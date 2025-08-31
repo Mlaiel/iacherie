@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive Tests for Core Recommendation Engine
+"""Comprehensive Tests for Core Recommendation Engine
 Testing recommendation generation, algorithms, and optimization
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -25,9 +21,7 @@ Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
 
 Lead Developer: Fahed Mlaiel
 Email: mlaiel@live.de
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -46,12 +40,10 @@ from ai.recommendation.exceptions import RecommendationError, ValidationError
 
 
 class TestRecommendationEngine:
-    """Comprehensive tests for the main recommendation engine"""
-    
+    """Comprehensive tests for the main recommendation engine"""    
     @pytest.mark.asyncio
     async def test_engine_initialization(self):
-        """Test recommendation engine initialization"""
-        engine = RecommendationEngine()
+        """Test recommendation engine initialization"""        engine = RecommendationEngine()
         
         # Test initial state
         assert engine.status.name == "INITIALIZING"
@@ -67,8 +59,7 @@ class TestRecommendationEngine:
     
     @pytest.mark.asyncio
     async def test_engine_initialization_failure(self):
-        """Test engine initialization failure handling"""
-        engine = RecommendationEngine()
+        """Test engine initialization failure handling"""        engine = RecommendationEngine()
         
         # Mock a failure condition
         original_method = engine._load_recommendation_models
@@ -88,8 +79,7 @@ class TestRecommendationEngine:
     
     @pytest.mark.asyncio
     async def test_generate_recommendations_basic(self, recommendation_engine, sample_creator_musician):
-        """Test basic recommendation generation"""
-        creator = sample_creator_musician
+        """Test basic recommendation generation"""        creator = sample_creator_musician
         
         recommendations = await recommendation_engine.generate_recommendations(
             creator_profile=creator,
@@ -111,8 +101,7 @@ class TestRecommendationEngine:
     
     @pytest.mark.asyncio
     async def test_generate_recommendations_with_filters(self, recommendation_engine, sample_creator_musician):
-        """Test recommendation generation with content filters"""
-        creator = sample_creator_musician
+        """Test recommendation generation with content filters"""        creator = sample_creator_musician
         
         # Test platform filter
         youtube_recommendations = await recommendation_engine.generate_recommendations(
@@ -134,8 +123,7 @@ class TestRecommendationEngine:
     
     @pytest.mark.asyncio
     async def test_generate_recommendations_time_sensitive(self, recommendation_engine, sample_creator_musician):
-        """Test time-sensitive recommendation generation"""
-        creator = sample_creator_musician
+        """Test time-sensitive recommendation generation"""        creator = sample_creator_musician
         
         # Test with specific time horizon
         short_term_recs = await recommendation_engine.generate_recommendations(
@@ -163,8 +151,7 @@ class TestRecommendationEngine:
     
     @pytest.mark.asyncio
     async def test_generate_recommendations_personalization(self, recommendation_engine, sample_creator_musician, sample_creator_blogger):
-        """Test recommendation personalization for different creators"""
-        musician = sample_creator_musician
+        """Test recommendation personalization for different creators"""        musician = sample_creator_musician
         blogger = sample_creator_blogger
         
         musician_recs = await recommendation_engine.generate_recommendations(
@@ -196,8 +183,7 @@ class TestRecommendationEngine:
     
     @pytest.mark.asyncio
     async def test_recommendation_scoring_algorithms(self, recommendation_engine, sample_creator_musician):
-        """Test recommendation scoring algorithm accuracy"""
-        creator = sample_creator_musician
+        """Test recommendation scoring algorithm accuracy"""        creator = sample_creator_musician
         
         recommendations = await recommendation_engine.generate_recommendations(
             creator_profile=creator,
@@ -223,8 +209,7 @@ class TestRecommendationEngine:
     
     @pytest.mark.asyncio
     async def test_content_based_filtering(self, recommendation_engine, sample_creator_musician):
-        """Test content-based filtering algorithm"""
-        creator = sample_creator_musician
+        """Test content-based filtering algorithm"""        creator = sample_creator_musician
         
         # Generate recommendations using content-based filtering
         recommendations = await recommendation_engine._generate_content_based_recommendations(
@@ -250,8 +235,7 @@ class TestRecommendationEngine:
     
     @pytest.mark.asyncio
     async def test_collaborative_filtering(self, recommendation_engine, sample_creator_musician):
-        """Test collaborative filtering algorithm"""
-        creator = sample_creator_musician
+        """Test collaborative filtering algorithm"""        creator = sample_creator_musician
         
         # Mock similar creators for collaborative filtering
         similar_creators = [
@@ -273,8 +257,7 @@ class TestRecommendationEngine:
     
     @pytest.mark.asyncio
     async def test_trend_boosted_recommendations(self, recommendation_engine, sample_creator_musician):
-        """Test trend-boosted recommendation generation"""
-        creator = sample_creator_musician
+        """Test trend-boosted recommendation generation"""        creator = sample_creator_musician
         
         # Generate trend-boosted recommendations
         recommendations = await recommendation_engine._apply_trend_boosting(
@@ -292,8 +275,7 @@ class TestRecommendationEngine:
     
     @pytest.mark.asyncio
     async def test_revenue_optimized_recommendations(self, recommendation_engine, sample_creator_musician):
-        """Test revenue-optimized recommendation generation"""
-        creator = sample_creator_musician
+        """Test revenue-optimized recommendation generation"""        creator = sample_creator_musician
         
         # Generate revenue-optimized recommendations
         recommendations = await recommendation_engine._optimize_for_revenue(
@@ -313,8 +295,7 @@ class TestRecommendationEngine:
     
     @pytest.mark.asyncio
     async def test_recommendation_diversity(self, recommendation_engine, sample_creator_musician):
-        """Test recommendation diversity algorithms"""
-        creator = sample_creator_musician
+        """Test recommendation diversity algorithms"""        creator = sample_creator_musician
         
         recommendations = await recommendation_engine.generate_recommendations(
             creator_profile=creator,
@@ -340,11 +321,9 @@ class TestRecommendationEngine:
 
 
 class TestRecommendationConfig:
-    """Tests for recommendation configuration and customization"""
-    
+    """Tests for recommendation configuration and customization"""    
     def test_default_config(self):
-        """Test default recommendation configuration"""
-        config = RecommendationConfig()
+        """Test default recommendation configuration"""        config = RecommendationConfig()
         
         assert config.max_recommendations == 50
         assert config.diversity_factor == 0.5
@@ -355,8 +334,7 @@ class TestRecommendationConfig:
         assert config.enable_trend_boosting is True
     
     def test_custom_config(self):
-        """Test custom recommendation configuration"""
-        config = RecommendationConfig(
+        """Test custom recommendation configuration"""        config = RecommendationConfig(
             max_recommendations=20,
             diversity_factor=0.8,
             trend_weight=0.5,
@@ -371,8 +349,7 @@ class TestRecommendationConfig:
         assert config.enable_collaborative_filtering is False
     
     def test_config_validation(self):
-        """Test configuration validation"""
-        # Test invalid diversity factor
+        """Test configuration validation"""        # Test invalid diversity factor
         with pytest.raises(ValueError):
             RecommendationConfig(diversity_factor=1.5)  # > 1.0
         
@@ -389,12 +366,10 @@ class TestRecommendationConfig:
 
 
 class TestRecommendationRequest:
-    """Tests for recommendation request handling"""
-    
+    """Tests for recommendation request handling"""    
     @pytest.mark.asyncio
     async def test_process_recommendation_request(self, recommendation_engine, sample_creator_musician):
-        """Test processing of recommendation requests"""
-        creator = sample_creator_musician
+        """Test processing of recommendation requests"""        creator = sample_creator_musician
         
         request = RecommendationRequest(
             creator_id=creator.creator_id,
@@ -416,8 +391,7 @@ class TestRecommendationRequest:
     
     @pytest.mark.asyncio
     async def test_invalid_recommendation_request(self, recommendation_engine):
-        """Test handling of invalid recommendation requests"""
-        # Test missing creator ID
+        """Test handling of invalid recommendation requests"""        # Test missing creator ID
         invalid_request = RecommendationRequest(
             creator_id="",  # Invalid
             limit=5
@@ -437,8 +411,7 @@ class TestRecommendationRequest:
     
     @pytest.mark.asyncio
     async def test_recommendation_caching(self, recommendation_engine, sample_creator_musician):
-        """Test recommendation caching mechanisms"""
-        creator = sample_creator_musician
+        """Test recommendation caching mechanisms"""        creator = sample_creator_musician
         
         # Generate recommendations twice
         start_time = time.time()
@@ -463,13 +436,11 @@ class TestRecommendationRequest:
 
 
 class TestRecommendationPerformance:
-    """Performance tests for recommendation generation"""
-    
+    """Performance tests for recommendation generation"""    
     @pytest.mark.asyncio
     @pytest.mark.benchmark
     async def test_recommendation_generation_performance(self, benchmark, recommendation_engine, sample_creator_musician):
-        """Benchmark recommendation generation performance"""
-        creator = sample_creator_musician
+        """Benchmark recommendation generation performance"""        creator = sample_creator_musician
         
         async def generate_recommendations():
             return await recommendation_engine.generate_recommendations(
@@ -483,8 +454,7 @@ class TestRecommendationPerformance:
     
     @pytest.mark.asyncio
     async def test_recommendation_generation_timeout(self, recommendation_engine, sample_creator_musician):
-        """Test recommendation generation with timeout"""
-        creator = sample_creator_musician
+        """Test recommendation generation with timeout"""        creator = sample_creator_musician
         
         try:
             # Set short timeout to test timeout handling
@@ -504,8 +474,7 @@ class TestRecommendationPerformance:
     
     @pytest.mark.asyncio
     async def test_batch_recommendation_generation(self, recommendation_engine, sample_creator_musician, sample_creator_blogger):
-        """Test batch recommendation generation for multiple creators"""
-        creators = [sample_creator_musician, sample_creator_blogger]
+        """Test batch recommendation generation for multiple creators"""        creators = [sample_creator_musician, sample_creator_blogger]
         
         start_time = time.time()
         
@@ -526,8 +495,7 @@ class TestRecommendationPerformance:
     
     @pytest.mark.asyncio
     async def test_concurrent_recommendation_requests(self, recommendation_engine, sample_creator_musician):
-        """Test handling concurrent recommendation requests"""
-        creator = sample_creator_musician
+        """Test handling concurrent recommendation requests"""        creator = sample_creator_musician
         
         # Create multiple concurrent requests
         tasks = []
@@ -552,12 +520,10 @@ class TestRecommendationPerformance:
 
 
 class TestRecommendationQuality:
-    """Tests for recommendation quality and accuracy"""
-    
+    """Tests for recommendation quality and accuracy"""    
     @pytest.mark.asyncio
     async def test_recommendation_relevance_scoring(self, recommendation_engine, sample_creator_musician):
-        """Test recommendation relevance scoring accuracy"""
-        creator = sample_creator_musician
+        """Test recommendation relevance scoring accuracy"""        creator = sample_creator_musician
         
         recommendations = await recommendation_engine.generate_recommendations(
             creator_profile=creator,
@@ -580,8 +546,7 @@ class TestRecommendationQuality:
     
     @pytest.mark.asyncio
     async def test_recommendation_engagement_prediction(self, recommendation_engine, sample_creator_musician):
-        """Test engagement prediction accuracy"""
-        creator = sample_creator_musician
+        """Test engagement prediction accuracy"""        creator = sample_creator_musician
         
         recommendations = await recommendation_engine.generate_recommendations(
             creator_profile=creator,
@@ -603,8 +568,7 @@ class TestRecommendationQuality:
     
     @pytest.mark.asyncio
     async def test_recommendation_explanation_quality(self, recommendation_engine, sample_creator_musician):
-        """Test quality of recommendation explanations"""
-        creator = sample_creator_musician
+        """Test quality of recommendation explanations"""        creator = sample_creator_musician
         
         recommendations = await recommendation_engine.generate_recommendations(
             creator_profile=creator,
@@ -624,8 +588,7 @@ class TestRecommendationQuality:
     
     @pytest.mark.asyncio
     async def test_recommendation_consistency(self, recommendation_engine, sample_creator_musician):
-        """Test recommendation consistency across multiple generations"""
-        creator = sample_creator_musician
+        """Test recommendation consistency across multiple generations"""        creator = sample_creator_musician
         
         # Generate recommendations multiple times
         recommendation_sets = []
@@ -657,12 +620,10 @@ class TestRecommendationQuality:
 
 
 class TestRecommendationEdgeCases:
-    """Tests for edge cases and error scenarios"""
-    
+    """Tests for edge cases and error scenarios"""    
     @pytest.mark.asyncio
     async def test_recommendations_for_new_creator(self, recommendation_engine):
-        """Test recommendations for creators with minimal data"""
-        new_creator = CreatorProfile(
+        """Test recommendations for creators with minimal data"""        new_creator = CreatorProfile(
             creator_id="new_creator_001",
             display_name="New Creator",
             platforms=[Platform.YOUTUBE],
@@ -689,8 +650,7 @@ class TestRecommendationEdgeCases:
     
     @pytest.mark.asyncio
     async def test_recommendations_with_empty_filters(self, recommendation_engine, sample_creator_musician):
-        """Test recommendations with empty filters"""
-        creator = sample_creator_musician
+        """Test recommendations with empty filters"""        creator = sample_creator_musician
         
         # Test with empty platform filter
         recommendations = await recommendation_engine.generate_recommendations(
@@ -710,8 +670,7 @@ class TestRecommendationEdgeCases:
     
     @pytest.mark.asyncio
     async def test_recommendations_with_zero_limit(self, recommendation_engine, sample_creator_musician):
-        """Test recommendations with zero limit"""
-        creator = sample_creator_musician
+        """Test recommendations with zero limit"""        creator = sample_creator_musician
         
         with pytest.raises(ValidationError):
             await recommendation_engine.generate_recommendations(
@@ -721,8 +680,7 @@ class TestRecommendationEdgeCases:
     
     @pytest.mark.asyncio
     async def test_recommendations_with_very_high_limit(self, recommendation_engine, sample_creator_musician):
-        """Test recommendations with very high limit"""
-        creator = sample_creator_musician
+        """Test recommendations with very high limit"""        creator = sample_creator_musician
         
         recommendations = await recommendation_engine.generate_recommendations(
             creator_profile=creator,
@@ -734,8 +692,7 @@ class TestRecommendationEdgeCases:
     
     @pytest.mark.asyncio
     async def test_recommendations_for_unsupported_platform(self, recommendation_engine):
-        """Test recommendations for unsupported platforms"""
-        creator = CreatorProfile(
+        """Test recommendations for unsupported platforms"""        creator = CreatorProfile(
             creator_id="test_creator",
             display_name="Test Creator",
             platforms=[],  # No supported platforms

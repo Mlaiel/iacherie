@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Ultra-Industrial Test Suite for Data Management Module
+"""Ultra-Industrial Test Suite for Data Management Module
 
 This module provides comprehensive testing for observability data management,
 lifecycle management, retention policies, and data governance.
@@ -50,9 +46,7 @@ from Fahed Mlaiel will result in immediate legal action under German and interna
 copyright law, financial damages claims, and criminal prosecution where applicable.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import numpy as np
 import pandas as pd
@@ -90,12 +84,10 @@ from ai.observability.data_management import (
 
 
 class TestObservabilityDataManager:
-    """Ultra-industrial tests for ObservabilityDataManager class"""
-    
+    """Ultra-industrial tests for ObservabilityDataManager class"""    
     @pytest.fixture
     def data_manager(self):
-        """Create ObservabilityDataManager instance for testing"""
-        config = {
+        """Create ObservabilityDataManager instance for testing"""        config = {
             "storage_backends": ["postgresql", "redis", "mongodb"],
             "default_retention_days": 90,
             "compression_enabled": True,
@@ -107,8 +99,7 @@ class TestObservabilityDataManager:
     
     @pytest.fixture
     def sample_observability_data(self):
-        """Generate comprehensive observability data"""
-        data = {
+        """Generate comprehensive observability data"""        data = {
             "metrics": [],
             "logs": [],
             "traces": [],
@@ -172,8 +163,7 @@ class TestObservabilityDataManager:
         return data
     
     def test_initialization(self, data_manager):
-        """Test ObservabilityDataManager initialization"""
-        assert data_manager is not None
+        """Test ObservabilityDataManager initialization"""        assert data_manager is not None
         assert data_manager.config["storage_backends"] is not None
         assert hasattr(data_manager, 'storage_engines')
         assert hasattr(data_manager, 'data_validator')
@@ -181,8 +171,7 @@ class TestObservabilityDataManager:
         assert hasattr(data_manager, 'encryption_engine')
     
     def test_data_ingestion(self, data_manager, sample_observability_data):
-        """Test comprehensive data ingestion"""
-        # Test metrics ingestion
+        """Test comprehensive data ingestion"""        # Test metrics ingestion
         metrics_result = data_manager.ingest_metrics(sample_observability_data["metrics"])
         assert metrics_result["success"] is True
         assert metrics_result["records_processed"] == len(sample_observability_data["metrics"])
@@ -209,8 +198,7 @@ class TestObservabilityDataManager:
         assert batch_result["total_records"] > 0
     
     def test_data_validation(self, data_manager, sample_observability_data):
-        """Test data validation and quality checks"""
-        # Test schema validation
+        """Test data validation and quality checks"""        # Test schema validation
         schema_validation = data_manager.validate_data_schema(sample_observability_data)
         assert schema_validation["is_valid"] is True
         assert schema_validation["validation_score"] > 0.9
@@ -228,8 +216,7 @@ class TestObservabilityDataManager:
         assert "anomaly_types" in anomaly_detection
     
     def test_data_storage_backends(self, data_manager, sample_observability_data):
-        """Test multiple storage backend functionality"""
-        # Test PostgreSQL storage
+        """Test multiple storage backend functionality"""        # Test PostgreSQL storage
         postgres_result = data_manager.store_to_postgresql(sample_observability_data["metrics"])
         assert postgres_result["success"] is True
         assert "storage_location" in postgres_result
@@ -250,8 +237,7 @@ class TestObservabilityDataManager:
         assert "storage_savings" in optimization_result
     
     def test_data_retrieval(self, data_manager, sample_observability_data):
-        """Test data retrieval and querying"""
-        # Ingest test data first
+        """Test data retrieval and querying"""        # Ingest test data first
         data_manager.ingest_batch(sample_observability_data)
         
         # Test time-range queries
@@ -282,8 +268,7 @@ class TestObservabilityDataManager:
         assert "time_buckets" in aggregation_result
     
     def test_data_compression(self, data_manager, sample_observability_data):
-        """Test data compression functionality"""
-        # Ingest data
+        """Test data compression functionality"""        # Ingest data
         data_manager.ingest_batch(sample_observability_data)
         
         # Test compression
@@ -304,8 +289,7 @@ class TestObservabilityDataManager:
         assert decompression_result["success"] is True
     
     def test_data_encryption(self, data_manager, sample_observability_data):
-        """Test data encryption and security"""
-        # Test encryption of sensitive data
+        """Test data encryption and security"""        # Test encryption of sensitive data
         sensitive_data = {
             "user_data": [
                 {"user_id": "user_123", "email": "user@example.com", "ip_address": "192.168.1.100"}
@@ -333,8 +317,7 @@ class TestObservabilityDataManager:
         assert "decrypted_data" in decryption_result
     
     def test_performance_optimization(self, data_manager):
-        """Test performance optimization features"""
-        # Test indexing optimization
+        """Test performance optimization features"""        # Test indexing optimization
         indexing_result = data_manager.optimize_indexes()
         assert indexing_result["indexes_created"] > 0
         assert indexing_result["query_performance_improvement"] > 0
@@ -355,12 +338,10 @@ class TestObservabilityDataManager:
 
 
 class TestDataLifecycleManager:
-    """Ultra-industrial tests for DataLifecycleManager class"""
-    
+    """Ultra-industrial tests for DataLifecycleManager class"""    
     @pytest.fixture
     def lifecycle_manager(self):
-        """Create DataLifecycleManager instance for testing"""
-        config = {
+        """Create DataLifecycleManager instance for testing"""        config = {
             "lifecycle_policies": [
                 {"data_type": "metrics", "hot_days": 7, "warm_days": 30, "cold_days": 90},
                 {"data_type": "logs", "hot_days": 3, "warm_days": 14, "cold_days": 60},
@@ -372,15 +353,13 @@ class TestDataLifecycleManager:
         return DataLifecycleManager(config)
     
     def test_initialization(self, lifecycle_manager):
-        """Test DataLifecycleManager initialization"""
-        assert lifecycle_manager is not None
+        """Test DataLifecycleManager initialization"""        assert lifecycle_manager is not None
         assert len(lifecycle_manager.config["lifecycle_policies"]) == 3
         assert hasattr(lifecycle_manager, 'policy_engine')
         assert hasattr(lifecycle_manager, 'transition_scheduler')
     
     def test_lifecycle_policy_creation(self, lifecycle_manager):
-        """Test lifecycle policy creation and management"""
-        # Create custom policy
+        """Test lifecycle policy creation and management"""        # Create custom policy
         policy_config = {
             "name": "critical_logs_policy",
             "data_type": "logs",
@@ -402,8 +381,7 @@ class TestDataLifecycleManager:
         assert validation_result["is_valid"] is True
     
     def test_data_tier_transitions(self, lifecycle_manager):
-        """Test automated data tier transitions"""
-        # Simulate data aging process
+        """Test automated data tier transitions"""        # Simulate data aging process
         test_data = [
             {
                 "data_id": "data_001",
@@ -434,8 +412,7 @@ class TestDataLifecycleManager:
             assert "data_id" in transition
     
     def test_automated_lifecycle_management(self, lifecycle_manager):
-        """Test automated lifecycle management"""
-        # Start automated lifecycle management
+        """Test automated lifecycle management"""        # Start automated lifecycle management
         automation_result = lifecycle_manager.start_automation()
         assert automation_result["automation_enabled"] is True
         
@@ -450,8 +427,7 @@ class TestDataLifecycleManager:
         assert stop_result["automation_stopped"] is True
     
     def test_cost_optimization(self, lifecycle_manager):
-        """Test cost optimization features"""
-        # Analyze storage costs
+        """Test cost optimization features"""        # Analyze storage costs
         cost_analysis = lifecycle_manager.analyze_storage_costs()
         assert "current_costs" in cost_analysis
         assert "cost_breakdown_by_tier" in cost_analysis
@@ -464,8 +440,7 @@ class TestDataLifecycleManager:
         assert "roi_analysis" in recommendations
     
     def test_compliance_integration(self, lifecycle_manager):
-        """Test compliance requirements integration"""
-        compliance_requirements = {
+        """Test compliance requirements integration"""        compliance_requirements = {
             "gdpr": {"retention_days": 365, "deletion_required": True},
             "hipaa": {"encryption_required": True, "audit_trail": True},
             "sox": {"immutable_logs": True, "retention_days": 2555}  # 7 years
@@ -482,12 +457,10 @@ class TestDataLifecycleManager:
 
 
 class TestDataRetentionManager:
-    """Ultra-industrial tests for DataRetentionManager class"""
-    
+    """Ultra-industrial tests for DataRetentionManager class"""    
     @pytest.fixture
     def retention_manager(self):
-        """Create DataRetentionManager instance for testing"""
-        config = {
+        """Create DataRetentionManager instance for testing"""        config = {
             "default_retention_policies": {
                 "metrics": {"days": 90, "policy": "rolling"},
                 "logs": {"days": 60, "policy": "compliance_based"},
@@ -500,15 +473,13 @@ class TestDataRetentionManager:
         return DataRetentionManager(config)
     
     def test_initialization(self, retention_manager):
-        """Test DataRetentionManager initialization"""
-        assert retention_manager is not None
+        """Test DataRetentionManager initialization"""        assert retention_manager is not None
         assert retention_manager.config["legal_hold_enabled"] is True
         assert hasattr(retention_manager, 'retention_policies')
         assert hasattr(retention_manager, 'deletion_scheduler')
     
     def test_retention_policy_management(self, retention_manager):
-        """Test retention policy creation and management"""
-        # Create custom retention policy
+        """Test retention policy creation and management"""        # Create custom retention policy
         policy = RetentionPolicy(
             name="security_logs_retention",
             data_type="logs",
@@ -535,8 +506,7 @@ class TestDataRetentionManager:
         assert update_result["success"] is True
     
     def test_data_expiration_detection(self, retention_manager):
-        """Test data expiration detection and processing"""
-        # Create test data with various ages
+        """Test data expiration detection and processing"""        # Create test data with various ages
         test_data = []
         for i in range(100):
             days_old = i
@@ -559,8 +529,7 @@ class TestDataRetentionManager:
         assert expiration_result["total_expired_records"] > 0
     
     def test_secure_deletion(self, retention_manager):
-        """Test secure data deletion processes"""
-        # Create temporary test data
+        """Test secure data deletion processes"""        # Create temporary test data
         test_data_items = [
             {
                 "data_id": "sensitive_001",
@@ -588,8 +557,7 @@ class TestDataRetentionManager:
         assert "audit_trail_entries" in execution_result
     
     def test_legal_hold_functionality(self, retention_manager):
-        """Test legal hold and litigation support"""
-        # Create legal hold
+        """Test legal hold and litigation support"""        # Create legal hold
         legal_hold = {
             "hold_id": str(uuid4()),
             "name": "Investigation_2024_001",
@@ -622,8 +590,7 @@ class TestDataRetentionManager:
         assert "legal_hold_conflicts" in deletion_attempt
     
     def test_compliance_reporting(self, retention_manager):
-        """Test compliance reporting for retention management"""
-        # Generate retention compliance report
+        """Test compliance reporting for retention management"""        # Generate retention compliance report
         compliance_report = retention_manager.generate_compliance_report(
             report_period_days=90,
             include_audit_trail=True
@@ -642,12 +609,10 @@ class TestDataRetentionManager:
 
 
 class TestDataArchiver:
-    """Ultra-industrial tests for DataArchiver class"""
-    
+    """Ultra-industrial tests for DataArchiver class"""    
     @pytest.fixture
     def data_archiver(self):
-        """Create DataArchiver instance for testing"""
-        config = {
+        """Create DataArchiver instance for testing"""        config = {
             "archive_storage_backends": ["s3", "glacier", "local"],
             "default_archive_after_days": 90,
             "compression_enabled": True,
@@ -657,15 +622,13 @@ class TestDataArchiver:
         return DataArchiver(config)
     
     def test_initialization(self, data_archiver):
-        """Test DataArchiver initialization"""
-        assert data_archiver is not None
+        """Test DataArchiver initialization"""        assert data_archiver is not None
         assert "s3" in data_archiver.config["archive_storage_backends"]
         assert hasattr(data_archiver, 'archive_engines')
         assert hasattr(data_archiver, 'integrity_checker')
     
     def test_archival_process(self, data_archiver):
-        """Test complete data archival process"""
-        # Create test data for archival
+        """Test complete data archival process"""        # Create test data for archival
         archive_data = {
             "data_batch_id": str(uuid4()),
             "data_type": "logs",
@@ -698,8 +661,7 @@ class TestDataArchiver:
         assert "checksum_match" in integrity_check
     
     def test_archive_retrieval(self, data_archiver):
-        """Test data retrieval from archives"""
-        # First, create and archive some test data
+        """Test data retrieval from archives"""        # First, create and archive some test data
         test_data = {
             "data_batch_id": str(uuid4()),
             "data_type": "metrics",
@@ -727,8 +689,7 @@ class TestDataArchiver:
         assert len(filtered_retrieval["filtered_data"]) == 1
     
     def test_archive_management(self, data_archiver):
-        """Test archive management operations"""
-        # Create multiple test archives
+        """Test archive management operations"""        # Create multiple test archives
         archives_created = []
         for i in range(5):
             test_data = {
@@ -758,8 +719,7 @@ class TestDataArchiver:
         assert deletion_result["secure_deletion_verified"] is True
     
     def test_archive_search(self, data_archiver):
-        """Test archive search capabilities"""
-        # Create searchable test data
+        """Test archive search capabilities"""        # Create searchable test data
         searchable_data = {
             "data_batch_id": str(uuid4()),
             "data_type": "events",
@@ -804,8 +764,7 @@ class TestDataArchiver:
         assert any("security_incident" in str(result) for result in search_result["search_results"])
     
     def test_archive_compression_and_encryption(self, data_archiver):
-        """Test archive compression and encryption features"""
-        # Create large test data for compression testing
+        """Test archive compression and encryption features"""        # Create large test data for compression testing
         large_data = {
             "data_batch_id": str(uuid4()),
             "data_type": "logs",
@@ -843,12 +802,10 @@ class TestDataArchiver:
 
 
 class TestTimeSeriesDatabase:
-    """Ultra-industrial tests for TimeSeriesDatabase class"""
-    
+    """Ultra-industrial tests for TimeSeriesDatabase class"""    
     @pytest.fixture
     def timeseries_db(self):
-        """Create TimeSeriesDatabase instance for testing"""
-        config = {
+        """Create TimeSeriesDatabase instance for testing"""        config = {
             "backend": "influxdb",  # or "prometheus", "timescaledb"
             "retention_policies": {
                 "high_resolution": {"duration": "24h", "resolution": "1s"},
@@ -861,15 +818,13 @@ class TestTimeSeriesDatabase:
         return TimeSeriesDatabase(config)
     
     def test_initialization(self, timeseries_db):
-        """Test TimeSeriesDatabase initialization"""
-        assert timeseries_db is not None
+        """Test TimeSeriesDatabase initialization"""        assert timeseries_db is not None
         assert timeseries_db.config["backend"] == "influxdb"
         assert hasattr(timeseries_db, 'connection')
         assert hasattr(timeseries_db, 'retention_manager')
     
     def test_time_series_data_ingestion(self, timeseries_db):
-        """Test time series data ingestion"""
-        # Generate time series metrics
+        """Test time series data ingestion"""        # Generate time series metrics
         metrics_data = []
         base_time = datetime.now()
         
@@ -903,8 +858,7 @@ class TestTimeSeriesDatabase:
         assert ingestion_result["write_errors"] == 0
     
     def test_time_series_querying(self, timeseries_db):
-        """Test time series data querying"""
-        # First ingest some test data
+        """Test time series data querying"""        # First ingest some test data
         test_metrics = []
         base_time = datetime.now()
         
@@ -946,8 +900,7 @@ class TestTimeSeriesDatabase:
         assert "time_buckets" in aggregation_result
     
     def test_downsampling(self, timeseries_db):
-        """Test automatic downsampling for long-term storage"""
-        # Configure downsampling rules
+        """Test automatic downsampling for long-term storage"""        # Configure downsampling rules
         downsampling_config = {
             "rules": [
                 {
@@ -974,8 +927,7 @@ class TestTimeSeriesDatabase:
         assert "storage_saved" in execution_result
     
     def test_retention_policies(self, timeseries_db):
-        """Test retention policy management"""
-        # Create custom retention policy
+        """Test retention policy management"""        # Create custom retention policy
         policy_result = timeseries_db.create_retention_policy(
             name="short_term_metrics",
             duration="48h",
@@ -997,12 +949,10 @@ class TestTimeSeriesDatabase:
 
 
 class TestDataBackup:
-    """Ultra-industrial tests for DataBackup class"""
-    
+    """Ultra-industrial tests for DataBackup class"""    
     @pytest.fixture
     def data_backup(self):
-        """Create DataBackup instance for testing"""
-        config = {
+        """Create DataBackup instance for testing"""        config = {
             "backup_backends": ["s3", "local", "remote_sync"],
             "backup_schedule": {
                 "full_backup": {"frequency": "weekly", "day": "sunday"},
@@ -1015,15 +965,13 @@ class TestDataBackup:
         return DataBackup(config)
     
     def test_initialization(self, data_backup):
-        """Test DataBackup initialization"""
-        assert data_backup is not None
+        """Test DataBackup initialization"""        assert data_backup is not None
         assert "s3" in data_backup.config["backup_backends"]
         assert hasattr(data_backup, 'backup_engines')
         assert hasattr(data_backup, 'scheduler')
     
     def test_full_backup(self, data_backup):
-        """Test full data backup process"""
-        # Create test data
+        """Test full data backup process"""        # Create test data
         backup_data = {
             "databases": [
                 {
@@ -1059,8 +1007,7 @@ class TestDataBackup:
         assert backup_result["encryption_applied"] is True
     
     def test_incremental_backup(self, data_backup):
-        """Test incremental backup process"""
-        # Simulate previous backup
+        """Test incremental backup process"""        # Simulate previous backup
         last_backup_timestamp = datetime.now() - timedelta(days=1)
         
         # Create incremental changes data
@@ -1086,8 +1033,7 @@ class TestDataBackup:
         assert incremental_result["changes_backed_up"] == len(incremental_data["changed_records"])
     
     def test_backup_restoration(self, data_backup):
-        """Test backup restoration process"""
-        # Create a backup first
+        """Test backup restoration process"""        # Create a backup first
         test_data = {
             "databases": [
                 {"name": "test_db", "type": "postgresql", "size_bytes": 1024 * 1024}
@@ -1117,8 +1063,7 @@ class TestDataBackup:
         assert "restoration_time_seconds" in restoration_result
     
     def test_backup_verification(self, data_backup):
-        """Test backup verification and integrity checking"""
-        # Create test backup
+        """Test backup verification and integrity checking"""        # Create test backup
         backup_result = data_backup.create_full_backup(
             backup_name="verification_test_backup",
             data_sources={"databases": [{"name": "test_db", "type": "postgresql"}]}
@@ -1136,8 +1081,7 @@ class TestDataBackup:
         assert "data_completeness_check" in consistency_result
     
     def test_backup_scheduling(self, data_backup):
-        """Test automated backup scheduling"""
-        # Configure backup schedule
+        """Test automated backup scheduling"""        # Configure backup schedule
         schedule_config = {
             "full_backup": {
                 "enabled": True,

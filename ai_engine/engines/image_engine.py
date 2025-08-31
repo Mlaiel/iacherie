@@ -1,5 +1,4 @@
-"""
-ULTRA-INDUSTRIAL IMAGE ENGINE - PRODUCTION READY
+"""ULTRA-INDUSTRIAL IMAGE ENGINE - PRODUCTION READY
 IA-Influencer-Agent | Enterprise Content Protection Platform
 
 Advanced AI-powered image processing engine for photographers, visual artists, and content creators.
@@ -19,9 +18,7 @@ Unauthorized copying, distribution, or reverse engineering is strictly prohibite
 Any violation will be prosecuted to the full extent of the law.
 
 Business Logic: User Upload → AI Analysis → Style Detection → Quality Assessment → Enhancement Recommendations
-"""
-
-import asyncio
+"""import asyncio
 import numpy as np
 import logging
 import json
@@ -38,8 +35,7 @@ from pathlib import Path
 from .base_engine import BaseContentEngine, ProcessingResult, EngineMetrics, EngineStatus, ContentType, ProcessingPriority
 
 class ImageFormat(Enum):
-    """Supported image formats"""
-    JPEG = "jpeg"
+    """Supported image formats"""    JPEG = "jpeg"
     PNG = "png"
     WEBP = "webp"
     TIFF = "tiff"
@@ -48,16 +44,14 @@ class ImageFormat(Enum):
     HEIC = "heic"
 
 class ImageQuality(Enum):
-    """Image quality levels"""
-    LOW = "low"
+    """Image quality levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     ULTRA = "ultra"
     RAW = "raw"
 
 class ColorSpace(Enum):
-    """Color space options"""
-    SRGB = "sRGB"
+    """Color space options"""    SRGB = "sRGB"
     ADOBE_RGB = "Adobe RGB"
     PROPHOTO = "ProPhoto RGB"
     CMYK = "CMYK"
@@ -65,8 +59,7 @@ class ColorSpace(Enum):
 
 @dataclass
 class ImageMetadata:
-    """Comprehensive image metadata structure"""
-    width: int
+    """Comprehensive image metadata structure"""    width: int
     height: int
     channels: int
     color_space: ColorSpace
@@ -86,11 +79,9 @@ class ImageMetadata:
     copyright_info: Optional[str] = None
 
 class ImageProcessingEngine(BaseContentEngine):
-    """
-    Advanced image processing engine for content creators
+    """    Advanced image processing engine for content creators
     Handles image enhancement, format conversion, and optimization
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__("image_processor", config)
         self.supported_formats = [fmt.value for fmt in ImageFormat]
@@ -98,8 +89,7 @@ class ImageProcessingEngine(BaseContentEngine):
         self.max_file_size = self.config.get('max_file_size_mb', 100)
         
     async def initialize(self) -> bool:
-        """Initialize image processing engine"""
-        try:
+        """Initialize image processing engine"""        try:
             self.logger.info("Initializing Image Processing Engine...")
             
             # Load image processing models
@@ -125,8 +115,7 @@ class ImageProcessingEngine(BaseContentEngine):
             return False
     
     async def process_content(self, content: Any, options: Optional[Dict] = None) -> ProcessingResult:
-        """Process image content with advanced AI capabilities"""
-        start_time = time.time()
+        """Process image content with advanced AI capabilities"""        start_time = time.time()
         options = options or {}
         content_id = options.get('content_id', f"image_{int(time.time())}")
         
@@ -228,8 +217,7 @@ class ImageProcessingEngine(BaseContentEngine):
             )
     
     async def optimize_for_seo(self, content: Any, target_keywords: List[str]) -> Dict[str, Any]:
-        """Optimize image content for search engine visibility"""
-        features = await self._extract_image_seo_features(content)
+        """Optimize image content for search engine visibility"""        features = await self._extract_image_seo_features(content)
         
         return {
             'alt_text': await self._generate_alt_text(features, target_keywords),
@@ -244,8 +232,7 @@ class ImageProcessingEngine(BaseContentEngine):
         }
     
     async def protect_content(self, content: Any) -> Dict[str, Any]:
-        """Apply comprehensive image protection"""
-        # Generate image fingerprint
+        """Apply comprehensive image protection"""        # Generate image fingerprint
         fingerprint = await self._generate_image_fingerprint(content)
         
         # Apply watermarking
@@ -265,8 +252,7 @@ class ImageProcessingEngine(BaseContentEngine):
         }
     
     async def _load_image_models(self):
-        """Load image processing AI models"""
-        self.logger.info("Loading image processing models...")
+        """Load image processing AI models"""        self.logger.info("Loading image processing models...")
         await asyncio.sleep(0.3)
         
         self.image_models = {
@@ -280,8 +266,7 @@ class ImageProcessingEngine(BaseContentEngine):
         }
     
     async def _init_cv_models(self):
-        """Initialize computer vision models"""
-        self.logger.info("Initializing computer vision models...")
+        """Initialize computer vision models"""        self.logger.info("Initializing computer vision models...")
         await asyncio.sleep(0.2)
         
         self.cv_models = {
@@ -293,8 +278,7 @@ class ImageProcessingEngine(BaseContentEngine):
         }
     
     async def _load_enhancement_algorithms(self):
-        """Load image enhancement algorithms"""
-        self.logger.info("Loading enhancement algorithms...")
+        """Load image enhancement algorithms"""        self.logger.info("Loading enhancement algorithms...")
         await asyncio.sleep(0.15)
         
         self.enhancement_algorithms = {
@@ -306,8 +290,7 @@ class ImageProcessingEngine(BaseContentEngine):
         }
     
     async def _init_color_management(self):
-        """Initialize color management system"""
-        self.logger.info("Initializing color management...")
+        """Initialize color management system"""        self.logger.info("Initializing color management...")
         await asyncio.sleep(0.1)
         
         self.color_profiles = {
@@ -318,8 +301,7 @@ class ImageProcessingEngine(BaseContentEngine):
         }
     
     async def _extract_image_metadata(self, content: Any) -> ImageMetadata:
-        """Extract comprehensive image metadata"""
-        self.logger.info("Extracting image metadata...")
+        """Extract comprehensive image metadata"""        self.logger.info("Extracting image metadata...")
         await asyncio.sleep(0.2)
         
         return ImageMetadata(
@@ -349,8 +331,7 @@ class ImageProcessingEngine(BaseContentEngine):
         )
     
     async def _analyze_image_content(self, content: Any) -> Dict[str, Any]:
-        """Analyze image content using computer vision"""
-        self.logger.info("Analyzing image content...")
+        """Analyze image content using computer vision"""        self.logger.info("Analyzing image content...")
         await asyncio.sleep(0.3)
         
         return {
@@ -375,8 +356,7 @@ class ImageProcessingEngine(BaseContentEngine):
         }
     
     async def _enhance_image_quality(self, content: Any, options: Dict) -> Any:
-        """Enhance image quality using AI"""
-        self.logger.info("Enhancing image quality...")
+        """Enhance image quality using AI"""        self.logger.info("Enhancing image quality...")
         await asyncio.sleep(0.4)
         
         enhancement_level = options.get('enhancement_level', 'auto')
@@ -385,8 +365,7 @@ class ImageProcessingEngine(BaseContentEngine):
         return f"enhanced_{enhancement_level}_{target_quality}_{content}"
     
     async def _apply_artistic_filters(self, content: Any, options: Dict) -> Any:
-        """Apply artistic filters and effects"""
-        filters = options.get('filters', [])
+        """Apply artistic filters and effects"""        filters = options.get('filters', [])
         
         if filters:
             self.logger.info(f"Applying filters: {filters}")
@@ -396,8 +375,7 @@ class ImageProcessingEngine(BaseContentEngine):
         return content
     
     async def _optimize_for_platforms(self, content: Any, options: Dict) -> Dict[str, Any]:
-        """Optimize image for different platforms"""
-        self.logger.info("Optimizing for platforms...")
+        """Optimize image for different platforms"""        self.logger.info("Optimizing for platforms...")
         await asyncio.sleep(0.3)
         
         platforms = options.get('platforms', ['web', 'social', 'print'])
@@ -417,8 +395,7 @@ class ImageProcessingEngine(BaseContentEngine):
         return optimized
     
     async def _generate_image_thumbnails(self, content: Any) -> List[Dict[str, Any]]:
-        """Generate optimized thumbnails"""
-        self.logger.info("Generating thumbnails...")
+        """Generate optimized thumbnails"""        self.logger.info("Generating thumbnails...")
         await asyncio.sleep(0.15)
         
         return [
@@ -429,15 +406,13 @@ class ImageProcessingEngine(BaseContentEngine):
         ]
     
     async def _apply_image_protection(self, content: Any) -> Any:
-        """Apply image protection measures"""
-        self.logger.info("Applying image protection...")
+        """Apply image protection measures"""        self.logger.info("Applying image protection...")
         await asyncio.sleep(0.1)
         
         return f"protected_{content}"
     
     async def _calculate_image_quality_score(self, content: Any, metadata: ImageMetadata, analysis: Dict) -> float:
-        """Calculate comprehensive image quality score"""
-        base_score = 0.8
+        """Calculate comprehensive image quality score"""        base_score = 0.8
         
         # Technical quality factors
         if metadata.width >= 1920:
@@ -456,8 +431,7 @@ class ImageProcessingEngine(BaseContentEngine):
         return min(base_score, 1.0)
     
     async def _extract_image_seo_features(self, content: Any) -> Dict[str, Any]:
-        """Extract features for SEO optimization"""
-        return {
+        """Extract features for SEO optimization"""        return {
             'scene_type': 'professional_portrait',
             'objects': ['person', 'business', 'professional'],
             'style': 'modern',
@@ -468,28 +442,24 @@ class ImageProcessingEngine(BaseContentEngine):
         }
     
     async def _generate_alt_text(self, features: Dict, keywords: List[str]) -> str:
-        """Generate SEO-optimized alt text"""
-        scene = features.get('scene_type', 'image')
+        """Generate SEO-optimized alt text"""        scene = features.get('scene_type', 'image')
         objects = features.get('objects', ['content'])
         keyword = keywords[0] if keywords else 'professional'
         
         return f"Professional {scene} featuring {', '.join(objects[:2])} - {keyword} content"
     
     async def _generate_image_title(self, features: Dict, keywords: List[str]) -> str:
-        """Generate SEO-optimized image title"""
-        style = features.get('style', 'professional')
+        """Generate SEO-optimized image title"""        style = features.get('style', 'professional')
         mood = features.get('mood', 'modern')
         keyword = keywords[0] if keywords else 'image'
         
         return f"{style.title()} {mood.title()} {keyword.title()} - High Quality Visual Content"
     
     async def _generate_image_description(self, features: Dict, keywords: List[str]) -> str:
-        """Generate image description for platforms"""
-        return f"High-quality {features.get('style', 'professional')} image featuring {features.get('mood', 'modern')} design. Perfect for {', '.join(keywords[:3])}."
+        """Generate image description for platforms"""        return f"High-quality {features.get('style', 'professional')} image featuring {features.get('mood', 'modern')} design. Perfect for {', '.join(keywords[:3])}."
     
     async def _generate_image_tags(self, features: Dict, keywords: List[str]) -> List[str]:
-        """Generate image tags for discovery"""
-        base_tags = [
+        """Generate image tags for discovery"""        base_tags = [
             features.get('style', 'professional'),
             features.get('mood', 'modern'),
             'high-quality',
@@ -500,8 +470,7 @@ class ImageProcessingEngine(BaseContentEngine):
         return list(set(base_tags + keywords[:7]))
     
     async def _generate_image_schema(self, features: Dict) -> Dict[str, Any]:
-        """Generate schema.org markup for image"""
-        return {
+        """Generate schema.org markup for image"""        return {
             "@context": "https://schema.org",
             "@type": "ImageObject",
             "name": f"{features.get('style')} Image Content",
@@ -514,29 +483,25 @@ class ImageProcessingEngine(BaseContentEngine):
         }
     
     async def _generate_seo_filename(self, features: Dict, keywords: List[str]) -> str:
-        """Generate SEO-friendly filename"""
-        style = features.get('style', 'professional')
+        """Generate SEO-friendly filename"""        style = features.get('style', 'professional')
         keyword = keywords[0] if keywords else 'image'
         timestamp = int(time.time())
         
         return f"{style}-{keyword}-{timestamp}.jpg"
     
     async def _generate_image_fingerprint(self, content: Any) -> str:
-        """Generate robust image fingerprint"""
-        content_str = str(content)
+        """Generate robust image fingerprint"""        content_str = str(content)
         timestamp = str(time.time())
         combined = f"{content_str}_{timestamp}_image"
         return hashlib.sha256(combined.encode()).hexdigest()
     
     async def _apply_digital_watermark(self, content: Any) -> Any:
-        """Apply invisible digital watermark"""
-        self.logger.info("Applying digital watermark...")
+        """Apply invisible digital watermark"""        self.logger.info("Applying digital watermark...")
         await asyncio.sleep(0.05)
         return f"watermarked_{content}"
     
     async def _check_image_copyright(self, content: Any) -> Dict[str, Any]:
-        """Check for potential copyright violations"""
-        await asyncio.sleep(0.15)
+        """Check for potential copyright violations"""        await asyncio.sleep(0.15)
         
         return {
             'clear': True,
@@ -547,11 +512,9 @@ class ImageProcessingEngine(BaseContentEngine):
         }
 
 class PhotoEnhancementEngine(BaseContentEngine):
-    """
-    Advanced photo enhancement engine for photographers and content creators
+    """    Advanced photo enhancement engine for photographers and content creators
     Handles professional-grade photo editing and enhancement
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__("photo_enhancer", config)
         self.enhancement_categories = [
@@ -560,8 +523,7 @@ class PhotoEnhancementEngine(BaseContentEngine):
         ]
         
     async def initialize(self) -> bool:
-        """Initialize photo enhancement engine"""
-        try:
+        """Initialize photo enhancement engine"""        try:
             self.logger.info("Initializing Photo Enhancement Engine...")
             
             # Load photo enhancement models
@@ -584,8 +546,7 @@ class PhotoEnhancementEngine(BaseContentEngine):
             return False
     
     async def process_content(self, content: Any, options: Optional[Dict] = None) -> ProcessingResult:
-        """Enhance photo with professional-grade processing"""
-        start_time = time.time()
+        """Enhance photo with professional-grade processing"""        start_time = time.time()
         options = options or {}
         content_id = options.get('content_id', f"photo_{int(time.time())}")
         
@@ -650,16 +611,13 @@ class PhotoEnhancementEngine(BaseContentEngine):
             )
     
     async def optimize_for_seo(self, content: Any, target_keywords: List[str]) -> Dict[str, Any]:
-        """Photo SEO is handled by the main image engine"""
-        return {}
+        """Photo SEO is handled by the main image engine"""        return {}
     
     async def protect_content(self, content: Any) -> Dict[str, Any]:
-        """Photo protection"""
-        return {'protected': True, 'professional_watermark': True}
+        """Photo protection"""        return {'protected': True, 'professional_watermark': True}
     
     async def _load_photo_models(self):
-        """Load photo enhancement models"""
-        self.logger.info("Loading photo enhancement models...")
+        """Load photo enhancement models"""        self.logger.info("Loading photo enhancement models...")
         await asyncio.sleep(0.3)
         
         self.photo_models = {
@@ -671,8 +629,7 @@ class PhotoEnhancementEngine(BaseContentEngine):
         }
     
     async def _init_raw_processing(self):
-        """Initialize RAW photo processing"""
-        self.logger.info("Initializing RAW processing...")
+        """Initialize RAW photo processing"""        self.logger.info("Initializing RAW processing...")
         await asyncio.sleep(0.15)
         
         self.raw_config = {
@@ -682,8 +639,7 @@ class PhotoEnhancementEngine(BaseContentEngine):
         }
     
     async def _load_enhancement_presets(self):
-        """Load enhancement presets"""
-        self.logger.info("Loading enhancement presets...")
+        """Load enhancement presets"""        self.logger.info("Loading enhancement presets...")
         await asyncio.sleep(0.1)
         
         self.presets = {
@@ -694,8 +650,7 @@ class PhotoEnhancementEngine(BaseContentEngine):
         }
     
     async def _analyze_photo_type(self, content: Any) -> Dict[str, Any]:
-        """Analyze photo type and characteristics"""
-        self.logger.info("Analyzing photo type...")
+        """Analyze photo type and characteristics"""        self.logger.info("Analyzing photo type...")
         await asyncio.sleep(0.2)
         
         return {
@@ -709,15 +664,13 @@ class PhotoEnhancementEngine(BaseContentEngine):
         }
     
     async def _apply_auto_enhancements(self, content: Any, analysis: Dict) -> Any:
-        """Apply automatic enhancements"""
-        self.logger.info("Applying automatic enhancements...")
+        """Apply automatic enhancements"""        self.logger.info("Applying automatic enhancements...")
         await asyncio.sleep(0.3)
         
         return f"auto_enhanced_{analysis['type']}_{content}"
     
     async def _apply_targeted_enhancements(self, content: Any, options: Dict) -> Any:
-        """Apply specific targeted enhancements"""
-        enhancements = options.get('enhancements', [])
+        """Apply specific targeted enhancements"""        enhancements = options.get('enhancements', [])
         
         if enhancements:
             self.logger.info(f"Applying targeted enhancements: {enhancements}")
@@ -727,30 +680,25 @@ class PhotoEnhancementEngine(BaseContentEngine):
         return content
     
     async def _apply_professional_finishing(self, content: Any, options: Dict) -> Any:
-        """Apply professional finishing touches"""
-        self.logger.info("Applying professional finishing...")
+        """Apply professional finishing touches"""        self.logger.info("Applying professional finishing...")
         await asyncio.sleep(0.15)
         
         return f"pro_finished_{content}"
     
     async def _evaluate_photo_quality(self, content: Any) -> float:
-        """Evaluate photo quality"""
-        return 0.94
+        """Evaluate photo quality"""        return 0.94
 
 class NFTGenerationEngine(BaseContentEngine):
-    """
-    NFT generation engine for creating blockchain-ready digital assets
+    """    NFT generation engine for creating blockchain-ready digital assets
     Handles NFT metadata, rarity generation, and blockchain preparation
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__("nft_generator", config)
         self.nft_standards = ['ERC-721', 'ERC-1155']
         self.blockchains = ['ethereum', 'polygon', 'binance_smart_chain']
         
     async def initialize(self) -> bool:
-        """Initialize NFT generation engine"""
-        try:
+        """Initialize NFT generation engine"""        try:
             self.logger.info("Initializing NFT Generation Engine...")
             
             # Load NFT generation models
@@ -773,8 +721,7 @@ class NFTGenerationEngine(BaseContentEngine):
             return False
     
     async def process_content(self, content: Any, options: Optional[Dict] = None) -> ProcessingResult:
-        """Generate NFT-ready content with metadata"""
-        start_time = time.time()
+        """Generate NFT-ready content with metadata"""        start_time = time.time()
         options = options or {}
         content_id = options.get('content_id', f"nft_{int(time.time())}")
         
@@ -840,24 +787,21 @@ class NFTGenerationEngine(BaseContentEngine):
             )
     
     async def optimize_for_seo(self, content: Any, target_keywords: List[str]) -> Dict[str, Any]:
-        """NFT SEO optimization"""
-        return {
+        """NFT SEO optimization"""        return {
             'nft_optimized': True,
             'marketplace_ready': True,
             'discoverable': True
         }
     
     async def protect_content(self, content: Any) -> Dict[str, Any]:
-        """NFT content protection through blockchain"""
-        return {
+        """NFT content protection through blockchain"""        return {
             'blockchain_protected': True,
             'immutable_record': True,
             'ownership_verified': True
         }
     
     async def _load_nft_models(self):
-        """Load NFT generation models"""
-        self.logger.info("Loading NFT models...")
+        """Load NFT generation models"""        self.logger.info("Loading NFT models...")
         await asyncio.sleep(0.2)
         
         self.nft_models = {
@@ -868,8 +812,7 @@ class NFTGenerationEngine(BaseContentEngine):
         }
     
     async def _init_blockchain_utils(self):
-        """Initialize blockchain utilities"""
-        self.logger.info("Initializing blockchain utilities...")
+        """Initialize blockchain utilities"""        self.logger.info("Initializing blockchain utilities...")
         await asyncio.sleep(0.1)
         
         self.blockchain_config = {
@@ -880,8 +823,7 @@ class NFTGenerationEngine(BaseContentEngine):
         }
     
     async def _load_rarity_algorithms(self):
-        """Load rarity calculation algorithms"""
-        self.logger.info("Loading rarity algorithms...")
+        """Load rarity calculation algorithms"""        self.logger.info("Loading rarity algorithms...")
         await asyncio.sleep(0.05)
         
         self.rarity_weights = {
@@ -894,8 +836,7 @@ class NFTGenerationEngine(BaseContentEngine):
         }
     
     async def _generate_nft_artwork(self, content: Any, options: Dict) -> Any:
-        """Generate NFT artwork"""
-        self.logger.info("Generating NFT artwork...")
+        """Generate NFT artwork"""        self.logger.info("Generating NFT artwork...")
         await asyncio.sleep(0.4)
         
         style = options.get('style', 'modern')
@@ -904,8 +845,7 @@ class NFTGenerationEngine(BaseContentEngine):
         return f"nft_artwork_{style}_{rarity_tier}_{content}"
     
     async def _create_nft_metadata(self, artwork: Any, options: Dict) -> Dict[str, Any]:
-        """Create comprehensive NFT metadata"""
-        self.logger.info("Creating NFT metadata...")
+        """Create comprehensive NFT metadata"""        self.logger.info("Creating NFT metadata...")
         await asyncio.sleep(0.2)
         
         return {
@@ -926,8 +866,7 @@ class NFTGenerationEngine(BaseContentEngine):
         }
     
     async def _calculate_rarity(self, metadata: Dict) -> Dict[str, Any]:
-        """Calculate NFT rarity score"""
-        self.logger.info("Calculating rarity...")
+        """Calculate NFT rarity score"""        self.logger.info("Calculating rarity...")
         await asyncio.sleep(0.1)
         
         # Simulate rarity calculation
@@ -950,8 +889,7 @@ class NFTGenerationEngine(BaseContentEngine):
         }
     
     async def _prepare_for_blockchain(self, artwork: Any, metadata: Dict, options: Dict) -> Any:
-        """Prepare NFT for blockchain deployment"""
-        self.logger.info("Preparing for blockchain...")
+        """Prepare NFT for blockchain deployment"""        self.logger.info("Preparing for blockchain...")
         await asyncio.sleep(0.2)
         
         blockchain = options.get('blockchain', 'ethereum')
@@ -967,8 +905,7 @@ class NFTGenerationEngine(BaseContentEngine):
         }
     
     async def _evaluate_nft_quality(self, nft_data: Dict, rarity_data: Dict) -> float:
-        """Evaluate NFT quality score"""
-        base_score = 0.8
+        """Evaluate NFT quality score"""        base_score = 0.8
         
         # Adjust based on rarity
         if rarity_data['tier'] == 'legendary':

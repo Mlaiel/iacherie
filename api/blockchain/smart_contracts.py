@@ -1,13 +1,10 @@
-"""
-Advanced Smart Contract Management for IA Influencer Agent Platform
+"""Advanced Smart Contract Management for IA Influencer Agent Platform
 Enterprise-grade blockchain smart contract deployment and interaction
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timezone
 from typing import Dict, List, Optional, Any, Tuple
@@ -23,8 +20,7 @@ from ..security.encryption import EncryptionManager
 
 
 class ContractType(Enum):
-    """Smart contract types"""
-    COPYRIGHT_PROTECTION = "copyright_protection"
+    """Smart contract types"""    COPYRIGHT_PROTECTION = "copyright_protection"
     DIGITAL_RIGHTS_MANAGEMENT = "digital_rights_management"
     REVENUE_SHARING = "revenue_sharing"
     COLLABORATION_AGREEMENT = "collaboration_agreement"
@@ -37,8 +33,7 @@ class ContractType(Enum):
 
 
 class ContractStatus(Enum):
-    """Smart contract status"""
-    DEPLOYING = "deploying"
+    """Smart contract status"""    DEPLOYING = "deploying"
     ACTIVE = "active"
     PAUSED = "paused"
     TERMINATED = "terminated"
@@ -48,8 +43,7 @@ class ContractStatus(Enum):
 
 @dataclass
 class SmartContract:
-    """Smart contract representation"""
-    contract_id: str
+    """Smart contract representation"""    contract_id: str
     contract_type: ContractType
     contract_address: str
     deployment_tx_id: str
@@ -66,8 +60,7 @@ class SmartContract:
 
 @dataclass
 class ContractInteraction:
-    """Contract interaction record"""
-    interaction_id: str
+    """Contract interaction record"""    interaction_id: str
     contract_address: str
     function_name: str
     parameters: Dict[str, Any]
@@ -82,11 +75,9 @@ class ContractInteraction:
 
 
 class SmartContractManager:
-    """
-    Advanced Smart Contract Management System
+    """    Advanced Smart Contract Management System
     Handles deployment, interaction, and lifecycle management of blockchain smart contracts
-    """
-    
+    """    
     def __init__(self, encryption_manager: EncryptionManager):
         self.encryption_manager = encryption_manager
         self.logger = logging.getLogger(__name__)
@@ -108,8 +99,7 @@ class SmartContractManager:
     
     async def deploy_copyright_contract(self, asset_id: str, creator_id: str,
                                       content_hash: str, protection_level: str) -> str:
-        """
-        Deploy copyright protection smart contract
+        """        Deploy copyright protection smart contract
         
         Args:
             asset_id: Asset identifier
@@ -119,8 +109,7 @@ class SmartContractManager:
             
         Returns:
             str: Contract address
-        """
-        try:
+        """        try:
             contract_params = {
                 'asset_id': asset_id,
                 'creator_id': creator_id,
@@ -146,8 +135,7 @@ class SmartContractManager:
     
     async def deploy_collaboration_contract(self, proposal_id: str, initiator: str,
                                           target: str, terms: Dict[str, Any]) -> str:
-        """Deploy collaboration agreement smart contract"""
-        try:
+        """Deploy collaboration agreement smart contract"""        try:
             contract_params = {
                 'proposal_id': proposal_id,
                 'parties': [initiator, target],
@@ -172,8 +160,7 @@ class SmartContractManager:
     
     async def _deploy_contract(self, contract_type: ContractType, creator_id: str,
                              parameters: Dict[str, Any]) -> str:
-        """Internal contract deployment method"""
-        contract_id = f"contract_{int(datetime.now().timestamp())}_{uuid.uuid4().hex[:8]}"
+        """Internal contract deployment method"""        contract_id = f"contract_{int(datetime.now().timestamp())}_{uuid.uuid4().hex[:8]}"
         contract_address = f"0x{hashlib.sha256(contract_id.encode()).hexdigest()[:40]}"
         
         contract = SmartContract(
@@ -196,8 +183,7 @@ class SmartContractManager:
         return contract_address
     
     def _load_contract_templates(self) -> Dict[str, str]:
-        """Load smart contract templates"""
-        return {
+        """Load smart contract templates"""        return {
             'copyright_protection': "pragma solidity ^0.8.0; contract CopyrightProtection { }",
             'collaboration_agreement': "pragma solidity ^0.8.0; contract CollaborationAgreement { }"
         }
@@ -209,8 +195,7 @@ class ContractManager:
         self.deployed_contracts = {}
 
     def prepare_rights_contract(self, creator_info: Dict) -> Dict:
-        """Prepare smart contract for content rights management."""
-        contract_template = {
+        """Prepare smart contract for content rights management."""        contract_template = {
             "contract_name": f"ContentRights_{creator_info.get('name', 'Creator').replace(' ', '')}",
             "creator_address": creator_info.get("wallet_address"),
             "contract_type": "ERC721_Rights",
@@ -231,8 +216,7 @@ class ContractManager:
         return contract_template
 
     def deploy_contract(self, contract_config: Dict) -> Dict:
-        """Deploy smart contract (simulation)."""
-        # Generate mock contract address
+        """Deploy smart contract (simulation)."""        # Generate mock contract address
         contract_hash = hashlib.sha256(
             f"{contract_config['contract_name']}{datetime.utcnow()}".encode()
         ).hexdigest()
@@ -260,8 +244,7 @@ class ContractManager:
         return deployment_result
 
     def create_licensing_contract(self, content_info: Dict, license_terms: Dict) -> Dict:
-        """Create smart contract for content licensing."""
-        license_contract = {
+        """Create smart contract for content licensing."""        license_contract = {
             "contract_type": "ContentLicense",
             "content_id": content_info.get("id"),
             "content_hash": content_info.get("content_hash"),
@@ -282,8 +265,7 @@ class ContractManager:
         return license_contract
 
     def setup_royalty_splitter(self, stakeholders: List[Dict]) -> Dict:
-        """Setup smart contract for automatic royalty splitting."""
-        total_percent = sum(s.get("percentage", 0) for s in stakeholders)
+        """Setup smart contract for automatic royalty splitting."""        total_percent = sum(s.get("percentage", 0) for s in stakeholders)
         if total_percent != 100:
             raise ValueError("Stakeholder percentages must sum to 100")
         
@@ -303,8 +285,7 @@ class ContractManager:
         return splitter_config
 
     def create_collaboration_contract(self, collaborators: List[Dict], project_terms: Dict) -> Dict:
-        """Create smart contract for collaboration agreements."""
-        collaboration_contract = {
+        """Create smart contract for collaboration agreements."""        collaboration_contract = {
             "contract_type": "CollaborationAgreement",
             "collaborators": collaborators,
             "project_terms": project_terms,
@@ -335,8 +316,7 @@ class ContractManager:
         return collaboration_contract
 
     def monitor_contract_events(self, contract_address: str) -> Dict:
-        """Monitor smart contract events and activities."""
-        # Mock event monitoring
+        """Monitor smart contract events and activities."""        # Mock event monitoring
         events = [
             {
                 "event_type": "RightsAnchored",
@@ -363,8 +343,7 @@ class ContractManager:
         }
 
     def upgrade_contract(self, contract_address: str, new_features: List[str]) -> Dict:
-        """Upgrade contract functionality (proxy pattern)."""
-        upgrade_result = {
+        """Upgrade contract functionality (proxy pattern)."""        upgrade_result = {
             "contract_address": contract_address,
             "upgrade_type": "proxy_implementation",
             "new_features": new_features,
@@ -377,8 +356,7 @@ class ContractManager:
         return upgrade_result
 
     def estimate_contract_costs(self, contract_type: str, network: str = "ethereum") -> Dict:
-        """Estimate costs for contract deployment and operations."""
-        base_costs = {
+        """Estimate costs for contract deployment and operations."""        base_costs = {
             "ethereum": {"deployment": 0.05, "transaction": 0.002, "gas_price_gwei": 20},
             "polygon": {"deployment": 0.01, "transaction": 0.0001, "gas_price_gwei": 30},
             "bsc": {"deployment": 0.008, "transaction": 0.0002, "gas_price_gwei": 5}

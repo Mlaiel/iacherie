@@ -21,8 +21,7 @@ will be prosecuted to the FULL EXTENT OF THE LAW under German and
 International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""
-# Platform crawlers
+"""# Platform crawlers
 from .platform_crawler import PlatformCrawler
 from .youtube_crawler import YouTubeCrawler
 from .instagram_crawler import InstagramCrawler

@@ -1,5 +1,4 @@
-"""
-Performance Optimizer - Advanced Content & Campaign Performance Optimization System
+"""Performance Optimizer - Advanced Content & Campaign Performance Optimization System
 
 Enterprise-grade performance optimization engine providing comprehensive analysis
 and optimization strategies for content performance, campaign effectiveness,
@@ -12,9 +11,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This performance optimization system and its algorithms are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import pandas as pd
@@ -42,8 +39,7 @@ from ...utils.cache_manager import CacheManager
 logger = logging.getLogger(__name__)
 
 class OptimizationType(Enum):
-    """Types of optimization"""
-    CONTENT_PERFORMANCE = "content_performance"
+    """Types of optimization"""    CONTENT_PERFORMANCE = "content_performance"
     ENGAGEMENT_OPTIMIZATION = "engagement_optimization"
     POSTING_SCHEDULE = "posting_schedule"
     CONTENT_FORMAT = "content_format"
@@ -55,16 +51,14 @@ class OptimizationType(Enum):
     VIRAL_OPTIMIZATION = "viral_optimization"
 
 class OptimizationPriority(Enum):
-    """Optimization priority levels"""
-    IMMEDIATE = "immediate"      # Implement within 24 hours
+    """Optimization priority levels"""    IMMEDIATE = "immediate"      # Implement within 24 hours
     HIGH = "high"               # Implement within 1 week
     MEDIUM = "medium"           # Implement within 1 month
     LOW = "low"                 # Implement when resources allow
     MAINTENANCE = "maintenance"  # Ongoing optimization
 
 class MetricImpactLevel(Enum):
-    """Expected impact levels on metrics"""
-    DRAMATIC = "dramatic"        # 50%+ improvement
+    """Expected impact levels on metrics"""    DRAMATIC = "dramatic"        # 50%+ improvement
     SIGNIFICANT = "significant"  # 20-50% improvement
     MODERATE = "moderate"        # 10-20% improvement
     MINOR = "minor"             # 5-10% improvement
@@ -72,8 +66,7 @@ class MetricImpactLevel(Enum):
 
 @dataclass
 class OptimizationRecommendation:
-    """Performance optimization recommendation structure"""
-    recommendation_id: str = field(default_factory=lambda: f"opt_{int(datetime.now().timestamp())}")
+    """Performance optimization recommendation structure"""    recommendation_id: str = field(default_factory=lambda: f"opt_{int(datetime.now().timestamp())}")
     title: str = ""
     description: str = ""
     optimization_type: OptimizationType = OptimizationType.CONTENT_PERFORMANCE
@@ -97,8 +90,7 @@ class OptimizationRecommendation:
 
 @dataclass
 class PerformanceAnalysis:
-    """Comprehensive performance analysis results"""
-    analysis_id: str = field(default_factory=lambda: f"analysis_{int(datetime.now().timestamp())}")
+    """Comprehensive performance analysis results"""    analysis_id: str = field(default_factory=lambda: f"analysis_{int(datetime.now().timestamp())}")
     analysis_period: Dict[str, datetime] = field(default_factory=dict)
     overall_performance_score: float = 0.0  # 0.0-1.0
     performance_trends: Dict[str, List[float]] = field(default_factory=dict)
@@ -117,8 +109,7 @@ class PerformanceAnalysis:
 
 @dataclass
 class A_BTestConfiguration:
-    """A/B test configuration for optimization validation"""
-    test_id: str = field(default_factory=lambda: f"abtest_{int(datetime.now().timestamp())}")
+    """A/B test configuration for optimization validation"""    test_id: str = field(default_factory=lambda: f"abtest_{int(datetime.now().timestamp())}")
     test_name: str = ""
     hypothesis: str = ""
     test_type: str = ""  # content_format, posting_time, thumbnail, title, etc.
@@ -138,8 +129,7 @@ class A_BTestConfiguration:
     implementation_recommendation: str = ""
 
 class PerformanceOptimizer:
-    """
-    Advanced Performance Optimization Engine for IA Influencer Platform
+    """    Advanced Performance Optimization Engine for IA Influencer Platform
     
     Provides comprehensive performance analysis and optimization capabilities:
     
@@ -166,11 +156,9 @@ class PerformanceOptimizer:
     - Conversion funnel optimization for maximum monetization efficiency
     - Pricing strategy optimization based on audience behavior analytics
     - ROI maximization through resource allocation optimization
-    """
-    
+    """    
     def __init__(self, cache_manager: CacheManager = None):
-        """Initialize the performance optimizer"""
-        self.cache_manager = cache_manager or CacheManager("performance_optimizer")
+        """Initialize the performance optimizer"""        self.cache_manager = cache_manager or CacheManager("performance_optimizer")
         
         # Optimization configuration
         self.optimization_config = {
@@ -254,8 +242,7 @@ class PerformanceOptimizer:
     async def analyze_comprehensive_performance(self, 
                                               creator_data: Dict[str, Any],
                                               analysis_period_days: int = None) -> PerformanceAnalysis:
-        """
-        Perform comprehensive performance analysis
+        """        Perform comprehensive performance analysis
         
         Args:
             creator_data: Creator profile and historical performance data
@@ -263,8 +250,7 @@ class PerformanceOptimizer:
             
         Returns:
             PerformanceAnalysis: Complete performance analysis results
-        """
-        try:
+        """        try:
             period_days = analysis_period_days or self.optimization_config['analysis_period_days']
             
             # Define analysis period
@@ -331,8 +317,7 @@ class PerformanceOptimizer:
     async def generate_optimization_recommendations(self, 
                                                    performance_analysis: PerformanceAnalysis,
                                                    creator_data: Dict[str, Any]) -> List[OptimizationRecommendation]:
-        """
-        Generate actionable optimization recommendations based on performance analysis
+        """        Generate actionable optimization recommendations based on performance analysis
         
         Args:
             performance_analysis: Results from comprehensive performance analysis
@@ -340,8 +325,7 @@ class PerformanceOptimizer:
             
         Returns:
             List[OptimizationRecommendation]: Prioritized optimization recommendations
-        """
-        try:
+        """        try:
             recommendations = []
             
             # Content optimization recommendations
@@ -428,8 +412,7 @@ class PerformanceOptimizer:
     async def optimize_posting_schedule(self, 
                                       creator_data: Dict[str, Any],
                                       historical_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """
-        Optimize posting schedule based on audience engagement patterns
+        """        Optimize posting schedule based on audience engagement patterns
         
         Args:
             creator_data: Creator profile and current posting schedule
@@ -437,8 +420,7 @@ class PerformanceOptimizer:
             
         Returns:
             Dict[str, Any]: Optimized posting schedule recommendations
-        """
-        try:
+        """        try:
             # Analyze current posting patterns
             current_schedule = creator_data.get('posting_schedule', {})
             platforms = creator_data.get('active_platforms', [])
@@ -522,8 +504,7 @@ class PerformanceOptimizer:
                                      test_hypothesis: str,
                                      test_parameters: Dict[str, Any],
                                      creator_data: Dict[str, Any]) -> A_BTestConfiguration:
-        """
-        Create A/B test framework for optimization validation
+        """        Create A/B test framework for optimization validation
         
         Args:
             test_hypothesis: The hypothesis being tested
@@ -532,8 +513,7 @@ class PerformanceOptimizer:
             
         Returns:
             A_BTestConfiguration: Complete A/B test configuration
-        """
-        try:
+        """        try:
             test_config = A_BTestConfiguration(
                 test_name=test_parameters.get('test_name', 'Performance Optimization Test'),
                 hypothesis=test_hypothesis,
@@ -607,8 +587,7 @@ class PerformanceOptimizer:
     # Helper methods for performance analysis
 
     async def _calculate_overall_performance_score(self, creator_data: Dict[str, Any]) -> float:
-        """Calculate comprehensive performance score"""
-        
+        """Calculate comprehensive performance score"""        
         # Get key metrics
         engagement_rate = creator_data.get('engagement_rate', 0.02)
         growth_rate = creator_data.get('follower_growth_rate', 0.05)
@@ -639,8 +618,7 @@ class PerformanceOptimizer:
         return min(max(overall_score, 0.0), 1.0)
 
     async def _analyze_performance_trends(self, creator_data: Dict[str, Any], period_days: int) -> Dict[str, List[float]]:
-        """Analyze performance trends over time"""
-        
+        """Analyze performance trends over time"""        
         historical_metrics = creator_data.get('historical_metrics', {})
         trends = {}
         
@@ -674,8 +652,7 @@ class PerformanceOptimizer:
     async def _generate_content_optimization_recommendations(self, 
                                                            analysis: PerformanceAnalysis,
                                                            creator_data: Dict[str, Any]) -> List[OptimizationRecommendation]:
-        """Generate content-specific optimization recommendations"""
-        
+        """Generate content-specific optimization recommendations"""        
         recommendations = []
         
         # Analyze content type performance
@@ -739,8 +716,7 @@ class PerformanceOptimizer:
         return recommendations
 
     async def _analyze_optimal_content_length(self, creator_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze optimal content length for the creator"""
-        
+        """Analyze optimal content length for the creator"""        
         content_history = creator_data.get('content_history', [])
         if len(content_history) < 20:  # Need sufficient data
             return {'recommendation': 'no_change', 'confidence': 0.3}
@@ -786,8 +762,7 @@ class PerformanceOptimizer:
         return {'recommendation': 'no_change', 'confidence': 0.8}
 
     def _categorize_content_length(self, content: Dict[str, Any]) -> str:
-        """Categorize content by length"""
-        
+        """Categorize content by length"""        
         content_type = content.get('type', 'post')
         
         if content_type == 'video':
@@ -819,14 +794,12 @@ class PerformanceOptimizer:
 
 
 class ContentPerformanceAnalyzer:
-    """Specialized content performance analyzer"""
-    
+    """Specialized content performance analyzer"""    
     def __init__(self, performance_optimizer: PerformanceOptimizer):
         self.optimizer = performance_optimizer
     
     async def analyze_viral_content_patterns(self, content_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze patterns in viral content"""
-        return {
+        """Analyze patterns in viral content"""        return {
             'viral_triggers': ['trending_hashtag', 'emotional_hook', 'timing'],
             'common_elements': ['strong_opening', 'clear_cta', 'shareable_format'],
             'optimal_length': 45,  # seconds for video
@@ -834,14 +807,12 @@ class ContentPerformanceAnalyzer:
         }
 
 class EngagementOptimizationEngine:
-    """Specialized engagement optimization engine"""
-    
+    """Specialized engagement optimization engine"""    
     def __init__(self, performance_optimizer: PerformanceOptimizer):
         self.optimizer = performance_optimizer
     
     async def optimize_community_engagement(self, community_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize community engagement strategies"""
-        return {
+        """Optimize community engagement strategies"""        return {
             'response_time_optimization': 'within_2_hours',
             'community_events': ['weekly_qa', 'monthly_live_stream'],
             'engagement_triggers': ['questions', 'polls', 'challenges'],
@@ -849,14 +820,12 @@ class EngagementOptimizationEngine:
         }
 
 class ConversionOptimizationSpecialist:
-    """Specialized conversion optimization specialist"""
-    
+    """Specialized conversion optimization specialist"""    
     def __init__(self, performance_optimizer: PerformanceOptimizer):
         self.optimizer = performance_optimizer
     
     async def optimize_conversion_funnel(self, funnel_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize conversion funnel performance"""
-        return {
+        """Optimize conversion funnel performance"""        return {
             'awareness_stage': {
                 'optimization': 'improve_hook_quality',
                 'target_metric': 'click_through_rate',

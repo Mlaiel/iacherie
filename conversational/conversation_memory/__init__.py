@@ -39,8 +39,7 @@ Project Team Specialties:
 • DevOps Engineer: Infrastructure automation & deployment
 • IA Prompt Engineer: Advanced prompt engineering & optimization
 ---
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 import logging
 
 from .managers import (

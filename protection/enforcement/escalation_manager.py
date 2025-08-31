@@ -1,9 +1,6 @@
-"""
-Case Escalation Management System
+"""Case Escalation Management System
 Professional escalation workflow for unresolved copyright enforcement cases
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple, Callable
 from dataclasses import dataclass, field
@@ -20,8 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 class EscalationLevel(Enum):
-    """Escalation levels for enforcement cases"""
-    INITIAL = "initial"              # First enforcement action
+    """Escalation levels for enforcement cases"""    INITIAL = "initial"              # First enforcement action
     AUTOMATED_RETRY = "automated_retry"  # Automated follow-up
     MANUAL_REVIEW = "manual_review"      # Human review required
     LEGAL_NOTICE = "legal_notice"        # Legal notice sent
@@ -32,8 +28,7 @@ class EscalationLevel(Enum):
 
 
 class EscalationTrigger(Enum):
-    """Triggers that cause case escalation"""
-    TIME_EXPIRED = "time_expired"
+    """Triggers that cause case escalation"""    TIME_EXPIRED = "time_expired"
     PLATFORM_REJECTION = "platform_rejection"
     COUNTER_NOTICE = "counter_notice"
     REPEAT_INFRINGEMENT = "repeat_infringement"
@@ -45,8 +40,7 @@ class EscalationTrigger(Enum):
 
 
 class EscalationStatus(Enum):
-    """Status of escalation processes"""
-    PENDING = "pending"
+    """Status of escalation processes"""    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     PAUSED = "paused"
@@ -55,8 +49,7 @@ class EscalationStatus(Enum):
 
 
 class EscalationOutcome(Enum):
-    """Possible outcomes of escalation"""
-    CONTENT_REMOVED = "content_removed"
+    """Possible outcomes of escalation"""    CONTENT_REMOVED = "content_removed"
     REVENUE_CLAIMED = "revenue_claimed"
     SETTLEMENT_REACHED = "settlement_reached"
     CASE_DISMISSED = "case_dismissed"
@@ -68,8 +61,7 @@ class EscalationOutcome(Enum):
 
 @dataclass
 class EscalationRule:
-    """Rule defining when and how to escalate cases"""
-    id: str
+    """Rule defining when and how to escalate cases"""    id: str
     name: str
     description: str
     enabled: bool = True
@@ -102,8 +94,7 @@ class EscalationRule:
 
 @dataclass
 class EscalationAction:
-    """Action taken during escalation"""
-    id: str
+    """Action taken during escalation"""    id: str
     case_id: str
     escalation_id: str
     action_type: str
@@ -127,8 +118,7 @@ class EscalationAction:
 
 @dataclass
 class EscalationHistory:
-    """Complete escalation history for a case"""
-    case_id: str
+    """Complete escalation history for a case"""    case_id: str
     escalations: List['CaseEscalation'] = field(default_factory=list)
     total_escalations: int = 0
     current_level: EscalationLevel = EscalationLevel.INITIAL
@@ -137,8 +127,7 @@ class EscalationHistory:
     total_cost: float = 0.0
     
     def add_escalation(self, escalation: 'CaseEscalation'):
-        """Add escalation to history"""
-        self.escalations.append(escalation)
+        """Add escalation to history"""        self.escalations.append(escalation)
         self.total_escalations = len(self.escalations)
         
         if escalation.to_level.value > self.highest_level_reached.value:
@@ -147,8 +136,7 @@ class EscalationHistory:
         self.current_level = escalation.to_level
     
     def calculate_totals(self):
-        """Calculate total time and cost"""
-        total_time = timedelta()
+        """Calculate total time and cost"""        total_time = timedelta()
         total_cost = 0.0
         
         for escalation in self.escalations:
@@ -164,8 +152,7 @@ class EscalationHistory:
 
 @dataclass
 class CaseEscalation:
-    """Individual case escalation instance"""
-    id: str
+    """Individual case escalation instance"""    id: str
     case_id: str
     triggered_by: EscalationTrigger
     trigger_data: Dict[str, Any] = field(default_factory=dict)
@@ -196,24 +183,20 @@ class CaseEscalation:
     evidence_updates: List[str] = field(default_factory=list)
     
     def add_action(self, action: EscalationAction):
-        """Add action to escalation"""
-        self.actions.append(action)
+        """Add action to escalation"""        self.actions.append(action)
     
     def add_note(self, note: str):
-        """Add note to escalation"""
-        timestamp = datetime.utcnow().isoformat()
+        """Add note to escalation"""        timestamp = datetime.utcnow().isoformat()
         self.notes.append(f"{timestamp}: {note}")
     
     def calculate_duration(self) -> Optional[timedelta]:
-        """Calculate escalation duration"""
-        if self.completed_at and self.started_at:
+        """Calculate escalation duration"""        if self.completed_at and self.started_at:
             return self.completed_at - self.started_at
         return None
 
 
 class AutomatedEscalationEngine:
-    """Engine for automated case escalation"""
-    
+    """Engine for automated case escalation"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.escalation_rules: Dict[str, EscalationRule] = {}
@@ -241,8 +224,7 @@ class AutomatedEscalationEngine:
         logger.info("Automated escalation engine initialized")
     
     def _setup_default_rules(self):
-        """Setup default escalation rules"""
-        default_rules = [
+        """Setup default escalation rules"""        default_rules = [
             EscalationRule(
                 id="time_based_retry",
                 name="Time-Based Automated Retry",
@@ -320,8 +302,7 @@ class AutomatedEscalationEngine:
         case_id: str,
         case_data: Dict[str, Any]
     ) -> List[EscalationRule]:
-        """Evaluate if case should be escalated and return applicable rules"""
-        try:
+        """Evaluate if case should be escalated and return applicable rules"""        try:
             applicable_rules = []
             current_level = EscalationLevel(case_data.get('current_escalation_level', 'initial'))
             
@@ -351,8 +332,7 @@ class AutomatedEscalationEngine:
         rule: EscalationRule,
         case_data: Dict[str, Any]
     ) -> bool:
-        """Check if trigger conditions are met"""
-        try:
+        """Check if trigger conditions are met"""        try:
             trigger = rule.trigger_type
             
             if trigger == EscalationTrigger.TIME_EXPIRED:
@@ -398,8 +378,7 @@ class AutomatedEscalationEngine:
             return False
     
     async def _get_previous_cases_for_infringer(self, infringer_id: str) -> List[str]:
-        """Get previous cases for the same infringer"""
-        try:
+        """Get previous cases for the same infringer"""        try:
             # In real implementation, would query database
             # For now, simulate with empty list
             return []
@@ -413,8 +392,7 @@ class AutomatedEscalationEngine:
         rule: EscalationRule,
         trigger_data: Optional[Dict[str, Any]] = None
     ) -> CaseEscalation:
-        """Escalate case according to rule"""
-        try:
+        """Escalate case according to rule"""        try:
             logger.info(f"Escalating case {case_id} from {rule.from_level.value} to {rule.to_level.value}")
             
             # Create escalation
@@ -463,8 +441,7 @@ class AutomatedEscalationEngine:
             raise
     
     def _assign_escalation_handler(self, level: EscalationLevel) -> Optional[str]:
-        """Assign handler based on escalation level"""
-        handlers = {
+        """Assign handler based on escalation level"""        handlers = {
             EscalationLevel.AUTOMATED_RETRY: "automated_system",
             EscalationLevel.MANUAL_REVIEW: "human_reviewer",
             EscalationLevel.LEGAL_NOTICE: "legal_specialist",
@@ -477,8 +454,7 @@ class AutomatedEscalationEngine:
         return handlers.get(level)
     
     def _calculate_deadline(self, level: EscalationLevel) -> timedelta:
-        """Calculate deadline based on escalation level"""
-        deadlines = {
+        """Calculate deadline based on escalation level"""        deadlines = {
             EscalationLevel.AUTOMATED_RETRY: timedelta(hours=6),
             EscalationLevel.MANUAL_REVIEW: timedelta(days=2),
             EscalationLevel.LEGAL_NOTICE: timedelta(days=5),
@@ -495,8 +471,7 @@ class AutomatedEscalationEngine:
         escalation: CaseEscalation,
         actions: List[str]
     ):
-        """Execute automated actions for escalation"""
-        try:
+        """Execute automated actions for escalation"""        try:
             for action_type in actions:
                 action_id = f"ACT-{escalation.id}-{len(escalation.actions)}"
                 
@@ -537,8 +512,7 @@ class AutomatedEscalationEngine:
             logger.error(f"Error executing automated actions: {e}")
     
     async def _retry_platform_action(self, case_id: str) -> bool:
-        """Retry platform enforcement action"""
-        try:
+        """Retry platform enforcement action"""        try:
             # In real implementation, would integrate with platform handlers
             logger.info(f"Retrying platform action for case {case_id}")
             return True
@@ -547,8 +521,7 @@ class AutomatedEscalationEngine:
             return False
     
     async def _collect_additional_evidence(self, case_id: str) -> bool:
-        """Collect additional evidence for case"""
-        try:
+        """Collect additional evidence for case"""        try:
             # In real implementation, would integrate with evidence collector
             logger.info(f"Collecting additional evidence for case {case_id}")
             return True
@@ -557,8 +530,7 @@ class AutomatedEscalationEngine:
             return False
     
     async def _generate_legal_notice(self, case_id: str) -> bool:
-        """Generate legal notice for case"""
-        try:
+        """Generate legal notice for case"""        try:
             # In real implementation, would integrate with legal document generator
             logger.info(f"Generating legal notice for case {case_id}")
             return True
@@ -567,8 +539,7 @@ class AutomatedEscalationEngine:
             return False
     
     async def _collect_damages_evidence(self, case_id: str) -> bool:
-        """Collect evidence of damages"""
-        try:
+        """Collect evidence of damages"""        try:
             # In real implementation, would calculate and document damages
             logger.info(f"Collecting damages evidence for case {case_id}")
             return True
@@ -581,8 +552,7 @@ class AutomatedEscalationEngine:
         escalation: CaseEscalation,
         recipients: List[str]
     ):
-        """Send notifications about escalation"""
-        try:
+        """Send notifications about escalation"""        try:
             for recipient in recipients:
                 # In real implementation, would send actual notifications
                 logger.info(f"Sending escalation notification to {recipient} for case {escalation.case_id}")
@@ -596,8 +566,7 @@ class AutomatedEscalationEngine:
         approver: str,
         notes: Optional[str] = None
     ) -> bool:
-        """Approve manual escalation"""
-        try:
+        """Approve manual escalation"""        try:
             escalation = self.active_escalations.get(escalation_id)
             if not escalation:
                 logger.error(f"Escalation not found: {escalation_id}")
@@ -629,8 +598,7 @@ class AutomatedEscalationEngine:
         rejector: str,
         reason: str
     ) -> bool:
-        """Reject manual escalation"""
-        try:
+        """Reject manual escalation"""        try:
             escalation = self.active_escalations.get(escalation_id)
             if not escalation:
                 logger.error(f"Escalation not found: {escalation_id}")
@@ -658,8 +626,7 @@ class AutomatedEscalationEngine:
         outcome: EscalationOutcome,
         notes: Optional[str] = None
     ) -> bool:
-        """Mark escalation as completed"""
-        try:
+        """Mark escalation as completed"""        try:
             escalation = self.active_escalations.get(escalation_id)
             if not escalation:
                 logger.error(f"Escalation not found: {escalation_id}")
@@ -693,8 +660,7 @@ class AutomatedEscalationEngine:
             return False
     
     async def get_escalation_status(self, escalation_id: str) -> Optional[Dict[str, Any]]:
-        """Get detailed escalation status"""
-        try:
+        """Get detailed escalation status"""        try:
             escalation = self.active_escalations.get(escalation_id)
             if not escalation:
                 # Check completed escalations in history
@@ -736,12 +702,10 @@ class AutomatedEscalationEngine:
             return None
     
     async def get_case_escalation_history(self, case_id: str) -> Optional[EscalationHistory]:
-        """Get complete escalation history for case"""
-        return self.escalation_history.get(case_id)
+        """Get complete escalation history for case"""        return self.escalation_history.get(case_id)
     
     async def monitor_escalations(self):
-        """Monitor active escalations for deadlines and status updates"""
-        try:
+        """Monitor active escalations for deadlines and status updates"""        try:
             current_time = datetime.utcnow()
             overdue_escalations = []
             
@@ -774,8 +738,7 @@ class AutomatedEscalationEngine:
             logger.error(f"Error monitoring escalations: {e}")
     
     async def _handle_overdue_escalation(self, escalation: CaseEscalation):
-        """Handle overdue escalation"""
-        try:
+        """Handle overdue escalation"""        try:
             # Send urgent notifications
             await self._send_escalation_notifications(
                 escalation,
@@ -793,8 +756,7 @@ class AutomatedEscalationEngine:
             logger.error(f"Error handling overdue escalation: {e}")
     
     def _get_next_escalation_level(self, current_level: EscalationLevel) -> Optional[EscalationLevel]:
-        """Get next escalation level"""
-        level_order = [
+        """Get next escalation level"""        level_order = [
             EscalationLevel.INITIAL,
             EscalationLevel.AUTOMATED_RETRY,
             EscalationLevel.MANUAL_REVIEW,
@@ -815,8 +777,7 @@ class AutomatedEscalationEngine:
         return None
     
     async def get_escalation_statistics(self) -> Dict[str, Any]:
-        """Get escalation engine statistics"""
-        try:
+        """Get escalation engine statistics"""        try:
             active_count = len(self.active_escalations)
             total_cases = len(self.escalation_history)
             
@@ -868,8 +829,7 @@ class AutomatedEscalationEngine:
             return {}
     
     async def shutdown(self):
-        """Shutdown escalation engine"""
-        try:
+        """Shutdown escalation engine"""        try:
             # Save state of active escalations
             # In real implementation, would persist to database
             
@@ -889,8 +849,7 @@ escalation_engine = AutomatedEscalationEngine()
 
 
 async def get_escalation_engine() -> AutomatedEscalationEngine:
-    """Get the global escalation engine instance"""
-    return escalation_engine
+    """Get the global escalation engine instance"""    return escalation_engine
 
 
 __all__ = [

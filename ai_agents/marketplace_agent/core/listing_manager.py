@@ -1,14 +1,11 @@
-"""
-Listing Manager - Advanced Marketplace Listing Management
+"""Listing Manager - Advanced Marketplace Listing Management
 
 Handles creation, optimization, search, and management of marketplace listings
 with AI-powered optimization and intelligent categorization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -20,8 +17,7 @@ from .marketplace_agent import MarketplaceConfig, MarketplaceListing, ContentTyp
 
 
 class ListingStatus(Enum):
-    """Listing status enumeration."""
-    DRAFT = "draft"
+    """Listing status enumeration."""    DRAFT = "draft"
     PENDING_REVIEW = "pending_review"
     ACTIVE = "active"
     PAUSED = "paused"
@@ -31,8 +27,7 @@ class ListingStatus(Enum):
 
 
 class ListingCategory(Enum):
-    """Marketplace listing categories."""
-    MUSIC_PRODUCTION = "music_production"
+    """Marketplace listing categories."""    MUSIC_PRODUCTION = "music_production"
     AUDIO_EFFECTS = "audio_effects"
     VIDEO_CONTENT = "video_content"
     VISUAL_DESIGN = "visual_design"
@@ -46,8 +41,7 @@ class ListingCategory(Enum):
 
 @dataclass
 class ListingOptimization:
-    """Listing optimization suggestions and metrics."""
-    title_suggestions: List[str] = field(default_factory=list)
+    """Listing optimization suggestions and metrics."""    title_suggestions: List[str] = field(default_factory=list)
     description_improvements: List[str] = field(default_factory=list)
     pricing_recommendations: Dict[str, float] = field(default_factory=dict)
     tag_suggestions: List[str] = field(default_factory=list)
@@ -59,8 +53,7 @@ class ListingOptimization:
 
 @dataclass
 class SearchFilters:
-    """Advanced search filters for marketplace listings."""
-    content_type: Optional[ContentType] = None
+    """Advanced search filters for marketplace listings."""    content_type: Optional[ContentType] = None
     price_range: Optional[Tuple[float, float]] = None
     category: Optional[ListingCategory] = None
     tags: List[str] = field(default_factory=list)
@@ -72,8 +65,7 @@ class SearchFilters:
 
 
 class ListingManager:
-    """
-    Advanced marketplace listing management with AI optimization.
+    """    Advanced marketplace listing management with AI optimization.
     
     Provides comprehensive listing lifecycle management including:
     - Intelligent listing creation and optimization
@@ -81,16 +73,12 @@ class ListingManager:
     - AI-powered categorization and tagging
     - Market analysis and pricing optimization
     - Performance tracking and analytics
-    """
-
-    def __init__(self, config: MarketplaceConfig):
-        """
-        Initialize listing manager.
+    """    def __init__(self, config: MarketplaceConfig):
+        """        Initialize listing manager.
         
         Args:
             config: Marketplace configuration
-        """
-        self.config = config
+        """        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize components
@@ -104,8 +92,7 @@ class ListingManager:
         self.logger.info("Listing manager initialized")
 
     def _initialize_ai_models(self) -> None:
-        """Initialize AI models for listing optimization."""
-        try:
+        """Initialize AI models for listing optimization."""        try:
             # Initialize NLP models for content analysis
             # Initialize image recognition for visual content
             # Initialize audio analysis for music content
@@ -116,8 +103,7 @@ class ListingManager:
             raise
 
     def _initialize_search_engine(self) -> None:
-        """Initialize advanced search engine capabilities."""
-        try:
+        """Initialize advanced search engine capabilities."""        try:
             # Initialize Elasticsearch or similar search engine
             # Configure semantic search capabilities
             # Set up search indexing and optimization
@@ -127,16 +113,14 @@ class ListingManager:
             raise
 
     async def create_listing(self, listing: MarketplaceListing) -> MarketplaceListing:
-        """
-        Create a new marketplace listing with validation.
+        """        Create a new marketplace listing with validation.
         
         Args:
             listing: Listing data to create
             
         Returns:
             Created listing with generated ID and metadata
-        """
-        try:
+        """        try:
             # Validate listing data
             validation_errors = await self._validate_listing_data(listing)
             if validation_errors:
@@ -167,16 +151,14 @@ class ListingManager:
             raise
 
     async def optimize_listing(self, listing: MarketplaceListing) -> MarketplaceListing:
-        """
-        AI-powered listing optimization for better performance.
+        """        AI-powered listing optimization for better performance.
         
         Args:
             listing: Listing to optimize
             
         Returns:
             Optimized listing with improved metadata
-        """
-        try:
+        """        try:
             # Generate optimization suggestions
             optimization = await self._generate_listing_optimization(listing)
             
@@ -205,8 +187,7 @@ class ListingManager:
         limit: int = 20,
         offset: int = 0
     ) -> Dict[str, Any]:
-        """
-        Advanced listing search with AI-powered ranking.
+        """        Advanced listing search with AI-powered ranking.
         
         Args:
             query: Search query string
@@ -216,8 +197,7 @@ class ListingManager:
             
         Returns:
             Search results with metadata
-        """
-        try:
+        """        try:
             # Parse and validate filters
             search_filters = await self._parse_search_filters(filters)
             
@@ -252,16 +232,14 @@ class ListingManager:
             return {"listings": [], "total_count": 0, "error": str(e)}
 
     async def get_listing(self, listing_id: int) -> Optional[MarketplaceListing]:
-        """
-        Get listing by ID with caching.
+        """        Get listing by ID with caching.
         
         Args:
             listing_id: ID of the listing to retrieve
             
         Returns:
             Listing data or None if not found
-        """
-        try:
+        """        try:
             # Check cache first
             if listing_id in self._listing_cache:
                 return self._listing_cache[listing_id]
@@ -285,8 +263,7 @@ class ListingManager:
         listing_id: int,
         updates: Dict[str, Any]
     ) -> Optional[MarketplaceListing]:
-        """
-        Update existing listing with validation.
+        """        Update existing listing with validation.
         
         Args:
             listing_id: ID of listing to update
@@ -294,8 +271,7 @@ class ListingManager:
             
         Returns:
             Updated listing or None if not found
-        """
-        try:
+        """        try:
             # Get current listing
             current_listing = await self.get_listing(listing_id)
             if not current_listing:
@@ -327,16 +303,14 @@ class ListingManager:
             raise
 
     async def delete_listing(self, listing_id: int) -> bool:
-        """
-        Soft delete listing (mark as removed).
+        """        Soft delete listing (mark as removed).
         
         Args:
             listing_id: ID of listing to delete
             
         Returns:
             True if successfully deleted
-        """
-        try:
+        """        try:
             # Update status to removed
             success = await self.update_listing(listing_id, {
                 "status": ListingStatus.REMOVED.value,
@@ -366,8 +340,7 @@ class ListingManager:
         category: Optional[ListingCategory] = None,
         limit: int = 20
     ) -> List[MarketplaceListing]:
-        """
-        Get trending marketplace listings.
+        """        Get trending marketplace listings.
         
         Args:
             time_range: Time range for trending analysis
@@ -376,8 +349,7 @@ class ListingManager:
             
         Returns:
             List of trending listings
-        """
-        try:
+        """        try:
             # Calculate trending based on views, purchases, ratings
             trending_listings = await self._calculate_trending_listings(
                 time_range, category, limit
@@ -401,8 +373,7 @@ class ListingManager:
         status_filter: Optional[ListingStatus] = None,
         limit: int = 50
     ) -> List[MarketplaceListing]:
-        """
-        Get all listings for a specific creator.
+        """        Get all listings for a specific creator.
         
         Args:
             creator_id: ID of the creator
@@ -411,8 +382,7 @@ class ListingManager:
             
         Returns:
             List of creator's listings
-        """
-        try:
+        """        try:
             listings = await self._fetch_creator_listings(creator_id, status_filter, limit)
             
             # Sort by creation date (newest first)
@@ -429,8 +399,7 @@ class ListingManager:
             return []
 
     async def _validate_listing_data(self, listing: MarketplaceListing) -> List[str]:
-        """Validate listing data for creation."""
-        errors = []
+        """Validate listing data for creation."""        errors = []
         
         if not listing.title or len(listing.title.strip()) < 5:
             errors.append("Title must be at least 5 characters long")
@@ -453,8 +422,7 @@ class ListingManager:
         self,
         listing: MarketplaceListing
     ) -> ListingOptimization:
-        """Generate AI-powered optimization suggestions for listing."""
-        try:
+        """Generate AI-powered optimization suggestions for listing."""        try:
             optimization = ListingOptimization()
             
             # Title optimization
@@ -488,8 +456,7 @@ class ListingManager:
             return ListingOptimization()
 
     async def _generate_title_suggestions(self, listing: MarketplaceListing) -> List[str]:
-        """Generate AI-powered title suggestions."""
-        # Implementation would use NLP models to generate optimized titles
+        """Generate AI-powered title suggestions."""        # Implementation would use NLP models to generate optimized titles
         suggestions = [
             f"Premium {listing.content_type.title()} - {listing.title}",
             f"Professional {listing.title} Collection",
@@ -498,8 +465,7 @@ class ListingManager:
         return suggestions[:3]
 
     async def _analyze_description(self, listing: MarketplaceListing) -> List[str]:
-        """Analyze description and suggest improvements."""
-        improvements = []
+        """Analyze description and suggest improvements."""        improvements = []
         
         if len(listing.description) < 100:
             improvements.append("Consider adding more detailed description")
@@ -510,8 +476,7 @@ class ListingManager:
         return improvements
 
     async def _analyze_pricing(self, listing: MarketplaceListing) -> Dict[str, float]:
-        """Analyze and suggest optimal pricing."""
-        # Implementation would analyze market data for pricing optimization
+        """Analyze and suggest optimal pricing."""        # Implementation would analyze market data for pricing optimization
         recommendations = {
             "suggested_price": listing.base_price * 1.1,
             "competitive_range_min": listing.base_price * 0.8,
@@ -521,8 +486,7 @@ class ListingManager:
         return recommendations
 
     async def _generate_tag_suggestions(self, listing: MarketplaceListing) -> List[str]:
-        """Generate relevant tags using AI content analysis."""
-        # Implementation would analyze content and generate relevant tags
+        """Generate relevant tags using AI content analysis."""        # Implementation would analyze content and generate relevant tags
         base_tags = [listing.content_type.value]
         
         if listing.content_type == ContentType.AUDIO:
@@ -535,8 +499,7 @@ class ListingManager:
         return base_tags[:10]
 
     async def _calculate_seo_score(self, listing: MarketplaceListing) -> float:
-        """Calculate SEO optimization score."""
-        score = 0.0
+        """Calculate SEO optimization score."""        score = 0.0
         
         # Title length optimization
         if 30 <= len(listing.title) <= 60:
@@ -565,8 +528,7 @@ class ListingManager:
         limit: int,
         offset: int
     ) -> List[MarketplaceListing]:
-        """Perform semantic search on marketplace listings."""
-        try:
+        """Perform semantic search on marketplace listings."""        try:
             # Implementation would use Elasticsearch or similar for semantic search
             # For now, return mock results
             mock_listings = []
@@ -588,8 +550,7 @@ class ListingManager:
         results: List[MarketplaceListing],
         query: str
     ) -> List[MarketplaceListing]:
-        """Apply AI-powered ranking to search results."""
-        try:
+        """Apply AI-powered ranking to search results."""        try:
             # Implementation would use ML models for result ranking
             # Factors: relevance, popularity, creator reputation, price, etc.
             
@@ -601,8 +562,7 @@ class ListingManager:
             return results
 
     async def _store_listing(self, listing: MarketplaceListing) -> MarketplaceListing:
-        """Store listing in database."""
-        try:
+        """Store listing in database."""        try:
             # Implementation would store in actual database
             # For now, simulate database storage
             if not listing.id:
@@ -615,22 +575,19 @@ class ListingManager:
             raise
 
     async def _generate_listing_id(self) -> int:
-        """Generate unique listing ID."""
-        # In real implementation, this would come from database auto-increment
+        """Generate unique listing ID."""        # In real implementation, this would come from database auto-increment
         import random
         return random.randint(10000, 99999)
 
     async def _index_listing_for_search(self, listing: MarketplaceListing) -> None:
-        """Index listing for search engine."""
-        try:
+        """Index listing for search engine."""        try:
             # Implementation would index in Elasticsearch or similar
             self.logger.debug(f"Indexed listing {listing.id} for search")
         except Exception as e:
             self.logger.error(f"Failed to index listing {listing.id}: {e}")
 
     async def _fetch_listing_from_db(self, listing_id: int) -> Optional[MarketplaceListing]:
-        """Fetch listing from database."""
-        try:
+        """Fetch listing from database."""        try:
             # Implementation would fetch from actual database
             return None  # Mock implementation
         except Exception as e:
@@ -638,8 +595,7 @@ class ListingManager:
             return None
 
     async def _parse_search_filters(self, filters: Dict[str, Any]) -> SearchFilters:
-        """Parse and validate search filters."""
-        search_filters = SearchFilters()
+        """Parse and validate search filters."""        search_filters = SearchFilters()
         
         if "content_type" in filters:
             try:

@@ -1,14 +1,11 @@
-"""
-Audit Logger - Comprehensive Legal Compliance Audit Trail
+"""Audit Logger - Comprehensive Legal Compliance Audit Trail
 
 Maintains detailed audit logs for all legal compliance activities, providing
 comprehensive tracking and forensic capabilities for the IA Influencer Agent platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-
-from typing import Dict, List, Any, Optional, Union, Tuple
+"""from typing import Dict, List, Any, Optional, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
 import asyncio
@@ -22,8 +19,7 @@ logger = logging.getLogger(__name__)
 
 
 class AuditEventType(Enum):
-    """Types of audit events."""
-    COMPLIANCE_CHECK = "compliance_check"
+    """Types of audit events."""    COMPLIANCE_CHECK = "compliance_check"
     COPYRIGHT_REGISTRATION = "copyright_registration"
     GDPR_CONSENT = "gdpr_consent"
     GDPR_WITHDRAWAL = "gdpr_withdrawal"
@@ -41,8 +37,7 @@ class AuditEventType(Enum):
 
 
 class AuditLevel(Enum):
-    """Audit logging levels."""
-    INFO = "info"
+    """Audit logging levels."""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
@@ -50,8 +45,7 @@ class AuditLevel(Enum):
 
 
 class DataSensitivity(Enum):
-    """Data sensitivity levels for audit logs."""
-    PUBLIC = "public"
+    """Data sensitivity levels for audit logs."""    PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
     RESTRICTED = "restricted"
@@ -59,8 +53,7 @@ class DataSensitivity(Enum):
 
 @dataclass
 class AuditSession:
-    """Audit session tracking."""
-    session_id: str
+    """Audit session tracking."""    session_id: str
     user_id: Optional[str]
     action: str
     started_at: datetime
@@ -71,8 +64,7 @@ class AuditSession:
 
 @dataclass
 class AuditEvent:
-    """Audit event record structure."""
-    event_id: str
+    """Audit event record structure."""    event_id: str
     session_id: Optional[str]
     event_type: AuditEventType
     level: AuditLevel
@@ -92,21 +84,17 @@ class AuditEvent:
 
 
 class AuditLogger:
-    """
-    Comprehensive audit logging system for legal compliance.
+    """    Comprehensive audit logging system for legal compliance.
     
     Provides immutable audit trails, forensic capabilities,
     and compliance reporting for all platform activities.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize the Audit Logger.
+        """        Initialize the Audit Logger.
         
         Args:
             config: Configuration dictionary with audit settings
-        """
-        self.config = config
+        """        self.config = config
         self.audit_config = config.get("audit", {})
         
         # Audit data storage
@@ -137,8 +125,7 @@ class AuditLogger:
         user_id: Optional[str] = None,
         context: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Start a new audit session for tracking related events.
+        """        Start a new audit session for tracking related events.
         
         Args:
             action: Action being performed
@@ -147,8 +134,7 @@ class AuditLogger:
             
         Returns:
             Session ID for tracking related events
-        """
-        try:
+        """        try:
             session_id = f"audit_session_{uuid.uuid4().hex[:16]}"
             
             audit_session = AuditSession(
@@ -188,8 +174,7 @@ class AuditLogger:
         status: str = "completed",
         summary: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Complete an audit session with final status and summary.
+        """        Complete an audit session with final status and summary.
         
         Args:
             session_id: ID of session to complete
@@ -198,8 +183,7 @@ class AuditLogger:
             
         Returns:
             Session completion results
-        """
-        try:
+        """        try:
             if session_id not in self.audit_sessions:
                 raise ValueError(f"Audit session {session_id} not found")
             
@@ -258,8 +242,7 @@ class AuditLogger:
         user_agent: Optional[str] = None,
         data_sensitivity: DataSensitivity = DataSensitivity.INTERNAL
     ) -> str:
-        """
-        Log an audit event with full context and integrity protection.
+        """        Log an audit event with full context and integrity protection.
         
         Args:
             event_type: Type of event being logged
@@ -278,8 +261,7 @@ class AuditLogger:
             
         Returns:
             Event ID for tracking
-        """
-        try:
+        """        try:
             event_id = f"audit_{uuid.uuid4().hex[:16]}"
             
             # Sanitize sensitive data
@@ -336,8 +318,7 @@ class AuditLogger:
         session_id: str,
         compliance_result: Dict[str, Any]
     ) -> str:
-        """
-        Log compliance check results.
+        """        Log compliance check results.
         
         Args:
             session_id: Audit session ID
@@ -345,8 +326,7 @@ class AuditLogger:
             
         Returns:
             Event ID
-        """
-        return await self.log_event(
+        """        return await self.log_event(
             event_type=AuditEventType.COMPLIANCE_CHECK,
             level=AuditLevel.INFO if compliance_result.get("overall_compliant") else AuditLevel.WARNING,
             action="compliance_verification",
@@ -368,8 +348,7 @@ class AuditLogger:
         session_id: str,
         dmca_result: Dict[str, Any]
     ) -> str:
-        """
-        Log DMCA action processing.
+        """        Log DMCA action processing.
         
         Args:
             session_id: Audit session ID
@@ -377,8 +356,7 @@ class AuditLogger:
             
         Returns:
             Event ID
-        """
-        return await self.log_event(
+        """        return await self.log_event(
             event_type=AuditEventType.DMCA_TAKEDOWN,
             level=AuditLevel.INFO,
             action="dmca_processing",
@@ -399,8 +377,7 @@ class AuditLogger:
         session_id: str,
         request_result: Dict[str, Any]
     ) -> str:
-        """
-        Log GDPR data subject request processing.
+        """        Log GDPR data subject request processing.
         
         Args:
             session_id: Audit session ID
@@ -408,8 +385,7 @@ class AuditLogger:
             
         Returns:
             Event ID
-        """
-        return await self.log_event(
+        """        return await self.log_event(
             event_type=AuditEventType.DATA_SUBJECT_REQUEST,
             level=AuditLevel.INFO,
             action=f"data_subject_request_{request_result.get('request_type', 'unknown')}",
@@ -432,8 +408,7 @@ class AuditLogger:
         error_message: str,
         error_context: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Log error events with context.
+        """        Log error events with context.
         
         Args:
             session_id: Optional audit session ID
@@ -442,8 +417,7 @@ class AuditLogger:
             
         Returns:
             Event ID
-        """
-        return await self.log_event(
+        """        return await self.log_event(
             event_type=AuditEventType.COMPLIANCE_CHECK,
             level=AuditLevel.ERROR,
             action="error_occurred",
@@ -462,8 +436,7 @@ class AuditLogger:
         report: Dict[str, Any],
         generated_by: Optional[str] = None
     ) -> str:
-        """
-        Log compliance report generation.
+        """        Log compliance report generation.
         
         Args:
             report: Generated report data
@@ -471,8 +444,7 @@ class AuditLogger:
             
         Returns:
             Event ID
-        """
-        return await self.log_event(
+        """        return await self.log_event(
             event_type=AuditEventType.COMPLIANCE_CHECK,
             level=AuditLevel.INFO,
             action="compliance_report_generated",
@@ -500,8 +472,7 @@ class AuditLogger:
         event_types: Optional[List[str]] = None,
         limit: int = 100
     ) -> Dict[str, Any]:
-        """
-        Retrieve audit trail with filtering options.
+        """        Retrieve audit trail with filtering options.
         
         Args:
             resource_type: Filter by resource type
@@ -515,8 +486,7 @@ class AuditLogger:
             
         Returns:
             Filtered audit trail
-        """
-        try:
+        """        try:
             if not start_date:
                 start_date = datetime.utcnow() - timedelta(days=30)
             if not end_date:
@@ -589,8 +559,7 @@ class AuditLogger:
         resource_id: str,
         time_window_hours: int = 24
     ) -> Dict[str, Any]:
-        """
-        Generate forensic analysis report for security or compliance incident.
+        """        Generate forensic analysis report for security or compliance incident.
         
         Args:
             incident_id: Unique identifier for the incident
@@ -599,8 +568,7 @@ class AuditLogger:
             
         Returns:
             Comprehensive forensic report
-        """
-        try:
+        """        try:
             # Define time window
             incident_time = datetime.utcnow()  # In practice, would be provided
             start_time = incident_time - timedelta(hours=time_window_hours)
@@ -666,8 +634,7 @@ class AuditLogger:
     
     # Private helper methods
     def _sanitize_sensitive_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Remove or mask sensitive data from audit logs."""
-        if not data:
+        """Remove or mask sensitive data from audit logs."""        if not data:
             return data
         
         sanitized = data.copy()
@@ -689,8 +656,7 @@ class AuditLogger:
         return sanitized
     
     def _calculate_event_checksum(self, event: AuditEvent) -> str:
-        """Calculate integrity checksum for audit event."""
-        # Create deterministic string representation
+        """Calculate integrity checksum for audit event."""        # Create deterministic string representation
         event_data = {
             "event_id": event.event_id,
             "timestamp": event.timestamp.isoformat(),
@@ -706,16 +672,14 @@ class AuditLogger:
         return hashlib.sha256(event_string.encode()).hexdigest()
     
     def _verify_event_integrity(self, event: AuditEvent) -> bool:
-        """Verify the integrity of an audit event."""
-        if not self.integrity_checking or not event.checksum:
+        """Verify the integrity of an audit event."""        if not self.integrity_checking or not event.checksum:
             return True
         
         calculated_checksum = self._calculate_event_checksum(event)
         return calculated_checksum == event.checksum
     
     def _serialize_audit_event(self, event: AuditEvent) -> Dict[str, Any]:
-        """Serialize audit event for external consumption."""
-        return {
+        """Serialize audit event for external consumption."""        return {
             "event_id": event.event_id,
             "session_id": event.session_id,
             "event_type": event.event_type.value,
@@ -733,15 +697,13 @@ class AuditLogger:
         }
     
     def _count_session_events(self, session_id: str) -> int:
-        """Count events logged for a session."""
-        return len([
+        """Count events logged for a session."""        return len([
             event for event in self.audit_events.values()
             if event.session_id == session_id
         ])
     
     def _analyze_event_patterns(self, events: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze patterns in audit events."""
-        event_types = {}
+        """Analyze patterns in audit events."""        event_types = {}
         users_involved = set()
         integrity_violations = 0
         
@@ -765,8 +727,7 @@ class AuditLogger:
         }
     
     def _detect_anomalies(self, events: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Detect anomalies in audit events."""
-        anomalies = []
+        """Detect anomalies in audit events."""        anomalies = []
         
         # Check for integrity violations
         for event in events:
@@ -799,8 +760,7 @@ class AuditLogger:
         return anomalies
     
     def _generate_event_timeline(self, events: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Generate chronological timeline of events."""
-        # Sort events by timestamp
+        """Generate chronological timeline of events."""        # Sort events by timestamp
         sorted_events = sorted(events, key=lambda x: x["timestamp"])
         
         timeline = []
@@ -820,8 +780,7 @@ class AuditLogger:
         analysis: Dict[str, Any], 
         anomalies: List[Dict[str, Any]]
     ) -> List[str]:
-        """Generate forensic investigation recommendations."""
-        recommendations = []
+        """Generate forensic investigation recommendations."""        recommendations = []
         
         if analysis["integrity_violations"] > 0:
             recommendations.append("Investigate potential audit log tampering")
@@ -837,11 +796,9 @@ class AuditLogger:
     
     # External integration methods
     async def _trigger_real_time_alert(self, event: AuditEvent) -> None:
-        """Trigger real-time alerts for critical events."""
-        logger.warning(f"CRITICAL AUDIT EVENT: {event.action} - {event.event_id}")
+        """Trigger real-time alerts for critical events."""        logger.warning(f"CRITICAL AUDIT EVENT: {event.action} - {event.event_id}")
     
     async def _forward_to_external_systems(self, event: AuditEvent) -> None:
-        """Forward audit events to external logging systems."""
-        # Placeholder for external system integration
+        """Forward audit events to external logging systems."""        # Placeholder for external system integration
         # Would integrate with SIEM, compliance tools, etc.
         pass

@@ -1,5 +1,4 @@
-"""
-Queue Workers Manager - IA-Influencer-Agent
+"""Queue Workers Manager - IA-Influencer-Agent
 ================================================================================
 Module: backend/crawlers/queues/queue_workers.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,9 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Worker initialization → Task assignment → Platform specialization → 
 Load balancing → Health monitoring → Performance optimization → Scaling decisions
-"""
-
-from typing import Any, Dict, List, Optional, Set, Callable, Tuple
+"""from typing import Any, Dict, List, Optional, Set, Callable, Tuple
 import logging
 import asyncio
 from datetime import datetime, timedelta
@@ -38,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 class WorkerStatus(Enum):
-    """Worker status states"""
-    INITIALIZING = "initializing"
+    """Worker status states"""    INITIALIZING = "initializing"
     IDLE = "idle"
     BUSY = "busy"
     OVERLOADED = "overloaded"
@@ -49,8 +45,7 @@ class WorkerStatus(Enum):
 
 
 class WorkerType(Enum):
-    """Specialized worker types"""
-    GENERAL_PURPOSE = "general_purpose"
+    """Specialized worker types"""    GENERAL_PURPOSE = "general_purpose"
     PLATFORM_SPECIALIZED = "platform_specialized"
     PROTECTION_MONITOR = "protection_monitor"
     BULK_PROCESSOR = "bulk_processor"
@@ -60,8 +55,7 @@ class WorkerType(Enum):
 
 @dataclass
 class WorkerMetrics:
-    """Individual worker performance metrics"""
-    worker_id: str
+    """Individual worker performance metrics"""    worker_id: str
     worker_type: WorkerType
     platform_specialty: Optional[PlatformType] = None
     
@@ -91,8 +85,7 @@ class WorkerMetrics:
 
 @dataclass
 class WorkerCapacity:
-    """Worker capacity and resource limits"""
-    max_concurrent_tasks: int = 5
+    """Worker capacity and resource limits"""    max_concurrent_tasks: int = 5
     max_memory_mb: int = 512
     max_cpu_percent: float = 80.0
     max_requests_per_minute: int = 60
@@ -101,8 +94,7 @@ class WorkerCapacity:
 
 @dataclass
 class WorkerConfig:
-    """Worker configuration"""
-    worker_type: WorkerType = WorkerType.GENERAL_PURPOSE
+    """Worker configuration"""    worker_type: WorkerType = WorkerType.GENERAL_PURPOSE
     platform_specialty: Optional[PlatformType] = None
     capacity: WorkerCapacity = field(default_factory=WorkerCapacity)
     
@@ -122,8 +114,7 @@ class WorkerConfig:
 
 
 class CrawlerWorker:
-    """
-    🤖 Advanced Crawler Worker - IA-Influencer-Agent
+    """    🤖 Advanced Crawler Worker - IA-Influencer-Agent
     
     Enterprise-grade crawler worker featuring:
     - Multi-platform crawling capabilities
@@ -132,8 +123,7 @@ class CrawlerWorker:
     - Adaptive performance optimization
     - Error recovery and retry logic
     - Platform-specific optimizations
-    """
-    
+    """    
     def __init__(self, worker_id: str, config: WorkerConfig = None):
         self.worker_id = worker_id
         self.config = config or WorkerConfig()
@@ -165,8 +155,7 @@ class CrawlerWorker:
         self._health_status_callback: Optional[Callable] = None
     
     async def initialize(self) -> bool:
-        """Initialize worker"""
-        try:
+        """Initialize worker"""        try:
             self.status = WorkerStatus.INITIALIZING
             self._is_running = True
             
@@ -188,8 +177,7 @@ class CrawlerWorker:
             return False
     
     async def execute_task(self, task: CrawlerTask) -> Dict[str, Any]:
-        """Execute crawler task"""
-        try:
+        """Execute crawler task"""        try:
             # Check worker capacity
             if not await self._can_accept_task(task):
                 raise Exception("Worker at capacity")
@@ -240,8 +228,7 @@ class CrawlerWorker:
             raise
     
     async def cancel_task(self, task_id: str) -> bool:
-        """Cancel currently executing task"""
-        try:
+        """Cancel currently executing task"""        try:
             task = self.current_tasks.get(task_id)
             if not task:
                 return False
@@ -260,8 +247,7 @@ class CrawlerWorker:
             return False
     
     async def get_worker_status(self) -> Dict[str, Any]:
-        """Get comprehensive worker status"""
-        try:
+        """Get comprehensive worker status"""        try:
             # Update system metrics
             await self._update_system_metrics()
             
@@ -295,8 +281,7 @@ class CrawlerWorker:
             return {"error": str(e)}
     
     async def shutdown(self):
-        """Gracefully shutdown worker"""
-        try:
+        """Gracefully shutdown worker"""        try:
             self.status = WorkerStatus.SHUTTING_DOWN
             self._is_running = False
             
@@ -325,16 +310,13 @@ class CrawlerWorker:
             logger.error(f"❌ Worker {self.worker_id} shutdown error: {e}")
     
     def set_completion_callback(self, callback: Callable):
-        """Set task completion callback"""
-        self._task_completion_callback = callback
+        """Set task completion callback"""        self._task_completion_callback = callback
     
     def set_health_callback(self, callback: Callable):
-        """Set health status callback"""
-        self._health_status_callback = callback
+        """Set health status callback"""        self._health_status_callback = callback
     
     async def _can_accept_task(self, task: CrawlerTask) -> bool:
-        """Check if worker can accept new task"""
-        # Check current capacity
+        """Check if worker can accept new task"""        # Check current capacity
         if len(self.current_tasks) >= self.config.capacity.max_concurrent_tasks:
             return False
         
@@ -357,8 +339,7 @@ class CrawlerWorker:
         return True
     
     async def _execute_task_by_platform(self, task: CrawlerTask) -> Dict[str, Any]:
-        """Execute task based on platform type"""
-        try:
+        """Execute task based on platform type"""        try:
             if task.platform == PlatformType.YOUTUBE:
                 return await self._execute_youtube_crawl(task)
             elif task.platform == PlatformType.INSTAGRAM:
@@ -377,8 +358,7 @@ class CrawlerWorker:
             raise
     
     async def _execute_youtube_crawl(self, task: CrawlerTask) -> Dict[str, Any]:
-        """Execute YouTube-specific crawling"""
-        # Placeholder for YouTube crawling implementation
+        """Execute YouTube-specific crawling"""        # Placeholder for YouTube crawling implementation
         await asyncio.sleep(2)  # Simulate crawling
         return {
             "platform": "youtube",
@@ -389,8 +369,7 @@ class CrawlerWorker:
         }
     
     async def _execute_instagram_crawl(self, task: CrawlerTask) -> Dict[str, Any]:
-        """Execute Instagram-specific crawling"""
-        # Placeholder for Instagram crawling implementation
+        """Execute Instagram-specific crawling"""        # Placeholder for Instagram crawling implementation
         await asyncio.sleep(2)  # Simulate crawling
         return {
             "platform": "instagram",
@@ -401,8 +380,7 @@ class CrawlerWorker:
         }
     
     async def _execute_tiktok_crawl(self, task: CrawlerTask) -> Dict[str, Any]:
-        """Execute TikTok-specific crawling"""
-        # Placeholder for TikTok crawling implementation
+        """Execute TikTok-specific crawling"""        # Placeholder for TikTok crawling implementation
         await asyncio.sleep(2)  # Simulate crawling
         return {
             "platform": "tiktok",
@@ -413,8 +391,7 @@ class CrawlerWorker:
         }
     
     async def _execute_twitter_crawl(self, task: CrawlerTask) -> Dict[str, Any]:
-        """Execute Twitter-specific crawling"""
-        # Placeholder for Twitter crawling implementation
+        """Execute Twitter-specific crawling"""        # Placeholder for Twitter crawling implementation
         await asyncio.sleep(2)  # Simulate crawling
         return {
             "platform": "twitter",
@@ -425,8 +402,7 @@ class CrawlerWorker:
         }
     
     async def _execute_spotify_crawl(self, task: CrawlerTask) -> Dict[str, Any]:
-        """Execute Spotify-specific crawling"""
-        # Placeholder for Spotify crawling implementation
+        """Execute Spotify-specific crawling"""        # Placeholder for Spotify crawling implementation
         await asyncio.sleep(2)  # Simulate crawling
         return {
             "platform": "spotify",
@@ -437,8 +413,7 @@ class CrawlerWorker:
         }
     
     async def _execute_generic_crawl(self, task: CrawlerTask) -> Dict[str, Any]:
-        """Execute generic web crawling"""
-        # Placeholder for generic crawling implementation
+        """Execute generic web crawling"""        # Placeholder for generic crawling implementation
         await asyncio.sleep(2)  # Simulate crawling
         return {
             "platform": "generic",
@@ -449,14 +424,12 @@ class CrawlerWorker:
         }
     
     async def _initialize_platform_specific(self):
-        """Initialize platform-specific configurations"""
-        if self.config.platform_specialty:
+        """Initialize platform-specific configurations"""        if self.config.platform_specialty:
             # Platform-specific initialization
             logger.info(f"Initializing {self.config.platform_specialty.value} specialist worker")
     
     async def _update_success_metrics(self, task: CrawlerTask, execution_time: float):
-        """Update metrics after successful task completion"""
-        self.metrics.tasks_completed += 1
+        """Update metrics after successful task completion"""        self.metrics.tasks_completed += 1
         self.metrics.total_execution_time += execution_time
         self.metrics.average_execution_time = (
             self.metrics.total_execution_time / self.metrics.tasks_completed
@@ -472,8 +445,7 @@ class CrawlerWorker:
             await self._task_completion_callback(self.worker_id, task, True)
     
     async def _update_failure_metrics(self, task: CrawlerTask, error: str):
-        """Update metrics after task failure"""
-        self.metrics.tasks_failed += 1
+        """Update metrics after task failure"""        self.metrics.tasks_failed += 1
         self.metrics.error_counts[error] += 1
         self.metrics.last_error = error
         self.metrics.last_error_at = datetime.now()
@@ -487,8 +459,7 @@ class CrawlerWorker:
             await self._task_completion_callback(self.worker_id, task, False)
     
     async def _update_system_metrics(self):
-        """Update system resource metrics"""
-        try:
+        """Update system resource metrics"""        try:
             # CPU usage
             self.metrics.cpu_usage_percent = psutil.cpu_percent(interval=0.1)
             
@@ -505,8 +476,7 @@ class CrawlerWorker:
             logger.warning(f"Failed to update system metrics: {e}")
     
     async def _health_monitor(self):
-        """Background health monitoring"""
-        while self._is_running:
+        """Background health monitoring"""        while self._is_running:
             try:
                 await self._update_system_metrics()
                 
@@ -533,8 +503,7 @@ class CrawlerWorker:
                 await asyncio.sleep(self.config.health_check_interval)
     
     async def _get_health_status(self) -> Dict[str, Any]:
-        """Get current health status"""
-        try:
+        """Get current health status"""        try:
             health_score = 100.0
             issues = []
             
@@ -588,15 +557,13 @@ class CrawlerWorker:
             }
     
     async def _cancel_task_execution(self, task_id: str):
-        """Cancel specific task execution"""
-        # Implementation would depend on the crawler type
+        """Cancel specific task execution"""        # Implementation would depend on the crawler type
         # For now, just a placeholder
         logger.info(f"Cancelling task execution: {task_id}")
 
 
 class QueueWorkersManager:
-    """
-    👥 Queue Workers Manager - IA-Influencer-Agent
+    """    👥 Queue Workers Manager - IA-Influencer-Agent
     
     Enterprise worker pool management featuring:
     - Dynamic worker scaling
@@ -605,8 +572,7 @@ class QueueWorkersManager:
     - Health monitoring and recovery
     - Performance analytics
     - Resource management
-    """
-    
+    """    
     def __init__(self, max_workers: int = 20):
         self.max_workers = max_workers
         
@@ -631,8 +597,7 @@ class QueueWorkersManager:
         self._management_tasks: List[asyncio.Task] = []
     
     async def initialize(self) -> bool:
-        """Initialize workers manager"""
-        try:
+        """Initialize workers manager"""        try:
             self._is_running = True
             
             # Create initial worker pool
@@ -654,8 +619,7 @@ class QueueWorkersManager:
             return False
     
     async def assign_task_to_worker(self, task: CrawlerTask) -> Optional[str]:
-        """Assign task to best available worker"""
-        try:
+        """Assign task to best available worker"""        try:
             # Find best worker for task
             worker_id = await self._find_best_worker(task)
             
@@ -680,8 +644,7 @@ class QueueWorkersManager:
             return None
     
     async def get_workers_status(self) -> Dict[str, Any]:
-        """Get comprehensive workers status"""
-        try:
+        """Get comprehensive workers status"""        try:
             workers_status = {}
             
             for worker_id, worker in self.workers.items():
@@ -715,8 +678,7 @@ class QueueWorkersManager:
             return {"error": str(e)}
     
     async def shutdown(self):
-        """Gracefully shutdown all workers"""
-        try:
+        """Gracefully shutdown all workers"""        try:
             self._is_running = False
             
             # Cancel management tasks
@@ -736,8 +698,7 @@ class QueueWorkersManager:
             logger.error(f"❌ Workers shutdown error: {e}")
     
     async def _create_initial_workers(self):
-        """Create initial worker pool"""
-        # Create general purpose workers
+        """Create initial worker pool"""        # Create general purpose workers
         for i in range(5):  # Start with 5 general workers
             await self._create_worker(WorkerType.GENERAL_PURPOSE)
         
@@ -750,8 +711,7 @@ class QueueWorkersManager:
         worker_type: WorkerType, 
         platform_specialty: Optional[PlatformType] = None
     ) -> Optional[str]:
-        """Create new worker"""
-        try:
+        """Create new worker"""        try:
             if len(self.workers) >= self.max_workers:
                 return None
             
@@ -789,8 +749,7 @@ class QueueWorkersManager:
             return None
     
     async def _find_best_worker(self, task: CrawlerTask) -> Optional[str]:
-        """Find best available worker for task"""
-        try:
+        """Find best available worker for task"""        try:
             # Prefer platform-specialized workers
             if task.platform in self.platform_workers:
                 for worker_id in self.platform_workers[task.platform]:
@@ -816,8 +775,7 @@ class QueueWorkersManager:
             return None
     
     async def _create_worker_for_task(self, task: CrawlerTask) -> Optional[str]:
-        """Create specialized worker for specific task if needed"""
-        if len(self.workers) >= self.max_workers:
+        """Create specialized worker for specific task if needed"""        if len(self.workers) >= self.max_workers:
             return None
         
         # Create platform-specialized worker if beneficial
@@ -828,8 +786,7 @@ class QueueWorkersManager:
         return await self._create_worker(WorkerType.GENERAL_PURPOSE)
     
     async def _worker_health_monitor(self):
-        """Monitor worker health and restart unhealthy workers"""
-        while self._is_running:
+        """Monitor worker health and restart unhealthy workers"""        while self._is_running:
             try:
                 unhealthy_workers = []
                 
@@ -849,8 +806,7 @@ class QueueWorkersManager:
                 await asyncio.sleep(60)
     
     async def _load_balancer(self):
-        """Background load balancing"""
-        while self._is_running:
+        """Background load balancing"""        while self._is_running:
             try:
                 # Implement load balancing logic
                 await self._balance_worker_load()
@@ -861,8 +817,7 @@ class QueueWorkersManager:
                 await asyncio.sleep(30)
     
     async def _auto_scaler(self):
-        """Automatic worker scaling based on demand"""
-        while self._is_running:
+        """Automatic worker scaling based on demand"""        while self._is_running:
             try:
                 await self._scale_workers_based_on_demand()
                 await asyncio.sleep(60)  # Scale check every minute
@@ -872,8 +827,7 @@ class QueueWorkersManager:
                 await asyncio.sleep(60)
     
     async def _performance_optimizer(self):
-        """Optimize worker performance"""
-        while self._is_running:
+        """Optimize worker performance"""        while self._is_running:
             try:
                 await self._optimize_worker_performance()
                 await asyncio.sleep(300)  # Optimize every 5 minutes
@@ -883,8 +837,7 @@ class QueueWorkersManager:
                 await asyncio.sleep(300)
     
     async def _restart_worker(self, worker_id: str):
-        """Restart unhealthy worker"""
-        try:
+        """Restart unhealthy worker"""        try:
             worker = self.workers.get(worker_id)
             if not worker:
                 return
@@ -910,23 +863,19 @@ class QueueWorkersManager:
             logger.error(f"❌ Failed to restart worker {worker_id}: {e}")
     
     async def _balance_worker_load(self):
-        """Balance load across workers"""
-        # Implementation for load balancing
+        """Balance load across workers"""        # Implementation for load balancing
         pass
     
     async def _scale_workers_based_on_demand(self):
-        """Scale workers based on current demand"""
-        # Implementation for auto-scaling
+        """Scale workers based on current demand"""        # Implementation for auto-scaling
         pass
     
     async def _optimize_worker_performance(self):
-        """Optimize worker performance"""
-        # Implementation for performance optimization
+        """Optimize worker performance"""        # Implementation for performance optimization
         pass
     
     async def _on_task_completion(self, worker_id: str, task: CrawlerTask, success: bool):
-        """Callback for task completion"""
-        # Cleanup assignment
+        """Callback for task completion"""        # Cleanup assignment
         self.worker_assignments.pop(task.task_id, None)
         
         # Log completion
@@ -934,12 +883,10 @@ class QueueWorkersManager:
         logger.info(f"📋 Task {task.task_id} {status} on worker {worker_id}")
     
     async def _on_health_status_change(self, worker_id: str, health_status: Dict[str, Any]):
-        """Callback for worker health status changes"""
-        if health_status["status"] == "unhealthy":
+        """Callback for worker health status changes"""        if health_status["status"] == "unhealthy":
             logger.warning(f"⚠️ Worker {worker_id} health degraded: {health_status['issues']}")
 
 
 # Factory function
 def create_workers_manager(max_workers: int = 20) -> QueueWorkersManager:
-    """Create and return configured workers manager"""
-    return QueueWorkersManager(max_workers)
+    """Create and return configured workers manager"""    return QueueWorkersManager(max_workers)

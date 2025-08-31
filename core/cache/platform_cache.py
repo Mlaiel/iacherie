@@ -1,12 +1,9 @@
-"""
-Platform Cache for IA Influencer Agent Platform
+"""Platform Cache for IA Influencer Agent Platform
 Specialized caching for external platform APIs and rate limiting
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import hashlib
@@ -22,8 +19,7 @@ from .memory_cache import MemoryCache
 logger = logging.getLogger(__name__)
 
 class Platform(Enum):
-    """Supported platforms"""
-    SPOTIFY = "spotify"
+    """Supported platforms"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -35,8 +31,7 @@ class Platform(Enum):
     DEEZER = "deezer"
 
 class APIEndpoint(Enum):
-    """API endpoint types"""
-    USER_PROFILE = "user_profile"
+    """API endpoint types"""    USER_PROFILE = "user_profile"
     CONTENT_LIST = "content_list"
     ANALYTICS = "analytics"
     UPLOAD = "upload"
@@ -46,8 +41,7 @@ class APIEndpoint(Enum):
 
 @dataclass
 class APIResponse:
-    """Cached API response structure"""
-    platform: Platform
+    """Cached API response structure"""    platform: Platform
     endpoint: APIEndpoint
     request_params: Dict[str, Any]
     response_data: Dict[str, Any]
@@ -58,8 +52,7 @@ class APIResponse:
     request_id: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        data = asdict(self)
+        """Convert to dictionary"""        data = asdict(self)
         data['platform'] = self.platform.value
         data['endpoint'] = self.endpoint.value
         data['cached_at'] = self.cached_at.isoformat()
@@ -68,8 +61,7 @@ class APIResponse:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'APIResponse':
-        """Create from dictionary"""
-        data['platform'] = Platform(data['platform'])
+        """Create from dictionary"""        data['platform'] = Platform(data['platform'])
         data['endpoint'] = APIEndpoint(data['endpoint'])
         data['cached_at'] = datetime.fromisoformat(data['cached_at'])
         data['expires_at'] = datetime.fromisoformat(data['expires_at'])
@@ -77,13 +69,11 @@ class APIResponse:
     
     @property
     def is_expired(self) -> bool:
-        """Check if response is expired"""
-        return datetime.utcnow() > self.expires_at
+        """Check if response is expired"""        return datetime.utcnow() > self.expires_at
 
 @dataclass
 class RateLimitInfo:
-    """Rate limiting information"""
-    platform: Platform
+    """Rate limiting information"""    platform: Platform
     endpoint: APIEndpoint
     requests_made: int
     requests_limit: int
@@ -93,20 +83,16 @@ class RateLimitInfo:
     
     @property
     def requests_remaining(self) -> int:
-        """Get remaining requests in current window"""
-        return max(0, self.requests_limit - self.requests_made)
+        """Get remaining requests in current window"""        return max(0, self.requests_limit - self.requests_made)
     
     @property
     def is_rate_limited(self) -> bool:
-        """Check if rate limited"""
-        return self.requests_made >= self.requests_limit and datetime.utcnow() < self.reset_at
+        """Check if rate limited"""        return self.requests_made >= self.requests_limit and datetime.utcnow() < self.reset_at
 
 class PlatformCache:
-    """
-    Advanced platform cache for external API responses and rate limiting
+    """    Advanced platform cache for external API responses and rate limiting
     Handles caching for multiple platforms with intelligent TTL management
-    """
-    
+    """    
     def __init__(self,
                  redis_config: RedisConfig,
                  default_ttl: int = 3600,  # 1 hour
@@ -199,16 +185,14 @@ class PlatformCache:
         logger.info("PlatformCache initialized")
     
     async def initialize(self):
-        """Initialize cache connections"""
-        await self.redis_cache.connect()
+        """Initialize cache connections"""        await self.redis_cache.connect()
     
     def _generate_cache_key(self,
                           platform: Platform,
                           endpoint: APIEndpoint,
                           params: Dict[str, Any],
                           user_id: Optional[str] = None) -> str:
-        """Generate cache key for API request"""
-        # Sort parameters for consistent key generation
+        """Generate cache key for API request"""        # Sort parameters for consistent key generation
         sorted_params = json.dumps(params, sort_keys=True)
         params_hash = hashlib.md5(sorted_params.encode()).hexdigest()
         
@@ -225,8 +209,7 @@ class PlatformCache:
         return ":".join(key_parts)
     
     def _get_ttl(self, platform: Platform, endpoint: APIEndpoint) -> int:
-        """Get TTL for platform/endpoint combination"""
-        platform_config = self.platform_ttls.get(platform, {})
+        """Get TTL for platform/endpoint combination"""        platform_config = self.platform_ttls.get(platform, {})
         return platform_config.get(endpoint, self.default_ttl)
     
     async def cache_api_response(self,
@@ -238,8 +221,7 @@ class PlatformCache:
                                response_time: float,
                                user_id: Optional[str] = None,
                                custom_ttl: Optional[int] = None) -> bool:
-        """Cache API response"""
-        
+        """Cache API response"""        
         try:
             ttl = custom_ttl or self._get_ttl(platform, endpoint)
             cache_key = self._generate_cache_key(platform, endpoint, request_params, user_id)
@@ -281,8 +263,7 @@ class PlatformCache:
                                 endpoint: APIEndpoint,
                                 request_params: Dict[str, Any],
                                 user_id: Optional[str] = None) -> Optional[APIResponse]:
-        """Get cached API response"""
-        
+        """Get cached API response"""        
         cache_key = self._generate_cache_key(platform, endpoint, request_params, user_id)
         
         # Try memory cache first
@@ -321,8 +302,7 @@ class PlatformCache:
                              platform: Platform,
                              endpoint: APIEndpoint,
                              user_id: Optional[str] = None) -> RateLimitInfo:
-        """Check rate limit for platform/endpoint"""
-        
+        """Check rate limit for platform/endpoint"""        
         # Get rate limit configuration
         platform_limits = self.rate_limits.get(platform, {})
         if endpoint not in platform_limits:
@@ -373,8 +353,7 @@ class PlatformCache:
                                  platform: Platform,
                                  endpoint: APIEndpoint,
                                  user_id: Optional[str] = None) -> bool:
-        """Increment rate limit counter"""
-        
+        """Increment rate limit counter"""        
         try:
             rate_limit_info = await self.check_rate_limit(platform, endpoint, user_id)
             
@@ -415,8 +394,7 @@ class PlatformCache:
                              user_id: str,
                              token_data: Dict[str, Any],
                              expires_in: Optional[int] = None) -> bool:
-        """Store user authentication token for platform"""
-        
+        """Store user authentication token for platform"""        
         try:
             token_key = f"{self.USER_TOKEN_PREFIX}:{platform.value}:{user_id}"
             
@@ -439,8 +417,7 @@ class PlatformCache:
             return False
     
     async def get_user_token(self, platform: Platform, user_id: str) -> Optional[Dict[str, Any]]:
-        """Get user authentication token for platform"""
-        
+        """Get user authentication token for platform"""        
         token_key = f"{self.USER_TOKEN_PREFIX}:{platform.value}:{user_id}"
         token_data = await self.redis_cache.get(token_key)
         
@@ -451,8 +428,7 @@ class PlatformCache:
         return None
     
     async def revoke_user_token(self, platform: Platform, user_id: str) -> bool:
-        """Revoke user authentication token"""
-        
+        """Revoke user authentication token"""        
         token_key = f"{self.USER_TOKEN_PREFIX}:{platform.value}:{user_id}"
         return await self.redis_cache.delete(token_key)
     
@@ -461,8 +437,7 @@ class PlatformCache:
                               trends_data: Dict[str, Any],
                               region: Optional[str] = None,
                               category: Optional[str] = None) -> bool:
-        """Cache trending content data"""
-        
+        """Cache trending content data"""        
         try:
             trends_key = f"{self.TRENDS_PREFIX}:{platform.value}"
             if region:
@@ -492,8 +467,7 @@ class PlatformCache:
                             platform: Platform,
                             region: Optional[str] = None,
                             category: Optional[str] = None) -> Optional[Dict[str, Any]]:
-        """Get cached trending content data"""
-        
+        """Get cached trending content data"""        
         trends_key = f"{self.TRENDS_PREFIX}:{platform.value}"
         if region:
             trends_key += f":{region}"
@@ -513,8 +487,7 @@ class PlatformCache:
                                  query: str,
                                  results: Dict[str, Any],
                                  search_type: Optional[str] = None) -> bool:
-        """Cache search results"""
-        
+        """Cache search results"""        
         try:
             # Generate search key
             query_hash = hashlib.md5(query.encode()).hexdigest()
@@ -543,8 +516,7 @@ class PlatformCache:
                                platform: Platform,
                                query: str,
                                search_type: Optional[str] = None) -> Optional[Dict[str, Any]]:
-        """Get cached search results"""
-        
+        """Get cached search results"""        
         query_hash = hashlib.md5(query.encode()).hexdigest()
         search_key = f"{self.SEARCH_PREFIX}:{platform.value}:{query_hash}"
         if search_type:
@@ -559,8 +531,7 @@ class PlatformCache:
         return None
     
     async def invalidate_user_cache(self, platform: Platform, user_id: str):
-        """Invalidate all cached data for a user on a platform"""
-        
+        """Invalidate all cached data for a user on a platform"""        
         try:
             # Get all keys for this user/platform combination
             pattern = f"{self.API_RESPONSE_PREFIX}:{platform.value}:*:{user_id}"
@@ -578,8 +549,7 @@ class PlatformCache:
             logger.error(f"Failed to invalidate user cache: {e}")
     
     async def invalidate_platform_cache(self, platform: Platform):
-        """Invalidate all cached data for a platform"""
-        
+        """Invalidate all cached data for a platform"""        
         try:
             # Get all keys for this platform
             pattern = f"{self.API_RESPONSE_PREFIX}:{platform.value}:*"
@@ -607,8 +577,7 @@ class PlatformCache:
             logger.error(f"Failed to invalidate platform cache: {e}")
     
     async def get_rate_limit_status(self, user_id: Optional[str] = None) -> Dict[str, Any]:
-        """Get rate limit status for all platforms"""
-        
+        """Get rate limit status for all platforms"""        
         status = {}
         
         for platform in Platform:
@@ -631,8 +600,7 @@ class PlatformCache:
         return status
     
     async def cleanup_expired_responses(self) -> int:
-        """Clean up expired API responses"""
-        
+        """Clean up expired API responses"""        
         try:
             # Get all API response keys
             pattern = f"{self.API_RESPONSE_PREFIX}:*"
@@ -667,8 +635,7 @@ class PlatformCache:
             return 0
     
     async def get_stats(self) -> Dict[str, Any]:
-        """Get cache statistics"""
-        redis_stats = await self.redis_cache.get_stats()
+        """Get cache statistics"""        redis_stats = await self.redis_cache.get_stats()
         memory_stats = self.memory_cache.get_stats()
         
         return {
@@ -686,15 +653,12 @@ class PlatformCache:
         }
     
     async def close(self):
-        """Close cache connections"""
-        await self.redis_cache.close()
+        """Close cache connections"""        await self.redis_cache.close()
         self.memory_cache.close()
 
 class APIResponseCache(PlatformCache):
-    """
-    Simplified API response cache for general external API caching
-    """
-    
+    """    Simplified API response cache for general external API caching
+    """    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
     
@@ -702,8 +666,7 @@ class APIResponseCache(PlatformCache):
                            endpoint_url: str,
                            response_data: Dict[str, Any],
                            ttl: Optional[int] = None) -> bool:
-        """Cache arbitrary API response"""
-        
+        """Cache arbitrary API response"""        
         try:
             url_hash = hashlib.md5(endpoint_url.encode()).hexdigest()
             cache_key = f"api_response:{url_hash}"
@@ -724,8 +687,7 @@ class APIResponseCache(PlatformCache):
             return False
     
     async def get_response(self, endpoint_url: str) -> Optional[Dict[str, Any]]:
-        """Get cached API response"""
-        
+        """Get cached API response"""        
         url_hash = hashlib.md5(endpoint_url.encode()).hexdigest()
         cache_key = f"api_response:{url_hash}"
         

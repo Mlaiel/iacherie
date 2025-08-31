@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Compliance Dashboard
+"""IA Influencer Agent - Compliance Dashboard
 Enterprise-grade compliance management interface and reporting dashboard
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -12,9 +11,7 @@ This module provides comprehensive compliance dashboard functionality including:
 - Regulatory status dashboards
 - Policy management interface
 - Violation tracking and remediation
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -41,8 +38,7 @@ logger = get_logger(__name__)
 
 
 class DashboardView(str, Enum):
-    """Dashboard view types"""
-    EXECUTIVE_SUMMARY = "executive_summary"
+    """Dashboard view types"""    EXECUTIVE_SUMMARY = "executive_summary"
     COMPLIANCE_STATUS = "compliance_status"
     VIOLATION_TRACKING = "violation_tracking"
     AUDIT_TIMELINE = "audit_timeline"
@@ -55,8 +51,7 @@ class DashboardView(str, Enum):
 
 
 class ReportFrequency(str, Enum):
-    """Report generation frequency"""
-    REAL_TIME = "real_time"
+    """Report generation frequency"""    REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -66,8 +61,7 @@ class ReportFrequency(str, Enum):
 
 
 class AlertSeverity(str, Enum):
-    """Alert severity levels"""
-    CRITICAL = "critical"
+    """Alert severity levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -76,8 +70,7 @@ class AlertSeverity(str, Enum):
 
 @dataclass
 class DashboardMetrics:
-    """Dashboard metrics summary"""
-    total_users: int
+    """Dashboard metrics summary"""    total_users: int
     active_policies: int
     compliance_score: float
     open_violations: int
@@ -93,8 +86,7 @@ class DashboardMetrics:
 
 @dataclass
 class ComplianceAlert:
-    """Compliance alert information"""
-    alert_id: str
+    """Compliance alert information"""    alert_id: str
     severity: AlertSeverity
     title: str
     description: str
@@ -109,8 +101,7 @@ class ComplianceAlert:
 
 @dataclass
 class DashboardWidget:
-    """Dashboard widget configuration"""
-    widget_id: str
+    """Dashboard widget configuration"""    widget_id: str
     widget_type: str
     title: str
     data_source: str
@@ -121,12 +112,9 @@ class DashboardWidget:
 
 
 class ComplianceDashboard:
-    """
-    Enterprise-grade compliance dashboard providing comprehensive
+    """    Enterprise-grade compliance dashboard providing comprehensive
     compliance monitoring, reporting, and management interface.
-    """
-
-    def __init__(self):
+    """    def __init__(self):
         self.audit_logger = AuditLogger()
         self.compliance_monitor = ComplianceMonitor()
         self.gdpr_manager = GDPRComplianceManager()
@@ -139,8 +127,7 @@ class ComplianceDashboard:
         user_id: str,
         time_range: Optional[tuple] = None
     ) -> Dict[str, Any]:
-        """
-        Generate executive compliance dashboard with key metrics
+        """        Generate executive compliance dashboard with key metrics
         
         Args:
             user_id: User requesting the dashboard
@@ -148,8 +135,7 @@ class ComplianceDashboard:
             
         Returns:
             Dict[str, Any]: Executive dashboard data
-        """
-        try:
+        """        try:
             # Check user permissions
             if not await self._check_dashboard_permission(user_id, DashboardView.EXECUTIVE_SUMMARY):
                 raise HTTPException(status_code=403, detail="Insufficient permissions")
@@ -214,8 +200,7 @@ class ComplianceDashboard:
         user_id: str,
         framework_filter: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """
-        Generate detailed compliance status dashboard
+        """        Generate detailed compliance status dashboard
         
         Args:
             user_id: User requesting the dashboard
@@ -223,8 +208,7 @@ class ComplianceDashboard:
             
         Returns:
             Dict[str, Any]: Compliance status dashboard data
-        """
-        try:
+        """        try:
             # Check permissions
             if not await self._check_dashboard_permission(user_id, DashboardView.COMPLIANCE_STATUS):
                 raise HTTPException(status_code=403, detail="Insufficient permissions")
@@ -274,8 +258,7 @@ class ComplianceDashboard:
         status_filter: Optional[List[str]] = None,
         severity_filter: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """
-        Generate violation tracking and remediation dashboard
+        """        Generate violation tracking and remediation dashboard
         
         Args:
             user_id: User requesting the dashboard
@@ -284,8 +267,7 @@ class ComplianceDashboard:
             
         Returns:
             Dict[str, Any]: Violation tracking dashboard data
-        """
-        try:
+        """        try:
             # Check permissions
             if not await self._check_dashboard_permission(user_id, DashboardView.VIOLATION_TRACKING):
                 raise HTTPException(status_code=403, detail="Insufficient permissions")
@@ -329,8 +311,7 @@ class ComplianceDashboard:
         parameters: Dict[str, Any],
         background_tasks: BackgroundTasks
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive compliance report
+        """        Generate comprehensive compliance report
         
         Args:
             user_id: User requesting the report
@@ -340,8 +321,7 @@ class ComplianceDashboard:
             
         Returns:
             Dict[str, Any]: Report generation status
-        """
-        try:
+        """        try:
             # Validate report type and parameters
             await self._validate_report_parameters(report_type, parameters)
             
@@ -391,8 +371,7 @@ class ComplianceDashboard:
         remediation_steps: List[str] = None,
         auto_remediation: bool = False
     ) -> ComplianceAlert:
-        """
-        Create new compliance alert
+        """        Create new compliance alert
         
         Args:
             severity: Alert severity level
@@ -405,8 +384,7 @@ class ComplianceDashboard:
             
         Returns:
             ComplianceAlert: Created alert
-        """
-        try:
+        """        try:
             alert_id = f"alert_{int(datetime.now().timestamp())}"
             
             alert = ComplianceAlert(
@@ -445,8 +423,7 @@ class ComplianceDashboard:
         widget_id: str,
         widget_config: DashboardWidget
     ) -> bool:
-        """
-        Update dashboard widget configuration
+        """        Update dashboard widget configuration
         
         Args:
             user_id: User updating the widget
@@ -455,8 +432,7 @@ class ComplianceDashboard:
             
         Returns:
             bool: Update success status
-        """
-        try:
+        """        try:
             # Validate widget configuration
             await self._validate_widget_config(widget_config)
             
@@ -486,8 +462,7 @@ class ComplianceDashboard:
             return False
 
     async def _collect_dashboard_metrics(self, time_range: tuple) -> DashboardMetrics:
-        """Collect comprehensive dashboard metrics"""
-        try:
+        """Collect comprehensive dashboard metrics"""        try:
             async with get_db_session() as session:
                 start_date, end_date = time_range
 
@@ -529,8 +504,7 @@ class ComplianceDashboard:
             return DashboardMetrics(0, 0, 0.0, 0, 0, 0, 0.0, 0.0, 0, 0.0, 0, 0)
 
     async def _generate_compliance_trends(self, time_range: tuple) -> Dict[str, Any]:
-        """Generate compliance trend data"""
-        try:
+        """Generate compliance trend data"""        try:
             trends = {
                 "compliance_score_trend": await self._get_compliance_score_trend(time_range),
                 "violation_trend": await self._get_violation_trend(time_range),
@@ -547,8 +521,7 @@ class ComplianceDashboard:
         self,
         severity_filter: Optional[List[AlertSeverity]] = None
     ) -> List[ComplianceAlert]:
-        """Get active compliance alerts"""
-        try:
+        """Get active compliance alerts"""        try:
             # Implementation to fetch active alerts
             # This would typically query from a database or cache
             return []
@@ -558,8 +531,7 @@ class ComplianceDashboard:
             return []
 
     async def _check_dashboard_permission(self, user_id: str, view: DashboardView) -> bool:
-        """Check if user has permission to access specific dashboard view"""
-        try:
+        """Check if user has permission to access specific dashboard view"""        try:
             # Implementation would check user roles and permissions
             return True  # Placeholder
 
@@ -568,8 +540,7 @@ class ComplianceDashboard:
             return False
 
     async def _validate_report_parameters(self, report_type: str, parameters: Dict[str, Any]) -> None:
-        """Validate report generation parameters"""
-        # Implementation for parameter validation
+        """Validate report generation parameters"""        # Implementation for parameter validation
         pass
 
     async def _generate_report_background(
@@ -579,8 +550,7 @@ class ComplianceDashboard:
         report_type: str,
         parameters: Dict[str, Any]
     ) -> None:
-        """Generate report in background"""
-        try:
+        """Generate report in background"""        try:
             # Implementation for background report generation
             pass
 
@@ -588,43 +558,35 @@ class ComplianceDashboard:
             logger.error(f"Failed to generate report in background: {str(e)}")
 
     async def _store_alert(self, alert: ComplianceAlert) -> None:
-        """Store compliance alert"""
-        # Implementation to store alert in database
+        """Store compliance alert"""        # Implementation to store alert in database
         pass
 
     async def _process_auto_remediation(self, alert: ComplianceAlert) -> None:
-        """Process automatic remediation for alert"""
-        # Implementation for auto-remediation
+        """Process automatic remediation for alert"""        # Implementation for auto-remediation
         pass
 
     async def _send_alert_notifications(self, alert: ComplianceAlert) -> None:
-        """Send alert notifications"""
-        # Implementation to send notifications
+        """Send alert notifications"""        # Implementation to send notifications
         pass
 
     async def _get_violation_counts(self, time_range: tuple) -> Dict[str, int]:
-        """Get violation counts for time range"""
-        # Implementation to get violation statistics
+        """Get violation counts for time range"""        # Implementation to get violation statistics
         return {"open": 0, "resolved": 0, "pending_audits": 0, "dmca_takedowns": 0, "data_breaches": 0, "regulatory_changes": 0}
 
     async def _calculate_current_risk_score(self) -> float:
-        """Calculate current risk score"""
-        # Implementation for risk score calculation
+        """Calculate current risk score"""        # Implementation for risk score calculation
         return 0.0
 
     async def _get_executive_widgets(self) -> List[DashboardWidget]:
-        """Get executive dashboard widgets"""
-        # Implementation to return widget configurations
+        """Get executive dashboard widgets"""        # Implementation to return widget configurations
         return []
 
     async def _get_compliance_widgets(self) -> List[DashboardWidget]:
-        """Get compliance dashboard widgets"""
-        # Implementation to return widget configurations
+        """Get compliance dashboard widgets"""        # Implementation to return widget configurations
         return []
 
     async def _get_violation_widgets(self) -> List[DashboardWidget]:
-        """Get violation tracking widgets"""
-        # Implementation to return widget configurations
+        """Get violation tracking widgets"""        # Implementation to return widget configurations
         return []
 
 

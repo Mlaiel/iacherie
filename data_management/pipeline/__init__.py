@@ -27,8 +27,7 @@ This module provides:
 - AI-powered monetization analytics
 - Brand collaboration matching
 - Revenue tracking and optimization
-"""
-from .coordinators import (
+"""from .coordinators import (
     ContentPipelineCoordinator,
     ProcessingOrchestrator,
     QualityAssuranceCoordinator

@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Configuration Management
+"""IA Influencer Agent - Configuration Management
 Enterprise configuration and secrets management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -11,9 +10,7 @@ Features:
 - Environment-specific configurations
 - Configuration versioning and rollback
 - Integration with Kubernetes ConfigMaps and Secrets
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import yaml
@@ -34,10 +31,8 @@ from .base_manager import BaseDeploymentManager
 
 # Mock classes for standalone operation
 class EncryptionManager:
-    """Mock encryption manager."""
-    def __init__(self):
-        """Initialize encryption manager with security protocols"""
-        self.logger = logging.getLogger(f"{__name__}.EncryptionManager")
+    """Mock encryption manager."""    def __init__(self):
+        """Initialize encryption manager with security protocols"""        self.logger = logging.getLogger(f"{__name__}.EncryptionManager")
         self.encryption_algorithms = ['AES-256-GCM', 'ChaCha20-Poly1305', 'XSalsa20-Poly1305']
         self.key_derivation = 'PBKDF2-SHA512'
         self.key_rotation_interval = 90  # days
@@ -60,10 +55,8 @@ class EncryptionManager:
         return base64.b64decode(encrypted_data.encode()).decode()
 
 class MetricsCollector:
-    """Mock metrics collector."""
-    def __init__(self):
-        """Initialize configuration metrics collector"""
-        self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
+    """Mock metrics collector."""    def __init__(self):
+        """Initialize configuration metrics collector"""        self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
         self.config_metrics = ['config_changes', 'secret_rotations', 'access_frequency']
         self.security_metrics = ['unauthorized_access', 'encryption_status', 'key_rotation_status']
         self.monitoring_tools = ['vault', 'consul', 'etcd', 'kubernetes_secrets']
@@ -74,8 +67,7 @@ class MetricsCollector:
 
 
 class ConfigType(Enum):
-    """Configuration types."""
-    APPLICATION = "application"
+    """Configuration types."""    APPLICATION = "application"
     DATABASE = "database"
     API_KEYS = "api_keys"
     CERTIFICATES = "certificates"
@@ -86,8 +78,7 @@ class ConfigType(Enum):
 
 
 class SecretType(Enum):
-    """Secret types."""
-    PASSWORD = "password"
+    """Secret types."""    PASSWORD = "password"
     API_KEY = "api_key"
     TOKEN = "token"
     CERTIFICATE = "certificate"
@@ -97,8 +88,7 @@ class SecretType(Enum):
 
 
 class Environment(Enum):
-    """Environment types."""
-    DEVELOPMENT = "development"
+    """Environment types."""    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -107,8 +97,7 @@ class Environment(Enum):
 
 @dataclass
 class ConfigEntry:
-    """Configuration entry."""
-    key: str
+    """Configuration entry."""    key: str
     value: Any
     config_type: ConfigType
     environment: Environment
@@ -122,8 +111,7 @@ class ConfigEntry:
 
 @dataclass
 class SecretEntry:
-    """Secret entry."""
-    key: str
+    """Secret entry."""    key: str
     value: str
     secret_type: SecretType
     environment: Environment
@@ -139,8 +127,7 @@ class SecretEntry:
 
 @dataclass
 class ConfigTemplate:
-    """Configuration template."""
-    name: str
+    """Configuration template."""    name: str
     config_type: ConfigType
     template: Dict[str, Any]
     variables: List[str]
@@ -149,14 +136,11 @@ class ConfigTemplate:
 
 
 class ConfigurationManager(BaseDeploymentManager):
-    """
-    Enterprise configuration and secrets management.
+    """    Enterprise configuration and secrets management.
     
     Manages application configurations, secrets, and environment-specific
     settings with encryption, versioning, and rotation capabilities.
-    """
-
-    def __init__(
+    """    def __init__(
         self,
         encryption_manager: Optional[EncryptionManager] = None,
         metrics_collector: Optional[MetricsCollector] = None,
@@ -193,8 +177,7 @@ class ConfigurationManager(BaseDeploymentManager):
         )
 
     def _get_platform_configurations(self) -> Dict[str, Dict[str, Any]]:
-        """Get default platform configurations."""
-        return {
+        """Get default platform configurations."""        return {
             "api_gateway": {
                 "port": 8000,
                 "max_connections": 1000,
@@ -282,13 +265,11 @@ class ConfigurationManager(BaseDeploymentManager):
         }
 
     async def initialize(self) -> bool:
-        """
-        Initialize configuration manager.
+        """        Initialize configuration manager.
         
         Returns:
             True if initialization successful, False otherwise
-        """
-        try:
+        """        try:
             # Initialize encryption manager
             encryption_init = await self.encryption_manager.initialize()
             if not encryption_init:
@@ -314,8 +295,7 @@ class ConfigurationManager(BaseDeploymentManager):
             return False
 
     async def _initialize_platform_configurations(self) -> None:
-        """Initialize platform configurations for all environments."""
-        try:
+        """Initialize platform configurations for all environments."""        try:
             for env in Environment:
                 # Initialize configuration storage for environment
                 if env.value not in self.configurations:
@@ -349,8 +329,7 @@ class ConfigurationManager(BaseDeploymentManager):
             self.logger.error(f"Failed to initialize platform configurations: {e}")
 
     def _adjust_config_for_environment(self, config: Dict[str, Any], env: Environment) -> Dict[str, Any]:
-        """Adjust configuration values based on environment."""
-        env_config = config.copy()
+        """Adjust configuration values based on environment."""        env_config = config.copy()
         
         # Environment-specific adjustments
         if env == Environment.DEVELOPMENT:
@@ -386,8 +365,7 @@ class ConfigurationManager(BaseDeploymentManager):
         description: str = "",
         encrypt: bool = False
     ) -> bool:
-        """
-        Set configuration value.
+        """        Set configuration value.
         
         Args:
             key: Configuration key
@@ -400,8 +378,7 @@ class ConfigurationManager(BaseDeploymentManager):
             
         Returns:
             True if configuration set successfully, False otherwise
-        """
-        try:
+        """        try:
             # Encrypt value if requested
             final_value = value
             if encrypt:
@@ -465,8 +442,7 @@ class ConfigurationManager(BaseDeploymentManager):
         environment: Environment,
         decrypt: bool = True
     ) -> Optional[Any]:
-        """
-        Get configuration value.
+        """        Get configuration value.
         
         Args:
             key: Configuration key
@@ -475,8 +451,7 @@ class ConfigurationManager(BaseDeploymentManager):
             
         Returns:
             Configuration value or None if not found
-        """
-        try:
+        """        try:
             env_key = environment.value
             
             if env_key not in self.configurations or key not in self.configurations[env_key]:
@@ -519,8 +494,7 @@ class ConfigurationManager(BaseDeploymentManager):
         expires_at: Optional[datetime] = None,
         rotation_interval_days: Optional[int] = None
     ) -> bool:
-        """
-        Set secret value.
+        """        Set secret value.
         
         Args:
             key: Secret key
@@ -534,8 +508,7 @@ class ConfigurationManager(BaseDeploymentManager):
             
         Returns:
             True if secret set successfully, False otherwise
-        """
-        try:
+        """        try:
             # Encrypt secret value
             encrypted_value = await self.encryption_manager.encrypt_data(value)
             
@@ -596,8 +569,7 @@ class ConfigurationManager(BaseDeploymentManager):
         environment: Environment,
         decrypt: bool = True
     ) -> Optional[str]:
-        """
-        Get secret value.
+        """        Get secret value.
         
         Args:
             key: Secret key
@@ -606,8 +578,7 @@ class ConfigurationManager(BaseDeploymentManager):
             
         Returns:
             Secret value or None if not found
-        """
-        try:
+        """        try:
             env_key = environment.value
             
             if env_key not in self.secrets or key not in self.secrets[env_key]:
@@ -640,8 +611,7 @@ class ConfigurationManager(BaseDeploymentManager):
             return None
 
     async def delete_configuration(self, key: str, environment: Environment) -> bool:
-        """
-        Delete configuration.
+        """        Delete configuration.
         
         Args:
             key: Configuration key
@@ -649,8 +619,7 @@ class ConfigurationManager(BaseDeploymentManager):
             
         Returns:
             True if deletion successful, False otherwise
-        """
-        try:
+        """        try:
             env_key = environment.value
             
             if env_key not in self.configurations or key not in self.configurations[env_key]:
@@ -685,8 +654,7 @@ class ConfigurationManager(BaseDeploymentManager):
             return False
 
     async def delete_secret(self, key: str, environment: Environment) -> bool:
-        """
-        Delete secret.
+        """        Delete secret.
         
         Args:
             key: Secret key
@@ -694,8 +662,7 @@ class ConfigurationManager(BaseDeploymentManager):
             
         Returns:
             True if deletion successful, False otherwise
-        """
-        try:
+        """        try:
             env_key = environment.value
             
             if env_key not in self.secrets or key not in self.secrets[env_key]:
@@ -730,8 +697,7 @@ class ConfigurationManager(BaseDeploymentManager):
             return False
 
     async def rotate_secret(self, key: str, environment: Environment, new_value: str) -> bool:
-        """
-        Rotate secret value.
+        """        Rotate secret value.
         
         Args:
             key: Secret key
@@ -740,8 +706,7 @@ class ConfigurationManager(BaseDeploymentManager):
             
         Returns:
             True if rotation successful, False otherwise
-        """
-        try:
+        """        try:
             env_key = environment.value
             
             if env_key not in self.secrets or key not in self.secrets[env_key]:
@@ -779,13 +744,11 @@ class ConfigurationManager(BaseDeploymentManager):
             return False
 
     async def auto_rotate_secrets(self) -> int:
-        """
-        Automatically rotate secrets that are due for rotation.
+        """        Automatically rotate secrets that are due for rotation.
         
         Returns:
             Number of secrets rotated
-        """
-        try:
+        """        try:
             rotated_count = 0
             current_time = datetime.now()
             
@@ -817,8 +780,7 @@ class ConfigurationManager(BaseDeploymentManager):
             return 0
 
     async def _generate_new_secret_value(self, secret_type: SecretType) -> Optional[str]:
-        """Generate new secret value based on type."""
-        try:
+        """Generate new secret value based on type."""        try:
             if secret_type in [SecretType.PASSWORD, SecretType.API_KEY, SecretType.TOKEN]:
                 # Generate random string
                 import secrets
@@ -839,8 +801,7 @@ class ConfigurationManager(BaseDeploymentManager):
             return None
 
     async def _sync_config_to_kubernetes(self, config_entry: ConfigEntry) -> bool:
-        """Sync configuration to Kubernetes ConfigMap."""
-        try:
+        """Sync configuration to Kubernetes ConfigMap."""        try:
             if not self.k8s_client:
                 return True  # Skip if Kubernetes client not available
             
@@ -900,8 +861,7 @@ class ConfigurationManager(BaseDeploymentManager):
             return False
 
     async def _sync_secret_to_kubernetes(self, secret_entry: SecretEntry) -> bool:
-        """Sync secret to Kubernetes Secret."""
-        try:
+        """Sync secret to Kubernetes Secret."""        try:
             if not self.k8s_client:
                 return True  # Skip if Kubernetes client not available
             
@@ -964,8 +924,7 @@ class ConfigurationManager(BaseDeploymentManager):
             return False
 
     async def _delete_config_from_kubernetes(self, key: str, namespace: str) -> bool:
-        """Delete configuration from Kubernetes ConfigMap."""
-        try:
+        """Delete configuration from Kubernetes ConfigMap."""        try:
             if not self.k8s_client:
                 return True  # Skip if Kubernetes client not available
             
@@ -988,8 +947,7 @@ class ConfigurationManager(BaseDeploymentManager):
             return False
 
     async def _delete_secret_from_kubernetes(self, key: str, namespace: str) -> bool:
-        """Delete secret from Kubernetes Secret."""
-        try:
+        """Delete secret from Kubernetes Secret."""        try:
             if not self.k8s_client:
                 return True  # Skip if Kubernetes client not available
             
@@ -1017,8 +975,7 @@ class ConfigurationManager(BaseDeploymentManager):
         config_type: Optional[ConfigType] = None,
         namespace: Optional[str] = None
     ) -> List[ConfigEntry]:
-        """
-        List configurations.
+        """        List configurations.
         
         Args:
             environment: Optional environment filter
@@ -1027,8 +984,7 @@ class ConfigurationManager(BaseDeploymentManager):
             
         Returns:
             List of configuration entries
-        """
-        results = []
+        """        results = []
         
         for env_key, configs in self.configurations.items():
             if environment and env_key != environment.value:
@@ -1052,8 +1008,7 @@ class ConfigurationManager(BaseDeploymentManager):
         namespace: Optional[str] = None,
         include_values: bool = False
     ) -> List[Dict[str, Any]]:
-        """
-        List secrets (without values by default for security).
+        """        List secrets (without values by default for security).
         
         Args:
             environment: Optional environment filter
@@ -1063,8 +1018,7 @@ class ConfigurationManager(BaseDeploymentManager):
             
         Returns:
             List of secret information
-        """
-        results = []
+        """        results = []
         
         for env_key, secrets in self.secrets.items():
             if environment and env_key != environment.value:
@@ -1107,8 +1061,7 @@ class ConfigurationManager(BaseDeploymentManager):
         output_format: str = "json",
         include_secrets: bool = False
     ) -> Optional[str]:
-        """
-        Export configuration for environment.
+        """        Export configuration for environment.
         
         Args:
             environment: Target environment
@@ -1117,8 +1070,7 @@ class ConfigurationManager(BaseDeploymentManager):
             
         Returns:
             Exported configuration string or None if failed
-        """
-        try:
+        """        try:
             export_data = {
                 "environment": environment.value,
                 "exported_at": datetime.now().isoformat(),
@@ -1170,8 +1122,7 @@ class ConfigurationManager(BaseDeploymentManager):
         input_format: str = "json",
         overwrite: bool = False
     ) -> bool:
-        """
-        Import configuration for environment.
+        """        Import configuration for environment.
         
         Args:
             data: Configuration data string
@@ -1181,8 +1132,7 @@ class ConfigurationManager(BaseDeploymentManager):
             
         Returns:
             True if import successful, False otherwise
-        """
-        try:
+        """        try:
             # Parse input data
             if input_format.lower() == "yaml":
                 import_data = yaml.safe_load(data)
@@ -1245,13 +1195,11 @@ class ConfigurationManager(BaseDeploymentManager):
             return False
 
     async def cleanup(self) -> bool:
-        """
-        Cleanup configuration manager.
+        """        Cleanup configuration manager.
         
         Returns:
             True if cleanup successful, False otherwise
-        """
-        try:
+        """        try:
             # Clear all configurations and secrets
             self.configurations.clear()
             self.secrets.clear()

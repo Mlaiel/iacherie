@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Logging System Usage Examples
+"""IA Influencer Agent - Logging System Usage Examples
 Complete examples of logging system implementation
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -9,9 +8,7 @@ WARNING: This code is the intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit 
 written permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timezone
 from typing import Dict, Any
@@ -32,8 +29,7 @@ from . import (
 
 
 class LoggingSystemExample:
-    """Complete example of IA Influencer Agent logging system"""
-    
+    """Complete example of IA Influencer Agent logging system"""    
     def __init__(self):
         self.aggregator = None
         self.es_manager = None
@@ -43,8 +39,7 @@ class LoggingSystemExample:
         self.monitoring_service = None
     
     async def setup_complete_system(self):
-        """Setup complete logging system with all components"""
-        
+        """Setup complete logging system with all components"""        
         # 1. Setup Log Aggregator
         aggregator_config = {
             'buffer_size': 1000,
@@ -134,8 +129,7 @@ class LoggingSystemExample:
         logging.info("Complete logging system setup completed")
     
     async def example_ai_processing_logs(self):
-        """Example of AI processing logs"""
-        
+        """Example of AI processing logs"""        
         # Fingerprinting success
         await self.aggregator.log(
             level=LogLevel.INFO,
@@ -188,8 +182,7 @@ class LoggingSystemExample:
         )
     
     async def example_error_logs(self):
-        """Example of error logging scenarios"""
-        
+        """Example of error logging scenarios"""        
         # AI processing error
         await self.aggregator.log(
             level=LogLevel.ERROR,
@@ -240,8 +233,7 @@ class LoggingSystemExample:
         )
     
     async def example_user_activity_logs(self):
-        """Example of user activity logging"""
-        
+        """Example of user activity logging"""        
         # User upload
         await self.aggregator.log(
             level=LogLevel.INFO,
@@ -294,8 +286,7 @@ class LoggingSystemExample:
         )
     
     async def example_performance_logs(self):
-        """Example of performance monitoring logs"""
-        
+        """Example of performance monitoring logs"""        
         # API response time
         await self.aggregator.log(
             level=LogLevel.INFO,
@@ -346,8 +337,7 @@ class LoggingSystemExample:
         )
     
     async def run_analytics_examples(self):
-        """Example of analytics operations"""
-        
+        """Example of analytics operations"""        
         # Compute metrics
         metrics = await self.analytics_engine.compute_metrics(24)
         print("Current Metrics:")
@@ -382,8 +372,7 @@ class LoggingSystemExample:
         print(f"- Anomalies: {dashboard_data['anomalies']['count']}")
     
     async def run_retention_examples(self):
-        """Example of retention operations"""
-        
+        """Example of retention operations"""        
         # Run retention policies
         log_directory = "/var/log/ia-influencer"
         retention_results = await self.retention_manager.run_retention(log_directory)
@@ -403,8 +392,7 @@ class LoggingSystemExample:
         print(f"- Compressed ratio: {stats['compression_ratio']:.2%}")
     
     async def cleanup_system(self):
-        """Cleanup and shutdown logging system"""
-        
+        """Cleanup and shutdown logging system"""        
         if self.monitoring_service:
             await self.monitoring_service.stop()
         
@@ -424,8 +412,7 @@ class LoggingSystemExample:
 
 
 async def main():
-    """Main example execution"""
-    
+    """Main example execution"""    
     # Initialize logging system
     example = LoggingSystemExample()
     

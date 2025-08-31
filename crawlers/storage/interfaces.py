@@ -1,5 +1,4 @@
-"""
-Storage Interfaces Module
+"""Storage Interfaces Module
 =========================
 
 Professional storage interface definitions for IA-Influencer-Agent platform.
@@ -22,9 +21,7 @@ Expertise combinée:
 - Audio/Vidéo: Traitement multimédia et analyse de contenu
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
-"""
-
-from abc import ABC, abstractmethod
+"""from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Any, Union, AsyncIterator, Tuple, Callable
 from datetime import datetime, timedelta
 from dataclasses import dataclass, field
@@ -35,8 +32,7 @@ import asyncio
 from contextlib import asynccontextmanager
 
 class StorageBackendType(Enum):
-    """Supported storage backend types."""
-    DATABASE = "database"
+    """Supported storage backend types."""    DATABASE = "database"
     FILE_SYSTEM = "file_system"
     OBJECT_STORAGE = "object_storage"
     CACHE = "cache"
@@ -46,8 +42,7 @@ class StorageBackendType(Enum):
     MESSAGE_QUEUE = "message_queue"
 
 class ContentType(Enum):
-    """Content types for multi-format support."""
-    AUDIO = "audio"
+    """Content types for multi-format support."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -58,15 +53,13 @@ class ContentType(Enum):
     COLLABORATION = "collaboration"
 
 class ViolationSeverity(IntEnum):
-    """Violation severity levels."""
-    LOW = 1
+    """Violation severity levels."""    LOW = 1
     MEDIUM = 2
     HIGH = 3
     CRITICAL = 4
 
 class FingerPrintType(Enum):
-    """Fingerprint algorithm types."""
-    CHROMAPRINT = "chromaprint"
+    """Fingerprint algorithm types."""    CHROMAPRINT = "chromaprint"
     PERCEPTUAL_HASH = "perceptual_hash"
     CONTENT_HASH = "content_hash"
     VECTOR_EMBEDDING = "vector_embedding"
@@ -74,8 +67,7 @@ class FingerPrintType(Enum):
     CLIP_EMBEDDING = "clip_embedding"
 
 class CompressionType(Enum):
-    """Supported compression types."""
-    NONE = "none"
+    """Supported compression types."""    NONE = "none"
     GZIP = "gzip"
     BZIP2 = "bzip2"
     LZ4 = "lz4"
@@ -84,8 +76,7 @@ class CompressionType(Enum):
     DEFLATE = "deflate"
 
 class DataFormat(Enum):
-    """Supported data formats."""
-    JSON = "json"
+    """Supported data formats."""    JSON = "json"
     JSONL = "jsonl"
     PARQUET = "parquet"
     CSV = "csv"
@@ -97,8 +88,7 @@ class DataFormat(Enum):
     MSGPACK = "msgpack"
 
 class Platform(Enum):
-    """Supported social media platforms."""
-    YOUTUBE = "youtube"
+    """Supported social media platforms."""    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     TWITTER = "twitter"
@@ -112,8 +102,7 @@ class Platform(Enum):
     REDDIT = "reddit"
 
 class RevenueType(Enum):
-    """Revenue stream types."""
-    STREAMING = "streaming"
+    """Revenue stream types."""    STREAMING = "streaming"
     ADVERTISING = "advertising"
     SPONSORSHIP = "sponsorship"
     MERCHANDISE = "merchandise"
@@ -123,8 +112,7 @@ class RevenueType(Enum):
     COLLABORATION = "collaboration"
 
 class StorageOperation(Enum):
-    """Storage operation types."""
-    CREATE = "create"
+    """Storage operation types."""    CREATE = "create"
     READ = "read"
     UPDATE = "update"
     DELETE = "delete"
@@ -137,8 +125,7 @@ class StorageOperation(Enum):
     DECOMPRESS = "decompress"
 
 class HealthStatus(Enum):
-    """Health status levels."""
-    HEALTHY = "healthy"
+    """Health status levels."""    HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
     OFFLINE = "offline"
@@ -146,8 +133,7 @@ class HealthStatus(Enum):
 
 @dataclass
 class CrawlerData:
-    """Unified crawler data structure."""
-    id: str
+    """Unified crawler data structure."""    id: str
     platform: Platform
     content_id: str
     author_id: str
@@ -176,8 +162,7 @@ class CrawlerData:
 
 @dataclass
 class ContentRecord:
-    """Content record for protection system."""
-    id: str
+    """Content record for protection system."""    id: str
     user_id: str
     original_filename: str
     content_type: ContentType
@@ -204,8 +189,7 @@ class ContentRecord:
 
 @dataclass
 class ViolationRecord:
-    """Copyright violation record."""
-    id: str
+    """Copyright violation record."""    id: str
     original_content_id: str
     detected_content_id: str
     platform: Platform
@@ -228,23 +212,20 @@ class ViolationRecord:
 
 @dataclass
 class CacheKey:
-    """Cache key structure."""
-    namespace: str
+    """Cache key structure."""    namespace: str
     identifier: str
     version: Optional[str] = None
     tags: List[str] = field(default_factory=list)
     
     def to_string(self) -> str:
-        """Convert to cache key string."""
-        key = f"{self.namespace}:{self.identifier}"
+        """Convert to cache key string."""        key = f"{self.namespace}:{self.identifier}"
         if self.version:
             key += f":{self.version}"
         return key
 
 @dataclass
 class VectorRecord:
-    """Vector embedding record."""
-    id: str
+    """Vector embedding record."""    id: str
     content_id: str
     embedding_type: str  # audio, video, image, text
     embedding_model: str  # chromaprint, clip, bert, etc.
@@ -257,8 +238,7 @@ class VectorRecord:
 
 @dataclass
 class TimeSeriesPoint:
-    """Time series data point."""
-    metric_name: str
+    """Time series data point."""    metric_name: str
     timestamp: datetime
     value: Union[int, float]
     tags: Dict[str, str] = field(default_factory=dict)
@@ -266,8 +246,7 @@ class TimeSeriesPoint:
 
 @dataclass
 class RevenueRecord:
-    """Revenue tracking record."""
-    id: str
+    """Revenue tracking record."""    id: str
     user_id: str
     content_id: str
     platform: Platform
@@ -287,8 +266,7 @@ class RevenueRecord:
 
 @dataclass
 class CollaborationRecord:
-    """Creator collaboration record."""
-    id: str
+    """Creator collaboration record."""    id: str
     initiator_user_id: str
     collaborator_user_id: str
     project_title: str
@@ -304,8 +282,7 @@ class CollaborationRecord:
 
 @dataclass
 class StorageMetadata:
-    """Storage operation metadata."""
-    record_id: str
+    """Storage operation metadata."""    record_id: str
     created_at: datetime
     updated_at: Optional[datetime] = None
     size_bytes: Optional[int] = None
@@ -324,8 +301,7 @@ class StorageMetadata:
 
 # Storage Exceptions
 class StorageException(Exception):
-    """Base exception for storage operations."""
-    
+    """Base exception for storage operations."""    
     def __init__(self, message: str, error_code: Optional[str] = None, details: Optional[Dict[str, Any]] = None):
         self.message = message
         self.error_code = error_code
@@ -333,48 +309,42 @@ class StorageException(Exception):
         super().__init__(self.message)
 
 class ConnectionException(StorageException):
-    """Exception for connection-related errors."""
-    def __init__(self, message: str, host: str = None, port: int = None, details: dict = None):
+    """Exception for connection-related errors."""    def __init__(self, message: str, host: str = None, port: int = None, details: dict = None):
         self.host = host
         self.port = port
         self.details = details or {}
         super().__init__(message, "CONNECTION_ERROR", self.details)
 
 class ValidationException(StorageException):
-    """Exception for data validation errors."""
-    def __init__(self, message: str, field: str = None, value: Any = None, details: dict = None):
+    """Exception for data validation errors."""    def __init__(self, message: str, field: str = None, value: Any = None, details: dict = None):
         self.field = field
         self.value = value
         self.details = details or {}
         super().__init__(message, "VALIDATION_ERROR", self.details)
 
 class TimeoutException(StorageException):
-    """Exception for timeout errors."""
-    def __init__(self, message: str, timeout_duration: float = None, operation: str = None, details: dict = None):
+    """Exception for timeout errors."""    def __init__(self, message: str, timeout_duration: float = None, operation: str = None, details: dict = None):
         self.timeout_duration = timeout_duration
         self.operation = operation
         self.details = details or {}
         super().__init__(message, "TIMEOUT_ERROR", self.details)
 
 class CapacityException(StorageException):
-    """Exception for storage capacity errors."""
-    def __init__(self, message: str, current_capacity: int = None, max_capacity: int = None, details: dict = None):
+    """Exception for storage capacity errors."""    def __init__(self, message: str, current_capacity: int = None, max_capacity: int = None, details: dict = None):
         self.current_capacity = current_capacity
         self.max_capacity = max_capacity
         self.details = details or {}
         super().__init__(message, "CAPACITY_ERROR", self.details)
 
 class AuthenticationException(StorageException):
-    """Exception for authentication errors."""
-    def __init__(self, message: str, user_id: str = None, auth_method: str = None, details: dict = None):
+    """Exception for authentication errors."""    def __init__(self, message: str, user_id: str = None, auth_method: str = None, details: dict = None):
         self.user_id = user_id
         self.auth_method = auth_method
         self.details = details or {}
         super().__init__(message, "AUTH_ERROR", self.details)
 
 class PermissionException(StorageException):
-    """Exception for permission errors."""
-    def __init__(self, message: str, user_id: str = None, resource: str = None, action: str = None, details: dict = None):
+    """Exception for permission errors."""    def __init__(self, message: str, user_id: str = None, resource: str = None, action: str = None, details: dict = None):
         self.user_id = user_id
         self.resource = resource
         self.action = action
@@ -382,24 +352,21 @@ class PermissionException(StorageException):
         super().__init__(message, "PERMISSION_ERROR", self.details)
 
 class DuplicateRecordException(StorageException):
-    """Exception for duplicate record errors."""
-    def __init__(self, message: str, record_id: str = None, unique_field: str = None, details: dict = None):
+    """Exception for duplicate record errors."""    def __init__(self, message: str, record_id: str = None, unique_field: str = None, details: dict = None):
         self.record_id = record_id
         self.unique_field = unique_field
         self.details = details or {}
         super().__init__(message, "DUPLICATE_ERROR", self.details)
 
 class RecordNotFoundException(StorageException):
-    """Exception for record not found errors."""
-    def __init__(self, message: str, record_id: str = None, search_criteria: dict = None, details: dict = None):
+    """Exception for record not found errors."""    def __init__(self, message: str, record_id: str = None, search_criteria: dict = None, details: dict = None):
         self.record_id = record_id
         self.search_criteria = search_criteria or {}
         self.details = details or {}
         super().__init__(message, "RECORD_NOT_FOUND", self.details)
 
 class CorruptedDataException(StorageException):
-    """Exception for corrupted data errors."""
-    def __init__(self, message: str, data_path: str = None, checksum_expected: str = None, 
+    """Exception for corrupted data errors."""    def __init__(self, message: str, data_path: str = None, checksum_expected: str = None, 
                  checksum_actual: str = None, details: dict = None):
         self.data_path = data_path
         self.checksum_expected = checksum_expected
@@ -408,8 +375,7 @@ class CorruptedDataException(StorageException):
         super().__init__(message, "DATA_CORRUPTION", self.details)
 
 class UnsupportedOperationException(StorageException):
-    """Exception for unsupported operations."""
-    def __init__(self, message: str, operation: str = None, provider: str = None, details: dict = None):
+    """Exception for unsupported operations."""    def __init__(self, message: str, operation: str = None, provider: str = None, details: dict = None):
         self.operation = operation
         self.provider = provider
         self.details = details or {}
@@ -417,16 +383,14 @@ class UnsupportedOperationException(StorageException):
 
 @dataclass
 class QueryFilter:
-    """Query filter for storage operations."""
-    field: str
+    """Query filter for storage operations."""    field: str
     operator: str  # eq, ne, gt, gte, lt, lte, in, nin, contains, regex
     value: Any
     case_sensitive: bool = True
 
 @dataclass
 class QueryOptions:
-    """Query options for storage operations."""
-    filters: List[QueryFilter]
+    """Query options for storage operations."""    filters: List[QueryFilter]
     sort_by: Optional[str] = None
     sort_order: str = "asc"  # asc, desc
     limit: Optional[int] = None
@@ -436,8 +400,7 @@ class QueryOptions:
 
 @dataclass
 class StorageStats:
-    """Storage statistics."""
-    total_records: int
+    """Storage statistics."""    total_records: int
     total_size_bytes: int
     created_today: int
     updated_today: int
@@ -445,20 +408,17 @@ class StorageStats:
     compression_ratio: Optional[float] = None
 
 class BaseStorageProvider(ABC):
-    """
-    Abstract base class for all storage providers.
+    """    Abstract base class for all storage providers.
     
     Defines the common interface that all storage backends must implement.
-    """
-    
+    """    
     def __init__(
         self,
         provider_id: str,
         backend_type: StorageBackendType,
         config: Dict[str, Any]
     ):
-        """Initialize storage provider."""
-        self.provider_id = provider_id
+        """Initialize storage provider."""        self.provider_id = provider_id
         self.backend_type = backend_type
         self.config = config
         self.is_connected = False
@@ -466,18 +426,15 @@ class BaseStorageProvider(ABC):
     
     @abstractmethod
     async def connect(self) -> None:
-        """Establish connection to storage backend."""
-        pass
+        """Establish connection to storage backend."""        pass
     
     @abstractmethod
     async def disconnect(self) -> None:
-        """Close connection to storage backend."""
-        pass
+        """Close connection to storage backend."""        pass
     
     @abstractmethod
     async def health_check(self) -> bool:
-        """Check if storage backend is healthy."""
-        pass
+        """Check if storage backend is healthy."""        pass
     
     @abstractmethod
     async def store_record(
@@ -486,16 +443,14 @@ class BaseStorageProvider(ABC):
         data: Any,
         metadata: Optional[StorageMetadata] = None
     ) -> bool:
-        """Store a single record."""
-        pass
+        """Store a single record."""        pass
     
     @abstractmethod
     async def store_batch(
         self,
         records: List[Tuple[str, Any, Optional[StorageMetadata]]]
     ) -> Dict[str, bool]:
-        """Store multiple records in batch."""
-        pass
+        """Store multiple records in batch."""        pass
     
     @abstractmethod
     async def retrieve_record(
@@ -503,8 +458,7 @@ class BaseStorageProvider(ABC):
         record_id: str,
         include_metadata: bool = True
     ) -> Optional[Tuple[Any, Optional[StorageMetadata]]]:
-        """Retrieve a single record."""
-        pass
+        """Retrieve a single record."""        pass
     
     @abstractmethod
     async def retrieve_batch(
@@ -512,24 +466,21 @@ class BaseStorageProvider(ABC):
         record_ids: List[str],
         include_metadata: bool = True
     ) -> Dict[str, Optional[Tuple[Any, Optional[StorageMetadata]]]]:
-        """Retrieve multiple records in batch."""
-        pass
+        """Retrieve multiple records in batch."""        pass
     
     @abstractmethod
     async def query_records(
         self,
         options: QueryOptions
     ) -> AsyncIterator[Tuple[str, Any, Optional[StorageMetadata]]]:
-        """Query records with filtering and pagination."""
-        pass
+        """Query records with filtering and pagination."""        pass
     
     @abstractmethod
     async def count_records(
         self,
         filters: Optional[List[QueryFilter]] = None
     ) -> int:
-        """Count records matching filters."""
-        pass
+        """Count records matching filters."""        pass
     
     @abstractmethod
     async def update_record(
@@ -538,28 +489,23 @@ class BaseStorageProvider(ABC):
         data: Any,
         metadata: Optional[StorageMetadata] = None
     ) -> bool:
-        """Update an existing record."""
-        pass
+        """Update an existing record."""        pass
     
     @abstractmethod
     async def delete_record(self, record_id: str) -> bool:
-        """Delete a record."""
-        pass
+        """Delete a record."""        pass
     
     @abstractmethod
     async def delete_batch(self, record_ids: List[str]) -> Dict[str, bool]:
-        """Delete multiple records in batch."""
-        pass
+        """Delete multiple records in batch."""        pass
     
     @abstractmethod
     async def exists(self, record_id: str) -> bool:
-        """Check if record exists."""
-        pass
+        """Check if record exists."""        pass
     
     @abstractmethod
     async def get_statistics(self) -> StorageStats:
-        """Get storage statistics."""
-        pass
+        """Get storage statistics."""        pass
     
     @abstractmethod
     async def cleanup_old_records(
@@ -567,16 +513,13 @@ class BaseStorageProvider(ABC):
         older_than: datetime,
         batch_size: int = 1000
     ) -> int:
-        """Remove records older than specified date."""
-        pass
+        """Remove records older than specified date."""        pass
 
 class ContentStorageProvider(BaseStorageProvider):
-    """
-    Abstract base class for content-specific storage providers.
+    """    Abstract base class for content-specific storage providers.
     
     Extends BaseStorageProvider with content-specific operations.
-    """
-    
+    """    
     @abstractmethod
     async def store_content(
         self,
@@ -586,8 +529,7 @@ class ContentStorageProvider(BaseStorageProvider):
         content_data: Dict[str, Any],
         media_files: Optional[List[Dict[str, Any]]] = None
     ) -> bool:
-        """Store content with associated media files."""
-        pass
+        """Store content with associated media files."""        pass
     
     @abstractmethod
     async def retrieve_content(
@@ -595,8 +537,7 @@ class ContentStorageProvider(BaseStorageProvider):
         content_id: str,
         include_media: bool = True
     ) -> Optional[Dict[str, Any]]:
-        """Retrieve content with optional media files."""
-        pass
+        """Retrieve content with optional media files."""        pass
     
     @abstractmethod
     async def query_content_by_platform(
@@ -606,8 +547,7 @@ class ContentStorageProvider(BaseStorageProvider):
         end_date: Optional[datetime] = None,
         limit: Optional[int] = None
     ) -> AsyncIterator[Dict[str, Any]]:
-        """Query content by platform and date range."""
-        pass
+        """Query content by platform and date range."""        pass
     
     @abstractmethod
     async def get_content_metrics(
@@ -616,16 +556,13 @@ class ContentStorageProvider(BaseStorageProvider):
         content_type: Optional[str] = None,
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """Get content metrics and analytics."""
-        pass
+        """Get content metrics and analytics."""        pass
 
 class ViolationStorageProvider(BaseStorageProvider):
-    """
-    Abstract base class for violation-specific storage providers.
+    """    Abstract base class for violation-specific storage providers.
     
     Handles storage of copyright violations and DMCA notices.
-    """
-    
+    """    
     @abstractmethod
     async def store_violation(
         self,
@@ -637,8 +574,7 @@ class ViolationStorageProvider(BaseStorageProvider):
         violation_type: str,
         evidence: Dict[str, Any]
     ) -> bool:
-        """Store a violation record."""
-        pass
+        """Store a violation record."""        pass
     
     @abstractmethod
     async def update_violation_status(
@@ -647,8 +583,7 @@ class ViolationStorageProvider(BaseStorageProvider):
         status: str,
         resolution_notes: Optional[str] = None
     ) -> bool:
-        """Update violation status and resolution."""
-        pass
+        """Update violation status and resolution."""        pass
     
     @abstractmethod
     async def get_violation_statistics(
@@ -656,24 +591,20 @@ class ViolationStorageProvider(BaseStorageProvider):
         platform: Optional[str] = None,
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """Get violation statistics."""
-        pass
+        """Get violation statistics."""        pass
     
     @abstractmethod
     async def query_violations_by_content(
         self,
         content_id: str
     ) -> AsyncIterator[Dict[str, Any]]:
-        """Query violations for specific content."""
-        pass
+        """Query violations for specific content."""        pass
 
 class CacheStorageProvider(BaseStorageProvider):
-    """
-    Abstract base class for cache storage providers.
+    """    Abstract base class for cache storage providers.
     
     Handles temporary storage with TTL support.
-    """
-    
+    """    
     @abstractmethod
     async def set_with_ttl(
         self,
@@ -681,13 +612,11 @@ class CacheStorageProvider(BaseStorageProvider):
         value: Any,
         ttl_seconds: int
     ) -> bool:
-        """Set value with time-to-live."""
-        pass
+        """Set value with time-to-live."""        pass
     
     @abstractmethod
     async def get_ttl(self, key: str) -> Optional[int]:
-        """Get remaining TTL for key."""
-        pass
+        """Get remaining TTL for key."""        pass
     
     @abstractmethod
     async def extend_ttl(
@@ -695,8 +624,7 @@ class CacheStorageProvider(BaseStorageProvider):
         key: str,
         additional_seconds: int
     ) -> bool:
-        """Extend TTL for existing key."""
-        pass
+        """Extend TTL for existing key."""        pass
     
     @abstractmethod
     async def set_multiple_with_ttl(
@@ -704,16 +632,13 @@ class CacheStorageProvider(BaseStorageProvider):
         data: Dict[str, Any],
         ttl_seconds: int
     ) -> Dict[str, bool]:
-        """Set multiple values with TTL."""
-        pass
+        """Set multiple values with TTL."""        pass
 
 class VectorStorageProvider(BaseStorageProvider):
-    """
-    Abstract base class for vector storage providers.
+    """    Abstract base class for vector storage providers.
     
     Handles embedding storage and similarity search.
-    """
-    
+    """    
     @abstractmethod
     async def store_embedding(
         self,
@@ -721,8 +646,7 @@ class VectorStorageProvider(BaseStorageProvider):
         embedding: List[float],
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """Store an embedding vector."""
-        pass
+        """Store an embedding vector."""        pass
     
     @abstractmethod
     async def similarity_search(
@@ -732,16 +656,14 @@ class VectorStorageProvider(BaseStorageProvider):
         similarity_threshold: float = 0.8,
         metadata_filters: Optional[Dict[str, Any]] = None
     ) -> List[Tuple[str, float, Optional[Dict[str, Any]]]]:
-        """Perform similarity search."""
-        pass
+        """Perform similarity search."""        pass
     
     @abstractmethod
     async def get_embedding(
         self,
         record_id: str
     ) -> Optional[Tuple[List[float], Optional[Dict[str, Any]]]]:
-        """Retrieve embedding by ID."""
-        pass
+        """Retrieve embedding by ID."""        pass
     
     @abstractmethod
     async def update_embedding(
@@ -750,8 +672,7 @@ class VectorStorageProvider(BaseStorageProvider):
         embedding: List[float],
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """Update existing embedding."""
-        pass
+        """Update existing embedding."""        pass
     
     @abstractmethod
     async def batch_similarity_search(
@@ -760,16 +681,13 @@ class VectorStorageProvider(BaseStorageProvider):
         top_k: int = 10,
         similarity_threshold: float = 0.8
     ) -> List[List[Tuple[str, float, Optional[Dict[str, Any]]]]]:
-        """Perform batch similarity search."""
-        pass
+        """Perform batch similarity search."""        pass
 
 class TimeSeriesStorageProvider(BaseStorageProvider):
-    """
-    Abstract base class for time series storage providers.
+    """    Abstract base class for time series storage providers.
     
     Handles time-indexed data storage and aggregation.
-    """
-    
+    """    
     @abstractmethod
     async def store_metric(
         self,
@@ -778,16 +696,14 @@ class TimeSeriesStorageProvider(BaseStorageProvider):
         value: Union[int, float],
         tags: Optional[Dict[str, str]] = None
     ) -> bool:
-        """Store a single metric point."""
-        pass
+        """Store a single metric point."""        pass
     
     @abstractmethod
     async def store_metrics_batch(
         self,
         metrics: List[Tuple[str, datetime, Union[int, float], Optional[Dict[str, str]]]]
     ) -> Dict[str, bool]:
-        """Store multiple metric points."""
-        pass
+        """Store multiple metric points."""        pass
     
     @abstractmethod
     async def query_metrics(
@@ -799,8 +715,7 @@ class TimeSeriesStorageProvider(BaseStorageProvider):
         interval: Optional[timedelta] = None,
         tags: Optional[Dict[str, str]] = None
     ) -> List[Tuple[datetime, Union[int, float]]]:
-        """Query metric data with optional aggregation."""
-        pass
+        """Query metric data with optional aggregation."""        pass
     
     @abstractmethod
     async def get_latest_metric(
@@ -808,23 +723,19 @@ class TimeSeriesStorageProvider(BaseStorageProvider):
         metric_name: str,
         tags: Optional[Dict[str, str]] = None
     ) -> Optional[Tuple[datetime, Union[int, float]]]:
-        """Get latest metric value."""
-        pass
+        """Get latest metric value."""        pass
 
 class RevenueStorageProvider(BaseStorageProvider):
-    """
-    Abstract base class for revenue tracking storage providers.
+    """    Abstract base class for revenue tracking storage providers.
     
     Handles monetization data and revenue calculations.
-    """
-    
+    """    
     @abstractmethod
     async def store_revenue_record(
         self,
         revenue_record: RevenueRecord
     ) -> bool:
-        """Store a revenue record."""
-        pass
+        """Store a revenue record."""        pass
     
     @abstractmethod
     async def calculate_user_revenue(
@@ -834,8 +745,7 @@ class RevenueStorageProvider(BaseStorageProvider):
         end_date: datetime,
         platform: Optional[Platform] = None
     ) -> Dict[str, float]:
-        """Calculate revenue for user in date range."""
-        pass
+        """Calculate revenue for user in date range."""        pass
     
     @abstractmethod
     async def get_revenue_analytics(
@@ -843,8 +753,7 @@ class RevenueStorageProvider(BaseStorageProvider):
         user_id: str,
         period_days: int = 30
     ) -> Dict[str, Any]:
-        """Get revenue analytics and trends."""
-        pass
+        """Get revenue analytics and trends."""        pass
     
     @abstractmethod
     async def estimate_projected_revenue(
@@ -853,31 +762,26 @@ class RevenueStorageProvider(BaseStorageProvider):
         content_id: str,
         projection_days: int = 30
     ) -> float:
-        """Estimate projected revenue using ML."""
-        pass
+        """Estimate projected revenue using ML."""        pass
     
     @abstractmethod
     async def get_platform_commission_rates(
         self,
         platform: Platform
     ) -> Dict[str, float]:
-        """Get commission rates for platform."""
-        pass
+        """Get commission rates for platform."""        pass
 
 class CollaborationStorageProvider(BaseStorageProvider):
-    """
-    Abstract base class for collaboration storage providers.
+    """    Abstract base class for collaboration storage providers.
     
     Handles creator collaboration and partnership data.
-    """
-    
+    """    
     @abstractmethod
     async def store_collaboration(
         self,
         collaboration_record: CollaborationRecord
     ) -> bool:
-        """Store a collaboration record."""
-        pass
+        """Store a collaboration record."""        pass
     
     @abstractmethod
     async def find_potential_collaborators(
@@ -886,8 +790,7 @@ class CollaborationStorageProvider(BaseStorageProvider):
         content_type: ContentType,
         max_results: int = 10
     ) -> List[Dict[str, Any]]:
-        """Find potential collaborators using AI matching."""
-        pass
+        """Find potential collaborators using AI matching."""        pass
     
     @abstractmethod
     async def get_collaboration_recommendations(
@@ -896,8 +799,7 @@ class CollaborationStorageProvider(BaseStorageProvider):
         genre: Optional[str] = None,
         audience_overlap_threshold: float = 0.3
     ) -> List[Dict[str, Any]]:
-        """Get AI-powered collaboration recommendations."""
-        pass
+        """Get AI-powered collaboration recommendations."""        pass
     
     @abstractmethod
     async def calculate_collaboration_score(
@@ -905,16 +807,13 @@ class CollaborationStorageProvider(BaseStorageProvider):
         user_a_id: str,
         user_b_id: str
     ) -> float:
-        """Calculate collaboration compatibility score."""
-        pass
+        """Calculate collaboration compatibility score."""        pass
 
 class FingerPrintStorageProvider(BaseStorageProvider):
-    """
-    Abstract base class for fingerprint storage providers.
+    """    Abstract base class for fingerprint storage providers.
     
     Handles content fingerprints and similarity matching.
-    """
-    
+    """    
     @abstractmethod
     async def store_fingerprint(
         self,
@@ -923,8 +822,7 @@ class FingerPrintStorageProvider(BaseStorageProvider):
         fingerprint_data: Union[str, List[float]],
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """Store content fingerprint."""
-        pass
+        """Store content fingerprint."""        pass
     
     @abstractmethod
     async def find_similar_content(
@@ -934,8 +832,7 @@ class FingerPrintStorageProvider(BaseStorageProvider):
         similarity_threshold: float = 0.8,
         max_results: int = 10
     ) -> List[Tuple[str, float]]:
-        """Find similar content by fingerprint."""
-        pass
+        """Find similar content by fingerprint."""        pass
     
     @abstractmethod
     async def detect_violations(
@@ -943,8 +840,7 @@ class FingerPrintStorageProvider(BaseStorageProvider):
         content_id: str,
         platform_data: CrawlerData
     ) -> List[ViolationRecord]:
-        """Detect copyright violations."""
-        pass
+        """Detect copyright violations."""        pass
     
     @abstractmethod
     async def update_fingerprint_index(
@@ -952,16 +848,13 @@ class FingerPrintStorageProvider(BaseStorageProvider):
         content_id: str,
         fingerprint_type: FingerPrintType
     ) -> bool:
-        """Update fingerprint search index."""
-        pass
+        """Update fingerprint search index."""        pass
 
 class AnalyticsStorageProvider(BaseStorageProvider):
-    """
-    Abstract base class for analytics storage providers.
+    """    Abstract base class for analytics storage providers.
     
     Handles analytics data and performance metrics.
-    """
-    
+    """    
     @abstractmethod
     async def store_engagement_metrics(
         self,
@@ -969,8 +862,7 @@ class AnalyticsStorageProvider(BaseStorageProvider):
         platform: Platform,
         metrics: Dict[str, Union[int, float]]
     ) -> bool:
-        """Store engagement metrics."""
-        pass
+        """Store engagement metrics."""        pass
     
     @abstractmethod
     async def calculate_trend_analysis(
@@ -979,8 +871,7 @@ class AnalyticsStorageProvider(BaseStorageProvider):
         metric_name: str,
         period_days: int = 30
     ) -> Dict[str, Any]:
-        """Calculate trend analysis."""
-        pass
+        """Calculate trend analysis."""        pass
     
     @abstractmethod
     async def get_content_performance(
@@ -988,8 +879,7 @@ class AnalyticsStorageProvider(BaseStorageProvider):
         content_id: str,
         metrics: List[str]
     ) -> Dict[str, Any]:
-        """Get content performance analytics."""
-        pass
+        """Get content performance analytics."""        pass
     
     @abstractmethod
     async def predict_viral_potential(
@@ -997,16 +887,13 @@ class AnalyticsStorageProvider(BaseStorageProvider):
         content_id: str,
         platform: Platform
     ) -> float:
-        """Predict viral potential using ML."""
-        pass
+        """Predict viral potential using ML."""        pass
 
 class DistributionStorageProvider(BaseStorageProvider):
-    """
-    Abstract base class for content distribution storage providers.
+    """    Abstract base class for content distribution storage providers.
     
     Handles multi-platform content distribution.
-    """
-    
+    """    
     @abstractmethod
     async def store_distribution_record(
         self,
@@ -1014,16 +901,14 @@ class DistributionStorageProvider(BaseStorageProvider):
         target_platforms: List[Platform],
         distribution_config: Dict[str, Any]
     ) -> str:
-        """Store distribution record and return distribution ID."""
-        pass
+        """Store distribution record and return distribution ID."""        pass
     
     @abstractmethod
     async def get_distribution_status(
         self,
         distribution_id: str
     ) -> Dict[Platform, str]:
-        """Get distribution status across platforms."""
-        pass
+        """Get distribution status across platforms."""        pass
     
     @abstractmethod
     async def schedule_distribution(
@@ -1033,8 +918,7 @@ class DistributionStorageProvider(BaseStorageProvider):
         scheduled_time: datetime,
         distribution_config: Dict[str, Any]
     ) -> bool:
-        """Schedule content distribution."""
-        pass
+        """Schedule content distribution."""        pass
     
     @abstractmethod
     async def optimize_distribution_timing(
@@ -1043,16 +927,13 @@ class DistributionStorageProvider(BaseStorageProvider):
         content_type: ContentType,
         target_platforms: List[Platform]
     ) -> Dict[Platform, datetime]:
-        """Optimize distribution timing using AI."""
-        pass
+        """Optimize distribution timing using AI."""        pass
 
 class LicensingStorageProvider(BaseStorageProvider):
-    """
-    Abstract base class for licensing storage providers.
+    """    Abstract base class for licensing storage providers.
     
     Handles content licensing and legal agreements.
-    """
-    
+    """    
     @abstractmethod
     async def store_license(
         self,
@@ -1062,8 +943,7 @@ class LicensingStorageProvider(BaseStorageProvider):
         commercial_use: bool = False,
         attribution_required: bool = True
     ) -> str:
-        """Store content license."""
-        pass
+        """Store content license."""        pass
     
     @abstractmethod
     async def check_usage_rights(
@@ -1072,8 +952,7 @@ class LicensingStorageProvider(BaseStorageProvider):
         usage_type: str,
         requester_id: str
     ) -> bool:
-        """Check if usage is permitted under license."""
-        pass
+        """Check if usage is permitted under license."""        pass
     
     @abstractmethod
     async def generate_license_agreement(
@@ -1082,8 +961,7 @@ class LicensingStorageProvider(BaseStorageProvider):
         license_template: str,
         custom_terms: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Generate license agreement document."""
-        pass
+        """Generate license agreement document."""        pass
     
     @abstractmethod
     async def track_license_usage(
@@ -1091,14 +969,11 @@ class LicensingStorageProvider(BaseStorageProvider):
         license_id: str,
         usage_details: Dict[str, Any]
     ) -> bool:
-        """Track license usage for reporting."""
-        pass
+        """Track license usage for reporting."""        pass
 
 class StorageRouter(ABC):
-    """
-    Abstract base class for storage routing and load balancing.
-    """
-    
+    """    Abstract base class for storage routing and load balancing.
+    """    
     @abstractmethod
     async def route_operation(
         self,
@@ -1106,24 +981,21 @@ class StorageRouter(ABC):
         data_size: Optional[int] = None,
         priority: int = 1
     ) -> BaseStorageProvider:
-        """Route operation to appropriate storage provider."""
-        pass
+        """Route operation to appropriate storage provider."""        pass
     
     @abstractmethod
     async def get_provider_health(
         self,
         provider_id: str
     ) -> HealthStatus:
-        """Get health status of storage provider."""
-        pass
+        """Get health status of storage provider."""        pass
     
     @abstractmethod
     async def balance_load(
         self,
         available_providers: List[BaseStorageProvider]
     ) -> BaseStorageProvider:
-        """Balance load across providers."""
-        pass
+        """Balance load across providers."""        pass
     
     @abstractmethod
     async def handle_failover(
@@ -1131,36 +1003,29 @@ class StorageRouter(ABC):
         failed_provider: BaseStorageProvider,
         operation_context: Dict[str, Any]
     ) -> BaseStorageProvider:
-        """Handle provider failover."""
-        pass
+        """Handle provider failover."""        pass
 
 class StorageTransaction(ABC):
-    """
-    Abstract base class for storage transactions.
+    """    Abstract base class for storage transactions.
     
     Provides ACID properties for storage operations.
-    """
-    
+    """    
     def __init__(self, transaction_id: str):
-        """Initialize transaction."""
-        self.transaction_id = transaction_id
+        """Initialize transaction."""        self.transaction_id = transaction_id
         self.is_active = True
         self.operations = []
     
     @abstractmethod
     async def begin(self) -> None:
-        """Begin transaction."""
-        pass
+        """Begin transaction."""        pass
     
     @abstractmethod
     async def commit(self) -> bool:
-        """Commit transaction."""
-        pass
+        """Commit transaction."""        pass
     
     @abstractmethod
     async def rollback(self) -> bool:
-        """Rollback transaction."""
-        pass
+        """Rollback transaction."""        pass
     
     @abstractmethod
     async def add_operation(
@@ -1168,73 +1033,62 @@ class StorageTransaction(ABC):
         operation_type: str,
         operation_data: Dict[str, Any]
     ) -> None:
-        """Add operation to transaction."""
-        pass
+        """Add operation to transaction."""        pass
     
     async def __aenter__(self):
-        """Async context manager entry."""
-        await self.begin()
+        """Async context manager entry."""        await self.begin()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
-        if exc_type is not None:
+        """Async context manager exit."""        if exc_type is not None:
             await self.rollback()
         else:
             await self.commit()
 
 class StorageFactory(ABC):
-    """
-    Abstract factory for creating storage providers.
-    """
-    
+    """    Abstract factory for creating storage providers.
+    """    
     @abstractmethod
     def create_content_storage(
         self,
         config: Dict[str, Any]
     ) -> ContentStorageProvider:
-        """Create content storage provider."""
-        pass
+        """Create content storage provider."""        pass
     
     @abstractmethod
     def create_violation_storage(
         self,
         config: Dict[str, Any]
     ) -> ViolationStorageProvider:
-        """Create violation storage provider."""
-        pass
+        """Create violation storage provider."""        pass
     
     @abstractmethod
     def create_cache_storage(
         self,
         config: Dict[str, Any]
     ) -> CacheStorageProvider:
-        """Create cache storage provider."""
-        pass
+        """Create cache storage provider."""        pass
     
     @abstractmethod
     def create_vector_storage(
         self,
         config: Dict[str, Any]
     ) -> VectorStorageProvider:
-        """Create vector storage provider."""
-        pass
+        """Create vector storage provider."""        pass
     
     @abstractmethod
     def create_timeseries_storage(
         self,
         config: Dict[str, Any]
     ) -> TimeSeriesStorageProvider:
-        """Create time series storage provider."""
-        pass
+        """Create time series storage provider."""        pass
     
     @abstractmethod
     def create_transaction(
         self,
         provider: BaseStorageProvider
     ) -> StorageTransaction:
-        """Create storage transaction."""
-        pass
+        """Create storage transaction."""        pass
 
 # Export all interfaces
 __all__ = [

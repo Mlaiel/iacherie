@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Advanced PromptManager Tests
+"""Advanced PromptManager Tests
 Ultra-professional test suite for the PromptManager system
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
@@ -25,9 +21,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -47,20 +41,17 @@ from ai.prompts.prompt_manager import (
 
 
 class TestPromptManager:
-    """Ultra-comprehensive test suite for PromptManager"""
-    
+    """Ultra-comprehensive test suite for PromptManager"""    
     @pytest.fixture
     async def prompt_manager(self):
-        """Create a fresh PromptManager instance for each test"""
-        manager = PromptManager()
+        """Create a fresh PromptManager instance for each test"""        manager = PromptManager()
         await manager.initialize()
         yield manager
         # No cleanup method available in PromptManager
     
     @pytest.fixture
     def sample_prompt_template(self):
-        """Create a sample prompt template for testing"""
-        return PromptTemplate(
+        """Create a sample prompt template for testing"""        return PromptTemplate(
             template_id=str(uuid.uuid4()),
             name="Test Content Creation Prompt",
             description="A test prompt for content creation scenarios",
@@ -105,8 +96,7 @@ class TestPromptManager:
     
     @pytest.fixture
     def sample_variables(self):
-        """Sample variables for prompt template testing"""
-        return {
+        """Sample variables for prompt template testing"""        return {
             "content_type": "blog_post",
             "topic": "Artificial Intelligence in Music Production",
             "target_audience": "music producers and AI enthusiasts",
@@ -117,8 +107,7 @@ class TestPromptManager:
     
     @pytest.mark.asyncio
     async def test_prompt_manager_initialization(self):
-        """Test PromptManager initialization"""
-        manager = PromptManager()
+        """Test PromptManager initialization"""        manager = PromptManager()
         await manager.initialize()
         
         assert manager is not None
@@ -135,8 +124,7 @@ class TestPromptManager:
     
     @pytest.mark.asyncio
     async def test_prompt_manager_configuration(self, prompt_manager):
-        """Test PromptManager configuration settings"""
-        config = prompt_manager.get_configuration()
+        """Test PromptManager configuration settings"""        config = prompt_manager.get_configuration()
         assert config is not None
         assert "max_template_size" in config
         assert "cache_expiry_minutes" in config
@@ -153,8 +141,7 @@ class TestPromptManager:
     
     @pytest.mark.asyncio
     async def test_create_prompt_template(self, prompt_manager, sample_prompt_template):
-        """Test creating a new prompt template"""
-        result = await prompt_manager.create_template(sample_prompt_template)
+        """Test creating a new prompt template"""        result = await prompt_manager.create_template(sample_prompt_template)
         
         assert result["success"] is True
         assert "template_id" in result
@@ -169,8 +156,7 @@ class TestPromptManager:
     
     @pytest.mark.asyncio
     async def test_create_duplicate_template_fails(self, prompt_manager, sample_prompt_template):
-        """Test that creating duplicate templates fails appropriately"""
-        # Create first template
+        """Test that creating duplicate templates fails appropriately"""        # Create first template
         result1 = await prompt_manager.create_template(sample_prompt_template)
         assert result1["success"] is True
         
@@ -181,8 +167,7 @@ class TestPromptManager:
     
     @pytest.mark.asyncio
     async def test_update_prompt_template(self, prompt_manager, sample_prompt_template):
-        """Test updating an existing prompt template"""
-        # Create template
+        """Test updating an existing prompt template"""        # Create template
         await prompt_manager.create_template(sample_prompt_template)
         
         # Update template
@@ -200,8 +185,7 @@ class TestPromptManager:
     
     @pytest.mark.asyncio
     async def test_delete_prompt_template(self, prompt_manager, sample_prompt_template):
-        """Test deleting a prompt template"""
-        # Create template
+        """Test deleting a prompt template"""        # Create template
         await prompt_manager.create_template(sample_prompt_template)
         
         # Delete template
@@ -214,8 +198,7 @@ class TestPromptManager:
     
     @pytest.mark.asyncio
     async def test_list_templates_by_category(self, prompt_manager):
-        """Test listing templates by category"""
-        # Create multiple templates with different categories
+        """Test listing templates by category"""        # Create multiple templates with different categories
         templates = []
         for category in [PromptCategory.CONTENT_CREATION, PromptCategory.MARKETING, PromptCategory.TECHNICAL]:
             template = PromptTemplate(
@@ -250,8 +233,7 @@ class TestPromptManager:
     
     @pytest.mark.asyncio
     async def test_generate_prompt_from_template(self, prompt_manager, sample_prompt_template, sample_variables):
-        """Test generating a prompt from template with variables"""
-        # Create template
+        """Test generating a prompt from template with variables"""        # Create template
         await prompt_manager.create_template(sample_prompt_template)
         
         # Generate prompt
@@ -268,8 +250,7 @@ class TestPromptManager:
     
     @pytest.mark.asyncio
     async def test_generate_prompt_with_missing_required_variable_fails(self, prompt_manager, sample_prompt_template):
-        """Test that generating prompt fails when required variables are missing"""
-        await prompt_manager.create_template(sample_prompt_template)
+        """Test that generating prompt fails when required variables are missing"""        await prompt_manager.create_template(sample_prompt_template)
         
         # Missing required 'content_type' variable
         incomplete_variables = {
@@ -288,8 +269,7 @@ class TestPromptManager:
     
     @pytest.mark.asyncio
     async def test_generate_prompt_with_invalid_variable_value_fails(self, prompt_manager, sample_prompt_template):
-        """Test that generating prompt fails with invalid variable values"""
-        await prompt_manager.create_template(sample_prompt_template)
+        """Test that generating prompt fails with invalid variable values"""        await prompt_manager.create_template(sample_prompt_template)
         
         # Invalid content_type (not in choices)
         invalid_variables = {
@@ -309,8 +289,7 @@ class TestPromptManager:
     
     @pytest.mark.asyncio
     async def test_generate_prompt_with_default_values(self, prompt_manager, sample_prompt_template):
-        """Test generating prompt using default values for optional variables"""
-        await prompt_manager.create_template(sample_prompt_template)
+        """Test generating prompt using default values for optional variables"""        await prompt_manager.create_template(sample_prompt_template)
         
         # Only provide required variables, let defaults fill in optional ones
         minimal_variables = {
@@ -331,8 +310,7 @@ class TestPromptManager:
     
     @pytest.mark.asyncio
     async def test_validate_variables_success(self, prompt_manager, sample_prompt_template, sample_variables):
-        """Test successful variable validation"""
-        await prompt_manager.create_template(sample_prompt_template)
+        """Test successful variable validation"""        await prompt_manager.create_template(sample_prompt_template)
         
         validation_result = await prompt_manager.validate_variables(
             template_id=sample_prompt_template.template_id,
@@ -344,8 +322,7 @@ class TestPromptManager:
     
     @pytest.mark.asyncio
     async def test_validate_variables_with_errors(self, prompt_manager, sample_prompt_template):
-        """Test variable validation with multiple errors"""
-        await prompt_manager.create_template(sample_prompt_template)
+        """Test variable validation with multiple errors"""        await prompt_manager.create_template(sample_prompt_template)
         
         # Variables with multiple validation errors
         invalid_variables = {
@@ -372,8 +349,7 @@ class TestPromptManager:
     
     @pytest.mark.asyncio
     async def test_prompt_performance_tracking(self, prompt_manager, sample_prompt_template, sample_variables):
-        """Test performance tracking for prompt generation"""
-        await prompt_manager.create_template(sample_prompt_template)
+        """Test performance tracking for prompt generation"""        await prompt_manager.create_template(sample_prompt_template)
         
         # Generate prompt multiple times to build performance data
         for i in range(5):
@@ -401,8 +377,7 @@ class TestPromptManager:
     
     @pytest.mark.asyncio
     async def test_prompt_optimization_recommendations(self, prompt_manager, sample_prompt_template):
-        """Test getting optimization recommendations for prompts"""
-        await prompt_manager.create_template(sample_prompt_template)
+        """Test getting optimization recommendations for prompts"""        await prompt_manager.create_template(sample_prompt_template)
         
         # Simulate low-performing prompt
         for i in range(10):
@@ -433,8 +408,7 @@ class TestPromptManager:
     
     @pytest.mark.asyncio
     async def test_prompt_caching(self, prompt_manager, sample_prompt_template, sample_variables):
-        """Test prompt generation caching"""
-        await prompt_manager.create_template(sample_prompt_template)
+        """Test prompt generation caching"""        await prompt_manager.create_template(sample_prompt_template)
         
         # First generation (should cache)
         start_time = datetime.now()
@@ -463,8 +437,7 @@ class TestPromptManager:
     
     @pytest.mark.asyncio
     async def test_cache_invalidation(self, prompt_manager, sample_prompt_template, sample_variables):
-        """Test cache invalidation when template is updated"""
-        await prompt_manager.create_template(sample_prompt_template)
+        """Test cache invalidation when template is updated"""        await prompt_manager.create_template(sample_prompt_template)
         
         # Generate and cache prompt
         result1 = await prompt_manager.generate_prompt(
@@ -493,8 +466,7 @@ class TestPromptManager:
     
     @pytest.mark.asyncio
     async def test_nonexistent_template_error(self, prompt_manager):
-        """Test error handling for nonexistent template"""
-        fake_id = str(uuid.uuid4())
+        """Test error handling for nonexistent template"""        fake_id = str(uuid.uuid4())
         
         result = await prompt_manager.generate_prompt(
             template_id=fake_id,
@@ -506,8 +478,7 @@ class TestPromptManager:
     
     @pytest.mark.asyncio
     async def test_malformed_template_error(self, prompt_manager):
-        """Test error handling for malformed template"""
-        malformed_template = PromptTemplate(
+        """Test error handling for malformed template"""        malformed_template = PromptTemplate(
             template_id=str(uuid.uuid4()),
             name="Malformed Template",
             description="Template with malformed variables",
@@ -528,8 +499,7 @@ class TestPromptManager:
     
     @pytest.mark.asyncio
     async def test_concurrent_template_access(self, prompt_manager, sample_variables):
-        """Test concurrent access to template generation"""
-        # Create multiple templates
+        """Test concurrent access to template generation"""        # Create multiple templates
         templates = []
         for i in range(3):
             template = PromptTemplate(
@@ -569,8 +539,7 @@ class TestPromptManager:
     
     @pytest.mark.asyncio
     async def test_memory_management_large_templates(self, prompt_manager):
-        """Test memory management with large number of templates"""
-        template_ids = []
+        """Test memory management with large number of templates"""        template_ids = []
         
         # Create many templates
         for i in range(100):
@@ -610,16 +579,14 @@ class TestPromptManager:
     
     @pytest.mark.asyncio
     async def test_full_workflow_integration(self, prompt_manager):
-        """Test complete workflow from template creation to prompt generation"""
-        # Step 1: Create sophisticated template
+        """Test complete workflow from template creation to prompt generation"""        # Step 1: Create sophisticated template
         complex_template = PromptTemplate(
             template_id=str(uuid.uuid4()),
             name="Complex Content Creation Template",
             description="Multi-variable template for sophisticated content creation",
             category=PromptCategory.CONTENT_CREATION,
             prompt_type=PromptType.INSTRUCTION,
-            template_text="""
-            Create a {content_format} about {main_topic} targeting {audience}.
+            template_text="""            Create a {content_format} about {main_topic} targeting {audience}.
             
             Requirements:
             - Tone: {tone}

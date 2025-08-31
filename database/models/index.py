@@ -1,5 +1,4 @@
-"""
-Database Models Index - IA Influencer Agent + Content Protection Platform
+"""Database Models Index - IA Influencer Agent + Content Protection Platform
 
 Centralized index for all ultra-industrial database models with factory patterns,
 model registry, and enterprise-grade model management utilities.
@@ -27,9 +26,7 @@ Expert Project Team - Fahed Mlaiel:
 
 Business Logic Implementation:
 Multi-Format Creator → AI Processing → Protection → SEO → Collaboration → Distribution → Monetization
-"""
-
-from typing import Dict, Type, Any, List, Optional, Union
+"""from typing import Dict, Type, Any, List, Optional, Union
 from enum import Enum
 import logging
 from datetime import datetime, timezone
@@ -81,8 +78,7 @@ logger = logging.getLogger(__name__)
 
 
 class ModelCategory(Enum):
-    """Categories for organizing database models"""
-    CONTENT_PROTECTION = "content_protection"
+    """Categories for organizing database models"""    CONTENT_PROTECTION = "content_protection"
     AI_ANALYTICS = "ai_analytics"
     CREATOR_MANAGEMENT = "creator_management"
     MONETIZATION = "monetization"
@@ -95,8 +91,7 @@ class ModelCategory(Enum):
 
 
 class BusinessProcess(Enum):
-    """Business processes mapped to model usage"""
-    CONTENT_UPLOAD = "content_upload"
+    """Business processes mapped to model usage"""    CONTENT_UPLOAD = "content_upload"
     AI_PROCESSING = "ai_processing"
     RIGHTS_PROTECTION = "rights_protection"
     SEO_OPTIMIZATION = "seo_optimization"
@@ -202,44 +197,37 @@ BUSINESS_PROCESS_MODELS = {
 
 
 class ModelFactory:
-    """
-    Ultra-Industrial Model Factory
+    """    Ultra-Industrial Model Factory
     
     Enterprise-grade factory for creating, managing, and organizing database models
     with support for business process workflows and model categorization.
-    """
-    
+    """    
     @staticmethod
     def get_model_by_name(model_name: str) -> Type:
-        """Get model class by name from registry"""
-        if model_name not in MODEL_REGISTRY:
+        """Get model class by name from registry"""        if model_name not in MODEL_REGISTRY:
             raise ValueError(f"Model '{model_name}' not found in registry")
         return MODEL_REGISTRY[model_name]
     
     @staticmethod
     def get_models_by_category(category: ModelCategory) -> List[Type]:
-        """Get all models in a specific category"""
-        if category not in MODEL_CATEGORIES:
+        """Get all models in a specific category"""        if category not in MODEL_CATEGORIES:
             raise ValueError(f"Category '{category}' not found")
         return MODEL_CATEGORIES[category]
     
     @staticmethod
     def get_models_for_business_process(process: BusinessProcess) -> List[Type]:
-        """Get all models required for a business process"""
-        if process not in BUSINESS_PROCESS_MODELS:
+        """Get all models required for a business process"""        if process not in BUSINESS_PROCESS_MODELS:
             raise ValueError(f"Business process '{process}' not found")
         return BUSINESS_PROCESS_MODELS[process]
     
     @staticmethod
     def create_model_instance(model_name: str, **kwargs) -> Any:
-        """Create a new model instance with given parameters"""
-        model_class = ModelFactory.get_model_by_name(model_name)
+        """Create a new model instance with given parameters"""        model_class = ModelFactory.get_model_by_name(model_name)
         return model_class(**kwargs)
     
     @staticmethod
     def get_model_relationships(model_class: Type) -> Dict[str, Any]:
-        """Get relationship information for a model"""
-        relationships = {}
+        """Get relationship information for a model"""        relationships = {}
         
         if hasattr(model_class, '__mapper__'):
             for rel in model_class.__mapper__.relationships:
@@ -254,13 +242,11 @@ class ModelFactory:
     
     @staticmethod
     def validate_business_logic_flow(creator_type: str = None) -> Dict[str, List[str]]:
-        """
-        Validate the complete business logic flow for multi-format creators
+        """        Validate the complete business logic flow for multi-format creators
         
         Business Logic: Multi-Format Creator → AI Processing → Protection → 
                        SEO → Collaboration → Distribution → Monetization
-        """
-        workflow = {
+        """        workflow = {
             "1_content_upload": [
                 "UserContent",
                 "ContentFingerprint", 
@@ -303,17 +289,14 @@ class ModelFactory:
 
 
 class ModelAnalyzer:
-    """
-    Ultra-Industrial Model Analyzer
+    """    Ultra-Industrial Model Analyzer
     
     Advanced analytics and insights for database model usage patterns,
     performance optimization, and business intelligence.
-    """
-    
+    """    
     @staticmethod
     def analyze_model_dependencies() -> Dict[str, Dict[str, Any]]:
-        """Analyze dependencies between models"""
-        dependencies = {}
+        """Analyze dependencies between models"""        dependencies = {}
         
         for model_name, model_class in MODEL_REGISTRY.items():
             model_deps = {
@@ -347,8 +330,7 @@ class ModelAnalyzer:
     
     @staticmethod
     def get_performance_critical_models() -> List[str]:
-        """Identify performance-critical models for optimization"""
-        critical_models = [
+        """Identify performance-critical models for optimization"""        critical_models = [
             'content_fingerprints',  # High-volume fingerprint operations
             'protection_alerts',     # Real-time violation detection
             'revenue_tracking',      # Financial data processing
@@ -362,8 +344,7 @@ class ModelAnalyzer:
     
     @staticmethod
     def generate_model_documentation() -> Dict[str, Dict[str, Any]]:
-        """Generate comprehensive model documentation"""
-        documentation = {}
+        """Generate comprehensive model documentation"""        documentation = {}
         
         for model_name, model_class in MODEL_REGISTRY.items():
             doc = {
@@ -392,8 +373,7 @@ class ModelAnalyzer:
     
     @staticmethod
     def _get_business_purpose(model_name: str) -> str:
-        """Get business purpose for a model"""
-        purposes = {
+        """Get business purpose for a model"""        purposes = {
             'content_fingerprints': 'Core content identification and protection',
             'protection_alerts': 'Real-time copyright violation detection',
             'revenue_tracking': 'Financial performance and monetization',
@@ -409,8 +389,7 @@ class ModelAnalyzer:
     
     @staticmethod
     def _get_usage_patterns(model_name: str) -> List[str]:
-        """Get typical usage patterns for a model"""
-        patterns = {
+        """Get typical usage patterns for a model"""        patterns = {
             'content_fingerprints': ['High-frequency reads', 'Batch processing', 'Real-time matching'],
             'protection_alerts': ['Real-time notifications', 'Automated responses', 'Alert aggregation'],
             'revenue_tracking': ['Financial reporting', 'Analytics queries', 'Revenue aggregation'],

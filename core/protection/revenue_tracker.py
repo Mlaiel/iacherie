@@ -1,5 +1,4 @@
-"""
-Revenue Tracking Engine for Content Protection Monetization
+"""Revenue Tracking Engine for Content Protection Monetization
 
 This module provides comprehensive revenue tracking and monetization features:
 - Multi-platform revenue collection (YouTube, Instagram, TikTok, Spotify)
@@ -14,9 +13,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import json
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, field
@@ -48,8 +45,7 @@ settings = get_settings()
 
 
 class RevenuePlatform(Enum):
-    """Supported revenue platforms"""
-    YOUTUBE = "youtube"
+    """Supported revenue platforms"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     SPOTIFY = "spotify"
@@ -59,8 +55,7 @@ class RevenuePlatform(Enum):
 
 
 class RevenueType(Enum):
-    """Types of revenue streams"""
-    AD_REVENUE = "ad_revenue"           # Platform advertising revenue
+    """Types of revenue streams"""    AD_REVENUE = "ad_revenue"           # Platform advertising revenue
     LICENSING = "licensing"             # Content licensing fees
     TAKEDOWN_FEES = "takedown_fees"     # Fees for violation takedowns
     SUBSCRIPTION = "subscription"       # Platform subscription revenue
@@ -70,8 +65,7 @@ class RevenueType(Enum):
 
 
 class PaymentMethod(Enum):
-    """Payment processing methods"""
-    STRIPE = "stripe"
+    """Payment processing methods"""    STRIPE = "stripe"
     WISE = "wise"
     PAYPAL = "paypal"
     BANK_TRANSFER = "bank_transfer"
@@ -80,8 +74,7 @@ class PaymentMethod(Enum):
 
 @dataclass
 class RevenueConfiguration:
-    """Revenue tracking configuration"""
-    enabled_platforms: List[RevenuePlatform] = field(default_factory=list)
+    """Revenue tracking configuration"""    enabled_platforms: List[RevenuePlatform] = field(default_factory=list)
     collection_interval_hours: int = 24
     auto_payout_enabled: bool = False
     auto_payout_threshold: Decimal = Decimal('100.00')
@@ -98,8 +91,7 @@ class RevenueConfiguration:
 
 @dataclass
 class PlatformRevenueData:
-    """Revenue data from a specific platform"""
-    platform: RevenuePlatform
+    """Revenue data from a specific platform"""    platform: RevenuePlatform
     period_start: date
     period_end: date
     total_revenue: Decimal
@@ -111,8 +103,7 @@ class PlatformRevenueData:
 
 @dataclass
 class LicensingTransaction:
-    """Licensing fee transaction"""
-    content_id: str
+    """Licensing fee transaction"""    content_id: str
     licensee_info: Dict[str, str]
     license_type: str
     fee_amount: Decimal
@@ -123,13 +114,11 @@ class LicensingTransaction:
 
 
 class RevenueTracker:
-    """
-    Revenue tracking engine for content protection monetization
+    """    Revenue tracking engine for content protection monetization
     
     Provides comprehensive revenue tracking across multiple platforms
     with automated collection, calculation, and distribution.
-    """
-    
+    """    
     def __init__(self, config: RevenueConfiguration):
         self.config = config
         self.executor = ThreadPoolExecutor(max_workers=4)
@@ -148,8 +137,7 @@ class RevenueTracker:
     
     async def collect_platform_revenue(self, user_id: str, platform: RevenuePlatform, 
                                      start_date: date, end_date: date) -> Optional[PlatformRevenueData]:
-        """Collect revenue data from specific platform"""
-        try:
+        """Collect revenue data from specific platform"""        try:
             if platform == RevenuePlatform.YOUTUBE:
                 return await self._collect_youtube_revenue(user_id, start_date, end_date)
             elif platform == RevenuePlatform.INSTAGRAM:
@@ -167,8 +155,7 @@ class RevenueTracker:
             return None
     
     async def _collect_youtube_revenue(self, user_id: str, start_date: date, end_date: date) -> Optional[PlatformRevenueData]:
-        """Collect revenue from YouTube Creator API"""
-        try:
+        """Collect revenue from YouTube Creator API"""        try:
             if not self._youtube_client:
                 self._youtube_client = await self._initialize_youtube_client(user_id)
             
@@ -205,8 +192,7 @@ class RevenueTracker:
             return None
     
     async def _collect_instagram_revenue(self, user_id: str, start_date: date, end_date: date) -> Optional[PlatformRevenueData]:
-        """Collect revenue from Instagram Creator API"""
-        try:
+        """Collect revenue from Instagram Creator API"""        try:
             # Instagram Graph API for creator insights
             access_token = await self._get_instagram_token(user_id)
             
@@ -241,8 +227,7 @@ class RevenueTracker:
             return None
     
     async def _collect_spotify_revenue(self, user_id: str, start_date: date, end_date: date) -> Optional[PlatformRevenueData]:
-        """Collect revenue from Spotify for Artists API"""
-        try:
+        """Collect revenue from Spotify for Artists API"""        try:
             # Spotify Web API for artist analytics
             access_token = await self._get_spotify_token(user_id)
             
@@ -272,8 +257,7 @@ class RevenueTracker:
             return None
     
     async def calculate_licensing_fees(self, content_id: str, usage_data: Dict[str, Any]) -> List[LicensingTransaction]:
-        """Calculate licensing fees for protected content usage"""
-        transactions = []
+        """Calculate licensing fees for protected content usage"""        transactions = []
         
         try:
             # Get content protection data
@@ -311,8 +295,7 @@ class RevenueTracker:
             return transactions
     
     async def process_automated_payout(self, user_id: str, amount: Decimal) -> bool:
-        """Process automated payout to user"""
-        try:
+        """Process automated payout to user"""        try:
             if not self.config.auto_payout_enabled:
                 logger.info("Automated payouts disabled")
                 return False
@@ -355,8 +338,7 @@ class RevenueTracker:
             return False
     
     async def generate_revenue_report(self, user_id: str, start_date: date, end_date: date) -> Dict[str, Any]:
-        """Generate comprehensive revenue report"""
-        try:
+        """Generate comprehensive revenue report"""        try:
             report = {
                 'user_id': user_id,
                 'period': {
@@ -427,49 +409,40 @@ class RevenueTracker:
     
     # Helper methods
     async def _initialize_youtube_client(self, user_id: str):
-        """Initialize YouTube API client"""
-        credentials = await self._get_youtube_credentials(user_id)
+        """Initialize YouTube API client"""        credentials = await self._get_youtube_credentials(user_id)
         return build('youtubeAnalytics', 'v2', credentials=credentials)
     
     async def _get_instagram_token(self, user_id: str) -> str:
-        """Get Instagram access token for user"""
-        # Implementation for getting stored Instagram token
+        """Get Instagram access token for user"""        # Implementation for getting stored Instagram token
         pass
     
     async def _get_spotify_token(self, user_id: str) -> str:
-        """Get Spotify access token for user"""
-        # Implementation for getting stored Spotify token
+        """Get Spotify access token for user"""        # Implementation for getting stored Spotify token
         pass
     
     def _calculate_instagram_revenue_estimate(self, insights_data: Dict[str, Any]) -> Decimal:
-        """Calculate estimated Instagram revenue from insights"""
-        # Implementation for revenue estimation based on engagement
+        """Calculate estimated Instagram revenue from insights"""        # Implementation for revenue estimation based on engagement
         # This is an estimate as Instagram doesn't provide direct revenue data
         return Decimal('0.00')
     
     def _calculate_spotify_revenue_estimate(self, tracks_data: Dict[str, Any]) -> Decimal:
-        """Calculate estimated Spotify revenue"""
-        # Implementation for revenue estimation based on streams
+        """Calculate estimated Spotify revenue"""        # Implementation for revenue estimation based on streams
         return Decimal('0.00')
     
     async def _get_content_fingerprint(self, content_id: str) -> Optional[ContentFingerprint]:
-        """Get content fingerprint from database"""
-        # Implementation for database query
+        """Get content fingerprint from database"""        # Implementation for database query
         pass
     
     def _calculate_base_licensing_fee(self, fingerprint: ContentFingerprint, usage_info: Dict[str, Any]) -> Decimal:
-        """Calculate base licensing fee"""
-        # Implementation for fee calculation based on content type and usage
+        """Calculate base licensing fee"""        # Implementation for fee calculation based on content type and usage
         return Decimal('100.00')
     
     def _get_penalty_multiplier(self, platform: str, usage_info: Dict[str, Any]) -> Decimal:
-        """Get penalty multiplier for unauthorized usage"""
-        # Implementation for penalty calculation
+        """Get penalty multiplier for unauthorized usage"""        # Implementation for penalty calculation
         return Decimal('2.0')  # 2x penalty for unauthorized usage
     
     async def _convert_currency(self, amount: Decimal, from_currency: str, to_currency: str) -> Decimal:
-        """Convert currency using real-time rates"""
-        if from_currency == to_currency:
+        """Convert currency using real-time rates"""        if from_currency == to_currency:
             return amount
         
         # Implementation for currency conversion
@@ -477,16 +450,13 @@ class RevenueTracker:
         return amount  # Placeholder
     
     async def _get_user_payout_info(self, user_id: str) -> Dict[str, str]:
-        """Get user payout preferences"""
-        # Implementation for getting user payout info from database
+        """Get user payout preferences"""        # Implementation for getting user payout info from database
         return {}
     
     async def _get_licensing_fees(self, user_id: str, start_date: date, end_date: date) -> List[LicensingTransaction]:
-        """Get licensing fees for date range"""
-        # Implementation for database query
+        """Get licensing fees for date range"""        # Implementation for database query
         return []
     
     async def _get_youtube_credentials(self, user_id: str) -> Credentials:
-        """Get YouTube API credentials for user"""
-        # Implementation for getting stored credentials
+        """Get YouTube API credentials for user"""        # Implementation for getting stored credentials
         pass

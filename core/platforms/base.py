@@ -1,14 +1,11 @@
-"""
-Platform Base Classes and Manager
+"""Platform Base Classes and Manager
 
 This module provides the base classes and manager for platform integrations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""
-
-from abc import ABC, abstractmethod
+"""from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Any, Union
 from enum import Enum
 from dataclasses import dataclass
@@ -20,8 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Enumeration of all supported platform types"""
-    
+    """Enumeration of all supported platform types"""    
     # Original 16 platforms - Core social media and content platforms
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
@@ -56,8 +52,7 @@ class PlatformType(Enum):
 
 
 class ContentType(Enum):
-    """Content type enumeration"""
-    AUDIO = "audio"
+    """Content type enumeration"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -67,8 +62,7 @@ class ContentType(Enum):
 
 
 class PlatformStatus(Enum):
-    """Platform status enumeration"""
-    ACTIVE = "active"
+    """Platform status enumeration"""    ACTIVE = "active"
     INACTIVE = "inactive"
     MAINTENANCE = "maintenance"
     ERROR = "error"
@@ -77,8 +71,7 @@ class PlatformStatus(Enum):
 
 @dataclass
 class PlatformCredentials:
-    """Platform credentials configuration"""
-    api_key: str
+    """Platform credentials configuration"""    api_key: str
     api_secret: str
     access_token: Optional[str] = None
     refresh_token: Optional[str] = None
@@ -90,8 +83,7 @@ class PlatformCredentials:
 
 @dataclass
 class PlatformConfig:
-    """Platform configuration"""
-    platform_id: str
+    """Platform configuration"""    platform_id: str
     platform_name: str
     platform_type: PlatformType
     api_base_url: str
@@ -105,8 +97,7 @@ class PlatformConfig:
 
 @dataclass
 class ContentMetadata:
-    """Content metadata structure"""
-    title: str
+    """Content metadata structure"""    title: str
     description: str
     tags: List[str]
     category: str
@@ -122,8 +113,7 @@ class ContentMetadata:
 
 @dataclass
 class UploadResult:
-    """Upload result structure"""
-    success: bool
+    """Upload result structure"""    success: bool
     platform_id: str
     content_id: Optional[str] = None
     url: Optional[str] = None
@@ -134,8 +124,7 @@ class UploadResult:
 
 @dataclass
 class AnalyticsData:
-    """Analytics data structure"""
-    platform_id: str
+    """Analytics data structure"""    platform_id: str
     content_id: str
     views: int
     likes: int
@@ -151,11 +140,9 @@ class AnalyticsData:
 
 
 class PlatformBase(ABC):
-    """Base class for all platform integrations"""
-    
+    """Base class for all platform integrations"""    
     def __init__(self, config: PlatformConfig):
-        """Initialize platform with configuration"""
-        self.config = config
+        """Initialize platform with configuration"""        self.config = config
         self.status = PlatformStatus.INACTIVE
         self.last_sync = None
         self.error_count = 0
@@ -163,72 +150,58 @@ class PlatformBase(ABC):
         
     @property
     def platform_id(self) -> str:
-        """Get platform identifier"""
-        return self.config.platform_id
+        """Get platform identifier"""        return self.config.platform_id
     
     @property
     def platform_name(self) -> str:
-        """Get platform name"""
-        return self.config.platform_name
+        """Get platform name"""        return self.config.platform_name
     
     @property
     def platform_type(self) -> PlatformType:
-        """Get platform type"""
-        return self.config.platform_type
+        """Get platform type"""        return self.config.platform_type
     
     @property
     def is_authenticated(self) -> bool:
-        """Check if platform is authenticated"""
-        return self.config.credentials.access_token is not None
+        """Check if platform is authenticated"""        return self.config.credentials.access_token is not None
     
     @property
     def is_active(self) -> bool:
-        """Check if platform is active"""
-        return self.status == PlatformStatus.ACTIVE
+        """Check if platform is active"""        return self.status == PlatformStatus.ACTIVE
     
     @abstractmethod
     async def authenticate(self) -> bool:
-        """Authenticate with the platform"""
-        pass
+        """Authenticate with the platform"""        pass
     
     @abstractmethod
     async def refresh_token(self) -> bool:
-        """Refresh authentication token"""
-        pass
+        """Refresh authentication token"""        pass
     
     @abstractmethod
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Upload content to platform"""
-        pass
+        """Upload content to platform"""        pass
     
     @abstractmethod
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
-        """Get content analytics"""
-        pass
+        """Get content analytics"""        pass
     
     @abstractmethod
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search content on platform"""
-        pass
+        """Search content on platform"""        pass
     
     @abstractmethod
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
-        """Get user's content from platform"""
-        pass
+        """Get user's content from platform"""        pass
     
     @abstractmethod
     async def delete_content(self, content_id: str) -> bool:
-        """Delete content from platform"""
-        pass
+        """Delete content from platform"""        pass
     
     @abstractmethod
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
-        """Update content metadata"""
-        pass
+        """Update content metadata"""        pass
     
     async def test_connection(self) -> bool:
-        """Test platform connection"""
-        try:
+        """Test platform connection"""        try:
             if not self.is_authenticated:
                 return await self.authenticate()
             
@@ -241,67 +214,56 @@ class PlatformBase(ABC):
             return False
     
     async def handle_rate_limit(self, retry_after: int = None):
-        """Handle rate limiting"""
-        wait_time = retry_after or self.config.rate_limit
+        """Handle rate limiting"""        wait_time = retry_after or self.config.rate_limit
         logger.warning(f"Rate limited on {self.platform_name}, waiting {wait_time}s")
         await asyncio.sleep(wait_time)
     
     def increment_error_count(self):
-        """Increment error count and update status"""
-        self.error_count += 1
+        """Increment error count and update status"""        self.error_count += 1
         if self.error_count >= self.max_errors:
             self.status = PlatformStatus.ERROR
             logger.error(f"Platform {self.platform_name} exceeded max errors")
     
     def reset_error_count(self):
-        """Reset error count"""
-        self.error_count = 0
+        """Reset error count"""        self.error_count = 0
         if self.status == PlatformStatus.ERROR:
             self.status = PlatformStatus.ACTIVE
 
 
 class PlatformManager:
-    """Manager for multiple platform integrations"""
-    
+    """Manager for multiple platform integrations"""    
     def __init__(self):
-        """Initialize platform manager"""
-        self.platforms: Dict[str, PlatformBase] = {}
+        """Initialize platform manager"""        self.platforms: Dict[str, PlatformBase] = {}
         self.active_platforms: List[str] = []
         
     def register_platform(self, platform: PlatformBase):
-        """Register a platform"""
-        self.platforms[platform.platform_id] = platform
+        """Register a platform"""        self.platforms[platform.platform_id] = platform
         logger.info(f"Registered platform: {platform.platform_name}")
     
     def unregister_platform(self, platform_id: str):
-        """Unregister a platform"""
-        if platform_id in self.platforms:
+        """Unregister a platform"""        if platform_id in self.platforms:
             del self.platforms[platform_id]
             if platform_id in self.active_platforms:
                 self.active_platforms.remove(platform_id)
             logger.info(f"Unregistered platform: {platform_id}")
     
     def get_platform(self, platform_id: str) -> Optional[PlatformBase]:
-        """Get platform by ID"""
-        return self.platforms.get(platform_id)
+        """Get platform by ID"""        return self.platforms.get(platform_id)
     
     def get_platforms_by_type(self, platform_type: PlatformType) -> List[PlatformBase]:
-        """Get platforms by type"""
-        return [
+        """Get platforms by type"""        return [
             platform for platform in self.platforms.values()
             if platform.platform_type == platform_type
         ]
     
     def get_active_platforms(self) -> List[PlatformBase]:
-        """Get active platforms"""
-        return [
+        """Get active platforms"""        return [
             platform for platform in self.platforms.values()
             if platform.is_active
         ]
     
     async def authenticate_all(self) -> Dict[str, bool]:
-        """Authenticate all platforms"""
-        results = {}
+        """Authenticate all platforms"""        results = {}
         for platform_id, platform in self.platforms.items():
             try:
                 results[platform_id] = await platform.authenticate()
@@ -317,8 +279,7 @@ class PlatformManager:
         return results
     
     async def test_all_connections(self) -> Dict[str, bool]:
-        """Test all platform connections"""
-        results = {}
+        """Test all platform connections"""        results = {}
         for platform_id, platform in self.platforms.items():
             results[platform_id] = await platform.test_connection()
         
@@ -330,8 +291,7 @@ class PlatformManager:
         content_path: str, 
         metadata: ContentMetadata
     ) -> Dict[str, UploadResult]:
-        """Upload content to multiple platforms"""
-        results = {}
+        """Upload content to multiple platforms"""        results = {}
         
         for platform_id in platform_ids:
             platform = self.get_platform(platform_id)
@@ -370,8 +330,7 @@ class PlatformManager:
         start_date: datetime, 
         end_date: datetime
     ) -> Dict[str, AnalyticsData]:
-        """Get aggregated analytics from multiple platforms"""
-        results = {}
+        """Get aggregated analytics from multiple platforms"""        results = {}
         
         for platform_id, content_id in content_ids.items():
             platform = self.get_platform(platform_id)
@@ -389,8 +348,7 @@ class PlatformManager:
         return results
     
     def get_platform_stats(self) -> Dict[str, Any]:
-        """Get platform manager statistics"""
-        total_platforms = len(self.platforms)
+        """Get platform manager statistics"""        total_platforms = len(self.platforms)
         active_platforms = len(self.get_active_platforms())
         error_platforms = len([
             p for p in self.platforms.values() 

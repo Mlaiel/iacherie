@@ -1,5 +1,4 @@
-"""
-Monetization Pipeline
+"""Monetization Pipeline
 
 Ultra-advanced monetization pipeline for content creators with AI-powered
 revenue optimization, automated licensing, and multi-platform payout processing.
@@ -8,9 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: Content Analysis → Revenue Estimation → Licensing Setup → Platform Integration → Payout Processing → Optimization
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 from typing import Dict, List, Any, Optional, Union, Callable, Tuple
@@ -25,8 +22,7 @@ logger = logging.getLogger(__name__)
 
 
 class MonetizationStage(Enum):
-    """Monetization pipeline stages"""
-    CONTENT_VALUATION = "content_valuation"
+    """Monetization pipeline stages"""    CONTENT_VALUATION = "content_valuation"
     REVENUE_ESTIMATION = "revenue_estimation"
     LICENSING_SETUP = "licensing_setup"
     PLATFORM_INTEGRATION = "platform_integration"
@@ -39,8 +35,7 @@ class MonetizationStage(Enum):
 
 
 class RevenueModel(Enum):
-    """Revenue models"""
-    SUBSCRIPTION = "subscription"
+    """Revenue models"""    SUBSCRIPTION = "subscription"
     PAY_PER_USE = "pay_per_use"
     ADVERTISING = "advertising"
     LICENSING = "licensing"
@@ -51,8 +46,7 @@ class RevenueModel(Enum):
 
 
 class PlatformType(Enum):
-    """Platform types"""
-    MUSIC_STREAMING = "music_streaming"
+    """Platform types"""    MUSIC_STREAMING = "music_streaming"
     VIDEO_STREAMING = "video_streaming"
     SOCIAL_MEDIA = "social_media"
     CONTENT_MARKETPLACE = "content_marketplace"
@@ -61,8 +55,7 @@ class PlatformType(Enum):
 
 
 class PayoutFrequency(Enum):
-    """Payout frequencies"""
-    REAL_TIME = "real_time"
+    """Payout frequencies"""    REAL_TIME = "real_time"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -71,8 +64,7 @@ class PayoutFrequency(Enum):
 
 @dataclass
 class RevenueStream:
-    """Revenue stream definition"""
-    stream_id: str = ""
+    """Revenue stream definition"""    stream_id: str = ""
     name: str = ""
     revenue_model: RevenueModel = RevenueModel.LICENSING
     platform: str = ""
@@ -86,8 +78,7 @@ class RevenueStream:
 
 @dataclass
 class LicensingTerms:
-    """Licensing terms definition"""
-    license_id: str = ""
+    """Licensing terms definition"""    license_id: str = ""
     license_type: str = "standard"
     usage_rights: List[str] = field(default_factory=list)
     territory: str = "worldwide"
@@ -100,8 +91,7 @@ class LicensingTerms:
 
 @dataclass
 class PayoutConfig:
-    """Payout configuration"""
-    payout_id: str = ""
+    """Payout configuration"""    payout_id: str = ""
     frequency: PayoutFrequency = PayoutFrequency.MONTHLY
     minimum_amount: Decimal = Decimal('50.00')
     payment_method: str = "bank_transfer"
@@ -113,8 +103,7 @@ class PayoutConfig:
 
 @dataclass
 class MonetizationResult:
-    """Monetization processing result"""
-    monetization_id: str = ""
+    """Monetization processing result"""    monetization_id: str = ""
     content_id: str = ""
     revenue_streams: List[RevenueStream] = field(default_factory=list)
     licensing_terms: List[LicensingTerms] = field(default_factory=list)
@@ -132,8 +121,7 @@ class MonetizationResult:
 
 
 class RevenueEngine:
-    """AI-powered revenue estimation engine"""
-    
+    """AI-powered revenue estimation engine"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.RevenueEngine")
@@ -143,8 +131,7 @@ class RevenueEngine:
         self.ml_models = self._initialize_ml_models()
     
     def _load_market_rates(self) -> Dict[str, Any]:
-        """Load current market rates"""
-        return {
+        """Load current market rates"""        return {
             "music_streaming": {
                 "spotify": {"per_stream": 0.003, "commission": 0.30},
                 "apple_music": {"per_stream": 0.007, "commission": 0.30},
@@ -168,8 +155,7 @@ class RevenueEngine:
         }
     
     def _initialize_ml_models(self) -> Dict[str, Any]:
-        """Initialize ML models for revenue prediction"""
-        return {
+        """Initialize ML models for revenue prediction"""        return {
             "content_valuation": "valuation_model_v2.3",
             "market_prediction": "market_predictor_v1.8",
             "pricing_optimization": "pricing_optimizer_v3.1",
@@ -182,8 +168,7 @@ class RevenueEngine:
         platforms: List[str],
         parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Estimate revenue potential for content"""
-        self.logger.info("Estimating revenue potential")
+        """Estimate revenue potential for content"""        self.logger.info("Estimating revenue potential")
         
         # Content valuation
         content_value = await self._value_content(content_data, parameters)
@@ -212,8 +197,7 @@ class RevenueEngine:
         }
     
     async def _value_content(self, content_data: Dict[str, Any], parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Value content using AI models"""
-        # Simulate AI content valuation
+        """Value content using AI models"""        # Simulate AI content valuation
         await asyncio.sleep(0.1)
         
         base_score = 0.75
@@ -240,8 +224,7 @@ class RevenueEngine:
         content_value: Dict[str, Any],
         parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Estimate revenue for specific platform"""
-        # Simulate platform revenue estimation
+        """Estimate revenue for specific platform"""        # Simulate platform revenue estimation
         await asyncio.sleep(0.05)
         
         # Get platform rates
@@ -272,8 +255,7 @@ class RevenueEngine:
         }
     
     def _categorize_platform(self, platform: str) -> str:
-        """Categorize platform for rate lookup"""
-        platform_lower = platform.lower()
+        """Categorize platform for rate lookup"""        platform_lower = platform.lower()
         
         if platform_lower in ["spotify", "apple_music", "youtube_music", "soundcloud"]:
             return "music_streaming"
@@ -289,8 +271,7 @@ class RevenueEngine:
         content_data: Dict[str, Any],
         platform_estimates: Dict[str, Any]
     ) -> List[str]:
-        """Generate revenue optimization recommendations"""
-        recommendations = []
+        """Generate revenue optimization recommendations"""        recommendations = []
         
         # Analyze performance across platforms
         best_platform = max(platform_estimates.items(), key=lambda x: x[1]["monthly_revenue"])
@@ -313,8 +294,7 @@ class RevenueEngine:
 
 
 class RevenueCalculator:
-    """Advanced revenue calculation engine"""
-    
+    """Advanced revenue calculation engine"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.RevenueCalculator")
@@ -324,8 +304,7 @@ class RevenueCalculator:
         revenue_streams: List[RevenueStream],
         time_horizon_months: int = 12
     ) -> Dict[str, Any]:
-        """Calculate revenue projections"""
-        monthly_projections = []
+        """Calculate revenue projections"""        monthly_projections = []
         
         for month in range(time_horizon_months):
             month_revenue = Decimal('0.00')
@@ -354,8 +333,7 @@ class RevenueCalculator:
         }
     
     def _calculate_growth_factor(self, stream: RevenueStream, month: int) -> float:
-        """Calculate growth factor for revenue stream"""
-        # Simulate different growth patterns
+        """Calculate growth factor for revenue stream"""        # Simulate different growth patterns
         if stream.revenue_model == RevenueModel.SUBSCRIPTION:
             # Steady growth for subscriptions
             return 1.0 + (month * 0.05)
@@ -368,8 +346,7 @@ class RevenueCalculator:
 
 
 class PayoutProcessor:
-    """Automated payout processing system"""
-    
+    """Automated payout processing system"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.PayoutProcessor")
@@ -388,8 +365,7 @@ class PayoutProcessor:
         payout_config: PayoutConfig,
         verification_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Setup payout account for user"""
-        self.logger.info(f"Setting up payout account for user: {user_id}")
+        """Setup payout account for user"""        self.logger.info(f"Setting up payout account for user: {user_id}")
         
         # Verify user identity and payment details
         verification_result = await self._verify_payout_details(verification_data)
@@ -416,8 +392,7 @@ class PayoutProcessor:
         }
     
     async def _verify_payout_details(self, verification_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Verify payout details"""
-        # Simulate verification process
+        """Verify payout details"""        # Simulate verification process
         await asyncio.sleep(0.1)
         
         return {
@@ -428,8 +403,7 @@ class PayoutProcessor:
         }
     
     async def _setup_payment_gateway(self, payment_method: str, payment_details: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup payment gateway integration"""
-        # Simulate gateway setup
+        """Setup payment gateway integration"""        # Simulate gateway setup
         await asyncio.sleep(0.05)
         
         gateway_config = self.payment_gateways.get(payment_method, {})
@@ -443,8 +417,7 @@ class PayoutProcessor:
         }
     
     def _calculate_fee_schedule(self, payout_config: PayoutConfig) -> Dict[str, Any]:
-        """Calculate fee schedule"""
-        base_fees = {
+        """Calculate fee schedule"""        base_fees = {
             "bank_transfer": {"fixed": 2.50, "percentage": 0.0},
             "paypal": {"fixed": 0.35, "percentage": 0.029},
             "stripe": {"fixed": 0.25, "percentage": 0.025},
@@ -463,8 +436,7 @@ class PayoutProcessor:
 
 
 class LicensingEngine:
-    """Automated licensing engine"""
-    
+    """Automated licensing engine"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.LicensingEngine")
@@ -475,8 +447,7 @@ class LicensingEngine:
         revenue_estimate: Dict[str, Any],
         parameters: Dict[str, Any]
     ) -> List[LicensingTerms]:
-        """Generate licensing terms based on content and market analysis"""
-        self.logger.info("Generating licensing terms")
+        """Generate licensing terms based on content and market analysis"""        self.logger.info("Generating licensing terms")
         
         licensing_tiers = []
         
@@ -496,8 +467,7 @@ class LicensingEngine:
         return licensing_tiers
     
     async def _create_standard_license(self, content_data: Dict[str, Any], revenue_estimate: Dict[str, Any]) -> LicensingTerms:
-        """Create standard licensing terms"""
-        base_price = revenue_estimate["total_monthly_revenue"] * 2  # 2 months of revenue
+        """Create standard licensing terms"""        base_price = revenue_estimate["total_monthly_revenue"] * 2  # 2 months of revenue
         
         return LicensingTerms(
             license_id=f"std_{uuid.uuid4().hex[:8]}",
@@ -512,8 +482,7 @@ class LicensingEngine:
         )
     
     async def _create_premium_license(self, content_data: Dict[str, Any], revenue_estimate: Dict[str, Any]) -> LicensingTerms:
-        """Create premium licensing terms"""
-        base_price = revenue_estimate["total_monthly_revenue"] * 6  # 6 months of revenue
+        """Create premium licensing terms"""        base_price = revenue_estimate["total_monthly_revenue"] * 6  # 6 months of revenue
         
         return LicensingTerms(
             license_id=f"prem_{uuid.uuid4().hex[:8]}",
@@ -528,8 +497,7 @@ class LicensingEngine:
         )
     
     async def _create_exclusive_license(self, content_data: Dict[str, Any], revenue_estimate: Dict[str, Any]) -> LicensingTerms:
-        """Create exclusive licensing terms"""
-        base_price = revenue_estimate["total_annual_revenue"] * 2  # 2 years of revenue
+        """Create exclusive licensing terms"""        base_price = revenue_estimate["total_annual_revenue"] * 2  # 2 years of revenue
         
         return LicensingTerms(
             license_id=f"excl_{uuid.uuid4().hex[:8]}",
@@ -545,8 +513,7 @@ class LicensingEngine:
 
 
 class RevenueOptimizer:
-    """AI-powered revenue optimization engine"""
-    
+    """AI-powered revenue optimization engine"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.RevenueOptimizer")
@@ -557,8 +524,7 @@ class RevenueOptimizer:
         market_data: Dict[str, Any],
         user_preferences: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize revenue strategy using AI"""
-        self.logger.info("Optimizing revenue strategy")
+        """Optimize revenue strategy using AI"""        self.logger.info("Optimizing revenue strategy")
         
         # Analyze current performance
         performance_analysis = await self._analyze_performance(current_performance)
@@ -580,8 +546,7 @@ class RevenueOptimizer:
         }
     
     async def _analyze_performance(self, performance_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze current revenue performance"""
-        return {
+        """Analyze current revenue performance"""        return {
             "revenue_trends": "growing",
             "platform_performance": {"best": "spotify", "worst": "tiktok"},
             "conversion_rates": {"average": 0.05, "best": 0.12},
@@ -589,8 +554,7 @@ class RevenueOptimizer:
         }
     
     async def _analyze_market_opportunities(self, market_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze market opportunities"""
-        return {
+        """Analyze market opportunities"""        return {
             "trending_platforms": ["tiktok", "instagram_reels"],
             "pricing_gaps": {"underpriced_premium_tier": True},
             "seasonal_opportunities": ["holiday_content_demand"],
@@ -603,8 +567,7 @@ class RevenueOptimizer:
         market_opportunities: Dict[str, Any],
         user_preferences: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate optimization recommendations"""
-        optimizations = []
+        """Generate optimization recommendations"""        optimizations = []
         
         # Pricing optimization
         optimizations.append({
@@ -636,8 +599,7 @@ class RevenueOptimizer:
         return optimizations
     
     def _calculate_expected_improvement(self, optimizations: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calculate expected improvement from optimizations"""
-        total_impact = sum(
+        """Calculate expected improvement from optimizations"""        total_impact = sum(
             float(opt["expected_impact"].replace("+", "").replace("% revenue", "")) / 100
             for opt in optimizations
         )
@@ -650,8 +612,7 @@ class RevenueOptimizer:
         }
     
     def _prioritize_optimizations(self, optimizations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Prioritize optimizations by impact and effort"""
-        # Sort by impact/effort ratio
+        """Prioritize optimizations by impact and effort"""        # Sort by impact/effort ratio
         priority_scores = []
         
         for opt in optimizations:
@@ -669,8 +630,7 @@ class RevenueOptimizer:
 
 
 class MonetizationPipeline:
-    """
-    Ultra-advanced monetization pipeline for content creators.
+    """    Ultra-advanced monetization pipeline for content creators.
     
     Features:
     - AI-powered revenue estimation
@@ -679,8 +639,7 @@ class MonetizationPipeline:
     - Advanced payout processing
     - Real-time optimization
     - Performance analytics
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or self._get_default_config()
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -705,8 +664,7 @@ class MonetizationPipeline:
         self.logger.info("Monetization Pipeline initialized successfully")
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration"""
-        return {
+        """Get default configuration"""        return {
             "revenue_models": ["subscription", "licensing", "advertising", "commission"],
             "supported_platforms": {
                 "music": ["spotify", "apple_music", "youtube_music", "soundcloud"],
@@ -738,8 +696,7 @@ class MonetizationPipeline:
         }
     
     def _initialize_stage_processors(self):
-        """Initialize stage processors"""
-        self.stage_processors = {
+        """Initialize stage processors"""        self.stage_processors = {
             MonetizationStage.CONTENT_VALUATION: self._process_content_valuation,
             MonetizationStage.REVENUE_ESTIMATION: self._process_revenue_estimation,
             MonetizationStage.LICENSING_SETUP: self._process_licensing_setup,
@@ -759,8 +716,7 @@ class MonetizationPipeline:
         user_preferences: Dict[str, Any],
         parameters: Optional[Dict[str, Any]] = None
     ) -> MonetizationResult:
-        """
-        Setup complete monetization for content
+        """        Setup complete monetization for content
         
         Args:
             content_id: Unique content identifier
@@ -770,8 +726,7 @@ class MonetizationPipeline:
             
         Returns:
             MonetizationResult with complete monetization setup
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         monetization_id = f"mon_{uuid.uuid4().hex[:16]}"
         
         # Initialize result
@@ -833,8 +788,7 @@ class MonetizationPipeline:
         user_preferences: Dict[str, Any],
         parameters: Dict[str, Any]
     ):
-        """Process content valuation stage"""
-        self.logger.info("Processing content valuation")
+        """Process content valuation stage"""        self.logger.info("Processing content valuation")
         
         # Enhanced content valuation with AI
         valuation = await self.revenue_engine._value_content(content_data, parameters)
@@ -852,8 +806,7 @@ class MonetizationPipeline:
         user_preferences: Dict[str, Any],
         parameters: Dict[str, Any]
     ):
-        """Process revenue estimation stage"""
-        self.logger.info("Processing revenue estimation")
+        """Process revenue estimation stage"""        self.logger.info("Processing revenue estimation")
         
         # Get target platforms from user preferences
         target_platforms = user_preferences.get("target_platforms", ["spotify", "youtube", "instagram"])
@@ -875,8 +828,7 @@ class MonetizationPipeline:
         user_preferences: Dict[str, Any],
         parameters: Dict[str, Any]
     ):
-        """Process licensing setup stage"""
-        self.logger.info("Processing licensing setup")
+        """Process licensing setup stage"""        self.logger.info("Processing licensing setup")
         
         # Generate licensing terms
         revenue_estimate = result.analytics_config.get("revenue_estimation", {})
@@ -906,8 +858,7 @@ class MonetizationPipeline:
         user_preferences: Dict[str, Any],
         parameters: Dict[str, Any]
     ):
-        """Process platform integration stage"""
-        self.logger.info("Processing platform integration")
+        """Process platform integration stage"""        self.logger.info("Processing platform integration")
         
         target_platforms = user_preferences.get("target_platforms", [])
         
@@ -941,8 +892,7 @@ class MonetizationPipeline:
         user_preferences: Dict[str, Any],
         parameters: Dict[str, Any]
     ):
-        """Process pricing optimization stage"""
-        self.logger.info("Processing pricing optimization")
+        """Process pricing optimization stage"""        self.logger.info("Processing pricing optimization")
         
         if not self.config["optimization"]["price_optimization"]:
             result.warnings.append("Price optimization disabled")
@@ -972,8 +922,7 @@ class MonetizationPipeline:
         user_preferences: Dict[str, Any],
         parameters: Dict[str, Any]
     ):
-        """Process payment setup stage"""
-        self.logger.info("Processing payment setup")
+        """Process payment setup stage"""        self.logger.info("Processing payment setup")
         
         # Setup payment processing
         payment_method = user_preferences.get("payment_method", "bank_transfer")
@@ -996,8 +945,7 @@ class MonetizationPipeline:
         user_preferences: Dict[str, Any],
         parameters: Dict[str, Any]
     ):
-        """Process payout configuration stage"""
-        self.logger.info("Processing payout configuration")
+        """Process payout configuration stage"""        self.logger.info("Processing payout configuration")
         
         if result.payout_config:
             # Setup payout account
@@ -1019,8 +967,7 @@ class MonetizationPipeline:
         user_preferences: Dict[str, Any],
         parameters: Dict[str, Any]
     ):
-        """Process analytics setup stage"""
-        self.logger.info("Processing analytics setup")
+        """Process analytics setup stage"""        self.logger.info("Processing analytics setup")
         
         # Setup comprehensive analytics
         analytics_config = {
@@ -1058,8 +1005,7 @@ class MonetizationPipeline:
         user_preferences: Dict[str, Any],
         parameters: Dict[str, Any]
     ):
-        """Process optimization engine stage"""
-        self.logger.info("Processing optimization engine")
+        """Process optimization engine stage"""        self.logger.info("Processing optimization engine")
         
         if not self.config["optimization"]["enable_ai_optimization"]:
             result.warnings.append("AI optimization disabled")
@@ -1090,8 +1036,7 @@ class MonetizationPipeline:
         user_preferences: Dict[str, Any],
         parameters: Dict[str, Any]
     ):
-        """Process activation stage"""
-        self.logger.info("Processing activation")
+        """Process activation stage"""        self.logger.info("Processing activation")
         
         # Activate all revenue streams
         for stream in result.revenue_streams:
@@ -1121,8 +1066,7 @@ class MonetizationPipeline:
         content_data: Dict[str, Any],
         user_preferences: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Setup integration with specific platform"""
-        # Simulate platform integration setup
+        """Setup integration with specific platform"""        # Simulate platform integration setup
         await asyncio.sleep(0.1)
         
         return {
@@ -1136,8 +1080,7 @@ class MonetizationPipeline:
         }
     
     def _get_platform_revenue_model(self, platform: str) -> RevenueModel:
-        """Get revenue model for platform"""
-        platform_models = {
+        """Get revenue model for platform"""        platform_models = {
             "spotify": RevenueModel.ROYALTY,
             "youtube": RevenueModel.ADVERTISING,
             "instagram": RevenueModel.COMMISSION,
@@ -1147,8 +1090,7 @@ class MonetizationPipeline:
         return platform_models.get(platform, RevenueModel.COMMISSION)
     
     def _get_platform_revenue_sharing(self, platform: str) -> Dict[str, float]:
-        """Get platform revenue sharing rates"""
-        sharing_rates = {
+        """Get platform revenue sharing rates"""        sharing_rates = {
             "spotify": {"platform": 0.30, "creator": 0.70},
             "youtube": {"platform": 0.45, "creator": 0.55},
             "instagram": {"platform": 0.30, "creator": 0.70},
@@ -1158,8 +1100,7 @@ class MonetizationPipeline:
         return sharing_rates.get(platform, {"platform": 0.30, "creator": 0.70})
     
     def _get_platform_content_requirements(self, platform: str) -> Dict[str, Any]:
-        """Get platform content requirements"""
-        requirements = {
+        """Get platform content requirements"""        requirements = {
             "spotify": {"format": "audio", "quality": "320kbps", "metadata_required": True},
             "youtube": {"format": "video", "quality": "1080p", "thumbnails_required": True},
             "instagram": {"format": "image/video", "aspect_ratio": "1:1 or 9:16", "hashtags_recommended": True}
@@ -1168,8 +1109,7 @@ class MonetizationPipeline:
         return requirements.get(platform, {"format": "any", "quality": "high"})
     
     async def _optimize_license_price(self, terms: LicensingTerms, analytics_config: Dict[str, Any]) -> Decimal:
-        """Optimize license price using AI"""
-        # Simulate AI price optimization
+        """Optimize license price using AI"""        # Simulate AI price optimization
         current_price = terms.price
         market_factor = 1.1  # Market analysis suggests 10% increase
         quality_factor = analytics_config.get("content_valuation", {}).get("score", 0.8)
@@ -1180,16 +1120,13 @@ class MonetizationPipeline:
     
     # Public API Methods
     def get_monetization_status(self, monetization_id: str) -> Optional[MonetizationResult]:
-        """Get monetization status"""
-        return self.active_monetizations.get(monetization_id) or self.completed_monetizations.get(monetization_id)
+        """Get monetization status"""        return self.active_monetizations.get(monetization_id) or self.completed_monetizations.get(monetization_id)
     
     def get_active_monetizations(self) -> Dict[str, MonetizationResult]:
-        """Get all active monetizations"""
-        return self.active_monetizations.copy()
+        """Get all active monetizations"""        return self.active_monetizations.copy()
     
     def get_monetization_metrics(self) -> Dict[str, Any]:
-        """Get monetization metrics"""
-        completed_monetizations = list(self.completed_monetizations.values())
+        """Get monetization metrics"""        completed_monetizations = list(self.completed_monetizations.values())
         
         return {
             "active_monetizations": len(self.active_monetizations),
@@ -1200,8 +1137,7 @@ class MonetizationPipeline:
         }
     
     async def cancel_monetization(self, monetization_id: str) -> bool:
-        """Cancel monetization setup"""
-        if monetization_id in self.active_monetizations:
+        """Cancel monetization setup"""        if monetization_id in self.active_monetizations:
             result = self.active_monetizations[monetization_id]
             result.success = False
             result.errors.append("Monetization setup cancelled")

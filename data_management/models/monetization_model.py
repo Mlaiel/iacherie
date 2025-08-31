@@ -1,5 +1,4 @@
-"""
-💰 Monetization Models - IA Influencer Agent Platform Enterprise
+"""💰 Monetization Models - IA Influencer Agent Platform Enterprise
 ===============================================================
 Module: backend/data_management/models/monetization_model.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,9 +15,7 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC MONETIZATION PIPELINE:
 Content Creation → Revenue Eligibility → Multi-Platform Distribution → 
 Real-Time Analytics → AI Revenue Optimization → Automated Payouts → Tax Reporting
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timezone, timedelta
 from enum import Enum, IntEnum
 from dataclasses import dataclass, field
@@ -27,8 +24,7 @@ import uuid
 import hashlib
 
 class RevenueSource(Enum):
-    """Advanced revenue sources across platforms"""
-    STREAMING = "streaming"
+    """Advanced revenue sources across platforms"""    STREAMING = "streaming"
     DOWNLOAD = "download"
     LICENSING = "licensing"
     COLLABORATION = "collaboration"
@@ -50,8 +46,7 @@ class RevenueSource(Enum):
     EXCLUSIVE_LICENSING = "exclusive_licensing"
 
 class PaymentMethod(Enum):
-    """Supported payment methods"""
-    BANK_TRANSFER = "bank_transfer"
+    """Supported payment methods"""    BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE = "stripe"
     WISE = "wise"
@@ -61,8 +56,7 @@ class PaymentMethod(Enum):
     STORE_CREDIT = "store_credit"
 
 class PaymentStatus(Enum):
-    """Payment processing status"""
-    PENDING = "pending"
+    """Payment processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -71,16 +65,14 @@ class PaymentStatus(Enum):
     DISPUTED = "disputed"
 
 class TaxStatus(Enum):
-    """Tax reporting status"""
-    EXEMPT = "exempt"
+    """Tax reporting status"""    EXEMPT = "exempt"
     DOMESTIC = "domestic"
     FOREIGN = "foreign"
     WITHHOLDING = "withholding"
     TREATY = "treaty"
 
 class RevenueCategory(Enum):
-    """Revenue categorization for reporting"""
-    PRIMARY = "primary"  # Main content revenue
+    """Revenue categorization for reporting"""    PRIMARY = "primary"  # Main content revenue
     SECONDARY = "secondary"  # Derivative revenue
     PASSIVE = "passive"  # Ongoing royalties
     ACTIVE = "active"  # Performance-based
@@ -89,8 +81,7 @@ class RevenueCategory(Enum):
 
 @dataclass
 class RevenueTrackingModel:
-    """Advanced revenue tracking with real-time analytics"""
-    
+    """Advanced revenue tracking with real-time analytics"""    
     # Core identifiers
     revenue_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
@@ -151,14 +142,12 @@ class RevenueTrackingModel:
     updated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def calculate_net_amount(self) -> Decimal:
-        """Calculate net amount after all deductions"""
-        deductions = self.platform_commission + self.service_fee + self.tax_amount
+        """Calculate net amount after all deductions"""        deductions = self.platform_commission + self.service_fee + self.tax_amount
         self.net_amount = self.gross_amount - deductions
         return self.net_amount
     
     def calculate_revenue_metrics(self) -> Dict[str, Decimal]:
-        """Calculate revenue performance metrics"""
-        total_engagement = self.views_count + self.plays_count + self.downloads_count
+        """Calculate revenue performance metrics"""        total_engagement = self.views_count + self.plays_count + self.downloads_count
         
         if total_engagement > 0:
             self.revenue_per_view = self.gross_amount / total_engagement
@@ -174,8 +163,7 @@ class RevenueTrackingModel:
         }
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage and API"""
-        return {
+        """Convert to dictionary for storage and API"""        return {
             "revenue_id": self.revenue_id,
             "creator_id": self.creator_id,
             "content_id": self.content_id,
@@ -211,8 +199,7 @@ class RevenueTrackingModel:
 
 @dataclass
 class PaymentModel:
-    """Advanced payment processing and payout management"""
-    
+    """Advanced payment processing and payout management"""    
     # Core identifiers
     payment_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
@@ -262,30 +249,25 @@ class PaymentModel:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def calculate_net_amount(self) -> Decimal:
-        """Calculate net amount after fees and taxes"""
-        total_fees = self.processing_fee + self.provider_fee + self.withholding_tax
+        """Calculate net amount after fees and taxes"""        total_fees = self.processing_fee + self.provider_fee + self.withholding_tax
         self.net_amount = self.amount - total_fees
         return self.net_amount
     
     def mark_completed(self, provider_transaction_id: str) -> None:
-        """Mark payment as completed"""
-        self.payment_status = PaymentStatus.COMPLETED
+        """Mark payment as completed"""        self.payment_status = PaymentStatus.COMPLETED
         self.provider_transaction_id = provider_transaction_id
         self.completed_at = datetime.now(timezone.utc)
     
     def mark_failed(self, reason: str) -> None:
-        """Mark payment as failed with reason"""
-        self.payment_status = PaymentStatus.FAILED
+        """Mark payment as failed with reason"""        self.payment_status = PaymentStatus.FAILED
         self.failure_reason = reason
         self.retry_count += 1
     
     def can_retry(self) -> bool:
-        """Check if payment can be retried"""
-        return self.retry_count < self.max_retries and self.payment_status == PaymentStatus.FAILED
+        """Check if payment can be retried"""        return self.retry_count < self.max_retries and self.payment_status == PaymentStatus.FAILED
     
     def to_dict(self, include_sensitive: bool = False) -> Dict[str, Any]:
-        """Convert to dictionary with optional sensitive data"""
-        base_data = {
+        """Convert to dictionary with optional sensitive data"""        base_data = {
             "payment_id": self.payment_id,
             "creator_id": self.creator_id,
             "tenant_id": self.tenant_id,
@@ -322,8 +304,7 @@ class PaymentModel:
 
 @dataclass
 class MonetizationModel:
-    """Advanced monetization configuration and optimization"""
-    
+    """Advanced monetization configuration and optimization"""    
     # Core identifiers
     monetization_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
@@ -369,23 +350,19 @@ class MonetizationModel:
     updated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def calculate_creator_share(self, gross_amount: Decimal) -> Decimal:
-        """Calculate creator's share of revenue"""
-        return gross_amount * self.creator_percentage
+        """Calculate creator's share of revenue"""        return gross_amount * self.creator_percentage
     
     def calculate_platform_share(self, gross_amount: Decimal) -> Decimal:
-        """Calculate platform's share of revenue"""
-        return gross_amount * self.platform_commission
+        """Calculate platform's share of revenue"""        return gross_amount * self.platform_commission
     
     def update_settings(self, new_settings: Dict[str, Any]) -> None:
-        """Update monetization settings"""
-        for key, value in new_settings.items():
+        """Update monetization settings"""        for key, value in new_settings.items():
             if hasattr(self, key):
                 setattr(self, key, value)
         self.updated_at = datetime.now(timezone.utc)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage"""
-        return {
+        """Convert to dictionary for storage"""        return {
             "monetization_id": self.monetization_id,
             "creator_id": self.creator_id,
             "content_id": self.content_id,
@@ -419,8 +396,7 @@ def calculate_revenue_projection(
     growth_rate: float, 
     months: int
 ) -> Decimal:
-    """Calculate projected revenue based on growth rate"""
-    monthly_growth = Decimal(str(1 + (growth_rate / 12)))
+    """Calculate projected revenue based on growth rate"""    monthly_growth = Decimal(str(1 + (growth_rate / 12)))
     projection = current_revenue * (monthly_growth ** months)
     return projection
 
@@ -429,8 +405,7 @@ def optimize_payout_schedule(
     revenue_history: List[Decimal], 
     minimum_payout: Decimal
 ) -> str:
-    """Optimize payout frequency based on revenue patterns"""
-    avg_monthly = sum(revenue_history) / len(revenue_history) if revenue_history else Decimal('0')
+    """Optimize payout frequency based on revenue patterns"""    avg_monthly = sum(revenue_history) / len(revenue_history) if revenue_history else Decimal('0')
     
     if avg_monthly >= minimum_payout * 4:
         return "weekly"

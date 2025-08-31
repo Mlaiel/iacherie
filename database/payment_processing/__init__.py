@@ -23,8 +23,7 @@ ENTERPRISE FEATURES:
 - Multi-currency and international payment support
 - Advanced security with encryption and audit trails
 - Microservices architecture with high availability
-"""
-# Core payment processing components
+"""# Core payment processing components
 from .models import (
     # Enums
     PaymentStatus,

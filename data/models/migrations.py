@@ -1,5 +1,4 @@
-"""
-Database Migrations Management
+"""Database Migrations Management
 =============================
 
 Alembic migrations support and database schema management utilities.
@@ -13,9 +12,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use without explicit written 
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-from typing import Dict, List, Any, Optional
+"""from typing import Dict, List, Any, Optional
 from datetime import datetime
 import os
 import logging
@@ -42,11 +39,9 @@ logger = logging.getLogger(__name__)
 
 
 class MigrationManager:
-    """
-    Manages database migrations using Alembic.
+    """    Manages database migrations using Alembic.
     Provides utilities for schema evolution and version control.
-    """
-    
+    """    
     def __init__(self, engine: Engine, alembic_ini_path: str = None):
         if not ALEMBIC_AVAILABLE:
             raise ImportError("Alembic is required for migration management")
@@ -60,8 +55,7 @@ class MigrationManager:
             self.config.set_main_option("sqlalchemy.url", str(engine.url))
     
     def _find_alembic_ini(self) -> Optional[str]:
-        """Find alembic.ini file in project structure"""
-        possible_paths = [
+        """Find alembic.ini file in project structure"""        possible_paths = [
             'alembic.ini',
             '../alembic.ini',
             '../../alembic.ini',
@@ -77,12 +71,10 @@ class MigrationManager:
         return None
     
     def init_alembic(self, directory: str = "migrations") -> bool:
-        """Initialize Alembic in the project"""
-        try:
+        """Initialize Alembic in the project"""        try:
             if not self.config:
                 # Create basic alembic.ini
-                alembic_ini_content = f"""
-[alembic]
+                alembic_ini_content = f"""[alembic]
 script_location = {directory}
 sqlalchemy.url = {self.engine.url}
 
@@ -121,8 +113,7 @@ formatter = generic
 [formatter_generic]
 format = %(levelname)-5.5s [%(name)s] %(message)s
 datefmt = %H:%M:%S
-"""
-                with open('alembic.ini', 'w') as f:
+"""                with open('alembic.ini', 'w') as f:
                     f.write(alembic_ini_content)
                 
                 self.config = Config('alembic.ini')
@@ -143,9 +134,7 @@ datefmt = %H:%M:%S
             return False
     
     def _update_env_py(self, env_py_path: str):
-        """Update env.py to import our models"""
-        additional_imports = """
-# Import all models for autogenerate support
+        """Update env.py to import our models"""        additional_imports = """# Import all models for autogenerate support
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -158,8 +147,7 @@ from backend.data.models.content_model import Base
 
 # Set target metadata
 target_metadata = Base.metadata
-"""
-        
+"""        
         try:
             with open(env_py_path, 'r') as f:
                 content = f.read()
@@ -183,8 +171,7 @@ target_metadata = Base.metadata
             logger.warning(f"Could not update env.py: {e}")
     
     def create_migration(self, message: str, autogenerate: bool = True) -> bool:
-        """Create a new migration"""
-        try:
+        """Create a new migration"""        try:
             if not self.config:
                 logger.error("Alembic not configured")
                 return False
@@ -206,8 +193,7 @@ target_metadata = Base.metadata
             return False
     
     def upgrade(self, revision: str = "head") -> bool:
-        """Upgrade database to specified revision"""
-        try:
+        """Upgrade database to specified revision"""        try:
             if not self.config:
                 logger.error("Alembic not configured")
                 return False
@@ -221,8 +207,7 @@ target_metadata = Base.metadata
             return False
     
     def downgrade(self, revision: str) -> bool:
-        """Downgrade database to specified revision"""
-        try:
+        """Downgrade database to specified revision"""        try:
             if not self.config:
                 logger.error("Alembic not configured")
                 return False
@@ -236,8 +221,7 @@ target_metadata = Base.metadata
             return False
     
     def get_current_revision(self) -> Optional[str]:
-        """Get current database revision"""
-        try:
+        """Get current database revision"""        try:
             with self.engine.connect() as connection:
                 context = MigrationContext.configure(connection)
                 return context.get_current_revision()
@@ -246,8 +230,7 @@ target_metadata = Base.metadata
             return None
     
     def get_history(self) -> List[Dict[str, Any]]:
-        """Get migration history"""
-        try:
+        """Get migration history"""        try:
             if not self.config:
                 return []
             
@@ -273,8 +256,7 @@ target_metadata = Base.metadata
             return []
     
     def check_for_updates(self) -> Dict[str, Any]:
-        """Check if database needs updates"""
-        result = {
+        """Check if database needs updates"""        result = {
             'needs_update': False,
             'current_revision': None,
             'head_revision': None,
@@ -308,18 +290,15 @@ target_metadata = Base.metadata
 
 
 class SchemaValidator:
-    """
-    Validates database schema against model definitions.
+    """    Validates database schema against model definitions.
     Detects inconsistencies and suggests fixes.
-    """
-    
+    """    
     def __init__(self, engine: Engine):
         self.engine = engine
         self.metadata = Base.metadata
     
     def validate_schema(self) -> Dict[str, Any]:
-        """Validate current schema against models"""
-        validation_result = {
+        """Validate current schema against models"""        validation_result = {
             'valid': True,
             'errors': [],
             'warnings': [],
@@ -363,8 +342,7 @@ class SchemaValidator:
         return validation_result
     
     def _compare_table_columns(self, expected_table: Table, current_table: Table) -> Dict[str, Any]:
-        """Compare columns between expected and current table"""
-        issues = {
+        """Compare columns between expected and current table"""        issues = {
             'missing_columns': [],
             'extra_columns': [],
             'type_mismatches': [],
@@ -410,15 +388,13 @@ class SchemaValidator:
 
 
 def create_initial_migration_script() -> str:
-    """Generate initial migration script content"""
-    return '''"""Initial migration: Create all tables
+    """Generate initial migration script content"""    return '''"""Initial migration: Create all tables
 
 Revision ID: 001_initial
 Revises: 
 Create Date: {create_date}
 
-"""
-from alembic import op
+"""from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 
@@ -430,22 +406,19 @@ depends_on = None
 
 
 def upgrade():
-    """Create all tables"""
-    # This will be auto-generated by Alembic
+    """Create all tables"""    # This will be auto-generated by Alembic
     # when running: alembic revision --autogenerate -m "Initial migration"
     pass
 
 
 def downgrade():
-    """Drop all tables"""
-    # This will be auto-generated by Alembic
+    """Drop all tables"""    # This will be auto-generated by Alembic
     pass
 '''.format(create_date=datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S'))
 
 
 def get_migration_commands() -> Dict[str, str]:
-    """Get common migration commands for reference"""
-    return {
+    """Get common migration commands for reference"""    return {
         'init': 'alembic init migrations',
         'create_migration': 'alembic revision --autogenerate -m "Migration message"',
         'upgrade': 'alembic upgrade head',
@@ -459,8 +432,7 @@ def get_migration_commands() -> Dict[str, str]:
 
 # Quick setup function
 def quick_setup_migrations(engine: Engine, directory: str = "migrations") -> MigrationManager:
-    """Quick setup for migrations"""
-    manager = MigrationManager(engine)
+    """Quick setup for migrations"""    manager = MigrationManager(engine)
     
     if not manager.config:
         logger.info("Initializing Alembic...")

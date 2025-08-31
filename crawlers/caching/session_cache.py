@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Session Cache - User and Crawler Session Management
+"""Session Cache - User and Crawler Session Management
 ==================================================
 
 Advanced session caching for users, crawlers, and temporary data
@@ -9,9 +8,7 @@ with intelligent session lifecycle management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 from datetime import datetime, timedelta
@@ -27,8 +24,7 @@ from .cache_manager import CacheManager
 logger = logging.getLogger(__name__)
 
 class SessionType(Enum):
-    """Session type enumeration."""
-    USER = "user"
+    """Session type enumeration."""    USER = "user"
     CRAWLER = "crawler"
     API = "api"
     ADMIN = "admin"
@@ -37,8 +33,7 @@ class SessionType(Enum):
 
 @dataclass
 class SessionData:
-    """Session data structure."""
-    session_id: str
+    """Session data structure."""    session_id: str
     session_type: SessionType
     user_id: Optional[str] = None
     created_at: datetime = field(default_factory=datetime.now)
@@ -51,21 +46,18 @@ class SessionData:
     user_agent: Optional[str] = None
     
     def is_expired(self) -> bool:
-        """Check if session is expired."""
-        if self.expires_at is None:
+        """Check if session is expired."""        if self.expires_at is None:
             return False
         return datetime.now() > self.expires_at
     
     def extend_session(self, extension_seconds: int) -> None:
-        """Extend session expiration."""
-        if self.expires_at:
+        """Extend session expiration."""        if self.expires_at:
             self.expires_at += timedelta(seconds=extension_seconds)
         else:
             self.expires_at = datetime.now() + timedelta(seconds=extension_seconds)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization."""
-        return {
+        """Convert to dictionary for serialization."""        return {
             "session_id": self.session_id,
             "session_type": self.session_type.value,
             "user_id": self.user_id,
@@ -81,8 +73,7 @@ class SessionData:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'SessionData':
-        """Create from dictionary."""
-        expires_at = None
+        """Create from dictionary."""        expires_at = None
         if data.get('expires_at'):
             expires_at = datetime.fromisoformat(data['expires_at'])
         
@@ -101,8 +92,7 @@ class SessionData:
         )
 
 class SessionCache:
-    """
-    Advanced session cache implementation.
+    """    Advanced session cache implementation.
     
     Features:
     - Multiple session types
@@ -111,19 +101,16 @@ class SessionCache:
     - User-based indexing
     - Activity tracking
     - Security monitoring
-    """
-    
+    """    
     def __init__(self, cache_manager: Optional[CacheManager] = None,
                  default_ttl: int = 3600, max_sessions_per_user: int = 10):
-        """
-        Initialize session cache.
+        """        Initialize session cache.
         
         Args:
             cache_manager: Cache manager instance
             default_ttl: Default session TTL in seconds
             max_sessions_per_user: Maximum sessions per user
-        """
-        self.cache_manager = cache_manager
+        """        self.cache_manager = cache_manager
         self.default_ttl = default_ttl
         self.max_sessions_per_user = max_sessions_per_user
         self.logger = logging.getLogger(f"{__name__}.SessionCache")
@@ -150,31 +137,26 @@ class SessionCache:
         self.logger.info("Session cache initialized")
     
     async def _get_cache_manager(self) -> CacheManager:
-        """Get cache manager instance."""
-        if self.cache_manager is None:
+        """Get cache manager instance."""        if self.cache_manager is None:
             from .cache_manager import get_cache_manager
             self.cache_manager = await get_cache_manager()
         return self.cache_manager
     
     def _make_session_key(self, session_id: str) -> str:
-        """Create session cache key."""
-        return f"{self.session_key_prefix}{session_id}"
+        """Create session cache key."""        return f"{self.session_key_prefix}{session_id}"
     
     def _make_user_index_key(self, user_id: str) -> str:
-        """Create user session index key."""
-        return f"{self.user_index_prefix}{user_id}"
+        """Create user session index key."""        return f"{self.user_index_prefix}{user_id}"
     
     def _make_type_index_key(self, session_type: SessionType) -> str:
-        """Create type session index key."""
-        return f"{self.type_index_prefix}{session_type.value}"
+        """Create type session index key."""        return f"{self.type_index_prefix}{session_type.value}"
     
     async def create_session(self, session_type: SessionType,
                            user_id: Optional[str] = None,
                            ttl: Optional[int] = None,
                            data: Optional[Dict[str, Any]] = None,
                            **kwargs) -> str:
-        """
-        Create new session.
+        """        Create new session.
         
         Args:
             session_type: Type of session
@@ -185,8 +167,7 @@ class SessionCache:
             
         Returns:
             Session ID
-        """
-        try:
+        """        try:
             cache_manager = await self._get_cache_manager()
             
             # Generate session ID
@@ -233,16 +214,14 @@ class SessionCache:
             return None
     
     async def get_session(self, session_id: str) -> Optional[SessionData]:
-        """
-        Get session data.
+        """        Get session data.
         
         Args:
             session_id: Session ID
             
         Returns:
             Session data or None if not found/expired
-        """
-        try:
+        """        try:
             cache_manager = await self._get_cache_manager()
             session_key = self._make_session_key(session_id)
             
@@ -275,8 +254,7 @@ class SessionCache:
                            data: Optional[Dict[str, Any]] = None,
                            metadata: Optional[Dict[str, Any]] = None,
                            extend_ttl: Optional[int] = None) -> bool:
-        """
-        Update session data.
+        """        Update session data.
         
         Args:
             session_id: Session ID
@@ -286,8 +264,7 @@ class SessionCache:
             
         Returns:
             True if successful
-        """
-        try:
+        """        try:
             session_data = await self.get_session(session_id)
             if not session_data:
                 return False
@@ -319,16 +296,14 @@ class SessionCache:
             return False
     
     async def delete_session(self, session_id: str) -> bool:
-        """
-        Delete session.
+        """        Delete session.
         
         Args:
             session_id: Session ID
             
         Returns:
             True if successful
-        """
-        try:
+        """        try:
             # Get session data for cleanup
             session_data = await self.get_session(session_id)
             
@@ -351,8 +326,7 @@ class SessionCache:
             return False
     
     async def get_user_sessions(self, user_id: str) -> List[SessionData]:
-        """Get all sessions for user."""
-        try:
+        """Get all sessions for user."""        try:
             cache_manager = await self._get_cache_manager()
             user_index_key = self._make_user_index_key(user_id)
             
@@ -371,8 +345,7 @@ class SessionCache:
             return []
     
     async def delete_user_sessions(self, user_id: str) -> int:
-        """Delete all sessions for user."""
-        try:
+        """Delete all sessions for user."""        try:
             sessions = await self.get_user_sessions(user_id)
             deleted_count = 0
             
@@ -395,8 +368,7 @@ class SessionCache:
             return 0
     
     async def get_sessions_by_type(self, session_type: SessionType) -> List[SessionData]:
-        """Get all sessions of specific type."""
-        try:
+        """Get all sessions of specific type."""        try:
             cache_manager = await self._get_cache_manager()
             type_index_key = self._make_type_index_key(session_type)
             
@@ -415,8 +387,7 @@ class SessionCache:
             return []
     
     async def cleanup_expired_sessions(self) -> int:
-        """Clean up expired sessions."""
-        try:
+        """Clean up expired sessions."""        try:
             cleaned_count = 0
             
             # Check all session types
@@ -435,8 +406,7 @@ class SessionCache:
             return 0
     
     async def _add_to_indexes(self, session_data: SessionData) -> None:
-        """Add session to indexes."""
-        try:
+        """Add session to indexes."""        try:
             cache_manager = await self._get_cache_manager()
             
             # User index
@@ -461,8 +431,7 @@ class SessionCache:
             self.logger.error(f"Error adding to indexes: {e}")
     
     async def _remove_from_indexes(self, session_data: SessionData) -> None:
-        """Remove session from indexes."""
-        try:
+        """Remove session from indexes."""        try:
             cache_manager = await self._get_cache_manager()
             
             # User index
@@ -487,8 +456,7 @@ class SessionCache:
             self.logger.error(f"Error removing from indexes: {e}")
     
     async def _cleanup_user_sessions(self, user_id: str) -> None:
-        """Cleanup old sessions if user has too many."""
-        try:
+        """Cleanup old sessions if user has too many."""        try:
             sessions = await self.get_user_sessions(user_id)
             
             if len(sessions) > self.max_sessions_per_user:
@@ -504,8 +472,7 @@ class SessionCache:
             self.logger.error(f"Error cleaning up user sessions for {user_id}: {e}")
     
     async def get_stats(self) -> Dict[str, Any]:
-        """Get session cache statistics."""
-        try:
+        """Get session cache statistics."""        try:
             stats = {
                 "total_sessions": self.session_count,
                 "active_users": len(self.active_users),
@@ -524,30 +491,24 @@ class SessionCache:
             return {}
 
 class UserCache(SessionCache):
-    """
-    Specialized cache for user sessions and data.
+    """    Specialized cache for user sessions and data.
     
     Enhanced with user-specific features and preferences.
-    """
-    
+    """    
     def __init__(self, **kwargs):
-        """Initialize user cache."""
-        super().__init__(**kwargs)
+        """Initialize user cache."""        super().__init__(**kwargs)
         self.logger = logging.getLogger(f"{__name__}.UserCache")
         
         # User-specific settings
         self.default_ttl = 7200  # 2 hours for user sessions
 
 class CrawlerSessionCache(SessionCache):
-    """
-    Specialized cache for crawler sessions and state.
+    """    Specialized cache for crawler sessions and state.
     
     Enhanced with crawler-specific features and monitoring.
-    """
-    
+    """    
     def __init__(self, **kwargs):
-        """Initialize crawler session cache."""
-        super().__init__(**kwargs)
+        """Initialize crawler session cache."""        super().__init__(**kwargs)
         self.logger = logging.getLogger(f"{__name__}.CrawlerSessionCache")
         
         # Crawler-specific settings

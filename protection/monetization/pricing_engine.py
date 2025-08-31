@@ -1,12 +1,9 @@
-"""
-Pricing Engine - Professional dynamic pricing and optimization system.
+"""Pricing Engine - Professional dynamic pricing and optimization system.
 Handles intelligent pricing strategies, A/B testing, and revenue optimization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from decimal import Decimal, ROUND_HALF_UP
 from datetime import datetime, timedelta
@@ -23,8 +20,7 @@ logger = logging.getLogger(__name__)
 
 
 class PricingStrategy(Enum):
-    """Available pricing strategies."""
-    FIXED = "fixed"
+    """Available pricing strategies."""    FIXED = "fixed"
     DYNAMIC = "dynamic"
     DEMAND_BASED = "demand_based"
     TIERED = "tiered"
@@ -37,16 +33,14 @@ class PricingStrategy(Enum):
 
 
 class PriceTestStatus(Enum):
-    """A/B test status for pricing."""
-    ACTIVE = "active"
+    """A/B test status for pricing."""    ACTIVE = "active"
     COMPLETED = "completed"
     PAUSED = "paused"
     CANCELLED = "cancelled"
 
 
 class ContentType(Enum):
-    """Content types for pricing."""
-    AUDIO = "audio"
+    """Content types for pricing."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -57,8 +51,7 @@ class ContentType(Enum):
 
 @dataclass
 class PricePoint:
-    """Individual price point configuration."""
-    price_id: str
+    """Individual price point configuration."""    price_id: str
     content_type: ContentType
     base_price: Decimal
     currency: str = "EUR"
@@ -72,8 +65,7 @@ class PricePoint:
     updated_at: datetime = field(default_factory=datetime.utcnow)
     
     def calculate_price(self, context: Dict[str, Any] = None) -> Decimal:
-        """Calculate final price based on strategy and context."""
-        context = context or {}
+        """Calculate final price based on strategy and context."""        context = context or {}
         price = self.base_price
         
         # Apply multipliers
@@ -102,8 +94,7 @@ class PricePoint:
         return price.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
     
     def _apply_psychological_pricing(self, price: Decimal) -> Decimal:
-        """Apply psychological pricing (e.g., $9.99 instead of $10.00)."""
-        price_float = float(price)
+        """Apply psychological pricing (e.g., $9.99 instead of $10.00)."""        price_float = float(price)
         
         if price_float >= 10:
             # Round down to .99
@@ -119,8 +110,7 @@ class PricePoint:
 
 @dataclass
 class PriceTest:
-    """A/B price testing configuration."""
-    test_id: str
+    """A/B price testing configuration."""    test_id: str
     name: str
     content_type: ContentType
     control_price: Decimal
@@ -136,8 +126,7 @@ class PriceTest:
     created_at: datetime = field(default_factory=datetime.utcnow)
     
     def get_price_for_user(self, user_id: str) -> Decimal:
-        """Get price for specific user based on test assignment."""
-        # Simple hash-based assignment for consistency
+        """Get price for specific user based on test assignment."""        # Simple hash-based assignment for consistency
         user_hash = hash(user_id + self.test_id) % 100
         cumulative_split = 0
         
@@ -152,8 +141,7 @@ class PriceTest:
         return self.control_price
     
     def record_conversion(self, user_id: str, price: Decimal, revenue: Decimal) -> None:
-        """Record conversion for the test."""
-        price_key = f"price_{price}"
+        """Record conversion for the test."""        price_key = f"price_{price}"
         
         if price_key not in self.metrics:
             self.metrics[price_key] = {
@@ -171,8 +159,7 @@ class PriceTest:
         metrics["avg_revenue"] = metrics["revenue"] / max(metrics["conversions"], 1)
     
     def record_exposure(self, user_id: str, price: Decimal) -> None:
-        """Record exposure for the test."""
-        price_key = f"price_{price}"
+        """Record exposure for the test."""        price_key = f"price_{price}"
         
         if price_key not in self.metrics:
             self.metrics[price_key] = {
@@ -188,8 +175,7 @@ class PriceTest:
 
 @dataclass
 class DemandData:
-    """Market demand data for pricing optimization."""
-    content_type: ContentType
+    """Market demand data for pricing optimization."""    content_type: ContentType
     time_period: datetime
     view_count: int
     conversion_count: int
@@ -198,8 +184,7 @@ class DemandData:
     demand_score: float = 1.0
     
     def calculate_demand_factor(self) -> float:
-        """Calculate demand factor based on data."""
-        if self.view_count == 0:
+        """Calculate demand factor based on data."""        if self.view_count == 0:
             return 1.0
         
         conversion_rate = self.conversion_count / self.view_count
@@ -212,11 +197,9 @@ class DemandData:
 
 
 class PricingEngine:
-    """
-    Professional dynamic pricing and optimization engine.
+    """    Professional dynamic pricing and optimization engine.
     Handles intelligent pricing strategies, A/B testing, and optimization.
-    """
-    
+    """    
     def __init__(self):
         self.price_points: Dict[str, PricePoint] = {}
         self.active_tests: Dict[str, PriceTest] = {}
@@ -227,8 +210,7 @@ class PricingEngine:
         self.is_initialized = False
     
     async def initialize(self) -> bool:
-        """Initialize pricing engine."""
-        try:
+        """Initialize pricing engine."""        try:
             # Create default price points
             for price_point in self.default_prices:
                 self.price_points[price_point.price_id] = price_point
@@ -245,8 +227,7 @@ class PricingEngine:
             return False
     
     def _create_default_prices(self) -> List[PricePoint]:
-        """Create default price points for different content types."""
-        prices = []
+        """Create default price points for different content types."""        prices = []
         
         # Audio content pricing
         audio_price = PricePoint(
@@ -328,8 +309,7 @@ class PricingEngine:
         return prices
     
     def _initialize_optimization_rules(self) -> None:
-        """Initialize pricing optimization rules."""
-        self.optimization_rules = {
+        """Initialize pricing optimization rules."""        self.optimization_rules = {
             "demand_threshold": 1.5,  # Increase price if demand factor > 1.5
             "low_demand_threshold": 0.8,  # Decrease price if demand factor < 0.8
             "price_adjustment_rate": 0.1,  # 10% adjustment rate
@@ -344,8 +324,7 @@ class PricingEngine:
         user_id: str,
         context: Dict[str, Any] = None
     ) -> Decimal:
-        """Get optimized price for content."""
-        if not self.is_initialized:
+        """Get optimized price for content."""        if not self.is_initialized:
             await self.initialize()
         
         context = context or {}
@@ -389,8 +368,7 @@ class PricingEngine:
         test_prices: List[Decimal],
         duration_days: int = 14
     ) -> Optional[PriceTest]:
-        """Create a new A/B price test."""
-        try:
+        """Create a new A/B price test."""        try:
             test_id = str(uuid.uuid4())
             end_date = datetime.utcnow() + timedelta(days=duration_days)
             
@@ -418,8 +396,7 @@ class PricingEngine:
             return None
     
     async def analyze_price_test(self, test_id: str) -> Dict[str, Any]:
-        """Analyze price test results."""
-        test = self.active_tests.get(test_id)
+        """Analyze price test results."""        test = self.active_tests.get(test_id)
         if not test:
             return {"error": "Test not found"}
         
@@ -479,8 +456,7 @@ class PricingEngine:
             return {"error": str(e)}
     
     async def optimize_prices(self) -> Dict[str, Any]:
-        """Run automated price optimization."""
-        try:
+        """Run automated price optimization."""        try:
             optimization_results = {
                 "optimized_count": 0,
                 "skipped_count": 0,
@@ -550,8 +526,7 @@ class PricingEngine:
             return {"error": str(e)}
     
     async def get_pricing_analytics(self, days: int = 30) -> Dict[str, Any]:
-        """Get pricing performance analytics."""
-        try:
+        """Get pricing performance analytics."""        try:
             cutoff_date = datetime.utcnow() - timedelta(days=days)
             
             recent_history = [
@@ -611,8 +586,7 @@ class PricingEngine:
         price: Decimal,
         revenue: Decimal
     ) -> None:
-        """Record a successful purchase for pricing optimization."""
-        try:
+        """Record a successful purchase for pricing optimization."""        try:
             # Update active tests
             for test in self.active_tests.values():
                 if test.content_type == content_type and test.status == PriceTestStatus.ACTIVE:
@@ -627,19 +601,16 @@ class PricingEngine:
             logger.error(f"Purchase recording failed: {e}")
     
     def get_price_point(self, content_type: ContentType) -> Optional[PricePoint]:
-        """Get price point for content type."""
-        return self._get_price_point(content_type)
+        """Get price point for content type."""        return self._get_price_point(content_type)
     
     def list_active_tests(self) -> List[PriceTest]:
-        """List all active price tests."""
-        return [
+        """List all active price tests."""        return [
             test for test in self.active_tests.values()
             if test.status == PriceTestStatus.ACTIVE
         ]
     
     async def _get_price_point(self, content_type: ContentType) -> Optional[PricePoint]:
-        """Get price point for content type."""
-        # Find exact match first
+        """Get price point for content type."""        # Find exact match first
         for price_point in self.price_points.values():
             if price_point.content_type == content_type and price_point.is_active:
                 return price_point
@@ -649,8 +620,7 @@ class PricingEngine:
         return self.price_points.get(standard_id)
     
     async def _calculate_demand_factor(self, content_type: ContentType) -> float:
-        """Calculate demand factor for content type."""
-        try:
+        """Calculate demand factor for content type."""        try:
             # Get recent demand data
             recent_data = [
                 d for d in self.demand_data
@@ -676,8 +646,7 @@ class PricingEngine:
         price: Decimal,
         revenue: Decimal
     ) -> None:
-        """Update demand data with new interaction."""
-        try:
+        """Update demand data with new interaction."""        try:
             # Find or create today's demand data
             today = datetime.utcnow().date()
             today_data = None
@@ -718,8 +687,7 @@ class PricingEngine:
         final_price: Decimal,
         context: Dict[str, Any]
     ) -> None:
-        """Log pricing decision for analytics."""
-        try:
+        """Log pricing decision for analytics."""        try:
             log_entry = {
                 "timestamp": datetime.utcnow().isoformat(),
                 "content_type": content_type.value,

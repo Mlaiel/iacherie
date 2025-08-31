@@ -1,5 +1,4 @@
-"""
-Content Insights Module - IA Influencer Agent + Content Protection Platform
+"""Content Insights Module - IA Influencer Agent + Content Protection Platform
 
 Advanced content analysis and insights system for multi-format content creators with
 AI-powered content optimization, trend analysis, and performance prediction.
@@ -23,9 +22,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-
-import uuid
+"""import uuid
 import json
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -47,8 +44,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentCategory(Enum):
-    """Content category types"""
-    MUSIC = "music"
+    """Content category types"""    MUSIC = "music"
     VIDEO = "video"
     PHOTO = "photo"
     BLOG_POST = "blog_post"
@@ -61,8 +57,7 @@ class ContentCategory(Enum):
 
 
 class TrendStatus(Enum):
-    """Trend status types"""
-    EMERGING = "emerging"
+    """Trend status types"""    EMERGING = "emerging"
     TRENDING = "trending"
     STABLE = "stable"
     DECLINING = "declining"
@@ -70,8 +65,7 @@ class TrendStatus(Enum):
 
 
 class ContentElement(Enum):
-    """Content element types for analysis"""
-    HASHTAGS = "hashtags"
+    """Content element types for analysis"""    HASHTAGS = "hashtags"
     MENTIONS = "mentions"
     LOCATION = "location"
     MUSIC_TRACK = "music_track"
@@ -82,13 +76,11 @@ class ContentElement(Enum):
 
 
 class ContentInsightModel(Base):
-    """
-    Enterprise-grade content insights model
+    """    Enterprise-grade content insights model
     
     Stores comprehensive content analysis data with AI-powered insights
     for content optimization and performance prediction.
-    """
-    __tablename__ = "content_insights"
+    """    __tablename__ = "content_insights"
     
     # Primary identifiers
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -164,8 +156,7 @@ class ContentInsightModel(Base):
 
 @dataclass
 class ContentTrend:
-    """Data class for content trends"""
-    trend_id: str
+    """Data class for content trends"""    trend_id: str
     trend_name: str
     trend_category: str
     trend_score: float
@@ -181,8 +172,7 @@ class ContentTrend:
     risk_level: str  # low, medium, high
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for JSON serialization"""
-        return {
+        """Convert to dictionary for JSON serialization"""        return {
             "trend_id": self.trend_id,
             "trend_name": self.trend_name,
             "trend_category": self.trend_category,
@@ -202,8 +192,7 @@ class ContentTrend:
 
 @dataclass
 class ContentOptimizationRecommendation:
-    """Data class for content optimization recommendations"""
-    recommendation_id: str
+    """Data class for content optimization recommendations"""    recommendation_id: str
     title: str
     description: str
     category: str
@@ -216,8 +205,7 @@ class ContentOptimizationRecommendation:
     examples: List[str]
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for JSON serialization"""
-        return {
+        """Convert to dictionary for JSON serialization"""        return {
             "recommendation_id": self.recommendation_id,
             "title": self.title,
             "description": self.description,
@@ -233,21 +221,17 @@ class ContentOptimizationRecommendation:
 
 
 class ContentInsights:
-    """
-    Enterprise-grade content insights and analysis engine
+    """    Enterprise-grade content insights and analysis engine
     
     Provides comprehensive content analysis with AI-powered insights,
     trend detection, and optimization recommendations for content creators.
-    """
-    
+    """    
     def __init__(self, db_session: Session):
-        """
-        Initialize content insights analyzer with database session
+        """        Initialize content insights analyzer with database session
         
         Args:
             db_session: Database session for analytics operations
-        """
-        self.db = db_session
+        """        self.db = db_session
         self.logger = logging.getLogger(__name__)
     
     async def analyze_content(
@@ -257,8 +241,7 @@ class ContentInsights:
         platform: str,
         content_data: Dict[str, Any]
     ) -> ContentInsightModel:
-        """
-        Perform comprehensive content analysis with AI insights
+        """        Perform comprehensive content analysis with AI insights
         
         Args:
             user_id: User identifier
@@ -268,8 +251,7 @@ class ContentInsights:
             
         Returns:
             Content insights model with analysis results
-        """
-        try:
+        """        try:
             self.logger.info(f"Analyzing content {content_id} for user {user_id}")
             
             # Extract content elements
@@ -346,8 +328,7 @@ class ContentInsights:
             raise
     
     async def _extract_content_elements(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract and analyze content elements"""
-        
+        """Extract and analyze content elements"""        
         elements = {
             "hashtags": [],
             "mentions": [],
@@ -381,20 +362,17 @@ class ContentInsights:
         return elements
     
     def _extract_hashtags(self, text: str) -> List[str]:
-        """Extract hashtags from text content"""
-        hashtag_pattern = r'#\w+'
+        """Extract hashtags from text content"""        hashtag_pattern = r'#\w+'
         hashtags = re.findall(hashtag_pattern, text.lower())
         return [tag[1:] for tag in hashtags]  # Remove # symbol
     
     def _extract_mentions(self, text: str) -> List[str]:
-        """Extract user mentions from text content"""
-        mention_pattern = r'@\w+'
+        """Extract user mentions from text content"""        mention_pattern = r'@\w+'
         mentions = re.findall(mention_pattern, text.lower())
         return [mention[1:] for mention in mentions]  # Remove @ symbol
     
     def _analyze_call_to_action(self, text: str) -> Dict[str, Any]:
-        """Analyze call-to-action elements in text"""
-        cta_keywords = [
+        """Analyze call-to-action elements in text"""        cta_keywords = [
             "click", "link", "bio", "comment", "share", "tag", "follow",
             "subscribe", "like", "save", "swipe", "watch", "listen",
             "visit", "shop", "buy", "download", "sign up"
@@ -414,8 +392,7 @@ class ContentInsights:
         }
     
     async def _analyze_visual_features(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze visual features of content"""
-        
+        """Analyze visual features of content"""        
         visual_features = {
             "dominant_colors": [],
             "composition": {},
@@ -448,8 +425,7 @@ class ContentInsights:
         return visual_features
     
     async def _analyze_audio_features(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze audio features for music/video content"""
-        
+        """Analyze audio features for music/video content"""        
         audio_features = {
             "tempo": 0,
             "key": None,
@@ -475,8 +451,7 @@ class ContentInsights:
         return audio_features
     
     async def _analyze_text_content(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze text content with NLP"""
-        
+        """Analyze text content with NLP"""        
         text_analysis = {
             "word_count": 0,
             "readability_score": 0.0,
@@ -518,8 +493,7 @@ class ContentInsights:
         audio_features: Dict[str, Any],
         text_analysis: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Calculate AI-powered content scores"""
-        
+        """Calculate AI-powered content scores"""        
         # Content quality score (0-10)
         content_score = 0.0
         
@@ -576,8 +550,7 @@ class ContentInsights:
         }
     
     def _calculate_hashtag_trend_score(self, hashtags: List[str]) -> float:
-        """Calculate trend alignment score based on hashtags"""
-        # Simulated trending hashtag database
+        """Calculate trend alignment score based on hashtags"""        # Simulated trending hashtag database
         trending_hashtags = {
             "viral", "trending", "fyp", "explore", "reels", "love", "instagood",
             "photooftheday", "beautiful", "happy", "fashion", "art", "music"
@@ -596,8 +569,7 @@ class ContentInsights:
         content_elements: Dict[str, Any],
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze content alignment with current trends"""
-        
+        """Analyze content alignment with current trends"""        
         trend_analysis = {
             "trend_score": 0.0,
             "keywords": [],
@@ -629,8 +601,7 @@ class ContentInsights:
         ai_scores: Dict[str, float],
         trend_analysis: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate AI-powered optimization suggestions"""
-        
+        """Generate AI-powered optimization suggestions"""        
         suggestions = []
         
         # Hashtag optimization
@@ -693,8 +664,7 @@ class ContentInsights:
         days_back: int = 30,
         limit: int = 20
     ) -> List[ContentInsightModel]:
-        """
-        Get content insights for user within specified timeframe
+        """        Get content insights for user within specified timeframe
         
         Args:
             user_id: User identifier
@@ -703,8 +673,7 @@ class ContentInsights:
             
         Returns:
             List of content insights
-        """
-        try:
+        """        try:
             start_date = datetime.utcnow() - timedelta(days=days_back)
             
             insights = self.db.query(ContentInsightModel).filter(
@@ -722,16 +691,13 @@ class ContentInsights:
 
 
 class TrendAnalyzer:
-    """
-    Enterprise-grade trend analysis engine
+    """    Enterprise-grade trend analysis engine
     
     Provides comprehensive trend detection, analysis, and prediction
     capabilities for content optimization and strategy planning.
-    """
-    
+    """    
     def __init__(self, db_session: Session):
-        """Initialize trend analyzer with database session"""
-        self.db = db_session
+        """Initialize trend analyzer with database session"""        self.db = db_session
         self.logger = logging.getLogger(__name__)
     
     async def detect_emerging_trends(
@@ -740,8 +706,7 @@ class TrendAnalyzer:
         category: Optional[str] = None,
         timeframe_hours: int = 24
     ) -> List[ContentTrend]:
-        """
-        Detect emerging trends across platforms and categories
+        """        Detect emerging trends across platforms and categories
         
         Args:
             platform: Specific platform filter
@@ -750,8 +715,7 @@ class TrendAnalyzer:
             
         Returns:
             List of detected trends
-        """
-        try:
+        """        try:
             # Build query filters
             filters = []
             start_time = datetime.utcnow() - timedelta(hours=timeframe_hours)
@@ -794,8 +758,7 @@ class TrendAnalyzer:
             raise
     
     async def _analyze_hashtag_trends(self, content_data: List[ContentInsightModel]) -> List[ContentTrend]:
-        """Analyze hashtag usage trends"""
-        
+        """Analyze hashtag usage trends"""        
         hashtag_usage = defaultdict(list)
         hashtag_performance = defaultdict(list)
         
@@ -856,8 +819,7 @@ class TrendAnalyzer:
         return trends
     
     async def _analyze_content_type_trends(self, content_data: List[ContentInsightModel]) -> List[ContentTrend]:
-        """Analyze content type performance trends"""
-        
+        """Analyze content type performance trends"""        
         content_type_performance = defaultdict(list)
         content_type_usage = defaultdict(int)
         
@@ -915,8 +877,7 @@ class TrendAnalyzer:
         return trends
     
     async def _analyze_performance_trends(self, content_data: List[ContentInsightModel]) -> List[ContentTrend]:
-        """Analyze overall performance trends"""
-        
+        """Analyze overall performance trends"""        
         trends = []
         
         # Analyze engagement rate trends over time
@@ -980,8 +941,7 @@ class TrendAnalyzer:
         user_id: int,
         content_category: Optional[str] = None
     ) -> List[ContentOptimizationRecommendation]:
-        """
-        Get personalized trend-based recommendations for user
+        """        Get personalized trend-based recommendations for user
         
         Args:
             user_id: User identifier
@@ -989,8 +949,7 @@ class TrendAnalyzer:
             
         Returns:
             List of optimization recommendations
-        """
-        try:
+        """        try:
             # Get current trends
             current_trends = await self.detect_emerging_trends(
                 category=content_category,
@@ -1033,8 +992,7 @@ class TrendAnalyzer:
             raise
     
     async def _get_user_recent_content(self, user_id: int) -> List[ContentInsightModel]:
-        """Get user's recent content for analysis"""
-        
+        """Get user's recent content for analysis"""        
         start_date = datetime.utcnow() - timedelta(days=14)
         
         return self.db.query(ContentInsightModel).filter(
@@ -1046,8 +1004,7 @@ class TrendAnalyzer:
         self,
         user_content: List[ContentInsightModel]
     ) -> List[ContentOptimizationRecommendation]:
-        """Generate user-specific optimization recommendations"""
-        
+        """Generate user-specific optimization recommendations"""        
         recommendations = []
         
         if not user_content:

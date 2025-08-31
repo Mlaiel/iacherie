@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-IA Influencer Agent - Deployment Provisioning Index Module
+"""IA Influencer Agent - Deployment Provisioning Index Module
 ===========================================================
 
 Module central pour l'orchestration du provisioning et déploiement automatisé
@@ -29,9 +28,7 @@ Contact: mlaiel@live.de pour toute demande d'autorisation.
 - Audio Engineer: Fahed Mlaiel
 - DevOps: Fahed Mlaiel
 - IA Prompt Engineer: Fahed Mlaiel
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import sys
 from datetime import datetime
@@ -105,8 +102,7 @@ from .scripts import (
 
 
 class DeploymentStatus(Enum):
-    """États de déploiement possibles."""
-    PENDING = "pending"
+    """États de déploiement possibles."""    PENDING = "pending"
     INITIALIZING = "initializing"
     VALIDATING = "validating"
     PROVISIONING = "provisioning"
@@ -120,8 +116,7 @@ class DeploymentStatus(Enum):
 
 
 class EnvironmentType(Enum):
-    """Types d'environnements supportés."""
-    DEVELOPMENT = "development"
+    """Types d'environnements supportés."""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
@@ -130,8 +125,7 @@ class EnvironmentType(Enum):
 
 @dataclass
 class DeploymentContext:
-    """Contexte de déploiement avec toutes les informations nécessaires."""
-    deployment_id: str
+    """Contexte de déploiement avec toutes les informations nécessaires."""    deployment_id: str
     environment: EnvironmentType
     region: str
     timestamp: datetime = field(default_factory=datetime.utcnow)
@@ -144,8 +138,7 @@ class DeploymentContext:
 
 
 class ProvisioningOrchestrator:
-    """
-    Orchestrateur principal pour le provisioning et déploiement automatisé.
+    """    Orchestrateur principal pour le provisioning et déploiement automatisé.
     
     Coordonne tous les aspects du déploiement:
     - Infrastructure (serveurs, réseaux, stockage)
@@ -153,16 +146,12 @@ class ProvisioningOrchestrator:
     - Applications (microservices, APIs, frontends)
     - Sécurité (certificats, firewalls, accès)
     - Monitoring (métriques, logs, alertes)
-    """
-
-    def __init__(self, config_path: Optional[str] = None):
-        """
-        Initialise l'orchestrateur de provisioning.
+    """    def __init__(self, config_path: Optional[str] = None):
+        """        Initialise l'orchestrateur de provisioning.
         
         Args:
             config_path: Chemin vers le fichier de configuration principal
-        """
-        self.logger = self._setup_logging()
+        """        self.logger = self._setup_logging()
         self.config_path = config_path
         
         # Managers
@@ -208,8 +197,7 @@ class ProvisioningOrchestrator:
         self.deployment_history: List[DeploymentContext] = []
 
     def _setup_logging(self) -> logging.Logger:
-        """Configure le système de logging."""
-        logger = logging.getLogger("provisioning_orchestrator")
+        """Configure le système de logging."""        logger = logging.getLogger("provisioning_orchestrator")
         logger.setLevel(logging.INFO)
         
         if not logger.handlers:
@@ -229,8 +217,7 @@ class ProvisioningOrchestrator:
         region: str,
         config_overrides: Optional[Dict[str, Any]] = None
     ) -> DeploymentContext:
-        """
-        Déploie la stack complète IA Influencer Agent.
+        """        Déploie la stack complète IA Influencer Agent.
         
         Args:
             deployment_id: Identifiant unique du déploiement
@@ -240,8 +227,7 @@ class ProvisioningOrchestrator:
             
         Returns:
             Contexte de déploiement avec le statut final
-        """
-        context = DeploymentContext(
+        """        context = DeploymentContext(
             deployment_id=deployment_id,
             environment=environment,
             region=region,
@@ -311,8 +297,7 @@ class ProvisioningOrchestrator:
         return context
 
     async def _validate_deployment(self, context: DeploymentContext):
-        """Valide la configuration et les prérequis de déploiement."""
-        context.status = DeploymentStatus.VALIDATING
+        """Valide la configuration et les prérequis de déploiement."""        context.status = DeploymentStatus.VALIDATING
         self.logger.info(f"Validating deployment: {context.deployment_id}")
         
         # Validation de la configuration
@@ -341,8 +326,7 @@ class ProvisioningOrchestrator:
         context.logs.append("Validation completed successfully")
 
     async def _provision_infrastructure(self, context: DeploymentContext):
-        """Provisionne l'infrastructure de base."""
-        context.status = DeploymentStatus.PROVISIONING
+        """Provisionne l'infrastructure de base."""        context.status = DeploymentStatus.PROVISIONING
         self.logger.info(f"Provisioning infrastructure: {context.deployment_id}")
         
         # Création des ressources compute
@@ -363,8 +347,7 @@ class ProvisioningOrchestrator:
         context.logs.append("Infrastructure provisioning completed")
 
     async def _configure_network(self, context: DeploymentContext):
-        """Configure les composants réseau."""
-        self.logger.info(f"Configuring network: {context.deployment_id}")
+        """Configure les composants réseau."""        self.logger.info(f"Configuring network: {context.deployment_id}")
         
         # VPC et sous-réseaux
         await self.network_manager.create_vpc_subnets(
@@ -384,8 +367,7 @@ class ProvisioningOrchestrator:
         context.logs.append("Network configuration completed")
 
     async def _setup_security(self, context: DeploymentContext):
-        """Configure la sécurité."""
-        self.logger.info(f"Setting up security: {context.deployment_id}")
+        """Configure la sécurité."""        self.logger.info(f"Setting up security: {context.deployment_id}")
         
         # Certificats SSL/TLS
         await self.security_manager.provision_certificates(
@@ -410,8 +392,7 @@ class ProvisioningOrchestrator:
         context.logs.append("Security setup completed")
 
     async def _deploy_databases(self, context: DeploymentContext):
-        """Déploie les bases de données."""
-        self.logger.info(f"Deploying databases: {context.deployment_id}")
+        """Déploie les bases de données."""        self.logger.info(f"Deploying databases: {context.deployment_id}")
         
         # Base de données principale
         await self.database_manager.deploy_primary_database(
@@ -436,8 +417,7 @@ class ProvisioningOrchestrator:
         context.logs.append("Database deployment completed")
 
     async def _deploy_services(self, context: DeploymentContext):
-        """Déploie les microservices."""
-        self.logger.info(f"Deploying services: {context.deployment_id}")
+        """Déploie les microservices."""        self.logger.info(f"Deploying services: {context.deployment_id}")
         
         # Services core
         await self.service_manager.deploy_core_services(
@@ -462,8 +442,7 @@ class ProvisioningOrchestrator:
         context.logs.append("Services deployment completed")
 
     async def _deploy_applications(self, context: DeploymentContext):
-        """Déploie les applications."""
-        self.logger.info(f"Deploying applications: {context.deployment_id}")
+        """Déploie les applications."""        self.logger.info(f"Deploying applications: {context.deployment_id}")
         
         # API Gateway
         await self.deployment_manager.deploy_api_gateway(
@@ -483,8 +462,7 @@ class ProvisioningOrchestrator:
         context.logs.append("Applications deployment completed")
 
     async def _configure_load_balancing(self, context: DeploymentContext):
-        """Configure le load balancing et CDN."""
-        self.logger.info(f"Configuring load balancing: {context.deployment_id}")
+        """Configure le load balancing et CDN."""        self.logger.info(f"Configuring load balancing: {context.deployment_id}")
         
         # Load balancers
         await self.load_balancer_manager.configure_load_balancers(
@@ -504,8 +482,7 @@ class ProvisioningOrchestrator:
         context.logs.append("Load balancing configuration completed")
 
     async def _setup_monitoring(self, context: DeploymentContext):
-        """Configure le monitoring et l'observabilité."""
-        self.logger.info(f"Setting up monitoring: {context.deployment_id}")
+        """Configure le monitoring et l'observabilité."""        self.logger.info(f"Setting up monitoring: {context.deployment_id}")
         
         # Métriques
         await self.monitoring_manager.setup_metrics_collection(
@@ -530,8 +507,7 @@ class ProvisioningOrchestrator:
         context.logs.append("Monitoring setup completed")
 
     async def _configure_backup_dr(self, context: DeploymentContext):
-        """Configure les sauvegardes et disaster recovery."""
-        self.logger.info(f"Configuring backup and DR: {context.deployment_id}")
+        """Configure les sauvegardes et disaster recovery."""        self.logger.info(f"Configuring backup and DR: {context.deployment_id}")
         
         # Stratégie de sauvegarde
         await self.backup_manager.configure_backup_strategy(
@@ -551,8 +527,7 @@ class ProvisioningOrchestrator:
         context.logs.append("Backup and DR configuration completed")
 
     async def _optimize_performance(self, context: DeploymentContext):
-        """Optimise les performances."""
-        self.logger.info(f"Optimizing performance: {context.deployment_id}")
+        """Optimise les performances."""        self.logger.info(f"Optimizing performance: {context.deployment_id}")
         
         # Tuning base de données
         await self.performance_manager.optimize_database_performance(
@@ -572,8 +547,7 @@ class ProvisioningOrchestrator:
         context.logs.append("Performance optimization completed")
 
     async def _validate_compliance(self, context: DeploymentContext):
-        """Valide la conformité."""
-        self.logger.info(f"Validating compliance: {context.deployment_id}")
+        """Valide la conformité."""        self.logger.info(f"Validating compliance: {context.deployment_id}")
         
         # Conformité GDPR
         await self.compliance_manager.validate_gdpr_compliance(
@@ -593,8 +567,7 @@ class ProvisioningOrchestrator:
         context.logs.append("Compliance validation completed")
 
     async def _run_deployment_tests(self, context: DeploymentContext):
-        """Exécute les tests de déploiement."""
-        context.status = DeploymentStatus.TESTING
+        """Exécute les tests de déploiement."""        context.status = DeploymentStatus.TESTING
         self.logger.info(f"Running deployment tests: {context.deployment_id}")
         
         # Tests de santé
@@ -620,8 +593,7 @@ class ProvisioningOrchestrator:
         context.logs.append("Deployment tests completed")
 
     async def _rollback_deployment(self, context: DeploymentContext):
-        """Effectue un rollback du déploiement."""
-        context.status = DeploymentStatus.ROLLING_BACK
+        """Effectue un rollback du déploiement."""        context.status = DeploymentStatus.ROLLING_BACK
         self.logger.info(f"Rolling back deployment: {context.deployment_id}")
         
         try:
@@ -648,8 +620,7 @@ class ProvisioningOrchestrator:
             context.logs.append(f"ROLLBACK ERROR: {str(e)}")
 
     async def get_deployment_status(self, deployment_id: str) -> Optional[DeploymentContext]:
-        """Récupère le statut d'un déploiement."""
-        if deployment_id in self.active_deployments:
+        """Récupère le statut d'un déploiement."""        if deployment_id in self.active_deployments:
             return self.active_deployments[deployment_id]
         
         # Recherche dans l'historique
@@ -660,12 +631,10 @@ class ProvisioningOrchestrator:
         return None
 
     async def list_active_deployments(self) -> List[DeploymentContext]:
-        """Liste tous les déploiements actifs."""
-        return list(self.active_deployments.values())
+        """Liste tous les déploiements actifs."""        return list(self.active_deployments.values())
 
     async def cancel_deployment(self, deployment_id: str) -> bool:
-        """Annule un déploiement en cours."""
-        if deployment_id not in self.active_deployments:
+        """Annule un déploiement en cours."""        if deployment_id not in self.active_deployments:
             return False
         
         context = self.active_deployments[deployment_id]
@@ -673,8 +642,7 @@ class ProvisioningOrchestrator:
         return True
 
     async def cleanup_resources(self, deployment_id: str) -> bool:
-        """Nettoie les ressources d'un déploiement."""
-        context = await self.get_deployment_status(deployment_id)
+        """Nettoie les ressources d'un déploiement."""        context = await self.get_deployment_status(deployment_id)
         if not context:
             return False
         
@@ -697,8 +665,7 @@ orchestrator = ProvisioningOrchestrator()
 
 
 async def main():
-    """Point d'entrée principal pour le provisioning."""
-    import argparse
+    """Point d'entrée principal pour le provisioning."""    import argparse
     
     parser = argparse.ArgumentParser(description="IA Influencer Agent Provisioning Orchestrator")
     parser.add_argument("--deploy", help="Deploy full stack with deployment ID")

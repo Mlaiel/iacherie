@@ -1,5 +1,4 @@
-"""
-Selenium Scraper - IA-Influencer-Agent
+"""Selenium Scraper - IA-Influencer-Agent
 ======================================
 
 Advanced Selenium-based scraper for JavaScript-heavy sites.
@@ -11,9 +10,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 ⚠️ CRITICAL LEGAL WARNING ⚠️
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable
 from dataclasses import dataclass
@@ -33,8 +30,7 @@ from fake_useragent import UserAgent
 
 @dataclass
 class SeleniumConfig:
-    """Selenium scraper configuration."""
-    headless: bool = True
+    """Selenium scraper configuration."""    headless: bool = True
     window_size: tuple = (1920, 1080)
     timeout: int = 30
     page_load_timeout: int = 60
@@ -49,16 +45,14 @@ class SeleniumConfig:
 
 @dataclass
 class InteractionStep:
-    """Selenium interaction step definition."""
-    action: str  # click, type, scroll, wait, screenshot, etc.
+    """Selenium interaction step definition."""    action: str  # click, type, scroll, wait, screenshot, etc.
     selector: str
     value: Optional[str] = None
     timeout: int = 10
     optional: bool = False
 
 class SeleniumScraper:
-    """
-    Advanced Selenium-based web scraper.
+    """    Advanced Selenium-based web scraper.
     
     Features:
     - JavaScript execution
@@ -69,8 +63,7 @@ class SeleniumScraper:
     - Headless and headed modes
     - Custom browser profiles
     - Extension support
-    """
-    
+    """    
     def __init__(self, config: Optional[SeleniumConfig] = None):
         self.config = config or SeleniumConfig()
         self.logger = logging.getLogger(__name__)
@@ -78,17 +71,14 @@ class SeleniumScraper:
         self.user_agent = UserAgent()
         
     async def __aenter__(self):
-        """Async context manager entry."""
-        await self.start_driver()
+        """Async context manager entry."""        await self.start_driver()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
-        await self.close_driver()
+        """Async context manager exit."""        await self.close_driver()
         
     async def start_driver(self):
-        """Initialize and start Chrome driver."""
-        if self.driver:
+        """Initialize and start Chrome driver."""        if self.driver:
             return
             
         options = self._create_chrome_options()
@@ -117,8 +107,7 @@ class SeleniumScraper:
             raise
             
     async def close_driver(self):
-        """Close Chrome driver."""
-        if self.driver:
+        """Close Chrome driver."""        if self.driver:
             try:
                 self.driver.quit()
                 self.driver = None
@@ -127,8 +116,7 @@ class SeleniumScraper:
                 self.logger.error(f"Error closing driver: {e}")
                 
     def _create_chrome_options(self) -> Options:
-        """Create Chrome options with optimizations."""
-        options = uc.ChromeOptions() if self.config.use_undetected_chrome else Options()
+        """Create Chrome options with optimizations."""        options = uc.ChromeOptions() if self.config.use_undetected_chrome else Options()
         
         # Basic options
         if self.config.headless:
@@ -172,16 +160,14 @@ class SeleniumScraper:
         return options
         
     def _execute_stealth_scripts(self):
-        """Execute stealth scripts to avoid detection."""
-        if not self.driver:
+        """Execute stealth scripts to avoid detection."""        if not self.driver:
             return
             
         # Remove webdriver property
         self.driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
         
         # Override plugins and languages
-        self.driver.execute_script("""
-            Object.defineProperty(navigator, 'plugins', {
+        self.driver.execute_script("""            Object.defineProperty(navigator, 'plugins', {
                 get: () => [1, 2, 3, 4, 5]
             });
             Object.defineProperty(navigator, 'languages', {
@@ -190,8 +176,7 @@ class SeleniumScraper:
         """)
         
     async def navigate_to(self, url: str, wait_for_element: Optional[str] = None) -> bool:
-        """Navigate to URL and optionally wait for element."""
-        if not self.driver:
+        """Navigate to URL and optionally wait for element."""        if not self.driver:
             await self.start_driver()
             
         try:
@@ -212,8 +197,7 @@ class SeleniumScraper:
             return False
             
     async def execute_interactions(self, steps: List[InteractionStep]) -> Dict[str, Any]:
-        """Execute series of interaction steps."""
-        results = {
+        """Execute series of interaction steps."""        results = {
             'success': True,
             'steps_completed': 0,
             'errors': [],
@@ -241,8 +225,7 @@ class SeleniumScraper:
         return results
         
     async def _execute_step(self, step: InteractionStep) -> Any:
-        """Execute single interaction step."""
-        if not self.driver:
+        """Execute single interaction step."""        if not self.driver:
             raise Exception("Driver not initialized")
             
         element = None
@@ -281,8 +264,7 @@ class SeleniumScraper:
             raise Exception(f"Unknown action: {step.action}")
             
     async def _find_element(self, selector: str, timeout: int):
-        """Find element with timeout."""
-        wait = WebDriverWait(self.driver, timeout)
+        """Find element with timeout."""        wait = WebDriverWait(self.driver, timeout)
         
         # Try different selector strategies
         try:
@@ -304,8 +286,7 @@ class SeleniumScraper:
                         raise NoSuchElementException(f"Element not found: {selector}")
                         
     async def _click_element(self, element) -> bool:
-        """Click element with human-like behavior."""
-        try:
+        """Click element with human-like behavior."""        try:
             # Scroll to element first
             self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
             await asyncio.sleep(random.uniform(0.5, 1.5))
@@ -329,8 +310,7 @@ class SeleniumScraper:
             return False
             
     async def _type_text(self, element, text: str) -> bool:
-        """Type text with human-like typing speed."""
-        try:
+        """Type text with human-like typing speed."""        try:
             element.clear()
             await asyncio.sleep(random.uniform(0.2, 0.5))
             
@@ -347,8 +327,7 @@ class SeleniumScraper:
             return False
             
     async def _clear_element(self, element) -> bool:
-        """Clear element content."""
-        try:
+        """Clear element content."""        try:
             element.clear()
             return True
         except Exception as e:
@@ -356,8 +335,7 @@ class SeleniumScraper:
             return False
             
     async def _scroll_to_element(self, element) -> bool:
-        """Scroll to element."""
-        try:
+        """Scroll to element."""        try:
             self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
             await asyncio.sleep(random.uniform(0.5, 1.5))
             return True
@@ -366,8 +344,7 @@ class SeleniumScraper:
             return False
             
     async def _take_screenshot(self, filename: Optional[str] = None) -> str:
-        """Take screenshot and return filename."""
-        try:
+        """Take screenshot and return filename."""        try:
             if not filename:
                 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
                 filename = f"screenshot_{timestamp}.png"
@@ -381,40 +358,35 @@ class SeleniumScraper:
             return ""
             
     async def _extract_text(self, element) -> str:
-        """Extract text from element."""
-        try:
+        """Extract text from element."""        try:
             return element.text
         except Exception as e:
             self.logger.error(f"Text extraction failed: {e}")
             return ""
             
     async def _extract_attribute(self, element, attribute: str) -> str:
-        """Extract attribute from element."""
-        try:
+        """Extract attribute from element."""        try:
             return element.get_attribute(attribute) or ""
         except Exception as e:
             self.logger.error(f"Attribute extraction failed: {e}")
             return ""
             
     async def _extract_html(self, element) -> str:
-        """Extract HTML from element."""
-        try:
+        """Extract HTML from element."""        try:
             return element.get_attribute('outerHTML') or ""
         except Exception as e:
             self.logger.error(f"HTML extraction failed: {e}")
             return ""
             
     async def _execute_javascript(self, script: str) -> Any:
-        """Execute JavaScript code."""
-        try:
+        """Execute JavaScript code."""        try:
             return self.driver.execute_script(script)
         except Exception as e:
             self.logger.error(f"JavaScript execution failed: {e}")
             return None
             
     async def _hover_element(self, element) -> bool:
-        """Hover over element."""
-        try:
+        """Hover over element."""        try:
             actions = ActionChains(self.driver)
             actions.move_to_element(element)
             actions.perform()
@@ -425,8 +397,7 @@ class SeleniumScraper:
             return False
             
     async def _select_dropdown(self, element, value: str) -> bool:
-        """Select dropdown value."""
-        try:
+        """Select dropdown value."""        try:
             from selenium.webdriver.support.ui import Select
             select = Select(element)
             select.select_by_visible_text(value)
@@ -437,12 +408,10 @@ class SeleniumScraper:
             return False
             
     async def _wait_for_element(self, selector: str, timeout: int):
-        """Wait for element to appear."""
-        return await self._find_element(selector, timeout)
+        """Wait for element to appear."""        return await self._find_element(selector, timeout)
         
     async def scroll_page(self, direction: str = 'down', amount: int = 3) -> bool:
-        """Scroll page in specified direction."""
-        try:
+        """Scroll page in specified direction."""        try:
             body = self.driver.find_element(By.TAG_NAME, 'body')
             
             for _ in range(amount):
@@ -465,8 +434,7 @@ class SeleniumScraper:
             
     async def infinite_scroll(self, max_scrolls: int = 10, 
                             pause_time: float = 2.0) -> int:
-        """Perform infinite scroll to load dynamic content."""
-        scrolls_performed = 0
+        """Perform infinite scroll to load dynamic content."""        scrolls_performed = 0
         last_height = self.driver.execute_script("return document.body.scrollHeight")
         
         for i in range(max_scrolls):
@@ -490,8 +458,7 @@ class SeleniumScraper:
         return scrolls_performed
         
     async def extract_all_links(self) -> List[Dict[str, str]]:
-        """Extract all links from current page."""
-        try:
+        """Extract all links from current page."""        try:
             links = self.driver.find_elements(By.TAG_NAME, 'a')
             
             link_data = []
@@ -513,8 +480,7 @@ class SeleniumScraper:
             return []
             
     async def extract_all_images(self) -> List[Dict[str, str]]:
-        """Extract all images from current page."""
-        try:
+        """Extract all images from current page."""        try:
             images = self.driver.find_elements(By.TAG_NAME, 'img')
             
             image_data = []
@@ -537,48 +503,42 @@ class SeleniumScraper:
             return []
             
     async def get_page_source(self) -> str:
-        """Get current page source."""
-        try:
+        """Get current page source."""        try:
             return self.driver.page_source
         except Exception as e:
             self.logger.error(f"Failed to get page source: {e}")
             return ""
             
     async def get_current_url(self) -> str:
-        """Get current page URL."""
-        try:
+        """Get current page URL."""        try:
             return self.driver.current_url
         except Exception as e:
             self.logger.error(f"Failed to get current URL: {e}")
             return ""
             
     async def refresh_page(self):
-        """Refresh current page."""
-        try:
+        """Refresh current page."""        try:
             self.driver.refresh()
             await asyncio.sleep(random.uniform(2, 4))
         except Exception as e:
             self.logger.error(f"Page refresh failed: {e}")
             
     async def go_back(self):
-        """Navigate back in browser history."""
-        try:
+        """Navigate back in browser history."""        try:
             self.driver.back()
             await asyncio.sleep(random.uniform(1, 2))
         except Exception as e:
             self.logger.error(f"Back navigation failed: {e}")
             
     async def go_forward(self):
-        """Navigate forward in browser history."""
-        try:
+        """Navigate forward in browser history."""        try:
             self.driver.forward()
             await asyncio.sleep(random.uniform(1, 2))
         except Exception as e:
             self.logger.error(f"Forward navigation failed: {e}")
             
     def is_driver_alive(self) -> bool:
-        """Check if driver is still alive."""
-        if not self.driver:
+        """Check if driver is still alive."""        if not self.driver:
             return False
             
         try:

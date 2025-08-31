@@ -1,5 +1,4 @@
-"""
-Database Threat Detector
+"""Database Threat Detector
 
 Enterprise-grade database threat detection and response system with real-time
 monitoring, anomaly detection, and automated incident response capabilities.
@@ -23,9 +22,7 @@ Contact: mlaiel@live.de
 ⚠️ LEGAL WARNING: Any unauthorized use, copying, distribution, or commercialization 
 of this code without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will result in immediate legal action.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import time
@@ -45,16 +42,14 @@ logger = logging.getLogger(__name__)
 
 
 class ThreatLevel(Enum):
-    """Threat severity levels"""
-    LOW = "low"
+    """Threat severity levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class ThreatCategory(Enum):
-    """Threat categories"""
-    SQL_INJECTION = "sql_injection"
+    """Threat categories"""    SQL_INJECTION = "sql_injection"
     PRIVILEGE_ESCALATION = "privilege_escalation"
     DATA_EXFILTRATION = "data_exfiltration"
     BRUTE_FORCE = "brute_force"
@@ -69,8 +64,7 @@ class ThreatCategory(Enum):
 
 
 class ResponseAction(Enum):
-    """Automated response actions"""
-    ALERT = "alert"
+    """Automated response actions"""    ALERT = "alert"
     BLOCK_USER = "block_user"
     BLOCK_IP = "block_ip"
     REVOKE_PRIVILEGES = "revoke_privileges"
@@ -83,8 +77,7 @@ class ResponseAction(Enum):
 
 @dataclass
 class ThreatIndicator:
-    """Threat indicator definition"""
-    indicator_id: str
+    """Threat indicator definition"""    indicator_id: str
     name: str
     description: str
     category: ThreatCategory
@@ -99,8 +92,7 @@ class ThreatIndicator:
 
 @dataclass
 class ThreatEvent:
-    """Detected threat event"""
-    event_id: str
+    """Detected threat event"""    event_id: str
     threat_id: str
     source_ip: str
     user_id: Optional[str]
@@ -119,8 +111,7 @@ class ThreatEvent:
 
 @dataclass
 class UserBehaviorProfile:
-    """User behavior analysis profile"""
-    user_id: str
+    """User behavior analysis profile"""    user_id: str
     username: str
     typical_login_times: List[int] = field(default_factory=list)  # Hours of day
     typical_ip_addresses: Set[str] = field(default_factory=set)
@@ -137,8 +128,7 @@ class UserBehaviorProfile:
 
 @dataclass
 class SecurityMetrics:
-    """Security monitoring metrics"""
-    timestamp: datetime
+    """Security monitoring metrics"""    timestamp: datetime
     total_connections: int
     failed_logins: int
     successful_logins: int
@@ -153,8 +143,7 @@ class SecurityMetrics:
 
 @dataclass
 class IncidentResponse:
-    """Security incident response"""
-    incident_id: str
+    """Security incident response"""    incident_id: str
     threat_event_id: str
     response_type: ResponseAction
     executed_at: datetime = field(default_factory=datetime.now)
@@ -165,27 +154,22 @@ class IncidentResponse:
 
 
 class ThreatDetectionEngine(ABC):
-    """Abstract threat detection engine interface"""
-    
+    """Abstract threat detection engine interface"""    
     @abstractmethod
     async def analyze_query(self, query: str, context: Dict[str, Any]) -> List[ThreatEvent]:
-        """Analyze database query for threats"""
-        pass
+        """Analyze database query for threats"""        pass
     
     @abstractmethod
     async def analyze_login(self, login_data: Dict[str, Any]) -> List[ThreatEvent]:
-        """Analyze login attempt for threats"""
-        pass
+        """Analyze login attempt for threats"""        pass
     
     @abstractmethod
     async def analyze_session(self, session_data: Dict[str, Any]) -> List[ThreatEvent]:
-        """Analyze user session for threats"""
-        pass
+        """Analyze user session for threats"""        pass
 
 
 class SQLInjectionDetector(ThreatDetectionEngine):
-    """SQL injection threat detection engine"""
-    
+    """SQL injection threat detection engine"""    
     def __init__(self):
         self.sql_injection_patterns = [
             r"(?i)(union\s+select)",
@@ -217,8 +201,7 @@ class SQLInjectionDetector(ThreatDetectionEngine):
         ]
     
     async def analyze_query(self, query: str, context: Dict[str, Any]) -> List[ThreatEvent]:
-        """Analyze query for SQL injection patterns"""
-        threats = []
+        """Analyze query for SQL injection patterns"""        threats = []
         
         try:
             for i, pattern in enumerate(self.sql_injection_patterns):
@@ -251,8 +234,7 @@ class SQLInjectionDetector(ThreatDetectionEngine):
             return []
     
     async def analyze_login(self, login_data: Dict[str, Any]) -> List[ThreatEvent]:
-        """Analyze login for SQL injection in credentials"""
-        threats = []
+        """Analyze login for SQL injection in credentials"""        threats = []
         
         try:
             username = login_data.get("username", "")
@@ -276,8 +258,7 @@ class SQLInjectionDetector(ThreatDetectionEngine):
             return []
     
     async def analyze_session(self, session_data: Dict[str, Any]) -> List[ThreatEvent]:
-        """Analyze session queries for SQL injection"""
-        threats = []
+        """Analyze session queries for SQL injection"""        threats = []
         
         try:
             queries = session_data.get("queries", [])
@@ -293,8 +274,7 @@ class SQLInjectionDetector(ThreatDetectionEngine):
             return []
     
     def _calculate_injection_confidence(self, query: str, pattern: str) -> float:
-        """Calculate confidence score for SQL injection detection"""
-        base_confidence = 0.7
+        """Calculate confidence score for SQL injection detection"""        base_confidence = 0.7
         
         # Increase confidence based on multiple factors
         factors = []
@@ -317,8 +297,7 @@ class SQLInjectionDetector(ThreatDetectionEngine):
         return min(1.0, base_confidence + sum(factors))
     
     def _determine_injection_severity(self, confidence: float) -> ThreatLevel:
-        """Determine threat severity based on confidence"""
-        if confidence >= 0.9:
+        """Determine threat severity based on confidence"""        if confidence >= 0.9:
             return ThreatLevel.CRITICAL
         elif confidence >= 0.75:
             return ThreatLevel.HIGH
@@ -329,15 +308,13 @@ class SQLInjectionDetector(ThreatDetectionEngine):
 
 
 class BehaviorAnalysisEngine(ThreatDetectionEngine):
-    """User behavior analysis threat detection engine"""
-    
+    """User behavior analysis threat detection engine"""    
     def __init__(self):
         self.user_profiles: Dict[str, UserBehaviorProfile] = {}
         self.session_data: Dict[str, List[Dict[str, Any]]] = defaultdict(list)
     
     async def analyze_query(self, query: str, context: Dict[str, Any]) -> List[ThreatEvent]:
-        """Analyze query for behavioral anomalies"""
-        threats = []
+        """Analyze query for behavioral anomalies"""        threats = []
         user_id = context.get("user_id")
         
         if not user_id:
@@ -373,8 +350,7 @@ class BehaviorAnalysisEngine(ThreatDetectionEngine):
             return []
     
     async def analyze_login(self, login_data: Dict[str, Any]) -> List[ThreatEvent]:
-        """Analyze login behavior for anomalies"""
-        threats = []
+        """Analyze login behavior for anomalies"""        threats = []
         user_id = login_data.get("user_id")
         
         if not user_id:
@@ -416,8 +392,7 @@ class BehaviorAnalysisEngine(ThreatDetectionEngine):
             return []
     
     async def analyze_session(self, session_data: Dict[str, Any]) -> List[ThreatEvent]:
-        """Analyze session behavior for anomalies"""
-        threats = []
+        """Analyze session behavior for anomalies"""        threats = []
         user_id = session_data.get("user_id")
         
         if not user_id:
@@ -461,8 +436,7 @@ class BehaviorAnalysisEngine(ThreatDetectionEngine):
             return []
     
     async def _update_user_profile(self, user_id: str, context: Dict[str, Any]):
-        """Update user behavior profile"""
-        if user_id not in self.user_profiles:
+        """Update user behavior profile"""        if user_id not in self.user_profiles:
             self.user_profiles[user_id] = UserBehaviorProfile(
                 user_id=user_id,
                 username=context.get("username", user_id)
@@ -492,8 +466,7 @@ class BehaviorAnalysisEngine(ThreatDetectionEngine):
         profile.updated_at = datetime.now()
     
     async def _is_anomalous_login_time(self, user_id: str, login_data: Dict[str, Any]) -> bool:
-        """Check if login time is anomalous for user"""
-        if user_id not in self.user_profiles:
+        """Check if login time is anomalous for user"""        if user_id not in self.user_profiles:
             return False
         
         profile = self.user_profiles[user_id]
@@ -521,8 +494,7 @@ class BehaviorAnalysisEngine(ThreatDetectionEngine):
         return current_hour not in common_hours
     
     async def _is_anomalous_ip_address(self, user_id: str, login_data: Dict[str, Any]) -> bool:
-        """Check if IP address is anomalous for user"""
-        if user_id not in self.user_profiles:
+        """Check if IP address is anomalous for user"""        if user_id not in self.user_profiles:
             return False
         
         profile = self.user_profiles[user_id]
@@ -547,8 +519,7 @@ class BehaviorAnalysisEngine(ThreatDetectionEngine):
         return len(profile.typical_ip_addresses) >= 3
     
     async def _is_anomalous_query_pattern(self, user_id: str, query: str) -> bool:
-        """Check if query pattern is anomalous for user"""
-        # Simplified pattern analysis
+        """Check if query pattern is anomalous for user"""        # Simplified pattern analysis
         # In production, this would use more sophisticated ML models
         
         if user_id not in self.user_profiles:
@@ -568,8 +539,7 @@ class BehaviorAnalysisEngine(ThreatDetectionEngine):
         return False
     
     async def _is_anomalous_data_volume(self, user_id: str, session_data: Dict[str, Any]) -> bool:
-        """Check if data volume is anomalous"""
-        current_volume = session_data.get("data_volume", 0)
+        """Check if data volume is anomalous"""        current_volume = session_data.get("data_volume", 0)
         
         if user_id not in self.user_profiles:
             return current_volume > 1000000  # 1MB threshold for new users
@@ -584,8 +554,7 @@ class BehaviorAnalysisEngine(ThreatDetectionEngine):
         return current_volume > profile.typical_data_volume * 10
     
     async def _is_anomalous_session_duration(self, user_id: str, session_data: Dict[str, Any]) -> bool:
-        """Check if session duration is anomalous"""
-        current_duration = session_data.get("duration_minutes", 0)
+        """Check if session duration is anomalous"""        current_duration = session_data.get("duration_minutes", 0)
         
         if user_id not in self.user_profiles:
             return current_duration > 480  # 8 hours for new users
@@ -600,8 +569,7 @@ class BehaviorAnalysisEngine(ThreatDetectionEngine):
         return current_duration > profile.average_session_duration * 5
     
     def _get_profile_summary(self, user_id: str) -> Dict[str, Any]:
-        """Get summary of user profile for evidence"""
-        if user_id not in self.user_profiles:
+        """Get summary of user profile for evidence"""        if user_id not in self.user_profiles:
             return {}
         
         profile = self.user_profiles[user_id]
@@ -615,8 +583,7 @@ class BehaviorAnalysisEngine(ThreatDetectionEngine):
 
 
 class ThreatDetector:
-    """
-    Enterprise-grade database threat detection system
+    """    Enterprise-grade database threat detection system
     
     Provides comprehensive threat detection capabilities including:
     - Real-time threat monitoring
@@ -624,11 +591,9 @@ class ThreatDetector:
     - Automated threat response
     - Threat intelligence integration
     - Incident management
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize threat detector"""
-        self.config = config or {}
+        """Initialize threat detector"""        self.config = config or {}
         
         # Detection engines
         self.detection_engines: List[ThreatDetectionEngine] = []
@@ -669,8 +634,7 @@ class ThreatDetector:
         logger.info("Database threat detector initialized successfully")
     
     def _initialize_threat_indicators(self):
-        """Initialize default threat indicators"""
-        try:
+        """Initialize default threat indicators"""        try:
             default_indicators = [
                 ThreatIndicator(
                     indicator_id="sql_injection_basic",
@@ -724,8 +688,7 @@ class ThreatDetector:
         activity_type: str,
         activity_data: Dict[str, Any]
     ) -> List[ThreatEvent]:
-        """
-        Analyze database activity for threats
+        """        Analyze database activity for threats
         
         Args:
             activity_type: Type of activity (query, login, session)
@@ -733,8 +696,7 @@ class ThreatDetector:
             
         Returns:
             List of detected threat events
-        """
-        all_threats = []
+        """        all_threats = []
         
         try:
             # Run analysis through all detection engines
@@ -770,8 +732,7 @@ class ThreatDetector:
             return []
     
     async def _process_threat_event(self, threat: ThreatEvent):
-        """Process detected threat event"""
-        try:
+        """Process detected threat event"""        try:
             # Store threat event
             self.threat_events[threat.event_id] = threat
             
@@ -795,8 +756,7 @@ class ThreatDetector:
             logger.error(f"Failed to process threat event: {e}")
     
     def _determine_response_actions(self, threat: ThreatEvent) -> List[ResponseAction]:
-        """Determine appropriate response actions for threat"""
-        actions = []
+        """Determine appropriate response actions for threat"""        actions = []
         
         # Always log and alert
         actions.append(ResponseAction.LOG_DETAILED)
@@ -835,8 +795,7 @@ class ThreatDetector:
         return actions
     
     async def _execute_response_action(self, threat: ThreatEvent, action: ResponseAction):
-        """Execute response action for threat"""
-        try:
+        """Execute response action for threat"""        try:
             handler = self.response_handlers.get(action)
             if handler:
                 success = await handler(threat)
@@ -860,90 +819,76 @@ class ThreatDetector:
             logger.error(f"Failed to execute response action {action.value}: {e}")
     
     async def _handle_alert(self, threat: ThreatEvent) -> bool:
-        """Handle alert response action"""
-        # In production, this would send alerts to monitoring systems
+        """Handle alert response action"""        # In production, this would send alerts to monitoring systems
         logger.warning(f"SECURITY ALERT: {threat.threat_category.value} detected")
         return True
     
     async def _handle_block_user(self, threat: ThreatEvent) -> bool:
-        """Handle block user response action"""
-        if threat.user_id:
+        """Handle block user response action"""        if threat.user_id:
             self.blocked_users.add(threat.user_id)
             logger.warning(f"Blocked user: {threat.user_id}")
             return True
         return False
     
     async def _handle_block_ip(self, threat: ThreatEvent) -> bool:
-        """Handle block IP response action"""
-        if threat.source_ip and threat.source_ip != "unknown":
+        """Handle block IP response action"""        if threat.source_ip and threat.source_ip != "unknown":
             self.blocked_ips.add(threat.source_ip)
             logger.warning(f"Blocked IP: {threat.source_ip}")
             return True
         return False
     
     async def _handle_revoke_privileges(self, threat: ThreatEvent) -> bool:
-        """Handle revoke privileges response action"""
-        # In production, this would integrate with privilege manager
+        """Handle revoke privileges response action"""        # In production, this would integrate with privilege manager
         logger.warning(f"Would revoke privileges for user: {threat.user_id}")
         return True
     
     async def _handle_quarantine_session(self, threat: ThreatEvent) -> bool:
-        """Handle quarantine session response action"""
-        # In production, this would quarantine the session
+        """Handle quarantine session response action"""        # In production, this would quarantine the session
         logger.warning(f"Would quarantine session: {threat.session_id}")
         return True
     
     async def _handle_require_mfa(self, threat: ThreatEvent) -> bool:
-        """Handle require MFA response action"""
-        # In production, this would require MFA for next access
+        """Handle require MFA response action"""        # In production, this would require MFA for next access
         logger.warning(f"Would require MFA for user: {threat.user_id}")
         return True
     
     async def _handle_log_detailed(self, threat: ThreatEvent) -> bool:
-        """Handle detailed logging response action"""
-        # In production, this would send to detailed logging system
+        """Handle detailed logging response action"""        # In production, this would send to detailed logging system
         logger.info(f"Detailed log for threat {threat.event_id}: {threat.evidence}")
         return True
     
     async def _handle_notify_admin(self, threat: ThreatEvent) -> bool:
-        """Handle notify admin response action"""
-        # In production, this would send notifications to administrators
+        """Handle notify admin response action"""        # In production, this would send notifications to administrators
         logger.critical(f"ADMIN NOTIFICATION: Critical threat detected - {threat.threat_category.value}")
         return True
     
     async def _handle_trigger_incident(self, threat: ThreatEvent) -> bool:
-        """Handle trigger incident response action"""
-        # In production, this would create incident in incident management system
+        """Handle trigger incident response action"""        # In production, this would create incident in incident management system
         logger.critical(f"INCIDENT TRIGGERED: {threat.event_id}")
         return True
     
     def is_ip_blocked(self, ip_address: str) -> bool:
-        """Check if IP address is blocked"""
-        return ip_address in self.blocked_ips
+        """Check if IP address is blocked"""        return ip_address in self.blocked_ips
     
     def is_user_blocked(self, user_id: str) -> bool:
-        """Check if user is blocked"""
-        return user_id in self.blocked_users
+        """Check if user is blocked"""        return user_id in self.blocked_users
     
     def unblock_ip(self, ip_address: str) -> bool:
-        """Unblock IP address"""
-        if ip_address in self.blocked_ips:
+        """Unblock IP address"""        if ip_address in self.blocked_ips:
             self.blocked_ips.remove(ip_address)
             logger.info(f"Unblocked IP: {ip_address}")
             return True
         return False
     
     def unblock_user(self, user_id: str) -> bool:
-        """Unblock user"""
-        if user_id in self.blocked_users:
+        """Unblock user"""        if user_id in self.blocked_users:
             self.blocked_users.remove(user_id)
             logger.info(f"Unblocked user: {user_id}")
             return True
         return False
     
     def get_threat_summary(self, time_range_hours: int = 24) -> Dict[str, Any]:
-        """Get threat detection summary"""
-        cutoff_time = datetime.now() - timedelta(hours=time_range_hours)
+        """Get threat detection summary"""        cutoff_time = datetime.now() - timedelta(hours=time_range_hours)
         
         recent_threats = [
             threat for threat in self.threat_events.values()
@@ -972,8 +917,7 @@ class ThreatDetector:
         }
     
     def get_security_metrics(self) -> Dict[str, Any]:
-        """Get security monitoring metrics"""
-        return {
+        """Get security monitoring metrics"""        return {
             "total_threat_events": len(self.threat_events),
             "active_threats": len([
                 threat for threat in self.threat_events.values()

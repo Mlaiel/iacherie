@@ -43,8 +43,7 @@ Any unauthorized use is strictly prohibited.
 • Security testing integration
 • Documentation compliance
 • Legal protection implementation
-"""
-import pytest
+"""import pytest
 import asyncio
 import logging
 import unittest
@@ -82,8 +81,7 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
-"""
-# Test configuration constants
+"""# Test configuration constants
 TEST_CONFIG = {
     "async_timeout": 30.0,
     "performance_threshold": 5.0,  # seconds

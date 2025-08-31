@@ -1,14 +1,11 @@
-"""
-Cache Management Utilities for IA Influencer Agent Platform
+"""Cache Management Utilities for IA Influencer Agent Platform
 Advanced caching, memory optimization, and performance monitoring
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent Platform with Multi-Content Protection
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""
-
-import redis
+"""import redis
 import json
 import pickle
 import asyncio
@@ -29,8 +26,7 @@ logger = logging.getLogger(__name__)
 
 
 class CacheStrategy(Enum):
-    """Cache strategy enumeration"""
-    LRU = "lru"  # Least Recently Used
+    """Cache strategy enumeration"""    LRU = "lru"  # Least Recently Used
     LFU = "lfu"  # Least Frequently Used
     FIFO = "fifo"  # First In First Out
     TTL = "ttl"  # Time To Live
@@ -40,16 +36,14 @@ class CacheStrategy(Enum):
 
 
 class CacheLevel(Enum):
-    """Cache level enumeration"""
-    L1_MEMORY = "l1_memory"  # In-memory cache
+    """Cache level enumeration"""    L1_MEMORY = "l1_memory"  # In-memory cache
     L2_REDIS = "l2_redis"    # Redis cache
     L3_DATABASE = "l3_database"  # Database cache
 
 
 @dataclass
 class CacheStats:
-    """Cache performance statistics"""
-    hits: int = 0
+    """Cache performance statistics"""    hits: int = 0
     misses: int = 0
     evictions: int = 0
     memory_usage: int = 0
@@ -58,15 +52,13 @@ class CacheStats:
     
     @property
     def hit_ratio(self) -> float:
-        """Calculate cache hit ratio"""
-        total = self.hits + self.misses
+        """Calculate cache hit ratio"""        total = self.hits + self.misses
         return self.hits / total if total > 0 else 0.0
 
 
 @dataclass
 class CacheEntry:
-    """Cache entry with metadata"""
-    key: str
+    """Cache entry with metadata"""    key: str
     value: Any
     created_at: datetime = field(default_factory=datetime.utcnow)
     accessed_at: datetime = field(default_factory=datetime.utcnow)
@@ -76,23 +68,20 @@ class CacheEntry:
     
     @property
     def is_expired(self) -> bool:
-        """Check if cache entry is expired"""
-        if self.ttl is None:
+        """Check if cache entry is expired"""        if self.ttl is None:
             return False
         return (datetime.utcnow() - self.created_at).seconds > self.ttl
 
 
 class MemoryOptimizer:
-    """Advanced memory optimization and monitoring"""
-    
+    """Advanced memory optimization and monitoring"""    
     def __init__(self, max_memory_percent: float = 80.0):
         self.max_memory_percent = max_memory_percent
         self.memory_warnings = []
         self.optimization_history = []
         
     def monitor_memory_usage(self) -> Dict[str, Any]:
-        """Monitor current memory usage"""
-        memory = psutil.virtual_memory()
+        """Monitor current memory usage"""        memory = psutil.virtual_memory()
         process = psutil.Process()
         
         memory_info = {
@@ -110,8 +99,7 @@ class MemoryOptimizer:
         return memory_info
     
     def _trigger_memory_optimization(self):
-        """Trigger memory optimization procedures"""
-        logger.warning(f"Memory usage exceeded {self.max_memory_percent}%, triggering optimization")
+        """Trigger memory optimization procedures"""        logger.warning(f"Memory usage exceeded {self.max_memory_percent}%, triggering optimization")
         
         optimization_result = {
             'timestamp': datetime.utcnow(),
@@ -131,14 +119,12 @@ class MemoryOptimizer:
         self.optimization_history.append(optimization_result)
         
     def _clear_low_priority_caches(self):
-        """Clear low priority cache entries"""
-        # This would integrate with the cache manager
+        """Clear low priority cache entries"""        # This would integrate with the cache manager
         # to clear least recently used or expired entries
         pass
     
     def optimize_data_structures(self, data: Any) -> Any:
-        """Optimize data structures for memory efficiency"""
-        if isinstance(data, dict):
+        """Optimize data structures for memory efficiency"""        if isinstance(data, dict):
             # Convert to more memory-efficient structure if large
             if len(data) > 1000:
                 return self._optimize_large_dict(data)
@@ -149,8 +135,7 @@ class MemoryOptimizer:
         return data
     
     def _optimize_large_dict(self, data: dict) -> dict:
-        """Optimize large dictionary structures"""
-        # Remove None values and empty collections
+        """Optimize large dictionary structures"""        # Remove None values and empty collections
         optimized = {
             k: v for k, v in data.items() 
             if v is not None and (not isinstance(v, (list, dict)) or v)
@@ -158,8 +143,7 @@ class MemoryOptimizer:
         return optimized
     
     def _optimize_large_list(self, data: list) -> list:
-        """Optimize large list structures"""
-        # Remove None values and duplicates while preserving order
+        """Optimize large list structures"""        # Remove None values and duplicates while preserving order
         seen = set()
         optimized = []
         for item in data:
@@ -170,8 +154,7 @@ class MemoryOptimizer:
 
 
 class RedisHandler:
-    """Advanced Redis cache handler with clustering support"""
-    
+    """Advanced Redis cache handler with clustering support"""    
     def __init__(self, 
                  host: str = 'localhost', 
                  port: int = 6379, 
@@ -188,8 +171,7 @@ class RedisHandler:
         self._connect()
         
     def _connect(self):
-        """Establish Redis connection"""
-        try:
+        """Establish Redis connection"""        try:
             if self.cluster_mode:
                 # Redis Cluster configuration
                 from rediscluster import RedisCluster
@@ -220,8 +202,7 @@ class RedisHandler:
             raise
     
     async def get(self, key: str) -> Optional[Any]:
-        """Get value from Redis cache"""
-        try:
+        """Get value from Redis cache"""        try:
             value = self.client.get(key)
             if value is None:
                 return None
@@ -237,8 +218,7 @@ class RedisHandler:
             return None
     
     async def set(self, key: str, value: Any, ttl: Optional[int] = None) -> bool:
-        """Set value in Redis cache"""
-        try:
+        """Set value in Redis cache"""        try:
             # Serialize value
             if isinstance(value, (dict, list, tuple)):
                 serialized_value = json.dumps(value, default=str)
@@ -258,8 +238,7 @@ class RedisHandler:
             return False
     
     async def delete(self, key: str) -> bool:
-        """Delete key from Redis cache"""
-        try:
+        """Delete key from Redis cache"""        try:
             result = self.client.delete(key)
             return bool(result)
         except Exception as e:
@@ -267,16 +246,14 @@ class RedisHandler:
             return False
     
     async def exists(self, key: str) -> bool:
-        """Check if key exists in Redis"""
-        try:
+        """Check if key exists in Redis"""        try:
             return bool(self.client.exists(key))
         except Exception as e:
             logger.error(f"Redis EXISTS error for key {key}: {str(e)}")
             return False
     
     def get_info(self) -> Dict[str, Any]:
-        """Get Redis server information"""
-        try:
+        """Get Redis server information"""        try:
             info = self.client.info()
             return {
                 'redis_version': info.get('redis_version'),
@@ -292,8 +269,7 @@ class RedisHandler:
 
 
 class CacheManager:
-    """Comprehensive multi-level cache management system"""
-    
+    """Comprehensive multi-level cache management system"""    
     def __init__(self, 
                  redis_config: Optional[Dict[str, Any]] = None,
                  default_ttl: int = 3600,
@@ -332,8 +308,7 @@ class CacheManager:
         self._start_background_tasks()
     
     def _start_background_tasks(self):
-        """Start background maintenance tasks"""
-        def cleanup_task():
+        """Start background maintenance tasks"""        def cleanup_task():
             while True:
                 try:
                     self._cleanup_expired_entries()
@@ -347,8 +322,7 @@ class CacheManager:
         cleanup_thread.start()
     
     async def get(self, key: str, default: Any = None) -> Any:
-        """Get value from multi-level cache"""
-        start_time = time.time()
+        """Get value from multi-level cache"""        start_time = time.time()
         
         try:
             # Check L1 memory cache first
@@ -396,8 +370,7 @@ class CacheManager:
                   value: Any, 
                   ttl: Optional[int] = None,
                   strategy: CacheStrategy = CacheStrategy.LRU) -> bool:
-        """Set value in multi-level cache"""
-        if ttl is None:
+        """Set value in multi-level cache"""        if ttl is None:
             ttl = self.default_ttl
         
         try:
@@ -415,8 +388,7 @@ class CacheManager:
             return False
     
     async def _store_l1(self, key: str, value: Any, ttl: Optional[int] = None):
-        """Store value in L1 memory cache"""
-        # Check if we need to evict entries
+        """Store value in L1 memory cache"""        # Check if we need to evict entries
         if len(self.l1_cache) >= self.max_memory_entries:
             await self._evict_entries(1)
         
@@ -435,8 +407,7 @@ class CacheManager:
         self.stats[CacheLevel.L1_MEMORY].memory_usage += entry.size
     
     async def delete(self, key: str) -> bool:
-        """Delete key from all cache levels"""
-        deleted = False
+        """Delete key from all cache levels"""        deleted = False
         
         # Delete from L1
         if key in self.l1_cache:
@@ -452,8 +423,7 @@ class CacheManager:
         return deleted
     
     async def clear(self, pattern: Optional[str] = None):
-        """Clear cache entries matching pattern"""
-        if pattern is None:
+        """Clear cache entries matching pattern"""        if pattern is None:
             # Clear all
             self.l1_cache.clear()
             self.stats[CacheLevel.L1_MEMORY].memory_usage = 0
@@ -464,8 +434,7 @@ class CacheManager:
                 await self.delete(key)
     
     async def _evict_entries(self, count: int):
-        """Evict entries using configured strategy"""
-        evicted = 0
+        """Evict entries using configured strategy"""        evicted = 0
         
         while evicted < count and self.l1_cache:
             # Default LRU eviction
@@ -475,22 +444,18 @@ class CacheManager:
             evicted += 1
     
     def _lru_eviction(self) -> str:
-        """LRU eviction strategy"""
-        return next(iter(self.l1_cache))
+        """LRU eviction strategy"""        return next(iter(self.l1_cache))
     
     def _lfu_eviction(self) -> str:
-        """LFU eviction strategy"""
-        return min(self.l1_cache.keys(), 
+        """LFU eviction strategy"""        return min(self.l1_cache.keys(), 
                   key=lambda k: self.l1_cache[k].access_count)
     
     def _fifo_eviction(self) -> str:
-        """FIFO eviction strategy"""
-        return min(self.l1_cache.keys(), 
+        """FIFO eviction strategy"""        return min(self.l1_cache.keys(), 
                   key=lambda k: self.l1_cache[k].created_at)
     
     def _cleanup_expired_entries(self):
-        """Remove expired entries from L1 cache"""
-        expired_keys = [
+        """Remove expired entries from L1 cache"""        expired_keys = [
             key for key, entry in self.l1_cache.items() 
             if entry.is_expired
         ]
@@ -501,8 +466,7 @@ class CacheManager:
             self.stats[CacheLevel.L1_MEMORY].evictions += 1
     
     def _update_memory_stats(self):
-        """Update memory usage statistics"""
-        total_size = sum(entry.size for entry in self.l1_cache.values())
+        """Update memory usage statistics"""        total_size = sum(entry.size for entry in self.l1_cache.values())
         self.stats[CacheLevel.L1_MEMORY].memory_usage = total_size
         
         # Update last updated timestamp
@@ -510,8 +474,7 @@ class CacheManager:
             stats.last_updated = datetime.utcnow()
     
     def _calculate_size(self, obj: Any) -> int:
-        """Calculate approximate size of object in bytes"""
-        try:
+        """Calculate approximate size of object in bytes"""        try:
             return len(pickle.dumps(obj))
         except Exception:
             # Fallback estimation
@@ -528,8 +491,7 @@ class CacheManager:
                 return 64  # Default estimate
     
     def get_stats(self) -> Dict[str, Dict[str, Any]]:
-        """Get comprehensive cache statistics"""
-        stats_dict = {}
+        """Get comprehensive cache statistics"""        stats_dict = {}
         
         for level, stats in self.stats.items():
             stats_dict[level.value] = {
@@ -558,8 +520,7 @@ class CacheManager:
 
 
 class PerformanceMonitor:
-    """Performance monitoring and optimization for cache operations"""
-    
+    """Performance monitoring and optimization for cache operations"""    
     def __init__(self, cache_manager: CacheManager):
         self.cache_manager = cache_manager
         self.performance_history = []
@@ -570,8 +531,7 @@ class PerformanceMonitor:
         }
     
     def monitor_performance(self) -> Dict[str, Any]:
-        """Monitor cache performance and generate alerts"""
-        stats = self.cache_manager.get_stats()
+        """Monitor cache performance and generate alerts"""        stats = self.cache_manager.get_stats()
         alerts = []
         recommendations = []
         
@@ -609,8 +569,7 @@ class PerformanceMonitor:
         return performance_report
     
     def get_performance_trend(self, hours: int = 24) -> Dict[str, Any]:
-        """Get performance trends over specified period"""
-        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
+        """Get performance trends over specified period"""        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
         recent_reports = [
             report for report in self.performance_history
             if report['timestamp'] >= cutoff_time
@@ -642,8 +601,7 @@ class PerformanceMonitor:
 
 
 def cache_decorator(ttl: int = 3600, key_prefix: str = "", cache_manager: Optional[CacheManager] = None):
-    """Decorator for caching function results"""
-    def decorator(func: Callable) -> Callable:
+    """Decorator for caching function results"""    def decorator(func: Callable) -> Callable:
         @wraps(func)
         async def async_wrapper(*args, **kwargs):
             # Generate cache key

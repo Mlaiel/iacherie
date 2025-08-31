@@ -1,5 +1,4 @@
-"""
-Notification Handler - Deployment Automation
+"""Notification Handler - Deployment Automation
 
 Advanced notification management system for the IA Influencer Agent platform,
 providing multi-channel notifications, intelligent alerting, and
@@ -7,9 +6,7 @@ comprehensive deployment event communication.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -29,8 +26,7 @@ from ..monitoring.metrics_collector import MetricsCollector
 
 
 class NotificationLevel(Enum):
-    """Notification severity levels"""
-    DEBUG = "debug"
+    """Notification severity levels"""    DEBUG = "debug"
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -38,8 +34,7 @@ class NotificationLevel(Enum):
 
 
 class NotificationChannel(Enum):
-    """Notification delivery channels"""
-    EMAIL = "email"
+    """Notification delivery channels"""    EMAIL = "email"
     SLACK = "slack"
     TEAMS = "teams"
     WEBHOOK = "webhook"
@@ -50,8 +45,7 @@ class NotificationChannel(Enum):
 
 
 class NotificationEventType(Enum):
-    """Types of notification events"""
-    DEPLOYMENT_STARTED = "deployment_started"
+    """Types of notification events"""    DEPLOYMENT_STARTED = "deployment_started"
     DEPLOYMENT_COMPLETED = "deployment_completed"
     DEPLOYMENT_FAILED = "deployment_failed"
     ROLLBACK_STARTED = "rollback_started"
@@ -67,8 +61,7 @@ class NotificationEventType(Enum):
 
 @dataclass
 class NotificationTemplate:
-    """Notification template configuration"""
-    name: str
+    """Notification template configuration"""    name: str
     event_type: NotificationEventType
     level: NotificationLevel
     channels: List[NotificationChannel]
@@ -83,8 +76,7 @@ class NotificationTemplate:
 
 @dataclass
 class NotificationRecipient:
-    """Notification recipient configuration"""
-    name: str
+    """Notification recipient configuration"""    name: str
     email: Optional[str] = None
     phone: Optional[str] = None
     slack_user_id: Optional[str] = None
@@ -105,8 +97,7 @@ class NotificationRecipient:
 
 @dataclass
 class NotificationEvent:
-    """Notification event data"""
-    event_id: str
+    """Notification event data"""    event_id: str
     event_type: NotificationEventType
     level: NotificationLevel
     timestamp: datetime
@@ -121,8 +112,7 @@ class NotificationEvent:
 
 @dataclass
 class NotificationDelivery:
-    """Notification delivery tracking"""
-    delivery_id: str
+    """Notification delivery tracking"""    delivery_id: str
     notification_event_id: str
     recipient: str
     channel: NotificationChannel
@@ -133,15 +123,12 @@ class NotificationDelivery:
 
 
 class NotificationHandler(BaseComponent):
-    """
-    Enterprise-grade notification management system.
+    """    Enterprise-grade notification management system.
     
     Provides comprehensive notification capabilities including multi-channel
     delivery, intelligent routing, rate limiting, template management,
     and delivery tracking for deployment automation events.
-    """
-
-    def __init__(self, config: Dict[str, Any]):
+    """    def __init__(self, config: Dict[str, Any]):
         super().__init__()
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -174,8 +161,7 @@ class NotificationHandler(BaseComponent):
         asyncio.create_task(self._notification_worker())
 
     def _initialize_default_templates(self) -> None:
-        """Initialize default notification templates"""
-        
+        """Initialize default notification templates"""        
         # Deployment Started
         self.templates['deployment_started'] = NotificationTemplate(
             name="Deployment Started",
@@ -183,8 +169,7 @@ class NotificationHandler(BaseComponent):
             level=NotificationLevel.INFO,
             channels=[NotificationChannel.SLACK, NotificationChannel.EMAIL],
             subject_template="🚀 Deployment Started: {service_name} in {environment}",
-            body_template="""
-Deployment has started for the IA Influencer Agent platform.
+            body_template="""Deployment has started for the IA Influencer Agent platform.
 
 **Details:**
 - Service: {service_name}
@@ -210,8 +195,7 @@ IA Influencer Agent Deployment System
             level=NotificationLevel.INFO,
             channels=[NotificationChannel.SLACK, NotificationChannel.EMAIL],
             subject_template="✅ Deployment Completed: {service_name} in {environment}",
-            body_template="""
-Deployment has completed successfully for the IA Influencer Agent platform.
+            body_template="""Deployment has completed successfully for the IA Influencer Agent platform.
 
 **Details:**
 - Service: {service_name}
@@ -239,8 +223,7 @@ IA Influencer Agent Deployment System
             level=NotificationLevel.ERROR,
             channels=[NotificationChannel.SLACK, NotificationChannel.EMAIL, NotificationChannel.SMS],
             subject_template="❌ Deployment Failed: {service_name} in {environment}",
-            body_template="""
-DEPLOYMENT FAILURE ALERT
+            body_template="""DEPLOYMENT FAILURE ALERT
 
 A deployment has failed for the IA Influencer Agent platform.
 
@@ -277,8 +260,7 @@ IA Influencer Agent Deployment System
             level=NotificationLevel.WARNING,
             channels=[NotificationChannel.SLACK, NotificationChannel.EMAIL],
             subject_template="🔄 Rollback Completed: {service_name} in {environment}",
-            body_template="""
-Rollback has completed for the IA Influencer Agent platform.
+            body_template="""Rollback has completed for the IA Influencer Agent platform.
 
 **Details:**
 - Service: {service_name}
@@ -307,8 +289,7 @@ IA Influencer Agent Deployment System
             level=NotificationLevel.INFO,
             channels=[NotificationChannel.SLACK],
             subject_template="📊 Scaling Event: {service_name} ({from_replicas} → {to_replicas})",
-            body_template="""
-Auto-scaling event occurred for the IA Influencer Agent platform.
+            body_template="""Auto-scaling event occurred for the IA Influencer Agent platform.
 
 **Details:**
 - Service: {service_name}
@@ -340,8 +321,7 @@ IA Influencer Agent Deployment System
             level=NotificationLevel.ERROR,
             channels=[NotificationChannel.SLACK, NotificationChannel.EMAIL, NotificationChannel.SMS],
             subject_template="🚨 Health Check Failed: {service_name} in {environment}",
-            body_template="""
-HEALTH CHECK FAILURE ALERT
+            body_template="""HEALTH CHECK FAILURE ALERT
 
 A critical health check has failed for the IA Influencer Agent platform.
 
@@ -373,8 +353,7 @@ IA Influencer Agent Deployment System
         )
 
     def _initialize_default_recipients(self) -> None:
-        """Initialize default notification recipients"""
-        
+        """Initialize default notification recipients"""        
         # Platform Administrator
         self.recipients['platform_admin'] = NotificationRecipient(
             name="Platform Administrator",
@@ -419,8 +398,7 @@ IA Influencer Agent Deployment System
         )
 
     async def _notification_worker(self) -> None:
-        """Background worker to process notification queue"""
-        
+        """Background worker to process notification queue"""        
         while True:
             try:
                 # Get notification from queue
@@ -448,8 +426,7 @@ IA Influencer Agent Deployment System
         workflow_id: Optional[str] = None,
         attachments: Optional[List[str]] = None
     ) -> str:
-        """
-        Send a notification.
+        """        Send a notification.
         
         Args:
             event_type: Type of notification event
@@ -464,8 +441,7 @@ IA Influencer Agent Deployment System
             
         Returns:
             Notification event ID
-        """
-        
+        """        
         event_id = f"notif-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{event_type.value}"
         
         notification_event = NotificationEvent(
@@ -490,8 +466,7 @@ IA Influencer Agent Deployment System
         return event_id
 
     async def _process_notification(self, event: NotificationEvent) -> None:
-        """Process a notification event"""
-        
+        """Process a notification event"""        
         try:
             # Get template for this event type
             template = self._get_template_for_event(event)
@@ -523,8 +498,7 @@ IA Influencer Agent Deployment System
             self.logger.error(f"Error processing notification {event.event_id}: {str(e)}", exc_info=True)
 
     def _get_template_for_event(self, event: NotificationEvent) -> Optional[NotificationTemplate]:
-        """Get notification template for an event"""
-        
+        """Get notification template for an event"""        
         # Try exact match first
         template_key = event.event_type.value
         if template_key in self.templates:
@@ -539,16 +513,14 @@ IA Influencer Agent Deployment System
         return None
 
     def _get_critical_template(self) -> NotificationTemplate:
-        """Get default critical notification template"""
-        
+        """Get default critical notification template"""        
         return NotificationTemplate(
             name="Critical Alert",
             event_type=NotificationEventType.SYSTEM_ALERT,
             level=NotificationLevel.CRITICAL,
             channels=[NotificationChannel.EMAIL, NotificationChannel.SLACK, NotificationChannel.SMS],
             subject_template="🚨 CRITICAL ALERT: {title}",
-            body_template="""
-CRITICAL SYSTEM ALERT
+            body_template="""CRITICAL SYSTEM ALERT
 
 {message}
 
@@ -568,16 +540,14 @@ IA Influencer Agent Deployment System
         )
 
     def _get_error_template(self) -> NotificationTemplate:
-        """Get default error notification template"""
-        
+        """Get default error notification template"""        
         return NotificationTemplate(
             name="Error Alert",
             event_type=NotificationEventType.SYSTEM_ALERT,
             level=NotificationLevel.ERROR,
             channels=[NotificationChannel.EMAIL, NotificationChannel.SLACK],
             subject_template="❌ ERROR: {title}",
-            body_template="""
-System Error Alert
+            body_template="""System Error Alert
 
 {message}
 
@@ -597,8 +567,7 @@ IA Influencer Agent Deployment System
         )
 
     def _get_recipients_for_level(self, level: NotificationLevel) -> Dict[str, NotificationRecipient]:
-        """Get recipients that should receive notifications at this level"""
-        
+        """Get recipients that should receive notifications at this level"""        
         relevant_recipients = {}
         
         for name, recipient in self.recipients.items():
@@ -616,8 +585,7 @@ IA Influencer Agent Deployment System
         recipient_name: str,
         recipient: NotificationRecipient
     ) -> None:
-        """Send notification to a specific recipient"""
-        
+        """Send notification to a specific recipient"""        
         try:
             # Check if recipient wants notifications at this level
             if event.level not in recipient.notification_preferences:
@@ -647,8 +615,7 @@ IA Influencer Agent Deployment System
         recipient: NotificationRecipient,
         channel: NotificationChannel
     ) -> None:
-        """Send notification via specific channel"""
-        
+        """Send notification via specific channel"""        
         delivery_id = f"delivery-{event.event_id}-{channel.value}-{datetime.utcnow().strftime('%H%M%S')}"
         
         delivery = NotificationDelivery(
@@ -693,8 +660,7 @@ IA Influencer Agent Deployment System
         event: NotificationEvent,
         template: NotificationTemplate
     ) -> tuple[str, str]:
-        """Render notification template with event data"""
-        
+        """Render notification template with event data"""        
         # Prepare template variables
         variables = {
             'title': event.title,
@@ -733,8 +699,7 @@ IA Influencer Agent Deployment System
         body: str,
         attachments: List[str]
     ) -> None:
-        """Send email notification"""
-        
+        """Send email notification"""        
         if not recipient.email or not self.email_config:
             return
         
@@ -790,8 +755,7 @@ IA Influencer Agent Deployment System
         subject: str,
         body: str
     ) -> None:
-        """Send Slack notification"""
-        
+        """Send Slack notification"""        
         if not self.slack_config.get('webhook_url'):
             return
         
@@ -843,8 +807,7 @@ IA Influencer Agent Deployment System
         subject: str,
         body: str
     ) -> None:
-        """Send Microsoft Teams notification"""
-        
+        """Send Microsoft Teams notification"""        
         if not self.teams_config.get('webhook_url'):
             return
         
@@ -884,8 +847,7 @@ IA Influencer Agent Deployment System
         recipient: NotificationRecipient,
         message: str
     ) -> None:
-        """Send SMS notification"""
-        
+        """Send SMS notification"""        
         if not recipient.phone or not self.sms_config:
             return
         
@@ -905,15 +867,13 @@ IA Influencer Agent Deployment System
             raise
 
     async def _send_twilio_sms(self, phone: str, message: str) -> None:
-        """Send SMS via Twilio"""
-        
+        """Send SMS via Twilio"""        
         # This would use the Twilio client
         # For security, actual implementation would use proper Twilio SDK
         self.logger.info(f"SMS would be sent to {phone}: {message[:50]}...")
 
     async def _send_aws_sns_sms(self, phone: str, message: str) -> None:
-        """Send SMS via AWS SNS"""
-        
+        """Send SMS via AWS SNS"""        
         # This would use AWS SNS client
         # For security, actual implementation would use proper AWS SDK
         self.logger.info(f"AWS SNS SMS would be sent to {phone}: {message[:50]}...")
@@ -924,8 +884,7 @@ IA Influencer Agent Deployment System
         subject: str,
         body: str
     ) -> None:
-        """Send webhook notification"""
-        
+        """Send webhook notification"""        
         webhook_urls = self.webhook_config.get('urls', [])
         
         for webhook_url in webhook_urls:
@@ -959,14 +918,12 @@ IA Influencer Agent Deployment System
                 self.logger.error(f"Failed to send webhook to {webhook_url}: {str(e)}")
 
     def _send_console(self, subject: str, body: str) -> None:
-        """Send console notification (logging)"""
-        
+        """Send console notification (logging)"""        
         self.logger.info(f"NOTIFICATION: {subject}")
         self.logger.info(f"MESSAGE: {body}")
 
     def _is_rate_limited(self, event: NotificationEvent, template: NotificationTemplate) -> bool:
-        """Check if notification is rate limited"""
-        
+        """Check if notification is rate limited"""        
         # Check cooldown
         cooldown_key = f"{event.event_type.value}_{event.service_name or 'global'}"
         if cooldown_key in self.cooldown_cache:
@@ -992,8 +949,7 @@ IA Influencer Agent Deployment System
         return False
 
     def _update_rate_limit_cache(self, event: NotificationEvent, template: NotificationTemplate) -> None:
-        """Update rate limiting cache"""
-        
+        """Update rate limiting cache"""        
         current_time = datetime.utcnow()
         
         # Update cooldown cache
@@ -1007,8 +963,7 @@ IA Influencer Agent Deployment System
         self.rate_limit_cache[rate_key].append(current_time)
 
     def _is_in_quiet_hours(self, recipient: NotificationRecipient) -> bool:
-        """Check if current time is in recipient's quiet hours"""
-        
+        """Check if current time is in recipient's quiet hours"""        
         # Simple implementation - would need proper timezone handling
         current_hour = datetime.utcnow().hour
         
@@ -1021,20 +976,17 @@ IA Influencer Agent Deployment System
             return quiet_start <= current_hour < quiet_end
 
     async def add_notification_template(self, template: NotificationTemplate) -> None:
-        """Add a new notification template"""
-        
+        """Add a new notification template"""        
         self.templates[template.name.lower().replace(' ', '_')] = template
         self.logger.info(f"Added notification template: {template.name}")
 
     async def add_notification_recipient(self, recipient: NotificationRecipient) -> None:
-        """Add a new notification recipient"""
-        
+        """Add a new notification recipient"""        
         self.recipients[recipient.name.lower().replace(' ', '_')] = recipient
         self.logger.info(f"Added notification recipient: {recipient.name}")
 
     async def get_notification_status(self, event_id: str) -> Dict[str, Any]:
-        """Get notification delivery status"""
-        
+        """Get notification delivery status"""        
         deliveries = [d for d in self.delivery_history if d.notification_event_id == event_id]
         
         return {
@@ -1056,8 +1008,7 @@ IA Influencer Agent Deployment System
         }
 
     async def get_delivery_statistics(self, hours: int = 24) -> Dict[str, Any]:
-        """Get notification delivery statistics"""
-        
+        """Get notification delivery statistics"""        
         cutoff_time = datetime.utcnow() - timedelta(hours=hours)
         
         recent_deliveries = [
@@ -1092,8 +1043,7 @@ IA Influencer Agent Deployment System
         }
 
     async def test_notification_channels(self) -> Dict[str, Any]:
-        """Test all configured notification channels"""
-        
+        """Test all configured notification channels"""        
         test_results = {}
         
         test_event = NotificationEvent(

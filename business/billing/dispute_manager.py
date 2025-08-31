@@ -1,5 +1,4 @@
-"""
-Dispute Manager Engine - Comprehensive payment dispute management
+"""Dispute Manager Engine - Comprehensive payment dispute management
 ================================================================
 
 Advanced dispute management system handling chargebacks, disputes,
@@ -7,9 +6,7 @@ arbitration, and automated resolution processes.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
@@ -24,8 +21,7 @@ import json
 logger = logging.getLogger(__name__)
 
 class DisputeType(Enum):
-    """Types of payment disputes"""
-    CHARGEBACK = "chargeback"
+    """Types of payment disputes"""    CHARGEBACK = "chargeback"
     FRAUD = "fraud"
     UNAUTHORIZED = "unauthorized"
     DUPLICATE = "duplicate"
@@ -35,8 +31,7 @@ class DisputeType(Enum):
     GENERAL = "general"
 
 class DisputeStatus(Enum):
-    """Dispute resolution status"""
-    RECEIVED = "received"
+    """Dispute resolution status"""    RECEIVED = "received"
     UNDER_REVIEW = "under_review"
     RESPONSE_NEEDED = "response_needed"
     RESPONDED = "responded"
@@ -46,8 +41,7 @@ class DisputeStatus(Enum):
     ACCEPTED = "accepted"
 
 class DisputeStage(Enum):
-    """Dispute process stages"""
-    INQUIRY = "inquiry"
+    """Dispute process stages"""    INQUIRY = "inquiry"
     CHARGEBACK = "chargeback"
     PRE_ARBITRATION = "pre_arbitration"
     ARBITRATION = "arbitration"
@@ -55,8 +49,7 @@ class DisputeStage(Enum):
 
 @dataclass
 class DisputeData:
-    """Dispute information structure"""
-    dispute_id: str
+    """Dispute information structure"""    dispute_id: str
     transaction_id: str
     customer_id: str
     amount: Decimal
@@ -71,18 +64,15 @@ class DisputeData:
     created_at: datetime
 
 class DisputeManagerEngine:
-    """
-    Advanced dispute management engine handling all aspects of payment
+    """    Advanced dispute management engine handling all aspects of payment
     disputes including automated evidence collection and response generation.
-    """
-    
+    """    
     def __init__(self, redis_client: redis.Redis, db_pool: asyncpg.Pool):
         self.redis = redis_client
         self.db_pool = db_pool
         
     async def initialize(self) -> None:
-        """Initialize dispute manager engine"""
-        try:
+        """Initialize dispute manager engine"""        try:
             await self._setup_database_tables()
             await self._setup_dispute_rules()
             await self._setup_automated_responses()
@@ -92,10 +82,8 @@ class DisputeManagerEngine:
             raise
 
     async def _setup_database_tables(self) -> None:
-        """Setup database tables for dispute management"""
-        async with self.db_pool.acquire() as conn:
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS payment_disputes (
+        """Setup database tables for dispute management"""        async with self.db_pool.acquire() as conn:
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS payment_disputes (
                     id SERIAL PRIMARY KEY,
                     dispute_id VARCHAR(100) UNIQUE NOT NULL,
                     transaction_id VARCHAR(100) NOT NULL,
@@ -120,8 +108,7 @@ class DisputeManagerEngine:
                 );
             """)
             
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS dispute_communications (
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS dispute_communications (
                     id SERIAL PRIMARY KEY,
                     dispute_id VARCHAR(100) NOT NULL REFERENCES payment_disputes(dispute_id),
                     communication_type VARCHAR(20) NOT NULL,
@@ -133,8 +120,7 @@ class DisputeManagerEngine:
                 );
             """)
             
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS dispute_evidence (
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS dispute_evidence (
                     id SERIAL PRIMARY KEY,
                     dispute_id VARCHAR(100) NOT NULL REFERENCES payment_disputes(dispute_id),
                     evidence_type VARCHAR(50) NOT NULL,
@@ -145,8 +131,7 @@ class DisputeManagerEngine:
                 );
             """)
             
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS dispute_analytics (
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS dispute_analytics (
                     id SERIAL PRIMARY KEY,
                     dispute_id VARCHAR(100) NOT NULL REFERENCES payment_disputes(dispute_id),
                     win_probability DECIMAL(5,4),
@@ -158,8 +143,7 @@ class DisputeManagerEngine:
             """)
 
     async def _setup_dispute_rules(self) -> None:
-        """Setup dispute handling rules"""
-        try:
+        """Setup dispute handling rules"""        try:
             # Define evidence requirements by dispute type
             evidence_requirements = {
                 DisputeType.FRAUD: [
@@ -202,8 +186,7 @@ class DisputeManagerEngine:
             logger.error(f"Failed to setup dispute rules: {e}")
 
     async def _setup_automated_responses(self) -> None:
-        """Setup automated response templates"""
-        try:
+        """Setup automated response templates"""        try:
             response_templates = {
                 'fraud_response': {
                     'subject': 'Fraud Dispute Response',
@@ -243,8 +226,7 @@ class DisputeManagerEngine:
             logger.error(f"Failed to setup automated responses: {e}")
 
     async def create_dispute(self, dispute_data: Dict[str, Any]) -> DisputeData:
-        """Create new dispute record"""
-        try:
+        """Create new dispute record"""        try:
             # Generate dispute ID
             dispute_id = f"disp_{dispute_data['transaction_id']}_{int(datetime.now().timestamp())}"
             
@@ -286,8 +268,7 @@ class DisputeManagerEngine:
             raise HTTPException(status_code=500, detail="Dispute creation failed")
 
     async def _get_evidence_requirements(self, dispute_type: DisputeType) -> List[str]:
-        """Get evidence requirements for dispute type"""
-        try:
+        """Get evidence requirements for dispute type"""        try:
             cached_requirements = self.redis.get(f"evidence_req_{dispute_type.value}")
             if cached_requirements:
                 return json.loads(cached_requirements.decode())
@@ -300,11 +281,9 @@ class DisputeManagerEngine:
             return []
 
     async def _store_dispute(self, dispute: DisputeData) -> None:
-        """Store dispute in database"""
-        try:
+        """Store dispute in database"""        try:
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""
-                    INSERT INTO payment_disputes
+                await conn.execute("""                    INSERT INTO payment_disputes
                     (dispute_id, transaction_id, customer_id, amount, currency,
                      dispute_type, status, stage, reason_code, description,
                      evidence_required, response_deadline)
@@ -328,8 +307,7 @@ class DisputeManagerEngine:
             logger.error(f"Failed to store dispute: {e}")
 
     async def _start_dispute_processing(self, dispute: DisputeData) -> None:
-        """Start automated dispute processing"""
-        try:
+        """Start automated dispute processing"""        try:
             # Analyze dispute win probability
             await self._analyze_dispute(dispute)
             
@@ -346,12 +324,10 @@ class DisputeManagerEngine:
             logger.error(f"Failed to start dispute processing: {e}")
 
     async def _analyze_dispute(self, dispute: DisputeData) -> None:
-        """Analyze dispute win probability and risk"""
-        try:
+        """Analyze dispute win probability and risk"""        try:
             # Get transaction history for customer
             async with self.db_pool.acquire() as conn:
-                customer_history = await conn.fetch("""
-                    SELECT COUNT(*) as total_transactions,
+                customer_history = await conn.fetch("""                    SELECT COUNT(*) as total_transactions,
                            COUNT(CASE WHEN payment_status = 'completed' THEN 1 END) as successful_transactions,
                            AVG(amount) as avg_transaction_amount
                     FROM payments 
@@ -360,8 +336,7 @@ class DisputeManagerEngine:
                 """, dispute.customer_id)
                 
                 # Previous disputes for customer
-                dispute_history = await conn.fetch("""
-                    SELECT COUNT(*) as total_disputes,
+                dispute_history = await conn.fetch("""                    SELECT COUNT(*) as total_disputes,
                            COUNT(CASE WHEN status = 'won' THEN 1 END) as won_disputes,
                            COUNT(CASE WHEN status = 'lost' THEN 1 END) as lost_disputes
                     FROM payment_disputes 
@@ -377,8 +352,7 @@ class DisputeManagerEngine:
                 win_probability = self._calculate_win_probability(dispute, risk_score)
                 
                 # Store analysis
-                await conn.execute("""
-                    INSERT INTO dispute_analytics
+                await conn.execute("""                    INSERT INTO dispute_analytics
                     (dispute_id, win_probability, risk_score, recommended_action, analysis_data)
                     VALUES ($1, $2, $3, $4, $5)
                 """,
@@ -398,8 +372,7 @@ class DisputeManagerEngine:
 
     def _calculate_risk_score(self, dispute: DisputeData, 
                             customer_history: Any, dispute_history: Any) -> Decimal:
-        """Calculate dispute risk score"""
-        risk_score = Decimal('0.5')  # Base risk
+        """Calculate dispute risk score"""        risk_score = Decimal('0.5')  # Base risk
         
         # Adjust based on dispute type
         high_risk_types = [DisputeType.FRAUD, DisputeType.UNAUTHORIZED]
@@ -425,8 +398,7 @@ class DisputeManagerEngine:
         return min(risk_score, Decimal('1.0'))
 
     def _calculate_win_probability(self, dispute: DisputeData, risk_score: Decimal) -> Decimal:
-        """Calculate probability of winning dispute"""
-        base_probability = Decimal('0.7')  # Base win rate
+        """Calculate probability of winning dispute"""        base_probability = Decimal('0.7')  # Base win rate
         
         # Lower probability for high-risk disputes
         probability = base_probability - (risk_score * Decimal('0.4'))
@@ -445,18 +417,15 @@ class DisputeManagerEngine:
         return max(min(probability, Decimal('0.95')), Decimal('0.05'))
 
     async def _collect_evidence(self, dispute: DisputeData) -> None:
-        """Collect evidence for dispute response"""
-        try:
+        """Collect evidence for dispute response"""        try:
             async with self.db_pool.acquire() as conn:
                 # Get transaction details
-                transaction = await conn.fetchrow("""
-                    SELECT * FROM payments WHERE transaction_id = $1
+                transaction = await conn.fetchrow("""                    SELECT * FROM payments WHERE transaction_id = $1
                 """, dispute.transaction_id)
                 
                 if transaction:
                     # Store transaction evidence
-                    await conn.execute("""
-                        INSERT INTO dispute_evidence
+                    await conn.execute("""                        INSERT INTO dispute_evidence
                         (dispute_id, evidence_type, evidence_data)
                         VALUES ($1, 'transaction_details', $2)
                     """,
@@ -477,19 +446,16 @@ class DisputeManagerEngine:
             logger.error(f"Failed to collect evidence: {e}")
 
     async def _collect_type_specific_evidence(self, dispute: DisputeData, conn) -> None:
-        """Collect evidence specific to dispute type"""
-        try:
+        """Collect evidence specific to dispute type"""        try:
             if dispute.dispute_type == DisputeType.PRODUCT_NOT_RECEIVED:
                 # Look for delivery confirmations
-                delivery_info = await conn.fetchrow("""
-                    SELECT delivery_status, tracking_number, delivered_at
+                delivery_info = await conn.fetchrow("""                    SELECT delivery_status, tracking_number, delivered_at
                     FROM order_deliveries 
                     WHERE transaction_id = $1
                 """, dispute.transaction_id)
                 
                 if delivery_info:
-                    await conn.execute("""
-                        INSERT INTO dispute_evidence
+                    await conn.execute("""                        INSERT INTO dispute_evidence
                         (dispute_id, evidence_type, evidence_data)
                         VALUES ($1, 'delivery_confirmation', $2)
                     """,
@@ -499,8 +465,7 @@ class DisputeManagerEngine:
             
             elif dispute.dispute_type == DisputeType.FRAUD:
                 # Look for customer verification data
-                verification = await conn.fetchrow("""
-                    SELECT verification_method, verified_at, ip_address
+                verification = await conn.fetchrow("""                    SELECT verification_method, verified_at, ip_address
                     FROM customer_verifications 
                     WHERE customer_id = $1
                     AND created_at <= (SELECT created_at FROM payments WHERE transaction_id = $2)
@@ -509,8 +474,7 @@ class DisputeManagerEngine:
                 """, dispute.customer_id, dispute.transaction_id)
                 
                 if verification:
-                    await conn.execute("""
-                        INSERT INTO dispute_evidence
+                    await conn.execute("""                        INSERT INTO dispute_evidence
                         (dispute_id, evidence_type, evidence_data)
                         VALUES ($1, 'customer_verification', $2)
                     """,
@@ -522,12 +486,10 @@ class DisputeManagerEngine:
             logger.error(f"Failed to collect type-specific evidence: {e}")
 
     async def _generate_automated_response(self, dispute: DisputeData) -> None:
-        """Generate automated dispute response"""
-        try:
+        """Generate automated dispute response"""        try:
             # Get win probability analysis
             async with self.db_pool.acquire() as conn:
-                analysis = await conn.fetchrow("""
-                    SELECT win_probability, recommended_action
+                analysis = await conn.fetchrow("""                    SELECT win_probability, recommended_action
                     FROM dispute_analytics
                     WHERE dispute_id = $1
                 """, dispute.dispute_id)
@@ -538,15 +500,13 @@ class DisputeManagerEngine:
                     
                     if response:
                         # Store response
-                        await conn.execute("""
-                            INSERT INTO dispute_communications
+                        await conn.execute("""                            INSERT INTO dispute_communications
                             (dispute_id, communication_type, direction, content)
                             VALUES ($1, 'response', 'outgoing', $2)
                         """, dispute.dispute_id, response)
                         
                         # Update dispute status
-                        await conn.execute("""
-                            UPDATE payment_disputes
+                        await conn.execute("""                            UPDATE payment_disputes
                             SET status = 'responded', updated_at = NOW()
                             WHERE dispute_id = $1
                         """, dispute.dispute_id)
@@ -555,8 +515,7 @@ class DisputeManagerEngine:
             logger.error(f"Failed to generate automated response: {e}")
 
     async def _create_dispute_response(self, dispute: DisputeData) -> Optional[str]:
-        """Create dispute response content"""
-        try:
+        """Create dispute response content"""        try:
             # Get response template
             template_key = f"{dispute.dispute_type.value}_response"
             cached_template = self.redis.get(f"response_template_{template_key}")
@@ -566,21 +525,18 @@ class DisputeManagerEngine:
                 return template_data['template']
             
             # Fallback generic response
-            return f"""
-            We have reviewed the dispute for transaction {dispute.transaction_id} and found
+            return f"""            We have reviewed the dispute for transaction {dispute.transaction_id} and found
             that the transaction was processed correctly according to our records.
             
             All supporting evidence has been collected and is attached to this response.
             We respectfully request that this dispute be resolved in our favor.
-            """
-            
+            """            
         except Exception as e:
             logger.error(f"Failed to create dispute response: {e}")
             return None
 
     async def _setup_dispute_monitoring(self, dispute: DisputeData) -> None:
-        """Setup monitoring for dispute deadlines"""
-        try:
+        """Setup monitoring for dispute deadlines"""        try:
             # Set Redis reminder for deadline
             days_until_deadline = (dispute.deadline - datetime.now()).days
             if days_until_deadline > 1:
@@ -592,12 +548,10 @@ class DisputeManagerEngine:
             logger.error(f"Failed to setup dispute monitoring: {e}")
 
     async def get_dispute_dashboard(self) -> Dict[str, Any]:
-        """Get dispute management dashboard data"""
-        try:
+        """Get dispute management dashboard data"""        try:
             async with self.db_pool.acquire() as conn:
                 # Summary statistics
-                summary = await conn.fetchrow("""
-                    SELECT 
+                summary = await conn.fetchrow("""                    SELECT 
                         COUNT(*) as total_disputes,
                         COUNT(CASE WHEN status IN ('received', 'under_review', 'response_needed') THEN 1 END) as active_disputes,
                         COUNT(CASE WHEN status = 'won' THEN 1 END) as won_disputes,
@@ -610,8 +564,7 @@ class DisputeManagerEngine:
                 """)
                 
                 # Recent disputes
-                recent_disputes = await conn.fetch("""
-                    SELECT 
+                recent_disputes = await conn.fetch("""                    SELECT 
                         dispute_id,
                         transaction_id,
                         amount,
@@ -625,8 +578,7 @@ class DisputeManagerEngine:
                 """)
                 
                 # Dispute type breakdown
-                type_breakdown = await conn.fetch("""
-                    SELECT 
+                type_breakdown = await conn.fetch("""                    SELECT 
                         dispute_type,
                         COUNT(*) as count,
                         SUM(amount) as total_amount

@@ -1,5 +1,4 @@
-"""
-SEO Optimization Database Model
+"""SEO Optimization Database Model
 
 Ultra-industrial SQLAlchemy model for comprehensive SEO optimization,
 keyword tracking, search engine performance, and content discovery enhancement.
@@ -24,9 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-
-from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric, ARRAY
+"""from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID, JSONB
@@ -40,8 +37,7 @@ Base = declarative_base()
 
 
 class SearchEngine(Enum):
-    """Supported search engines"""
-    GOOGLE = "google"
+    """Supported search engines"""    GOOGLE = "google"
     BING = "bing"
     YAHOO = "yahoo"
     DUCKDUCKGO = "duckduckgo"
@@ -58,8 +54,7 @@ class SearchEngine(Enum):
 
 
 class OptimizationType(Enum):
-    """Types of SEO optimization"""
-    CONTENT_OPTIMIZATION = "content_optimization"
+    """Types of SEO optimization"""    CONTENT_OPTIMIZATION = "content_optimization"
     KEYWORD_OPTIMIZATION = "keyword_optimization"
     METADATA_OPTIMIZATION = "metadata_optimization"
     TECHNICAL_SEO = "technical_seo"
@@ -76,8 +71,7 @@ class OptimizationType(Enum):
 
 
 class KeywordDifficulty(Enum):
-    """Keyword competition difficulty levels"""
-    VERY_EASY = "very_easy"      # 0-20
+    """Keyword competition difficulty levels"""    VERY_EASY = "very_easy"      # 0-20
     EASY = "easy"                # 21-40
     MODERATE = "moderate"        # 41-60
     HARD = "hard"                # 61-80
@@ -85,8 +79,7 @@ class KeywordDifficulty(Enum):
 
 
 class SearchIntent(Enum):
-    """User search intent categories"""
-    INFORMATIONAL = "informational"
+    """User search intent categories"""    INFORMATIONAL = "informational"
     NAVIGATIONAL = "navigational"
     TRANSACTIONAL = "transactional"
     COMMERCIAL = "commercial"
@@ -97,8 +90,7 @@ class SearchIntent(Enum):
 
 
 class OptimizationStatus(Enum):
-    """SEO optimization status"""
-    PENDING = "pending"
+    """SEO optimization status"""    PENDING = "pending"
     ANALYZING = "analyzing"
     OPTIMIZING = "optimizing"
     COMPLETED = "completed"
@@ -109,8 +101,7 @@ class OptimizationStatus(Enum):
 
 
 class ContentType(Enum):
-    """Content types for SEO optimization"""
-    MUSIC_TRACK = "music_track"
+    """Content types for SEO optimization"""    MUSIC_TRACK = "music_track"
     MUSIC_VIDEO = "music_video"
     PODCAST_EPISODE = "podcast_episode"
     BLOG_POST = "blog_post"
@@ -125,13 +116,11 @@ class ContentType(Enum):
 
 
 class SEOOptimization(Base):
-    """
-    Ultra-Industrial SEO Optimization Model
+    """    Ultra-Industrial SEO Optimization Model
     
     Comprehensive SEO optimization system with AI-powered keyword analysis,
     search engine performance tracking, and automated content discovery enhancement.
-    """
-    __tablename__ = "seo_optimization"
+    """    __tablename__ = "seo_optimization"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -330,8 +319,7 @@ class SEOOptimization(Base):
         return f"<SEOOptimization(id={self.id}, content_id={self.content_id}, score={self.overall_seo_score})>"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert model to dictionary for API responses"""
-        return {
+        """Convert model to dictionary for API responses"""        return {
             "id": str(self.id),
             "seo_id": self.seo_id,
             "content_id": str(self.content_id),
@@ -351,8 +339,7 @@ class SEOOptimization(Base):
         }
     
     def calculate_seo_score(self) -> float:
-        """Calculate overall SEO score based on multiple factors"""
-        scores = []
+        """Calculate overall SEO score based on multiple factors"""        scores = []
         weights = {
             'technical_seo_score': 0.25,
             'content_seo_score': 0.30,
@@ -384,8 +371,7 @@ class SEOOptimization(Base):
         return min(sum(scores), 100.0)
     
     def get_keyword_performance(self) -> Dict[str, Any]:
-        """Get keyword performance summary"""
-        if not self.keyword_rankings:
+        """Get keyword performance summary"""        if not self.keyword_rankings:
             return {}
         
         total_keywords = len(self.primary_keywords or []) + len(self.secondary_keywords or [])
@@ -401,8 +387,7 @@ class SEOOptimization(Base):
         }
     
     def get_optimization_recommendations(self) -> List[str]:
-        """Get AI-powered optimization recommendations"""
-        recommendations = []
+        """Get AI-powered optimization recommendations"""        recommendations = []
         
         if self.overall_seo_score < 50:
             recommendations.append("Improve overall SEO strategy and implementation")
@@ -428,8 +413,7 @@ class SEOOptimization(Base):
         return recommendations
     
     def track_ranking_change(self, keyword: str, old_position: float, new_position: float):
-        """Track ranking changes for keywords"""
-        if not self.ranking_changes:
+        """Track ranking changes for keywords"""        if not self.ranking_changes:
             self.ranking_changes = {}
         
         change_data = {
@@ -443,8 +427,7 @@ class SEOOptimization(Base):
         self.ranking_changes[keyword] = change_data
     
     def estimate_traffic_value(self) -> Decimal:
-        """Estimate the monetary value of organic traffic"""
-        if not self.organic_traffic or not self.cost_per_click:
+        """Estimate the monetary value of organic traffic"""        if not self.organic_traffic or not self.cost_per_click:
             return Decimal('0.0')
         
         # Simple estimation: traffic * CPC * conversion rate
@@ -452,8 +435,7 @@ class SEOOptimization(Base):
         return estimated_value
     
     def needs_optimization_update(self) -> bool:
-        """Check if optimization needs an update"""
-        if not self.last_optimization_date:
+        """Check if optimization needs an update"""        if not self.last_optimization_date:
             return True
         
         days_since_update = (datetime.now(timezone.utc) - self.last_optimization_date).days

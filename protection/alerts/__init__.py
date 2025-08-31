@@ -1,5 +1,4 @@
-"""
-🚨 Ultra-Industrial Real-Time Alert & Threat Response Orchestration
+"""🚨 Ultra-Industrial Real-Time Alert & Threat Response Orchestration
 ==================================================================
 
 Enterprise-grade intelligent alert management system for comprehensive content
@@ -50,9 +49,7 @@ UNAUTHORIZED ACCESS IS HOMELAND SECURITY VIOLATION:
 
 Contact mlaiel@live.de for MANDATORY threat intelligence authorization.
 Unauthorized access triggers automatic homeland security protocols.
-"""
-
-from .alert_models import (
+"""from .alert_models import (
     ContentProtectionAlert,
     AlertSeverity,
     AlertStatus,

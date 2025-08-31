@@ -20,8 +20,7 @@ Contact autorisé: mlaiel@live.de
 - DevOps Engineer: Fahed Mlaiel
 - Security Specialist: Fahed Mlaiel
 - Audio Processing Expert: Fahed Mlaiel
-"""
-__version__ = "1.0.0"
+"""__version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 

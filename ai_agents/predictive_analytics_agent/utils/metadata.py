@@ -1,5 +1,4 @@
-"""
-Predictive Analytics Agent - Module Metadata and Architecture Documentation
+"""Predictive Analytics Agent - Module Metadata and Architecture Documentation
 
 Enterprise-grade metadata and architecture documentation for the comprehensive
 Predictive Analytics Agent module following unified IA Influencer specifications.
@@ -11,9 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This metadata documentation and architectural specifications are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-from datetime import datetime
+"""from datetime import datetime
 from typing import Dict, List, Any
 from dataclasses import dataclass, field
 
@@ -79,8 +76,7 @@ MODULE_METADATA = {
     
     # Legal protection notices
     "legal_protection": {
-        "intellectual_property_notice": """
-        🔒 INTELLECTUAL PROPERTY PROTECTION:
+        "intellectual_property_notice": """        🔒 INTELLECTUAL PROPERTY PROTECTION:
         All algorithms, methodologies, and implementations within this module are proprietary
         intellectual property of Fahed Mlaiel. Any attempt to reverse engineer, copy, or
         redistribute this code without explicit written permission is strictly prohibited
@@ -97,12 +93,10 @@ MODULE_METADATA = {
             "All derivative works require explicit licensing agreement"
         ],
         
-        "enforcement_notice": """
-        This code is monitored for unauthorized use. Any violations will be prosecuted
+        "enforcement_notice": """        This code is monitored for unauthorized use. Any violations will be prosecuted
         to the full extent of applicable law including but not limited to copyright
         infringement, trade secret misappropriation, and breach of licensing terms.
-        """
-    }
+        """    }
 }
 
 # Architecture overview
@@ -416,24 +410,20 @@ DEPLOYMENT_SPECIFICATIONS = {
 
 @dataclass
 class ModuleDocumentation:
-    """Complete module documentation structure"""
-    metadata: Dict[str, Any] = field(default_factory=lambda: MODULE_METADATA)
+    """Complete module documentation structure"""    metadata: Dict[str, Any] = field(default_factory=lambda: MODULE_METADATA)
     architecture: Dict[str, Any] = field(default_factory=lambda: ARCHITECTURE_OVERVIEW)
     performance: Dict[str, Any] = field(default_factory=lambda: PERFORMANCE_SPECIFICATIONS)
     integrations: Dict[str, Any] = field(default_factory=lambda: INTEGRATION_SPECIFICATIONS)
     deployment: Dict[str, Any] = field(default_factory=lambda: DEPLOYMENT_SPECIFICATIONS)
     
     def get_component_info(self, component_name: str) -> Dict[str, Any]:
-        """Get detailed information about a specific component"""
-        return self.architecture.get("core_components", {}).get(component_name, {})
+        """Get detailed information about a specific component"""        return self.architecture.get("core_components", {}).get(component_name, {})
     
     def get_integration_details(self, integration_type: str) -> Dict[str, Any]:
-        """Get integration details for a specific type"""
-        return self.integrations.get(f"{integration_type}_integrations", {})
+        """Get integration details for a specific type"""        return self.integrations.get(f"{integration_type}_integrations", {})
     
     def get_performance_targets(self, metric_type: str) -> Dict[str, Any]:
-        """Get performance targets for a specific metric type"""
-        return self.performance.get(metric_type, {})
+        """Get performance targets for a specific metric type"""        return self.performance.get(metric_type, {})
 
 # Create module documentation instance
 module_documentation = ModuleDocumentation()

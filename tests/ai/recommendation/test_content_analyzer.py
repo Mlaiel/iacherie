@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive Tests for Content Analysis Components
+"""Comprehensive Tests for Content Analysis Components
 Testing content analysis, feature extraction, and multi-modal processing
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -25,9 +21,7 @@ Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
 
 Lead Developer: Fahed Mlaiel
 Email: mlaiel@live.de
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -51,12 +45,10 @@ from ai.recommendation.exceptions import ContentAnalysisError, ValidationError
 
 
 class TestContentAnalyzer:
-    """Comprehensive tests for the main content analyzer"""
-    
+    """Comprehensive tests for the main content analyzer"""    
     @pytest.mark.asyncio
     async def test_analyzer_initialization(self):
-        """Test content analyzer initialization"""
-        analyzer = ContentAnalyzer()
+        """Test content analyzer initialization"""        analyzer = ContentAnalyzer()
         
         # Test initial state
         assert analyzer.status.name == "INITIALIZING"
@@ -74,8 +66,7 @@ class TestContentAnalyzer:
     
     @pytest.mark.asyncio
     async def test_analyzer_initialization_failure(self):
-        """Test analyzer initialization failure handling"""
-        analyzer = ContentAnalyzer()
+        """Test analyzer initialization failure handling"""        analyzer = ContentAnalyzer()
         
         # Mock a failure condition
         original_method = analyzer._load_analysis_models
@@ -95,8 +86,7 @@ class TestContentAnalyzer:
     
     @pytest.mark.asyncio
     async def test_analyze_content_video(self, content_analyzer, sample_video_content):
-        """Test video content analysis"""
-        video_data = sample_video_content
+        """Test video content analysis"""        video_data = sample_video_content
         
         result = await content_analyzer.analyze_content(
             content_data=video_data,
@@ -123,8 +113,7 @@ class TestContentAnalyzer:
     
     @pytest.mark.asyncio
     async def test_analyze_content_audio(self, content_analyzer, sample_audio_content):
-        """Test audio content analysis"""
-        audio_data = sample_audio_content
+        """Test audio content analysis"""        audio_data = sample_audio_content
         
         result = await content_analyzer.analyze_content(
             content_data=audio_data,
@@ -151,8 +140,7 @@ class TestContentAnalyzer:
     
     @pytest.mark.asyncio
     async def test_analyze_content_text(self, content_analyzer, sample_text_content):
-        """Test text content analysis"""
-        text_data = sample_text_content
+        """Test text content analysis"""        text_data = sample_text_content
         
         result = await content_analyzer.analyze_content(
             content_data=text_data,
@@ -179,8 +167,7 @@ class TestContentAnalyzer:
     
     @pytest.mark.asyncio
     async def test_analyze_content_image(self, content_analyzer, sample_image_content):
-        """Test image content analysis"""
-        image_data = sample_image_content
+        """Test image content analysis"""        image_data = sample_image_content
         
         result = await content_analyzer.analyze_content(
             content_data=image_data,
@@ -206,8 +193,7 @@ class TestContentAnalyzer:
     
     @pytest.mark.asyncio
     async def test_batch_content_analysis(self, content_analyzer, sample_video_content, sample_audio_content, sample_text_content):
-        """Test batch content analysis"""
-        content_batch = [
+        """Test batch content analysis"""        content_batch = [
             (sample_video_content, ContentType.VIDEO, Platform.YOUTUBE),
             (sample_audio_content, ContentType.AUDIO, Platform.SPOTIFY),
             (sample_text_content, ContentType.TEXT, Platform.TWITTER)
@@ -227,8 +213,7 @@ class TestContentAnalyzer:
     
     @pytest.mark.asyncio
     async def test_content_similarity_analysis(self, content_analyzer, sample_video_content):
-        """Test content similarity analysis"""
-        video_data = sample_video_content
+        """Test content similarity analysis"""        video_data = sample_video_content
         
         # Analyze original content
         original_result = await content_analyzer.analyze_content(
@@ -257,8 +242,7 @@ class TestContentAnalyzer:
     
     @pytest.mark.asyncio
     async def test_content_quality_assessment(self, content_analyzer, sample_video_content):
-        """Test content quality assessment"""
-        video_data = sample_video_content
+        """Test content quality assessment"""        video_data = sample_video_content
         
         quality_assessment = await content_analyzer.assess_quality(
             content_data=video_data,
@@ -277,12 +261,10 @@ class TestContentAnalyzer:
 
 
 class TestVideoAnalyzer:
-    """Tests for video content analysis"""
-    
+    """Tests for video content analysis"""    
     @pytest.mark.asyncio
     async def test_video_feature_extraction(self, video_analyzer, sample_video_content):
-        """Test video feature extraction"""
-        video_data = sample_video_content
+        """Test video feature extraction"""        video_data = sample_video_content
         
         features = await video_analyzer.extract_features(video_data)
         
@@ -299,8 +281,7 @@ class TestVideoAnalyzer:
     
     @pytest.mark.asyncio
     async def test_video_object_detection(self, video_analyzer, sample_video_content):
-        """Test video object detection"""
-        video_data = sample_video_content
+        """Test video object detection"""        video_data = sample_video_content
         
         objects = await video_analyzer.detect_objects(video_data)
         
@@ -314,8 +295,7 @@ class TestVideoAnalyzer:
     
     @pytest.mark.asyncio
     async def test_video_scene_analysis(self, video_analyzer, sample_video_content):
-        """Test video scene analysis"""
-        video_data = sample_video_content
+        """Test video scene analysis"""        video_data = sample_video_content
         
         scenes = await video_analyzer.analyze_scenes(video_data)
         
@@ -331,8 +311,7 @@ class TestVideoAnalyzer:
     
     @pytest.mark.asyncio
     async def test_video_quality_metrics(self, video_analyzer, sample_video_content):
-        """Test video quality metrics calculation"""
-        video_data = sample_video_content
+        """Test video quality metrics calculation"""        video_data = sample_video_content
         
         quality_metrics = await video_analyzer.calculate_quality_metrics(video_data)
         
@@ -348,8 +327,7 @@ class TestVideoAnalyzer:
     
     @pytest.mark.asyncio
     async def test_video_engagement_indicators(self, video_analyzer, sample_video_content):
-        """Test video engagement indicators analysis"""
-        video_data = sample_video_content
+        """Test video engagement indicators analysis"""        video_data = sample_video_content
         
         engagement_indicators = await video_analyzer.analyze_engagement_indicators(video_data)
         
@@ -364,12 +342,10 @@ class TestVideoAnalyzer:
 
 
 class TestAudioAnalyzer:
-    """Tests for audio content analysis"""
-    
+    """Tests for audio content analysis"""    
     @pytest.mark.asyncio
     async def test_audio_feature_extraction(self, audio_analyzer, sample_audio_content):
-        """Test audio feature extraction"""
-        audio_data = sample_audio_content
+        """Test audio feature extraction"""        audio_data = sample_audio_content
         
         features = await audio_analyzer.extract_features(audio_data)
         
@@ -387,8 +363,7 @@ class TestAudioAnalyzer:
     
     @pytest.mark.asyncio
     async def test_audio_genre_classification(self, audio_analyzer, sample_audio_content):
-        """Test audio genre classification"""
-        audio_data = sample_audio_content
+        """Test audio genre classification"""        audio_data = sample_audio_content
         
         genre_predictions = await audio_analyzer.classify_genre(audio_data)
         
@@ -406,8 +381,7 @@ class TestAudioAnalyzer:
     
     @pytest.mark.asyncio
     async def test_audio_mood_analysis(self, audio_analyzer, sample_audio_content):
-        """Test audio mood analysis"""
-        audio_data = sample_audio_content
+        """Test audio mood analysis"""        audio_data = sample_audio_content
         
         mood_analysis = await audio_analyzer.analyze_mood(audio_data)
         
@@ -421,8 +395,7 @@ class TestAudioAnalyzer:
     
     @pytest.mark.asyncio
     async def test_audio_quality_assessment(self, audio_analyzer, sample_audio_content):
-        """Test audio quality assessment"""
-        audio_data = sample_audio_content
+        """Test audio quality assessment"""        audio_data = sample_audio_content
         
         quality_metrics = await audio_analyzer.assess_quality(audio_data)
         
@@ -437,8 +410,7 @@ class TestAudioAnalyzer:
     
     @pytest.mark.asyncio
     async def test_audio_beat_detection(self, audio_analyzer, sample_audio_content):
-        """Test audio beat detection and rhythm analysis"""
-        audio_data = sample_audio_content
+        """Test audio beat detection and rhythm analysis"""        audio_data = sample_audio_content
         
         rhythm_analysis = await audio_analyzer.analyze_rhythm(audio_data)
         
@@ -460,12 +432,10 @@ class TestAudioAnalyzer:
 
 
 class TestTextAnalyzer:
-    """Tests for text content analysis"""
-    
+    """Tests for text content analysis"""    
     @pytest.mark.asyncio
     async def test_text_feature_extraction(self, text_analyzer, sample_text_content):
-        """Test text feature extraction"""
-        text_data = sample_text_content
+        """Test text feature extraction"""        text_data = sample_text_content
         
         features = await text_analyzer.extract_features(text_data)
         
@@ -478,8 +448,7 @@ class TestTextAnalyzer:
     
     @pytest.mark.asyncio
     async def test_text_sentiment_analysis(self, text_analyzer, sample_text_content):
-        """Test text sentiment analysis"""
-        text_data = sample_text_content
+        """Test text sentiment analysis"""        text_data = sample_text_content
         
         sentiment = await text_analyzer.analyze_sentiment(text_data)
         
@@ -494,8 +463,7 @@ class TestTextAnalyzer:
     
     @pytest.mark.asyncio
     async def test_text_entity_extraction(self, text_analyzer, sample_text_content):
-        """Test named entity extraction"""
-        text_data = sample_text_content
+        """Test named entity extraction"""        text_data = sample_text_content
         
         entities = await text_analyzer.extract_entities(text_data)
         
@@ -514,8 +482,7 @@ class TestTextAnalyzer:
     
     @pytest.mark.asyncio
     async def test_text_topic_modeling(self, text_analyzer, sample_text_content):
-        """Test topic modeling and classification"""
-        text_data = sample_text_content
+        """Test topic modeling and classification"""        text_data = sample_text_content
         
         topics = await text_analyzer.extract_topics(text_data)
         
@@ -533,8 +500,7 @@ class TestTextAnalyzer:
     
     @pytest.mark.asyncio
     async def test_text_readability_analysis(self, text_analyzer, sample_text_content):
-        """Test text readability analysis"""
-        text_data = sample_text_content
+        """Test text readability analysis"""        text_data = sample_text_content
         
         readability = await text_analyzer.analyze_readability(text_data)
         
@@ -549,8 +515,7 @@ class TestTextAnalyzer:
     
     @pytest.mark.asyncio
     async def test_text_hashtag_extraction(self, text_analyzer, sample_text_content):
-        """Test hashtag and mention extraction"""
-        text_with_hashtags = sample_text_content.copy()
+        """Test hashtag and mention extraction"""        text_with_hashtags = sample_text_content.copy()
         text_with_hashtags['content'] += " #music #AI #technology @influencer"
         
         hashtags = await text_analyzer.extract_hashtags(text_with_hashtags)
@@ -569,12 +534,10 @@ class TestTextAnalyzer:
 
 
 class TestFeatureExtractor:
-    """Tests for feature extraction utilities"""
-    
+    """Tests for feature extraction utilities"""    
     @pytest.mark.asyncio
     async def test_multimodal_feature_extraction(self, feature_extractor, sample_video_content):
-        """Test multimodal feature extraction"""
-        video_data = sample_video_content
+        """Test multimodal feature extraction"""        video_data = sample_video_content
         
         features = await feature_extractor.extract_multimodal_features(
             content_data=video_data,
@@ -592,8 +555,7 @@ class TestFeatureExtractor:
     
     @pytest.mark.asyncio
     async def test_feature_normalization(self, feature_extractor, sample_audio_content):
-        """Test feature normalization"""
-        audio_data = sample_audio_content
+        """Test feature normalization"""        audio_data = sample_audio_content
         
         raw_features = await feature_extractor.extract_raw_features(
             audio_data, ContentType.AUDIO
@@ -613,8 +575,7 @@ class TestFeatureExtractor:
     
     @pytest.mark.asyncio
     async def test_feature_embedding_generation(self, feature_extractor, sample_text_content):
-        """Test feature embedding generation"""
-        text_data = sample_text_content
+        """Test feature embedding generation"""        text_data = sample_text_content
         
         embeddings = await feature_extractor.generate_embeddings(
             content_data=text_data,
@@ -631,8 +592,7 @@ class TestFeatureExtractor:
     
     @pytest.mark.asyncio
     async def test_feature_similarity_calculation(self, feature_extractor, sample_audio_content):
-        """Test feature similarity calculation"""
-        audio_data = sample_audio_content
+        """Test feature similarity calculation"""        audio_data = sample_audio_content
         
         # Extract features for same content
         features1 = await feature_extractor.extract_multimodal_features(
@@ -651,12 +611,10 @@ class TestFeatureExtractor:
 
 
 class TestMultiModalAnalyzer:
-    """Tests for multimodal content analysis"""
-    
+    """Tests for multimodal content analysis"""    
     @pytest.mark.asyncio
     async def test_multimodal_content_analysis(self, multimodal_analyzer, sample_video_content):
-        """Test multimodal content analysis"""
-        video_data = sample_video_content
+        """Test multimodal content analysis"""        video_data = sample_video_content
         
         analysis_result = await multimodal_analyzer.analyze_multimodal_content(video_data)
         
@@ -673,8 +631,7 @@ class TestMultiModalAnalyzer:
     
     @pytest.mark.asyncio
     async def test_cross_modal_consistency(self, multimodal_analyzer, sample_video_content):
-        """Test cross-modal consistency analysis"""
-        video_data = sample_video_content
+        """Test cross-modal consistency analysis"""        video_data = sample_video_content
         
         consistency_score = await multimodal_analyzer.analyze_cross_modal_consistency(video_data)
         
@@ -694,8 +651,7 @@ class TestMultiModalAnalyzer:
     
     @pytest.mark.asyncio
     async def test_multimodal_feature_fusion(self, multimodal_analyzer, sample_video_content):
-        """Test multimodal feature fusion"""
-        video_data = sample_video_content
+        """Test multimodal feature fusion"""        video_data = sample_video_content
         
         fused_features = await multimodal_analyzer.fuse_multimodal_features(video_data)
         
@@ -720,13 +676,11 @@ class TestMultiModalAnalyzer:
 
 
 class TestContentAnalysisPerformance:
-    """Performance tests for content analysis"""
-    
+    """Performance tests for content analysis"""    
     @pytest.mark.asyncio
     @pytest.mark.benchmark
     async def test_content_analysis_performance(self, benchmark, content_analyzer, sample_video_content):
-        """Benchmark content analysis performance"""
-        video_data = sample_video_content
+        """Benchmark content analysis performance"""        video_data = sample_video_content
         
         async def analyze_content():
             return await content_analyzer.analyze_content(
@@ -740,8 +694,7 @@ class TestContentAnalysisPerformance:
     
     @pytest.mark.asyncio
     async def test_parallel_content_analysis(self, content_analyzer, sample_video_content, sample_audio_content, sample_text_content):
-        """Test parallel content analysis performance"""
-        content_items = [
+        """Test parallel content analysis performance"""        content_items = [
             (sample_video_content, ContentType.VIDEO, Platform.YOUTUBE),
             (sample_audio_content, ContentType.AUDIO, Platform.SPOTIFY),
             (sample_text_content, ContentType.TEXT, Platform.TWITTER)
@@ -763,8 +716,7 @@ class TestContentAnalysisPerformance:
     
     @pytest.mark.asyncio
     async def test_memory_usage_during_analysis(self, content_analyzer, sample_video_content):
-        """Test memory usage during content analysis"""
-        import psutil
+        """Test memory usage during content analysis"""        import psutil
         import os
         
         process = psutil.Process(os.getpid())
@@ -786,12 +738,10 @@ class TestContentAnalysisPerformance:
 
 
 class TestContentAnalysisErrorHandling:
-    """Tests for content analysis error handling"""
-    
+    """Tests for content analysis error handling"""    
     @pytest.mark.asyncio
     async def test_invalid_content_type_handling(self, content_analyzer):
-        """Test handling of invalid content types"""
-        invalid_content = {"invalid": "data"}
+        """Test handling of invalid content types"""        invalid_content = {"invalid": "data"}
         
         with pytest.raises(ValidationError):
             await content_analyzer.analyze_content(
@@ -802,8 +752,7 @@ class TestContentAnalysisErrorHandling:
     
     @pytest.mark.asyncio
     async def test_corrupted_content_handling(self, content_analyzer):
-        """Test handling of corrupted content data"""
-        corrupted_video = {
+        """Test handling of corrupted content data"""        corrupted_video = {
             "title": "Test Video",
             "video_data": "corrupted_binary_data",
             "format": "mp4"
@@ -818,8 +767,7 @@ class TestContentAnalysisErrorHandling:
     
     @pytest.mark.asyncio
     async def test_empty_content_handling(self, content_analyzer):
-        """Test handling of empty content"""
-        empty_text = {"content": ""}
+        """Test handling of empty content"""        empty_text = {"content": ""}
         
         with pytest.raises(ValidationError):
             await content_analyzer.analyze_content(
@@ -830,8 +778,7 @@ class TestContentAnalysisErrorHandling:
     
     @pytest.mark.asyncio
     async def test_large_content_handling(self, content_analyzer):
-        """Test handling of very large content"""
-        # Create a very large text content
+        """Test handling of very large content"""        # Create a very large text content
         large_text = {
             "content": "Large content " * 100000,  # Very large text
             "title": "Large Content Test"
@@ -850,8 +797,7 @@ class TestContentAnalysisErrorHandling:
     
     @pytest.mark.asyncio
     async def test_analysis_timeout_handling(self, content_analyzer, sample_video_content):
-        """Test analysis timeout handling"""
-        video_data = sample_video_content
+        """Test analysis timeout handling"""        video_data = sample_video_content
         
         try:
             # Set short timeout to test timeout handling

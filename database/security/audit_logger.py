@@ -1,5 +1,4 @@
-"""
-Database Audit Logger
+"""Database Audit Logger
 
 Enterprise-grade database audit logging system with comprehensive event tracking,
 compliance reporting, and advanced analytics for security monitoring.
@@ -23,9 +22,7 @@ Contact: mlaiel@live.de
 ⚠️ LEGAL WARNING: Any unauthorized use, copying, distribution, or commercialization 
 of this code without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will result in immediate legal action.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import time
@@ -48,8 +45,7 @@ logger = logging.getLogger(__name__)
 
 
 class AuditEventType(Enum):
-    """Audit event types"""
-    # Authentication events
+    """Audit event types"""    # Authentication events
     LOGIN_SUCCESS = "login_success"
     LOGIN_FAILURE = "login_failure"
     LOGOUT = "logout"
@@ -90,8 +86,7 @@ class AuditEventType(Enum):
 
 
 class AuditSeverity(Enum):
-    """Audit event severity levels"""
-    INFO = "info"
+    """Audit event severity levels"""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
@@ -99,8 +94,7 @@ class AuditSeverity(Enum):
 
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks"""
-    GDPR = "gdpr"
+    """Supported compliance frameworks"""    GDPR = "gdpr"
     CCPA = "ccpa"
     HIPAA = "hipaa"
     SOX = "sox"
@@ -111,8 +105,7 @@ class ComplianceFramework(Enum):
 
 @dataclass
 class AuditEvent:
-    """Audit event record"""
-    event_id: str
+    """Audit event record"""    event_id: str
     event_type: AuditEventType
     severity: AuditSeverity
     timestamp: datetime
@@ -132,8 +125,7 @@ class AuditEvent:
 
 @dataclass
 class AuditQuery:
-    """Audit log query parameters"""
-    start_time: Optional[datetime] = None
+    """Audit log query parameters"""    start_time: Optional[datetime] = None
     end_time: Optional[datetime] = None
     event_types: Optional[List[AuditEventType]] = None
     severity_levels: Optional[List[AuditSeverity]] = None
@@ -148,8 +140,7 @@ class AuditQuery:
 
 @dataclass
 class AuditReport:
-    """Audit analysis report"""
-    report_id: str
+    """Audit analysis report"""    report_id: str
     generated_at: datetime
     period_start: datetime
     period_end: datetime
@@ -165,8 +156,7 @@ class AuditReport:
 
 
 class AuditMetrics:
-    """Audit logging metrics"""
-    
+    """Audit logging metrics"""    
     def __init__(self):
         self.total_events: int = 0
         self.events_by_type: Dict[AuditEventType, int] = {}
@@ -178,8 +168,7 @@ class AuditMetrics:
         self.retention_purges: int = 0
         
     def record_event(self, event: AuditEvent, processing_time: float):
-        """Record audit event metrics"""
-        self.total_events += 1
+        """Record audit event metrics"""        self.total_events += 1
         
         # Count by type
         self.events_by_type[event.event_type] = (
@@ -199,35 +188,29 @@ class AuditMetrics:
 
 
 class AuditStorage(ABC):
-    """Abstract audit storage interface"""
-    
+    """Abstract audit storage interface"""    
     @abstractmethod
     async def store_event(self, event: AuditEvent) -> bool:
-        """Store audit event"""
-        pass
+        """Store audit event"""        pass
     
     @abstractmethod
     async def query_events(self, query: AuditQuery) -> List[AuditEvent]:
-        """Query audit events"""
-        pass
+        """Query audit events"""        pass
     
     @abstractmethod
     async def purge_events(self, before_date: datetime) -> int:
-        """Purge old audit events"""
-        pass
+        """Purge old audit events"""        pass
 
 
 class FileAuditStorage(AuditStorage):
-    """File-based audit storage implementation"""
-    
+    """File-based audit storage implementation"""    
     def __init__(self, storage_path: str, compress: bool = True):
         self.storage_path = Path(storage_path)
         self.storage_path.mkdir(parents=True, exist_ok=True)
         self.compress = compress
         
     async def store_event(self, event: AuditEvent) -> bool:
-        """Store audit event to file"""
-        try:
+        """Store audit event to file"""        try:
             # Create date-based filename
             date_str = event.timestamp.strftime("%Y-%m-%d")
             filename = f"audit-{date_str}.jsonl"
@@ -254,8 +237,7 @@ class FileAuditStorage(AuditStorage):
             return False
     
     async def query_events(self, query: AuditQuery) -> List[AuditEvent]:
-        """Query audit events from files"""
-        events = []
+        """Query audit events from files"""        events = []
         
         try:
             # Determine which files to read based on date range
@@ -282,8 +264,7 @@ class FileAuditStorage(AuditStorage):
         start_time: Optional[datetime], 
         end_time: Optional[datetime]
     ) -> List[Path]:
-        """Get audit files for date range"""
-        files = []
+        """Get audit files for date range"""        files = []
         
         # Get all audit files
         pattern = "audit-*.jsonl*"
@@ -309,8 +290,7 @@ class FileAuditStorage(AuditStorage):
         return sorted(files)
     
     async def _read_events_from_file(self, file_path: Path, query: AuditQuery) -> List[AuditEvent]:
-        """Read and filter events from a file"""
-        events = []
+        """Read and filter events from a file"""        events = []
         
         try:
             # Open file (compressed or not)
@@ -342,8 +322,7 @@ class FileAuditStorage(AuditStorage):
             return []
     
     def _dict_to_audit_event(self, data: Dict[str, Any]) -> AuditEvent:
-        """Convert dictionary to AuditEvent"""
-        # Convert string enums back to enum objects
+        """Convert dictionary to AuditEvent"""        # Convert string enums back to enum objects
         data["event_type"] = AuditEventType(data["event_type"])
         data["severity"] = AuditSeverity(data["severity"])
         data["timestamp"] = datetime.fromisoformat(data["timestamp"])
@@ -356,8 +335,7 @@ class FileAuditStorage(AuditStorage):
         return AuditEvent(**data)
     
     async def _event_matches_query(self, event: AuditEvent, query: AuditQuery) -> bool:
-        """Check if event matches query criteria"""
-        # Time range filter
+        """Check if event matches query criteria"""        # Time range filter
         if query.start_time and event.timestamp < query.start_time:
             return False
         if query.end_time and event.timestamp > query.end_time:
@@ -394,8 +372,7 @@ class FileAuditStorage(AuditStorage):
         return True
     
     async def purge_events(self, before_date: datetime) -> int:
-        """Purge old audit events"""
-        purged_count = 0
+        """Purge old audit events"""        purged_count = 0
         
         try:
             # Find files to purge
@@ -431,8 +408,7 @@ class FileAuditStorage(AuditStorage):
 
 
 class DatabaseAuditLogger:
-    """
-    Enterprise-grade database audit logger
+    """    Enterprise-grade database audit logger
     
     Provides comprehensive audit logging capabilities including:
     - Multi-storage backend support
@@ -440,11 +416,9 @@ class DatabaseAuditLogger:
     - Compliance reporting
     - Anomaly detection
     - Advanced analytics
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize audit logger"""
-        self.config = config or {}
+        """Initialize audit logger"""        self.config = config or {}
         self.storage_backends: List[AuditStorage] = []
         self.metrics = AuditMetrics()
         
@@ -470,8 +444,7 @@ class DatabaseAuditLogger:
         logger.info("Database audit logger initialized successfully")
     
     def _initialize_storage_backends(self):
-        """Initialize audit storage backends"""
-        try:
+        """Initialize audit storage backends"""        try:
             # File storage backend
             storage_path = self.config.get("file_storage_path", "./audit_logs")
             file_storage = FileAuditStorage(storage_path, self.enable_compression)
@@ -501,8 +474,7 @@ class DatabaseAuditLogger:
         details: Optional[Dict[str, Any]] = None,
         compliance_flags: Optional[List[ComplianceFramework]] = None
     ) -> bool:
-        """
-        Log audit event
+        """        Log audit event
         
         Args:
             event_type: Type of audit event
@@ -520,8 +492,7 @@ class DatabaseAuditLogger:
             
         Returns:
             True if event logged successfully, False otherwise
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Create audit event
@@ -569,8 +540,7 @@ class DatabaseAuditLogger:
             return False
     
     async def _calculate_risk_score(self, event: AuditEvent) -> float:
-        """Calculate risk score for audit event"""
-        risk_score = 0.0
+        """Calculate risk score for audit event"""        risk_score = 0.0
         
         # Base risk by event type
         risk_by_type = {
@@ -610,20 +580,17 @@ class DatabaseAuditLogger:
         return min(risk_score, 10.0)  # Cap at 10.0
     
     async def _is_suspicious_ip(self, ip_address: str) -> bool:
-        """Check if IP address is suspicious"""
-        # This would implement IP reputation checking
+        """Check if IP address is suspicious"""        # This would implement IP reputation checking
         # For now, return False as placeholder
         return False
     
     async def _is_privileged_user(self, user_id: str) -> bool:
-        """Check if user has privileged access"""
-        # This would check user roles and permissions
+        """Check if user has privileged access"""        # This would check user roles and permissions
         # For now, return False as placeholder
         return False
     
     async def _flush_events(self):
-        """Flush buffered events to storage backends"""
-        if not self.event_buffer:
+        """Flush buffered events to storage backends"""        if not self.event_buffer:
             return
         
         try:
@@ -644,8 +611,7 @@ class DatabaseAuditLogger:
             self.event_buffer.extend(events_to_flush)
     
     async def _flush_events_periodically(self):
-        """Periodically flush events to storage"""
-        while True:
+        """Periodically flush events to storage"""        while True:
             try:
                 await asyncio.sleep(self.flush_interval)
                 
@@ -658,8 +624,7 @@ class DatabaseAuditLogger:
                 logger.error(f"Periodic flush error: {e}")
     
     async def _retention_cleanup_task(self):
-        """Background task for audit log retention cleanup"""
-        while True:
+        """Background task for audit log retention cleanup"""        while True:
             try:
                 # Run cleanup daily
                 await asyncio.sleep(24 * 3600)
@@ -681,8 +646,7 @@ class DatabaseAuditLogger:
                 logger.error(f"Retention cleanup error: {e}")
     
     async def _send_real_time_alert(self, event: AuditEvent):
-        """Send real-time alert for critical events"""
-        try:
+        """Send real-time alert for critical events"""        try:
             alert_data = {
                 "event_id": event.event_id,
                 "event_type": event.event_type.value,
@@ -702,16 +666,14 @@ class DatabaseAuditLogger:
             logger.error(f"Failed to send real-time alert: {e}")
     
     async def query_events(self, query: AuditQuery) -> List[AuditEvent]:
-        """
-        Query audit events
+        """        Query audit events
         
         Args:
             query: Audit query parameters
             
         Returns:
             List of matching audit events
-        """
-        try:
+        """        try:
             # Use first storage backend for queries
             # In production, this might use a dedicated query backend
             if self.storage_backends:
@@ -729,8 +691,7 @@ class DatabaseAuditLogger:
         end_time: datetime,
         compliance_framework: Optional[ComplianceFramework] = None
     ) -> AuditReport:
-        """
-        Generate audit analysis report
+        """        Generate audit analysis report
         
         Args:
             start_time: Report start time
@@ -739,8 +700,7 @@ class DatabaseAuditLogger:
             
         Returns:
             Audit analysis report
-        """
-        try:
+        """        try:
             # Query events for the period
             query = AuditQuery(
                 start_time=start_time,
@@ -778,8 +738,7 @@ class DatabaseAuditLogger:
             raise
     
     async def _analyze_events(self, events: List[AuditEvent]) -> Dict[str, Any]:
-        """Analyze audit events for reporting"""
-        analysis = {
+        """Analyze audit events for reporting"""        analysis = {
             "events_by_type": {},
             "events_by_severity": {},
             "security_events": 0,
@@ -846,8 +805,7 @@ class DatabaseAuditLogger:
         return analysis
     
     async def _detect_anomalies(self, events: List[AuditEvent]) -> List[Dict[str, Any]]:
-        """Detect anomalies in audit events"""
-        anomalies = []
+        """Detect anomalies in audit events"""        anomalies = []
         
         # Example anomaly: Multiple failed logins from same IP
         failed_logins_by_ip = {}
@@ -870,8 +828,7 @@ class DatabaseAuditLogger:
         return anomalies
     
     async def _generate_recommendations(self, analysis: Dict[str, Any]) -> List[str]:
-        """Generate security recommendations based on analysis"""
-        recommendations = []
+        """Generate security recommendations based on analysis"""        recommendations = []
         
         # High number of security events
         if analysis["security_events"] > 10:
@@ -898,8 +855,7 @@ class DatabaseAuditLogger:
         return recommendations
     
     def get_audit_metrics(self) -> Dict[str, Any]:
-        """Get audit logging metrics"""
-        return {
+        """Get audit logging metrics"""        return {
             "total_events": self.metrics.total_events,
             "events_by_type": {k.value: v for k, v in self.metrics.events_by_type.items()},
             "events_by_severity": {k.value: v for k, v in self.metrics.events_by_severity.items()},

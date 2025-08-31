@@ -1,5 +1,4 @@
-"""
-Payment Processing Configuration - Industrial Configuration Management
+"""Payment Processing Configuration - Industrial Configuration Management
 
 Centralized configuration management for payment processing, provider settings,
 security parameters, and system-wide payment policies.
@@ -11,9 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-from datetime import timedelta
+"""from datetime import timedelta
 from decimal import Decimal
 from typing import Dict, List, Optional, Any, Union
 import os
@@ -24,8 +21,7 @@ from pydantic.types import SecretStr
 
 @dataclass
 class ProviderConfig:
-    """Configuration for a single payment provider."""
-    api_key: str
+    """Configuration for a single payment provider."""    api_key: str
     api_secret: Optional[str] = None
     webhook_secret: Optional[str] = None
     environment: str = "production"  # sandbox, production
@@ -39,13 +35,11 @@ class ProviderConfig:
 
 
 class PaymentConfig(BaseSettings):
-    """
-    Comprehensive payment configuration management.
+    """    Comprehensive payment configuration management.
     
     Centralizes all payment-related configuration including provider settings,
     fees, limits, security parameters, and compliance requirements.
-    """
-    
+    """    
     # Database and core settings
     database_url: str = "postgresql://payment_user:payment_pass@localhost/payment_db"
     redis_url: str = "redis://localhost:6379/0"
@@ -174,8 +168,7 @@ class PaymentConfig(BaseSettings):
         
     @validator('providers')
     def validate_providers(cls, v):
-        """Validate provider configurations."""
-        required_fields = ["api_key", "currency", "fee_rate"]
+        """Validate provider configurations."""        required_fields = ["api_key", "currency", "fee_rate"]
         for provider_name, config in v.items():
             for field in required_fields:
                 if field not in config or not config[field]:
@@ -184,8 +177,7 @@ class PaymentConfig(BaseSettings):
     
     @validator('supported_currencies')
     def validate_currencies(cls, v):
-        """Validate currency codes."""
-        valid_currencies = [
+        """Validate currency codes."""        valid_currencies = [
             "EUR", "USD", "GBP", "CHF", "SEK", "NOK", "DKK", 
             "CAD", "AUD", "JPY", "CNY", "INR", "BRL"
         ]
@@ -196,26 +188,22 @@ class PaymentConfig(BaseSettings):
     
     @validator('payout_schedule')
     def validate_payout_schedule(cls, v):
-        """Validate payout schedule."""
-        valid_schedules = ["daily", "weekly", "biweekly", "monthly"]
+        """Validate payout schedule."""        valid_schedules = ["daily", "weekly", "biweekly", "monthly"]
         if v not in valid_schedules:
             raise ValueError(f"Invalid payout schedule: {v}")
         return v
     
     def get_provider_config(self, provider_name: str) -> Optional[Dict[str, Any]]:
-        """Get configuration for specific provider."""
-        return self.providers.get(provider_name)
+        """Get configuration for specific provider."""        return self.providers.get(provider_name)
     
     def is_provider_enabled(self, provider_name: str) -> bool:
-        """Check if provider is enabled and configured."""
-        config = self.get_provider_config(provider_name)
+        """Check if provider is enabled and configured."""        config = self.get_provider_config(provider_name)
         if not config:
             return False
         return bool(config.get("api_key"))
     
     def get_currency_config(self, currency: str) -> Dict[str, Any]:
-        """Get currency-specific configuration."""
-        currency_configs = {
+        """Get currency-specific configuration."""        currency_configs = {
             "EUR": {
                 "symbol": "€",
                 "decimal_places": 2,
@@ -244,8 +232,7 @@ class PaymentConfig(BaseSettings):
         return currency_configs.get(currency, currency_configs["EUR"])
     
     def get_fee_structure(self, provider: str, currency: str = None) -> Dict[str, float]:
-        """Get fee structure for provider and currency."""
-        provider_config = self.get_provider_config(provider)
+        """Get fee structure for provider and currency."""        provider_config = self.get_provider_config(provider)
         if not provider_config:
             return {"rate": self.platform_fee_rate, "fixed": self.minimum_fee}
         
@@ -255,8 +242,7 @@ class PaymentConfig(BaseSettings):
         }
     
     def get_payout_schedule_config(self) -> Dict[str, Any]:
-        """Get payout scheduling configuration."""
-        schedules = {
+        """Get payout scheduling configuration."""        schedules = {
             "daily": {"frequency_days": 1, "min_amount": self.minimum_payout},
             "weekly": {"frequency_days": 7, "min_amount": self.minimum_payout},
             "biweekly": {"frequency_days": 14, "min_amount": self.minimum_payout * 2},
@@ -272,8 +258,7 @@ class PaymentConfig(BaseSettings):
         return config
     
     def get_compliance_rules(self, country: str = "DE") -> Dict[str, Any]:
-        """Get compliance rules for specific country."""
-        default_rules = {
+        """Get compliance rules for specific country."""        default_rules = {
             "kyc_required": self.compliance_settings["kyc_required"],
             "aml_screening": self.compliance_settings["aml_enabled"],
             "tax_withholding": country in self.tax_settings["withholding_countries"],
@@ -306,8 +291,7 @@ class PaymentConfig(BaseSettings):
         return default_rules
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary."""
-        return {
+        """Convert configuration to dictionary."""        return {
             "default_currency": self.default_currency,
             "supported_currencies": self.supported_currencies,
             "platform_fee_rate": self.platform_fee_rate,
@@ -330,23 +314,20 @@ _config_instance = None
 
 
 def get_payment_config() -> PaymentConfig:
-    """Get global payment configuration instance."""
-    global _config_instance
+    """Get global payment configuration instance."""    global _config_instance
     if _config_instance is None:
         _config_instance = PaymentConfig()
     return _config_instance
 
 
 def override_payment_config(config: PaymentConfig):
-    """Override global configuration instance."""
-    global _config_instance
+    """Override global configuration instance."""    global _config_instance
     _config_instance = config
 
 
 # Environment-specific configurations
 def get_test_config() -> PaymentConfig:
-    """Get test configuration with safe defaults."""
-    return PaymentConfig(
+    """Get test configuration with safe defaults."""    return PaymentConfig(
         environment="test",
         debug=True,
         database_url="sqlite:///test_payments.db",
@@ -367,8 +348,7 @@ def get_test_config() -> PaymentConfig:
 
 
 def get_sandbox_config() -> PaymentConfig:
-    """Get sandbox configuration for development."""
-    return PaymentConfig(
+    """Get sandbox configuration for development."""    return PaymentConfig(
         environment="sandbox",
         debug=True,
         providers={

@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent Platform - Collaboration Models
+"""IA Influencer Agent Platform - Collaboration Models
 Advanced collaboration and partnership management system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -13,9 +12,7 @@ will result in legal action.
 
 Contact: mlaiel@live.de
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-from datetime import datetime, timezone
+"""from datetime import datetime, timezone
 from typing import Optional, Dict, Any, List
 from decimal import Decimal
 from sqlalchemy import (
@@ -32,8 +29,7 @@ from .base import (
 
 
 class Collaboration(BaseModel, UUIDMixin, TimestampMixin, SoftDeleteMixin, AuditMixin, StatusMixin):
-    """Core collaboration management between creators"""
-    
+    """Core collaboration management between creators"""    
     __tablename__ = 'collaborations'
     
     # Primary Collaborators
@@ -192,8 +188,7 @@ class Collaboration(BaseModel, UUIDMixin, TimestampMixin, SoftDeleteMixin, Audit
 
 
 class CollaborationRequest(BaseModel, UUIDMixin, TimestampMixin, AuditMixin, StatusMixin):
-    """Collaboration invitation and request management"""
-    
+    """Collaboration invitation and request management"""    
     __tablename__ = 'collaboration_requests'
     
     collaboration_id: Mapped[Optional[UUID]] = mapped_column(
@@ -309,8 +304,7 @@ class CollaborationRequest(BaseModel, UUIDMixin, TimestampMixin, AuditMixin, Sta
 
 
 class CollaborationAgreement(BaseModel, UUIDMixin, TimestampMixin, AuditMixin, StatusMixin):
-    """Legal agreements for collaboration partnerships"""
-    
+    """Legal agreements for collaboration partnerships"""    
     __tablename__ = 'collaboration_agreements'
     
     collaboration_id: Mapped[UUID] = mapped_column(
@@ -464,8 +458,7 @@ class CollaborationAgreement(BaseModel, UUIDMixin, TimestampMixin, AuditMixin, S
 
 
 class CollaborationRevenue(BaseModel, UUIDMixin, TimestampMixin, AuditMixin):
-    """Revenue tracking and distribution for collaborations"""
-    
+    """Revenue tracking and distribution for collaborations"""    
     __tablename__ = 'collaboration_revenues'
     
     collaboration_id: Mapped[UUID] = mapped_column(
@@ -589,8 +582,7 @@ class CollaborationRevenue(BaseModel, UUIDMixin, TimestampMixin, AuditMixin):
 
 
 class CollaborationMessage(BaseModel, UUIDMixin, TimestampMixin, SoftDeleteMixin):
-    """Communication system for collaboration management"""
-    
+    """Communication system for collaboration management"""    
     __tablename__ = 'collaboration_messages'
     
     collaboration_id: Mapped[UUID] = mapped_column(

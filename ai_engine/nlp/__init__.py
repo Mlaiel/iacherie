@@ -1,5 +1,4 @@
-"""
-Natural Language Processing (NLP) Module
+"""Natural Language Processing (NLP) Module
 
 Advanced NLP capabilities for content analysis, text processing, and language understanding.
 Supports multi-format content processing for the IA Influencer Agent Platform.
@@ -20,9 +19,7 @@ Team Specialties:
 - Audio Processing Specialist: Fahed Mlaiel
 - DevOps Engineer: Fahed Mlaiel
 - AI Prompt Engineer: Fahed Mlaiel
-"""
-
-# Core NLP modules
+"""# Core NLP modules
 from . import core
 from . import processors
 from . import analyzers

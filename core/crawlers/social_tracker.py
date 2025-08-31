@@ -1,5 +1,4 @@
-"""
-Social Media Tracker - Surveillance avancée des réseaux sociaux
+"""Social Media Tracker - Surveillance avancée des réseaux sociaux
 ==============================================================
 
 Tracker spécialisé pour la surveillance automatisée des plateformes
@@ -8,9 +7,7 @@ de réseaux sociaux et détection de violations de contenu.
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel. Tous droits réservés.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import re
@@ -35,8 +32,7 @@ from ...utils.captcha_solver import CaptchaSolver
 
 
 class SocialPlatform(Enum):
-    """Plateformes de réseaux sociaux supportées"""
-    YOUTUBE = "youtube"
+    """Plateformes de réseaux sociaux supportées"""    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     TWITTER = "twitter"
@@ -52,8 +48,7 @@ class SocialPlatform(Enum):
 
 @dataclass
 class SocialContent:
-    """Contenu détecté sur réseau social"""
-    platform: SocialPlatform
+    """Contenu détecté sur réseau social"""    platform: SocialPlatform
     content_id: str
     url: str
     title: str
@@ -74,8 +69,7 @@ class SocialContent:
 
 @dataclass
 class ViolationDetection:
-    """Détection de violation sur réseau social"""
-    original_content: SocialContent
+    """Détection de violation sur réseau social"""    original_content: SocialContent
     violating_content: SocialContent
     similarity_score: float
     violation_confidence: float
@@ -86,18 +80,14 @@ class ViolationDetection:
 
 
 class SocialMediaTracker:
-    """
-    Tracker avancé pour surveillance des réseaux sociaux
-    """
-    
+    """    Tracker avancé pour surveillance des réseaux sociaux
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialise le tracker de réseaux sociaux
+        """        Initialise le tracker de réseaux sociaux
         
         Args:
             config: Configuration du tracker
-        """
-        self.config = config
+        """        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialisation des composants
@@ -139,10 +129,8 @@ class SocialMediaTracker:
         }
 
     def _initialize_platform_apis(self) -> None:
-        """
-        Initialise les APIs des plateformes
-        """
-        try:
+        """        Initialise les APIs des plateformes
+        """        try:
             # Twitter API
             if self.config.get('twitter_api_key'):
                 self.twitter_api = tweepy.Client(
@@ -165,10 +153,8 @@ class SocialMediaTracker:
             self.logger.error(f"Erreur lors de l'initialisation des APIs: {e}")
 
     def _setup_selenium_driver(self) -> None:
-        """
-        Configure le driver Selenium
-        """
-        chrome_options = Options()
+        """        Configure le driver Selenium
+        """        chrome_options = Options()
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--disable-dev-shm-usage')
@@ -183,8 +169,7 @@ class SocialMediaTracker:
         original_content: SocialContent,
         search_keywords: List[str]
     ) -> List[ViolationDetection]:
-        """
-        Traque le contenu à travers toutes les plateformes
+        """        Traque le contenu à travers toutes les plateformes
         
         Args:
             original_content: Contenu original à protéger
@@ -192,8 +177,7 @@ class SocialMediaTracker:
             
         Returns:
             List[ViolationDetection]: Violations détectées
-        """
-        violations = []
+        """        violations = []
         
         # Enregistrement du contenu original
         self.tracked_content[original_content.content_id] = original_content
@@ -238,8 +222,7 @@ class SocialMediaTracker:
         original_content: SocialContent,
         search_keywords: List[str]
     ) -> List[ViolationDetection]:
-        """
-        Recherche du contenu sur une plateforme spécifique
+        """        Recherche du contenu sur une plateforme spécifique
         
         Args:
             platform: Plateforme à rechercher
@@ -248,8 +231,7 @@ class SocialMediaTracker:
             
         Returns:
             List[ViolationDetection]: Violations trouvées
-        """
-        violations = []
+        """        violations = []
         
         try:
             await self.rate_limiter.acquire()
@@ -284,16 +266,14 @@ class SocialMediaTracker:
             return []
 
     async def _search_youtube(self, keywords: List[str]) -> List[SocialContent]:
-        """
-        Recherche sur YouTube
+        """        Recherche sur YouTube
         
         Args:
             keywords: Mots-clés de recherche
             
         Returns:
             List[SocialContent]: Contenus trouvés
-        """
-        contents = []
+        """        contents = []
         
         try:
             for keyword in keywords:
@@ -323,16 +303,14 @@ class SocialMediaTracker:
             return []
 
     async def _extract_youtube_content(self, entry: Dict[str, Any]) -> Optional[SocialContent]:
-        """
-        Extrait les informations d'un contenu YouTube
+        """        Extrait les informations d'un contenu YouTube
         
         Args:
             entry: Entrée YouTube
             
         Returns:
             Optional[SocialContent]: Contenu extrait
-        """
-        try:
+        """        try:
             return SocialContent(
                 platform=SocialPlatform.YOUTUBE,
                 content_id=entry.get('id', ''),
@@ -358,16 +336,14 @@ class SocialMediaTracker:
             return None
 
     async def _search_tiktok(self, keywords: List[str]) -> List[SocialContent]:
-        """
-        Recherche sur TikTok
+        """        Recherche sur TikTok
         
         Args:
             keywords: Mots-clés de recherche
             
         Returns:
             List[SocialContent]: Contenus trouvés
-        """
-        contents = []
+        """        contents = []
         
         try:
             for keyword in keywords:
@@ -393,16 +369,14 @@ class SocialMediaTracker:
             return []
 
     async def _parse_tiktok_search_results(self, html: str) -> List[SocialContent]:
-        """
-        Parse les résultats de recherche TikTok
+        """        Parse les résultats de recherche TikTok
         
         Args:
             html: HTML de la page de résultats
             
         Returns:
             List[SocialContent]: Contenus parsés
-        """
-        contents = []
+        """        contents = []
         soup = BeautifulSoup(html, 'html.parser')
         
         try:
@@ -425,16 +399,14 @@ class SocialMediaTracker:
             return []
 
     async def _search_instagram(self, keywords: List[str]) -> List[SocialContent]:
-        """
-        Recherche sur Instagram
+        """        Recherche sur Instagram
         
         Args:
             keywords: Mots-clés de recherche
             
         Returns:
             List[SocialContent]: Contenus trouvés
-        """
-        contents = []
+        """        contents = []
         
         try:
             for keyword in keywords:
@@ -461,16 +433,14 @@ class SocialMediaTracker:
             return []
 
     async def _extract_instagram_content(self, post) -> Optional[SocialContent]:
-        """
-        Extrait les informations d'un post Instagram
+        """        Extrait les informations d'un post Instagram
         
         Args:
             post: Post Instagram
             
         Returns:
             Optional[SocialContent]: Contenu extrait
-        """
-        try:
+        """        try:
             return SocialContent(
                 platform=SocialPlatform.INSTAGRAM,
                 content_id=post.shortcode,
@@ -500,16 +470,14 @@ class SocialMediaTracker:
             return None
 
     async def _search_twitter(self, keywords: List[str]) -> List[SocialContent]:
-        """
-        Recherche sur Twitter
+        """        Recherche sur Twitter
         
         Args:
             keywords: Mots-clés de recherche
             
         Returns:
             List[SocialContent]: Contenus trouvés
-        """
-        contents = []
+        """        contents = []
         
         try:
             if not hasattr(self, 'twitter_api'):
@@ -536,16 +504,14 @@ class SocialMediaTracker:
             return []
 
     async def _extract_twitter_content(self, tweet) -> Optional[SocialContent]:
-        """
-        Extrait les informations d'un tweet
+        """        Extrait les informations d'un tweet
         
         Args:
             tweet: Tweet
             
         Returns:
             Optional[SocialContent]: Contenu extrait
-        """
-        try:
+        """        try:
             metrics = tweet.public_metrics
             
             return SocialContent(
@@ -576,16 +542,14 @@ class SocialMediaTracker:
             return None
 
     async def _search_facebook(self, keywords: List[str]) -> List[SocialContent]:
-        """
-        Recherche sur Facebook (via scraping)
+        """        Recherche sur Facebook (via scraping)
         
         Args:
             keywords: Mots-clés de recherche
             
         Returns:
             List[SocialContent]: Contenus trouvés
-        """
-        contents = []
+        """        contents = []
         
         try:
             # Facebook nécessite du scraping avancé avec gestion des cookies
@@ -611,16 +575,14 @@ class SocialMediaTracker:
             return []
 
     async def _extract_facebook_content(self, post_element) -> Optional[SocialContent]:
-        """
-        Extrait les informations d'un post Facebook
+        """        Extrait les informations d'un post Facebook
         
         Args:
             post_element: Élément DOM du post
             
         Returns:
             Optional[SocialContent]: Contenu extrait
-        """
-        try:
+        """        try:
             # Extraction basique des informations visibles
             text_elements = post_element.find_elements(By.CSS_SELECTOR, '[data-ad-preview="message"]')
             text = text_elements[0].text if text_elements else ''
@@ -655,8 +617,7 @@ class SocialMediaTracker:
         original_content: SocialContent,
         found_content: SocialContent
     ) -> Optional[ViolationDetection]:
-        """
-        Analyse une violation potentielle
+        """        Analyse une violation potentielle
         
         Args:
             original_content: Contenu original
@@ -664,8 +625,7 @@ class SocialMediaTracker:
             
         Returns:
             Optional[ViolationDetection]: Violation détectée
-        """
-        try:
+        """        try:
             # Comparaison de contenu basée sur le type
             similarity_score = 0.0
             detection_method = ""
@@ -725,24 +685,19 @@ class SocialMediaTracker:
             return None
 
     async def _compare_videos(self, url1: str, url2: str) -> float:
-        """Compare deux vidéos"""
-        return await self.content_analyzer.compare_video_content(url1, url2)
+        """Compare deux vidéos"""        return await self.content_analyzer.compare_video_content(url1, url2)
 
     async def _compare_images(self, url1: str, url2: str) -> float:
-        """Compare deux images"""
-        return await self.content_analyzer.compare_image_content(url1, url2)
+        """Compare deux images"""        return await self.content_analyzer.compare_image_content(url1, url2)
 
     async def _compare_audio(self, url1: str, url2: str) -> float:
-        """Compare deux audios"""
-        return await self.content_analyzer.compare_audio_content(url1, url2)
+        """Compare deux audios"""        return await self.content_analyzer.compare_audio_content(url1, url2)
 
     async def _compare_text(self, text1: str, text2: str) -> float:
-        """Compare deux textes"""
-        return await self.content_analyzer.compare_text_similarity(text1, text2)
+        """Compare deux textes"""        return await self.content_analyzer.compare_text_similarity(text1, text2)
 
     def _compare_metadata(self, content1: SocialContent, content2: SocialContent) -> float:
-        """
-        Compare les métadonnées de deux contenus
+        """        Compare les métadonnées de deux contenus
         
         Args:
             content1: Premier contenu
@@ -750,8 +705,7 @@ class SocialMediaTracker:
             
         Returns:
             float: Score de similarité des métadonnées
-        """
-        score = 0.0
+        """        score = 0.0
         factors = 0
         
         # Comparaison des titres
@@ -785,8 +739,7 @@ class SocialMediaTracker:
         return score / factors if factors > 0 else 0.0
 
     def _calculate_text_similarity(self, text1: str, text2: str) -> float:
-        """
-        Calcule la similarité entre deux textes
+        """        Calcule la similarité entre deux textes
         
         Args:
             text1: Premier texte
@@ -794,8 +747,7 @@ class SocialMediaTracker:
             
         Returns:
             float: Score de similarité
-        """
-        # Implémentation simple basée sur les mots communs
+        """        # Implémentation simple basée sur les mots communs
         words1 = set(text1.lower().split())
         words2 = set(text2.lower().split())
         
@@ -811,8 +763,7 @@ class SocialMediaTracker:
         original: SocialContent,
         suspect: SocialContent
     ) -> float:
-        """
-        Calcule le niveau de confiance de la violation
+        """        Calcule le niveau de confiance de la violation
         
         Args:
             similarity_score: Score de similarité du contenu
@@ -822,8 +773,7 @@ class SocialMediaTracker:
             
         Returns:
             float: Niveau de confiance
-        """
-        confidence = similarity_score
+        """        confidence = similarity_score
         
         # Boost de confiance si même plateforme et auteur différent
         if original.platform == suspect.platform and original.author_id != suspect.author_id:
@@ -840,8 +790,7 @@ class SocialMediaTracker:
         return min(1.0, confidence)
 
     def _get_tiktok_headers(self) -> Dict[str, str]:
-        """Génère des headers pour TikTok"""
-        return {
+        """Génère des headers pour TikTok"""        return {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
             'Accept-Language': 'en-US,en;q=0.5',
@@ -854,14 +803,12 @@ class SocialMediaTracker:
         tracked_contents: List[SocialContent],
         monitoring_interval: int = 3600
     ) -> None:
-        """
-        Surveillance continue des plateformes
+        """        Surveillance continue des plateformes
         
         Args:
             tracked_contents: Contenus à surveiller
             monitoring_interval: Intervalle de surveillance en secondes
-        """
-        self.logger.info("Démarrage de la surveillance continue des réseaux sociaux")
+        """        self.logger.info("Démarrage de la surveillance continue des réseaux sociaux")
         
         while True:
             try:
@@ -884,16 +831,14 @@ class SocialMediaTracker:
                 await asyncio.sleep(60)
 
     def _generate_search_keywords(self, content: SocialContent) -> List[str]:
-        """
-        Génère des mots-clés de recherche pour un contenu
+        """        Génère des mots-clés de recherche pour un contenu
         
         Args:
             content: Contenu à rechercher
             
         Returns:
             List[str]: Mots-clés générés
-        """
-        keywords = []
+        """        keywords = []
         
         # Titre et description
         if content.title:
@@ -913,13 +858,11 @@ class SocialMediaTracker:
         return list(set(keywords))  # Déduplication
 
     async def _handle_violation_detection(self, violation: ViolationDetection) -> None:
-        """
-        Traite une violation détectée
+        """        Traite une violation détectée
         
         Args:
             violation: Violation détectée
-        """
-        self.logger.warning(
+        """        self.logger.warning(
             f"Violation détectée: {violation.violating_content.url} "
             f"(confiance: {violation.violation_confidence:.2f})"
         )
@@ -936,8 +879,7 @@ class SocialMediaTracker:
             await self._initiate_takedown_request(violation)
 
     async def _send_violation_notification(self, violation: ViolationDetection) -> None:
-        """Envoie une notification de violation"""
-        notification_data = {
+        """Envoie une notification de violation"""        notification_data = {
             'type': 'social_media_violation',
             'original_url': violation.original_content.url,
             'violation_url': violation.violating_content.url,
@@ -951,8 +893,7 @@ class SocialMediaTracker:
         pass
 
     async def _collect_violation_evidence(self, violation: ViolationDetection) -> None:
-        """Collecte les preuves de violation"""
-        try:
+        """Collecte les preuves de violation"""        try:
             # Capture d'écran/enregistrement
             evidence_path = await self._capture_violation_evidence(violation.violating_content)
             
@@ -967,13 +908,11 @@ class SocialMediaTracker:
             self.logger.error(f"Erreur lors de la collecte d'évidence: {e}")
 
     async def _capture_violation_evidence(self, content: SocialContent) -> str:
-        """Capture des preuves visuelles"""
-        # Implémentation de capture d'écran/enregistrement
+        """Capture des preuves visuelles"""        # Implémentation de capture d'écran/enregistrement
         return f"/evidence/{content.platform.value}_{content.content_id}.png"
 
     async def _save_violation_metadata(self, violation: ViolationDetection) -> str:
-        """Sauvegarde les métadonnées de violation"""
-        metadata = {
+        """Sauvegarde les métadonnées de violation"""        metadata = {
             'violation': asdict(violation),
             'timestamp': datetime.now().isoformat(),
             'detection_version': '2.0.0'
@@ -987,8 +926,7 @@ class SocialMediaTracker:
         return file_path
 
     async def _initiate_takedown_request(self, violation: ViolationDetection) -> None:
-        """Initie une demande de retrait"""
-        try:
+        """Initie une demande de retrait"""        try:
             platform = violation.violating_content.platform
             
             if platform == SocialPlatform.YOUTUBE:
@@ -1003,23 +941,19 @@ class SocialMediaTracker:
             self.logger.error(f"Erreur lors de l'initiation du takedown: {e}")
 
     async def _youtube_takedown_request(self, violation: ViolationDetection) -> None:
-        """Demande de retrait YouTube"""
-        # Implémentation via l'API YouTube Content ID ou copyright claim
+        """Demande de retrait YouTube"""        # Implémentation via l'API YouTube Content ID ou copyright claim
         pass
 
     async def _instagram_takedown_request(self, violation: ViolationDetection) -> None:
-        """Demande de retrait Instagram"""
-        # Implémentation via l'API Instagram/Facebook
+        """Demande de retrait Instagram"""        # Implémentation via l'API Instagram/Facebook
         pass
 
     def get_tracking_statistics(self) -> Dict[str, Any]:
-        """
-        Retourne les statistiques de tracking
+        """        Retourne les statistiques de tracking
         
         Returns:
             Dict[str, Any]: Statistiques détaillées
-        """
-        total_violations = len(self.detected_violations)
+        """        total_violations = len(self.detected_violations)
         platform_stats = {}
         
         for violation in self.detected_violations:
@@ -1047,8 +981,7 @@ class SocialMediaTracker:
         }
 
     async def cleanup_old_data(self) -> None:
-        """Nettoie les anciennes données"""
-        cutoff_date = datetime.now() - timedelta(
+        """Nettoie les anciennes données"""        cutoff_date = datetime.now() - timedelta(
             days=self.config.get('data_retention_days', 90)
         )
         
@@ -1061,8 +994,7 @@ class SocialMediaTracker:
         self.logger.info("Nettoyage des données anciennes effectué")
 
     def __del__(self):
-        """Nettoyage lors de la destruction"""
-        try:
+        """Nettoyage lors de la destruction"""        try:
             if hasattr(self, 'selenium_driver'):
                 self.selenium_driver.quit()
         except Exception:

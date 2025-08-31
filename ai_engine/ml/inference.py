@@ -1,5 +1,4 @@
-"""
-ML Inference Engine
+"""ML Inference Engine
 
 High-performance inference engine for machine learning models with support
 for batch processing, real-time inference, and distributed serving.
@@ -11,9 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import json
 import time
 import torch
@@ -65,8 +62,7 @@ logger = logging.getLogger(__name__)
 
 
 class InferenceMode(Enum):
-    """Inference execution modes"""
-    BATCH = "batch"
+    """Inference execution modes"""    BATCH = "batch"
     STREAM = "stream"
     REAL_TIME = "real_time"
     ASYNC_BATCH = "async_batch"
@@ -75,8 +71,7 @@ class InferenceMode(Enum):
 
 
 class OptimizationLevel(Enum):
-    """Model optimization levels"""
-    NONE = "none"
+    """Model optimization levels"""    NONE = "none"
     BASIC = "basic"
     ADVANCED = "advanced"
     MAXIMUM = "maximum"
@@ -86,8 +81,7 @@ class OptimizationLevel(Enum):
 
 
 class InferenceBackend(Enum):
-    """Inference backends"""
-    PYTORCH = "pytorch"
+    """Inference backends"""    PYTORCH = "pytorch"
     ONNX = "onnx"
     TENSORRT = "tensorrt"
     TORCHSCRIPT = "torchscript"
@@ -98,8 +92,7 @@ class InferenceBackend(Enum):
 
 @dataclass
 class InferenceConfig:
-    """Configuration for inference engine"""
-    # Model configuration
+    """Configuration for inference engine"""    # Model configuration
     model_path: str
     backend: InferenceBackend = InferenceBackend.PYTORCH
     device: str = "auto"  # auto, cpu, cuda, cuda:0, etc.
@@ -144,8 +137,7 @@ class InferenceConfig:
 
 @dataclass
 class InferenceResult:
-    """Result from inference operation"""
-    predictions: Union[np.ndarray, List[Any], Dict[str, Any]]
+    """Result from inference operation"""    predictions: Union[np.ndarray, List[Any], Dict[str, Any]]
     confidence: Optional[Union[float, List[float]]] = None
     latency_ms: float = 0.0
     throughput_rps: float = 0.0
@@ -156,8 +148,7 @@ class InferenceResult:
     error: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert result to dictionary"""
-        return {
+        """Convert result to dictionary"""        return {
             'predictions': self.predictions.tolist() if isinstance(self.predictions, np.ndarray) else self.predictions,
             'confidence': self.confidence,
             'latency_ms': self.latency_ms,
@@ -171,30 +162,24 @@ class InferenceResult:
 
 
 class ModelBackend(ABC):
-    """Abstract base class for inference backends"""
-    
+    """Abstract base class for inference backends"""    
     @abstractmethod
     def load_model(self, model_path: str, config: InferenceConfig) -> Any:
-        """Load model for inference"""
-        pass
+        """Load model for inference"""        pass
     
     @abstractmethod
     def predict(self, model: Any, inputs: Any) -> Any:
-        """Run prediction"""
-        pass
+        """Run prediction"""        pass
     
     @abstractmethod
     def predict_batch(self, model: Any, inputs: List[Any]) -> List[Any]:
-        """Run batch prediction"""
-        pass
+        """Run batch prediction"""        pass
 
 
 class PyTorchBackend(ModelBackend):
-    """PyTorch inference backend"""
-    
+    """PyTorch inference backend"""    
     def load_model(self, model_path: str, config: InferenceConfig) -> torch.nn.Module:
-        """Load PyTorch model"""
-        device = self._get_device(config.device)
+        """Load PyTorch model"""        device = self._get_device(config.device)
         
         if model_path.endswith('.pt') or model_path.endswith('.pth'):
             checkpoint = torch.load(model_path, map_location=device)
@@ -222,22 +207,19 @@ class PyTorchBackend(ModelBackend):
         return model
     
     def predict(self, model: torch.nn.Module, inputs: torch.Tensor) -> torch.Tensor:
-        """Run single prediction"""
-        with torch.no_grad():
+        """Run single prediction"""        with torch.no_grad():
             if inputs.dim() == 1:
                 inputs = inputs.unsqueeze(0)
             return model(inputs)
     
     def predict_batch(self, model: torch.nn.Module, inputs: List[torch.Tensor]) -> List[torch.Tensor]:
-        """Run batch prediction"""
-        with torch.no_grad():
+        """Run batch prediction"""        with torch.no_grad():
             batch_tensor = torch.stack(inputs)
             outputs = model(batch_tensor)
             return [outputs[i] for i in range(outputs.size(0))]
     
     def _get_device(self, device_str: str) -> torch.device:
-        """Get appropriate device"""
-        if device_str == "auto":
+        """Get appropriate device"""        if device_str == "auto":
             return torch.device("cuda" if torch.cuda.is_available() else "cpu")
         return torch.device(device_str)
 
@@ -245,11 +227,9 @@ class PyTorchBackend(ModelBackend):
 # ONNX Backend (conditional)
 if ONNX_AVAILABLE:
     class ONNXBackend(ModelBackend):
-        """ONNX Runtime inference backend"""
-        
+        """ONNX Runtime inference backend"""        
         def load_model(self, model_path: str, config: InferenceConfig) -> ort.InferenceSession:
-            """Load ONNX model"""
-            providers = self._get_providers(config.device)
+            """Load ONNX model"""            providers = self._get_providers(config.device)
             
             session_options = ort.SessionOptions()
             session_options.intra_op_num_threads = config.num_workers
@@ -267,21 +247,18 @@ if ONNX_AVAILABLE:
             return session
         
         def predict(self, model: ort.InferenceSession, inputs: Dict[str, np.ndarray]) -> Dict[str, np.ndarray]:
-            """Run single prediction"""
-            outputs = model.run(None, inputs)
+            """Run single prediction"""            outputs = model.run(None, inputs)
             return {name: output for name, output in zip([o.name for o in model.get_outputs()], outputs)}
         
         def predict_batch(self, model: ort.InferenceSession, inputs: List[Dict[str, np.ndarray]]) -> List[Dict[str, np.ndarray]]:
-            """Run batch prediction"""
-            results = []
+            """Run batch prediction"""            results = []
             for input_dict in inputs:
                 result = self.predict(model, input_dict)
                 results.append(result)
             return results
         
         def _get_providers(self, device_str: str) -> List[str]:
-            """Get ONNX providers based on device"""
-            if device_str == "auto":
+            """Get ONNX providers based on device"""            if device_str == "auto":
                 if torch.cuda.is_available():
                     return ['CUDAExecutionProvider', 'CPUExecutionProvider']
                 else:
@@ -308,11 +285,9 @@ else:
 
 
 class TransformersBackend(ModelBackend):
-    """Hugging Face Transformers backend"""
-    
+    """Hugging Face Transformers backend"""    
     def load_model(self, model_path: str, config: InferenceConfig) -> pipeline:
-        """Load Transformers model"""
-        device = 0 if torch.cuda.is_available() and config.device != "cpu" else -1
+        """Load Transformers model"""        device = 0 if torch.cuda.is_available() and config.device != "cpu" else -1
         
         # Determine task type from model path or config
         task = config.preprocessing_config.get('task', 'text-generation')
@@ -327,17 +302,14 @@ class TransformersBackend(ModelBackend):
         return pipe
     
     def predict(self, model: pipeline, inputs: str) -> Dict[str, Any]:
-        """Run single prediction"""
-        return model(inputs)
+        """Run single prediction"""        return model(inputs)
     
     def predict_batch(self, model: pipeline, inputs: List[str]) -> List[Dict[str, Any]]:
-        """Run batch prediction"""
-        return model(inputs)
+        """Run batch prediction"""        return model(inputs)
 
 
 class InferenceCache:
-    """Caching system for inference results"""
-    
+    """Caching system for inference results"""    
     def __init__(self, config: InferenceConfig):
         self.config = config
         self.local_cache = {}
@@ -352,8 +324,7 @@ class InferenceCache:
                 logger.warning("Redis not available, using local cache only")
     
     def get(self, key: str) -> Optional[Any]:
-        """Get cached result"""
-        if not self.config.enable_cache:
+        """Get cached result"""        if not self.config.enable_cache:
             return None
         
         # Check local cache first
@@ -376,8 +347,7 @@ class InferenceCache:
         return None
     
     def set(self, key: str, value: Any):
-        """Set cached result"""
-        if not self.config.enable_cache:
+        """Set cached result"""        if not self.config.enable_cache:
             return
         
         # Store in local cache
@@ -402,16 +372,14 @@ class InferenceCache:
                 logger.warning(f"Redis cache error: {e}")
     
     def _is_cache_valid(self, key: str) -> bool:
-        """Check if cache entry is still valid"""
-        if key not in self.cache_timestamps:
+        """Check if cache entry is still valid"""        if key not in self.cache_timestamps:
             return False
         
         age = datetime.now() - self.cache_timestamps[key]
         return age.total_seconds() < self.config.cache_ttl_seconds
     
     def _generate_cache_key(self, inputs: Any, model_version: str = "") -> str:
-        """Generate cache key for inputs"""
-        if isinstance(inputs, torch.Tensor):
+        """Generate cache key for inputs"""        if isinstance(inputs, torch.Tensor):
             inputs_hash = hash(inputs.cpu().numpy().tobytes())
         elif isinstance(inputs, np.ndarray):
             inputs_hash = hash(inputs.tobytes())
@@ -424,8 +392,7 @@ class InferenceCache:
 
 
 class BatchProcessor:
-    """Dynamic batching processor for inference"""
-    
+    """Dynamic batching processor for inference"""    
     def __init__(self, config: InferenceConfig):
         self.config = config
         self.batch_queue = Queue()
@@ -434,28 +401,24 @@ class BatchProcessor:
         self.worker_thread = None
     
     def start(self):
-        """Start batch processing"""
-        if not self.processing:
+        """Start batch processing"""        if not self.processing:
             self.processing = True
             self.worker_thread = threading.Thread(target=self._process_batches)
             self.worker_thread.start()
     
     def stop(self):
-        """Stop batch processing"""
-        self.processing = False
+        """Stop batch processing"""        self.processing = False
         if self.worker_thread:
             self.worker_thread.join()
     
     def add_request(self, request_id: str, inputs: Any) -> Queue:
-        """Add inference request to batch"""
-        result_queue = Queue()
+        """Add inference request to batch"""        result_queue = Queue()
         self.result_queues[request_id] = result_queue
         self.batch_queue.put((request_id, inputs))
         return result_queue
     
     def _process_batches(self):
-        """Process batches in background thread"""
-        while self.processing:
+        """Process batches in background thread"""        while self.processing:
             batch = []
             batch_ids = []
             
@@ -483,14 +446,12 @@ class BatchProcessor:
                         del self.result_queues[request_id]
     
     def _process_batch_impl(self, batch: List[Any]) -> List[Any]:
-        """Implement batch processing (to be overridden)"""
-        # Placeholder implementation
+        """Implement batch processing (to be overridden)"""        # Placeholder implementation
         return [f"result_{i}" for i in range(len(batch))]
 
 
 class InferenceEngine:
-    """High-performance inference engine with enterprise features"""
-    
+    """High-performance inference engine with enterprise features"""    
     def __init__(self, config: InferenceConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -517,8 +478,7 @@ class InferenceEngine:
             self.batch_processor.start()
     
     def _load_model(self):
-        """Load model with specified backend"""
-        try:
+        """Load model with specified backend"""        try:
             backend_map = {
                 InferenceBackend.PYTORCH: PyTorchBackend(),
                 InferenceBackend.ONNX: ONNXBackend(),
@@ -537,8 +497,7 @@ class InferenceEngine:
             raise
     
     def predict(self, inputs: Any, **kwargs) -> InferenceResult:
-        """Run single inference"""
-        start_time = time.time()
+        """Run single inference"""        start_time = time.time()
         
         try:
             # Check cache
@@ -583,8 +542,7 @@ class InferenceEngine:
             )
     
     def predict_batch(self, inputs: List[Any], **kwargs) -> List[InferenceResult]:
-        """Run batch inference"""
-        start_time = time.time()
+        """Run batch inference"""        start_time = time.time()
         
         try:
             # Run batch inference
@@ -625,24 +583,20 @@ class InferenceEngine:
             return [error_result] * len(inputs)
     
     async def predict_async(self, inputs: Any, **kwargs) -> InferenceResult:
-        """Run asynchronous inference"""
-        loop = asyncio.get_event_loop()
+        """Run asynchronous inference"""        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(self.executor, self.predict, inputs, **kwargs)
     
     async def predict_batch_async(self, inputs: List[Any], **kwargs) -> List[InferenceResult]:
-        """Run asynchronous batch inference"""
-        loop = asyncio.get_event_loop()
+        """Run asynchronous batch inference"""        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(self.executor, self.predict_batch, inputs, **kwargs)
     
     async def predict_stream(self, input_stream: AsyncGenerator[Any, None], **kwargs) -> AsyncGenerator[InferenceResult, None]:
-        """Run streaming inference"""
-        async for inputs in input_stream:
+        """Run streaming inference"""        async for inputs in input_stream:
             result = await self.predict_async(inputs, **kwargs)
             yield result
     
     def predict_with_dynamic_batching(self, inputs: Any, **kwargs) -> InferenceResult:
-        """Run inference with dynamic batching"""
-        if not self.batch_processor:
+        """Run inference with dynamic batching"""        if not self.batch_processor:
             return self.predict(inputs, **kwargs)
         
         request_id = f"req_{time.time()}_{id(inputs)}"
@@ -660,8 +614,7 @@ class InferenceEngine:
     
     @contextmanager
     def profiling_context(self):
-        """Context manager for profiling inference"""
-        if not self.config.enable_profiling:
+        """Context manager for profiling inference"""        if not self.config.enable_profiling:
             yield
             return
         
@@ -690,8 +643,7 @@ class InferenceEngine:
             self.logger.info(f"Profiling data: {profile_data}")
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Get performance metrics"""
-        avg_latency = self.total_latency / self.request_count if self.request_count > 0 else 0.0
+        """Get performance metrics"""        avg_latency = self.total_latency / self.request_count if self.request_count > 0 else 0.0
         error_rate = self.error_count / self.request_count if self.request_count > 0 else 0.0
         
         metrics = {
@@ -734,8 +686,7 @@ class InferenceEngine:
         return metrics
     
     def warmup(self, num_samples: int = 10):
-        """Warm up the model with dummy inputs"""
-        self.logger.info(f"Warming up model with {num_samples} samples...")
+        """Warm up the model with dummy inputs"""        self.logger.info(f"Warming up model with {num_samples} samples...")
         
         # Generate dummy inputs based on model type
         dummy_inputs = self._generate_dummy_inputs()
@@ -749,8 +700,7 @@ class InferenceEngine:
         self.logger.info("Model warmup completed")
     
     def _generate_dummy_inputs(self) -> Any:
-        """Generate dummy inputs for warmup"""
-        # This would need to be customized based on model type
+        """Generate dummy inputs for warmup"""        # This would need to be customized based on model type
         if self.config.backend == InferenceBackend.PYTORCH:
             return torch.randn(1, 224, 224, 3)  # Example for vision model
         elif self.config.backend == InferenceBackend.TRANSFORMERS:
@@ -759,8 +709,7 @@ class InferenceEngine:
             return np.random.randn(1, 224, 224, 3)
     
     def shutdown(self):
-        """Shutdown inference engine"""
-        if self.batch_processor:
+        """Shutdown inference engine"""        if self.batch_processor:
             self.batch_processor.stop()
         
         self.executor.shutdown(wait=True)
@@ -768,28 +717,24 @@ class InferenceEngine:
 
 
 class ModelServer:
-    """HTTP server for serving ML models"""
-    
+    """HTTP server for serving ML models"""    
     def __init__(self, config: InferenceConfig):
         self.config = config
         self.engines = {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     def add_model(self, model_name: str, engine: InferenceEngine):
-        """Add model to server"""
-        self.engines[model_name] = engine
+        """Add model to server"""        self.engines[model_name] = engine
         self.logger.info(f"Added model: {model_name}")
     
     def remove_model(self, model_name: str):
-        """Remove model from server"""
-        if model_name in self.engines:
+        """Remove model from server"""        if model_name in self.engines:
             self.engines[model_name].shutdown()
             del self.engines[model_name]
             self.logger.info(f"Removed model: {model_name}")
     
     async def serve_request(self, model_name: str, inputs: Any, **kwargs) -> InferenceResult:
-        """Serve inference request"""
-        if model_name not in self.engines:
+        """Serve inference request"""        if model_name not in self.engines:
             return InferenceResult(
                 predictions=None,
                 error=f"Model {model_name} not found"
@@ -799,15 +744,13 @@ class ModelServer:
         return await engine.predict_async(inputs, **kwargs)
     
     def get_model_metrics(self, model_name: str) -> Dict[str, Any]:
-        """Get metrics for specific model"""
-        if model_name not in self.engines:
+        """Get metrics for specific model"""        if model_name not in self.engines:
             return {"error": f"Model {model_name} not found"}
         
         return self.engines[model_name].get_metrics()
     
     def get_server_metrics(self) -> Dict[str, Any]:
-        """Get server-wide metrics"""
-        total_requests = sum(engine.request_count for engine in self.engines.values())
+        """Get server-wide metrics"""        total_requests = sum(engine.request_count for engine in self.engines.values())
         total_errors = sum(engine.error_count for engine in self.engines.values())
         
         return {

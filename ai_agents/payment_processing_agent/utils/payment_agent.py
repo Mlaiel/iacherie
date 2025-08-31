@@ -1,5 +1,4 @@
-"""
-Payment Processing Agent - Industrial Payment Ecosystem Core
+"""Payment Processing Agent - Industrial Payment Ecosystem Core
 
 Main agent class coordinating all payment processing operations, revenue tracking,
 creator payouts, fraud detection, and financial compliance for the IA Influencer platform.
@@ -11,9 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from decimal import Decimal, ROUND_HALF_UP
@@ -58,21 +55,17 @@ logger = logging.getLogger(__name__)
 
 
 class PaymentProcessingAgent(BaseAgent):
-    """
-    Industrial payment processing agent for creator monetization ecosystem.
+    """    Industrial payment processing agent for creator monetization ecosystem.
     
     Handles multi-currency payments, automated payouts, fraud detection,
     tax compliance, and revenue analytics for content creators.
-    """
-
-    def __init__(
+    """    def __init__(
         self,
         config: Optional[PaymentConfig] = None,
         db_session: Optional[Session] = None,
         **kwargs
     ):
-        """Initialize payment processing agent with enterprise configuration."""
-        super().__init__(
+        """Initialize payment processing agent with enterprise configuration."""        super().__init__(
             name="payment_processing_agent",
             version="1.0.0",
             capabilities=[
@@ -108,8 +101,7 @@ class PaymentProcessingAgent(BaseAgent):
         }
         
     def _initialize_processors(self) -> Dict[str, Any]:
-        """Initialize payment processors based on configuration."""
-        processors = {}
+        """Initialize payment processors based on configuration."""        processors = {}
         
         if "stripe" in self.config.providers:
             processors["stripe"] = StripeProcessor(
@@ -145,8 +137,7 @@ class PaymentProcessingAgent(BaseAgent):
         source: str = "platform_revenue",
         metadata: Optional[Dict[str, Any]] = None
     ) -> PaymentTransaction:
-        """
-        Process revenue from content monetization.
+        """        Process revenue from content monetization.
         
         Args:
             creator_id: Creator account identifier
@@ -161,8 +152,7 @@ class PaymentProcessingAgent(BaseAgent):
             
         Raises:
             PaymentProcessingError: If processing fails
-        """
-        try:
+        """        try:
             # Validate inputs
             amount = Decimal(str(amount)).quantize(
                 Decimal('0.01'), rounding=ROUND_HALF_UP
@@ -242,8 +232,7 @@ class PaymentProcessingAgent(BaseAgent):
         currency: str = "EUR",
         metadata: Optional[Dict[str, Any]] = None
     ) -> List[PaymentTransaction]:
-        """
-        Process split payment for content collaboration.
+        """        Process split payment for content collaboration.
         
         Args:
             content_id: Content being monetized
@@ -254,8 +243,7 @@ class PaymentProcessingAgent(BaseAgent):
             
         Returns:
             List[PaymentTransaction]: Transaction records for each creator
-        """
-        try:
+        """        try:
             total_amount = Decimal(str(total_amount)).quantize(
                 Decimal('0.01'), rounding=ROUND_HALF_UP
             )
@@ -309,8 +297,7 @@ class PaymentProcessingAgent(BaseAgent):
         currency: str = "EUR",
         scheduled_date: Optional[datetime] = None
     ) -> PayoutSchedule:
-        """
-        Schedule payout to creator's payment method.
+        """        Schedule payout to creator's payment method.
         
         Args:
             creator_id: Creator account identifier
@@ -321,8 +308,7 @@ class PaymentProcessingAgent(BaseAgent):
             
         Returns:
             PayoutSchedule: Scheduled payout record
-        """
-        try:
+        """        try:
             # Get creator's available balance
             available_balance = await self._get_creator_balance(creator_id, currency)
             
@@ -393,8 +379,7 @@ class PaymentProcessingAgent(BaseAgent):
         payment_method: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Perform fraud detection analysis on transaction or parameters.
+        """        Perform fraud detection analysis on transaction or parameters.
         
         Args:
             transaction_id: Existing transaction to analyze
@@ -405,8 +390,7 @@ class PaymentProcessingAgent(BaseAgent):
             
         Returns:
             Dict with fraud analysis results
-        """
-        try:
+        """        try:
             if transaction_id:
                 # Analyze existing transaction
                 transaction = await self._get_transaction(transaction_id)
@@ -440,8 +424,7 @@ class PaymentProcessingAgent(BaseAgent):
         end_date: Optional[datetime] = None,
         currency: str = "EUR"
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive revenue analytics for creator.
+        """        Get comprehensive revenue analytics for creator.
         
         Args:
             creator_id: Creator account identifier
@@ -451,8 +434,7 @@ class PaymentProcessingAgent(BaseAgent):
             
         Returns:
             Dict with revenue analytics data
-        """
-        try:
+        """        try:
             return await self.analytics.get_creator_analytics(
                 creator_id=creator_id,
                 start_date=start_date,
@@ -470,8 +452,7 @@ class PaymentProcessingAgent(BaseAgent):
         year: int,
         country: str = "DE"
     ) -> Dict[str, Any]:
-        """
-        Generate tax compliance report for creator.
+        """        Generate tax compliance report for creator.
         
         Args:
             creator_id: Creator account identifier
@@ -480,8 +461,7 @@ class PaymentProcessingAgent(BaseAgent):
             
         Returns:
             Dict with tax report data
-        """
-        try:
+        """        try:
             return await self.compliance.generate_tax_report(
                 creator_id=creator_id,
                 year=year,
@@ -499,8 +479,7 @@ class PaymentProcessingAgent(BaseAgent):
         payload: Dict[str, Any],
         signature: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Process payment provider webhook events.
+        """        Process payment provider webhook events.
         
         Args:
             provider: Payment provider name (stripe, wise, etc.)
@@ -510,8 +489,7 @@ class PaymentProcessingAgent(BaseAgent):
             
         Returns:
             Dict with processing results
-        """
-        try:
+        """        try:
             return await self.webhook_handler.process_webhook(
                 provider=provider,
                 event_type=event_type,
@@ -529,8 +507,7 @@ class PaymentProcessingAgent(BaseAgent):
         amount: Decimal, 
         currency: str
     ) -> Decimal:
-        """Calculate platform fees for transaction."""
-        fee_rate = self.config.platform_fee_rate
+        """Calculate platform fees for transaction."""        fee_rate = self.config.platform_fee_rate
         min_fee = Decimal(str(self.config.minimum_fee))
         
         calculated_fee = (amount * Decimal(str(fee_rate)) / 100).quantize(
@@ -540,8 +517,7 @@ class PaymentProcessingAgent(BaseAgent):
         return max(calculated_fee, min_fee)
 
     async def _get_creator_balance(self, creator_id: str, currency: str) -> Decimal:
-        """Get creator's available balance for payout."""
-        if not self.db_session:
+        """Get creator's available balance for payout."""        if not self.db_session:
             return Decimal("0.00")
             
         # Sum completed revenues minus scheduled payouts
@@ -572,8 +548,7 @@ class PaymentProcessingAgent(BaseAgent):
         creator_id: str, 
         method_id: str
     ) -> Optional[PaymentMethod]:
-        """Get creator's payment method by ID."""
-        if not self.db_session:
+        """Get creator's payment method by ID."""        if not self.db_session:
             return None
             
         return self.db_session.query(PaymentMethod).filter(
@@ -585,8 +560,7 @@ class PaymentProcessingAgent(BaseAgent):
         ).first()
 
     async def _get_transaction(self, transaction_id: str) -> Optional[PaymentTransaction]:
-        """Get transaction by ID."""
-        if not self.db_session:
+        """Get transaction by ID."""        if not self.db_session:
             return None
             
         return self.db_session.query(PaymentTransaction).filter(
@@ -594,8 +568,7 @@ class PaymentProcessingAgent(BaseAgent):
         ).first()
 
     async def _check_payout_eligibility(self, creator_id: str):
-        """Check if creator is eligible for automatic payout."""
-        balance = await self._get_creator_balance(creator_id, self.config.default_currency)
+        """Check if creator is eligible for automatic payout."""        balance = await self._get_creator_balance(creator_id, self.config.default_currency)
         
         if balance >= self.config.auto_payout_threshold:
             await self.schedule_payout(
@@ -605,8 +578,7 @@ class PaymentProcessingAgent(BaseAgent):
             )
 
     async def _execute_payout(self, payout: PayoutSchedule):
-        """Execute scheduled payout through payment processor."""
-        try:
+        """Execute scheduled payout through payment processor."""        try:
             # Get appropriate processor
             processor_name = payout.payment_method.split('_')[0]  # e.g., 'stripe' from 'stripe_bank_transfer'
             processor = self.processors.get(processor_name)
@@ -655,8 +627,7 @@ class PaymentProcessingAgent(BaseAgent):
             raise
 
     async def get_status(self) -> Dict[str, Any]:
-        """Get agent status and metrics."""
-        status = await super().get_status()
+        """Get agent status and metrics."""        status = await super().get_status()
         
         status.update({
             "payment_processors": list(self.processors.keys()),
@@ -671,8 +642,7 @@ class PaymentProcessingAgent(BaseAgent):
         return status
 
     async def health_check(self) -> bool:
-        """Perform health check on payment systems."""
-        try:
+        """Perform health check on payment systems."""        try:
             # Check database connection
             if self.db_session:
                 self.db_session.execute("SELECT 1")

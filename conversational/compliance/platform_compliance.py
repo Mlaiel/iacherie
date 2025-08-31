@@ -1,5 +1,4 @@
-"""
-Platform Compliance Manager - Multi-Platform Legal Compliance System
+"""Platform Compliance Manager - Multi-Platform Legal Compliance System
 
 This module manages compliance requirements across multiple content distribution platforms
 including YouTube, TikTok, Instagram, Spotify, and other social media platforms.
@@ -11,9 +10,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  WARNING: Unauthorized use, reproduction, or distribution of this code is strictly prohibited.
     This system is proprietary and protected by international copyright laws.
     Violations will be prosecuted to the full extent of the law.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -33,8 +30,7 @@ from ..models.platform_models import PlatformCompliance, ContentSubmission, Plat
 
 
 class Platform(Enum):
-    """Supported platforms"""
-    YOUTUBE = "youtube"
+    """Supported platforms"""    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     TWITTER = "twitter"
@@ -47,8 +43,7 @@ class Platform(Enum):
 
 
 class ComplianceStatus(Enum):
-    """Platform compliance status"""
-    COMPLIANT = "compliant"
+    """Platform compliance status"""    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PENDING_REVIEW = "pending_review"
     REQUIRES_UPDATE = "requires_update"
@@ -56,8 +51,7 @@ class ComplianceStatus(Enum):
 
 
 class ContentRating(Enum):
-    """Content rating classifications"""
-    GENERAL = "general"
+    """Content rating classifications"""    GENERAL = "general"
     TEEN = "teen"
     MATURE = "mature"
     EXPLICIT = "explicit"
@@ -65,8 +59,7 @@ class ContentRating(Enum):
 
 
 class PolicyViolationType(Enum):
-    """Types of policy violations"""
-    COPYRIGHT = "copyright"
+    """Types of policy violations"""    COPYRIGHT = "copyright"
     CONTENT_GUIDELINES = "content_guidelines"
     COMMUNITY_STANDARDS = "community_standards"
     SPAM = "spam"
@@ -78,8 +71,7 @@ class PolicyViolationType(Enum):
 
 @dataclass
 class PlatformRequirements:
-    """Platform-specific compliance requirements"""
-    platform: Platform
+    """Platform-specific compliance requirements"""    platform: Platform
     content_guidelines: Dict[str, Any]
     technical_requirements: Dict[str, Any]
     monetization_policies: Dict[str, Any]
@@ -91,8 +83,7 @@ class PlatformRequirements:
 
 @dataclass
 class ComplianceAssessment:
-    """Compliance assessment result"""
-    platform: Platform
+    """Compliance assessment result"""    platform: Platform
     content_id: str
     compliance_status: ComplianceStatus
     compliance_score: float
@@ -104,8 +95,7 @@ class ComplianceAssessment:
 
 @dataclass
 class ContentSubmissionResult:
-    """Content submission result"""
-    submission_id: str
+    """Content submission result"""    submission_id: str
     platform: Platform
     content_id: str
     status: str
@@ -116,13 +106,11 @@ class ContentSubmissionResult:
 
 
 class PlatformComplianceManager:
-    """
-    Multi-Platform Compliance Management System
+    """    Multi-Platform Compliance Management System
     
     Manages compliance requirements across multiple content distribution platforms,
     ensuring content meets platform-specific guidelines and policies.
-    """
-    
+    """    
     def __init__(self, 
                  db_manager: DatabaseManager,
                  cache_manager: CacheManager,
@@ -145,8 +133,7 @@ class PlatformComplianceManager:
                                        content_id: str, 
                                        platform: Platform,
                                        content_metadata: Dict[str, Any]) -> ComplianceAssessment:
-        """
-        Assess content compliance with platform-specific requirements
+        """        Assess content compliance with platform-specific requirements
         
         Args:
             content_id: Content identifier
@@ -155,8 +142,7 @@ class PlatformComplianceManager:
             
         Returns:
             ComplianceAssessment: Detailed compliance assessment
-        """
-        try:
+        """        try:
             assessment_start = datetime.now()
             
             # Get platform requirements
@@ -269,8 +255,7 @@ class PlatformComplianceManager:
                                        platform: Platform,
                                        content_data: Dict[str, Any],
                                        submission_options: Dict[str, Any] = None) -> ContentSubmissionResult:
-        """
-        Submit content to platform with compliance verification
+        """        Submit content to platform with compliance verification
         
         Args:
             content_id: Content identifier
@@ -280,8 +265,7 @@ class PlatformComplianceManager:
             
         Returns:
             ContentSubmissionResult: Submission result with compliance status
-        """
-        try:
+        """        try:
             submission_id = str(uuid.uuid4())
             
             # Pre-submission compliance check
@@ -386,13 +370,11 @@ class PlatformComplianceManager:
             )
     
     async def monitor_platform_policies(self) -> Dict[str, Any]:
-        """
-        Monitor platform policy changes and update compliance rules
+        """        Monitor platform policy changes and update compliance rules
         
         Returns:
             Dict: Policy monitoring results
-        """
-        try:
+        """        try:
             policy_updates = {}
             
             for platform in Platform:
@@ -446,8 +428,7 @@ class PlatformComplianceManager:
     async def get_compliance_recommendations(self, 
                                            content_id: str,
                                            target_platforms: List[Platform]) -> Dict[str, Any]:
-        """
-        Get compliance recommendations for multiple platforms
+        """        Get compliance recommendations for multiple platforms
         
         Args:
             content_id: Content identifier
@@ -455,8 +436,7 @@ class PlatformComplianceManager:
             
         Returns:
             Dict: Compliance recommendations for each platform
-        """
-        try:
+        """        try:
             # Get content metadata
             content_metadata = await self._get_content_metadata(content_id)
             
@@ -517,8 +497,7 @@ class PlatformComplianceManager:
             }
     
     async def _initialize_platform_requirements(self):
-        """Initialize platform-specific requirements and policies"""
-        try:
+        """Initialize platform-specific requirements and policies"""        try:
             # YouTube requirements
             self.platform_configs[Platform.YOUTUBE] = {
                 "content_guidelines": {
@@ -609,8 +588,7 @@ class PlatformComplianceManager:
     async def _check_content_guidelines(self, 
                                       content_metadata: Dict[str, Any],
                                       guidelines: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Check content against platform content guidelines"""
-        violations = []
+        """Check content against platform content guidelines"""        violations = []
         
         try:
             # Check duration limits
@@ -679,8 +657,7 @@ class PlatformComplianceManager:
             return [{"type": "system_error", "message": str(e)}]
     
     async def get_platform_status_dashboard(self) -> Dict[str, Any]:
-        """Get comprehensive platform compliance dashboard"""
-        try:
+        """Get comprehensive platform compliance dashboard"""        try:
             dashboard_data = {}
             
             for platform in Platform:

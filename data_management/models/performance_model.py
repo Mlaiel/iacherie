@@ -1,19 +1,15 @@
-"""
-Performance Models - IA Influencer Agent Platform Enterprise
+"""Performance Models - IA Influencer Agent Platform Enterprise
 © 2025 Fahed Mlaiel. All Rights Reserved.
 
 Advanced performance models for system monitoring and optimization.
-"""
-
-from typing import Dict, Any, List, Optional
+"""from typing import Dict, Any, List, Optional
 from datetime import datetime
 from enum import Enum
 from dataclasses import dataclass
 from decimal import Decimal
 
 class PerformanceMetricType(str, Enum):
-    """Performance metric types."""
-    RESPONSE_TIME = "response_time"
+    """Performance metric types."""    RESPONSE_TIME = "response_time"
     THROUGHPUT = "throughput"
     ERROR_RATE = "error_rate"
     CPU_USAGE = "cpu_usage"
@@ -23,8 +19,7 @@ class PerformanceMetricType(str, Enum):
 # For backwards compatibility, alias to expected name
 @dataclass
 class PerformanceMetric:
-    """System performance metric model."""
-    metric_id: str
+    """System performance metric model."""    metric_id: str
     service_name: str
     metric_type: PerformanceMetricType
     value: Decimal
@@ -34,16 +29,14 @@ class PerformanceMetric:
 # Additional models for the performance system
 @dataclass
 class MetricType:
-    """Metric type definition."""
-    type_id: str
+    """Metric type definition."""    type_id: str
     name: str
     unit: str
     description: str
     
 @dataclass
 class PerformanceTrend:
-    """Performance trend analysis."""
-    trend_id: str
+    """Performance trend analysis."""    trend_id: str
     metric_type: str
     direction: str  # "up", "down", "stable"
     percentage_change: Decimal
@@ -52,8 +45,7 @@ class PerformanceTrend:
     
 @dataclass
 class PerformanceAlert:
-    """Performance alert definition."""
-    alert_id: str
+    """Performance alert definition."""    alert_id: str
     metric_type: str
     threshold: Decimal
     comparison_operator: str  # ">", "<", ">=", "<=", "=="
@@ -61,8 +53,7 @@ class PerformanceAlert:
     
 @dataclass
 class BenchmarkComparison:
-    """Benchmark comparison data."""
-    comparison_id: str
+    """Benchmark comparison data."""    comparison_id: str
     current_value: Decimal
     baseline_value: Decimal
     improvement_percentage: Decimal
@@ -71,8 +62,7 @@ class BenchmarkComparison:
     
 @dataclass
 class PerformanceReport:
-    """Performance report structure."""
-    report_id: str
+    """Performance report structure."""    report_id: str
     report_type: str
     generated_at: datetime
     metrics: List[PerformanceMetric]
@@ -82,8 +72,7 @@ class PerformanceReport:
     
 @dataclass
 class OptimizationRecommendation:
-    """Performance optimization recommendation."""
-    recommendation_id: str
+    """Performance optimization recommendation."""    recommendation_id: str
     category: str
     title: str
     description: str
@@ -97,8 +86,7 @@ PerformanceMetricModel = PerformanceMetric
 
 @dataclass
 class SystemHealthModel:
-    """System health status model."""
-    health_id: str
+    """System health status model."""    health_id: str
     service_name: str
     status: str
     uptime: int

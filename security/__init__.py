@@ -1,10 +1,7 @@
-"""
-Security Module - Comprehensive security audit, monitoring, and compliance system
+"""Security Module - Comprehensive security audit, monitoring, and compliance system
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-# Import main security components for easy access
+"""# Import main security components for easy access
 try:
     from .audit_trail import (
         SecurityAuditTrail,

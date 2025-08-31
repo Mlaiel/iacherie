@@ -1,14 +1,11 @@
-"""
-Utility Functions - Professional Audio Format Conversion Utilities
+"""Utility Functions - Professional Audio Format Conversion Utilities
 
 Comprehensive utility functions for audio format conversion operations.
 Provides file handling, compression analysis, and helper functions.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import tempfile
 import shutil
@@ -42,25 +39,21 @@ logger = logging.getLogger(__name__)
 
 
 class ConversionUtils:
-    """
-    Professional Conversion Utilities
+    """    Professional Conversion Utilities
     
     Advanced utility functions for audio conversion operations including
     format detection, parameter optimization, and conversion planning.
-    """
-    
+    """    
     @staticmethod
     def detect_audio_format(file_path: Path) -> Optional[AudioFormat]:
-        """
-        Detect audio format from file
+        """        Detect audio format from file
         
         Args:
             file_path: Path to audio file
             
         Returns:
             Detected AudioFormat or None
-        """
-        try:
+        """        try:
             # Method 1: Extension-based detection
             extension = file_path.suffix.lower().lstrip('.')
             extension_mapping = {
@@ -135,16 +128,14 @@ class ConversionUtils:
     
     @staticmethod
     def get_audio_specs(file_path: Path) -> Dict[str, Any]:
-        """
-        Get comprehensive audio file specifications
+        """        Get comprehensive audio file specifications
         
         Args:
             file_path: Path to audio file
             
         Returns:
             Dictionary with audio specifications
-        """
-        specs = {
+        """        specs = {
             'format': None,
             'sample_rate': None,
             'channels': None,
@@ -236,8 +227,7 @@ class ConversionUtils:
     def calculate_optimal_bitrate(audio_specs: Dict[str, Any], 
                                 target_format: AudioFormat,
                                 quality_preference: str = "high") -> int:
-        """
-        Calculate optimal bitrate for conversion
+        """        Calculate optimal bitrate for conversion
         
         Args:
             audio_specs: Source audio specifications
@@ -246,8 +236,7 @@ class ConversionUtils:
             
         Returns:
             Optimal bitrate in kbps
-        """
-        # Base bitrate recommendations by format and quality
+        """        # Base bitrate recommendations by format and quality
         bitrate_table = {
             AudioFormat.MP3: {
                 'low': 128,
@@ -308,8 +297,7 @@ class ConversionUtils:
     def estimate_conversion_complexity(source_specs: Dict[str, Any],
                                      target_format: AudioFormat,
                                      processing_options: Optional[Dict[str, Any]] = None) -> str:
-        """
-        Estimate conversion complexity level
+        """        Estimate conversion complexity level
         
         Args:
             source_specs: Source audio specifications
@@ -318,8 +306,7 @@ class ConversionUtils:
             
         Returns:
             Complexity level: 'low', 'medium', 'high', 'extreme'
-        """
-        complexity_score = 0
+        """        complexity_score = 0
         
         # Base complexity by format conversion
         source_format = source_specs.get('format')
@@ -393,8 +380,7 @@ class ConversionUtils:
     def validate_conversion_compatibility(source_format: AudioFormat,
                                         target_format: AudioFormat,
                                         source_specs: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Validate conversion compatibility and return warnings/recommendations
+        """        Validate conversion compatibility and return warnings/recommendations
         
         Args:
             source_format: Source audio format
@@ -403,8 +389,7 @@ class ConversionUtils:
             
         Returns:
             Validation result with warnings and recommendations
-        """
-        validation = {
+        """        validation = {
             'compatible': True,
             'quality_loss_expected': False,
             'warnings': [],
@@ -460,17 +445,14 @@ class ConversionUtils:
 
 
 class FileUtils:
-    """
-    Professional File Handling Utilities
+    """    Professional File Handling Utilities
     
     Advanced file operations for audio conversion including secure file handling,
     atomic operations, and comprehensive file management.
-    """
-    
+    """    
     @staticmethod
     def create_secure_temp_file(suffix: str = '.tmp', prefix: str = 'audio_conv_') -> Path:
-        """
-        Create secure temporary file with proper permissions
+        """        Create secure temporary file with proper permissions
         
         Args:
             suffix: File suffix
@@ -478,8 +460,7 @@ class FileUtils:
             
         Returns:
             Path to created temporary file
-        """
-        try:
+        """        try:
             fd, temp_path = tempfile.mkstemp(suffix=suffix, prefix=prefix)
             os.close(fd)  # Close file descriptor immediately
             
@@ -496,8 +477,7 @@ class FileUtils:
     
     @staticmethod
     def atomic_move(source: Path, destination: Path, overwrite: bool = False) -> bool:
-        """
-        Perform atomic file move operation
+        """        Perform atomic file move operation
         
         Args:
             source: Source file path
@@ -506,8 +486,7 @@ class FileUtils:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             # Check if destination exists
             if destination.exists() and not overwrite:
                 raise FileError(f"Destination file exists: {destination}")
@@ -533,8 +512,7 @@ class FileUtils:
     
     @staticmethod
     def safe_remove(file_path: Path, secure_delete: bool = False) -> bool:
-        """
-        Safely remove file with optional secure deletion
+        """        Safely remove file with optional secure deletion
         
         Args:
             file_path: Path to file to remove
@@ -542,8 +520,7 @@ class FileUtils:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             if not file_path.exists():
                 return True
             
@@ -570,8 +547,7 @@ class FileUtils:
     
     @staticmethod
     def calculate_file_hash(file_path: Path, algorithm: str = 'sha256') -> str:
-        """
-        Calculate file hash for integrity verification
+        """        Calculate file hash for integrity verification
         
         Args:
             file_path: Path to file
@@ -579,8 +555,7 @@ class FileUtils:
             
         Returns:
             Hex digest of file hash
-        """
-        try:
+        """        try:
             hash_obj = hashlib.new(algorithm)
             
             with open(file_path, 'rb') as f:
@@ -597,8 +572,7 @@ class FileUtils:
     
     @staticmethod
     def verify_file_integrity(file_path: Path, expected_hash: str, algorithm: str = 'sha256') -> bool:
-        """
-        Verify file integrity using hash comparison
+        """        Verify file integrity using hash comparison
         
         Args:
             file_path: Path to file
@@ -607,8 +581,7 @@ class FileUtils:
             
         Returns:
             True if file integrity is verified
-        """
-        try:
+        """        try:
             actual_hash = FileUtils.calculate_file_hash(file_path, algorithm)
             return actual_hash.lower() == expected_hash.lower()
             
@@ -618,16 +591,14 @@ class FileUtils:
     
     @staticmethod
     def get_available_space(directory: Path) -> int:
-        """
-        Get available disk space in bytes
+        """        Get available disk space in bytes
         
         Args:
             directory: Directory to check
             
         Returns:
             Available space in bytes
-        """
-        try:
+        """        try:
             stat_result = shutil.disk_usage(str(directory))
             return stat_result.free
             
@@ -637,8 +608,7 @@ class FileUtils:
     
     @staticmethod
     def ensure_sufficient_space(directory: Path, required_bytes: int, safety_margin: float = 0.1) -> bool:
-        """
-        Ensure sufficient disk space with safety margin
+        """        Ensure sufficient disk space with safety margin
         
         Args:
             directory: Directory to check
@@ -647,8 +617,7 @@ class FileUtils:
             
         Returns:
             True if sufficient space available
-        """
-        try:
+        """        try:
             available = FileUtils.get_available_space(directory)
             required_with_margin = int(required_bytes * (1 + safety_margin))
             
@@ -664,8 +633,7 @@ class FileUtils:
     
     @staticmethod
     def backup_file(file_path: Path, backup_dir: Optional[Path] = None) -> Optional[Path]:
-        """
-        Create backup copy of file
+        """        Create backup copy of file
         
         Args:
             file_path: Original file path
@@ -673,8 +641,7 @@ class FileUtils:
             
         Returns:
             Path to backup file or None if failed
-        """
-        try:
+        """        try:
             if not file_path.exists():
                 return None
             
@@ -701,18 +668,15 @@ class FileUtils:
 
 
 class CompressionUtils:
-    """
-    Audio Compression Analysis Utilities
+    """    Audio Compression Analysis Utilities
     
     Advanced compression analysis and optimization utilities for
     audio format conversion with intelligent parameter selection.
-    """
-    
+    """    
     @staticmethod
     def analyze_compression_potential(audio_data: np.ndarray, 
                                     sample_rate: int) -> Dict[str, float]:
-        """
-        Analyze audio compression potential and characteristics
+        """        Analyze audio compression potential and characteristics
         
         Args:
             audio_data: Audio data array
@@ -720,8 +684,7 @@ class CompressionUtils:
             
         Returns:
             Compression analysis results
-        """
-        analysis = {
+        """        analysis = {
             'dynamic_range': 0.0,
             'spectral_complexity': 0.0,
             'temporal_complexity': 0.0,
@@ -783,8 +746,7 @@ class CompressionUtils:
                                 sample_rate: int,
                                 target_format: AudioFormat,
                                 quality_target: float = 0.9) -> Dict[str, Any]:
-        """
-        Optimize lossy compression parameters based on audio analysis
+        """        Optimize lossy compression parameters based on audio analysis
         
         Args:
             audio_data: Audio data array
@@ -794,8 +756,7 @@ class CompressionUtils:
             
         Returns:
             Optimized parameters
-        """
-        params = {}
+        """        params = {}
         
         try:
             # Analyze compression characteristics
@@ -886,8 +847,7 @@ class CompressionUtils:
     def estimate_compression_ratio(source_specs: Dict[str, Any],
                                  target_format: AudioFormat,
                                  target_params: Dict[str, Any]) -> float:
-        """
-        Estimate compression ratio for given parameters
+        """        Estimate compression ratio for given parameters
         
         Args:
             source_specs: Source audio specifications
@@ -896,8 +856,7 @@ class CompressionUtils:
             
         Returns:
             Estimated compression ratio (source_size / target_size)
-        """
-        try:
+        """        try:
             # Get source file size or estimate
             source_size = source_specs.get('file_size')
             duration = source_specs.get('duration', 0)
@@ -952,25 +911,21 @@ class CompressionUtils:
 
 
 class ValidationUtils:
-    """
-    Audio Validation Utilities
+    """    Audio Validation Utilities
     
     Comprehensive validation functions for audio files, formats,
     and conversion parameters.
-    """
-    
+    """    
     @staticmethod
     def validate_audio_file(file_path: Path) -> Dict[str, Any]:
-        """
-        Comprehensive audio file validation
+        """        Comprehensive audio file validation
         
         Args:
             file_path: Path to audio file
             
         Returns:
             Validation results
-        """
-        validation = {
+        """        validation = {
             'valid': False,
             'readable': False,
             'format_detected': False,
@@ -1075,8 +1030,7 @@ class ValidationUtils:
     def validate_conversion_parameters(source_specs: Dict[str, Any],
                                      format_spec: FormatSpecification,
                                      processing_options: Optional[Dict[str, Any]] = None) -> List[str]:
-        """
-        Validate conversion parameters and return any issues
+        """        Validate conversion parameters and return any issues
         
         Args:
             source_specs: Source audio specifications
@@ -1085,8 +1039,7 @@ class ValidationUtils:
             
         Returns:
             List of validation issues
-        """
-        issues = []
+        """        issues = []
         
         try:
             # Format specification validation

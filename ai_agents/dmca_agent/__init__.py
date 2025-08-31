@@ -23,8 +23,7 @@ Project Team Specialties:
 - Audio Processing: Music industry protection expertise
 - DevOps Engineer: Automated deployment and monitoring
 - AI Prompt Engineer: Natural language processing optimization
-"""
-# Import all main classes and functions
+"""# Import all main classes and functions
 from .dmca_orchestrator import (
     DMCAOrchestrator,
     DMCACase,

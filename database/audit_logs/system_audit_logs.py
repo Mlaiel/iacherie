@@ -1,5 +1,4 @@
-"""
-Ultra-Advanced System Audit Logs Module
+"""Ultra-Advanced System Audit Logs Module
 
 Revolutionary enterprise-grade system audit logging for IA Influencer Agent platform.
 Provides comprehensive tracking for all system activities, infrastructure events, performance
@@ -14,9 +13,7 @@ This revolutionary system audit logging technology is the EXCLUSIVE property of 
 Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
-"""
-
-from typing import List, Dict, Any, Optional, Union, Tuple, Callable
+"""from typing import List, Dict, Any, Optional, Union, Tuple, Callable
 import logging
 from datetime import datetime, timezone, timedelta
 from enum import Enum
@@ -53,8 +50,7 @@ Base = declarative_base()
 
 
 class SystemEventType(Enum):
-    """Ultra-comprehensive system event types for complete audit coverage."""
-    
+    """Ultra-comprehensive system event types for complete audit coverage."""    
     # Application Lifecycle Events
     APPLICATION_START = "application_start"
     APPLICATION_STOP = "application_stop"
@@ -147,8 +143,7 @@ class SystemEventType(Enum):
 
 
 class SystemSeverity(Enum):
-    """Ultra-advanced system event severity levels with detailed classification."""
-    
+    """Ultra-advanced system event severity levels with detailed classification."""    
     CRITICAL = "critical"          # System failure, immediate action required
     HIGH = "high"                  # Significant impact, urgent attention needed
     MEDIUM = "medium"              # Moderate impact, scheduled response
@@ -163,8 +158,7 @@ class SystemSeverity(Enum):
 
 @dataclass
 class SystemEventContext:
-    """Ultra-comprehensive context information for system events."""
-    
+    """Ultra-comprehensive context information for system events."""    
     # Basic Service Information
     service_name: str
     service_version: str
@@ -236,14 +230,12 @@ class SystemEventContext:
     confidence_score: Optional[float] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for JSON serialization."""
-        return asdict(self)
+        """Convert to dictionary for JSON serialization."""        return asdict(self)
     
     @classmethod
     def create_business_context(cls, tenant_id: str, user_id: str, content_type: str, 
                                creator_type: str, operation_type: str) -> 'SystemEventContext':
-        """Create context for business logic operations."""
-        return cls(
+        """Create context for business logic operations."""        return cls(
             service_name="ia_influencer_platform",
             service_version="2.0.0",
             tenant_id=tenant_id,
@@ -258,8 +250,7 @@ class SystemEventContext:
 
 @dataclass
 class SystemMetrics:
-    """Ultra-comprehensive system performance and health metrics."""
-    
+    """Ultra-comprehensive system performance and health metrics."""    
     # System Health Indicators
     system_health_score: float = 100.0  # 0-100 health score
     availability_percentage: float = 99.99
@@ -308,8 +299,7 @@ class SystemMetrics:
     timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def calculate_composite_score(self) -> float:
-        """Calculate overall system health composite score."""
-        weights = {
+        """Calculate overall system health composite score."""        weights = {
             'system_health_score': 0.3,
             'availability_percentage': 0.25,
             'cpu_utilization_percent': 0.15,
@@ -334,8 +324,7 @@ class SystemMetrics:
 
 
 class SystemAuditLog(Base):
-    """Ultra-advanced system audit log model with comprehensive tracking capabilities."""
-    
+    """Ultra-advanced system audit log model with comprehensive tracking capabilities."""    
     __tablename__ = "system_audit_logs"
     
     # Primary Identifiers
@@ -508,8 +497,7 @@ class SystemAuditLog(Base):
     indexed_at = Column(DateTime(timezone=True))
     
     def __init__(self, **kwargs):
-        """Initialize with automatic ID generation and integrity protection."""
-        super().__init__(**kwargs)
+        """Initialize with automatic ID generation and integrity protection."""        super().__init__(**kwargs)
         if not self.event_id:
             self.event_id = f"sys_{uuid.uuid4().hex[:16]}"
         if not self.correlation_id:
@@ -521,8 +509,7 @@ class SystemAuditLog(Base):
         self._generate_forensic_hash()
     
     def _generate_forensic_hash(self) -> None:
-        """Generate cryptographic hash for integrity verification."""
-        data_to_hash = {
+        """Generate cryptographic hash for integrity verification."""        data_to_hash = {
             'event_id': self.event_id,
             'event_type': self.event_type,
             'timestamp': self.timestamp.isoformat() if self.timestamp else '',
@@ -534,8 +521,7 @@ class SystemAuditLog(Base):
         self.forensic_hash = hashlib.sha512(hash_input.encode()).hexdigest()
     
     def verify_integrity(self) -> bool:
-        """Verify the integrity of the audit log entry."""
-        if not self.forensic_hash:
+        """Verify the integrity of the audit log entry."""        if not self.forensic_hash:
             return False
         
         # Re-calculate hash and compare
@@ -548,16 +534,14 @@ class SystemAuditLog(Base):
         return is_valid
     
     def calculate_duration(self) -> Optional[int]:
-        """Calculate event duration in milliseconds."""
-        if self.event_start_time and self.event_end_time:
+        """Calculate event duration in milliseconds."""        if self.event_start_time and self.event_end_time:
             delta = self.event_end_time - self.event_start_time
             return int(delta.total_seconds() * 1000)
         return None
     
     def set_business_context(self, tenant_id: str, user_id: str, content_type: str, 
                             creator_type: str, operation_type: str) -> None:
-        """Set business context for IA Influencer operations."""
-        self.tenant_id = tenant_id
+        """Set business context for IA Influencer operations."""        self.tenant_id = tenant_id
         self.user_id = user_id
         self.content_type = content_type
         self.creator_type = creator_type
@@ -565,8 +549,7 @@ class SystemAuditLog(Base):
         self.business_impact = "high" if operation_type in ["monetize", "protect"] else "medium"
     
     def mark_as_resolved(self, resolved_by: str, notes: str) -> None:
-        """Mark the event as resolved with resolution details."""
-        self.is_resolved = True
+        """Mark the event as resolved with resolution details."""        self.is_resolved = True
         self.resolved_by = resolved_by
         self.resolution_notes = notes
         self.resolved_at = datetime.now(timezone.utc)
@@ -577,20 +560,17 @@ class SystemAuditLog(Base):
             self.resolution_duration_minutes = int(delta.total_seconds() / 60)
     
     def add_tags(self, **tags) -> None:
-        """Add tags to the audit log entry."""
-        if not self.tags:
+        """Add tags to the audit log entry."""        if not self.tags:
             self.tags = {}
         self.tags.update(tags)
     
     def add_custom_metrics(self, **metrics) -> None:
-        """Add custom metrics to the audit log entry."""
-        if not self.custom_metrics:
+        """Add custom metrics to the audit log entry."""        if not self.custom_metrics:
             self.custom_metrics = {}
         self.custom_metrics.update(metrics)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert model to dictionary with all fields."""
-        result = {}
+        """Convert model to dictionary with all fields."""        result = {}
         for column in self.__table__.columns:
             value = getattr(self, column.name)
             if isinstance(value, datetime):
@@ -602,14 +582,12 @@ class SystemAuditLog(Base):
         return result
     
     def to_json(self) -> str:
-        """Convert to JSON string."""
-        return json.dumps(self.to_dict(), default=str, ensure_ascii=False, indent=2)
+        """Convert to JSON string."""        return json.dumps(self.to_dict(), default=str, ensure_ascii=False, indent=2)
     
     @classmethod
     def from_context(cls, event_type: SystemEventType, severity: SystemSeverity,
                      context: SystemEventContext, **kwargs) -> 'SystemAuditLog':
-        """Create audit log from system event context."""
-        return cls(
+        """Create audit log from system event context."""        return cls(
             event_type=event_type.value,
             severity=severity.value,
             service_name=context.service_name,
@@ -657,18 +635,15 @@ class SystemAuditLog(Base):
 
 
 class SystemAuditLogger:
-    """Enterprise system audit logger."""
-    
+    """Enterprise system audit logger."""    
     def __init__(self, db_session, service_name: str, environment: str):
-        """
-        Initialize system audit logger.
+        """        Initialize system audit logger.
         
         Args:
             db_session: Database session
             service_name: Name of the service
             environment: Environment (prod, staging, dev)
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.service_name = service_name
         self.environment = environment
         self.logger = logging.getLogger(f"{__name__}.{service_name}")
@@ -687,8 +662,7 @@ class SystemAuditLogger:
         correlation_id: Optional[str] = None,
         request_id: Optional[str] = None
     ) -> str:
-        """
-        Log a system event.
+        """        Log a system event.
         
         Args:
             event_type: Type of system event
@@ -705,8 +679,7 @@ class SystemAuditLogger:
             
         Returns:
             str: Generated event ID
-        """
-        try:
+        """        try:
             event_id = f"sys_{uuid.uuid4().hex[:16]}"
             
             audit_log = SystemAuditLog(
@@ -758,8 +731,7 @@ class SystemAuditLogger:
             raise
     
     def log_application_start(self, version: str, config_hash: str) -> str:
-        """Log application start event."""
-        return self.log_system_event(
+        """Log application start event."""        return self.log_system_event(
             event_type=SystemEventType.APPLICATION_START,
             event_name="Application Started",
             severity=SystemSeverity.INFO,
@@ -772,8 +744,7 @@ class SystemAuditLogger:
         )
     
     def log_application_stop(self, reason: str, exit_code: int = 0) -> str:
-        """Log application stop event."""
-        severity = SystemSeverity.INFO if exit_code == 0 else SystemSeverity.HIGH
+        """Log application stop event."""        severity = SystemSeverity.INFO if exit_code == 0 else SystemSeverity.HIGH
         return self.log_system_event(
             event_type=SystemEventType.APPLICATION_STOP,
             event_name="Application Stopped",
@@ -793,8 +764,7 @@ class SystemAuditLogger:
         new_value: Any,
         changed_by: str
     ) -> str:
-        """Log configuration change event."""
-        return self.log_system_event(
+        """Log configuration change event."""        return self.log_system_event(
             event_type=SystemEventType.CONFIG_CHANGE,
             event_name="Configuration Changed",
             severity=SystemSeverity.MEDIUM,
@@ -813,8 +783,7 @@ class SystemAuditLogger:
         migration_version: str,
         status: str
     ) -> str:
-        """Log database migration event."""
-        severity = SystemSeverity.INFO if status == "success" else SystemSeverity.HIGH
+        """Log database migration event."""        severity = SystemSeverity.INFO if status == "success" else SystemSeverity.HIGH
         return self.log_system_event(
             event_type=SystemEventType.DATABASE_MIGRATION,
             event_name="Database Migration",
@@ -835,8 +804,7 @@ class SystemAuditLogger:
         current_value: float,
         alert_level: str
     ) -> str:
-        """Log performance alert event."""
-        severity_map = {
+        """Log performance alert event."""        severity_map = {
             "warning": SystemSeverity.MEDIUM,
             "critical": SystemSeverity.HIGH,
             "emergency": SystemSeverity.CRITICAL
@@ -858,8 +826,7 @@ class SystemAuditLogger:
         )
     
     def resolve_event(self, event_id: str, resolution_notes: str, resolved_by: str) -> bool:
-        """
-        Mark a system event as resolved.
+        """        Mark a system event as resolved.
         
         Args:
             event_id: ID of the event to resolve
@@ -868,8 +835,7 @@ class SystemAuditLogger:
             
         Returns:
             bool: True if successfully resolved, False otherwise
-        """
-        try:
+        """        try:
             audit_log = self.db_session.query(SystemAuditLog).filter_by(event_id=event_id).first()
             
             if audit_log:
@@ -897,8 +863,7 @@ class SystemAuditLogger:
         event_type: Optional[SystemEventType] = None,
         limit: int = 100
     ) -> List[Dict[str, Any]]:
-        """
-        Get unresolved system events.
+        """        Get unresolved system events.
         
         Args:
             severity: Filter by severity level
@@ -907,8 +872,7 @@ class SystemAuditLogger:
             
         Returns:
             List[Dict[str, Any]]: List of unresolved events
-        """
-        try:
+        """        try:
             query = self.db_session.query(SystemAuditLog).filter_by(is_resolved=False)
             
             if severity:
@@ -926,13 +890,11 @@ class SystemAuditLogger:
             return []
     
     def get_system_health_summary(self) -> Dict[str, Any]:
-        """
-        Get system health summary based on recent events.
+        """        Get system health summary based on recent events.
         
         Returns:
             Dict[str, Any]: System health summary
-        """
-        try:
+        """        try:
             # Get events from last 24 hours
             from sqlalchemy import func
             twenty_four_hours_ago = datetime.now(timezone.utc) - timezone.timedelta(hours=24)
@@ -978,8 +940,7 @@ class SystemAuditLogger:
 
 
 def create_system_audit_logger(db_session, service_name: str, environment: str) -> SystemAuditLogger:
-    """
-    Factory function to create system audit logger.
+    """    Factory function to create system audit logger.
     
     Args:
         db_session: Database session
@@ -988,23 +949,19 @@ def create_system_audit_logger(db_session, service_name: str, environment: str) 
         
     Returns:
         SystemAuditLogger: Configured system audit logger
-    """
-    return SystemAuditLogger(db_session, service_name, environment)
+    """    return SystemAuditLogger(db_session, service_name, environment)
 
 
 class SystemHealthMonitor:
-    """Ultra-advanced system health monitoring and predictive analysis."""
-    
+    """Ultra-advanced system health monitoring and predictive analysis."""    
     def __init__(self, db_session, redis_client=None):
-        """Initialize health monitor with database and cache."""
-        self.db_session = db_session
+        """Initialize health monitor with database and cache."""        self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
         self.health_cache_ttl = 300  # 5 minutes
         
     async def analyze_system_health(self, time_window_hours: int = 24) -> Dict[str, Any]:
-        """Perform comprehensive system health analysis."""
-        try:
+        """Perform comprehensive system health analysis."""        try:
             end_time = datetime.now(timezone.utc)
             start_time = end_time - timedelta(hours=time_window_hours)
             
@@ -1049,8 +1006,7 @@ class SystemHealthMonitor:
             return {"error": str(e), "health_score": 0, "status": "unknown"}
     
     def _analyze_performance_trends(self, events: List[SystemAuditLog]) -> Dict[str, Any]:
-        """Analyze performance trends from audit events."""
-        if not events:
+        """Analyze performance trends from audit events."""        if not events:
             return {"trend": "stable", "avg_response_time": 0, "throughput": 0}
         
         response_times = [e.response_time_ms for e in events if e.response_time_ms]
@@ -1070,8 +1026,7 @@ class SystemHealthMonitor:
         }
     
     def _analyze_error_patterns(self, events: List[SystemAuditLog]) -> Dict[str, Any]:
-        """Analyze error patterns and frequencies."""
-        error_events = [e for e in events if e.is_error]
+        """Analyze error patterns and frequencies."""        error_events = [e for e in events if e.is_error]
         
         if not error_events:
             return {"error_rate": 0, "patterns": [], "critical_errors": 0}
@@ -1097,8 +1052,7 @@ class SystemHealthMonitor:
         }
     
     def _analyze_resource_trends(self, events: List[SystemAuditLog]) -> Dict[str, Any]:
-        """Analyze resource utilization trends."""
-        return {
+        """Analyze resource utilization trends."""        return {
             "cpu_trend": self._analyze_resource_metric([e.cpu_usage_percent for e in events if e.cpu_usage_percent]),
             "memory_trend": self._analyze_resource_metric([e.memory_usage_percent for e in events if e.memory_usage_percent]),
             "disk_trend": self._analyze_resource_metric([e.disk_usage_percent for e in events if e.disk_usage_percent]),
@@ -1106,8 +1060,7 @@ class SystemHealthMonitor:
         }
     
     async def _predict_system_issues(self, events: List[SystemAuditLog]) -> Dict[str, Any]:
-        """Use ML models to predict potential system issues."""
-        try:
+        """Use ML models to predict potential system issues."""        try:
             # Prepare feature matrix
             features = self._extract_features_for_prediction(events)
             
@@ -1129,8 +1082,7 @@ class SystemHealthMonitor:
             return {"prediction": "error", "message": str(e)}
     
     def _calculate_composite_health_score(self, performance: Dict, errors: Dict, resources: Dict) -> float:
-        """Calculate composite health score from multiple metrics."""
-        base_score = 100.0
+        """Calculate composite health score from multiple metrics."""        base_score = 100.0
         
         # Performance impact
         avg_response = performance.get("avg_response_time_ms", 0)
@@ -1162,8 +1114,7 @@ class SystemHealthMonitor:
         return max(0.0, min(100.0, base_score))
     
     def _calculate_trend(self, values: List[float]) -> str:
-        """Calculate trend direction from time series data."""
-        if len(values) < 2:
+        """Calculate trend direction from time series data."""        if len(values) < 2:
             return "stable"
         
         # Simple linear regression slope
@@ -1178,8 +1129,7 @@ class SystemHealthMonitor:
             return "stable"
     
     def _determine_health_status(self, health_score: float) -> str:
-        """Determine health status from score."""
-        if health_score >= 90:
+        """Determine health status from score."""        if health_score >= 90:
             return "excellent"
         elif health_score >= 80:
             return "good"
@@ -1192,16 +1142,13 @@ class SystemHealthMonitor:
 
 
 class InfrastructureAuditor:
-    """Ultra-advanced infrastructure audit and compliance monitoring."""
-    
+    """Ultra-advanced infrastructure audit and compliance monitoring."""    
     def __init__(self, db_session):
-        """Initialize infrastructure auditor."""
-        self.db_session = db_session
+        """Initialize infrastructure auditor."""        self.db_session = db_session
         self.logger = logging.getLogger(__name__)
     
     async def audit_infrastructure_compliance(self) -> Dict[str, Any]:
-        """Perform comprehensive infrastructure compliance audit."""
-        try:
+        """Perform comprehensive infrastructure compliance audit."""        try:
             audit_results = {
                 "compliance_score": 0,
                 "security_posture": {},
@@ -1237,8 +1184,7 @@ class InfrastructureAuditor:
             return {"error": str(e), "compliance_score": 0}
     
     async def _assess_security_posture(self) -> Dict[str, Any]:
-        """Assess current security posture."""
-        # Query security-related events
+        """Assess current security posture."""        # Query security-related events
         security_events = self.db_session.query(SystemAuditLog).filter(
             SystemAuditLog.event_category == "security",
             SystemAuditLog.timestamp >= datetime.now(timezone.utc) - timedelta(days=7)
@@ -1253,8 +1199,7 @@ class InfrastructureAuditor:
         }
     
     async def _establish_performance_baseline(self) -> Dict[str, Any]:
-        """Establish performance baselines for monitoring."""
-        # Analyze historical performance data
+        """Establish performance baselines for monitoring."""        # Analyze historical performance data
         recent_events = self.db_session.query(SystemAuditLog).filter(
             SystemAuditLog.timestamp >= datetime.now(timezone.utc) - timedelta(days=30)
         ).all()
@@ -1270,16 +1215,13 @@ class InfrastructureAuditor:
 
 
 class PerformanceAnalyzer:
-    """Ultra-advanced performance analysis and optimization engine."""
-    
+    """Ultra-advanced performance analysis and optimization engine."""    
     def __init__(self, db_session):
-        """Initialize performance analyzer."""
-        self.db_session = db_session
+        """Initialize performance analyzer."""        self.db_session = db_session
         self.logger = logging.getLogger(__name__)
     
     async def analyze_performance_patterns(self, days: int = 7) -> Dict[str, Any]:
-        """Analyze performance patterns and identify optimization opportunities."""
-        try:
+        """Analyze performance patterns and identify optimization opportunities."""        try:
             end_time = datetime.now(timezone.utc)
             start_time = end_time - timedelta(days=days)
             
@@ -1309,8 +1251,7 @@ class PerformanceAnalyzer:
             return {"error": str(e)}
     
     def _analyze_time_based_patterns(self, events: List[SystemAuditLog]) -> Dict[str, Any]:
-        """Analyze performance patterns based on time of day/week."""
-        # Group events by hour of day
+        """Analyze performance patterns based on time of day/week."""        # Group events by hour of day
         hourly_performance = {}
         for event in events:
             hour = event.timestamp.hour
@@ -1336,8 +1277,7 @@ class PerformanceAnalyzer:
         }
     
     def _identify_bottlenecks(self, events: List[SystemAuditLog]) -> List[Dict[str, Any]]:
-        """Identify system bottlenecks from performance data."""
-        bottlenecks = []
+        """Identify system bottlenecks from performance data."""        bottlenecks = []
         
         # CPU bottleneck detection
         high_cpu_events = [e for e in events if e.cpu_usage_percent and e.cpu_usage_percent > 80]

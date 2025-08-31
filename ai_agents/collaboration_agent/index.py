@@ -1,5 +1,4 @@
-"""
-Collaboration Agent Index - Ultra-Advanced AI-Powered Creator Collaboration Hub
+"""Collaboration Agent Index - Ultra-Advanced AI-Powered Creator Collaboration Hub
 
 Central index and navigation system for the collaboration agent module,
 providing quick access to all collaboration features and services.
@@ -22,9 +21,7 @@ Team Specialties:
 - Audio Engineer: Advanced audio processing and analysis
 - DevOps Engineer: CI/CD, deployment, and infrastructure automation
 - IA Prompt Engineer: AI prompt optimization and conversational systems
-"""
-
-from typing import Dict, List, Any, Optional
+"""from typing import Dict, List, Any, Optional
 import asyncio
 import logging
 from datetime import datetime
@@ -64,16 +61,14 @@ PERFORMANCE_TARGETS = {
 }
 
 class CollaborationHub:
-    """
-    Central hub for all collaboration agent functionality.
+    """    Central hub for all collaboration agent functionality.
     
     Provides unified interface for:
     - Creator matching and compatibility analysis
     - Collaboration workflow management
     - Project orchestration and coordination
     - Performance monitoring and optimization
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -98,8 +93,7 @@ class CollaborationHub:
         self.initialized = False
     
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize all collaboration components"""
-        try:
+        """Initialize all collaboration components"""        try:
             start_time = datetime.utcnow()
             
             # Initialize core agent
@@ -152,8 +146,7 @@ class CollaborationHub:
             raise
     
     async def get_service(self, service_name: str):
-        """Get specific service by name"""
-        if not self.initialized:
+        """Get specific service by name"""        if not self.initialized:
             raise RuntimeError("CollaborationHub not initialized")
         
         service = self.services.get(service_name)
@@ -163,8 +156,7 @@ class CollaborationHub:
         return service
     
     async def health_check(self) -> Dict[str, Any]:
-        """Comprehensive health check of all collaboration services"""
-        try:
+        """Comprehensive health check of all collaboration services"""        try:
             health_status = {
                 'overall_status': 'healthy',
                 'timestamp': datetime.utcnow(),
@@ -206,8 +198,7 @@ class CollaborationHub:
             }
     
     async def get_module_info(self) -> Dict[str, Any]:
-        """Get comprehensive module information"""
-        return {
+        """Get comprehensive module information"""        return {
             'module': {
                 'name': MODULE_NAME,
                 'version': MODULE_VERSION,
@@ -244,8 +235,7 @@ class CollaborationHub:
 collaboration_hub = None
 
 async def get_collaboration_hub(config: Dict[str, Any] = None) -> CollaborationHub:
-    """Get or create global collaboration hub instance"""
-    global collaboration_hub
+    """Get or create global collaboration hub instance"""    global collaboration_hub
     
     if collaboration_hub is None:
         collaboration_hub = CollaborationHub(config)
@@ -254,8 +244,7 @@ async def get_collaboration_hub(config: Dict[str, Any] = None) -> CollaborationH
     return collaboration_hub
 
 async def quick_match(creator_id: str, preferences: Dict[str, Any] = None) -> Dict[str, Any]:
-    """Quick creator matching interface"""
-    hub = await get_collaboration_hub()
+    """Quick creator matching interface"""    hub = await get_collaboration_hub()
     matcher = await hub.get_service('creator_matcher')
     
     return await matcher.find_matches(
@@ -269,8 +258,7 @@ async def create_collaboration(
     target_id: str,
     collaboration_details: Dict[str, Any]
 ) -> Dict[str, Any]:
-    """Quick collaboration creation interface"""
-    hub = await get_collaboration_hub()
+    """Quick collaboration creation interface"""    hub = await get_collaboration_hub()
     manager = await hub.get_service('collaboration_manager')
     
     # Create proposal
@@ -291,8 +279,7 @@ async def get_collaboration_analytics(
     creator_id: str = None,
     project_id: str = None
 ) -> Dict[str, Any]:
-    """Quick analytics interface"""
-    hub = await get_collaboration_hub()
+    """Quick analytics interface"""    hub = await get_collaboration_hub()
     manager = await hub.get_service('collaboration_manager')
     
     return await manager.get_collaboration_analytics(
@@ -302,16 +289,13 @@ async def get_collaboration_analytics(
 
 # Convenience functions for common operations
 async def find_matches(creator_id: str, **kwargs):
-    """Find collaboration matches for a creator"""
-    return await quick_match(creator_id, kwargs)
+    """Find collaboration matches for a creator"""    return await quick_match(creator_id, kwargs)
 
 async def start_collaboration(initiator_id: str, target_id: str, **details):
-    """Start new collaboration between creators"""
-    return await create_collaboration(initiator_id, target_id, details)
+    """Start new collaboration between creators"""    return await create_collaboration(initiator_id, target_id, details)
 
 async def get_analytics(creator_id: str = None, project_id: str = None):
-    """Get collaboration analytics"""
-    return await get_collaboration_analytics(creator_id, project_id)
+    """Get collaboration analytics"""    return await get_collaboration_analytics(creator_id, project_id)
 
 # Module exports
 __all__ = [

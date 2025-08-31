@@ -1,5 +1,4 @@
-"""
-Health Checker - Transaction System Health Monitoring
+"""Health Checker - Transaction System Health Monitoring
 
 Enterprise-grade health monitoring system providing comprehensive health checks,
 performance monitoring, and system diagnostics for the IA Influencer platform's
@@ -24,9 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-
-import asyncio
+"""import asyncio
 import psutil
 import logging
 import time
@@ -48,8 +45,7 @@ logger = logging.getLogger(__name__)
 
 
 class HealthStatus(Enum):
-    """Health status levels"""
-    HEALTHY = "HEALTHY"         # All systems operating normally
+    """Health status levels"""    HEALTHY = "HEALTHY"         # All systems operating normally
     WARNING = "WARNING"         # Some issues detected but system functional
     CRITICAL = "CRITICAL"       # Critical issues requiring immediate attention
     DEGRADED = "DEGRADED"       # System performance degraded
@@ -58,8 +54,7 @@ class HealthStatus(Enum):
 
 
 class MetricType(Enum):
-    """Types of health metrics"""
-    COUNTER = "COUNTER"         # Monotonically increasing value
+    """Types of health metrics"""    COUNTER = "COUNTER"         # Monotonically increasing value
     GAUGE = "GAUGE"             # Current value
     HISTOGRAM = "HISTOGRAM"     # Distribution of values
     TIMER = "TIMER"             # Time measurements
@@ -68,8 +63,7 @@ class MetricType(Enum):
 
 @dataclass
 class HealthMetric:
-    """Individual health metric"""
-    name: str
+    """Individual health metric"""    name: str
     value: float
     metric_type: MetricType
     unit: str = ""
@@ -80,8 +74,7 @@ class HealthMetric:
     
     @property
     def status(self) -> HealthStatus:
-        """Determine health status based on thresholds"""
-        if self.threshold_critical is not None and self.value >= self.threshold_critical:
+        """Determine health status based on thresholds"""        if self.threshold_critical is not None and self.value >= self.threshold_critical:
             return HealthStatus.CRITICAL
         elif self.threshold_warning is not None and self.value >= self.threshold_warning:
             return HealthStatus.WARNING
@@ -89,8 +82,7 @@ class HealthMetric:
             return HealthStatus.HEALTHY
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'name': self.name,
             'value': self.value,
             'metric_type': self.metric_type.value,
@@ -105,8 +97,7 @@ class HealthMetric:
 
 @dataclass
 class HealthCheckResult:
-    """Result of a health check"""
-    check_name: str
+    """Result of a health check"""    check_name: str
     status: HealthStatus
     message: str
     metrics: List[HealthMetric] = field(default_factory=list)
@@ -116,8 +107,7 @@ class HealthCheckResult:
     details: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'check_name': self.check_name,
             'status': self.status.value,
             'message': self.message,
@@ -131,8 +121,7 @@ class HealthCheckResult:
 
 @dataclass
 class SystemHealthReport:
-    """Comprehensive system health report"""
-    overall_status: HealthStatus
+    """Comprehensive system health report"""    overall_status: HealthStatus
     timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     check_results: List[HealthCheckResult] = field(default_factory=list)
     summary_metrics: Dict[str, float] = field(default_factory=dict)
@@ -141,8 +130,7 @@ class SystemHealthReport:
     version: str = "1.0.0"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'overall_status': self.overall_status.value,
             'timestamp': self.timestamp.isoformat(),
             'check_results': [result.to_dict() for result in self.check_results],
@@ -154,16 +142,14 @@ class SystemHealthReport:
 
 
 class MetricsCollector:
-    """Metrics collection and aggregation system"""
-    
+    """Metrics collection and aggregation system"""    
     def __init__(self, max_history: int = 1000):
         self.max_history = max_history
         self.metrics_history: Dict[str, deque] = defaultdict(lambda: deque(maxlen=max_history))
         self.lock = threading.RLock()
         
     def record_metric(self, metric: HealthMetric) -> None:
-        """Record a metric value"""
-        with self.lock:
+        """Record a metric value"""        with self.lock:
             self.metrics_history[metric.name].append({
                 'value': metric.value,
                 'timestamp': metric.timestamp,
@@ -171,8 +157,7 @@ class MetricsCollector:
             })
     
     def get_metric_history(self, metric_name: str, duration: Optional[timedelta] = None) -> List[Dict[str, Any]]:
-        """Get metric history for specified duration"""
-        with self.lock:
+        """Get metric history for specified duration"""        with self.lock:
             history = list(self.metrics_history[metric_name])
             
             if duration:
@@ -185,8 +170,7 @@ class MetricsCollector:
             return history
     
     def get_metric_statistics(self, metric_name: str, duration: Optional[timedelta] = None) -> Dict[str, float]:
-        """Get statistical analysis of metric"""
-        history = self.get_metric_history(metric_name, duration)
+        """Get statistical analysis of metric"""        history = self.get_metric_history(metric_name, duration)
         
         if not history:
             return {}
@@ -205,8 +189,7 @@ class MetricsCollector:
         }
     
     def get_all_metrics(self) -> Dict[str, Any]:
-        """Get all current metrics"""
-        with self.lock:
+        """Get all current metrics"""        with self.lock:
             all_metrics = {}
             
             for metric_name, history in self.metrics_history.items():
@@ -225,8 +208,7 @@ class MetricsCollector:
 
 
 class TransactionHealthChecker:
-    """
-    Comprehensive transaction system health checker
+    """    Comprehensive transaction system health checker
     
     Features:
     - Real-time system monitoring
@@ -237,8 +219,7 @@ class TransactionHealthChecker:
     - Historical trend analysis
     - Resource utilization monitoring
     - Business metrics tracking
-    """
-    
+    """    
     def __init__(
         self,
         check_interval: float = 30.0,
@@ -293,13 +274,11 @@ class TransactionHealthChecker:
         logger.info("TransactionHealthChecker initialized with interval: %.1fs", check_interval)
     
     def register_health_check(self, name: str, check_function: Callable) -> None:
-        """Register a custom health check function"""
-        self.health_checks[name] = check_function
+        """Register a custom health check function"""        self.health_checks[name] = check_function
         logger.debug("Registered health check: %s", name)
     
     def record_business_metric(self, metric_name: str, value: float, labels: Optional[Dict[str, str]] = None) -> None:
-        """Record business metric"""
-        metric = HealthMetric(
+        """Record business metric"""        metric = HealthMetric(
             name=f"business.{metric_name}",
             value=value,
             metric_type=MetricType.GAUGE,
@@ -320,8 +299,7 @@ class TransactionHealthChecker:
         value: float,
         creator_id: Optional[str] = None
     ) -> None:
-        """Record transaction-specific metric"""
-        labels = {'transaction_id': transaction_id}
+        """Record transaction-specific metric"""        labels = {'transaction_id': transaction_id}
         if creator_id:
             labels['creator_id'] = creator_id
         
@@ -336,8 +314,7 @@ class TransactionHealthChecker:
         self.metrics_collector.record_metric(metric)
     
     async def run_health_check(self, check_name: str) -> HealthCheckResult:
-        """Run specific health check"""
-        if check_name not in self.health_checks:
+        """Run specific health check"""        if check_name not in self.health_checks:
             return HealthCheckResult(
                 check_name=check_name,
                 status=HealthStatus.UNKNOWN,
@@ -381,8 +358,7 @@ class TransactionHealthChecker:
             )
     
     async def run_all_health_checks(self) -> SystemHealthReport:
-        """Run all registered health checks"""
-        start_time = time.time()
+        """Run all registered health checks"""        start_time = time.time()
         check_results = []
         
         # Run all health checks
@@ -418,8 +394,7 @@ class TransactionHealthChecker:
         return report
     
     async def get_system_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive system metrics"""
-        
+        """Get comprehensive system metrics"""        
         metrics = {
             'timestamp': datetime.now(timezone.utc).isoformat(),
             'uptime': time.time() - self.system_start_time,
@@ -442,8 +417,7 @@ class TransactionHealthChecker:
         return metrics
     
     async def get_creator_health_metrics(self, creator_id: str) -> Dict[str, Any]:
-        """Get health metrics specific to a creator"""
-        
+        """Get health metrics specific to a creator"""        
         creator_metrics = {
             'creator_id': creator_id,
             'timestamp': datetime.now(timezone.utc).isoformat(),
@@ -464,8 +438,7 @@ class TransactionHealthChecker:
         return creator_metrics
     
     async def get_content_protection_health(self) -> Dict[str, Any]:
-        """Get content protection system health metrics"""
-        
+        """Get content protection system health metrics"""        
         protection_metrics = {
             'timestamp': datetime.now(timezone.utc).isoformat(),
             'metrics': {},
@@ -484,8 +457,7 @@ class TransactionHealthChecker:
         return protection_metrics
     
     async def get_revenue_system_health(self) -> Dict[str, Any]:
-        """Get revenue system health metrics"""
-        
+        """Get revenue system health metrics"""        
         revenue_metrics = {
             'timestamp': datetime.now(timezone.utc).isoformat(),
             'metrics': {},
@@ -504,8 +476,7 @@ class TransactionHealthChecker:
         return revenue_metrics
     
     def _register_default_checks(self) -> None:
-        """Register default health checks"""
-        
+        """Register default health checks"""        
         self.health_checks.update({
             'system_resources': self._check_system_resources,
             'database_connectivity': self._check_database_connectivity,
@@ -520,8 +491,7 @@ class TransactionHealthChecker:
         })
     
     async def _check_system_resources(self) -> HealthCheckResult:
-        """Check system resource utilization"""
-        
+        """Check system resource utilization"""        
         metrics = []
         status = HealthStatus.HEALTHY
         messages = []
@@ -614,8 +584,7 @@ class TransactionHealthChecker:
             )
     
     async def _check_database_connectivity(self) -> HealthCheckResult:
-        """Check database connectivity and performance"""
-        
+        """Check database connectivity and performance"""        
         try:
             start_time = time.time()
             
@@ -666,8 +635,7 @@ class TransactionHealthChecker:
             )
     
     async def _check_transaction_coordinator(self) -> HealthCheckResult:
-        """Check transaction coordinator health"""
-        
+        """Check transaction coordinator health"""        
         try:
             # Mock transaction coordinator metrics
             active_transactions = 25  # Mock value
@@ -727,8 +695,7 @@ class TransactionHealthChecker:
             )
     
     async def _check_memory_usage(self) -> HealthCheckResult:
-        """Check detailed memory usage"""
-        
+        """Check detailed memory usage"""        
         try:
             # Process memory info
             process = psutil.Process()
@@ -790,8 +757,7 @@ class TransactionHealthChecker:
             )
     
     async def _check_disk_space(self) -> HealthCheckResult:
-        """Check disk space across mounted filesystems"""
-        
+        """Check disk space across mounted filesystems"""        
         try:
             metrics = []
             status = HealthStatus.HEALTHY
@@ -842,8 +808,7 @@ class TransactionHealthChecker:
             )
     
     async def _check_network_connectivity(self) -> HealthCheckResult:
-        """Check network connectivity"""
-        
+        """Check network connectivity"""        
         try:
             # Test network connectivity by checking socket creation
             start_time = time.time()
@@ -911,8 +876,7 @@ class TransactionHealthChecker:
             )
     
     async def _check_creator_system(self) -> HealthCheckResult:
-        """Check creator economy system health"""
-        
+        """Check creator economy system health"""        
         try:
             # Mock creator system metrics
             active_creators = self.business_metrics.get('active_creators', 0)
@@ -961,8 +925,7 @@ class TransactionHealthChecker:
             )
     
     async def _check_content_protection(self) -> HealthCheckResult:
-        """Check content protection system health"""
-        
+        """Check content protection system health"""        
         try:
             # Mock content protection metrics
             violations_detected = self.business_metrics.get('violations_detected', 0)
@@ -1016,8 +979,7 @@ class TransactionHealthChecker:
             )
     
     async def _check_revenue_system(self) -> HealthCheckResult:
-        """Check revenue system health"""
-        
+        """Check revenue system health"""        
         try:
             # Mock revenue system metrics
             revenue_generated = self.business_metrics.get('revenue_generated', 0.0)
@@ -1071,8 +1033,7 @@ class TransactionHealthChecker:
             )
     
     async def _check_performance_metrics(self) -> HealthCheckResult:
-        """Check overall performance metrics"""
-        
+        """Check overall performance metrics"""        
         try:
             # Calculate recent performance statistics
             recent_stats = self._calculate_recent_performance()
@@ -1123,8 +1084,7 @@ class TransactionHealthChecker:
             )
     
     def _determine_overall_status(self, check_results: List[HealthCheckResult]) -> HealthStatus:
-        """Determine overall system health status"""
-        
+        """Determine overall system health status"""        
         if not check_results:
             return HealthStatus.UNKNOWN
         
@@ -1145,8 +1105,7 @@ class TransactionHealthChecker:
             return HealthStatus.HEALTHY
     
     def _generate_summary_metrics(self, check_results: List[HealthCheckResult]) -> Dict[str, float]:
-        """Generate summary metrics from check results"""
-        
+        """Generate summary metrics from check results"""        
         total_checks = len(check_results)
         healthy_checks = sum(1 for result in check_results if result.status == HealthStatus.HEALTHY)
         
@@ -1159,8 +1118,7 @@ class TransactionHealthChecker:
         }
     
     def _generate_recommendations(self, check_results: List[HealthCheckResult]) -> List[str]:
-        """Generate health recommendations based on check results"""
-        
+        """Generate health recommendations based on check results"""        
         recommendations = []
         
         for result in check_results:
@@ -1181,8 +1139,7 @@ class TransactionHealthChecker:
         return recommendations
     
     async def _collect_system_metrics(self) -> Dict[str, Any]:
-        """Collect detailed system metrics"""
-        
+        """Collect detailed system metrics"""        
         try:
             # CPU information
             cpu_count = psutil.cpu_count()
@@ -1236,8 +1193,7 @@ class TransactionHealthChecker:
             return {}
     
     def _collect_performance_metrics(self) -> Dict[str, Any]:
-        """Collect performance metrics"""
-        
+        """Collect performance metrics"""        
         # Get recent performance statistics
         recent_stats = self._calculate_recent_performance()
         
@@ -1254,8 +1210,7 @@ class TransactionHealthChecker:
         }
     
     def _calculate_recent_performance(self) -> Dict[str, float]:
-        """Calculate recent performance statistics"""
-        
+        """Calculate recent performance statistics"""        
         # Mock performance calculations
         # In a real implementation, this would analyze actual metrics
         return {
@@ -1266,8 +1221,7 @@ class TransactionHealthChecker:
         }
     
     def _calculate_trends(self) -> Dict[str, str]:
-        """Calculate performance trends"""
-        
+        """Calculate performance trends"""        
         trends = {}
         
         # Calculate trends for key metrics
@@ -1296,27 +1250,23 @@ class TransactionHealthChecker:
         return trends
     
     def _calculate_creator_health_score(self, creator_id: str) -> float:
-        """Calculate health score for specific creator"""
-        
+        """Calculate health score for specific creator"""        
         # Mock health score calculation
         # In a real implementation, this would analyze creator-specific metrics
         return 85.5  # Mock score (0-100)
     
     def _calculate_protection_effectiveness(self) -> float:
-        """Calculate content protection effectiveness score"""
-        
+        """Calculate content protection effectiveness score"""        
         # Mock effectiveness calculation
         return 92.3  # Mock score (0-100)
     
     def _calculate_revenue_reliability(self) -> float:
-        """Calculate revenue system reliability score"""
-        
+        """Calculate revenue system reliability score"""        
         # Mock reliability calculation
         return 97.8  # Mock score (0-100)
     
     async def _monitoring_loop(self) -> None:
-        """Background monitoring loop"""
-        
+        """Background monitoring loop"""        
         while self._monitoring:
             try:
                 # Run full health check
@@ -1329,8 +1279,7 @@ class TransactionHealthChecker:
                 await asyncio.sleep(10)  # Wait before retrying
     
     async def _metrics_collection_loop(self) -> None:
-        """Background metrics collection loop"""
-        
+        """Background metrics collection loop"""        
         while self._monitoring:
             try:
                 # Collect and record system metrics
@@ -1351,8 +1300,7 @@ class TransactionHealthChecker:
                 await asyncio.sleep(5)
     
     async def shutdown(self) -> None:
-        """Graceful shutdown of health checker"""
-        logger.info("Shutting down TransactionHealthChecker...")
+        """Graceful shutdown of health checker"""        logger.info("Shutting down TransactionHealthChecker...")
         
         self._monitoring = False
         
@@ -1364,15 +1312,13 @@ class TransactionHealthChecker:
 
 # Convenience functions for common health patterns
 async def quick_health_check(health_checker: TransactionHealthChecker) -> bool:
-    """Quick health check returning simple boolean"""
-    
+    """Quick health check returning simple boolean"""    
     report = await health_checker.run_all_health_checks()
     return report.overall_status in [HealthStatus.HEALTHY, HealthStatus.WARNING]
 
 
 async def get_system_status(health_checker: TransactionHealthChecker) -> Dict[str, str]:
-    """Get simplified system status"""
-    
+    """Get simplified system status"""    
     report = await health_checker.run_all_health_checks()
     
     return {
@@ -1384,6 +1330,5 @@ async def get_system_status(health_checker: TransactionHealthChecker) -> Dict[st
 
 
 async def check_creator_health(health_checker: TransactionHealthChecker, creator_id: str) -> Dict[str, Any]:
-    """Check health for specific creator"""
-    
+    """Check health for specific creator"""    
     return await health_checker.get_creator_health_metrics(creator_id)

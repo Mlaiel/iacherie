@@ -1,14 +1,11 @@
-"""
-Intent Classifier - Advanced user intent classification for multi-format creators
+"""Intent Classifier - Advanced user intent classification for multi-format creators
 ================================================================================
 
 Classifies user intents with high accuracy using ML models and pattern matching
 optimized for different creator types and their specific needs.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass
@@ -21,8 +18,7 @@ from backend.ai.models import ConversationalAI
 
 
 class PrimaryIntent(Enum):
-    """Primary user intent categories"""
-    CONTENT_UPLOAD = "content_upload"
+    """Primary user intent categories"""    CONTENT_UPLOAD = "content_upload"
     CONTENT_ANALYSIS = "content_analysis"
     MONETIZATION_QUESTION = "monetization_question"
     PROTECTION_CONCERN = "protection_concern"
@@ -40,8 +36,7 @@ class PrimaryIntent(Enum):
 
 
 class IntentConfidence(Enum):
-    """Intent classification confidence levels"""
-    HIGH = "high"
+    """Intent classification confidence levels"""    HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
     UNCERTAIN = "uncertain"
@@ -49,8 +44,7 @@ class IntentConfidence(Enum):
 
 @dataclass
 class IntentClassificationResult:
-    """Complete intent classification results"""
-    primary_intent: PrimaryIntent
+    """Complete intent classification results"""    primary_intent: PrimaryIntent
     secondary_intents: List[PrimaryIntent]
     confidence: float
     confidence_level: IntentConfidence
@@ -63,12 +57,10 @@ class IntentClassificationResult:
 
 
 class IntentClassifier:
-    """
-    Advanced intent classification system that accurately identifies user
+    """    Advanced intent classification system that accurately identifies user
     intentions with creator-type specific optimizations and contextual
     understanding for optimal conversation routing.
-    """
-    
+    """    
     def __init__(self, ai_engine: ConversationalAI):
         self.ai_engine = ai_engine
         self.logger = logging.getLogger(__name__)
@@ -93,8 +85,7 @@ class IntentClassifier:
         context_analysis: Dict[str, Any],
         creator_type: Any
     ) -> IntentClassificationResult:
-        """
-        Classify user intent with high accuracy and contextual understanding
+        """        Classify user intent with high accuracy and contextual understanding
         
         Args:
             processed_message: Processed user message
@@ -103,8 +94,7 @@ class IntentClassifier:
             
         Returns:
             IntentClassificationResult: Complete intent classification
-        """
-        try:
+        """        try:
             message_content = processed_message.processed_content
             has_attachments = len(processed_message.attachments) > 0
             creator_value = creator_type.value if hasattr(creator_type, 'value') else str(creator_type)
@@ -225,8 +215,7 @@ class IntentClassifier:
             return self._create_fallback_classification(processed_message)
     
     async def _extract_linguistic_features(self, message: str) -> Dict[str, Any]:
-        """Extract linguistic features for classification"""
-        try:
+        """Extract linguistic features for classification"""        try:
             features = {
                 "message_length": len(message),
                 "word_count": len(message.split()),
@@ -259,8 +248,7 @@ class IntentClassifier:
         has_attachments: bool,
         linguistic_features: Dict[str, Any]
     ) -> Dict[PrimaryIntent, float]:
-        """Classify intent using pattern matching"""
-        try:
+        """Classify intent using pattern matching"""        try:
             scores = {intent: 0.0 for intent in PrimaryIntent}
             message_lower = message.lower()
             
@@ -311,8 +299,7 @@ class IntentClassifier:
         creator_type: str,
         context_analysis: Dict[str, Any]
     ) -> Dict[PrimaryIntent, float]:
-        """Classify with creator-type specific patterns"""
-        try:
+        """Classify with creator-type specific patterns"""        try:
             scores = {intent: 0.0 for intent in PrimaryIntent}
             message_lower = message.lower()
             
@@ -370,8 +357,7 @@ class IntentClassifier:
         context_analysis: Dict[str, Any],
         has_attachments: bool
     ) -> Dict[PrimaryIntent, float]:
-        """Enhance classification with context analysis"""
-        try:
+        """Enhance classification with context analysis"""        try:
             scores = {intent: 0.0 for intent in PrimaryIntent}
             
             # Business intent context
@@ -425,8 +411,7 @@ class IntentClassifier:
         linguistic_features: Dict[str, Any],
         creator_type: str
     ) -> Dict[PrimaryIntent, float]:
-        """ML-based intent classification (placeholder for future ML model)"""
-        try:
+        """ML-based intent classification (placeholder for future ML model)"""        try:
             # This would integrate with actual ML models in production
             # For now, return uniform low scores
             scores = {intent: 0.1 for intent in PrimaryIntent}
@@ -450,8 +435,7 @@ class IntentClassifier:
         context_scores: Dict[PrimaryIntent, float],
         ml_scores: Dict[PrimaryIntent, float]
     ) -> Dict[PrimaryIntent, float]:
-        """Combine scores from different classification methods"""
-        try:
+        """Combine scores from different classification methods"""        try:
             combined_scores = {}
             
             # Weights for different classification methods
@@ -486,8 +470,7 @@ class IntentClassifier:
         self,
         combined_scores: Dict[PrimaryIntent, float]
     ) -> Tuple[PrimaryIntent, List[PrimaryIntent]]:
-        """Determine primary and secondary intents"""
-        try:
+        """Determine primary and secondary intents"""        try:
             # Sort intents by score
             sorted_intents = sorted(
                 combined_scores.items(),
@@ -520,8 +503,7 @@ class IntentClassifier:
         primary_intent: PrimaryIntent,
         linguistic_features: Dict[str, Any]
     ) -> Tuple[float, IntentConfidence]:
-        """Calculate classification confidence"""
-        try:
+        """Calculate classification confidence"""        try:
             primary_score = combined_scores.get(primary_intent, 0.0)
             
             # Base confidence from primary score
@@ -566,8 +548,7 @@ class IntentClassifier:
         primary_intent: PrimaryIntent,
         creator_type: str
     ) -> List[str]:
-        """Extract specific indicators that led to intent classification"""
-        try:
+        """Extract specific indicators that led to intent classification"""        try:
             indicators = []
             message_lower = message.lower()
             
@@ -606,8 +587,7 @@ class IntentClassifier:
         intent_indicators: List[str],
         confidence: float
     ) -> str:
-        """Generate human-readable classification reasoning"""
-        try:
+        """Generate human-readable classification reasoning"""        try:
             primary_score = combined_scores.get(primary_intent, 0.0)
             
             reasoning = f"Classified as '{primary_intent.value}' with {confidence:.1%} confidence. "
@@ -633,8 +613,7 @@ class IntentClassifier:
             return f"Classified as {primary_intent.value} with moderate confidence."
     
     def _create_fallback_classification(self, processed_message: Any) -> IntentClassificationResult:
-        """Create fallback classification when main classification fails"""
-        return IntentClassificationResult(
+        """Create fallback classification when main classification fails"""        return IntentClassificationResult(
             primary_intent=PrimaryIntent.GENERAL_CHAT,
             secondary_intents=[],
             confidence=0.5,
@@ -648,8 +627,7 @@ class IntentClassifier:
         )
     
     def _setup_intent_patterns(self):
-        """Setup pattern matching for intent classification"""
-        self.intent_patterns = {
+        """Setup pattern matching for intent classification"""        self.intent_patterns = {
             PrimaryIntent.CONTENT_UPLOAD: [
                 "upload", "share", "post", "submit", "attach", "file", "send"
             ],
@@ -698,8 +676,7 @@ class IntentClassifier:
         }
     
     def _setup_creator_specific_patterns(self):
-        """Setup creator-type specific patterns"""
-        self.creator_specific_patterns = {
+        """Setup creator-type specific patterns"""        self.creator_specific_patterns = {
             "musician": {
                 "content_analysis": ["song", "track", "music", "audio", "melody", "lyrics"],
                 "monetization_question": ["streaming", "royalties", "spotify", "revenue", "sales"],
@@ -738,8 +715,7 @@ class IntentClassifier:
         }
     
     def _setup_confidence_thresholds(self):
-        """Setup confidence level thresholds"""
-        self.confidence_thresholds = {
+        """Setup confidence level thresholds"""        self.confidence_thresholds = {
             IntentConfidence.HIGH: 0.8,
             IntentConfidence.MEDIUM: 0.6,
             IntentConfidence.LOW: 0.4,
@@ -747,8 +723,7 @@ class IntentClassifier:
         }
     
     def _setup_ml_features(self):
-        """Setup ML feature extraction (placeholder)"""
-        self.ml_features = {
+        """Setup ML feature extraction (placeholder)"""        self.ml_features = {
             "text_embeddings": False,  # Future: BERT/RoBERTa embeddings
             "sequence_modeling": False,  # Future: LSTM/Transformer models
             "multimodal": False,  # Future: Text + attachment analysis
@@ -757,15 +732,13 @@ class IntentClassifier:
     
     # Helper methods for additional functionality
     async def _extract_key_phrases(self, message: str) -> List[str]:
-        """Extract key phrases from message"""
-        # Simplified key phrase extraction
+        """Extract key phrases from message"""        # Simplified key phrase extraction
         words = message.lower().split()
         key_phrases = [word for word in words if len(word) > 4]
         return key_phrases[:10]
     
     async def _analyze_grammar_indicators(self, message: str) -> Dict[str, bool]:
-        """Analyze grammatical indicators"""
-        return {
+        """Analyze grammatical indicators"""        return {
             "has_questions": '?' in message,
             "has_imperatives": any(word in message.lower() for word in ['help', 'show', 'tell']),
             "has_conditionals": any(word in message.lower() for word in ['if', 'would', 'could']),
@@ -779,8 +752,7 @@ class IntentClassifier:
         creator_type: str,
         context_analysis: Dict[str, Any]
     ) -> List[str]:
-        """Generate actionable items based on classified intent"""
-        actionable_items = []
+        """Generate actionable items based on classified intent"""        actionable_items = []
         
         # Primary intent actions
         intent_actions = {
@@ -805,8 +777,7 @@ class IntentClassifier:
         creator_type: str,
         context_analysis: Dict[str, Any]
     ) -> List[str]:
-        """Generate suggested response approaches"""
-        suggestions = []
+        """Generate suggested response approaches"""        suggestions = []
         
         # Intent-based suggestions
         if primary_intent == PrimaryIntent.CONTENT_ANALYSIS:
@@ -836,8 +807,7 @@ class IntentClassifier:
         primary_intent: PrimaryIntent,
         creator_type: str
     ) -> Dict[str, Any]:
-        """Extract intents specific to creator type"""
-        creator_intents = {}
+        """Extract intents specific to creator type"""        creator_intents = {}
         message_lower = message.lower()
         
         if creator_type == "musician":
@@ -863,8 +833,7 @@ class IntentClassifier:
         classification_result: IntentClassificationResult,
         creator_type: str
     ):
-        """Update classification performance metrics"""
-        self.classification_metrics["total_classifications"] += 1
+        """Update classification performance metrics"""        self.classification_metrics["total_classifications"] += 1
         
         if classification_result.confidence_level == IntentConfidence.HIGH:
             self.classification_metrics["high_confidence_count"] += 1

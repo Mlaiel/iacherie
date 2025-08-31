@@ -1,5 +1,4 @@
-"""
-Enterprise Virtual Economy - Virtual currency and economic system for IA Influencer platform.
+"""Enterprise Virtual Economy - Virtual currency and economic system for IA Influencer platform.
 
 This module provides a comprehensive virtual economy management system that handles
 virtual currency transactions, economic balance, marketplace operations, and
@@ -26,9 +25,7 @@ For licensing inquiries ONLY: mlaiel@live.de
 Business Logic Integration:
 Creator Upload → AI Processing → Protection → SEO → Collaboration Matching + Gamification →
 Virtual Economy → Distribution → Monetization → Analytics
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -42,8 +39,7 @@ logger = logging.getLogger(__name__)
 
 
 class CurrencyType(str, Enum):
-    """Types of virtual currencies."""
-    CREDITS = "credits"            # Main platform currency
+    """Types of virtual currencies."""    CREDITS = "credits"            # Main platform currency
     GEMS = "gems"                  # Premium currency
     TOKENS = "tokens"              # Special event currency
     INFLUENCE_POINTS = "influence_points"  # Influence-based currency
@@ -52,8 +48,7 @@ class CurrencyType(str, Enum):
 
 
 class TransactionType(str, Enum):
-    """Types of virtual economy transactions."""
-    EARN = "earn"
+    """Types of virtual economy transactions."""    EARN = "earn"
     SPEND = "spend"
     TRANSFER = "transfer"
     PURCHASE = "purchase"
@@ -66,8 +61,7 @@ class TransactionType(str, Enum):
 
 
 class TransactionSource(str, Enum):
-    """Sources of virtual economy transactions."""
-    CONTENT_UPLOAD = "content_upload"
+    """Sources of virtual economy transactions."""    CONTENT_UPLOAD = "content_upload"
     ACHIEVEMENT_UNLOCK = "achievement_unlock"
     CHALLENGE_COMPLETION = "challenge_completion"
     DAILY_LOGIN = "daily_login"
@@ -87,8 +81,7 @@ class TransactionSource(str, Enum):
 
 
 class MarketplaceItemType(str, Enum):
-    """Types of items in the virtual marketplace."""
-    CONTENT_BOOST = "content_boost"
+    """Types of items in the virtual marketplace."""    CONTENT_BOOST = "content_boost"
     PROFILE_CUSTOMIZATION = "profile_customization"
     SPECIAL_BADGE = "special_badge"
     PREMIUM_ANALYTICS = "premium_analytics"
@@ -102,8 +95,7 @@ class MarketplaceItemType(str, Enum):
 
 @dataclass
 class VirtualWallet:
-    """Represents a user's virtual wallet."""
-    wallet_id: str = field(default_factory=lambda: str(uuid4()))
+    """Represents a user's virtual wallet."""    wallet_id: str = field(default_factory=lambda: str(uuid4()))
     user_id: str = ""
     
     # Currency balances
@@ -123,16 +115,13 @@ class VirtualWallet:
     lock_reason: Optional[str] = None
     
     def get_balance(self, currency: CurrencyType) -> Decimal:
-        """Get balance for a specific currency."""
-        return self.balances.get(currency, Decimal('0'))
+        """Get balance for a specific currency."""        return self.balances.get(currency, Decimal('0'))
     
     def has_sufficient_balance(self, currency: CurrencyType, amount: Decimal) -> bool:
-        """Check if wallet has sufficient balance."""
-        return self.get_balance(currency) >= amount
+        """Check if wallet has sufficient balance."""        return self.get_balance(currency) >= amount
     
     def get_net_worth(self, exchange_rates: Dict[CurrencyType, Decimal]) -> Decimal:
-        """Calculate total wallet value in credits equivalent."""
-        total_value = Decimal('0')
+        """Calculate total wallet value in credits equivalent."""        total_value = Decimal('0')
         
         for currency, balance in self.balances.items():
             rate = exchange_rates.get(currency, Decimal('1'))
@@ -143,8 +132,7 @@ class VirtualWallet:
 
 @dataclass
 class VirtualTransaction:
-    """Represents a virtual economy transaction."""
-    transaction_id: str = field(default_factory=lambda: str(uuid4()))
+    """Represents a virtual economy transaction."""    transaction_id: str = field(default_factory=lambda: str(uuid4()))
     user_id: str = ""
     
     # Transaction details
@@ -178,8 +166,7 @@ class VirtualTransaction:
 
 @dataclass
 class MarketplaceItem:
-    """Represents an item in the virtual marketplace."""
-    item_id: str = field(default_factory=lambda: str(uuid4()))
+    """Represents an item in the virtual marketplace."""    item_id: str = field(default_factory=lambda: str(uuid4()))
     name: str = ""
     description: str = ""
     detailed_description: str = ""
@@ -228,8 +215,7 @@ class MarketplaceItem:
     created_by: str = ""
     
     def is_available(self) -> bool:
-        """Check if item is currently available for purchase."""
-        if not self.available:
+        """Check if item is currently available for purchase."""        if not self.available:
             return False
         
         now = datetime.utcnow()
@@ -246,8 +232,7 @@ class MarketplaceItem:
         return True
     
     def can_user_purchase(self, user_profile: Dict[str, Any], user_purchases: int) -> Tuple[bool, List[str]]:
-        """Check if a user can purchase this item."""
-        reasons = []
+        """Check if a user can purchase this item."""        reasons = []
         
         # Check level requirement
         if self.level_requirement:
@@ -277,16 +262,13 @@ class MarketplaceItem:
 
 
 class VirtualEconomy:
-    """
-    Enterprise-grade virtual economy management system.
+    """    Enterprise-grade virtual economy management system.
     
     Manages virtual currencies, transactions, marketplace operations,
     and economic balance across the platform.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the virtual economy system."""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize the virtual economy system."""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self._wallets: Dict[str, VirtualWallet] = {}
         self._transactions: List[VirtualTransaction] = []
         self._marketplace_items: Dict[str, MarketplaceItem] = {}
@@ -303,8 +285,7 @@ class VirtualEconomy:
         self.logger.info("VirtualEconomy initialized successfully")
     
     def _initialize_exchange_rates(self) -> None:
-        """Initialize currency exchange rates (relative to credits)."""
-        self._exchange_rates = {
+        """Initialize currency exchange rates (relative to credits)."""        self._exchange_rates = {
             CurrencyType.CREDITS: Decimal('1.0'),
             CurrencyType.GEMS: Decimal('10.0'),  # 1 gem = 10 credits
             CurrencyType.TOKENS: Decimal('5.0'),  # 1 token = 5 credits
@@ -314,8 +295,7 @@ class VirtualEconomy:
         }
     
     def _initialize_marketplace(self) -> None:
-        """Initialize marketplace with default items."""
-        
+        """Initialize marketplace with default items."""        
         # Content Boosts
         content_boost_small = MarketplaceItem(
             name="Content Boost (Small)",
@@ -449,8 +429,7 @@ class VirtualEconomy:
         self._marketplace_items[platform_credits.item_id] = platform_credits
     
     async def get_user_wallet(self, user_id: str) -> VirtualWallet:
-        """Get or create a user's virtual wallet."""
-        if user_id not in self._wallets:
+        """Get or create a user's virtual wallet."""        if user_id not in self._wallets:
             wallet = VirtualWallet(user_id=user_id)
             
             # Initialize with starting balances
@@ -494,8 +473,7 @@ class VirtualEconomy:
         related_user_id: Optional[str] = None,
         related_item_id: Optional[str] = None
     ) -> VirtualTransaction:
-        """Process a virtual economy transaction."""
-        async with self._transaction_lock:
+        """Process a virtual economy transaction."""        async with self._transaction_lock:
             try:
                 wallet = await self.get_user_wallet(user_id)
                 metadata = metadata or {}
@@ -577,8 +555,7 @@ class VirtualEconomy:
         transaction: VirtualTransaction,
         wallet: VirtualWallet
     ) -> Dict[str, Any]:
-        """Validate a transaction before processing."""
-        errors = []
+        """Validate a transaction before processing."""        errors = []
         
         # Check if wallet is locked
         if wallet.locked:
@@ -614,8 +591,7 @@ class VirtualEconomy:
         }
     
     async def _get_daily_spending(self, user_id: str, currency: CurrencyType) -> Decimal:
-        """Get user's spending for today in a specific currency."""
-        today = datetime.utcnow().date()
+        """Get user's spending for today in a specific currency."""        today = datetime.utcnow().date()
         daily_spent = Decimal('0')
         
         for transaction in self._transactions:
@@ -633,8 +609,7 @@ class VirtualEconomy:
         transaction: VirtualTransaction,
         wallet: VirtualWallet
     ) -> None:
-        """Process an earn/bonus transaction."""
-        current_balance = wallet.get_balance(transaction.currency)
+        """Process an earn/bonus transaction."""        current_balance = wallet.get_balance(transaction.currency)
         new_balance = current_balance + transaction.amount
         
         wallet.balances[transaction.currency] = new_balance
@@ -645,8 +620,7 @@ class VirtualEconomy:
         transaction: VirtualTransaction,
         wallet: VirtualWallet
     ) -> None:
-        """Process a spend/purchase transaction."""
-        current_balance = wallet.get_balance(transaction.currency)
+        """Process a spend/purchase transaction."""        current_balance = wallet.get_balance(transaction.currency)
         new_balance = current_balance - transaction.amount
         
         wallet.balances[transaction.currency] = new_balance
@@ -657,8 +631,7 @@ class VirtualEconomy:
         transaction: VirtualTransaction,
         wallet: VirtualWallet
     ) -> None:
-        """Process a transfer transaction."""
-        if not transaction.related_user_id:
+        """Process a transfer transaction."""        if not transaction.related_user_id:
             raise ValueError("Transfer requires related_user_id")
         
         # Deduct from sender
@@ -692,8 +665,7 @@ class VirtualEconomy:
         transaction: VirtualTransaction,
         wallet: VirtualWallet
     ) -> None:
-        """Process a currency exchange transaction."""
-        # Extract exchange details from transaction metadata
+        """Process a currency exchange transaction."""        # Extract exchange details from transaction metadata
         exchange_data = transaction.metadata or {}
         from_currency = CurrencyType(exchange_data.get('from_currency', CurrencyType.POINTS))
         to_currency = transaction.currency
@@ -721,8 +693,7 @@ class VirtualEconomy:
         transaction: VirtualTransaction,
         wallet: VirtualWallet
     ) -> None:
-        """Process a refund transaction."""
-        # Add refunded amount back to wallet
+        """Process a refund transaction."""        # Add refunded amount back to wallet
         current_balance = wallet.get_balance(transaction.currency)
         new_balance = current_balance + transaction.amount
         
@@ -735,8 +706,7 @@ class VirtualEconomy:
         item_id: str,
         quantity: int = 1
     ) -> Dict[str, Any]:
-        """Purchase an item from the virtual marketplace."""
-        try:
+        """Purchase an item from the virtual marketplace."""        try:
             if item_id not in self._marketplace_items:
                 return {"success": False, "error": "Item not found"}
             
@@ -837,8 +807,7 @@ class VirtualEconomy:
         item: MarketplaceItem,
         quantity: int
     ) -> List[Dict[str, Any]]:
-        """Apply the effects of purchased items."""
-        effects_applied = []
+        """Apply the effects of purchased items."""        effects_applied = []
         
         # This would integrate with other systems to apply effects
         # For now, we'll just record what effects should be applied
@@ -863,8 +832,7 @@ class VirtualEconomy:
         limit: int = 50,
         offset: int = 0
     ) -> Dict[str, Any]:
-        """Get marketplace items with optional filtering."""
-        try:
+        """Get marketplace items with optional filtering."""        try:
             filtered_items = []
             
             for item in self._marketplace_items.values():
@@ -945,8 +913,7 @@ class VirtualEconomy:
         limit: int = 100,
         offset: int = 0
     ) -> Dict[str, Any]:
-        """Get user's transaction history with optional filtering."""
-        try:
+        """Get user's transaction history with optional filtering."""        try:
             user_transactions = []
             
             for transaction in self._transactions:
@@ -998,8 +965,7 @@ class VirtualEconomy:
             return {"transactions": [], "pagination": {"total": 0, "limit": limit, "offset": offset, "has_more": False}}
     
     async def get_user_financial_summary(self, user_id: str) -> Dict[str, Any]:
-        """Get comprehensive financial summary for a user."""
-        try:
+        """Get comprehensive financial summary for a user."""        try:
             wallet = await self.get_user_wallet(user_id)
             
             # Calculate net worth
@@ -1063,8 +1029,7 @@ class VirtualEconomy:
             return {}
     
     async def daily_login_bonus(self, user_id: str, consecutive_days: int) -> VirtualTransaction:
-        """Award daily login bonus based on consecutive days."""
-        try:
+        """Award daily login bonus based on consecutive days."""        try:
             # Calculate bonus based on streak
             base_credits = 25
             streak_bonus = min(consecutive_days * 5, 100)  # Max 100 bonus credits
@@ -1119,8 +1084,7 @@ _virtual_economy: Optional[VirtualEconomy] = None
 
 
 async def get_virtual_economy() -> VirtualEconomy:
-    """Get the global virtual economy instance."""
-    global _virtual_economy
+    """Get the global virtual economy instance."""    global _virtual_economy
     
     if _virtual_economy is None:
         _virtual_economy = VirtualEconomy()
@@ -1136,8 +1100,7 @@ async def award_currency(
     source: TransactionSource,
     description: str = ""
 ) -> VirtualTransaction:
-    """Award currency to a user (convenience function)."""
-    economy = await get_virtual_economy()
+    """Award currency to a user (convenience function)."""    economy = await get_virtual_economy()
     return await economy.process_transaction(
         user_id=user_id,
         transaction_type=TransactionType.EARN,
@@ -1155,8 +1118,7 @@ async def spend_currency(
     source: TransactionSource,
     description: str = ""
 ) -> VirtualTransaction:
-    """Spend currency for a user (convenience function)."""
-    economy = await get_virtual_economy()
+    """Spend currency for a user (convenience function)."""    economy = await get_virtual_economy()
     return await economy.process_transaction(
         user_id=user_id,
         transaction_type=TransactionType.SPEND,
@@ -1168,7 +1130,6 @@ async def spend_currency(
 
 
 async def get_user_balance(user_id: str, currency: CurrencyType) -> Decimal:
-    """Get user's balance for a specific currency (convenience function)."""
-    economy = await get_virtual_economy()
+    """Get user's balance for a specific currency (convenience function)."""    economy = await get_virtual_economy()
     wallet = await economy.get_user_wallet(user_id)
     return wallet.get_balance(currency)

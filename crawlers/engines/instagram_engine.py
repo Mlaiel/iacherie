@@ -1,5 +1,4 @@
-"""
-Instagram Crawling Engine
+"""Instagram Crawling Engine
 ========================
 
 Advanced Instagram crawler for content discovery, profile analysis, and Stories monitoring.
@@ -12,9 +11,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Set
 from dataclasses import dataclass, asdict
@@ -58,8 +55,7 @@ settings = get_settings()
 
 @dataclass
 class InstagramPostData:
-    """Instagram post data structure"""
-    post_id: str
+    """Instagram post data structure"""    post_id: str
     shortcode: str
     url: str
     caption: str
@@ -84,8 +80,7 @@ class InstagramPostData:
 
 @dataclass
 class InstagramProfileData:
-    """Instagram profile data structure"""
-    user_id: str
+    """Instagram profile data structure"""    user_id: str
     username: str
     full_name: str
     biography: str
@@ -112,8 +107,7 @@ class InstagramProfileData:
 
 @dataclass
 class InstagramStoryData:
-    """Instagram story data structure"""
-    story_id: str
+    """Instagram story data structure"""    story_id: str
     user_id: str
     username: str
     media_type: str  # photo, video
@@ -130,8 +124,7 @@ class InstagramStoryData:
 
 
 class InstagramCrawlerEngine(BaseCrawlerEngine):
-    """
-    Advanced Instagram crawler engine with comprehensive data extraction.
+    """    Advanced Instagram crawler engine with comprehensive data extraction.
     
     Features:
     - Profile and post analytics extraction
@@ -141,11 +134,9 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
     - Business account insights
     - Rate limiting and proxy rotation
     - Anti-detection mechanisms
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize Instagram crawler engine"""
-        super().__init__(config)
+        """Initialize Instagram crawler engine"""        super().__init__(config)
         self.session = None
         self.loader = None
         self.rate_limiter = RateLimiter(
@@ -163,8 +154,7 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
         self._setup_instaloader()
     
     def _setup_session(self) -> None:
-        """Setup HTTP session with headers and cookies"""
-        self.session = requests.Session()
+        """Setup HTTP session with headers and cookies"""        self.session = requests.Session()
         self.session.headers.update({
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
@@ -176,8 +166,7 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
         logger.info("HTTP session initialized")
     
     def _setup_selenium_driver(self) -> None:
-        """Setup Selenium WebDriver with stealth configuration"""
-        try:
+        """Setup Selenium WebDriver with stealth configuration"""        try:
             chrome_options = webdriver.ChromeOptions()
             chrome_options.add_argument('--headless')
             chrome_options.add_argument('--no-sandbox')
@@ -208,8 +197,7 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
             self.driver = None
     
     def _setup_instaloader(self) -> None:
-        """Setup Instaloader for API-based extraction"""
-        try:
+        """Setup Instaloader for API-based extraction"""        try:
             self.loader = instaloader.Instaloader(
                 download_pictures=False,
                 download_videos=False,
@@ -227,16 +215,14 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
             self.loader = None
     
     async def get_profile_data(self, username: str) -> Optional[InstagramProfileData]:
-        """
-        Get comprehensive profile data for a user
+        """        Get comprehensive profile data for a user
         
         Args:
             username: Instagram username
             
         Returns:
             Profile data or None if not found
-        """
-        await self.rate_limiter.wait()
+        """        await self.rate_limiter.wait()
         
         cache_key = f"profile_{username.lower()}"
         cached_result = await self.cache_manager.get(cache_key)
@@ -270,8 +256,7 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
         max_posts: int = 50,
         include_stories: bool = False
     ) -> List[InstagramPostData]:
-        """
-        Get recent posts from a user's profile
+        """        Get recent posts from a user's profile
         
         Args:
             username: Instagram username
@@ -280,8 +265,7 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of post data
-        """
-        await self.rate_limiter.wait()
+        """        await self.rate_limiter.wait()
         
         try:
             # Try Instaloader first
@@ -302,16 +286,14 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Failed to get posts: {e}")
     
     async def get_post_details(self, shortcode: str) -> Optional[InstagramPostData]:
-        """
-        Get detailed information about a specific post
+        """        Get detailed information about a specific post
         
         Args:
             shortcode: Instagram post shortcode
             
         Returns:
             Detailed post data
-        """
-        await self.rate_limiter.wait()
+        """        await self.rate_limiter.wait()
         
         cache_key = f"post_{shortcode}"
         cached_result = await self.cache_manager.get(cache_key)
@@ -338,8 +320,7 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
             return None
     
     async def search_hashtag(self, hashtag: str, max_posts: int = 100) -> List[InstagramPostData]:
-        """
-        Search posts by hashtag
+        """        Search posts by hashtag
         
         Args:
             hashtag: Hashtag to search for (without #)
@@ -347,8 +328,7 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of posts containing the hashtag
-        """
-        await self.rate_limiter.wait()
+        """        await self.rate_limiter.wait()
         
         try:
             if self.loader:
@@ -364,16 +344,14 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Hashtag search failed: {e}")
     
     async def monitor_stories(self, usernames: List[str]) -> List[InstagramStoryData]:
-        """
-        Monitor stories from multiple users
+        """        Monitor stories from multiple users
         
         Args:
             usernames: List of usernames to monitor
             
         Returns:
             List of active stories
-        """
-        stories = []
+        """        stories = []
         
         for username in usernames:
             try:
@@ -395,8 +373,7 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
         original_content: Dict, 
         search_hashtags: List[str]
     ) -> List[Dict]:
-        """
-        Detect potential content theft using image similarity and metadata
+        """        Detect potential content theft using image similarity and metadata
         
         Args:
             original_content: Original content metadata
@@ -404,8 +381,7 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of potential theft matches
-        """
-        theft_candidates = []
+        """        theft_candidates = []
         
         for hashtag in search_hashtags:
             try:
@@ -436,8 +412,7 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
         return theft_candidates
     
     async def _get_profile_instaloader(self, username: str) -> Optional[InstagramProfileData]:
-        """Get profile data using Instaloader"""
-        try:
+        """Get profile data using Instaloader"""        try:
             profile = instaloader.Profile.from_username(self.loader.context, username)
             
             return InstagramProfileData(
@@ -464,8 +439,7 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
             return None
     
     async def _get_profile_selenium(self, username: str) -> Optional[InstagramProfileData]:
-        """Get profile data using Selenium scraping"""
-        try:
+        """Get profile data using Selenium scraping"""        try:
             url = f"https://www.instagram.com/{username}/"
             self.driver.get(url)
             
@@ -571,8 +545,7 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
             return None
     
     async def _get_posts_instaloader(self, username: str, max_posts: int) -> List[InstagramPostData]:
-        """Get posts using Instaloader"""
-        posts = []
+        """Get posts using Instaloader"""        posts = []
         try:
             profile = instaloader.Profile.from_username(self.loader.context, username)
             
@@ -608,8 +581,7 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
         return posts
     
     def _parse_count(self, count_str: str) -> int:
-        """Parse Instagram count strings (e.g., '1.2K', '5M')"""
-        try:
+        """Parse Instagram count strings (e.g., '1.2K', '5M')"""        try:
             count_str = count_str.replace(',', '').replace(' ', '')
             if 'K' in count_str:
                 return int(float(count_str.replace('K', '')) * 1000)
@@ -621,8 +593,7 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
             return 0
     
     async def _calculate_engagement_rate(self, profile) -> float:
-        """Calculate engagement rate for a profile"""
-        try:
+        """Calculate engagement rate for a profile"""        try:
             total_engagement = 0
             post_count = 0
             
@@ -647,8 +618,7 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
         original: Dict, 
         candidate: Dict
     ) -> float:
-        """Calculate similarity between original and candidate content"""
-        try:
+        """Calculate similarity between original and candidate content"""        try:
             # Caption similarity
             original_caption = original.get('caption', '').lower()
             candidate_caption = candidate.get('caption', '').lower()
@@ -687,8 +657,7 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
             return 0.0
     
     async def _classify_theft_type(self, original: Dict, candidate: InstagramPostData) -> str:
-        """Classify the type of potential content theft"""
-        try:
+        """Classify the type of potential content theft"""        try:
             # Exact repost
             if original.get('caption', '').strip() == candidate.caption.strip():
                 return "exact_repost"
@@ -714,8 +683,7 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
             return "unknown"
     
     async def cleanup(self) -> None:
-        """Cleanup resources"""
-        try:
+        """Cleanup resources"""        try:
             if hasattr(self, 'driver') and self.driver:
                 self.driver.quit()
             if hasattr(self, 'session') and self.session:
@@ -726,8 +694,7 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
             logger.error(f"Error during cleanup: {e}")
     
     def __del__(self):
-        """Destructor to ensure cleanup"""
-        try:
+        """Destructor to ensure cleanup"""        try:
             if hasattr(self, 'driver') and self.driver:
                 self.driver.quit()
             if hasattr(self, 'session') and self.session:

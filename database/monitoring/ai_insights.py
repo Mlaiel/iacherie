@@ -1,5 +1,4 @@
-"""
-Database AI Insights - Advanced Machine Learning Analytics for Database Intelligence
+"""Database AI Insights - Advanced Machine Learning Analytics for Database Intelligence
 
 AI-powered database analytics system with predictive analysis, anomaly detection,
 pattern recognition, and intelligent recommendations for the IA Influencer Agent platform.
@@ -13,9 +12,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute violation sera poursuivie selon les lois en vigueur.
-"""
-
-import asyncio
+"""import asyncio
 import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
@@ -50,8 +47,7 @@ from ...monitoring.notifications import AIInsightsNotificationManager
 
 
 class InsightType(Enum):
-    """Types of AI insights"""
-    PERFORMANCE_PREDICTION = "performance_prediction"
+    """Types of AI insights"""    PERFORMANCE_PREDICTION = "performance_prediction"
     ANOMALY_DETECTION = "anomaly_detection"
     PATTERN_RECOGNITION = "pattern_recognition"
     CAPACITY_PLANNING = "capacity_planning"
@@ -62,8 +58,7 @@ class InsightType(Enum):
 
 
 class AnomalyType(Enum):
-    """Types of anomalies detected"""
-    PERFORMANCE_DEGRADATION = "performance_degradation"
+    """Types of anomalies detected"""    PERFORMANCE_DEGRADATION = "performance_degradation"
     UNUSUAL_QUERY_PATTERN = "unusual_query_pattern"
     RESOURCE_SPIKE = "resource_spike"
     CONNECTION_ANOMALY = "connection_anomaly"
@@ -73,8 +68,7 @@ class AnomalyType(Enum):
 
 
 class ConfidenceLevel(Enum):
-    """Confidence levels for predictions"""
-    LOW = "low"
+    """Confidence levels for predictions"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     VERY_HIGH = "very_high"
@@ -82,8 +76,7 @@ class ConfidenceLevel(Enum):
 
 @dataclass
 class AIInsight:
-    """AI-generated database insight"""
-    insight_id: str
+    """AI-generated database insight"""    insight_id: str
     timestamp: datetime
     insight_type: InsightType
     confidence: float
@@ -98,8 +91,7 @@ class AIInsight:
     expires_at: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'insight_id': self.insight_id,
             'timestamp': self.timestamp.isoformat(),
             'insight_type': self.insight_type.value,
@@ -118,8 +110,7 @@ class AIInsight:
 
 @dataclass
 class AnomalyDetection:
-    """Anomaly detection result"""
-    anomaly_id: str
+    """Anomaly detection result"""    anomaly_id: str
     timestamp: datetime
     anomaly_type: AnomalyType
     severity: str
@@ -131,8 +122,7 @@ class AnomalyDetection:
     recommended_actions: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'anomaly_id': self.anomaly_id,
             'timestamp': self.timestamp.isoformat(),
             'anomaly_type': self.anomaly_type.value,
@@ -148,8 +138,7 @@ class AnomalyDetection:
 
 @dataclass
 class PredictionResult:
-    """Performance prediction result"""
-    prediction_id: str
+    """Performance prediction result"""    prediction_id: str
     timestamp: datetime
     target_metric: str
     current_value: float
@@ -161,8 +150,7 @@ class PredictionResult:
     factors: Dict[str, float]  # Contributing factors
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'prediction_id': self.prediction_id,
             'timestamp': self.timestamp.isoformat(),
             'target_metric': self.target_metric,
@@ -177,8 +165,7 @@ class PredictionResult:
 
 
 class DatabaseAIInsights:
-    """Advanced AI-powered database insights system"""
-    
+    """Advanced AI-powered database insights system"""    
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
@@ -208,8 +195,7 @@ class DatabaseAIInsights:
         asyncio.create_task(self._initialize_ml_models())
         
     async def _initialize_ml_models(self):
-        """Initialize machine learning models"""
-        try:
+        """Initialize machine learning models"""        try:
             # Initialize anomaly detection models
             self.models['performance_anomaly'] = IsolationForest(
                 contamination=0.1,
@@ -245,8 +231,7 @@ class DatabaseAIInsights:
             self.logger.error(f"Failed to initialize ML models: {e}")
             
     async def _load_pretrained_models(self):
-        """Load pre-trained models from storage"""
-        try:
+        """Load pre-trained models from storage"""        try:
             # Try to load models from Redis cache
             model_data = await self.cache.get("ai_models")
             if model_data:
@@ -257,8 +242,7 @@ class DatabaseAIInsights:
             self.logger.debug(f"No pre-trained models found: {e}")
             
     async def start_monitoring(self, interval: int = 300):  # 5 minutes
-        """Start AI insights monitoring"""
-        if self._monitoring_active:
+        """Start AI insights monitoring"""        if self._monitoring_active:
             self.logger.warning("AI insights monitoring already active")
             return
             
@@ -269,8 +253,7 @@ class DatabaseAIInsights:
         self.logger.info("Database AI insights monitoring started")
         
     async def stop_monitoring(self):
-        """Stop AI insights monitoring"""
-        self._monitoring_active = False
+        """Stop AI insights monitoring"""        self._monitoring_active = False
         if self._monitoring_task:
             self._monitoring_task.cancel()
             try:
@@ -280,8 +263,7 @@ class DatabaseAIInsights:
         self.logger.info("Database AI insights monitoring stopped")
         
     async def _monitoring_loop(self, interval: int):
-        """Main AI insights monitoring loop"""
-        while self._monitoring_active:
+        """Main AI insights monitoring loop"""        while self._monitoring_active:
             try:
                 await self._collect_training_data()
                 await self._detect_anomalies()
@@ -296,12 +278,10 @@ class DatabaseAIInsights:
                 await asyncio.sleep(interval)
                 
     async def _collect_training_data(self):
-        """Collect data for model training"""
-        try:
+        """Collect data for model training"""        try:
             async with get_database_session() as session:
                 # Collect performance metrics
-                perf_query = text("""
-                    SELECT 
+                perf_query = text("""                    SELECT 
                         NOW() as timestamp,
                         (SELECT count(*) FROM pg_stat_activity WHERE state = 'active') as active_connections,
                         (SELECT count(*) FROM pg_stat_activity WHERE state = 'idle') as idle_connections,
@@ -374,8 +354,7 @@ class DatabaseAIInsights:
             self.logger.error(f"Failed to collect training data: {e}")
             
     async def _detect_anomalies(self):
-        """Detect anomalies in database metrics"""
-        try:
+        """Detect anomalies in database metrics"""        try:
             if len(self.historical_data) < 100:  # Need sufficient data
                 return
                 
@@ -412,12 +391,10 @@ class DatabaseAIInsights:
             self.logger.error(f"Failed to detect anomalies: {e}")
             
     async def _detect_query_anomalies(self):
-        """Detect anomalies in query patterns"""
-        try:
+        """Detect anomalies in query patterns"""        try:
             async with get_database_session() as session:
                 # Get recent query statistics
-                query_stats_query = text("""
-                    SELECT 
+                query_stats_query = text("""                    SELECT 
                         query,
                         calls,
                         total_time,
@@ -463,8 +440,7 @@ class DatabaseAIInsights:
             self.logger.error(f"Failed to detect query anomalies: {e}")
             
     async def _process_anomaly(self, anomaly_type: AnomalyType, score: float, data_point: pd.Series, features: List[str]):
-        """Process detected anomaly"""
-        try:
+        """Process detected anomaly"""        try:
             anomaly_id = f"anomaly_{anomaly_type.value}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
             
             # Calculate severity based on score
@@ -500,8 +476,7 @@ class DatabaseAIInsights:
             self.logger.error(f"Failed to process anomaly: {e}")
             
     async def _process_query_anomaly(self, query_stat, score: float):
-        """Process query anomaly"""
-        try:
+        """Process query anomaly"""        try:
             anomaly_id = f"query_anomaly_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
             
             severity = self._calculate_anomaly_severity(score)
@@ -547,8 +522,7 @@ class DatabaseAIInsights:
             self.logger.error(f"Failed to process query anomaly: {e}")
             
     def _calculate_anomaly_severity(self, score: float) -> str:
-        """Calculate anomaly severity based on score"""
-        abs_score = abs(score)
+        """Calculate anomaly severity based on score"""        abs_score = abs(score)
         
         if abs_score > 0.8:
             return "CRITICAL"
@@ -560,8 +534,7 @@ class DatabaseAIInsights:
             return "LOW"
             
     async def _analyze_root_cause(self, anomaly_type: AnomalyType, data_point: pd.Series, features: List[str]) -> Dict[str, Any]:
-        """Analyze root cause of anomaly"""
-        try:
+        """Analyze root cause of anomaly"""        try:
             root_cause = {
                 'most_deviant_metrics': [],
                 'potential_causes': [],
@@ -596,8 +569,7 @@ class DatabaseAIInsights:
             return {}
             
     def _get_potential_causes(self, metric: str, current_value: float, normal_value: float) -> List[str]:
-        """Get potential causes for metric deviation"""
-        causes = []
+        """Get potential causes for metric deviation"""        causes = []
         
         if metric == 'active_connections' and current_value > normal_value * 2:
             causes.extend([
@@ -621,8 +593,7 @@ class DatabaseAIInsights:
         return causes
         
     async def _generate_anomaly_recommendations(self, anomaly_type: AnomalyType, root_cause: Dict[str, Any]) -> List[str]:
-        """Generate recommendations for anomaly"""
-        recommendations = []
+        """Generate recommendations for anomaly"""        recommendations = []
         
         if anomaly_type == AnomalyType.PERFORMANCE_DEGRADATION:
             recommendations.extend([
@@ -644,8 +615,7 @@ class DatabaseAIInsights:
         return list(set(recommendations))  # Remove duplicates
         
     async def _store_anomaly(self, anomaly: AnomalyDetection):
-        """Store anomaly detection result"""
-        try:
+        """Store anomaly detection result"""        try:
             await self.cache.set(
                 f"anomaly:{anomaly.anomaly_id}",
                 json.dumps(anomaly.to_dict()),
@@ -668,8 +638,7 @@ class DatabaseAIInsights:
             self.logger.error(f"Failed to store anomaly: {e}")
             
     async def _send_anomaly_alert(self, anomaly: AnomalyDetection):
-        """Send anomaly alert notification"""
-        try:
+        """Send anomaly alert notification"""        try:
             await self.notification_manager.send_anomaly_alert(
                 severity=anomaly.severity,
                 title=f'Database Anomaly: {anomaly.anomaly_type.value.title()}',
@@ -680,8 +649,7 @@ class DatabaseAIInsights:
             self.logger.error(f"Failed to send anomaly alert: {e}")
             
     async def _generate_predictions(self):
-        """Generate performance predictions"""
-        try:
+        """Generate performance predictions"""        try:
             if len(self.historical_data) < 50:  # Need sufficient data
                 return
                 
@@ -703,8 +671,7 @@ class DatabaseAIInsights:
             self.logger.error(f"Failed to generate predictions: {e}")
             
     async def _predict_metric(self, metric: str) -> Optional[PredictionResult]:
-        """Predict specific metric value"""
-        try:
+        """Predict specific metric value"""        try:
             # Prepare time series data
             data = self.historical_data[['timestamp', metric]].copy()
             data['timestamp'] = pd.to_datetime(data['timestamp'])
@@ -796,8 +763,7 @@ class DatabaseAIInsights:
             return None
             
     async def _store_prediction(self, prediction: PredictionResult):
-        """Store prediction result"""
-        try:
+        """Store prediction result"""        try:
             await self.cache.set(
                 f"prediction:{prediction.prediction_id}",
                 json.dumps(prediction.to_dict()),
@@ -814,8 +780,7 @@ class DatabaseAIInsights:
             self.logger.error(f"Failed to store prediction: {e}")
             
     async def _recognize_patterns(self):
-        """Recognize patterns in database behavior"""
-        try:
+        """Recognize patterns in database behavior"""        try:
             if len(self.historical_data) < 100:
                 return
                 
@@ -829,8 +794,7 @@ class DatabaseAIInsights:
             self.logger.error(f"Failed to recognize patterns: {e}")
             
     async def _recognize_usage_patterns(self):
-        """Recognize database usage patterns"""
-        try:
+        """Recognize database usage patterns"""        try:
             # Group by hour to find usage patterns
             data = self.historical_data.copy()
             data['timestamp'] = pd.to_datetime(data['timestamp'])
@@ -878,8 +842,7 @@ class DatabaseAIInsights:
             self.logger.error(f"Failed to recognize usage patterns: {e}")
             
     async def _recognize_performance_patterns(self):
-        """Recognize performance patterns"""
-        try:
+        """Recognize performance patterns"""        try:
             # Analyze performance correlations
             data = self.historical_data.copy()
             
@@ -928,8 +891,7 @@ class DatabaseAIInsights:
             self.logger.error(f"Failed to recognize performance patterns: {e}")
             
     async def _generate_insights(self):
-        """Generate high-level AI insights"""
-        try:
+        """Generate high-level AI insights"""        try:
             # Generate capacity planning insights
             await self._generate_capacity_insights()
             
@@ -940,8 +902,7 @@ class DatabaseAIInsights:
             self.logger.error(f"Failed to generate insights: {e}")
             
     async def _generate_capacity_insights(self):
-        """Generate capacity planning insights"""
-        try:
+        """Generate capacity planning insights"""        try:
             if len(self.historical_data) < 24:  # Need at least 24 data points
                 return
                 
@@ -1002,8 +963,7 @@ class DatabaseAIInsights:
             self.logger.error(f"Failed to generate capacity insights: {e}")
             
     async def _generate_optimization_insights(self):
-        """Generate optimization insights"""
-        try:
+        """Generate optimization insights"""        try:
             data = self.historical_data.copy()
             
             if len(data) < 10:
@@ -1043,8 +1003,7 @@ class DatabaseAIInsights:
             self.logger.error(f"Failed to generate optimization insights: {e}")
             
     async def _store_insight(self, insight: AIInsight):
-        """Store AI insight"""
-        try:
+        """Store AI insight"""        try:
             self.insights[insight.insight_id] = insight
             
             await self.cache.set(
@@ -1073,8 +1032,7 @@ class DatabaseAIInsights:
             self.logger.error(f"Failed to store insight: {e}")
             
     async def _send_insight_notification(self, insight: AIInsight):
-        """Send insight notification"""
-        try:
+        """Send insight notification"""        try:
             await self.notification_manager.send_insight_notification(
                 title=insight.title,
                 message=insight.description,
@@ -1084,8 +1042,7 @@ class DatabaseAIInsights:
             self.logger.error(f"Failed to send insight notification: {e}")
             
     async def _retrain_models_if_needed(self):
-        """Retrain models if needed"""
-        try:
+        """Retrain models if needed"""        try:
             # Retrain models daily
             for model_name in ['performance_anomaly', 'query_anomaly']:
                 last_trained = self.model_last_trained.get(model_name)
@@ -1101,8 +1058,7 @@ class DatabaseAIInsights:
             self.logger.error(f"Failed to retrain models: {e}")
             
     async def _retrain_model(self, model_name: str):
-        """Retrain specific model"""
-        try:
+        """Retrain specific model"""        try:
             if len(self.historical_data) < 100:
                 return
                 
@@ -1124,8 +1080,7 @@ class DatabaseAIInsights:
             self.logger.error(f"Failed to retrain model {model_name}: {e}")
             
     async def _save_models(self):
-        """Save trained models to cache"""
-        try:
+        """Save trained models to cache"""        try:
             models_to_save = {
                 key: value for key, value in self.models.items()
                 if key in ['performance_anomaly', 'query_anomaly', 'scaler']
@@ -1141,8 +1096,7 @@ class DatabaseAIInsights:
             self.logger.error(f"Failed to save models: {e}")
             
     async def _cleanup_old_insights(self):
-        """Cleanup old insights and data"""
-        try:
+        """Cleanup old insights and data"""        try:
             # Remove insights older than 7 days
             cutoff_time = datetime.utcnow() - timedelta(days=7)
             cutoff_timestamp = cutoff_time.timestamp()
@@ -1178,8 +1132,7 @@ class DatabaseAIInsights:
             self.logger.error(f"Failed to cleanup old insights: {e}")
             
     async def get_insights_summary(self, hours: int = 24) -> Dict[str, Any]:
-        """Get AI insights summary"""
-        try:
+        """Get AI insights summary"""        try:
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             cutoff_timestamp = cutoff_time.timestamp()
             
@@ -1233,36 +1186,30 @@ class DatabaseAIInsights:
 
 
 class PredictiveAnalyzer:
-    """Advanced predictive analysis engine"""
-    
+    """Advanced predictive analysis engine"""    
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
         
     async def predict_performance_degradation(self, metrics: List[Dict]) -> Dict[str, Any]:
-        """Predict potential performance degradation"""
-        # Implementation for performance degradation prediction
+        """Predict potential performance degradation"""        # Implementation for performance degradation prediction
         pass
         
     async def forecast_capacity_needs(self, usage_trends: List[Dict]) -> Dict[str, Any]:
-        """Forecast future capacity requirements"""
-        # Implementation for capacity forecasting
+        """Forecast future capacity requirements"""        # Implementation for capacity forecasting
         pass
 
 
 class AnomalyDetector:
-    """Advanced anomaly detection engine"""
-    
+    """Advanced anomaly detection engine"""    
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
         
     async def detect_performance_anomalies(self, metrics: List[Dict]) -> List[AnomalyDetection]:
-        """Detect performance anomalies"""
-        # Implementation for performance anomaly detection
+        """Detect performance anomalies"""        # Implementation for performance anomaly detection
         pass
         
     async def detect_security_anomalies(self, security_events: List[Dict]) -> List[AnomalyDetection]:
-        """Detect security anomalies"""
-        # Implementation for security anomaly detection
+        """Detect security anomalies"""        # Implementation for security anomaly detection
         pass

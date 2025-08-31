@@ -1,5 +1,4 @@
-"""
-Configuration Index - IA-Influencer Agent Platform
+"""Configuration Index - IA-Influencer Agent Platform
 ================================================
 Master index for all configuration modules and services.
 
@@ -9,9 +8,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 ⚠️ PROPRIÉTÉ EXCLUSIVE DE FAHED MLAIEL
 Toute tentative de copie, vol ou réutilisation sans autorisation écrite
 de Fahed Mlaiel (mlaiel@live.de) sera poursuivie en justice selon la loi allemande.
-"""
-
-from typing import Dict, List, Optional, Any, Type, Union
+"""from typing import Dict, List, Optional, Any, Type, Union
 import logging
 from datetime import datetime
 from enum import Enum
@@ -91,8 +88,7 @@ logger = logging.getLogger(__name__)
 
 
 class ConfigurationModule(Enum):
-    """Configuration module enumeration."""
-    # Core modules
+    """Configuration module enumeration."""    # Core modules
     ENVIRONMENTS = "environments"
     SECURITY = "security"
     DATABASE = "database"
@@ -126,11 +122,9 @@ class ConfigurationModule(Enum):
 
 
 class ConfigurationIndex:
-    """Master configuration index for the IA-Influencer Agent platform."""
-    
+    """Master configuration index for the IA-Influencer Agent platform."""    
     def __init__(self):
-        """Initialize configuration index."""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize configuration index."""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.initialized = False
         self.managers: Dict[str, Any] = {}
         self.configurations: Dict[str, Any] = {}
@@ -142,8 +136,7 @@ class ConfigurationIndex:
         self._initialize_metadata()
     
     def _register_managers(self) -> None:
-        """Register all configuration managers."""
-        self.managers.update({
+        """Register all configuration managers."""        self.managers.update({
             # Environment managers
             'development': DevelopmentConfigManager,
             'production': ProductionConfigManager,
@@ -188,8 +181,7 @@ class ConfigurationIndex:
         })
     
     def _register_configurations(self) -> None:
-        """Register all configuration instances."""
-        self.configurations.update({
+        """Register all configuration instances."""        self.configurations.update({
             # API configurations
             'content_delivery_apis': content_delivery_apis_config,
             'ml_apis': ml_apis_config,
@@ -204,8 +196,7 @@ class ConfigurationIndex:
         })
     
     def _initialize_metadata(self) -> None:
-        """Initialize configuration metadata."""
-        self.metadata = {
+        """Initialize configuration metadata."""        self.metadata = {
             'platform_info': {
                 'name': 'IA-Influencer Agent Platform',
                 'version': '2.0.0',
@@ -286,8 +277,7 @@ class ConfigurationIndex:
         }
     
     def _get_module_description(self, module: ConfigurationModule) -> str:
-        """Get module description."""
-        descriptions = {
+        """Get module description."""        descriptions = {
             ConfigurationModule.ENVIRONMENTS: "Environment-specific configurations for development, staging, and production",
             ConfigurationModule.SECURITY: "Security, authentication, authorization, and encryption configurations",
             ConfigurationModule.DATABASE: "Database connections, schemas, and data management configurations",
@@ -312,8 +302,7 @@ class ConfigurationIndex:
         return descriptions.get(module, "Configuration module")
     
     def _get_module_components(self, module: ConfigurationModule) -> List[str]:
-        """Get module components."""
-        components = {
+        """Get module components."""        components = {
             ConfigurationModule.ENVIRONMENTS: ["Development", "Staging", "Production", "Testing"],
             ConfigurationModule.SECURITY: ["Authentication", "Authorization", "Encryption", "Audit"],
             ConfigurationModule.DATABASE: ["PostgreSQL", "MongoDB", "Redis", "FAISS", "Elasticsearch"],
@@ -325,8 +314,7 @@ class ConfigurationIndex:
         return components.get(module, [])
     
     def _get_module_dependencies(self, module: ConfigurationModule) -> List[str]:
-        """Get module dependencies."""
-        dependencies = {
+        """Get module dependencies."""        dependencies = {
             ConfigurationModule.MONETIZATION: ["security", "database", "apis"],
             ConfigurationModule.CONTENT_PROTECTION: ["ai", "database", "storage"],
             ConfigurationModule.BLOCKCHAIN: ["security", "apis", "database"],
@@ -335,44 +323,34 @@ class ConfigurationIndex:
         return dependencies.get(module, [])
     
     def get_manager(self, manager_name: str) -> Optional[Type]:
-        """Get configuration manager by name."""
-        return self.managers.get(manager_name)
+        """Get configuration manager by name."""        return self.managers.get(manager_name)
     
     def get_configuration(self, config_name: str) -> Optional[Any]:
-        """Get configuration instance by name."""
-        return self.configurations.get(config_name)
+        """Get configuration instance by name."""        return self.configurations.get(config_name)
     
     def get_module_info(self, module: ConfigurationModule) -> Dict[str, Any]:
-        """Get module information."""
-        return self.metadata.get('configuration_modules', {}).get(module.value, {})
+        """Get module information."""        return self.metadata.get('configuration_modules', {}).get(module.value, {})
     
     def list_managers(self) -> List[str]:
-        """List all available configuration managers."""
-        return list(self.managers.keys())
+        """List all available configuration managers."""        return list(self.managers.keys())
     
     def list_configurations(self) -> List[str]:
-        """List all available configuration instances."""
-        return list(self.configurations.keys())
+        """List all available configuration instances."""        return list(self.configurations.keys())
     
     def get_platform_info(self) -> Dict[str, Any]:
-        """Get platform information."""
-        return self.metadata.get('platform_info', {})
+        """Get platform information."""        return self.metadata.get('platform_info', {})
     
     def get_business_logic(self) -> Dict[str, Any]:
-        """Get business logic information."""
-        return self.metadata.get('business_logic', {})
+        """Get business logic information."""        return self.metadata.get('business_logic', {})
     
     def get_technical_stack(self) -> Dict[str, Any]:
-        """Get technical stack information."""
-        return self.metadata.get('technical_stack', {})
+        """Get technical stack information."""        return self.metadata.get('technical_stack', {})
     
     def get_security_features(self) -> Dict[str, Any]:
-        """Get security features information."""
-        return self.metadata.get('security_features', {})
+        """Get security features information."""        return self.metadata.get('security_features', {})
     
     def validate_all_configurations(self) -> Dict[str, Any]:
-        """Validate all configurations."""
-        results = {}
+        """Validate all configurations."""        results = {}
         
         for name, config in self.configurations.items():
             try:
@@ -386,8 +364,7 @@ class ConfigurationIndex:
         return results
     
     def get_configuration_summary(self) -> Dict[str, Any]:
-        """Get configuration summary."""
-        return {
+        """Get configuration summary."""        return {
             "platform_info": self.get_platform_info(),
             "total_managers": len(self.managers),
             "total_configurations": len(self.configurations),
@@ -404,30 +381,24 @@ configuration_index = ConfigurationIndex()
 
 
 def get_config_manager(manager_name: str) -> Optional[Type]:
-    """Get configuration manager by name."""
-    return configuration_index.get_manager(manager_name)
+    """Get configuration manager by name."""    return configuration_index.get_manager(manager_name)
 
 
 def get_config(config_name: str) -> Optional[Any]:
-    """Get configuration instance by name."""
-    return configuration_index.get_configuration(config_name)
+    """Get configuration instance by name."""    return configuration_index.get_configuration(config_name)
 
 
 def list_available_managers() -> List[str]:
-    """List all available configuration managers."""
-    return configuration_index.list_managers()
+    """List all available configuration managers."""    return configuration_index.list_managers()
 
 
 def list_available_configurations() -> List[str]:
-    """List all available configuration instances."""
-    return configuration_index.list_configurations()
+    """List all available configuration instances."""    return configuration_index.list_configurations()
 
 
 def get_platform_summary() -> Dict[str, Any]:
-    """Get platform configuration summary."""
-    return configuration_index.get_configuration_summary()
+    """Get platform configuration summary."""    return configuration_index.get_configuration_summary()
 
 
 def validate_configurations() -> Dict[str, Any]:
-    """Validate all configurations."""
-    return configuration_index.validate_all_configurations()
+    """Validate all configurations."""    return configuration_index.validate_all_configurations()

@@ -1,5 +1,4 @@
-"""
-Advanced Team Collaboration Database Model
+"""Advanced Team Collaboration Database Model
 
 Enterprise-grade SQLAlchemy model for creator collaboration, team management,
 and intelligent matching systems for multi-format content creators.
@@ -23,9 +22,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-
-from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric
+"""from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID, ARRAY
@@ -39,8 +36,7 @@ Base = declarative_base()
 
 
 class CollaborationType(Enum):
-    """Types of collaboration"""
-    MUSIC_PRODUCTION = "music_production"
+    """Types of collaboration"""    MUSIC_PRODUCTION = "music_production"
     VIDEO_CREATION = "video_creation"
     PODCAST_COLLABORATION = "podcast_collaboration"
     CONTENT_SERIES = "content_series"
@@ -53,8 +49,7 @@ class CollaborationType(Enum):
 
 
 class CollaborationStatus(Enum):
-    """Collaboration request status"""
-    DRAFT = "draft"
+    """Collaboration request status"""    DRAFT = "draft"
     PENDING = "pending"
     UNDER_REVIEW = "under_review"
     NEGOTIATING = "negotiating"
@@ -67,8 +62,7 @@ class CollaborationStatus(Enum):
 
 
 class TeamRole(Enum):
-    """Team member roles"""
-    LEAD_CREATOR = "lead_creator"
+    """Team member roles"""    LEAD_CREATOR = "lead_creator"
     CO_CREATOR = "co_creator"
     PRODUCER = "producer"
     SONGWRITER = "songwriter"
@@ -83,8 +77,7 @@ class TeamRole(Enum):
 
 
 class SkillLevel(Enum):
-    """Skill proficiency levels"""
-    BEGINNER = "beginner"
+    """Skill proficiency levels"""    BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
     EXPERT = "expert"
@@ -92,8 +85,7 @@ class SkillLevel(Enum):
 
 
 class MatchingCriteria(Enum):
-    """AI matching criteria"""
-    GENRE_COMPATIBILITY = "genre_compatibility"
+    """AI matching criteria"""    GENRE_COMPATIBILITY = "genre_compatibility"
     AUDIENCE_OVERLAP = "audience_overlap"
     ENGAGEMENT_SIMILARITY = "engagement_similarity"
     GEOGRAPHIC_PROXIMITY = "geographic_proximity"
@@ -104,13 +96,11 @@ class MatchingCriteria(Enum):
 
 
 class CreatorCollaboration(Base):
-    """
-    Creator Collaboration Model
+    """    Creator Collaboration Model
     
     Manages collaboration requests, team formation, and project coordination
     between content creators with AI-powered matching and optimization.
-    """
-    __tablename__ = "creator_collaborations"
+    """    __tablename__ = "creator_collaborations"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -232,8 +222,7 @@ class CreatorCollaboration(Base):
         return f"<CreatorCollaboration(id={self.id}, title={self.title}, status={self.status.value})>"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert model to dictionary for API responses"""
-        return {
+        """Convert model to dictionary for API responses"""        return {
             "id": str(self.id),
             "initiator_user_id": str(self.initiator_user_id),
             "collaboration_type": self.collaboration_type.value,
@@ -301,12 +290,10 @@ class CreatorCollaboration(Base):
 
 
 class CollaborationTeamMember(Base):
-    """
-    Collaboration Team Member Model
+    """    Collaboration Team Member Model
     
     Manages team members within collaboration projects.
-    """
-    __tablename__ = "collaboration_team_members"
+    """    __tablename__ = "collaboration_team_members"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -346,12 +333,10 @@ class CollaborationTeamMember(Base):
 
 
 class CollaborationApplication(Base):
-    """
-    Collaboration Application Model
+    """    Collaboration Application Model
     
     Manages applications to join collaboration projects.
-    """
-    __tablename__ = "collaboration_applications"
+    """    __tablename__ = "collaboration_applications"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -392,12 +377,10 @@ class CollaborationApplication(Base):
 
 
 class AICollaborationMatch(Base):
-    """
-    AI Collaboration Match Model
+    """    AI Collaboration Match Model
     
     Stores AI-generated matches between creators and collaboration opportunities.
-    """
-    __tablename__ = "ai_collaboration_matches"
+    """    __tablename__ = "ai_collaboration_matches"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -435,12 +418,10 @@ class AICollaborationMatch(Base):
 
 
 class ProjectUpdate(Base):
-    """
-    Project Update Model
+    """    Project Update Model
     
     Tracks progress updates and communications within collaboration projects.
-    """
-    __tablename__ = "project_updates"
+    """    __tablename__ = "project_updates"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)

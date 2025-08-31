@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Fingerprinting Module Index
+"""IA Influencer Agent - Fingerprinting Module Index
 ================================================
 
 Central index for the fingerprinting system providing unified access to all
@@ -22,9 +21,7 @@ will be prosecuted to the FULL EXTENT OF THE LAW under German and
 International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""
-
-import logging
+"""import logging
 from typing import Dict, Any, Optional, List, Union
 from pathlib import Path
 import asyncio
@@ -47,21 +44,17 @@ from .performance import (
 logger = logging.getLogger(__name__)
 
 class FingerprintingSystemIndex:
-    """
-    Central orchestrator for the IA Influencer Agent fingerprinting system.
+    """    Central orchestrator for the IA Influencer Agent fingerprinting system.
     
     Provides unified interface for multi-modal content fingerprinting,
     similarity detection, and content protection workflows.
-    """
-    
+    """    
     def __init__(self, config: Optional[FingerprintingSystemConfig] = None):
-        """
-        Initialize the fingerprinting system.
+        """        Initialize the fingerprinting system.
         
         Args:
             config: System configuration (auto-optimized if not provided)
-        """
-        self.config = config or get_config("production")
+        """        self.config = config or get_config("production")
         self.logger = logging.getLogger(__name__)
         
         # Initialize components
@@ -81,8 +74,7 @@ class FingerprintingSystemIndex:
         self.logger.info("Fingerprinting system initialized successfully")
     
     def _initialize_components(self):
-        """Initialize all fingerprinting components"""
-        try:
+        """Initialize all fingerprinting components"""        try:
             # Initialize fingerprinters with configuration
             self.audio_fingerprinter = AudioFingerprinter(config=self.config.audio)
             self.video_fingerprinter = VideoFingerprinter(config=self.config.video)
@@ -105,8 +97,7 @@ class FingerprintingSystemIndex:
                                                content_id: str, 
                                                file_path: str,
                                                content_type: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Generate comprehensive fingerprint for any content type.
+        """        Generate comprehensive fingerprint for any content type.
         
         Args:
             content_id: Unique content identifier
@@ -115,8 +106,7 @@ class FingerprintingSystemIndex:
             
         Returns:
             Comprehensive fingerprint with metadata and analysis results
-        """
-        try:
+        """        try:
             start_time = datetime.utcnow()
             
             # Auto-detect content type if not provided
@@ -166,8 +156,7 @@ class FingerprintingSystemIndex:
                                  query_fingerprint: Dict[str, Any],
                                  similarity_threshold: float = 0.8,
                                  max_results: int = 50) -> List[Dict[str, Any]]:
-        """
-        Find matching content across all fingerprint types.
+        """        Find matching content across all fingerprint types.
         
         Args:
             query_fingerprint: Fingerprint to search for
@@ -176,8 +165,7 @@ class FingerprintingSystemIndex:
             
         Returns:
             List of matching content with similarity scores and details
-        """
-        try:
+        """        try:
             content_type = query_fingerprint.get('content_type')
             
             if content_type == 'audio':
@@ -220,8 +208,7 @@ class FingerprintingSystemIndex:
     async def batch_process_content(self, 
                                   content_list: List[Dict[str, str]],
                                   batch_size: int = 10) -> Dict[str, Any]:
-        """
-        Process multiple content items in batches.
+        """        Process multiple content items in batches.
         
         Args:
             content_list: List of {'content_id': str, 'file_path': str, 'content_type': str}
@@ -229,8 +216,7 @@ class FingerprintingSystemIndex:
             
         Returns:
             Batch processing results with statistics
-        """
-        try:
+        """        try:
             results = {}
             total_items = len(content_list)
             processed_items = 0
@@ -293,8 +279,7 @@ class FingerprintingSystemIndex:
     async def verify_content_integrity(self, 
                                      content_id: str, 
                                      original_fingerprint: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Verify content integrity by comparing with original fingerprint.
+        """        Verify content integrity by comparing with original fingerprint.
         
         Args:
             content_id: Content identifier
@@ -302,8 +287,7 @@ class FingerprintingSystemIndex:
             
         Returns:
             Integrity verification results
-        """
-        try:
+        """        try:
             # Re-generate fingerprint
             current_fingerprint = await self.generate_comprehensive_fingerprint(
                 content_id, 
@@ -355,8 +339,7 @@ class FingerprintingSystemIndex:
                                     query: str,
                                     content_types: List[str] = None,
                                     filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """
-        Search content database using text query and filters.
+        """        Search content database using text query and filters.
         
         Args:
             query: Search query
@@ -365,8 +348,7 @@ class FingerprintingSystemIndex:
             
         Returns:
             List of matching content
-        """
-        try:
+        """        try:
             # Implementation would integrate with actual database
             # This is a placeholder for the search interface
             
@@ -383,8 +365,7 @@ class FingerprintingSystemIndex:
             return []
     
     def get_system_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive system statistics"""
-        try:
+        """Get comprehensive system statistics"""        try:
             performance_stats = self.performance_monitor.get_performance_report()
             
             return {
@@ -406,8 +387,7 @@ class FingerprintingSystemIndex:
             return {'error': str(e)}
     
     async def optimize_system_performance(self) -> Dict[str, Any]:
-        """Optimize system performance based on current load and usage patterns"""
-        try:
+        """Optimize system performance based on current load and usage patterns"""        try:
             optimization_results = await optimize_system_performance()
             
             # Apply component-specific optimizations
@@ -436,8 +416,7 @@ class FingerprintingSystemIndex:
     # Private helper methods
     
     def _detect_content_type(self, file_path: str) -> str:
-        """Auto-detect content type from file extension"""
-        file_ext = Path(file_path).suffix.lower()
+        """Auto-detect content type from file extension"""        file_ext = Path(file_path).suffix.lower()
         
         audio_extensions = {'.mp3', '.wav', '.flac', '.aac', '.ogg', '.m4a'}
         video_extensions = {'.mp4', '.avi', '.mov', '.mkv', '.wmv', '.flv', '.webm'}
@@ -456,8 +435,7 @@ class FingerprintingSystemIndex:
             return 'unknown'
     
     async def _extract_metadata_safe(self, file_path: str) -> Optional[Dict[str, Any]]:
-        """Safely extract metadata with error handling"""
-        try:
+        """Safely extract metadata with error handling"""        try:
             metadata = await self.metadata_extractor(file_path)
             return metadata.to_dict() if metadata else None
         except Exception as e:
@@ -468,8 +446,7 @@ class FingerprintingSystemIndex:
                                                 content_id: str, 
                                                 file_path: str, 
                                                 content_type: str):
-        """Generate fingerprint based on content type"""
-        try:
+        """Generate fingerprint based on content type"""        try:
             if content_type == 'audio':
                 return await self.audio_fingerprinter.generate_fingerprint(content_id, file_path)
             elif content_type == 'video':
@@ -486,8 +463,7 @@ class FingerprintingSystemIndex:
             return None
     
     def _create_error_result(self, content_id: str, error_message: str) -> Dict[str, Any]:
-        """Create standardized error result"""
-        return {
+        """Create standardized error result"""        return {
             'content_id': content_id,
             'error': error_message,
             'success': False,
@@ -495,8 +471,7 @@ class FingerprintingSystemIndex:
         }
     
     def _calculate_confidence_score(self, fingerprint_result: Any) -> float:
-        """Calculate confidence score for fingerprint quality"""
-        try:
+        """Calculate confidence score for fingerprint quality"""        try:
             # Implementation would analyze fingerprint quality metrics
             # Placeholder calculation
             if hasattr(fingerprint_result, 'vector_embedding') and fingerprint_result.vector_embedding:
@@ -507,8 +482,7 @@ class FingerprintingSystemIndex:
             return 0.5
     
     def _generate_security_hash(self, content_id: str, fingerprint_result: Any) -> str:
-        """Generate security hash for fingerprint integrity"""
-        try:
+        """Generate security hash for fingerprint integrity"""        try:
             content = f"{content_id}_{datetime.utcnow().isoformat()}"
             if hasattr(fingerprint_result, 'perceptual_hash'):
                 content += fingerprint_result.perceptual_hash
@@ -517,16 +491,14 @@ class FingerprintingSystemIndex:
             return ""
     
     async def _store_comprehensive_fingerprint(self, comprehensive_result: Dict[str, Any]):
-        """Store comprehensive fingerprint in vector database"""
-        try:
+        """Store comprehensive fingerprint in vector database"""        try:
             # Implementation would store in actual database
             pass
         except Exception as e:
             self.logger.error(f"Error storing comprehensive fingerprint: {e}")
     
     async def _multi_modal_search(self, query_fingerprint: Dict[str, Any], threshold: float):
-        """Perform multi-modal content search"""
-        try:
+        """Perform multi-modal content search"""        try:
             # Implementation would perform cross-modal search
             return []
         except Exception as e:
@@ -534,8 +506,7 @@ class FingerprintingSystemIndex:
             return []
     
     async def _enrich_match_results(self, matches: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Enrich match results with additional metadata"""
-        try:
+        """Enrich match results with additional metadata"""        try:
             # Add additional metadata and analysis
             for match in matches:
                 match['enriched_at'] = datetime.utcnow().isoformat()
@@ -546,8 +517,7 @@ class FingerprintingSystemIndex:
             return matches
     
     async def _compare_fingerprints(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """Compare two fingerprints for similarity"""
-        try:
+        """Compare two fingerprints for similarity"""        try:
             # Implementation would perform detailed fingerprint comparison
             return 0.85  # Placeholder
         except Exception as e:
@@ -555,8 +525,7 @@ class FingerprintingSystemIndex:
             return 0.0
     
     def _check_file_size_change(self, original: Dict[str, Any], current: Dict[str, Any]) -> bool:
-        """Check if file size has changed"""
-        try:
+        """Check if file size has changed"""        try:
             orig_size = original.get('metadata', {}).get('technical', {}).get('file_size', 0)
             curr_size = current.get('metadata', {}).get('technical', {}).get('file_size', 0)
             return orig_size != curr_size
@@ -564,8 +533,7 @@ class FingerprintingSystemIndex:
             return False
     
     def _detect_metadata_changes(self, original: Dict[str, Any], current: Dict[str, Any]) -> List[str]:
-        """Detect changes in metadata"""
-        try:
+        """Detect changes in metadata"""        try:
             changes = []
             # Implementation would compare metadata fields
             return changes
@@ -573,8 +541,7 @@ class FingerprintingSystemIndex:
             return []
     
     def _check_component_status(self, component) -> Dict[str, Any]:
-        """Check status of a system component"""
-        try:
+        """Check status of a system component"""        try:
             return {
                 'status': 'healthy',
                 'last_check': datetime.utcnow().isoformat(),
@@ -587,8 +554,7 @@ class FingerprintingSystemIndex:
             }
     
     def _assess_system_health(self) -> Dict[str, Any]:
-        """Assess overall system health"""
-        try:
+        """Assess overall system health"""        try:
             total_operations = (self.stats['total_fingerprints_generated'] + 
                               self.stats['successful_matches'])
             error_rate = (self.stats['processing_errors'] / max(total_operations, 1)) * 100
@@ -621,35 +587,29 @@ class FingerprintingSystemIndex:
 _system_instance = None
 
 def get_fingerprinting_system(config: Optional[FingerprintingSystemConfig] = None) -> FingerprintingSystemIndex:
-    """Get global fingerprinting system instance"""
-    global _system_instance
+    """Get global fingerprinting system instance"""    global _system_instance
     if _system_instance is None:
         _system_instance = FingerprintingSystemIndex(config)
     return _system_instance
 
 def reset_fingerprinting_system():
-    """Reset global fingerprinting system instance"""
-    global _system_instance
+    """Reset global fingerprinting system instance"""    global _system_instance
     _system_instance = None
 
 # Convenience functions for direct access
 async def fingerprint_content(content_id: str, file_path: str, content_type: str = None) -> Dict[str, Any]:
-    """Convenience function to fingerprint content"""
-    system = get_fingerprinting_system()
+    """Convenience function to fingerprint content"""    system = get_fingerprinting_system()
     return await system.generate_comprehensive_fingerprint(content_id, file_path, content_type)
 
 async def find_similar_content(query_fingerprint: Dict[str, Any], 
                              similarity_threshold: float = 0.8) -> List[Dict[str, Any]]:
-    """Convenience function to find similar content"""
-    system = get_fingerprinting_system()
+    """Convenience function to find similar content"""    system = get_fingerprinting_system()
     return await system.find_content_matches(query_fingerprint, similarity_threshold)
 
 async def batch_fingerprint_content(content_list: List[Dict[str, str]]) -> Dict[str, Any]:
-    """Convenience function for batch fingerprinting"""
-    system = get_fingerprinting_system()
+    """Convenience function for batch fingerprinting"""    system = get_fingerprinting_system()
     return await system.batch_process_content(content_list)
 
 def get_system_stats() -> Dict[str, Any]:
-    """Convenience function to get system statistics"""
-    system = get_fingerprinting_system()
+    """Convenience function to get system statistics"""    system = get_fingerprinting_system()
     return system.get_system_statistics()

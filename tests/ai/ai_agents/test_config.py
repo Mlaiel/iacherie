@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive Tests for Configuration Management
+"""Comprehensive Tests for Configuration Management
 
 Industrial-grade testing for configuration handling, validation,
 environment management, and dynamic configuration updates.
@@ -26,9 +22,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -59,11 +53,9 @@ logger = logging.getLogger(__name__)
 
 
 class TestAgentConfig:
-    """Test agent configuration management"""
-    
+    """Test agent configuration management"""    
     def test_agent_config_creation(self):
-        """Test creating agent configuration"""
-        config = AgentConfig(
+        """Test creating agent configuration"""        config = AgentConfig(
             agent_id="test_agent_001",
             agent_type="ContentCreatorAgent",
             max_concurrent_tasks=5,
@@ -90,8 +82,7 @@ class TestAgentConfig:
         assert config.custom_settings["quality_preset"] == "high"
     
     def test_agent_config_validation(self):
-        """Test agent configuration validation"""
-        # Valid configuration
+        """Test agent configuration validation"""        # Valid configuration
         valid_config = AgentConfig(
             agent_id="valid_agent",
             agent_type="TestAgent",
@@ -113,8 +104,7 @@ class TestAgentConfig:
             )
     
     def test_agent_config_serialization(self):
-        """Test agent configuration serialization"""
-        config = AgentConfig(
+        """Test agent configuration serialization"""        config = AgentConfig(
             agent_id="serialization_test",
             agent_type="ContentCreatorAgent",
             max_concurrent_tasks=8,
@@ -144,8 +134,7 @@ class TestAgentConfig:
         assert json_restored.agent_id == config.agent_id
     
     def test_agent_config_merging(self):
-        """Test merging agent configurations"""
-        base_config = AgentConfig(
+        """Test merging agent configurations"""        base_config = AgentConfig(
             agent_id="base_agent",
             agent_type="BaseAgent",
             max_concurrent_tasks=5,
@@ -172,8 +161,7 @@ class TestAgentConfig:
         assert merged_config.custom_settings["new_setting"] == "new_value"  # Added
     
     def test_agent_config_environment_variables(self):
-        """Test loading configuration from environment variables"""
-        # Set environment variables
+        """Test loading configuration from environment variables"""        # Set environment variables
         os.environ["AGENT_MAX_CONCURRENT_TASKS"] = "15"
         os.environ["AGENT_TIMEOUT_SECONDS"] = "900"
         os.environ["AGENT_RETRY_ATTEMPTS"] = "5"
@@ -196,11 +184,9 @@ class TestAgentConfig:
 
 
 class TestSystemConfig:
-    """Test system configuration management"""
-    
+    """Test system configuration management"""    
     def test_system_config_creation(self):
-        """Test creating system configuration"""
-        config = SystemConfig(
+        """Test creating system configuration"""        config = SystemConfig(
             environment=Environment.DEVELOPMENT,
             debug_mode=True,
             log_level="DEBUG",
@@ -233,8 +219,7 @@ class TestSystemConfig:
         assert config.monitoring_config.metrics_enabled is True
     
     def test_system_config_validation(self):
-        """Test system configuration validation"""
-        # Valid configuration
+        """Test system configuration validation"""        # Valid configuration
         valid_config = SystemConfig(
             environment=Environment.PRODUCTION,
             max_agents=200,
@@ -256,8 +241,7 @@ class TestSystemConfig:
         assert len(validation_result["errors"]) > 0
     
     def test_environment_specific_configs(self):
-        """Test environment-specific configuration loading"""
-        # Development environment
+        """Test environment-specific configuration loading"""        # Development environment
         dev_config = SystemConfig.for_environment(Environment.DEVELOPMENT)
         assert dev_config.environment == Environment.DEVELOPMENT
         assert dev_config.debug_mode is True
@@ -275,8 +259,7 @@ class TestSystemConfig:
         assert test_config.log_level == "DEBUG"
     
     def test_config_inheritance(self):
-        """Test configuration inheritance and overrides"""
-        base_config = SystemConfig(
+        """Test configuration inheritance and overrides"""        base_config = SystemConfig(
             environment=Environment.DEVELOPMENT,
             max_agents=50,
             debug_mode=True
@@ -299,11 +282,9 @@ class TestSystemConfig:
 
 
 class TestDatabaseConfig:
-    """Test database configuration management"""
-    
+    """Test database configuration management"""    
     def test_database_config_creation(self):
-        """Test creating database configuration"""
-        config = DatabaseConfig(
+        """Test creating database configuration"""        config = DatabaseConfig(
             host="db.example.com",
             port=5432,
             database="production_db",
@@ -322,8 +303,7 @@ class TestDatabaseConfig:
         assert config.connection_pool_size == 20
     
     def test_database_connection_string(self):
-        """Test database connection string generation"""
-        config = DatabaseConfig(
+        """Test database connection string generation"""        config = DatabaseConfig(
             host="localhost",
             port=5432,
             database="test_db",
@@ -341,8 +321,7 @@ class TestDatabaseConfig:
         assert "sslmode=require" in ssl_connection_string
     
     def test_database_config_security(self):
-        """Test database configuration security features"""
-        config = DatabaseConfig(
+        """Test database configuration security features"""        config = DatabaseConfig(
             host="secure-db.example.com",
             port=5432,
             database="secure_db",
@@ -362,8 +341,7 @@ class TestDatabaseConfig:
             assert decrypted_config.password == "very_secure_password"
     
     def test_database_config_validation(self):
-        """Test database configuration validation"""
-        # Valid configuration
+        """Test database configuration validation"""        # Valid configuration
         valid_config = DatabaseConfig(
             host="valid-host",
             port=5432,
@@ -397,11 +375,9 @@ class TestDatabaseConfig:
 
 
 class TestSecurityConfig:
-    """Test security configuration management"""
-    
+    """Test security configuration management"""    
     def test_security_config_creation(self):
-        """Test creating security configuration"""
-        config = SecurityConfig(
+        """Test creating security configuration"""        config = SecurityConfig(
             encryption_enabled=True,
             jwt_secret="super_secret_jwt_key",
             session_timeout=7200,
@@ -426,8 +402,7 @@ class TestSecurityConfig:
         assert config.csrf_protection is True
     
     def test_security_config_validation(self):
-        """Test security configuration validation"""
-        # Valid configuration
+        """Test security configuration validation"""        # Valid configuration
         valid_config = SecurityConfig(
             encryption_enabled=True,
             jwt_secret="secure_secret_key_with_sufficient_length",
@@ -449,8 +424,7 @@ class TestSecurityConfig:
         assert any("jwt_secret" in error.lower() for error in validation_result["errors"])
     
     def test_password_policy_validation(self):
-        """Test password policy validation"""
-        config = SecurityConfig(
+        """Test password policy validation"""        config = SecurityConfig(
             password_policy={
                 "min_length": 8,
                 "require_uppercase": True,
@@ -482,8 +456,7 @@ class TestSecurityConfig:
             assert config.validate_password(password) is False
     
     def test_jwt_token_operations(self):
-        """Test JWT token operations"""
-        config = SecurityConfig(
+        """Test JWT token operations"""        config = SecurityConfig(
             jwt_secret="test_jwt_secret_key_for_testing_purposes",
             session_timeout=3600
         )
@@ -511,18 +484,15 @@ class TestSecurityConfig:
 
 
 class TestConfigManager:
-    """Test configuration manager functionality"""
-    
+    """Test configuration manager functionality"""    
     @pytest.fixture
     def temp_config_dir(self):
-        """Create temporary directory for configuration files"""
-        with tempfile.TemporaryDirectory() as temp_dir:
+        """Create temporary directory for configuration files"""        with tempfile.TemporaryDirectory() as temp_dir:
             yield Path(temp_dir)
     
     @pytest.fixture
     async def config_manager(self, temp_config_dir) -> ConfigManager:
-        """Create configuration manager for testing"""
-        manager = ConfigManager(config_directory=temp_config_dir)
+        """Create configuration manager for testing"""        manager = ConfigManager(config_directory=temp_config_dir)
         await manager.initialize()
         
         yield manager
@@ -530,8 +500,7 @@ class TestConfigManager:
         await manager.shutdown()
     
     async def test_config_manager_initialization(self, temp_config_dir):
-        """Test configuration manager initialization"""
-        manager = ConfigManager(config_directory=temp_config_dir)
+        """Test configuration manager initialization"""        manager = ConfigManager(config_directory=temp_config_dir)
         
         assert not manager.initialized
         
@@ -542,8 +511,7 @@ class TestConfigManager:
         assert not manager.initialized
     
     async def test_config_loading_and_saving(self, config_manager, temp_config_dir):
-        """Test loading and saving configurations"""
-        # Create test configuration
+        """Test loading and saving configurations"""        # Create test configuration
         test_config = SystemConfig(
             environment=Environment.TESTING,
             max_agents=25,
@@ -566,8 +534,7 @@ class TestConfigManager:
         assert loaded_config.debug_mode is True
     
     async def test_config_file_formats(self, config_manager, temp_config_dir):
-        """Test different configuration file formats"""
-        test_config = AgentConfig(
+        """Test different configuration file formats"""        test_config = AgentConfig(
             agent_id="format_test_agent",
             agent_type="TestAgent",
             max_concurrent_tasks=10
@@ -584,8 +551,7 @@ class TestConfigManager:
         assert yaml_loaded.agent_id == "format_test_agent"
     
     async def test_config_validation_on_load(self, config_manager, temp_config_dir):
-        """Test configuration validation during loading"""
-        # Create invalid configuration file
+        """Test configuration validation during loading"""        # Create invalid configuration file
         invalid_config_data = {
             "agent_id": "invalid_agent",
             "agent_type": "TestAgent",
@@ -602,8 +568,7 @@ class TestConfigManager:
             await config_manager.load_config("invalid_config.json", AgentConfig)
     
     async def test_config_hot_reloading(self, config_manager, temp_config_dir):
-        """Test hot reloading of configuration changes"""
-        # Create initial configuration
+        """Test hot reloading of configuration changes"""        # Create initial configuration
         initial_config = SystemConfig(
             environment=Environment.DEVELOPMENT,
             max_agents=50
@@ -630,8 +595,7 @@ class TestConfigManager:
         assert current_config.max_agents == 100
     
     async def test_config_backup_and_restore(self, config_manager, temp_config_dir):
-        """Test configuration backup and restore functionality"""
-        # Create configuration
+        """Test configuration backup and restore functionality"""        # Create configuration
         original_config = AgentConfig(
             agent_id="backup_test_agent",
             agent_type="TestAgent",
@@ -666,8 +630,7 @@ class TestConfigManager:
         assert restored_config.custom_settings["test_setting"] == "original_value"
     
     async def test_config_environment_overrides(self, config_manager):
-        """Test environment-based configuration overrides"""
-        # Set environment variables
+        """Test environment-based configuration overrides"""        # Set environment variables
         os.environ["CONFIG_MAX_AGENTS"] = "200"
         os.environ["CONFIG_DEBUG_MODE"] = "false"
         os.environ["CONFIG_LOG_LEVEL"] = "ERROR"
@@ -694,8 +657,7 @@ class TestConfigManager:
                     del os.environ[key]
     
     async def test_config_encryption(self, config_manager, temp_config_dir):
-        """Test configuration encryption for sensitive data"""
-        # Create configuration with sensitive data
+        """Test configuration encryption for sensitive data"""        # Create configuration with sensitive data
         sensitive_config = SecurityConfig(
             encryption_enabled=True,
             jwt_secret="super_secret_jwt_key",
@@ -733,8 +695,7 @@ class TestConfigManager:
         assert decrypted_config.api_keys["openai"] == "sk-secret-key"
     
     async def test_config_versioning(self, config_manager):
-        """Test configuration versioning"""
-        # Create initial version
+        """Test configuration versioning"""        # Create initial version
         v1_config = SystemConfig(
             environment=Environment.DEVELOPMENT,
             max_agents=50,
@@ -770,8 +731,7 @@ class TestConfigManager:
     
     @pytest.mark.performance
     async def test_config_performance(self, config_manager, assert_performance):
-        """Test configuration management performance"""
-        # Test configuration loading performance
+        """Test configuration management performance"""        # Test configuration loading performance
         test_config = SystemConfig(
             environment=Environment.TESTING,
             max_agents=100
@@ -790,11 +750,9 @@ class TestConfigManager:
 
 
 class TestConfigValidator:
-    """Test configuration validation functionality"""
-    
+    """Test configuration validation functionality"""    
     def test_schema_validation(self):
-        """Test configuration schema validation"""
-        validator = ConfigValidator()
+        """Test configuration schema validation"""        validator = ConfigValidator()
         
         # Define schema for agent configuration
         agent_schema = {
@@ -831,8 +789,7 @@ class TestConfigValidator:
         assert len(validation_result["errors"]) > 0
     
     def test_cross_field_validation(self):
-        """Test cross-field validation rules"""
-        validator = ConfigValidator()
+        """Test cross-field validation rules"""        validator = ConfigValidator()
         
         # Define validation rules
         validation_rules = [
@@ -872,8 +829,7 @@ class TestConfigValidator:
         assert len(validation_result["errors"]) == 2
     
     def test_custom_validators(self):
-        """Test custom validation functions"""
-        validator = ConfigValidator()
+        """Test custom validation functions"""        validator = ConfigValidator()
         
         # Define custom validator for URL format
         def validate_url(value):

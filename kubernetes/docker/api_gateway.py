@@ -1,5 +1,4 @@
-"""
-🌐 API Gateway Docker Configuration - IA-Influencer-Agent Platform
+"""🌐 API Gateway Docker Configuration - IA-Influencer-Agent Platform
 ===================================================================
 Expert: DevOps Engineer + API Gateway Specialist + Load Balancer Expert
 Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -13,9 +12,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 
 Professional API Gateway Docker configuration for high-performance
 multi-format content processing and real-time AI protection services.
-"""
-
-from typing import Dict, List, Optional, Any
+"""from typing import Dict, List, Optional, Any
 import logging
 from dataclasses import dataclass, field
 import yaml
@@ -25,8 +22,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class APIGatewayDockerConfig:
-    """Enterprise API Gateway Docker configuration"""
-    
+    """Enterprise API Gateway Docker configuration"""    
     # Container Configuration
     image_name: str = "ia-influencer/api-gateway"
     image_tag: str = "2.0.0"
@@ -80,9 +76,7 @@ class APIGatewayDockerConfig:
     })
     
     def generate_dockerfile(self) -> str:
-        """Generate production Dockerfile for API Gateway"""
-        return f"""
-# IA-Influencer API Gateway - Production Docker Image
+        """Generate production Dockerfile for API Gateway"""        return f"""# IA-Influencer API Gateway - Production Docker Image
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 # Professional high-performance API Gateway with load balancing
 
@@ -153,11 +147,8 @@ EXPOSE {self.ssl_port}
 # Run with dumb-init for proper signal handling
 ENTRYPOINT ["dumb-init", "--"]
 CMD ["node", "server.js"]
-"""
-
-    def generate_docker_compose_service(self) -> Dict[str, Any]:
-        """Generate docker-compose service configuration"""
-        return {
+"""    def generate_docker_compose_service(self) -> Dict[str, Any]:
+        """Generate docker-compose service configuration"""        return {
             "image": f"{self.image_name}:{self.image_tag}",
             "container_name": self.container_name,
             "restart": "unless-stopped",
@@ -225,9 +216,7 @@ CMD ["node", "server.js"]
         }
     
     def generate_nginx_config(self) -> str:
-        """Generate Nginx configuration for API Gateway"""
-        return f"""
-# IA-Influencer API Gateway - Nginx Configuration
+        """Generate Nginx configuration for API Gateway"""        return f"""# IA-Influencer API Gateway - Nginx Configuration
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 # High-performance reverse proxy with load balancing
 
@@ -347,14 +336,11 @@ http {{
         }}
     }}
 }}
-"""
-    
+"""    
     def _generate_upstream_configs(self) -> str:
-        """Generate upstream server configurations"""
-        upstreams = []
+        """Generate upstream server configurations"""        upstreams = []
         for service, url in self.backend_services.items():
-            upstreams.append(f"""
-    upstream {service}_backend {{
+            upstreams.append(f"""    upstream {service}_backend {{
         least_conn;
         server {url.replace('http://', '')} max_fails=3 fail_timeout=30s;
         keepalive 32;
@@ -362,8 +348,7 @@ http {{
         return "\n".join(upstreams)
     
     def _generate_location_blocks(self) -> str:
-        """Generate location blocks for API routing"""
-        locations = []
+        """Generate location blocks for API routing"""        locations = []
         
         # API routes mapping
         route_mapping = {
@@ -376,8 +361,7 @@ http {{
         }
         
         for route, upstream in route_mapping.items():
-            locations.append(f"""
-        location {route} {{
+            locations.append(f"""        location {route} {{
             limit_req zone=api_limit burst=20 nodelay;
             
             proxy_pass http://{upstream};
@@ -399,8 +383,7 @@ http {{
         return "\n".join(locations)
     
     def save_config_files(self, output_dir: str) -> List[str]:
-        """Save all configuration files to output directory"""
-        import os
+        """Save all configuration files to output directory"""        import os
         from pathlib import Path
         
         config_dir = Path(output_dir)

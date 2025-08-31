@@ -1,5 +1,4 @@
-"""
-Database Connection Pool Manager for IA-Influencer Agent Platform
+"""Database Connection Pool Manager for IA-Influencer Agent Platform
 ================================================================
 
 Professional database connection pool management orchestrating PostgreSQL,
@@ -15,9 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import threading
 import time
 from typing import Dict, List, Optional, Any, Union, Callable
@@ -37,8 +34,7 @@ logger = logging.getLogger(__name__)
 
 
 class DatabaseType(Enum):
-    """Supported database types"""
-    POSTGRESQL = "postgresql"
+    """Supported database types"""    POSTGRESQL = "postgresql"
     MONGODB = "mongodb"
     REDIS = "redis"
     FAISS = "faiss"
@@ -46,23 +42,20 @@ class DatabaseType(Enum):
 
 
 class ConnectionPoolStrategy(Enum):
-    """Connection pool strategies"""
-    LAZY_LOADING = "lazy_loading"          # Create connections on-demand
+    """Connection pool strategies"""    LAZY_LOADING = "lazy_loading"          # Create connections on-demand
     EAGER_LOADING = "eager_loading"        # Pre-create all connections
     MIXED = "mixed"                        # Combination of both
 
 
 class HealthCheckLevel(Enum):
-    """Health check detail levels"""
-    BASIC = "basic"                        # Simple ping checks
+    """Health check detail levels"""    BASIC = "basic"                        # Simple ping checks
     DETAILED = "detailed"                  # Full health statistics
     COMPREHENSIVE = "comprehensive"        # Complete diagnostic information
 
 
 @dataclass
 class ConnectionPoolConfig:
-    """Connection pool configuration"""
-    strategy: ConnectionPoolStrategy = ConnectionPoolStrategy.MIXED
+    """Connection pool configuration"""    strategy: ConnectionPoolStrategy = ConnectionPoolStrategy.MIXED
     health_check_interval: int = 30
     connection_timeout: int = 30
     max_retries: int = 3
@@ -75,8 +68,7 @@ class ConnectionPoolConfig:
 
 @dataclass
 class DatabaseConnectionInfo:
-    """Database connection information and statistics"""
-    database_type: DatabaseType
+    """Database connection information and statistics"""    database_type: DatabaseType
     connection_id: str
     created_at: float
     last_used_at: float
@@ -87,14 +79,11 @@ class DatabaseConnectionInfo:
 
 
 class DatabaseConnectionPool:
-    """
-    Professional database connection pool manager for IA-Influencer Agent Platform
+    """    Professional database connection pool manager for IA-Influencer Agent Platform
     
     Orchestrates connections across multiple database systems with intelligent
     load balancing, health monitoring, and automatic failover capabilities.
-    """
-
-    def __init__(self, 
+    """    def __init__(self, 
                  environment: str = "development",
                  config: Optional[ConnectionPoolConfig] = None):
         self.environment = environment
@@ -134,8 +123,7 @@ class DatabaseConnectionPool:
             self.start_monitoring()
 
     def _setup_logging(self) -> None:
-        """Setup connection pool logging"""
-        self.logger = logging.getLogger(f"database_pool.{self.environment}")
+        """Setup connection pool logging"""        self.logger = logging.getLogger(f"database_pool.{self.environment}")
         if not self.logger.handlers:
             handler = logging.StreamHandler()
             formatter = logging.Formatter(
@@ -146,8 +134,7 @@ class DatabaseConnectionPool:
             self.logger.setLevel(logging.INFO)
 
     def _initialize_core_connections(self) -> None:
-        """Initialize core database connections eagerly"""
-        try:
+        """Initialize core database connections eagerly"""        try:
             # Create core connections that are commonly used
             core_connections = [
                 ("postgresql_main", DatabaseType.POSTGRESQL, {}),
@@ -171,8 +158,7 @@ class DatabaseConnectionPool:
                       connection_id: str, 
                       database_type: DatabaseType, 
                       **kwargs) -> Any:
-        """
-        Get database connection with intelligent caching and load balancing
+        """        Get database connection with intelligent caching and load balancing
         
         Args:
             connection_id: Unique connection identifier
@@ -181,8 +167,7 @@ class DatabaseConnectionPool:
             
         Returns:
             Database connection object
-        """
-        with self._connection_lock:
+        """        with self._connection_lock:
             # Check if connection exists and is healthy
             if connection_id in self._connections:
                 connection = self._connections[connection_id]
@@ -242,8 +227,7 @@ class DatabaseConnectionPool:
                 raise
 
     def _create_connection(self, database_type: DatabaseType, **kwargs) -> Any:
-        """Create database connection based on type"""
-        if database_type == DatabaseType.POSTGRESQL:
+        """Create database connection based on type"""        if database_type == DatabaseType.POSTGRESQL:
             tenant_id = kwargs.get("tenant_id")
             if tenant_id:
                 return self.postgresql_config.get_tenant_engine(tenant_id)
@@ -289,8 +273,7 @@ class DatabaseConnectionPool:
             raise ValueError(f"Unsupported database type: {database_type}")
 
     def _is_connection_healthy(self, connection: Any, database_type: DatabaseType) -> bool:
-        """Quick health check for database connection"""
-        try:
+        """Quick health check for database connection"""        try:
             if database_type == DatabaseType.POSTGRESQL:
                 # SQLAlchemy engine health check
                 with connection.connect() as conn:
@@ -321,8 +304,7 @@ class DatabaseConnectionPool:
 
     @contextmanager
     def get_postgresql_connection(self, connection_type: str = "main", **kwargs):
-        """Context manager for PostgreSQL connections"""
-        connection_id = f"postgresql_{connection_type}"
+        """Context manager for PostgreSQL connections"""        connection_id = f"postgresql_{connection_type}"
         connection = self.get_connection(
             connection_id, 
             DatabaseType.POSTGRESQL, 
@@ -338,8 +320,7 @@ class DatabaseConnectionPool:
 
     @contextmanager
     def get_mongodb_connection(self, workload: MongoDBWorkloadType = MongoDBWorkloadType.MEDIA_STORAGE, **kwargs):
-        """Context manager for MongoDB connections"""
-        connection_id = f"mongodb_{workload.value}"
+        """Context manager for MongoDB connections"""        connection_id = f"mongodb_{workload.value}"
         connection = self.get_connection(
             connection_id, 
             DatabaseType.MONGODB, 
@@ -354,8 +335,7 @@ class DatabaseConnectionPool:
 
     @contextmanager
     def get_redis_connection(self, workload: RedisWorkloadType = RedisWorkloadType.CACHE, **kwargs):
-        """Context manager for Redis connections"""
-        connection_id = f"redis_{workload.value}"
+        """Context manager for Redis connections"""        connection_id = f"redis_{workload.value}"
         connection = self.get_connection(
             connection_id, 
             DatabaseType.REDIS, 
@@ -369,8 +349,7 @@ class DatabaseConnectionPool:
             pass  # Connection pool handles cleanup
 
     def get_tenant_connections(self, tenant_id: str) -> Dict[str, Any]:
-        """Get all database connections for a specific tenant"""
-        connections = {}
+        """Get all database connections for a specific tenant"""        connections = {}
         
         try:
             # PostgreSQL tenant connection
@@ -403,15 +382,13 @@ class DatabaseConnectionPool:
         return connections
 
     def add_connection_callback(self, event: str, callback: Callable) -> None:
-        """Add callback for connection events"""
-        if event in self._connection_callbacks:
+        """Add callback for connection events"""        if event in self._connection_callbacks:
             self._connection_callbacks[event].append(callback)
         else:
             raise ValueError(f"Unknown event: {event}")
 
     def start_monitoring(self) -> None:
-        """Start connection pool monitoring"""
-        if self._monitoring_enabled:
+        """Start connection pool monitoring"""        if self._monitoring_enabled:
             return
         
         self._monitoring_enabled = True
@@ -445,13 +422,11 @@ class DatabaseConnectionPool:
         self.logger.info("Database connection pool monitoring started")
 
     def stop_monitoring(self) -> None:
-        """Stop connection pool monitoring"""
-        self._monitoring_enabled = False
+        """Stop connection pool monitoring"""        self._monitoring_enabled = False
         self.logger.info("Database connection pool monitoring stopped")
 
     def _perform_health_checks(self) -> None:
-        """Perform health checks on all connections"""
-        with self._connection_lock:
+        """Perform health checks on all connections"""        with self._connection_lock:
             for connection_id, connection in list(self._connections.items()):
                 conn_info = self._connection_info[connection_id]
                 
@@ -466,8 +441,7 @@ class DatabaseConnectionPool:
                 # Don't wait for completion to avoid blocking
 
     def _check_connection_health(self, connection_id: str, connection: Any, conn_info: DatabaseConnectionInfo) -> None:
-        """Check health of individual connection"""
-        try:
+        """Check health of individual connection"""        try:
             is_healthy = self._is_connection_healthy(connection, conn_info.database_type)
             
             if is_healthy:
@@ -492,8 +466,7 @@ class DatabaseConnectionPool:
             self.logger.error(f"Health check failed for {connection_id}: {str(e)}")
 
     def _cleanup_stale_connections(self) -> None:
-        """Cleanup stale or unused connections"""
-        current_time = time.time()
+        """Cleanup stale or unused connections"""        current_time = time.time()
         stale_connections = []
         
         with self._connection_lock:
@@ -514,8 +487,7 @@ class DatabaseConnectionPool:
                 self.logger.error(f"Failed to close stale connection {connection_id}: {str(e)}")
 
     def _close_connection(self, connection_id: str) -> None:
-        """Close specific connection"""
-        with self._connection_lock:
+        """Close specific connection"""        with self._connection_lock:
             if connection_id in self._connections:
                 connection = self._connections[connection_id]
                 conn_info = self._connection_info[connection_id]
@@ -546,8 +518,7 @@ class DatabaseConnectionPool:
                     self.logger.error(f"Error closing connection {connection_id}: {str(e)}")
 
     def get_pool_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive connection pool statistics"""
-        with self._connection_lock:
+        """Get comprehensive connection pool statistics"""        with self._connection_lock:
             stats = {
                 "environment": self.environment,
                 "total_connections": len(self._connections),
@@ -595,16 +566,14 @@ class DatabaseConnectionPool:
             return stats
 
     def health_check(self, level: HealthCheckLevel = HealthCheckLevel.BASIC) -> Dict[str, Any]:
-        """
-        Perform comprehensive health check on all database connections
+        """        Perform comprehensive health check on all database connections
         
         Args:
             level: Detail level of health check
             
         Returns:
             Health check results dictionary
-        """
-        health_status = {
+        """        health_status = {
             "status": "healthy",
             "environment": self.environment,
             "pool_stats": {},
@@ -651,8 +620,7 @@ class DatabaseConnectionPool:
         return health_status
 
     def close_all_connections(self) -> None:
-        """Close all database connections and cleanup resources"""
-        self.stop_monitoring()
+        """Close all database connections and cleanup resources"""        self.stop_monitoring()
         
         with self._connection_lock:
             connection_ids = list(self._connections.keys())
@@ -673,8 +641,7 @@ class DatabaseConnectionPool:
         self.logger.info("All database connections closed")
 
     def __del__(self):
-        """Cleanup on object destruction"""
-        try:
+        """Cleanup on object destruction"""        try:
             self.close_all_connections()
         except:
             pass

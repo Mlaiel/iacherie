@@ -1,5 +1,4 @@
-"""
-Content Validator - Multi-Format Content Validation Engine
+"""Content Validator - Multi-Format Content Validation Engine
 ==========================================================
 
 Enterprise-grade content validation system supporting audio, video, image, text,
@@ -15,9 +14,7 @@ is STRICTLY PROHIBITED and will be prosecuted under international copyright law.
 
 Business Logic: Content upload → Format detection → Technical validation → 
 Business rule validation → Quality scoring → Enhancement recommendations
-"""
-
-import logging
+"""import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union, Tuple
 from dataclasses import dataclass
@@ -50,16 +47,14 @@ import spacy
 
 
 class ValidationLevel(Enum):
-    """Validation intensity levels"""
-    BASIC = "basic"
+    """Validation intensity levels"""    BASIC = "basic"
     STANDARD = "standard"
     COMPREHENSIVE = "comprehensive"
     ENTERPRISE = "enterprise"
 
 
 class ContentFormat(Enum):
-    """Supported content formats"""
-    AUDIO = "audio"
+    """Supported content formats"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -70,8 +65,7 @@ class ContentFormat(Enum):
 
 @dataclass
 class ValidationResult:
-    """Content validation result structure"""
-    format: ContentFormat
+    """Content validation result structure"""    format: ContentFormat
     is_valid: bool
     score: float
     technical_checks: Dict[str, Any]
@@ -84,13 +78,11 @@ class ValidationResult:
 
 
 class ContentValidator:
-    """
-    Enterprise content validation engine for multi-format content quality assessment.
+    """    Enterprise content validation engine for multi-format content quality assessment.
     
     Provides comprehensive validation including technical specifications, business rules,
     quality metrics, and platform-specific requirements for creator content.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -230,8 +222,7 @@ class ContentValidator:
         self.logger.info("ContentValidator initialized successfully")
     
     def _load_nlp_models(self):
-        """Load NLP models for text validation."""
-        try:
+        """Load NLP models for text validation."""        try:
             # Download required NLTK data
             nltk.download('punkt', quiet=True)
             nltk.download('stopwords', quiet=True)
@@ -254,8 +245,7 @@ class ContentValidator:
         requirements: Optional[Dict[str, Any]] = None,
         validation_level: str = "standard"
     ) -> ValidationResult:
-        """
-        Validate content based on type and requirements.
+        """        Validate content based on type and requirements.
         
         Args:
             content_data: Content data to validate
@@ -265,8 +255,7 @@ class ContentValidator:
             
         Returns:
             ValidationResult: Comprehensive validation results
-        """
-        try:
+        """        try:
             self.logger.info(f"Starting content validation - Type: {content_type}, Level: {validation_level}")
             
             # Detect content format
@@ -337,8 +326,7 @@ class ContentValidator:
         content_data: Union[bytes, str, Dict[str, Any]],
         content_type: str
     ) -> ContentFormat:
-        """Detect content format from data and type hint."""
-        # Direct type mapping
+        """Detect content format from data and type hint."""        # Direct type mapping
         type_mapping = {
             'audio': ContentFormat.AUDIO,
             'video': ContentFormat.VIDEO,
@@ -376,8 +364,7 @@ class ContentValidator:
         requirements: Optional[Dict[str, Any]],
         validation_level: str
     ):
-        """Validate audio content technical and quality specifications."""
-        if not HAS_MEDIA_LIBS:
+        """Validate audio content technical and quality specifications."""        if not HAS_MEDIA_LIBS:
             result.warnings.append("Media processing libraries not available - limited audio validation")
             return
         
@@ -495,8 +482,7 @@ class ContentValidator:
         requirements: Optional[Dict[str, Any]],
         validation_level: str
     ):
-        """Validate video content technical and quality specifications."""
-        if not HAS_MEDIA_LIBS:
+        """Validate video content technical and quality specifications."""        if not HAS_MEDIA_LIBS:
             result.warnings.append("Media processing libraries not available - limited video validation")
             return
         
@@ -659,8 +645,7 @@ class ContentValidator:
         requirements: Optional[Dict[str, Any]],
         validation_level: str
     ):
-        """Validate image content technical and quality specifications."""
-        try:
+        """Validate image content technical and quality specifications."""        try:
             # Get image file path or data
             if isinstance(content_data, bytes):
                 # Create temporary file for bytes data
@@ -801,8 +786,7 @@ class ContentValidator:
         requirements: Optional[Dict[str, Any]],
         validation_level: str
     ):
-        """Validate text content quality, readability, and compliance."""
-        try:
+        """Validate text content quality, readability, and compliance."""        try:
             # Extract text content
             if isinstance(content_data, str):
                 text = content_data
@@ -977,8 +961,7 @@ class ContentValidator:
         requirements: Optional[Dict[str, Any]],
         validation_level: str
     ):
-        """Validate document content (PDF, Word, etc.)."""
-        # Document validation would require additional libraries like PyPDF2, python-docx
+        """Validate document content (PDF, Word, etc.)."""        # Document validation would require additional libraries like PyPDF2, python-docx
         result.warnings.append("Document validation not fully implemented - performing basic checks")
         
         # Basic file validation
@@ -1003,8 +986,7 @@ class ContentValidator:
         requirements: Optional[Dict[str, Any]],
         validation_level: str
     ):
-        """Validate multimedia content (combinations of different formats)."""
-        if isinstance(content_data, dict):
+        """Validate multimedia content (combinations of different formats)."""        if isinstance(content_data, dict):
             # Validate each component separately
             for component_type, component_data in content_data.items():
                 if component_type in ['audio', 'video', 'image', 'text']:
@@ -1030,8 +1012,7 @@ class ContentValidator:
         result: ValidationResult,
         requirements: Optional[Dict[str, Any]]
     ):
-        """Validate content against business rules and platform requirements."""
-        business_checks = {}
+        """Validate content against business rules and platform requirements."""        business_checks = {}
         
         # Platform-specific requirements
         if requirements:
@@ -1090,16 +1071,14 @@ class ContentValidator:
         result.business_checks.update(business_checks)
     
     def _get_file_path(self, content_data: Union[bytes, str, Dict[str, Any]]) -> Optional[str]:
-        """Extract file path from content data."""
-        if isinstance(content_data, str) and os.path.exists(content_data):
+        """Extract file path from content data."""        if isinstance(content_data, str) and os.path.exists(content_data):
             return content_data
         elif isinstance(content_data, dict):
             return content_data.get('file_path') or content_data.get('path')
         return None
     
     def _calculate_validation_score(self, result: ValidationResult) -> float:
-        """Calculate overall validation score from all checks."""
-        scores = []
+        """Calculate overall validation score from all checks."""        scores = []
         
         # Technical checks score
         if result.technical_checks:
@@ -1161,13 +1140,11 @@ class ContentValidator:
 
 
 class AudioQualityValidator:
-    """
-    Specialized audio quality validator for music creators and audio content.
+    """    Specialized audio quality validator for music creators and audio content.
     
     Performs advanced audio analysis including spectral analysis, loudness measurement,
     dynamic range analysis, and platform-specific audio quality checks.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.AudioQualityValidator")
@@ -1189,8 +1166,7 @@ class AudioQualityValidator:
         audio_data: Union[bytes, str],
         requirements: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Perform comprehensive audio quality analysis."""
-        if not HAS_MEDIA_LIBS:
+        """Perform comprehensive audio quality analysis."""        if not HAS_MEDIA_LIBS:
             return {'error': 'Audio processing libraries not available'}
         
         try:
@@ -1280,8 +1256,7 @@ class AudioQualityValidator:
             return {'error': f'Audio validation failed: {str(e)}'}
     
     def _calculate_audio_quality_score(self, metrics: Dict[str, Any]) -> float:
-        """Calculate overall audio quality score based on multiple factors."""
-        score_components = []
+        """Calculate overall audio quality score based on multiple factors."""        score_components = []
         
         # SNR score (0-1)
         if 'snr_estimate' in metrics:
@@ -1317,13 +1292,11 @@ class AudioQualityValidator:
 
 
 class VideoQualityValidator:
-    """
-    Specialized video quality validator for content creators.
+    """    Specialized video quality validator for content creators.
     
     Performs advanced video analysis including resolution assessment, frame rate analysis,
     motion detection, color grading evaluation, and platform-specific video quality checks.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.VideoQualityValidator")
@@ -1343,8 +1316,7 @@ class VideoQualityValidator:
         video_data: Union[bytes, str],
         requirements: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Perform comprehensive video quality analysis."""
-        if not HAS_MEDIA_LIBS:
+        """Perform comprehensive video quality analysis."""        if not HAS_MEDIA_LIBS:
             return {'error': 'Video processing libraries not available'}
         
         try:
@@ -1460,8 +1432,7 @@ class VideoQualityValidator:
             return {'error': f'Video validation failed: {str(e)}'}
     
     def _calculate_video_quality_score(self, metrics: Dict[str, Any]) -> float:
-        """Calculate overall video quality score based on multiple factors."""
-        score_components = []
+        """Calculate overall video quality score based on multiple factors."""        score_components = []
         
         # Sharpness score (0-1)
         if 'avg_sharpness' in metrics:
@@ -1495,13 +1466,11 @@ class VideoQualityValidator:
 
 
 class ImageQualityValidator:
-    """
-    Specialized image quality validator for photographers and visual content creators.
+    """    Specialized image quality validator for photographers and visual content creators.
     
     Performs advanced image analysis including sharpness assessment, color analysis,
     composition evaluation, and platform-specific image quality checks.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.ImageQualityValidator")
@@ -1521,8 +1490,7 @@ class ImageQualityValidator:
         image_data: Union[bytes, str],
         requirements: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Perform comprehensive image quality analysis."""
-        if not HAS_MEDIA_LIBS:
+        """Perform comprehensive image quality analysis."""        if not HAS_MEDIA_LIBS:
             return {'error': 'Image processing libraries not available'}
         
         try:
@@ -1628,8 +1596,7 @@ class ImageQualityValidator:
             return {'error': f'Image validation failed: {str(e)}'}
     
     def _calculate_image_quality_score(self, metrics: Dict[str, Any]) -> float:
-        """Calculate overall image quality score based on multiple factors."""
-        score_components = []
+        """Calculate overall image quality score based on multiple factors."""        score_components = []
         
         # Sharpness score (0-1)
         if 'sharpness' in metrics:
@@ -1660,13 +1627,11 @@ class ImageQualityValidator:
 
 
 class TextQualityValidator:
-    """
-    Specialized text quality validator for bloggers and content writers.
+    """    Specialized text quality validator for bloggers and content writers.
     
     Performs advanced text analysis including readability assessment, SEO optimization,
     language detection, sentiment analysis, and content uniqueness verification.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.TextQualityValidator")
@@ -1695,8 +1660,7 @@ class TextQualityValidator:
         text_data: str,
         requirements: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Perform comprehensive text quality analysis."""
-        try:
+        """Perform comprehensive text quality analysis."""        try:
             quality_metrics = {}
             
             # Basic text properties
@@ -1795,8 +1759,7 @@ class TextQualityValidator:
             return {'error': f'Text validation failed: {str(e)}'}
     
     def _analyze_seo_quality(self, text: str, seo_requirements: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze SEO quality factors."""
-        seo_metrics = {}
+        """Analyze SEO quality factors."""        seo_metrics = {}
         
         # Keyword density analysis
         keywords = seo_requirements.get('keywords', [])
@@ -1824,8 +1787,7 @@ class TextQualityValidator:
         return seo_metrics
     
     def _calculate_text_quality_score(self, metrics: Dict[str, Any]) -> float:
-        """Calculate overall text quality score based on multiple factors."""
-        score_components = []
+        """Calculate overall text quality score based on multiple factors."""        score_components = []
         
         # Readability score (0-1)
         if 'reading_ease' in metrics:

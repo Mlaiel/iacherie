@@ -19,8 +19,7 @@ Features:
 - Trend detection and virality prediction
 - Multi-platform content parsing (YouTube, Instagram, TikTok, etc.)
 - Industrial-grade performance optimization
-"""
-# Core parser infrastructure
+"""# Core parser infrastructure
 from .parser_factory import ParserFactory
 from .parser_manager import ParserManager
 from .parser_config import ParserConfig

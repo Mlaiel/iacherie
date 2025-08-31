@@ -1,5 +1,4 @@
-"""
-Cache Serializer Module
+"""Cache Serializer Module
 =======================
 
 Specialized serialization for cache data and storage optimization.
@@ -29,9 +28,7 @@ Expertise combinée:
 - Audio/Vidéo: Cache optimisé pour contenu multimédia lourd
 - DevOps: Monitoring et scaling automatique des systèmes de cache
 - IA Prompt Engineer: Cache intelligent pour réponses IA optimisées
-"""
-
-import logging
+"""import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
 from dataclasses import dataclass, field
@@ -44,24 +41,21 @@ from pydantic import BaseModel, Field, validator
 logger = logging.getLogger(__name__)
 
 class CacheType(Enum):
-    """Types of cache storage."""
-    MEMORY = "memory"
+    """Types of cache storage."""    MEMORY = "memory"
     REDIS = "redis"
     DISK = "disk"
     DISTRIBUTED = "distributed"
     HYBRID = "hybrid"
 
 class CacheStrategy(Enum):
-    """Cache eviction strategies."""
-    LRU = "lru"  # Least Recently Used
+    """Cache eviction strategies."""    LRU = "lru"  # Least Recently Used
     LFU = "lfu"  # Least Frequently Used
     FIFO = "fifo"  # First In First Out
     TTL = "ttl"  # Time To Live
     ADAPTIVE = "adaptive"
 
 class CompressionAlgorithm(Enum):
-    """Compression algorithms for cache data."""
-    NONE = "none"
+    """Compression algorithms for cache data."""    NONE = "none"
     GZIP = "gzip"
     LZ4 = "lz4"
     ZSTD = "zstd"
@@ -69,8 +63,7 @@ class CompressionAlgorithm(Enum):
 
 @dataclass
 class CacheMetrics:
-    """Cache performance metrics."""
-    hit_count: int = 0
+    """Cache performance metrics."""    hit_count: int = 0
     miss_count: int = 0
     eviction_count: int = 0
     total_size_bytes: int = 0
@@ -81,8 +74,7 @@ class CacheMetrics:
 
 @dataclass
 class CacheEntry:
-    """Individual cache entry."""
-    key: str
+    """Individual cache entry."""    key: str
     data: Any
     created_at: datetime = field(default_factory=datetime.now)
     accessed_at: datetime = field(default_factory=datetime.now)
@@ -95,13 +87,11 @@ class CacheEntry:
     tags: List[str] = field(default_factory=list)
 
 class CacheData(BaseModel):
-    """
-    Comprehensive cache data model.
+    """    Comprehensive cache data model.
     
     Represents cache entries, metadata, and performance metrics
     for the IA-Influencer-Agent crawler caching system.
-    """
-    
+    """    
     # Cache identification
     cache_id: str = Field(..., description="Unique cache identifier")
     cache_name: str = Field(..., description="Cache name/namespace")
@@ -155,17 +145,14 @@ class CacheData(BaseModel):
         return v
 
 class CacheSerializer:
-    """
-    Advanced cache data serialization system.
+    """    Advanced cache data serialization system.
     
     Handles efficient serialization and deserialization of cache
     entries, metadata, and performance metrics with optimization
     for high-frequency cache operations.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize cache serializer."""
-        self.serialization_cache = {}  # Internal cache for serialization
+        """Initialize cache serializer."""        self.serialization_cache = {}  # Internal cache for serialization
         self.max_entry_size = 10 * 1024 * 1024  # 10MB per entry
         
         logger.info("Cache serializer initialized")
@@ -176,8 +163,7 @@ class CacheSerializer:
         include_entries: bool = True,
         max_entries: Optional[int] = None
     ) -> Dict[str, Any]:
-        """
-        Serialize cache data to dictionary format.
+        """        Serialize cache data to dictionary format.
         
         Args:
             cache_data: Cache data to serialize
@@ -186,8 +172,7 @@ class CacheSerializer:
             
         Returns:
             Serialized cache dictionary
-        """
-        try:
+        """        try:
             # Convert to dictionary
             data = cache_data.dict(exclude={'entries'})
             
@@ -248,16 +233,14 @@ class CacheSerializer:
         self,
         data: Dict[str, Any]
     ) -> CacheData:
-        """
-        Deserialize cache data from dictionary format.
+        """        Deserialize cache data from dictionary format.
         
         Args:
             data: Serialized cache dictionary
             
         Returns:
             Deserialized CacheData object
-        """
-        try:
+        """        try:
             # Handle datetime conversions
             datetime_fields = ['created_at', 'updated_at', 'last_cleanup', 'next_cleanup']
             for field in datetime_fields:
@@ -295,8 +278,7 @@ class CacheSerializer:
         entry: CacheEntry,
         compress_data: bool = True
     ) -> Dict[str, Any]:
-        """
-        Serialize individual cache entry.
+        """        Serialize individual cache entry.
         
         Args:
             entry: Cache entry to serialize
@@ -304,8 +286,7 @@ class CacheSerializer:
             
         Returns:
             Serialized cache entry dictionary
-        """
-        try:
+        """        try:
             return self._serialize_cache_entry(entry, compress_data)
             
         except Exception as e:
@@ -316,16 +297,14 @@ class CacheSerializer:
         self,
         data: Dict[str, Any]
     ) -> CacheEntry:
-        """
-        Deserialize individual cache entry.
+        """        Deserialize individual cache entry.
         
         Args:
             data: Serialized cache entry dictionary
             
         Returns:
             Deserialized CacheEntry object
-        """
-        try:
+        """        try:
             return self._deserialize_cache_entry(data)
             
         except Exception as e:
@@ -337,8 +316,7 @@ class CacheSerializer:
         entry: CacheEntry,
         compress_data: bool = True
     ) -> Dict[str, Any]:
-        """Internal cache entry serialization."""
-        data = {
+        """Internal cache entry serialization."""        data = {
             'key': entry.key,
             'created_at': entry.created_at.isoformat(),
             'accessed_at': entry.accessed_at.isoformat(),
@@ -384,8 +362,7 @@ class CacheSerializer:
         return data
     
     def _deserialize_cache_entry(self, data: Dict[str, Any]) -> CacheEntry:
-        """Internal cache entry deserialization."""
-        # Handle datetime conversions
+        """Internal cache entry deserialization."""        # Handle datetime conversions
         if isinstance(data.get('created_at'), str):
             data['created_at'] = datetime.fromisoformat(data['created_at'])
         
@@ -409,8 +386,7 @@ class CacheSerializer:
         return CacheEntry(**data)
     
     def _serialize_cache_metrics(self, metrics: CacheMetrics) -> Dict[str, Any]:
-        """Serialize cache metrics."""
-        return {
+        """Serialize cache metrics."""        return {
             'hit_count': metrics.hit_count,
             'miss_count': metrics.miss_count,
             'eviction_count': metrics.eviction_count,
@@ -422,12 +398,10 @@ class CacheSerializer:
         }
     
     def _deserialize_cache_metrics(self, data: Dict[str, Any]) -> CacheMetrics:
-        """Deserialize cache metrics."""
-        return CacheMetrics(**data)
+        """Deserialize cache metrics."""        return CacheMetrics(**data)
     
     def _compress_entry_data(self, data: Any) -> str:
-        """Compress cache entry data."""
-        try:
+        """Compress cache entry data."""        try:
             import gzip
             import pickle
             
@@ -448,8 +422,7 @@ class CacheSerializer:
             return json.dumps(data, default=str)
     
     def _decompress_entry_data(self, compressed_data: str) -> Any:
-        """Decompress cache entry data."""
-        try:
+        """Decompress cache entry data."""        try:
             if compressed_data.startswith('gzip_pickle:'):
                 import gzip
                 import pickle
@@ -477,8 +450,7 @@ class CacheSerializer:
         parameters: Optional[Dict[str, Any]] = None,
         namespace: Optional[str] = None
     ) -> str:
-        """Calculate standardized cache key."""
-        try:
+        """Calculate standardized cache key."""        try:
             key_components = [base_key]
             
             if namespace:
@@ -510,8 +482,7 @@ class CacheSerializer:
         cleanup_expired: bool = True,
         compress_large_entries: bool = True
     ) -> CacheData:
-        """Optimize cache data for better performance."""
-        try:
+        """Optimize cache data for better performance."""        try:
             optimized_entries = {}
             current_time = datetime.now()
             
@@ -550,8 +521,7 @@ class CacheSerializer:
             return cache_data
     
     def calculate_cache_statistics(self, cache_data: CacheData) -> Dict[str, Any]:
-        """Calculate comprehensive cache statistics."""
-        try:
+        """Calculate comprehensive cache statistics."""        try:
             total_requests = cache_data.metrics.hit_count + cache_data.metrics.miss_count
             hit_rate = cache_data.metrics.hit_count / max(total_requests, 1) * 100
             

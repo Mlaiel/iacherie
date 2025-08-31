@@ -1,5 +1,4 @@
-"""
-Advanced AI-Powered Content Analysis for Multimedia Processing
+"""Advanced AI-Powered Content Analysis for Multimedia Processing
 Professional content analysis with scene detection, object recognition, sentiment analysis
 
 Project Team: Lead AI Developer + Backend Senior Engineer + ML Engineer + 
@@ -15,9 +14,7 @@ distribution, or modification without written permission from Fahed Mlaiel
 extent of the law. All rights reserved.
 
 Contact: mlaiel@live.de for licensing and authorization inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import cv2
@@ -54,8 +51,7 @@ settings = get_settings()
 
 @dataclass
 class AnalysisResult:
-    """Base analysis result structure"""
-    content_type: str
+    """Base analysis result structure"""    content_type: str
     confidence: float
     processing_time: float
     timestamp: datetime = field(default_factory=datetime.utcnow)
@@ -64,8 +60,7 @@ class AnalysisResult:
 
 @dataclass 
 class SceneAnalysis(AnalysisResult):
-    """Scene detection analysis results"""
-    scenes: List[Dict[str, Any]] = field(default_factory=list)
+    """Scene detection analysis results"""    scenes: List[Dict[str, Any]] = field(default_factory=list)
     scene_changes: List[float] = field(default_factory=list)
     dominant_colors: List[str] = field(default_factory=list)
     motion_intensity: float = 0.0
@@ -74,8 +69,7 @@ class SceneAnalysis(AnalysisResult):
 
 @dataclass
 class ObjectAnalysis(AnalysisResult):
-    """Object detection analysis results"""
-    objects: List[Dict[str, Any]] = field(default_factory=list)
+    """Object detection analysis results"""    objects: List[Dict[str, Any]] = field(default_factory=list)
     faces: List[Dict[str, Any]] = field(default_factory=list)
     text_regions: List[Dict[str, Any]] = field(default_factory=list)
     landmarks: List[Dict[str, Any]] = field(default_factory=list)
@@ -83,8 +77,7 @@ class ObjectAnalysis(AnalysisResult):
 
 @dataclass
 class SentimentAnalysis(AnalysisResult):
-    """Sentiment and emotion analysis results"""
-    overall_sentiment: str
+    """Sentiment and emotion analysis results"""    overall_sentiment: str
     sentiment_score: float
     emotions: Dict[str, float] = field(default_factory=dict)
     keywords: List[str] = field(default_factory=list)
@@ -94,8 +87,7 @@ class SentimentAnalysis(AnalysisResult):
 
 @dataclass
 class AudioAnalysis(AnalysisResult):
-    """Audio content analysis results"""
-    genre_predictions: Dict[str, float] = field(default_factory=dict)
+    """Audio content analysis results"""    genre_predictions: Dict[str, float] = field(default_factory=dict)
     tempo: float = 0.0
     key_signature: str = "unknown"
     energy_level: float = 0.0
@@ -106,25 +98,21 @@ class AudioAnalysis(AnalysisResult):
 
 
 class BaseAnalyzer(ABC):
-    """Base class for all AI analyzers"""
-    
+    """Base class for all AI analyzers"""    
     def __init__(self):
         self.executor = ThreadPoolExecutor(max_workers=settings.MAX_WORKERS)
         self._models_loaded = False
         
     @abstractmethod
     async def analyze(self, content: Any, options: Dict[str, Any] = None) -> AnalysisResult:
-        """Analyze content and return results"""
-        pass
+        """Analyze content and return results"""        pass
     
     @abstractmethod
     def load_models(self) -> None:
-        """Load required AI models"""
-        pass
+        """Load required AI models"""        pass
     
     async def _ensure_models_loaded(self) -> None:
-        """Ensure models are loaded before analysis"""
-        if not self._models_loaded:
+        """Ensure models are loaded before analysis"""        if not self._models_loaded:
             await asyncio.get_event_loop().run_in_executor(
                 self.executor, self.load_models
             )
@@ -132,8 +120,7 @@ class BaseAnalyzer(ABC):
 
 
 class ContentAnalyzer(BaseAnalyzer):
-    """Main content analyzer orchestrating different analysis types"""
-    
+    """Main content analyzer orchestrating different analysis types"""    
     def __init__(self):
         super().__init__()
         self.scene_detector = SceneDetector()
@@ -147,8 +134,7 @@ class ContentAnalyzer(BaseAnalyzer):
         content_format: ContentFormat,
         options: Dict[str, Any] = None
     ) -> Dict[str, AnalysisResult]:
-        """Comprehensive analysis for all content types"""
-        options = options or {}
+        """Comprehensive analysis for all content types"""        options = options or {}
         results = {}
         
         try:
@@ -179,8 +165,7 @@ class ContentAnalyzer(BaseAnalyzer):
             raise AIAnalysisError(f"Analysis failed: {str(e)}")
     
     async def _extract_audio_from_video(self, video_content: bytes) -> bytes:
-        """Extract audio track from video content"""
-        # Implementation for audio extraction from video
+        """Extract audio track from video content"""        # Implementation for audio extraction from video
         import tempfile
         import ffmpeg
         
@@ -200,8 +185,7 @@ class ContentAnalyzer(BaseAnalyzer):
                 return audio_file.read()
     
     async def _transcribe_audio(self, audio_content: bytes) -> str:
-        """Transcribe audio content to text"""
-        # Implementation for speech-to-text
+        """Transcribe audio content to text"""        # Implementation for speech-to-text
         import speech_recognition as sr
         import tempfile
         
@@ -218,28 +202,24 @@ class ContentAnalyzer(BaseAnalyzer):
                     return ""
     
     async def analyze(self, content: Any, options: Dict[str, Any] = None) -> AnalysisResult:
-        """Main analyze method implementation"""
-        return await self.analyze_comprehensive(content, ContentFormat.detect(content), options)
+        """Main analyze method implementation"""        return await self.analyze_comprehensive(content, ContentFormat.detect(content), options)
     
     def load_models(self) -> None:
-        """Load all required models"""
-        self.scene_detector.load_models()
+        """Load all required models"""        self.scene_detector.load_models()
         self.object_detector.load_models()
         self.sentiment_analyzer.load_models()
         self.audio_analyzer.load_models()
 
 
 class SceneDetector(BaseAnalyzer):
-    """Advanced scene detection and video analysis"""
-    
+    """Advanced scene detection and video analysis"""    
     def __init__(self):
         super().__init__()
         self.model = None
         self.face_cascade = None
         
     def load_models(self) -> None:
-        """Load scene detection models"""
-        try:
+        """Load scene detection models"""        try:
             # Load OpenCV cascade for face detection
             self.face_cascade = cv2.CascadeClassifier(
                 cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
@@ -263,8 +243,7 @@ class SceneDetector(BaseAnalyzer):
             raise ProcessingError(f"Model loading failed: {str(e)}")
     
     async def analyze(self, content: Any, options: Dict[str, Any] = None) -> SceneAnalysis:
-        """Analyze video content for scenes"""
-        await self._ensure_models_loaded()
+        """Analyze video content for scenes"""        await self._ensure_models_loaded()
         options = options or {}
         
         start_time = datetime.utcnow()
@@ -295,8 +274,7 @@ class SceneDetector(BaseAnalyzer):
             raise AIAnalysisError(f"Scene analysis failed: {str(e)}")
     
     async def _analyze_video_bytes(self, video_bytes: bytes, options: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze video content from bytes"""
-        import tempfile
+        """Analyze video content from bytes"""        import tempfile
         
         with tempfile.NamedTemporaryFile(suffix='.mp4') as temp_file:
             temp_file.write(video_bytes)
@@ -304,8 +282,7 @@ class SceneDetector(BaseAnalyzer):
             return await self._analyze_video_file(temp_file.name, options)
     
     async def _analyze_video_file(self, video_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze video file for scenes and content"""
-        results = {
+        """Analyze video file for scenes and content"""        results = {
             "scenes": [],
             "scene_changes": [],
             "dominant_colors": [],
@@ -394,8 +371,7 @@ class SceneDetector(BaseAnalyzer):
         return results
     
     async def _extract_dominant_colors(self, frames: List[np.ndarray]) -> List[str]:
-        """Extract dominant colors from frames"""
-        all_pixels = []
+        """Extract dominant colors from frames"""        all_pixels = []
         for frame in frames[::max(1, len(frames)//10)]:  # Sample frames
             resized = cv2.resize(frame, (50, 50))
             pixels = resized.reshape(-1, 3)
@@ -416,8 +392,7 @@ class SceneDetector(BaseAnalyzer):
         return colors
     
     async def _calculate_motion_intensity(self, frames: List[np.ndarray]) -> float:
-        """Calculate motion intensity in video"""
-        if len(frames) < 2:
+        """Calculate motion intensity in video"""        if len(frames) < 2:
             return 0.0
         
         motion_values = []
@@ -439,8 +414,7 @@ class SceneDetector(BaseAnalyzer):
         return float(np.mean(motion_values)) if motion_values else 0.0
     
     async def _analyze_lighting(self, frames: List[np.ndarray]) -> str:
-        """Analyze lighting conditions in frames"""
-        brightness_values = []
+        """Analyze lighting conditions in frames"""        brightness_values = []
         
         for frame in frames[::max(1, len(frames)//20)]:  # Sample frames
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -463,8 +437,7 @@ class SceneDetector(BaseAnalyzer):
 
 
 class ObjectDetector(BaseAnalyzer):
-    """Advanced object detection and recognition"""
-    
+    """Advanced object detection and recognition"""    
     def __init__(self):
         super().__init__()
         self.yolo_model = None
@@ -473,8 +446,7 @@ class ObjectDetector(BaseAnalyzer):
         self.face_recognition_model = None
         
     def load_models(self) -> None:
-        """Load object detection models"""
-        try:
+        """Load object detection models"""        try:
             # Load YOLO for object detection
             import torch
             self.yolo_model = torch.hub.load('ultralytics/yolov5', 'yolov5s')
@@ -495,8 +467,7 @@ class ObjectDetector(BaseAnalyzer):
             raise ProcessingError(f"Model loading failed: {str(e)}")
     
     async def analyze(self, content: Any, options: Dict[str, Any] = None) -> ObjectAnalysis:
-        """Analyze image content for objects"""
-        await self._ensure_models_loaded()
+        """Analyze image content for objects"""        await self._ensure_models_loaded()
         options = options or {}
         
         start_time = datetime.utcnow()
@@ -544,8 +515,7 @@ class ObjectDetector(BaseAnalyzer):
             raise AIAnalysisError(f"Object analysis failed: {str(e)}")
     
     async def analyze_video(self, video_content: bytes, options: Dict[str, Any] = None) -> ObjectAnalysis:
-        """Analyze video content for objects across frames"""
-        await self._ensure_models_loaded()
+        """Analyze video content for objects across frames"""        await self._ensure_models_loaded()
         options = options or {}
         
         # Extract key frames and analyze objects
@@ -599,8 +569,7 @@ class ObjectDetector(BaseAnalyzer):
             )
     
     async def _detect_objects(self, image: Image.Image, options: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect objects in image using YOLO"""
-        try:
+        """Detect objects in image using YOLO"""        try:
             results = self.yolo_model(image)
             objects = []
             
@@ -625,8 +594,7 @@ class ObjectDetector(BaseAnalyzer):
             return []
     
     async def _detect_faces(self, image_cv: np.ndarray, options: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect faces in image"""
-        try:
+        """Detect faces in image"""        try:
             # Convert BGR to RGB for MediaPipe
             rgb_image = cv2.cvtColor(image_cv, cv2.COLOR_BGR2RGB)
             results = self.face_detection.process(rgb_image)
@@ -654,8 +622,7 @@ class ObjectDetector(BaseAnalyzer):
             return []
     
     async def _detect_text(self, image_cv: np.ndarray, options: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect text regions in image"""
-        try:
+        """Detect text regions in image"""        try:
             # Use OpenCV's text detection
             import pytesseract
             
@@ -685,8 +652,7 @@ class ObjectDetector(BaseAnalyzer):
             return []
     
     async def _detect_landmarks(self, image_cv: np.ndarray, options: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect visual landmarks and features"""
-        try:
+        """Detect visual landmarks and features"""        try:
             # Use OpenCV feature detection
             sift = cv2.SIFT_create()
             keypoints, descriptors = sift.detectAndCompute(cv2.cvtColor(image_cv, cv2.COLOR_BGR2GRAY), None)
@@ -709,8 +675,7 @@ class ObjectDetector(BaseAnalyzer):
 
 
 class SentimentAnalyzer(BaseAnalyzer):
-    """Advanced sentiment and emotion analysis"""
-    
+    """Advanced sentiment and emotion analysis"""    
     def __init__(self):
         super().__init__()
         self.text_classifier = None
@@ -719,8 +684,7 @@ class SentimentAnalyzer(BaseAnalyzer):
         self.nlp = None
         
     def load_models(self) -> None:
-        """Load sentiment analysis models"""
-        try:
+        """Load sentiment analysis models"""        try:
             # Load transformers pipelines
             self.text_classifier = pipeline("sentiment-analysis", 
                                            model="cardiffnlp/twitter-roberta-base-sentiment-latest")
@@ -745,8 +709,7 @@ class SentimentAnalyzer(BaseAnalyzer):
             raise ProcessingError(f"Model loading failed: {str(e)}")
     
     async def analyze(self, content: Any, options: Dict[str, Any] = None) -> SentimentAnalysis:
-        """Main analyze method - routes to appropriate analyzer"""
-        if isinstance(content, str):
+        """Main analyze method - routes to appropriate analyzer"""        if isinstance(content, str):
             return await self.analyze_text(content, options)
         elif isinstance(content, (bytes, Image.Image)):
             return await self.analyze_image(content, options)
@@ -754,8 +717,7 @@ class SentimentAnalyzer(BaseAnalyzer):
             raise AIAnalysisError("Unsupported content type for sentiment analysis")
     
     async def analyze_text(self, text: str, options: Dict[str, Any] = None) -> SentimentAnalysis:
-        """Analyze text content for sentiment and emotions"""
-        await self._ensure_models_loaded()
+        """Analyze text content for sentiment and emotions"""        await self._ensure_models_loaded()
         options = options or {}
         
         start_time = datetime.utcnow()
@@ -812,8 +774,7 @@ class SentimentAnalyzer(BaseAnalyzer):
             raise AIAnalysisError(f"Sentiment analysis failed: {str(e)}")
     
     async def analyze_image(self, image_content: Any, options: Dict[str, Any] = None) -> SentimentAnalysis:
-        """Analyze image content for emotional sentiment"""
-        await self._ensure_models_loaded()
+        """Analyze image content for emotional sentiment"""        await self._ensure_models_loaded()
         options = options or {}
         
         start_time = datetime.utcnow()
@@ -853,8 +814,7 @@ class SentimentAnalyzer(BaseAnalyzer):
             raise AIAnalysisError(f"Image sentiment analysis failed: {str(e)}")
     
     async def _extract_keywords(self, text: str) -> List[str]:
-        """Extract keywords from text using spaCy and TF-IDF"""
-        try:
+        """Extract keywords from text using spaCy and TF-IDF"""        try:
             # Use spaCy for named entity recognition and key terms
             doc = self.nlp(text)
             
@@ -879,8 +839,7 @@ class SentimentAnalyzer(BaseAnalyzer):
             return []
     
     async def _extract_themes(self, text: str) -> List[str]:
-        """Extract themes and topics from text"""
-        try:
+        """Extract themes and topics from text"""        try:
             # Use simple topic modeling based on key terms
             doc = self.nlp(text)
             
@@ -910,8 +869,7 @@ class SentimentAnalyzer(BaseAnalyzer):
             return []
     
     async def _describe_image_emotion(self, image: Image.Image) -> str:
-        """Generate emotional description of image using CLIP"""
-        try:
+        """Generate emotional description of image using CLIP"""        try:
             # Define emotional descriptors to test
             emotional_descriptions = [
                 "a happy and joyful scene",
@@ -948,16 +906,14 @@ class SentimentAnalyzer(BaseAnalyzer):
 
 
 class AudioContentAnalyzer(BaseAnalyzer):
-    """Advanced audio content analysis for music and speech"""
-    
+    """Advanced audio content analysis for music and speech"""    
     def __init__(self):
         super().__init__()
         self.genre_classifier = None
         self.speech_recognizer = None
         
     def load_models(self) -> None:
-        """Load audio analysis models"""
-        try:
+        """Load audio analysis models"""        try:
             # Load audio classification models
             self.genre_classifier = pipeline("audio-classification", 
                                             model="facebook/wav2vec2-base-960h")
@@ -973,8 +929,7 @@ class AudioContentAnalyzer(BaseAnalyzer):
             raise ProcessingError(f"Model loading failed: {str(e)}")
     
     async def analyze(self, content: Any, options: Dict[str, Any] = None) -> AudioAnalysis:
-        """Analyze audio content"""
-        await self._ensure_models_loaded()
+        """Analyze audio content"""        await self._ensure_models_loaded()
         options = options or {}
         
         start_time = datetime.utcnow()
@@ -1022,8 +977,7 @@ class AudioContentAnalyzer(BaseAnalyzer):
             raise AIAnalysisError(f"Audio analysis failed: {str(e)}")
     
     async def _load_audio_from_bytes(self, audio_bytes: bytes) -> Tuple[np.ndarray, int]:
-        """Load audio from bytes"""
-        import tempfile
+        """Load audio from bytes"""        import tempfile
         
         with tempfile.NamedTemporaryFile(suffix='.wav') as temp_file:
             temp_file.write(audio_bytes)
@@ -1033,8 +987,7 @@ class AudioContentAnalyzer(BaseAnalyzer):
             return audio_data, sample_rate
     
     async def _extract_tempo(self, audio_data: np.ndarray, sample_rate: int) -> float:
-        """Extract tempo (BPM) from audio"""
-        try:
+        """Extract tempo (BPM) from audio"""        try:
             tempo, _ = librosa.beat.beat_track(y=audio_data, sr=sample_rate)
             return float(tempo)
         except Exception as e:
@@ -1042,8 +995,7 @@ class AudioContentAnalyzer(BaseAnalyzer):
             return 0.0
     
     async def _extract_key(self, audio_data: np.ndarray, sample_rate: int) -> str:
-        """Extract key signature from audio"""
-        try:
+        """Extract key signature from audio"""        try:
             # Use chromagram to estimate key
             chromagram = librosa.feature.chroma_stft(y=audio_data, sr=sample_rate)
             key_profile = np.mean(chromagram, axis=1)
@@ -1059,8 +1011,7 @@ class AudioContentAnalyzer(BaseAnalyzer):
             return "unknown"
     
     async def _calculate_energy(self, audio_data: np.ndarray) -> float:
-        """Calculate energy level of audio"""
-        try:
+        """Calculate energy level of audio"""        try:
             # RMS energy
             rms_energy = np.sqrt(np.mean(audio_data**2))
             return float(rms_energy)
@@ -1070,8 +1021,7 @@ class AudioContentAnalyzer(BaseAnalyzer):
             return 0.0
     
     async def _analyze_mood(self, audio_data: np.ndarray, sample_rate: int) -> str:
-        """Analyze mood/valence of audio"""
-        try:
+        """Analyze mood/valence of audio"""        try:
             # Extract spectral features for mood analysis
             spectral_centroids = librosa.feature.spectral_centroid(y=audio_data, sr=sample_rate)
             spectral_rolloff = librosa.feature.spectral_rolloff(y=audio_data, sr=sample_rate)
@@ -1097,8 +1047,7 @@ class AudioContentAnalyzer(BaseAnalyzer):
             return "neutral"
     
     async def _detect_instruments(self, audio_data: np.ndarray, sample_rate: int) -> List[str]:
-        """Detect instruments in audio"""
-        try:
+        """Detect instruments in audio"""        try:
             # Extract features that might indicate instruments
             spectral_contrast = librosa.feature.spectral_contrast(y=audio_data, sr=sample_rate)
             tonnetz = librosa.feature.tonnetz(y=audio_data, sr=sample_rate)
@@ -1119,8 +1068,7 @@ class AudioContentAnalyzer(BaseAnalyzer):
             return []
     
     async def _segment_audio(self, audio_data: np.ndarray, sample_rate: int) -> Tuple[List[Dict], List[Dict]]:
-        """Segment audio into speech and music parts"""
-        try:
+        """Segment audio into speech and music parts"""        try:
             # Use spectral features to distinguish speech from music
             frame_length = int(0.1 * sample_rate)  # 100ms frames
             hop_length = frame_length // 4
@@ -1161,8 +1109,7 @@ class AudioContentAnalyzer(BaseAnalyzer):
             return [], []
     
     async def _predict_genre(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """Predict music genre"""
-        try:
+        """Predict music genre"""        try:
             # Extract features for genre classification
             mfcc = librosa.feature.mfcc(y=audio_data, sr=sample_rate, n_mfcc=13)
             spectral_contrast = librosa.feature.spectral_contrast(y=audio_data, sr=sample_rate)
@@ -1192,5 +1139,4 @@ class AudioContentAnalyzer(BaseAnalyzer):
 
 
 class AIAnalysisError(Exception):
-    """Custom exception for AI analysis errors"""
-    pass
+    """Custom exception for AI analysis errors"""    pass

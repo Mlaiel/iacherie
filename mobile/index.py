@@ -1,12 +1,9 @@
-"""
-Mobile Infrastructure Index - Professional Navigation System
+"""Mobile Infrastructure Index - Professional Navigation System
 Provides comprehensive overview and navigation for all mobile modules
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Business Logic: creators → upload multi-format → AI processing → protection → monetization → collaboration
-"""
-
-from typing import Dict, List, Any, Optional
+"""from typing import Dict, List, Any, Optional
 from dataclasses import dataclass
 import importlib.util
 import os
@@ -14,8 +11,7 @@ import os
 
 @dataclass
 class MobileModuleInfo:
-    """Professional mobile module information structure."""
-    name: str
+    """Professional mobile module information structure."""    name: str
     description: str
     file_path: str
     key_classes: List[str]
@@ -25,8 +21,7 @@ class MobileModuleInfo:
 
 
 class MobileModuleIndex:
-    """Professional index of all mobile infrastructure modules."""
-    
+    """Professional index of all mobile infrastructure modules."""    
     def __init__(self):
         self.modules = {
             "backend": MobileModuleInfo(
@@ -91,30 +86,25 @@ class MobileModuleIndex:
         }
     
     def get_all_modules(self) -> Dict[str, MobileModuleInfo]:
-        """Get all mobile modules with their information."""
-        return self.modules
+        """Get all mobile modules with their information."""        return self.modules
     
     def get_module_by_name(self, name: str) -> Optional[MobileModuleInfo]:
-        """Get specific mobile module information."""
-        return self.modules.get(name)
+        """Get specific mobile module information."""        return self.modules.get(name)
     
     def find_modules_for_platform(self, platform: str) -> List[MobileModuleInfo]:
-        """Find modules supporting specific platform."""
-        return [
+        """Find modules supporting specific platform."""        return [
             module for module in self.modules.values()
             if platform in module.mobile_platforms
         ]
     
     def find_modules_for_purpose(self, purpose_keyword: str) -> List[MobileModuleInfo]:
-        """Find modules by business purpose keyword."""
-        return [
+        """Find modules by business purpose keyword."""        return [
             module for module in self.modules.values()
             if purpose_keyword.lower() in module.business_purpose.lower()
         ]
     
     def get_system_overview(self) -> Dict[str, Any]:
-        """Get comprehensive mobile system overview."""
-        return {
+        """Get comprehensive mobile system overview."""        return {
             "total_modules": len(self.modules),
             "modules": {
                 name: {
@@ -160,25 +150,21 @@ class MobileModuleIndex:
 
 
 def get_module_index() -> MobileModuleIndex:
-    """Get the mobile module index instance."""
-    return MobileModuleIndex()
+    """Get the mobile module index instance."""    return MobileModuleIndex()
 
 
 def get_system_overview() -> Dict[str, Any]:
-    """Get mobile system overview."""
-    index = get_module_index()
+    """Get mobile system overview."""    index = get_module_index()
     return index.get_system_overview()
 
 
 def find_modules_for_purpose(purpose: str) -> List[MobileModuleInfo]:
-    """Find mobile modules for specific business purpose."""
-    index = get_module_index()
+    """Find mobile modules for specific business purpose."""    index = get_module_index()
     return index.find_modules_for_purpose(purpose)
 
 
 def find_modules_for_platform(platform: str) -> List[MobileModuleInfo]:
-    """Find mobile modules for specific platform."""
-    index = get_module_index()
+    """Find mobile modules for specific platform."""    index = get_module_index()
     return index.find_modules_for_platform(platform)
 
 

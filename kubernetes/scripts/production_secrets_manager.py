@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-🔧 Production Environment Secrets Manager - Ainflue Platform
+"""🔧 Production Environment Secrets Manager - Ainflue Platform
 ==============================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps + Security + Backend Senior
@@ -15,9 +14,7 @@ Contact: mlaiel@live.de
 
 Production secrets management with automated rotation and validation.
 ==============================================================
-"""
-
-import os
+"""import os
 import base64
 import secrets
 import logging
@@ -31,8 +28,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ExternalAPISecrets:
-    """External API credentials configuration"""
-    # Social Media APIs
+    """External API credentials configuration"""    # Social Media APIs
     youtube_api_key: str = ""
     instagram_app_id: str = ""
     instagram_app_secret: str = ""
@@ -87,8 +83,7 @@ class ExternalAPISecrets:
 
 
 class ProductionSecretsManager:
-    """
-    Production secrets manager for external API configurations.
+    """    Production secrets manager for external API configurations.
     
     Features:
     - Automated secret creation and updates
@@ -96,8 +91,7 @@ class ProductionSecretsManager:
     - Secret rotation and validation
     - Environment-specific configurations
     - Security compliance checks
-    """
-    
+    """    
     def __init__(self, namespace: str = "ainflue", environment: str = "production"):
         self.namespace = namespace
         self.environment = environment
@@ -118,8 +112,7 @@ class ProductionSecretsManager:
                 logger.warning(f"Could not load Kubernetes configuration: {e}")
     
     def load_secrets_from_environment(self) -> ExternalAPISecrets:
-        """Load secrets from environment variables"""
-        return ExternalAPISecrets(
+        """Load secrets from environment variables"""        return ExternalAPISecrets(
             # Social Media APIs
             youtube_api_key=os.getenv('YOUTUBE_API_KEY', ''),
             instagram_app_id=os.getenv('INSTAGRAM_APP_ID', ''),
@@ -175,8 +168,7 @@ class ProductionSecretsManager:
         )
     
     def encode_secrets(self, secrets: ExternalAPISecrets) -> Dict[str, str]:
-        """Encode secrets to base64 for Kubernetes"""
-        encoded_secrets = {}
+        """Encode secrets to base64 for Kubernetes"""        encoded_secrets = {}
         
         # Convert dataclass to dict
         secrets_dict = {
@@ -242,8 +234,7 @@ class ProductionSecretsManager:
         return encoded_secrets
     
     def create_kubernetes_secret(self, secrets: ExternalAPISecrets) -> bool:
-        """Create or update Kubernetes secret with external API credentials"""
-        if not self.kubernetes_client:
+        """Create or update Kubernetes secret with external API credentials"""        if not self.kubernetes_client:
             logger.error("Kubernetes client not available")
             return False
         
@@ -295,8 +286,7 @@ class ProductionSecretsManager:
             return False
     
     def validate_secrets(self, secrets: ExternalAPISecrets) -> Dict[str, bool]:
-        """Validate external API secrets"""
-        validation_results = {}
+        """Validate external API secrets"""        validation_results = {}
         
         # Check critical API keys
         critical_apis = {
@@ -322,8 +312,7 @@ class ProductionSecretsManager:
         return validation_results
     
     def rotate_secrets(self) -> bool:
-        """Rotate secrets that support programmatic rotation"""
-        try:
+        """Rotate secrets that support programmatic rotation"""        try:
             # Generate new JWT and encryption keys
             new_jwt_secret = secrets.token_urlsafe(64)
             new_encryption_key = secrets.token_urlsafe(32)
@@ -339,8 +328,7 @@ class ProductionSecretsManager:
             return False
     
     def setup_production_secrets(self) -> bool:
-        """Complete setup of production secrets"""
-        try:
+        """Complete setup of production secrets"""        try:
             # Load secrets from environment
             secrets_config = self.load_secrets_from_environment()
             
@@ -369,8 +357,7 @@ class ProductionSecretsManager:
             return False
     
     def get_secret_status(self) -> Dict[str, Any]:
-        """Get status of secret management"""
-        secrets_config = self.load_secrets_from_environment()
+        """Get status of secret management"""        secrets_config = self.load_secrets_from_environment()
         validation_results = self.validate_secrets(secrets_config)
         
         return {

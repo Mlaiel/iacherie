@@ -1,15 +1,12 @@
 #!/usr/bin/env python3
-"""
-Setup script for IA Influencer Agent Pipeline Management System
+"""Setup script for IA Influencer Agent Pipeline Management System
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
-"""
-
-from setuptools import setup, find_packages
+"""from setuptools import setup, find_packages
 import os
 from pathlib import Path
 
@@ -19,8 +16,7 @@ long_description = (this_directory / "README.md").read_text(encoding='utf-8')
 
 # Read requirements
 def read_requirements():
-    """Read requirements from requirements.txt"""
-    requirements_path = this_directory / "requirements.txt"
+    """Read requirements from requirements.txt"""    requirements_path = this_directory / "requirements.txt"
     if requirements_path.exists():
         with open(requirements_path, 'r', encoding='utf-8') as f:
             requirements = []
@@ -197,9 +193,7 @@ setup(
 
 # Post-install message
 def print_post_install_message():
-    """Print post-installation message"""
-    message = """
-╔══════════════════════════════════════════════════════════════════════════════╗
+    """Print post-installation message"""    message = """╔══════════════════════════════════════════════════════════════════════════════╗
 ║                                                                              ║
 ║    🎉 IA Influencer Agent Pipeline System Successfully Installed!           ║
 ║                                                                              ║
@@ -220,8 +214,7 @@ def print_post_install_message():
 ║       • README.fr.md (Français)                                            ║
 ║                                                                              ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
-    """
-    print(message)
+    """    print(message)
 
 if __name__ == "__main__":
     print_post_install_message()

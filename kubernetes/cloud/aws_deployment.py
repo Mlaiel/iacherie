@@ -1,5 +1,4 @@
-"""
-AWS Deployment Manager - Enterprise AWS Infrastructure Management
+"""AWS Deployment Manager - Enterprise AWS Infrastructure Management
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -14,9 +13,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 This module provides comprehensive AWS deployment and management capabilities
 for the IA Influencer Agent platform, including EC2, ECS, Lambda, RDS, S3,
 CloudFront, and other AWS services.
-"""
-
-import logging
+"""import logging
 import asyncio
 import boto3
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -30,8 +27,7 @@ import aioboto3
 logger = logging.getLogger(__name__)
 
 class AWSRegion(Enum):
-    """AWS regions for global deployment"""
-    US_EAST_1 = "us-east-1"
+    """AWS regions for global deployment"""    US_EAST_1 = "us-east-1"
     US_WEST_2 = "us-west-2"
     EU_WEST_1 = "eu-west-1"
     EU_CENTRAL_1 = "eu-central-1"
@@ -39,8 +35,7 @@ class AWSRegion(Enum):
     AP_NORTHEAST_1 = "ap-northeast-1"
 
 class AWSServiceType(Enum):
-    """AWS service types"""
-    EC2 = "ec2"
+    """AWS service types"""    EC2 = "ec2"
     ECS = "ecs"
     LAMBDA = "lambda"
     RDS = "rds"
@@ -55,8 +50,7 @@ class AWSServiceType(Enum):
 
 @dataclass
 class AWSCredentials:
-    """AWS credentials configuration"""
-    access_key_id: str
+    """AWS credentials configuration"""    access_key_id: str
     secret_access_key: str
     session_token: Optional[str] = None
     region: str = "eu-central-1"
@@ -64,8 +58,7 @@ class AWSCredentials:
 
 @dataclass
 class AWSDeploymentConfig:
-    """AWS deployment configuration"""
-    environment: str
+    """AWS deployment configuration"""    environment: str
     region: AWSRegion
     vpc_config: Dict[str, Any]
     services: List[Dict[str, Any]]
@@ -81,8 +74,7 @@ class AWSDeploymentConfig:
 
 @dataclass
 class AWSResource:
-    """AWS resource representation"""
-    resource_id: str
+    """AWS resource representation"""    resource_id: str
     resource_type: AWSServiceType
     region: AWSRegion
     status: str
@@ -93,11 +85,9 @@ class AWSResource:
     security_compliance: bool = True
 
 class AWSDeploymentManager:
-    """Enterprise AWS deployment and management system"""
-    
+    """Enterprise AWS deployment and management system"""    
     def __init__(self, credentials: AWSCredentials):
-        """Initialize AWS deployment manager"""
-        self.logger = logging.getLogger(self.__class__.__name__)
+        """Initialize AWS deployment manager"""        self.logger = logging.getLogger(self.__class__.__name__)
         self.credentials = credentials
         self.session = aioboto3.Session(
             aws_access_key_id=credentials.access_key_id,
@@ -109,8 +99,7 @@ class AWSDeploymentManager:
         self.deployment_history: List[Dict[str, Any]] = []
         
     async def initialize(self) -> bool:
-        """Initialize AWS connection and validate credentials"""
-        try:
+        """Initialize AWS connection and validate credentials"""        try:
             async with self.session.client('sts') as sts:
                 caller_identity = await sts.get_caller_identity()
                 self.logger.info(f"AWS credentials validated for account: {caller_identity.get('Account')}")
@@ -120,8 +109,7 @@ class AWSDeploymentManager:
             return False
     
     async def deploy_infrastructure(self, config: AWSDeploymentConfig) -> Dict[str, Any]:
-        """Deploy complete infrastructure stack"""
-        deployment_id = f"deploy-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
+        """Deploy complete infrastructure stack"""        deployment_id = f"deploy-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
         self.logger.info(f"Starting AWS infrastructure deployment: {deployment_id}")
         
         try:
@@ -181,8 +169,7 @@ class AWSDeploymentManager:
             raise
     
     async def _deploy_vpc_infrastructure(self, config: AWSDeploymentConfig) -> Dict[str, Any]:
-        """Deploy VPC and networking infrastructure"""
-        vpc_config = config.vpc_config
+        """Deploy VPC and networking infrastructure"""        vpc_config = config.vpc_config
         
         async with self.session.client('ec2', region_name=config.region.value) as ec2:
             # Create VPC
@@ -291,8 +278,7 @@ class AWSDeploymentManager:
             }
     
     async def _deploy_security_groups(self, config: AWSDeploymentConfig) -> Dict[str, Any]:
-        """Deploy security groups"""
-        security_groups = {}
+        """Deploy security groups"""        security_groups = {}
         
         async with self.session.client('ec2', region_name=config.region.value) as ec2:
             for sg_config in config.security_groups:
@@ -327,8 +313,7 @@ class AWSDeploymentManager:
         return security_groups
     
     async def _deploy_database_infrastructure(self, config: AWSDeploymentConfig) -> Dict[str, Any]:
-        """Deploy RDS database infrastructure"""
-        db_config = config.database_config
+        """Deploy RDS database infrastructure"""        db_config = config.database_config
         
         async with self.session.client('rds', region_name=config.region.value) as rds:
             # Create DB subnet group
@@ -373,8 +358,7 @@ class AWSDeploymentManager:
             }
     
     async def _deploy_application_services(self, config: AWSDeploymentConfig) -> Dict[str, Any]:
-        """Deploy application services (ECS/Lambda)"""
-        services = {}
+        """Deploy application services (ECS/Lambda)"""        services = {}
         
         # Deploy ECS services
         for service_config in config.services:
@@ -388,8 +372,7 @@ class AWSDeploymentManager:
         return services
     
     async def _deploy_ecs_service(self, service_config: Dict[str, Any], config: AWSDeploymentConfig) -> Dict[str, Any]:
-        """Deploy ECS service"""
-        async with self.session.client('ecs', region_name=config.region.value) as ecs:
+        """Deploy ECS service"""        async with self.session.client('ecs', region_name=config.region.value) as ecs:
             # Create ECS cluster if not exists
             cluster_name = f"ia-influencer-cluster-{config.environment}"
             try:
@@ -468,8 +451,7 @@ class AWSDeploymentManager:
             }
     
     async def _deploy_lambda_function(self, service_config: Dict[str, Any], config: AWSDeploymentConfig) -> Dict[str, Any]:
-        """Deploy Lambda function"""
-        async with self.session.client('lambda', region_name=config.region.value) as lambda_client:
+        """Deploy Lambda function"""        async with self.session.client('lambda', region_name=config.region.value) as lambda_client:
             function_response = await lambda_client.create_function(
                 FunctionName=service_config['name'],
                 Runtime=service_config.get('runtime', 'python3.9'),
@@ -503,8 +485,7 @@ class AWSDeploymentManager:
             }
     
     async def _deploy_load_balancers(self, config: AWSDeploymentConfig) -> Dict[str, Any]:
-        """Deploy Application Load Balancers"""
-        lb_config = config.load_balancer_config
+        """Deploy Application Load Balancers"""        lb_config = config.load_balancer_config
         
         async with self.session.client('elbv2', region_name=config.region.value) as elbv2:
             # Create Application Load Balancer
@@ -568,8 +549,7 @@ class AWSDeploymentManager:
             }
     
     async def _deploy_storage_infrastructure(self, config: AWSDeploymentConfig) -> Dict[str, Any]:
-        """Deploy S3 storage infrastructure"""
-        storage_config = config.storage_config
+        """Deploy S3 storage infrastructure"""        storage_config = config.storage_config
         
         async with self.session.client('s3', region_name=config.region.value) as s3:
             buckets = {}
@@ -632,8 +612,7 @@ class AWSDeploymentManager:
             return buckets
     
     async def _deploy_monitoring_infrastructure(self, config: AWSDeploymentConfig) -> Dict[str, Any]:
-        """Deploy CloudWatch monitoring infrastructure"""
-        monitoring_config = config.monitoring_config
+        """Deploy CloudWatch monitoring infrastructure"""        monitoring_config = config.monitoring_config
         
         async with self.session.client('logs', region_name=config.region.value) as logs:
             async with self.session.client('cloudwatch', region_name=config.region.value) as cloudwatch:
@@ -686,8 +665,7 @@ class AWSDeploymentManager:
                 }
     
     async def _configure_auto_scaling(self, config: AWSDeploymentConfig) -> Dict[str, Any]:
-        """Configure auto-scaling policies"""
-        scaling_config = config.scaling_config
+        """Configure auto-scaling policies"""        scaling_config = config.scaling_config
         
         async with self.session.client('application-autoscaling', region_name=config.region.value) as autoscaling:
             scaling_targets = {}
@@ -731,8 +709,7 @@ class AWSDeploymentManager:
             return scaling_targets
     
     async def _configure_backup_systems(self, config: AWSDeploymentConfig) -> Dict[str, Any]:
-        """Configure AWS Backup systems"""
-        backup_config = config.backup_config
+        """Configure AWS Backup systems"""        backup_config = config.backup_config
         
         async with self.session.client('backup', region_name=config.region.value) as backup:
             # Create backup vault
@@ -776,8 +753,7 @@ class AWSDeploymentManager:
             }
     
     async def _get_deployment_endpoints(self) -> Dict[str, str]:
-        """Get deployment endpoints"""
-        return {
+        """Get deployment endpoints"""        return {
             "api_gateway": "https://api.ia-influencer.com",
             "web_app": "https://app.ia-influencer.com",
             "admin_panel": "https://admin.ia-influencer.com",
@@ -785,8 +761,7 @@ class AWSDeploymentManager:
         }
     
     async def _calculate_deployment_cost(self) -> Dict[str, float]:
-        """Calculate estimated deployment cost"""
-        return {
+        """Calculate estimated deployment cost"""        return {
             "monthly_estimate": 2500.0,
             "compute_cost": 800.0,
             "storage_cost": 200.0,
@@ -798,14 +773,12 @@ class AWSDeploymentManager:
         }
     
     async def _rollback_deployment(self, deployment_id: str) -> bool:
-        """Rollback failed deployment"""
-        self.logger.info(f"Rolling back deployment: {deployment_id}")
+        """Rollback failed deployment"""        self.logger.info(f"Rolling back deployment: {deployment_id}")
         # Implementation for rollback logic
         return True
     
     async def scale_service(self, service_name: str, desired_count: int) -> bool:
-        """Scale ECS service"""
-        try:
+        """Scale ECS service"""        try:
             async with self.session.client('ecs', region_name=self.credentials.region) as ecs:
                 await ecs.update_service(
                     cluster=f"ia-influencer-cluster-{service_name}",
@@ -819,8 +792,7 @@ class AWSDeploymentManager:
             return False
     
     async def get_service_status(self, service_name: str) -> Dict[str, Any]:
-        """Get service status"""
-        try:
+        """Get service status"""        try:
             async with self.session.client('ecs', region_name=self.credentials.region) as ecs:
                 response = await ecs.describe_services(
                     cluster=f"ia-influencer-cluster-{service_name}",
@@ -846,8 +818,7 @@ class AWSDeploymentManager:
             return {"service_name": service_name, "status": "error", "error": str(e)}
     
     async def get_deployment_costs(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get deployment costs for period"""
-        try:
+        """Get deployment costs for period"""        try:
             async with self.session.client('ce', region_name='us-east-1') as ce:
                 response = await ce.get_cost_and_usage(
                     TimePeriod={
@@ -885,8 +856,7 @@ class AWSDeploymentManager:
             return {"error": str(e)}
     
     async def cleanup_resources(self, deployment_id: str) -> bool:
-        """Cleanup deployment resources"""
-        try:
+        """Cleanup deployment resources"""        try:
             self.logger.info(f"Cleaning up resources for deployment: {deployment_id}")
             # Implementation for cleanup logic
             return True

@@ -1,5 +1,4 @@
-"""
-Audio Quality Configuration Module for IA-Influencer Agent Platform
+"""Audio Quality Configuration Module for IA-Influencer Agent Platform
 ==================================================================
 
 Professional audio quality assessment and optimization configuration.
@@ -18,9 +17,7 @@ explicit written permission from Fahed Mlaiel is strictly prohibited and will be
 to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import logging
+"""import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple, NamedTuple
 from dataclasses import dataclass, field
@@ -30,8 +27,7 @@ logger = logging.getLogger(__name__)
 
 
 class QualityMetric(Enum):
-    """Audio quality metrics"""
-    SNR = "signal_noise_ratio"
+    """Audio quality metrics"""    SNR = "signal_noise_ratio"
     THD = "total_harmonic_distortion"
     DYNAMIC_RANGE = "dynamic_range"
     PEAK_RMS_RATIO = "peak_rms_ratio"
@@ -46,8 +42,7 @@ class QualityMetric(Enum):
 
 
 class QualityGrade(Enum):
-    """Audio quality grades"""
-    EXCELLENT = "excellent"      # 90-100%
+    """Audio quality grades"""    EXCELLENT = "excellent"      # 90-100%
     GOOD = "good"               # 75-89%
     ACCEPTABLE = "acceptable"    # 60-74%
     POOR = "poor"               # 40-59%
@@ -55,8 +50,7 @@ class QualityGrade(Enum):
 
 
 class QualityStandard(Enum):
-    """Audio quality standards"""
-    BROADCAST = "broadcast"      # EBU R128, ITU-R BS.1770
+    """Audio quality standards"""    BROADCAST = "broadcast"      # EBU R128, ITU-R BS.1770
     STREAMING = "streaming"      # Platform-specific standards
     MASTERING = "mastering"      # Professional mastering standards
     PODCAST = "podcast"          # Podcast-specific standards
@@ -65,8 +59,7 @@ class QualityStandard(Enum):
 
 
 class AnalysisDepth(Enum):
-    """Quality analysis depth levels"""
-    QUICK = "quick"             # Basic metrics only
+    """Quality analysis depth levels"""    QUICK = "quick"             # Basic metrics only
     STANDARD = "standard"       # Standard quality assessment
     COMPREHENSIVE = "comprehensive"  # Full quality analysis
     FORENSIC = "forensic"       # Detailed forensic analysis
@@ -74,8 +67,7 @@ class AnalysisDepth(Enum):
 
 @dataclass
 class QualityThresholds:
-    """Quality assessment thresholds"""
-    excellent_threshold: float = 90.0
+    """Quality assessment thresholds"""    excellent_threshold: float = 90.0
     good_threshold: float = 75.0
     acceptable_threshold: float = 60.0
     poor_threshold: float = 40.0
@@ -91,8 +83,7 @@ class QualityThresholds:
 
 @dataclass
 class PerceptualQualityConfig:
-    """Perceptual quality assessment configuration"""
-    enable_psychoacoustic_model: bool = True
+    """Perceptual quality assessment configuration"""    enable_psychoacoustic_model: bool = True
     use_bark_scale: bool = True
     use_critical_bands: bool = True
     masking_threshold_analysis: bool = True
@@ -103,8 +94,7 @@ class PerceptualQualityConfig:
 
 @dataclass
 class TechnicalQualityConfig:
-    """Technical quality assessment configuration"""
-    analyze_frequency_response: bool = True
+    """Technical quality assessment configuration"""    analyze_frequency_response: bool = True
     analyze_phase_response: bool = True
     analyze_harmonic_distortion: bool = True
     analyze_intermodulation: bool = False
@@ -115,8 +105,7 @@ class TechnicalQualityConfig:
 
 @dataclass
 class EnhancementConfig:
-    """Quality enhancement configuration"""
-    enable_noise_reduction: bool = True
+    """Quality enhancement configuration"""    enable_noise_reduction: bool = True
     enable_dynamic_range_enhancement: bool = True
     enable_spectral_enhancement: bool = True
     enable_stereo_enhancement: bool = False
@@ -126,16 +115,13 @@ class EnhancementConfig:
 
 
 class AudioQualityConfig:
-    """
-    Comprehensive audio quality configuration manager
+    """    Comprehensive audio quality configuration manager
     
     Manages quality assessment metrics, thresholds, standards compliance,
     and enhancement strategies for professional audio processing.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize audio quality configuration"""
-        self.logger = logging.getLogger(self.__class__.__name__)
+        """Initialize audio quality configuration"""        self.logger = logging.getLogger(self.__class__.__name__)
         
         # Core configuration
         self._quality_standard = QualityStandard.STREAMING
@@ -169,8 +155,7 @@ class AudioQualityConfig:
         self.logger.info("AudioQualityConfig initialized successfully")
     
     def _initialize_standard_configs(self) -> Dict[QualityStandard, Dict[str, Any]]:
-        """Initialize quality standard configurations"""
-        return {
+        """Initialize quality standard configurations"""        return {
             QualityStandard.BROADCAST: {
                 "name": "Broadcast Standard (EBU R128)",
                 "description": "Professional broadcast audio quality standards",
@@ -316,8 +301,7 @@ class AudioQualityConfig:
         }
     
     def _initialize_quality_profiles(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize quality assessment profiles"""
-        return {
+        """Initialize quality assessment profiles"""        return {
             "music_production": {
                 "description": "Music production quality assessment",
                 "primary_metrics": [
@@ -402,8 +386,7 @@ class AudioQualityConfig:
         }
     
     def _initialize_metric_weights(self) -> Dict[QualityMetric, float]:
-        """Initialize metric weights for overall quality scoring"""
-        return {
+        """Initialize metric weights for overall quality scoring"""        return {
             QualityMetric.SNR: 0.15,
             QualityMetric.THD: 0.10,
             QualityMetric.DYNAMIC_RANGE: 0.20,
@@ -419,40 +402,34 @@ class AudioQualityConfig:
         }
     
     def get_quality_standard_config(self, standard: QualityStandard) -> Dict[str, Any]:
-        """
-        Get configuration for specific quality standard
+        """        Get configuration for specific quality standard
         
         Args:
             standard: Quality standard
             
         Returns:
             Standard configuration
-        """
-        return self._standard_configs.get(standard, {})
+        """        return self._standard_configs.get(standard, {})
     
     def get_quality_profile(self, profile_name: str) -> Dict[str, Any]:
-        """
-        Get quality assessment profile
+        """        Get quality assessment profile
         
         Args:
             profile_name: Name of the quality profile
             
         Returns:
             Quality profile configuration
-        """
-        return self._quality_profiles.get(profile_name, {})
+        """        return self._quality_profiles.get(profile_name, {})
     
     def apply_quality_profile(self, profile_name: str) -> bool:
-        """
-        Apply quality assessment profile
+        """        Apply quality assessment profile
         
         Args:
             profile_name: Name of the quality profile
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             profile = self.get_quality_profile(profile_name)
             if not profile:
                 self.logger.error(f"Unknown quality profile: {profile_name}")
@@ -499,16 +476,14 @@ class AudioQualityConfig:
             return False
     
     def calculate_quality_score(self, metrics: Dict[str, float]) -> Dict[str, Any]:
-        """
-        Calculate overall quality score from individual metrics
+        """        Calculate overall quality score from individual metrics
         
         Args:
             metrics: Dictionary of metric values
             
         Returns:
             Quality score and analysis
-        """
-        try:
+        """        try:
             weighted_scores = []
             metric_scores = {}
             
@@ -566,8 +541,7 @@ class AudioQualityConfig:
             }
     
     def _normalize_metric_value(self, metric: QualityMetric, value: float) -> float:
-        """Normalize metric value to 0-100 scale"""
-        try:
+        """Normalize metric value to 0-100 scale"""        try:
             if metric == QualityMetric.SNR:
                 # SNR: higher is better, normalize around 20-60dB range
                 return min(100, max(0, (value - 10) * 2))
@@ -612,13 +586,11 @@ class AudioQualityConfig:
             return 50.0  # Default middle value
     
     def _get_target_lufs(self) -> float:
-        """Get target LUFS for current quality standard"""
-        standard_config = self._standard_configs.get(self._quality_standard, {})
+        """Get target LUFS for current quality standard"""        standard_config = self._standard_configs.get(self._quality_standard, {})
         return standard_config.get("target_lufs", -16.0)
     
     def _determine_quality_grade(self, score: float) -> QualityGrade:
-        """Determine quality grade from overall score"""
-        if score >= self.quality_thresholds.excellent_threshold:
+        """Determine quality grade from overall score"""        if score >= self.quality_thresholds.excellent_threshold:
             return QualityGrade.EXCELLENT
         elif score >= self.quality_thresholds.good_threshold:
             return QualityGrade.GOOD
@@ -632,8 +604,7 @@ class AudioQualityConfig:
     def _generate_recommendations(self, 
                                 metric_scores: Dict[str, Dict[str, float]], 
                                 overall_score: float) -> List[str]:
-        """Generate quality improvement recommendations"""
-        recommendations = []
+        """Generate quality improvement recommendations"""        recommendations = []
         
         try:
             # Analyze individual metrics for issues
@@ -693,8 +664,7 @@ class AudioQualityConfig:
             return ["Unable to generate specific recommendations due to analysis error."]
     
     def _check_standard_compliance(self, metrics: Dict[str, float]) -> Dict[str, bool]:
-        """Check compliance with current quality standard"""
-        compliance = {}
+        """Check compliance with current quality standard"""        compliance = {}
         
         try:
             standard_config = self._standard_configs.get(self._quality_standard, {})
@@ -732,8 +702,7 @@ class AudioQualityConfig:
                             use_case: str,
                             quality_standard: Optional[QualityStandard] = None,
                             target_grade: Optional[QualityGrade] = None) -> Dict[str, Any]:
-        """
-        Create complete quality assessment configuration
+        """        Create complete quality assessment configuration
         
         Args:
             use_case: Quality assessment use case
@@ -742,8 +711,7 @@ class AudioQualityConfig:
             
         Returns:
             Complete quality configuration
-        """
-        try:
+        """        try:
             # Apply appropriate profile based on use case
             if use_case in self._quality_profiles:
                 self.apply_quality_profile(use_case)
@@ -812,8 +780,7 @@ class AudioQualityConfig:
     def validate_quality_requirements(self, 
                                     metrics: Dict[str, float],
                                     requirements: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        """
-        Validate audio quality against specific requirements
+        """        Validate audio quality against specific requirements
         
         Args:
             metrics: Audio quality metrics
@@ -821,8 +788,7 @@ class AudioQualityConfig:
             
         Returns:
             Tuple of (meets_requirements, failed_requirements)
-        """
-        failed_requirements = []
+        """        failed_requirements = []
         
         try:
             # Check minimum SNR
@@ -860,8 +826,7 @@ class AudioQualityConfig:
         return meets_requirements, failed_requirements
     
     def export_config(self) -> Dict[str, Any]:
-        """Export complete audio quality configuration"""
-        try:
+        """Export complete audio quality configuration"""        try:
             return {
                 "quality_standard": self._quality_standard.value,
                 "analysis_depth": self._analysis_depth.value,

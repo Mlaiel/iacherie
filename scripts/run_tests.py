@@ -1,15 +1,12 @@
 #!/usr/bin/env python3
-"""
-Comprehensive Test Runner for Ainflue Platform
+"""Comprehensive Test Runner for Ainflue Platform
 
 Executes all test suites with proper reporting and coverage analysis.
 Validates critical production requirements are met.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import subprocess
+"""import subprocess
 import sys
 import time
 import json
@@ -20,8 +17,7 @@ from datetime import datetime
 
 
 class TestRunner:
-    """Comprehensive test execution and reporting."""
-    
+    """Comprehensive test execution and reporting."""    
     def __init__(self, project_root: str = None):
         self.project_root = Path(project_root or os.getcwd())
         self.test_results = {}
@@ -29,8 +25,7 @@ class TestRunner:
         self.end_time = None
         
     def run_all_tests(self) -> Dict[str, Any]:
-        """Run all test suites and generate comprehensive report."""
-        print("🚀 Starting Comprehensive Test Suite for Ainflue Platform")
+        """Run all test suites and generate comprehensive report."""        print("🚀 Starting Comprehensive Test Suite for Ainflue Platform")
         print("=" * 60)
         
         self.start_time = datetime.now()
@@ -72,8 +67,7 @@ class TestRunner:
         return final_report
     
     def _run_fingerprinting_tests(self) -> Dict[str, Any]:
-        """Run fingerprinting unit tests."""
-        start_time = time.time()
+        """Run fingerprinting unit tests."""        start_time = time.time()
         
         try:
             result = subprocess.run([
@@ -102,8 +96,7 @@ class TestRunner:
             }
     
     def _run_monetization_tests(self) -> Dict[str, Any]:
-        """Run monetization unit tests."""
-        start_time = time.time()
+        """Run monetization unit tests."""        start_time = time.time()
         
         try:
             result = subprocess.run([
@@ -132,8 +125,7 @@ class TestRunner:
             }
     
     def _run_crawler_tests(self) -> Dict[str, Any]:
-        """Run crawler unit tests."""
-        start_time = time.time()
+        """Run crawler unit tests."""        start_time = time.time()
         
         try:
             result = subprocess.run([
@@ -162,8 +154,7 @@ class TestRunner:
             }
     
     def _run_integration_tests(self) -> Dict[str, Any]:
-        """Run API integration tests."""
-        start_time = time.time()
+        """Run API integration tests."""        start_time = time.time()
         
         try:
             result = subprocess.run([
@@ -192,8 +183,7 @@ class TestRunner:
             }
     
     def _run_performance_tests(self) -> Dict[str, Any]:
-        """Run performance and load tests."""
-        start_time = time.time()
+        """Run performance and load tests."""        start_time = time.time()
         
         try:
             result = subprocess.run([
@@ -222,8 +212,7 @@ class TestRunner:
             }
     
     def _run_security_tests(self) -> Dict[str, Any]:
-        """Run security audit and validation."""
-        start_time = time.time()
+        """Run security audit and validation."""        start_time = time.time()
         
         try:
             # Run security hardening script
@@ -259,8 +248,7 @@ class TestRunner:
             }
     
     def _run_coverage_analysis(self) -> Dict[str, Any]:
-        """Run code coverage analysis."""
-        start_time = time.time()
+        """Run code coverage analysis."""        start_time = time.time()
         
         try:
             # Run tests with coverage
@@ -300,8 +288,7 @@ class TestRunner:
             }
     
     def _count_tests_from_output(self, output: str) -> int:
-        """Extract test count from pytest output."""
-        try:
+        """Extract test count from pytest output."""        try:
             # Look for pytest summary line
             lines = output.split('\n')
             for line in lines:
@@ -321,8 +308,7 @@ class TestRunner:
             return 0
     
     def _extract_performance_metrics(self, output: str) -> Dict[str, Any]:
-        """Extract performance metrics from test output."""
-        try:
+        """Extract performance metrics from test output."""        try:
             # Look for JSON performance data in output
             import re
             json_matches = re.findall(r'\\{[^}]+\\}', output)
@@ -333,8 +319,7 @@ class TestRunner:
             return {"note": "Performance metrics extraction failed"}
     
     def _extract_security_score(self, output: str) -> float:
-        """Extract security score from audit output."""
-        try:
+        """Extract security score from audit output."""        try:
             # Look for security score in output
             import re
             score_match = re.search(r'score[:\s]+(\d+\.?\d*)', output)
@@ -345,8 +330,7 @@ class TestRunner:
             return 85.0
     
     def _read_coverage_report(self) -> Dict[str, Any]:
-        """Read coverage report if available."""
-        try:
+        """Read coverage report if available."""        try:
             coverage_file = self.project_root / "coverage.json"
             if coverage_file.exists():
                 with open(coverage_file) as f:
@@ -362,8 +346,7 @@ class TestRunner:
         return {"total_coverage": 78.5, "note": "Simulated coverage data"}
     
     def _print_suite_result(self, suite_name: str, result: Dict[str, Any]):
-        """Print individual test suite result."""
-        if result["success"]:
+        """Print individual test suite result."""        if result["success"]:
             print(f"✅ {suite_name}: PASSED")
         else:
             print(f"❌ {suite_name}: FAILED")
@@ -383,8 +366,7 @@ class TestRunner:
             print(f"   Error: {result['error']}")
     
     def _generate_final_report(self) -> Dict[str, Any]:
-        """Generate comprehensive final report."""
-        total_duration = (self.end_time - self.start_time).total_seconds()
+        """Generate comprehensive final report."""        total_duration = (self.end_time - self.start_time).total_seconds()
         
         # Calculate overall metrics
         total_tests = sum(r.get("tests_run", 0) for r in self.test_results.values())
@@ -421,8 +403,7 @@ class TestRunner:
         }
     
     def _assess_production_readiness(self, coverage: float, security_score: float) -> Dict[str, Any]:
-        """Assess production readiness based on test results."""
-        criteria = {
+        """Assess production readiness based on test results."""        criteria = {
             "test_coverage": {"score": coverage, "threshold": 85.0, "weight": 0.3},
             "security_score": {"score": security_score, "threshold": 80.0, "weight": 0.3},
             "test_success": {"score": 100.0, "threshold": 95.0, "weight": 0.4}  # All tests should pass
@@ -452,8 +433,7 @@ class TestRunner:
         }
     
     def _check_requirements_compliance(self, coverage: float, security_score: float, tests_passed: bool) -> Dict[str, bool]:
-        """Check compliance with critical production requirements."""
-        return {
+        """Check compliance with critical production requirements."""        return {
             "unit_tests_implemented": tests_passed,
             "integration_tests_implemented": "Integration Tests - API" in self.test_results,
             "performance_tests_implemented": "Performance Tests" in self.test_results,
@@ -465,8 +445,7 @@ class TestRunner:
         }
     
     def _print_final_report(self, report: Dict[str, Any]):
-        """Print comprehensive final report."""
-        print("\n" + "=" * 60)
+        """Print comprehensive final report."""        print("\n" + "=" * 60)
         print("🎯 FINAL TEST REPORT - AINFLUE PLATFORM")
         print("=" * 60)
         
@@ -515,8 +494,7 @@ class TestRunner:
 
 
 def main():
-    """Main execution function."""
-    import argparse
+    """Main execution function."""    import argparse
     
     parser = argparse.ArgumentParser(description="Comprehensive Ainflue Platform Test Runner")
     parser.add_argument("--project-root", help="Project root directory", default=".")

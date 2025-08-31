@@ -1,5 +1,4 @@
-"""
-Spotify Agent Configuration - Ultra-Advanced Configuration Management
+"""Spotify Agent Configuration - Ultra-Advanced Configuration Management
 
 Industrial-grade configuration management system providing environment-specific settings,
 feature flags, performance tuning, security configurations, and operational parameters.
@@ -18,9 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-
-import os
+"""import os
 import json
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -32,16 +29,14 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class Environment(Enum):
-    """Environment types"""
-    DEVELOPMENT = "development"
+    """Environment types"""    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
     ENTERPRISE = "enterprise"
 
 class FeatureFlag(Enum):
-    """Feature flags for controlled feature rollout"""
-    ADVANCED_ANALYTICS = "advanced_analytics"
+    """Feature flags for controlled feature rollout"""    ADVANCED_ANALYTICS = "advanced_analytics"
     MARKETING_INTELLIGENCE = "marketing_intelligence"
     CONTENT_PROTECTION = "content_protection"
     COLLABORATION_ENGINE = "collaboration_engine"
@@ -52,8 +47,7 @@ class FeatureFlag(Enum):
 
 @dataclass
 class SpotifyAPIConfig:
-    """Spotify API configuration"""
-    client_id: str = ""
+    """Spotify API configuration"""    client_id: str = ""
     client_secret: str = ""
     redirect_uri: str = "http://localhost:8000/callback"
     scopes: List[str] = field(default_factory=lambda: [
@@ -76,8 +70,7 @@ class SpotifyAPIConfig:
 
 @dataclass 
 class CacheConfig:
-    """Caching configuration"""
-    enabled: bool = True
+    """Caching configuration"""    enabled: bool = True
     backend: str = "redis"  # redis, memory, database
     host: str = "localhost"
     port: int = 6379
@@ -89,8 +82,7 @@ class CacheConfig:
 
 @dataclass
 class DatabaseConfig:
-    """Database configuration"""
-    host: str = "localhost"
+    """Database configuration"""    host: str = "localhost"
     port: int = 5432
     name: str = "ia_influencer_agent"
     username: str = "postgres"
@@ -102,8 +94,7 @@ class DatabaseConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration"""
-    encryption_enabled: bool = True
+    """Security configuration"""    encryption_enabled: bool = True
     encryption_algorithm: str = "AES-256-GCM"
     secret_key: str = ""
     jwt_secret: str = ""
@@ -115,8 +106,7 @@ class SecurityConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance optimization configuration"""
-    max_concurrent_requests: int = 1000
+    """Performance optimization configuration"""    max_concurrent_requests: int = 1000
     request_timeout: int = 30
     batch_processing_size: int = 100
     async_processing: bool = True
@@ -127,8 +117,7 @@ class PerformanceConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring and observability configuration"""
-    enabled: bool = True
+    """Monitoring and observability configuration"""    enabled: bool = True
     metrics_collection: bool = True
     prometheus_enabled: bool = True
     prometheus_port: int = 9090
@@ -140,8 +129,7 @@ class MonitoringConfig:
 
 @dataclass
 class FeatureFlagConfig:
-    """Feature flag configuration"""
-    flags: Dict[str, bool] = field(default_factory=lambda: {
+    """Feature flag configuration"""    flags: Dict[str, bool] = field(default_factory=lambda: {
         FeatureFlag.ADVANCED_ANALYTICS.value: True,
         FeatureFlag.MARKETING_INTELLIGENCE.value: True,
         FeatureFlag.CONTENT_PROTECTION.value: True,
@@ -156,8 +144,7 @@ class FeatureFlagConfig:
 
 @dataclass
 class MLConfig:
-    """Machine Learning configuration"""
-    model_cache_enabled: bool = True
+    """Machine Learning configuration"""    model_cache_enabled: bool = True
     model_cache_ttl: int = 86400  # 24 hours
     batch_prediction_size: int = 1000
     feature_store_enabled: bool = True
@@ -168,8 +155,7 @@ class MLConfig:
 
 @dataclass
 class SpotifyAgentConfig:
-    """Complete Spotify Agent configuration"""
-    environment: Environment = Environment.PRODUCTION
+    """Complete Spotify Agent configuration"""    environment: Environment = Environment.PRODUCTION
     debug: bool = False
     
     # Service configurations
@@ -186,8 +172,7 @@ class SpotifyAgentConfig:
     custom_settings: Dict[str, Any] = field(default_factory=dict)
 
 class ConfigurationManager:
-    """Advanced configuration management system"""
-    
+    """Advanced configuration management system"""    
     def __init__(self, config_path: Optional[str] = None, environment: Optional[Environment] = None):
         self.config_path = config_path
         self.environment = environment or self._detect_environment()
@@ -201,20 +186,17 @@ class ConfigurationManager:
         ]
 
     def get_config(self) -> SpotifyAgentConfig:
-        """Get complete configuration with all sources merged"""
-        if self._config is None:
+        """Get complete configuration with all sources merged"""        if self._config is None:
             self._config = self._build_configuration()
             self._validate_configuration(self._config)
         return self._config
 
     def reload_config(self) -> SpotifyAgentConfig:
-        """Reload configuration from all sources"""
-        self._config = None
+        """Reload configuration from all sources"""        self._config = None
         return self.get_config()
 
     def _detect_environment(self) -> Environment:
-        """Detect current environment"""
-        env = os.getenv("SPOTIFY_AGENT_ENV", "production").lower()
+        """Detect current environment"""        env = os.getenv("SPOTIFY_AGENT_ENV", "production").lower()
         
         env_mapping = {
             "dev": Environment.DEVELOPMENT,
@@ -231,8 +213,7 @@ class ConfigurationManager:
         return env_mapping.get(env, Environment.PRODUCTION)
 
     def _build_configuration(self) -> SpotifyAgentConfig:
-        """Build configuration by merging all sources"""
-        config = SpotifyAgentConfig(environment=self.environment)
+        """Build configuration by merging all sources"""        config = SpotifyAgentConfig(environment=self.environment)
         
         # Apply configuration sources in priority order
         for source_loader in reversed(self.config_sources):
@@ -246,8 +227,7 @@ class ConfigurationManager:
         return config
 
     def _load_environment_variables(self) -> Dict[str, Any]:
-        """Load configuration from environment variables"""
-        env_config = {}
+        """Load configuration from environment variables"""        env_config = {}
         
         # Spotify API configuration
         if os.getenv("SPOTIFY_CLIENT_ID"):
@@ -283,8 +263,7 @@ class ConfigurationManager:
         return env_config
 
     def _load_config_files(self) -> Dict[str, Any]:
-        """Load configuration from files"""
-        config_data = {}
+        """Load configuration from files"""        config_data = {}
         
         # Look for configuration files
         config_paths = [
@@ -311,8 +290,7 @@ class ConfigurationManager:
         return config_data
 
     def _load_config_file(self, file_path: str) -> Dict[str, Any]:
-        """Load configuration from a specific file"""
-        path = Path(file_path)
+        """Load configuration from a specific file"""        path = Path(file_path)
         
         if not path.exists():
             return {}
@@ -326,15 +304,13 @@ class ConfigurationManager:
                 raise ValueError(f"Unsupported config file format: {path.suffix}")
 
     def _load_defaults(self) -> Dict[str, Any]:
-        """Load default configuration"""
-        return {
+        """Load default configuration"""        return {
             "environment": self.environment.value,
             "debug": self.environment in (Environment.DEVELOPMENT, Environment.TESTING)
         }
 
     def _merge_configurations(self, base_config: SpotifyAgentConfig, override_config: Dict[str, Any]) -> SpotifyAgentConfig:
-        """Merge configuration dictionaries into SpotifyAgentConfig"""
-        # This would implement deep merging logic
+        """Merge configuration dictionaries into SpotifyAgentConfig"""        # This would implement deep merging logic
         # For now, simplified implementation
         
         if "spotify_api" in override_config:
@@ -354,8 +330,7 @@ class ConfigurationManager:
         return base_config
 
     def _apply_environment_overrides(self, config: SpotifyAgentConfig) -> SpotifyAgentConfig:
-        """Apply environment-specific configuration overrides"""
-        if config.environment == Environment.DEVELOPMENT:
+        """Apply environment-specific configuration overrides"""        if config.environment == Environment.DEVELOPMENT:
             config.debug = True
             config.monitoring.logging_level = "DEBUG"
             config.cache.default_ttl = 300  # 5 minutes for faster development
@@ -385,8 +360,7 @@ class ConfigurationManager:
         return config
 
     def _validate_configuration(self, config: SpotifyAgentConfig):
-        """Validate configuration for completeness and correctness"""
-        # Validate required Spotify API credentials
+        """Validate configuration for completeness and correctness"""        # Validate required Spotify API credentials
         if not config.spotify_api.client_id:
             logger.warning("Spotify client_id not configured")
         
@@ -407,8 +381,7 @@ class ConfigurationManager:
 _config_manager: Optional[ConfigurationManager] = None
 
 def get_config_manager(config_path: Optional[str] = None, environment: Optional[Environment] = None) -> ConfigurationManager:
-    """Get global configuration manager instance"""
-    global _config_manager
+    """Get global configuration manager instance"""    global _config_manager
     
     if _config_manager is None:
         _config_manager = ConfigurationManager(config_path, environment)
@@ -416,12 +389,10 @@ def get_config_manager(config_path: Optional[str] = None, environment: Optional[
     return _config_manager
 
 def get_config() -> SpotifyAgentConfig:
-    """Get current Spotify agent configuration"""
-    return get_config_manager().get_config()
+    """Get current Spotify agent configuration"""    return get_config_manager().get_config()
 
 def reload_config() -> SpotifyAgentConfig:
-    """Reload configuration from all sources"""
-    return get_config_manager().reload_config()
+    """Reload configuration from all sources"""    return get_config_manager().reload_config()
 
 # Export main components
 __all__ = [

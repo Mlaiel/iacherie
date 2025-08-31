@@ -27,8 +27,7 @@ CDN optimization → Backup strategies → Performance monitoring → Cost optim
 
 Enterprise Storage Deployment Suite for IA-Influencer-Agent platform
 providing comprehensive storage infrastructure management capabilities.
-"""
-__version__ = "2.0.0"
+"""__version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __license__ = "Proprietary - All Rights Reserved"

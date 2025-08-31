@@ -1,5 +1,4 @@
-"""
-Fingerprinting Integration Notifications Manager
+"""Fingerprinting Integration Notifications Manager
 
 Gestionnaire spécialisé pour les notifications liées au système d'empreintage IA
 et à l'intégration avec les agents de protection de contenu existants.
@@ -20,9 +19,7 @@ Ce code constitue la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou tentative de reverse engineering
 non autorisée par écrit est formellement interdite et passible de poursuites judiciaires
 selon le droit allemand et international. Contact: mlaiel@live.de
-"""
-
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -36,8 +33,7 @@ logger = logging.getLogger(__name__)
 
 
 class FingerprintingEventType(Enum):
-    """Types d'événements de fingerprinting"""
-    FINGERPRINT_GENERATED = "fingerprint_generated"
+    """Types d'événements de fingerprinting"""    FINGERPRINT_GENERATED = "fingerprint_generated"
     SIMILARITY_DETECTED = "similarity_detected"
     QUALITY_ALERT = "quality_alert"
     PROCESSING_COMPLETED = "processing_completed"
@@ -50,8 +46,7 @@ class FingerprintingEventType(Enum):
 
 
 class FingerprintQuality(Enum):
-    """Niveaux de qualité d'empreintes"""
-    EXCELLENT = "excellent"
+    """Niveaux de qualité d'empreintes"""    EXCELLENT = "excellent"
     GOOD = "good"
     MEDIUM = "medium"
     POOR = "poor"
@@ -60,8 +55,7 @@ class FingerprintQuality(Enum):
 
 @dataclass
 class FingerprintingNotificationData:
-    """Structure des données de notification fingerprinting"""
-    content_id: str
+    """Structure des données de notification fingerprinting"""    content_id: str
     fingerprint_id: str
     content_type: str  # audio, video, image, text
     quality_score: float
@@ -75,23 +69,19 @@ class FingerprintingNotificationData:
 
 
 class FingerprintingIntegrationManager:
-    """
-    Gestionnaire d'intégration pour les notifications de fingerprinting.
+    """    Gestionnaire d'intégration pour les notifications de fingerprinting.
     
     Ce gestionnaire orchestre les notifications liées au système d'empreintage
     IA et s'intègre avec les agents de protection existants.
-    """
-    
+    """    
     def __init__(self, db_pool: asyncpg.Pool, redis_client: aioredis.Redis, config: Dict[str, Any]):
-        """
-        Initialise le gestionnaire d'intégration fingerprinting.
+        """        Initialise le gestionnaire d'intégration fingerprinting.
         
         Args:
             db_pool: Pool de connexions PostgreSQL
             redis_client: Client Redis pour cache et queues
             config: Configuration du gestionnaire
-        """
-        self.db_pool = db_pool
+        """        self.db_pool = db_pool
         self.redis = redis_client
         self.config = config
         
@@ -127,8 +117,7 @@ class FingerprintingIntegrationManager:
         notification_data: FingerprintingNotificationData,
         notification_channels: List[str] = None
     ) -> Dict[str, Any]:
-        """
-        Traite une notification d'événement de fingerprinting.
+        """        Traite une notification d'événement de fingerprinting.
         
         Args:
             event_type: Type d'événement
@@ -137,8 +126,7 @@ class FingerprintingIntegrationManager:
             
         Returns:
             Résultat du traitement
-        """
-        try:
+        """        try:
             # Channels par défaut si non spécifiés
             if notification_channels is None:
                 notification_channels = self._get_default_channels(event_type)
@@ -189,8 +177,7 @@ class FingerprintingIntegrationManager:
         event_type: FingerprintingEventType, 
         data: FingerprintingNotificationData
     ) -> Dict[str, Any]:
-        """Prépare les données du message selon le type d'événement"""
-        
+        """Prépare les données du message selon le type d'événement"""        
         base_data = {
             "content_id": data.content_id,
             "fingerprint_id": data.fingerprint_id,
@@ -300,17 +287,14 @@ class FingerprintingIntegrationManager:
         data: FingerprintingNotificationData,
         message_data: Dict[str, Any]
     ) -> str:
-        """Stocke la notification en base de données"""
-        
-        query = """
-        INSERT INTO fingerprint_notifications (
+        """Stocke la notification en base de données"""        
+        query = """        INSERT INTO fingerprint_notifications (
             user_id, content_id, fingerprint_id, event_type, content_type,
             quality_score, processing_time, similarity_matches, message_data,
             priority, category, action_required, metadata, created_at
         ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, NOW())
         RETURNING id
-        """
-        
+        """        
         async with self.db_pool.acquire() as conn:
             notification_id = await conn.fetchval(
                 query,
@@ -337,8 +321,7 @@ class FingerprintingIntegrationManager:
         message_data: Dict[str, Any],
         channels: List[str]
     ) -> Dict[str, Any]:
-        """Envoie les notifications sur les canaux spécifiés"""
-        
+        """Envoie les notifications sur les canaux spécifiés"""        
         delivery_results = {}
         
         for channel in channels:
@@ -371,8 +354,7 @@ class FingerprintingIntegrationManager:
         event_type: FingerprintingEventType,
         data: FingerprintingNotificationData
     ):
-        """Traitement spécialisé selon le type d'événement"""
-        
+        """Traitement spécialisé selon le type d'événement"""        
         try:
             if event_type == FingerprintingEventType.SIMILARITY_DETECTED:
                 await self._process_similarity_detection(data)
@@ -390,8 +372,7 @@ class FingerprintingIntegrationManager:
             logger.error(f"Erreur traitement spécialisé {event_type.value}: {str(e)}")
 
     async def _process_similarity_detection(self, data: FingerprintingNotificationData):
-        """Traite la détection de similarité"""
-        
+        """Traite la détection de similarité"""        
         # Analyser les correspondances
         high_confidence_matches = [
             match for match in data.similarity_matches 
@@ -406,8 +387,7 @@ class FingerprintingIntegrationManager:
         await self._update_monitoring_dashboard(data)
 
     async def _initiate_rights_protection_workflow(self, data: FingerprintingNotificationData):
-        """Initie le workflow de protection des droits"""
-        
+        """Initie le workflow de protection des droits"""        
         # Capturer les preuves
         evidence_data = {
             "fingerprint_id": data.fingerprint_id,
@@ -425,8 +405,7 @@ class FingerprintingIntegrationManager:
             await self._notify_legal_team(data, evidence_data)
 
     async def _get_default_channels(self, event_type: FingerprintingEventType) -> List[str]:
-        """Retourne les canaux par défaut selon le type d'événement"""
-        
+        """Retourne les canaux par défaut selon le type d'événement"""        
         channel_mapping = {
             FingerprintingEventType.FINGERPRINT_GENERATED: ["dashboard", "websocket"],
             FingerprintingEventType.SIMILARITY_DETECTED: ["email", "push", "dashboard"],
@@ -442,8 +421,7 @@ class FingerprintingIntegrationManager:
         return channel_mapping.get(event_type, ["dashboard"])
 
     def _determine_quality_level(self, quality_score: float) -> FingerprintQuality:
-        """Détermine le niveau de qualité basé sur le score"""
-        
+        """Détermine le niveau de qualité basé sur le score"""        
         if quality_score >= self.quality_thresholds[FingerprintQuality.EXCELLENT]:
             return FingerprintQuality.EXCELLENT
         elif quality_score >= self.quality_thresholds[FingerprintQuality.GOOD]:
@@ -460,8 +438,7 @@ class FingerprintingIntegrationManager:
         content_type: str, 
         quality_level: FingerprintQuality
     ) -> List[str]:
-        """Retourne des suggestions d'amélioration de qualité"""
-        
+        """Retourne des suggestions d'amélioration de qualité"""        
         suggestions = {
             "audio": {
                 FingerprintQuality.POOR: [
@@ -523,8 +500,7 @@ class FingerprintingIntegrationManager:
         limit: int = 50,
         offset: int = 0
     ) -> List[Dict[str, Any]]:
-        """Récupère l'historique des notifications de fingerprinting"""
-        
+        """Récupère l'historique des notifications de fingerprinting"""        
         conditions = ["user_id = $1"]
         params = [user_id]
         param_count = 1
@@ -539,16 +515,14 @@ class FingerprintingIntegrationManager:
             conditions.append(f"event_type = ANY(${param_count})")
             params.append(event_types)
         
-        query = f"""
-        SELECT id, content_id, fingerprint_id, event_type, content_type,
+        query = f"""        SELECT id, content_id, fingerprint_id, event_type, content_type,
                quality_score, processing_time, message_data, priority,
                category, action_required, created_at
         FROM fingerprint_notifications
         WHERE {' AND '.join(conditions)}
         ORDER BY created_at DESC
         LIMIT ${param_count + 1} OFFSET ${param_count + 2}
-        """
-        
+        """        
         params.extend([limit, offset])
         
         async with self.db_pool.acquire() as conn:
@@ -557,15 +531,13 @@ class FingerprintingIntegrationManager:
         return [dict(row) for row in rows]
 
     async def get_system_metrics(self) -> Dict[str, Any]:
-        """Retourne les métriques du système de fingerprinting"""
-        
+        """Retourne les métriques du système de fingerprinting"""        
         # Métriques en temps réel depuis Redis
         redis_metrics = await self.redis.hgetall("fingerprint:metrics")
         
         # Métriques de base de données
         async with self.db_pool.acquire() as conn:
-            db_metrics = await conn.fetchrow("""
-            SELECT 
+            db_metrics = await conn.fetchrow("""            SELECT 
                 COUNT(*) as total_notifications,
                 COUNT(*) FILTER (WHERE event_type = 'fingerprint_generated') as fingerprints_generated,
                 COUNT(*) FILTER (WHERE event_type = 'similarity_detected') as similarities_detected,
@@ -585,35 +557,29 @@ class FingerprintingIntegrationManager:
         }
 
     async def _send_email_notification(self, notification_id: str, message_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Envoie une notification par email"""
-        # Intégration avec le gestionnaire d'emails existant
+        """Envoie une notification par email"""        # Intégration avec le gestionnaire d'emails existant
         return {"success": True, "method": "email", "notification_id": notification_id}
 
     async def _send_push_notification(self, notification_id: str, message_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Envoie une notification push"""
-        # Intégration avec le gestionnaire push existant
+        """Envoie une notification push"""        # Intégration avec le gestionnaire push existant
         return {"success": True, "method": "push", "notification_id": notification_id}
 
     async def _send_websocket_notification(self, notification_id: str, message_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Envoie une notification WebSocket"""
-        # Intégration avec le gestionnaire temps réel existant
+        """Envoie une notification WebSocket"""        # Intégration avec le gestionnaire temps réel existant
         return {"success": True, "method": "websocket", "notification_id": notification_id}
 
     async def _update_dashboard_notification(self, notification_id: str, message_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Met à jour le tableau de bord"""
-        return {"success": True, "method": "dashboard", "notification_id": notification_id}
+        """Met à jour le tableau de bord"""        return {"success": True, "method": "dashboard", "notification_id": notification_id}
 
     async def _cache_notification_data(self, notification_id: str, message_data: Dict[str, Any]):
-        """Met en cache les données de notification pour accès rapide"""
-        await self.redis.setex(
+        """Met en cache les données de notification pour accès rapide"""        await self.redis.setex(
             f"fingerprint:notification:{notification_id}",
             3600,  # 1 heure
             json.dumps(message_data)
         )
 
     async def _update_metrics(self, event_type: FingerprintingEventType, delivery_results: Dict[str, Any]):
-        """Met à jour les métriques système"""
-        
+        """Met à jour les métriques système"""        
         # Incrémenter compteurs Redis
         await self.redis.hincrby("fingerprint:metrics", f"event:{event_type.value}", 1)
         
@@ -623,13 +589,11 @@ class FingerprintingIntegrationManager:
             await self.redis.hincrby("fingerprint:metrics", f"delivery:{channel}:{status}", 1)
 
     async def _trigger_automated_protection(self, data: FingerprintingNotificationData, matches: List[Dict[str, Any]]):
-        """Déclenche la protection automatisée"""
-        logger.info(f"Déclenchement protection automatisée pour {data.content_id}")
+        """Déclenche la protection automatisée"""        logger.info(f"Déclenchement protection automatisée pour {data.content_id}")
         # Intégration avec le système de protection existant
 
     async def _update_monitoring_dashboard(self, data: FingerprintingNotificationData):
-        """Met à jour le tableau de bord de surveillance"""
-        dashboard_data = {
+        """Met à jour le tableau de bord de surveillance"""        dashboard_data = {
             "content_id": data.content_id,
             "similarity_count": len(data.similarity_matches),
             "last_check": datetime.utcnow().isoformat()
@@ -642,31 +606,23 @@ class FingerprintingIntegrationManager:
         )
 
     async def _store_violation_evidence(self, content_id: str, evidence_data: Dict[str, Any]):
-        """Stocke les preuves de violation"""
-        query = """
-        INSERT INTO content_violation_evidence (content_id, evidence_data, created_at)
+        """Stocke les preuves de violation"""        query = """        INSERT INTO content_violation_evidence (content_id, evidence_data, created_at)
         VALUES ($1, $2, NOW())
-        """
-        
+        """        
         async with self.db_pool.acquire() as conn:
             await conn.execute(query, content_id, json.dumps(evidence_data))
 
     async def _notify_legal_team(self, data: FingerprintingNotificationData, evidence_data: Dict[str, Any]):
-        """Notifie l'équipe légale"""
-        logger.info(f"Notification équipe légale pour violation: {data.content_id}")
+        """Notifie l'équipe légale"""        logger.info(f"Notification équipe légale pour violation: {data.content_id}")
         # Intégration avec le système de notification légale
 
     async def _schedule_quality_improvement(self, data: FingerprintingNotificationData):
-        """Programme l'amélioration de qualité"""
-        logger.info(f"Planification amélioration qualité: {data.fingerprint_id}")
+        """Programme l'amélioration de qualité"""        logger.info(f"Planification amélioration qualité: {data.fingerprint_id}")
 
     async def _update_content_protection_status(self, data: FingerprintingNotificationData):
-        """Met à jour le statut de protection du contenu"""
-        query = """
-        UPDATE content_items 
+        """Met à jour le statut de protection du contenu"""        query = """        UPDATE content_items 
         SET fingerprint_status = 'completed', protection_enabled = true, updated_at = NOW()
         WHERE id = $1
-        """
-        
+        """        
         async with self.db_pool.acquire() as conn:
             await conn.execute(query, data.content_id)

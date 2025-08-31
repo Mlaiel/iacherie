@@ -1,12 +1,9 @@
-"""
-Monetization Manager - Central orchestration for all monetization systems.
+"""Monetization Manager - Central orchestration for all monetization systems.
 Coordinates revenue engine, payments, subscriptions, commissions, analytics, and pricing.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from decimal import Decimal
 from datetime import datetime, timedelta
@@ -26,8 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 class MonetizationEvent(Enum):
-    """Monetization system events."""
-    REVENUE_GENERATED = "revenue_generated"
+    """Monetization system events."""    REVENUE_GENERATED = "revenue_generated"
     PAYMENT_PROCESSED = "payment_processed"
     SUBSCRIPTION_CREATED = "subscription_created"
     SUBSCRIPTION_RENEWED = "subscription_renewed"
@@ -38,8 +34,7 @@ class MonetizationEvent(Enum):
 
 @dataclass
 class MonetizationConfig:
-    """Central monetization configuration."""
-    revenue_share_rate: Decimal = Decimal("0.15")  # 15% platform fee
+    """Central monetization configuration."""    revenue_share_rate: Decimal = Decimal("0.15")  # 15% platform fee
     min_payout_threshold: Decimal = Decimal("50.00")
     default_currency: str = "EUR"
     payment_gateways: List[GatewayType] = field(default_factory=lambda: [GatewayType.STRIPE, GatewayType.PAYPAL])
@@ -50,8 +45,7 @@ class MonetizationConfig:
     analytics_retention_days: int = 365
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert config to dictionary."""
-        return {
+        """Convert config to dictionary."""        return {
             "revenue_share_rate": float(self.revenue_share_rate),
             "min_payout_threshold": float(self.min_payout_threshold),
             "default_currency": self.default_currency,
@@ -66,8 +60,7 @@ class MonetizationConfig:
 
 @dataclass
 class MonetizationStats:
-    """Aggregated monetization statistics."""
-    total_revenue: Decimal
+    """Aggregated monetization statistics."""    total_revenue: Decimal
     active_subscriptions: int
     pending_commissions: Decimal
     conversion_rate: float
@@ -77,8 +70,7 @@ class MonetizationStats:
     last_updated: datetime = field(default_factory=datetime.utcnow)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert stats to dictionary."""
-        return {
+        """Convert stats to dictionary."""        return {
             "total_revenue": float(self.total_revenue),
             "active_subscriptions": self.active_subscriptions,
             "pending_commissions": float(self.pending_commissions),
@@ -91,11 +83,9 @@ class MonetizationStats:
 
 
 class MonetizationManager:
-    """
-    Central monetization management system.
+    """    Central monetization management system.
     Orchestrates all monetization components and provides unified interface.
-    """
-    
+    """    
     def __init__(self, config: Optional[MonetizationConfig] = None):
         self.config = config or MonetizationConfig()
         
@@ -119,8 +109,7 @@ class MonetizationManager:
         self.background_tasks: List[asyncio.Task] = []
     
     async def initialize(self, gateway_configs: Dict[GatewayType, Dict[str, str]] = None) -> bool:
-        """Initialize all monetization components."""
-        try:
+        """Initialize all monetization components."""        try:
             logger.info("Initializing monetization manager...")
             
             # Initialize components in order
@@ -189,8 +178,7 @@ class MonetizationManager:
         viewer_id: str,
         context: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Process complete content monetization flow."""
-        if not self.is_initialized:
+        """Process complete content monetization flow."""        if not self.is_initialized:
             await self.initialize()
         
         context = context or {}
@@ -288,8 +276,7 @@ class MonetizationManager:
         plan_id: str,
         payment_method: PaymentMethod = PaymentMethod.CREDIT_CARD
     ) -> Dict[str, Any]:
-        """Create a new subscription with payment processing."""
-        try:
+        """Create a new subscription with payment processing."""        try:
             result = {
                 "success": False,
                 "subscription_id": None,
@@ -383,8 +370,7 @@ class MonetizationManager:
             }
     
     async def get_user_monetization_summary(self, user_id: str) -> Dict[str, Any]:
-        """Get comprehensive monetization summary for a user."""
-        try:
+        """Get comprehensive monetization summary for a user."""        try:
             summary = {
                 "user_id": user_id,
                 "revenue": {},
@@ -434,8 +420,7 @@ class MonetizationManager:
         report_type: ReportType = ReportType.MONTHLY,
         user_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Generate comprehensive monetization report."""
-        try:
+        """Generate comprehensive monetization report."""        try:
             # Calculate report period
             now = datetime.utcnow()
             if report_type == ReportType.DAILY:
@@ -475,8 +460,7 @@ class MonetizationManager:
             }
     
     async def optimize_monetization(self, user_id: Optional[str] = None) -> Dict[str, Any]:
-        """Run automated monetization optimization."""
-        try:
+        """Run automated monetization optimization."""        try:
             optimization_results = {
                 "pricing_optimization": {},
                 "subscription_optimization": {},
@@ -527,8 +511,7 @@ class MonetizationManager:
             }
     
     async def get_monetization_stats(self, force_refresh: bool = False) -> MonetizationStats:
-        """Get aggregated monetization statistics."""
-        # Check cache
+        """Get aggregated monetization statistics."""        # Check cache
         if (not force_refresh and 
             self.cached_stats and 
             self.stats_cache_expiry and 
@@ -597,14 +580,12 @@ class MonetizationManager:
             )
     
     def register_event_handler(self, event: MonetizationEvent, handler: callable) -> None:
-        """Register event handler for monetization events."""
-        if event not in self.event_handlers:
+        """Register event handler for monetization events."""        if event not in self.event_handlers:
             self.event_handlers[event] = []
         self.event_handlers[event].append(handler)
     
     async def shutdown(self) -> None:
-        """Shutdown monetization manager and cleanup resources."""
-        try:
+        """Shutdown monetization manager and cleanup resources."""        try:
             # Cancel background tasks
             for task in self.background_tasks:
                 task.cancel()
@@ -622,8 +603,7 @@ class MonetizationManager:
             logger.error(f"Monetization manager shutdown failed: {e}")
     
     async def _start_background_tasks(self) -> None:
-        """Start background maintenance tasks."""
-        try:
+        """Start background maintenance tasks."""        try:
             # Subscription renewal task
             renewal_task = asyncio.create_task(self._subscription_renewal_task())
             self.background_tasks.append(renewal_task)
@@ -643,8 +623,7 @@ class MonetizationManager:
             logger.error(f"Background task startup failed: {e}")
     
     async def _subscription_renewal_task(self) -> None:
-        """Background task for subscription renewals."""
-        while True:
+        """Background task for subscription renewals."""        while True:
             try:
                 await asyncio.sleep(3600)  # Run every hour
                 await self.subscription_manager.process_renewals()
@@ -654,8 +633,7 @@ class MonetizationManager:
                 logger.error(f"Subscription renewal task failed: {e}")
     
     async def _commission_payout_task(self) -> None:
-        """Background task for commission payouts."""
-        while True:
+        """Background task for commission payouts."""        while True:
             try:
                 await asyncio.sleep(86400)  # Run daily
                 await self.commission_manager.process_payouts()
@@ -665,8 +643,7 @@ class MonetizationManager:
                 logger.error(f"Commission payout task failed: {e}")
     
     async def _pricing_optimization_task(self) -> None:
-        """Background task for price optimization."""
-        while True:
+        """Background task for price optimization."""        while True:
             try:
                 await asyncio.sleep(3600 * 6)  # Run every 6 hours
                 await self.pricing_engine.optimize_prices()
@@ -676,8 +653,7 @@ class MonetizationManager:
                 logger.error(f"Pricing optimization task failed: {e}")
     
     async def _emit_event(self, event: MonetizationEvent, data: Dict[str, Any]) -> None:
-        """Emit monetization event to registered handlers."""
-        try:
+        """Emit monetization event to registered handlers."""        try:
             handlers = self.event_handlers.get(event, [])
             for handler in handlers:
                 try:
@@ -696,8 +672,7 @@ class MonetizationManager:
         amount: Decimal, 
         reference_id: str
     ) -> None:
-        """Process referral commission if applicable."""
-        try:
+        """Process referral commission if applicable."""        try:
             # Check if user was referred by an affiliate
             # This would typically check a referral tracking system
             # For now, we'll simulate a 10% chance of referral
@@ -718,8 +693,7 @@ class MonetizationManager:
             logger.error(f"Referral commission processing failed: {e}")
     
     async def _get_revenue_optimization_insights(self, user_id: Optional[str]) -> List[str]:
-        """Get revenue optimization insights."""
-        insights = []
+        """Get revenue optimization insights."""        insights = []
         
         try:
             stats = await self.get_monetization_stats()
@@ -739,8 +713,7 @@ class MonetizationManager:
         return insights
     
     async def _get_pricing_recommendations(self, user_id: Optional[str]) -> List[str]:
-        """Get pricing optimization recommendations."""
-        recommendations = []
+        """Get pricing optimization recommendations."""        recommendations = []
         
         try:
             pricing_analytics = await self.pricing_engine.get_pricing_analytics()
@@ -758,8 +731,7 @@ class MonetizationManager:
         return recommendations
     
     async def _get_subscription_insights(self, user_id: Optional[str]) -> List[str]:
-        """Get subscription optimization insights."""
-        insights = []
+        """Get subscription optimization insights."""        insights = []
         
         try:
             sub_analytics = await self.subscription_manager.get_subscription_analytics()
@@ -778,8 +750,7 @@ class MonetizationManager:
         return insights
     
     async def _get_commission_opportunities(self, user_id: Optional[str]) -> List[str]:
-        """Get commission program opportunities."""
-        opportunities = []
+        """Get commission program opportunities."""        opportunities = []
         
         try:
             commission_analytics = await self.commission_manager.get_commission_analytics()

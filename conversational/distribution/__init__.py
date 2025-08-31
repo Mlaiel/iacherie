@@ -37,8 +37,7 @@ or distribution is strictly prohibited and will result in legal action.
 📊 Supported Platforms:
 YouTube, Instagram, TikTok, Twitter, LinkedIn, Spotify, Facebook, Pinterest, 
 Snapchat, Twitch, Reddit, Discord, Telegram, Medium, Substack
-"""
-import logging
+"""import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
 import asyncio

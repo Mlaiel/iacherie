@@ -1,5 +1,4 @@
-"""
-Payload Transformer - Enterprise Data Transformation System
+"""Payload Transformer - Enterprise Data Transformation System
 
 Industrial-grade webhook payload transformation and normalization engine
 for multi-platform integrations with advanced mapping and validation.
@@ -11,9 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission from Fahed Mlaiel <mlaiel@live.de> is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 import re
@@ -40,8 +37,7 @@ from ...security.encryption import ContentEncryption
 logger = logging.getLogger(__name__)
 
 class PlatformType(Enum):
-    """Supported webhook platforms"""
-    GITHUB = "github"
+    """Supported webhook platforms"""    GITHUB = "github"
     STRIPE = "stripe"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -58,8 +54,7 @@ class PlatformType(Enum):
     CUSTOM = "custom"
 
 class TransformationType(Enum):
-    """Types of payload transformations"""
-    NORMALIZE = "normalize"
+    """Types of payload transformations"""    NORMALIZE = "normalize"
     VALIDATE = "validate"
     ENRICH = "enrich"
     FILTER = "filter"
@@ -70,8 +65,7 @@ class TransformationType(Enum):
 
 @dataclass
 class TransformationRule:
-    """Individual transformation rule configuration"""
-    rule_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Individual transformation rule configuration"""    rule_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     rule_name: str = None
     transformation_type: TransformationType = TransformationType.NORMALIZE
     source_field: str = None
@@ -86,8 +80,7 @@ class TransformationRule:
 
 @dataclass
 class PlatformMapping:
-    """Platform-specific field mapping configuration"""
-    platform: PlatformType
+    """Platform-specific field mapping configuration"""    platform: PlatformType
     mapping_version: str = "1.0"
     field_mappings: Dict[str, str] = field(default_factory=dict)
     transformation_rules: List[TransformationRule] = field(default_factory=list)
@@ -97,8 +90,7 @@ class PlatformMapping:
 
 @dataclass
 class TransformationContext:
-    """Context information for payload transformation"""
-    platform: PlatformType
+    """Context information for payload transformation"""    platform: PlatformType
     event_type: str
     source_payload: Dict[str, Any]
     headers: Dict[str, str] = field(default_factory=dict)
@@ -109,8 +101,7 @@ class TransformationContext:
 
 @dataclass
 class TransformationResult:
-    """Result of payload transformation"""
-    success: bool
+    """Result of payload transformation"""    success: bool
     transformed_payload: Optional[Dict[str, Any]] = None
     original_payload: Optional[Dict[str, Any]] = None
     applied_rules: List[str] = field(default_factory=list)
@@ -120,13 +111,11 @@ class TransformationResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class PayloadTransformer:
-    """
-    Industrial-grade webhook payload transformation engine
+    """    Industrial-grade webhook payload transformation engine
     
     Provides comprehensive payload transformation, normalization, and validation
     across multiple platforms with advanced mapping and business logic support.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.performance_monitor = PerformanceMonitor("payload_transformer")
@@ -156,8 +145,7 @@ class PayloadTransformer:
         context: TransformationContext,
         custom_rules: List[TransformationRule] = None
     ) -> TransformationResult:
-        """
-        Transform webhook payload according to platform mappings and rules
+        """        Transform webhook payload according to platform mappings and rules
         
         Args:
             context: Transformation context with payload and metadata
@@ -165,8 +153,7 @@ class PayloadTransformer:
             
         Returns:
             TransformationResult with transformed payload and metadata
-        """
-        start_time = asyncio.get_event_loop().time()
+        """        start_time = asyncio.get_event_loop().time()
         
         try:
             # Validate input
@@ -331,8 +318,7 @@ class PayloadTransformer:
         event_type: str = None,
         custom_schema: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """
-        Validate payload against platform schema
+        """        Validate payload against platform schema
         
         Args:
             payload: Payload to validate
@@ -342,8 +328,7 @@ class PayloadTransformer:
             
         Returns:
             Validation result
-        """
-        try:
+        """        try:
             # Determine validation schema
             validation_schema = custom_schema
             
@@ -377,8 +362,7 @@ class PayloadTransformer:
         platform: PlatformType,
         mapping: PlatformMapping
     ) -> None:
-        """Add or update platform mapping configuration"""
-        self._platform_mappings[platform] = mapping
+        """Add or update platform mapping configuration"""        self._platform_mappings[platform] = mapping
         logger.info(f"Platform mapping added/updated for {platform.value}")
 
     async def add_transformation_function(
@@ -386,31 +370,26 @@ class PayloadTransformer:
         function_name: str,
         function: Callable
     ) -> None:
-        """Add custom transformation function"""
-        self._transformation_functions[function_name] = function
+        """Add custom transformation function"""        self._transformation_functions[function_name] = function
         logger.info(f"Transformation function registered: {function_name}")
 
     async def get_supported_platforms(self) -> List[str]:
-        """Get list of supported platforms"""
-        return [platform.value for platform in self._platform_mappings.keys()]
+        """Get list of supported platforms"""        return [platform.value for platform in self._platform_mappings.keys()]
 
     async def get_platform_mapping(
         self,
         platform: PlatformType
     ) -> Optional[PlatformMapping]:
-        """Get platform mapping configuration"""
-        return self._platform_mappings.get(platform)
+        """Get platform mapping configuration"""        return self._platform_mappings.get(platform)
 
     async def clear_cache(self) -> None:
-        """Clear transformation cache"""
-        self._transformation_cache.clear()
+        """Clear transformation cache"""        self._transformation_cache.clear()
         logger.info("Transformation cache cleared")
 
     # Private methods
     
     def _initialize_platform_mappings(self) -> None:
-        """Initialize default platform mappings"""
-        
+        """Initialize default platform mappings"""        
         # GitHub webhook mapping
         github_mapping = PlatformMapping(
             platform=PlatformType.GITHUB,
@@ -537,8 +516,7 @@ class PayloadTransformer:
         self._platform_mappings[PlatformType.WEBHOOK_GENERIC] = generic_mapping
 
     def _initialize_transformation_functions(self) -> None:
-        """Initialize transformation functions"""
-        
+        """Initialize transformation functions"""        
         self._transformation_functions.update({
             'remove_field': lambda payload, field: self._remove_field(payload, field),
             'timestamp_to_iso': lambda payload, field: self._timestamp_to_iso(payload, field),
@@ -555,8 +533,7 @@ class PayloadTransformer:
         })
 
     def _initialize_validation_schemas(self) -> None:
-        """Initialize validation schemas for platforms"""
-        
+        """Initialize validation schemas for platforms"""        
         # GitHub event schema
         github_schema = {
             "type": "object",
@@ -624,8 +601,7 @@ class PayloadTransformer:
         rules: List[Dict[str, Any]],
         context: TransformationContext
     ) -> tuple:
-        """Apply preprocessing rules to payload"""
-        applied_rules = []
+        """Apply preprocessing rules to payload"""        applied_rules = []
         warnings = []
         
         for rule in rules:
@@ -659,8 +635,7 @@ class PayloadTransformer:
         mappings: Dict[str, str],
         context: TransformationContext
     ) -> tuple:
-        """Apply field mappings to payload"""
-        applied_rules = []
+        """Apply field mappings to payload"""        applied_rules = []
         warnings = []
         
         for source_field, target_field in mappings.items():
@@ -690,8 +665,7 @@ class PayloadTransformer:
         rule: TransformationRule,
         context: TransformationContext
     ) -> tuple:
-        """Apply individual transformation rule"""
-        try:
+        """Apply individual transformation rule"""        try:
             # Check conditions
             if rule.conditions and not self._check_conditions(payload, rule.conditions):
                 return payload, {'applied': False}
@@ -745,8 +719,7 @@ class PayloadTransformer:
         rules: List[Dict[str, Any]],
         context: TransformationContext
     ) -> tuple:
-        """Apply postprocessing rules to payload"""
-        applied_rules = []
+        """Apply postprocessing rules to payload"""        applied_rules = []
         warnings = []
         
         for rule in rules:
@@ -778,8 +751,7 @@ class PayloadTransformer:
         payload: Dict[str, Any],
         schema: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate payload against JSON schema"""
-        try:
+        """Validate payload against JSON schema"""        try:
             validate(payload, schema)
             return {'valid': True}
             
@@ -799,8 +771,7 @@ class PayloadTransformer:
         payload: Dict[str, Any],
         context: TransformationContext
     ) -> Dict[str, Any]:
-        """Enrich payload with transformation metadata"""
-        payload['_metadata'] = {
+        """Enrich payload with transformation metadata"""        payload['_metadata'] = {
             'transformation_id': str(uuid.uuid4()),
             'transformed_at': datetime.now(timezone.utc).isoformat(),
             'platform': context.platform.value,
@@ -822,8 +793,7 @@ class PayloadTransformer:
         context: TransformationContext,
         custom_rules: List[TransformationRule] = None
     ) -> str:
-        """Generate cache key for transformation result"""
-        key_components = [
+        """Generate cache key for transformation result"""        key_components = [
             context.platform.value,
             context.event_type,
             str(hash(json.dumps(context.source_payload, sort_keys=True))),
@@ -836,14 +806,12 @@ class PayloadTransformer:
         return ':'.join(key_components)
 
     def _get_generic_mapping(self) -> PlatformMapping:
-        """Get generic platform mapping for unknown platforms"""
-        return self._platform_mappings.get(PlatformType.WEBHOOK_GENERIC)
+        """Get generic platform mapping for unknown platforms"""        return self._platform_mappings.get(PlatformType.WEBHOOK_GENERIC)
 
     # Utility methods for field operations
     
     def _get_nested_value(self, data: Dict[str, Any], field_path: str) -> Any:
-        """Get value from nested dictionary using dot notation"""
-        keys = field_path.split('.')
+        """Get value from nested dictionary using dot notation"""        keys = field_path.split('.')
         value = data
         
         for key in keys:
@@ -871,8 +839,7 @@ class PayloadTransformer:
         return value
 
     def _set_nested_value(self, data: Dict[str, Any], field_path: str, value: Any) -> None:
-        """Set value in nested dictionary using dot notation"""
-        keys = field_path.split('.')
+        """Set value in nested dictionary using dot notation"""        keys = field_path.split('.')
         current = data
         
         for i, key in enumerate(keys[:-1]):
@@ -883,8 +850,7 @@ class PayloadTransformer:
         current[keys[-1]] = value
 
     def _remove_nested_field(self, data: Dict[str, Any], field_path: str) -> None:
-        """Remove field from nested dictionary using dot notation"""
-        keys = field_path.split('.')
+        """Remove field from nested dictionary using dot notation"""        keys = field_path.split('.')
         current = data
         
         for key in keys[:-1]:
@@ -897,8 +863,7 @@ class PayloadTransformer:
             del current[keys[-1]]
 
     def _remove_null_fields(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Remove fields with null values"""
-        if isinstance(data, dict):
+        """Remove fields with null values"""        if isinstance(data, dict):
             return {k: self._remove_null_fields(v) for k, v in data.items() if v is not None}
         elif isinstance(data, list):
             return [self._remove_null_fields(item) for item in data if item is not None]
@@ -906,8 +871,7 @@ class PayloadTransformer:
             return data
 
     def _normalize_keys(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Normalize dictionary keys to snake_case"""
-        if isinstance(data, dict):
+        """Normalize dictionary keys to snake_case"""        if isinstance(data, dict):
             normalized = {}
             for key, value in data.items():
                 # Convert camelCase/PascalCase to snake_case
@@ -925,8 +889,7 @@ class PayloadTransformer:
             return data
 
     def _flatten_nested_dict(self, data: Dict[str, Any], max_depth: int, current_depth: int = 0) -> Dict[str, Any]:
-        """Flatten nested dictionary up to max depth"""
-        if current_depth >= max_depth or not isinstance(data, dict):
+        """Flatten nested dictionary up to max depth"""        if current_depth >= max_depth or not isinstance(data, dict):
             return data
         
         flattened = {}
@@ -941,8 +904,7 @@ class PayloadTransformer:
         return flattened
 
     def _check_conditions(self, payload: Dict[str, Any], conditions: Dict[str, Any]) -> bool:
-        """Check if payload meets transformation conditions"""
-        for field, expected_value in conditions.items():
+        """Check if payload meets transformation conditions"""        for field, expected_value in conditions.items():
             actual_value = self._get_nested_value(payload, field)
             
             if isinstance(expected_value, dict):
@@ -969,29 +931,25 @@ class PayloadTransformer:
         return True
 
     def _calculate_checksum(self, data: Dict[str, Any]) -> str:
-        """Calculate checksum for payload"""
-        import hashlib
+        """Calculate checksum for payload"""        import hashlib
         payload_str = json.dumps(data, sort_keys=True)
         return hashlib.md5(payload_str.encode()).hexdigest()
 
     # Transformation function implementations
     
     def _remove_field(self, payload: Dict[str, Any], field: str) -> Dict[str, Any]:
-        """Remove field from payload"""
-        self._remove_nested_field(payload, field)
+        """Remove field from payload"""        self._remove_nested_field(payload, field)
         return payload
 
     def _timestamp_to_iso(self, payload: Dict[str, Any], field: str) -> Dict[str, Any]:
-        """Convert Unix timestamp to ISO format"""
-        timestamp = self._get_nested_value(payload, field)
+        """Convert Unix timestamp to ISO format"""        timestamp = self._get_nested_value(payload, field)
         if timestamp and isinstance(timestamp, (int, float)):
             iso_time = datetime.fromtimestamp(timestamp, tz=timezone.utc).isoformat()
             self._set_nested_value(payload, field.replace('created', 'created_at'), iso_time)
         return payload
 
     def _cents_to_dollars(self, payload: Dict[str, Any], field: str) -> Dict[str, Any]:
-        """Convert cents to dollars"""
-        cents = self._get_nested_value(payload, field)
+        """Convert cents to dollars"""        cents = self._get_nested_value(payload, field)
         if cents and isinstance(cents, (int, float)):
             dollars = cents / 100.0
             target_field = field.replace('cents', '').replace('_cents', '')
@@ -999,8 +957,7 @@ class PayloadTransformer:
         return payload
 
     def _convert_string_numbers(self, payload: Dict[str, Any]) -> Dict[str, Any]:
-        """Convert string numbers to integers"""
-        for key, value in payload.items():
+        """Convert string numbers to integers"""        for key, value in payload.items():
             if isinstance(value, str) and value.isdigit():
                 payload[key] = int(value)
             elif isinstance(value, dict):
@@ -1008,8 +965,7 @@ class PayloadTransformer:
         return payload
 
     def _flatten_instagram_entry(self, payload: Dict[str, Any]) -> Dict[str, Any]:
-        """Flatten Instagram webhook entry structure"""
-        if 'entry' in payload and isinstance(payload['entry'], list) and payload['entry']:
+        """Flatten Instagram webhook entry structure"""        if 'entry' in payload and isinstance(payload['entry'], list) and payload['entry']:
             entry = payload['entry'][0]
             if 'changes' in entry and isinstance(entry['changes'], list) and entry['changes']:
                 change = entry['changes'][0]
@@ -1022,8 +978,7 @@ class PayloadTransformer:
         return payload
 
     def _extract_github_repository_info(self, payload: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract GitHub repository information"""
-        if 'repository' in payload:
+        """Extract GitHub repository information"""        if 'repository' in payload:
             repo = payload['repository']
             payload['repository_info'] = {
                 'name': repo.get('name'),
@@ -1035,8 +990,7 @@ class PayloadTransformer:
         return payload
 
     def _extract_youtube_metadata(self, payload: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract YouTube video metadata"""
-        if 'snippet' in payload:
+        """Extract YouTube video metadata"""        if 'snippet' in payload:
             snippet = payload['snippet']
             payload['video_metadata'] = {
                 'channel_id': snippet.get('channelId'),
@@ -1049,8 +1003,7 @@ class PayloadTransformer:
         return payload
 
     def _add_generic_metadata(self, payload: Dict[str, Any]) -> Dict[str, Any]:
-        """Add generic metadata to payload"""
-        payload['_generic_metadata'] = {
+        """Add generic metadata to payload"""        payload['_generic_metadata'] = {
             'processed_at': datetime.now(timezone.utc).isoformat(),
             'payload_type': 'generic_webhook',
             'field_count': len(payload)
@@ -1058,8 +1011,7 @@ class PayloadTransformer:
         return payload
 
     def _sanitize_html(self, payload: Dict[str, Any], field: str) -> Dict[str, Any]:
-        """Sanitize HTML content in field"""
-        import html
+        """Sanitize HTML content in field"""        import html
         value = self._get_nested_value(payload, field)
         if value and isinstance(value, str):
             sanitized = html.escape(value)
@@ -1067,8 +1019,7 @@ class PayloadTransformer:
         return payload
 
     def _validate_email(self, payload: Dict[str, Any], field: str) -> Dict[str, Any]:
-        """Validate email format"""
-        email = self._get_nested_value(payload, field)
+        """Validate email format"""        email = self._get_nested_value(payload, field)
         if email and isinstance(email, str):
             email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
             is_valid = re.match(email_pattern, email) is not None
@@ -1076,8 +1027,7 @@ class PayloadTransformer:
         return payload
 
     def _normalize_url(self, payload: Dict[str, Any], field: str) -> Dict[str, Any]:
-        """Normalize URL format"""
-        url = self._get_nested_value(payload, field)
+        """Normalize URL format"""        url = self._get_nested_value(payload, field)
         if url and isinstance(url, str):
             # Add protocol if missing
             if not url.startswith(('http://', 'https://')):
@@ -1088,8 +1038,7 @@ class PayloadTransformer:
         return payload
 
     def _format_phone_number(self, payload: Dict[str, Any], field: str) -> Dict[str, Any]:
-        """Format phone number"""
-        phone = self._get_nested_value(payload, field)
+        """Format phone number"""        phone = self._get_nested_value(payload, field)
         if phone and isinstance(phone, str):
             # Remove non-digits
             digits = re.sub(r'\D', '', phone)
@@ -1100,8 +1049,7 @@ class PayloadTransformer:
         return payload
 
     async def _apply_normalization(self, payload: Dict[str, Any], rule: TransformationRule) -> Dict[str, Any]:
-        """Apply normalization rule"""
-        if rule.source_field:
+        """Apply normalization rule"""        if rule.source_field:
             value = self._get_nested_value(payload, rule.source_field)
             if value is not None:
                 # Apply default normalization
@@ -1115,14 +1063,12 @@ class PayloadTransformer:
         return payload
 
     async def _apply_validation_rule(self, payload: Dict[str, Any], rule: TransformationRule) -> Dict[str, Any]:
-        """Apply validation rule"""
-        if rule.validation_schema:
+        """Apply validation rule"""        if rule.validation_schema:
             return await self._validate_payload(payload, rule.validation_schema)
         return {'valid': True}
 
     async def _apply_enrichment(self, payload: Dict[str, Any], rule: TransformationRule, context: TransformationContext) -> Dict[str, Any]:
-        """Apply enrichment rule"""
-        if rule.target_field:
+        """Apply enrichment rule"""        if rule.target_field:
             enriched_value = {
                 'timestamp': datetime.now(timezone.utc).isoformat(),
                 'platform': context.platform.value,
@@ -1133,8 +1079,7 @@ class PayloadTransformer:
         return payload
 
     async def _apply_filter(self, payload: Dict[str, Any], rule: TransformationRule) -> Dict[str, Any]:
-        """Apply filter rule"""
-        if rule.conditions:
+        """Apply filter rule"""        if rule.conditions:
             # Remove fields that don't meet conditions
             for field, condition in rule.conditions.items():
                 value = self._get_nested_value(payload, field)
@@ -1144,8 +1089,7 @@ class PayloadTransformer:
         return payload
 
     async def _apply_sanitization(self, payload: Dict[str, Any], rule: TransformationRule) -> Dict[str, Any]:
-        """Apply sanitization rule"""
-        if rule.source_field:
+        """Apply sanitization rule"""        if rule.source_field:
             value = self._get_nested_value(payload, rule.source_field)
             if isinstance(value, str):
                 # Basic sanitization

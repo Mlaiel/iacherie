@@ -22,8 +22,7 @@ This module provides comprehensive marketplace functionality including:
 - AI-powered content optimization
 - Multi-format content distribution
 - Revenue sharing and monetization
-"""
-from .content_manager import ContentManager, ContentMetadata
+"""from .content_manager import ContentManager, ContentMetadata
 from .creator_profile import CreatorProfileManager, CreatorProfile
 from .collaboration_engine import CollaborationEngine, CollaborationOpportunity
 from .monetization_engine import MonetizationEngine, MonetizationStrategy

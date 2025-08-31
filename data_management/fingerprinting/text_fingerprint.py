@@ -1,5 +1,4 @@
-"""
-📝 Text Fingerprinting Engine - IA Influencer Agent Platform Enterprise
+"""📝 Text Fingerprinting Engine - IA Influencer Agent Platform Enterprise
 =======================================================================
 Module: backend/data_management/fingerprinting/text_fingerprint.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -28,9 +27,7 @@ TEXT FINGERPRINTING TECHNOLOGIES:
 ├── 🌐 Language Detection (Multi-language Support)
 ├── 🔍 Semantic Similarity (Cosine + Euclidean)
 └── 🛡️ Plagiarism Protection (Real-time Monitoring)
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple, Set
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Set
 from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
 import numpy as np
@@ -99,8 +96,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TextFingerprintConfig:
-    """Configuration avancée pour le fingerprinting de texte"""
-    
+    """Configuration avancée pour le fingerprinting de texte"""    
     # Paramètres généraux
     max_text_length: int = 100000  # 100K caractères max
     min_text_length: int = 100     # 100 caractères min
@@ -142,16 +138,14 @@ class TextFingerprintConfig:
     gpu_acceleration: bool = False
 
 class BaseTextProcessor(ABC):
-    """Classe de base pour les processeurs de texte"""
-    
+    """Classe de base pour les processeurs de texte"""    
     def __init__(self, config: TextFingerprintConfig):
         self.config = config
         self.cache = {} if config.cache_enabled else None
         
     @abstractmethod
     async def process(self, text: str) -> Dict[str, Any]:
-        """Process text and extract features"""
-        logger.warning(f"process method not implemented in {self.__class__.__name__}")
+        """Process text and extract features"""        logger.warning(f"process method not implemented in {self.__class__.__name__}")
         
         # Return basic fingerprint data structure
         return {
@@ -167,20 +161,17 @@ class BaseTextProcessor(ABC):
     
     @abstractmethod
     def get_name(self) -> str:
-        """Get processor name"""
-        return f"default_{self.__class__.__name__.lower()}"
+        """Get processor name"""        return f"default_{self.__class__.__name__.lower()}"
     
     def _clean_text(self, text: str) -> str:
-        """Nettoie et normalise le texte"""
-        # Suppression des caractères spéciaux et normalisation
+        """Nettoie et normalise le texte"""        # Suppression des caractères spéciaux et normalisation
         text = re.sub(r'[^\w\s]', ' ', text)
         text = re.sub(r'\s+', ' ', text)
         text = text.strip().lower()
         return text
     
     def _detect_language(self, text: str) -> str:
-        """Détecte la langue du texte"""
-        if not SPACY_AVAILABLE:
+        """Détecte la langue du texte"""        if not SPACY_AVAILABLE:
             return "en"  # Fallback vers l'anglais
         
         try:
@@ -193,8 +184,7 @@ class BaseTextProcessor(ABC):
             return "en"
 
 class BERTProcessor(BaseTextProcessor):
-    """Processeur BERT pour l'analyse sémantique avancée"""
-    
+    """Processeur BERT pour l'analyse sémantique avancée"""    
     def __init__(self, config: TextFingerprintConfig):
         super().__init__(config)
         self.model = None
@@ -202,8 +192,7 @@ class BERTProcessor(BaseTextProcessor):
         self._load_model()
     
     def _load_model(self):
-        """Charge le modèle BERT"""
-        if not TRANSFORMERS_AVAILABLE:
+        """Charge le modèle BERT"""        if not TRANSFORMERS_AVAILABLE:
             logger.error("BERT processor requires transformers library")
             return
         
@@ -215,8 +204,7 @@ class BERTProcessor(BaseTextProcessor):
             logger.error(f"Failed to load BERT model: {e}")
     
     async def process(self, text: str) -> Dict[str, Any]:
-        """Traite le texte avec BERT"""
-        if not self.model or not self.tokenizer:
+        """Traite le texte avec BERT"""        if not self.model or not self.tokenizer:
             return {"error": "BERT model not available"}
         
         try:
@@ -256,8 +244,7 @@ class BERTProcessor(BaseTextProcessor):
             return {"error": str(e)}
     
     def _chunk_text(self, text: str) -> List[str]:
-        """Divise le texte en chunks gérables"""
-        words = text.split()
+        """Divise le texte en chunks gérables"""        words = text.split()
         chunks = []
         
         for i in range(0, len(words), self.config.chunk_size - self.config.overlap_size):
@@ -268,12 +255,10 @@ class BERTProcessor(BaseTextProcessor):
         return chunks if chunks else [text]
     
     def get_name(self) -> str:
-        """Get processor name"""
-        return "bert"
+        """Get processor name"""        return "bert"
 
 class RoBERTaProcessor(BaseTextProcessor):
-    """Processeur RoBERTa pour l'analyse robuste"""
-    
+    """Processeur RoBERTa pour l'analyse robuste"""    
     def __init__(self, config: TextFingerprintConfig):
         super().__init__(config)
         self.model = None
@@ -281,8 +266,7 @@ class RoBERTaProcessor(BaseTextProcessor):
         self._load_model()
     
     def _load_model(self):
-        """Charge le modèle RoBERTa"""
-        if not TRANSFORMERS_AVAILABLE:
+        """Charge le modèle RoBERTa"""        if not TRANSFORMERS_AVAILABLE:
             logger.error("RoBERTa processor requires transformers library")
             return
         
@@ -294,8 +278,7 @@ class RoBERTaProcessor(BaseTextProcessor):
             logger.error(f"Failed to load RoBERTa model: {e}")
     
     async def process(self, text: str) -> Dict[str, Any]:
-        """Traite le texte avec RoBERTa"""
-        if not self.model or not self.tokenizer:
+        """Traite le texte avec RoBERTa"""        if not self.model or not self.tokenizer:
             return {"error": "RoBERTa model not available"}
         
         try:
@@ -331,8 +314,7 @@ class RoBERTaProcessor(BaseTextProcessor):
             return {"error": str(e)}
     
     def _chunk_text(self, text: str) -> List[str]:
-        """Divise le texte en chunks gérables"""
-        words = text.split()
+        """Divise le texte en chunks gérables"""        words = text.split()
         chunks = []
         
         for i in range(0, len(words), self.config.chunk_size - self.config.overlap_size):
@@ -343,20 +325,17 @@ class RoBERTaProcessor(BaseTextProcessor):
         return chunks if chunks else [text]
     
     def get_name(self) -> str:
-        """Get processor name"""
-        return "roberta"
+        """Get processor name"""        return "roberta"
 
 class TFIDFProcessor(BaseTextProcessor):
-    """Processeur TF-IDF pour l'analyse statistique"""
-    
+    """Processeur TF-IDF pour l'analyse statistique"""    
     def __init__(self, config: TextFingerprintConfig):
         super().__init__(config)
         self.vectorizer = None
         self._initialize_vectorizer()
     
     def _initialize_vectorizer(self):
-        """Initialise le vectoriseur TF-IDF"""
-        if not SKLEARN_AVAILABLE:
+        """Initialise le vectoriseur TF-IDF"""        if not SKLEARN_AVAILABLE:
             logger.error("TF-IDF processor requires scikit-learn")
             return
         
@@ -373,8 +352,7 @@ class TFIDFProcessor(BaseTextProcessor):
             logger.error(f"Failed to initialize TF-IDF vectorizer: {e}")
     
     async def process(self, text: str) -> Dict[str, Any]:
-        """Traite le texte avec TF-IDF"""
-        if not self.vectorizer:
+        """Traite le texte avec TF-IDF"""        if not self.vectorizer:
             return {"error": "TF-IDF vectorizer not available"}
         
         try:
@@ -403,19 +381,16 @@ class TFIDFProcessor(BaseTextProcessor):
             return {"error": str(e)}
     
     def get_name(self) -> str:
-        """Get processor name"""
-        return "tfidf"
+        """Get processor name"""        return "tfidf"
 
 class Word2VecProcessor(BaseTextProcessor):
-    """Processeur Word2Vec pour les embeddings de mots"""
-    
+    """Processeur Word2Vec pour les embeddings de mots"""    
     def __init__(self, config: TextFingerprintConfig):
         super().__init__(config)
         self.model = None
         
     async def process(self, text: str) -> Dict[str, Any]:
-        """Traite le texte avec Word2Vec"""
-        if not GENSIM_AVAILABLE:
+        """Traite le texte avec Word2Vec"""        if not GENSIM_AVAILABLE:
             return {"error": "Word2Vec requires gensim library"}
         
         try:
@@ -450,8 +425,7 @@ class Word2VecProcessor(BaseTextProcessor):
             return {"error": str(e)}
     
     def _prepare_sentences(self, text: str) -> List[List[str]]:
-        """Prépare les phrases pour Word2Vec"""
-        if NLTK_AVAILABLE:
+        """Prépare les phrases pour Word2Vec"""        if NLTK_AVAILABLE:
             sentences = sent_tokenize(text)
             return [word_tokenize(sentence.lower()) for sentence in sentences]
         else:
@@ -460,8 +434,7 @@ class Word2VecProcessor(BaseTextProcessor):
             return [sentence.strip().lower().split() for sentence in sentences if sentence.strip()]
     
     def _generate_doc_vector(self, model, text: str) -> np.ndarray:
-        """Génère un vecteur pour l'ensemble du document"""
-        words = text.lower().split()
+        """Génère un vecteur pour l'ensemble du document"""        words = text.lower().split()
         word_vectors = []
         
         for word in words:
@@ -474,15 +447,12 @@ class Word2VecProcessor(BaseTextProcessor):
             return np.zeros(model.vector_size)
     
     def get_name(self) -> str:
-        """Get processor name"""
-        return "word2vec"
+        """Get processor name"""        return "word2vec"
 
 class NGramProcessor(BaseTextProcessor):
-    """Processeur N-gram pour l'analyse structurelle"""
-    
+    """Processeur N-gram pour l'analyse structurelle"""    
     async def process(self, text: str) -> Dict[str, Any]:
-        """Traite le texte avec analyse N-gram"""
-        try:
+        """Traite le texte avec analyse N-gram"""        try:
             # N-grams de mots
             word_ngrams = self._extract_word_ngrams(text)
             
@@ -507,8 +477,7 @@ class NGramProcessor(BaseTextProcessor):
             return {"error": str(e)}
     
     def _extract_word_ngrams(self, text: str) -> List[str]:
-        """Extrait les n-grams de mots"""
-        words = text.lower().split()
+        """Extrait les n-grams de mots"""        words = text.lower().split()
         ngrams = []
         
         for n in range(self.config.ngram_range[0], self.config.ngram_range[1] + 1):
@@ -519,8 +488,7 @@ class NGramProcessor(BaseTextProcessor):
         return list(set(ngrams))  # Suppression des doublons
     
     def _extract_char_ngrams(self, text: str) -> List[str]:
-        """Extrait les n-grams de caractères"""
-        text = self._clean_text(text)
+        """Extrait les n-grams de caractères"""        text = self._clean_text(text)
         ngrams = []
         
         for n in range(self.config.char_ngram_range[0], self.config.char_ngram_range[1] + 1):
@@ -531,17 +499,14 @@ class NGramProcessor(BaseTextProcessor):
         return list(set(ngrams))  # Suppression des doublons
     
     def _hash_ngrams(self, ngrams: List[str]) -> str:
-        """Génère un hash des n-grams"""
-        combined = "".join(sorted(ngrams))
+        """Génère un hash des n-grams"""        combined = "".join(sorted(ngrams))
         return hashlib.sha256(combined.encode()).hexdigest()
     
     def get_name(self) -> str:
-        """Get processor name"""
-        return "ngram"
+        """Get processor name"""        return "ngram"
 
 class TextFingerprintEngine:
-    """
-    Moteur principal de fingerprinting de texte avec IA
+    """    Moteur principal de fingerprinting de texte avec IA
     
     Fonctionnalités:
     - Analyse sémantique avancée (BERT, RoBERTa)
@@ -550,8 +515,7 @@ class TextFingerprintEngine:
     - Détection de plagiat et similarité
     - Support multi-langue
     - Performance optimisée
-    """
-    
+    """    
     def __init__(self, config: Optional[TextFingerprintConfig] = None):
         self.config = config or TextFingerprintConfig()
         
@@ -570,8 +534,7 @@ class TextFingerprintEngine:
         logger.info("TextFingerprintEngine initialized successfully")
     
     def _initialize_processors(self):
-        """Initialise tous les processeurs activés"""
-        if self.config.bert_enabled:
+        """Initialise tous les processeurs activés"""        if self.config.bert_enabled:
             self.processors["bert"] = BERTProcessor(self.config)
         
         if self.config.roberta_enabled:
@@ -589,16 +552,14 @@ class TextFingerprintEngine:
         logger.info(f"Initialized {len(self.processors)} text processors")
     
     async def generate_fingerprint(self, text_path: str) -> Dict[str, Any]:
-        """
-        Génère une empreinte complète pour un texte
+        """        Génère une empreinte complète pour un texte
         
         Args:
             text_path: Chemin vers le fichier texte
             
         Returns:
             Dictionnaire contenant l'empreinte complète
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Lecture du fichier
@@ -634,8 +595,7 @@ class TextFingerprintEngine:
             raise
     
     async def _read_text_file(self, file_path: str) -> str:
-        """Lit le contenu d'un fichier texte"""
-        path = Path(file_path)
+        """Lit le contenu d'un fichier texte"""        path = Path(file_path)
         
         if not path.exists():
             raise FileNotFoundError(f"Text file not found: {file_path}")
@@ -659,8 +619,7 @@ class TextFingerprintEngine:
             raise
     
     def _validate_text(self, text: str) -> bool:
-        """Valide le contenu du texte"""
-        if not text or not text.strip():
+        """Valide le contenu du texte"""        if not text or not text.strip():
             return False
         
         if len(text) < self.config.min_text_length:
@@ -674,8 +633,7 @@ class TextFingerprintEngine:
         return True
     
     async def _process_text(self, text: str) -> Dict[str, Any]:
-        """Traite le texte avec tous les processeurs activés"""
-        results = {}
+        """Traite le texte avec tous les processeurs activés"""        results = {}
         
         # Traitement en parallèle avec tous les processeurs
         tasks = []
@@ -699,8 +657,7 @@ class TextFingerprintEngine:
         return results
     
     def _generate_composite_hash(self, results: Dict[str, Any]) -> str:
-        """Génère un hash composite de tous les résultats"""
-        hash_components = []
+        """Génère un hash composite de tous les résultats"""        hash_components = []
         
         for processor_name, result in results.items():
             if "error" not in result:
@@ -712,8 +669,7 @@ class TextFingerprintEngine:
         return hashlib.sha256(combined.encode()).hexdigest()
     
     def _detect_language(self, text: str) -> str:
-        """Détecte la langue du texte"""
-        if not self.config.language_detection:
+        """Détecte la langue du texte"""        if not self.config.language_detection:
             return "unknown"
         
         # Implémentation simplifiée - en production, utiliser un modèle spécialisé
@@ -741,8 +697,7 @@ class TextFingerprintEngine:
         return "unknown"
     
     async def compare_texts(self, text1_path: str, text2_path: str) -> Dict[str, Any]:
-        """Compare deux textes et calcule leur similarité"""
-        try:
+        """Compare deux textes et calcule leur similarité"""        try:
             # Génération des empreintes
             fp1 = await self.generate_fingerprint(text1_path)
             fp2 = await self.generate_fingerprint(text2_path)
@@ -811,8 +766,7 @@ class TextFingerprintEngine:
             raise
     
     def _cosine_similarity(self, vec1: List[float], vec2: List[float]) -> float:
-        """Calcule la similarité cosinus entre deux vecteurs"""
-        v1 = np.array(vec1)
+        """Calcule la similarité cosinus entre deux vecteurs"""        v1 = np.array(vec1)
         v2 = np.array(vec2)
         
         dot_product = np.dot(v1, v2)
@@ -825,8 +779,7 @@ class TextFingerprintEngine:
         return dot_product / (norm1 * norm2)
     
     def _jaccard_similarity(self, set1: Set, set2: Set) -> float:
-        """Calcule la similarité de Jaccard entre deux ensembles"""
-        intersection = len(set1.intersection(set2))
+        """Calcule la similarité de Jaccard entre deux ensembles"""        intersection = len(set1.intersection(set2))
         union = len(set1.union(set2))
         
         if union == 0:
@@ -835,8 +788,7 @@ class TextFingerprintEngine:
         return intersection / union
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Retourne les métriques de performance"""
-        avg_processing_time = (
+        """Retourne les métriques de performance"""        avg_processing_time = (
             self.metrics["processing_time_total"] / self.metrics["texts_processed"]
             if self.metrics["texts_processed"] > 0 else 0
         )

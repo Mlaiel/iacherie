@@ -1,5 +1,4 @@
-"""
-Vector Store Connection Pool - IA Influencer Agent + Content Protection Platform
+"""Vector Store Connection Pool - IA Influencer Agent + Content Protection Platform
 
 Enterprise vector database connection pool for content fingerprinting,
 similarity search, and AI-powered content matching.
@@ -36,9 +35,7 @@ or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import pickle
 import numpy as np
@@ -69,8 +66,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class VectorStoreConfig(PoolConfig):
-    """Vector store configuration"""
-    # Vector dimensions
+    """Vector store configuration"""    # Vector dimensions
     vector_dimension: int = 512
     distance_metric: str = "cosine"  # cosine, euclidean, inner_product
     
@@ -102,12 +98,10 @@ class VectorStoreConfig(PoolConfig):
 # =============== VECTOR STORE INTERFACES ===============
 
 class IVectorStore:
-    """Interface for vector stores"""
-    
+    """Interface for vector stores"""    
     async def add_vectors(self, vectors: np.ndarray, metadata: List[Dict[str, Any]], 
                          ids: Optional[List[str]] = None) -> bool:
-        """Add vectors to the store"""
-        try:
+        """Add vectors to the store"""        try:
             if self.index is None:
                 # Initialize index with first vectors
                 dimension = vectors.shape[1]
@@ -144,8 +138,7 @@ class IVectorStore:
     
     async def search_similar(self, query_vector: np.ndarray, top_k: int = 100, 
                            filter_criteria: Optional[Dict] = None) -> List[Tuple[str, float, Dict]]:
-        """Search for similar vectors"""
-        start_time = time.time()
+        """Search for similar vectors"""        start_time = time.time()
         
         try:
             if self.index is None or self.index.ntotal == 0:
@@ -189,8 +182,7 @@ class IVectorStore:
             return []
     
     def _matches_filter(self, metadata: Dict[str, Any], filter_criteria: Dict) -> bool:
-        """Check if metadata matches filter criteria"""
-        for key, value in filter_criteria.items():
+        """Check if metadata matches filter criteria"""        for key, value in filter_criteria.items():
             if key not in metadata:
                 return False
             if isinstance(value, list):
@@ -201,8 +193,7 @@ class IVectorStore:
         return True
     
     async def delete_vectors(self, ids: List[str]) -> bool:
-        """Delete vectors by IDs"""
-        try:
+        """Delete vectors by IDs"""        try:
             # FAISS doesn't support deletion, so we mark as deleted in metadata
             deleted_count = 0
             for vector_id in ids:
@@ -221,8 +212,7 @@ class IVectorStore:
             return False
     
     async def update_metadata(self, id: str, metadata: Dict[str, Any]) -> bool:
-        """Update metadata for a vector"""
-        try:
+        """Update metadata for a vector"""        try:
             index_id = self.id_to_index.get(id)
             if index_id is not None and index_id in self.metadata_store:
                 self.metadata_store[index_id].update(metadata)
@@ -234,8 +224,7 @@ class IVectorStore:
             return False
     
     async def get_stats(self) -> Dict[str, Any]:
-        """Get store statistics"""
-        if self.index:
+        """Get store statistics"""        if self.index:
             self.stats["index_size_mb"] = self.index.ntotal * self.config.dimension * 4 / (1024 * 1024)  # 4 bytes per float
         
         return {
@@ -252,8 +241,7 @@ class IVectorStore:
 # =============== FAISS VECTOR STORE ===============
 
 class FAISSVectorStore(IVectorStore):
-    """FAISS-based vector store implementation"""
-    
+    """FAISS-based vector store implementation"""    
     def __init__(self, config: VectorStoreConfig, store_name: str):
         self.config = config
         self.store_name = store_name
@@ -278,8 +266,7 @@ class FAISSVectorStore(IVectorStore):
         self._dirty = False
     
     async def initialize(self) -> bool:
-        """Initialize FAISS index"""
-        try:
+        """Initialize FAISS index"""        try:
             # Create index based on configuration
             if self.config.faiss_index_type == "IndexFlatIP":
                 self.index = faiss.IndexFlatIP(self.config.vector_dimension)
@@ -320,8 +307,7 @@ class FAISSVectorStore(IVectorStore):
             return False
     
     async def _load_index(self) -> None:
-        """Load existing index from disk"""
-        try:
+        """Load existing index from disk"""        try:
             index_path = Path(self.config.index_persist_path) / f"{self.store_name}.faiss"
             metadata_path = Path(self.config.index_persist_path) / f"{self.store_name}_metadata.pkl"
             
@@ -345,8 +331,7 @@ class FAISSVectorStore(IVectorStore):
             logger.warning(f"Could not load existing index: {e}")
     
     async def _save_index(self) -> None:
-        """Save index to disk"""
-        try:
+        """Save index to disk"""        try:
             # Create directory if it doesn't exist
             index_dir = Path(self.config.index_persist_path)
             index_dir.mkdir(parents=True, exist_ok=True)
@@ -384,8 +369,7 @@ class FAISSVectorStore(IVectorStore):
             logger.error(f"Failed to save index: {e}")
     
     async def _auto_save_loop(self) -> None:
-        """Auto-save loop"""
-        while True:
+        """Auto-save loop"""        while True:
             try:
                 await asyncio.sleep(self.config.auto_save_interval)
                 if self._dirty:
@@ -397,8 +381,7 @@ class FAISSVectorStore(IVectorStore):
     
     async def add_vectors(self, vectors: np.ndarray, metadata: List[Dict[str, Any]], 
                          ids: Optional[List[str]] = None) -> bool:
-        """Add vectors to FAISS index"""
-        try:
+        """Add vectors to FAISS index"""        try:
             if vectors.shape[1] != self.config.vector_dimension:
                 raise ValueError(f"Vector dimension mismatch: expected {self.config.vector_dimension}, got {vectors.shape[1]}")
             
@@ -442,8 +425,7 @@ class FAISSVectorStore(IVectorStore):
     
     async def search_similar(self, query_vector: np.ndarray, top_k: int = 100, 
                            filter_criteria: Optional[Dict] = None) -> List[Tuple[str, float, Dict]]:
-        """Search for similar vectors"""
-        import time
+        """Search for similar vectors"""        import time
         start_time = time.time()
         
         try:
@@ -498,8 +480,7 @@ class FAISSVectorStore(IVectorStore):
             return []
     
     def _matches_filter(self, metadata: Dict[str, Any], filter_criteria: Dict[str, Any]) -> bool:
-        """Check if metadata matches filter criteria"""
-        for key, value in filter_criteria.items():
+        """Check if metadata matches filter criteria"""        for key, value in filter_criteria.items():
             if key not in metadata:
                 return False
             
@@ -531,8 +512,7 @@ class FAISSVectorStore(IVectorStore):
         return True
     
     async def delete_vectors(self, ids: List[str]) -> bool:
-        """Delete vectors by IDs (FAISS doesn't support deletion, so we mark as deleted)"""
-        try:
+        """Delete vectors by IDs (FAISS doesn't support deletion, so we mark as deleted)"""        try:
             deleted_count = 0
             for vec_id in ids:
                 if vec_id in self.id_to_index:
@@ -553,8 +533,7 @@ class FAISSVectorStore(IVectorStore):
             return False
     
     async def update_metadata(self, vec_id: str, metadata: Dict[str, Any]) -> bool:
-        """Update metadata for a vector"""
-        try:
+        """Update metadata for a vector"""        try:
             if vec_id in self.id_to_index:
                 index_id = self.id_to_index[vec_id]
                 if index_id in self.metadata_store:
@@ -570,8 +549,7 @@ class FAISSVectorStore(IVectorStore):
             return False
     
     async def get_stats(self) -> Dict[str, Any]:
-        """Get FAISS store statistics"""
-        return {
+        """Get FAISS store statistics"""        return {
             "store_name": self.store_name,
             "index_type": self.config.faiss_index_type,
             "vector_dimension": self.config.vector_dimension,
@@ -581,8 +559,7 @@ class FAISSVectorStore(IVectorStore):
         }
     
     async def close(self) -> None:
-        """Close FAISS store"""
-        try:
+        """Close FAISS store"""        try:
             # Cancel auto-save task
             if self._auto_save_task:
                 self._auto_save_task.cancel()
@@ -603,8 +580,7 @@ class FAISSVectorStore(IVectorStore):
 # =============== VECTOR STORE CONNECTION POOL ===============
 
 class VectorStoreConnectionPool(IConnectionPool):
-    """Vector store connection pool manager"""
-    
+    """Vector store connection pool manager"""    
     def __init__(self, config: VectorStoreConfig, connection_info: DatabaseConnectionInfo):
         self.config = config
         self.connection_info = connection_info
@@ -632,8 +608,7 @@ class VectorStoreConnectionPool(IConnectionPool):
         self._health_check_task: Optional[asyncio.Task] = None
     
     async def initialize(self) -> bool:
-        """Initialize vector stores for each content type"""
-        try:
+        """Initialize vector stores for each content type"""        try:
             # Create vector store for each content type
             for content_type in self.content_types:
                 store_name = f"{self.connection_info.database}_{content_type}"
@@ -665,21 +640,18 @@ class VectorStoreConnectionPool(IConnectionPool):
             return False
     
     async def acquire(self, timeout: Optional[float] = None) -> Dict[str, IVectorStore]:
-        """Acquire vector stores"""
-        if not self.vector_stores:
+        """Acquire vector stores"""        if not self.vector_stores:
             raise Exception("Vector store pool not initialized")
         
         return self.vector_stores
     
     async def release(self, connection: Any) -> None:
-        """Release vector stores (no-op)"""
-        pass
+        """Release vector stores (no-op)"""        pass
     
     async def add_content_fingerprint(self, content_type: str, vector: np.ndarray, 
                                     metadata: Dict[str, Any], 
                                     fingerprint_id: Optional[str] = None) -> bool:
-        """Add content fingerprint to appropriate vector store"""
-        try:
+        """Add content fingerprint to appropriate vector store"""        try:
             if content_type not in self.vector_stores:
                 raise ValueError(f"Unsupported content type: {content_type}")
             
@@ -709,16 +681,14 @@ class VectorStoreConnectionPool(IConnectionPool):
             return False
     
     def _generate_fingerprint_id(self, vector: np.ndarray) -> str:
-        """Generate unique fingerprint ID based on vector content"""
-        vector_hash = hashlib.sha256(vector.tobytes()).hexdigest()
+        """Generate unique fingerprint ID based on vector content"""        vector_hash = hashlib.sha256(vector.tobytes()).hexdigest()
         timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
         return f"fp_{timestamp}_{vector_hash[:16]}"
     
     async def search_similar_content(self, content_type: str, query_vector: np.ndarray, 
                                    top_k: int = 100, similarity_threshold: float = None,
                                    filter_criteria: Optional[Dict] = None) -> List[Tuple[str, float, Dict]]:
-        """Search for similar content across vector stores"""
-        try:
+        """Search for similar content across vector stores"""        try:
             if content_type not in self.vector_stores:
                 raise ValueError(f"Unsupported content type: {content_type}")
             
@@ -747,8 +717,7 @@ class VectorStoreConnectionPool(IConnectionPool):
     async def search_cross_content_types(self, query_vector: np.ndarray, 
                                        content_types: Optional[List[str]] = None,
                                        top_k: int = 100) -> Dict[str, List[Tuple[str, float, Dict]]]:
-        """Search across multiple content types"""
-        try:
+        """Search across multiple content types"""        try:
             if content_types is None:
                 content_types = list(self.vector_stores.keys())
             
@@ -769,8 +738,7 @@ class VectorStoreConnectionPool(IConnectionPool):
             return {}
     
     async def delete_content_fingerprint(self, content_type: str, fingerprint_id: str) -> bool:
-        """Delete content fingerprint"""
-        try:
+        """Delete content fingerprint"""        try:
             if content_type not in self.vector_stores:
                 raise ValueError(f"Unsupported content type: {content_type}")
             
@@ -783,8 +751,7 @@ class VectorStoreConnectionPool(IConnectionPool):
     
     async def update_content_metadata(self, content_type: str, fingerprint_id: str, 
                                     metadata: Dict[str, Any]) -> bool:
-        """Update content metadata"""
-        try:
+        """Update content metadata"""        try:
             if content_type not in self.vector_stores:
                 raise ValueError(f"Unsupported content type: {content_type}")
             
@@ -796,8 +763,7 @@ class VectorStoreConnectionPool(IConnectionPool):
             return False
     
     async def get_content_stats(self, content_type: Optional[str] = None) -> Dict[str, Any]:
-        """Get statistics for specific content type or all"""
-        try:
+        """Get statistics for specific content type or all"""        try:
             if content_type:
                 if content_type in self.vector_stores:
                     return await self.vector_stores[content_type].get_stats()
@@ -815,8 +781,7 @@ class VectorStoreConnectionPool(IConnectionPool):
             return {}
     
     async def health_check(self) -> bool:
-        """Check vector store pool health"""
-        try:
+        """Check vector store pool health"""        try:
             healthy_stores = 0
             total_stores = len(self.vector_stores)
             
@@ -839,8 +804,7 @@ class VectorStoreConnectionPool(IConnectionPool):
             return False
     
     async def _health_monitor(self) -> None:
-        """Background health monitoring"""
-        while self.state == ConnectionState.ACTIVE:
+        """Background health monitoring"""        while self.state == ConnectionState.ACTIVE:
             try:
                 is_healthy = await self.health_check()
                 if not is_healthy:
@@ -858,8 +822,7 @@ class VectorStoreConnectionPool(IConnectionPool):
                 await asyncio.sleep(5)
     
     async def _update_stats(self) -> None:
-        """Update aggregated statistics"""
-        try:
+        """Update aggregated statistics"""        try:
             total_vectors = 0
             total_searches = 0
             total_search_time = 0
@@ -880,8 +843,7 @@ class VectorStoreConnectionPool(IConnectionPool):
             logger.error(f"Failed to update stats: {e}")
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get vector store pool statistics"""
-        pool_stats = {
+        """Get vector store pool statistics"""        pool_stats = {
             "content_types": list(self.vector_stores.keys()),
             "vector_dimension": self.config.vector_dimension,
             "distance_metric": self.config.distance_metric,
@@ -892,8 +854,7 @@ class VectorStoreConnectionPool(IConnectionPool):
         return pool_stats
     
     async def close(self) -> None:
-        """Close vector store pool"""
-        try:
+        """Close vector store pool"""        try:
             self.state = ConnectionState.CLOSED
             
             # Cancel health monitoring

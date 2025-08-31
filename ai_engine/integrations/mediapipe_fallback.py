@@ -1,14 +1,11 @@
 #!/usr/bin/env python3
-"""
-MediaPipe Fallback Module
+"""MediaPipe Fallback Module
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Fallback implementation for MediaPipe functionality when the library is not available.
 Provides basic content detection capabilities using alternative methods.
-"""
-
-import logging
+"""import logging
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple
 from PIL import Image
@@ -19,21 +16,17 @@ from io import BytesIO
 logger = logging.getLogger(__name__)
 
 class MediaPipeFallback:
-    """
-    Fallback implementation for MediaPipe functionality.
+    """    Fallback implementation for MediaPipe functionality.
     Provides basic content analysis using OpenCV and PIL.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the MediaPipe fallback system."""
-        self.initialized = True
+        """Initialize the MediaPipe fallback system."""        self.initialized = True
         self.face_cascade = None
         self.body_cascade = None
         self._load_cascades()
         
     def _load_cascades(self):
-        """Load OpenCV Haar cascades for basic detection."""
-        try:
+        """Load OpenCV Haar cascades for basic detection."""        try:
             # Load pre-trained classifiers
             self.face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
             self.body_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_fullbody.xml')
@@ -41,16 +34,14 @@ class MediaPipeFallback:
             logger.warning(f"Could not load OpenCV cascades: {e}")
             
     def detect_faces(self, image: Union[np.ndarray, str, bytes]) -> List[Dict[str, Any]]:
-        """
-        Detect faces in the image using OpenCV.
+        """        Detect faces in the image using OpenCV.
         
         Args:
             image: Input image as numpy array, base64 string, or bytes
             
         Returns:
             List of face detection results
-        """
-        try:
+        """        try:
             # Convert image to OpenCV format
             cv_image = self._convert_to_opencv(image)
             if cv_image is None:
@@ -78,16 +69,14 @@ class MediaPipeFallback:
             return []
             
     def detect_pose(self, image: Union[np.ndarray, str, bytes]) -> List[Dict[str, Any]]:
-        """
-        Detect pose/body in the image using OpenCV.
+        """        Detect pose/body in the image using OpenCV.
         
         Args:
             image: Input image as numpy array, base64 string, or bytes
             
         Returns:
             List of pose detection results
-        """
-        try:
+        """        try:
             cv_image = self._convert_to_opencv(image)
             if cv_image is None:
                 return []
@@ -114,16 +103,14 @@ class MediaPipeFallback:
             return []
             
     def detect_hands(self, image: Union[np.ndarray, str, bytes]) -> List[Dict[str, Any]]:
-        """
-        Basic hand detection (limited without MediaPipe).
+        """        Basic hand detection (limited without MediaPipe).
         
         Args:
             image: Input image as numpy array, base64 string, or bytes
             
         Returns:
             List of hand detection results (basic estimation)
-        """
-        try:
+        """        try:
             # Basic skin color detection as fallback
             cv_image = self._convert_to_opencv(image)
             if cv_image is None:
@@ -157,8 +144,7 @@ class MediaPipeFallback:
             return []
             
     def _convert_to_opencv(self, image: Union[np.ndarray, str, bytes]) -> Optional[np.ndarray]:
-        """Convert various image formats to OpenCV format."""
-        try:
+        """Convert various image formats to OpenCV format."""        try:
             if isinstance(image, np.ndarray):
                 return image
             elif isinstance(image, str):
@@ -176,8 +162,7 @@ class MediaPipeFallback:
             return None
             
     def _estimate_face_landmarks(self, x: int, y: int, w: int, h: int) -> List[Tuple[int, int]]:
-        """Estimate basic face landmarks from bounding box."""
-        landmarks = []
+        """Estimate basic face landmarks from bounding box."""        landmarks = []
         # Estimate basic landmark positions
         landmarks.append((x + w//4, y + h//3))      # Left eye
         landmarks.append((x + 3*w//4, y + h//3))    # Right eye
@@ -186,8 +171,7 @@ class MediaPipeFallback:
         return landmarks
         
     def _estimate_pose_landmarks(self, x: int, y: int, w: int, h: int) -> List[Tuple[int, int]]:
-        """Estimate basic pose landmarks from bounding box."""
-        landmarks = []
+        """Estimate basic pose landmarks from bounding box."""        landmarks = []
         # Estimate basic body landmark positions
         landmarks.append((x + w//2, y + h//6))      # Head/neck
         landmarks.append((x + w//4, y + h//3))      # Left shoulder
@@ -201,13 +185,11 @@ class MediaPipeFallback:
 _mediapipe_fallback = MediaPipeFallback()
 
 def get_mediapipe_processor():
-    """
-    Get MediaPipe processor with fallback.
+    """    Get MediaPipe processor with fallback.
     
     Returns:
         MediaPipe processor or fallback implementation
-    """
-    try:
+    """    try:
         import mediapipe as mp
         logger.info("MediaPipe available, using full functionality")
         return mp

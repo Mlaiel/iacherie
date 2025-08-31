@@ -1,5 +1,4 @@
-"""
-Enterprise Crawling Sessions Manager
+"""Enterprise Crawling Sessions Manager
 
 Advanced session management for persistent crawler operations
 with multi-platform support and robust state tracking.
@@ -11,9 +10,7 @@ Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security Expert
 Copyright: All rights reserved
-"""
-
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, desc, asc, func, text
@@ -35,16 +32,14 @@ from ..core.exceptions import (
 
 
 class SessionPriority(Enum):
-    """Session priority levels for resource allocation."""
-    LOW = 1
+    """Session priority levels for resource allocation."""    LOW = 1
     NORMAL = 5
     HIGH = 8
     CRITICAL = 10
 
 
 class CrawlingSessionManager(DatabaseManager):
-    """
-    Enterprise-grade crawling session manager for persistent
+    """    Enterprise-grade crawling session manager for persistent
     crawler operations across multiple platforms.
     
     Handles:
@@ -53,16 +48,13 @@ class CrawlingSessionManager(DatabaseManager):
     - Resource allocation and cleanup
     - Performance monitoring
     - Failure recovery and resumption
-    """
-    
+    """    
     def __init__(self, db_session: Session):
-        """
-        Initialize crawling session manager.
+        """        Initialize crawling session manager.
         
         Args:
             db_session: SQLAlchemy database session
-        """
-        super().__init__(db_session)
+        """        super().__init__(db_session)
         self.table = CrawlingSession
     
     async def create_session(
@@ -75,8 +67,7 @@ class CrawlingSessionManager(DatabaseManager):
         max_duration_hours: int = 24,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Create a new crawling session with comprehensive configuration.
+        """        Create a new crawling session with comprehensive configuration.
         
         Args:
             platform: Target platform (youtube, tiktok, instagram, twitter, generic)
@@ -93,8 +84,7 @@ class CrawlingSessionManager(DatabaseManager):
         Raises:
             CrawlingSessionError: If session creation fails
             ValidationError: If invalid parameters provided
-        """
-        try:
+        """        try:
             # Validate platform
             if platform not in [p.value for p in PlatformType]:
                 raise ValidationError(f"Unsupported platform: {platform}")
@@ -152,16 +142,14 @@ class CrawlingSessionManager(DatabaseManager):
             raise CrawlingSessionError(f"Failed to create session: {str(e)}")
     
     async def get_session(self, session_id: str) -> Optional[Dict[str, Any]]:
-        """
-        Retrieve session details by ID.
+        """        Retrieve session details by ID.
         
         Args:
             session_id: Session identifier
             
         Returns:
             Dict containing session data or None if not found
-        """
-        try:
+        """        try:
             session = await self.db.query(CrawlingSession).filter(
                 CrawlingSession.session_id == session_id
             ).first()
@@ -201,8 +189,7 @@ class CrawlingSessionManager(DatabaseManager):
         session_id: str,
         status: SessionStatus
     ) -> bool:
-        """
-        Update session status with timestamp tracking.
+        """        Update session status with timestamp tracking.
         
         Args:
             session_id: Session identifier
@@ -210,11 +197,9 @@ class CrawlingSessionManager(DatabaseManager):
             
         Returns:
             bool indicating success
-        """
-        try:
+        """        try:
             result = await self.db.execute(
-                text("""
-                UPDATE crawling_sessions 
+                text("""                UPDATE crawling_sessions 
                 SET status = :status, 
                     updated_at = :now,
                     last_activity = :now
@@ -241,8 +226,7 @@ class CrawlingSessionManager(DatabaseManager):
         increment_successful: int = 0,
         increment_errors: int = 0
     ) -> bool:
-        """
-        Update session activity metrics.
+        """        Update session activity metrics.
         
         Args:
             session_id: Session identifier
@@ -252,11 +236,9 @@ class CrawlingSessionManager(DatabaseManager):
             
         Returns:
             bool indicating success
-        """
-        try:
+        """        try:
             result = await self.db.execute(
-                text("""
-                UPDATE crawling_sessions 
+                text("""                UPDATE crawling_sessions 
                 SET last_activity = :now,
                     total_requests = total_requests + :requests,
                     successful_requests = successful_requests + :successful,
@@ -281,8 +263,7 @@ class CrawlingSessionManager(DatabaseManager):
             raise DatabaseError(f"Failed to update session activity: {str(e)}")
     
     async def add_job_to_session(self, session_id: str, job_id: str) -> bool:
-        """
-        Associate a job with a session and increment job counter.
+        """        Associate a job with a session and increment job counter.
         
         Args:
             session_id: Session identifier
@@ -290,11 +271,9 @@ class CrawlingSessionManager(DatabaseManager):
             
         Returns:
             bool indicating success
-        """
-        try:
+        """        try:
             result = await self.db.execute(
-                text("""
-                UPDATE crawling_sessions 
+                text("""                UPDATE crawling_sessions 
                 SET jobs_count = jobs_count + 1,
                     last_activity = :now,
                     updated_at = :now
@@ -314,8 +293,7 @@ class CrawlingSessionManager(DatabaseManager):
             raise DatabaseError(f"Failed to add job to session: {str(e)}")
     
     async def increment_discoveries(self, session_id: str, count: int = 1) -> bool:
-        """
-        Increment discovery count for session.
+        """        Increment discovery count for session.
         
         Args:
             session_id: Session identifier
@@ -323,11 +301,9 @@ class CrawlingSessionManager(DatabaseManager):
             
         Returns:
             bool indicating success
-        """
-        try:
+        """        try:
             result = await self.db.execute(
-                text("""
-                UPDATE crawling_sessions 
+                text("""                UPDATE crawling_sessions 
                 SET discoveries_count = discoveries_count + :count,
                     last_activity = :now,
                     updated_at = :now
@@ -352,8 +328,7 @@ class CrawlingSessionManager(DatabaseManager):
         user_id: str,
         platform: Optional[str] = None
     ) -> List[Dict[str, Any]]:
-        """
-        Get all active sessions for a user.
+        """        Get all active sessions for a user.
         
         Args:
             user_id: User identifier
@@ -361,8 +336,7 @@ class CrawlingSessionManager(DatabaseManager):
             
         Returns:
             List of active session dictionaries
-        """
-        try:
+        """        try:
             query = self.db.query(CrawlingSession).filter(
                 and_(
                     CrawlingSession.user_id == user_id,
@@ -404,16 +378,14 @@ class CrawlingSessionManager(DatabaseManager):
         self,
         cutoff_time: datetime
     ) -> List[Dict[str, Any]]:
-        """
-        Get sessions that have expired or been inactive.
+        """        Get sessions that have expired or been inactive.
         
         Args:
             cutoff_time: Time before which sessions are considered expired
             
         Returns:
             List of expired session dictionaries
-        """
-        try:
+        """        try:
             sessions = await self.db.query(CrawlingSession).filter(
                 or_(
                     CrawlingSession.expires_at < datetime.utcnow(),
@@ -443,16 +415,14 @@ class CrawlingSessionManager(DatabaseManager):
             raise DatabaseError(f"Failed to get expired sessions: {str(e)}")
     
     async def delete_session(self, session_id: str) -> bool:
-        """
-        Delete a session and clean up associated data.
+        """        Delete a session and clean up associated data.
         
         Args:
             session_id: Session identifier
             
         Returns:
             bool indicating success
-        """
-        try:
+        """        try:
             result = await self.db.execute(
                 text("DELETE FROM crawling_sessions WHERE session_id = :session_id"),
                 {'session_id': session_id}
@@ -469,22 +439,19 @@ class CrawlingSessionManager(DatabaseManager):
         self,
         time_range: timedelta = timedelta(days=7)
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive session statistics for dashboard.
+        """        Get comprehensive session statistics for dashboard.
         
         Args:
             time_range: Time range for statistics
             
         Returns:
             Dict containing session statistics
-        """
-        try:
+        """        try:
             since_time = datetime.utcnow() - time_range
             
             # Get session counts by status
             status_counts = await self.db.execute(
-                text("""
-                SELECT status, COUNT(*) as count
+                text("""                SELECT status, COUNT(*) as count
                 FROM crawling_sessions
                 WHERE created_at >= :since_time
                 GROUP BY status
@@ -494,8 +461,7 @@ class CrawlingSessionManager(DatabaseManager):
             
             # Get platform breakdown
             platform_counts = await self.db.execute(
-                text("""
-                SELECT platform, COUNT(*) as count,
+                text("""                SELECT platform, COUNT(*) as count,
                        AVG(discoveries_count) as avg_discoveries,
                        AVG(successful_requests::float / NULLIF(total_requests, 0) * 100) as avg_success_rate
                 FROM crawling_sessions
@@ -507,8 +473,7 @@ class CrawlingSessionManager(DatabaseManager):
             
             # Get performance metrics
             performance_metrics = await self.db.execute(
-                text("""
-                SELECT 
+                text("""                SELECT 
                     COUNT(*) as total_sessions,
                     SUM(discoveries_count) as total_discoveries,
                     SUM(total_requests) as total_requests,
@@ -550,13 +515,11 @@ class CrawlingSessionManager(DatabaseManager):
             raise DatabaseError(f"Failed to get session statistics: {str(e)}")
     
     async def health_check(self) -> Dict[str, Any]:
-        """
-        Perform health check of session management system.
+        """        Perform health check of session management system.
         
         Returns:
             Dict containing health status
-        """
-        try:
+        """        try:
             # Check active sessions count
             active_count = await self.db.query(func.count(CrawlingSession.session_id)).filter(
                 CrawlingSession.status.in_([

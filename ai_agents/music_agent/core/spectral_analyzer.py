@@ -1,5 +1,4 @@
-"""
-Real-Time Spectral Analysis Engine for Music Agent
+"""Real-Time Spectral Analysis Engine for Music Agent
 ==================================================
 
 Ultra-advanced spectral analysis system providing real-time audio analysis,
@@ -7,9 +6,7 @@ feature extraction, and intelligent music understanding capabilities.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple
@@ -28,8 +25,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SpectralFeatures:
-    """Container for extracted spectral features"""
-    mfcc: List[float]
+    """Container for extracted spectral features"""    mfcc: List[float]
     spectral_centroid: List[float]
     spectral_bandwidth: List[float]
     spectral_rolloff: List[float]
@@ -41,8 +37,7 @@ class SpectralFeatures:
 
 @dataclass
 class RealTimeAnalysisResult:
-    """Result of real-time spectral analysis"""
-    analysis_id: str
+    """Result of real-time spectral analysis"""    analysis_id: str
     features: SpectralFeatures
     genre_prediction: Optional[str] = None
     mood_analysis: Optional[Dict[str, float]] = None
@@ -50,8 +45,7 @@ class RealTimeAnalysisResult:
     processing_time_ms: float = 0.0
 
 class SpectralAnalyzer:
-    """
-    Real-Time Spectral Analysis Engine
+    """    Real-Time Spectral Analysis Engine
     
     Provides advanced audio analysis capabilities including:
     - Real-time spectral feature extraction
@@ -59,8 +53,7 @@ class SpectralAnalyzer:
     - Genre and mood classification
     - Audio quality assessment
     - Tempo and key detection
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.sample_rate = self.config.get('sample_rate', 22050)
@@ -72,8 +65,7 @@ class SpectralAnalyzer:
         self._initialize_components()
         
     def _initialize_components(self):
-        """Initialize audio processing components"""
-        if not HAS_AUDIO_LIBS:
+        """Initialize audio processing components"""        if not HAS_AUDIO_LIBS:
             logger.warning("Audio processing libraries not available. Using basic analysis.")
             self._use_basic_analysis = True
         else:
@@ -84,8 +76,7 @@ class SpectralAnalyzer:
         audio_data: bytes,
         metadata: Optional[Dict[str, Any]] = None
     ) -> RealTimeAnalysisResult:
-        """
-        Perform real-time spectral analysis on audio data
+        """        Perform real-time spectral analysis on audio data
         
         Args:
             audio_data: Raw audio bytes
@@ -93,8 +84,7 @@ class SpectralAnalyzer:
             
         Returns:
             RealTimeAnalysisResult with extracted features and analysis
-        """
-        start_time = asyncio.get_event_loop().time()
+        """        start_time = asyncio.get_event_loop().time()
         analysis_id = f"spectral_{int(start_time * 1000)}"
         
         try:
@@ -124,8 +114,7 @@ class SpectralAnalyzer:
             raise
     
     async def _advanced_analysis(self, audio_data: bytes) -> SpectralFeatures:
-        """Perform advanced spectral analysis using librosa"""
-        try:
+        """Perform advanced spectral analysis using librosa"""        try:
             # Load audio from bytes
             audio_array, sr = sf.read(io.BytesIO(audio_data))
             
@@ -196,8 +185,7 @@ class SpectralAnalyzer:
             raise
     
     async def _basic_analysis(self, audio_data: bytes) -> SpectralFeatures:
-        """Perform basic analysis without advanced libraries"""
-        # Basic analysis using simple calculations
+        """Perform basic analysis without advanced libraries"""        # Basic analysis using simple calculations
         data_length = len(audio_data)
         
         # Simple energy calculation
@@ -222,8 +210,7 @@ class SpectralAnalyzer:
         )
     
     def _detect_key(self, chroma: np.ndarray) -> str:
-        """Detect musical key from chroma features"""
-        try:
+        """Detect musical key from chroma features"""        try:
             # Calculate average chroma profile
             chroma_mean = np.mean(chroma, axis=1)
             
@@ -258,8 +245,7 @@ class SpectralAnalyzer:
             return "C"  # Default to C major
     
     async def _predict_genre(self, features: SpectralFeatures) -> Optional[str]:
-        """Predict musical genre based on spectral features"""
-        try:
+        """Predict musical genre based on spectral features"""        try:
             # Simple genre classification based on features
             tempo = features.tempo
             energy = features.energy
@@ -280,8 +266,7 @@ class SpectralAnalyzer:
             return None
     
     async def _analyze_mood(self, features: SpectralFeatures) -> Optional[Dict[str, float]]:
-        """Analyze musical mood based on spectral features"""
-        try:
+        """Analyze musical mood based on spectral features"""        try:
             # Simple mood analysis based on features
             energy = features.energy
             tempo = features.tempo
@@ -303,8 +288,7 @@ class SpectralAnalyzer:
             return None
     
     async def _assess_quality(self, features: SpectralFeatures, audio_data: bytes) -> float:
-        """Assess audio quality based on features and data"""
-        try:
+        """Assess audio quality based on features and data"""        try:
             # Simple quality assessment
             quality_score = 0.0
             
@@ -333,8 +317,7 @@ class SpectralAnalyzer:
         self, 
         audio_files: List[Dict[str, Any]]
     ) -> List[RealTimeAnalysisResult]:
-        """Perform batch analysis on multiple audio files"""
-        results = []
+        """Perform batch analysis on multiple audio files"""        results = []
         
         for audio_file in audio_files:
             try:
@@ -352,8 +335,7 @@ class SpectralAnalyzer:
         return results
     
     def get_analyzer_info(self) -> Dict[str, Any]:
-        """Get information about the analyzer configuration"""
-        return {
+        """Get information about the analyzer configuration"""        return {
             "sample_rate": self.sample_rate,
             "n_mfcc": self.n_mfcc,
             "hop_length": self.hop_length,

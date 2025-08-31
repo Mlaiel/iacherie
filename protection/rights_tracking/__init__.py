@@ -52,8 +52,7 @@ UNAUTHORIZED ACCESS IS CONSTITUTIONAL VIOLATION:
 
 Contact mlaiel@live.de for MANDATORY constitutional authorization.
 Unauthorized access triggers automatic Supreme Court legal protocols.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
 from dataclasses import dataclass, field

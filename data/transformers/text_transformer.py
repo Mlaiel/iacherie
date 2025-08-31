@@ -1,5 +1,4 @@
-"""
-Text Transformer - Professional text processing for IA Influencer Agent Platform
+"""Text Transformer - Professional text processing for IA Influencer Agent Platform
 =================================================================================
 
 Advanced text transformation, analysis, and conversion capabilities
@@ -8,9 +7,7 @@ for creators' text content workflows.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import os
 import tempfile
@@ -38,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 class TextFormat(Enum):
-    """Supported text formats."""
-    TXT = "txt"
+    """Supported text formats."""    TXT = "txt"
     JSON = "json"
     XML = "xml"
     HTML = "html"
@@ -50,8 +46,7 @@ class TextFormat(Enum):
 
 
 class Language(Enum):
-    """Supported languages."""
-    ENGLISH = "en"
+    """Supported languages."""    ENGLISH = "en"
     FRENCH = "fr"
     GERMAN = "de"
     SPANISH = "es"
@@ -66,8 +61,7 @@ class Language(Enum):
 
 
 class TextProcessingMode(Enum):
-    """Text processing modes."""
-    CLEAN = "clean"
+    """Text processing modes."""    CLEAN = "clean"
     NORMALIZE = "normalize"
     TRANSLATE = "translate"
     SUMMARIZE = "summarize"
@@ -79,8 +73,7 @@ class TextProcessingMode(Enum):
 
 @dataclass
 class TextSettings:
-    """Text processing settings."""
-    format: TextFormat = TextFormat.TXT
+    """Text processing settings."""    format: TextFormat = TextFormat.TXT
     encoding: str = "utf-8"
     language: Language = Language.AUTO
     processing_modes: List[TextProcessingMode] = None
@@ -114,8 +107,7 @@ class TextSettings:
 
 @dataclass
 class TextMetadata:
-    """Text file metadata."""
-    encoding: Optional[str] = None
+    """Text file metadata."""    encoding: Optional[str] = None
     language: Optional[str] = None
     char_count: int = 0
     word_count: int = 0
@@ -133,26 +125,22 @@ class TextMetadata:
 
 
 class TextTransformer:
-    """
-    Professional text transformation engine for the IA Influencer Agent Platform.
+    """    Professional text transformation engine for the IA Influencer Agent Platform.
     
     Provides advanced text processing, analysis, and conversion capabilities
     optimized for creator content workflows.
-    """
-    
+    """    
     def __init__(
         self,
         config: Optional[Dict[str, Any]] = None,
         temp_dir: Optional[str] = None
     ):
-        """
-        Initialize text transformer.
+        """        Initialize text transformer.
         
         Args:
             config: Configuration options
             temp_dir: Temporary directory for processing
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self.temp_dir = Path(temp_dir) if temp_dir else Path(tempfile.gettempdir()) / "text_transform"
         
         # Create temp directory
@@ -168,8 +156,7 @@ class TextTransformer:
         logger.info("TextTransformer initialized")
     
     def _init_nlp_models(self):
-        """Initialize NLP models and pipelines."""
-        try:
+        """Initialize NLP models and pipelines."""        try:
             # Download required NLTK data
             nltk.download('punkt', quiet=True)
             nltk.download('stopwords', quiet=True)
@@ -203,16 +190,14 @@ class TextTransformer:
             logger.warning(f"Could not initialize all NLP models: {e}")
     
     async def transform(self, request) -> Any:
-        """
-        Transform text based on request configuration.
+        """        Transform text based on request configuration.
         
         Args:
             request: Transformation request with text settings
             
         Returns:
             TransformationResult with processing metrics
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Parse request
@@ -277,8 +262,7 @@ class TextTransformer:
         encoding: str = "utf-8",
         **kwargs
     ) -> bool:
-        """
-        Convert text file to specified format.
+        """        Convert text file to specified format.
         
         Args:
             input_path: Input text file path
@@ -289,8 +273,7 @@ class TextTransformer:
             
         Returns:
             Success status
-        """
-        settings = TextSettings(
+        """        settings = TextSettings(
             format=format if isinstance(format, TextFormat) else TextFormat(format),
             encoding=encoding,
             **kwargs
@@ -316,8 +299,7 @@ class TextTransformer:
         text: str,
         analysis_options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Analyze text and extract insights.
+        """        Analyze text and extract insights.
         
         Args:
             text: Text to analyze
@@ -325,8 +307,7 @@ class TextTransformer:
             
         Returns:
             Analysis results
-        """
-        try:
+        """        try:
             options = analysis_options or {}
             results = {}
             
@@ -373,8 +354,7 @@ class TextTransformer:
         target_language: Union[str, Language],
         source_language: Union[str, Language] = Language.AUTO
     ) -> str:
-        """
-        Translate text to target language.
+        """        Translate text to target language.
         
         Args:
             text: Text to translate
@@ -383,8 +363,7 @@ class TextTransformer:
             
         Returns:
             Translated text
-        """
-        try:
+        """        try:
             if not TEXT_LIBS_AVAILABLE:
                 logger.warning("Translation requires transformers library")
                 return text
@@ -419,8 +398,7 @@ class TextTransformer:
         ratio: float = 0.3,
         max_length: Optional[int] = None
     ) -> str:
-        """
-        Summarize text content.
+        """        Summarize text content.
         
         Args:
             text: Text to summarize
@@ -429,8 +407,7 @@ class TextTransformer:
             
         Returns:
             Summarized text
-        """
-        try:
+        """        try:
             if not TEXT_LIBS_AVAILABLE:
                 logger.warning("Summarization requires transformers library")
                 return text
@@ -461,16 +438,14 @@ class TextTransformer:
             return text
     
     async def get_metadata(self, text: str) -> TextMetadata:
-        """
-        Extract comprehensive text metadata.
+        """        Extract comprehensive text metadata.
         
         Args:
             text: Text content
             
         Returns:
             TextMetadata object
-        """
-        try:
+        """        try:
             metadata = TextMetadata()
             
             # Basic statistics
@@ -516,8 +491,7 @@ class TextTransformer:
             return TextMetadata()
     
     async def _read_text_file(self, file_path: Path) -> Tuple[str, str]:
-        """Read text file with encoding detection."""
-        try:
+        """Read text file with encoding detection."""        try:
             # Detect encoding
             with open(file_path, 'rb') as f:
                 raw_data = f.read()
@@ -538,8 +512,7 @@ class TextTransformer:
             return content, 'utf-8'
     
     async def _save_text_file(self, text: str, output_path: Path, settings: TextSettings):
-        """Save text file with specified format and encoding."""
-        try:
+        """Save text file with specified format and encoding."""        try:
             output_path.parent.mkdir(parents=True, exist_ok=True)
             
             if settings.format == TextFormat.JSON:
@@ -565,8 +538,7 @@ class TextTransformer:
         <format>{settings.format.value}</format>
         <processed_at>{time.time()}</processed_at>
     </metadata>
-</document>"""
-                with open(output_path, 'w', encoding=settings.encoding) as f:
+</document>"""                with open(output_path, 'w', encoding=settings.encoding) as f:
                     f.write(xml_content)
             
             else:
@@ -579,8 +551,7 @@ class TextTransformer:
             raise
     
     async def _process_text(self, text: str, settings: TextSettings) -> str:
-        """Process text according to settings."""
-        processed = text
+        """Process text according to settings."""        processed = text
         
         try:
             # Apply processing modes
@@ -601,8 +572,7 @@ class TextTransformer:
             return text
     
     async def _clean_text(self, text: str, settings: TextSettings) -> str:
-        """Clean text content."""
-        cleaned = text
+        """Clean text content."""        cleaned = text
         
         try:
             # Remove HTML tags
@@ -637,8 +607,7 @@ class TextTransformer:
             return text
     
     async def _normalize_text(self, text: str, settings: TextSettings) -> str:
-        """Normalize text content."""
-        try:
+        """Normalize text content."""        try:
             normalized = text
             
             # Convert to lowercase (optional)
@@ -657,8 +626,7 @@ class TextTransformer:
             return text
     
     async def _enhance_text(self, text: str, settings: TextSettings) -> str:
-        """Enhance text quality."""
-        try:
+        """Enhance text quality."""        try:
             enhanced = text
             
             # Grammar and spelling improvements would require specialized models
@@ -676,8 +644,7 @@ class TextTransformer:
             return text
     
     async def _improve_readability(self, text: str) -> str:
-        """Improve text readability."""
-        try:
+        """Improve text readability."""        try:
             # This is a simplified implementation
             # In practice, you'd use more sophisticated NLP techniques
             
@@ -705,8 +672,7 @@ class TextTransformer:
             return text
     
     async def _analyze_sentiment(self, text: str) -> Optional[Dict[str, Any]]:
-        """Analyze text sentiment."""
-        try:
+        """Analyze text sentiment."""        try:
             if 'sentiment' not in self.pipelines:
                 return None
             
@@ -727,8 +693,7 @@ class TextTransformer:
             return None
     
     async def _analyze_readability(self, text: str) -> Dict[str, Any]:
-        """Analyze text readability."""
-        try:
+        """Analyze text readability."""        try:
             readability = {}
             
             if TEXT_LIBS_AVAILABLE:
@@ -742,8 +707,7 @@ class TextTransformer:
             return {}
     
     async def _extract_keywords(self, text: str, max_keywords: int = 20) -> List[str]:
-        """Extract keywords from text."""
-        try:
+        """Extract keywords from text."""        try:
             if not TEXT_LIBS_AVAILABLE:
                 return []
             
@@ -773,8 +737,7 @@ class TextTransformer:
             return []
     
     async def _extract_entities(self, text: str) -> List[Dict[str, str]]:
-        """Extract named entities from text."""
-        try:
+        """Extract named entities from text."""        try:
             if 'en' not in self.nlp_models:
                 return []
             
@@ -796,8 +759,7 @@ class TextTransformer:
             return []
     
     async def _detect_language(self, text: str) -> Optional[str]:
-        """Detect text language."""
-        try:
+        """Detect text language."""        try:
             # Simple language detection based on common words
             # In practice, you'd use a proper language detection library
             
@@ -826,8 +788,7 @@ class TextTransformer:
             return None
     
     async def _extractive_summarization(self, text: str, ratio: float) -> str:
-        """Simple extractive summarization."""
-        try:
+        """Simple extractive summarization."""        try:
             sentences = re.split(r'[.!?]+', text)
             sentences = [s.strip() for s in sentences if s.strip()]
             
@@ -857,8 +818,7 @@ class TextTransformer:
             return text
     
     def _parse_text_settings(self, request) -> TextSettings:
-        """Parse transformation request into text settings."""
-        settings = TextSettings()
+        """Parse transformation request into text settings."""        settings = TextSettings()
         
         if hasattr(request, 'target_format') and request.target_format:
             settings.format = TextFormat(request.target_format)
@@ -891,8 +851,7 @@ class TextTransformer:
         settings: TextSettings,
         requested_output: Optional[str] = None
     ) -> Path:
-        """Generate output file path."""
-        if requested_output:
+        """Generate output file path."""        if requested_output:
             return Path(requested_output)
         
         # Generate based on input and settings
@@ -900,8 +859,7 @@ class TextTransformer:
         return input_path.parent / output_name
     
     async def cleanup(self):
-        """Cleanup temporary files and resources."""
-        try:
+        """Cleanup temporary files and resources."""        try:
             # Clean temp directory
             if self.temp_dir.exists():
                 import shutil
@@ -914,8 +872,7 @@ class TextTransformer:
 
 
 class TextConverter:
-    """Simplified text converter interface."""
-    
+    """Simplified text converter interface."""    
     def __init__(self, transformer: Optional[TextTransformer] = None):
         self.transformer = transformer or TextTransformer()
     
@@ -926,13 +883,11 @@ class TextConverter:
         format: str = "txt",
         encoding: str = "utf-8"
     ) -> bool:
-        """Convert text file."""
-        return await self.transformer.convert(input_path, output_path, format, encoding)
+        """Convert text file."""        return await self.transformer.convert(input_path, output_path, format, encoding)
 
 
 class TextAnalyzer:
-    """Simplified text analyzer interface."""
-    
+    """Simplified text analyzer interface."""    
     def __init__(self, transformer: Optional[TextTransformer] = None):
         self.transformer = transformer or TextTransformer()
     
@@ -941,5 +896,4 @@ class TextAnalyzer:
         text: str,
         options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Analyze text content."""
-        return await self.transformer.analyze(text, options)
+        """Analyze text content."""        return await self.transformer.analyze(text, options)

@@ -1,13 +1,10 @@
-"""
-IA Influencer Agent - Fingerprint Manager
+"""IA Influencer Agent - Fingerprint Manager
 Central management system for all fingerprinting operations
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved to Fahed Mlaiel
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import time
@@ -24,8 +21,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Supported content types for fingerprinting"""
-    AUDIO = "audio"
+    """Supported content types for fingerprinting"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     UNKNOWN = "unknown"
@@ -33,8 +29,7 @@ class ContentType(Enum):
 
 @dataclass
 class FingerprintRequest:
-    """Request object for fingerprinting operations"""
-    file_path: str
+    """Request object for fingerprinting operations"""    file_path: str
     content_type: ContentType
     methods: Optional[List[str]] = None
     priority: int = 1
@@ -43,8 +38,7 @@ class FingerprintRequest:
 
 @dataclass
 class FingerprintResult:
-    """Result object for fingerprinting operations"""
-    request_id: str
+    """Result object for fingerprinting operations"""    request_id: str
     file_path: str
     content_type: ContentType
     fingerprint_data: Dict
@@ -54,14 +48,11 @@ class FingerprintResult:
 
 
 class FingerprintManager:
-    """
-    Central manager for coordinating all fingerprinting operations
+    """    Central manager for coordinating all fingerprinting operations
     across audio, video, and image content types
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the fingerprint manager with all engines"""
-        self.audio_engine = AudioFingerprintEngine()
+        """Initialize the fingerprint manager with all engines"""        self.audio_engine = AudioFingerprintEngine()
         self.video_engine = VideoFingerprintEngine()
         self.image_engine = ImageFingerprintEngine()
         
@@ -78,16 +69,14 @@ class FingerprintManager:
         logger.info("FingerprintManager initialized with all engines")
     
     def detect_content_type(self, file_path: Union[str, Path]) -> ContentType:
-        """
-        Detect content type based on file extension
+        """        Detect content type based on file extension
         
         Args:
             file_path: Path to the content file
         
         Returns:
             Detected content type
-        """
-        try:
+        """        try:
             file_path = Path(file_path)
             extension = file_path.suffix.lower()
             
@@ -111,8 +100,7 @@ class FingerprintManager:
         methods: Optional[List[str]] = None,
         request_id: Optional[str] = None
     ) -> FingerprintResult:
-        """
-        Extract fingerprint from content file
+        """        Extract fingerprint from content file
         
         Args:
             file_path: Path to content file
@@ -122,8 +110,7 @@ class FingerprintManager:
         
         Returns:
             FingerprintResult with extracted data
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         if request_id is None:
             request_id = f"fp_{int(time.time() * 1000)}"
@@ -190,8 +177,7 @@ class FingerprintManager:
         content_type: ContentType,
         methods: Optional[List[str]]
     ) -> Dict:
-        """Route fingerprinting request to appropriate engine"""
-        try:
+        """Route fingerprinting request to appropriate engine"""        try:
             if content_type == ContentType.AUDIO:
                 return await self.audio_engine.extract_fingerprint(file_path, methods)
             elif content_type == ContentType.VIDEO:
@@ -210,8 +196,7 @@ class FingerprintManager:
         file_paths: List[Union[str, Path]],
         methods_by_type: Optional[Dict[ContentType, List[str]]] = None
     ) -> List[FingerprintResult]:
-        """
-        Extract fingerprints from multiple files in batch
+        """        Extract fingerprints from multiple files in batch
         
         Args:
             file_paths: List of file paths to process
@@ -219,8 +204,7 @@ class FingerprintManager:
         
         Returns:
             List of fingerprint results
-        """
-        try:
+        """        try:
             # Group files by content type
             files_by_type = {
                 ContentType.AUDIO: [],
@@ -266,8 +250,7 @@ class FingerprintManager:
         content_type: ContentType,
         methods: Optional[List[str]]
     ) -> List[FingerprintResult]:
-        """Process batch of files of same content type"""
-        try:
+        """Process batch of files of same content type"""        try:
             tasks = []
             for file_path in file_paths:
                 task = self.extract_fingerprint(file_path, content_type, methods)
@@ -303,8 +286,7 @@ class FingerprintManager:
         fingerprint1: FingerprintResult,
         fingerprint2: FingerprintResult
     ) -> Dict[str, float]:
-        """
-        Compare two fingerprints and return similarity scores
+        """        Compare two fingerprints and return similarity scores
         
         Args:
             fingerprint1: First fingerprint result
@@ -312,8 +294,7 @@ class FingerprintManager:
         
         Returns:
             Dictionary with similarity scores
-        """
-        try:
+        """        try:
             if not fingerprint1.success or not fingerprint2.success:
                 return {'overall': 0.0, 'error': 'One or both fingerprints failed'}
             
@@ -351,8 +332,7 @@ class FingerprintManager:
         candidate_fingerprints: List[FingerprintResult],
         similarity_threshold: float = 0.8
     ) -> List[Tuple[FingerprintResult, float]]:
-        """
-        Find similar content from a list of candidates
+        """        Find similar content from a list of candidates
         
         Args:
             target_fingerprint: Target fingerprint to match against
@@ -361,8 +341,7 @@ class FingerprintManager:
         
         Returns:
             List of tuples (fingerprint, similarity_score) sorted by similarity
-        """
-        try:
+        """        try:
             similar_results = []
             
             # Compare target with each candidate
@@ -385,12 +364,10 @@ class FingerprintManager:
             return []
     
     def get_cached_result(self, request_id: str) -> Optional[FingerprintResult]:
-        """Get cached fingerprint result by request ID"""
-        return self.results_cache.get(request_id)
+        """Get cached fingerprint result by request ID"""        return self.results_cache.get(request_id)
     
     def clear_cache(self, older_than_hours: Optional[int] = None):
-        """Clear results cache, optionally only entries older than specified hours"""
-        try:
+        """Clear results cache, optionally only entries older than specified hours"""        try:
             if older_than_hours is None:
                 # Clear all cache
                 self.results_cache.clear()
@@ -414,8 +391,7 @@ class FingerprintManager:
             logger.error(f"Error clearing cache: {str(e)}")
     
     def export_fingerprint(self, result: FingerprintResult, file_path: Union[str, Path]) -> bool:
-        """
-        Export fingerprint result to JSON file
+        """        Export fingerprint result to JSON file
         
         Args:
             result: Fingerprint result to export
@@ -423,8 +399,7 @@ class FingerprintManager:
         
         Returns:
             True if successful, False otherwise
-        """
-        try:
+        """        try:
             output_data = {
                 'request_id': result.request_id,
                 'file_path': result.file_path,
@@ -447,16 +422,14 @@ class FingerprintManager:
             return False
     
     def import_fingerprint(self, file_path: Union[str, Path]) -> Optional[FingerprintResult]:
-        """
-        Import fingerprint result from JSON file
+        """        Import fingerprint result from JSON file
         
         Args:
             file_path: Input file path
         
         Returns:
             FingerprintResult if successful, None otherwise
-        """
-        try:
+        """        try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
             
@@ -481,8 +454,7 @@ class FingerprintManager:
             return None
     
     def get_manager_stats(self) -> Dict[str, any]:
-        """Get statistics about the fingerprint manager"""
-        try:
+        """Get statistics about the fingerprint manager"""        try:
             cache_stats = {
                 'total_cached': len(self.results_cache),
                 'successful': sum(1 for r in self.results_cache.values() if r.success),

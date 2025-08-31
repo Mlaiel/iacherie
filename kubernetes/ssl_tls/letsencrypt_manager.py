@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Let's Encrypt Certificate Manager
+"""IA Influencer Agent - Let's Encrypt Certificate Manager
 Automated SSL certificate provisioning with ACME protocol
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -13,9 +12,7 @@ Team Expertise:
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized copying, distribution, or use without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
-"""
-
-import os
+"""import os
 import json
 import time
 import logging
@@ -45,21 +42,18 @@ except ImportError:
 
 
 class ChallengeType(Enum):
-    """ACME challenge types"""
-    HTTP_01 = "http-01"
+    """ACME challenge types"""    HTTP_01 = "http-01"
     DNS_01 = "dns-01"
     TLS_ALPN_01 = "tls-alpn-01"
 
 
 class CertificateError(Exception):
-    """Certificate provisioning exception"""
-    pass
+    """Certificate provisioning exception"""    pass
 
 
 @dataclass
 class LetsEncryptConfig:
-    """Let's Encrypt configuration"""
-    email: str
+    """Let's Encrypt configuration"""    email: str
     staging: bool = True
     key_size: int = 2048
     challenge_type: ChallengeType = ChallengeType.HTTP_01
@@ -73,8 +67,7 @@ class LetsEncryptConfig:
 
 @dataclass
 class CertificateRequest:
-    """Certificate request information"""
-    domains: List[str]
+    """Certificate request information"""    domains: List[str]
     email: str
     challenge_type: ChallengeType
     webroot_path: Optional[str] = None
@@ -82,19 +75,15 @@ class CertificateRequest:
 
 
 class LetsEncryptManager:
-    """
-    Let's Encrypt certificate management with ACME v2 protocol
+    """    Let's Encrypt certificate management with ACME v2 protocol
     Supports HTTP-01, DNS-01, and TLS-ALPN-01 challenges
-    """
-    
+    """    
     def __init__(self, config: LetsEncryptConfig):
-        """
-        Initialize Let's Encrypt manager
+        """        Initialize Let's Encrypt manager
         
         Args:
             config: Let's Encrypt configuration
-        """
-        if acme is None:
+        """        if acme is None:
             raise ImportError("ACME library is required. Install with: pip install acme")
         
         self.config = config
@@ -124,8 +113,7 @@ class LetsEncryptManager:
         self.logger.info("Let's Encrypt manager initialized")
     
     def _init_directories(self) -> None:
-        """Initialize Let's Encrypt directories"""
-        try:
+        """Initialize Let's Encrypt directories"""        try:
             for directory in [self.account_path, self.cert_path, self.work_path]:
                 directory.mkdir(parents=True, exist_ok=True)
                 os.chmod(directory, 0o755)
@@ -145,8 +133,7 @@ class LetsEncryptManager:
             raise
     
     def _init_acme_client(self) -> None:
-        """Initialize ACME client with account key"""
-        try:
+        """Initialize ACME client with account key"""        try:
             # Load or generate account key
             account_key_path = self.account_path / "account.key"
             
@@ -171,8 +158,7 @@ class LetsEncryptManager:
             raise
     
     def _generate_account_key(self) -> jose.JWKRSA:
-        """Generate new account key"""
-        private_key = rsa.generate_private_key(
+        """Generate new account key"""        private_key = rsa.generate_private_key(
             public_exponent=65537,
             key_size=self.config.key_size,
             backend=default_backend()
@@ -180,8 +166,7 @@ class LetsEncryptManager:
         return jose.JWKRSA(key=private_key)
     
     def _load_account_key(self, key_path: Path) -> jose.JWKRSA:
-        """Load account key from file"""
-        with open(key_path, 'rb') as key_file:
+        """Load account key from file"""        with open(key_path, 'rb') as key_file:
             private_key = serialization.load_pem_private_key(
                 key_file.read(),
                 password=None,
@@ -190,8 +175,7 @@ class LetsEncryptManager:
         return jose.JWKRSA(key=private_key)
     
     def _save_account_key(self, key_path: Path, account_key: jose.JWKRSA) -> None:
-        """Save account key to file"""
-        key_data = account_key.key.private_bytes(
+        """Save account key to file"""        key_data = account_key.key.private_bytes(
             encoding=serialization.Encoding.PEM,
             format=serialization.PrivateFormat.PKCS8,
             encryption_algorithm=serialization.NoEncryption()
@@ -203,8 +187,7 @@ class LetsEncryptManager:
         os.chmod(key_path, 0o600)
     
     def _register_account(self) -> None:
-        """Register account with Let's Encrypt"""
-        try:
+        """Register account with Let's Encrypt"""        try:
             # Check if account already exists
             account_file = self.account_path / "account.json"
             
@@ -240,16 +223,14 @@ class LetsEncryptManager:
             raise
     
     def request_certificate(self, cert_request: CertificateRequest) -> Tuple[str, str, str]:
-        """
-        Request SSL certificate from Let's Encrypt
+        """        Request SSL certificate from Let's Encrypt
         
         Args:
             cert_request: Certificate request details
             
         Returns:
             Tuple of (certificate_pem, private_key_pem, chain_pem)
-        """
-        try:
+        """        try:
             self.logger.info(f"Requesting certificate for domains: {cert_request.domains}")
             
             # Generate private key for certificate
@@ -315,8 +296,7 @@ class LetsEncryptManager:
         authorization: messages.Authorization,
         cert_request: CertificateRequest
     ) -> None:
-        """Complete ACME challenge for domain authorization"""
-        domain = authorization.body.identifier.value
+        """Complete ACME challenge for domain authorization"""        domain = authorization.body.identifier.value
         
         # Find appropriate challenge
         challenge = None
@@ -340,8 +320,7 @@ class LetsEncryptManager:
         self._wait_for_challenge_validation(challenge)
     
     def _complete_http_challenge(self, challenge: messages.ChallengeBody, domain: str) -> None:
-        """Complete HTTP-01 challenge"""
-        try:
+        """Complete HTTP-01 challenge"""        try:
             # Get challenge response
             response, validation = challenge.chall.response_and_validation(self.account_key)
             
@@ -374,8 +353,7 @@ class LetsEncryptManager:
             raise
     
     def _complete_dns_challenge(self, challenge: messages.ChallengeBody, domain: str) -> None:
-        """Complete DNS-01 challenge"""
-        try:
+        """Complete DNS-01 challenge"""        try:
             # Get challenge response
             response, validation = challenge.chall.response_and_validation(self.account_key)
             
@@ -407,8 +385,7 @@ class LetsEncryptManager:
             raise
     
     def _create_dns_record(self, name: str, value: str, domain: str) -> None:
-        """Create DNS TXT record using provider API"""
-        if self.config.dns_provider == "cloudflare":
+        """Create DNS TXT record using provider API"""        if self.config.dns_provider == "cloudflare":
             self._create_cloudflare_dns_record(name, value, domain)
         elif self.config.dns_provider == "route53":
             self._create_route53_dns_record(name, value, domain)
@@ -416,8 +393,7 @@ class LetsEncryptManager:
             raise CertificateError(f"Unsupported DNS provider: {self.config.dns_provider}")
     
     def _create_cloudflare_dns_record(self, name: str, value: str, domain: str) -> None:
-        """Create DNS record using Cloudflare API"""
-        try:
+        """Create DNS record using Cloudflare API"""        try:
             api_token = self.config.dns_credentials.get('api_token')
             zone_id = self.config.dns_credentials.get('zone_id')
             
@@ -453,8 +429,7 @@ class LetsEncryptManager:
             raise
     
     def _create_route53_dns_record(self, name: str, value: str, domain: str) -> None:
-        """Create DNS record using AWS Route53"""
-        try:
+        """Create DNS record using AWS Route53"""        try:
             import boto3
             
             aws_access_key = self.config.dns_credentials.get('aws_access_key_id')
@@ -494,8 +469,7 @@ class LetsEncryptManager:
             raise
     
     def _verify_dns_record(self, name: str, value: str) -> None:
-        """Verify DNS TXT record exists"""
-        max_attempts = 10
+        """Verify DNS TXT record exists"""        max_attempts = 10
         attempt = 0
         
         while attempt < max_attempts:
@@ -523,8 +497,7 @@ class LetsEncryptManager:
         raise CertificateError(f"DNS record {name} not found after {max_attempts} attempts")
     
     def _wait_for_challenge_validation(self, challenge: messages.ChallengeBody) -> None:
-        """Wait for challenge to be validated by Let's Encrypt"""
-        max_attempts = 30
+        """Wait for challenge to be validated by Let's Encrypt"""        max_attempts = 30
         attempt = 0
         
         while attempt < max_attempts:
@@ -561,8 +534,7 @@ class LetsEncryptManager:
         private_key_pem: str,
         chain_pem: str
     ) -> None:
-        """Save certificate files to disk"""
-        try:
+        """Save certificate files to disk"""        try:
             # Create domain directory
             domain_path = self.cert_path / domain
             domain_path.mkdir(parents=True, exist_ok=True)
@@ -593,16 +565,14 @@ class LetsEncryptManager:
             raise
     
     def renew_certificate(self, domain: str) -> bool:
-        """
-        Renew certificate for domain
+        """        Renew certificate for domain
         
         Args:
             domain: Domain to renew certificate for
             
         Returns:
             True if renewal successful
-        """
-        try:
+        """        try:
             domain_path = self.cert_path / domain
             cert_file = domain_path / "cert.pem"
             
@@ -656,8 +626,7 @@ class LetsEncryptManager:
             return False
     
     def list_certificates(self) -> List[Dict[str, Any]]:
-        """List all managed certificates"""
-        certificates = []
+        """List all managed certificates"""        certificates = []
         
         try:
             for domain_path in self.cert_path.iterdir():
@@ -694,8 +663,7 @@ class LetsEncryptManager:
             return []
     
     def cleanup_challenge_files(self, domain: str) -> None:
-        """Clean up challenge files after validation"""
-        try:
+        """Clean up challenge files after validation"""        try:
             if self.config.challenge_type == ChallengeType.HTTP_01:
                 challenge_dir = Path(self.config.webroot_path) / ".well-known" / "acme-challenge"
                 if challenge_dir.exists():
@@ -712,13 +680,11 @@ class LetsEncryptManager:
 
 
 def create_letsencrypt_manager(config: LetsEncryptConfig) -> LetsEncryptManager:
-    """
-    Factory function to create Let's Encrypt manager
+    """    Factory function to create Let's Encrypt manager
     
     Args:
         config: Let's Encrypt configuration
         
     Returns:
         Configured Let's Encrypt manager
-    """
-    return LetsEncryptManager(config)
+    """    return LetsEncryptManager(config)

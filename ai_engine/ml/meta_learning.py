@@ -1,13 +1,10 @@
-"""
-Meta Learning Module - Meta-learning, few-shot learning, and transfer learning
+"""Meta Learning Module - Meta-learning, few-shot learning, and transfer learning
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides meta-learning capabilities including few-shot learning,
 transfer learning, and model adaptation techniques.
-"""
-
-import logging
+"""import logging
 import numpy as np
 import copy
 from typing import Dict, List, Any, Optional, Union, Tuple, Callable
@@ -19,23 +16,20 @@ from datetime import datetime
 logger = logging.getLogger(__name__)
 
 class MetaLearningAlgorithm(Enum):
-    """Meta-learning algorithms"""
-    MAML = "maml"  # Model-Agnostic Meta-Learning
+    """Meta-learning algorithms"""    MAML = "maml"  # Model-Agnostic Meta-Learning
     PROTOTYPICAL = "prototypical"
     MATCHING_NETWORKS = "matching_networks"
     REPTILE = "reptile"
 
 class TransferStrategy(Enum):
-    """Transfer learning strategies"""
-    FEATURE_EXTRACTION = "feature_extraction"
+    """Transfer learning strategies"""    FEATURE_EXTRACTION = "feature_extraction"
     FINE_TUNING = "fine_tuning"
     DOMAIN_ADAPTATION = "domain_adaptation"
     MULTI_TASK = "multi_task"
 
 @dataclass
 class Task:
-    """Meta-learning task definition"""
-    task_id: str
+    """Meta-learning task definition"""    task_id: str
     name: str
     data: Dict[str, np.ndarray]  # X_train, y_train, X_test, y_test
     metadata: Dict[str, Any]
@@ -43,8 +37,7 @@ class Task:
 
 @dataclass
 class MetaLearningConfig:
-    """Configuration for meta-learning"""
-    algorithm: MetaLearningAlgorithm
+    """Configuration for meta-learning"""    algorithm: MetaLearningAlgorithm
     num_inner_steps: int = 5
     inner_lr: float = 0.01
     meta_lr: float = 0.001
@@ -53,8 +46,7 @@ class MetaLearningConfig:
     num_meta_iterations: int = 1000
 
 class MetaLearner:
-    """Main meta-learning engine"""
-    
+    """Main meta-learning engine"""    
     def __init__(self, config: MetaLearningConfig):
         self.config = config
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -65,8 +57,7 @@ class MetaLearner:
         self.logger.info("MetaLearner initialized successfully")
     
     def _initialize_meta_model(self):
-        """Initialize the meta-model"""
-        try:
+        """Initialize the meta-model"""        try:
             # Simplified meta-model initialization
             self.meta_model = {
                 "weights": np.random.normal(0, 0.1, (100, 50)),
@@ -82,8 +73,7 @@ class MetaLearner:
             raise
     
     def train(self, tasks: List[Task]) -> Dict[str, Any]:
-        """Train the meta-learner on multiple tasks"""
-        try:
+        """Train the meta-learner on multiple tasks"""        try:
             self.logger.info(f"Starting meta-training on {len(tasks)} tasks")
             start_time = datetime.utcnow()
             
@@ -152,8 +142,7 @@ class MetaLearner:
             raise
     
     def _split_task_data(self, task: Task) -> Tuple[Dict[str, np.ndarray], Dict[str, np.ndarray]]:
-        """Split task data into support and query sets"""
-        X_train = task.data.get('X_train', np.array([]))
+        """Split task data into support and query sets"""        X_train = task.data.get('X_train', np.array([]))
         y_train = task.data.get('y_train', np.array([]))
         
         if len(X_train) < self.config.num_support_samples + self.config.num_query_samples:
@@ -179,8 +168,7 @@ class MetaLearner:
     
     def _inner_loop_adaptation(self, model: Dict[str, np.ndarray], 
                               support_data: Dict[str, np.ndarray]) -> Dict[str, np.ndarray]:
-        """Perform inner loop adaptation on support set"""
-        adapted_model = copy.deepcopy(model)
+        """Perform inner loop adaptation on support set"""        adapted_model = copy.deepcopy(model)
         
         for step in range(self.config.num_inner_steps):
             # Forward pass
@@ -199,8 +187,7 @@ class MetaLearner:
         return adapted_model
     
     def _forward_pass(self, model: Dict[str, np.ndarray], X: np.ndarray) -> np.ndarray:
-        """Forward pass through the model"""
-        if len(X) == 0:
+        """Forward pass through the model"""        if len(X) == 0:
             return np.array([])
         
         # Simple neural network forward pass
@@ -212,8 +199,7 @@ class MetaLearner:
     def _compute_gradients(self, model: Dict[str, np.ndarray], 
                           data: Dict[str, np.ndarray], 
                           predictions: np.ndarray) -> Dict[str, np.ndarray]:
-        """Compute gradients for model parameters"""
-        gradients = {}
+        """Compute gradients for model parameters"""        gradients = {}
         
         if len(predictions) == 0:
             # Return zero gradients if no data
@@ -239,8 +225,7 @@ class MetaLearner:
     
     def _compute_task_loss(self, model: Dict[str, np.ndarray], 
                           query_data: Dict[str, np.ndarray]) -> float:
-        """Compute loss on query set"""
-        if len(query_data['X']) == 0:
+        """Compute loss on query set"""        if len(query_data['X']) == 0:
             return 0.0
         
         predictions = self._forward_pass(model, query_data['X'])
@@ -249,33 +234,28 @@ class MetaLearner:
     
     def _compute_meta_gradients(self, model: Dict[str, np.ndarray],
                                query_data: Dict[str, np.ndarray]) -> Dict[str, np.ndarray]:
-        """Compute meta-gradients"""
-        predictions = self._forward_pass(model, query_data['X'])
+        """Compute meta-gradients"""        predictions = self._forward_pass(model, query_data['X'])
         return self._compute_gradients(model, query_data, predictions)
     
     def _initialize_gradients(self) -> Dict[str, np.ndarray]:
-        """Initialize gradients to zero"""
-        gradients = {}
+        """Initialize gradients to zero"""        gradients = {}
         for param_name in self.meta_model:
             gradients[param_name] = np.zeros_like(self.meta_model[param_name])
         return gradients
     
     def _accumulate_gradients(self, accumulated: Dict[str, np.ndarray],
                              new_gradients: Dict[str, np.ndarray]) -> Dict[str, np.ndarray]:
-        """Accumulate gradients across tasks"""
-        for param_name in accumulated:
+        """Accumulate gradients across tasks"""        for param_name in accumulated:
             accumulated[param_name] += new_gradients[param_name]
         return accumulated
     
     def _meta_update(self, gradients: Dict[str, np.ndarray], batch_size: int):
-        """Perform meta-parameter update"""
-        for param_name in self.meta_model:
+        """Perform meta-parameter update"""        for param_name in self.meta_model:
             avg_gradient = gradients[param_name] / batch_size
             self.meta_model[param_name] -= self.config.meta_lr * avg_gradient
     
     def _evaluate_task_performance(self, task: Task) -> Dict[str, float]:
-        """Evaluate performance on a single task"""
-        try:
+        """Evaluate performance on a single task"""        try:
             support_data, query_data = self._split_task_data(task)
             adapted_model = self._inner_loop_adaptation(
                 copy.deepcopy(self.meta_model), support_data
@@ -299,8 +279,7 @@ class MetaLearner:
             return {"accuracy": 0.0, "loss": float('inf')}
     
     def adapt_to_new_task(self, task: Task, num_adaptation_steps: Optional[int] = None) -> Dict[str, np.ndarray]:
-        """Adapt the meta-model to a new task"""
-        if num_adaptation_steps is None:
+        """Adapt the meta-model to a new task"""        if num_adaptation_steps is None:
             num_adaptation_steps = self.config.num_inner_steps
         
         support_data = {
@@ -315,8 +294,7 @@ class MetaLearner:
         return adapted_model
 
 class FewShotLearner:
-    """Specialized few-shot learning system"""
-    
+    """Specialized few-shot learning system"""    
     def __init__(self, algorithm: MetaLearningAlgorithm = MetaLearningAlgorithm.PROTOTYPICAL):
         self.algorithm = algorithm
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -326,8 +304,7 @@ class FewShotLearner:
     
     def train(self, support_set: Dict[str, List[np.ndarray]], 
              embedding_function: Optional[Callable] = None) -> Dict[str, Any]:
-        """Train few-shot learner on support set"""
-        try:
+        """Train few-shot learner on support set"""        try:
             self.logger.info(f"Training few-shot learner with {len(support_set)} classes")
             
             if embedding_function is None:
@@ -355,8 +332,7 @@ class FewShotLearner:
     
     def predict(self, query_samples: List[np.ndarray], 
                embedding_function: Optional[Callable] = None) -> List[str]:
-        """Predict classes for query samples"""
-        try:
+        """Predict classes for query samples"""        try:
             if not self.prototypes:
                 raise ValueError("Model not trained. Call train() first.")
             
@@ -388,15 +364,13 @@ class FewShotLearner:
             raise
     
     def _default_embedding_function(self, sample: np.ndarray) -> np.ndarray:
-        """Default embedding function (simple feature extraction)"""
-        # Simple embedding: flatten and normalize
+        """Default embedding function (simple feature extraction)"""        # Simple embedding: flatten and normalize
         flattened = sample.flatten()
         normalized = flattened / (np.linalg.norm(flattened) + 1e-8)
         return normalized
 
 class TransferLearner:
-    """Transfer learning system"""
-    
+    """Transfer learning system"""    
     def __init__(self, strategy: TransferStrategy = TransferStrategy.FINE_TUNING):
         self.strategy = strategy
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -407,8 +381,7 @@ class TransferLearner:
         self.logger.info("TransferLearner initialized successfully")
     
     def set_source_model(self, model: Any, feature_extractor: Optional[Callable] = None):
-        """Set the pre-trained source model"""
-        self.source_model = model
+        """Set the pre-trained source model"""        self.source_model = model
         if feature_extractor:
             self.feature_extractor = feature_extractor
         else:
@@ -418,8 +391,7 @@ class TransferLearner:
     
     def transfer(self, target_data: Dict[str, np.ndarray], 
                 target_labels: np.ndarray) -> Dict[str, Any]:
-        """Perform transfer learning to target domain"""
-        try:
+        """Perform transfer learning to target domain"""        try:
             if self.source_model is None:
                 raise ValueError("Source model not set. Call set_source_model() first.")
             
@@ -450,8 +422,7 @@ class TransferLearner:
     
     def _feature_extraction_transfer(self, target_data: Dict[str, np.ndarray],
                                    target_labels: np.ndarray) -> Dict[str, Any]:
-        """Transfer learning using feature extraction"""
-        # Extract features using source model
+        """Transfer learning using feature extraction"""        # Extract features using source model
         X_train = target_data.get('X_train', np.array([]))
         X_test = target_data.get('X_test', np.array([]))
         
@@ -474,8 +445,7 @@ class TransferLearner:
     
     def _fine_tuning_transfer(self, target_data: Dict[str, np.ndarray],
                              target_labels: np.ndarray) -> Dict[str, Any]:
-        """Transfer learning using fine-tuning"""
-        # Clone source model for fine-tuning
+        """Transfer learning using fine-tuning"""        # Clone source model for fine-tuning
         self.target_model = copy.deepcopy(self.source_model)
         
         # Fine-tune on target data (simplified)
@@ -504,13 +474,11 @@ class TransferLearner:
     
     def _domain_adaptation_transfer(self, target_data: Dict[str, np.ndarray],
                                   target_labels: np.ndarray) -> Dict[str, Any]:
-        """Transfer learning using domain adaptation"""
-        # Simplified domain adaptation
+        """Transfer learning using domain adaptation"""        # Simplified domain adaptation
         return self._fine_tuning_transfer(target_data, target_labels)
     
     def _default_feature_extractor(self, data: np.ndarray) -> np.ndarray:
-        """Default feature extraction function"""
-        if len(data) == 0:
+        """Default feature extraction function"""        if len(data) == 0:
             return np.array([]).reshape(0, 50)
         
         # Simple feature extraction: random projection
@@ -520,8 +488,7 @@ class TransferLearner:
         return features
     
     def _train_target_classifier(self, features: np.ndarray, labels: np.ndarray) -> Dict[str, np.ndarray]:
-        """Train simple classifier on extracted features"""
-        if len(features) == 0:
+        """Train simple classifier on extracted features"""        if len(features) == 0:
             return {"weights": np.array([]), "bias": np.array([])}
         
         # Simple linear classifier
@@ -532,16 +499,14 @@ class TransferLearner:
     
     def _predict_with_target_model(self, model: Dict[str, np.ndarray], 
                                   features: np.ndarray) -> np.ndarray:
-        """Make predictions with target model"""
-        if len(features) == 0:
+        """Make predictions with target model"""        if len(features) == 0:
             return np.array([])
         
         predictions = np.dot(features, model["weights"]) + model["bias"]
         return (predictions > 0).astype(int)
     
     def _predict_with_source_model(self, data: np.ndarray) -> np.ndarray:
-        """Make predictions with source model"""
-        if len(data) == 0:
+        """Make predictions with source model"""        if len(data) == 0:
             return np.array([])
         
         # Simulate source model prediction
@@ -549,8 +514,7 @@ class TransferLearner:
         return predictions
     
     def _compute_accuracy(self, predictions: np.ndarray, true_labels: np.ndarray) -> float:
-        """Compute classification accuracy"""
-        if len(predictions) == 0 or len(true_labels) == 0:
+        """Compute classification accuracy"""        if len(predictions) == 0 or len(true_labels) == 0:
             return 0.0
         
         if len(predictions) != len(true_labels):

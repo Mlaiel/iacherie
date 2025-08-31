@@ -1,13 +1,10 @@
-"""
-Application Configuration - IA Influencer Agent Platform
+"""Application Configuration - IA Influencer Agent Platform
 Core application settings and environment-specific configurations
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""
-
-import os
+"""import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 from datetime import timedelta
@@ -16,8 +13,7 @@ import secrets
 
 @dataclass
 class AppConfig:
-    """Base application configuration class"""
-    
+    """Base application configuration class"""    
     # Application Identity
     app_name: str = "IA Influencer Agent Platform"
     app_version: str = "2.0.0"
@@ -178,8 +174,7 @@ class AppConfig:
     payout_processing_time: int = field(default_factory=lambda: int(os.getenv("PAYOUT_PROCESSING_TIME", "48")))  # hours
     
     def __post_init__(self):
-        """Post-initialization validation and setup"""
-        # Ensure required directories exist
+        """Post-initialization validation and setup"""        # Ensure required directories exist
         os.makedirs(os.path.dirname(self.log_file_path), exist_ok=True)
         os.makedirs(self.local_storage_path, exist_ok=True)
         os.makedirs(self.vector_db_path, exist_ok=True)
@@ -188,8 +183,7 @@ class AppConfig:
         self._validate_config()
     
     def _validate_config(self):
-        """Validate configuration parameters"""
-        if self.creator_commission_rate + self.platform_commission_rate > 1.0:
+        """Validate configuration parameters"""        if self.creator_commission_rate + self.platform_commission_rate > 1.0:
             raise ValueError("Total commission rates cannot exceed 100%")
         
         if self.database_max_connections < self.database_pool_size:
@@ -200,34 +194,28 @@ class AppConfig:
     
     @property
     def is_production(self) -> bool:
-        """Check if running in production environment"""
-        return self.environment.lower() == "production"
+        """Check if running in production environment"""        return self.environment.lower() == "production"
     
     @property
     def is_development(self) -> bool:
-        """Check if running in development environment"""
-        return self.environment.lower() == "development"
+        """Check if running in development environment"""        return self.environment.lower() == "development"
     
     @property
     def is_testing(self) -> bool:
-        """Check if running in testing environment"""
-        return self.environment.lower() == "testing"
+        """Check if running in testing environment"""        return self.environment.lower() == "testing"
     
     @property
     def database_dsn(self) -> str:
-        """Get formatted database DSN"""
-        return (f"postgresql://{self.database_username}:{self.database_password}"
+        """Get formatted database DSN"""        return (f"postgresql://{self.database_username}:{self.database_password}"
                 f"@{self.database_host}:{self.database_port}/{self.database_name}")
     
     @property
     def redis_dsn(self) -> str:
-        """Get formatted Redis DSN"""
-        auth = f":{self.redis_password}@" if self.redis_password else ""
+        """Get formatted Redis DSN"""        auth = f":{self.redis_password}@" if self.redis_password else ""
         return f"redis://{auth}{self.redis_host}:{self.redis_port}/{self.redis_db}"
     
     def get_feature_config(self) -> Dict[str, bool]:
-        """Get all feature toggles as dictionary"""
-        return {
+        """Get all feature toggles as dictionary"""        return {
             'fingerprinting': self.enable_fingerprinting,
             'content_protection': self.enable_content_protection,
             'monetization': self.enable_monetization,
@@ -236,8 +224,7 @@ class AppConfig:
         }
     
     def get_database_config(self) -> Dict[str, Any]:
-        """Get database configuration as dictionary"""
-        return {
+        """Get database configuration as dictionary"""        return {
             'url': self.database_url,
             'host': self.database_host,
             'port': self.database_port,
@@ -251,8 +238,7 @@ class AppConfig:
         }
     
     def get_redis_config(self) -> Dict[str, Any]:
-        """Get Redis configuration as dictionary"""
-        return {
+        """Get Redis configuration as dictionary"""        return {
             'url': self.redis_url,
             'host': self.redis_host,
             'port': self.redis_port,
@@ -262,8 +248,7 @@ class AppConfig:
         }
     
     def get_security_config(self) -> Dict[str, Any]:
-        """Get security configuration as dictionary"""
-        return {
+        """Get security configuration as dictionary"""        return {
             'secret_key': self.secret_key,
             'jwt_secret': self.jwt_secret,
             'encryption_key': self.encryption_key,

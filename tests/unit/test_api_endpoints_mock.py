@@ -1,30 +1,24 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Mock-based Unit Tests for API Endpoints
+"""Mock-based Unit Tests for API Endpoints
 =======================================
 
 Mock-based tests for API endpoints that work without FastAPI dependencies.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Complete API test coverage without external dependencies
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -34,8 +28,7 @@ import json
 from datetime import datetime, timedelta
 
 class MockResponse:
-    """Mock HTTP response"""
-    
+    """Mock HTTP response"""    
     def __init__(self, status_code: int, json_data: Dict = None, text: str = ""):
         self.status_code = status_code
         self._json_data = json_data or {}
@@ -46,8 +39,7 @@ class MockResponse:
 
 
 class MockAPIClient:
-    """Mock API client for testing"""
-    
+    """Mock API client for testing"""    
     def __init__(self):
         self.base_url = "https://api.ainflue.test"
         self.auth_token = None
@@ -57,8 +49,7 @@ class MockAPIClient:
         }
     
     def authenticate(self, username: str, password: str) -> MockResponse:
-        """Mock authentication"""
-        if username == "test_user" and password == "test_pass":
+        """Mock authentication"""        if username == "test_user" and password == "test_pass":
             self.auth_token = "mock_jwt_token_12345"
             return MockResponse(200, {
                 "access_token": self.auth_token,
@@ -68,8 +59,7 @@ class MockAPIClient:
         return MockResponse(401, {"error": "Invalid credentials"})
     
     def get(self, endpoint: str, headers: Dict = None) -> MockResponse:
-        """Mock GET request"""
-        if not self.auth_token and endpoint != "/health":
+        """Mock GET request"""        if not self.auth_token and endpoint != "/health":
             return MockResponse(401, {"error": "Authentication required"})
         
         # Mock different endpoints
@@ -94,8 +84,7 @@ class MockAPIClient:
         return MockResponse(404, {"error": "Endpoint not found"})
     
     def post(self, endpoint: str, data: Dict, headers: Dict = None) -> MockResponse:
-        """Mock POST request"""
-        if not self.auth_token and endpoint not in ["/auth/login", "/auth/register"]:
+        """Mock POST request"""        if not self.auth_token and endpoint not in ["/auth/login", "/auth/register"]:
             return MockResponse(401, {"error": "Authentication required"})
         
         if endpoint == "/auth/register":
@@ -121,8 +110,7 @@ class MockAPIClient:
         return MockResponse(404, {"error": "Endpoint not found"})
     
     def put(self, endpoint: str, data: Dict, headers: Dict = None) -> MockResponse:
-        """Mock PUT request"""
-        if not self.auth_token:
+        """Mock PUT request"""        if not self.auth_token:
             return MockResponse(401, {"error": "Authentication required"})
         
         if endpoint.startswith("/content/") and endpoint.endswith("/update"):
@@ -136,8 +124,7 @@ class MockAPIClient:
         return MockResponse(404, {"error": "Endpoint not found"})
     
     def delete(self, endpoint: str, headers: Dict = None) -> MockResponse:
-        """Mock DELETE request"""
-        if not self.auth_token:
+        """Mock DELETE request"""        if not self.auth_token:
             return MockResponse(401, {"error": "Authentication required"})
         
         if endpoint.startswith("/content/"):
@@ -152,15 +139,13 @@ class MockAPIClient:
 
 
 class TestAPIAuthentication:
-    """Test API authentication endpoints"""
-    
+    """Test API authentication endpoints"""    
     @pytest.fixture
     def api_client(self):
         return MockAPIClient()
     
     def test_successful_authentication(self, api_client):
-        """Test successful user authentication"""
-        response = api_client.authenticate("test_user", "test_pass")
+        """Test successful user authentication"""        response = api_client.authenticate("test_user", "test_pass")
         
         assert response.status_code == 200
         data = response.json()
@@ -169,8 +154,7 @@ class TestAPIAuthentication:
         assert api_client.auth_token is not None
     
     def test_failed_authentication(self, api_client):
-        """Test failed authentication with wrong credentials"""
-        response = api_client.authenticate("wrong_user", "wrong_pass")
+        """Test failed authentication with wrong credentials"""        response = api_client.authenticate("wrong_user", "wrong_pass")
         
         assert response.status_code == 401
         data = response.json()
@@ -178,8 +162,7 @@ class TestAPIAuthentication:
         assert api_client.auth_token is None
     
     def test_registration_endpoint(self, api_client):
-        """Test user registration"""
-        user_data = {
+        """Test user registration"""        user_data = {
             "username": "new_user",
             "email": "new@example.com",
             "password": "secure_password"
@@ -194,8 +177,7 @@ class TestAPIAuthentication:
 
 
 class TestAPIEndpoints:
-    """Test main API endpoints"""
-    
+    """Test main API endpoints"""    
     @pytest.fixture
     def authenticated_client(self):
         client = MockAPIClient()
@@ -203,8 +185,7 @@ class TestAPIEndpoints:
         return client
     
     def test_health_endpoint(self):
-        """Test health check endpoint (no auth required)"""
-        client = MockAPIClient()
+        """Test health check endpoint (no auth required)"""        client = MockAPIClient()
         response = client.get("/health")
         
         assert response.status_code == 200
@@ -213,8 +194,7 @@ class TestAPIEndpoints:
         assert "timestamp" in data
     
     def test_user_profile_endpoint(self, authenticated_client):
-        """Test user profile retrieval"""
-        response = authenticated_client.get("/user/profile")
+        """Test user profile retrieval"""        response = authenticated_client.get("/user/profile")
         
         assert response.status_code == 200
         data = response.json()
@@ -223,8 +203,7 @@ class TestAPIEndpoints:
         assert "email" in data
     
     def test_unauthorized_access(self):
-        """Test unauthorized access to protected endpoints"""
-        client = MockAPIClient()
+        """Test unauthorized access to protected endpoints"""        client = MockAPIClient()
         response = client.get("/user/profile")
         
         assert response.status_code == 401
@@ -233,8 +212,7 @@ class TestAPIEndpoints:
 
 
 class TestContentAPI:
-    """Test content management API endpoints"""
-    
+    """Test content management API endpoints"""    
     @pytest.fixture
     def authenticated_client(self):
         client = MockAPIClient()
@@ -242,8 +220,7 @@ class TestContentAPI:
         return client
     
     def test_content_upload(self, authenticated_client):
-        """Test content upload endpoint"""
-        upload_data = {
+        """Test content upload endpoint"""        upload_data = {
             "filename": "test_audio.mp3",
             "size": 1024000,
             "content_type": "audio/mpeg"
@@ -258,8 +235,7 @@ class TestContentAPI:
         assert data["upload_status"] == "completed"
     
     def test_content_retrieval(self, authenticated_client):
-        """Test content retrieval by ID"""
-        content_id = "test_content_123"
+        """Test content retrieval by ID"""        content_id = "test_content_123"
         response = authenticated_client.get(f"/content/{content_id}")
         
         assert response.status_code == 200
@@ -270,8 +246,7 @@ class TestContentAPI:
         assert "status" in data
     
     def test_content_update(self, authenticated_client):
-        """Test content update"""
-        content_id = "test_content_123"
+        """Test content update"""        content_id = "test_content_123"
         update_data = {
             "title": "Updated Title",
             "description": "Updated description"
@@ -286,8 +261,7 @@ class TestContentAPI:
         assert "updated_at" in data
     
     def test_content_deletion(self, authenticated_client):
-        """Test content deletion"""
-        content_id = "test_content_123"
+        """Test content deletion"""        content_id = "test_content_123"
         response = authenticated_client.delete(f"/content/{content_id}")
         
         assert response.status_code == 200
@@ -298,8 +272,7 @@ class TestContentAPI:
 
 
 class TestProtectionAPI:
-    """Test content protection API endpoints"""
-    
+    """Test content protection API endpoints"""    
     @pytest.fixture
     def authenticated_client(self):
         client = MockAPIClient()
@@ -307,8 +280,7 @@ class TestProtectionAPI:
         return client
     
     def test_protection_scan_initiation(self, authenticated_client):
-        """Test initiating a protection scan"""
-        scan_data = {
+        """Test initiating a protection scan"""        scan_data = {
             "content_id": "content_123",
             "scan_type": "comprehensive",
             "platforms": ["youtube", "spotify", "tiktok"]
@@ -324,8 +296,7 @@ class TestProtectionAPI:
 
 
 class TestAPIErrorHandling:
-    """Test API error handling and edge cases"""
-    
+    """Test API error handling and edge cases"""    
     @pytest.fixture
     def authenticated_client(self):
         client = MockAPIClient()
@@ -333,16 +304,14 @@ class TestAPIErrorHandling:
         return client
     
     def test_nonexistent_endpoint(self, authenticated_client):
-        """Test accessing non-existent endpoint"""
-        response = authenticated_client.get("/nonexistent/endpoint")
+        """Test accessing non-existent endpoint"""        response = authenticated_client.get("/nonexistent/endpoint")
         
         assert response.status_code == 404
         data = response.json()
         assert "error" in data
     
     def test_malformed_request_data(self, authenticated_client):
-        """Test handling of malformed request data"""
-        # This would typically test with invalid JSON, 
+        """Test handling of malformed request data"""        # This would typically test with invalid JSON, 
         # but our mock handles Dict data
         invalid_data = {}  # Empty data
         response = authenticated_client.post("/content/upload", invalid_data)
@@ -351,8 +320,7 @@ class TestAPIErrorHandling:
         assert response.status_code == 201
     
     def test_authentication_token_validation(self):
-        """Test API behavior with invalid/expired tokens"""
-        client = MockAPIClient()
+        """Test API behavior with invalid/expired tokens"""        client = MockAPIClient()
         client.auth_token = "invalid_token"
         
         # In a real implementation, this would validate the token
@@ -362,11 +330,9 @@ class TestAPIErrorHandling:
 
 
 class TestAPIRateLimiting:
-    """Test API rate limiting (mock implementation)"""
-    
+    """Test API rate limiting (mock implementation)"""    
     def test_rate_limit_simulation(self):
-        """Test rate limiting behavior"""
-        client = MockAPIClient()
+        """Test rate limiting behavior"""        client = MockAPIClient()
         client.authenticate("test_user", "test_pass")
         
         # Simulate multiple rapid requests
@@ -380,8 +346,7 @@ class TestAPIRateLimiting:
 
 
 class TestAPIIntegration:
-    """Test API integration scenarios"""
-    
+    """Test API integration scenarios"""    
     @pytest.fixture
     def authenticated_client(self):
         client = MockAPIClient()
@@ -389,8 +354,7 @@ class TestAPIIntegration:
         return client
     
     def test_complete_content_workflow(self, authenticated_client):
-        """Test complete content management workflow"""
-        
+        """Test complete content management workflow"""        
         # 1. Upload content
         upload_data = {
             "filename": "workflow_test.mp3",
@@ -424,8 +388,7 @@ class TestAPIIntegration:
 
 
 def test_api_coverage():
-    """Test that all essential API functionality is covered"""
-    
+    """Test that all essential API functionality is covered"""    
     client = MockAPIClient()
     
     # Verify essential methods exist

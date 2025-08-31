@@ -1,5 +1,4 @@
-"""
-Communication Analytics Database
+"""Communication Analytics Database
 
 Enterprise communication analytics system for tracking collaboration effectiveness,
 message delivery performance, engagement metrics, and cross-platform communication insights.
@@ -23,9 +22,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-
-import uuid
+"""import uuid
 import json
 import asyncio
 from datetime import datetime, timezone, timedelta
@@ -47,8 +44,7 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsType(Enum):
-    """Communication analytics types"""
-    MESSAGE_DELIVERY = "message_delivery"
+    """Communication analytics types"""    MESSAGE_DELIVERY = "message_delivery"
     COLLABORATION_ENGAGEMENT = "collaboration_engagement"
     PLATFORM_PERFORMANCE = "platform_performance"
     USER_ACTIVITY = "user_activity"
@@ -59,8 +55,7 @@ class AnalyticsType(Enum):
 
 
 class MetricType(Enum):
-    """Metric types for analytics"""
-    COUNTER = "counter"
+    """Metric types for analytics"""    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     RATE = "rate"
@@ -70,8 +65,7 @@ class MetricType(Enum):
 
 
 class AggregationPeriod(Enum):
-    """Data aggregation periods"""
-    MINUTE = "minute"
+    """Data aggregation periods"""    MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -82,8 +76,7 @@ class AggregationPeriod(Enum):
 
 @dataclass
 class AnalyticsMetric:
-    """Communication analytics metric"""
-    metric_id: str
+    """Communication analytics metric"""    metric_id: str
     metric_name: str
     metric_type: MetricType
     value: Union[int, float, str]
@@ -98,8 +91,7 @@ class AnalyticsMetric:
 
 @dataclass
 class EngagementAnalysis:
-    """Collaboration engagement analysis"""
-    collaboration_id: str
+    """Collaboration engagement analysis"""    collaboration_id: str
     total_participants: int
     active_participants: int
     message_count: int
@@ -113,8 +105,7 @@ class EngagementAnalysis:
 
 
 class CommunicationMetrics(Base):
-    """Database model for communication metrics"""
-    __tablename__ = "communication_metrics"
+    """Database model for communication metrics"""    __tablename__ = "communication_metrics"
     __table_args__ = (
         Index('idx_metrics_user_id', 'user_id'),
         Index('idx_metrics_timestamp', 'timestamp'),
@@ -140,8 +131,7 @@ class CommunicationMetrics(Base):
 
 
 class EngagementAnalytics(Base):
-    """Database model for engagement analytics"""
-    __tablename__ = "engagement_analytics"
+    """Database model for engagement analytics"""    __tablename__ = "engagement_analytics"
     __table_args__ = (
         Index('idx_engagement_collaboration_id', 'collaboration_id'),
         Index('idx_engagement_date', 'analysis_date'),
@@ -167,8 +157,7 @@ class EngagementAnalytics(Base):
 
 
 class PlatformPerformanceMetrics(Base):
-    """Database model for platform performance metrics"""
-    __tablename__ = "platform_performance_metrics"
+    """Database model for platform performance metrics"""    __tablename__ = "platform_performance_metrics"
     __table_args__ = (
         Index('idx_platform_perf_platform', 'platform'),
         Index('idx_platform_perf_date', 'measurement_date'),
@@ -193,11 +182,9 @@ class PlatformPerformanceMetrics(Base):
 
 
 class CommunicationAnalyticsEngine:
-    """
-    Enterprise communication analytics engine for comprehensive analysis
+    """    Enterprise communication analytics engine for comprehensive analysis
     of collaboration effectiveness and platform performance metrics.
-    """
-    
+    """    
     def __init__(self, db_session: Session, redis_client: redis.Redis):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -207,8 +194,7 @@ class CommunicationAnalyticsEngine:
         self.alert_thresholds = {}
         
     async def initialize_analytics_engine(self) -> bool:
-        """Initialize communication analytics engine"""
-        try:
+        """Initialize communication analytics engine"""        try:
             # Setup metric processors
             await self._setup_metric_processors()
             
@@ -236,8 +222,7 @@ class CommunicationAnalyticsEngine:
         metric: AnalyticsMetric,
         analytics_type: AnalyticsType
     ) -> bool:
-        """Record communication metric"""
-        try:
+        """Record communication metric"""        try:
             # Store metric in database
             metric_record = CommunicationMetrics(
                 metric_id=metric.metric_id,
@@ -274,8 +259,7 @@ class CommunicationAnalyticsEngine:
         collaboration_id: str,
         analysis_period: timedelta = timedelta(hours=24)
     ) -> EngagementAnalysis:
-        """Analyze collaboration engagement metrics"""
-        try:
+        """Analyze collaboration engagement metrics"""        try:
             end_time = datetime.utcnow()
             start_time = end_time - analysis_period
             
@@ -323,8 +307,7 @@ class CommunicationAnalyticsEngine:
         user_id: Optional[str] = None,
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """Generate platform performance report"""
-        try:
+        """Generate platform performance report"""        try:
             if not date_range:
                 end_date = datetime.utcnow()
                 start_date = end_date - timedelta(days=7)
@@ -382,8 +365,7 @@ class CommunicationAnalyticsEngine:
         insight_type: str = "general",
         period: AggregationPeriod = AggregationPeriod.WEEK
     ) -> Dict[str, Any]:
-        """Get AI-powered communication insights"""
-        try:
+        """Get AI-powered communication insights"""        try:
             # Determine analysis period
             analysis_period = await self._get_analysis_period(period)
             
@@ -424,8 +406,7 @@ class CommunicationAnalyticsEngine:
         session_id: str,
         metric_types: List[AnalyticsType]
     ) -> AsyncGenerator[Dict[str, Any], None]:
-        """Stream real-time communication metrics"""
-        try:
+        """Stream real-time communication metrics"""        try:
             # Setup real-time metric tracking
             tracking_channels = await self._setup_real_time_tracking(session_id, metric_types)
             
@@ -460,8 +441,7 @@ class CommunicationAnalyticsEngine:
             yield {'error': str(e)}
     
     async def _calculate_engagement_scores(self, metrics: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate collaboration engagement scores using advanced algorithms"""
-        try:
+        """Calculate collaboration engagement scores using advanced algorithms"""        try:
             # Base engagement metrics
             total_participants = metrics.get('total_participants', 0)
             active_participants = metrics.get('active_participants', 0)
@@ -506,8 +486,7 @@ class CommunicationAnalyticsEngine:
             return {}
     
     async def _generate_engagement_insights(self, engagement_data: Dict[str, Any]) -> List[str]:
-        """Generate AI-powered engagement insights"""
-        try:
+        """Generate AI-powered engagement insights"""        try:
             insights = []
             
             # Participation analysis
@@ -549,8 +528,7 @@ class CommunicationAnalyticsEngine:
         user_id: str,
         dashboard_type: str = "overview"
     ) -> Dict[str, Any]:
-        """Generate data for analytics dashboard"""
-        try:
+        """Generate data for analytics dashboard"""        try:
             dashboard_data = {
                 'user_id': user_id,
                 'dashboard_type': dashboard_type,
@@ -586,8 +564,7 @@ class CommunicationAnalyticsEngine:
         format_type: str = "json",
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """Export comprehensive analytics report"""
-        try:
+        """Export comprehensive analytics report"""        try:
             if not date_range:
                 end_date = datetime.utcnow()
                 start_date = end_date - timedelta(days=30)
@@ -628,7 +605,6 @@ async def get_communication_analytics_engine(
     db_session: Session,
     redis_client: redis.Redis
 ) -> CommunicationAnalyticsEngine:
-    """Get configured communication analytics engine instance"""
-    engine = CommunicationAnalyticsEngine(db_session, redis_client)
+    """Get configured communication analytics engine instance"""    engine = CommunicationAnalyticsEngine(db_session, redis_client)
     await engine.initialize_analytics_engine()
     return engine

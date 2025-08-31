@@ -1,5 +1,4 @@
-"""
-Payment Gateway Adapters - Enterprise Financial Processing
+"""Payment Gateway Adapters - Enterprise Financial Processing
 
 This module provides comprehensive adapters for major payment gateways and
 financial services including Stripe, PayPal, Wise, and bank transfer systems.
@@ -19,9 +18,7 @@ Supported Gateways:
 - Cryptocurrency: Bitcoin, Ethereum, Stablecoins
 - Apple Pay: In-app payments, Subscriptions
 - Google Pay: Payment processing, Subscriptions
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -41,8 +38,7 @@ from .base_adapter import (
 logger = logging.getLogger(__name__)
 
 class PaymentGateway(Enum):
-    """Supported payment gateways."""
-    STRIPE = "stripe"
+    """Supported payment gateways."""    STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
     BANK_TRANSFER = "bank_transfer"
@@ -54,8 +50,7 @@ class PaymentGateway(Enum):
     KLARNA = "klarna"
 
 class PaymentMethod(Enum):
-    """Payment method types."""
-    CREDIT_CARD = "credit_card"
+    """Payment method types."""    CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     BANK_ACCOUNT = "bank_account"
     DIGITAL_WALLET = "digital_wallet"
@@ -66,8 +61,7 @@ class PaymentMethod(Enum):
     CASH = "cash"
 
 class TransactionType(Enum):
-    """Transaction types."""
-    PAYMENT = "payment"
+    """Transaction types."""    PAYMENT = "payment"
     REFUND = "refund"
     PAYOUT = "payout"
     SUBSCRIPTION = "subscription"
@@ -78,8 +72,7 @@ class TransactionType(Enum):
     DISPUTE = "dispute"
 
 class TransactionStatus(Enum):
-    """Transaction status types."""
-    PENDING = "pending"
+    """Transaction status types."""    PENDING = "pending"
     COMPLETED = "completed"
     FAILED = "failed"
     CANCELLED = "cancelled"
@@ -91,8 +84,7 @@ class TransactionStatus(Enum):
 
 @dataclass
 class PaymentTransaction:
-    """Payment transaction data structure."""
-    transaction_id: str
+    """Payment transaction data structure."""    transaction_id: str
     amount: Decimal
     currency: str
     transaction_type: TransactionType
@@ -108,8 +100,7 @@ class PaymentTransaction:
 
 @dataclass
 class RevenueAnalytics:
-    """Revenue analytics and financial metrics."""
-    total_revenue: Decimal = Decimal('0.00')
+    """Revenue analytics and financial metrics."""    total_revenue: Decimal = Decimal('0.00')
     net_revenue: Decimal = Decimal('0.00')
     total_fees: Decimal = Decimal('0.00')
     transaction_count: int = 0
@@ -124,8 +115,7 @@ class RevenueAnalytics:
     platform_specific_metrics: Dict[str, Any] = field(default_factory=dict)
 
 class StripeAdapter(BasePlatformAdapter):
-    """
-    Enterprise Stripe payment gateway adapter.
+    """    Enterprise Stripe payment gateway adapter.
     
     Supports:
     - Payment processing and subscriptions
@@ -134,8 +124,7 @@ class StripeAdapter(BasePlatformAdapter):
     - Automated payouts and transfers
     - Tax calculation and compliance
     - Fraud prevention and security
-    """
-    
+    """    
     def __init__(self, credentials: AdapterCredentials, redis_client=None):
         rate_config = RateLimitConfig(
             requests_per_second=25.0,
@@ -156,8 +145,7 @@ class StripeAdapter(BasePlatformAdapter):
         )
     
     async def authenticate(self) -> bool:
-        """Authenticate with Stripe API."""
-        try:
+        """Authenticate with Stripe API."""        try:
             response = await self.make_request(
                 method="GET",
                 endpoint="account",
@@ -177,8 +165,7 @@ class StripeAdapter(BasePlatformAdapter):
     async def create_payment_intent(self, amount: int, currency: str = "usd", 
                                    customer_id: Optional[str] = None,
                                    metadata: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Create a Stripe payment intent."""
-        try:
+        """Create a Stripe payment intent."""        try:
             payment_data = {
                 "amount": amount,  # Amount in cents
                 "currency": currency.lower(),
@@ -212,8 +199,7 @@ class StripeAdapter(BasePlatformAdapter):
     
     async def create_subscription(self, customer_id: str, price_id: str,
                                  metadata: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Create a Stripe subscription."""
-        try:
+        """Create a Stripe subscription."""        try:
             subscription_data = {
                 "customer": customer_id,
                 "items": [{"price": price_id}],
@@ -244,8 +230,7 @@ class StripeAdapter(BasePlatformAdapter):
     
     async def create_transfer(self, amount: int, destination: str, currency: str = "usd",
                              metadata: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Create a transfer to a connected account."""
-        try:
+        """Create a transfer to a connected account."""        try:
             transfer_data = {
                 "amount": amount,
                 "currency": currency.lower(),
@@ -275,8 +260,7 @@ class StripeAdapter(BasePlatformAdapter):
     
     async def get_revenue_analytics(self, start_date: Optional[datetime] = None,
                                    end_date: Optional[datetime] = None) -> RevenueAnalytics:
-        """Get Stripe revenue analytics."""
-        try:
+        """Get Stripe revenue analytics."""        try:
             # Calculate date range
             if not start_date:
                 start_date = datetime.now() - timedelta(days=30)
@@ -339,8 +323,7 @@ class StripeAdapter(BasePlatformAdapter):
             return RevenueAnalytics()
     
     async def webhook_verify(self, payload: str, signature: str, webhook_secret: str) -> bool:
-        """Verify Stripe webhook signature."""
-        try:
+        """Verify Stripe webhook signature."""        try:
             expected_signature = hmac.new(
                 webhook_secret.encode('utf-8'),
                 payload.encode('utf-8'),
@@ -353,8 +336,7 @@ class StripeAdapter(BasePlatformAdapter):
             return False
     
     async def health_check(self) -> bool:
-        """Perform Stripe API health check."""
-        try:
+        """Perform Stripe API health check."""        try:
             response = await self.make_request(
                 method="GET",
                 endpoint="account",
@@ -365,8 +347,7 @@ class StripeAdapter(BasePlatformAdapter):
             return False
 
 class PayPalAdapter(BasePlatformAdapter):
-    """
-    Enterprise PayPal payment gateway adapter.
+    """    Enterprise PayPal payment gateway adapter.
     
     Supports:
     - PayPal Express Checkout
@@ -375,8 +356,7 @@ class PayPalAdapter(BasePlatformAdapter):
     - Dispute management
     - Multi-currency processing
     - PayPal for Developers API
-    """
-    
+    """    
     def __init__(self, credentials: AdapterCredentials, redis_client=None):
         rate_config = RateLimitConfig(
             requests_per_second=10.0,
@@ -398,8 +378,7 @@ class PayPalAdapter(BasePlatformAdapter):
         )
     
     async def authenticate(self) -> bool:
-        """Authenticate with PayPal API using OAuth2."""
-        try:
+        """Authenticate with PayPal API using OAuth2."""        try:
             # Get access token
             auth_string = base64.b64encode(
                 f"{self.credentials.client_id}:{self.credentials.client_secret}".encode()
@@ -432,8 +411,7 @@ class PayPalAdapter(BasePlatformAdapter):
     async def create_payment(self, amount: str, currency: str = "USD",
                             return_url: str = "", cancel_url: str = "",
                             description: str = "") -> Dict[str, Any]:
-        """Create a PayPal payment."""
-        try:
+        """Create a PayPal payment."""        try:
             payment_data = {
                 "intent": "sale",
                 "payer": {"payment_method": "paypal"},
@@ -476,8 +454,7 @@ class PayPalAdapter(BasePlatformAdapter):
             raise AdapterError(f"Failed to create PayPal payment: {e}")
     
     async def execute_payment(self, payment_id: str, payer_id: str) -> Dict[str, Any]:
-        """Execute an approved PayPal payment."""
-        try:
+        """Execute an approved PayPal payment."""        try:
             execution_data = {"payer_id": payer_id}
             
             response = await self.make_request(
@@ -501,8 +478,7 @@ class PayPalAdapter(BasePlatformAdapter):
     
     async def create_payout(self, recipient_email: str, amount: str, 
                            currency: str = "USD", note: str = "") -> Dict[str, Any]:
-        """Create a PayPal payout."""
-        try:
+        """Create a PayPal payout."""        try:
             payout_data = {
                 "sender_batch_header": {
                     "sender_batch_id": f"batch_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
@@ -540,8 +516,7 @@ class PayPalAdapter(BasePlatformAdapter):
             raise AdapterError(f"Failed to create PayPal payout: {e}")
     
     async def health_check(self) -> bool:
-        """Perform PayPal API health check."""
-        try:
+        """Perform PayPal API health check."""        try:
             # Test with a simple API call
             response = await self.make_request(
                 method="GET",
@@ -553,8 +528,7 @@ class PayPalAdapter(BasePlatformAdapter):
             return False
 
 class WiseAdapter(BasePlatformAdapter):
-    """
-    Enterprise Wise (formerly TransferWise) adapter for international transfers.
+    """    Enterprise Wise (formerly TransferWise) adapter for international transfers.
     
     Supports:
     - International money transfers
@@ -562,8 +536,7 @@ class WiseAdapter(BasePlatformAdapter):
     - Real-time exchange rates
     - Compliance and verification
     - Business account management
-    """
-    
+    """    
     def __init__(self, credentials: AdapterCredentials, redis_client=None):
         rate_config = RateLimitConfig(
             requests_per_second=10.0,
@@ -584,8 +557,7 @@ class WiseAdapter(BasePlatformAdapter):
         )
     
     async def authenticate(self) -> bool:
-        """Authenticate with Wise API."""
-        try:
+        """Authenticate with Wise API."""        try:
             response = await self.make_request(
                 method="GET",
                 endpoint="v1/profiles",
@@ -604,8 +576,7 @@ class WiseAdapter(BasePlatformAdapter):
     
     async def get_exchange_rate(self, source_currency: str, target_currency: str, 
                                amount: Optional[float] = None) -> Dict[str, Any]:
-        """Get real-time exchange rate from Wise."""
-        try:
+        """Get real-time exchange rate from Wise."""        try:
             params = {
                 "source": source_currency.upper(),
                 "target": target_currency.upper()
@@ -634,8 +605,7 @@ class WiseAdapter(BasePlatformAdapter):
             raise AdapterError(f"Failed to get Wise exchange rate: {e}")
     
     async def health_check(self) -> bool:
-        """Perform Wise API health check."""
-        try:
+        """Perform Wise API health check."""        try:
             response = await self.make_request(
                 method="GET",
                 endpoint="v1/profiles",
@@ -646,8 +616,7 @@ class WiseAdapter(BasePlatformAdapter):
             return False
 
 class PaymentAdapterFactory:
-    """Factory for creating payment gateway adapters."""
-    
+    """Factory for creating payment gateway adapters."""    
     _adapters = {
         PaymentGateway.STRIPE: StripeAdapter,
         PaymentGateway.PAYPAL: PayPalAdapter,
@@ -657,8 +626,7 @@ class PaymentAdapterFactory:
     
     @classmethod
     def create_adapter(cls, gateway: PaymentGateway, credentials: AdapterCredentials, redis_client=None) -> BasePlatformAdapter:
-        """Create adapter for specified payment gateway."""
-        if gateway not in cls._adapters:
+        """Create adapter for specified payment gateway."""        if gateway not in cls._adapters:
             raise AdapterError(f"Unsupported payment gateway: {gateway}")
         
         adapter_class = cls._adapters[gateway]
@@ -666,8 +634,7 @@ class PaymentAdapterFactory:
     
     @classmethod
     def get_supported_gateways(cls) -> List[PaymentGateway]:
-        """Get list of supported payment gateways."""
-        return list(cls._adapters.keys())
+        """Get list of supported payment gateways."""        return list(cls._adapters.keys())
 
 # Export all classes
 __all__ = [

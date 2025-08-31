@@ -1,5 +1,4 @@
-"""
-Platform Integration Configuration for IA-Influencer Agent Platform
+"""Platform Integration Configuration for IA-Influencer Agent Platform
 ==================================================================
 
 Professional platform API integration configurations for multi-platform
@@ -15,9 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-from dataclasses import dataclass, field
+"""from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union
 from enum import Enum
 import asyncio
@@ -28,8 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Platform categories for integration"""
-    MUSIC = "music"
+    """Platform categories for integration"""    MUSIC = "music"
     VIDEO = "video"
     SOCIAL = "social"
     STREAMING = "streaming"
@@ -38,8 +34,7 @@ class PlatformType(Enum):
 
 
 class APIAuthType(Enum):
-    """API authentication methods"""
-    OAUTH2 = "oauth2"
+    """API authentication methods"""    OAUTH2 = "oauth2"
     API_KEY = "api_key"
     JWT = "jwt"
     CLIENT_CREDENTIALS = "client_credentials"
@@ -48,8 +43,7 @@ class APIAuthType(Enum):
 
 @dataclass
 class PlatformAPIConfig:
-    """Platform API configuration"""
-    
+    """Platform API configuration"""    
     platform_name: str
     platform_type: PlatformType
     
@@ -316,8 +310,7 @@ DAILYMOTION_CONFIG = PlatformAPIConfig(
 
 @dataclass
 class PlatformIntegrationConfig:
-    """Platform integration service configuration"""
-    
+    """Platform integration service configuration"""    
     # Service identification
     service_name: str = "platform-integration"
     service_version: str = "2.0.0"
@@ -373,17 +366,14 @@ class PlatformIntegrationConfig:
 
 
 class PlatformIntegrationOrchestrator:
-    """Platform integration orchestrator"""
-    
+    """Platform integration orchestrator"""    
     def __init__(self, config: PlatformIntegrationConfig = None):
-        """Initialize orchestrator"""
-        self.config = config or PlatformIntegrationConfig()
+        """Initialize orchestrator"""        self.config = config or PlatformIntegrationConfig()
         self.platform_clients = {}
         self.logger = logging.getLogger(__name__)
     
     async def initialize_platforms(self) -> Dict[str, bool]:
-        """Initialize all platform integrations"""
-        results = {}
+        """Initialize all platform integrations"""        results = {}
         
         for platform_name, platform_config in self.config.platforms.items():
             try:
@@ -397,8 +387,7 @@ class PlatformIntegrationOrchestrator:
         return results
     
     async def _initialize_platform(self, platform_name: str, config: PlatformAPIConfig) -> bool:
-        """Initialize individual platform integration"""
-        try:
+        """Initialize individual platform integration"""        try:
             # Validate configuration
             if not config.base_url:
                 raise ValueError(f"Missing base URL for {platform_name}")
@@ -428,8 +417,7 @@ class PlatformIntegrationOrchestrator:
             return False
     
     def get_platform_capabilities(self, platform_name: str) -> Dict[str, Any]:
-        """Get platform capabilities and features"""
-        if platform_name not in self.config.platforms:
+        """Get platform capabilities and features"""        if platform_name not in self.config.platforms:
             return {}
         
         config = self.config.platforms[platform_name]
@@ -456,15 +444,13 @@ class PlatformIntegrationOrchestrator:
         }
     
     def get_platforms_by_type(self, platform_type: PlatformType) -> List[str]:
-        """Get platforms filtered by type"""
-        return [
+        """Get platforms filtered by type"""        return [
             name for name, config in self.config.platforms.items()
             if config.platform_type == platform_type
         ]
     
     async def get_integration_health(self) -> Dict[str, Any]:
-        """Get platform integration health status"""
-        health_status = {
+        """Get platform integration health status"""        health_status = {
             "overall_status": "healthy",
             "platforms": {},
             "metrics": {
@@ -496,8 +482,7 @@ class PlatformIntegrationOrchestrator:
         return health_status
     
     def get_configuration_summary(self) -> Dict[str, Any]:
-        """Get configuration summary"""
-        return {
+        """Get configuration summary"""        return {
             "service_info": {
                 "name": self.config.service_name,
                 "version": self.config.service_version,
@@ -527,28 +512,23 @@ platform_integration_orchestrator = PlatformIntegrationOrchestrator()
 
 # Convenience functions
 async def initialize_platform_integrations() -> Dict[str, bool]:
-    """Initialize all platform integrations"""
-    return await platform_integration_orchestrator.initialize_platforms()
+    """Initialize all platform integrations"""    return await platform_integration_orchestrator.initialize_platforms()
 
 
 async def get_platform_integration_health() -> Dict[str, Any]:
-    """Get platform integration health"""
-    return await platform_integration_orchestrator.get_integration_health()
+    """Get platform integration health"""    return await platform_integration_orchestrator.get_integration_health()
 
 
 def get_platform_integration_summary() -> Dict[str, Any]:
-    """Get platform integration configuration summary"""
-    return platform_integration_orchestrator.get_configuration_summary()
+    """Get platform integration configuration summary"""    return platform_integration_orchestrator.get_configuration_summary()
 
 
 def get_platform_capabilities(platform_name: str) -> Dict[str, Any]:
-    """Get capabilities for specific platform"""
-    return platform_integration_orchestrator.get_platform_capabilities(platform_name)
+    """Get capabilities for specific platform"""    return platform_integration_orchestrator.get_platform_capabilities(platform_name)
 
 
 def get_platforms_by_type(platform_type: PlatformType) -> List[str]:
-    """Get platforms by type"""
-    return platform_integration_orchestrator.get_platforms_by_type(platform_type)
+    """Get platforms by type"""    return platform_integration_orchestrator.get_platforms_by_type(platform_type)
 
 
 # Export main configuration instance

@@ -1,12 +1,9 @@
-"""
-Pinterest Platform Adapter for IA Influencer Agent Distribution System.
+"""Pinterest Platform Adapter for IA Influencer Agent Distribution System.
 Handles visual content distribution, board management, and e-commerce integration.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
@@ -25,18 +22,15 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class PinterestCredentials:
-    """Pinterest API credentials configuration."""
-    client_id: str
+    """Pinterest API credentials configuration."""    client_id: str
     client_secret: str
     access_token: str
     refresh_token: Optional[str] = None
 
 class PinterestAdapter(BasePlatformAdapter):
-    """
-    Advanced Pinterest platform adapter for visual content distribution.
+    """    Advanced Pinterest platform adapter for visual content distribution.
     Supports pins, boards, shopping features, and analytics.
-    """
-    
+    """    
     PLATFORM_NAME = "pinterest"
     API_VERSION = "v5"
     BASE_URL = f"https://api.pinterest.com/{API_VERSION}"
@@ -59,8 +53,7 @@ class PinterestAdapter(BasePlatformAdapter):
         self._verify_credentials()
     
     def _verify_credentials(self):
-        """Verify Pinterest API credentials."""
-        try:
+        """Verify Pinterest API credentials."""        try:
             # Test API connection
             response = self.session.get(f"{self.BASE_URL}/user_account")
             
@@ -75,8 +68,7 @@ class PinterestAdapter(BasePlatformAdapter):
             raise AuthenticationError(f"Pinterest authentication failed: {e}")
     
     async def authenticate_user(self, user_id: str) -> Dict[str, Any]:
-        """Generate Pinterest OAuth URL for user authentication."""
-        try:
+        """Generate Pinterest OAuth URL for user authentication."""        try:
             auth_params = {
                 "response_type": "code",
                 "client_id": self.credentials.client_id,
@@ -100,8 +92,7 @@ class PinterestAdapter(BasePlatformAdapter):
             raise AuthenticationError(f"Failed to authenticate user: {e}")
     
     async def validate_content(self, content_metadata: ContentMetadata) -> Dict[str, Any]:
-        """Validate content meets Pinterest requirements."""
-        validation_results = {
+        """Validate content meets Pinterest requirements."""        validation_results = {
             "is_valid": True,
             "errors": [],
             "warnings": []
@@ -166,8 +157,7 @@ class PinterestAdapter(BasePlatformAdapter):
         return validation_results
     
     async def upload_content(self, distribution_request: DistributionRequest) -> DistributionResult:
-        """Upload content (pin) to Pinterest."""
-        try:
+        """Upload content (pin) to Pinterest."""        try:
             # Validate content first
             validation = await self.validate_content(distribution_request.content_metadata)
             if not validation["is_valid"]:
@@ -218,8 +208,7 @@ class PinterestAdapter(BasePlatformAdapter):
             )
     
     async def _get_or_create_board(self, user_id: str, board_name: str, board_description: str) -> str:
-        """Get existing board or create new one."""
-        try:
+        """Get existing board or create new one."""        try:
             # First, try to find existing board
             response = self.session.get(f"{self.BASE_URL}/boards")
             
@@ -250,8 +239,7 @@ class PinterestAdapter(BasePlatformAdapter):
             return await self._create_default_board()
     
     async def _create_default_board(self) -> str:
-        """Create a default board as fallback."""
-        try:
+        """Create a default board as fallback."""        try:
             board_data = {
                 "name": "IA Influencer Content",
                 "description": "Content distributed via IA Influencer Agent",
@@ -270,8 +258,7 @@ class PinterestAdapter(BasePlatformAdapter):
             raise DistributionError("Board creation failed")
     
     async def _create_pin(self, board_id: str, file_path: Optional[str], content_metadata: ContentMetadata) -> Dict:
-        """Create pin on Pinterest."""
-        try:
+        """Create pin on Pinterest."""        try:
             pin_data = {
                 "board_id": board_id,
                 "description": self._prepare_pin_description(content_metadata),
@@ -318,8 +305,7 @@ class PinterestAdapter(BasePlatformAdapter):
             return {"error": str(e)}
     
     def _prepare_pin_description(self, content_metadata: ContentMetadata) -> str:
-        """Prepare optimized pin description."""
-        description_parts = []
+        """Prepare optimized pin description."""        description_parts = []
         
         if content_metadata.title:
             description_parts.append(content_metadata.title)
@@ -343,8 +329,7 @@ class PinterestAdapter(BasePlatformAdapter):
         return " ".join(description_parts)
     
     async def _upload_image_media(self, file_path: str) -> Dict:
-        """Upload image media for pin."""
-        try:
+        """Upload image media for pin."""        try:
             # Pinterest uses direct file upload
             with open(file_path, 'rb') as image_file:
                 files = {"image": image_file}
@@ -372,8 +357,7 @@ class PinterestAdapter(BasePlatformAdapter):
             return {"error": str(e)}
     
     async def _upload_video_media(self, file_path: str) -> Dict:
-        """Upload video media for pin."""
-        try:
+        """Upload video media for pin."""        try:
             # Pinterest video upload is similar to image
             with open(file_path, 'rb') as video_file:
                 files = {"video": video_file}
@@ -401,8 +385,7 @@ class PinterestAdapter(BasePlatformAdapter):
             return {"error": str(e)}
     
     async def get_analytics(self, content_id: str, date_range: tuple = None) -> PlatformAnalytics:
-        """Retrieve analytics data for Pinterest pin."""
-        try:
+        """Retrieve analytics data for Pinterest pin."""        try:
             pin_id = content_id.replace("pinterest_", "")
             
             # Get pin analytics
@@ -463,8 +446,7 @@ class PinterestAdapter(BasePlatformAdapter):
             raise DistributionError(f"Analytics retrieval failed: {e}")
     
     async def get_revenue_data(self, content_id: str, date_range: tuple = None) -> RevenueData:
-        """Estimate revenue from Pinterest content (shopping, affiliate, traffic)."""
-        try:
+        """Estimate revenue from Pinterest content (shopping, affiliate, traffic)."""        try:
             analytics = await self.get_analytics(content_id, date_range)
             
             # Pinterest revenue comes from e-commerce, affiliate, and traffic conversion
@@ -500,8 +482,7 @@ class PinterestAdapter(BasePlatformAdapter):
             raise DistributionError(f"Revenue calculation failed: {e}")
     
     async def update_content_metadata(self, content_id: str, metadata: Dict[str, Any]) -> bool:
-        """Update Pinterest pin metadata."""
-        try:
+        """Update Pinterest pin metadata."""        try:
             pin_id = content_id.replace("pinterest_", "")
             
             update_data = {}
@@ -537,8 +518,7 @@ class PinterestAdapter(BasePlatformAdapter):
             return False
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete Pinterest pin."""
-        try:
+        """Delete Pinterest pin."""        try:
             pin_id = content_id.replace("pinterest_", "")
             
             response = self.session.delete(f"{self.BASE_URL}/pins/{pin_id}")
@@ -555,8 +535,7 @@ class PinterestAdapter(BasePlatformAdapter):
             return False
     
     def get_platform_limits(self) -> Dict[str, Any]:
-        """Return platform-specific limits and requirements."""
-        return {
+        """Return platform-specific limits and requirements."""        return {
             "max_image_size_mb": self.MAX_IMAGE_SIZE_MB,
             "max_video_size_mb": self.MAX_VIDEO_SIZE_MB,
             "max_pin_description_length": self.MAX_PIN_DESCRIPTION_LENGTH,

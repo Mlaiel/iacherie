@@ -1,5 +1,4 @@
-"""
-Core Managers Index - IA-Influencer-Agent
+"""Core Managers Index - IA-Influencer-Agent
 ================================================================================
 Module: backend/core/managers/index.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -15,9 +14,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Application startup → Manager initialization → Service registration → 
 Health monitoring → Lifecycle management → Graceful shutdown
-"""
-
-from typing import Any, Dict, List, Optional, Union, Type, TypeVar
+"""from typing import Any, Dict, List, Optional, Union, Type, TypeVar
 import logging
 import asyncio
 from datetime import datetime
@@ -64,10 +61,8 @@ _MANAGER_HEALTH_STATUS: Dict[str, Dict[str, Any]] = {}
 
 
 class ManagerRegistry:
-    """
-    Central registry for all enterprise managers with lifecycle management
-    """
-    
+    """    Central registry for all enterprise managers with lifecycle management
+    """    
     def __init__(self):
         self._managers: Dict[str, Any] = {}
         self._initialization_order: List[str] = []
@@ -79,8 +74,7 @@ class ManagerRegistry:
         self._register_manager_factories()
     
     def _register_manager_factories(self):
-        """Register all manager factory functions"""
-        self._manager_factories = {
+        """Register all manager factory functions"""        self._manager_factories = {
             # Core infrastructure managers
             "database": get_database_manager,
             "cache": get_cache_manager,
@@ -132,13 +126,11 @@ class ManagerRegistry:
         ]
     
     async def initialize_all_managers(self) -> Dict[str, bool]:
-        """
-        Initialize all managers in dependency order
+        """        Initialize all managers in dependency order
         
         Returns:
             Dict mapping manager names to initialization success
-        """
-        initialization_results = {}
+        """        initialization_results = {}
         
         logger.info("🚀 Starting IA-Influencer-Agent managers initialization...")
         
@@ -204,13 +196,11 @@ class ManagerRegistry:
         return initialization_results
     
     async def shutdown_all_managers(self) -> Dict[str, bool]:
-        """
-        Gracefully shutdown all managers in reverse order
+        """        Gracefully shutdown all managers in reverse order
         
         Returns:
             Dict mapping manager names to shutdown success
-        """
-        shutdown_results = {}
+        """        shutdown_results = {}
         
         logger.info("🛑 Starting IA-Influencer-Agent managers shutdown...")
         
@@ -257,13 +247,11 @@ class ManagerRegistry:
         return shutdown_results
     
     async def perform_health_checks(self) -> Dict[str, Dict[str, Any]]:
-        """
-        Perform health checks on all managers
+        """        Perform health checks on all managers
         
         Returns:
             Dict mapping manager names to health status
-        """
-        health_results = {}
+        """        health_results = {}
         
         for manager_name, manager_instance in self._managers.items():
             try:
@@ -305,36 +293,30 @@ class ManagerRegistry:
         return health_results
     
     def get_manager(self, manager_name: str) -> Optional[Any]:
-        """
-        Get a manager instance by name
+        """        Get a manager instance by name
         
         Args:
             manager_name: Name of the manager
             
         Returns:
             Manager instance or None if not found
-        """
-        return self._managers.get(manager_name)
+        """        return self._managers.get(manager_name)
     
     def register_startup_callback(self, manager_name: str, callback: callable):
-        """Register a callback to be executed when a manager starts"""
-        if manager_name not in self._startup_callbacks:
+        """Register a callback to be executed when a manager starts"""        if manager_name not in self._startup_callbacks:
             self._startup_callbacks[manager_name] = []
         self._startup_callbacks[manager_name].append(callback)
     
     def register_shutdown_callback(self, manager_name: str, callback: callable):
-        """Register a callback to be executed when a manager shuts down"""
-        if manager_name not in self._shutdown_callbacks:
+        """Register a callback to be executed when a manager shuts down"""        if manager_name not in self._shutdown_callbacks:
             self._shutdown_callbacks[manager_name] = []
         self._shutdown_callbacks[manager_name].append(callback)
     
     def get_all_managers(self) -> Dict[str, Any]:
-        """Get all registered managers"""
-        return self._managers.copy()
+        """Get all registered managers"""        return self._managers.copy()
     
     def get_manager_health_status(self) -> Dict[str, Dict[str, Any]]:
-        """Get health status of all managers"""
-        return _MANAGER_HEALTH_STATUS.copy()
+        """Get health status of all managers"""        return _MANAGER_HEALTH_STATUS.copy()
 
 
 # Global manager registry instance
@@ -343,134 +325,109 @@ _manager_registry = ManagerRegistry()
 
 # Public API functions
 async def initialize_all_managers() -> Dict[str, bool]:
-    """
-    Initialize all IA-Influencer-Agent managers
+    """    Initialize all IA-Influencer-Agent managers
     
     Returns:
         Dict mapping manager names to initialization success
-    """
-    return await _manager_registry.initialize_all_managers()
+    """    return await _manager_registry.initialize_all_managers()
 
 
 async def shutdown_all_managers() -> Dict[str, bool]:
-    """
-    Shutdown all IA-Influencer-Agent managers
+    """    Shutdown all IA-Influencer-Agent managers
     
     Returns:
         Dict mapping manager names to shutdown success
-    """
-    return await _manager_registry.shutdown_all_managers()
+    """    return await _manager_registry.shutdown_all_managers()
 
 
 async def perform_health_checks() -> Dict[str, Dict[str, Any]]:
-    """
-    Perform health checks on all managers
+    """    Perform health checks on all managers
     
     Returns:
         Dict mapping manager names to health status
-    """
-    return await _manager_registry.perform_health_checks()
+    """    return await _manager_registry.perform_health_checks()
 
 
 def get_manager(manager_name: str) -> Optional[Any]:
-    """
-    Get a manager instance by name
+    """    Get a manager instance by name
     
     Args:
         manager_name: Name of the manager (e.g., 'database', 'cache', 'queue')
         
     Returns:
         Manager instance or None if not found
-    """
-    return _manager_registry.get_manager(manager_name)
+    """    return _manager_registry.get_manager(manager_name)
 
 
 def get_all_managers() -> Dict[str, Any]:
-    """
-    Get all registered managers
+    """    Get all registered managers
     
     Returns:
         Dict mapping manager names to instances
-    """
-    return _manager_registry.get_all_managers()
+    """    return _manager_registry.get_all_managers()
 
 
 def get_manager_health_status() -> Dict[str, Dict[str, Any]]:
-    """
-    Get health status of all managers
+    """    Get health status of all managers
     
     Returns:
         Dict mapping manager names to health status
-    """
-    return _manager_registry.get_manager_health_status()
+    """    return _manager_registry.get_manager_health_status()
 
 
 def register_startup_callback(manager_name: str, callback: callable):
-    """
-    Register a callback to be executed when a manager starts
+    """    Register a callback to be executed when a manager starts
     
     Args:
         manager_name: Name of the manager
         callback: Callback function to execute
-    """
-    _manager_registry.register_startup_callback(manager_name, callback)
+    """    _manager_registry.register_startup_callback(manager_name, callback)
 
 
 def register_shutdown_callback(manager_name: str, callback: callable):
-    """
-    Register a callback to be executed when a manager shuts down
+    """    Register a callback to be executed when a manager shuts down
     
     Args:
         manager_name: Name of the manager
         callback: Callback function to execute
-    """
-    _manager_registry.register_shutdown_callback(manager_name, callback)
+    """    _manager_registry.register_shutdown_callback(manager_name, callback)
 
 
 # Convenience functions for direct manager access
 def get_database_manager_instance():
-    """Get database manager instance"""
-    return get_manager("database") or get_database_manager()
+    """Get database manager instance"""    return get_manager("database") or get_database_manager()
 
 
 def get_cache_manager_instance():
-    """Get cache manager instance"""
-    return get_manager("cache") or get_cache_manager()
+    """Get cache manager instance"""    return get_manager("cache") or get_cache_manager()
 
 
 def get_queue_manager_instance():
-    """Get queue manager instance"""
-    return get_manager("queue") or get_queue_manager()
+    """Get queue manager instance"""    return get_manager("queue") or get_queue_manager()
 
 
 def get_storage_manager_instance():
-    """Get storage manager instance"""
-    return get_manager("storage") or get_storage_manager()
+    """Get storage manager instance"""    return get_manager("storage") or get_storage_manager()
 
 
 def get_backup_manager_instance():
-    """Get backup manager instance"""
-    return get_manager("backup") or get_backup_manager()
+    """Get backup manager instance"""    return get_manager("backup") or get_backup_manager()
 
 
 def get_protection_manager_instance():
-    """Get protection manager instance"""
-    return get_manager("protection") or get_protection_manager()
+    """Get protection manager instance"""    return get_manager("protection") or get_protection_manager()
 
 
 def get_fingerprinting_manager_instance():
-    """Get fingerprinting manager instance"""
-    return get_manager("fingerprinting") or get_fingerprinting_manager()
+    """Get fingerprinting manager instance"""    return get_manager("fingerprinting") or get_fingerprinting_manager()
 
 
 def get_monetization_manager_instance():
-    """Get monetization manager instance"""
-    return get_manager("monetization") or get_monetization_manager()
+    """Get monetization manager instance"""    return get_manager("monetization") or get_monetization_manager()
 
 
 def get_ai_agent_manager_instance():
-    """Get AI agent manager instance"""
-    return get_manager("ai_agent") or get_ai_agent_manager()
+    """Get AI agent manager instance"""    return get_manager("ai_agent") or get_ai_agent_manager()
 
 
 # Export all manager access functions

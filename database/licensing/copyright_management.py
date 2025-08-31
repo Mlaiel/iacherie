@@ -1,5 +1,4 @@
-"""
-Copyright Management Database Module
+"""Copyright Management Database Module
 
 Enterprise-grade copyright management system for IA Influencer Agent platform.
 Provides comprehensive copyright protection, verification, and enforcement capabilities.
@@ -11,9 +10,7 @@ STRICT COPYRIGHT WARNING: This code and concept are EXCLUSIVE intellectual prope
 ANY unauthorized use, copying, or theft without explicit written authorization is STRICTLY PROHIBITED
 and subject to immediate legal prosecution under German law.
 Contact: mlaiel@live.de for ANY authorization requests.
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple, Set
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Set
 from datetime import datetime, timedelta, timezone
 from enum import Enum, IntEnum
 from dataclasses import dataclass, field
@@ -70,8 +67,7 @@ copyright_processing_time = Histogram('copyright_processing_seconds', 'Copyright
 logger = logging.getLogger(__name__)
 
 class CopyrightStatus(Enum):
-    """Advanced copyright status tracking"""
-    DRAFT = "draft"
+    """Advanced copyright status tracking"""    DRAFT = "draft"
     SUBMITTED = "submitted"
     UNDER_REVIEW = "under_review"
     DOCUMENTS_REQUESTED = "documents_requested"
@@ -90,8 +86,7 @@ class CopyrightStatus(Enum):
     FAIR_USE_EXEMPTION = "fair_use_exemption"
 
 class ClaimType(Enum):
-    """Comprehensive claim types with legal basis"""
-    ORIGINAL_WORK = "original_work"
+    """Comprehensive claim types with legal basis"""    ORIGINAL_WORK = "original_work"
     DERIVATIVE_WORK = "derivative_work"
     COMPILATION = "compilation"
     COLLECTIVE_WORK = "collective_work"
@@ -107,8 +102,7 @@ class ClaimType(Enum):
     BOAT_HULL_DESIGN = "boat_hull_design"
 
 class OwnershipType(Enum):
-    """Detailed ownership classification"""
-    SOLE_OWNER = "sole_owner"
+    """Detailed ownership classification"""    SOLE_OWNER = "sole_owner"
     JOINT_OWNER = "joint_owner"
     CO_OWNER = "co_owner"
     WORK_FOR_HIRE = "work_for_hire"
@@ -122,8 +116,7 @@ class OwnershipType(Enum):
     STATUTORY_LICENSE = "statutory_license"
 
 class VerificationMethod(Enum):
-    """Advanced verification methods"""
-    DOCUMENT_UPLOAD = "document_upload"
+    """Advanced verification methods"""    DOCUMENT_UPLOAD = "document_upload"
     DIGITAL_SIGNATURE = "digital_signature"
     BLOCKCHAIN_PROOF = "blockchain_proof"
     TIMESTAMP_AUTHORITY = "timestamp_authority"
@@ -137,16 +130,14 @@ class VerificationMethod(Enum):
     EXPERT_ANALYSIS = "expert_analysis"
 
 class InfringementSeverity(IntEnum):
-    """Infringement severity levels"""
-    MINOR = 1
+    """Infringement severity levels"""    MINOR = 1
     MODERATE = 2
     SIGNIFICANT = 3
     SEVERE = 4
     CRITICAL = 5
 
 class EnforcementAction(Enum):
-    """Copyright enforcement actions"""
-    NONE = "none"
+    """Copyright enforcement actions"""    NONE = "none"
     WARNING_NOTICE = "warning_notice"
     TAKEDOWN_REQUEST = "takedown_request"
     DMCA_NOTICE = "dmca_notice"
@@ -159,8 +150,7 @@ class EnforcementAction(Enum):
 
 @dataclass
 class CopyrightMetadata:
-    """Comprehensive copyright metadata"""
-    original_title: str
+    """Comprehensive copyright metadata"""    original_title: str
     alternative_titles: List[str] = field(default_factory=list)
     creation_date: datetime = None
     first_publication_date: Optional[datetime] = None
@@ -187,16 +177,14 @@ class CopyrightMetadata:
 
 @dataclass
 class OwnershipChain:
-    """Track ownership transfer chain"""
-    transfers: List[Dict[str, Any]] = field(default_factory=list)
+    """Track ownership transfer chain"""    transfers: List[Dict[str, Any]] = field(default_factory=list)
     current_owner: Optional[str] = None
     original_owner: Optional[str] = None
     verification_status: str = "unverified"
     
     def add_transfer(self, from_owner: str, to_owner: str, transfer_date: datetime, 
                     transfer_type: str, evidence: Dict[str, Any] = None):
-        """Add ownership transfer to chain"""
-        self.transfers.append({
+        """Add ownership transfer to chain"""        self.transfers.append({
             'from_owner': from_owner,
             'to_owner': to_owner,
             'transfer_date': transfer_date.isoformat(),
@@ -207,11 +195,9 @@ class OwnershipChain:
         self.current_owner = to_owner
 
 class CopyrightRegistration(BaseModel, TimestampMixin, AuditMixin):
-    """
-    Comprehensive copyright registration model with blockchain integration.
+    """    Comprehensive copyright registration model with blockchain integration.
     Supports multi-jurisdiction registration and automated verification.
-    """
-    __tablename__ = "copyright_registrations"
+    """    __tablename__ = "copyright_registrations"
 
     # Primary identifiers
     id = Column(PostgresUUID(as_uuid=True), primary_key=True, default=uuid4)
@@ -325,8 +311,7 @@ class CopyrightRegistration(BaseModel, TimestampMixin, AuditMixin):
     
     @hybrid_property
     def protection_strength(self):
-        """Calculate overall protection strength score"""
-        score = Decimal('0.0')
+        """Calculate overall protection strength score"""        score = Decimal('0.0')
         
         # Verification strength
         if self.verification_status == "verified":
@@ -353,10 +338,8 @@ class CopyrightRegistration(BaseModel, TimestampMixin, AuditMixin):
         return min(score, Decimal('1.0'))
 
 class OwnershipClaim(BaseModel, TimestampMixin, AuditMixin):
-    """
-    Detailed ownership claims with evidence and verification tracking.
-    """
-    __tablename__ = "ownership_claims"
+    """    Detailed ownership claims with evidence and verification tracking.
+    """    __tablename__ = "ownership_claims"
     
     # Primary identifiers
     id = Column(PostgresUUID(as_uuid=True), primary_key=True, default=uuid4)
@@ -398,10 +381,8 @@ class OwnershipClaim(BaseModel, TimestampMixin, AuditMixin):
     )
 
 class InfringementReport(BaseModel, TimestampMixin, AuditMixin):
-    """
-    Comprehensive infringement detection and reporting system.
-    """
-    __tablename__ = "infringement_reports"
+    """    Comprehensive infringement detection and reporting system.
+    """    __tablename__ = "infringement_reports"
     
     # Primary identifiers
     id = Column(PostgresUUID(as_uuid=True), primary_key=True, default=uuid4)
@@ -491,10 +472,8 @@ class InfringementReport(BaseModel, TimestampMixin, AuditMixin):
         )
 
 class TakedownRequest(BaseModel, TimestampMixin, AuditMixin):
-    """
-    DMCA and international takedown request management.
-    """
-    __tablename__ = "takedown_requests"
+    """    DMCA and international takedown request management.
+    """    __tablename__ = "takedown_requests"
     
     # Primary identifiers
     id = Column(PostgresUUID(as_uuid=True), primary_key=True, default=uuid4)
@@ -546,10 +525,8 @@ class TakedownRequest(BaseModel, TimestampMixin, AuditMixin):
     )
 
 class VerificationRecord(BaseModel, TimestampMixin, AuditMixin):
-    """
-    Comprehensive verification record tracking with multiple verification methods.
-    """
-    __tablename__ = "verification_records"
+    """    Comprehensive verification record tracking with multiple verification methods.
+    """    __tablename__ = "verification_records"
     
     # Primary identifiers
     id = Column(PostgresUUID(as_uuid=True), primary_key=True, default=uuid4)
@@ -591,11 +568,9 @@ class VerificationRecord(BaseModel, TimestampMixin, AuditMixin):
         Index('idx_verification_result_confidence', 'result', 'confidence_score'),
         Index('idx_verification_verifier_type', 'verifier_type', 'completed_at'),
 class CopyrightManagementService:
-    """
-    Enterprise-grade copyright management service with AI-powered protection.
+    """    Enterprise-grade copyright management service with AI-powered protection.
     Provides comprehensive copyright registration, monitoring, and enforcement.
-    """
-    
+    """    
     def __init__(self, db_session: Session, cache_manager: CacheManager, security_manager: SecurityManager):
         self.db = db_session
         self.cache = cache_manager
@@ -618,16 +593,14 @@ class CopyrightManagementService:
         logger.info("CopyrightManagementService initialized")
     
     async def register_copyright(self, registration_data: Dict[str, Any]) -> CopyrightRegistration:
-        """
-        Register new copyright with comprehensive verification and blockchain recording.
+        """        Register new copyright with comprehensive verification and blockchain recording.
         
         Args:
             registration_data: Complete copyright registration information
             
         Returns:
             CopyrightRegistration: Created registration record
-        """
-        with copyright_processing_time.time():
+        """        with copyright_processing_time.time():
             try:
                 # Generate unique registration number
                 registration_number = self._generate_registration_number()
@@ -682,8 +655,7 @@ class CopyrightManagementService:
                 raise
     
     async def verify_copyright_ownership(self, registration_id: str, verification_data: Dict[str, Any]) -> VerificationRecord:
-        """
-        Verify copyright ownership using multiple verification methods.
+        """        Verify copyright ownership using multiple verification methods.
         
         Args:
             registration_id: Registration to verify
@@ -691,8 +663,7 @@ class CopyrightManagementService:
             
         Returns:
             VerificationRecord: Verification result
-        """
-        registration = self.db.query(CopyrightRegistration).filter(
+        """        registration = self.db.query(CopyrightRegistration).filter(
             CopyrightRegistration.id == registration_id
         ).first()
         
@@ -757,8 +728,7 @@ class CopyrightManagementService:
             raise
     
     async def detect_infringement(self, registration_id: str, scan_platforms: List[str] = None) -> List[InfringementReport]:
-        """
-        AI-powered infringement detection across multiple platforms.
+        """        AI-powered infringement detection across multiple platforms.
         
         Args:
             registration_id: Registration to monitor
@@ -766,8 +736,7 @@ class CopyrightManagementService:
             
         Returns:
             List[InfringementReport]: Detected infringements
-        """
-        registration = self.db.query(CopyrightRegistration).filter(
+        """        registration = self.db.query(CopyrightRegistration).filter(
             CopyrightRegistration.id == registration_id
         ).first()
         
@@ -802,8 +771,7 @@ class CopyrightManagementService:
         return detected_infringements
     
     async def submit_takedown_request(self, infringement_report_id: str, request_data: Dict[str, Any]) -> TakedownRequest:
-        """
-        Submit DMCA or international takedown request.
+        """        Submit DMCA or international takedown request.
         
         Args:
             infringement_report_id: Infringement to address
@@ -811,8 +779,7 @@ class CopyrightManagementService:
             
         Returns:
             TakedownRequest: Created takedown request
-        """
-        infringement = self.db.query(InfringementReport).filter(
+        """        infringement = self.db.query(InfringementReport).filter(
             InfringementReport.id == infringement_report_id
         ).first()
         
@@ -862,8 +829,7 @@ class CopyrightManagementService:
         return takedown_request
     
     async def _create_content_fingerprint(self, content_path: str, content_type: str) -> Dict[str, Any]:
-        """Create content fingerprint based on type"""
-        try:
+        """Create content fingerprint based on type"""        try:
             if content_type.startswith('audio'):
                 return await self.audio_fingerprinter.create_fingerprint(content_path)
             elif content_type.startswith('video'):
@@ -886,8 +852,7 @@ class CopyrightManagementService:
             raise
     
     async def _initiate_verification_process(self, registration: CopyrightRegistration, registration_data: Dict[str, Any]):
-        """Initiate automated verification process"""
-        verification_methods = registration_data.get('verification_methods', ['ai_fingerprint'])
+        """Initiate automated verification process"""        verification_methods = registration_data.get('verification_methods', ['ai_fingerprint'])
         
         for method in verification_methods:
             try:
@@ -903,8 +868,7 @@ class CopyrightManagementService:
                 logger.error(f"Verification method {method} failed: {e}")
     
     async def _record_on_blockchain(self, registration: CopyrightRegistration):
-        """Record copyright on blockchain for immutable proof"""
-        try:
+        """Record copyright on blockchain for immutable proof"""        try:
             blockchain_data = {
                 'registration_number': registration.registration_number,
                 'content_hash': registration.content_hash,
@@ -927,8 +891,7 @@ class CopyrightManagementService:
             logger.error(f"Error recording on blockchain: {e}")
     
     async def _verify_with_ai_fingerprint(self, registration: CopyrightRegistration, verification_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Verify using AI fingerprint analysis"""
-        # Compare with existing fingerprints
+        """Verify using AI fingerprint analysis"""        # Compare with existing fingerprints
         similarity_threshold = 0.85
         
         # This would integrate with the actual fingerprinting system
@@ -946,8 +909,7 @@ class CopyrightManagementService:
         }
     
     async def _verify_with_blockchain(self, registration: CopyrightRegistration, verification_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Verify using blockchain records"""
-        if not registration.blockchain_hash:
+        """Verify using blockchain records"""        if not registration.blockchain_hash:
             return {
                 'status': 'failed',
                 'confidence': 0.0,
@@ -965,8 +927,7 @@ class CopyrightManagementService:
         }
     
     async def _scan_platform_for_infringement(self, registration: CopyrightRegistration, platform: str) -> List[Dict[str, Any]]:
-        """Scan specific platform for potential infringement"""
-        # This would integrate with platform APIs and web scraping
+        """Scan specific platform for potential infringement"""        # This would integrate with platform APIs and web scraping
         # Placeholder implementation
         return [
             {
@@ -978,8 +939,7 @@ class CopyrightManagementService:
         ]
     
     async def _create_infringement_report(self, registration: CopyrightRegistration, detection_result: Dict[str, Any], platform: str) -> InfringementReport:
-        """Create infringement report from detection result"""
-        report_number = self._generate_infringement_number()
+        """Create infringement report from detection result"""        report_number = self._generate_infringement_number()
         
         # Assess severity based on various factors
         severity = self._assess_infringement_severity(detection_result)
@@ -1015,8 +975,7 @@ class CopyrightManagementService:
         return report
     
     def _assess_infringement_severity(self, detection_result: Dict[str, Any]) -> int:
-        """Assess infringement severity based on multiple factors"""
-        severity = InfringementSeverity.MODERATE
+        """Assess infringement severity based on multiple factors"""        severity = InfringementSeverity.MODERATE
         
         # High similarity score increases severity
         if detection_result['similarity_score'] > 0.95:
@@ -1038,26 +997,22 @@ class CopyrightManagementService:
         return severity
     
     def _generate_registration_number(self) -> str:
-        """Generate unique registration number"""
-        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+        """Generate unique registration number"""        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
         random_suffix = str(uuid4())[:8].upper()
         return f"CR-{timestamp}-{random_suffix}"
     
     def _generate_verification_id(self) -> str:
-        """Generate unique verification ID"""
-        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+        """Generate unique verification ID"""        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
         random_suffix = str(uuid4())[:6].upper()
         return f"VR-{timestamp}-{random_suffix}"
     
     def _generate_infringement_number(self) -> str:
-        """Generate unique infringement report number"""
-        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+        """Generate unique infringement report number"""        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
         random_suffix = str(uuid4())[:6].upper()
         return f"IR-{timestamp}-{random_suffix}"
     
     def _generate_takedown_number(self) -> str:
-        """Generate unique takedown request number"""
-        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+        """Generate unique takedown request number"""        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
         random_suffix = str(uuid4())[:6].upper()
         return f"TD-{timestamp}-{random_suffix}"
 
@@ -1123,12 +1078,10 @@ __all__ = [
             self.registration_id = f"CR-{uuid.uuid4().hex[:8].upper()}"
 
     def generate_content_hash(self, content_data: bytes) -> str:
-        """Génère un hash unique du contenu"""
-        return hashlib.sha512(content_data).hexdigest()
+        """Génère un hash unique du contenu"""        return hashlib.sha512(content_data).hexdigest()
 
     def add_co_owner(self, user_id: int, ownership_percentage: float, role: str = "co_author"):
-        """Ajoute un co-propriétaire"""
-        if not self.co_owners:
+        """Ajoute un co-propriétaire"""        if not self.co_owners:
             self.co_owners = []
         
         co_owner_info = {
@@ -1141,16 +1094,14 @@ __all__ = [
         self.co_owners.append(co_owner_info)
 
     def is_valid_registration(self) -> bool:
-        """Vérifie si l'enregistrement est valide"""
-        return (
+        """Vérifie si l'enregistrement est valide"""        return (
             self.status in [CopyrightStatus.REGISTERED.value, CopyrightStatus.VERIFIED.value] and
             (self.expiration_date is None or self.expiration_date > datetime.utcnow()) and
             self.verification_score and self.verification_score >= 0.8
         )
 
     def get_ownership_percentage(self, user_id: int) -> float:
-        """Retourne le pourcentage de propriété d'un utilisateur"""
-        if user_id == self.owner_id:
+        """Retourne le pourcentage de propriété d'un utilisateur"""        if user_id == self.owner_id:
             if not self.co_owners:
                 return 100.0
             
@@ -1166,8 +1117,7 @@ __all__ = [
         return 0.0
 
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit l'enregistrement en dictionnaire"""
-        return {
+        """Convertit l'enregistrement en dictionnaire"""        return {
             "id": self.id,
             "registration_id": self.registration_id,
             "title": self.title,
@@ -1187,11 +1137,9 @@ __all__ = [
         }
 
 class CopyrightViolation(BaseModel):
-    """
-    Modèle pour les violations de droits d'auteur détectées.
+    """    Modèle pour les violations de droits d'auteur détectées.
     Gère le suivi et la résolution des infractions.
-    """
-    __tablename__ = "copyright_violations"
+    """    __tablename__ = "copyright_violations"
 
     # Identifiants
     id = Column(Integer, primary_key=True, index=True)
@@ -1235,8 +1183,7 @@ class CopyrightViolation(BaseModel):
             self.violation_id = f"CV-{uuid.uuid4().hex[:8].upper()}"
 
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit la violation en dictionnaire"""
-        return {
+        """Convertit la violation en dictionnaire"""        return {
             "id": self.id,
             "violation_id": self.violation_id,
             "infringing_url": self.infringing_url,
@@ -1252,12 +1199,9 @@ class CopyrightViolation(BaseModel):
         }
 
 class CopyrightManager:
-    """
-    Gestionnaire pour les opérations de droits d'auteur.
+    """    Gestionnaire pour les opérations de droits d'auteur.
     Fournit une interface complète pour la protection du contenu.
-    """
-
-    def __init__(self, db_session: Session):
+    """    def __init__(self, db_session: Session):
         self.db = db_session
         self.logger = logging.getLogger(__name__)
 
@@ -1272,8 +1216,7 @@ class CopyrightManager:
         content_data: bytes,
         proof_documents: Optional[List[str]] = None
     ) -> CopyrightRegistration:
-        """Enregistre un nouveau droit d'auteur"""
-        
+        """Enregistre un nouveau droit d'auteur"""        
         try:
             # Génération du hash du contenu
             content_hash = hashlib.sha512(content_data).hexdigest()
@@ -1328,8 +1271,7 @@ class CopyrightManager:
         content_data: bytes,
         claimed_owner_id: int
     ) -> Tuple[bool, Optional[CopyrightRegistration], float]:
-        """Vérifie la propriété d'un contenu"""
-        
+        """Vérifie la propriété d'un contenu"""        
         content_hash = hashlib.sha512(content_data).hexdigest()
         
         # Recherche exacte par hash
@@ -1361,8 +1303,7 @@ class CopyrightManager:
         reported_by_user_id: Optional[int] = None,
         evidence_data: Optional[Dict] = None
     ) -> CopyrightViolation:
-        """Signale une violation de droits d'auteur"""
-        
+        """Signale une violation de droits d'auteur"""        
         try:
             registration = self.db.query(CopyrightRegistration).filter(
                 CopyrightRegistration.id == registration_id
@@ -1404,8 +1345,7 @@ class CopyrightManager:
         violation_id: str,
         custom_message: Optional[str] = None
     ) -> bool:
-        """Envoie une demande de retrait DMCA"""
-        
+        """Envoie une demande de retrait DMCA"""        
         try:
             violation = self.db.query(CopyrightViolation).filter(
                 CopyrightViolation.violation_id == violation_id
@@ -1446,8 +1386,7 @@ class CopyrightManager:
         transfer_percentage: float = 100.0,
         transfer_type: str = "full_transfer"
     ) -> bool:
-        """Transfère des droits d'auteur"""
-        
+        """Transfère des droits d'auteur"""        
         try:
             registration = self.db.query(CopyrightRegistration).filter(
                 CopyrightRegistration.id == registration_id
@@ -1507,8 +1446,7 @@ class CopyrightManager:
         user_id: int,
         include_co_ownership: bool = True
     ) -> List[CopyrightRegistration]:
-        """Récupère tous les droits d'auteur d'un utilisateur"""
-        
+        """Récupère tous les droits d'auteur d'un utilisateur"""        
         query = self.db.query(CopyrightRegistration)
         
         if include_co_ownership:
@@ -1528,8 +1466,7 @@ class CopyrightManager:
         self,
         registration_id: int
     ) -> Dict[str, Any]:
-        """Génère un certificat de droits d'auteur"""
-        
+        """Génère un certificat de droits d'auteur"""        
         registration = self.db.query(CopyrightRegistration).filter(
             CopyrightRegistration.id == registration_id
         ).first()
@@ -1558,8 +1495,7 @@ class CopyrightManager:
         return certificate
 
     def _calculate_verification_score(self, registration: CopyrightRegistration) -> Decimal:
-        """Calcule le score de vérification basé sur plusieurs facteurs"""
-        
+        """Calcule le score de vérification basé sur plusieurs facteurs"""        
         score = Decimal('0.5')  # Score de base
         
         # Documents de preuve
@@ -1594,8 +1530,7 @@ class CopyrightManager:
         return min(score, Decimal('1.0'))
 
     def _find_similar_content(self, content_data: bytes) -> List[Tuple[CopyrightRegistration, float]]:
-        """Trouve du contenu similaire en utilisant l'IA"""
-        
+        """Trouve du contenu similaire en utilisant l'IA"""        
         try:
             # Generate content hash for quick comparison
             content_hash = hashlib.sha256(content_data).hexdigest()
@@ -1635,8 +1570,7 @@ class CopyrightManager:
             return []
 
     def _analyze_violation(self, violation: CopyrightViolation):
-        """Analyse automatique d'une violation"""
-        
+        """Analyse automatique d'une violation"""        
         try:
             # AI-powered violation analysis implementation
             analysis_result = {
@@ -1715,8 +1649,7 @@ class CopyrightManager:
         }
 
     def _trigger_automated_response(self, violation: CopyrightViolation):
-        """Déclenche les réponses automatiques à une violation"""
-        
+        """Déclenche les réponses automatiques à une violation"""        
         # Envoi automatique de DMCA pour violations évidentes
         if violation.similarity_score >= Decimal('0.9'):
             self.send_dmca_takedown(violation.violation_id)
@@ -1726,12 +1659,10 @@ class CopyrightManager:
         violation: CopyrightViolation,
         custom_message: Optional[str] = None
     ) -> str:
-        """Génère le contenu d'un avis DMCA"""
-        
+        """Génère le contenu d'un avis DMCA"""        
         registration = violation.registration
         
-        dmca_template = f"""
-DIGITAL MILLENNIUM COPYRIGHT ACT TAKEDOWN NOTICE
+        dmca_template = f"""DIGITAL MILLENNIUM COPYRIGHT ACT TAKEDOWN NOTICE
 
 To: {violation.platform} Copyright Agent
 
@@ -1764,8 +1695,7 @@ Email: mlaiel@live.de
 Date: {datetime.utcnow().strftime('%Y-%m-%d')}
 
 This notice is sent in good faith and with the reasonable belief that use of the described material is not authorized by the copyright owner, its agent, or the law.
-"""
-        
+"""        
         return dmca_template
 
     def _send_platform_notice(
@@ -1774,8 +1704,7 @@ This notice is sent in good faith and with the reasonable belief that use of the
         dmca_content: str,
         violation: CopyrightViolation
     ) -> bool:
-        """Envoie l'avis à la plateforme appropriée"""
-        
+        """Envoie l'avis à la plateforme appropriée"""        
         try:
             # Real platform API implementation for DMCA takedown notices
             platform_configs = {
@@ -1844,8 +1773,7 @@ This notice is sent in good faith and with the reasonable belief that use of the
             return False
 
     async def _check_user_verification_status(self, user_id: str) -> Dict[str, Any]:
-        """Check user verification status"""
-        try:
+        """Check user verification status"""        try:
             # Simulate user verification check
             # In real implementation, this would query user database
             return {
@@ -1859,8 +1787,7 @@ This notice is sent in good faith and with the reasonable belief that use of the
             return {"verified": False, "error": str(e)}
     
     def _calculate_content_similarity(self, hash1: str, hash2: str) -> float:
-        """Calculate similarity between two content hashes"""
-        try:
+        """Calculate similarity between two content hashes"""        try:
             if hash1 == hash2:
                 return 1.0
             
@@ -1873,8 +1800,7 @@ This notice is sent in good faith and with the reasonable belief that use of the
             return 0.0
     
     def _analyze_metadata_similarity(self, metadata: Dict[str, Any]) -> float:
-        """Analyze metadata similarity"""
-        try:
+        """Analyze metadata similarity"""        try:
             # Mock metadata analysis
             # In real implementation, this would perform deep metadata comparison
             score = 0.8  # Default similarity score
@@ -1883,8 +1809,7 @@ This notice is sent in good faith and with the reasonable belief that use of the
             return 0.0
     
     def _calculate_text_similarity(self, text1: str, text2: str) -> float:
-        """Calculate text similarity"""
-        try:
+        """Calculate text similarity"""        try:
             # Simple text similarity using character overlap
             if not text1 or not text2:
                 return 0.0
@@ -1903,8 +1828,7 @@ This notice is sent in good faith and with the reasonable belief that use of the
             return 0.0
     
     async def _send_platform_request(self, config: Dict[str, Any], payload: Dict[str, Any]) -> Dict[str, Any]:
-        """Send request to platform API"""
-        try:
+        """Send request to platform API"""        try:
             # Mock API response for testing
             # In real implementation, this would make actual HTTP requests
             return {
@@ -1917,10 +1841,8 @@ This notice is sent in good faith and with the reasonable belief that use of the
             return {"success": False, "error": str(e)}
 
     def _generate_legal_statement(self, registration: CopyrightRegistration) -> str:
-        """Génère la déclaration légale pour le certificat"""
-        
-        return f"""
-This certificate confirms that the work '{registration.title}' has been registered 
+        """Génère la déclaration légale pour le certificat"""        
+        return f"""This certificate confirms that the work '{registration.title}' has been registered 
 for copyright protection under registration number {registration.registration_id}.
 
 The work is owned by the registered copyright holder and is protected under 

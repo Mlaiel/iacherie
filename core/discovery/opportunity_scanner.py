@@ -1,5 +1,4 @@
-"""
-🎯 OPPORTUNITY SCANNER - Business Opportunity Discovery Engine
+"""🎯 OPPORTUNITY SCANNER - Business Opportunity Discovery Engine
 ===========================================================
 
 Team Specialties:
@@ -32,9 +31,7 @@ Features:
 - Competitive analysis and market positioning
 - Seasonal and event-based opportunity tracking
 - Geographic market expansion identification
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -54,8 +51,7 @@ import requests
 logger = logging.getLogger(__name__)
 
 class OpportunityType(Enum):
-    """Business opportunity types"""
-    BRAND_PARTNERSHIP = "brand_partnership"
+    """Business opportunity types"""    BRAND_PARTNERSHIP = "brand_partnership"
     SPONSORSHIP = "sponsorship"
     AFFILIATE_MARKETING = "affiliate_marketing"
     PRODUCT_PLACEMENT = "product_placement"
@@ -75,8 +71,7 @@ class OpportunityType(Enum):
     CROWDFUNDING = "crowdfunding"
 
 class OpportunityStatus(Enum):
-    """Opportunity status enumeration"""
-    DISCOVERED = "discovered"
+    """Opportunity status enumeration"""    DISCOVERED = "discovered"
     ANALYZING = "analyzing"
     QUALIFIED = "qualified"
     RECOMMENDED = "recommended"
@@ -88,8 +83,7 @@ class OpportunityStatus(Enum):
     DECLINED = "declined"
 
 class MarketSegment(Enum):
-    """Market segment categories"""
-    MUSIC = "music"
+    """Market segment categories"""    MUSIC = "music"
     ENTERTAINMENT = "entertainment"
     LIFESTYLE = "lifestyle"
     TECHNOLOGY = "technology"
@@ -110,8 +104,7 @@ class MarketSegment(Enum):
     ARTS_CRAFTS = "arts_crafts"
 
 class RevenueModel(Enum):
-    """Revenue model types"""
-    CPM = "cpm"  # Cost per mille
+    """Revenue model types"""    CPM = "cpm"  # Cost per mille
     CPC = "cpc"  # Cost per click
     CPA = "cpa"  # Cost per action
     FLAT_FEE = "flat_fee"
@@ -123,8 +116,7 @@ class RevenueModel(Enum):
 
 @dataclass
 class OpportunityFilter:
-    """Opportunity discovery filter configuration"""
-    opportunity_types: List[OpportunityType] = field(default_factory=list)
+    """Opportunity discovery filter configuration"""    opportunity_types: List[OpportunityType] = field(default_factory=list)
     market_segments: List[MarketSegment] = field(default_factory=list)
     revenue_models: List[RevenueModel] = field(default_factory=list)
     min_revenue_potential: float = 0.0
@@ -140,8 +132,7 @@ class OpportunityFilter:
 
 @dataclass
 class MarketTrend:
-    """Market trend information"""
-    trend_id: str
+    """Market trend information"""    trend_id: str
     trend_name: str
     market_segment: MarketSegment
     trend_strength: float  # 0.0 to 1.0
@@ -160,8 +151,7 @@ class MarketTrend:
 
 @dataclass
 class RevenueProjection:
-    """Revenue projection analysis"""
-    projection_id: str
+    """Revenue projection analysis"""    projection_id: str
     opportunity_type: OpportunityType
     revenue_model: RevenueModel
     timeframe: timedelta
@@ -178,8 +168,7 @@ class RevenueProjection:
 
 @dataclass
 class BusinessOpportunity:
-    """Comprehensive business opportunity"""
-    opportunity_id: str
+    """Comprehensive business opportunity"""    opportunity_id: str
     title: str
     description: str
     opportunity_type: OpportunityType
@@ -233,8 +222,7 @@ class BusinessOpportunity:
 
 
 class OpportunityScanner:
-    """
-    Advanced business opportunity discovery and analysis engine
+    """    Advanced business opportunity discovery and analysis engine
     
     This class provides comprehensive opportunity discovery capabilities including:
     - Real-time market opportunity detection and analysis
@@ -245,11 +233,9 @@ class OpportunityScanner:
     - Competitive market analysis and positioning insights
     - Seasonal and event-based opportunity tracking
     - Geographic market expansion and localization opportunities
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize opportunity scanner with configuration"""
-        self.config = config or {}
+        """Initialize opportunity scanner with configuration"""        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
         # AI/ML Models for opportunity analysis
@@ -289,8 +275,7 @@ class OpportunityScanner:
         self._opportunity_validation_task = None
 
     async def initialize(self) -> bool:
-        """Initialize all opportunity scanner components"""
-        try:
+        """Initialize all opportunity scanner components"""        try:
             self.logger.info("Initializing OpportunityScanner...")
             
             # Initialize AI/ML models
@@ -320,8 +305,7 @@ class OpportunityScanner:
         include_predictions: bool = True,
         limit: int = 20
     ) -> List[BusinessOpportunity]:
-        """
-        Scan for business opportunities matching creator profile and criteria
+        """        Scan for business opportunities matching creator profile and criteria
         
         Args:
             creator_id: Creator ID to scan opportunities for
@@ -332,8 +316,7 @@ class OpportunityScanner:
             
         Returns:
             List of discovered business opportunities ranked by potential
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             filters = filters or OpportunityFilter()
@@ -431,8 +414,7 @@ class OpportunityScanner:
         time_horizon: timedelta = timedelta(days=90),
         include_emerging: bool = True
     ) -> List[MarketTrend]:
-        """
-        Analyze current and emerging market trends
+        """        Analyze current and emerging market trends
         
         Args:
             market_segments: Specific market segments to analyze
@@ -441,8 +423,7 @@ class OpportunityScanner:
             
         Returns:
             List of market trends with analysis and predictions
-        """
-        try:
+        """        try:
             cache_key = f"trends_{market_segments}_{time_horizon}_{include_emerging}"
             
             # Check cache first
@@ -495,8 +476,7 @@ class OpportunityScanner:
         creator_metrics: Dict[str, Any],
         timeframe: timedelta = timedelta(days=365)
     ) -> RevenueProjection:
-        """
-        Predict revenue potential for a specific opportunity
+        """        Predict revenue potential for a specific opportunity
         
         Args:
             opportunity: Business opportunity to analyze
@@ -505,8 +485,7 @@ class OpportunityScanner:
             
         Returns:
             Detailed revenue projection with confidence intervals
-        """
-        try:
+        """        try:
             # Base revenue calculation factors
             audience_factor = min(creator_metrics.get('total_followers', 0) / 10000, 5.0)
             engagement_factor = min(creator_metrics.get('avg_engagement_rate', 0) * 20, 3.0)
@@ -604,8 +583,7 @@ class OpportunityScanner:
         opportunity: BusinessOpportunity,
         creator_profile: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Evaluate risk factors for a business opportunity
+        """        Evaluate risk factors for a business opportunity
         
         Args:
             opportunity: Business opportunity to evaluate
@@ -613,8 +591,7 @@ class OpportunityScanner:
             
         Returns:
             Comprehensive risk assessment with mitigation strategies
-        """
-        try:
+        """        try:
             risk_assessment = {
                 'overall_risk_score': 0.0,
                 'risk_categories': {},
@@ -701,8 +678,7 @@ class OpportunityScanner:
         opportunity_type: OpportunityType,
         geographic_scope: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """
-        Perform competitive analysis for market segment and opportunity type
+        """        Perform competitive analysis for market segment and opportunity type
         
         Args:
             market_segment: Market segment to analyze
@@ -711,8 +687,7 @@ class OpportunityScanner:
             
         Returns:
             Comprehensive competitive landscape analysis
-        """
-        try:
+        """        try:
             competitive_analysis = {
                 'market_segment': market_segment.value,
                 'opportunity_type': opportunity_type.value,
@@ -779,8 +754,7 @@ class OpportunityScanner:
     # Private implementation methods for complete industrial-grade functionality
 
     async def _initialize_analysis_models(self):
-        """Initialize AI/ML models for opportunity analysis"""
-        try:
+        """Initialize AI/ML models for opportunity analysis"""        try:
             # Trend detection model
             self.trend_detector = {
                 'lookback_days': 30,
@@ -814,8 +788,7 @@ class OpportunityScanner:
             raise
 
     async def _initialize_data_sources(self):
-        """Initialize data sources and API connections"""
-        try:
+        """Initialize data sources and API connections"""        try:
             # Market data sources
             self.market_data_sources = {
                 'social_media_apis': {},
@@ -844,8 +817,7 @@ class OpportunityScanner:
             self.logger.error(f"Failed to initialize data sources: {e}")
 
     async def _build_market_intelligence(self):
-        """Build market intelligence database"""
-        try:
+        """Build market intelligence database"""        try:
             # Initialize market intelligence storage
             self.market_intelligence = {
                 'segments': {},
@@ -865,8 +837,7 @@ class OpportunityScanner:
             self.logger.error(f"Failed to build market intelligence: {e}")
 
     async def _start_background_monitoring(self):
-        """Start background monitoring tasks"""
-        try:
+        """Start background monitoring tasks"""        try:
             # Market monitoring task
             self._market_monitoring_task = asyncio.create_task(self._market_monitoring_loop())
             
@@ -882,8 +853,7 @@ class OpportunityScanner:
             self.logger.error(f"Failed to start background monitoring: {e}")
 
     async def _market_monitoring_loop(self):
-        """Background task for continuous market monitoring"""
-        while True:
+        """Background task for continuous market monitoring"""        while True:
             try:
                 await asyncio.sleep(3600)  # Monitor every hour
                 await self._update_market_intelligence()
@@ -891,8 +861,7 @@ class OpportunityScanner:
                 self.logger.error(f"Error in market monitoring loop: {e}")
 
     async def _trend_analysis_loop(self):
-        """Background task for trend analysis"""
-        while True:
+        """Background task for trend analysis"""        while True:
             try:
                 await asyncio.sleep(1800)  # Analyze every 30 minutes
                 await self._update_trend_analysis()
@@ -900,8 +869,7 @@ class OpportunityScanner:
                 self.logger.error(f"Error in trend analysis loop: {e}")
 
     async def _opportunity_validation_loop(self):
-        """Background task for opportunity validation"""
-        while True:
+        """Background task for opportunity validation"""        while True:
             try:
                 await asyncio.sleep(7200)  # Validate every 2 hours
                 await self._validate_existing_opportunities()
@@ -909,8 +877,7 @@ class OpportunityScanner:
                 self.logger.error(f"Error in opportunity validation loop: {e}")
 
     async def get_scanner_statistics(self) -> Dict[str, Any]:
-        """Get opportunity scanner statistics and metrics"""
-        try:
+        """Get opportunity scanner statistics and metrics"""        try:
             return {
                 'scanner_metrics': self.scanner_metrics.copy(),
                 'database_statistics': {
@@ -932,8 +899,7 @@ class OpportunityScanner:
             return {}
 
     async def shutdown(self):
-        """Shutdown opportunity scanner and cleanup resources"""
-        try:
+        """Shutdown opportunity scanner and cleanup resources"""        try:
             # Cancel background tasks
             if self._market_monitoring_task:
                 self._market_monitoring_task.cancel()
@@ -961,16 +927,14 @@ class OpportunityScanner:
     SPORTS = "sports"
 
 class RiskLevel(Enum):
-    """Risk level assessment"""
-    LOW = "low"
+    """Risk level assessment"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     VERY_HIGH = "very_high"
 
 @dataclass
 class OpportunityFilter:
-    """Opportunity discovery filter configuration"""
-    opportunity_types: List[OpportunityType] = field(default_factory=list)
+    """Opportunity discovery filter configuration"""    opportunity_types: List[OpportunityType] = field(default_factory=list)
     market_segments: List[MarketSegment] = field(default_factory=list)
     min_revenue_potential: float = 0.0
     max_risk_level: RiskLevel = RiskLevel.HIGH
@@ -986,8 +950,7 @@ class OpportunityFilter:
 
 @dataclass
 class MarketTrend:
-    """Market trend information"""
-    trend_id: str
+    """Market trend information"""    trend_id: str
     name: str
     description: str
     market_segment: MarketSegment
@@ -1007,8 +970,7 @@ class MarketTrend:
 
 @dataclass
 class RevenueProjection:
-    """Revenue projection analysis"""
-    projection_id: str
+    """Revenue projection analysis"""    projection_id: str
     opportunity_id: str
     best_case_revenue: float
     likely_case_revenue: float
@@ -1025,8 +987,7 @@ class RevenueProjection:
 
 @dataclass
 class BusinessOpportunity:
-    """Comprehensive business opportunity"""
-    opportunity_id: str
+    """Comprehensive business opportunity"""    opportunity_id: str
     title: str
     description: str
     opportunity_type: OpportunityType
@@ -1071,13 +1032,10 @@ class BusinessOpportunity:
     related_opportunities: List[str] = field(default_factory=list)
 
 class OpportunityScanner:
-    """
-    Advanced business opportunity discovery and analysis system
-    """
-    
+    """    Advanced business opportunity discovery and analysis system
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize opportunity scanner"""
-        self.config = config or {}
+        """Initialize opportunity scanner"""        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
         # Data sources and APIs
@@ -1111,8 +1069,7 @@ class OpportunityScanner:
         self.logger.info("OpportunityScanner initialized successfully")
 
     async def initialize(self) -> bool:
-        """Initialize scanner components"""
-        try:
+        """Initialize scanner components"""        try:
             # Initialize data sources
             await self._setup_data_sources()
             
@@ -1138,10 +1095,8 @@ class OpportunityScanner:
         filters: Optional[OpportunityFilter] = None,
         limit: int = 20
     ) -> List[BusinessOpportunity]:
-        """
-        Scan for business opportunities matching creator profile
-        """
-        start_time = datetime.now()
+        """        Scan for business opportunities matching creator profile
+        """        start_time = datetime.now()
         
         try:
             # Apply default filters
@@ -1199,10 +1154,8 @@ class OpportunityScanner:
         market_segments: Optional[List[MarketSegment]] = None,
         time_horizon: timedelta = timedelta(days=90)
     ) -> List[MarketTrend]:
-        """
-        Analyze current and emerging market trends
-        """
-        try:
+        """        Analyze current and emerging market trends
+        """        try:
             # Default to all segments if none specified
             if not market_segments:
                 market_segments = list(MarketSegment)
@@ -1234,10 +1187,8 @@ class OpportunityScanner:
         opportunity: BusinessOpportunity,
         creator_metrics: Dict[str, Any]
     ) -> RevenueProjection:
-        """
-        Predict revenue potential for specific opportunity
-        """
-        try:
+        """        Predict revenue potential for specific opportunity
+        """        try:
             # Collect comparable data
             comparable_data = await self._collect_comparable_revenue_data(
                 opportunity, creator_metrics
@@ -1304,10 +1255,8 @@ class OpportunityScanner:
         opportunity_id: str,
         performance_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Track and analyze opportunity performance
-        """
-        try:
+        """        Track and analyze opportunity performance
+        """        try:
             # Get opportunity details
             opportunity = self._opportunity_db.get(opportunity_id)
             if not opportunity:
@@ -1357,10 +1306,8 @@ class OpportunityScanner:
         creator_profile: Dict[str, Any],
         time_horizon: timedelta = timedelta(days=30)
     ) -> List[BusinessOpportunity]:
-        """
-        Identify emerging opportunities before they become mainstream
-        """
-        try:
+        """        Identify emerging opportunities before they become mainstream
+        """        try:
             # Analyze emerging trends
             emerging_trends = await self._identify_emerging_trends(time_horizon)
             
@@ -1394,8 +1341,7 @@ class OpportunityScanner:
     # Private methods for internal processing
 
     async def _setup_data_sources(self):
-        """Setup market data sources and APIs"""
-        self._market_data_sources = {
+        """Setup market data sources and APIs"""        self._market_data_sources = {
             'google_trends': {'api_key': self.config.get('google_trends_api')},
             'social_listening': {'api_key': self.config.get('social_api')},
             'brand_databases': {'api_key': self.config.get('brand_db_api')},
@@ -1404,8 +1350,7 @@ class OpportunityScanner:
         self.logger.info("Market data sources configured")
 
     async def _load_prediction_models(self):
-        """Load machine learning prediction models"""
-        # Mock model initialization
+        """Load machine learning prediction models"""        # Mock model initialization
         self._revenue_predictor = RandomForestRegressor(n_estimators=100)
         self._opportunity_classifier = RandomForestRegressor(n_estimators=50)
         self._risk_assessor = LinearRegression()
@@ -1421,8 +1366,7 @@ class OpportunityScanner:
         self.logger.info("Prediction models loaded and trained")
 
     async def _setup_market_databases(self):
-        """Setup market intelligence databases"""
-        # Mock market data
+        """Setup market intelligence databases"""        # Mock market data
         self._market_data = {
             'brand_partnerships': {
                 'average_rates': {'micro': 500, 'macro': 5000, 'mega': 50000},
@@ -1436,15 +1380,13 @@ class OpportunityScanner:
         self.logger.info("Market databases initialized")
 
     async def _setup_monitoring(self):
-        """Setup real-time opportunity monitoring"""
-        self.logger.info("Real-time monitoring setup completed")
+        """Setup real-time opportunity monitoring"""        self.logger.info("Real-time monitoring setup completed")
 
     async def _analyze_creator_profile(
         self,
         creator_profile: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze creator profile for opportunity matching"""
-        analysis = {
+        """Analyze creator profile for opportunity matching"""        analysis = {
             'creator_id': creator_profile.get('creator_id', 'unknown'),
             'content_categories': creator_profile.get('categories', []),
             'audience_size': creator_profile.get('follower_count', 0),
@@ -1461,8 +1403,7 @@ class OpportunityScanner:
         return analysis
 
     def _assess_monetization_readiness(self, profile: Dict[str, Any]) -> float:
-        """Assess creator's readiness for monetization"""
-        factors = {
+        """Assess creator's readiness for monetization"""        factors = {
             'follower_count': min(1.0, profile.get('follower_count', 0) / 10000),
             'engagement_rate': min(1.0, profile.get('engagement_rate', 0.0) / 0.1),
             'content_consistency': profile.get('posting_frequency_score', 0.5),
@@ -1472,8 +1413,7 @@ class OpportunityScanner:
         return sum(factors.values()) / len(factors)
 
     def _calculate_brand_safety_score(self, profile: Dict[str, Any]) -> float:
-        """Calculate brand safety score"""
-        # Simplified brand safety assessment
+        """Calculate brand safety score"""        # Simplified brand safety assessment
         base_score = 0.8
         
         if profile.get('content_warnings', 0) > 5:
@@ -1485,8 +1425,7 @@ class OpportunityScanner:
         return max(0.0, min(1.0, base_score))
 
     def _analyze_growth_trajectory(self, profile: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze creator's growth trajectory"""
-        return {
+        """Analyze creator's growth trajectory"""        return {
             'growth_rate': profile.get('monthly_growth_rate', 0.0),
             'trend': 'rising' if profile.get('monthly_growth_rate', 0.0) > 0.05 else 'stable',
             'consistency': profile.get('growth_consistency_score', 0.5)
@@ -1497,8 +1436,7 @@ class OpportunityScanner:
         profile_analysis: Dict[str, Any],
         filters: OpportunityFilter
     ) -> List[Dict[str, Any]]:
-        """Discover opportunities across multiple channels"""
-        opportunities = []
+        """Discover opportunities across multiple channels"""        opportunities = []
         
         # Brand partnership opportunities
         brand_opportunities = await self._discover_brand_partnerships(
@@ -1537,8 +1475,7 @@ class OpportunityScanner:
         profile_analysis: Dict[str, Any],
         filters: OpportunityFilter
     ) -> List[Dict[str, Any]]:
-        """Discover brand partnership opportunities"""
-        opportunities = []
+        """Discover brand partnership opportunities"""        opportunities = []
         
         # Mock brand partnerships based on profile
         audience_size = profile_analysis['audience_size']
@@ -1560,8 +1497,7 @@ class OpportunityScanner:
         return opportunities
 
     def _calculate_brand_partnership_revenue(self, audience_size: int) -> float:
-        """Calculate estimated brand partnership revenue"""
-        base_rate = 10.0  # per 1000 followers
+        """Calculate estimated brand partnership revenue"""        base_rate = 10.0  # per 1000 followers
         return (audience_size / 1000) * base_rate * (0.8 + np.random.random() * 0.4)
 
     async def _discover_platform_opportunities(
@@ -1569,8 +1505,7 @@ class OpportunityScanner:
         profile_analysis: Dict[str, Any],
         filters: OpportunityFilter
     ) -> List[Dict[str, Any]]:
-        """Discover platform-specific opportunities"""
-        opportunities = []
+        """Discover platform-specific opportunities"""        opportunities = []
         
         platforms = profile_analysis['platforms']
         
@@ -1601,8 +1536,7 @@ class OpportunityScanner:
         profile_analysis: Dict[str, Any],
         filters: OpportunityFilter
     ) -> List[Dict[str, Any]]:
-        """Discover content licensing opportunities"""
-        opportunities = []
+        """Discover content licensing opportunities"""        opportunities = []
         
         if 'music' in profile_analysis['content_categories']:
             opportunities.append({
@@ -1621,8 +1555,7 @@ class OpportunityScanner:
         profile_analysis: Dict[str, Any],
         filters: OpportunityFilter
     ) -> List[Dict[str, Any]]:
-        """Discover collaboration opportunities"""
-        opportunities = []
+        """Discover collaboration opportunities"""        opportunities = []
         
         opportunities.append({
             'type': OpportunityType.COLLABORATION,
@@ -1640,8 +1573,7 @@ class OpportunityScanner:
         profile_analysis: Dict[str, Any],
         filters: OpportunityFilter
     ) -> List[Dict[str, Any]]:
-        """Discover emerging market opportunities"""
-        opportunities = []
+        """Discover emerging market opportunities"""        opportunities = []
         
         opportunities.append({
             'type': OpportunityType.NFT_CREATION,
@@ -1659,8 +1591,7 @@ class OpportunityScanner:
         opportunities: List[Dict[str, Any]],
         profile_analysis: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Analyze and score discovered opportunities"""
-        scored_opportunities = []
+        """Analyze and score discovered opportunities"""        scored_opportunities = []
         
         for opp in opportunities:
             # Calculate opportunity score
@@ -1680,8 +1611,7 @@ class OpportunityScanner:
         opportunity: Dict[str, Any],
         profile_analysis: Dict[str, Any]
     ) -> float:
-        """Calculate comprehensive opportunity score"""
-        revenue_score = min(1.0, opportunity.get('estimated_revenue', 0) / 5000.0)
+        """Calculate comprehensive opportunity score"""        revenue_score = min(1.0, opportunity.get('estimated_revenue', 0) / 5000.0)
         timeline_score = max(0.0, 1.0 - opportunity.get('timeline', 90) / 180.0)
         risk_score = {
             RiskLevel.LOW: 1.0,
@@ -1708,8 +1638,7 @@ class OpportunityScanner:
         opportunity: Dict[str, Any],
         profile_analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze how well opportunity fits creator profile"""
-        return {
+        """Analyze how well opportunity fits creator profile"""        return {
             'content_alignment': 0.8,
             'audience_match': 0.7,
             'skill_requirements_met': 0.9,
@@ -1722,8 +1651,7 @@ class OpportunityScanner:
         opportunity: Dict[str, Any],
         profile_analysis: Dict[str, Any]
     ) -> float:
-        """Estimate probability of opportunity success"""
-        base_probability = 0.5
+        """Estimate probability of opportunity success"""        base_probability = 0.5
         
         # Adjust based on creator factors
         if profile_analysis['monetization_readiness'] > 0.8:
@@ -1742,8 +1670,7 @@ class OpportunityScanner:
         opportunities: List[Dict[str, Any]],
         filters: OpportunityFilter
     ) -> List[Dict[str, Any]]:
-        """Apply filtering criteria to opportunities"""
-        filtered = []
+        """Apply filtering criteria to opportunities"""        filtered = []
         
         for opp in opportunities:
             # Check opportunity types
@@ -1778,8 +1705,7 @@ class OpportunityScanner:
         opportunities: List[Dict[str, Any]],
         profile_analysis: Dict[str, Any]
     ) -> List[BusinessOpportunity]:
-        """Generate detailed revenue projections for opportunities"""
-        business_opportunities = []
+        """Generate detailed revenue projections for opportunities"""        business_opportunities = []
         
         for opp in opportunities:
             # Create BusinessOpportunity object
@@ -1816,8 +1742,7 @@ class OpportunityScanner:
         opportunity: Dict[str, Any],
         profile_analysis: Dict[str, Any]
     ) -> RevenueProjection:
-        """Create detailed revenue projection"""
-        base_revenue = opportunity.get('estimated_revenue', 0.0)
+        """Create detailed revenue projection"""        base_revenue = opportunity.get('estimated_revenue', 0.0)
         
         return RevenueProjection(
             projection_id=f"proj_{uuid.uuid4().hex[:8]}",
@@ -1837,8 +1762,7 @@ class OpportunityScanner:
         )
 
     async def _get_market_trend(self, market_segment: Optional[MarketSegment]) -> MarketTrend:
-        """Get market trend for segment"""
-        return MarketTrend(
+        """Get market trend for segment"""        return MarketTrend(
             trend_id=f"trend_{uuid.uuid4().hex[:8]}",
             name=f"{market_segment.value if market_segment else 'general'} Market Trend",
             description="Growing market with positive outlook",
@@ -1862,8 +1786,7 @@ class OpportunityScanner:
         self,
         opportunities: List[BusinessOpportunity]
     ) -> List[BusinessOpportunity]:
-        """Rank opportunities by priority and potential"""
-        return sorted(
+        """Rank opportunities by priority and potential"""        return sorted(
             opportunities,
             key=lambda x: (x.priority_score, x.revenue_potential.likely_case_revenue),
             reverse=True
@@ -1874,8 +1797,7 @@ class OpportunityScanner:
         market_segments: List[MarketSegment],
         time_horizon: timedelta
     ) -> Dict[str, Any]:
-        """Collect trend data from multiple sources"""
-        return {
+        """Collect trend data from multiple sources"""        return {
             'google_trends': {'music': 100, 'entertainment': 95},
             'social_mentions': {'music': 50000, 'entertainment': 75000},
             'search_volume': {'music': 100000, 'entertainment': 150000}
@@ -1885,8 +1807,7 @@ class OpportunityScanner:
         self,
         trend_data: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Analyze trend patterns and momentum"""
-        patterns = []
+        """Analyze trend patterns and momentum"""        patterns = []
         
         for segment in ['music', 'entertainment']:
             pattern = {
@@ -1904,8 +1825,7 @@ class OpportunityScanner:
         self,
         analyzed_trends: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Predict trend trajectories using ML models"""
-        predictions = []
+        """Predict trend trajectories using ML models"""        predictions = []
         
         for trend in analyzed_trends:
             prediction = {
@@ -1922,8 +1842,7 @@ class OpportunityScanner:
         self,
         trend_predictions: List[Dict[str, Any]]
     ) -> List[MarketTrend]:
-        """Identify opportunities from trend analysis"""
-        trend_opportunities = []
+        """Identify opportunities from trend analysis"""        trend_opportunities = []
         
         for trend in trend_predictions:
             market_trend = MarketTrend(
@@ -1953,8 +1872,7 @@ class OpportunityScanner:
         self,
         trends: List[MarketTrend]
     ) -> List[MarketTrend]:
-        """Rank trends by business potential"""
-        return sorted(
+        """Rank trends by business potential"""        return sorted(
             trends,
             key=lambda x: (x.trend_score, x.momentum, x.growth_rate),
             reverse=True
@@ -1965,8 +1883,7 @@ class OpportunityScanner:
         opportunity: BusinessOpportunity,
         creator_metrics: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Collect comparable revenue data"""
-        return [
+        """Collect comparable revenue data"""        return [
             {'similar_creator': 'creator_123', 'revenue': 1500.0, 'timeline': 30},
             {'similar_creator': 'creator_456', 'revenue': 2000.0, 'timeline': 45}
         ]
@@ -1977,8 +1894,7 @@ class OpportunityScanner:
         creator_metrics: Dict[str, Any],
         comparable_data: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Apply ML models for revenue prediction"""
-        # Mock revenue prediction
+        """Apply ML models for revenue prediction"""        # Mock revenue prediction
         base_prediction = opportunity.revenue_potential.likely_case_revenue
         
         return {
@@ -1992,8 +1908,7 @@ class OpportunityScanner:
         revenue_prediction: Dict[str, Any],
         risk_factors: List[str]
     ) -> Dict[str, Any]:
-        """Apply risk adjustments to revenue predictions"""
-        risk_adjustment = 1.0 - (len(risk_factors) * 0.05)  # 5% reduction per risk factor
+        """Apply risk adjustments to revenue predictions"""        risk_adjustment = 1.0 - (len(risk_factors) * 0.05)  # 5% reduction per risk factor
         
         adjusted_prediction = {
             **revenue_prediction,
@@ -2008,8 +1923,7 @@ class OpportunityScanner:
         risk_adjusted_prediction: Dict[str, Any],
         opportunity: BusinessOpportunity
     ) -> Dict[str, Any]:
-        """Generate revenue scenario analysis"""
-        base_revenue = risk_adjusted_prediction['risk_adjusted_revenue']
+        """Generate revenue scenario analysis"""        base_revenue = risk_adjusted_prediction['risk_adjusted_revenue']
         
         return {
             'best_case': base_revenue * 1.5,
@@ -2027,8 +1941,7 @@ class OpportunityScanner:
         self,
         market_segment: MarketSegment
     ) -> Dict[str, Any]:
-        """Get current market conditions"""
-        return {
+        """Get current market conditions"""        return {
             'growth_rate': 0.15,
             'competition_level': 0.6,
             'market_maturity': 'growing',
@@ -2040,8 +1953,7 @@ class OpportunityScanner:
         opportunity: BusinessOpportunity,
         performance_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate opportunity performance metrics"""
-        return {
+        """Calculate opportunity performance metrics"""        return {
             'actual_revenue': performance_data.get('revenue', 0.0),
             'timeline_adherence': performance_data.get('timeline_score', 1.0),
             'quality_score': performance_data.get('quality_score', 0.8),
@@ -2053,8 +1965,7 @@ class OpportunityScanner:
         opportunity: BusinessOpportunity,
         performance_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze accuracy of revenue projections"""
-        projected = opportunity.revenue_potential.likely_case_revenue
+        """Analyze accuracy of revenue projections"""        projected = opportunity.revenue_potential.likely_case_revenue
         actual = performance_data.get('revenue', 0.0)
         
         accuracy = 1.0 - abs(projected - actual) / max(projected, 1.0)
@@ -2072,8 +1983,7 @@ class OpportunityScanner:
         opportunity: BusinessOpportunity,
         performance_data: Dict[str, Any]
     ) -> BusinessOpportunity:
-        """Update opportunity status based on performance"""
-        if performance_data.get('completed', False):
+        """Update opportunity status based on performance"""        if performance_data.get('completed', False):
             opportunity.status = OpportunityStatus.COMPLETED
         elif performance_data.get('active', True):
             opportunity.status = OpportunityStatus.ACTIVE
@@ -2087,8 +1997,7 @@ class OpportunityScanner:
         performance_metrics: Dict[str, Any],
         projection_accuracy: Dict[str, Any]
     ) -> List[str]:
-        """Generate insights from performance analysis"""
-        insights = []
+        """Generate insights from performance analysis"""        insights = []
         
         if projection_accuracy['accuracy'] > 0.8:
             insights.append("Revenue projections were highly accurate")
@@ -2106,8 +2015,7 @@ class OpportunityScanner:
         performance_metrics: Dict[str, Any],
         opportunity: BusinessOpportunity
     ) -> List[str]:
-        """Generate recommendations based on performance"""
-        recommendations = []
+        """Generate recommendations based on performance"""        recommendations = []
         
         if performance_metrics['roi_actual'] > opportunity.roi_projection:
             recommendations.append("Consider scaling similar opportunities")
@@ -2124,8 +2032,7 @@ class OpportunityScanner:
         opportunity_id: str,
         projection_accuracy: Dict[str, Any]
     ):
-        """Update ML model accuracy based on actual results"""
-        accuracy = projection_accuracy['accuracy']
+        """Update ML model accuracy based on actual results"""        accuracy = projection_accuracy['accuracy']
         
         # Update metrics
         current_avg = self.metrics['average_accuracy']
@@ -2141,8 +2048,7 @@ class OpportunityScanner:
         self,
         time_horizon: timedelta
     ) -> List[Dict[str, Any]]:
-        """Identify emerging trends before mainstream adoption"""
-        # Mock emerging trends
+        """Identify emerging trends before mainstream adoption"""        # Mock emerging trends
         return [
             {
                 'trend_name': 'AI-Generated Music',
@@ -2163,8 +2069,7 @@ class OpportunityScanner:
         emerging_trends: List[Dict[str, Any]],
         creator_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Filter trends relevant to creator profile"""
-        relevant = []
+        """Filter trends relevant to creator profile"""        relevant = []
         creator_categories = creator_profile.get('categories', [])
         
         for trend in emerging_trends:
@@ -2178,8 +2083,7 @@ class OpportunityScanner:
         relevant_trends: List[Dict[str, Any]],
         creator_profile: Dict[str, Any]
     ) -> List[BusinessOpportunity]:
-        """Predict early opportunities from emerging trends"""
-        opportunities = []
+        """Predict early opportunities from emerging trends"""        opportunities = []
         
         for trend in relevant_trends:
             opportunity = BusinessOpportunity(
@@ -2216,8 +2120,7 @@ class OpportunityScanner:
         self,
         early_opportunities: List[BusinessOpportunity]
     ) -> Dict[str, Any]:
-        """Analyze first-mover advantages for early opportunities"""
-        return {
+        """Analyze first-mover advantages for early opportunities"""        return {
             'competitive_advantage': 0.8,
             'market_positioning': 'leader',
             'brand_building_potential': 0.9,
@@ -2230,8 +2133,7 @@ class OpportunityScanner:
         early_opportunities: List[BusinessOpportunity],
         advantage_analysis: Dict[str, Any]
     ) -> List[BusinessOpportunity]:
-        """Score opportunities by timing and potential"""
-        for opp in early_opportunities:
+        """Score opportunities by timing and potential"""        for opp in early_opportunities:
             timing_bonus = advantage_analysis['competitive_advantage'] * 0.2
             opp.priority_score += timing_bonus
         
@@ -2243,8 +2145,7 @@ class OpportunityScanner:
         opportunity_count: int,
         failed: bool = False
     ):
-        """Update scan performance metrics"""
-        self.metrics['total_scans'] += 1
+        """Update scan performance metrics"""        self.metrics['total_scans'] += 1
         
         if not failed:
             self.metrics['opportunities_discovered'] += opportunity_count
@@ -2258,8 +2159,7 @@ class OpportunityScanner:
         )
 
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get scanner performance metrics"""
-        return {
+        """Get scanner performance metrics"""        return {
             'scanner_metrics': self.metrics,
             'data_source_status': {
                 source: 'active' for source in self._market_data_sources.keys()
@@ -2283,8 +2183,7 @@ class OpportunityScanner:
         }
 
     async def shutdown(self):
-        """Cleanup and shutdown scanner"""
-        try:
+        """Cleanup and shutdown scanner"""        try:
             # Clear caches
             self._opportunity_cache.clear()
             self._trend_cache.clear()

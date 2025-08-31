@@ -1,5 +1,4 @@
-"""
-Base Crawler Abstract Class
+"""Base Crawler Abstract Class
 ===========================
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -11,9 +10,7 @@ Unauthorized use, copying or distribution prohibited.
 Abstract base class defining the common interface for all platform-specific
 crawlers. Provides standardized methods for content extraction, rate limiting,
 error handling, and result normalization across different platforms.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 from abc import ABC, abstractmethod
@@ -30,8 +27,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CrawlResult:
-    """Standardized result structure for crawler operations."""
-    
+    """Standardized result structure for crawler operations."""    
     url: str
     platform: str
     content_type: str
@@ -48,15 +44,13 @@ class CrawlResult:
     content_data: Optional[bytes] = None
     
     def __post_init__(self):
-        """Initialize default values."""
-        if self.tags is None:
+        """Initialize default values."""        if self.tags is None:
             self.tags = []
         if self.metadata is None:
             self.metadata = {}
 
 class RateLimiter:
-    """Rate limiting implementation for crawler requests."""
-    
+    """Rate limiting implementation for crawler requests."""    
     def __init__(self, requests_per_minute: int, requests_per_hour: int):
         self.requests_per_minute = requests_per_minute
         self.requests_per_hour = requests_per_hour
@@ -66,8 +60,7 @@ class RateLimiter:
         self.hour_requests: List[float] = []
     
     async def acquire(self):
-        """Acquire permission to make a request, blocking if necessary."""
-        
+        """Acquire permission to make a request, blocking if necessary."""        
         now = time.time()
         
         # Clean old requests
@@ -96,8 +89,7 @@ class RateLimiter:
         self.hour_requests.append(now)
     
     def _clean_old_requests(self, now: float):
-        """Remove old request timestamps."""
-        
+        """Remove old request timestamps."""        
         # Remove requests older than 1 minute
         self.minute_requests = [req_time for req_time in self.minute_requests if now - req_time < 60]
         
@@ -105,13 +97,11 @@ class RateLimiter:
         self.hour_requests = [req_time for req_time in self.hour_requests if now - req_time < 3600]
 
 class BaseCrawler(ABC):
-    """
-    Abstract base class for all platform-specific crawlers.
+    """    Abstract base class for all platform-specific crawlers.
     
     Provides common functionality including rate limiting, error handling,
     retry logic, and standardized result formatting.
-    """
-    
+    """    
     def __init__(self, config: PlatformConfig, database_session: Session):
         self.config = config
         self.db_session = database_session
@@ -139,8 +129,7 @@ class BaseCrawler(ABC):
         logger.info("Initialized %s crawler", self.__class__.__name__)
     
     def _build_headers(self) -> Dict[str, str]:
-        """Build HTTP headers for requests."""
-        
+        """Build HTTP headers for requests."""        
         headers = {
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
             'Accept-Language': 'en-US,en;q=0.5',
@@ -164,8 +153,7 @@ class BaseCrawler(ABC):
         urls: List[str], 
         fingerprints: List[str]
     ) -> List[CrawlResult]:
-        """
-        Crawl multiple URLs and return results.
+        """        Crawl multiple URLs and return results.
         
         Args:
             urls: List of URLs to crawl
@@ -173,8 +161,7 @@ class BaseCrawler(ABC):
             
         Returns:
             List of CrawlResult objects
-        """
-        
+        """        
         results = []
         
         for url in urls:
@@ -195,8 +182,7 @@ class BaseCrawler(ABC):
         url: str, 
         fingerprints: List[str]
     ) -> Optional[CrawlResult]:
-        """
-        Crawl a single URL with retry logic.
+        """        Crawl a single URL with retry logic.
         
         Args:
             url: URL to crawl
@@ -204,8 +190,7 @@ class BaseCrawler(ABC):
             
         Returns:
             CrawlResult or None if failed
-        """
-        
+        """        
         for attempt in range(self.config.max_retries + 1):
             try:
                 # Rate limiting
@@ -245,8 +230,7 @@ class BaseCrawler(ABC):
         url: str, 
         fingerprints: List[str]
     ) -> Optional[CrawlResult]:
-        """
-        Platform-specific implementation of URL crawling.
+        """        Platform-specific implementation of URL crawling.
         
         This method must be implemented by each platform-specific crawler.
         
@@ -256,34 +240,29 @@ class BaseCrawler(ABC):
             
         Returns:
             CrawlResult or None
-        """
-        pass
+        """        pass
     
     @abstractmethod
     def extract_content_metadata(self, content_data: Any) -> Dict[str, Any]:
-        """
-        Extract platform-specific metadata from content.
+        """        Extract platform-specific metadata from content.
         
         Args:
             content_data: Platform-specific content data
             
         Returns:
             Dictionary of extracted metadata
-        """
-        pass
+        """        pass
     
     @abstractmethod
     def is_url_supported(self, url: str) -> bool:
-        """
-        Check if URL is supported by this crawler.
+        """        Check if URL is supported by this crawler.
         
         Args:
             url: URL to check
             
         Returns:
             True if URL is supported
-        """
-        pass
+        """        pass
     
     async def search_content(
         self, 
@@ -291,8 +270,7 @@ class BaseCrawler(ABC):
         fingerprints: List[str],
         max_results: int = 50
     ) -> List[CrawlResult]:
-        """
-        Search for content using platform-specific search capabilities.
+        """        Search for content using platform-specific search capabilities.
         
         Args:
             search_terms: Terms to search for
@@ -301,8 +279,7 @@ class BaseCrawler(ABC):
             
         Returns:
             List of CrawlResult objects
-        """
-        
+        """        
         # Default implementation - can be overridden by specific crawlers
         logger.info("Search not implemented for %s", self.__class__.__name__)
         return []
@@ -313,8 +290,7 @@ class BaseCrawler(ABC):
         category: Optional[str] = None,
         max_results: int = 50
     ) -> List[CrawlResult]:
-        """
-        Get trending content from the platform.
+        """        Get trending content from the platform.
         
         Args:
             fingerprints: Protected content fingerprints
@@ -323,20 +299,17 @@ class BaseCrawler(ABC):
             
         Returns:
             List of CrawlResult objects
-        """
-        
+        """        
         # Default implementation - can be overridden by specific crawlers
         logger.info("Trending content not implemented for %s", self.__class__.__name__)
         return []
     
     async def health_check(self) -> bool:
-        """
-        Perform health check on the crawler.
+        """        Perform health check on the crawler.
         
         Returns:
             True if crawler is healthy
-        """
-        
+        """        
         try:
             # Test basic connectivity
             test_url = self._get_health_check_url()
@@ -352,12 +325,10 @@ class BaseCrawler(ABC):
             return False
     
     def _get_health_check_url(self) -> Optional[str]:
-        """Get URL for health check - can be overridden by specific crawlers."""
-        return self.config.base_url if self.config.base_url else None
+        """Get URL for health check - can be overridden by specific crawlers."""        return self.config.base_url if self.config.base_url else None
     
     def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get crawler performance metrics."""
-        
+        """Get crawler performance metrics."""        
         success_rate = self.successful_requests / self.total_requests if self.total_requests > 0 else 0
         
         return {
@@ -377,8 +348,7 @@ class BaseCrawler(ABC):
         }
     
     def _update_performance_metrics(self, response_time: float, success: bool):
-        """Update performance tracking metrics."""
-        
+        """Update performance tracking metrics."""        
         self.total_requests += 1
         
         if success:
@@ -394,8 +364,7 @@ class BaseCrawler(ABC):
             self.failed_requests += 1
     
     def _record_error(self, error: Exception):
-        """Record error for monitoring and debugging."""
-        
+        """Record error for monitoring and debugging."""        
         self.error_count += 1
         self.last_error_time = datetime.utcnow()
         
@@ -403,8 +372,7 @@ class BaseCrawler(ABC):
         logger.error("Crawler error in %s: %s", self.__class__.__name__, str(error))
     
     def _normalize_url(self, url: str) -> str:
-        """Normalize URL format for consistent processing."""
-        
+        """Normalize URL format for consistent processing."""        
         url = url.strip()
         
         # Remove tracking parameters
@@ -426,12 +394,10 @@ class BaseCrawler(ABC):
         return url
     
     def _extract_content_id(self, url: str) -> Optional[str]:
-        """Extract content ID from URL - to be implemented by specific crawlers."""
-        return None
+        """Extract content ID from URL - to be implemented by specific crawlers."""        return None
     
     def _determine_content_type(self, metadata: Dict[str, Any]) -> ContentType:
-        """Determine content type from metadata."""
-        
+        """Determine content type from metadata."""        
         # Default implementation based on common patterns
         content_type_str = metadata.get('content_type', '').lower()
         
@@ -447,7 +413,6 @@ class BaseCrawler(ABC):
             return ContentType.MIXED
     
     async def close(self):
-        """Clean up crawler resources."""
-        
+        """Clean up crawler resources."""        
         # Override in specific crawlers if needed
         logger.info("Closing %s crawler", self.__class__.__name__)

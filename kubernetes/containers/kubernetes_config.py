@@ -1,5 +1,4 @@
-"""
-⚓ Kubernetes Configuration Manager - IA-Influencer-Agent Infrastructure
+"""⚓ Kubernetes Configuration Manager - IA-Influencer-Agent Infrastructure
 =======================================================================
 Expert: DevOps Engineer + Cloud Architect + Kubernetes Specialist
 Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -12,9 +11,7 @@ l'autorisation écrite explicite de Fahed Mlaiel est strictement
 interdite et constituera une violation des lois sur le droit d'auteur.
 
 Professional Kubernetes configuration and management for IA-Influencer-Agent platform.
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 import asyncio
 import logging
 import json
@@ -31,8 +28,7 @@ import base64
 logger = logging.getLogger(__name__)
 
 class KubernetesResourceType(Enum):
-    """Kubernetes resource types"""
-    DEPLOYMENT = "Deployment"
+    """Kubernetes resource types"""    DEPLOYMENT = "Deployment"
     SERVICE = "Service"
     CONFIGMAP = "ConfigMap"
     SECRET = "Secret"
@@ -46,8 +42,7 @@ class KubernetesResourceType(Enum):
 
 @dataclass
 class KubernetesResource:
-    """Kubernetes resource configuration"""
-    api_version: str
+    """Kubernetes resource configuration"""    api_version: str
     kind: str
     metadata: Dict[str, Any]
     spec: Dict[str, Any]
@@ -55,8 +50,7 @@ class KubernetesResource:
 
 @dataclass
 class PodSpec:
-    """Pod specification for Kubernetes deployments"""
-    containers: List[Dict[str, Any]]
+    """Pod specification for Kubernetes deployments"""    containers: List[Dict[str, Any]]
     volumes: List[Dict[str, Any]] = field(default_factory=list)
     node_selector: Dict[str, str] = field(default_factory=dict)
     tolerations: List[Dict[str, Any]] = field(default_factory=list)
@@ -67,8 +61,7 @@ class PodSpec:
 
 @dataclass
 class DeploymentSpec:
-    """Deployment specification"""
-    replicas: int
+    """Deployment specification"""    replicas: int
     selector: Dict[str, Any]
     template: Dict[str, Any]
     strategy: Dict[str, Any] = field(default_factory=dict)
@@ -76,8 +69,7 @@ class DeploymentSpec:
     progress_deadline_seconds: int = 600
 
 class KubernetesConfigManager:
-    """Professional Kubernetes configuration manager"""
-    
+    """Professional Kubernetes configuration manager"""    
     def __init__(self, config_path: str = "/app/config/kubernetes", namespace: str = "ia-influencer"):
         self.config_path = Path(config_path)
         self.namespace = namespace
@@ -92,8 +84,7 @@ class KubernetesConfigManager:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
     async def initialize(self) -> bool:
-        """Initialize Kubernetes configuration manager"""
-        try:
+        """Initialize Kubernetes configuration manager"""        try:
             # Load Kubernetes configuration
             try:
                 config.load_incluster_config()  # In-cluster config
@@ -127,8 +118,7 @@ class KubernetesConfigManager:
             return False
     
     async def _create_namespace(self) -> None:
-        """Create namespace if it doesn't exist"""
-        try:
+        """Create namespace if it doesn't exist"""        try:
             # Check if namespace exists
             try:
                 self.core_v1_api.read_namespace(name=self.namespace)
@@ -156,8 +146,7 @@ class KubernetesConfigManager:
             self.logger.error(f"❌ Error creating namespace: {e}")
     
     async def _generate_default_resources(self) -> None:
-        """Generate default Kubernetes resources for IA-Influencer services"""
-        
+        """Generate default Kubernetes resources for IA-Influencer services"""        
         # ConfigMap for application configuration
         config_map = KubernetesResource(
             api_version="v1",
@@ -578,8 +567,7 @@ class KubernetesConfigManager:
             await self._save_resource(name, resource)
     
     async def _save_resource(self, name: str, resource: KubernetesResource) -> None:
-        """Save Kubernetes resource to file"""
-        try:
+        """Save Kubernetes resource to file"""        try:
             resource_file = self.config_path / f"{name}.yaml"
             resource_dict = asdict(resource)
             
@@ -598,8 +586,7 @@ class KubernetesConfigManager:
             self.logger.error(f"❌ Error saving resource {name}: {e}")
     
     async def apply_resource(self, resource_name: str) -> bool:
-        """Apply Kubernetes resource"""
-        try:
+        """Apply Kubernetes resource"""        try:
             if resource_name not in self.resources:
                 self.logger.error(f"❌ Resource {resource_name} not found")
                 return False
@@ -627,8 +614,7 @@ class KubernetesConfigManager:
             return False
     
     async def _apply_deployment(self, resource: KubernetesResource) -> bool:
-        """Apply Deployment resource"""
-        try:
+        """Apply Deployment resource"""        try:
             deployment_body = client.V1Deployment(
                 api_version=resource.api_version,
                 kind=resource.kind,
@@ -663,8 +649,7 @@ class KubernetesConfigManager:
             return False
     
     async def _apply_service(self, resource: KubernetesResource) -> bool:
-        """Apply Service resource"""
-        try:
+        """Apply Service resource"""        try:
             service_body = client.V1Service(
                 api_version=resource.api_version,
                 kind=resource.kind,
@@ -697,8 +682,7 @@ class KubernetesConfigManager:
             return False
     
     async def _apply_configmap(self, resource: KubernetesResource) -> bool:
-        """Apply ConfigMap resource"""
-        try:
+        """Apply ConfigMap resource"""        try:
             configmap_body = client.V1ConfigMap(
                 api_version=resource.api_version,
                 kind=resource.kind,
@@ -731,8 +715,7 @@ class KubernetesConfigManager:
             return False
     
     async def _apply_secret(self, resource: KubernetesResource) -> bool:
-        """Apply Secret resource"""
-        try:
+        """Apply Secret resource"""        try:
             secret_body = client.V1Secret(
                 api_version=resource.api_version,
                 kind=resource.kind,
@@ -766,8 +749,7 @@ class KubernetesConfigManager:
             return False
     
     async def _apply_ingress(self, resource: KubernetesResource) -> bool:
-        """Apply Ingress resource"""
-        try:
+        """Apply Ingress resource"""        try:
             ingress_body = client.V1Ingress(
                 api_version=resource.api_version,
                 kind=resource.kind,
@@ -800,8 +782,7 @@ class KubernetesConfigManager:
             return False
     
     async def _apply_hpa(self, resource: KubernetesResource) -> bool:
-        """Apply HorizontalPodAutoscaler resource"""
-        try:
+        """Apply HorizontalPodAutoscaler resource"""        try:
             hpa_body = client.V1HorizontalPodAutoscaler(
                 api_version=resource.api_version,
                 kind=resource.kind,
@@ -834,8 +815,7 @@ class KubernetesConfigManager:
             return False
     
     async def deploy_all_resources(self) -> bool:
-        """Deploy all Kubernetes resources"""
-        try:
+        """Deploy all Kubernetes resources"""        try:
             success_count = 0
             total_count = len(self.resources)
             
@@ -865,8 +845,7 @@ class KubernetesConfigManager:
             return False
     
     async def get_resource_status(self, resource_name: str) -> Dict[str, Any]:
-        """Get status of deployed resource"""
-        try:
+        """Get status of deployed resource"""        try:
             if resource_name not in self.resources:
                 return {"status": "not_found", "error": "Resource not configured"}
             
@@ -907,15 +886,13 @@ class KubernetesConfigManager:
             return {"status": "error", "error": str(e)}
 
 class KubernetesDeploymentManager:
-    """Professional Kubernetes deployment manager"""
-    
+    """Professional Kubernetes deployment manager"""    
     def __init__(self, config_manager: KubernetesConfigManager):
         self.config_manager = config_manager
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def rolling_update(self, deployment_name: str, new_image: str) -> bool:
-        """Perform rolling update of deployment"""
-        try:
+        """Perform rolling update of deployment"""        try:
             # Get current deployment
             deployment = self.config_manager.apps_v1_api.read_namespaced_deployment(
                 name=deployment_name,
@@ -942,8 +919,7 @@ class KubernetesDeploymentManager:
             return False
     
     async def scale_deployment(self, deployment_name: str, replicas: int) -> bool:
-        """Scale deployment to specified number of replicas"""
-        try:
+        """Scale deployment to specified number of replicas"""        try:
             # Scale deployment
             scale_body = client.V1Scale(
                 spec=client.V1ScaleSpec(replicas=replicas)
@@ -963,15 +939,13 @@ class KubernetesDeploymentManager:
             return False
 
 class KubernetesPodManager:
-    """Professional Kubernetes pod manager"""
-    
+    """Professional Kubernetes pod manager"""    
     def __init__(self, config_manager: KubernetesConfigManager):
         self.config_manager = config_manager
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def get_pods(self, label_selector: str = None) -> List[Dict[str, Any]]:
-        """Get pods in namespace"""
-        try:
+        """Get pods in namespace"""        try:
             pods_list = self.config_manager.core_v1_api.list_namespaced_pod(
                 namespace=self.config_manager.namespace,
                 label_selector=label_selector
@@ -995,8 +969,7 @@ class KubernetesPodManager:
             return []
     
     async def get_pod_logs(self, pod_name: str, container_name: str = None, lines: int = 100) -> str:
-        """Get logs from pod"""
-        try:
+        """Get logs from pod"""        try:
             logs = self.config_manager.core_v1_api.read_namespaced_pod_log(
                 name=pod_name,
                 namespace=self.config_manager.namespace,
@@ -1011,8 +984,7 @@ class KubernetesPodManager:
             return ""
     
     async def execute_command(self, pod_name: str, command: List[str], container_name: str = None) -> str:
-        """Execute command in pod"""
-        try:
+        """Execute command in pod"""        try:
             from kubernetes.stream import stream
             
             exec_command = ['/bin/sh', '-c'] + command

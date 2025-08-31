@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Consent Management System
+"""IA Influencer Agent - Consent Management System
 Enterprise-grade consent orchestration and tracking system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -11,9 +10,7 @@ This module provides comprehensive consent management functionality including:
 - Consent withdrawal processing
 - Privacy preference centers
 - Compliance-ready consent documentation
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -37,8 +34,7 @@ logger = get_logger(__name__)
 
 
 class ConsentType(str, Enum):
-    """Types of user consent"""
-    ESSENTIAL = "essential"
+    """Types of user consent"""    ESSENTIAL = "essential"
     FUNCTIONAL = "functional"
     ANALYTICS = "analytics"
     MARKETING = "marketing"
@@ -53,8 +49,7 @@ class ConsentType(str, Enum):
 
 
 class ConsentStatus(str, Enum):
-    """Consent status values"""
-    GRANTED = "granted"
+    """Consent status values"""    GRANTED = "granted"
     WITHDRAWN = "withdrawn"
     PENDING = "pending"
     EXPIRED = "expired"
@@ -63,8 +58,7 @@ class ConsentStatus(str, Enum):
 
 
 class ConsentMethod(str, Enum):
-    """Methods of consent collection"""
-    EXPLICIT_CHECKBOX = "explicit_checkbox"
+    """Methods of consent collection"""    EXPLICIT_CHECKBOX = "explicit_checkbox"
     DIGITAL_SIGNATURE = "digital_signature"
     EMAIL_CONFIRMATION = "email_confirmation"
     BIOMETRIC_VERIFICATION = "biometric_verification"
@@ -75,8 +69,7 @@ class ConsentMethod(str, Enum):
 
 
 class ProcessingPurpose(str, Enum):
-    """Data processing purposes"""
-    SERVICE_PROVISION = "service_provision"
+    """Data processing purposes"""    SERVICE_PROVISION = "service_provision"
     CONTENT_PERSONALIZATION = "content_personalization"
     ANALYTICS_INSIGHTS = "analytics_insights"
     MARKETING_CAMPAIGNS = "marketing_campaigns"
@@ -90,8 +83,7 @@ class ProcessingPurpose(str, Enum):
 
 @dataclass
 class ConsentDetails:
-    """Detailed consent information"""
-    consent_id: str
+    """Detailed consent information"""    consent_id: str
     user_id: str
     consent_type: ConsentType
     purpose: ProcessingPurpose
@@ -111,8 +103,7 @@ class ConsentDetails:
 
 @dataclass
 class ConsentBundle:
-    """Bundle of related consents"""
-    bundle_id: str
+    """Bundle of related consents"""    bundle_id: str
     user_id: str
     bundle_name: str
     consents: List[ConsentDetails]
@@ -124,8 +115,7 @@ class ConsentBundle:
 
 @dataclass
 class PrivacyPreferences:
-    """User privacy preferences"""
-    user_id: str
+    """User privacy preferences"""    user_id: str
     communication_preferences: Dict[str, bool]
     data_sharing_preferences: Dict[str, bool]
     retention_preferences: Dict[str, int]
@@ -137,12 +127,9 @@ class PrivacyPreferences:
 
 
 class ConsentManager:
-    """
-    Enterprise-grade consent management system providing comprehensive
+    """    Enterprise-grade consent management system providing comprehensive
     consent orchestration, tracking, and compliance functionality.
-    """
-
-    def __init__(self):
+    """    def __init__(self):
         self.audit_logger = AuditLogger()
         self.session_cache = {}
         self.consent_templates = {}
@@ -161,8 +148,7 @@ class ConsentManager:
         metadata: Dict[str, Any] = None,
         request_context: Dict[str, Any] = None
     ) -> ConsentDetails:
-        """
-        Grant user consent with comprehensive tracking
+        """        Grant user consent with comprehensive tracking
         
         Args:
             user_id: User identifier
@@ -178,8 +164,7 @@ class ConsentManager:
             
         Returns:
             ConsentDetails: Detailed consent record
-        """
-        try:
+        """        try:
             async with get_db_session() as session:
                 # Validate user exists
                 user = await session.get(User, user_id)
@@ -269,8 +254,7 @@ class ConsentManager:
         reason: Optional[str] = None,
         request_context: Dict[str, Any] = None
     ) -> bool:
-        """
-        Withdraw user consent with audit trail
+        """        Withdraw user consent with audit trail
         
         Args:
             user_id: User identifier
@@ -281,8 +265,7 @@ class ConsentManager:
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             async with get_db_session() as session:
                 # Find active consent
                 query = select(ConsentRecord).where(
@@ -345,8 +328,7 @@ class ConsentManager:
         status_filter: Optional[ConsentStatus] = None,
         include_history: bool = False
     ) -> List[ConsentDetails]:
-        """
-        Retrieve user consents with optional filtering
+        """        Retrieve user consents with optional filtering
         
         Args:
             user_id: User identifier
@@ -355,8 +337,7 @@ class ConsentManager:
             
         Returns:
             List[ConsentDetails]: User consent records
-        """
-        try:
+        """        try:
             async with get_db_session() as session:
                 query = select(ConsentRecord).where(ConsentRecord.user_id == user_id)
                 
@@ -400,8 +381,7 @@ class ConsentManager:
         consent_type: ConsentType,
         purpose: ProcessingPurpose
     ) -> bool:
-        """
-        Check if user has valid consent for specific purpose
+        """        Check if user has valid consent for specific purpose
         
         Args:
             user_id: User identifier
@@ -410,8 +390,7 @@ class ConsentManager:
             
         Returns:
             bool: Consent validity status
-        """
-        try:
+        """        try:
             async with get_db_session() as session:
                 query = select(ConsentRecord).where(
                     and_(
@@ -439,8 +418,7 @@ class ConsentManager:
         user_id: str,
         preferences: PrivacyPreferences
     ) -> bool:
-        """
-        Update user privacy preferences
+        """        Update user privacy preferences
         
         Args:
             user_id: User identifier
@@ -448,8 +426,7 @@ class ConsentManager:
             
         Returns:
             bool: Update success status
-        """
-        try:
+        """        try:
             async with get_db_session() as session:
                 # Find or create privacy preference record
                 query = select(PrivacyPreference).where(PrivacyPreference.user_id == user_id)
@@ -501,8 +478,7 @@ class ConsentManager:
         date_range: Optional[tuple] = None,
         consent_types: Optional[List[ConsentType]] = None
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive consent report
+        """        Generate comprehensive consent report
         
         Args:
             user_id: Optional user filter
@@ -511,8 +487,7 @@ class ConsentManager:
             
         Returns:
             Dict[str, Any]: Comprehensive consent report
-        """
-        try:
+        """        try:
             async with get_db_session() as session:
                 # Build base query
                 query = select(ConsentRecord)
@@ -590,8 +565,7 @@ class ConsentManager:
         consent_type: ConsentType,
         session: AsyncSession
     ) -> None:
-        """Process implications of consent withdrawal"""
-        try:
+        """Process implications of consent withdrawal"""        try:
             # Handle withdrawal implications based on consent type
             if consent_type == ConsentType.ANALYTICS:
                 await self._stop_analytics_tracking(user_id)
@@ -610,8 +584,7 @@ class ConsentManager:
         user: User,
         consent_details: ConsentDetails
     ) -> None:
-        """Send consent confirmation email"""
-        try:
+        """Send consent confirmation email"""        try:
             subject = f"Consent Confirmation - {consent_details.consent_type.value.title()}"
             template_data = {
                 "user_name": user.full_name,
@@ -632,23 +605,19 @@ class ConsentManager:
             logger.error(f"Failed to send consent confirmation: {str(e)}")
 
     async def _stop_analytics_tracking(self, user_id: str) -> None:
-        """Stop analytics tracking for user"""
-        # Implementation for stopping analytics tracking
+        """Stop analytics tracking for user"""        # Implementation for stopping analytics tracking
         pass
 
     async def _remove_from_marketing_lists(self, user_id: str) -> None:
-        """Remove user from marketing lists"""
-        # Implementation for removing from marketing lists
+        """Remove user from marketing lists"""        # Implementation for removing from marketing lists
         pass
 
     async def _reset_personalization_data(self, user_id: str) -> None:
-        """Reset personalization data for user"""
-        # Implementation for resetting personalization data
+        """Reset personalization data for user"""        # Implementation for resetting personalization data
         pass
 
     async def _adjust_protection_settings(self, user_id: str) -> None:
-        """Adjust content protection settings"""
-        # Implementation for adjusting protection settings
+        """Adjust content protection settings"""        # Implementation for adjusting protection settings
         pass
 
 

@@ -8,8 +8,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
-"""
-__version__ = "1.0.0"
+"""__version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."

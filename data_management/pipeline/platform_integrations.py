@@ -1,5 +1,4 @@
-"""
-Platform Integration Module  
+"""Platform Integration Module  
 Author: Fahed Mlaiel <mlaiel@live.de>
 
 Specialized platform integrations for creators supporting the complete monetization workflow:
@@ -12,9 +11,7 @@ Specialized platform integrations for creators supporting the complete monetizat
 ⚠️ COPYRIGHT NOTICE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This code and all associated concepts are the EXCLUSIVE PROPERTY of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use will result in immediate legal action.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
@@ -43,8 +40,7 @@ from ..utils.decorators import monitor_performance, retry_on_failure
 
 
 class BasePlatformIntegration(ABC):
-    """Abstract base class for platform integrations."""
-    
+    """Abstract base class for platform integrations."""    
     def __init__(self, platform_name: str, config: PlatformConfig):
         self.platform_name = platform_name
         self.config = config
@@ -53,31 +49,25 @@ class BasePlatformIntegration(ABC):
         
     @abstractmethod
     async def authenticate(self, credentials: Dict[str, Any]) -> bool:
-        """Authenticate with the platform."""
-        pass
+        """Authenticate with the platform."""        pass
     
     @abstractmethod
     async def upload_content(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload content to the platform."""
-        pass
+        """Upload content to the platform."""        pass
     
     @abstractmethod
     async def get_analytics(self, content_id: str) -> Dict[str, Any]:
-        """Get content analytics from the platform."""
-        pass
+        """Get content analytics from the platform."""        pass
     
     @abstractmethod
     async def optimize_content(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize content for the platform."""
-        pass
+        """Optimize content for the platform."""        pass
 
 
 class CreatorPlatformManager:
-    """
-    Centralized platform management for creators supporting multi-platform
+    """    Centralized platform management for creators supporting multi-platform
     content distribution, analytics aggregation, and monetization tracking.
-    """
-    
+    """    
     def __init__(self, creator_type: str, config: PlatformConfig = None):
         self.creator_type = creator_type
         self.config = config or PlatformConfig()
@@ -120,8 +110,7 @@ class CreatorPlatformManager:
         self._initialize_platforms()
 
     def _initialize_platforms(self):
-        """Initialize platform integrations for the creator type."""
-        creator_config = self.creator_platforms.get(self.creator_type, {})
+        """Initialize platform integrations for the creator type."""        creator_config = self.creator_platforms.get(self.creator_type, {})
         
         # Initialize primary platforms
         for platform in creator_config.get('primary', []):
@@ -137,8 +126,7 @@ class CreatorPlatformManager:
                 self.platforms[platform] = self._create_platform_integration(platform)
 
     def _create_platform_integration(self, platform_name: str) -> BasePlatformIntegration:
-        """Create platform integration instance."""
-        platform_classes = {
+        """Create platform integration instance."""        platform_classes = {
             'spotify': SpotifyIntegration,
             'apple_music': AppleMusicIntegration,
             'youtube_music': YouTubeMusicIntegration,
@@ -166,8 +154,7 @@ class CreatorPlatformManager:
         target_platforms: List[str] = None,
         distribution_strategy: str = "simultaneous"
     ) -> Dict[str, Any]:
-        """
-        Distribute content across multiple platforms with optimized timing and formatting.
+        """        Distribute content across multiple platforms with optimized timing and formatting.
         
         Args:
             content_data: Content to distribute
@@ -176,8 +163,7 @@ class CreatorPlatformManager:
             
         Returns:
             Distribution results with platform-specific metrics
-        """
-        if target_platforms is None:
+        """        if target_platforms is None:
             target_platforms = self.creator_platforms[self.creator_type]['primary']
         
         distribution_results = {
@@ -224,8 +210,7 @@ class CreatorPlatformManager:
             raise PlatformError(f"Content distribution failed: {str(e)}")
 
     async def _distribute_simultaneous(self, optimized_content: Dict[str, Dict[str, Any]]) -> Dict[str, Any]:
-        """Distribute content simultaneously across all platforms."""
-        platform_results = {}
+        """Distribute content simultaneously across all platforms."""        platform_results = {}
         
         # Create upload tasks for all platforms
         upload_tasks = []
@@ -252,8 +237,7 @@ class CreatorPlatformManager:
         return platform_results
 
     async def _distribute_staged(self, optimized_content: Dict[str, Dict[str, Any]]) -> Dict[str, Any]:
-        """Distribute content in stages based on platform priority."""
-        platform_results = {}
+        """Distribute content in stages based on platform priority."""        platform_results = {}
         creator_config = self.creator_platforms[self.creator_type]
         
         # Stage 1: Primary platforms
@@ -301,8 +285,7 @@ class CreatorPlatformManager:
         return platform_results
 
     async def _distribute_optimized_timing(self, optimized_content: Dict[str, Dict[str, Any]]) -> Dict[str, Any]:
-        """Distribute content at optimal times for each platform."""
-        platform_results = {}
+        """Distribute content at optimal times for each platform."""        platform_results = {}
         
         # Get optimal posting times for each platform
         optimal_times = await self._get_optimal_posting_times(list(optimized_content.keys()))
@@ -339,15 +322,13 @@ class CreatorPlatformManager:
         return platform_results
 
     async def _upload_to_platform(self, platform: str, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload content to a specific platform."""
-        if platform not in self.platforms:
+        """Upload content to a specific platform."""        if platform not in self.platforms:
             raise PlatformError(f"Platform {platform} not configured")
         
         return await self.platforms[platform].upload_content(content)
 
     async def _get_optimal_posting_times(self, platforms: List[str]) -> Dict[str, datetime]:
-        """Get optimal posting times for each platform based on audience analytics."""
-        # Default optimal times (would be replaced with real analytics)
+        """Get optimal posting times for each platform based on audience analytics."""        # Default optimal times (would be replaced with real analytics)
         default_times = {
             'instagram': datetime.now().replace(hour=11, minute=0),  # 11 AM
             'tiktok': datetime.now().replace(hour=18, minute=0),     # 6 PM
@@ -361,8 +342,7 @@ class CreatorPlatformManager:
         return {platform: default_times.get(platform, datetime.utcnow()) for platform in platforms}
 
     async def _aggregate_distribution_metrics(self, platform_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Aggregate metrics from all platform distributions."""
-        total_platforms = len(platform_results)
+        """Aggregate metrics from all platform distributions."""        total_platforms = len(platform_results)
         successful_uploads = sum(1 for result in platform_results.values() if result.get('status') == 'success')
         failed_uploads = sum(1 for result in platform_results.values() if result.get('status') == 'failed')
         scheduled_uploads = sum(1 for result in platform_results.values() if result.get('status') == 'scheduled')
@@ -377,8 +357,7 @@ class CreatorPlatformManager:
         }
 
     async def _setup_monetization_tracking(self, platform_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup monetization tracking for successful uploads."""
-        tracking_config = {
+        """Setup monetization tracking for successful uploads."""        tracking_config = {
             'tracking_enabled': True,
             'tracked_platforms': [],
             'revenue_streams': {},
@@ -402,8 +381,7 @@ class CreatorPlatformManager:
         return tracking_config
 
     async def get_aggregated_analytics(self, time_period: str = "30d") -> Dict[str, Any]:
-        """Get aggregated analytics across all platforms."""
-        aggregated_analytics = {
+        """Get aggregated analytics across all platforms."""        aggregated_analytics = {
             'time_period': time_period,
             'platform_analytics': {},
             'total_metrics': {
@@ -446,11 +424,9 @@ class CreatorPlatformManager:
 # Platform-specific implementations
 
 class SpotifyIntegration(BasePlatformIntegration):
-    """Spotify integration for musicians."""
-    
+    """Spotify integration for musicians."""    
     async def authenticate(self, credentials: Dict[str, Any]) -> bool:
-        """Authenticate with Spotify."""
-        try:
+        """Authenticate with Spotify."""        try:
             sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
                 client_id=credentials['client_id'],
                 client_secret=credentials['client_secret'],
@@ -465,8 +441,7 @@ class SpotifyIntegration(BasePlatformIntegration):
             return False
     
     async def upload_content(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload music content to Spotify (via distributors)."""
-        # Note: Direct upload to Spotify requires distribution partners
+        """Upload music content to Spotify (via distributors)."""        # Note: Direct upload to Spotify requires distribution partners
         return {
             'platform': 'spotify',
             'status': 'submitted_to_distributor',
@@ -475,8 +450,7 @@ class SpotifyIntegration(BasePlatformIntegration):
         }
     
     async def get_analytics(self, content_id: str) -> Dict[str, Any]:
-        """Get Spotify analytics."""
-        # Mock analytics data (would integrate with Spotify for Artists API)
+        """Get Spotify analytics."""        # Mock analytics data (would integrate with Spotify for Artists API)
         return {
             'platform': 'spotify',
             'content_id': content_id,
@@ -489,8 +463,7 @@ class SpotifyIntegration(BasePlatformIntegration):
         }
     
     async def optimize_content(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize content for Spotify."""
-        optimized = content_data.copy()
+        """Optimize content for Spotify."""        optimized = content_data.copy()
         
         # Spotify-specific optimizations
         optimized.update({
@@ -517,11 +490,9 @@ class SpotifyIntegration(BasePlatformIntegration):
 
 
 class InstagramIntegration(BasePlatformIntegration):
-    """Instagram integration for visual content creators."""
-    
+    """Instagram integration for visual content creators."""    
     async def authenticate(self, credentials: Dict[str, Any]) -> bool:
-        """Authenticate with Instagram."""
-        try:
+        """Authenticate with Instagram."""        try:
             # Initialize Instagram session
             self.session = instaloader.Instaloader()
             self.session.login(credentials['username'], credentials['password'])
@@ -531,8 +502,7 @@ class InstagramIntegration(BasePlatformIntegration):
             return False
     
     async def upload_content(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload content to Instagram."""
-        content_type = content_data.get('content_type', 'image')
+        """Upload content to Instagram."""        content_type = content_data.get('content_type', 'image')
         
         if content_type == 'image':
             return await self._upload_image_post(content_data)
@@ -542,8 +512,7 @@ class InstagramIntegration(BasePlatformIntegration):
             raise ContentError(f"Unsupported content type for Instagram: {content_type}")
     
     async def _upload_image_post(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload image post to Instagram."""
-        # Mock upload (actual implementation would use Instagram Graph API)
+        """Upload image post to Instagram."""        # Mock upload (actual implementation would use Instagram Graph API)
         return {
             'platform': 'instagram',
             'post_type': 'image',
@@ -554,8 +523,7 @@ class InstagramIntegration(BasePlatformIntegration):
         }
     
     async def _upload_video_post(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload video post to Instagram."""
-        # Mock upload
+        """Upload video post to Instagram."""        # Mock upload
         return {
             'platform': 'instagram',
             'post_type': 'video',
@@ -566,8 +534,7 @@ class InstagramIntegration(BasePlatformIntegration):
         }
     
     async def get_analytics(self, content_id: str) -> Dict[str, Any]:
-        """Get Instagram analytics."""
-        return {
+        """Get Instagram analytics."""        return {
             'platform': 'instagram',
             'content_id': content_id,
             'views': 5420,
@@ -582,8 +549,7 @@ class InstagramIntegration(BasePlatformIntegration):
         }
     
     async def optimize_content(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize content for Instagram."""
-        optimized = content_data.copy()
+        """Optimize content for Instagram."""        optimized = content_data.copy()
         
         content_type = content_data.get('content_type', 'image')
         
@@ -617,8 +583,7 @@ class InstagramIntegration(BasePlatformIntegration):
         return optimized
     
     async def _optimize_caption(self, description: str) -> str:
-        """Optimize caption for Instagram engagement."""
-        # Add engagement hooks and calls-to-action
+        """Optimize caption for Instagram engagement."""        # Add engagement hooks and calls-to-action
         hooks = ["💫 ", "🔥 ", "✨ ", "🚀 "]
         hook = hooks[hash(description) % len(hooks)]
         
@@ -629,8 +594,7 @@ class InstagramIntegration(BasePlatformIntegration):
         return optimized_caption[:2200]  # Instagram caption limit
     
     async def _generate_hashtags(self, content_data: Dict[str, Any]) -> List[str]:
-        """Generate optimized hashtags for Instagram."""
-        base_hashtags = [
+        """Generate optimized hashtags for Instagram."""        base_hashtags = [
             '#content', '#creative', '#inspiration', '#motivation',
             '#follow', '#like', '#share', '#comment'
         ]
@@ -658,16 +622,13 @@ class InstagramIntegration(BasePlatformIntegration):
 
 
 class YouTubeIntegration(BasePlatformIntegration):
-    """YouTube integration for video creators."""
-    
+    """YouTube integration for video creators."""    
     async def authenticate(self, credentials: Dict[str, Any]) -> bool:
-        """Authenticate with YouTube."""
-        # Mock authentication (would use YouTube Data API)
+        """Authenticate with YouTube."""        # Mock authentication (would use YouTube Data API)
         return True
     
     async def upload_content(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload video content to YouTube."""
-        return {
+        """Upload video content to YouTube."""        return {
             'platform': 'youtube',
             'video_id': f"yt_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}",
             'status': 'uploaded',
@@ -678,8 +639,7 @@ class YouTubeIntegration(BasePlatformIntegration):
         }
     
     async def get_analytics(self, content_id: str) -> Dict[str, Any]:
-        """Get YouTube analytics."""
-        return {
+        """Get YouTube analytics."""        return {
             'platform': 'youtube',
             'content_id': content_id,
             'views': 12500,
@@ -695,8 +655,7 @@ class YouTubeIntegration(BasePlatformIntegration):
         }
     
     async def optimize_content(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize content for YouTube."""
-        optimized = content_data.copy()
+        """Optimize content for YouTube."""        optimized = content_data.copy()
         
         optimized.update({
             'video_specs': {
@@ -727,8 +686,7 @@ class YouTubeIntegration(BasePlatformIntegration):
         return optimized
     
     async def _optimize_title(self, title: str) -> str:
-        """Optimize YouTube title for search and engagement."""
-        # Add engaging elements while keeping under 100 characters
+        """Optimize YouTube title for search and engagement."""        # Add engaging elements while keeping under 100 characters
         optimized_title = title
         if len(title) < 60:
             optimized_title += " | Must Watch!"
@@ -736,8 +694,7 @@ class YouTubeIntegration(BasePlatformIntegration):
         return optimized_title[:100]
     
     async def _optimize_description(self, description: str) -> str:
-        """Optimize YouTube description for SEO and engagement."""
-        optimized_desc = f"{description}\n\n"
+        """Optimize YouTube description for SEO and engagement."""        optimized_desc = f"{description}\n\n"
         optimized_desc += "🔔 Subscribe for more content like this!\n"
         optimized_desc += "👍 Like this video if you enjoyed it!\n"
         optimized_desc += "💬 Leave a comment with your thoughts!\n"
@@ -751,8 +708,7 @@ class YouTubeIntegration(BasePlatformIntegration):
         return optimized_desc
     
     async def _generate_tags(self, content_data: Dict[str, Any]) -> List[str]:
-        """Generate optimized tags for YouTube."""
-        base_tags = ['content', 'video', 'creator', 'original', 'quality']
+        """Generate optimized tags for YouTube."""        base_tags = ['content', 'video', 'creator', 'original', 'quality']
         
         # Add content-specific tags
         creator_tags = {
@@ -772,20 +728,16 @@ class YouTubeIntegration(BasePlatformIntegration):
 # Additional platform integrations would follow similar patterns...
 
 class TikTokIntegration(BasePlatformIntegration):
-    """TikTok integration for short-form video creators."""
-    pass
+    """TikTok integration for short-form video creators."""    pass
 
 class LinkedInIntegration(BasePlatformIntegration):
-    """LinkedIn integration for professional content creators."""
-    pass
+    """LinkedIn integration for professional content creators."""    pass
 
 class MediumIntegration(BasePlatformIntegration):
-    """Medium integration for bloggers and writers."""
-    pass
+    """Medium integration for bloggers and writers."""    pass
 
 class GenericPlatformIntegration(BasePlatformIntegration):
-    """Generic platform integration for unsupported platforms."""
-    
+    """Generic platform integration for unsupported platforms."""    
     async def authenticate(self, credentials: Dict[str, Any]) -> bool:
         return True
     

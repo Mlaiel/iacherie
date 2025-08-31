@@ -1,5 +1,4 @@
-"""
-Crawler Configurations Index
+"""Crawler Configurations Index
 ===========================
 
 Centralized index and management interface for all crawler configuration modules.
@@ -15,9 +14,7 @@ Contact: mlaiel@live.de | www.fahed-mlaiel.de
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, modification, or distribution is strictly prohibited.
 Legal action will be taken against violators.
-"""
-
-import os
+"""import os
 import sys
 import json
 import logging
@@ -53,14 +50,11 @@ from .notification_configs import NotificationChannel, NotificationPriority
 logger = logging.getLogger(__name__)
 
 class ConfigurationIndex:
-    """
-    Comprehensive index and management system for all crawler configurations.
+    """    Comprehensive index and management system for all crawler configurations.
     Provides unified access, validation, monitoring, and maintenance capabilities.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize configuration index."""
-        self.version = "2.0.0"
+        """Initialize configuration index."""        self.version = "2.0.0"
         self.initialized_at = datetime.now()
         self.author = "Fahed Mlaiel <mlaiel@live.de>"
         
@@ -84,8 +78,7 @@ class ConfigurationIndex:
         logger.info(f"Configuration Index v{self.version} initialized")
     
     def get_system_overview(self) -> Dict[str, Any]:
-        """Get comprehensive system overview."""
-        overview = {
+        """Get comprehensive system overview."""        overview = {
             "metadata": {
                 "version": self.version,
                 "initialized_at": self.initialized_at.isoformat(),
@@ -155,8 +148,7 @@ class ConfigurationIndex:
         return overview
     
     def _get_module_info(self, manager_name: str, manager: Any) -> Dict[str, Any]:
-        """Get detailed information about a configuration module."""
-        info = {
+        """Get detailed information about a configuration module."""        info = {
             "name": manager_name,
             "type": type(manager).__name__,
             "status": "loaded",
@@ -228,8 +220,7 @@ class ConfigurationIndex:
         return info
     
     def validate_all_configurations(self) -> Dict[str, Any]:
-        """Perform comprehensive validation of all configurations."""
-        validation_results = {
+        """Perform comprehensive validation of all configurations."""        validation_results = {
             "overall_status": "valid",
             "timestamp": datetime.now().isoformat(),
             "summary": {
@@ -324,8 +315,7 @@ class ConfigurationIndex:
         return validation_results
     
     def get_configuration_health(self) -> Dict[str, Any]:
-        """Get health status of all configurations."""
-        health_report = {
+        """Get health status of all configurations."""        health_report = {
             "overall_health": "healthy",
             "timestamp": datetime.now().isoformat(),
             "modules": {},
@@ -386,8 +376,7 @@ class ConfigurationIndex:
         return health_report
     
     def generate_comprehensive_report(self, include_details: bool = True) -> Dict[str, Any]:
-        """Generate comprehensive configuration report."""
-        report = {
+        """Generate comprehensive configuration report."""        report = {
             "metadata": {
                 "generated_at": datetime.now().isoformat(),
                 "version": self.version,
@@ -408,8 +397,7 @@ class ConfigurationIndex:
         return report
     
     def _get_security_assessment(self) -> Dict[str, Any]:
-        """Get security assessment of configurations."""
-        assessment = {
+        """Get security assessment of configurations."""        assessment = {
             "overall_score": 0.0,
             "encryption_status": "unknown",
             "authentication_status": "unknown",
@@ -462,8 +450,7 @@ class ConfigurationIndex:
         return assessment
     
     def _get_performance_metrics(self) -> Dict[str, Any]:
-        """Get performance metrics for configurations."""
-        metrics = {
+        """Get performance metrics for configurations."""        metrics = {
             "configuration_load_time": 0.0,
             "memory_usage": "unknown",
             "validation_time": 0.0,
@@ -502,8 +489,7 @@ class ConfigurationIndex:
         return metrics
     
     def _generate_recommendations(self) -> List[str]:
-        """Generate recommendations based on configuration analysis."""
-        recommendations = []
+        """Generate recommendations based on configuration analysis."""        recommendations = []
         
         try:
             # System-wide recommendations
@@ -540,8 +526,7 @@ class ConfigurationIndex:
         return recommendations
     
     def _get_detailed_configurations(self) -> Dict[str, Any]:
-        """Get detailed configuration data for all modules."""
-        detailed_configs = {}
+        """Get detailed configuration data for all modules."""        detailed_configs = {}
         
         for manager_name, manager in self.managers.items():
             try:
@@ -565,8 +550,7 @@ class ConfigurationIndex:
         return detailed_configs
     
     def export_configuration_report(self, filepath: Optional[str] = None) -> str:
-        """Export comprehensive configuration report to file."""
-        if filepath is None:
+        """Export comprehensive configuration report to file."""        if filepath is None:
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             filepath = f"crawler_configuration_report_{timestamp}.json"
         
@@ -583,8 +567,7 @@ class ConfigurationIndex:
             raise
     
     def interactive_configuration_wizard(self) -> Dict[str, Any]:
-        """Interactive configuration setup wizard."""
-        wizard_results = {
+        """Interactive configuration setup wizard."""        wizard_results = {
             "started_at": datetime.now().isoformat(),
             "steps_completed": [],
             "configurations_updated": [],
@@ -610,24 +593,19 @@ configuration_index = ConfigurationIndex()
 
 # Convenience functions for quick access
 def get_system_status() -> Dict[str, Any]:
-    """Get quick system status overview."""
-    return configuration_index.get_system_overview()
+    """Get quick system status overview."""    return configuration_index.get_system_overview()
 
 def validate_configurations() -> Dict[str, Any]:
-    """Validate all configurations."""
-    return configuration_index.validate_all_configurations()
+    """Validate all configurations."""    return configuration_index.validate_all_configurations()
 
 def get_health_status() -> Dict[str, Any]:
-    """Get configuration health status."""
-    return configuration_index.get_configuration_health()
+    """Get configuration health status."""    return configuration_index.get_configuration_health()
 
 def generate_report() -> Dict[str, Any]:
-    """Generate comprehensive configuration report."""
-    return configuration_index.generate_comprehensive_report()
+    """Generate comprehensive configuration report."""    return configuration_index.generate_comprehensive_report()
 
 def export_report(filepath: Optional[str] = None) -> str:
-    """Export configuration report to file."""
-    return configuration_index.export_configuration_report(filepath)
+    """Export configuration report to file."""    return configuration_index.export_configuration_report(filepath)
 
 # Module initialization
 if __name__ == "__main__":
@@ -806,8 +784,7 @@ PRODUCTION_PRESET = {
 }
 
 def get_environment_preset(environment: str) -> dict:
-    """Get configuration preset for specific environment."""
-    presets = {
+    """Get configuration preset for specific environment."""    presets = {
         "development": DEVELOPMENT_PRESET,
         "staging": STAGING_PRESET,
         "production": PRODUCTION_PRESET
@@ -815,8 +792,7 @@ def get_environment_preset(environment: str) -> dict:
     return presets.get(environment.lower(), PRODUCTION_PRESET)
 
 def apply_environment_preset(environment: str) -> None:
-    """Apply configuration preset for specific environment."""
-    preset = get_environment_preset(environment)
+    """Apply configuration preset for specific environment."""    preset = get_environment_preset(environment)
     
     # Apply global settings
     if "global" in preset:
@@ -851,8 +827,7 @@ def quick_setup(
     enable_surveillance: bool = True,
     enable_protection: bool = True
 ) -> dict:
-    """Quick setup for crawler configuration system."""
-    
+    """Quick setup for crawler configuration system."""    
     # Apply environment preset
     apply_environment_preset(environment)
     
@@ -888,8 +863,7 @@ def quick_setup(
     }
 
 def health_check() -> dict:
-    """Perform comprehensive health check of configuration system."""
-    results = {
+    """Perform comprehensive health check of configuration system."""    results = {
         "timestamp": "2025-08-20T00:00:00Z",
         "overall_status": "healthy",
         "components": {}
@@ -964,8 +938,7 @@ def health_check() -> dict:
     return results
 
 def export_configuration_summary() -> dict:
-    """Export comprehensive configuration summary."""
-    return {
+    """Export comprehensive configuration summary."""    return {
         "system_info": {
             "name": "IA Influencer Agent - Content Protection Platform",
             "author": "Fahed Mlaiel",

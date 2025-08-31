@@ -1,5 +1,4 @@
-"""
-Platform Integration Manager
+"""Platform Integration Manager
 ===========================
 
 Enterprise-grade platform integration manager for seamless connectivity across
@@ -20,9 +19,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 This code is the intellectual property of Fahed Mlaiel. Any unauthorized use,
 reproduction, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in legal action.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 from datetime import datetime, timedelta
@@ -46,8 +43,7 @@ from ...models.platform_integration import PlatformConnection, APICredentials, P
 
 
 class PlatformType(Enum):
-    """Supported platform types for integration."""
-    YOUTUBE = "youtube"
+    """Supported platform types for integration."""    YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -62,8 +58,7 @@ class PlatformType(Enum):
 
 
 class AuthenticationType(Enum):
-    """Authentication methods supported by platforms."""
-    OAUTH2 = "oauth2"
+    """Authentication methods supported by platforms."""    OAUTH2 = "oauth2"
     API_KEY = "api_key"
     BEARER_TOKEN = "bearer_token"
     BASIC_AUTH = "basic_auth"
@@ -72,8 +67,7 @@ class AuthenticationType(Enum):
 
 
 class APIEndpointType(Enum):
-    """API endpoint categories."""
-    CONTENT_DISCOVERY = "content_discovery"
+    """API endpoint categories."""    CONTENT_DISCOVERY = "content_discovery"
     CONTENT_UPLOAD = "content_upload"
     USER_MANAGEMENT = "user_management"
     ANALYTICS = "analytics"
@@ -85,8 +79,7 @@ class APIEndpointType(Enum):
 
 @dataclass
 class PlatformCredentials:
-    """Platform authentication credentials."""
-    platform: PlatformType
+    """Platform authentication credentials."""    platform: PlatformType
     auth_type: AuthenticationType
     client_id: Optional[str] = None
     client_secret: Optional[str] = None
@@ -100,8 +93,7 @@ class PlatformCredentials:
 
 @dataclass
 class APIEndpoint:
-    """API endpoint configuration."""
-    endpoint_type: APIEndpointType
+    """API endpoint configuration."""    endpoint_type: APIEndpointType
     url: str
     method: str = "GET"
     headers: Dict[str, str] = field(default_factory=dict)
@@ -113,8 +105,7 @@ class APIEndpoint:
 
 @dataclass
 class PlatformConfiguration:
-    """Platform configuration settings."""
-    platform: PlatformType
+    """Platform configuration settings."""    platform: PlatformType
     base_url: str
     endpoints: Dict[APIEndpointType, APIEndpoint]
     credentials: PlatformCredentials
@@ -128,8 +119,7 @@ class PlatformConfiguration:
 
 @dataclass
 class PlatformResponse:
-    """Standardized platform API response."""
-    platform: PlatformType
+    """Standardized platform API response."""    platform: PlatformType
     endpoint_type: APIEndpointType
     status_code: int
     data: Any
@@ -141,8 +131,7 @@ class PlatformResponse:
 
 
 class PlatformIntegrationManager:
-    """
-    Enterprise-grade platform integration manager for multi-platform operations.
+    """    Enterprise-grade platform integration manager for multi-platform operations.
     
     Features:
     - Multi-platform API management
@@ -151,11 +140,9 @@ class PlatformIntegrationManager:
     - Circuit breaker patterns for fault tolerance
     - Real-time health monitoring
     - Automatic credential refresh
-    """
-    
+    """    
     def __init__(self, config: Optional[PlatformConfig] = None):
-        """Initialize platform integration manager."""
-        self.config = config or PlatformConfig()
+        """Initialize platform integration manager."""        self.config = config or PlatformConfig()
         self.logger = get_logger(__name__)
         self.encryption_manager = EncryptionManager()
         
@@ -182,8 +169,7 @@ class PlatformIntegrationManager:
         self._initialize_platform_configs()
     
     def _initialize_platform_configs(self):
-        """Initialize default platform configurations."""
-        # YouTube configuration
+        """Initialize default platform configurations."""        # YouTube configuration
         youtube_endpoints = {
             APIEndpointType.CONTENT_DISCOVERY: APIEndpoint(
                 endpoint_type=APIEndpointType.CONTENT_DISCOVERY,
@@ -279,8 +265,7 @@ class PlatformIntegrationManager:
         }
     
     async def initialize_platform(self, platform: PlatformType, credentials: PlatformCredentials) -> bool:
-        """
-        Initialize platform connection with credentials.
+        """        Initialize platform connection with credentials.
         
         Args:
             platform: Platform to initialize
@@ -288,8 +273,7 @@ class PlatformIntegrationManager:
             
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             if platform not in self.platforms:
                 self.logger.error(f"Unsupported platform: {platform}")
                 return False
@@ -351,8 +335,7 @@ class PlatformIntegrationManager:
         data: Optional[Dict[str, Any]] = None,
         headers: Optional[Dict[str, str]] = None
     ) -> PlatformResponse:
-        """
-        Make API request to platform endpoint.
+        """        Make API request to platform endpoint.
         
         Args:
             platform: Target platform
@@ -363,8 +346,7 @@ class PlatformIntegrationManager:
             
         Returns:
             PlatformResponse: Standardized response
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Validate platform and endpoint
@@ -473,8 +455,7 @@ class PlatformIntegrationManager:
             )
     
     async def _ensure_valid_authentication(self, platform: PlatformType):
-        """Ensure platform authentication is valid and refresh if needed."""
-        credentials = self.platforms[platform].credentials
+        """Ensure platform authentication is valid and refresh if needed."""        credentials = self.platforms[platform].credentials
         
         if not credentials:
             raise Exception(f"No credentials configured for {platform.value}")
@@ -484,8 +465,7 @@ class PlatformIntegrationManager:
             await self._refresh_authentication(platform)
     
     async def _refresh_authentication(self, platform: PlatformType):
-        """Refresh authentication credentials for platform."""
-        try:
+        """Refresh authentication credentials for platform."""        try:
             credentials = self.platforms[platform].credentials
             
             if credentials.auth_type == AuthenticationType.OAUTH2:
@@ -506,8 +486,7 @@ class PlatformIntegrationManager:
             raise
     
     async def _refresh_oauth2_token(self, platform: PlatformType, credentials: PlatformCredentials):
-        """Refresh OAuth2 access token."""
-        platform_config = self.platforms[platform]
+        """Refresh OAuth2 access token."""        platform_config = self.platforms[platform]
         
         # Platform-specific token refresh endpoints
         refresh_urls = {
@@ -547,8 +526,7 @@ class PlatformIntegrationManager:
                     raise Exception(f"Token refresh failed: {response.status}")
     
     async def _get_authentication_headers(self, platform: PlatformType) -> Dict[str, str]:
-        """Get authentication headers for platform."""
-        credentials = self.platforms[platform].credentials
+        """Get authentication headers for platform."""        credentials = self.platforms[platform].credentials
         headers = {}
         
         if credentials.auth_type == AuthenticationType.OAUTH2:
@@ -566,16 +544,14 @@ class PlatformIntegrationManager:
         return headers
     
     def _get_default_headers(self, platform: PlatformType) -> Dict[str, str]:
-        """Get default headers for platform."""
-        return {
+        """Get default headers for platform."""        return {
             "User-Agent": f"IA-Influencer-Agent/1.0 ({platform.value})",
             "Accept": "application/json",
             "Content-Type": "application/json"
         }
     
     async def _perform_health_check(self, platform: PlatformType) -> bool:
-        """Perform health check for platform."""
-        try:
+        """Perform health check for platform."""        try:
             platform_config = self.platforms[platform]
             if not platform_config.health_check_url:
                 return True  # Assume healthy if no health check URL
@@ -600,8 +576,7 @@ class PlatformIntegrationManager:
             return False
     
     async def _update_metrics(self, platform: PlatformType, status_code: int, response_time: float):
-        """Update platform metrics."""
-        if platform not in self.metrics:
+        """Update platform metrics."""        if platform not in self.metrics:
             return
         
         metrics = self.metrics[platform]
@@ -617,8 +592,7 @@ class PlatformIntegrationManager:
         metrics.average_response_time = total_time / metrics.total_requests
     
     async def _encrypt_and_store_credentials(self, platform: PlatformType, credentials: PlatformCredentials):
-        """Encrypt and store platform credentials."""
-        try:
+        """Encrypt and store platform credentials."""        try:
             # Serialize credentials
             credentials_data = {
                 "platform": credentials.platform.value,
@@ -660,20 +634,16 @@ class PlatformIntegrationManager:
             self.logger.error(f"Failed to store credentials for {platform.value}: {str(e)}")
     
     async def get_platform_metrics(self, platform: PlatformType) -> Optional[PlatformMetrics]:
-        """Get metrics for specific platform."""
-        return self.metrics.get(platform)
+        """Get metrics for specific platform."""        return self.metrics.get(platform)
     
     async def get_all_platform_metrics(self) -> Dict[PlatformType, PlatformMetrics]:
-        """Get metrics for all platforms."""
-        return self.metrics.copy()
+        """Get metrics for all platforms."""        return self.metrics.copy()
     
     async def check_platform_health(self, platform: PlatformType) -> bool:
-        """Check health status of specific platform."""
-        return await self._perform_health_check(platform)
+        """Check health status of specific platform."""        return await self._perform_health_check(platform)
     
     async def check_all_platform_health(self) -> Dict[PlatformType, bool]:
-        """Check health status of all platforms."""
-        health_results = {}
+        """Check health status of all platforms."""        health_results = {}
         
         for platform in self.platforms:
             health_results[platform] = await self._perform_health_check(platform)
@@ -681,8 +651,7 @@ class PlatformIntegrationManager:
         return health_results
     
     async def close(self):
-        """Close all platform connections and cleanup resources."""
-        try:
+        """Close all platform connections and cleanup resources."""        try:
             # Close all HTTP sessions
             for session in self.sessions.values():
                 await session.close()
@@ -701,26 +670,22 @@ class PlatformIntegrationManager:
             self.logger.error(f"Error closing platform integration manager: {str(e)}")
     
     async def __aenter__(self):
-        """Async context manager entry."""
-        return self
+        """Async context manager entry."""        return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
-        await self.close()
+        """Async context manager exit."""        await self.close()
 
 
 # Factory functions and utilities
 async def create_platform_integration_manager(config: Optional[PlatformConfig] = None) -> PlatformIntegrationManager:
-    """Create and initialize platform integration manager."""
-    return PlatformIntegrationManager(config)
+    """Create and initialize platform integration manager."""    return PlatformIntegrationManager(config)
 
 
 async def initialize_all_platforms(
     manager: PlatformIntegrationManager,
     credentials_map: Dict[PlatformType, PlatformCredentials]
 ) -> Dict[PlatformType, bool]:
-    """Initialize all platforms with their credentials."""
-    results = {}
+    """Initialize all platforms with their credentials."""    results = {}
     
     for platform, credentials in credentials_map.items():
         results[platform] = await manager.initialize_platform(platform, credentials)
@@ -729,8 +694,7 @@ async def initialize_all_platforms(
 
 
 async def perform_bulk_health_check(manager: PlatformIntegrationManager) -> Dict[PlatformType, bool]:
-    """Perform health check on all configured platforms."""
-    return await manager.check_all_platform_health()
+    """Perform health check on all configured platforms."""    return await manager.check_all_platform_health()
 
 
 # Export all components

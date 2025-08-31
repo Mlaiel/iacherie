@@ -1,5 +1,4 @@
-"""
-Social Media Scraper - IA-Influencer-Agent
+"""Social Media Scraper - IA-Influencer-Agent
 ==========================================
 
 Specialized scraper for social media platforms.
@@ -11,9 +10,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 ⚠️ CRITICAL LEGAL WARNING ⚠️
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -26,8 +23,7 @@ from .platform_scraper import PlatformScraper, PlatformContent, PlatformProfile
 
 @dataclass
 class SocialMetrics:
-    """Social media engagement metrics."""
-    likes: int = 0
+    """Social media engagement metrics."""    likes: int = 0
     shares: int = 0
     comments: int = 0
     views: int = 0
@@ -39,8 +35,7 @@ class SocialMetrics:
 
 @dataclass
 class InfluencerProfile:
-    """Enhanced influencer profile data."""
-    platform: str
+    """Enhanced influencer profile data."""    platform: str
     username: str
     display_name: str
     bio: str
@@ -61,8 +56,7 @@ class InfluencerProfile:
 
 @dataclass
 class TrendingTopic:
-    """Trending topic or hashtag data."""
-    platform: str
+    """Trending topic or hashtag data."""    platform: str
     topic: str
     hashtag: str
     volume: int
@@ -74,8 +68,7 @@ class TrendingTopic:
     timestamp: datetime
 
 class SocialScraper:
-    """
-    Specialized social media scraper.
+    """    Specialized social media scraper.
     
     Features:
     - Multi-platform social content extraction
@@ -85,8 +78,7 @@ class SocialScraper:
     - Hashtag analysis
     - Brand mention tracking
     - Collaboration opportunity detection
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.platform_scraper = PlatformScraper()
@@ -95,8 +87,7 @@ class SocialScraper:
                                  min_followers: int = 1000,
                                  max_followers: int = 1000000,
                                  engagement_threshold: float = 2.0) -> List[InfluencerProfile]:
-        """Discover influencers in specific niche."""
-        self.logger.info(f"Discovering influencers in {niche} on {platform}")
+        """Discover influencers in specific niche."""        self.logger.info(f"Discovering influencers in {niche} on {platform}")
         
         # Search for content in niche
         search_terms = [niche, f"#{niche}", f"{niche}influencer"]
@@ -147,8 +138,7 @@ class SocialScraper:
         
     async def _analyze_influencer_profile(self, platform: str, username: str,
                                         sample_content: PlatformContent) -> InfluencerProfile:
-        """Analyze influencer profile and metrics."""
-        # Get recent content
+        """Analyze influencer profile and metrics."""        # Get recent content
         recent_content = await self.platform_scraper.monitor_user(
             platform, username, limit=20
         )
@@ -210,8 +200,7 @@ class SocialScraper:
         )
         
     def _analyze_posting_frequency(self, posting_times: List[datetime]) -> Dict[str, int]:
-        """Analyze posting frequency patterns."""
-        if not posting_times:
+        """Analyze posting frequency patterns."""        if not posting_times:
             return {}
             
         # Group by day of week
@@ -223,8 +212,7 @@ class SocialScraper:
         return day_counts
         
     def _find_best_posting_times(self, content: List[PlatformContent]) -> List[str]:
-        """Find best posting times based on engagement."""
-        if not content:
+        """Find best posting times based on engagement."""        if not content:
             return []
             
         # Analyze engagement by hour
@@ -248,8 +236,7 @@ class SocialScraper:
         return [f"{hour:02d}:00" for hour, _ in sorted_hours[:3]]
         
     def _categorize_influencer(self, content: List[PlatformContent]) -> str:
-        """Categorize influencer based on content."""
-        # Analyze hashtags and content for category
+        """Categorize influencer based on content."""        # Analyze hashtags and content for category
         all_text = " ".join([c.title + " " + c.description for c in content])
         all_hashtags = []
         for c in content:
@@ -288,8 +275,7 @@ class SocialScraper:
         return 'general'
         
     def _extract_brand_mentions(self, content: List[PlatformContent]) -> List[str]:
-        """Extract brand mentions from content."""
-        brand_patterns = [
+        """Extract brand mentions from content."""        brand_patterns = [
             r'@(\w+)',  # @mentions
             r'#(\w+brand|\w+official)',  # Brand hashtags
             r'\b([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\s+(?:brand|official|store)\b'  # Brand names
@@ -307,8 +293,7 @@ class SocialScraper:
         
     async def track_hashtag_performance(self, platform: str, hashtag: str,
                                       days: int = 7) -> Dict[str, Any]:
-        """Track hashtag performance over time."""
-        self.logger.info(f"Tracking #{hashtag} performance on {platform}")
+        """Track hashtag performance over time."""        self.logger.info(f"Tracking #{hashtag} performance on {platform}")
         
         # Search for hashtag content
         content = await self.platform_scraper.search_content(
@@ -387,8 +372,7 @@ class SocialScraper:
         
     async def find_collaboration_opportunities(self, platform: str, content_type: str,
                                             target_audience: str, budget_range: str) -> List[Dict[str, Any]]:
-        """Find collaboration opportunities with influencers."""
-        self.logger.info(f"Finding collaboration opportunities for {content_type} on {platform}")
+        """Find collaboration opportunities with influencers."""        self.logger.info(f"Finding collaboration opportunities for {content_type} on {platform}")
         
         # Define search terms based on content type
         search_terms = {
@@ -437,8 +421,7 @@ class SocialScraper:
         return opportunities[:20]  # Return top 20 opportunities
         
     def _calculate_collaboration_score(self, content: PlatformContent, target_audience: str) -> float:
-        """Calculate collaboration suitability score."""
-        score = 0.0
+        """Calculate collaboration suitability score."""        score = 0.0
         
         # Check content relevance
         text = (content.title + " " + content.description).lower()
@@ -471,14 +454,12 @@ class SocialScraper:
         return min(score, 1.0)
         
     def _estimate_engagement_rate(self, content: PlatformContent) -> float:
-        """Estimate engagement rate from content."""
-        followers = content.author_followers or 1
+        """Estimate engagement rate from content."""        followers = content.author_followers or 1
         engagement = content.engagement.get('likes', 0) + content.engagement.get('comments', 0)
         return (engagement / followers) * 100 if followers > 0 else 0
         
     def _estimate_collaboration_cost(self, followers: int, budget_range: str) -> str:
-        """Estimate collaboration cost."""
-        if not followers:
+        """Estimate collaboration cost."""        if not followers:
             return "Unknown"
             
         # Rough estimates per post (in USD)
@@ -494,8 +475,7 @@ class SocialScraper:
             return "$10000+"
             
     def _suggest_contact_methods(self, content: PlatformContent) -> List[str]:
-        """Suggest contact methods for influencer."""
-        suggestions = []
+        """Suggest contact methods for influencer."""        suggestions = []
         
         # Check for contact info in bio/description
         text = content.description.lower()

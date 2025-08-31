@@ -1,5 +1,4 @@
-"""
-Distribution Tracker - Content Distribution Monitoring
+"""Distribution Tracker - Content Distribution Monitoring
 ======================================================
 
 Advanced tracking system for monitoring content distribution across platforms,
@@ -7,9 +6,7 @@ analyzing performance, and providing real-time insights.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -25,8 +22,7 @@ from ..storage.database import DatabaseManager
 
 
 class TrackingStatus(Enum):
-    """Tracking status enumeration."""
-    ACTIVE = "active"
+    """Tracking status enumeration."""    ACTIVE = "active"
     PAUSED = "paused"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -34,8 +30,7 @@ class TrackingStatus(Enum):
 
 
 class DistributionPhase(Enum):
-    """Distribution phase enumeration."""
-    QUEUED = "queued"
+    """Distribution phase enumeration."""    QUEUED = "queued"
     PROCESSING = "processing"
     UPLOADING = "uploading"
     PUBLISHED = "published"
@@ -45,8 +40,7 @@ class DistributionPhase(Enum):
 
 @dataclass
 class TrackingMetrics:
-    """Tracking metrics data structure."""
-    views: int = 0
+    """Tracking metrics data structure."""    views: int = 0
     likes: int = 0
     shares: int = 0
     comments: int = 0
@@ -63,8 +57,7 @@ class TrackingMetrics:
 
 @dataclass
 class PlatformTracking:
-    """Platform-specific tracking data."""
-    platform: str
+    """Platform-specific tracking data."""    platform: str
     platform_id: str
     platform_url: str
     status: str = "unknown"
@@ -79,8 +72,7 @@ class PlatformTracking:
 
 @dataclass
 class DistributionTracking:
-    """Distribution tracking data structure."""
-    tracking_id: UUID = field(default_factory=uuid4)
+    """Distribution tracking data structure."""    tracking_id: UUID = field(default_factory=uuid4)
     content_id: UUID = field(default_factory=uuid4)
     user_id: UUID = field(default_factory=uuid4)
     distribution_id: UUID = field(default_factory=uuid4)
@@ -116,16 +108,13 @@ class DistributionTracking:
 
 
 class DistributionTracker:
-    """
-    Distribution Tracker
+    """    Distribution Tracker
     
     Provides comprehensive tracking and monitoring of content distribution
     across multiple platforms with real-time analytics and performance insights.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize distribution tracker."""
-        self.config = config or {}
+        """Initialize distribution tracker."""        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         self.event_emitter = EventEmitter()
         
@@ -164,13 +153,11 @@ class DistributionTracker:
         }
     
     async def initialize(self) -> bool:
-        """
-        Initialize the distribution tracker.
+        """        Initialize the distribution tracker.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             self.logger.info("Initializing Distribution Tracker")
             
             # Initialize core components
@@ -204,13 +191,11 @@ class DistributionTracker:
             return False
     
     async def shutdown(self) -> bool:
-        """
-        Gracefully shutdown the distribution tracker.
+        """        Gracefully shutdown the distribution tracker.
         
         Returns:
             bool: True if shutdown successful
-        """
-        try:
+        """        try:
             self.logger.info("Shutting down Distribution Tracker")
             self.is_running = False
             
@@ -243,8 +228,7 @@ class DistributionTracker:
         platforms: List[str],
         tracking_config: Optional[Dict[str, Any]] = None
     ) -> UUID:
-        """
-        Start tracking a content distribution.
+        """        Start tracking a content distribution.
         
         Args:
             content_id: Content being distributed
@@ -255,8 +239,7 @@ class DistributionTracker:
             
         Returns:
             UUID: Tracking ID
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             raise RuntimeError("Distribution Tracker not initialized")
         
         # Create tracking instance
@@ -312,8 +295,7 @@ class DistributionTracker:
         status: str,
         published_at: Optional[datetime] = None
     ) -> bool:
-        """
-        Update platform-specific tracking information.
+        """        Update platform-specific tracking information.
         
         Args:
             tracking_id: Tracking ID
@@ -325,8 +307,7 @@ class DistributionTracker:
             
         Returns:
             bool: True if update successful
-        """
-        tracking = self.active_trackings.get(tracking_id)
+        """        tracking = self.active_trackings.get(tracking_id)
         if not tracking:
             self.logger.warning(f"Tracking {tracking_id} not found")
             return False
@@ -364,16 +345,14 @@ class DistributionTracker:
         return True
     
     async def collect_analytics_data(self, tracking_id: UUID) -> Dict[str, Any]:
-        """
-        Collect analytics data for all platforms in a tracking.
+        """        Collect analytics data for all platforms in a tracking.
         
         Args:
             tracking_id: Tracking ID
             
         Returns:
             Dict containing collected analytics data
-        """
-        tracking = self.active_trackings.get(tracking_id)
+        """        tracking = self.active_trackings.get(tracking_id)
         if not tracking:
             return {}
         
@@ -446,16 +425,14 @@ class DistributionTracker:
         return collected_data
     
     async def analyze_performance(self, tracking_id: UUID) -> Dict[str, Any]:
-        """
-        Analyze performance for a tracked distribution.
+        """        Analyze performance for a tracked distribution.
         
         Args:
             tracking_id: Tracking ID
             
         Returns:
             Dict containing performance analysis
-        """
-        tracking = self.active_trackings.get(tracking_id)
+        """        tracking = self.active_trackings.get(tracking_id)
         if not tracking:
             return {}
         
@@ -499,16 +476,14 @@ class DistributionTracker:
             return {}
     
     async def get_tracking_status(self, tracking_id: UUID) -> Optional[Dict[str, Any]]:
-        """
-        Get current status of a tracking.
+        """        Get current status of a tracking.
         
         Args:
             tracking_id: Tracking ID
             
         Returns:
             Dict containing tracking status or None if not found
-        """
-        # Check active trackings
+        """        # Check active trackings
         tracking = self.active_trackings.get(tracking_id)
         if not tracking:
             # Check completed trackings
@@ -544,8 +519,7 @@ class DistributionTracker:
         }
     
     async def stop_tracking(self, tracking_id: UUID, reason: str = "completed") -> bool:
-        """
-        Stop tracking a distribution.
+        """        Stop tracking a distribution.
         
         Args:
             tracking_id: Tracking ID
@@ -553,8 +527,7 @@ class DistributionTracker:
             
         Returns:
             bool: True if stopped successfully
-        """
-        tracking = self.active_trackings.get(tracking_id)
+        """        tracking = self.active_trackings.get(tracking_id)
         if not tracking:
             return False
         
@@ -609,8 +582,7 @@ class DistributionTracker:
         return True
     
     async def _convert_analytics_to_metrics(self, platform: str, analytics: Dict[str, Any]) -> TrackingMetrics:
-        """Convert platform-specific analytics to tracking metrics."""
-        metrics = TrackingMetrics()
+        """Convert platform-specific analytics to tracking metrics."""        metrics = TrackingMetrics()
         
         # Platform-specific conversions
         if platform == 'youtube':
@@ -655,8 +627,7 @@ class DistributionTracker:
         return metrics
     
     async def _check_performance_alerts(self, tracking: DistributionTracking, analysis: Dict[str, Any]) -> None:
-        """Check for performance alerts and anomalies."""
-        alerts = []
+        """Check for performance alerts and anomalies."""        alerts = []
         
         # Check engagement rate
         if tracking.total_metrics.engagement_rate < tracking.alert_thresholds['low_engagement_threshold']:
@@ -715,8 +686,7 @@ class DistributionTracker:
             self.logger.warning(f"Generated {len(alerts)} alerts for tracking {tracking.tracking_id}")
     
     async def _start_background_tasks(self) -> None:
-        """Start background tracking tasks."""
-        # Start analytics collection task
+        """Start background tracking tasks."""        # Start analytics collection task
         asyncio.create_task(self._collect_analytics_continuously())
         
         # Start performance analysis task
@@ -729,8 +699,7 @@ class DistributionTracker:
         asyncio.create_task(self._cleanup_old_data())
     
     async def _collect_analytics_continuously(self) -> None:
-        """Continuously collect analytics data for active trackings."""
-        while self.is_running:
+        """Continuously collect analytics data for active trackings."""        while self.is_running:
             try:
                 # Collect analytics for all active trackings
                 for tracking_id in list(self.active_trackings.keys()):
@@ -746,8 +715,7 @@ class DistributionTracker:
                 await asyncio.sleep(self.tracking_interval)
     
     async def _analyze_performance_continuously(self) -> None:
-        """Continuously analyze performance for active trackings."""
-        while self.is_running:
+        """Continuously analyze performance for active trackings."""        while self.is_running:
             try:
                 # Analyze performance for all active trackings
                 for tracking_id in list(self.active_trackings.keys()):
@@ -763,8 +731,7 @@ class DistributionTracker:
                 await asyncio.sleep(self.analytics_interval)
     
     async def _detect_trending_content(self) -> None:
-        """Detect trending content based on performance metrics."""
-        while self.is_running:
+        """Detect trending content based on performance metrics."""        while self.is_running:
             try:
                 trending_candidates = []
                 
@@ -801,8 +768,7 @@ class DistributionTracker:
                 await asyncio.sleep(1800)
     
     async def _cleanup_old_data(self) -> None:
-        """Clean up old tracking data."""
-        while self.is_running:
+        """Clean up old tracking data."""        while self.is_running:
             try:
                 # Clean up completed trackings older than 30 days
                 cutoff_date = datetime.utcnow() - timedelta(days=30)
@@ -834,20 +800,17 @@ class DistributionTracker:
                 await asyncio.sleep(86400)
     
     async def _load_existing_trackings(self) -> None:
-        """Load existing active trackings from storage."""
-        # This would load from database
+        """Load existing active trackings from storage."""        # This would load from database
         # For now, start with empty state
         pass
     
     async def _initialize_platform_adapters(self) -> None:
-        """Initialize platform adapters for analytics collection."""
-        # This would initialize platform adapters
+        """Initialize platform adapters for analytics collection."""        # This would initialize platform adapters
         # For now, use mock adapters
         pass
     
     async def _save_all_trackings(self) -> None:
-        """Save all tracking data to persistent storage."""
-        try:
+        """Save all tracking data to persistent storage."""        try:
             # Save active trackings
             for tracking in self.active_trackings.values():
                 await self._save_tracking(tracking)
@@ -862,18 +825,15 @@ class DistributionTracker:
             self.logger.error(f"Failed to save tracking data: {e}")
     
     async def _save_tracking(self, tracking: DistributionTracking) -> None:
-        """Save individual tracking to database."""
-        # This would save to database
+        """Save individual tracking to database."""        # This would save to database
         pass
     
     async def _archive_tracking(self, tracking: DistributionTracking) -> None:
-        """Archive tracking to long-term storage."""
-        # This would archive to long-term storage
+        """Archive tracking to long-term storage."""        # This would archive to long-term storage
         pass
     
     def get_system_metrics(self) -> Dict[str, Any]:
-        """Get current system metrics."""
-        return {
+        """Get current system metrics."""        return {
             **self.system_metrics,
             'timestamp': datetime.utcnow().isoformat(),
             'active_trackings_count': len(self.active_trackings),
@@ -892,12 +852,10 @@ class DistributionTracker:
         }
     
     def get_trending_content(self, limit: int = 10) -> List[Dict[str, Any]]:
-        """Get trending content list."""
-        return self.trending_content[:limit]
+        """Get trending content list."""        return self.trending_content[:limit]
     
     def get_recent_alerts(self, hours: int = 24) -> List[Dict[str, Any]]:
-        """Get recent alerts."""
-        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
+        """Get recent alerts."""        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
         return [
             alert for alert in self.anomaly_alerts
             if alert['timestamp'] > cutoff_time
@@ -910,8 +868,7 @@ class DistributionTracker:
         platform: Optional[str] = None,
         time_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """Get analytics data with optional filtering."""
-        analytics = {
+        """Get analytics data with optional filtering."""        analytics = {
             'trackings': [],
             'aggregated_metrics': TrackingMetrics().__dict__,
             'platform_breakdown': defaultdict(lambda: TrackingMetrics().__dict__),

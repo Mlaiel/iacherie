@@ -1,5 +1,4 @@
-"""
-Automated distribution engine for multi-platform content and revenue distribution.
+"""Automated distribution engine for multi-platform content and revenue distribution.
 
 This module implements comprehensive distribution orchestration including:
 - Multi-platform content distribution automation
@@ -24,9 +23,7 @@ LEGAL WARNING: This software and all associated intellectual property
 belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
-"""
-
-import asyncio
+"""import asyncio
 import aiohttp
 import logging
 from datetime import datetime, timedelta
@@ -54,8 +51,7 @@ from ..core.exceptions import DistributionException, PayoutException
 
 
 class DistributionPlatform(Enum):
-    """Supported distribution platforms."""
-    SPOTIFY = "spotify"
+    """Supported distribution platforms."""    SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE_MUSIC = "youtube_music"
     AMAZON_MUSIC = "amazon_music"
@@ -73,8 +69,7 @@ class DistributionPlatform(Enum):
 
 
 class ContentType(Enum):
-    """Types of content for distribution."""
-    AUDIO = "audio"
+    """Types of content for distribution."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     PODCAST = "podcast"
@@ -88,8 +83,7 @@ class ContentType(Enum):
 
 
 class DistributionStatus(Enum):
-    """Distribution status tracking."""
-    PENDING = "pending"
+    """Distribution status tracking."""    PENDING = "pending"
     PROCESSING = "processing"
     UPLOADING = "uploading"
     DISTRIBUTED = "distributed"
@@ -101,8 +95,7 @@ class DistributionStatus(Enum):
 
 
 class PayoutStatus(Enum):
-    """Payout processing status."""
-    PENDING = "pending"
+    """Payout processing status."""    PENDING = "pending"
     CALCULATING = "calculating"
     APPROVED = "approved"
     PROCESSING = "processing"
@@ -113,8 +106,7 @@ class PayoutStatus(Enum):
 
 
 class PayoutMethod(Enum):
-    """Supported payout methods."""
-    BANK_TRANSFER = "bank_transfer"
+    """Supported payout methods."""    BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE_CONNECT = "stripe_connect"
     WISE = "wise"
@@ -125,8 +117,7 @@ class PayoutMethod(Enum):
 
 @dataclass
 class ContentAsset:
-    """Content asset for distribution."""
-    asset_id: str
+    """Content asset for distribution."""    asset_id: str
     creator_id: str
     title: str
     content_type: ContentType
@@ -146,8 +137,7 @@ class ContentAsset:
 
 @dataclass
 class DistributionTarget:
-    """Distribution target configuration."""
-    platform: DistributionPlatform
+    """Distribution target configuration."""    platform: DistributionPlatform
     enabled: bool = True
     auto_distribute: bool = False
     custom_metadata: Dict[str, Any] = field(default_factory=dict)
@@ -160,8 +150,7 @@ class DistributionTarget:
 
 @dataclass
 class DistributionJob:
-    """Distribution job tracking."""
-    job_id: str
+    """Distribution job tracking."""    job_id: str
     creator_id: str
     asset: ContentAsset
     targets: List[DistributionTarget]
@@ -178,8 +167,7 @@ class DistributionJob:
 
 @dataclass
 class RevenueRecord:
-    """Revenue tracking record."""
-    record_id: str
+    """Revenue tracking record."""    record_id: str
     creator_id: str
     platform: str
     content_id: str
@@ -199,8 +187,7 @@ class RevenueRecord:
 
 @dataclass
 class PayoutRequest:
-    """Payout processing request."""
-    payout_id: str
+    """Payout processing request."""    payout_id: str
     creator_id: str
     total_amount: Decimal
     currency: str
@@ -219,8 +206,7 @@ class PayoutRequest:
 
 @dataclass
 class PlatformIntegration:
-    """Platform integration configuration."""
-    platform: DistributionPlatform
+    """Platform integration configuration."""    platform: DistributionPlatform
     api_endpoint: str
     auth_method: str
     credentials: Dict[str, str]
@@ -234,8 +220,7 @@ class PlatformIntegration:
 
 
 class AutomatedDistributionEngine:
-    """
-    Comprehensive automated distribution and payout engine.
+    """    Comprehensive automated distribution and payout engine.
     
     Provides advanced distribution orchestration including:
     - Multi-platform content distribution automation
@@ -243,8 +228,7 @@ class AutomatedDistributionEngine:
     - Automated payout processing and management
     - Real-time distribution analytics and reporting
     - Cross-platform synchronization and optimization
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger("monetization.distribution_engine")
@@ -282,8 +266,7 @@ class AutomatedDistributionEngine:
         self.logger.info("AutomatedDistributionEngine initialized successfully")
     
     async def _initialize_distribution_engine(self):
-        """Initialize distribution engine components."""
-        try:
+        """Initialize distribution engine components."""        try:
             # Initialize HTTP session
             await self._initialize_session()
             
@@ -306,8 +289,7 @@ class AutomatedDistributionEngine:
             raise DistributionException(f"Engine initialization error: {e}")
     
     async def _initialize_session(self):
-        """Initialize aiohttp session for external API calls."""
-        try:
+        """Initialize aiohttp session for external API calls."""        try:
             connector = aiohttp.TCPConnector(
                 limit=100,
                 limit_per_host=20,
@@ -331,8 +313,7 @@ class AutomatedDistributionEngine:
             raise DistributionException(f"Session initialization error: {e}")
     
     def _initialize_storage_config(self) -> Dict[str, Any]:
-        """Initialize storage system configurations."""
-        return {
+        """Initialize storage system configurations."""        return {
             "aws_s3": {
                 "bucket": self.config.get("aws_s3_bucket", ""),
                 "region": self.config.get("aws_region", "us-east-1"),
@@ -351,18 +332,15 @@ class AutomatedDistributionEngine:
         }
     
     async def _load_platform_integrations(self):
-        """Load platform integration configurations from database."""
-        try:
-            query = """
-            SELECT 
+        """Load platform integration configurations from database."""        try:
+            query = """            SELECT 
                 platform, api_endpoint, auth_method, credentials,
                 supported_formats, max_file_size, upload_method,
                 metadata_mapping, rate_limits, webhook_config,
                 last_sync, is_active
             FROM platform_integrations
             WHERE is_active = true
-            """
-            
+            """            
             results = await self.db.fetch(query)
             
             for row in results:
@@ -392,8 +370,7 @@ class AutomatedDistributionEngine:
             await self._initialize_default_integrations()
     
     async def _initialize_default_integrations(self):
-        """Initialize default platform integrations."""
-        default_integrations = {
+        """Initialize default platform integrations."""        default_integrations = {
             DistributionPlatform.SPOTIFY: PlatformIntegration(
                 platform=DistributionPlatform.SPOTIFY,
                 api_endpoint="https://api.spotify.com/v1",
@@ -421,8 +398,7 @@ class AutomatedDistributionEngine:
         self.platform_integrations.update(default_integrations)
     
     async def _initialize_distribution_queues(self):
-        """Initialize distribution processing queues."""
-        for platform in DistributionPlatform:
+        """Initialize distribution processing queues."""        for platform in DistributionPlatform:
             queue_key = f"distribution_queue:{platform.value}"
             self.distribution_queues[platform] = queue_key
             
@@ -431,8 +407,7 @@ class AutomatedDistributionEngine:
             self.logger.debug(f"Distribution queue {platform.value}: {queue_size} items")
     
     async def _initialize_storage_systems(self):
-        """Initialize cloud storage system connections."""
-        try:
+        """Initialize cloud storage system connections."""        try:
             # Initialize AWS S3 client
             if self.storage_config["aws_s3"]["access_key"]:
                 self.s3_client = boto3.client(
@@ -458,8 +433,7 @@ class AutomatedDistributionEngine:
             self.logger.error(f"Storage system initialization failed: {e}")
     
     async def _start_background_tasks(self):
-        """Start background processing tasks."""
-        try:
+        """Start background processing tasks."""        try:
             # Start distribution queue processors
             for platform in DistributionPlatform:
                 if platform in self.platform_integrations:
@@ -486,8 +460,7 @@ class AutomatedDistributionEngine:
         targets: List[DistributionTarget],
         schedule_release: bool = False
     ) -> DistributionJob:
-        """
-        Distribute content to multiple platforms with intelligent orchestration.
+        """        Distribute content to multiple platforms with intelligent orchestration.
         
         Args:
             creator_id: Creator identifier
@@ -497,8 +470,7 @@ class AutomatedDistributionEngine:
             
         Returns:
             Distribution job with tracking information
-        """
-        try:
+        """        try:
             # Generate unique job ID
             job_id = f"dist_{uuid.uuid4().hex[:12]}"
             
@@ -539,8 +511,7 @@ class AutomatedDistributionEngine:
             raise DistributionException(f"Distribution error: {e}")
     
     async def _validate_content_asset(self, asset: ContentAsset):
-        """Validate content asset for distribution."""
-        try:
+        """Validate content asset for distribution."""        try:
             # Check if file exists
             file_path = Path(asset.file_path)
             if not file_path.exists():
@@ -569,8 +540,7 @@ class AutomatedDistributionEngine:
             raise DistributionException(f"Asset validation error: {e}")
     
     async def _is_valid_content_format(self, content_type: ContentType, format: str) -> bool:
-        """Check if content format is valid for content type."""
-        valid_formats = {
+        """Check if content format is valid for content type."""        valid_formats = {
             ContentType.AUDIO: ["mp3", "wav", "flac", "aac", "m4a", "ogg"],
             ContentType.VIDEO: ["mp4", "mov", "avi", "mkv", "webm", "m4v"],
             ContentType.IMAGE: ["jpg", "jpeg", "png", "gif", "webp", "svg"],
@@ -583,8 +553,7 @@ class AutomatedDistributionEngine:
         self,
         targets: List[DistributionTarget]
     ) -> List[DistributionTarget]:
-        """Validate and filter distribution targets."""
-        validated_targets = []
+        """Validate and filter distribution targets."""        validated_targets = []
         
         for target in targets:
             try:
@@ -618,16 +587,13 @@ class AutomatedDistributionEngine:
         return validated_targets
     
     async def _store_distribution_job(self, job: DistributionJob):
-        """Store distribution job in database."""
-        try:
+        """Store distribution job in database."""        try:
             # Store main job record
-            job_query = """
-            INSERT INTO distribution_jobs (
+            job_query = """            INSERT INTO distribution_jobs (
                 job_id, creator_id, asset_id, status, created_at,
                 retry_count, max_retries, metadata
             ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-            """
-            
+            """            
             await self.db.execute(
                 job_query,
                 job.job_id,
@@ -641,8 +607,7 @@ class AutomatedDistributionEngine:
             )
             
             # Store asset information
-            asset_query = """
-            INSERT INTO content_assets (
+            asset_query = """            INSERT INTO content_assets (
                 asset_id, creator_id, title, content_type, file_path,
                 file_size, duration, format, quality, metadata,
                 thumbnail_path, preview_path, tags, explicit_content,
@@ -650,8 +615,7 @@ class AutomatedDistributionEngine:
             ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
             ON CONFLICT (asset_id) DO UPDATE SET
                 title = $3, metadata = $10, tags = $13
-            """
-            
+            """            
             await self.db.execute(
                 asset_query,
                 job.asset.asset_id,
@@ -674,14 +638,12 @@ class AutomatedDistributionEngine:
             
             # Store distribution targets
             for target in job.targets:
-                target_query = """
-                INSERT INTO distribution_targets (
+                target_query = """                INSERT INTO distribution_targets (
                     job_id, platform, enabled, auto_distribute,
                     custom_metadata, release_schedule, pricing_tier,
                     territory_restrictions, age_restrictions, distribution_priority
                 ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-                """
-                
+                """                
                 await self.db.execute(
                     target_query,
                     job.job_id,
@@ -703,8 +665,7 @@ class AutomatedDistributionEngine:
             raise DistributionException(f"Job storage error: {e}")
     
     async def _schedule_distribution_job(self, job: DistributionJob):
-        """Schedule distribution job for later execution."""
-        try:
+        """Schedule distribution job for later execution."""        try:
             # Find earliest release schedule
             earliest_release = None
             for target in job.targets:
@@ -732,8 +693,7 @@ class AutomatedDistributionEngine:
             raise DistributionException(f"Job scheduling error: {e}")
     
     async def _start_distribution_job(self, job: DistributionJob):
-        """Start immediate distribution job processing."""
-        try:
+        """Start immediate distribution job processing."""        try:
             # Update job status
             job.status = DistributionStatus.PROCESSING
             job.started_at = datetime.utcnow()
@@ -759,8 +719,7 @@ class AutomatedDistributionEngine:
             raise DistributionException(f"Job start error: {e}")
     
     async def _process_distribution_queue(self, platform: DistributionPlatform):
-        """Process distribution queue for specific platform."""
-        queue_key = self.distribution_queues[platform]
+        """Process distribution queue for specific platform."""        queue_key = self.distribution_queues[platform]
         
         while True:
             try:
@@ -796,8 +755,7 @@ class AutomatedDistributionEngine:
         job_id: str,
         platform: DistributionPlatform
     ):
-        """Process distribution to single platform."""
-        try:
+        """Process distribution to single platform."""        try:
             self.logger.info(f"Processing distribution to {platform.value} for job: {job_id}")
             
             # Get job details
@@ -863,8 +821,7 @@ class AutomatedDistributionEngine:
         target: DistributionTarget,
         integration: PlatformIntegration
     ) -> Dict[str, Any]:
-        """Distribute content to Spotify via Spotify for Artists API."""
-        try:
+        """Distribute content to Spotify via Spotify for Artists API."""        try:
             # Prepare metadata for Spotify
             metadata = await self._prepare_spotify_metadata(job.asset, target)
             
@@ -931,8 +888,7 @@ class AutomatedDistributionEngine:
         target: DistributionTarget,
         integration: PlatformIntegration
     ) -> Dict[str, Any]:
-        """Distribute content to YouTube via YouTube Data API v3."""
-        try:
+        """Distribute content to YouTube via YouTube Data API v3."""        try:
             # Prepare metadata for YouTube
             metadata = await self._prepare_youtube_metadata(job.asset, target)
             
@@ -1009,8 +965,7 @@ class AutomatedDistributionEngine:
         target: DistributionTarget,
         integration: PlatformIntegration
     ) -> Dict[str, Any]:
-        """Distribute content to Instagram via Instagram Graph API."""
-        try:
+        """Distribute content to Instagram via Instagram Graph API."""        try:
             # Prepare metadata for Instagram
             metadata = await self._prepare_instagram_metadata(job.asset, target)
             
@@ -1082,8 +1037,7 @@ class AutomatedDistributionEngine:
         target: DistributionTarget,
         integration: PlatformIntegration
     ) -> Dict[str, Any]:
-        """Generic distribution handler for other platforms."""
-        try:
+        """Generic distribution handler for other platforms."""        try:
             self.logger.info(f"Using generic distribution for: {target.platform.value}")
             
             # Prepare generic metadata
@@ -1116,8 +1070,7 @@ class AutomatedDistributionEngine:
             return {"success": False, "error": str(e)}
     
     async def _upload_content_to_storage(self, asset: ContentAsset, platform: str) -> str:
-        """Upload content to appropriate cloud storage and return URL."""
-        try:
+        """Upload content to appropriate cloud storage and return URL."""        try:
             # Generate storage path
             storage_key = f"content/{platform}/{asset.creator_id}/{asset.asset_id}/{Path(asset.file_path).name}"
             
@@ -1183,8 +1136,7 @@ class AutomatedDistributionEngine:
             raise DistributionException(f"Upload error: {e}")
     
     def _get_content_type(self, file_format: str) -> str:
-        """Get MIME type for file format."""
-        content_types = {
+        """Get MIME type for file format."""        content_types = {
             "mp3": "audio/mpeg",
             "wav": "audio/wav",
             "flac": "audio/flac",
@@ -1206,8 +1158,7 @@ class AutomatedDistributionEngine:
         return content_types.get(file_format.lower(), "application/octet-stream")
     
     async def _prepare_spotify_metadata(self, asset: ContentAsset, target: DistributionTarget) -> Dict[str, Any]:
-        """Prepare metadata for Spotify submission."""
-        metadata = {
+        """Prepare metadata for Spotify submission."""        metadata = {
             "title": asset.title,
             "artists": [{"name": asset.metadata.get("artist", "Unknown Artist")}],
             "album": asset.metadata.get("album", asset.title),
@@ -1226,8 +1177,7 @@ class AutomatedDistributionEngine:
         return metadata
     
     async def _prepare_youtube_metadata(self, asset: ContentAsset, target: DistributionTarget) -> Dict[str, Any]:
-        """Prepare metadata for YouTube submission."""
-        # Generate description
+        """Prepare metadata for YouTube submission."""        # Generate description
         description_parts = []
         if asset.metadata.get("description"):
             description_parts.append(asset.metadata["description"])
@@ -1263,8 +1213,7 @@ class AutomatedDistributionEngine:
         return metadata
     
     async def _prepare_instagram_metadata(self, asset: ContentAsset, target: DistributionTarget) -> Dict[str, Any]:
-        """Prepare metadata for Instagram submission."""
-        # Generate caption
+        """Prepare metadata for Instagram submission."""        # Generate caption
         caption_parts = [asset.title]
         
         if asset.metadata.get("artist"):
@@ -1294,16 +1243,14 @@ class AutomatedDistributionEngine:
         return metadata
     
     async def process_revenue_aggregation(self, creator_id: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Process revenue aggregation from all platforms.
+        """        Process revenue aggregation from all platforms.
         
         Args:
             creator_id: Optional creator ID to process specific creator
             
         Returns:
             Aggregation results summary
-        """
-        try:
+        """        try:
             self.logger.info(f"Starting revenue aggregation for creator: {creator_id or 'all'}")
             
             aggregation_results = {
@@ -1351,16 +1298,14 @@ class AutomatedDistributionEngine:
             raise DistributionException(f"Revenue aggregation error: {e}")
     
     async def process_automated_payouts(self, creator_id: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Process automated payouts for eligible creators.
+        """        Process automated payouts for eligible creators.
         
         Args:
             creator_id: Optional creator ID to process specific creator
             
         Returns:
             Payout processing results
-        """
-        try:
+        """        try:
             self.logger.info(f"Starting automated payout processing for creator: {creator_id or 'all'}")
             
             payout_results = {
@@ -1444,8 +1389,7 @@ class AutomatedDistributionEngine:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive distribution analytics for creator.
+        """        Get comprehensive distribution analytics for creator.
         
         Args:
             creator_id: Creator identifier
@@ -1454,8 +1398,7 @@ class AutomatedDistributionEngine:
             
         Returns:
             Comprehensive analytics data
-        """
-        try:
+        """        try:
             self.logger.info(f"Generating distribution analytics for creator: {creator_id}")
             
             analytics = {
@@ -1475,8 +1418,7 @@ class AutomatedDistributionEngine:
             }
             
             # Get distribution jobs for creator in date range
-            jobs_query = """
-            SELECT 
+            jobs_query = """            SELECT 
                 dj.*, ca.title, ca.content_type,
                 COUNT(dt.platform) as target_platforms,
                 AVG(CASE WHEN pr.status = 'completed' THEN 1 ELSE 0 END) as success_rate
@@ -1488,8 +1430,7 @@ class AutomatedDistributionEngine:
                 AND dj.created_at BETWEEN $2 AND $3
             GROUP BY dj.job_id, ca.title, ca.content_type
             ORDER BY dj.created_at DESC
-            """
-            
+            """            
             distribution_jobs = await self.db.fetch(jobs_query, creator_id, start_date, end_date)
             
             analytics["summary"]["total_distributions"] = len(distribution_jobs)
@@ -1509,12 +1450,10 @@ class AutomatedDistributionEngine:
             # Process job results
             for job in distribution_jobs:
                 # Get platform results for this job
-                results_query = """
-                SELECT platform, status, result, platform_content_id
+                results_query = """                SELECT platform, status, result, platform_content_id
                 FROM platform_results
                 WHERE job_id = $1
-                """
-                platform_results = await self.db.fetch(results_query, job["job_id"])
+                """                platform_results = await self.db.fetch(results_query, job["job_id"])
                 
                 for result in platform_results:
                     platform = result["platform"]
@@ -1536,8 +1475,7 @@ class AutomatedDistributionEngine:
             analytics["platform_performance"] = platform_stats
             
             # Get revenue data
-            revenue_query = """
-            SELECT 
+            revenue_query = """            SELECT 
                 platform, 
                 SUM(net_revenue) as total_revenue,
                 COUNT(*) as revenue_records,
@@ -1548,8 +1486,7 @@ class AutomatedDistributionEngine:
                 AND revenue_period_end <= $3
             GROUP BY platform
             ORDER BY total_revenue DESC
-            """
-            
+            """            
             revenue_data = await self.db.fetch(revenue_query, creator_id, start_date, end_date)
             
             for row in revenue_data:
@@ -1584,8 +1521,7 @@ class AutomatedDistributionEngine:
         platform_stats: Dict[str, Dict[str, Any]],
         revenue_analysis: Dict[str, Dict[str, Any]]
     ) -> List[str]:
-        """Generate intelligent recommendations based on performance data."""
-        recommendations = []
+        """Generate intelligent recommendations based on performance data."""        recommendations = []
         
         # Find best performing platforms
         best_platforms = sorted(
@@ -1640,23 +1576,18 @@ class AutomatedDistributionEngine:
         return recommendations
     
     async def _get_eligible_payout_creators(self, creator_id: Optional[str] = None) -> List[Dict[str, Any]]:
-        """Get creators eligible for automated payouts."""
-        try:
+        """Get creators eligible for automated payouts."""        try:
             # Query to get creators with unpaid revenue above minimum threshold
             if creator_id:
-                query = """
-                SELECT DISTINCT creator_id, preferred_currency, payout_method, payout_details
+                query = """                SELECT DISTINCT creator_id, preferred_currency, payout_method, payout_details
                 FROM creator_profiles 
                 WHERE creator_id = $1 AND payout_enabled = true
-                """
-                creators = await self.db.fetch(query, creator_id)
+                """                creators = await self.db.fetch(query, creator_id)
             else:
-                query = """
-                SELECT DISTINCT creator_id, preferred_currency, payout_method, payout_details
+                query = """                SELECT DISTINCT creator_id, preferred_currency, payout_method, payout_details
                 FROM creator_profiles 
                 WHERE payout_enabled = true
-                """
-                creators = await self.db.fetch(query)
+                """                creators = await self.db.fetch(query)
             
             return [dict(creator) for creator in creators]
             
@@ -1671,14 +1602,11 @@ class AutomatedDistributionEngine:
             }] if creator_id else []
     
     async def _calculate_available_revenue(self, creator_id: str) -> Decimal:
-        """Calculate total available revenue for creator."""
-        try:
-            query = """
-            SELECT COALESCE(SUM(amount), 0) as total_revenue
+        """Calculate total available revenue for creator."""        try:
+            query = """            SELECT COALESCE(SUM(amount), 0) as total_revenue
             FROM revenue_transactions 
             WHERE creator_id = $1 AND status = 'completed' AND payout_status = 'unpaid'
-            """
-            result = await self.db.fetchrow(query, creator_id)
+            """            result = await self.db.fetchrow(query, creator_id)
             return Decimal(str(result["total_revenue"])) if result else Decimal("0")
             
         except Exception as e:
@@ -1687,14 +1615,11 @@ class AutomatedDistributionEngine:
             return Decimal("100.00")
     
     async def _get_unpaid_revenue_records(self, creator_id: str) -> List[str]:
-        """Get list of unpaid revenue record IDs for creator."""
-        try:
-            query = """
-            SELECT transaction_id 
+        """Get list of unpaid revenue record IDs for creator."""        try:
+            query = """            SELECT transaction_id 
             FROM revenue_transactions 
             WHERE creator_id = $1 AND status = 'completed' AND payout_status = 'unpaid'
-            """
-            records = await self.db.fetch(query, creator_id)
+            """            records = await self.db.fetch(query, creator_id)
             return [record["transaction_id"] for record in records]
             
         except Exception as e:
@@ -1702,8 +1627,7 @@ class AutomatedDistributionEngine:
             return ["mock_transaction_1", "mock_transaction_2"]
     
     async def _calculate_payout_fee(self, amount: Decimal, payout_method: Any) -> Decimal:
-        """Calculate processing fee for payout."""
-        try:
+        """Calculate processing fee for payout."""        try:
             # Fee structure based on payout method
             fee_rates = {
                 "paypal": {"rate": Decimal("0.025"), "fixed": Decimal("0.30")},
@@ -1723,8 +1647,7 @@ class AutomatedDistributionEngine:
             return Decimal("2.50")  # Default fee
     
     async def _process_payout_request(self, payout_request: Any) -> Dict[str, Any]:
-        """Process payout request through payment processor."""
-        try:
+        """Process payout request through payment processor."""        try:
             # Simulate payout processing
             processing_result = {
                 "success": True,
@@ -1756,25 +1679,21 @@ class AutomatedDistributionEngine:
             }
     
     async def _mark_revenue_as_paid(self, revenue_record_ids: List[str], payout_id: str) -> None:
-        """Mark revenue records as paid."""
-        try:
+        """Mark revenue records as paid."""        try:
             if not revenue_record_ids:
                 return
                 
-            query = """
-            UPDATE revenue_transactions 
+            query = """            UPDATE revenue_transactions 
             SET payout_status = 'paid', payout_id = $1, payout_date = NOW()
             WHERE transaction_id = ANY($2)
-            """
-            await self.db.execute(query, payout_id, revenue_record_ids)
+            """            await self.db.execute(query, payout_id, revenue_record_ids)
             self.logger.debug(f"Marked {len(revenue_record_ids)} revenue records as paid")
             
         except Exception as e:
             self.logger.error(f"Error marking revenue as paid: {e}")
     
     async def cleanup_resources(self):
-        """Clean up engine resources."""
-        try:
+        """Clean up engine resources."""        try:
             if self.session and not self.session.closed:
                 await self.session.close()
             
@@ -1789,5 +1708,4 @@ class AutomatedDistributionEngine:
 
 # Factory function for easy instantiation
 def create_distribution_engine(config: Optional[Dict[str, Any]] = None) -> AutomatedDistributionEngine:
-    """Create and return configured distribution engine instance."""
-    return AutomatedDistributionEngine(config)
+    """Create and return configured distribution engine instance."""    return AutomatedDistributionEngine(config)

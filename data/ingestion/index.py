@@ -1,5 +1,4 @@
-"""
-Data Ingestion Index
+"""Data Ingestion Index
 ===================
 
 Main index file for the data ingestion module providing centralized access
@@ -12,9 +11,7 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 This code is proprietary and confidential. Any unauthorized copying, distribution,
 or use without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is
 strictly prohibited and will result in legal action.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, BinaryIO
 from datetime import datetime
@@ -37,8 +34,7 @@ from ...core.config import get_settings
 
 @dataclass
 class IngestionCapabilities:
-    """Available ingestion capabilities and configuration"""
-    supported_formats: Dict[str, List[str]]
+    """Available ingestion capabilities and configuration"""    supported_formats: Dict[str, List[str]]
     max_file_size: int
     max_batch_size: int
     processing_modes: List[str]
@@ -48,8 +44,7 @@ class IngestionCapabilities:
 
 
 class DataIngestionOrchestrator:
-    """
-    Central orchestrator for all data ingestion operations.
+    """    Central orchestrator for all data ingestion operations.
     
     Provides unified interface for:
     - Single content ingestion
@@ -58,13 +53,11 @@ class DataIngestionOrchestrator:
     - Multi-format processing
     - Quality management
     - Progress tracking
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, redis_client: Redis,
                  storage_manager: StorageManager, content_validator: ContentValidator,
                  quality_manager: DataQualityManager):
-        """
-        Initialize DataIngestionOrchestrator.
+        """        Initialize DataIngestionOrchestrator.
         
         Args:
             db_session: Async database session
@@ -72,8 +65,7 @@ class DataIngestionOrchestrator:
             storage_manager: Storage management service
             content_validator: Content validation service
             quality_manager: Data quality management service
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.redis = redis_client
         self.storage_manager = storage_manager
         self.content_validator = content_validator
@@ -98,16 +90,14 @@ class DataIngestionOrchestrator:
         self.settings = get_settings()
         
     async def ingest_single_content(self, request: IngestionRequest) -> IngestionResult:
-        """
-        Ingest single content item with full processing pipeline.
+        """        Ingest single content item with full processing pipeline.
         
         Args:
             request: Content ingestion request
             
         Returns:
             Complete ingestion result
-        """
-        try:
+        """        try:
             self.logger.info(f"Starting single content ingestion for user: {request.user_id}")
             
             # Validate request
@@ -130,8 +120,7 @@ class DataIngestionOrchestrator:
     
     async def ingest_batch_content(self, items: List[Dict[str, Any]], 
                                  config: Dict[str, Any]) -> str:
-        """
-        Ingest multiple content items in batch.
+        """        Ingest multiple content items in batch.
         
         Args:
             items: List of content items to process
@@ -139,8 +128,7 @@ class DataIngestionOrchestrator:
             
         Returns:
             Batch ID for tracking
-        """
-        try:
+        """        try:
             self.logger.info(f"Starting batch ingestion with {len(items)} items")
             
             # Convert items to BatchItem objects
@@ -180,8 +168,7 @@ class DataIngestionOrchestrator:
     
     async def extract_metadata_only(self, file_data: Union[bytes, BinaryIO], 
                                   filename: str, include_ai: bool = True) -> MetadataCollection:
-        """
-        Extract metadata without full content ingestion.
+        """        Extract metadata without full content ingestion.
         
         Args:
             file_data: Content file data
@@ -190,8 +177,7 @@ class DataIngestionOrchestrator:
             
         Returns:
             Metadata collection
-        """
-        try:
+        """        try:
             self.logger.info(f"Extracting metadata for: {filename}")
             
             metadata_collection = await self.metadata_extractor.extract_metadata(
@@ -207,8 +193,7 @@ class DataIngestionOrchestrator:
     
     async def process_content_only(self, file_data: Union[bytes, BinaryIO], 
                                  filename: str, options: ProcessingOptions = None):
-        """
-        Process content without full ingestion pipeline.
+        """        Process content without full ingestion pipeline.
         
         Args:
             file_data: Content file data
@@ -217,8 +202,7 @@ class DataIngestionOrchestrator:
             
         Returns:
             Processing result
-        """
-        try:
+        """        try:
             self.logger.info(f"Processing content: {filename}")
             
             if options is None:
@@ -236,16 +220,14 @@ class DataIngestionOrchestrator:
             raise IngestionError(f"Content processing failed: {str(e)}")
     
     async def get_ingestion_status(self, content_id: str) -> Dict[str, Any]:
-        """
-        Get ingestion status for content or batch.
+        """        Get ingestion status for content or batch.
         
         Args:
             content_id: Content or batch identifier
             
         Returns:
             Status information
-        """
-        try:
+        """        try:
             # Try as single content first
             status = await self.content_manager.get_ingestion_status(content_id)
             
@@ -271,16 +253,14 @@ class DataIngestionOrchestrator:
             return {'content_id': content_id, 'status': 'error', 'message': str(e)}
     
     async def get_batch_metrics(self, batch_id: str) -> Dict[str, Any]:
-        """
-        Get detailed batch processing metrics.
+        """        Get detailed batch processing metrics.
         
         Args:
             batch_id: Batch identifier
             
         Returns:
             Comprehensive metrics
-        """
-        try:
+        """        try:
             return await self.batch_processor.get_batch_metrics(batch_id)
             
         except Exception as e:
@@ -288,13 +268,11 @@ class DataIngestionOrchestrator:
             return {}
     
     async def list_active_operations(self) -> Dict[str, Any]:
-        """
-        List all active ingestion operations.
+        """        List all active ingestion operations.
         
         Returns:
             Summary of active operations
-        """
-        try:
+        """        try:
             active_batches = await self.batch_processor.list_active_batches()
             
             return {
@@ -308,40 +286,35 @@ class DataIngestionOrchestrator:
             return {'error': str(e)}
     
     async def pause_batch(self, batch_id: str) -> bool:
-        """Pause batch processing"""
-        try:
+        """Pause batch processing"""        try:
             return await self.batch_processor.pause_batch(batch_id)
         except Exception as e:
             self.logger.error(f"Failed to pause batch: {str(e)}")
             return False
     
     async def resume_batch(self, batch_id: str) -> bool:
-        """Resume paused batch processing"""
-        try:
+        """Resume paused batch processing"""        try:
             return await self.batch_processor.resume_batch(batch_id)
         except Exception as e:
             self.logger.error(f"Failed to resume batch: {str(e)}")
             return False
     
     async def cancel_batch(self, batch_id: str) -> bool:
-        """Cancel batch processing"""
-        try:
+        """Cancel batch processing"""        try:
             return await self.batch_processor.cancel_batch(batch_id)
         except Exception as e:
             self.logger.error(f"Failed to cancel batch: {str(e)}")
             return False
     
     async def cleanup_old_operations(self, hours: int = 24) -> Dict[str, int]:
-        """
-        Cleanup old completed operations.
+        """        Cleanup old completed operations.
         
         Args:
             hours: Remove operations older than this many hours
             
         Returns:
             Cleanup statistics
-        """
-        try:
+        """        try:
             cleaned_batches = await self.batch_processor.cleanup_completed_batches(hours)
             
             return {
@@ -354,13 +327,11 @@ class DataIngestionOrchestrator:
             return {'error': str(e)}
     
     def get_capabilities(self) -> IngestionCapabilities:
-        """
-        Get current ingestion capabilities and limits.
+        """        Get current ingestion capabilities and limits.
         
         Returns:
             Ingestion capabilities configuration
-        """
-        try:
+        """        try:
             # Collect supported formats from all processors
             supported_formats = {}
             
@@ -402,13 +373,11 @@ class DataIngestionOrchestrator:
             )
     
     async def health_check(self) -> Dict[str, Any]:
-        """
-        Perform health check on ingestion system.
+        """        Perform health check on ingestion system.
         
         Returns:
             Health status of all components
-        """
-        try:
+        """        try:
             health_status = {
                 'overall_status': 'healthy',
                 'timestamp': datetime.utcnow().isoformat(),
@@ -468,8 +437,7 @@ class DataIngestionOrchestrator:
             }
     
     async def _validate_ingestion_request(self, request: IngestionRequest):
-        """Validate ingestion request"""
-        try:
+        """Validate ingestion request"""        try:
             if not request.user_id:
                 raise ValueError("User ID is required")
             
@@ -503,8 +471,7 @@ async def create_ingestion_orchestrator(db_session: AsyncSession, redis_client: 
                                       storage_manager: StorageManager, 
                                       content_validator: ContentValidator,
                                       quality_manager: DataQualityManager) -> DataIngestionOrchestrator:
-    """
-    Factory function to create and initialize DataIngestionOrchestrator.
+    """    Factory function to create and initialize DataIngestionOrchestrator.
     
     Args:
         db_session: Async database session
@@ -515,8 +482,7 @@ async def create_ingestion_orchestrator(db_session: AsyncSession, redis_client: 
         
     Returns:
         Initialized DataIngestionOrchestrator
-    """
-    try:
+    """    try:
         orchestrator = DataIngestionOrchestrator(
             db_session, redis_client, storage_manager, 
             content_validator, quality_manager

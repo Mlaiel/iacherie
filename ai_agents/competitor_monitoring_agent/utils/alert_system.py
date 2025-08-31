@@ -1,13 +1,10 @@
-"""
-Real-time Alert System - Advanced Monitoring and Notification Engine
+"""Real-time Alert System - Advanced Monitoring and Notification Engine
 Provides real-time alerts and notifications for competitor activities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel. All rights reserved.
 WARNING: Unauthorized use, copying, or distribution is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Callable
@@ -30,16 +27,14 @@ from ...utils.template_engine import TemplateEngine
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels."""
-    LOW = "low"
+    """Alert severity levels."""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class AlertType(Enum):
-    """Types of competitor alerts."""
-    CONTENT_UPDATE = "content_update"
+    """Types of competitor alerts."""    CONTENT_UPDATE = "content_update"
     PRICING_CHANGE = "pricing_change"
     PRODUCT_LAUNCH = "product_launch"
     MARKETING_CAMPAIGN = "marketing_campaign"
@@ -53,8 +48,7 @@ class AlertType(Enum):
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration."""
-    rule_id: str
+    """Alert rule configuration."""    rule_id: str
     name: str
     description: str
     alert_type: AlertType
@@ -70,8 +64,7 @@ class AlertRule:
 
 @dataclass
 class Alert:
-    """Alert instance."""
-    alert_id: str
+    """Alert instance."""    alert_id: str
     rule_id: str
     competitor_id: str
     alert_type: AlertType
@@ -89,8 +82,7 @@ class Alert:
 
 @dataclass
 class AlertMetrics:
-    """Alert system metrics."""
-    total_alerts: int
+    """Alert system metrics."""    total_alerts: int
     alerts_by_severity: Dict[str, int]
     alerts_by_type: Dict[str, int]
     response_time_avg: float
@@ -101,16 +93,13 @@ class AlertMetrics:
 
 
 class AlertSystem:
-    """
-    Advanced real-time alert system for competitor monitoring.
+    """    Advanced real-time alert system for competitor monitoring.
     
     Provides intelligent alerting, notification routing, and alert management
     with support for multiple channels and customizable rules.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the alert system."""
-        self.config = config
+        """Initialize the alert system."""        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Core components
@@ -153,8 +142,7 @@ class AlertSystem:
         self.logger.info("AlertSystem initialized")
     
     async def create_alert_rule(self, rule_data: Dict[str, Any]) -> AlertRule:
-        """Create a new alert rule."""
-        try:
+        """Create a new alert rule."""        try:
             # Validate rule data
             required_fields = ["name", "alert_type", "conditions", "severity"]
             for field in required_fields:
@@ -188,8 +176,7 @@ class AlertSystem:
             raise AlertError(f"Failed to create alert rule: {str(e)}")
     
     async def evaluate_data_for_alerts(self, competitor_id: str, data_type: str, data: Dict[str, Any]):
-        """Evaluate incoming data against alert rules."""
-        try:
+        """Evaluate incoming data against alert rules."""        try:
             relevant_rules = [
                 rule for rule in self.alert_rules.values()
                 if rule.enabled and self._is_rule_relevant(rule, competitor_id, data_type, data)
@@ -203,8 +190,7 @@ class AlertSystem:
             self.logger.error(f"Error evaluating data for alerts: {str(e)}")
     
     async def _trigger_alert(self, rule: AlertRule, competitor_id: str, data: Dict[str, Any]):
-        """Trigger an alert based on a rule match."""
-        try:
+        """Trigger an alert based on a rule match."""        try:
             # Check rate limits
             if not self._check_rate_limit(rule.rule_id):
                 self.logger.warning(f"Rate limit exceeded for rule {rule.name}")
@@ -255,8 +241,7 @@ class AlertSystem:
             self.logger.error(f"Error triggering alert: {str(e)}")
     
     async def _alert_processing_loop(self):
-        """Main alert processing loop."""
-        while True:
+        """Main alert processing loop."""        while True:
             try:
                 # Get alert from queue
                 alert = await self.alert_queue.get()
@@ -277,8 +262,7 @@ class AlertSystem:
                 await asyncio.sleep(1)
     
     async def _notification_processing_loop(self):
-        """Process notification queue."""
-        while True:
+        """Process notification queue."""        while True:
             try:
                 # Get notification from queue
                 notification_data = await self.notification_queue.get()
@@ -294,8 +278,7 @@ class AlertSystem:
                 await asyncio.sleep(1)
     
     async def _send_notifications(self, notification_data: Dict[str, Any]):
-        """Send notifications through configured channels."""
-        try:
+        """Send notifications through configured channels."""        try:
             alert = notification_data["alert"]
             rule = self.alert_rules[alert.rule_id]
             
@@ -317,8 +300,7 @@ class AlertSystem:
             self.logger.error(f"Error sending notifications: {str(e)}")
     
     async def _process_content_update(self, alert: Alert):
-        """Process content update alerts."""
-        try:
+        """Process content update alerts."""        try:
             content_data = alert.data
             
             # Analyze content changes
@@ -341,8 +323,7 @@ class AlertSystem:
             self.logger.error(f"Error processing content update alert: {str(e)}")
     
     async def _process_pricing_change(self, alert: Alert):
-        """Process pricing change alerts."""
-        try:
+        """Process pricing change alerts."""        try:
             pricing_data = alert.data
             
             # Analyze pricing changes
@@ -364,8 +345,7 @@ class AlertSystem:
             self.logger.error(f"Error processing pricing change alert: {str(e)}")
     
     async def _process_product_launch(self, alert: Alert):
-        """Process product launch alerts."""
-        try:
+        """Process product launch alerts."""        try:
             product_data = alert.data
             
             # Analyze product launch
@@ -388,8 +368,7 @@ class AlertSystem:
             self.logger.error(f"Error processing product launch alert: {str(e)}")
     
     async def acknowledge_alert(self, alert_id: str, user_id: str, notes: str = "") -> bool:
-        """Acknowledge an alert."""
-        try:
+        """Acknowledge an alert."""        try:
             if alert_id not in self.active_alerts:
                 raise ValidationError(f"Alert not found: {alert_id}")
             
@@ -416,8 +395,7 @@ class AlertSystem:
             return False
     
     async def resolve_alert(self, alert_id: str, user_id: str, resolution_notes: str = "") -> bool:
-        """Resolve an alert."""
-        try:
+        """Resolve an alert."""        try:
             if alert_id not in self.active_alerts:
                 raise ValidationError(f"Alert not found: {alert_id}")
             
@@ -446,8 +424,7 @@ class AlertSystem:
             return False
     
     async def get_alert_metrics(self, period: str = "24h") -> AlertMetrics:
-        """Get alert system metrics for specified period."""
-        try:
+        """Get alert system metrics for specified period."""        try:
             # Calculate period start
             if period == "1h":
                 start_time = datetime.utcnow() - timedelta(hours=1)
@@ -507,8 +484,7 @@ class AlertSystem:
             return AlertMetrics(0, {}, {}, 0, 0, 0, 0, period)
     
     async def get_active_alerts(self, filters: Dict[str, Any] = None) -> List[Alert]:
-        """Get active alerts with optional filters."""
-        try:
+        """Get active alerts with optional filters."""        try:
             alerts = list(self.active_alerts.values())
             
             if filters:

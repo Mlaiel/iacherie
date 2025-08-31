@@ -1,5 +1,4 @@
-"""
-Advanced distribution and publishing workflow module.
+"""Advanced distribution and publishing workflow module.
 
 This module provides comprehensive content distribution workflows including
 multi-platform publishing, automated scheduling, cross-platform optimization,
@@ -8,9 +7,7 @@ audience targeting, and performance tracking for creator content distribution.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
-"""
-
-from typing import Dict, Any, List, Optional, Union, Tuple
+"""from typing import Dict, Any, List, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
@@ -30,8 +27,7 @@ from .exceptions import WorkflowException, PipelineException
 
 
 class PlatformType(Enum):
-    """Supported distribution platforms."""
-    YOUTUBE = "youtube"
+    """Supported distribution platforms."""    YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -48,8 +44,7 @@ class PlatformType(Enum):
 
 
 class DistributionStrategy(Enum):
-    """Content distribution strategies."""
-    SIMULTANEOUS = "simultaneous"
+    """Content distribution strategies."""    SIMULTANEOUS = "simultaneous"
     SEQUENTIAL = "sequential"
     STAGGERED = "staggered"
     PLATFORM_SPECIFIC = "platform_specific"
@@ -59,8 +54,7 @@ class DistributionStrategy(Enum):
 
 
 class ContentOptimizationType(Enum):
-    """Content optimization types for platforms."""
-    FORMAT_CONVERSION = "format_conversion"
+    """Content optimization types for platforms."""    FORMAT_CONVERSION = "format_conversion"
     RESOLUTION_ADJUSTMENT = "resolution_adjustment"
     ASPECT_RATIO_OPTIMIZATION = "aspect_ratio_optimization"
     COMPRESSION_OPTIMIZATION = "compression_optimization"
@@ -71,8 +65,7 @@ class ContentOptimizationType(Enum):
 
 
 class PublishingStatus(Enum):
-    """Publishing status for distributed content."""
-    PENDING = "pending"
+    """Publishing status for distributed content."""    PENDING = "pending"
     SCHEDULED = "scheduled"
     PUBLISHING = "publishing"
     PUBLISHED = "published"
@@ -84,8 +77,7 @@ class PublishingStatus(Enum):
 
 @dataclass
 class PlatformConfiguration:
-    """Configuration for specific platform distribution."""
-    platform: PlatformType
+    """Configuration for specific platform distribution."""    platform: PlatformType
     enabled: bool
     optimization_settings: Dict[str, Any] = field(default_factory=dict)
     posting_schedule: Optional[Dict[str, Any]] = None
@@ -97,8 +89,7 @@ class PlatformConfiguration:
 
 @dataclass
 class DistributionResult:
-    """Result of content distribution to a platform."""
-    platform: PlatformType
+    """Result of content distribution to a platform."""    platform: PlatformType
     content_id: str
     platform_content_id: Optional[str]
     publishing_status: PublishingStatus
@@ -112,8 +103,7 @@ class DistributionResult:
 
 @dataclass
 class DistributionCampaign:
-    """Comprehensive distribution campaign configuration."""
-    campaign_id: str
+    """Comprehensive distribution campaign configuration."""    campaign_id: str
     content_items: List[str]
     target_platforms: List[PlatformType]
     distribution_strategy: DistributionStrategy
@@ -125,8 +115,7 @@ class DistributionCampaign:
 
 
 class DistributionPublishingWorkflow:
-    """Advanced distribution and publishing workflow system."""
-    
+    """Advanced distribution and publishing workflow system."""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger("workflow.distribution")
@@ -155,8 +144,7 @@ class DistributionPublishingWorkflow:
         distribution_request: Dict[str, Any],
         pipeline_config: Dict[str, Any] = None
     ) -> IntelligentContentPipeline:
-        """Create comprehensive distribution pipeline."""
-        pipeline_config = pipeline_config or {}
+        """Create comprehensive distribution pipeline."""        pipeline_config = pipeline_config or {}
         pipeline_id = f"distribution_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
         pipeline = IntelligentContentPipeline(
@@ -185,8 +173,7 @@ class DistributionPublishingWorkflow:
         pipeline: IntelligentContentPipeline,
         distribution_request: Dict[str, Any]
     ):
-        """Add distribution workflow steps."""
-        
+        """Add distribution workflow steps."""        
         # Step 1: Platform configuration and validation
         platform_config_step = PipelineStep(
             name="platform_configuration",
@@ -365,8 +352,7 @@ class DistributionPublishingWorkflow:
         pipeline.add_step(distribution_reporting_step)
     
     async def _configure_and_validate_platforms(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Configure and validate platform settings."""
-        distribution_request = context.get("distribution_request", {})
+        """Configure and validate platform settings."""        distribution_request = context.get("distribution_request", {})
         target_platforms = metadata.get("target_platforms", self.default_platforms)
         validate_credentials = metadata.get("validate_credentials", True)
         
@@ -414,8 +400,7 @@ class DistributionPublishingWorkflow:
         }
     
     async def _optimize_content_for_platforms(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize content for different platforms."""
-        platform_config_result = context.get("platform_configuration_result")
+        """Optimize content for different platforms."""        platform_config_result = context.get("platform_configuration_result")
         optimization_types = metadata.get("optimization_types", ["all"])
         quality_settings = metadata.get("quality_settings", {})
         
@@ -469,8 +454,7 @@ class DistributionPublishingWorkflow:
         }
     
     async def _analyze_and_target_audiences(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze and target audiences for distribution."""
-        if self.enable_auto_optimization:
+        """Analyze and target audiences for distribution."""        if self.enable_auto_optimization:
             optimization_result = context.get("content_optimization_result")
         else:
             platform_config_result = context.get("platform_configuration_result")
@@ -521,8 +505,7 @@ class DistributionPublishingWorkflow:
         }
     
     async def _optimize_distribution_scheduling(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize distribution scheduling across platforms."""
-        if self.enable_audience_targeting:
+        """Optimize distribution scheduling across platforms."""        if self.enable_audience_targeting:
             audience_result = context.get("audience_targeting_result")
             audience_targeting_results = audience_result.get("audience_targeting_results", []) if audience_result else []
         else:
@@ -569,8 +552,7 @@ class DistributionPublishingWorkflow:
         }
     
     async def _execute_multi_platform_publishing(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute multi-platform publishing."""
-        scheduling_result = context.get("distribution_scheduling_result")
+        """Execute multi-platform publishing."""        scheduling_result = context.get("distribution_scheduling_result")
         publish_immediately = metadata.get("publish_immediately", False)
         enable_monetization = metadata.get("enable_monetization", self.enable_automated_monetization)
         
@@ -614,8 +596,7 @@ class DistributionPublishingWorkflow:
         }
     
     async def _verify_publishing_results(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Verify publishing results across platforms."""
-        publishing_result = context.get("multi_platform_publishing_result")
+        """Verify publishing results across platforms."""        publishing_result = context.get("multi_platform_publishing_result")
         verification_depth = metadata.get("verification_depth", "standard")
         check_monetization = metadata.get("check_monetization_status", True)
         
@@ -655,8 +636,7 @@ class DistributionPublishingWorkflow:
         }
     
     async def _setup_performance_tracking(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup performance tracking for distributed content."""
-        verification_result = context.get("publishing_verification_result")
+        """Setup performance tracking for distributed content."""        verification_result = context.get("publishing_verification_result")
         tracking_metrics = metadata.get("tracking_metrics", ["views", "engagement", "revenue"])
         tracking_frequency = metadata.get("tracking_frequency", "hourly")
         
@@ -696,8 +676,7 @@ class DistributionPublishingWorkflow:
         }
     
     async def _initialize_cross_platform_analytics(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Initialize cross-platform analytics."""
-        if self.enable_performance_tracking:
+        """Initialize cross-platform analytics."""        if self.enable_performance_tracking:
             tracking_result = context.get("performance_tracking_setup_result")
             tracking_setups = tracking_result.get("tracking_setups", []) if tracking_result else []
         else:
@@ -742,8 +721,7 @@ class DistributionPublishingWorkflow:
         }
     
     async def _setup_automated_promotion(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup automated promotion campaigns."""
-        if self.enable_cross_platform_analytics:
+        """Setup automated promotion campaigns."""        if self.enable_cross_platform_analytics:
             analytics_result = context.get("cross_platform_analytics_result")
             analytics_setups = analytics_result.get("analytics_setups", []) if analytics_result else []
         else:
@@ -797,8 +775,7 @@ class DistributionPublishingWorkflow:
         }
     
     async def _generate_distribution_reports(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate distribution reports and send notifications."""
-        promotion_result = context.get("automated_promotion_setup_result")
+        """Generate distribution reports and send notifications."""        promotion_result = context.get("automated_promotion_setup_result")
         report_types = metadata.get("report_types", ["summary", "detailed"])
         notification_preferences = metadata.get("notification_preferences", {})
         
@@ -846,8 +823,7 @@ class DistributionPublishingWorkflow:
         platform_settings: Dict[str, Any],
         validate_credentials: bool
     ) -> Optional[PlatformConfiguration]:
-        """Configure settings for a single platform."""
-        try:
+        """Configure settings for a single platform."""        try:
             platform_config = PlatformConfiguration(
                 platform=platform,
                 enabled=platform_settings.get(platform.value, {}).get("enabled", True),
@@ -870,8 +846,7 @@ class DistributionPublishingWorkflow:
         platform_config: Optional[PlatformConfiguration],
         validate_credentials: bool
     ) -> Dict[str, Any]:
-        """Validate platform configuration."""
-        if not platform_config:
+        """Validate platform configuration."""        if not platform_config:
             return {
                 "platform": "unknown",
                 "validation_status": "failed",
@@ -906,8 +881,7 @@ class DistributionPublishingWorkflow:
         platform: PlatformType,
         credentials: Dict[str, Any]
     ) -> bool:
-        """Validate API credentials for platform."""
-        # Simplified credential validation
+        """Validate API credentials for platform."""        # Simplified credential validation
         required_keys = {
             PlatformType.YOUTUBE: ["api_key", "client_id"],
             PlatformType.INSTAGRAM: ["access_token", "business_account_id"],
@@ -924,8 +898,7 @@ class DistributionPublishingWorkflow:
         optimization_types: List[str],
         quality_settings: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize content for a single platform."""
-        platform = platform_config.platform
+        """Optimize content for a single platform."""        platform = platform_config.platform
         content_id = content_item.get("id")
         
         # Use platform optimizer
@@ -955,8 +928,7 @@ class DistributionPublishingWorkflow:
         targeting_criteria: Dict[str, Any],
         demographic_analysis: bool
     ) -> Dict[str, Any]:
-        """Analyze audience potential for content."""
-        # Use audience targeting engine
+        """Analyze audience potential for content."""        # Use audience targeting engine
         audience_analysis = await self.audience_targeting.analyze_content_audience(
             content_item,
             targeting_criteria,
@@ -971,8 +943,7 @@ class DistributionPublishingWorkflow:
         audience_analysis: Dict[str, Any],
         optimization_result: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Generate platform-specific audience targeting."""
-        platform_targeting = {}
+        """Generate platform-specific audience targeting."""        platform_targeting = {}
         
         # Generate targeting for each platform
         for platform in [PlatformType.YOUTUBE, PlatformType.INSTAGRAM, PlatformType.TIKTOK]:
@@ -994,8 +965,7 @@ class DistributionPublishingWorkflow:
         distribution_strategy: DistributionStrategy,
         scheduling_preferences: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize scheduling for content distribution."""
-        content_id = content_item.get("id")
+        """Optimize scheduling for content distribution."""        content_id = content_item.get("id")
         
         # Use distribution scheduler
         scheduling_result = await self.distribution_scheduler.optimize_scheduling(
@@ -1021,8 +991,7 @@ class DistributionPublishingWorkflow:
         publish_immediately: bool,
         enable_monetization: bool
     ) -> List[DistributionResult]:
-        """Publish content to multiple platforms."""
-        content_id = scheduling_result.get("content_id")
+        """Publish content to multiple platforms."""        content_id = scheduling_result.get("content_id")
         platform_schedules = scheduling_result.get("platform_schedules", {})
         
         publishing_results = []
@@ -1063,8 +1032,7 @@ class DistributionPublishingWorkflow:
         verification_depth: str,
         check_monetization: bool
     ) -> Dict[str, Any]:
-        """Verify content publishing results."""
-        content_id = publishing_result.get("content_id")
+        """Verify content publishing results."""        content_id = publishing_result.get("content_id")
         platform_results = publishing_result.get("platform_results", [])
         
         verification_data = {
@@ -1101,8 +1069,7 @@ class DistributionPublishingWorkflow:
         verification_depth: str,
         check_monetization: bool
     ) -> Dict[str, Any]:
-        """Verify publishing for a single platform."""
-        verification = {
+        """Verify publishing for a single platform."""        verification = {
             "platform": distribution_result.platform.value,
             "content_id": distribution_result.content_id,
             "platform_content_id": distribution_result.platform_content_id,
@@ -1129,8 +1096,7 @@ class DistributionPublishingWorkflow:
         platform: PlatformType,
         platform_content_id: Optional[str]
     ) -> bool:
-        """Check if monetization is enabled for content."""
-        # Simplified monetization check
+        """Check if monetization is enabled for content."""        # Simplified monetization check
         if not platform_content_id:
             return False
         
@@ -1143,8 +1109,7 @@ class DistributionPublishingWorkflow:
         tracking_metrics: List[str],
         tracking_frequency: str
     ) -> Dict[str, Any]:
-        """Setup performance tracking for content."""
-        content_id = verification.get("content_id")
+        """Setup performance tracking for content."""        content_id = verification.get("content_id")
         
         # Setup tracking with performance tracker
         tracking_setup = await self.performance_tracker.setup_content_tracking(
@@ -1170,8 +1135,7 @@ class DistributionPublishingWorkflow:
         analytics_depth: str,
         comparative_analysis: bool
     ) -> Dict[str, Any]:
-        """Initialize cross-platform analytics for content."""
-        content_id = item.get("content_id")
+        """Initialize cross-platform analytics for content."""        content_id = item.get("content_id")
         
         return {
             "content_id": content_id,
@@ -1190,8 +1154,7 @@ class DistributionPublishingWorkflow:
         promotion_budget: Dict[str, Any],
         promotion_strategy: str
     ) -> Dict[str, Any]:
-        """Setup automated promotion for content."""
-        content_id = item.get("content_id")
+        """Setup automated promotion for content."""        content_id = item.get("content_id")
         
         # Allocate budget based on platform performance potential
         allocated_budget = self._calculate_promotion_budget_allocation(
@@ -1216,8 +1179,7 @@ class DistributionPublishingWorkflow:
         platform_configurations: List[Optional[PlatformConfiguration]],
         validation_results: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Generate configuration summary."""
-        valid_configs = [c for c in platform_configurations if c and c.enabled]
+        """Generate configuration summary."""        valid_configs = [c for c in platform_configurations if c and c.enabled]
         valid_validations = [v for v in validation_results if v.get("validation_status") == "valid"]
         
         return {
@@ -1229,8 +1191,7 @@ class DistributionPublishingWorkflow:
         }
     
     def _count_successful_optimizations(self, optimization_results: List[Dict[str, Any]]) -> int:
-        """Count successful content optimizations."""
-        successful_count = 0
+        """Count successful content optimizations."""        successful_count = 0
         for result in optimization_results:
             for platform_opt in result.get("platform_optimizations", []):
                 if platform_opt.get("optimization_status") == "completed":
@@ -1238,8 +1199,7 @@ class DistributionPublishingWorkflow:
         return successful_count
     
     def _calculate_average_targeting_confidence(self, targeting_results: List[Dict[str, Any]]) -> float:
-        """Calculate average targeting confidence."""
-        valid_results = [r for r in targeting_results if "error" not in r]
+        """Calculate average targeting confidence."""        valid_results = [r for r in targeting_results if "error" not in r]
         if not valid_results:
             return 0.0
         
@@ -1247,8 +1207,7 @@ class DistributionPublishingWorkflow:
         return total_confidence / len(valid_results)
     
     def _count_audience_segments(self, targeting_results: List[Dict[str, Any]]) -> int:
-        """Count identified audience segments."""
-        segments = set()
+        """Count identified audience segments."""        segments = set()
         for result in targeting_results:
             if "error" not in result:
                 audience_analysis = result.get("audience_analysis", {})
@@ -1257,8 +1216,7 @@ class DistributionPublishingWorkflow:
         return len(segments)
     
     def _count_scheduled_publications(self, scheduling_results: List[Dict[str, Any]]) -> int:
-        """Count total scheduled publications."""
-        total_publications = 0
+        """Count total scheduled publications."""        total_publications = 0
         for result in scheduling_results:
             if result.get("scheduling_status") != "failed":
                 platform_schedules = result.get("platform_schedules", {})
@@ -1266,8 +1224,7 @@ class DistributionPublishingWorkflow:
         return total_publications
     
     def _count_platform_publications(self, publishing_results: List[Dict[str, Any]]) -> int:
-        """Count total platform publications."""
-        total_publications = 0
+        """Count total platform publications."""        total_publications = 0
         for result in publishing_results:
             if result.get("publishing_status") != "failed":
                 platform_results = result.get("platform_results", [])
@@ -1275,8 +1232,7 @@ class DistributionPublishingWorkflow:
         return total_publications
     
     def _count_successful_publications(self, publishing_results: List[Dict[str, Any]]) -> int:
-        """Count successful publications."""
-        successful_count = 0
+        """Count successful publications."""        successful_count = 0
         for result in publishing_results:
             if result.get("publishing_status") != "failed":
                 platform_results = result.get("platform_results", [])
@@ -1287,16 +1243,14 @@ class DistributionPublishingWorkflow:
         return successful_count
     
     def _calculate_verification_success_rate(self, verification_results: List[Dict[str, Any]]) -> float:
-        """Calculate verification success rate."""
-        if not verification_results:
+        """Calculate verification success rate."""        if not verification_results:
             return 0.0
         
         total_success_rate = sum([v.get("overall_success_rate", 0.0) for v in verification_results])
         return total_success_rate / len(verification_results)
     
     def _count_monetization_enabled(self, verification_results: List[Dict[str, Any]]) -> int:
-        """Count content with monetization enabled."""
-        monetization_count = 0
+        """Count content with monetization enabled."""        monetization_count = 0
         for result in verification_results:
             if result.get("verification_status") != "failed":
                 platform_verifications = result.get("platform_verifications", [])
@@ -1306,8 +1260,7 @@ class DistributionPublishingWorkflow:
         return monetization_count
     
     def _get_tracked_platforms(self, tracking_setups: List[Dict[str, Any]]) -> List[str]:
-        """Get list of tracked platforms."""
-        platforms = set()
+        """Get list of tracked platforms."""        platforms = set()
         for setup in tracking_setups:
             if setup.get("tracking_status") != "failed":
                 platforms.update(setup.get("tracked_platforms", []))
@@ -1318,8 +1271,7 @@ class DistributionPublishingWorkflow:
         item: Dict[str, Any],
         promotion_budget: Dict[str, Any]
     ) -> float:
-        """Calculate promotion budget allocation for content."""
-        base_budget = promotion_budget.get("per_content", 50.0)
+        """Calculate promotion budget allocation for content."""        base_budget = promotion_budget.get("per_content", 50.0)
         performance_multiplier = item.get("estimated_performance", 1.0)
         
         return base_budget * performance_multiplier
@@ -1329,8 +1281,7 @@ class DistributionPublishingWorkflow:
         item: Dict[str, Any],
         promotion_strategy: str
     ) -> List[Dict[str, Any]]:
-        """Generate promotion campaigns for content."""
-        if promotion_strategy == "organic":
+        """Generate promotion campaigns for content."""        if promotion_strategy == "organic":
             return []
         
         return [
@@ -1349,8 +1300,7 @@ class DistributionPublishingWorkflow:
         ]
     
     def _compile_distribution_data(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Compile comprehensive distribution data from pipeline."""
-        return {
+        """Compile comprehensive distribution data from pipeline."""        return {
             "pipeline_id": context.get("pipeline_id"),
             "distribution_timestamp": datetime.utcnow().isoformat(),
             "summary": {
@@ -1375,28 +1325,23 @@ class DistributionPublishingWorkflow:
         }
     
     def _get_configured_platforms_count(self, context: Dict[str, Any]) -> int:
-        """Get count of configured platforms."""
-        config_result = context.get("platform_configuration_result", {})
+        """Get count of configured platforms."""        config_result = context.get("platform_configuration_result", {})
         return config_result.get("configured_platforms", 0)
     
     def _get_successful_publications_count(self, context: Dict[str, Any]) -> int:
-        """Get count of successful publications."""
-        publishing_result = context.get("multi_platform_publishing_result", {})
+        """Get count of successful publications."""        publishing_result = context.get("multi_platform_publishing_result", {})
         return publishing_result.get("successful_publications", 0)
     
     def _get_monetization_enabled_count(self, context: Dict[str, Any]) -> int:
-        """Get count of content with monetization enabled."""
-        verification_result = context.get("publishing_verification_result", {})
+        """Get count of content with monetization enabled."""        verification_result = context.get("publishing_verification_result", {})
         return verification_result.get("monetization_enabled_count", 0)
     
     def _is_performance_tracking_enabled(self, context: Dict[str, Any]) -> bool:
-        """Check if performance tracking is enabled."""
-        tracking_result = context.get("performance_tracking_setup_result", {})
+        """Check if performance tracking is enabled."""        tracking_result = context.get("performance_tracking_setup_result", {})
         return tracking_result.get("tracking_enabled_count", 0) > 0
     
     def _get_active_promotion_campaigns_count(self, context: Dict[str, Any]) -> int:
-        """Get count of active promotion campaigns."""
-        promotion_result = context.get("automated_promotion_setup_result", {})
+        """Get count of active promotion campaigns."""        promotion_result = context.get("automated_promotion_setup_result", {})
         return promotion_result.get("promotion_enabled_count", 0)
     
     async def _generate_single_distribution_report(
@@ -1404,8 +1349,7 @@ class DistributionPublishingWorkflow:
         report_type: str,
         distribution_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate single distribution report."""
-        report_id = str(uuid.uuid4())
+        """Generate single distribution report."""        report_id = str(uuid.uuid4())
         timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
         
         return {
@@ -1420,8 +1364,7 @@ class DistributionPublishingWorkflow:
         }
     
     def _calculate_overall_success_rate(self, distribution_data: Dict[str, Any]) -> float:
-        """Calculate overall distribution success rate."""
-        summary = distribution_data.get("summary", {})
+        """Calculate overall distribution success rate."""        summary = distribution_data.get("summary", {})
         total_content = summary.get("total_content_distributed", 0)
         successful_publications = summary.get("successful_publications", 0)
         
@@ -1436,8 +1379,7 @@ class DistributionPublishingWorkflow:
         generated_reports: List[Dict[str, Any]],
         notification_preferences: Dict[str, Any]
     ):
-        """Send distribution completion notifications."""
-        # Simplified notification sending
+        """Send distribution completion notifications."""        # Simplified notification sending
         notification_channels = notification_preferences.get("channels", ["email"])
         
         for channel in notification_channels:

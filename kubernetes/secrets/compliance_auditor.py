@@ -1,12 +1,9 @@
-"""
-IA Influencer Agent - Compliance Auditor
+"""IA Influencer Agent - Compliance Auditor
 Security compliance validation and audit trail management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""
-
-import os
+"""import os
 import logging
 import json
 import hashlib
@@ -25,8 +22,7 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks."""
-    GDPR = "gdpr"
+    """Supported compliance frameworks."""    GDPR = "gdpr"
     PCI_DSS = "pci_dss"
     SOX = "sox"
     HIPAA = "hipaa"
@@ -36,8 +32,7 @@ class ComplianceFramework(Enum):
 
 
 class AuditEventType(Enum):
-    """Audit event types."""
-    SECRET_ACCESS = "secret_access"
+    """Audit event types."""    SECRET_ACCESS = "secret_access"
     SECRET_CREATION = "secret_creation"
     SECRET_MODIFICATION = "secret_modification"
     SECRET_DELETION = "secret_deletion"
@@ -55,8 +50,7 @@ class AuditEventType(Enum):
 
 
 class ComplianceStatus(Enum):
-    """Compliance status."""
-    COMPLIANT = "compliant"
+    """Compliance status."""    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
     UNKNOWN = "unknown"
@@ -64,8 +58,7 @@ class ComplianceStatus(Enum):
 
 @dataclass
 class AuditEvent:
-    """Audit event record."""
-    event_id: str
+    """Audit event record."""    event_id: str
     event_type: AuditEventType
     timestamp: datetime
     user_id: str
@@ -80,8 +73,7 @@ class AuditEvent:
 
 @dataclass
 class ComplianceRule:
-    """Compliance rule definition."""
-    rule_id: str
+    """Compliance rule definition."""    rule_id: str
     framework: ComplianceFramework
     title: str
     description: str
@@ -94,8 +86,7 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceCheck:
-    """Compliance check result."""
-    check_id: str
+    """Compliance check result."""    check_id: str
     rule_id: str
     status: ComplianceStatus
     score: float
@@ -106,24 +97,20 @@ class ComplianceCheck:
 
 
 class ComplianceAuditor:
-    """
-    Enterprise compliance auditor for security audit trails,
+    """    Enterprise compliance auditor for security audit trails,
     compliance validation, and regulatory reporting.
-    """
-    
+    """    
     def __init__(
         self,
         vault_manager: VaultManager,
         config: SecretsConfig = None
     ):
-        """
-        Initialize compliance auditor.
+        """        Initialize compliance auditor.
         
         Args:
             vault_manager: Configured VaultManager instance
             config: Optional secrets configuration
-        """
-        self.vault = vault_manager
+        """        self.vault = vault_manager
         self.config = config or SecretsConfig()
         self.security = SecurityUtils()
         
@@ -151,8 +138,7 @@ class ComplianceAuditor:
         details: Dict[str, Any] = None,
         risk_level: str = "low"
     ) -> str:
-        """
-        Log audit event.
+        """        Log audit event.
         
         Args:
             event_type: Type of audit event
@@ -166,8 +152,7 @@ class ComplianceAuditor:
             
         Returns:
             str: Event ID
-        """
-        try:
+        """        try:
             event_id = str(uuid.uuid4())
             
             # Determine compliance impact
@@ -208,8 +193,7 @@ class ComplianceAuditor:
         framework: ComplianceFramework = None,
         rules: List[str] = None
     ) -> Dict[str, Any]:
-        """
-        Run comprehensive compliance check.
+        """        Run comprehensive compliance check.
         
         Args:
             framework: Specific framework to check
@@ -217,8 +201,7 @@ class ComplianceAuditor:
             
         Returns:
             dict: Compliance check results
-        """
-        try:
+        """        try:
             check_results = []
             total_score = 0.0
             passed_checks = 0
@@ -302,8 +285,7 @@ class ComplianceAuditor:
         user_id: str = None,
         risk_level: str = None
     ) -> Dict[str, Any]:
-        """
-        Generate audit report.
+        """        Generate audit report.
         
         Args:
             start_date: Start date for report
@@ -314,8 +296,7 @@ class ComplianceAuditor:
             
         Returns:
             dict: Audit report
-        """
-        try:
+        """        try:
             # Set default date range
             if not end_date:
                 end_date = datetime.utcnow()
@@ -382,8 +363,7 @@ class ComplianceAuditor:
         filters: Dict[str, Any] = None,
         limit: int = 100
     ) -> List[Dict[str, Any]]:
-        """
-        Search audit events.
+        """        Search audit events.
         
         Args:
             query: Search query string
@@ -392,8 +372,7 @@ class ComplianceAuditor:
             
         Returns:
             list: Matching audit events
-        """
-        try:
+        """        try:
             matching_events = []
             query_lower = query.lower()
             
@@ -433,8 +412,7 @@ class ComplianceAuditor:
         start_date: datetime = None,
         end_date: datetime = None
     ) -> Optional[str]:
-        """
-        Export audit log.
+        """        Export audit log.
         
         Args:
             format: Export format (json, csv, xml)
@@ -443,8 +421,7 @@ class ComplianceAuditor:
             
         Returns:
             str: Path to exported file
-        """
-        try:
+        """        try:
             # Generate report
             report = self.generate_audit_report(start_date, end_date)
             
@@ -515,13 +492,11 @@ class ComplianceAuditor:
             return None
     
     def validate_data_retention(self) -> Dict[str, Any]:
-        """
-        Validate data retention compliance.
+        """        Validate data retention compliance.
         
         Returns:
             dict: Retention validation results
-        """
-        try:
+        """        try:
             retention_policy = self.config.audit_retention_days
             current_date = datetime.utcnow()
             
@@ -565,13 +540,11 @@ class ComplianceAuditor:
             return {'error': str(e)}
     
     def cleanup_expired_events(self) -> int:
-        """
-        Clean up expired audit events.
+        """        Clean up expired audit events.
         
         Returns:
             int: Number of events cleaned up
-        """
-        try:
+        """        try:
             retention_policy = self.config.audit_retention_days
             current_date = datetime.utcnow()
             
@@ -597,8 +570,7 @@ class ComplianceAuditor:
             return 0
     
     def _initialize_compliance_rules(self) -> None:
-        """Initialize compliance rules for various frameworks."""
-        
+        """Initialize compliance rules for various frameworks."""        
         # GDPR Rules
         self.compliance_rules["gdpr_001"] = ComplianceRule(
             rule_id="gdpr_001",
@@ -672,8 +644,7 @@ class ComplianceAuditor:
         logger.info(f"Initialized {len(self.compliance_rules)} compliance rules")
     
     def _execute_compliance_check(self, rule: ComplianceRule) -> ComplianceCheck:
-        """Execute a compliance check."""
-        check_id = str(uuid.uuid4())
+        """Execute a compliance check."""        check_id = str(uuid.uuid4())
         
         try:
             # Execute check function
@@ -707,8 +678,7 @@ class ComplianceAuditor:
             )
     
     def check_data_access_logging(self) -> Dict[str, Any]:
-        """Check GDPR data access logging compliance."""
-        try:
+        """Check GDPR data access logging compliance."""        try:
             # Count data access events
             access_events = [
                 event for event in self.audit_events
@@ -749,8 +719,7 @@ class ComplianceAuditor:
             }
     
     def check_data_retention(self) -> Dict[str, Any]:
-        """Check data retention compliance."""
-        try:
+        """Check data retention compliance."""        try:
             retention_validation = self.validate_data_retention()
             
             if 'error' in retention_validation:
@@ -801,8 +770,7 @@ class ComplianceAuditor:
             }
     
     def check_encryption_strength(self) -> Dict[str, Any]:
-        """Check encryption strength compliance."""
-        try:
+        """Check encryption strength compliance."""        try:
             # Check encryption configuration
             encryption_events = [
                 event for event in self.audit_events
@@ -851,8 +819,7 @@ class ComplianceAuditor:
             }
     
     def check_access_control(self) -> Dict[str, Any]:
-        """Check access control compliance."""
-        try:
+        """Check access control compliance."""        try:
             # Analyze access patterns
             auth_events = [
                 event for event in self.audit_events
@@ -906,8 +873,7 @@ class ComplianceAuditor:
             }
     
     def check_audit_integrity(self) -> Dict[str, Any]:
-        """Check audit trail integrity."""
-        try:
+        """Check audit trail integrity."""        try:
             # Check for tampering indicators
             integrity_issues = 0
             total_checks = 0
@@ -958,8 +924,7 @@ class ComplianceAuditor:
             }
     
     def check_security_policy(self) -> Dict[str, Any]:
-        """Check security policy implementation."""
-        try:
+        """Check security policy implementation."""        try:
             # Check for policy-related events
             policy_events = [
                 event for event in self.audit_events
@@ -997,8 +962,7 @@ class ComplianceAuditor:
         event_type: AuditEventType,
         details: Dict[str, Any]
     ) -> List[str]:
-        """Determine compliance frameworks impacted by event."""
-        impact = []
+        """Determine compliance frameworks impacted by event."""        impact = []
         
         # Map event types to compliance frameworks
         if event_type in [AuditEventType.SECRET_ACCESS, AuditEventType.SECRET_CREATION]:
@@ -1013,8 +977,7 @@ class ComplianceAuditor:
         return impact
     
     def _check_compliance_violations(self, event: AuditEvent) -> None:
-        """Check for immediate compliance violations."""
-        try:
+        """Check for immediate compliance violations."""        try:
             # Check for high-risk events
             if event.risk_level == 'critical':
                 self._trigger_compliance_alert(event, "Critical risk event detected")
@@ -1036,8 +999,7 @@ class ComplianceAuditor:
             logger.error(f"Compliance violation check failed: {e}")
     
     def _trigger_compliance_alert(self, event: AuditEvent, message: str) -> None:
-        """Trigger compliance alert."""
-        try:
+        """Trigger compliance alert."""        try:
             alert_data = {
                 'alert_type': 'compliance_violation',
                 'event_id': event.event_id,
@@ -1055,8 +1017,7 @@ class ComplianceAuditor:
             logger.error(f"Failed to trigger compliance alert: {e}")
     
     def _generate_audit_statistics(self, events: List[AuditEvent]) -> Dict[str, Any]:
-        """Generate audit statistics."""
-        try:
+        """Generate audit statistics."""        try:
             if not events:
                 return {}
             
@@ -1094,8 +1055,7 @@ class ComplianceAuditor:
             return {}
     
     def _analyze_risk_patterns(self, events: List[AuditEvent]) -> Dict[str, Any]:
-        """Analyze risk patterns in events."""
-        try:
+        """Analyze risk patterns in events."""        try:
             high_risk_events = [e for e in events if e.risk_level in ['high', 'critical']]
             
             # Risk trend analysis
@@ -1121,8 +1081,7 @@ class ComplianceAuditor:
             return {}
     
     def _generate_compliance_summary(self, events: List[AuditEvent]) -> Dict[str, Any]:
-        """Generate compliance summary."""
-        try:
+        """Generate compliance summary."""        try:
             compliance_events = {}
             
             for event in events:
@@ -1143,8 +1102,7 @@ class ComplianceAuditor:
             return {}
     
     def _event_to_dict(self, event: AuditEvent) -> Dict[str, Any]:
-        """Convert audit event to dictionary."""
-        return {
+        """Convert audit event to dictionary."""        return {
             'event_id': event.event_id,
             'event_type': event.event_type.value,
             'timestamp': event.timestamp.isoformat(),
@@ -1159,8 +1117,7 @@ class ComplianceAuditor:
         }
     
     def _check_to_dict(self, check: ComplianceCheck) -> Dict[str, Any]:
-        """Convert compliance check to dictionary."""
-        return {
+        """Convert compliance check to dictionary."""        return {
             'check_id': check.check_id,
             'rule_id': check.rule_id,
             'status': check.status.value,
@@ -1172,8 +1129,7 @@ class ComplianceAuditor:
         }
     
     def _persist_audit_event(self, event: AuditEvent) -> None:
-        """Persist audit event to storage."""
-        try:
+        """Persist audit event to storage."""        try:
             # Append to audit log file
             audit_file = Path(self.config.audit_log_file)
             audit_file.parent.mkdir(parents=True, exist_ok=True)
@@ -1185,8 +1141,7 @@ class ComplianceAuditor:
             logger.error(f"Failed to persist audit event: {e}")
     
     def _load_audit_events(self) -> None:
-        """Load audit events from storage."""
-        try:
+        """Load audit events from storage."""        try:
             audit_file = Path(self.config.audit_log_file)
             if not audit_file.exists():
                 return
@@ -1218,8 +1173,7 @@ class ComplianceAuditor:
             logger.error(f"Failed to load audit events: {e}")
     
     def _save_audit_events(self) -> None:
-        """Save audit events to storage."""
-        try:
+        """Save audit events to storage."""        try:
             audit_file = Path(self.config.audit_log_file)
             audit_file.parent.mkdir(parents=True, exist_ok=True)
             
@@ -1231,8 +1185,7 @@ class ComplianceAuditor:
             logger.error(f"Failed to save audit events: {e}")
     
     def _save_compliance_report(self, report: Dict[str, Any]) -> None:
-        """Save compliance report."""
-        try:
+        """Save compliance report."""        try:
             reports_dir = Path(self.config.compliance_reports_dir)
             reports_dir.mkdir(parents=True, exist_ok=True)
             
@@ -1247,8 +1200,7 @@ class ComplianceAuditor:
 
 
 class InfluencerComplianceAuditor(ComplianceAuditor):
-    """
-    Specialized compliance auditor for IA Influencer Agent platform.
+    """    Specialized compliance auditor for IA Influencer Agent platform.
     
     Handles compliance for:
     - Content creator data protection (GDPR, CCPA)
@@ -1256,8 +1208,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
     - Platform API usage compliance
     - Content protection regulatory requirements
     - Intellectual property compliance
-    """
-    
+    """    
     def __init__(self, vault_manager: VaultManager, config: SecretsConfig = None):
         super().__init__(vault_manager, config)
         
@@ -1306,8 +1257,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         platform: str,
         user_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Audit compliance for specific platform integration.
+        """        Audit compliance for specific platform integration.
         
         Args:
             platform: Platform name (youtube, instagram, etc.)
@@ -1315,8 +1265,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
             
         Returns:
             dict: Platform compliance audit result
-        """
-        try:
+        """        try:
             audit_id = f"platform_audit_{platform}_{int(datetime.utcnow().timestamp())}"
             
             compliance_result = {
@@ -1390,8 +1339,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         content_type: str,
         user_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Audit compliance for content protection systems.
+        """        Audit compliance for content protection systems.
         
         Args:
             content_type: Type of content (audio, video, image, text)
@@ -1399,8 +1347,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
             
         Returns:
             dict: Content protection compliance audit result
-        """
-        try:
+        """        try:
             audit_id = f"content_protection_audit_{content_type}_{int(datetime.utcnow().timestamp())}"
             
             compliance_result = {
@@ -1454,8 +1401,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         processor: str,
         transaction_volume: Optional[float] = None
     ) -> Dict[str, Any]:
-        """
-        Audit PCI-DSS compliance for payment processing.
+        """        Audit PCI-DSS compliance for payment processing.
         
         Args:
             processor: Payment processor name
@@ -1463,8 +1409,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
             
         Returns:
             dict: Payment compliance audit result
-        """
-        try:
+        """        try:
             audit_id = f"payment_audit_{processor}_{int(datetime.utcnow().timestamp())}"
             
             compliance_result = {
@@ -1531,8 +1476,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         user_id: str,
         data_types: List[str]
     ) -> Dict[str, Any]:
-        """
-        Audit GDPR/CCPA compliance for creator data protection.
+        """        Audit GDPR/CCPA compliance for creator data protection.
         
         Args:
             user_id: Creator user identifier
@@ -1540,8 +1484,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
             
         Returns:
             dict: Creator data compliance audit result
-        """
-        try:
+        """        try:
             audit_id = f"creator_data_audit_{user_id}_{int(datetime.utcnow().timestamp())}"
             
             compliance_result = {
@@ -1598,8 +1541,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         include_platforms: List[str] = None,
         include_users: List[str] = None
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive compliance report for IA Influencer platform.
+        """        Generate comprehensive compliance report for IA Influencer platform.
         
         Args:
             include_platforms: Platforms to include in report
@@ -1607,8 +1549,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
             
         Returns:
             dict: Comprehensive compliance report
-        """
-        try:
+        """        try:
             report_id = f"comprehensive_report_{int(datetime.utcnow().timestamp())}"
             
             report = {
@@ -1704,8 +1645,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         platform: str,
         requirements: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Check data retention compliance for platform."""
-        try:
+        """Check data retention compliance for platform."""        try:
             retention_days = requirements.get('data_retention', 1095)
             
             # Check if data retention policy is configured
@@ -1739,8 +1679,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         platform: str,
         requirements: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Check API usage logging compliance."""
-        try:
+        """Check API usage logging compliance."""        try:
             logging_required = requirements.get('api_usage_logging', False)
             
             if not logging_required:
@@ -1778,8 +1717,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         platform: str,
         requirements: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Check content scanning compliance."""
-        try:
+        """Check content scanning compliance."""        try:
             scanning_required = requirements.get('content_scanning', False)
             
             if not scanning_required:
@@ -1817,8 +1755,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         platform: str,
         user_id: Optional[str]
     ) -> Dict[str, Any]:
-        """Check creator consent compliance."""
-        try:
+        """Check creator consent compliance."""        try:
             if not user_id:
                 return {
                     'status': ComplianceStatus.COMPLIANT,
@@ -1856,8 +1793,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         platform: str,
         user_id: Optional[str]
     ) -> Dict[str, Any]:
-        """Check royalty tracking compliance for Spotify."""
-        try:
+        """Check royalty tracking compliance for Spotify."""        try:
             # Check if royalty tracking is configured
             vault_path = f"ia-influencer/config/royalty_tracking/{platform}"
             tracking_config = self.vault.get_secret(vault_path)
@@ -1886,8 +1822,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
     
     # Placeholder methods for compliance rule initialization
     def _initialize_gdpr_rules(self) -> List[ComplianceRule]:
-        """Initialize GDPR compliance rules."""
-        return [
+        """Initialize GDPR compliance rules."""        return [
             ComplianceRule(
                 rule_id="gdpr_001",
                 framework=ComplianceFramework.GDPR,
@@ -1909,8 +1844,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         ]
     
     def _initialize_pci_dss_rules(self) -> List[ComplianceRule]:
-        """Initialize PCI-DSS compliance rules."""
-        return [
+        """Initialize PCI-DSS compliance rules."""        return [
             ComplianceRule(
                 rule_id="pci_001",
                 framework=ComplianceFramework.PCI_DSS,
@@ -1932,8 +1866,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         ]
     
     def _initialize_dmca_rules(self) -> List[ComplianceRule]:
-        """Initialize DMCA compliance rules."""
-        return [
+        """Initialize DMCA compliance rules."""        return [
             ComplianceRule(
                 rule_id="dmca_001",
                 framework="DMCA",
@@ -1946,8 +1879,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         ]
     
     def _initialize_platform_terms_rules(self) -> List[ComplianceRule]:
-        """Initialize platform terms compliance rules."""
-        return [
+        """Initialize platform terms compliance rules."""        return [
             ComplianceRule(
                 rule_id="terms_001",
                 framework="PLATFORM_TERMS",
@@ -1960,8 +1892,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         ]
     
     def _initialize_creator_rights_rules(self) -> List[ComplianceRule]:
-        """Initialize creator rights compliance rules."""
-        return [
+        """Initialize creator rights compliance rules."""        return [
             ComplianceRule(
                 rule_id="creator_001",
                 framework="CONTENT_CREATOR_RIGHTS",
@@ -1975,124 +1906,95 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
     
     # Placeholder methods for various compliance checks
     def _check_content_encryption_compliance(self, content_type: str) -> Dict[str, Any]:
-        """Check content encryption compliance."""
-        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Content encryption implemented'}
+        """Check content encryption compliance."""        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Content encryption implemented'}
     
     def _check_fingerprinting_compliance(self, content_type: str) -> Dict[str, Any]:
-        """Check fingerprinting compliance."""
-        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Fingerprinting system active'}
+        """Check fingerprinting compliance."""        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Fingerprinting system active'}
     
     def _check_content_access_control(self, content_type: str, user_id: Optional[str]) -> Dict[str, Any]:
-        """Check content access control compliance."""
-        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Access controls implemented'}
+        """Check content access control compliance."""        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Access controls implemented'}
     
     def _check_content_retention_compliance(self, content_type: str) -> Dict[str, Any]:
-        """Check content retention compliance."""
-        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Retention policies configured'}
+        """Check content retention compliance."""        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Retention policies configured'}
     
     def _check_dmca_compliance(self, content_type: str) -> Dict[str, Any]:
-        """Check DMCA compliance."""
-        return {'status': ComplianceStatus.COMPLIANT, 'message': 'DMCA protection active'}
+        """Check DMCA compliance."""        return {'status': ComplianceStatus.COMPLIANT, 'message': 'DMCA protection active'}
     
     # PCI-DSS requirement check methods
     def _check_pci_requirement_1(self, processor: str) -> Dict[str, Any]:
-        """Check PCI Requirement 1: Firewall."""
-        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Firewall configured'}
+        """Check PCI Requirement 1: Firewall."""        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Firewall configured'}
     
     def _check_pci_requirement_2(self, processor: str) -> Dict[str, Any]:
-        """Check PCI Requirement 2: Default passwords."""
-        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Default passwords changed'}
+        """Check PCI Requirement 2: Default passwords."""        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Default passwords changed'}
     
     def _check_pci_requirement_3(self, processor: str) -> Dict[str, Any]:
-        """Check PCI Requirement 3: Cardholder data protection."""
-        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Cardholder data encrypted'}
+        """Check PCI Requirement 3: Cardholder data protection."""        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Cardholder data encrypted'}
     
     def _check_pci_requirement_4(self, processor: str) -> Dict[str, Any]:
-        """Check PCI Requirement 4: Encryption in transit."""
-        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Data encrypted in transit'}
+        """Check PCI Requirement 4: Encryption in transit."""        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Data encrypted in transit'}
     
     def _check_pci_requirement_5(self, processor: str) -> Dict[str, Any]:
-        """Check PCI Requirement 5: Antivirus."""
-        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Antivirus protection active'}
+        """Check PCI Requirement 5: Antivirus."""        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Antivirus protection active'}
     
     def _check_pci_requirement_6(self, processor: str) -> Dict[str, Any]:
-        """Check PCI Requirement 6: Secure development."""
-        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Secure development practices'}
+        """Check PCI Requirement 6: Secure development."""        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Secure development practices'}
     
     def _check_pci_requirement_7(self, processor: str) -> Dict[str, Any]:
-        """Check PCI Requirement 7: Access control."""
-        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Access controls implemented'}
+        """Check PCI Requirement 7: Access control."""        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Access controls implemented'}
     
     def _check_pci_requirement_8(self, processor: str) -> Dict[str, Any]:
-        """Check PCI Requirement 8: User identification."""
-        return {'status': ComplianceStatus.COMPLIANT, 'message': 'User identification implemented'}
+        """Check PCI Requirement 8: User identification."""        return {'status': ComplianceStatus.COMPLIANT, 'message': 'User identification implemented'}
     
     def _check_pci_requirement_9(self, processor: str) -> Dict[str, Any]:
-        """Check PCI Requirement 9: Physical access."""
-        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Physical access controlled'}
+        """Check PCI Requirement 9: Physical access."""        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Physical access controlled'}
     
     def _check_pci_requirement_10(self, processor: str) -> Dict[str, Any]:
-        """Check PCI Requirement 10: Logging."""
-        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Logging implemented'}
+        """Check PCI Requirement 10: Logging."""        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Logging implemented'}
     
     def _check_pci_requirement_11(self, processor: str) -> Dict[str, Any]:
-        """Check PCI Requirement 11: Security testing."""
-        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Security testing performed'}
+        """Check PCI Requirement 11: Security testing."""        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Security testing performed'}
     
     def _check_pci_requirement_12(self, processor: str) -> Dict[str, Any]:
-        """Check PCI Requirement 12: Information security policy."""
-        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Security policy implemented'}
+        """Check PCI Requirement 12: Information security policy."""        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Security policy implemented'}
     
     # GDPR compliance check methods
     def _check_gdpr_consent(self, user_id: str) -> Dict[str, Any]:
-        """Check GDPR consent compliance."""
-        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Valid consent obtained'}
+        """Check GDPR consent compliance."""        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Valid consent obtained'}
     
     def _check_gdpr_data_minimization(self, user_id: str, data_types: List[str]) -> Dict[str, Any]:
-        """Check GDPR data minimization compliance."""
-        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Data minimization implemented'}
+        """Check GDPR data minimization compliance."""        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Data minimization implemented'}
     
     def _check_gdpr_purpose_limitation(self, user_id: str) -> Dict[str, Any]:
-        """Check GDPR purpose limitation compliance."""
-        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Purpose limitation respected'}
+        """Check GDPR purpose limitation compliance."""        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Purpose limitation respected'}
     
     def _check_gdpr_accuracy(self, user_id: str) -> Dict[str, Any]:
-        """Check GDPR accuracy compliance."""
-        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Data accuracy maintained'}
+        """Check GDPR accuracy compliance."""        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Data accuracy maintained'}
     
     def _check_gdpr_storage_limitation(self, user_id: str) -> Dict[str, Any]:
-        """Check GDPR storage limitation compliance."""
-        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Storage limitation implemented'}
+        """Check GDPR storage limitation compliance."""        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Storage limitation implemented'}
     
     def _check_gdpr_security(self, user_id: str) -> Dict[str, Any]:
-        """Check GDPR security compliance."""
-        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Appropriate security measures'}
+        """Check GDPR security compliance."""        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Appropriate security measures'}
     
     def _check_gdpr_accountability(self, user_id: str) -> Dict[str, Any]:
-        """Check GDPR accountability compliance."""
-        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Accountability demonstrated'}
+        """Check GDPR accountability compliance."""        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Accountability demonstrated'}
     
     # CCPA compliance check methods
     def _check_ccpa_notice(self, user_id: str) -> Dict[str, Any]:
-        """Check CCPA notice compliance."""
-        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Privacy notice provided'}
+        """Check CCPA notice compliance."""        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Privacy notice provided'}
     
     def _check_ccpa_opt_out(self, user_id: str) -> Dict[str, Any]:
-        """Check CCPA opt-out compliance."""
-        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Opt-out mechanism available'}
+        """Check CCPA opt-out compliance."""        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Opt-out mechanism available'}
     
     def _check_ccpa_data_deletion(self, user_id: str) -> Dict[str, Any]:
-        """Check CCPA data deletion compliance."""
-        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Data deletion capability'}
+        """Check CCPA data deletion compliance."""        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Data deletion capability'}
     
     def _check_ccpa_non_discrimination(self, user_id: str) -> Dict[str, Any]:
-        """Check CCPA non-discrimination compliance."""
-        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Non-discrimination policy'}
+        """Check CCPA non-discrimination compliance."""        return {'status': ComplianceStatus.COMPLIANT, 'message': 'Non-discrimination policy'}
     
     # Compliance score calculation methods
     def _calculate_platform_compliance_score(self, result: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate platform compliance score."""
-        checks = result.get('compliance_checks', {})
+        """Calculate platform compliance score."""        checks = result.get('compliance_checks', {})
         total_checks = len(checks)
         compliant_checks = sum(1 for check in checks.values() 
                               if check.get('status') == ComplianceStatus.COMPLIANT)
@@ -2114,21 +2016,17 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         return result
     
     def _calculate_content_protection_compliance_score(self, result: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate content protection compliance score."""
-        return self._calculate_platform_compliance_score(result)
+        """Calculate content protection compliance score."""        return self._calculate_platform_compliance_score(result)
     
     def _calculate_pci_compliance_score(self, result: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate PCI compliance score."""
-        return self._calculate_platform_compliance_score(result)
+        """Calculate PCI compliance score."""        return self._calculate_platform_compliance_score(result)
     
     def _calculate_creator_data_compliance_score(self, result: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate creator data compliance score."""
-        return self._calculate_platform_compliance_score(result)
+        """Calculate creator data compliance score."""        return self._calculate_platform_compliance_score(result)
     
     # Report generation methods
     def _generate_executive_summary(self, report: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate executive summary."""
-        return {
+        """Generate executive summary."""        return {
             'overall_score': report['overall_score'],
             'total_audits': len(report['platform_compliance']) + len(report['payment_compliance']),
             'compliance_status': 'Good' if report['overall_score'] >= 80 else 'Needs Improvement',
@@ -2136,8 +2034,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _generate_risk_assessment(self, report: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate risk assessment."""
-        return {
+        """Generate risk assessment."""        return {
             'overall_risk': 'Low' if report['overall_score'] >= 80 else 'Medium',
             'high_risk_areas': [],
             'medium_risk_areas': [],
@@ -2145,8 +2042,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _generate_compliance_recommendations(self, report: Dict[str, Any]) -> List[str]:
-        """Generate compliance recommendations."""
-        return [
+        """Generate compliance recommendations."""        return [
             'Continue monitoring platform API usage compliance',
             'Regular review of data retention policies',
             'Maintain current encryption standards',
@@ -2155,8 +2051,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
 
 
 class InfluencerComplianceAuditor(ComplianceAuditor):
-    """
-    Specialized compliance auditor for IA Influencer Agent platform.
+    """    Specialized compliance auditor for IA Influencer Agent platform.
     
     Handles compliance for:
     - Content creator data protection (GDPR/CCPA)
@@ -2164,8 +2059,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
     - Content protection and copyright compliance
     - Payment processing compliance (PCI-DSS)
     - AI model usage and data handling compliance
-    """
-    
+    """    
     def __init__(self, vault_manager: VaultManager, config: SecretsConfig = None):
         super().__init__(vault_manager, config)
         self.platform_compliance_rules = self._initialize_platform_compliance_rules()
@@ -2179,8 +2073,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         platform: str,
         creator_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Audit platform API usage compliance.
+        """        Audit platform API usage compliance.
         
         Args:
             platform: Platform name (youtube, instagram, etc.)
@@ -2188,8 +2081,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
             
         Returns:
             dict: Compliance audit results
-        """
-        try:
+        """        try:
             audit_result = {
                 'audit_id': str(uuid.uuid4()),
                 'audit_type': 'platform_api_compliance',
@@ -2247,8 +2139,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         content_type: str,
         creator_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Audit content protection compliance.
+        """        Audit content protection compliance.
         
         Args:
             content_type: Type of content (audio, video, image, text)
@@ -2256,8 +2147,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
             
         Returns:
             dict: Compliance audit results
-        """
-        try:
+        """        try:
             audit_result = {
                 'audit_id': str(uuid.uuid4()),
                 'audit_type': 'content_protection_compliance',
@@ -2315,8 +2205,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         model_name: str,
         usage_data: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """
-        Audit AI model usage compliance.
+        """        Audit AI model usage compliance.
         
         Args:
             model_name: AI model name
@@ -2324,8 +2213,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
             
         Returns:
             dict: Compliance audit results
-        """
-        try:
+        """        try:
             audit_result = {
                 'audit_id': str(uuid.uuid4()),
                 'audit_type': 'ai_model_compliance',
@@ -2382,8 +2270,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         creator_id: str,
         data_types: List[str] = None
     ) -> Dict[str, Any]:
-        """
-        Audit creator data handling compliance (GDPR/CCPA).
+        """        Audit creator data handling compliance (GDPR/CCPA).
         
         Args:
             creator_id: Creator identifier
@@ -2391,8 +2278,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
             
         Returns:
             dict: Compliance audit results
-        """
-        try:
+        """        try:
             audit_result = {
                 'audit_id': str(uuid.uuid4()),
                 'audit_type': 'creator_data_compliance',
@@ -2454,8 +2340,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         include_platforms: List[str] = None,
         include_creators: List[str] = None
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive compliance report for IA Influencer Agent platform.
+        """        Generate comprehensive compliance report for IA Influencer Agent platform.
         
         Args:
             report_period_days: Number of days to include in report
@@ -2464,8 +2349,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
             
         Returns:
             dict: Comprehensive compliance report
-        """
-        try:
+        """        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=report_period_days)
             
@@ -2546,8 +2430,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
     
     # Platform-specific compliance check methods
     def _check_platform_credentials_security(self, platform: str) -> Dict[str, Any]:
-        """Check platform credentials security compliance."""
-        try:
+        """Check platform credentials security compliance."""        try:
             vault_path = f"ia-influencer/apis/{platform}"
             secret = self.vault.get_secret(vault_path)
             
@@ -2580,8 +2463,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
             }
     
     def _check_platform_usage_limits(self, platform: str) -> Dict[str, Any]:
-        """Check platform API usage limits compliance."""
-        # Implementation would check actual API usage against limits
+        """Check platform API usage limits compliance."""        # Implementation would check actual API usage against limits
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'{platform} API usage within limits',
@@ -2589,8 +2471,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _check_platform_data_handling(self, platform: str, creator_id: Optional[str]) -> Dict[str, Any]:
-        """Check platform data handling compliance."""
-        # Implementation would verify data handling practices
+        """Check platform data handling compliance."""        # Implementation would verify data handling practices
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'{platform} data handling compliant',
@@ -2598,8 +2479,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _check_platform_terms_compliance(self, platform: str) -> Dict[str, Any]:
-        """Check platform terms of service compliance."""
-        # Implementation would verify ToS compliance
+        """Check platform terms of service compliance."""        # Implementation would verify ToS compliance
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'{platform} terms of service compliance verified',
@@ -2607,8 +2487,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _check_platform_privacy_compliance(self, platform: str) -> Dict[str, Any]:
-        """Check platform privacy policy compliance."""
-        # Implementation would verify privacy compliance
+        """Check platform privacy policy compliance."""        # Implementation would verify privacy compliance
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'{platform} privacy policy compliance verified',
@@ -2616,8 +2495,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _check_platform_content_rights(self, platform: str, creator_id: Optional[str]) -> Dict[str, Any]:
-        """Check platform content rights compliance."""
-        # Implementation would verify content rights compliance
+        """Check platform content rights compliance."""        # Implementation would verify content rights compliance
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'{platform} content rights compliance verified',
@@ -2626,8 +2504,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
     
     # Content protection compliance check methods
     def _check_content_encryption_compliance(self, content_type: str) -> Dict[str, Any]:
-        """Check content encryption compliance."""
-        try:
+        """Check content encryption compliance."""        try:
             vault_path = f"ia-influencer/protection/{content_type}"
             secret = self.vault.get_secret(vault_path)
             
@@ -2661,8 +2538,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
             }
     
     def _check_content_fingerprinting_compliance(self, content_type: str) -> Dict[str, Any]:
-        """Check content fingerprinting compliance."""
-        # Implementation would verify fingerprinting compliance
+        """Check content fingerprinting compliance."""        # Implementation would verify fingerprinting compliance
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'{content_type} fingerprinting compliance verified',
@@ -2670,8 +2546,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _check_content_copyright_compliance(self, content_type: str, creator_id: Optional[str]) -> Dict[str, Any]:
-        """Check content copyright compliance."""
-        # Implementation would verify copyright compliance
+        """Check content copyright compliance."""        # Implementation would verify copyright compliance
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'{content_type} copyright compliance verified',
@@ -2679,8 +2554,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _check_content_dmca_compliance(self, content_type: str) -> Dict[str, Any]:
-        """Check content DMCA compliance."""
-        # Implementation would verify DMCA compliance
+        """Check content DMCA compliance."""        # Implementation would verify DMCA compliance
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'{content_type} DMCA compliance verified',
@@ -2688,8 +2562,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _check_content_retention_compliance(self, content_type: str) -> Dict[str, Any]:
-        """Check content retention compliance."""
-        # Implementation would verify retention compliance
+        """Check content retention compliance."""        # Implementation would verify retention compliance
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'{content_type} retention compliance verified',
@@ -2697,8 +2570,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _check_content_access_control(self, content_type: str, creator_id: Optional[str]) -> Dict[str, Any]:
-        """Check content access control compliance."""
-        # Implementation would verify access control compliance
+        """Check content access control compliance."""        # Implementation would verify access control compliance
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'{content_type} access control compliance verified',
@@ -2707,8 +2579,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
     
     # AI model compliance check methods
     def _check_ai_model_api_usage(self, model_name: str, usage_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Check AI model API usage compliance."""
-        # Implementation would check API usage patterns
+        """Check AI model API usage compliance."""        # Implementation would check API usage patterns
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'{model_name} API usage within compliance guidelines',
@@ -2716,8 +2587,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _check_ai_model_data_handling(self, model_name: str) -> Dict[str, Any]:
-        """Check AI model data handling compliance."""
-        # Implementation would verify data handling practices
+        """Check AI model data handling compliance."""        # Implementation would verify data handling practices
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'{model_name} data handling compliant',
@@ -2725,8 +2595,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _check_ai_model_privacy_compliance(self, model_name: str) -> Dict[str, Any]:
-        """Check AI model privacy compliance."""
-        # Implementation would verify privacy compliance
+        """Check AI model privacy compliance."""        # Implementation would verify privacy compliance
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'{model_name} privacy compliance verified',
@@ -2734,8 +2603,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _check_ai_model_bias_compliance(self, model_name: str) -> Dict[str, Any]:
-        """Check AI model bias and fairness compliance."""
-        # Implementation would check for bias and fairness issues
+        """Check AI model bias and fairness compliance."""        # Implementation would check for bias and fairness issues
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'{model_name} bias and fairness compliance verified',
@@ -2743,8 +2611,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _check_ai_model_cost_compliance(self, model_name: str, usage_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Check AI model cost management compliance."""
-        # Implementation would verify cost management
+        """Check AI model cost management compliance."""        # Implementation would verify cost management
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'{model_name} cost management compliant',
@@ -2752,8 +2619,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _check_ai_model_security_compliance(self, model_name: str) -> Dict[str, Any]:
-        """Check AI model security compliance."""
-        # Implementation would verify security measures
+        """Check AI model security compliance."""        # Implementation would verify security measures
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'{model_name} security compliance verified',
@@ -2762,8 +2628,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
     
     # Creator data compliance check methods
     def _check_creator_gdpr_consent(self, creator_id: str) -> Dict[str, Any]:
-        """Check creator GDPR consent compliance."""
-        # Implementation would verify GDPR consent
+        """Check creator GDPR consent compliance."""        # Implementation would verify GDPR consent
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'GDPR consent verified for creator {creator_id}',
@@ -2771,8 +2636,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _check_creator_gdpr_data_minimization(self, creator_id: str, data_types: List[str]) -> Dict[str, Any]:
-        """Check creator GDPR data minimization compliance."""
-        # Implementation would verify data minimization
+        """Check creator GDPR data minimization compliance."""        # Implementation would verify data minimization
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'GDPR data minimization verified for creator {creator_id}',
@@ -2780,8 +2644,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _check_creator_gdpr_purpose_limitation(self, creator_id: str) -> Dict[str, Any]:
-        """Check creator GDPR purpose limitation compliance."""
-        # Implementation would verify purpose limitation
+        """Check creator GDPR purpose limitation compliance."""        # Implementation would verify purpose limitation
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'GDPR purpose limitation verified for creator {creator_id}',
@@ -2789,8 +2652,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _check_creator_gdpr_accuracy(self, creator_id: str) -> Dict[str, Any]:
-        """Check creator GDPR accuracy compliance."""
-        # Implementation would verify data accuracy
+        """Check creator GDPR accuracy compliance."""        # Implementation would verify data accuracy
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'GDPR accuracy verified for creator {creator_id}',
@@ -2798,8 +2660,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _check_creator_gdpr_storage_limitation(self, creator_id: str) -> Dict[str, Any]:
-        """Check creator GDPR storage limitation compliance."""
-        # Implementation would verify storage limitation
+        """Check creator GDPR storage limitation compliance."""        # Implementation would verify storage limitation
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'GDPR storage limitation verified for creator {creator_id}',
@@ -2807,8 +2668,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _check_creator_gdpr_security(self, creator_id: str) -> Dict[str, Any]:
-        """Check creator GDPR security compliance."""
-        # Implementation would verify security measures
+        """Check creator GDPR security compliance."""        # Implementation would verify security measures
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'GDPR security verified for creator {creator_id}',
@@ -2816,8 +2676,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _check_creator_gdpr_accountability(self, creator_id: str) -> Dict[str, Any]:
-        """Check creator GDPR accountability compliance."""
-        # Implementation would verify accountability measures
+        """Check creator GDPR accountability compliance."""        # Implementation would verify accountability measures
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'GDPR accountability verified for creator {creator_id}',
@@ -2825,8 +2684,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _check_creator_ccpa_notice(self, creator_id: str) -> Dict[str, Any]:
-        """Check creator CCPA notice compliance."""
-        # Implementation would verify CCPA notice
+        """Check creator CCPA notice compliance."""        # Implementation would verify CCPA notice
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'CCPA notice verified for creator {creator_id}',
@@ -2834,8 +2692,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _check_creator_ccpa_opt_out(self, creator_id: str) -> Dict[str, Any]:
-        """Check creator CCPA opt-out compliance."""
-        # Implementation would verify opt-out mechanism
+        """Check creator CCPA opt-out compliance."""        # Implementation would verify opt-out mechanism
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'CCPA opt-out verified for creator {creator_id}',
@@ -2843,8 +2700,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _check_creator_ccpa_data_deletion(self, creator_id: str) -> Dict[str, Any]:
-        """Check creator CCPA data deletion compliance."""
-        # Implementation would verify data deletion capability
+        """Check creator CCPA data deletion compliance."""        # Implementation would verify data deletion capability
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'CCPA data deletion verified for creator {creator_id}',
@@ -2852,8 +2708,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _check_creator_ccpa_non_discrimination(self, creator_id: str) -> Dict[str, Any]:
-        """Check creator CCPA non-discrimination compliance."""
-        # Implementation would verify non-discrimination policy
+        """Check creator CCPA non-discrimination compliance."""        # Implementation would verify non-discrimination policy
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'CCPA non-discrimination verified for creator {creator_id}',
@@ -2861,8 +2716,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _check_creator_data_encryption(self, creator_id: str) -> Dict[str, Any]:
-        """Check creator data encryption compliance."""
-        # Implementation would verify data encryption
+        """Check creator data encryption compliance."""        # Implementation would verify data encryption
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'Data encryption verified for creator {creator_id}',
@@ -2870,8 +2724,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _check_creator_access_control(self, creator_id: str) -> Dict[str, Any]:
-        """Check creator access control compliance."""
-        # Implementation would verify access controls
+        """Check creator access control compliance."""        # Implementation would verify access controls
         return {
             'status': ComplianceStatus.COMPLIANT,
             'message': f'Access control verified for creator {creator_id}',
@@ -2880,8 +2733,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
     
     # Initialize compliance rules
     def _initialize_platform_compliance_rules(self) -> List[ComplianceRule]:
-        """Initialize platform-specific compliance rules."""
-        return [
+        """Initialize platform-specific compliance rules."""        return [
             ComplianceRule(
                 rule_id="PLATFORM_001",
                 framework=ComplianceFramework.GDPR,
@@ -2907,8 +2759,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         ]
     
     def _initialize_content_protection_rules(self) -> List[ComplianceRule]:
-        """Initialize content protection compliance rules."""
-        return [
+        """Initialize content protection compliance rules."""        return [
             ComplianceRule(
                 rule_id="CONTENT_001",
                 framework=ComplianceFramework.ISO_27001,
@@ -2934,8 +2785,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         ]
     
     def _initialize_ai_model_compliance_rules(self) -> List[ComplianceRule]:
-        """Initialize AI model compliance rules."""
-        return [
+        """Initialize AI model compliance rules."""        return [
             ComplianceRule(
                 rule_id="AI_001",
                 framework=ComplianceFramework.GDPR,
@@ -2962,8 +2812,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
     
     # Generate recommendations
     def _generate_platform_recommendations(self, platform: str, audit_result: Dict[str, Any]) -> List[str]:
-        """Generate platform-specific recommendations."""
-        recommendations = []
+        """Generate platform-specific recommendations."""        recommendations = []
         
         for check_name, check_result in audit_result['compliance_checks'].items():
             if check_result['status'] != ComplianceStatus.COMPLIANT:
@@ -2977,8 +2826,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         return recommendations
     
     def _generate_content_protection_recommendations(self, content_type: str, audit_result: Dict[str, Any]) -> List[str]:
-        """Generate content protection recommendations."""
-        recommendations = []
+        """Generate content protection recommendations."""        recommendations = []
         
         for check_name, check_result in audit_result['compliance_checks'].items():
             if check_result['status'] != ComplianceStatus.COMPLIANT:
@@ -2992,8 +2840,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         return recommendations
     
     def _generate_ai_model_recommendations(self, model_name: str, audit_result: Dict[str, Any]) -> List[str]:
-        """Generate AI model recommendations."""
-        recommendations = []
+        """Generate AI model recommendations."""        recommendations = []
         
         for check_name, check_result in audit_result['compliance_checks'].items():
             if check_result['status'] != ComplianceStatus.COMPLIANT:
@@ -3007,8 +2854,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         return recommendations
     
     def _generate_creator_data_recommendations(self, creator_id: str, audit_result: Dict[str, Any]) -> List[str]:
-        """Generate creator data recommendations."""
-        recommendations = []
+        """Generate creator data recommendations."""        recommendations = []
         
         for check_name, check_result in audit_result['compliance_checks'].items():
             if check_result['status'] != ComplianceStatus.COMPLIANT:
@@ -3023,8 +2869,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
     
     # Report generation methods
     def _generate_influencer_executive_summary(self, report: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate executive summary for influencer platform."""
-        return {
+        """Generate executive summary for influencer platform."""        return {
             'overall_score': report['overall_score'],
             'compliance_status': 'Excellent' if report['overall_score'] >= 90 else 'Good' if report['overall_score'] >= 80 else 'Needs Improvement',
             'platforms_audited': len(report['platform_compliance']),
@@ -3041,8 +2886,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _generate_influencer_risk_assessment(self, report: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate risk assessment for influencer platform."""
-        overall_risk = 'Low' if report['overall_score'] >= 85 else 'Medium' if report['overall_score'] >= 70 else 'High'
+        """Generate risk assessment for influencer platform."""        overall_risk = 'Low' if report['overall_score'] >= 85 else 'Medium' if report['overall_score'] >= 70 else 'High'
         
         return {
             'overall_risk': overall_risk,
@@ -3062,8 +2906,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
         }
     
     def _generate_influencer_compliance_recommendations(self, report: Dict[str, Any]) -> List[str]:
-        """Generate compliance recommendations for influencer platform."""
-        return [
+        """Generate compliance recommendations for influencer platform."""        return [
             'Maintain current high standards of compliance across all areas',
             'Implement quarterly compliance reviews for all platforms',
             'Continue monitoring AI model usage for bias and fairness',
@@ -3075,9 +2918,7 @@ class InfluencerComplianceAuditor(ComplianceAuditor):
     
     # Scoring methods
     def _calculate_ai_model_compliance_score(self, result: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate AI model compliance score."""
-        return self._calculate_platform_compliance_score(result)
+        """Calculate AI model compliance score."""        return self._calculate_platform_compliance_score(result)
     
     def _calculate_creator_data_compliance_score(self, result: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate creator data compliance score."""
-        return self._calculate_platform_compliance_score(result)
+        """Calculate creator data compliance score."""        return self._calculate_platform_compliance_score(result)

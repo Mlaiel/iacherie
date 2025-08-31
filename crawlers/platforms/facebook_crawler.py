@@ -1,5 +1,4 @@
-"""
-Facebook Crawler
+"""Facebook Crawler
 ================
 
 Professional Facebook content crawler with Graph API integration.
@@ -11,9 +10,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator
 from datetime import datetime, timedelta
@@ -39,8 +36,7 @@ settings = get_settings()
 
 @dataclass
 class FacebookPost:
-    """Facebook post data structure."""
-    post_id: str
+    """Facebook post data structure."""    post_id: str
     message: str
     story: str
     link: str
@@ -65,8 +61,7 @@ class FacebookPost:
 
 @dataclass
 class FacebookPage:
-    """Facebook page data structure."""
-    page_id: str
+    """Facebook page data structure."""    page_id: str
     name: str
     category: str
     category_list: List[Dict]
@@ -90,8 +85,7 @@ class FacebookPage:
 
 @dataclass
 class FacebookEvent:
-    """Facebook event data structure."""
-    event_id: str
+    """Facebook event data structure."""    event_id: str
     name: str
     description: str
     start_time: datetime
@@ -112,8 +106,7 @@ class FacebookEvent:
     cover: Dict
 
 class FacebookCrawler:
-    """
-    Professional Facebook crawler implementation.
+    """    Professional Facebook crawler implementation.
     
     Features:
     - Facebook Graph API integration
@@ -124,11 +117,9 @@ class FacebookCrawler:
     - Engagement analytics
     - Real-time monitoring
     - Multi-format content support
-    """
-    
+    """    
     def __init__(self):
-        """Initialize Facebook crawler."""
-        self.access_token = settings.FACEBOOK_ACCESS_TOKEN
+        """Initialize Facebook crawler."""        self.access_token = settings.FACEBOOK_ACCESS_TOKEN
         self.app_id = settings.FACEBOOK_APP_ID
         self.app_secret = settings.FACEBOOK_APP_SECRET
         self.rate_limiter = FacebookRateLimiter()
@@ -149,16 +140,14 @@ class FacebookCrawler:
         self.selenium_options.add_argument('--disable-blink-features=AutomationControlled')
     
     async def __aenter__(self):
-        """Async context manager entry."""
-        headers = {
+        """Async context manager entry."""        headers = {
             'User-Agent': self.user_agent_rotator.get_user_agent()
         }
         self.session = aiohttp.ClientSession(headers=headers)
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
-        if self.session:
+        """Async context manager exit."""        if self.session:
             await self.session.close()
     
     async def search_pages(
@@ -167,8 +156,7 @@ class FacebookCrawler:
         max_results: int = 50,
         fields: List[str] = None
     ) -> List[FacebookPage]:
-        """
-        Search Facebook pages.
+        """        Search Facebook pages.
         
         Args:
             query: Search query
@@ -177,8 +165,7 @@ class FacebookCrawler:
             
         Returns:
             List of Facebook page objects
-        """
-        try:
+        """        try:
             await self.rate_limiter.wait_if_needed()
             
             if self.access_token:
@@ -191,8 +178,7 @@ class FacebookCrawler:
             return []
     
     async def _search_pages_api(self, query: str, max_results: int, fields: List[str]) -> List[FacebookPage]:
-        """Search pages using Facebook Graph API."""
-        try:
+        """Search pages using Facebook Graph API."""        try:
             if not fields:
                 fields = [
                     'id', 'name', 'category', 'category_list', 'description',
@@ -250,8 +236,7 @@ class FacebookCrawler:
             return []
     
     def _parse_page_data(self, page_data: dict) -> Optional[FacebookPage]:
-        """Parse Facebook page data from API response."""
-        try:
+        """Parse Facebook page data from API response."""        try:
             return FacebookPage(
                 page_id=page_data.get('id', ''),
                 name=page_data.get('name', ''),
@@ -288,8 +273,7 @@ class FacebookCrawler:
         until: Optional[datetime] = None,
         fields: List[str] = None
     ) -> List[FacebookPost]:
-        """Get posts from a Facebook page."""
-        try:
+        """Get posts from a Facebook page."""        try:
             await self.rate_limiter.wait_if_needed()
             
             if self.access_token:
@@ -309,8 +293,7 @@ class FacebookCrawler:
         until: Optional[datetime],
         fields: List[str]
     ) -> List[FacebookPost]:
-        """Get page posts using Facebook Graph API."""
-        try:
+        """Get page posts using Facebook Graph API."""        try:
             if not fields:
                 fields = [
                     'id', 'message', 'story', 'link', 'name', 'caption',
@@ -372,8 +355,7 @@ class FacebookCrawler:
             return []
     
     def _parse_post_data(self, post_data: dict) -> Optional[FacebookPost]:
-        """Parse Facebook post data from API response."""
-        try:
+        """Parse Facebook post data from API response."""        try:
             # Parse timestamps
             created_time = datetime.fromisoformat(
                 post_data.get('created_time', '').replace('Z', '+00:00')
@@ -433,8 +415,7 @@ class FacebookCrawler:
         location: Optional[str] = None,
         max_results: int = 50
     ) -> List[FacebookEvent]:
-        """Search Facebook events."""
-        try:
+        """Search Facebook events."""        try:
             await self.rate_limiter.wait_if_needed()
             
             if self.access_token:
@@ -447,8 +428,7 @@ class FacebookCrawler:
             return []
     
     async def _search_events_api(self, query: str, location: Optional[str], max_results: int) -> List[FacebookEvent]:
-        """Search events using Facebook Graph API."""
-        try:
+        """Search events using Facebook Graph API."""        try:
             # Note: Public event search was restricted in Facebook API
             # This would require special permissions or alternative approaches
             logger.info("Facebook event search requires special API permissions")
@@ -463,8 +443,7 @@ class FacebookCrawler:
         page_id: str,
         check_interval: int = 300
     ) -> AsyncGenerator[List[FacebookPost], None]:
-        """Monitor Facebook page for new posts."""
-        last_check = datetime.now()
+        """Monitor Facebook page for new posts."""        last_check = datetime.now()
         seen_posts = set()
         
         while True:
@@ -494,8 +473,7 @@ class FacebookCrawler:
                 await asyncio.sleep(60)
     
     async def analyze_post_engagement(self, post: FacebookPost) -> Dict:
-        """Analyze Facebook post engagement metrics."""
-        try:
+        """Analyze Facebook post engagement metrics."""        try:
             # Extract engagement counts
             reaction_count = post.reactions.get('total_count', 0)
             comment_count = post.comments.get('total_count', 0)
@@ -550,8 +528,7 @@ class FacebookCrawler:
         page_ids: List[str] = None,
         similarity_threshold: float = 0.7
     ) -> List[Dict]:
-        """Detect posts similar to reference post."""
-        try:
+        """Detect posts similar to reference post."""        try:
             similar_posts = []
             
             # If no specific pages provided, search broadly
@@ -585,8 +562,7 @@ class FacebookCrawler:
             return []
     
     def _calculate_post_similarity(self, post1: FacebookPost, post2: FacebookPost) -> float:
-        """Calculate similarity score between two posts."""
-        # Message similarity
+        """Calculate similarity score between two posts."""        # Message similarity
         message1_words = set((post1.message or '').lower().split())
         message2_words = set((post2.message or '').lower().split())
         message_similarity = len(message1_words & message2_words) / len(message1_words | message2_words) if message1_words | message2_words else 0
@@ -619,8 +595,7 @@ class FacebookCrawler:
         return similarity
     
     def _get_post_match_factors(self, post1: FacebookPost, post2: FacebookPost) -> List[str]:
-        """Get factors that contribute to post similarity."""
-        factors = []
+        """Get factors that contribute to post similarity."""        factors = []
         
         if post1.type == post2.type:
             factors.append(f'same_type: {post1.type}')
@@ -646,8 +621,7 @@ class FacebookCrawler:
         return factors
     
     async def get_page_insights(self, page_id: str, metrics: List[str] = None) -> Dict:
-        """Get Facebook page insights (requires page access token)."""
-        try:
+        """Get Facebook page insights (requires page access token)."""        try:
             await self.rate_limiter.wait_if_needed()
             
             if not self.access_token:

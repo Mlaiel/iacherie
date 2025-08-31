@@ -1,5 +1,4 @@
-"""
-APIs Configuration Index - Centralized API Registry & Orchestration
+"""APIs Configuration Index - Centralized API Registry & Orchestration
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -16,9 +15,7 @@ serving as the main entry point for API management and integration services.
 
 Business Logic: User (musician/blogger/photographer/influencer/comedian) → Multi-format upload → 
 AI rights protection → Pro SEO → Collaboration matching → Multi-platform distribution
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Union, Type
 from dataclasses import dataclass
@@ -43,10 +40,8 @@ from .fingerprinting_apis import FINGERPRINTING_CONFIGS, FingerprintAPIConfig
 logger = logging.getLogger(__name__)
 
 class APIRegistry:
-    """
-    Centralized API registry and orchestration system
-    """
-    
+    """    Centralized API registry and orchestration system
+    """    
     def __init__(self, environment: str = "production"):
         self.environment = environment
         self.api_manager = APIManager(environment=environment)
@@ -63,8 +58,7 @@ class APIRegistry:
         self._initialize_registry()
     
     def _initialize_registry(self) -> None:
-        """Initialize the complete API registry"""
-        try:
+        """Initialize the complete API registry"""        try:
             # Register all API configurations
             all_configs = {
                 **PLATFORM_CONFIGS,
@@ -88,8 +82,7 @@ class APIRegistry:
             raise
     
     async def get_authenticated_client(self, api_name: str, user_id: Optional[str] = None) -> Any:
-        """
-        Get authenticated client for specified API
+        """        Get authenticated client for specified API
         
         Args:
             api_name: API service name
@@ -97,8 +90,7 @@ class APIRegistry:
             
         Returns:
             Authenticated API client instance
-        """
-        try:
+        """        try:
             if api_name not in self._api_configs:
                 raise ValueError(f"API configuration not found: {api_name}")
             
@@ -133,8 +125,7 @@ class APIRegistry:
             raise
     
     async def _validate_client(self, client: Any) -> bool:
-        """Validate if client is still valid and authenticated"""
-        try:
+        """Validate if client is still valid and authenticated"""        try:
             # Implementation depends on client type
             # This is a simplified validation
             if hasattr(client, 'is_authenticated'):
@@ -151,8 +142,7 @@ class APIRegistry:
         data: Optional[Dict[str, Any]] = None,
         user_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Execute API request with rate limiting and monitoring
+        """        Execute API request with rate limiting and monitoring
         
         Args:
             api_name: API service name
@@ -163,8 +153,7 @@ class APIRegistry:
             
         Returns:
             API response data
-        """
-        try:
+        """        try:
             # Check rate limiting
             rate_limit_result = await self.rate_limiter.check_rate_limit(
                 api_name=api_name,
@@ -202,26 +191,22 @@ class APIRegistry:
             raise
     
     def get_api_status(self, api_name: Optional[str] = None) -> Dict[str, APIStatus]:
-        """Get status of API(s)"""
-        if api_name:
+        """Get status of API(s)"""        if api_name:
             return {api_name: self._api_status.get(api_name, APIStatus.INACTIVE)}
         return self._api_status.copy()
     
     def get_registered_apis(self) -> List[str]:
-        """Get list of all registered API names"""
-        return list(self._api_configs.keys())
+        """Get list of all registered API names"""        return list(self._api_configs.keys())
     
     async def health_check(self, api_name: Optional[str] = None) -> Dict[str, Dict[str, Any]]:
-        """
-        Perform health check on API(s)
+        """        Perform health check on API(s)
         
         Args:
             api_name: Optional specific API to check
             
         Returns:
             Health status for API(s)
-        """
-        health_results = {}
+        """        health_results = {}
         apis_to_check = [api_name] if api_name else self._api_configs.keys()
         
         for api in apis_to_check:
@@ -240,8 +225,7 @@ class APIRegistry:
         return health_results
     
     async def refresh_authentication(self, api_name: str, user_id: Optional[str] = None) -> bool:
-        """
-        Refresh authentication for specified API
+        """        Refresh authentication for specified API
         
         Args:
             api_name: API service name
@@ -249,8 +233,7 @@ class APIRegistry:
             
         Returns:
             True if refresh successful
-        """
-        try:
+        """        try:
             client_key = f"{api_name}_{user_id or 'global'}"
             
             # Remove cached client
@@ -268,8 +251,7 @@ class APIRegistry:
             return False
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown API registry and cleanup resources"""
-        try:
+        """Gracefully shutdown API registry and cleanup resources"""        try:
             # Stop monitoring
             await self.monitoring_manager.stop_all_monitoring()
             
@@ -289,16 +271,14 @@ class APIRegistry:
 _global_registry: Optional[APIRegistry] = None
 
 def get_api_registry(environment: str = "production") -> APIRegistry:
-    """
-    Get global API registry instance (singleton pattern)
+    """    Get global API registry instance (singleton pattern)
     
     Args:
         environment: Target environment
         
     Returns:
         Global APIRegistry instance
-    """
-    global _global_registry
+    """    global _global_registry
     
     if _global_registry is None:
         _global_registry = APIRegistry(environment=environment)
@@ -306,16 +286,14 @@ def get_api_registry(environment: str = "production") -> APIRegistry:
     return _global_registry
 
 async def initialize_apis(environment: str = "production") -> APIRegistry:
-    """
-    Initialize and return the global API registry
+    """    Initialize and return the global API registry
     
     Args:
         environment: Target environment
         
     Returns:
         Initialized APIRegistry instance
-    """
-    registry = get_api_registry(environment)
+    """    registry = get_api_registry(environment)
     
     # Perform initial health checks
     health_status = await registry.health_check()
@@ -326,18 +304,15 @@ async def initialize_apis(environment: str = "production") -> APIRegistry:
 
 # Convenience functions for common operations
 async def get_platform_client(platform: str, user_id: Optional[str] = None) -> Any:
-    """Get authenticated client for social media/streaming platform"""
-    registry = get_api_registry()
+    """Get authenticated client for social media/streaming platform"""    registry = get_api_registry()
     return await registry.get_authenticated_client(platform, user_id)
 
 async def get_payment_client(provider: str, user_id: Optional[str] = None) -> Any:
-    """Get authenticated client for payment provider"""
-    registry = get_api_registry()
+    """Get authenticated client for payment provider"""    registry = get_api_registry()
     return await registry.get_authenticated_client(provider, user_id)
 
 async def get_protection_client(service: str, user_id: Optional[str] = None) -> Any:
-    """Get authenticated client for content protection service"""
-    registry = get_api_registry()
+    """Get authenticated client for content protection service"""    registry = get_api_registry()
     return await registry.get_authenticated_client(service, user_id)
 
 async def execute_platform_request(
@@ -347,8 +322,7 @@ async def execute_platform_request(
     data: Optional[Dict[str, Any]] = None,
     user_id: Optional[str] = None
 ) -> Dict[str, Any]:
-    """Execute request to social media/streaming platform"""
-    registry = get_api_registry()
+    """Execute request to social media/streaming platform"""    registry = get_api_registry()
     return await registry.execute_api_request(platform, method, endpoint, data, user_id)
 
 # Export main classes and functions

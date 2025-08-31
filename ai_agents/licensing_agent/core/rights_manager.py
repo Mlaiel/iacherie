@@ -1,5 +1,4 @@
-"""
-Rights Manager - Comprehensive Digital Rights Management System
+"""Rights Manager - Comprehensive Digital Rights Management System
 
 Advanced rights management, ownership tracking, and copyright protection system
 for multi-format content across all digital platforms and territories.
@@ -18,9 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
 from datetime import datetime, timedelta
@@ -47,8 +44,7 @@ from ...security.rights_encryption import RightsEncryption
 logger = logging.getLogger(__name__)
 
 class RightsType(Enum):
-    """Types of content rights"""
-    COPYRIGHT = "copyright"
+    """Types of content rights"""    COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     PERFORMANCE = "performance"
     MECHANICAL = "mechanical"
@@ -63,8 +59,7 @@ class RightsType(Enum):
     NEIGHBORING_RIGHTS = "neighboring_rights"
 
 class OwnershipType(Enum):
-    """Types of ownership structures"""
-    SOLE = "sole"
+    """Types of ownership structures"""    SOLE = "sole"
     JOINT = "joint"
     COLLECTIVE = "collective"
     CORPORATE = "corporate"
@@ -73,8 +68,7 @@ class OwnershipType(Enum):
     SOCIETY = "collecting_society"
 
 class RightsStatus(Enum):
-    """Rights registration status"""
-    PENDING = "pending"
+    """Rights registration status"""    PENDING = "pending"
     REGISTERED = "registered"
     RENEWED = "renewed"
     EXPIRED = "expired"
@@ -83,8 +77,7 @@ class RightsStatus(Enum):
     REVOKED = "revoked"
 
 class TerritoryScope(Enum):
-    """Territory scope definitions"""
-    WORLDWIDE = "worldwide"
+    """Territory scope definitions"""    WORLDWIDE = "worldwide"
     REGIONAL = "regional"
     NATIONAL = "national"
     SUBNATIONAL = "subnational"
@@ -93,8 +86,7 @@ class TerritoryScope(Enum):
 
 @dataclass
 class RightsOwner:
-    """Rights owner information"""
-    owner_id: str
+    """Rights owner information"""    owner_id: str
     name: str
     email: str
     ownership_percentage: Decimal
@@ -108,8 +100,7 @@ class RightsOwner:
 
 @dataclass
 class RightsRecord:
-    """Comprehensive rights record"""
-    rights_id: str
+    """Comprehensive rights record"""    rights_id: str
     content_id: str
     rights_type: RightsType
     owners: List[RightsOwner]
@@ -128,8 +119,7 @@ class RightsRecord:
 
 @dataclass
 class RightsTransfer:
-    """Rights transfer record"""
-    transfer_id: str
+    """Rights transfer record"""    transfer_id: str
     rights_id: str
     from_owner: RightsOwner
     to_owner: RightsOwner
@@ -142,13 +132,11 @@ class RightsTransfer:
     blockchain_tx: Optional[str] = None
 
 class RightsManager:
-    """
-    Ultra-Advanced Digital Rights Management System
+    """    Ultra-Advanced Digital Rights Management System
     
     Provides comprehensive rights tracking, ownership verification, and blockchain-secured
     rights management for all content types across global territories.
-    """
-    
+    """    
     def __init__(self):
         self.copyright_registry = CopyrightRegistryAPI()
         self.rights_blockchain = RightsBlockchain()
@@ -171,8 +159,7 @@ class RightsManager:
         territory: List[str],
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Register comprehensive rights for content with blockchain verification
+        """        Register comprehensive rights for content with blockchain verification
         
         Args:
             content_id: Content identifier
@@ -183,8 +170,7 @@ class RightsManager:
             
         Returns:
             Registration result with blockchain verification
-        """
-        try:
+        """        try:
             # Validate ownership percentages
             total_percentage = sum(owner.ownership_percentage for owner in owners)
             if total_percentage != Decimal("100.0"):
@@ -245,8 +231,7 @@ class RightsManager:
         claimed_owner: str,
         rights_type: Optional[RightsType] = None
     ) -> Dict[str, Any]:
-        """
-        Verify ownership claims with multi-source validation
+        """        Verify ownership claims with multi-source validation
         
         Args:
             content_id: Content to verify ownership for
@@ -255,8 +240,7 @@ class RightsManager:
             
         Returns:
             Ownership verification result
-        """
-        try:
+        """        try:
             # Get all rights records for content
             rights_records = await self._get_content_rights(content_id)
             
@@ -316,16 +300,14 @@ class RightsManager:
         self,
         rights_transfer: RightsTransfer
     ) -> Dict[str, Any]:
-        """
-        Execute secure rights transfer with legal documentation
+        """        Execute secure rights transfer with legal documentation
         
         Args:
             rights_transfer: Transfer details
             
         Returns:
             Transfer execution result
-        """
-        try:
+        """        try:
             # Validate transfer
             validation_result = await self._validate_rights_transfer(rights_transfer)
             if not validation_result["valid"]:
@@ -406,8 +388,7 @@ class RightsManager:
         evidence: Dict[str, Any],
         resolution: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Resolve rights disputes with blockchain-verified evidence
+        """        Resolve rights disputes with blockchain-verified evidence
         
         Args:
             dispute_id: Dispute identifier
@@ -416,8 +397,7 @@ class RightsManager:
             
         Returns:
             Dispute resolution result
-        """
-        try:
+        """        try:
             # Get dispute details
             dispute = await self._get_dispute_by_id(dispute_id)
             if not dispute:
@@ -484,8 +464,7 @@ class RightsManager:
             raise RightsError(f"Dispute resolution failed: {str(e)}")
 
     def _determine_territory_scope(self, territories: List[str]) -> TerritoryScope:
-        """Determine territory scope based on coverage"""
-        if "WORLDWIDE" in territories or len(territories) > 50:
+        """Determine territory scope based on coverage"""        if "WORLDWIDE" in territories or len(territories) > 50:
             return TerritoryScope.WORLDWIDE
         elif len(territories) > 10:
             return TerritoryScope.REGIONAL
@@ -493,8 +472,7 @@ class RightsManager:
             return TerritoryScope.NATIONAL
 
     async def _register_with_copyright_office(self, rights_record: RightsRecord) -> Dict[str, Any]:
-        """Register rights with relevant copyright offices"""
-        registration_results = []
+        """Register rights with relevant copyright offices"""        registration_results = []
         
         for territory in rights_record.territory:
             if territory in self.copyright_registry.supported_territories:
@@ -515,8 +493,7 @@ class RightsManager:
         }
 
     async def _validate_rights_transfer(self, transfer: RightsTransfer) -> Dict[str, Any]:
-        """Validate rights transfer parameters"""
-        errors = []
+        """Validate rights transfer parameters"""        errors = []
         
         # Validate ownership percentage
         if transfer.percentage_transferred <= 0 or transfer.percentage_transferred > 100:
@@ -538,8 +515,7 @@ class RightsManager:
         current_owners: List[RightsOwner],
         transfer: RightsTransfer
     ) -> List[RightsOwner]:
-        """Update ownership structure after transfer"""
-        updated_owners = []
+        """Update ownership structure after transfer"""        updated_owners = []
         
         for owner in current_owners:
             if owner.owner_id == transfer.from_owner.owner_id:
@@ -567,8 +543,7 @@ class RightsManager:
         return updated_owners
 
     def _calculate_confidence_score(self, verification_results: List[Dict[str, Any]]) -> float:
-        """Calculate confidence score for ownership verification"""
-        if not verification_results:
+        """Calculate confidence score for ownership verification"""        if not verification_results:
             return 0.0
         
         score = 0.0
@@ -594,8 +569,7 @@ class RightsManager:
         return min(score / total_weight if total_weight > 0 else 0.0, 1.0)
 
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get rights management metrics"""
-        return {
+        """Get rights management metrics"""        return {
             **self.metrics,
             "timestamp": datetime.utcnow(),
             "blockchain_sync_status": await self.rights_blockchain.get_sync_status(),
@@ -604,10 +578,8 @@ class RightsManager:
 
 
 class CopyrightProtector:
-    """
-    Advanced copyright protection and infringement detection system
-    """
-    
+    """    Advanced copyright protection and infringement detection system
+    """    
     def __init__(self):
         self.rights_manager = RightsManager()
         
@@ -616,8 +588,7 @@ class CopyrightProtector:
         content_id: str,
         suspected_infringement: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Detect and analyze potential copyright infringement
+        """        Detect and analyze potential copyright infringement
         
         Args:
             content_id: Original content ID
@@ -625,8 +596,7 @@ class CopyrightProtector:
             
         Returns:
             Infringement analysis result
-        """
-        try:
+        """        try:
             # Verify original rights
             rights_verification = await self.rights_manager.verify_ownership(
                 content_id,
@@ -674,8 +644,7 @@ class CopyrightProtector:
         original_content_id: str,
         suspected_content: Dict[str, Any]
     ) -> float:
-        """Calculate comprehensive content similarity score using advanced AI algorithms"""
-        try:
+        """Calculate comprehensive content similarity score using advanced AI algorithms"""        try:
             # Get original content fingerprint and metadata
             original_fingerprint = await self._get_content_fingerprint(original_content_id)
             if not original_fingerprint:
@@ -757,8 +726,7 @@ class CopyrightProtector:
             return 0.0
 
     async def _analyze_usage_context(self, suspected_infringement: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze the context of suspected infringing usage"""
-        return {
+        """Analyze the context of suspected infringing usage"""        return {
             "commercial_use": suspected_infringement.get("is_commercial", False),
             "attribution_provided": suspected_infringement.get("has_attribution", False),
             "platform": suspected_infringement.get("platform", "unknown"),
@@ -772,8 +740,7 @@ class CopyrightProtector:
         usage_analysis: Dict[str, Any],
         rights_verification: Dict[str, Any]
     ) -> float:
-        """Calculate probability of infringement"""
-        base_probability = similarity_score
+        """Calculate probability of infringement"""        base_probability = similarity_score
         
         # Adjust based on usage context
         if usage_analysis["commercial_use"]:
@@ -792,8 +759,7 @@ class CopyrightProtector:
         return min(base_probability, 1.0)
 
     def _determine_recommended_action(self, probability: float) -> str:
-        """Determine recommended action based on infringement probability"""
-        if probability > 0.9:
+        """Determine recommended action based on infringement probability"""        if probability > 0.9:
             return "immediate_legal_action"
         elif probability > 0.7:
             return "takedown_notice"
@@ -803,8 +769,7 @@ class CopyrightProtector:
             return "monitor"
 
 class RightsStatus(Enum):
-    """Status of rights"""
-    ACTIVE = "active"
+    """Status of rights"""    ACTIVE = "active"
     PENDING = "pending"
     EXPIRED = "expired"
     DISPUTED = "disputed"
@@ -813,8 +778,7 @@ class RightsStatus(Enum):
 
 @dataclass
 class RightsOwnership:
-    """Rights ownership information"""
-    owner_id: str
+    """Rights ownership information"""    owner_id: str
     owner_name: str
     owner_type: str  # individual, company, organization
     ownership_percentage: Decimal
@@ -828,8 +792,7 @@ class RightsOwnership:
 
 @dataclass
 class RightsRecord:
-    """Complete rights record for content"""
-    content_id: str
+    """Complete rights record for content"""    content_id: str
     content_type: str
     rights_id: str
     title: str
@@ -844,13 +807,11 @@ class RightsRecord:
     updated_at: datetime = field(default_factory=datetime.utcnow)
 
 class RightsManager:
-    """
-    Comprehensive Digital Rights Management System
+    """    Comprehensive Digital Rights Management System
     
     Manages all aspects of digital rights including ownership tracking,
     territorial rights, copyright registration, and rights chain documentation.
-    """
-    
+    """    
     def __init__(self):
         self.copyright_api = CopyrightRegistryAPI()
         self.rights_blockchain = RightsBlockchain()
@@ -876,8 +837,7 @@ class RightsManager:
         content_metadata: Dict[str, Any],
         initial_ownership: List[RightsOwnership]
     ) -> Dict[str, Any]:
-        """
-        Register comprehensive rights for content
+        """        Register comprehensive rights for content
         
         Args:
             content_id: Content identifier
@@ -886,8 +846,7 @@ class RightsManager:
             
         Returns:
             Complete rights registration result
-        """
-        try:
+        """        try:
             # Validate content and ownership data
             validation_result = await self._validate_rights_data(content_metadata, initial_ownership)
             if not validation_result["valid"]:
@@ -952,8 +911,7 @@ class RightsManager:
         transfer_details: Dict[str, Any],
         authorization: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Transfer ownership of rights between parties
+        """        Transfer ownership of rights between parties
         
         Args:
             rights_id: Rights record identifier
@@ -962,8 +920,7 @@ class RightsManager:
             
         Returns:
             Transfer completion result
-        """
-        try:
+        """        try:
             # Get existing rights record
             rights_record = self.rights_registry.get(rights_id)
             if not rights_record:
@@ -1030,8 +987,7 @@ class RightsManager:
         rights_types: List[RightsType],
         territory: str = None
     ) -> Dict[str, Any]:
-        """
-        Verify rights ownership for specific party and usage
+        """        Verify rights ownership for specific party and usage
         
         Args:
             content_id: Content identifier
@@ -1041,8 +997,7 @@ class RightsManager:
             
         Returns:
             Verification result with ownership details
-        """
-        try:
+        """        try:
             # Get rights record
             rights_id = self.ownership_chain.get(content_id)
             if not rights_id:
@@ -1095,8 +1050,7 @@ class RightsManager:
         rights_id: str,
         certificate_type: str = "ownership"
     ) -> Dict[str, Any]:
-        """
-        Generate official rights certificate
+        """        Generate official rights certificate
         
         Args:
             rights_id: Rights record identifier
@@ -1104,8 +1058,7 @@ class RightsManager:
             
         Returns:
             Generated certificate data
-        """
-        try:
+        """        try:
             rights_record = self.rights_registry.get(rights_id)
             if not rights_record:
                 raise RightsError(f"Rights record not found: {rights_id}")
@@ -1155,8 +1108,7 @@ class RightsManager:
         usage_details: Dict[str, Any],
         platform_info: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Track and record rights usage for royalty and compliance purposes
+        """        Track and record rights usage for royalty and compliance purposes
         
         Args:
             content_id: Content identifier
@@ -1165,8 +1117,7 @@ class RightsManager:
             
         Returns:
             Usage tracking result
-        """
-        try:
+        """        try:
             # Get rights record
             rights_id = self.ownership_chain.get(content_id)
             if not rights_id:
@@ -1232,8 +1183,7 @@ class RightsManager:
         content_metadata: Dict[str, Any],
         ownership: List[RightsOwnership]
     ) -> Dict[str, Any]:
-        """Validate rights registration data"""
-        errors = []
+        """Validate rights registration data"""        errors = []
         
         # Comprehensive content validation with business logic
         if not content_metadata.get("title") or not content_metadata["title"].strip():
@@ -1280,8 +1230,7 @@ class RightsManager:
         self,
         ownerships: List[RightsOwnership]
     ) -> Dict[str, List[RightsType]]:
-        """Calculate territorial rights coverage"""
-        territorial_rights = {}
+        """Calculate territorial rights coverage"""        territorial_rights = {}
         
         for ownership in ownerships:
             for territory in ownership.territories:
@@ -1296,8 +1245,7 @@ class RightsManager:
         return territorial_rights
 
     async def _register_copyright(self, rights_record: RightsRecord) -> Dict[str, Any]:
-        """Register copyright with relevant authorities"""
-        registration_data = {
+        """Register copyright with relevant authorities"""        registration_data = {
             "title": rights_record.title,
             "creators": rights_record.creators,
             "content_type": rights_record.content_type,
@@ -1327,8 +1275,7 @@ class RightsManager:
         }
 
     async def _record_on_blockchain(self, rights_record: RightsRecord) -> Dict[str, Any]:
-        """Record rights on blockchain"""
-        blockchain_data = {
+        """Record rights on blockchain"""        blockchain_data = {
             "rights_id": rights_record.rights_id,
             "content_id": rights_record.content_id,
             "ownership_hash": await self._generate_ownership_hash(rights_record.ownerships),
@@ -1339,8 +1286,7 @@ class RightsManager:
         return await self.rights_blockchain.record_rights(blockchain_data)
 
     async def _generate_ownership_hash(self, ownerships: List[RightsOwnership]) -> str:
-        """Generate cryptographic hash of ownership structure"""
-        ownership_data = json.dumps(
+        """Generate cryptographic hash of ownership structure"""        ownership_data = json.dumps(
             [own.__dict__ for own in ownerships], 
             sort_keys=True, 
             default=str
@@ -1350,10 +1296,8 @@ class RightsManager:
 
 
 class CopyrightProtector:
-    """
-    Specialized copyright protection and enforcement system
-    """
-    
+    """    Specialized copyright protection and enforcement system
+    """    
     def __init__(self, rights_manager: RightsManager):
         self.rights_manager = rights_manager
         self.violation_detector = None  # Will be initialized with AI models
@@ -1364,8 +1308,7 @@ class CopyrightProtector:
         content_id: str,
         monitoring_platforms: List[str]
     ) -> Dict[str, Any]:
-        """Detect copyright violations across platforms using AI-powered detection"""
-        try:
+        """Detect copyright violations across platforms using AI-powered detection"""        try:
             violations_found = []
             platform_results = {}
             
@@ -1422,8 +1365,7 @@ class CopyrightProtector:
         self,
         violation_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate comprehensive DMCA takedown notice with legal compliance"""
-        try:
+        """Generate comprehensive DMCA takedown notice with legal compliance"""        try:
             # Validate violation details
             required_fields = ["content_id", "violation_url", "platform", "infringer_info"]
             missing_fields = [field for field in required_fields if field not in violation_details]

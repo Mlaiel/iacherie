@@ -1,5 +1,4 @@
-"""
-Sentiment Analytics Engine for IA Influencer Agent Platform
+"""Sentiment Analytics Engine for IA Influencer Agent Platform
 Advanced sentiment analysis and emotional intelligence for conversational AI.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,9 +9,7 @@ copying, distribution, or reproduction is strictly prohibited and will be
 prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
@@ -31,8 +28,7 @@ import json
 
 
 class SentimentDimension(Enum):
-    """Dimensions of sentiment analysis."""
-    POLARITY = "polarity"  # positive/negative
+    """Dimensions of sentiment analysis."""    POLARITY = "polarity"  # positive/negative
     INTENSITY = "intensity"  # strength of emotion
     EMOTION = "emotion"  # specific emotions
     SUBJECTIVITY = "subjectivity"  # subjective vs objective
@@ -43,8 +39,7 @@ class SentimentDimension(Enum):
 
 
 class EmotionType(Enum):
-    """Specific emotion types for detailed analysis."""
-    JOY = "joy"
+    """Specific emotion types for detailed analysis."""    JOY = "joy"
     SADNESS = "sadness"
     ANGER = "anger"
     FEAR = "fear"
@@ -60,8 +55,7 @@ class EmotionType(Enum):
 
 @dataclass
 class SentimentScore:
-    """Comprehensive sentiment score data structure."""
-    text_id: str
+    """Comprehensive sentiment score data structure."""    text_id: str
     text: str
     timestamp: datetime
     polarity_score: float  # -1 to 1
@@ -77,8 +71,7 @@ class SentimentScore:
 
 @dataclass
 class EmotionalProfile:
-    """User's emotional profile based on conversation history."""
-    user_id: str
+    """User's emotional profile based on conversation history."""    user_id: str
     dominant_emotions: List[EmotionType]
     emotional_stability: float
     sentiment_patterns: Dict[str, float]
@@ -90,11 +83,9 @@ class EmotionalProfile:
 
 
 class SentimentAnalytics:
-    """
-    Enterprise-grade sentiment analytics engine for comprehensive
+    """    Enterprise-grade sentiment analytics engine for comprehensive
     emotional intelligence and sentiment tracking in conversations.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, model_cache_dir: str = "./models"):
         self.db_session = db_session
         self.model_cache_dir = model_cache_dir
@@ -135,8 +126,7 @@ class SentimentAnalytics:
         }
     
     async def initialize_sentiment_models(self):
-        """Initialize sentiment analysis and emotion detection models."""
-        try:
+        """Initialize sentiment analysis and emotion detection models."""        try:
             self.logger.info("Initializing sentiment analytics models")
             
             # Initialize sentiment analysis pipeline
@@ -166,8 +156,7 @@ class SentimentAnalytics:
             raise
     
     async def analyze_text_sentiment(self, text: str, context: Optional[Dict[str, Any]] = None) -> SentimentScore:
-        """Perform comprehensive sentiment analysis on text."""
-        try:
+        """Perform comprehensive sentiment analysis on text."""        try:
             text_id = f"text_{int(datetime.utcnow().timestamp())}"
             
             # Multi-model sentiment analysis
@@ -227,8 +216,7 @@ class SentimentAnalytics:
             raise
     
     async def analyze_conversation_sentiment_flow(self, conversation_turns: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze sentiment flow throughout a conversation."""
-        try:
+        """Analyze sentiment flow throughout a conversation."""        try:
             sentiment_timeline = []
             user_sentiment_scores = []
             ai_response_effectiveness = []
@@ -289,8 +277,7 @@ class SentimentAnalytics:
             return {}
     
     async def build_user_emotional_profile(self, user_id: str) -> EmotionalProfile:
-        """Build comprehensive emotional profile for a user."""
-        try:
+        """Build comprehensive emotional profile for a user."""        try:
             # Get user's conversation history
             user_conversations = await self._get_user_conversations(user_id)
             
@@ -359,8 +346,7 @@ class SentimentAnalytics:
             raise
     
     async def generate_emotional_intelligence_insights(self, time_period: int = 30) -> Dict[str, Any]:
-        """Generate insights about emotional intelligence and sentiment patterns."""
-        try:
+        """Generate insights about emotional intelligence and sentiment patterns."""        try:
             # Get sentiment data for the period
             sentiment_data = await self._get_sentiment_data_by_period(time_period)
             
@@ -397,8 +383,7 @@ class SentimentAnalytics:
             return {}
     
     async def predict_user_emotional_state(self, user_id: str, recent_messages: List[str]) -> Dict[str, Any]:
-        """Predict user's current emotional state based on recent interactions."""
-        try:
+        """Predict user's current emotional state based on recent interactions."""        try:
             # Get user's emotional profile
             if user_id not in self.emotional_profiles:
                 await self.build_user_emotional_profile(user_id)
@@ -439,8 +424,7 @@ class SentimentAnalytics:
     # Private helper methods
     
     async def _analyze_with_roberta(self, text: str) -> Dict[str, float]:
-        """Analyze sentiment using RoBERTa model."""
-        try:
+        """Analyze sentiment using RoBERTa model."""        try:
             results = self.sentiment_models['roberta'](text)
             
             # Convert to polarity score
@@ -462,8 +446,7 @@ class SentimentAnalytics:
             return {'polarity': 0.0, 'confidence': 0.0, 'raw_results': []}
     
     def _analyze_with_vader(self, text: str) -> Dict[str, float]:
-        """Analyze sentiment using VADER."""
-        try:
+        """Analyze sentiment using VADER."""        try:
             scores = self.vader_analyzer.polarity_scores(text)
             return {
                 'polarity': scores['compound'],
@@ -477,8 +460,7 @@ class SentimentAnalytics:
             return {'polarity': 0.0, 'positive': 0.0, 'negative': 0.0, 'neutral': 1.0}
     
     def _analyze_with_textblob(self, text: str) -> Dict[str, float]:
-        """Analyze sentiment using TextBlob."""
-        try:
+        """Analyze sentiment using TextBlob."""        try:
             blob = textblob.TextBlob(text)
             return {
                 'polarity': blob.sentiment.polarity,
@@ -490,8 +472,7 @@ class SentimentAnalytics:
             return {'polarity': 0.0, 'subjectivity': 0.5}
     
     async def _classify_emotions(self, text: str) -> Dict[EmotionType, float]:
-        """Classify emotions in text."""
-        try:
+        """Classify emotions in text."""        try:
             emotion_results = self.emotion_classifier(text)
             
             emotion_mapping = {
@@ -516,8 +497,7 @@ class SentimentAnalytics:
             return {EmotionType.JOY: 0.0}
     
     def _combine_sentiment_scores(self, roberta_score: float, vader_score: float, textblob_score: float) -> float:
-        """Combine sentiment scores from different models."""
-        # Weighted average with RoBERTa having highest weight
+        """Combine sentiment scores from different models."""        # Weighted average with RoBERTa having highest weight
         weights = {'roberta': 0.5, 'vader': 0.3, 'textblob': 0.2}
         
         combined = (
@@ -530,16 +510,14 @@ class SentimentAnalytics:
         return max(-1.0, min(1.0, combined))
     
     def _calculate_sentiment_intensity(self, roberta_result: Dict, vader_result: Dict) -> float:
-        """Calculate sentiment intensity based on model confidence and scores."""
-        # Use confidence from RoBERTa and absolute values from VADER
+        """Calculate sentiment intensity based on model confidence and scores."""        # Use confidence from RoBERTa and absolute values from VADER
         roberta_intensity = roberta_result.get('confidence', 0)
         vader_intensity = abs(vader_result.get('polarity', 0))
         
         return (roberta_intensity + vader_intensity) / 2
     
     def _determine_sentiment_trend(self, polarity: float, intensity: float) -> str:
-        """Determine sentiment trend based on polarity and intensity."""
-        if polarity > 0.2 and intensity > 0.6:
+        """Determine sentiment trend based on polarity and intensity."""        if polarity > 0.2 and intensity > 0.6:
             return "strongly_positive"
         elif polarity > 0.2:
             return "positive"

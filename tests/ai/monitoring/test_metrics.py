@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Advanced Metrics Tests - Industrial Grade
+"""Advanced Metrics Tests - Industrial Grade
 
 Comprehensive, enterprise-level test suite for monitoring metrics system.
 Tests metrics collection, aggregation, analysis, and real-time processing.
@@ -27,9 +23,7 @@ WARNING: This code is the intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use of this code without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted to the full
 extent of the law.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -70,12 +64,10 @@ from .fixtures import (
 
 
 class TestMetricsCore:
-    """Core functionality tests for metrics system."""
-    
+    """Core functionality tests for metrics system."""    
     @pytest.fixture
     async def metrics_collector(self):
-        """Create and initialize metrics collector."""
-        collector = MetricsCollector(
+        """Create and initialize metrics collector."""        collector = MetricsCollector(
             config={
                 "collection_enabled": True,
                 "real_time_processing": True,
@@ -94,12 +86,10 @@ class TestMetricsCore:
     
     @pytest.fixture
     def sample_metric_data(self, sample_metrics):
-        """Get sample metric data for testing."""
-        return sample_metrics["performance_metrics"]
+        """Get sample metric data for testing."""        return sample_metrics["performance_metrics"]
     
     async def test_metrics_collector_initialization(self, metrics_collector):
-        """Test comprehensive initialization of metrics collector."""
-        # Verify core components
+        """Test comprehensive initialization of metrics collector."""        # Verify core components
         assert metrics_collector is not None
         assert metrics_collector.is_initialized
         assert metrics_collector.metric_aggregator is not None
@@ -150,8 +140,7 @@ class TestMetricsCore:
         assert all(unit in supported_units for unit in expected_units)
     
     async def test_metric_collection_and_validation(self, metrics_collector, sample_metric_data):
-        """Test metric collection with comprehensive validation."""
-        # Metric collection scenarios
+        """Test metric collection with comprehensive validation."""        # Metric collection scenarios
         collection_scenarios = [
             {
                 "metric_name": "api_response_time",
@@ -263,8 +252,7 @@ class TestMetricsCore:
         assert len(invalid_validation.validation_errors) > 0
     
     async def test_time_series_processing(self, metrics_collector):
-        """Test time series data processing and analysis."""
-        # Generate time series data
+        """Test time series data processing and analysis."""        # Generate time series data
         time_series_scenarios = [
             {
                 "metric_name": "cpu_utilization",
@@ -388,8 +376,7 @@ class TestMetricsCore:
             assert all("timestamp" in point and "value" in point for point in aggregated_data)
     
     async def test_metric_aggregation_and_analysis(self, metrics_collector):
-        """Test metric aggregation and statistical analysis."""
-        # Aggregation scenarios
+        """Test metric aggregation and statistical analysis."""        # Aggregation scenarios
         aggregation_scenarios = [
             {
                 "aggregation_name": "service_performance_summary",
@@ -494,8 +481,7 @@ class TestMetricsCore:
             assert custom_result.result is not None
     
     async def test_alert_threshold_management(self, metrics_collector):
-        """Test alert threshold configuration and monitoring."""
-        # Alert threshold scenarios
+        """Test alert threshold configuration and monitoring."""        # Alert threshold scenarios
         threshold_scenarios = [
             {
                 "metric_name": "cpu_usage",
@@ -593,8 +579,7 @@ class TestMetricsCore:
         assert breach_count > 0  # At least some breaches should be detected
     
     async def test_real_time_metrics_processing(self, metrics_collector):
-        """Test real-time metrics processing and streaming."""
-        # Real-time processing scenarios
+        """Test real-time metrics processing and streaming."""        # Real-time processing scenarios
         realtime_scenarios = [
             {
                 "stream_name": "high_frequency_api_metrics",
@@ -680,8 +665,7 @@ class TestMetricsCore:
                 assert "aggregated_values" in window
     
     async def test_custom_metrics_and_extensions(self, metrics_collector):
-        """Test custom metrics and extensibility features."""
-        # Custom metric type scenarios
+        """Test custom metrics and extensibility features."""        # Custom metric type scenarios
         custom_metric_scenarios = [
             {
                 "metric_type_name": "business_conversion_funnel",
@@ -800,12 +784,10 @@ class TestMetricsCore:
 
 @pytest.mark.performance
 class TestMetricsPerformance:
-    """Performance tests for metrics system."""
-    
+    """Performance tests for metrics system."""    
     @pytest.fixture
     async def high_performance_metrics_collector(self):
-        """Create high-performance metrics collector."""
-        collector = MetricsCollector(
+        """Create high-performance metrics collector."""        collector = MetricsCollector(
             config={
                 "high_performance_mode": True,
                 "parallel_processing": True,
@@ -820,8 +802,7 @@ class TestMetricsPerformance:
         await collector.shutdown()
     
     async def test_high_volume_metric_collection(self, high_performance_metrics_collector):
-        """Test metric collection under high volume."""
-        # High volume scenario
+        """Test metric collection under high volume."""        # High volume scenario
         metric_count = 1000000  # 1 million metrics
         batch_size = 10000
         
@@ -858,14 +839,12 @@ class TestMetricsPerformance:
         assert collection_rate > 15000  # At least 15K metrics per second
     
     async def test_concurrent_metric_processing(self, high_performance_metrics_collector):
-        """Test concurrent metric processing performance."""
-        # Create multiple concurrent processing tasks
+        """Test concurrent metric processing performance."""        # Create multiple concurrent processing tasks
         concurrent_tasks = 50
         metrics_per_task = 10000
         
         async def process_metrics_task(task_id: int):
-            """Process metrics for a single task."""
-            task_metrics = []
+            """Process metrics for a single task."""            task_metrics = []
             for i in range(metrics_per_task):
                 metric = Metric(
                     name=f"concurrent_metric_{task_id}_{i}",

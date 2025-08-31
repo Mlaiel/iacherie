@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Cache Preloading - Intelligent Content Preloading System
+"""Cache Preloading - Intelligent Content Preloading System
 ========================================================
 
 Advanced preloading system for predictive cache warming
@@ -9,9 +8,7 @@ and intelligent content prefetching.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 from datetime import datetime, timedelta
@@ -29,24 +26,21 @@ from ...core.utils import generate_uuid, get_timestamp
 logger = logging.getLogger(__name__)
 
 class PreloadStrategy(Enum):
-    """Preloading strategies."""
-    EAGER = "eager"
+    """Preloading strategies."""    EAGER = "eager"
     LAZY = "lazy"
     PREDICTIVE = "predictive"
     SCHEDULED = "scheduled"
     USER_DRIVEN = "user_driven"
 
 class PreloadPriority(Enum):
-    """Preload priority levels."""
-    CRITICAL = 1
+    """Preload priority levels."""    CRITICAL = 1
     HIGH = 2
     MEDIUM = 3
     LOW = 4
     BACKGROUND = 5
 
 class PreloadTrigger(Enum):
-    """Preload triggers."""
-    TIME_BASED = "time_based"
+    """Preload triggers."""    TIME_BASED = "time_based"
     ACCESS_PATTERN = "access_pattern"
     USER_BEHAVIOR = "user_behavior"
     CONTENT_UPDATE = "content_update"
@@ -54,8 +48,7 @@ class PreloadTrigger(Enum):
 
 @dataclass
 class PreloadTask:
-    """Preload task definition."""
-    task_id: str
+    """Preload task definition."""    task_id: str
     key: str
     priority: PreloadPriority
     strategy: PreloadStrategy
@@ -69,13 +62,11 @@ class PreloadTask:
     max_retries: int = 3
     
     def __lt__(self, other):
-        """For priority queue ordering."""
-        return self.priority.value < other.priority.value
+        """For priority queue ordering."""        return self.priority.value < other.priority.value
 
 @dataclass
 class PreloadResult:
-    """Preload operation result."""
-    task_id: str
+    """Preload operation result."""    task_id: str
     key: str
     success: bool
     data: Any = None
@@ -85,16 +76,14 @@ class PreloadResult:
 
 @dataclass
 class AccessPrediction:
-    """Access prediction model."""
-    key: str
+    """Access prediction model."""    key: str
     probability: float
     predicted_time: datetime
     confidence: float
     factors: Dict[str, float]
 
 class CachePreloader:
-    """
-    Advanced cache preloading system.
+    """    Advanced cache preloading system.
     
     Features:
     - Predictive preloading
@@ -102,18 +91,15 @@ class CachePreloader:
     - Dependency management
     - Pattern learning
     - Resource-aware execution
-    """
-    
+    """    
     def __init__(self, max_concurrent_tasks: int = 10,
                  prediction_window_hours: int = 24):
-        """
-        Initialize cache preloader.
+        """        Initialize cache preloader.
         
         Args:
             max_concurrent_tasks: Maximum concurrent preload tasks
             prediction_window_hours: Prediction time window
-        """
-        self.max_concurrent_tasks = max_concurrent_tasks
+        """        self.max_concurrent_tasks = max_concurrent_tasks
         self.prediction_window_hours = prediction_window_hours
         self.logger = logging.getLogger(f"{__name__}.CachePreloader")
         
@@ -157,8 +143,7 @@ class CachePreloader:
                              scheduled_time: Optional[datetime] = None,
                              dependencies: Optional[List[str]] = None,
                              metadata: Optional[Dict[str, Any]] = None) -> str:
-        """
-        Add preload task.
+        """        Add preload task.
         
         Args:
             key: Cache key to preload
@@ -172,8 +157,7 @@ class CachePreloader:
             
         Returns:
             Task ID
-        """
-        try:
+        """        try:
             task = PreloadTask(
                 task_id=generate_uuid(),
                 key=key,
@@ -203,8 +187,7 @@ class CachePreloader:
             return ""
     
     async def remove_preload_task(self, task_id: str) -> bool:
-        """Remove preload task."""
-        try:
+        """Remove preload task."""        try:
             with self.lock:
                 # Remove from queue
                 self.task_queue = [task for task in self.task_queue if task.task_id != task_id]
@@ -222,8 +205,7 @@ class CachePreloader:
             return False
     
     async def _try_execute_tasks(self) -> None:
-        """Try to execute pending tasks."""
-        if not self.preload_enabled:
+        """Try to execute pending tasks."""        if not self.preload_enabled:
             return
         
         try:
@@ -262,8 +244,7 @@ class CachePreloader:
             self.logger.error(f"Error executing tasks: {e}")
     
     async def _is_task_ready(self, task: PreloadTask) -> bool:
-        """Check if task is ready for execution."""
-        try:
+        """Check if task is ready for execution."""        try:
             # Check scheduled time
             if task.scheduled_time and datetime.now() < task.scheduled_time:
                 return False
@@ -282,8 +263,7 @@ class CachePreloader:
             return False
     
     async def _execute_task(self, task: PreloadTask) -> None:
-        """Execute preload task."""
-        try:
+        """Execute preload task."""        try:
             async def task_executor():
                 start_time = time.time()
                 result = PreloadResult(task_id=task.task_id, key=task.key, success=False)
@@ -337,8 +317,7 @@ class CachePreloader:
             self.logger.error(f"Error executing preload task: {e}")
     
     async def _store_preloaded_data(self, key: str, data: Any) -> None:
-        """Store preloaded data in cache."""
-        try:
+        """Store preloaded data in cache."""        try:
             # This would integrate with the actual cache implementation
             self.logger.debug(f"Storing preloaded data for key {key}")
             
@@ -346,8 +325,7 @@ class CachePreloader:
             self.logger.error(f"Error storing preloaded data: {e}")
     
     async def _check_resource_usage(self) -> float:
-        """Check current resource usage."""
-        try:
+        """Check current resource usage."""        try:
             # Simplified resource check - would integrate with actual monitoring
             return 0.5  # Return 50% usage as placeholder
             
@@ -357,8 +335,7 @@ class CachePreloader:
     
     async def record_cache_access(self, key: str, hit: bool, 
                                 timestamp: Optional[datetime] = None) -> None:
-        """Record cache access for prediction learning."""
-        try:
+        """Record cache access for prediction learning."""        try:
             await self.access_predictor.record_access(key, hit, timestamp)
             await self.pattern_analyzer.analyze_access(key, timestamp or datetime.now())
             
@@ -373,8 +350,7 @@ class CachePreloader:
             self.logger.error(f"Error recording cache access: {e}")
     
     async def generate_predictions(self) -> List[AccessPrediction]:
-        """Generate access predictions."""
-        try:
+        """Generate access predictions."""        try:
             predictions = await self.access_predictor.generate_predictions(
                 self.prediction_window_hours
             )
@@ -393,8 +369,7 @@ class CachePreloader:
             return []
     
     async def start_automated_preloading(self) -> None:
-        """Start automated preloading process."""
-        if self.scheduler_task is not None:
+        """Start automated preloading process."""        if self.scheduler_task is not None:
             return
         
         async def preload_loop():
@@ -421,8 +396,7 @@ class CachePreloader:
         self.logger.info("Started automated preloading")
     
     async def stop_automated_preloading(self) -> None:
-        """Stop automated preloading process."""
-        if self.scheduler_task:
+        """Stop automated preloading process."""        if self.scheduler_task:
             self.scheduler_task.cancel()
             try:
                 await self.scheduler_task
@@ -441,8 +415,7 @@ class CachePreloader:
             self.logger.info("Stopped automated preloading")
     
     async def _cleanup_old_tasks(self) -> None:
-        """Clean up old completed and failed tasks."""
-        try:
+        """Clean up old completed and failed tasks."""        try:
             cutoff_time = datetime.now() - timedelta(hours=24)
             
             with self.lock:
@@ -460,8 +433,7 @@ class CachePreloader:
             self.logger.error(f"Error cleaning up old tasks: {e}")
     
     async def get_preload_stats(self) -> Dict[str, Any]:
-        """Get preloading statistics."""
-        try:
+        """Get preloading statistics."""        try:
             with self.lock:
                 success_rate = (self.stats['successful_tasks'] / self.stats['total_tasks'] 
                                if self.stats['total_tasks'] > 0 else 0)
@@ -487,11 +459,9 @@ class CachePreloader:
             return {}
 
 class AccessPredictor:
-    """Predict future cache access patterns."""
-    
+    """Predict future cache access patterns."""    
     def __init__(self):
-        """Initialize access predictor."""
-        self.access_history: List[Dict[str, Any]] = []
+        """Initialize access predictor."""        self.access_history: List[Dict[str, Any]] = []
         self.pattern_weights: Dict[str, float] = {
             'temporal': 0.3,
             'frequency': 0.25,
@@ -502,8 +472,7 @@ class AccessPredictor:
     
     async def record_access(self, key: str, hit: bool, 
                           timestamp: Optional[datetime] = None) -> None:
-        """Record cache access."""
-        try:
+        """Record cache access."""        try:
             access_record = {
                 'key': key,
                 'hit': hit,
@@ -521,8 +490,7 @@ class AccessPredictor:
             logger.error(f"Error recording access: {e}")
     
     async def generate_predictions(self, window_hours: int) -> List[AccessPrediction]:
-        """Generate access predictions."""
-        try:
+        """Generate access predictions."""        try:
             predictions = []
             
             with self.lock:
@@ -547,8 +515,7 @@ class AccessPredictor:
             return []
     
     async def _predict_key_access(self, key: str, window_hours: int) -> Optional[AccessPrediction]:
-        """Predict access for specific key."""
-        try:
+        """Predict access for specific key."""        try:
             # Get access history for this key
             key_accesses = [
                 record for record in self.access_history
@@ -598,8 +565,7 @@ class AccessPredictor:
             return None
     
     async def _calculate_temporal_score(self, accesses: List[Dict[str, Any]]) -> float:
-        """Calculate temporal pattern score."""
-        try:
+        """Calculate temporal pattern score."""        try:
             if len(accesses) < 3:
                 return 0.0
             
@@ -621,8 +587,7 @@ class AccessPredictor:
             return 0.0
     
     async def _calculate_frequency_score(self, accesses: List[Dict[str, Any]]) -> float:
-        """Calculate frequency score."""
-        try:
+        """Calculate frequency score."""        try:
             if not accesses:
                 return 0.0
             
@@ -640,8 +605,7 @@ class AccessPredictor:
             return 0.0
     
     async def _calculate_recency_score(self, accesses: List[Dict[str, Any]]) -> float:
-        """Calculate recency score."""
-        try:
+        """Calculate recency score."""        try:
             if not accesses:
                 return 0.0
             
@@ -655,8 +619,7 @@ class AccessPredictor:
             return 0.0
     
     async def _calculate_sequence_score(self, key: str, accesses: List[Dict[str, Any]]) -> float:
-        """Calculate sequence pattern score."""
-        try:
+        """Calculate sequence pattern score."""        try:
             # Simple sequence scoring - would be more sophisticated in practice
             return 0.5  # Placeholder
             
@@ -664,8 +627,7 @@ class AccessPredictor:
             return 0.0
     
     async def _predict_next_access_time(self, accesses: List[Dict[str, Any]]) -> datetime:
-        """Predict next access time."""
-        try:
+        """Predict next access time."""        try:
             if len(accesses) < 2:
                 return datetime.now() + timedelta(hours=1)
             
@@ -684,15 +646,12 @@ class AccessPredictor:
             return datetime.now() + timedelta(hours=1)
 
 class PatternAnalyzer:
-    """Analyze access patterns for preloading optimization."""
-    
+    """Analyze access patterns for preloading optimization."""    
     def __init__(self):
-        """Initialize pattern analyzer."""
-        self.patterns: Dict[str, Any] = {}
+        """Initialize pattern analyzer."""        self.patterns: Dict[str, Any] = {}
     
     async def analyze_access(self, key: str, timestamp: datetime) -> None:
-        """Analyze access pattern."""
-        try:
+        """Analyze access pattern."""        try:
             # Pattern analysis implementation
             pass
             
@@ -700,15 +659,12 @@ class PatternAnalyzer:
             logger.error(f"Error analyzing access pattern: {e}")
 
 class PreloadScheduler:
-    """Schedule preload tasks based on predictions and policies."""
-    
+    """Schedule preload tasks based on predictions and policies."""    
     def __init__(self):
-        """Initialize preload scheduler."""
-        self.schedules: Dict[str, Dict[str, Any]] = {}
+        """Initialize preload scheduler."""        self.schedules: Dict[str, Dict[str, Any]] = {}
     
     async def schedule_preload(self, key: str, predicted_time: datetime) -> None:
-        """Schedule preload task."""
-        try:
+        """Schedule preload task."""        try:
             # Scheduling implementation
             pass
             

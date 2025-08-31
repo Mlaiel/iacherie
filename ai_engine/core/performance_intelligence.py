@@ -1,5 +1,4 @@
-"""
-Performance Intelligence & Auto-Optimization Module
+"""Performance Intelligence & Auto-Optimization Module
 
 Advanced AI system for real-time performance monitoring, intelligent optimization,
 and autonomous content strategy refinement for maximum ROI and engagement.
@@ -12,9 +11,7 @@ This revolutionary performance intelligence system represents proprietary AI tec
 Unauthorized copying, reverse engineering, or use will result in immediate prosecution.
 
 Business Logic: Performance Monitoring → Pattern Recognition → Intelligent Analysis → Auto-Optimization → Strategy Refinement → Continuous Learning
-"""
-
-import asyncio
+"""import asyncio
 import json
 import uuid
 from typing import Dict, List, Any, Optional, Set, Tuple, Union, Callable
@@ -58,8 +55,7 @@ logger = logging.getLogger(__name__)
 
 
 class PerformanceMetricType(Enum):
-    """Types of performance metrics"""
-    ENGAGEMENT_RATE = "engagement_rate"
+    """Types of performance metrics"""    ENGAGEMENT_RATE = "engagement_rate"
     REACH = "reach"
     IMPRESSIONS = "impressions"
     CLICKS = "clicks"
@@ -81,16 +77,14 @@ class PerformanceMetricType(Enum):
 
 
 class OptimizationDirection(Enum):
-    """Direction of optimization"""
-    MAXIMIZE = "maximize"
+    """Direction of optimization"""    MAXIMIZE = "maximize"
     MINIMIZE = "minimize"
     STABILIZE = "stabilize"
     TARGET = "target"
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
-    CRITICAL = "critical"
+    """Alert severity levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -98,8 +92,7 @@ class AlertSeverity(Enum):
 
 
 class AutoOptimizationAction(Enum):
-    """Types of automatic optimization actions"""
-    ADJUST_POSTING_TIME = "adjust_posting_time"
+    """Types of automatic optimization actions"""    ADJUST_POSTING_TIME = "adjust_posting_time"
     MODIFY_HASHTAGS = "modify_hashtags"
     CHANGE_CONTENT_FORMAT = "change_content_format"
     UPDATE_CAPTIONS = "update_captions"
@@ -113,8 +106,7 @@ class AutoOptimizationAction(Enum):
 
 @dataclass
 class PerformanceMetric:
-    """Individual performance metric data point"""
-    metric_id: str
+    """Individual performance metric data point"""    metric_id: str
     metric_type: PerformanceMetricType
     value: float
     timestamp: datetime
@@ -140,8 +132,7 @@ class PerformanceMetric:
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert for anomalies or thresholds"""
-    alert_id: str
+    """Performance alert for anomalies or thresholds"""    alert_id: str
     severity: AlertSeverity
     metric_type: PerformanceMetricType
     alert_type: str
@@ -175,8 +166,7 @@ class PerformanceAlert:
 
 @dataclass
 class OptimizationRecommendation:
-    """AI-generated optimization recommendation"""
-    recommendation_id: str
+    """AI-generated optimization recommendation"""    recommendation_id: str
     action_type: AutoOptimizationAction
     target_metric: PerformanceMetricType
     expected_improvement: float
@@ -212,8 +202,7 @@ class OptimizationRecommendation:
 
 @dataclass
 class AutoOptimizationResult:
-    """Result of automatic optimization action"""
-    optimization_id: str
+    """Result of automatic optimization action"""    optimization_id: str
     action_taken: AutoOptimizationAction
     target_metrics: List[PerformanceMetricType]
     before_values: Dict[str, float]
@@ -245,8 +234,7 @@ class AutoOptimizationResult:
 
 @dataclass
 class PerformanceInsight:
-    """AI-generated performance insight"""
-    insight_id: str
+    """AI-generated performance insight"""    insight_id: str
     insight_type: str
     title: str
     description: str
@@ -279,8 +267,7 @@ class PerformanceInsight:
 
 
 class RealTimePerformanceMonitor:
-    """Real-time performance monitoring and analysis system"""
-    
+    """Real-time performance monitoring and analysis system"""    
     def __init__(self):
         self.metrics_buffer = deque(maxlen=10000)  # Keep last 10k metrics
         self.alerts_active = {}
@@ -289,8 +276,7 @@ class RealTimePerformanceMonitor:
         self._initialize_detectors()
     
     def _initialize_detectors(self):
-        """Initialize anomaly detection models"""
-        if ML_OPTIMIZATION_AVAILABLE:
+        """Initialize anomaly detection models"""        if ML_OPTIMIZATION_AVAILABLE:
             try:
                 for metric_type in PerformanceMetricType:
                     self.anomaly_detectors[metric_type] = IsolationForest(
@@ -302,8 +288,7 @@ class RealTimePerformanceMonitor:
                 logger.warning(f"Failed to initialize anomaly detectors: {e}")
     
     async def ingest_metric(self, metric: PerformanceMetric):
-        """Ingest new performance metric"""
-        try:
+        """Ingest new performance metric"""        try:
             # Add to buffer
             self.metrics_buffer.append(metric)
             
@@ -327,8 +312,7 @@ class RealTimePerformanceMonitor:
             logger.error(f"Metric ingestion failed: {e}")
     
     async def _update_baseline(self, metric: PerformanceMetric):
-        """Update baseline metrics for comparison"""
-        try:
+        """Update baseline metrics for comparison"""        try:
             key = (metric.metric_type, metric.platform, metric.content_id)
             
             if key not in self.baseline_metrics:
@@ -363,8 +347,7 @@ class RealTimePerformanceMonitor:
             logger.error(f"Baseline update failed: {e}")
     
     async def _detect_anomalies(self, metric: PerformanceMetric) -> List[Dict[str, Any]]:
-        """Detect anomalies in incoming metrics"""
-        anomalies = []
+        """Detect anomalies in incoming metrics"""        anomalies = []
         
         try:
             key = (metric.metric_type, metric.platform, metric.content_id)
@@ -428,8 +411,7 @@ class RealTimePerformanceMonitor:
             return []
     
     async def _generate_alert(self, anomaly: Dict[str, Any], metric: PerformanceMetric):
-        """Generate performance alert for anomaly"""
-        try:
+        """Generate performance alert for anomaly"""        try:
             alert_id = str(uuid.uuid4())
             
             # Determine alert message
@@ -471,8 +453,7 @@ class RealTimePerformanceMonitor:
     def _generate_alert_actions(self, 
                               metric_type: PerformanceMetricType,
                               anomaly: Dict[str, Any]) -> List[str]:
-        """Generate suggested actions for alert"""
-        actions = []
+        """Generate suggested actions for alert"""        actions = []
         
         try:
             if metric_type == PerformanceMetricType.ENGAGEMENT_RATE:
@@ -520,8 +501,7 @@ class RealTimePerformanceMonitor:
             return ["Review metric performance manually"]
     
     async def _update_anomaly_detector(self, metric: PerformanceMetric):
-        """Update ML anomaly detector with new data"""
-        try:
+        """Update ML anomaly detector with new data"""        try:
             if not ML_OPTIMIZATION_AVAILABLE:
                 return
             
@@ -540,8 +520,7 @@ class RealTimePerformanceMonitor:
     async def get_active_alerts(self, 
                               severity_filter: Optional[AlertSeverity] = None,
                               platform_filter: Optional[Platform] = None) -> List[PerformanceAlert]:
-        """Get active performance alerts"""
-        try:
+        """Get active performance alerts"""        try:
             alerts = list(self.alerts_active.values())
             
             # Apply filters
@@ -569,8 +548,7 @@ class RealTimePerformanceMonitor:
             return []
     
     async def resolve_alert(self, alert_id: str, auto_resolved: bool = False):
-        """Resolve a performance alert"""
-        try:
+        """Resolve a performance alert"""        try:
             if alert_id in self.alerts_active:
                 alert = self.alerts_active[alert_id]
                 alert.resolved_at = datetime.utcnow()
@@ -586,8 +564,7 @@ class RealTimePerformanceMonitor:
 
 
 class IntelligentOptimizationEngine:
-    """Intelligent optimization engine with ML-powered recommendations"""
-    
+    """Intelligent optimization engine with ML-powered recommendations"""    
     def __init__(self):
         self.optimization_history = deque(maxlen=1000)
         self.success_patterns = {}
@@ -596,8 +573,7 @@ class IntelligentOptimizationEngine:
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize optimization models"""
-        if ML_OPTIMIZATION_AVAILABLE:
+        """Initialize optimization models"""        if ML_OPTIMIZATION_AVAILABLE:
             try:
                 # Different models for different optimization types
                 for action in AutoOptimizationAction:
@@ -613,8 +589,7 @@ class IntelligentOptimizationEngine:
                                                   metrics_data: List[PerformanceMetric],
                                                   target_improvements: Dict[PerformanceMetricType, float],
                                                   constraints: Dict[str, Any] = None) -> List[OptimizationRecommendation]:
-        """Generate intelligent optimization recommendations"""
-        try:
+        """Generate intelligent optimization recommendations"""        try:
             constraints = constraints or {}
             recommendations = []
             
@@ -645,8 +620,7 @@ class IntelligentOptimizationEngine:
     
     async def _analyze_current_performance(self, 
                                          metrics_data: List[PerformanceMetric]) -> Dict[str, Any]:
-        """Analyze current performance patterns"""
-        try:
+        """Analyze current performance patterns"""        try:
             analysis = {
                 "metric_trends": {},
                 "platform_performance": {},
@@ -694,8 +668,7 @@ class IntelligentOptimizationEngine:
             return {}
     
     def _calculate_trend(self, values: List[float]) -> Dict[str, float]:
-        """Calculate trend statistics for values"""
-        try:
+        """Calculate trend statistics for values"""        try:
             if len(values) < 2:
                 return {"slope": 0, "r_squared": 0, "direction": "stable"}
             
@@ -723,8 +696,7 @@ class IntelligentOptimizationEngine:
             return {"slope": 0, "r_squared": 0, "direction": "stable"}
     
     def _calculate_performance_stats(self, metrics: List[PerformanceMetric]) -> Dict[str, float]:
-        """Calculate performance statistics for metrics"""
-        try:
+        """Calculate performance statistics for metrics"""        try:
             if not metrics:
                 return {}
             
@@ -746,8 +718,7 @@ class IntelligentOptimizationEngine:
             return {}
     
     def _analyze_time_patterns(self, metrics_data: List[PerformanceMetric]) -> Dict[str, Any]:
-        """Analyze time-based performance patterns"""
-        try:
+        """Analyze time-based performance patterns"""        try:
             patterns = {
                 "hourly_performance": defaultdict(list),
                 "daily_performance": defaultdict(list),
@@ -784,8 +755,7 @@ class IntelligentOptimizationEngine:
     async def _identify_optimization_opportunities(self, 
                                                  analysis: Dict[str, Any],
                                                  targets: Dict[PerformanceMetricType, float]) -> List[Dict[str, Any]]:
-        """Identify optimization opportunities"""
-        opportunities = []
+        """Identify optimization opportunities"""        opportunities = []
         
         try:
             # Check metric trends for improvement opportunities
@@ -855,8 +825,7 @@ class IntelligentOptimizationEngine:
                                                 opportunity: Dict[str, Any],
                                                 analysis: Dict[str, Any],
                                                 constraints: Dict[str, Any]) -> Optional[OptimizationRecommendation]:
-        """Create specific optimization recommendation"""
-        try:
+        """Create specific optimization recommendation"""        try:
             rec_id = str(uuid.uuid4())
             
             if opportunity["type"] == "trend_improvement":
@@ -951,8 +920,7 @@ class IntelligentOptimizationEngine:
                                   action: AutoOptimizationAction,
                                   opportunity: Dict[str, Any],
                                   analysis: Dict[str, Any]) -> Dict[str, Any]:
-        """Get implementation details for optimization action"""
-        details = {"action": action.value}
+        """Get implementation details for optimization action"""        details = {"action": action.value}
         
         try:
             if action == AutoOptimizationAction.MODIFY_HASHTAGS:
@@ -993,8 +961,7 @@ class IntelligentOptimizationEngine:
             return details
     
     def _get_resource_requirements(self, action: AutoOptimizationAction) -> Dict[str, Any]:
-        """Get resource requirements for optimization action"""
-        requirements = {
+        """Get resource requirements for optimization action"""        requirements = {
             AutoOptimizationAction.ADJUST_POSTING_TIME: {"time_hours": 0.5, "complexity": "low", "automation": True},
             AutoOptimizationAction.MODIFY_HASHTAGS: {"time_hours": 1, "complexity": "low", "automation": True},
             AutoOptimizationAction.UPDATE_CAPTIONS: {"time_hours": 2, "complexity": "medium", "automation": False},
@@ -1006,8 +973,7 @@ class IntelligentOptimizationEngine:
         return requirements.get(action, {"time_hours": 2, "complexity": "medium", "automation": False})
     
     def _assess_optimization_risk(self, action: AutoOptimizationAction) -> Dict[str, float]:
-        """Assess risk for optimization action"""
-        risk_profiles = {
+        """Assess risk for optimization action"""        risk_profiles = {
             AutoOptimizationAction.ADJUST_POSTING_TIME: {"performance_risk": 0.1, "resource_risk": 0.05},
             AutoOptimizationAction.MODIFY_HASHTAGS: {"performance_risk": 0.15, "resource_risk": 0.1},
             AutoOptimizationAction.UPDATE_CAPTIONS: {"performance_risk": 0.2, "resource_risk": 0.15},
@@ -1020,8 +986,7 @@ class IntelligentOptimizationEngine:
     
     def _rank_recommendations(self, 
                             recommendations: List[OptimizationRecommendation]) -> List[OptimizationRecommendation]:
-        """Rank recommendations by impact and feasibility"""
-        try:
+        """Rank recommendations by impact and feasibility"""        try:
             def score_recommendation(rec):
                 # Impact score (0-1)
                 impact_score = rec.expected_improvement * rec.confidence
@@ -1047,8 +1012,7 @@ class IntelligentOptimizationEngine:
 
 
 class AutoOptimizationExecutor:
-    """Executes automatic optimizations based on recommendations"""
-    
+    """Executes automatic optimizations based on recommendations"""    
     def __init__(self):
         self.execution_queue = asyncio.Queue()
         self.active_optimizations = {}
@@ -1056,8 +1020,7 @@ class AutoOptimizationExecutor:
     
     async def execute_optimization(self, 
                                  recommendation: OptimizationRecommendation) -> AutoOptimizationResult:
-        """Execute an optimization recommendation"""
-        try:
+        """Execute an optimization recommendation"""        try:
             optimization_id = str(uuid.uuid4())
             
             # Create result record
@@ -1100,8 +1063,7 @@ class AutoOptimizationExecutor:
                                      action: AutoOptimizationAction,
                                      details: Dict[str, Any],
                                      result: AutoOptimizationResult) -> bool:
-        """Execute specific optimization action"""
-        try:
+        """Execute specific optimization action"""        try:
             if action == AutoOptimizationAction.ADJUST_POSTING_TIME:
                 return await self._adjust_posting_schedule(details, result)
             
@@ -1131,8 +1093,7 @@ class AutoOptimizationExecutor:
     async def _adjust_posting_schedule(self, 
                                      details: Dict[str, Any],
                                      result: AutoOptimizationResult) -> bool:
-        """Adjust posting schedule optimization"""
-        try:
+        """Adjust posting schedule optimization"""        try:
             new_schedule = details.get("new_schedule", [])
             
             # Simulate schedule adjustment
@@ -1156,8 +1117,7 @@ class AutoOptimizationExecutor:
     async def _optimize_hashtags(self, 
                                details: Dict[str, Any],
                                result: AutoOptimizationResult) -> bool:
-        """Optimize hashtags for content"""
-        try:
+        """Optimize hashtags for content"""        try:
             target_count = details.get("target_hashtags", 15)
             include_trending = details.get("include_trending", True)
             
@@ -1182,8 +1142,7 @@ class AutoOptimizationExecutor:
     async def _update_captions(self, 
                              details: Dict[str, Any],
                              result: AutoOptimizationResult) -> bool:
-        """Update captions for better engagement"""
-        try:
+        """Update captions for better engagement"""        try:
             focus = details.get("focus", "engagement")
             include_questions = details.get("include_questions", True)
             
@@ -1207,8 +1166,7 @@ class AutoOptimizationExecutor:
     async def _update_creative_elements(self, 
                                       details: Dict[str, Any],
                                       result: AutoOptimizationResult) -> bool:
-        """Update creative elements"""
-        try:
+        """Update creative elements"""        try:
             elements = details.get("elements_to_update", [])
             
             # Simulate creative updates
@@ -1230,8 +1188,7 @@ class AutoOptimizationExecutor:
     async def _adjust_audience_targeting(self, 
                                        details: Dict[str, Any],
                                        result: AutoOptimizationResult) -> bool:
-        """Adjust audience targeting"""
-        try:
+        """Adjust audience targeting"""        try:
             platform = details.get("platform")
             focus_areas = details.get("focus_areas", [])
             
@@ -1254,8 +1211,7 @@ class AutoOptimizationExecutor:
     async def _modify_posting_frequency(self, 
                                       details: Dict[str, Any],
                                       result: AutoOptimizationResult) -> bool:
-        """Modify posting frequency"""
-        try:
+        """Modify posting frequency"""        try:
             # Simulate frequency modification
             logger.info("Modifying posting frequency based on performance data")
             
@@ -1275,8 +1231,7 @@ class AutoOptimizationExecutor:
     async def monitor_optimization_results(self, 
                                          optimization_id: str,
                                          monitoring_period: timedelta = timedelta(hours=24)) -> AutoOptimizationResult:
-        """Monitor results of executed optimization"""
-        try:
+        """Monitor results of executed optimization"""        try:
             if optimization_id not in self.active_optimizations:
                 raise OptimizationError("Optimization not found")
             

@@ -1,12 +1,9 @@
-"""
-Data Loaders Module
+"""Data Loaders Module
 Author: Fahed Mlaiel <mlaiel@live.de>
 
 Advanced data loading systems for distributed content delivery,
 platform integration, and intelligent storage management.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, AsyncGenerator
 from datetime import datetime, timedelta
@@ -42,8 +39,7 @@ from ..utils.compression import CompressionManager
 
 @dataclass
 class LoadingJob:
-    """Data loading job specification."""
-    job_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Data loading job specification."""    job_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_data: Dict[str, Any] = field(default_factory=dict)
     destination: str = ""
     platform: str = ""
@@ -56,11 +52,9 @@ class LoadingJob:
 
 
 class DistributedLoader:
-    """
-    High-performance distributed content loader with intelligent
+    """    High-performance distributed content loader with intelligent
     load balancing and multi-cloud storage support.
-    """
-    
+    """    
     def __init__(self, config: LoaderConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -83,8 +77,7 @@ class DistributedLoader:
         self._initialize_storage_clients()
     
     def _initialize_storage_clients(self):
-        """Initialize cloud storage clients."""
-        
+        """Initialize cloud storage clients."""        
         # AWS S3
         if self.config.aws_config:
             self.storage_clients['s3'] = boto3.client(
@@ -114,8 +107,7 @@ class DistributedLoader:
         platform: str,
         package_id: str
     ) -> Dict[str, Any]:
-        """
-        Create optimized distribution package for specific platform.
+        """        Create optimized distribution package for specific platform.
         
         Args:
             content_data: Content data with optimizations
@@ -124,8 +116,7 @@ class DistributedLoader:
             
         Returns:
             Distribution package information
-        """
-        
+        """        
         package_info = {
             'package_id': package_id,
             'platform': platform,
@@ -177,8 +168,7 @@ class DistributedLoader:
         content_data: Dict[str, Any],
         platform: str
     ) -> Dict[str, Any]:
-        """Prepare content data for platform-specific distribution."""
-        
+        """Prepare content data for platform-specific distribution."""        
         prepared_content = content_data.copy()
         
         # Apply platform-specific optimizations
@@ -209,8 +199,7 @@ class DistributedLoader:
         return prepared_content
     
     async def _optimize_for_youtube(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply YouTube-specific optimizations."""
-        
+        """Apply YouTube-specific optimizations."""        
         if content.get('type') == 'video':
             # YouTube video optimizations
             content['youtube_metadata'] = {
@@ -225,8 +214,7 @@ class DistributedLoader:
         return content
     
     async def _optimize_for_instagram(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply Instagram-specific optimizations."""
-        
+        """Apply Instagram-specific optimizations."""        
         if content.get('type') in ['image', 'video']:
             # Instagram format optimizations
             content['instagram_metadata'] = {
@@ -239,8 +227,7 @@ class DistributedLoader:
         return content
     
     async def _optimize_for_tiktok(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply TikTok-specific optimizations."""
-        
+        """Apply TikTok-specific optimizations."""        
         if content.get('type') == 'video':
             # TikTok video optimizations
             content['tiktok_metadata'] = {
@@ -253,8 +240,7 @@ class DistributedLoader:
         return content
     
     async def _optimize_for_spotify(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply Spotify-specific optimizations."""
-        
+        """Apply Spotify-specific optimizations."""        
         if content.get('type') == 'audio':
             # Spotify audio optimizations
             content['spotify_metadata'] = {
@@ -275,8 +261,7 @@ class DistributedLoader:
         package_id: str,
         platform: str
     ) -> Dict[str, str]:
-        """Upload content to distributed storage systems."""
-        
+        """Upload content to distributed storage systems."""        
         storage_urls = {}
         upload_tasks = []
         
@@ -318,8 +303,7 @@ class DistributedLoader:
         content: Dict[str, Any],
         platform: str
     ) -> List[str]:
-        """Determine optimal storage strategy based on content and platform."""
-        
+        """Determine optimal storage strategy based on content and platform."""        
         content_type = content.get('type', '')
         content_size = content.get('size', 0)
         
@@ -340,8 +324,7 @@ class DistributedLoader:
         package_id: str,
         storage_type: str
     ) -> str:
-        """Upload content to specific storage system."""
-        
+        """Upload content to specific storage system."""        
         if storage_type == 's3':
             return await self._upload_to_s3(content, package_id)
         elif storage_type == 'azure':
@@ -352,8 +335,7 @@ class DistributedLoader:
             raise StorageError(f"Unsupported storage type: {storage_type}")
     
     async def _upload_to_s3(self, content: Dict[str, Any], package_id: str) -> str:
-        """Upload content to AWS S3."""
-        
+        """Upload content to AWS S3."""        
         bucket_name = self.config.aws_config['bucket']
         key = f"content/{package_id}/{content.get('filename', 'content')}"
         
@@ -380,8 +362,7 @@ class DistributedLoader:
         return url
     
     async def _upload_to_azure(self, content: Dict[str, Any], package_id: str) -> str:
-        """Upload content to Azure Blob Storage."""
-        
+        """Upload content to Azure Blob Storage."""        
         container_name = self.config.azure_config['container']
         blob_name = f"content/{package_id}/{content.get('filename', 'content')}"
         
@@ -409,8 +390,7 @@ class DistributedLoader:
         return blob_client.url
     
     async def _upload_to_gcs(self, content: Dict[str, Any], package_id: str) -> str:
-        """Upload content to Google Cloud Storage."""
-        
+        """Upload content to Google Cloud Storage."""        
         bucket_name = self.config.gcp_config['bucket']
         blob_name = f"content/{package_id}/{content.get('filename', 'content')}"
         
@@ -440,11 +420,9 @@ class DistributedLoader:
 
 
 class PlatformLoader:
-    """
-    Specialized loader for platform-specific content delivery
+    """    Specialized loader for platform-specific content delivery
     with API integration and automated publishing workflows.
-    """
-    
+    """    
     def __init__(self, config: LoaderConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -468,8 +446,7 @@ class PlatformLoader:
         self._initialize_platform_apis()
     
     def _initialize_platform_apis(self):
-        """Initialize platform-specific API clients."""
-        
+        """Initialize platform-specific API clients."""        
         # YouTube API
         if self.config.youtube_config:
             self.platform_apis['youtube'] = YouTubeAPI(
@@ -505,8 +482,7 @@ class PlatformLoader:
         platform: str,
         publishing_options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Load content to specific platform with automated publishing.
+        """        Load content to specific platform with automated publishing.
         
         Args:
             content_package: Distribution package data
@@ -515,8 +491,7 @@ class PlatformLoader:
             
         Returns:
             Publishing results with platform response
-        """
-        
+        """        
         if platform not in self.platform_apis:
             raise PlatformError(f"Platform {platform} not configured")
         
@@ -565,8 +540,7 @@ class PlatformLoader:
         platform: str,
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Prepare content for platform-specific requirements."""
-        
+        """Prepare content for platform-specific requirements."""        
         prepared = content_package.copy()
         
         # Apply platform-specific content preparation
@@ -583,11 +557,9 @@ class PlatformLoader:
 
 
 class StorageLoader:
-    """
-    High-performance storage loader with intelligent data management,
+    """    High-performance storage loader with intelligent data management,
     caching strategies, and automated backup systems.
-    """
-    
+    """    
     def __init__(self, config: LoaderConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -601,8 +573,7 @@ class StorageLoader:
         self._initialize_storage_systems()
     
     def _initialize_storage_systems(self):
-        """Initialize various storage systems."""
-        
+        """Initialize various storage systems."""        
         # PostgreSQL connection pool
         if self.config.postgres_config:
             # In production, use proper async connection pool
@@ -630,8 +601,7 @@ class StorageLoader:
         table_name: str,
         loading_strategy: str = 'insert'
     ) -> Dict[str, Any]:
-        """
-        Load data to database with intelligent loading strategies.
+        """        Load data to database with intelligent loading strategies.
         
         Args:
             data: Data to load
@@ -640,8 +610,7 @@ class StorageLoader:
             
         Returns:
             Loading result information
-        """
-        
+        """        
         try:
             if loading_strategy == 'insert':
                 result = await self._insert_data(data, table_name)
@@ -661,8 +630,7 @@ class StorageLoader:
             raise LoaderError(f"Database loading failed: {e}")
     
     async def _insert_data(self, data: Dict[str, Any], table_name: str) -> Dict[str, Any]:
-        """Insert data using standard INSERT operation."""
-        
+        """Insert data using standard INSERT operation."""        
         # Implementation would use actual database connection
         # This is a simplified example
         
@@ -674,8 +642,7 @@ class StorageLoader:
         }
     
     async def _upsert_data(self, data: Dict[str, Any], table_name: str) -> Dict[str, Any]:
-        """Insert or update data using UPSERT operation."""
-        
+        """Insert or update data using UPSERT operation."""        
         # Implementation would use actual database connection
         # This is a simplified example
         
@@ -687,8 +654,7 @@ class StorageLoader:
         }
     
     async def _bulk_load_data(self, data: List[Dict[str, Any]], table_name: str) -> Dict[str, Any]:
-        """Bulk load data for high-performance scenarios."""
-        
+        """Bulk load data for high-performance scenarios."""        
         # Implementation would use actual database connection
         # This is a simplified example
         
@@ -701,11 +667,9 @@ class StorageLoader:
 
 
 class AnalyticsLoader:
-    """
-    Specialized loader for analytics data with real-time streaming
+    """    Specialized loader for analytics data with real-time streaming
     and time-series optimization.
-    """
-    
+    """    
     def __init__(self, config: LoaderConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -718,8 +682,7 @@ class AnalyticsLoader:
         self._initialize_analytics_storage()
     
     def _initialize_analytics_storage(self):
-        """Initialize analytics-specific storage systems."""
-        
+        """Initialize analytics-specific storage systems."""        
         # InfluxDB for time-series data
         if self.config.influxdb_config:
             # Initialize InfluxDB client
@@ -736,8 +699,7 @@ class AnalyticsLoader:
         analytics_data: Dict[str, Any],
         data_type: str = 'event'
     ) -> Dict[str, Any]:
-        """
-        Load analytics data with optimized storage strategies.
+        """        Load analytics data with optimized storage strategies.
         
         Args:
             analytics_data: Analytics data to load
@@ -745,8 +707,7 @@ class AnalyticsLoader:
             
         Returns:
             Loading result with indexing information
-        """
-        
+        """        
         try:
             # Enrich analytics data
             enriched_data = await self._enrich_analytics_data(analytics_data)
@@ -768,8 +729,7 @@ class AnalyticsLoader:
             raise LoaderError(f"Analytics loading failed: {e}")
     
     async def _enrich_analytics_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Enrich analytics data with additional metadata."""
-        
+        """Enrich analytics data with additional metadata."""        
         enriched = data.copy()
         enriched.update({
             'loaded_at': datetime.utcnow().isoformat(),

@@ -1,5 +1,4 @@
-"""
-Rights Tracking Configuration - Enterprise Configuration Management System
+"""Rights Tracking Configuration - Enterprise Configuration Management System
 Configuration centralisée ultra-avancée pour le module de suivi des droits
 Système professionnel de gestion des paramètres et constantes
 
@@ -13,9 +12,7 @@ Ce code, concept et propriété intellectuelle appartiennent exclusivement à Fa
 Toute tentative de vol, copie, redistribution ou utilisation sans autorisation écrite 
 explicite de Fahed Mlaiel (mlaiel@live.de) entraînera des actions légales immédiates 
 selon le droit allemand et international de la propriété intellectuelle.
-"""
-
-import os
+"""import os
 from typing import Dict, List, Any, Optional
 from enum import Enum
 from dataclasses import dataclass
@@ -23,8 +20,7 @@ from pydantic import BaseSettings, Field
 
 
 class RightsTrackingConfig(BaseSettings):
-    """Configuration principale du système de suivi des droits"""
-    
+    """Configuration principale du système de suivi des droits"""    
     # === Configuration Base de Données ===
     DATABASE_URL: str = Field(
         default="postgresql://user:password@localhost:5432/rights_tracking",
@@ -94,8 +90,7 @@ class RightsTrackingConfig(BaseSettings):
 
 # Énumérations pour les types de données
 class LicenseType(str, Enum):
-    """Types de licences disponibles"""
-    EXCLUSIVE = "exclusive"
+    """Types de licences disponibles"""    EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     SYNC = "sync"
     MASTER = "master"
@@ -106,8 +101,7 @@ class LicenseType(str, Enum):
 
 
 class ContentType(str, Enum):
-    """Types de contenu supportés"""
-    AUDIO = "audio"
+    """Types de contenu supportés"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -118,8 +112,7 @@ class ContentType(str, Enum):
 
 
 class ViolationType(str, Enum):
-    """Types de violations détectées"""
-    UNAUTHORIZED_USE = "unauthorized_use"
+    """Types de violations détectées"""    UNAUTHORIZED_USE = "unauthorized_use"
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     TRADEMARK_VIOLATION = "trademark_violation"
     LICENSE_BREACH = "license_breach"
@@ -130,8 +123,7 @@ class ViolationType(str, Enum):
 
 
 class Platform(str, Enum):
-    """Plateformes de surveillance supportées"""
-    YOUTUBE = "youtube"
+    """Plateformes de surveillance supportées"""    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
@@ -146,8 +138,7 @@ class Platform(str, Enum):
 
 
 class ActionType(str, Enum):
-    """Types d'actions d'enforcement"""
-    DMCA_TAKEDOWN = "dmca_takedown"
+    """Types d'actions d'enforcement"""    DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     PLATFORM_REPORT = "platform_report"
     LEGAL_ACTION = "legal_action"
@@ -157,8 +148,7 @@ class ActionType(str, Enum):
 
 
 class Currency(str, Enum):
-    """Devises supportées"""
-    USD = "USD"
+    """Devises supportées"""    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     CAD = "CAD"
@@ -174,8 +164,7 @@ class Currency(str, Enum):
 
 
 class TerritoryCode(str, Enum):
-    """Codes de territoires ISO 3166-1"""
-    WORLDWIDE = "WW"
+    """Codes de territoires ISO 3166-1"""    WORLDWIDE = "WW"
     US = "US"
     CA = "CA"
     MX = "MX"
@@ -239,8 +228,7 @@ class TerritoryCode(str, Enum):
 
 @dataclass
 class PlatformConfig:
-    """Configuration pour une plateforme spécifique"""
-    name: str
+    """Configuration pour une plateforme spécifique"""    name: str
     api_endpoint: str
     api_key_required: bool
     rate_limit_per_hour: int
@@ -253,8 +241,7 @@ class PlatformConfig:
 
 @dataclass
 class AIModelConfig:
-    """Configuration pour les modèles d'IA"""
-    model_name: str
+    """Configuration pour les modèles d'IA"""    model_name: str
     model_path: str
     input_formats: List[str]
     confidence_threshold: float
@@ -265,8 +252,7 @@ class AIModelConfig:
 
 @dataclass
 class NotificationConfig:
-    """Configuration des notifications"""
-    channel_type: str  # email, webhook, sms, slack
+    """Configuration des notifications"""    channel_type: str  # email, webhook, sms, slack
     endpoint: str
     enabled: bool
     severity_filter: List[str]
@@ -504,34 +490,28 @@ HIGH_AVAILABILITY_CONFIG: Dict[str, Any] = {
 
 
 def get_config() -> RightsTrackingConfig:
-    """Retourne l'instance de configuration globale"""
-    return RightsTrackingConfig()
+    """Retourne l'instance de configuration globale"""    return RightsTrackingConfig()
 
 
 def get_platform_config(platform: Platform) -> Optional[PlatformConfig]:
-    """Retourne la configuration pour une plateforme spécifique"""
-    return PLATFORM_CONFIGS.get(platform)
+    """Retourne la configuration pour une plateforme spécifique"""    return PLATFORM_CONFIGS.get(platform)
 
 
 def get_ai_model_config(model_name: str) -> Optional[AIModelConfig]:
-    """Retourne la configuration pour un modèle d'IA spécifique"""
-    return AI_MODEL_CONFIGS.get(model_name)
+    """Retourne la configuration pour un modèle d'IA spécifique"""    return AI_MODEL_CONFIGS.get(model_name)
 
 
 def get_legal_clauses(jurisdiction: str) -> Dict[str, str]:
-    """Retourne les clauses légales pour une juridiction"""
-    return LEGAL_CLAUSE_TEMPLATES.get(jurisdiction, LEGAL_CLAUSE_TEMPLATES["US"])
+    """Retourne les clauses légales pour une juridiction"""    return LEGAL_CLAUSE_TEMPLATES.get(jurisdiction, LEGAL_CLAUSE_TEMPLATES["US"])
 
 
 def get_default_royalty_rate(license_type: LicenseType, usage_type: str) -> float:
-    """Retourne le taux de royalty par défaut"""
-    rates = DEFAULT_ROYALTY_RATES.get(license_type, {})
+    """Retourne le taux de royalty par défaut"""    rates = DEFAULT_ROYALTY_RATES.get(license_type, {})
     return rates.get(usage_type, 0.10)  # 10% par défaut
 
 
 def validate_territory_code(territory: str) -> bool:
-    """Valide un code de territoire"""
-    try:
+    """Valide un code de territoire"""    try:
         TerritoryCode(territory)
         return True
     except ValueError:
@@ -539,8 +519,7 @@ def validate_territory_code(territory: str) -> bool:
 
 
 def get_currency_symbol(currency: Currency) -> str:
-    """Retourne le symbole d'une devise"""
-    symbols = {
+    """Retourne le symbole d'une devise"""    symbols = {
         Currency.USD: "$",
         Currency.EUR: "€",
         Currency.GBP: "£",
@@ -556,8 +535,7 @@ def get_currency_symbol(currency: Currency) -> str:
 
 # Validation de la configuration au démarrage
 def validate_configuration() -> bool:
-    """Valide la configuration au démarrage de l'application"""
-    config = get_config()
+    """Valide la configuration au démarrage de l'application"""    config = get_config()
     
     # Vérifications critiques
     if not config.DATABASE_URL:

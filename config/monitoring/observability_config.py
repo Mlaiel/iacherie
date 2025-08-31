@@ -1,5 +1,4 @@
-"""
-Observability Configuration Module for IA-Influencer Agent Platform
+"""Observability Configuration Module for IA-Influencer Agent Platform
 ===================================================================
 
 Professional observability orchestration and unified monitoring configuration for
@@ -15,9 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import os
+"""import os
 import asyncio
 from typing import Dict, List, Any, Optional, Callable, Union
 from dataclasses import dataclass, field
@@ -29,16 +26,14 @@ from pathlib import Path
 
 
 class ObservabilityLevel(Enum):
-    """Observability depth levels"""
-    MINIMAL = "minimal"
+    """Observability depth levels"""    MINIMAL = "minimal"
     STANDARD = "standard"
     COMPREHENSIVE = "comprehensive"
     ENTERPRISE = "enterprise"
 
 
 class ComponentHealth(Enum):
-    """Component health states"""
-    HEALTHY = "healthy"
+    """Component health states"""    HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
     UNKNOWN = "unknown"
@@ -46,8 +41,7 @@ class ComponentHealth(Enum):
 
 @dataclass
 class ObservabilityComponent:
-    """Observability component configuration"""
-    name: str
+    """Observability component configuration"""    name: str
     component_type: str
     enabled: bool = True
     health_endpoint: Optional[str] = None
@@ -60,8 +54,7 @@ class ObservabilityComponent:
 
 @dataclass
 class ServiceLevelObjective:
-    """Service Level Objective definition"""
-    name: str
+    """Service Level Objective definition"""    name: str
     metric: str
     target_value: float
     threshold: float
@@ -73,8 +66,7 @@ class ServiceLevelObjective:
 
 @dataclass
 class ObservabilityPipeline:
-    """Observability data pipeline configuration"""
-    name: str
+    """Observability data pipeline configuration"""    name: str
     source: str
     processors: List[str] = field(default_factory=list)
     destinations: List[str] = field(default_factory=list)
@@ -85,20 +77,17 @@ class ObservabilityPipeline:
 
 
 class ObservabilityConfig:
-    """
-    Professional observability configuration orchestrator
+    """    Professional observability configuration orchestrator
     
     Manages unified monitoring, metrics, tracing, and logging configuration
     with enterprise-grade observability patterns and SRE practices.
-    """
-    
+    """    
     def __init__(self, 
                  level: ObservabilityLevel = ObservabilityLevel.COMPREHENSIVE,
                  enable_slo: bool = True,
                  enable_distributed_tracing: bool = True,
                  enable_error_tracking: bool = True):
-        """Initialize observability configuration"""
-        self.level = level
+        """Initialize observability configuration"""        self.level = level
         self.enable_slo = enable_slo
         self.enable_distributed_tracing = enable_distributed_tracing
         self.enable_error_tracking = enable_error_tracking
@@ -148,8 +137,7 @@ class ObservabilityConfig:
         self._setup_observability_pipelines()
     
     def _setup_standard_components(self):
-        """Setup standard observability components"""
-        # Core platform components
+        """Setup standard observability components"""        # Core platform components
         self.register_component(ObservabilityComponent(
             name="api_gateway",
             component_type="gateway",
@@ -221,8 +209,7 @@ class ObservabilityConfig:
         ))
     
     def _setup_service_level_objectives(self):
-        """Setup Service Level Objectives for the platform"""
-        if not self.enable_slo:
+        """Setup Service Level Objectives for the platform"""        if not self.enable_slo:
             return
             
         # API Gateway SLOs
@@ -297,8 +284,7 @@ class ObservabilityConfig:
         ))
     
     def _setup_observability_pipelines(self):
-        """Setup observability data pipelines"""
-        # Metrics pipeline
+        """Setup observability data pipelines"""        # Metrics pipeline
         self.register_pipeline(ObservabilityPipeline(
             name="metrics_collection",
             source="prometheus_scraper",
@@ -339,45 +325,36 @@ class ObservabilityConfig:
         ))
     
     def register_component(self, component: ObservabilityComponent):
-        """Register observability component"""
-        self._components[component.name] = component
+        """Register observability component"""        self._components[component.name] = component
         logging.info(f"Registered observability component: {component.name}")
     
     def register_slo(self, slo: ServiceLevelObjective):
-        """Register Service Level Objective"""
-        self._slos[slo.name] = slo
+        """Register Service Level Objective"""        self._slos[slo.name] = slo
         logging.info(f"Registered SLO: {slo.name} (target: {slo.target_value}%)")
     
     def register_pipeline(self, pipeline: ObservabilityPipeline):
-        """Register observability pipeline"""
-        self._pipelines[pipeline.name] = pipeline
+        """Register observability pipeline"""        self._pipelines[pipeline.name] = pipeline
         logging.info(f"Registered observability pipeline: {pipeline.name}")
     
     def get_component(self, name: str) -> Optional[ObservabilityComponent]:
-        """Get observability component by name"""
-        return self._components.get(name)
+        """Get observability component by name"""        return self._components.get(name)
     
     def get_slo(self, name: str) -> Optional[ServiceLevelObjective]:
-        """Get SLO by name"""
-        return self._slos.get(name)
+        """Get SLO by name"""        return self._slos.get(name)
     
     def get_pipeline(self, name: str) -> Optional[ObservabilityPipeline]:
-        """Get pipeline by name"""
-        return self._pipelines.get(name)
+        """Get pipeline by name"""        return self._pipelines.get(name)
     
     def get_components_by_type(self, component_type: str) -> List[ObservabilityComponent]:
-        """Get components by type"""
-        return [comp for comp in self._components.values() 
+        """Get components by type"""        return [comp for comp in self._components.values() 
                 if comp.component_type == component_type]
     
     def get_critical_components(self) -> List[ObservabilityComponent]:
-        """Get critical components (tier 1)"""
-        return [comp for comp in self._components.values()
+        """Get critical components (tier 1)"""        return [comp for comp in self._components.values()
                 if comp.metadata.get("tier", 99) == 1]
     
     async def check_component_health(self, component_name: str) -> ComponentHealth:
-        """Check health of specific component"""
-        component = self.get_component(component_name)
+        """Check health of specific component"""        component = self.get_component(component_name)
         if not component:
             return ComponentHealth.UNKNOWN
             
@@ -393,8 +370,7 @@ class ObservabilityConfig:
             return ComponentHealth.UNHEALTHY
     
     async def check_system_health(self) -> Dict[str, ComponentHealth]:
-        """Check health of all components"""
-        health_status = {}
+        """Check health of all components"""        health_status = {}
         
         for name in self._components.keys():
             health_status[name] = await self.check_component_health(name)
@@ -402,8 +378,7 @@ class ObservabilityConfig:
         return health_status
     
     def get_monitoring_dashboard_config(self) -> Dict[str, Any]:
-        """Get configuration for monitoring dashboards"""
-        return {
+        """Get configuration for monitoring dashboards"""        return {
             "service_map": {
                 "components": list(self._components.keys()),
                 "dependencies": {
@@ -425,8 +400,7 @@ class ObservabilityConfig:
         }
     
     def export_configuration(self) -> Dict[str, Any]:
-        """Export complete observability configuration"""
-        return {
+        """Export complete observability configuration"""        return {
             "metadata": {
                 "generated_at": datetime.utcnow().isoformat(),
                 "level": self.level.value,

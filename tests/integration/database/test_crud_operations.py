@@ -1,30 +1,24 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Database Integration Tests - CRUD Operations
+"""Database Integration Tests - CRUD Operations
 
 Tests database operations including create, read, update, delete
 operations across all models with proper transaction handling.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -68,8 +62,7 @@ TEST_DATABASE_URL = "postgresql+asyncpg://test_user:test_pass@localhost:5432/ain
 
 @pytest.fixture(scope="session")
 async def test_engine():
-    """Create mock test database engine."""
-    # Mock engine for testing - in real implementation, use actual test database
+    """Create mock test database engine."""    # Mock engine for testing - in real implementation, use actual test database
     print("Mock database engine created for testing")
     yield "mock_engine"
     print("Mock database engine cleaned up")
@@ -77,8 +70,7 @@ async def test_engine():
 
 @pytest.fixture
 async def test_session(test_engine):
-    """Create mock test database session."""
-    # Mock session for testing
+    """Create mock test database session."""    # Mock session for testing
     class MockSession:
         def __init__(self):
             self._objects = []
@@ -109,8 +101,7 @@ async def test_session(test_engine):
 
 @pytest.fixture
 async def sample_user(test_session):
-    """Create a sample user for testing."""
-    user = User(
+    """Create a sample user for testing."""    user = User(
         id=str(uuid.uuid4())[:32],
         email=f"test_{uuid.uuid4()}@example.com",
         username=f"testuser_{uuid.uuid4().hex[:8]}",
@@ -130,13 +121,11 @@ async def sample_user(test_session):
 
 
 class TestUserCRUDOperations:
-    """Test CRUD operations for User model."""
-    
+    """Test CRUD operations for User model."""    
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_create_user(self, test_session):
-        """Test creating a new user."""
-        user_data = {
+        """Test creating a new user."""        user_data = {
             "id": str(uuid.uuid4())[:32],
             "email": f"create_test_{uuid.uuid4()}@example.com",
             "username": f"createuser_{uuid.uuid4().hex[:8]}",
@@ -166,8 +155,7 @@ class TestUserCRUDOperations:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_read_user(self, test_session, sample_user):
-        """Test reading a user from database."""
-        # Read by ID
+        """Test reading a user from database."""        # Read by ID
         result = await test_session.execute(
             select(User).where(User.id == sample_user.id)
         )
@@ -190,8 +178,7 @@ class TestUserCRUDOperations:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_update_user(self, test_session, sample_user):
-        """Test updating a user."""
-        original_updated_at = sample_user.updated_at
+        """Test updating a user."""        original_updated_at = sample_user.updated_at
         
         # Update user data
         await test_session.execute(
@@ -218,8 +205,7 @@ class TestUserCRUDOperations:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_delete_user(self, test_session, sample_user):
-        """Test deleting a user."""
-        user_id = sample_user.id
+        """Test deleting a user."""        user_id = sample_user.id
         
         # Delete user
         await test_session.execute(
@@ -238,8 +224,7 @@ class TestUserCRUDOperations:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_user_unique_constraints(self, test_session, sample_user):
-        """Test unique constraints on user email and username."""
-        # Try to create user with same email
+        """Test unique constraints on user email and username."""        # Try to create user with same email
         duplicate_email_user = User(
             id=str(uuid.uuid4())[:32],
             email=sample_user.email,  # Duplicate email
@@ -277,13 +262,11 @@ class TestUserCRUDOperations:
 
 
 class TestContentCRUDOperations:
-    """Test CRUD operations for Content model."""
-    
+    """Test CRUD operations for Content model."""    
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_create_content(self, test_session, sample_user):
-        """Test creating content associated with a user."""
-        content_data = {
+        """Test creating content associated with a user."""        content_data = {
             "id": str(uuid.uuid4()),
             "user_id": sample_user.id,
             "title": "Test Content",
@@ -307,8 +290,7 @@ class TestContentCRUDOperations:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_read_content_with_user_relationship(self, test_session, sample_user):
-        """Test reading content with user relationship."""
-        # Create content
+        """Test reading content with user relationship."""        # Create content
         content = Content(
             id=str(uuid.uuid4()),
             user_id=sample_user.id,
@@ -343,8 +325,7 @@ class TestContentCRUDOperations:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_content_foreign_key_constraint(self, test_session):
-        """Test foreign key constraint for content-user relationship."""
-        # Try to create content with non-existent user_id
+        """Test foreign key constraint for content-user relationship."""        # Try to create content with non-existent user_id
         invalid_content = Content(
             id=str(uuid.uuid4()),
             user_id="non_existent_user_id",
@@ -361,13 +342,11 @@ class TestContentCRUDOperations:
 
 
 class TestTransactionHandling:
-    """Test database transaction handling."""
-    
+    """Test database transaction handling."""    
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_transaction_rollback(self, test_session):
-        """Test transaction rollback functionality."""
-        # Count initial users
+        """Test transaction rollback functionality."""        # Count initial users
         initial_result = await test_session.execute(select(User))
         initial_count = len(initial_result.all())
         
@@ -414,8 +393,7 @@ class TestTransactionHandling:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_concurrent_transactions(self, test_engine):
-        """Test handling of concurrent transactions."""
-        async def create_user_transaction(session_factory, user_data):
+        """Test handling of concurrent transactions."""        async def create_user_transaction(session_factory, user_data):
             async with session_factory() as session:
                 user = User(**user_data)
                 session.add(user)
@@ -454,13 +432,11 @@ class TestTransactionHandling:
 
 
 class TestDataIntegrityAndConstraints:
-    """Test data integrity and database constraints."""
-    
+    """Test data integrity and database constraints."""    
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_required_fields(self, test_session):
-        """Test that required fields are enforced."""
-        # Try to create user without required fields
+        """Test that required fields are enforced."""        # Try to create user without required fields
         incomplete_user = User(
             id=str(uuid.uuid4())[:32],
             # Missing email, username, password_hash, etc.
@@ -474,8 +450,7 @@ class TestDataIntegrityAndConstraints:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_data_type_validation(self, test_session):
-        """Test data type validation."""
-        # Try to create user with invalid data types
+        """Test data type validation."""        # Try to create user with invalid data types
         with pytest.raises(Exception):
             invalid_user = User(
                 id=12345,  # Should be string
@@ -495,8 +470,7 @@ class TestDataIntegrityAndConstraints:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_cascade_operations(self, test_session, sample_user):
-        """Test cascade operations when deleting related records."""
-        # Create content for the user
+        """Test cascade operations when deleting related records."""        # Create content for the user
         content_items = []
         for i in range(3):
             content = Content(

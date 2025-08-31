@@ -1,5 +1,4 @@
-"""
-Input and Content Validation Module
+"""Input and Content Validation Module
 Advanced validation and security scanning for IA Influencer Agent
 
 Features:
@@ -19,9 +18,7 @@ Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 License: Proprietary - Contact author for licensing terms
-"""
-
-import re
+"""import re
 import mimetypes
 import magic
 import hashlib
@@ -56,8 +53,7 @@ from backend.core.logging import SecurityLogger
 
 
 class ValidationResult(Enum):
-    """Validation result status with threat levels"""
-    VALID = "valid"
+    """Validation result status with threat levels"""    VALID = "valid"
     INVALID = "invalid"
     SUSPICIOUS = "suspicious"
     MALICIOUS = "malicious"
@@ -66,8 +62,7 @@ class ValidationResult(Enum):
 
 
 class ThreatCategory(Enum):
-    """Threat categories for classification"""
-    MALWARE = "malware"
+    """Threat categories for classification"""    MALWARE = "malware"
     VIRUS = "virus"
     TROJAN = "trojan"
     SPYWARE = "spyware"
@@ -81,8 +76,7 @@ class ThreatCategory(Enum):
 
 
 class ContentCategory(Enum):
-    """Content categories for validation"""
-    AUDIO = "audio"
+    """Content categories for validation"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -94,8 +88,7 @@ class ContentCategory(Enum):
 
 @dataclass
 class ValidationReport:
-    """Comprehensive validation report"""
-    file_id: str
+    """Comprehensive validation report"""    file_id: str
     filename: str
     content_type: str
     file_size: int
@@ -109,8 +102,7 @@ class ValidationReport:
 
 @dataclass
 class MalwareSignature:
-    """Malware signature definition"""
-    signature_id: str
+    """Malware signature definition"""    signature_id: str
     name: str
     description: str
     pattern: bytes
@@ -120,8 +112,7 @@ class MalwareSignature:
 
 
 class InputValidator:
-    """Advanced input validation and sanitization"""
-    
+    """Advanced input validation and sanitization"""    
     def __init__(self):
         self.logger = SecurityLogger("InputValidator")
         self.cache = CacheManager()
@@ -142,8 +133,7 @@ class InputValidator:
         }
     
     def _initialize_validation_rules(self) -> Dict[str, Any]:
-        """Initialize validation rules"""
-        return {
+        """Initialize validation rules"""        return {
             "email": r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
             "url": r'^https?://(?:[-\w.])+(?:\:[0-9]+)?(?:/(?:[\w/_.])*(?:\?(?:[\w&=%.])*)?(?:\#(?:[\w.])*)?)?$',
             "username": r'^[a-zA-Z0-9_-]{3,30}$',
@@ -156,8 +146,7 @@ class InputValidator:
         }
     
     def validate_input(self, input_value: str, validation_type: str) -> Tuple[bool, str]:
-        """Validate input against specific rules"""
-        try:
+        """Validate input against specific rules"""        try:
             if validation_type not in self.validation_rules:
                 return False, f"Unknown validation type: {validation_type}"
             
@@ -179,8 +168,7 @@ class InputValidator:
             return False, f"Validation error: {str(e)}"
     
     def _check_input_security(self, input_value: str, validation_type: str) -> List[str]:
-        """Check input for security issues"""
-        issues = []
+        """Check input for security issues"""        issues = []
         
         # Check for SQL injection patterns
         sql_patterns = [
@@ -228,8 +216,7 @@ class InputValidator:
         return issues
     
     def sanitize_html(self, html_content: str) -> str:
-        """Sanitize HTML content"""
-        try:
+        """Sanitize HTML content"""        try:
             sanitized = bleach.clean(
                 html_content,
                 tags=self.allowed_tags,
@@ -244,8 +231,7 @@ class InputValidator:
             return ""
     
     def sanitize_filename(self, filename: str) -> str:
-        """Sanitize filename for safe storage"""
-        try:
+        """Sanitize filename for safe storage"""        try:
             # Remove path components
             filename = filename.split('/')[-1].split('\\')[-1]
             
@@ -268,8 +254,7 @@ class InputValidator:
             return f"file_{int(datetime.utcnow().timestamp())}"
     
     def validate_json_schema(self, json_data: Dict[str, Any], schema: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        """Validate JSON data against schema"""
-        try:
+        """Validate JSON data against schema"""        try:
             from jsonschema import validate, ValidationError as JsonValidationError
             
             validate(instance=json_data, schema=schema)
@@ -283,8 +268,7 @@ class InputValidator:
 
 
 class ContentValidator:
-    """Content validation for uploaded files"""
-    
+    """Content validation for uploaded files"""    
     def __init__(self):
         self.logger = SecurityLogger("ContentValidator")
         self.cache = CacheManager()
@@ -332,8 +316,7 @@ class ContentValidator:
         filename: str,
         declared_mime_type: Optional[str] = None
     ) -> ValidationReport:
-        """Comprehensive content validation"""
-        try:
+        """Comprehensive content validation"""        try:
             file_id = hashlib.md5(file_data).hexdigest()
             
             # Initialize report
@@ -395,8 +378,7 @@ class ContentValidator:
             )
     
     def _validate_file_size(self, file_data: bytes, filename: str) -> Dict[str, Any]:
-        """Validate file size"""
-        file_size = len(file_data)
+        """Validate file size"""        file_size = len(file_data)
         file_ext = filename.lower().split('.')[-1] if '.' in filename else ''
         
         # Determine content category
@@ -424,8 +406,7 @@ class ContentValidator:
         filename: str, 
         declared_mime_type: Optional[str]
     ) -> Dict[str, Any]:
-        """Validate file type and detect MIME type"""
-        try:
+        """Validate file type and detect MIME type"""        try:
             # Detect actual MIME type using magic
             try:
                 detected_mime = magic.from_buffer(file_data, mime=True)
@@ -470,8 +451,7 @@ class ContentValidator:
             return {"file_type": {"is_valid": False, "error": str(e)}}
     
     def _validate_file_extension(self, filename: str) -> Dict[str, Any]:
-        """Validate file extension"""
-        file_ext = '.' + filename.lower().split('.')[-1] if '.' in filename else ''
+        """Validate file extension"""        file_ext = '.' + filename.lower().split('.')[-1] if '.' in filename else ''
         
         is_blocked = file_ext in self.blocked_extensions
         is_valid = not is_blocked
@@ -494,8 +474,7 @@ class ContentValidator:
         file_data: bytes, 
         content_category: Optional[str]
     ) -> Dict[str, Any]:
-        """Validate content structure based on type"""
-        try:
+        """Validate content structure based on type"""        try:
             if not content_category:
                 return {"content_structure": {"is_valid": True, "message": "No structure validation needed"}}
             
@@ -515,8 +494,7 @@ class ContentValidator:
             return {"content_structure": {"is_valid": False, "error": str(e)}}
     
     async def _validate_image_structure(self, image_data: bytes) -> Dict[str, Any]:
-        """Validate image file structure"""
-        try:
+        """Validate image file structure"""        try:
             import io
             image = Image.open(io.BytesIO(image_data))
             
@@ -564,8 +542,7 @@ class ContentValidator:
             return {"content_structure": {"is_valid": False, "error": f"Invalid image format: {str(e)}"}}
     
     async def _validate_audio_structure(self, audio_data: bytes) -> Dict[str, Any]:
-        """Validate audio file structure"""
-        try:
+        """Validate audio file structure"""        try:
             import io
             
             # Try to parse with mutagen
@@ -599,8 +576,7 @@ class ContentValidator:
             return {"content_structure": {"is_valid": False, "error": f"Audio validation failed: {str(e)}"}}
     
     async def _validate_video_structure(self, video_data: bytes) -> Dict[str, Any]:
-        """Validate video file structure"""
-        try:
+        """Validate video file structure"""        try:
             import io
             
             # Try to open with PyAV
@@ -644,8 +620,7 @@ class ContentValidator:
             return {"content_structure": {"is_valid": False, "error": f"Video validation failed: {str(e)}"}}
     
     async def _validate_content_security(self, file_data: bytes, filename: str) -> Dict[str, Any]:
-        """Security validation of file content"""
-        try:
+        """Security validation of file content"""        try:
             security_issues = []
             is_suspicious = False
             is_malicious = False
@@ -691,8 +666,7 @@ class ContentValidator:
             return {"content_security": {"is_valid": False, "error": str(e)}}
     
     def _determine_content_category(self, file_extension: str) -> Optional[ContentCategory]:
-        """Determine content category from file extension"""
-        ext_mapping = {
+        """Determine content category from file extension"""        ext_mapping = {
             'jpg': ContentCategory.IMAGE, 'jpeg': ContentCategory.IMAGE, 'png': ContentCategory.IMAGE,
             'gif': ContentCategory.IMAGE, 'bmp': ContentCategory.IMAGE, 'webp': ContentCategory.IMAGE,
             'mp3': ContentCategory.AUDIO, 'wav': ContentCategory.AUDIO, 'flac': ContentCategory.AUDIO,
@@ -707,8 +681,7 @@ class ContentValidator:
         return ext_mapping.get(file_extension.lower())
     
     def _get_category_from_mime(self, mime_type: str) -> Optional[ContentCategory]:
-        """Get content category from MIME type"""
-        if mime_type.startswith('image/'):
+        """Get content category from MIME type"""        if mime_type.startswith('image/'):
             return ContentCategory.IMAGE
         elif mime_type.startswith('audio/'):
             return ContentCategory.AUDIO
@@ -724,16 +697,14 @@ class ContentValidator:
             return None
     
     def _is_mime_type_allowed(self, mime_type: str, category: Optional[ContentCategory]) -> bool:
-        """Check if MIME type is allowed for the category"""
-        if not category:
+        """Check if MIME type is allowed for the category"""        if not category:
             return False
         
         allowed_types = self.allowed_mime_types.get(category, [])
         return mime_type in allowed_types
     
     def _contains_executable_code(self, file_data: bytes) -> bool:
-        """Check if file contains executable code"""
-        # Check for PE header (Windows executables)
+        """Check if file contains executable code"""        # Check for PE header (Windows executables)
         if file_data.startswith(b'MZ'):
             return True
         
@@ -758,8 +729,7 @@ class ContentValidator:
         return False
     
     def _calculate_entropy(self, data: bytes) -> float:
-        """Calculate Shannon entropy of data"""
-        if not data:
+        """Calculate Shannon entropy of data"""        if not data:
             return 0.0
         
         # Count byte frequencies
@@ -780,8 +750,7 @@ class ContentValidator:
 
 
 class MalwareScanner:
-    """Malware detection and scanning"""
-    
+    """Malware detection and scanning"""    
     def __init__(self):
         self.logger = SecurityLogger("MalwareScanner")
         self.cache = CacheManager()
@@ -790,8 +759,7 @@ class MalwareScanner:
         self.signatures = self._load_malware_signatures()
     
     def _load_malware_signatures(self) -> List[MalwareSignature]:
-        """Load malware signatures"""
-        signatures = []
+        """Load malware signatures"""        signatures = []
         
         # Basic malware signatures (in production, use comprehensive signature database)
         signatures.append(MalwareSignature(
@@ -817,8 +785,7 @@ class MalwareScanner:
         return signatures
     
     async def scan_content(self, file_data: bytes, filename: str) -> Dict[str, Any]:
-        """Scan content for malware"""
-        try:
+        """Scan content for malware"""        try:
             scan_results = {
                 "is_clean": True,
                 "threats_detected": [],
@@ -857,8 +824,7 @@ class MalwareScanner:
             }
     
     async def _heuristic_analysis(self, file_data: bytes, filename: str) -> Dict[str, Any]:
-        """Perform heuristic analysis"""
-        suspicion_score = 0
+        """Perform heuristic analysis"""        suspicion_score = 0
         suspicious_indicators = []
         
         # Check file size anomalies
@@ -915,16 +881,14 @@ class MalwareScanner:
 
 
 class VirusScanner:
-    """Dedicated virus scanning functionality"""
-    
+    """Dedicated virus scanning functionality"""    
     def __init__(self, malware_scanner: MalwareScanner):
         self.malware_scanner = malware_scanner
         self.logger = SecurityLogger("VirusScanner")
         self.cache = CacheManager()
     
     async def scan_file(self, file_data: bytes, filename: str) -> Dict[str, Any]:
-        """Comprehensive virus scan"""
-        try:
+        """Comprehensive virus scan"""        try:
             # Calculate file hash
             file_hash = hashlib.sha256(file_data).hexdigest()
             
@@ -973,8 +937,7 @@ class VirusScanner:
 
 
 class SecurityValidator:
-    """Main security validation orchestrator"""
-    
+    """Main security validation orchestrator"""    
     def __init__(self):
         self.input_validator = InputValidator()
         self.content_validator = ContentValidator()
@@ -989,8 +952,7 @@ class SecurityValidator:
         declared_mime_type: Optional[str] = None,
         user_id: Optional[str] = None
     ) -> ValidationReport:
-        """Comprehensive upload validation"""
-        try:
+        """Comprehensive upload validation"""        try:
             # Sanitize filename
             safe_filename = self.input_validator.sanitize_filename(filename)
             

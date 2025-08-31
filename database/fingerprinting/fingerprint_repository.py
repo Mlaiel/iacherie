@@ -1,14 +1,11 @@
-"""
-Comprehensive Fingerprint Repository
+"""Comprehensive Fingerprint Repository
 
 High-level repository interface for fingerprint data operations with advanced
 querying, analytics, and enterprise-grade data management capabilities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timezone, timedelta
@@ -39,8 +36,7 @@ logger = logging.getLogger(__name__)
 
 
 class FingerprintStatus(Enum):
-    """Fingerprint status types"""
-    ACTIVE = "active"
+    """Fingerprint status types"""    ACTIVE = "active"
     INACTIVE = "inactive"
     PENDING = "pending"
     EXPIRED = "expired"
@@ -48,8 +44,7 @@ class FingerprintStatus(Enum):
 
 
 class SortField(Enum):
-    """Available sort fields"""
-    CREATED_AT = "created_at"
+    """Available sort fields"""    CREATED_AT = "created_at"
     UPDATED_AT = "updated_at"
     CONFIDENCE_SCORE = "confidence_score"
     SIMILARITY_SCORE = "similarity_score"
@@ -59,8 +54,7 @@ class SortField(Enum):
 
 @dataclass
 class FingerprintQuery:
-    """Comprehensive fingerprint query parameters"""
-    user_id: Optional[str] = None
+    """Comprehensive fingerprint query parameters"""    user_id: Optional[str] = None
     content_ids: Optional[List[str]] = None
     content_types: Optional[List[str]] = None
     fingerprint_types: Optional[List[str]] = None
@@ -99,8 +93,7 @@ class FingerprintQuery:
 
 @dataclass
 class FingerprintStatistics:
-    """Comprehensive fingerprint statistics"""
-    total_count: int
+    """Comprehensive fingerprint statistics"""    total_count: int
     active_count: int
     content_type_distribution: Dict[str, int]
     quality_distribution: Dict[str, int]
@@ -112,8 +105,7 @@ class FingerprintStatistics:
 
 @dataclass
 class MatchStatistics:
-    """Match operation statistics"""
-    total_matches: int
+    """Match operation statistics"""    total_matches: int
     exact_matches: int
     similar_matches: int
     partial_matches: int
@@ -123,11 +115,9 @@ class MatchStatistics:
 
 
 class FingerprintRepository:
-    """
-    Comprehensive repository for fingerprint data operations with advanced
+    """    Comprehensive repository for fingerprint data operations with advanced
     querying, analytics, and enterprise-grade data management.
-    """
-    
+    """    
     def __init__(
         self,
         db_manager: DatabaseManager,
@@ -148,8 +138,7 @@ class FingerprintRepository:
         user_id: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Create a new fingerprint with full indexing
+        """        Create a new fingerprint with full indexing
         
         Args:
             fingerprint: ContentFingerprint object
@@ -158,8 +147,7 @@ class FingerprintRepository:
             
         Returns:
             Fingerprint ID
-        """
-        try:
+        """        try:
             # Store fingerprint
             fingerprint_id = await self.storage_manager.store_fingerprint(
                 fingerprint, user_id, metadata
@@ -187,8 +175,7 @@ class FingerprintRepository:
         include_vectors: bool = False,
         include_matches: bool = False
     ) -> Optional[ContentFingerprint]:
-        """
-        Retrieve a fingerprint by ID
+        """        Retrieve a fingerprint by ID
         
         Args:
             fingerprint_id: Fingerprint identifier
@@ -197,8 +184,7 @@ class FingerprintRepository:
             
         Returns:
             ContentFingerprint object or None
-        """
-        try:
+        """        try:
             fingerprint = await self.storage_manager.retrieve_fingerprint(
                 fingerprint_id, include_vectors
             )
@@ -222,16 +208,14 @@ class FingerprintRepository:
         self,
         query: FingerprintQuery
     ) -> PaginatedResponse[ContentFingerprint]:
-        """
-        Advanced fingerprint querying with complex filters
+        """        Advanced fingerprint querying with complex filters
         
         Args:
             query: FingerprintQuery with all filter parameters
             
         Returns:
             Paginated response with matching fingerprints
-        """
-        try:
+        """        try:
             # Build query conditions
             conditions = self._build_query_conditions(query)
             
@@ -295,8 +279,7 @@ class FingerprintRepository:
         max_results: int = 50,
         user_id: Optional[str] = None
     ) -> List[Tuple[ContentFingerprint, float]]:
-        """
-        Search for similar fingerprints using the matching engine
+        """        Search for similar fingerprints using the matching engine
         
         Args:
             reference_fingerprint: Fingerprint to search for
@@ -306,8 +289,7 @@ class FingerprintRepository:
             
         Returns:
             List of (fingerprint, similarity_score) tuples
-        """
-        try:
+        """        try:
             # Find matches using the matching engine
             match_results = await self.matching_engine.find_matches(
                 reference_fingerprint,
@@ -341,8 +323,7 @@ class FingerprintRepository:
         fingerprint_id: str,
         updates: Dict[str, Any]
     ) -> bool:
-        """
-        Update fingerprint data
+        """        Update fingerprint data
         
         Args:
             fingerprint_id: Fingerprint identifier
@@ -350,8 +331,7 @@ class FingerprintRepository:
             
         Returns:
             True if updated successfully
-        """
-        try:
+        """        try:
             # Validate updates
             allowed_fields = {
                 'metadata', 'quality_level', 'status', 'confidence_score',
@@ -385,8 +365,7 @@ class FingerprintRepository:
         fingerprint_id: str,
         soft_delete: bool = True
     ) -> bool:
-        """
-        Delete fingerprint (soft or hard delete)
+        """        Delete fingerprint (soft or hard delete)
         
         Args:
             fingerprint_id: Fingerprint identifier
@@ -394,8 +373,7 @@ class FingerprintRepository:
             
         Returns:
             True if deleted successfully
-        """
-        try:
+        """        try:
             if soft_delete:
                 # Soft delete - mark as deleted
                 success = await self.update_fingerprint(
@@ -431,8 +409,7 @@ class FingerprintRepository:
         fingerprints_data: List[Tuple[ContentFingerprint, str, Optional[Dict[str, Any]]]],
         batch_size: int = 100
     ) -> List[str]:
-        """
-        Bulk create fingerprints with optimized performance
+        """        Bulk create fingerprints with optimized performance
         
         Args:
             fingerprints_data: List of (fingerprint, user_id, metadata) tuples
@@ -440,8 +417,7 @@ class FingerprintRepository:
             
         Returns:
             List of created fingerprint IDs
-        """
-        try:
+        """        try:
             created_ids = []
             
             # Process in batches
@@ -481,8 +457,7 @@ class FingerprintRepository:
         fingerprint_id: str,
         limit: int = 50
     ) -> List[MatchResult]:
-        """
-        Get match history for a fingerprint
+        """        Get match history for a fingerprint
         
         Args:
             fingerprint_id: Fingerprint identifier
@@ -490,8 +465,7 @@ class FingerprintRepository:
             
         Returns:
             List of match results
-        """
-        try:
+        """        try:
             async with self.db_manager.get_session() as session:
                 query = select(FingerprintMatchModel).where(
                     or_(
@@ -530,8 +504,7 @@ class FingerprintRepository:
         user_id: Optional[str] = None,
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> FingerprintStatistics:
-        """
-        Get comprehensive fingerprint statistics
+        """        Get comprehensive fingerprint statistics
         
         Args:
             user_id: Optional user filter
@@ -539,8 +512,7 @@ class FingerprintRepository:
             
         Returns:
             FingerprintStatistics object
-        """
-        try:
+        """        try:
             async with self.db_manager.get_session() as session:
                 # Base query conditions
                 conditions = []
@@ -629,8 +601,7 @@ class FingerprintRepository:
         user_id: Optional[str] = None,
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> MatchStatistics:
-        """
-        Get comprehensive match operation statistics
+        """        Get comprehensive match operation statistics
         
         Args:
             user_id: Optional user filter
@@ -638,8 +609,7 @@ class FingerprintRepository:
             
         Returns:
             MatchStatistics object
-        """
-        try:
+        """        try:
             async with self.db_manager.get_session() as session:
                 # Build base conditions
                 conditions = []
@@ -713,13 +683,11 @@ class FingerprintRepository:
             raise DatabaseError(f"Match statistics calculation failed: {e}")
     
     async def cleanup_expired_fingerprints(self) -> int:
-        """
-        Clean up expired fingerprints
+        """        Clean up expired fingerprints
         
         Returns:
             Number of fingerprints cleaned up
-        """
-        try:
+        """        try:
             cleaned_count = await self.storage_manager.cleanup_expired_fingerprints()
             self.logger.info(f"Cleaned up {cleaned_count} expired fingerprints")
             return cleaned_count
@@ -733,14 +701,12 @@ class FingerprintRepository:
         content_type: Optional[str] = None,
         batch_size: int = 1000
     ) -> None:
-        """
-        Rebuild fingerprint indexes
+        """        Rebuild fingerprint indexes
         
         Args:
             content_type: Optional content type filter
             batch_size: Batch size for processing
-        """
-        try:
+        """        try:
             await self.index_manager.rebuild_indexes(content_type, batch_size)
             self.logger.info(f"Rebuilt indexes for content_type: {content_type or 'all'}")
             
@@ -754,8 +720,7 @@ class FingerprintRepository:
         format: str = "json",
         include_vectors: bool = False
     ) -> Dict[str, Any]:
-        """
-        Export fingerprints based on query
+        """        Export fingerprints based on query
         
         Args:
             query: Query parameters
@@ -764,8 +729,7 @@ class FingerprintRepository:
             
         Returns:
             Export data
-        """
-        try:
+        """        try:
             # Remove pagination for export
             query.pagination = None
             query.include_vectors = include_vectors
@@ -798,8 +762,7 @@ class FingerprintRepository:
     # Private helper methods
     
     def _build_query_conditions(self, query: FingerprintQuery) -> List:
-        """Build SQLAlchemy query conditions from FingerprintQuery"""
-        conditions = []
+        """Build SQLAlchemy query conditions from FingerprintQuery"""        conditions = []
         
         # User filter
         if query.user_id:
@@ -879,8 +842,7 @@ class FingerprintRepository:
         fingerprint: ContentFingerprint,
         include_vectors: bool = False
     ) -> Dict[str, Any]:
-        """Convert fingerprint to dictionary for export"""
-        data = {
+        """Convert fingerprint to dictionary for export"""        data = {
             'fingerprint_id': fingerprint.fingerprint_id,
             'content_id': fingerprint.content_id,
             'content_type': str(fingerprint.content_type),
@@ -907,13 +869,11 @@ class FingerprintRepository:
         return data
     
     async def health_check(self) -> Dict[str, Any]:
-        """
-        Perform health check on the repository and its components
+        """        Perform health check on the repository and its components
         
         Returns:
             Health status information
-        """
-        try:
+        """        try:
             health_status = {
                 "status": "healthy",
                 "timestamp": datetime.now(timezone.utc).isoformat(),

@@ -1,5 +1,4 @@
-"""
-📈 SEO Processor - IA Influencer Agent Platform Enterprise
+"""📈 SEO Processor - IA Influencer Agent Platform Enterprise
 ==========================================================
 Module: backend/data_management/processors/seo_processor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,9 +16,7 @@ Contact obligatoire: mlaiel@live.de
 LOGIQUE MÉTIER SEO:
 Content Analysis → Keyword Research → Competition Analysis → SEO Optimization → 
 Hashtag Strategy → Platform-Specific SEO → Performance Tracking → Recommendation Engine
-"""
-
-import json
+"""import json
 import logging
 import asyncio
 import re
@@ -39,8 +36,7 @@ from .base_processor import BaseProcessor, AsyncBaseProcessor
 
 
 class SEOProcessor(BaseProcessor):
-    """Processeur SEO avancé multi-plateformes - Production Enterprise"""
-    
+    """Processeur SEO avancé multi-plateformes - Production Enterprise"""    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.logger = logging.getLogger(__name__)
@@ -131,8 +127,7 @@ class SEOProcessor(BaseProcessor):
         }
     
     def process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traite l'optimisation SEO complète"""
-        content_data = input_data.get('content_data', {})
+        """Traite l'optimisation SEO complète"""        content_data = input_data.get('content_data', {})
         platform = input_data.get('platform', 'youtube')
         target_audience = input_data.get('target_audience', {})
         competition_analysis = input_data.get('include_competition', True)
@@ -203,8 +198,7 @@ class SEOProcessor(BaseProcessor):
         return seo_result
     
     def _analyze_content(self, content_data: Dict[str, Any], platform: str) -> Dict[str, Any]:
-        """Analyse le contenu existant"""
-        analysis = {
+        """Analyse le contenu existant"""        analysis = {
             'content_structure': {},
             'readability': {},
             'keyword_density': {},
@@ -253,8 +247,7 @@ class SEOProcessor(BaseProcessor):
         return analysis
     
     def _analyze_readability(self, text: str) -> Dict[str, Any]:
-        """Analyse la lisibilité du texte"""
-        try:
+        """Analyse la lisibilité du texte"""        try:
             blob = TextBlob(text)
             
             # Basic readability metrics
@@ -299,8 +292,7 @@ class SEOProcessor(BaseProcessor):
             return {'error': str(e)}
     
     def _analyze_keyword_density(self, text: str) -> Dict[str, Any]:
-        """Analyse la densité des mots-clés"""
-        try:
+        """Analyse la densité des mots-clés"""        try:
             # Clean and tokenize text
             words = re.findall(r'\b\w+\b', text.lower())
             total_words = len(words)
@@ -339,8 +331,7 @@ class SEOProcessor(BaseProcessor):
             return {'error': str(e)}
     
     def _perform_semantic_analysis(self, text: str) -> Dict[str, Any]:
-        """Effectue l'analyse sémantique du contenu"""
-        analysis = {
+        """Effectue l'analyse sémantique du contenu"""        analysis = {
             'sentiment': {},
             'entities': [],
             'topics': [],
@@ -381,8 +372,7 @@ class SEOProcessor(BaseProcessor):
         return analysis
     
     def _classify_sentiment(self, polarity: float) -> str:
-        """Classifie le sentiment basé sur la polarité"""
-        if polarity > 0.1:
+        """Classifie le sentiment basé sur la polarité"""        if polarity > 0.1:
             return 'positive'
         elif polarity < -0.1:
             return 'negative'
@@ -390,8 +380,7 @@ class SEOProcessor(BaseProcessor):
             return 'neutral'
     
     def _identify_topics(self, text: str) -> List[str]:
-        """Identifie les sujets principaux"""
-        topics = []
+        """Identifie les sujets principaux"""        topics = []
         
         for category, keywords in self.keyword_categories.items():
             if any(keyword in text.lower() for keyword in keywords):
@@ -400,8 +389,7 @@ class SEOProcessor(BaseProcessor):
         return topics
     
     def _categorize_content(self, text: str) -> str:
-        """Catégorise le contenu"""
-        text_lower = text.lower()
+        """Catégorise le contenu"""        text_lower = text.lower()
         
         # Count matches for each category
         category_scores = {}
@@ -416,8 +404,7 @@ class SEOProcessor(BaseProcessor):
             return 'general'
     
     def _extract_themes(self, text: str) -> List[str]:
-        """Extrait les thèmes principaux"""
-        themes = []
+        """Extrait les thèmes principaux"""        themes = []
         
         # Look for common content themes
         theme_keywords = {
@@ -439,8 +426,7 @@ class SEOProcessor(BaseProcessor):
         return themes
     
     def _check_platform_compliance(self, content_structure: Dict, platform_reqs: Dict) -> Dict[str, Any]:
-        """Vérifie la conformité aux exigences de la plateforme"""
-        compliance = {
+        """Vérifie la conformité aux exigences de la plateforme"""        compliance = {
             'overall_score': 0,
             'compliant_aspects': [],
             'non_compliant_aspects': [],
@@ -509,8 +495,7 @@ class SEOProcessor(BaseProcessor):
         return compliance
     
     def _perform_keyword_optimization(self, content_data: Dict, platform: str, target_audience: Dict) -> Dict[str, Any]:
-        """Effectue l'optimisation des mots-clés"""
-        optimization = {
+        """Effectue l'optimisation des mots-clés"""        optimization = {
             'primary_keywords': [],
             'secondary_keywords': [],
             'long_tail_keywords': [],
@@ -559,8 +544,7 @@ class SEOProcessor(BaseProcessor):
         return optimization
     
     def _extract_keywords(self, text: str) -> List[str]:
-        """Extrait les mots-clés du texte"""
-        try:
+        """Extrait les mots-clés du texte"""        try:
             # Clean text
             text = re.sub(r'[^\w\s]', '', text.lower())
             words = text.split()
@@ -578,8 +562,7 @@ class SEOProcessor(BaseProcessor):
             return []
     
     def _get_trending_keywords(self, platform: str, category: str) -> List[str]:
-        """Récupère les mots-clés tendance"""
-        # Simulated trending keywords (would connect to real APIs in production)
+        """Récupère les mots-clés tendance"""        # Simulated trending keywords (would connect to real APIs in production)
         trending_by_platform = {
             'youtube': ['viral', 'trending', '2025', 'new', 'latest', 'best', 'top', 'amazing'],
             'instagram': ['aesthetic', 'vibes', 'mood', 'inspo', 'ootd', 'selfie', 'lifestyle'],
@@ -602,8 +585,7 @@ class SEOProcessor(BaseProcessor):
         return platform_keywords + category_keywords
     
     def _generate_keyword_suggestions(self, current_keywords: List[str], category: str, target_audience: Dict) -> Dict[str, List[str]]:
-        """Génère des suggestions de mots-clés"""
-        suggestions = {
+        """Génère des suggestions de mots-clés"""        suggestions = {
             'primary': [],
             'secondary': [],
             'long_tail': []
@@ -653,8 +635,7 @@ class SEOProcessor(BaseProcessor):
         return suggestions
     
     def _estimate_keyword_difficulty(self, keyword: str, platform: str) -> Dict[str, Any]:
-        """Estime la difficulté du mot-clé (simulé)"""
-        # Simulated difficulty based on keyword characteristics
+        """Estime la difficulté du mot-clé (simulé)"""        # Simulated difficulty based on keyword characteristics
         keyword_length = len(keyword.split())
         
         if keyword_length == 1:
@@ -687,8 +668,7 @@ class SEOProcessor(BaseProcessor):
         }
     
     def _find_keyword_opportunities(self, current: List[str], suggested: Dict, trending: List[str]) -> List[Dict[str, Any]]:
-        """Trouve les opportunités d'optimisation des mots-clés"""
-        opportunities = []
+        """Trouve les opportunités d'optimisation des mots-clés"""        opportunities = []
         
         # Missing trending keywords
         missing_trending = [kw for kw in trending if kw not in current]
@@ -726,8 +706,7 @@ class SEOProcessor(BaseProcessor):
         return opportunities
     
     def _optimize_for_platform(self, content_data: Dict, platform: str, keyword_data: Dict) -> Dict[str, Any]:
-        """Optimise pour une plateforme spécifique"""
-        optimization = {
+        """Optimise pour une plateforme spécifique"""        optimization = {
             'platform_specific_tips': [],
             'content_structure_optimization': {},
             'engagement_optimization': {},
@@ -755,8 +734,7 @@ class SEOProcessor(BaseProcessor):
         return optimization
     
     def _optimize_for_youtube(self, content_data: Dict, keyword_data: Dict, config: Dict) -> Dict[str, Any]:
-        """Optimisation spécifique à YouTube"""
-        return {
+        """Optimisation spécifique à YouTube"""        return {
             'platform_specific_tips': [
                 'Use primary keyword in first 60 characters of title',
                 'Include timestamps in description for better user experience',
@@ -782,8 +760,7 @@ class SEOProcessor(BaseProcessor):
         }
     
     def _optimize_for_instagram(self, content_data: Dict, keyword_data: Dict, config: Dict) -> Dict[str, Any]:
-        """Optimisation spécifique à Instagram"""
-        return {
+        """Optimisation spécifique à Instagram"""        return {
             'platform_specific_tips': [
                 'Use 11 hashtags for optimal reach',
                 'Mix popular and niche hashtags',
@@ -809,8 +786,7 @@ class SEOProcessor(BaseProcessor):
         }
     
     def _optimize_for_tiktok(self, content_data: Dict, keyword_data: Dict, config: Dict) -> Dict[str, Any]:
-        """Optimisation spécifique à TikTok"""
-        return {
+        """Optimisation spécifique à TikTok"""        return {
             'platform_specific_tips': [
                 'Use trending sounds and music',
                 'Participate in trending challenges and hashtags',
@@ -836,8 +812,7 @@ class SEOProcessor(BaseProcessor):
         }
     
     def _optimize_for_twitter(self, content_data: Dict, keyword_data: Dict, config: Dict) -> Dict[str, Any]:
-        """Optimisation spécifique à Twitter"""
-        return {
+        """Optimisation spécifique à Twitter"""        return {
             'platform_specific_tips': [
                 'Tweet during peak hours (9-10 AM, 7-9 PM)',
                 'Use 1-2 relevant hashtags maximum',
@@ -863,8 +838,7 @@ class SEOProcessor(BaseProcessor):
         }
     
     def _optimize_for_linkedin(self, content_data: Dict, keyword_data: Dict, config: Dict) -> Dict[str, Any]:
-        """Optimisation spécifique à LinkedIn"""
-        return {
+        """Optimisation spécifique à LinkedIn"""        return {
             'platform_specific_tips': [
                 'Post professional, value-driven content',
                 'Use industry-specific keywords',
@@ -890,8 +864,7 @@ class SEOProcessor(BaseProcessor):
         }
     
     def _develop_hashtag_strategy(self, keyword_data: Dict, platform: str, target_audience: Dict) -> Dict[str, Any]:
-        """Développe une stratégie de hashtags"""
-        strategy = {
+        """Développe une stratégie de hashtags"""        strategy = {
             'recommended_hashtags': [],
             'hashtag_mix': {},
             'hashtag_research': {},
@@ -983,8 +956,7 @@ class SEOProcessor(BaseProcessor):
         return strategy
     
     def _calculate_hashtag_score(self, hashtags: List[str], platform: str) -> int:
-        """Calcule le score d'optimisation des hashtags"""
-        try:
+        """Calcule le score d'optimisation des hashtags"""        try:
             score = 0
             total_possible = 100
             
@@ -1032,8 +1004,7 @@ class SEOProcessor(BaseProcessor):
             return 50
     
     def _calculate_seo_score(self, content_analysis: Dict, keyword_opt: Dict, platform_opt: Dict, hashtag_strategy: Dict) -> int:
-        """Calcule le score SEO global"""
-        try:
+        """Calcule le score SEO global"""        try:
             total_score = 0
             weights = self.seo_config['seo_factors']
             
@@ -1074,8 +1045,7 @@ class SEOProcessor(BaseProcessor):
             return 50
     
     def _analyze_competition(self, keywords: List[str], platform: str) -> Dict[str, Any]:
-        """Analyse la concurrence (simulé)"""
-        competition = {
+        """Analyse la concurrence (simulé)"""        competition = {
             'competitor_analysis': {},
             'market_gaps': [],
             'competitive_keywords': [],
@@ -1112,8 +1082,7 @@ class SEOProcessor(BaseProcessor):
         return competition
     
     def _generate_seo_recommendations(self, seo_result: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Génère des recommandations SEO"""
-        recommendations = []
+        """Génère des recommandations SEO"""        recommendations = []
         
         try:
             seo_score = seo_result.get('seo_score', 0)
@@ -1202,8 +1171,7 @@ class SEOProcessor(BaseProcessor):
         return recommendations[:5]  # Return top 5 recommendations
     
     def _create_optimized_content(self, content_data: Dict, keyword_opt: Dict, platform_opt: Dict, hashtag_strategy: Dict) -> Dict[str, Any]:
-        """Crée du contenu optimisé"""
-        optimized = {
+        """Crée du contenu optimisé"""        optimized = {
             'optimized_title': '',
             'optimized_description': '',
             'optimized_tags': [],
@@ -1262,8 +1230,7 @@ class SEOProcessor(BaseProcessor):
         return optimized
     
     def validate_input(self, input_data: Any) -> bool:
-        """Valide les données d'entrée pour le SEO"""
-        if not isinstance(input_data, dict):
+        """Valide les données d'entrée pour le SEO"""        if not isinstance(input_data, dict):
             return False
         
         content_data = input_data.get('content_data')
@@ -1278,16 +1245,14 @@ class SEOProcessor(BaseProcessor):
 
 
 class AsyncSEOProcessor(AsyncBaseProcessor):
-    """Version asynchrone du processeur SEO"""
-    
+    """Version asynchrone du processeur SEO"""    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.sync_processor = SEOProcessor(config)
         self.executor = ThreadPoolExecutor(max_workers=4)
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Traitement asynchrone du SEO"""
-        loop = asyncio.get_event_loop()
+        """Traitement asynchrone du SEO"""        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
             self.sync_processor.process_with_stats, 
@@ -1295,5 +1260,4 @@ class AsyncSEOProcessor(AsyncBaseProcessor):
         )
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Validation asynchrone"""
-        return self.sync_processor.validate_input(input_data)
+        """Validation asynchrone"""        return self.sync_processor.validate_input(input_data)

@@ -1,5 +1,4 @@
-"""
-API Gateway Agent - Core Implementation
+"""API Gateway Agent - Core Implementation
 
 Enterprise-grade API Gateway providing intelligent request routing, load balancing,
 security, monitoring, and service orchestration for the IA-Influencer-Agent platform.
@@ -10,9 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import uuid
@@ -64,8 +61,7 @@ UPSTREAM_HEALTH = Gauge(
 
 
 class APIGatewayAgent(BaseAgent):
-    """
-    Enterprise API Gateway Agent
+    """    Enterprise API Gateway Agent
     
     Provides comprehensive API management including:
     - Intelligent request routing
@@ -76,11 +72,9 @@ class APIGatewayAgent(BaseAgent):
     - Request/response transformation
     - Metrics collection and monitoring
     - Service discovery integration
-    """
-    
+    """    
     def __init__(self, config: Optional[APIGatewayConfig] = None):
-        """Initialize API Gateway Agent"""
-        self.config = config or APIGatewayConfig()
+        """Initialize API Gateway Agent"""        self.config = config or APIGatewayConfig()
         super().__init__(
             agent_id=f"api-gateway-{uuid.uuid4().hex[:8]}",
             agent_type="api_gateway_agent",
@@ -110,8 +104,7 @@ class APIGatewayAgent(BaseAgent):
         logger.info(f"API Gateway Agent initialized with config: {self.config.service_name}")
     
     def _initialize_components(self):
-        """Initialize all gateway components"""
-        try:
+        """Initialize all gateway components"""        try:
             # Request router
             self.router = RequestRouter(self.config)
             
@@ -161,8 +154,7 @@ class APIGatewayAgent(BaseAgent):
             raise
     
     def _setup_middleware(self):
-        """Setup FastAPI middleware"""
-        # CORS middleware
+        """Setup FastAPI middleware"""        # CORS middleware
         self.app.add_middleware(
             CORSMiddleware,
             allow_origins=self.config.cors_origins,
@@ -174,8 +166,7 @@ class APIGatewayAgent(BaseAgent):
         # Custom middleware for request processing
         @self.app.middleware("http")
         async def process_request(request: Request, call_next):
-            """Process incoming requests through gateway pipeline"""
-            start_time = time.time()
+            """Process incoming requests through gateway pipeline"""            start_time = time.time()
             request_id = str(uuid.uuid4())
             
             # Add request ID to headers
@@ -229,12 +220,10 @@ class APIGatewayAgent(BaseAgent):
                 raise HTTPException(status_code=500, detail="Internal server error")
     
     def _setup_routes(self):
-        """Setup API routes"""
-        
+        """Setup API routes"""        
         @self.app.get("/health")
         async def health_check():
-            """Gateway health check endpoint"""
-            return {
+            """Gateway health check endpoint"""            return {
                 "status": "healthy",
                 "version": self.config.version,
                 "timestamp": datetime.utcnow().isoformat(),
@@ -243,8 +232,7 @@ class APIGatewayAgent(BaseAgent):
         
         @self.app.get("/metrics")
         async def metrics_endpoint():
-            """Prometheus metrics endpoint"""
-            if not self.config.metrics_enabled:
+            """Prometheus metrics endpoint"""            if not self.config.metrics_enabled:
                 raise HTTPException(status_code=404, detail="Metrics disabled")
             return Response(
                 content=self.metrics_collector.generate_metrics(),
@@ -253,12 +241,10 @@ class APIGatewayAgent(BaseAgent):
         
         @self.app.api_route("/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
         async def proxy_request(request: Request, path: str):
-            """Main request proxying endpoint"""
-            return await self._proxy_request(request, path)
+            """Main request proxying endpoint"""            return await self._proxy_request(request, path)
     
     async def _proxy_request(self, request: Request, path: str) -> Response:
-        """Proxy request to appropriate upstream service"""
-        try:
+        """Proxy request to appropriate upstream service"""        try:
             # Determine target service
             service_name = self.router.route_request(f"/{path}")
             if not service_name:
@@ -314,8 +300,7 @@ class APIGatewayAgent(BaseAgent):
         body: Optional[bytes],
         service_name: str
     ) -> Dict[str, Any]:
-        """Make request to upstream service"""
-        timeout = aiohttp.ClientTimeout(
+        """Make request to upstream service"""        timeout = aiohttp.ClientTimeout(
             total=self.config.service_routes[service_name].get("timeout", 30)
         )
         
@@ -345,15 +330,13 @@ class APIGatewayAgent(BaseAgent):
                 }
     
     async def _is_auth_bypass_path(self, path: str) -> bool:
-        """Check if path should bypass authentication"""
-        for bypass_path in self.config.auth_bypass_paths:
+        """Check if path should bypass authentication"""        for bypass_path in self.config.auth_bypass_paths:
             if path.startswith(bypass_path):
                 return True
         return False
     
     async def _get_services_health(self) -> Dict[str, Dict[str, Any]]:
-        """Get health status of all services"""
-        services_health = {}
+        """Get health status of all services"""        services_health = {}
         
         for service_name, config in self.config.service_routes.items():
             if not config.get("health_check", True):
@@ -394,8 +377,7 @@ class APIGatewayAgent(BaseAgent):
         return services_health
     
     async def start(self) -> None:
-        """Start the API Gateway Agent"""
-        try:
+        """Start the API Gateway Agent"""        try:
             self.status = AgentStatus.INITIALIZING
             
             # Start background tasks
@@ -411,8 +393,7 @@ class APIGatewayAgent(BaseAgent):
             raise
     
     async def stop(self) -> None:
-        """Stop the API Gateway Agent"""
-        try:
+        """Stop the API Gateway Agent"""        try:
             self.status = AgentStatus.STOPPING
             
             # Close Redis connection
@@ -427,8 +408,7 @@ class APIGatewayAgent(BaseAgent):
             self.status = AgentStatus.ERROR
     
     async def _health_check_loop(self):
-        """Background health checking loop"""
-        while self.status == AgentStatus.RUNNING:
+        """Background health checking loop"""        while self.status == AgentStatus.RUNNING:
             try:
                 await self._get_services_health()
                 await asyncio.sleep(self.config.health_check_interval)
@@ -437,8 +417,7 @@ class APIGatewayAgent(BaseAgent):
                 await asyncio.sleep(self.config.health_check_interval)
     
     async def _metrics_collection_loop(self):
-        """Background metrics collection loop"""
-        while self.status == AgentStatus.RUNNING:
+        """Background metrics collection loop"""        while self.status == AgentStatus.RUNNING:
             try:
                 # Update active connections gauge
                 # This would typically come from the server
@@ -451,8 +430,7 @@ class APIGatewayAgent(BaseAgent):
                 await asyncio.sleep(60)
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get comprehensive gateway statistics"""
-        return {
+        """Get comprehensive gateway statistics"""        return {
             "agent_id": self.agent_id,
             "status": self.status.value,
             "version": self.config.version,

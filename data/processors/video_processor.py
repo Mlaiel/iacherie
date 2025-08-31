@@ -1,5 +1,4 @@
-"""
-Video Processor Module
+"""Video Processor Module
 =====================
 
 Enterprise-grade video processing for content creators and influencers.
@@ -16,9 +15,7 @@ Features:
 - Frame-by-frame analysis and object detection
 - Video quality assessment and improvement
 - Batch processing for large video collections
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import cv2
@@ -58,8 +55,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class VideoMetadata:
-    """Video metadata container"""
-    duration: float
+    """Video metadata container"""    duration: float
     fps: float
     width: int
     height: int
@@ -73,8 +69,7 @@ class VideoMetadata:
 
 @dataclass
 class VideoFeatures:
-    """Video feature extraction results"""
-    motion_vectors: np.ndarray
+    """Video feature extraction results"""    motion_vectors: np.ndarray
     optical_flow: np.ndarray
     scene_changes: List[float]
     dominant_colors: List[Tuple[int, int, int]]
@@ -86,8 +81,7 @@ class VideoFeatures:
 
 @dataclass
 class VideoFingerprint:
-    """Video fingerprint data"""
-    perceptual_hash: Optional[str] = None
+    """Video fingerprint data"""    perceptual_hash: Optional[str] = None
     temporal_hash: Optional[str] = None
     color_hash: Optional[str] = None
     motion_hash: Optional[str] = None
@@ -95,8 +89,7 @@ class VideoFingerprint:
     combined_hash: Optional[str] = None
 
 class VideoProcessor:
-    """Professional video processing engine"""
-    
+    """Professional video processing engine"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or self._get_default_config()
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -105,8 +98,7 @@ class VideoProcessor:
         self._initialize_engines()
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default video processing configuration"""
-        return {
+        """Get default video processing configuration"""        return {
             'fps': 30,
             'resolution': (1920, 1080),
             'quality': 'high',
@@ -127,8 +119,7 @@ class VideoProcessor:
         }
     
     def _initialize_engines(self):
-        """Initialize video processing engines"""
-        try:
+        """Initialize video processing engines"""        try:
             # Ensure temp directory exists
             os.makedirs(self.config['temp_dir'], exist_ok=True)
             
@@ -161,8 +152,7 @@ class VideoProcessor:
         format_hint: Optional[str] = None,
         config: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Main video processing pipeline
+        """        Main video processing pipeline
         
         Args:
             video_data: Video data as bytes or file path
@@ -171,8 +161,7 @@ class VideoProcessor:
         
         Returns:
             Dict containing processed video data and analysis results
-        """
-        try:
+        """        try:
             # Merge configuration
             processing_config = self.config.copy()
             if config:
@@ -237,8 +226,7 @@ class VideoProcessor:
         video_data: Union[bytes, str],
         format_hint: Optional[str] = None
     ) -> str:
-        """Prepare video data for processing"""
-        try:
+        """Prepare video data for processing"""        try:
             if isinstance(video_data, str):
                 # Already a file path
                 if os.path.exists(video_data):
@@ -265,8 +253,7 @@ class VideoProcessor:
             raise
     
     async def _extract_metadata(self, video_path: str) -> VideoMetadata:
-        """Extract comprehensive video metadata"""
-        try:
+        """Extract comprehensive video metadata"""        try:
             # Use OpenCV to get standard metadata
             cap = cv2.VideoCapture(video_path)
             
@@ -331,8 +318,7 @@ class VideoProcessor:
         video_path: str,
         metadata: VideoMetadata
     ) -> Dict[str, Any]:
-        """Extract comprehensive video features"""
-        try:
+        """Extract comprehensive video features"""        try:
             features_data = {}
             
             cap = cv2.VideoCapture(video_path)
@@ -458,8 +444,7 @@ class VideoProcessor:
         video_path: str,
         metadata: VideoMetadata
     ) -> Dict[str, Any]:
-        """Generate comprehensive video fingerprint"""
-        try:
+        """Generate comprehensive video fingerprint"""        try:
             fingerprint = VideoFingerprint()
             
             cap = cv2.VideoCapture(video_path)
@@ -585,8 +570,7 @@ class VideoProcessor:
         video_path: str,
         metadata: VideoMetadata
     ) -> Dict[str, Any]:
-        """Apply video enhancement algorithms"""
-        try:
+        """Apply video enhancement algorithms"""        try:
             enhancement_applied = []
             
             # For now, return placeholder - actual enhancement would require
@@ -621,8 +605,7 @@ class VideoProcessor:
         video_path: str,
         metadata: VideoMetadata
     ) -> Dict[str, Any]:
-        """Detect scene changes in video"""
-        try:
+        """Detect scene changes in video"""        try:
             cap = cv2.VideoCapture(video_path)
             if not cap.isOpened():
                 raise ValueError("Cannot open video for scene detection")
@@ -683,8 +666,7 @@ class VideoProcessor:
         video_path: str,
         metadata: VideoMetadata
     ) -> Dict[str, Any]:
-        """Analyze motion patterns in video"""
-        try:
+        """Analyze motion patterns in video"""        try:
             cap = cv2.VideoCapture(video_path)
             if not cap.isOpened():
                 raise ValueError("Cannot open video for motion analysis")
@@ -753,8 +735,7 @@ class VideoProcessor:
         output_path: Optional[str] = None,
         config: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Convert video to different format"""
-        try:
+        """Convert video to different format"""        try:
             if not FFMPEG_AVAILABLE:
                 raise RuntimeError("FFmpeg not available for video conversion")
             
@@ -800,8 +781,7 @@ class VideoProcessor:
         frame_rate: Optional[float] = None,
         frame_count: Optional[int] = None
     ) -> List[str]:
-        """Extract frames from video"""
-        try:
+        """Extract frames from video"""        try:
             os.makedirs(output_dir, exist_ok=True)
             
             cap = cv2.VideoCapture(video_path)
@@ -848,8 +828,7 @@ class VideoProcessor:
         video_files: List[str],
         config: Optional[Dict[str, Any]] = None
     ) -> List[Dict[str, Any]]:
-        """Process multiple video files in batch"""
-        tasks = []
+        """Process multiple video files in batch"""        tasks = []
         for file_path in video_files:
             task = self.process(file_path, config=config)
             tasks.append(task)
@@ -863,8 +842,7 @@ class VideoProcessor:
         ]
     
     def cleanup(self):
-        """Cleanup temporary files and resources"""
-        try:
+        """Cleanup temporary files and resources"""        try:
             # Clean up temporary directory
             temp_dir = self.config['temp_dir']
             if os.path.exists(temp_dir):
@@ -878,5 +856,4 @@ class VideoProcessor:
             self.logger.warning(f"Cleanup failed: {str(e)}")
     
     def __del__(self):
-        """Destructor"""
-        self.cleanup()
+        """Destructor"""        self.cleanup()

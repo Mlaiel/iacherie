@@ -1,5 +1,4 @@
-"""
-Revenue Sharing Module - Advanced Financial Distribution System
+"""Revenue Sharing Module - Advanced Financial Distribution System
 
 Enterprise-grade revenue sharing for multi-format content creators
 enabling automatic distribution, contract automation, royalty calculations, and financial reporting.
@@ -12,9 +11,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import uuid
 from datetime import datetime, timedelta, date
 from typing import Dict, List, Optional, Set, Union, Any, Tuple
@@ -36,8 +33,7 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueType(Enum):
-    """Types of revenue sources"""
-    ADVERTISING = "advertising"
+    """Types of revenue sources"""    ADVERTISING = "advertising"
     SPONSORSHIP = "sponsorship"
     AFFILIATE = "affiliate"
     SUBSCRIPTION = "subscription"
@@ -50,8 +46,7 @@ class RevenueType(Enum):
 
 
 class DistributionMethod(Enum):
-    """Revenue distribution methods"""
-    EQUAL_SPLIT = "equal_split"
+    """Revenue distribution methods"""    EQUAL_SPLIT = "equal_split"
     CONTRIBUTION_BASED = "contribution_based"
     ROLE_BASED = "role_based"
     CUSTOM_PERCENTAGE = "custom_percentage"
@@ -61,8 +56,7 @@ class DistributionMethod(Enum):
 
 
 class PaymentStatus(Enum):
-    """Payment processing status"""
-    PENDING = "pending"
+    """Payment processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -72,8 +66,7 @@ class PaymentStatus(Enum):
 
 
 class ContractStatus(Enum):
-    """Revenue sharing contract status"""
-    DRAFT = "draft"
+    """Revenue sharing contract status"""    DRAFT = "draft"
     PENDING_APPROVAL = "pending_approval"
     ACTIVE = "active"
     SUSPENDED = "suspended"
@@ -82,8 +75,7 @@ class ContractStatus(Enum):
 
 
 class TaxStatus(Enum):
-    """Tax handling status"""
-    GROSS = "gross"
+    """Tax handling status"""    GROSS = "gross"
     NET = "net"
     TAX_EXEMPT = "tax_exempt"
     PENDING_CALCULATION = "pending_calculation"
@@ -91,8 +83,7 @@ class TaxStatus(Enum):
 
 @dataclass
 class RevenueShare:
-    """Revenue sharing allocation"""
-    share_id: str
+    """Revenue sharing allocation"""    share_id: str
     contract_id: str
     collaborator_id: str
     collaborator_name: str
@@ -109,8 +100,7 @@ class RevenueShare:
     updated_at: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation"""
-        return {
+        """Convert to dictionary representation"""        return {
             "share_id": self.share_id,
             "contract_id": self.contract_id,
             "collaborator_id": self.collaborator_id,
@@ -131,8 +121,7 @@ class RevenueShare:
 
 @dataclass
 class RevenueContract:
-    """Revenue sharing contract"""
-    contract_id: str
+    """Revenue sharing contract"""    contract_id: str
     project_id: str
     contract_name: str
     description: str
@@ -152,8 +141,7 @@ class RevenueContract:
     updated_at: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation"""
-        return {
+        """Convert to dictionary representation"""        return {
             "contract_id": self.contract_id,
             "project_id": self.project_id,
             "contract_name": self.contract_name,
@@ -177,8 +165,7 @@ class RevenueContract:
 
 @dataclass
 class RevenueTransaction:
-    """Revenue transaction record"""
-    transaction_id: str
+    """Revenue transaction record"""    transaction_id: str
     contract_id: str
     revenue_source: RevenueType
     gross_amount: Decimal
@@ -194,8 +181,7 @@ class RevenueTransaction:
     created_at: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation"""
-        return {
+        """Convert to dictionary representation"""        return {
             "transaction_id": self.transaction_id,
             "contract_id": self.contract_id,
             "revenue_source": self.revenue_source.value,
@@ -214,8 +200,7 @@ class RevenueTransaction:
 
 
 class RevenueDistributionEngine:
-    """Advanced revenue distribution calculation engine"""
-    
+    """Advanced revenue distribution calculation engine"""    
     def __init__(self, db_session: AsyncSession, cache_manager: CacheManager):
         self.db = db_session
         self.cache = cache_manager
@@ -229,8 +214,7 @@ class RevenueDistributionEngine:
         contract_data: Dict[str, Any],
         created_by: str
     ) -> Dict[str, Any]:
-        """Create new revenue sharing contract"""
-        try:
+        """Create new revenue sharing contract"""        try:
             # Validate contract data
             await self._validate_contract_data(contract_data)
             
@@ -312,8 +296,7 @@ class RevenueDistributionEngine:
         currency: str = "USD",
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Process revenue distribution according to contract"""
-        try:
+        """Process revenue distribution according to contract"""        try:
             # Get contract
             contract_data = await self.cache.get(f"revenue_contract:{contract_id}")
             if not contract_data:
@@ -389,8 +372,7 @@ class RevenueDistributionEngine:
             raise BusinessLogicError(f"Failed to process distribution: {str(e)}")
     
     async def _validate_contract_data(self, contract_data: Dict[str, Any]):
-        """Validate revenue contract data"""
-        required_fields = ["name", "shares"]
+        """Validate revenue contract data"""        required_fields = ["name", "shares"]
         
         for field in required_fields:
             if field not in contract_data:
@@ -413,8 +395,7 @@ class RevenueDistributionEngine:
         amount: Decimal,
         revenue_source: RevenueType
     ) -> Dict[str, Decimal]:
-        """Calculate processing fees"""
-        fees = {}
+        """Calculate processing fees"""        fees = {}
         
         # Platform fee (example: 2.5%)
         platform_fee_rate = Decimal("0.025")
@@ -442,8 +423,7 @@ class RevenueDistributionEngine:
         amount: Decimal,
         contract_data: Dict[str, Any]
     ) -> Dict[str, Decimal]:
-        """Calculate applicable taxes"""
-        taxes = {}
+        """Calculate applicable taxes"""        taxes = {}
         
         # Get tax requirements from contract
         compliance = contract_data.get("compliance_requirements", {})
@@ -463,8 +443,7 @@ class RevenueDistributionEngine:
         net_amount: Decimal,
         revenue_source: RevenueType
     ) -> List[Dict[str, Any]]:
-        """Calculate individual distributions"""
-        distributions = []
+        """Calculate individual distributions"""        distributions = []
         shares = contract_data["shares"]
         
         for share in shares:
@@ -518,8 +497,7 @@ class RevenueDistributionEngine:
         net_amount: Decimal,
         contract_data: Dict[str, Any]
     ) -> Decimal:
-        """Calculate contribution-based distribution amount"""
-        # Implementation would analyze actual contributions
+        """Calculate contribution-based distribution amount"""        # Implementation would analyze actual contributions
         # For now, fall back to percentage-based
         percentage = Decimal(share["allocation_percentage"]) / Decimal("100")
         return net_amount * percentage
@@ -528,8 +506,7 @@ class RevenueDistributionEngine:
         self,
         distributions: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Process actual payments to collaborators"""
-        payment_results = []
+        """Process actual payments to collaborators"""        payment_results = []
         
         for distribution in distributions:
             try:
@@ -566,8 +543,7 @@ class RevenueDistributionEngine:
         distributions: List[Dict[str, Any]],
         transaction_id: str
     ):
-        """Send notifications to collaborators about distributions"""
-        for distribution in distributions:
+        """Send notifications to collaborators about distributions"""        for distribution in distributions:
             try:
                 await self.notification.send_notification(
                     user_id=distribution["collaborator_id"],
@@ -584,8 +560,7 @@ class RevenueDistributionEngine:
                 logger.error(f"Failed to send notification to {distribution['collaborator_id']}: {str(e)}")
     
     async def _add_contract_to_project(self, project_id: str, contract_id: str):
-        """Add contract to project's contract list"""
-        project_contracts_key = f"project_contracts:{project_id}"
+        """Add contract to project's contract list"""        project_contracts_key = f"project_contracts:{project_id}"
         contracts_data = await self.cache.get(project_contracts_key)
         
         if not contracts_data:
@@ -596,8 +571,7 @@ class RevenueDistributionEngine:
 
 
 class RoyaltyCalculationEngine:
-    """Advanced royalty calculation for content licensing"""
-    
+    """Advanced royalty calculation for content licensing"""    
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
         self.royalty_rates = {
@@ -616,8 +590,7 @@ class RoyaltyCalculationEngine:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Calculate royalties for content usage"""
-        try:
+        """Calculate royalties for content usage"""        try:
             # Get content royalty settings
             royalty_settings = await self._get_content_royalty_settings(content_id)
             
@@ -660,8 +633,7 @@ class RoyaltyCalculationEngine:
             raise BusinessLogicError(f"Failed to calculate royalties: {str(e)}")
     
     async def _get_content_royalty_settings(self, content_id: str) -> Dict[str, Any]:
-        """Get royalty settings for content"""
-        settings = await self.cache.get(f"content_royalty_settings:{content_id}")
+        """Get royalty settings for content"""        settings = await self.cache.get(f"content_royalty_settings:{content_id}")
         if not settings:
             # Default settings
             settings = {
@@ -681,8 +653,7 @@ class RoyaltyCalculationEngine:
         royalty_type: str,
         settings: Dict[str, Any]
     ) -> Decimal:
-        """Calculate base royalty amount"""
-        # Get rate
+        """Calculate base royalty amount"""        # Get rate
         custom_rates = settings.get("custom_rates", {})
         rate = Decimal(str(custom_rates.get(royalty_type))) if royalty_type in custom_rates else self.royalty_rates.get(royalty_type, Decimal("0.01"))
         
@@ -707,8 +678,7 @@ class RoyaltyCalculationEngine:
         usage_data: Dict[str, Any],
         settings: Dict[str, Any]
     ) -> Decimal:
-        """Apply modifiers to base royalty amount"""
-        modified_amount = base_amount
+        """Apply modifiers to base royalty amount"""        modified_amount = base_amount
         modifiers = settings.get("modifiers", {})
         
         # Territory modifier
@@ -740,8 +710,7 @@ class RoyaltyCalculationEngine:
         total_amount: Decimal,
         settings: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Calculate royalty distributions to rights holders"""
-        distributions = []
+        """Calculate royalty distributions to rights holders"""        distributions = []
         distribution_rules = settings.get("distribution_rules", [])
         
         if not distribution_rules:
@@ -768,8 +737,7 @@ class RoyaltyCalculationEngine:
 
 
 class ContractAutomationManager:
-    """Contract automation and smart contract management"""
-    
+    """Contract automation and smart contract management"""    
     def __init__(self, cache_manager: CacheManager, notification_service: NotificationService):
         self.cache = cache_manager
         self.notification = notification_service
@@ -780,8 +748,7 @@ class ContractAutomationManager:
         trigger_event: str,
         event_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute automated contract actions"""
-        try:
+        """Execute automated contract actions"""        try:
             contract_data = await self.cache.get(f"revenue_contract:{contract_id}")
             if not contract_data:
                 raise ValidationError("Contract not found")
@@ -814,8 +781,7 @@ class ContractAutomationManager:
         event_data: Dict[str, Any],
         contract_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute specific contract action"""
-        action_type = rule.get("action_type")
+        """Execute specific contract action"""        action_type = rule.get("action_type")
         
         if action_type == "automatic_payment":
             return await self._execute_automatic_payment(rule, event_data, contract_data)
@@ -834,8 +800,7 @@ class ContractAutomationManager:
         event_data: Dict[str, Any],
         contract_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute automatic payment action"""
-        # Implementation would trigger automated payment
+        """Execute automatic payment action"""        # Implementation would trigger automated payment
         return {
             "action_type": "automatic_payment",
             "status": "executed",
@@ -848,8 +813,7 @@ class ContractAutomationManager:
         event_data: Dict[str, Any],
         contract_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute automatic contract renewal"""
-        # Implementation would renew contract automatically
+        """Execute automatic contract renewal"""        # Implementation would renew contract automatically
         return {
             "action_type": "contract_renewal",
             "status": "executed",
@@ -862,8 +826,7 @@ class ContractAutomationManager:
         event_data: Dict[str, Any],
         contract_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute performance bonus payment"""
-        # Implementation would calculate and distribute performance bonus
+        """Execute performance bonus payment"""        # Implementation would calculate and distribute performance bonus
         return {
             "action_type": "performance_bonus",
             "status": "executed",
@@ -876,8 +839,7 @@ class ContractAutomationManager:
         event_data: Dict[str, Any],
         contract_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute milestone-based payment"""
-        # Implementation would trigger milestone payment
+        """Execute milestone-based payment"""        # Implementation would trigger milestone payment
         return {
             "action_type": "milestone_payment",
             "status": "executed",
@@ -886,8 +848,7 @@ class ContractAutomationManager:
 
 
 class FinancialReportingManager:
-    """Advanced financial reporting for revenue sharing"""
-    
+    """Advanced financial reporting for revenue sharing"""    
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
         
@@ -900,8 +861,7 @@ class FinancialReportingManager:
         period_end: Optional[datetime] = None,
         report_type: str = "summary"
     ) -> Dict[str, Any]:
-        """Generate comprehensive revenue report"""
-        try:
+        """Generate comprehensive revenue report"""        try:
             # Set default period if not provided
             if not period_end:
                 period_end = datetime.utcnow()
@@ -953,8 +913,7 @@ class FinancialReportingManager:
         period_start: datetime,
         period_end: datetime
     ) -> List[Dict[str, Any]]:
-        """Collect transaction data based on filters"""
-        # Implementation would query database/cache for transactions
+        """Collect transaction data based on filters"""        # Implementation would query database/cache for transactions
         # For now, return sample data structure
         return []
     
@@ -964,8 +923,7 @@ class FinancialReportingManager:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Generate summary revenue report"""
-        total_revenue = Decimal("0")
+        """Generate summary revenue report"""        total_revenue = Decimal("0")
         total_distributions = Decimal("0")
         total_fees = Decimal("0")
         total_taxes = Decimal("0")
@@ -1009,8 +967,7 @@ class FinancialReportingManager:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Generate detailed revenue report"""
-        return {
+        """Generate detailed revenue report"""        return {
             "transactions": transactions,
             "analytics": await self._calculate_detailed_analytics(transactions)
         }
@@ -1021,8 +978,7 @@ class FinancialReportingManager:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Generate tax-focused report"""
-        tax_summary = {}
+        """Generate tax-focused report"""        tax_summary = {}
         withholding_summary = {}
         
         for transaction in transactions:
@@ -1044,16 +1000,14 @@ class FinancialReportingManager:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Generate performance-focused report"""
-        return {
+        """Generate performance-focused report"""        return {
             "performance_metrics": await self._calculate_performance_metrics(transactions),
             "trends": await self._calculate_revenue_trends(transactions),
             "projections": await self._calculate_revenue_projections(transactions)
         }
     
     async def _calculate_detailed_analytics(self, transactions: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calculate detailed analytics from transactions"""
-        return {
+        """Calculate detailed analytics from transactions"""        return {
             "average_transaction_size": "0.00",
             "revenue_growth_rate": "0.00",
             "top_revenue_sources": [],
@@ -1061,28 +1015,24 @@ class FinancialReportingManager:
         }
     
     async def _determine_required_tax_forms(self, transactions: List[Dict[str, Any]]) -> List[str]:
-        """Determine required tax forms based on transactions"""
-        return ["1099-MISC", "W-9"]
+        """Determine required tax forms based on transactions"""        return ["1099-MISC", "W-9"]
     
     async def _calculate_performance_metrics(self, transactions: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calculate performance metrics"""
-        return {
+        """Calculate performance metrics"""        return {
             "revenue_per_collaborator": "0.00",
             "conversion_rate": "0.00",
             "retention_rate": "0.00"
         }
     
     async def _calculate_revenue_trends(self, transactions: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calculate revenue trends"""
-        return {
+        """Calculate revenue trends"""        return {
             "monthly_growth": "0.00",
             "seasonal_patterns": {},
             "volatility_index": "0.00"
         }
     
     async def _calculate_revenue_projections(self, transactions: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calculate revenue projections"""
-        return {
+        """Calculate revenue projections"""        return {
             "next_month_projection": "0.00",
             "confidence_interval": "0.00",
             "key_assumptions": []

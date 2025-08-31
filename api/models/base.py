@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent Platform - Base Models and Mixins
+"""IA Influencer Agent Platform - Base Models and Mixins
 Foundation classes for all data models with enterprise-grade features
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -13,9 +12,7 @@ will result in legal action.
 
 Contact: mlaiel@live.de
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import uuid
+"""import uuid
 from datetime import datetime, timezone
 from typing import Optional, Dict, Any, List
 from sqlalchemy import (
@@ -32,8 +29,7 @@ Base = declarative_base()
 
 
 class BaseModel(Base):
-    """Base model class with common functionality for all models"""
-    
+    """Base model class with common functionality for all models"""    
     __abstract__ = True
     
     @declared_attr
@@ -41,15 +37,13 @@ class BaseModel(Base):
         return cls.__name__.lower() + 's'
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert model instance to dictionary"""
-        return {
+        """Convert model instance to dictionary"""        return {
             column.name: getattr(self, column.name) 
             for column in self.__table__.columns
         }
     
     def update_from_dict(self, data: Dict[str, Any]) -> None:
-        """Update model instance from dictionary"""
-        for key, value in data.items():
+        """Update model instance from dictionary"""        for key, value in data.items():
             if hasattr(self, key):
                 setattr(self, key, value)
     
@@ -58,8 +52,7 @@ class BaseModel(Base):
 
 
 class UUIDMixin:
-    """Mixin for UUID primary key"""
-    
+    """Mixin for UUID primary key"""    
     id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True),
         primary_key=True,
@@ -69,8 +62,7 @@ class UUIDMixin:
 
 
 class TimestampMixin:
-    """Mixin for automatic timestamp tracking"""
-    
+    """Mixin for automatic timestamp tracking"""    
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now(),
@@ -88,8 +80,7 @@ class TimestampMixin:
 
 
 class SoftDeleteMixin:
-    """Mixin for soft delete functionality"""
-    
+    """Mixin for soft delete functionality"""    
     is_deleted: Mapped[bool] = mapped_column(
         Boolean,
         default=False,
@@ -104,19 +95,16 @@ class SoftDeleteMixin:
     )
     
     def soft_delete(self) -> None:
-        """Mark record as deleted"""
-        self.is_deleted = True
+        """Mark record as deleted"""        self.is_deleted = True
         self.deleted_at = datetime.now(timezone.utc)
     
     def restore(self) -> None:
-        """Restore soft deleted record"""
-        self.is_deleted = False
+        """Restore soft deleted record"""        self.is_deleted = False
         self.deleted_at = None
 
 
 class AuditMixin:
-    """Mixin for audit trail functionality"""
-    
+    """Mixin for audit trail functionality"""    
     created_by: Mapped[Optional[uuid.UUID]] = mapped_column(
         UUID(as_uuid=True),
         nullable=True,
@@ -141,13 +129,11 @@ class AuditMixin:
     )
     
     def increment_version(self) -> None:
-        """Increment version number for optimistic locking"""
-        self.version += 1
+        """Increment version number for optimistic locking"""        self.version += 1
 
 
 class MetadataMixin:
-    """Mixin for storing flexible metadata"""
-    
+    """Mixin for storing flexible metadata"""    
     metadata_: Mapped[Optional[Dict[str, Any]]] = mapped_column(
         'metadata',
         JSONB,
@@ -163,8 +149,7 @@ class MetadataMixin:
 
 
 class GeoLocationMixin:
-    """Mixin for geographic location data"""
-    
+    """Mixin for geographic location data"""    
     latitude: Mapped[Optional[float]] = mapped_column(
         Numeric(10, 8),
         nullable=True
@@ -189,8 +174,7 @@ class GeoLocationMixin:
 
 
 class StatusMixin:
-    """Mixin for status tracking"""
-    
+    """Mixin for status tracking"""    
     status: Mapped[str] = mapped_column(
         String(50),
         default='active',
@@ -210,15 +194,13 @@ class StatusMixin:
     )
     
     def update_status(self, new_status: str, reason: Optional[str] = None) -> None:
-        """Update status with timestamp and reason"""
-        self.status = new_status
+        """Update status with timestamp and reason"""        self.status = new_status
         self.status_reason = reason
         self.status_changed_at = datetime.now(timezone.utc)
 
 
 class PerformanceMetricsMixin:
-    """Mixin for performance tracking"""
-    
+    """Mixin for performance tracking"""    
     view_count: Mapped[int] = mapped_column(
         BigInteger,
         default=0,
@@ -254,8 +236,7 @@ class PerformanceMetricsMixin:
     )
     
     def calculate_engagement_rate(self) -> float:
-        """Calculate engagement rate based on interactions"""
-        total_interactions = self.like_count + self.share_count + self.comment_count
+        """Calculate engagement rate based on interactions"""        total_interactions = self.like_count + self.share_count + self.comment_count
         if self.view_count > 0:
             return round(total_interactions / self.view_count, 4)
         return 0.0

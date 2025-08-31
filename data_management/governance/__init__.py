@@ -1,5 +1,4 @@
-"""
-Data Governance Module
+"""Data Governance Module
 
 Complete data governance system for the IA Influencer Agent platform,
 providing comprehensive policy management, compliance monitoring,
@@ -13,9 +12,7 @@ WARNING: This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
-"""
-
-from .policies import (
+"""from .policies import (
     PolicyManager,
     DataPolicy,
     PolicyCondition,

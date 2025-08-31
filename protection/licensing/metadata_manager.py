@@ -1,5 +1,4 @@
-"""
-📊 License Metadata Manager - Comprehensive Data Management System
+"""📊 License Metadata Manager - Comprehensive Data Management System
 ================================================================
 
 Ultra-advanced metadata management system for licensing and rights tracking:
@@ -21,9 +20,7 @@ and may result in severe civil and criminal penalties. Users must comply with al
 applicable intellectual property laws and license agreements.
 
 Contact: mlaiel@live.de for licensing and authorization requests.
-"""
-
-import logging
+"""import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union, Tuple
 from datetime import datetime, timedelta
@@ -45,8 +42,7 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 class MetadataStandard(Enum):
-    """Industry metadata standards"""
-    ISRC = "isrc"  # International Standard Recording Code
+    """Industry metadata standards"""    ISRC = "isrc"  # International Standard Recording Code
     UPC = "upc"    # Universal Product Code
     EAN = "ean"    # European Article Number
     ISWC = "iswc"  # International Standard Musical Work Code
@@ -57,8 +53,7 @@ class MetadataStandard(Enum):
     MP4 = "mp4"    # MP4 metadata
 
 class ContentType(Enum):
-    """Content type classification"""
-    AUDIO_TRACK = "audio_track"
+    """Content type classification"""    AUDIO_TRACK = "audio_track"
     MUSIC_VIDEO = "music_video"
     ALBUM = "album"
     COMPILATION = "compilation"
@@ -70,8 +65,7 @@ class ContentType(Enum):
     INSTRUMENTAL = "instrumental"
 
 class MetadataQuality(Enum):
-    """Metadata completeness levels"""
-    MINIMAL = "minimal"      # Basic title, artist
+    """Metadata completeness levels"""    MINIMAL = "minimal"      # Basic title, artist
     STANDARD = "standard"    # Industry minimum requirements
     ENHANCED = "enhanced"    # Additional marketing metadata
     COMPREHENSIVE = "comprehensive"  # Full metadata set
@@ -79,8 +73,7 @@ class MetadataQuality(Enum):
 
 @dataclass
 class ContentIdentifiers:
-    """Standard content identifiers"""
-    isrc: Optional[str] = None
+    """Standard content identifiers"""    isrc: Optional[str] = None
     upc: Optional[str] = None
     ean: Optional[str] = None
     iswc: Optional[str] = None
@@ -91,8 +84,7 @@ class ContentIdentifiers:
 
 @dataclass
 class AudioMetadata:
-    """Comprehensive audio metadata structure"""
-    # Basic information
+    """Comprehensive audio metadata structure"""    # Basic information
     title: str
     artist: str
     album: Optional[str] = None
@@ -151,8 +143,7 @@ class AudioMetadata:
 
 @dataclass
 class MetadataValidationResult:
-    """Metadata validation result"""
-    validation_id: str
+    """Metadata validation result"""    validation_id: str
     is_valid: bool
     quality_score: float
     completeness_percentage: float
@@ -163,16 +154,13 @@ class MetadataValidationResult:
     standards_compliance: Dict[MetadataStandard, bool]
 
 class LicenseMetadataManager:
-    """
-    🚀 Comprehensive license metadata management system
+    """    🚀 Comprehensive license metadata management system
     
     Advanced system for extracting, validating, enriching and managing
     all types of content metadata for licensing purposes.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize metadata manager with configuration."""
-        self.config = config
+        """Initialize metadata manager with configuration."""        self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Load metadata standards and validation rules
@@ -197,8 +185,7 @@ class LicenseMetadataManager:
         self.logger.info("License Metadata Manager initialized successfully")
 
     def _load_metadata_standards(self):
-        """Load industry metadata standards and requirements."""
-        self.metadata_standards = {
+        """Load industry metadata standards and requirements."""        self.metadata_standards = {
             MetadataStandard.DDEX: {
                 'required_fields': [
                     'title', 'artist', 'release_date', 'isrc', 'genre',
@@ -231,8 +218,7 @@ class LicenseMetadataManager:
         }
 
     def _load_validation_rules(self):
-        """Load metadata validation rules."""
-        self.validation_rules = {
+        """Load metadata validation rules."""        self.validation_rules = {
             'title': {
                 'required': True,
                 'min_length': 1,
@@ -269,8 +255,7 @@ class LicenseMetadataManager:
         }
 
     def _initialize_ai_services(self):
-        """Initialize AI services for metadata enhancement."""
-        try:
+        """Initialize AI services for metadata enhancement."""        try:
             # Audio analysis models
             self.audio_analyzer = None  # Would initialize with actual audio ML models
             
@@ -289,8 +274,7 @@ class LicenseMetadataManager:
             self.music_analyzer = None
 
     def _initialize_external_services(self):
-        """Initialize external metadata services."""
-        self.external_services = {
+        """Initialize external metadata services."""        self.external_services = {
             'musicbrainz': {
                 'base_url': 'https://musicbrainz.org/ws/2',
                 'rate_limit': 1,  # requests per second
@@ -321,8 +305,7 @@ class LicenseMetadataManager:
         content_type: ContentType,
         enhancement_level: MetadataQuality = MetadataQuality.STANDARD
     ) -> Dict[str, Any]:
-        """
-        Extract comprehensive metadata from content file.
+        """        Extract comprehensive metadata from content file.
         
         Args:
             file_path: Path to content file
@@ -331,8 +314,7 @@ class LicenseMetadataManager:
             
         Returns:
             Extracted and enhanced metadata
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             self.logger.info(f"Extracting metadata from: {file_path}")
@@ -403,8 +385,7 @@ class LicenseMetadataManager:
         file_path: str,
         content_type: ContentType
     ) -> Dict[str, Any]:
-        """Extract basic metadata from file."""
-        metadata = {}
+        """Extract basic metadata from file."""        metadata = {}
         
         try:
             if content_type == ContentType.AUDIO_TRACK:
@@ -443,8 +424,7 @@ class LicenseMetadataManager:
             return {}
 
     def _get_tag_value(self, audio_file, tag_names: List[str]) -> Optional[str]:
-        """Get tag value from audio file using multiple possible tag names."""
-        for tag_name in tag_names:
+        """Get tag value from audio file using multiple possible tag names."""        for tag_name in tag_names:
             if tag_name in audio_file:
                 value = audio_file[tag_name]
                 if isinstance(value, list) and value:
@@ -454,8 +434,7 @@ class LicenseMetadataManager:
         return None
 
     async def _extract_technical_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract technical metadata from file."""
-        technical = {}
+        """Extract technical metadata from file."""        technical = {}
         
         try:
             file_path_obj = Path(file_path)
@@ -482,14 +461,12 @@ class LicenseMetadataManager:
             return {}
 
     def _detect_mime_type(self, file_path: str) -> Optional[str]:
-        """Detect MIME type of file."""
-        import mimetypes
+        """Detect MIME type of file."""        import mimetypes
         mime_type, _ = mimetypes.guess_type(file_path)
         return mime_type
 
     async def _extract_audio_technical_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract audio-specific technical metadata."""
-        audio_tech = {}
+        """Extract audio-specific technical metadata."""        audio_tech = {}
         
         try:
             audio_file = mutagen.File(file_path)
@@ -517,8 +494,7 @@ class LicenseMetadataManager:
             return {}
 
     def _calculate_audio_quality_score(self, audio_tech: Dict[str, Any]) -> float:
-        """Calculate audio quality score based on technical parameters."""
-        score = 0.0
+        """Calculate audio quality score based on technical parameters."""        score = 0.0
         
         # Bitrate scoring (40% weight)
         bitrate = audio_tech.get('bitrate_kbps', 0)
@@ -573,8 +549,7 @@ class LicenseMetadataManager:
         file_path: str,
         content_type: ContentType
     ) -> Dict[str, Any]:
-        """Analyze content for additional metadata."""
-        analysis = {}
+        """Analyze content for additional metadata."""        analysis = {}
         
         try:
             if content_type == ContentType.AUDIO_TRACK and self.audio_analyzer:
@@ -589,8 +564,7 @@ class LicenseMetadataManager:
             return {}
 
     async def _analyze_audio_content(self, file_path: str) -> Dict[str, Any]:
-        """Analyze audio content for additional metadata."""
-        # Note: In production, this would use actual audio analysis libraries
+        """Analyze audio content for additional metadata."""        # Note: In production, this would use actual audio analysis libraries
         # like librosa, essentia, or custom ML models
         
         audio_analysis = {
@@ -624,8 +598,7 @@ class LicenseMetadataManager:
         basic_metadata: Dict[str, Any],
         content_type: ContentType
     ) -> Dict[str, Any]:
-        """Enrich metadata from external sources."""
-        enriched = {}
+        """Enrich metadata from external sources."""        enriched = {}
         
         try:
             # MusicBrainz enrichment
@@ -645,8 +618,7 @@ class LicenseMetadataManager:
             return {}
 
     async def _query_musicbrainz(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Query MusicBrainz for additional metadata."""
-        # Note: In production, this would make real API calls to MusicBrainz
+        """Query MusicBrainz for additional metadata."""        # Note: In production, this would make real API calls to MusicBrainz
         return {
             'musicbrainz_id': str(uuid.uuid4()),
             'release_country': 'US',  # Placeholder
@@ -654,8 +626,7 @@ class LicenseMetadataManager:
         }
 
     async def _query_spotify(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Query Spotify for additional metadata."""
-        # Note: In production, this would make real API calls to Spotify
+        """Query Spotify for additional metadata."""        # Note: In production, this would make real API calls to Spotify
         return {
             'spotify_id': str(uuid.uuid4()),
             'popularity': 65,  # Placeholder
@@ -668,8 +639,7 @@ class LicenseMetadataManager:
         metadata: Dict[str, Any],
         content_type: ContentType
     ) -> Dict[str, Any]:
-        """Enhance metadata using AI analysis."""
-        ai_enhanced = {}
+        """Enhance metadata using AI analysis."""        ai_enhanced = {}
         
         try:
             # AI-powered genre classification
@@ -696,8 +666,7 @@ class LicenseMetadataManager:
         file_path: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Classify genre using AI."""
-        # Placeholder AI genre classification
+        """Classify genre using AI."""        # Placeholder AI genre classification
         return {
             'ai_genre_primary': 'Pop',
             'ai_genre_secondary': 'Electronic',
@@ -709,8 +678,7 @@ class LicenseMetadataManager:
         file_path: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze mood using AI."""
-        # Placeholder AI mood analysis
+        """Analyze mood using AI."""        # Placeholder AI mood analysis
         return {
             'ai_mood': 'Energetic',
             'ai_emotion': 'Happy',
@@ -727,16 +695,14 @@ class LicenseMetadataManager:
         file_path: str,
         metadata: Dict[str, Any]
     ) -> List[str]:
-        """Generate AI-powered content tags."""
-        # Placeholder AI tag generation
+        """Generate AI-powered content tags."""        # Placeholder AI tag generation
         return [
             'upbeat', 'danceable', 'modern', 'radio-friendly',
             'mainstream', 'catchy', 'commercial'
         ]
 
     def _combine_metadata(self, *metadata_dicts) -> AudioMetadata:
-        """Combine metadata from multiple sources."""
-        combined = {}
+        """Combine metadata from multiple sources."""        combined = {}
         
         # Merge all metadata dictionaries
         for metadata_dict in metadata_dicts:
@@ -771,8 +737,7 @@ class LicenseMetadataManager:
         return audio_metadata
 
     def _safe_int_conversion(self, value) -> Optional[int]:
-        """Safely convert value to integer."""
-        if value is None:
+        """Safely convert value to integer."""        if value is None:
             return None
         try:
             if isinstance(value, str) and '/' in value:
@@ -783,8 +748,7 @@ class LicenseMetadataManager:
             return None
 
     def _safe_float_conversion(self, value) -> Optional[float]:
-        """Safely convert value to float."""
-        if value is None:
+        """Safely convert value to float."""        if value is None:
             return None
         try:
             return float(value)
@@ -792,8 +756,7 @@ class LicenseMetadataManager:
             return None
 
     def _safe_date_conversion(self, value) -> Optional[datetime]:
-        """Safely convert value to datetime."""
-        if value is None:
+        """Safely convert value to datetime."""        if value is None:
             return None
         try:
             if isinstance(value, str):
@@ -808,8 +771,7 @@ class LicenseMetadataManager:
             return None
 
     async def validate_metadata(self, metadata: AudioMetadata) -> MetadataValidationResult:
-        """Validate metadata against industry standards."""
-        validation_id = str(uuid.uuid4())
+        """Validate metadata against industry standards."""        validation_id = str(uuid.uuid4())
         is_valid = True
         missing_fields = []
         invalid_fields = []
@@ -900,8 +862,7 @@ class LicenseMetadataManager:
             )
 
     def _calculate_metadata_quality_score(self, metadata: AudioMetadata) -> float:
-        """Calculate overall metadata quality score."""
-        score = 0.0
+        """Calculate overall metadata quality score."""        score = 0.0
         
         # Essential fields (40 points)
         if metadata.title:
@@ -957,18 +918,15 @@ class LicenseMetadataManager:
         return min(score, 100.0)
 
     def _check_ddex_compliance(self, metadata: AudioMetadata) -> bool:
-        """Check DDEX standard compliance."""
-        required_ddex_fields = ['title', 'artist', 'duration', 'genre']
+        """Check DDEX standard compliance."""        required_ddex_fields = ['title', 'artist', 'duration', 'genre']
         return all(getattr(metadata, field) for field in required_ddex_fields)
 
     def _check_id3_compliance(self, metadata: AudioMetadata) -> bool:
-        """Check ID3 standard compliance."""
-        required_id3_fields = ['title', 'artist']
+        """Check ID3 standard compliance."""        required_id3_fields = ['title', 'artist']
         return all(getattr(metadata, field) for field in required_id3_fields)
 
     def _update_extraction_metrics(self, success: bool, processing_time: float):
-        """Update metadata extraction metrics."""
-        self.metadata_metrics['total_extractions'] += 1
+        """Update metadata extraction metrics."""        self.metadata_metrics['total_extractions'] += 1
         if success:
             self.metadata_metrics['successful_extractions'] += 1
 
@@ -977,8 +935,7 @@ class LicenseMetadataManager:
         metadata: AudioMetadata,
         territory: str = 'US'
     ) -> ContentIdentifiers:
-        """Generate industry standard identifiers for content."""
-        try:
+        """Generate industry standard identifiers for content."""        try:
             identifiers = ContentIdentifiers()
             
             # Generate ISRC if not present
@@ -998,8 +955,7 @@ class LicenseMetadataManager:
             return ContentIdentifiers()
 
     async def _generate_isrc(self, territory: str) -> str:
-        """Generate a valid ISRC code."""
-        import random
+        """Generate a valid ISRC code."""        import random
         import string
         
         # Country code
@@ -1025,21 +981,18 @@ class LicenseMetadataManager:
         return isrc
 
     def _generate_custom_id(self, metadata: AudioMetadata) -> str:
-        """Generate custom internal identifier."""
-        # Create hash based on metadata
+        """Generate custom internal identifier."""        # Create hash based on metadata
         content = f"{metadata.title}_{metadata.artist}_{datetime.now().isoformat()}"
         hash_object = hashlib.md5(content.encode())
         return f"LIC_{hash_object.hexdigest()[:8].upper()}"
 
     def _generate_catalog_number(self, metadata: AudioMetadata) -> str:
-        """Generate catalog number."""
-        year = datetime.now().year
+        """Generate catalog number."""        year = datetime.now().year
         random_part = str(uuid.uuid4()).split('-')[0].upper()
         return f"CAT{year}{random_part}"
 
     def get_metadata_metrics(self) -> Dict[str, Any]:
-        """Get metadata management performance metrics."""
-        total = self.metadata_metrics['total_extractions']
+        """Get metadata management performance metrics."""        total = self.metadata_metrics['total_extractions']
         successful = self.metadata_metrics['successful_extractions']
         
         return {

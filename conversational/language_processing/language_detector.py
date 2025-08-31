@@ -1,5 +1,4 @@
-"""
-Enterprise Language Detection and Classification Module
+"""Enterprise Language Detection and Classification Module
 ====================================================
 
 World-class multi-language processing for global content creators:
@@ -24,9 +23,7 @@ Copyright: Fahed Mlaiel - All Rights Reserved
     
     Contact: mlaiel@live.de for licensing inquiries ONLY.
     Violators will be prosecuted to the full extent of German and EU law.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
 from dataclasses import dataclass, field
@@ -56,8 +53,7 @@ DetectorFactory.seed = 0
 
 
 class SupportedLanguage(Enum):
-    """Supported languages for content processing"""
-    # Major Global Languages (Tier 1)
+    """Supported languages for content processing"""    # Major Global Languages (Tier 1)
     ENGLISH = "en"
     CHINESE_SIMPLIFIED = "zh"
     CHINESE_TRADITIONAL = "zh_TW"
@@ -182,8 +178,7 @@ class SupportedLanguage(Enum):
 
 
 class LanguageFamily(Enum):
-    """Language families for linguistic analysis"""
-    INDO_EUROPEAN = "indo_european"
+    """Language families for linguistic analysis"""    INDO_EUROPEAN = "indo_european"
     SINO_TIBETAN = "sino_tibetan"
     AFRO_ASIATIC = "afro_asiatic"
     NIGER_CONGO = "niger_congo"
@@ -194,8 +189,7 @@ class LanguageFamily(Enum):
 
 
 class Script(Enum):
-    """Writing scripts supported"""
-    LATIN = "latin"
+    """Writing scripts supported"""    LATIN = "latin"
     CYRILLIC = "cyrillic"
     ARABIC = "arabic"
     CHINESE = "chinese"
@@ -209,8 +203,7 @@ class Script(Enum):
 
 @dataclass
 class LanguageDetectionResult:
-    """Comprehensive language detection result"""
-    detected_language: SupportedLanguage
+    """Comprehensive language detection result"""    detected_language: SupportedLanguage
     confidence_score: float
     alternative_languages: List[Tuple[SupportedLanguage, float]] = field(default_factory=list)
     language_family: LanguageFamily = None
@@ -225,8 +218,7 @@ class LanguageDetectionResult:
 
 @dataclass
 class LanguageProfile:
-    """Language profile for content optimization"""
-    primary_language: SupportedLanguage
+    """Language profile for content optimization"""    primary_language: SupportedLanguage
     secondary_languages: List[SupportedLanguage] = field(default_factory=list)
     preferred_formality: str = "neutral"
     cultural_context: str = "global"
@@ -235,16 +227,14 @@ class LanguageProfile:
 
 
 class LanguageDetector:
-    """Enterprise language detection for global content"""
-    
+    """Enterprise language detection for global content"""    
     def __init__(self):
         self.language_models = {}
         self._initialize_models()
         self._load_language_mappings()
         
     def _initialize_models(self):
-        """Initialize language detection models"""
-        try:
+        """Initialize language detection models"""        try:
             # Initialize transformer-based language detection
             self.multilingual_model = pipeline(
                 "text-classification",
@@ -257,8 +247,7 @@ class LanguageDetector:
             logger.error(f"Failed to initialize language models: {e}")
             
     def _load_language_mappings(self):
-        """Load language family and script mappings"""
-        self.language_families = {
+        """Load language family and script mappings"""        self.language_families = {
             'en': LanguageFamily.INDO_EUROPEAN,
             'de': LanguageFamily.INDO_EUROPEAN,
             'fr': LanguageFamily.INDO_EUROPEAN,
@@ -300,8 +289,7 @@ class LanguageDetector:
         }
         
     async def detect_language(self, text: str, user_context: Optional[Dict] = None) -> LanguageDetectionResult:
-        """
-        Detect language with comprehensive analysis
+        """        Detect language with comprehensive analysis
         
         Args:
             text: Text content to analyze
@@ -309,8 +297,7 @@ class LanguageDetector:
             
         Returns:
             LanguageDetectionResult with detailed analysis
-        """
-        try:
+        """        try:
             # Cache key for performance
             cache_key = f"lang_detect_{hashlib.md5(text.encode()).hexdigest()}"
             cached_result = await cache_manager.get(cache_key)
@@ -378,8 +365,7 @@ class LanguageDetector:
             )
             
     async def _detect_with_langdetect(self, text: str) -> Dict[str, Any]:
-        """Detect language using langdetect library"""
-        try:
+        """Detect language using langdetect library"""        try:
             # Detect primary language
             detected_lang = detect(text)
             
@@ -410,8 +396,7 @@ class LanguageDetector:
             }
             
     async def _detect_with_transformer(self, text: str) -> Dict[str, Any]:
-        """Detect language using transformer model"""
-        try:
+        """Detect language using transformer model"""        try:
             if not self.multilingual_model:
                 return {'language': 'en', 'confidence': 0.5}
                 
@@ -436,8 +421,7 @@ class LanguageDetector:
             return {'language': 'en', 'confidence': 0.5}
             
     def _detect_script(self, text: str) -> Script:
-        """Detect writing script of the text"""
-        try:
+        """Detect writing script of the text"""        try:
             # Count characters from different scripts
             script_counts = {
                 Script.LATIN: 0,
@@ -501,8 +485,7 @@ class LanguageDetector:
             return Script.LATIN
             
     async def _analyze_multilingual_content(self, text: str) -> Tuple[bool, Dict[str, float]]:
-        """Analyze if content contains multiple languages"""
-        try:
+        """Analyze if content contains multiple languages"""        try:
             # Split text into sentences
             sentences = re.split(r'[.!?]+', text)
             
@@ -537,8 +520,7 @@ class LanguageDetector:
             return False, {}
             
     async def _detect_dialect(self, text: str, language: str) -> Optional[str]:
-        """Detect dialect or regional variant with comprehensive support"""
-        try:
+        """Detect dialect or regional variant with comprehensive support"""        try:
             # Comprehensive dialect detection patterns for global coverage
             dialect_patterns = {
                 'en': {
@@ -695,8 +677,7 @@ class LanguageDetector:
             return None
             
     async def _analyze_formality(self, text: str) -> str:
-        """Analyze formality level of the text"""
-        try:
+        """Analyze formality level of the text"""        try:
             formal_indicators = [
                 'therefore', 'furthermore', 'consequently', 'moreover', 'nevertheless',
                 'however', 'nonetheless', 'whereas', 'pursuant', 'regarding'
@@ -724,8 +705,7 @@ class LanguageDetector:
             return "neutral"
             
     async def _calculate_language_complexity(self, text: str) -> float:
-        """Calculate language complexity score"""
-        try:
+        """Calculate language complexity score"""        try:
             words = text.split()
             
             if not words:
@@ -764,8 +744,7 @@ class LanguageDetector:
             return 0.5
             
     def _select_best_language(self, primary: Dict, transformer: Dict, user_context: Optional[Dict]) -> str:
-        """Select the best language detection result"""
-        try:
+        """Select the best language detection result"""        try:
             # If confidences are similar, prefer primary detection
             if abs(primary['confidence'] - transformer.get('confidence', 0)) < 0.1:
                 return primary['language']
@@ -788,8 +767,7 @@ class LanguageDetector:
 
 
 class LanguageClassifier:
-    """Enterprise language classification for content types"""
-    
+    """Enterprise language classification for content types"""    
     def __init__(self):
         self.detector = LanguageDetector()
         
@@ -799,8 +777,7 @@ class LanguageClassifier:
         content_type: str = "general",
         target_audience: Optional[Dict] = None
     ) -> LanguageProfile:
-        """
-        Classify and create language profile for content
+        """        Classify and create language profile for content
         
         Args:
             text: Content text
@@ -809,8 +786,7 @@ class LanguageClassifier:
             
         Returns:
             LanguageProfile for content optimization
-        """
-        try:
+        """        try:
             # Detect primary language
             detection_result = await self.detector.detect_language(text)
             
@@ -864,8 +840,7 @@ class LanguageClassifier:
             )
             
     async def _determine_cultural_context(self, language: SupportedLanguage, dialect: Optional[str]) -> str:
-        """Determine cultural context from language and dialect"""
-        try:
+        """Determine cultural context from language and dialect"""        try:
             cultural_mappings = {
                 SupportedLanguage.ENGLISH: "international" if not dialect else f"english_{dialect}",
                 SupportedLanguage.GERMAN: "german_speaking",
@@ -889,8 +864,7 @@ class LanguageClassifier:
         language: SupportedLanguage,
         target_audience: Optional[Dict]
     ) -> List[str]:
-        """Determine target geographical regions"""
-        try:
+        """Determine target geographical regions"""        try:
             # Default regions by language
             region_mappings = {
                 SupportedLanguage.ENGLISH: ["US", "UK", "CA", "AU", "NZ"],
@@ -924,8 +898,7 @@ class LanguageClassifier:
         detection_result: LanguageDetectionResult,
         content_type: str
     ) -> Dict[str, Any]:
-        """Create localization preferences based on detected language"""
-        try:
+        """Create localization preferences based on detected language"""        try:
             prefs = {
                 "date_format": "ISO",
                 "number_format": "international",

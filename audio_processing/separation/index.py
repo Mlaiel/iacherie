@@ -1,5 +1,4 @@
-"""
-Audio Separation Module Index
+"""Audio Separation Module Index
 
 This file serves as the main entry point and documentation index
 for the professional audio separation module.
@@ -11,9 +10,7 @@ Copyright: Fahed Mlaiel - Unauthorized use strictly prohibited
 Any unauthorized use, copying, distribution, or modification is strictly
 prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-# Module Metadata
+"""# Module Metadata
 MODULE_INFO = {
     "name": "audio.separation",
     "version": "2.0.0",
@@ -79,8 +76,7 @@ DOCUMENTATION = {
 
 # Usage Examples Index
 EXAMPLES = {
-    "basic_separation": """
-from backend.audio.separation import SeparationService, SeparationRequest
+    "basic_separation": """from backend.audio.separation import SeparationService, SeparationRequest
 
 service = SeparationService()
 request = SeparationRequest(
@@ -90,8 +86,7 @@ request = SeparationRequest(
 response = await service.separate_audio(request)
 """,
     
-    "batch_processing": """
-from backend.audio.separation import BatchProcessor
+    "batch_processing": """from backend.audio.separation import BatchProcessor
 
 processor = BatchProcessor()
 results = await processor.process_directory(
@@ -100,18 +95,15 @@ results = await processor.process_directory(
 )
 """,
     
-    "realtime_streaming": """
-from backend.audio.separation import RealtimeProcessor
+    "realtime_streaming": """from backend.audio.separation import RealtimeProcessor
 
 realtime = RealtimeProcessor()
 await realtime.start_streaming(separation_types=["vocal"])
 stems = await realtime.process_audio_chunk(audio_chunk)
-"""
-}
+"""}
 
 # Legal Information
-LEGAL_NOTICE = """
-⚠️ IMPORTANT LEGAL NOTICE ⚠️
+LEGAL_NOTICE = """⚠️ IMPORTANT LEGAL NOTICE ⚠️
 
 COPYRIGHT: This entire audio separation module is the exclusive 
 intellectual property of Fahed Mlaiel (mlaiel@live.de).
@@ -131,11 +123,8 @@ Contact mlaiel@live.de for licensing inquiries.
 
 VIOLATIONS: Will be prosecuted under applicable copyright, 
 trade secret, and intellectual property laws.
-"""
-
-def get_module_overview():
-    """Get comprehensive module overview."""
-    return {
+"""def get_module_overview():
+    """Get comprehensive module overview."""    return {
         "info": MODULE_INFO,
         "documentation": DOCUMENTATION,
         "examples": EXAMPLES,
@@ -143,8 +132,7 @@ def get_module_overview():
     }
 
 def display_team_credits():
-    """Display team expertise and credits."""
-    print("🏆 IA INFLUENCER AGENT - AUDIO SEPARATION MODULE 🏆")
+    """Display team expertise and credits."""    print("🏆 IA INFLUENCER AGENT - AUDIO SEPARATION MODULE 🏆")
     print("=" * 60)
     print(f"Lead Developer & Architect: {MODULE_INFO['author']}")
     print(f"Contact: {MODULE_INFO['email']}")

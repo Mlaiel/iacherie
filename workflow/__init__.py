@@ -8,8 +8,7 @@ and collaborative workflow management with real-time monitoring and optimization
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
-"""
-from .pipeline import (
+"""from .pipeline import (
     IntelligentContentPipeline,
     PipelineStep,
     PipelineStepType,

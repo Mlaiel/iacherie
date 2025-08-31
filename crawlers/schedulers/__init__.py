@@ -26,8 +26,7 @@ Business Logic Integration:
 Creator content upload → Scheduler coordination → AI processing → 
 Protection layer → Multi-platform distribution → Performance optimization → 
 Revenue maximization → User satisfaction → Business growth → Market leadership
-"""
-from .main_scheduler import (
+"""from .main_scheduler import (
     MainScheduler,
     SchedulerType,
     SchedulingStrategy,

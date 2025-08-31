@@ -1,5 +1,4 @@
-"""
-Dialect Processor Engine - Ainflue Platform
+"""Dialect Processor Engine - Ainflue Platform
 ================================================================================
 Module: core/i18n/dialect_processor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,9 +15,7 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC:
 Text input → Dialect detection → Regional analysis → Variant identification → 
 Linguistic features → Cultural markers → Processing recommendations
-"""
-
-import logging
+"""import logging
 import asyncio
 import re
 from typing import Dict, List, Any, Optional, Tuple, Union, Set
@@ -31,8 +28,7 @@ logger = logging.getLogger(__name__)
 
 
 class DialectFamily(Enum):
-    """Major dialect families"""
-    ARABIC = "arabic"
+    """Major dialect families"""    ARABIC = "arabic"
     ENGLISH = "english"
     SPANISH = "spanish"
     FRENCH = "french"
@@ -46,8 +42,7 @@ class DialectFamily(Enum):
 
 
 class RegionalVariant(Enum):
-    """Regional variants for dialects"""
-    NORTHERN = "northern"
+    """Regional variants for dialects"""    NORTHERN = "northern"
     SOUTHERN = "southern"
     EASTERN = "eastern"
     WESTERN = "western"
@@ -59,8 +54,7 @@ class RegionalVariant(Enum):
 
 
 class LinguisticFeature(Enum):
-    """Linguistic features for dialect identification"""
-    PHONETIC = "phonetic"
+    """Linguistic features for dialect identification"""    PHONETIC = "phonetic"
     LEXICAL = "lexical"
     GRAMMATICAL = "grammatical"
     SYNTACTIC = "syntactic"
@@ -71,8 +65,7 @@ class LinguisticFeature(Enum):
 
 @dataclass
 class DialectMarker:
-    """Dialect identification marker"""
-    pattern: str
+    """Dialect identification marker"""    pattern: str
     feature_type: LinguisticFeature
     confidence_weight: float
     regions: List[str]
@@ -82,8 +75,7 @@ class DialectMarker:
 
 @dataclass
 class DialectVariant:
-    """Dialect variant information"""
-    code: str
+    """Dialect variant information"""    code: str
     name: str
     family: DialectFamily
     region: str
@@ -101,8 +93,7 @@ class DialectVariant:
 
 @dataclass
 class DialectDetection:
-    """Dialect detection result"""
-    detected_dialect: str
+    """Dialect detection result"""    detected_dialect: str
     confidence_score: float
     detected_features: List[LinguisticFeature]
     matching_markers: List[DialectMarker]
@@ -113,8 +104,7 @@ class DialectDetection:
 
 
 class DialectProcessor:
-    """Advanced dialect processing and detection engine"""
-    
+    """Advanced dialect processing and detection engine"""    
     def __init__(self):
         self.dialect_variants: Dict[str, DialectVariant] = {}
         self.dialect_markers: Dict[str, List[DialectMarker]] = {}
@@ -129,8 +119,7 @@ class DialectProcessor:
         logger.info("Dialect Processor Engine initialized")
     
     def _initialize_dialect_variants(self):
-        """Initialize major dialect variants"""
-        
+        """Initialize major dialect variants"""        
         # Arabic dialects
         self.dialect_variants["ar-eg"] = DialectVariant(
             code="ar-eg",
@@ -327,8 +316,7 @@ class DialectProcessor:
         logger.info(f"Initialized {len(self.dialect_variants)} dialect variants")
     
     def _initialize_dialect_markers(self):
-        """Initialize dialect identification markers"""
-        
+        """Initialize dialect identification markers"""        
         # Arabic dialect markers
         arabic_markers = {
             "ar-eg": [
@@ -508,8 +496,7 @@ class DialectProcessor:
         logger.info(f"Initialized dialect markers for {len(self.dialect_markers)} dialects")
     
     def _compile_linguistic_patterns(self):
-        """Compile linguistic patterns for efficient matching"""
-        try:
+        """Compile linguistic patterns for efficient matching"""        try:
             # Compile regex patterns for all markers
             for dialect_code, markers in self.dialect_markers.items():
                 patterns = []
@@ -533,8 +520,7 @@ class DialectProcessor:
         base_language: str = None,
         region_hint: str = None
     ) -> DialectDetection:
-        """Detect dialect from text input"""
-        try:
+        """Detect dialect from text input"""        try:
             # Check cache first
             cache_key = f"{text[:100]}_{base_language}_{region_hint}"
             if cache_key in self.detection_cache:
@@ -632,8 +618,7 @@ class DialectProcessor:
             )
     
     def _extract_regional_indicators(self, text: str, dialect: str) -> List[str]:
-        """Extract regional indicators from text"""
-        indicators = []
+        """Extract regional indicators from text"""        indicators = []
         
         if dialect in self.dialect_variants:
             variant = self.dialect_variants[dialect]
@@ -657,8 +642,7 @@ class DialectProcessor:
         return indicators
     
     def _perform_linguistic_analysis(self, text: str, dialect: str) -> Dict[str, Any]:
-        """Perform linguistic analysis of the text"""
-        analysis = {
+        """Perform linguistic analysis of the text"""        analysis = {
             "text_length": len(text),
             "word_count": len(text.split()),
             "script_analysis": self._analyze_script(text),
@@ -675,8 +659,7 @@ class DialectProcessor:
         return analysis
     
     def _analyze_script(self, text: str) -> Dict[str, Any]:
-        """Analyze the writing script used in text"""
-        scripts = {
+        """Analyze the writing script used in text"""        scripts = {
             "latin": 0,
             "arabic": 0,
             "tifinagh": 0,
@@ -705,8 +688,7 @@ class DialectProcessor:
         confidence: float,
         features: List[LinguisticFeature]
     ) -> List[str]:
-        """Generate processing recommendations based on detection"""
-        recommendations = []
+        """Generate processing recommendations based on detection"""        recommendations = []
         
         if confidence < 0.3:
             recommendations.append("low_confidence_detection")
@@ -743,16 +725,14 @@ class DialectProcessor:
         return recommendations
     
     async def get_dialect_info(self, dialect_code: str) -> Optional[DialectVariant]:
-        """Get detailed information about a dialect"""
-        return self.dialect_variants.get(dialect_code)
+        """Get detailed information about a dialect"""        return self.dialect_variants.get(dialect_code)
     
     async def list_supported_dialects(
         self,
         family: DialectFamily = None,
         region: str = None
     ) -> List[DialectVariant]:
-        """List supported dialects with optional filtering"""
-        dialects = list(self.dialect_variants.values())
+        """List supported dialects with optional filtering"""        dialects = list(self.dialect_variants.values())
         
         if family:
             dialects = [d for d in dialects if d.family == family]
@@ -767,8 +747,7 @@ class DialectProcessor:
         text: str,
         expected_languages: List[str] = None
     ) -> Dict[str, Any]:
-        """Process text that may contain multiple dialects"""
-        try:
+        """Process text that may contain multiple dialects"""        try:
             # Split text into segments (simple sentence-based splitting)
             sentences = re.split(r'[.!?]+', text)
             
@@ -812,8 +791,7 @@ class DialectProcessor:
             }
     
     async def health_check(self) -> bool:
-        """Health check for dialect processor"""
-        try:
+        """Health check for dialect processor"""        try:
             # Check if dialect variants are loaded
             if not self.dialect_variants:
                 return False

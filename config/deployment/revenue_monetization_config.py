@@ -1,5 +1,4 @@
-"""
-Revenue and Monetization Configuration Module for IA-Influencer Agent Platform
+"""Revenue and Monetization Configuration Module for IA-Influencer Agent Platform
 ==============================================================================
 
 Professional revenue tracking and monetization configuration
@@ -21,9 +20,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 WILL FACE IMMEDIATE LEGAL ACTION under German and international intellectual property law.
 
 📧 Contact: mlaiel@live.de for licensing and usage permissions ONLY.
-"""
-
-import os
+"""import os
 import json
 import yaml
 from typing import Dict, List, Optional, Any, Union
@@ -36,8 +33,7 @@ import logging
 
 
 class PaymentProvider(Enum):
-    """Supported payment providers"""
-    STRIPE = "stripe"
+    """Supported payment providers"""    STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
     BANK_TRANSFER = "bank_transfer"
@@ -47,8 +43,7 @@ class PaymentProvider(Enum):
 
 
 class RevenueSource(Enum):
-    """Revenue sources"""
-    CONTENT_PROTECTION = "content_protection"
+    """Revenue sources"""    CONTENT_PROTECTION = "content_protection"
     LICENSING_FEES = "licensing_fees"
     ROYALTY_COLLECTION = "royalty_collection"
     SUBSCRIPTION_FEES = "subscription_fees"
@@ -59,8 +54,7 @@ class RevenueSource(Enum):
 
 
 class CurrencyCode(Enum):
-    """Supported currencies"""
-    EUR = "EUR"
+    """Supported currencies"""    EUR = "EUR"
     USD = "USD"
     GBP = "GBP"
     CAD = "CAD"
@@ -73,8 +67,7 @@ class CurrencyCode(Enum):
 
 
 class PayoutSchedule(Enum):
-    """Payout schedules"""
-    DAILY = "daily"
+    """Payout schedules"""    DAILY = "daily"
     WEEKLY = "weekly"
     BIWEEKLY = "biweekly"
     MONTHLY = "monthly"
@@ -85,8 +78,7 @@ class PayoutSchedule(Enum):
 
 @dataclass
 class PaymentProviderConfig:
-    """Payment provider configuration"""
-    provider: PaymentProvider
+    """Payment provider configuration"""    provider: PaymentProvider
     enabled: bool = True
     api_key: Optional[str] = None
     api_secret: Optional[str] = None
@@ -101,8 +93,7 @@ class PaymentProviderConfig:
 
 @dataclass
 class RevenueStreamConfig:
-    """Revenue stream configuration"""
-    source: RevenueSource
+    """Revenue stream configuration"""    source: RevenueSource
     enabled: bool = True
     commission_rate: float = 0.15  # 15% platform commission
     minimum_amount: float = 0.01
@@ -115,8 +106,7 @@ class RevenueStreamConfig:
 
 @dataclass
 class TaxConfiguration:
-    """Tax configuration"""
-    tax_jurisdiction: str = "Germany"
+    """Tax configuration"""    tax_jurisdiction: str = "Germany"
     vat_rate: float = 0.19
     income_tax_rate: float = 0.42
     withholding_tax_rate: float = 0.25
@@ -127,8 +117,7 @@ class TaxConfiguration:
 
 @dataclass
 class RoyaltyConfig:
-    """Royalty collection configuration"""
-    collection_societies: Dict[str, Any] = field(default_factory=dict)
+    """Royalty collection configuration"""    collection_societies: Dict[str, Any] = field(default_factory=dict)
     international_collections: bool = True
     mechanical_royalties: bool = True
     performance_royalties: bool = True
@@ -138,8 +127,7 @@ class RoyaltyConfig:
 
 
 class RevenueMonetizationConfig:
-    """
-    Professional revenue tracking and monetization configuration for IA-Influencer Agent Platform.
+    """    Professional revenue tracking and monetization configuration for IA-Influencer Agent Platform.
     
     Provides comprehensive monetization infrastructure:
     - Multi-provider payment processing (Stripe, PayPal, Wise, Crypto)
@@ -154,8 +142,7 @@ class RevenueMonetizationConfig:
     - Automated payout systems
     - Legal fee tracking for content protection
     - Performance-based pricing models
-    """
-    
+    """    
     def __init__(self, environment: str = "development"):
         self.environment = environment
         self.project_name = "ia-influencer-agent-revenue"
@@ -167,8 +154,7 @@ class RevenueMonetizationConfig:
         self.logger = self._setup_logging()
         
     def _initialize_payment_providers(self) -> Dict[PaymentProvider, PaymentProviderConfig]:
-        """Initialize payment provider configurations"""
-        providers = {}
+        """Initialize payment provider configurations"""        providers = {}
         
         # Stripe configuration
         providers[PaymentProvider.STRIPE] = PaymentProviderConfig(
@@ -231,8 +217,7 @@ class RevenueMonetizationConfig:
         return providers
     
     def _initialize_revenue_streams(self) -> Dict[RevenueSource, RevenueStreamConfig]:
-        """Initialize revenue stream configurations"""
-        streams = {}
+        """Initialize revenue stream configurations"""        streams = {}
         
         # Content protection revenue
         streams[RevenueSource.CONTENT_PROTECTION] = RevenueStreamConfig(
@@ -306,8 +291,7 @@ class RevenueMonetizationConfig:
         return streams
     
     def _initialize_tax_config(self) -> TaxConfiguration:
-        """Initialize tax configuration"""
-        return TaxConfiguration(
+        """Initialize tax configuration"""        return TaxConfiguration(
             tax_jurisdiction="Germany",
             vat_rate=0.19,
             income_tax_rate=0.42,
@@ -318,8 +302,7 @@ class RevenueMonetizationConfig:
         )
     
     def _initialize_royalty_config(self) -> RoyaltyConfig:
-        """Initialize royalty collection configuration"""
-        collection_societies = {
+        """Initialize royalty collection configuration"""        collection_societies = {
             "GEMA": {  # Germany
                 "name": "GEMA",
                 "country": "DE",
@@ -369,8 +352,7 @@ class RevenueMonetizationConfig:
         )
     
     def _setup_logging(self) -> logging.Logger:
-        """Setup logging configuration"""
-        logger = logging.getLogger("revenue_monetization")
+        """Setup logging configuration"""        logger = logging.getLogger("revenue_monetization")
         logger.setLevel(logging.INFO)
         
         if not logger.handlers:
@@ -384,16 +366,13 @@ class RevenueMonetizationConfig:
         return logger
     
     def get_payment_provider_config(self, provider: PaymentProvider) -> Optional[PaymentProviderConfig]:
-        """Get configuration for specific payment provider"""
-        return self.payment_providers.get(provider)
+        """Get configuration for specific payment provider"""        return self.payment_providers.get(provider)
     
     def get_revenue_stream_config(self, source: RevenueSource) -> Optional[RevenueStreamConfig]:
-        """Get configuration for specific revenue stream"""
-        return self.revenue_streams.get(source)
+        """Get configuration for specific revenue stream"""        return self.revenue_streams.get(source)
     
     def calculate_net_revenue(self, gross_amount: float, source: RevenueSource, provider: PaymentProvider) -> Dict[str, float]:
-        """Calculate net revenue after fees and taxes"""
-        stream_config = self.get_revenue_stream_config(source)
+        """Calculate net revenue after fees and taxes"""        stream_config = self.get_revenue_stream_config(source)
         provider_config = self.get_payment_provider_config(provider)
         
         if not stream_config or not provider_config:
@@ -421,8 +400,7 @@ class RevenueMonetizationConfig:
         }
     
     def generate_stripe_configuration(self) -> Dict[str, Any]:
-        """Generate Stripe-specific configuration"""
-        return {
+        """Generate Stripe-specific configuration"""        return {
             "api_version": "2023-10-16",
             "webhook_endpoints": {
                 "payment_intent": "/webhooks/stripe/payment-intent",
@@ -485,8 +463,7 @@ class RevenueMonetizationConfig:
         }
     
     def generate_paypal_configuration(self) -> Dict[str, Any]:
-        """Generate PayPal-specific configuration"""
-        return {
+        """Generate PayPal-specific configuration"""        return {
             "api_version": "v2",
             "environment": "sandbox" if self.environment != "production" else "live",
             "webhook_events": [
@@ -514,8 +491,7 @@ class RevenueMonetizationConfig:
         }
     
     def generate_wise_configuration(self) -> Dict[str, Any]:
-        """Generate Wise (TransferWise) configuration"""
-        return {
+        """Generate Wise (TransferWise) configuration"""        return {
             "api_version": "v1",
             "environment": "sandbox" if self.environment != "production" else "live",
             "profile_type": "business",
@@ -541,8 +517,7 @@ class RevenueMonetizationConfig:
         }
     
     def generate_revenue_analytics_config(self) -> Dict[str, Any]:
-        """Generate revenue analytics configuration"""
-        return {
+        """Generate revenue analytics configuration"""        return {
             "dashboard_metrics": [
                 "total_revenue",
                 "monthly_recurring_revenue", 
@@ -574,8 +549,7 @@ class RevenueMonetizationConfig:
         }
     
     def generate_tax_compliance_config(self) -> Dict[str, Any]:
-        """Generate tax compliance configuration"""
-        return {
+        """Generate tax compliance configuration"""        return {
             "jurisdiction": "Germany",
             "vat_configuration": {
                 "rate": self.tax_config.vat_rate,
@@ -617,8 +591,7 @@ class RevenueMonetizationConfig:
         }
     
     def export_configurations(self, output_dir: str = "./revenue-configs") -> Dict[str, str]:
-        """Export all revenue and monetization configurations to files"""
-        output_path = Path(output_dir)
+        """Export all revenue and monetization configurations to files"""        output_path = Path(output_dir)
         output_path.mkdir(parents=True, exist_ok=True)
         
         exported_files = {}
@@ -717,8 +690,7 @@ class RevenueMonetizationConfig:
 
 # Factory function for different environments
 def create_revenue_monetization_config(environment: str = "development") -> RevenueMonetizationConfig:
-    """Create revenue monetization configuration for specific environment"""
-    return RevenueMonetizationConfig(environment=environment)
+    """Create revenue monetization configuration for specific environment"""    return RevenueMonetizationConfig(environment=environment)
 
 
 # Export configuration instances

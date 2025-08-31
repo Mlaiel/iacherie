@@ -1,5 +1,4 @@
-"""
-Sentiment Analyzer
+"""Sentiment Analyzer
 ==================
 
 Advanced sentiment and emotion analysis system for content understanding.
@@ -22,9 +21,7 @@ Expertise combinée:
 - Audio/Vidéo: Traitement multimédia et analyse de contenu
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple
@@ -43,16 +40,14 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 logger = logging.getLogger(__name__)
 
 class SentimentPolarity(Enum):
-    """Sentiment polarity levels."""
-    VERY_POSITIVE = "very_positive"
+    """Sentiment polarity levels."""    VERY_POSITIVE = "very_positive"
     POSITIVE = "positive"
     NEUTRAL = "neutral"
     NEGATIVE = "negative"
     VERY_NEGATIVE = "very_negative"
 
 class EmotionType(Enum):
-    """Emotion types for classification."""
-    JOY = "joy"
+    """Emotion types for classification."""    JOY = "joy"
     SADNESS = "sadness"
     ANGER = "anger"
     FEAR = "fear"
@@ -64,8 +59,7 @@ class EmotionType(Enum):
     FRUSTRATION = "frustration"
 
 class AnalysisLanguage(Enum):
-    """Supported languages for sentiment analysis."""
-    ENGLISH = "en"
+    """Supported languages for sentiment analysis."""    ENGLISH = "en"
     FRENCH = "fr"
     GERMAN = "de"
     SPANISH = "es"
@@ -74,8 +68,7 @@ class AnalysisLanguage(Enum):
 
 @dataclass
 class SentimentScore:
-    """Sentiment analysis score result."""
-    polarity: SentimentPolarity
+    """Sentiment analysis score result."""    polarity: SentimentPolarity
     confidence: float
     polarity_score: float  # -1 (negative) to 1 (positive)
     subjectivity: float   # 0 (objective) to 1 (subjective)
@@ -93,8 +86,7 @@ class SentimentScore:
 
 @dataclass
 class EmotionDetection:
-    """Emotion detection result."""
-    primary_emotion: EmotionType
+    """Emotion detection result."""    primary_emotion: EmotionType
     confidence: float
     emotion_scores: Dict[EmotionType, float] = field(default_factory=dict)
     emotional_intensity: float = 0.0
@@ -111,8 +103,7 @@ class EmotionDetection:
 
 @dataclass
 class SentimentAnalysisResult:
-    """Complete sentiment analysis result."""
-    content_id: str
+    """Complete sentiment analysis result."""    content_id: str
     sentiment_score: SentimentScore
     emotion_detection: EmotionDetection
     
@@ -132,8 +123,7 @@ class SentimentAnalysisResult:
     created_at: datetime = field(default_factory=datetime.now)
 
 class SentimentAnalyzer:
-    """
-    Advanced sentiment and emotion analysis system.
+    """    Advanced sentiment and emotion analysis system.
     
     Features:
     - Multi-language sentiment analysis
@@ -142,8 +132,7 @@ class SentimentAnalyzer:
     - Trending keyword analysis
     - Real-time and batch processing
     - Cultural and contextual awareness
-    """
-    
+    """    
     def __init__(
         self,
         enable_gpu: bool = True,
@@ -151,16 +140,14 @@ class SentimentAnalyzer:
         enable_emotion_detection: bool = True,
         enable_trending_analysis: bool = True
     ):
-        """
-        Initialize sentiment analyzer.
+        """        Initialize sentiment analyzer.
         
         Args:
             enable_gpu: Enable GPU acceleration
             default_language: Default language for analysis
             enable_emotion_detection: Enable emotion detection
             enable_trending_analysis: Enable trending keyword analysis
-        """
-        self.enable_gpu = enable_gpu and torch.cuda.is_available()
+        """        self.enable_gpu = enable_gpu and torch.cuda.is_available()
         self.default_language = default_language
         self.enable_emotion_detection = enable_emotion_detection
         self.enable_trending_analysis = enable_trending_analysis
@@ -182,8 +169,7 @@ class SentimentAnalyzer:
         logger.info(f"SentimentAnalyzer initialized with GPU: {self.enable_gpu}")
     
     def _initialize_models(self) -> None:
-        """Initialize sentiment and emotion analysis models."""
-        try:
+        """Initialize sentiment and emotion analysis models."""        try:
             # Multi-language sentiment model
             self.sentiment_pipeline = pipeline(
                 "sentiment-analysis",
@@ -221,8 +207,7 @@ class SentimentAnalyzer:
             raise
     
     def _load_emotion_lexicons(self) -> None:
-        """Load emotion lexicons and keywords."""
-        self.emotion_keywords = {
+        """Load emotion lexicons and keywords."""        self.emotion_keywords = {
             EmotionType.JOY: [
                 'happy', 'joy', 'excited', 'delighted', 'cheerful', 'pleased',
                 'glad', 'thrilled', 'elated', 'overjoyed', 'blissful', 'ecstatic'
@@ -280,8 +265,7 @@ class SentimentAnalyzer:
         language: Optional[AnalysisLanguage] = None,
         include_emotions: bool = True
     ) -> SentimentAnalysisResult:
-        """
-        Analyze sentiment and emotions in text content.
+        """        Analyze sentiment and emotions in text content.
         
         Args:
             content_id: Unique content identifier
@@ -291,8 +275,7 @@ class SentimentAnalyzer:
             
         Returns:
             SentimentAnalysisResult: Complete sentiment analysis
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             # Detect language if not specified
@@ -382,8 +365,7 @@ class SentimentAnalyzer:
         text: str,
         language: AnalysisLanguage
     ) -> SentimentScore:
-        """Analyze sentiment score using multiple models."""
-        start_time = datetime.now()
+        """Analyze sentiment score using multiple models."""        start_time = datetime.now()
         
         try:
             scores = []
@@ -483,8 +465,7 @@ class SentimentAnalyzer:
         text: str,
         language: AnalysisLanguage
     ) -> EmotionDetection:
-        """Detect emotions in text using ML and rule-based approaches."""
-        start_time = datetime.now()
+        """Detect emotions in text using ML and rule-based approaches."""        start_time = datetime.now()
         
         try:
             emotion_scores = {}
@@ -553,8 +534,7 @@ class SentimentAnalyzer:
             )
     
     def _preprocess_text(self, text: str) -> str:
-        """Preprocess text for analysis."""
-        # Remove excessive whitespace
+        """Preprocess text for analysis."""        # Remove excessive whitespace
         text = re.sub(r'\s+', ' ', text)
         
         # Handle emojis (preserve them as they carry sentiment)
@@ -570,8 +550,7 @@ class SentimentAnalyzer:
         return text.strip()
     
     def _detect_language(self, text: str) -> AnalysisLanguage:
-        """Detect language of text content."""
-        # Simplified language detection
+        """Detect language of text content."""        # Simplified language detection
         english_words = {'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by'}
         french_words = {'le', 'la', 'les', 'et', 'ou', 'mais', 'dans', 'sur', 'à', 'pour', 'de', 'avec'}
         german_words = {'der', 'die', 'das', 'und', 'oder', 'aber', 'in', 'auf', 'zu', 'für', 'von', 'mit'}
@@ -590,8 +569,7 @@ class SentimentAnalyzer:
             return AnalysisLanguage.GERMAN
     
     def _rule_based_sentiment(self, text: str) -> float:
-        """Calculate sentiment using rule-based approach."""
-        words = text.lower().split()
+        """Calculate sentiment using rule-based approach."""        words = text.lower().split()
         
         positive_words = {
             'good', 'great', 'excellent', 'amazing', 'wonderful', 'fantastic',
@@ -632,8 +610,7 @@ class SentimentAnalyzer:
         return np.clip(sentiment, -1.0, 1.0)
     
     def _map_emotion_label(self, label: str) -> Optional[EmotionType]:
-        """Map emotion labels from ML models to our emotion types."""
-        label_mapping = {
+        """Map emotion labels from ML models to our emotion types."""        label_mapping = {
             'joy': EmotionType.JOY,
             'happiness': EmotionType.JOY,
             'sadness': EmotionType.SADNESS,
@@ -648,8 +625,7 @@ class SentimentAnalyzer:
         return label_mapping.get(label.lower())
     
     def _rule_based_emotion_detection(self, text: str) -> Dict[EmotionType, float]:
-        """Detect emotions using rule-based keyword matching."""
-        words = set(text.lower().split())
+        """Detect emotions using rule-based keyword matching."""        words = set(text.lower().split())
         emotion_scores = {}
         
         for emotion_type, keywords in self.emotion_keywords.items():
@@ -660,8 +636,7 @@ class SentimentAnalyzer:
         return emotion_scores
     
     def _calculate_emotional_intensity(self, text: str, emotion_scores: Dict[EmotionType, float]) -> float:
-        """Calculate overall emotional intensity."""
-        # Consider exclamation marks, capital letters, repeated characters
+        """Calculate overall emotional intensity."""        # Consider exclamation marks, capital letters, repeated characters
         exclamation_count = text.count('!')
         question_count = text.count('?')
         caps_ratio = sum(1 for c in text if c.isupper()) / max(1, len(text))
@@ -683,8 +658,7 @@ class SentimentAnalyzer:
         return np.mean(intensity_factors)
     
     def _calculate_emotional_stability(self, emotion_scores: Dict[EmotionType, float]) -> float:
-        """Calculate emotional stability (consistency of emotions)."""
-        if not emotion_scores:
+        """Calculate emotional stability (consistency of emotions)."""        if not emotion_scores:
             return 1.0
         
         scores = list(emotion_scores.values())
@@ -694,8 +668,7 @@ class SentimentAnalyzer:
         return max(0.0, 1.0 - variance)
     
     def _calculate_emotion_complexity(self, emotion_scores: Dict[EmotionType, float]) -> float:
-        """Calculate emotion complexity (number of significant emotions)."""
-        significant_emotions = sum(1 for score in emotion_scores.values() if score > 0.3)
+        """Calculate emotion complexity (number of significant emotions)."""        significant_emotions = sum(1 for score in emotion_scores.values() if score > 0.3)
         
         # Normalize to 0-1 scale
         return min(1.0, significant_emotions / len(EmotionType))
@@ -705,16 +678,14 @@ class SentimentAnalyzer:
         emotion_scores: Dict[EmotionType, float],
         threshold: float = 0.4
     ) -> List[EmotionType]:
-        """Identify mixed emotions above threshold."""
-        return [emotion for emotion, score in emotion_scores.items() if score >= threshold]
+        """Identify mixed emotions above threshold."""        return [emotion for emotion, score in emotion_scores.items() if score >= threshold]
     
     def _calculate_audience_appeal(
         self,
         sentiment: SentimentScore,
         emotion: EmotionDetection
     ) -> float:
-        """Calculate audience appeal score."""
-        factors = []
+        """Calculate audience appeal score."""        factors = []
         
         # Positive sentiment generally has higher appeal
         if sentiment.polarity in [SentimentPolarity.POSITIVE, SentimentPolarity.VERY_POSITIVE]:
@@ -740,8 +711,7 @@ class SentimentAnalyzer:
         return np.mean(factors)
     
     def _calculate_engagement_potential(self, text: str, sentiment: SentimentScore) -> float:
-        """Calculate engagement potential based on content characteristics."""
-        factors = []
+        """Calculate engagement potential based on content characteristics."""        factors = []
         
         # Text length factor
         text_length = len(text.split())
@@ -776,8 +746,7 @@ class SentimentAnalyzer:
         sentiment: SentimentScore,
         emotion: EmotionDetection
     ) -> float:
-        """Calculate virality potential score."""
-        factors = []
+        """Calculate virality potential score."""        factors = []
         
         # Extreme emotions tend to go viral
         viral_emotions = [EmotionType.ANGER, EmotionType.EXCITEMENT, EmotionType.SURPRISE, EmotionType.JOY]
@@ -809,8 +778,7 @@ class SentimentAnalyzer:
         return np.mean(factors)
     
     def _calculate_brand_safety(self, text: str, sentiment: SentimentScore) -> float:
-        """Calculate brand safety score."""
-        safety_factors = []
+        """Calculate brand safety score."""        safety_factors = []
         
         # Positive sentiment is generally brand-safe
         if sentiment.polarity in [SentimentPolarity.POSITIVE, SentimentPolarity.VERY_POSITIVE]:
@@ -839,8 +807,7 @@ class SentimentAnalyzer:
         return np.mean(safety_factors)
     
     def _extract_trending_keywords(self, text: str, max_keywords: int = 10) -> List[str]:
-        """Extract potentially trending keywords."""
-        # Remove stop words and extract meaningful keywords
+        """Extract potentially trending keywords."""        # Remove stop words and extract meaningful keywords
         stop_words = {
             'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for',
             'of', 'with', 'by', 'from', 'is', 'are', 'was', 'were',
@@ -857,8 +824,7 @@ class SentimentAnalyzer:
         return [word for word, count in word_counts.most_common(max_keywords)]
     
     def _analyze_hashtag_sentiment(self, text: str) -> Dict[str, float]:
-        """Analyze sentiment of individual hashtags."""
-        hashtags = re.findall(r'#(\w+)', text.lower())
+        """Analyze sentiment of individual hashtags."""        hashtags = re.findall(r'#(\w+)', text.lower())
         hashtag_sentiment = {}
         
         for hashtag in hashtags:
@@ -871,8 +837,7 @@ class SentimentAnalyzer:
         self,
         content_batch: List[Tuple[str, str, Optional[AnalysisLanguage]]]
     ) -> List[SentimentAnalysisResult]:
-        """Analyze sentiment for multiple content items in batch."""
-        tasks = []
+        """Analyze sentiment for multiple content items in batch."""        tasks = []
         
         for content_id, text_content, language in content_batch:
             task = asyncio.create_task(
@@ -889,8 +854,7 @@ class SentimentAnalyzer:
         return valid_results
     
     def get_analytics(self) -> Dict[str, Any]:
-        """Get sentiment analysis analytics and performance metrics."""
-        avg_processing_time = np.mean(self.processing_times) if self.processing_times else 0
+        """Get sentiment analysis analytics and performance metrics."""        avg_processing_time = np.mean(self.processing_times) if self.processing_times else 0
         
         return {
             "total_analyses": self.analysis_count,
@@ -906,8 +870,7 @@ class SentimentAnalyzer:
         }
     
     async def cleanup(self) -> None:
-        """Cleanup resources and clear caches."""
-        # Clear statistics
+        """Cleanup resources and clear caches."""        # Clear statistics
         self.processing_times.clear()
         self.sentiment_distribution.clear()
         self.emotion_distribution.clear()

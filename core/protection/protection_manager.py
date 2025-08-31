@@ -1,5 +1,4 @@
-"""
-Protection Manager - Central Orchestrator for Content Protection System
+"""Protection Manager - Central Orchestrator for Content Protection System
 
 This module serves as the main coordinator for all content protection activities:
 - Manages fingerprinting, monitoring, and violation detection workflows
@@ -10,9 +9,7 @@ This module serves as the main coordinator for all content protection activities
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import json
 from typing import Dict, List, Optional, Any, Set, Callable
 from dataclasses import dataclass, field, asdict
@@ -40,16 +37,14 @@ settings = get_settings()
 
 
 class ProtectionLevel(Enum):
-    """Protection levels for content"""
-    BASIC = "basic"           # Fingerprinting only
+    """Protection levels for content"""    BASIC = "basic"           # Fingerprinting only
     STANDARD = "standard"     # Fingerprinting + basic monitoring
     PREMIUM = "premium"       # Full monitoring + violation detection
     ENTERPRISE = "enterprise" # Full protection + legal automation
 
 
 class ProtectionPolicy(Enum):
-    """Protection policies for different content types"""
-    STRICT = "strict"         # Zero tolerance for any similarity
+    """Protection policies for different content types"""    STRICT = "strict"         # Zero tolerance for any similarity
     BALANCED = "balanced"     # Standard thresholds with false positive filtering
     PERMISSIVE = "permissive" # High thresholds, educational use allowed
     CUSTOM = "custom"         # User-defined thresholds
@@ -57,8 +52,7 @@ class ProtectionPolicy(Enum):
 
 @dataclass
 class ProtectionConfiguration:
-    """Comprehensive protection configuration"""
-    protection_level: ProtectionLevel
+    """Comprehensive protection configuration"""    protection_level: ProtectionLevel
     protection_policy: ProtectionPolicy
     
     # Monitoring settings
@@ -86,8 +80,7 @@ class ProtectionConfiguration:
 
 @dataclass
 class ProtectedContent:
-    """Represents content under protection"""
-    content_id: str
+    """Represents content under protection"""    content_id: str
     content_type: ContentType
     file_path: Optional[Path] = None
     text_content: Optional[str] = None
@@ -107,8 +100,7 @@ class ProtectedContent:
 
 @dataclass
 class ProtectionJob:
-    """Represents a protection job/task"""
-    job_id: str
+    """Represents a protection job/task"""    job_id: str
     content_id: str
     job_type: str  # fingerprint, monitor, detect, etc.
     status: str = "pending"
@@ -120,8 +112,7 @@ class ProtectionJob:
 
 
 class ProtectionManager:
-    """Central manager for all content protection operations"""
-    
+    """Central manager for all content protection operations"""    
     def __init__(self):
         # Core components
         self.fingerprint_engine = FingerprintEngine()
@@ -146,8 +137,7 @@ class ProtectionManager:
         self._initialize_default_configs()
     
     def _initialize_default_configs(self):
-        """Initialize default protection configurations"""
-        # Basic protection config
+        """Initialize default protection configurations"""        # Basic protection config
         self.protection_configs['basic'] = ProtectionConfiguration(
             protection_level=ProtectionLevel.BASIC,
             protection_policy=ProtectionPolicy.BALANCED,
@@ -189,8 +179,7 @@ class ProtectionManager:
         )
     
     async def start_protection_service(self):
-        """Start the protection service background tasks"""
-        try:
+        """Start the protection service background tasks"""        try:
             # Start job processor
             job_processor_task = asyncio.create_task(self._process_job_queue())
             self.background_tasks.add(job_processor_task)
@@ -210,8 +199,7 @@ class ProtectionManager:
             raise
     
     async def stop_protection_service(self):
-        """Stop the protection service and cleanup"""
-        try:
+        """Stop the protection service and cleanup"""        try:
             # Cancel all background tasks
             for task in self.background_tasks:
                 task.cancel()
@@ -240,8 +228,7 @@ class ProtectionManager:
                             protection_config: str = 'standard',
                             search_terms: Optional[List[str]] = None,
                             metadata: Optional[Dict[str, Any]] = None) -> str:
-        """Start protection for new content"""
-        try:
+        """Start protection for new content"""        try:
             # Generate content ID
             content_id = str(uuid.uuid4())
             
@@ -281,8 +268,7 @@ class ProtectionManager:
             raise
     
     async def _create_fingerprint_job(self, content_id: str) -> str:
-        """Create fingerprinting job"""
-        job_id = str(uuid.uuid4())
+        """Create fingerprinting job"""        job_id = str(uuid.uuid4())
         job = ProtectionJob(
             job_id=job_id,
             content_id=content_id,
@@ -298,8 +284,7 @@ class ProtectionManager:
                                    content_id: str, 
                                    config: ProtectionConfiguration,
                                    search_terms: Optional[List[str]]) -> str:
-        """Create monitoring job"""
-        job_id = str(uuid.uuid4())
+        """Create monitoring job"""        job_id = str(uuid.uuid4())
         job = ProtectionJob(
             job_id=job_id,
             content_id=content_id,
@@ -316,8 +301,7 @@ class ProtectionManager:
         return job_id
     
     async def _process_job_queue(self):
-        """Process protection jobs from queue"""
-        while True:
+        """Process protection jobs from queue"""        while True:
             try:
                 # Get job from queue
                 job = await self.job_queue.get()
@@ -343,8 +327,7 @@ class ProtectionManager:
                     job.error_message = str(e)
     
     async def _process_fingerprint_job(self, job: ProtectionJob):
-        """Process fingerprinting job"""
-        try:
+        """Process fingerprinting job"""        try:
             job.status = "running"
             job.progress = 0.1
             
@@ -377,8 +360,7 @@ class ProtectionManager:
             logger.error(f"Error in fingerprinting job: {e}")
     
     async def _process_monitoring_job(self, job: ProtectionJob):
-        """Process monitoring setup job"""
-        try:
+        """Process monitoring setup job"""        try:
             job.status = "running"
             job.progress = 0.1
             
@@ -422,8 +404,7 @@ class ProtectionManager:
             logger.error(f"Error in monitoring job: {e}")
     
     async def _process_detection_job(self, job: ProtectionJob):
-        """Process violation detection job"""
-        try:
+        """Process violation detection job"""        try:
             job.status = "running"
             job.progress = 0.1
             
@@ -474,8 +455,7 @@ class ProtectionManager:
             logger.error(f"Error in detection job: {e}")
     
     async def _periodic_violation_detection(self):
-        """Periodic violation detection for all protected content"""
-        while True:
+        """Periodic violation detection for all protected content"""        while True:
             try:
                 # Run detection every 30 minutes
                 await asyncio.sleep(1800)
@@ -507,8 +487,7 @@ class ProtectionManager:
                 logger.error(f"Error in periodic violation detection: {e}")
     
     async def _process_monitoring_results(self):
-        """Process new monitoring results as they come in"""
-        while True:
+        """Process new monitoring results as they come in"""        while True:
             try:
                 await asyncio.sleep(300)  # Check every 5 minutes
                 
@@ -530,8 +509,7 @@ class ProtectionManager:
                 logger.error(f"Error processing monitoring results: {e}")
     
     async def _quick_violation_check(self, content_id: str, urls: List[str]):
-        """Perform quick violation check for real-time alerts"""
-        try:
+        """Perform quick violation check for real-time alerts"""        try:
             content = self.protected_content[content_id]
             
             # Only check first few URLs to avoid overload
@@ -556,8 +534,7 @@ class ProtectionManager:
             logger.warning(f"Error in quick violation check: {e}")
     
     def _generate_search_terms(self, content: ProtectedContent) -> List[str]:
-        """Generate search terms from content metadata"""
-        search_terms = []
+        """Generate search terms from content metadata"""        search_terms = []
         
         # Extract from metadata
         metadata = content.metadata
@@ -579,8 +556,7 @@ class ProtectionManager:
         return search_terms[:10]  # Limit to 10 terms
     
     def _detect_content_type(self, file_path: Path) -> ContentType:
-        """Detect content type from file extension"""
-        suffix = file_path.suffix.lower()
+        """Detect content type from file extension"""        suffix = file_path.suffix.lower()
         
         if suffix in ['.mp3', '.wav', '.flac', '.ogg', '.m4a']:
             return ContentType.AUDIO
@@ -592,16 +568,14 @@ class ProtectionManager:
             return ContentType.TEXT
     
     def _get_protection_config_for_content(self, content_id: str) -> ProtectionConfiguration:
-        """Get protection configuration for specific content"""
-        # This would typically be stored per content
+        """Get protection configuration for specific content"""        # This would typically be stored per content
         # For now, return standard config
         return self.protection_configs['standard']
     
     # Public API methods
     
     async def get_protection_status(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Get protection status for content"""
-        if content_id not in self.protected_content:
+        """Get protection status for content"""        if content_id not in self.protected_content:
             return None
         
         content = self.protected_content[content_id]
@@ -619,8 +593,7 @@ class ProtectionManager:
         }
     
     async def stop_protection(self, content_id: str) -> bool:
-        """Stop protection for specific content"""
-        try:
+        """Stop protection for specific content"""        try:
             if content_id not in self.protected_content:
                 return False
             
@@ -644,8 +617,7 @@ class ProtectionManager:
     async def update_protection_config(self, 
                                      content_id: str, 
                                      config_name: str) -> bool:
-        """Update protection configuration for content"""
-        try:
+        """Update protection configuration for content"""        try:
             if content_id not in self.protected_content:
                 return False
             
@@ -673,8 +645,7 @@ class ProtectionManager:
             return False
     
     def get_system_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive system statistics"""
-        total_violations = sum(content.violations_detected for content in self.protected_content.values())
+        """Get comprehensive system statistics"""        total_violations = sum(content.violations_detected for content in self.protected_content.values())
         total_resolved = sum(content.violations_resolved for content in self.protected_content.values())
         
         active_content = sum(1 for content in self.protected_content.values() 

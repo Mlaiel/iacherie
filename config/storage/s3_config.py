@@ -1,5 +1,4 @@
-"""
-AWS S3 Storage Configuration for IA-Influencer Agent Platform
+"""AWS S3 Storage Configuration for IA-Influencer Agent Platform
 =============================================================
 
 Professional AWS S3 storage configuration for multi-format content management.
@@ -14,9 +13,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import os
+"""import os
 from typing import Dict, List, Optional
 from dataclasses import dataclass
 import boto3
@@ -24,8 +21,7 @@ from botocore.exceptions import ClientError
 
 @dataclass
 class S3BucketConfig:
-    """S3 bucket configuration for specific content types."""
-    
+    """S3 bucket configuration for specific content types."""    
     name: str
     region: str
     public_read: bool = False
@@ -35,11 +31,9 @@ class S3BucketConfig:
 
 @dataclass
 class S3Config:
-    """
-    Comprehensive AWS S3 configuration for IA-Influencer Agent platform.
+    """    Comprehensive AWS S3 configuration for IA-Influencer Agent platform.
     Handles multi-format content storage with enterprise-grade security.
-    """
-    
+    """    
     # AWS Credentials
     access_key_id: str = os.getenv('AWS_ACCESS_KEY_ID', '')
     secret_access_key: str = os.getenv('AWS_SECRET_ACCESS_KEY', '')
@@ -68,13 +62,11 @@ class S3Config:
     presigned_url_expiration: int = 3600  # 1 hour
     
     def __post_init__(self):
-        """Initialize bucket configurations if not provided."""
-        if self.buckets is None:
+        """Initialize bucket configurations if not provided."""        if self.buckets is None:
             self.buckets = self._get_default_bucket_config()
     
     def _get_default_bucket_config(self) -> Dict[str, S3BucketConfig]:
-        """Default bucket configuration for different content types."""
-        env = os.getenv('ENVIRONMENT', 'development')
+        """Default bucket configuration for different content types."""        env = os.getenv('ENVIRONMENT', 'development')
         base_name = f"ia-influencer-{env}"
         
         return {
@@ -170,8 +162,7 @@ class S3Config:
         }
     
     def get_client(self) -> boto3.client:
-        """Create and configure S3 client with optimized settings."""
-        config = boto3.session.Config(
+        """Create and configure S3 client with optimized settings."""        config = boto3.session.Config(
             region_name=self.default_region,
             retries={'max_attempts': 3, 'mode': 'adaptive'},
             max_pool_connections=50,
@@ -187,8 +178,7 @@ class S3Config:
         )
     
     def get_transfer_config(self) -> boto3.s3.transfer.TransferConfig:
-        """Get optimized transfer configuration for large files."""
-        return boto3.s3.transfer.TransferConfig(
+        """Get optimized transfer configuration for large files."""        return boto3.s3.transfer.TransferConfig(
             multipart_threshold=self.multipart_threshold,
             multipart_chunksize=self.multipart_chunksize,
             max_concurrency=self.max_concurrency,
@@ -197,8 +187,7 @@ class S3Config:
         )
     
     def validate_configuration(self) -> bool:
-        """Validate S3 configuration and connectivity."""
-        try:
+        """Validate S3 configuration and connectivity."""        try:
             client = self.get_client()
             client.list_buckets()
             return True
@@ -207,14 +196,12 @@ class S3Config:
             return False
     
     def get_bucket_name(self, content_type: str) -> str:
-        """Get bucket name for specific content type."""
-        if content_type not in self.buckets:
+        """Get bucket name for specific content type."""        if content_type not in self.buckets:
             raise ValueError(f"Unknown content type: {content_type}")
         return self.buckets[content_type].name
     
     def get_content_types(self) -> List[str]:
-        """Get list of supported content types."""
-        return list(self.buckets.keys())
+        """Get list of supported content types."""        return list(self.buckets.keys())
 
 # Global S3 configuration instance
 s3_config = S3Config()

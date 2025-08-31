@@ -1,14 +1,11 @@
-"""
-🎯 Audio Quality Assessment - Professional Quality Analysis Engine
+"""🎯 Audio Quality Assessment - Professional Quality Analysis Engine
 
 Advanced quality assessment system for comprehensive audio evaluation.
 Includes perceptual quality metrics, technical analysis, and optimization recommendations.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Union, Any
 from pathlib import Path
@@ -29,8 +26,7 @@ logger = logging.getLogger(__name__)
 
 
 class QualityAspect(Enum):
-    """Different aspects of audio quality"""
-    OVERALL = "overall"
+    """Different aspects of audio quality"""    OVERALL = "overall"
     CLARITY = "clarity"
     LOUDNESS = "loudness"
     DYNAMIC_RANGE = "dynamic_range"
@@ -43,8 +39,7 @@ class QualityAspect(Enum):
 
 
 class QualityGrade(Enum):
-    """Quality grades"""
-    EXCELLENT = "excellent"     # 9.0-10.0
+    """Quality grades"""    EXCELLENT = "excellent"     # 9.0-10.0
     VERY_GOOD = "very_good"    # 8.0-8.9
     GOOD = "good"              # 7.0-7.9
     FAIR = "fair"              # 6.0-6.9
@@ -54,8 +49,7 @@ class QualityGrade(Enum):
 
 @dataclass
 class QualityMetric:
-    """Individual quality metric result"""
-    aspect: QualityAspect
+    """Individual quality metric result"""    aspect: QualityAspect
     score: float  # 0.0 to 10.0
     grade: QualityGrade
     description: str
@@ -65,8 +59,7 @@ class QualityMetric:
 
 @dataclass
 class QualityReport:
-    """Comprehensive quality assessment report"""
-    overall_score: float
+    """Comprehensive quality assessment report"""    overall_score: float
     overall_grade: QualityGrade
     metrics: Dict[QualityAspect, QualityMetric]
     summary: str
@@ -77,16 +70,14 @@ class QualityReport:
 
 
 class PerceptualQualityAnalyzer:
-    """
-    👂 Perceptual Quality Analysis
+    """    👂 Perceptual Quality Analysis
     
     Human-perceptual quality assessment:
     - Psychoacoustic modeling
     - Perceptual loudness analysis
     - Frequency masking evaluation
     - Temporal masking assessment
-    """
-    
+    """    
     def __init__(self, config: Optional[AudioProcessingConfig] = None):
         self.config = config or AudioProcessingConfig()
         
@@ -97,8 +88,7 @@ class PerceptualQualityAnalyzer:
         logger.info("PerceptualQualityAnalyzer initialized")
     
     def _init_bark_scale(self) -> np.ndarray:
-        """Initialize Bark scale frequency edges"""
-        # Standard Bark scale frequencies (Hz)
+        """Initialize Bark scale frequency edges"""        # Standard Bark scale frequencies (Hz)
         bark_edges = np.array([
             0, 100, 200, 300, 400, 510, 630, 770, 920, 1080,
             1270, 1480, 1720, 2000, 2320, 2700, 3150, 3700,
@@ -107,8 +97,7 @@ class PerceptualQualityAnalyzer:
         return bark_edges
     
     def _init_masking_thresholds(self) -> Dict[str, float]:
-        """Initialize masking threshold parameters"""
-        return {
+        """Initialize masking threshold parameters"""        return {
             'tonality_threshold': 0.5,
             'simultaneous_masking_slope': 15.0,  # dB/Bark
             'temporal_masking_decay': 0.1,       # Time constant
@@ -118,8 +107,7 @@ class PerceptualQualityAnalyzer:
     async def analyze_perceptual_quality(self,
                                        audio_data: np.ndarray,
                                        sample_rate: int) -> Dict[str, float]:
-        """Analyze perceptual quality aspects"""
-        try:
+        """Analyze perceptual quality aspects"""        try:
             metrics = {}
             
             # Calculate STFT
@@ -159,8 +147,7 @@ class PerceptualQualityAnalyzer:
     async def _analyze_perceptual_loudness(self,
                                          magnitude: np.ndarray,
                                          sample_rate: int) -> float:
-        """Analyze perceptual loudness using psychoacoustic principles"""
-        try:
+        """Analyze perceptual loudness using psychoacoustic principles"""        try:
             # Convert to Bark scale bands
             freqs = librosa.fft_frequencies(sr=sample_rate, n_fft=magnitude.shape[0]*2-1)
             
@@ -204,8 +191,7 @@ class PerceptualQualityAnalyzer:
             return 5.0  # Default neutral score
     
     def _get_loudness_weights(self) -> np.ndarray:
-        """Get loudness weighting based on equal-loudness contours"""
-        # Simplified A-weighting-like curve for Bark bands
+        """Get loudness weighting based on equal-loudness contours"""        # Simplified A-weighting-like curve for Bark bands
         # Real implementation would use ISO 226 standard
         weights = np.array([
             0.1, 0.3, 0.5, 0.7, 0.9, 1.0, 1.0, 1.0, 1.0, 1.0,
@@ -217,8 +203,7 @@ class PerceptualQualityAnalyzer:
     async def _analyze_frequency_balance(self,
                                        magnitude: np.ndarray,
                                        sample_rate: int) -> float:
-        """Analyze frequency balance across spectrum"""
-        try:
+        """Analyze frequency balance across spectrum"""        try:
             # Define frequency bands (bass, mids, treble)
             freqs = librosa.fft_frequencies(sr=sample_rate, n_fft=magnitude.shape[0]*2-1)
             
@@ -262,8 +247,7 @@ class PerceptualQualityAnalyzer:
                              freqs: np.ndarray,
                              low_freq: float,
                              high_freq: float) -> float:
-        """Calculate energy in a frequency band"""
-        low_idx = np.argmin(np.abs(freqs - low_freq))
+        """Calculate energy in a frequency band"""        low_idx = np.argmin(np.abs(freqs - low_freq))
         high_idx = np.argmin(np.abs(freqs - high_freq))
         
         if high_idx > low_idx:
@@ -274,8 +258,7 @@ class PerceptualQualityAnalyzer:
     async def _analyze_spectral_clarity(self,
                                       magnitude: np.ndarray,
                                       sample_rate: int) -> float:
-        """Analyze spectral clarity and definition"""
-        try:
+        """Analyze spectral clarity and definition"""        try:
             # Calculate spectral centroid variation
             spectral_centroid = []
             for frame in magnitude.T:
@@ -312,8 +295,7 @@ class PerceptualQualityAnalyzer:
             return 5.0
     
     async def _analyze_temporal_smoothness(self, magnitude: np.ndarray) -> float:
-        """Analyze temporal smoothness of the audio"""
-        try:
+        """Analyze temporal smoothness of the audio"""        try:
             # Calculate frame-to-frame energy variations
             energy_per_frame = np.sum(magnitude ** 2, axis=0)
             
@@ -342,16 +324,14 @@ class PerceptualQualityAnalyzer:
 
 
 class TechnicalQualityAnalyzer:
-    """
-    🔧 Technical Quality Analysis
+    """    🔧 Technical Quality Analysis
     
     Objective technical quality assessment:
     - SNR and dynamic range
     - THD+N analysis
     - Frequency response evaluation
     - Clipping and distortion detection
-    """
-    
+    """    
     def __init__(self, config: Optional[AudioProcessingConfig] = None):
         self.config = config or AudioProcessingConfig()
         
@@ -360,8 +340,7 @@ class TechnicalQualityAnalyzer:
     async def analyze_technical_quality(self,
                                       audio_data: np.ndarray,
                                       sample_rate: int) -> Dict[str, float]:
-        """Analyze technical quality aspects"""
-        try:
+        """Analyze technical quality aspects"""        try:
             metrics = {}
             
             # Signal-to-noise ratio
@@ -395,8 +374,7 @@ class TechnicalQualityAnalyzer:
             return {}
     
     async def _analyze_snr(self, audio_data: np.ndarray) -> float:
-        """Analyze signal-to-noise ratio"""
-        try:
+        """Analyze signal-to-noise ratio"""        try:
             # Simple SNR estimation using quiet segments
             # Real implementation would use more sophisticated noise estimation
             
@@ -434,8 +412,7 @@ class TechnicalQualityAnalyzer:
             return 5.0
     
     async def _analyze_dynamic_range(self, audio_data: np.ndarray) -> float:
-        """Analyze dynamic range"""
-        try:
+        """Analyze dynamic range"""        try:
             # Calculate peak and RMS levels
             peak_level = np.max(np.abs(audio_data))
             rms_level = np.sqrt(np.mean(audio_data ** 2))
@@ -466,8 +443,7 @@ class TechnicalQualityAnalyzer:
             return 5.0
     
     async def _analyze_thd_n(self, audio_data: np.ndarray, sample_rate: int) -> float:
-        """Analyze Total Harmonic Distortion + Noise"""
-        try:
+        """Analyze Total Harmonic Distortion + Noise"""        try:
             # Simplified THD+N analysis
             # Real implementation would use sine wave analysis
             
@@ -517,8 +493,7 @@ class TechnicalQualityAnalyzer:
             return 5.0
     
     async def _analyze_clipping(self, audio_data: np.ndarray) -> float:
-        """Analyze clipping artifacts"""
-        try:
+        """Analyze clipping artifacts"""        try:
             # Detect hard clipping
             max_val = np.max(np.abs(audio_data))
             clipping_threshold = 0.99  # 99% of full scale
@@ -548,8 +523,7 @@ class TechnicalQualityAnalyzer:
     async def _analyze_frequency_flatness(self,
                                         audio_data: np.ndarray,
                                         sample_rate: int) -> float:
-        """Analyze frequency response flatness"""
-        try:
+        """Analyze frequency response flatness"""        try:
             # Calculate power spectral density
             freqs, psd = signal.welch(audio_data, sample_rate, nperseg=2048)
             
@@ -594,8 +568,7 @@ class TechnicalQualityAnalyzer:
             return 5.0
     
     def _get_octave_bands(self, freqs: np.ndarray) -> List[Tuple[float, float]]:
-        """Get octave band frequency ranges"""
-        # Standard octave bands
+        """Get octave band frequency ranges"""        # Standard octave bands
         center_freqs = [31.5, 63, 125, 250, 500, 1000, 2000, 4000, 8000, 16000]
         bands = []
         
@@ -616,8 +589,7 @@ class TechnicalQualityAnalyzer:
         return bands
     
     async def _analyze_peak_rms_ratio(self, audio_data: np.ndarray) -> float:
-        """Analyze peak-to-RMS ratio"""
-        try:
+        """Analyze peak-to-RMS ratio"""        try:
             peak_level = np.max(np.abs(audio_data))
             rms_level = np.sqrt(np.mean(audio_data ** 2))
             
@@ -644,8 +616,7 @@ class TechnicalQualityAnalyzer:
 
 
 class AudioQualityAssessor:
-    """
-    🎯 Comprehensive Audio Quality Assessor
+    """    🎯 Comprehensive Audio Quality Assessor
     
     Professional quality assessment system:
     - Perceptual and technical analysis
@@ -653,8 +624,7 @@ class AudioQualityAssessor:
     - Detailed recommendations
     - Comparative quality analysis
     - Optimization suggestions
-    """
-    
+    """    
     def __init__(self, config: Optional[AudioProcessingConfig] = None):
         self.config = config or AudioProcessingConfig()
         self.audio_processor = AudioProcessor(config)
@@ -679,8 +649,7 @@ class AudioQualityAssessor:
                            audio_data: np.ndarray,
                            sample_rate: int,
                            reference_audio: Optional[np.ndarray] = None) -> QualityReport:
-        """
-        Comprehensive audio quality assessment
+        """        Comprehensive audio quality assessment
         
         Args:
             audio_data: Audio samples to assess
@@ -689,8 +658,7 @@ class AudioQualityAssessor:
             
         Returns:
             Detailed quality report
-        """
-        import time
+        """        import time
         start_time = time.time()
         
         try:
@@ -849,8 +817,7 @@ class AudioQualityAssessor:
     async def _analyze_additional_metrics(self,
                                         audio_data: np.ndarray,
                                         sample_rate: int) -> Dict[str, float]:
-        """Analyze additional quality metrics"""
-        try:
+        """Analyze additional quality metrics"""        try:
             metrics = {}
             
             # Silence detection
@@ -880,8 +847,7 @@ class AudioQualityAssessor:
             return {}
     
     async def _analyze_silence_ratio(self, audio_data: np.ndarray) -> float:
-        """Analyze ratio of silence in audio"""
-        try:
+        """Analyze ratio of silence in audio"""        try:
             # Define silence threshold (e.g., -60dB)
             silence_threshold = 0.001  # About -60dB
             
@@ -904,8 +870,7 @@ class AudioQualityAssessor:
             return 5.0
     
     async def _analyze_stereo_imaging(self, stereo_audio: np.ndarray) -> float:
-        """Analyze stereo imaging quality"""
-        try:
+        """Analyze stereo imaging quality"""        try:
             left_channel = stereo_audio[0, :]
             right_channel = stereo_audio[1, :]
             
@@ -937,8 +902,7 @@ class AudioQualityAssessor:
             return 5.0
     
     async def _estimate_noise_level(self, audio_data: np.ndarray) -> float:
-        """Estimate background noise level"""
-        try:
+        """Estimate background noise level"""        try:
             # Use minimum RMS in sliding windows as noise estimate
             window_size = int(0.1 * len(audio_data))  # 100ms windows
             window_rms = []
@@ -977,8 +941,7 @@ class AudioQualityAssessor:
                                  metrics: Dict[str, float],
                                  components: List[str],
                                  weights: Optional[List[float]] = None) -> float:
-        """Calculate weighted composite score from multiple components"""
-        if weights is None:
+        """Calculate weighted composite score from multiple components"""        if weights is None:
             weights = [1.0] * len(components)
         
         if len(weights) != len(components):
@@ -998,8 +961,7 @@ class AudioQualityAssessor:
             return 5.0  # Default neutral score
     
     def _score_to_grade(self, score: float) -> QualityGrade:
-        """Convert numeric score to quality grade"""
-        if score >= 9.0:
+        """Convert numeric score to quality grade"""        if score >= 9.0:
             return QualityGrade.EXCELLENT
         elif score >= 8.0:
             return QualityGrade.VERY_GOOD
@@ -1013,8 +975,7 @@ class AudioQualityAssessor:
             return QualityGrade.VERY_POOR
     
     def _get_clarity_recommendations(self, score: float, metrics: Dict[str, float]) -> List[str]:
-        """Get recommendations for improving clarity"""
-        recommendations = []
+        """Get recommendations for improving clarity"""        recommendations = []
         
         if score < 7.0:
             if metrics.get('thd_n', 10) < 6:
@@ -1031,8 +992,7 @@ class AudioQualityAssessor:
         return recommendations
     
     def _get_loudness_recommendations(self, score: float, metrics: Dict[str, float]) -> List[str]:
-        """Get recommendations for improving loudness"""
-        recommendations = []
+        """Get recommendations for improving loudness"""        recommendations = []
         
         if score < 7.0:
             if metrics.get('dynamic_range', 5) < 6:
@@ -1046,8 +1006,7 @@ class AudioQualityAssessor:
         return recommendations
     
     def _get_dynamic_range_recommendations(self, score: float) -> List[str]:
-        """Get recommendations for improving dynamic range"""
-        recommendations = []
+        """Get recommendations for improving dynamic range"""        recommendations = []
         
         if score < 7.0:
             recommendations.extend([
@@ -1059,8 +1018,7 @@ class AudioQualityAssessor:
         return recommendations
     
     def _get_frequency_recommendations(self, score: float, metrics: Dict[str, float]) -> List[str]:
-        """Get recommendations for improving frequency response"""
-        recommendations = []
+        """Get recommendations for improving frequency response"""        recommendations = []
         
         if score < 7.0:
             recommendations.extend([
@@ -1072,8 +1030,7 @@ class AudioQualityAssessor:
         return recommendations
     
     def _get_noise_recommendations(self, score: float, metrics: Dict[str, float]) -> List[str]:
-        """Get recommendations for reducing noise"""
-        recommendations = []
+        """Get recommendations for reducing noise"""        recommendations = []
         
         if score < 7.0:
             recommendations.extend([
@@ -1086,8 +1043,7 @@ class AudioQualityAssessor:
         return recommendations
     
     def _get_distortion_recommendations(self, score: float, metrics: Dict[str, float]) -> List[str]:
-        """Get recommendations for reducing distortion"""
-        recommendations = []
+        """Get recommendations for reducing distortion"""        recommendations = []
         
         if score < 7.0:
             if metrics.get('clipping', 10) < 7:
@@ -1104,8 +1060,7 @@ class AudioQualityAssessor:
         return recommendations
     
     def _get_temporal_recommendations(self, score: float) -> List[str]:
-        """Get recommendations for improving temporal quality"""
-        recommendations = []
+        """Get recommendations for improving temporal quality"""        recommendations = []
         
         if score < 7.0:
             recommendations.extend([
@@ -1120,8 +1075,7 @@ class AudioQualityAssessor:
                         overall_score: float,
                         overall_grade: QualityGrade,
                         metrics: Dict[QualityAspect, QualityMetric]) -> str:
-        """Generate quality assessment summary"""
-        summary_parts = [
+        """Generate quality assessment summary"""        summary_parts = [
             f"Overall Quality: {overall_score:.1f}/10 ({overall_grade.value.replace('_', ' ').title()})"
         ]
         
@@ -1152,8 +1106,7 @@ class AudioQualityAssessor:
     
     def _generate_overall_recommendations(self,
                                         metrics: Dict[QualityAspect, QualityMetric]) -> List[str]:
-        """Generate overall improvement recommendations"""
-        all_recommendations = []
+        """Generate overall improvement recommendations"""        all_recommendations = []
         
         # Collect recommendations from all aspects, prioritizing worst scores
         sorted_metrics = sorted(metrics.items(), key=lambda x: x[1].score)
@@ -1177,8 +1130,7 @@ class AudioQualityAssessor:
                             audio1: np.ndarray,
                             audio2: np.ndarray,
                             sample_rate: int) -> Dict[str, Any]:
-        """Compare quality between two audio files"""
-        try:
+        """Compare quality between two audio files"""        try:
             # Assess both files
             report1 = await self.assess_quality(audio1, sample_rate)
             report2 = await self.assess_quality(audio2, sample_rate)

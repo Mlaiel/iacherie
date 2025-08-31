@@ -1,5 +1,4 @@
-"""
-Platform Compliance Validator for IA Influencer Agent Platform
+"""Platform Compliance Validator for IA Influencer Agent Platform
 ============================================================
 
 Advanced multi-platform compliance validation system providing comprehensive
@@ -17,9 +16,7 @@ Features:
 - Creator program compliance validation
 - Platform-specific content guidelines enforcement
 - Revenue optimization recommendations
-"""
-
-import re
+"""import re
 import json
 import mimetypes
 from enum import Enum
@@ -35,8 +32,7 @@ logger = logging.getLogger(__name__)
 
 
 class Platform(Enum):
-    """Supported platforms"""
-    SPOTIFY = "spotify"
+    """Supported platforms"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -51,8 +47,7 @@ class Platform(Enum):
 
 
 class ContentCategory(Enum):
-    """Content categories"""
-    MUSIC = "music"
+    """Content categories"""    MUSIC = "music"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -63,8 +58,7 @@ class ContentCategory(Enum):
 
 
 class MonetizationTier(Enum):
-    """Monetization tiers"""
-    NONE = "none"
+    """Monetization tiers"""    NONE = "none"
     BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
@@ -72,8 +66,7 @@ class MonetizationTier(Enum):
 
 
 class ComplianceStatus(Enum):
-    """Compliance status levels"""
-    COMPLIANT = "compliant"
+    """Compliance status levels"""    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
     PENDING_REVIEW = "pending_review"
@@ -82,8 +75,7 @@ class ComplianceStatus(Enum):
 
 @dataclass
 class PlatformRequirement:
-    """Individual platform requirement"""
-    requirement_id: str
+    """Individual platform requirement"""    requirement_id: str
     name: str
     description: str
     category: str
@@ -96,8 +88,7 @@ class PlatformRequirement:
 
 @dataclass
 class ContentSpecification:
-    """Content specification for platform"""
-    min_duration: Optional[float] = None
+    """Content specification for platform"""    min_duration: Optional[float] = None
     max_duration: Optional[float] = None
     min_resolution: Optional[Tuple[int, int]] = None
     max_resolution: Optional[Tuple[int, int]] = None
@@ -112,8 +103,7 @@ class ContentSpecification:
 
 @dataclass
 class MonetizationRequirement:
-    """Monetization requirements for platform"""
-    min_followers: Optional[int] = None
+    """Monetization requirements for platform"""    min_followers: Optional[int] = None
     min_watch_time: Optional[int] = None
     min_content_count: Optional[int] = None
     geographic_restrictions: List[str] = field(default_factory=list)
@@ -126,8 +116,7 @@ class MonetizationRequirement:
 
 @dataclass
 class ComplianceViolation:
-    """Individual compliance violation"""
-    violation_id: str
+    """Individual compliance violation"""    violation_id: str
     requirement: PlatformRequirement
     severity: str
     description: str
@@ -140,8 +129,7 @@ class ComplianceViolation:
 
 @dataclass
 class PlatformComplianceResult:
-    """Platform compliance validation result"""
-    platform: Platform
+    """Platform compliance validation result"""    platform: Platform
     is_compliant: bool
     compliance_status: ComplianceStatus
     compliance_score: float
@@ -157,8 +145,7 @@ class PlatformComplianceResult:
 
 @dataclass
 class CreatorProfile:
-    """Creator profile for compliance checking"""
-    creator_id: str
+    """Creator profile for compliance checking"""    creator_id: str
     creator_type: str  # musician, blogger, photographer, influencer, comedian
     follower_counts: Dict[Platform, int] = field(default_factory=dict)
     engagement_rates: Dict[Platform, float] = field(default_factory=dict)
@@ -173,8 +160,7 @@ class CreatorProfile:
 
 @dataclass
 class ContentMetadata:
-    """Content metadata for compliance validation"""
-    title: Optional[str] = None
+    """Content metadata for compliance validation"""    title: Optional[str] = None
     description: Optional[str] = None
     tags: List[str] = field(default_factory=list)
     category: Optional[ContentCategory] = None
@@ -192,14 +178,12 @@ class ContentMetadata:
 
 
 class PlatformComplianceValidator:
-    """
-    Enterprise-grade platform compliance validator for creator content.
+    """    Enterprise-grade platform compliance validator for creator content.
     
     Provides comprehensive compliance validation for major creator platforms
     including content requirements, monetization eligibility, creator program
     compliance, and revenue optimization recommendations.
-    """
-    
+    """    
     def __init__(self):
         self.platform_requirements = self._load_platform_requirements()
         self.content_specifications = self._load_content_specifications()
@@ -216,8 +200,7 @@ class PlatformComplianceValidator:
         content_metadata: ContentMetadata,
         creator_profile: CreatorProfile
     ) -> PlatformComplianceResult:
-        """
-        Validate content compliance for specific platform.
+        """        Validate content compliance for specific platform.
         
         Args:
             platform: Target platform
@@ -227,8 +210,7 @@ class PlatformComplianceValidator:
             
         Returns:
             PlatformComplianceResult: Compliance validation result
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         
         # Check cache first
         cache_key = self._generate_cache_key(platform, content_metadata, creator_profile)
@@ -303,8 +285,7 @@ class PlatformComplianceValidator:
         content_metadata: ContentMetadata,
         creator_profile: CreatorProfile
     ) -> Dict[Platform, PlatformComplianceResult]:
-        """
-        Validate compliance across multiple platforms.
+        """        Validate compliance across multiple platforms.
         
         Args:
             platforms: List of target platforms
@@ -314,8 +295,7 @@ class PlatformComplianceValidator:
             
         Returns:
             Dict[Platform, PlatformComplianceResult]: Compliance results per platform
-        """
-        results = {}
+        """        results = {}
         
         for platform in platforms:
             try:
@@ -340,8 +320,7 @@ class PlatformComplianceValidator:
         platform: Platform,
         creator_profile: CreatorProfile
     ) -> Dict[str, Any]:
-        """
-        Validate creator program eligibility for platform.
+        """        Validate creator program eligibility for platform.
         
         Args:
             platform: Target platform
@@ -349,8 +328,7 @@ class PlatformComplianceValidator:
             
         Returns:
             Dict: Creator program eligibility assessment
-        """
-        try:
+        """        try:
             eligibility = {
                 "platform": platform.value,
                 "eligible": False,
@@ -420,8 +398,7 @@ class PlatformComplianceValidator:
         creator_profile: CreatorProfile,
         content_performance: Optional[Dict[str, Any]] = None
     ) -> List[str]:
-        """
-        Get revenue optimization recommendations for creator.
+        """        Get revenue optimization recommendations for creator.
         
         Args:
             platform: Target platform
@@ -430,8 +407,7 @@ class PlatformComplianceValidator:
             
         Returns:
             List[str]: Revenue optimization recommendations
-        """
-        recommendations = []
+        """        recommendations = []
         
         try:
             # Platform-specific revenue optimization
@@ -460,8 +436,7 @@ class PlatformComplianceValidator:
         content_specs: ContentSpecification,
         result: PlatformComplianceResult
     ):
-        """Validate content against platform specifications"""
-        
+        """Validate content against platform specifications"""        
         # Validate file size
         if content_specs.max_file_size and content_metadata.file_size:
             if content_metadata.file_size > content_specs.max_file_size:
@@ -611,8 +586,7 @@ class PlatformComplianceValidator:
         requirements: List[PlatformRequirement],
         result: PlatformComplianceResult
     ):
-        """Validate content against platform-specific requirements"""
-        
+        """Validate content against platform-specific requirements"""        
         for requirement in requirements:
             try:
                 if not self._check_requirement(requirement, content_metadata, creator_profile):
@@ -638,8 +612,7 @@ class PlatformComplianceValidator:
         platform: Platform,
         result: PlatformComplianceResult
     ):
-        """Validate monetization eligibility"""
-        
+        """Validate monetization eligibility"""        
         eligibility_score = 1.0
         
         # Check follower count
@@ -693,8 +666,7 @@ class PlatformComplianceValidator:
             )
     
     def _calculate_compliance_score(self, result: PlatformComplianceResult):
-        """Calculate overall compliance score"""
-        if not result.violations:
+        """Calculate overall compliance score"""        if not result.violations:
             result.compliance_score = 1.0
             return
         
@@ -707,8 +679,7 @@ class PlatformComplianceValidator:
             result.compliance_score = 1.0
     
     def _determine_compliance_status(self, result: PlatformComplianceResult):
-        """Determine final compliance status"""
-        high_severity_violations = [v for v in result.violations if v.severity == "high"]
+        """Determine final compliance status"""        high_severity_violations = [v for v in result.violations if v.severity == "high"]
         medium_severity_violations = [v for v in result.violations if v.severity == "medium"]
         
         if high_severity_violations:
@@ -729,8 +700,7 @@ class PlatformComplianceValidator:
         result: PlatformComplianceResult,
         creator_profile: CreatorProfile
     ):
-        """Generate optimization recommendations"""
-        recommendations = []
+        """Generate optimization recommendations"""        recommendations = []
         
         # Recommendations based on violations
         for violation in result.violations:
@@ -774,8 +744,7 @@ class PlatformComplianceValidator:
         content_metadata: ContentMetadata,
         creator_profile: CreatorProfile
     ) -> str:
-        """Generate cache key for compliance result"""
-        import hashlib
+        """Generate cache key for compliance result"""        import hashlib
         
         key_data = f"{platform.value}_{content_metadata.format}_{content_metadata.duration}_{creator_profile.creator_id}"
         return hashlib.md5(key_data.encode()).hexdigest()
@@ -786,15 +755,13 @@ class PlatformComplianceValidator:
         content_metadata: ContentMetadata,
         creator_profile: CreatorProfile
     ) -> bool:
-        """Check if specific requirement is met"""
-        
+        """Check if specific requirement is met"""        
         # This would implement specific validation logic for each requirement
         # Perform comprehensive AI-powered content analysis for copyright compliance
         return self._comprehensive_copyright_analysis(content_data, content_metadata)
     
     def _calculate_impact_score(self, requirement: PlatformRequirement) -> float:
-        """Calculate impact score for requirement violation"""
-        severity_scores = {
+        """Calculate impact score for requirement violation"""        severity_scores = {
             "low": 0.2,
             "medium": 0.5,
             "high": 0.8,
@@ -810,8 +777,7 @@ class PlatformComplianceValidator:
         return min(1.0, base_score)
     
     def _get_min_account_age(self, platform: Platform) -> int:
-        """Get minimum account age requirement for platform"""
-        min_ages = {
+        """Get minimum account age requirement for platform"""        min_ages = {
             Platform.SPOTIFY: 0,
             Platform.YOUTUBE: 30,
             Platform.INSTAGRAM: 0,
@@ -821,8 +787,7 @@ class PlatformComplianceValidator:
         return min_ages.get(platform, 0)
     
     def _determine_program_tier(self, platform: Platform, creator_profile: CreatorProfile) -> str:
-        """Determine creator program tier"""
-        follower_count = creator_profile.follower_counts.get(platform, 0)
+        """Determine creator program tier"""        follower_count = creator_profile.follower_counts.get(platform, 0)
         
         if follower_count >= 1000000:
             return "elite"
@@ -841,8 +806,7 @@ class PlatformComplianceValidator:
         creator_profile: CreatorProfile,
         missing_requirements: List[str]
     ) -> List[str]:
-        """Generate creator program recommendations"""
-        recommendations = []
+        """Generate creator program recommendations"""        recommendations = []
         
         for requirement in missing_requirements:
             if "followers" in requirement.lower():
@@ -857,8 +821,7 @@ class PlatformComplianceValidator:
         return recommendations
     
     def _get_spotify_revenue_recommendations(self, creator_profile: CreatorProfile) -> List[str]:
-        """Get Spotify-specific revenue recommendations"""
-        return [
+        """Get Spotify-specific revenue recommendations"""        return [
             "Release music consistently to maintain listener engagement",
             "Optimize track titles and descriptions for Spotify search",
             "Submit to Spotify playlists for increased exposure",
@@ -866,8 +829,7 @@ class PlatformComplianceValidator:
         ]
     
     def _get_youtube_revenue_recommendations(self, creator_profile: CreatorProfile) -> List[str]:
-        """Get YouTube-specific revenue recommendations"""
-        return [
+        """Get YouTube-specific revenue recommendations"""        return [
             "Create longer videos to increase ad revenue potential",
             "Develop a consistent upload schedule",
             "Optimize video SEO with relevant keywords",
@@ -875,8 +837,7 @@ class PlatformComplianceValidator:
         ]
     
     def _get_instagram_revenue_recommendations(self, creator_profile: CreatorProfile) -> List[str]:
-        """Get Instagram-specific revenue recommendations"""
-        return [
+        """Get Instagram-specific revenue recommendations"""        return [
             "Leverage Instagram Shopping for direct product sales",
             "Create sponsored content partnerships with brands",
             "Use Instagram Reels to reach wider audiences",
@@ -884,8 +845,7 @@ class PlatformComplianceValidator:
         ]
     
     def _get_tiktok_revenue_recommendations(self, creator_profile: CreatorProfile) -> List[str]:
-        """Get TikTok-specific revenue recommendations"""
-        return [
+        """Get TikTok-specific revenue recommendations"""        return [
             "Join TikTok Creator Fund for direct monetization",
             "Partner with brands for sponsored content",
             "Use trending sounds and hashtags to increase visibility",
@@ -893,8 +853,7 @@ class PlatformComplianceValidator:
         ]
     
     def _get_general_revenue_recommendations(self, creator_profile: CreatorProfile) -> List[str]:
-        """Get general revenue recommendations"""
-        return [
+        """Get general revenue recommendations"""        return [
             "Diversify revenue streams across multiple platforms",
             "Build direct relationships with fans for recurring support",
             "Create premium content for subscription-based revenue",
@@ -907,8 +866,7 @@ class PlatformComplianceValidator:
         creator_profile: CreatorProfile,
         monetization_tier: MonetizationTier
     ) -> str:
-        """Estimate revenue potential based on creator profile"""
-        follower_count = creator_profile.follower_counts.get(platform, 0)
+        """Estimate revenue potential based on creator profile"""        follower_count = creator_profile.follower_counts.get(platform, 0)
         engagement_rate = creator_profile.engagement_rates.get(platform, 0.02)
         
         # Advanced AI-powered revenue estimation based on content analytics and platform data
@@ -932,8 +890,7 @@ class PlatformComplianceValidator:
             return "Very High ($10,000+/month)"
     
     def _load_platform_requirements(self) -> Dict[Platform, List[PlatformRequirement]]:
-        """Load platform-specific requirements"""
-        return {
+        """Load platform-specific requirements"""        return {
             Platform.SPOTIFY: [
                 PlatformRequirement(
                     requirement_id="audio_quality",
@@ -993,8 +950,7 @@ class PlatformComplianceValidator:
         }
     
     def _load_content_specifications(self) -> Dict[Platform, ContentSpecification]:
-        """Load platform content specifications"""
-        return {
+        """Load platform content specifications"""        return {
             Platform.SPOTIFY: ContentSpecification(
                 min_duration=30.0,
                 max_duration=600.0,
@@ -1029,8 +985,7 @@ class PlatformComplianceValidator:
         }
     
     def _load_monetization_requirements(self) -> Dict[Platform, MonetizationRequirement]:
-        """Load platform monetization requirements"""
-        return {
+        """Load platform monetization requirements"""        return {
             Platform.SPOTIFY: MonetizationRequirement(
                 revenue_sharing=0.7,  # 70% to artist
                 payout_threshold=20.0
@@ -1056,8 +1011,7 @@ class PlatformComplianceValidator:
         }
     
     def health_check(self) -> Dict[str, Any]:
-        """Perform health check of platform compliance validator"""
-        return {
+        """Perform health check of platform compliance validator"""        return {
             "status": "healthy",
             "platforms_supported": len(Platform),
             "cache_size": len(self.compliance_cache),
@@ -1065,8 +1019,7 @@ class PlatformComplianceValidator:
         }
     
     def _calculate_creator_content_count(self, creator_profile: CreatorProfile, platform: Platform) -> int:
-        """Calculate actual content count from creator profile and platform data"""
-        try:
+        """Calculate actual content count from creator profile and platform data"""        try:
             # Extract content count from creator profile metrics
             if creator_profile.platform_metrics:
                 platform_key = platform.value.lower()
@@ -1118,8 +1071,7 @@ class PlatformComplianceValidator:
             return 10  # Safe default
     
     def _estimate_content_count_from_metrics(self, creator_profile: CreatorProfile) -> int:
-        """Estimate content count from platform API or analytics"""
-        try:
+        """Estimate content count from platform API or analytics"""        try:
             if not creator_profile.platform_metrics:
                 return 10  # Default for new creators
             
@@ -1155,8 +1107,7 @@ class PlatformComplianceValidator:
             return 15  # Default estimate
     
     def _comprehensive_copyright_analysis(self, content_data: bytes, content_metadata: ContentMetadata) -> bool:
-        """Perform comprehensive AI-powered content analysis for copyright compliance"""
-        try:
+        """Perform comprehensive AI-powered content analysis for copyright compliance"""        try:
             # Initialize copyright compliance score
             compliance_score = 1.0
             
@@ -1184,8 +1135,7 @@ class PlatformComplianceValidator:
             return False  # Fail safe for copyright concerns
     
     def _check_content_fingerprint_risk(self, content_data: bytes, content_metadata: ContentMetadata) -> float:
-        """Check content fingerprint against known copyrighted material"""
-        try:
+        """Check content fingerprint against known copyrighted material"""        try:
             # Calculate content hash for duplicate detection
             content_hash = hashlib.sha256(content_data).hexdigest()
             
@@ -1219,8 +1169,7 @@ class PlatformComplianceValidator:
             return 0.5  # Medium risk when check fails
     
     def _analyze_metadata_copyright_risk(self, content_metadata: ContentMetadata) -> float:
-        """Analyze metadata for copyright risk indicators"""
-        try:
+        """Analyze metadata for copyright risk indicators"""        try:
             risk_score = 0.0
             
             # Check title for copyright indicators
@@ -1262,8 +1211,7 @@ class PlatformComplianceValidator:
             return 0.3  # Medium risk default
     
     def _analyze_content_patterns_for_copyright(self, content_data: bytes, content_metadata: ContentMetadata) -> float:
-        """Analyze content patterns that might indicate copyright infringement"""
-        try:
+        """Analyze content patterns that might indicate copyright infringement"""        try:
             risk_score = 0.0
             
             # File format analysis
@@ -1294,8 +1242,7 @@ class PlatformComplianceValidator:
             return 0.2  # Low-medium risk default
     
     def _validate_content_licensing(self, content_metadata: ContentMetadata) -> float:
-        """Validate content licensing information"""
-        try:
+        """Validate content licensing information"""        try:
             risk_score = 0.0
             
             # Check for licensing information in metadata
@@ -1332,8 +1279,7 @@ class PlatformComplianceValidator:
         creator_profile: CreatorProfile, 
         platform: Platform
     ) -> float:
-        """Advanced AI-powered revenue estimation based on content analytics and platform data"""
-        try:
+        """Advanced AI-powered revenue estimation based on content analytics and platform data"""        try:
             base_revenue = 0.0
             
             # Platform-specific revenue models
@@ -1419,8 +1365,7 @@ class PlatformComplianceValidator:
             return 0.0
     
     def _calculate_content_quality_multiplier(self, content_metadata: ContentMetadata) -> float:
-        """Calculate content quality multiplier for revenue estimation"""
-        try:
+        """Calculate content quality multiplier for revenue estimation"""        try:
             multiplier = 1.0
             
             # High-quality formats get bonus
@@ -1453,8 +1398,7 @@ class PlatformComplianceValidator:
             return 1.0
     
     def _calculate_experience_multiplier(self, creator_profile: CreatorProfile) -> float:
-        """Calculate creator experience multiplier"""
-        try:
+        """Calculate creator experience multiplier"""        try:
             # Base multiplier by experience level
             experience_multipliers = {
                 'beginner': 0.7,
@@ -1481,8 +1425,7 @@ class PlatformComplianceValidator:
             return 1.0
     
     def _calculate_trending_multiplier(self, content_metadata: ContentMetadata) -> float:
-        """Calculate trending and seasonal multiplier"""
-        try:
+        """Calculate trending and seasonal multiplier"""        try:
             multiplier = 1.0
             
             # Check for trending keywords
@@ -1517,8 +1460,7 @@ class PlatformComplianceValidator:
 
 # Factory functions
 def create_platform_compliance_validator() -> PlatformComplianceValidator:
-    """Create a platform compliance validator"""
-    return PlatformComplianceValidator()
+    """Create a platform compliance validator"""    return PlatformComplianceValidator()
 
 
 def validate_spotify_compliance(
@@ -1526,8 +1468,7 @@ def validate_spotify_compliance(
     content_metadata: ContentMetadata,
     creator_profile: CreatorProfile
 ) -> PlatformComplianceResult:
-    """Validate Spotify compliance for musician content"""
-    validator = create_platform_compliance_validator()
+    """Validate Spotify compliance for musician content"""    validator = create_platform_compliance_validator()
     return validator.validate_platform_compliance(
         Platform.SPOTIFY, content_data, content_metadata, creator_profile
     )
@@ -1538,8 +1479,7 @@ def validate_youtube_compliance(
     content_metadata: ContentMetadata,
     creator_profile: CreatorProfile
 ) -> PlatformComplianceResult:
-    """Validate YouTube compliance for video content"""
-    validator = create_platform_compliance_validator()
+    """Validate YouTube compliance for video content"""    validator = create_platform_compliance_validator()
     return validator.validate_platform_compliance(
         Platform.YOUTUBE, content_data, content_metadata, creator_profile
     )

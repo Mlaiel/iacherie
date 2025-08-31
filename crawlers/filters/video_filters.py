@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Video Content Filters
+"""IA Influencer Agent - Video Content Filters
 ===========================================
 
 Ultra-advanced professional video content filtering for multimedia processing.
@@ -28,9 +27,7 @@ Technical Team Expertise:
 - IA Prompt Engineer: Prompt optimization and AI interaction
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import hashlib
@@ -53,15 +50,12 @@ from .filter_engine import FilterResponse, FilterResult, FilterType, ContentItem
 
 
 class VideoQualityAnalyzer:
-    """Video quality analysis and metrics calculation."""
-    
+    """Video quality analysis and metrics calculation."""    
     def __init__(self):
-        """Initialize video quality analyzer."""
-        self.logger = logging.getLogger(__name__)
+        """Initialize video quality analyzer."""        self.logger = logging.getLogger(__name__)
     
     def analyze_frame_quality(self, frame: np.ndarray) -> Dict[str, float]:
-        """Analyze quality metrics for a single frame."""
-        try:
+        """Analyze quality metrics for a single frame."""        try:
             quality_metrics = {}
             
             # Convert to grayscale for analysis
@@ -102,8 +96,7 @@ class VideoQualityAnalyzer:
             return {'error': str(e), 'overall_score': 0.5}
     
     def calculate_motion_metrics(self, frames: List[np.ndarray]) -> Dict[str, float]:
-        """Calculate motion-related quality metrics."""
-        try:
+        """Calculate motion-related quality metrics."""        try:
             if len(frames) < 2:
                 return {'motion_score': 0.0, 'stability_score': 1.0}
             
@@ -142,15 +135,12 @@ class VideoQualityAnalyzer:
 
 
 class VideoSceneDetector:
-    """Video scene detection and segmentation."""
-    
+    """Video scene detection and segmentation."""    
     def __init__(self):
-        """Initialize scene detector."""
-        self.logger = logging.getLogger(__name__)
+        """Initialize scene detector."""        self.logger = logging.getLogger(__name__)
     
     def detect_scenes(self, frames: List[np.ndarray], threshold: float = 0.3) -> List[Dict[str, Any]]:
-        """Detect scene changes in video frames."""
-        try:
+        """Detect scene changes in video frames."""        try:
             if len(frames) < 2:
                 return [{'start_frame': 0, 'end_frame': len(frames)-1, 'scene_type': 'single'}]
             
@@ -195,8 +185,7 @@ class VideoSceneDetector:
             return [{'start_frame': 0, 'end_frame': len(frames)-1, 'scene_type': 'unknown', 'error': str(e)}]
     
     def _classify_scene_type(self, scene_frames: List[np.ndarray]) -> str:
-        """Classify the type of scene based on visual characteristics."""
-        try:
+        """Classify the type of scene based on visual characteristics."""        try:
             if not scene_frames:
                 return 'unknown'
             
@@ -220,16 +209,13 @@ class VideoSceneDetector:
 
 
 class VideoObjectDetector:
-    """Video object detection using computer vision."""
-    
+    """Video object detection using computer vision."""    
     def __init__(self):
-        """Initialize object detector."""
-        self.logger = logging.getLogger(__name__)
+        """Initialize object detector."""        self.logger = logging.getLogger(__name__)
         self.cascade_classifiers = self._load_cascade_classifiers()
     
     def _load_cascade_classifiers(self) -> Dict[str, Any]:
-        """Load OpenCV cascade classifiers."""
-        classifiers = {}
+        """Load OpenCV cascade classifiers."""        classifiers = {}
         
         try:
             # Face detection
@@ -250,8 +236,7 @@ class VideoObjectDetector:
         return classifiers
     
     def detect_objects_in_frame(self, frame: np.ndarray) -> Dict[str, Any]:
-        """Detect objects in a single frame."""
-        try:
+        """Detect objects in a single frame."""        try:
             detection_results = {
                 'faces': [],
                 'objects': [],
@@ -298,8 +283,7 @@ class VideoObjectDetector:
             return {'faces': [], 'objects': [], 'confidence': 0.0, 'error': str(e)}
     
     def detect_objects_in_video(self, frames: List[np.ndarray], sample_rate: int = 5) -> Dict[str, Any]:
-        """Detect objects across video frames with sampling."""
-        try:
+        """Detect objects across video frames with sampling."""        try:
             all_detections = {
                 'faces_detected': 0,
                 'objects_detected': 0,
@@ -349,11 +333,9 @@ class VideoObjectDetector:
 
 
 class VideoContentFilter:
-    """Enterprise-grade video content filter."""
-    
+    """Enterprise-grade video content filter."""    
     def __init__(self, config: VideoFilterConfig):
-        """Initialize video content filter."""
-        self.config = config
+        """Initialize video content filter."""        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize components
@@ -369,8 +351,7 @@ class VideoContentFilter:
         ai_validation: bool = True,
         strict_mode: bool = False
     ) -> FilterResponse:
-        """Asynchronously filter video content."""
-        return await asyncio.get_event_loop().run_in_executor(
+        """Asynchronously filter video content."""        return await asyncio.get_event_loop().run_in_executor(
             None, self.filter, content, ai_validation, strict_mode
         )
     
@@ -380,8 +361,7 @@ class VideoContentFilter:
         ai_validation: bool = True,
         strict_mode: bool = False
     ) -> FilterResponse:
-        """Filter video content with comprehensive analysis."""
-        start_time = time.time()
+        """Filter video content with comprehensive analysis."""        start_time = time.time()
         
         try:
             if not HAS_VIDEO_LIBS:
@@ -452,8 +432,7 @@ class VideoContentFilter:
             )
     
     def _load_video_content(self, content: ContentItem) -> Tuple[Optional[List[np.ndarray]], Dict[str, Any]]:
-        """Load and validate video content."""
-        try:
+        """Load and validate video content."""        try:
             metadata = {}
             frames = []
             
@@ -538,8 +517,7 @@ class VideoContentFilter:
         ai_validation: bool,
         strict_mode: bool
     ) -> Dict[str, Any]:
-        """Perform comprehensive video content analysis."""
-        analysis_results = {
+        """Perform comprehensive video content analysis."""        analysis_results = {
             'warnings': [],
             'errors': [],
             'confidence': 0.85
@@ -574,8 +552,7 @@ class VideoContentFilter:
             return analysis_results
     
     def _analyze_video_quality(self, frames: List[np.ndarray]) -> Dict[str, Any]:
-        """Analyze video quality metrics."""
-        try:
+        """Analyze video quality metrics."""        try:
             if not frames:
                 return {'error': 'No frames to analyze', 'overall_score': 0.0}
             
@@ -615,8 +592,7 @@ class VideoContentFilter:
             return {'error': str(e), 'overall_score': 0.5}
     
     def _analyze_scenes(self, frames: List[np.ndarray]) -> Dict[str, Any]:
-        """Analyze video scenes and transitions."""
-        try:
+        """Analyze video scenes and transitions."""        try:
             scenes = self.scene_detector.detect_scenes(frames)
             
             return {
@@ -631,8 +607,7 @@ class VideoContentFilter:
             return {'error': str(e), 'scene_count': 0}
     
     def _analyze_objects(self, frames: List[np.ndarray]) -> Dict[str, Any]:
-        """Analyze objects in video."""
-        try:
+        """Analyze objects in video."""        try:
             object_analysis = self.object_detector.detect_objects_in_video(frames)
             return object_analysis
             
@@ -641,8 +616,7 @@ class VideoContentFilter:
             return {'error': str(e), 'detection_confidence': 0.0}
     
     def _analyze_faces(self, frames: List[np.ndarray]) -> Dict[str, Any]:
-        """Analyze faces in video."""
-        try:
+        """Analyze faces in video."""        try:
             # Use object detector for face analysis
             face_analysis = self.object_detector.detect_objects_in_video(frames)
             
@@ -658,8 +632,7 @@ class VideoContentFilter:
             return {'error': str(e), 'confidence': 0.0}
     
     def _classify_content(self, frames: List[np.ndarray]) -> Dict[str, Any]:
-        """Classify video content type."""
-        try:
+        """Classify video content type."""        try:
             # Simplified content classification
             # In real implementation, use specialized models
             
@@ -696,8 +669,7 @@ class VideoContentFilter:
             return {'error': str(e), 'content_type': 'unknown', 'confidence': 0.0}
     
     def _calculate_overall_score(self, analysis_results: Dict[str, Any], strict_mode: bool) -> float:
-        """Calculate overall video filter score."""
-        scores = []
+        """Calculate overall video filter score."""        scores = []
         weights = []
         
         # Quality score
@@ -739,8 +711,7 @@ class VideoContentFilter:
         analysis_results: Dict[str, Any],
         strict_mode: bool
     ) -> FilterResult:
-        """Determine filter result based on analysis."""
-        # Check quality thresholds
+        """Determine filter result based on analysis."""        # Check quality thresholds
         quality_data = analysis_results.get('quality', {})
         if quality_data.get('overall_score', 1.0) < 0.3:  # Very low quality
             return FilterResult.WARNING if not strict_mode else FilterResult.FAILED
@@ -762,8 +733,7 @@ class VideoContentFilter:
                 return FilterResult.FAILED
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on video filter."""
-        health_status = {
+        """Perform health check on video filter."""        health_status = {
             'status': 'healthy',
             'libraries': {
                 'opencv': HAS_VIDEO_LIBS,

@@ -15,8 +15,7 @@ Unauthorized reproduction, distribution, or use is strictly prohibited.
 Violations may result in severe civil and criminal penalties.
 
 For licensing inquiries: mlaiel@live.de
-"""
-# Import everything from the main index module for enhanced functionality
+"""# Import everything from the main index module for enhanced functionality
 from .index import *
 
 # Maintain backward compatibility with existing imports

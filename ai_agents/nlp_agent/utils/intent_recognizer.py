@@ -1,5 +1,4 @@
-"""
-Intent Recognizer - Advanced Intent Detection System
+"""Intent Recognizer - Advanced Intent Detection System
 ===================================================
 
 Advanced AI-powered intent recognition system for understanding user intentions,
@@ -7,9 +6,7 @@ goals, and purposes in text content with high accuracy.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
@@ -32,8 +29,7 @@ from .config import NLPAgentConfig, default_config
 logger = logging.getLogger(__name__)
 
 class IntentCategory(Enum):
-    """Main intent categories"""
-    INFORMATIONAL = "informational"
+    """Main intent categories"""    INFORMATIONAL = "informational"
     TRANSACTIONAL = "transactional"
     NAVIGATIONAL = "navigational"
     COMMERCIAL = "commercial"
@@ -43,8 +39,7 @@ class IntentCategory(Enum):
     PERSONAL = "personal"
 
 class IntentType(Enum):
-    """Specific intent types"""
-    QUESTION = "question"
+    """Specific intent types"""    QUESTION = "question"
     REQUEST = "request"
     COMPLAINT = "complaint"
     COMPLIMENT = "compliment"
@@ -62,8 +57,7 @@ class IntentType(Enum):
 
 @dataclass
 class IntentScore:
-    """Individual intent detection score"""
-    intent: str
+    """Individual intent detection score"""    intent: str
     category: str
     confidence: float
     keywords: List[str] = field(default_factory=list)
@@ -71,8 +65,7 @@ class IntentScore:
 
 @dataclass
 class IntentResult:
-    """Complete intent recognition result"""
-    text: str
+    """Complete intent recognition result"""    text: str
     primary_intent: str
     primary_category: str
     confidence: float
@@ -88,14 +81,11 @@ class IntentResult:
     timestamp: str = field(default_factory=lambda: datetime.now().isoformat())
 
 class IntentRecognizer:
-    """
-    Advanced AI-powered intent recognition system for understanding user intentions,
+    """    Advanced AI-powered intent recognition system for understanding user intentions,
     goals, and purposes in text content.
-    """
-    
+    """    
     def __init__(self, config: Optional[NLPAgentConfig] = None):
-        """Initialize Intent Recognizer"""
-        self.config = config or default_config
+        """Initialize Intent Recognizer"""        self.config = config or default_config
         self.models = {}
         self.pipelines = {}
         self.intent_patterns = self._load_intent_patterns()
@@ -104,8 +94,7 @@ class IntentRecognizer:
         self._initialize_models()
     
     def _load_intent_patterns(self) -> Dict[str, Dict[str, List[str]]]:
-        """Load patterns for intent recognition"""
-        return {
+        """Load patterns for intent recognition"""        return {
             "question": {
                 "patterns": [
                     r'\b(what|how|why|where|when|who|which|whose)\b',
@@ -199,8 +188,7 @@ class IntentRecognizer:
         }
     
     def _load_context_analyzers(self) -> Dict[str, List[str]]:
-        """Load context analyzers for intent refinement"""
-        return {
+        """Load context analyzers for intent refinement"""        return {
             "urgency": {
                 "high": ["urgent", "asap", "immediately", "emergency", "critical", "now"],
                 "medium": ["soon", "today", "this week", "please", "important"],
@@ -224,8 +212,7 @@ class IntentRecognizer:
         }
     
     def _initialize_models(self):
-        """Initialize intent recognition models"""
-        try:
+        """Initialize intent recognition models"""        try:
             if TRANSFORMERS_AVAILABLE:
                 # Intent classification model
                 self.pipelines["intent"] = pipeline(
@@ -254,8 +241,7 @@ class IntentRecognizer:
             self._setup_fallback_methods()
     
     def _setup_fallback_methods(self):
-        """Setup fallback methods for intent recognition"""
-        logger.info("Setting up intent recognition fallback methods")
+        """Setup fallback methods for intent recognition"""        logger.info("Setting up intent recognition fallback methods")
         self.fallback_mode = True
         
         # Compile regex patterns for better performance
@@ -267,8 +253,7 @@ class IntentRecognizer:
             ]
     
     def _get_device(self) -> int:
-        """Get optimal device for model execution"""
-        if self.config.performance.enable_gpu and TRANSFORMERS_AVAILABLE:
+        """Get optimal device for model execution"""        if self.config.performance.enable_gpu and TRANSFORMERS_AVAILABLE:
             try:
                 if torch.cuda.is_available():
                     return 0  # Use first GPU
@@ -283,8 +268,7 @@ class IntentRecognizer:
         analyze_urgency: bool = True,
         detect_emotion: bool = True
     ) -> Union[IntentResult, List[IntentResult]]:
-        """
-        Recognize intent in text
+        """        Recognize intent in text
         
         Args:
             text: Text or list of texts to analyze
@@ -294,8 +278,7 @@ class IntentRecognizer:
         
         Returns:
             IntentResult or list of results
-        """
-        start_time = asyncio.get_event_loop().time()
+        """        start_time = asyncio.get_event_loop().time()
         
         # Handle batch processing
         is_batch = isinstance(text, list)
@@ -331,8 +314,7 @@ class IntentRecognizer:
         analyze_urgency: bool,
         detect_emotion: bool
     ) -> IntentResult:
-        """Recognize intent for a single text"""
-        if not text or not isinstance(text, str):
+        """Recognize intent for a single text"""        if not text or not isinstance(text, str):
             raise ValueError("Input text must be a non-empty string")
         
         result = IntentResult(
@@ -384,8 +366,7 @@ class IntentRecognizer:
             return result
     
     async def _recognize_with_transformer(self, text: str, result: IntentResult):
-        """Recognize intent using transformer model"""
-        try:
+        """Recognize intent using transformer model"""        try:
             # Use zero-shot classification for intent recognition
             intent_pipeline = self.pipelines.get("intent")
             if intent_pipeline:
@@ -423,8 +404,7 @@ class IntentRecognizer:
             await self._recognize_with_patterns(text, result)
     
     async def _recognize_with_patterns(self, text: str, result: IntentResult):
-        """Recognize intent using pattern-based approach"""
-        text_lower = text.lower()
+        """Recognize intent using pattern-based approach"""        text_lower = text.lower()
         intent_scores = {}
         
         # Check each intent pattern
@@ -479,8 +459,7 @@ class IntentRecognizer:
             result.confidence = 0.1
     
     def _map_intent_to_category(self, intent: str) -> str:
-        """Map specific intent to general category"""
-        intent_to_category = {
+        """Map specific intent to general category"""        intent_to_category = {
             "question": "informational",
             "request": "support",
             "complaint": "support",
@@ -501,8 +480,7 @@ class IntentRecognizer:
         return intent_to_category.get(intent, "personal")
     
     def _extract_intent_keywords(self, text: str, intent: str) -> List[str]:
-        """Extract keywords that match a specific intent"""
-        if intent not in self.intent_patterns:
+        """Extract keywords that match a specific intent"""        if intent not in self.intent_patterns:
             return []
         
         text_lower = text.lower()
@@ -511,8 +489,7 @@ class IntentRecognizer:
         return [keyword for keyword in keywords if keyword in text_lower]
     
     async def _analyze_context(self, text: str, result: IntentResult):
-        """Analyze contextual information"""
-        # This method can be expanded with more sophisticated context analysis
+        """Analyze contextual information"""        # This method can be expanded with more sophisticated context analysis
         context_info = {}
         
         # Check for context clues
@@ -528,8 +505,7 @@ class IntentRecognizer:
         result.metadata.update(context_info)
     
     async def _analyze_urgency(self, text: str) -> str:
-        """Analyze urgency level of the text"""
-        text_lower = text.lower()
+        """Analyze urgency level of the text"""        text_lower = text.lower()
         urgency_indicators = self.context_analyzers["urgency"]
         
         # Check for urgency indicators
@@ -541,8 +517,7 @@ class IntentRecognizer:
         return "medium"
     
     async def _detect_emotion_context(self, text: str) -> Optional[str]:
-        """Detect emotional context of the text"""
-        text_lower = text.lower()
+        """Detect emotional context of the text"""        text_lower = text.lower()
         emotion_indicators = self.context_analyzers["emotion"]
         
         emotion_scores = {}
@@ -557,8 +532,7 @@ class IntentRecognizer:
         return None
     
     async def _detect_target_audience(self, text: str) -> Optional[str]:
-        """Detect target audience of the text"""
-        text_lower = text.lower()
+        """Detect target audience of the text"""        text_lower = text.lower()
         audience_indicators = self.context_analyzers["audience"]
         
         for audience, indicators in audience_indicators.items():
@@ -568,8 +542,7 @@ class IntentRecognizer:
         return "general"
     
     async def _requires_action(self, text: str) -> bool:
-        """Determine if text requires action"""
-        action_indicators = [
+        """Determine if text requires action"""        action_indicators = [
             "please", "help", "fix", "solve", "do", "make", "create",
             "send", "give", "provide", "show", "tell", "explain"
         ]
@@ -578,8 +551,7 @@ class IntentRecognizer:
         return any(indicator in text_lower for indicator in action_indicators)
     
     async def _expects_response(self, text: str) -> bool:
-        """Determine if text expects a response"""
-        response_indicators = [
+        """Determine if text expects a response"""        response_indicators = [
             "?", "what", "how", "why", "when", "where", "who",
             "please respond", "let me know", "get back to me",
             "reply", "answer", "feedback"
@@ -588,8 +560,7 @@ class IntentRecognizer:
         return any(indicator in text.lower() for indicator in response_indicators)
     
     async def _analyze_temporal_context(self, text: str) -> Optional[str]:
-        """Analyze temporal context of the text"""
-        text_lower = text.lower()
+        """Analyze temporal context of the text"""        text_lower = text.lower()
         temporal_indicators = self.context_analyzers["temporal"]
         
         for timeframe, indicators in temporal_indicators.items():
@@ -599,8 +570,7 @@ class IntentRecognizer:
         return None
     
     async def analyze_intent_confidence(self, text: str) -> Dict[str, float]:
-        """Get confidence scores for all possible intents"""
-        result = await self.recognize_intent(text)
+        """Get confidence scores for all possible intents"""        result = await self.recognize_intent(text)
         
         confidence_scores = {}
         for score in result.intent_scores:
@@ -613,8 +583,7 @@ class IntentRecognizer:
         text1: str,
         text2: str
     ) -> Dict[str, Any]:
-        """Compare intents between two texts"""
-        results = await self.recognize_intent([text1, text2])
+        """Compare intents between two texts"""        results = await self.recognize_intent([text1, text2])
         result1, result2 = results
         
         comparison = {
@@ -636,16 +605,13 @@ class IntentRecognizer:
         return comparison
     
     def get_supported_intents(self) -> List[str]:
-        """Get list of supported intent types"""
-        return list(self.intent_patterns.keys())
+        """Get list of supported intent types"""        return list(self.intent_patterns.keys())
     
     def get_intent_patterns(self, intent: str) -> Dict[str, Any]:
-        """Get patterns for a specific intent"""
-        return self.intent_patterns.get(intent, {})
+        """Get patterns for a specific intent"""        return self.intent_patterns.get(intent, {})
     
     def health_check(self) -> Dict[str, Any]:
-        """Perform health check"""
-        status = {
+        """Perform health check"""        status = {
             "status": "healthy",
             "models_loaded": len(self.pipelines),
             "patterns_loaded": len(self.intent_patterns),
@@ -665,8 +631,7 @@ class IntentRecognizer:
         return status
     
     def shutdown(self):
-        """Shutdown the intent recognizer"""
-        logger.info("Shutting down Intent Recognizer")
+        """Shutdown the intent recognizer"""        logger.info("Shutting down Intent Recognizer")
         
         # Clear models
         self.models.clear()
@@ -680,8 +645,7 @@ class IntentRecognizer:
 
 # Utility functions
 def calculate_intent_similarity(result1: IntentResult, result2: IntentResult) -> float:
-    """Calculate similarity between two intent results"""
-    # Same intent
+    """Calculate similarity between two intent results"""    # Same intent
     if result1.primary_intent == result2.primary_intent:
         intent_sim = 1.0
     elif result1.primary_category == result2.primary_category:
@@ -702,8 +666,7 @@ def calculate_intent_similarity(result1: IntentResult, result2: IntentResult) ->
     return (intent_sim + confidence_sim + context_sim) / 3.0
 
 def extract_intent_features(result: IntentResult) -> Dict[str, Any]:
-    """Extract key features from intent result"""
-    return {
+    """Extract key features from intent result"""    return {
         "primary_intent": result.primary_intent,
         "primary_category": result.primary_category,
         "confidence": result.confidence,

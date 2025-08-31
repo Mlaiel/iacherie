@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-IA-Influencer-Agent Remix Agent Module
+"""IA-Influencer-Agent Remix Agent Module
 ================================================================================
 Module: ai_agents/remix_agent/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -20,9 +19,7 @@ LOGIQUE MÉTIER: User request → Agent analysis → Style processing → Collab
 Quality assurance → Trend integration → Professional output
 
 Technologies IA: Multi-Agent Systems, Style Analysis, Trend Prediction, Collaboration Facilitation
-"""
-
-__version__ = "1.0.0"
+"""__version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."

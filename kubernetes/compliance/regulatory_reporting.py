@@ -1,12 +1,9 @@
-"""
-IA Influencer Agent - Regulatory Reporting System
+"""IA Influencer Agent - Regulatory Reporting System
 Automated compliance reporting for multiple regulatory frameworks
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -32,8 +29,7 @@ logger = get_logger(__name__)
 
 
 class ReportType(str, Enum):
-    """Regulatory report types"""
-    QUARTERLY = "quarterly"
+    """Regulatory report types"""    QUARTERLY = "quarterly"
     ANNUAL = "annual"
     INCIDENT = "incident"
     BREACH_NOTIFICATION = "breach_notification"
@@ -43,8 +39,7 @@ class ReportType(str, Enum):
 
 
 class ReportFormat(str, Enum):
-    """Report output formats"""
-    PDF = "pdf"
+    """Report output formats"""    PDF = "pdf"
     XML = "xml"
     JSON = "json"
     CSV = "csv"
@@ -52,8 +47,7 @@ class ReportFormat(str, Enum):
 
 
 class SubmissionMethod(str, Enum):
-    """Report submission methods"""
-    AUTOMATED_API = "automated_api"
+    """Report submission methods"""    AUTOMATED_API = "automated_api"
     SECURE_PORTAL = "secure_portal"
     EMAIL_ENCRYPTED = "email_encrypted"
     MANUAL_UPLOAD = "manual_upload"
@@ -61,8 +55,7 @@ class SubmissionMethod(str, Enum):
 
 
 class ReportStatus(str, Enum):
-    """Report generation and submission status"""
-    DRAFT = "draft"
+    """Report generation and submission status"""    DRAFT = "draft"
     GENERATED = "generated"
     REVIEWED = "reviewed"
     APPROVED = "approved"
@@ -74,8 +67,7 @@ class ReportStatus(str, Enum):
 
 @dataclass
 class RegulatoryRequirement:
-    """Regulatory reporting requirement definition"""
-    requirement_id: str
+    """Regulatory reporting requirement definition"""    requirement_id: str
     framework: ComplianceFramework
     jurisdiction: str
     report_type: ReportType
@@ -92,8 +84,7 @@ class RegulatoryRequirement:
 
 @dataclass
 class ComplianceMetrics:
-    """Compliance metrics for reporting"""
-    metric_name: str
+    """Compliance metrics for reporting"""    metric_name: str
     metric_value: float
     unit: str
     period_start: datetime
@@ -106,8 +97,7 @@ class ComplianceMetrics:
 
 @dataclass
 class RegulatoryReport:
-    """Complete regulatory report structure"""
-    report_id: str
+    """Complete regulatory report structure"""    report_id: str
     framework: ComplianceFramework
     report_type: ReportType
     jurisdiction: str
@@ -127,8 +117,7 @@ class RegulatoryReport:
 
 
 class RegulatoryReportingSystem:
-    """Automated regulatory reporting and submission system"""
-    
+    """Automated regulatory reporting and submission system"""    
     def __init__(self):
         self.logger = logger
         self.audit_logger = AuditLogger()
@@ -148,8 +137,7 @@ class RegulatoryReportingSystem:
         self._scheduler_running = False
     
     async def start_reporting_scheduler(self) -> None:
-        """Start automated regulatory reporting scheduler"""
-        try:
+        """Start automated regulatory reporting scheduler"""        try:
             if self._scheduler_running:
                 self.logger.warning("Regulatory reporting scheduler already running")
                 return
@@ -171,8 +159,7 @@ class RegulatoryReportingSystem:
             raise
     
     async def stop_reporting_scheduler(self) -> None:
-        """Stop regulatory reporting scheduler"""
-        try:
+        """Stop regulatory reporting scheduler"""        try:
             self._scheduler_running = False
             
             # Cancel all reporting tasks
@@ -197,8 +184,7 @@ class RegulatoryReportingSystem:
         period_end: datetime,
         generated_by: str
     ) -> str:
-        """Generate comprehensive regulatory report"""
-        try:
+        """Generate comprehensive regulatory report"""        try:
             # Get regulatory requirement
             requirement = self._get_regulatory_requirement(framework, report_type, jurisdiction)
             if not requirement:
@@ -284,8 +270,7 @@ class RegulatoryReportingSystem:
         submission_method: Optional[SubmissionMethod] = None,
         reviewer_approval: bool = False
     ) -> Dict[str, Any]:
-        """Submit regulatory report to authorities"""
-        try:
+        """Submit regulatory report to authorities"""        try:
             # Get report details
             async with get_db_session() as session:
                 report_result = await session.execute(
@@ -390,8 +375,7 @@ class RegulatoryReportingSystem:
         framework: ComplianceFramework,
         jurisdiction: str = None
     ) -> Dict[str, Any]:
-        """Track regulatory compliance status and upcoming deadlines"""
-        try:
+        """Track regulatory compliance status and upcoming deadlines"""        try:
             # Get applicable requirements
             requirements = [
                 req for req in self.regulatory_requirements.values()
@@ -475,8 +459,7 @@ class RegulatoryReportingSystem:
         period_end: datetime,
         data_sources: List[str]
     ) -> Dict[str, Any]:
-        """Collect compliance data from various sources"""
-        try:
+        """Collect compliance data from various sources"""        try:
             compliance_data = {
                 "audit_logs": [],
                 "compliance_metrics": [],
@@ -528,8 +511,7 @@ class RegulatoryReportingSystem:
             return {}
     
     def _load_regulatory_requirements(self) -> Dict[str, RegulatoryRequirement]:
-        """Load regulatory reporting requirements"""
-        return {
+        """Load regulatory reporting requirements"""        return {
             "GDPR_ANNUAL_EU": RegulatoryRequirement(
                 requirement_id="GDPR_ANNUAL_EU",
                 framework=ComplianceFramework.GDPR,

@@ -1,12 +1,9 @@
-"""
-Business Logic Core Demonstration
+"""Business Logic Core Demonstration
 Shows the 53 AI agents working together in the finalized business workflow
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 from business_logic_core import (
     BusinessLogicCore,
     ContentUpload, 
@@ -17,8 +14,7 @@ from business_logic_core import (
 
 
 async def demonstrate_business_logic_core():
-    """Demonstrate the complete business logic core functionality"""
-    
+    """Demonstrate the complete business logic core functionality"""    
     print("🎉 BUSINESS LOGIC CORE DEMONSTRATION")
     print("=" * 60)
     print("🚀 Ainflue Platform - 53 AI Agents Integration")

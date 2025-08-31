@@ -1,5 +1,4 @@
-"""
-Royalty Calculator - Advanced Revenue Distribution & Payment Processing System
+"""Royalty Calculator - Advanced Revenue Distribution & Payment Processing System
 
 Comprehensive royalty calculation, revenue distribution, and automated payment processing
 for multi-party content licensing across all platforms and territories.
@@ -18,9 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -51,8 +48,7 @@ from ...utils.fraud_detector import FraudDetector
 logger = logging.getLogger(__name__)
 
 class RoyaltyModel(Enum):
-    """Types of royalty calculation models"""
-    PERCENTAGE = "percentage"
+    """Types of royalty calculation models"""    PERCENTAGE = "percentage"
     FIXED_RATE = "fixed_rate"
     TIERED = "tiered"
     PERFORMANCE = "performance"
@@ -60,8 +56,7 @@ class RoyaltyModel(Enum):
     WATERFALL = "waterfall"
 
 class PaymentMethod(Enum):
-    """Available payment methods"""
-    BANK_TRANSFER = "bank_transfer"
+    """Available payment methods"""    BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE = "stripe"
     CRYPTOCURRENCY = "cryptocurrency"
@@ -69,8 +64,7 @@ class PaymentMethod(Enum):
     WIRE_TRANSFER = "wire_transfer"
 
 class PaymentStatus(Enum):
-    """Payment processing status"""
-    PENDING = "pending"
+    """Payment processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -78,8 +72,7 @@ class PaymentStatus(Enum):
     REFUNDED = "refunded"
 
 class RevenueSource(Enum):
-    """Sources of revenue"""
-    STREAMING = "streaming"
+    """Sources of revenue"""    STREAMING = "streaming"
     DOWNLOAD = "download"
     SYNC_LICENSE = "sync_license"
     PERFORMANCE = "performance"
@@ -90,8 +83,7 @@ class RevenueSource(Enum):
 
 @dataclass
 class UsageMetrics:
-    """Content usage metrics for royalty calculation"""
-    plays: int = 0
+    """Content usage metrics for royalty calculation"""    plays: int = 0
     downloads: int = 0
     streams: int = 0
     views: int = 0
@@ -106,8 +98,7 @@ class UsageMetrics:
 
 @dataclass
 class RevenueData:
-    """Revenue data for royalty calculation"""
-    source: RevenueSource
+    """Revenue data for royalty calculation"""    source: RevenueSource
     gross_revenue: Decimal
     platform_fees: Decimal
     taxes: Decimal
@@ -120,8 +111,7 @@ class RevenueData:
 
 @dataclass
 class RoyaltyCalculationResult:
-    """Result of royalty calculation"""
-    calculation_id: str
+    """Result of royalty calculation"""    calculation_id: str
     content_id: str
     license_id: str
     rightholder_id: str
@@ -140,8 +130,7 @@ class RoyaltyCalculationResult:
 
 @dataclass
 class PaymentInstruction:
-    """Payment processing instruction"""
-    payment_id: str
+    """Payment processing instruction"""    payment_id: str
     recipient_id: str
     recipient_info: Dict[str, Any]
     amount: Decimal
@@ -153,13 +142,11 @@ class PaymentInstruction:
     recurring: bool = False
 
 class RoyaltyCalculator:
-    """
-    Advanced Royalty Calculation Engine
+    """    Advanced Royalty Calculation Engine
     
     Handles complex royalty calculations with multiple revenue streams,
     tiered rates, territorial adjustments, and multi-party distributions.
-    """
-    
+    """    
     def __init__(self):
         self.currency_converter = CurrencyConverter()
         self.tax_calculator = TaxCalculator()
@@ -180,8 +167,7 @@ class RoyaltyCalculator:
         }
 
     async def initialize(self):
-        """Initialize royalty calculator with rate tables and models"""
-        await self._load_rate_tables()
+        """Initialize royalty calculator with rate tables and models"""        await self._load_rate_tables()
         await self._load_calculation_models()
         await self._load_territorial_adjustments()
         await self._load_platform_rates()
@@ -196,8 +182,7 @@ class RoyaltyCalculator:
         royalty_model: RoyaltyModel = RoyaltyModel.PERCENTAGE,
         base_rate: Optional[Decimal] = None
     ) -> RoyaltyCalculationResult:
-        """
-        Calculate comprehensive royalties for content usage
+        """        Calculate comprehensive royalties for content usage
         
         Args:
             content_id: Content identifier
@@ -210,8 +195,7 @@ class RoyaltyCalculator:
             
         Returns:
             Detailed royalty calculation result
-        """
-        try:
+        """        try:
             calculation_id = str(uuid.uuid4())
             period_start, period_end = calculation_period
             
@@ -309,8 +293,7 @@ class RoyaltyCalculator:
         ownership_structure: List[Dict[str, Any]],
         distribution_rules: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """
-        Calculate royalty distribution among multiple rights holders
+        """        Calculate royalty distribution among multiple rights holders
         
         Args:
             content_id: Content identifier
@@ -320,8 +303,7 @@ class RoyaltyCalculator:
             
         Returns:
             List of individual royalty allocations
-        """
-        try:
+        """        try:
             distributions = []
             remaining_royalty = total_royalty
             
@@ -388,8 +370,7 @@ class RoyaltyCalculator:
         period_end: datetime,
         include_details: bool = True
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive royalty statement for rights holder
+        """        Generate comprehensive royalty statement for rights holder
         
         Args:
             rightholder_id: Rights holder identifier
@@ -399,8 +380,7 @@ class RoyaltyCalculator:
             
         Returns:
             Complete royalty statement
-        """
-        try:
+        """        try:
             # Get all calculations for period
             calculations = await self._get_calculations_for_period(
                 rightholder_id, period_start, period_end
@@ -489,8 +469,7 @@ class RoyaltyCalculator:
         royalty_rate: Decimal,
         usage_metrics: UsageMetrics
     ) -> Decimal:
-        """Calculate royalties using percentage model"""
-        total_royalty = Decimal("0.00")
+        """Calculate royalties using percentage model"""        total_royalty = Decimal("0.00")
         
         for revenue in revenue_data:
             # Apply base percentage
@@ -512,8 +491,7 @@ class RoyaltyCalculator:
         usage_metrics: UsageMetrics,
         license_info: Dict[str, Any]
     ) -> Decimal:
-        """Calculate royalties using tiered model"""
-        total_royalty = Decimal("0.00")
+        """Calculate royalties using tiered model"""        total_royalty = Decimal("0.00")
         
         # Get tier structure
         tiers = license_info.get("tier_structure", [
@@ -553,8 +531,7 @@ class RoyaltyCalculator:
         license_info: Dict[str, Any],
         revenue_data: List[RevenueData]
     ) -> Dict[str, Decimal]:
-        """Calculate all applicable deductions"""
-        deductions = {}
+        """Calculate all applicable deductions"""        deductions = {}
         
         # Platform fees
         if license_info.get("platform_fee_passthrough", False):
@@ -589,8 +566,7 @@ class RoyaltyCalculator:
         return deductions
 
     async def _load_rate_tables(self):
-        """Load royalty rate tables"""
-        self.rate_tables = {
+        """Load royalty rate tables"""        self.rate_tables = {
             "streaming": {
                 "spotify": Decimal("0.08"),
                 "apple_music": Decimal("0.09"),
@@ -611,8 +587,7 @@ class RoyaltyCalculator:
         }
 
     async def _load_territorial_adjustments(self):
-        """Load territorial adjustment factors"""
-        self.territorial_adjustments = {
+        """Load territorial adjustment factors"""        self.territorial_adjustments = {
             "US": Decimal("1.0"),
             "EU": Decimal("0.95"),
             "UK": Decimal("0.92"),
@@ -622,10 +597,8 @@ class RoyaltyCalculator:
 
 
 class RevenueDistributor:
-    """
-    Revenue Distribution and Payment Processing System
-    """
-    
+    """    Revenue Distribution and Payment Processing System
+    """    
     def __init__(self):
         self.payment_processors = {
             PaymentMethod.STRIPE: StripeProcessor(),
@@ -639,8 +612,7 @@ class RevenueDistributor:
         distributions: List[Dict[str, Any]],
         payment_schedule: Optional[datetime] = None
     ) -> List[Dict[str, Any]]:
-        """Process royalty payments to rights holders"""
-        try:
+        """Process royalty payments to rights holders"""        try:
             payment_results = []
             
             for distribution in distributions:
@@ -668,8 +640,7 @@ class RevenueDistributor:
             raise PaymentError(f"Failed to process payments: {str(e)}")
             
     async def _process_payment(self, instruction: PaymentInstruction) -> Dict[str, Any]:
-        """Process individual payment"""
-        try:
+        """Process individual payment"""        try:
             processor = self.payment_processors.get(instruction.payment_method)
             if not processor:
                 raise PaymentError(f"Unsupported payment method: {instruction.payment_method}")

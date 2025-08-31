@@ -1,5 +1,4 @@
-"""
-Blockchain Content Protection - Main Index
+"""Blockchain Content Protection - Main Index
 Professional blockchain integration hub for all content protection services
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -19,9 +18,7 @@ without explicit written authorization from Fahed Mlaiel is strictly
 prohibited and will result in legal action.
 
 Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
 from dataclasses import dataclass
@@ -55,8 +52,7 @@ logger = logging.getLogger(__name__)
 
 
 class ServiceStatus(Enum):
-    """Blockchain service status"""
-    INITIALIZING = "initializing"
+    """Blockchain service status"""    INITIALIZING = "initializing"
     ACTIVE = "active"
     MAINTENANCE = "maintenance"
     ERROR = "error"
@@ -65,8 +61,7 @@ class ServiceStatus(Enum):
 
 @dataclass
 class BlockchainServiceConfig:
-    """Complete blockchain service configuration"""
-    environment: Environment
+    """Complete blockchain service configuration"""    environment: Environment
     networks: Dict[str, Dict[str, Any]]
     smart_contracts: Dict[str, Any]
     nft_settings: Dict[str, Any]
@@ -79,11 +74,9 @@ class BlockchainServiceConfig:
 
 
 class BlockchainContentProtectionHub:
-    """
-    Professional blockchain content protection hub
+    """    Professional blockchain content protection hub
     Central orchestrator for all blockchain-based content protection services
-    """
-    
+    """    
     def __init__(self, config: BlockchainServiceConfig):
         self.config = config
         self.status = ServiceStatus.INITIALIZING
@@ -106,13 +99,11 @@ class BlockchainContentProtectionHub:
         self.performance_metrics = {}
         
     async def initialize(self) -> bool:
-        """
-        Initialize all blockchain services
+        """        Initialize all blockchain services
         
         Returns:
             True if initialization successful, False otherwise
-        """
-        try:
+        """        try:
             logger.info("Initializing Blockchain Content Protection Hub...")
             
             # Initialize core services
@@ -157,8 +148,7 @@ class BlockchainContentProtectionHub:
             return False
     
     async def _initialize_core_services(self):
-        """Initialize core blockchain services"""
-        try:
+        """Initialize core blockchain services"""        try:
             # Create blockchain configuration
             blockchain_config = BlockchainConfig(
                 environment=self.config.environment,
@@ -177,8 +167,7 @@ class BlockchainContentProtectionHub:
             raise
     
     async def _initialize_contract_manager(self):
-        """Initialize smart contract manager"""
-        try:
+        """Initialize smart contract manager"""        try:
             contract_config = self.config.smart_contracts
             
             self.contract_manager = SmartContractManager(contract_config)
@@ -192,8 +181,7 @@ class BlockchainContentProtectionHub:
             raise
     
     async def _initialize_nft_manager(self):
-        """Initialize NFT manager"""
-        try:
+        """Initialize NFT manager"""        try:
             nft_config = self.config.nft_settings
             
             self.nft_manager = NFTManager(nft_config)
@@ -207,8 +195,7 @@ class BlockchainContentProtectionHub:
             raise
     
     async def _initialize_payment_processor(self):
-        """Initialize payment processor"""
-        try:
+        """Initialize payment processor"""        try:
             payment_config = PaymentConfig(**self.config.payment_processors)
             
             self.payment_processor = CryptoPaymentProcessor(payment_config)
@@ -222,8 +209,7 @@ class BlockchainContentProtectionHub:
             raise
     
     async def _initialize_defi_integration(self):
-        """Initialize DeFi integration"""
-        try:
+        """Initialize DeFi integration"""        try:
             defi_config = self.config.defi_protocols
             
             self.defi_integration = DeFiIntegration(defi_config)
@@ -237,8 +223,7 @@ class BlockchainContentProtectionHub:
             raise
     
     async def _initialize_monitoring(self):
-        """Initialize blockchain monitoring"""
-        try:
+        """Initialize blockchain monitoring"""        try:
             monitoring_config = self.config.monitoring_config
             
             self.monitor = BlockchainMonitor(monitoring_config)
@@ -252,8 +237,7 @@ class BlockchainContentProtectionHub:
             raise
     
     async def _initialize_timestamping(self):
-        """Initialize cryptographic timestamping"""
-        try:
+        """Initialize cryptographic timestamping"""        try:
             timestamping_config = self.config.timestamping_config
             
             self.timestamping = CryptographicTimestamping(timestamping_config)
@@ -266,8 +250,7 @@ class BlockchainContentProtectionHub:
             raise
     
     async def _initialize_validation(self):
-        """Initialize blockchain validation"""
-        try:
+        """Initialize blockchain validation"""        try:
             validation_config = self.config.validation_config
             
             self.validator = BlockchainValidator(validation_config)
@@ -280,8 +263,7 @@ class BlockchainContentProtectionHub:
             raise
     
     async def _perform_health_checks(self) -> bool:
-        """Perform comprehensive health checks on all services"""
-        try:
+        """Perform comprehensive health checks on all services"""        try:
             health_results = {}
             
             # Check smart contract manager
@@ -312,40 +294,35 @@ class BlockchainContentProtectionHub:
             return False
     
     async def _check_contract_health(self) -> bool:
-        """Check smart contract manager health"""
-        try:
+        """Check smart contract manager health"""        try:
             # Test contract deployment capability
             return await self.contract_manager.test_connection()
         except Exception:
             return False
     
     async def _check_nft_health(self) -> bool:
-        """Check NFT manager health"""
-        try:
+        """Check NFT manager health"""        try:
             # Test NFT operations
             return await self.nft_manager.test_connection()
         except Exception:
             return False
     
     async def _check_payment_health(self) -> bool:
-        """Check payment processor health"""
-        try:
+        """Check payment processor health"""        try:
             # Test payment processing capability
             return await self.payment_processor.test_connection()
         except Exception:
             return False
     
     async def _check_defi_health(self) -> bool:
-        """Check DeFi integration health"""
-        try:
+        """Check DeFi integration health"""        try:
             # Test DeFi protocol connectivity
             return await self.defi_integration.test_protocols()
         except Exception:
             return False
     
     async def _check_monitoring_health(self) -> bool:
-        """Check monitoring service health"""
-        try:
+        """Check monitoring service health"""        try:
             # Test monitoring capabilities
             return self.monitor.is_healthy()
         except Exception:
@@ -360,8 +337,7 @@ class BlockchainContentProtectionHub:
         license_terms: Dict[str, Any],
         network: str = "ethereum"
     ) -> Dict[str, Any]:
-        """
-        Register content copyright on blockchain
+        """        Register content copyright on blockchain
         
         Args:
             content_path: Path to content file
@@ -371,8 +347,7 @@ class BlockchainContentProtectionHub:
             
         Returns:
             Registration result with transaction details
-        """
-        try:
+        """        try:
             if not self.contract_manager:
                 raise BlockchainError("Contract manager not initialized")
             
@@ -418,8 +393,7 @@ class BlockchainContentProtectionHub:
         metadata: NFTMetadata,
         network: str = "ethereum"
     ) -> Dict[str, Any]:
-        """
-        Create NFT for content protection
+        """        Create NFT for content protection
         
         Args:
             content_path: Path to content file
@@ -428,8 +402,7 @@ class BlockchainContentProtectionHub:
             
         Returns:
             NFT creation result
-        """
-        try:
+        """        try:
             if not self.nft_manager:
                 raise BlockchainError("NFT manager not initialized")
             
@@ -468,8 +441,7 @@ class BlockchainContentProtectionHub:
         payment_method: PaymentMethod,
         recipient_address: str
     ) -> Dict[str, Any]:
-        """
-        Process payment for content usage
+        """        Process payment for content usage
         
         Args:
             content_id: Content identifier
@@ -480,8 +452,7 @@ class BlockchainContentProtectionHub:
             
         Returns:
             Payment processing result
-        """
-        try:
+        """        try:
             if not self.payment_processor:
                 raise BlockchainError("Payment processor not initialized")
             
@@ -513,8 +484,7 @@ class BlockchainContentProtectionHub:
         original_hash: str,
         validation_level: ValidationLevel = ValidationLevel.STANDARD
     ) -> ValidationReport:
-        """
-        Validate content integrity using blockchain validation
+        """        Validate content integrity using blockchain validation
         
         Args:
             content_path: Path to content file
@@ -523,8 +493,7 @@ class BlockchainContentProtectionHub:
             
         Returns:
             Validation report
-        """
-        try:
+        """        try:
             if not self.validator:
                 raise BlockchainError("Validator not initialized")
             
@@ -565,8 +534,7 @@ class BlockchainContentProtectionHub:
         content_path: str,
         metadata: Dict[str, Any]
     ) -> TimestampProof:
-        """
-        Create cryptographic timestamp proof for content
+        """        Create cryptographic timestamp proof for content
         
         Args:
             content_path: Path to content file
@@ -574,8 +542,7 @@ class BlockchainContentProtectionHub:
             
         Returns:
             Timestamp proof
-        """
-        try:
+        """        try:
             if not self.timestamping:
                 raise BlockchainError("Timestamping service not initialized")
             
@@ -600,8 +567,7 @@ class BlockchainContentProtectionHub:
         content_id: str,
         monitoring_period: timedelta = timedelta(days=30)
     ) -> Dict[str, Any]:
-        """
-        Monitor content usage across blockchain networks
+        """        Monitor content usage across blockchain networks
         
         Args:
             content_id: Content identifier
@@ -609,8 +575,7 @@ class BlockchainContentProtectionHub:
             
         Returns:
             Usage monitoring results
-        """
-        try:
+        """        try:
             if not self.monitor:
                 raise BlockchainError("Monitor not initialized")
             
@@ -633,13 +598,11 @@ class BlockchainContentProtectionHub:
             raise BlockchainError(f"Content monitoring failed: {e}")
     
     async def get_service_status(self) -> Dict[str, Any]:
-        """
-        Get comprehensive status of all blockchain services
+        """        Get comprehensive status of all blockchain services
         
         Returns:
             Service status report
-        """
-        try:
+        """        try:
             status_report = {
                 "hub_status": self.status.value,
                 "services": {},
@@ -668,8 +631,7 @@ class BlockchainContentProtectionHub:
             }
     
     async def _get_or_deploy_copyright_contract(self, network: str) -> str:
-        """Get existing or deploy new copyright registry contract"""
-        try:
+        """Get existing or deploy new copyright registry contract"""        try:
             # Check if contract already deployed for this network
             contract_key = f"copyright_registry_{network}"
             
@@ -698,8 +660,7 @@ class BlockchainContentProtectionHub:
             raise ContractError(f"Copyright contract deployment failed: {e}")
     
     async def shutdown(self):
-        """Gracefully shutdown all blockchain services"""
-        try:
+        """Gracefully shutdown all blockchain services"""        try:
             logger.info("Shutting down Blockchain Content Protection Hub...")
             
             # Stop monitoring
@@ -728,8 +689,7 @@ async def create_blockchain_hub(
     config_path: Optional[str] = None,
     config_dict: Optional[Dict[str, Any]] = None
 ) -> BlockchainContentProtectionHub:
-    """
-    Factory function to create and initialize blockchain hub
+    """    Factory function to create and initialize blockchain hub
     
     Args:
         config_path: Path to configuration file
@@ -737,8 +697,7 @@ async def create_blockchain_hub(
         
     Returns:
         Initialized BlockchainContentProtectionHub
-    """
-    try:
+    """    try:
         # Load configuration
         if config_path:
             with open(config_path, 'r') as f:
@@ -768,8 +727,7 @@ async def create_blockchain_hub(
 
 
 def _get_default_config() -> Dict[str, Any]:
-    """Get default configuration for blockchain services"""
-    return {
+    """Get default configuration for blockchain services"""    return {
         "environment": Environment.DEVELOPMENT.value,
         "networks": {
             "ethereum": {
@@ -911,11 +869,9 @@ logger = logging.getLogger(__name__)
 
 
 class BlockchainModuleManager:
-    """
-    Central manager for all blockchain functionality
+    """    Central manager for all blockchain functionality
     Provides unified access to all blockchain services
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.blockchain_service: Optional[BlockchainService] = None
@@ -929,8 +885,7 @@ class BlockchainModuleManager:
         logger.info("Blockchain Module Manager initialized")
     
     async def initialize(self) -> bool:
-        """Initialize all blockchain components"""
-        try:
+        """Initialize all blockchain components"""        try:
             logger.info("Initializing blockchain module components...")
             
             # Initialize core blockchain service
@@ -986,11 +941,9 @@ class BlockchainModuleManager:
         owner_info: Dict[str, Any],
         protection_options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Complete content protection registration
+        """        Complete content protection registration
         Combines blockchain registration, NFT minting, and DLT storage
-        """
-        try:
+        """        try:
             if not self.initialized:
                 await self.initialize()
             
@@ -1053,8 +1006,7 @@ class BlockchainModuleManager:
         content_id: str,
         content_path: str
     ) -> Dict[str, Any]:
-        """Complete content authenticity verification"""
-        try:
+        """Complete content authenticity verification"""        try:
             if not self.initialized:
                 await self.initialize()
             
@@ -1125,8 +1077,7 @@ class BlockchainModuleManager:
         payer_address: str,
         license_terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process cryptocurrency payment for content licensing"""
-        try:
+        """Process cryptocurrency payment for content licensing"""        try:
             if not self.crypto_payment_processor:
                 raise CryptoPaymentError("Payment processor not initialized")
             
@@ -1164,8 +1115,7 @@ class BlockchainModuleManager:
             }
     
     async def get_module_status(self) -> Dict[str, Any]:
-        """Get comprehensive status of all blockchain components"""
-        try:
+        """Get comprehensive status of all blockchain components"""        try:
             status = {
                 'initialized': self.initialized,
                 'timestamp': datetime.utcnow().isoformat(),
@@ -1213,8 +1163,7 @@ class BlockchainModuleManager:
             }
     
     async def shutdown(self):
-        """Graceful shutdown of all blockchain components"""
-        try:
+        """Graceful shutdown of all blockchain components"""        try:
             logger.info("Shutting down blockchain module...")
             
             if self.blockchain_service:
@@ -1241,8 +1190,7 @@ blockchain_module = BlockchainModuleManager()
 
 
 async def get_blockchain_module(config: Optional[Dict[str, Any]] = None) -> BlockchainModuleManager:
-    """Get the global blockchain module instance"""
-    if config and not blockchain_module.initialized:
+    """Get the global blockchain module instance"""    if config and not blockchain_module.initialized:
         blockchain_module.config.update(config)
         await blockchain_module.initialize()
     

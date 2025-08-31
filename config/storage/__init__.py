@@ -13,8 +13,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-# Cloud Storage Configurations
+"""# Cloud Storage Configurations
 from .s3_config import S3Config, s3_config
 from .azure_blob_config import AzureBlobConfig, azure_blob_config
 from .gcs_config import GCSConfig, gcs_config

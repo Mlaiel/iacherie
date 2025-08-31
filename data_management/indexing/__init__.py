@@ -15,8 +15,7 @@ without explicit written permission is strictly prohibited
 and will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-from .engines import (
+"""from .engines import (
     VectorSearchEngine,
     ContentIndexEngine,
     FingerprintIndexEngine,

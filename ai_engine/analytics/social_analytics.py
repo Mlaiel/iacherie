@@ -1,5 +1,4 @@
-"""
-Social Analytics - Advanced Social Media Analytics and Intelligence
+"""Social Analytics - Advanced Social Media Analytics and Intelligence
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -10,9 +9,7 @@ prohibited and will result in severe legal consequences.
 
 This module provides comprehensive social media analytics, audience insights,
 and social intelligence for content creators on the IA Influencer Agent platform.
-"""
-
-import logging
+"""import logging
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from dataclasses import dataclass, field
@@ -28,8 +25,7 @@ import asyncio
 logger = logging.getLogger(__name__)
 
 class SocialPlatform(Enum):
-    """Supported social media platforms"""
-    INSTAGRAM = "instagram"
+    """Supported social media platforms"""    INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
     TWITTER = "twitter"
     LINKEDIN = "linkedin"
@@ -45,8 +41,7 @@ class SocialPlatform(Enum):
     WHATSAPP = "whatsapp"
 
 class EngagementType(Enum):
-    """Types of social engagement"""
-    LIKE = "like"
+    """Types of social engagement"""    LIKE = "like"
     LOVE = "love"
     COMMENT = "comment"
     REPLY = "reply"
@@ -68,8 +63,7 @@ class EngagementType(Enum):
     SWIPE_UP = "swipe_up"
 
 class AudienceSegment(Enum):
-    """Audience segmentation types"""
-    AGE_GROUP = "age_group"
+    """Audience segmentation types"""    AGE_GROUP = "age_group"
     GENDER = "gender"
     LOCATION = "location"
     INTEREST = "interest"
@@ -81,15 +75,13 @@ class AudienceSegment(Enum):
     OCCUPATION = "occupation"
 
 class SentimentType(Enum):
-    """Sentiment analysis types"""
-    POSITIVE = "positive"
+    """Sentiment analysis types"""    POSITIVE = "positive"
     NEGATIVE = "negative"
     NEUTRAL = "neutral"
     MIXED = "mixed"
 
 class TrendStatus(Enum):
-    """Trend status types"""
-    EMERGING = "emerging"
+    """Trend status types"""    EMERGING = "emerging"
     TRENDING = "trending"
     PEAK = "peak"
     DECLINING = "declining"
@@ -97,8 +89,7 @@ class TrendStatus(Enum):
 
 @dataclass
 class SocialEngagement:
-    """Individual social media engagement record"""
-    engagement_id: str
+    """Individual social media engagement record"""    engagement_id: str
     platform: SocialPlatform
     content_id: str
     user_id: str
@@ -115,8 +106,7 @@ class SocialEngagement:
 
 @dataclass
 class AudienceProfile:
-    """Comprehensive audience profile"""
-    profile_id: str
+    """Comprehensive audience profile"""    profile_id: str
     creator_id: str
     analysis_timestamp: datetime = field(default_factory=datetime.utcnow)
     
@@ -147,8 +137,7 @@ class AudienceProfile:
 
 @dataclass
 class SocialTrend:
-    """Social media trend analysis"""
-    trend_id: str
+    """Social media trend analysis"""    trend_id: str
     keyword: str
     platform: SocialPlatform
     status: TrendStatus
@@ -165,8 +154,7 @@ class SocialTrend:
 
 @dataclass
 class CompetitorIntelligence:
-    """Competitor social media intelligence"""
-    competitor_id: str
+    """Competitor social media intelligence"""    competitor_id: str
     competitor_name: str
     platforms: List[SocialPlatform] = field(default_factory=list)
     
@@ -198,8 +186,7 @@ class CompetitorIntelligence:
 
 @dataclass
 class SocialCampaign:
-    """Social media campaign analytics"""
-    campaign_id: str
+    """Social media campaign analytics"""    campaign_id: str
     campaign_name: str
     creator_id: str
     platforms: List[SocialPlatform] = field(default_factory=list)
@@ -231,11 +218,9 @@ class SocialCampaign:
     optimization_recommendations: List[str] = field(default_factory=list)
 
 class SocialAnalyticsEngine:
-    """Advanced social media analytics engine for comprehensive social intelligence"""
-    
+    """Advanced social media analytics engine for comprehensive social intelligence"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize social analytics engine"""
-        self.config = config or {}
+        """Initialize social analytics engine"""        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
         # Data storage (in production, use proper databases)
@@ -269,8 +254,7 @@ class SocialAnalyticsEngine:
         self.logger.info("SocialAnalyticsEngine initialized successfully")
     
     def _initialize_ai_models(self):
-        """Initialize AI models for social analytics"""
-        try:
+        """Initialize AI models for social analytics"""        try:
             # Sentiment analysis model
             self.sentiment_model = None  # Initialize with actual model
             
@@ -288,8 +272,7 @@ class SocialAnalyticsEngine:
             self.logger.error(f"Failed to initialize AI models: {e}")
     
     async def track_engagement(self, engagement: SocialEngagement) -> bool:
-        """Track individual social media engagement"""
-        try:
+        """Track individual social media engagement"""        try:
             # Validate engagement data
             if not self._validate_engagement(engagement):
                 return False
@@ -314,8 +297,7 @@ class SocialAnalyticsEngine:
             return False
     
     def _validate_engagement(self, engagement: SocialEngagement) -> bool:
-        """Validate engagement data"""
-        required_fields = ['engagement_id', 'platform', 'content_id', 'user_id', 'engagement_type']
+        """Validate engagement data"""        required_fields = ['engagement_id', 'platform', 'content_id', 'user_id', 'engagement_type']
         for field in required_fields:
             if not getattr(engagement, field, None):
                 self.logger.warning(f"Missing required field: {field}")
@@ -323,8 +305,7 @@ class SocialAnalyticsEngine:
         return True
     
     async def _enhance_engagement_data(self, engagement: SocialEngagement) -> SocialEngagement:
-        """Enhance engagement data with AI insights"""
-        try:
+        """Enhance engagement data with AI insights"""        try:
             # Sentiment analysis on content
             if engagement.content_text:
                 engagement.sentiment = await self._analyze_sentiment(engagement.content_text)
@@ -347,8 +328,7 @@ class SocialAnalyticsEngine:
         platform: Optional[SocialPlatform] = None,
         timeframe: Optional[timedelta] = None
     ) -> AudienceProfile:
-        """Analyze comprehensive audience profile for a creator"""
-        start_time = datetime.utcnow()
+        """Analyze comprehensive audience profile for a creator"""        start_time = datetime.utcnow()
         
         try:
             if not timeframe:
@@ -406,8 +386,7 @@ class SocialAnalyticsEngine:
         platform: Optional[SocialPlatform],
         timeframe: timedelta
     ) -> List[SocialEngagement]:
-        """Get creator's engagements for analysis"""
-        all_engagements = []
+        """Get creator's engagements for analysis"""        all_engagements = []
         
         # Collect engagements from all content
         for content_id, engagements in self.engagements_cache.items():
@@ -429,8 +408,7 @@ class SocialAnalyticsEngine:
         profile: AudienceProfile,
         engagements: List[SocialEngagement]
     ):
-        """Analyze audience demographic breakdown"""
-        try:
+        """Analyze audience demographic breakdown"""        try:
             # Simulate demographic analysis (in production, integrate with platform APIs)
             profile.total_followers = len(set(eng.user_id for eng in engagements))
             
@@ -468,8 +446,7 @@ class SocialAnalyticsEngine:
         profile: AudienceProfile,
         engagements: List[SocialEngagement]
     ):
-        """Analyze audience engagement patterns"""
-        try:
+        """Analyze audience engagement patterns"""        try:
             # Engagement type preferences
             engagement_counts = Counter(eng.engagement_type.value for eng in engagements)
             total_engagements = len(engagements)
@@ -507,8 +484,7 @@ class SocialAnalyticsEngine:
         profile: AudienceProfile,
         engagements: List[SocialEngagement]
     ):
-        """Analyze audience interests and content preferences"""
-        try:
+        """Analyze audience interests and content preferences"""        try:
             # Extract interests from engagement metadata and content
             interest_keywords = []
             hashtags = []
@@ -554,8 +530,7 @@ class SocialAnalyticsEngine:
         profile: AudienceProfile,
         engagements: List[SocialEngagement]
     ):
-        """Calculate audience influence and virality metrics"""
-        try:
+        """Calculate audience influence and virality metrics"""        try:
             # Count influencer followers (users with high influence scores)
             high_influence_threshold = 7.0  # Out of 10
             profile.influencer_followers = len([
@@ -585,8 +560,7 @@ class SocialAnalyticsEngine:
         profile: AudienceProfile,
         engagements: List[SocialEngagement]
     ):
-        """Analyze audience platform preferences"""
-        try:
+        """Analyze audience platform preferences"""        try:
             # Platform usage distribution
             platform_counts = Counter(eng.platform.value for eng in engagements)
             total_engagements = len(engagements)
@@ -617,8 +591,7 @@ class SocialAnalyticsEngine:
         platforms: Optional[List[SocialPlatform]] = None,
         timeframe: Optional[timedelta] = None
     ) -> List[SocialTrend]:
-        """Detect emerging and trending topics across social platforms"""
-        try:
+        """Detect emerging and trending topics across social platforms"""        try:
             if not timeframe:
                 timeframe = timedelta(hours=24)  # Last 24 hours for trend detection
             
@@ -656,8 +629,7 @@ class SocialAnalyticsEngine:
         platform: SocialPlatform,
         timeframe: timedelta
     ) -> List[SocialTrend]:
-        """Detect trends on a specific platform"""
-        platform_trends = []
+        """Detect trends on a specific platform"""        platform_trends = []
         
         try:
             # Get platform engagements
@@ -721,8 +693,7 @@ class SocialAnalyticsEngine:
         volume: int,
         engagements: List[SocialEngagement]
     ) -> TrendStatus:
-        """Determine the status of a trend"""
-        # Simple heuristic based on volume and recency
+        """Determine the status of a trend"""        # Simple heuristic based on volume and recency
         recent_engagements = [
             eng for eng in engagements
             if keyword.lower() in (eng.content_text or "").lower()
@@ -746,8 +717,7 @@ class SocialAnalyticsEngine:
         platform: SocialPlatform,
         timeframe: timedelta
     ) -> float:
-        """Calculate trend velocity (rate of change)"""
-        try:
+        """Calculate trend velocity (rate of change)"""        try:
             # Get historical data (simplified)
             current_mentions = await self._count_keyword_mentions(keyword, platform, timedelta(hours=6))
             previous_mentions = await self._count_keyword_mentions(
@@ -769,8 +739,7 @@ class SocialAnalyticsEngine:
         trend: SocialTrend,
         engagements: List[SocialEngagement]
     ) -> SocialTrend:
-        """Enhance trend with additional analysis"""
-        try:
+        """Enhance trend with additional analysis"""        try:
             # Sentiment analysis
             trend_engagements = [
                 eng for eng in engagements
@@ -824,8 +793,7 @@ class SocialAnalyticsEngine:
         trend: SocialTrend,
         engagements: List[SocialEngagement]
     ) -> float:
-        """Calculate monetization potential of a trend"""
-        try:
+        """Calculate monetization potential of a trend"""        try:
             factors = []
             
             # Volume factor (higher volume = higher potential)
@@ -871,8 +839,7 @@ class SocialAnalyticsEngine:
         creator_id: str,
         timeframe: Optional[timedelta] = None
     ) -> List[CompetitorIntelligence]:
-        """Analyze competitor social media intelligence"""
-        if not timeframe:
+        """Analyze competitor social media intelligence"""        if not timeframe:
             timeframe = timedelta(days=30)
         
         competitor_analyses = []
@@ -924,8 +891,7 @@ class SocialAnalyticsEngine:
         intelligence: CompetitorIntelligence,
         timeframe: timedelta
     ):
-        """Analyze competitor's social media presence"""
-        try:
+        """Analyze competitor's social media presence"""        try:
             # Simulate competitor data (in production, integrate with platform APIs)
             intelligence.platforms = [
                 SocialPlatform.INSTAGRAM,
@@ -956,8 +922,7 @@ class SocialAnalyticsEngine:
         platforms: List[SocialPlatform],
         duration_days: int = 7
     ) -> SocialCampaign:
-        """Create and initialize a new social media campaign"""
-        try:
+        """Create and initialize a new social media campaign"""        try:
             campaign = SocialCampaign(
                 campaign_id=f"campaign_{creator_id}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}",
                 campaign_name=campaign_name,
@@ -989,8 +954,7 @@ class SocialAnalyticsEngine:
     # Simulation and utility methods
     
     async def _analyze_sentiment(self, text: str) -> SentimentType:
-        """Analyze sentiment of text content"""
-        # Simplified sentiment analysis (in production, use actual NLP models)
+        """Analyze sentiment of text content"""        # Simplified sentiment analysis (in production, use actual NLP models)
         positive_words = ['good', 'great', 'awesome', 'amazing', 'love', 'fantastic', 'excellent']
         negative_words = ['bad', 'terrible', 'awful', 'hate', 'horrible', 'worst', 'disgusting']
         
@@ -1008,8 +972,7 @@ class SocialAnalyticsEngine:
             return SentimentType.NEUTRAL
     
     async def _calculate_influence_score(self, engagement: SocialEngagement) -> float:
-        """Calculate influence score for an engagement"""
-        # Simplified influence calculation
+        """Calculate influence score for an engagement"""        # Simplified influence calculation
         base_score = 5.0
         
         # Boost for high-value engagement types
@@ -1029,8 +992,7 @@ class SocialAnalyticsEngine:
         return min(10.0, base_score * multiplier + user_factor)
     
     async def _estimate_reach_potential(self, engagement: SocialEngagement) -> int:
-        """Estimate reach potential of an engagement"""
-        # Simplified reach estimation
+        """Estimate reach potential of an engagement"""        # Simplified reach estimation
         base_reach = hash(engagement.user_id) % 1000 + 100  # 100-1100 base reach
         
         # Multiply by engagement type impact
@@ -1048,8 +1010,7 @@ class SocialAnalyticsEngine:
         self,
         engagements: List[SocialEngagement]
     ) -> Dict[str, float]:
-        """Analyze geographic distribution of engagements"""
-        # Simulate geographic distribution
+        """Analyze geographic distribution of engagements"""        # Simulate geographic distribution
         countries = ['US', 'UK', 'Canada', 'Australia', 'Germany', 'France', 'Japan', 'Brazil']
         distribution = {}
         
@@ -1070,8 +1031,7 @@ class SocialAnalyticsEngine:
         engagements: List[SocialEngagement],
         topic_categories: Dict[str, List[str]]
     ) -> Dict[str, float]:
-        """Calculate audience affinities for different topics"""
-        topic_scores = {}
+        """Calculate audience affinities for different topics"""        topic_scores = {}
         
         for topic, keywords in topic_categories.items():
             topic_mentions = 0
@@ -1098,8 +1058,7 @@ class SocialAnalyticsEngine:
         timeframe: timedelta,
         offset: Optional[timedelta] = None
     ) -> int:
-        """Count keyword mentions in a specific timeframe"""
-        end_time = datetime.utcnow() - (offset or timedelta(0))
+        """Count keyword mentions in a specific timeframe"""        end_time = datetime.utcnow() - (offset or timedelta(0))
         start_time = end_time - timeframe
         
         count = 0
@@ -1114,8 +1073,7 @@ class SocialAnalyticsEngine:
         return count
     
     def _update_processing_time(self, processing_time: float):
-        """Update average processing time statistics"""
-        current_avg = self.analytics_stats['average_processing_time']
+        """Update average processing time statistics"""        current_avg = self.analytics_stats['average_processing_time']
         total_analyses = self.analytics_stats['total_audience_analyses']
         
         if total_analyses > 1:
@@ -1126,8 +1084,7 @@ class SocialAnalyticsEngine:
             self.analytics_stats['average_processing_time'] = processing_time
     
     def get_engine_statistics(self) -> Dict[str, Any]:
-        """Get social analytics engine performance statistics"""
-        stats = self.analytics_stats.copy()
+        """Get social analytics engine performance statistics"""        stats = self.analytics_stats.copy()
         stats['cached_profiles'] = len(self.audience_profiles_cache)
         stats['cached_competitors'] = len(self.competitor_cache)
         stats['cached_campaigns'] = len(self.campaigns_cache)
@@ -1135,8 +1092,7 @@ class SocialAnalyticsEngine:
         return stats
     
     async def cleanup_old_data(self, max_age_days: int = 30):
-        """Clean up old cached data"""
-        cutoff_date = datetime.utcnow() - timedelta(days=max_age_days)
+        """Clean up old cached data"""        cutoff_date = datetime.utcnow() - timedelta(days=max_age_days)
         
         # Clean old engagements
         for content_id, engagements in list(self.engagements_cache.items()):
@@ -1162,8 +1118,7 @@ class SocialAnalyticsEngine:
         data_types: List[str] = None,
         format_type: str = "json"
     ) -> Dict[str, Any]:
-        """Export analytics data for a creator"""
-        if not data_types:
+        """Export analytics data for a creator"""        if not data_types:
             data_types = ['audience_profile', 'engagements', 'trends', 'campaigns']
         
         export_data = {

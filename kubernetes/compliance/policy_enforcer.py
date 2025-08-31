@@ -1,12 +1,9 @@
-"""
-IA Influencer Agent - Policy Enforcement Engine
+"""IA Influencer Agent - Policy Enforcement Engine
 Automated policy enforcement and governance system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -30,8 +27,7 @@ logger = get_logger(__name__)
 
 
 class PolicyType(str, Enum):
-    """Policy enforcement types"""
-    ACCESS_CONTROL = "access_control"
+    """Policy enforcement types"""    ACCESS_CONTROL = "access_control"
     DATA_RETENTION = "data_retention"
     CONTENT_PROTECTION = "content_protection"
     SECURITY = "security"
@@ -43,8 +39,7 @@ class PolicyType(str, Enum):
 
 
 class PolicyAction(str, Enum):
-    """Policy enforcement actions"""
-    ALLOW = "allow"
+    """Policy enforcement actions"""    ALLOW = "allow"
     DENY = "deny"
     WARN = "warn"
     THROTTLE = "throttle"
@@ -57,16 +52,14 @@ class PolicyAction(str, Enum):
 
 
 class PolicySeverity(str, Enum):
-    """Policy violation severity levels"""
-    LOW = "low"
+    """Policy violation severity levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class PolicyScope(str, Enum):
-    """Policy enforcement scope"""
-    USER = "user"
+    """Policy enforcement scope"""    USER = "user"
     ORGANIZATION = "organization"
     SYSTEM = "system"
     GLOBAL = "global"
@@ -74,8 +67,7 @@ class PolicyScope(str, Enum):
 
 @dataclass
 class PolicyCondition:
-    """Policy rule condition definition"""
-    field: str
+    """Policy rule condition definition"""    field: str
     operator: str  # eq, ne, gt, lt, gte, lte, in, not_in, contains, regex
     value: Any
     data_type: str  # string, number, boolean, array, object
@@ -83,8 +75,7 @@ class PolicyCondition:
 
 @dataclass
 class PolicyRule:
-    """Complete policy rule definition"""
-    rule_id: str
+    """Complete policy rule definition"""    rule_id: str
     name: str
     description: str
     policy_type: PolicyType
@@ -102,8 +93,7 @@ class PolicyRule:
 
 @dataclass
 class PolicyEvaluationContext:
-    """Context for policy evaluation"""
-    user_id: Optional[int] = None
+    """Context for policy evaluation"""    user_id: Optional[int] = None
     organization_id: Optional[int] = None
     resource_type: Optional[str] = None
     resource_id: Optional[str] = None
@@ -117,8 +107,7 @@ class PolicyEvaluationContext:
 
 @dataclass
 class PolicyViolationDetails:
-    """Policy violation details"""
-    rule_id: str
+    """Policy violation details"""    rule_id: str
     rule_name: str
     violation_type: str
     severity: PolicySeverity
@@ -128,8 +117,7 @@ class PolicyViolationDetails:
 
 
 class PolicyEnforcer:
-    """Enterprise policy enforcement engine"""
-    
+    """Enterprise policy enforcement engine"""    
     def __init__(self):
         self.logger = logger
         self.audit_logger = AuditLogger()
@@ -165,8 +153,7 @@ class PolicyEnforcer:
         policy_type: PolicyType,
         context: PolicyEvaluationContext
     ) -> Dict[str, Any]:
-        """Evaluate all applicable policies for given context"""
-        try:
+        """Evaluate all applicable policies for given context"""        try:
             if not self.enforcement_enabled:
                 return {"action": PolicyAction.ALLOW, "policies_evaluated": 0}
             
@@ -255,8 +242,7 @@ class PolicyEnforcer:
         action: str,
         request_data: Dict[str, Any] = None
     ) -> bool:
-        """Enforce access control policies"""
-        try:
+        """Enforce access control policies"""        try:
             context = PolicyEvaluationContext(
                 user_id=user_id,
                 resource_type=resource_type,
@@ -280,8 +266,7 @@ class PolicyEnforcer:
         action: str,
         resource_type: str = None
     ) -> Dict[str, Any]:
-        """Enforce rate limiting policies"""
-        try:
+        """Enforce rate limiting policies"""        try:
             context = PolicyEvaluationContext(
                 user_id=user_id,
                 action=action,
@@ -317,8 +302,7 @@ class PolicyEnforcer:
         content_type: str,
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Enforce content protection policies"""
-        try:
+        """Enforce content protection policies"""        try:
             context = PolicyEvaluationContext(
                 user_id=user_id,
                 resource_type="content",
@@ -349,8 +333,7 @@ class PolicyEnforcer:
         rule_definition: Dict[str, Any],
         created_by: str
     ) -> PolicyRule:
-        """Create new policy rule"""
-        try:
+        """Create new policy rule"""        try:
             # Validate rule definition
             await self._validate_policy_rule(rule_definition)
             
@@ -425,8 +408,7 @@ class PolicyEnforcer:
         updates: Dict[str, Any],
         updated_by: str
     ) -> PolicyRule:
-        """Update existing policy rule"""
-        try:
+        """Update existing policy rule"""        try:
             async with get_db_session() as session:
                 # Get existing rule
                 result = await session.execute(
@@ -472,8 +454,7 @@ class PolicyEnforcer:
         policy: PolicyRule,
         context: PolicyEvaluationContext
     ) -> Dict[str, Any]:
-        """Evaluate single policy rule against context"""
-        try:
+        """Evaluate single policy rule against context"""        try:
             # Check if all conditions are met
             conditions_met = True
             condition_results = []
@@ -517,8 +498,7 @@ class PolicyEnforcer:
         condition: PolicyCondition,
         context: PolicyEvaluationContext
     ) -> bool:
-        """Evaluate single policy condition"""
-        try:
+        """Evaluate single policy condition"""        try:
             # Extract value from context
             context_value = self._extract_context_value(condition.field, context)
             
@@ -543,8 +523,7 @@ class PolicyEnforcer:
             return False
     
     def _extract_context_value(self, field: str, context: PolicyEvaluationContext) -> Any:
-        """Extract value from evaluation context using dot notation"""
-        try:
+        """Extract value from evaluation context using dot notation"""        try:
             # Handle nested field access (e.g., "request_data.content_type")
             parts = field.split(".")
             value = context
@@ -564,8 +543,7 @@ class PolicyEnforcer:
             return None
     
     def _load_default_policies(self) -> List[PolicyRule]:
-        """Load pre-defined default policy rules"""
-        return [
+        """Load pre-defined default policy rules"""        return [
             # Rate limiting for API calls
             PolicyRule(
                 rule_id="POL-DEFAULT-001",

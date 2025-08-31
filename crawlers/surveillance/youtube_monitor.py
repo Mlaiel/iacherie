@@ -1,5 +1,4 @@
-"""
-YouTube Monitor - Surveillance YouTube Automatique
+"""YouTube Monitor - Surveillance YouTube Automatique
 =================================================
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
@@ -13,9 +12,7 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
 
 Automated YouTube surveillance system for content protection and monitoring.
 Provides real-time monitoring of YouTube channels, videos, and content violations.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set
 from datetime import datetime, timedelta
@@ -29,8 +26,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class YouTubeMonitorTarget:
-    """YouTube monitoring target definition."""
-    target_id: str
+    """YouTube monitoring target definition."""    target_id: str
     target_type: str  # channel, video, keyword, playlist
     identifier: str  # channel_id, video_id, search_term, playlist_id
     creator_id: Optional[str] = None
@@ -43,8 +39,7 @@ class YouTubeMonitorTarget:
 
 @dataclass
 class YouTubeViolation:
-    """YouTube content violation detection result."""
-    violation_id: str
+    """YouTube content violation detection result."""    violation_id: str
     target_id: str
     video_id: str
     video_title: str
@@ -60,8 +55,7 @@ class YouTubeViolation:
 
 @dataclass
 class YouTubeMonitoringMetrics:
-    """YouTube monitoring metrics."""
-    targets_monitored: int = 0
+    """YouTube monitoring metrics."""    targets_monitored: int = 0
     videos_scanned: int = 0
     violations_detected: int = 0
     channels_monitored: int = 0
@@ -72,8 +66,7 @@ class YouTubeMonitoringMetrics:
 
 
 class YouTubeMonitor:
-    """
-    Professional YouTube monitoring and surveillance system.
+    """    Professional YouTube monitoring and surveillance system.
     
     Features:
     - Real-time channel monitoring
@@ -82,11 +75,9 @@ class YouTubeMonitor:
     - Content similarity matching
     - Trend analysis and alerts
     - Performance metrics tracking
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize YouTube monitor."""
-        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize YouTube monitor."""        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
         self.config = config or {}
@@ -117,8 +108,7 @@ class YouTubeMonitor:
         self._logger.info("YouTube Monitor initialized")
     
     async def initialize(self) -> None:
-        """Initialize the YouTube monitor."""
-        try:
+        """Initialize the YouTube monitor."""        try:
             self._logger.info("Initializing YouTube monitor...")
             
             # Validate configuration
@@ -135,8 +125,7 @@ class YouTubeMonitor:
             raise
     
     async def _initialize_youtube_client(self) -> None:
-        """Initialize YouTube API client."""
-        try:
+        """Initialize YouTube API client."""        try:
             # This would initialize the actual YouTube API client
             # For now, we'll implement a placeholder
             self._logger.debug("YouTube API client initialized")
@@ -146,8 +135,7 @@ class YouTubeMonitor:
             raise
     
     async def start_monitoring(self) -> None:
-        """Start YouTube monitoring operations."""
-        try:
+        """Start YouTube monitoring operations."""        try:
             if self._monitoring_active:
                 self._logger.warning("YouTube monitoring is already active")
                 return
@@ -165,8 +153,7 @@ class YouTubeMonitor:
             raise
     
     async def stop_monitoring(self) -> None:
-        """Stop YouTube monitoring operations."""
-        try:
+        """Stop YouTube monitoring operations."""        try:
             if not self._monitoring_active:
                 self._logger.warning("YouTube monitoring is not active")
                 return
@@ -194,8 +181,7 @@ class YouTubeMonitor:
         creator_id: Optional[str] = None,
         check_interval_minutes: int = None
     ) -> str:
-        """Add channel monitoring target."""
-        try:
+        """Add channel monitoring target."""        try:
             target_id = f"channel_{channel_id}_{datetime.now().timestamp()}"
             
             target = YouTubeMonitorTarget(
@@ -225,8 +211,7 @@ class YouTubeMonitor:
         creator_id: Optional[str] = None,
         check_interval_minutes: int = None
     ) -> str:
-        """Add video monitoring target."""
-        try:
+        """Add video monitoring target."""        try:
             target_id = f"video_{video_id}_{datetime.now().timestamp()}"
             
             target = YouTubeMonitorTarget(
@@ -256,8 +241,7 @@ class YouTubeMonitor:
         creator_id: Optional[str] = None,
         check_interval_minutes: int = None
     ) -> str:
-        """Add keyword monitoring target."""
-        try:
+        """Add keyword monitoring target."""        try:
             target_id = f"keyword_{keyword.replace(' ', '_')}_{datetime.now().timestamp()}"
             
             target = YouTubeMonitorTarget(
@@ -282,8 +266,7 @@ class YouTubeMonitor:
             raise
     
     async def remove_monitoring_target(self, target_id: str) -> bool:
-        """Remove monitoring target."""
-        try:
+        """Remove monitoring target."""        try:
             if target_id in self.targets:
                 target = self.targets[target_id]
                 target.enabled = False
@@ -302,8 +285,7 @@ class YouTubeMonitor:
             return False
     
     async def _monitoring_loop(self) -> None:
-        """Main monitoring loop."""
-        self._logger.info("YouTube monitoring loop started")
+        """Main monitoring loop."""        self._logger.info("YouTube monitoring loop started")
         
         try:
             while self._monitoring_active:
@@ -356,13 +338,11 @@ class YouTubeMonitor:
         target: YouTubeMonitorTarget,
         semaphore: asyncio.Semaphore
     ) -> None:
-        """Check target with concurrency control."""
-        async with semaphore:
+        """Check target with concurrency control."""        async with semaphore:
             await self._check_target(target)
     
     async def _check_target(self, target: YouTubeMonitorTarget) -> None:
-        """Check a monitoring target for violations."""
-        try:
+        """Check a monitoring target for violations."""        try:
             self._logger.debug(f"Checking target: {target.target_id} ({target.target_type})")
             
             # Rate limiting
@@ -392,8 +372,7 @@ class YouTubeMonitor:
             target.next_check = datetime.now() + timedelta(minutes=5)
     
     async def _check_channel(self, target: YouTubeMonitorTarget) -> None:
-        """Check channel for violations."""
-        try:
+        """Check channel for violations."""        try:
             channel_id = target.identifier
             
             # Get recent videos from channel
@@ -420,8 +399,7 @@ class YouTubeMonitor:
             raise
     
     async def _check_video(self, target: YouTubeMonitorTarget) -> None:
-        """Check specific video for violations."""
-        try:
+        """Check specific video for violations."""        try:
             video_id = target.identifier
             
             # Get video details
@@ -447,8 +425,7 @@ class YouTubeMonitor:
             raise
     
     async def _check_keyword(self, target: YouTubeMonitorTarget) -> None:
-        """Check keyword search for violations."""
-        try:
+        """Check keyword search for violations."""        try:
             keyword = target.identifier
             
             # Search for videos with keyword
@@ -479,8 +456,7 @@ class YouTubeMonitor:
         channel_id: str,
         max_results: int = 50
     ) -> List[Dict[str, Any]]:
-        """Get recent videos from a channel."""
-        try:
+        """Get recent videos from a channel."""        try:
             # This would use the YouTube API to get channel videos
             # For now, return placeholder data
             videos = []
@@ -497,8 +473,7 @@ class YouTubeMonitor:
             return []
     
     async def _get_video_details(self, video_id: str) -> Optional[Dict[str, Any]]:
-        """Get video details."""
-        try:
+        """Get video details."""        try:
             # This would use the YouTube API to get video details
             # For now, return placeholder data
             video = None
@@ -519,8 +494,7 @@ class YouTubeMonitor:
         query: str,
         max_results: int = 50
     ) -> List[Dict[str, Any]]:
-        """Search for videos by keyword."""
-        try:
+        """Search for videos by keyword."""        try:
             # This would use the YouTube API to search videos
             # For now, return placeholder data
             videos = []
@@ -541,8 +515,7 @@ class YouTubeMonitor:
         video: Dict[str, Any],
         target: YouTubeMonitorTarget
     ) -> List[YouTubeViolation]:
-        """Analyze video for potential violations."""
-        violations = []
+        """Analyze video for potential violations."""        violations = []
         
         try:
             video_id = video.get('id', '')
@@ -582,8 +555,7 @@ class YouTubeMonitor:
         return violations
     
     async def _enforce_rate_limit(self) -> None:
-        """Enforce rate limiting for API requests."""
-        current_time = asyncio.get_event_loop().time()
+        """Enforce rate limiting for API requests."""        current_time = asyncio.get_event_loop().time()
         time_since_last_request = current_time - self._last_request_time
         
         if time_since_last_request < self._request_delay:
@@ -593,8 +565,7 @@ class YouTubeMonitor:
         self._last_request_time = asyncio.get_event_loop().time()
     
     def get_monitoring_status(self) -> Dict[str, Any]:
-        """Get current monitoring status."""
-        return {
+        """Get current monitoring status."""        return {
             'monitoring_active': self._monitoring_active,
             'targets_count': len(self.targets),
             'active_targets': len([t for t in self.targets.values() if t.enabled]),
@@ -612,8 +583,7 @@ class YouTubeMonitor:
         }
     
     def get_recent_violations(self, limit: int = 100) -> List[Dict[str, Any]]:
-        """Get recent violations."""
-        recent_violations = sorted(
+        """Get recent violations."""        recent_violations = sorted(
             self.violations,
             key=lambda v: v.detected_at,
             reverse=True
@@ -638,8 +608,7 @@ class YouTubeMonitor:
         ]
     
     async def shutdown(self) -> None:
-        """Shutdown the YouTube monitor."""
-        try:
+        """Shutdown the YouTube monitor."""        try:
             self._logger.info("Shutting down YouTube monitor...")
             
             await self.stop_monitoring()

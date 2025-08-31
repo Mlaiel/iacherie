@@ -1,5 +1,4 @@
-"""
-Viral Detector Module - Advanced AI-Powered Viral Content Detection & Prediction System
+"""Viral Detector Module - Advanced AI-Powered Viral Content Detection & Prediction System
 
 Sophisticated viral content detection system that combines:
 - Deep learning models for viral pattern recognition
@@ -23,9 +22,7 @@ Team Specialties:
 - Database Administrator & Security Expert: High-performance data storage and protection
 - Microservices Architect & DevOps Engineer: Scalable distributed systems and deployment
 - AI Prompt Engineer & Content Protection: Intelligent content optimization and rights protection
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import pandas as pd
@@ -92,8 +89,7 @@ from ...security.content_protection import ContentFingerprinter
 logger = logging.getLogger(__name__)
 
 class ViralityCategory(Enum):
-    """Comprehensive virality categories with specific characteristics"""
-    EXPLOSIVE_VIRAL = "explosive_viral"          # >10M views in 24h
+    """Comprehensive virality categories with specific characteristics"""    EXPLOSIVE_VIRAL = "explosive_viral"          # >10M views in 24h
     HIGH_VIRAL = "high_viral"                    # 1-10M views in 24h  
     MODERATE_VIRAL = "moderate_viral"            # 100K-1M views in 24h
     TRENDING = "trending"                        # 10K-100K views in 24h
@@ -103,8 +99,7 @@ class ViralityCategory(Enum):
     FAILED = "failed"                           # Very low engagement
 
 class ViralPattern(Enum):
-    """Advanced viral propagation patterns"""
-    EXPONENTIAL_GROWTH = "exponential_growth"
+    """Advanced viral propagation patterns"""    EXPONENTIAL_GROWTH = "exponential_growth"
     S_CURVE_ADOPTION = "s_curve_adoption"
     PLATEAU_SUSTAINED = "plateau_sustained"
     SPIKE_AND_DROP = "spike_and_drop"
@@ -114,8 +109,7 @@ class ViralPattern(Enum):
     INFLUENCER_AMPLIFIED = "influencer_amplified"
 
 class ContentViralityFactor(Enum):
-    """Key factors contributing to viral potential"""
-    EMOTIONAL_TRIGGER = "emotional_trigger"
+    """Key factors contributing to viral potential"""    EMOTIONAL_TRIGGER = "emotional_trigger"
     NOVELTY_FACTOR = "novelty_factor"
     RELATABILITY_INDEX = "relatability_index"
     TIMING_OPTIMIZATION = "timing_optimization"
@@ -128,8 +122,7 @@ class ContentViralityFactor(Enum):
 
 @dataclass
 class AdvancedViralityScore:
-    """Comprehensive virality assessment with detailed analytics"""
-    overall_score: float
+    """Comprehensive virality assessment with detailed analytics"""    overall_score: float
     category: ViralityCategory
     pattern: ViralPattern
     confidence_interval: Tuple[float, float]
@@ -155,8 +148,7 @@ class AdvancedViralityScore:
 
 @dataclass
 class ViralContentProfile:
-    """Detailed profile of viral content characteristics"""
-    content_id: str
+    """Detailed profile of viral content characteristics"""    content_id: str
     content_type: ContentType
     viral_dna: Dict[str, Any]
     success_patterns: List[str]
@@ -167,8 +159,7 @@ class ViralContentProfile:
     platform_optimization: Dict[str, Dict[str, Any]]
 
 class AdvancedViralNN(nn.Module):
-    """Sophisticated neural network for viral content prediction"""
-    
+    """Sophisticated neural network for viral content prediction"""    
     def __init__(
         self, 
         input_size: int, 
@@ -261,8 +252,7 @@ class AdvancedViralNN(nn.Module):
         }
 
 class ViralDetector:
-    """
-    Enterprise-Grade Viral Content Detection System
+    """    Enterprise-Grade Viral Content Detection System
     
     Advanced AI system that predicts viral potential using:
     - Deep learning models with attention mechanisms
@@ -273,8 +263,7 @@ class ViralDetector:
     - Sentiment and emotional impact assessment
     - Competitive landscape analysis
     - Personalized optimization recommendations
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         
@@ -318,8 +307,7 @@ class ViralDetector:
         logger.info("AdvancedViralDetector initialized with enterprise-grade capabilities")
     
     async def initialize_detection_system(self):
-        """Initialize complete viral detection system"""
-        try:
+        """Initialize complete viral detection system"""        try:
             with self.performance_monitor.time_operation("system_initialization"):
                 logger.info("Initializing advanced viral detection system")
                 
@@ -355,8 +343,7 @@ class ViralDetector:
         platform_targets: Optional[List[str]] = None,
         analysis_depth: str = "comprehensive"
     ) -> AdvancedViralityScore:
-        """
-        Comprehensive viral potential prediction with advanced analytics
+        """        Comprehensive viral potential prediction with advanced analytics
         
         Args:
             content_metadata: Content to analyze
@@ -366,8 +353,7 @@ class ViralDetector:
             
         Returns:
             Detailed virality assessment with recommendations
-        """
-        try:
+        """        try:
             with self.performance_monitor.time_operation("viral_prediction"):
                 logger.info(f"Predicting viral potential for content: {content_metadata.content_id}")
                 
@@ -405,8 +391,7 @@ class ViralDetector:
         batch_size: int = 32,
         include_comparisons: bool = True
     ) -> Dict[str, Any]:
-        """Batch analysis of viral patterns for multiple content pieces"""
-        try:
+        """Batch analysis of viral patterns for multiple content pieces"""        try:
             with self.performance_monitor.time_operation("batch_viral_analysis"):
                 logger.info(f"Analyzing viral patterns for {len(content_batch)} content pieces")
                 
@@ -462,8 +447,7 @@ class ViralDetector:
         target_platforms: Optional[List[str]] = None,
         optimization_goals: Optional[Dict[str, float]] = None
     ) -> Dict[str, Any]:
-        """Generate specific optimization recommendations for viral potential"""
-        try:
+        """Generate specific optimization recommendations for viral potential"""        try:
             with self.performance_monitor.time_operation("virality_optimization"):
                 # Current viral assessment
                 current_score = await self.predict_viral_potential(
@@ -518,8 +502,7 @@ class ViralDetector:
         creator_profile: Optional[CreatorProfile],
         platform_targets: Optional[List[str]]
     ) -> Dict[str, Any]:
-        """Extract comprehensive feature set for viral prediction"""
-        try:
+        """Extract comprehensive feature set for viral prediction"""        try:
             features = {}
             
             # Content-based features
@@ -570,8 +553,7 @@ class ViralDetector:
         self, 
         content_metadata: ContentMetadata
     ) -> Dict[str, Any]:
-        """Extract detailed content-based features"""
-        features = {}
+        """Extract detailed content-based features"""        features = {}
         
         # Basic content metrics
         features.update({
@@ -605,8 +587,7 @@ class ViralDetector:
         return features
 
     async def _ensemble_predict(self, features: Dict[str, Any]) -> Dict[str, Any]:
-        """Advanced ensemble prediction with multiple models"""
-        try:
+        """Advanced ensemble prediction with multiple models"""        try:
             # Prepare features for different models
             feature_vector = await self._prepare_feature_vector(features)
             
@@ -641,13 +622,11 @@ class ViralDetector:
 # Additional sophisticated methods continue...
 
 class ContentRanker:
-    """
-    Advanced Content Ranking System for Viral Potential
+    """    Advanced Content Ranking System for Viral Potential
     
     Sophisticated ranking system that evaluates and ranks content
     based on viral potential, engagement likelihood, and business value.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.viral_detector = ViralDetector(config)
@@ -670,8 +649,7 @@ class ContentRanker:
         creator_profile: Optional[CreatorProfile] = None,
         ranking_criteria: Optional[Dict[str, float]] = None
     ) -> List[Dict[str, Any]]:
-        """Rank content by viral potential and business value"""
-        try:
+        """Rank content by viral potential and business value"""        try:
             with self.performance_monitor.time_operation("content_ranking"):
                 logger.info(f"Ranking {len(content_list)} content pieces")
                 
@@ -728,8 +706,7 @@ class ContentRanker:
         creator_profile: Optional[CreatorProfile],
         weights: Dict[str, float]
     ) -> float:
-        """Calculate comprehensive ranking score"""
-        try:
+        """Calculate comprehensive ranking score"""        try:
             # Component scores
             viral_component = viral_score.overall_score * weights.get('viral_score', 0.4)
             
@@ -810,16 +787,14 @@ from ...integrations.social_platforms import PlatformAnalyzer
 logger = logging.getLogger(__name__)
 
 class ViralityLevel(Enum):
-    """Virality level classifications"""
-    LOW = "low"           # 0-20% virality score
+    """Virality level classifications"""    LOW = "low"           # 0-20% virality score
     MODERATE = "moderate" # 21-50% virality score
     HIGH = "high"         # 51-80% virality score
     VIRAL = "viral"       # 81-95% virality score
     MEGA_VIRAL = "mega_viral"  # 96-100% virality score
 
 class ContentRankingCriteria(Enum):
-    """Content ranking criteria"""
-    ENGAGEMENT_RATE = "engagement_rate"
+    """Content ranking criteria"""    ENGAGEMENT_RATE = "engagement_rate"
     GROWTH_VELOCITY = "growth_velocity"
     REACH_POTENTIAL = "reach_potential"
     TREND_ALIGNMENT = "trend_alignment"
@@ -828,8 +803,7 @@ class ContentRankingCriteria(Enum):
 
 @dataclass
 class ViralDetectionConfig:
-    """Configuration for viral detection operations"""
-    content_types: List[ContentType]
+    """Configuration for viral detection operations"""    content_types: List[ContentType]
     platforms: List[str]
     detection_sensitivity: float = 0.75
     min_engagement_threshold: int = 100
@@ -840,8 +814,7 @@ class ViralDetectionConfig:
 
 @dataclass
 class ViralIndicators:
-    """Key viral content indicators"""
-    engagement_acceleration: float
+    """Key viral content indicators"""    engagement_acceleration: float
     share_velocity: float
     comment_sentiment: float
     reach_expansion_rate: float
@@ -851,13 +824,11 @@ class ViralIndicators:
     audience_resonance: float
 
 class ViralDetector(BaseMLModel):
-    """
-    Advanced Viral Content Detection Engine
+    """    Advanced Viral Content Detection Engine
     
     Provides real-time viral content detection, prediction, and ranking using
     advanced machine learning algorithms and multi-modal content analysis.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__("ViralDetector", config)
         
@@ -889,8 +860,7 @@ class ViralDetector(BaseMLModel):
         self._detection_history = []
 
     async def initialize(self) -> bool:
-        """Initialize viral detection models and components"""
-        try:
+        """Initialize viral detection models and components"""        try:
             logger.info("Initializing ViralDetector")
             
             # Initialize media processor
@@ -928,8 +898,7 @@ class ViralDetector(BaseMLModel):
         content_batch: List[ContentMetadata],
         config: ViralDetectionConfig
     ) -> List[ViralPrediction]:
-        """
-        Detect viral potential in a batch of content
+        """        Detect viral potential in a batch of content
         
         Args:
             content_batch: List of content to analyze
@@ -937,8 +906,7 @@ class ViralDetector(BaseMLModel):
             
         Returns:
             List[ViralPrediction]: Viral potential predictions
-        """
-        try:
+        """        try:
             logger.info(f"Detecting viral potential for {len(content_batch)} content items")
             
             if len(content_batch) > self.max_content_per_batch:
@@ -982,8 +950,7 @@ class ViralDetector(BaseMLModel):
         creator_profile: CreatorProfile,
         time_horizon: int = 24
     ) -> Dict[str, Any]:
-        """
-        Predict engagement growth over time for specific content
+        """        Predict engagement growth over time for specific content
         
         Args:
             content: Content to analyze
@@ -992,8 +959,7 @@ class ViralDetector(BaseMLModel):
             
         Returns:
             Engagement growth predictions with confidence intervals
-        """
-        try:
+        """        try:
             # Extract content features
             content_features = await self._extract_content_features(content)
             
@@ -1061,8 +1027,7 @@ class ViralDetector(BaseMLModel):
         content: ContentMetadata,
         engagement_data: Dict[str, Any]
     ) -> ViralIndicators:
-        """
-        Analyze specific indicators that suggest viral potential
+        """        Analyze specific indicators that suggest viral potential
         
         Args:
             content: Content to analyze
@@ -1070,8 +1035,7 @@ class ViralDetector(BaseMLModel):
             
         Returns:
             ViralIndicators: Comprehensive viral indicators analysis
-        """
-        try:
+        """        try:
             # Calculate engagement acceleration
             engagement_acceleration = await self._calculate_engagement_acceleration(
                 engagement_data.get("engagement_history", [])
@@ -1132,8 +1096,7 @@ class ViralDetector(BaseMLModel):
         content_batch: List[ContentMetadata],
         config: ViralDetectionConfig
     ) -> List[np.ndarray]:
-        """Extract features from a batch of content"""
-        batch_features = []
+        """Extract features from a batch of content"""        batch_features = []
         
         tasks = []
         for content in content_batch:
@@ -1152,8 +1115,7 @@ class ViralDetector(BaseMLModel):
         return batch_features
 
     async def _extract_content_features(self, content: ContentMetadata) -> np.ndarray:
-        """Extract comprehensive features from content"""
-        features = []
+        """Extract comprehensive features from content"""        features = []
         
         # Basic metadata features
         features.extend([
@@ -1205,8 +1167,7 @@ class ViralDetector(BaseMLModel):
         content_batch: List[ContentMetadata],
         config: ViralDetectionConfig
     ) -> List[ViralPrediction]:
-        """Predict virality for a batch of content"""
-        predictions = []
+        """Predict virality for a batch of content"""        predictions = []
         
         if not self._virality_classifier:
             # Fallback to heuristic predictions
@@ -1284,8 +1245,7 @@ class ViralDetector(BaseMLModel):
         return predictions
 
     def _determine_virality_level(self, score: float) -> ViralityLevel:
-        """Determine virality level based on score"""
-        if score >= 0.96:
+        """Determine virality level based on score"""        if score >= 0.96:
             return ViralityLevel.MEGA_VIRAL
         elif score >= 0.81:
             return ViralityLevel.VIRAL
@@ -1297,8 +1257,7 @@ class ViralDetector(BaseMLModel):
             return ViralityLevel.LOW
 
     async def _background_viral_monitoring(self):
-        """Background task for continuous viral content monitoring"""
-        while self.is_initialized:
+        """Background task for continuous viral content monitoring"""        while self.is_initialized:
             try:
                 # Monitor trending content across platforms
                 await self._monitor_trending_content()
@@ -1316,8 +1275,7 @@ class ViralDetector(BaseMLModel):
                 await asyncio.sleep(600)  # Wait 10 minutes on error
 
     async def cleanup(self):
-        """Clean up resources"""
-        try:
+        """Clean up resources"""        try:
             # Clean up media processor
             if self.media_processor:
                 await self.media_processor.cleanup()
@@ -1337,13 +1295,11 @@ class ViralDetector(BaseMLModel):
             logger.error(f"Cleanup failed: {str(e)}")
 
 class ContentRanker:
-    """
-    Advanced Content Ranking Engine
+    """    Advanced Content Ranking Engine
     
     Provides sophisticated content ranking algorithms based on multiple criteria
     including viral potential, trend alignment, and audience engagement.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.ranking_weights = config.get("ranking_weights", {
@@ -1363,8 +1319,7 @@ class ContentRanker:
         criteria: List[ContentRankingCriteria],
         creator_profile: Optional[CreatorProfile] = None
     ) -> List[ContentRanking]:
-        """
-        Rank content based on specified criteria
+        """        Rank content based on specified criteria
         
         Args:
             content_list: List of content to rank
@@ -1373,8 +1328,7 @@ class ContentRanker:
             
         Returns:
             List[ContentRanking]: Ranked content with scores
-        """
-        try:
+        """        try:
             logger.info(f"Ranking {len(content_list)} content items")
             
             rankings = []
@@ -1433,8 +1387,7 @@ class ContentRanker:
         criterion: ContentRankingCriteria,
         creator_profile: Optional[CreatorProfile]
     ) -> float:
-        """Calculate score for a specific ranking criterion"""
-        try:
+        """Calculate score for a specific ranking criterion"""        try:
             if criterion == ContentRankingCriteria.ENGAGEMENT_RATE:
                 return await self._calculate_engagement_score(content)
             elif criterion == ContentRankingCriteria.GROWTH_VELOCITY:
@@ -1459,8 +1412,7 @@ class ContentRanker:
         criterion_scores: Dict[str, float],
         weights: Dict[str, float]
     ) -> float:
-        """Calculate weighted overall score"""
-        total_score = 0.0
+        """Calculate weighted overall score"""        total_score = 0.0
         total_weight = 0.0
         
         for criterion, score in criterion_scores.items():
@@ -1475,8 +1427,7 @@ class ContentRanker:
         content_list: List[ContentMetadata],
         performance_data: Dict[str, Any]
     ) -> Dict[str, float]:
-        """
-        Optimize ranking weights based on performance data
+        """        Optimize ranking weights based on performance data
         
         Args:
             content_list: Historical content data
@@ -1484,8 +1435,7 @@ class ContentRanker:
             
         Returns:
             Optimized ranking weights
-        """
-        try:
+        """        try:
             # This would implement a more sophisticated optimization algorithm
             # For now, return current weights
             return self.ranking_weights.copy()

@@ -1,5 +1,4 @@
-"""
-Authentication Management Module
+"""Authentication Management Module
 Enterprise-grade authentication system for IA Influencer Agent
 
 Features:
@@ -11,9 +10,7 @@ Features:
 - Single Sign-On (SSO) integration
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-
-import jwt
+"""import jwt
 import bcrypt
 import pyotp
 import secrets
@@ -40,8 +37,7 @@ from backend.core.logging import SecurityLogger
 
 @dataclass
 class AuthToken:
-    """Authentication token data structure"""
-    access_token: str
+    """Authentication token data structure"""    access_token: str
     refresh_token: str
     token_type: str = "bearer"
     expires_in: int = 3600
@@ -52,8 +48,7 @@ class AuthToken:
 
 @dataclass
 class AuthUser:
-    """Authenticated user data structure"""
-    user_id: str
+    """Authenticated user data structure"""    user_id: str
     tenant_id: str
     email: str
     roles: List[str]
@@ -65,13 +60,11 @@ class AuthUser:
 
 
 class AuthenticationError(Exception):
-    """Custom authentication exception"""
-    pass
+    """Custom authentication exception"""    pass
 
 
 class TokenManager:
-    """Advanced JWT token management with rotation and security"""
-    
+    """Advanced JWT token management with rotation and security"""    
     def __init__(self, settings=None):
         self.settings = settings or get_settings()
         self.logger = SecurityLogger("TokenManager")
@@ -90,8 +83,7 @@ class TokenManager:
         expires_delta: Optional[timedelta] = None,
         tenant_id: Optional[str] = None
     ) -> str:
-        """Create JWT access token with enhanced security"""
-        try:
+        """Create JWT access token with enhanced security"""        try:
             to_encode = data.copy()
             
             # Set expiration
@@ -127,8 +119,7 @@ class TokenManager:
         user_id: str, 
         tenant_id: Optional[str] = None
     ) -> str:
-        """Create long-lived refresh token"""
-        try:
+        """Create long-lived refresh token"""        try:
             data = {
                 "sub": user_id,
                 "type": "refresh",
@@ -152,8 +143,7 @@ class TokenManager:
             raise AuthenticationError("Refresh token creation failed")
     
     async def verify_token(self, token: str) -> Dict[str, Any]:
-        """Verify and decode JWT token with security checks"""
-        try:
+        """Verify and decode JWT token with security checks"""        try:
             # Decode token
             payload = jwt.decode(token, self.secret_key, algorithms=[self.algorithm])
             
@@ -179,8 +169,7 @@ class TokenManager:
             raise AuthenticationError("Token verification failed")
     
     async def revoke_token(self, token: str) -> bool:
-        """Revoke token by adding to blacklist"""
-        try:
+        """Revoke token by adding to blacklist"""        try:
             payload = jwt.decode(
                 token, 
                 self.secret_key, 
@@ -209,8 +198,7 @@ class TokenManager:
 
 
 class MultiTenantAuth:
-    """Multi-tenant authentication with tenant isolation"""
-    
+    """Multi-tenant authentication with tenant isolation"""    
     def __init__(self, token_manager: TokenManager):
         self.token_manager = token_manager
         self.logger = SecurityLogger("MultiTenantAuth")
@@ -222,8 +210,7 @@ class MultiTenantAuth:
         password: str, 
         tenant_id: str
     ) -> Optional[AuthToken]:
-        """Authenticate user within specific tenant context"""
-        try:
+        """Authenticate user within specific tenant context"""        try:
             # Validate tenant
             if not await self.validate_tenant(tenant_id):
                 raise AuthenticationError("Invalid tenant")
@@ -269,8 +256,7 @@ class MultiTenantAuth:
             raise AuthenticationError("Authentication failed")
     
     async def validate_tenant(self, tenant_id: str) -> bool:
-        """Validate tenant exists and is active"""
-        cache_key = f"tenant:{tenant_id}"
+        """Validate tenant exists and is active"""        cache_key = f"tenant:{tenant_id}"
         cached_tenant = await self.cache.get(cache_key)
         
         if cached_tenant:
@@ -281,27 +267,23 @@ class MultiTenantAuth:
         return True  # Placeholder
     
     async def get_tenant_user(self, email: str, tenant_id: str):
-        """Get user within tenant context"""
-        # Implementation depends on your user model
+        """Get user within tenant context"""        # Implementation depends on your user model
         # Should include tenant_id in query
         pass
     
     def verify_password(self, plain_password: str, hashed_password: str) -> bool:
-        """Verify password using bcrypt"""
-        return bcrypt.checkpw(
+        """Verify password using bcrypt"""        return bcrypt.checkpw(
             plain_password.encode('utf-8'), 
             hashed_password.encode('utf-8')
         )
     
     async def update_last_login(self, user_id: str, tenant_id: str):
-        """Update user's last login timestamp"""
-        # Implementation depends on your user model
+        """Update user's last login timestamp"""        # Implementation depends on your user model
         pass
 
 
 class OAuth2Manager:
-    """OAuth2 integration for third-party authentication"""
-    
+    """OAuth2 integration for third-party authentication"""    
     def __init__(self):
         self.logger = SecurityLogger("OAuth2Manager")
         self.cache = CacheManager()
@@ -326,8 +308,7 @@ class OAuth2Manager:
         }
     
     async def get_authorization_url(self, provider: str, state: str) -> str:
-        """Generate OAuth2 authorization URL"""
-        if provider not in self.providers:
+        """Generate OAuth2 authorization URL"""        if provider not in self.providers:
             raise AuthenticationError("Unsupported OAuth2 provider")
         
         config = self.providers[provider]
@@ -349,8 +330,7 @@ class OAuth2Manager:
         code: str, 
         state: str
     ) -> Dict[str, Any]:
-        """Exchange authorization code for access token"""
-        try:
+        """Exchange authorization code for access token"""        try:
             if provider not in self.providers:
                 raise AuthenticationError("Unsupported OAuth2 provider")
             
@@ -404,19 +384,16 @@ class OAuth2Manager:
 
 
 class TwoFactorAuth:
-    """Two-Factor Authentication (2FA) manager"""
-    
+    """Two-Factor Authentication (2FA) manager"""    
     def __init__(self):
         self.logger = SecurityLogger("TwoFactorAuth")
         self.cache = CacheManager()
     
     def generate_secret(self) -> str:
-        """Generate TOTP secret for user"""
-        return pyotp.random_base32()
+        """Generate TOTP secret for user"""        return pyotp.random_base32()
     
     def generate_qr_code(self, secret: str, user_email: str) -> bytes:
-        """Generate QR code for TOTP setup"""
-        totp_uri = pyotp.totp.TOTP(secret).provisioning_uri(
+        """Generate QR code for TOTP setup"""        totp_uri = pyotp.totp.TOTP(secret).provisioning_uri(
             user_email,
             issuer_name="IA Influencer Agent"
         )
@@ -431,13 +408,11 @@ class TwoFactorAuth:
         return buffer.getvalue()
     
     def verify_totp(self, secret: str, token: str) -> bool:
-        """Verify TOTP token"""
-        totp = pyotp.TOTP(secret)
+        """Verify TOTP token"""        totp = pyotp.TOTP(secret)
         return totp.verify(token, valid_window=1)
     
     async def enable_2fa(self, user_id: str, secret: str) -> bool:
-        """Enable 2FA for user"""
-        try:
+        """Enable 2FA for user"""        try:
             # Store secret securely in database
             # Implementation depends on your user model
             
@@ -453,8 +428,7 @@ class TwoFactorAuth:
 
 
 class AuthenticationManager:
-    """Main authentication manager orchestrating all auth services"""
-    
+    """Main authentication manager orchestrating all auth services"""    
     def __init__(self):
         self.token_manager = TokenManager()
         self.multi_tenant_auth = MultiTenantAuth(self.token_manager)
@@ -470,8 +444,7 @@ class AuthenticationManager:
         tenant_id: str,
         mfa_token: Optional[str] = None
     ) -> AuthToken:
-        """Main authentication endpoint"""
-        try:
+        """Main authentication endpoint"""        try:
             # Basic authentication
             auth_token = await self.multi_tenant_auth.authenticate_tenant_user(
                 email, password, tenant_id
@@ -496,8 +469,7 @@ class AuthenticationManager:
         self, 
         credentials: HTTPAuthorizationCredentials = Depends(HTTPBearer())
     ) -> AuthUser:
-        """Get current authenticated user from token"""
-        try:
+        """Get current authenticated user from token"""        try:
             token = credentials.credentials
             payload = await self.token_manager.verify_token(token)
             
@@ -519,20 +491,17 @@ class AuthenticationManager:
             raise HTTPException(status_code=401, detail="Invalid authentication")
     
     async def get_user(self, user_id: str, tenant_id: str) -> Optional[AuthUser]:
-        """Get user details"""
-        # Implementation depends on your user model
+        """Get user details"""        # Implementation depends on your user model
         pass
     
     async def verify_mfa(self, user_id: str, token: str) -> bool:
-        """Verify MFA token for user"""
-        # Get user's MFA secret and verify
+        """Verify MFA token for user"""        # Get user's MFA secret and verify
         # Implementation depends on your user model
         return True  # Placeholder
 
 
 class JWTManager:
-    """Dedicated JWT management with advanced features"""
-    
+    """Dedicated JWT management with advanced features"""    
     def __init__(self):
         self.logger = SecurityLogger("JWTManager")
         self.token_manager = TokenManager()
@@ -543,8 +512,7 @@ class JWTManager:
         expires_in: int = 3600,
         audience: Optional[str] = None
     ) -> str:
-        """Create custom JWT token with specific payload"""
-        try:
+        """Create custom JWT token with specific payload"""        try:
             custom_data = payload.copy()
             
             if audience:
@@ -560,8 +528,7 @@ class JWTManager:
             raise
     
     async def verify_audience(self, token: str, expected_audience: str) -> bool:
-        """Verify token audience"""
-        try:
+        """Verify token audience"""        try:
             payload = await self.token_manager.verify_token(token)
             return payload.get("aud") == expected_audience
             

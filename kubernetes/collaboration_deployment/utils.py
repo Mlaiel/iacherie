@@ -1,5 +1,4 @@
-"""
-Advanced Collaboration Deployment Utilities for IA Influencer Agent
+"""Advanced Collaboration Deployment Utilities for IA Influencer Agent
 ===================================================================
 
 This module provides comprehensive utility functions and helper classes for
@@ -26,9 +25,7 @@ This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any reproduction, modification, distribution or use without explicit 
 written authorization is STRICTLY PROHIBITED and will be subject to 
 legal proceedings under German and international law.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import functools
 from typing import Dict, List, Optional, Any, Union, Callable, Type
@@ -55,8 +52,7 @@ logger = logging.getLogger(__name__)
 
 
 class DeploymentPhase(Enum):
-    """Deployment phases for IA Influencer Agent collaboration services."""
-    INITIALIZATION = "initialization"
+    """Deployment phases for IA Influencer Agent collaboration services."""    INITIALIZATION = "initialization"
     VALIDATION = "validation"
     PREPARATION = "preparation"
     DEPLOYMENT = "deployment"
@@ -68,8 +64,7 @@ class DeploymentPhase(Enum):
 
 
 class MetricCategory(Enum):
-    """Categories of deployment and operational metrics."""
-    PERFORMANCE = "performance"
+    """Categories of deployment and operational metrics."""    PERFORMANCE = "performance"
     AVAILABILITY = "availability"
     RELIABILITY = "reliability"
     SECURITY = "security"
@@ -80,8 +75,7 @@ class MetricCategory(Enum):
 
 
 class UtilityType(Enum):
-    """Types of utility functions."""
-    VALIDATION = "validation"
+    """Types of utility functions."""    VALIDATION = "validation"
     TRANSFORMATION = "transformation"
     CALCULATION = "calculation"
     FORMATTING = "formatting"
@@ -92,8 +86,7 @@ class UtilityType(Enum):
 
 @dataclass
 class DeploymentMetric:
-    """A deployment metric data point with enhanced metadata."""
-    name: str
+    """A deployment metric data point with enhanced metadata."""    name: str
     value: float
     unit: str
     category: MetricCategory
@@ -107,8 +100,7 @@ class DeploymentMetric:
 
 @dataclass
 class ValidationResult:
-    """Comprehensive validation result with detailed information."""
-    check_name: str
+    """Comprehensive validation result with detailed information."""    check_name: str
     passed: bool
     message: str
     details: Dict[str, Any] = field(default_factory=dict)
@@ -121,8 +113,7 @@ class ValidationResult:
 
 @dataclass
 class DeploymentStep:
-    """A single deployment step with enhanced configuration."""
-    name: str
+    """A single deployment step with enhanced configuration."""    name: str
     description: str
     phase: DeploymentPhase
     function: Callable
@@ -136,12 +127,10 @@ class DeploymentStep:
 
 
 class CreatorDeploymentUtilities:
-    """Creator-specific deployment utilities for the IA Influencer Agent platform."""
-    
+    """Creator-specific deployment utilities for the IA Influencer Agent platform."""    
     @staticmethod
     def validate_creator_deployment_config(config: Dict[str, Any]) -> ValidationResult:
-        """Validate creator-specific deployment configuration."""
-        errors = []
+        """Validate creator-specific deployment configuration."""        errors = []
         warnings = []
         recommendations = []
         
@@ -201,8 +190,7 @@ class CreatorDeploymentUtilities:
     
     @staticmethod
     def generate_creator_deployment_id(creator_id: str, deployment_type: str) -> str:
-        """Generate unique deployment ID for creator services."""
-        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+        """Generate unique deployment ID for creator services."""        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
         unique_suffix = secrets.token_hex(4)
         return f"creator-{creator_id}-{deployment_type}-{timestamp}-{unique_suffix}"
     
@@ -211,8 +199,7 @@ class CreatorDeploymentUtilities:
         creator_profile: Dict[str, Any],
         expected_load: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate optimized resource requirements for creator workloads."""
-        
+        """Calculate optimized resource requirements for creator workloads."""        
         # Base requirements
         base_cpu = 0.5
         base_memory = 1024  # MB
@@ -260,8 +247,7 @@ class CreatorDeploymentUtilities:
         primary_creator: Dict[str, Any],
         collaborating_creators: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Generate collaboration configuration for multiple creators."""
-        
+        """Generate collaboration configuration for multiple creators."""        
         collaboration_config = {
             "collaboration_id": str(uuid.uuid4()),
             "primary_creator": primary_creator["creator_id"],
@@ -324,12 +310,10 @@ class CreatorDeploymentUtilities:
 
 
 class AdvancedDeploymentUtilities:
-    """Advanced deployment utilities with enterprise features."""
-    
+    """Advanced deployment utilities with enterprise features."""    
     @staticmethod
     async def validate_kubernetes_cluster(cluster_config: Dict[str, Any]) -> ValidationResult:
-        """Validate Kubernetes cluster configuration and health."""
-        checks = []
+        """Validate Kubernetes cluster configuration and health."""        checks = []
         
         try:
             # Check cluster connectivity
@@ -376,8 +360,7 @@ class AdvancedDeploymentUtilities:
         deployment_config: Dict[str, Any],
         performance_metrics: List[DeploymentMetric]
     ) -> Dict[str, Any]:
-        """Optimize deployment configuration based on performance metrics."""
-        
+        """Optimize deployment configuration based on performance metrics."""        
         optimizations = []
         optimized_config = deployment_config.copy()
         
@@ -437,8 +420,7 @@ class AdvancedDeploymentUtilities:
         config: Dict[str, Any],
         template_type: str = "kubernetes"
     ) -> str:
-        """Generate deployment manifest from configuration."""
-        
+        """Generate deployment manifest from configuration."""        
         if template_type == "kubernetes":
             return AdvancedDeploymentUtilities._generate_kubernetes_manifest(service_name, config)
         elif template_type == "docker-compose":
@@ -448,8 +430,7 @@ class AdvancedDeploymentUtilities:
     
     @staticmethod
     def _generate_kubernetes_manifest(service_name: str, config: Dict[str, Any]) -> str:
-        """Generate Kubernetes deployment manifest."""
-        
+        """Generate Kubernetes deployment manifest."""        
         manifest = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
@@ -507,28 +488,23 @@ class AdvancedDeploymentUtilities:
     
     @staticmethod
     async def _check_cluster_connectivity(cluster_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Check Kubernetes cluster connectivity."""
-        return {"passed": True, "message": "Cluster connectivity verified"}
+        """Check Kubernetes cluster connectivity."""        return {"passed": True, "message": "Cluster connectivity verified"}
     
     @staticmethod
     async def _check_cluster_resources(cluster_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Check cluster resource availability."""
-        return {"passed": True, "message": "Sufficient resources available"}
+        """Check cluster resource availability."""        return {"passed": True, "message": "Sufficient resources available"}
     
     @staticmethod
     async def _check_security_policies(cluster_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Check cluster security policies."""
-        return {"passed": True, "message": "Security policies configured correctly"}
+        """Check cluster security policies."""        return {"passed": True, "message": "Security policies configured correctly"}
     
     @staticmethod
     async def _check_cluster_networking(cluster_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Check cluster networking configuration."""
-        return {"passed": True, "message": "Networking configuration validated"}
+        """Check cluster networking configuration."""        return {"passed": True, "message": "Networking configuration validated"}
 
 
 class DeploymentUtils:
-    """
-    Comprehensive utility class for deployment operations.
+    """    Comprehensive utility class for deployment operations.
     
     Provides common utility functions for:
     - ID generation and validation
@@ -539,12 +515,10 @@ class DeploymentUtils:
     - Network utilities and connectivity checks
     - Creator-specific deployment utilities
     - Performance optimization tools
-    """
-    
+    """    
     @staticmethod
     def generate_deployment_id(deployment_name: str, creator_id: Optional[str] = None) -> str:
-        """Generate unique deployment ID with optional creator context."""
-        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+        """Generate unique deployment ID with optional creator context."""        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
         unique_suffix = secrets.token_hex(4)
         
         if creator_id:
@@ -554,8 +528,7 @@ class DeploymentUtils:
     
     @staticmethod
     def sanitize_name(name: str, max_length: int = 63) -> str:
-        """Sanitize name for Kubernetes compatibility."""
-        # Convert to lowercase
+        """Sanitize name for Kubernetes compatibility."""        # Convert to lowercase
         sanitized = name.lower()
         
         # Replace invalid characters with hyphens
@@ -575,8 +548,7 @@ class DeploymentUtils:
     
     @staticmethod
     def validate_kubernetes_name(name: str) -> bool:
-        """Validate Kubernetes resource name format."""
-        if not name or len(name) > 63:
+        """Validate Kubernetes resource name format."""        if not name or len(name) > 63:
             return False
         
         # Must start and end with alphanumeric character
@@ -587,8 +559,7 @@ class DeploymentUtils:
     
     @staticmethod
     def calculate_checksum(data: Any) -> str:
-        """Calculate SHA256 checksum of data."""
-        if isinstance(data, dict):
+        """Calculate SHA256 checksum of data."""        if isinstance(data, dict):
             data_str = json.dumps(data, sort_keys=True)
         elif isinstance(data, str):
             data_str = data
@@ -599,8 +570,7 @@ class DeploymentUtils:
     
     @staticmethod
     def format_resource_value(value: Union[int, float], unit: str) -> str:
-        """Format resource values for Kubernetes specifications."""
-        if unit.lower() in ['cpu', 'cores']:
+        """Format resource values for Kubernetes specifications."""        if unit.lower() in ['cpu', 'cores']:
             return f"{value}"
         elif unit.lower() in ['memory', 'ram', 'mi', 'mb']:
             return f"{int(value)}Mi"
@@ -615,8 +585,7 @@ class DeploymentUtils:
         timeout_seconds: int = 300,
         poll_interval: int = 5
     ) -> bool:
-        """Wait for a condition to become true with timeout."""
-        start_time = time.time()
+        """Wait for a condition to become true with timeout."""        start_time = time.time()
         
         while time.time() - start_time < timeout_seconds:
             try:
@@ -631,8 +600,7 @@ class DeploymentUtils:
     
     @staticmethod
     def merge_configurations(*configs: Dict[str, Any]) -> Dict[str, Any]:
-        """Deep merge multiple configuration dictionaries."""
-        result = {}
+        """Deep merge multiple configuration dictionaries."""        result = {}
         
         for config in configs:
             for key, value in config.items():
@@ -645,8 +613,7 @@ class DeploymentUtils:
     
     @staticmethod
     def extract_errors_from_logs(logs: str, error_patterns: List[str] = None) -> List[str]:
-        """Extract error messages from logs using patterns."""
-        if error_patterns is None:
+        """Extract error messages from logs using patterns."""        if error_patterns is None:
             error_patterns = [
                 r'ERROR.*',
                 r'FATAL.*',
@@ -675,18 +642,15 @@ advanced_utils = AdvancedDeploymentUtilities()
 
 # Convenience functions for common operations
 def generate_unique_id(prefix: str = "ia-influencer") -> str:
-    """Generate unique identifier with optional prefix."""
-    return f"{prefix}-{uuid.uuid4()}"
+    """Generate unique identifier with optional prefix."""    return f"{prefix}-{uuid.uuid4()}"
 
 
 def current_timestamp() -> str:
-    """Get current timestamp in ISO format."""
-    return datetime.utcnow().isoformat()
+    """Get current timestamp in ISO format."""    return datetime.utcnow().isoformat()
 
 
 def safe_get(dictionary: Dict[str, Any], key_path: str, default: Any = None) -> Any:
-    """Safely get nested dictionary value using dot notation."""
-    keys = key_path.split('.')
+    """Safely get nested dictionary value using dot notation."""    keys = key_path.split('.')
     value = dictionary
     
     try:
@@ -698,8 +662,7 @@ def safe_get(dictionary: Dict[str, Any], key_path: str, default: Any = None) -> 
 
 
 def retry_on_failure(max_retries: int = 3, delay: float = 1.0):
-    """Decorator for retrying functions on failure."""
-    def decorator(func):
+    """Decorator for retrying functions on failure."""    def decorator(func):
         @functools.wraps(func)
         async def wrapper(*args, **kwargs):
             last_exception = None
@@ -722,15 +685,13 @@ def retry_on_failure(max_retries: int = 3, delay: float = 1.0):
     
     @staticmethod
     def generate_deployment_id() -> str:
-        """Generate unique deployment ID."""
-        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+        """Generate unique deployment ID."""        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
         random_suffix = secrets.token_hex(4)
         return f"deploy-{timestamp}-{random_suffix}"
     
     @staticmethod
     def generate_resource_name(base_name: str, environment: str, suffix: str = None) -> str:
-        """Generate consistent resource names."""
-        parts = [base_name, environment]
+        """Generate consistent resource names."""        parts = [base_name, environment]
         if suffix:
             parts.append(suffix)
         
@@ -748,25 +709,21 @@ def retry_on_failure(max_retries: int = 3, delay: float = 1.0):
     
     @staticmethod
     def generate_secret_value(length: int = 32) -> str:
-        """Generate secure random secret value."""
-        return secrets.token_urlsafe(length)
+        """Generate secure random secret value."""        return secrets.token_urlsafe(length)
     
     @staticmethod
     def encode_base64(data: Union[str, bytes]) -> str:
-        """Encode data to base64."""
-        if isinstance(data, str):
+        """Encode data to base64."""        if isinstance(data, str):
             data = data.encode('utf-8')
         return base64.b64encode(data).decode('utf-8')
     
     @staticmethod
     def decode_base64(data: str) -> str:
-        """Decode base64 data."""
-        return base64.b64decode(data).decode('utf-8')
+        """Decode base64 data."""        return base64.b64decode(data).decode('utf-8')
     
     @staticmethod
     def sanitize_label_value(value: str) -> str:
-        """Sanitize value for Kubernetes labels."""
-        # Kubernetes label values must be 63 characters or less
+        """Sanitize value for Kubernetes labels."""        # Kubernetes label values must be 63 characters or less
         # and match the regex [a-z0-9A-Z]([a-z0-9A-Z\-\_\.]*[a-z0-9A-Z])?
         sanitized = re.sub(r'[^a-zA-Z0-9\-_.]', '-', value)
         sanitized = re.sub(r'^[^a-zA-Z0-9]', '', sanitized)
@@ -779,8 +736,7 @@ def retry_on_failure(max_retries: int = 3, delay: float = 1.0):
     
     @staticmethod
     def parse_resource_string(resource_str: str) -> Dict[str, Union[int, float]]:
-        """Parse Kubernetes resource string (e.g., '1Gi', '500m')."""
-        if not resource_str:
+        """Parse Kubernetes resource string (e.g., '1Gi', '500m')."""        if not resource_str:
             return {"value": 0, "unit": ""}
         
         # Memory resources
@@ -826,8 +782,7 @@ def retry_on_failure(max_retries: int = 3, delay: float = 1.0):
     
     @staticmethod
     def format_duration(seconds: float) -> str:
-        """Format duration in human-readable format."""
-        if seconds < 1:
+        """Format duration in human-readable format."""        if seconds < 1:
             return f"{seconds*1000:.0f}ms"
         elif seconds < 60:
             return f"{seconds:.1f}s"
@@ -838,8 +793,7 @@ def retry_on_failure(max_retries: int = 3, delay: float = 1.0):
     
     @staticmethod
     def calculate_resource_percentage(used: str, total: str) -> float:
-        """Calculate resource usage percentage."""
-        used_parsed = DeploymentUtils.parse_resource_string(used)
+        """Calculate resource usage percentage."""        used_parsed = DeploymentUtils.parse_resource_string(used)
         total_parsed = DeploymentUtils.parse_resource_string(total)
         
         if total_parsed["normalized_value"] == 0:
@@ -849,8 +803,7 @@ def retry_on_failure(max_retries: int = 3, delay: float = 1.0):
     
     @staticmethod
     async def run_kubectl_command(command: List[str], namespace: str = None) -> Dict[str, Any]:
-        """Run kubectl command and return result."""
-        if namespace:
+        """Run kubectl command and return result."""        if namespace:
             command.extend(["-n", namespace])
         
         try:
@@ -878,14 +831,12 @@ def retry_on_failure(max_retries: int = 3, delay: float = 1.0):
     
     @staticmethod
     async def check_kubernetes_connectivity() -> bool:
-        """Check if kubectl can connect to cluster."""
-        result = await DeploymentUtils.run_kubectl_command(["cluster-info"])
+        """Check if kubectl can connect to cluster."""        result = await DeploymentUtils.run_kubectl_command(["cluster-info"])
         return result["success"]
     
     @staticmethod
     def validate_yaml(yaml_content: str) -> ValidationResult:
-        """Validate YAML content."""
-        try:
+        """Validate YAML content."""        try:
             yaml.safe_load(yaml_content)
             return ValidationResult(
                 check_name="yaml_validation",
@@ -901,8 +852,7 @@ def retry_on_failure(max_retries: int = 3, delay: float = 1.0):
     
     @staticmethod
     def validate_kubernetes_manifest(manifest: Dict[str, Any]) -> ValidationResult:
-        """Validate Kubernetes manifest structure."""
-        required_fields = ["apiVersion", "kind", "metadata"]
+        """Validate Kubernetes manifest structure."""        required_fields = ["apiVersion", "kind", "metadata"]
         
         for field in required_fields:
             if field not in manifest:
@@ -928,8 +878,7 @@ def retry_on_failure(max_retries: int = 3, delay: float = 1.0):
 
 
 class CollaborationMetrics:
-    """
-    Metrics collection and analysis for collaboration deployment.
+    """    Metrics collection and analysis for collaboration deployment.
     
     Provides comprehensive metrics collection including:
     - Performance metrics
@@ -937,23 +886,19 @@ class CollaborationMetrics:
     - Business metrics
     - Deployment metrics
     - Health metrics
-    """
-    
+    """    
     def __init__(self):
-        """Initialize metrics collector."""
-        self.metrics: List[DeploymentMetric] = []
+        """Initialize metrics collector."""        self.metrics: List[DeploymentMetric] = []
         self.start_time = datetime.utcnow()
         
     def add_metric(self, metric: DeploymentMetric) -> None:
-        """Add a metric to the collection."""
-        self.metrics.append(metric)
+        """Add a metric to the collection."""        self.metrics.append(metric)
         logger.debug(f"Added metric: {metric.name} = {metric.value} {metric.unit}")
     
     def record_deployment_metric(self, name: str, value: float, unit: str = "", 
                                 category: MetricCategory = MetricCategory.PERFORMANCE,
                                 labels: Dict[str, str] = None) -> None:
-        """Record a deployment metric."""
-        metric = DeploymentMetric(
+        """Record a deployment metric."""        metric = DeploymentMetric(
             name=name,
             value=value,
             unit=unit,
@@ -964,8 +909,7 @@ class CollaborationMetrics:
     
     def record_timing_metric(self, operation_name: str, start_time: datetime, 
                            end_time: datetime = None) -> None:
-        """Record timing metric for an operation."""
-        if end_time is None:
+        """Record timing metric for an operation."""        if end_time is None:
             end_time = datetime.utcnow()
         
         duration = (end_time - start_time).total_seconds()
@@ -979,8 +923,7 @@ class CollaborationMetrics:
     
     def record_resource_metric(self, resource_type: str, usage: float, 
                               total: float, unit: str = "") -> None:
-        """Record resource utilization metric."""
-        percentage = (usage / total * 100) if total > 0 else 0
+        """Record resource utilization metric."""        percentage = (usage / total * 100) if total > 0 else 0
         
         self.record_deployment_metric(
             name=f"{resource_type}_utilization",
@@ -999,8 +942,7 @@ class CollaborationMetrics:
         )
     
     def record_availability_metric(self, service_name: str, is_available: bool) -> None:
-        """Record service availability metric."""
-        self.record_deployment_metric(
+        """Record service availability metric."""        self.record_deployment_metric(
             name="service_availability",
             value=1.0 if is_available else 0.0,
             unit="boolean",
@@ -1009,8 +951,7 @@ class CollaborationMetrics:
         )
     
     def record_error_metric(self, error_type: str, count: int = 1) -> None:
-        """Record error metric."""
-        self.record_deployment_metric(
+        """Record error metric."""        self.record_deployment_metric(
             name="deployment_errors",
             value=count,
             unit="count",
@@ -1019,8 +960,7 @@ class CollaborationMetrics:
         )
     
     async def collect_deployment_metrics(self) -> Dict[str, Any]:
-        """Collect comprehensive deployment metrics."""
-        deployment_duration = (datetime.utcnow() - self.start_time).total_seconds()
+        """Collect comprehensive deployment metrics."""        deployment_duration = (datetime.utcnow() - self.start_time).total_seconds()
         
         # Aggregate metrics by category
         metrics_by_category = {}
@@ -1054,8 +994,7 @@ class CollaborationMetrics:
         }
     
     async def get_current_metrics(self) -> Dict[str, Any]:
-        """Get current metrics summary."""
-        if not self.metrics:
+        """Get current metrics summary."""        if not self.metrics:
             return {"status": "no_metrics", "count": 0}
         
         latest_metrics = {}
@@ -1078,18 +1017,15 @@ class CollaborationMetrics:
         }
     
     def get_metrics_by_category(self, category: MetricCategory) -> List[DeploymentMetric]:
-        """Get metrics filtered by category."""
-        return [m for m in self.metrics if m.category == category]
+        """Get metrics filtered by category."""        return [m for m in self.metrics if m.category == category]
     
     def get_metrics_by_name_pattern(self, pattern: str) -> List[DeploymentMetric]:
-        """Get metrics matching name pattern."""
-        import re
+        """Get metrics matching name pattern."""        import re
         compiled_pattern = re.compile(pattern)
         return [m for m in self.metrics if compiled_pattern.search(m.name)]
     
     def calculate_sla_metrics(self, target_availability: float = 99.9) -> Dict[str, Any]:
-        """Calculate SLA metrics."""
-        availability_metrics = self.get_metrics_by_category(MetricCategory.AVAILABILITY)
+        """Calculate SLA metrics."""        availability_metrics = self.get_metrics_by_category(MetricCategory.AVAILABILITY)
         
         if not availability_metrics:
             return {"status": "no_data"}
@@ -1111,8 +1047,7 @@ class CollaborationMetrics:
 
 
 class DeploymentValidator:
-    """
-    Comprehensive validation for deployment configurations and states.
+    """    Comprehensive validation for deployment configurations and states.
     
     Provides validation for:
     - Configuration files
@@ -1120,22 +1055,18 @@ class DeploymentValidator:
     - Security policies
     - Network configurations
     - Deployment readiness
-    """
-    
+    """    
     def __init__(self):
-        """Initialize deployment validator."""
-        self.validation_results: List[ValidationResult] = []
+        """Initialize deployment validator."""        self.validation_results: List[ValidationResult] = []
     
     def add_validation_result(self, result: ValidationResult) -> None:
-        """Add validation result."""
-        self.validation_results.append(result)
+        """Add validation result."""        self.validation_results.append(result)
         
         log_level = logging.ERROR if not result.passed else logging.INFO
         logger.log(log_level, f"Validation {result.check_name}: {result.message}")
     
     async def validate_deployment_readiness(self, deployment_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate deployment readiness."""
-        checks = [
+        """Validate deployment readiness."""        checks = [
             self._validate_kubernetes_connection,
             self._validate_namespace_access,
             self._validate_resource_quotas,
@@ -1184,8 +1115,7 @@ class DeploymentValidator:
         }
     
     async def _validate_kubernetes_connection(self, config: Dict[str, Any]) -> ValidationResult:
-        """Validate Kubernetes cluster connection."""
-        is_connected = await DeploymentUtils.check_kubernetes_connectivity()
+        """Validate Kubernetes cluster connection."""        is_connected = await DeploymentUtils.check_kubernetes_connectivity()
         
         return ValidationResult(
             check_name="kubernetes_connection",
@@ -1195,8 +1125,7 @@ class DeploymentValidator:
         )
     
     async def _validate_namespace_access(self, config: Dict[str, Any]) -> ValidationResult:
-        """Validate namespace access permissions."""
-        namespace = config.get("namespace", "collaboration")
+        """Validate namespace access permissions."""        namespace = config.get("namespace", "collaboration")
         
         # Check if namespace exists
         result = await DeploymentUtils.run_kubectl_command(["get", "namespace", namespace])
@@ -1216,8 +1145,7 @@ class DeploymentValidator:
             )
     
     async def _validate_resource_quotas(self, config: Dict[str, Any]) -> ValidationResult:
-        """Validate resource quotas."""
-        # This would check actual resource quotas in the cluster
+        """Validate resource quotas."""        # This would check actual resource quotas in the cluster
         # For now, simulate the check
         await asyncio.sleep(0.5)
         
@@ -1229,8 +1157,7 @@ class DeploymentValidator:
         )
     
     async def _validate_storage_classes(self, config: Dict[str, Any]) -> ValidationResult:
-        """Validate storage classes availability."""
-        result = await DeploymentUtils.run_kubectl_command(["get", "storageclass"])
+        """Validate storage classes availability."""        result = await DeploymentUtils.run_kubectl_command(["get", "storageclass"])
         
         if result["success"]:
             return ValidationResult(
@@ -1247,8 +1174,7 @@ class DeploymentValidator:
             )
     
     async def _validate_network_policies(self, config: Dict[str, Any]) -> ValidationResult:
-        """Validate network policies support."""
-        # Check if network policies are supported
+        """Validate network policies support."""        # Check if network policies are supported
         await asyncio.sleep(0.3)
         
         return ValidationResult(
@@ -1258,8 +1184,7 @@ class DeploymentValidator:
         )
     
     async def _validate_rbac_permissions(self, config: Dict[str, Any]) -> ValidationResult:
-        """Validate RBAC permissions."""
-        # Check if we have necessary RBAC permissions
+        """Validate RBAC permissions."""        # Check if we have necessary RBAC permissions
         result = await DeploymentUtils.run_kubectl_command(["auth", "can-i", "create", "deployments"])
         
         if result["success"] and "yes" in result["stdout"].lower():
@@ -1278,8 +1203,7 @@ class DeploymentValidator:
 
 
 class DeploymentOrchestrator:
-    """
-    Advanced deployment orchestration with step management.
+    """    Advanced deployment orchestration with step management.
     
     Provides:
     - Step-by-step deployment execution
@@ -1287,23 +1211,19 @@ class DeploymentOrchestrator:
     - Rollback capabilities
     - Progress tracking
     - Error handling
-    """
-    
+    """    
     def __init__(self):
-        """Initialize deployment orchestrator."""
-        self.steps: List[DeploymentStep] = []
+        """Initialize deployment orchestrator."""        self.steps: List[DeploymentStep] = []
         self.executed_steps: List[str] = []
         self.failed_steps: List[str] = []
         self.metrics = CollaborationMetrics()
     
     def add_step(self, step: DeploymentStep) -> None:
-        """Add deployment step."""
-        self.steps.append(step)
+        """Add deployment step."""        self.steps.append(step)
         logger.info(f"Added deployment step: {step.name}")
     
     async def execute_deployment(self) -> Dict[str, Any]:
-        """Execute all deployment steps in order."""
-        logger.info(f"Starting deployment execution with {len(self.steps)} steps")
+        """Execute all deployment steps in order."""        logger.info(f"Starting deployment execution with {len(self.steps)} steps")
         start_time = datetime.utcnow()
         
         try:
@@ -1352,8 +1272,7 @@ class DeploymentOrchestrator:
             }
     
     def _resolve_dependencies(self) -> List[DeploymentStep]:
-        """Resolve step dependencies and return ordered list."""
-        ordered_steps = []
+        """Resolve step dependencies and return ordered list."""        ordered_steps = []
         remaining_steps = self.steps.copy()
         
         while remaining_steps:
@@ -1375,8 +1294,7 @@ class DeploymentOrchestrator:
         return ordered_steps
     
     async def _execute_step(self, step: DeploymentStep) -> Dict[str, Any]:
-        """Execute a single deployment step."""
-        logger.info(f"Executing step: {step.name}")
+        """Execute a single deployment step."""        logger.info(f"Executing step: {step.name}")
         start_time = datetime.utcnow()
         
         for attempt in range(step.retry_count):
@@ -1427,8 +1345,7 @@ class DeploymentOrchestrator:
         return {"success": False, "step_name": step.name, "error": "Unknown error"}
     
     async def rollback_deployment(self) -> Dict[str, Any]:
-        """Rollback executed deployment steps."""
-        logger.info("Starting deployment rollback")
+        """Rollback executed deployment steps."""        logger.info("Starting deployment rollback")
         
         rollback_results = []
         

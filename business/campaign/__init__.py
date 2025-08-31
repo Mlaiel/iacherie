@@ -32,8 +32,7 @@ Team Specialties:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-from .campaign_manager import CampaignManager
+"""from .campaign_manager import CampaignManager
 from .campaign_analytics import CampaignAnalytics
 from .campaign_optimization import CampaignOptimization
 from .content_integration import ContentIntegration

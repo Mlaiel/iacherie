@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Test suite for Trend Analysis AI Agents
+"""Test suite for Trend Analysis AI Agents
 
 Tests all functionalities of trend detection, market analysis, 
 prediction algorithms, and trend-based content strategy agents.
@@ -28,9 +24,7 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -53,17 +47,14 @@ from ai.ai_agents.trend_analysis_agents import (
 
 
 class TestTrendAnalysisAgent:
-    """Test TrendAnalysisAgent functionality"""
-    
+    """Test TrendAnalysisAgent functionality"""    
     @pytest.fixture
     def agent(self):
-        """Create TrendAnalysisAgent instance"""
-        return TrendAnalysisAgent()
+        """Create TrendAnalysisAgent instance"""        return TrendAnalysisAgent()
     
     @pytest.fixture
     def sample_trend_data(self):
-        """Sample trend data for analysis"""
-        return {
+        """Sample trend data for analysis"""        return {
             "analysis_id": "trend_001",
             "market_segment": "tech_education",
             "data_sources": ["youtube", "tiktok", "instagram", "twitter"],
@@ -100,8 +91,7 @@ class TestTrendAnalysisAgent:
     
     @pytest.mark.asyncio
     async def test_analyze_current_trends(self, agent, sample_trend_data):
-        """Test current trend analysis"""
-        trend_analysis = await agent.analyze_current_trends(sample_trend_data)
+        """Test current trend analysis"""        trend_analysis = await agent.analyze_current_trends(sample_trend_data)
         
         assert "trending_topics" in trend_analysis
         assert "trend_momentum" in trend_analysis
@@ -121,8 +111,7 @@ class TestTrendAnalysisAgent:
     
     @pytest.mark.asyncio
     async def test_identify_emerging_trends(self, agent, sample_trend_data):
-        """Test emerging trend identification"""
-        emerging_analysis = await agent.identify_emerging_trends(sample_trend_data)
+        """Test emerging trend identification"""        emerging_analysis = await agent.identify_emerging_trends(sample_trend_data)
         
         assert "emerging_trends" in emerging_analysis
         assert "early_indicators" in emerging_analysis
@@ -141,8 +130,7 @@ class TestTrendAnalysisAgent:
     
     @pytest.mark.asyncio
     async def test_analyze_trend_lifecycle(self, agent, sample_trend_data):
-        """Test trend lifecycle analysis"""
-        lifecycle_analysis = await agent.analyze_trend_lifecycle(sample_trend_data)
+        """Test trend lifecycle analysis"""        lifecycle_analysis = await agent.analyze_trend_lifecycle(sample_trend_data)
         
         assert "lifecycle_stage" in lifecycle_analysis
         assert "maturity_indicators" in lifecycle_analysis
@@ -159,8 +147,7 @@ class TestTrendAnalysisAgent:
     
     @pytest.mark.asyncio
     async def test_cross_platform_trend_analysis(self, agent, sample_trend_data):
-        """Test cross-platform trend analysis"""
-        platform_data = {
+        """Test cross-platform trend analysis"""        platform_data = {
             "youtube": {
                 "video_trends": ["AI tutorials", "coding bootcamp", "tech reviews"],
                 "search_trends": ["machine learning 2025", "python programming", "data science"],
@@ -196,8 +183,7 @@ class TestTrendAnalysisAgent:
     
     @pytest.mark.asyncio
     async def test_seasonal_trend_analysis(self, agent, sample_trend_data):
-        """Test seasonal trend analysis"""
-        seasonal_data = {
+        """Test seasonal trend analysis"""        seasonal_data = {
             "yearly_patterns": {
                 "Q1": {"tech_education": 0.8, "career_advice": 1.2, "productivity": 1.1},
                 "Q2": {"tech_education": 1.0, "career_advice": 0.9, "productivity": 0.95},
@@ -231,17 +217,14 @@ class TestTrendAnalysisAgent:
 
 
 class TestMarketTrendAnalyzer:
-    """Test MarketTrendAnalyzer functionality"""
-    
+    """Test MarketTrendAnalyzer functionality"""    
     @pytest.fixture
     def agent(self):
-        """Create MarketTrendAnalyzer instance"""
-        return MarketTrendAnalyzer()
+        """Create MarketTrendAnalyzer instance"""        return MarketTrendAnalyzer()
     
     @pytest.fixture
     def sample_market_data(self):
-        """Sample market data for analysis"""
-        return {
+        """Sample market data for analysis"""        return {
             "market_id": "digital_marketing_2025",
             "industry_segment": "content_creation",
             "market_size": 45000000000,  # $45B
@@ -285,8 +268,7 @@ class TestMarketTrendAnalyzer:
     
     @pytest.mark.asyncio
     async def test_analyze_market_dynamics(self, agent, sample_market_data):
-        """Test market dynamics analysis"""
-        market_analysis = await agent.analyze_market_dynamics(sample_market_data)
+        """Test market dynamics analysis"""        market_analysis = await agent.analyze_market_dynamics(sample_market_data)
         
         assert "market_health" in market_analysis
         assert "competitive_landscape" in market_analysis
@@ -306,8 +288,7 @@ class TestMarketTrendAnalyzer:
     
     @pytest.mark.asyncio
     async def test_identify_market_opportunities(self, agent, sample_market_data):
-        """Test market opportunity identification"""
-        opportunity_analysis = await agent.identify_market_opportunities(sample_market_data)
+        """Test market opportunity identification"""        opportunity_analysis = await agent.identify_market_opportunities(sample_market_data)
         
         assert "high_opportunity_segments" in opportunity_analysis
         assert "underserved_markets" in opportunity_analysis
@@ -327,8 +308,7 @@ class TestMarketTrendAnalyzer:
     
     @pytest.mark.asyncio
     async def test_consumer_behavior_analysis(self, agent, sample_market_data):
-        """Test consumer behavior analysis"""
-        behavior_analysis = await agent.consumer_behavior_analysis(sample_market_data)
+        """Test consumer behavior analysis"""        behavior_analysis = await agent.consumer_behavior_analysis(sample_market_data)
         
         assert "behavior_patterns" in behavior_analysis
         assert "preference_shifts" in behavior_analysis
@@ -351,8 +331,7 @@ class TestMarketTrendAnalyzer:
     
     @pytest.mark.asyncio
     async def test_competitive_intelligence(self, agent, sample_market_data):
-        """Test competitive intelligence analysis"""
-        competitor_data = {
+        """Test competitive intelligence analysis"""        competitor_data = {
             "direct_competitors": [
                 {
                     "competitor_id": "competitor_A",
@@ -392,8 +371,7 @@ class TestMarketTrendAnalyzer:
     
     @pytest.mark.asyncio
     async def test_generate_market_insight_report(self, agent, sample_market_data):
-        """Test market insight report generation"""
-        report_config = {
+        """Test market insight report generation"""        report_config = {
             "report_depth": "comprehensive",
             "focus_areas": ["growth_opportunities", "competitive_analysis", "technology_trends"],
             "forecast_period": 24  # months
@@ -413,17 +391,14 @@ class TestMarketTrendAnalyzer:
 
 
 class TestContentTrendAgent:
-    """Test ContentTrendAgent functionality"""
-    
+    """Test ContentTrendAgent functionality"""    
     @pytest.fixture
     def agent(self):
-        """Create ContentTrendAgent instance"""
-        return ContentTrendAgent()
+        """Create ContentTrendAgent instance"""        return ContentTrendAgent()
     
     @pytest.fixture
     def sample_content_trends(self):
-        """Sample content trend data"""
-        return {
+        """Sample content trend data"""        return {
             "content_analysis_id": "content_trends_001",
             "platforms": ["youtube", "tiktok", "instagram", "twitter"],
             "content_categories": [
@@ -477,8 +452,7 @@ class TestContentTrendAgent:
     
     @pytest.mark.asyncio
     async def test_analyze_content_performance_trends(self, agent, sample_content_trends):
-        """Test content performance trend analysis"""
-        performance_analysis = await agent.analyze_content_performance_trends(
+        """Test content performance trend analysis"""        performance_analysis = await agent.analyze_content_performance_trends(
             sample_content_trends
         )
         
@@ -498,8 +472,7 @@ class TestContentTrendAgent:
     
     @pytest.mark.asyncio
     async def test_identify_viral_content_patterns(self, agent, sample_content_trends):
-        """Test viral content pattern identification"""
-        viral_analysis = await agent.identify_viral_content_patterns(sample_content_trends)
+        """Test viral content pattern identification"""        viral_analysis = await agent.identify_viral_content_patterns(sample_content_trends)
         
         assert "viral_indicators" in viral_analysis
         assert "common_elements" in viral_analysis
@@ -518,8 +491,7 @@ class TestContentTrendAgent:
     
     @pytest.mark.asyncio
     async def test_content_format_evolution(self, agent, sample_content_trends):
-        """Test content format evolution analysis"""
-        format_evolution = await agent.content_format_evolution(sample_content_trends)
+        """Test content format evolution analysis"""        format_evolution = await agent.content_format_evolution(sample_content_trends)
         
         assert "format_lifecycle" in format_evolution
         assert "emerging_formats" in format_evolution
@@ -537,8 +509,7 @@ class TestContentTrendAgent:
     
     @pytest.mark.asyncio
     async def test_hashtag_and_keyword_trends(self, agent, sample_content_trends):
-        """Test hashtag and keyword trend analysis"""
-        hashtag_analysis = await agent.hashtag_and_keyword_trends(sample_content_trends)
+        """Test hashtag and keyword trend analysis"""        hashtag_analysis = await agent.hashtag_and_keyword_trends(sample_content_trends)
         
         assert "trending_hashtags" in hashtag_analysis
         assert "keyword_momentum" in hashtag_analysis
@@ -556,8 +527,7 @@ class TestContentTrendAgent:
     
     @pytest.mark.asyncio
     async def test_generate_content_trend_report(self, agent, sample_content_trends):
-        """Test content trend report generation"""
-        report_parameters = {
+        """Test content trend report generation"""        report_parameters = {
             "analysis_period": "quarterly",
             "focus_platforms": ["youtube", "tiktok"],
             "content_categories": ["educational", "technology"],
@@ -577,17 +547,14 @@ class TestContentTrendAgent:
 
 
 class TestPredictiveTrendAgent:
-    """Test PredictiveTrendAgent functionality"""
-    
+    """Test PredictiveTrendAgent functionality"""    
     @pytest.fixture
     def agent(self):
-        """Create PredictiveTrendAgent instance"""
-        return PredictiveTrendAgent()
+        """Create PredictiveTrendAgent instance"""        return PredictiveTrendAgent()
     
     @pytest.fixture
     def sample_prediction_data(self):
-        """Sample data for trend prediction"""
-        return {
+        """Sample data for trend prediction"""        return {
             "prediction_id": "pred_001",
             "historical_data": {
                 "timeframe": "24_months",
@@ -625,8 +592,7 @@ class TestPredictiveTrendAgent:
     
     @pytest.mark.asyncio
     async def test_predict_trend_trajectory(self, agent, sample_prediction_data):
-        """Test trend trajectory prediction"""
-        trajectory_prediction = await agent.predict_trend_trajectory(sample_prediction_data)
+        """Test trend trajectory prediction"""        trajectory_prediction = await agent.predict_trend_trajectory(sample_prediction_data)
         
         assert "prediction_timeline" in trajectory_prediction
         assert "confidence_intervals" in trajectory_prediction
@@ -646,8 +612,7 @@ class TestPredictiveTrendAgent:
     
     @pytest.mark.asyncio
     async def test_forecast_content_demand(self, agent, sample_prediction_data):
-        """Test content demand forecasting"""
-        demand_forecast = await agent.forecast_content_demand(sample_prediction_data)
+        """Test content demand forecasting"""        demand_forecast = await agent.forecast_content_demand(sample_prediction_data)
         
         assert "demand_predictions" in demand_forecast
         assert "content_type_forecasts" in demand_forecast
@@ -669,8 +634,7 @@ class TestPredictiveTrendAgent:
     
     @pytest.mark.asyncio
     async def test_early_trend_detection(self, agent, sample_prediction_data):
-        """Test early trend detection"""
-        early_signals = {
+        """Test early trend detection"""        early_signals = {
             "weak_signals": [
                 {
                     "signal_type": "search_query_emergence",
@@ -716,8 +680,7 @@ class TestPredictiveTrendAgent:
     
     @pytest.mark.asyncio
     async def test_scenario_modeling(self, agent, sample_prediction_data):
-        """Test scenario modeling for trend predictions"""
-        scenarios = {
+        """Test scenario modeling for trend predictions"""        scenarios = {
             "optimistic": {
                 "market_growth_rate": 0.25,
                 "technology_adoption": 0.85,
@@ -758,8 +721,7 @@ class TestPredictiveTrendAgent:
     
     @pytest.mark.asyncio
     async def test_generate_prediction_report(self, agent, sample_prediction_data):
-        """Test prediction report generation"""
-        prediction_config = {
+        """Test prediction report generation"""        prediction_config = {
             "prediction_horizon": "12_months",
             "confidence_threshold": 0.7,
             "include_scenarios": True,
@@ -780,12 +742,10 @@ class TestPredictiveTrendAgent:
 
 
 class TestIntegrationScenarios:
-    """Test integration between different trend analysis agents"""
-    
+    """Test integration between different trend analysis agents"""    
     @pytest.fixture
     def agents(self):
-        """Create all trend analysis agents for integration testing"""
-        return {
+        """Create all trend analysis agents for integration testing"""        return {
             "trend": TrendAnalysisAgent(),
             "market": MarketTrendAnalyzer(),
             "content": ContentTrendAgent(),
@@ -794,8 +754,7 @@ class TestIntegrationScenarios:
     
     @pytest.mark.asyncio
     async def test_comprehensive_trend_intelligence(self, agents):
-        """Test comprehensive trend intelligence workflow"""
-        # Comprehensive trend analysis scenario
+        """Test comprehensive trend intelligence workflow"""        # Comprehensive trend analysis scenario
         intelligence_request = {
             "analysis_scope": "content_creator_economy",
             "geographic_focus": "north_america",
@@ -831,25 +790,21 @@ class TestIntegrationScenarios:
 
 
 class TestErrorHandling:
-    """Test error handling scenarios"""
-    
+    """Test error handling scenarios"""    
     @pytest.fixture
     def agent(self):
-        """Create TrendAnalysisAgent for error testing"""
-        return TrendAnalysisAgent()
+        """Create TrendAnalysisAgent for error testing"""        return TrendAnalysisAgent()
     
     @pytest.mark.asyncio
     async def test_insufficient_trend_data(self, agent):
-        """Test handling of insufficient trend data"""
-        minimal_data = {"analysis_id": "test"}
+        """Test handling of insufficient trend data"""        minimal_data = {"analysis_id": "test"}
         
         with pytest.raises((ValueError, KeyError)):
             await agent.analyze_current_trends(minimal_data)
     
     @pytest.mark.asyncio
     async def test_invalid_trend_parameters(self, agent):
-        """Test handling of invalid trend parameters"""
-        invalid_data = {
+        """Test handling of invalid trend parameters"""        invalid_data = {
             "analysis_id": "test",
             "time_period": "invalid_period",
             "data_sources": "not_a_list",
@@ -866,8 +821,7 @@ class TestErrorHandling:
     
     @pytest.mark.asyncio
     async def test_external_trend_api_failures(self, agent):
-        """Test handling of external trend API failures"""
-        with patch('aiohttp.ClientSession.get') as mock_get:
+        """Test handling of external trend API failures"""        with patch('aiohttp.ClientSession.get') as mock_get:
             mock_get.side_effect = Exception("Trend API service unavailable")
             
             trend_data = {
@@ -885,17 +839,14 @@ class TestErrorHandling:
 
 
 class TestPerformanceAndScaling:
-    """Test performance and scaling scenarios"""
-    
+    """Test performance and scaling scenarios"""    
     @pytest.fixture
     def agent(self):
-        """Create TrendAnalysisAgent for performance testing"""
-        return TrendAnalysisAgent()
+        """Create TrendAnalysisAgent for performance testing"""        return TrendAnalysisAgent()
     
     @pytest.mark.asyncio
     async def test_bulk_trend_analysis(self, agent):
-        """Test bulk trend analysis performance"""
-        trend_batch = [
+        """Test bulk trend analysis performance"""        trend_batch = [
             {
                 "analysis_id": f"bulk_trend_{i}",
                 "market_segment": f"market_{i}",
@@ -925,8 +876,7 @@ class TestPerformanceAndScaling:
     
     @pytest.mark.asyncio
     async def test_real_time_trend_monitoring(self, agent):
-        """Test real-time trend monitoring capabilities"""
-        # Simulate real-time data streams
+        """Test real-time trend monitoring capabilities"""        # Simulate real-time data streams
         data_streams = [
             {
                 "stream_id": f"stream_{i}",

@@ -24,8 +24,7 @@ Unauthorized use, modification, or distribution by any individual or entity
 without explicit written permission from Fahed Mlaiel is strictly prohibited.
 Violators will face immediate legal action under German and international law.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-from .content_validator import ContentQualityValidator
+"""from .content_validator import ContentQualityValidator
 from .metrics_collector import QualityMetricsCollector
 from .performance_monitor import PerformanceMonitor
 from .validation_engine import ValidationEngine

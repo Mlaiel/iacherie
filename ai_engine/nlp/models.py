@@ -1,5 +1,4 @@
-"""
-Advanced AI Models Management Module for IA Influencer Agent Platform
+"""Advanced AI Models Management Module for IA Influencer Agent Platform
 
 Comprehensive AI/ML model management system for loading, optimizing,
 and serving multiple NLP models efficiently.
@@ -9,9 +8,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Callable
 from dataclasses import dataclass, field
@@ -30,8 +27,7 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class ModelType(Enum):
-    """Types of AI models"""
-    SENTIMENT_ANALYSIS = "sentiment_analysis"
+    """Types of AI models"""    SENTIMENT_ANALYSIS = "sentiment_analysis"
     TEXT_CLASSIFICATION = "text_classification"
     NAMED_ENTITY_RECOGNITION = "named_entity_recognition"
     TOPIC_MODELING = "topic_modeling"
@@ -43,8 +39,7 @@ class ModelType(Enum):
     CONTENT_SCORING = "content_scoring"
 
 class ModelStatus(Enum):
-    """Model status states"""
-    UNLOADED = "unloaded"
+    """Model status states"""    UNLOADED = "unloaded"
     LOADING = "loading"
     LOADED = "loaded"
     ERROR = "error"
@@ -53,8 +48,7 @@ class ModelStatus(Enum):
 
 @dataclass
 class ModelConfig:
-    """Model configuration"""
-    model_id: str
+    """Model configuration"""    model_id: str
     model_type: ModelType
     model_path: str
     model_class: str
@@ -70,8 +64,7 @@ class ModelConfig:
 
 @dataclass
 class ModelInstance:
-    """Loaded model instance"""
-    config: ModelConfig
+    """Loaded model instance"""    config: ModelConfig
     model: Any  # The actual model object
     status: ModelStatus
     load_time: datetime
@@ -83,8 +76,7 @@ class ModelInstance:
 
 @dataclass
 class ModelPrediction:
-    """Model prediction result"""
-    model_id: str
+    """Model prediction result"""    model_id: str
     input_data: Any
     prediction: Any
     confidence: float
@@ -94,8 +86,7 @@ class ModelPrediction:
 
 @dataclass
 class ModelPerformanceMetrics:
-    """Model performance metrics"""
-    model_id: str
+    """Model performance metrics"""    model_id: str
     total_predictions: int
     average_processing_time: float
     accuracy_score: float
@@ -106,8 +97,7 @@ class ModelPerformanceMetrics:
     last_evaluation: datetime
 
 class BaseNLPModel(ABC):
-    """Abstract base class for NLP models"""
-    
+    """Abstract base class for NLP models"""    
     def __init__(self, config: ModelConfig):
         self.config = config
         self.is_loaded = False
@@ -115,35 +105,28 @@ class BaseNLPModel(ABC):
     
     @abstractmethod
     async def load_model(self):
-        """Load the model"""
-        pass
+        """Load the model"""        pass
     
     @abstractmethod
     async def predict(self, input_data: Any) -> Any:
-        """Make prediction"""
-        pass
+        """Make prediction"""        pass
     
     @abstractmethod
     async def batch_predict(self, input_batch: List[Any]) -> List[Any]:
-        """Make batch predictions"""
-        pass
+        """Make batch predictions"""        pass
     
     @abstractmethod
     def get_model_info(self) -> Dict[str, Any]:
-        """Get model information"""
-        pass
+        """Get model information"""        pass
     
     async def unload_model(self):
-        """Unload the model"""
-        self.model = None
+        """Unload the model"""        self.model = None
         self.is_loaded = False
 
 class SentimentAnalysisModel(BaseNLPModel):
-    """Sentiment analysis model"""
-    
+    """Sentiment analysis model"""    
     async def load_model(self):
-        """Load sentiment analysis model"""
-        # In production, this would load actual models like BERT, RoBERTa, etc.
+        """Load sentiment analysis model"""        # In production, this would load actual models like BERT, RoBERTa, etc.
         await asyncio.sleep(0.1)  # Simulate loading time
         
         # Simulated model loading
@@ -157,8 +140,7 @@ class SentimentAnalysisModel(BaseNLPModel):
         logger.info(f"Sentiment analysis model loaded: {self.config.model_id}")
     
     async def predict(self, input_data: str) -> Dict[str, Any]:
-        """Predict sentiment"""
-        if not self.is_loaded:
+        """Predict sentiment"""        if not self.is_loaded:
             await self.load_model()
         
         # Simulate sentiment analysis
@@ -178,16 +160,14 @@ class SentimentAnalysisModel(BaseNLPModel):
         }
     
     async def batch_predict(self, input_batch: List[str]) -> List[Dict[str, Any]]:
-        """Batch sentiment prediction"""
-        results = []
+        """Batch sentiment prediction"""        results = []
         for text in input_batch:
             result = await self.predict(text)
             results.append(result)
         return results
     
     def get_model_info(self) -> Dict[str, Any]:
-        """Get sentiment model information"""
-        return {
+        """Get sentiment model information"""        return {
             'model_type': 'sentiment_analysis',
             'architecture': 'transformer_based',
             'training_data': 'social_media_sentiment_dataset',
@@ -196,11 +176,9 @@ class SentimentAnalysisModel(BaseNLPModel):
         }
 
 class TextClassificationModel(BaseNLPModel):
-    """Text classification model"""
-    
+    """Text classification model"""    
     async def load_model(self):
-        """Load text classification model"""
-        await asyncio.sleep(0.15)  # Simulate loading time
+        """Load text classification model"""        await asyncio.sleep(0.15)  # Simulate loading time
         
         self.model = {
             'type': 'text_classifier',
@@ -212,8 +190,7 @@ class TextClassificationModel(BaseNLPModel):
         logger.info(f"Text classification model loaded: {self.config.model_id}")
     
     async def predict(self, input_data: str) -> Dict[str, Any]:
-        """Predict text category"""
-        if not self.is_loaded:
+        """Predict text category"""        if not self.is_loaded:
             await self.load_model()
         
         import random
@@ -232,8 +209,7 @@ class TextClassificationModel(BaseNLPModel):
         }
     
     async def batch_predict(self, input_batch: List[str]) -> List[Dict[str, Any]]:
-        """Batch text classification"""
-        results = []
+        """Batch text classification"""        results = []
         for text in input_batch:
             result = await self.predict(text)
             results.append(result)
@@ -248,11 +224,9 @@ class TextClassificationModel(BaseNLPModel):
         }
 
 class EmbeddingModel(BaseNLPModel):
-    """Text embedding model"""
-    
+    """Text embedding model"""    
     async def load_model(self):
-        """Load embedding model"""
-        await asyncio.sleep(0.2)  # Simulate loading time
+        """Load embedding model"""        await asyncio.sleep(0.2)  # Simulate loading time
         
         self.model = {
             'type': 'embedding_model',
@@ -264,8 +238,7 @@ class EmbeddingModel(BaseNLPModel):
         logger.info(f"Embedding model loaded: {self.config.model_id}")
     
     async def predict(self, input_data: str) -> List[float]:
-        """Generate text embedding"""
-        if not self.is_loaded:
+        """Generate text embedding"""        if not self.is_loaded:
             await self.load_model()
         
         # Simulate embedding generation
@@ -276,8 +249,7 @@ class EmbeddingModel(BaseNLPModel):
         return embedding
     
     async def batch_predict(self, input_batch: List[str]) -> List[List[float]]:
-        """Batch embedding generation"""
-        results = []
+        """Batch embedding generation"""        results = []
         for text in input_batch:
             embedding = await self.predict(text)
             results.append(embedding)
@@ -291,8 +263,7 @@ class EmbeddingModel(BaseNLPModel):
         }
 
 class AdvancedModelManager:
-    """
-    Advanced AI model management system
+    """    Advanced AI model management system
     
     Features:
     - Dynamic model loading/unloading
@@ -302,8 +273,7 @@ class AdvancedModelManager:
     - Model versioning
     - Batch processing
     - Auto-scaling
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or self._get_default_config()
         self.models: Dict[str, ModelInstance] = {}
@@ -317,8 +287,7 @@ class AdvancedModelManager:
         self._load_model_configurations()
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration"""
-        return {
+        """Get default configuration"""        return {
             'models_directory': './models',
             'max_loaded_models': 10,
             'memory_limit_mb': 8192,
@@ -338,8 +307,7 @@ class AdvancedModelManager:
         }
     
     def _load_model_configurations(self):
-        """Load model configurations"""
-        # Define available models
+        """Load model configurations"""        # Define available models
         model_configs = [
             ModelConfig(
                 model_id="sentiment_v1",
@@ -382,8 +350,7 @@ class AdvancedModelManager:
         logger.info(f"Loaded {len(model_configs)} model configurations")
     
     async def load_model(self, model_id: str, force_reload: bool = False) -> bool:
-        """Load a specific model"""
-        if model_id not in self.model_configs:
+        """Load a specific model"""        if model_id not in self.model_configs:
             logger.error(f"Model configuration not found: {model_id}")
             return False
         
@@ -438,8 +405,7 @@ class AdvancedModelManager:
             return False
     
     async def unload_model(self, model_id: str) -> bool:
-        """Unload a specific model"""
-        if model_id not in self.models:
+        """Unload a specific model"""        if model_id not in self.models:
             logger.warning(f"Model not found for unloading: {model_id}")
             return False
         
@@ -461,8 +427,7 @@ class AdvancedModelManager:
             return False
     
     async def predict(self, model_id: str, input_data: Any, use_cache: bool = True) -> ModelPrediction:
-        """Make prediction using specified model"""
-        start_time = time.time()
+        """Make prediction using specified model"""        start_time = time.time()
         
         # Check cache first
         if use_cache and self.cache_manager.enabled:
@@ -513,8 +478,7 @@ class AdvancedModelManager:
     
     async def batch_predict(self, model_id: str, input_batch: List[Any], 
                           batch_size: int = None) -> List[ModelPrediction]:
-        """Make batch predictions"""
-        if not await self._ensure_model_loaded(model_id):
+        """Make batch predictions"""        if not await self._ensure_model_loaded(model_id):
             raise RuntimeError(f"Failed to load model: {model_id}")
         
         model_instance = self.models[model_id]
@@ -561,8 +525,7 @@ class AdvancedModelManager:
         return results
     
     async def get_model_status(self, model_id: str = None) -> Dict[str, Any]:
-        """Get status of specific model or all models"""
-        if model_id:
+        """Get status of specific model or all models"""        if model_id:
             if model_id not in self.models:
                 return {'error': f'Model not found: {model_id}'}
             
@@ -597,8 +560,7 @@ class AdvancedModelManager:
             return status
     
     async def optimize_models(self):
-        """Optimize loaded models (unload unused models, etc.)"""
-        if not self.config['auto_unload_unused']:
+        """Optimize loaded models (unload unused models, etc.)"""        if not self.config['auto_unload_unused']:
             return
         
         current_time = datetime.utcnow()
@@ -616,12 +578,10 @@ class AdvancedModelManager:
             await self.unload_model(model_id)
     
     async def get_performance_metrics(self, model_id: str = None) -> Dict[str, Any]:
-        """Get performance metrics for models"""
-        return await self.performance_monitor.get_metrics(model_id)
+        """Get performance metrics for models"""        return await self.performance_monitor.get_metrics(model_id)
     
     async def _ensure_model_loaded(self, model_id: str) -> bool:
-        """Ensure model is loaded and ready"""
-        if model_id not in self.models:
+        """Ensure model is loaded and ready"""        if model_id not in self.models:
             return await self.load_model(model_id)
         
         model_instance = self.models[model_id]
@@ -644,8 +604,7 @@ class AdvancedModelManager:
             return model_instance.status == ModelStatus.LOADED
     
     async def _create_model_instance(self, config: ModelConfig) -> BaseNLPModel:
-        """Create model instance based on configuration"""
-        if config.model_type == ModelType.SENTIMENT_ANALYSIS:
+        """Create model instance based on configuration"""        if config.model_type == ModelType.SENTIMENT_ANALYSIS:
             return SentimentAnalysisModel(config)
         elif config.model_type == ModelType.TEXT_CLASSIFICATION:
             return TextClassificationModel(config)
@@ -655,8 +614,7 @@ class AdvancedModelManager:
             raise ValueError(f"Unsupported model type: {config.model_type}")
     
     async def _free_resources_for_model(self, config: ModelConfig):
-        """Free up resources to load a new model"""
-        if not self.config['auto_unload_unused']:
+        """Free up resources to load a new model"""        if not self.config['auto_unload_unused']:
             return
         
         # Find least recently used models to unload
@@ -688,8 +646,7 @@ class AdvancedModelManager:
             freed_memory += model_instance.memory_usage
     
     def _extract_confidence(self, prediction: Any) -> float:
-        """Extract confidence score from prediction"""
-        if isinstance(prediction, dict):
+        """Extract confidence score from prediction"""        if isinstance(prediction, dict):
             if 'confidence' in prediction:
                 return prediction['confidence']
             elif 'score' in prediction:
@@ -700,8 +657,7 @@ class AdvancedModelManager:
         return 0.5  # Default confidence
 
 class ModelCacheManager:
-    """Manages prediction caching"""
-    
+    """Manages prediction caching"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.enabled = config.get('enabled', True)
@@ -711,8 +667,7 @@ class ModelCacheManager:
         self.ttl = config.get('cache_ttl', 1800)  # seconds
     
     async def get_cached_prediction(self, model_id: str, input_data: Any) -> Optional[ModelPrediction]:
-        """Get cached prediction if available"""
-        if not self.enabled:
+        """Get cached prediction if available"""        if not self.enabled:
             return None
         
         cache_key = self._generate_cache_key(model_id, input_data)
@@ -729,8 +684,7 @@ class ModelCacheManager:
         return None
     
     async def cache_prediction(self, prediction: ModelPrediction):
-        """Cache a prediction result"""
-        if not self.enabled:
+        """Cache a prediction result"""        if not self.enabled:
             return
         
         cache_key = self._generate_cache_key(prediction.model_id, prediction.input_data)
@@ -743,14 +697,12 @@ class ModelCacheManager:
         self.cache_timestamps[cache_key] = time.time()
     
     def _generate_cache_key(self, model_id: str, input_data: Any) -> str:
-        """Generate cache key for input"""
-        data_str = str(input_data)
+        """Generate cache key for input"""        data_str = str(input_data)
         key_string = f"{model_id}:{data_str}"
         return hashlib.md5(key_string.encode()).hexdigest()
     
     async def _evict_oldest_entries(self):
-        """Evict oldest cache entries"""
-        # Remove 20% of oldest entries
+        """Evict oldest cache entries"""        # Remove 20% of oldest entries
         num_to_remove = max(1, len(self.cache) // 5)
         
         # Sort by timestamp
@@ -763,8 +715,7 @@ class ModelCacheManager:
                 del self.cache_timestamps[cache_key]
 
 class ModelPerformanceMonitor:
-    """Monitors model performance metrics"""
-    
+    """Monitors model performance metrics"""    
     def __init__(self):
         self.metrics = defaultdict(lambda: {
             'total_predictions': 0,
@@ -775,8 +726,7 @@ class ModelPerformanceMonitor:
         })
     
     async def record_prediction(self, model_id: str, processing_time: float, success: bool):
-        """Record a single prediction"""
-        metrics = self.metrics[model_id]
+        """Record a single prediction"""        metrics = self.metrics[model_id]
         
         metrics['total_predictions'] += 1
         metrics['total_processing_time'] += processing_time
@@ -789,8 +739,7 @@ class ModelPerformanceMonitor:
     
     async def record_batch_prediction(self, model_id: str, batch_size: int, 
                                     processing_time: float, success: bool):
-        """Record batch prediction"""
-        metrics = self.metrics[model_id]
+        """Record batch prediction"""        metrics = self.metrics[model_id]
         
         metrics['total_predictions'] += batch_size
         metrics['total_processing_time'] += processing_time
@@ -802,8 +751,7 @@ class ModelPerformanceMonitor:
             metrics['error_count'] += batch_size
     
     async def get_metrics(self, model_id: str = None) -> Dict[str, Any]:
-        """Get performance metrics"""
-        if model_id:
+        """Get performance metrics"""        if model_id:
             if model_id in self.metrics:
                 metrics = self.metrics[model_id]
                 return {
@@ -828,22 +776,19 @@ class ModelPerformanceMonitor:
             return all_metrics
 
 class ResourceManager:
-    """Manages computational resources"""
-    
+    """Manages computational resources"""    
     def __init__(self):
         self.memory_usage = 0
         self.cpu_usage = 0
         self.gpu_usage = 0
     
     async def check_resources(self, model_config: ModelConfig) -> bool:
-        """Check if resources are available for model"""
-        # Simplified resource checking
+        """Check if resources are available for model"""        # Simplified resource checking
         # In production, this would check actual system resources
         return True
     
     async def get_resource_usage(self) -> Dict[str, float]:
-        """Get current resource usage"""
-        return {
+        """Get current resource usage"""        return {
             'memory_usage_mb': self.memory_usage,
             'cpu_usage_percent': self.cpu_usage,
             'gpu_usage_percent': self.gpu_usage
@@ -851,13 +796,11 @@ class ResourceManager:
 
 # Utility functions
 async def create_model_manager(config: Dict[str, Any] = None) -> AdvancedModelManager:
-    """Create and initialize model manager"""
-    manager = AdvancedModelManager(config)
+    """Create and initialize model manager"""    manager = AdvancedModelManager(config)
     return manager
 
 async def load_essential_models(manager: AdvancedModelManager) -> bool:
-    """Load essential models for NLP operations"""
-    essential_models = ['sentiment_v1', 'classification_v2', 'embeddings_v1']
+    """Load essential models for NLP operations"""    essential_models = ['sentiment_v1', 'classification_v2', 'embeddings_v1']
     
     success_count = 0
     for model_id in essential_models:

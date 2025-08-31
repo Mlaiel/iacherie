@@ -1,5 +1,4 @@
-"""
-🎯 Quality Metrics - Professional Quality Measurement System
+"""🎯 Quality Metrics - Professional Quality Measurement System
 
 Comprehensive quality metrics system for detailed audio quality measurement,
 scoring, and reporting. Provides structured quality data and analysis.
@@ -13,9 +12,7 @@ Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou reproduction sans 
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 
 interdite et passible de poursuites judiciaires selon la loi allemande et internationale.
-"""
-
-import logging
+"""import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -28,8 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 class MetricCategory(Enum):
-    """Quality metric categories"""
-    TECHNICAL = "technical"
+    """Quality metric categories"""    TECHNICAL = "technical"
     PERCEPTUAL = "perceptual"
     CONTENT = "content"
     COMPLIANCE = "compliance"
@@ -37,8 +33,7 @@ class MetricCategory(Enum):
 
 
 class ScoreType(Enum):
-    """Quality score types"""
-    NORMALIZED = "normalized"      # 0.0 to 1.0
+    """Quality score types"""    NORMALIZED = "normalized"      # 0.0 to 1.0
     PERCENTAGE = "percentage"      # 0 to 100
     DB_SCALE = "db_scale"         # dB values
     RATING = "rating"             # 1 to 5 stars
@@ -46,8 +41,7 @@ class ScoreType(Enum):
 
 
 class QualityGrade(Enum):
-    """Quality grade classifications"""
-    EXCELLENT = "excellent"       # 90-100%
+    """Quality grade classifications"""    EXCELLENT = "excellent"       # 90-100%
     VERY_GOOD = "very_good"      # 80-89%
     GOOD = "good"                # 70-79%
     ACCEPTABLE = "acceptable"    # 60-69%
@@ -57,8 +51,7 @@ class QualityGrade(Enum):
 
 @dataclass
 class QualityScore:
-    """Individual quality score measurement"""
-    name: str
+    """Individual quality score measurement"""    name: str
     category: MetricCategory
     value: float
     score_type: ScoreType
@@ -74,8 +67,7 @@ class QualityScore:
 
 @dataclass 
 class QualityMetrics:
-    """Comprehensive quality metrics collection"""
-    
+    """Comprehensive quality metrics collection"""    
     # Overall scores
     overall_score: float = 0.0
     overall_grade: QualityGrade = QualityGrade.UNACCEPTABLE
@@ -106,16 +98,13 @@ class QualityMetrics:
     analysis_duration: float = 0.0
     
     def add_score(self, score: QualityScore):
-        """Add individual quality score"""
-        self.scores.append(score)
+        """Add individual quality score"""        self.scores.append(score)
     
     def get_scores_by_category(self, category: MetricCategory) -> List[QualityScore]:
-        """Get scores filtered by category"""
-        return [score for score in self.scores if score.category == category]
+        """Get scores filtered by category"""        return [score for score in self.scores if score.category == category]
     
     def calculate_category_score(self, category: MetricCategory) -> float:
-        """Calculate weighted average score for category"""
-        category_scores = self.get_scores_by_category(category)
+        """Calculate weighted average score for category"""        category_scores = self.get_scores_by_category(category)
         if not category_scores:
             return 0.0
         
@@ -125,16 +114,14 @@ class QualityMetrics:
         return total_weighted / max(total_weights, 1.0)
     
     def update_category_scores(self):
-        """Update all category scores"""
-        self.technical_score = self.calculate_category_score(MetricCategory.TECHNICAL)
+        """Update all category scores"""        self.technical_score = self.calculate_category_score(MetricCategory.TECHNICAL)
         self.perceptual_score = self.calculate_category_score(MetricCategory.PERCEPTUAL)
         self.content_score = self.calculate_category_score(MetricCategory.CONTENT)
         self.compliance_score = self.calculate_category_score(MetricCategory.COMPLIANCE)
         self.performance_score = self.calculate_category_score(MetricCategory.PERFORMANCE)
     
     def calculate_overall_score(self, weights: Dict[MetricCategory, float] = None) -> float:
-        """Calculate weighted overall score"""
-        if weights is None:
+        """Calculate weighted overall score"""        if weights is None:
             weights = {
                 MetricCategory.TECHNICAL: 0.35,
                 MetricCategory.PERCEPTUAL: 0.30,
@@ -168,8 +155,7 @@ class QualityMetrics:
     
     @staticmethod
     def score_to_grade(score: float) -> QualityGrade:
-        """Convert numeric score to quality grade"""
-        if score >= 0.90:
+        """Convert numeric score to quality grade"""        if score >= 0.90:
             return QualityGrade.EXCELLENT
         elif score >= 0.80:
             return QualityGrade.VERY_GOOD
@@ -183,12 +169,10 @@ class QualityMetrics:
             return QualityGrade.UNACCEPTABLE
     
     def get_failed_metrics(self) -> List[QualityScore]:
-        """Get metrics that failed their thresholds"""
-        return [score for score in self.scores if not score.passed]
+        """Get metrics that failed their thresholds"""        return [score for score in self.scores if not score.passed]
     
     def get_summary_stats(self) -> Dict[str, Any]:
-        """Get summary statistics"""
-        if not self.scores:
+        """Get summary statistics"""        if not self.scores:
             return {}
         
         values = [score.value for score in self.scores]
@@ -208,8 +192,7 @@ class QualityMetrics:
 
 @dataclass
 class QualityReport:
-    """Complete quality assessment report"""
-    
+    """Complete quality assessment report"""    
     # Core metrics
     metrics: QualityMetrics
     
@@ -242,8 +225,7 @@ class QualityReport:
     analysis_end: Optional[datetime] = None
     
     def generate_summary(self) -> str:
-        """Generate human-readable report summary"""
-        summary_parts = []
+        """Generate human-readable report summary"""        summary_parts = []
         
         # Overall assessment
         summary_parts.append(f"Overall Quality: {self.overall_grade.value.title()} ({self.overall_score:.1%})")
@@ -275,8 +257,7 @@ class QualityReport:
         return " | ".join(summary_parts)
     
     def get_detailed_analysis(self) -> Dict[str, Any]:
-        """Get detailed analysis breakdown"""
-        return {
+        """Get detailed analysis breakdown"""        return {
             'overall_assessment': {
                 'score': self.overall_score,
                 'grade': self.overall_grade.value,
@@ -321,8 +302,7 @@ class QualityReport:
         }
     
     def export_json(self, file_path: Optional[str] = None) -> str:
-        """Export report as JSON"""
-        export_data = {
+        """Export report as JSON"""        export_data = {
             'report_id': self.report_id,
             'created_at': self.created_at.isoformat(),
             'overall_assessment': {
@@ -390,8 +370,7 @@ class QualityReport:
         return json_str
     
     def export_csv(self, file_path: str):
-        """Export metrics as CSV"""
-        import csv
+        """Export metrics as CSV"""        import csv
         
         with open(file_path, 'w', newline='') as f:
             writer = csv.writer(f)
@@ -420,8 +399,7 @@ class QualityReport:
 
 
 class QualityMetricsCalculator:
-    """
-    🎯 Quality Metrics Calculator
+    """    🎯 Quality Metrics Calculator
     
     Advanced quality metrics calculation engine:
     - Technical quality metrics
@@ -429,15 +407,13 @@ class QualityMetricsCalculator:
     - Content analysis metrics
     - Compliance checking
     - Statistical analysis
-    """
-    
+    """    
     def __init__(self):
         self.metric_definitions = self._initialize_metric_definitions()
         logger.info("QualityMetricsCalculator initialized")
     
     def _initialize_metric_definitions(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize standard metric definitions"""
-        return {
+        """Initialize standard metric definitions"""        return {
             # Technical metrics
             'sample_rate': {
                 'category': MetricCategory.TECHNICAL,
@@ -575,8 +551,7 @@ class QualityMetricsCalculator:
         threshold: Optional[float] = None,
         custom_weight: Optional[float] = None
     ) -> QualityScore:
-        """Create quality score with standard definition"""
-        
+        """Create quality score with standard definition"""        
         definition = self.metric_definitions.get(name, {})
         
         category = definition.get('category', MetricCategory.TECHNICAL)
@@ -615,8 +590,7 @@ class QualityMetricsCalculator:
         max_threshold: float,
         invert: bool = False
     ) -> float:
-        """Calculate normalized score (0.0 to 1.0)"""
-        
+        """Calculate normalized score (0.0 to 1.0)"""        
         if min_threshold >= max_threshold:
             return 1.0 if value >= min_threshold else 0.0
         
@@ -638,8 +612,7 @@ class QualityMetricsCalculator:
         target: float,
         tolerance: float = 3.0
     ) -> float:
-        """Calculate score for dB-scale metrics"""
-        
+        """Calculate score for dB-scale metrics"""        
         deviation = abs(value - target)
         
         if deviation <= tolerance:
@@ -655,8 +628,7 @@ class QualityMetricsCalculator:
         scores: List[QualityScore],
         weights: Optional[Dict[MetricCategory, float]] = None
     ) -> Tuple[float, QualityGrade]:
-        """Aggregate multiple scores into overall score and grade"""
-        
+        """Aggregate multiple scores into overall score and grade"""        
         if not scores:
             return 0.0, QualityGrade.UNACCEPTABLE
         
@@ -705,8 +677,7 @@ class QualityMetricsCalculator:
         analysis_results: Dict[str, Any],
         thresholds: Dict[str, float] = None
     ) -> QualityMetrics:
-        """Create quality metrics from analysis results"""
-        
+        """Create quality metrics from analysis results"""        
         metrics = QualityMetrics()
         thresholds = thresholds or {}
         
@@ -731,8 +702,7 @@ class QualityMetricsCalculator:
         return metrics
     
     def _calculate_confidence(self, scores: List[QualityScore]) -> float:
-        """Calculate confidence level of quality assessment"""
-        if not scores:
+        """Calculate confidence level of quality assessment"""        if not scores:
             return 0.0
         
         # Factors affecting confidence:
@@ -760,8 +730,7 @@ class QualityMetricsCalculator:
         return max(0.0, min(1.0, confidence))
     
     def _calculate_reliability(self, scores: List[QualityScore]) -> float:
-        """Calculate reliability index of quality assessment"""
-        if not scores:
+        """Calculate reliability index of quality assessment"""        if not scores:
             return 0.0
         
         # Reliability based on:
@@ -793,8 +762,7 @@ class QualityMetricsCalculator:
         metrics1: QualityMetrics,
         metrics2: QualityMetrics
     ) -> Dict[str, Any]:
-        """Compare two quality metrics"""
-        
+        """Compare two quality metrics"""        
         comparison = {
             'overall_score_diff': metrics2.overall_score - metrics1.overall_score,
             'grade_change': {

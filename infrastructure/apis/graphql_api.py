@@ -1,5 +1,4 @@
-"""
-🌐 Graphql Api - IA-Influencer-Agent API Layer
+"""🌐 Graphql Api - IA-Influencer-Agent API Layer
 ==================================================================
 Expert: BACKEND_SENIOR + MICROSERVICES_ARCHITECT
 Architecture: RESTful API + GraphQL + WebSocket
@@ -8,9 +7,7 @@ Date: 2025-07-31 06:28:26
 API professionnel avec authentification, validation, et monitoring.
 Routes consolidées: 0
 ==================================================================
-"""
-
-from fastapi import FastAPI, HTTPException, Depends, status, Request, Response
+"""from fastapi import FastAPI, HTTPException, Depends, status, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
@@ -29,16 +26,14 @@ logger = logging.getLogger(__name__)
 security = HTTPBearer()
 
 class APIResponse(BaseModel):
-    """Réponse API standardisée"""
-    success: bool = True
+    """Réponse API standardisée"""    success: bool = True
     data: Optional[Any] = None
     message: str = ""
     timestamp: datetime = Field(default_factory=datetime.now)
     request_id: Optional[str] = None
 
 class APIError(BaseModel):
-    """Erreur API standardisée"""
-    error_code: str
+    """Erreur API standardisée"""    error_code: str
     message: str
     details: Optional[Dict[str, Any]] = None
     timestamp: datetime = Field(default_factory=datetime.now)
@@ -46,8 +41,7 @@ class APIError(BaseModel):
 # =============== MIDDLEWARE ===============
 
 async def authentication_middleware(request: Request, credentials: HTTPAuthorizationCredentials = Depends(security)):
-    """Middleware d'authentification"""
-    try:
+    """Middleware d'authentification"""    try:
         # JWT validation implementation for GraphQL
         token = credentials.credentials
         
@@ -75,8 +69,7 @@ async def authentication_middleware(request: Request, credentials: HTTPAuthoriza
         )
 
 async def rate_limiting_middleware(request: Request):
-    """Middleware de limitation de débit"""
-    # GraphQL-specific rate limiting with Redis-like logic
+    """Middleware de limitation de débit"""    # GraphQL-specific rate limiting with Redis-like logic
     client_ip = request.client.host
     
     # GraphQL queries can be more expensive, so lower limits
@@ -113,16 +106,14 @@ async def rate_limiting_middleware(request: Request):
 # =============== API ROUTES ===============
 
 class GraphqlApiAPI:
-    """API principale Graphql Api"""
-    
+    """API principale Graphql Api"""    
     def __init__(self, app: FastAPI):
         self.app = app
         self.setup_routes()
         self.setup_middleware()
     
     def setup_middleware(self):
-        """Configuration des middlewares"""
-        self.app.add_middleware(
+        """Configuration des middlewares"""        self.app.add_middleware(
             CORSMiddleware,
             allow_origins=["http://localhost:3000", "https://graphql.ainflue.com"],  # GraphQL-specific origins
             allow_credentials=True,
@@ -132,12 +123,10 @@ class GraphqlApiAPI:
         self.app.add_middleware(GZipMiddleware, minimum_size=1000)
     
     def setup_routes(self):
-        """Configuration des routes API"""
-        
+        """Configuration des routes API"""        
         @self.app.get("/health")
         async def health_check():
-            """Vérification de santé de l'API"""
-            return APIResponse(
+            """Vérification de santé de l'API"""            return APIResponse(
                 success=True,
                 data={"status": "healthy", "version": "1.0.0"},
                 message="API Graphql Api opérationnelle"
@@ -148,8 +137,7 @@ class GraphqlApiAPI:
             request: Request,
             auth_data: dict = Depends(authentication_middleware)
         ):
-            """Récupération des données"""
-            try:
+            """Récupération des données"""            try:
                 # GraphQL business logic implementation
                 # Support GraphQL-style field selection and relationships
                 if not hasattr(self, '_graphql_data_cache'):
@@ -204,8 +192,7 @@ class GraphqlApiAPI:
             data: Dict[str, Any],
             auth_data: dict = Depends(authentication_middleware)
         ):
-            """Création de données"""
-            try:
+            """Création de données"""            try:
                 # GraphQL mutation validation and creation
                 # Support GraphQL input types and mutations
                 if not data or not isinstance(data, dict):
@@ -257,30 +244,25 @@ class GraphqlApiAPI:
 # =============== WebSocket Support ===============
 
 class WebSocketManager:
-    """Gestionnaire WebSocket pour temps réel"""
-    
+    """Gestionnaire WebSocket pour temps réel"""    
     def __init__(self):
         self.active_connections: List = []
     
     async def connect(self, websocket):
-        """Connexion WebSocket"""
-        await websocket.accept()
+        """Connexion WebSocket"""        await websocket.accept()
         self.active_connections.append(websocket)
     
     def disconnect(self, websocket):
-        """Déconnexion WebSocket"""
-        self.active_connections.remove(websocket)
+        """Déconnexion WebSocket"""        self.active_connections.remove(websocket)
     
     async def broadcast(self, message: str):
-        """Diffusion message à tous les clients"""
-        for connection in self.active_connections:
+        """Diffusion message à tous les clients"""        for connection in self.active_connections:
             await connection.send_text(message)
 
 # =============== EXPORT MODULE ===============
 
 def create_graphqlapi_api(app: FastAPI) -> GraphqlApiAPI:
-    """Factory pour créer l'API Graphql Api"""
-    return GraphqlApiAPI(app)
+    """Factory pour créer l'API Graphql Api"""    return GraphqlApiAPI(app)
 
 __all__ = [
     "GraphqlApiAPI",

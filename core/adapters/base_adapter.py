@@ -1,5 +1,4 @@
-"""
-Enterprise Platform Adapters - Base Adapter Framework
+"""Enterprise Platform Adapters - Base Adapter Framework
 
 This module provides the foundational adapter framework for all external platform
 integrations, following enterprise design patterns with comprehensive error handling,
@@ -19,9 +18,7 @@ Components:
 - AdapterRateLimit: Intelligent rate limiting and throttling
 - AdapterCache: Caching strategy for optimal performance
 - AdapterError: Comprehensive error handling framework
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Any, Union, Callable, TypeVar, Generic
@@ -44,8 +41,7 @@ AdapterResponse = TypeVar('AdapterResponse')
 logger = logging.getLogger(__name__)
 
 class PlatformType(Enum):
-    """Enumeration of supported platform types."""
-    SOCIAL_MEDIA = "social_media"
+    """Enumeration of supported platform types."""    SOCIAL_MEDIA = "social_media"
     MUSIC_STREAMING = "music_streaming"
     VIDEO_PLATFORM = "video_platform"
     PAYMENT_GATEWAY = "payment_gateway"
@@ -61,8 +57,7 @@ class PlatformType(Enum):
     SEO_PLATFORM = "seo_platform"
 
 class AdapterStatus(Enum):
-    """Adapter operational status."""
-    ACTIVE = "active"
+    """Adapter operational status."""    ACTIVE = "active"
     INACTIVE = "inactive"
     ERROR = "error"
     RATE_LIMITED = "rate_limited"
@@ -70,8 +65,7 @@ class AdapterStatus(Enum):
     DEPRECATED = "deprecated"
 
 class AuthenticationType(Enum):
-    """Authentication method types."""
-    API_KEY = "api_key"
+    """Authentication method types."""    API_KEY = "api_key"
     OAUTH2 = "oauth2"
     JWT = "jwt"
     BASIC_AUTH = "basic_auth"
@@ -80,8 +74,7 @@ class AuthenticationType(Enum):
 
 @dataclass
 class AdapterCredentials:
-    """Secure credential storage for platform authentication."""
-    auth_type: AuthenticationType
+    """Secure credential storage for platform authentication."""    auth_type: AuthenticationType
     api_key: Optional[str] = None
     client_id: Optional[str] = None
     client_secret: Optional[str] = None
@@ -93,14 +86,12 @@ class AdapterCredentials:
     base_url: Optional[str] = None
     
     def is_token_expired(self) -> bool:
-        """Check if the access token is expired."""
-        if not self.token_expires_at:
+        """Check if the access token is expired."""        if not self.token_expires_at:
             return False
         return datetime.now() >= self.token_expires_at
     
     def to_headers(self) -> Dict[str, str]:
-        """Convert credentials to HTTP headers."""
-        headers = self.custom_headers.copy()
+        """Convert credentials to HTTP headers."""        headers = self.custom_headers.copy()
         
         if self.auth_type == AuthenticationType.API_KEY and self.api_key:
             headers["X-API-Key"] = self.api_key
@@ -113,8 +104,7 @@ class AdapterCredentials:
 
 @dataclass
 class RateLimitConfig:
-    """Rate limiting configuration for adapters."""
-    requests_per_second: float = 10.0
+    """Rate limiting configuration for adapters."""    requests_per_second: float = 10.0
     requests_per_minute: float = 600.0
     requests_per_hour: float = 36000.0
     burst_limit: int = 50
@@ -122,8 +112,7 @@ class RateLimitConfig:
     max_retries: int = 3
     
 class AdapterMetrics:
-    """Performance metrics tracking for adapters."""
-    
+    """Performance metrics tracking for adapters."""    
     def __init__(self, adapter_name: str, redis_client: Optional[redis.Redis] = None):
         self.adapter_name = adapter_name
         self.redis_client = redis_client
@@ -141,8 +130,7 @@ class AdapterMetrics:
         }
     
     def record_request(self, endpoint: str, response_time: float, success: bool, error: Optional[str] = None):
-        """Record request metrics."""
-        self.metrics['total_requests'] += 1
+        """Record request metrics."""        self.metrics['total_requests'] += 1
         self.metrics['total_response_time'] += response_time
         self.metrics['average_response_time'] = self.metrics['total_response_time'] / self.metrics['total_requests']
         self.metrics['last_request_time'] = datetime.now()
@@ -170,18 +158,15 @@ class AdapterMetrics:
             self._store_metrics_in_redis()
     
     def record_rate_limit(self):
-        """Record rate limiting event."""
-        self.metrics['rate_limited_requests'] += 1
+        """Record rate limiting event."""        self.metrics['rate_limited_requests'] += 1
     
     def get_success_rate(self) -> float:
-        """Calculate success rate percentage."""
-        if self.metrics['total_requests'] == 0:
+        """Calculate success rate percentage."""        if self.metrics['total_requests'] == 0:
             return 0.0
         return (self.metrics['successful_requests'] / self.metrics['total_requests']) * 100
     
     def _store_metrics_in_redis(self):
-        """Store metrics in Redis for persistence."""
-        try:
+        """Store metrics in Redis for persistence."""        try:
             key = f"adapter_metrics:{self.adapter_name}"
             self.redis_client.hset(key, mapping={
                 'metrics': json.dumps(self.metrics, default=str)
@@ -191,8 +176,7 @@ class AdapterMetrics:
             logger.warning(f"Failed to store metrics in Redis: {e}")
 
 class AdapterRateLimit:
-    """Intelligent rate limiting for API adapters."""
-    
+    """Intelligent rate limiting for API adapters."""    
     def __init__(self, config: RateLimitConfig, redis_client: Optional[redis.Redis] = None):
         self.config = config
         self.redis_client = redis_client
@@ -201,8 +185,7 @@ class AdapterRateLimit:
         self.request_times = []
     
     async def acquire(self, endpoint: str) -> bool:
-        """Acquire permission to make a request."""
-        current_time = time.time()
+        """Acquire permission to make a request."""        current_time = time.time()
         
         # Refill tokens based on time passed
         time_passed = current_time - self.last_refill
@@ -219,8 +202,7 @@ class AdapterRateLimit:
         return False
     
     async def wait_if_needed(self, endpoint: str) -> float:
-        """Wait if rate limiting is needed, return wait time."""
-        if await self.acquire(endpoint):
+        """Wait if rate limiting is needed, return wait time."""        if await self.acquire(endpoint):
             return 0.0
         
         # Calculate wait time
@@ -229,35 +211,30 @@ class AdapterRateLimit:
         return wait_time
     
     def _record_request_time(self, request_time: float):
-        """Record request time for monitoring."""
-        self.request_times.append(request_time)
+        """Record request time for monitoring."""        self.request_times.append(request_time)
         # Keep only last hour of data
         cutoff_time = request_time - 3600
         self.request_times = [t for t in self.request_times if t > cutoff_time]
     
     def get_current_rate(self) -> float:
-        """Get current request rate per second."""
-        current_time = time.time()
+        """Get current request rate per second."""        current_time = time.time()
         recent_requests = [t for t in self.request_times if t > current_time - 60]
         return len(recent_requests) / 60.0
 
 class AdapterCache:
-    """Intelligent caching system for adapter responses."""
-    
+    """Intelligent caching system for adapter responses."""    
     def __init__(self, redis_client: Optional[redis.Redis] = None, default_ttl: int = 300):
         self.redis_client = redis_client
         self.default_ttl = default_ttl
         self.local_cache = {}
     
     def _generate_cache_key(self, adapter_name: str, endpoint: str, params: Dict[str, Any]) -> str:
-        """Generate cache key from adapter name, endpoint, and parameters."""
-        params_str = json.dumps(params, sort_keys=True, default=str)
+        """Generate cache key from adapter name, endpoint, and parameters."""        params_str = json.dumps(params, sort_keys=True, default=str)
         params_hash = hashlib.md5(params_str.encode()).hexdigest()
         return f"adapter_cache:{adapter_name}:{endpoint}:{params_hash}"
     
     async def get(self, adapter_name: str, endpoint: str, params: Dict[str, Any]) -> Optional[Any]:
-        """Get cached response."""
-        cache_key = self._generate_cache_key(adapter_name, endpoint, params)
+        """Get cached response."""        cache_key = self._generate_cache_key(adapter_name, endpoint, params)
         
         # Try Redis first
         if self.redis_client:
@@ -280,8 +257,7 @@ class AdapterCache:
     
     async def set(self, adapter_name: str, endpoint: str, params: Dict[str, Any], 
                   data: Any, ttl: Optional[int] = None) -> None:
-        """Set cached response."""
-        cache_key = self._generate_cache_key(adapter_name, endpoint, params)
+        """Set cached response."""        cache_key = self._generate_cache_key(adapter_name, endpoint, params)
         ttl = ttl or self.default_ttl
         
         # Store in Redis
@@ -305,14 +281,12 @@ class AdapterCache:
             del self.local_cache[key]
 
 class BasePlatformAdapter(ABC):
-    """
-    Abstract base class for all platform adapters.
+    """    Abstract base class for all platform adapters.
     
     This class provides the foundation for implementing adapters to external platforms
     with comprehensive error handling, rate limiting, authentication, caching, and
     performance monitoring capabilities.
-    """
-    
+    """    
     def __init__(self, 
                  platform_name: str,
                  platform_type: PlatformType,
@@ -336,17 +310,14 @@ class BasePlatformAdapter(ABC):
         logger.info(f"Initialized {platform_name} adapter for {platform_type.value}")
     
     async def __aenter__(self):
-        """Async context manager entry."""
-        await self.connect()
+        """Async context manager entry."""        await self.connect()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
-        await self.disconnect()
+        """Async context manager exit."""        await self.disconnect()
     
     async def connect(self) -> bool:
-        """Initialize connection to the platform."""
-        try:
+        """Initialize connection to the platform."""        try:
             # Create HTTP session
             timeout = aiohttp.ClientTimeout(total=30, connect=10)
             self.session = aiohttp.ClientSession(
@@ -370,8 +341,7 @@ class BasePlatformAdapter(ABC):
             return False
     
     async def disconnect(self) -> None:
-        """Clean up resources and disconnect."""
-        if self.session:
+        """Clean up resources and disconnect."""        if self.session:
             await self.session.close()
             self.session = None
         
@@ -380,12 +350,10 @@ class BasePlatformAdapter(ABC):
     
     @abstractmethod
     async def authenticate(self) -> bool:
-        """Authenticate with the platform."""
-        pass
+        """Authenticate with the platform."""        pass
     
     async def refresh_token(self) -> bool:
-        """Refresh authentication token if supported."""
-        logger.warning(f"Token refresh not implemented for {self.platform_name}")
+        """Refresh authentication token if supported."""        logger.warning(f"Token refresh not implemented for {self.platform_name}")
         return False
     
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
@@ -398,8 +366,7 @@ class BasePlatformAdapter(ABC):
                           headers: Optional[Dict[str, str]] = None,
                           cache_ttl: Optional[int] = None,
                           use_cache: bool = True) -> Dict[str, Any]:
-        """
-        Make HTTP request with comprehensive error handling, rate limiting, and caching.
+        """        Make HTTP request with comprehensive error handling, rate limiting, and caching.
         
         Args:
             method: HTTP method (GET, POST, PUT, DELETE, etc.)
@@ -416,8 +383,7 @@ class BasePlatformAdapter(ABC):
             
         Raises:
             AdapterError: When request fails
-        """
-        if not self.session:
+        """        if not self.session:
             raise AdapterError(f"Adapter {self.platform_name} not connected")
         
         # Check cache first
@@ -525,8 +491,7 @@ class BasePlatformAdapter(ABC):
             raise AdapterError(error_msg)
     
     def get_status(self) -> Dict[str, Any]:
-        """Get adapter status and metrics."""
-        return {
+        """Get adapter status and metrics."""        return {
             'platform_name': self.platform_name,
             'platform_type': self.platform_type.value,
             'status': self.status.value,
@@ -539,12 +504,10 @@ class BasePlatformAdapter(ABC):
     
     @abstractmethod
     async def health_check(self) -> bool:
-        """Perform health check on the platform connection."""
-        pass
+        """Perform health check on the platform connection."""        pass
 
 class AdapterError(Exception):
-    """Base exception for adapter-related errors."""
-    
+    """Base exception for adapter-related errors."""    
     def __init__(self, message: str, platform: Optional[str] = None, error_code: Optional[str] = None):
         super().__init__(message)
         self.message = message
@@ -553,20 +516,16 @@ class AdapterError(Exception):
         self.timestamp = datetime.now()
 
 class AuthenticationError(AdapterError):
-    """Authentication-related adapter error."""
-    pass
+    """Authentication-related adapter error."""    pass
 
 class RateLimitError(AdapterError):
-    """Rate limiting-related adapter error."""
-    pass
+    """Rate limiting-related adapter error."""    pass
 
 class ConfigurationError(AdapterError):
-    """Configuration-related adapter error."""
-    pass
+    """Configuration-related adapter error."""    pass
 
 class NetworkError(AdapterError):
-    """Network-related adapter error."""
-    pass
+    """Network-related adapter error."""    pass
 
 # Export all classes and types
 __all__ = [

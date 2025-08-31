@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Agent Registry Update Script
+"""Agent Registry Update Script
 Met à jour le registre des agents selon l'état réel du système
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -9,9 +8,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use is strictly prohibited. Contact: mlaiel@live.de
-"""
-
-# REGISTRE COMPLET DES AGENTS EXISTANTS - État Réel du 13 Août 2025
+"""# REGISTRE COMPLET DES AGENTS EXISTANTS - État Réel du 13 Août 2025
 
 EXISTING_AGENTS_REGISTRY = {
     # ═══════════════════════════════════════════════════════════════
@@ -739,8 +736,7 @@ EXISTING_AGENTS_REGISTRY = {
 # ═══════════════════════════════════════════════════════════════
 
 def get_agents_statistics():
-    """Retourne les statistiques complètes du système d'agents"""
-    
+    """Retourne les statistiques complètes du système d'agents"""    
     stats = {
         'total_agents': len(EXISTING_AGENTS_REGISTRY),
         'by_category': {},
@@ -769,8 +765,7 @@ def get_agents_statistics():
     return stats
 
 def validate_agent_dependencies():
-    """Valide que toutes les dépendances existent"""
-    errors = []
+    """Valide que toutes les dépendances existent"""    errors = []
     
     for agent_id, config in EXISTING_AGENTS_REGISTRY.items():
         dependencies = config.get('dependencies', [])
@@ -782,16 +777,14 @@ def validate_agent_dependencies():
     return errors
 
 def get_agents_by_category(category: str):
-    """Retourne tous les agents d'une catégorie donnée"""
-    return {
+    """Retourne tous les agents d'une catégorie donnée"""    return {
         agent_id: config 
         for agent_id, config in EXISTING_AGENTS_REGISTRY.items() 
         if config['category'] == category
     }
 
 def get_critical_agents():
-    """Retourne tous les agents critiques"""
-    return {
+    """Retourne tous les agents critiques"""    return {
         agent_id: config 
         for agent_id, config in EXISTING_AGENTS_REGISTRY.items() 
         if config['priority'] == 'critical'

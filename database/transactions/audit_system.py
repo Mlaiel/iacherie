@@ -1,5 +1,4 @@
-"""
-Audit System - Comprehensive Transaction Auditing and Compliance
+"""Audit System - Comprehensive Transaction Auditing and Compliance
 
 Enterprise-grade audit system providing comprehensive transaction logging,
 compliance tracking, and regulatory reporting for the IA Influencer platform's
@@ -24,9 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-
-import asyncio
+"""import asyncio
 import json
 import hashlib
 import logging
@@ -49,8 +46,7 @@ logger = logging.getLogger(__name__)
 
 
 class AuditLevel(Enum):
-    """Audit level enumeration"""
-    NONE = "NONE"                   # No auditing
+    """Audit level enumeration"""    NONE = "NONE"                   # No auditing
     MINIMAL = "MINIMAL"             # Basic operations only
     STANDARD = "STANDARD"           # Standard audit level
     DETAILED = "DETAILED"           # Detailed audit with metadata
@@ -64,8 +60,7 @@ class AuditLevel(Enum):
 
 
 class AuditEventType(Enum):
-    """Audit event types"""
-    # Transaction events
+    """Audit event types"""    # Transaction events
     TRANSACTION_BEGIN = "TRANSACTION_BEGIN"
     TRANSACTION_PREPARE = "TRANSACTION_PREPARE"
     TRANSACTION_COMMIT = "TRANSACTION_COMMIT"
@@ -105,8 +100,7 @@ class AuditEventType(Enum):
 
 
 class ComplianceStandard(Enum):
-    """Compliance standards"""
-    GDPR = "GDPR"                   # General Data Protection Regulation
+    """Compliance standards"""    GDPR = "GDPR"                   # General Data Protection Regulation
     CCPA = "CCPA"                   # California Consumer Privacy Act
     SOX = "SOX"                     # Sarbanes-Oxley Act
     PCI_DSS = "PCI_DSS"            # Payment Card Industry Data Security Standard
@@ -121,8 +115,7 @@ class ComplianceStandard(Enum):
 
 @dataclass
 class AuditContext:
-    """Audit context information"""
-    user_id: Optional[str] = None
+    """Audit context information"""    user_id: Optional[str] = None
     session_id: Optional[str] = None
     ip_address: Optional[str] = None
     user_agent: Optional[str] = None
@@ -135,8 +128,7 @@ class AuditContext:
     compliance_tags: Set[str] = field(default_factory=set)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'user_id': self.user_id,
             'session_id': self.session_id,
             'ip_address': self.ip_address,
@@ -153,8 +145,7 @@ class AuditContext:
 
 @dataclass
 class TransactionLog:
-    """Transaction log entry for audit purposes"""
-    log_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Transaction log entry for audit purposes"""    log_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     event_type: AuditEventType = AuditEventType.TRANSACTION_BEGIN
     audit_level: AuditLevel = AuditLevel.STANDARD
@@ -171,13 +162,11 @@ class TransactionLog:
     checksum: Optional[str] = None
     
     def __post_init__(self):
-        """Calculate checksum after initialization"""
-        if self.checksum is None:
+        """Calculate checksum after initialization"""        if self.checksum is None:
             self.checksum = self._calculate_checksum()
     
     def _calculate_checksum(self) -> str:
-        """Calculate SHA-256 checksum of log entry"""
-        data = {
+        """Calculate SHA-256 checksum of log entry"""        data = {
             'log_id': self.log_id,
             'timestamp': self.timestamp.isoformat(),
             'event_type': self.event_type.value,
@@ -194,13 +183,11 @@ class TransactionLog:
         return hashlib.sha256(data_str.encode('utf-8')).hexdigest()
     
     def verify_integrity(self) -> bool:
-        """Verify log entry integrity"""
-        expected_checksum = self._calculate_checksum()
+        """Verify log entry integrity"""        expected_checksum = self._calculate_checksum()
         return self.checksum == expected_checksum
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization"""
-        return {
+        """Convert to dictionary for serialization"""        return {
             'log_id': self.log_id,
             'timestamp': self.timestamp.isoformat(),
             'event_type': self.event_type.value,
@@ -220,8 +207,7 @@ class TransactionLog:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'TransactionLog':
-        """Create from dictionary"""
-        context = None
+        """Create from dictionary"""        context = None
         if data.get('context'):
             context_data = data['context']
             context = AuditContext(
@@ -265,8 +251,7 @@ class TransactionLog:
 
 
 class AuditStorage:
-    """Audit log storage with SQLite backend"""
-    
+    """Audit log storage with SQLite backend"""    
     def __init__(self, db_path: str = "./audit_logs.db"):
         self.db_path = db_path
         self.lock = threading.RLock()
@@ -275,12 +260,10 @@ class AuditStorage:
         logger.info("AuditStorage initialized: %s", db_path)
     
     def _init_database(self):
-        """Initialize audit database schema"""
-        with self.lock:
+        """Initialize audit database schema"""        with self.lock:
             conn = sqlite3.connect(self.db_path)
             try:
-                conn.execute("""
-                    CREATE TABLE IF NOT EXISTS audit_logs (
+                conn.execute("""                    CREATE TABLE IF NOT EXISTS audit_logs (
                         log_id TEXT PRIMARY KEY,
                         timestamp REAL NOT NULL,
                         event_type TEXT NOT NULL,
@@ -300,23 +283,19 @@ class AuditStorage:
                     )
                 """)
                 
-                conn.execute("""
-                    CREATE INDEX IF NOT EXISTS idx_audit_timestamp 
+                conn.execute("""                    CREATE INDEX IF NOT EXISTS idx_audit_timestamp 
                     ON audit_logs(timestamp)
                 """)
                 
-                conn.execute("""
-                    CREATE INDEX IF NOT EXISTS idx_audit_event_type 
+                conn.execute("""                    CREATE INDEX IF NOT EXISTS idx_audit_event_type 
                     ON audit_logs(event_type)
                 """)
                 
-                conn.execute("""
-                    CREATE INDEX IF NOT EXISTS idx_audit_transaction_id 
+                conn.execute("""                    CREATE INDEX IF NOT EXISTS idx_audit_transaction_id 
                     ON audit_logs(transaction_id)
                 """)
                 
-                conn.execute("""
-                    CREATE INDEX IF NOT EXISTS idx_audit_user_id 
+                conn.execute("""                    CREATE INDEX IF NOT EXISTS idx_audit_user_id 
                     ON audit_logs(json_extract(context, '$.user_id'))
                 """)
                 
@@ -326,12 +305,10 @@ class AuditStorage:
                 conn.close()
     
     def store_log(self, log_entry: TransactionLog) -> None:
-        """Store audit log entry"""
-        with self.lock:
+        """Store audit log entry"""        with self.lock:
             conn = sqlite3.connect(self.db_path)
             try:
-                conn.execute("""
-                    INSERT INTO audit_logs (
+                conn.execute("""                    INSERT INTO audit_logs (
                         log_id, timestamp, event_type, audit_level, transaction_id,
                         operation, resource, previous_state, new_state, metadata,
                         context, compliance_standards, retention_period, encrypted, checksum
@@ -369,8 +346,7 @@ class AuditStorage:
         creator_id: Optional[str] = None,
         limit: int = 1000
     ) -> List[TransactionLog]:
-        """Retrieve audit logs with filtering"""
-        
+        """Retrieve audit logs with filtering"""        
         conditions = []
         params = []
         
@@ -404,13 +380,11 @@ class AuditStorage:
         if conditions:
             where_clause = "WHERE " + " AND ".join(conditions)
         
-        query = f"""
-            SELECT * FROM audit_logs 
+        query = f"""            SELECT * FROM audit_logs 
             {where_clause}
             ORDER BY timestamp DESC 
             LIMIT ?
-        """
-        params.append(limit)
+        """        params.append(limit)
         
         with self.lock:
             conn = sqlite3.connect(self.db_path)
@@ -447,15 +421,13 @@ class AuditStorage:
                 conn.close()
     
     def cleanup_expired_logs(self) -> int:
-        """Remove expired audit logs based on retention period"""
-        
+        """Remove expired audit logs based on retention period"""        
         current_time = datetime.now(timezone.utc).timestamp()
         
         with self.lock:
             conn = sqlite3.connect(self.db_path)
             try:
-                cursor = conn.execute("""
-                    DELETE FROM audit_logs 
+                cursor = conn.execute("""                    DELETE FROM audit_logs 
                     WHERE timestamp < (? - retention_period)
                 """, (current_time,))
                 
@@ -470,8 +442,7 @@ class AuditStorage:
 
 
 class GeolocationService:
-    """Geolocation service for IP address tracking"""
-    
+    """Geolocation service for IP address tracking"""    
     def __init__(self, geoip_db_path: Optional[str] = None):
         self.geoip_db_path = geoip_db_path
         self.reader = None
@@ -484,8 +455,7 @@ class GeolocationService:
                 logger.warning("Failed to load GeoIP database: %s", str(e))
     
     def get_location_info(self, ip_address_str: str) -> Dict[str, Any]:
-        """Get location information for IP address"""
-        
+        """Get location information for IP address"""        
         location_info = {
             'ip_address': ip_address_str,
             'country': None,
@@ -522,14 +492,12 @@ class GeolocationService:
         return location_info
     
     def close(self):
-        """Close GeoIP database reader"""
-        if self.reader:
+        """Close GeoIP database reader"""        if self.reader:
             self.reader.close()
 
 
 class AuditSystem:
-    """
-    Comprehensive audit system for enterprise-grade transaction auditing
+    """    Comprehensive audit system for enterprise-grade transaction auditing
     
     Features:
     - Multi-level audit logging
@@ -541,8 +509,7 @@ class AuditSystem:
     - Revenue operation auditing
     - Content protection compliance
     - Real-time monitoring and alerting
-    """
-    
+    """    
     def __init__(
         self,
         audit_level: AuditLevel = AuditLevel.STANDARD,
@@ -581,8 +548,7 @@ class AuditSystem:
     
     @asynccontextmanager
     async def audit_context(self, context: AuditContext):
-        """Context manager for audit context correlation"""
-        self._context_stack.append(context)
+        """Context manager for audit context correlation"""        self._context_stack.append(context)
         try:
             yield context
         finally:
@@ -601,8 +567,7 @@ class AuditSystem:
         context: Optional[AuditContext] = None,
         compliance_standards: Optional[Set[ComplianceStandard]] = None
     ) -> str:
-        """Log transaction audit event"""
-        
+        """Log transaction audit event"""        
         # Use current context if none provided
         if context is None and self._context_stack:
             context = self._context_stack[-1]
@@ -666,8 +631,7 @@ class AuditSystem:
         revenue_data: Optional[Dict[str, Any]] = None,
         context: Optional[AuditContext] = None
     ) -> str:
-        """Log creator economy specific event"""
-        
+        """Log creator economy specific event"""        
         # Enhance context with creator ID
         if context:
             context.creator_id = creator_id
@@ -716,8 +680,7 @@ class AuditSystem:
         violation_data: Optional[Dict[str, Any]] = None,
         context: Optional[AuditContext] = None
     ) -> str:
-        """Log content protection specific event"""
-        
+        """Log content protection specific event"""        
         # Enhance context
         if context:
             context.content_id = content_id
@@ -772,8 +735,7 @@ class AuditSystem:
         transaction_data: Optional[Dict[str, Any]] = None,
         context: Optional[AuditContext] = None
     ) -> str:
-        """Log revenue operation event with compliance tracking"""
-        
+        """Log revenue operation event with compliance tracking"""        
         # Enhance context
         if context:
             context.creator_id = creator_id
@@ -847,8 +809,7 @@ class AuditSystem:
         event_types: Optional[List[AuditEventType]] = None,
         limit: int = 1000
     ) -> List[TransactionLog]:
-        """Get comprehensive audit trail with filtering"""
-        
+        """Get comprehensive audit trail with filtering"""        
         # If content_id provided, also look for creator_id in metadata
         user_id = None
         if creator_id:
@@ -873,8 +834,7 @@ class AuditSystem:
         to_date: datetime,
         creator_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Generate compliance report for specific standard"""
-        
+        """Generate compliance report for specific standard"""        
         # Get relevant audit logs
         logs = await self.get_audit_trail(
             creator_id=creator_id,
@@ -935,8 +895,7 @@ class AuditSystem:
         from_timestamp: Optional[datetime] = None,
         to_timestamp: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """Verify integrity of audit logs"""
-        
+        """Verify integrity of audit logs"""        
         integrity_report = {
             'total_logs_checked': 0,
             'corrupted_logs': 0,
@@ -985,8 +944,7 @@ class AuditSystem:
             return integrity_report
     
     async def get_audit_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive audit system metrics"""
-        
+        """Get comprehensive audit system metrics"""        
         metrics = self.metrics.copy()
         
         # Add current configuration
@@ -1015,8 +973,7 @@ class AuditSystem:
         return metrics
     
     def _get_event_audit_level(self, event_type: AuditEventType) -> AuditLevel:
-        """Determine audit level for event type"""
-        
+        """Determine audit level for event type"""        
         # High-priority events always get comprehensive auditing
         high_priority_events = {
             AuditEventType.SECURITY_VIOLATION,
@@ -1044,8 +1001,7 @@ class AuditSystem:
         return self.audit_level
     
     def _should_audit(self, event_audit_level: AuditLevel) -> bool:
-        """Check if event should be audited based on configured level"""
-        
+        """Check if event should be audited based on configured level"""        
         level_hierarchy = {
             AuditLevel.NONE: 0,
             AuditLevel.MINIMAL: 1,
@@ -1064,8 +1020,7 @@ class AuditSystem:
         return event_level >= configured_level
     
     def _get_retention_period(self, compliance_standards: Set[ComplianceStandard]) -> int:
-        """Get retention period based on compliance standards"""
-        
+        """Get retention period based on compliance standards"""        
         # Default retention periods by standard (in seconds)
         retention_periods = {
             ComplianceStandard.GDPR: 3 * 365 * 24 * 3600,  # 3 years
@@ -1085,8 +1040,7 @@ class AuditSystem:
         return max_retention
     
     async def _check_compliance_violation(self, log_entry: TransactionLog) -> bool:
-        """Check if log entry indicates compliance violation"""
-        
+        """Check if log entry indicates compliance violation"""        
         violation_events = {
             AuditEventType.SECURITY_VIOLATION,
             AuditEventType.ACCESS_DENIED,
@@ -1096,8 +1050,7 @@ class AuditSystem:
         return log_entry.event_type in violation_events
     
     async def _handle_compliance_violation(self, log_entry: TransactionLog) -> None:
-        """Handle detected compliance violation"""
-        
+        """Handle detected compliance violation"""        
         logger.warning(
             "Compliance violation detected: %s (log_id=%s, transaction=%s)",
             log_entry.event_type.value,
@@ -1108,8 +1061,7 @@ class AuditSystem:
         # In a real implementation, this would trigger alerts, notifications, etc.
     
     async def _analyze_gdpr_compliance(self, logs: List[TransactionLog]) -> Dict[str, Any]:
-        """Analyze GDPR compliance from audit logs"""
-        
+        """Analyze GDPR compliance from audit logs"""        
         return {
             'gdpr_analysis': {
                 'data_subject_requests': len([
@@ -1128,8 +1080,7 @@ class AuditSystem:
         }
     
     async def _analyze_dmca_compliance(self, logs: List[TransactionLog]) -> Dict[str, Any]:
-        """Analyze DMCA compliance from audit logs"""
-        
+        """Analyze DMCA compliance from audit logs"""        
         return {
             'dmca_analysis': {
                 'takedown_notices': len([
@@ -1148,8 +1099,7 @@ class AuditSystem:
         }
     
     async def _analyze_revenue_compliance(self, logs: List[TransactionLog]) -> Dict[str, Any]:
-        """Analyze revenue reporting compliance from audit logs"""
-        
+        """Analyze revenue reporting compliance from audit logs"""        
         revenue_events = [
             log for log in logs 
             if log.event_type in [AuditEventType.REVENUE_CALCULATION, AuditEventType.PAYMENT_PROCESSED]
@@ -1177,8 +1127,7 @@ class AuditSystem:
         }
     
     async def _periodic_cleanup(self) -> None:
-        """Background task for periodic cleanup of expired logs"""
-        
+        """Background task for periodic cleanup of expired logs"""        
         while self._monitoring:
             try:
                 deleted_count = await asyncio.get_event_loop().run_in_executor(
@@ -1196,8 +1145,7 @@ class AuditSystem:
                 await asyncio.sleep(3600)  # Retry in 1 hour
     
     async def _integrity_monitoring(self) -> None:
-        """Background task for integrity monitoring"""
-        
+        """Background task for integrity monitoring"""        
         while self._monitoring:
             try:
                 # Verify integrity of recent logs
@@ -1215,8 +1163,7 @@ class AuditSystem:
                 await asyncio.sleep(1800)  # Retry in 30 minutes
     
     async def shutdown(self) -> None:
-        """Graceful shutdown of audit system"""
-        logger.info("Shutting down AuditSystem...")
+        """Graceful shutdown of audit system"""        logger.info("Shutting down AuditSystem...")
         
         self._monitoring = False
         
@@ -1237,8 +1184,7 @@ async def audit_creator_action(
     context: Optional[AuditContext] = None,
     **kwargs
 ):
-    """Audit creator-specific action"""
-    
+    """Audit creator-specific action"""    
     event_type_map = {
         'register': AuditEventType.CREATOR_REGISTRATION,
         'upload_content': AuditEventType.CONTENT_UPLOAD,
@@ -1265,8 +1211,7 @@ async def audit_content_operation(
     context: Optional[AuditContext] = None,
     **kwargs
 ):
-    """Audit content protection operation"""
-    
+    """Audit content protection operation"""    
     event_type_map = {
         'fingerprint': AuditEventType.CONTENT_FINGERPRINT,
         'protect': AuditEventType.CONTENT_PROTECTION,
@@ -1294,8 +1239,7 @@ async def audit_revenue_operation(
     context: Optional[AuditContext] = None,
     **kwargs
 ):
-    """Audit revenue operation with compliance tracking"""
-    
+    """Audit revenue operation with compliance tracking"""    
     event_type_map = {
         'calculate': AuditEventType.REVENUE_CALCULATION,
         'process_payment': AuditEventType.PAYMENT_PROCESSED,

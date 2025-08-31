@@ -1,5 +1,4 @@
-"""
-Trend Detection Engine
+"""Trend Detection Engine
 =====================
 
 Professional trend detection and market intelligence system.
@@ -12,9 +11,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from dataclasses import dataclass, asdict
@@ -47,8 +44,7 @@ logger = logging.getLogger(__name__)
 settings = get_settings()
 
 class TrendType(Enum):
-    """Trend type classification."""
-    VIRAL = "viral"
+    """Trend type classification."""    VIRAL = "viral"
     EMERGING = "emerging"
     DECLINING = "declining"
     STABLE = "stable"
@@ -56,16 +52,14 @@ class TrendType(Enum):
     BREAKING = "breaking"
 
 class TrendScope(Enum):
-    """Trend scope classification."""
-    GLOBAL = "global"
+    """Trend scope classification."""    GLOBAL = "global"
     REGIONAL = "regional"
     NICHE = "niche"
     PLATFORM_SPECIFIC = "platform_specific"
     DEMOGRAPHIC_SPECIFIC = "demographic_specific"
 
 class TrendCategory(Enum):
-    """Trend category classification."""
-    MUSIC = "music"
+    """Trend category classification."""    MUSIC = "music"
     ENTERTAINMENT = "entertainment"
     TECHNOLOGY = "technology"
     FASHION = "fashion"
@@ -78,8 +72,7 @@ class TrendCategory(Enum):
 
 @dataclass
 class TrendSignal:
-    """Individual trend signal data."""
-    signal_id: str
+    """Individual trend signal data."""    signal_id: str
     content: str
     source_platform: str
     timestamp: datetime
@@ -93,8 +86,7 @@ class TrendSignal:
 
 @dataclass
 class TrendPattern:
-    """Detected trend pattern."""
-    trend_id: str
+    """Detected trend pattern."""    trend_id: str
     trend_type: TrendType
     trend_scope: TrendScope
     category: TrendCategory
@@ -110,8 +102,7 @@ class TrendPattern:
 
 @dataclass
 class MarketOpportunity:
-    """Market opportunity identification."""
-    opportunity_id: str
+    """Market opportunity identification."""    opportunity_id: str
     title: str
     description: str
     market_size_estimate: float
@@ -125,8 +116,7 @@ class MarketOpportunity:
 
 @dataclass
 class ViralPrediction:
-    """Viral content prediction."""
-    content_id: str
+    """Viral content prediction."""    content_id: str
     viral_probability: float
     peak_reach_estimate: int
     viral_timeline: Dict[str, int]  # hour -> engagement
@@ -136,8 +126,7 @@ class ViralPrediction:
     geographic_spread: Dict[str, float]
 
 class TrendDetectionEngine:
-    """
-    Advanced trend detection and market intelligence engine.
+    """    Advanced trend detection and market intelligence engine.
     
     Features:
     - Real-time trend identification
@@ -146,8 +135,7 @@ class TrendDetectionEngine:
     - Cross-platform trend correlation
     - Demographic trend analysis
     - Monetization opportunity detection
-    """
-    
+    """    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.metrics_collector = MetricsCollector()
@@ -155,8 +143,7 @@ class TrendDetectionEngine:
         self._initialize_trend_models()
         
     def _initialize_trend_models(self):
-        """Initialize trend detection models and data sources."""
-        try:
+        """Initialize trend detection models and data sources."""        try:
             # Google Trends API
             self.pytrends = TrendReq(hl='en-US', tz=360)
             
@@ -187,8 +174,7 @@ class TrendDetectionEngine:
         platform_data: Dict[str, List[TrendSignal]],
         time_window: Optional[timedelta] = None
     ) -> List[TrendPattern]:
-        """
-        Analyze real-time trends across multiple platforms.
+        """        Analyze real-time trends across multiple platforms.
         
         Args:
             platform_data: Dictionary mapping platform names to trend signals
@@ -196,8 +182,7 @@ class TrendDetectionEngine:
             
         Returns:
             List of detected trend patterns
-        """
-        try:
+        """        try:
             if time_window is None:
                 time_window = self.trending_window
             
@@ -256,8 +241,7 @@ class TrendDetectionEngine:
         platform_context: str,
         historical_data: Optional[List[Dict[str, Any]]] = None
     ) -> ViralPrediction:
-        """
-        Predict viral potential for content.
+        """        Predict viral potential for content.
         
         Args:
             content_data: Content data including text, engagement metrics, etc.
@@ -266,8 +250,7 @@ class TrendDetectionEngine:
             
         Returns:
             Viral prediction analysis
-        """
-        try:
+        """        try:
             content_id = content_data.get('id', 'unknown')
             
             # Extract viral indicators
@@ -323,8 +306,7 @@ class TrendDetectionEngine:
         trend_patterns: List[TrendPattern],
         market_data: Optional[Dict[str, Any]] = None
     ) -> List[MarketOpportunity]:
-        """
-        Identify market opportunities from trend patterns.
+        """        Identify market opportunities from trend patterns.
         
         Args:
             trend_patterns: Detected trend patterns
@@ -332,8 +314,7 @@ class TrendDetectionEngine:
             
         Returns:
             List of identified market opportunities
-        """
-        try:
+        """        try:
             opportunities = []
             
             for trend in trend_patterns:
@@ -366,8 +347,7 @@ class TrendDetectionEngine:
         trends: List[TrendPattern],
         external_data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, List[str]]:
-        """
-        Analyze correlations between trends and external factors.
+        """        Analyze correlations between trends and external factors.
         
         Args:
             trends: List of trend patterns to analyze
@@ -375,8 +355,7 @@ class TrendDetectionEngine:
             
         Returns:
             Dictionary mapping trends to correlated factors
-        """
-        try:
+        """        try:
             correlations = {}
             
             # Create feature matrix for correlation analysis
@@ -413,8 +392,7 @@ class TrendDetectionEngine:
             raise TrendAnalysisError(f"Trend correlation analysis failed: {e}")
     
     def _extract_signal_features(self, signals: List[TrendSignal]) -> np.ndarray:
-        """Extract features from trend signals for clustering."""
-        features = []
+        """Extract features from trend signals for clustering."""        features = []
         
         for signal in signals:
             feature_vector = [
@@ -438,8 +416,7 @@ class TrendDetectionEngine:
         features: np.ndarray, 
         signals: List[TrendSignal]
     ) -> Dict[int, List[TrendSignal]]:
-        """Cluster trend signals using machine learning."""
-        # Normalize features
+        """Cluster trend signals using machine learning."""        # Normalize features
         features_scaled = self.scaler.fit_transform(features)
         
         # Apply clustering
@@ -454,8 +431,7 @@ class TrendDetectionEngine:
         return dict(clusters)
     
     async def _analyze_trend_cluster(self, cluster_signals: List[TrendSignal]) -> Optional[TrendPattern]:
-        """Analyze a cluster of signals to identify trend pattern."""
-        if not cluster_signals:
+        """Analyze a cluster of signals to identify trend pattern."""        if not cluster_signals:
             return None
         
         # Extract common keywords and hashtags
@@ -528,8 +504,7 @@ class TrendDetectionEngine:
         )
     
     def _extract_viral_indicators(self, content_data: Dict[str, Any], platform: str) -> Dict[str, float]:
-        """Extract indicators that predict viral potential."""
-        indicators = {}
+        """Extract indicators that predict viral potential."""        indicators = {}
         
         # Content characteristics
         text = content_data.get('text', '')
@@ -560,8 +535,7 @@ class TrendDetectionEngine:
         return indicators
     
     def _calculate_base_viral_probability(self, indicators: Dict[str, float]) -> float:
-        """Calculate base viral probability from indicators."""
-        # Weighted scoring system
+        """Calculate base viral probability from indicators."""        # Weighted scoring system
         score = 0.0
         
         # Content quality indicators
@@ -605,8 +579,7 @@ class TrendDetectionEngine:
         return min(1.0, score)
     
     def _get_platform_viral_modifier(self, platform: str) -> float:
-        """Get platform-specific viral potential modifier."""
-        modifiers = {
+        """Get platform-specific viral potential modifier."""        modifiers = {
             'tiktok': 1.5,      # High viral potential
             'instagram': 1.2,    # Good viral potential
             'twitter': 1.3,      # Good for rapid spread
@@ -618,8 +591,7 @@ class TrendDetectionEngine:
         return modifiers.get(platform.lower(), 1.0)
     
     def _predict_viral_timeline(self, indicators: Dict[str, float], probability: float) -> Dict[str, int]:
-        """Predict viral content timeline."""
-        timeline = {}
+        """Predict viral content timeline."""        timeline = {}
         
         if probability < 0.3:
             # Low viral potential - minimal engagement
@@ -645,8 +617,7 @@ class TrendDetectionEngine:
         return timeline
     
     def _estimate_peak_reach(self, indicators: Dict[str, float], probability: float) -> int:
-        """Estimate peak reach for viral content."""
-        base_reach = indicators.get('creator_followers', 1000)
+        """Estimate peak reach for viral content."""        base_reach = indicators.get('creator_followers', 1000)
         viral_multiplier = 1 + (probability * 50)  # Up to 50x multiplier
         platform_factor = indicators.get('platform_reach', 1.0)
         
@@ -654,8 +625,7 @@ class TrendDetectionEngine:
         return min(10000000, peak_reach)  # Cap at 10M
     
     def _identify_amplification_factors(self, indicators: Dict[str, float]) -> List[str]:
-        """Identify factors that could amplify viral spread."""
-        factors = []
+        """Identify factors that could amplify viral spread."""        factors = []
         
         if indicators.get('sentiment', 0) > 0.5:
             factors.append("high_positive_sentiment")
@@ -676,16 +646,14 @@ class TrendDetectionEngine:
         return factors
     
     def _calculate_critical_mass(self, indicators: Dict[str, float]) -> int:
-        """Calculate critical mass threshold for viral acceleration."""
-        base_threshold = 1000
+        """Calculate critical mass threshold for viral acceleration."""        base_threshold = 1000
         creator_factor = min(5.0, indicators.get('creator_followers', 1000) / 10000)
         platform_factor = indicators.get('platform_reach', 1.0)
         
         return int(base_threshold * creator_factor * platform_factor)
     
     def _calculate_decay_rate(self, indicators: Dict[str, float]) -> float:
-        """Calculate viral content decay rate."""
-        # Base decay rate
+        """Calculate viral content decay rate."""        # Base decay rate
         decay = 0.3
         
         # Content quality affects longevity
@@ -698,8 +666,7 @@ class TrendDetectionEngine:
         return max(0.1, decay)
     
     def _predict_geographic_spread(self, indicators: Dict[str, float]) -> Dict[str, float]:
-        """Predict geographic spread of viral content."""
-        # Simplified geographic spread model
+        """Predict geographic spread of viral content."""        # Simplified geographic spread model
         base_spread = {
             'local': 0.4,
             'national': 0.3,
@@ -721,8 +688,7 @@ class TrendDetectionEngine:
         return {k: v/total for k, v in base_spread.items()}
     
     def _calculate_growth_rate(self, signals: List[TrendSignal]) -> float:
-        """Calculate trend growth rate from signals."""
-        if len(signals) < 2:
+        """Calculate trend growth rate from signals."""        if len(signals) < 2:
             return 0.0
         
         # Sort by timestamp
@@ -747,8 +713,7 @@ class TrendDetectionEngine:
         return 0.0
     
     def _classify_trend_type(self, signals: List[TrendSignal], growth_rate: float) -> TrendType:
-        """Classify trend type based on signals and growth rate."""
-        total_reach = sum(signal.reach_estimate for signal in signals)
+        """Classify trend type based on signals and growth rate."""        total_reach = sum(signal.reach_estimate for signal in signals)
         
         if total_reach > self.viral_threshold and growth_rate > 2.0:
             return TrendType.VIRAL
@@ -767,8 +732,7 @@ class TrendDetectionEngine:
                 return TrendType.BREAKING
     
     def _detect_seasonal_pattern(self, timestamps: List[datetime]) -> bool:
-        """Detect if timestamps show seasonal patterns."""
-        # Simplified seasonal detection
+        """Detect if timestamps show seasonal patterns."""        # Simplified seasonal detection
         hours = [ts.hour for ts in timestamps]
         days = [ts.weekday() for ts in timestamps]
         
@@ -779,8 +743,7 @@ class TrendDetectionEngine:
         return hour_variance < 10 and day_variance < 2  # Low variance indicates pattern
     
     def _determine_trend_scope(self, signals: List[TrendSignal]) -> TrendScope:
-        """Determine the scope of a trend."""
-        total_reach = sum(signal.reach_estimate for signal in signals)
+        """Determine the scope of a trend."""        total_reach = sum(signal.reach_estimate for signal in signals)
         platforms = set(signal.source_platform for signal in signals)
         
         if total_reach > 1000000 and len(platforms) > 3:
@@ -793,8 +756,7 @@ class TrendDetectionEngine:
             return TrendScope.NICHE
     
     def _categorize_trend(self, content: str, hashtags: List[str]) -> TrendCategory:
-        """Categorize trend based on content and hashtags."""
-        content_lower = content.lower()
+        """Categorize trend based on content and hashtags."""        content_lower = content.lower()
         hashtags_lower = [tag.lower() for tag in hashtags]
         
         # Category keywords
@@ -829,8 +791,7 @@ class TrendDetectionEngine:
         return TrendCategory.ENTERTAINMENT  # Default
     
     def _calculate_trend_confidence(self, signals: List[TrendSignal], growth_rate: float) -> float:
-        """Calculate confidence score for trend detection."""
-        # Base confidence from signal count
+        """Calculate confidence score for trend detection."""        # Base confidence from signal count
         signal_confidence = min(1.0, len(signals) / 20)  # Max confidence at 20 signals
         
         # Engagement consistency
@@ -860,8 +821,7 @@ class TrendDetectionEngine:
         return confidence
     
     def _predict_trend_peak(self, signals: List[TrendSignal], trend_type: TrendType) -> Optional[datetime]:
-        """Predict when trend will reach its peak."""
-        if trend_type == TrendType.DECLINING:
+        """Predict when trend will reach its peak."""        if trend_type == TrendType.DECLINING:
             return None
         
         # Get trend start time
@@ -883,8 +843,7 @@ class TrendDetectionEngine:
         return None
     
     def _estimate_trend_duration(self, trend_type: TrendType, growth_rate: float) -> int:
-        """Estimate trend duration in days."""
-        base_durations = {
+        """Estimate trend duration in days."""        base_durations = {
             TrendType.VIRAL: 3,
             TrendType.EMERGING: 14,
             TrendType.BREAKING: 1,
@@ -904,8 +863,7 @@ class TrendDetectionEngine:
         return base_duration
     
     def _analyze_trend_demographics(self, signals: List[TrendSignal]) -> Dict[str, Any]:
-        """Analyze demographic patterns in trend signals."""
-        # Simplified demographic analysis
+        """Analyze demographic patterns in trend signals."""        # Simplified demographic analysis
         demographics = {
             'age_groups': {'18-24': 0.3, '25-34': 0.4, '35-44': 0.2, '45+': 0.1},
             'geographic_distribution': {'urban': 0.6, 'suburban': 0.3, 'rural': 0.1},
@@ -923,8 +881,7 @@ class TrendDetectionEngine:
         return demographics
     
     async def _find_related_trends(self, keywords: List[str], category: TrendCategory) -> List[str]:
-        """Find trends related to the given keywords and category."""
-        # Simplified related trend finding
+        """Find trends related to the given keywords and category."""        # Simplified related trend finding
         related = []
         
         # Use cached trend data to find related trends
@@ -947,8 +904,7 @@ class TrendDetectionEngine:
         engagement: float, 
         scope: TrendScope
     ) -> List[Dict[str, Any]]:
-        """Identify monetization opportunities for the trend."""
-        opportunities = []
+        """Identify monetization opportunities for the trend."""        opportunities = []
         
         if engagement > 10000:  # High engagement threshold
             if category == TrendCategory.MUSIC:
@@ -977,8 +933,7 @@ class TrendDetectionEngine:
         return opportunities
     
     def _assess_trend_risks(self, trend_type: TrendType, category: TrendCategory, growth_rate: float) -> List[str]:
-        """Assess potential risks associated with the trend."""
-        risks = []
+        """Assess potential risks associated with the trend."""        risks = []
         
         if trend_type == TrendType.VIRAL and growth_rate > 5.0:
             risks.append("extremely_rapid_growth_may_lead_to_quick_decline")
@@ -992,8 +947,7 @@ class TrendDetectionEngine:
         return risks
     
     def _estimate_market_size(self, trend: TrendPattern) -> float:
-        """Estimate market size for a trend."""
-        # Simplified market size estimation
+        """Estimate market size for a trend."""        # Simplified market size estimation
         base_size = 10000
         
         # Scope multiplier
@@ -1013,8 +967,7 @@ class TrendDetectionEngine:
         return base_size * scope_multiplier * growth_multiplier * trend.confidence_score
     
     def _assess_competition_level(self, trend: TrendPattern) -> str:
-        """Assess competition level for a trend."""
-        if trend.trend_type == TrendType.VIRAL:
+        """Assess competition level for a trend."""        if trend.trend_type == TrendType.VIRAL:
             return "high"  # Viral trends attract many competitors
         elif trend.trend_type == TrendType.EMERGING:
             return "medium"  # Emerging trends have moderate competition
@@ -1029,8 +982,7 @@ class TrendDetectionEngine:
         market_size: float, 
         competition_level: str
     ) -> Optional[MarketOpportunity]:
-        """Create a market opportunity from trend analysis."""
-        # Calculate success probability
+        """Create a market opportunity from trend analysis."""        # Calculate success probability
         success_factors = {
             "high": 0.3,
             "medium": 0.6,
@@ -1074,8 +1026,7 @@ class TrendDetectionEngine:
         )
     
     def _calculate_roi_estimate(self, market_size: float, competition_level: str, trend: TrendPattern) -> float:
-        """Calculate ROI estimate for market opportunity."""
-        # Base ROI calculation
+        """Calculate ROI estimate for market opportunity."""        # Base ROI calculation
         base_roi = market_size / 100000  # Simplified calculation
         
         # Competition penalty
@@ -1097,8 +1048,7 @@ class TrendDetectionEngine:
         return min(10.0, roi)  # Cap at 1000% ROI
     
     def _estimate_time_to_market(self, category: TrendCategory, competition_level: str) -> int:
-        """Estimate time to market in days."""
-        base_times = {
+        """Estimate time to market in days."""        base_times = {
             TrendCategory.MUSIC: 30,
             TrendCategory.TECHNOLOGY: 90,
             TrendCategory.ENTERTAINMENT: 45,
@@ -1120,8 +1070,7 @@ class TrendDetectionEngine:
         return int(base_time * multiplier)
     
     def _identify_entry_barriers(self, category: TrendCategory, competition_level: str) -> List[str]:
-        """Identify entry barriers for market opportunity."""
-        barriers = []
+        """Identify entry barriers for market opportunity."""        barriers = []
         
         if competition_level == "high":
             barriers.append("high_competition")
@@ -1140,8 +1089,7 @@ class TrendDetectionEngine:
         return barriers
     
     def _estimate_required_resources(self, market_size: float, category: TrendCategory) -> Dict[str, Any]:
-        """Estimate required resources for market opportunity."""
-        # Base resource requirements
+        """Estimate required resources for market opportunity."""        # Base resource requirements
         base_budget = min(100000, market_size * 0.1)  # 10% of market size, capped
         
         resources = {
@@ -1165,8 +1113,7 @@ class TrendDetectionEngine:
         return resources
     
     def _create_trend_feature_matrix(self, trends: List[TrendPattern]) -> np.ndarray:
-        """Create feature matrix for trend correlation analysis."""
-        features = []
+        """Create feature matrix for trend correlation analysis."""        features = []
         
         for trend in trends:
             feature_vector = [
@@ -1186,8 +1133,7 @@ class TrendDetectionEngine:
         trends: List[TrendPattern], 
         external_data: Dict[str, Any]
     ) -> Dict[str, List[str]]:
-        """Analyze correlations with external data sources."""
-        correlations = {}
+        """Analyze correlations with external data sources."""        correlations = {}
         
         # Example: Stock market correlation
         if 'stock_data' in external_data:
@@ -1207,8 +1153,7 @@ class TrendDetectionEngine:
         return correlations
     
     def _get_platform_reach_factor(self, platform: str) -> float:
-        """Get platform reach factor for viral prediction."""
-        reach_factors = {
+        """Get platform reach factor for viral prediction."""        reach_factors = {
             'youtube': 2.0,
             'tiktok': 1.8,
             'instagram': 1.5,
@@ -1222,5 +1167,4 @@ class TrendDetectionEngine:
 
 # Factory function
 def create_trend_detection_engine() -> TrendDetectionEngine:
-    """Create and return a trend detection engine instance."""
-    return TrendDetectionEngine()
+    """Create and return a trend detection engine instance."""    return TrendDetectionEngine()

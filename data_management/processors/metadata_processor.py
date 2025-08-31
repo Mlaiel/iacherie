@@ -1,5 +1,4 @@
-"""
-📊 Metadata Processor - IA Influencer Agent Platform Enterprise
+"""📊 Metadata Processor - IA Influencer Agent Platform Enterprise
 ================================================================
 Module: backend/data_management/processors/metadata_processor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,9 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER METADATA PROCESSOR:
 Content Input → Format Detection → Technical Metadata → Content Metadata → 
 AI-Enhanced Metadata → Privacy Analysis → Enrichment → Standardization
-"""
-
-import os
+"""import os
 import json
 import hashlib
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -54,8 +51,7 @@ from .base_processor import BaseProcessor, AsyncBaseProcessor
 
 
 class MetadataProcessor(BaseProcessor):
-    """Processeur avancé de métadonnées - Production Enterprise"""
-    
+    """Processeur avancé de métadonnées - Production Enterprise"""    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.supported_types = {
@@ -81,8 +77,7 @@ class MetadataProcessor(BaseProcessor):
         self.logger = logging.getLogger(__name__)
     
     def _init_extractors(self):
-        """Initialize metadata extraction tools"""
-        try:
+        """Initialize metadata extraction tools"""        try:
             # AI models for content analysis
             self.content_classifier = pipeline(
                 "zero-shot-classification",
@@ -102,8 +97,7 @@ class MetadataProcessor(BaseProcessor):
             self.geocoder = None
     
     def validate_input(self, input_data: Any) -> bool:
-        """Valide les données d'entrée pour extraction de métadonnées"""
-        if isinstance(input_data, str):
+        """Valide les données d'entrée pour extraction de métadonnées"""        if isinstance(input_data, str):
             # File path validation
             return Path(input_data).exists()
         elif isinstance(input_data, bytes):
@@ -119,8 +113,7 @@ class MetadataProcessor(BaseProcessor):
         return False
     
     def process(self, input_data: Any) -> Dict[str, Any]:
-        """Traite et extrait toutes les métadonnées"""
-        try:
+        """Traite et extrait toutes les métadonnées"""        try:
             # Determine content type
             content_type = self._detect_content_type(input_data)
             
@@ -175,8 +168,7 @@ class MetadataProcessor(BaseProcessor):
             }
     
     def _detect_content_type(self, input_data: Any) -> str:
-        """Détecte le type de contenu"""
-        if isinstance(input_data, str):
+        """Détecte le type de contenu"""        if isinstance(input_data, str):
             # File path analysis
             path = Path(input_data)
             mime_type, _ = mimetypes.guess_type(input_data)
@@ -220,8 +212,7 @@ class MetadataProcessor(BaseProcessor):
         return 'unknown'
     
     def _extract_technical_metadata(self, input_data: Any, content_type: str) -> Dict[str, Any]:
-        """Extrait les métadonnées techniques de base"""
-        metadata = {
+        """Extrait les métadonnées techniques de base"""        metadata = {
             "content_type": content_type,
             "extraction_timestamp": datetime.now(timezone.utc).isoformat()
         }
@@ -256,8 +247,7 @@ class MetadataProcessor(BaseProcessor):
         return metadata
     
     def _extract_format_metadata(self, input_data: Any, content_type: str) -> Dict[str, Any]:
-        """Extrait les métadonnées spécifiques au format"""
-        if content_type == 'audio':
+        """Extrait les métadonnées spécifiques au format"""        if content_type == 'audio':
             return self._extract_audio_metadata(input_data)
         elif content_type == 'video':
             return self._extract_video_metadata(input_data)
@@ -269,8 +259,7 @@ class MetadataProcessor(BaseProcessor):
             return {}
     
     def _extract_audio_metadata(self, input_data: Any) -> Dict[str, Any]:
-        """Extrait les métadonnées audio avec Mutagen"""
-        if not isinstance(input_data, str):
+        """Extrait les métadonnées audio avec Mutagen"""        if not isinstance(input_data, str):
             return {}
         
         try:
@@ -309,8 +298,7 @@ class MetadataProcessor(BaseProcessor):
             return {}
     
     def _extract_video_metadata(self, input_data: Any) -> Dict[str, Any]:
-        """Extrait les métadonnées vidéo avec OpenCV"""
-        if not isinstance(input_data, str):
+        """Extrait les métadonnées vidéo avec OpenCV"""        if not isinstance(input_data, str):
             return {}
         
         try:
@@ -338,8 +326,7 @@ class MetadataProcessor(BaseProcessor):
             return {}
     
     def _extract_image_metadata(self, input_data: Any) -> Dict[str, Any]:
-        """Extrait les métadonnées image avec PIL et EXIF"""
-        metadata = {}
+        """Extrait les métadonnées image avec PIL et EXIF"""        metadata = {}
         
         try:
             if isinstance(input_data, str):
@@ -387,8 +374,7 @@ class MetadataProcessor(BaseProcessor):
             return {}
     
     def _extract_document_metadata(self, input_data: Any) -> Dict[str, Any]:
-        """Extrait les métadonnées de documents"""
-        if not isinstance(input_data, str):
+        """Extrait les métadonnées de documents"""        if not isinstance(input_data, str):
             return {}
         
         path = Path(input_data)
@@ -406,8 +392,7 @@ class MetadataProcessor(BaseProcessor):
             return {}
     
     def _extract_pdf_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extrait les métadonnées PDF"""
-        try:
+        """Extrait les métadonnées PDF"""        try:
             with open(file_path, 'rb') as file:
                 pdf_reader = PyPDF2.PdfReader(file)
                 
@@ -434,8 +419,7 @@ class MetadataProcessor(BaseProcessor):
             return {}
     
     def _extract_docx_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extrait les métadonnées DOCX"""
-        try:
+        """Extrait les métadonnées DOCX"""        try:
             doc = docx.Document(file_path)
             
             metadata = {
@@ -463,8 +447,7 @@ class MetadataProcessor(BaseProcessor):
             return {}
     
     def _extract_content_metadata(self, input_data: Any, content_type: str) -> Dict[str, Any]:
-        """Extrait les métadonnées basées sur le contenu"""
-        content_metadata = {
+        """Extrait les métadonnées basées sur le contenu"""        content_metadata = {
             "content_analysis_timestamp": datetime.now(timezone.utc).isoformat()
         }
         
@@ -480,8 +463,7 @@ class MetadataProcessor(BaseProcessor):
         return content_metadata
     
     def _analyze_audio_content(self, input_data: Any) -> Dict[str, Any]:
-        """Analyse le contenu audio"""
-        # Placeholder for audio content analysis
+        """Analyse le contenu audio"""        # Placeholder for audio content analysis
         # In production, this would include:
         # - Tempo detection
         # - Key detection
@@ -499,8 +481,7 @@ class MetadataProcessor(BaseProcessor):
         }
     
     def _analyze_video_content(self, input_data: Any) -> Dict[str, Any]:
-        """Analyse le contenu vidéo"""
-        # Placeholder for video content analysis
+        """Analyse le contenu vidéo"""        # Placeholder for video content analysis
         # In production, this would include:
         # - Scene detection
         # - Object detection
@@ -518,8 +499,7 @@ class MetadataProcessor(BaseProcessor):
         }
     
     def _analyze_image_content(self, input_data: Any) -> Dict[str, Any]:
-        """Analyse le contenu image"""
-        # Placeholder for image content analysis
+        """Analyse le contenu image"""        # Placeholder for image content analysis
         # In production, this would include:
         # - Object detection
         # - Scene classification
@@ -536,8 +516,7 @@ class MetadataProcessor(BaseProcessor):
         }
     
     def _analyze_document_content(self, input_data: Any) -> Dict[str, Any]:
-        """Analyse le contenu document"""
-        # Placeholder for document content analysis
+        """Analyse le contenu document"""        # Placeholder for document content analysis
         # In production, this would include:
         # - Topic classification
         # - Sentiment analysis
@@ -554,8 +533,7 @@ class MetadataProcessor(BaseProcessor):
         }
     
     def _extract_ai_metadata(self, input_data: Any, content_type: str) -> Dict[str, Any]:
-        """Extrait les métadonnées enrichies par IA"""
-        ai_metadata = {
+        """Extrait les métadonnées enrichies par IA"""        ai_metadata = {
             "ai_analysis_timestamp": datetime.now(timezone.utc).isoformat(),
             "ai_models_used": []
         }
@@ -581,8 +559,7 @@ class MetadataProcessor(BaseProcessor):
         return ai_metadata
     
     def _classify_content_with_ai(self, input_data: Any, content_type: str) -> Dict[str, Any]:
-        """Classification du contenu avec IA"""
-        if content_type == 'document' and isinstance(input_data, str):
+        """Classification du contenu avec IA"""        if content_type == 'document' and isinstance(input_data, str):
             # Extract text for classification
             try:
                 with open(input_data, 'r', encoding='utf-8', errors='ignore') as f:
@@ -600,8 +577,7 @@ class MetadataProcessor(BaseProcessor):
         return {}
     
     def _generate_semantic_embeddings(self, input_data: Any, content_type: str) -> List[float]:
-        """Génère des embeddings sémantiques"""
-        if content_type == 'document' and isinstance(input_data, str):
+        """Génère des embeddings sémantiques"""        if content_type == 'document' and isinstance(input_data, str):
             try:
                 with open(input_data, 'r', encoding='utf-8', errors='ignore') as f:
                     text = f.read()[:512]  # Limit text length
@@ -614,8 +590,7 @@ class MetadataProcessor(BaseProcessor):
         return []
     
     def _analyze_privacy(self, format_metadata: Dict, content_metadata: Dict) -> Dict[str, Any]:
-        """Analyse les risques de confidentialité"""
-        privacy_risks = []
+        """Analyse les risques de confidentialité"""        privacy_risks = []
         risk_score = 0.0
         
         # Check for sensitive metadata fields
@@ -652,8 +627,7 @@ class MetadataProcessor(BaseProcessor):
         }
     
     def _enrich_semantic_metadata(self, technical: Dict, format_specific: Dict, content: Dict) -> Dict[str, Any]:
-        """Enrichit les métadonnées avec des informations sémantiques"""
-        semantic_metadata = {
+        """Enrichit les métadonnées avec des informations sémantiques"""        semantic_metadata = {
             "enrichment_timestamp": datetime.now(timezone.utc).isoformat()
         }
         
@@ -679,8 +653,7 @@ class MetadataProcessor(BaseProcessor):
     
     def _standardize_metadata(self, technical: Dict, format_specific: Dict, 
                             content: Dict, ai_enhanced: Dict) -> Dict[str, Any]:
-        """Standardise les métadonnées selon des schémas communs"""
-        # Dublin Core-inspired standardization
+        """Standardise les métadonnées selon des schémas communs"""        # Dublin Core-inspired standardization
         standardized = {
             "schema_version": "1.0",
             "identifier": technical.get("hashes", {}).get("sha256", ""),
@@ -709,8 +682,7 @@ class MetadataProcessor(BaseProcessor):
     
     # Utility methods
     def _calculate_file_hashes(self, file_path: str) -> Dict[str, str]:
-        """Calcule les hashes du fichier"""
-        hashes = {}
+        """Calcule les hashes du fichier"""        hashes = {}
         
         try:
             with open(file_path, 'rb') as f:
@@ -724,16 +696,14 @@ class MetadataProcessor(BaseProcessor):
         return hashes
     
     def _calculate_data_hashes(self, data: bytes) -> Dict[str, str]:
-        """Calcule les hashes des données binaires"""
-        return {
+        """Calcule les hashes des données binaires"""        return {
             "md5": hashlib.md5(data).hexdigest(),
             "sha1": hashlib.sha1(data).hexdigest(),
             "sha256": hashlib.sha256(data).hexdigest()
         }
     
     def _parse_gps_data(self, gps_info: Dict) -> Optional[Dict[str, Any]]:
-        """Parse les données GPS depuis EXIF"""
-        try:
+        """Parse les données GPS depuis EXIF"""        try:
             def convert_to_degrees(value):
                 d, m, s = value
                 return d + (m / 60.0) + (s / 3600.0)
@@ -768,8 +738,7 @@ class MetadataProcessor(BaseProcessor):
             return None
     
     def _enrich_location_data(self, latitude: float, longitude: float) -> Dict[str, Any]:
-        """Enrichit les données de localisation"""
-        location_info = {
+        """Enrichit les données de localisation"""        location_info = {
             "coordinates": {"latitude": latitude, "longitude": longitude}
         }
         
@@ -792,8 +761,7 @@ class MetadataProcessor(BaseProcessor):
         return location_info
     
     def _extract_creation_time(self, technical: Dict, format_specific: Dict) -> Optional[str]:
-        """Extrait la date de création"""
-        # Try different sources for creation time
+        """Extrait la date de création"""        # Try different sources for creation time
         candidates = [
             format_specific.get('exif', {}).get('DateTime'),
             format_specific.get('creation_date'),
@@ -808,8 +776,7 @@ class MetadataProcessor(BaseProcessor):
         return None
     
     def _enrich_temporal_data(self, creation_time: str) -> Dict[str, Any]:
-        """Enrichit les données temporelles"""
-        try:
+        """Enrichit les données temporelles"""        try:
             # Parse creation time
             if 'T' in creation_time:
                 dt = datetime.fromisoformat(creation_time.replace('Z', '+00:00'))
@@ -830,8 +797,7 @@ class MetadataProcessor(BaseProcessor):
             return {}
     
     def _assess_technical_quality(self, technical: Dict, format_specific: Dict) -> Dict[str, Any]:
-        """Évalue la qualité technique"""
-        quality_score = 0.0
+        """Évalue la qualité technique"""        quality_score = 0.0
         quality_factors = {}
         
         # File size assessment
@@ -883,8 +849,7 @@ class MetadataProcessor(BaseProcessor):
         }
     
     def _get_risk_level(self, risk_score: float) -> str:
-        """Convertit le score de risque en niveau"""
-        if risk_score >= 0.7:
+        """Convertit le score de risque en niveau"""        if risk_score >= 0.7:
             return "high"
         elif risk_score >= 0.4:
             return "medium"
@@ -894,8 +859,7 @@ class MetadataProcessor(BaseProcessor):
             return "minimal"
     
     def _generate_privacy_recommendations(self, privacy_risks: List[Dict]) -> List[str]:
-        """Génère des recommandations de confidentialité"""
-        recommendations = []
+        """Génère des recommandations de confidentialité"""        recommendations = []
         
         for risk in privacy_risks:
             recommendations.append(risk.get("recommendation", "Review privacy settings"))
@@ -909,8 +873,7 @@ class MetadataProcessor(BaseProcessor):
         return list(set(recommendations))  # Remove duplicates
     
     def _extract_title(self, format_specific: Dict) -> str:
-        """Extrait le titre"""
-        candidates = [
+        """Extrait le titre"""        candidates = [
             format_specific.get('tags', {}).get('title'),
             format_specific.get('title'),
             format_specific.get('exif', {}).get('DocumentName')
@@ -923,8 +886,7 @@ class MetadataProcessor(BaseProcessor):
         return ""
     
     def _extract_creator(self, format_specific: Dict) -> str:
-        """Extrait le créateur"""
-        candidates = [
+        """Extrait le créateur"""        candidates = [
             format_specific.get('tags', {}).get('artist'),
             format_specific.get('author'),
             format_specific.get('creator'),
@@ -938,8 +900,7 @@ class MetadataProcessor(BaseProcessor):
         return ""
     
     def _extract_subject(self, format_specific: Dict, ai_enhanced: Dict) -> str:
-        """Extrait le sujet"""
-        # Try traditional metadata first
+        """Extrait le sujet"""        # Try traditional metadata first
         candidates = [
             format_specific.get('tags', {}).get('genre'),
             format_specific.get('subject'),
@@ -958,8 +919,7 @@ class MetadataProcessor(BaseProcessor):
         return ""
     
     def _extract_description(self, format_specific: Dict, content: Dict) -> str:
-        """Extrait la description"""
-        candidates = [
+        """Extrait la description"""        candidates = [
             format_specific.get('comments'),
             format_specific.get('description'),
             format_specific.get('exif', {}).get('ImageDescription')
@@ -972,16 +932,14 @@ class MetadataProcessor(BaseProcessor):
         return ""
     
     def _extract_coverage(self, format_specific: Dict) -> str:
-        """Extrait la couverture géographique/temporelle"""
-        gps_data = format_specific.get('exif', {})
+        """Extrait la couverture géographique/temporelle"""        gps_data = format_specific.get('exif', {})
         if gps_data.get('gps_latitude') and gps_data.get('gps_longitude'):
             return f"{gps_data['gps_latitude']}, {gps_data['gps_longitude']}"
         
         return ""
     
     def _extract_rights(self, format_specific: Dict) -> str:
-        """Extrait les informations de droits"""
-        candidates = [
+        """Extrait les informations de droits"""        candidates = [
             format_specific.get('exif', {}).get('Copyright'),
             format_specific.get('copyright'),
             format_specific.get('rights')
@@ -994,8 +952,7 @@ class MetadataProcessor(BaseProcessor):
         return ""
     
     def _extract_dimensions(self, format_specific: Dict) -> Dict[str, Any]:
-        """Extrait les dimensions"""
-        dimensions = {}
+        """Extrait les dimensions"""        dimensions = {}
         
         if format_specific.get('width'):
             dimensions['width'] = format_specific['width']
@@ -1005,12 +962,10 @@ class MetadataProcessor(BaseProcessor):
         return dimensions
     
     def _extract_duration(self, format_specific: Dict) -> Optional[float]:
-        """Extrait la durée"""
-        return format_specific.get('length_seconds') or format_specific.get('duration_seconds')
+        """Extrait la durée"""        return format_specific.get('length_seconds') or format_specific.get('duration_seconds')
     
     def _extract_quality_metrics(self, format_specific: Dict) -> Dict[str, Any]:
-        """Extrait les métriques de qualité"""
-        metrics = {}
+        """Extrait les métriques de qualité"""        metrics = {}
         
         if format_specific.get('bitrate'):
             metrics['bitrate'] = format_specific['bitrate']
@@ -1022,8 +977,7 @@ class MetadataProcessor(BaseProcessor):
         return metrics
     
     def _get_season(self, month: int) -> str:
-        """Détermine la saison"""
-        if month in [12, 1, 2]:
+        """Détermine la saison"""        if month in [12, 1, 2]:
             return "winter"
         elif month in [3, 4, 5]:
             return "spring"
@@ -1033,8 +987,7 @@ class MetadataProcessor(BaseProcessor):
             return "autumn"
     
     def _get_time_of_day(self, hour: int) -> str:
-        """Détermine le moment de la journée"""
-        if 5 <= hour < 12:
+        """Détermine le moment de la journée"""        if 5 <= hour < 12:
             return "morning"
         elif 12 <= hour < 17:
             return "afternoon"
@@ -1044,8 +997,7 @@ class MetadataProcessor(BaseProcessor):
             return "night"
     
     def _get_quality_rating(self, score: float) -> str:
-        """Convertit le score en rating de qualité"""
-        if score >= 0.9:
+        """Convertit le score en rating de qualité"""        if score >= 0.9:
             return "excellent"
         elif score >= 0.7:
             return "good"
@@ -1058,16 +1010,14 @@ class MetadataProcessor(BaseProcessor):
 
 
 class AsyncMetadataProcessor(AsyncBaseProcessor):
-    """Version asynchrone du processeur de métadonnées"""
-    
+    """Version asynchrone du processeur de métadonnées"""    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.sync_processor = MetadataProcessor(config)
         self.executor = ThreadPoolExecutor(max_workers=4)
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Version asynchrone de la validation"""
-        loop = asyncio.get_event_loop()
+        """Version asynchrone de la validation"""        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
             self.sync_processor.validate_input, 
@@ -1075,8 +1025,7 @@ class AsyncMetadataProcessor(AsyncBaseProcessor):
         )
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Version asynchrone du traitement"""
-        loop = asyncio.get_event_loop()
+        """Version asynchrone du traitement"""        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
             self.sync_processor.process, 
@@ -1084,6 +1033,5 @@ class AsyncMetadataProcessor(AsyncBaseProcessor):
         )
     
     async def process_batch(self, input_batch: List[Any]) -> List[Dict[str, Any]]:
-        """Traitement en lot asynchrone"""
-        tasks = [self.process(item) for item in input_batch]
+        """Traitement en lot asynchrone"""        tasks = [self.process(item) for item in input_batch]
         return await asyncio.gather(*tasks, return_exceptions=True)

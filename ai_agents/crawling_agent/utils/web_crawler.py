@@ -1,5 +1,4 @@
-"""
-Advanced Web Crawler - High-Performance Multi-Platform Content Extraction Engine
+"""Advanced Web Crawler - High-Performance Multi-Platform Content Extraction Engine
 
 Industrial-grade web crawling system with stealth capabilities, JavaScript rendering,
 and intelligent content extraction for the IA-Influencer-Agent platform.
@@ -18,9 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import hashlib
@@ -78,8 +75,7 @@ from ...security.content_sanitizer import ContentSanitizer
 logger = logging.getLogger(__name__)
 
 class CrawlerMode(Enum):
-    """Web crawler operational modes"""
-    FAST = "fast"
+    """Web crawler operational modes"""    FAST = "fast"
     THOROUGH = "thorough"
     STEALTH = "stealth"
     JAVASCRIPT = "javascript"
@@ -87,8 +83,7 @@ class CrawlerMode(Enum):
     RESEARCH = "research"
 
 class ContentExtractionMethod(Enum):
-    """Content extraction methods"""
-    BEAUTIFULSOUP = "beautifulsoup"
+    """Content extraction methods"""    BEAUTIFULSOUP = "beautifulsoup"
     NEWSPAPER = "newspaper"
     TRAFILATURA = "trafilatura"
     GOOSE = "goose"
@@ -96,16 +91,14 @@ class ContentExtractionMethod(Enum):
     CUSTOM = "custom"
 
 class RobotsPolicyLevel(Enum):
-    """Robots.txt compliance levels"""
-    STRICT = "strict"
+    """Robots.txt compliance levels"""    STRICT = "strict"
     MODERATE = "moderate"
     LENIENT = "lenient"
     IGNORE = "ignore"
 
 @dataclass
 class CrawlerConfig:
-    """Comprehensive crawler configuration"""
-    mode: CrawlerMode = CrawlerMode.THOROUGH
+    """Comprehensive crawler configuration"""    mode: CrawlerMode = CrawlerMode.THOROUGH
     max_concurrent_requests: int = 10
     max_pages_per_domain: int = 1000
     max_crawl_depth: int = 3
@@ -146,8 +139,7 @@ class CrawlerConfig:
 
 @dataclass
 class CrawlResult:
-    """Comprehensive crawl result structure"""
-    url: str
+    """Comprehensive crawl result structure"""    url: str
     status_code: int
     title: str
     content: str
@@ -192,13 +184,11 @@ class CrawlResult:
     warnings: List[str] = field(default_factory=list)
 
 class WebCrawler:
-    """
-    Advanced Web Crawler with Multi-Method Content Extraction
+    """    Advanced Web Crawler with Multi-Method Content Extraction
     
     High-performance web crawler capable of handling JavaScript-heavy sites,
     respecting robots.txt, rotating proxies/user agents, and extracting clean content.
-    """
-    
+    """    
     def __init__(self, config: Optional[CrawlerConfig] = None):
         self.config = config or CrawlerConfig()
         
@@ -240,8 +230,7 @@ class WebCrawler:
         logger.info(f"Web Crawler initialized in {self.config.mode.value} mode")
 
     async def initialize(self) -> None:
-        """Initialize crawler components and connections"""
-        try:
+        """Initialize crawler components and connections"""        try:
             # Setup HTTP session
             connector = aiohttp.TCPConnector(
                 limit=self.config.max_concurrent_requests,
@@ -279,8 +268,7 @@ class WebCrawler:
             raise CrawlingError(f"Crawler initialization failed: {str(e)}")
 
     async def _setup_selenium(self) -> None:
-        """Setup Selenium WebDriver with optimal configuration"""
-        chrome_options = Options()
+        """Setup Selenium WebDriver with optimal configuration"""        chrome_options = Options()
         
         # Basic options
         if self.config.headless_browser:
@@ -314,8 +302,7 @@ class WebCrawler:
             
             if self.config.mode == CrawlerMode.STEALTH:
                 # Execute stealth scripts
-                self.selenium_driver.execute_script("""
-                    Object.defineProperty(navigator, 'webdriver', {get: () => undefined});
+                self.selenium_driver.execute_script("""                    Object.defineProperty(navigator, 'webdriver', {get: () => undefined});
                     Object.defineProperty(navigator, 'plugins', {get: () => [1, 2, 3, 4, 5]});
                     Object.defineProperty(navigator, 'languages', {get: () => ['en-US', 'en']});
                 """)
@@ -329,8 +316,7 @@ class WebCrawler:
             raise
 
     def _get_default_headers(self) -> Dict[str, str]:
-        """Generate default HTTP headers"""
-        return {
+        """Generate default HTTP headers"""        return {
             'User-Agent': self.user_agent_rotator.get_random_agent(),
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
             'Accept-Language': 'en-US,en;q=0.5',
@@ -341,8 +327,7 @@ class WebCrawler:
         }
 
     async def crawl_url(self, url: str, **kwargs) -> Optional[CrawlResult]:
-        """Crawl single URL with comprehensive error handling"""
-        start_time = time.time()
+        """Crawl single URL with comprehensive error handling"""        start_time = time.time()
         
         try:
             # URL validation and normalization
@@ -441,15 +426,13 @@ class WebCrawler:
             self.stats['requests_made'] += 1
 
     async def _perform_crawl(self, url: str, **kwargs) -> Optional[CrawlResult]:
-        """Perform actual crawling based on configured mode"""
-        if self.config.mode == CrawlerMode.JAVASCRIPT or kwargs.get('require_js', False):
+        """Perform actual crawling based on configured mode"""        if self.config.mode == CrawlerMode.JAVASCRIPT or kwargs.get('require_js', False):
             return await self._crawl_with_selenium(url, **kwargs)
         else:
             return await self._crawl_with_aiohttp(url, **kwargs)
 
     async def _crawl_with_aiohttp(self, url: str, **kwargs) -> Optional[CrawlResult]:
-        """Crawl URL using aiohttp for fast static content"""
-        headers = self._get_request_headers()
+        """Crawl URL using aiohttp for fast static content"""        headers = self._get_request_headers()
         proxy = None
         
         if self.config.proxy_rotation:
@@ -491,8 +474,7 @@ class WebCrawler:
             return None
 
     async def _crawl_with_selenium(self, url: str, **kwargs) -> Optional[CrawlResult]:
-        """Crawl URL using Selenium for JavaScript-heavy content"""
-        if not self.selenium_driver:
+        """Crawl URL using Selenium for JavaScript-heavy content"""        if not self.selenium_driver:
             await self._setup_selenium()
         
         try:
@@ -541,8 +523,7 @@ class WebCrawler:
             return None
 
     def _get_request_headers(self) -> Dict[str, str]:
-        """Generate request headers with rotation"""
-        headers = self._get_default_headers()
+        """Generate request headers with rotation"""        headers = self._get_default_headers()
         
         if self.config.user_agent_rotation:
             headers['User-Agent'] = self.user_agent_rotator.get_random_agent()
@@ -561,8 +542,7 @@ class WebCrawler:
         return headers
 
     def _detect_encoding(self, content: bytes, headers: Dict[str, str]) -> str:
-        """Detect content encoding from headers and content"""
-        # Check Content-Type header
+        """Detect content encoding from headers and content"""        # Check Content-Type header
         content_type = headers.get('content-type', '').lower()
         if 'charset=' in content_type:
             try:
@@ -594,8 +574,7 @@ class WebCrawler:
     async def _build_crawl_result(self, url: str, status_code: int, headers: Dict[str, str],
                                 html_content: str, final_url: str, redirect_chain: List[str],
                                 encoding: str, response_time: float, cookies: Dict[str, str] = None) -> CrawlResult:
-        """Build comprehensive crawl result from raw response data"""
-        
+        """Build comprehensive crawl result from raw response data"""        
         # Parse HTML
         soup = BeautifulSoup(html_content, 'html.parser')
         
@@ -659,8 +638,7 @@ class WebCrawler:
         )
 
     async def _extract_content(self, html: str, soup: BeautifulSoup) -> Tuple[str, str]:
-        """Extract and clean content using configured method"""
-        raw_content = ""
+        """Extract and clean content using configured method"""        raw_content = ""
         cleaned_content = ""
         
         try:
@@ -709,8 +687,7 @@ class WebCrawler:
         return raw_content, cleaned_content
 
     def _extract_main_content_heuristic(self, soup: BeautifulSoup) -> str:
-        """Extract main content using heuristic approach"""
-        # Remove unwanted elements
+        """Extract main content using heuristic approach"""        # Remove unwanted elements
         for element in soup(['script', 'style', 'nav', 'footer', 'header', 
                            'aside', 'sidebar', 'menu', 'advertisement']):
             element.decompose()
@@ -745,8 +722,7 @@ class WebCrawler:
         return self._find_largest_text_block(soup)
 
     def _find_largest_text_block(self, soup: BeautifulSoup) -> str:
-        """Find the largest text block in the document"""
-        largest_block = ""
+        """Find the largest text block in the document"""        largest_block = ""
         largest_size = 0
         
         for element in soup.find_all(['div', 'section', 'article', 'p']):
@@ -758,8 +734,7 @@ class WebCrawler:
         return largest_block
 
     def _extract_comprehensive_metadata(self, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Extract comprehensive metadata from HTML"""
-        metadata = {}
+        """Extract comprehensive metadata from HTML"""        metadata = {}
         
         # Basic meta tags
         for meta in soup.find_all('meta'):
@@ -830,8 +805,7 @@ class WebCrawler:
         return metadata
 
     def _extract_and_categorize_links(self, soup: BeautifulSoup, base_url: str) -> Tuple[List[str], List[str]]:
-        """Extract and categorize internal and external links"""
-        base_domain = urlparse(base_url).netloc
+        """Extract and categorize internal and external links"""        base_domain = urlparse(base_url).netloc
         internal_links = []
         external_links = []
         
@@ -857,8 +831,7 @@ class WebCrawler:
         return internal_links, external_links
 
     def _extract_images_with_metadata(self, soup: BeautifulSoup, base_url: str) -> List[Dict[str, str]]:
-        """Extract images with comprehensive metadata"""
-        images = []
+        """Extract images with comprehensive metadata"""        images = []
         
         for img in soup.find_all('img'):
             src = img.get('src')
@@ -882,8 +855,7 @@ class WebCrawler:
         return images[:50]  # Limit number of images
 
     def _extract_videos_with_metadata(self, soup: BeautifulSoup, base_url: str) -> List[Dict[str, str]]:
-        """Extract videos with metadata"""
-        videos = []
+        """Extract videos with metadata"""        videos = []
         
         # Video tags
         for video in soup.find_all('video'):
@@ -912,8 +884,7 @@ class WebCrawler:
         return videos[:20]  # Limit number of videos
 
     def _calculate_readability_score(self, content: str) -> float:
-        """Calculate readability score using Flesch-Kincaid"""
-        if not content or len(content) < 100:
+        """Calculate readability score using Flesch-Kincaid"""        if not content or len(content) < 100:
             return 0.0
         
         try:
@@ -934,8 +905,7 @@ class WebCrawler:
             return max(0.0, min(100.0, score))
 
     def _count_syllables(self, word: str) -> int:
-        """Count syllables in a word"""
-        word = word.lower()
+        """Count syllables in a word"""        word = word.lower()
         count = 0
         vowels = "aeiouy"
         if word[0] in vowels:
@@ -950,8 +920,7 @@ class WebCrawler:
         return count
 
     def _calculate_content_quality(self, soup: BeautifulSoup, content: str) -> float:
-        """Calculate overall content quality score"""
-        score = 0.0
+        """Calculate overall content quality score"""        score = 0.0
         
         # Content length factor (0-20 points)
         word_count = len(content.split())
@@ -1009,8 +978,7 @@ class WebCrawler:
         return min(score, 100.0)
 
     def _calculate_seo_score(self, soup: BeautifulSoup, metadata: Dict) -> float:
-        """Calculate SEO quality score"""
-        score = 0.0
+        """Calculate SEO quality score"""        score = 0.0
         
         # Title optimization (0-25 points)
         title_elem = soup.find('title')
@@ -1062,8 +1030,7 @@ class WebCrawler:
         return min(score, 100.0)
 
     def _detect_content_language(self, content: str) -> str:
-        """Detect content language"""
-        if not content or len(content) < 50:
+        """Detect content language"""        if not content or len(content) < 50:
             return 'unknown'
         
         try:
@@ -1078,8 +1045,7 @@ class WebCrawler:
             return 'unknown'
 
     def _normalize_url(self, url: str) -> str:
-        """Normalize URL for consistency"""
-        url = url.strip()
+        """Normalize URL for consistency"""        url = url.strip()
         if not url.startswith(('http://', 'https://')):
             url = 'https://' + url
         
@@ -1103,8 +1069,7 @@ class WebCrawler:
         return clean_url
 
     def _is_valid_url(self, url: str) -> bool:
-        """Validate URL format and domain"""
-        try:
+        """Validate URL format and domain"""        try:
             parsed = urlparse(url)
             if not all([parsed.scheme, parsed.netloc]):
                 return False
@@ -1122,8 +1087,7 @@ class WebCrawler:
             return False
 
     async def _check_robots_compliance(self, url: str) -> bool:
-        """Check robots.txt compliance"""
-        if self.config.robots_policy == RobotsPolicyLevel.IGNORE:
+        """Check robots.txt compliance"""        if self.config.robots_policy == RobotsPolicyLevel.IGNORE:
             return True
         
         try:
@@ -1166,8 +1130,7 @@ class WebCrawler:
             return self.config.robots_policy != RobotsPolicyLevel.STRICT
 
     async def _apply_rate_limiting(self, url: str) -> None:
-        """Apply rate limiting and respect crawl delays"""
-        domain = urlparse(url).netloc
+        """Apply rate limiting and respect crawl delays"""        domain = urlparse(url).netloc
         
         # Apply global rate limiting
         await self.rate_limiter.acquire()
@@ -1195,8 +1158,7 @@ class WebCrawler:
             await asyncio.sleep(delay)
 
     async def _post_process_result(self, result: CrawlResult) -> CrawlResult:
-        """Post-process crawl result for quality and consistency"""
-        try:
+        """Post-process crawl result for quality and consistency"""        try:
             # Validate content length constraints
             if len(result.cleaned_content) < self.config.min_content_length:
                 result.warnings.append(f"Content length ({len(result.cleaned_content)}) below minimum threshold")
@@ -1217,8 +1179,7 @@ class WebCrawler:
             return result
 
     async def crawl_multiple(self, urls: List[str], max_concurrent: int = None, **kwargs) -> List[CrawlResult]:
-        """Crawl multiple URLs concurrently"""
-        max_concurrent = max_concurrent or self.config.max_concurrent_requests
+        """Crawl multiple URLs concurrently"""        max_concurrent = max_concurrent or self.config.max_concurrent_requests
         semaphore = asyncio.Semaphore(max_concurrent)
         
         async def crawl_with_semaphore(url):
@@ -1239,8 +1200,7 @@ class WebCrawler:
         return valid_results
 
     async def crawl_sitemap(self, sitemap_url: str, **kwargs) -> List[CrawlResult]:
-        """Crawl URLs from sitemap"""
-        try:
+        """Crawl URLs from sitemap"""        try:
             # Fetch sitemap
             async with self.session.get(sitemap_url) as response:
                 sitemap_content = await response.text()
@@ -1258,8 +1218,7 @@ class WebCrawler:
             return []
 
     def get_statistics(self) -> Dict[str, Any]:
-        """Get crawler statistics"""
-        return {
+        """Get crawler statistics"""        return {
             **self.stats,
             'crawled_urls_count': len(self.crawled_urls),
             'failed_urls_count': len(self.failed_urls),
@@ -1271,8 +1230,7 @@ class WebCrawler:
         }
 
     async def cleanup(self) -> None:
-        """Clean up resources and connections"""
-        if self.session:
+        """Clean up resources and connections"""        if self.session:
             await self.session.close()
         
         if self.selenium_driver:
@@ -1285,13 +1243,11 @@ class WebCrawler:
 
 
 class SiteMonitor:
-    """
-    Advanced Site Monitoring for Content Changes and Updates
+    """    Advanced Site Monitoring for Content Changes and Updates
     
     Monitors websites for content changes, new publications, and structural updates.
     Provides diff analysis and change notifications.
-    """
-    
+    """    
     def __init__(self, crawler: WebCrawler):
         self.crawler = crawler
         self.monitored_sites: Dict[str, Dict] = {}
@@ -1300,8 +1256,7 @@ class SiteMonitor:
         
     async def add_site(self, url: str, check_interval_minutes: int = 60, 
                       change_threshold: float = 0.1) -> str:
-        """Add site to monitoring list"""
-        site_id = hashlib.md5(url.encode()).hexdigest()[:12]
+        """Add site to monitoring list"""        site_id = hashlib.md5(url.encode()).hexdigest()[:12]
         
         # Initial crawl
         initial_result = await self.crawler.crawl_url(url)
@@ -1321,8 +1276,7 @@ class SiteMonitor:
         return site_id
     
     async def check_site_changes(self, site_id: str) -> Optional[Dict]:
-        """Check specific site for changes"""
-        if site_id not in self.monitored_sites:
+        """Check specific site for changes"""        if site_id not in self.monitored_sites:
             return None
         
         site_info = self.monitored_sites[site_id]
@@ -1357,8 +1311,7 @@ class SiteMonitor:
         return None
     
     def _detect_changes(self, old_result: CrawlResult, new_result: CrawlResult) -> Dict:
-        """Detect and analyze changes between crawl results"""
-        changes = {
+        """Detect and analyze changes between crawl results"""        changes = {
             'content_changed': False,
             'title_changed': False,
             'structure_changed': False,
@@ -1419,8 +1372,7 @@ class SiteMonitor:
         return changes
     
     def _calculate_text_similarity(self, text1: str, text2: str) -> float:
-        """Calculate text similarity using simple word overlap"""
-        if not text1 or not text2:
+        """Calculate text similarity using simple word overlap"""        if not text1 or not text2:
             return 0.0 if text1 != text2 else 1.0
         
         words1 = set(text1.lower().split())
@@ -1437,8 +1389,7 @@ class SiteMonitor:
         return len(intersection) / len(union) if union else 0.0
     
     async def start_monitoring(self) -> None:
-        """Start continuous monitoring of all sites"""
-        self.monitoring_active = True
+        """Start continuous monitoring of all sites"""        self.monitoring_active = True
         
         while self.monitoring_active:
             for site_id, site_info in self.monitored_sites.items():
@@ -1457,12 +1408,10 @@ class SiteMonitor:
             await asyncio.sleep(60)  # Check every minute
     
     def stop_monitoring(self) -> None:
-        """Stop continuous monitoring"""
-        self.monitoring_active = False
+        """Stop continuous monitoring"""        self.monitoring_active = False
     
     def get_monitoring_report(self) -> Dict:
-        """Get comprehensive monitoring report"""
-        return {
+        """Get comprehensive monitoring report"""        return {
             'monitored_sites_count': len(self.monitored_sites),
             'total_checks': sum(site['check_count'] for site in self.monitored_sites.values()),
             'total_changes_detected': sum(site['changes_detected'] for site in self.monitored_sites.values()),

@@ -1,5 +1,4 @@
-"""
-Real-time Analytics Engine
+"""Real-time Analytics Engine
 
 Advanced real-time analytics system for the IA Influencer platform providing
 comprehensive data analysis, business intelligence, and predictive insights.
@@ -12,9 +11,7 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import time
 import json
 from datetime import datetime, timezone, timedelta
@@ -32,8 +29,7 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics time frame options"""
-    REAL_TIME = "real_time"           # Last few minutes
+    """Analytics time frame options"""    REAL_TIME = "real_time"           # Last few minutes
     HOURLY = "hourly"                 # Last hour
     DAILY = "daily"                   # Last 24 hours
     WEEKLY = "weekly"                 # Last 7 days
@@ -43,8 +39,7 @@ class AnalyticsTimeframe(Enum):
 
 
 class AnalyticsMetricType(Enum):
-    """Types of analytics metrics"""
-    COUNT = "count"                   # Simple count
+    """Types of analytics metrics"""    COUNT = "count"                   # Simple count
     RATE = "rate"                     # Rate over time
     PERCENTAGE = "percentage"         # Percentage value
     AVERAGE = "average"               # Average value
@@ -54,8 +49,7 @@ class AnalyticsMetricType(Enum):
 
 
 class InsightSeverity(Enum):
-    """Severity levels for insights"""
-    INFO = "info"
+    """Severity levels for insights"""    INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -64,8 +58,7 @@ class InsightSeverity(Enum):
 
 @dataclass
 class AnalyticsDataPoint:
-    """Single analytics data point"""
-    timestamp: datetime
+    """Single analytics data point"""    timestamp: datetime
     metric_name: str
     value: Union[int, float]
     dimensions: Dict[str, str] = field(default_factory=dict)
@@ -76,8 +69,7 @@ class AnalyticsDataPoint:
             self.timestamp = self.timestamp.replace(tzinfo=timezone.utc)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'timestamp': self.timestamp.isoformat(),
             'metric_name': self.metric_name,
             'value': self.value,
@@ -88,8 +80,7 @@ class AnalyticsDataPoint:
 
 @dataclass
 class AnalyticsResult:
-    """Analytics calculation result"""
-    metric_name: str
+    """Analytics calculation result"""    metric_name: str
     timeframe: AnalyticsTimeframe
     metric_type: AnalyticsMetricType
     value: Union[int, float, Dict[str, Any]]
@@ -99,8 +90,7 @@ class AnalyticsResult:
     trend: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'metric_name': self.metric_name,
             'timeframe': self.timeframe.value,
             'metric_type': self.metric_type.value,
@@ -114,8 +104,7 @@ class AnalyticsResult:
 
 @dataclass
 class BusinessInsight:
-    """Business insight generated from analytics"""
-    title: str
+    """Business insight generated from analytics"""    title: str
     description: str
     severity: InsightSeverity
     category: str
@@ -126,8 +115,7 @@ class BusinessInsight:
     impact_score: float = 0.0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'title': self.title,
             'description': self.description,
             'severity': self.severity.value,
@@ -141,8 +129,7 @@ class BusinessInsight:
 
 
 class RealTimeAnalytics:
-    """
-    Real-time analytics engine providing live insights and metrics
+    """    Real-time analytics engine providing live insights and metrics
     
     Features:
     - Real-time data processing
@@ -152,11 +139,9 @@ class RealTimeAnalytics:
     - Performance monitoring
     - User behavior tracking
     - Content engagement analysis
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize real-time analytics"""
-        self.config = config or {}
+        """Initialize real-time analytics"""        self.config = config or {}
         
         # Configuration
         self.processing_interval = self.config.get('processing_interval', 5)  # seconds
@@ -185,8 +170,7 @@ class RealTimeAnalytics:
         self.last_cache_update = datetime.now(timezone.utc)
     
     async def start_processing(self):
-        """Start real-time processing"""
-        try:
+        """Start real-time processing"""        try:
             logger.info("Starting real-time analytics processing")
             self.is_processing = True
             self.processing_task = asyncio.create_task(self._processing_loop())
@@ -195,8 +179,7 @@ class RealTimeAnalytics:
             logger.error(f"Failed to start real-time processing: {str(e)}")
     
     async def stop_processing(self):
-        """Stop real-time processing"""
-        try:
+        """Stop real-time processing"""        try:
             logger.info("Stopping real-time analytics processing")
             self.is_processing = False
             
@@ -211,8 +194,7 @@ class RealTimeAnalytics:
             logger.error(f"Failed to stop real-time processing: {str(e)}")
     
     async def _processing_loop(self):
-        """Main processing loop"""
-        while self.is_processing:
+        """Main processing loop"""        while self.is_processing:
             try:
                 # Process buffered data
                 await self._process_buffered_data()
@@ -233,8 +215,7 @@ class RealTimeAnalytics:
                 await asyncio.sleep(1)  # Brief pause on error
     
     def ingest_data_point(self, data_point: AnalyticsDataPoint):
-        """Ingest a single data point"""
-        try:
+        """Ingest a single data point"""        try:
             with self._lock:
                 self.data_buffer.append(data_point)
                 
@@ -253,8 +234,7 @@ class RealTimeAnalytics:
             logger.error(f"Failed to ingest data point: {str(e)}")
     
     def ingest_batch(self, data_points: List[AnalyticsDataPoint]):
-        """Ingest multiple data points"""
-        try:
+        """Ingest multiple data points"""        try:
             with self._lock:
                 for data_point in data_points:
                     self.data_buffer.append(data_point)
@@ -275,8 +255,7 @@ class RealTimeAnalytics:
             logger.error(f"Failed to ingest batch: {str(e)}")
     
     async def _process_buffered_data(self):
-        """Process data from buffer"""
-        try:
+        """Process data from buffer"""        try:
             if not self.data_buffer:
                 return
             
@@ -301,8 +280,7 @@ class RealTimeAnalytics:
             logger.error(f"Failed to process buffered data: {str(e)}")
     
     def _group_by_time_windows(self, data_points: List[AnalyticsDataPoint]) -> Dict[datetime, List[AnalyticsDataPoint]]:
-        """Group data points by time windows"""
-        windows = {}
+        """Group data points by time windows"""        windows = {}
         
         for data_point in data_points:
             # Round to minute for grouping
@@ -317,8 +295,7 @@ class RealTimeAnalytics:
     
     async def _process_time_window(self, time_window: datetime, 
                                  data_points: List[AnalyticsDataPoint]) -> List[AnalyticsResult]:
-        """Process data for a specific time window"""
-        results = []
+        """Process data for a specific time window"""        results = []
         
         try:
             # Group by metric name
@@ -339,8 +316,7 @@ class RealTimeAnalytics:
     async def _calculate_metric_analytics(self, metric_name: str, 
                                         data_points: List[AnalyticsDataPoint], 
                                         time_window: datetime) -> List[AnalyticsResult]:
-        """Calculate analytics for a specific metric"""
-        results = []
+        """Calculate analytics for a specific metric"""        results = []
         
         try:
             values = [dp.value for dp in data_points]
@@ -397,8 +373,7 @@ class RealTimeAnalytics:
         return results
     
     async def _update_metrics_cache(self):
-        """Update metrics cache for quick access"""
-        try:
+        """Update metrics cache for quick access"""        try:
             current_time = datetime.now(timezone.utc)
             
             if (current_time - self.last_cache_update).total_seconds() < self.cache_ttl:
@@ -429,8 +404,7 @@ class RealTimeAnalytics:
             logger.error(f"Failed to update metrics cache: {str(e)}")
     
     async def _calculate_summary_stats(self) -> Dict[str, Any]:
-        """Calculate summary statistics"""
-        try:
+        """Calculate summary statistics"""        try:
             stats = {
                 'total_data_points': len(self.data_buffer),
                 'active_metrics': len(self.live_counters),
@@ -457,8 +431,7 @@ class RealTimeAnalytics:
             return {}
     
     async def _cleanup_old_data(self):
-        """Clean up old data"""
-        try:
+        """Clean up old data"""        try:
             cutoff_time = datetime.now(timezone.utc) - timedelta(minutes=self.retention_minutes)
             
             # Clean processed metrics
@@ -474,8 +447,7 @@ class RealTimeAnalytics:
             logger.error(f"Failed to cleanup old data: {str(e)}")
     
     async def _trigger_callbacks(self, data_point: AnalyticsDataPoint):
-        """Trigger real-time callbacks"""
-        try:
+        """Trigger real-time callbacks"""        try:
             metric_callbacks = self.event_callbacks.get(data_point.metric_name, [])
             global_callbacks = self.event_callbacks.get('*', [])
             
@@ -492,8 +464,7 @@ class RealTimeAnalytics:
             logger.error(f"Failed to trigger callbacks: {str(e)}")
     
     async def _trigger_batch_callbacks(self, data_points: List[AnalyticsDataPoint]):
-        """Trigger batch callbacks"""
-        try:
+        """Trigger batch callbacks"""        try:
             batch_callbacks = self.event_callbacks.get('batch', [])
             
             for callback in batch_callbacks:
@@ -510,16 +481,13 @@ class RealTimeAnalytics:
     
     # Public API methods
     def register_callback(self, metric_name: str, callback: Callable):
-        """Register callback for metric events"""
-        self.event_callbacks[metric_name].append(callback)
+        """Register callback for metric events"""        self.event_callbacks[metric_name].append(callback)
     
     def get_live_metrics(self) -> Dict[str, Any]:
-        """Get current live metrics"""
-        return self.metrics_cache.copy()
+        """Get current live metrics"""        return self.metrics_cache.copy()
     
     def get_metric_value(self, metric_name: str, dimensions: Optional[Dict[str, str]] = None) -> float:
-        """Get current value for a specific metric"""
-        metric_key = metric_name
+        """Get current value for a specific metric"""        metric_key = metric_name
         if dimensions:
             dimension_str = "_".join(f"{k}:{v}" for k, v in dimensions.items())
             metric_key += f"_{dimension_str}"
@@ -527,8 +495,7 @@ class RealTimeAnalytics:
         return self.live_counters.get(metric_key, 0.0)
     
     async def get_creator_performance_insights(self, creator_id: str) -> Dict[str, Any]:
-        """Get performance insights for a specific creator"""
-        try:
+        """Get performance insights for a specific creator"""        try:
             insights = {
                 'creator_id': creator_id,
                 'timestamp': datetime.now(timezone.utc).isoformat(),
@@ -563,8 +530,7 @@ class RealTimeAnalytics:
             return {}
     
     async def get_content_performance(self, content_id: str) -> Dict[str, Any]:
-        """Get performance metrics for specific content"""
-        try:
+        """Get performance metrics for specific content"""        try:
             performance = {
                 'content_id': content_id,
                 'timestamp': datetime.now(timezone.utc).isoformat(),
@@ -596,8 +562,7 @@ class RealTimeAnalytics:
 
 
 class HistoricalAnalytics:
-    """
-    Historical analytics engine for long-term trends and insights
+    """    Historical analytics engine for long-term trends and insights
     
     Features:
     - Long-term trend analysis
@@ -605,11 +570,9 @@ class HistoricalAnalytics:
     - Seasonal pattern detection
     - Growth analysis
     - Performance benchmarking
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize historical analytics"""
-        self.config = config or {}
+        """Initialize historical analytics"""        self.config = config or {}
         
         # Storage configuration
         self.data_retention_days = self.config.get('retention_days', 365)
@@ -627,8 +590,7 @@ class HistoricalAnalytics:
         self.executor = ThreadPoolExecutor(max_workers=4)
     
     def store_data_point(self, data_point: AnalyticsDataPoint):
-        """Store a data point for historical analysis"""
-        try:
+        """Store a data point for historical analysis"""        try:
             metric_key = data_point.metric_name
             self.historical_data[metric_key].append(data_point)
             
@@ -643,8 +605,7 @@ class HistoricalAnalytics:
             logger.error(f"Failed to store historical data point: {str(e)}")
     
     async def analyze_trends(self, metric_name: str, timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
-        """Analyze trends for a specific metric"""
-        try:
+        """Analyze trends for a specific metric"""        try:
             cache_key = f"trends_{metric_name}_{timeframe.value}"
             
             # Check cache
@@ -680,8 +641,7 @@ class HistoricalAnalytics:
     
     def _filter_by_timeframe(self, data_points: List[AnalyticsDataPoint], 
                            timeframe: AnalyticsTimeframe) -> List[AnalyticsDataPoint]:
-        """Filter data points by timeframe"""
-        now = datetime.now(timezone.utc)
+        """Filter data points by timeframe"""        now = datetime.now(timezone.utc)
         
         timeframe_deltas = {
             AnalyticsTimeframe.HOURLY: timedelta(hours=1),
@@ -699,8 +659,7 @@ class HistoricalAnalytics:
     
     async def _perform_trend_analysis(self, data_points: List[AnalyticsDataPoint], 
                                     timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
-        """Perform detailed trend analysis"""
-        try:
+        """Perform detailed trend analysis"""        try:
             # Sort by timestamp
             sorted_data = sorted(data_points, key=lambda x: x.timestamp)
             values = [dp.value for dp in sorted_data]
@@ -762,8 +721,7 @@ class HistoricalAnalytics:
     
     async def _calculate_trend_indicators(self, values: List[float], 
                                         timestamps: List[datetime]) -> Dict[str, Any]:
-        """Calculate trend indicators"""
-        try:
+        """Calculate trend indicators"""        try:
             indicators = {}
             
             if len(values) < 2:
@@ -809,8 +767,7 @@ class HistoricalAnalytics:
             return {}
     
     def _calculate_linear_regression_slope(self, x_values: List[int], y_values: List[float]) -> float:
-        """Calculate linear regression slope"""
-        n = len(x_values)
+        """Calculate linear regression slope"""        n = len(x_values)
         x_mean = sum(x_values) / n
         y_mean = sum(y_values) / n
         
@@ -820,8 +777,7 @@ class HistoricalAnalytics:
         return numerator / denominator if denominator != 0 else 0
     
     def _calculate_moving_average(self, values: List[float], window: int) -> List[float]:
-        """Calculate moving average"""
-        if len(values) < window:
+        """Calculate moving average"""        if len(values) < window:
             return []
         
         moving_averages = []
@@ -832,8 +788,7 @@ class HistoricalAnalytics:
         return moving_averages
     
     def _calculate_cagr(self, values: List[float], timestamps: List[datetime]) -> Optional[float]:
-        """Calculate Compound Annual Growth Rate"""
-        if len(values) < 2 or values[0] == 0:
+        """Calculate Compound Annual Growth Rate"""        if len(values) < 2 or values[0] == 0:
             return None
         
         try:
@@ -854,8 +809,7 @@ class HistoricalAnalytics:
     
     async def _detect_seasonal_patterns(self, values: List[float], 
                                       timestamps: List[datetime]) -> Dict[str, Any]:
-        """Detect seasonal patterns in data"""
-        try:
+        """Detect seasonal patterns in data"""        try:
             patterns = {
                 'hourly_pattern': {},
                 'daily_pattern': {},
@@ -909,8 +863,7 @@ class HistoricalAnalytics:
     async def compare_periods(self, metric_name: str, 
                             period1_start: datetime, period1_end: datetime,
                             period2_start: datetime, period2_end: datetime) -> Dict[str, Any]:
-        """Compare two time periods for a metric"""
-        try:
+        """Compare two time periods for a metric"""        try:
             data_points = self.historical_data.get(metric_name, [])
             
             # Filter data for each period
@@ -972,8 +925,7 @@ class HistoricalAnalytics:
 
 
 class PredictiveAnalytics:
-    """
-    Predictive analytics engine for forecasting and trend prediction
+    """    Predictive analytics engine for forecasting and trend prediction
     
     Features:
     - Time series forecasting
@@ -981,11 +933,9 @@ class PredictiveAnalytics:
     - Trend extrapolation
     - Confidence intervals
     - Alert predictions
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize predictive analytics"""
-        self.config = config or {}
+        """Initialize predictive analytics"""        self.config = config or {}
         
         # Prediction configuration
         self.prediction_horizon = self.config.get('prediction_horizon', 24)  # hours
@@ -1002,8 +952,7 @@ class PredictiveAnalytics:
     async def predict_metric_values(self, metric_name: str, 
                                    historical_data: List[AnalyticsDataPoint],
                                    hours_ahead: int = 24) -> Dict[str, Any]:
-        """Predict future values for a metric"""
-        try:
+        """Predict future values for a metric"""        try:
             if len(historical_data) < self.min_data_points:
                 return {'error': f'Insufficient data points. Need at least {self.min_data_points}'}
             
@@ -1034,8 +983,7 @@ class PredictiveAnalytics:
     async def _generate_predictions(self, values: List[float], 
                                   timestamps: List[datetime],
                                   hours_ahead: int) -> List[Dict[str, Any]]:
-        """Generate predictions using trend analysis"""
-        try:
+        """Generate predictions using trend analysis"""        try:
             predictions = []
             
             # Calculate trend
@@ -1070,8 +1018,7 @@ class PredictiveAnalytics:
             return []
     
     def _calculate_slope(self, x_values: List[int], y_values: List[float]) -> float:
-        """Calculate linear regression slope"""
-        n = len(x_values)
+        """Calculate linear regression slope"""        n = len(x_values)
         x_mean = sum(x_values) / n
         y_mean = sum(y_values) / n
         
@@ -1082,8 +1029,7 @@ class PredictiveAnalytics:
     
     async def detect_anomaly_predictions(self, metric_name: str,
                                        historical_data: List[AnalyticsDataPoint]) -> Dict[str, Any]:
-        """Predict potential anomalies"""
-        try:
+        """Predict potential anomalies"""        try:
             if len(historical_data) < 20:
                 return {'error': 'Insufficient data for anomaly prediction'}
             
@@ -1145,11 +1091,9 @@ class PredictiveAnalytics:
 
 # Specialized analytics classes for different domains
 class ContentAnalytics(RealTimeAnalytics):
-    """Specialized analytics for content performance"""
-    
+    """Specialized analytics for content performance"""    
     async def analyze_content_engagement(self, content_id: str) -> Dict[str, Any]:
-        """Analyze engagement metrics for specific content"""
-        engagement_metrics = [
+        """Analyze engagement metrics for specific content"""        engagement_metrics = [
             f"content_views_content_id:{content_id}",
             f"content_likes_content_id:{content_id}",
             f"content_shares_content_id:{content_id}",
@@ -1177,8 +1121,7 @@ class ContentAnalytics(RealTimeAnalytics):
         }
     
     def _calculate_performance_tier(self, engagement_score: float) -> str:
-        """Calculate performance tier based on engagement score"""
-        if engagement_score > 1000:
+        """Calculate performance tier based on engagement score"""        if engagement_score > 1000:
             return 'viral'
         elif engagement_score > 500:
             return 'high'
@@ -1191,11 +1134,9 @@ class ContentAnalytics(RealTimeAnalytics):
 
 
 class UserAnalytics(RealTimeAnalytics):
-    """Specialized analytics for user behavior"""
-    
+    """Specialized analytics for user behavior"""    
     async def analyze_user_journey(self, user_id: str) -> Dict[str, Any]:
-        """Analyze user journey and behavior patterns"""
-        user_metrics = {
+        """Analyze user journey and behavior patterns"""        user_metrics = {
             k: v for k, v in self.live_counters.items()
             if f"user_id:{user_id}" in k
         }
@@ -1222,11 +1163,9 @@ class UserAnalytics(RealTimeAnalytics):
 
 
 class PerformanceAnalytics(RealTimeAnalytics):
-    """Specialized analytics for system performance"""
-    
+    """Specialized analytics for system performance"""    
     async def analyze_system_health(self) -> Dict[str, Any]:
-        """Analyze overall system health"""
-        performance_metrics = {
+        """Analyze overall system health"""        performance_metrics = {
             k: v for k, v in self.live_counters.items()
             if any(perf_key in k.lower() for perf_key in ['response_time', 'latency', 'cpu', 'memory', 'error'])
         }

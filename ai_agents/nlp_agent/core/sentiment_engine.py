@@ -1,5 +1,4 @@
-"""
-Sentiment Engine - Advanced Sentiment & Emotion Analysis
+"""Sentiment Engine - Advanced Sentiment & Emotion Analysis
 ========================================================
 
 State-of-the-art sentiment analysis engine using transformer models
@@ -7,9 +6,7 @@ for comprehensive emotion detection and sentiment classification.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
@@ -34,15 +31,13 @@ from .config import NLPAgentConfig, default_config
 logger = logging.getLogger(__name__)
 
 class SentimentLabel(Enum):
-    """Sentiment classification labels"""
-    POSITIVE = "positive"
+    """Sentiment classification labels"""    POSITIVE = "positive"
     NEGATIVE = "negative" 
     NEUTRAL = "neutral"
     MIXED = "mixed"
 
 class EmotionLabel(Enum):
-    """Emotion classification labels"""
-    JOY = "joy"
+    """Emotion classification labels"""    JOY = "joy"
     SADNESS = "sadness"
     ANGER = "anger"
     FEAR = "fear"
@@ -54,22 +49,19 @@ class EmotionLabel(Enum):
 
 @dataclass
 class SentimentScore:
-    """Individual sentiment score"""
-    label: str
+    """Individual sentiment score"""    label: str
     score: float
     confidence: float = 0.0
 
 @dataclass
 class EmotionScore:
-    """Individual emotion score"""
-    emotion: str
+    """Individual emotion score"""    emotion: str
     score: float
     intensity: str = "low"  # low, medium, high
 
 @dataclass
 class SentimentResult:
-    """Complete sentiment analysis result"""
-    text: str
+    """Complete sentiment analysis result"""    text: str
     overall_sentiment: SentimentLabel
     confidence: float
     sentiment_scores: List[SentimentScore] = field(default_factory=list)
@@ -83,22 +75,18 @@ class SentimentResult:
     timestamp: str = field(default_factory=lambda: datetime.now().isoformat())
 
 class SentimentEngine:
-    """
-    Advanced sentiment analysis engine using state-of-the-art transformer models
+    """    Advanced sentiment analysis engine using state-of-the-art transformer models
     for comprehensive emotion detection and sentiment classification.
-    """
-    
+    """    
     def __init__(self, config: Optional[NLPAgentConfig] = None):
-        """Initialize Sentiment Engine"""
-        self.config = config or default_config
+        """Initialize Sentiment Engine"""        self.config = config or default_config
         self.models = {}
         self.pipelines = {}
         self._model_cache = {}
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize sentiment and emotion analysis models"""
-        if not TRANSFORMERS_AVAILABLE:
+        """Initialize sentiment and emotion analysis models"""        if not TRANSFORMERS_AVAILABLE:
             logger.warning("Transformers not available. Using fallback sentiment analysis.")
             return
         
@@ -136,8 +124,7 @@ class SentimentEngine:
             self._setup_fallback_models()
     
     def _load_specialized_models(self):
-        """Load specialized sentiment models for different domains"""
-        specialized_models = {
+        """Load specialized sentiment models for different domains"""        specialized_models = {
             "twitter": "cardiffnlp/twitter-roberta-base-sentiment-latest",
             "financial": "ProsusAI/finbert",
             "multilingual": "cardiffnlp/twitter-xlm-roberta-base-sentiment"
@@ -156,8 +143,7 @@ class SentimentEngine:
                 logger.warning(f"Failed to load {domain} sentiment model: {e}")
     
     def _setup_fallback_models(self):
-        """Setup fallback models when transformers are not available"""
-        logger.info("Setting up fallback sentiment analysis")
+        """Setup fallback models when transformers are not available"""        logger.info("Setting up fallback sentiment analysis")
         
         # Simple rule-based sentiment
         self.positive_words = {
@@ -175,8 +161,7 @@ class SentimentEngine:
         self.fallback_mode = True
     
     def _get_device(self) -> int:
-        """Get optimal device for model execution"""
-        if self.config.performance.enable_gpu and TRANSFORMERS_AVAILABLE:
+        """Get optimal device for model execution"""        if self.config.performance.enable_gpu and TRANSFORMERS_AVAILABLE:
             try:
                 if torch.cuda.is_available():
                     return 0  # Use first GPU
@@ -191,8 +176,7 @@ class SentimentEngine:
         domain: Optional[str] = None,
         include_emotions: bool = None
     ) -> Union[SentimentResult, List[SentimentResult]]:
-        """
-        Analyze sentiment and emotions in text
+        """        Analyze sentiment and emotions in text
         
         Args:
             text: Text or list of texts to analyze
@@ -202,8 +186,7 @@ class SentimentEngine:
         
         Returns:
             SentimentResult or list of results
-        """
-        start_time = asyncio.get_event_loop().time()
+        """        start_time = asyncio.get_event_loop().time()
         
         # Handle batch processing
         is_batch = isinstance(text, list)
@@ -245,8 +228,7 @@ class SentimentEngine:
         domain: Optional[str] = None,
         include_emotions: bool = True
     ) -> SentimentResult:
-        """Analyze sentiment for a single text"""
-        if not text or not isinstance(text, str):
+        """Analyze sentiment for a single text"""        if not text or not isinstance(text, str):
             raise ValueError("Input text must be a non-empty string")
         
         result = SentimentResult(text=text, overall_sentiment=SentimentLabel.NEUTRAL, confidence=0.0)
@@ -286,8 +268,7 @@ class SentimentEngine:
             return result
     
     def _select_model(self, domain: Optional[str], language: Optional[str]) -> str:
-        """Select appropriate model based on domain and language"""
-        # Domain-specific models
+        """Select appropriate model based on domain and language"""        # Domain-specific models
         if domain and f"sentiment_{domain}" in self.pipelines:
             return f"sentiment_{domain}"
         
@@ -304,8 +285,7 @@ class SentimentEngine:
         result: SentimentResult,
         model_key: str
     ):
-        """Perform sentiment analysis using transformer models"""
-        try:
+        """Perform sentiment analysis using transformer models"""        try:
             pipeline_obj = self.pipelines.get(model_key, self.pipelines["sentiment"])
             
             # Run inference
@@ -358,8 +338,7 @@ class SentimentEngine:
             await self._fallback_sentiment_analysis(text, result)
     
     async def _fallback_sentiment_analysis(self, text: str, result: SentimentResult):
-        """Fallback sentiment analysis using rule-based approach"""
-        words = text.lower().split()
+        """Fallback sentiment analysis using rule-based approach"""        words = text.lower().split()
         
         positive_count = sum(1 for word in words if word in self.positive_words)
         negative_count = sum(1 for word in words if word in self.negative_words)
@@ -387,8 +366,7 @@ class SentimentEngine:
         ]
     
     async def _analyze_emotions(self, text: str, result: SentimentResult):
-        """Analyze emotions in text"""
-        try:
+        """Analyze emotions in text"""        try:
             emotion_pipeline = self.pipelines["emotion"]
             
             predictions = await asyncio.get_event_loop().run_in_executor(
@@ -433,8 +411,7 @@ class SentimentEngine:
             logger.error(f"Emotion analysis failed: {e}")
     
     def _normalize_sentiment_label(self, label: str) -> str:
-        """Normalize sentiment labels to standard format"""
-        label = label.lower()
+        """Normalize sentiment labels to standard format"""        label = label.lower()
         
         # Map common label variations
         positive_labels = ["positive", "pos", "1", "good", "happy"]
@@ -451,8 +428,7 @@ class SentimentEngine:
             return label
     
     def _calculate_polarity(self, sentiment_scores: List[SentimentScore]) -> float:
-        """Calculate polarity score from sentiment scores"""
-        total_positive = sum(score.score for score in sentiment_scores if score.label == "positive")
+        """Calculate polarity score from sentiment scores"""        total_positive = sum(score.score for score in sentiment_scores if score.label == "positive")
         total_negative = sum(score.score for score in sentiment_scores if score.label == "negative")
         
         if total_positive + total_negative == 0:
@@ -461,8 +437,7 @@ class SentimentEngine:
         return (total_positive - total_negative) / (total_positive + total_negative)
     
     def _calculate_additional_metrics(self, text: str, result: SentimentResult):
-        """Calculate additional sentiment metrics"""
-        words = text.split()
+        """Calculate additional sentiment metrics"""        words = text.split()
         
         # Subjectivity (simple heuristic)
         subjective_indicators = [
@@ -488,8 +463,7 @@ class SentimentEngine:
         texts: List[str],
         timestamps: Optional[List[datetime]] = None
     ) -> Dict[str, Any]:
-        """Analyze sentiment trends over time"""
-        if not texts:
+        """Analyze sentiment trends over time"""        if not texts:
             return {"error": "No texts provided"}
         
         results = await self.analyze_sentiment(texts)
@@ -527,8 +501,7 @@ class SentimentEngine:
         return trend_analysis
     
     def _get_sentiment_distribution(self, results: List[SentimentResult]) -> Dict[str, float]:
-        """Get distribution of sentiments"""
-        total = len(results)
+        """Get distribution of sentiments"""        total = len(results)
         if total == 0:
             return {}
         
@@ -540,8 +513,7 @@ class SentimentEngine:
         return distribution
     
     def _calculate_trend_direction(self, polarities: List[float]) -> str:
-        """Calculate overall trend direction"""
-        if len(polarities) < 2:
+        """Calculate overall trend direction"""        if len(polarities) < 2:
             return "insufficient_data"
         
         # Simple linear trend
@@ -560,8 +532,7 @@ class SentimentEngine:
         text1: str,
         text2: str
     ) -> Dict[str, Any]:
-        """Compare sentiments between two texts"""
-        results = await self.analyze_sentiment([text1, text2])
+        """Compare sentiments between two texts"""        results = await self.analyze_sentiment([text1, text2])
         
         result1, result2 = results
         
@@ -590,8 +561,7 @@ class SentimentEngine:
         return comparison
     
     def get_model_info(self) -> Dict[str, Any]:
-        """Get information about loaded models"""
-        return {
+        """Get information about loaded models"""        return {
             "models_loaded": list(self.pipelines.keys()),
             "transformers_available": TRANSFORMERS_AVAILABLE,
             "device": self._get_device(),
@@ -600,8 +570,7 @@ class SentimentEngine:
         }
     
     def health_check(self) -> Dict[str, Any]:
-        """Perform health check"""
-        status = {
+        """Perform health check"""        status = {
             "status": "healthy",
             "models_loaded": len(self.pipelines),
             "transformers_available": TRANSFORMERS_AVAILABLE,
@@ -628,8 +597,7 @@ class SentimentEngine:
         return status
     
     def shutdown(self):
-        """Shutdown the sentiment engine"""
-        logger.info("Shutting down Sentiment Engine")
+        """Shutdown the sentiment engine"""        logger.info("Shutting down Sentiment Engine")
         
         # Clear model cache
         self.models.clear()
@@ -642,8 +610,7 @@ class SentimentEngine:
 
 # Utility functions
 def calculate_sentiment_similarity(result1: SentimentResult, result2: SentimentResult) -> float:
-    """Calculate similarity between two sentiment results"""
-    polarity_sim = 1.0 - abs(result1.polarity - result2.polarity)
+    """Calculate similarity between two sentiment results"""    polarity_sim = 1.0 - abs(result1.polarity - result2.polarity)
     confidence_sim = 1.0 - abs(result1.confidence - result2.confidence)
     
     # Emotion similarity

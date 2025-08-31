@@ -1,13 +1,10 @@
-"""
-IA Influencer Agent - Video Fingerprinting Engine
+"""IA Influencer Agent - Video Fingerprinting Engine
 Advanced video fingerprinting for content protection and identification
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved to Fahed Mlaiel
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited
-"""
-
-import asyncio
+"""import asyncio
 import hashlib
 import logging
 import numpy as np
@@ -25,26 +22,22 @@ logger = logging.getLogger(__name__)
 
 
 class VideoFingerprintEngine:
-    """
-    Professional video fingerprinting engine using multiple computer vision
+    """    Professional video fingerprinting engine using multiple computer vision
     algorithms for robust content identification and protection
-    """
-    
+    """    
     def __init__(
         self, 
         frame_sampling_rate: int = 30,
         hash_size: int = 8,
         max_frames: int = 100
     ):
-        """
-        Initialize video fingerprinting engine
+        """        Initialize video fingerprinting engine
         
         Args:
             frame_sampling_rate: Extract every Nth frame
             hash_size: Size for perceptual hashing
             max_frames: Maximum frames to process per video
-        """
-        self.frame_sampling_rate = frame_sampling_rate
+        """        self.frame_sampling_rate = frame_sampling_rate
         self.hash_size = hash_size
         self.max_frames = max_frames
         self.similarity_threshold = 0.85
@@ -59,8 +52,7 @@ class VideoFingerprintEngine:
         video_path: Union[str, Path],
         methods: List[str] = None
     ) -> Dict[str, any]:
-        """
-        Extract comprehensive video fingerprint using multiple methods
+        """        Extract comprehensive video fingerprint using multiple methods
         
         Args:
             video_path: Path to video file
@@ -69,8 +61,7 @@ class VideoFingerprintEngine:
         
         Returns:
             Dictionary containing all fingerprint data
-        """
-        if methods is None:
+        """        if methods is None:
             methods = ['perceptual_hash', 'histogram', 'optical_flow', 'edge_detection']
         
         try:
@@ -123,8 +114,7 @@ class VideoFingerprintEngine:
             raise
     
     async def _get_video_info(self, video_path: Path) -> Dict[str, any]:
-        """Extract video metadata"""
-        try:
+        """Extract video metadata"""        try:
             cap = cv2.VideoCapture(str(video_path))
             
             if not cap.isOpened():
@@ -150,8 +140,7 @@ class VideoFingerprintEngine:
             return {'width': 0, 'height': 0, 'fps': 0, 'frame_count': 0, 'duration': 0.0}
     
     async def _extract_frames(self, video_path: Path, video_info: Dict) -> List[np.ndarray]:
-        """Extract frames from video for analysis"""
-        try:
+        """Extract frames from video for analysis"""        try:
             cap = cv2.VideoCapture(str(video_path))
             frames = []
             frame_idx = 0
@@ -187,8 +176,7 @@ class VideoFingerprintEngine:
             return []
     
     async def _extract_perceptual_hash(self, frames: List[np.ndarray]) -> Dict[str, any]:
-        """Extract perceptual hash fingerprints for frames"""
-        try:
+        """Extract perceptual hash fingerprints for frames"""        try:
             hashes = []
             hash_strings = []
             
@@ -234,8 +222,7 @@ class VideoFingerprintEngine:
             return {'error': str(e), 'algorithm': 'perceptual_hash'}
     
     async def _extract_histogram_features(self, frames: List[np.ndarray]) -> Dict[str, any]:
-        """Extract color histogram features"""
-        try:
+        """Extract color histogram features"""        try:
             histograms = []
             
             for frame in frames:
@@ -286,8 +273,7 @@ class VideoFingerprintEngine:
             return {'error': str(e), 'algorithm': 'histogram'}
     
     async def _extract_optical_flow(self, frames: List[np.ndarray]) -> Dict[str, any]:
-        """Extract optical flow features for motion analysis"""
-        try:
+        """Extract optical flow features for motion analysis"""        try:
             if len(frames) < 2:
                 return {'error': 'Need at least 2 frames for optical flow', 'algorithm': 'optical_flow'}
             
@@ -355,8 +341,7 @@ class VideoFingerprintEngine:
             return {'error': str(e), 'algorithm': 'optical_flow'}
     
     async def _extract_edge_features(self, frames: List[np.ndarray]) -> Dict[str, any]:
-        """Extract edge detection features"""
-        try:
+        """Extract edge detection features"""        try:
             edge_features = []
             
             for frame in frames:
@@ -419,8 +404,7 @@ class VideoFingerprintEngine:
             return {'error': str(e), 'algorithm': 'edge_detection'}
     
     def _generate_combined_hash(self, methods_data: Dict[str, any]) -> str:
-        """Generate combined hash from all fingerprinting methods"""
-        try:
+        """Generate combined hash from all fingerprinting methods"""        try:
             hash_parts = []
             
             for method, data in methods_data.items():
@@ -450,8 +434,7 @@ class VideoFingerprintEngine:
         fingerprint1: Dict[str, any], 
         fingerprint2: Dict[str, any]
     ) -> Dict[str, float]:
-        """
-        Compare two video fingerprints and return similarity scores
+        """        Compare two video fingerprints and return similarity scores
         
         Args:
             fingerprint1: First fingerprint data
@@ -459,8 +442,7 @@ class VideoFingerprintEngine:
         
         Returns:
             Dictionary with similarity scores for each method
-        """
-        similarities = {}
+        """        similarities = {}
         
         try:
             # Compare each method
@@ -499,8 +481,7 @@ class VideoFingerprintEngine:
         data2: Dict[str, any], 
         method: str
     ) -> float:
-        """Compare two fingerprints using specific method"""
-        try:
+        """Compare two fingerprints using specific method"""        try:
             if 'error' in data1 or 'error' in data2:
                 return 0.0
             
@@ -520,8 +501,7 @@ class VideoFingerprintEngine:
             return 0.0
     
     def _compare_perceptual_hash(self, data1: Dict, data2: Dict) -> float:
-        """Compare perceptual hash sequences"""
-        try:
+        """Compare perceptual hash sequences"""        try:
             seq1 = data1.get('hash_sequence', [])
             seq2 = data2.get('hash_sequence', [])
             
@@ -570,8 +550,7 @@ class VideoFingerprintEngine:
             return 0.0
     
     def _compare_histogram(self, data1: Dict, data2: Dict) -> float:
-        """Compare histogram features"""
-        try:
+        """Compare histogram features"""        try:
             hist1 = data1.get('average_histogram', {})
             hist2 = data2.get('average_histogram', {})
             
@@ -595,8 +574,7 @@ class VideoFingerprintEngine:
             return 0.0
     
     def _compare_optical_flow(self, data1: Dict, data2: Dict) -> float:
-        """Compare optical flow features"""
-        try:
+        """Compare optical flow features"""        try:
             mag1 = data1.get('average_magnitude', 0)
             mag2 = data2.get('average_magnitude', 0)
             var1 = data1.get('average_direction_variance', 0)
@@ -616,8 +594,7 @@ class VideoFingerprintEngine:
             return 0.0
     
     def _compare_edge_detection(self, data1: Dict, data2: Dict) -> float:
-        """Compare edge detection features"""
-        try:
+        """Compare edge detection features"""        try:
             density1 = data1.get('average_edge_density', 0)
             density2 = data2.get('average_edge_density', 0)
             orientation1 = np.array(data1.get('average_orientation', []))
@@ -652,8 +629,7 @@ class VideoFingerprintEngine:
         video_paths: List[Union[str, Path]], 
         methods: List[str] = None
     ) -> List[Dict[str, any]]:
-        """
-        Process multiple video files in batch
+        """        Process multiple video files in batch
         
         Args:
             video_paths: List of video file paths
@@ -661,8 +637,7 @@ class VideoFingerprintEngine:
         
         Returns:
             List of fingerprint data for each file
-        """
-        tasks = []
+        """        tasks = []
         for video_path in video_paths:
             task = self.extract_fingerprint(video_path, methods)
             tasks.append(task)
@@ -686,8 +661,7 @@ class VideoFingerprintEngine:
             raise
     
     def get_engine_info(self) -> Dict[str, any]:
-        """Get engine configuration and capabilities"""
-        return {
+        """Get engine configuration and capabilities"""        return {
             'engine': 'VideoFingerprintEngine',
             'version': '1.0.0',
             'frame_sampling_rate': self.frame_sampling_rate,

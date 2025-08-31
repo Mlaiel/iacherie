@@ -1,5 +1,4 @@
-"""
-Performance Metrics Engine
+"""Performance Metrics Engine
 =========================
 
 Advanced performance metrics calculation and optimization for multi-platform content.
@@ -11,9 +10,7 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 WARNING: This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized copying, distribution, or modification without explicit written
 permission is strictly prohibited and will result in legal action.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -33,8 +30,7 @@ from sklearn.metrics import mean_squared_error
 
 
 class PerformanceCategory(Enum):
-    """Performance category enumeration"""
-    ENGAGEMENT = "engagement"
+    """Performance category enumeration"""    ENGAGEMENT = "engagement"
     REACH = "reach"
     CONVERSION = "conversion"
     RETENTION = "retention"
@@ -45,8 +41,7 @@ class PerformanceCategory(Enum):
 
 
 class PlatformType(Enum):
-    """Platform type enumeration"""
-    YOUTUBE = "youtube"
+    """Platform type enumeration"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     SPOTIFY = "spotify"
@@ -58,8 +53,7 @@ class PlatformType(Enum):
 
 @dataclass
 class PerformanceMetric:
-    """Individual performance metric"""
-    metric_id: str
+    """Individual performance metric"""    metric_id: str
     category: PerformanceCategory
     platform: PlatformType
     value: float
@@ -73,8 +67,7 @@ class PerformanceMetric:
 
 @dataclass
 class PerformanceBenchmark:
-    """Performance benchmark data"""
-    category: PerformanceCategory
+    """Performance benchmark data"""    category: PerformanceCategory
     platform: PlatformType
     industry_average: float
     top_quartile: float
@@ -86,8 +79,7 @@ class PerformanceBenchmark:
 
 @dataclass
 class PerformanceOptimization:
-    """Performance optimization recommendation"""
-    category: PerformanceCategory
+    """Performance optimization recommendation"""    category: PerformanceCategory
     current_value: float
     target_value: float
     improvement_potential: float
@@ -98,22 +90,18 @@ class PerformanceOptimization:
 
 
 class PerformanceMetrics:
-    """
-    Professional performance metrics engine for content optimization.
+    """    Professional performance metrics engine for content optimization.
     
     Calculates comprehensive performance metrics, benchmarks against industry standards,
     and provides actionable optimization recommendations for content creators.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, redis_client: Redis):
-        """
-        Initialize PerformanceMetrics engine.
+        """        Initialize PerformanceMetrics engine.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
         self.cache_ttl = 3600  # 1 hour cache
@@ -122,8 +110,7 @@ class PerformanceMetrics:
                                          platform: PlatformType,
                                          time_period: timedelta = timedelta(days=30)
                                          ) -> Dict[str, float]:
-        """
-        Calculate comprehensive engagement metrics for content.
+        """        Calculate comprehensive engagement metrics for content.
         
         Args:
             content_id: Unique content identifier
@@ -132,8 +119,7 @@ class PerformanceMetrics:
             
         Returns:
             Dictionary containing engagement metrics
-        """
-        try:
+        """        try:
             cache_key = f"engagement_metrics:{content_id}:{platform.value}:{time_period.days}"
             cached_result = await self._get_cached_result(cache_key)
             
@@ -144,8 +130,7 @@ class PerformanceMetrics:
             end_date = datetime.utcnow()
             start_date = end_date - time_period
             
-            query = text("""
-                SELECT 
+            query = text("""                SELECT 
                     SUM(views) as total_views,
                     SUM(likes) as total_likes,
                     SUM(comments) as total_comments,
@@ -198,8 +183,7 @@ class PerformanceMetrics:
                                     platform: PlatformType,
                                     time_period: timedelta = timedelta(days=30)
                                     ) -> Dict[str, float]:
-        """
-        Calculate reach and audience growth metrics.
+        """        Calculate reach and audience growth metrics.
         
         Args:
             user_id: User identifier
@@ -208,8 +192,7 @@ class PerformanceMetrics:
             
         Returns:
             Dictionary containing reach metrics
-        """
-        try:
+        """        try:
             cache_key = f"reach_metrics:{user_id}:{platform.value}:{time_period.days}"
             cached_result = await self._get_cached_result(cache_key)
             
@@ -220,8 +203,7 @@ class PerformanceMetrics:
             start_date = end_date - time_period
             
             # Fetch reach data
-            query = text("""
-                WITH daily_metrics AS (
+            query = text("""                WITH daily_metrics AS (
                     SELECT 
                         DATE(created_at) as metric_date,
                         SUM(reach) as daily_reach,
@@ -291,8 +273,7 @@ class PerformanceMetrics:
                                          platform: PlatformType,
                                          time_period: timedelta = timedelta(days=30)
                                          ) -> Dict[str, float]:
-        """
-        Calculate conversion and monetization performance metrics.
+        """        Calculate conversion and monetization performance metrics.
         
         Args:
             user_id: User identifier
@@ -301,8 +282,7 @@ class PerformanceMetrics:
             
         Returns:
             Dictionary containing conversion metrics
-        """
-        try:
+        """        try:
             cache_key = f"conversion_metrics:{user_id}:{platform.value}:{time_period.days}"
             cached_result = await self._get_cached_result(cache_key)
             
@@ -313,8 +293,7 @@ class PerformanceMetrics:
             start_date = end_date - time_period
             
             # Fetch conversion data
-            query = text("""
-                SELECT 
+            query = text("""                SELECT 
                     SUM(views) as total_views,
                     SUM(clicks) as total_clicks,
                     SUM(conversions) as total_conversions,
@@ -371,8 +350,7 @@ class PerformanceMetrics:
     async def get_performance_benchmarks(self, category: PerformanceCategory,
                                        platform: PlatformType
                                        ) -> Optional[PerformanceBenchmark]:
-        """
-        Get industry performance benchmarks for comparison.
+        """        Get industry performance benchmarks for comparison.
         
         Args:
             category: Performance category
@@ -380,8 +358,7 @@ class PerformanceMetrics:
             
         Returns:
             Performance benchmark data
-        """
-        try:
+        """        try:
             cache_key = f"benchmarks:{category.value}:{platform.value}"
             cached_result = await self._get_cached_result(cache_key)
             
@@ -389,8 +366,7 @@ class PerformanceMetrics:
                 return PerformanceBenchmark(**cached_result)
                 
             # Fetch benchmark data from database
-            query = text("""
-                SELECT 
+            query = text("""                SELECT 
                     AVG(metric_value) as industry_average,
                     PERCENTILE_CONT(0.75) WITHIN GROUP (ORDER BY metric_value) as top_quartile,
                     PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY metric_value) as median,
@@ -438,8 +414,7 @@ class PerformanceMetrics:
     async def generate_performance_report(self, user_id: str,
                                         time_period: timedelta = timedelta(days=30)
                                         ) -> Dict[str, Any]:
-        """
-        Generate comprehensive performance report for user.
+        """        Generate comprehensive performance report for user.
         
         Args:
             user_id: User identifier
@@ -447,8 +422,7 @@ class PerformanceMetrics:
             
         Returns:
             Comprehensive performance report
-        """
-        try:
+        """        try:
             report = {
                 "user_id": user_id,
                 "period_start": datetime.utcnow() - time_period,
@@ -494,16 +468,14 @@ class PerformanceMetrics:
     
     async def _calculate_growth_metrics(self, user_id: str, platform: PlatformType,
                                       time_period: timedelta) -> Dict[str, float]:
-        """Calculate growth metrics for reach analysis."""
-        try:
+        """Calculate growth metrics for reach analysis."""        try:
             # Split time period into two halves for comparison
             mid_point = datetime.utcnow() - time_period / 2
             end_date = datetime.utcnow()
             start_date = end_date - time_period
             
             # Get metrics for first half
-            query_first = text("""
-                SELECT AVG(reach) as avg_reach, SUM(views) as total_views
+            query_first = text("""                SELECT AVG(reach) as avg_reach, SUM(views) as total_views
                 FROM content_metrics cm
                 JOIN content c ON cm.content_id = c.id
                 WHERE c.user_id = :user_id AND cm.platform = :platform
@@ -522,8 +494,7 @@ class PerformanceMetrics:
             first_half = result_first.fetchone()
             
             # Get metrics for second half
-            query_second = text("""
-                SELECT AVG(reach) as avg_reach, SUM(views) as total_views
+            query_second = text("""                SELECT AVG(reach) as avg_reach, SUM(views) as total_views
                 FROM content_metrics cm
                 JOIN content c ON cm.content_id = c.id
                 WHERE c.user_id = :user_id AND cm.platform = :platform
@@ -559,14 +530,12 @@ class PerformanceMetrics:
             return {"reach_growth_rate": 0, "views_growth_rate": 0}
     
     def _calculate_roi(self, revenue: float, cost: float) -> float:
-        """Calculate return on investment."""
-        if cost == 0:
+        """Calculate return on investment."""        if cost == 0:
             return 0
         return ((revenue - cost) / cost * 100)
     
     async def _calculate_overall_performance(self, platforms: Dict) -> Dict[str, float]:
-        """Calculate overall performance metrics across all platforms."""
-        try:
+        """Calculate overall performance metrics across all platforms."""        try:
             if not platforms:
                 return {}
                 
@@ -603,8 +572,7 @@ class PerformanceMetrics:
             return {}
     
     async def _generate_performance_recommendations(self, user_id: str, report: Dict) -> List[Dict]:
-        """Generate actionable performance recommendations."""
-        try:
+        """Generate actionable performance recommendations."""        try:
             recommendations = []
             
             # Analyze engagement rates
@@ -653,8 +621,7 @@ class PerformanceMetrics:
             return []
     
     async def _get_cached_result(self, cache_key: str) -> Optional[Dict]:
-        """Get cached result from Redis."""
-        try:
+        """Get cached result from Redis."""        try:
             cached_data = self.redis_client.get(cache_key)
             if cached_data:
                 return json.loads(cached_data)
@@ -664,8 +631,7 @@ class PerformanceMetrics:
             return None
     
     async def _cache_result(self, cache_key: str, data: Dict, ttl: int = None) -> None:
-        """Cache result in Redis."""
-        try:
+        """Cache result in Redis."""        try:
             cache_ttl = ttl or self.cache_ttl
             self.redis_client.setex(
                 cache_key,

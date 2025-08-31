@@ -1,5 +1,4 @@
-"""
-Real-Time Logging Configuration for IA-Influencer Agent Platform
+"""Real-Time Logging Configuration for IA-Influencer Agent Platform
 ================================================================
 
 Industrial-grade logging configuration for real-time monitoring, live event tracking,
@@ -17,9 +16,7 @@ without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICT
 and will result in immediate legal action under German and International copyright laws.
 
 Contact: mlaiel@live.de for licensing inquiries only.
-"""
-
-import logging
+"""import logging
 import json
 import asyncio
 from datetime import datetime
@@ -34,8 +31,7 @@ from pythonjsonlogger import jsonlogger
 
 
 class RealTimeEventType(str, Enum):
-    """Types of real-time events"""
-    LIVE_STREAM_START = "live_stream_start"
+    """Types of real-time events"""    LIVE_STREAM_START = "live_stream_start"
     LIVE_STREAM_END = "live_stream_end"
     VIEWER_JOIN = "viewer_join"
     VIEWER_LEAVE = "viewer_leave"
@@ -53,8 +49,7 @@ class RealTimeEventType(str, Enum):
 
 
 class AlertSeverity(str, Enum):
-    """Alert severity levels"""
-    CRITICAL = "critical"
+    """Alert severity levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -62,8 +57,7 @@ class AlertSeverity(str, Enum):
 
 
 class StreamingPlatform(str, Enum):
-    """Streaming platforms for real-time events"""
-    YOUTUBE_LIVE = "youtube_live"
+    """Streaming platforms for real-time events"""    YOUTUBE_LIVE = "youtube_live"
     TWITCH = "twitch"
     INSTAGRAM_LIVE = "instagram_live"
     FACEBOOK_LIVE = "facebook_live"
@@ -77,8 +71,7 @@ class StreamingPlatform(str, Enum):
 
 @dataclass
 class RealTimeLogConfig:
-    """Configuration for real-time logging"""
-    enable_live_event_logging: bool = True
+    """Configuration for real-time logging"""    enable_live_event_logging: bool = True
     enable_streaming_analytics: bool = True
     enable_real_time_alerts: bool = True
     enable_performance_monitoring: bool = True
@@ -112,8 +105,7 @@ class RealTimeLogConfig:
 
 
 class RealTimeLogger:
-    """Specialized logger for real-time operations"""
-    
+    """Specialized logger for real-time operations"""    
     def __init__(self, config: RealTimeLogConfig):
         self.config = config
         self.logger = self._setup_logger()
@@ -127,8 +119,7 @@ class RealTimeLogger:
         }
         
     def _setup_logger(self) -> structlog.BoundLogger:
-        """Setup structured logger for real-time events"""
-        processors = [
+        """Setup structured logger for real-time events"""        processors = [
             structlog.threadlocal.merge_threadlocal_context,
             structlog.processors.TimeStamper(fmt="iso"),
             structlog.processors.add_log_level,
@@ -149,15 +140,13 @@ class RealTimeLogger:
         return structlog.get_logger("ia_influencer_realtime")
     
     def _add_real_time_markers(self, logger, method_name, event_dict):
-        """Add real-time specific markers"""
-        event_dict['real_time_event'] = True
+        """Add real-time specific markers"""        event_dict['real_time_event'] = True
         event_dict['processing_timestamp_ms'] = int(time.time() * 1000)
         event_dict['event_sequence'] = self.performance_metrics['events_processed']
         return event_dict
     
     def add_alert_callback(self, callback: Callable[[Dict[str, Any]], None]) -> None:
-        """Add callback for real-time alerts"""
-        self.alert_callbacks.append(callback)
+        """Add callback for real-time alerts"""        self.alert_callbacks.append(callback)
     
     def log_live_stream_event(
         self,
@@ -170,8 +159,7 @@ class RealTimeLogger:
         technical_metrics: Dict[str, Any],
         event_data: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Log live streaming events in real-time"""
-        if not self.config.enable_live_event_logging:
+        """Log live streaming events in real-time"""        if not self.config.enable_live_event_logging:
             return
             
         start_time = time.time()
@@ -216,8 +204,7 @@ class RealTimeLogger:
         activity_data: Dict[str, Any],
         engagement_score: float
     ) -> None:
-        """Log real-time audience activity"""
-        if not self.config.enable_audience_tracking:
+        """Log real-time audience activity"""        if not self.config.enable_audience_tracking:
             return
             
         log_data = {
@@ -246,8 +233,7 @@ class RealTimeLogger:
         revenue_source: str,
         processing_fees: Optional[float] = None
     ) -> None:
-        """Log real-time revenue events"""
-        if not self.config.enable_revenue_tracking:
+        """Log real-time revenue events"""        if not self.config.enable_revenue_tracking:
             return
             
         log_data = {
@@ -285,8 +271,7 @@ class RealTimeLogger:
         auto_remediation: bool = False,
         remediation_actions: Optional[List[str]] = None
     ) -> None:
-        """Log real-time performance alerts"""
-        if not self.config.enable_performance_monitoring:
+        """Log real-time performance alerts"""        if not self.config.enable_performance_monitoring:
             return
             
         log_data = {
@@ -323,8 +308,7 @@ class RealTimeLogger:
         immediate_response: bool = False,
         mitigation_status: str = "in_progress"
     ) -> None:
-        """Log real-time security incidents"""
-        if not self.config.enable_security_monitoring:
+        """Log real-time security incidents"""        if not self.config.enable_security_monitoring:
             return
             
         log_data = {
@@ -360,8 +344,7 @@ class RealTimeLogger:
         prediction_confidence: float,
         viral_threshold_exceeded: bool
     ) -> None:
-        """Log viral content detection in real-time"""
-        log_data = {
+        """Log viral content detection in real-time"""        log_data = {
             "event_type": "viral_content_detection",
             "content_id": content_id,
             "creator_id": creator_id,
@@ -390,8 +373,7 @@ class RealTimeLogger:
         time_sensitive: bool,
         expiry_time: Optional[datetime] = None
     ) -> None:
-        """Log real-time collaboration opportunities"""
-        log_data = {
+        """Log real-time collaboration opportunities"""        log_data = {
             "event_type": "collaboration_opportunity",
             "opportunity_id": opportunity_id,
             "creator_id": creator_id,
@@ -422,8 +404,7 @@ class RealTimeLogger:
         latency_ms: float,
         connection_quality: str
     ) -> None:
-        """Log WebSocket real-time events"""
-        if not self.config.enable_websocket_logging:
+        """Log WebSocket real-time events"""        if not self.config.enable_websocket_logging:
             return
             
         log_data = {
@@ -445,8 +426,7 @@ class RealTimeLogger:
         self.logger.info("WebSocket event logged", **log_data)
     
     def process_event_buffer(self) -> None:
-        """Process buffered events in batches"""
-        if not self.event_buffer:
+        """Process buffered events in batches"""        if not self.event_buffer:
             return
             
         batch_size = min(self.config.batch_size, len(self.event_buffer))
@@ -465,8 +445,7 @@ class RealTimeLogger:
             )
     
     def _check_stream_alerts(self, log_data: Dict[str, Any], viewer_count: int, technical_metrics: Dict[str, Any]) -> None:
-        """Check for streaming-related alerts"""
-        # Low viewer count alert
+        """Check for streaming-related alerts"""        # Low viewer count alert
         if viewer_count < 10:
             self._trigger_alert(AlertSeverity.LOW, "Low viewer count", {"stream_data": log_data})
             
@@ -475,8 +454,7 @@ class RealTimeLogger:
             self._trigger_alert(AlertSeverity.HIGH, "High dropped frames detected", {"technical_metrics": technical_metrics})
     
     def _trigger_alert(self, severity: AlertSeverity, message: str, data: Dict[str, Any]) -> None:
-        """Trigger real-time alerts"""
-        if not self.config.enable_real_time_alerts:
+        """Trigger real-time alerts"""        if not self.config.enable_real_time_alerts:
             return
             
         alert_data = {
@@ -494,8 +472,7 @@ class RealTimeLogger:
                 self.logger.error("Alert callback failed", error=str(e), alert_data=alert_data)
     
     def _update_performance_metrics(self, processing_time_ms: float) -> None:
-        """Update internal performance metrics"""
-        self.performance_metrics['events_processed'] += 1
+        """Update internal performance metrics"""        self.performance_metrics['events_processed'] += 1
         self.performance_metrics['last_event_time'] = datetime.utcnow()
         
         # Update rolling average
@@ -506,8 +483,7 @@ class RealTimeLogger:
         )
     
     def get_real_time_metrics(self) -> Dict[str, Any]:
-        """Get real-time logging system metrics"""
-        return {
+        """Get real-time logging system metrics"""        return {
             "live_event_logging": self.config.enable_live_event_logging,
             "streaming_analytics": self.config.enable_streaming_analytics,
             "real_time_alerts": self.config.enable_real_time_alerts,
@@ -524,17 +500,14 @@ class RealTimeLogger:
 
 
 class RealTimeLoggingConfig:
-    """Main configuration class for real-time logging"""
-    
+    """Main configuration class for real-time logging"""    
     @staticmethod
     def create_default_config() -> RealTimeLogConfig:
-        """Create default real-time logging configuration"""
-        return RealTimeLogConfig()
+        """Create default real-time logging configuration"""        return RealTimeLogConfig()
     
     @staticmethod
     def create_high_performance_config() -> RealTimeLogConfig:
-        """Create high-performance real-time logging configuration"""
-        return RealTimeLogConfig(
+        """Create high-performance real-time logging configuration"""        return RealTimeLogConfig(
             enable_live_event_logging=True,
             enable_streaming_analytics=True,
             enable_real_time_alerts=True,

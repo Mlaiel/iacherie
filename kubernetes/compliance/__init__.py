@@ -13,8 +13,7 @@ This module provides complete compliance functionality including:
 - Data retention and privacy controls
 - Regulatory reporting automation
 - External service integrations
-"""
-from .audit_logger import (
+"""from .audit_logger import (
     AuditLogger,
     AuditCategory,
     AuditLevel,

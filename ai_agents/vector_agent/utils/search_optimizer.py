@@ -1,5 +1,4 @@
-"""
-Search Optimizer - Intelligent Vector Search Performance Enhancement
+"""Search Optimizer - Intelligent Vector Search Performance Enhancement
 
 Ultra-advanced search optimization engine providing intelligent caching,
 query optimization, and result enhancement for vector similarity operations.
@@ -12,9 +11,7 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Any attempt to steal the concept, idea, or code without explicit written authorization
 from Fahed Mlaiel will result in immediate legal prosecution under German and international law.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import json
@@ -36,8 +33,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class QueryPerformanceMetric:
-    """Performance metrics for search queries"""
-    query_hash: str
+    """Performance metrics for search queries"""    query_hash: str
     execution_time: float
     result_count: int
     cache_hit: bool
@@ -49,8 +45,7 @@ class QueryPerformanceMetric:
 
 @dataclass
 class CacheEntry:
-    """Cache entry with metadata"""
-    query_hash: str
+    """Cache entry with metadata"""    query_hash: str
     results: List[VectorSearchResult]
     created_at: datetime
     access_count: int
@@ -60,8 +55,7 @@ class CacheEntry:
 
 
 class QueryCache:
-    """Intelligent query result caching system"""
-    
+    """Intelligent query result caching system"""    
     def __init__(self, max_size: int = 10000, default_ttl: int = 3600):
         self.max_size = max_size
         self.default_ttl = default_ttl
@@ -74,8 +68,7 @@ class QueryCache:
         }
     
     def _generate_query_hash(self, request: VectorSearchRequest) -> str:
-        """Generate unique hash for search request"""
-        # Include relevant parameters that affect results
+        """Generate unique hash for search request"""        # Include relevant parameters that affect results
         query_data = {
             "query_vector_hash": hashlib.md5(np.array(request.query_vector).tobytes()).hexdigest()[:16],
             "content_type": request.content_type,
@@ -88,8 +81,7 @@ class QueryCache:
         return hashlib.sha256(query_string.encode()).hexdigest()[:32]
     
     def get(self, request: VectorSearchRequest) -> Optional[List[VectorSearchResult]]:
-        """Get cached results if available and valid"""
-        query_hash = self._generate_query_hash(request)
+        """Get cached results if available and valid"""        query_hash = self._generate_query_hash(request)
         
         if query_hash in self.cache:
             entry = self.cache[query_hash]
@@ -114,8 +106,7 @@ class QueryCache:
     
     def put(self, request: VectorSearchRequest, results: List[VectorSearchResult], 
             ttl: Optional[int] = None) -> None:
-        """Cache search results"""
-        query_hash = self._generate_query_hash(request)
+        """Cache search results"""        query_hash = self._generate_query_hash(request)
         
         # Calculate entry size
         entry_size = self._estimate_entry_size(results)
@@ -139,14 +130,12 @@ class QueryCache:
         self.cache_stats["total_size_bytes"] += entry_size
     
     def remove(self, query_hash: str) -> None:
-        """Remove entry from cache"""
-        if query_hash in self.cache:
+        """Remove entry from cache"""        if query_hash in self.cache:
             entry = self.cache.pop(query_hash)
             self.cache_stats["total_size_bytes"] -= entry.size_bytes
     
     def clear(self) -> None:
-        """Clear all cache entries"""
-        self.cache.clear()
+        """Clear all cache entries"""        self.cache.clear()
         self.cache_stats = {
             "hits": 0,
             "misses": 0,
@@ -155,20 +144,17 @@ class QueryCache:
         }
     
     def _is_entry_valid(self, entry: CacheEntry) -> bool:
-        """Check if cache entry is still valid"""
-        age = (datetime.now(timezone.utc) - entry.created_at).total_seconds()
+        """Check if cache entry is still valid"""        age = (datetime.now(timezone.utc) - entry.created_at).total_seconds()
         return age < entry.ttl_seconds
     
     def _evict_oldest(self) -> None:
-        """Evict oldest cache entry"""
-        if self.cache:
+        """Evict oldest cache entry"""        if self.cache:
             query_hash, entry = self.cache.popitem(last=False)
             self.cache_stats["total_size_bytes"] -= entry.size_bytes
             self.cache_stats["evictions"] += 1
     
     def _estimate_entry_size(self, results: List[VectorSearchResult]) -> int:
-        """Estimate memory size of cache entry"""
-        # Basic estimation: assume ~1KB per result
+        """Estimate memory size of cache entry"""        # Basic estimation: assume ~1KB per result
         base_size = len(results) * 1024
         
         # Add size for metadata
@@ -180,8 +166,7 @@ class QueryCache:
         return base_size
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get cache statistics"""
-        total_requests = self.cache_stats["hits"] + self.cache_stats["misses"]
+        """Get cache statistics"""        total_requests = self.cache_stats["hits"] + self.cache_stats["misses"]
         hit_rate = self.cache_stats["hits"] / total_requests if total_requests > 0 else 0.0
         
         return {
@@ -195,16 +180,14 @@ class QueryCache:
 
 
 class QueryOptimizer:
-    """Intelligent query optimization engine"""
-    
+    """Intelligent query optimization engine"""    
     def __init__(self, config: VectorConfig):
         self.config = config
         self.performance_history: List[QueryPerformanceMetric] = []
         self.optimization_rules: Dict[str, Any] = self._initialize_optimization_rules()
     
     def _initialize_optimization_rules(self) -> Dict[str, Any]:
-        """Initialize optimization rules based on content types and patterns"""
-        return {
+        """Initialize optimization rules based on content types and patterns"""        return {
             "similarity_threshold_adjustment": {
                 "audio": {"min": 0.65, "max": 0.95, "optimal": 0.80},
                 "video": {"min": 0.70, "max": 0.98, "optimal": 0.85},
@@ -225,8 +208,7 @@ class QueryOptimizer:
         }
     
     def optimize_search_request(self, request: VectorSearchRequest) -> VectorSearchRequest:
-        """Optimize search request based on historical performance"""
-        optimized_request = VectorSearchRequest(
+        """Optimize search request based on historical performance"""        optimized_request = VectorSearchRequest(
             query_id=request.query_id,
             query_vector=request.query_vector,
             content_type=request.content_type,
@@ -243,8 +225,7 @@ class QueryOptimizer:
         return optimized_request
     
     def _optimize_similarity_threshold(self, request: VectorSearchRequest) -> VectorSearchRequest:
-        """Optimize similarity threshold based on content type and history"""
-        content_type = request.content_type
+        """Optimize similarity threshold based on content type and history"""        content_type = request.content_type
         current_threshold = request.similarity_threshold
         
         if content_type in self.optimization_rules["similarity_threshold_adjustment"]:
@@ -272,8 +253,7 @@ class QueryOptimizer:
         return request
     
     def _optimize_max_results(self, request: VectorSearchRequest) -> VectorSearchRequest:
-        """Optimize maximum results based on performance targets"""
-        rules = self.optimization_rules["max_results_optimization"]
+        """Optimize maximum results based on performance targets"""        rules = self.optimization_rules["max_results_optimization"]
         current_max = request.max_results
         
         # Get recent performance for similar queries
@@ -296,8 +276,7 @@ class QueryOptimizer:
         return request
     
     def _optimize_search_parameters(self, request: VectorSearchRequest) -> VectorSearchRequest:
-        """Optimize additional search parameters"""
-        content_type = request.content_type
+        """Optimize additional search parameters"""        content_type = request.content_type
         
         if content_type in self.optimization_rules["content_type_specific"]:
             content_rules = self.optimization_rules["content_type_specific"][content_type]
@@ -314,8 +293,7 @@ class QueryOptimizer:
     
     def record_performance(self, request: VectorSearchRequest, execution_time: float,
                           result_count: int, cache_hit: bool = False) -> None:
-        """Record query performance for future optimization"""
-        metric = QueryPerformanceMetric(
+        """Record query performance for future optimization"""        metric = QueryPerformanceMetric(
             query_hash=self._generate_query_hash(request),
             execution_time=execution_time,
             result_count=result_count,
@@ -334,12 +312,10 @@ class QueryOptimizer:
             self.performance_history = self.performance_history[-max_history:]
     
     def _generate_query_hash(self, request: VectorSearchRequest) -> str:
-        """Generate hash for query tracking"""
-        return hashlib.md5(f"{request.content_type}_{request.similarity_threshold}_{request.max_results}".encode()).hexdigest()[:16]
+        """Generate hash for query tracking"""        return hashlib.md5(f"{request.content_type}_{request.similarity_threshold}_{request.max_results}".encode()).hexdigest()[:16]
     
     def _get_historical_performance(self, content_type: str, days: int = 7) -> List[QueryPerformanceMetric]:
-        """Get historical performance metrics for content type"""
-        cutoff_date = datetime.now(timezone.utc) - timedelta(days=days)
+        """Get historical performance metrics for content type"""        cutoff_date = datetime.now(timezone.utc) - timedelta(days=days)
         
         return [
             metric for metric in self.performance_history
@@ -347,8 +323,7 @@ class QueryOptimizer:
         ]
     
     def _get_recent_performance(self, content_type: str, limit: int = 10) -> List[QueryPerformanceMetric]:
-        """Get recent performance metrics"""
-        content_metrics = [
+        """Get recent performance metrics"""        content_metrics = [
             metric for metric in self.performance_history
             if metric.content_type == content_type
         ]
@@ -358,15 +333,13 @@ class QueryOptimizer:
 
 
 class ResultEnhancer:
-    """Advanced result enhancement and post-processing"""
-    
+    """Advanced result enhancement and post-processing"""    
     def __init__(self, config: VectorConfig):
         self.config = config
     
     def enhance_results(self, results: List[VectorSearchResult], 
                        request: VectorSearchRequest) -> List[VectorSearchResult]:
-        """Enhance search results with additional processing"""
-        try:
+        """Enhance search results with additional processing"""        try:
             enhanced_results = []
             
             for result in results:
@@ -387,8 +360,7 @@ class ResultEnhancer:
     
     def _enhance_single_result(self, result: VectorSearchResult, 
                              request: VectorSearchRequest) -> VectorSearchResult:
-        """Enhance individual search result"""
-        enhanced_metadata = result.metadata.copy() if result.metadata else {}
+        """Enhance individual search result"""        enhanced_metadata = result.metadata.copy() if result.metadata else {}
         
         # Add enhancement metadata
         enhanced_metadata["enhanced_at"] = datetime.now(timezone.utc).isoformat()
@@ -416,8 +388,7 @@ class ResultEnhancer:
     
     def _enhance_audio_result(self, metadata: Dict[str, Any], 
                             result: VectorSearchResult) -> Dict[str, Any]:
-        """Enhance audio-specific result metadata"""
-        metadata["audio_enhancement"] = {
+        """Enhance audio-specific result metadata"""        metadata["audio_enhancement"] = {
             "confidence_boost": min(1.0, result.confidence + 0.1) if result.confidence < 0.9 else result.confidence,
             "spectral_match_quality": "high" if result.similarity_score > 0.8 else "medium"
         }
@@ -425,8 +396,7 @@ class ResultEnhancer:
     
     def _enhance_video_result(self, metadata: Dict[str, Any], 
                             result: VectorSearchResult) -> Dict[str, Any]:
-        """Enhance video-specific result metadata"""
-        metadata["video_enhancement"] = {
+        """Enhance video-specific result metadata"""        metadata["video_enhancement"] = {
             "visual_similarity": result.detailed_scores.get("cosine", 0.0) if result.detailed_scores else 0.0,
             "temporal_consistency": "stable" if result.confidence > 0.8 else "variable"
         }
@@ -434,8 +404,7 @@ class ResultEnhancer:
     
     def _enhance_image_result(self, metadata: Dict[str, Any], 
                             result: VectorSearchResult) -> Dict[str, Any]:
-        """Enhance image-specific result metadata"""
-        metadata["image_enhancement"] = {
+        """Enhance image-specific result metadata"""        metadata["image_enhancement"] = {
             "perceptual_similarity": result.similarity_score,
             "structural_match": result.detailed_scores.get("euclidean", 0.0) if result.detailed_scores else 0.0
         }
@@ -443,8 +412,7 @@ class ResultEnhancer:
     
     def _enhance_text_result(self, metadata: Dict[str, Any], 
                            result: VectorSearchResult) -> Dict[str, Any]:
-        """Enhance text-specific result metadata"""
-        metadata["text_enhancement"] = {
+        """Enhance text-specific result metadata"""        metadata["text_enhancement"] = {
             "semantic_similarity": result.detailed_scores.get("cosine", 0.0) if result.detailed_scores else 0.0,
             "linguistic_match": result.detailed_scores.get("pearson", 0.0) if result.detailed_scores else 0.0
         }
@@ -452,8 +420,7 @@ class ResultEnhancer:
     
     def _apply_result_optimizations(self, results: List[VectorSearchResult], 
                                   request: VectorSearchRequest) -> List[VectorSearchResult]:
-        """Apply result-level optimizations"""
-        # Remove very low confidence results
+        """Apply result-level optimizations"""        # Remove very low confidence results
         min_confidence = 0.1
         filtered_results = [r for r in results if r.confidence >= min_confidence]
         
@@ -466,8 +433,7 @@ class ResultEnhancer:
     
     def _rank_results(self, results: List[VectorSearchResult], 
                      request: VectorSearchRequest) -> List[VectorSearchResult]:
-        """Advanced result ranking"""
-        # Multi-factor ranking combining similarity, confidence, and match type
+        """Advanced result ranking"""        # Multi-factor ranking combining similarity, confidence, and match type
         def ranking_score(result: VectorSearchResult) -> float:
             base_score = result.similarity_score * 0.7
             confidence_score = result.confidence * 0.2
@@ -487,13 +453,11 @@ class ResultEnhancer:
 
 
 class SearchOptimizer:
-    """
-    Ultra-Advanced Search Optimization Engine
+    """    Ultra-Advanced Search Optimization Engine
     
     Provides intelligent query optimization, caching, and result enhancement
     for maximum vector search performance and relevance.
-    """
-    
+    """    
     def __init__(self, config: VectorConfig):
         self.config = config
         self.query_cache = QueryCache(config.cache_size, config.cache_ttl)
@@ -511,8 +475,7 @@ class SearchOptimizer:
         logger.info("Search Optimizer initialized")
     
     async def initialize(self) -> None:
-        """Initialize search optimizer"""
-        try:
+        """Initialize search optimizer"""        try:
             # Initialize optimization components
             logger.info("Search Optimizer initialized successfully")
             
@@ -522,8 +485,7 @@ class SearchOptimizer:
     
     async def optimize_results(self, results: List[VectorSearchResult], 
                              request: VectorSearchRequest) -> List[VectorSearchResult]:
-        """Optimize search results with caching and enhancement"""
-        try:
+        """Optimize search results with caching and enhancement"""        try:
             start_time = time.time()
             
             # Check cache first
@@ -556,8 +518,7 @@ class SearchOptimizer:
             raise SearchOptimizationError(f"Optimization failed: {str(e)}")
     
     async def optimize_search_request(self, request: VectorSearchRequest) -> VectorSearchRequest:
-        """Optimize search request parameters"""
-        try:
+        """Optimize search request parameters"""        try:
             optimized_request = self.query_optimizer.optimize_search_request(request)
             return optimized_request
             
@@ -567,8 +528,7 @@ class SearchOptimizer:
     
     async def record_query_performance(self, request: VectorSearchRequest, 
                                      execution_time: float, result_count: int) -> None:
-        """Record query performance for optimization learning"""
-        try:
+        """Record query performance for optimization learning"""        try:
             self.query_optimizer.record_performance(request, execution_time, result_count)
             
             # Update metrics
@@ -579,17 +539,14 @@ class SearchOptimizer:
             logger.error(f"Performance recording failed: {e}")
     
     async def get_cache_stats(self) -> Dict[str, Any]:
-        """Get cache performance statistics"""
-        return self.query_cache.get_statistics()
+        """Get cache performance statistics"""        return self.query_cache.get_statistics()
     
     async def clear_cache(self) -> None:
-        """Clear optimization cache"""
-        self.query_cache.clear()
+        """Clear optimization cache"""        self.query_cache.clear()
         logger.info("Search optimization cache cleared")
     
     async def get_optimization_recommendations(self, content_type: str) -> Dict[str, Any]:
-        """Get optimization recommendations for content type"""
-        try:
+        """Get optimization recommendations for content type"""        try:
             # Get historical performance
             historical_performance = self.query_optimizer._get_historical_performance(content_type)
             
@@ -632,8 +589,7 @@ class SearchOptimizer:
     
     def _record_optimization_performance(self, request: VectorSearchRequest, 
                                        optimization_time: float, cache_hit: bool) -> None:
-        """Record optimization performance metrics"""
-        try:
+        """Record optimization performance metrics"""        try:
             # Update cache usage statistics
             total_queries = self.optimization_stats["queries_optimized"] + 1
             current_cache_ratio = self.optimization_stats["cache_usage_ratio"]
@@ -656,8 +612,7 @@ class SearchOptimizer:
             logger.error(f"Error recording optimization performance: {e}")
     
     async def get_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive optimization statistics"""
-        try:
+        """Get comprehensive optimization statistics"""        try:
             cache_stats = await self.get_cache_stats()
             
             return {
@@ -671,8 +626,7 @@ class SearchOptimizer:
             return {}
     
     async def shutdown(self) -> None:
-        """Graceful shutdown of search optimizer"""
-        try:
+        """Graceful shutdown of search optimizer"""        try:
             # Clear cache to free memory
             await self.clear_cache()
             

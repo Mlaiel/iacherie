@@ -1,26 +1,20 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Unit tests for ai_engine.personalization.core module
+"""Unit tests for ai_engine.personalization.core module
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -70,11 +64,8 @@ except ImportError as e:
 
 
 class TestPersonalizationConfig:
-    """Test cases for PersonalizationConfig dataclass"""
-
-    def test_default_initialization(self):
-        """Test PersonalizationConfig with default values"""
-        config = PersonalizationConfig()
+    """Test cases for PersonalizationConfig dataclass"""    def test_default_initialization(self):
+        """Test PersonalizationConfig with default values"""        config = PersonalizationConfig()
         
         assert config.model_type == PersonalizationType.HYBRID
         assert config.embedding_dimension == 512
@@ -96,8 +87,7 @@ class TestPersonalizationConfig:
         assert config.gdpr_compliant is True
 
     def test_custom_initialization(self):
-        """Test PersonalizationConfig with custom values"""
-        config = PersonalizationConfig(
+        """Test PersonalizationConfig with custom values"""        config = PersonalizationConfig(
             model_type=PersonalizationType.COLLABORATIVE_FILTERING,
             embedding_dimension=256,
             num_recommendations=15,
@@ -113,11 +103,8 @@ class TestPersonalizationConfig:
 
 
 class TestUserProfile:
-    """Test cases for UserProfile dataclass"""
-
-    def test_user_profile_initialization(self):
-        """Test UserProfile initialization"""
-        created_time = datetime.utcnow()
+    """Test cases for UserProfile dataclass"""    def test_user_profile_initialization(self):
+        """Test UserProfile initialization"""        created_time = datetime.utcnow()
         profile = UserProfile(
             user_id="test_user_123",
             created_at=created_time,
@@ -149,8 +136,7 @@ class TestUserProfile:
         assert profile.professional_goals == []
 
     def test_user_profile_with_data(self):
-        """Test UserProfile with initial data"""
-        profile = UserProfile(
+        """Test UserProfile with initial data"""        profile = UserProfile(
             user_id="test_user_456",
             created_at=datetime.utcnow(),
             updated_at=datetime.utcnow(),
@@ -173,11 +159,8 @@ class TestUserProfile:
 
 
 class TestContentItem:
-    """Test cases for ContentItem dataclass"""
-
-    def test_content_item_initialization(self):
-        """Test ContentItem initialization"""
-        created_time = datetime.utcnow()
+    """Test cases for ContentItem dataclass"""    def test_content_item_initialization(self):
+        """Test ContentItem initialization"""        created_time = datetime.utcnow()
         content = ContentItem(
             content_id="content_123",
             content_type=ContentType.VIDEO,
@@ -207,11 +190,8 @@ class TestContentItem:
 
 
 class TestPersonalizationEngine:
-    """Test cases for PersonalizationEngine class"""
-
-    def setup_method(self):
-        """Setup test fixtures"""
-        self.config = PersonalizationConfig(
+    """Test cases for PersonalizationEngine class"""    def setup_method(self):
+        """Setup test fixtures"""        self.config = PersonalizationConfig(
             model_type=PersonalizationType.HYBRID,
             num_recommendations=10,
             min_interactions=3
@@ -223,8 +203,7 @@ class TestPersonalizationEngine:
             self.engine = PersonalizationEngine(self.config)
 
     def test_initialization(self):
-        """Test PersonalizationEngine initialization"""
-        assert self.engine.config == self.config
+        """Test PersonalizationEngine initialization"""        assert self.engine.config == self.config
         assert self.engine.logger is not None
         assert "total_recommendations" in self.engine.metrics
         assert "successful_matches" in self.engine.metrics
@@ -233,8 +212,7 @@ class TestPersonalizationEngine:
 
     @pytest.mark.asyncio
     async def test_create_new_profile(self):
-        """Test creating a new user profile"""
-        profile = await self.engine._create_new_profile("new_user_123")
+        """Test creating a new user profile"""        profile = await self.engine._create_new_profile("new_user_123")
         
         assert profile.user_id == "new_user_123"
         assert profile.created_at is not None
@@ -248,8 +226,7 @@ class TestPersonalizationEngine:
 
     @pytest.mark.asyncio
     async def test_get_user_profile_new_user(self):
-        """Test getting profile for new user"""
-        with patch.object(self.engine, '_get_cached_profile', return_value=None):
+        """Test getting profile for new user"""        with patch.object(self.engine, '_get_cached_profile', return_value=None):
             with patch.object(self.engine, '_load_profile_from_db', return_value=None):
                 with patch.object(self.engine, '_cache_profile', return_value=None):
                     profile = await self.engine.get_user_profile("new_user_456")
@@ -259,8 +236,7 @@ class TestPersonalizationEngine:
 
     @pytest.mark.asyncio
     async def test_update_user_profile(self):
-        """Test updating user profile with interaction data"""
-        # Create initial profile
+        """Test updating user profile with interaction data"""        # Create initial profile
         profile = await self.engine._create_new_profile("test_user")
         
         # Mock methods
@@ -292,8 +268,7 @@ class TestPersonalizationEngine:
 
     @pytest.mark.asyncio
     async def test_get_recommendations_invalid_user_id(self):
-        """Test get_recommendations with invalid user ID"""
-        with pytest.raises(PersonalizationError, match="Invalid user ID"):
+        """Test get_recommendations with invalid user ID"""        with pytest.raises(PersonalizationError, match="Invalid user ID"):
             await self.engine.get_recommendations("")
 
         with pytest.raises(PersonalizationError, match="Invalid user ID"):
@@ -304,8 +279,7 @@ class TestPersonalizationEngine:
 
     @pytest.mark.asyncio
     async def test_get_recommendations_valid_user(self):
-        """Test get_recommendations with valid user"""
-        # Create test profile
+        """Test get_recommendations with valid user"""        # Create test profile
         profile = await self.engine._create_new_profile("test_user")
         
         with patch.object(self.engine, 'get_user_profile', return_value=profile):
@@ -334,8 +308,7 @@ class TestPersonalizationEngine:
 
     @pytest.mark.asyncio
     async def test_process_feedback_valid_data(self):
-        """Test processing valid feedback"""
-        # Create test profile
+        """Test processing valid feedback"""        # Create test profile
         profile = await self.engine._create_new_profile("test_user")
         
         with patch.object(self.engine, 'update_user_profile', return_value=profile) as mock_update:
@@ -359,8 +332,7 @@ class TestPersonalizationEngine:
 
     @pytest.mark.asyncio
     async def test_process_feedback_invalid_type(self):
-        """Test processing feedback with invalid type"""
-        with pytest.raises(PersonalizationError, match="Invalid feedback type"):
+        """Test processing feedback with invalid type"""        with pytest.raises(PersonalizationError, match="Invalid feedback type"):
             await self.engine.process_feedback(
                 user_id="test_user",
                 content_id="content_123",
@@ -370,8 +342,7 @@ class TestPersonalizationEngine:
 
     @pytest.mark.asyncio
     async def test_process_feedback_missing_value(self):
-        """Test processing feedback with missing value"""
-        with pytest.raises(PersonalizationError, match="Missing feedback value"):
+        """Test processing feedback with missing value"""        with pytest.raises(PersonalizationError, match="Missing feedback value"):
             await self.engine.process_feedback(
                 user_id="test_user",
                 content_id="content_123",
@@ -380,8 +351,7 @@ class TestPersonalizationEngine:
 
     @pytest.mark.asyncio
     async def test_process_feedback_invalid_value_range(self):
-        """Test processing feedback with invalid value range"""
-        with pytest.raises(PersonalizationError, match="Invalid feedback value"):
+        """Test processing feedback with invalid value range"""        with pytest.raises(PersonalizationError, match="Invalid feedback value"):
             await self.engine.process_feedback(
                 user_id="test_user",
                 content_id="content_123",
@@ -399,8 +369,7 @@ class TestPersonalizationEngine:
 
     @pytest.mark.asyncio
     async def test_process_feedback_with_value_parameter(self):
-        """Test processing feedback using 'value' parameter instead of 'feedback_value'"""
-        profile = await self.engine._create_new_profile("test_user")
+        """Test processing feedback using 'value' parameter instead of 'feedback_value'"""        profile = await self.engine._create_new_profile("test_user")
         
         with patch.object(self.engine, 'update_user_profile', return_value=profile) as mock_update:
             await self.engine.process_feedback(
@@ -417,8 +386,7 @@ class TestPersonalizationEngine:
 
     @pytest.mark.asyncio
     async def test_get_cold_start_recommendations(self):
-        """Test cold start recommendations for new users"""
-        profile = await self.engine._create_new_profile("new_user")
+        """Test cold start recommendations for new users"""        profile = await self.engine._create_new_profile("new_user")
         
         with patch.object(self.engine, '_get_popular_content') as mock_popular:
             mock_popular.return_value = [
@@ -456,8 +424,7 @@ class TestPersonalizationEngine:
 
     @pytest.mark.asyncio
     async def test_apply_diversity_filter(self):
-        """Test diversity filtering of recommendations"""
-        recommendations = [
+        """Test diversity filtering of recommendations"""        recommendations = [
             {'content_id': 'video_1', 'content_type': 'video', 'category': 'entertainment', 'score': 0.9},
             {'content_id': 'video_2', 'content_type': 'video', 'category': 'entertainment', 'score': 0.8},
             {'content_id': 'audio_1', 'content_type': 'audio', 'category': 'educational', 'score': 0.7},
@@ -474,8 +441,7 @@ class TestPersonalizationEngine:
 
     @pytest.mark.asyncio
     async def test_find_collaboration_matches(self):
-        """Test finding collaboration matches"""
-        profile = await self.engine._create_new_profile("collab_user")
+        """Test finding collaboration matches"""        profile = await self.engine._create_new_profile("collab_user")
         profile.collaboration_interests = ["music", "video"]
         profile.skill_level = "advanced"
         
@@ -488,8 +454,7 @@ class TestPersonalizationEngine:
             assert len(matches) == 0  # No partners in mock
 
     def test_profile_to_dict_conversion(self):
-        """Test internal profile serialization methods"""
-        profile = UserProfile(
+        """Test internal profile serialization methods"""        profile = UserProfile(
             user_id="test_user",
             created_at=datetime.utcnow(),
             updated_at=datetime.utcnow(),
@@ -504,17 +469,13 @@ class TestPersonalizationEngine:
 
 
 class TestUserProfileManager:
-    """Test cases for UserProfileManager class"""
-
-    def setup_method(self):
-        """Setup test fixtures"""
-        self.config = PersonalizationConfig()
+    """Test cases for UserProfileManager class"""    def setup_method(self):
+        """Setup test fixtures"""        self.config = PersonalizationConfig()
         self.manager = UserProfileManager(self.config)
 
     @pytest.mark.asyncio
     async def test_create_profile_basic(self):
-        """Test creating basic user profile"""
-        initial_data = {
+        """Test creating basic user profile"""        initial_data = {
             'demographics': {
                 'age_group': 'adult',
                 'gender': 'other',
@@ -540,8 +501,7 @@ class TestUserProfileManager:
 
     @pytest.mark.asyncio
     async def test_create_profile_minimal_data(self):
-        """Test creating profile with minimal data"""
-        profile = await self.manager.create_profile("minimal_user", {})
+        """Test creating profile with minimal data"""        profile = await self.manager.create_profile("minimal_user", {})
         
         assert profile.user_id == "minimal_user"
         assert profile.age_group is None
@@ -549,8 +509,7 @@ class TestUserProfileManager:
 
     @pytest.mark.asyncio
     async def test_validate_profile_valid(self):
-        """Test validating a valid profile"""
-        profile = UserProfile(
+        """Test validating a valid profile"""        profile = UserProfile(
             user_id="valid_user",
             created_at=datetime.utcnow(),
             updated_at=datetime.utcnow(),
@@ -563,8 +522,7 @@ class TestUserProfileManager:
 
     @pytest.mark.asyncio
     async def test_validate_profile_invalid_sophistication(self):
-        """Test validating profile with invalid sophistication value"""
-        profile = UserProfile(
+        """Test validating profile with invalid sophistication value"""        profile = UserProfile(
             user_id="invalid_user",
             created_at=datetime.utcnow(),
             updated_at=datetime.utcnow(),
@@ -577,8 +535,7 @@ class TestUserProfileManager:
 
     @pytest.mark.asyncio
     async def test_validate_profile_missing_required_fields(self):
-        """Test validating profile with missing required fields"""
-        profile = UserProfile(
+        """Test validating profile with missing required fields"""        profile = UserProfile(
             user_id="",  # Empty user_id
             created_at=datetime.utcnow(),
             updated_at=datetime.utcnow()
@@ -589,8 +546,7 @@ class TestUserProfileManager:
 
     @pytest.mark.asyncio
     async def test_optimize_profile(self):
-        """Test profile optimization"""
-        # Create profile with old interactions
+        """Test profile optimization"""        # Create profile with old interactions
         profile = UserProfile(
             user_id="optimize_user",
             created_at=datetime.utcnow(),
@@ -626,17 +582,13 @@ class TestUserProfileManager:
 
 
 class TestContentPersonalizer:
-    """Test cases for ContentPersonalizer class"""
-
-    def setup_method(self):
-        """Setup test fixtures"""
-        self.config = PersonalizationConfig()
+    """Test cases for ContentPersonalizer class"""    def setup_method(self):
+        """Setup test fixtures"""        self.config = PersonalizationConfig()
         self.personalizer = ContentPersonalizer(self.config)
 
     @pytest.mark.asyncio
     async def test_personalize_content_basic(self):
-        """Test basic content personalization"""
-        content = {
+        """Test basic content personalization"""        content = {
             'id': 'test_content',
             'type': 'video',
             'title': 'Test Video',
@@ -663,8 +615,7 @@ class TestContentPersonalizer:
 
     @pytest.mark.asyncio
     async def test_adapt_content_format(self):
-        """Test content format adaptation"""
-        content = {'type': 'video', 'title': 'Test Video'}
+        """Test content format adaptation"""        content = {'type': 'video', 'title': 'Test Video'}
         
         profile = UserProfile(
             user_id="test_user",
@@ -679,8 +630,7 @@ class TestContentPersonalizer:
 
     @pytest.mark.asyncio
     async def test_personalize_presentation_sophisticated_user(self):
-        """Test presentation personalization for sophisticated user"""
-        content = {'type': 'text', 'title': 'Technical Article'}
+        """Test presentation personalization for sophisticated user"""        content = {'type': 'text', 'title': 'Technical Article'}
         
         profile = UserProfile(
             user_id="sophisticated_user",
@@ -699,8 +649,7 @@ class TestContentPersonalizer:
 
     @pytest.mark.asyncio
     async def test_personalize_presentation_beginner_user(self):
-        """Test presentation personalization for beginner user"""
-        content = {'type': 'tutorial', 'title': 'How to Guide'}
+        """Test presentation personalization for beginner user"""        content = {'type': 'tutorial', 'title': 'How to Guide'}
         
         profile = UserProfile(
             user_id="beginner_user",
@@ -716,8 +665,7 @@ class TestContentPersonalizer:
 
     @pytest.mark.asyncio
     async def test_optimize_timing(self):
-        """Test content timing optimization"""
-        content = {'type': 'video', 'title': 'Time-sensitive Content'}
+        """Test content timing optimization"""        content = {'type': 'video', 'title': 'Time-sensitive Content'}
         
         profile = UserProfile(
             user_id="timed_user",
@@ -736,8 +684,7 @@ class TestContentPersonalizer:
 
     @pytest.mark.asyncio
     async def test_calculate_adaptation_score(self):
-        """Test adaptation score calculation"""
-        content = {
+        """Test adaptation score calculation"""        content = {
             'type': 'video',
             'genre': 'music',
             'complexity': 0.6
@@ -759,11 +706,8 @@ class TestContentPersonalizer:
 
 
 class TestEnumTypes:
-    """Test cases for enum types"""
-
-    def test_personalization_type_enum(self):
-        """Test PersonalizationType enum values"""
-        assert PersonalizationType.COLLABORATIVE_FILTERING.value == "collaborative_filtering"
+    """Test cases for enum types"""    def test_personalization_type_enum(self):
+        """Test PersonalizationType enum values"""        assert PersonalizationType.COLLABORATIVE_FILTERING.value == "collaborative_filtering"
         assert PersonalizationType.CONTENT_BASED.value == "content_based"
         assert PersonalizationType.HYBRID.value == "hybrid"
         assert PersonalizationType.DEEP_LEARNING.value == "deep_learning"
@@ -771,8 +715,7 @@ class TestEnumTypes:
         assert PersonalizationType.BEHAVIORAL.value == "behavioral"
 
     def test_content_type_enum(self):
-        """Test ContentType enum values"""
-        assert ContentType.AUDIO.value == "audio"
+        """Test ContentType enum values"""        assert ContentType.AUDIO.value == "audio"
         assert ContentType.VIDEO.value == "video"
         assert ContentType.IMAGE.value == "image"
         assert ContentType.TEXT.value == "text"
@@ -782,8 +725,7 @@ class TestEnumTypes:
         assert ContentType.SOCIAL_POST.value == "social_post"
 
     def test_user_interaction_type_enum(self):
-        """Test UserInteractionType enum values"""
-        assert UserInteractionType.VIEW.value == "view"
+        """Test UserInteractionType enum values"""        assert UserInteractionType.VIEW.value == "view"
         assert UserInteractionType.LIKE.value == "like"
         assert UserInteractionType.SHARE.value == "share"
         assert UserInteractionType.COMMENT.value == "comment"

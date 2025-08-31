@@ -1,5 +1,4 @@
-"""
-Legal Action Automation and Case Management System
+"""Legal Action Automation and Case Management System
 
 Automated legal case management, evidence collection, escalation workflows,
 and litigation support for copyright enforcement.
@@ -7,9 +6,7 @@ and litigation support for copyright enforcement.
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -34,8 +31,7 @@ logger = logging.getLogger(__name__)
 
 
 class CaseStatus(str, Enum):
-    """Legal case status enumeration"""
-    INITIATED = "initiated"
+    """Legal case status enumeration"""    INITIATED = "initiated"
     EVIDENCE_COLLECTION = "evidence_collection"
     LEGAL_REVIEW = "legal_review"
     ESCALATED = "escalated"
@@ -46,8 +42,7 @@ class CaseStatus(str, Enum):
 
 
 class CasePriority(str, Enum):
-    """Case priority levels"""
-    LOW = "low"
+    """Case priority levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -55,8 +50,7 @@ class CasePriority(str, Enum):
 
 
 class EvidenceType(str, Enum):
-    """Types of evidence for legal cases"""
-    SCREENSHOT = "screenshot"
+    """Types of evidence for legal cases"""    SCREENSHOT = "screenshot"
     VIDEO_RECORDING = "video_recording"
     WEBPAGE_ARCHIVE = "webpage_archive"
     METADATA = "metadata"
@@ -68,8 +62,7 @@ class EvidenceType(str, Enum):
 
 @dataclass
 class EvidenceItem:
-    """Single piece of evidence"""
-    evidence_type: EvidenceType
+    """Single piece of evidence"""    evidence_type: EvidenceType
     file_path: str
     description: str
     collection_date: datetime
@@ -80,8 +73,7 @@ class EvidenceItem:
 
 @dataclass
 class LegalCaseRequest:
-    """Legal case creation request"""
-    content_id: str
+    """Legal case creation request"""    content_id: str
     violation_url: str
     platform: str
     copyright_owner: str
@@ -94,8 +86,7 @@ class LegalCaseRequest:
 
 
 class EvidenceCollector:
-    """Advanced evidence collection and preservation system"""
-    
+    """Advanced evidence collection and preservation system"""    
     def __init__(self):
         self.storage = S3Storage()
         self.settings = get_settings()
@@ -106,13 +97,11 @@ class EvidenceCollector:
         content_type: str,
         case_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Collect comprehensive evidence for copyright violation
+        """        Collect comprehensive evidence for copyright violation
         
         Returns:
             Dict containing evidence URLs, metadata, and collection info
-        """
-        try:
+        """        try:
             evidence_package = {
                 "collection_timestamp": datetime.utcnow().isoformat(),
                 "violation_url": violation_url,
@@ -156,8 +145,7 @@ class EvidenceCollector:
         case_id: str,
         collector_id: str
     ) -> bool:
-        """Preserve chain of custody for evidence"""
-        try:
+        """Preserve chain of custody for evidence"""        try:
             # Calculate file hash for integrity
             file_hash = await self._calculate_file_hash(evidence_item.file_path)
             evidence_item.hash_value = file_hash
@@ -190,8 +178,7 @@ class EvidenceCollector:
             return False
     
     async def _collect_screenshots(self, url: str) -> List[EvidenceItem]:
-        """Collect screenshots of violation"""
-        evidence_items = []
+        """Collect screenshots of violation"""        evidence_items = []
         try:
             # Take full page screenshot
             screenshot_path = await self._take_screenshot(url, "fullpage")
@@ -223,8 +210,7 @@ class EvidenceCollector:
         return evidence_items
     
     async def _collect_webpage_archive(self, url: str) -> List[EvidenceItem]:
-        """Collect archived copy of webpage"""
-        evidence_items = []
+        """Collect archived copy of webpage"""        evidence_items = []
         try:
             # Save HTML content
             html_path = await self._save_webpage_html(url)
@@ -256,8 +242,7 @@ class EvidenceCollector:
         return evidence_items
     
     async def _collect_metadata(self, url: str) -> List[EvidenceItem]:
-        """Collect metadata about the violation"""
-        evidence_items = []
+        """Collect metadata about the violation"""        evidence_items = []
         try:
             metadata = await self._extract_page_metadata(url)
             metadata_path = await self._save_metadata_json(metadata, url)
@@ -278,8 +263,7 @@ class EvidenceCollector:
         return evidence_items
     
     async def _collect_network_traces(self, url: str) -> List[EvidenceItem]:
-        """Collect network traces and HTTP headers"""
-        evidence_items = []
+        """Collect network traces and HTTP headers"""        evidence_items = []
         try:
             network_data = await self._capture_network_data(url)
             trace_path = await self._save_network_trace(network_data, url)
@@ -300,24 +284,20 @@ class EvidenceCollector:
         return evidence_items
     
     async def _take_screenshot(self, url: str, view_type: str) -> Optional[str]:
-        """Take screenshot using headless browser"""
-        # Implementation would use Playwright/Selenium
+        """Take screenshot using headless browser"""        # Implementation would use Playwright/Selenium
         # Return path to saved screenshot
         return f"/tmp/screenshot_{hash(url)}_{view_type}.png"
     
     async def _save_webpage_html(self, url: str) -> Optional[str]:
-        """Save complete HTML of webpage"""
-        # Implementation would fetch and save HTML
+        """Save complete HTML of webpage"""        # Implementation would fetch and save HTML
         return f"/tmp/webpage_{hash(url)}.html"
     
     async def _save_warc_archive(self, url: str) -> Optional[str]:
-        """Save WARC archive of webpage"""
-        # Implementation would create WARC archive
+        """Save WARC archive of webpage"""        # Implementation would create WARC archive
         return f"/tmp/archive_{hash(url)}.warc"
     
     async def _extract_page_metadata(self, url: str) -> Dict[str, Any]:
-        """Extract metadata from webpage"""
-        # Implementation would extract metadata
+        """Extract metadata from webpage"""        # Implementation would extract metadata
         return {
             "url": url,
             "title": "",
@@ -327,8 +307,7 @@ class EvidenceCollector:
         }
     
     async def _save_metadata_json(self, metadata: Dict[str, Any], url: str) -> Optional[str]:
-        """Save metadata as JSON file"""
-        path = f"/tmp/metadata_{hash(url)}.json"
+        """Save metadata as JSON file"""        path = f"/tmp/metadata_{hash(url)}.json"
         try:
             with open(path, 'w') as f:
                 json.dump(metadata, f, indent=2)
@@ -337,12 +316,10 @@ class EvidenceCollector:
             return None
     
     async def _capture_network_data(self, url: str) -> Dict[str, Any]:
-        """Capture network data for URL"""
-        return {"url": url, "headers": {}, "requests": []}
+        """Capture network data for URL"""        return {"url": url, "headers": {}, "requests": []}
     
     async def _save_network_trace(self, data: Dict[str, Any], url: str) -> Optional[str]:
-        """Save network trace data"""
-        path = f"/tmp/network_{hash(url)}.json"
+        """Save network trace data"""        path = f"/tmp/network_{hash(url)}.json"
         try:
             with open(path, 'w') as f:
                 json.dump(data, f, indent=2)
@@ -351,16 +328,14 @@ class EvidenceCollector:
             return None
     
     async def _calculate_file_hash(self, file_path: str) -> str:
-        """Calculate SHA-256 hash of file"""
-        try:
+        """Calculate SHA-256 hash of file"""        try:
             with open(file_path, 'rb') as f:
                 return hashlib.sha256(f.read()).hexdigest()
         except Exception:
             return ""
     
     async def _generate_evidence_manifest(self, evidence_package: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate evidence manifest for legal purposes"""
-        return {
+        """Generate evidence manifest for legal purposes"""        return {
             "generated_at": datetime.utcnow().isoformat(),
             "total_items": len(evidence_package["evidence_items"]),
             "collection_method": "automated",
@@ -370,8 +345,7 @@ class EvidenceCollector:
 
 
 class CaseTracker:
-    """Legal case progress tracking and management"""
-    
+    """Legal case progress tracking and management"""    
     def __init__(self):
         self.settings = get_settings()
     
@@ -380,8 +354,7 @@ class CaseTracker:
         request: LegalCaseRequest,
         session: AsyncSession
     ) -> Tuple[bool, str, Optional[str]]:
-        """Create new legal case"""
-        try:
+        """Create new legal case"""        try:
             # Generate case reference
             case_reference = generate_case_reference(
                 request.platform,
@@ -434,8 +407,7 @@ class CaseTracker:
         notes: str,
         session: AsyncSession
     ) -> bool:
-        """Update case status with audit trail"""
-        try:
+        """Update case status with audit trail"""        try:
             # Update case
             await session.execute(
                 update(LegalCase)
@@ -469,8 +441,7 @@ class CaseTracker:
         case_id: str,
         session: AsyncSession
     ) -> List[Dict[str, Any]]:
-        """Get complete timeline of case actions"""
-        try:
+        """Get complete timeline of case actions"""        try:
             result = await session.execute(
                 select(CaseAction)
                 .where(CaseAction.case_id == case_id)
@@ -500,8 +471,7 @@ class CaseTracker:
         escalation_reason: str,
         session: AsyncSession
     ) -> bool:
-        """Escalate case to higher priority"""
-        try:
+        """Escalate case to higher priority"""        try:
             # Get current case
             result = await session.execute(
                 select(LegalCase).where(LegalCase.id == case_id)
@@ -543,8 +513,7 @@ class CaseTracker:
             return False
     
     def _escalate_priority(self, current_priority: str) -> str:
-        """Escalate case priority to next level"""
-        priority_map = {
+        """Escalate case priority to next level"""        priority_map = {
             CasePriority.LOW.value: CasePriority.MEDIUM.value,
             CasePriority.MEDIUM.value: CasePriority.HIGH.value,
             CasePriority.HIGH.value: CasePriority.CRITICAL.value,
@@ -555,8 +524,7 @@ class CaseTracker:
 
 
 class LegalActionManager:
-    """Manages legal actions and workflows"""
-    
+    """Manages legal actions and workflows"""    
     def __init__(self):
         self.case_tracker = CaseTracker()
         self.evidence_collector = EvidenceCollector()
@@ -568,8 +536,7 @@ class LegalActionManager:
         case_request: LegalCaseRequest,
         session: AsyncSession
     ) -> Tuple[bool, str, Optional[str]]:
-        """Initiate complete legal action workflow"""
-        try:
+        """Initiate complete legal action workflow"""        try:
             # Create legal case
             success, message, case_id = await self.case_tracker.create_case(
                 case_request, session
@@ -614,8 +581,7 @@ class LegalActionManager:
         case_id: str,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Process automated case actions"""
-        try:
+        """Process automated case actions"""        try:
             # Get case details
             case = await self._get_case_by_id(case_id, session)
             if not case:
@@ -657,8 +623,7 @@ class LegalActionManager:
         evidence_data: Dict[str, Any],
         session: AsyncSession
     ) -> None:
-        """Store evidence items for case"""
-        for evidence_item in evidence_data.get("evidence_items", []):
+        """Store evidence items for case"""        for evidence_item in evidence_data.get("evidence_items", []):
             case_evidence = CaseEvidence(
                 case_id=case_id,
                 evidence_type=evidence_item.evidence_type.value,
@@ -678,8 +643,7 @@ class LegalActionManager:
         case_request: LegalCaseRequest,
         evidence_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Assess legal merit of case"""
-        assessment = {
+        """Assess legal merit of case"""        assessment = {
             "merit_score": 0.0,
             "strength_factors": [],
             "weakness_factors": [],
@@ -720,8 +684,7 @@ class LegalActionManager:
         assessment: Dict[str, Any],
         session: AsyncSession
     ) -> None:
-        """Update case with legal assessment"""
-        await session.execute(
+        """Update case with legal assessment"""        await session.execute(
             update(LegalCase)
             .where(LegalCase.id == case_id)
             .values(
@@ -736,8 +699,7 @@ class LegalActionManager:
         case_request: LegalCaseRequest,
         assessment: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Determine next actions based on assessment"""
-        actions = []
+        """Determine next actions based on assessment"""        actions = []
         
         # Always start with DMCA
         actions.append({
@@ -768,8 +730,7 @@ class LegalActionManager:
         actions: List[Dict[str, Any]],
         session: AsyncSession
     ) -> None:
-        """Schedule automatic case actions"""
-        for action_data in actions:
+        """Schedule automatic case actions"""        for action_data in actions:
             action = CaseAction(
                 case_id=case_id,
                 action_type=action_data["action_type"],
@@ -784,23 +745,20 @@ class LegalActionManager:
         await session.commit()
     
     async def _get_case_by_id(self, case_id: str, session: AsyncSession) -> Optional[LegalCase]:
-        """Get case by ID"""
-        result = await session.execute(
+        """Get case by ID"""        result = await session.execute(
             select(LegalCase).where(LegalCase.id == case_id)
         )
         return result.scalar_one_or_none()
     
     async def _auto_file_dmca(self, case: LegalCase) -> Dict[str, Any]:
-        """Automatically file DMCA notice"""
-        return {
+        """Automatically file DMCA notice"""        return {
             "action": "dmca_filed",
             "success": True,
             "details": "DMCA notice automatically generated and submitted"
         }
     
     async def _check_escalation_triggers(self, case: LegalCase) -> Dict[str, Any]:
-        """Check if case should be escalated"""
-        triggers = {
+        """Check if case should be escalated"""        triggers = {
             "should_escalate": False,
             "reason": ""
         }
@@ -819,8 +777,7 @@ class LegalActionManager:
         return triggers
     
     async def _generate_case_recommendations(self, case: LegalCase) -> List[str]:
-        """Generate recommendations for case"""
-        recommendations = []
+        """Generate recommendations for case"""        recommendations = []
         
         if case.status == CaseStatus.INITIATED.value:
             recommendations.append("File DMCA notice immediately")

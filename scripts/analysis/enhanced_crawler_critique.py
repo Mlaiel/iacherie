@@ -1,15 +1,12 @@
 #!/usr/bin/env python3
-"""
-Enhanced Crawler Verification Summary
+"""Enhanced Crawler Verification Summary
 =====================================
 
 Comprehensive crawler verification combining static analysis with implementation validation.
 Addresses the requirement: "Identifier crawlers avec implémentation réelle vs stub - vérifier fonctionnalité"
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-
-import os
+"""import os
 import ast
 import re
 import json
@@ -18,14 +15,12 @@ from typing import Dict, List, Any, Optional
 from datetime import datetime
 
 class CrawlerCritique:
-    """Enhanced crawler verification with implementation and functionality analysis."""
-    
+    """Enhanced crawler verification with implementation and functionality analysis."""    
     def __init__(self, project_root: str = "."):
         self.project_root = Path(project_root)
         
     def analyze_implementation_quality(self, file_path: Path) -> Dict[str, Any]:
-        """Analyze the quality and completeness of a crawler implementation."""
-        try:
+        """Analyze the quality and completeness of a crawler implementation."""        try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
                 
@@ -82,8 +77,7 @@ class CrawlerCritique:
             }
     
     def _count_real_indicators(self, content: str) -> int:
-        """Count indicators of real implementation."""
-        indicators = [
+        """Count indicators of real implementation."""        indicators = [
             'aiohttp', 'requests', 'urllib', 'httpx',
             'async def', 'await ', 
             '.get(', '.post(', '.put(', '.delete(',
@@ -100,8 +94,7 @@ class CrawlerCritique:
         return sum(1 for indicator in indicators if indicator in content.lower())
     
     def _count_stub_indicators(self, content: str) -> int:
-        """Count indicators of stub implementation."""
-        indicators = [
+        """Count indicators of stub implementation."""        indicators = [
             r'^\s*pass\s*$',
             r'^\s*\.\.\.\s*$', 
             r'raise NotImplementedError',
@@ -119,13 +112,11 @@ class CrawlerCritique:
         return count
     
     def _has_type_hints(self, content: str) -> bool:
-        """Check if the file has comprehensive type hints."""
-        type_patterns = ['List[', 'Dict[', 'Optional[', 'Union[', 'AsyncGenerator[', '-> ']
+        """Check if the file has comprehensive type hints."""        type_patterns = ['List[', 'Dict[', 'Optional[', 'Union[', 'AsyncGenerator[', '-> ']
         return sum(1 for pattern in type_patterns if pattern in content) >= 3
     
     def _analyze_api_integration(self, content: str) -> Dict[str, Any]:
-        """Analyze API integration capabilities."""
-        api_libraries = ['aiohttp', 'requests', 'urllib', 'httpx']
+        """Analyze API integration capabilities."""        api_libraries = ['aiohttp', 'requests', 'urllib', 'httpx']
         platform_apis = ['spotipy', 'googleapiclient', 'selenium', 'instagram']
         
         has_api_lib = any(lib in content for lib in api_libraries)
@@ -142,8 +133,7 @@ class CrawlerCritique:
         }
     
     def _analyze_error_handling(self, content: str) -> Dict[str, Any]:
-        """Analyze error handling implementation."""
-        try_count = content.count('try:')
+        """Analyze error handling implementation."""        try_count = content.count('try:')
         except_count = content.count('except')
         logging_count = content.count('logging') + content.count('logger')
         custom_exceptions = content.count('Error') + content.count('Exception')
@@ -161,8 +151,7 @@ class CrawlerCritique:
     def _calculate_implementation_score(self, real_indicators: int, stub_indicators: int, 
                                       dataclass_count: int, type_hints: bool,
                                       api_integration: Dict, error_handling: Dict) -> int:
-        """Calculate overall implementation quality score (0-100)."""
-        
+        """Calculate overall implementation quality score (0-100)."""        
         # Base score from real vs stub indicators
         indicator_score = min(real_indicators * 3, 50) - stub_indicators * 10
         
@@ -180,8 +169,7 @@ class CrawlerCritique:
         return max(0, min(100, int(total_score)))
     
     def _classify_implementation(self, score: int, stub_indicators: int) -> str:
-        """Classify implementation type based on score and indicators."""
-        if stub_indicators > 5:
+        """Classify implementation type based on score and indicators."""        if stub_indicators > 5:
             return "stub"
         elif score >= 80:
             return "professional"
@@ -193,8 +181,7 @@ class CrawlerCritique:
             return "incomplete"
     
     def verify_priority_crawlers(self) -> Dict[str, Any]:
-        """Verify the three priority crawlers specified in the requirement."""
-        priority_crawlers = {
+        """Verify the three priority crawlers specified in the requirement."""        priority_crawlers = {
             "spotify": "spotify_crawler.py",
             "youtube": "youtube_crawler.py", 
             "instagram": "instagram_crawler.py"
@@ -230,8 +217,7 @@ class CrawlerCritique:
         return results
     
     def generate_critique_report(self) -> Dict[str, Any]:
-        """Generate comprehensive critique report."""
-        priority_results = self.verify_priority_crawlers()
+        """Generate comprehensive critique report."""        priority_results = self.verify_priority_crawlers()
         
         # Calculate summary statistics
         verified_count = sum(1 for r in priority_results.values() 
@@ -267,8 +253,7 @@ class CrawlerCritique:
         }
     
     def _generate_recommendations(self, results: Dict[str, Any]) -> List[str]:
-        """Generate actionable recommendations based on analysis."""
-        recommendations = []
+        """Generate actionable recommendations based on analysis."""        recommendations = []
         
         for platform, analysis in results.items():
             if analysis.get("classification") == "missing":
@@ -285,8 +270,7 @@ class CrawlerCritique:
         return recommendations
     
     def print_critique_summary(self, report: Dict[str, Any]):
-        """Print human-readable critique summary."""
-        print("\n🔍 CRAWLER CRITIQUE - IMPLEMENTATION VS STUB VERIFICATION")
+        """Print human-readable critique summary."""        print("\n🔍 CRAWLER CRITIQUE - IMPLEMENTATION VS STUB VERIFICATION")
         print("=" * 65)
         print(f"Requirement: {report['requirement']}")
         print(f"Status: {report['overall_status']}")
@@ -322,8 +306,7 @@ class CrawlerCritique:
             print(f"   {rec}")
 
 def main():
-    """Main execution function."""
-    print("🔍 ENHANCED CRAWLER VERIFICATION - IMPLEMENTATION vs STUB")
+    """Main execution function."""    print("🔍 ENHANCED CRAWLER VERIFICATION - IMPLEMENTATION vs STUB")
     print("=" * 60)
     
     critique = CrawlerCritique()

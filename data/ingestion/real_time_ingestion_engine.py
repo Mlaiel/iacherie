@@ -1,5 +1,4 @@
-"""
-Real-Time Content Ingestion Engine
+"""Real-Time Content Ingestion Engine
 =================================
 
 Enterprise-grade real-time content ingestion system for high-throughput streaming
@@ -23,9 +22,7 @@ PROJECT TEAM SPECIALTIES:
 - Audio/Video Specialist: Multimedia processing and codec optimization
 - Microservices Architect: Distributed systems and service orchestration
 - IA Prompt Engineer: AI model fine-tuning and content analysis
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import time
@@ -58,8 +55,7 @@ from .content_ingestion_manager import (
 
 
 class StreamingMode(Enum):
-    """Real-time streaming modes"""
-    LIVE_UPLOAD = "live_upload"
+    """Real-time streaming modes"""    LIVE_UPLOAD = "live_upload"
     PROGRESSIVE_UPLOAD = "progressive_upload"
     CHUNKED_TRANSFER = "chunked_transfer"
     STREAMING_ANALYSIS = "streaming_analysis"
@@ -68,8 +64,7 @@ class StreamingMode(Enum):
 
 
 class StreamingQuality(Enum):
-    """Streaming quality levels"""
-    DRAFT = "draft"
+    """Streaming quality levels"""    DRAFT = "draft"
     STANDARD = "standard"
     HIGH = "high"
     ULTRA = "ultra"
@@ -77,8 +72,7 @@ class StreamingQuality(Enum):
 
 
 class StreamingPriority(Enum):
-    """Streaming priority levels"""
-    LOW = "low"
+    """Streaming priority levels"""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     CRITICAL = "critical"
@@ -87,8 +81,7 @@ class StreamingPriority(Enum):
 
 @dataclass
 class StreamingSession:
-    """Real-time streaming session information"""
-    session_id: str
+    """Real-time streaming session information"""    session_id: str
     user_id: str
     content_type: ContentType
     mode: StreamingMode
@@ -113,8 +106,7 @@ class StreamingSession:
 
 @dataclass
 class StreamingChunk:
-    """Streaming content chunk"""
-    chunk_id: str
+    """Streaming content chunk"""    chunk_id: str
     session_id: str
     sequence_number: int
     data: bytes
@@ -127,8 +119,7 @@ class StreamingChunk:
 
 @dataclass
 class StreamingResult:
-    """Real-time processing result"""
-    session_id: str
+    """Real-time processing result"""    session_id: str
     chunk_id: str
     success: bool
     processing_time_ms: float
@@ -141,26 +132,22 @@ class StreamingResult:
 
 
 class RealTimeIngestionEngine:
-    """
-    Enterprise real-time content ingestion engine for IA Influencer Agent platform.
+    """    Enterprise real-time content ingestion engine for IA Influencer Agent platform.
     
     Provides high-performance streaming content ingestion with WebSocket support,
     real-time AI analysis, progressive upload handling, and event-driven processing
     for live content creation and streaming scenarios.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, redis_client: Redis,
                  content_manager: ContentIngestionManager, auth_manager: AuthManager):
-        """
-        Initialize RealTimeIngestionEngine.
+        """        Initialize RealTimeIngestionEngine.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for session management
             content_manager: Content ingestion manager
             auth_manager: Authentication manager
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.redis = redis_client
         self.content_manager = content_manager
         self.auth_manager = auth_manager
@@ -206,8 +193,7 @@ class RealTimeIngestionEngine:
         self.session_locks = weakref.WeakValueDictionary()
         
     async def start_websocket_server(self):
-        """Start WebSocket server for real-time ingestion"""
-        try:
+        """Start WebSocket server for real-time ingestion"""        try:
             self.logger.info(f"Starting WebSocket server on {self.websocket_host}:{self.websocket_port}")
             
             # Initialize Kafka if configured
@@ -236,8 +222,7 @@ class RealTimeIngestionEngine:
             raise StreamingError(f"WebSocket server startup failed: {str(e)}")
     
     async def _handle_websocket_connection(self, websocket: WebSocketServerProtocol, path: str):
-        """Handle individual WebSocket connection"""
-        session_id = None
+        """Handle individual WebSocket connection"""        session_id = None
         user_id = None
         
         try:
@@ -277,8 +262,7 @@ class RealTimeIngestionEngine:
                 await self._cleanup_streaming_session(session_id)
     
     async def _authenticate_websocket(self, websocket: WebSocketServerProtocol) -> Dict[str, Any]:
-        """Authenticate WebSocket connection"""
-        try:
+        """Authenticate WebSocket connection"""        try:
             # Wait for authentication message
             auth_message = await asyncio.wait_for(websocket.recv(), timeout=10.0)
             auth_data = json.loads(auth_message)
@@ -322,8 +306,7 @@ class RealTimeIngestionEngine:
     
     async def _initialize_streaming_session(self, websocket: WebSocketServerProtocol, 
                                           user_id: str, path: str) -> Optional[str]:
-        """Initialize new streaming session"""
-        try:
+        """Initialize new streaming session"""        try:
             # Check concurrent session limits
             user_sessions = [s for s in self.active_sessions.values() if s.user_id == user_id]
             if len(user_sessions) >= 5:  # Max 5 sessions per user
@@ -406,8 +389,7 @@ class RealTimeIngestionEngine:
             return None
     
     async def _process_streaming_message(self, session_id: str, message: Union[str, bytes]):
-        """Process incoming streaming message"""
-        session = self.active_sessions.get(session_id)
+        """Process incoming streaming message"""        session = self.active_sessions.get(session_id)
         if not session:
             return
         
@@ -434,8 +416,7 @@ class RealTimeIngestionEngine:
             await self._send_error_response(session_id, f"Message processing failed: {str(e)}")
     
     async def _handle_control_message(self, session: StreamingSession, data: Dict[str, Any]):
-        """Handle JSON control messages"""
-        message_type = data.get('type')
+        """Handle JSON control messages"""        message_type = data.get('type')
         
         if message_type == 'chunk_metadata':
             # Handle chunk metadata
@@ -473,8 +454,7 @@ class RealTimeIngestionEngine:
             await self._send_error_response(session.session_id, f"Unknown message type: {message_type}")
     
     async def _handle_content_chunk(self, session: StreamingSession, chunk_data: bytes):
-        """Handle binary content chunk"""
-        try:
+        """Handle binary content chunk"""        try:
             # Create chunk object
             chunk = StreamingChunk(
                 chunk_id=str(uuid.uuid4()),
@@ -528,8 +508,7 @@ class RealTimeIngestionEngine:
             await self._send_error_response(session.session_id, f"Chunk processing failed: {str(e)}")
     
     async def _process_live_upload_chunk(self, session: StreamingSession, chunk: StreamingChunk):
-        """Process chunk for live upload mode"""
-        # Store chunk temporarily
+        """Process chunk for live upload mode"""        # Store chunk temporarily
         chunk_path = await self._store_temporary_chunk(session, chunk)
         
         # Perform real-time quality analysis if enabled
@@ -545,8 +524,7 @@ class RealTimeIngestionEngine:
             })
     
     async def _process_progressive_chunk(self, session: StreamingSession, chunk: StreamingChunk):
-        """Process chunk for progressive upload mode"""
-        # Accumulate chunks for batch processing
+        """Process chunk for progressive upload mode"""        # Accumulate chunks for batch processing
         await self._accumulate_progressive_chunk(session, chunk)
         
         # Check if we should trigger intermediate processing
@@ -554,8 +532,7 @@ class RealTimeIngestionEngine:
             await self._process_accumulated_chunks(session)
     
     async def _process_analysis_chunk(self, session: StreamingSession, chunk: StreamingChunk):
-        """Process chunk for streaming analysis mode"""
-        # Perform immediate AI analysis
+        """Process chunk for streaming analysis mode"""        # Perform immediate AI analysis
         analysis_result = await self._perform_streaming_analysis(session, chunk)
         
         # Send analysis results
@@ -569,8 +546,7 @@ class RealTimeIngestionEngine:
         })
     
     async def _process_transcription_chunk(self, session: StreamingSession, chunk: StreamingChunk):
-        """Process chunk for live transcription mode"""
-        if session.content_type != ContentType.AUDIO:
+        """Process chunk for live transcription mode"""        if session.content_type != ContentType.AUDIO:
             return
         
         # Perform real-time transcription
@@ -587,8 +563,7 @@ class RealTimeIngestionEngine:
         })
     
     async def _process_realtime_chunk(self, session: StreamingSession, chunk: StreamingChunk):
-        """Process chunk for real-time processing mode"""
-        # Perform comprehensive real-time processing
+        """Process chunk for real-time processing mode"""        # Perform comprehensive real-time processing
         processing_result = await self._perform_realtime_processing(session, chunk)
         
         # Send processing results
@@ -603,8 +578,7 @@ class RealTimeIngestionEngine:
     
     # Additional helper methods...
     async def _send_session_response(self, session_id: str, data: Dict[str, Any]):
-        """Send response to session WebSocket"""
-        session = self.active_sessions.get(session_id)
+        """Send response to session WebSocket"""        session = self.active_sessions.get(session_id)
         if session and session.websocket:
             try:
                 await session.websocket.send(json.dumps(data))
@@ -612,8 +586,7 @@ class RealTimeIngestionEngine:
                 self.logger.error(f"Failed to send response to session {session_id}: {str(e)}")
     
     async def _send_error_response(self, session_id: str, error_message: str):
-        """Send error response to session"""
-        await self._send_session_response(session_id, {
+        """Send error response to session"""        await self._send_session_response(session_id, {
             'type': 'error',
             'error': error_message,
             'session_id': session_id,
@@ -621,8 +594,7 @@ class RealTimeIngestionEngine:
         })
     
     async def _trigger_event(self, event_name: str, **kwargs):
-        """Trigger event handlers"""
-        handlers = self.event_handlers.get(event_name, [])
+        """Trigger event handlers"""        handlers = self.event_handlers.get(event_name, [])
         for handler in handlers:
             try:
                 if asyncio.iscoroutinefunction(handler):
@@ -633,22 +605,19 @@ class RealTimeIngestionEngine:
                 self.logger.error(f"Event handler failed for {event_name}: {str(e)}")
     
     def add_event_handler(self, event_name: str, handler: Callable):
-        """Add event handler"""
-        if event_name not in self.event_handlers:
+        """Add event handler"""        if event_name not in self.event_handlers:
             self.event_handlers[event_name] = []
         self.event_handlers[event_name].append(handler)
     
     def remove_event_handler(self, event_name: str, handler: Callable):
-        """Remove event handler"""
-        if event_name in self.event_handlers:
+        """Remove event handler"""        if event_name in self.event_handlers:
             try:
                 self.event_handlers[event_name].remove(handler)
             except ValueError:
                 pass
     
     async def get_active_sessions(self, user_id: Optional[str] = None) -> List[Dict[str, Any]]:
-        """Get list of active sessions"""
-        sessions = []
+        """Get list of active sessions"""        sessions = []
         for session in self.active_sessions.values():
             if user_id is None or session.user_id == user_id:
                 sessions.append({
@@ -666,8 +635,7 @@ class RealTimeIngestionEngine:
         return sessions
     
     async def get_session_metrics(self, session_id: str) -> Optional[Dict[str, Any]]:
-        """Get detailed session metrics"""
-        session = self.active_sessions.get(session_id)
+        """Get detailed session metrics"""        session = self.active_sessions.get(session_id)
         if not session:
             return None
         
@@ -695,32 +663,25 @@ class RealTimeIngestionEngine:
     
     # Placeholder implementations for specialized processing
     async def _store_session_state(self, session: StreamingSession):
-        """Store session state in Redis"""
-        pass
+        """Store session state in Redis"""        pass
     
     async def _store_temporary_chunk(self, session: StreamingSession, chunk: StreamingChunk) -> str:
-        """Store chunk temporarily for processing"""
-        pass
+        """Store chunk temporarily for processing"""        pass
     
     async def _analyze_chunk_quality(self, session: StreamingSession, chunk: StreamingChunk, chunk_path: str) -> Dict[str, Any]:
-        """Analyze chunk quality in real-time"""
-        return {'quality_score': 0.8}
+        """Analyze chunk quality in real-time"""        return {'quality_score': 0.8}
     
     async def _perform_streaming_analysis(self, session: StreamingSession, chunk: StreamingChunk) -> Dict[str, Any]:
-        """Perform real-time streaming analysis"""
-        return {'analysis': 'placeholder'}
+        """Perform real-time streaming analysis"""        return {'analysis': 'placeholder'}
     
     async def _transcribe_audio_chunk(self, session: StreamingSession, chunk: StreamingChunk) -> Dict[str, Any]:
-        """Transcribe audio chunk in real-time"""
-        return {'text': 'placeholder', 'confidence': 0.9}
+        """Transcribe audio chunk in real-time"""        return {'text': 'placeholder', 'confidence': 0.9}
     
     async def _perform_realtime_processing(self, session: StreamingSession, chunk: StreamingChunk) -> Dict[str, Any]:
-        """Perform comprehensive real-time processing"""
-        return {'processing_result': 'placeholder'}
+        """Perform comprehensive real-time processing"""        return {'processing_result': 'placeholder'}
     
     async def _session_cleanup_loop(self):
-        """Background task for session cleanup"""
-        while True:
+        """Background task for session cleanup"""        while True:
             try:
                 await asyncio.sleep(self.session_cleanup_interval)
                 await self._cleanup_inactive_sessions()
@@ -728,8 +689,7 @@ class RealTimeIngestionEngine:
                 self.logger.error(f"Session cleanup error: {str(e)}")
     
     async def _cleanup_inactive_sessions(self):
-        """Cleanup inactive sessions"""
-        current_time = datetime.now(timezone.utc)
+        """Cleanup inactive sessions"""        current_time = datetime.now(timezone.utc)
         sessions_to_remove = []
         
         for session_id, session in self.active_sessions.items():
@@ -745,8 +705,7 @@ class RealTimeIngestionEngine:
             await self._cleanup_streaming_session(session_id)
     
     async def _cleanup_streaming_session(self, session_id: str):
-        """Cleanup streaming session"""
-        session = self.active_sessions.get(session_id)
+        """Cleanup streaming session"""        session = self.active_sessions.get(session_id)
         if session:
             try:
                 # Close WebSocket if still open
@@ -765,8 +724,7 @@ class RealTimeIngestionEngine:
                 self.logger.error(f"Session cleanup error for {session_id}: {str(e)}")
     
     async def _initialize_kafka(self):
-        """Initialize Kafka producer/consumer if configured"""
-        if self.settings.kafka_enabled:
+        """Initialize Kafka producer/consumer if configured"""        if self.settings.kafka_enabled:
             try:
                 self.kafka_producer = AIOKafkaProducer(
                     bootstrap_servers=self.settings.kafka_bootstrap_servers,
@@ -778,8 +736,7 @@ class RealTimeIngestionEngine:
                 self.logger.warning(f"Kafka initialization failed: {str(e)}")
     
     async def shutdown(self):
-        """Shutdown streaming engine gracefully"""
-        try:
+        """Shutdown streaming engine gracefully"""        try:
             self.logger.info("Shutting down real-time ingestion engine")
             
             # Close all active sessions

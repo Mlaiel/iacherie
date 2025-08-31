@@ -1,14 +1,11 @@
-"""
-Team Coordination Database Module
+"""Team Coordination Database Module
 
 Real-time team coordination system for collaborative content creation.
 Handles communication, synchronization, and workflow orchestration.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices
-"""
-
-from typing import List, Dict, Any, Optional, Union, Tuple, Set
+"""from typing import List, Dict, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timedelta
 from enum import Enum
 import json
@@ -30,8 +27,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class TeamRole(Enum):
-    """Team role enumeration"""
-    PROJECT_LEAD = "project_lead"
+    """Team role enumeration"""    PROJECT_LEAD = "project_lead"
     CREATIVE_DIRECTOR = "creative_director"
     CONTENT_CREATOR = "content_creator"
     DESIGNER = "designer"
@@ -41,8 +37,7 @@ class TeamRole(Enum):
     OBSERVER = "observer"
 
 class CommunicationChannel(Enum):
-    """Communication channel enumeration"""
-    PROJECT_CHAT = "project_chat"
+    """Communication channel enumeration"""    PROJECT_CHAT = "project_chat"
     TASK_DISCUSSION = "task_discussion"
     DESIGN_REVIEW = "design_review"
     GENERAL_UPDATE = "general_update"
@@ -50,8 +45,7 @@ class CommunicationChannel(Enum):
     MILESTONE_ALERT = "milestone_alert"
 
 class SynchronizationEvent(Enum):
-    """Synchronization event types"""
-    CONTENT_UPDATE = "content_update"
+    """Synchronization event types"""    CONTENT_UPDATE = "content_update"
     TASK_STATUS_CHANGE = "task_status_change"
     MILESTONE_REACHED = "milestone_reached"
     TEAM_MEMBER_JOIN = "team_member_join"
@@ -60,11 +54,9 @@ class SynchronizationEvent(Enum):
     APPROVAL_REQUESTED = "approval_requested"
 
 class TeamMember(Base):
-    """
-    Team member model with roles, permissions, and activity tracking.
+    """    Team member model with roles, permissions, and activity tracking.
     Manages individual team member participation in projects.
-    """
-    __tablename__ = 'team_members'
+    """    __tablename__ = 'team_members'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -127,11 +119,9 @@ class TeamMember(Base):
     )
 
 class TeamCommunication(Base):
-    """
-    Team communication and messaging system.
+    """    Team communication and messaging system.
     Handles real-time messaging, announcements, and notifications.
-    """
-    __tablename__ = 'team_communications'
+    """    __tablename__ = 'team_communications'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -196,11 +186,9 @@ class TeamCommunication(Base):
     )
 
 class WorkflowState(Base):
-    """
-    Workflow state management for team coordination.
+    """    Workflow state management for team coordination.
     Tracks project and task states across the team.
-    """
-    __tablename__ = 'workflow_states'
+    """    __tablename__ = 'workflow_states'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -243,11 +231,9 @@ class WorkflowState(Base):
     )
 
 class RealTimeSession(Base):
-    """
-    Real-time collaboration session tracking.
+    """    Real-time collaboration session tracking.
     Manages active collaboration sessions and presence.
-    """
-    __tablename__ = 'realtime_sessions'
+    """    __tablename__ = 'realtime_sessions'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -300,8 +286,7 @@ class RealTimeSession(Base):
 
 @dataclass
 class TeamInviteRequest:
-    """Data class for team invitation requests"""
-    project_id: str
+    """Data class for team invitation requests"""    project_id: str
     invited_user_id: str
     invited_by: str
     team_role: TeamRole
@@ -311,8 +296,7 @@ class TeamInviteRequest:
 
 @dataclass
 class CommunicationMessage:
-    """Data class for team communication messages"""
-    project_id: str
+    """Data class for team communication messages"""    project_id: str
     sender_id: str
     channel: CommunicationChannel
     content: str
@@ -322,11 +306,9 @@ class CommunicationMessage:
     attachments: List[Dict[str, Any]] = None
 
 class TeamCoordinationEngine:
-    """
-    Enterprise team coordination engine with real-time features.
+    """    Enterprise team coordination engine with real-time features.
     Handles team management, communication, and workflow synchronization.
-    """
-    
+    """    
     def __init__(self, db_session, redis_client: aioredis.Redis = None, websocket_manager = None):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -339,16 +321,14 @@ class TeamCoordinationEngine:
         self.workflow_channel = "workflow_updates"
     
     async def invite_team_member(self, request: TeamInviteRequest) -> Optional[TeamMember]:
-        """
-        Invite a new team member to the project.
+        """        Invite a new team member to the project.
         
         Args:
             request: Team invitation request
             
         Returns:
             Created team member instance
-        """
-        try:
+        """        try:
             # Check if user is already a team member
             existing_member = await self.db_session.query(TeamMember)\
                 .filter(
@@ -404,16 +384,14 @@ class TeamCoordinationEngine:
             raise
     
     async def send_team_message(self, message: CommunicationMessage) -> Optional[TeamCommunication]:
-        """
-        Send message to team with real-time delivery.
+        """        Send message to team with real-time delivery.
         
         Args:
             message: Communication message data
             
         Returns:
             Created communication instance
-        """
-        try:
+        """        try:
             # Generate message ID
             message_id = self._generate_message_id(message.project_id)
             
@@ -460,8 +438,7 @@ class TeamCoordinationEngine:
         session_type: str = 'collaboration',
         activity: str = 'general'
     ) -> Optional[RealTimeSession]:
-        """
-        Start a real-time collaboration session.
+        """        Start a real-time collaboration session.
         
         Args:
             project_id: Project identifier
@@ -471,8 +448,7 @@ class TeamCoordinationEngine:
             
         Returns:
             Created session instance
-        """
-        try:
+        """        try:
             # End any existing active sessions for this user/project
             await self._end_user_sessions(project_id, user_id)
             
@@ -524,8 +500,7 @@ class TeamCoordinationEngine:
         changed_by: str,
         change_reason: str = None
     ) -> Optional[WorkflowState]:
-        """
-        Update workflow state with team synchronization.
+        """        Update workflow state with team synchronization.
         
         Args:
             project_id: Project identifier
@@ -537,8 +512,7 @@ class TeamCoordinationEngine:
             
         Returns:
             Updated workflow state instance
-        """
-        try:
+        """        try:
             # Get current workflow state
             workflow_state = await self.db_session.query(WorkflowState)\
                 .filter(
@@ -601,16 +575,14 @@ class TeamCoordinationEngine:
             raise
     
     async def get_team_presence(self, project_id: str) -> Dict[str, Any]:
-        """
-        Get real-time team presence information.
+        """        Get real-time team presence information.
         
         Args:
             project_id: Project identifier
             
         Returns:
             Team presence data
-        """
-        try:
+        """        try:
             # Get active sessions
             active_sessions = await self.db_session.query(RealTimeSession)\
                 .filter(
@@ -667,8 +639,7 @@ class TeamCoordinationEngine:
         limit: int = 50,
         offset: int = 0
     ) -> List[Dict[str, Any]]:
-        """
-        Get team activity feed for project dashboard.
+        """        Get team activity feed for project dashboard.
         
         Args:
             project_id: Project identifier
@@ -677,8 +648,7 @@ class TeamCoordinationEngine:
             
         Returns:
             List of activity items
-        """
-        try:
+        """        try:
             # Get recent communications
             communications = await self.db_session.query(TeamCommunication)\
                 .filter(TeamCommunication.project_id == uuid.UUID(project_id))\
@@ -736,16 +706,14 @@ class TeamCoordinationEngine:
             return []
     
     async def get_team_performance_metrics(self, project_id: str) -> Dict[str, Any]:
-        """
-        Get comprehensive team performance metrics.
+        """        Get comprehensive team performance metrics.
         
         Args:
             project_id: Project identifier
             
         Returns:
             Team performance metrics
-        """
-        try:
+        """        try:
             # Get team members
             team_members = await self.db_session.query(TeamMember)\
                 .filter(
@@ -806,32 +774,27 @@ class TeamCoordinationEngine:
     # Private helper methods
     
     def _generate_member_id(self, project_id: str) -> str:
-        """Generate unique team member identifier"""
-        timestamp = datetime.utcnow().strftime('%Y%m%d%H%M')
+        """Generate unique team member identifier"""        timestamp = datetime.utcnow().strftime('%Y%m%d%H%M')
         random_suffix = str(uuid.uuid4())[:8].upper()
         return f"MEMBER-{timestamp}-{random_suffix}"
     
     def _generate_message_id(self, project_id: str) -> str:
-        """Generate unique message identifier"""
-        timestamp = datetime.utcnow().strftime('%Y%m%d%H%M%S')
+        """Generate unique message identifier"""        timestamp = datetime.utcnow().strftime('%Y%m%d%H%M%S')
         random_suffix = str(uuid.uuid4())[:8].upper()
         return f"MSG-{timestamp}-{random_suffix}"
     
     def _generate_session_id(self, project_id: str, user_id: str) -> str:
-        """Generate unique session identifier"""
-        timestamp = datetime.utcnow().strftime('%Y%m%d%H%M%S')
+        """Generate unique session identifier"""        timestamp = datetime.utcnow().strftime('%Y%m%d%H%M%S')
         user_short = str(user_id)[:8]
         return f"SESSION-{timestamp}-{user_short}"
     
     def _generate_workflow_state_id(self, project_id: str, entity_type: str) -> str:
-        """Generate unique workflow state identifier"""
-        timestamp = datetime.utcnow().strftime('%Y%m%d%H%M')
+        """Generate unique workflow state identifier"""        timestamp = datetime.utcnow().strftime('%Y%m%d%H%M')
         type_code = entity_type.upper()[:4]
         return f"WORKFLOW-{type_code}-{timestamp}-{str(uuid.uuid4())[:8]}"
     
     def _default_role_permissions(self, role: TeamRole) -> Dict[str, Any]:
-        """Get default permissions for team role"""
-        permissions = {
+        """Get default permissions for team role"""        permissions = {
             TeamRole.PROJECT_LEAD: {
                 'can_manage_team': True,
                 'can_manage_tasks': True,
@@ -858,8 +821,7 @@ class TeamCoordinationEngine:
         return permissions.get(role, permissions[TeamRole.COLLABORATOR])
     
     def _default_notification_preferences(self) -> Dict[str, Any]:
-        """Default notification preferences"""
-        return {
+        """Default notification preferences"""        return {
             'email_notifications': True,
             'push_notifications': True,
             'in_app_notifications': True,
@@ -873,8 +835,7 @@ class TeamCoordinationEngine:
         }
     
     def _default_availability_schedule(self) -> Dict[str, Any]:
-        """Default availability schedule"""
-        return {
+        """Default availability schedule"""        return {
             'monday': ['09:00', '17:00'],
             'tuesday': ['09:00', '17:00'],
             'wednesday': ['09:00', '17:00'],
@@ -885,8 +846,7 @@ class TeamCoordinationEngine:
         }
     
     def _default_responsibility_areas(self, role: TeamRole) -> Dict[str, Any]:
-        """Default responsibility areas for role"""
-        areas = {
+        """Default responsibility areas for role"""        areas = {
             TeamRole.PROJECT_LEAD: ['project_oversight', 'team_management', 'stakeholder_communication'],
             TeamRole.CREATIVE_DIRECTOR: ['creative_direction', 'quality_assurance', 'design_approval'],
             TeamRole.CONTENT_CREATOR: ['content_creation', 'content_editing', 'asset_management'],
@@ -902,15 +862,13 @@ class TeamCoordinationEngine:
         }
     
     def _generate_search_vector(self, content: str) -> str:
-        """Generate search vector for full-text search"""
-        # This would typically use PostgreSQL's full-text search
+        """Generate search vector for full-text search"""        # This would typically use PostgreSQL's full-text search
         # For now, return a simplified version
         words = content.lower().split()
         return ' '.join(set(words))
     
     async def _deliver_message_realtime(self, communication: TeamCommunication):
-        """Deliver message via WebSocket to online team members"""
-        if not self.websocket_manager:
+        """Deliver message via WebSocket to online team members"""        if not self.websocket_manager:
             return
         
         message_data = {
@@ -930,8 +888,7 @@ class TeamCoordinationEngine:
         )
     
     async def _broadcast_team_update(self, project_id: str, update_type: str, data: Dict[str, Any]):
-        """Broadcast team updates to project members"""
-        if not self.websocket_manager:
+        """Broadcast team updates to project members"""        if not self.websocket_manager:
             return
         
         update_data = {
@@ -945,8 +902,7 @@ class TeamCoordinationEngine:
         await self.websocket_manager.broadcast_to_project(project_id, update_data)
     
     async def _broadcast_presence_update(self, project_id: str, user_id: str, action: str, data: Dict[str, Any]):
-        """Broadcast presence updates"""
-        if not self.websocket_manager:
+        """Broadcast presence updates"""        if not self.websocket_manager:
             return
         
         presence_data = {
@@ -960,8 +916,7 @@ class TeamCoordinationEngine:
         await self.websocket_manager.broadcast_to_project(project_id, presence_data)
     
     async def _broadcast_workflow_update(self, project_id: str, workflow_data: Dict[str, Any]):
-        """Broadcast workflow state changes"""
-        if not self.websocket_manager:
+        """Broadcast workflow state changes"""        if not self.websocket_manager:
             return
         
         update_data = {

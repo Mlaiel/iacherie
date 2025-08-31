@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Content Models Tests
+"""Content Models Tests
 
 Comprehensive tests for Pydantic models and data structures
 used in the content generation system.
@@ -25,9 +21,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -66,11 +60,9 @@ from ai.content_generation.content_models import (
 
 
 class TestEnums:
-    """Test suite for enum definitions"""
-    
+    """Test suite for enum definitions"""    
     def test_platform_enum(self):
-        """Test Platform enum values"""
-        assert Platform.INSTAGRAM.value == "instagram"
+        """Test Platform enum values"""        assert Platform.INSTAGRAM.value == "instagram"
         assert Platform.TWITTER.value == "twitter"
         assert Platform.LINKEDIN.value == "linkedin"
         assert Platform.TIKTOK.value == "tiktok"
@@ -84,8 +76,7 @@ class TestEnums:
         assert len(Platform) == 9
     
     def test_content_type_enum(self):
-        """Test ContentType enum values"""
-        assert ContentType.BLOG_POST.value == "blog_post"
+        """Test ContentType enum values"""        assert ContentType.BLOG_POST.value == "blog_post"
         assert ContentType.SOCIAL_POST.value == "social_post"
         assert ContentType.INSTAGRAM_POST.value == "instagram_post"
         assert ContentType.TWITTER_POST.value == "twitter_post"
@@ -105,8 +96,7 @@ class TestEnums:
         assert len(ContentType) == 15
     
     def test_content_format_enum(self):
-        """Test ContentFormat enum values"""
-        assert ContentFormat.TEXT.value == "text"
+        """Test ContentFormat enum values"""        assert ContentFormat.TEXT.value == "text"
         assert ContentFormat.HTML.value == "html"
         assert ContentFormat.MARKDOWN.value == "markdown"
         assert ContentFormat.JSON.value == "json"
@@ -116,8 +106,7 @@ class TestEnums:
         assert len(ContentFormat) == 5
     
     def test_quality_level_enum(self):
-        """Test QualityLevel enum values"""
-        assert QualityLevel.BASIC.value == "basic"
+        """Test QualityLevel enum values"""        assert QualityLevel.BASIC.value == "basic"
         assert QualityLevel.STANDARD.value == "standard"
         assert QualityLevel.PREMIUM.value == "premium"
         assert QualityLevel.ENTERPRISE.value == "enterprise"
@@ -126,8 +115,7 @@ class TestEnums:
         assert len(QualityLevel) == 4
     
     def test_brand_voice_enum(self):
-        """Test BrandVoice enum values"""
-        assert BrandVoice.PROFESSIONAL.value == "professional"
+        """Test BrandVoice enum values"""        assert BrandVoice.PROFESSIONAL.value == "professional"
         assert BrandVoice.CASUAL.value == "casual"
         assert BrandVoice.FRIENDLY.value == "friendly"
         assert BrandVoice.AUTHORITATIVE.value == "authoritative"
@@ -139,11 +127,9 @@ class TestEnums:
 
 
 class TestContentRequest:
-    """Test suite for ContentGenerationRequest model"""
-    
+    """Test suite for ContentGenerationRequest model"""    
     def test_basic_content_request(self):
-        """Test basic content request creation"""
-        request = ContentGenerationRequest(
+        """Test basic content request creation"""        request = ContentGenerationRequest(
             content_type=ContentType.SOCIAL_POST,
             platform=Platform.INSTAGRAM,
             topic="AI technology trends",
@@ -165,8 +151,7 @@ class TestContentRequest:
         assert request.quality_level == QualityLevel.STANDARD  # default
     
     def test_content_request_with_optional_fields(self):
-        """Test content request with all optional fields"""
-        keywords = ["AI", "technology", "innovation"]
+        """Test content request with all optional fields"""        keywords = ["AI", "technology", "innovation"]
         style_preferences = {"focus_keyword": "AI trends", "meta_description": True}
         
         request = ContentGenerationRequest(
@@ -198,8 +183,7 @@ class TestContentRequest:
         assert request.quality_level == QualityLevel.PREMIUM
     
     def test_content_request_validation_errors(self):
-        """Test content request validation errors"""
-        # Test missing required fields
+        """Test content request validation errors"""        # Test missing required fields
         with pytest.raises(ValidationError):
             ContentGenerationRequest()
         
@@ -212,11 +196,9 @@ class TestContentRequest:
 
 
 class TestContentResponse:
-    """Test suite for ContentGenerationResponse model"""
-    
+    """Test suite for ContentGenerationResponse model"""    
     def test_successful_content_response(self):
-        """Test successful content response creation"""
-        response = ContentGenerationResponse(
+        """Test successful content response creation"""        response = ContentGenerationResponse(
             content_id="content_123",
             content_type=ContentType.SOCIAL_POST,
             status="completed",
@@ -233,8 +215,7 @@ class TestContentResponse:
         assert isinstance(response.created_at, datetime)
     
     def test_failed_content_response(self):
-        """Test failed content response creation"""
-        response = ContentGenerationResponse(
+        """Test failed content response creation"""        response = ContentGenerationResponse(
             content_id="content_456",
             content_type=ContentType.BLOG_POST,
             status="failed",
@@ -246,8 +227,7 @@ class TestContentResponse:
         assert response.final_content is None
     
     def test_content_response_with_metrics(self):
-        """Test content response with quality scores"""
-        quality_score = QualityScoreResponse(
+        """Test content response with quality scores"""        quality_score = QualityScoreResponse(
             overall_score=0.88,
             readability_score=0.85,
             engagement_score=0.92,
@@ -276,11 +256,9 @@ class TestContentResponse:
 
 
 class TestABTestConfiguration:
-    """Test suite for ABTestConfiguration model"""
-    
+    """Test suite for ABTestConfiguration model"""    
     def test_basic_ab_test_config(self):
-        """Test basic A/B test configuration"""
-        config = ABTestConfiguration(
+        """Test basic A/B test configuration"""        config = ABTestConfiguration(
             test_id="test_001",
             test_name="CTA Button Test",
             hypothesis="Blue button will increase clicks by 15%",
@@ -296,8 +274,7 @@ class TestABTestConfiguration:
         assert config.status == "draft"  # default
     
     def test_advanced_ab_test_config(self):
-        """Test advanced A/B test configuration"""
-        config = ABTestConfiguration(
+        """Test advanced A/B test configuration"""        config = ABTestConfiguration(
             test_id="test_002",
             test_name="Headlines Test",
             hypothesis="Emotional headline will increase engagement",
@@ -318,8 +295,7 @@ class TestABTestConfiguration:
         assert config.status == "running"
     
     def test_ab_test_config_validation(self):
-        """Test A/B test config validation"""
-        # Test invalid traffic split
+        """Test A/B test config validation"""        # Test invalid traffic split
         with pytest.raises(ValidationError):
             ABTestConfiguration(
                 test_id="test_003",
@@ -345,11 +321,9 @@ class TestABTestConfiguration:
 
 
 class TestContentMetadata:
-    """Test suite for ContentMetadata model"""
-    
+    """Test suite for ContentMetadata model"""    
     def test_content_metadata_creation(self):
-        """Test content metadata creation"""
-        metadata = ContentMetadata(
+        """Test content metadata creation"""        metadata = ContentMetadata(
             title="AI Content Generation Guide",
             description="Complete guide to AI-powered content creation",
             author="Fahed Mlaiel",
@@ -368,8 +342,7 @@ class TestContentMetadata:
         assert metadata.status == "published"
     
     def test_metadata_version_tracking(self):
-        """Test metadata with social media fields"""
-        metadata = ContentMetadata(
+        """Test metadata with social media fields"""        metadata = ContentMetadata(
             title="Social Media Post",
             author="Test Author",
             og_title="Amazing Social Post",
@@ -385,11 +358,9 @@ class TestContentMetadata:
 
 
 class TestQualityScoreResponse:
-    """Test suite for QualityScoreResponse model"""
-    
+    """Test suite for QualityScoreResponse model"""    
     def test_quality_score_response_creation(self):
-        """Test quality score response creation"""
-        response = QualityScoreResponse(
+        """Test quality score response creation"""        response = QualityScoreResponse(
             overall_score=0.875,
             readability_score=0.912,
             engagement_score=0.838,
@@ -410,8 +381,7 @@ class TestQualityScoreResponse:
         assert len(response.improvement_suggestions) == 2
     
     def test_quality_score_response_validation(self):
-        """Test quality score response validation"""
-        # Test valid score range
+        """Test quality score response validation"""        # Test valid score range
         response = QualityScoreResponse(
             overall_score=0.5,
             readability_score=0.75,
@@ -430,11 +400,9 @@ class TestQualityScoreResponse:
 
 
 class TestPerformanceMetrics:
-    """Test suite for PerformanceMetrics model"""
-    
+    """Test suite for PerformanceMetrics model"""    
     def test_performance_metrics_creation(self):
-        """Test performance metrics creation"""
-        from datetime import datetime, timezone
+        """Test performance metrics creation"""        from datetime import datetime, timezone
         
         metrics = PerformanceMetrics(
             content_id="content_123",
@@ -463,8 +431,7 @@ class TestPerformanceMetrics:
         assert metrics.impressions == 4500
     
     def test_performance_metrics_optional_fields(self):
-        """Test performance metrics with optional fields"""
-        from datetime import datetime, timezone
+        """Test performance metrics with optional fields"""        from datetime import datetime, timezone
         
         metrics = PerformanceMetrics(
             content_id="content_456",
@@ -488,11 +455,9 @@ class TestPerformanceMetrics:
 
 
 class TestContentOptimizationRequest:
-    """Test suite for ContentOptimizationRequest model"""
-    
+    """Test suite for ContentOptimizationRequest model"""    
     def test_content_optimization_request_creation(self):
-        """Test content optimization request creation"""
-        request = ContentOptimizationRequest(
+        """Test content optimization request creation"""        request = ContentOptimizationRequest(
             content="Basic content about AI technology",
             target_platform=Platform.INSTAGRAM,
             optimization_goals=["engagement", "reach", "clarity"],
@@ -507,8 +472,7 @@ class TestContentOptimizationRequest:
         assert request.current_performance["views"] == 100
     
     def test_content_optimization_optional_fields(self):
-        """Test content optimization request with optional fields"""
-        request = ContentOptimizationRequest(
+        """Test content optimization request with optional fields"""        request = ContentOptimizationRequest(
             content="Simple AI guide",
             target_platform=Platform.TWITTER,
             optimization_goals=["engagement"]
@@ -520,11 +484,9 @@ class TestContentOptimizationRequest:
 
 
 class TestTemplateRequest:
-    """Test suite for TemplateRequest model"""
-    
+    """Test suite for TemplateRequest model"""    
     def test_template_request_creation(self):
-        """Test template request creation"""
-        request = TemplateRequest(
+        """Test template request creation"""        request = TemplateRequest(
             template_type="blog_post",
             content_type=ContentType.BLOG_POST,
             platform=Platform.LINKEDIN,
@@ -540,8 +502,7 @@ class TestTemplateRequest:
         assert request.variables["author"] == "Fahed Mlaiel"
     
     def test_template_request_optional_fields(self):
-        """Test template request with optional fields"""
-        request = TemplateRequest(
+        """Test template request with optional fields"""        request = TemplateRequest(
             template_type="social_post",
             content_type=ContentType.SOCIAL_POST,
             platform=Platform.TWITTER,
@@ -555,11 +516,9 @@ class TestTemplateRequest:
 
 
 class TestBatchContentRequest:
-    """Test suite for BatchContentRequest model"""
-    
+    """Test suite for BatchContentRequest model"""    
     def test_batch_content_request_creation(self):
-        """Test batch content request creation"""
-        individual_requests = [
+        """Test batch content request creation"""        individual_requests = [
             {
                 "content_type": "social_post",
                 "platform": "instagram",
@@ -588,8 +547,7 @@ class TestBatchContentRequest:
         assert batch.callback_url == "https://example.com/webhook"
     
     def test_batch_with_settings(self):
-        """Test batch with batch settings"""
-        batch = BatchContentRequest(
+        """Test batch with batch settings"""        batch = BatchContentRequest(
             requests=[{"content_type": "social", "topic": "test"}],
             batch_settings={"auto_optimize": True, "quality_check": True},
             global_brand_voice=BrandVoice.CASUAL
@@ -601,11 +559,9 @@ class TestBatchContentRequest:
 
 
 class TestPerformanceAnalysisRequest:
-    """Test suite for PerformanceAnalysisRequest model"""
-    
+    """Test suite for PerformanceAnalysisRequest model"""    
     def test_performance_analysis_request_creation(self):
-        """Test performance analysis request creation"""
-        request = PerformanceAnalysisRequest(
+        """Test performance analysis request creation"""        request = PerformanceAnalysisRequest(
             content_ids=["content_1", "content_2", "content_3"],
             analysis_types=["engagement", "reach", "conversion"],
             time_period="7d",
@@ -621,8 +577,7 @@ class TestPerformanceAnalysisRequest:
         assert request.breakdown_by_platform is True
     
     def test_performance_analysis_optional_fields(self):
-        """Test performance analysis request with optional fields"""
-        request = PerformanceAnalysisRequest(
+        """Test performance analysis request with optional fields"""        request = PerformanceAnalysisRequest(
             content_ids=["content_1"],
             analysis_types=["engagement"]
         )
@@ -632,11 +587,9 @@ class TestPerformanceAnalysisRequest:
 
 
 class TestContentGenerationResponse:
-    """Test suite for ContentGenerationResponse model"""
-    
+    """Test suite for ContentGenerationResponse model"""    
     def test_content_generation_response_creation(self):
-        """Test content generation response creation"""
-        response = ContentGenerationResponse(
+        """Test content generation response creation"""        response = ContentGenerationResponse(
             content_id="content_123",
             content_type=ContentType.BLOG_POST,
             status="completed",
@@ -655,8 +608,7 @@ class TestContentGenerationResponse:
         assert len(response.steps_completed) == 3
     
     def test_content_generation_response_validation(self):
-        """Test content generation response validation"""
-        # Test with minimal required fields
+        """Test content generation response validation"""        # Test with minimal required fields
         response = ContentGenerationResponse(
             content_id="content_456",
             content_type=ContentType.SOCIAL_POST,
@@ -670,11 +622,9 @@ class TestContentGenerationResponse:
 
 
 class TestContentOptimizationResponse:
-    """Test suite for ContentOptimizationResponse model"""
-    
+    """Test suite for ContentOptimizationResponse model"""    
     def test_content_optimization_response_creation(self):
-        """Test content optimization response creation"""
-        response = ContentOptimizationResponse(
+        """Test content optimization response creation"""        response = ContentOptimizationResponse(
             original_content="Basic AI content",
             optimized_content="Enhanced AI content with better engagement and SEO optimization",
             optimization_applied=["seo", "engagement", "readability"],
@@ -691,8 +641,7 @@ class TestContentOptimizationResponse:
         assert len(response.suggestions) == 2
     
     def test_content_optimization_response_validation(self):
-        """Test content optimization response validation"""
-        response = ContentOptimizationResponse(
+        """Test content optimization response validation"""        response = ContentOptimizationResponse(
             original_content="Simple content",
             optimized_content="Improved content",
             optimization_applied=["basic"],
@@ -706,11 +655,9 @@ class TestContentOptimizationResponse:
 
 
 class TestContentError:
-    """Test suite for ContentError model"""
-    
+    """Test suite for ContentError model"""    
     def test_content_error_creation(self):
-        """Test content error creation"""
-        error = ContentError(
+        """Test content error creation"""        error = ContentError(
             error_code="GENERATION_FAILED",
             error_message="Failed to generate content due to API timeout",
             content_id="content_123",
@@ -727,8 +674,7 @@ class TestContentError:
         assert error.context["model"] == "gpt-4"
     
     def test_content_error_validation(self):
-        """Test content error with minimal fields"""
-        error = ContentError(
+        """Test content error with minimal fields"""        error = ContentError(
             error_code="VALIDATION_ERROR",
             error_message="Invalid input parameters",
             error_type="validation"

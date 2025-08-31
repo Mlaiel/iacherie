@@ -18,8 +18,7 @@ and will result in immediate legal action under German and International law.
 For licensing, collaboration, or business inquiries:
 📧 Contact: mlaiel@live.de
 🌐 Official Project: IA-Influencer Agent Platform
-"""
-# Import all business configuration modules
+"""# Import all business configuration modules
 from .workflow_config import (
     WorkflowConfig,
     ContentType,

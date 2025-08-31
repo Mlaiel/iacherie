@@ -1,5 +1,4 @@
-"""
-Enterprise Content Protection Engine
+"""Enterprise Content Protection Engine
 ===================================
 
 Advanced multi-layer content protection system with real-time monitoring,
@@ -11,9 +10,7 @@ Enterprise Content Protection Platform - Protection Engine Core
 ⚠️  COPYRIGHT NOTICE ⚠️
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -43,8 +40,7 @@ settings = get_settings()
 
 
 class ProtectionLevel(str, Enum):
-    """Content protection levels."""
-    BASIC = "basic"
+    """Content protection levels."""    BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
     ENTERPRISE = "enterprise"
@@ -52,8 +48,7 @@ class ProtectionLevel(str, Enum):
 
 
 class ProtectionMethod(str, Enum):
-    """Available protection methods."""
-    DIGITAL_WATERMARKING = "digital_watermarking"
+    """Available protection methods."""    DIGITAL_WATERMARKING = "digital_watermarking"
     STEGANOGRAPHY = "steganography"
     FINGERPRINTING = "fingerprinting"
     ACCESS_CONTROL = "access_control"
@@ -64,8 +59,7 @@ class ProtectionMethod(str, Enum):
 
 
 class ThreatLevel(str, Enum):
-    """Threat assessment levels."""
-    LOW = "low"
+    """Threat assessment levels."""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -74,8 +68,7 @@ class ThreatLevel(str, Enum):
 
 @dataclass
 class ProtectionConfiguration:
-    """Comprehensive protection configuration."""
-    protection_id: str
+    """Comprehensive protection configuration."""    protection_id: str
     content_id: str
     protection_level: ProtectionLevel
     enabled_methods: List[ProtectionMethod]
@@ -89,8 +82,7 @@ class ProtectionConfiguration:
 
 
 class ProtectionRequest(BaseModel):
-    """Protection activation request model."""
-    content_id: str = Field(..., description="Content identifier")
+    """Protection activation request model."""    content_id: str = Field(..., description="Content identifier")
     protection_level: ProtectionLevel = Field(default=ProtectionLevel.STANDARD)
     methods: List[ProtectionMethod] = Field(default_factory=list)
     watermark_visible: bool = Field(default=False)
@@ -103,8 +95,7 @@ class ProtectionRequest(BaseModel):
 
 
 class ThreatAssessment(BaseModel):
-    """Security threat assessment model."""
-    threat_id: str
+    """Security threat assessment model."""    threat_id: str
     content_id: str
     threat_level: ThreatLevel
     threat_type: str
@@ -118,8 +109,7 @@ class ThreatAssessment(BaseModel):
 
 
 class ProtectionReport(BaseModel):
-    """Protection status report model."""
-    protection_id: str
+    """Protection status report model."""    protection_id: str
     content_id: str
     protection_status: str
     active_methods: List[str]
@@ -132,19 +122,16 @@ class ProtectionReport(BaseModel):
 
 
 class ContentProtectionEngine:
-    """
-    Enterprise content protection engine with multi-layer security,
+    """    Enterprise content protection engine with multi-layer security,
     real-time threat detection, and automated response capabilities.
-    """
-    
+    """    
     def __init__(
         self, 
         db_session: AsyncSession,
         fingerprint_engine: DigitalFingerprintEngine,
         copyright_detector: CopyrightDetectionService
     ):
-        """Initialize content protection engine."""
-        self.db = db_session
+        """Initialize content protection engine."""        self.db = db_session
         self.fingerprint_engine = fingerprint_engine
         self.copyright_detector = copyright_detector
         self.encryption = AdvancedEncryption()
@@ -176,8 +163,7 @@ class ContentProtectionEngine:
         user_id: str,
         protection_request: ProtectionRequest
     ) -> Dict[str, Any]:
-        """
-        Activate comprehensive protection for content.
+        """        Activate comprehensive protection for content.
         
         Args:
             content_id: Content identifier
@@ -186,8 +172,7 @@ class ContentProtectionEngine:
             
         Returns:
             Protection activation result with security details
-        """
-        try:
+        """        try:
             # Validate content ownership
             content_record = await self._get_content_record(content_id)
             if not content_record or content_record.owner_id != user_id:
@@ -291,8 +276,7 @@ class ContentProtectionEngine:
     async def assess_threats(
         self, content_id: str, protection_id: str
     ) -> List[ThreatAssessment]:
-        """
-        Perform comprehensive threat assessment for protected content.
+        """        Perform comprehensive threat assessment for protected content.
         
         Args:
             content_id: Content identifier
@@ -300,8 +284,7 @@ class ContentProtectionEngine:
             
         Returns:
             List of detected threats with risk assessment
-        """
-        try:
+        """        try:
             # Get protection configuration
             config = await self._get_protection_config(protection_id)
             if not config:
@@ -351,8 +334,7 @@ class ContentProtectionEngine:
         response_action: str,
         user_id: str
     ) -> Dict[str, Any]:
-        """
-        Execute automated or manual response to detected threat.
+        """        Execute automated or manual response to detected threat.
         
         Args:
             threat_assessment: Detected threat information
@@ -361,8 +343,7 @@ class ContentProtectionEngine:
             
         Returns:
             Response execution result
-        """
-        try:
+        """        try:
             response_id = str(uuid4())
             
             # Validate user authorization
@@ -413,8 +394,7 @@ class ContentProtectionEngine:
     async def generate_protection_report(
         self, protection_id: str, user_id: str
     ) -> ProtectionReport:
-        """
-        Generate comprehensive protection status report.
+        """        Generate comprehensive protection status report.
         
         Args:
             protection_id: Protection instance ID
@@ -422,8 +402,7 @@ class ContentProtectionEngine:
             
         Returns:
             Detailed protection report
-        """
-        try:
+        """        try:
             # Validate access
             protection_record = await self._get_protection_record(protection_id)
             if not protection_record or protection_record.user_id != user_id:
@@ -470,8 +449,7 @@ class ContentProtectionEngine:
     async def deactivate_protection(
         self, protection_id: str, user_id: str
     ) -> Dict[str, Any]:
-        """
-        Deactivate content protection and cleanup resources.
+        """        Deactivate content protection and cleanup resources.
         
         Args:
             protection_id: Protection instance ID
@@ -479,8 +457,7 @@ class ContentProtectionEngine:
             
         Returns:
             Deactivation result
-        """
-        try:
+        """        try:
             # Validate authorization
             protection_record = await self._get_protection_record(protection_id)
             if not protection_record or protection_record.user_id != user_id:
@@ -534,8 +511,7 @@ class ContentProtectionEngine:
     async def _get_default_methods(
         self, protection_level: ProtectionLevel
     ) -> List[ProtectionMethod]:
-        """Get default protection methods for level."""
-        method_sets = {
+        """Get default protection methods for level."""        method_sets = {
             ProtectionLevel.BASIC: [
                 ProtectionMethod.FINGERPRINTING,
                 ProtectionMethod.ACCESS_CONTROL
@@ -572,8 +548,7 @@ class ContentProtectionEngine:
     async def _apply_protection_method(
         self, method: ProtectionMethod, content: Any, config: ProtectionConfiguration
     ) -> Dict[str, Any]:
-        """Apply specific protection method to content."""
-        service = self.protection_methods.get(method)
+        """Apply specific protection method to content."""        service = self.protection_methods.get(method)
         if not service:
             return {"error": f"Protection method {method} not available"}
         
@@ -603,8 +578,7 @@ class ContentProtectionEngine:
             return {"error": str(e)}
     
     async def _calculate_security_score(self, config: ProtectionConfiguration) -> int:
-        """Calculate overall security score (0-100)."""
-        base_score = 20  # Basic protection
+        """Calculate overall security score (0-100)."""        base_score = 20  # Basic protection
         
         # Method-based scoring
         method_scores = {
@@ -633,20 +607,17 @@ class ContentProtectionEngine:
     # Placeholder implementations for supporting services
     
     async def _get_content_record(self, content_id: str) -> Optional[Any]:
-        """Get content record from database."""
-        pass
+        """Get content record from database."""        pass
     
     async def _start_protection_monitoring(
         self, protection_id: str, config: ProtectionConfiguration
     ) -> str:
-        """Start protection monitoring task."""
-        return f"monitor_task_{protection_id}"
+        """Start protection monitoring task."""        return f"monitor_task_{protection_id}"
     
     async def _create_blockchain_proof(
         self, content: Any, config: ProtectionConfiguration
     ) -> Dict[str, Any]:
-        """Create blockchain timestamp proof."""
-        return {
+        """Create blockchain timestamp proof."""        return {
             "blockchain": "ethereum",
             "transaction_hash": f"0x{hashlib.sha256(content.data).hexdigest()}",
             "timestamp": datetime.utcnow().isoformat()
@@ -656,20 +627,17 @@ class ContentProtectionEngine:
         self, protection_id: str, user_id: str, 
         config: ProtectionConfiguration, results: Dict[str, Any]
     ) -> Any:
-        """Create protection record in database."""
-        pass
+        """Create protection record in database."""        pass
 
 
 # Supporting service classes (simplified implementations)
 
 class DigitalWatermarkingService:
-    """Digital watermarking service for content protection."""
-    
+    """Digital watermarking service for content protection."""    
     async def apply_watermark(
         self, content: Any, settings: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply digital watermark to content."""
-        return {
+        """Apply digital watermark to content."""        return {
             "watermark_applied": True,
             "watermark_type": "visible" if settings.get("visible") else "invisible",
             "watermark_text": settings.get("text"),
@@ -678,13 +646,11 @@ class DigitalWatermarkingService:
 
 
 class SteganographyService:
-    """Steganographic data embedding service."""
-    
+    """Steganographic data embedding service."""    
     async def embed_steganographic_data(
         self, content: Any, config: ProtectionConfiguration
     ) -> Dict[str, Any]:
-        """Embed steganographic protection data."""
-        return {
+        """Embed steganographic protection data."""        return {
             "steganography_applied": True,
             "data_embedded": f"protection_id:{config.protection_id}",
             "method": "lsb_embedding"
@@ -692,13 +658,11 @@ class SteganographyService:
 
 
 class AccessControlService:
-    """Content access control service."""
-    
+    """Content access control service."""    
     async def setup_access_control(
         self, content: Any, restrictions: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Setup access control for content."""
-        return {
+        """Setup access control for content."""        return {
             "access_control_enabled": True,
             "password_protected": restrictions.get("password_protected", False),
             "view_tracking": restrictions.get("view_tracking", True),
@@ -707,13 +671,11 @@ class AccessControlService:
 
 
 class BlockchainTimestampingService:
-    """Blockchain timestamping service."""
-    
+    """Blockchain timestamping service."""    
     async def create_timestamp(
         self, content: Any, config: ProtectionConfiguration
     ) -> Dict[str, Any]:
-        """Create blockchain timestamp for content."""
-        return {
+        """Create blockchain timestamp for content."""        return {
             "blockchain_timestamp": True,
             "network": "ethereum",
             "timestamp": datetime.utcnow().isoformat(),
@@ -722,13 +684,11 @@ class BlockchainTimestampingService:
 
 
 class RealTimeMonitoringService:
-    """Real-time content monitoring service."""
-    
+    """Real-time content monitoring service."""    
     async def setup_monitoring(
         self, content_id: str, config: ProtectionConfiguration
     ) -> Dict[str, Any]:
-        """Setup real-time monitoring for content."""
-        return {
+        """Setup real-time monitoring for content."""        return {
             "monitoring_enabled": True,
             "content_id": content_id,
             "sensitivity": config.monitoring_sensitivity,
@@ -737,13 +697,11 @@ class RealTimeMonitoringService:
 
 
 class GeofencingService:
-    """Geographic restriction service."""
-    
+    """Geographic restriction service."""    
     async def setup_geofencing(
         self, content: Any, restrictions: List[str]
     ) -> Dict[str, Any]:
-        """Setup geographic access restrictions."""
-        return {
+        """Setup geographic access restrictions."""        return {
             "geofencing_enabled": True,
             "restricted_regions": restrictions,
             "enforcement_method": "ip_geolocation"
@@ -751,24 +709,18 @@ class GeofencingService:
 
 
 class ThreatDetectionEngine:
-    """Advanced threat detection engine."""
-    
+    """Advanced threat detection engine."""    
     async def scan_unauthorized_access(self, content_id: str) -> List[ThreatAssessment]:
-        """Scan for unauthorized access attempts."""
-        return []
+        """Scan for unauthorized access attempts."""        return []
     
     async def scan_copyright_violations(self, content_id: str) -> List[ThreatAssessment]:
-        """Scan for copyright violations."""
-        return []
+        """Scan for copyright violations."""        return []
     
     async def scan_unauthorized_distribution(self, content_id: str) -> List[ThreatAssessment]:
-        """Scan for unauthorized distribution."""
-        return []
+        """Scan for unauthorized distribution."""        return []
     
     async def scan_tampering_attempts(self, content_id: str) -> List[ThreatAssessment]:
-        """Scan for content tampering attempts."""
-        return []
+        """Scan for content tampering attempts."""        return []
     
     async def scan_suspicious_activity(self, content_id: str) -> List[ThreatAssessment]:
-        """Scan for suspicious user activity."""
-        return []
+        """Scan for suspicious user activity."""        return []

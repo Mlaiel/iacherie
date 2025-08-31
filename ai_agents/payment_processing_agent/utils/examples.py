@@ -1,5 +1,4 @@
-"""
-Payment Processing Agent - Usage Examples
+"""Payment Processing Agent - Usage Examples
 
 Industrial examples demonstrating payment processing capabilities,
 fraud detection, compliance, analytics, and currency conversion.
@@ -11,9 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from decimal import Decimal
 from datetime import datetime
@@ -33,8 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 async def example_basic_payment_processing():
-    """Example: Basic payment processing workflow"""
-    print("=== Basic Payment Processing Example ===")
+    """Example: Basic payment processing workflow"""    print("=== Basic Payment Processing Example ===")
     
     # Get payment agent
     agent = await get_payment_agent()
@@ -63,8 +59,7 @@ async def example_basic_payment_processing():
 
 
 async def example_revenue_allocation():
-    """Example: Revenue allocation and creator payments"""
-    print("\n=== Revenue Allocation Example ===")
+    """Example: Revenue allocation and creator payments"""    print("\n=== Revenue Allocation Example ===")
     
     agent = await get_payment_agent()
     
@@ -93,8 +88,7 @@ async def example_revenue_allocation():
 
 
 async def example_fraud_detection():
-    """Example: Fraud detection and risk assessment"""
-    print("\n=== Fraud Detection Example ===")
+    """Example: Fraud detection and risk assessment"""    print("\n=== Fraud Detection Example ===")
     
     agent = await get_payment_agent()
     
@@ -122,8 +116,7 @@ async def example_fraud_detection():
 
 
 async def example_currency_conversion():
-    """Example: Multi-currency payment processing"""
-    print("\n=== Currency Conversion Example ===")
+    """Example: Multi-currency payment processing"""    print("\n=== Currency Conversion Example ===")
     
     agent = await get_payment_agent()
     
@@ -146,8 +139,7 @@ async def example_currency_conversion():
 
 
 async def example_compliance_check():
-    """Example: KYC/AML compliance verification"""
-    print("\n=== Compliance Check Example ===")
+    """Example: KYC/AML compliance verification"""    print("\n=== Compliance Check Example ===")
     
     agent = await get_payment_agent()
     
@@ -177,8 +169,7 @@ async def example_compliance_check():
 
 
 async def example_payout_scheduling():
-    """Example: Automated payout scheduling"""
-    print("\n=== Payout Scheduling Example ===")
+    """Example: Automated payout scheduling"""    print("\n=== Payout Scheduling Example ===")
     
     agent = await get_payment_agent()
     
@@ -203,8 +194,7 @@ async def example_payout_scheduling():
 
 
 async def example_analytics_dashboard():
-    """Example: Revenue analytics and insights"""
-    print("\n=== Analytics Dashboard Example ===")
+    """Example: Revenue analytics and insights"""    print("\n=== Analytics Dashboard Example ===")
     
     agent = await get_payment_agent()
     
@@ -233,8 +223,7 @@ async def example_analytics_dashboard():
 
 
 async def example_webhook_handling():
-    """Example: Webhook processing for payment updates"""
-    print("\n=== Webhook Handling Example ===")
+    """Example: Webhook processing for payment updates"""    print("\n=== Webhook Handling Example ===")
     
     agent = await get_payment_agent()
     
@@ -273,8 +262,7 @@ async def example_webhook_handling():
 
 
 async def example_multi_provider_processing():
-    """Example: Multi-provider payment processing"""
-    print("\n=== Multi-Provider Processing Example ===")
+    """Example: Multi-provider payment processing"""    print("\n=== Multi-Provider Processing Example ===")
     
     agent = await get_payment_agent()
     
@@ -321,8 +309,7 @@ async def example_multi_provider_processing():
 
 
 async def example_performance_monitoring():
-    """Example: Performance monitoring and metrics"""
-    print("\n=== Performance Monitoring Example ===")
+    """Example: Performance monitoring and metrics"""    print("\n=== Performance Monitoring Example ===")
     
     # Get service instance for monitoring
     from . import get_service
@@ -351,8 +338,7 @@ async def example_performance_monitoring():
 
 
 async def run_all_examples():
-    """Run all payment processing examples"""
-    print("🚀 Payment Processing Agent - Industrial Examples")
+    """Run all payment processing examples"""    print("🚀 Payment Processing Agent - Industrial Examples")
     print("=" * 60)
     
     try:

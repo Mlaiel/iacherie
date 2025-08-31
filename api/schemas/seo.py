@@ -1,5 +1,4 @@
-"""
-SEO & Marketing Optimization Schemas for IA Influencer Agent Platform
+"""SEO & Marketing Optimization Schemas for IA Influencer Agent Platform
 Professional SEO analysis, content optimization, and marketing strategy schemas
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -7,9 +6,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
-"""
-
-from datetime import datetime
+"""from datetime import datetime
 from decimal import Decimal
 from typing import Any, Dict, List, Optional, Set
 from uuid import UUID
@@ -20,8 +17,7 @@ from .base import BaseSchema, TimestampSchema, UUIDSchema, AuditSchema
 
 
 class SEOAnalysis(UUIDSchema, TimestampSchema):
-    """SEO analysis results schema."""
-    
+    """SEO analysis results schema."""    
     content_id: UUID = Field(description="Analyzed content")
     analysis_type: str = Field(description="Type of SEO analysis")
     analysis_version: str = Field(description="Analysis algorithm version")
@@ -76,8 +72,7 @@ class SEOAnalysis(UUIDSchema, TimestampSchema):
     
     @validator('analysis_type')
     def validate_analysis_type(cls, v):
-        """Validate analysis type."""
-        allowed_types = {
+        """Validate analysis type."""        allowed_types = {
             "content_analysis", "keyword_research", "competitive_analysis",
             "technical_seo", "semantic_analysis", "performance_audit"
         }
@@ -87,8 +82,7 @@ class SEOAnalysis(UUIDSchema, TimestampSchema):
 
 
 class SEOOptimization(BaseSchema):
-    """SEO optimization request schema."""
-    
+    """SEO optimization request schema."""    
     content_id: UUID = Field(description="Content to optimize")
     optimization_level: str = Field(description="Level of optimization")
     target_keywords: List[str] = Field(description="Primary keywords to target")
@@ -125,16 +119,14 @@ class SEOOptimization(BaseSchema):
     
     @validator('optimization_level')
     def validate_optimization_level(cls, v):
-        """Validate optimization level."""
-        allowed_levels = {"basic", "standard", "advanced", "comprehensive", "custom"}
+        """Validate optimization level."""        allowed_levels = {"basic", "standard", "advanced", "comprehensive", "custom"}
         if v not in allowed_levels:
             raise ValueError(f'Optimization level must be one of: {", ".join(allowed_levels)}')
         return v
 
 
 class KeywordResearch(UUIDSchema, TimestampSchema):
-    """Keyword research results schema."""
-    
+    """Keyword research results schema."""    
     research_query: str = Field(description="Initial research query")
     research_scope: str = Field(description="Scope of keyword research")
     target_market: str = Field(description="Target market/region")
@@ -184,8 +176,7 @@ class KeywordResearch(UUIDSchema, TimestampSchema):
     
     @validator('research_scope')
     def validate_research_scope(cls, v):
-        """Validate research scope."""
-        allowed_scopes = {
+        """Validate research scope."""        allowed_scopes = {
             "comprehensive", "competitive", "niche_specific", "trend_analysis",
             "seasonal_analysis", "local_seo", "voice_search", "mobile_optimization"
         }
@@ -195,8 +186,7 @@ class KeywordResearch(UUIDSchema, TimestampSchema):
 
 
 class ContentOptimization(UUIDSchema, TimestampSchema):
-    """Content optimization results schema."""
-    
+    """Content optimization results schema."""    
     content_id: UUID
     optimization_request_id: UUID = Field(description="Associated optimization request")
     optimization_type: str = Field(description="Type of optimization performed")
@@ -240,8 +230,7 @@ class ContentOptimization(UUIDSchema, TimestampSchema):
 
 
 class SocialMediaStrategy(UUIDSchema, TimestampSchema):
-    """Social media marketing strategy schema."""
-    
+    """Social media marketing strategy schema."""    
     creator_id: UUID
     strategy_name: str = Field(description="Social media strategy name")
     target_platforms: List[str] = Field(description="Target social media platforms")
@@ -286,8 +275,7 @@ class SocialMediaStrategy(UUIDSchema, TimestampSchema):
 
 
 class MarketingCampaign(UUIDSchema, TimestampSchema, AuditSchema):
-    """Marketing campaign management schema."""
-    
+    """Marketing campaign management schema."""    
     creator_id: UUID
     campaign_name: str = Field(description="Marketing campaign name")
     campaign_type: str = Field(description="Type of marketing campaign")
@@ -342,8 +330,7 @@ class MarketingCampaign(UUIDSchema, TimestampSchema, AuditSchema):
     
     @validator('campaign_type')
     def validate_campaign_type(cls, v):
-        """Validate campaign type."""
-        allowed_types = {
+        """Validate campaign type."""        allowed_types = {
             "brand_awareness", "lead_generation", "product_launch", "engagement",
             "conversion", "retention", "viral_marketing", "influencer_collaboration",
             "content_marketing", "paid_advertising", "email_marketing", "seo_campaign"
@@ -354,8 +341,7 @@ class MarketingCampaign(UUIDSchema, TimestampSchema, AuditSchema):
 
 
 class InfluencerMetrics(UUIDSchema, TimestampSchema):
-    """Influencer performance metrics schema."""
-    
+    """Influencer performance metrics schema."""    
     creator_id: UUID
     metrics_period_start: datetime
     metrics_period_end: datetime
@@ -409,8 +395,7 @@ class InfluencerMetrics(UUIDSchema, TimestampSchema):
 
 
 class ContentPerformancePrediction(UUIDSchema, TimestampSchema):
-    """AI-powered content performance prediction schema."""
-    
+    """AI-powered content performance prediction schema."""    
     content_id: UUID
     prediction_model_version: str = Field(description="Prediction model version")
     confidence_level: float = Field(ge=0.0, le=1.0, description="Prediction confidence")

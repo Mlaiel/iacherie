@@ -1,5 +1,4 @@
-"""
-Data Sync Configuration Module for IA-Influencer Agent Platform
+"""Data Sync Configuration Module for IA-Influencer Agent Platform
 ===============================================================
 
 Professional data synchronization configuration for multi-platform content management.
@@ -14,9 +13,7 @@ Any unauthorized use, reproduction, or distribution without explicit written per
 is strictly prohibited and will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import os
+"""import os
 from typing import Dict, Any, Optional, List, Union, Callable
 from pydantic import BaseSettings, Field, validator
 from enum import Enum
@@ -25,15 +22,13 @@ from datetime import datetime, timedelta
 
 
 class SyncDirection(str, Enum):
-    """Data synchronization direction."""
-    BIDIRECTIONAL = "bidirectional"
+    """Data synchronization direction."""    BIDIRECTIONAL = "bidirectional"
     PUSH_ONLY = "push_only"
     PULL_ONLY = "pull_only"
 
 
 class SyncStrategy(str, Enum):
-    """Data synchronization strategies."""
-    REAL_TIME = "real_time"
+    """Data synchronization strategies."""    REAL_TIME = "real_time"
     SCHEDULED = "scheduled"
     EVENT_DRIVEN = "event_driven"
     MANUAL = "manual"
@@ -41,8 +36,7 @@ class SyncStrategy(str, Enum):
 
 
 class ConflictResolution(str, Enum):
-    """Conflict resolution strategies."""
-    LAST_WRITE_WINS = "last_write_wins"
+    """Conflict resolution strategies."""    LAST_WRITE_WINS = "last_write_wins"
     SOURCE_PRIORITY = "source_priority"
     MANUAL_RESOLUTION = "manual_resolution"
     MERGE_STRATEGY = "merge_strategy"
@@ -50,8 +44,7 @@ class ConflictResolution(str, Enum):
 
 
 class SyncStatus(str, Enum):
-    """Synchronization status."""
-    IDLE = "idle"
+    """Synchronization status."""    IDLE = "idle"
     RUNNING = "running"
     PAUSED = "paused"
     ERROR = "error"
@@ -60,8 +53,7 @@ class SyncStatus(str, Enum):
 
 
 class DataSource(str, Enum):
-    """Supported data sources for synchronization."""
-    # Platform sources
+    """Supported data sources for synchronization."""    # Platform sources
     SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -90,8 +82,7 @@ class DataSource(str, Enum):
 
 @dataclass
 class SyncMetrics:
-    """Synchronization metrics tracking."""
-    total_records: int = 0
+    """Synchronization metrics tracking."""    total_records: int = 0
     synced_records: int = 0
     failed_records: int = 0
     skipped_records: int = 0
@@ -104,8 +95,7 @@ class SyncMetrics:
 
 @dataclass
 class SyncMapping:
-    """Field mapping configuration between data sources."""
-    source_field: str
+    """Field mapping configuration between data sources."""    source_field: str
     target_field: str
     transform_function: Optional[str] = None
     required: bool = True
@@ -114,16 +104,14 @@ class SyncMapping:
 
 @dataclass
 class SyncFilter:
-    """Data filtering configuration for synchronization."""
-    field_name: str
+    """Data filtering configuration for synchronization."""    field_name: str
     operator: str  # eq, ne, gt, lt, gte, lte, in, not_in, contains
     value: Any
     logical_operator: str = "AND"  # AND, OR
 
 
 class DataSyncConfig(BaseSettings):
-    """Data synchronization configuration for multi-platform integration."""
-    
+    """Data synchronization configuration for multi-platform integration."""    
     # === GENERAL SYNC SETTINGS ===
     
     # Global sync settings
@@ -269,8 +257,7 @@ class DataSyncConfig(BaseSettings):
 
 
 class DataSyncManager:
-    """Data synchronization manager with advanced conflict resolution."""
-    
+    """Data synchronization manager with advanced conflict resolution."""    
     def __init__(self, config: DataSyncConfig):
         self.config = config
         self.sync_jobs: Dict[str, Dict[str, Any]] = {}
@@ -279,12 +266,10 @@ class DataSyncManager:
         self.metrics: Dict[str, SyncMetrics] = {}
         
     def register_sync_mapping(self, sync_id: str, mappings: List[SyncMapping]):
-        """Register field mappings for a sync job."""
-        self.sync_mappings[sync_id] = mappings
+        """Register field mappings for a sync job."""        self.sync_mappings[sync_id] = mappings
     
     def register_sync_filter(self, sync_id: str, filters: List[SyncFilter]):
-        """Register filters for a sync job."""
-        self.sync_filters[sync_id] = filters
+        """Register filters for a sync job."""        self.sync_filters[sync_id] = filters
     
     def create_sync_job(
         self, 
@@ -296,8 +281,7 @@ class DataSyncManager:
         conflict_resolution: ConflictResolution = ConflictResolution.LAST_WRITE_WINS,
         **kwargs
     ) -> Dict[str, Any]:
-        """Create a new synchronization job."""
-        job_config = {
+        """Create a new synchronization job."""        job_config = {
             "job_id": job_id,
             "source": source,
             "target": target,
@@ -318,19 +302,16 @@ class DataSyncManager:
         return job_config
     
     def get_sync_job(self, job_id: str) -> Optional[Dict[str, Any]]:
-        """Get synchronization job configuration."""
-        return self.sync_jobs.get(job_id)
+        """Get synchronization job configuration."""        return self.sync_jobs.get(job_id)
     
     def update_sync_status(self, job_id: str, status: SyncStatus):
-        """Update synchronization job status."""
-        if job_id in self.sync_jobs:
+        """Update synchronization job status."""        if job_id in self.sync_jobs:
             self.sync_jobs[job_id]["status"] = status
             if status == SyncStatus.RUNNING:
                 self.sync_jobs[job_id]["last_run"] = datetime.utcnow()
     
     def get_platform_sync_config(self, platform: str) -> Dict[str, Any]:
-        """Get platform-specific synchronization configuration."""
-        platform_config = {
+        """Get platform-specific synchronization configuration."""        platform_config = {
             "enabled": getattr(self.config, f"{platform}_sync_enabled", False),
             "strategy": getattr(self.config, f"{platform}_sync_strategy", SyncStrategy.SCHEDULED),
             "interval": getattr(self.config, f"{platform}_sync_interval", 3600),
@@ -339,8 +320,7 @@ class DataSyncManager:
         return platform_config
     
     def calculate_next_sync_time(self, job_id: str) -> Optional[datetime]:
-        """Calculate next synchronization time for a job."""
-        job = self.get_sync_job(job_id)
+        """Calculate next synchronization time for a job."""        job = self.get_sync_job(job_id)
         if not job or not job.get("enabled"):
             return None
             
@@ -356,8 +336,7 @@ class DataSyncManager:
         return None
     
     def get_sync_metrics(self, job_id: str) -> Optional[SyncMetrics]:
-        """Get synchronization metrics for a job."""
-        return self.metrics.get(job_id)
+        """Get synchronization metrics for a job."""        return self.metrics.get(job_id)
     
     def update_sync_metrics(
         self, 
@@ -368,8 +347,7 @@ class DataSyncManager:
         conflicts_detected: int = 0,
         sync_duration: float = 0.0
     ):
-        """Update synchronization metrics."""
-        if job_id not in self.metrics:
+        """Update synchronization metrics."""        if job_id not in self.metrics:
             self.metrics[job_id] = SyncMetrics()
             
         metrics = self.metrics[job_id]
@@ -382,15 +360,13 @@ class DataSyncManager:
         metrics.next_sync_time = self.calculate_next_sync_time(job_id)
     
     def get_active_sync_jobs(self) -> List[Dict[str, Any]]:
-        """Get all active synchronization jobs."""
-        return [
+        """Get all active synchronization jobs."""        return [
             job for job in self.sync_jobs.values()
             if job.get("enabled") and job.get("status") != SyncStatus.CANCELLED
         ]
     
     def get_sync_schedule(self) -> Dict[str, datetime]:
-        """Get synchronization schedule for all jobs."""
-        schedule = {}
+        """Get synchronization schedule for all jobs."""        schedule = {}
         for job_id, job in self.sync_jobs.items():
             next_sync = self.calculate_next_sync_time(job_id)
             if next_sync:
@@ -398,8 +374,7 @@ class DataSyncManager:
         return schedule
     
     def validate_sync_data(self, data: Dict[str, Any], mappings: List[SyncMapping]) -> Dict[str, Any]:
-        """Validate and transform sync data based on mappings."""
-        validated_data = {}
+        """Validate and transform sync data based on mappings."""        validated_data = {}
         
         for mapping in mappings:
             source_value = data.get(mapping.source_field)
@@ -420,8 +395,7 @@ class DataSyncManager:
         return validated_data
     
     def apply_sync_filters(self, data: List[Dict[str, Any]], filters: List[SyncFilter]) -> List[Dict[str, Any]]:
-        """Apply filters to sync data."""
-        if not filters:
+        """Apply filters to sync data."""        if not filters:
             return data
             
         filtered_data = []

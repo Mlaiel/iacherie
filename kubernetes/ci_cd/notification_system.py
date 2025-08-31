@@ -1,5 +1,4 @@
-"""
-🔧 Notification System - IA-Influencer-Agent CI/CD
+"""🔧 Notification System - IA-Influencer-Agent CI/CD
 ================================================================
 Expert: DEVOPS_ENGINEER + COMMUNICATION_SPECIALIST
 Created: 2025-08-24
@@ -8,9 +7,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Enterprise notification system for CI/CD pipeline events and alerts.
 Multi-channel communication with intelligent routing and escalation.
 ================================================================
-"""
-
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 import asyncio
 import logging
 import json
@@ -28,8 +25,7 @@ import boto3
 logger = logging.getLogger(__name__)
 
 class NotificationChannel(Enum):
-    """Notification channel enumeration"""
-    EMAIL = "email"
+    """Notification channel enumeration"""    EMAIL = "email"
     SLACK = "slack"
     TEAMS = "teams"
     DISCORD = "discord"
@@ -39,16 +35,14 @@ class NotificationChannel(Enum):
     PAGERDUTY = "pagerduty"
 
 class NotificationPriority(Enum):
-    """Notification priority enumeration"""
-    CRITICAL = "critical"
+    """Notification priority enumeration"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
     INFO = "info"
 
 class EventType(Enum):
-    """Pipeline event type enumeration"""
-    BUILD_STARTED = "build_started"
+    """Pipeline event type enumeration"""    BUILD_STARTED = "build_started"
     BUILD_SUCCESS = "build_success"
     BUILD_FAILED = "build_failed"
     DEPLOYMENT_STARTED = "deployment_started"
@@ -63,8 +57,7 @@ class EventType(Enum):
 
 @dataclass
 class NotificationConfiguration:
-    """Notification configuration"""
-    channel: NotificationChannel
+    """Notification configuration"""    channel: NotificationChannel
     enabled: bool = True
     webhook_url: Optional[str] = None
     email_config: Optional[Dict[str, str]] = None
@@ -82,8 +75,7 @@ class NotificationConfiguration:
 
 @dataclass
 class NotificationMessage:
-    """Notification message"""
-    event_type: EventType
+    """Notification message"""    event_type: EventType
     priority: NotificationPriority
     title: str
     message: str
@@ -100,8 +92,7 @@ class NotificationMessage:
 
 @dataclass
 class NotificationRecipient:
-    """Notification recipient"""
-    name: str
+    """Notification recipient"""    name: str
     email: Optional[str] = None
     slack_user: Optional[str] = None
     phone: Optional[str] = None
@@ -114,11 +105,9 @@ class NotificationRecipient:
             self.roles = []
 
 class NotificationSystem:
-    """Enterprise notification system for CI/CD pipelines"""
-    
+    """Enterprise notification system for CI/CD pipelines"""    
     def __init__(self):
-        """Initialize notification system"""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize notification system"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.configurations: Dict[NotificationChannel, NotificationConfiguration] = {}
         self.recipients: Dict[str, NotificationRecipient] = {}
         self.message_history: List[NotificationMessage] = []
@@ -126,8 +115,7 @@ class NotificationSystem:
         self.initialized = False
     
     async def initialize(self) -> bool:
-        """Initialize notification system"""
-        try:
+        """Initialize notification system"""        try:
             # Setup notification channels
             await self._setup_notification_channels()
             
@@ -146,8 +134,7 @@ class NotificationSystem:
             return False
     
     async def _setup_notification_channels(self) -> None:
-        """Setup notification channels"""
-        
+        """Setup notification channels"""        
         # Email configuration for critical alerts
         self.configurations[NotificationChannel.EMAIL] = NotificationConfiguration(
             channel=NotificationChannel.EMAIL,
@@ -224,8 +211,7 @@ class NotificationSystem:
         )
     
     async def _setup_ia_influencer_recipients(self) -> None:
-        """Setup recipients for IA-Influencer team"""
-        
+        """Setup recipients for IA-Influencer team"""        
         # Lead Architect
         self.recipients["fahed_mlaiel"] = NotificationRecipient(
             name="Fahed Mlaiel",
@@ -289,8 +275,7 @@ class NotificationSystem:
         user: Optional[str] = None,
         custom_channels: Optional[List[NotificationChannel]] = None
     ) -> Dict[NotificationChannel, bool]:
-        """Send notification across configured channels"""
-        try:
+        """Send notification across configured channels"""        try:
             notification_msg = NotificationMessage(
                 event_type=event_type,
                 priority=priority,
@@ -355,8 +340,7 @@ class NotificationSystem:
         config: NotificationConfiguration,
         message: NotificationMessage
     ) -> bool:
-        """Send notification to specific channel"""
-        try:
+        """Send notification to specific channel"""        try:
             if channel == NotificationChannel.EMAIL:
                 return await self._send_email_notification(config, message)
             elif channel == NotificationChannel.SLACK:
@@ -382,8 +366,7 @@ class NotificationSystem:
         config: NotificationConfiguration,
         message: NotificationMessage
     ) -> bool:
-        """Send email notification"""
-        try:
+        """Send email notification"""        try:
             email_config = config.email_config
             
             # Create message
@@ -426,8 +409,7 @@ class NotificationSystem:
         config: NotificationConfiguration,
         message: NotificationMessage
     ) -> bool:
-        """Send Slack notification"""
-        try:
+        """Send Slack notification"""        try:
             slack_config = config.slack_config
             webhook_url = slack_config['webhook_url']
             
@@ -494,8 +476,7 @@ class NotificationSystem:
         config: NotificationConfiguration,
         message: NotificationMessage
     ) -> bool:
-        """Send Microsoft Teams notification"""
-        try:
+        """Send Microsoft Teams notification"""        try:
             webhook_url = config.webhook_url
             color = self._get_priority_color(message.priority)
             
@@ -541,8 +522,7 @@ class NotificationSystem:
         config: NotificationConfiguration,
         message: NotificationMessage
     ) -> bool:
-        """Send Discord notification"""
-        try:
+        """Send Discord notification"""        try:
             webhook_url = config.webhook_url
             color = int(self._get_priority_color(message.priority).replace("#", ""), 16)
             
@@ -592,8 +572,7 @@ class NotificationSystem:
         config: NotificationConfiguration,
         message: NotificationMessage
     ) -> bool:
-        """Send PagerDuty notification"""
-        try:
+        """Send PagerDuty notification"""        try:
             webhook_url = config.webhook_url
             
             payload = {
@@ -628,8 +607,7 @@ class NotificationSystem:
         config: NotificationConfiguration,
         message: NotificationMessage
     ) -> bool:
-        """Send generic webhook notification"""
-        try:
+        """Send generic webhook notification"""        try:
             webhook_url = config.webhook_url
             
             payload = {
@@ -654,8 +632,7 @@ class NotificationSystem:
             return False
     
     def _get_recipients_for_message(self, message: NotificationMessage) -> List[NotificationRecipient]:
-        """Get appropriate recipients for a message"""
-        recipients = []
+        """Get appropriate recipients for a message"""        recipients = []
         
         for recipient in self.recipients.values():
             # Check priority threshold
@@ -673,11 +650,9 @@ class NotificationSystem:
         return recipients
     
     def _create_email_html(self, message: NotificationMessage) -> str:
-        """Create HTML email body"""
-        color = self._get_priority_color(message.priority)
+        """Create HTML email body"""        color = self._get_priority_color(message.priority)
         
-        html = f"""
-        <html>
+        html = f"""        <html>
             <body style="font-family: Arial, sans-serif; margin: 0; padding: 20px;">
                 <div style="border-left: 4px solid {color}; padding-left: 20px;">
                     <h2 style="color: {color}; margin-top: 0;">{message.title}</h2>
@@ -716,12 +691,10 @@ class NotificationSystem:
                 </div>
             </body>
         </html>
-        """
-        return html
+        """        return html
     
     def _get_priority_color(self, priority: NotificationPriority) -> str:
-        """Get color code for priority level"""
-        colors = {
+        """Get color code for priority level"""        colors = {
             NotificationPriority.CRITICAL: "#DC3545",
             NotificationPriority.HIGH: "#FD7E14",
             NotificationPriority.MEDIUM: "#FFC107",
@@ -731,8 +704,7 @@ class NotificationSystem:
         return colors.get(priority, "#6C757D")
     
     def _map_priority_to_severity(self, priority: NotificationPriority) -> str:
-        """Map priority to PagerDuty severity"""
-        mapping = {
+        """Map priority to PagerDuty severity"""        mapping = {
             NotificationPriority.CRITICAL: "critical",
             NotificationPriority.HIGH: "error",
             NotificationPriority.MEDIUM: "warning",
@@ -742,15 +714,13 @@ class NotificationSystem:
         return mapping.get(priority, "info")
     
     def _generate_tags(self, event_type: EventType, environment: Optional[str]) -> List[str]:
-        """Generate tags for the message"""
-        tags = ["ci_cd", event_type.value]
+        """Generate tags for the message"""        tags = ["ci_cd", event_type.value]
         if environment:
             tags.append(f"env:{environment}")
         return tags
     
     def _is_rate_limited(self, channel: NotificationChannel, message: NotificationMessage) -> bool:
-        """Check if notification is rate limited"""
-        # Implement rate limiting logic
+        """Check if notification is rate limited"""        # Implement rate limiting logic
         rate_key = f"{channel.value}:{message.event_type.value}"
         now = datetime.now()
         
@@ -764,8 +734,7 @@ class NotificationSystem:
         return False
     
     async def _initialize_rate_limiting(self) -> None:
-        """Initialize rate limiting"""
-        # Clean old rate limit entries periodically
+        """Initialize rate limiting"""        # Clean old rate limit entries periodically
         self.rate_limits = {}
         self.logger.info("Rate limiting initialized")
     
@@ -775,8 +744,7 @@ class NotificationSystem:
         priority: Optional[NotificationPriority] = None,
         event_type: Optional[EventType] = None
     ) -> List[Dict[str, Any]]:
-        """Get notification history"""
-        cutoff_time = datetime.now() - timedelta(hours=hours)
+        """Get notification history"""        cutoff_time = datetime.now() - timedelta(hours=hours)
         
         filtered_messages = []
         for msg in self.message_history:
@@ -788,8 +756,7 @@ class NotificationSystem:
         return filtered_messages
     
     async def test_notifications(self) -> Dict[NotificationChannel, bool]:
-        """Test all configured notification channels"""
-        test_results = {}
+        """Test all configured notification channels"""        test_results = {}
         
         test_message = NotificationMessage(
             event_type=EventType.BUILD_SUCCESS,

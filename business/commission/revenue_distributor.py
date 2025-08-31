@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Revenue Distributor Engine - Advanced Revenue Distribution and Settlement System
+"""Revenue Distributor Engine - Advanced Revenue Distribution and Settlement System
 =============================================================================
 
 Professional revenue distribution engine with multi-party settlements, escrow management,
@@ -15,9 +14,7 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert 
 © 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from datetime import datetime, timedelta
@@ -48,8 +45,7 @@ from ...security.encryption import encrypt_sensitive_data, decrypt_sensitive_dat
 logger = get_structured_logger(__name__)
 
 class DistributionType(str, Enum):
-    """Revenue distribution type enumeration"""
-    IMMEDIATE = "immediate"
+    """Revenue distribution type enumeration"""    IMMEDIATE = "immediate"
     SCHEDULED = "scheduled"
     BATCH = "batch"
     ESCROW = "escrow"
@@ -57,16 +53,14 @@ class DistributionType(str, Enum):
     RECURRING = "recurring"
 
 class SettlementMethod(str, Enum):
-    """Settlement method enumeration"""
-    BANK_TRANSFER = "bank_transfer"
+    """Settlement method enumeration"""    BANK_TRANSFER = "bank_transfer"
     CRYPTO_WALLET = "crypto_wallet"
     DIGITAL_WALLET = "digital_wallet"
     PLATFORM_CREDIT = "platform_credit"
     MANUAL_PROCESSING = "manual_processing"
 
 class EscrowStatus(str, Enum):
-    """Escrow status enumeration"""
-    PENDING = "pending"
+    """Escrow status enumeration"""    PENDING = "pending"
     ACTIVE = "active"
     RELEASED = "released"
     DISPUTED = "disputed"
@@ -74,8 +68,7 @@ class EscrowStatus(str, Enum):
     EXPIRED = "expired"
 
 class DistributionRequest(BaseModel):
-    """Revenue distribution request model"""
-    
+    """Revenue distribution request model"""    
     transaction_id: str = Field(..., min_length=1)
     total_amount: Decimal = Field(..., gt=0)
     currency: Currency = Currency.EUR
@@ -115,15 +108,13 @@ class DistributionRequest(BaseModel):
     
     @validator('distribution_rules')
     def validate_distribution_rules(cls, v):
-        """Validate distribution rules sum to 100%"""
-        total = sum(v.values())
+        """Validate distribution rules sum to 100%"""        total = sum(v.values())
         if abs(total - Decimal("1.0")) > Decimal("0.001"):  # Allow small rounding errors
             raise ValueError(f"Distribution rules must sum to 100% (got {total * 100}%)")
         return v
 
 class DistributionResult(BaseModel):
-    """Revenue distribution result model"""
-    
+    """Revenue distribution result model"""    
     distribution_id: str = Field(..., min_length=1)
     request: DistributionRequest
     
@@ -156,8 +147,7 @@ class DistributionResult(BaseModel):
         }
 
 class EscrowAccount(BaseModel):
-    """Escrow account model"""
-    
+    """Escrow account model"""    
     escrow_id: str = Field(..., min_length=1)
     transaction_id: str = Field(..., min_length=1)
     amount: Decimal = Field(..., gt=0)
@@ -186,16 +176,13 @@ class EscrowAccount(BaseModel):
         }
 
 class RevenueDistributorEngine:
-    """
-    Professional Revenue Distributor Engine
+    """    Professional Revenue Distributor Engine
     
     Handles multi-party revenue distribution, escrow management, and
     automated settlements with comprehensive error handling and security.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Revenue Distributor Engine"""
-        self.config = config or {}
+        """Initialize Revenue Distributor Engine"""        self.config = config or {}
         
         # Components
         self._settlement_processor: Optional[SettlementProcessor] = None
@@ -216,8 +203,7 @@ class RevenueDistributorEngine:
         logger.info("RevenueDistributorEngine initialized")
     
     async def initialize(self) -> None:
-        """Initialize all distributor components"""
-        try:
+        """Initialize all distributor components"""        try:
             logger.info("Initializing Revenue Distributor Engine...")
             
             # Initialize components
@@ -245,16 +231,14 @@ class RevenueDistributorEngine:
         self, 
         request: DistributionRequest
     ) -> DistributionResult:
-        """
-        Distribute revenue according to the specified rules
+        """        Distribute revenue according to the specified rules
         
         Args:
             request: Distribution request
             
         Returns:
             Distribution result
-        """
-        distribution_id = f"dist_{uuid.uuid4().hex}"
+        """        distribution_id = f"dist_{uuid.uuid4().hex}"
         
         try:
             logger.info(f"Processing revenue distribution: {distribution_id}")
@@ -306,8 +290,7 @@ class RevenueDistributorEngine:
             raise CommissionError(f"Revenue distribution error: {e}")
     
     async def _validate_distribution_request(self, request: DistributionRequest) -> None:
-        """Validate distribution request"""
-        try:
+        """Validate distribution request"""        try:
             # Amount validation
             if request.total_amount < self._min_distribution_amount:
                 raise ValidationError(f"Amount below minimum: {self._min_distribution_amount}")
@@ -341,8 +324,7 @@ class RevenueDistributorEngine:
             raise ValidationError(f"Invalid distribution request: {e}")
     
     async def _calculate_distributions(self, request: DistributionRequest) -> List[Dict[str, Any]]:
-        """Calculate individual distributions for each party"""
-        try:
+        """Calculate individual distributions for each party"""        try:
             distributions = []
             
             for party_id, percentage in request.distribution_rules.items():
@@ -375,8 +357,7 @@ class RevenueDistributorEngine:
         self, 
         request: DistributionRequest
     ) -> Tuple[Decimal, Decimal]:
-        """Calculate platform and processing fees"""
-        try:
+        """Calculate platform and processing fees"""        try:
             # Platform fee (usually a small percentage)
             platform_fee_rate = Decimal("0.005")  # 0.5%
             platform_fee = (request.total_amount * platform_fee_rate).quantize(
@@ -412,8 +393,7 @@ class RevenueDistributorEngine:
             return Decimal("0.00"), Decimal("0.00")
     
     async def _process_immediate_distribution(self, result: DistributionResult) -> None:
-        """Process immediate distribution"""
-        try:
+        """Process immediate distribution"""        try:
             logger.info(f"Processing immediate distribution: {result.distribution_id}")
             
             # Check if approval is required
@@ -459,8 +439,7 @@ class RevenueDistributorEngine:
             result.error_messages.append(str(e))
     
     async def _process_settlement(self, distribution_id: str, distribution: Dict[str, Any]) -> str:
-        """Process individual settlement"""
-        try:
+        """Process individual settlement"""        try:
             if not self._settlement_processor:
                 raise CommissionError("Settlement processor not initialized")
             
@@ -480,8 +459,7 @@ class RevenueDistributorEngine:
             raise CommissionError(f"Settlement failed: {e}")
     
     async def _schedule_distribution(self, result: DistributionResult) -> None:
-        """Schedule distribution for future execution"""
-        try:
+        """Schedule distribution for future execution"""        try:
             logger.info(f"Scheduling distribution: {result.distribution_id}")
             
             result.status = DistributionStatus.SCHEDULED
@@ -496,8 +474,7 @@ class RevenueDistributorEngine:
             result.error_messages.append(str(e))
     
     async def _create_escrow_distribution(self, result: DistributionResult) -> None:
-        """Create escrow-based distribution"""
-        try:
+        """Create escrow-based distribution"""        try:
             logger.info(f"Creating escrow distribution: {result.distribution_id}")
             
             if not self._escrow_manager:
@@ -525,8 +502,7 @@ class RevenueDistributorEngine:
             result.error_messages.append(str(e))
     
     async def _create_conditional_distribution(self, result: DistributionResult) -> None:
-        """Create conditional distribution"""
-        try:
+        """Create conditional distribution"""        try:
             logger.info(f"Creating conditional distribution: {result.distribution_id}")
             
             # Store distribution with conditions for later evaluation
@@ -539,8 +515,7 @@ class RevenueDistributorEngine:
             result.error_messages.append(str(e))
     
     async def _queue_batch_distribution(self, result: DistributionResult) -> None:
-        """Queue distribution for batch processing"""
-        try:
+        """Queue distribution for batch processing"""        try:
             logger.info(f"Queuing batch distribution: {result.distribution_id}")
             
             result.status = DistributionStatus.QUEUED
@@ -552,8 +527,7 @@ class RevenueDistributorEngine:
             result.error_messages.append(str(e))
     
     async def _setup_recurring_distribution(self, result: DistributionResult) -> None:
-        """Setup recurring distribution"""
-        try:
+        """Setup recurring distribution"""        try:
             logger.info(f"Setting up recurring distribution: {result.distribution_id}")
             
             result.status = DistributionStatus.RECURRING_ACTIVE
@@ -566,8 +540,7 @@ class RevenueDistributorEngine:
     
     # Storage and retrieval methods
     async def _store_distribution_result(self, result: DistributionResult) -> None:
-        """Store distribution result in database"""
-        try:
+        """Store distribution result in database"""        try:
             async with self._session_factory() as session:
                 # Store in database (implementation depends on your models)
                 # This would typically involve creating records in your distribution tables
@@ -578,8 +551,7 @@ class RevenueDistributorEngine:
             raise CommissionError(f"Storage error: {e}")
     
     async def _store_scheduled_distribution(self, result: DistributionResult) -> None:
-        """Store scheduled distribution for future processing"""
-        try:
+        """Store scheduled distribution for future processing"""        try:
             # Store in Redis with expiry based on scheduled time
             if self._redis_client:
                 ttl = int((result.scheduled_for - datetime.utcnow()).total_seconds())
@@ -593,24 +565,20 @@ class RevenueDistributorEngine:
             logger.error(f"Failed to store scheduled distribution: {e}")
     
     async def _store_conditional_distribution(self, result: DistributionResult) -> None:
-        """Store conditional distribution"""
-        # Implementation for conditional distribution storage
+        """Store conditional distribution"""        # Implementation for conditional distribution storage
         pass
     
     async def _store_batch_distribution(self, result: DistributionResult) -> None:
-        """Store batch distribution"""
-        # Implementation for batch distribution storage
+        """Store batch distribution"""        # Implementation for batch distribution storage
         pass
     
     async def _store_recurring_distribution(self, result: DistributionResult) -> None:
-        """Store recurring distribution"""
-        # Implementation for recurring distribution storage
+        """Store recurring distribution"""        # Implementation for recurring distribution storage
         pass
     
     # Public API methods
     async def get_distribution_status(self, distribution_id: str) -> Optional[DistributionResult]:
-        """Get distribution status by ID"""
-        try:
+        """Get distribution status by ID"""        try:
             async with self._session_factory() as session:
                 # Query distribution from database
                 # Implementation depends on your models
@@ -621,8 +589,7 @@ class RevenueDistributorEngine:
             return None
     
     async def approve_distribution(self, distribution_id: str, approver_id: str) -> bool:
-        """Approve pending distribution"""
-        try:
+        """Approve pending distribution"""        try:
             if not self._approval_manager:
                 return False
             
@@ -638,8 +605,7 @@ class RevenueDistributorEngine:
         approver_id: str, 
         reason: str
     ) -> bool:
-        """Reject pending distribution"""
-        try:
+        """Reject pending distribution"""        try:
             if not self._approval_manager:
                 return False
             
@@ -650,8 +616,7 @@ class RevenueDistributorEngine:
             return False
     
     async def cancel_distribution(self, distribution_id: str, reason: str) -> bool:
-        """Cancel pending or scheduled distribution"""
-        try:
+        """Cancel pending or scheduled distribution"""        try:
             # Implementation for distribution cancellation
             logger.info(f"Cancelling distribution {distribution_id}: {reason}")
             return True
@@ -661,8 +626,7 @@ class RevenueDistributorEngine:
             return False
     
     async def process_scheduled_distributions(self) -> int:
-        """Process all due scheduled distributions"""
-        try:
+        """Process all due scheduled distributions"""        try:
             processed_count = 0
             # Implementation for processing scheduled distributions
             return processed_count
@@ -672,8 +636,7 @@ class RevenueDistributorEngine:
             return 0
     
     async def process_batch_distributions(self, batch_size: int = 100) -> int:
-        """Process batch distributions"""
-        try:
+        """Process batch distributions"""        try:
             processed_count = 0
             # Implementation for batch processing
             return processed_count
@@ -683,8 +646,7 @@ class RevenueDistributorEngine:
             return 0
     
     async def shutdown(self) -> None:
-        """Shutdown Revenue Distributor Engine"""
-        try:
+        """Shutdown Revenue Distributor Engine"""        try:
             logger.info("Shutting down Revenue Distributor Engine...")
             
             # Shutdown components
@@ -704,14 +666,12 @@ class RevenueDistributorEngine:
 
 # Component classes
 class SettlementProcessor:
-    """Settlement processing component"""
-    
+    """Settlement processing component"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
     
     async def initialize(self) -> None:
-        """Initialize settlement processor"""
-        pass
+        """Initialize settlement processor"""        pass
     
     async def process_settlement(
         self,
@@ -722,8 +682,7 @@ class SettlementProcessor:
         method: SettlementMethod,
         details: Dict[str, Any]
     ) -> str:
-        """Process individual settlement"""
-        # Generate settlement ID
+        """Process individual settlement"""        # Generate settlement ID
         settlement_id = f"settle_{uuid.uuid4().hex}"
         
         # Process based on method
@@ -741,38 +700,31 @@ class SettlementProcessor:
         return settlement_id
     
     async def _process_bank_transfer(self, settlement_id: str, party_id: str, amount: Decimal, currency: Currency, details: Dict[str, Any]) -> None:
-        """Process bank transfer settlement"""
-        # Implementation for bank transfer
+        """Process bank transfer settlement"""        # Implementation for bank transfer
         pass
     
     async def _process_crypto_transfer(self, settlement_id: str, party_id: str, amount: Decimal, currency: Currency, details: Dict[str, Any]) -> None:
-        """Process crypto wallet settlement"""
-        # Implementation for crypto transfer
+        """Process crypto wallet settlement"""        # Implementation for crypto transfer
         pass
     
     async def _process_digital_wallet_transfer(self, settlement_id: str, party_id: str, amount: Decimal, currency: Currency, details: Dict[str, Any]) -> None:
-        """Process digital wallet settlement"""
-        # Implementation for digital wallet
+        """Process digital wallet settlement"""        # Implementation for digital wallet
         pass
     
     async def _process_platform_credit(self, settlement_id: str, party_id: str, amount: Decimal, currency: Currency, details: Dict[str, Any]) -> None:
-        """Process platform credit settlement"""
-        # Implementation for platform credit
+        """Process platform credit settlement"""        # Implementation for platform credit
         pass
     
     async def shutdown(self) -> None:
-        """Shutdown settlement processor"""
-        pass
+        """Shutdown settlement processor"""        pass
 
 class EscrowManager:
-    """Escrow management component"""
-    
+    """Escrow management component"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
     
     async def initialize(self) -> None:
-        """Initialize escrow manager"""
-        pass
+        """Initialize escrow manager"""        pass
     
     async def create_escrow(
         self,
@@ -783,8 +735,7 @@ class EscrowManager:
         currency: Currency,
         conditions: Dict[str, Any]
     ) -> EscrowAccount:
-        """Create new escrow account"""
-        escrow_id = f"escrow_{uuid.uuid4().hex}"
+        """Create new escrow account"""        escrow_id = f"escrow_{uuid.uuid4().hex}"
         
         escrow_account = EscrowAccount(
             escrow_id=escrow_id,
@@ -804,54 +755,43 @@ class EscrowManager:
         return escrow_account
     
     async def release_escrow(self, escrow_id: str, release_reason: str) -> bool:
-        """Release funds from escrow"""
-        # Implementation for escrow release
+        """Release funds from escrow"""        # Implementation for escrow release
         return True
     
     async def shutdown(self) -> None:
-        """Shutdown escrow manager"""
-        pass
+        """Shutdown escrow manager"""        pass
 
 class ApprovalManager:
-    """Approval management component"""
-    
+    """Approval management component"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
     
     async def initialize(self) -> None:
-        """Initialize approval manager"""
-        pass
+        """Initialize approval manager"""        pass
     
     async def approve_distribution(self, distribution_id: str, approver_id: str) -> bool:
-        """Approve distribution"""
-        # Implementation for approval
+        """Approve distribution"""        # Implementation for approval
         return True
     
     async def reject_distribution(self, distribution_id: str, approver_id: str, reason: str) -> bool:
-        """Reject distribution"""
-        # Implementation for rejection
+        """Reject distribution"""        # Implementation for rejection
         return True
     
     async def shutdown(self) -> None:
-        """Shutdown approval manager"""
-        pass
+        """Shutdown approval manager"""        pass
 
 class PaymentGateway:
-    """Payment gateway component"""
-    
+    """Payment gateway component"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
     
     async def initialize(self) -> None:
-        """Initialize payment gateway"""
-        pass
+        """Initialize payment gateway"""        pass
     
     async def shutdown(self) -> None:
-        """Shutdown payment gateway"""
-        pass
+        """Shutdown payment gateway"""        pass
 
-"""
-Professional Revenue Distributor Engine
+"""Professional Revenue Distributor Engine
 © 2025 Fahed Mlaiel - Enterprise-Grade Solution
 
 This engine provides comprehensive revenue distribution capabilities with multi-party

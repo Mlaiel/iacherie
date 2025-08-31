@@ -1,5 +1,4 @@
-"""
-Content Distribution Workflows Database System
+"""Content Distribution Workflows Database System
 
 Enterprise content distribution workflow system with multi-platform orchestration,
 intelligent content adaptation, real-time synchronization, and performance
@@ -24,9 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-
-import uuid
+"""import uuid
 import json
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -46,8 +43,7 @@ logger = logging.getLogger(__name__)
 
 
 class DistributionStrategy(Enum):
-    """Content distribution strategies"""
-    SIMULTANEOUS = "simultaneous"
+    """Content distribution strategies"""    SIMULTANEOUS = "simultaneous"
     SEQUENTIAL = "sequential"
     OPTIMIZED_TIMING = "optimized_timing"
     GEOGRAPHIC_ROLLOUT = "geographic_rollout"
@@ -58,8 +54,7 @@ class DistributionStrategy(Enum):
 
 
 class ContentAdaptationType(Enum):
-    """Types of content adaptation"""
-    FORMAT_CONVERSION = "format_conversion"
+    """Types of content adaptation"""    FORMAT_CONVERSION = "format_conversion"
     RESOLUTION_SCALING = "resolution_scaling"
     ASPECT_RATIO_ADJUSTMENT = "aspect_ratio_adjustment"
     DURATION_EDITING = "duration_editing"
@@ -72,8 +67,7 @@ class ContentAdaptationType(Enum):
 
 
 class DistributionStatus(Enum):
-    """Distribution workflow status"""
-    DRAFT = "draft"
+    """Distribution workflow status"""    DRAFT = "draft"
     PREPARING = "preparing"
     ADAPTING_CONTENT = "adapting_content"
     SCHEDULING = "scheduling"
@@ -88,8 +82,7 @@ class DistributionStatus(Enum):
 
 
 class PlatformStatus(Enum):
-    """Individual platform publishing status"""
-    PENDING = "pending"
+    """Individual platform publishing status"""    PENDING = "pending"
     PREPARING = "preparing"
     UPLOADING = "uploading"
     PROCESSING = "processing"
@@ -101,8 +94,7 @@ class PlatformStatus(Enum):
 
 
 class SynchronizationType(Enum):
-    """Content synchronization types"""
-    REAL_TIME = "real_time"
+    """Content synchronization types"""    REAL_TIME = "real_time"
     BATCH = "batch"
     SCHEDULED = "scheduled"
     EVENT_DRIVEN = "event_driven"
@@ -110,10 +102,8 @@ class SynchronizationType(Enum):
 
 
 class ContentDistributionWorkflow(Base):
-    """
-    Database model for content distribution workflows
-    """
-    __tablename__ = "content_distribution_workflows"
+    """    Database model for content distribution workflows
+    """    __tablename__ = "content_distribution_workflows"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     workflow_name = Column(String(200), nullable=False)
@@ -205,10 +195,8 @@ class ContentDistributionWorkflow(Base):
 
 
 class PlatformPublication(Base):
-    """
-    Database model for individual platform publications
-    """
-    __tablename__ = "platform_publications"
+    """    Database model for individual platform publications
+    """    __tablename__ = "platform_publications"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     distribution_workflow_id = Column(UUID(as_uuid=True), ForeignKey('content_distribution_workflows.id'), nullable=False, index=True)
@@ -300,10 +288,8 @@ class PlatformPublication(Base):
 
 
 class ContentSynchronization(Base):
-    """
-    Database model for content synchronization across platforms
-    """
-    __tablename__ = "content_synchronizations"
+    """    Database model for content synchronization across platforms
+    """    __tablename__ = "content_synchronizations"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     sync_name = Column(String(200), nullable=False)
@@ -363,10 +349,8 @@ class ContentSynchronization(Base):
 
 
 class PlatformAdaptationRule(Base):
-    """
-    Database model for platform-specific content adaptation rules
-    """
-    __tablename__ = "platform_adaptation_rules"
+    """    Database model for platform-specific content adaptation rules
+    """    __tablename__ = "platform_adaptation_rules"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     rule_name = Column(String(200), nullable=False)
@@ -438,10 +422,8 @@ class PlatformAdaptationRule(Base):
 
 
 class CrossPlatformAnalytics(Base):
-    """
-    Database model for cross-platform content analytics
-    """
-    __tablename__ = "cross_platform_analytics"
+    """    Database model for cross-platform content analytics
+    """    __tablename__ = "cross_platform_analytics"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     content_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -528,10 +510,8 @@ class CrossPlatformAnalytics(Base):
 
 
 class ContentDistributionManager:
-    """
-    Enterprise content distribution management system
-    """
-    
+    """    Enterprise content distribution management system
+    """    
     def __init__(self, db_session: Session):
         self.db_session = db_session
         self.platform_adapters = self._initialize_platform_adapters()
@@ -540,8 +520,7 @@ class ContentDistributionManager:
         self.analytics_engine = CrossPlatformAnalyticsEngine(db_session)
     
     def _initialize_platform_adapters(self) -> Dict[str, Any]:
-        """Initialize platform-specific adapters"""
-        return {
+        """Initialize platform-specific adapters"""        return {
             'youtube': YouTubePlatformAdapter(),
             'tiktok': TikTokPlatformAdapter(),
             'instagram': InstagramPlatformAdapter(),
@@ -557,8 +536,7 @@ class ContentDistributionManager:
         workflow_data: Dict[str, Any],
         user_id: str
     ) -> str:
-        """
-        Create new content distribution workflow
+        """        Create new content distribution workflow
         
         Args:
             workflow_data: Workflow configuration
@@ -566,8 +544,7 @@ class ContentDistributionManager:
             
         Returns:
             Distribution workflow ID
-        """
-        # Validate platform configurations
+        """        # Validate platform configurations
         await self._validate_platform_configs(workflow_data['target_platforms'])
         
         # Create workflow record
@@ -610,16 +587,14 @@ class ContentDistributionManager:
         self,
         workflow_id: str
     ) -> Dict[str, Any]:
-        """
-        Execute content distribution workflow
+        """        Execute content distribution workflow
         
         Args:
             workflow_id: Workflow to execute
             
         Returns:
             Execution results
-        """
-        workflow = self.db_session.query(ContentDistributionWorkflow).filter(
+        """        workflow = self.db_session.query(ContentDistributionWorkflow).filter(
             ContentDistributionWorkflow.id == workflow_id
         ).first()
         
@@ -684,8 +659,7 @@ class ContentDistributionManager:
         sync_config: Dict[str, Any],
         user_id: str
     ) -> str:
-        """
-        Setup content synchronization between platforms
+        """        Setup content synchronization between platforms
         
         Args:
             sync_config: Synchronization configuration
@@ -693,8 +667,7 @@ class ContentDistributionManager:
             
         Returns:
             Synchronization ID
-        """
-        sync = ContentSynchronization(
+        """        sync = ContentSynchronization(
             sync_name=sync_config['sync_name'],
             sync_description=sync_config.get('sync_description', ''),
             user_id=user_id,
@@ -724,8 +697,7 @@ class ContentDistributionManager:
         rule_config: Dict[str, Any],
         user_id: str
     ) -> str:
-        """
-        Create platform adaptation rule
+        """        Create platform adaptation rule
         
         Args:
             rule_config: Rule configuration
@@ -733,8 +705,7 @@ class ContentDistributionManager:
             
         Returns:
             Rule ID
-        """
-        rule = PlatformAdaptationRule(
+        """        rule = PlatformAdaptationRule(
             rule_name=rule_config['rule_name'],
             rule_description=rule_config.get('rule_description', ''),
             user_id=user_id,
@@ -766,8 +737,7 @@ class ContentDistributionManager:
         time_period: str = "daily",
         days_back: int = 30
     ) -> Dict[str, Any]:
-        """
-        Get cross-platform analytics for content
+        """        Get cross-platform analytics for content
         
         Args:
             content_id: Content to analyze
@@ -776,8 +746,7 @@ class ContentDistributionManager:
             
         Returns:
             Analytics data
-        """
-        end_date = datetime.now(timezone.utc)
+        """        end_date = datetime.now(timezone.utc)
         start_date = end_date - timedelta(days=days_back)
         
         analytics = self.db_session.query(CrossPlatformAnalytics).filter(
@@ -797,8 +766,7 @@ class ContentDistributionManager:
         return self._aggregate_analytics_data(analytics)
     
     async def _validate_platform_configs(self, platform_configs: Dict[str, Any]):
-        """Validate platform configurations"""
-        for platform, config in platform_configs.items():
+        """Validate platform configurations"""        for platform, config in platform_configs.items():
             if platform not in self.platform_adapters:
                 raise ValueError(f"Unsupported platform: {platform}")
             
@@ -810,8 +778,7 @@ class ContentDistributionManager:
         workflow_id: str,
         platform_configs: Dict[str, Any]
     ):
-        """Create platform publication records"""
-        for platform, config in platform_configs.items():
+        """Create platform publication records"""        for platform, config in platform_configs.items():
             publication = PlatformPublication(
                 distribution_workflow_id=workflow_id,
                 platform_name=platform,
@@ -826,13 +793,11 @@ class ContentDistributionManager:
         self.db_session.commit()
     
     async def _start_workflow_execution(self, workflow_id: str):
-        """Start immediate workflow execution"""
-        # Implementation would start async execution
+        """Start immediate workflow execution"""        # Implementation would start async execution
         await self.execute_distribution_workflow(workflow_id)
     
     async def _adapt_content_for_platforms(self, workflow_id: str):
-        """Adapt content for each target platform"""
-        workflow = self.db_session.query(ContentDistributionWorkflow).filter(
+        """Adapt content for each target platform"""        workflow = self.db_session.query(ContentDistributionWorkflow).filter(
             ContentDistributionWorkflow.id == workflow_id
         ).first()
         
@@ -867,13 +832,11 @@ class ContentDistributionManager:
         self.db_session.commit()
     
     async def _perform_quality_checks(self, workflow_id: str):
-        """Perform quality checks on adapted content"""
-        # Implementation would run quality validation
+        """Perform quality checks on adapted content"""        # Implementation would run quality validation
         pass
     
     async def _publish_to_platforms(self, workflow_id: str) -> Dict[str, Any]:
-        """Publish content to all platforms"""
-        publications = self.db_session.query(PlatformPublication).filter(
+        """Publish content to all platforms"""        publications = self.db_session.query(PlatformPublication).filter(
             PlatformPublication.distribution_workflow_id == workflow_id,
             PlatformPublication.status == "prepared"
         ).all()
@@ -923,18 +886,15 @@ class ContentDistributionManager:
         return results
     
     async def _start_performance_monitoring(self, workflow_id: str):
-        """Start performance monitoring for published content"""
-        # Implementation would start monitoring tasks
+        """Start performance monitoring for published content"""        # Implementation would start monitoring tasks
         pass
     
     async def _schedule_next_sync(self, sync_id: str):
-        """Schedule next synchronization"""
-        # Implementation would schedule sync based on frequency
+        """Schedule next synchronization"""        # Implementation would schedule sync based on frequency
         pass
     
     def _aggregate_analytics_data(self, analytics: List[CrossPlatformAnalytics]) -> Dict[str, Any]:
-        """Aggregate analytics data from multiple records"""
-        if not analytics:
+        """Aggregate analytics data from multiple records"""        if not analytics:
             return {}
         
         # Calculate totals and averages
@@ -958,8 +918,7 @@ class ContentDistributionManager:
 
 
 class ContentProcessor:
-    """Content processing and adaptation engine"""
-    
+    """Content processing and adaptation engine"""    
     def __init__(self, db_session: Session):
         self.db_session = db_session
     
@@ -969,8 +928,7 @@ class ContentProcessor:
         platform: str,
         adaptation_rules: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process and adapt content for specific platform"""
-        # Implementation would handle content processing
+        """Process and adapt content for specific platform"""        # Implementation would handle content processing
         return {
             'processed_path': content_path,
             'adaptations_applied': [],
@@ -979,8 +937,7 @@ class ContentProcessor:
 
 
 class DistributionScheduler:
-    """Content distribution scheduling system"""
-    
+    """Content distribution scheduling system"""    
     def __init__(self, db_session: Session):
         self.db_session = db_session
     
@@ -989,14 +946,12 @@ class DistributionScheduler:
         workflow_id: str,
         scheduled_time: datetime
     ):
-        """Schedule workflow for future execution"""
-        # Implementation would add to scheduler
+        """Schedule workflow for future execution"""        # Implementation would add to scheduler
         logger.info(f"Scheduled workflow {workflow_id} for {scheduled_time}")
 
 
 class CrossPlatformAnalyticsEngine:
-    """Cross-platform analytics generation engine"""
-    
+    """Cross-platform analytics generation engine"""    
     def __init__(self, db_session: Session):
         self.db_session = db_session
     
@@ -1007,8 +962,7 @@ class CrossPlatformAnalyticsEngine:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Generate cross-platform analytics for content"""
-        # Implementation would collect and analyze platform data
+        """Generate cross-platform analytics for content"""        # Implementation would collect and analyze platform data
         return {
             'total_views': 10000,
             'total_engagement': 500,
@@ -1020,8 +974,7 @@ class CrossPlatformAnalyticsEngine:
 # Platform adapter implementations (simplified interfaces)
 class YouTubePlatformAdapter:
     async def validate_config(self, config: Dict[str, Any]):
-        """Validate YouTube-specific configuration"""
-        required_fields = ['api_key', 'channel_id', 'privacy_status']
+        """Validate YouTube-specific configuration"""        required_fields = ['api_key', 'channel_id', 'privacy_status']
         for field in required_fields:
             if field not in config:
                 raise ValueError(f"Missing required YouTube config field: {field}")
@@ -1037,8 +990,7 @@ class YouTubePlatformAdapter:
 
 class TikTokPlatformAdapter:
     async def validate_config(self, config: Dict[str, Any]):
-        """Validate TikTok-specific configuration"""
-        required_fields = ['access_token', 'user_id']
+        """Validate TikTok-specific configuration"""        required_fields = ['access_token', 'user_id']
         for field in required_fields:
             if field not in config:
                 raise ValueError(f"Missing required TikTok config field: {field}")
@@ -1054,8 +1006,7 @@ class TikTokPlatformAdapter:
 
 class InstagramPlatformAdapter:
     async def validate_config(self, config: Dict[str, Any]):
-        """Validate Instagram-specific configuration"""
-        required_fields = ['access_token', 'user_id']
+        """Validate Instagram-specific configuration"""        required_fields = ['access_token', 'user_id']
         for field in required_fields:
             if field not in config:
                 raise ValueError(f"Missing required Instagram config field: {field}")
@@ -1071,8 +1022,7 @@ class InstagramPlatformAdapter:
 
 class FacebookPlatformAdapter:
     async def validate_config(self, config: Dict[str, Any]):
-        """Validate Facebook-specific configuration"""
-        required_fields = ['access_token', 'page_id']
+        """Validate Facebook-specific configuration"""        required_fields = ['access_token', 'page_id']
         for field in required_fields:
             if field not in config:
                 raise ValueError(f"Missing required Facebook config field: {field}")
@@ -1088,8 +1038,7 @@ class FacebookPlatformAdapter:
 
 class TwitterPlatformAdapter:
     async def validate_config(self, config: Dict[str, Any]):
-        """Validate Twitter-specific configuration"""
-        required_fields = ['api_key', 'api_secret', 'access_token', 'access_token_secret']
+        """Validate Twitter-specific configuration"""        required_fields = ['api_key', 'api_secret', 'access_token', 'access_token_secret']
         for field in required_fields:
             if field not in config:
                 raise ValueError(f"Missing required Twitter config field: {field}")
@@ -1105,8 +1054,7 @@ class TwitterPlatformAdapter:
 
 class LinkedInPlatformAdapter:
     async def validate_config(self, config: Dict[str, Any]):
-        """Validate LinkedIn-specific configuration"""
-        required_fields = ['access_token', 'person_id']
+        """Validate LinkedIn-specific configuration"""        required_fields = ['access_token', 'person_id']
         for field in required_fields:
             if field not in config:
                 raise ValueError(f"Missing required LinkedIn config field: {field}")
@@ -1122,8 +1070,7 @@ class LinkedInPlatformAdapter:
 
 class TwitchPlatformAdapter:
     async def validate_config(self, config: Dict[str, Any]):
-        """Validate Twitch-specific configuration"""
-        required_fields = ['client_id', 'access_token', 'broadcaster_id']
+        """Validate Twitch-specific configuration"""        required_fields = ['client_id', 'access_token', 'broadcaster_id']
         for field in required_fields:
             if field not in config:
                 raise ValueError(f"Missing required Twitch config field: {field}")
@@ -1139,8 +1086,7 @@ class TwitchPlatformAdapter:
 
 class SpotifyPlatformAdapter:
     async def validate_config(self, config: Dict[str, Any]):
-        """Validate Spotify-specific configuration"""
-        required_fields = ['client_id', 'client_secret', 'artist_id']
+        """Validate Spotify-specific configuration"""        required_fields = ['client_id', 'client_secret', 'artist_id']
         for field in required_fields:
             if field not in config:
                 raise ValueError(f"Missing required Spotify config field: {field}")

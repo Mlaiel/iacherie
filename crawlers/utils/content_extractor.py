@@ -1,5 +1,4 @@
-"""
-Content Extractor Module
+"""Content Extractor Module
 ========================
 
 Professional content extraction for web crawling with AI-powered analysis.
@@ -11,9 +10,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
-"""
-
-import re
+"""import re
 import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Tuple, Any
@@ -43,8 +40,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ExtractedContent:
-    """Structure for extracted content."""
-    title: Optional[str] = None
+    """Structure for extracted content."""    title: Optional[str] = None
     description: Optional[str] = None
     content: Optional[str] = None
     clean_text: Optional[str] = None
@@ -90,8 +86,7 @@ class ExtractedContent:
 
 @dataclass
 class SocialMediaContent:
-    """Structure for social media content."""
-    platform: str
+    """Structure for social media content."""    platform: str
     content_type: str
     text: Optional[str] = None
     author: Optional[str] = None
@@ -134,8 +129,7 @@ class SocialMediaContent:
             self.content_warnings = []
 
 class ContentExtractor:
-    """
-    Professional content extraction system.
+    """    Professional content extraction system.
     
     Features:
     - Intelligent HTML parsing
@@ -148,11 +142,9 @@ class ContentExtractor:
     - Contact information parsing
     - Structured data extraction
     - Anti-bot detection handling
-    """
-    
+    """    
     def __init__(self):
-        """Initialize content extractor."""
-        self.social_media_patterns = self._load_social_media_patterns()
+        """Initialize content extractor."""        self.social_media_patterns = self._load_social_media_patterns()
         self.contact_patterns = self._load_contact_patterns()
         self.content_selectors = self._load_content_selectors()
         
@@ -160,8 +152,7 @@ class ContentExtractor:
         self.readability_doc = None
     
     def _load_social_media_patterns(self) -> Dict[str, Dict[str, str]]:
-        """Load social media URL patterns."""
-        return {
+        """Load social media URL patterns."""        return {
             'youtube': {
                 'channel': r'youtube\.com/(?:c/|channel/|user/|@)([^/?]+)',
                 'video': r'youtube\.com/watch\?v=([^&]+)',
@@ -197,8 +188,7 @@ class ContentExtractor:
         }
     
     def _load_contact_patterns(self) -> Dict[str, str]:
-        """Load contact information patterns."""
-        return {
+        """Load contact information patterns."""        return {
             'email': r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b',
             'phone': r'(\+?1?[-.\s]?)?\(?([0-9]{3})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})',
             'phone_international': r'\+\d{1,3}[-.\s]?\d{1,14}',
@@ -207,8 +197,7 @@ class ContentExtractor:
         }
     
     def _load_content_selectors(self) -> Dict[str, List[str]]:
-        """Load CSS selectors for content extraction."""
-        return {
+        """Load CSS selectors for content extraction."""        return {
             'title': [
                 'h1',
                 '[data-testid="title"]',
@@ -258,8 +247,7 @@ class ContentExtractor:
         url: str,
         driver=None
     ) -> ExtractedContent:
-        """
-        Extract comprehensive content from HTML.
+        """        Extract comprehensive content from HTML.
         
         Args:
             html: HTML content
@@ -268,8 +256,7 @@ class ContentExtractor:
             
         Returns:
             ExtractedContent object
-        """
-        soup = BeautifulSoup(html, 'html.parser')
+        """        soup = BeautifulSoup(html, 'html.parser')
         
         # Remove unwanted elements
         self._clean_html(soup)
@@ -348,8 +335,7 @@ class ContentExtractor:
         )
     
     def _clean_html(self, soup: BeautifulSoup) -> None:
-        """Remove unwanted HTML elements."""
-        # Remove scripts, styles, and comments
+        """Remove unwanted HTML elements."""        # Remove scripts, styles, and comments
         for element in soup(['script', 'style', 'nav', 'footer', 'header']):
             element.decompose()
         
@@ -375,8 +361,7 @@ class ContentExtractor:
                 element.decompose()
     
     def _extract_title(self, soup: BeautifulSoup) -> Optional[str]:
-        """Extract page title."""
-        # Try multiple selectors
+        """Extract page title."""        # Try multiple selectors
         for selector in self.content_selectors['title']:
             element = soup.select_one(selector)
             if element and element.get_text(strip=True):
@@ -390,8 +375,7 @@ class ContentExtractor:
         return None
     
     def _extract_description(self, soup: BeautifulSoup) -> Optional[str]:
-        """Extract page description."""
-        # Try meta descriptions first
+        """Extract page description."""        # Try meta descriptions first
         meta_desc = soup.find('meta', {'name': 'description'})
         if meta_desc and meta_desc.get('content'):
             return meta_desc['content'].strip()
@@ -410,8 +394,7 @@ class ContentExtractor:
         return None
     
     def _extract_main_content(self, soup: BeautifulSoup) -> Optional[str]:
-        """Extract main content."""
-        # Try content selectors
+        """Extract main content."""        # Try content selectors
         for selector in self.content_selectors['content']:
             element = soup.select_one(selector)
             if element:
@@ -425,8 +408,7 @@ class ContentExtractor:
         return str(soup)
     
     def _extract_clean_text(self, soup: BeautifulSoup) -> Optional[str]:
-        """Extract clean text content."""
-        # Try to use readability for better content extraction
+        """Extract clean text content."""        # Try to use readability for better content extraction
         try:
             if self.readability_doc:
                 clean_html = self.readability_doc.summary()
@@ -445,8 +427,7 @@ class ContentExtractor:
         return soup.get_text(separator=' ', strip=True)
     
     def _extract_metadata(self, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Extract page metadata."""
-        metadata = {}
+        """Extract page metadata."""        metadata = {}
         
         # Extract all meta tags
         for meta in soup.find_all('meta'):
@@ -472,8 +453,7 @@ class ContentExtractor:
         return metadata
     
     def _extract_links(self, soup: BeautifulSoup, base_url: str) -> List[Dict[str, str]]:
-        """Extract all links."""
-        links = []
+        """Extract all links."""        links = []
         
         for link in soup.find_all('a', href=True):
             href = link['href']
@@ -492,8 +472,7 @@ class ContentExtractor:
         return links
     
     def _extract_images(self, soup: BeautifulSoup, base_url: str) -> List[Dict[str, str]]:
-        """Extract all images."""
-        images = []
+        """Extract all images."""        images = []
         
         for img in soup.find_all('img', src=True):
             src = img['src']
@@ -512,8 +491,7 @@ class ContentExtractor:
         return images
     
     def _extract_videos(self, soup: BeautifulSoup, base_url: str) -> List[Dict[str, str]]:
-        """Extract all videos."""
-        videos = []
+        """Extract all videos."""        videos = []
         
         # Extract video elements
         for video in soup.find_all('video'):
@@ -547,8 +525,7 @@ class ContentExtractor:
         return videos
     
     def _extract_social_media_links(self, soup: BeautifulSoup, base_url: str) -> List[Dict[str, str]]:
-        """Extract social media links."""
-        social_links = []
+        """Extract social media links."""        social_links = []
         
         for link in soup.find_all('a', href=True):
             href = link['href']
@@ -569,8 +546,7 @@ class ContentExtractor:
         return social_links
     
     def _extract_contact_info(self, text: str) -> Dict[str, Any]:
-        """Extract contact information."""
-        if not text:
+        """Extract contact information."""        if not text:
             return {}
         
         contact = {}
@@ -603,8 +579,7 @@ class ContentExtractor:
         return contact
     
     def _detect_language(self, soup: BeautifulSoup) -> Optional[str]:
-        """Detect content language."""
-        # Check HTML lang attribute
+        """Detect content language."""        # Check HTML lang attribute
         html_tag = soup.find('html')
         if html_tag and html_tag.get('lang'):
             return html_tag['lang']
@@ -622,8 +597,7 @@ class ContentExtractor:
         return None
     
     def _extract_keywords(self, text: str) -> List[str]:
-        """Extract keywords from text."""
-        if not text:
+        """Extract keywords from text."""        if not text:
             return []
         
         # Simple keyword extraction (in production, use more sophisticated NLP)
@@ -653,8 +627,7 @@ class ContentExtractor:
         return [word for word, freq in sorted_words[:20]]
     
     def _extract_author(self, soup: BeautifulSoup) -> Optional[str]:
-        """Extract author information."""
-        for selector in self.content_selectors['author']:
+        """Extract author information."""        for selector in self.content_selectors['author']:
             element = soup.select_one(selector)
             if element:
                 if element.name == 'meta':
@@ -665,8 +638,7 @@ class ContentExtractor:
         return None
     
     def _extract_publish_date(self, soup: BeautifulSoup) -> Optional[datetime]:
-        """Extract publication date."""
-        for selector in self.content_selectors['date']:
+        """Extract publication date."""        for selector in self.content_selectors['date']:
             element = soup.select_one(selector)
             if element:
                 date_str = None
@@ -701,8 +673,7 @@ class ContentExtractor:
         return None
     
     async def _extract_dynamic_content(self, driver) -> Optional[Dict[str, str]]:
-        """Extract content from dynamic pages using Selenium."""
-        try:
+        """Extract content from dynamic pages using Selenium."""        try:
             # Wait for content to load
             await asyncio.sleep(2)
             
@@ -745,8 +716,7 @@ class ContentExtractor:
         platform: str,
         url: str
     ) -> Optional[SocialMediaContent]:
-        """Extract social media specific content."""
-        soup = BeautifulSoup(html, 'html.parser')
+        """Extract social media specific content."""        soup = BeautifulSoup(html, 'html.parser')
         
         if platform.lower() == 'twitter':
             return self._extract_twitter_content(soup, url)
@@ -762,8 +732,7 @@ class ContentExtractor:
             return None
     
     def _extract_twitter_content(self, soup: BeautifulSoup, url: str) -> Optional[SocialMediaContent]:
-        """Extract Twitter-specific content."""
-        # Twitter content extraction logic
+        """Extract Twitter-specific content."""        # Twitter content extraction logic
         text_element = soup.select_one('[data-testid="tweetText"]')
         text = text_element.get_text(strip=True) if text_element else None
         
@@ -785,8 +754,7 @@ class ContentExtractor:
         )
     
     def _extract_instagram_content(self, soup: BeautifulSoup, url: str) -> Optional[SocialMediaContent]:
-        """Extract Instagram-specific content."""
-        # Instagram content extraction logic
+        """Extract Instagram-specific content."""        # Instagram content extraction logic
         return SocialMediaContent(
             platform='instagram',
             content_type='post',
@@ -794,8 +762,7 @@ class ContentExtractor:
         )
     
     def _extract_youtube_content(self, soup: BeautifulSoup, url: str) -> Optional[SocialMediaContent]:
-        """Extract YouTube-specific content."""
-        # YouTube content extraction logic
+        """Extract YouTube-specific content."""        # YouTube content extraction logic
         return SocialMediaContent(
             platform='youtube',
             content_type='video',
@@ -803,8 +770,7 @@ class ContentExtractor:
         )
     
     def _extract_tiktok_content(self, soup: BeautifulSoup, url: str) -> Optional[SocialMediaContent]:
-        """Extract TikTok-specific content."""
-        # TikTok content extraction logic
+        """Extract TikTok-specific content."""        # TikTok content extraction logic
         return SocialMediaContent(
             platform='tiktok',
             content_type='video',
@@ -812,8 +778,7 @@ class ContentExtractor:
         )
     
     def _extract_facebook_content(self, soup: BeautifulSoup, url: str) -> Optional[SocialMediaContent]:
-        """Extract Facebook-specific content."""
-        # Facebook content extraction logic
+        """Extract Facebook-specific content."""        # Facebook content extraction logic
         return SocialMediaContent(
             platform='facebook',
             content_type='post',
@@ -821,8 +786,7 @@ class ContentExtractor:
         )
     
     def _calculate_readability(self, text: str) -> float:
-        """Calculate readability score using multiple metrics."""
-        if not text or len(text) < 50:
+        """Calculate readability score using multiple metrics."""        if not text or len(text) < 50:
             return 0.0
         
         try:
@@ -839,8 +803,7 @@ class ContentExtractor:
             return 0.5  # Default neutral score
     
     def _analyze_sentiment(self, text: str) -> float:
-        """Analyze sentiment of text content."""
-        if not text or len(text) < 10:
+        """Analyze sentiment of text content."""        if not text or len(text) < 10:
             return 0.0
         
         try:
@@ -878,8 +841,7 @@ class ContentExtractor:
             return 0.0
     
     def _assess_content_quality(self, text: str, word_count: int) -> float:
-        """Assess overall content quality."""
-        if not text or word_count < 10:
+        """Assess overall content quality."""        if not text or word_count < 10:
             return 0.0
         
         quality_score = 0.0
@@ -933,8 +895,7 @@ class ContentExtractor:
             return 0.5
     
     def _generate_content_fingerprint(self, text: str) -> Optional[str]:
-        """Generate content fingerprint for duplicate detection."""
-        if not text or len(text) < 50:
+        """Generate content fingerprint for duplicate detection."""        if not text or len(text) < 50:
             return None
         
         try:
@@ -950,8 +911,7 @@ class ContentExtractor:
             return None
     
     def _extract_entities(self, text: str) -> List[Dict[str, str]]:
-        """Extract named entities from text."""
-        entities = []
+        """Extract named entities from text."""        entities = []
         
         if not text or len(text) < 20:
             return entities
@@ -1002,8 +962,7 @@ class ContentExtractor:
             return entities
     
     def _classify_topics(self, text: str) -> List[str]:
-        """Classify content into topic categories."""
-        if not text or len(text) < 100:
+        """Classify content into topic categories."""        if not text or len(text) < 100:
             return []
         
         try:
@@ -1073,8 +1032,7 @@ class ContentExtractor:
             return []
     
     def _determine_content_type(self, soup: BeautifulSoup, metadata: Dict) -> str:
-        """Determine the type of content."""
-        try:
+        """Determine the type of content."""        try:
             # Check Open Graph type
             og_type = metadata.get('og:type', '').lower()
             if og_type:
@@ -1107,8 +1065,7 @@ class ContentExtractor:
             return 'webpage'
     
     async def extract_multimedia_content(self, soup: BeautifulSoup, base_url: str) -> Dict[str, List]:
-        """Extract and analyze multimedia content."""
-        multimedia = {
+        """Extract and analyze multimedia content."""        multimedia = {
             'images': [],
             'videos': [],
             'audio': [],
@@ -1221,8 +1178,7 @@ class ContentExtractor:
         return multimedia
     
     def _get_image_format(self, url: str) -> str:
-        """Determine image format from URL."""
-        url_lower = url.lower()
+        """Determine image format from URL."""        url_lower = url.lower()
         if '.jpg' in url_lower or '.jpeg' in url_lower:
             return 'jpeg'
         elif '.png' in url_lower:
@@ -1237,8 +1193,7 @@ class ContentExtractor:
             return 'unknown'
     
     def _categorize_image_size(self, img) -> str:
-        """Categorize image size."""
-        try:
+        """Categorize image size."""        try:
             width = int(img.get('width', 0))
             height = int(img.get('height', 0))
             
@@ -1260,8 +1215,7 @@ class ContentExtractor:
             return 'unknown'
     
     def _identify_video_platform(self, url: str) -> str:
-        """Identify video platform from URL."""
-        url_lower = url.lower()
+        """Identify video platform from URL."""        url_lower = url.lower()
         if 'youtube' in url_lower:
             return 'youtube'
         elif 'vimeo' in url_lower:
@@ -1276,8 +1230,7 @@ class ContentExtractor:
             return 'unknown'
     
     def _get_audio_format(self, url: str) -> str:
-        """Determine audio format from URL."""
-        url_lower = url.lower()
+        """Determine audio format from URL."""        url_lower = url.lower()
         if '.mp3' in url_lower:
             return 'mp3'
         elif '.wav' in url_lower:
@@ -1292,8 +1245,7 @@ class ContentExtractor:
             return 'unknown'
     
     def _get_document_format(self, url: str) -> str:
-        """Determine document format from URL."""
-        url_lower = url.lower()
+        """Determine document format from URL."""        url_lower = url.lower()
         if '.pdf' in url_lower:
             return 'pdf'
         elif '.doc' in url_lower:
@@ -1314,8 +1266,7 @@ class ContentExtractor:
             return 'unknown'
     
     async def extract_schema_markup(self, soup: BeautifulSoup) -> List[Dict]:
-        """Extract structured data markup."""
-        structured_data = []
+        """Extract structured data markup."""        structured_data = []
         
         try:
             # JSON-LD
@@ -1362,8 +1313,7 @@ class ContentExtractor:
         return structured_data
     
     def _extract_microdata(self, element) -> Dict:
-        """Extract microdata from element."""
-        data = {}
+        """Extract microdata from element."""        data = {}
         
         # Get item type
         itemtype = element.get('itemtype')
@@ -1394,8 +1344,7 @@ class ContentExtractor:
         return data
     
     def _extract_rdfa(self, element) -> Dict:
-        """Extract RDFa from element."""
-        data = {}
+        """Extract RDFa from element."""        data = {}
         
         # Get type
         typeof = element.get('typeof')
@@ -1420,8 +1369,7 @@ class ContentExtractor:
 
 # Utility functions for content extraction
 async def extract_content_from_url(url: str, timeout: int = 30) -> Optional[ExtractedContent]:
-    """Extract content directly from URL."""
-    try:
+    """Extract content directly from URL."""    try:
         async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=timeout)) as session:
             async with session.get(url) as response:
                 if response.status == 200:
@@ -1434,8 +1382,7 @@ async def extract_content_from_url(url: str, timeout: int = 30) -> Optional[Extr
     return None
 
 def clean_extracted_text(text: str) -> str:
-    """Clean and normalize extracted text."""
-    if not text:
+    """Clean and normalize extracted text."""    if not text:
         return ""
     
     # Remove excessive whitespace
@@ -1453,8 +1400,7 @@ def clean_extracted_text(text: str) -> str:
     return text.strip()
 
 def extract_domain_info(url: str) -> Dict[str, str]:
-    """Extract domain information from URL."""
-    try:
+    """Extract domain information from URL."""    try:
         parsed = urlparse(url)
         return {
             'domain': parsed.netloc,

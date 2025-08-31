@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-IA Influencer Agent - Advanced Business Models Configuration
+"""IA Influencer Agent - Advanced Business Models Configuration
 
 This module provides comprehensive configuration management for the notification system,
 including business rules, templates, channels, and performance settings.
@@ -15,9 +14,7 @@ Architecture Pattern: Configuration Management with Business Rules
 Processing Level: Enterprise Configuration Management
 Business Logic Integration: Complete Configuration Control
 Configuration Design: Multi-Environment with Business Context
-"""
-
-import os
+"""import os
 import json
 import yaml
 from datetime import datetime, timezone
@@ -28,8 +25,7 @@ from pathlib import Path
 
 
 class EnvironmentType(Enum):
-    """Environment types for configuration."""
-    DEVELOPMENT = "development"
+    """Environment types for configuration."""    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -37,8 +33,7 @@ class EnvironmentType(Enum):
 
 
 class ConfigurationCategory(Enum):
-    """Configuration categories."""
-    BUSINESS_RULES = "business_rules"
+    """Configuration categories."""    BUSINESS_RULES = "business_rules"
     NOTIFICATION_SETTINGS = "notification_settings"
     CHANNEL_CONFIG = "channel_config"
     TEMPLATE_CONFIG = "template_config"
@@ -50,8 +45,7 @@ class ConfigurationCategory(Enum):
 
 @dataclass
 class ConfigurationSource:
-    """Configuration source information."""
-    source_type: str  # file, database, api, environment
+    """Configuration source information."""    source_type: str  # file, database, api, environment
     source_path: str
     priority: int = 100
     is_encrypted: bool = False
@@ -62,8 +56,7 @@ class ConfigurationSource:
 
 @dataclass
 class BusinessRuleConfig:
-    """Business rule configuration."""
-    rule_name: str
+    """Business rule configuration."""    rule_name: str
     rule_category: str
     rule_priority: int
     conditions: Dict[str, Any]
@@ -78,8 +71,7 @@ class BusinessRuleConfig:
 
 @dataclass
 class ChannelConfiguration:
-    """Channel-specific configuration."""
-    channel_name: str
+    """Channel-specific configuration."""    channel_name: str
     provider: str
     enabled: bool = True
     
@@ -112,8 +104,7 @@ class ChannelConfiguration:
 
 @dataclass
 class TemplateConfiguration:
-    """Template system configuration."""
-    template_engine: str = "jinja2"
+    """Template system configuration."""    template_engine: str = "jinja2"
     template_directory: str = "templates"
     cache_enabled: bool = True
     cache_ttl_seconds: int = 3600
@@ -139,8 +130,7 @@ class TemplateConfiguration:
 
 @dataclass
 class SecurityConfiguration:
-    """Security configuration for notifications."""
-    
+    """Security configuration for notifications."""    
     # Authentication & Authorization
     require_authentication: bool = True
     api_key_required: bool = True
@@ -177,8 +167,7 @@ class SecurityConfiguration:
 
 @dataclass
 class PerformanceConfiguration:
-    """Performance optimization configuration."""
-    
+    """Performance optimization configuration."""    
     # Processing Settings
     max_concurrent_notifications: int = 1000
     batch_processing_enabled: bool = True
@@ -214,8 +203,7 @@ class PerformanceConfiguration:
 
 @dataclass
 class IntegrationConfiguration:
-    """External integration configuration."""
-    
+    """External integration configuration."""    
     # AI Services
     ai_personalization_enabled: bool = True
     ai_priority_classification: bool = True
@@ -244,13 +232,11 @@ class IntegrationConfiguration:
 
 
 class NotificationConfigurationManager:
-    """
-    Advanced configuration management for the notification system.
+    """    Advanced configuration management for the notification system.
     
     Provides comprehensive configuration loading, validation, and management
     with support for multiple environments, business rules, and real-time updates.
-    """
-    
+    """    
     def __init__(
         self,
         environment: EnvironmentType = EnvironmentType.DEVELOPMENT,
@@ -267,8 +253,7 @@ class NotificationConfigurationManager:
         self._initialize_default_configurations()
     
     def _initialize_default_configurations(self):
-        """Initialize default configuration values."""
-        
+        """Initialize default configuration values."""        
         # Business Rules Configuration
         self._configurations[ConfigurationCategory.BUSINESS_RULES.value] = {
             "content_protection_rules": [
@@ -427,16 +412,14 @@ class NotificationConfigurationManager:
         )
     
     def get_configuration(self, category: ConfigurationCategory) -> Dict[str, Any]:
-        """Get configuration for specified category."""
-        return self._configurations.get(category.value, {})
+        """Get configuration for specified category."""        return self._configurations.get(category.value, {})
     
     def export_configuration(
         self,
         category: Optional[ConfigurationCategory] = None,
         format: str = "yaml"
     ) -> str:
-        """Export configuration as string in specified format."""
-        if category:
+        """Export configuration as string in specified format."""        if category:
             data = {category.value: self.get_configuration(category)}
         else:
             data = self._configurations
@@ -479,8 +462,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ChannelConfig:
-    """Channel-specific configuration."""
-    enabled: bool = True
+    """Channel-specific configuration."""    enabled: bool = True
     provider: Optional[str] = None
     api_key: Optional[str] = None
     api_secret: Optional[str] = None
@@ -501,8 +483,7 @@ class ChannelConfig:
 
 @dataclass
 class AIConfig:
-    """AI features configuration."""
-    enabled: bool = True
+    """AI features configuration."""    enabled: bool = True
     priority_classification_enabled: bool = True
     personalization_enabled: bool = True
     template_optimization_enabled: bool = True
@@ -521,8 +502,7 @@ class AIConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security and authentication configuration."""
-    encryption_enabled: bool = True
+    """Security and authentication configuration."""    encryption_enabled: bool = True
     encryption_algorithm: str = "AES-256"
     jwt_secret: Optional[str] = None
     jwt_expiry: int = 3600  # seconds
@@ -541,8 +521,7 @@ class SecurityConfig:
 
 @dataclass
 class AnalyticsConfig:
-    """Analytics and monitoring configuration."""
-    enabled: bool = True
+    """Analytics and monitoring configuration."""    enabled: bool = True
     real_time_tracking: bool = True
     performance_monitoring: bool = True
     business_intelligence: bool = True
@@ -560,8 +539,7 @@ class AnalyticsConfig:
 
 @dataclass
 class WorkflowConfig:
-    """Workflow orchestration configuration."""
-    enabled: bool = True
+    """Workflow orchestration configuration."""    enabled: bool = True
     max_workflow_steps: int = 20
     step_timeout: int = 300  # seconds
     workflow_timeout: int = 3600  # seconds
@@ -578,8 +556,7 @@ class WorkflowConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance optimization configuration."""
-    caching_enabled: bool = True
+    """Performance optimization configuration."""    caching_enabled: bool = True
     cache_ttl: int = 3600  # seconds
     cache_max_size: int = 10000
     connection_pooling: bool = True
@@ -596,22 +573,18 @@ class PerformanceConfig:
 
 
 class NotificationConfig:
-    """
-    Enterprise notification system configuration.
+    """    Enterprise notification system configuration.
     
     Provides comprehensive configuration management for all aspects of the
     notification system including channels, AI features, security, analytics,
     and performance optimization.
-    """
-    
+    """    
     def __init__(self, config_data: Optional[Dict[str, Any]] = None):
-        """
-        Initialize notification configuration.
+        """        Initialize notification configuration.
         
         Args:
             config_data: Optional configuration dictionary
-        """
-        # Load configuration from various sources
+        """        # Load configuration from various sources
         self._load_configuration(config_data)
         
         # Initialize component configurations
@@ -623,8 +596,7 @@ class NotificationConfig:
         logger.info(f"NotificationConfig initialized for environment: {self.environment}")
     
     def _load_configuration(self, config_data: Optional[Dict[str, Any]]):
-        """Load configuration from multiple sources."""
-        # Default configuration
+        """Load configuration from multiple sources."""        # Default configuration
         self._config = self._get_default_config()
         
         # Load from environment variables
@@ -643,8 +615,7 @@ class NotificationConfig:
         self.log_level = self._config.get("log_level", "DEBUG" if self.debug else "INFO")
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration values."""
-        return {
+        """Get default configuration values."""        return {
             "environment": "development",
             "debug": True,
             "log_level": "DEBUG",
@@ -803,8 +774,7 @@ class NotificationConfig:
         }
     
     def _load_from_environment(self):
-        """Load configuration from environment variables."""
-        env_mappings = {
+        """Load configuration from environment variables."""        env_mappings = {
             "NOTIFICATION_DEBUG": ("debug", bool),
             "NOTIFICATION_LOG_LEVEL": ("log_level", str),
             "NOTIFICATION_ENVIRONMENT": ("environment", str),
@@ -834,8 +804,7 @@ class NotificationConfig:
                     logger.warning(f"Invalid environment variable {env_var}: {e}")
     
     def _load_from_file(self):
-        """Load configuration from file."""
-        config_files = [
+        """Load configuration from file."""        config_files = [
             "notification_config.json",
             "config/notification.json",
             "/etc/notification/config.json"
@@ -855,8 +824,7 @@ class NotificationConfig:
                     logger.warning(f"Failed to load config from {config_file}: {e}")
     
     def _apply_config_override(self, override_config: Dict[str, Any]):
-        """Apply configuration override."""
-        def deep_merge(base: Dict, override: Dict):
+        """Apply configuration override."""        def deep_merge(base: Dict, override: Dict):
             for key, value in override.items():
                 if key in base and isinstance(base[key], dict) and isinstance(value, dict):
                     deep_merge(base[key], value)
@@ -866,8 +834,7 @@ class NotificationConfig:
         deep_merge(self._config, override_config)
     
     def _set_nested_config(self, path: str, value: Any):
-        """Set nested configuration value using dot notation."""
-        keys = path.split('.')
+        """Set nested configuration value using dot notation."""        keys = path.split('.')
         current = self._config
         
         for key in keys[:-1]:
@@ -878,8 +845,7 @@ class NotificationConfig:
         current[keys[-1]] = value
     
     def _initialize_component_configs(self):
-        """Initialize typed configuration objects for components."""
-        # Channel configurations
+        """Initialize typed configuration objects for components."""        # Channel configurations
         self.channels = {}
         for channel_name, channel_config in self._config.get("channels", {}).items():
             self.channels[channel_name] = ChannelConfig(**channel_config)
@@ -905,8 +871,7 @@ class NotificationConfig:
         self.performance = PerformanceConfig(**performance_config)
     
     def _validate_configuration(self):
-        """Validate configuration for consistency and required values."""
-        errors = []
+        """Validate configuration for consistency and required values."""        errors = []
         
         # Validate required API keys for enabled channels
         for channel_name, channel_config in self.channels.items():
@@ -935,8 +900,7 @@ class NotificationConfig:
     # Public methods for accessing configuration
     
     def get(self, key: str, default: Any = None) -> Any:
-        """Get configuration value by key path."""
-        keys = key.split('.')
+        """Get configuration value by key path."""        keys = key.split('.')
         current = self._config
         
         try:
@@ -947,43 +911,34 @@ class NotificationConfig:
             return default
     
     def get_channel_config(self, channel: str) -> Optional[ChannelConfig]:
-        """Get configuration for specific channel."""
-        return self.channels.get(channel)
+        """Get configuration for specific channel."""        return self.channels.get(channel)
     
     def get_business_rules(self) -> Dict[str, Any]:
-        """Get business rules configuration."""
-        return self._config.get("business_rules", {})
+        """Get business rules configuration."""        return self._config.get("business_rules", {})
     
     def get_business_rule(self, rule_name: str) -> Dict[str, Any]:
-        """Get specific business rule configuration."""
-        return self._config.get("business_rules", {}).get(rule_name, {})
+        """Get specific business rule configuration."""        return self._config.get("business_rules", {}).get(rule_name, {})
     
     def is_channel_enabled(self, channel: str) -> bool:
-        """Check if channel is enabled."""
-        channel_config = self.get_channel_config(channel)
+        """Check if channel is enabled."""        channel_config = self.get_channel_config(channel)
         return channel_config.enabled if channel_config else False
     
     def is_ai_enabled(self) -> bool:
-        """Check if AI features are enabled."""
-        return self.ai.enabled
+        """Check if AI features are enabled."""        return self.ai.enabled
     
     def is_analytics_enabled(self) -> bool:
-        """Check if analytics are enabled."""
-        return self.analytics.enabled
+        """Check if analytics are enabled."""        return self.analytics.enabled
     
     def is_workflows_enabled(self) -> bool:
-        """Check if workflows are enabled."""
-        return self.workflows.enabled
+        """Check if workflows are enabled."""        return self.workflows.enabled
     
     def update_config(self, updates: Dict[str, Any]):
-        """Update configuration at runtime."""
-        self._apply_config_override(updates)
+        """Update configuration at runtime."""        self._apply_config_override(updates)
         self._initialize_component_configs()
         logger.info("Configuration updated at runtime")
     
     def export_config(self, include_secrets: bool = False) -> Dict[str, Any]:
-        """Export configuration for debugging or backup."""
-        config_copy = self._config.copy()
+        """Export configuration for debugging or backup."""        config_copy = self._config.copy()
         
         if not include_secrets:
             # Remove sensitive information
@@ -1003,8 +958,7 @@ class NotificationConfig:
         return config_copy
     
     def get_health_check_config(self) -> Dict[str, Any]:
-        """Get health check configuration."""
-        return {
+        """Get health check configuration."""        return {
             "enabled": True,
             "interval": self.get("system.health_check_interval", 60),
             "checks": {
@@ -1017,9 +971,7 @@ class NotificationConfig:
         }
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary."""
-        return self._config.copy()
+        """Convert configuration to dictionary."""        return self._config.copy()
     
     def __str__(self) -> str:
-        """String representation of configuration."""
-        return f"NotificationConfig(environment={self.environment}, channels={len(self.channels)}, ai_enabled={self.ai.enabled})"
+        """String representation of configuration."""        return f"NotificationConfig(environment={self.environment}, channels={len(self.channels)}, ai_enabled={self.ai.enabled})"

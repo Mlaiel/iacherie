@@ -1,5 +1,4 @@
-"""
-AI Configuration Index - IA-Influencer Agent Platform
+"""AI Configuration Index - IA-Influencer Agent Platform
 ====================================================
 
 Central index for all AI configuration modules and services.
@@ -15,9 +14,7 @@ without explicit written permission is STRICTLY PROHIBITED and will be
 prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-from typing import Dict, List, Optional, Union, Any, Type
+"""from typing import Dict, List, Optional, Union, Any, Type
 import logging
 import os
 from datetime import datetime
@@ -49,23 +46,19 @@ logger = logging.getLogger(__name__)
 
 
 class AIConfigRegistry:
-    """
-    Central registry for all AI configuration modules.
+    """    Central registry for all AI configuration modules.
     
     Provides unified access to all AI configurations, validation,
     and management capabilities for the IA-Influencer platform.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize AI configuration registry."""
-        self._configs = {}
+        """Initialize AI configuration registry."""        self._configs = {}
         self._config_classes = {}
         self._initialization_time = datetime.now()
         self._register_all_configs()
     
     def _register_all_configs(self):
-        """Register all available AI configurations."""
-        
+        """Register all available AI configurations."""        
         # Core AI Configurations
         self._register_config("ai_model", AIModelConfig, ai_model_config)
         self._register_config("fingerprint", FingerprintAIConfig, fingerprint_ai_config)
@@ -87,46 +80,38 @@ class AIConfigRegistry:
         logger.info(f"Registered {len(self._configs)} AI configuration modules")
     
     def _register_config(self, name: str, config_class: Type, config_instance: Any):
-        """Register a configuration module."""
-        self._configs[name] = config_instance
+        """Register a configuration module."""        self._configs[name] = config_instance
         self._config_classes[name] = config_class
     
     def get_config(self, config_name: str) -> Optional[Any]:
-        """
-        Get configuration instance by name.
+        """        Get configuration instance by name.
         
         Args:
             config_name: Name of the configuration module
             
         Returns:
             Configuration instance or None if not found
-        """
-        return self._configs.get(config_name)
+        """        return self._configs.get(config_name)
     
     def get_config_class(self, config_name: str) -> Optional[Type]:
-        """
-        Get configuration class by name.
+        """        Get configuration class by name.
         
         Args:
             config_name: Name of the configuration module
             
         Returns:
             Configuration class or None if not found
-        """
-        return self._config_classes.get(config_name)
+        """        return self._config_classes.get(config_name)
     
     def list_configs(self) -> List[str]:
-        """Get list of all registered configuration names."""
-        return list(self._configs.keys())
+        """Get list of all registered configuration names."""        return list(self._configs.keys())
     
     def validate_all_configs(self) -> Dict[str, Dict[str, Any]]:
-        """
-        Validate all registered configurations.
+        """        Validate all registered configurations.
         
         Returns:
             Dictionary with validation results for each configuration
-        """
-        validation_results = {}
+        """        validation_results = {}
         
         for config_name, config_instance in self._configs.items():
             try:
@@ -164,13 +149,11 @@ class AIConfigRegistry:
         return validation_results
     
     def get_system_overview(self) -> Dict[str, Any]:
-        """
-        Get comprehensive system overview of all AI configurations.
+        """        Get comprehensive system overview of all AI configurations.
         
         Returns:
             Dictionary with system overview information
-        """
-        overview = {
+        """        overview = {
             "platform": "IA-Influencer Agent + Content Protection",
             "version": "2.0.0",
             "author": "Fahed Mlaiel",
@@ -238,16 +221,14 @@ class AIConfigRegistry:
         return overview
     
     def get_configuration_summary(self, config_name: str) -> Optional[Dict[str, Any]]:
-        """
-        Get detailed summary for a specific configuration.
+        """        Get detailed summary for a specific configuration.
         
         Args:
             config_name: Name of the configuration
             
         Returns:
             Configuration summary or None if not found
-        """
-        if config_name not in self._configs:
+        """        if config_name not in self._configs:
             return None
         
         config_instance = self._configs[config_name]
@@ -270,8 +251,7 @@ class AIConfigRegistry:
         return summary
     
     def _get_config_key_features(self, config_name: str, config_instance: Any) -> List[str]:
-        """Get key features for a configuration."""
-        
+        """Get key features for a configuration."""        
         feature_mappings = {
             "ai_model": [
                 "Multi-model support (PyTorch, TensorFlow, Hugging Face)",
@@ -326,16 +306,14 @@ class AIConfigRegistry:
         return feature_mappings.get(config_name, ["Advanced AI configuration"])
     
     def export_configuration_docs(self, output_format: str = "markdown") -> str:
-        """
-        Export comprehensive documentation for all configurations.
+        """        Export comprehensive documentation for all configurations.
         
         Args:
             output_format: Output format (markdown, json, yaml)
             
         Returns:
             Formatted configuration documentation
-        """
-        if output_format.lower() == "markdown":
+        """        if output_format.lower() == "markdown":
             return self._export_markdown_docs()
         elif output_format.lower() == "json":
             import json
@@ -344,8 +322,7 @@ class AIConfigRegistry:
             return "Unsupported format. Use 'markdown' or 'json'."
     
     def _export_markdown_docs(self) -> str:
-        """Export documentation in Markdown format."""
-        
+        """Export documentation in Markdown format."""        
         docs = []
         docs.append("# IA-Influencer Agent - AI Configuration Documentation
 ")
@@ -466,13 +443,11 @@ ai_config_registry = AIConfigRegistry()
 
 
 def get_all_ai_configs() -> Dict[str, Any]:
-    """
-    Get all AI configuration instances.
+    """    Get all AI configuration instances.
     
     Returns:
         Dictionary mapping configuration names to instances
-    """
-    return {
+    """    return {
         # Core AI Configurations
         "ai_model": ai_model_config,
         "fingerprint": fingerprint_ai_config,
@@ -494,26 +469,22 @@ def get_all_ai_configs() -> Dict[str, Any]:
 
 
 def validate_ai_environment() -> Dict[str, Any]:
-    """
-    Validate the AI environment and configuration setup.
+    """    Validate the AI environment and configuration setup.
     
     Returns:
         Validation results dictionary
-    """
-    return ai_config_registry.validate_all_configs()
+    """    return ai_config_registry.validate_all_configs()
 
 
 def export_ai_documentation(format: str = "markdown") -> str:
-    """
-    Export comprehensive AI configuration documentation.
+    """    Export comprehensive AI configuration documentation.
     
     Args:
         format: Export format (markdown, json)
         
     Returns:
         Formatted documentation string
-    """
-    return ai_config_registry.export_configuration_docs(format)
+    """    return ai_config_registry.export_configuration_docs(format)
 
 
 # Module metadata
@@ -544,16 +515,13 @@ from . import (
 
 
 class AIConfigurationManager:
-    """
-    Central AI Configuration Manager for IA-Influencer Agent Platform.
+    """    Central AI Configuration Manager for IA-Influencer Agent Platform.
     
     Provides unified access to all AI configuration modules and utilities
     for configuration management, validation, and deployment.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the AI Configuration Manager."""
-        self.configs = {
+        """Initialize the AI Configuration Manager."""        self.configs = {
             'model': ai_model_config,
             'fingerprint': fingerprint_ai_config,
             'nlp': nlp_config,
@@ -565,16 +533,13 @@ class AIConfigurationManager:
         }
         
     def get_config(self, config_type: str):
-        """Get specific configuration by type."""
-        return self.configs.get(config_type)
+        """Get specific configuration by type."""        return self.configs.get(config_type)
     
     def get_all_configs(self) -> Dict[str, Any]:
-        """Get all configuration instances."""
-        return self.configs.copy()
+        """Get all configuration instances."""        return self.configs.copy()
     
     def validate_configurations(self) -> Dict[str, Any]:
-        """Validate all AI configurations for consistency and completeness."""
-        validation_results = {
+        """Validate all AI configurations for consistency and completeness."""        validation_results = {
             'status': 'success',
             'issues': [],
             'warnings': [],
@@ -618,8 +583,7 @@ class AIConfigurationManager:
         return validation_results
     
     def get_hardware_requirements(self) -> Dict[str, Any]:
-        """Get consolidated hardware requirements for all AI modules."""
-        requirements = {
+        """Get consolidated hardware requirements for all AI modules."""        requirements = {
             'minimum': {
                 'cpu_cores': 4,
                 'memory_gb': 8,
@@ -672,8 +636,7 @@ class AIConfigurationManager:
         return requirements
     
     def get_model_inventory(self) -> Dict[str, List[Dict[str, Any]]]:
-        """Get complete inventory of all configured AI models."""
-        inventory = {
+        """Get complete inventory of all configured AI models."""        inventory = {
             'audio_models': [],
             'vision_models': [],
             'nlp_models': [],
@@ -721,8 +684,7 @@ class AIConfigurationManager:
         return inventory
     
     def export_configuration(self, file_path: Optional[str] = None) -> Dict[str, Any]:
-        """Export complete AI configuration to JSON file."""
-        export_data = {
+        """Export complete AI configuration to JSON file."""        export_data = {
             'metadata': {
                 'version': '2.0.0',
                 'author': 'Fahed Mlaiel',
@@ -764,8 +726,7 @@ class AIConfigurationManager:
         return export_data
     
     def get_deployment_checklist(self) -> Dict[str, Any]:
-        """Get deployment readiness checklist for AI modules."""
-        checklist = {
+        """Get deployment readiness checklist for AI modules."""        checklist = {
             'status': 'ready',
             'checks': {
                 'configurations_valid': True,
@@ -807,8 +768,7 @@ class AIConfigurationManager:
         return checklist
     
     def optimize_for_environment(self, environment: str = 'production') -> Dict[str, Any]:
-        """Get optimized configuration recommendations for specific environment."""
-        optimizations = {
+        """Get optimized configuration recommendations for specific environment."""        optimizations = {
             'environment': environment,
             'recommendations': [],
             'configuration_changes': {},
@@ -864,23 +824,19 @@ ai_config_manager = AIConfigurationManager()
 
 # Utility functions for easy access
 def get_complete_ai_config():
-    """Get complete AI configuration in one call."""
-    return ai_config_manager.get_all_configs()
+    """Get complete AI configuration in one call."""    return ai_config_manager.get_all_configs()
 
 
 def validate_ai_setup():
-    """Validate complete AI setup."""
-    return ai_config_manager.validate_configurations()
+    """Validate complete AI setup."""    return ai_config_manager.validate_configurations()
 
 
 def get_deployment_status():
-    """Get AI deployment readiness status."""
-    return ai_config_manager.get_deployment_checklist()
+    """Get AI deployment readiness status."""    return ai_config_manager.get_deployment_checklist()
 
 
 def export_ai_config(file_path: str = "ai_config_export.json"):
-    """Export AI configuration to file."""
-    return ai_config_manager.export_configuration(file_path)
+    """Export AI configuration to file."""    return ai_config_manager.export_configuration(file_path)
 
 
 # Export all utility functions

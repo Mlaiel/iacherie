@@ -50,8 +50,7 @@ UNAUTHORIZED USE IS FEDERAL FINANCIAL CRIME:
 
 Contact mlaiel@live.de for MANDATORY FinTech licensing authorization.
 All financial transactions are monitored by regulatory compliance systems.
-"""
-# Core monetization components
+"""# Core monetization components
 from .revenue_engine import (
     RevenueEngine,
     RevenueTransaction,
@@ -354,8 +353,7 @@ Professional monetization engine for content creators:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Revenue Specialist + Market Analyst + AI Engineer
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union, Tuple
 from datetime import datetime, timedelta

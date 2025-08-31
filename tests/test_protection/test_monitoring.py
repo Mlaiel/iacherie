@@ -1,27 +1,21 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Test suite for Protection Monitoring module.
+"""Test suite for Protection Monitoring module.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import unittest
+"""import unittest
 from unittest.mock import Mock, AsyncMock, patch
 import asyncio
 from datetime import datetime, timedelta
@@ -30,11 +24,8 @@ import json
 
 
 class TestProtectionMonitoring(unittest.TestCase):
-    """Test suite for ProtectionMonitor class"""
-
-    def setUp(self):
-        """Set up test fixtures"""
-        self.monitor = None  # Will be mocked
+    """Test suite for ProtectionMonitor class"""    def setUp(self):
+        """Set up test fixtures"""        self.monitor = None  # Will be mocked
         self.sample_monitoring_target = {
             "user_id": "user_123",
             "content_id": "content_456",
@@ -51,8 +42,7 @@ class TestProtectionMonitoring(unittest.TestCase):
         }
 
     def test_monitoring_target_structure(self):
-        """Test monitoring target data structure"""
-        target = {
+        """Test monitoring target data structure"""        target = {
             "user_id": "user_123",
             "content_id": "content_456",
             "content_type": "audio",
@@ -75,8 +65,7 @@ class TestProtectionMonitoring(unittest.TestCase):
         self.assertIsInstance(target["monitoring_frequency"], int)
 
     def test_violation_detection_scoring(self):
-        """Test violation detection similarity scoring"""
-        original_title = "My Awesome Song"
+        """Test violation detection similarity scoring"""        original_title = "My Awesome Song"
         found_titles = [
             "My Awesome Song",  # Exact match
             "My Amazing Song",  # Similar
@@ -105,8 +94,7 @@ class TestProtectionMonitoring(unittest.TestCase):
         self.assertGreater(similarities[4], 0.5)  # Extended version
 
     def test_search_query_generation(self):
-        """Test search query generation from content fingerprint"""
-        content_data = {
+        """Test search query generation from content fingerprint"""        content_data = {
             "content_id": "song_123",
             "user_id": "artist_456",
             "content_type": "audio",
@@ -144,8 +132,7 @@ class TestProtectionMonitoring(unittest.TestCase):
         self.assertIn("song", queries)
 
     def test_platform_crawler_initialization(self):
-        """Test platform crawler initialization"""
-        crawlers = {
+        """Test platform crawler initialization"""        crawlers = {
             'youtube': {'api_key': 'test_key', 'rate_limit': 1.0},
             'instagram': {'access_token': 'test_token', 'rate_limit': 2.0},
             'tiktok': {'api_key': 'test_key', 'rate_limit': 1.5},
@@ -159,8 +146,7 @@ class TestProtectionMonitoring(unittest.TestCase):
             self.assertIn('rate_limit', crawlers[platform])
 
     def test_monitoring_frequency_check(self):
-        """Test monitoring frequency checking logic"""
-        target = {
+        """Test monitoring frequency checking logic"""        target = {
             "content_id": "test_123",
             "monitoring_frequency": 24,  # hours
             "last_checked": None
@@ -183,8 +169,7 @@ class TestProtectionMonitoring(unittest.TestCase):
         self.assertTrue(should_check_old)
 
     def test_violation_record_creation(self):
-        """Test violation record creation"""
-        original_content = {
+        """Test violation record creation"""        original_content = {
             "content_id": "original_123",
             "user_id": "user_456"
         }
@@ -219,8 +204,7 @@ class TestProtectionMonitoring(unittest.TestCase):
         self.assertIsInstance(violation_record["detected_at"], datetime)
 
     def test_alert_threshold_filtering(self):
-        """Test alert threshold filtering"""
-        alert_threshold = 0.85
+        """Test alert threshold filtering"""        alert_threshold = 0.85
         similarity_scores = [0.95, 0.82, 0.90, 0.75, 0.88, 0.60]
         
         # Filter violations above threshold
@@ -238,8 +222,7 @@ class TestProtectionMonitoring(unittest.TestCase):
             self.assertLess(score, alert_threshold)
 
     def test_platform_search_result_parsing(self):
-        """Test platform search result parsing"""
-        # Mock YouTube search results
+        """Test platform search result parsing"""        # Mock YouTube search results
         youtube_results = [
             {
                 "platform": "youtube",
@@ -274,8 +257,7 @@ class TestProtectionMonitoring(unittest.TestCase):
             self.assertEqual(result["platform"], "instagram")
 
     def test_monitoring_cycle_scheduling(self):
-        """Test monitoring cycle scheduling logic"""
-        active_monitors = {
+        """Test monitoring cycle scheduling logic"""        active_monitors = {
             "content_1": {
                 "content_id": "content_1",
                 "monitoring_frequency": 24,
@@ -314,8 +296,7 @@ class TestProtectionMonitoring(unittest.TestCase):
         self.assertIn("content_3", content_to_check)  # Never checked
 
     def test_content_fingerprint_comparison(self):
-        """Test content fingerprint comparison logic"""
-        original_fingerprint = {
+        """Test content fingerprint comparison logic"""        original_fingerprint = {
             "title": "Original Song",
             "duration": 180,
             "audio_hash": "abc123",
@@ -355,8 +336,7 @@ class TestProtectionMonitoring(unittest.TestCase):
         self.assertEqual(len(medium_matches), 2)  # Exact and similar
 
     def test_monitoring_status_reporting(self):
-        """Test monitoring status reporting"""
-        user_id = "user_123"
+        """Test monitoring status reporting"""        user_id = "user_123"
         active_monitors = {
             "content_1": {
                 "user_id": "user_123",

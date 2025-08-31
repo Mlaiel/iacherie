@@ -1,5 +1,4 @@
-"""
-SEO Platform Adapters - Search Engine Optimization Integration
+"""SEO Platform Adapters - Search Engine Optimization Integration
 
 This module provides comprehensive adapter infrastructure for integrating with
 SEO platforms, analytics tools, and search engine optimization services.
@@ -16,9 +15,7 @@ Features:
 - Backlink monitoring and analysis
 - Technical SEO auditing
 - Competitor analysis and tracking
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from abc import abstractmethod
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
@@ -39,8 +36,7 @@ from .base_adapter import (
 logger = logging.getLogger(__name__)
 
 class SEOPlatform(Enum):
-    """Supported SEO platforms and tools."""
-    GOOGLE_SEARCH_CONSOLE = "google_search_console"
+    """Supported SEO platforms and tools."""    GOOGLE_SEARCH_CONSOLE = "google_search_console"
     GOOGLE_ANALYTICS = "google_analytics"
     SEMRUSH = "semrush"
     AHREFS = "ahrefs"
@@ -54,8 +50,7 @@ class SEOPlatform(Enum):
     SISTRIX = "sistrix"
 
 class SEOMetricType(Enum):
-    """Types of SEO metrics."""
-    ORGANIC_TRAFFIC = "organic_traffic"
+    """Types of SEO metrics."""    ORGANIC_TRAFFIC = "organic_traffic"
     KEYWORD_RANKINGS = "keyword_rankings"
     BACKLINKS = "backlinks"
     DOMAIN_AUTHORITY = "domain_authority"
@@ -69,8 +64,7 @@ class SEOMetricType(Enum):
     SITE_SPEED = "site_speed"
 
 class KeywordDifficulty(Enum):
-    """Keyword difficulty levels."""
-    VERY_EASY = "very_easy"
+    """Keyword difficulty levels."""    VERY_EASY = "very_easy"
     EASY = "easy"
     MEDIUM = "medium"
     HARD = "hard"
@@ -78,8 +72,7 @@ class KeywordDifficulty(Enum):
 
 @dataclass
 class SEOKeyword:
-    """Represents an SEO keyword with its metrics."""
-    keyword: str
+    """Represents an SEO keyword with its metrics."""    keyword: str
     search_volume: int
     keyword_difficulty: KeywordDifficulty
     cost_per_click: float
@@ -94,8 +87,7 @@ class SEOKeyword:
 
 @dataclass
 class BacklinkProfile:
-    """Represents a backlink profile."""
-    referring_domains: int
+    """Represents a backlink profile."""    referring_domains: int
     total_backlinks: int
     dofollow_links: int
     nofollow_links: int
@@ -110,8 +102,7 @@ class BacklinkProfile:
 
 @dataclass
 class TechnicalSEOIssue:
-    """Represents a technical SEO issue."""
-    issue_type: str
+    """Represents a technical SEO issue."""    issue_type: str
     severity: str  # critical, high, medium, low
     affected_pages: List[str]
     description: str
@@ -122,8 +113,7 @@ class TechnicalSEOIssue:
 
 @dataclass
 class ContentOptimization:
-    """Content optimization recommendations."""
-    target_keyword: str
+    """Content optimization recommendations."""    target_keyword: str
     current_score: float
     potential_score: float
     recommendations: List[Dict[str, Any]]
@@ -134,8 +124,7 @@ class ContentOptimization:
 
 @dataclass
 class CompetitorAnalysis:
-    """Competitor SEO analysis."""
-    competitor_domain: str
+    """Competitor SEO analysis."""    competitor_domain: str
     domain_authority: float
     organic_traffic: int
     organic_keywords: int
@@ -146,8 +135,7 @@ class CompetitorAnalysis:
     last_analyzed: datetime = field(default_factory=datetime.utcnow)
 
 class BaseSEOAdapter(BasePlatformAdapter):
-    """Base class for SEO platform adapters."""
-    
+    """Base class for SEO platform adapters."""    
     def __init__(
         self, 
         platform_name: str,
@@ -174,37 +162,30 @@ class BaseSEOAdapter(BasePlatformAdapter):
     
     @abstractmethod
     async def track_domain(self, domain: str) -> bool:
-        """Add a domain for SEO tracking."""
-        pass
+        """Add a domain for SEO tracking."""        pass
     
     @abstractmethod
     async def get_keyword_rankings(self, domain: str, keywords: List[str]) -> List[SEOKeyword]:
-        """Get keyword rankings for a domain."""
-        pass
+        """Get keyword rankings for a domain."""        pass
     
     @abstractmethod
     async def get_backlink_profile(self, domain: str) -> Optional[BacklinkProfile]:
-        """Get backlink profile for a domain."""
-        pass
+        """Get backlink profile for a domain."""        pass
     
     @abstractmethod
     async def audit_technical_seo(self, domain: str) -> List[TechnicalSEOIssue]:
-        """Perform technical SEO audit."""
-        pass
+        """Perform technical SEO audit."""        pass
     
     @abstractmethod
     async def analyze_competitors(self, domain: str, competitors: List[str]) -> List[CompetitorAnalysis]:
-        """Analyze competitors for a domain."""
-        pass
+        """Analyze competitors for a domain."""        pass
     
     @abstractmethod
     async def research_keywords(self, seed_keywords: List[str], location: str = "US") -> List[SEOKeyword]:
-        """Research keywords based on seed keywords."""
-        pass
+        """Research keywords based on seed keywords."""        pass
     
     async def calculate_keyword_opportunity(self, keyword: SEOKeyword) -> float:
-        """Calculate keyword opportunity score."""
-        # Factors: search volume, difficulty, current position, trend
+        """Calculate keyword opportunity score."""        # Factors: search volume, difficulty, current position, trend
         volume_score = min(keyword.search_volume / 10000, 1.0) * 0.3
         
         difficulty_scores = {
@@ -243,8 +224,7 @@ class BaseSEOAdapter(BasePlatformAdapter):
         return min(opportunity_score, 1.0)
     
     async def prioritize_keywords(self, keywords: List[SEOKeyword]) -> List[SEOKeyword]:
-        """Prioritize keywords based on opportunity score."""
-        keyword_scores = []
+        """Prioritize keywords based on opportunity score."""        keyword_scores = []
         
         for keyword in keywords:
             opportunity_score = await self.calculate_keyword_opportunity(keyword)
@@ -256,8 +236,7 @@ class BaseSEOAdapter(BasePlatformAdapter):
         return [keyword for keyword, score in keyword_scores]
 
 class GoogleSearchConsoleAdapter(BaseSEOAdapter):
-    """Google Search Console API adapter."""
-    
+    """Google Search Console API adapter."""    
     def __init__(self, credentials: AdapterCredentials, config: Dict[str, Any]):
         super().__init__(
             platform_name="google_search_console",
@@ -268,8 +247,7 @@ class GoogleSearchConsoleAdapter(BaseSEOAdapter):
         self.api_base_url = "https://www.googleapis.com/webmasters/v3"
     
     async def track_domain(self, domain: str) -> bool:
-        """Add a domain to Google Search Console tracking."""
-        try:
+        """Add a domain to Google Search Console tracking."""        try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.access_token}",
                 "Content-Type": "application/json"
@@ -294,8 +272,7 @@ class GoogleSearchConsoleAdapter(BaseSEOAdapter):
             return False
     
     async def get_keyword_rankings(self, domain: str, keywords: List[str]) -> List[SEOKeyword]:
-        """Get keyword rankings from Google Search Console."""
-        results = []
+        """Get keyword rankings from Google Search Console."""        results = []
         
         try:
             headers = {
@@ -349,8 +326,7 @@ class GoogleSearchConsoleAdapter(BaseSEOAdapter):
         return results
     
     async def get_backlink_profile(self, domain: str) -> Optional[BacklinkProfile]:
-        """Google Search Console doesn't provide comprehensive backlink data."""
-        # GSC has limited backlink data compared to dedicated tools
+        """Google Search Console doesn't provide comprehensive backlink data."""        # GSC has limited backlink data compared to dedicated tools
         try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.access_token}"
@@ -382,8 +358,7 @@ class GoogleSearchConsoleAdapter(BaseSEOAdapter):
         return None
     
     async def audit_technical_seo(self, domain: str) -> List[TechnicalSEOIssue]:
-        """Get technical SEO issues from Google Search Console."""
-        issues = []
+        """Get technical SEO issues from Google Search Console."""        issues = []
         
         try:
             headers = {
@@ -428,13 +403,11 @@ class GoogleSearchConsoleAdapter(BaseSEOAdapter):
         return issues
     
     async def analyze_competitors(self, domain: str, competitors: List[str]) -> List[CompetitorAnalysis]:
-        """Google Search Console doesn't provide competitor analysis."""
-        # GSC is focused on your own domain, not competitors
+        """Google Search Console doesn't provide competitor analysis."""        # GSC is focused on your own domain, not competitors
         return []
     
     async def research_keywords(self, seed_keywords: List[str], location: str = "US") -> List[SEOKeyword]:
-        """Google Search Console doesn't provide keyword research."""
-        # Use existing performance data to suggest related keywords
+        """Google Search Console doesn't provide keyword research."""        # Use existing performance data to suggest related keywords
         related_keywords = []
         
         for seed in seed_keywords:
@@ -446,8 +419,7 @@ class GoogleSearchConsoleAdapter(BaseSEOAdapter):
         return related_keywords
 
 class SEMrushAdapter(BaseSEOAdapter):
-    """SEMrush API adapter implementation."""
-    
+    """SEMrush API adapter implementation."""    
     def __init__(self, credentials: AdapterCredentials, config: Dict[str, Any]):
         super().__init__(
             platform_name="semrush",
@@ -458,14 +430,12 @@ class SEMrushAdapter(BaseSEOAdapter):
         self.api_base_url = "https://api.semrush.com"
     
     async def track_domain(self, domain: str) -> bool:
-        """Add domain to SEMrush tracking."""
-        self.tracked_domains.add(domain)
+        """Add domain to SEMrush tracking."""        self.tracked_domains.add(domain)
         logger.info(f"Domain added to SEMrush tracking: {domain}")
         return True
     
     async def get_keyword_rankings(self, domain: str, keywords: List[str]) -> List[SEOKeyword]:
-        """Get keyword rankings from SEMrush."""
-        results = []
+        """Get keyword rankings from SEMrush."""        results = []
         
         try:
             params = {
@@ -532,8 +502,7 @@ class SEMrushAdapter(BaseSEOAdapter):
         return results
     
     async def get_backlink_profile(self, domain: str) -> Optional[BacklinkProfile]:
-        """Get backlink profile from SEMrush."""
-        try:
+        """Get backlink profile from SEMrush."""        try:
             params = {
                 "type": "backlinks_overview",
                 "key": self.credentials.api_key,
@@ -573,14 +542,12 @@ class SEMrushAdapter(BaseSEOAdapter):
         return None
     
     async def audit_technical_seo(self, domain: str) -> List[TechnicalSEOIssue]:
-        """SEMrush doesn't provide comprehensive technical SEO audit via API."""
-        # SEMrush API is limited for technical audits
+        """SEMrush doesn't provide comprehensive technical SEO audit via API."""        # SEMrush API is limited for technical audits
         # This would typically require Site Audit tool which has limited API access
         return []
     
     async def analyze_competitors(self, domain: str, competitors: List[str]) -> List[CompetitorAnalysis]:
-        """Analyze competitors using SEMrush."""
-        analyses = []
+        """Analyze competitors using SEMrush."""        analyses = []
         
         for competitor in competitors:
             try:
@@ -652,8 +619,7 @@ class SEMrushAdapter(BaseSEOAdapter):
         return analyses
     
     async def research_keywords(self, seed_keywords: List[str], location: str = "US") -> List[SEOKeyword]:
-        """Research keywords using SEMrush."""
-        all_keywords = []
+        """Research keywords using SEMrush."""        all_keywords = []
         
         try:
             for seed in seed_keywords:
@@ -710,8 +676,7 @@ class SEMrushAdapter(BaseSEOAdapter):
         return all_keywords
 
 class SEOAdapterFactory:
-    """Factory for creating SEO platform adapters."""
-    
+    """Factory for creating SEO platform adapters."""    
     _adapters = {
         SEOPlatform.GOOGLE_SEARCH_CONSOLE: GoogleSearchConsoleAdapter,
         SEOPlatform.SEMRUSH: SEMrushAdapter
@@ -724,8 +689,7 @@ class SEOAdapterFactory:
         credentials: AdapterCredentials, 
         config: Dict[str, Any]
     ) -> BaseSEOAdapter:
-        """Create an SEO adapter instance."""
-        adapter_class = cls._adapters.get(platform)
+        """Create an SEO adapter instance."""        adapter_class = cls._adapters.get(platform)
         if not adapter_class:
             raise ValueError(f"Unsupported SEO platform: {platform}")
         
@@ -733,25 +697,21 @@ class SEOAdapterFactory:
     
     @classmethod
     def get_supported_platforms(cls) -> List[SEOPlatform]:
-        """Get list of supported SEO platforms."""
-        return list(cls._adapters.keys())
+        """Get list of supported SEO platforms."""        return list(cls._adapters.keys())
 
 class SEOAdapterManager:
-    """Manager for SEO adapter instances and comprehensive analysis."""
-    
+    """Manager for SEO adapter instances and comprehensive analysis."""    
     def __init__(self):
         self.adapters: Dict[SEOPlatform, BaseSEOAdapter] = {}
         self.primary_platforms = [SEOPlatform.GOOGLE_SEARCH_CONSOLE, SEOPlatform.SEMRUSH]
         self.tracked_domains: Set[str] = set()
     
     def register_adapter(self, platform: SEOPlatform, adapter: BaseSEOAdapter):
-        """Register an SEO adapter."""
-        self.adapters[platform] = adapter
+        """Register an SEO adapter."""        self.adapters[platform] = adapter
         logger.info(f"Registered SEO adapter for platform: {platform.value}")
     
     async def comprehensive_domain_analysis(self, domain: str) -> Dict[str, Any]:
-        """Perform comprehensive SEO analysis across all platforms."""
-        results = {
+        """Perform comprehensive SEO analysis across all platforms."""        results = {
             'domain': domain,
             'analysis_date': datetime.utcnow().isoformat(),
             'keyword_data': {},
@@ -822,8 +782,7 @@ class SEOAdapterManager:
         return results
     
     async def keyword_gap_analysis(self, domain: str, competitors: List[str]) -> Dict[str, Any]:
-        """Perform keyword gap analysis against competitors."""
-        gap_analysis = {
+        """Perform keyword gap analysis against competitors."""        gap_analysis = {
             'domain': domain,
             'competitors': competitors,
             'keyword_gaps': [],
@@ -867,8 +826,7 @@ class SEOAdapterManager:
         return gap_analysis
     
     async def _generate_recommendations(self, keywords: List[SEOKeyword], analysis_results: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate SEO recommendations based on analysis."""
-        recommendations = []
+        """Generate SEO recommendations based on analysis."""        recommendations = []
         
         # Keyword recommendations
         high_opportunity_keywords = []

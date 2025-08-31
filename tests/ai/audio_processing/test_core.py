@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-🧪 Core Audio Processing Tests - Industrial-Grade Test Suite
+"""🧪 Core Audio Processing Tests - Industrial-Grade Test Suite
 
 Comprehensive testing for core audio processing functionality including:
 - AudioProcessor class testing
@@ -27,9 +23,7 @@ Comprehensive testing for core audio processing functionality including:
 
 Created by Expert Team: Audio Developer + Backend Senior + ML Engineer
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -59,8 +53,7 @@ from . import TEST_CONFIG, setup_test_environment
 
 
 class TestAudioProcessor:
-    """
-    Industrial-grade testing for AudioProcessor class
+    """    Industrial-grade testing for AudioProcessor class
     
     Test Coverage:
     - Audio loading from various formats
@@ -70,27 +63,23 @@ class TestAudioProcessor:
     - Large file processing
     - Memory management
     - Error handling
-    """
-    
+    """    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""
-        setup_test_environment()
+        """Setup test environment before each test"""        setup_test_environment()
         self.processor = AudioProcessor()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
         self.temp_output_dir = TEST_CONFIG["temp_output_dir"]
     
     def test_initialization(self):
-        """Test AudioProcessor initialization"""
-        processor = AudioProcessor()
+        """Test AudioProcessor initialization"""        processor = AudioProcessor()
         assert processor is not None
         assert hasattr(processor, 'sample_rate')
         assert hasattr(processor, 'chunk_size')
         assert processor.sample_rate == 44100  # Default
     
     def test_load_audio_wav_format(self):
-        """Test loading WAV audio files"""
-        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test loading WAV audio files"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         assert audio_data is not None
@@ -100,13 +89,11 @@ class TestAudioProcessor:
         assert audio_data.dtype == np.float32
     
     def test_load_audio_nonexistent_file(self):
-        """Test error handling for non-existent files"""
-        with pytest.raises(FileNotFoundError):
+        """Test error handling for non-existent files"""        with pytest.raises(FileNotFoundError):
             self.processor.load_audio("nonexistent_file.wav")
     
     def test_load_audio_invalid_format(self):
-        """Test error handling for invalid audio formats"""
-        # Create a fake audio file with invalid content
+        """Test error handling for invalid audio formats"""        # Create a fake audio file with invalid content
         fake_file = self.temp_output_dir / "fake_audio.wav"
         with open(fake_file, 'w') as f:
             f.write("This is not audio data")
@@ -115,8 +102,7 @@ class TestAudioProcessor:
             self.processor.load_audio(str(fake_file))
     
     def test_resample_audio(self):
-        """Test audio resampling functionality"""
-        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test audio resampling functionality"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, _ = self.processor.load_audio(str(audio_file))
         
         # Resample to different rates
@@ -129,8 +115,7 @@ class TestAudioProcessor:
         assert resampled_48k.dtype == np.float32
     
     def test_normalize_audio(self):
-        """Test audio normalization"""
-        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test audio normalization"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, _ = self.processor.load_audio(str(audio_file))
         
         normalized = self.processor.normalize_audio(audio_data)
@@ -140,8 +125,7 @@ class TestAudioProcessor:
         assert normalized.dtype == np.float32
     
     def test_trim_silence(self):
-        """Test silence trimming functionality"""
-        # Create audio with silence padding
+        """Test silence trimming functionality"""        # Create audio with silence padding
         silence = np.zeros(1000)
         signal = np.sin(2 * np.pi * 440 * np.linspace(0, 1, 4410))  # 0.1 second tone
         audio_with_silence = np.concatenate([silence, signal, silence])
@@ -152,8 +136,7 @@ class TestAudioProcessor:
         assert len(trimmed) >= len(signal) * 0.9  # Should preserve most of the signal
     
     def test_convert_to_mono(self):
-        """Test stereo to mono conversion"""
-        # Create stereo audio data
+        """Test stereo to mono conversion"""        # Create stereo audio data
         mono_signal = np.sin(2 * np.pi * 440 * np.linspace(0, 1, 4410))
         stereo_signal = np.column_stack([mono_signal, mono_signal * 0.8])
         
@@ -164,8 +147,7 @@ class TestAudioProcessor:
         assert mono_converted.dtype == np.float32
     
     def test_save_audio(self):
-        """Test audio saving functionality"""
-        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test audio saving functionality"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         output_file = self.temp_output_dir / "test_output.wav"
@@ -179,8 +161,7 @@ class TestAudioProcessor:
         assert np.allclose(loaded_audio, audio_data, atol=1e-6)
     
     def test_memory_management_large_files(self):
-        """Test memory management with large audio files"""
-        # Create large audio data (simulate 10MB file)
+        """Test memory management with large audio files"""        # Create large audio data (simulate 10MB file)
         large_audio = np.random.randn(2205000)  # ~50 seconds at 44.1kHz
         
         process = psutil.Process(os.getpid())
@@ -197,8 +178,7 @@ class TestAudioProcessor:
         assert trimmed is not None
     
     def test_performance_benchmarking(self):
-        """Test processing performance meets requirements"""
-        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test processing performance meets requirements"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         
         start_time = time.time()
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
@@ -213,8 +193,7 @@ class TestAudioProcessor:
 
 
 class TestAudioAnalyzer:
-    """
-    Industrial-grade testing for AudioAnalyzer class
+    """    Industrial-grade testing for AudioAnalyzer class
     
     Test Coverage:
     - Feature extraction accuracy
@@ -223,25 +202,21 @@ class TestAudioAnalyzer:
     - Temporal feature extraction
     - Onset detection testing
     - Pitch estimation validation
-    """
-    
+    """    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""
-        setup_test_environment()
+        """Setup test environment before each test"""        setup_test_environment()
         self.analyzer = AudioAnalyzer()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
     
     def test_initialization(self):
-        """Test AudioAnalyzer initialization"""
-        analyzer = AudioAnalyzer()
+        """Test AudioAnalyzer initialization"""        analyzer = AudioAnalyzer()
         assert analyzer is not None
         assert hasattr(analyzer, 'sample_rate')
         assert hasattr(analyzer, 'frame_size')
     
     def test_extract_mfcc_features(self):
-        """Test MFCC feature extraction"""
-        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test MFCC feature extraction"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         processor = AudioProcessor()
         audio_data, sample_rate = processor.load_audio(str(audio_file))
         
@@ -254,8 +229,7 @@ class TestAudioAnalyzer:
         assert not np.isnan(mfcc_features).any()
     
     def test_extract_spectral_features(self):
-        """Test spectral feature extraction"""
-        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test spectral feature extraction"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         processor = AudioProcessor()
         audio_data, sample_rate = processor.load_audio(str(audio_file))
         
@@ -275,8 +249,7 @@ class TestAudioAnalyzer:
             assert not np.isnan(spectral_features[feature]).any()
     
     def test_extract_temporal_features(self):
-        """Test temporal feature extraction"""
-        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test temporal feature extraction"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         processor = AudioProcessor()
         audio_data, sample_rate = processor.load_audio(str(audio_file))
         
@@ -293,8 +266,7 @@ class TestAudioAnalyzer:
             assert temporal_features[feature] is not None
     
     def test_detect_onsets(self):
-        """Test onset detection"""
-        audio_file = self.test_data_dir / "chirp_sweep.wav"  # Use chirp for onset testing
+        """Test onset detection"""        audio_file = self.test_data_dir / "chirp_sweep.wav"  # Use chirp for onset testing
         processor = AudioProcessor()
         audio_data, sample_rate = processor.load_audio(str(audio_file))
         
@@ -306,8 +278,7 @@ class TestAudioAnalyzer:
         assert all(onset >= 0 for onset in onsets)
     
     def test_estimate_pitch(self):
-        """Test pitch estimation"""
-        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test pitch estimation"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         processor = AudioProcessor()
         audio_data, sample_rate = processor.load_audio(str(audio_file))
         
@@ -318,8 +289,7 @@ class TestAudioAnalyzer:
         assert 435 <= pitch_estimate <= 445  # Should be close to 440Hz
     
     def test_analyze_silence_vs_signal(self):
-        """Test analysis of silence vs signal"""
-        # Test silence
+        """Test analysis of silence vs signal"""        # Test silence
         silence_file = self.test_data_dir / "silence.wav"
         processor = AudioProcessor()
         silence_data, sample_rate = processor.load_audio(str(silence_file))
@@ -337,8 +307,7 @@ class TestAudioAnalyzer:
         assert signal_features['spectral_centroid'] > silence_features['spectral_centroid']
     
     def test_comprehensive_analysis(self):
-        """Test comprehensive audio analysis"""
-        audio_file = self.test_data_dir / "white_noise.wav"
+        """Test comprehensive audio analysis"""        audio_file = self.test_data_dir / "white_noise.wav"
         processor = AudioProcessor()
         audio_data, sample_rate = processor.load_audio(str(audio_file))
         
@@ -353,8 +322,7 @@ class TestAudioAnalyzer:
 
 
 class TestAudioEnhancer:
-    """
-    Industrial-grade testing for AudioEnhancer class
+    """    Industrial-grade testing for AudioEnhancer class
     
     Test Coverage:
     - Noise reduction effectiveness
@@ -362,25 +330,21 @@ class TestAudioEnhancer:
     - Frequency response correction
     - Harmonic enhancement
     - Quality improvement validation
-    """
-    
+    """    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""
-        setup_test_environment()
+        """Setup test environment before each test"""        setup_test_environment()
         self.enhancer = AudioEnhancer()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
     
     def test_initialization(self):
-        """Test AudioEnhancer initialization"""
-        enhancer = AudioEnhancer()
+        """Test AudioEnhancer initialization"""        enhancer = AudioEnhancer()
         assert enhancer is not None
         assert hasattr(enhancer, 'sample_rate')
         assert hasattr(enhancer, 'enhancement_settings')
     
     def test_noise_reduction(self):
-        """Test noise reduction effectiveness"""
-        # Load noisy audio
+        """Test noise reduction effectiveness"""        # Load noisy audio
         noisy_file = self.test_data_dir / "white_noise.wav"
         processor = AudioProcessor()
         noisy_audio, sample_rate = processor.load_audio(str(noisy_file))
@@ -398,8 +362,7 @@ class TestAudioEnhancer:
         assert enhanced_rms <= original_rms
     
     def test_dynamic_range_enhancement(self):
-        """Test dynamic range enhancement"""
-        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test dynamic range enhancement"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         processor = AudioProcessor()
         audio_data, sample_rate = processor.load_audio(str(audio_file))
         
@@ -418,8 +381,7 @@ class TestAudioEnhancer:
         assert enhanced_peak >= compressed_peak
     
     def test_frequency_response_correction(self):
-        """Test frequency response correction"""
-        audio_file = self.test_data_dir / "chirp_sweep.wav"
+        """Test frequency response correction"""        audio_file = self.test_data_dir / "chirp_sweep.wav"
         processor = AudioProcessor()
         audio_data, sample_rate = processor.load_audio(str(audio_file))
         
@@ -432,8 +394,7 @@ class TestAudioEnhancer:
         assert not np.isnan(corrected_audio).any()
     
     def test_harmonic_enhancement(self):
-        """Test harmonic enhancement"""
-        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test harmonic enhancement"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         processor = AudioProcessor()
         audio_data, sample_rate = processor.load_audio(str(audio_file))
         
@@ -452,8 +413,7 @@ class TestAudioEnhancer:
         assert abs(enhanced_pitch - original_pitch) < 5  # Within 5Hz tolerance
     
     def test_comprehensive_enhancement(self):
-        """Test comprehensive audio enhancement"""
-        audio_file = self.test_data_dir / "white_noise.wav"
+        """Test comprehensive audio enhancement"""        audio_file = self.test_data_dir / "white_noise.wav"
         processor = AudioProcessor()
         audio_data, sample_rate = processor.load_audio(str(audio_file))
         
@@ -473,8 +433,7 @@ class TestAudioEnhancer:
         assert enhanced_features['spectral_flatness'] <= original_features['spectral_flatness']
     
     def test_enhancement_preserves_length(self):
-        """Test that enhancement preserves audio length"""
-        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test that enhancement preserves audio length"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         processor = AudioProcessor()
         audio_data, sample_rate = processor.load_audio(str(audio_file))
         
@@ -483,8 +442,7 @@ class TestAudioEnhancer:
         assert len(enhanced_audio) == len(audio_data)
     
     def test_enhancement_stability(self):
-        """Test enhancement stability (no artifacts)"""
-        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test enhancement stability (no artifacts)"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         processor = AudioProcessor()
         audio_data, sample_rate = processor.load_audio(str(audio_file))
         
@@ -497,19 +455,16 @@ class TestAudioEnhancer:
 
 
 class TestAudioMetadata:
-    """
-    Industrial-grade testing for AudioMetadata class
+    """    Industrial-grade testing for AudioMetadata class
     
     Test Coverage:
     - Metadata extraction accuracy
     - Format compatibility
     - Encoding information
     - Duration calculation
-    """
-    
+    """    
     def test_metadata_creation(self):
-        """Test AudioMetadata creation"""
-        metadata = AudioMetadata(
+        """Test AudioMetadata creation"""        metadata = AudioMetadata(
             duration=5.0,
             sample_rate=44100,
             channels=2,
@@ -524,8 +479,7 @@ class TestAudioMetadata:
         assert metadata.format == "WAV"
     
     def test_metadata_validation(self):
-        """Test metadata validation"""
-        # Valid metadata
+        """Test metadata validation"""        # Valid metadata
         valid_metadata = AudioMetadata(
             duration=5.0,
             sample_rate=44100,
@@ -547,18 +501,15 @@ class TestAudioMetadata:
 
 
 class TestAudioFeatures:
-    """
-    Industrial-grade testing for AudioFeatures class
+    """    Industrial-grade testing for AudioFeatures class
     
     Test Coverage:
     - Feature container functionality
     - Data serialization
     - Feature access methods
-    """
-    
+    """    
     def test_features_creation(self):
-        """Test AudioFeatures creation"""
-        mfcc = np.random.randn(13, 100)
+        """Test AudioFeatures creation"""        mfcc = np.random.randn(13, 100)
         spectral_features = {"spectral_centroid": np.random.randn(100)}
         temporal_features = {"rms_energy": np.random.randn(100)}
         
@@ -573,8 +524,7 @@ class TestAudioFeatures:
         assert features.temporal_features == temporal_features
     
     def test_features_serialization(self):
-        """Test feature serialization to dict"""
-        mfcc = np.random.randn(13, 100)
+        """Test feature serialization to dict"""        mfcc = np.random.randn(13, 100)
         spectral_features = {"spectral_centroid": np.random.randn(100)}
         temporal_features = {"rms_energy": np.random.randn(100)}
         
@@ -594,19 +544,15 @@ class TestAudioFeatures:
 
 # Performance and integration tests
 class TestCoreIntegration:
-    """
-    Integration tests for core audio processing workflow
-    """
-    
+    """    Integration tests for core audio processing workflow
+    """    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
-        setup_test_environment()
+        """Setup test environment"""        setup_test_environment()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
     
     def test_complete_processing_workflow(self):
-        """Test complete audio processing workflow"""
-        # Load audio
+        """Test complete audio processing workflow"""        # Load audio
         processor = AudioProcessor()
         audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = processor.load_audio(str(audio_file))
@@ -626,8 +572,7 @@ class TestCoreIntegration:
         assert len(enhanced_audio) == len(audio_data)
     
     def test_cross_module_compatibility(self):
-        """Test compatibility between all core modules"""
-        processor = AudioProcessor()
+        """Test compatibility between all core modules"""        processor = AudioProcessor()
         analyzer = AudioAnalyzer()
         enhancer = AudioEnhancer()
         

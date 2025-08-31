@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent Platform - Support Models
+"""IA Influencer Agent Platform - Support Models
 Additional models for notifications, analytics, monitoring, and system support
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -13,9 +12,7 @@ will result in legal action.
 
 Contact: mlaiel@live.de
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-from datetime import datetime, timezone
+"""from datetime import datetime, timezone
 from typing import Optional, Dict, Any, List
 from decimal import Decimal
 from sqlalchemy import (
@@ -30,8 +27,7 @@ from .base import BaseModel, UUIDMixin, TimestampMixin, SoftDeleteMixin, AuditMi
 
 # License Models
 class License(BaseModel, UUIDMixin, TimestampMixin, SoftDeleteMixin, AuditMixin, StatusMixin):
-    """Licensing system for content usage rights"""
-    
+    """Licensing system for content usage rights"""    
     __tablename__ = 'licenses'
     
     content_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('contents.id', ondelete='CASCADE'), nullable=False, index=True)
@@ -47,8 +43,7 @@ class License(BaseModel, UUIDMixin, TimestampMixin, SoftDeleteMixin, AuditMixin,
 
 
 class LicenseAgreement(BaseModel, UUIDMixin, TimestampMixin, AuditMixin, StatusMixin):
-    """License agreements between parties"""
-    
+    """License agreements between parties"""    
     __tablename__ = 'license_agreements'
     
     license_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('licenses.id', ondelete='CASCADE'), nullable=False, index=True)
@@ -62,8 +57,7 @@ class LicenseAgreement(BaseModel, UUIDMixin, TimestampMixin, AuditMixin, StatusM
 
 
 class LicenseUsage(BaseModel, UUIDMixin, TimestampMixin):
-    """License usage tracking and analytics"""
-    
+    """License usage tracking and analytics"""    
     __tablename__ = 'license_usage'
     
     agreement_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('license_agreements.id', ondelete='CASCADE'), nullable=False, index=True)
@@ -76,8 +70,7 @@ class LicenseUsage(BaseModel, UUIDMixin, TimestampMixin):
 
 
 class LicenseRevenue(BaseModel, UUIDMixin, TimestampMixin):
-    """Revenue tracking for licenses"""
-    
+    """Revenue tracking for licenses"""    
     __tablename__ = 'license_revenues'
     
     agreement_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('license_agreements.id', ondelete='CASCADE'), nullable=False, index=True)
@@ -92,8 +85,7 @@ class LicenseRevenue(BaseModel, UUIDMixin, TimestampMixin):
 
 # Revenue Models
 class Revenue(BaseModel, UUIDMixin, TimestampMixin, AuditMixin):
-    """Core revenue tracking"""
-    
+    """Core revenue tracking"""    
     __tablename__ = 'revenues'
     
     creator_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('creators.id', ondelete='CASCADE'), nullable=False, index=True)
@@ -108,8 +100,7 @@ class Revenue(BaseModel, UUIDMixin, TimestampMixin, AuditMixin):
 
 
 class RevenueStream(BaseModel, UUIDMixin, TimestampMixin, StatusMixin):
-    """Revenue stream configuration"""
-    
+    """Revenue stream configuration"""    
     __tablename__ = 'revenue_streams'
     
     creator_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('creators.id', ondelete='CASCADE'), nullable=False, index=True)
@@ -122,8 +113,7 @@ class RevenueStream(BaseModel, UUIDMixin, TimestampMixin, StatusMixin):
 
 
 class RevenueShare(BaseModel, UUIDMixin, TimestampMixin):
-    """Revenue sharing between collaborators"""
-    
+    """Revenue sharing between collaborators"""    
     __tablename__ = 'revenue_shares'
     
     revenue_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('revenues.id', ondelete='CASCADE'), nullable=False, index=True)
@@ -136,8 +126,7 @@ class RevenueShare(BaseModel, UUIDMixin, TimestampMixin):
 
 
 class PaymentRecord(BaseModel, UUIDMixin, TimestampMixin, StatusMixin):
-    """Payment processing records"""
-    
+    """Payment processing records"""    
     __tablename__ = 'payment_records'
     
     revenue_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('revenues.id', ondelete='CASCADE'), nullable=False, index=True)
@@ -152,8 +141,7 @@ class PaymentRecord(BaseModel, UUIDMixin, TimestampMixin, StatusMixin):
 
 
 class RoyaltyCalculation(BaseModel, UUIDMixin, TimestampMixin):
-    """Royalty calculations and distributions"""
-    
+    """Royalty calculations and distributions"""    
     __tablename__ = 'royalty_calculations'
     
     content_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('contents.id', ondelete='CASCADE'), nullable=False, index=True)
@@ -167,8 +155,7 @@ class RoyaltyCalculation(BaseModel, UUIDMixin, TimestampMixin):
 
 
 class RevenueReport(BaseModel, UUIDMixin, TimestampMixin):
-    """Revenue reporting and analytics"""
-    
+    """Revenue reporting and analytics"""    
     __tablename__ = 'revenue_reports'
     
     creator_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('creators.id', ondelete='CASCADE'), nullable=False, index=True)
@@ -183,8 +170,7 @@ class RevenueReport(BaseModel, UUIDMixin, TimestampMixin):
 
 # Distribution Models
 class Distribution(BaseModel, UUIDMixin, TimestampMixin, AuditMixin, StatusMixin):
-    """Content distribution management"""
-    
+    """Content distribution management"""    
     __tablename__ = 'distributions'
     
     content_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('contents.id', ondelete='CASCADE'), nullable=False, index=True)
@@ -197,8 +183,7 @@ class Distribution(BaseModel, UUIDMixin, TimestampMixin, AuditMixin, StatusMixin
 
 
 class DistributionChannel(BaseModel, UUIDMixin, TimestampMixin, StatusMixin):
-    """Distribution channel configuration"""
-    
+    """Distribution channel configuration"""    
     __tablename__ = 'distribution_channels'
     
     creator_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('creators.id', ondelete='CASCADE'), nullable=False, index=True)
@@ -211,8 +196,7 @@ class DistributionChannel(BaseModel, UUIDMixin, TimestampMixin, StatusMixin):
 
 
 class DistributionMetrics(BaseModel, UUIDMixin, TimestampMixin):
-    """Distribution performance metrics"""
-    
+    """Distribution performance metrics"""    
     __tablename__ = 'distribution_metrics'
     
     distribution_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('distributions.id', ondelete='CASCADE'), nullable=False, index=True)
@@ -225,8 +209,7 @@ class DistributionMetrics(BaseModel, UUIDMixin, TimestampMixin):
 
 
 class PlatformIntegration(BaseModel, UUIDMixin, TimestampMixin, StatusMixin):
-    """Platform integration management"""
-    
+    """Platform integration management"""    
     __tablename__ = 'platform_integrations'
     
     creator_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('creators.id', ondelete='CASCADE'), nullable=False, index=True)
@@ -239,8 +222,7 @@ class PlatformIntegration(BaseModel, UUIDMixin, TimestampMixin, StatusMixin):
 
 
 class ContentDelivery(BaseModel, UUIDMixin, TimestampMixin, StatusMixin):
-    """Content delivery tracking"""
-    
+    """Content delivery tracking"""    
     __tablename__ = 'content_deliveries'
     
     distribution_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('distributions.id', ondelete='CASCADE'), nullable=False, index=True)
@@ -254,8 +236,7 @@ class ContentDelivery(BaseModel, UUIDMixin, TimestampMixin, StatusMixin):
 
 # Analytics Models
 class Analytics(BaseModel, UUIDMixin, TimestampMixin):
-    """Core analytics data"""
-    
+    """Core analytics data"""    
     __tablename__ = 'analytics'
     
     creator_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('creators.id', ondelete='CASCADE'), nullable=False, index=True)
@@ -269,8 +250,7 @@ class Analytics(BaseModel, UUIDMixin, TimestampMixin):
 
 
 class PerformanceMetrics(BaseModel, UUIDMixin, TimestampMixin):
-    """Detailed performance analytics"""
-    
+    """Detailed performance analytics"""    
     __tablename__ = 'performance_metrics'
     
     content_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('contents.id', ondelete='CASCADE'), nullable=False, index=True)
@@ -284,8 +264,7 @@ class PerformanceMetrics(BaseModel, UUIDMixin, TimestampMixin):
 
 
 class AudienceInsights(BaseModel, UUIDMixin, TimestampMixin):
-    """Audience analytics and demographics"""
-    
+    """Audience analytics and demographics"""    
     __tablename__ = 'audience_insights'
     
     creator_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('creators.id', ondelete='CASCADE'), nullable=False, index=True)
@@ -298,8 +277,7 @@ class AudienceInsights(BaseModel, UUIDMixin, TimestampMixin):
 
 
 class EngagementMetrics(BaseModel, UUIDMixin, TimestampMixin):
-    """Engagement tracking and analysis"""
-    
+    """Engagement tracking and analysis"""    
     __tablename__ = 'engagement_metrics'
     
     content_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('contents.id', ondelete='CASCADE'), nullable=False, index=True)
@@ -312,8 +290,7 @@ class EngagementMetrics(BaseModel, UUIDMixin, TimestampMixin):
 
 
 class TrendAnalysis(BaseModel, UUIDMixin, TimestampMixin):
-    """Trend analysis and predictions"""
-    
+    """Trend analysis and predictions"""    
     __tablename__ = 'trend_analysis'
     
     trend_category: Mapped[str] = mapped_column(String(100), nullable=False, index=True)
@@ -325,8 +302,7 @@ class TrendAnalysis(BaseModel, UUIDMixin, TimestampMixin):
 
 
 class PredictiveAnalytics(BaseModel, UUIDMixin, TimestampMixin):
-    """Predictive analytics and forecasting"""
-    
+    """Predictive analytics and forecasting"""    
     __tablename__ = 'predictive_analytics'
     
     creator_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('creators.id', ondelete='CASCADE'), nullable=False, index=True)
@@ -341,8 +317,7 @@ class PredictiveAnalytics(BaseModel, UUIDMixin, TimestampMixin):
 
 # Monitoring Models
 class MonitoringJob(BaseModel, UUIDMixin, TimestampMixin, StatusMixin):
-    """Content monitoring job management"""
-    
+    """Content monitoring job management"""    
     __tablename__ = 'monitoring_jobs'
     
     protection_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('content_protections.id', ondelete='CASCADE'), nullable=False, index=True)
@@ -356,8 +331,7 @@ class MonitoringJob(BaseModel, UUIDMixin, TimestampMixin, StatusMixin):
 
 
 class CrawlerResult(BaseModel, UUIDMixin, TimestampMixin):
-    """Web crawler results"""
-    
+    """Web crawler results"""    
     __tablename__ = 'crawler_results'
     
     monitoring_job_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('monitoring_jobs.id', ondelete='CASCADE'), nullable=False, index=True)
@@ -370,8 +344,7 @@ class CrawlerResult(BaseModel, UUIDMixin, TimestampMixin):
 
 
 class AlertRule(BaseModel, UUIDMixin, TimestampMixin, StatusMixin):
-    """Alert rule configuration"""
-    
+    """Alert rule configuration"""    
     __tablename__ = 'alert_rules'
     
     creator_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('creators.id', ondelete='CASCADE'), nullable=False, index=True)
@@ -385,8 +358,7 @@ class AlertRule(BaseModel, UUIDMixin, TimestampMixin, StatusMixin):
 
 
 class NotificationEvent(BaseModel, UUIDMixin, TimestampMixin):
-    """Notification event tracking"""
-    
+    """Notification event tracking"""    
     __tablename__ = 'notification_events'
     
     alert_rule_id: Mapped[Optional[UUID]] = mapped_column(UUID(as_uuid=True), ForeignKey('alert_rules.id', ondelete='SET NULL'), nullable=True, index=True)
@@ -399,8 +371,7 @@ class NotificationEvent(BaseModel, UUIDMixin, TimestampMixin):
 
 
 class SystemHealth(BaseModel, UUIDMixin, TimestampMixin):
-    """System health monitoring"""
-    
+    """System health monitoring"""    
     __tablename__ = 'system_health'
     
     component_name: Mapped[str] = mapped_column(String(100), nullable=False, index=True)
@@ -411,8 +382,7 @@ class SystemHealth(BaseModel, UUIDMixin, TimestampMixin):
 
 
 class PerformanceLog(BaseModel, UUIDMixin, TimestampMixin):
-    """System performance logging"""
-    
+    """System performance logging"""    
     __tablename__ = 'performance_logs'
     
     operation_type: Mapped[str] = mapped_column(String(100), nullable=False, index=True)
@@ -424,8 +394,7 @@ class PerformanceLog(BaseModel, UUIDMixin, TimestampMixin):
 
 # Notification Models
 class Notification(BaseModel, UUIDMixin, TimestampMixin, StatusMixin):
-    """User notifications"""
-    
+    """User notifications"""    
     __tablename__ = 'notifications'
     
     user_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('users.id', ondelete='CASCADE'), nullable=False, index=True)
@@ -439,8 +408,7 @@ class Notification(BaseModel, UUIDMixin, TimestampMixin, StatusMixin):
 
 
 class NotificationTemplate(BaseModel, UUIDMixin, TimestampMixin, StatusMixin):
-    """Notification templates"""
-    
+    """Notification templates"""    
     __tablename__ = 'notification_templates'
     
     template_name: Mapped[str] = mapped_column(String(200), unique=True, nullable=False, index=True)
@@ -452,8 +420,7 @@ class NotificationTemplate(BaseModel, UUIDMixin, TimestampMixin, StatusMixin):
 
 
 class NotificationLog(BaseModel, UUIDMixin, TimestampMixin):
-    """Notification delivery logging"""
-    
+    """Notification delivery logging"""    
     __tablename__ = 'notification_logs'
     
     notification_id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), ForeignKey('notifications.id', ondelete='CASCADE'), nullable=False, index=True)
@@ -467,8 +434,7 @@ class NotificationLog(BaseModel, UUIDMixin, TimestampMixin):
 
 # Audit Models
 class AuditLog(BaseModel, UUIDMixin, TimestampMixin):
-    """System audit logging"""
-    
+    """System audit logging"""    
     __tablename__ = 'audit_logs'
     
     user_id: Mapped[Optional[UUID]] = mapped_column(UUID(as_uuid=True), nullable=True, index=True)
@@ -482,8 +448,7 @@ class AuditLog(BaseModel, UUIDMixin, TimestampMixin):
 
 
 class SecurityEvent(BaseModel, UUIDMixin, TimestampMixin):
-    """Security event tracking"""
-    
+    """Security event tracking"""    
     __tablename__ = 'security_events'
     
     event_type: Mapped[str] = mapped_column(String(100), nullable=False, index=True)
@@ -495,8 +460,7 @@ class SecurityEvent(BaseModel, UUIDMixin, TimestampMixin):
 
 
 class ComplianceRecord(BaseModel, UUIDMixin, TimestampMixin, StatusMixin):
-    """Compliance and regulatory records"""
-    
+    """Compliance and regulatory records"""    
     __tablename__ = 'compliance_records'
     
     compliance_type: Mapped[str] = mapped_column(String(100), nullable=False, index=True)

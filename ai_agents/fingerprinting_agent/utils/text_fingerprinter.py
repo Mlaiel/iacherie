@@ -1,5 +1,4 @@
-"""
-Text Fingerprinter - Advanced AI-Powered Text Content Identification
+"""Text Fingerprinter - Advanced AI-Powered Text Content Identification
 
 Ultra-sophisticated text fingerprinting system using NLP, semantic analysis,
 and deep learning for precise text content identification and similarity matching.
@@ -10,9 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import hashlib
@@ -46,8 +43,7 @@ from transformers import (
     AutoTokenizer, AutoModel,
     BertTokenizer, BertModel,
     RobertaTokenizer, RobertaModel,
-"""
-Text Fingerprinter - Advanced AI-Powered Text Content Identification
+"""Text Fingerprinter - Advanced AI-Powered Text Content Identification
 
 Ultra-sophisticated text fingerprinting system using NLP, semantic analysis,
 and deep learning for precise text content identification and similarity matching.
@@ -58,9 +54,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import hashlib
@@ -114,15 +108,13 @@ from ...ml.text_models import TextEmbeddingModel
 logger = logging.getLogger(__name__)
 
 class TextFingerprintQuality(Enum):
-    """Text fingerprint quality levels"""
-    BASIC = "basic"          # Hash and n-grams only
+    """Text fingerprint quality levels"""    BASIC = "basic"          # Hash and n-grams only
     STANDARD = "standard"    # + TF-IDF, basic NLP
     ADVANCED = "advanced"    # + Named entities, syntax
     ULTRA = "ultra"          # + Deep learning embeddings
 
 class TextFeatureType(Enum):
-    """Types of text features extracted"""
-    NGRAM_FEATURES = "ngram_features"
+    """Types of text features extracted"""    NGRAM_FEATURES = "ngram_features"
     TFIDF_FEATURES = "tfidf_features"
     LINGUISTIC_FEATURES = "linguistic_features"
     SEMANTIC_FEATURES = "semantic_features"
@@ -134,8 +126,7 @@ class TextFeatureType(Enum):
 
 @dataclass
 class TextFeatureVector:
-    """Text feature vector structure"""
-    feature_type: TextFeatureType
+    """Text feature vector structure"""    feature_type: TextFeatureType
     vector_data: np.ndarray
     confidence_score: float
     extraction_params: Dict[str, Any]
@@ -144,8 +135,7 @@ class TextFeatureVector:
 
 @dataclass
 class TextFingerprint:
-    """Complete text fingerprint structure"""
-    fingerprint_id: str
+    """Complete text fingerprint structure"""    fingerprint_id: str
     text_hash: str
     ngram_features: Dict[str, Dict[str, float]]
     feature_vectors: List[TextFeatureVector]
@@ -156,8 +146,7 @@ class TextFingerprint:
     created_at: datetime = field(default_factory=lambda: datetime.now())
 
 class TextFingerprinter:
-    """
-    Ultra-advanced text fingerprinting system with NLP and deep learning.
+    """    Ultra-advanced text fingerprinting system with NLP and deep learning.
     
     Features:
     - Multi-level n-gram analysis (1-5 grams)
@@ -169,8 +158,7 @@ class TextFingerprinter:
     - Plagiarism and similarity detection
     - Multi-language support
     - Quality assessment
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -210,8 +198,7 @@ class TextFingerprinter:
         logger.info("TextFingerprinter initialized with advanced NLP configuration")
     
     async def initialize(self):
-        """Initialize all NLP models and processors"""
-        try:
+        """Initialize all NLP models and processors"""        try:
             start_time = time.time()
             
             # Initialize NLTK data
@@ -248,10 +235,8 @@ class TextFingerprinter:
         text_data: Union[str, List[str]], 
         quality_level: TextFingerprintQuality = TextFingerprintQuality.ADVANCED
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive text fingerprint with configurable quality levels
-        """
-        start_time = time.time()
+        """        Generate comprehensive text fingerprint with configurable quality levels
+        """        start_time = time.time()
         
         try:
             # Preprocess text
@@ -370,8 +355,7 @@ class TextFingerprinter:
             raise TextProcessingError(f"Fingerprint generation failed: {e}")
     
     async def _preprocess_text(self, text_data: Union[str, List[str]]) -> Tuple[str, str]:
-        """Preprocess text data for analysis"""
-        try:
+        """Preprocess text data for analysis"""        try:
             # Handle different input types
             if isinstance(text_data, list):
                 original_text = ' '.join(text_data)
@@ -405,8 +389,7 @@ class TextFingerprinter:
             raise TextProcessingError(f"Preprocessing failed: {e}")
     
     def _create_text_hash(self, text: str) -> str:
-        """Create fast hash of text for quick lookups"""
-        try:
+        """Create fast hash of text for quick lookups"""        try:
             # Create hash from text content and basic statistics
             text_stats = [
                 len(text),
@@ -439,8 +422,7 @@ class TextFingerprinter:
             return ""
     
     async def _extract_ngram_features(self, text: str) -> Dict[str, Dict[str, float]]:
-        """Extract n-gram features from text"""
-        try:
+        """Extract n-gram features from text"""        try:
             ngram_features = {}
             
             # Tokenize text
@@ -485,8 +467,7 @@ class TextFingerprinter:
             return {}
     
     async def _extract_tfidf_features(self, text: str) -> List[TextFeatureVector]:
-        """Extract TF-IDF features"""
-        features = []
+        """Extract TF-IDF features"""        features = []
         
         try:
             # Initialize TF-IDF vectorizer if not done
@@ -520,8 +501,7 @@ class TextFingerprinter:
         return features
     
     async def _extract_linguistic_features(self, processed_text: str, original_text: str) -> List[TextFeatureVector]:
-        """Extract linguistic and statistical features"""
-        features = []
+        """Extract linguistic and statistical features"""        features = []
         
         try:
             # Basic text statistics
@@ -583,8 +563,7 @@ class TextFingerprinter:
     # etc.
     
     async def cleanup(self):
-        """Clean up resources"""
-        try:
+        """Clean up resources"""        try:
             # Clean up models
             if hasattr(self, 'bert_model') and self.bert_model is not None:
                 del self.bert_model
@@ -608,8 +587,7 @@ class TextFingerprinter:
             logger.error(f"TextFingerprinter cleanup failed: {e}")
     
     def get_supported_languages(self) -> List[str]:
-        """Get list of supported languages"""
-        return ['en', 'de', 'fr', 'es', 'it', 'pt', 'nl', 'ru', 'zh', 'ja']
+        """Get list of supported languages"""        return ['en', 'de', 'fr', 'es', 'it', 'pt', 'nl', 'ru', 'zh', 'ja']
 import sentence_transformers
 from sentence_transformers import SentenceTransformer
 
@@ -627,15 +605,13 @@ from ...ml.text_models import TextEmbeddingModel
 logger = logging.getLogger(__name__)
 
 class TextFingerprintQuality(Enum):
-    """Text fingerprint quality levels"""
-    BASIC = "basic"          # Hash-based fingerprinting
+    """Text fingerprint quality levels"""    BASIC = "basic"          # Hash-based fingerprinting
     STANDARD = "standard"    # + N-gram analysis
     ADVANCED = "advanced"    # + NLP features
     ULTRA = "ultra"          # + Deep learning embeddings
 
 class TextFingerprinter:
-    """
-    Ultra-advanced text fingerprinting system with NLP and deep learning.
+    """    Ultra-advanced text fingerprinting system with NLP and deep learning.
     
     Features:
     - Multi-level hashing (character, word, sentence)
@@ -647,8 +623,7 @@ class TextFingerprinter:
     - Plagiarism detection capabilities
     - Multi-language support
     - Sentiment and emotion analysis
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -701,8 +676,7 @@ class TextFingerprinter:
         self._download_nltk_data()
         
     async def initialize(self):
-        """Initialize text fingerprinting system"""
-        try:
+        """Initialize text fingerprinting system"""        try:
             # Initialize deep learning models
             await self._initialize_deep_models()
             
@@ -717,10 +691,8 @@ class TextFingerprinter:
     
     async def generate_fingerprint(self, text_data: Union[str, bytes], 
                                  quality_level: TextFingerprintQuality) -> Dict[str, Any]:
-        """
-        Generate comprehensive text fingerprint with specified quality level
-        """
-        start_time = time.time()
+        """        Generate comprehensive text fingerprint with specified quality level
+        """        start_time = time.time()
         
         try:
             # Preprocess text
@@ -803,8 +775,7 @@ class TextFingerprinter:
             raise TextProcessingError(f"Fingerprint generation failed: {e}")
     
     async def _preprocess_text(self, text_data: Union[str, bytes]) -> Tuple[str, Dict[str, Any]]:
-        """Preprocess text and extract metadata"""
-        metadata = {}
+        """Preprocess text and extract metadata"""        metadata = {}
         
         try:
             # Convert to string if bytes
@@ -846,8 +817,7 @@ class TextFingerprinter:
             raise TextProcessingError(f"Text preprocessing failed: {e}")
     
     async def _generate_text_hashes(self, text: str) -> Dict[str, str]:
-        """Generate multiple text hashes"""
-        try:
+        """Generate multiple text hashes"""        try:
             hashes = {}
             
             # Character-level hash
@@ -883,8 +853,7 @@ class TextFingerprinter:
             raise TextProcessingError(f"Text hashing failed: {e}")
     
     async def _extract_ngram_features(self, text: str) -> np.ndarray:
-        """Extract n-gram based features"""
-        try:
+        """Extract n-gram based features"""        try:
             # TF-IDF features
             try:
                 tfidf_features = self.tfidf_vectorizer.fit_transform([text]).toarray()[0]
@@ -925,8 +894,7 @@ class TextFingerprinter:
             return np.zeros(130)  # Return fallback features
     
     async def _extract_linguistic_features(self, text: str) -> np.ndarray:
-        """Extract linguistic and grammatical features"""
-        try:
+        """Extract linguistic and grammatical features"""        try:
             features = []
             
             # Basic linguistic statistics
@@ -990,8 +958,7 @@ class TextFingerprinter:
             return np.zeros(15)  # Return fallback features
     
     async def _extract_style_features(self, text: str) -> np.ndarray:
-        """Extract writing style features"""
-        try:
+        """Extract writing style features"""        try:
             features = []
             
             words = word_tokenize(text.lower())
@@ -1047,8 +1014,7 @@ class TextFingerprinter:
             return np.zeros(10)  # Return fallback features
     
     async def _generate_semantic_embedding(self, text: str) -> np.ndarray:
-        """Generate semantic embedding using deep learning"""
-        try:
+        """Generate semantic embedding using deep learning"""        try:
             embeddings = []
             
             # Sentence-BERT embedding
@@ -1078,8 +1044,7 @@ class TextFingerprinter:
             return np.random.rand(384)  # Fallback
     
     async def _get_bert_embedding(self, text: str) -> np.ndarray:
-        """Get BERT embedding for text"""
-        try:
+        """Get BERT embedding for text"""        try:
             # Tokenize and encode
             inputs = self.bert_tokenizer(text, return_tensors='pt', 
                                        truncation=True, max_length=512, padding=True)
@@ -1096,8 +1061,7 @@ class TextFingerprinter:
             return np.random.rand(768)
     
     async def _assess_text_quality(self, text: str) -> Dict[str, float]:
-        """Assess text quality for fingerprinting reliability"""
-        quality_metrics = {}
+        """Assess text quality for fingerprinting reliability"""        quality_metrics = {}
         
         try:
             words = word_tokenize(text.lower())
@@ -1154,8 +1118,7 @@ class TextFingerprinter:
         return quality_metrics
     
     async def _detect_language(self, text: str) -> str:
-        """Detect text language (simplified implementation)"""
-        try:
+        """Detect text language (simplified implementation)"""        try:
             # Simple language detection based on common words
             english_words = {'the', 'and', 'a', 'to', 'of', 'in', 'is', 'it', 'you', 'that'}
             german_words = {'der', 'die', 'und', 'in', 'den', 'von', 'zu', 'das', 'mit', 'sich'}
@@ -1179,8 +1142,7 @@ class TextFingerprinter:
             return 'en'  # Default to English
     
     async def _clean_text(self, text: str) -> str:
-        """Clean and normalize text"""
-        try:
+        """Clean and normalize text"""        try:
             # Remove extra whitespace
             text = re.sub(r'\s+', ' ', text)
             
@@ -1203,8 +1165,7 @@ class TextFingerprinter:
             return text  # Return original if cleaning fails
     
     def _download_nltk_data(self):
-        """Download required NLTK data"""
-        try:
+        """Download required NLTK data"""        try:
             nltk.download('punkt', quiet=True)
             nltk.download('stopwords', quiet=True)
             nltk.download('wordnet', quiet=True)
@@ -1213,8 +1174,7 @@ class TextFingerprinter:
             logger.warning("Failed to download NLTK data")
     
     async def _initialize_deep_models(self):
-        """Initialize deep learning models"""
-        try:
+        """Initialize deep learning models"""        try:
             # Load Sentence-BERT
             self.sentence_transformer = SentenceTransformer('all-MiniLM-L6-v2')
             
@@ -1230,8 +1190,7 @@ class TextFingerprinter:
             logger.warning(f"Failed to load deep learning models: {e}")
     
     async def _initialize_nlp_components(self):
-        """Initialize NLP components"""
-        try:
+        """Initialize NLP components"""        try:
             # Load spaCy model
             self.spacy_model = spacy.load("en_core_web_sm")
             
@@ -1241,8 +1200,7 @@ class TextFingerprinter:
             logger.warning(f"Failed to initialize NLP components: {e}")
     
     async def cleanup(self):
-        """Cleanup resources"""
-        # Clear models to free memory
+        """Cleanup resources"""        # Clear models to free memory
         self.bert_model = None
         self.bert_tokenizer = None
         self.sentence_transformer = None

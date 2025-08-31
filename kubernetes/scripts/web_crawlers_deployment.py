@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Web Crawlers Deployment Manager
+"""Web Crawlers Deployment Manager
 Enterprise-grade deployment system for comprehensive web surveillance,
 multi-platform content monitoring, and automated content detection.
 
@@ -24,9 +23,7 @@ and international copyright laws.
 
 Project: IA Influencer Agent Platform - Web Surveillance & Content Monitoring
 Copyright: Fahed Mlaiel - All rights reserved
-"""
-
-import os
+"""import os
 import sys
 import time
 import json
@@ -68,8 +65,7 @@ logger = logging.getLogger(__name__)
 
 
 class CrawlerType(Enum):
-    """Types of web crawlers"""
-    YOUTUBE_CRAWLER = "youtube_crawler"
+    """Types of web crawlers"""    YOUTUBE_CRAWLER = "youtube_crawler"
     INSTAGRAM_CRAWLER = "instagram_crawler"
     TIKTOK_CRAWLER = "tiktok_crawler"
     TWITTER_CRAWLER = "twitter_crawler"
@@ -87,8 +83,7 @@ class CrawlerType(Enum):
 
 
 class CrawlingStrategy(Enum):
-    """Web crawling strategies"""
-    SELENIUM_BROWSER = "selenium_browser"
+    """Web crawling strategies"""    SELENIUM_BROWSER = "selenium_browser"
     REQUESTS_HTTP = "requests_http"
     SCRAPY_FRAMEWORK = "scrapy_framework"
     API_INTEGRATION = "api_integration"
@@ -99,8 +94,7 @@ class CrawlingStrategy(Enum):
 
 
 class AntiDetectionMode(Enum):
-    """Anti-detection mechanisms"""
-    USER_AGENT_ROTATION = "user_agent_rotation"
+    """Anti-detection mechanisms"""    USER_AGENT_ROTATION = "user_agent_rotation"
     PROXY_CHAIN = "proxy_chain"
     REQUEST_DELAY = "request_delay"
     CAPTCHA_SOLVING = "captcha_solving"
@@ -111,8 +105,7 @@ class AntiDetectionMode(Enum):
 
 
 class ContentType(Enum):
-    """Types of content to monitor"""
-    AUDIO_CONTENT = "audio_content"
+    """Types of content to monitor"""    AUDIO_CONTENT = "audio_content"
     VIDEO_CONTENT = "video_content"
     IMAGE_CONTENT = "image_content"
     TEXT_CONTENT = "text_content"
@@ -123,8 +116,7 @@ class ContentType(Enum):
 
 
 class PlatformAPI(Enum):
-    """Platform API integrations"""
-    YOUTUBE_DATA_API = "youtube_data_api"
+    """Platform API integrations"""    YOUTUBE_DATA_API = "youtube_data_api"
     INSTAGRAM_BASIC_API = "instagram_basic_api"
     TWITTER_API_V2 = "twitter_api_v2"
     TIKTOK_RESEARCH_API = "tiktok_research_api"
@@ -137,8 +129,7 @@ class PlatformAPI(Enum):
 
 @dataclass
 class CrawlerConfig:
-    """Configuration for web crawler deployment"""
-    crawler_id: str
+    """Configuration for web crawler deployment"""    crawler_id: str
     crawler_name: str
     crawler_type: CrawlerType
     crawling_strategy: CrawlingStrategy
@@ -192,8 +183,7 @@ class CrawlerConfig:
 
 @dataclass
 class ProxyConfig:
-    """Proxy configuration for anti-detection"""
-    proxy_provider: str
+    """Proxy configuration for anti-detection"""    proxy_provider: str
     proxy_list: List[str] = field(default_factory=list)
     rotation_interval: int = 300  # seconds
     authentication_required: bool = False
@@ -215,8 +205,7 @@ class ProxyConfig:
 
 @dataclass
 class DeploymentConfig:
-    """Crawler system deployment configuration"""
-    replicas: int = 3
+    """Crawler system deployment configuration"""    replicas: int = 3
     resource_limits: Dict[str, str] = field(default_factory=lambda: {
         'cpu': '2000m',
         'memory': '4Gi',
@@ -249,14 +238,11 @@ class DeploymentConfig:
 
 
 class WebCrawlersDeploymentManager:
-    """
-    Enterprise Web Crawlers Deployment Manager
+    """    Enterprise Web Crawlers Deployment Manager
     Handles deployment and management of comprehensive web surveillance systems
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize the Web Crawlers Deployment Manager"""
-        self.config_path = config_path or os.getenv('CRAWLER_CONFIG_PATH', '/etc/crawlers/config.yaml')
+        """Initialize the Web Crawlers Deployment Manager"""        self.config_path = config_path or os.getenv('CRAWLER_CONFIG_PATH', '/etc/crawlers/config.yaml')
         self.crawler_configs: Dict[str, CrawlerConfig] = {}
         self.proxy_configs: Dict[str, ProxyConfig] = {}
         self.deployments: Dict[str, DeploymentConfig] = {}
@@ -278,8 +264,7 @@ class WebCrawlersDeploymentManager:
         logger.info("Web Crawlers Deployment Manager initialized successfully")
     
     def _init_kubernetes_client(self):
-        """Initialize Kubernetes client"""
-        try:
+        """Initialize Kubernetes client"""        try:
             config.load_incluster_config()
         except:
             try:
@@ -297,8 +282,7 @@ class WebCrawlersDeploymentManager:
         logger.info("Kubernetes client initialized")
     
     def _init_docker_client(self):
-        """Initialize Docker client"""
-        try:
+        """Initialize Docker client"""        try:
             self.docker_client = docker.from_env()
             logger.info("Docker client initialized")
         except Exception as e:
@@ -306,8 +290,7 @@ class WebCrawlersDeploymentManager:
             self.docker_client = None
     
     def _init_redis_client(self):
-        """Initialize Redis client for caching and coordination"""
-        try:
+        """Initialize Redis client for caching and coordination"""        try:
             redis_host = os.getenv('REDIS_HOST', 'localhost')
             redis_port = int(os.getenv('REDIS_PORT', '6379'))
             redis_password = os.getenv('REDIS_PASSWORD')
@@ -325,8 +308,7 @@ class WebCrawlersDeploymentManager:
             self.redis_client = None
     
     def _init_database_client(self):
-        """Initialize database client"""
-        try:
+        """Initialize database client"""        try:
             db_url = os.getenv('DATABASE_URL', 'postgresql://user:pass@localhost:5432/ia_influencer')
             self.db_url = db_url
             logger.info("Database client initialized")
@@ -335,8 +317,7 @@ class WebCrawlersDeploymentManager:
             self.db_url = None
     
     def _init_storage_client(self):
-        """Initialize storage clients"""
-        # MinIO for file storage
+        """Initialize storage clients"""        # MinIO for file storage
         try:
             minio_endpoint = os.getenv('MINIO_ENDPOINT', 'localhost:9000')
             minio_access_key = os.getenv('MINIO_ACCESS_KEY', 'minioadmin')
@@ -362,8 +343,7 @@ class WebCrawlersDeploymentManager:
             self.s3_client = None
     
     def _load_config(self):
-        """Load crawler configurations"""
-        if os.path.exists(self.config_path):
+        """Load crawler configurations"""        if os.path.exists(self.config_path):
             try:
                 with open(self.config_path, 'r') as f:
                     config_data = yaml.safe_load(f)
@@ -415,8 +395,7 @@ class WebCrawlersDeploymentManager:
                 logger.error(f"Failed to load configuration: {e}")
     
     def _init_user_agents(self):
-        """Initialize user agent rotation pool"""
-        self.user_agents = [
+        """Initialize user agent rotation pool"""        self.user_agents = [
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
             "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
@@ -429,14 +408,12 @@ class WebCrawlersDeploymentManager:
         logger.info(f"Initialized {len(self.user_agents)} user agents for rotation")
     
     def _init_proxy_rotation(self):
-        """Initialize proxy rotation system"""
-        self.current_proxy_index = 0
+        """Initialize proxy rotation system"""        self.current_proxy_index = 0
         self.proxy_failures = {}
         logger.info("Proxy rotation system initialized")
     
     def deploy_crawler_system(self, deployment_config: DeploymentConfig) -> bool:
-        """Deploy complete web crawler system"""
-        if not self.k8s_client:
+        """Deploy complete web crawler system"""        if not self.k8s_client:
             logger.error("Kubernetes client not available")
             return False
         
@@ -478,8 +455,7 @@ class WebCrawlersDeploymentManager:
             return False
     
     def _create_crawler_configmaps(self):
-        """Create ConfigMaps for crawler configurations"""
-        # Main crawler configuration
+        """Create ConfigMaps for crawler configurations"""        # Main crawler configuration
         crawler_config_data = {}
         for crawler_id, config in self.crawler_configs.items():
             crawler_config_data[f"{crawler_id}.yaml"] = yaml.dump(config.to_dict())
@@ -528,8 +504,7 @@ class WebCrawlersDeploymentManager:
         logger.info("Created crawler ConfigMaps")
     
     def _create_crawler_secrets(self):
-        """Create secrets for API keys and credentials"""
-        secrets_data = {
+        """Create secrets for API keys and credentials"""        secrets_data = {
             "youtube-api-key": os.getenv('YOUTUBE_API_KEY', ''),
             "instagram-access-token": os.getenv('INSTAGRAM_ACCESS_TOKEN', ''),
             "twitter-bearer-token": os.getenv('TWITTER_BEARER_TOKEN', ''),
@@ -577,8 +552,7 @@ class WebCrawlersDeploymentManager:
                 logger.info("Updated crawler secrets")
     
     def _create_crawler_storage(self, deployment_config: DeploymentConfig):
-        """Create PersistentVolumeClaims for crawler storage"""
-        storage_configs = [
+        """Create PersistentVolumeClaims for crawler storage"""        storage_configs = [
             {
                 "name": "crawler-data-storage",
                 "size": deployment_config.resource_limits['storage'],
@@ -631,8 +605,7 @@ class WebCrawlersDeploymentManager:
                     raise
     
     def _deploy_redis_coordination(self):
-        """Deploy Redis for crawler coordination"""
-        redis_deployment = {
+        """Deploy Redis for crawler coordination"""        redis_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -719,8 +692,7 @@ class WebCrawlersDeploymentManager:
         logger.info("Deployed Redis coordination service")
     
     def _deploy_crawler_service(self, crawler_id: str, crawler_config: CrawlerConfig, deployment_config: DeploymentConfig):
-        """Deploy individual crawler service"""
-        container_image = self._get_crawler_image(crawler_config.crawler_type)
+        """Deploy individual crawler service"""        container_image = self._get_crawler_image(crawler_config.crawler_type)
         
         deployment_manifest = {
             "apiVersion": "apps/v1",
@@ -854,8 +826,7 @@ class WebCrawlersDeploymentManager:
         logger.info(f"Deployed crawler service: {crawler_id}")
     
     def _get_crawler_image(self, crawler_type: CrawlerType) -> str:
-        """Get Docker image for specific crawler type"""
-        image_mapping = {
+        """Get Docker image for specific crawler type"""        image_mapping = {
             CrawlerType.YOUTUBE_CRAWLER: "ia-influencer/youtube-crawler:latest",
             CrawlerType.INSTAGRAM_CRAWLER: "ia-influencer/instagram-crawler:latest",
             CrawlerType.TIKTOK_CRAWLER: "ia-influencer/tiktok-crawler:latest",
@@ -867,8 +838,7 @@ class WebCrawlersDeploymentManager:
         return image_mapping.get(crawler_type, "ia-influencer/generic-crawler:latest")
     
     def _get_crawler_env_vars(self, crawler_id: str, crawler_config: CrawlerConfig) -> List[Dict[str, Any]]:
-        """Get environment variables for crawler"""
-        base_env = [
+        """Get environment variables for crawler"""        base_env = [
             {"name": "CRAWLER_ID", "value": crawler_id},
             {"name": "CRAWLER_TYPE", "value": crawler_config.crawler_type.value},
             {"name": "CRAWLING_STRATEGY", "value": crawler_config.crawling_strategy.value},
@@ -913,8 +883,7 @@ class WebCrawlersDeploymentManager:
         return base_env + secret_env
     
     def _create_crawler_hpa(self, crawler_id: str, deployment_config: DeploymentConfig):
-        """Create Horizontal Pod Autoscaler for crawler"""
-        hpa_manifest = {
+        """Create Horizontal Pod Autoscaler for crawler"""        hpa_manifest = {
             "apiVersion": "autoscaling/v1",
             "kind": "HorizontalPodAutoscaler",
             "metadata": {
@@ -941,8 +910,7 @@ class WebCrawlersDeploymentManager:
         logger.info(f"Created HPA for crawler: {crawler_id}")
     
     def _deploy_crawler_orchestrator(self, deployment_config: DeploymentConfig):
-        """Deploy crawler orchestrator service"""
-        orchestrator_deployment = {
+        """Deploy crawler orchestrator service"""        orchestrator_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -1012,8 +980,7 @@ class WebCrawlersDeploymentManager:
         logger.info("Deployed crawler orchestrator")
     
     def _create_crawler_services(self):
-        """Create services for crawler system"""
-        # Orchestrator service
+        """Create services for crawler system"""        # Orchestrator service
         orchestrator_service = {
             "apiVersion": "v1",
             "kind": "Service",
@@ -1042,14 +1009,12 @@ class WebCrawlersDeploymentManager:
         logger.info("Created crawler services")
     
     def _deploy_crawler_monitoring(self):
-        """Deploy monitoring for crawler system"""
-        # This would deploy Prometheus monitoring, Grafana dashboards, etc.
+        """Deploy monitoring for crawler system"""        # This would deploy Prometheus monitoring, Grafana dashboards, etc.
         # Implementation depends on existing monitoring infrastructure
         logger.info("Crawler monitoring deployment completed")
     
     def _create_namespace(self, namespace: str):
-        """Create Kubernetes namespace if it doesn't exist"""
-        try:
+        """Create Kubernetes namespace if it doesn't exist"""        try:
             self.core_v1.read_namespace(name=namespace)
         except ApiException as e:
             if e.status == 404:
@@ -1062,8 +1027,7 @@ class WebCrawlersDeploymentManager:
                 logger.info(f"Created namespace: {namespace}")
     
     def _create_or_update_configmap(self, configmap_manifest: Dict[str, Any]):
-        """Create or update ConfigMap"""
-        try:
+        """Create or update ConfigMap"""        try:
             self.core_v1.read_namespaced_config_map(
                 name=configmap_manifest['metadata']['name'],
                 namespace=configmap_manifest['metadata']['namespace']
@@ -1083,8 +1047,7 @@ class WebCrawlersDeploymentManager:
                 )
     
     def start_crawler(self, crawler_id: str) -> bool:
-        """Start specific crawler"""
-        try:
+        """Start specific crawler"""        try:
             if crawler_id not in self.crawler_configs:
                 logger.error(f"Crawler configuration not found: {crawler_id}")
                 return False
@@ -1111,8 +1074,7 @@ class WebCrawlersDeploymentManager:
             return False
     
     def stop_crawler(self, crawler_id: str) -> bool:
-        """Stop specific crawler"""
-        try:
+        """Stop specific crawler"""        try:
             # Scale down deployment
             deployment = self.apps_v1.read_namespaced_deployment(
                 name=f"crawler-{crawler_id}",
@@ -1135,8 +1097,7 @@ class WebCrawlersDeploymentManager:
             return False
     
     def get_crawler_status(self) -> Dict[str, Any]:
-        """Get status of all crawlers"""
-        status = {
+        """Get status of all crawlers"""        status = {
             'timestamp': datetime.now().isoformat(),
             'crawlers': {},
             'system_health': 'unknown'
@@ -1186,8 +1147,7 @@ class WebCrawlersDeploymentManager:
         return status
     
     def health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive health check"""
-        health_status = {
+        """Perform comprehensive health check"""        health_status = {
             'timestamp': datetime.now().isoformat(),
             'overall_status': 'healthy',
             'components': {
@@ -1225,8 +1185,7 @@ class WebCrawlersDeploymentManager:
 
 
 def main():
-    """Main function for testing the Web Crawlers Deployment Manager"""
-    # Initialize manager
+    """Main function for testing the Web Crawlers Deployment Manager"""    # Initialize manager
     manager = WebCrawlersDeploymentManager()
     
     # Example configurations

@@ -1,5 +1,4 @@
-"""
-Quality Optimizer - AI-powered quality enhancement for IA Influencer Agent Platform
+"""Quality Optimizer - AI-powered quality enhancement for IA Influencer Agent Platform
 =================================================================================
 
 Advanced quality optimization system using machine learning and AI techniques
@@ -8,9 +7,7 @@ for intelligent content enhancement and quality assessment.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from pathlib import Path
@@ -24,8 +21,7 @@ logger = logging.getLogger(__name__)
 
 
 class QualityDimension(Enum):
-    """Quality assessment dimensions."""
-    VISUAL_CLARITY = "visual_clarity"
+    """Quality assessment dimensions."""    VISUAL_CLARITY = "visual_clarity"
     AUDIO_FIDELITY = "audio_fidelity"
     COMPRESSION_EFFICIENCY = "compression_efficiency"
     PERCEPTUAL_QUALITY = "perceptual_quality"
@@ -35,8 +31,7 @@ class QualityDimension(Enum):
 
 
 class OptimizationGoal(Enum):
-    """Optimization objectives."""
-    MAXIMIZE_QUALITY = "maximize_quality"
+    """Optimization objectives."""    MAXIMIZE_QUALITY = "maximize_quality"
     MINIMIZE_SIZE = "minimize_size"
     BALANCE_QUALITY_SIZE = "balance_quality_size"
     OPTIMIZE_FOR_PLATFORM = "optimize_for_platform"
@@ -45,8 +40,7 @@ class OptimizationGoal(Enum):
 
 
 class QualityLevel(Enum):
-    """Quality levels."""
-    POOR = "poor"
+    """Quality levels."""    POOR = "poor"
     FAIR = "fair"
     GOOD = "good"
     EXCELLENT = "excellent"
@@ -55,8 +49,7 @@ class QualityLevel(Enum):
 
 @dataclass
 class QualityMetrics:
-    """Comprehensive quality metrics."""
-    overall_score: float = 0.0
+    """Comprehensive quality metrics."""    overall_score: float = 0.0
     
     # Visual quality metrics
     sharpness: float = 0.0
@@ -93,8 +86,7 @@ class QualityMetrics:
     platform_scores: Dict[str, float] = field(default_factory=dict)
     
     def get_quality_level(self) -> QualityLevel:
-        """Get quality level based on overall score."""
-        if self.overall_score >= 90:
+        """Get quality level based on overall score."""        if self.overall_score >= 90:
             return QualityLevel.PERFECT
         elif self.overall_score >= 80:
             return QualityLevel.EXCELLENT
@@ -108,8 +100,7 @@ class QualityMetrics:
 
 @dataclass
 class OptimizationResult:
-    """Result of quality optimization."""
-    success: bool
+    """Result of quality optimization."""    success: bool
     input_file: str
     output_file: str
     
@@ -134,26 +125,22 @@ class OptimizationResult:
 
 
 class QualityOptimizer:
-    """
-    AI-powered quality optimizer for the IA Influencer Agent Platform.
+    """    AI-powered quality optimizer for the IA Influencer Agent Platform.
     
     Provides intelligent quality assessment and enhancement using machine
     learning techniques and advanced signal processing.
-    """
-    
+    """    
     def __init__(
         self,
         model_path: Optional[str] = None,
         config: Optional[Dict[str, Any]] = None
     ):
-        """
-        Initialize quality optimizer.
+        """        Initialize quality optimizer.
         
         Args:
             model_path: Path to trained quality models
             config: Configuration options
-        """
-        self.model_path = model_path
+        """        self.model_path = model_path
         self.config = config or {}
         
         # Quality assessment models
@@ -180,8 +167,7 @@ class QualityOptimizer:
         content_type: str = "video",
         detailed_analysis: bool = True
     ) -> QualityMetrics:
-        """
-        Assess content quality using AI models.
+        """        Assess content quality using AI models.
         
         Args:
             file_path: Path to content file
@@ -190,8 +176,7 @@ class QualityOptimizer:
             
         Returns:
             Quality metrics
-        """
-        try:
+        """        try:
             start_time = time.time()
             
             # Initialize metrics
@@ -231,8 +216,7 @@ class QualityOptimizer:
         target_platform: Optional[str] = None,
         custom_parameters: Optional[Dict[str, Any]] = None
     ) -> OptimizationResult:
-        """
-        Optimize content quality using AI-powered techniques.
+        """        Optimize content quality using AI-powered techniques.
         
         Args:
             input_file: Input file path
@@ -243,8 +227,7 @@ class QualityOptimizer:
             
         Returns:
             Optimization result
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Assess original quality
@@ -351,8 +334,7 @@ class QualityOptimizer:
         enhancement_type: str,
         strength: float = 1.0
     ) -> bool:
-        """
-        Apply AI-powered enhancement to content.
+        """        Apply AI-powered enhancement to content.
         
         Args:
             input_file: Input file path
@@ -362,8 +344,7 @@ class QualityOptimizer:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             # Load appropriate AI model
             model = await self._load_enhancement_model(enhancement_type)
             if not model:
@@ -387,8 +368,7 @@ class QualityOptimizer:
         file2: str,
         comparison_metrics: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """
-        Compare quality between two files.
+        """        Compare quality between two files.
         
         Args:
             file1: First file path
@@ -397,8 +377,7 @@ class QualityOptimizer:
             
         Returns:
             Comparison results
-        """
-        try:
+        """        try:
             # Assess both files
             metrics1 = await self.assess_quality(file1)
             metrics2 = await self.assess_quality(file2)
@@ -448,8 +427,7 @@ class QualityOptimizer:
         target_platform: Optional[str] = None,
         target_quality: Optional[QualityLevel] = None
     ) -> List[str]:
-        """
-        Get AI-powered optimization recommendations.
+        """        Get AI-powered optimization recommendations.
         
         Args:
             file_path: File to analyze
@@ -458,8 +436,7 @@ class QualityOptimizer:
             
         Returns:
             List of recommendations
-        """
-        try:
+        """        try:
             # Assess current quality
             metrics = await self.assess_quality(file_path)
             recommendations = []
@@ -512,8 +489,7 @@ class QualityOptimizer:
         metrics: QualityMetrics,
         detailed: bool
     ):
-        """Analyze video quality metrics."""
-        try:
+        """Analyze video quality metrics."""        try:
             # This would integrate with video analysis libraries
             # For now, simulate analysis
             
@@ -548,8 +524,7 @@ class QualityOptimizer:
         metrics: QualityMetrics,
         detailed: bool
     ):
-        """Analyze audio quality metrics."""
-        try:
+        """Analyze audio quality metrics."""        try:
             # Simulated audio analysis
             metrics.bitrate = 320000  # 320 kbps
             metrics.snr_ratio = 85.0
@@ -566,8 +541,7 @@ class QualityOptimizer:
         metrics: QualityMetrics,
         detailed: bool
     ):
-        """Analyze image quality metrics."""
-        try:
+        """Analyze image quality metrics."""        try:
             # Simulated image analysis
             metrics.resolution = "1920x1080"
             metrics.sharpness = 0.80
@@ -584,8 +558,7 @@ class QualityOptimizer:
         metrics: QualityMetrics,
         content_type: str
     ) -> float:
-        """Calculate overall quality score."""
-        try:
+        """Calculate overall quality score."""        try:
             if content_type == "video":
                 # Weighted average for video
                 score = (
@@ -623,8 +596,7 @@ class QualityOptimizer:
         metrics: QualityMetrics,
         content_type: str
     ) -> Dict[str, float]:
-        """Calculate platform-specific quality scores."""
-        platform_scores = {}
+        """Calculate platform-specific quality scores."""        platform_scores = {}
         
         for platform, specs in self.platform_specs.items():
             score = metrics.overall_score
@@ -647,8 +619,7 @@ class QualityOptimizer:
         platform: Optional[str],
         content_type: str
     ) -> Dict[str, Any]:
-        """Select optimal enhancement strategy."""
-        strategy = {
+        """Select optimal enhancement strategy."""        strategy = {
             "techniques": [],
             "parameters": {}
         }
@@ -687,8 +658,7 @@ class QualityOptimizer:
         output_file: str,
         parameters: Dict[str, Any]
     ) -> bool:
-        """Apply specific enhancement technique."""
-        try:
+        """Apply specific enhancement technique."""        try:
             # This would integrate with actual enhancement tools
             # For now, simulate processing
             
@@ -706,8 +676,7 @@ class QualityOptimizer:
             return False
     
     async def _load_enhancement_model(self, enhancement_type: str):
-        """Load AI enhancement model."""
-        # This would load actual AI models
+        """Load AI enhancement model."""        # This would load actual AI models
         # For now, return a mock model
         return {"type": enhancement_type, "loaded": True}
     
@@ -718,8 +687,7 @@ class QualityOptimizer:
         output_file: str,
         strength: float
     ) -> bool:
-        """Apply AI-powered enhancement."""
-        try:
+        """Apply AI-powered enhancement."""        try:
             # Simulate AI processing
             await asyncio.sleep(0.5)  # Simulate AI inference time
             
@@ -734,8 +702,7 @@ class QualityOptimizer:
             return False
     
     def _detect_content_type(self, file_path: str) -> str:
-        """Detect content type from file."""
-        suffix = Path(file_path).suffix.lower()
+        """Detect content type from file."""        suffix = Path(file_path).suffix.lower()
         
         video_formats = {'.mp4', '.avi', '.mov', '.mkv', '.webm'}
         audio_formats = {'.mp3', '.wav', '.aac', '.flac', '.ogg'}
@@ -756,8 +723,7 @@ class QualityOptimizer:
         optimized: QualityMetrics,
         goal: OptimizationGoal
     ) -> float:
-        """Calculate improvement score based on goal."""
-        if goal == OptimizationGoal.MAXIMIZE_QUALITY:
+        """Calculate improvement score based on goal."""        if goal == OptimizationGoal.MAXIMIZE_QUALITY:
             return max(0, optimized.overall_score - original.overall_score)
         elif goal == OptimizationGoal.MINIMIZE_SIZE:
             if original.file_size > 0:
@@ -777,8 +743,7 @@ class QualityOptimizer:
         optimized: QualityMetrics,
         goal: OptimizationGoal
     ) -> List[str]:
-        """Generate optimization recommendations."""
-        recommendations = []
+        """Generate optimization recommendations."""        recommendations = []
         
         if optimized.overall_score > original.overall_score:
             recommendations.append("Quality improvement achieved successfully")
@@ -793,20 +758,17 @@ class QualityOptimizer:
         return recommendations
     
     def _calculate_efficiency_score(self, improvement: float, size_reduction: float) -> float:
-        """Calculate efficiency score."""
-        return (improvement + size_reduction) / 2
+        """Calculate efficiency score."""        return (improvement + size_reduction) / 2
     
     async def _can_enhance_with_ai(self, file_path: str) -> bool:
-        """Check if AI enhancement is available for this content."""
-        content_type = self._detect_content_type(file_path)
+        """Check if AI enhancement is available for this content."""        content_type = self._detect_content_type(file_path)
         
         # Check if we have AI models for this content type
         ai_supported_types = {"video", "image", "audio"}
         return content_type in ai_supported_types
     
     def _init_platform_specs(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize platform specifications."""
-        return {
+        """Initialize platform specifications."""        return {
             "youtube": {
                 "max_file_size": 12 * 1024 * 1024 * 1024,  # 12GB
                 "max_bitrate": 68000000,  # 68 Mbps for 4K
@@ -831,8 +793,7 @@ class QualityOptimizer:
         }
     
     def _init_quality_benchmarks(self) -> Dict[str, Dict[str, float]]:
-        """Initialize quality benchmarks."""
-        return {
+        """Initialize quality benchmarks."""        return {
             "excellent": {
                 "overall_score": 90,
                 "sharpness": 0.9,
@@ -854,8 +815,7 @@ class QualityOptimizer:
         }
     
     def _init_enhancement_techniques(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize available enhancement techniques."""
-        return {
+        """Initialize available enhancement techniques."""        return {
             "sharpen": {
                 "description": "Enhance image sharpness and detail",
                 "parameters": {"strength": 1.0, "radius": 1.0},

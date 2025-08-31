@@ -1,5 +1,4 @@
-"""
-Commission Management System
+"""Commission Management System
 
 Système de gestion avancé des commissions avec calculs automatisés,
 distribution intelligente et tracking des affiliations pour la plateforme IA Influencer Agent.
@@ -12,9 +11,7 @@ Auteur: Fahed Mlaiel <mlaiel@live.de>
 Ce code et concept sont la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Violation = Poursuites judiciaires selon le droit allemand et international.
-"""
-
-from typing import Dict, List, Optional, Any, Tuple, Union
+"""from typing import Dict, List, Optional, Any, Tuple, Union
 from datetime import datetime, timedelta
 from decimal import Decimal, ROUND_HALF_UP
 from enum import Enum
@@ -40,8 +37,7 @@ Base = declarative_base()
 
 
 class CommissionType(Enum):
-    """Types de commissions"""
-    AFFILIATE_REFERRAL = "affiliate_referral"
+    """Types de commissions"""    AFFILIATE_REFERRAL = "affiliate_referral"
     COLLABORATION_SPLIT = "collaboration_split"
     PLATFORM_COMMISSION = "platform_commission"
     CREATOR_ROYALTY = "creator_royalty"
@@ -54,8 +50,7 @@ class CommissionType(Enum):
 
 
 class CommissionStatus(Enum):
-    """Status des commissions"""
-    PENDING = "pending"
+    """Status des commissions"""    PENDING = "pending"
     CALCULATED = "calculated"
     APPROVED = "approved"
     PAID = "paid"
@@ -65,8 +60,7 @@ class CommissionStatus(Enum):
 
 
 class CommissionTier(Enum):
-    """Niveaux de commission"""
-    BRONZE = "bronze"
+    """Niveaux de commission"""    BRONZE = "bronze"
     SILVER = "silver"
     GOLD = "gold"
     PLATINUM = "platinum"
@@ -76,10 +70,8 @@ class CommissionTier(Enum):
 
 @dataclass
 class CommissionRuleModel(BaseModel, TimestampMixin):
-    """
-    Modèle des règles de commission
-    """
-    __tablename__ = "commission_rules"
+    """    Modèle des règles de commission
+    """    __tablename__ = "commission_rules"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     rule_name = Column(String(255), nullable=False, index=True)
@@ -114,10 +106,8 @@ class CommissionRuleModel(BaseModel, TimestampMixin):
 
 @dataclass
 class CommissionRecordModel(BaseModel, TimestampMixin):
-    """
-    Modèle des enregistrements de commission
-    """
-    __tablename__ = "commission_records"
+    """    Modèle des enregistrements de commission
+    """    __tablename__ = "commission_records"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     commission_id = Column(String(255), unique=True, nullable=False, index=True)
@@ -162,10 +152,8 @@ class CommissionRecordModel(BaseModel, TimestampMixin):
 
 @dataclass
 class AffiliateTrackingModel(BaseModel, TimestampMixin):
-    """
-    Modèle de suivi des affiliés
-    """
-    __tablename__ = "affiliate_tracking"
+    """    Modèle de suivi des affiliés
+    """    __tablename__ = "affiliate_tracking"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     affiliate_id = Column(String(255), unique=True, nullable=False, index=True)
@@ -201,10 +189,8 @@ class AffiliateTrackingModel(BaseModel, TimestampMixin):
 
 
 class CommissionCalculatorEngine:
-    """
-    Moteur de calcul avancé des commissions
-    """
-    
+    """    Moteur de calcul avancé des commissions
+    """    
     def __init__(self, db_session: Session, cache_manager: CacheManager):
         self.db_session = db_session
         self.cache_manager = cache_manager
@@ -219,10 +205,8 @@ class CommissionCalculatorEngine:
         recipient_user_id: uuid.UUID,
         additional_context: Optional[Dict[str, Any]] = None
     ) -> CommissionRecordModel:
-        """
-        Calcule une commission basée sur les règles définies
-        """
-        try:
+        """        Calcule une commission basée sur les règles définies
+        """        try:
             # Récupération des données
             revenue_record = await self._get_revenue_record(revenue_record_id)
             commission_rule = await self._get_commission_rule(commission_rule_id)
@@ -308,10 +292,8 @@ class CommissionCalculatorEngine:
         revenue_record,
         additional_context: Optional[Dict[str, Any]] = None
     ) -> Decimal:
-        """
-        Calcule le pourcentage de commission dynamique
-        """
-        base_percentage = commission_rule.base_percentage
+        """        Calcule le pourcentage de commission dynamique
+        """        base_percentage = commission_rule.base_percentage
         
         # Ajustement basé sur les performances
         if commission_rule.performance_multiplier > 1.0:
@@ -335,10 +317,8 @@ class CommissionCalculatorEngine:
         recipient_user_id: uuid.UUID,
         revenue_record
     ) -> Decimal:
-        """
-        Calcule le bonus de performance
-        """
-        # Récupération des métriques de performance
+        """        Calcule le bonus de performance
+        """        # Récupération des métriques de performance
         performance_data = await self._get_user_performance_metrics(recipient_user_id)
         
         if not performance_data:
@@ -366,10 +346,8 @@ class CommissionCalculatorEngine:
         recipient_user_id: uuid.UUID,
         commission_rule: CommissionRuleModel
     ) -> Decimal:
-        """
-        Calcule le bonus de niveau
-        """
-        affiliate_data = await self._get_affiliate_data(recipient_user_id)
+        """        Calcule le bonus de niveau
+        """        affiliate_data = await self._get_affiliate_data(recipient_user_id)
         
         if not affiliate_data:
             return Decimal('0')
@@ -393,19 +371,15 @@ class CommissionCalculatorEngine:
 
 
 class CommissionDistributionEngine:
-    """
-    Moteur de distribution automatisée des commissions
-    """
-    
+    """    Moteur de distribution automatisée des commissions
+    """    
     def __init__(self, db_session: Session):
         self.db_session = db_session
         self.event_emitter = EventEmitter()
     
     async def process_pending_commissions(self) -> Dict[str, Any]:
-        """
-        Traite toutes les commissions en attente
-        """
-        pending_commissions = await self._get_pending_commissions()
+        """        Traite toutes les commissions en attente
+        """        pending_commissions = await self._get_pending_commissions()
         
         results = {
             'processed': 0,
@@ -437,10 +411,8 @@ class CommissionDistributionEngine:
         return results
     
     async def _distribute_commission(self, commission: CommissionRecordModel):
-        """
-        Distribue une commission individuelle
-        """
-        # Validation des fonds
+        """        Distribue une commission individuelle
+        """        # Validation des fonds
         await self._validate_available_funds(commission)
         
         # Traitement du paiement
@@ -467,10 +439,8 @@ class CommissionDistributionEngine:
 
 
 class CommissionManager:
-    """
-    Gestionnaire principal des commissions
-    """
-    
+    """    Gestionnaire principal des commissions
+    """    
     def __init__(self, db_manager: DatabaseManager):
         self.db_manager = db_manager
         self.cache_manager = CacheManager()
@@ -487,10 +457,8 @@ class CommissionManager:
         base_percentage: Decimal,
         configuration: Dict[str, Any]
     ) -> CommissionRuleModel:
-        """
-        Crée une nouvelle règle de commission
-        """
-        rule = CommissionRuleModel(
+        """        Crée une nouvelle règle de commission
+        """        rule = CommissionRuleModel(
             rule_name=rule_name,
             commission_type=commission_type.value,
             base_percentage=base_percentage,
@@ -516,10 +484,8 @@ class CommissionManager:
         self,
         revenue_record_id: uuid.UUID
     ) -> List[CommissionRecordModel]:
-        """
-        Calcule et distribue automatiquement toutes les commissions applicables
-        """
-        applicable_rules = await self._find_applicable_commission_rules(revenue_record_id)
+        """        Calcule et distribue automatiquement toutes les commissions applicables
+        """        applicable_rules = await self._find_applicable_commission_rules(revenue_record_id)
         created_commissions = []
         
         for rule, recipient_id in applicable_rules:
@@ -543,10 +509,8 @@ class CommissionManager:
         user_id: Optional[uuid.UUID] = None,
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """
-        Génère des analyses complètes des commissions
-        """
-        query_filters = {}
+        """        Génère des analyses complètes des commissions
+        """        query_filters = {}
         
         if user_id:
             query_filters['recipient_user_id'] = user_id

@@ -1,5 +1,4 @@
-"""
-Enterprise Reward Calculator - Dynamic rewards calculation system for IA Influencer platform.
+"""Enterprise Reward Calculator - Dynamic rewards calculation system for IA Influencer platform.
 
 This module provides a sophisticated reward calculation engine that dynamically
 calculates and distributes rewards based on user actions, achievements, and performance.
@@ -26,9 +25,7 @@ For licensing inquiries ONLY: mlaiel@live.de
 Business Logic Integration:
 Creator Upload → AI Processing → Protection → SEO → Collaboration Matching + Gamification →
 Dynamic Reward Calculation → Distribution → Monetization → Analytics
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -43,8 +40,7 @@ logger = logging.getLogger(__name__)
 
 
 class RewardType(str, Enum):
-    """Types of rewards available in the system."""
-    EXPERIENCE_POINTS = "experience_points"
+    """Types of rewards available in the system."""    EXPERIENCE_POINTS = "experience_points"
     VIRTUAL_CURRENCY = "virtual_currency"
     REAL_CURRENCY = "real_currency"
     BADGE = "badge"
@@ -62,8 +58,7 @@ class RewardType(str, Enum):
 
 
 class RewardRarity(str, Enum):
-    """Rarity levels for rewards."""
-    COMMON = "common"
+    """Rarity levels for rewards."""    COMMON = "common"
     UNCOMMON = "uncommon"
     RARE = "rare"
     EPIC = "epic"
@@ -72,8 +67,7 @@ class RewardRarity(str, Enum):
 
 
 class RewardSource(str, Enum):
-    """Sources that can trigger rewards."""
-    CONTENT_UPLOAD = "content_upload"
+    """Sources that can trigger rewards."""    CONTENT_UPLOAD = "content_upload"
     ACHIEVEMENT_UNLOCK = "achievement_unlock"
     CHALLENGE_COMPLETION = "challenge_completion"
     COLLABORATION_SUCCESS = "collaboration_success"
@@ -90,8 +84,7 @@ class RewardSource(str, Enum):
 
 
 class RewardCalculationMethod(str, Enum):
-    """Methods for calculating reward values."""
-    FIXED = "fixed"
+    """Methods for calculating reward values."""    FIXED = "fixed"
     PERCENTAGE = "percentage"
     TIERED = "tiered"
     EXPONENTIAL = "exponential"
@@ -102,8 +95,7 @@ class RewardCalculationMethod(str, Enum):
 
 @dataclass
 class RewardCalculationContext:
-    """Context information for reward calculations."""
-    user_id: str
+    """Context information for reward calculations."""    user_id: str
     source: RewardSource
     trigger_data: Dict[str, Any] = field(default_factory=dict)
     user_profile: Dict[str, Any] = field(default_factory=dict)
@@ -126,8 +118,7 @@ class RewardCalculationContext:
 
 @dataclass
 class RewardRule:
-    """Defines rules for calculating rewards."""
-    rule_id: str = field(default_factory=lambda: str(uuid4()))
+    """Defines rules for calculating rewards."""    rule_id: str = field(default_factory=lambda: str(uuid4()))
     name: str = ""
     description: str = ""
     reward_type: RewardType = RewardType.EXPERIENCE_POINTS
@@ -159,8 +150,7 @@ class RewardRule:
     times_triggered: int = 0
     
     def is_valid(self, timestamp: Optional[datetime] = None) -> bool:
-        """Check if the reward rule is currently valid."""
-        if not self.active:
+        """Check if the reward rule is currently valid."""        if not self.active:
             return False
         
         if timestamp is None:
@@ -177,8 +167,7 @@ class RewardRule:
 
 @dataclass
 class CalculatedReward:
-    """Represents a calculated reward."""
-    reward_id: str = field(default_factory=lambda: str(uuid4()))
+    """Represents a calculated reward."""    reward_id: str = field(default_factory=lambda: str(uuid4()))
     user_id: str = ""
     reward_type: RewardType = RewardType.EXPERIENCE_POINTS
     value: Union[int, float, Decimal] = 0
@@ -209,14 +198,12 @@ class CalculatedReward:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def is_expired(self) -> bool:
-        """Check if the reward has expired."""
-        if not self.expires_at:
+        """Check if the reward has expired."""        if not self.expires_at:
             return False
         return datetime.utcnow() > self.expires_at
     
     def get_display_value(self) -> str:
-        """Get formatted display value for the reward."""
-        if self.reward_type == RewardType.VIRTUAL_CURRENCY:
+        """Get formatted display value for the reward."""        if self.reward_type == RewardType.VIRTUAL_CURRENCY:
             return f"{int(self.value):,} coins"
         elif self.reward_type == RewardType.REAL_CURRENCY:
             return f"${self.value:.2f}"
@@ -229,16 +216,13 @@ class CalculatedReward:
 
 
 class RewardCalculator:
-    """
-    Enterprise-grade dynamic reward calculation system.
+    """    Enterprise-grade dynamic reward calculation system.
     
     Calculates and optimizes rewards based on user behavior, performance,
     and platform dynamics to maximize engagement and retention.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the reward calculator."""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize the reward calculator."""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self._rules: Dict[str, RewardRule] = {}
         self._user_reward_history: Dict[str, List[CalculatedReward]] = {}
         self._daily_limits: Dict[str, Dict[str, Decimal]] = {}
@@ -250,8 +234,7 @@ class RewardCalculator:
         self.logger.info("RewardCalculator initialized successfully")
     
     def _initialize_default_rules(self) -> None:
-        """Initialize default reward rules."""
-        
+        """Initialize default reward rules."""        
         # Content Upload Rewards
         content_upload_rule = RewardRule(
             name="Content Upload Basic",
@@ -412,8 +395,7 @@ class RewardCalculator:
         self,
         context: RewardCalculationContext
     ) -> List[CalculatedReward]:
-        """Calculate rewards for a given context."""
-        try:
+        """Calculate rewards for a given context."""        try:
             calculated_rewards = []
             
             # Find applicable rules
@@ -470,8 +452,7 @@ class RewardCalculator:
         self,
         context: RewardCalculationContext
     ) -> List[RewardRule]:
-        """Find rules applicable to the given context."""
-        applicable_rules = []
+        """Find rules applicable to the given context."""        applicable_rules = []
         
         for rule in self._rules.values():
             # Check if rule is valid
@@ -495,8 +476,7 @@ class RewardCalculator:
         rule: RewardRule,
         context: RewardCalculationContext
     ) -> bool:
-        """Check if rule conditions are met."""
-        try:
+        """Check if rule conditions are met."""        try:
             for condition_key, condition_value in rule.conditions.items():
                 
                 if condition_key == "first_upload":
@@ -534,8 +514,7 @@ class RewardCalculator:
             return False
     
     async def _check_rule_limits(self, rule: RewardRule, user_id: str) -> bool:
-        """Check if rule limits allow for more rewards."""
-        try:
+        """Check if rule limits allow for more rewards."""        try:
             today = datetime.utcnow().date()
             this_month = datetime.utcnow().replace(day=1).date()
             
@@ -570,8 +549,7 @@ class RewardCalculator:
         rule: RewardRule,
         context: RewardCalculationContext
     ) -> Union[int, float, Decimal]:
-        """Calculate the reward value based on the rule's calculation method."""
-        try:
+        """Calculate the reward value based on the rule's calculation method."""        try:
             if rule.calculation_method == RewardCalculationMethod.FIXED:
                 return rule.base_value
             
@@ -606,8 +584,7 @@ class RewardCalculator:
         rule: RewardRule,
         context: RewardCalculationContext
     ) -> Union[int, float, Decimal]:
-        """Calculate value using tiered approach."""
-        params = rule.calculation_params
+        """Calculate value using tiered approach."""        params = rule.calculation_params
         
         if "tiers" in params:
             # Quality-based tiers
@@ -644,8 +621,7 @@ class RewardCalculator:
         rule: RewardRule,
         context: RewardCalculationContext
     ) -> Union[int, float, Decimal]:
-        """Calculate value using exponential growth."""
-        params = rule.calculation_params
+        """Calculate value using exponential growth."""        params = rule.calculation_params
         
         # Streak-based exponential growth
         if context.source == RewardSource.STREAK_BONUS:
@@ -673,8 +649,7 @@ class RewardCalculator:
         rule: RewardRule,
         context: RewardCalculationContext
     ) -> Union[int, float, Decimal]:
-        """Calculate value based on performance metrics."""
-        params = rule.calculation_params
+        """Calculate value based on performance metrics."""        params = rule.calculation_params
         base_value = Decimal(str(rule.base_value))
         
         if context.source == RewardSource.CONTENT_UPLOAD:
@@ -734,8 +709,7 @@ class RewardCalculator:
         rule: RewardRule,
         context: RewardCalculationContext
     ) -> Union[int, float, Decimal]:
-        """Calculate value based on community metrics."""
-        # Community voting, peer ratings, etc.
+        """Calculate value based on community metrics."""        # Community voting, peer ratings, etc.
         community_score = context.trigger_data.get("community_score", 0.75)
         return Decimal(str(rule.base_value)) * Decimal(str(community_score))
     
@@ -744,8 +718,7 @@ class RewardCalculator:
         rule: RewardRule,
         context: RewardCalculationContext
     ) -> Union[int, float, Decimal]:
-        """Calculate AI-optimized reward value."""
-        # This would integrate with ML models for optimization
+        """Calculate AI-optimized reward value."""        # This would integrate with ML models for optimization
         # For now, use a sophisticated heuristic approach
         
         base_value = Decimal(str(rule.base_value))
@@ -769,8 +742,7 @@ class RewardCalculator:
         reward: CalculatedReward,
         context: RewardCalculationContext
     ) -> None:
-        """Apply various multipliers and bonuses to the reward."""
-        try:
+        """Apply various multipliers and bonuses to the reward."""        try:
             original_value = reward.value
             
             # Apply streak multiplier
@@ -835,8 +807,7 @@ class RewardCalculator:
         user_id: str,
         rewards: List[CalculatedReward]
     ) -> List[CalculatedReward]:
-        """Award calculated rewards to a user."""
-        try:
+        """Award calculated rewards to a user."""        try:
             awarded_rewards = []
             
             for reward in rewards:
@@ -869,8 +840,7 @@ class RewardCalculator:
             return []
     
     async def _update_user_limits(self, user_id: str, reward: CalculatedReward) -> None:
-        """Update user's daily and monthly limits."""
-        try:
+        """Update user's daily and monthly limits."""        try:
             rule = self._rules.get(reward.rule_id)
             if not rule:
                 return
@@ -904,8 +874,7 @@ class RewardCalculator:
         user_id: str,
         period_days: int = 30
     ) -> Dict[str, Any]:
-        """Get summary of user's rewards over a period."""
-        try:
+        """Get summary of user's rewards over a period."""        try:
             if user_id not in self._user_reward_history:
                 return {
                     "user_id": user_id,
@@ -975,8 +944,7 @@ class RewardCalculator:
         user_profile: Dict[str, Any],
         optimization_goals: List[str]
     ) -> Dict[str, Any]:
-        """Optimize reward calculations for a specific user."""
-        try:
+        """Optimize reward calculations for a specific user."""        try:
             # Analyze user's reward history and engagement patterns
             history = self._user_reward_history.get(user_id, [])
             
@@ -1026,8 +994,7 @@ class RewardCalculator:
         user_id: str,
         user_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate personalized reward recommendations."""
-        recommendations = []
+        """Generate personalized reward recommendations."""        recommendations = []
         
         # Analyze user patterns
         user_level = user_profile.get("level", 1)
@@ -1070,8 +1037,7 @@ _reward_calculator: Optional[RewardCalculator] = None
 
 
 async def get_reward_calculator() -> RewardCalculator:
-    """Get the global reward calculator instance."""
-    global _reward_calculator
+    """Get the global reward calculator instance."""    global _reward_calculator
     
     if _reward_calculator is None:
         _reward_calculator = RewardCalculator()
@@ -1085,8 +1051,7 @@ async def calculate_content_upload_rewards(
     content_data: Dict[str, Any],
     user_profile: Dict[str, Any]
 ) -> List[CalculatedReward]:
-    """Calculate rewards for content upload (convenience function)."""
-    calculator = await get_reward_calculator()
+    """Calculate rewards for content upload (convenience function)."""    calculator = await get_reward_calculator()
     
     context = RewardCalculationContext(
         user_id=user_id,
@@ -1107,8 +1072,7 @@ async def award_achievement_rewards(
     achievement_data: Dict[str, Any],
     user_profile: Dict[str, Any]
 ) -> List[CalculatedReward]:
-    """Award rewards for achievement unlock (convenience function)."""
-    calculator = await get_reward_calculator()
+    """Award rewards for achievement unlock (convenience function)."""    calculator = await get_reward_calculator()
     
     context = RewardCalculationContext(
         user_id=user_id,

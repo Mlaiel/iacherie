@@ -1,5 +1,4 @@
-"""
-Professional content fingerprinting workflow integration module.
+"""Professional content fingerprinting workflow integration module.
 
 This module integrates AI-powered content fingerprinting capabilities with the 
 workflow system for comprehensive content protection and rights management.
@@ -7,9 +6,7 @@ workflow system for comprehensive content protection and rights management.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
-"""
-
-from typing import Dict, Any, List, Optional, Union
+"""from typing import Dict, Any, List, Optional, Union
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from enum import Enum
@@ -26,8 +23,7 @@ from .exceptions import WorkflowException, PipelineException
 
 
 class FingerprintContentType(Enum):
-    """Supported content types for fingerprinting."""
-    AUDIO = "audio"
+    """Supported content types for fingerprinting."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -36,8 +32,7 @@ class FingerprintContentType(Enum):
 
 
 class FingerprintingQuality(Enum):
-    """Quality levels for fingerprinting processing."""
-    FAST = "fast"
+    """Quality levels for fingerprinting processing."""    FAST = "fast"
     BALANCED = "balanced"
     COMPREHENSIVE = "comprehensive"
     ULTRA_PRECISE = "ultra_precise"
@@ -45,8 +40,7 @@ class FingerprintingQuality(Enum):
 
 @dataclass
 class ContentFingerprintResult:
-    """Result of content fingerprinting operation."""
-    content_id: str
+    """Result of content fingerprinting operation."""    content_id: str
     content_type: FingerprintContentType
     fingerprint_hash: str
     vector_embedding: Optional[bytes] = None
@@ -63,8 +57,7 @@ class ContentFingerprintResult:
 
 
 class ContentFingerprintingWorkflow:
-    """Workflow integration for content fingerprinting operations."""
-    
+    """Workflow integration for content fingerprinting operations."""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger("workflow.fingerprinting")
@@ -87,8 +80,7 @@ class ContentFingerprintingWorkflow:
         content_items: List[Dict[str, Any]],
         quality: FingerprintingQuality = None
     ) -> IntelligentContentPipeline:
-        """Create a comprehensive fingerprinting pipeline."""
-        quality = quality or self.default_quality
+        """Create a comprehensive fingerprinting pipeline."""        quality = quality or self.default_quality
         pipeline_id = f"fingerprinting_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
         pipeline = IntelligentContentPipeline(
@@ -114,8 +106,7 @@ class ContentFingerprintingWorkflow:
         pipeline: IntelligentContentPipeline,
         quality: FingerprintingQuality
     ):
-        """Add fingerprinting workflow steps to pipeline."""
-        
+        """Add fingerprinting workflow steps to pipeline."""        
         # Step 1: Content validation and preparation
         validation_step = PipelineStep(
             name="content_validation",
@@ -224,8 +215,7 @@ class ContentFingerprintingWorkflow:
         pipeline.add_step(notification_step)
     
     async def _validate_content(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate content items before fingerprinting."""
-        content_items = context.get("content_items", [])
+        """Validate content items before fingerprinting."""        content_items = context.get("content_items", [])
         
         if not content_items:
             raise PipelineException("No content items provided for fingerprinting")
@@ -271,8 +261,7 @@ class ContentFingerprintingWorkflow:
         }
     
     async def _classify_content(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Classify content types for appropriate fingerprinting."""
-        validation_result = context.get("content_validation_result")
+        """Classify content types for appropriate fingerprinting."""        validation_result = context.get("content_validation_result")
         if not validation_result:
             raise PipelineException("Content validation result not available")
         
@@ -310,8 +299,7 @@ class ContentFingerprintingWorkflow:
         }
     
     async def _generate_fingerprints(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate fingerprints for classified content."""
-        validation_result = context.get("content_validation_result")
+        """Generate fingerprints for classified content."""        validation_result = context.get("content_validation_result")
         classification_result = context.get("content_classification_result")
         quality_level = context.get("quality_level", "balanced")
         
@@ -359,8 +347,7 @@ class ContentFingerprintingWorkflow:
         strategy: str,
         quality_level: str
     ) -> ContentFingerprintResult:
-        """Generate fingerprint for a single content item."""
-        start_time = datetime.utcnow()
+        """Generate fingerprint for a single content item."""        start_time = datetime.utcnow()
         
         try:
             if content_type == FingerprintContentType.AUDIO:
@@ -403,8 +390,7 @@ class ContentFingerprintingWorkflow:
             raise PipelineException(f"Fingerprint generation failed: {e}")
     
     async def _generate_vector_embeddings(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate vector embeddings for similarity matching."""
-        fingerprint_result = context.get("fingerprint_generation_result")
+        """Generate vector embeddings for similarity matching."""        fingerprint_result = context.get("fingerprint_generation_result")
         if not fingerprint_result:
             raise PipelineException("Fingerprint results not available")
         
@@ -443,8 +429,7 @@ class ContentFingerprintingWorkflow:
         }
     
     async def _perform_similarity_matching(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform similarity matching against existing content."""
-        fingerprint_result = context.get("fingerprint_generation_result")
+        """Perform similarity matching against existing content."""        fingerprint_result = context.get("fingerprint_generation_result")
         threshold = metadata.get("threshold", self.similarity_threshold)
         
         if not fingerprint_result:
@@ -486,8 +471,7 @@ class ContentFingerprintingWorkflow:
         }
     
     async def _assess_fingerprint_quality(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess quality of generated fingerprints."""
-        fingerprint_result = context.get("fingerprint_generation_result")
+        """Assess quality of generated fingerprints."""        fingerprint_result = context.get("fingerprint_generation_result")
         quality_thresholds = metadata.get("quality_thresholds", {})
         
         if not fingerprint_result:
@@ -527,8 +511,7 @@ class ContentFingerprintingWorkflow:
         }
     
     async def _store_and_index_fingerprints(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Store fingerprints and create search indices."""
-        fingerprint_result = context.get("fingerprint_generation_result")
+        """Store fingerprints and create search indices."""        fingerprint_result = context.get("fingerprint_generation_result")
         quality_result = context.get("quality_assessment_result")
         storage_backend = metadata.get("storage_backend", "postgresql")
         
@@ -581,8 +564,7 @@ class ContentFingerprintingWorkflow:
         }
     
     async def _send_completion_notifications(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Send notifications about fingerprinting completion."""
-        storage_result = context.get("storage_indexing_result")
+        """Send notifications about fingerprinting completion."""        storage_result = context.get("storage_indexing_result")
         
         if not storage_result:
             return {"notifications_sent": 0, "status": "skipped"}
@@ -616,8 +598,7 @@ class ContentFingerprintingWorkflow:
     # Helper methods
     
     async def _detect_content_type(self, item: Dict[str, Any]) -> FingerprintContentType:
-        """Detect content type from item data."""
-        # Simplified content type detection
+        """Detect content type from item data."""        # Simplified content type detection
         if "file_path" in item:
             file_extension = item["file_path"].split(".")[-1].lower()
             if file_extension in ["mp3", "wav", "flac", "aac", "ogg"]:
@@ -633,8 +614,7 @@ class ContentFingerprintingWorkflow:
         return FingerprintContentType.MULTIMEDIA
     
     def _get_fingerprinting_strategy(self, content_type: FingerprintContentType) -> str:
-        """Get fingerprinting strategy for content type."""
-        strategies = {
+        """Get fingerprinting strategy for content type."""        strategies = {
             FingerprintContentType.AUDIO: "spectral_analysis",
             FingerprintContentType.VIDEO: "frame_analysis",
             FingerprintContentType.IMAGE: "perceptual_hash",
@@ -645,8 +625,7 @@ class ContentFingerprintingWorkflow:
         return strategies.get(content_type, "generic")
     
     def _get_processing_priority(self, content_type: FingerprintContentType) -> int:
-        """Get processing priority for content type."""
-        priorities = {
+        """Get processing priority for content type."""        priorities = {
             FingerprintContentType.AUDIO: 9,
             FingerprintContentType.VIDEO: 8,
             FingerprintContentType.IMAGE: 7,
@@ -657,8 +636,7 @@ class ContentFingerprintingWorkflow:
         return priorities.get(content_type, 5)
     
     def _get_quality_thresholds(self, quality: FingerprintingQuality) -> Dict[str, float]:
-        """Get quality thresholds for fingerprinting level."""
-        thresholds = {
+        """Get quality thresholds for fingerprinting level."""        thresholds = {
             FingerprintingQuality.FAST: {
                 "minimum_score": 0.6,
                 "accuracy_threshold": 0.8,
@@ -687,8 +665,7 @@ class ContentFingerprintingWorkflow:
         fp_result: ContentFingerprintResult,
         thresholds: Dict[str, float]
     ) -> Dict[str, float]:
-        """Calculate quality metrics for fingerprint."""
-        # Simplified quality metrics calculation
+        """Calculate quality metrics for fingerprint."""        # Simplified quality metrics calculation
         base_score = 0.8  # Base quality score
         
         # Adjust based on processing time
@@ -719,8 +696,7 @@ class ContentFingerprintingWorkflow:
         quality_data: Dict[str, Any],
         storage_backend: str
     ) -> str:
-        """Store fingerprint data in backend storage."""
-        # Simplified storage implementation
+        """Store fingerprint data in backend storage."""        # Simplified storage implementation
         storage_id = f"fp_{fp_result.content_id}_{hashlib.md5(fp_result.fingerprint_hash.encode()).hexdigest()[:8]}"
         
         # Here would be actual database storage
@@ -729,13 +705,11 @@ class ContentFingerprintingWorkflow:
         return storage_id
     
     async def _create_search_index(self, fp_result: ContentFingerprintResult, storage_id: str):
-        """Create search index for fingerprint."""
-        # Simplified indexing implementation
+        """Create search index for fingerprint."""        # Simplified indexing implementation
         # await self.search_engine.index_fingerprint(storage_id, fp_result)
         pass
     
     async def _send_notification(self, event_type: str, data: Dict[str, Any]):
-        """Send notification about workflow events."""
-        # Simplified notification implementation
+        """Send notification about workflow events."""        # Simplified notification implementation
         # await self.notification_service.send(event_type, data)
         pass

@@ -1,5 +1,4 @@
-"""
-Real-time Notification & Alert System
+"""Real-time Notification & Alert System
 
 This module provides comprehensive notification capabilities:
 - Real-time alerts via WebSocket, email, SMS, and push notifications
@@ -14,9 +13,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import json
 from typing import Dict, List, Optional, Any, Set, Callable
 from dataclasses import dataclass, field
@@ -59,8 +56,7 @@ settings = get_settings()
 
 
 class NotificationChannel(Enum):
-    """Available notification channels"""
-    EMAIL = "email"
+    """Available notification channels"""    EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
     WEBSOCKET = "websocket"
@@ -72,8 +68,7 @@ class NotificationChannel(Enum):
 
 
 class NotificationPriority(Enum):
-    """Notification priority levels"""
-    LOW = "low"
+    """Notification priority levels"""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
@@ -81,8 +76,7 @@ class NotificationPriority(Enum):
 
 
 class NotificationType(Enum):
-    """Types of notifications"""
-    VIOLATION_DETECTED = "violation_detected"
+    """Types of notifications"""    VIOLATION_DETECTED = "violation_detected"
     TAKEDOWN_SUCCESS = "takedown_success"
     TAKEDOWN_FAILED = "takedown_failed"
     REVENUE_ALERT = "revenue_alert"
@@ -94,8 +88,7 @@ class NotificationType(Enum):
 
 @dataclass
 class NotificationTemplate:
-    """Template for notifications"""
-    template_id: str
+    """Template for notifications"""    template_id: str
     notification_type: NotificationType
     channel: NotificationChannel
     subject_template: str
@@ -108,8 +101,7 @@ class NotificationTemplate:
 
 @dataclass
 class NotificationContent:
-    """Content for a notification"""
-    notification_id: str
+    """Content for a notification"""    notification_id: str
     user_id: str
     notification_type: NotificationType
     priority: NotificationPriority
@@ -123,8 +115,7 @@ class NotificationContent:
 
 @dataclass
 class NotificationDelivery:
-    """Delivery status for a notification"""
-    notification_id: str
+    """Delivery status for a notification"""    notification_id: str
     channel: NotificationChannel
     status: str  # pending, sent, delivered, failed, read
     delivery_time: Optional[datetime] = None
@@ -134,13 +125,11 @@ class NotificationDelivery:
 
 
 class NotificationManager:
-    """
-    Comprehensive notification and alert system
+    """    Comprehensive notification and alert system
     
     Manages multi-channel notification delivery with smart routing,
     priority handling, and real-time communication capabilities.
-    """
-    
+    """    
     def __init__(self):
         self.active_connections: Dict[str, WebSocket] = {}
         self.notification_queue = asyncio.Queue()
@@ -166,8 +155,7 @@ class NotificationManager:
         logger.info("Notification manager initialized")
     
     async def _initialize_services(self):
-        """Initialize external notification services"""
-        try:
+        """Initialize external notification services"""        try:
             # Initialize Twilio for SMS
             if hasattr(settings, 'TWILIO_ACCOUNT_SID') and settings.TWILIO_ACCOUNT_SID:
                 self.twilio_client = TwilioClient(
@@ -191,8 +179,7 @@ class NotificationManager:
     async def send_notification(self, content: NotificationContent, 
                               channels: List[NotificationChannel],
                               user_preferences: Optional[Dict[str, Any]] = None) -> Dict[str, NotificationDelivery]:
-        """Send notification through specified channels"""
-        try:
+        """Send notification through specified channels"""        try:
             deliveries = {}
             
             # Filter channels based on user preferences
@@ -229,8 +216,7 @@ class NotificationManager:
             return {}
     
     async def send_violation_alert(self, violation_data: Dict[str, Any], user_id: str) -> bool:
-        """Send alert for content violation detection"""
-        try:
+        """Send alert for content violation detection"""        try:
             # Create notification content
             notification = NotificationContent(
                 notification_id=str(uuid.uuid4()),
@@ -270,8 +256,7 @@ class NotificationManager:
             return False
     
     async def send_takedown_update(self, takedown_data: Dict[str, Any], user_id: str, success: bool) -> bool:
-        """Send update on takedown request status"""
-        try:
+        """Send update on takedown request status"""        try:
             notification_type = NotificationType.TAKEDOWN_SUCCESS if success else NotificationType.TAKEDOWN_FAILED
             title = "✅ Takedown Successful" if success else "❌ Takedown Failed"
             
@@ -301,8 +286,7 @@ class NotificationManager:
             return False
     
     async def send_revenue_alert(self, revenue_data: Dict[str, Any], user_id: str) -> bool:
-        """Send alert for revenue threshold or anomaly"""
-        try:
+        """Send alert for revenue threshold or anomaly"""        try:
             notification = NotificationContent(
                 notification_id=str(uuid.uuid4()),
                 user_id=user_id,
@@ -328,8 +312,7 @@ class NotificationManager:
             return False
     
     async def send_protection_summary(self, summary_data: Dict[str, Any], user_id: str) -> bool:
-        """Send daily/weekly protection summary"""
-        try:
+        """Send daily/weekly protection summary"""        try:
             period = summary_data.get('period', 'daily')
             
             notification = NotificationContent(
@@ -353,8 +336,7 @@ class NotificationManager:
             return False
     
     async def connect_websocket(self, user_id: str, websocket: WebSocket):
-        """Connect user to real-time notifications via WebSocket"""
-        try:
+        """Connect user to real-time notifications via WebSocket"""        try:
             await websocket.accept()
             self.active_connections[user_id] = websocket
             
@@ -371,8 +353,7 @@ class NotificationManager:
             logger.error(f"WebSocket connection failed: {e}")
     
     async def disconnect_websocket(self, user_id: str):
-        """Disconnect user WebSocket"""
-        if user_id in self.active_connections:
+        """Disconnect user WebSocket"""        if user_id in self.active_connections:
             try:
                 await self.active_connections[user_id].close()
             except:
@@ -381,8 +362,7 @@ class NotificationManager:
             logger.info(f"WebSocket disconnected for user {user_id}")
     
     async def _send_via_channel(self, content: NotificationContent, channel: NotificationChannel) -> bool:
-        """Send notification via specific channel"""
-        try:
+        """Send notification via specific channel"""        try:
             if channel == NotificationChannel.EMAIL:
                 return await self._send_email(content)
             elif channel == NotificationChannel.SMS:
@@ -410,8 +390,7 @@ class NotificationManager:
             return False
     
     async def _send_email(self, content: NotificationContent) -> bool:
-        """Send email notification"""
-        try:
+        """Send email notification"""        try:
             # Get user email
             user_email = await self._get_user_email(content.user_id)
             if not user_email:
@@ -443,8 +422,7 @@ class NotificationManager:
             return False
     
     async def _send_sms(self, content: NotificationContent) -> bool:
-        """Send SMS notification"""
-        try:
+        """Send SMS notification"""        try:
             if not self.twilio_client:
                 return False
             
@@ -472,8 +450,7 @@ class NotificationManager:
             return False
     
     async def _send_websocket(self, content: NotificationContent) -> bool:
-        """Send real-time notification via WebSocket"""
-        try:
+        """Send real-time notification via WebSocket"""        try:
             if content.user_id not in self.active_connections:
                 return False
             
@@ -503,8 +480,7 @@ class NotificationManager:
             return False
     
     async def _send_push_notification(self, content: NotificationContent) -> bool:
-        """Send push notification"""
-        try:
+        """Send push notification"""        try:
             # Get user push tokens
             push_tokens = await self._get_user_push_tokens(content.user_id)
             if not push_tokens:
@@ -535,8 +511,7 @@ class NotificationManager:
             return False
     
     async def _send_slack(self, content: NotificationContent) -> bool:
-        """Send Slack notification"""
-        try:
+        """Send Slack notification"""        try:
             if not self.slack_client:
                 return False
             
@@ -584,8 +559,7 @@ class NotificationManager:
             return False
     
     async def _send_telegram(self, content: NotificationContent) -> bool:
-        """Send Telegram notification"""
-        try:
+        """Send Telegram notification"""        try:
             if not self.telegram_bot:
                 return False
             
@@ -611,8 +585,7 @@ class NotificationManager:
             return False
     
     async def _send_webhook(self, content: NotificationContent) -> bool:
-        """Send webhook notification"""
-        try:
+        """Send webhook notification"""        try:
             webhook_url = await self._get_user_webhook_url(content.user_id)
             if not webhook_url:
                 return False
@@ -642,8 +615,7 @@ class NotificationManager:
             return False
     
     async def _send_in_app(self, content: NotificationContent) -> bool:
-        """Store in-app notification"""
-        try:
+        """Store in-app notification"""        try:
             # Store notification in database for in-app display
             await self._store_in_app_notification(content)
             logger.info(f"In-app notification stored for user {content.user_id}")
@@ -654,8 +626,7 @@ class NotificationManager:
             return False
     
     async def _start_notification_worker(self):
-        """Start background worker for processing notification queue"""
-        while True:
+        """Start background worker for processing notification queue"""        while True:
             try:
                 # This would process queued notifications
                 await asyncio.sleep(1)
@@ -665,8 +636,7 @@ class NotificationManager:
     
     # Helper methods
     def _determine_violation_priority(self, violation_data: Dict[str, Any]) -> NotificationPriority:
-        """Determine priority based on violation characteristics"""
-        similarity_score = violation_data.get('similarity_score', 0)
+        """Determine priority based on violation characteristics"""        similarity_score = violation_data.get('similarity_score', 0)
         platform = violation_data.get('platform', '')
         
         if similarity_score > 0.95:
@@ -681,14 +651,12 @@ class NotificationManager:
     def _filter_channels_by_preferences(self, channels: List[NotificationChannel], 
                                        preferences: Dict[str, Any], 
                                        priority: NotificationPriority) -> List[NotificationChannel]:
-        """Filter channels based on user preferences"""
-        # This would filter channels based on user preferences and priority
+        """Filter channels based on user preferences"""        # This would filter channels based on user preferences and priority
         return channels
     
     def _get_channels_for_violation(self, priority: NotificationPriority, 
                                    preferences: Dict[str, Any]) -> List[NotificationChannel]:
-        """Get appropriate channels for violation based on priority"""
-        if priority in [NotificationPriority.URGENT, NotificationPriority.CRITICAL]:
+        """Get appropriate channels for violation based on priority"""        if priority in [NotificationPriority.URGENT, NotificationPriority.CRITICAL]:
             return [NotificationChannel.EMAIL, NotificationChannel.SMS, NotificationChannel.WEBSOCKET, NotificationChannel.PUSH]
         elif priority == NotificationPriority.HIGH:
             return [NotificationChannel.EMAIL, NotificationChannel.WEBSOCKET, NotificationChannel.PUSH]
@@ -696,8 +664,7 @@ class NotificationManager:
             return [NotificationChannel.EMAIL, NotificationChannel.IN_APP]
     
     async def _render_email_template(self, content: NotificationContent) -> str:
-        """Render email template with content"""
-        try:
+        """Render email template with content"""        try:
             template = self.jinja_env.get_template(f'{content.notification_type.value}.html')
             return template.render(
                 title=content.title,
@@ -711,37 +678,28 @@ class NotificationManager:
     
     # Database and external service helper methods
     async def _get_user_notification_preferences(self, user_id: str) -> Dict[str, Any]:
-        """Get user notification preferences"""
-        return {}
+        """Get user notification preferences"""        return {}
     
     async def _get_user_email(self, user_id: str) -> Optional[str]:
-        """Get user email address"""
-        return None
+        """Get user email address"""        return None
     
     async def _get_user_phone(self, user_id: str) -> Optional[str]:
-        """Get user phone number"""
-        return None
+        """Get user phone number"""        return None
     
     async def _get_user_push_tokens(self, user_id: str) -> List[str]:
-        """Get user push notification tokens"""
-        return []
+        """Get user push notification tokens"""        return []
     
     async def _get_user_slack_channel(self, user_id: str) -> Optional[str]:
-        """Get user Slack channel"""
-        return None
+        """Get user Slack channel"""        return None
     
     async def _get_user_telegram_chat(self, user_id: str) -> Optional[str]:
-        """Get user Telegram chat ID"""
-        return None
+        """Get user Telegram chat ID"""        return None
     
     async def _get_user_webhook_url(self, user_id: str) -> Optional[str]:
-        """Get user webhook URL"""
-        return None
+        """Get user webhook URL"""        return None
     
     async def _store_notification_log(self, content: NotificationContent, deliveries: Dict[str, NotificationDelivery]):
-        """Store notification log in database"""
-        pass
+        """Store notification log in database"""        pass
     
     async def _store_in_app_notification(self, content: NotificationContent):
-        """Store in-app notification in database"""
-        pass
+        """Store in-app notification in database"""        pass

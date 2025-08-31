@@ -1,5 +1,4 @@
-"""
-Scheduling Agent
+"""Scheduling Agent
 
 Advanced AI agent for intelligent content scheduling, timing optimization,
 and automated publication across multiple platforms and time zones.
@@ -10,9 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 import uuid
@@ -27,16 +24,14 @@ from ..core.content_types import SocialPlatform, ContentType
 
 # Production-ready engines for content scheduling
 class EngagementTimingAnalyzer:
-    """Analyzes historical data to determine optimal engagement times"""
-    
+    """Analyzes historical data to determine optimal engagement times"""    
     def __init__(self):
         self.initialized = False
         self.timing_models = {}
         self.logger = logging.getLogger(f"{__name__}.EngagementTimingAnalyzer")
     
     async def initialize(self):
-        """Initialize engagement timing analysis models"""
-        try:
+        """Initialize engagement timing analysis models"""        try:
             # Initialize timing patterns based on platform research
             self.timing_models = {
                 'platform_optimal_times': {
@@ -101,8 +96,7 @@ class EngagementTimingAnalyzer:
         target_audience: Dict[str, Any],
         timezone: str = 'US/Eastern'
     ) -> Dict[str, Any]:
-        """Analyze optimal posting times for specific parameters"""
-        if not self.initialized:
+        """Analyze optimal posting times for specific parameters"""        if not self.initialized:
             await self.initialize()
         
         try:
@@ -142,16 +136,14 @@ class EngagementTimingAnalyzer:
             return {'optimal_times': {}, 'best_times': []}
     
     def _get_content_type_adjustment(self, content_type: str) -> Dict[str, int]:
-        """Get timing adjustments based on content type"""
-        content_factors = self.timing_models['audience_behavior_factors']['content_types']
+        """Get timing adjustments based on content type"""        content_factors = self.timing_models['audience_behavior_factors']['content_types']
         return content_factors.get(content_type.lower(), {
             'best_days': ['tuesday', 'wednesday', 'thursday'],
             'best_times': (12, 16)
         })
     
     def _get_audience_adjustment(self, target_audience: Dict[str, Any]) -> Dict[str, Any]:
-        """Get timing adjustments based on audience demographics"""
-        age_group = target_audience.get('primary_age_group', '25-34')
+        """Get timing adjustments based on audience demographics"""        age_group = target_audience.get('primary_age_group', '25-34')
         audience_factors = self.timing_models['audience_behavior_factors']['age_groups']
         return audience_factors.get(age_group, audience_factors['25-34'])
     
@@ -162,8 +154,7 @@ class EngagementTimingAnalyzer:
         audience_adjustment: Dict[str, Any],
         timezone_offset: int
     ) -> Dict[str, List[Dict[str, Any]]]:
-        """Calculate optimal posting windows"""
-        optimal_windows = {'weekdays': [], 'weekends': []}
+        """Calculate optimal posting windows"""        optimal_windows = {'weekdays': [], 'weekends': []}
         
         for day_type in ['weekdays', 'weekends']:
             day_windows = platform_times.get(day_type, {})
@@ -195,8 +186,7 @@ class EngagementTimingAnalyzer:
         content_adjustment: Dict[str, Any],
         audience_adjustment: Dict[str, Any]
     ) -> float:
-        """Calculate engagement score for a time window"""
-        base_score = 0.6
+        """Calculate engagement score for a time window"""        base_score = 0.6
         
         # Adjust based on audience peak hours
         audience_peak_start, audience_peak_end = audience_adjustment.get('peak_hours', (19, 22))
@@ -220,8 +210,7 @@ class EngagementTimingAnalyzer:
         return min(1.0, base_score)
     
     def _score_time_windows(self, optimal_windows: Dict[str, List[Dict[str, Any]]], platform: str, content_type: str) -> List[Dict[str, Any]]:
-        """Score all time windows and return sorted list"""
-        all_windows = []
+        """Score all time windows and return sorted list"""        all_windows = []
         
         for day_type, windows in optimal_windows.items():
             for window in windows:
@@ -235,12 +224,10 @@ class EngagementTimingAnalyzer:
         return sorted(all_windows, key=lambda x: x['engagement_score'], reverse=True)
     
     def _get_top_times(self, scored_windows: List[Dict[str, Any]], limit: int = 5) -> List[Dict[str, Any]]:
-        """Get top N best posting times"""
-        return scored_windows[:limit]
+        """Get top N best posting times"""        return scored_windows[:limit]
     
     def _calculate_confidence_score(self, scored_windows: List[Dict[str, Any]]) -> float:
-        """Calculate overall confidence in timing recommendations"""
-        if not scored_windows:
+        """Calculate overall confidence in timing recommendations"""        if not scored_windows:
             return 0.0
         
         avg_score = sum(window['engagement_score'] for window in scored_windows) / len(scored_windows)
@@ -251,16 +238,14 @@ class EngagementTimingAnalyzer:
         return confidence
 
 class ScheduleOptimizationEngine:
-    """Advanced scheduling optimization with ML predictions"""
-    
+    """Advanced scheduling optimization with ML predictions"""    
     def __init__(self):
         self.initialized = False
         self.optimization_models = {}
         self.logger = logging.getLogger(f"{__name__}.ScheduleOptimizationEngine")
     
     async def initialize(self):
-        """Initialize schedule optimization models"""
-        try:
+        """Initialize schedule optimization models"""        try:
             self.optimization_models = {
                 'posting_frequency': {
                     'instagram': {'min_interval_hours': 4, 'max_daily_posts': 3, 'optimal_weekly': 7},
@@ -300,8 +285,7 @@ class ScheduleOptimizationEngine:
         time_horizon_days: int = 7,
         optimization_strategy: str = 'optimal_engagement'
     ) -> List[Dict[str, Any]]:
-        """Predict optimal posting times for content queue"""
-        if not self.initialized:
+        """Predict optimal posting times for content queue"""        if not self.initialized:
             await self.initialize()
         
         try:
@@ -334,8 +318,7 @@ class ScheduleOptimizationEngine:
         time_horizon_days: int,
         strategy: str
     ) -> List[Dict[str, Any]]:
-        """Find optimal time slots for a specific content item"""
-        slots = []
+        """Find optimal time slots for a specific content item"""        slots = []
         
         content_type = content_item.get('type', 'general')
         
@@ -378,8 +361,7 @@ class ScheduleOptimizationEngine:
         time_horizon_days: int,
         platform_rules: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate potential time slots based on platform rules"""
-        slots = []
+        """Generate potential time slots based on platform rules"""        slots = []
         current_time = datetime.now(timezone.utc)
         
         # Generate slots for each day in the horizon
@@ -409,8 +391,7 @@ class ScheduleOptimizationEngine:
         return slots
     
     def _get_platform_optimal_hours(self, platform: str, day_type: str) -> List[int]:
-        """Get list of optimal hours for platform and day type"""
-        # Mock implementation - would use actual timing analysis
+        """Get list of optimal hours for platform and day type"""        # Mock implementation - would use actual timing analysis
         if platform.lower() == 'instagram':
             if day_type == 'weekdays':
                 return [8, 9, 12, 13, 19, 20]
@@ -430,8 +411,7 @@ class ScheduleOptimizationEngine:
             return [9, 12, 15, 18]  # Default hours
     
     def _calculate_base_time_score(self, hour: int, day_type: str, platform: str) -> float:
-        """Calculate base score for a time slot"""
-        # Peak hours get higher scores
+        """Calculate base score for a time slot"""        # Peak hours get higher scores
         if platform.lower() == 'instagram':
             peak_hours = [9, 12, 19] if day_type == 'weekdays' else [10, 15, 18]
         elif platform.lower() == 'twitter':
@@ -453,8 +433,7 @@ class ScheduleOptimizationEngine:
         platform: str,
         strategy: str
     ) -> List[Dict[str, Any]]:
-        """Score time slots based on optimization strategy"""
-        scored_slots = []
+        """Score time slots based on optimization strategy"""        scored_slots = []
         
         for slot in slots:
             base_score = slot['base_score']
@@ -481,8 +460,7 @@ class ScheduleOptimizationEngine:
         return scored_slots
     
     async def _score_for_engagement(self, slot: Dict[str, Any], content_item: Dict[str, Any], platform: str) -> float:
-        """Score slot for maximum engagement potential"""
-        base_score = slot['base_score']
+        """Score slot for maximum engagement potential"""        base_score = slot['base_score']
         
         # Boost score for content types that perform well at this time
         content_type = content_item.get('type', 'general')
@@ -498,8 +476,7 @@ class ScheduleOptimizationEngine:
         return min(1.0, base_score)
     
     async def _score_for_consistency(self, slot: Dict[str, Any], content_item: Dict[str, Any], platform: str) -> float:
-        """Score slot for consistent posting schedule"""
-        base_score = slot['base_score']
+        """Score slot for consistent posting schedule"""        base_score = slot['base_score']
         
         # Prefer consistent times (e.g., same hour each day)
         consistent_hours = [9, 12, 18]  # Standard posting times
@@ -510,8 +487,7 @@ class ScheduleOptimizationEngine:
         return min(1.0, base_score)
     
     async def _score_for_trends(self, slot: Dict[str, Any], content_item: Dict[str, Any], platform: str) -> float:
-        """Score slot based on trending topics and viral content times"""
-        base_score = slot['base_score']
+        """Score slot based on trending topics and viral content times"""        base_score = slot['base_score']
         
         # Trending content often performs better during peak social media hours
         peak_social_hours = [12, 13, 19, 20, 21]
@@ -522,8 +498,7 @@ class ScheduleOptimizationEngine:
         return min(1.0, base_score)
     
     def _apply_external_factors(self, base_score: float, slot_datetime: datetime, platform: str) -> float:
-        """Apply seasonal, holiday, and competitive factors"""
-        adjusted_score = base_score
+        """Apply seasonal, holiday, and competitive factors"""        adjusted_score = base_score
         
         # Apply seasonal factors
         month = slot_datetime.month
@@ -542,8 +517,7 @@ class ScheduleOptimizationEngine:
         return min(1.0, adjusted_score)
     
     async def _apply_global_optimizations(self, schedule: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Apply global constraints and optimizations to the schedule"""
-        optimized_schedule = []
+        """Apply global constraints and optimizations to the schedule"""        optimized_schedule = []
         
         # Group by platform to apply platform-specific constraints
         platform_schedules = {}
@@ -569,8 +543,7 @@ class ScheduleOptimizationEngine:
         return optimized_schedule
     
     def _apply_frequency_constraints(self, items: List[Dict[str, Any]], rules: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Apply posting frequency constraints"""
-        filtered_items = []
+        """Apply posting frequency constraints"""        filtered_items = []
         last_post_time = None
         daily_post_count = {}
         
@@ -598,16 +571,14 @@ class ScheduleOptimizationEngine:
         return filtered_items
 
 class CalendarSyncManager:
-    """Manages calendar synchronization and scheduling conflicts"""
-    
+    """Manages calendar synchronization and scheduling conflicts"""    
     def __init__(self):
         self.initialized = False
         self.calendar_systems = {}
         self.logger = logging.getLogger(f"{__name__}.CalendarSyncManager")
     
     async def initialize(self):
-        """Initialize calendar synchronization systems"""
-        try:
+        """Initialize calendar synchronization systems"""        try:
             self.calendar_systems = {
                 'supported_calendars': ['google', 'outlook', 'apple', 'custom'],
                 'sync_intervals': {
@@ -631,8 +602,7 @@ class CalendarSyncManager:
             raise
     
     async def check_scheduling_conflicts(self, proposed_schedule: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Check for conflicts with existing calendar events"""
-        if not self.initialized:
+        """Check for conflicts with existing calendar events"""        if not self.initialized:
             await self.initialize()
         
         try:
@@ -666,14 +636,12 @@ class CalendarSyncManager:
             return {'conflicts_found': 0, 'conflicts': [], 'available_slots': proposed_schedule}
     
     async def _check_time_conflict(self, post_time: datetime) -> bool:
-        """Check if a specific time has conflicts"""
-        # Mock conflict detection - would integrate with actual calendar APIs
+        """Check if a specific time has conflicts"""        # Mock conflict detection - would integrate with actual calendar APIs
         import random
         return random.random() < 0.1  # 10% chance of conflict
     
     async def _suggest_alternative_times(self, original_time: datetime) -> List[datetime]:
-        """Suggest alternative times when conflicts occur"""
-        alternatives = []
+        """Suggest alternative times when conflicts occur"""        alternatives = []
         
         # Suggest times 30 minutes before and after
         for offset in [-30, 30, -60, 60]:
@@ -687,8 +655,7 @@ logger = logging.getLogger(__name__)
 
 
 class SchedulingStrategy(Enum):
-    """Content scheduling strategies"""
-    OPTIMAL_ENGAGEMENT = "optimal_engagement"
+    """Content scheduling strategies"""    OPTIMAL_ENGAGEMENT = "optimal_engagement"
     CONSISTENT_PRESENCE = "consistent_presence"
     TREND_BASED = "trend_based"
     AUDIENCE_ACTIVITY = "audience_activity"
@@ -699,8 +666,7 @@ class SchedulingStrategy(Enum):
 
 
 class ScheduleStatus(Enum):
-    """Schedule item status"""
-    DRAFT = "draft"
+    """Schedule item status"""    DRAFT = "draft"
     SCHEDULED = "scheduled"
     PUBLISHED = "published"
     FAILED = "failed"
@@ -709,8 +675,7 @@ class ScheduleStatus(Enum):
 
 
 class Priority(Enum):
-    """Content priority levels"""
-    LOW = "low"
+    """Content priority levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     URGENT = "urgent"
@@ -718,8 +683,7 @@ class Priority(Enum):
 
 
 class RecurrenceType(Enum):
-    """Recurring schedule types"""
-    NONE = "none"
+    """Recurring schedule types"""    NONE = "none"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -728,8 +692,7 @@ class RecurrenceType(Enum):
 
 @dataclass
 class ScheduleItem:
-    """Comprehensive schedule item structure"""
-    schedule_id: str
+    """Comprehensive schedule item structure"""    schedule_id: str
     content_id: str
     title: str
     platform: SocialPlatform
@@ -757,8 +720,7 @@ class ScheduleItem:
 
 @dataclass
 class ScheduleConflict:
-    """Schedule conflict detection"""
-    conflict_id: str
+    """Schedule conflict detection"""    conflict_id: str
     affected_schedules: List[str]
     conflict_type: str
     severity: float
@@ -768,8 +730,7 @@ class ScheduleConflict:
 
 @dataclass
 class OptimalTimeSlot:
-    """Optimal posting time recommendation"""
-    slot_id: str
+    """Optimal posting time recommendation"""    slot_id: str
     platform: SocialPlatform
     optimal_time: datetime
     engagement_score: float
@@ -782,8 +743,7 @@ class OptimalTimeSlot:
 
 @dataclass
 class SchedulingReport:
-    """Comprehensive scheduling performance report"""
-    report_id: str
+    """Comprehensive scheduling performance report"""    report_id: str
     period_start: datetime
     period_end: datetime
     total_scheduled: int
@@ -797,8 +757,7 @@ class SchedulingReport:
 
 
 class SchedulingAgent(BaseAIAgent):
-    """
-    Advanced AI agent for intelligent content scheduling and timing optimization.
+    """    Advanced AI agent for intelligent content scheduling and timing optimization.
     
     Capabilities:
     - Multi-platform scheduling coordination
@@ -809,8 +768,7 @@ class SchedulingAgent(BaseAIAgent):
     - Performance-based schedule refinement
     - Event and trend-based scheduling
     - Calendar integration and sync
-    """
-    
+    """    
     def __init__(self, config: AgentConfiguration):
         # Ensure required capabilities
         required_capabilities = {
@@ -876,8 +834,7 @@ class SchedulingAgent(BaseAIAgent):
         logger.info("SchedulingAgent initialized successfully")
 
     async def initialize(self) -> bool:
-        """Initialize scheduling agent"""
-        try:
+        """Initialize scheduling agent"""        try:
             await super().initialize()
             
             # Initialize scheduling engines
@@ -905,8 +862,7 @@ class SchedulingAgent(BaseAIAgent):
         content_items: List[Dict[str, Any]],
         scheduling_params: Dict[str, Any]
     ) -> List[ScheduleItem]:
-        """
-        Create optimal schedule for multiple content items
+        """        Create optimal schedule for multiple content items
         
         Args:
             content_items: List of content to schedule
@@ -914,8 +870,7 @@ class SchedulingAgent(BaseAIAgent):
             
         Returns:
             Optimized schedule items
-        """
-        try:
+        """        try:
             logger.info(f"Creating optimal schedule for {len(content_items)} content items")
             
             # Analyze content requirements
@@ -964,8 +919,7 @@ class SchedulingAgent(BaseAIAgent):
         target_audience: Dict[str, Any],
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> List[OptimalTimeSlot]:
-        """
-        Find optimal posting times for specific content
+        """        Find optimal posting times for specific content
         
         Args:
             platform: Target platform
@@ -975,8 +929,7 @@ class SchedulingAgent(BaseAIAgent):
             
         Returns:
             List of optimal time slots
-        """
-        try:
+        """        try:
             logger.info(f"Finding optimal posting times for {platform.value}")
             
             # Check cache first
@@ -1045,8 +998,7 @@ class SchedulingAgent(BaseAIAgent):
         scheduled_time: datetime,
         scheduling_options: Optional[Dict[str, Any]] = None
     ) -> ScheduleItem:
-        """
-        Schedule specific content for publication
+        """        Schedule specific content for publication
         
         Args:
             content_id: Content to schedule
@@ -1056,8 +1008,7 @@ class SchedulingAgent(BaseAIAgent):
             
         Returns:
             Created schedule item
-        """
-        try:
+        """        try:
             logger.info(f"Scheduling content {content_id} for {platform.value}")
             
             options = scheduling_options or {}
@@ -1129,8 +1080,7 @@ class SchedulingAgent(BaseAIAgent):
         new_time: datetime,
         reason: str = "user_request"
     ) -> ScheduleItem:
-        """
-        Reschedule existing content
+        """        Reschedule existing content
         
         Args:
             schedule_id: Schedule item to reschedule
@@ -1139,8 +1089,7 @@ class SchedulingAgent(BaseAIAgent):
             
         Returns:
             Updated schedule item
-        """
-        try:
+        """        try:
             logger.info(f"Rescheduling content: {schedule_id}")
             
             if schedule_id not in self.active_schedules:
@@ -1183,8 +1132,7 @@ class SchedulingAgent(BaseAIAgent):
         date_range: Tuple[datetime, datetime],
         platforms: Optional[List[SocialPlatform]] = None
     ) -> SchedulingReport:
-        """
-        Analyze scheduling performance and provide insights
+        """        Analyze scheduling performance and provide insights
         
         Args:
             date_range: Period to analyze
@@ -1192,8 +1140,7 @@ class SchedulingAgent(BaseAIAgent):
             
         Returns:
             Comprehensive scheduling report
-        """
-        try:
+        """        try:
             logger.info(f"Analyzing scheduling performance for period: {date_range}")
             
             start_date, end_date = date_range
@@ -1245,8 +1192,7 @@ class SchedulingAgent(BaseAIAgent):
     # Private helper methods for scheduling operations
 
     async def _analyze_content_requirements(self, content_items: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze content requirements for optimal scheduling"""
-        analysis = {
+        """Analyze content requirements for optimal scheduling"""        analysis = {
             'content_types': {},
             'priority_distribution': {},
             'platform_requirements': {},
@@ -1279,8 +1225,7 @@ class SchedulingAgent(BaseAIAgent):
         date_range: Dict[str, Any],
         timezones: List[str]
     ) -> List[OptimalTimeSlot]:
-        """Get optimal time slots for platform"""
-        
+        """Get optimal time slots for platform"""        
         # Use cached data if available and fresh
         cache_key = f"{platform}_{hash(str(date_range))}"
         if cache_key in self.optimal_time_cache:
@@ -1300,8 +1245,7 @@ class SchedulingAgent(BaseAIAgent):
         return optimal_slots
 
     async def can_handle_task(self, task_type: str, context: Dict[str, Any]) -> bool:
-        """Check if agent can handle scheduling task"""
-        supported_tasks = [
+        """Check if agent can handle scheduling task"""        supported_tasks = [
             "create_optimal_schedule",
             "find_optimal_posting_times",
             "schedule_content",

@@ -1,5 +1,4 @@
-"""
-🌐 Enterprise Platform APIs Unified Management System
+"""🌐 Enterprise Platform APIs Unified Management System
 ====================================================
 
 Advanced unified interface for multiple platform APIs with enterprise-grade
@@ -36,9 +35,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 ⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import time
@@ -60,8 +57,7 @@ import certifi
 logger = logging.getLogger(__name__)
 
 class APIStatus(str, Enum):
-    """Comprehensive API connection status enumeration."""
-    ACTIVE = "active"
+    """Comprehensive API connection status enumeration."""    ACTIVE = "active"
     INACTIVE = "inactive"
     ERROR = "error"
     RATE_LIMITED = "rate_limited"
@@ -73,8 +69,7 @@ class APIStatus(str, Enum):
     SUSPENDED = "suspended"
 
 class AuthType(str, Enum):
-    """Authentication type enumeration."""
-    API_KEY = "api_key"
+    """Authentication type enumeration."""    API_KEY = "api_key"
     OAUTH2 = "oauth2"
     BEARER_TOKEN = "bearer_token"
     BASIC_AUTH = "basic_auth"
@@ -84,8 +79,7 @@ class AuthType(str, Enum):
     CUSTOM = "custom"
 
 class RequestMethod(str, Enum):
-    """HTTP request methods."""
-    GET = "GET"
+    """HTTP request methods."""    GET = "GET"
     POST = "POST"
     PUT = "PUT"
     DELETE = "DELETE"
@@ -95,8 +89,7 @@ class RequestMethod(str, Enum):
 
 @dataclass
 class APICredentials:
-    """Enhanced API credentials structure with security features."""
-    platform: str
+    """Enhanced API credentials structure with security features."""    platform: str
     auth_type: AuthType
     api_key: Optional[str] = None
     api_secret: Optional[str] = None
@@ -115,21 +108,18 @@ class APICredentials:
     rate_limits: Dict[str, int] = field(default_factory=dict)
     
     def is_token_expired(self) -> bool:
-        """Check if access token is expired."""
-        if not self.token_expires_at:
+        """Check if access token is expired."""        if not self.token_expires_at:
             return False
         return datetime.utcnow() >= self.token_expires_at
     
     def time_until_expiry(self) -> Optional[timedelta]:
-        """Get time until token expiry."""
-        if not self.token_expires_at:
+        """Get time until token expiry."""        if not self.token_expires_at:
             return None
         return self.token_expires_at - datetime.utcnow()
 
 @dataclass
 class APIRequest:
-    """Enhanced API request structure with enterprise features."""
-    method: RequestMethod
+    """Enhanced API request structure with enterprise features."""    method: RequestMethod
     endpoint: str
     params: Optional[Dict[str, Any]] = None
     data: Optional[Union[Dict, str, bytes]] = None
@@ -148,20 +138,17 @@ class APIRequest:
     request_id: Optional[str] = None
     
     def __post_init__(self):
-        """Post-initialization processing."""
-        if not self.request_id:
+        """Post-initialization processing."""        if not self.request_id:
             self.request_id = self._generate_request_id()
     
     def _generate_request_id(self) -> str:
-        """Generate unique request ID."""
-        timestamp = str(int(time.time() * 1000))
+        """Generate unique request ID."""        timestamp = str(int(time.time() * 1000))
         random_part = hashlib.md5(f"{self.method}{self.endpoint}{timestamp}".encode()).hexdigest()[:8]
         return f"{timestamp}-{random_part}"
 
 @dataclass 
 class APIResponse:
-    """Enhanced API response structure with comprehensive metadata."""
-    status_code: int
+    """Enhanced API response structure with comprehensive metadata."""    status_code: int
     data: Any
     headers: Dict[str, str]
     request_id: str
@@ -189,23 +176,19 @@ class APIResponse:
     
     @property
     def is_success(self) -> bool:
-        """Check if response indicates success."""
-        return 200 <= self.status_code < 300
+        """Check if response indicates success."""        return 200 <= self.status_code < 300
     
     @property
     def is_rate_limited(self) -> bool:
-        """Check if response indicates rate limiting."""
-        return self.status_code == 429
+        """Check if response indicates rate limiting."""        return self.status_code == 429
     
     @property
     def is_unauthorized(self) -> bool:
-        """Check if response indicates authentication issues."""
-        return self.status_code in [401, 403]
+        """Check if response indicates authentication issues."""        return self.status_code in [401, 403]
 
 @dataclass
 class RateLimitPolicy:
-    """Rate limiting policy configuration."""
-    requests_per_second: Optional[int] = None
+    """Rate limiting policy configuration."""    requests_per_second: Optional[int] = None
     requests_per_minute: Optional[int] = None
     requests_per_hour: Optional[int] = None
     requests_per_day: Optional[int] = None
@@ -214,8 +197,7 @@ class RateLimitPolicy:
     reset_strategy: str = "sliding"  # sliding, fixed
     
 class CircuitBreaker:
-    """Circuit breaker implementation for fault tolerance."""
-    
+    """Circuit breaker implementation for fault tolerance."""    
     def __init__(self, failure_threshold: int = 5, recovery_timeout: int = 60):
         self.failure_threshold = failure_threshold
         self.recovery_timeout = recovery_timeout
@@ -224,15 +206,13 @@ class CircuitBreaker:
         self.state = "closed"  # closed, open, half_open
     
     def record_success(self):
-        """Record successful request."""
-        if self.state == "half_open":
+        """Record successful request."""        if self.state == "half_open":
             self.state = "closed"
             self.failure_count = 0
             logger.info("Circuit breaker closed after successful recovery")
     
     def record_failure(self):
-        """Record failed request."""
-        self.failure_count += 1
+        """Record failed request."""        self.failure_count += 1
         self.last_failure_time = datetime.utcnow()
         
         if self.failure_count >= self.failure_threshold:
@@ -240,8 +220,7 @@ class CircuitBreaker:
             logger.warning(f"Circuit breaker opened after {self.failure_count} failures")
     
     def can_execute(self) -> bool:
-        """Check if request can be executed."""
-        if self.state == "closed":
+        """Check if request can be executed."""        if self.state == "closed":
             return True
         elif self.state == "open":
             if self.last_failure_time:
@@ -255,16 +234,14 @@ class CircuitBreaker:
             return True
 
 class RequestCache:
-    """Intelligent request caching system."""
-    
+    """Intelligent request caching system."""    
     def __init__(self, max_size: int = 1000):
         self.cache: Dict[str, Dict] = {}
         self.max_size = max_size
         self.access_times: Dict[str, datetime] = {}
     
     def get(self, key: str) -> Optional[APIResponse]:
-        """Get cached response."""
-        if key in self.cache:
+        """Get cached response."""        if key in self.cache:
             cache_data = self.cache[key]
             if datetime.utcnow() < cache_data['expires_at']:
                 self.access_times[key] = datetime.utcnow()
@@ -277,8 +254,7 @@ class RequestCache:
         return None
     
     def put(self, key: str, response: APIResponse, duration: int):
-        """Cache response."""
-        if len(self.cache) >= self.max_size:
+        """Cache response."""        if len(self.cache) >= self.max_size:
             self._evict_oldest()
         
         self.cache[key] = {
@@ -288,35 +264,30 @@ class RequestCache:
         self.access_times[key] = datetime.utcnow()
     
     def _remove(self, key: str):
-        """Remove entry from cache."""
-        self.cache.pop(key, None)
+        """Remove entry from cache."""        self.cache.pop(key, None)
         self.access_times.pop(key, None)
     
     def _evict_oldest(self):
-        """Evict least recently used entry."""
-        if self.access_times:
+        """Evict least recently used entry."""        if self.access_times:
             oldest_key = min(self.access_times.keys(), key=lambda k: self.access_times[k])
             self._remove(oldest_key)
     
     def generate_key(self, platform: str, endpoint: str, params: Optional[Dict] = None) -> str:
-        """Generate cache key."""
-        key_data = f"{platform}:{endpoint}"
+        """Generate cache key."""        key_data = f"{platform}:{endpoint}"
         if params:
             sorted_params = sorted(params.items())
             key_data += f":{json.dumps(sorted_params)}"
         return hashlib.md5(key_data.encode()).hexdigest()
 
 class PerformanceMonitor:
-    """Advanced performance monitoring and analytics."""
-    
+    """Advanced performance monitoring and analytics."""    
     def __init__(self):
         self.metrics: Dict[str, Dict] = defaultdict(dict)
         self.request_history: deque = deque(maxlen=10000)
         self.alert_callbacks: List[Callable] = []
     
     def record_request(self, platform: str, endpoint: str, response: APIResponse):
-        """Record request metrics."""
-        if platform not in self.metrics:
+        """Record request metrics."""        if platform not in self.metrics:
             self.metrics[platform] = {
                 'total_requests': 0,
                 'successful_requests': 0,
@@ -371,23 +342,19 @@ class PerformanceMonitor:
         self._check_alerts(platform, response)
     
     def get_platform_metrics(self, platform: str) -> Dict[str, Any]:
-        """Get metrics for specific platform."""
-        return self.metrics.get(platform, {})
+        """Get metrics for specific platform."""        return self.metrics.get(platform, {})
     
     def get_success_rate(self, platform: str) -> float:
-        """Get success rate for platform."""
-        metrics = self.metrics.get(platform, {})
+        """Get success rate for platform."""        metrics = self.metrics.get(platform, {})
         total = metrics.get('total_requests', 0)
         successful = metrics.get('successful_requests', 0)
         return (successful / total * 100) if total > 0 else 0.0
     
     def register_alert_callback(self, callback: Callable):
-        """Register callback for performance alerts."""
-        self.alert_callbacks.append(callback)
+        """Register callback for performance alerts."""        self.alert_callbacks.append(callback)
     
     def _check_alerts(self, platform: str, response: APIResponse):
-        """Check for performance alert conditions."""
-        # Check high response time
+        """Check for performance alert conditions."""        # Check high response time
         if response.response_time > 5.0:  # 5 seconds threshold
             self._trigger_alert('high_response_time', {
                 'platform': platform,
@@ -404,8 +371,7 @@ class PerformanceMonitor:
             })
     
     def _trigger_alert(self, alert_type: str, data: Dict[str, Any]):
-        """Trigger performance alert."""
-        alert_data = {
+        """Trigger performance alert."""        alert_data = {
             'type': alert_type,
             'timestamp': datetime.utcnow(),
             'data': data
@@ -424,8 +390,7 @@ class PerformanceMonitor:
 
 @dataclass
 class APIResponse:
-    """Standardized API response structure."""
-    success: bool
+    """Standardized API response structure."""    success: bool
     status_code: int
     data: Optional[Dict[str, Any]]
     error: Optional[str]
@@ -436,16 +401,14 @@ class APIResponse:
 
 @dataclass
 class RateLimitInfo:
-    """Rate limiting information."""
-    requests_per_hour: int
+    """Rate limiting information."""    requests_per_hour: int
     requests_per_day: int
     requests_remaining: int
     reset_time: datetime
     current_usage: int
 
 class BasePlatformAPI(ABC):
-    """
-    Abstract base class for platform APIs.
+    """    Abstract base class for platform APIs.
     
     Provides standardized interface for:
     - Authentication management
@@ -453,11 +416,9 @@ class BasePlatformAPI(ABC):
     - Request handling
     - Response parsing
     - Error handling
-    """
-    
+    """    
     def __init__(self, platform: str, credentials: APICredentials, config: Dict[str, Any] = None):
-        """Initialize base platform API."""
-        self.platform = platform
+        """Initialize base platform API."""        self.platform = platform
         self.credentials = credentials
         self.config = config or {}
         
@@ -479,13 +440,11 @@ class BasePlatformAPI(ABC):
     
     @abstractmethod
     async def authenticate(self) -> bool:
-        """Authenticate with the platform API."""
-        pass
+        """Authenticate with the platform API."""        pass
     
     @abstractmethod
     async def refresh_credentials(self) -> bool:
-        """Refresh API credentials if possible."""
-        pass
+        """Refresh API credentials if possible."""        pass
     
     @abstractmethod
     async def make_request(
@@ -496,26 +455,22 @@ class BasePlatformAPI(ABC):
         data: Optional[Dict[str, Any]] = None,
         headers: Optional[Dict[str, str]] = None
     ) -> APIResponse:
-        """Make authenticated API request."""
-        pass
+        """Make authenticated API request."""        pass
     
     async def check_authentication(self) -> bool:
-        """Check if current authentication is valid."""
-        if not self.last_auth_check:
+        """Check if current authentication is valid."""        if not self.last_auth_check:
             return False
         
         time_since_check = datetime.utcnow() - self.last_auth_check
         return time_since_check < self.auth_valid_duration
     
     async def ensure_authentication(self) -> bool:
-        """Ensure API is authenticated."""
-        if not await self.check_authentication():
+        """Ensure API is authenticated."""        if not await self.check_authentication():
             return await self.authenticate()
         return True
     
     def _update_rate_limit_info(self, headers: Dict[str, str]):
-        """Update rate limit information from response headers."""
-        try:
+        """Update rate limit information from response headers."""        try:
             # Common rate limit header patterns
             remaining = None
             reset_time = None
@@ -556,15 +511,13 @@ class BasePlatformAPI(ABC):
             logger.error(f"Error updating rate limit info: {e}")
     
     def _check_rate_limit(self) -> bool:
-        """Check if request can be made within rate limits."""
-        if not self.rate_limit_info:
+        """Check if request can be made within rate limits."""        if not self.rate_limit_info:
             return True
         
         return self.rate_limit_info.requests_remaining > 0
     
     async def _handle_rate_limit(self):
-        """Handle rate limiting by waiting."""
-        if not self.rate_limit_info:
+        """Handle rate limiting by waiting."""        if not self.rate_limit_info:
             return
         
         if self.rate_limit_info.requests_remaining <= 0:
@@ -574,16 +527,14 @@ class BasePlatformAPI(ABC):
                 await asyncio.sleep(wait_time)
 
 class YouTubeAPI(BasePlatformAPI):
-    """YouTube Data API v3 interface."""
-    
+    """YouTube Data API v3 interface."""    
     def __init__(self, credentials: APICredentials, config: Dict[str, Any] = None):
         super().__init__("youtube", credentials, config)
         self.base_url = "https://www.googleapis.com/youtube/v3"
         self.api_version = "v3"
     
     async def authenticate(self) -> bool:
-        """Authenticate with YouTube API."""
-        try:
+        """Authenticate with YouTube API."""        try:
             if not self.credentials.api_key:
                 logger.error("YouTube API key not provided")
                 return False
@@ -615,8 +566,7 @@ class YouTubeAPI(BasePlatformAPI):
             return False
     
     async def refresh_credentials(self) -> bool:
-        """YouTube API keys don't need refreshing."""
-        return await self.authenticate()
+        """YouTube API keys don't need refreshing."""        return await self.authenticate()
     
     async def make_request(
         self,
@@ -626,8 +576,7 @@ class YouTubeAPI(BasePlatformAPI):
         data: Optional[Dict[str, Any]] = None,
         headers: Optional[Dict[str, str]] = None
     ) -> APIResponse:
-        """Make authenticated YouTube API request."""
-        if not await self.ensure_authentication():
+        """Make authenticated YouTube API request."""        if not await self.ensure_authentication():
             return APIResponse(
                 success=False,
                 status_code=401,
@@ -689,16 +638,14 @@ class YouTubeAPI(BasePlatformAPI):
             )
 
 class InstagramAPI(BasePlatformAPI):
-    """Instagram Graph API interface."""
-    
+    """Instagram Graph API interface."""    
     def __init__(self, credentials: APICredentials, config: Dict[str, Any] = None):
         super().__init__("instagram", credentials, config)
         self.base_url = "https://graph.instagram.com"
         self.api_version = "v18.0"
     
     async def authenticate(self) -> bool:
-        """Authenticate with Instagram API."""
-        try:
+        """Authenticate with Instagram API."""        try:
             if not self.credentials.access_token:
                 logger.error("Instagram access token not provided")
                 return False
@@ -728,8 +675,7 @@ class InstagramAPI(BasePlatformAPI):
             return False
     
     async def refresh_credentials(self) -> bool:
-        """Refresh Instagram access token if possible."""
-        # Instagram Graph API token refresh logic would go here
+        """Refresh Instagram access token if possible."""        # Instagram Graph API token refresh logic would go here
         # For now, just re-authenticate
         return await self.authenticate()
     
@@ -741,8 +687,7 @@ class InstagramAPI(BasePlatformAPI):
         data: Optional[Dict[str, Any]] = None,
         headers: Optional[Dict[str, str]] = None
     ) -> APIResponse:
-        """Make authenticated Instagram API request."""
-        if not await self.ensure_authentication():
+        """Make authenticated Instagram API request."""        if not await self.ensure_authentication():
             return APIResponse(
                 success=False,
                 status_code=401,
@@ -798,16 +743,14 @@ class InstagramAPI(BasePlatformAPI):
             )
 
 class TwitterAPI(BasePlatformAPI):
-    """Twitter API v2 interface."""
-    
+    """Twitter API v2 interface."""    
     def __init__(self, credentials: APICredentials, config: Dict[str, Any] = None):
         super().__init__("twitter", credentials, config)
         self.base_url = "https://api.twitter.com/2"
         self.api_version = "2"
     
     async def authenticate(self) -> bool:
-        """Authenticate with Twitter API."""
-        try:
+        """Authenticate with Twitter API."""        try:
             if not self.credentials.bearer_token:
                 logger.error("Twitter bearer token not provided")
                 return False
@@ -836,8 +779,7 @@ class TwitterAPI(BasePlatformAPI):
             return False
     
     async def refresh_credentials(self) -> bool:
-        """Twitter bearer tokens don't need refreshing."""
-        return await self.authenticate()
+        """Twitter bearer tokens don't need refreshing."""        return await self.authenticate()
     
     async def make_request(
         self,
@@ -847,8 +789,7 @@ class TwitterAPI(BasePlatformAPI):
         data: Optional[Dict[str, Any]] = None,
         headers: Optional[Dict[str, str]] = None
     ) -> APIResponse:
-        """Make authenticated Twitter API request."""
-        if not await self.ensure_authentication():
+        """Make authenticated Twitter API request."""        if not await self.ensure_authentication():
             return APIResponse(
                 success=False,
                 status_code=401,
@@ -907,8 +848,7 @@ class TwitterAPI(BasePlatformAPI):
             )
 
 class PlatformAPIManager:
-    """
-    Unified Platform API Manager
+    """    Unified Platform API Manager
     ============================
     
     Centralized management for multiple platform APIs featuring:
@@ -918,11 +858,9 @@ class PlatformAPIManager:
     - Credential management
     - Health monitoring
     - Load balancing across APIs
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize platform API manager."""
-        self.config = config
+        """Initialize platform API manager."""        self.config = config
         self.apis: Dict[str, BasePlatformAPI] = {}
         self.credentials_store: Dict[str, APICredentials] = {}
         
@@ -938,8 +876,7 @@ class PlatformAPIManager:
         logger.info("Platform API Manager initialized")
     
     def _initialize_apis(self):
-        """Initialize platform APIs based on configuration."""
-        try:
+        """Initialize platform APIs based on configuration."""        try:
             # YouTube API
             if 'youtube' in self.config:
                 youtube_config = self.config['youtube']
@@ -982,8 +919,7 @@ class PlatformAPIManager:
             logger.error(f"Error initializing APIs: {e}")
     
     async def authenticate_all(self) -> Dict[str, bool]:
-        """Authenticate all configured APIs."""
-        results = {}
+        """Authenticate all configured APIs."""        results = {}
         
         for platform, api in self.apis.items():
             try:
@@ -1010,8 +946,7 @@ class PlatformAPIManager:
         data: Optional[Dict[str, Any]] = None,
         headers: Optional[Dict[str, str]] = None
     ) -> APIResponse:
-        """Make request to specific platform API."""
-        if platform not in self.apis:
+        """Make request to specific platform API."""        if platform not in self.apis:
             return APIResponse(
                 success=False,
                 status_code=404,
@@ -1066,8 +1001,7 @@ class PlatformAPIManager:
             )
     
     async def get_api_status(self, platform: Optional[str] = None) -> Dict[str, Any]:
-        """Get status of platform APIs."""
-        if platform:
+        """Get status of platform APIs."""        if platform:
             if platform not in self.apis:
                 return {"error": f"Platform {platform} not found"}
             
@@ -1091,8 +1025,7 @@ class PlatformAPIManager:
         return status_info
     
     async def refresh_all_credentials(self) -> Dict[str, bool]:
-        """Refresh credentials for all APIs."""
-        results = {}
+        """Refresh credentials for all APIs."""        results = {}
         
         for platform, api in self.apis.items():
             try:
@@ -1111,20 +1044,17 @@ class PlatformAPIManager:
         return results
     
     def get_available_platforms(self) -> List[str]:
-        """Get list of configured platforms."""
-        return list(self.apis.keys())
+        """Get list of configured platforms."""        return list(self.apis.keys())
     
     def is_platform_available(self, platform: str) -> bool:
-        """Check if platform is available and active."""
-        if platform not in self.apis:
+        """Check if platform is available and active."""        if platform not in self.apis:
             return False
         
         api = self.apis[platform]
         return api.status == APIStatus.ACTIVE
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on all APIs."""
-        health_status = {
+        """Perform health check on all APIs."""        health_status = {
             "overall_health": "healthy",
             "total_apis": len(self.apis),
             "active_apis": 0,
@@ -1170,8 +1100,7 @@ class PlatformAPIManager:
         return health_status
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get API usage statistics."""
-        recent_requests = [
+        """Get API usage statistics."""        recent_requests = [
             req for req in self.request_history
             if datetime.utcnow() - req['timestamp'] < timedelta(hours=1)
         ]

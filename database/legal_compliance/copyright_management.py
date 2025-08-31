@@ -1,5 +1,4 @@
-"""
-Copyright Management System - IA Influencer Agent + Content Protection Platform
+"""Copyright Management System - IA Influencer Agent + Content Protection Platform
 
 Comprehensive copyright management including ownership verification, rights tracking,
 license management, and royalty distribution for multi-format content creators
@@ -9,9 +8,7 @@ Business Logic: User Upload → AI Protection → Copyright Verification → Lic
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-
-from typing import Dict, List, Any, Optional, Union, Tuple, Set
+"""from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timedelta
 from enum import Enum
 import asyncio
@@ -25,8 +22,7 @@ logger = logging.getLogger(__name__)
 
 
 class CopyrightStatus(Enum):
-    """Copyright status enumeration."""
-    VERIFIED = "verified"
+    """Copyright status enumeration."""    VERIFIED = "verified"
     PENDING_VERIFICATION = "pending_verification"
     DISPUTED = "disputed"
     INFRINGEMENT_DETECTED = "infringement_detected"
@@ -38,8 +34,7 @@ class CopyrightStatus(Enum):
 
 
 class RightsType(Enum):
-    """Types of rights that can be held."""
-    FULL_OWNERSHIP = "full_ownership"
+    """Types of rights that can be held."""    FULL_OWNERSHIP = "full_ownership"
     EXCLUSIVE_LICENSE = "exclusive_license"
     NON_EXCLUSIVE_LICENSE = "non_exclusive_license"
     PERFORMANCE_RIGHTS = "performance_rights"
@@ -52,8 +47,7 @@ class RightsType(Enum):
 
 
 class ContentType(Enum):
-    """Content types for copyright management."""
-    AUDIO = "audio"
+    """Content types for copyright management."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -62,8 +56,7 @@ class ContentType(Enum):
 
 
 class CreatorType(Enum):
-    """Creator types for specialized copyright handling."""
-    MUSICIAN = "musician"
+    """Creator types for specialized copyright handling."""    MUSICIAN = "musician"
     PRODUCER = "producer"
     BLOGGER = "blogger"
     WRITER = "writer"
@@ -77,8 +70,7 @@ class CreatorType(Enum):
 
 @dataclass
 class CopyrightRecord:
-    """Enhanced copyright record data structure."""
-    record_id: str
+    """Enhanced copyright record data structure."""    record_id: str
     content_id: str
     owner_id: str
     creator_type: CreatorType
@@ -99,8 +91,7 @@ class CopyrightRecord:
 
 @dataclass
 class RoyaltyDistribution:
-    """Enhanced royalty distribution configuration."""
-    distribution_id: str
+    """Enhanced royalty distribution configuration."""    distribution_id: str
     content_id: str
     rights_holders: List[Dict[str, Any]]  # [{holder_id, percentage, role, creator_type}]
     payment_schedule: str
@@ -114,8 +105,7 @@ class RoyaltyDistribution:
 
 @dataclass
 class ContentUsageRecord:
-    """Track content usage across platforms."""
-    usage_id: str
+    """Track content usage across platforms."""    usage_id: str
     content_id: str
     platform: str
     usage_type: str  # stream, download, view, share
@@ -127,8 +117,7 @@ class ContentUsageRecord:
 
 @dataclass
 class LicenseAgreement:
-    """License agreement structure."""
-    license_id: str
+    """License agreement structure."""    license_id: str
     content_id: str
     licensee_id: str
     licensor_id: str
@@ -143,8 +132,7 @@ class LicenseAgreement:
 
 
 class CopyrightManager:
-    """
-    Comprehensive copyright management system.
+    """    Comprehensive copyright management system.
     
     Handles copyright verification, rights tracking, license management,
     and royalty distribution for all content types in the IA Influencer ecosystem.
@@ -152,16 +140,13 @@ class CopyrightManager:
     Business Logic Flow:
     1. Content Upload → 2. AI Fingerprinting → 3. Copyright Verification → 
     4. License Management → 5. Usage Tracking → 6. Royalty Distribution
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize the Copyright Manager.
+        """        Initialize the Copyright Manager.
         
         Args:
             config: Configuration dictionary with database connections
-        """
-        self.config = config
+        """        self.config = config
         self.db_config = config.get("database", {})
         self.copyright_config = config.get("copyright", {})
         
@@ -196,8 +181,7 @@ class CopyrightManager:
         ai_fingerprint: str,
         evidence_documents: List[str] = None
     ) -> CopyrightRecord:
-        """
-        Register copyright for content with enhanced verification.
+        """        Register copyright for content with enhanced verification.
         
         Args:
             content_id: Unique content identifier
@@ -210,8 +194,7 @@ class CopyrightManager:
             
         Returns:
             CopyrightRecord: Created copyright record
-        """
-        try:
+        """        try:
             # Generate blockchain proof for immutable ownership
             blockchain_proof = await self._generate_blockchain_proof(
                 content_id, owner_id, ai_fingerprint
@@ -276,8 +259,7 @@ class CopyrightManager:
         owner_id: str,
         ai_fingerprint: str
     ) -> str:
-        """Generate blockchain proof for immutable ownership record."""
-        # Create a hash combining content ID, owner, fingerprint, and timestamp
+        """Generate blockchain proof for immutable ownership record."""        # Create a hash combining content ID, owner, fingerprint, and timestamp
         timestamp = datetime.utcnow().isoformat()
         proof_data = f"{content_id}:{owner_id}:{ai_fingerprint}:{timestamp}"
         
@@ -296,8 +278,7 @@ class CopyrightManager:
         content_metadata: Dict[str, Any],
         ai_fingerprint: str
     ) -> float:
-        """Verify content ownership using multiple verification methods."""
-        verification_score = 0.0
+        """Verify content ownership using multiple verification methods."""        verification_score = 0.0
         
         # Base verification for account ownership
         verification_score += 0.2
@@ -334,8 +315,7 @@ class CopyrightManager:
         return min(verification_score, 1.0)
     
     async def _check_fingerprint_uniqueness(self, ai_fingerprint: str) -> bool:
-        """Check if AI fingerprint is unique across all registered content."""
-        for record in self.copyright_records.values():
+        """Check if AI fingerprint is unique across all registered content."""        for record in self.copyright_records.values():
             if record.ai_fingerprint_hash == ai_fingerprint:
                 return False
         return True
@@ -346,8 +326,7 @@ class CopyrightManager:
         content_type: ContentType,
         content_metadata: Dict[str, Any]
     ) -> RightsType:
-        """Determine appropriate rights type based on creator and content."""
-        # Default to full ownership for original creators
+        """Determine appropriate rights type based on creator and content."""        # Default to full ownership for original creators
         if content_metadata.get("original_creation", True):
             return RightsType.FULL_OWNERSHIP
         
@@ -365,8 +344,7 @@ class CopyrightManager:
         return RightsType.NON_EXCLUSIVE_LICENSE
     
     def _calculate_expiration_date(self, content_type: ContentType) -> Optional[datetime]:
-        """Calculate copyright expiration date based on content type and jurisdiction."""
-        # Standard copyright duration (varies by jurisdiction)
+        """Calculate copyright expiration date based on content type and jurisdiction."""        # Standard copyright duration (varies by jurisdiction)
         years = 70  # EU standard
         if content_type == ContentType.AUDIO:
             years = 50  # Sound recordings
@@ -380,16 +358,14 @@ class CopyrightManager:
         platform_splits: Dict[str, float] = None,
         collaboration_splits: Dict[str, float] = None
     ) -> RoyaltyDistribution:
-        """
-        Setup automated royalty distribution for content.
+        """        Setup automated royalty distribution for content.
         
         Args:
             content_id: Content identifier
             rights_holders: List of rights holders with percentages
             platform_splits: Platform-specific revenue splits
             collaboration_splits: Collaborator revenue splits
-        """
-        try:
+        """        try:
             distribution = RoyaltyDistribution(
                 distribution_id=str(uuid.uuid4()),
                 content_id=content_id,
@@ -420,8 +396,7 @@ class CopyrightManager:
         usage_count: int,
         revenue_generated: float = 0.0
     ) -> ContentUsageRecord:
-        """Track content usage across platforms for royalty calculation."""
-        try:
+        """Track content usage across platforms for royalty calculation."""        try:
             usage_record = ContentUsageRecord(
                 usage_id=str(uuid.uuid4()),
                 content_id=content_id,
@@ -464,13 +439,11 @@ class CopyrightManager:
         platform: str,
         confidence_score: float
     ) -> Optional[str]:
-        """
-        Detect potential copyright infringement using AI fingerprint matching.
+        """        Detect potential copyright infringement using AI fingerprint matching.
         
         Returns:
             Content ID of original content if infringement detected, None otherwise
-        """
-        try:
+        """        try:
             if confidence_score < self.ai_confidence_threshold:
                 return None
             
@@ -508,8 +481,7 @@ class CopyrightManager:
         fingerprint1: str,
         fingerprint2: str
     ) -> float:
-        """Calculate similarity between two AI fingerprints."""
-        # Simplified similarity calculation
+        """Calculate similarity between two AI fingerprints."""        # Simplified similarity calculation
         # In a real implementation, this would use advanced AI similarity algorithms
         if fingerprint1 == fingerprint2:
             return 1.0
@@ -530,8 +502,7 @@ class CopyrightManager:
         similarity_score: float,
         ai_confidence: float
     ) -> None:
-        """Create infringement record for legal processing."""
-        infringement_record = {
+        """Create infringement record for legal processing."""        infringement_record = {
             "infringement_id": str(uuid.uuid4()),
             "original_content_id": original_content_id,
             "infringing_content_id": infringing_content_id,
@@ -552,8 +523,7 @@ class CopyrightManager:
         creator_id: str,
         period_days: int = 30
     ) -> Dict[str, Any]:
-        """Generate comprehensive copyright report for a creator."""
-        try:
+        """Generate comprehensive copyright report for a creator."""        try:
             period_start = datetime.utcnow() - timedelta(days=period_days)
             
             # Get creator's content
@@ -607,8 +577,7 @@ class CopyrightManager:
             raise
     
     async def _get_content_breakdown(self, creator_content: List[str]) -> Dict[str, Any]:
-        """Get content breakdown by type and status."""
-        breakdown = {
+        """Get content breakdown by type and status."""        breakdown = {
             "by_type": {},
             "by_status": {},
             "by_rights": {}
@@ -638,8 +607,7 @@ class CopyrightManager:
         return breakdown
     
     async def _get_platform_performance(self, creator_content: List[str]) -> Dict[str, Any]:
-        """Get performance metrics by platform."""
-        platform_performance = {}
+        """Get performance metrics by platform."""        platform_performance = {}
         
         for content_id in creator_content:
             for usage in self.usage_records.get(content_id, []):
@@ -666,8 +634,7 @@ class CopyrightManager:
         creator_id: str,
         creator_content: List[str]
     ) -> List[str]:
-        """Generate personalized copyright recommendations."""
-        recommendations = []
+        """Generate personalized copyright recommendations."""        recommendations = []
         
         # Check verification rates
         unverified_content = sum(
@@ -713,8 +680,7 @@ class CopyrightManager:
         evidence_documents: Optional[List[str]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Register copyright for content with ownership verification.
+        """        Register copyright for content with ownership verification.
         
         Args:
             content_id: Unique identifier for the content
@@ -726,8 +692,7 @@ class CopyrightManager:
             
         Returns:
             Copyright registration results
-        """
-        try:
+        """        try:
             # Generate unique record ID
             record_id = f"cr_{uuid.uuid4().hex[:12]}"
             
@@ -787,8 +752,7 @@ class CopyrightManager:
         content_type: str,
         check_databases: bool = True
     ) -> Dict[str, Any]:
-        """
-        Verify copyright status and ownership for content.
+        """        Verify copyright status and ownership for content.
         
         Args:
             content_id: Unique identifier for content
@@ -797,8 +761,7 @@ class CopyrightManager:
             
         Returns:
             Copyright verification results
-        """
-        try:
+        """        try:
             verification_result = {
                 "content_id": content_id,
                 "verified_at": datetime.utcnow().isoformat(),
@@ -860,8 +823,7 @@ class CopyrightManager:
         minimum_payout: float = 10.0,
         currency: str = "EUR"
     ) -> Dict[str, Any]:
-        """
-        Set up royalty distribution for copyrighted content.
+        """        Set up royalty distribution for copyrighted content.
         
         Args:
             content_id: Content to set up distribution for
@@ -872,8 +834,7 @@ class CopyrightManager:
             
         Returns:
             Royalty distribution setup results
-        """
-        try:
+        """        try:
             # Validate percentages sum to 100
             total_percentage = sum(holder.get("percentage", 0) for holder in rights_holders)
             if abs(total_percentage - 100.0) > 0.01:
@@ -926,8 +887,7 @@ class CopyrightManager:
         evidence: List[str],
         disputed_record_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Process copyright claim or dispute.
+        """        Process copyright claim or dispute.
         
         Args:
             content_id: Content being claimed
@@ -938,8 +898,7 @@ class CopyrightManager:
             
         Returns:
             Claim processing results
-        """
-        try:
+        """        try:
             claim_id = f"claim_{uuid.uuid4().hex[:12]}"
             
             claim_result = {
@@ -994,8 +953,7 @@ class CopyrightManager:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """
-        Get copyright compliance summary for reporting.
+        """        Get copyright compliance summary for reporting.
         
         Args:
             user_id: Optional user ID to filter by
@@ -1004,8 +962,7 @@ class CopyrightManager:
             
         Returns:
             Copyright compliance summary
-        """
-        try:
+        """        try:
             if not start_date:
                 start_date = datetime.utcnow() - timedelta(days=30)
             if not end_date:
@@ -1077,8 +1034,7 @@ class CopyrightManager:
         reason: Optional[str] = None,
         updated_by: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Update copyright status for content.
+        """        Update copyright status for content.
         
         Args:
             content_id: Content to update
@@ -1088,8 +1044,7 @@ class CopyrightManager:
             
         Returns:
             Update results
-        """
-        try:
+        """        try:
             # Find records for this content
             relevant_records = [
                 record for record in self.copyright_records.values()
@@ -1139,8 +1094,7 @@ class CopyrightManager:
         rights_type: RightsType,
         evidence_documents: List[str]
     ) -> Dict[str, Any]:
-        """Verify the validity of a copyright claim."""
-        verification_score = 0.0
+        """Verify the validity of a copyright claim."""        verification_score = 0.0
         factors = []
         
         # Check evidence quality
@@ -1170,8 +1124,7 @@ class CopyrightManager:
         }
     
     async def _check_internal_registry(self, content_id: str) -> List[Dict[str, Any]]:
-        """Check internal copyright registry for existing records."""
-        records = []
+        """Check internal copyright registry for existing records."""        records = []
         
         for record in self.copyright_records.values():
             if record.content_id == content_id:
@@ -1191,8 +1144,7 @@ class CopyrightManager:
         content_id: str, 
         content_type: str
     ) -> List[Dict[str, Any]]:
-        """Check external copyright databases."""
-        # Placeholder for external database integration
+        """Check external copyright databases."""        # Placeholder for external database integration
         # Would integrate with services like:
         # - ASCAP, BMI, SESAC (music)
         # - Getty Images (images)
@@ -1215,8 +1167,7 @@ class CopyrightManager:
         content_id: str, 
         content_type: str
     ) -> List[Dict[str, Any]]:
-        """Check for fingerprint matches indicating potential duplicates."""
-        # Placeholder for fingerprinting integration
+        """Check for fingerprint matches indicating potential duplicates."""        # Placeholder for fingerprinting integration
         return []
     
     async def _detect_copyright_conflicts(
@@ -1224,8 +1175,7 @@ class CopyrightManager:
         records: List[Dict[str, Any]],
         fingerprint_matches: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Detect potential copyright conflicts."""
-        conflicts = []
+        """Detect potential copyright conflicts."""        conflicts = []
         
         # Check for multiple ownership claims
         owners = set(record.get("owner_id") for record in records)
@@ -1251,8 +1201,7 @@ class CopyrightManager:
         records: List[Dict[str, Any]],
         conflicts: List[Dict[str, Any]]
     ) -> str:
-        """Determine overall copyright status."""
-        if conflicts:
+        """Determine overall copyright status."""        if conflicts:
             return CopyrightStatus.DISPUTED.value
         
         if not records:
@@ -1268,8 +1217,7 @@ class CopyrightManager:
         self, 
         verification_result: Dict[str, Any]
     ) -> List[str]:
-        """Generate copyright recommendations."""
-        recommendations = []
+        """Generate copyright recommendations."""        recommendations = []
         
         if not verification_result["ownership_verified"]:
             recommendations.append("Register copyright ownership with supporting documentation")
@@ -1286,8 +1234,7 @@ class CopyrightManager:
         self, 
         copyright_record: CopyrightRecord
     ) -> None:
-        """Set up default royalty distribution for new copyright."""
-        await self.setup_royalty_distribution(
+        """Set up default royalty distribution for new copyright."""        await self.setup_royalty_distribution(
             content_id=copyright_record.content_id,
             rights_holders=[{
                 "holder_id": copyright_record.owner_id,
@@ -1297,8 +1244,7 @@ class CopyrightManager:
         )
     
     def _get_next_steps(self, copyright_record: CopyrightRecord) -> List[str]:
-        """Get next steps based on copyright record status."""
-        if copyright_record.status == CopyrightStatus.PENDING_VERIFICATION:
+        """Get next steps based on copyright record status."""        if copyright_record.status == CopyrightStatus.PENDING_VERIFICATION:
             return [
                 "Await verification completion",
                 "Provide additional evidence if requested",
@@ -1319,8 +1265,7 @@ class CopyrightManager:
         start_date: datetime,
         end_date: datetime
     ) -> List[CopyrightRecord]:
-        """Filter copyright records by criteria."""
-        filtered = []
+        """Filter copyright records by criteria."""        filtered = []
         
         for record in self.copyright_records.values():
             # Filter by user
@@ -1337,8 +1282,7 @@ class CopyrightManager:
         return filtered
     
     def _calculate_next_payment_date(self, payment_schedule: str) -> str:
-        """Calculate next payment date based on schedule."""
-        now = datetime.utcnow()
+        """Calculate next payment date based on schedule."""        now = datetime.utcnow()
         
         if payment_schedule == "monthly":
             next_date = now.replace(day=1) + timedelta(days=32)
@@ -1354,16 +1298,13 @@ class CopyrightManager:
     
     # Placeholder methods for external integrations
     async def _check_user_copyright_history(self, user_id: str) -> float:
-        """Check user's copyright history score."""
-        return 0.8  # Placeholder
+        """Check user's copyright history score."""        return 0.8  # Placeholder
     
     async def _check_content_uniqueness(self, content_id: str) -> float:
-        """Check content uniqueness score."""
-        return 0.9  # Placeholder
+        """Check content uniqueness score."""        return 0.9  # Placeholder
     
     async def _check_metadata_consistency(self, content_id: str, owner_id: str) -> float:
-        """Check metadata consistency score."""
-        return 0.85  # Placeholder
+        """Check metadata consistency score."""        return 0.85  # Placeholder
     
     async def _analyze_claim_validity(
         self,
@@ -1372,8 +1313,7 @@ class CopyrightManager:
         claim_type: str,
         evidence: List[str]
     ) -> Dict[str, Any]:
-        """Analyze validity of copyright claim."""
-        return {
+        """Analyze validity of copyright claim."""        return {
             "score": 0.7,
             "factors": ["Evidence provided", "User verification completed"]
         }
@@ -1382,8 +1322,7 @@ class CopyrightManager:
         self, 
         royalty_distribution: RoyaltyDistribution
     ) -> None:
-        """Set up automated payment processing."""
-        logger.info(f"Payment automation set up for distribution {royalty_distribution.distribution_id}")
+        """Set up automated payment processing."""        logger.info(f"Payment automation set up for distribution {royalty_distribution.distribution_id}")
     
     # Logging methods
     async def _log_copyright_registration(
@@ -1391,25 +1330,21 @@ class CopyrightManager:
         record: CopyrightRecord, 
         result: Dict[str, Any]
     ) -> None:
-        """Log copyright registration."""
-        logger.info(f"Copyright registered: {record.record_id} for content {record.content_id}")
+        """Log copyright registration."""        logger.info(f"Copyright registered: {record.record_id} for content {record.content_id}")
     
     async def _log_royalty_setup(
         self, 
         distribution: RoyaltyDistribution, 
         result: Dict[str, Any]
     ) -> None:
-        """Log royalty distribution setup."""
-        logger.info(f"Royalty distribution set up: {distribution.distribution_id}")
+        """Log royalty distribution setup."""        logger.info(f"Royalty distribution set up: {distribution.distribution_id}")
     
     async def _log_copyright_claim(self, claim_result: Dict[str, Any]) -> None:
-        """Log copyright claim processing."""
-        logger.info(f"Copyright claim processed: {claim_result['claim_id']}")
+        """Log copyright claim processing."""        logger.info(f"Copyright claim processed: {claim_result['claim_id']}")
     
     async def _log_status_update(
         self, 
         record: CopyrightRecord, 
         update_result: Dict[str, Any]
     ) -> None:
-        """Log copyright status update."""
-        logger.info(f"Copyright status updated: {record.record_id} -> {record.status.value}")
+        """Log copyright status update."""        logger.info(f"Copyright status updated: {record.record_id} -> {record.status.value}")

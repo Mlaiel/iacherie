@@ -1,5 +1,4 @@
-"""
-IA-Influencer-Agent - Event Aggregator and Processor
+"""IA-Influencer-Agent - Event Aggregator and Processor
 Module: backend/core/events/event_aggregator.py
 Architecture: Event Stream Processing and Analytics
 Auteur: Fahed Mlaiel <mlaiel@live.de>
@@ -10,9 +9,7 @@ Auteur: Fahed Mlaiel <mlaiel@live.de>
 Description:
     Système d'agrégation d'événements avec processing temps réel,
     analytics et métriques pour la plateforme IA-Influencer-Agent.
-"""
-
-from typing import Any, Dict, List, Optional, Union, Callable, Tuple
+"""from typing import Any, Dict, List, Optional, Union, Callable, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from enum import Enum
@@ -31,8 +28,7 @@ logger = logging.getLogger(__name__)
 
 
 class AggregationType(Enum):
-    """Types d'agrégation"""
-    COUNT = "count"
+    """Types d'agrégation"""    COUNT = "count"
     SUM = "sum"
     AVERAGE = "average"
     MIN = "min"
@@ -44,16 +40,14 @@ class AggregationType(Enum):
 
 
 class WindowType(Enum):
-    """Types de fenêtres temporelles"""
-    TUMBLING = "tumbling"  # Fenêtres non-chevauchantes
+    """Types de fenêtres temporelles"""    TUMBLING = "tumbling"  # Fenêtres non-chevauchantes
     SLIDING = "sliding"    # Fenêtres glissantes
     SESSION = "session"    # Fenêtres basées sur activité
 
 
 @dataclass
 class AggregationWindow:
-    """Fenêtre d'agrégation temporelle"""
-    window_id: str
+    """Fenêtre d'agrégation temporelle"""    window_id: str
     window_type: WindowType
     size_seconds: int
     slide_seconds: Optional[int] = None  # Pour sliding windows
@@ -63,22 +57,19 @@ class AggregationWindow:
     event_count: int = 0
     
     def contains(self, timestamp: datetime) -> bool:
-        """Vérifie si un timestamp est dans la fenêtre"""
-        if not self.start_time or not self.end_time:
+        """Vérifie si un timestamp est dans la fenêtre"""        if not self.start_time or not self.end_time:
             return False
         return self.start_time <= timestamp < self.end_time
     
     def is_complete(self) -> bool:
-        """Vérifie si la fenêtre est complète"""
-        if not self.end_time:
+        """Vérifie si la fenêtre est complète"""        if not self.end_time:
             return False
         return datetime.now(timezone.utc) >= self.end_time
 
 
 @dataclass
 class AggregationRule:
-    """Règle d'agrégation"""
-    rule_id: str
+    """Règle d'agrégation"""    rule_id: str
     name: str
     event_types: List[str]
     aggregation_type: AggregationType
@@ -91,8 +82,7 @@ class AggregationRule:
     enabled: bool = True
     
     def matches_event(self, event: Event) -> bool:
-        """Vérifie si l'événement correspond à la règle"""
-        if not self.enabled:
+        """Vérifie si l'événement correspond à la règle"""        if not self.enabled:
             return False
         
         # Vérification type
@@ -119,8 +109,7 @@ class AggregationRule:
         return True
     
     def get_group_key(self, event: Event) -> str:
-        """Génère une clé de groupement pour l'événement"""
-        if not self.group_by:
+        """Génère une clé de groupement pour l'événement"""        if not self.group_by:
             return "default"
         
         key_parts = []
@@ -143,8 +132,7 @@ class AggregationRule:
 
 @dataclass
 class AggregationResult:
-    """Résultat d'agrégation"""
-    rule_id: str
+    """Résultat d'agrégation"""    rule_id: str
     window_id: str
     group_key: str
     aggregation_type: AggregationType
@@ -171,8 +159,7 @@ class AggregationResult:
 
 
 class EventBuffer:
-    """Buffer pour stocker les événements en attente d'agrégation"""
-    
+    """Buffer pour stocker les événements en attente d'agrégation"""    
     def __init__(self, max_size: int = 10000):
         self.max_size = max_size
         self._events: deque = deque(maxlen=max_size)
@@ -180,8 +167,7 @@ class EventBuffer:
         self._index_by_time: Dict[datetime, List[Event]] = defaultdict(list)
     
     def add_event(self, event: Event):
-        """Ajoute un événement au buffer"""
-        self._events.append(event)
+        """Ajoute un événement au buffer"""        self._events.append(event)
         self._index_by_type[event.type].append(event)
         
         # Index par minute pour optimisation
@@ -192,8 +178,7 @@ class EventBuffer:
         self._cleanup_old_indexes()
     
     def get_events_by_type(self, event_type: str) -> List[Event]:
-        """Récupère les événements par type"""
-        events = []
+        """Récupère les événements par type"""        events = []
         for stored_type, event_list in self._index_by_type.items():
             if stored_type.startswith(event_type) or event_type == "*":
                 events.extend(event_list)
@@ -204,16 +189,14 @@ class EventBuffer:
         start_time: datetime, 
         end_time: datetime
     ) -> List[Event]:
-        """Récupère les événements dans une fenêtre temporelle"""
-        events = []
+        """Récupère les événements dans une fenêtre temporelle"""        events = []
         for event in self._events:
             if start_time <= event.timestamp < end_time:
                 events.append(event)
         return events
     
     def _cleanup_old_indexes(self):
-        """Nettoie les index d'événements anciens"""
-        cutoff_time = datetime.now(timezone.utc) - timedelta(hours=1)
+        """Nettoie les index d'événements anciens"""        cutoff_time = datetime.now(timezone.utc) - timedelta(hours=1)
         
         # Nettoyage index temporel
         expired_keys = [
@@ -224,13 +207,11 @@ class EventBuffer:
             del self._index_by_time[key]
     
     def size(self) -> int:
-        """Retourne la taille du buffer"""
-        return len(self._events)
+        """Retourne la taille du buffer"""        return len(self._events)
 
 
 class AggregationProcessor:
-    """Processeur d'agrégation pour un type spécifique"""
-    
+    """Processeur d'agrégation pour un type spécifique"""    
     def __init__(self, rule: AggregationRule):
         self.rule = rule
         self._windows: Dict[str, AggregationWindow] = {}
@@ -238,8 +219,7 @@ class AggregationProcessor:
         self._results: List[AggregationResult] = []
     
     def process_event(self, event: Event) -> List[AggregationResult]:
-        """Traite un événement et retourne les résultats complétés"""
-        if not self.rule.matches_event(event):
+        """Traite un événement et retourne les résultats complétés"""        if not self.rule.matches_event(event):
             return []
         
         group_key = self.rule.get_group_key(event)
@@ -269,8 +249,7 @@ class AggregationProcessor:
         timestamp: datetime, 
         group_key: str
     ) -> AggregationWindow:
-        """Récupère ou crée une fenêtre pour un timestamp"""
-        window_key = f"{group_key}_{timestamp.strftime('%Y%m%d_%H%M')}"
+        """Récupère ou crée une fenêtre pour un timestamp"""        window_key = f"{group_key}_{timestamp.strftime('%Y%m%d_%H%M')}"
         
         if window_key not in self._windows:
             return self._create_new_window(timestamp, group_key, window_key)
@@ -283,8 +262,7 @@ class AggregationProcessor:
         group_key: str,
         window_key: Optional[str] = None
     ) -> AggregationWindow:
-        """Crée une nouvelle fenêtre"""
-        if not window_key:
+        """Crée une nouvelle fenêtre"""        if not window_key:
             window_key = f"{group_key}_{timestamp.strftime('%Y%m%d_%H%M')}"
         
         if self.rule.window_type == WindowType.TUMBLING:
@@ -308,8 +286,7 @@ class AggregationProcessor:
         return window
     
     def _align_to_window(self, timestamp: datetime) -> datetime:
-        """Aligne un timestamp au début de fenêtre"""
-        window_size = self.rule.window_size
+        """Aligne un timestamp au début de fenêtre"""        window_size = self.rule.window_size
         epoch = datetime(1970, 1, 1, tzinfo=timezone.utc)
         seconds_since_epoch = (timestamp - epoch).total_seconds()
         aligned_seconds = (seconds_since_epoch // window_size) * window_size
@@ -321,8 +298,7 @@ class AggregationProcessor:
         window: AggregationWindow, 
         group_key: str
     ):
-        """Ajoute un événement à une fenêtre"""
-        window.event_count += 1
+        """Ajoute un événement à une fenêtre"""        window.event_count += 1
         
         # Extraction de la valeur selon le type d'agrégation
         value = self._extract_value(event)
@@ -331,8 +307,7 @@ class AggregationProcessor:
             self._values[window_group_key].append(value)
     
     def _extract_value(self, event: Event) -> Any:
-        """Extrait la valeur à agréger d'un événement"""
-        if not self.rule.field_name:
+        """Extrait la valeur à agréger d'un événement"""        if not self.rule.field_name:
             return 1  # Comptage simple
         
         # Recherche dans data puis metadata
@@ -344,8 +319,7 @@ class AggregationProcessor:
         return None
     
     def _finalize_completed_windows(self) -> List[AggregationResult]:
-        """Finalise les fenêtres complètes"""
-        results = []
+        """Finalise les fenêtres complètes"""        results = []
         current_time = datetime.now(timezone.utc)
         completed_windows = []
         
@@ -370,8 +344,7 @@ class AggregationProcessor:
         return results
     
     def _compute_aggregation(self, window: AggregationWindow) -> Optional[AggregationResult]:
-        """Calcule l'agrégation pour une fenêtre"""
-        try:
+        """Calcule l'agrégation pour une fenêtre"""        try:
             # Récupération des valeurs pour cette fenêtre
             window_values = []
             for key, values in self._values.items():
@@ -404,8 +377,7 @@ class AggregationProcessor:
             return None
     
     def _calculate_aggregation_value(self, values: List[Any]) -> Union[int, float, str, List[Any]]:
-        """Calcule la valeur d'agrégation"""
-        if self.rule.aggregation_type == AggregationType.COUNT:
+        """Calcule la valeur d'agrégation"""        if self.rule.aggregation_type == AggregationType.COUNT:
             return len(values)
         elif self.rule.aggregation_type == AggregationType.SUM:
             return sum(values)
@@ -429,10 +401,8 @@ class AggregationProcessor:
 
 
 class EventAggregator:
-    """
-    Système principal d'agrégation d'événements
-    """
-    
+    """    Système principal d'agrégation d'événements
+    """    
     def __init__(
         self,
         buffer_size: int = 10000,
@@ -465,8 +435,7 @@ class EventAggregator:
         logger.info("EventAggregator initialized")
     
     async def start(self):
-        """Démarre le traitement d'agrégation"""
-        if self._processing:
+        """Démarre le traitement d'agrégation"""        if self._processing:
             return
         
         self._processing = True
@@ -474,8 +443,7 @@ class EventAggregator:
         logger.info("EventAggregator started")
     
     async def stop(self):
-        """Arrête le traitement d'agrégation"""
-        if not self._processing:
+        """Arrête le traitement d'agrégation"""        if not self._processing:
             return
         
         self._processing = False
@@ -485,8 +453,7 @@ class EventAggregator:
         logger.info("EventAggregator stopped")
     
     def register_rule(self, rule: AggregationRule) -> bool:
-        """Enregistre une règle d'agrégation"""
-        try:
+        """Enregistre une règle d'agrégation"""        try:
             self._rules[rule.rule_id] = rule
             self._processors[rule.rule_id] = AggregationProcessor(rule)
             self._stats["rules_count"] += 1
@@ -499,8 +466,7 @@ class EventAggregator:
             return False
     
     def unregister_rule(self, rule_id: str) -> bool:
-        """Désenregistre une règle d'agrégation"""
-        if rule_id in self._rules:
+        """Désenregistre une règle d'agrégation"""        if rule_id in self._rules:
             del self._rules[rule_id]
             del self._processors[rule_id]
             self._stats["rules_count"] -= 1
@@ -511,12 +477,10 @@ class EventAggregator:
         return False
     
     def add_result_callback(self, callback: Callable[[AggregationResult], None]):
-        """Ajoute un callback pour les résultats"""
-        self._result_callbacks.append(callback)
+        """Ajoute un callback pour les résultats"""        self._result_callbacks.append(callback)
     
     async def process_event(self, event: Event) -> List[AggregationResult]:
-        """Traite un événement et retourne les résultats immédiats"""
-        self._buffer.add_event(event)
+        """Traite un événement et retourne les résultats immédiats"""        self._buffer.add_event(event)
         self._stats["events_processed"] += 1
         
         results = []
@@ -545,8 +509,7 @@ class EventAggregator:
         return results
     
     async def _process_loop(self):
-        """Boucle de traitement périodique"""
-        while self._processing:
+        """Boucle de traitement périodique"""        while self._processing:
             try:
                 # Finalisation des fenêtres expirées
                 await self._finalize_expired_windows()
@@ -561,8 +524,7 @@ class EventAggregator:
                 self._stats["processing_errors"] += 1
     
     async def _finalize_expired_windows(self):
-        """Finalise les fenêtres expirées"""
-        for processor in self._processors.values():
+        """Finalise les fenêtres expirées"""        for processor in self._processors.values():
             try:
                 results = processor._finalize_completed_windows()
                 
@@ -581,8 +543,7 @@ class EventAggregator:
                            processor.rule.rule_id, e)
     
     def _cleanup_old_results(self):
-        """Nettoie les anciens résultats"""
-        cutoff_time = datetime.now(timezone.utc) - timedelta(hours=24)
+        """Nettoie les anciens résultats"""        cutoff_time = datetime.now(timezone.utc) - timedelta(hours=24)
         
         initial_count = len(self._results)
         self._results = [
@@ -600,8 +561,7 @@ class EventAggregator:
         since: Optional[datetime] = None,
         limit: int = 100
     ) -> List[AggregationResult]:
-        """Récupère les résultats d'agrégation"""
-        results = self._results.copy()
+        """Récupère les résultats d'agrégation"""        results = self._results.copy()
         
         # Filtrage par rule_id
         if rule_id:
@@ -617,8 +577,7 @@ class EventAggregator:
         return results[:limit]
     
     def get_realtime_metrics(self) -> Dict[str, Any]:
-        """Récupère les métriques temps réel"""
-        now = datetime.now(timezone.utc)
+        """Récupère les métriques temps réel"""        now = datetime.now(timezone.utc)
         last_hour = now - timedelta(hours=1)
         
         # Compteurs par type d'événement (dernière heure)
@@ -646,8 +605,7 @@ class EventAggregator:
         }
     
     def get_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques complètes"""
-        return {
+        """Retourne les statistiques complètes"""        return {
             "stats": self._stats.copy(),
             "buffer_size": self._buffer.size(),
             "rules_count": len(self._rules),
@@ -657,8 +615,7 @@ class EventAggregator:
 
 
 class EventProcessor:
-    """Processeur d'événements de haut niveau avec agrégation"""
-    
+    """Processeur d'événements de haut niveau avec agrégation"""    
     def __init__(self, aggregator: EventAggregator):
         self.aggregator = aggregator
         self._event_handlers: Dict[str, List[Callable]] = defaultdict(list)
@@ -670,8 +627,7 @@ class EventProcessor:
         self.aggregator.add_result_callback(self._handle_aggregation_result)
     
     def _setup_default_rules(self):
-        """Configure les règles d'agrégation par défaut"""
-        default_rules = [
+        """Configure les règles d'agrégation par défaut"""        default_rules = [
             # Comptage des uploads de contenu par utilisateur
             AggregationRule(
                 rule_id="content_uploads_per_user",
@@ -718,8 +674,7 @@ class EventProcessor:
             self.aggregator.register_rule(rule)
     
     def _handle_aggregation_result(self, result: AggregationResult):
-        """Traite les résultats d'agrégation"""
-        try:
+        """Traite les résultats d'agrégation"""        try:
             # Alertes automatiques pour certains seuils
             if result.rule_id == "violations_per_tenant" and result.value > 10:
                 logger.warning("High violation rate detected for tenant %s: %d violations", 
@@ -745,12 +700,10 @@ class EventProcessor:
         rule_id: str, 
         handler: Callable[[AggregationResult], None]
     ):
-        """Enregistre un handler pour les résultats d'une règle"""
-        self._event_handlers[rule_id].append(handler)
+        """Enregistre un handler pour les résultats d'une règle"""        self._event_handlers[rule_id].append(handler)
     
     async def process_event(self, event: Event) -> List[AggregationResult]:
-        """Point d'entrée principal pour traitement d'événements"""
-        return await self.aggregator.process_event(event)
+        """Point d'entrée principal pour traitement d'événements"""        return await self.aggregator.process_event(event)
 
 
 # Instance globale

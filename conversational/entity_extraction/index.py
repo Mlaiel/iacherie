@@ -1,5 +1,4 @@
-"""
-Entity Extraction Index - IA Influencer Agent
+"""Entity Extraction Index - IA Influencer Agent
 
 Central orchestration module for all entity extraction services. Provides unified
 interface for multi-format content entity recognition, platform detection, 
@@ -24,9 +23,7 @@ Team Specializations:
 - Audio Engineer: Professional audio processing
 - DevOps Engineer: CI/CD & infrastructure automation
 - IA Prompt Engineer: Advanced AI prompt optimization
-"""
-
-import asyncio
+"""import asyncio
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
 from datetime import datetime
@@ -52,8 +49,7 @@ from ...utils.validation import validate_input
 
 @dataclass
 class ComprehensiveExtractionResult:
-    """Complete entity extraction results from all modules"""
-    general_entities: List[ExtractedEntity]
+    """Complete entity extraction results from all modules"""    general_entities: List[ExtractedEntity]
     platform_entities: List[PlatformEntity]
     collaboration_entities: List[CollaborationEntity]
     business_entities: List[Any]
@@ -70,8 +66,7 @@ class ComprehensiveExtractionResult:
 
 
 class EntityExtractionOrchestrator(BaseService):
-    """
-    Central orchestrator for all entity extraction services.
+    """    Central orchestrator for all entity extraction services.
     
     Provides unified interface for:
     - Multi-format content analysis
@@ -80,8 +75,7 @@ class EntityExtractionOrchestrator(BaseService):
     - Business relationship mapping
     - Creative work analysis
     - Comprehensive entity linking
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
         self.logger = logging.getLogger(__name__)
@@ -94,8 +88,7 @@ class EntityExtractionOrchestrator(BaseService):
         self.cache_ttl = config.get("cache_ttl", 1800) if config else 1800
     
     def _initialize_services(self, config: Optional[Dict[str, Any]]):
-        """Initialize all comprehensive entity extraction services with advanced capabilities"""
-        try:
+        """Initialize all comprehensive entity extraction services with advanced capabilities"""        try:
             # Core entity extraction services
             self.entity_extractor = EntityExtractor(config)
             self.platform_extractor = PlatformEntityExtractor(config)
@@ -144,8 +137,7 @@ class EntityExtractionOrchestrator(BaseService):
             raise
     
     def _initialize_sentiment_analyzer(self):
-        """Initialize advanced sentiment analysis for extracted content"""
-        from transformers import pipeline
+        """Initialize advanced sentiment analysis for extracted content"""        from transformers import pipeline
         
         try:
             return pipeline(
@@ -159,16 +151,14 @@ class EntityExtractionOrchestrator(BaseService):
             return None
     
     def _initialize_trend_detector(self):
-        """Initialize trend detection system for creative content"""
-        class TrendDetector:
+        """Initialize trend detection system for creative content"""        class TrendDetector:
             def __init__(self):
                 self.trend_patterns = []
                 self.viral_indicators = []
                 self.engagement_thresholds = {}
                 
             async def detect_trends(self, entities: List[Any], timeframe: str = "24h") -> List[Dict[str, Any]]:
-                """Detect trending patterns in extracted entities"""
-                trends = []
+                """Detect trending patterns in extracted entities"""                trends = []
                 
                 # Analyze entity frequency patterns
                 entity_counts = {}
@@ -192,16 +182,14 @@ class EntityExtractionOrchestrator(BaseService):
         return TrendDetector()
     
     def _initialize_quality_assessor(self):
-        """Initialize content quality assessment system"""
-        class QualityAssessor:
+        """Initialize content quality assessment system"""        class QualityAssessor:
             def __init__(self):
                 self.quality_metrics = [
                     'completeness', 'accuracy', 'relevance', 'uniqueness', 'engagement_potential'
                 ]
                 
             async def assess_extraction_quality(self, extraction_result: ComprehensiveExtractionResult) -> Dict[str, float]:
-                """Assess quality of entity extraction results"""
-                quality_scores = {}
+                """Assess quality of entity extraction results"""                quality_scores = {}
                 
                 # Completeness score based on number of entities found
                 total_entities = extraction_result.total_entities
@@ -232,8 +220,7 @@ class EntityExtractionOrchestrator(BaseService):
         return QualityAssessor()
     
     def _initialize_monetization_analyzer(self):
-        """Initialize monetization opportunity analyzer"""
-        class MonetizationAnalyzer:
+        """Initialize monetization opportunity analyzer"""        class MonetizationAnalyzer:
             def __init__(self):
                 self.revenue_models = [
                     'streaming', 'licensing', 'brand_partnerships', 'merchandise', 
@@ -241,8 +228,7 @@ class EntityExtractionOrchestrator(BaseService):
                 ]
                 
             async def analyze_monetization_opportunities(self, entities: List[Any]) -> List[Dict[str, Any]]:
-                """Analyze monetization opportunities from extracted entities"""
-                opportunities = []
+                """Analyze monetization opportunities from extracted entities"""                opportunities = []
                 
                 # Check for brand partnership opportunities
                 for entity in entities:
@@ -272,8 +258,7 @@ class EntityExtractionOrchestrator(BaseService):
         return MonetizationAnalyzer()
     
     def _initialize_seo_optimizer(self):
-        """Initialize SEO optimization engine"""
-        class SEOOptimizer:
+        """Initialize SEO optimization engine"""        class SEOOptimizer:
             def __init__(self):
                 self.seo_factors = [
                     'keyword_density', 'title_optimization', 'meta_description', 
@@ -281,8 +266,7 @@ class EntityExtractionOrchestrator(BaseService):
                 ]
                 
             async def optimize_content_seo(self, entities: List[Any], content: str) -> Dict[str, Any]:
-                """Generate SEO optimization recommendations"""
-                recommendations = {
+                """Generate SEO optimization recommendations"""                recommendations = {
                     'keywords': [],
                     'hashtags': [],
                     'title_suggestions': [],
@@ -320,15 +304,13 @@ class EntityExtractionOrchestrator(BaseService):
         return SEOOptimizer()
     
     def _initialize_realtime_processor(self):
-        """Initialize real-time processing system"""
-        class RealtimeProcessor:
+        """Initialize real-time processing system"""        class RealtimeProcessor:
             def __init__(self):
                 self.processing_queue = asyncio.Queue()
                 self.active_streams = {}
                 
             async def process_stream(self, stream_id: str, data: Any) -> Dict[str, Any]:
-                """Process streaming data in real-time"""
-                result = {
+                """Process streaming data in real-time"""                result = {
                     'stream_id': stream_id,
                     'processed_at': datetime.now().isoformat(),
                     'status': 'processed',
@@ -347,8 +329,7 @@ class EntityExtractionOrchestrator(BaseService):
         return RealtimeProcessor()
     
     def _initialize_performance_monitor(self):
-        """Initialize performance monitoring system"""
-        class PerformanceMonitor:
+        """Initialize performance monitoring system"""        class PerformanceMonitor:
             def __init__(self):
                 self.metrics = {
                     'processing_time': [],
@@ -359,8 +340,7 @@ class EntityExtractionOrchestrator(BaseService):
                 }
                 
             async def monitor_extraction_performance(self, start_time: datetime, end_time: datetime) -> Dict[str, Any]:
-                """Monitor and report extraction performance"""
-                processing_time = (end_time - start_time).total_seconds()
+                """Monitor and report extraction performance"""                processing_time = (end_time - start_time).total_seconds()
                 self.metrics['processing_time'].append(processing_time)
                 
                 return {
@@ -372,8 +352,7 @@ class EntityExtractionOrchestrator(BaseService):
         return PerformanceMonitor()
     
     def _initialize_security_validator(self):
-        """Initialize security validation system"""
-        class SecurityValidator:
+        """Initialize security validation system"""        class SecurityValidator:
             def __init__(self):
                 self.blocked_patterns = [
                     r'(?i)password', r'(?i)api[_-]?key', r'(?i)secret', 
@@ -381,8 +360,7 @@ class EntityExtractionOrchestrator(BaseService):
                 ]
                 
             async def validate_content_security(self, content: str) -> Dict[str, Any]:
-                """Validate content for security issues"""
-                import re
+                """Validate content for security issues"""                import re
                 
                 issues = []
                 for pattern in self.blocked_patterns:
@@ -398,15 +376,13 @@ class EntityExtractionOrchestrator(BaseService):
         return SecurityValidator()
     
     def _initialize_ml_enhancement(self):
-        """Initialize machine learning enhancement engine"""
-        class MLEnhancementEngine:
+        """Initialize machine learning enhancement engine"""        class MLEnhancementEngine:
             def __init__(self):
                 self.models = {}
                 self.training_data = []
                 
             async def enhance_extraction_results(self, results: ComprehensiveExtractionResult) -> ComprehensiveExtractionResult:
-                """Enhance extraction results using ML"""
-                # Apply ML-based confidence score adjustments
+                """Enhance extraction results using ML"""                # Apply ML-based confidence score adjustments
                 enhanced_confidence = {}
                 for key, score in results.confidence_scores.items():
                     # Apply ML enhancement (simplified)
@@ -419,14 +395,12 @@ class EntityExtractionOrchestrator(BaseService):
         return MLEnhancementEngine()
     
     def _initialize_prediction_engine(self):
-        """Initialize prediction engine for future trends and opportunities"""
-        class PredictionEngine:
+        """Initialize prediction engine for future trends and opportunities"""        class PredictionEngine:
             def __init__(self):
                 self.prediction_models = {}
                 
             async def predict_future_opportunities(self, historical_data: List[Any]) -> Dict[str, Any]:
-                """Predict future opportunities based on historical data"""
-                predictions = {
+                """Predict future opportunities based on historical data"""                predictions = {
                     'trending_topics': [],
                     'collaboration_opportunities': [],
                     'monetization_potential': {},
@@ -446,14 +420,12 @@ class EntityExtractionOrchestrator(BaseService):
         return PredictionEngine()
     
     def _initialize_data_exporter(self):
-        """Initialize data export system"""
-        class DataExporter:
+        """Initialize data export system"""        class DataExporter:
             def __init__(self):
                 self.export_formats = ['json', 'csv', 'xml', 'pdf', 'excel']
                 
             async def export_results(self, results: ComprehensiveExtractionResult, format: str = 'json') -> Dict[str, Any]:
-                """Export extraction results in specified format"""
-                export_data = {
+                """Export extraction results in specified format"""                export_data = {
                     'format': format,
                     'exported_at': datetime.now().isoformat(),
                     'total_entities': results.total_entities,
@@ -493,8 +465,7 @@ class EntityExtractionOrchestrator(BaseService):
         platforms: Optional[List[PlatformType]] = None,
         include_recommendations: bool = True
     ) -> ComprehensiveExtractionResult:
-        """
-        Perform comprehensive entity extraction using all available services
+        """        Perform comprehensive entity extraction using all available services
         
         Args:
             text: Input text to analyze
@@ -505,8 +476,7 @@ class EntityExtractionOrchestrator(BaseService):
             
         Returns:
             Complete extraction results from all services
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             if not validate_input(text, str):
@@ -602,8 +572,7 @@ class EntityExtractionOrchestrator(BaseService):
         text: str, 
         content_metadata: Optional[ContentMetadata]
     ) -> List[ExtractedEntity]:
-        """Extract general entities using core entity extractor"""
-        try:
+        """Extract general entities using core entity extractor"""        try:
             result = await self.entity_extractor.extract_entities(text, content_metadata)
             return result.entities
         except Exception as e:
@@ -615,8 +584,7 @@ class EntityExtractionOrchestrator(BaseService):
         text: str, 
         platforms: Optional[List[PlatformType]]
     ) -> List[PlatformEntity]:
-        """Extract platform-specific entities"""
-        try:
+        """Extract platform-specific entities"""        try:
             result = await self.platform_extractor.extract_platform_entities(
                 text, platforms
             )
@@ -631,8 +599,7 @@ class EntityExtractionOrchestrator(BaseService):
         content_metadata: Optional[ContentMetadata],
         user_profile: Optional[Dict[str, Any]]
     ) -> List[CollaborationEntity]:
-        """Extract collaboration opportunities"""
-        try:
+        """Extract collaboration opportunities"""        try:
             result = await self.collaboration_tracker.track_collaboration_entities(
                 text, content_metadata, user_profile
             )
@@ -646,8 +613,7 @@ class EntityExtractionOrchestrator(BaseService):
         text: str, 
         content_metadata: Optional[ContentMetadata]
     ) -> List[Any]:
-        """Extract business entities"""
-        try:
+        """Extract business entities"""        try:
             result = await self.business_processor.process_business_entities(text)
             return result.entities if hasattr(result, 'entities') else []
         except Exception as e:
@@ -659,8 +625,7 @@ class EntityExtractionOrchestrator(BaseService):
         text: str, 
         content_metadata: Optional[ContentMetadata]
     ) -> List[Any]:
-        """Extract creative work entities"""
-        try:
+        """Extract creative work entities"""        try:
             result = await self.creative_detector.detect_creative_entities(text)
             return result.entities if hasattr(result, 'entities') else []
         except Exception as e:
@@ -672,8 +637,7 @@ class EntityExtractionOrchestrator(BaseService):
         text: str, 
         content_metadata: Optional[ContentMetadata]
     ) -> List[Any]:
-        """Extract content-specific entities"""
-        try:
+        """Extract content-specific entities"""        try:
             result = await self.content_analyzer.analyze_content_entities(text)
             return result.entities if hasattr(result, 'entities') else []
         except Exception as e:
@@ -685,8 +649,7 @@ class EntityExtractionOrchestrator(BaseService):
         text: str, 
         content_metadata: Optional[ContentMetadata]
     ) -> List[Any]:
-        """Extract metadata entities"""
-        try:
+        """Extract metadata entities"""        try:
             result = await self.metadata_parser.parse_metadata_entities(text)
             return result.entities if hasattr(result, 'entities') else []
         except Exception as e:
@@ -694,8 +657,7 @@ class EntityExtractionOrchestrator(BaseService):
             return []
     
     async def _extract_relationships(self, text: str) -> List[Any]:
-        """Extract entity relationships"""
-        try:
+        """Extract entity relationships"""        try:
             result = await self.relationship_extractor.extract_relationships(text)
             return result.relationships if hasattr(result, 'relationships') else []
         except Exception as e:
@@ -703,8 +665,7 @@ class EntityExtractionOrchestrator(BaseService):
             return []
     
     def _process_extraction_results(self, results: List[Any]) -> tuple:
-        """Process extraction results and handle exceptions"""
-        processed_results = []
+        """Process extraction results and handle exceptions"""        processed_results = []
         
         for result in results:
             if isinstance(result, Exception):
@@ -728,8 +689,7 @@ class EntityExtractionOrchestrator(BaseService):
         creative_entities: List[Any],
         content_entities: List[Any]
     ) -> Dict[str, float]:
-        """Calculate average confidence scores by category"""
-        scores = {}
+        """Calculate average confidence scores by category"""        scores = {}
         
         # General entities confidence
         if general_entities:
@@ -781,8 +741,7 @@ class EntityExtractionOrchestrator(BaseService):
         business_entities: List[Any],
         user_profile: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Generate insights from extracted entities"""
-        insights = {}
+        """Generate insights from extracted entities"""        insights = {}
         
         # Platform distribution analysis
         if platform_entities:
@@ -841,8 +800,7 @@ class EntityExtractionOrchestrator(BaseService):
         user_profile: Optional[Dict[str, Any]],
         insights: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate comprehensive recommendations based on all extracted entities"""
-        recommendations = []
+        """Generate comprehensive recommendations based on all extracted entities"""        recommendations = []
         
         # Platform optimization recommendations
         if insights.get("platform_distribution"):
@@ -925,8 +883,7 @@ class EntityExtractionOrchestrator(BaseService):
         return recommendations
     
     async def get_service_status(self) -> Dict[str, Any]:
-        """Get status of all extraction services"""
-        status = {
+        """Get status of all extraction services"""        status = {
             "orchestrator_healthy": self.services_initialized,
             "services": {}
         }
@@ -957,8 +914,7 @@ class EntityExtractionOrchestrator(BaseService):
         return status
     
     async def get_comprehensive_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive metrics from all services"""
-        return await self.metrics.get_all_metrics()
+        """Get comprehensive metrics from all services"""        return await self.metrics.get_all_metrics()
 
 
 # Convenience function for quick access
@@ -968,8 +924,7 @@ async def extract_entities_comprehensive(
     user_profile: Optional[Dict[str, Any]] = None,
     config: Optional[Dict[str, Any]] = None
 ) -> ComprehensiveExtractionResult:
-    """
-    Convenience function for comprehensive entity extraction
+    """    Convenience function for comprehensive entity extraction
     
     Args:
         text: Input text to analyze
@@ -979,8 +934,7 @@ async def extract_entities_comprehensive(
         
     Returns:
         Complete extraction results
-    """
-    orchestrator = EntityExtractionOrchestrator(config)
+    """    orchestrator = EntityExtractionOrchestrator(config)
     return await orchestrator.extract_all_entities(
         text, content_metadata, user_profile
     )

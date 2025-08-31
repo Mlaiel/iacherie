@@ -1,5 +1,4 @@
-"""
-Pipeline Orchestrator for Coordinated Workflow Management
+"""Pipeline Orchestrator for Coordinated Workflow Management
 ========================================================
 
 Professional orchestration system managing complex multi-pipeline workflows
@@ -19,9 +18,7 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 This proprietary orchestration technology and workflow management systems
 belong exclusively to Fahed Mlaiel. Any unauthorized use, reverse engineering,
 or competitive implementation will result in immediate legal action.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Union, Any, Callable
@@ -61,8 +58,7 @@ settings = get_settings()
 
 
 class WorkflowType(str, Enum):
-    """Types of orchestrated workflows"""
-    CONTENT_LIFECYCLE = "content_lifecycle"           # Full content processing
+    """Types of orchestrated workflows"""    CONTENT_LIFECYCLE = "content_lifecycle"           # Full content processing
     PROTECTION_ACTIVATION = "protection_activation"   # Content protection setup
     REVENUE_OPTIMIZATION = "revenue_optimization"     # Monetization optimization
     COLLABORATION_MATCHING = "collaboration_matching" # Creator matching
@@ -72,8 +68,7 @@ class WorkflowType(str, Enum):
 
 
 class PipelineStatus(str, Enum):
-    """Pipeline execution status"""
-    PENDING = "pending"
+    """Pipeline execution status"""    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -82,18 +77,15 @@ class PipelineStatus(str, Enum):
 
 
 class WorkflowPriority(str, Enum):
-    """Workflow execution priority"""
-    LOW = "low"
+    """Workflow execution priority"""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class WorkflowManager:
-    """
-    Advanced workflow management system for complex multi-step processes
-    """
-    
+    """    Advanced workflow management system for complex multi-step processes
+    """    
     def __init__(self):
         self.redis_client = Redis.from_url(settings.REDIS_URL)
         self.celery_app = Celery('pipeline_orchestrator')
@@ -169,10 +161,8 @@ class WorkflowManager:
         workflow_data: Dict[str, Any],
         priority: WorkflowPriority = WorkflowPriority.NORMAL
     ) -> Dict[str, Any]:
-        """
-        Execute a complete workflow with error handling and monitoring
-        """
-        try:
+        """        Execute a complete workflow with error handling and monitoring
+        """        try:
             workflow_id = str(uuid4())
             logger.info(f"Starting workflow execution: {workflow_id} ({workflow_type.value})")
             
@@ -246,10 +236,8 @@ class WorkflowManager:
         workflow_def: Dict[str, Any],
         workflow_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Execute individual workflow steps with dependency management
-        """
-        steps = workflow_def["steps"]
+        """        Execute individual workflow steps with dependency management
+        """        steps = workflow_def["steps"]
         parallel_steps = workflow_def.get("parallel_steps", [])
         
         step_results = {}
@@ -331,10 +319,8 @@ class WorkflowManager:
         execution_context: Dict[str, Any],
         previous_results: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Execute individual pipeline step with monitoring
-        """
-        pipeline_name = step["pipeline"]
+        """        Execute individual pipeline step with monitoring
+        """        pipeline_name = step["pipeline"]
         method_name = step["method"]
         step_key = f"{pipeline_name}.{method_name}"
         
@@ -410,10 +396,8 @@ class WorkflowManager:
         execution_context: Dict[str, Any],
         previous_results: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Prepare method arguments from execution context
-        """
-        import inspect
+        """        Prepare method arguments from execution context
+        """        import inspect
         
         # Get method signature
         sig = inspect.signature(method)
@@ -449,10 +433,8 @@ class WorkflowManager:
         return method_args
 
     async def get_workflow_status(self, workflow_id: str) -> Dict[str, Any]:
-        """
-        Get detailed workflow execution status
-        """
-        try:
+        """        Get detailed workflow execution status
+        """        try:
             async with AsyncDatabaseSession() as session:
                 # Get workflow execution
                 execution = await session.get(WorkflowExecution, workflow_id)
@@ -507,10 +489,8 @@ class WorkflowManager:
             raise WorkflowError(f"Status retrieval failed: {str(e)}")
 
     async def cancel_workflow(self, workflow_id: str, reason: str = "User cancelled") -> Dict[str, Any]:
-        """
-        Cancel running workflow
-        """
-        try:
+        """        Cancel running workflow
+        """        try:
             async with AsyncDatabaseSession() as session:
                 execution = await session.get(WorkflowExecution, workflow_id)
                 if not execution:
@@ -554,10 +534,8 @@ class WorkflowManager:
 
 
 class PipelineMonitor:
-    """
-    System monitoring and health checking for pipeline operations
-    """
-    
+    """    System monitoring and health checking for pipeline operations
+    """    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.notification_manager = NotificationManager()
@@ -571,10 +549,8 @@ class PipelineMonitor:
         }
 
     async def check_system_health(self) -> Dict[str, Any]:
-        """
-        Comprehensive system health check
-        """
-        try:
+        """        Comprehensive system health check
+        """        try:
             health_report = {
                 "timestamp": datetime.utcnow().isoformat(),
                 "overall_status": "healthy",
@@ -619,8 +595,7 @@ class PipelineMonitor:
             }
 
     async def _check_pipeline_health(self, pipeline_name: str) -> Dict[str, Any]:
-        """Check health of individual pipeline"""
-        try:
+        """Check health of individual pipeline"""        try:
             # Get recent task statistics
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(hours=1)
@@ -687,8 +662,7 @@ class PipelineMonitor:
             }
 
     async def _get_workflow_metrics(self) -> Dict[str, Any]:
-        """Get workflow execution metrics"""
-        try:
+        """Get workflow execution metrics"""        try:
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(hours=24)
             
@@ -733,8 +707,7 @@ class PipelineMonitor:
             return {"error": str(e)}
 
     async def _check_resource_usage(self) -> Dict[str, Any]:
-        """Check system resource usage"""
-        try:
+        """Check system resource usage"""        try:
             import psutil
             
             # CPU usage
@@ -772,8 +745,7 @@ class PipelineMonitor:
             return {"error": str(e)}
 
     async def _generate_health_alerts(self, health_report: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate health alerts based on metrics"""
-        alerts = []
+        """Generate health alerts based on metrics"""        alerts = []
         
         # Check pipeline health alerts
         for pipeline_name, health in health_report.get("pipeline_health", {}).items():
@@ -824,19 +796,15 @@ class PipelineMonitor:
 
 
 class HealthChecker:
-    """
-    Automated health checking and alerting system
-    """
-    
+    """    Automated health checking and alerting system
+    """    
     def __init__(self):
         self.monitor = PipelineMonitor()
         self.notification_manager = NotificationManager()
 
     async def run_health_check_cycle(self):
-        """
-        Run complete health check cycle with alerting
-        """
-        try:
+        """        Run complete health check cycle with alerting
+        """        try:
             logger.info("Starting health check cycle")
             
             # Run system health check
@@ -867,8 +835,7 @@ class HealthChecker:
             raise MonitoringError(f"Health check failed: {str(e)}")
 
     async def _send_health_alerts(self, alerts: List[Dict[str, Any]], health_report: Dict[str, Any]):
-        """Send health alerts to administrators"""
-        try:
+        """Send health alerts to administrators"""        try:
             high_severity_alerts = [a for a in alerts if a.get("severity") == "high"]
             
             if high_severity_alerts:
@@ -891,8 +858,7 @@ class HealthChecker:
             logger.error(f"Failed to send health alerts: {str(e)}")
 
     async def _send_critical_alert(self, error_message: str):
-        """Send critical system alert"""
-        try:
+        """Send critical system alert"""        try:
             await self.notification_manager.send_admin_alert(
                 "Critical System Error",
                 f"Health check system failure: {error_message}",
@@ -906,8 +872,7 @@ class HealthChecker:
             logger.error(f"Failed to send critical alert: {str(e)}")
 
     async def _save_health_metrics(self, health_report: Dict[str, Any]):
-        """Save health metrics to database"""
-        try:
+        """Save health metrics to database"""        try:
             metrics = WorkflowMetrics(
                 id=str(uuid4()),
                 timestamp=datetime.utcnow(),
@@ -927,17 +892,14 @@ class HealthChecker:
 
 
 class PipelineOrchestrator:
-    """
-    Main orchestrator managing all pipeline operations and workflows
-    """
-    
+    """    Main orchestrator managing all pipeline operations and workflows
+    """    
     def __init__(self):
         self.workflow_manager = WorkflowManager()
         self.health_checker = HealthChecker()
         
     async def start_orchestration_services(self):
-        """Start all orchestration services"""
-        logger.info("Starting pipeline orchestration services")
+        """Start all orchestration services"""        logger.info("Starting pipeline orchestration services")
         
         # Start background health monitoring
         asyncio.create_task(self._health_monitoring_loop())
@@ -945,8 +907,7 @@ class PipelineOrchestrator:
         logger.info("Orchestration services started successfully")
 
     async def _health_monitoring_loop(self):
-        """Background health monitoring loop"""
-        while True:
+        """Background health monitoring loop"""        while True:
             try:
                 await self.health_checker.run_health_check_cycle()
                 await asyncio.sleep(300)  # Check every 5 minutes

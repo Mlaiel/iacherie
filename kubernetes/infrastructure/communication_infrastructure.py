@@ -1,5 +1,4 @@
-"""
-Real-time Communication and Notification Infrastructure
+"""Real-time Communication and Notification Infrastructure
 
 Provides comprehensive real-time communication, notification delivery,
 and event streaming infrastructure for the IA Influencer Agent platform.
@@ -18,9 +17,7 @@ Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import yaml
@@ -36,8 +33,7 @@ import hashlib
 logger = logging.getLogger(__name__)
 
 class NotificationType(Enum):
-    """Notification types"""
-    CONTENT_UPLOADED = "content_uploaded"
+    """Notification types"""    CONTENT_UPLOADED = "content_uploaded"
     COPYRIGHT_VIOLATION = "copyright_violation"
     REVENUE_EARNED = "revenue_earned"
     DMCA_TAKEDOWN = "dmca_takedown"
@@ -49,8 +45,7 @@ class NotificationType(Enum):
     LIVE_STREAM_STARTED = "live_stream_started"
 
 class DeliveryChannel(Enum):
-    """Notification delivery channels"""
-    PUSH_MOBILE = "push_mobile"
+    """Notification delivery channels"""    PUSH_MOBILE = "push_mobile"
     PUSH_WEB = "push_web"
     EMAIL = "email"
     SMS = "sms"
@@ -60,16 +55,14 @@ class DeliveryChannel(Enum):
     DISCORD = "discord"
 
 class EventPriority(Enum):
-    """Event priority levels"""
-    LOW = "low"
+    """Event priority levels"""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
     CRITICAL = "critical"
 
 class StreamType(Enum):
-    """Event stream types"""
-    USER_ACTIVITY = "user_activity"
+    """Event stream types"""    USER_ACTIVITY = "user_activity"
     CONTENT_EVENTS = "content_events"
     REVENUE_EVENTS = "revenue_events"
     SECURITY_EVENTS = "security_events"
@@ -78,8 +71,7 @@ class StreamType(Enum):
 
 @dataclass
 class NotificationMessage:
-    """Notification message structure"""
-    message_id: str
+    """Notification message structure"""    message_id: str
     user_id: str
     notification_type: NotificationType
     title: str
@@ -94,8 +86,7 @@ class NotificationMessage:
 
 @dataclass
 class EventMessage:
-    """Event streaming message structure"""
-    event_id: str
+    """Event streaming message structure"""    event_id: str
     stream_type: StreamType
     event_type: str
     payload: Dict[str, Any]
@@ -108,8 +99,7 @@ class EventMessage:
 
 @dataclass
 class WebSocketConnection:
-    """WebSocket connection tracking"""
-    connection_id: str
+    """WebSocket connection tracking"""    connection_id: str
     user_id: str
     session_id: str
     connected_at: datetime
@@ -119,8 +109,7 @@ class WebSocketConnection:
 
 @dataclass
 class CommunicationInfrastructureSpec:
-    """Real-time communication infrastructure specification"""
-    namespace: str = "ia-influencer-communication"
+    """Real-time communication infrastructure specification"""    namespace: str = "ia-influencer-communication"
     enable_websockets: bool = True
     enable_push_notifications: bool = True
     enable_email_service: bool = True
@@ -138,8 +127,7 @@ class CommunicationInfrastructureSpec:
     geographic_distribution: bool = True
 
 class CommunicationInfrastructureManager:
-    """Advanced real-time communication and notification infrastructure manager"""
-    
+    """Advanced real-time communication and notification infrastructure manager"""    
     def __init__(self, k8s_client=None, redis_client=None, kafka_client=None):
         self.k8s_client = k8s_client
         self.redis_client = redis_client
@@ -154,8 +142,7 @@ class CommunicationInfrastructureManager:
         self.event_streams = {}
         
     async def deploy_communication_infrastructure(self, spec: CommunicationInfrastructureSpec) -> Dict[str, Any]:
-        """Deploy comprehensive real-time communication infrastructure"""
-        try:
+        """Deploy comprehensive real-time communication infrastructure"""        try:
             results = {}
             logger.info("Deploying real-time communication infrastructure for IA Influencer platform")
             
@@ -232,8 +219,7 @@ class CommunicationInfrastructureManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_websocket_infrastructure(self, spec: CommunicationInfrastructureSpec) -> Dict[str, Any]:
-        """Deploy WebSocket infrastructure for real-time communication"""
-        try:
+        """Deploy WebSocket infrastructure for real-time communication"""        try:
             # Deploy WebSocket gateway
             websocket_gateway = client.V1Deployment(
                 metadata=client.V1ObjectMeta(
@@ -349,8 +335,7 @@ class CommunicationInfrastructureManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_notification_services(self, spec: CommunicationInfrastructureSpec) -> Dict[str, Any]:
-        """Deploy comprehensive notification services"""
-        try:
+        """Deploy comprehensive notification services"""        try:
             # Deploy unified notification service
             notification_service = client.V1Deployment(
                 metadata=client.V1ObjectMeta(
@@ -480,8 +465,7 @@ class CommunicationInfrastructureManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_live_streaming_infrastructure(self, spec: CommunicationInfrastructureSpec) -> Dict[str, Any]:
-        """Deploy live streaming infrastructure for content creators"""
-        try:
+        """Deploy live streaming infrastructure for content creators"""        try:
             # Deploy streaming media server
             streaming_server = client.V1Deployment(
                 metadata=client.V1ObjectMeta(
@@ -580,8 +564,7 @@ class CommunicationInfrastructureManager:
             return {'status': 'error', 'message': str(e)}
     
     async def send_notification(self, notification: NotificationMessage) -> Dict[str, Any]:
-        """Send notification through specified delivery channels"""
-        try:
+        """Send notification through specified delivery channels"""        try:
             delivery_results = {}
             
             # Validate notification message
@@ -632,8 +615,7 @@ class CommunicationInfrastructureManager:
             return {'status': 'error', 'message': str(e)}
     
     async def broadcast_event(self, event: EventMessage) -> Dict[str, Any]:
-        """Broadcast event to all relevant subscribers"""
-        try:
+        """Broadcast event to all relevant subscribers"""        try:
             # Validate event message
             if not event.event_id:
                 event.event_id = str(uuid.uuid4())
@@ -664,8 +646,7 @@ class CommunicationInfrastructureManager:
             return {'status': 'error', 'message': str(e)}
     
     async def get_communication_status(self, namespace: str = "ia-influencer-communication") -> Dict[str, Any]:
-        """Get comprehensive communication infrastructure status"""
-        try:
+        """Get comprehensive communication infrastructure status"""        try:
             status = {
                 'overall_health': 'healthy',
                 'real_time_connections': {
@@ -747,8 +728,7 @@ class CommunicationInfrastructureManager:
 def create_notification_message(user_id: str, notification_type: NotificationType, 
                                title: str, content: str, 
                                channels: List[DeliveryChannel]) -> NotificationMessage:
-    """Create a standardized notification message"""
-    return NotificationMessage(
+    """Create a standardized notification message"""    return NotificationMessage(
         message_id=str(uuid.uuid4()),
         user_id=user_id,
         notification_type=notification_type,
@@ -760,8 +740,7 @@ def create_notification_message(user_id: str, notification_type: NotificationTyp
 
 def create_event_message(stream_type: StreamType, event_type: str, 
                         payload: Dict[str, Any], user_id: str = None) -> EventMessage:
-    """Create a standardized event message"""
-    return EventMessage(
+    """Create a standardized event message"""    return EventMessage(
         event_id=str(uuid.uuid4()),
         stream_type=stream_type,
         event_type=event_type,
@@ -772,13 +751,11 @@ def create_event_message(stream_type: StreamType, event_type: str,
 
 def format_content_upload_notification(creator_name: str, content_title: str, 
                                      content_type: str) -> Tuple[str, str]:
-    """Format content upload notification"""
-    title = f"New {content_type} uploaded!"
+    """Format content upload notification"""    title = f"New {content_type} uploaded!"
     content = f"{creator_name} just uploaded '{content_title}'. Check it out now!"
     return title, content
 
 def format_revenue_notification(amount: float, currency: str = "USD") -> Tuple[str, str]:
-    """Format revenue notification"""
-    title = "💰 Revenue Earned!"
+    """Format revenue notification"""    title = "💰 Revenue Earned!"
     content = f"You've earned {currency} {amount:.2f} from your content. Keep creating!"
     return title, content

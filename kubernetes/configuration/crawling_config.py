@@ -1,5 +1,4 @@
-"""
-🔍 Web Crawling & Monitoring Configuration Manager - IA-Influencer-Agent
+"""🔍 Web Crawling & Monitoring Configuration Manager - IA-Influencer-Agent
 ========================================================================
 Project Creator & Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
@@ -15,9 +14,7 @@ Contact: mlaiel@live.de
 
 Enterprise-grade web crawling and monitoring configuration management system.
 ========================================================================
-"""
-
-from typing import Dict, Any, Optional, List, Union, Tuple, Set
+"""from typing import Dict, Any, Optional, List, Union, Tuple, Set
 from enum import Enum
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -32,8 +29,7 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class CrawlerType(Enum):
-    """Types of crawlers"""
-    WEB_SCRAPER = "web_scraper"
+    """Types of crawlers"""    WEB_SCRAPER = "web_scraper"
     API_CRAWLER = "api_crawler"
     SOCIAL_MEDIA_CRAWLER = "social_media_crawler"
     SEARCH_ENGINE_CRAWLER = "search_engine_crawler"
@@ -43,8 +39,7 @@ class CrawlerType(Enum):
     TREND_ANALYZER = "trend_analyzer"
 
 class CrawlFrequency(Enum):
-    """Crawling frequency options"""
-    REAL_TIME = "real_time"
+    """Crawling frequency options"""    REAL_TIME = "real_time"
     EVERY_MINUTE = "every_minute"
     EVERY_5_MINUTES = "every_5_minutes"
     EVERY_15_MINUTES = "every_15_minutes"
@@ -57,8 +52,7 @@ class CrawlFrequency(Enum):
     ON_DEMAND = "on_demand"
 
 class DetectionMode(Enum):
-    """Content detection modes"""
-    EXACT_MATCH = "exact_match"
+    """Content detection modes"""    EXACT_MATCH = "exact_match"
     FUZZY_MATCH = "fuzzy_match"
     SEMANTIC_MATCH = "semantic_match"
     VISUAL_MATCH = "visual_match"
@@ -66,8 +60,7 @@ class DetectionMode(Enum):
     HYBRID_MATCH = "hybrid_match"
 
 class AlertLevel(Enum):
-    """Alert severity levels"""
-    INFO = "info"
+    """Alert severity levels"""    INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -75,8 +68,7 @@ class AlertLevel(Enum):
     EMERGENCY = "emergency"
 
 class ActionType(Enum):
-    """Automated action types"""
-    NOTIFY_ONLY = "notify_only"
+    """Automated action types"""    NOTIFY_ONLY = "notify_only"
     LOG_VIOLATION = "log_violation"
     SEND_DMCA = "send_dmca"
     CONTACT_PLATFORM = "contact_platform"
@@ -86,8 +78,7 @@ class ActionType(Enum):
     ESCALATE_HUMAN = "escalate_human"
 
 class CrawlerEngine(Enum):
-    """Crawler engines"""
-    SCRAPY = "scrapy"
+    """Crawler engines"""    SCRAPY = "scrapy"
     SELENIUM = "selenium"
     PLAYWRIGHT = "playwright"
     BEAUTIFULSOUP = "beautifulsoup"
@@ -98,8 +89,7 @@ class CrawlerEngine(Enum):
 
 @dataclass
 class PlatformCrawlerConfig:
-    """Individual platform crawler configuration"""
-    platform_name: str
+    """Individual platform crawler configuration"""    platform_name: str
     enabled: bool = True
     crawler_type: CrawlerType = CrawlerType.WEB_SCRAPER
     engine: CrawlerEngine = CrawlerEngine.SCRAPY
@@ -181,8 +171,7 @@ class PlatformCrawlerConfig:
 
 @dataclass
 class ContentDetectionConfig:
-    """Content detection configuration"""
-    enabled: bool = True
+    """Content detection configuration"""    enabled: bool = True
     
     # Detection algorithms
     fingerprint_matching: bool = True
@@ -227,8 +216,7 @@ class ContentDetectionConfig:
 
 @dataclass
 class AlertingConfig:
-    """Alerting configuration"""
-    enabled: bool = True
+    """Alerting configuration"""    enabled: bool = True
     
     # Alert channels
     email_alerts: bool = True
@@ -283,8 +271,7 @@ class AlertingConfig:
 
 @dataclass
 class AutomatedActionConfig:
-    """Automated action configuration"""
-    enabled: bool = True
+    """Automated action configuration"""    enabled: bool = True
     
     # Action settings
     auto_dmca_enabled: bool = True
@@ -327,8 +314,7 @@ class AutomatedActionConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance and optimization configuration"""
-    # Resource limits
+    """Performance and optimization configuration"""    # Resource limits
     max_memory_gb: int = 8
     max_cpu_cores: int = 4
     max_disk_space_gb: int = 100
@@ -371,8 +357,7 @@ class PerformanceConfig:
 
 @dataclass
 class CrawlingMonitoringConfiguration:
-    """Master crawling and monitoring configuration"""
-    # Platform configurations
+    """Master crawling and monitoring configuration"""    # Platform configurations
     platform_configs: Dict[str, PlatformCrawlerConfig] = field(default_factory=dict)
     
     # Core configurations
@@ -430,16 +415,13 @@ class CrawlingMonitoringConfiguration:
     contact_email: str = "mlaiel@live.de"
 
 class CrawlingMonitoringConfigManager:
-    """
-    Enterprise-grade crawling and monitoring configuration manager.
+    """    Enterprise-grade crawling and monitoring configuration manager.
     
     Manages comprehensive configuration for web crawling, content monitoring,
     piracy detection, automated actions, and alerting systems.
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize crawling monitoring configuration manager"""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize crawling monitoring configuration manager"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration path
         self.config_path = config_path or os.getenv(
@@ -464,8 +446,7 @@ class CrawlingMonitoringConfigManager:
         self.logger.info("Crawling monitoring configuration manager initialized")
     
     def _initialize_default_platforms(self) -> None:
-        """Initialize default platform configurations"""
-        default_platforms = {
+        """Initialize default platform configurations"""        default_platforms = {
             "youtube": {
                 "platform_name": "YouTube",
                 "api_base_url": "https://www.googleapis.com/youtube/v3",
@@ -507,8 +488,7 @@ class CrawlingMonitoringConfigManager:
             self._config.platform_configs[platform_id] = config
     
     def _load_configuration(self) -> bool:
-        """Load configuration from file"""
-        try:
+        """Load configuration from file"""        try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r', encoding='utf-8') as f:
                     if self.config_path.endswith('.yaml') or self.config_path.endswith('.yml'):
@@ -528,8 +508,7 @@ class CrawlingMonitoringConfigManager:
             return False
     
     def _update_config_from_dict(self, config_data: Dict[str, Any]) -> None:
-        """Update configuration from dictionary"""
-        for key, value in config_data.items():
+        """Update configuration from dictionary"""        for key, value in config_data.items():
             if hasattr(self._config, key):
                 setattr(self._config, key, value)
         
@@ -537,8 +516,7 @@ class CrawlingMonitoringConfigManager:
         self.last_updated = datetime.now()
     
     def add_platform(self, platform_id: str, config: PlatformCrawlerConfig) -> bool:
-        """Add platform crawler configuration"""
-        try:
+        """Add platform crawler configuration"""        try:
             self._config.platform_configs[platform_id] = config
             self._config.updated_at = datetime.now()
             self.last_updated = datetime.now()
@@ -549,19 +527,16 @@ class CrawlingMonitoringConfigManager:
             return False
     
     def get_platform_config(self, platform_id: str) -> Optional[PlatformCrawlerConfig]:
-        """Get platform crawler configuration"""
-        return self._config.platform_configs.get(platform_id)
+        """Get platform crawler configuration"""        return self._config.platform_configs.get(platform_id)
     
     def get_enabled_platforms(self) -> List[str]:
-        """Get list of enabled platforms"""
-        return [
+        """Get list of enabled platforms"""        return [
             platform_id for platform_id, config in self._config.platform_configs.items()
             if config.enabled
         ]
     
     def validate_configuration(self) -> List[str]:
-        """Validate configuration and return list of errors"""
-        errors = []
+        """Validate configuration and return list of errors"""        errors = []
         
         try:
             # Validate platform configurations
@@ -602,8 +577,7 @@ class CrawlingMonitoringConfigManager:
             return [error_msg]
     
     def get_configuration_status(self) -> Dict[str, Any]:
-        """Get configuration status and metadata"""
-        return {
+        """Get configuration status and metadata"""        return {
             "initialized": self.initialized,
             "last_updated": self.last_updated,
             "config_path": self.config_path,

@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Audio Machine Learning Module for IA-Influencer-Agent
+"""Audio Machine Learning Module for IA-Influencer-Agent
 ====================================================
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -18,9 +17,7 @@ Features:
 - Multi-format audio support
 - High-quality audio generation
 - Advanced voice analysis
-"""
-
-import logging
+"""import logging
 import numpy as np
 import torch
 import torch.nn as nn
@@ -59,8 +56,7 @@ except ImportError:
 
 
 class AudioTaskType(Enum):
-    """Audio ML task types"""
-    CLASSIFICATION = "classification"
+    """Audio ML task types"""    CLASSIFICATION = "classification"
     MUSIC_GENERATION = "music_generation"
     VOICE_ANALYSIS = "voice_analysis"
     SPEECH_SYNTHESIS = "speech_synthesis"
@@ -69,8 +65,7 @@ class AudioTaskType(Enum):
 
 
 class AudioFormat(Enum):
-    """Supported audio formats"""
-    WAV = "wav"
+    """Supported audio formats"""    WAV = "wav"
     MP3 = "mp3"
     FLAC = "flac"
     OGG = "ogg"
@@ -78,8 +73,7 @@ class AudioFormat(Enum):
 
 
 class MusicGenre(Enum):
-    """Music genres for classification and generation"""
-    CLASSICAL = "classical"
+    """Music genres for classification and generation"""    CLASSICAL = "classical"
     JAZZ = "jazz"
     ROCK = "rock"
     POP = "pop"
@@ -92,8 +86,7 @@ class MusicGenre(Enum):
 
 
 class VoiceCharacteristic(Enum):
-    """Voice analysis characteristics"""
-    GENDER = "gender"
+    """Voice analysis characteristics"""    GENDER = "gender"
     AGE_GROUP = "age_group"
     EMOTION = "emotion"
     ACCENT = "accent"
@@ -103,8 +96,7 @@ class VoiceCharacteristic(Enum):
 
 @dataclass
 class AudioFeatures:
-    """Audio feature extraction result"""
-    mfccs: np.ndarray
+    """Audio feature extraction result"""    mfccs: np.ndarray
     spectral_centroids: np.ndarray
     spectral_rolloff: np.ndarray
     zero_crossing_rate: np.ndarray
@@ -117,8 +109,7 @@ class AudioFeatures:
 
 @dataclass
 class AudioClassificationResult:
-    """Result from audio classification"""
-    predictions: List[Dict[str, Any]]
+    """Result from audio classification"""    predictions: List[Dict[str, Any]]
     confidence: float
     processing_time: float
     features_used: List[str]
@@ -127,8 +118,7 @@ class AudioClassificationResult:
 
 @dataclass
 class MusicGenerationResult:
-    """Result from music generation"""
-    generated_audio: np.ndarray
+    """Result from music generation"""    generated_audio: np.ndarray
     sample_rate: int
     duration: float
     genre: MusicGenre
@@ -140,8 +130,7 @@ class MusicGenerationResult:
 
 @dataclass
 class VoiceAnalysisResult:
-    """Result from voice analysis"""
-    characteristics: Dict[VoiceCharacteristic, Dict[str, float]]
+    """Result from voice analysis"""    characteristics: Dict[VoiceCharacteristic, Dict[str, float]]
     overall_confidence: float
     processing_time: float
     voice_quality_score: float
@@ -150,8 +139,7 @@ class VoiceAnalysisResult:
 
 @dataclass
 class SpeechSynthesisResult:
-    """Result from speech synthesis"""
-    synthesized_audio: np.ndarray
+    """Result from speech synthesis"""    synthesized_audio: np.ndarray
     sample_rate: int
     duration: float
     text: str
@@ -161,8 +149,7 @@ class SpeechSynthesisResult:
 
 
 class BaseAudioProcessor(ABC):
-    """Base class for audio processors"""
-    
+    """Base class for audio processors"""    
     def __init__(self, processor_name: str = "base_audio"):
         self.processor_name = processor_name
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -172,12 +159,10 @@ class BaseAudioProcessor(ABC):
         
     @abstractmethod
     def load_model(self) -> bool:
-        """Load the audio processing model"""
-        pass
+        """Load the audio processing model"""        pass
         
     def load_audio(self, file_path: str) -> Tuple[np.ndarray, int]:
-        """Load audio file"""
-        try:
+        """Load audio file"""        try:
             if LIBROSA_AVAILABLE:
                 audio, sr = librosa.load(file_path, sr=self.sample_rate)
                 return audio, sr
@@ -202,8 +187,7 @@ class BaseAudioProcessor(ABC):
             return audio, self.sample_rate
     
     def save_audio(self, audio: np.ndarray, file_path: str, sample_rate: int = None):
-        """Save audio to file"""
-        sr = sample_rate or self.sample_rate
+        """Save audio to file"""        sr = sample_rate or self.sample_rate
         
         try:
             if SOUNDFILE_AVAILABLE:
@@ -219,16 +203,14 @@ class BaseAudioProcessor(ABC):
 
 
 class AudioClassifier(BaseAudioProcessor):
-    """Audio classification for genre, instrument, and sound recognition"""
-    
+    """Audio classification for genre, instrument, and sound recognition"""    
     def __init__(self, model_name: str = "audio_classifier_v1"):
         super().__init__(f"classifier_{model_name}")
         self.genres = [genre.value for genre in MusicGenre]
         self.feature_extractors = ['mfcc', 'spectral_centroid', 'chroma', 'tempo']
         
     def load_model(self) -> bool:
-        """Load audio classification model"""
-        try:
+        """Load audio classification model"""        try:
             # Create audio classification model
             self.model = self._create_audio_classifier()
             self.model.to(self.device)
@@ -242,8 +224,7 @@ class AudioClassifier(BaseAudioProcessor):
             return False
     
     def _create_audio_classifier(self):
-        """Create audio classification model"""
-        class AudioClassificationModel(nn.Module):
+        """Create audio classification model"""        class AudioClassificationModel(nn.Module):
             def __init__(self, input_size=13, num_classes=len(MusicGenre)):
                 super().__init__()
                 self.features = nn.Sequential(
@@ -264,8 +245,7 @@ class AudioClassifier(BaseAudioProcessor):
         return AudioClassificationModel()
     
     def extract_features(self, audio: np.ndarray, sample_rate: int) -> AudioFeatures:
-        """Extract features from audio"""
-        try:
+        """Extract features from audio"""        try:
             if LIBROSA_AVAILABLE:
                 # Extract comprehensive features using librosa
                 mfccs = librosa.feature.mfcc(y=audio, sr=sample_rate, n_mfcc=13)
@@ -314,8 +294,7 @@ class AudioClassifier(BaseAudioProcessor):
     
     def classify_audio(self, audio: Union[str, np.ndarray], 
                       sample_rate: int = None) -> AudioClassificationResult:
-        """Classify audio genre/type"""
-        start_time = time.time()
+        """Classify audio genre/type"""        start_time = time.time()
         
         try:
             if not self.is_loaded:
@@ -377,8 +356,7 @@ class AudioClassifier(BaseAudioProcessor):
             )
     
     def _prepare_feature_vector(self, features: AudioFeatures) -> np.ndarray:
-        """Prepare feature vector for classification"""
-        # Use mean MFCC coefficients as primary features
+        """Prepare feature vector for classification"""        # Use mean MFCC coefficients as primary features
         mfcc_means = np.mean(features.mfccs, axis=1)
         
         # Add additional statistical features
@@ -395,8 +373,7 @@ class AudioClassifier(BaseAudioProcessor):
         return feature_vector.astype(np.float32)
     
     def _simple_mfcc(self, audio: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Simple MFCC extraction without librosa"""
-        # Very basic MFCC approximation using FFT
+        """Simple MFCC extraction without librosa"""        # Very basic MFCC approximation using FFT
         if SCIPY_AVAILABLE:
             # Compute FFT-based features
             fft = np.abs(np.fft.fft(audio))
@@ -411,8 +388,7 @@ class AudioClassifier(BaseAudioProcessor):
             return np.random.normal(0, 1, (13, 100))
     
     def _spectral_centroid(self, audio: np.ndarray) -> np.ndarray:
-        """Calculate spectral centroid"""
-        if SCIPY_AVAILABLE:
+        """Calculate spectral centroid"""        if SCIPY_AVAILABLE:
             # Simple spectral centroid calculation
             fft = np.abs(np.fft.fft(audio))
             freqs = np.fft.fftfreq(len(audio))
@@ -421,35 +397,29 @@ class AudioClassifier(BaseAudioProcessor):
         return np.random.normal(0.5, 0.1, 100)
     
     def _spectral_rolloff(self, audio: np.ndarray) -> np.ndarray:
-        """Calculate spectral rolloff"""
-        return np.random.normal(0.7, 0.1, 100)  # Simple approximation
+        """Calculate spectral rolloff"""        return np.random.normal(0.7, 0.1, 100)  # Simple approximation
     
     def _zero_crossing_rate(self, audio: np.ndarray) -> np.ndarray:
-        """Calculate zero crossing rate"""
-        zcr = np.mean(np.diff(np.signbit(audio)))
+        """Calculate zero crossing rate"""        zcr = np.mean(np.diff(np.signbit(audio)))
         return np.array([zcr] * 100)
     
     def _simple_chroma(self, audio: np.ndarray) -> np.ndarray:
-        """Simple chroma feature extraction"""
-        return np.random.normal(0.5, 0.2, (12, 100))  # 12 pitch classes
+        """Simple chroma feature extraction"""        return np.random.normal(0.5, 0.2, (12, 100))  # 12 pitch classes
     
     def _estimate_tempo(self, audio: np.ndarray, sample_rate: int) -> float:
-        """Simple tempo estimation"""
-        # Basic tempo estimation (very simplified)
+        """Simple tempo estimation"""        # Basic tempo estimation (very simplified)
         return np.random.uniform(60, 180)  # Random tempo between 60-180 BPM
 
 
 class MusicGenerator(BaseAudioProcessor):
-    """AI music generation and composition"""
-    
+    """AI music generation and composition"""    
     def __init__(self, model_name: str = "music_generator_v1"):
         super().__init__(f"music_gen_{model_name}")
         self.available_genres = [genre.value for genre in MusicGenre]
         self.default_duration = 30.0  # 30 seconds
         
     def load_model(self) -> bool:
-        """Load music generation model"""
-        try:
+        """Load music generation model"""        try:
             # Create music generation model
             self.model = self._create_music_generator()
             self.model.to(self.device)
@@ -463,8 +433,7 @@ class MusicGenerator(BaseAudioProcessor):
             return False
     
     def _create_music_generator(self):
-        """Create music generation model"""
-        class MusicGeneratorModel(nn.Module):
+        """Create music generation model"""        class MusicGeneratorModel(nn.Module):
             def __init__(self, latent_dim=128, output_size=1024):
                 super().__init__()
                 self.generator = nn.Sequential(
@@ -488,8 +457,7 @@ class MusicGenerator(BaseAudioProcessor):
                       tempo: float = 120.0,
                       key: str = "C",
                       seed: Optional[int] = None) -> MusicGenerationResult:
-        """Generate music based on parameters"""
-        start_time = time.time()
+        """Generate music based on parameters"""        start_time = time.time()
         
         try:
             if not self.is_loaded:
@@ -564,8 +532,7 @@ class MusicGenerator(BaseAudioProcessor):
     
     def _apply_genre_characteristics(self, audio: np.ndarray, 
                                    genre: MusicGenre, tempo: float) -> np.ndarray:
-        """Apply genre-specific characteristics to generated audio"""
-        if genre == MusicGenre.ELECTRONIC:
+        """Apply genre-specific characteristics to generated audio"""        if genre == MusicGenre.ELECTRONIC:
             # Add some digital effects
             audio = self._apply_digital_effects(audio)
         elif genre == MusicGenre.CLASSICAL:
@@ -581,15 +548,13 @@ class MusicGenerator(BaseAudioProcessor):
         return audio
     
     def _apply_digital_effects(self, audio: np.ndarray) -> np.ndarray:
-        """Apply digital effects for electronic music"""
-        # Simple bit-crushing effect
+        """Apply digital effects for electronic music"""        # Simple bit-crushing effect
         bits = 8
         audio = np.round(audio * (2**(bits-1))) / (2**(bits-1))
         return audio
     
     def _apply_smoothing(self, audio: np.ndarray) -> np.ndarray:
-        """Apply smoothing for classical music"""
-        if SCIPY_AVAILABLE:
+        """Apply smoothing for classical music"""        if SCIPY_AVAILABLE:
             # Apply low-pass filter
             from scipy import signal
             b, a = signal.butter(4, 0.8, btype='low')
@@ -597,28 +562,24 @@ class MusicGenerator(BaseAudioProcessor):
         return audio
     
     def _apply_distortion(self, audio: np.ndarray, amount: float = 0.5) -> np.ndarray:
-        """Apply distortion effect"""
-        # Simple tanh distortion
+        """Apply distortion effect"""        # Simple tanh distortion
         return np.tanh(audio * (1 + amount * 3))
     
     def _apply_swing_rhythm(self, audio: np.ndarray, tempo: float) -> np.ndarray:
-        """Apply swing rhythm for jazz"""
-        # Simple rhythmic modulation
+        """Apply swing rhythm for jazz"""        # Simple rhythmic modulation
         t = np.linspace(0, len(audio) / self.sample_rate, len(audio))
         swing_mod = 1 + 0.1 * np.sin(2 * np.pi * (tempo / 60) * t)
         return audio * swing_mod
 
 
 class VoiceAnalyzer(BaseAudioProcessor):
-    """Voice analysis and speaker recognition"""
-    
+    """Voice analysis and speaker recognition"""    
     def __init__(self, model_name: str = "voice_analyzer_v1"):
         super().__init__(f"voice_{model_name}")
         self.analysis_features = ['pitch', 'formants', 'spectral', 'temporal']
         
     def load_model(self) -> bool:
-        """Load voice analysis model"""
-        try:
+        """Load voice analysis model"""        try:
             # Create voice analysis models for different characteristics
             self.models = {}
             for characteristic in VoiceCharacteristic:
@@ -633,8 +594,7 @@ class VoiceAnalyzer(BaseAudioProcessor):
             return False
     
     def _create_voice_model(self, characteristic: VoiceCharacteristic):
-        """Create voice analysis model for specific characteristic"""
-        if characteristic == VoiceCharacteristic.GENDER:
+        """Create voice analysis model for specific characteristic"""        if characteristic == VoiceCharacteristic.GENDER:
             num_classes = 2  # male, female
         elif characteristic == VoiceCharacteristic.AGE_GROUP:
             num_classes = 4  # child, young, middle, senior
@@ -662,8 +622,7 @@ class VoiceAnalyzer(BaseAudioProcessor):
     
     def analyze_voice(self, audio: Union[str, np.ndarray], 
                      sample_rate: int = None) -> VoiceAnalysisResult:
-        """Comprehensive voice analysis"""
-        start_time = time.time()
+        """Comprehensive voice analysis"""        start_time = time.time()
         
         try:
             if not self.is_loaded:
@@ -719,8 +678,7 @@ class VoiceAnalyzer(BaseAudioProcessor):
             )
     
     def _extract_voice_features(self, audio: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract features specific to voice analysis"""
-        # Extract comprehensive voice features
+        """Extract features specific to voice analysis"""        # Extract comprehensive voice features
         features = []
         
         if LIBROSA_AVAILABLE:
@@ -745,8 +703,7 @@ class VoiceAnalyzer(BaseAudioProcessor):
     
     def _analyze_characteristic(self, features: np.ndarray, 
                               characteristic: VoiceCharacteristic) -> Dict[str, float]:
-        """Analyze specific voice characteristic"""
-        try:
+        """Analyze specific voice characteristic"""        try:
             if characteristic not in self.models:
                 return {"unknown": 0.5}
             
@@ -772,8 +729,7 @@ class VoiceAnalyzer(BaseAudioProcessor):
             return {"unknown": 0.0}
     
     def _get_characteristic_labels(self, characteristic: VoiceCharacteristic) -> List[str]:
-        """Get labels for each voice characteristic"""
-        labels = {
+        """Get labels for each voice characteristic"""        labels = {
             VoiceCharacteristic.GENDER: ["male", "female"],
             VoiceCharacteristic.AGE_GROUP: ["child", "young_adult", "middle_aged", "senior"],
             VoiceCharacteristic.EMOTION: ["happy", "sad", "angry", "neutral", "fearful", "surprised", "disgusted"],
@@ -785,8 +741,7 @@ class VoiceAnalyzer(BaseAudioProcessor):
         return labels.get(characteristic, ["unknown"])
     
     def _assess_voice_quality(self, audio: np.ndarray, sample_rate: int) -> float:
-        """Assess overall voice quality"""
-        try:
+        """Assess overall voice quality"""        try:
             # Simple voice quality metrics
             
             # Signal-to-noise ratio approximation
@@ -818,8 +773,7 @@ class VoiceAnalyzer(BaseAudioProcessor):
 
 
 class SpeechSynthesizer(BaseAudioProcessor):
-    """Text-to-speech synthesis and voice generation"""
-    
+    """Text-to-speech synthesis and voice generation"""    
     def __init__(self, model_name: str = "speech_synthesizer_v1"):
         super().__init__(f"tts_{model_name}")
         self.voice_profiles = {
@@ -831,8 +785,7 @@ class SpeechSynthesizer(BaseAudioProcessor):
         }
         
     def load_model(self) -> bool:
-        """Load speech synthesis model"""
-        try:
+        """Load speech synthesis model"""        try:
             # Create text-to-speech model
             self.model = self._create_tts_model()
             self.model.to(self.device)
@@ -850,8 +803,7 @@ class SpeechSynthesizer(BaseAudioProcessor):
             return False
     
     def _create_tts_model(self):
-        """Create text-to-speech model"""
-        class TTSModel(nn.Module):
+        """Create text-to-speech model"""        class TTSModel(nn.Module):
             def __init__(self, vocab_size=1000, embed_size=128, hidden_size=256):
                 super().__init__()
                 self.embedding = nn.Embedding(vocab_size, embed_size)
@@ -872,15 +824,13 @@ class SpeechSynthesizer(BaseAudioProcessor):
         return TTSModel()
     
     def _create_phoneme_mapping(self) -> Dict[str, int]:
-        """Create simple phoneme to index mapping"""
-        # Basic character to index mapping (simplified)
+        """Create simple phoneme to index mapping"""        # Basic character to index mapping (simplified)
         chars = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?;:"
         return {char: idx for idx, char in enumerate(chars)}
     
     def synthesize_speech(self, text: str, voice_profile: str = 'default',
                          language: str = 'en') -> SpeechSynthesisResult:
-        """Synthesize speech from text"""
-        start_time = time.time()
+        """Synthesize speech from text"""        start_time = time.time()
         
         try:
             if not self.is_loaded:
@@ -938,8 +888,7 @@ class SpeechSynthesizer(BaseAudioProcessor):
             )
     
     def _text_to_indices(self, text: str) -> List[int]:
-        """Convert text to character indices"""
-        indices = []
+        """Convert text to character indices"""        indices = []
         for char in text:
             if char in self.phoneme_map:
                 indices.append(self.phoneme_map[char])
@@ -948,8 +897,7 @@ class SpeechSynthesizer(BaseAudioProcessor):
         return indices
     
     def _generate_speech(self, text_indices: List[int], voice_settings: Dict[str, Any]) -> np.ndarray:
-        """Generate speech from text indices"""
-        try:
+        """Generate speech from text indices"""        try:
             # Convert to tensor
             input_tensor = torch.LongTensor(text_indices).unsqueeze(0).to(self.device)
             
@@ -984,8 +932,7 @@ class SpeechSynthesizer(BaseAudioProcessor):
     
     def _apply_voice_characteristics(self, audio: np.ndarray, 
                                    voice_settings: Dict[str, Any]) -> np.ndarray:
-        """Apply voice characteristics to synthesized audio"""
-        modified_audio = audio.copy()
+        """Apply voice characteristics to synthesized audio"""        modified_audio = audio.copy()
         
         # Apply pitch modification
         if 'pitch' in voice_settings:
@@ -1003,8 +950,7 @@ class SpeechSynthesizer(BaseAudioProcessor):
         return modified_audio
     
     def _pitch_shift(self, audio: np.ndarray, factor: float) -> np.ndarray:
-        """Simple pitch shifting"""
-        if SCIPY_AVAILABLE:
+        """Simple pitch shifting"""        if SCIPY_AVAILABLE:
             # Very basic pitch shifting using resampling
             from scipy import signal
             new_length = int(len(audio) / factor)
@@ -1012,16 +958,14 @@ class SpeechSynthesizer(BaseAudioProcessor):
         return audio
     
     def _time_stretch(self, audio: np.ndarray, factor: float) -> np.ndarray:
-        """Simple time stretching"""
-        if SCIPY_AVAILABLE:
+        """Simple time stretching"""        if SCIPY_AVAILABLE:
             from scipy import signal
             new_length = int(len(audio) / factor)
             return signal.resample(audio, new_length)
         return audio
     
     def _assess_synthesis_quality(self, audio: np.ndarray, text: str) -> float:
-        """Assess quality of synthesized speech"""
-        try:
+        """Assess quality of synthesized speech"""        try:
             # Simple quality metrics
             
             # Check for silence/low energy regions

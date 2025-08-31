@@ -1,5 +1,4 @@
-"""
-Multilingual Support Module - Entry Point Index
+"""Multilingual Support Module - Entry Point Index
 
 Simplified entry point for enterprise multilingual conversation system.
 Provides easy access to all multilingual capabilities for global content creators.
@@ -14,9 +13,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
@@ -102,8 +99,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MultilingualSystemConfiguration:
-    """Complete multilingual system configuration"""
-    # Database configuration
+    """Complete multilingual system configuration"""    # Database configuration
     database_url: str = "postgresql+asyncpg://user:pass@localhost/multilingual_db"
     
     # Redis configuration
@@ -147,8 +143,7 @@ class MultilingualSystemConfiguration:
 
 
 class MultilingualSystemBuilder:
-    """Builder pattern for creating complete multilingual system"""
-    
+    """Builder pattern for creating complete multilingual system"""    
     def __init__(self, config: Optional[MultilingualSystemConfiguration] = None):
         self.config = config or MultilingualSystemConfiguration()
         self._redis_client: Optional[aioredis.Redis] = None
@@ -161,8 +156,7 @@ class MultilingualSystemBuilder:
         self._orchestrator: Optional[MultilingualOrchestrator] = None
     
     async def with_redis(self, redis_client: Optional[aioredis.Redis] = None) -> 'MultilingualSystemBuilder':
-        """Configure Redis client"""
-        if redis_client:
+        """Configure Redis client"""        if redis_client:
             self._redis_client = redis_client
         else:
             self._redis_client = await aioredis.from_url(
@@ -174,8 +168,7 @@ class MultilingualSystemBuilder:
         return self
     
     async def with_database(self, db_session: Optional[AsyncSession] = None) -> 'MultilingualSystemBuilder':
-        """Configure database session"""
-        if db_session:
+        """Configure database session"""        if db_session:
             self._db_session = db_session
         else:
             # Create async engine and session
@@ -196,8 +189,7 @@ class MultilingualSystemBuilder:
         return self
     
     async def with_language_manager(self, language_manager: Optional[LanguageManager] = None) -> 'MultilingualSystemBuilder':
-        """Configure language manager"""
-        if language_manager:
+        """Configure language manager"""        if language_manager:
             self._language_manager = language_manager
         else:
             if not self._redis_client:
@@ -226,8 +218,7 @@ class MultilingualSystemBuilder:
         return self
     
     async def with_translation_engine(self, translation_engine: Optional[TranslationEngine] = None) -> 'MultilingualSystemBuilder':
-        """Configure translation engine"""
-        if translation_engine:
+        """Configure translation engine"""        if translation_engine:
             self._translation_engine = translation_engine
         else:
             if not self._redis_client:
@@ -266,8 +257,7 @@ class MultilingualSystemBuilder:
         return self
     
     async def with_cultural_adaptor(self, cultural_adaptor: Optional[CulturalAdaptor] = None) -> 'MultilingualSystemBuilder':
-        """Configure cultural adaptor"""
-        if cultural_adaptor:
+        """Configure cultural adaptor"""        if cultural_adaptor:
             self._cultural_adaptor = cultural_adaptor
         else:
             if not self._redis_client:
@@ -298,8 +288,7 @@ class MultilingualSystemBuilder:
         return self
     
     async def with_conversation_localizer(self, conversation_localizer: Optional[ConversationLocalizer] = None) -> 'MultilingualSystemBuilder':
-        """Configure conversation localizer"""
-        if conversation_localizer:
+        """Configure conversation localizer"""        if conversation_localizer:
             self._conversation_localizer = conversation_localizer
         else:
             if not self._translation_engine:
@@ -339,8 +328,7 @@ class MultilingualSystemBuilder:
         return self
     
     async def with_localization_processor(self, localization_processor: Optional[LocalizationProcessor] = None) -> 'MultilingualSystemBuilder':
-        """Configure localization processor"""
-        if localization_processor:
+        """Configure localization processor"""        if localization_processor:
             self._localization_processor = localization_processor
         else:
             if not self._redis_client:
@@ -375,8 +363,7 @@ class MultilingualSystemBuilder:
         return self
     
     async def build(self) -> MultilingualOrchestrator:
-        """Build complete multilingual orchestrator"""
-        # Ensure all components are configured
+        """Build complete multilingual orchestrator"""        # Ensure all components are configured
         if not self._language_manager:
             await self.with_language_manager()
         if not self._translation_engine:
@@ -407,16 +394,14 @@ class MultilingualSystemBuilder:
 
 
 class MultilingualSystemFactory:
-    """Factory for creating multilingual system with presets"""
-    
+    """Factory for creating multilingual system with presets"""    
     @staticmethod
     async def create_basic_system(
         database_url: str,
         redis_host: str = "localhost",
         redis_port: int = 6379
     ) -> MultilingualOrchestrator:
-        """Create basic multilingual system with minimal configuration"""
-        config = MultilingualSystemConfiguration(
+        """Create basic multilingual system with minimal configuration"""        config = MultilingualSystemConfiguration(
             database_url=database_url,
             redis_host=redis_host,
             redis_port=redis_port,
@@ -439,8 +424,7 @@ class MultilingualSystemFactory:
         deepl_api_key: Optional[str] = None,
         hofstede_api_key: Optional[str] = None
     ) -> MultilingualOrchestrator:
-        """Create enterprise-grade multilingual system with full configuration"""
-        config = MultilingualSystemConfiguration(
+        """Create enterprise-grade multilingual system with full configuration"""        config = MultilingualSystemConfiguration(
             database_url=database_url,
             redis_host=redis_host,
             redis_port=redis_port,
@@ -469,8 +453,7 @@ class MultilingualSystemFactory:
         redis_host: str = "localhost",
         redis_port: int = 6379
     ) -> MultilingualOrchestrator:
-        """Create development multilingual system for testing"""
-        config = MultilingualSystemConfiguration(
+        """Create development multilingual system for testing"""        config = MultilingualSystemConfiguration(
             database_url=database_url,
             redis_host=redis_host,
             redis_port=redis_port,
@@ -495,8 +478,7 @@ async def create_multilingual_system(
     system_type: str = "basic",
     **kwargs
 ) -> MultilingualOrchestrator:
-    """
-    Create multilingual system with specified type
+    """    Create multilingual system with specified type
     
     Args:
         system_type: "basic", "enterprise", or "development"
@@ -504,8 +486,7 @@ async def create_multilingual_system(
     
     Returns:
         Configured MultilingualOrchestrator instance
-    """
-    if system_type == "basic":
+    """    if system_type == "basic":
         return await MultilingualSystemFactory.create_basic_system(**kwargs)
     elif system_type == "enterprise":
         return await MultilingualSystemFactory.create_enterprise_system(**kwargs)
@@ -521,8 +502,7 @@ async def quick_translate(
     source_language: Optional[Union[str, SupportedLanguage]] = None,
     **system_kwargs
 ) -> str:
-    """
-    Quick translation function for simple use cases
+    """    Quick translation function for simple use cases
     
     Args:
         text: Text to translate
@@ -532,8 +512,7 @@ async def quick_translate(
     
     Returns:
         Translated text
-    """
-    # Create basic system
+    """    # Create basic system
     orchestrator = await create_multilingual_system("basic", **system_kwargs)
     
     # Convert language codes if needed
@@ -563,8 +542,7 @@ async def detect_language(
     text: str,
     **system_kwargs
 ) -> Tuple[SupportedLanguage, float]:
-    """
-    Quick language detection function
+    """    Quick language detection function
     
     Args:
         text: Text to analyze
@@ -572,8 +550,7 @@ async def detect_language(
     
     Returns:
         Tuple of (detected_language, confidence_score)
-    """
-    # Create basic system
+    """    # Create basic system
     orchestrator = await create_multilingual_system("basic", **system_kwargs)
     
     # Detect language

@@ -1,5 +1,4 @@
-"""
-⚡ Optimization Engine
+"""⚡ Optimization Engine
 ===================
 
 Advanced optimization system for content protection performance:
@@ -12,9 +11,7 @@ Advanced optimization system for content protection performance:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + ML Engineer + Performance Engineer
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import logging
+"""import logging
 import numpy as np
 import pandas as pd
 from typing import Dict, Any, List, Optional, Tuple
@@ -30,10 +27,8 @@ import json
 logger = logging.getLogger(__name__)
 
 class OptimizationEngine:
-    """
-    Enterprise optimization engine for content protection systems
-    """
-    
+    """    Enterprise optimization engine for content protection systems
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.optimization_history = []
@@ -65,8 +60,7 @@ class OptimizationEngine:
         logger.info("Optimization Engine initialized with multi-objective optimization")
     
     def _initialize_optimizers(self):
-        """Initialize optimization algorithms"""
-        try:
+        """Initialize optimization algorithms"""        try:
             # Gaussian Process for Bayesian optimization
             kernel = RBF(length_scale=1.0) + Matern(length_scale=1.0, nu=2.5)
             self.gp_optimizer = GaussianProcessRegressor(kernel=kernel, alpha=1e-6)
@@ -84,10 +78,8 @@ class OptimizationEngine:
     
     async def recommend_optimizations(self, content_data: Dict[str, Any], 
                                     risk_assessment: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Main optimization recommendation entry point
-        """
-        try:
+        """        Main optimization recommendation entry point
+        """        try:
             optimization_result = {
                 'content_id': content_data.get('id'),
                 'timestamp': datetime.utcnow().isoformat(),
@@ -136,8 +128,7 @@ class OptimizationEngine:
     
     async def _analyze_current_performance(self, content_data: Dict[str, Any], 
                                          risk_assessment: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze current system performance"""
-        try:
+        """Analyze current system performance"""        try:
             performance_metrics = {
                 'detection_metrics': await self._measure_detection_performance(content_data),
                 'response_metrics': await self._measure_response_performance(),
@@ -161,8 +152,7 @@ class OptimizationEngine:
             raise
     
     async def _generate_optimization_recommendations(self, current_performance: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate specific optimization recommendations"""
-        try:
+        """Generate specific optimization recommendations"""        try:
             recommendations = {
                 'parameter_tuning': [],
                 'algorithm_improvements': [],
@@ -199,8 +189,7 @@ class OptimizationEngine:
     
     async def _optimize_parameters(self, current_performance: Dict[str, Any], 
                                  risk_assessment: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize system parameters using multi-objective optimization"""
-        try:
+        """Optimize system parameters using multi-objective optimization"""        try:
             optimization_results = {}
             
             # Single-objective optimizations for each target
@@ -237,8 +226,7 @@ class OptimizationEngine:
     
     async def _optimize_resources(self, current_performance: Dict[str, Any], 
                                 content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize resource allocation and usage"""
-        try:
+        """Optimize resource allocation and usage"""        try:
             resource_optimizations = {
                 'cpu_optimization': await self._optimize_cpu_usage(current_performance),
                 'memory_optimization': await self._optimize_memory_usage(current_performance),
@@ -258,8 +246,7 @@ class OptimizationEngine:
             raise
     
     async def _perform_cost_analysis(self, optimization_result: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform cost-benefit analysis of optimizations"""
-        try:
+        """Perform cost-benefit analysis of optimizations"""        try:
             cost_analysis = {
                 'current_costs': await self._calculate_current_costs(optimization_result),
                 'optimization_costs': await self._calculate_optimization_costs(optimization_result),
@@ -288,8 +275,7 @@ class OptimizationEngine:
             raise
     
     def _prioritize_optimizations(self, optimization_result: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Prioritize optimization implementations based on impact and cost"""
-        try:
+        """Prioritize optimization implementations based on impact and cost"""        try:
             optimizations = []
             
             # Extract all optimization recommendations
@@ -330,8 +316,7 @@ class OptimizationEngine:
     
     def _evaluate_objective(self, trial, target_name: str, current_performance: Dict[str, Any], 
                           risk_assessment: Dict[str, Any]) -> float:
-        """Evaluate objective function for optimization"""
-        try:
+        """Evaluate objective function for optimization"""        try:
             # Suggest parameters
             params = {}
             for param_name, bounds in self.parameter_bounds.items():
@@ -354,8 +339,7 @@ class OptimizationEngine:
     
     def _simulate_performance(self, params: Dict[str, Any], current_performance: Dict[str, Any], 
                             risk_assessment: Dict[str, Any]) -> Dict[str, float]:
-        """Simulate system performance with given parameters"""
-        try:
+        """Simulate system performance with given parameters"""        try:
             # This is a simplified simulation - in practice would use more complex models
             simulated = {}
             
@@ -394,8 +378,7 @@ class OptimizationEngine:
     
     async def _multi_objective_optimization(self, current_performance: Dict[str, Any], 
                                           risk_assessment: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform multi-objective optimization using weighted objectives"""
-        try:
+        """Perform multi-objective optimization using weighted objectives"""        try:
             def multi_objective_function(params_array):
                 # Convert array to parameter dict
                 params = {}
@@ -456,8 +439,7 @@ class OptimizationEngine:
             raise
     
     async def update_model(self, feedback_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Update optimization models based on performance feedback"""
-        try:
+        """Update optimization models based on performance feedback"""        try:
             update_results = {
                 'timestamp': datetime.utcnow().isoformat(),
                 'samples_processed': len(feedback_data),
@@ -495,8 +477,7 @@ class OptimizationEngine:
     
     # Helper methods for specific optimization tasks
     async def _measure_detection_performance(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Measure detection performance metrics"""
-        # Placeholder implementation
+        """Measure detection performance metrics"""        # Placeholder implementation
         return {
             'detection_accuracy': 0.85,
             'detection_recall': 0.80,
@@ -505,8 +486,7 @@ class OptimizationEngine:
         }
     
     async def _measure_response_performance(self) -> Dict[str, Any]:
-        """Measure response time performance"""
-        # Placeholder implementation
+        """Measure response time performance"""        # Placeholder implementation
         return {
             'avg_response_time': 8.5,
             'p95_response_time': 15.0,
@@ -515,8 +495,7 @@ class OptimizationEngine:
         }
     
     async def _measure_resource_performance(self) -> Dict[str, Any]:
-        """Measure resource usage performance"""
-        # Placeholder implementation
+        """Measure resource usage performance"""        # Placeholder implementation
         return {
             'cpu_usage': 0.65,
             'memory_usage': 0.70,
@@ -525,8 +504,7 @@ class OptimizationEngine:
         }
     
     async def _measure_accuracy_performance(self, risk_assessment: Dict[str, Any]) -> Dict[str, Any]:
-        """Measure accuracy-related performance"""
-        # Placeholder implementation
+        """Measure accuracy-related performance"""        # Placeholder implementation
         return {
             'detection_accuracy': 0.88,
             'false_positive_rate': 0.08,
@@ -535,8 +513,7 @@ class OptimizationEngine:
         }
     
     async def _measure_cost_performance(self) -> Dict[str, Any]:
-        """Measure cost-related performance"""
-        # Placeholder implementation
+        """Measure cost-related performance"""        # Placeholder implementation
         return {
             'cost_per_detection': 0.05,
             'efficiency_score': 0.75,
@@ -544,8 +521,7 @@ class OptimizationEngine:
         }
     
     def _calculate_overall_performance_score(self, performance_metrics: Dict[str, Any]) -> float:
-        """Calculate overall performance score"""
-        scores = []
+        """Calculate overall performance score"""        scores = []
         
         # Extract key metrics and normalize
         detection_metrics = performance_metrics.get('detection_metrics', {})
@@ -574,8 +550,7 @@ class OptimizationEngine:
         return sum(scores)
     
     def _identify_performance_bottlenecks(self, performance_metrics: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Identify performance bottlenecks"""
-        bottlenecks = []
+        """Identify performance bottlenecks"""        bottlenecks = []
         
         # Check response time
         response_metrics = performance_metrics.get('response_metrics', {})
@@ -614,8 +589,7 @@ class OptimizationEngine:
     
     # Additional helper methods would be implemented here...
     def _calculate_priority_score(self, optimization: Dict[str, Any]) -> float:
-        """Calculate priority score for optimization"""
-        impact = optimization.get('impact_score', 0.5)
+        """Calculate priority score for optimization"""        impact = optimization.get('impact_score', 0.5)
         cost = optimization.get('implementation_cost', 0.5)
         complexity_weights = {'low': 1.0, 'medium': 0.7, 'high': 0.4}
         complexity_weight = complexity_weights.get(optimization.get('complexity', 'medium'), 0.7)
@@ -625,8 +599,7 @@ class OptimizationEngine:
         return priority_score
     
     async def _update_optimization_history(self, optimization_result: Dict[str, Any]):
-        """Update optimization history for learning"""
-        self.optimization_history.append({
+        """Update optimization history for learning"""        self.optimization_history.append({
             'timestamp': datetime.utcnow(),
             'optimization_result': optimization_result,
             'performance_before': optimization_result.get('current_performance'),

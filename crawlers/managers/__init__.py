@@ -36,8 +36,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel. Any unauthoriz
 reproduction, distribution, reverse engineering, or commercialization without explicit 
 written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in immediate legal action under German and international copyright law.
-"""
-from .content_discovery_manager import (
+"""from .content_discovery_manager import (
     ContentDiscoveryManager,
     DiscoveryTarget,
     DiscoveredContent,

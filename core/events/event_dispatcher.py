@@ -1,5 +1,4 @@
-"""
-IA-Influencer-Agent - Event Dispatcher System
+"""IA-Influencer-Agent - Event Dispatcher System
 Module: backend/core/events/event_dispatcher.py
 Architecture: Event Handler Orchestration and Routing
 Auteur: Fahed Mlaiel <mlaiel@live.de>
@@ -10,9 +9,7 @@ Auteur: Fahed Mlaiel <mlaiel@live.de>
 Description:
     Système de dispatch d'événements avec routage intelligent, gestion d'erreurs,
     retry automatique et orchestration des handlers pour la plateforme IA-Influencer-Agent.
-"""
-
-from typing import Any, Dict, List, Optional, Union, Callable, Type
+"""from typing import Any, Dict, List, Optional, Union, Callable, Type
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
@@ -28,15 +25,13 @@ logger = logging.getLogger(__name__)
 
 
 class HandlerType(Enum):
-    """Type de handler d'événement"""
-    SYNC = "sync"
+    """Type de handler d'événement"""    SYNC = "sync"
     ASYNC = "async"
     BACKGROUND = "background"
 
 
 class RetryPolicy(Enum):
-    """Politique de retry"""
-    NONE = "none"
+    """Politique de retry"""    NONE = "none"
     LINEAR = "linear"
     EXPONENTIAL = "exponential"
     FIXED = "fixed"
@@ -44,8 +39,7 @@ class RetryPolicy(Enum):
 
 @dataclass
 class HandlerConfig:
-    """Configuration d'un handler d'événement"""
-    handler_id: str
+    """Configuration d'un handler d'événement"""    handler_id: str
     event_types: List[str]
     handler_type: HandlerType = HandlerType.ASYNC
     priority: int = 100
@@ -59,10 +53,8 @@ class HandlerConfig:
 
 
 class EventHandler(ABC):
-    """
-    Classe de base pour les handlers d'événements
-    """
-    
+    """    Classe de base pour les handlers d'événements
+    """    
     def __init__(self, config: HandlerConfig):
         self.config = config
         self.stats = {
@@ -76,12 +68,10 @@ class EventHandler(ABC):
     
     @abstractmethod
     async def handle(self, event: Event) -> Any:
-        """Traite un événement"""
-        pass
+        """Traite un événement"""        pass
     
     def can_handle(self, event: Event) -> bool:
-        """Vérifie si ce handler peut traiter l'événement"""
-        if not self.config.enabled:
+        """Vérifie si ce handler peut traiter l'événement"""        if not self.config.enabled:
             return False
         
         # Vérification type d'événement
@@ -107,8 +97,7 @@ class EventHandler(ABC):
         return True
     
     async def execute(self, event: Event) -> Dict[str, Any]:
-        """Exécute le handler avec gestion d'erreurs et métriques"""
-        start_time = datetime.now(timezone.utc)
+        """Exécute le handler avec gestion d'erreurs et métriques"""        start_time = datetime.now(timezone.utc)
         result = {
             "handler_id": self.config.handler_id,
             "success": False,
@@ -161,16 +150,14 @@ class EventHandler(ABC):
 
 
 class FunctionHandler(EventHandler):
-    """Handler basé sur une fonction"""
-    
+    """Handler basé sur une fonction"""    
     def __init__(self, config: HandlerConfig, func: Callable):
         super().__init__(config)
         self.func = func
         self.is_async = asyncio.iscoroutinefunction(func)
     
     async def handle(self, event: Event) -> Any:
-        """Exécute la fonction handler"""
-        if self.is_async:
+        """Exécute la fonction handler"""        if self.is_async:
             return await self.func(event)
         else:
             # Exécution synchrone dans thread pool
@@ -179,15 +166,13 @@ class FunctionHandler(EventHandler):
 
 
 class ClassHandler(EventHandler):
-    """Handler basé sur une classe avec méthode handle"""
-    
+    """Handler basé sur une classe avec méthode handle"""    
     def __init__(self, config: HandlerConfig, handler_class: Type, *args, **kwargs):
         super().__init__(config)
         self.handler_instance = handler_class(*args, **kwargs)
     
     async def handle(self, event: Event) -> Any:
-        """Délègue à l'instance de la classe"""
-        handle_method = getattr(self.handler_instance, 'handle', None)
+        """Délègue à l'instance de la classe"""        handle_method = getattr(self.handler_instance, 'handle', None)
         if not handle_method:
             raise ValueError(f"Handler class must have a 'handle' method")
         
@@ -199,10 +184,8 @@ class ClassHandler(EventHandler):
 
 
 class EventDispatcher:
-    """
-    Système central de dispatch d'événements
-    """
-    
+    """    Système central de dispatch d'événements
+    """    
     def __init__(
         self,
         name: str = "main_dispatcher",
@@ -236,8 +219,7 @@ class EventDispatcher:
         handler: EventHandler,
         priority: int = 100
     ) -> str:
-        """
-        Enregistre un handler d'événement
+        """        Enregistre un handler d'événement
         
         Args:
             handler: Instance du handler
@@ -245,8 +227,7 @@ class EventDispatcher:
             
         Returns:
             ID du handler enregistré
-        """
-        handler_id = handler.config.handler_id
+        """        handler_id = handler.config.handler_id
         
         if handler_id in self._handlers:
             logger.warning("Handler %s already registered, replacing", handler_id)
@@ -266,8 +247,7 @@ class EventDispatcher:
         priority: int = 100,
         **config_kwargs
     ) -> str:
-        """
-        Enregistre une fonction comme handler
+        """        Enregistre une fonction comme handler
         
         Args:
             func: Fonction à enregistrer
@@ -278,8 +258,7 @@ class EventDispatcher:
             
         Returns:
             ID du handler enregistré
-        """
-        if handler_id is None:
+        """        if handler_id is None:
             handler_id = f"func_{func.__name__}_{id(func)}"
         
         config = HandlerConfig(
@@ -301,8 +280,7 @@ class EventDispatcher:
         *args,
         **kwargs
     ) -> str:
-        """
-        Enregistre une classe comme handler
+        """        Enregistre une classe comme handler
         
         Args:
             handler_class: Classe handler
@@ -313,8 +291,7 @@ class EventDispatcher:
             
         Returns:
             ID du handler enregistré
-        """
-        if handler_id is None:
+        """        if handler_id is None:
             handler_id = f"class_{handler_class.__name__}_{id(handler_class)}"
         
         config_kwargs = kwargs.pop('config', {})
@@ -329,16 +306,14 @@ class EventDispatcher:
         return self.register_handler(handler, priority)
     
     def unregister_handler(self, handler_id: str) -> bool:
-        """
-        Désenregistre un handler
+        """        Désenregistre un handler
         
         Args:
             handler_id: ID du handler à supprimer
             
         Returns:
             True si supprimé avec succès
-        """
-        if handler_id in self._handlers:
+        """        if handler_id in self._handlers:
             del self._handlers[handler_id]
             del self._handler_priorities[handler_id]
             self._stats["handlers_registered"] -= 1
@@ -349,16 +324,14 @@ class EventDispatcher:
         return False
     
     async def dispatch(self, event: Event) -> Dict[str, Any]:
-        """
-        Dispatch un événement vers tous les handlers compatibles
+        """        Dispatch un événement vers tous les handlers compatibles
         
         Args:
             event: Événement à dispatcher
             
         Returns:
             Résultats du dispatch avec détails par handler
-        """
-        start_time = datetime.now(timezone.utc)
+        """        start_time = datetime.now(timezone.utc)
         self._stats["events_dispatched"] += 1
         
         # Recherche des handlers compatibles
@@ -440,8 +413,7 @@ class EventDispatcher:
         return dispatch_result
     
     def _get_compatible_handlers(self, event: Event) -> List[EventHandler]:
-        """Trouve les handlers compatibles avec un événement"""
-        compatible = []
+        """Trouve les handlers compatibles avec un événement"""        compatible = []
         
         for handler in self._handlers.values():
             if handler.can_handle(event):
@@ -454,8 +426,7 @@ class EventDispatcher:
         handler: EventHandler, 
         event: Event
     ) -> Dict[str, Any]:
-        """Exécute un handler avec retry selon sa politique"""
-        last_error = None
+        """Exécute un handler avec retry selon sa politique"""        last_error = None
         
         for attempt in range(handler.config.max_retries + 1):
             try:
@@ -500,8 +471,7 @@ class EventDispatcher:
         attempt: int, 
         base_delay: float
     ) -> float:
-        """Calcule le délai de retry selon la politique"""
-        if policy == RetryPolicy.NONE:
+        """Calcule le délai de retry selon la politique"""        if policy == RetryPolicy.NONE:
             return 0.0
         elif policy == RetryPolicy.FIXED:
             return base_delay
@@ -513,8 +483,7 @@ class EventDispatcher:
             return base_delay
     
     def get_handlers_info(self) -> List[Dict[str, Any]]:
-        """Retourne les informations sur tous les handlers"""
-        handlers_info = []
+        """Retourne les informations sur tous les handlers"""        handlers_info = []
         
         for handler_id, handler in self._handlers.items():
             info = {
@@ -535,8 +504,7 @@ class EventDispatcher:
         return handlers_info
     
     def get_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques du dispatcher"""
-        return {
+        """Retourne les statistiques du dispatcher"""        return {
             "name": self.name,
             "stats": self._stats.copy(),
             "handlers_count": len(self._handlers),

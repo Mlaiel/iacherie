@@ -1,14 +1,11 @@
 #!/usr/bin/env python3
-"""
-Quality Requirements Validator for Ainflue Platform
+"""Quality Requirements Validator for Ainflue Platform
 Validates the following requirements:
 - Test Coverage: >85% pour code critique
 - Security: Zero vulnerabilités critiques/hautes  
 - Documentation: 100% APIs documentées
 - Monitoring: 50+ métriques métier
-"""
-
-import json
+"""import json
 import os
 import subprocess
 import sys
@@ -20,8 +17,7 @@ from dataclasses import dataclass
 
 @dataclass
 class QualityResult:
-    """Result of a quality check"""
-    requirement: str
+    """Result of a quality check"""    requirement: str
     passed: bool
     score: float
     message: str
@@ -29,15 +25,13 @@ class QualityResult:
 
 
 class QualityRequirementsValidator:
-    """Validates quality requirements for production readiness"""
-    
+    """Validates quality requirements for production readiness"""    
     def __init__(self, repo_path: str = "."):
         self.repo_path = Path(repo_path)
         self.results: List[QualityResult] = []
     
     def validate_test_coverage(self) -> QualityResult:
-        """Validate test coverage >85% for critical code"""
-        try:
+        """Validate test coverage >85% for critical code"""        try:
             # Count critical code files
             critical_paths = [
                 "api/",
@@ -153,8 +147,7 @@ class QualityRequirementsValidator:
             )
     
     def validate_security(self) -> QualityResult:
-        """Validate zero critical/high vulnerabilities"""
-        try:
+        """Validate zero critical/high vulnerabilities"""        try:
             vulnerabilities = {
                 "critical": 0,
                 "high": 0,
@@ -244,8 +237,7 @@ class QualityRequirementsValidator:
             )
     
     def validate_api_documentation(self) -> QualityResult:
-        """Validate 100% API documentation"""
-        try:
+        """Validate 100% API documentation"""        try:
             # Find API endpoints and documentation more comprehensively
             api_files = []
             if (self.repo_path / "api").exists():
@@ -386,8 +378,7 @@ class QualityRequirementsValidator:
             )
     
     def validate_monitoring_metrics(self) -> QualityResult:
-        """Validate 50+ business metrics"""
-        try:
+        """Validate 50+ business metrics"""        try:
             metrics_found = []
             
             # Search for metrics in monitoring and config files
@@ -508,8 +499,7 @@ class QualityRequirementsValidator:
             )
     
     def run_all_validations(self) -> Dict[str, Any]:
-        """Run all quality validations"""
-        print("🔍 Running Quality Requirements Validation...")
+        """Run all quality validations"""        print("🔍 Running Quality Requirements Validation...")
         print("=" * 60)
         
         validations = [

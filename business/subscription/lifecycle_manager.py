@@ -1,5 +1,4 @@
-"""
-Lifecycle Manager
+"""Lifecycle Manager
 
 Subscription lifecycle management orchestrator handling state transitions,
 automated workflows, and business rule enforcement throughout subscription lifecycle.
@@ -8,9 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use strictly prohibited.
-"""
-
-from datetime import datetime, timedelta
+"""from datetime import datetime, timedelta
 from decimal import Decimal
 from typing import Optional, Dict, Any, List
 import logging
@@ -37,8 +34,7 @@ logger = get_logger(__name__)
 
 
 class LifecycleEvent(Enum):
-    """Subscription lifecycle events."""
-    SUBSCRIPTION_CREATED = "subscription_created"
+    """Subscription lifecycle events."""    SUBSCRIPTION_CREATED = "subscription_created"
     TRIAL_STARTED = "trial_started"
     TRIAL_ENDING_SOON = "trial_ending_soon"
     TRIAL_CONVERTED = "trial_converted"
@@ -55,8 +51,7 @@ class LifecycleEvent(Enum):
 
 
 class LifecycleManager:
-    """
-    Comprehensive subscription lifecycle management system.
+    """    Comprehensive subscription lifecycle management system.
     
     Manages:
     - Subscription state transitions and validation
@@ -68,11 +63,9 @@ class LifecycleManager:
     - Automated notifications and communications
     - Business rule enforcement and validation
     - Analytics and lifecycle reporting
-    """
-    
+    """    
     def __init__(self):
-        """Initialize lifecycle manager."""
-        self.logger = get_logger(__name__)
+        """Initialize lifecycle manager."""        self.logger = get_logger(__name__)
         self.subscription_service = SubscriptionService()
         self.billing_engine = BillingEngine()
         self.payment_processor = PaymentProcessor()
@@ -92,8 +85,7 @@ class LifecycleManager:
         action: str,
         **kwargs
     ) -> Dict[str, Any]:
-        """
-        Handle subscription lifecycle changes with validation and automation.
+        """        Handle subscription lifecycle changes with validation and automation.
         
         Args:
             user_id: User ID
@@ -102,8 +94,7 @@ class LifecycleManager:
             
         Returns:
             Change result with updated subscription information
-        """
-        try:
+        """        try:
             # Validate action
             if action not in self._get_valid_actions():
                 raise ValidationError(f"Invalid lifecycle action: {action}")
@@ -138,8 +129,7 @@ class LifecycleManager:
         task_types: Optional[List[str]] = None,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Process scheduled lifecycle tasks.
+        """        Process scheduled lifecycle tasks.
         
         Args:
             task_types: Optional list of task types to process
@@ -147,8 +137,7 @@ class LifecycleManager:
             
         Returns:
             Processing results
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         all_task_types = [
@@ -196,8 +185,7 @@ class LifecycleManager:
         end_date: datetime,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Get lifecycle analytics for specified period.
+        """        Get lifecycle analytics for specified period.
         
         Args:
             start_date: Analysis start date
@@ -206,8 +194,7 @@ class LifecycleManager:
             
         Returns:
             Lifecycle analytics data
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         try:
@@ -264,8 +251,7 @@ class LifecycleManager:
         user_id: int,
         **kwargs
     ) -> Dict[str, Any]:
-        """Handle new subscription creation."""
-        try:
+        """Handle new subscription creation."""        try:
             # Create subscription through service
             subscription = await self.subscription_service.subscribe_user_to_plan(
                 user_id=user_id,
@@ -302,8 +288,7 @@ class LifecycleManager:
         user_id: int,
         **kwargs
     ) -> Dict[str, Any]:
-        """Handle subscription upgrade."""
-        try:
+        """Handle subscription upgrade."""        try:
             subscription = await self.subscription_service.upgrade_subscription(
                 user_id=user_id,
                 new_plan_id=kwargs["plan_id"],
@@ -336,8 +321,7 @@ class LifecycleManager:
         user_id: int,
         **kwargs
     ) -> Dict[str, Any]:
-        """Handle subscription downgrade."""
-        try:
+        """Handle subscription downgrade."""        try:
             subscription = await self.subscription_service.downgrade_subscription(
                 user_id=user_id,
                 new_plan_id=kwargs["plan_id"],
@@ -370,8 +354,7 @@ class LifecycleManager:
         user_id: int,
         **kwargs
     ) -> Dict[str, Any]:
-        """Handle subscription cancellation."""
-        try:
+        """Handle subscription cancellation."""        try:
             subscription = await self.subscription_service.cancel_subscription(
                 user_id=user_id,
                 cancellation_reason=kwargs.get("reason"),
@@ -408,8 +391,7 @@ class LifecycleManager:
         user_id: int,
         **kwargs
     ) -> Dict[str, Any]:
-        """Handle subscription reactivation."""
-        try:
+        """Handle subscription reactivation."""        try:
             subscription = await self.subscription_service.reactivate_subscription(
                 user_id=user_id,
                 payment_method_id=kwargs["payment_method_id"]
@@ -437,8 +419,7 @@ class LifecycleManager:
         user_id: int,
         **kwargs
     ) -> Dict[str, Any]:
-        """Handle trial to paid conversion."""
-        try:
+        """Handle trial to paid conversion."""        try:
             db = get_db_session()
             
             # Get trial subscription
@@ -482,8 +463,7 @@ class LifecycleManager:
     # Private task processors
     
     async def _process_trial_warnings(self, db: Session) -> Dict[str, Any]:
-        """Process trial ending warnings."""
-        processed = 0
+        """Process trial ending warnings."""        processed = 0
         
         for warning_days in self.trial_warning_days:
             warning_date = datetime.utcnow() + timedelta(days=warning_days)
@@ -509,8 +489,7 @@ class LifecycleManager:
         return {"trial_warnings_sent": processed}
     
     async def _process_trial_expirations(self, db: Session) -> Dict[str, Any]:
-        """Process expired trials."""
-        current_date = datetime.utcnow()
+        """Process expired trials."""        current_date = datetime.utcnow()
         
         expired_trials = db.query(UserSubscription).filter(
             UserSubscription.status == SubscriptionStatus.TRIAL.value,
@@ -536,30 +515,25 @@ class LifecycleManager:
         return {"expired_trials_processed": processed}
     
     async def _process_payment_retries(self, db: Session) -> Dict[str, Any]:
-        """Process payment retries for failed payments."""
-        # Implementation would handle payment retry logic
+        """Process payment retries for failed payments."""        # Implementation would handle payment retry logic
         return {"payment_retries_processed": 0}
     
     async def _process_subscription_renewals(self, db: Session) -> Dict[str, Any]:
-        """Process subscription renewals."""
-        # Implementation would handle automatic renewals
+        """Process subscription renewals."""        # Implementation would handle automatic renewals
         return {"renewals_processed": 0}
     
     async def _process_suspensions(self, db: Session) -> Dict[str, Any]:
-        """Process subscription suspensions for failed payments."""
-        # Implementation would handle suspension logic
+        """Process subscription suspensions for failed payments."""        # Implementation would handle suspension logic
         return {"suspensions_processed": 0}
     
     async def _process_expirations(self, db: Session) -> Dict[str, Any]:
-        """Process subscription expirations."""
-        # Implementation would handle expiration cleanup
+        """Process subscription expirations."""        # Implementation would handle expiration cleanup
         return {"expirations_processed": 0}
     
     # Private helper methods
     
     def _get_valid_actions(self) -> List[str]:
-        """Get list of valid lifecycle actions."""
-        return [
+        """Get list of valid lifecycle actions."""        return [
             "subscribe",
             "upgrade", 
             "downgrade",
@@ -574,8 +548,7 @@ class LifecycleManager:
         event: LifecycleEvent,
         data: Dict[str, Any]
     ) -> None:
-        """Trigger lifecycle event with notifications and analytics."""
-        event_data = {
+        """Trigger lifecycle event with notifications and analytics."""        event_data = {
             "user_id": user_id,
             "event_type": event.value,
             "timestamp": datetime.utcnow().isoformat(),
@@ -594,8 +567,7 @@ class LifecycleManager:
         event: LifecycleEvent,
         data: Dict[str, Any]
     ) -> None:
-        """Send appropriate notification based on lifecycle event."""
-        notification_templates = {
+        """Send appropriate notification based on lifecycle event."""        notification_templates = {
             LifecycleEvent.TRIAL_STARTED: "trial_welcome",
             LifecycleEvent.TRIAL_ENDING_SOON: "trial_ending_reminder",
             LifecycleEvent.TRIAL_CONVERTED: "subscription_welcome",
@@ -621,8 +593,7 @@ class LifecycleManager:
         action: str,
         result: Dict[str, Any]
     ) -> None:
-        """Trigger post-change workflows and automation."""
-        # This would handle post-change automation like:
+        """Trigger post-change workflows and automation."""        # This would handle post-change automation like:
         # - Updating user permissions
         # - Triggering integrations
         # - Starting onboarding flows
@@ -634,8 +605,7 @@ class LifecycleManager:
         user_id: int,
         subscription: UserSubscription
     ) -> None:
-        """Schedule cancellation survey."""
-        # Implementation would schedule a cancellation survey
+        """Schedule cancellation survey."""        # Implementation would schedule a cancellation survey
         # to understand why the user cancelled
         pass
 

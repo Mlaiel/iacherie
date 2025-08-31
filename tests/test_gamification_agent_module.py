@@ -1,30 +1,24 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive test suite for Gamification Agent Module.
+"""Comprehensive test suite for Gamification Agent Module.
 
 Tests all gamification components including challenge generation, reward optimization,
 engagement prediction, social competition, badge generation, and progression analysis.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import unittest
+"""import unittest
 import asyncio
 from unittest.mock import Mock, AsyncMock, patch
 from datetime import datetime, timezone, timedelta
@@ -33,11 +27,8 @@ import json
 
 
 class TestGamificationAgentModule(unittest.TestCase):
-    """Comprehensive test suite for Gamification Agent Module"""
-
-    def setUp(self):
-        """Set up test fixtures"""
-        self.sample_user_data = {
+    """Comprehensive test suite for Gamification Agent Module"""    def setUp(self):
+        """Set up test fixtures"""        self.sample_user_data = {
             "user_id": "test_user_123",
             "level": 5,
             "total_content_uploads": 25,
@@ -51,8 +42,7 @@ class TestGamificationAgentModule(unittest.TestCase):
         }
 
     def test_challenge_generation_structure(self):
-        """Test challenge generation data structures"""
-        challenge_template = {
+        """Test challenge generation data structures"""        challenge_template = {
             "template_id": "daily_upload",
             "title": "Daily Creator",
             "description": "Upload 1 piece of content today",
@@ -76,8 +66,7 @@ class TestGamificationAgentModule(unittest.TestCase):
         self.assertIsInstance(challenge_template["duration_hours"], int)
 
     def test_reward_optimization_calculations(self):
-        """Test reward optimization calculation logic"""
-        base_reward = 100
+        """Test reward optimization calculation logic"""        base_reward = 100
         quality_multiplier = 1.5
         engagement_multiplier = 1.2
         consistency_bonus = 25
@@ -90,8 +79,7 @@ class TestGamificationAgentModule(unittest.TestCase):
         self.assertEqual(optimized_reward, 205)
 
     def test_engagement_prediction_scoring(self):
-        """Test engagement prediction scoring system"""
-        user_metrics = {
+        """Test engagement prediction scoring system"""        user_metrics = {
             "content_frequency": 80,      # 80%
             "quality_consistency": 85,    # 85%
             "social_interaction": 75,     # 75%
@@ -122,8 +110,7 @@ class TestGamificationAgentModule(unittest.TestCase):
         self.assertEqual(engagement_score, 70.0)  # Expected: 70.0%
 
     def test_badge_rarity_system(self):
-        """Test badge rarity distribution system"""
-        badge_rarities = {
+        """Test badge rarity distribution system"""        badge_rarities = {
             "common": 50,      # 50%
             "uncommon": 30,    # 30%
             "rare": 15,        # 15%
@@ -148,8 +135,7 @@ class TestGamificationAgentModule(unittest.TestCase):
         self.assertGreater(rarity_points["epic"], rarity_points["rare"])
 
     def test_progression_stage_determination(self):
-        """Test progression stage determination logic"""
-        stage_thresholds = {
+        """Test progression stage determination logic"""        stage_thresholds = {
             "newcomer": {"min_uploads": 0, "max_uploads": 10, "min_level": 1, "max_level": 3},
             "developing": {"min_uploads": 10, "max_uploads": 50, "min_level": 3, "max_level": 6},
             "competent": {"min_uploads": 50, "max_uploads": 150, "min_level": 6, "max_level": 10},
@@ -182,8 +168,7 @@ class TestGamificationAgentModule(unittest.TestCase):
                            f"Failed for uploads={uploads}, level={level}")
 
     def test_social_competition_matching(self):
-        """Test social competition matching algorithm"""
-        user_profile = {
+        """Test social competition matching algorithm"""        user_profile = {
             "skill_level": 7,
             "collaboration_preference": 0.8,
             "content_types": ["video", "audio"],
@@ -244,8 +229,7 @@ class TestGamificationAgentModule(unittest.TestCase):
         self.assertEqual(best_match["competition_id"], "collab_tournament")
 
     def test_milestone_achievement_tracking(self):
-        """Test milestone achievement tracking system"""
-        milestones = {
+        """Test milestone achievement tracking system"""        milestones = {
             "content_milestones": [1, 5, 10, 25, 50, 100],
             "collaboration_milestones": [1, 3, 5, 10, 20],
             "follower_milestones": [100, 500, 1000, 5000, 10000]
@@ -292,8 +276,7 @@ class TestGamificationAgentModule(unittest.TestCase):
         self.assertGreater(content_progress["progress_percentage"], 0)
 
     def test_reward_tier_calculation(self):
-        """Test reward tier calculation based on optimization"""
-        base_amounts = [50, 100, 200, 500]
+        """Test reward tier calculation based on optimization"""        base_amounts = [50, 100, 200, 500]
         optimized_amounts = [60, 150, 300, 1200]
         
         expected_tiers = ["silver", "platinum", "platinum", "diamond"]
@@ -318,8 +301,7 @@ class TestGamificationAgentModule(unittest.TestCase):
                            f"Failed for base={base}, optimized={optimized}")
 
     def test_engagement_level_classification(self):
-        """Test engagement level classification"""
-        engagement_thresholds = {
+        """Test engagement level classification"""        engagement_thresholds = {
             "dormant": (0, 20),
             "low": (20, 40),
             "moderate": (40, 65),
@@ -341,8 +323,7 @@ class TestGamificationAgentModule(unittest.TestCase):
             self.assertEqual(actual, expected, f"Failed for score={score}")
 
     def test_gamification_system_integration(self):
-        """Test integration between gamification components"""
-        # Test data flow: User Activity -> Challenge -> Reward -> Badge -> Progression
+        """Test integration between gamification components"""        # Test data flow: User Activity -> Challenge -> Reward -> Badge -> Progression
         
         user_activity = {
             "activity_type": "content_upload",
@@ -391,8 +372,7 @@ class TestGamificationAgentModule(unittest.TestCase):
         self.assertEqual(progression_update["new_level"], 6)
 
     def test_gamification_analytics_calculations(self):
-        """Test gamification analytics and metrics calculations"""
-        system_metrics = {
+        """Test gamification analytics and metrics calculations"""        system_metrics = {
             "total_users_processed": 1500,
             "total_challenges_generated": 5000,
             "total_rewards_distributed": 12000,
@@ -428,11 +408,8 @@ class TestGamificationAgentModule(unittest.TestCase):
 
 
 class TestGamificationPerformance(unittest.TestCase):
-    """Performance tests for gamification system"""
-
-    def test_large_user_base_simulation(self):
-        """Test system performance with large user base"""
-        num_users = 10000
+    """Performance tests for gamification system"""    def test_large_user_base_simulation(self):
+        """Test system performance with large user base"""        num_users = 10000
         challenges_per_user = 3
         
         # Simulate challenge generation load
@@ -449,8 +426,7 @@ class TestGamificationPerformance(unittest.TestCase):
                        f"Processing {total_challenges} challenges would take {total_processing_time}s")
 
     def test_concurrent_user_handling(self):
-        """Test concurrent user processing capabilities"""
-        concurrent_users = 1000
+        """Test concurrent user processing capabilities"""        concurrent_users = 1000
         operations_per_user = 5
         
         total_operations = concurrent_users * operations_per_user

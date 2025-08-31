@@ -1,27 +1,21 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Test suite for Gamification System module.
+"""Test suite for Gamification System module.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import unittest
+"""import unittest
 from unittest.mock import Mock, AsyncMock, patch
 import asyncio
 from datetime import datetime, timedelta
@@ -30,11 +24,8 @@ import json
 
 
 class TestGamificationSystem(unittest.TestCase):
-    """Test suite for GamificationSystem class"""
-
-    def setUp(self):
-        """Set up test fixtures"""
-        self.gamification = None  # Will be mocked
+    """Test suite for GamificationSystem class"""    def setUp(self):
+        """Set up test fixtures"""        self.gamification = None  # Will be mocked
         self.sample_user_profile = {
             "user_id": "user_123",
             "level": 5,
@@ -47,8 +38,7 @@ class TestGamificationSystem(unittest.TestCase):
         }
 
     def test_user_gamification_profile_structure(self):
-        """Test user gamification profile data structure"""
-        profile = {
+        """Test user gamification profile data structure"""        profile = {
             "user_id": "user_123",
             "level": 1,
             "experience_points": 0,
@@ -72,8 +62,7 @@ class TestGamificationSystem(unittest.TestCase):
         self.assertIsInstance(profile["badges"], list)
 
     def test_experience_points_calculation(self):
-        """Test experience points calculation for different actions"""
-        action_points = {
+        """Test experience points calculation for different actions"""        action_points = {
             "content_upload": 50,
             "collaboration_complete": 100,
             "violation_resolved": 75,
@@ -104,8 +93,7 @@ class TestGamificationSystem(unittest.TestCase):
         self.assertEqual(total_points, 380)
 
     def test_level_progression_system(self):
-        """Test level progression based on experience points"""
-        level_thresholds = {
+        """Test level progression based on experience points"""        level_thresholds = {
             1: 0,
             2: 100,
             3: 300,
@@ -133,8 +121,7 @@ class TestGamificationSystem(unittest.TestCase):
             self.assertEqual(user_level, expected_levels[i])
 
     def test_achievement_unlock_system(self):
-        """Test achievement unlock system"""
-        achievements_config = {
+        """Test achievement unlock system"""        achievements_config = {
             "first_upload": {
                 "condition": "content_uploads >= 1",
                 "title": "First Steps",
@@ -189,8 +176,7 @@ class TestGamificationSystem(unittest.TestCase):
         self.assertEqual(set(new_achievements), set(expected_achievements))
 
     def test_badge_earning_system(self):
-        """Test badge earning system"""
-        badge_criteria = {
+        """Test badge earning system"""        badge_criteria = {
             "community_leader": {
                 "type": "engagement",
                 "requirements": {
@@ -259,8 +245,7 @@ class TestGamificationSystem(unittest.TestCase):
         self.assertEqual(set(earned_badges), set(expected_badges))
 
     def test_daily_streak_tracking(self):
-        """Test daily activity streak tracking"""
-        activity_log = [
+        """Test daily activity streak tracking"""        activity_log = [
             {"date": "2025-01-01", "active": True},
             {"date": "2025-01-02", "active": True},
             {"date": "2025-01-03", "active": False},  # Missed day
@@ -303,8 +288,7 @@ class TestGamificationSystem(unittest.TestCase):
         self.assertEqual(streak_bonus_multiplier, 1.2)  # 4-day streak gets 1.2x bonus
 
     def test_leaderboard_ranking_system(self):
-        """Test leaderboard ranking system"""
-        users = [
+        """Test leaderboard ranking system"""        users = [
             {"user_id": "user_1", "level": 8, "experience_points": 5500, "collaborations": 12},
             {"user_id": "user_2", "level": 6, "experience_points": 2800, "collaborations": 8},
             {"user_id": "user_3", "level": 9, "experience_points": 7200, "collaborations": 15},
@@ -334,8 +318,7 @@ class TestGamificationSystem(unittest.TestCase):
         self.assertEqual(collab_leaderboard[1]["user_id"], "user_1")  # 12 collaborations
 
     def test_seasonal_challenge_system(self):
-        """Test seasonal challenge system"""
-        current_season = {
+        """Test seasonal challenge system"""        current_season = {
             "id": "winter_2025",
             "name": "Winter Creator Challenge",
             "start_date": datetime(2025, 1, 1),
@@ -397,8 +380,7 @@ class TestGamificationSystem(unittest.TestCase):
         self.assertEqual(earned_badges, ["winter_collaborator"])
 
     def test_quest_system(self):
-        """Test quest/mission system"""
-        available_quests = [
+        """Test quest/mission system"""        available_quests = [
             {
                 "id": "daily_creator",
                 "type": "daily",

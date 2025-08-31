@@ -1,14 +1,11 @@
-"""
-Distributed Cache Coordinator - Multi-Instance Cache Coordination
+"""Distributed Cache Coordinator - Multi-Instance Cache Coordination
 
 Advanced coordination system for distributed cache instances providing
 consistency, synchronization, and intelligent load distribution across nodes.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import time
@@ -24,8 +21,7 @@ import redis.asyncio as aioredis
 logger = logging.getLogger(__name__)
 
 class NodeStatus(Enum):
-    """Cache node status states"""
-    ACTIVE = "active"
+    """Cache node status states"""    ACTIVE = "active"
     STANDBY = "standby"
     MAINTENANCE = "maintenance"
     FAILED = "failed"
@@ -33,8 +29,7 @@ class NodeStatus(Enum):
     LEAVING = "leaving"
 
 class CoordinationEvent(Enum):
-    """Types of coordination events"""
-    NODE_JOIN = "node_join"
+    """Types of coordination events"""    NODE_JOIN = "node_join"
     NODE_LEAVE = "node_leave"
     CACHE_UPDATE = "cache_update"
     CACHE_DELETE = "cache_delete"
@@ -44,8 +39,7 @@ class CoordinationEvent(Enum):
 
 @dataclass
 class CacheNode:
-    """Distributed cache node information"""
-    node_id: str
+    """Distributed cache node information"""    node_id: str
     hostname: str
     port: int
     status: NodeStatus = NodeStatus.JOINING
@@ -60,14 +54,12 @@ class CacheNode:
 
 @dataclass
 class ConsistencyHash:
-    """Consistent hashing for key distribution"""
-    ring: Dict[int, str] = field(default_factory=dict)
+    """Consistent hashing for key distribution"""    ring: Dict[int, str] = field(default_factory=dict)
     nodes: Dict[str, CacheNode] = field(default_factory=dict)
     virtual_nodes: int = 150
     
     def add_node(self, node: CacheNode):
-        """Add node to consistent hash ring"""
-        self.nodes[node.node_id] = node
+        """Add node to consistent hash ring"""        self.nodes[node.node_id] = node
         
         for i in range(self.virtual_nodes):
             virtual_key = f"{node.node_id}:{i}"
@@ -75,8 +67,7 @@ class ConsistencyHash:
             self.ring[hash_value] = node.node_id
     
     def remove_node(self, node_id: str):
-        """Remove node from hash ring"""
-        if node_id not in self.nodes:
+        """Remove node from hash ring"""        if node_id not in self.nodes:
             return
         
         # Remove virtual nodes
@@ -91,8 +82,7 @@ class ConsistencyHash:
         del self.nodes[node_id]
     
     def get_node_for_key(self, key: str) -> Optional[str]:
-        """Get responsible node for cache key"""
-        if not self.ring:
+        """Get responsible node for cache key"""        if not self.ring:
             return None
         
         key_hash = self._hash_key(key)
@@ -108,8 +98,7 @@ class ConsistencyHash:
         return self.ring[sorted_hashes[0]]
     
     def get_replica_nodes(self, key: str, replica_count: int = 2) -> List[str]:
-        """Get replica nodes for key"""
-        nodes = []
+        """Get replica nodes for key"""        nodes = []
         key_hash = self._hash_key(key)
         sorted_hashes = sorted(self.ring.keys())
         
@@ -136,13 +125,11 @@ class ConsistencyHash:
         return nodes
     
     def _hash_key(self, key: str) -> int:
-        """Hash key to ring position"""
-        return int(hashlib.md5(key.encode()).hexdigest(), 16)
+        """Hash key to ring position"""        return int(hashlib.md5(key.encode()).hexdigest(), 16)
 
 @dataclass
 class CoordinationMessage:
-    """Message for inter-node coordination"""
-    message_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Message for inter-node coordination"""    message_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     event_type: CoordinationEvent = CoordinationEvent.HEALTH_CHECK
     source_node: str = ""
     target_nodes: List[str] = field(default_factory=list)  # Empty = broadcast
@@ -152,15 +139,13 @@ class CoordinationMessage:
     correlation_id: Optional[str] = None
 
 class DistributedCacheCoordinator:
-    """
-    Advanced distributed cache coordination system providing:
+    """    Advanced distributed cache coordination system providing:
     - Node discovery and health monitoring
     - Consistent hashing for key distribution
     - Cache coherency and synchronization
     - Load balancing and failover handling
     - Conflict resolution and data consistency
-    """
-    
+    """    
     def __init__(
         self,
         node_id: str,
@@ -201,8 +186,7 @@ class DistributedCacheCoordinator:
         self._health_monitor_task: Optional[asyncio.Task] = None
     
     async def initialize(self):
-        """Initialize distributed coordination"""
-        try:
+        """Initialize distributed coordination"""        try:
             # Setup Redis connection
             self._redis = aioredis.from_url(self.redis_url)
             await self._redis.ping()
@@ -226,8 +210,7 @@ class DistributedCacheCoordinator:
             raise
     
     async def shutdown(self):
-        """Graceful shutdown with cluster notification"""
-        try:
+        """Graceful shutdown with cluster notification"""        try:
             # Notify cluster of departure
             await self._leave_cluster()
             
@@ -258,8 +241,7 @@ class DistributedCacheCoordinator:
         event_type: CoordinationEvent,
         handler: Callable
     ):
-        """Register handler for coordination events"""
-        if event_type not in self.event_handlers:
+        """Register handler for coordination events"""        if event_type not in self.event_handlers:
             self.event_handlers[event_type] = []
         
         self.event_handlers[event_type].append(handler)
@@ -270,8 +252,7 @@ class DistributedCacheCoordinator:
         value: Any,
         ttl: Optional[int] = None
     ):
-        """Notify cluster of cache update"""
-        message = CoordinationMessage(
+        """Notify cluster of cache update"""        message = CoordinationMessage(
             event_type=CoordinationEvent.CACHE_UPDATE,
             source_node=self.node_id,
             payload={
@@ -285,8 +266,7 @@ class DistributedCacheCoordinator:
         await self._broadcast_message(message)
     
     async def notify_cache_delete(self, key: str):
-        """Notify cluster of cache deletion"""
-        message = CoordinationMessage(
+        """Notify cluster of cache deletion"""        message = CoordinationMessage(
             event_type=CoordinationEvent.CACHE_DELETE,
             source_node=self.node_id,
             payload={'key': key}
@@ -300,8 +280,7 @@ class DistributedCacheCoordinator:
         patterns: List[str] = None,
         tags: List[str] = None
     ):
-        """Notify cluster of cache invalidation"""
-        message = CoordinationMessage(
+        """Notify cluster of cache invalidation"""        message = CoordinationMessage(
             event_type=CoordinationEvent.INVALIDATION,
             source_node=self.node_id,
             payload={
@@ -318,8 +297,7 @@ class DistributedCacheCoordinator:
         key: str,
         replica_count: int = 2
     ) -> List[CacheNode]:
-        """Get nodes responsible for caching a key"""
-        node_ids = self.consistent_hash.get_replica_nodes(key, replica_count)
+        """Get nodes responsible for caching a key"""        node_ids = self.consistent_hash.get_replica_nodes(key, replica_count)
         
         nodes = []
         for node_id in node_ids:
@@ -329,13 +307,11 @@ class DistributedCacheCoordinator:
         return nodes
     
     async def is_local_key(self, key: str) -> bool:
-        """Check if key should be handled by local node"""
-        primary_node = self.consistent_hash.get_node_for_key(key)
+        """Check if key should be handled by local node"""        primary_node = self.consistent_hash.get_node_for_key(key)
         return primary_node == self.node_id
     
     async def get_cluster_status(self) -> Dict[str, Any]:
-        """Get comprehensive cluster status"""
-        return {
+        """Get comprehensive cluster status"""        return {
             'local_node_id': self.node_id,
             'is_coordinator': self.is_coordinator,
             'coordinator_node_id': self.coordinator_node_id,
@@ -356,8 +332,7 @@ class DistributedCacheCoordinator:
         }
     
     async def trigger_rebalance(self, reason: str = "manual"):
-        """Trigger cluster rebalancing"""
-        if not self.is_coordinator:
+        """Trigger cluster rebalancing"""        if not self.is_coordinator:
             logger.warning("Only coordinator can trigger rebalance")
             return
         
@@ -373,8 +348,7 @@ class DistributedCacheCoordinator:
     # Private implementation methods
     
     async def _join_cluster(self):
-        """Join the cache cluster"""
-        # Register local node
+        """Join the cache cluster"""        # Register local node
         await self._register_node(self.local_node)
         
         # Discover existing nodes
@@ -406,8 +380,7 @@ class DistributedCacheCoordinator:
         self.local_node.status = NodeStatus.ACTIVE
     
     async def _leave_cluster(self):
-        """Leave the cache cluster gracefully"""
-        # Broadcast leave message
+        """Leave the cache cluster gracefully"""        # Broadcast leave message
         leave_message = CoordinationMessage(
             event_type=CoordinationEvent.NODE_LEAVE,
             source_node=self.node_id,
@@ -426,8 +399,7 @@ class DistributedCacheCoordinator:
         self.consistent_hash.remove_node(self.node_id)
     
     async def _register_node(self, node: CacheNode):
-        """Register node in Redis"""
-        node_key = f"cache_nodes:{node.node_id}"
+        """Register node in Redis"""        node_key = f"cache_nodes:{node.node_id}"
         node_data = {
             'node_id': node.node_id,
             'hostname': node.hostname,
@@ -443,13 +415,11 @@ class DistributedCacheCoordinator:
         await self._redis.expire(node_key, 300)  # 5 minute TTL
     
     async def _unregister_node(self, node_id: str):
-        """Remove node from Redis"""
-        node_key = f"cache_nodes:{node_id}"
+        """Remove node from Redis"""        node_key = f"cache_nodes:{node_id}"
         await self._redis.delete(node_key)
     
     async def _discover_nodes(self):
-        """Discover existing cluster nodes"""
-        pattern = "cache_nodes:*"
+        """Discover existing cluster nodes"""        pattern = "cache_nodes:*"
         node_keys = await self._redis.keys(pattern)
         
         for node_key in node_keys:
@@ -475,8 +445,7 @@ class DistributedCacheCoordinator:
                 self.consistent_hash.add_node(node)
     
     async def _elect_coordinator(self):
-        """Elect coordinator node (simple implementation)"""
-        active_nodes = [
+        """Elect coordinator node (simple implementation)"""        active_nodes = [
             node_id for node_id, node in self.known_nodes.items()
             if node.status == NodeStatus.ACTIVE
         ]
@@ -494,8 +463,7 @@ class DistributedCacheCoordinator:
         logger.info(f"Coordinator elected: {self.coordinator_node_id} (local: {self.is_coordinator})")
     
     async def _broadcast_message(self, message: CoordinationMessage):
-        """Broadcast coordination message to cluster"""
-        message_data = {
+        """Broadcast coordination message to cluster"""        message_data = {
             'message_id': message.message_id,
             'event_type': message.event_type.value,
             'source_node': message.source_node,
@@ -512,8 +480,7 @@ class DistributedCacheCoordinator:
         )
     
     async def _heartbeat_loop(self):
-        """Send periodic heartbeats"""
-        while True:
+        """Send periodic heartbeats"""        while True:
             try:
                 # Update last heartbeat
                 self.last_heartbeat = datetime.utcnow()
@@ -542,8 +509,7 @@ class DistributedCacheCoordinator:
                 await asyncio.sleep(30)
     
     async def _coordination_loop(self):
-        """Process coordination messages"""
-        while True:
+        """Process coordination messages"""        while True:
             try:
                 message = await self._pubsub.get_message(timeout=1.0)
                 
@@ -555,8 +521,7 @@ class DistributedCacheCoordinator:
                 await asyncio.sleep(1)
     
     async def _handle_coordination_message(self, message_data: bytes):
-        """Handle incoming coordination message"""
-        try:
+        """Handle incoming coordination message"""        try:
             data = json.loads(message_data.decode())
             
             # Skip own messages
@@ -593,8 +558,7 @@ class DistributedCacheCoordinator:
             logger.error(f"Error handling coordination message: {e}")
     
     async def _handle_node_join(self, data: Dict[str, Any]):
-        """Handle node join event"""
-        node_info = data.get('payload', {}).get('node_info', {})
+        """Handle node join event"""        node_info = data.get('payload', {}).get('node_info', {})
         node_id = node_info.get('node_id')
         
         if node_id and node_id not in self.known_nodes:
@@ -615,8 +579,7 @@ class DistributedCacheCoordinator:
             await self._elect_coordinator()
     
     async def _handle_node_leave(self, data: Dict[str, Any]):
-        """Handle node leave event"""
-        source_node = data.get('source_node')
+        """Handle node leave event"""        source_node = data.get('source_node')
         
         if source_node in self.known_nodes:
             self.consistent_hash.remove_node(source_node)
@@ -629,31 +592,27 @@ class DistributedCacheCoordinator:
                 await self._elect_coordinator()
     
     async def _handle_cache_update(self, data: Dict[str, Any]):
-        """Handle cache update notification"""
-        payload = data.get('payload', {})
+        """Handle cache update notification"""        payload = data.get('payload', {})
         key = payload.get('key')
         
         # This would integrate with local cache to update/sync data
         logger.debug(f"Cache update notification for key: {key}")
     
     async def _handle_cache_delete(self, data: Dict[str, Any]):
-        """Handle cache delete notification"""
-        payload = data.get('payload', {})
+        """Handle cache delete notification"""        payload = data.get('payload', {})
         key = payload.get('key')
         
         # This would integrate with local cache to delete data
         logger.debug(f"Cache delete notification for key: {key}")
     
     async def _handle_invalidation(self, data: Dict[str, Any]):
-        """Handle invalidation notification"""
-        payload = data.get('payload', {})
+        """Handle invalidation notification"""        payload = data.get('payload', {})
         
         # This would trigger local cache invalidation
         logger.debug(f"Cache invalidation notification: {payload}")
     
     async def _handle_health_check(self, data: Dict[str, Any]):
-        """Handle health check from other node"""
-        source_node = data.get('source_node')
+        """Handle health check from other node"""        source_node = data.get('source_node')
         payload = data.get('payload', {})
         
         if source_node in self.known_nodes:
@@ -664,13 +623,11 @@ class DistributedCacheCoordinator:
             node.connection_count = payload.get('connection_count', 0)
     
     async def _handle_rebalance(self, data: Dict[str, Any]):
-        """Handle rebalance notification"""
-        if self.is_coordinator:
+        """Handle rebalance notification"""        if self.is_coordinator:
             await self._perform_rebalance()
     
     async def _health_monitor_loop(self):
-        """Monitor node health and detect failures"""
-        while True:
+        """Monitor node health and detect failures"""        while True:
             try:
                 current_time = datetime.utcnow()
                 failed_nodes = []
@@ -701,8 +658,7 @@ class DistributedCacheCoordinator:
                 await asyncio.sleep(60)
     
     async def _perform_rebalance(self):
-        """Perform cluster rebalancing"""
-        logger.info("Starting cluster rebalance")
+        """Perform cluster rebalancing"""        logger.info("Starting cluster rebalance")
         
         # This would implement intelligent data redistribution
         # based on node capacity and performance metrics
@@ -717,8 +673,7 @@ class DistributedCacheCoordinator:
         logger.info("Cluster rebalance completed")
     
     def _calculate_cluster_health(self) -> str:
-        """Calculate overall cluster health"""
-        if not self.known_nodes:
+        """Calculate overall cluster health"""        if not self.known_nodes:
             return "unknown"
         
         active_nodes = len([

@@ -1,5 +1,4 @@
-"""
-Stream Buffer Management for IA Influencer Agent Platform
+"""Stream Buffer Management for IA Influencer Agent Platform
 ========================================================
 
 High-performance buffering system for stream data with intelligent
@@ -7,9 +6,7 @@ caching, compression, and memory-efficient storage strategies.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Iterator
 from datetime import datetime, timezone, timedelta
@@ -32,24 +29,21 @@ settings = get_settings()
 
 
 class BufferType(str, Enum):
-    """Buffer storage types"""
-    MEMORY = "memory"
+    """Buffer storage types"""    MEMORY = "memory"
     DISK = "disk"
     REDIS = "redis"
     HYBRID = "hybrid"
 
 
 class CompressionType(str, Enum):
-    """Data compression types"""
-    NONE = "none"
+    """Data compression types"""    NONE = "none"
     GZIP = "gzip"
     ZLIB = "zlib"
     PICKLE = "pickle"
 
 
 class EvictionPolicy(str, Enum):
-    """Buffer eviction policies"""
-    LRU = "lru"  # Least Recently Used
+    """Buffer eviction policies"""    LRU = "lru"  # Least Recently Used
     LFU = "lfu"  # Least Frequently Used
     FIFO = "fifo"  # First In, First Out
     TTL = "ttl"  # Time To Live
@@ -57,8 +51,7 @@ class EvictionPolicy(str, Enum):
 
 @dataclass
 class BufferConfig:
-    """Buffer configuration settings"""
-    buffer_type: BufferType = BufferType.MEMORY
+    """Buffer configuration settings"""    buffer_type: BufferType = BufferType.MEMORY
     max_size_mb: int = 100
     max_items: int = 10000
     ttl_seconds: int = 3600
@@ -72,8 +65,7 @@ class BufferConfig:
 
 @dataclass
 class BufferItem:
-    """Buffer item with metadata"""
-    key: str
+    """Buffer item with metadata"""    key: str
     data: Any
     size_bytes: int
     created_at: datetime
@@ -84,8 +76,7 @@ class BufferItem:
 
 
 class BufferStats(BaseModel):
-    """Buffer performance statistics"""
-    total_items: int = Field(default=0, description="Total items in buffer")
+    """Buffer performance statistics"""    total_items: int = Field(default=0, description="Total items in buffer")
     total_size_mb: float = Field(default=0.0, description="Total size in MB")
     hit_ratio: float = Field(default=0.0, description="Cache hit ratio")
     miss_ratio: float = Field(default=0.0, description="Cache miss ratio")
@@ -97,11 +88,9 @@ class BufferStats(BaseModel):
 
 
 class StreamBuffer:
-    """
-    High-performance stream buffer with intelligent caching, compression,
+    """    High-performance stream buffer with intelligent caching, compression,
     and memory-efficient storage for optimal stream processing performance.
-    """
-    
+    """    
     def __init__(self, config: BufferConfig):
         self.config = config
         self.items: Dict[str, BufferItem] = {}
@@ -112,8 +101,7 @@ class StreamBuffer:
         self._shutdown_event = asyncio.Event()
         
     async def initialize(self) -> None:
-        """Initialize stream buffer"""
-        try:
+        """Initialize stream buffer"""        try:
             # Load persisted data if enabled
             if self.config.enable_persistence and self.config.persistence_path:
                 await self._load_from_disk()
@@ -138,8 +126,7 @@ class StreamBuffer:
         ttl_seconds: Optional[int] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """
-        Store data in buffer
+        """        Store data in buffer
         
         Args:
             key: Item key
@@ -149,8 +136,7 @@ class StreamBuffer:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             with self._lock:
                 # Check if we need to evict items
                 await self._ensure_capacity()
@@ -194,16 +180,14 @@ class StreamBuffer:
             return False
             
     async def get(self, key: str) -> Optional[Any]:
-        """
-        Retrieve data from buffer
+        """        Retrieve data from buffer
         
         Args:
             key: Item key
             
         Returns:
             Stored data or None if not found
-        """
-        try:
+        """        try:
             with self._lock:
                 if key not in self.items:
                     self.stats.miss_ratio = (self.stats.miss_ratio * 0.9) + 0.1
@@ -236,15 +220,13 @@ class StreamBuffer:
             return None
             
     async def exists(self, key: str) -> bool:
-        """Check if key exists in buffer"""
-        with self._lock:
+        """Check if key exists in buffer"""        with self._lock:
             if key not in self.items:
                 return False
             return not self._is_expired(self.items[key])
             
     async def delete(self, key: str) -> bool:
-        """Delete item from buffer"""
-        try:
+        """Delete item from buffer"""        try:
             with self._lock:
                 if key in self.items:
                     await self._remove_item(key)
@@ -256,8 +238,7 @@ class StreamBuffer:
             return False
             
     async def clear(self) -> None:
-        """Clear all items from buffer"""
-        try:
+        """Clear all items from buffer"""        try:
             with self._lock:
                 self.items.clear()
                 self.access_queue.clear()
@@ -272,8 +253,7 @@ class StreamBuffer:
             logger.error(f"Failed to clear buffer: {e}")
             
     async def keys(self, pattern: Optional[str] = None) -> List[str]:
-        """Get all keys in buffer, optionally filtered by pattern"""
-        try:
+        """Get all keys in buffer, optionally filtered by pattern"""        try:
             with self._lock:
                 all_keys = list(self.items.keys())
                 
@@ -289,8 +269,7 @@ class StreamBuffer:
             return []
             
     async def flush(self) -> bool:
-        """Flush buffer to persistent storage"""
-        try:
+        """Flush buffer to persistent storage"""        try:
             if not self.config.enable_persistence or not self.config.persistence_path:
                 return False
                 
@@ -306,8 +285,7 @@ class StreamBuffer:
             return False
             
     async def get_stats(self) -> BufferStats:
-        """Get buffer performance statistics"""
-        with self._lock:
+        """Get buffer performance statistics"""        with self._lock:
             # Update memory usage
             import psutil
             process = psutil.Process()
@@ -316,8 +294,7 @@ class StreamBuffer:
             return self.stats
             
     async def optimize(self) -> None:
-        """Optimize buffer performance"""
-        try:
+        """Optimize buffer performance"""        try:
             with self._lock:
                 # Compress uncompressed items if beneficial
                 if self.config.compression != CompressionType.NONE:
@@ -335,8 +312,7 @@ class StreamBuffer:
             logger.error(f"Failed to optimize buffer: {e}")
             
     def _update_access_tracking(self, key: str) -> None:
-        """Update access tracking for eviction policies"""
-        # Update LRU queue
+        """Update access tracking for eviction policies"""        # Update LRU queue
         if key in self.access_queue:
             self.access_queue.remove(key)
         self.access_queue.append(key)
@@ -345,8 +321,7 @@ class StreamBuffer:
         self.access_frequency[key] = self.access_frequency.get(key, 0) + 1
         
     def _is_expired(self, item: BufferItem) -> bool:
-        """Check if item has expired"""
-        ttl = self.config.ttl_seconds
+        """Check if item has expired"""        ttl = self.config.ttl_seconds
         if ttl <= 0:
             return False
             
@@ -354,8 +329,7 @@ class StreamBuffer:
         return age > ttl
         
     async def _ensure_capacity(self) -> None:
-        """Ensure buffer has capacity for new items"""
-        # Check size limit
+        """Ensure buffer has capacity for new items"""        # Check size limit
         while self.stats.total_size_mb > self.config.max_size_mb and self.items:
             await self._evict_item()
             
@@ -364,8 +338,7 @@ class StreamBuffer:
             await self._evict_item()
             
     async def _evict_item(self) -> None:
-        """Evict item based on configured policy"""
-        try:
+        """Evict item based on configured policy"""        try:
             if not self.items:
                 return
                 
@@ -397,8 +370,7 @@ class StreamBuffer:
             logger.error(f"Failed to evict item: {e}")
             
     async def _remove_item(self, key: str) -> None:
-        """Remove item and update tracking structures"""
-        if key in self.items:
+        """Remove item and update tracking structures"""        if key in self.items:
             del self.items[key]
             
         if key in self.access_queue:
@@ -412,8 +384,7 @@ class StreamBuffer:
         self.stats.total_size_mb = sum(item.size_bytes for item in self.items.values()) / (1024 * 1024)
         
     async def _compress_data(self, data: Any) -> tuple[Any, bool]:
-        """Compress data based on configuration"""
-        if self.config.compression == CompressionType.NONE:
+        """Compress data based on configuration"""        if self.config.compression == CompressionType.NONE:
             return data, False
             
         try:
@@ -436,8 +407,7 @@ class StreamBuffer:
             return data, False
             
     async def _decompress_data(self, data: Any, compressed: bool) -> Any:
-        """Decompress data if needed"""
-        if not compressed:
+        """Decompress data if needed"""        if not compressed:
             return data
             
         try:
@@ -458,8 +428,7 @@ class StreamBuffer:
             return data
             
     async def _compress_items(self) -> None:
-        """Compress existing uncompressed items"""
-        for key, item in list(self.items.items()):
+        """Compress existing uncompressed items"""        for key, item in list(self.items.items()):
             if not item.compressed and self.config.compression != CompressionType.NONE:
                 compressed_data, compressed = await self._compress_data(item.data)
                 if compressed:
@@ -469,8 +438,7 @@ class StreamBuffer:
                     self.stats.compressions += 1
                     
     async def _cleanup_expired(self) -> None:
-        """Remove expired items"""
-        expired_keys = []
+        """Remove expired items"""        expired_keys = []
         for key, item in self.items.items():
             if self._is_expired(item):
                 expired_keys.append(key)
@@ -482,8 +450,7 @@ class StreamBuffer:
             logger.debug(f"Cleaned up {len(expired_keys)} expired items")
             
     async def _defragment(self) -> None:
-        """Defragment buffer storage"""
-        # For memory buffer, this reorganizes data structures
+        """Defragment buffer storage"""        # For memory buffer, this reorganizes data structures
         # For disk buffer, this would compact files
         if self.config.buffer_type == BufferType.MEMORY:
             # Rebuild access queue
@@ -492,8 +459,7 @@ class StreamBuffer:
             )
             
     async def _save_to_disk(self) -> None:
-        """Save buffer to disk"""
-        if not self.config.persistence_path:
+        """Save buffer to disk"""        if not self.config.persistence_path:
             return
             
         try:
@@ -521,8 +487,7 @@ class StreamBuffer:
             logger.error(f"Failed to save buffer to disk: {e}")
             
     async def _load_from_disk(self) -> None:
-        """Load buffer from disk"""
-        if not self.config.persistence_path:
+        """Load buffer from disk"""        if not self.config.persistence_path:
             return
             
         try:
@@ -562,8 +527,7 @@ class StreamBuffer:
             logger.error(f"Failed to load buffer from disk: {e}")
             
     async def _auto_flush_task(self) -> None:
-        """Background auto-flush task"""
-        while not self._shutdown_event.is_set():
+        """Background auto-flush task"""        while not self._shutdown_event.is_set():
             try:
                 await asyncio.sleep(self.config.flush_interval_seconds)
                 await self.flush()
@@ -571,8 +535,7 @@ class StreamBuffer:
                 logger.error(f"Auto-flush error: {e}")
                 
     async def _cleanup_task(self) -> None:
-        """Background cleanup task"""
-        while not self._shutdown_event.is_set():
+        """Background cleanup task"""        while not self._shutdown_event.is_set():
             try:
                 await asyncio.sleep(60)  # Cleanup every minute
                 await self._cleanup_expired()
@@ -580,8 +543,7 @@ class StreamBuffer:
                 logger.error(f"Cleanup task error: {e}")
                 
     async def _stats_updater(self) -> None:
-        """Background stats update task"""
-        while not self._shutdown_event.is_set():
+        """Background stats update task"""        while not self._shutdown_event.is_set():
             try:
                 await asyncio.sleep(30)  # Update every 30 seconds
                 
@@ -596,8 +558,7 @@ class StreamBuffer:
                 logger.error(f"Stats updater error: {e}")
                 
     async def shutdown(self) -> None:
-        """Gracefully shutdown buffer"""
-        try:
+        """Gracefully shutdown buffer"""        try:
             self._shutdown_event.set()
             
             # Final flush if persistence enabled

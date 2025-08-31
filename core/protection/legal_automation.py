@@ -1,5 +1,4 @@
-"""
-Legal Automation System for Content Protection
+"""Legal Automation System for Content Protection
 
 This module provides comprehensive legal automation capabilities:
 - Automated DMCA takedown notice generation and submission
@@ -14,9 +13,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import hashlib
 from typing import Dict, List, Optional, Any, Tuple
@@ -62,8 +59,7 @@ settings = get_settings()
 
 
 class LegalJurisdiction(Enum):
-    """Legal jurisdictions for copyright enforcement"""
-    US_DMCA = "us_dmca"                    # US Digital Millennium Copyright Act
+    """Legal jurisdictions for copyright enforcement"""    US_DMCA = "us_dmca"                    # US Digital Millennium Copyright Act
     EU_COPYRIGHT = "eu_copyright"          # EU Copyright Directive
     UK_COPYRIGHT = "uk_copyright"          # UK Copyright, Designs and Patents Act
     CANADA_COPYRIGHT = "canada_copyright"  # Canadian Copyright Act
@@ -72,8 +68,7 @@ class LegalJurisdiction(Enum):
 
 
 class LegalDocumentType(Enum):
-    """Types of legal documents"""
-    DMCA_TAKEDOWN = "dmca_takedown"
+    """Types of legal documents"""    DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     COPYRIGHT_CLAIM = "copyright_claim"
     LICENSING_AGREEMENT = "licensing_agreement"
@@ -83,8 +78,7 @@ class LegalDocumentType(Enum):
 
 
 class LegalActionType(Enum):
-    """Types of legal actions"""
-    TAKEDOWN_REQUEST = "takedown_request"
+    """Types of legal actions"""    TAKEDOWN_REQUEST = "takedown_request"
     MONETIZATION_CLAIM = "monetization_claim"
     LICENSING_DEMAND = "licensing_demand"
     LEGAL_NOTICE = "legal_notice"
@@ -93,8 +87,7 @@ class LegalActionType(Enum):
 
 @dataclass
 class LegalEntity:
-    """Legal entity information"""
-    name: str
+    """Legal entity information"""    name: str
     legal_type: str  # individual, corporation, LLC, etc.
     address: str
     city: str
@@ -109,8 +102,7 @@ class LegalEntity:
 
 @dataclass
 class CopyrightInformation:
-    """Copyright ownership information"""
-    owner: LegalEntity
+    """Copyright ownership information"""    owner: LegalEntity
     registration_number: Optional[str] = None
     registration_date: Optional[datetime] = None
     creation_date: Optional[datetime] = None
@@ -123,8 +115,7 @@ class CopyrightInformation:
 
 @dataclass
 class ViolationDetails:
-    """Details of copyright violation"""
-    infringing_url: str
+    """Details of copyright violation"""    infringing_url: str
     platform: str
     violator_info: Optional[Dict[str, Any]] = None
     violation_type: str = "unauthorized_reproduction"
@@ -137,8 +128,7 @@ class ViolationDetails:
 
 @dataclass
 class LegalDocumentTemplate:
-    """Template for legal documents"""
-    document_type: LegalDocumentType
+    """Template for legal documents"""    document_type: LegalDocumentType
     jurisdiction: LegalJurisdiction
     template_path: str
     required_fields: List[str] = field(default_factory=list)
@@ -147,13 +137,11 @@ class LegalDocumentTemplate:
 
 
 class LegalAutomation:
-    """
-    Legal automation system for content protection
+    """    Legal automation system for content protection
     
     Provides automated generation and submission of legal documents
     for copyright enforcement and violation response.
-    """
-    
+    """    
     def __init__(self):
         self.templates_dir = Path(__file__).parent / "templates" / "legal"
         self.evidence_collector = EvidenceCollector()
@@ -168,8 +156,7 @@ class LegalAutomation:
     
     async def generate_dmca_takedown(self, copyright_info: CopyrightInformation, 
                                    violation: ViolationDetails) -> Dict[str, Any]:
-        """Generate DMCA takedown notice"""
-        try:
+        """Generate DMCA takedown notice"""        try:
             # Prepare document data
             document_data = {
                 'copyright_owner': copyright_info.owner.__dict__,
@@ -216,8 +203,7 @@ class LegalAutomation:
             return {}
     
     async def submit_dmca_takedown(self, takedown_data: Dict[str, Any], platform: str) -> bool:
-        """Submit DMCA takedown notice to platform"""
-        try:
+        """Submit DMCA takedown notice to platform"""        try:
             if platform.lower() == "youtube":
                 return await self._submit_youtube_dmca(takedown_data)
             elif platform.lower() == "instagram":
@@ -237,8 +223,7 @@ class LegalAutomation:
     async def generate_cease_desist_letter(self, copyright_info: CopyrightInformation,
                                          violation: ViolationDetails,
                                          recipient: LegalEntity) -> Dict[str, Any]:
-        """Generate cease and desist letter"""
-        try:
+        """Generate cease and desist letter"""        try:
             document_data = {
                 'copyright_owner': copyright_info.owner.__dict__,
                 'recipient': recipient.__dict__,
@@ -273,8 +258,7 @@ class LegalAutomation:
     async def generate_licensing_agreement(self, copyright_info: CopyrightInformation,
                                          licensee: LegalEntity,
                                          license_terms: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate licensing agreement"""
-        try:
+        """Generate licensing agreement"""        try:
             document_data = {
                 'licensor': copyright_info.owner.__dict__,
                 'licensee': licensee.__dict__,
@@ -305,8 +289,7 @@ class LegalAutomation:
             return {}
     
     async def _generate_pdf_document(self, doc_type: LegalDocumentType, data: Dict[str, Any]) -> str:
-        """Generate PDF document from template and data"""
-        try:
+        """Generate PDF document from template and data"""        try:
             # Create temporary file
             temp_file = tempfile.NamedTemporaryFile(suffix='.pdf', delete=False)
             temp_path = temp_file.name
@@ -334,8 +317,7 @@ class LegalAutomation:
             raise
     
     def _build_dmca_content(self, data: Dict[str, Any], styles) -> List:
-        """Build DMCA takedown notice content"""
-        story = []
+        """Build DMCA takedown notice content"""        story = []
         
         # Header
         story.append(Paragraph("DMCA TAKEDOWN NOTICE", styles['Title']))
@@ -377,8 +359,7 @@ class LegalAutomation:
         return story
     
     def _build_cease_desist_content(self, data: Dict[str, Any], styles) -> List:
-        """Build cease and desist letter content"""
-        story = []
+        """Build cease and desist letter content"""        story = []
         
         # Header
         story.append(Paragraph("CEASE AND DESIST LETTER", styles['Title']))
@@ -417,8 +398,7 @@ class LegalAutomation:
         return story
     
     def _build_licensing_content(self, data: Dict[str, Any], styles) -> List:
-        """Build licensing agreement content"""
-        story = []
+        """Build licensing agreement content"""        story = []
         
         # Header
         story.append(Paragraph("LICENSING AGREEMENT", styles['Title']))
@@ -454,8 +434,7 @@ class LegalAutomation:
         return story
     
     async def _create_evidence_package(self, violation: ViolationDetails) -> str:
-        """Create evidence package for legal submission"""
-        try:
+        """Create evidence package for legal submission"""        try:
             # Create temporary directory for evidence
             temp_dir = tempfile.mkdtemp()
             evidence_dir = Path(temp_dir) / "evidence"
@@ -500,8 +479,7 @@ class LegalAutomation:
             return ""
     
     async def _sign_document(self, document_path: str) -> Dict[str, str]:
-        """Create digital signature for document"""
-        try:
+        """Create digital signature for document"""        try:
             if not self._private_key:
                 logger.warning("No private key available for signing")
                 return {}
@@ -534,8 +512,7 @@ class LegalAutomation:
             return {}
     
     async def _calculate_file_hash(self, file_path: str) -> str:
-        """Calculate SHA-256 hash of file"""
-        try:
+        """Calculate SHA-256 hash of file"""        try:
             sha256_hash = hashlib.sha256()
             with open(file_path, "rb") as f:
                 for byte_block in iter(lambda: f.read(4096), b""):
@@ -546,8 +523,7 @@ class LegalAutomation:
             return ""
     
     def _load_signing_keys(self):
-        """Load RSA keys for document signing"""
-        try:
+        """Load RSA keys for document signing"""        try:
             # In production, these would be loaded from secure storage
             # For now, we'll generate temporary keys
             self._private_key = rsa.generate_private_key(
@@ -562,20 +538,17 @@ class LegalAutomation:
             logger.error(f"Failed to load signing keys: {e}")
     
     def _generate_good_faith_statement(self) -> str:
-        """Generate good faith statement for DMCA"""
-        return ("I have a good faith belief that use of the copyrighted materials described above "
+        """Generate good faith statement for DMCA"""        return ("I have a good faith belief that use of the copyrighted materials described above "
                 "on the infringing web pages is not authorized by the copyright owner, or its agent, "
                 "or the law.")
     
     def _generate_perjury_statement(self) -> str:
-        """Generate perjury statement for DMCA"""
-        return ("I swear, under penalty of perjury, that the information in this notification is "
+        """Generate perjury statement for DMCA"""        return ("I swear, under penalty of perjury, that the information in this notification is "
                 "accurate and that I am the copyright owner, or am authorized to act on behalf of "
                 "the owner, of an exclusive right that is allegedly infringed.")
     
     def _generate_cease_desist_demands(self) -> List[str]:
-        """Generate demands for cease and desist letter"""
-        return [
+        """Generate demands for cease and desist letter"""        return [
             "Immediately cease and desist all use of the copyrighted material",
             "Remove all infringing content from your platform or website",
             "Provide written confirmation of compliance within 10 days",
@@ -583,39 +556,33 @@ class LegalAutomation:
         ]
     
     def _generate_legal_consequences_text(self) -> str:
-        """Generate legal consequences warning text"""
-        return ("Failure to comply with this demand may result in legal action against you, "
+        """Generate legal consequences warning text"""        return ("Failure to comply with this demand may result in legal action against you, "
                 "including but not limited to seeking monetary damages, injunctive relief, "
                 "and attorney's fees. We reserve all rights to pursue any and all legal remedies available.")
     
     # Platform-specific DMCA submission methods
     async def _submit_youtube_dmca(self, takedown_data: Dict[str, Any]) -> bool:
-        """Submit DMCA to YouTube"""
-        # Implementation for YouTube copyright claim submission
+        """Submit DMCA to YouTube"""        # Implementation for YouTube copyright claim submission
         logger.info("YouTube DMCA submission not yet implemented")
         return False
     
     async def _submit_instagram_dmca(self, takedown_data: Dict[str, Any]) -> bool:
-        """Submit DMCA to Instagram"""
-        # Implementation for Instagram copyright report
+        """Submit DMCA to Instagram"""        # Implementation for Instagram copyright report
         logger.info("Instagram DMCA submission not yet implemented")
         return False
     
     async def _submit_facebook_dmca(self, takedown_data: Dict[str, Any]) -> bool:
-        """Submit DMCA to Facebook"""
-        # Implementation for Facebook copyright report
+        """Submit DMCA to Facebook"""        # Implementation for Facebook copyright report
         logger.info("Facebook DMCA submission not yet implemented")
         return False
     
     async def _submit_tiktok_dmca(self, takedown_data: Dict[str, Any]) -> bool:
-        """Submit DMCA to TikTok"""
-        # Implementation for TikTok copyright report
+        """Submit DMCA to TikTok"""        # Implementation for TikTok copyright report
         logger.info("TikTok DMCA submission not yet implemented")
         return False
     
     async def _submit_generic_dmca(self, takedown_data: Dict[str, Any], platform: str) -> bool:
-        """Submit DMCA via email"""
-        try:
+        """Submit DMCA via email"""        try:
             # Get platform contact information
             contact_info = self._get_platform_contact_info(platform)
             if not contact_info:
@@ -630,8 +597,7 @@ class LegalAutomation:
             return False
     
     def _get_platform_contact_info(self, platform: str) -> Optional[Dict[str, str]]:
-        """Get contact information for platform"""
-        # This would be maintained in a database or configuration
+        """Get contact information for platform"""        # This would be maintained in a database or configuration
         platform_contacts = {
             'generic': {
                 'email': 'copyright@example.com',
@@ -642,8 +608,7 @@ class LegalAutomation:
         return platform_contacts.get(platform.lower())
     
     async def _send_dmca_email(self, takedown_data: Dict[str, Any], contact_info: Dict[str, str]) -> bool:
-        """Send DMCA notice via email"""
-        try:
+        """Send DMCA notice via email"""        try:
             msg = MIMEMultipart()
             msg['From'] = settings.SMTP_USER
             msg['To'] = contact_info['email']

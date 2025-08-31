@@ -1,5 +1,4 @@
-"""
-Threat Detection Configuration Module
+"""Threat Detection Configuration Module
 ====================================
 
 Advanced threat detection and security monitoring configuration for 
@@ -20,9 +19,7 @@ This code is proprietary and belongs to Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit 
 written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import os
+"""import os
 from typing import Dict, List, Optional, Set, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -30,8 +27,7 @@ from datetime import datetime, timedelta
 
 
 class ThreatLevel(Enum):
-    """Threat severity levels."""
-    LOW = "low"
+    """Threat severity levels."""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -39,8 +35,7 @@ class ThreatLevel(Enum):
 
 
 class ThreatCategory(Enum):
-    """Categories of security threats."""
-    MALWARE = "malware"
+    """Categories of security threats."""    MALWARE = "malware"
     PHISHING = "phishing"
     DATA_BREACH = "data_breach"
     INSIDER_THREAT = "insider_threat"
@@ -55,8 +50,7 @@ class ThreatCategory(Enum):
 
 
 class DetectionMethod(Enum):
-    """Threat detection methods."""
-    SIGNATURE_BASED = "signature_based"
+    """Threat detection methods."""    SIGNATURE_BASED = "signature_based"
     BEHAVIORAL_ANALYSIS = "behavioral_analysis"
     MACHINE_LEARNING = "machine_learning"
     STATISTICAL_ANALYSIS = "statistical_analysis"
@@ -67,8 +61,7 @@ class DetectionMethod(Enum):
 
 
 class ResponseAction(Enum):
-    """Automated response actions."""
-    ALERT = "alert"
+    """Automated response actions."""    ALERT = "alert"
     BLOCK = "block"
     QUARANTINE = "quarantine"
     ISOLATE = "isolate"
@@ -81,8 +74,7 @@ class ResponseAction(Enum):
 
 @dataclass
 class ThreatSignature:
-    """Threat signature definition."""
-    signature_id: str
+    """Threat signature definition."""    signature_id: str
     category: ThreatCategory
     severity: ThreatLevel
     pattern: str
@@ -106,8 +98,7 @@ class ThreatSignature:
 
 @dataclass
 class MalwareDetectionConfig:
-    """Malware detection configuration."""
-    
+    """Malware detection configuration."""    
     # Detection engines
     enabled_engines: List[str] = field(default_factory=lambda: [
         "clamav", "yara", "custom_ml", "hash_lookup", "behavioral_analysis"
@@ -166,8 +157,7 @@ class MalwareDetectionConfig:
 
 @dataclass
 class AnomalyDetectionConfig:
-    """Anomaly detection configuration."""
-    
+    """Anomaly detection configuration."""    
     # User behavior analysis
     user_behavior_analysis: Dict[str, Any] = field(default_factory=lambda: {
         "enabled": True,
@@ -229,8 +219,7 @@ class AnomalyDetectionConfig:
 
 @dataclass
 class FraudDetectionConfig:
-    """Fraud detection for revenue and financial operations."""
-    
+    """Fraud detection for revenue and financial operations."""    
     # Revenue fraud detection
     revenue_fraud_detection: Dict[str, Any] = field(default_factory=lambda: {
         "artificial_streaming": True,
@@ -295,8 +284,7 @@ class FraudDetectionConfig:
 
 @dataclass
 class ThreatIntelligenceConfig:
-    """Threat intelligence integration configuration."""
-    
+    """Threat intelligence integration configuration."""    
     # Threat intelligence feeds
     intelligence_feeds: List[Dict[str, Any]] = field(default_factory=lambda: [
         {
@@ -370,8 +358,7 @@ class ThreatIntelligenceConfig:
 
 @dataclass
 class IncidentResponseConfig:
-    """Security incident response configuration."""
-    
+    """Security incident response configuration."""    
     # Response team
     response_team: Dict[str, str] = field(default_factory=lambda: {
         "incident_commander": "security@ia-influencer.com",
@@ -455,8 +442,7 @@ class IncidentResponseConfig:
 
 @dataclass
 class ThreatDetectionMetrics:
-    """Threat detection performance metrics configuration."""
-    
+    """Threat detection performance metrics configuration."""    
     # Detection metrics
     detection_metrics: List[str] = field(default_factory=lambda: [
         "true_positive_rate",
@@ -488,8 +474,7 @@ class ThreatDetectionMetrics:
 
 @dataclass
 class ThreatDetectionConfig:
-    """Main threat detection configuration container."""
-    
+    """Main threat detection configuration container."""    
     # Core detection modules
     malware_detection: MalwareDetectionConfig = field(default_factory=MalwareDetectionConfig)
     anomaly_detection: AnomalyDetectionConfig = field(default_factory=AnomalyDetectionConfig)
@@ -554,13 +539,11 @@ threat_detection_config = ThreatDetectionConfig()
 
 
 def get_threat_detection_config() -> ThreatDetectionConfig:
-    """Get the threat detection configuration instance."""
-    return threat_detection_config
+    """Get the threat detection configuration instance."""    return threat_detection_config
 
 
 def get_threat_signature(signature_id: str) -> Optional[ThreatSignature]:
-    """Get a specific threat signature by ID."""
-    config = get_threat_detection_config()
+    """Get a specific threat signature by ID."""    config = get_threat_detection_config()
     for signature in config.custom_signatures:
         if signature.signature_id == signature_id:
             return signature
@@ -568,8 +551,7 @@ def get_threat_signature(signature_id: str) -> Optional[ThreatSignature]:
 
 
 def get_response_actions(threat_category: ThreatCategory, threat_level: ThreatLevel) -> List[ResponseAction]:
-    """Get appropriate response actions for a threat category and level."""
-    config = get_threat_detection_config()
+    """Get appropriate response actions for a threat category and level."""    config = get_threat_detection_config()
     
     # Get category-specific playbook
     playbook = config.incident_response.response_playbooks.get(threat_category)
@@ -595,8 +577,7 @@ def get_response_actions(threat_category: ThreatCategory, threat_level: ThreatLe
 
 
 def validate_threat_detection_config(config: ThreatDetectionConfig) -> bool:
-    """Validate threat detection configuration settings."""
-    # Validate sensitivity thresholds
+    """Validate threat detection configuration settings."""    # Validate sensitivity thresholds
     if not (0 <= config.global_sensitivity <= 1):
         raise ValueError(f"Global sensitivity must be between 0 and 1: {config.global_sensitivity}")
     

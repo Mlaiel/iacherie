@@ -23,8 +23,7 @@ written permission from the author is strictly prohibited and will be prosecuted
 to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-# Core integration configurations
+"""# Core integration configurations
 from .oauth_config import (
     OAuthConfig, 
     OAuthProvider, 

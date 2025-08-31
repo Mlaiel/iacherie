@@ -1,5 +1,4 @@
-"""
-Azure Blob Storage Configuration for IA-Influencer Agent Platform
+"""Azure Blob Storage Configuration for IA-Influencer Agent Platform
 ================================================================
 
 Professional Azure Blob storage configuration for enterprise content management.
@@ -14,9 +13,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import os
+"""import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
 from azure.storage.blob import BlobServiceClient, ContainerClient
@@ -24,8 +21,7 @@ from azure.core.exceptions import AzureError
 
 @dataclass
 class AzureContainerConfig:
-    """Azure container configuration for specific content types."""
-    
+    """Azure container configuration for specific content types."""    
     name: str
     public_access: str = 'off'  # 'blob', 'container', 'off'
     metadata: Optional[Dict[str, str]] = None
@@ -33,11 +29,9 @@ class AzureContainerConfig:
 
 @dataclass
 class AzureBlobConfig:
-    """
-    Comprehensive Azure Blob Storage configuration for IA-Influencer Agent platform.
+    """    Comprehensive Azure Blob Storage configuration for IA-Influencer Agent platform.
     Provides enterprise-grade blob storage with multi-tier optimization.
-    """
-    
+    """    
     # Azure Storage Account
     account_name: str = os.getenv('AZURE_STORAGE_ACCOUNT_NAME', '')
     account_key: str = os.getenv('AZURE_STORAGE_ACCOUNT_KEY', '')
@@ -65,8 +59,7 @@ class AzureBlobConfig:
     cdn_endpoint: Optional[str] = None
     
     def __post_init__(self):
-        """Initialize container configurations if not provided."""
-        if self.containers is None:
+        """Initialize container configurations if not provided."""        if self.containers is None:
             self.containers = self._get_default_container_config()
         
         if not self.connection_string and self.account_name and self.account_key:
@@ -78,8 +71,7 @@ class AzureBlobConfig:
             )
     
     def _get_default_container_config(self) -> Dict[str, AzureContainerConfig]:
-        """Default container configuration for different content types."""
-        env = os.getenv('ENVIRONMENT', 'development')
+        """Default container configuration for different content types."""        env = os.getenv('ENVIRONMENT', 'development')
         
         return {
             'audio-files': AzureContainerConfig(
@@ -133,8 +125,7 @@ class AzureBlobConfig:
         }
     
     def get_blob_service_client(self) -> BlobServiceClient:
-        """Create and configure Azure Blob Service client."""
-        try:
+        """Create and configure Azure Blob Service client."""        try:
             if self.connection_string:
                 return BlobServiceClient.from_connection_string(
                     conn_str=self.connection_string
@@ -148,13 +139,11 @@ class AzureBlobConfig:
             raise AzureError(f"Failed to create Blob Service client: {e}")
     
     def get_container_client(self, container_name: str) -> ContainerClient:
-        """Get container client for specific container."""
-        blob_service_client = self.get_blob_service_client()
+        """Get container client for specific container."""        blob_service_client = self.get_blob_service_client()
         return blob_service_client.get_container_client(container_name)
     
     def validate_configuration(self) -> bool:
-        """Validate Azure Blob Storage configuration and connectivity."""
-        try:
+        """Validate Azure Blob Storage configuration and connectivity."""        try:
             client = self.get_blob_service_client()
             # Test connectivity by listing containers
             list(client.list_containers(max_results=1))
@@ -164,36 +153,31 @@ class AzureBlobConfig:
             return False
     
     def get_container_name(self, content_type: str) -> str:
-        """Get container name for specific content type."""
-        container_key = f"{content_type}-files"
+        """Get container name for specific content type."""        container_key = f"{content_type}-files"
         if container_key not in self.containers:
             # Fallback to user-uploads for unknown types
             container_key = "user-uploads"
         return self.containers[container_key].name
     
     def get_content_types(self) -> List[str]:
-        """Get list of supported content types."""
-        return [key.replace('-files', '') for key in self.containers.keys() 
+        """Get list of supported content types."""        return [key.replace('-files', '') for key in self.containers.keys() 
                 if key.endswith('-files')]
     
     def get_access_tier_for_content(self, content_type: str) -> str:
-        """Get appropriate access tier for content type."""
-        container_key = f"{content_type}-files"
+        """Get appropriate access tier for content type."""        container_key = f"{content_type}-files"
         if container_key in self.containers:
             return self.containers[container_key].tier
         return 'hot'  # Default tier
     
     def get_sas_url_config(self) -> Dict[str, Any]:
-        """Get configuration for SAS URL generation."""
-        return {
+        """Get configuration for SAS URL generation."""        return {
             'account_name': self.account_name,
             'account_key': self.account_key,
             'protocol': 'https' if self.enable_https else 'http'
         }
     
     def get_lifecycle_management_policy(self) -> Dict[str, Any]:
-        """Get lifecycle management policy for blob storage optimization."""
-        return {
+        """Get lifecycle management policy for blob storage optimization."""        return {
             'rules': [
                 {
                     'name': 'audio_lifecycle',

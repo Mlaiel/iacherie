@@ -34,8 +34,7 @@ and business intelligence frameworks developed by Fahed Mlaiel.
 Unauthorized use, reproduction, or distribution is strictly prohibited.
 All concepts, data models, and analytical approaches are protected
 intellectual property.
-"""
-from .collectors import BusinessMetricsCollector
+"""from .collectors import BusinessMetricsCollector
 from .user_behavior import UserBehaviorCollector  
 from .content_analytics import ContentAnalyticsCollector
 from .revenue_metrics import RevenueMetricsCollector

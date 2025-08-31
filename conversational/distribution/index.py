@@ -1,5 +1,4 @@
-"""
-Distribution Module Index
+"""Distribution Module Index
 
 Enterprise-grade entry point for the IA Influencer Agent distribution system.
 Provides unified access to all distribution components and services.
@@ -10,9 +9,7 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: This code is proprietary and protected. Unauthorized use, reproduction, 
 or distribution is strictly prohibited and will result in legal action.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime
@@ -54,8 +51,7 @@ _redis_client: Optional[aioredis.Redis] = None
 
 @dataclass
 class DistributionConfig:
-    """Distribution service configuration"""
-    enable_analytics: bool = True
+    """Distribution service configuration"""    enable_analytics: bool = True
     enable_revenue_tracking: bool = True
     enable_scheduling: bool = True
     enable_content_adaptation: bool = True
@@ -66,8 +62,7 @@ class DistributionConfig:
 
 
 class DistributionService:
-    """
-    Main distribution service providing unified access to all distribution features.
+    """    Main distribution service providing unified access to all distribution features.
     
     This service acts as the primary interface for:
     - Content distribution across multiple platforms
@@ -76,16 +71,14 @@ class DistributionService:
     - Intelligent scheduling and timing
     - Content adaptation and formatting
     - Strategy optimization and recommendations
-    """
-    
+    """    
     def __init__(self, config: DistributionConfig = None):
         self.config = config or DistributionConfig()
         self.manager: Optional[DistributionModuleManager] = None
         self.is_initialized = False
         
     async def initialize(self, db: Session) -> None:
-        """Initialize the distribution service"""
-        try:
+        """Initialize the distribution service"""        try:
             logger.info("Initializing Distribution Service...")
             
             # Create Redis connection
@@ -108,8 +101,7 @@ class DistributionService:
             raise DistributionError(f"Service initialization failed: {e}")
     
     async def shutdown(self) -> None:
-        """Shutdown the distribution service"""
-        try:
+        """Shutdown the distribution service"""        try:
             logger.info("Shutting down Distribution Service...")
             
             if self.manager:
@@ -133,8 +125,7 @@ class DistributionService:
         strategy: str = "optimal_timing",
         schedule_time: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """Distribute content across specified platforms"""
-        if not self.is_initialized:
+        """Distribute content across specified platforms"""        if not self.is_initialized:
             raise DistributionError("Distribution service not initialized")
         
         try:
@@ -170,8 +161,7 @@ class DistributionService:
         time_range: str = "last_30_days",
         platforms: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """Get comprehensive analytics for user content"""
-        if not self.is_initialized:
+        """Get comprehensive analytics for user content"""        if not self.is_initialized:
             raise DistributionError("Distribution service not initialized")
         
         try:
@@ -199,8 +189,7 @@ class DistributionService:
         user_id: int,
         time_range: str = "last_30_days"
     ) -> Dict[str, Any]:
-        """Get revenue analytics and insights"""
-        if not self.is_initialized:
+        """Get revenue analytics and insights"""        if not self.is_initialized:
             raise DistributionError("Distribution service not initialized")
         
         try:
@@ -230,8 +219,7 @@ class DistributionService:
         schedule_time: datetime,
         strategy: str = "optimal_timing"
     ) -> Dict[str, Any]:
-        """Schedule content for future distribution"""
-        if not self.is_initialized:
+        """Schedule content for future distribution"""        if not self.is_initialized:
             raise DistributionError("Distribution service not initialized")
         
         try:
@@ -267,8 +255,7 @@ class DistributionService:
         target_platforms: List[str],
         quality_level: str = "high"
     ) -> Dict[str, Any]:
-        """Adapt content for specified platforms"""
-        if not self.is_initialized:
+        """Adapt content for specified platforms"""        if not self.is_initialized:
             raise DistributionError("Distribution service not initialized")
         
         try:
@@ -305,8 +292,7 @@ _distribution_service: Optional[DistributionService] = None
 
 
 async def get_distribution_service() -> DistributionService:
-    """Get or create the global distribution service instance"""
-    global _distribution_service
+    """Get or create the global distribution service instance"""    global _distribution_service
     
     if _distribution_service is None:
         _distribution_service = DistributionService()
@@ -315,8 +301,7 @@ async def get_distribution_service() -> DistributionService:
 
 
 async def initialize_distribution_service(db: Session) -> DistributionService:
-    """Initialize the distribution service"""
-    service = await get_distribution_service()
+    """Initialize the distribution service"""    service = await get_distribution_service()
     
     if not service.is_initialized:
         await service.initialize(db)
@@ -325,8 +310,7 @@ async def initialize_distribution_service(db: Session) -> DistributionService:
 
 
 async def shutdown_distribution_service() -> None:
-    """Shutdown the distribution service"""
-    global _distribution_service
+    """Shutdown the distribution service"""    global _distribution_service
     
     if _distribution_service and _distribution_service.is_initialized:
         await _distribution_service.shutdown()
@@ -336,8 +320,7 @@ async def shutdown_distribution_service() -> None:
 # FastAPI lifespan manager
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Manage FastAPI application lifespan"""
-    # Startup
+    """Manage FastAPI application lifespan"""    # Startup
     logger.info("Starting Distribution Service...")
     
     try:
@@ -351,8 +334,7 @@ async def lifespan(app: FastAPI):
 
 # FastAPI dependency
 async def get_service(db: Session = Depends(get_db)) -> DistributionService:
-    """FastAPI dependency to get distribution service"""
-    return await initialize_distribution_service(db)
+    """FastAPI dependency to get distribution service"""    return await initialize_distribution_service(db)
 
 
 # Utility functions for external use
@@ -362,8 +344,7 @@ async def quick_distribute(
     platforms: List[str],
     db: Session
 ) -> Dict[str, Any]:
-    """Quick content distribution function"""
-    service = await initialize_distribution_service(db)
+    """Quick content distribution function"""    service = await initialize_distribution_service(db)
     return await service.distribute_content(user_id, content_id, platforms)
 
 
@@ -372,8 +353,7 @@ async def quick_analytics(
     time_range: str,
     db: Session
 ) -> Dict[str, Any]:
-    """Quick analytics retrieval function"""
-    service = await initialize_distribution_service(db)
+    """Quick analytics retrieval function"""    service = await initialize_distribution_service(db)
     return await service.get_analytics(user_id, time_range)
 
 
@@ -384,15 +364,13 @@ async def quick_schedule(
     schedule_time: datetime,
     db: Session
 ) -> Dict[str, Any]:
-    """Quick content scheduling function"""
-    service = await initialize_distribution_service(db)
+    """Quick content scheduling function"""    service = await initialize_distribution_service(db)
     return await service.schedule_content(user_id, content_id, platforms, schedule_time)
 
 
 # Module status and health
 async def get_distribution_status() -> Dict[str, Any]:
-    """Get distribution module status"""
-    if _distribution_manager:
+    """Get distribution module status"""    if _distribution_manager:
         return await _distribution_manager.get_module_status()
     else:
         return {
@@ -402,8 +380,7 @@ async def get_distribution_status() -> Dict[str, Any]:
 
 
 async def get_distribution_health() -> Dict[str, Any]:
-    """Get distribution module health check"""
-    return await health_check()
+    """Get distribution module health check"""    return await health_check()
 
 
 # Export main components
@@ -424,8 +401,7 @@ __all__ = [
 
 
 # Initialize logging
-logger.info("""
-🎯 Distribution Module Index v2.1.0 Loaded
+logger.info("""🎯 Distribution Module Index v2.1.0 Loaded
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 🚀 Enterprise Distribution Service Ready

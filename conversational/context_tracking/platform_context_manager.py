@@ -1,5 +1,4 @@
-"""
-🌐 PLATFORM CONTEXT MANAGER - ENTERPRISE MULTI-PLATFORM INTELLIGENCE SYSTEM
+"""🌐 PLATFORM CONTEXT MANAGER - ENTERPRISE MULTI-PLATFORM INTELLIGENCE SYSTEM
 =============================================================================
 
 Ultra-sophisticated cross-platform context management system for multi-format
@@ -53,9 +52,7 @@ Business Logic Flow:
 Multi-Platform Integration → AI Context Analysis → Performance Optimization → 
 Cross-Platform Strategy → Content Distribution → Revenue Maximization → 
 Competitive Intelligence → Global Expansion → Continuous Optimization
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 from datetime import datetime, timedelta
@@ -77,8 +74,7 @@ from ...ai.recommendation.platform_optimizer import PlatformOptimizer
 
 
 class SupportedPlatform(Enum):
-    """Supported social media platforms"""
-    INSTAGRAM = "instagram"
+    """Supported social media platforms"""    INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
     SPOTIFY = "spotify"
@@ -96,8 +92,7 @@ class SupportedPlatform(Enum):
 
 
 class PlatformFeature(Enum):
-    """Platform-specific features"""
-    STORIES = "stories"
+    """Platform-specific features"""    STORIES = "stories"
     REELS = "reels"
     LIVE_STREAMING = "live_streaming"
     HASHTAGS = "hashtags"
@@ -114,8 +109,7 @@ class PlatformFeature(Enum):
 
 
 class ContentFormat(Enum):
-    """Content formats per platform"""
-    PHOTO = "photo"
+    """Content formats per platform"""    PHOTO = "photo"
     VIDEO = "video"
     AUDIO = "audio"
     TEXT = "text"
@@ -129,8 +123,7 @@ class ContentFormat(Enum):
 
 
 class EngagementType(Enum):
-    """Types of platform engagement"""
-    LIKES = "likes"
+    """Types of platform engagement"""    LIKES = "likes"
     SHARES = "shares"
     COMMENTS = "comments"
     SAVES = "saves"
@@ -144,8 +137,7 @@ class EngagementType(Enum):
 
 @dataclass
 class PlatformMetrics:
-    """Platform-specific performance metrics"""
-    platform: SupportedPlatform
+    """Platform-specific performance metrics"""    platform: SupportedPlatform
     follower_count: int
     engagement_rate: float
     reach: int
@@ -162,8 +154,7 @@ class PlatformMetrics:
 
 @dataclass
 class PlatformBehavior:
-    """User behavior patterns on specific platform"""
-    platform: SupportedPlatform
+    """User behavior patterns on specific platform"""    platform: SupportedPlatform
     posting_frequency: float
     content_preferences: Dict[str, float]
     engagement_patterns: Dict[str, Any]
@@ -178,8 +169,7 @@ class PlatformBehavior:
 
 @dataclass
 class CrossPlatformStrategy:
-    """Cross-platform content and engagement strategy"""
-    creator_id: str
+    """Cross-platform content and engagement strategy"""    creator_id: str
     primary_platforms: List[SupportedPlatform]
     content_adaptation_strategy: Dict[str, Any]
     cross_promotion_plan: Dict[str, Any]
@@ -193,8 +183,7 @@ class CrossPlatformStrategy:
 
 @dataclass
 class PlatformContext:
-    """Comprehensive platform context for user"""
-    user_id: str
+    """Comprehensive platform context for user"""    user_id: str
     platform: SupportedPlatform
     account_data: Dict[str, Any]
     current_metrics: PlatformMetrics
@@ -208,13 +197,11 @@ class PlatformContext:
 
 
 class PlatformContextManager:
-    """
-    Ultra-advanced platform context management system
+    """    Ultra-advanced platform context management system
     
     Provides comprehensive platform intelligence, cross-platform optimization,
     and strategic insights for multi-platform content creators.
-    """
-    
+    """    
     def __init__(self, 
                  cache_manager: CacheManager,
                  security_manager: SecurityManager,
@@ -280,8 +267,7 @@ class PlatformContextManager:
                                     user_id: str,
                                     platform: SupportedPlatform,
                                     context_data: Dict[str, Any]) -> PlatformContext:
-        """
-        Track and update platform context for user
+        """        Track and update platform context for user
         
         Args:
             user_id: User identifier
@@ -290,8 +276,7 @@ class PlatformContextManager:
             
         Returns:
             PlatformContext: Updated platform context
-        """
-        try:
+        """        try:
             # Validate input data
             await self._validate_platform_context_data(user_id, platform, context_data)
             
@@ -343,8 +328,7 @@ class PlatformContextManager:
     async def analyze_cross_platform_performance(self, 
                                                user_id: str,
                                                analysis_period: timedelta = timedelta(days=30)) -> Dict[str, Any]:
-        """
-        Analyze performance across all user's platforms
+        """        Analyze performance across all user's platforms
         
         Args:
             user_id: User identifier
@@ -352,8 +336,7 @@ class PlatformContextManager:
             
         Returns:
             Comprehensive cross-platform performance analysis
-        """
-        try:
+        """        try:
             # Get all platform contexts for user
             platform_contexts = await self._get_all_platform_contexts(user_id)
             
@@ -425,8 +408,7 @@ class PlatformContextManager:
                                        user_id: str,
                                        target_platforms: List[SupportedPlatform] = None,
                                        optimization_goals: Dict[str, Any] = None) -> CrossPlatformStrategy:
-        """
-        Generate optimized cross-platform strategy
+        """        Generate optimized cross-platform strategy
         
         Args:
             user_id: User identifier
@@ -435,8 +417,7 @@ class PlatformContextManager:
             
         Returns:
             CrossPlatformStrategy: Optimized platform strategy
-        """
-        try:
+        """        try:
             # Get current platform contexts
             platform_contexts = await self._get_all_platform_contexts(user_id)
             
@@ -524,8 +505,7 @@ class PlatformContextManager:
     async def predict_platform_trends(self, 
                                      platform: SupportedPlatform,
                                      prediction_horizon: timedelta = timedelta(days=30)) -> Dict[str, Any]:
-        """
-        Predict platform trends and opportunities
+        """        Predict platform trends and opportunities
         
         Args:
             platform: Target platform for trend prediction
@@ -533,8 +513,7 @@ class PlatformContextManager:
             
         Returns:
             Platform trend predictions and insights
-        """
-        try:
+        """        try:
             # Analyze historical trend data
             historical_trends = await self._analyze_historical_platform_trends(platform)
             
@@ -604,8 +583,7 @@ class PlatformContextManager:
                                                        user_id: str,
                                                        platform: SupportedPlatform,
                                                        content_goals: Dict[str, Any] = None) -> Dict[str, Any]:
-        """
-        Generate platform-specific content recommendations
+        """        Generate platform-specific content recommendations
         
         Args:
             user_id: User identifier
@@ -614,8 +592,7 @@ class PlatformContextManager:
             
         Returns:
             Platform-optimized content recommendations
-        """
-        try:
+        """        try:
             # Get platform context
             context = await self._get_platform_context(user_id, platform)
             if not context:
@@ -688,8 +665,7 @@ class PlatformContextManager:
                                              user_id: str,
                                              platform: SupportedPlatform,
                                              context_data: Dict[str, Any]):
-        """Validate platform context data"""
-        if not user_id:
+        """Validate platform context data"""        if not user_id:
             raise ValidationError("User ID is required for platform context tracking")
         
         if not isinstance(platform, SupportedPlatform):
@@ -701,8 +677,7 @@ class PlatformContextManager:
     async def _get_platform_context(self, 
                                   user_id: str,
                                   platform: SupportedPlatform) -> Optional[PlatformContext]:
-        """Retrieve platform context from cache or database"""
-        cache_key = f"platform_context:{user_id}:{platform.value}"
+        """Retrieve platform context from cache or database"""        cache_key = f"platform_context:{user_id}:{platform.value}"
         cached_data = await self.cache_manager.get(cache_key)
         
         if cached_data:
@@ -718,8 +693,7 @@ class PlatformContextManager:
                                      user_id: str,
                                      platform: SupportedPlatform,
                                      initial_data: Dict[str, Any]) -> PlatformContext:
-        """Create new platform context"""
-        # Initialize with default values
+        """Create new platform context"""        # Initialize with default values
         context = PlatformContext(
             user_id=user_id,
             platform=platform,
@@ -760,8 +734,7 @@ class PlatformContextManager:
         return context
 
     async def _cache_platform_context(self, context: PlatformContext):
-        """Cache platform context"""
-        cache_key = f"platform_context:{context.user_id}:{context.platform.value}"
+        """Cache platform context"""        cache_key = f"platform_context:{context.user_id}:{context.platform.value}"
         
         # Convert to JSON-serializable format
         context_data = {
@@ -811,8 +784,7 @@ class PlatformContextManager:
         )
 
     async def _update_account_data(self, context: PlatformContext, context_data: Dict[str, Any]):
-        """Update account data in context with validation and security"""
-        try:
+        """Update account data in context with validation and security"""        try:
             if "account_data" in context_data:
                 account_updates = context_data["account_data"]
                 
@@ -833,8 +805,7 @@ class PlatformContextManager:
             raise PlatformContextError(f"Account data update failed: {e}")
 
     async def _refresh_platform_metrics(self, context: PlatformContext):
-        """Refresh platform metrics from API with comprehensive data collection"""
-        try:
+        """Refresh platform metrics from API with comprehensive data collection"""        try:
             # Initialize API manager for the platform
             api_manager = PlatformAPIManager(context.platform)
             
@@ -876,8 +847,7 @@ class PlatformContextManager:
             pass
 
     async def _analyze_platform_behavior(self, context: PlatformContext, context_data: Dict[str, Any]):
-        """Analyze platform-specific behavior patterns with ML intelligence"""
-        try:
+        """Analyze platform-specific behavior patterns with ML intelligence"""        try:
             behavior_data = context_data.get('behavior_data', {})
             
             # Analyze posting patterns
@@ -909,8 +879,7 @@ class PlatformContextManager:
             pass
 
     async def _analyze_posting_patterns(self, behavior_data: Dict[str, Any], context: PlatformContext) -> Dict[str, Any]:
-        """Analyze posting frequency and timing patterns"""
-        try:
+        """Analyze posting frequency and timing patterns"""        try:
             posts = behavior_data.get('posts', [])
             if not posts:
                 return {'pattern': 'insufficient_data'}
@@ -953,8 +922,7 @@ class PlatformContextManager:
             return {'pattern': 'analysis_failed'}
 
     async def _identify_optimization_opportunities(self, context: PlatformContext) -> List[Dict[str, Any]]:
-        """Identify platform-specific optimization opportunities"""
-        try:
+        """Identify platform-specific optimization opportunities"""        try:
             opportunities = []
             
             # Content timing optimization
@@ -1049,8 +1017,7 @@ class PlatformContextManager:
             return []
 
     async def _calculate_optimization_score(self, context: PlatformContext) -> float:
-        """Calculate comprehensive platform optimization score"""
-        try:
+        """Calculate comprehensive platform optimization score"""        try:
             optimization_factors = {
                 'content_consistency': self._assess_content_consistency(context),
                 'engagement_quality': self._assess_engagement_quality(context),
@@ -1081,14 +1048,12 @@ class PlatformContextManager:
             return 0.5
 
     def _assess_content_consistency(self, context: PlatformContext) -> float:
-        """Assess content posting consistency"""
-        posting_patterns = context.behavior_patterns.get('posting_patterns', {})
+        """Assess content posting consistency"""        posting_patterns = context.behavior_patterns.get('posting_patterns', {})
         consistency_score = posting_patterns.get('posting_regularity_score', 0.5)
         return min(max(consistency_score, 0.0), 1.0)
 
     def _assess_engagement_quality(self, context: PlatformContext) -> float:
-        """Assess engagement quality and rate"""
-        engagement_rate = context.current_metrics.engagement_rate
+        """Assess engagement quality and rate"""        engagement_rate = context.current_metrics.engagement_rate
         
         # Platform-specific benchmarks
         platform_benchmarks = {
@@ -1105,8 +1070,7 @@ class PlatformContextManager:
         return engagement_score
 
     def _assess_feature_utilization(self, context: PlatformContext) -> float:
-        """Assess utilization of platform-specific features"""
-        feature_usage = context.behavior_patterns.get('feature_usage', {})
+        """Assess utilization of platform-specific features"""        feature_usage = context.behavior_patterns.get('feature_usage', {})
         total_features = len(feature_usage)
         used_features = sum(1 for usage in feature_usage.values() if usage.get('frequency', 0) > 0)
         
@@ -1114,8 +1078,7 @@ class PlatformContextManager:
         return min(max(utilization_score, 0.0), 1.0)
 
     async def _generate_platform_action_recommendations(self, context: PlatformContext) -> List[Dict[str, Any]]:
-        """Generate specific actionable platform recommendations"""
-        try:
+        """Generate specific actionable platform recommendations"""        try:
             recommendations = []
             
             # Content timing recommendations
@@ -1195,8 +1158,7 @@ class PlatformContextManager:
             return []
 
     async def _assess_competitive_position(self, context: PlatformContext) -> Dict[str, Any]:
-        """Assess competitive position on platform with market intelligence"""
-        try:
+        """Assess competitive position on platform with market intelligence"""        try:
             # Get platform-specific competitive metrics
             competitive_data = await self._get_competitive_data(context)
             

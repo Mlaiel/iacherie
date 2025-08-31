@@ -1,5 +1,4 @@
-"""
-Storage Manager
+"""Storage Manager
 ==============
 
 Professional storage management system for multi-provider cloud storage.
@@ -7,9 +6,7 @@ Supports AWS S3, Google Cloud Storage, Azure Blob, and local storage.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, BinaryIO
@@ -28,8 +25,7 @@ import aiohttp
 
 
 class StorageProvider(Enum):
-    """Storage provider enumeration"""
-    AWS_S3 = "aws_s3"
+    """Storage provider enumeration"""    AWS_S3 = "aws_s3"
     GOOGLE_CLOUD = "google_cloud"
     AZURE_BLOB = "azure_blob"
     LOCAL = "local"
@@ -37,8 +33,7 @@ class StorageProvider(Enum):
 
 
 class StorageClass(Enum):
-    """Storage class for cost optimization"""
-    STANDARD = "standard"
+    """Storage class for cost optimization"""    STANDARD = "standard"
     INFREQUENT_ACCESS = "infrequent_access"
     ARCHIVE = "archive"
     DEEP_ARCHIVE = "deep_archive"
@@ -46,8 +41,7 @@ class StorageClass(Enum):
 
 @dataclass
 class StorageConfig:
-    """Storage configuration"""
-    provider: StorageProvider
+    """Storage configuration"""    provider: StorageProvider
     bucket_name: str
     region: str
     access_key: str
@@ -61,8 +55,7 @@ class StorageConfig:
 
 @dataclass
 class StorageResult:
-    """Storage operation result"""
-    success: bool
+    """Storage operation result"""    success: bool
     file_path: str
     provider: str
     bucket: str
@@ -76,8 +69,7 @@ class StorageResult:
 
 @dataclass
 class StorageStats:
-    """Storage statistics"""
-    total_files: int
+    """Storage statistics"""    total_files: int
     total_size: int
     size_by_type: Dict[str, int]
     files_by_provider: Dict[str, int]
@@ -86,21 +78,17 @@ class StorageStats:
 
 
 class StorageManager:
-    """
-    Professional storage manager for IA Influencer Agent platform.
+    """    Professional storage manager for IA Influencer Agent platform.
     
     Provides unified interface for multi-provider cloud storage with
     automatic failover, cost optimization, and intelligent data placement.
-    """
-    
+    """    
     def __init__(self, configs: List[StorageConfig]):
-        """
-        Initialize StorageManager with multiple provider configurations.
+        """        Initialize StorageManager with multiple provider configurations.
         
         Args:
             configs: List of storage provider configurations
-        """
-        self.configs = {config.provider: config for config in configs}
+        """        self.configs = {config.provider: config for config in configs}
         self.logger = logging.getLogger(__name__)
         
         # Provider clients
@@ -123,8 +111,7 @@ class StorageManager:
         asyncio.create_task(self._initialize_providers())
     
     async def _initialize_providers(self):
-        """Initialize storage provider clients"""
-        try:
+        """Initialize storage provider clients"""        try:
             for provider, config in self.configs.items():
                 if provider == StorageProvider.AWS_S3:
                     self.clients[provider] = await self._initialize_s3_client(config)
@@ -145,8 +132,7 @@ class StorageManager:
     async def store_file(self, file_data: Union[bytes, BinaryIO], file_path: str,
                         metadata: Dict[str, Any] = None, 
                         provider: StorageProvider = None) -> StorageResult:
-        """
-        Store file in cloud storage with intelligent provider selection.
+        """        Store file in cloud storage with intelligent provider selection.
         
         Args:
             file_data: File data to store
@@ -156,8 +142,7 @@ class StorageManager:
             
         Returns:
             Storage result with operation details
-        """
-        try:
+        """        try:
             # Select optimal provider
             target_provider = provider or await self._select_optimal_provider(
                 file_data, file_path, metadata
@@ -236,8 +221,7 @@ class StorageManager:
     
     async def retrieve_file(self, file_path: str, 
                           provider: StorageProvider = None) -> Optional[bytes]:
-        """
-        Retrieve file from storage.
+        """        Retrieve file from storage.
         
         Args:
             file_path: Path to file in storage
@@ -245,8 +229,7 @@ class StorageManager:
             
         Returns:
             File content bytes or None if not found
-        """
-        try:
+        """        try:
             # Determine provider if not specified
             if not provider:
                 provider = await self._detect_file_provider(file_path)
@@ -286,8 +269,7 @@ class StorageManager:
     async def delete_file(self, file_path: str, 
                          provider: StorageProvider = None, 
                          permanent: bool = False) -> bool:
-        """
-        Delete file from storage.
+        """        Delete file from storage.
         
         Args:
             file_path: Path to file in storage
@@ -296,8 +278,7 @@ class StorageManager:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             # Determine provider if not specified
             if not provider:
                 provider = await self._detect_file_provider(file_path)
@@ -334,8 +315,7 @@ class StorageManager:
     async def list_files(self, prefix: str = "", 
                         provider: StorageProvider = None,
                         limit: int = 1000) -> List[Dict[str, Any]]:
-        """
-        List files in storage.
+        """        List files in storage.
         
         Args:
             prefix: Path prefix to filter files
@@ -344,8 +324,7 @@ class StorageManager:
             
         Returns:
             List of file information dictionaries
-        """
-        try:
+        """        try:
             target_provider = provider or self.primary_provider
             
             if target_provider not in self.clients:
@@ -360,8 +339,7 @@ class StorageManager:
     
     async def get_file_info(self, file_path: str, 
                            provider: StorageProvider = None) -> Optional[Dict[str, Any]]:
-        """
-        Get file information and metadata.
+        """        Get file information and metadata.
         
         Args:
             file_path: Path to file in storage
@@ -369,8 +347,7 @@ class StorageManager:
             
         Returns:
             File information dictionary or None
-        """
-        try:
+        """        try:
             target_provider = provider or await self._detect_file_provider(file_path)
             
             if not target_provider or target_provider not in self.clients:
@@ -386,8 +363,7 @@ class StorageManager:
     async def generate_presigned_url(self, file_path: str, 
                                    expiration_seconds: int = 3600,
                                    provider: StorageProvider = None) -> Optional[str]:
-        """
-        Generate presigned URL for file access.
+        """        Generate presigned URL for file access.
         
         Args:
             file_path: Path to file in storage
@@ -396,8 +372,7 @@ class StorageManager:
             
         Returns:
             Presigned URL or None
-        """
-        try:
+        """        try:
             target_provider = provider or await self._detect_file_provider(file_path)
             
             if not target_provider or target_provider not in self.clients:
@@ -414,13 +389,11 @@ class StorageManager:
             return None
     
     async def get_storage_stats(self) -> StorageStats:
-        """
-        Get comprehensive storage statistics.
+        """        Get comprehensive storage statistics.
         
         Returns:
             Storage statistics
-        """
-        try:
+        """        try:
             total_files = 0
             total_size = 0
             size_by_type = {}
@@ -467,8 +440,7 @@ class StorageManager:
     # Private helper methods for provider initialization
     
     async def _initialize_s3_client(self, config: StorageConfig):
-        """Initialize AWS S3 client"""
-        try:
+        """Initialize AWS S3 client"""        try:
             session = boto3.Session(
                 aws_access_key_id=config.access_key,
                 aws_secret_access_key=config.secret_key,
@@ -488,8 +460,7 @@ class StorageManager:
             raise
     
     async def _initialize_gcs_client(self, config: StorageConfig):
-        """Initialize Google Cloud Storage client"""
-        try:
+        """Initialize Google Cloud Storage client"""        try:
             # Implementation for GCS client initialization
             # Placeholder for now
             self.logger.info(f"GCS client initialized for bucket: {config.bucket_name}")
@@ -500,8 +471,7 @@ class StorageManager:
             raise
     
     async def _initialize_azure_client(self, config: StorageConfig):
-        """Initialize Azure Blob Storage client"""
-        try:
+        """Initialize Azure Blob Storage client"""        try:
             # Implementation for Azure client initialization
             # Placeholder for now
             self.logger.info(f"Azure client initialized for container: {config.bucket_name}")
@@ -512,8 +482,7 @@ class StorageManager:
             raise
     
     async def _initialize_minio_client(self, config: StorageConfig):
-        """Initialize MinIO client"""
-        try:
+        """Initialize MinIO client"""        try:
             # Implementation for MinIO client initialization
             # Would use similar approach to S3 with custom endpoint
             self.logger.info(f"MinIO client initialized for bucket: {config.bucket_name}")
@@ -524,8 +493,7 @@ class StorageManager:
             raise
     
     async def _initialize_local_storage(self, config: StorageConfig):
-        """Initialize local storage"""
-        try:
+        """Initialize local storage"""        try:
             storage_path = Path(config.bucket_name)
             storage_path.mkdir(parents=True, exist_ok=True)
             
@@ -540,8 +508,7 @@ class StorageManager:
     
     async def _select_optimal_provider(self, file_data: Union[bytes, BinaryIO], 
                                      file_path: str, metadata: Dict[str, Any]) -> StorageProvider:
-        """Select optimal storage provider based on file characteristics"""
-        # Simple selection logic - in production would consider:
+        """Select optimal storage provider based on file characteristics"""        # Simple selection logic - in production would consider:
         # - File size and type
         # - Cost optimization
         # - Geographic location
@@ -552,8 +519,7 @@ class StorageManager:
     
     async def _store_to_provider(self, provider: StorageProvider, file_content: bytes,
                                file_path: str, metadata: Dict[str, Any]) -> StorageResult:
-        """Store file to specific provider"""
-        try:
+        """Store file to specific provider"""        try:
             config = self.configs[provider]
             client = self.clients[provider]
             
@@ -578,8 +544,7 @@ class StorageManager:
     
     async def _store_to_s3(self, client, config: StorageConfig, file_content: bytes,
                           file_path: str, metadata: Dict[str, Any]) -> StorageResult:
-        """Store file to AWS S3"""
-        try:
+        """Store file to AWS S3"""        try:
             # Prepare metadata
             s3_metadata = {
                 'uploaded_at': datetime.utcnow().isoformat(),
@@ -634,8 +599,7 @@ class StorageManager:
     
     async def _store_to_local(self, client, config: StorageConfig, file_content: bytes,
                             file_path: str, metadata: Dict[str, Any]) -> StorageResult:
-        """Store file to local storage"""
-        try:
+        """Store file to local storage"""        try:
             full_path = client['path'] / file_path
             full_path.parent.mkdir(parents=True, exist_ok=True)
             
@@ -673,8 +637,7 @@ class StorageManager:
     
     async def _store_to_gcs(self, client, config: StorageConfig, file_content: bytes,
                            file_path: str, metadata: Dict[str, Any]) -> StorageResult:
-        """Store file to Google Cloud Storage"""
-        try:
+        """Store file to Google Cloud Storage"""        try:
             self.logger.info(f"Storing to GCS: {file_path}")
             # Basic implementation - logs operation and returns success
             # In production, would use Google Cloud Storage client
@@ -698,8 +661,7 @@ class StorageManager:
     
     async def _store_to_azure(self, client, config: StorageConfig, file_content: bytes,
                             file_path: str, metadata: Dict[str, Any]) -> StorageResult:
-        """Store file to Azure Blob Storage"""
-        try:
+        """Store file to Azure Blob Storage"""        try:
             self.logger.info(f"Storing to Azure: {file_path}")
             # Basic implementation - logs operation and returns success
             # In production, would use Azure Blob Storage client
@@ -723,8 +685,7 @@ class StorageManager:
     
     async def _store_to_minio(self, client, config: StorageConfig, file_content: bytes,
                             file_path: str, metadata: Dict[str, Any]) -> StorageResult:
-        """Store file to MinIO"""
-        try:
+        """Store file to MinIO"""        try:
             self.logger.info(f"Storing to MinIO: {file_path}")
             # Basic implementation - logs operation and returns success
             # In production, would use MinIO client
@@ -748,8 +709,7 @@ class StorageManager:
     
     async def _store_fallback(self, config: StorageConfig, file_content: bytes,
                              file_path: str, metadata: Dict[str, Any]) -> StorageResult:
-        """Fallback storage implementation for unsupported providers"""
-        try:
+        """Fallback storage implementation for unsupported providers"""        try:
             self.logger.warning(f"Using fallback storage for: {file_path}")
             # Basic fallback - logs operation and returns mock success
             file_hash = hashlib.sha256(file_content).hexdigest()
@@ -774,93 +734,75 @@ class StorageManager:
     # Including: compression, deduplication, backup management, etc.
     
     async def _compress_if_beneficial(self, content: bytes, file_path: str) -> Optional[bytes]:
-        """Compress content if it would be beneficial"""
-        # Placeholder - would implement compression logic
+        """Compress content if it would be beneficial"""        # Placeholder - would implement compression logic
         return None
     
     async def _check_duplicate(self, file_hash: str) -> Optional[Dict[str, Any]]:
-        """Check if file already exists based on hash"""
-        # Placeholder - would check file registry
+        """Check if file already exists based on hash"""        # Placeholder - would check file registry
         return None
     
     async def _register_file(self, file_hash: str, result: StorageResult):
-        """Register file in deduplication registry"""
-        # Placeholder - would store in database/cache
+        """Register file in deduplication registry"""        # Placeholder - would store in database/cache
         pass
     
     async def _unregister_file(self, file_path: str):
-        """Remove file from registry"""
-        # Placeholder
+        """Remove file from registry"""        # Placeholder
         pass
     
     async def _create_backup_copies(self, file_content: bytes, file_path: str,
                                   metadata: Dict[str, Any], primary_provider: StorageProvider):
-        """Create backup copies in other providers"""
-        # Placeholder - would create backups
+        """Create backup copies in other providers"""        # Placeholder - would create backups
         pass
     
     async def _detect_file_provider(self, file_path: str) -> Optional[StorageProvider]:
-        """Detect which provider contains the file"""
-        # Placeholder - would check file registry
+        """Detect which provider contains the file"""        # Placeholder - would check file registry
         return self.primary_provider
     
     async def _get_backup_providers(self, file_path: str) -> List[StorageProvider]:
-        """Get list of backup providers for file"""
-        # Placeholder
+        """Get list of backup providers for file"""        # Placeholder
         return []
     
     async def _retrieve_from_provider(self, provider: StorageProvider, file_path: str) -> Optional[bytes]:
-        """Retrieve file from specific provider"""
-        # Placeholder - would implement provider-specific retrieval
+        """Retrieve file from specific provider"""        # Placeholder - would implement provider-specific retrieval
         return None
     
     async def _delete_from_provider(self, provider: StorageProvider, file_path: str) -> bool:
-        """Delete file from specific provider"""
-        # Placeholder
+        """Delete file from specific provider"""        # Placeholder
         return True
     
     async def _move_file(self, provider: StorageProvider, source_path: str, dest_path: str) -> bool:
-        """Move file within provider"""
-        # Placeholder
+        """Move file within provider"""        # Placeholder
         return True
     
     async def _list_files_from_provider(self, provider: StorageProvider, prefix: str, limit: int) -> List[Dict]:
-        """List files from specific provider"""
-        # Placeholder
+        """List files from specific provider"""        # Placeholder
         return []
     
     async def _get_file_info_from_provider(self, provider: StorageProvider, file_path: str) -> Optional[Dict]:
-        """Get file info from specific provider"""
-        # Placeholder
+        """Get file info from specific provider"""        # Placeholder
         return None
     
     async def _generate_presigned_url_from_provider(self, provider: StorageProvider, 
                                                   file_path: str, expiration: int) -> Optional[str]:
-        """Generate presigned URL from specific provider"""
-        # Placeholder
+        """Generate presigned URL from specific provider"""        # Placeholder
         return None
     
     async def _get_provider_stats(self, provider: StorageProvider) -> Dict[str, Any]:
-        """Get statistics from specific provider"""
-        # Placeholder
+        """Get statistics from specific provider"""        # Placeholder
         return {'file_count': 0, 'total_size': 0, 'size_by_type': {}}
     
     async def _calculate_storage_efficiency(self) -> float:
-        """Calculate storage efficiency percentage"""
-        # Placeholder - would calculate compression, deduplication savings
+        """Calculate storage efficiency percentage"""        # Placeholder - would calculate compression, deduplication savings
         return 85.0
     
     async def _calculate_monthly_costs(self) -> Dict[str, float]:
-        """Calculate estimated monthly costs by provider"""
-        # Placeholder - would calculate based on usage and pricing
+        """Calculate estimated monthly costs by provider"""        # Placeholder - would calculate based on usage and pricing
         return {}
     
     async def _is_compressed_file(self, file_path: str) -> bool:
-        """Check if file is compressed"""
-        # Placeholder
+        """Check if file is compressed"""        # Placeholder
         return False
     
     async def _decompress_content(self, content: bytes) -> bytes:
-        """Decompress file content"""
-        # Placeholder
+        """Decompress file content"""        # Placeholder
         return content

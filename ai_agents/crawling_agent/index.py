@@ -1,5 +1,4 @@
-"""
-Crawling Agent Index - Central Entry Point & API Interface
+"""Crawling Agent Index - Central Entry Point & API Interface
 
 Provides centralized access to all crawling agent functionality with standardized interfaces
 for content discovery, surveillance, and monitoring operations.
@@ -18,9 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime
 from typing import Dict, List, Optional, Any, Union
@@ -37,8 +34,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CrawlingServiceConfig:
-    """Comprehensive configuration for crawling services"""
-    max_concurrent_agents: int = 10
+    """Comprehensive configuration for crawling services"""    max_concurrent_agents: int = 10
     default_crawl_depth: int = 3
     default_timeout: int = 30
     enable_surveillance: bool = True
@@ -53,13 +49,11 @@ class CrawlingServiceConfig:
 
 
 class CrawlingServiceInterface:
-    """
-    Unified interface for all crawling agent operations
+    """    Unified interface for all crawling agent operations
     
     Provides high-level API for content discovery, monitoring, and surveillance
     with intelligent load balancing and resource management.
-    """
-    
+    """    
     def __init__(self, config: Optional[CrawlingServiceConfig] = None):
         self.config = config or CrawlingServiceConfig()
         self.agent_manager = CrawlingAgentManager()
@@ -79,8 +73,7 @@ class CrawlingServiceInterface:
         }
     
     async def initialize(self) -> None:
-        """Initialize all crawling service components"""
-        if self.initialized:
+        """Initialize all crawling service components"""        if self.initialized:
             return
         
         try:
@@ -114,8 +107,7 @@ class CrawlingServiceInterface:
                              urls: List[str], 
                              content_types: List[str] = None,
                              max_depth: int = None) -> Dict[str, Any]:
-        """
-        Discover and extract content from specified URLs
+        """        Discover and extract content from specified URLs
         
         Args:
             urls: List of URLs to crawl
@@ -124,8 +116,7 @@ class CrawlingServiceInterface:
             
         Returns:
             Dictionary containing discovered content and analysis
-        """
-        self._ensure_initialized()
+        """        self._ensure_initialized()
         content_types = content_types or ['text']
         max_depth = max_depth or self.config.default_crawl_depth
         
@@ -154,8 +145,7 @@ class CrawlingServiceInterface:
                            url: str, 
                            strategy: str = 'comprehensive',
                            filters: Dict[str, Any] = None) -> Dict[str, Any]:
-        """
-        Comprehensive website crawling with advanced strategies
+        """        Comprehensive website crawling with advanced strategies
         
         Args:
             url: Target website URL
@@ -164,8 +154,7 @@ class CrawlingServiceInterface:
             
         Returns:
             Crawled website data and analysis
-        """
-        self._ensure_initialized()
+        """        self._ensure_initialized()
         filters = filters or {}
         
         crawl_request = {
@@ -200,8 +189,7 @@ class CrawlingServiceInterface:
                             content_fingerprint: str, 
                             platforms: List[str],
                             keywords: List[str] = None) -> Dict[str, Any]:
-        """
-        Monitor specific content across multiple platforms
+        """        Monitor specific content across multiple platforms
         
         Args:
             content_fingerprint: Unique content fingerprint
@@ -210,8 +198,7 @@ class CrawlingServiceInterface:
             
         Returns:
             Monitoring results and potential violations
-        """
-        self._ensure_initialized()
+        """        self._ensure_initialized()
         keywords = keywords or []
         
         monitoring_request = {
@@ -246,8 +233,7 @@ class CrawlingServiceInterface:
                                    reference_content: str,
                                    platforms: List[str] = None,
                                    similarity_threshold: float = 0.8) -> Dict[str, Any]:
-        """
-        Search for content similar to reference across platforms
+        """        Search for content similar to reference across platforms
         
         Args:
             reference_content: Content to find similarities for
@@ -256,8 +242,7 @@ class CrawlingServiceInterface:
             
         Returns:
             Similar content matches with similarity scores
-        """
-        self._ensure_initialized()
+        """        self._ensure_initialized()
         platforms = platforms or ['generic']
         
         search_request = {
@@ -292,8 +277,7 @@ class CrawlingServiceInterface:
                                content_fingerprint: str,
                                platforms: List[str],
                                alert_settings: Dict[str, Any] = None) -> Dict[str, Any]:
-        """
-        Setup automated content surveillance and monitoring
+        """        Setup automated content surveillance and monitoring
         
         Args:
             user_id: User identifier for surveillance target
@@ -303,8 +287,7 @@ class CrawlingServiceInterface:
             
         Returns:
             Surveillance target configuration and status
-        """
-        self._ensure_initialized()
+        """        self._ensure_initialized()
         alert_settings = alert_settings or {'threshold': 0.8, 'channels': ['email']}
         
         surveillance_request = {
@@ -338,8 +321,7 @@ class CrawlingServiceInterface:
     async def start_real_time_monitoring(self, 
                                        monitoring_config: Dict[str, Any],
                                        duration_hours: int = 24) -> Dict[str, Any]:
-        """
-        Start real-time content monitoring with immediate alerts
+        """        Start real-time content monitoring with immediate alerts
         
         Args:
             monitoring_config: Configuration for monitoring targets
@@ -347,8 +329,7 @@ class CrawlingServiceInterface:
             
         Returns:
             Real-time monitoring session details
-        """
-        self._ensure_initialized()
+        """        self._ensure_initialized()
         
         monitoring_request = {
             'action': 'real_time_monitor',
@@ -380,8 +361,7 @@ class CrawlingServiceInterface:
                            platform: str,
                            scan_type: str = 'content_discovery',
                            filters: Dict[str, Any] = None) -> Dict[str, Any]:
-        """
-        Perform comprehensive platform-specific scanning
+        """        Perform comprehensive platform-specific scanning
         
         Args:
             platform: Target platform name
@@ -390,8 +370,7 @@ class CrawlingServiceInterface:
             
         Returns:
             Platform scan results and discovered content
-        """
-        self._ensure_initialized()
+        """        self._ensure_initialized()
         filters = filters or {}
         
         scan_request = {
@@ -425,8 +404,7 @@ class CrawlingServiceInterface:
 
     # Content Analysis Operations
     async def analyze_content_fingerprint(self, content: str, content_type: str = 'text') -> str:
-        """
-        Generate unique fingerprint for content
+        """        Generate unique fingerprint for content
         
         Args:
             content: Content to fingerprint
@@ -434,8 +412,7 @@ class CrawlingServiceInterface:
             
         Returns:
             Unique content fingerprint
-        """
-        self._ensure_initialized()
+        """        self._ensure_initialized()
         
         try:
             fingerprint = await self.content_detector.create_content_signature(content, content_type)
@@ -448,8 +425,7 @@ class CrawlingServiceInterface:
     async def calculate_content_similarity(self, 
                                          fingerprint1: str, 
                                          fingerprint2: str) -> float:
-        """
-        Calculate similarity between two content fingerprints
+        """        Calculate similarity between two content fingerprints
         
         Args:
             fingerprint1: First content fingerprint
@@ -457,8 +433,7 @@ class CrawlingServiceInterface:
             
         Returns:
             Similarity score (0-1)
-        """
-        self._ensure_initialized()
+        """        self._ensure_initialized()
         
         try:
             similarity = await self.content_detector.calculate_similarity(fingerprint1, fingerprint2)
@@ -470,13 +445,11 @@ class CrawlingServiceInterface:
 
     # Service Management Operations
     def get_service_statistics(self) -> Dict[str, Any]:
-        """
-        Get comprehensive service statistics and metrics
+        """        Get comprehensive service statistics and metrics
         
         Returns:
             Service performance and usage statistics
-        """
-        return {
+        """        return {
             'service_stats': self.service_stats,
             'agent_pool_size': len(self.agent_manager.agents),
             'active_surveillance_targets': self.service_stats['surveillance_targets_active'],
@@ -490,13 +463,11 @@ class CrawlingServiceInterface:
         }
 
     def get_active_agents_status(self) -> Dict[str, Any]:
-        """
-        Get status of all active crawling agents
+        """        Get status of all active crawling agents
         
         Returns:
             Status information for all agents
-        """
-        agent_statuses = {}
+        """        agent_statuses = {}
         
         for agent_id, agent in self.agent_manager.agents.items():
             agent_statuses[agent_id] = {
@@ -513,13 +484,11 @@ class CrawlingServiceInterface:
         }
 
     async def health_check(self) -> Dict[str, Any]:
-        """
-        Perform comprehensive health check of all components
+        """        Perform comprehensive health check of all components
         
         Returns:
             Health status of all service components
-        """
-        health_status = {
+        """        health_status = {
             'overall_status': 'healthy',
             'components': {},
             'issues': [],
@@ -569,13 +538,11 @@ class CrawlingServiceInterface:
         return health_status
 
     def _ensure_initialized(self) -> None:
-        """Ensure service is properly initialized"""
-        if not self.initialized:
+        """Ensure service is properly initialized"""        if not self.initialized:
             raise RuntimeError("Crawling Service Interface not initialized. Call initialize() first.")
 
     async def shutdown(self) -> None:
-        """Gracefully shutdown all crawling service components"""
-        logger.info("Shutting down Crawling Service Interface...")
+        """Gracefully shutdown all crawling service components"""        logger.info("Shutting down Crawling Service Interface...")
         
         try:
             # Shutdown all components
@@ -604,16 +571,14 @@ class CrawlingServiceInterface:
 
 # Convenience factory functions
 def create_crawling_service(config: Optional[Dict[str, Any]] = None) -> CrawlingServiceInterface:
-    """
-    Factory function to create and configure crawling service
+    """    Factory function to create and configure crawling service
     
     Args:
         config: Optional configuration dictionary
         
     Returns:
         Configured CrawlingServiceInterface instance
-    """
-    service_config = CrawlingServiceConfig()
+    """    service_config = CrawlingServiceConfig()
     
     if config:
         for key, value in config.items():
@@ -625,8 +590,7 @@ def create_crawling_service(config: Optional[Dict[str, Any]] = None) -> Crawling
 
 async def quick_content_discovery(urls: List[str], 
                                 content_types: List[str] = None) -> Dict[str, Any]:
-    """
-    Quick content discovery utility function
+    """    Quick content discovery utility function
     
     Args:
         urls: List of URLs to crawl
@@ -634,8 +598,7 @@ async def quick_content_discovery(urls: List[str],
         
     Returns:
         Discovered content results
-    """
-    service = create_crawling_service()
+    """    service = create_crawling_service()
     await service.initialize()
     
     try:
@@ -647,8 +610,7 @@ async def quick_content_discovery(urls: List[str],
 
 async def quick_similarity_check(reference_content: str, 
                                search_platforms: List[str] = None) -> Dict[str, Any]:
-    """
-    Quick similarity checking utility function
+    """    Quick similarity checking utility function
     
     Args:
         reference_content: Content to find similarities for
@@ -656,8 +618,7 @@ async def quick_similarity_check(reference_content: str,
         
     Returns:
         Similar content matches
-    """
-    service = create_crawling_service()
+    """    service = create_crawling_service()
     await service.initialize()
     
     try:

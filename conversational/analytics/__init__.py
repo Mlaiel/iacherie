@@ -68,8 +68,7 @@ Continuous Learning & Optimization → Executive Dashboard & Reporting
 ✅ Professional English naming conventions
 ✅ No TODOs, placeholders, or incomplete implementations
 ✅ Production-ready, industrial-grade code quality
-"""
-# Import all enterprise analytics engines and core components
+"""# Import all enterprise analytics engines and core components
 from .performance_analytics import (
     EnterprisePerformanceAnalytics,
     PerformanceMetric,

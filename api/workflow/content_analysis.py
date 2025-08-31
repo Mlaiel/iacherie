@@ -1,5 +1,4 @@
-"""
-Advanced content analysis and classification workflow module.
+"""Advanced content analysis and classification workflow module.
 
 This module provides comprehensive content analysis including AI-powered classification,
 quality assessment, metadata extraction, format detection, and content optimization
@@ -8,9 +7,7 @@ for multi-format creator content (audio, video, image, text).
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
-"""
-
-from typing import Dict, Any, List, Optional, Union, Tuple
+"""from typing import Dict, Any, List, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
@@ -33,8 +30,7 @@ from .exceptions import WorkflowException, PipelineException
 
 
 class ContentFormat(Enum):
-    """Supported content formats."""
-    AUDIO_MP3 = "audio/mp3"
+    """Supported content formats."""    AUDIO_MP3 = "audio/mp3"
     AUDIO_WAV = "audio/wav"
     AUDIO_FLAC = "audio/flac"
     AUDIO_AAC = "audio/aac"
@@ -57,8 +53,7 @@ class ContentFormat(Enum):
 
 
 class ContentCategory(Enum):
-    """Content categorization types."""
-    MUSIC_SONG = "music_song"
+    """Content categorization types."""    MUSIC_SONG = "music_song"
     MUSIC_INSTRUMENTAL = "music_instrumental"
     MUSIC_PODCAST = "music_podcast"
     MUSIC_REMIX = "music_remix"
@@ -77,8 +72,7 @@ class ContentCategory(Enum):
 
 
 class QualityLevel(Enum):
-    """Content quality assessment levels."""
-    PROFESSIONAL = "professional"
+    """Content quality assessment levels."""    PROFESSIONAL = "professional"
     SEMI_PROFESSIONAL = "semi_professional"
     AMATEUR = "amateur"
     LOW_QUALITY = "low_quality"
@@ -86,8 +80,7 @@ class QualityLevel(Enum):
 
 
 class AnalysisDepth(Enum):
-    """Analysis depth levels."""
-    BASIC = "basic"
+    """Analysis depth levels."""    BASIC = "basic"
     STANDARD = "standard"
     COMPREHENSIVE = "comprehensive"
     EXPERT = "expert"
@@ -95,8 +88,7 @@ class AnalysisDepth(Enum):
 
 @dataclass
 class ContentAnalysisResult:
-    """Comprehensive content analysis result."""
-    content_id: str
+    """Comprehensive content analysis result."""    content_id: str
     format_info: Dict[str, Any]
     category: ContentCategory
     quality_level: QualityLevel
@@ -114,8 +106,7 @@ class ContentAnalysisResult:
 
 @dataclass
 class OptimizationRecommendation:
-    """Content optimization recommendation."""
-    recommendation_id: str
+    """Content optimization recommendation."""    recommendation_id: str
     content_id: str
     optimization_type: str
     priority: str  # high, medium, low
@@ -128,8 +119,7 @@ class OptimizationRecommendation:
 
 
 class ContentAnalysisWorkflow:
-    """Advanced content analysis and classification workflow system."""
-    
+    """Advanced content analysis and classification workflow system."""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger("workflow.content_analysis")
@@ -158,8 +148,7 @@ class ContentAnalysisWorkflow:
         content_items: List[Dict[str, Any]],
         analysis_config: Dict[str, Any] = None
     ) -> IntelligentContentPipeline:
-        """Create comprehensive content analysis pipeline."""
-        analysis_config = analysis_config or {}
+        """Create comprehensive content analysis pipeline."""        analysis_config = analysis_config or {}
         pipeline_id = f"content_analysis_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
         pipeline = IntelligentContentPipeline(
@@ -187,8 +176,7 @@ class ContentAnalysisWorkflow:
         pipeline: IntelligentContentPipeline,
         analysis_config: Dict[str, Any]
     ):
-        """Add content analysis workflow steps."""
-        
+        """Add content analysis workflow steps."""        
         # Step 1: Content validation and format detection
         validation_step = PipelineStep(
             name="content_validation",
@@ -357,8 +345,7 @@ class ContentAnalysisWorkflow:
         pipeline.add_step(reporting_step)
     
     async def _validate_and_detect_content(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate content and detect formats."""
-        content_items = context.get("content_items", [])
+        """Validate content and detect formats."""        content_items = context.get("content_items", [])
         max_file_size_mb = metadata.get("max_file_size_mb", self.max_file_size_mb)
         supported_formats = metadata.get("supported_formats", self.supported_formats)
         
@@ -395,8 +382,7 @@ class ContentAnalysisWorkflow:
         }
     
     async def _analyze_technical_specifications(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze technical specifications of content."""
-        validation_result = context.get("content_validation_result")
+        """Analyze technical specifications of content."""        validation_result = context.get("content_validation_result")
         analysis_depth = AnalysisDepth(metadata.get("analysis_depth", "standard"))
         extract_advanced_metadata = metadata.get("extract_advanced_metadata", True)
         
@@ -436,8 +422,7 @@ class ContentAnalysisWorkflow:
         }
     
     async def _classify_content_with_ai(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Classify content using AI-powered classification."""
-        technical_result = context.get("technical_analysis_result")
+        """Classify content using AI-powered classification."""        technical_result = context.get("technical_analysis_result")
         enable_multi_class = metadata.get("enable_multi_class", True)
         confidence_threshold = metadata.get("confidence_threshold", 0.8)
         
@@ -480,8 +465,7 @@ class ContentAnalysisWorkflow:
         }
     
     async def _assess_content_quality(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess content quality using multiple metrics."""
-        classification_result = context.get("ai_classification_result")
+        """Assess content quality using multiple metrics."""        classification_result = context.get("ai_classification_result")
         quality_metrics = metadata.get("quality_metrics", ["technical", "artistic", "commercial"])
         detailed_scoring = metadata.get("detailed_scoring", True)
         
@@ -521,8 +505,7 @@ class ContentAnalysisWorkflow:
         }
     
     async def _extract_and_enrich_metadata(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract and enrich content metadata."""
-        quality_result = context.get("quality_assessment_result")
+        """Extract and enrich content metadata."""        quality_result = context.get("quality_assessment_result")
         extract_embedded = metadata.get("extract_embedded_metadata", True)
         enrich_external = metadata.get("enrich_with_external_data", True)
         
@@ -565,8 +548,7 @@ class ContentAnalysisWorkflow:
         }
     
     async def _generate_ai_insights(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate AI-powered insights about content."""
-        metadata_result = context.get("metadata_extraction_result")
+        """Generate AI-powered insights about content."""        metadata_result = context.get("metadata_extraction_result")
         insight_types = metadata.get("insight_types", ["trends", "audience", "monetization"])
         market_analysis = metadata.get("market_analysis", True)
         
@@ -606,8 +588,7 @@ class ContentAnalysisWorkflow:
         }
     
     async def _generate_optimization_recommendations(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate optimization recommendations for content."""
-        if self.enable_ai_insights:
+        """Generate optimization recommendations for content."""        if self.enable_ai_insights:
             insights_result = context.get("ai_insights_generation_result")
             ai_insights = insights_result.get("ai_insights", []) if insights_result else []
         else:
@@ -658,8 +639,7 @@ class ContentAnalysisWorkflow:
         }
     
     async def _generate_content_fingerprints(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate content fingerprints for protection."""
-        if self.enable_optimization_suggestions:
+        """Generate content fingerprints for protection."""        if self.enable_optimization_suggestions:
             optimization_result = context.get("optimization_recommendations_result")
             optimization_recommendations = optimization_result.get("optimization_recommendations", []) if optimization_result else []
         else:
@@ -713,8 +693,7 @@ class ContentAnalysisWorkflow:
         }
     
     async def _compile_analysis_results(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Compile comprehensive analysis results."""
-        fingerprinting_result = context.get("content_fingerprinting_result")
+        """Compile comprehensive analysis results."""        fingerprinting_result = context.get("content_fingerprinting_result")
         include_raw_data = metadata.get("include_raw_data", False)
         generate_summary = metadata.get("generate_summary", True)
         
@@ -737,8 +716,7 @@ class ContentAnalysisWorkflow:
         }
     
     async def _generate_analysis_reports(self, context: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate analysis reports and notifications."""
-        compilation_result = context.get("result_compilation_result")
+        """Generate analysis reports and notifications."""        compilation_result = context.get("result_compilation_result")
         report_formats = metadata.get("report_formats", ["json", "pdf"])
         notification_channels = metadata.get("notification_channels", ["email"])
         
@@ -788,8 +766,7 @@ class ContentAnalysisWorkflow:
         max_file_size_mb: int,
         supported_formats: List[str]
     ) -> Dict[str, Any]:
-        """Validate a single content item."""
-        content_id = content_item.get("id", str(uuid.uuid4()))
+        """Validate a single content item."""        content_id = content_item.get("id", str(uuid.uuid4()))
         file_path = content_item.get("file_path")
         
         if not file_path:
@@ -831,8 +808,7 @@ class ContentAnalysisWorkflow:
         analysis_depth: AnalysisDepth,
         extract_advanced_metadata: bool
     ) -> Dict[str, Any]:
-        """Analyze technical specifications of single content."""
-        content_id = validation.get("content_id")
+        """Analyze technical specifications of single content."""        content_id = validation.get("content_id")
         file_path = validation.get("file_path")
         content_format = validation.get("content_format")
         
@@ -860,8 +836,7 @@ class ContentAnalysisWorkflow:
         enable_multi_class: bool,
         confidence_threshold: float
     ) -> Dict[str, Any]:
-        """Classify single content using AI."""
-        content_id = analysis.get("content_id")
+        """Classify single content using AI."""        content_id = analysis.get("content_id")
         technical_specs = analysis.get("technical_specifications", {})
         
         # Use AI classifier
@@ -888,8 +863,7 @@ class ContentAnalysisWorkflow:
         quality_metrics: List[str],
         detailed_scoring: bool
     ) -> Dict[str, Any]:
-        """Assess quality of single content."""
-        content_id = classification.get("content_id")
+        """Assess quality of single content."""        content_id = classification.get("content_id")
         
         # Use quality assessor
         quality_result = await self.quality_assessor.assess_content_quality(
@@ -915,8 +889,7 @@ class ContentAnalysisWorkflow:
         extract_embedded: bool,
         enrich_external: bool
     ) -> Dict[str, Any]:
-        """Extract metadata from single content."""
-        content_id = assessment.get("content_id")
+        """Extract metadata from single content."""        content_id = assessment.get("content_id")
         
         # Use metadata extractor
         metadata_result = await self.metadata_extractor.extract_content_metadata(
@@ -941,8 +914,7 @@ class ContentAnalysisWorkflow:
         insight_types: List[str],
         market_analysis: bool
     ) -> Dict[str, Any]:
-        """Generate AI insights for single content."""
-        content_id = extraction.get("content_id")
+        """Generate AI insights for single content."""        content_id = extraction.get("content_id")
         
         # Generate insights based on all available data
         insights = {
@@ -976,8 +948,7 @@ class ContentAnalysisWorkflow:
         recommendation_types: List[str],
         prioritize_recommendations: bool
     ) -> Dict[str, Any]:
-        """Generate optimization recommendations for single content."""
-        content_id = item.get("content_id")
+        """Generate optimization recommendations for single content."""        content_id = item.get("content_id")
         
         recommendations = []
         
@@ -1010,8 +981,7 @@ class ContentAnalysisWorkflow:
         fingerprint_types: List[str],
         generate_multiple: bool
     ) -> Dict[str, Any]:
-        """Generate fingerprints for single content."""
-        content_id = item.get("content_id")
+        """Generate fingerprints for single content."""        content_id = item.get("content_id")
         
         fingerprints = []
         
@@ -1036,8 +1006,7 @@ class ContentAnalysisWorkflow:
     # Utility methods
     
     async def _generate_file_hash(self, file_path: str) -> str:
-        """Generate SHA-256 hash of file."""
-        hash_sha256 = hashlib.sha256()
+        """Generate SHA-256 hash of file."""        hash_sha256 = hashlib.sha256()
         with open(file_path, "rb") as f:
             for chunk in iter(lambda: f.read(4096), b""):
                 hash_sha256.update(chunk)
@@ -1049,8 +1018,7 @@ class ContentAnalysisWorkflow:
         include_raw_data: bool,
         generate_summary: bool
     ) -> Dict[str, Any]:
-        """Compile all analysis results into comprehensive format."""
-        results = {
+        """Compile all analysis results into comprehensive format."""        results = {
             "analysis_id": str(uuid.uuid4()),
             "analysis_timestamp": datetime.utcnow().isoformat(),
             "content_analyses": [],
@@ -1091,8 +1059,7 @@ class ContentAnalysisWorkflow:
         return results
     
     def _calculate_average_analysis_time(self, analyses: List[Dict[str, Any]]) -> float:
-        """Calculate average analysis time."""
-        valid_analyses = [a for a in analyses if a.get("technical_analysis_status") != "failed"]
+        """Calculate average analysis time."""        valid_analyses = [a for a in analyses if a.get("technical_analysis_status") != "failed"]
         if not valid_analyses:
             return 0.0
         
@@ -1100,8 +1067,7 @@ class ContentAnalysisWorkflow:
         return total_time / len(valid_analyses)
     
     def _calculate_classification_distribution(self, classifications: List[Dict[str, Any]]) -> Dict[str, int]:
-        """Calculate distribution of classifications."""
-        distribution = {}
+        """Calculate distribution of classifications."""        distribution = {}
         for classification in classifications:
             if classification.get("classification_status") != "failed":
                 category = classification.get("primary_category", "unknown")
@@ -1109,8 +1075,7 @@ class ContentAnalysisWorkflow:
         return distribution
     
     def _calculate_average_quality_score(self, assessments: List[Dict[str, Any]]) -> float:
-        """Calculate average quality score."""
-        valid_assessments = [a for a in assessments if a.get("quality_assessment_status") != "failed"]
+        """Calculate average quality score."""        valid_assessments = [a for a in assessments if a.get("quality_assessment_status") != "failed"]
         if not valid_assessments:
             return 0.0
         
@@ -1118,8 +1083,7 @@ class ContentAnalysisWorkflow:
         return total_score / len(valid_assessments)
     
     def _calculate_quality_distribution(self, assessments: List[Dict[str, Any]]) -> Dict[str, int]:
-        """Calculate distribution of quality levels."""
-        distribution = {}
+        """Calculate distribution of quality levels."""        distribution = {}
         for assessment in assessments:
             if assessment.get("quality_assessment_status") != "failed":
                 quality_level = assessment.get("quality_level", {}).get("value", "unknown")
@@ -1127,8 +1091,7 @@ class ContentAnalysisWorkflow:
         return distribution
     
     def _calculate_enrichment_success_rate(self, extractions: List[Dict[str, Any]]) -> float:
-        """Calculate metadata enrichment success rate."""
-        valid_extractions = [e for e in extractions if e.get("metadata_extraction_status") != "failed"]
+        """Calculate metadata enrichment success rate."""        valid_extractions = [e for e in extractions if e.get("metadata_extraction_status") != "failed"]
         if not valid_extractions:
             return 0.0
         
@@ -1136,8 +1099,7 @@ class ContentAnalysisWorkflow:
         return successful_enrichments / len(valid_extractions)
     
     def _count_high_priority_recommendations(self, recommendations: List[Dict[str, Any]]) -> int:
-        """Count high priority recommendations."""
-        high_priority_count = 0
+        """Count high priority recommendations."""        high_priority_count = 0
         for rec_set in recommendations:
             if rec_set.get("recommendations_status") != "failed":
                 high_priority_count += rec_set.get("high_priority_count", 0)
@@ -1146,8 +1108,7 @@ class ContentAnalysisWorkflow:
     # Content-specific helper methods (simplified implementations)
     
     async def _analyze_content_trends(self, extraction: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze content trends."""
-        return {
+        """Analyze content trends."""        return {
             "trending_keywords": ["music", "indie", "acoustic"],
             "genre_popularity": 0.75,
             "seasonal_relevance": 0.6,
@@ -1155,8 +1116,7 @@ class ContentAnalysisWorkflow:
         }
     
     async def _analyze_audience_potential(self, extraction: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze audience potential."""
-        return {
+        """Analyze audience potential."""        return {
             "target_demographics": ["18-34", "music_lovers", "indie_fans"],
             "estimated_reach": 50000,
             "engagement_potential": 0.65,
@@ -1164,8 +1124,7 @@ class ContentAnalysisWorkflow:
         }
     
     async def _analyze_monetization_potential(self, extraction: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze monetization potential."""
-        return {
+        """Analyze monetization potential."""        return {
             "revenue_streams": ["streaming", "licensing", "merchandise"],
             "estimated_monthly_revenue": 500.0,
             "licensing_potential": 0.7,
@@ -1173,8 +1132,7 @@ class ContentAnalysisWorkflow:
         }
     
     async def _perform_market_analysis(self, extraction: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform market analysis."""
-        return {
+        """Perform market analysis."""        return {
             "market_size": "medium",
             "competition_level": "moderate",
             "market_trends": ["indie_growth", "acoustic_revival"],
@@ -1182,8 +1140,7 @@ class ContentAnalysisWorkflow:
         }
     
     async def _generate_quality_recommendations(self, item: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate quality improvement recommendations."""
-        return [
+        """Generate quality improvement recommendations."""        return [
             {
                 "type": "audio_quality",
                 "priority": "high",
@@ -1201,8 +1158,7 @@ class ContentAnalysisWorkflow:
         ]
     
     async def _generate_format_recommendations(self, item: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate format optimization recommendations."""
-        return [
+        """Generate format optimization recommendations."""        return [
             {
                 "type": "format_conversion",
                 "priority": "medium",
@@ -1213,8 +1169,7 @@ class ContentAnalysisWorkflow:
         ]
     
     async def _generate_seo_recommendations(self, item: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate SEO optimization recommendations."""
-        return [
+        """Generate SEO optimization recommendations."""        return [
             {
                 "type": "metadata_optimization",
                 "priority": "high",
@@ -1225,8 +1180,7 @@ class ContentAnalysisWorkflow:
         ]
     
     async def _create_content_fingerprint(self, item: Dict[str, Any], fingerprint_type: str) -> Dict[str, Any]:
-        """Create content fingerprint."""
-        return {
+        """Create content fingerprint."""        return {
             "fingerprint_id": str(uuid.uuid4()),
             "fingerprint_type": fingerprint_type,
             "fingerprint_hash": hashlib.sha256(
@@ -1239,8 +1193,7 @@ class ContentAnalysisWorkflow:
     # Data retrieval helper methods
     
     def _get_format_info_for_content(self, context: Dict[str, Any], content_id: str) -> Dict[str, Any]:
-        """Get format info for content from context."""
-        validation_results = context.get("content_validation_result", {}).get("validation_results", [])
+        """Get format info for content from context."""        validation_results = context.get("content_validation_result", {}).get("validation_results", [])
         for result in validation_results:
             if result.get("content_id") == content_id:
                 return {
@@ -1251,24 +1204,21 @@ class ContentAnalysisWorkflow:
         return {}
     
     def _get_metadata_for_content(self, context: Dict[str, Any], content_id: str) -> Dict[str, Any]:
-        """Get metadata for content from context."""
-        metadata_results = context.get("metadata_extraction_result", {}).get("metadata_extractions", [])
+        """Get metadata for content from context."""        metadata_results = context.get("metadata_extraction_result", {}).get("metadata_extractions", [])
         for result in metadata_results:
             if result.get("content_id") == content_id:
                 return result.get("extracted_metadata", {})
         return {}
     
     def _get_technical_specs_for_content(self, context: Dict[str, Any], content_id: str) -> Dict[str, Any]:
-        """Get technical specs for content from context."""
-        technical_results = context.get("technical_analysis_result", {}).get("technical_analyses", [])
+        """Get technical specs for content from context."""        technical_results = context.get("technical_analysis_result", {}).get("technical_analyses", [])
         for result in technical_results:
             if result.get("content_id") == content_id:
                 return result.get("technical_specifications", {})
         return {}
     
     def _get_ai_insights_for_content(self, context: Dict[str, Any], content_id: str) -> Dict[str, Any]:
-        """Get AI insights for content from context."""
-        if not self.enable_ai_insights:
+        """Get AI insights for content from context."""        if not self.enable_ai_insights:
             return {}
         
         insights_results = context.get("ai_insights_generation_result", {}).get("ai_insights", [])
@@ -1282,8 +1232,7 @@ class ContentAnalysisWorkflow:
         return {}
     
     def _get_optimization_suggestions_for_content(self, context: Dict[str, Any], content_id: str) -> List[Dict[str, Any]]:
-        """Get optimization suggestions for content from context."""
-        if not self.enable_optimization_suggestions:
+        """Get optimization suggestions for content from context."""        if not self.enable_optimization_suggestions:
             return []
         
         optimization_results = context.get("optimization_recommendations_result", {}).get("optimization_recommendations", [])
@@ -1293,8 +1242,7 @@ class ContentAnalysisWorkflow:
         return []
     
     def _calculate_total_processing_time_for_content(self, context: Dict[str, Any], content_id: str) -> float:
-        """Calculate total processing time for content."""
-        total_time = 0.0
+        """Calculate total processing time for content."""        total_time = 0.0
         
         # Sum processing times from all pipeline steps
         for step_result_key in context.keys():
@@ -1310,8 +1258,7 @@ class ContentAnalysisWorkflow:
         return total_time
     
     def _generate_analysis_summary(self, content_analyses: List[ContentAnalysisResult]) -> Dict[str, Any]:
-        """Generate comprehensive analysis summary."""
-        if not content_analyses:
+        """Generate comprehensive analysis summary."""        if not content_analyses:
             return {}
         
         return {
@@ -1326,24 +1273,21 @@ class ContentAnalysisWorkflow:
         }
     
     def _calculate_format_distribution(self, content_analyses: List[ContentAnalysisResult]) -> Dict[str, int]:
-        """Calculate format distribution."""
-        distribution = {}
+        """Calculate format distribution."""        distribution = {}
         for analysis in content_analyses:
             format_type = analysis.format_info.get("content_format", "unknown")
             distribution[format_type] = distribution.get(format_type, 0) + 1
         return distribution
     
     def _calculate_category_distribution(self, content_analyses: List[ContentAnalysisResult]) -> Dict[str, int]:
-        """Calculate category distribution."""
-        distribution = {}
+        """Calculate category distribution."""        distribution = {}
         for analysis in content_analyses:
             category = analysis.category.value if analysis.category else "unknown"
             distribution[category] = distribution.get(category, 0) + 1
         return distribution
     
     def _calculate_quality_level_distribution(self, content_analyses: List[ContentAnalysisResult]) -> Dict[str, int]:
-        """Calculate quality level distribution."""
-        distribution = {}
+        """Calculate quality level distribution."""        distribution = {}
         for analysis in content_analyses:
             quality_level = analysis.quality_level.value if analysis.quality_level else "unknown"
             distribution[quality_level] = distribution.get(quality_level, 0) + 1
@@ -1354,8 +1298,7 @@ class ContentAnalysisWorkflow:
         compiled_results: Dict[str, Any],
         report_format: str
     ) -> Dict[str, Any]:
-        """Generate single analysis report."""
-        report_id = str(uuid.uuid4())
+        """Generate single analysis report."""        report_id = str(uuid.uuid4())
         timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
         
         return {
@@ -1374,8 +1317,7 @@ class ContentAnalysisWorkflow:
         generated_reports: List[Dict[str, Any]],
         notification_channels: List[str]
     ):
-        """Send analysis completion notifications."""
-        # Simplified notification sending
+        """Send analysis completion notifications."""        # Simplified notification sending
         for channel in notification_channels:
             self.logger.info(f"Sending analysis completion notification via {channel}")
             # In real implementation, would send actual notifications

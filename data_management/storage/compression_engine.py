@@ -1,5 +1,4 @@
-"""
-🗜️ Compression Engine - IA Influencer Agent Platform Enterprise
+"""🗜️ Compression Engine - IA Influencer Agent Platform Enterprise
 ===============================================================
 Module: backend/data_management/storage/compression_engine.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -27,9 +26,7 @@ interdite et fera l'objet de poursuites judiciaires.
 - Audio Engineer: Fahed Mlaiel
 - DevOps: Fahed Mlaiel
 - IA Prompt Engineer: Fahed Mlaiel
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple, BinaryIO
+"""from typing import Dict, List, Optional, Any, Union, Tuple, BinaryIO
 import logging
 import asyncio
 import zlib
@@ -56,8 +53,7 @@ import io
 logger = logging.getLogger(__name__)
 
 class CompressionAlgorithm(Enum):
-    """Supported compression algorithms"""
-    GZIP = "gzip"
+    """Supported compression algorithms"""    GZIP = "gzip"
     BZIP2 = "bzip2"
     LZMA = "lzma"
     ZLIB = "zlib"
@@ -70,8 +66,7 @@ class CompressionAlgorithm(Enum):
 
 @dataclass
 class CompressionResult:
-    """Result of compression operation"""
-    success: bool
+    """Result of compression operation"""    success: bool
     algorithm: CompressionAlgorithm
     original_size: int
     compressed_size: int
@@ -83,8 +78,7 @@ class CompressionResult:
 
 @dataclass
 class CompressionConfig:
-    """Configuration for compression operations"""
-    algorithm: CompressionAlgorithm
+    """Configuration for compression operations"""    algorithm: CompressionAlgorithm
     quality_level: int = 85  # 1-100 for lossy compression
     compression_level: int = 6  # 1-9 for lossless compression
     preserve_quality: bool = True
@@ -92,16 +86,14 @@ class CompressionConfig:
     target_size_mb: Optional[float] = None
 
 class ContentTypeAnalyzer:
-    """Analyzes content to determine optimal compression strategy"""
-    
+    """Analyzes content to determine optimal compression strategy"""    
     @staticmethod
     def analyze_content(
         data: bytes, 
         filename: str, 
         content_type: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Analyze content to determine compression strategy"""
-        
+        """Analyze content to determine compression strategy"""        
         if not content_type:
             content_type = mimetypes.guess_type(filename)[0] or 'application/octet-stream'
         
@@ -174,8 +166,7 @@ class ContentTypeAnalyzer:
     
     @staticmethod
     def _calculate_entropy(data: bytes, sample_size: int = 10000) -> float:
-        """Calculate Shannon entropy of data sample"""
-        if len(data) == 0:
+        """Calculate Shannon entropy of data sample"""        if len(data) == 0:
             return 0.0
         
         # Use sample for large files
@@ -201,8 +192,7 @@ class ContentTypeAnalyzer:
         return entropy
 
 class CompressionEngine:
-    """
-    Enterprise compression engine with intelligent algorithm selection.
+    """    Enterprise compression engine with intelligent algorithm selection.
     
     Business Logic:
     - Analyzes content type to select optimal compression
@@ -210,11 +200,9 @@ class CompressionEngine:
     - Maximizes compression for text and data files
     - Supports both lossless and lossy compression
     - Monitors performance and quality metrics
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize compression engine"""
-        self.config = config or {}
+        """Initialize compression engine"""        self.config = config or {}
         self.content_analyzer = ContentTypeAnalyzer()
         
         # Performance metrics
@@ -234,8 +222,7 @@ class CompressionEngine:
         logger.info("CompressionEngine initialized successfully")
     
     def _check_dependencies(self) -> None:
-        """Check availability of compression tools"""
-        self.available_tools = {
+        """Check availability of compression tools"""        self.available_tools = {
             'ffmpeg': self._check_ffmpeg(),
             'imagemagick': self._check_imagemagick(),
             'pillow': True  # Always available with our imports
@@ -248,8 +235,7 @@ class CompressionEngine:
             logger.warning("ImageMagick not available - advanced image optimization limited")
     
     def _check_ffmpeg(self) -> bool:
-        """Check if FFmpeg is available"""
-        try:
+        """Check if FFmpeg is available"""        try:
             subprocess.run(['ffmpeg', '-version'], 
                          capture_output=True, check=True)
             return True
@@ -257,8 +243,7 @@ class CompressionEngine:
             return False
     
     def _check_imagemagick(self) -> bool:
-        """Check if ImageMagick is available"""
-        try:
+        """Check if ImageMagick is available"""        try:
             subprocess.run(['convert', '-version'], 
                          capture_output=True, check=True)
             return True
@@ -272,8 +257,7 @@ class CompressionEngine:
         content_type: Optional[str] = None,
         config: Optional[CompressionConfig] = None
     ) -> CompressionResult:
-        """
-        Compress content with optimal algorithm selection.
+        """        Compress content with optimal algorithm selection.
         
         Business Flow:
         1. Analyze content type and compressibility
@@ -281,8 +265,7 @@ class CompressionEngine:
         3. Apply compression with quality preservation
         4. Validate compression results
         5. Update performance metrics
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Analyze content
@@ -322,8 +305,7 @@ class CompressionEngine:
         algorithm: CompressionAlgorithm,
         original_filename: Optional[str] = None
     ) -> Tuple[bool, bytes, str]:
-        """Decompress content back to original format"""
-        try:
+        """Decompress content back to original format"""        try:
             if algorithm == CompressionAlgorithm.GZIP:
                 decompressed = gzip.decompress(compressed_data)
             elif algorithm == CompressionAlgorithm.BZIP2:
@@ -348,8 +330,7 @@ class CompressionEngine:
         files: List[Dict[str, Any]],
         max_concurrent: int = 5
     ) -> List[CompressionResult]:
-        """Compress multiple files concurrently"""
-        semaphore = asyncio.Semaphore(max_concurrent)
+        """Compress multiple files concurrently"""        semaphore = asyncio.Semaphore(max_concurrent)
         
         async def compress_single(file_info):
             async with semaphore:
@@ -379,8 +360,7 @@ class CompressionEngine:
         ]
     
     def _select_optimal_algorithm(self, analysis: Dict[str, Any]) -> CompressionAlgorithm:
-        """Select optimal compression algorithm based on content analysis"""
-        recommended = analysis.get('recommended_algorithms', [])
+        """Select optimal compression algorithm based on content analysis"""        recommended = analysis.get('recommended_algorithms', [])
         
         if not recommended:
             return CompressionAlgorithm.GZIP
@@ -394,8 +374,7 @@ class CompressionEngine:
         return CompressionAlgorithm.GZIP
     
     def _is_algorithm_available(self, algorithm: CompressionAlgorithm) -> bool:
-        """Check if compression algorithm is available"""
-        if algorithm in [CompressionAlgorithm.MP3_OPTIMIZED, CompressionAlgorithm.MP4_COMPRESSED, CompressionAlgorithm.FLAC_COMPRESSED]:
+        """Check if compression algorithm is available"""        if algorithm in [CompressionAlgorithm.MP3_OPTIMIZED, CompressionAlgorithm.MP4_COMPRESSED, CompressionAlgorithm.FLAC_COMPRESSED]:
             return self.available_tools['ffmpeg']
         elif algorithm in [CompressionAlgorithm.JPEG_OPTIMIZED, CompressionAlgorithm.PNG_OPTIMIZED, CompressionAlgorithm.WEBP]:
             return True  # Pillow is always available
@@ -409,8 +388,7 @@ class CompressionEngine:
         analysis: Dict[str, Any],
         config: Optional[CompressionConfig]
     ) -> CompressionResult:
-        """Apply specific compression algorithm"""
-        start_time = time.time()
+        """Apply specific compression algorithm"""        start_time = time.time()
         original_size = len(data)
         
         try:
@@ -469,28 +447,23 @@ class CompressionEngine:
     # Compression algorithm implementations
     
     async def _compress_gzip(self, data: bytes, config: Optional[CompressionConfig]) -> bytes:
-        """GZIP compression"""
-        level = config.compression_level if config else 6
+        """GZIP compression"""        level = config.compression_level if config else 6
         return gzip.compress(data, compresslevel=level)
     
     async def _compress_bzip2(self, data: bytes, config: Optional[CompressionConfig]) -> bytes:
-        """BZIP2 compression"""
-        level = config.compression_level if config else 6
+        """BZIP2 compression"""        level = config.compression_level if config else 6
         return bz2.compress(data, compresslevel=level)
     
     async def _compress_lzma(self, data: bytes, config: Optional[CompressionConfig]) -> bytes:
-        """LZMA compression"""
-        level = config.compression_level if config else 6
+        """LZMA compression"""        level = config.compression_level if config else 6
         return lzma.compress(data, preset=level)
     
     async def _compress_zlib(self, data: bytes, config: Optional[CompressionConfig]) -> bytes:
-        """ZLIB compression"""
-        level = config.compression_level if config else 6
+        """ZLIB compression"""        level = config.compression_level if config else 6
         return zlib.compress(data, level)
     
     async def _compress_jpeg(self, data: bytes, filename: str, config: Optional[CompressionConfig]) -> bytes:
-        """JPEG optimization"""
-        try:
+        """JPEG optimization"""        try:
             image = Image.open(io.BytesIO(data))
             
             # Convert to RGB if necessary
@@ -520,8 +493,7 @@ class CompressionEngine:
             return data
     
     async def _compress_png(self, data: bytes, config: Optional[CompressionConfig]) -> bytes:
-        """PNG optimization"""
-        try:
+        """PNG optimization"""        try:
             image = Image.open(io.BytesIO(data))
             
             output = io.BytesIO()
@@ -539,8 +511,7 @@ class CompressionEngine:
             return data
     
     async def _compress_webp(self, data: bytes, config: Optional[CompressionConfig]) -> bytes:
-        """WebP compression"""
-        try:
+        """WebP compression"""        try:
             image = Image.open(io.BytesIO(data))
             
             output = io.BytesIO()
@@ -561,8 +532,7 @@ class CompressionEngine:
             return data
     
     async def _compress_mp3(self, data: bytes, filename: str, config: Optional[CompressionConfig]) -> bytes:
-        """MP3 audio compression using FFmpeg"""
-        if not self.available_tools['ffmpeg']:
+        """MP3 audio compression using FFmpeg"""        if not self.available_tools['ffmpeg']:
             return data
         
         try:
@@ -597,8 +567,7 @@ class CompressionEngine:
             return data
     
     async def _compress_mp4(self, data: bytes, filename: str, config: Optional[CompressionConfig]) -> bytes:
-        """MP4 video compression using FFmpeg"""
-        if not self.available_tools['ffmpeg']:
+        """MP4 video compression using FFmpeg"""        if not self.available_tools['ffmpeg']:
             return data
         
         try:
@@ -635,8 +604,7 @@ class CompressionEngine:
             return data
     
     async def _compress_flac(self, data: bytes, filename: str, config: Optional[CompressionConfig]) -> bytes:
-        """FLAC audio compression using FFmpeg"""
-        if not self.available_tools['ffmpeg']:
+        """FLAC audio compression using FFmpeg"""        if not self.available_tools['ffmpeg']:
             return data
         
         try:
@@ -672,8 +640,7 @@ class CompressionEngine:
         compression_ratio: float,
         analysis: Dict[str, Any]
     ) -> float:
-        """Calculate quality score for compression result"""
-        # Base score from compression efficiency
+        """Calculate quality score for compression result"""        # Base score from compression efficiency
         efficiency_score = max(0.0, min(1.0, (1.0 - compression_ratio) * 2))
         
         # Adjust based on algorithm type
@@ -690,8 +657,7 @@ class CompressionEngine:
         return round(final_score, 3)
     
     def _update_metrics(self, result: CompressionResult) -> None:
-        """Update compression metrics"""
-        if result.success:
+        """Update compression metrics"""        if result.success:
             self.metrics['total_compressions'] += 1
             self.metrics['total_original_size'] += result.original_size
             self.metrics['total_compressed_size'] += result.compressed_size
@@ -721,8 +687,7 @@ class CompressionEngine:
                 self.metrics['quality_scores'] = self.metrics['quality_scores'][-1000:]
     
     def get_compression_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive compression statistics"""
-        avg_quality = 0.0
+        """Get comprehensive compression statistics"""        avg_quality = 0.0
         if self.metrics['quality_scores']:
             avg_quality = sum(self.metrics['quality_scores']) / len(self.metrics['quality_scores'])
         

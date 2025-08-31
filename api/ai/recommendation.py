@@ -1,6 +1,4 @@
-"""Recommendation engine for content optimization and collaboration matching."""
-
-import logging
+"""Recommendation engine for content optimization and collaboration matching."""import logging
 from typing import Dict, List, Tuple
 from collections import defaultdict
 import math
@@ -27,8 +25,7 @@ class RecommendationEngine:
             logger.info("RecommendationEngine initialized with fallback math support")
 
     def analyze_content_similarity(self, content_features: Dict) -> Dict:
-        """Analyze content similarity for recommendations."""
-        # Extract key features for similarity computation
+        """Analyze content similarity for recommendations."""        # Extract key features for similarity computation
         feature_vector = self._extract_feature_vector(content_features)
         
         # Mock similarity computation with stored content
@@ -51,8 +48,7 @@ class RecommendationEngine:
         }
 
     def recommend_hashtags(self, content_features: Dict) -> List[str]:
-        """Recommend hashtags based on content analysis."""
-        base_tags = []
+        """Recommend hashtags based on content analysis."""        base_tags = []
         
         # Based on media type
         media_type = content_features.get("media_type", "general")
@@ -85,8 +81,7 @@ class RecommendationEngine:
         return list(set(base_tags))[:10]  # Return unique tags, max 10
 
     def suggest_posting_times(self, user_profile: Dict) -> List[Dict]:
-        """Suggest optimal posting times based on audience analysis."""
-        # Mock audience analysis - in reality would use real data
+        """Suggest optimal posting times based on audience analysis."""        # Mock audience analysis - in reality would use real data
         default_times = [
             {"time": "09:00", "timezone": "UTC", "engagement_score": 0.85, "reason": "morning_peak"},
             {"time": "13:00", "timezone": "UTC", "engagement_score": 0.75, "reason": "lunch_break"},
@@ -105,8 +100,7 @@ class RecommendationEngine:
         return sorted(default_times, key=lambda x: x["engagement_score"], reverse=True)
 
     def recommend_collaborators(self, user_profile: Dict, content_features: Dict) -> List[Dict]:
-        """Recommend potential collaborators based on content and profile."""
-        # Mock collaborator database
+        """Recommend potential collaborators based on content and profile."""        # Mock collaborator database
         potential_collaborators = [
             {
                 "name": "MusicProducer_Pro",
@@ -147,8 +141,7 @@ class RecommendationEngine:
         return sorted(potential_collaborators, key=lambda x: x["compatibility_score"], reverse=True)
 
     def _extract_feature_vector(self, content_features: Dict) -> List[float]:
-        """Extract numerical feature vector from content features."""
-        # Simple feature extraction - in reality would be much more sophisticated
+        """Extract numerical feature vector from content features."""        # Simple feature extraction - in reality would be much more sophisticated
         features = []
         
         # Media type encoding
@@ -169,8 +162,7 @@ class RecommendationEngine:
             return features
 
     def _compute_similarity(self, vec1, vec2) -> float:
-        """Compute cosine similarity between two feature vectors."""
-        if NUMPY_AVAILABLE and hasattr(vec1, 'shape') and hasattr(vec2, 'shape'):
+        """Compute cosine similarity between two feature vectors."""        if NUMPY_AVAILABLE and hasattr(vec1, 'shape') and hasattr(vec2, 'shape'):
             # Use numpy implementation
             if np.linalg.norm(vec1) == 0 or np.linalg.norm(vec2) == 0:
                 return 0.0
@@ -193,8 +185,7 @@ class RecommendationEngine:
             return dot_product / (norm1 * norm2)
 
     def _get_match_reasons(self, features1: Dict, features2: Dict) -> List[str]:
-        """Get reasons why two pieces of content are similar."""
-        reasons = []
+        """Get reasons why two pieces of content are similar."""        reasons = []
         
         if features1.get("media_type") == features2.get("media_type"):
             reasons.append("same_media_type")
@@ -213,8 +204,7 @@ class RecommendationEngine:
         return reasons[:3]  # Return top 3 reasons
 
     def _calculate_diversity(self, similarities: List[Dict]) -> float:
-        """Calculate diversity score of recommended content."""
-        if not similarities:
+        """Calculate diversity score of recommended content."""        if not similarities:
             return 0.0
         
         # Simple diversity based on score spread

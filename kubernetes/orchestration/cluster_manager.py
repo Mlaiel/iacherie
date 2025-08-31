@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Cluster Management
+"""IA Influencer Agent - Cluster Management
 Enterprise cluster lifecycle and resource management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -11,9 +10,7 @@ Features:
 - Resource allocation and optimization
 - Cross-cluster networking and service mesh
 - Disaster recovery and backup strategies
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import yaml
@@ -32,10 +29,8 @@ from .base_manager import BaseDeploymentManager
 
 # Mock metrics collector for standalone operation
 class MetricsCollector:
-    """Mock metrics collector."""
-    def __init__(self):
-        """Initialize cluster metrics collector with infrastructure monitoring"""
-        self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
+    """Mock metrics collector."""    def __init__(self):
+        """Initialize cluster metrics collector with infrastructure monitoring"""        self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
         self.cluster_metrics = ['node_count', 'pod_count', 'service_count', 'ingress_count']
         self.infrastructure_metrics = ['cpu_usage', 'memory_usage', 'storage_usage', 'network_io']
         self.health_indicators = ['cluster_health', 'node_health', 'etcd_health', 'api_server_health']
@@ -47,8 +42,7 @@ from .kubernetes_manager import KubernetesManager
 
 
 class ClusterType(Enum):
-    """Cluster deployment types."""
-    PRODUCTION = "production"
+    """Cluster deployment types."""    PRODUCTION = "production"
     STAGING = "staging"
     DEVELOPMENT = "development"
     TESTING = "testing"
@@ -56,8 +50,7 @@ class ClusterType(Enum):
 
 
 class ClusterStatus(Enum):
-    """Cluster status."""
-    CREATING = "creating"
+    """Cluster status."""    CREATING = "creating"
     ACTIVE = "active"
     UPDATING = "updating"
     DELETING = "deleting"
@@ -66,8 +59,7 @@ class ClusterStatus(Enum):
 
 
 class NodeRole(Enum):
-    """Node roles in cluster."""
-    MASTER = "master"
+    """Node roles in cluster."""    MASTER = "master"
     WORKER = "worker"
     ETCD = "etcd"
     INGRESS = "ingress"
@@ -76,8 +68,7 @@ class NodeRole(Enum):
 
 @dataclass
 class ClusterNode:
-    """Cluster node configuration."""
-    name: str
+    """Cluster node configuration."""    name: str
     role: NodeRole
     instance_type: str
     cpu: int
@@ -90,8 +81,7 @@ class ClusterNode:
 
 @dataclass
 class ClusterConfig:
-    """Cluster configuration."""
-    name: str
+    """Cluster configuration."""    name: str
     cluster_type: ClusterType
     version: str
     region: str
@@ -104,8 +94,7 @@ class ClusterConfig:
 
 @dataclass
 class ClusterInfo:
-    """Cluster information."""
-    name: str
+    """Cluster information."""    name: str
     cluster_type: ClusterType
     status: ClusterStatus
     version: str
@@ -117,15 +106,12 @@ class ClusterInfo:
 
 
 class ClusterManager(BaseDeploymentManager):
-    """
-    Enterprise cluster management system.
+    """    Enterprise cluster management system.
     
     Manages multiple Kubernetes clusters for the IA Influencer Agent
     platform with enterprise features including disaster recovery,
     cross-cluster networking, and resource optimization.
-    """
-
-    def __init__(
+    """    def __init__(
         self,
         default_region: str = "us-west-2",
         metrics_collector: Optional[MetricsCollector] = None
@@ -156,16 +142,14 @@ class ClusterManager(BaseDeploymentManager):
         )
 
     async def create_cluster(self, config: ClusterConfig) -> bool:
-        """
-        Create new Kubernetes cluster.
+        """        Create new Kubernetes cluster.
         
         Args:
             config: Cluster configuration
             
         Returns:
             True if cluster creation initiated successfully, False otherwise
-        """
-        try:
+        """        try:
             # Validate configuration
             if not self._validate_cluster_config(config):
                 return False
@@ -212,8 +196,7 @@ class ClusterManager(BaseDeploymentManager):
             return False
 
     async def _create_cluster_infrastructure(self, config: ClusterConfig) -> bool:
-        """Create cluster infrastructure (cloud-specific implementation)."""
-        try:
+        """Create cluster infrastructure (cloud-specific implementation)."""        try:
             # This would integrate with cloud providers (AWS EKS, GCP GKE, Azure AKS)
             # For now, we'll simulate the process
             
@@ -245,8 +228,7 @@ class ClusterManager(BaseDeploymentManager):
             return False
 
     async def _create_cluster_network(self, config: ClusterConfig) -> bool:
-        """Create cluster networking."""
-        try:
+        """Create cluster networking."""        try:
             network_config = config.network_config
             
             # Create VPC/VNet
@@ -279,27 +261,23 @@ class ClusterManager(BaseDeploymentManager):
             return False
 
     async def _create_vpc(self, cluster_name: str, cidr: str, zones: List[str]) -> bool:
-        """Create VPC for cluster."""
-        # Cloud provider specific implementation
+        """Create VPC for cluster."""        # Cloud provider specific implementation
         self.logger.info(f"Creating VPC for cluster '{cluster_name}' with CIDR {cidr}")
         await asyncio.sleep(1)  # Simulate creation time
         return True
 
     async def _create_subnets(self, cluster_name: str, zones: List[str], subnet_size: int) -> bool:
-        """Create subnets for cluster."""
-        self.logger.info(f"Creating subnets for cluster '{cluster_name}' in zones {zones}")
+        """Create subnets for cluster."""        self.logger.info(f"Creating subnets for cluster '{cluster_name}' in zones {zones}")
         await asyncio.sleep(1)  # Simulate creation time
         return True
 
     async def _create_gateways(self, cluster_name: str, zones: List[str]) -> bool:
-        """Create internet and NAT gateways."""
-        self.logger.info(f"Creating gateways for cluster '{cluster_name}'")
+        """Create internet and NAT gateways."""        self.logger.info(f"Creating gateways for cluster '{cluster_name}'")
         await asyncio.sleep(1)  # Simulate creation time
         return True
 
     async def _create_cluster_security(self, config: ClusterConfig) -> bool:
-        """Create cluster security resources."""
-        try:
+        """Create cluster security resources."""        try:
             security_config = config.security_config
             
             # Create IAM roles and policies
@@ -324,20 +302,17 @@ class ClusterManager(BaseDeploymentManager):
             return False
 
     async def _create_iam_resources(self, cluster_name: str, roles: List[str]) -> bool:
-        """Create IAM roles and policies."""
-        self.logger.info(f"Creating IAM resources for cluster '{cluster_name}'")
+        """Create IAM roles and policies."""        self.logger.info(f"Creating IAM resources for cluster '{cluster_name}'")
         await asyncio.sleep(1)  # Simulate creation time
         return True
 
     async def _create_security_groups(self, cluster_name: str, security_groups: List[Dict]) -> bool:
-        """Create security groups."""
-        self.logger.info(f"Creating security groups for cluster '{cluster_name}'")
+        """Create security groups."""        self.logger.info(f"Creating security groups for cluster '{cluster_name}'")
         await asyncio.sleep(1)  # Simulate creation time
         return True
 
     async def _create_cluster_nodes(self, config: ClusterConfig) -> bool:
-        """Create cluster nodes."""
-        try:
+        """Create cluster nodes."""        try:
             for node in config.nodes:
                 node_created = await self._create_node(config.name, node)
                 if not node_created:
@@ -350,14 +325,12 @@ class ClusterManager(BaseDeploymentManager):
             return False
 
     async def _create_node(self, cluster_name: str, node: ClusterNode) -> bool:
-        """Create individual cluster node."""
-        self.logger.info(f"Creating node '{node.name}' for cluster '{cluster_name}'")
+        """Create individual cluster node."""        self.logger.info(f"Creating node '{node.name}' for cluster '{cluster_name}'")
         await asyncio.sleep(1)  # Simulate node creation time
         return True
 
     async def _initialize_cluster(self, config: ClusterConfig) -> bool:
-        """Initialize cluster with basic components."""
-        try:
+        """Initialize cluster with basic components."""        try:
             # Install CNI plugin
             cni_installed = await self._install_cni_plugin(config.name, config.network_config)
             if not cni_installed:
@@ -385,34 +358,29 @@ class ClusterManager(BaseDeploymentManager):
             return False
 
     async def _install_cni_plugin(self, cluster_name: str, network_config: Dict[str, Any]) -> bool:
-        """Install CNI plugin."""
-        cni_plugin = network_config.get("cni_plugin", "calico")
+        """Install CNI plugin."""        cni_plugin = network_config.get("cni_plugin", "calico")
         self.logger.info(f"Installing CNI plugin '{cni_plugin}' for cluster '{cluster_name}'")
         await asyncio.sleep(1)  # Simulate installation time
         return True
 
     async def _install_dns(self, cluster_name: str) -> bool:
-        """Install DNS addon."""
-        self.logger.info(f"Installing DNS for cluster '{cluster_name}'")
+        """Install DNS addon."""        self.logger.info(f"Installing DNS for cluster '{cluster_name}'")
         await asyncio.sleep(1)  # Simulate installation time
         return True
 
     async def _install_addons(self, cluster_name: str, addons: List[str]) -> bool:
-        """Install cluster addons."""
-        for addon in addons:
+        """Install cluster addons."""        for addon in addons:
             self.logger.info(f"Installing addon '{addon}' for cluster '{cluster_name}'")
             await asyncio.sleep(0.5)  # Simulate installation time
         return True
 
     async def _configure_rbac(self, cluster_name: str, security_config: Dict[str, Any]) -> bool:
-        """Configure RBAC."""
-        self.logger.info(f"Configuring RBAC for cluster '{cluster_name}'")
+        """Configure RBAC."""        self.logger.info(f"Configuring RBAC for cluster '{cluster_name}'")
         await asyncio.sleep(1)  # Simulate configuration time
         return True
 
     async def delete_cluster(self, cluster_name: str, force: bool = False) -> bool:
-        """
-        Delete Kubernetes cluster.
+        """        Delete Kubernetes cluster.
         
         Args:
             cluster_name: Name of the cluster to delete
@@ -420,8 +388,7 @@ class ClusterManager(BaseDeploymentManager):
             
         Returns:
             True if deletion initiated successfully, False otherwise
-        """
-        try:
+        """        try:
             if cluster_name not in self.clusters:
                 self.logger.warning(f"Cluster '{cluster_name}' not found")
                 return False
@@ -462,8 +429,7 @@ class ClusterManager(BaseDeploymentManager):
             return False
 
     async def _check_cluster_workloads(self, cluster_name: str) -> bool:
-        """Check if cluster has running workloads."""
-        try:
+        """Check if cluster has running workloads."""        try:
             if cluster_name in self.kubernetes_managers:
                 k8s_manager = self.kubernetes_managers[cluster_name]
                 
@@ -487,8 +453,7 @@ class ClusterManager(BaseDeploymentManager):
             return False
 
     async def _drain_cluster_nodes(self, cluster_name: str) -> bool:
-        """Drain all nodes in cluster."""
-        try:
+        """Drain all nodes in cluster."""        try:
             cluster_info = self.clusters[cluster_name]
             
             for node in cluster_info.nodes:
@@ -503,14 +468,12 @@ class ClusterManager(BaseDeploymentManager):
             return False
 
     async def _drain_node(self, cluster_name: str, node_name: str) -> bool:
-        """Drain specific node."""
-        self.logger.info(f"Draining node '{node_name}' in cluster '{cluster_name}'")
+        """Drain specific node."""        self.logger.info(f"Draining node '{node_name}' in cluster '{cluster_name}'")
         await asyncio.sleep(1)  # Simulate drain time
         return True
 
     async def _delete_cluster_infrastructure(self, cluster_name: str) -> bool:
-        """Delete cluster infrastructure."""
-        try:
+        """Delete cluster infrastructure."""        try:
             # Delete nodes
             nodes_deleted = await self._delete_cluster_nodes(cluster_name)
             if not nodes_deleted:
@@ -533,26 +496,22 @@ class ClusterManager(BaseDeploymentManager):
             return False
 
     async def _delete_cluster_nodes(self, cluster_name: str) -> bool:
-        """Delete cluster nodes."""
-        self.logger.info(f"Deleting nodes for cluster '{cluster_name}'")
+        """Delete cluster nodes."""        self.logger.info(f"Deleting nodes for cluster '{cluster_name}'")
         await asyncio.sleep(1)  # Simulate deletion time
         return True
 
     async def _delete_cluster_security(self, cluster_name: str) -> bool:
-        """Delete cluster security resources."""
-        self.logger.info(f"Deleting security resources for cluster '{cluster_name}'")
+        """Delete cluster security resources."""        self.logger.info(f"Deleting security resources for cluster '{cluster_name}'")
         await asyncio.sleep(1)  # Simulate deletion time
         return True
 
     async def _delete_cluster_network(self, cluster_name: str) -> bool:
-        """Delete cluster network resources."""
-        self.logger.info(f"Deleting network resources for cluster '{cluster_name}'")
+        """Delete cluster network resources."""        self.logger.info(f"Deleting network resources for cluster '{cluster_name}'")
         await asyncio.sleep(1)  # Simulate deletion time
         return True
 
     async def scale_cluster(self, cluster_name: str, node_changes: Dict[NodeRole, int]) -> bool:
-        """
-        Scale cluster by adding or removing nodes.
+        """        Scale cluster by adding or removing nodes.
         
         Args:
             cluster_name: Name of the cluster
@@ -560,8 +519,7 @@ class ClusterManager(BaseDeploymentManager):
             
         Returns:
             True if scaling successful, False otherwise
-        """
-        try:
+        """        try:
             if cluster_name not in self.clusters:
                 self.logger.error(f"Cluster '{cluster_name}' not found")
                 return False
@@ -599,8 +557,7 @@ class ClusterManager(BaseDeploymentManager):
             return False
 
     def _create_node_config(self, cluster_name: str, role: NodeRole, index: int) -> ClusterNode:
-        """Create node configuration for scaling."""
-        return ClusterNode(
+        """Create node configuration for scaling."""        return ClusterNode(
             name=f"{cluster_name}-{role.value}-{index}",
             role=role,
             instance_type="m5.large",
@@ -613,8 +570,7 @@ class ClusterManager(BaseDeploymentManager):
         )
 
     async def _remove_node(self, cluster_name: str, node_name: str) -> bool:
-        """Remove node from cluster."""
-        try:
+        """Remove node from cluster."""        try:
             # Drain node first
             drained = await self._drain_node(cluster_name, node_name)
             if not drained:
@@ -631,8 +587,7 @@ class ClusterManager(BaseDeploymentManager):
             return False
 
     async def update_cluster(self, cluster_name: str, new_version: str) -> bool:
-        """
-        Update cluster Kubernetes version.
+        """        Update cluster Kubernetes version.
         
         Args:
             cluster_name: Name of the cluster
@@ -640,8 +595,7 @@ class ClusterManager(BaseDeploymentManager):
             
         Returns:
             True if update successful, False otherwise
-        """
-        try:
+        """        try:
             if cluster_name not in self.clusters:
                 self.logger.error(f"Cluster '{cluster_name}' not found")
                 return False
@@ -683,33 +637,28 @@ class ClusterManager(BaseDeploymentManager):
             return False
 
     def _validate_version_upgrade(self, current_version: str, new_version: str) -> bool:
-        """Validate Kubernetes version upgrade path."""
-        # Simple validation - in production, would use proper semver comparison
+        """Validate Kubernetes version upgrade path."""        # Simple validation - in production, would use proper semver comparison
         return new_version > current_version
 
     async def _update_control_plane(self, cluster_name: str, new_version: str) -> bool:
-        """Update cluster control plane."""
-        self.logger.info(f"Updating control plane for cluster '{cluster_name}' to version {new_version}")
+        """Update cluster control plane."""        self.logger.info(f"Updating control plane for cluster '{cluster_name}' to version {new_version}")
         await asyncio.sleep(2)  # Simulate update time
         return True
 
     async def _update_cluster_nodes(self, cluster_name: str, new_version: str) -> bool:
-        """Update cluster nodes."""
-        self.logger.info(f"Updating nodes for cluster '{cluster_name}' to version {new_version}")
+        """Update cluster nodes."""        self.logger.info(f"Updating nodes for cluster '{cluster_name}' to version {new_version}")
         await asyncio.sleep(3)  # Simulate update time
         return True
 
     async def get_cluster_status(self, cluster_name: str) -> Optional[ClusterInfo]:
-        """
-        Get cluster status and information.
+        """        Get cluster status and information.
         
         Args:
             cluster_name: Name of the cluster
             
         Returns:
             Cluster information or None if not found
-        """
-        try:
+        """        try:
             if cluster_name not in self.clusters:
                 return None
             
@@ -739,8 +688,7 @@ class ClusterManager(BaseDeploymentManager):
             return None
 
     async def _get_cluster_resource_usage(self, cluster_name: str) -> Dict[str, Any]:
-        """Get cluster resource usage."""
-        try:
+        """Get cluster resource usage."""        try:
             k8s_manager = self.kubernetes_managers[cluster_name]
             cluster_resources = await k8s_manager.get_cluster_resources()
             
@@ -755,16 +703,14 @@ class ClusterManager(BaseDeploymentManager):
             return {}
 
     async def list_clusters(self, cluster_type: Optional[ClusterType] = None) -> List[ClusterInfo]:
-        """
-        List all managed clusters.
+        """        List all managed clusters.
         
         Args:
             cluster_type: Optional filter by cluster type
             
         Returns:
             List of cluster information
-        """
-        clusters = list(self.clusters.values())
+        """        clusters = list(self.clusters.values())
         
         if cluster_type:
             clusters = [c for c in clusters if c.cluster_type == cluster_type]
@@ -772,8 +718,7 @@ class ClusterManager(BaseDeploymentManager):
         return clusters
 
     async def _start_cluster_monitoring(self, cluster_name: str) -> bool:
-        """Start monitoring for cluster."""
-        try:
+        """Start monitoring for cluster."""        try:
             # Create Kubernetes manager for the cluster
             k8s_manager = KubernetesManager(
                 namespace="kube-system",
@@ -790,8 +735,7 @@ class ClusterManager(BaseDeploymentManager):
             return False
 
     async def _cleanup_failed_cluster(self, cluster_name: str) -> None:
-        """Cleanup resources from failed cluster creation."""
-        try:
+        """Cleanup resources from failed cluster creation."""        try:
             self.logger.info(f"Cleaning up failed cluster '{cluster_name}'")
             
             # Attempt to delete any created resources
@@ -805,8 +749,7 @@ class ClusterManager(BaseDeploymentManager):
             self.logger.error(f"Failed to cleanup failed cluster '{cluster_name}': {e}")
 
     def _validate_cluster_config(self, config: ClusterConfig) -> bool:
-        """Validate cluster configuration."""
-        try:
+        """Validate cluster configuration."""        try:
             # Basic validation
             if not config.name or not config.version:
                 self.logger.error("Cluster name and version are required")
@@ -834,8 +777,7 @@ class ClusterManager(BaseDeploymentManager):
             return False
 
     def _validate_node_config(self, node: ClusterNode) -> bool:
-        """Validate node configuration."""
-        if not node.name or not node.instance_type:
+        """Validate node configuration."""        if not node.name or not node.instance_type:
             self.logger.error(f"Node name and instance type are required")
             return False
         
@@ -846,8 +788,7 @@ class ClusterManager(BaseDeploymentManager):
         return True
 
     async def backup_cluster_config(self, cluster_name: str, backup_location: str) -> bool:
-        """
-        Backup cluster configuration and state.
+        """        Backup cluster configuration and state.
         
         Args:
             cluster_name: Name of the cluster
@@ -855,8 +796,7 @@ class ClusterManager(BaseDeploymentManager):
             
         Returns:
             True if backup successful, False otherwise
-        """
-        try:
+        """        try:
             if cluster_name not in self.clusters:
                 self.logger.error(f"Cluster '{cluster_name}' not found")
                 return False
@@ -902,8 +842,7 @@ class ClusterManager(BaseDeploymentManager):
             return False
 
     async def _save_backup(self, backup_location: str, backup_data: Dict[str, Any]) -> bool:
-        """Save backup data to location."""
-        try:
+        """Save backup data to location."""        try:
             # For file-based backup
             if backup_location.startswith("file://"):
                 file_path = backup_location[7:]  # Remove file:// prefix
@@ -926,16 +865,14 @@ class ClusterManager(BaseDeploymentManager):
             return False
 
     async def restore_cluster_from_backup(self, backup_location: str) -> bool:
-        """
-        Restore cluster from backup.
+        """        Restore cluster from backup.
         
         Args:
             backup_location: Location of the backup
             
         Returns:
             True if restore successful, False otherwise
-        """
-        try:
+        """        try:
             # Load backup data
             backup_data = await self._load_backup(backup_location)
             if not backup_data:
@@ -983,8 +920,7 @@ class ClusterManager(BaseDeploymentManager):
             return False
 
     async def _load_backup(self, backup_location: str) -> Optional[Dict[str, Any]]:
-        """Load backup data from location."""
-        try:
+        """Load backup data from location."""        try:
             # For file-based backup
             if backup_location.startswith("file://"):
                 file_path = backup_location[7:]  # Remove file:// prefix

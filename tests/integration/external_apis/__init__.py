@@ -1,5 +1,4 @@
-"""
-External APIs Integration Tests
+"""External APIs Integration Tests
 
 Tests for external service integrations including:
 - Payment processors (Stripe, PayPal)

@@ -1,5 +1,4 @@
-"""
-Platform Crawler Base
+"""Platform Crawler Base
 =====================
 
 Professional base crawler for multi-platform content monitoring and surveillance.
@@ -7,9 +6,7 @@ Provides foundation for platform-specific crawlers with advanced detection capab
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from abc import ABC, abstractmethod
 from datetime import datetime, timedelta
@@ -24,8 +21,7 @@ from ..fingerprinting.vector_matcher import VectorMatcher
 
 
 class CrawlerStatus(Enum):
-    """Crawler status enumeration"""
-    IDLE = "idle"
+    """Crawler status enumeration"""    IDLE = "idle"
     RUNNING = "running"
     PAUSED = "paused"
     ERROR = "error"
@@ -33,8 +29,7 @@ class CrawlerStatus(Enum):
 
 
 class ContentMatchType(Enum):
-    """Content match types"""
-    EXACT_MATCH = "exact_match"
+    """Content match types"""    EXACT_MATCH = "exact_match"
     PARTIAL_MATCH = "partial_match"
     SIMILAR_CONTENT = "similar_content"
     DERIVATIVE_WORK = "derivative_work"
@@ -43,8 +38,7 @@ class ContentMatchType(Enum):
 
 @dataclass
 class CrawlerConfig:
-    """Crawler configuration"""
-    platform_name: str
+    """Crawler configuration"""    platform_name: str
     search_terms: List[str]
     similarity_threshold: float
     max_results_per_search: int
@@ -58,8 +52,7 @@ class CrawlerConfig:
 
 @dataclass
 class ContentMatch:
-    """Content match result"""
-    url: str
+    """Content match result"""    url: str
     platform: str
     title: str
     description: str
@@ -79,8 +72,7 @@ class ContentMatch:
 
 @dataclass
 class CrawlerResult:
-    """Crawler execution result"""
-    platform: str
+    """Crawler execution result"""    platform: str
     crawl_id: str
     start_time: datetime
     end_time: datetime
@@ -93,22 +85,18 @@ class CrawlerResult:
 
 
 class PlatformCrawler(ABC):
-    """
-    Abstract base class for platform-specific crawlers.
+    """    Abstract base class for platform-specific crawlers.
     
     Provides common functionality for web crawling, content detection,
     and similarity matching across different social media platforms.
-    """
-    
+    """    
     def __init__(self, config: CrawlerConfig, vector_matcher: VectorMatcher):
-        """
-        Initialize PlatformCrawler.
+        """        Initialize PlatformCrawler.
         
         Args:
             config: Crawler configuration
             vector_matcher: Vector matching service for similarity detection
-        """
-        self.config = config
+        """        self.config = config
         self.vector_matcher = vector_matcher
         self.logger = logging.getLogger(__name__)
         
@@ -136,8 +124,7 @@ class PlatformCrawler(ABC):
         }
     
     async def initialize_session(self):
-        """Initialize HTTP session"""
-        if not self.session:
+        """Initialize HTTP session"""        if not self.session:
             timeout = aiohttp.ClientTimeout(total=self.config.timeout_seconds)
             self.session = aiohttp.ClientSession(
                 headers=self.headers,
@@ -146,16 +133,14 @@ class PlatformCrawler(ABC):
             )
     
     async def cleanup_session(self):
-        """Cleanup HTTP session"""
-        if self.session:
+        """Cleanup HTTP session"""        if self.session:
             await self.session.close()
             self.session = None
     
     @abstractmethod
     async def search_content(self, search_terms: List[str], 
                            max_results: int = 100) -> List[Dict[str, Any]]:
-        """
-        Search for content on the platform.
+        """        Search for content on the platform.
         
         Args:
             search_terms: Terms to search for
@@ -163,46 +148,39 @@ class PlatformCrawler(ABC):
             
         Returns:
             List of found content items
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def extract_content_metadata(self, content_url: str) -> Dict[str, Any]:
-        """
-        Extract metadata from content URL.
+        """        Extract metadata from content URL.
         
         Args:
             content_url: URL of the content
             
         Returns:
             Content metadata dictionary
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def download_content_sample(self, content_url: str) -> Optional[bytes]:
-        """
-        Download content sample for fingerprinting.
+        """        Download content sample for fingerprinting.
         
         Args:
             content_url: URL of the content
             
         Returns:
             Content data bytes or None if failed
-        """
-        pass
+        """        pass
     
     async def crawl_for_matches(self, fingerprint_data: Dict[str, Any]) -> CrawlerResult:
-        """
-        Crawl platform for content matches.
+        """        Crawl platform for content matches.
         
         Args:
             fingerprint_data: Fingerprint data to search for
             
         Returns:
             Crawler result with found matches
-        """
-        try:
+        """        try:
             crawl_id = f"{self.config.platform_name}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
             start_time = datetime.utcnow()
             
@@ -290,8 +268,7 @@ class PlatformCrawler(ABC):
     
     async def search_similar_content(self, fingerprints: Dict[str, Any], 
                                    threshold: float) -> List[Dict[str, Any]]:
-        """
-        Search for similar content using fingerprints.
+        """        Search for similar content using fingerprints.
         
         Args:
             fingerprints: Content fingerprints
@@ -299,8 +276,7 @@ class PlatformCrawler(ABC):
             
         Returns:
             List of similar content matches
-        """
-        try:
+        """        try:
             # Generate search terms from fingerprints
             search_terms = await self._extract_search_terms_from_fingerprints(fingerprints)
             
@@ -340,8 +316,7 @@ class PlatformCrawler(ABC):
     
     async def monitor_content_continuously(self, fingerprint_data: Dict[str, Any],
                                          callback_url: str = None) -> str:
-        """
-        Start continuous monitoring for content.
+        """        Start continuous monitoring for content.
         
         Args:
             fingerprint_data: Fingerprint data to monitor
@@ -349,8 +324,7 @@ class PlatformCrawler(ABC):
             
         Returns:
             Monitoring task ID
-        """
-        try:
+        """        try:
             monitoring_id = f"monitor_{self.config.platform_name}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
             
             # Create monitoring task
@@ -383,8 +357,7 @@ class PlatformCrawler(ABC):
     # Private helper methods
     
     async def _generate_search_terms(self, fingerprint_data: Dict[str, Any]) -> List[str]:
-        """Generate search terms from fingerprint data"""
-        search_terms = []
+        """Generate search terms from fingerprint data"""        search_terms = []
         
         # Extract terms from metadata
         if 'title' in fingerprint_data:
@@ -407,8 +380,7 @@ class PlatformCrawler(ABC):
         return search_terms[:10]  # Limit to 10 terms
     
     async def _extract_key_phrases(self, text: str) -> List[str]:
-        """Extract key phrases from text"""
-        # Simple keyword extraction (in production, would use NLP)
+        """Extract key phrases from text"""        # Simple keyword extraction (in production, would use NLP)
         words = text.split()
         phrases = []
         
@@ -423,8 +395,7 @@ class PlatformCrawler(ABC):
     
     async def _process_search_result(self, result: Dict[str, Any], 
                                    fingerprint_data: Dict[str, Any]) -> Optional[ContentMatch]:
-        """Process individual search result"""
-        try:
+        """Process individual search result"""        try:
             # Extract metadata
             metadata = await self.extract_content_metadata(result.get('url', ''))
             
@@ -462,8 +433,7 @@ class PlatformCrawler(ABC):
     
     async def _calculate_content_similarity(self, content: Dict[str, Any], 
                                           fingerprint_data: Dict[str, Any]) -> float:
-        """Calculate similarity between content and fingerprint"""
-        try:
+        """Calculate similarity between content and fingerprint"""        try:
             # Text similarity (title, description)
             text_similarity = await self._calculate_text_similarity(content, fingerprint_data)
             
@@ -494,8 +464,7 @@ class PlatformCrawler(ABC):
     
     async def _calculate_text_similarity(self, content: Dict[str, Any], 
                                        fingerprint_data: Dict[str, Any]) -> float:
-        """Calculate text similarity between content and fingerprint"""
-        # Simple text similarity (in production, would use advanced NLP)
+        """Calculate text similarity between content and fingerprint"""        # Simple text similarity (in production, would use advanced NLP)
         content_text = f"{content.get('title', '')} {content.get('description', '')}"
         fingerprint_text = f"{fingerprint_data.get('title', '')} {fingerprint_data.get('description', '')}"
         
@@ -514,8 +483,7 @@ class PlatformCrawler(ABC):
     
     async def _calculate_metadata_similarity(self, content: Dict[str, Any], 
                                            fingerprint_data: Dict[str, Any]) -> float:
-        """Calculate metadata similarity"""
-        similarities = []
+        """Calculate metadata similarity"""        similarities = []
         
         # Duration similarity (for audio/video)
         if 'duration' in content and 'duration' in fingerprint_data:
@@ -544,8 +512,7 @@ class PlatformCrawler(ABC):
         return sum(similarities) / len(similarities) if similarities else 0.0
     
     def _determine_match_type(self, similarity_score: float) -> ContentMatchType:
-        """Determine match type based on similarity score"""
-        if similarity_score >= 0.95:
+        """Determine match type based on similarity score"""        if similarity_score >= 0.95:
             return ContentMatchType.EXACT_MATCH
         elif similarity_score >= 0.85:
             return ContentMatchType.PARTIAL_MATCH
@@ -557,8 +524,7 @@ class PlatformCrawler(ABC):
             return ContentMatchType.FALSE_POSITIVE
     
     def _parse_upload_date(self, date_str: Any) -> datetime:
-        """Parse upload date from various formats"""
-        if isinstance(date_str, datetime):
+        """Parse upload date from various formats"""        if isinstance(date_str, datetime):
             return date_str
         
         if isinstance(date_str, str):
@@ -575,8 +541,7 @@ class PlatformCrawler(ABC):
         return datetime.utcnow()  # Default to now
     
     async def _apply_rate_limit(self):
-        """Apply rate limiting between requests"""
-        current_time = asyncio.get_event_loop().time()
+        """Apply rate limiting between requests"""        current_time = asyncio.get_event_loop().time()
         time_since_last = current_time - self.last_request_time
         
         if time_since_last < self.config.rate_limit_delay:
@@ -587,8 +552,7 @@ class PlatformCrawler(ABC):
         self.request_count += 1
     
     async def _extract_search_terms_from_fingerprints(self, fingerprints: Dict[str, Any]) -> List[str]:
-        """Extract search terms from fingerprints"""
-        terms = []
+        """Extract search terms from fingerprints"""        terms = []
         
         # Extract from various fingerprint types
         if 'audio_fingerprint' in fingerprints:
@@ -613,14 +577,12 @@ class PlatformCrawler(ABC):
         return list(set(terms))  # Remove duplicates
     
     async def _extract_content_vector(self, content: Dict[str, Any]) -> Optional[List[float]]:
-        """Extract vector representation from content"""
-        # This would implement content-to-vector conversion
+        """Extract vector representation from content"""        # This would implement content-to-vector conversion
         # Placeholder implementation
         return None
     
     async def _handle_monitoring_matches(self, result: CrawlerResult, callback_url: str = None):
-        """Handle matches found during monitoring"""
-        if not result.matches:
+        """Handle matches found during monitoring"""        if not result.matches:
             return
         
         # Log matches
@@ -644,8 +606,7 @@ class PlatformCrawler(ABC):
                 self.logger.error(f"Error sending callback notification: {str(e)}")
     
     def get_crawler_stats(self) -> Dict[str, Any]:
-        """Get crawler statistics"""
-        return {
+        """Get crawler statistics"""        return {
             'platform': self.config.platform_name,
             'status': self.status.value,
             'total_crawls': self.total_crawls,

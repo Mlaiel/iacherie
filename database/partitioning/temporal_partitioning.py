@@ -1,5 +1,4 @@
-"""
-Temporal Partitioning - Time-Based Partition Management
+"""Temporal Partitioning - Time-Based Partition Management
 
 Ultra-industrial temporal partitioning system for time-series and time-sensitive data.
 Provides intelligent time-based partitioning with automated archival, compression,
@@ -22,9 +21,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 🚨 INTELLECTUAL PROPERTY WARNING 🚨
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
-"""
-
-import logging
+"""import logging
 import time
 import threading
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -44,8 +41,7 @@ import psutil
 logger = logging.getLogger(__name__)
 
 class TimePartitionStrategy(Enum):
-    """Time-based partitioning strategies"""
-    HOURLY = "hourly"
+    """Time-based partitioning strategies"""    HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -55,8 +51,7 @@ class TimePartitionStrategy(Enum):
     CUSTOM_INTERVAL = "custom_interval"
 
 class TimeInterval(Enum):
-    """Time interval definitions"""
-    HOUR = "hour"
+    """Time interval definitions"""    HOUR = "hour"
     DAY = "day"
     WEEK = "week"
     MONTH = "month"
@@ -64,8 +59,7 @@ class TimeInterval(Enum):
     YEAR = "year"
 
 class RetentionPolicy(Enum):
-    """Data retention policies"""
-    TIME_BASED = "time_based"
+    """Data retention policies"""    TIME_BASED = "time_based"
     SIZE_BASED = "size_based"
     COUNT_BASED = "count_based"
     COMPLIANCE_BASED = "compliance_based"
@@ -73,8 +67,7 @@ class RetentionPolicy(Enum):
     NEVER_DELETE = "never_delete"
 
 class PurgePolicy(Enum):
-    """Data purge policies"""
-    IMMEDIATE = "immediate"
+    """Data purge policies"""    IMMEDIATE = "immediate"
     BATCH_PURGE = "batch_purge"
     GRADUAL_PURGE = "gradual_purge"
     ARCHIVE_THEN_PURGE = "archive_then_purge"
@@ -82,8 +75,7 @@ class PurgePolicy(Enum):
 
 @dataclass
 class TimePartitionConfig:
-    """Configuration for temporal partitioning"""
-    table_name: str
+    """Configuration for temporal partitioning"""    table_name: str
     time_column: str
     strategy: TimePartitionStrategy
     interval: Union[TimeInterval, int]  # TimeInterval enum or custom hours
@@ -99,8 +91,7 @@ class TimePartitionConfig:
 
 @dataclass
 class PartitionWindow:
-    """Time window for a partition"""
-    partition_name: str
+    """Time window for a partition"""    partition_name: str
     table_name: str
     start_time: datetime
     end_time: datetime
@@ -114,8 +105,7 @@ class PartitionWindow:
 
 @dataclass
 class ArchivalTask:
-    """Data archival task"""
-    task_id: str
+    """Data archival task"""    task_id: str
     partition_name: str
     table_name: str
     source_location: str
@@ -129,8 +119,7 @@ class ArchivalTask:
     error_message: Optional[str] = None
 
 class CompressionScheduler:
-    """Intelligent compression scheduling system"""
-    
+    """Intelligent compression scheduling system"""    
     def __init__(self, session_factory, config: Dict[str, Any] = None):
         self.session_factory = session_factory
         self.config = config or {}
@@ -139,8 +128,7 @@ class CompressionScheduler:
         self.compression_schedule: Dict[str, datetime] = {}
         
     def schedule_compression(self, partition: PartitionWindow) -> bool:
-        """Schedule compression for partition"""
-        try:
+        """Schedule compression for partition"""        try:
             # Check if partition is eligible for compression
             age_days = (datetime.utcnow() - partition.start_time).days
             
@@ -164,8 +152,7 @@ class CompressionScheduler:
             return False
     
     def _calculate_optimal_compression_time(self) -> datetime:
-        """Calculate optimal time for compression (low usage hours)"""
-        # Schedule during low usage hours (typically 2-4 AM)
+        """Calculate optimal time for compression (low usage hours)"""        # Schedule during low usage hours (typically 2-4 AM)
         now = datetime.utcnow()
         target_time = now.replace(hour=3, minute=0, second=0, microsecond=0)
         
@@ -176,8 +163,7 @@ class CompressionScheduler:
         return target_time
     
     def execute_compression(self, partition_name: str) -> bool:
-        """Execute compression for partition"""
-        try:
+        """Execute compression for partition"""        try:
             with self.session_factory() as session:
                 # PostgreSQL table compression (simplified)
                 logger.info(f"Compressing partition: {partition_name}")
@@ -199,8 +185,7 @@ class CompressionScheduler:
             return False
 
 class ArchivalManager:
-    """Data archival and long-term storage management"""
-    
+    """Data archival and long-term storage management"""    
     def __init__(self, session_factory, config: Dict[str, Any] = None):
         self.session_factory = session_factory
         self.config = config or {}
@@ -209,8 +194,7 @@ class ArchivalManager:
         self.executor = ThreadPoolExecutor(max_workers=2)
         
     def create_archival_task(self, partition: PartitionWindow, archival_type: str = "compress") -> ArchivalTask:
-        """Create archival task for partition"""
-        task_id = f"archive_{partition.partition_name}_{int(time.time())}"
+        """Create archival task for partition"""        task_id = f"archive_{partition.partition_name}_{int(time.time())}"
         
         task = ArchivalTask(
             task_id=task_id,
@@ -226,8 +210,7 @@ class ArchivalManager:
         return task
     
     def execute_archival_task(self, task: ArchivalTask) -> bool:
-        """Execute archival task"""
-        try:
+        """Execute archival task"""        try:
             task.status = "in_progress"
             task.started_at = datetime.utcnow()
             
@@ -259,8 +242,7 @@ class ArchivalManager:
             return False
     
     def _compress_partition(self, task: ArchivalTask) -> bool:
-        """Compress partition data"""
-        try:
+        """Compress partition data"""        try:
             with self.session_factory() as session:
                 # Example compression implementation
                 session.execute(text(f"VACUUM FULL {task.partition_name}"))
@@ -277,38 +259,32 @@ class ArchivalManager:
             return False
     
     def _move_partition(self, task: ArchivalTask) -> bool:
-        """Move partition to archive storage"""
-        # Implementation would move data to external storage
+        """Move partition to archive storage"""        # Implementation would move data to external storage
         # For example: AWS S3, Azure Blob, file system
         logger.info(f"Moving partition {task.partition_name} to {task.target_location}")
         return True
     
     def _backup_partition(self, task: ArchivalTask) -> bool:
-        """Create backup of partition"""
-        # Implementation would create backup copy
+        """Create backup of partition"""        # Implementation would create backup copy
         logger.info(f"Backing up partition {task.partition_name}")
         return True
 
 class TemporalPartitionManager:
-    """
-    Ultra-industrial temporal partition management system
+    """    Ultra-industrial temporal partition management system
     
     Manages time-based partitions with:
     - Intelligent partition creation and maintenance
     - Automated archival and compression
     - Data retention enforcement
     - Performance optimization for time-series queries
-    """
-    
+    """    
     def __init__(self, session_factory, config: Dict[str, Any] = None):
-        """
-        Initialize temporal partition manager
+        """        Initialize temporal partition manager
         
         Args:
             session_factory: SQLAlchemy session factory
             config: Configuration dictionary
-        """
-        self.session_factory = session_factory
+        """        self.session_factory = session_factory
         self.config = config or {}
         
         # Component initialization
@@ -333,8 +309,7 @@ class TemporalPartitionManager:
         logger.info("TemporalPartitionManager initialized")
     
     def register_table(self, config: TimePartitionConfig) -> bool:
-        """Register table for temporal partitioning"""
-        try:
+        """Register table for temporal partitioning"""        try:
             with self._lock:
                 # Validate configuration
                 if not self._validate_config(config):
@@ -357,8 +332,7 @@ class TemporalPartitionManager:
             return False
     
     def _validate_config(self, config: TimePartitionConfig) -> bool:
-        """Validate temporal partition configuration"""
-        if not config.table_name or not config.time_column:
+        """Validate temporal partition configuration"""        if not config.table_name or not config.time_column:
             logger.error("Table name and time column are required")
             return False
         
@@ -373,8 +347,7 @@ class TemporalPartitionManager:
         return True
     
     def _create_initial_partitions(self, config: TimePartitionConfig):
-        """Create initial partitions for table"""
-        try:
+        """Create initial partitions for table"""        try:
             current_time = datetime.utcnow().replace(tzinfo=timezone.utc)
             
             # Create past partitions
@@ -397,8 +370,7 @@ class TemporalPartitionManager:
             logger.error(f"Failed to create initial partitions for {config.table_name}: {e}")
     
     def _calculate_partition_start(self, base_time: datetime, strategy: TimePartitionStrategy, offset: int) -> datetime:
-        """Calculate partition start time based on strategy and offset"""
-        if strategy == TimePartitionStrategy.HOURLY:
+        """Calculate partition start time based on strategy and offset"""        if strategy == TimePartitionStrategy.HOURLY:
             return base_time.replace(minute=0, second=0, microsecond=0) + timedelta(hours=offset)
         
         elif strategy == TimePartitionStrategy.DAILY:
@@ -455,8 +427,7 @@ class TemporalPartitionManager:
             raise ValueError(f"Unsupported partition strategy: {strategy}")
     
     def _create_partition_for_time(self, config: TimePartitionConfig, start_time: datetime) -> bool:
-        """Create partition for specific time"""
-        try:
+        """Create partition for specific time"""        try:
             # Calculate end time
             end_time = self._calculate_partition_end(start_time, config.strategy)
             
@@ -486,8 +457,7 @@ class TemporalPartitionManager:
             return False
     
     def _calculate_partition_end(self, start_time: datetime, strategy: TimePartitionStrategy) -> datetime:
-        """Calculate partition end time"""
-        if strategy == TimePartitionStrategy.HOURLY:
+        """Calculate partition end time"""        if strategy == TimePartitionStrategy.HOURLY:
             return start_time + timedelta(hours=1)
         elif strategy == TimePartitionStrategy.DAILY:
             return start_time + timedelta(days=1)
@@ -507,8 +477,7 @@ class TemporalPartitionManager:
             raise ValueError(f"Unsupported strategy: {strategy}")
     
     def _generate_partition_name(self, table_name: str, start_time: datetime, strategy: TimePartitionStrategy) -> str:
-        """Generate partition name based on time and strategy"""
-        if strategy == TimePartitionStrategy.HOURLY:
+        """Generate partition name based on time and strategy"""        if strategy == TimePartitionStrategy.HOURLY:
             suffix = start_time.strftime('%Y_%m_%d_%H')
         elif strategy == TimePartitionStrategy.DAILY:
             suffix = start_time.strftime('%Y_%m_%d')
@@ -529,16 +498,13 @@ class TemporalPartitionManager:
         return f"{table_name}_{suffix}"
     
     def _create_database_partition(self, config: TimePartitionConfig, partition: PartitionWindow):
-        """Create actual database partition"""
-        try:
+        """Create actual database partition"""        try:
             with self.session_factory() as session:
                 # Create partition table (PostgreSQL syntax)
-                create_partition_sql = f"""
-                CREATE TABLE IF NOT EXISTS {partition.partition_name} 
+                create_partition_sql = f"""                CREATE TABLE IF NOT EXISTS {partition.partition_name} 
                 PARTITION OF {config.table_name}
                 FOR VALUES FROM ('{partition.start_time.isoformat()}') TO ('{partition.end_time.isoformat()}')
-                """
-                
+                """                
                 session.execute(text(create_partition_sql))
                 
                 # Create indexes for partition
@@ -551,30 +517,25 @@ class TemporalPartitionManager:
             raise
     
     def _create_partition_indexes(self, session: Session, config: TimePartitionConfig, partition: PartitionWindow):
-        """Create indexes for partition"""
-        try:
+        """Create indexes for partition"""        try:
             # Time column index
-            session.execute(text(f"""
-                CREATE INDEX IF NOT EXISTS idx_{partition.partition_name}_{config.time_column} 
+            session.execute(text(f"""                CREATE INDEX IF NOT EXISTS idx_{partition.partition_name}_{config.time_column} 
                 ON {partition.partition_name} ({config.time_column})
             """))
             
             # Additional indexes based on table type
             if 'content_fingerprints' in config.table_name:
-                session.execute(text(f"""
-                    CREATE INDEX IF NOT EXISTS idx_{partition.partition_name}_user_id 
+                session.execute(text(f"""                    CREATE INDEX IF NOT EXISTS idx_{partition.partition_name}_user_id 
                     ON {partition.partition_name} (user_id)
                 """))
             
             elif 'protection_alerts' in config.table_name:
-                session.execute(text(f"""
-                    CREATE INDEX IF NOT EXISTS idx_{partition.partition_name}_severity 
+                session.execute(text(f"""                    CREATE INDEX IF NOT EXISTS idx_{partition.partition_name}_severity 
                     ON {partition.partition_name} (severity)
                 """))
             
             elif 'revenue_tracking' in config.table_name:
-                session.execute(text(f"""
-                    CREATE INDEX IF NOT EXISTS idx_{partition.partition_name}_user_platform 
+                session.execute(text(f"""                    CREATE INDEX IF NOT EXISTS idx_{partition.partition_name}_user_platform 
                     ON {partition.partition_name} (user_id, platform)
                 """))
             
@@ -582,14 +543,12 @@ class TemporalPartitionManager:
             logger.warning(f"Failed to create some indexes for {partition.partition_name}: {e}")
     
     def _schedule_maintenance(self, table_name: str):
-        """Schedule maintenance for table"""
-        # Schedule next maintenance check
+        """Schedule maintenance for table"""        # Schedule next maintenance check
         next_maintenance = datetime.utcnow() + timedelta(hours=24)
         self.maintenance_schedule[table_name] = next_maintenance
     
     def start_monitoring(self):
-        """Start monitoring and maintenance"""
-        def monitoring_loop():
+        """Start monitoring and maintenance"""        def monitoring_loop():
             while self.monitoring_enabled:
                 try:
                     self._maintenance_cycle()
@@ -605,15 +564,13 @@ class TemporalPartitionManager:
             logger.info("Temporal partition monitoring started")
     
     def stop_monitoring(self):
-        """Stop monitoring"""
-        self.monitoring_enabled = False
+        """Stop monitoring"""        self.monitoring_enabled = False
         if self.monitoring_thread and self.monitoring_thread.is_alive():
             self.monitoring_thread.join(timeout=10)
         logger.info("Temporal partition monitoring stopped")
     
     def _maintenance_cycle(self):
-        """Single maintenance cycle"""
-        try:
+        """Single maintenance cycle"""        try:
             current_time = datetime.utcnow()
             
             for table_name, config in self.partition_configs.items():
@@ -643,8 +600,7 @@ class TemporalPartitionManager:
             logger.error(f"Error in maintenance cycle: {e}")
     
     def _ensure_future_partitions(self, config: TimePartitionConfig):
-        """Ensure adequate future partitions exist"""
-        try:
+        """Ensure adequate future partitions exist"""        try:
             current_time = datetime.utcnow().replace(tzinfo=timezone.utc)
             current_partitions = self.partition_windows[config.table_name]
             
@@ -674,8 +630,7 @@ class TemporalPartitionManager:
             logger.error(f"Failed to ensure future partitions for {config.table_name}: {e}")
     
     def _process_archival(self, config: TimePartitionConfig):
-        """Process archival for old partitions"""
-        try:
+        """Process archival for old partitions"""        try:
             current_time = datetime.utcnow()
             archive_cutoff = current_time - timedelta(days=config.archive_threshold_days)
             
@@ -697,8 +652,7 @@ class TemporalPartitionManager:
             logger.error(f"Failed to process archival for {config.table_name}: {e}")
     
     def _process_purge(self, config: TimePartitionConfig):
-        """Process purge for expired partitions"""
-        try:
+        """Process purge for expired partitions"""        try:
             current_time = datetime.utcnow()
             purge_cutoff = current_time - timedelta(days=config.retention_days)
             
@@ -723,8 +677,7 @@ class TemporalPartitionManager:
             logger.error(f"Failed to process purge for {config.table_name}: {e}")
     
     def _purge_partition(self, partition: PartitionWindow) -> bool:
-        """Purge partition data"""
-        try:
+        """Purge partition data"""        try:
             with self.session_factory() as session:
                 # Drop partition table
                 session.execute(text(f"DROP TABLE IF EXISTS {partition.partition_name}"))
@@ -737,14 +690,12 @@ class TemporalPartitionManager:
             return False
     
     def _update_partition_statistics(self, table_name: str):
-        """Update partition statistics"""
-        try:
+        """Update partition statistics"""        try:
             with self.session_factory() as session:
                 for partition in self.partition_windows[table_name]:
                     if partition.status != "purged":
                         # Update row count and size
-                        stats_query = text(f"""
-                            SELECT 
+                        stats_query = text(f"""                            SELECT 
                                 COUNT(*) as row_count,
                                 pg_total_relation_size('{partition.partition_name}') as size_bytes
                             FROM {partition.partition_name}
@@ -763,8 +714,7 @@ class TemporalPartitionManager:
             logger.warning(f"Failed to update statistics for {table_name}: {e}")
     
     def get_partition_info(self, table_name: str) -> Dict[str, Any]:
-        """Get comprehensive partition information"""
-        try:
+        """Get comprehensive partition information"""        try:
             config = self.partition_configs.get(table_name)
             partitions = self.partition_windows.get(table_name, [])
             
@@ -819,8 +769,7 @@ class TemporalPartitionManager:
             return {'error': str(e)}
     
     def force_maintenance(self, table_name: str = None) -> bool:
-        """Force immediate maintenance for table(s)"""
-        try:
+        """Force immediate maintenance for table(s)"""        try:
             tables_to_maintain = [table_name] if table_name else list(self.partition_configs.keys())
             
             for table in tables_to_maintain:
@@ -845,8 +794,7 @@ class TemporalPartitionManager:
             return False
     
     def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive temporal partitioning system status"""
-        try:
+        """Get comprehensive temporal partitioning system status"""        try:
             total_tables = len(self.partition_configs)
             total_partitions = sum(len(partitions) for partitions in self.partition_windows.values())
             
@@ -895,8 +843,7 @@ class TemporalPartitionManager:
             return {'error': str(e)}
     
     def shutdown(self):
-        """Shutdown temporal partition manager gracefully"""
-        try:
+        """Shutdown temporal partition manager gracefully"""        try:
             logger.info("Shutting down temporal partition manager...")
             
             # Stop monitoring

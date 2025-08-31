@@ -1,5 +1,4 @@
-"""
-audio_engine.py - MÉGA-MOTEUR INDUSTRIEL CONSOLIDÉ
+"""audio_engine.py - MÉGA-MOTEUR INDUSTRIEL CONSOLIDÉ
 ================================================================================
 
 🏭 CONSOLIDATION INDUSTRIELLE COMPLÈTE
@@ -11,25 +10,20 @@ audio_engine.py - MÉGA-MOTEUR INDUSTRIEL CONSOLIDÉ
 #     1. core.py (1 lignes) - /spleeter/core.py\n#     2. separator.py (1 lignes) - /spleeter/separator.py\n#     3. processor.py (1 lignes) - /spleeter/processor.py\n#     4. utils.py (1 lignes) - /spleeter/utils.py\n#     5. models.py (1 lignes) - /spleeter/models.py\n#     6. exceptions.py (1 lignes) - /spleeter/exceptions.py\n#     7. __init__.py (1 lignes) - /spleeter/__init__.py\n#     8. upload_processing_config.py (1 lignes) - /app/business/creators/creator_workflow/handlers/collaboration/config/core/uploa\n#     9. fingerprinting_service.py (1 lignes) - /app/business/creators/creator_workflow/handlers/collaboration/config/core/ai_pr\n#    10. processing_alerts.py (1 lignes) - /app/business/creators/creator_workflow/handlers/processing/processing_alerts.py\n#    11. __init__.py (1 lignes) - /app/business/creators/creator_workflow/handlers/processing/__init__.py\n#    12. audio_analysis.py (1 lignes) - /app/tasks/ai_tasks/audio_analysis.py\n#    13. track_analysis.py (1 lignes) - /app/tasks/spotify_tasks/track_analysis.py\n#    14. analytics_processing.py (1 lignes) - /app/tasks/analytics_tasks/analytics_processing.py\n#    15. musical_utils.py (1 lignes) - /app/ml/audio_intelligence/musical_utils.py\n#    16. musical_quality_strategy.py (1 lignes) - /app/ml/audio_intelligence/musical_quality_strategy.py\n#    17. audio_networks.py (1 lignes) - /app/ml/audio_intelligence/audio_networks.py\n#    18. audio_features.py (1 lignes) - /app/ml/audio_intelligence/audio_features.py\n#    19. analyzer.py (1 lignes) - /app/utils/audio/analyzer.py\n#    20. processor.py (1 lignes) - /app/utils/audio/processor.py\n#    21. __init__.py (1 lignes) - /app/utils/audio/__init__.py\n#    22. extractor.py (1 lignes) - /app/utils/audio/extractor.py\n#    23. media_formatter.py (2 lignes) - /app/utils/formatting/media_formatter.py\n#    24. processors.py (1 lignes) - /app/utils/processors/processors.py\n#    25. analyzers.py (1 lignes) - /app/utils/helpers/analyzers.py\n#    26. audio_importer.py (1 lignes) - /app/utils/helpers/audio_importer.py\n#    27. apple_music_integration.py (1 lignes) - /app/utils/helpers/apple_music_integration.py\n#    28. audio_quality_collector_engine.py (1 lignes) - /app/analytics/tools/data_collection/specialized_collectors/audio_quality_collec\n#    29. validation.py (1 lignes) - /app/analytics/core/business_logic/validation/validation.py\n#    30. youtube_music_integration.py (1 lignes) - /app/analytics/core/business_logic/content_analysis/youtube_music_integration.py\n#    31. music_data_processing.py (1 lignes) - /app/analytics/core/data_processing/transformation/music_data_processing.py\n#    32. fingerprint_alerts.py (1 lignes) - /app/analytics/blockchain/consensus/monitoring/alerts/business/handlers/content_\n#    33. upload_processing_config.py (1 lignes) - /app/analytics/blockchain/consensus/monitoring/alerts/business/handlers/creator_\n#    34. fingerprinting_service.py (1 lignes) - /app/analytics/blockchain/consensus/monitoring/alerts/business/handlers/creator_\n#    35. processing_alerts.py (1 lignes) - /app/analytics/blockchain/consensus/monitoring/alerts/business/handlers/creator_\n#    36. fingerprint_alerts.py (1 lignes) - /app/analytics/blockchain/consensus_backup_20250730_082819/monitoring/alerts/bus\n#    37. upload_processing_config.py (1 lignes) - /app/analytics/blockchain/consensus_backup_20250730_082819/monitoring/alerts/bus\n#    38. fingerprinting_service.py (1 lignes) - /app/analytics/blockchain/consensus_backup_20250730_082819/monitoring/alerts/bus\n#    39. processing_alerts.py (1 lignes) - /app/analytics/blockchain/consensus_backup_20250730_082819/monitoring/alerts/bus\n#    40. music_service.py (1 lignes) - /app/api/v2/grpc/music_service.py\n#    41. beat_generator.py (1 lignes) - /app/api/v1/music_generation/beat_generator.py\n#    42. audio_synthesis.py (1 lignes) - /app/api/v1/music_generation/audio_synthesis.py\n#    43. stem_separation.py (1 lignes) - /app/api/v1/music_generation/stem_separation.py\n#    44. mastering_ai.py (1 lignes) - /app/api/v1/music_generation/mastering_ai.py\n#    45. harmony_analyzer.py (1 lignes) - /app/api/v1/music_generation/harmony_analyzer.py\n#    46. __init__.py (1 lignes) - /app/api/v1/music_generation/__init__.py\n#    47. audio_effects.py (1 lignes) - /app/api/v1/music_generation/audio_effects.py\n#    48. music_streaming.py (1 lignes) - /app/api/websocket/music_streaming.py\n#    49. trend_analysis_service.py (1 lignes) - /app/services/analytics/trend_analysis_service.py\n#    50. fingerprint_types.py (1 lignes) - /app/services/protection/fingerprinting/fingerprint_types.py\n#    51. exceptions.py (1 lignes) - /app/services/protection/fingerprinting/exceptions.py\n#    52. __init__.py (1 lignes) - /app/services/protection/fingerprinting/__init__.py\n#    53. audio_utils.py (1 lignes) - /app/services/audio/audio_utils.py\n#    54. spleeter_client.py (1 lignes) - /app/services/audio/spleeter_client.py\n#    55. __init__.py (1 lignes) - /app/services/audio/__init__.py\n#    56. music_analysis_service.py (1 lignes) - /app/services/ai/music_analysis_service.py\n#    57. audio_fingerprint.py (1 lignes) - /app/services/ai/audio_fingerprint.py\n#    58. video_fingerprint.py (1 lignes) - /app/services/ai/video_fingerprint.py\n#    59. data_processing.py (1 lignes) - /app/fixtures/processing_services/data_processing.py\n#    60. audio.py (1 lignes) - /app/ml_analytics/audio.py\n#    61. test_setup_spleeter_venv.py (1 lignes) - /tests_backend/scripts/deployment/test_setup_spleeter_venv.py\n#    62. test_utils.py (1 lignes) - /tests_backend/services/spleeter_microservice/test_utils.py\n#    63. test_config.py (1 lignes) - /tests_backend/services/spleeter_microservice/test_config.py\n#    64. test_fixtures_json.py (1 lignes) - /tests_backend/services/spleeter_microservice/tests/test_fixtures_json.py\n#    65. __init__.py (1 lignes) - /tests_backend/services/spleeter_microservice/tests/__init__.py\n#    66. test_validate_fixtures.py (1 lignes) - /tests_backend/services/spleeter_microservice/tests/test_validate_fixtures.py\n#    67. test_core.py (1 lignes) - /tests_backend/spleeter/test_core.py\n#    68. test_integration.py (1 lignes) - /tests_backend/spleeter/test_integration.py\n#    69. test_processor.py (1 lignes) - /tests_backend/spleeter/test_processor.py\n#    70. test_utils.py (1 lignes) - /tests_backend/spleeter/test_utils.py\n#    71. test_performance.py (12 lignes) - /tests_backend/spleeter/test_performance.py\n#    72. conftest.py (1 lignes) - /tests_backend/spleeter/conftest.py\n#    73. test_monitoring.py (1 lignes) - /tests_backend/spleeter/test_monitoring.py\n#    74. test_audio_separation_utilities.py (1 lignes) - /tests_backend/spleeter/test_audio_separation_utilities.py\n#    75. test_analytics_processing.py (1 lignes) - /tests_backend/app/tasks/test_analytics_processing.py\n#    76. test_audio_analysis.py (1 lignes) - /tests_backend/app/tasks/ai_tasks/test_audio_analysis.py\n#    77. test_track_analysis.py (1 lignes) - /tests_backend/app/tasks/spotify_tasks/test_track_analysis.py\n#    78. test_data_processors.py (1 lignes) - /tests_backend/app/utils/test_data_processors.py\n#    79. test_streaming_audio.py (1 lignes) - /tests_backend/app/utils/audio/test_streaming_audio.py\n#    80. test_audio_quality.py (1 lignes) - /tests_backend/app/utils/audio/test_audio_quality.py\n#    81. test_audio_processors.py (1 lignes) - /tests_backend/app/utils/audio/test_audio_processors.py\n#    82. test_utils.py (2 lignes) - /tests_backend/app/utils/audio/test_utils.py\n#    83. __init__.py (1 lignes) - /tests_backend/app/utils/audio/__init__.py\n#    84. test_feature_extractors.py (1 lignes) - /tests_backend/app/utils/audio/test_feature_extractors.py\n#    85. test_music_service.py (1 lignes) - /tests_backend/app/api/v2/grpc/test_music_service.py\n#    86. test_audio_synthesis.py (1 lignes) - /tests_backend/app/api/v1/music_generation/test_audio_synthesis.py\n#    87. test_stem_separation.py (1 lignes) - /tests_backend/app/api/v1/music_generation/test_stem_separation.py\n#    88. test_audio_effects.py (1 lignes) - /tests_backend/app/api/v1/music_generation/test_audio_effects.py\n#    89. test_beat_generator.py (1 lignes) - /tests_backend/app/api/v1/music_generation/test_beat_generator.py\n#    90. test_harmony_analyzer.py (1 lignes) - /tests_backend/app/api/v1/music_generation/test_harmony_analyzer.py\n#    91. test_mastering_ai.py (1 lignes) - /tests_backend/app/api/v1/music_generation/test_mastering_ai.py\n#    92. test_music_streaming.py (1 lignes) - /tests_backend/app/api/websocket/test_music_streaming.py\n#    93. test_trend_analysis_service.py (1 lignes) - /tests_backend/app/services/analytics/test_trend_analysis_service.py\n#    94. test_audio_analyzer.py (1 lignes) - /tests_backend/app/services/audio/test_audio_analyzer.py\n#    95. test_audio_utils.py (1 lignes) - /tests_backend/app/services/audio/test_audio_utils.py\n#    96. __init__.py (1 lignes) - /tests_backend/app/services/audio/__init__.py\n#    97. test_spleeter_client.py (1 lignes) - /tests_backend/app/services/audio/test_spleeter_client.py\n#    98. test_track_analysis_service.py (1 lignes) - /tests_backend/app/services/spotify/test_track_analysis_service.py\n#    99. test_music_analysis_service.py (1 lignes) - /tests_backend/app/services/ai/test_music_analysis_service.py\n
 ================================================================================
 """
-
-
 # ==========================================================================================
 # MODULE 1/99: core.py
 # SOURCE: /spleeter/core.py
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-🎵 Spotify AI Agent - Spleeter Core Engine
+"""🎵 Spotify AI Agent - Spleeter Core Engine
 =========================================
 
 Moteur principal de séparation audio utilisant TensorFlow et des modèles
 pré-entraînés pour la séparation de sources audio multi-stems.
 
 🎖️ Développé par l'équipe d'experts enterprise
-"""
-
-import os
+"""import os
 import logging
 import asyncio
 from typing import Dict, List, Optional, Union, Tuple, Any
@@ -49,8 +43,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SpleeterConfig:
-    """Configuration pour le moteur Spleeter"""
-    
+    """Configuration pour le moteur Spleeter"""    
     # Modèle et adapter
     model_name: str = "spleeter:2stems-16kHz"
     audio_adapter: str = "tensorflow"
@@ -86,8 +79,7 @@ class SpleeterConfig:
     ])
     
     def __post_init__(self):
-        """Validation post-initialisation"""
-        if self.cache_dir is None:
+        """Validation post-initialisation"""        if self.cache_dir is None:
             self.cache_dir = os.path.expanduser("~/.spleeter/cache")
         if self.models_dir is None:
             self.models_dir = os.path.expanduser("~/.spleeter/models")
@@ -98,8 +90,7 @@ class SpleeterConfig:
 
 
 class SpleeterEngine:
-    """
-    Moteur principal de séparation audio Spleeter enterprise
+    """    Moteur principal de séparation audio Spleeter enterprise
     
     Features:
     - Multi-modèles (2, 4, 5 stems)
@@ -107,16 +98,13 @@ class SpleeterEngine:
     - Cache intelligent
     - Monitoring performance
     - Traitement batch
-    """
-    
+    """    
     def __init__(self, config: Optional[SpleeterConfig] = None):
-        """
-        Initialise le moteur Spleeter
+        """        Initialise le moteur Spleeter
         
         Args:
             config: Configuration du moteur
-        """
-        self.config = config or SpleeterConfig()
+        """        self.config = config or SpleeterConfig()
         self._setup_logging()
         self._setup_tensorflow()
         
@@ -134,15 +122,13 @@ class SpleeterEngine:
         logger.info(f"Spleeter Engine initialisé avec config: {self.config.model_name}")
     
     def _setup_logging(self):
-        """Configure le logging"""
-        logging.basicConfig(
+        """Configure le logging"""        logging.basicConfig(
             level=getattr(logging, self.config.log_level),
             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
         )
     
     def _setup_tensorflow(self):
-        """Configure TensorFlow pour performance optimale"""
-        if self.config.enable_gpu:
+        """Configure TensorFlow pour performance optimale"""        if self.config.enable_gpu:
             # Configuration GPU
             gpus = tf.config.experimental.list_physical_devices('GPU')
             if gpus:
@@ -163,8 +149,7 @@ class SpleeterEngine:
         tf.config.threading.set_intra_op_parallelism_threads(self.config.num_threads)
     
     async def initialize(self):
-        """Initialise le moteur de manière asynchrone"""
-        if self._initialized:
+        """Initialise le moteur de manière asynchrone"""        if self._initialized:
             return
         
         try:
@@ -188,13 +173,11 @@ class SpleeterEngine:
             raise SpleeterError(f"Échec initialisation moteur: {e}")
     
     async def _load_model(self, model_name: str):
-        """
-        Charge un modèle Spleeter
+        """        Charge un modèle Spleeter
         
         Args:
             model_name: Nom du modèle (ex: "spleeter:2stems-16kHz")
-        """
-        if model_name in self._models_cache:
+        """        if model_name in self._models_cache:
             return self._models_cache[model_name]
         
         try:
@@ -226,8 +209,7 @@ class SpleeterEngine:
             raise ModelNotFoundError(f"Impossible de charger {model_name}: {e}")
     
     def _create_mock_separator(self, model_name: str):
-        """Crée un séparateur simulé pour les tests"""
-        class MockSeparator:
+        """Crée un séparateur simulé pour les tests"""        class MockSeparator:
             def __init__(self, model_name):
                 self.model_name = model_name
                 self.stems = 2 if "2stems" in model_name else 4 if "4stems" in model_name else 5
@@ -261,8 +243,7 @@ class SpleeterEngine:
         return MockSeparator(model_name)
     
     def _validate_environment(self):
-        """Valide l'environnement d'exécution"""
-        # Vérification TensorFlow
+        """Valide l'environnement d'exécution"""        # Vérification TensorFlow
         if not tf.config.list_physical_devices():
             logger.warning("Aucun device TensorFlow détecté")
         
@@ -283,8 +264,7 @@ class SpleeterEngine:
         model_name: Optional[str] = None,
         **kwargs
     ) -> Dict[str, np.ndarray]:
-        """
-        Sépare un fichier audio en ses composants
+        """        Sépare un fichier audio en ses composants
         
         Args:
             audio_path: Chemin vers le fichier audio
@@ -297,8 +277,7 @@ class SpleeterEngine:
             
         Raises:
             AudioProcessingError: En cas d'erreur de traitement
-        """
-        if not self._initialized:
+        """        if not self._initialized:
             await self.initialize()
         
         # Validation du fichier
@@ -353,13 +332,11 @@ class SpleeterEngine:
             raise AudioProcessingError(f"Échec séparation: {e}")
     
     async def _load_audio(self, audio_path: Path) -> Tuple[np.ndarray, int]:
-        """
-        Charge un fichier audio
+        """        Charge un fichier audio
         
         Returns:
             Tuple (waveform, sample_rate)
-        """
-        try:
+        """        try:
             # Utilisation de librosa pour le chargement
             import librosa
             
@@ -391,8 +368,7 @@ class SpleeterEngine:
         waveform: np.ndarray,
         sample_rate: int
     ) -> Dict[str, np.ndarray]:
-        """
-        Effectue la séparation audio
+        """        Effectue la séparation audio
         
         Args:
             separator: Instance du séparateur
@@ -401,8 +377,7 @@ class SpleeterEngine:
             
         Returns:
             Dictionnaire des stems séparés
-        """
-        def _separate():
+        """        def _separate():
             return separator.separate(waveform, sample_rate)
         
         # Exécution dans thread pool pour éviter le blocage
@@ -418,16 +393,14 @@ class SpleeterEngine:
         base_name: str,
         sample_rate: int
     ):
-        """
-        Sauvegarde les stems séparés
+        """        Sauvegarde les stems séparés
         
         Args:
             stems: Dictionnaire des stems
             output_dir: Répertoire de sortie
             base_name: Nom de base des fichiers
             sample_rate: Fréquence d'échantillonnage
-        """
-        output_dir = Path(output_dir)
+        """        output_dir = Path(output_dir)
         output_dir.mkdir(parents=True, exist_ok=True)
         
         try:
@@ -456,8 +429,7 @@ class SpleeterEngine:
         model_name: Optional[str] = None,
         max_concurrent: int = 4
     ) -> Dict[str, Dict[str, np.ndarray]]:
-        """
-        Séparation en lot de plusieurs fichiers audio
+        """        Séparation en lot de plusieurs fichiers audio
         
         Args:
             audio_files: Liste des fichiers à traiter
@@ -467,8 +439,7 @@ class SpleeterEngine:
             
         Returns:
             Dictionnaire des résultats par fichier
-        """
-        if not self._initialized:
+        """        if not self._initialized:
             await self.initialize()
         
         results = {}
@@ -500,13 +471,11 @@ class SpleeterEngine:
         return results
     
     def get_available_models(self) -> List[str]:
-        """
-        Retourne la liste des modèles disponibles
+        """        Retourne la liste des modèles disponibles
         
         Returns:
             Liste des noms de modèles
-        """
-        return [
+        """        return [
             "spleeter:2stems-16kHz",
             "spleeter:2stems-8kHz", 
             "spleeter:4stems-16kHz",
@@ -516,16 +485,14 @@ class SpleeterEngine:
         ]
     
     def get_model_info(self, model_name: str) -> Dict[str, Any]:
-        """
-        Retourne les informations sur un modèle
+        """        Retourne les informations sur un modèle
         
         Args:
             model_name: Nom du modèle
             
         Returns:
             Dictionnaire d'informations
-        """
-        info = {
+        """        info = {
             "name": model_name,
             "loaded": model_name in self._models_cache,
             "stems": 2,
@@ -551,30 +518,25 @@ class SpleeterEngine:
         return info
     
     async def clear_cache(self):
-        """Vide le cache des modèles"""
-        self._models_cache.clear()
+        """Vide le cache des modèles"""        self._models_cache.clear()
         logger.info("Cache des modèles vidé")
     
     def get_performance_stats(self) -> Dict[str, Any]:
-        """
-        Retourne les statistiques de performance
+        """        Retourne les statistiques de performance
         
         Returns:
             Dictionnaire des métriques
-        """
-        if not self.monitor:
+        """        if not self.monitor:
             return {}
         
         return self.monitor.get_summary()
     
     async def health_check(self) -> Dict[str, Any]:
-        """
-        Vérifie l'état de santé du moteur
+        """        Vérifie l'état de santé du moteur
         
         Returns:
             Dictionnaire de statut
-        """
-        status = {
+        """        status = {
             "initialized": self._initialized,
             "models_loaded": len(self._models_cache),
             "gpu_available": len(tf.config.list_physical_devices('GPU')) > 0,
@@ -585,8 +547,7 @@ class SpleeterEngine:
         return status
     
     def _get_memory_usage(self) -> Dict[str, float]:
-        """Retourne l'utilisation mémoire"""
-        try:
+        """Retourne l'utilisation mémoire"""        try:
             import psutil
             process = psutil.Process()
             memory_info = process.memory_info()
@@ -600,17 +561,14 @@ class SpleeterEngine:
             return {"error": "psutil not available"}
     
     async def __aenter__(self):
-        """Context manager async entry"""
-        await self.initialize()
+        """Context manager async entry"""        await self.initialize()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Context manager async exit"""
-        await self.cleanup()
+        """Context manager async exit"""        await self.cleanup()
     
     async def cleanup(self):
-        """Nettoyage des ressources"""
-        if hasattr(self, '_thread_pool'):
+        """Nettoyage des ressources"""        if hasattr(self, '_thread_pool'):
             self._thread_pool.shutdown(wait=True)
         
         if self.monitor:
@@ -626,13 +584,11 @@ class SpleeterEngine:
 # LIGNES: 1
 # ==========================================================================================
 
-"""Mock Spleeter Separator"""
-import numpy as np
+"""Mock Spleeter Separator"""import numpy as np
 
 class Separator:
     def __init__(self, *args, **kwargs):
-        """Initialize audio separation engine with model configurations"""
-        self.logger = logging.getLogger(f"{__name__}.Separator")
+        """Initialize audio separation engine with model configurations"""        self.logger = logging.getLogger(f"{__name__}.Separator")
         self.model_name = kwargs.get('model_name', '2stems-16kHz')
         self.available_models = ['2stems-16kHz', '4stems-16kHz', '5stems-16kHz']
         self.sample_rate = kwargs.get('sample_rate', 44100)
@@ -642,8 +598,7 @@ class Separator:
         self.logger.info(f"Audio Separator initialized with model: {self.model_name}")
     
     def separate(self, audio_data):
-        """Separate audio into vocal and instrumental components"""
-        try:
+        """Separate audio into vocal and instrumental components"""        try:
             # Enhanced mock separation with realistic audio processing
             if hasattr(audio_data, 'shape'):
                 audio_length = audio_data.shape[0] if len(audio_data.shape) > 0 else 1000
@@ -670,17 +625,14 @@ class Separator:
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-🎵 Spotify AI Agent - Audio Processor
+"""🎵 Spotify AI Agent - Audio Processor
 ====================================
 
 Processeur audio avancé pour la préparation, le traitement batch
 et l'optimisation des opérations de séparation audio.
 
 🎖️ Développé par l'équipe d'experts enterprise
-"""
-
-import os
+"""import os
 import asyncio
 import numpy as np
 from typing import Dict, List, Optional, Union, Tuple, Any, AsyncGenerator
@@ -704,8 +656,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ProcessingOptions:
-    """Options de traitement audio"""
-    
+    """Options de traitement audio"""    
     # Qualité audio
     sample_rate: int = 44100
     bit_depth: int = 16
@@ -740,8 +691,7 @@ class ProcessingOptions:
     memory_optimization: bool = True
     
     def __post_init__(self):
-        """Validation des options"""
-        if self.max_workers <= 0:
+        """Validation des options"""        if self.max_workers <= 0:
             self.max_workers = mp.cpu_count()
         
         if self.sample_rate not in [8000, 16000, 22050, 44100, 48000, 96000]:
@@ -749,8 +699,7 @@ class ProcessingOptions:
 
 
 class AudioProcessor:
-    """
-    Processeur audio avancé pour Spleeter
+    """    Processeur audio avancé pour Spleeter
     
     Features:
     - Préprocessing audio optimisé
@@ -758,21 +707,18 @@ class AudioProcessor:
     - Support multi-format
     - Optimisations performance
     - Monitoring détaillé
-    """
-    
+    """    
     def __init__(
         self,
         options: Optional[ProcessingOptions] = None,
         cache_manager: Optional[CacheManager] = None
     ):
-        """
-        Initialise le processeur audio
+        """        Initialise le processeur audio
         
         Args:
             options: Options de traitement
             cache_manager: Gestionnaire de cache
-        """
-        self.options = options or ProcessingOptions()
+        """        self.options = options or ProcessingOptions()
         self.cache_manager = cache_manager
         
         # Utilitaires
@@ -795,8 +741,7 @@ class AudioProcessor:
         target_sample_rate: Optional[int] = None,
         normalize: Optional[bool] = None
     ) -> Tuple[np.ndarray, int]:
-        """
-        Charge et préprocesse un fichier audio
+        """        Charge et préprocesse un fichier audio
         
         Args:
             audio_path: Chemin vers le fichier audio
@@ -808,8 +753,7 @@ class AudioProcessor:
             
         Raises:
             AudioProcessingError: En cas d'erreur
-        """
-        audio_path = Path(audio_path)
+        """        audio_path = Path(audio_path)
         
         # Validation du fichier
         if not audio_path.exists():
@@ -865,16 +809,14 @@ class AudioProcessor:
             raise AudioProcessingError(f"Échec preprocessing: {e}")
     
     async def _load_audio_file(self, audio_path: Path) -> Tuple[np.ndarray, int]:
-        """
-        Charge un fichier audio
+        """        Charge un fichier audio
         
         Args:
             audio_path: Chemin vers le fichier
             
         Returns:
             Tuple (waveform, sample_rate)
-        """
-        def _load():
+        """        def _load():
             try:
                 import librosa
                 waveform, sample_rate = librosa.load(
@@ -920,8 +862,7 @@ class AudioProcessor:
         original_sr: int,
         target_sr: int
     ) -> np.ndarray:
-        """
-        Rééchantillonne l'audio
+        """        Rééchantillonne l'audio
         
         Args:
             waveform: Forme d'onde originale
@@ -930,8 +871,7 @@ class AudioProcessor:
             
         Returns:
             Forme d'onde rééchantillonnée
-        """
-        if original_sr == target_sr:
+        """        if original_sr == target_sr:
             return waveform
         
         def _resample():
@@ -976,16 +916,14 @@ class AudioProcessor:
         return await loop.run_in_executor(self._thread_pool, _resample)
     
     async def _normalize_audio(self, waveform: np.ndarray) -> np.ndarray:
-        """
-        Normalise l'audio
+        """        Normalise l'audio
         
         Args:
             waveform: Forme d'onde à normaliser
             
         Returns:
             Forme d'onde normalisée
-        """
-        def _normalize():
+        """        def _normalize():
             # Normalisation peak
             peak = np.max(np.abs(waveform))
             if peak > 0:
@@ -1010,8 +948,7 @@ class AudioProcessor:
         sample_rate: int,
         cutoff_freq: float
     ) -> np.ndarray:
-        """
-        Applique un filtre passe-haut
+        """        Applique un filtre passe-haut
         
         Args:
             waveform: Forme d'onde
@@ -1020,8 +957,7 @@ class AudioProcessor:
             
         Returns:
             Forme d'onde filtrée
-        """
-        def _filter():
+        """        def _filter():
             try:
                 from scipy import signal
                 
@@ -1049,8 +985,7 @@ class AudioProcessor:
         sample_rate: int,
         cutoff_freq: float
     ) -> np.ndarray:
-        """
-        Applique un filtre passe-bas
+        """        Applique un filtre passe-bas
         
         Args:
             waveform: Forme d'onde
@@ -1059,8 +994,7 @@ class AudioProcessor:
             
         Returns:
             Forme d'onde filtrée
-        """
-        def _filter():
+        """        def _filter():
             try:
                 from scipy import signal
                 
@@ -1087,8 +1021,7 @@ class AudioProcessor:
         waveform: np.ndarray,
         sample_rate: int
     ) -> np.ndarray:
-        """
-        Applique une réduction de bruit simple
+        """        Applique une réduction de bruit simple
         
         Args:
             waveform: Forme d'onde
@@ -1096,8 +1029,7 @@ class AudioProcessor:
             
         Returns:
             Forme d'onde avec bruit réduit
-        """
-        def _denoise():
+        """        def _denoise():
             # Réduction de bruit basique par seuillage spectral
             try:
                 import librosa
@@ -1140,16 +1072,14 @@ class AudioProcessor:
         sample_rate: int,
         normalize: Optional[bool] = None
     ):
-        """
-        Sauvegarde un fichier audio
+        """        Sauvegarde un fichier audio
         
         Args:
             waveform: Forme d'onde à sauvegarder
             output_path: Chemin de sortie
             sample_rate: Fréquence d'échantillonnage
             normalize: Normaliser avant sauvegarde
-        """
-        output_path = Path(output_path)
+        """        output_path = Path(output_path)
         output_path.parent.mkdir(parents=True, exist_ok=True)
         
         # Normalisation optionnelle
@@ -1181,16 +1111,14 @@ class AudioProcessor:
         logger.debug(f"Audio sauvegardé: {output_path}")
     
     def _get_format_settings(self, file_extension: str) -> Dict[str, Any]:
-        """
-        Retourne les paramètres de format selon l'extension
+        """        Retourne les paramètres de format selon l'extension
         
         Args:
             file_extension: Extension du fichier
             
         Returns:
             Dictionnaire des paramètres
-        """
-        settings = {}
+        """        settings = {}
         
         if file_extension.lower() == '.wav':
             if self.options.output_quality == "high":
@@ -1222,16 +1150,14 @@ class AudioProcessor:
         return settings
     
     async def get_audio_info(self, audio_path: Union[str, Path]) -> Dict[str, Any]:
-        """
-        Retourne les informations d'un fichier audio
+        """        Retourne les informations d'un fichier audio
         
         Args:
             audio_path: Chemin vers le fichier
             
         Returns:
             Dictionnaire d'informations
-        """
-        audio_path = Path(audio_path)
+        """        audio_path = Path(audio_path)
         
         def _get_info():
             try:
@@ -1265,8 +1191,7 @@ class AudioProcessor:
         return await loop.run_in_executor(self._thread_pool, _get_info)
     
     async def cleanup(self):
-        """Nettoyage des ressources"""
-        if hasattr(self, '_thread_pool'):
+        """Nettoyage des ressources"""        if hasattr(self, '_thread_pool'):
             self._thread_pool.shutdown(wait=True)
         
         if hasattr(self, '_process_pool') and self._process_pool:
@@ -1277,8 +1202,7 @@ class AudioProcessor:
 
 
 class BatchProcessor:
-    """
-    Processeur pour le traitement en lot de fichiers audio
+    """    Processeur pour le traitement en lot de fichiers audio
     
     Features:
     - Traitement parallèle optimisé
@@ -1286,23 +1210,20 @@ class BatchProcessor:
     - Monitoring de progression
     - Gestion d'erreurs robuste
     - Resume de traitements interrompus
-    """
-    
+    """    
     def __init__(
         self,
         audio_processor: AudioProcessor,
         max_concurrent_jobs: int = 4,
         queue_size: int = 100
     ):
-        """
-        Initialise le processeur batch
+        """        Initialise le processeur batch
         
         Args:
             audio_processor: Processeur audio à utiliser
             max_concurrent_jobs: Nombre max de jobs simultanés
             queue_size: Taille max de la queue
-        """
-        self.audio_processor = audio_processor
+        """        self.audio_processor = audio_processor
         self.max_concurrent_jobs = max_concurrent_jobs
         self.queue_size = queue_size
         
@@ -1323,8 +1244,7 @@ class BatchProcessor:
         logger.info(f"BatchProcessor initialisé: {max_concurrent_jobs} workers, queue size {queue_size}")
     
     async def start(self):
-        """Démarre les workers de traitement"""
-        if self._running:
+        """Démarre les workers de traitement"""        if self._running:
             return
         
         self._running = True
@@ -1337,8 +1257,7 @@ class BatchProcessor:
         logger.info(f"BatchProcessor démarré avec {len(self._workers)} workers")
     
     async def stop(self):
-        """Arrête les workers de traitement"""
-        if not self._running:
+        """Arrête les workers de traitement"""        if not self._running:
             return
         
         self._running = False
@@ -1354,13 +1273,11 @@ class BatchProcessor:
         logger.info("BatchProcessor arrêté")
     
     async def _worker(self, worker_id: str):
-        """
-        Worker de traitement des jobs
+        """        Worker de traitement des jobs
         
         Args:
             worker_id: Identifiant du worker
-        """
-        logger.debug(f"Worker {worker_id} démarré")
+        """        logger.debug(f"Worker {worker_id} démarré")
         
         try:
             while self._running:
@@ -1382,14 +1299,12 @@ class BatchProcessor:
         logger.debug(f"Worker {worker_id} arrêté")
     
     async def _process_job(self, worker_id: str, job: Dict[str, Any]):
-        """
-        Traite un job
+        """        Traite un job
         
         Args:
             worker_id: Identifiant du worker
             job: Informations du job
-        """
-        job_id = job['id']
+        """        job_id = job['id']
         
         try:
             self._active_jobs[job_id] = {
@@ -1438,8 +1353,7 @@ class BatchProcessor:
         priority: int = 1,
         **kwargs
     ) -> str:
-        """
-        Soumet un job de séparation audio
+        """        Soumet un job de séparation audio
         
         Args:
             audio_path: Chemin vers le fichier audio
@@ -1453,8 +1367,7 @@ class BatchProcessor:
             
         Raises:
             ValueError: Si la queue est pleine
-        """
-        if not self._running:
+        """        if not self._running:
             await self.start()
         
         # Génération de l'ID du job
@@ -1495,8 +1408,7 @@ class BatchProcessor:
         model_name: str,
         **kwargs
     ) -> Dict[str, Any]:
-        """
-        Exécute un job de séparation audio
+        """        Exécute un job de séparation audio
         
         Args:
             audio_path: Chemin vers le fichier
@@ -1506,8 +1418,7 @@ class BatchProcessor:
             
         Returns:
             Résultat du traitement
-        """
-        # Import du moteur Spleeter
+        """        # Import du moteur Spleeter
         from .core import SpleeterEngine, SpleeterConfig
         
         # Configuration du moteur
@@ -1531,16 +1442,14 @@ class BatchProcessor:
         }
     
     def get_job_status(self, job_id: str) -> Optional[Dict[str, Any]]:
-        """
-        Retourne le statut d'un job
+        """        Retourne le statut d'un job
         
         Args:
             job_id: Identifiant du job
             
         Returns:
             Informations du job ou None
-        """
-        # Vérifier dans les jobs actifs
+        """        # Vérifier dans les jobs actifs
         if job_id in self._active_jobs:
             return self._active_jobs[job_id].copy()
         
@@ -1555,13 +1464,11 @@ class BatchProcessor:
         return None
     
     def get_queue_status(self) -> Dict[str, Any]:
-        """
-        Retourne le statut de la queue
+        """        Retourne le statut de la queue
         
         Returns:
             Informations sur la queue
-        """
-        return {
+        """        return {
             "queue_size": self._job_queue.qsize(),
             "max_queue_size": self.queue_size,
             "active_jobs": len(self._active_jobs),
@@ -1576,8 +1483,7 @@ class BatchProcessor:
         status: Optional[str] = None,
         limit: int = 100
     ) -> List[Dict[str, Any]]:
-        """
-        Liste les jobs selon leur statut
+        """        Liste les jobs selon leur statut
         
         Args:
             status: Filtre par statut (active, completed, failed)
@@ -1585,8 +1491,7 @@ class BatchProcessor:
             
         Returns:
             Liste des jobs
-        """
-        jobs = []
+        """        jobs = []
         
         # Sélection des sources selon le statut
         if status is None or status == "active":
@@ -1604,8 +1509,7 @@ class BatchProcessor:
         return jobs[:limit]
     
     async def wait_for_job(self, job_id: str, timeout: Optional[float] = None) -> Dict[str, Any]:
-        """
-        Attend la completion d'un job
+        """        Attend la completion d'un job
         
         Args:
             job_id: Identifiant du job
@@ -1617,8 +1521,7 @@ class BatchProcessor:
         Raises:
             asyncio.TimeoutError: En cas de timeout
             ValueError: Si le job n'existe pas
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         while True:
             job_status = self.get_job_status(job_id)
@@ -1635,16 +1538,14 @@ class BatchProcessor:
             await asyncio.sleep(0.5)
     
     async def cancel_job(self, job_id: str) -> bool:
-        """
-        Annule un job
+        """        Annule un job
         
         Args:
             job_id: Identifiant du job
             
         Returns:
             True si annulé avec succès
-        """
-        # Job actif - difficile à annuler une fois commencé
+        """        # Job actif - difficile à annuler une fois commencé
         if job_id in self._active_jobs:
             logger.warning(f"Job {job_id} en cours - annulation non supportée")
             return False
@@ -1655,8 +1556,7 @@ class BatchProcessor:
         return False
     
     async def cleanup(self):
-        """Nettoyage des ressources"""
-        await self.stop()
+        """Nettoyage des ressources"""        await self.stop()
         
         if hasattr(self.audio_processor, 'cleanup'):
             await self.audio_processor.cleanup()
@@ -1670,17 +1570,14 @@ class BatchProcessor:
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-🎵 Spotify AI Agent - Spleeter Utils
+"""🎵 Spotify AI Agent - Spleeter Utils
 ===================================
 
 Utilitaires avancés pour le traitement audio, validation
 et optimisations diverses du module Spleeter.
 
 🎖️ Développé par l'équipe d'experts enterprise
-"""
-
-import os
+"""import os
 import re
 import asyncio
 import numpy as np
@@ -1702,8 +1599,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioMetadata:
-    """Métadonnées audio complètes"""
-    filename: str
+    """Métadonnées audio complètes"""    filename: str
     duration: float
     sample_rate: int
     channels: int
@@ -1728,8 +1624,7 @@ class AudioMetadata:
     zero_crossing_rate: Optional[float] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
-        result = {}
+        """Convertit en dictionnaire"""        result = {}
         for key, value in self.__dict__.items():
             if value is not None:
                 result[key] = value
@@ -1737,8 +1632,7 @@ class AudioMetadata:
 
 
 class AudioUtils:
-    """
-    Utilitaires pour le traitement et l'analyse audio
+    """    Utilitaires pour le traitement et l'analyse audio
     
     Features:
     - Analyse de métadonnées
@@ -1746,8 +1640,7 @@ class AudioUtils:
     - Conversion de formats
     - Optimisations audio
     - Détection de caractéristiques
-    """
-    
+    """    
     # Formats supportés
     SUPPORTED_FORMATS = {
         '.wav': {'codec': 'pcm', 'lossless': True},
@@ -1764,16 +1657,14 @@ class AudioUtils:
     
     @classmethod
     def is_audio_file(cls, file_path: Union[str, Path]) -> bool:
-        """
-        Vérifie si un fichier est un fichier audio supporté
+        """        Vérifie si un fichier est un fichier audio supporté
         
         Args:
             file_path: Chemin vers le fichier
             
         Returns:
             True si le fichier est audio
-        """
-        file_path = Path(file_path)
+        """        file_path = Path(file_path)
         
         # Vérification par extension
         if file_path.suffix.lower() in cls.SUPPORTED_FORMATS:
@@ -1788,16 +1679,14 @@ class AudioUtils:
     
     @classmethod
     def get_format_info(cls, file_path: Union[str, Path]) -> Dict[str, Any]:
-        """
-        Retourne les informations de format d'un fichier
+        """        Retourne les informations de format d'un fichier
         
         Args:
             file_path: Chemin vers le fichier
             
         Returns:
             Dictionnaire d'informations
-        """
-        file_path = Path(file_path)
+        """        file_path = Path(file_path)
         extension = file_path.suffix.lower()
         
         if extension in cls.SUPPORTED_FORMATS:
@@ -1807,8 +1696,7 @@ class AudioUtils:
     
     @classmethod
     async def get_audio_metadata(cls, file_path: Union[str, Path]) -> AudioMetadata:
-        """
-        Extrait les métadonnées complètes d'un fichier audio
+        """        Extrait les métadonnées complètes d'un fichier audio
         
         Args:
             file_path: Chemin vers le fichier audio
@@ -1818,8 +1706,7 @@ class AudioUtils:
             
         Raises:
             AudioProcessingError: En cas d'erreur
-        """
-        file_path = Path(file_path)
+        """        file_path = Path(file_path)
         
         if not file_path.exists():
             raise FileNotFoundError(f"Fichier non trouvé: {file_path}")
@@ -1852,8 +1739,7 @@ class AudioUtils:
     
     @classmethod
     def _extract_with_mutagen(cls, file_path: Path) -> Optional[AudioMetadata]:
-        """Extraction avec mutagen (métadonnées musicales)"""
-        try:
+        """Extraction avec mutagen (métadonnées musicales)"""        try:
             from mutagen import File
             from mutagen.id3 import ID3NoHeaderError
             
@@ -1925,8 +1811,7 @@ class AudioUtils:
     
     @classmethod
     def _extract_with_librosa(cls, file_path: Path) -> Optional[AudioMetadata]:
-        """Extraction avec librosa (analyse audio)"""
-        try:
+        """Extraction avec librosa (analyse audio)"""        try:
             import librosa
             import soundfile as sf
             
@@ -1980,8 +1865,7 @@ class AudioUtils:
     
     @classmethod
     def _extract_basic_metadata(cls, file_path: Path) -> AudioMetadata:
-        """Extraction basique (fallback)"""
-        file_info = cls.get_format_info(file_path)
+        """Extraction basique (fallback)"""        file_info = cls.get_format_info(file_path)
         file_size = file_path.stat().st_size
         
         # Estimation de durée basée sur la taille (très approximatif)
@@ -2000,16 +1884,14 @@ class AudioUtils:
     
     @classmethod
     def calculate_audio_hash(cls, file_path: Union[str, Path]) -> str:
-        """
-        Calcule un hash audio basé sur le contenu
+        """        Calcule un hash audio basé sur le contenu
         
         Args:
             file_path: Chemin vers le fichier
             
         Returns:
             Hash hexadécimal
-        """
-        def _calculate():
+        """        def _calculate():
             try:
                 import librosa
                 
@@ -2048,8 +1930,7 @@ class AudioUtils:
         threshold_db: float = -40.0,
         min_duration: float = 0.5
     ) -> List[Tuple[float, float]]:
-        """
-        Détecte les segments de silence dans l'audio
+        """        Détecte les segments de silence dans l'audio
         
         Args:
             audio_data: Données audio
@@ -2059,8 +1940,7 @@ class AudioUtils:
             
         Returns:
             Liste des segments (start, end) en secondes
-        """
-        # Conversion du seuil en linéaire
+        """        # Conversion du seuil en linéaire
         threshold_linear = 10 ** (threshold_db / 20)
         
         # Calcul de l'énergie par fenêtre
@@ -2122,8 +2002,7 @@ class AudioUtils:
         sample_rate: int,
         threshold_db: float = -40.0
     ) -> np.ndarray:
-        """
-        Supprime le silence au début et à la fin
+        """        Supprime le silence au début et à la fin
         
         Args:
             audio_data: Données audio
@@ -2132,8 +2011,7 @@ class AudioUtils:
             
         Returns:
             Audio sans silence aux extrémités
-        """
-        threshold_linear = 10 ** (threshold_db / 20)
+        """        threshold_linear = 10 ** (threshold_db / 20)
         
         if audio_data.ndim > 1:
             # Énergie moyenne des canaux
@@ -2159,8 +2037,7 @@ class AudioUtils:
         audio_data: np.ndarray,
         target_lufs: float = -23.0
     ) -> np.ndarray:
-        """
-        Normalise la sonie selon le standard LUFS
+        """        Normalise la sonie selon le standard LUFS
         
         Args:
             audio_data: Données audio
@@ -2168,8 +2045,7 @@ class AudioUtils:
             
         Returns:
             Audio normalisé
-        """
-        try:
+        """        try:
             import pyloudnorm as pyln
             
             # Meter pour mesurer la sonie
@@ -2202,16 +2078,14 @@ class AudioUtils:
 
 
 class ValidationUtils:
-    """
-    Utilitaires de validation pour les fichiers et paramètres audio
+    """    Utilitaires de validation pour les fichiers et paramètres audio
     
     Features:
     - Validation de fichiers audio
     - Vérification de paramètres
     - Contrôles de cohérence
     - Validation de sécurité
-    """
-    
+    """    
     # Limites de sécurité
     MAX_FILE_SIZE = 500 * 1024 * 1024  # 500MB
     MAX_DURATION = 3600  # 1 heure
@@ -2220,8 +2094,7 @@ class ValidationUtils:
     
     @classmethod
     def validate_audio_file(cls, file_path: Union[str, Path]) -> bool:
-        """
-        Valide un fichier audio
+        """        Valide un fichier audio
         
         Args:
             file_path: Chemin vers le fichier
@@ -2231,8 +2104,7 @@ class ValidationUtils:
             
         Raises:
             ValidationError: En cas de validation échouée
-        """
-        file_path = Path(file_path)
+        """        file_path = Path(file_path)
         
         # Existence
         if not file_path.exists():
@@ -2264,8 +2136,7 @@ class ValidationUtils:
     
     @classmethod
     def _validate_audio_content(cls, file_path: Path):
-        """Validation basique du contenu audio"""
-        try:
+        """Validation basique du contenu audio"""        try:
             import soundfile as sf
             
             # Test de lecture
@@ -2292,16 +2163,14 @@ class ValidationUtils:
     
     @classmethod
     def validate_sample_rate(cls, sample_rate: int) -> bool:
-        """
-        Valide une fréquence d'échantillonnage
+        """        Valide une fréquence d'échantillonnage
         
         Args:
             sample_rate: Fréquence à valider
             
         Returns:
             True si valide
-        """
-        if not isinstance(sample_rate, int):
+        """        if not isinstance(sample_rate, int):
             raise ValidationError(f"Sample rate doit être un entier: {type(sample_rate)}")
         
         if sample_rate < cls.MIN_SAMPLE_RATE:
@@ -2318,16 +2187,14 @@ class ValidationUtils:
     
     @classmethod
     def validate_model_name(cls, model_name: str) -> bool:
-        """
-        Valide un nom de modèle Spleeter
+        """        Valide un nom de modèle Spleeter
         
         Args:
             model_name: Nom du modèle
             
         Returns:
             True si valide
-        """
-        if not isinstance(model_name, str):
+        """        if not isinstance(model_name, str):
             raise ValidationError(f"Nom de modèle doit être une chaîne: {type(model_name)}")
         
         if not model_name.strip():
@@ -2349,16 +2216,14 @@ class ValidationUtils:
     
     @classmethod
     def validate_output_directory(cls, output_dir: Union[str, Path]) -> bool:
-        """
-        Valide un répertoire de sortie
+        """        Valide un répertoire de sortie
         
         Args:
             output_dir: Répertoire à valider
             
         Returns:
             True si valide
-        """
-        output_dir = Path(output_dir)
+        """        output_dir = Path(output_dir)
         
         # Vérification des permissions si le répertoire existe
         if output_dir.exists():
@@ -2389,16 +2254,14 @@ class ValidationUtils:
     
     @classmethod
     def validate_batch_size(cls, batch_size: int) -> bool:
-        """
-        Valide une taille de batch
+        """        Valide une taille de batch
         
         Args:
             batch_size: Taille à valider
             
         Returns:
             True si valide
-        """
-        if not isinstance(batch_size, int):
+        """        if not isinstance(batch_size, int):
             raise ValidationError(f"Batch size doit être un entier: {type(batch_size)}")
         
         if batch_size < 1:
@@ -2411,16 +2274,14 @@ class ValidationUtils:
     
     @classmethod
     def sanitize_filename(cls, filename: str) -> str:
-        """
-        Nettoie un nom de fichier pour la sécurité
+        """        Nettoie un nom de fichier pour la sécurité
         
         Args:
             filename: Nom à nettoyer
             
         Returns:
             Nom nettoyé
-        """
-        # Caractères dangereux à remplacer
+        """        # Caractères dangereux à remplacer
         dangerous_chars = ['/', '\\', ':', '*', '?', '"', '<', '>', '|']
         
         sanitized = filename
@@ -2454,8 +2315,7 @@ class ValidationUtils:
     
     @classmethod
     def validate_disk_space(cls, required_bytes: int, target_dir: Union[str, Path]) -> bool:
-        """
-        Vérifie l'espace disque disponible
+        """        Vérifie l'espace disque disponible
         
         Args:
             required_bytes: Espace requis
@@ -2463,8 +2323,7 @@ class ValidationUtils:
             
         Returns:
             True si assez d'espace
-        """
-        target_dir = Path(target_dir)
+        """        target_dir = Path(target_dir)
         
         try:
             # Utiliser shutil.disk_usage pour la compatibilité
@@ -2490,25 +2349,21 @@ class ValidationUtils:
 
 
 class PerformanceOptimizer:
-    """
-    Optimisateur de performance pour les opérations Spleeter
+    """    Optimisateur de performance pour les opérations Spleeter
     
     Features:
     - Détection configuration optimale
     - Recommandations hardware
     - Optimisations automatiques
     - Profiling de performance
-    """
-    
+    """    
     @classmethod
     def detect_optimal_config(cls) -> Dict[str, Any]:
-        """
-        Détecte la configuration optimale pour la machine actuelle
+        """        Détecte la configuration optimale pour la machine actuelle
         
         Returns:
             Configuration recommandée
-        """
-        config = {
+        """        config = {
             'cpu_count': os.cpu_count(),
             'gpu_available': cls._detect_gpu(),
             'memory_gb': cls._get_memory_info(),
@@ -2536,8 +2391,7 @@ class PerformanceOptimizer:
     
     @classmethod
     def _detect_gpu(cls) -> bool:
-        """Détecte la disponibilité GPU"""
-        try:
+        """Détecte la disponibilité GPU"""        try:
             import tensorflow as tf
             gpus = tf.config.list_physical_devices('GPU')
             return len(gpus) > 0
@@ -2548,8 +2402,7 @@ class PerformanceOptimizer:
     
     @classmethod
     def _get_memory_info(cls) -> float:
-        """Retourne la mémoire disponible en GB"""
-        try:
+        """Retourne la mémoire disponible en GB"""        try:
             import psutil
             memory = psutil.virtual_memory()
             return memory.total / (1024 ** 3)  # Conversion en GB
@@ -2564,8 +2417,7 @@ class PerformanceOptimizer:
         model_complexity: str = "2stems",
         use_gpu: bool = False
     ) -> float:
-        """
-        Estime le temps de traitement
+        """        Estime le temps de traitement
         
         Args:
             audio_duration: Durée audio en secondes
@@ -2574,8 +2426,7 @@ class PerformanceOptimizer:
             
         Returns:
             Temps estimé en secondes
-        """
-        # Facteurs de base (temps de traitement / durée audio)
+        """        # Facteurs de base (temps de traitement / durée audio)
         base_factors = {
             "2stems": 2.0,
             "4stems": 3.5,
@@ -2601,8 +2452,7 @@ class PerformanceOptimizer:
         sample_rate: int = 44100,
         model_complexity: str = "2stems"
     ) -> Dict[str, float]:
-        """
-        Calcule les besoins mémoire estimés
+        """        Calcule les besoins mémoire estimés
         
         Args:
             audio_duration: Durée audio
@@ -2611,8 +2461,7 @@ class PerformanceOptimizer:
             
         Returns:
             Besoins mémoire en MB
-        """
-        # Mémoire pour l'audio brut (stéréo, float32)
+        """        # Mémoire pour l'audio brut (stéréo, float32)
         audio_samples = audio_duration * sample_rate * 2  # stéréo
         audio_memory_mb = (audio_samples * 4) / (1024 ** 2)  # float32 = 4 bytes
         
@@ -2655,17 +2504,14 @@ class PerformanceOptimizer:
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-🎵 Spotify AI Agent - Model Manager
+"""🎵 Spotify AI Agent - Model Manager
 ==================================
 
 Gestionnaire avancé des modèles de séparation audio avec support
 de téléchargement, validation, versioning et optimisation.
 
 🎖️ Développé par l'équipe d'experts enterprise
-"""
-
-import os
+"""import os
 import json
 import hashlib
 import asyncio
@@ -2689,8 +2535,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ModelInfo:
-    """Informations sur un modèle Spleeter"""
-    name: str
+    """Informations sur un modèle Spleeter"""    name: str
     version: str
     stems: int
     sample_rate: int
@@ -2703,18 +2548,15 @@ class ModelInfo:
     performance_metrics: Dict[str, float]
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
-        return asdict(self)
+        """Convertit en dictionnaire"""        return asdict(self)
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'ModelInfo':
-        """Crée depuis un dictionnaire"""
-        return cls(**data)
+        """Crée depuis un dictionnaire"""        return cls(**data)
 
 
 class PretrainedModels:
-    """Catalogue des modèles pré-entraînés disponibles"""
-    
+    """Catalogue des modèles pré-entraînés disponibles"""    
     # Modèles officiels Spleeter
     OFFICIAL_MODELS = {
         "spleeter:2stems-16kHz": ModelInfo(
@@ -2829,18 +2671,15 @@ class PretrainedModels:
     
     @classmethod
     def get_all_models(cls) -> Dict[str, ModelInfo]:
-        """Retourne tous les modèles disponibles"""
-        return {**cls.OFFICIAL_MODELS, **cls.COMMUNITY_MODELS}
+        """Retourne tous les modèles disponibles"""        return {**cls.OFFICIAL_MODELS, **cls.COMMUNITY_MODELS}
     
     @classmethod
     def get_official_models(cls) -> Dict[str, ModelInfo]:
-        """Retourne seulement les modèles officiels"""
-        return cls.OFFICIAL_MODELS.copy()
+        """Retourne seulement les modèles officiels"""        return cls.OFFICIAL_MODELS.copy()
     
     @classmethod
     def get_community_models(cls) -> Dict[str, ModelInfo]:
-        """Retourne seulement les modèles communautaires"""
-        return cls.COMMUNITY_MODELS.copy()
+        """Retourne seulement les modèles communautaires"""        return cls.COMMUNITY_MODELS.copy()
     
     @classmethod
     def search_models(
@@ -2850,8 +2689,7 @@ class PretrainedModels:
         sample_rate: Optional[int] = None,
         tags: Optional[List[str]] = None
     ) -> Dict[str, ModelInfo]:
-        """
-        Recherche des modèles selon des critères
+        """        Recherche des modèles selon des critères
         
         Args:
             query: Texte de recherche
@@ -2861,8 +2699,7 @@ class PretrainedModels:
             
         Returns:
             Dictionnaire des modèles correspondants
-        """
-        all_models = cls.get_all_models()
+        """        all_models = cls.get_all_models()
         results = {}
         
         for name, model in all_models.items():
@@ -2889,8 +2726,7 @@ class PretrainedModels:
 
 
 class ModelManager:
-    """
-    Gestionnaire avancé des modèles Spleeter
+    """    Gestionnaire avancé des modèles Spleeter
     
     Features:
     - Téléchargement automatique des modèles
@@ -2898,8 +2734,7 @@ class ModelManager:
     - Cache local intelligent
     - Versioning des modèles
     - Métriques de performance
-    """
-    
+    """    
     def __init__(
         self,
         models_dir: Optional[Union[str, Path]] = None,
@@ -2907,16 +2742,14 @@ class ModelManager:
         auto_download: bool = True,
         max_cache_size_gb: float = 5.0
     ):
-        """
-        Initialise le gestionnaire de modèles
+        """        Initialise le gestionnaire de modèles
         
         Args:
             models_dir: Répertoire des modèles
             cache_enabled: Activer le cache
             auto_download: Téléchargement automatique
             max_cache_size_gb: Taille max du cache en GB
-        """
-        self.models_dir = Path(models_dir or os.path.expanduser("~/.spleeter/models"))
+        """        self.models_dir = Path(models_dir or os.path.expanduser("~/.spleeter/models"))
         self.cache_enabled = cache_enabled
         self.auto_download = auto_download
         self.max_cache_size = max_cache_size_gb * 1024 * 1024 * 1024  # Conversion en bytes
@@ -2942,8 +2775,7 @@ class ModelManager:
         logger.info(f"ModelManager initialisé: {self.models_dir}")
     
     def _load_metadata(self):
-        """Charge les métadonnées des modèles locaux"""
-        if self.metadata_file.exists():
+        """Charge les métadonnées des modèles locaux"""        if self.metadata_file.exists():
             try:
                 with open(self.metadata_file, 'r') as f:
                     metadata = json.load(f)
@@ -2958,8 +2790,7 @@ class ModelManager:
                 self._local_models = {}
     
     def _save_metadata(self):
-        """Sauvegarde les métadonnées des modèles"""
-        try:
+        """Sauvegarde les métadonnées des modèles"""        try:
             metadata = {
                 name: model.to_dict()
                 for name, model in self._local_models.items()
@@ -2974,8 +2805,7 @@ class ModelManager:
             logger.error(f"Erreur sauvegarde métadonnées: {e}")
     
     async def get_model_path(self, model_name: str) -> Path:
-        """
-        Retourne le chemin local d'un modèle
+        """        Retourne le chemin local d'un modèle
         
         Args:
             model_name: Nom du modèle
@@ -2985,8 +2815,7 @@ class ModelManager:
             
         Raises:
             ModelNotFoundError: Si le modèle n'est pas disponible
-        """
-        # Vérifier si le modèle est déjà local
+        """        # Vérifier si le modèle est déjà local
         model_path = self.models_dir / model_name
         
         if model_path.exists() and self._is_model_valid(model_name):
@@ -3000,16 +2829,14 @@ class ModelManager:
         raise ModelNotFoundError(f"Modèle non trouvé: {model_name}")
     
     def _is_model_valid(self, model_name: str) -> bool:
-        """
-        Vérifie la validité d'un modèle local
+        """        Vérifie la validité d'un modèle local
         
         Args:
             model_name: Nom du modèle
             
         Returns:
             True si le modèle est valide
-        """
-        if model_name not in self._local_models:
+        """        if model_name not in self._local_models:
             return False
         
         model_path = self.models_dir / model_name
@@ -3027,16 +2854,14 @@ class ModelManager:
         return True
     
     def _calculate_checksum(self, model_path: Path) -> str:
-        """
-        Calcule le checksum d'un modèle
+        """        Calcule le checksum d'un modèle
         
         Args:
             model_path: Chemin vers le modèle
             
         Returns:
             Checksum MD5 en hexadécimal
-        """
-        hasher = hashlib.md5()
+        """        hasher = hashlib.md5()
         
         if model_path.is_file():
             with open(model_path, 'rb') as f:
@@ -3058,8 +2883,7 @@ class ModelManager:
         force: bool = False,
         progress_callback: Optional[callable] = None
     ) -> Path:
-        """
-        Télécharge un modèle
+        """        Télécharge un modèle
         
         Args:
             model_name: Nom du modèle
@@ -3072,8 +2896,7 @@ class ModelManager:
         Raises:
             ModelNotFoundError: Si le modèle n'existe pas
             SpleeterError: En cas d'erreur de téléchargement
-        """
-        # Vérifier si le modèle existe
+        """        # Vérifier si le modèle existe
         all_models = PretrainedModels.get_all_models()
         if model_name not in all_models:
             raise ModelNotFoundError(f"Modèle inconnu: {model_name}")
@@ -3134,8 +2957,7 @@ class ModelManager:
         model_name: str,
         progress_callback: Optional[callable] = None
     ) -> Path:
-        """
-        Télécharge un fichier depuis une URL
+        """        Télécharge un fichier depuis une URL
         
         Args:
             url: URL du fichier
@@ -3144,8 +2966,7 @@ class ModelManager:
             
         Returns:
             Chemin vers le fichier téléchargé
-        """
-        if not self._session:
+        """        if not self._session:
             timeout = aiohttp.ClientTimeout(total=3600)  # 1 heure
             self._session = aiohttp.ClientSession(timeout=timeout)
         
@@ -3191,14 +3012,12 @@ class ModelManager:
             raise
     
     async def _extract_model(self, archive_path: Path, destination: Path):
-        """
-        Extrait une archive de modèle
+        """        Extrait une archive de modèle
         
         Args:
             archive_path: Chemin vers l'archive
             destination: Répertoire de destination
-        """
-        def _extract():
+        """        def _extract():
             if archive_path.suffix == '.zip':
                 import zipfile
                 with zipfile.ZipFile(archive_path, 'r') as zip_ref:
@@ -3213,13 +3032,11 @@ class ModelManager:
         await loop.run_in_executor(self._thread_pool, _extract)
     
     async def _ensure_disk_space(self, required_bytes: int):
-        """
-        S'assure qu'il y a assez d'espace disque
+        """        S'assure qu'il y a assez d'espace disque
         
         Args:
             required_bytes: Espace requis en bytes
-        """
-        # Vérifier l'espace libre
+        """        # Vérifier l'espace libre
         stat = os.statvfs(self.models_dir)
         free_bytes = stat.f_frsize * stat.f_avail
         
@@ -3235,13 +3052,11 @@ class ModelManager:
                 raise SpleeterError(f"Espace disque insuffisant: {free_bytes} < {required_bytes}")
     
     async def _cleanup_cache(self, bytes_to_free: int):
-        """
-        Nettoie le cache pour libérer de l'espace
+        """        Nettoie le cache pour libérer de l'espace
         
         Args:
             bytes_to_free: Nombre de bytes à libérer
-        """
-        if not self.cache_enabled:
+        """        if not self.cache_enabled:
             return
         
         # Obtenir les modèles triés par date d'accès
@@ -3266,16 +3081,14 @@ class ModelManager:
             logger.info(f"Modèle supprimé du cache: {model_name} ({size} bytes)")
     
     def _get_directory_size(self, path: Path) -> int:
-        """
-        Calcule la taille d'un répertoire
+        """        Calcule la taille d'un répertoire
         
         Args:
             path: Chemin vers le répertoire
             
         Returns:
             Taille en bytes
-        """
-        if path.is_file():
+        """        if path.is_file():
             return path.stat().st_size
         
         total_size = 0
@@ -3286,13 +3099,11 @@ class ModelManager:
         return total_size
     
     async def remove_model(self, model_name: str):
-        """
-        Supprime un modèle du cache local
+        """        Supprime un modèle du cache local
         
         Args:
             model_name: Nom du modèle à supprimer
-        """
-        model_path = self.models_dir / model_name
+        """        model_path = self.models_dir / model_name
         
         if model_path.exists():
             if model_path.is_file():
@@ -3308,43 +3119,35 @@ class ModelManager:
             self._save_metadata()
     
     def list_local_models(self) -> Dict[str, ModelInfo]:
-        """
-        Liste les modèles disponibles localement
+        """        Liste les modèles disponibles localement
         
         Returns:
             Dictionnaire des modèles locaux
-        """
-        return self._local_models.copy()
+        """        return self._local_models.copy()
     
     def list_available_models(self) -> Dict[str, ModelInfo]:
-        """
-        Liste tous les modèles disponibles (locaux + distants)
+        """        Liste tous les modèles disponibles (locaux + distants)
         
         Returns:
             Dictionnaire de tous les modèles
-        """
-        return PretrainedModels.get_all_models()
+        """        return PretrainedModels.get_all_models()
     
     def get_download_progress(self, model_name: str) -> Optional[Dict[str, Any]]:
-        """
-        Retourne le progrès de téléchargement d'un modèle
+        """        Retourne le progrès de téléchargement d'un modèle
         
         Args:
             model_name: Nom du modèle
             
         Returns:
             Dictionnaire du progrès ou None
-        """
-        return self._download_progress.get(model_name)
+        """        return self._download_progress.get(model_name)
     
     def get_cache_info(self) -> Dict[str, Any]:
-        """
-        Retourne les informations sur le cache
+        """        Retourne les informations sur le cache
         
         Returns:
             Dictionnaire d'informations
-        """
-        total_size = sum(
+        """        total_size = sum(
             self._get_directory_size(self.models_dir / name)
             for name in self._local_models.keys()
             if (self.models_dir / name).exists()
@@ -3359,13 +3162,11 @@ class ModelManager:
         }
     
     async def validate_all_models(self) -> Dict[str, bool]:
-        """
-        Valide tous les modèles locaux
+        """        Valide tous les modèles locaux
         
         Returns:
             Dictionnaire de validation par modèle
-        """
-        results = {}
+        """        results = {}
         
         for model_name in self._local_models.keys():
             try:
@@ -3377,16 +3178,14 @@ class ModelManager:
         return results
     
     async def update_model(self, model_name: str) -> bool:
-        """
-        Met à jour un modèle vers la dernière version
+        """        Met à jour un modèle vers la dernière version
         
         Args:
             model_name: Nom du modèle
             
         Returns:
             True si mis à jour, False sinon
-        """
-        if model_name not in self._local_models:
+        """        if model_name not in self._local_models:
             return False
         
         # Vérifier s'il y a une nouvelle version
@@ -3408,8 +3207,7 @@ class ModelManager:
         return True
     
     async def cleanup(self):
-        """Nettoyage des ressources"""
-        if self._session:
+        """Nettoyage des ressources"""        if self._session:
             await self._session.close()
         
         if hasattr(self, '_thread_pool'):
@@ -3424,17 +3222,14 @@ class ModelManager:
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-🎵 Spotify AI Agent - Spleeter Exceptions
+"""🎵 Spotify AI Agent - Spleeter Exceptions
 =========================================
 
 Classes d'exceptions personnalisées pour le module Spleeter.
 Gestion d'erreurs avancée avec contexte détaillé et logging.
 
 🎖️ Développé par l'équipe d'experts enterprise
-"""
-
-import logging
+"""import logging
 from typing import Dict, Any, Optional, List, Union
 from datetime import datetime
 import traceback
@@ -3445,16 +3240,14 @@ logger = logging.getLogger(__name__)
 
 
 class SpleeterBaseException(Exception):
-    """
-    Exception de base pour le module Spleeter
+    """    Exception de base pour le module Spleeter
     
     Features:
     - Contexte détaillé d'erreur
     - Logging automatique
     - Code d'erreur structuré
     - Données de debugging
-    """
-    
+    """    
     def __init__(self,
                  message: str,
                  error_code: str = "SPLEETER_ERROR",
@@ -3478,8 +3271,7 @@ class SpleeterBaseException(Exception):
         self._log_error()
     
     def _log_error(self):
-        """Log l'erreur selon sa sévérité"""
-        log_data = {
+        """Log l'erreur selon sa sévérité"""        log_data = {
             'error_code': self.error_code,
             'message': self.message,
             'context': self.context,
@@ -3502,13 +3294,11 @@ class SpleeterBaseException(Exception):
             logger.info(log_message, extra=log_data)
     
     def to_dict(self) -> Dict[str, Any]:
-        """
-        Convertit l'exception en dictionnaire pour serialization
+        """        Convertit l'exception en dictionnaire pour serialization
         
         Returns:
             Dictionnaire représentant l'erreur
-        """
-        result = {
+        """        result = {
             'error_type': self.__class__.__name__,
             'error_code': self.error_code,
             'message': self.message,
@@ -3526,8 +3316,7 @@ class SpleeterBaseException(Exception):
         return result
     
     def __str__(self) -> str:
-        """Représentation string enrichie"""
-        parts = [f"[{self.error_code}] {self.message}"]
+        """Représentation string enrichie"""        parts = [f"[{self.error_code}] {self.message}"]
         
         if self.context:
             context_str = ", ".join(f"{k}={v}" for k, v in self.context.items())
@@ -3540,16 +3329,14 @@ class SpleeterBaseException(Exception):
 
 
 class AudioProcessingError(SpleeterBaseException):
-    """
-    Erreurs liées au traitement audio
+    """    Erreurs liées au traitement audio
     
     Cas d'usage:
     - Échec de chargement audio
     - Format non supporté
     - Corruption de données
     - Problèmes de conversion
-    """
-    
+    """    
     def __init__(self,
                  message: str,
                  file_path: Optional[Union[str, Path]] = None,
@@ -3578,16 +3365,14 @@ class AudioProcessingError(SpleeterBaseException):
 
 
 class ModelError(SpleeterBaseException):
-    """
-    Erreurs liées aux modèles Spleeter
+    """    Erreurs liées aux modèles Spleeter
     
     Cas d'usage:
     - Modèle non trouvé
     - Échec de téléchargement
     - Version incompatible
     - Corruption de modèle
-    """
-    
+    """    
     def __init__(self,
                  message: str,
                  model_name: Optional[str] = None,
@@ -3613,8 +3398,7 @@ class ModelError(SpleeterBaseException):
 
 
 class ModelNotFoundError(ModelError):
-    """Modèle spécifique non trouvé"""
-    
+    """Modèle spécifique non trouvé"""    
     def __init__(self, model_name: str, available_models: Optional[List[str]] = None, **kwargs):
         message = f"Modèle '{model_name}' non trouvé"
         
@@ -3631,8 +3415,7 @@ class ModelNotFoundError(ModelError):
 
 
 class ModelDownloadError(ModelError):
-    """Erreur de téléchargement de modèle"""
-    
+    """Erreur de téléchargement de modèle"""    
     def __init__(self,
                  model_name: str,
                  download_url: Optional[str] = None,
@@ -3658,16 +3441,14 @@ class ModelDownloadError(ModelError):
 
 
 class ValidationError(SpleeterBaseException):
-    """
-    Erreurs de validation
+    """    Erreurs de validation
     
     Cas d'usage:
     - Paramètres invalides
     - Fichiers corrompus
     - Données incohérentes
     - Violations de contraintes
-    """
-    
+    """    
     def __init__(self,
                  message: str,
                  field_name: Optional[str] = None,
@@ -3697,16 +3478,14 @@ class ValidationError(SpleeterBaseException):
 
 
 class CacheError(SpleeterBaseException):
-    """
-    Erreurs liées au système de cache
+    """    Erreurs liées au système de cache
     
     Cas d'usage:
     - Échec d'écriture cache
     - Cache corrompu
     - Problèmes de permissions
     - Espace disque insuffisant
-    """
-    
+    """    
     def __init__(self,
                  message: str,
                  cache_type: Optional[str] = None,
@@ -3735,16 +3514,14 @@ class CacheError(SpleeterBaseException):
 
 
 class ConfigurationError(SpleeterBaseException):
-    """
-    Erreurs de configuration
+    """    Erreurs de configuration
     
     Cas d'usage:
     - Configuration manquante
     - Valeurs invalides
     - Fichier de config corrompu
     - Paramètres incompatibles
-    """
-    
+    """    
     def __init__(self,
                  message: str,
                  config_key: Optional[str] = None,
@@ -3770,16 +3547,14 @@ class ConfigurationError(SpleeterBaseException):
 
 
 class ResourceError(SpleeterBaseException):
-    """
-    Erreurs liées aux ressources système
+    """    Erreurs liées aux ressources système
     
     Cas d'usage:
     - Mémoire insuffisante
     - GPU non disponible
     - Espace disque insuffisant
     - Limites système atteintes
-    """
-    
+    """    
     def __init__(self,
                  message: str,
                  resource_type: Optional[str] = None,
@@ -3809,8 +3584,7 @@ class ResourceError(SpleeterBaseException):
 
 
 class GPUError(ResourceError):
-    """Erreurs spécifiques au GPU"""
-    
+    """Erreurs spécifiques au GPU"""    
     def __init__(self,
                  message: str,
                  gpu_id: Optional[int] = None,
@@ -3837,15 +3611,13 @@ class GPUError(ResourceError):
 
 
 class ProcessingTimeout(SpleeterBaseException):
-    """
-    Erreur de timeout de traitement
+    """    Erreur de timeout de traitement
     
     Cas d'usage:
     - Traitement trop long
     - Modèle bloqué
     - Ressources indisponibles
-    """
-    
+    """    
     def __init__(self,
                  message: str,
                  timeout_seconds: Optional[float] = None,
@@ -3869,15 +3641,13 @@ class ProcessingTimeout(SpleeterBaseException):
 
 
 class MonitoringError(SpleeterBaseException):
-    """
-    Erreurs du système de monitoring
+    """    Erreurs du système de monitoring
     
     Cas d'usage:
     - Échec collecte métriques
     - Problèmes d'export
     - Alertes non fonctionnelles
-    """
-    
+    """    
     def __init__(self,
                  message: str,
                  metric_name: Optional[str] = None,
@@ -3901,16 +3671,14 @@ class MonitoringError(SpleeterBaseException):
 
 
 class SecurityError(SpleeterBaseException):
-    """
-    Erreurs de sécurité
+    """    Erreurs de sécurité
     
     Cas d'usage:
     - Tentative d'accès non autorisé
     - Validation de sécurité échouée
     - Fichiers suspects
     - Path traversal
-    """
-    
+    """    
     def __init__(self,
                  message: str,
                  security_check: Optional[str] = None,
@@ -3936,15 +3704,13 @@ class SecurityError(SpleeterBaseException):
 
 
 class DependencyError(SpleeterBaseException):
-    """
-    Erreurs de dépendances
+    """    Erreurs de dépendances
     
     Cas d'usage:
     - Librairie manquante
     - Version incompatible
     - Import échoué
-    """
-    
+    """    
     def __init__(self,
                  message: str,
                  dependency_name: Optional[str] = None,
@@ -3973,15 +3739,13 @@ class DependencyError(SpleeterBaseException):
 
 
 class BatchProcessingError(SpleeterBaseException):
-    """
-    Erreurs de traitement par batch
+    """    Erreurs de traitement par batch
     
     Cas d'usage:
     - Échec partiel de batch
     - Queue saturée
     - Worker défaillant
-    """
-    
+    """    
     def __init__(self,
                  message: str,
                  batch_id: Optional[str] = None,
@@ -4014,16 +3778,14 @@ class BatchProcessingError(SpleeterBaseException):
 
 
 def handle_exception(func):
-    """
-    Décorateur pour la gestion automatique d'exceptions
+    """    Décorateur pour la gestion automatique d'exceptions
     
     Args:
         func: Fonction à décorer
         
     Returns:
         Fonction décorée
-    """
-    def wrapper(*args, **kwargs):
+    """    def wrapper(*args, **kwargs):
         try:
             return func(*args, **kwargs)
         except SpleeterBaseException:
@@ -4051,8 +3813,7 @@ def validate_required_dependency(
     min_version: Optional[str] = None,
     installation_hint: Optional[str] = None
 ):
-    """
-    Valide qu'une dépendance requise est disponible
+    """    Valide qu'une dépendance requise est disponible
     
     Args:
         dependency_name: Nom de la dépendance
@@ -4062,8 +3823,7 @@ def validate_required_dependency(
         
     Raises:
         DependencyError: Si la dépendance n'est pas disponible
-    """
-    import_name = import_name or dependency_name
+    """    import_name = import_name or dependency_name
     
     try:
         module = __import__(import_name)
@@ -4097,8 +3857,7 @@ def create_error_context(
     model_name: Optional[str] = None,
     additional_data: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
-    """
-    Crée un contexte d'erreur standardisé
+    """    Crée un contexte d'erreur standardisé
     
     Args:
         operation: Nom de l'opération
@@ -4108,8 +3867,7 @@ def create_error_context(
         
     Returns:
         Dictionnaire de contexte
-    """
-    context = {
+    """    context = {
         'operation': operation,
         'timestamp': datetime.now().isoformat(),
         'python_version': sys.version,
@@ -4144,15 +3902,13 @@ def log_exception_details(
     operation: str,
     logger_instance: Optional[logging.Logger] = None
 ):
-    """
-    Log les détails complets d'une exception
+    """    Log les détails complets d'une exception
     
     Args:
         exception: Exception à logger
         operation: Opération en cours
         logger_instance: Logger à utiliser
-    """
-    log = logger_instance or logger
+    """    log = logger_instance or logger
     
     if isinstance(exception, SpleeterBaseException):
         # Exception Spleeter - déjà loggée automatiquement
@@ -4181,8 +3937,7 @@ def safe_operation(
     log_errors: bool = True,
     **kwargs
 ) -> Any:
-    """
-    Exécute une opération avec gestion d'erreur sécurisée
+    """    Exécute une opération avec gestion d'erreur sécurisée
     
     Args:
         operation_name: Nom de l'opération
@@ -4198,8 +3953,7 @@ def safe_operation(
         
     Raises:
         Exception: Si reraise=True
-    """
-    try:
+    """    try:
         return operation_func(*args, **kwargs)
     
     except Exception as e:
@@ -4222,30 +3976,26 @@ def safe_operation(
 
 # Classe pour collecter et analyser les erreurs en batch
 class ErrorCollector:
-    """
-    Collecteur d'erreurs pour analyse et reporting
+    """    Collecteur d'erreurs pour analyse et reporting
     
     Features:
     - Accumulation d'erreurs
     - Analyse de patterns
     - Génération de rapports
     - Statistiques d'erreurs
-    """
-    
+    """    
     def __init__(self):
         self.errors: List[SpleeterBaseException] = []
         self.error_counts: Dict[str, int] = {}
         self.error_patterns: Dict[str, List[Dict[str, Any]]] = {}
     
     def add_error(self, error: Exception, context: Optional[Dict[str, Any]] = None):
-        """
-        Ajoute une erreur à la collection
+        """        Ajoute une erreur à la collection
         
         Args:
             error: Exception à ajouter
             context: Contexte additionnel
-        """
-        # Convertir en SpleeterBaseException si nécessaire
+        """        # Convertir en SpleeterBaseException si nécessaire
         if not isinstance(error, SpleeterBaseException):
             spleeter_error = SpleeterBaseException(
                 message=str(error),
@@ -4275,13 +4025,11 @@ class ErrorCollector:
         })
     
     def get_summary(self) -> Dict[str, Any]:
-        """
-        Retourne un résumé des erreurs collectées
+        """        Retourne un résumé des erreurs collectées
         
         Returns:
             Dictionnaire de résumé
-        """
-        return {
+        """        return {
             'total_errors': len(self.errors),
             'error_counts': self.error_counts.copy(),
             'most_common_error': max(self.error_counts.items(), key=lambda x: x[1])[0] if self.error_counts else None,
@@ -4296,22 +4044,19 @@ class ErrorCollector:
         }
     
     def clear(self):
-        """Vide la collection d'erreurs"""
-        self.errors.clear()
+        """Vide la collection d'erreurs"""        self.errors.clear()
         self.error_counts.clear()
         self.error_patterns.clear()
     
     def get_errors_by_type(self, error_code: str) -> List[SpleeterBaseException]:
-        """
-        Retourne les erreurs d'un type spécifique
+        """        Retourne les erreurs d'un type spécifique
         
         Args:
             error_code: Code d'erreur à filtrer
             
         Returns:
             Liste des erreurs correspondantes
-        """
-        return [error for error in self.errors if error.error_code == error_code]
+        """        return [error for error in self.errors if error.error_code == error_code]
 
 # ==========================================================================================
 # MODULE 7/99: __init__.py
@@ -4319,8 +4064,7 @@ class ErrorCollector:
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-🎵 Spotify AI Agent - Spleeter Module Enterprise
+"""🎵 Spotify AI Agent - Spleeter Module Enterprise
 ==============================================
 
 Module de séparation audio avancé utilisant l'IA pour séparer
@@ -4335,9 +4079,7 @@ Features:
 - Format audio multiple
 
 🎖️ Développé par l'équipe d'experts enterprise
-"""
-
-from .core import SpleeterEngine, SpleeterConfig
+"""from .core import SpleeterEngine, SpleeterConfig
 from .models import ModelManager, PretrainedModels
 from .processor import AudioProcessor, BatchProcessor
 from .cache import CacheManager
@@ -4387,8 +4129,7 @@ __all__ = [
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Multi-Format Upload Processing Configuration
+"""Multi-Format Upload Processing Configuration
 
 Enterprise-grade configuration for handling multi-format content uploads from creators
 (musicians, bloggers, photographers, influencers, comedians).
@@ -4402,9 +4143,7 @@ Project Team Specialties:
 This code and concept are exclusively owned by Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Legal action will be taken against violators.
-"""
-
-import os
+"""import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union, Set
 from enum import Enum
@@ -4412,8 +4151,7 @@ from decimal import Decimal
 
 
 class ContentFormat(Enum):
-    """Supported content formats for creators."""
-    # Audio formats
+    """Supported content formats for creators."""    # Audio formats
     AUDIO_MP3 = "audio/mp3"
     AUDIO_WAV = "audio/wav"
     AUDIO_FLAC = "audio/flac"
@@ -4449,8 +4187,7 @@ class ContentFormat(Enum):
 
 
 class CreatorType(Enum):
-    """Types of content creators."""
-    MUSICIAN = "musician"
+    """Types of content creators."""    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -4462,8 +4199,7 @@ class CreatorType(Enum):
 
 
 class ProcessingPriority(Enum):
-    """Processing priority levels."""
-    LOW = "low"
+    """Processing priority levels."""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
@@ -4472,8 +4208,7 @@ class ProcessingPriority(Enum):
 
 @dataclass
 class FormatProcessingConfig:
-    """Configuration for specific format processing."""
-    max_file_size_mb: int = 500
+    """Configuration for specific format processing."""    max_file_size_mb: int = 500
     allowed_extensions: Set[str] = field(default_factory=set)
     compression_enabled: bool = True
     quality_optimization: bool = True
@@ -4504,8 +4239,7 @@ class FormatProcessingConfig:
 
 @dataclass
 class UploadLimits:
-    """Upload limits configuration."""
-    # File size limits (MB)
+    """Upload limits configuration."""    # File size limits (MB)
     max_single_file_size: int = 2000
     max_total_upload_size: int = 10000
     max_files_per_batch: int = 50
@@ -4544,8 +4278,7 @@ class UploadLimits:
 
 @dataclass
 class ProcessingQueue:
-    """Upload processing queue configuration."""
-    max_concurrent_jobs: int = 10
+    """Upload processing queue configuration."""    max_concurrent_jobs: int = 10
     priority_weights: Dict[ProcessingPriority, int] = field(default_factory=lambda: {
         ProcessingPriority.LOW: 1,
         ProcessingPriority.NORMAL: 2,
@@ -4572,8 +4305,7 @@ class ProcessingQueue:
 
 @dataclass
 class ContentValidation:
-    """Content validation and safety configuration."""
-    enable_content_moderation: bool = True
+    """Content validation and safety configuration."""    enable_content_moderation: bool = True
     enable_copyright_detection: bool = True
     enable_duplicate_detection: bool = True
     enable_quality_assessment: bool = True
@@ -4592,8 +4324,7 @@ class ContentValidation:
 
 @dataclass
 class MetadataExtraction:
-    """Metadata extraction configuration."""
-    enable_automatic_extraction: bool = True
+    """Metadata extraction configuration."""    enable_automatic_extraction: bool = True
     preserve_original_metadata: bool = True
     generate_enhanced_metadata: bool = True
     
@@ -4617,8 +4348,7 @@ class MetadataExtraction:
 
 @dataclass
 class UploadProcessingConfiguration:
-    """Main upload processing configuration."""
-    
+    """Main upload processing configuration."""    
     # Core settings
     enabled: bool = True
     debug_mode: bool = field(default_factory=lambda: os.getenv("DEBUG", "false").lower() == "true")
@@ -4654,8 +4384,7 @@ class UploadProcessingConfiguration:
     
     @classmethod
     def create_default_format_configs(cls) -> Dict[ContentFormat, FormatProcessingConfig]:
-        """Create default format-specific configurations."""
-        configs = {}
+        """Create default format-specific configurations."""        configs = {}
         
         # Audio formats
         audio_config = FormatProcessingConfig(
@@ -4704,8 +4433,7 @@ class UploadProcessingConfiguration:
         return configs
     
     def validate_configuration(self) -> List[str]:
-        """Validate the upload processing configuration."""
-        errors = []
+        """Validate the upload processing configuration."""        errors = []
         
         if not self.temporary_storage_path:
             errors.append("temporary_storage_path cannot be empty")
@@ -4727,8 +4455,7 @@ class UploadProcessingConfiguration:
     
     @classmethod
     def create_development_config(cls) -> 'UploadProcessingConfiguration':
-        """Create configuration for development environment."""
-        config = cls()
+        """Create configuration for development environment."""        config = cls()
         config.debug_mode = True
         config.upload_limits.max_single_file_size = 100  # 100MB for dev
         config.processing_queue.max_concurrent_jobs = 2
@@ -4738,8 +4465,7 @@ class UploadProcessingConfiguration:
     
     @classmethod
     def create_production_config(cls) -> 'UploadProcessingConfiguration':
-        """Create configuration for production environment."""
-        config = cls()
+        """Create configuration for production environment."""        config = cls()
         config.debug_mode = False
         config.upload_limits.max_single_file_size = 2000  # 2GB for prod
         config.processing_queue.max_concurrent_jobs = 10
@@ -4750,8 +4476,7 @@ class UploadProcessingConfiguration:
     
     @classmethod
     def create_enterprise_config(cls) -> 'UploadProcessingConfiguration':
-        """Create configuration for enterprise environment."""
-        config = cls.create_production_config()
+        """Create configuration for enterprise environment."""        config = cls.create_production_config()
         config.upload_limits.max_single_file_size = 10000  # 10GB for enterprise
         config.processing_queue.max_concurrent_jobs = 20
         config.processing_threads = 8
@@ -4763,8 +4488,7 @@ class UploadProcessingConfiguration:
 
 # Export default configuration
 def get_upload_processing_config() -> UploadProcessingConfiguration:
-    """Get upload processing configuration based on environment."""
-    env = os.getenv("ENVIRONMENT", "development").lower()
+    """Get upload processing configuration based on environment."""    env = os.getenv("ENVIRONMENT", "development").lower()
     
     if env == "production":
         return UploadProcessingConfiguration.create_production_config()
@@ -4794,8 +4518,7 @@ __all__ = [
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Fingerprinting Service
+"""Fingerprinting Service
 
 Enterprise-grade content fingerprinting service supporting multi-format
 content analysis and unique signature generation.
@@ -4809,9 +4532,7 @@ Project Team Specialties:
 This code and concept are exclusively owned by Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Legal action will be taken against violators.
-"""
-
-import asyncio
+"""import asyncio
 import hashlib
 import logging
 import numpy as np
@@ -4827,8 +4548,7 @@ from .content_protection_service import ContentFormat
 
 
 class FingerprintType(Enum):
-    """Types of fingerprints."""
-    AUDIO_SPECTRAL = "audio_spectral"
+    """Types of fingerprints."""    AUDIO_SPECTRAL = "audio_spectral"
     AUDIO_CHROMAPRINT = "audio_chromaprint"
     VIDEO_FRAME = "video_frame"
     VIDEO_MOTION = "video_motion"
@@ -4841,8 +4561,7 @@ class FingerprintType(Enum):
 
 @dataclass
 class FingerprintResult:
-    """Fingerprint generation result."""
-    success: bool
+    """Fingerprint generation result."""    success: bool
     fingerprint_hash: str
     fingerprint_type: FingerprintType
     fingerprint_data: Dict[str, Any]
@@ -4853,22 +4572,18 @@ class FingerprintResult:
 
 
 class FingerprintingService:
-    """
-    Enterprise-grade content fingerprinting service.
+    """    Enterprise-grade content fingerprinting service.
     
     Provides multi-format content fingerprinting using advanced algorithms
     for audio, video, image, and text content.
-    """
-    
+    """    
     def __init__(self, config: AIProtectionConfiguration):
-        """Initialize the fingerprinting service."""
-        self.config = config
+        """Initialize the fingerprinting service."""        self.config = config
         self.logger = logging.getLogger(__name__)
         self._initialize_engines()
     
     def _initialize_engines(self):
-        """Initialize fingerprinting engines."""
-        from ..engines.audio_fingerprint_engine import AudioFingerprintEngine
+        """Initialize fingerprinting engines."""        from ..engines.audio_fingerprint_engine import AudioFingerprintEngine
         from ..engines.video_fingerprint_engine import VideoFingerprintEngine
         from ..engines.image_fingerprint_engine import ImageFingerprintEngine
         from ..engines.text_fingerprint_engine import TextFingerprintEngine
@@ -4891,8 +4606,7 @@ class FingerprintingService:
         content_format: ContentFormat,
         fingerprint_types: Optional[List[FingerprintType]] = None
     ) -> FingerprintResult:
-        """
-        Generate comprehensive fingerprint for content.
+        """        Generate comprehensive fingerprint for content.
         
         Args:
             content_path: Path to content file
@@ -4901,8 +4615,7 @@ class FingerprintingService:
             
         Returns:
             FingerprintResult with fingerprint data
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             self.logger.info(f"Generating fingerprint for {content_path}")
@@ -4968,8 +4681,7 @@ class FingerprintingService:
         fingerprint_data1: Dict[str, Any],
         fingerprint_data2: Dict[str, Any]
     ) -> float:
-        """
-        Compare two fingerprints and return similarity score.
+        """        Compare two fingerprints and return similarity score.
         
         Args:
             fingerprint1: First fingerprint hash
@@ -4979,8 +4691,7 @@ class FingerprintingService:
             
         Returns:
             Similarity score between 0 and 1
-        """
-        try:
+        """        try:
             # Quick hash comparison
             if fingerprint1 == fingerprint2:
                 return 1.0
@@ -5024,8 +4735,7 @@ class FingerprintingService:
             return 0.0
     
     def _get_default_fingerprint_types(self, content_format: ContentFormat) -> List[FingerprintType]:
-        """Get default fingerprint types for content format."""
-        type_mapping = {
+        """Get default fingerprint types for content format."""        type_mapping = {
             ContentFormat.AUDIO: [FingerprintType.AUDIO_SPECTRAL, FingerprintType.AUDIO_CHROMAPRINT],
             ContentFormat.VIDEO: [FingerprintType.VIDEO_FRAME, FingerprintType.VIDEO_MOTION, FingerprintType.AUDIO_SPECTRAL],
             ContentFormat.IMAGE: [FingerprintType.IMAGE_PERCEPTUAL, FingerprintType.IMAGE_FEATURE],
@@ -5037,8 +4747,7 @@ class FingerprintingService:
         return type_mapping.get(content_format, [FingerprintType.COMBINED])
     
     async def _generate_audio_fingerprint(self, content_path: Union[str, Path]) -> Dict[str, Any]:
-        """Generate audio fingerprint."""
-        fingerprint_data = {}
+        """Generate audio fingerprint."""        fingerprint_data = {}
         
         if hasattr(self, 'audio_engine'):
             # Spectral fingerprint
@@ -5061,8 +4770,7 @@ class FingerprintingService:
         return {"audio": fingerprint_data}
     
     async def _generate_video_fingerprint(self, content_path: Union[str, Path]) -> Dict[str, Any]:
-        """Generate video fingerprint."""
-        fingerprint_data = {}
+        """Generate video fingerprint."""        fingerprint_data = {}
         
         if hasattr(self, 'video_engine'):
             # Frame-based fingerprint
@@ -5086,8 +4794,7 @@ class FingerprintingService:
         return {"video": fingerprint_data}
     
     async def _generate_image_fingerprint(self, content_path: Union[str, Path]) -> Dict[str, Any]:
-        """Generate image fingerprint."""
-        fingerprint_data = {}
+        """Generate image fingerprint."""        fingerprint_data = {}
         
         if hasattr(self, 'image_engine'):
             # Perceptual hash
@@ -5110,8 +4817,7 @@ class FingerprintingService:
         return {"image": fingerprint_data}
     
     async def _generate_text_fingerprint(self, content_path: Union[str, Path]) -> Dict[str, Any]:
-        """Generate text fingerprint."""
-        fingerprint_data = {}
+        """Generate text fingerprint."""        fingerprint_data = {}
         
         if hasattr(self, 'text_engine'):
             # Read text content
@@ -5138,8 +4844,7 @@ class FingerprintingService:
         return {"text": fingerprint_data}
     
     async def _generate_mixed_media_fingerprint(self, content_path: Union[str, Path]) -> Dict[str, Any]:
-        """Generate fingerprint for mixed media content."""
-        # Analyze file to determine what types of content it contains
+        """Generate fingerprint for mixed media content."""        # Analyze file to determine what types of content it contains
         # For now, return a basic hash-based fingerprint
         with open(content_path, 'rb') as f:
             content = f.read()
@@ -5155,8 +4860,7 @@ class FingerprintingService:
         }
     
     def _create_combined_hash(self, fingerprint_data: Dict[str, Any]) -> str:
-        """Create combined hash from all fingerprint data."""
-        # Serialize fingerprint data and create hash
+        """Create combined hash from all fingerprint data."""        # Serialize fingerprint data and create hash
         import json
         
         # Sort keys for consistent hashing
@@ -5164,8 +4868,7 @@ class FingerprintingService:
         return hashlib.sha256(data_str.encode()).hexdigest()
     
     def _get_similarity_threshold(self, content_format: ContentFormat) -> float:
-        """Get similarity threshold for content format."""
-        # Return appropriate thresholds based on content type
+        """Get similarity threshold for content format."""        # Return appropriate thresholds based on content type
         thresholds = {
             ContentFormat.AUDIO: self.config.copyright_detection.similarity_threshold,
             ContentFormat.VIDEO: self.config.copyright_detection.similarity_threshold,
@@ -5178,8 +4881,7 @@ class FingerprintingService:
         return thresholds.get(content_format, 0.80)
     
     async def _compare_audio_fingerprints(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """Compare audio fingerprints."""
-        similarities = []
+        """Compare audio fingerprints."""        similarities = []
         
         # Compare spectral fingerprints
         if "spectral" in fp1 and "spectral" in fp2:
@@ -5199,8 +4901,7 @@ class FingerprintingService:
         return sum(similarities) / len(similarities) if similarities else 0.0
     
     async def _compare_video_fingerprints(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """Compare video fingerprints."""
-        similarities = []
+        """Compare video fingerprints."""        similarities = []
         
         # Compare frame fingerprints
         if "frames" in fp1 and "frames" in fp2:
@@ -5215,8 +4916,7 @@ class FingerprintingService:
         return sum(similarities) / len(similarities) if similarities else 0.0
     
     async def _compare_image_fingerprints(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """Compare image fingerprints."""
-        similarities = []
+        """Compare image fingerprints."""        similarities = []
         
         # Compare perceptual hashes
         if "phash" in fp1 and "phash" in fp2:
@@ -5231,8 +4931,7 @@ class FingerprintingService:
         return sum(similarities) / len(similarities) if similarities else 0.0
     
     async def _compare_text_fingerprints(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """Compare text fingerprints."""
-        similarities = []
+        """Compare text fingerprints."""        similarities = []
         
         # Compare n-grams
         if "ngrams" in fp1 and "ngrams" in fp2:
@@ -5247,33 +4946,27 @@ class FingerprintingService:
         return sum(similarities) / len(similarities) if similarities else 0.0
     
     def _compare_spectral_features(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """Compare spectral features."""
-        # Placeholder implementation
+        """Compare spectral features."""        # Placeholder implementation
         return 0.5
     
     def _compare_chromaprints(self, fp1: str, fp2: str) -> float:
-        """Compare chromaprint fingerprints."""
-        # Placeholder implementation
+        """Compare chromaprint fingerprints."""        # Placeholder implementation
         return 0.5
     
     def _compare_mfcc_features(self, fp1: List[float], fp2: List[float]) -> float:
-        """Compare MFCC features."""
-        # Placeholder implementation using cosine similarity
+        """Compare MFCC features."""        # Placeholder implementation using cosine similarity
         return 0.5
     
     def _compare_frame_fingerprints(self, fp1: List[str], fp2: List[str]) -> float:
-        """Compare frame fingerprints."""
-        # Placeholder implementation
+        """Compare frame fingerprints."""        # Placeholder implementation
         return 0.5
     
     def _compare_motion_vectors(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """Compare motion vectors."""
-        # Placeholder implementation
+        """Compare motion vectors."""        # Placeholder implementation
         return 0.5
     
     def _compare_perceptual_hashes(self, fp1: str, fp2: str) -> float:
-        """Compare perceptual hashes."""
-        # Calculate Hamming distance
+        """Compare perceptual hashes."""        # Calculate Hamming distance
         if len(fp1) != len(fp2):
             return 0.0
         
@@ -5282,13 +4975,11 @@ class FingerprintingService:
         return similarity
     
     def _compare_image_features(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """Compare image features."""
-        # Placeholder implementation
+        """Compare image features."""        # Placeholder implementation
         return 0.5
     
     def _compare_ngrams(self, fp1: Dict[str, int], fp2: Dict[str, int]) -> float:
-        """Compare n-gram fingerprints."""
-        # Calculate Jaccard similarity
+        """Compare n-gram fingerprints."""        # Calculate Jaccard similarity
         set1 = set(fp1.keys())
         set2 = set(fp2.keys())
         
@@ -5298,8 +4989,7 @@ class FingerprintingService:
         return intersection / union if union > 0 else 0.0
     
     def _compare_semantic_embeddings(self, fp1: List[float], fp2: List[float]) -> float:
-        """Compare semantic embeddings."""
-        # Placeholder implementation using cosine similarity
+        """Compare semantic embeddings."""        # Placeholder implementation using cosine similarity
         return 0.5
 
 
@@ -5317,8 +5007,7 @@ __all__ = [
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Processing Alert Handler Module
+"""Processing Alert Handler Module
 
 This module provides comprehensive monitoring for AI content processing pipeline
 in the Influencer AI Agent Platform. It handles processing stage alerts,
@@ -5333,9 +5022,7 @@ Business Context:
 - Monitors fingerprinting, quality assessment, and SEO optimization
 - Integrates with content protection and rights management systems
 - Essential for creator content enhancement and monetization pipeline
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import json
@@ -5356,8 +5043,7 @@ from ...alert_manager import AlertManager
 
 
 class ProcessingStage(Enum):
-    """AI processing stages for content analysis."""
-    INITIATED = "initiated"
+    """AI processing stages for content analysis."""    INITIATED = "initiated"
     FINGERPRINTING = "fingerprinting"
     QUALITY_ANALYSIS = "quality_analysis"
     SEO_OPTIMIZATION = "seo_optimization"
@@ -5371,8 +5057,7 @@ class ProcessingStage(Enum):
 
 
 class ContentType(Enum):
-    """Supported content types for processing."""
-    AUDIO = "audio"
+    """Supported content types for processing."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -5380,8 +5065,7 @@ class ContentType(Enum):
 
 
 class QualityLevel(Enum):
-    """Content quality assessment levels."""
-    EXCELLENT = "excellent"
+    """Content quality assessment levels."""    EXCELLENT = "excellent"
     GOOD = "good"
     AVERAGE = "average"
     POOR = "poor"
@@ -5390,8 +5074,7 @@ class QualityLevel(Enum):
 
 @dataclass
 class ProcessingMetrics:
-    """Processing performance metrics."""
-    processing_id: str
+    """Processing performance metrics."""    processing_id: str
     content_id: str
     user_id: str
     content_type: ContentType
@@ -5413,8 +5096,7 @@ class ProcessingMetrics:
 
 @dataclass
 class ProcessingAlert:
-    """Alert for processing events."""
-    alert_id: str
+    """Alert for processing events."""    alert_id: str
     processing_id: str
     content_id: str
     user_id: str
@@ -5429,13 +5111,11 @@ class ProcessingAlert:
 
 
 class ProcessingAlertHandler:
-    """
-    Alert handler for AI content processing pipeline.
+    """    Alert handler for AI content processing pipeline.
     
     Manages processing stage monitoring, quality analysis alerts,
     SEO optimization notifications, and protection setup status.
-    """
-    
+    """    
     def __init__(self, alert_manager: AlertManager):
         self.alert_manager = alert_manager
         self.logger = logging.getLogger(__name__)
@@ -5443,8 +5123,7 @@ class ProcessingAlertHandler:
         self.ai_models = self._initialize_ai_models()
         
     def _initialize_ai_models(self) -> Dict[str, Any]:
-        """Initialize AI models for content processing."""
-        try:
+        """Initialize AI models for content processing."""        try:
             models = {
                 'text_analyzer': transformers.pipeline(
                     'text-classification',
@@ -5473,8 +5152,7 @@ class ProcessingAlertHandler:
         content_path: str,
         processing_options: Dict[str, Any] = None
     ) -> str:
-        """
-        Start AI processing pipeline for uploaded content.
+        """        Start AI processing pipeline for uploaded content.
         
         Args:
             content_id: Unique content identifier
@@ -5485,8 +5163,7 @@ class ProcessingAlertHandler:
             
         Returns:
             processing_id: Unique processing session identifier
-        """
-        processing_id = self._generate_processing_id(content_id, user_id)
+        """        processing_id = self._generate_processing_id(content_id, user_id)
         
         # Initialize processing metrics
         metrics = ProcessingMetrics(
@@ -5524,8 +5201,7 @@ class ProcessingAlertHandler:
     # [Include all other methods from the original file...]
     
     async def shutdown(self) -> None:
-        """Shutdown processing alert handler."""
-        self.logger.info("Shutting down processing alert handler...")
+        """Shutdown processing alert handler."""        self.logger.info("Shutting down processing alert handler...")
         self.processing_sessions.clear()
         self.logger.info("Processing alert handler shutdown complete")
 
@@ -5536,17 +5212,14 @@ class ProcessingAlertHandler:
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Processing Alert Handlers Module
+"""Processing Alert Handlers Module
 
 This module contains all processing-related alert handlers for the Creator Workflow
 in the Influencer AI Agent Platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
-"""
-
-from .processing_alerts import (
+"""from .processing_alerts import (
     ProcessingAlertHandler,
     ProcessingStage,
     ContentType,
@@ -5570,14 +5243,12 @@ __all__ = [
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Audio Analysis Task
+"""Audio Analysis Task
 ------------------
 Celery-Task für tiefe Audioanalyse, ML-Feature-Extraktion, Klassifikation, Anomalie-Erkennung.
 - Input-Validation, Audit, Traceability, Observability
 - ML/AI-Integration (TensorFlow, PyTorch, Hugging Face)
-"""
-from celery import shared_task
+"""from celery import shared_task
 import logging
 
 def validate_audio_input(audio_path: str) -> bool:
@@ -5586,8 +5257,7 @@ def validate_audio_input(audio_path: str) -> bool:
 
 @shared_task(bind=True, name="ai_tasks.analyze_audio_task", autoretry_for=(Exception,), retry_backoff=True, max_retries=3)
 def analyze_audio_task(self, audio_path: str, model_version: str = "latest", trace_id: str = None) -> dict:
-    """Analysiert Audio, extrahiert Features, klassifiziert, erkennt Anomalien (ML/AI)."""
-    if not validate_audio_input(audio_path):
+    """Analysiert Audio, extrahiert Features, klassifiziert, erkennt Anomalien (ML/AI)."""    if not validate_audio_input(audio_path):
         logging.error(f"Invalid audio input: {audio_path}")
         raise ValueError("Invalid audio input")
     # ... ML-Feature-Extraktion, Modell-Call, z.B. Hugging Face Pipeline ...
@@ -5607,8 +5277,7 @@ def analyze_audio_task(self, audio_path: str, model_version: str = "latest", tra
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Track Analysis Tasks for Spotify AI Agent
+"""Track Analysis Tasks for Spotify AI Agent
 ----------------------------------------
 - Führt fortschrittliche Audio- und Metadatenanalyse für Tracks durch
 - Integriert Security, Audit, Observability, ML/AI-Hooks, GDPR
@@ -5616,9 +5285,7 @@ Track Analysis Tasks for Spotify AI Agent
 
 Autoren & Rollen:
 - Lead Dev, Architecte IA, Backend Senior, ML Engineer, DBA/Data Engineer, Security Specialist, Microservices Architect
-"""
-
-import logging
+"""import logging
 from celery import shared_task
 from datetime import datetime
 from typing import Dict, Any
@@ -5634,12 +5301,10 @@ logger = logging.getLogger("track_analysis")
 @retry_on_failure
 @audit_log(action="analyze_track")
 def analyze_track(self, track_id: str, deep_analysis: bool = True) -> Dict[str, Any]:
-    """
-    Führt eine fortschrittliche Analyse eines Spotify-Tracks durch.
+    """    Führt eine fortschrittliche Analyse eines Spotify-Tracks durch.
     - Holt Audio-Features, Metadaten, wendet ML-Modelle an
     - Audit, Logging, GDPR-Compliance
-    """
-    logger.info(f"[TRACK] Start analysis for track {track_id}")
+    """    logger.info(f"[TRACK] Start analysis for track {track_id}")
     try:
         track_data = SpotifyAPIService().get_track(track_id)
         features = SpotifyAPIService().get_audio_features(track_id)
@@ -5658,8 +5323,7 @@ def analyze_track(self, track_id: str, deep_analysis: bool = True) -> Dict[str, 
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Analytics Processing Task
+"""Analytics Processing Task
 ------------------------
 - Führt fortschrittliche, skalierbare Analysen und Datenverarbeitung für Spotify AI Agent aus
 - Integriert Security, Audit, Observability, ML/AI-Hooks, Prometheus, OpenTelemetry, Sentry
@@ -5667,9 +5331,7 @@ Analytics Processing Task
 
 Autoren & Rollen:
 - Lead Dev, Architecte IA, Backend Senior, ML Engineer, DBA/Data Engineer, Security Specialist, Microservices Architect
-"""
-
-import logging
+"""import logging
 from celery import shared_task
 from datetime import datetime
 from typing import Dict, Any
@@ -5683,11 +5345,9 @@ analytics_processing_counter = Counter('analytics_processing_total', 'Total Anal
 
 @shared_task(bind=True, name="analytics_processing.process_analytics", autoretry_for=(Exception,), retry_backoff=True, max_retries=5)
 def process_analytics(self, data: Dict[str, Any], analysis_type: str = "trend", trace_id: str = None) -> Dict[str, Any]:
-    """
-    Führt eine Analyse auf den übergebenen Daten aus (z.B. Trend, KPI, Anomalie).
+    """    Führt eine Analyse auf den übergebenen Daten aus (z.B. Trend, KPI, Anomalie).
     - Audit, Logging, Prometheus, OpenTelemetry, Sentry
-    """
-    with tracer.start_as_current_span("process_analytics_task"):
+    """    with tracer.start_as_current_span("process_analytics_task"):
         logger.info(f"[ANALYTICS] Start processing: {analysis_type}")
         analytics_processing_counter.inc()
         try:
@@ -5711,8 +5371,7 @@ def process_analytics(self, data: Dict[str, Any], analysis_type: str = "trend", 
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Musical Intelligence Utilities - Spotify AI Agent Deployment
+"""Musical Intelligence Utilities - Spotify AI Agent Deployment
 ===========================================================
 
 Ultra-advanced musical intelligence system for deployment environments.
@@ -5730,9 +5389,7 @@ Features:
 - Rhythm pattern recognition
 - Collaborative filtering for music
 - Content-based recommendation systems
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import json
@@ -5789,8 +5446,7 @@ ACTIVE_AUDIO_SESSIONS = Gauge('musical_active_audio_sessions', 'Active audio pro
 
 
 class Genre(Enum):
-    """Musical genres with hierarchical classification"""
-    # Main genres
+    """Musical genres with hierarchical classification"""    # Main genres
     ROCK = "rock"
     POP = "pop"
     JAZZ = "jazz"
@@ -5831,8 +5487,7 @@ class Genre(Enum):
 
 
 class Mood(Enum):
-    """Emotional and energy-based mood categories"""
-    # Valence-Arousal based moods
+    """Emotional and energy-based mood categories"""    # Valence-Arousal based moods
     HAPPY = "happy"
     ENERGETIC = "energetic"
     EXCITED = "excited"
@@ -5869,8 +5524,7 @@ class Mood(Enum):
 
 
 class MusicalKey(Enum):
-    """Musical keys for harmonic analysis"""
-    # Major keys
+    """Musical keys for harmonic analysis"""    # Major keys
     C_MAJOR = "C_major"
     G_MAJOR = "G_major"
     D_MAJOR = "D_major"
@@ -5902,8 +5556,7 @@ class MusicalKey(Enum):
 
 
 class TimeSignature(Enum):
-    """Time signatures for rhythmic analysis"""
-    FOUR_FOUR = "4/4"
+    """Time signatures for rhythmic analysis"""    FOUR_FOUR = "4/4"
     THREE_FOUR = "3/4"
     TWO_FOUR = "2/4"
     SIX_EIGHT = "6/8"
@@ -5917,8 +5570,7 @@ class TimeSignature(Enum):
 
 @dataclass
 class AudioFeatures:
-    """Comprehensive audio feature representation"""
-    # Basic temporal features
+    """Comprehensive audio feature representation"""    # Basic temporal features
     duration: float
     sample_rate: int
     
@@ -5967,8 +5619,7 @@ class AudioFeatures:
     segments: List[Tuple[float, float]]
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization"""
-        return {
+        """Convert to dictionary for serialization"""        return {
             'duration': self.duration,
             'sample_rate': self.sample_rate,
             'tempo': self.tempo,
@@ -6006,8 +5657,7 @@ class AudioFeatures:
 
 @dataclass
 class MusicalAnalysis:
-    """Complete musical analysis result"""
-    track_id: str
+    """Complete musical analysis result"""    track_id: str
     audio_features: AudioFeatures
     
     # Classification results
@@ -6034,8 +5684,7 @@ class MusicalAnalysis:
     processing_time_ms: float = 0.0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'track_id': self.track_id,
             'audio_features': self.audio_features.to_dict(),
             'genre': self.genre.value,
@@ -6056,10 +5705,8 @@ class MusicalAnalysis:
 
 
 class AdvancedAudioAnalyzer:
-    """
-    Ultra-advanced audio analysis engine for deployment
-    """
-    
+    """    Ultra-advanced audio analysis engine for deployment
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.sample_rate = config.get('sample_rate', 22050)
@@ -6094,8 +5741,7 @@ class AdvancedAudioAnalyzer:
         logger.info("AdvancedAudioAnalyzer initialized")
     
     def _init_essentia_algorithms(self):
-        """Initialize Essentia algorithms for advanced analysis"""
-        # Rhythm analysis
+        """Initialize Essentia algorithms for advanced analysis"""        # Rhythm analysis
         self.rhythm_extractor = es.RhythmExtractor2013()
         self.beat_tracker = es.BeatTrackerMultiFeature()
         
@@ -6113,8 +5759,7 @@ class AdvancedAudioAnalyzer:
         logger.info("Essentia algorithms initialized")
     
     def _load_models(self):
-        """Load pre-trained classification models"""
-        try:
+        """Load pre-trained classification models"""        try:
             # Load genre classifier
             if self.genre_model_path and Path(self.genre_model_path).exists():
                 self.genre_classifier = joblib.load(self.genre_model_path)
@@ -6135,8 +5780,7 @@ class AdvancedAudioAnalyzer:
             logger.error(f"Failed to load models: {e}")
     
     def _create_genre_classifier(self) -> RandomForestClassifier:
-        """Create basic genre classifier"""
-        return RandomForestClassifier(
+        """Create basic genre classifier"""        return RandomForestClassifier(
             n_estimators=100,
             max_depth=20,
             random_state=42,
@@ -6144,8 +5788,7 @@ class AdvancedAudioAnalyzer:
         )
     
     def _create_mood_classifier(self) -> ExtraTreesClassifier:
-        """Create basic mood classifier"""
-        return ExtraTreesClassifier(
+        """Create basic mood classifier"""        return ExtraTreesClassifier(
             n_estimators=100,
             max_depth=15,
             random_state=42,
@@ -6153,8 +5796,7 @@ class AdvancedAudioAnalyzer:
         )
     
     async def analyze_audio(self, audio_path: str, enable_caching: bool = True) -> MusicalAnalysis:
-        """Perform comprehensive audio analysis"""
-        start_time = time.time()
+        """Perform comprehensive audio analysis"""        start_time = time.time()
         
         try:
             # Check cache first
@@ -6217,8 +5859,7 @@ class AdvancedAudioAnalyzer:
             raise
     
     async def _extract_comprehensive_features(self, y: np.ndarray, sr: int) -> AudioFeatures:
-        """Extract comprehensive audio features"""
-        # Basic features
+        """Extract comprehensive audio features"""        # Basic features
         duration = len(y) / sr
         
         # Rhythm and tempo
@@ -6311,8 +5952,7 @@ class AdvancedAudioAnalyzer:
         )
     
     async def _estimate_time_signature(self, y: np.ndarray, sr: int, beats: np.ndarray) -> TimeSignature:
-        """Estimate time signature using beat analysis"""
-        try:
+        """Estimate time signature using beat analysis"""        try:
             if len(beats) < 8:
                 return TimeSignature.UNKNOWN
             
@@ -6343,8 +5983,7 @@ class AdvancedAudioAnalyzer:
             return TimeSignature.UNKNOWN
     
     async def _test_time_signature(self, beat_strengths: np.ndarray, beats_per_measure: int) -> float:
-        """Test how well beat strengths fit a time signature"""
-        if len(beat_strengths) < beats_per_measure * 2:
+        """Test how well beat strengths fit a time signature"""        if len(beat_strengths) < beats_per_measure * 2:
             return 0.0
         
         score = 0.0
@@ -6363,8 +6002,7 @@ class AdvancedAudioAnalyzer:
         return score / measure_count if measure_count > 0 else 0.0
     
     async def _calculate_rhythm_regularity(self, beats: np.ndarray, sr: int) -> float:
-        """Calculate rhythm regularity score"""
-        if len(beats) < 4:
+        """Calculate rhythm regularity score"""        if len(beats) < 4:
             return 0.0
         
         beat_times = librosa.frames_to_time(beats, sr=sr)
@@ -6381,8 +6019,7 @@ class AdvancedAudioAnalyzer:
         return float(regularity)
     
     async def _detect_key(self, chroma: np.ndarray) -> Tuple[MusicalKey, float]:
-        """Detect musical key using chroma features"""
-        try:
+        """Detect musical key using chroma features"""        try:
             # Key profiles (Krumhansl-Schmuckler)
             major_profile = np.array([6.35, 2.23, 3.48, 2.33, 4.38, 4.09, 2.52, 5.19, 2.39, 3.66, 2.29, 2.88])
             minor_profile = np.array([6.33, 2.68, 3.52, 5.38, 2.60, 3.53, 2.54, 4.75, 3.98, 2.69, 3.34, 3.17])
@@ -6427,8 +6064,7 @@ class AdvancedAudioAnalyzer:
     
     async def _calculate_valence(self, y: np.ndarray, sr: int, chroma: np.ndarray, 
                                spectral_centroids: np.ndarray, tempo: float) -> float:
-        """Calculate musical valence (positivity)"""
-        valence = 0.0
+        """Calculate musical valence (positivity)"""        valence = 0.0
         
         # Major keys tend to be more positive
         key, key_conf = await self._detect_key(chroma)
@@ -6453,8 +6089,7 @@ class AdvancedAudioAnalyzer:
     
     async def _calculate_arousal(self, rms_energy: np.ndarray, spectral_centroids: np.ndarray, 
                                tempo: float) -> float:
-        """Calculate musical arousal (energy/activation)"""
-        arousal = 0.0
+        """Calculate musical arousal (energy/activation)"""        arousal = 0.0
         
         # Energy level
         energy_level = np.mean(rms_energy)
@@ -6472,8 +6107,7 @@ class AdvancedAudioAnalyzer:
     
     async def _calculate_danceability(self, tempo: float, beats: np.ndarray, 
                                     rhythm_regularity: float) -> float:
-        """Calculate danceability score"""
-        danceability = 0.0
+        """Calculate danceability score"""        danceability = 0.0
         
         # Optimal tempo range for dancing
         if 90 <= tempo <= 130:
@@ -6494,8 +6128,7 @@ class AdvancedAudioAnalyzer:
         return min(1.0, danceability)
     
     async def _calculate_energy(self, rms_energy: np.ndarray, spectral_centroids: np.ndarray) -> float:
-        """Calculate energy level"""
-        # RMS energy contribution
+        """Calculate energy level"""        # RMS energy contribution
         energy_rms = np.mean(rms_energy)
         energy_score = min(1.0, energy_rms * 5)
         
@@ -6508,8 +6141,7 @@ class AdvancedAudioAnalyzer:
     
     async def _calculate_acousticness(self, y: np.ndarray, harmonic_energy: float, 
                                     percussive_energy: float) -> float:
-        """Calculate acousticness score"""
-        total_energy = harmonic_energy + percussive_energy
+        """Calculate acousticness score"""        total_energy = harmonic_energy + percussive_energy
         
         if total_energy == 0:
             return 0.5
@@ -6525,8 +6157,7 @@ class AdvancedAudioAnalyzer:
         return min(1.0, acousticness)
     
     async def _calculate_instrumentalness(self, y: np.ndarray, sr: int) -> float:
-        """Calculate instrumentalness (vocal detection)"""
-        # This is a simplified version - would need vocal detection model
+        """Calculate instrumentalness (vocal detection)"""        # This is a simplified version - would need vocal detection model
         
         # Spectral characteristics that might indicate vocals
         spectral_centroids = librosa.feature.spectral_centroid(y=y, sr=sr)[0]
@@ -6542,8 +6173,7 @@ class AdvancedAudioAnalyzer:
         return max(0.0, instrumentalness)
     
     async def _calculate_liveness(self, y: np.ndarray, sr: int) -> float:
-        """Calculate liveness (live recording detection)"""
-        # Room ambience and reverb detection (simplified)
+        """Calculate liveness (live recording detection)"""        # Room ambience and reverb detection (simplified)
         
         # Calculate spectral flux for detecting audience noise
         stft = librosa.stft(y)
@@ -6556,8 +6186,7 @@ class AdvancedAudioAnalyzer:
         return max(0.0, liveness)
     
     async def _calculate_speechiness(self, mfccs: np.ndarray, zcr: np.ndarray) -> float:
-        """Calculate speechiness"""
-        # MFCC patterns characteristic of speech
+        """Calculate speechiness"""        # MFCC patterns characteristic of speech
         mfcc_speech_score = 0.0
         
         if mfccs.shape[0] >= 3:
@@ -6580,8 +6209,7 @@ class AdvancedAudioAnalyzer:
         return min(1.0, speechiness)
     
     async def _calculate_loudness(self, y: np.ndarray) -> float:
-        """Calculate loudness in dB"""
-        rms = np.sqrt(np.mean(y ** 2))
+        """Calculate loudness in dB"""        rms = np.sqrt(np.mean(y ** 2))
         if rms > 0:
             loudness_db = 20 * np.log10(rms)
         else:
@@ -6590,8 +6218,7 @@ class AdvancedAudioAnalyzer:
         return float(loudness_db)
     
     async def _calculate_consonance(self, chroma: np.ndarray) -> float:
-        """Calculate harmonic consonance"""
-        # Simplified consonance calculation based on chroma
+        """Calculate harmonic consonance"""        # Simplified consonance calculation based on chroma
         chroma_mean = np.mean(chroma, axis=1)
         
         # Perfect consonances (unison, octave, fifth, fourth)
@@ -6605,8 +6232,7 @@ class AdvancedAudioAnalyzer:
         return min(1.0, consonance_score / len(consonant_intervals))
     
     async def _detect_segments(self, y: np.ndarray, sr: int) -> List[Tuple[float, float]]:
-        """Detect audio segments"""
-        try:
+        """Detect audio segments"""        try:
             # Use librosa's segment detection
             chroma = librosa.feature.chroma_stft(y=y, sr=sr)
             segments = librosa.segment.agglomerative(chroma, k=8)
@@ -6625,8 +6251,7 @@ class AdvancedAudioAnalyzer:
             return []
     
     async def _classify_genre(self, features: AudioFeatures) -> Tuple[Genre, float, Dict[str, float]]:
-        """Classify musical genre"""
-        try:
+        """Classify musical genre"""        try:
             if self.genre_classifier is None:
                 return await self._rule_based_genre_classification(features)
             
@@ -6642,8 +6267,7 @@ class AdvancedAudioAnalyzer:
             return Genre.UNKNOWN, 0.0, {}
     
     async def _rule_based_genre_classification(self, features: AudioFeatures) -> Tuple[Genre, float, Dict[str, float]]:
-        """Rule-based genre classification"""
-        probabilities = {}
+        """Rule-based genre classification"""        probabilities = {}
         
         # Electronic music
         if (features.energy > 0.7 and features.danceability > 0.6 and 
@@ -6691,8 +6315,7 @@ class AdvancedAudioAnalyzer:
         return best_genre, confidence, probabilities
     
     async def _classify_mood(self, features: AudioFeatures) -> Tuple[Mood, float, Dict[str, float]]:
-        """Classify musical mood"""
-        try:
+        """Classify musical mood"""        try:
             probabilities = {}
             
             # Use valence-arousal model
@@ -6747,8 +6370,7 @@ class AdvancedAudioAnalyzer:
             return Mood.PLAYFUL, 0.0, {}
     
     def _extract_classification_features(self, features: AudioFeatures) -> np.ndarray:
-        """Extract features for classification"""
-        feature_vector = [
+        """Extract features for classification"""        feature_vector = [
             features.tempo,
             features.energy,
             features.danceability,
@@ -6781,8 +6403,7 @@ class AdvancedAudioAnalyzer:
         return np.array(feature_vector)
     
     async def _analyze_structure(self, y: np.ndarray, sr: int) -> List[Dict[str, Any]]:
-        """Analyze song structure"""
-        try:
+        """Analyze song structure"""        try:
             # Structural segmentation using chroma features
             chroma = librosa.feature.chroma_stft(y=y, sr=sr)
             
@@ -6813,8 +6434,7 @@ class AdvancedAudioAnalyzer:
             return []
     
     async def _segment_song_structure(self, y: np.ndarray, sr: int) -> Tuple[List[Tuple[float, float]], List[Tuple[float, float]]]:
-        """Segment song into chorus and verse sections"""
-        try:
+        """Segment song into chorus and verse sections"""        try:
             # This is a simplified approach - would need more sophisticated analysis
             
             # Detect repeating sections (likely choruses)
@@ -6844,8 +6464,7 @@ class AdvancedAudioAnalyzer:
             return [], []
     
     async def _generate_audio_fingerprint(self, y: np.ndarray, sr: int) -> str:
-        """Generate audio fingerprint for identification"""
-        try:
+        """Generate audio fingerprint for identification"""        try:
             # Use spectral peaks as fingerprint basis
             stft = librosa.stft(y)
             magnitude = np.abs(stft)
@@ -6867,8 +6486,7 @@ class AdvancedAudioAnalyzer:
             return ""
     
     async def _generate_similarity_hash(self, features: AudioFeatures) -> str:
-        """Generate similarity hash for fast comparison"""
-        try:
+        """Generate similarity hash for fast comparison"""        try:
             # Use key features for similarity
             similarity_features = [
                 round(features.tempo, 1),
@@ -6894,8 +6512,7 @@ class AdvancedAudioAnalyzer:
             return ""
     
     async def _get_cached_analysis(self, audio_path: str) -> Optional[MusicalAnalysis]:
-        """Get cached analysis result"""
-        if not self.redis_client:
+        """Get cached analysis result"""        if not self.redis_client:
             return None
         
         try:
@@ -6918,8 +6535,7 @@ class AdvancedAudioAnalyzer:
         return None
     
     async def _cache_analysis(self, audio_path: str, analysis: MusicalAnalysis):
-        """Cache analysis result"""
-        if not self.redis_client:
+        """Cache analysis result"""        if not self.redis_client:
             return
         
         try:
@@ -6941,8 +6557,7 @@ class AdvancedAudioAnalyzer:
 _audio_analyzer = None
 
 def get_audio_analyzer(config: Optional[Dict[str, Any]] = None) -> AdvancedAudioAnalyzer:
-    """Get global audio analyzer"""
-    global _audio_analyzer
+    """Get global audio analyzer"""    global _audio_analyzer
     if _audio_analyzer is None:
         _audio_analyzer = AdvancedAudioAnalyzer(config or {})
     return _audio_analyzer
@@ -6951,13 +6566,11 @@ def get_audio_analyzer(config: Optional[Dict[str, Any]] = None) -> AdvancedAudio
 # Utility functions
 async def analyze_track_comprehensive(audio_path: str, 
                                    enable_caching: bool = True) -> MusicalAnalysis:
-    """Comprehensive track analysis"""
-    analyzer = get_audio_analyzer()
+    """Comprehensive track analysis"""    analyzer = get_audio_analyzer()
     return await analyzer.analyze_audio(audio_path, enable_caching)
 
 async def batch_analyze_tracks(audio_paths: List[str]) -> List[MusicalAnalysis]:
-    """Batch analyze multiple tracks"""
-    analyzer = get_audio_analyzer()
+    """Batch analyze multiple tracks"""    analyzer = get_audio_analyzer()
     
     results = []
     for audio_path in audio_paths:
@@ -6972,8 +6585,7 @@ async def batch_analyze_tracks(audio_paths: List[str]) -> List[MusicalAnalysis]:
 
 def compare_audio_features(analysis1: MusicalAnalysis, 
                          analysis2: MusicalAnalysis) -> float:
-    """Compare two audio analyses for similarity"""
-    features1 = analysis1.audio_features
+    """Compare two audio analyses for similarity"""    features1 = analysis1.audio_features
     features2 = analysis2.audio_features
     
     # Calculate similarities
@@ -7006,8 +6618,7 @@ def compare_audio_features(analysis1: MusicalAnalysis,
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Musical Quality Validation Strategy - Spotify AI Agent
+"""Musical Quality Validation Strategy - Spotify AI Agent
 =====================================================
 
 Stratégie de validation spécialisée pour la qualité musicale des modèles IA
@@ -7021,9 +6632,7 @@ Features:
 - Tests de créativité et diversité musicale
 - Validation de genre et style musical
 - Métriques de qualité audio perceptuelle
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Tuple, Union
 from dataclasses import dataclass, field
@@ -7049,8 +6658,7 @@ logger = logging.getLogger(__name__)
 
 
 class MusicalGenre(Enum):
-    """Genres musicaux supportés"""
-    POP = "pop"
+    """Genres musicaux supportés"""    POP = "pop"
     ROCK = "rock"
     JAZZ = "jazz"
     CLASSICAL = "classical"
@@ -7065,8 +6673,7 @@ class MusicalGenre(Enum):
 
 
 class MusicalKey(Enum):
-    """Tonalités musicales"""
-    C_MAJOR = "C_major"
+    """Tonalités musicales"""    C_MAJOR = "C_major"
     C_SHARP_MAJOR = "C#_major"
     D_MAJOR = "D_major"
     D_SHARP_MAJOR = "D#_major"
@@ -7094,8 +6701,7 @@ class MusicalKey(Enum):
 
 @dataclass
 class AudioAnalysisResult:
-    """Résultat complet d'analyse audio"""
-    
+    """Résultat complet d'analyse audio"""    
     # Métadonnées
     filename: str
     duration: float
@@ -7141,8 +6747,7 @@ class AudioAnalysisResult:
 
 @dataclass
 class MusicalValidationConfig:
-    """Configuration pour la validation musicale"""
-    
+    """Configuration pour la validation musicale"""    
     # Seuils de qualité
     min_audio_quality: float = 0.7
     min_musical_coherence: float = 0.75
@@ -7170,13 +6775,11 @@ class MusicalValidationConfig:
 
 
 class MusicalQualityValidationStrategy(BaseDeploymentStrategy):
-    """
-    Stratégie de validation ultra-avancée pour la qualité musicale
+    """    Stratégie de validation ultra-avancée pour la qualité musicale
     
     Cette stratégie utilise des algorithmes de pointe en MIR (Music Information Retrieval)
     pour valider la qualité, cohérence et créativité des générations musicales.
-    """
-    
+    """    
     def __init__(self, config: 'DeploymentConfig'):
         super().__init__(config)
         
@@ -7205,8 +6808,7 @@ class MusicalQualityValidationStrategy(BaseDeploymentStrategy):
         self.validation_history: List[Dict[str, Any]] = []
     
     def _setup_essentia_analyzers(self):
-        """Configure les analyseurs Essentia pour l'analyse audio"""
-        
+        """Configure les analyseurs Essentia pour l'analyse audio"""        
         # Analyseurs de base
         self.windowing = es.Windowing(type='hann')
         self.spectrum = es.Spectrum()
@@ -7236,8 +6838,7 @@ class MusicalQualityValidationStrategy(BaseDeploymentStrategy):
                                    audio_data: Union[np.ndarray, str],
                                    expected_genre: MusicalGenre = None,
                                    reference_track: str = None) -> Dict[str, Any]:
-        """
-        Valide la qualité musicale complète d'un échantillon audio
+        """        Valide la qualité musicale complète d'un échantillon audio
         
         Args:
             audio_data: Données audio (array numpy ou chemin fichier)
@@ -7246,8 +6847,7 @@ class MusicalQualityValidationStrategy(BaseDeploymentStrategy):
             
         Returns:
             Dict contenant les résultats de validation musicale
-        """
-        validation_start = datetime.now()
+        """        validation_start = datetime.now()
         validation_id = f"musical-validation-{validation_start.strftime('%Y%m%d-%H%M%S')}"
         
         logger.info(f"Démarrage validation musicale {validation_id}")
@@ -7349,8 +6949,7 @@ class MusicalQualityValidationStrategy(BaseDeploymentStrategy):
             }
     
     async def _load_and_prepare_audio(self, audio_data: Union[np.ndarray, str]) -> Tuple[np.ndarray, int]:
-        """Charge et prépare les données audio pour analyse"""
-        
+        """Charge et prépare les données audio pour analyse"""        
         if isinstance(audio_data, str):
             # Chargement depuis fichier
             signal, sr = librosa.load(audio_data, sr=22050, mono=True)
@@ -7377,8 +6976,7 @@ class MusicalQualityValidationStrategy(BaseDeploymentStrategy):
         return signal, sr
     
     async def _perform_comprehensive_analysis(self, audio_signal: np.ndarray, sr: int) -> AudioAnalysisResult:
-        """Effectue une analyse audio complète avec tous les extracteurs"""
-        
+        """Effectue une analyse audio complète avec tous les extracteurs"""        
         logger.info("Analyse audio complète en cours...")
         
         # Métadonnées de base
@@ -7446,8 +7044,7 @@ class MusicalQualityValidationStrategy(BaseDeploymentStrategy):
         return result
     
     async def _analyze_harmonic_content(self, audio_signal: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Analyse harmonique détaillée"""
-        
+        """Analyse harmonique détaillée"""        
         # Extraction de la tonalité
         key_result = self.key_extractor(audio_signal)
         key_name = key_result[0]
@@ -7476,8 +7073,7 @@ class MusicalQualityValidationStrategy(BaseDeploymentStrategy):
         }
     
     async def _analyze_rhythmic_content(self, audio_signal: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Analyse rythmique détaillée"""
-        
+        """Analyse rythmique détaillée"""        
         # Extraction du tempo et des beats
         rhythm_result = self.rhythm_extractor(audio_signal)
         tempo = rhythm_result[0]
@@ -7501,8 +7097,7 @@ class MusicalQualityValidationStrategy(BaseDeploymentStrategy):
         }
     
     async def _analyze_melodic_content(self, audio_signal: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Analyse mélodique détaillée"""
-        
+        """Analyse mélodique détaillée"""        
         # Extraction de la fréquence fondamentale
         pitches, magnitudes = librosa.piptrack(y=audio_signal, sr=sr)
         
@@ -7533,8 +7128,7 @@ class MusicalQualityValidationStrategy(BaseDeploymentStrategy):
         }
     
     async def _analyze_perceptual_features(self, audio_signal: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Analyse des features perceptuelles"""
-        
+        """Analyse des features perceptuelles"""        
         # Loudness
         loudness = self.loudness_extractor(audio_signal)
         
@@ -7560,8 +7154,7 @@ class MusicalQualityValidationStrategy(BaseDeploymentStrategy):
         }
     
     async def _validate_harmonic_content(self, analysis: AudioAnalysisResult) -> Dict[str, Any]:
-        """Valide le contenu harmonique"""
-        
+        """Valide le contenu harmonique"""        
         validations = {}
         
         # Validation de la stabilité tonale
@@ -7599,8 +7192,7 @@ class MusicalQualityValidationStrategy(BaseDeploymentStrategy):
         }
     
     async def _validate_rhythmic_content(self, analysis: AudioAnalysisResult) -> Dict[str, Any]:
-        """Valide le contenu rythmique"""
-        
+        """Valide le contenu rythmique"""        
         validations = {}
         
         # Validation du tempo
@@ -7640,8 +7232,7 @@ class MusicalQualityValidationStrategy(BaseDeploymentStrategy):
         }
     
     async def get_real_time_metrics(self) -> Dict[str, Any]:
-        """Retourne les métriques musicales en temps réel"""
-        
+        """Retourne les métriques musicales en temps réel"""        
         # Dernière validation
         last_validation = self.validation_history[-1] if self.validation_history else None
         
@@ -7681,8 +7272,7 @@ class MusicalQualityValidationStrategy(BaseDeploymentStrategy):
     # Méthodes utilitaires privées
     
     def _convert_to_key_enum(self, key_name: str) -> MusicalKey:
-        """Convertit un nom de tonalité en enum"""
-        # Mapping Essentia -> enum
+        """Convertit un nom de tonalité en enum"""        # Mapping Essentia -> enum
         key_mapping = {
             'C major': MusicalKey.C_MAJOR,
             'C# major': MusicalKey.C_SHARP_MAJOR,
@@ -7693,8 +7283,7 @@ class MusicalQualityValidationStrategy(BaseDeploymentStrategy):
         return key_mapping.get(key_name, MusicalKey.C_MAJOR)
     
     def _calculate_harmonic_complexity(self, chroma: np.ndarray) -> float:
-        """Calcule la complexité harmonique à partir du chromagramme"""
-        # Entropie du chromagramme
+        """Calcule la complexité harmonique à partir du chromagramme"""        # Entropie du chromagramme
         chroma_mean = np.mean(chroma, axis=1)
         chroma_normalized = chroma_mean / np.sum(chroma_mean)
         harmonic_entropy = entropy(chroma_normalized)
@@ -7706,8 +7295,7 @@ class MusicalQualityValidationStrategy(BaseDeploymentStrategy):
         return float(complexity)
     
     def _calculate_tonal_stability(self, chroma: np.ndarray) -> float:
-        """Calcule la stabilité tonale"""
-        # Variance temporelle du chromagramme
+        """Calcule la stabilité tonale"""        # Variance temporelle du chromagramme
         chroma_variance = np.var(chroma, axis=1)
         # Stabilité = inverse de la variance moyenne
         stability = 1.0 / (1.0 + np.mean(chroma_variance))
@@ -7715,8 +7303,7 @@ class MusicalQualityValidationStrategy(BaseDeploymentStrategy):
         return float(stability)
     
     def _extract_main_melody(self, pitches: np.ndarray, magnitudes: np.ndarray) -> np.ndarray:
-        """Extrait la mélodie principale"""
-        melody = []
+        """Extrait la mélodie principale"""        melody = []
         
         for t in range(pitches.shape[1]):
             # Trouver le pic de magnitude le plus fort
@@ -7732,8 +7319,7 @@ class MusicalQualityValidationStrategy(BaseDeploymentStrategy):
         return np.array(melody)
     
     def _calculate_melodic_complexity(self, melody: np.ndarray, intervals: List[float]) -> float:
-        """Calcule la complexité mélodique"""
-        if len(intervals) == 0:
+        """Calcule la complexité mélodique"""        if len(intervals) == 0:
             return 0.0
         
         # Diversité des intervalles
@@ -7749,8 +7335,7 @@ class MusicalQualityValidationStrategy(BaseDeploymentStrategy):
         return float(complexity)
     
     async def _update_musical_metrics(self, validation_result: Dict[str, Any]) -> None:
-        """Met à jour les métriques Prometheus musicales"""
-        # Implémentation des métriques spécifiques
+        """Met à jour les métriques Prometheus musicales"""        # Implémentation des métriques spécifiques
         pass
 
 # ==========================================================================================
@@ -7759,8 +7344,7 @@ class MusicalQualityValidationStrategy(BaseDeploymentStrategy):
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-🎵 Spotify AI Agent - Audio Neural Networks Module
+"""🎵 Spotify AI Agent - Audio Neural Networks Module
 ================================================
 
 This module contains specialized neural network architectures optimized
@@ -7775,9 +7359,7 @@ Audio Network Components:
 - Hybrid audio-visual networks
 - Music generation and synthesis networks
 - Audio enhancement and denoising networks
-"""
-
-import numpy as np
+"""import numpy as np
 import librosa
 import soundfile as sf
 from typing import Dict, List, Tuple, Optional, Union, Any
@@ -7796,8 +7378,7 @@ logger = logging.getLogger(__name__)
 
 
 class AudioConfig(NetworkConfig):
-    """Extended configuration for audio neural networks."""
-    
+    """Extended configuration for audio neural networks."""    
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         
@@ -7832,20 +7413,17 @@ class AudioConfig(NetworkConfig):
 
 
 class AudioPreprocessor:
-    """
-    Advanced audio preprocessing pipeline for neural networks.
+    """    Advanced audio preprocessing pipeline for neural networks.
     
     Provides comprehensive audio feature extraction, normalization,
     and augmentation capabilities for training and inference.
-    """
-    
+    """    
     def __init__(self, config: AudioConfig):
         self.config = config
         self.feature_extractors = self._initialize_extractors()
         
     def _initialize_extractors(self) -> Dict[str, Any]:
-        """Initialize audio feature extractors."""
-        extractors = {}
+        """Initialize audio feature extractors."""        extractors = {}
         
         # Mel-scale spectrogram
         if self.config.mel_scale:
@@ -7873,16 +7451,14 @@ class AudioPreprocessor:
         return extractors
     
     def extract_features(self, audio: np.ndarray) -> Dict[str, np.ndarray]:
-        """
-        Extract comprehensive audio features.
+        """        Extract comprehensive audio features.
         
         Args:
             audio: Audio signal array
             
         Returns:
             Dict[str, np.ndarray]: Extracted features
-        """
-        features = {}
+        """        features = {}
         
         # Normalize audio if required
         if self.config.normalize_audio:
@@ -7953,16 +7529,14 @@ class AudioPreprocessor:
         return features
     
     def augment_audio(self, audio: np.ndarray) -> np.ndarray:
-        """
-        Apply audio augmentation techniques.
+        """        Apply audio augmentation techniques.
         
         Args:
             audio: Original audio signal
             
         Returns:
             np.ndarray: Augmented audio signal
-        """
-        augmented = audio.copy()
+        """        augmented = audio.copy()
         
         # Time stretching
         if self.config.time_stretch:
@@ -8000,14 +7574,12 @@ class AudioPreprocessor:
 
 
 class SpectralConvNet(BaseNeuralNetwork):
-    """
-    Spectral Convolutional Neural Network for audio processing.
+    """    Spectral Convolutional Neural Network for audio processing.
     
     Specialized CNN architecture optimized for spectral analysis
     of audio signals, particularly effective for music classification
     and audio pattern recognition.
-    """
-    
+    """    
     def __init__(self, config: Union[AudioConfig, Dict[str, Any]], name: str = None):
         if isinstance(config, dict):
             config = AudioConfig(**config)
@@ -8016,8 +7588,7 @@ class SpectralConvNet(BaseNeuralNetwork):
         self.preprocessor = AudioPreprocessor(config)
         
     def build_model(self):
-        """Build the spectral convolutional neural network."""
-        if self.config.framework == "tensorflow":
+        """Build the spectral convolutional neural network."""        if self.config.framework == "tensorflow":
             return self._build_tensorflow_model()
         elif self.config.framework == "pytorch":
             return self._build_pytorch_model()
@@ -8025,8 +7596,7 @@ class SpectralConvNet(BaseNeuralNetwork):
             raise ValueError(f"Unsupported framework: {self.config.framework}")
     
     def _build_tensorflow_model(self):
-        """Build TensorFlow spectral CNN model."""
-        inputs = tf.keras.layers.Input(shape=self.config.input_shape)
+        """Build TensorFlow spectral CNN model."""        inputs = tf.keras.layers.Input(shape=self.config.input_shape)
         
         # Spectral convolution layers
         x = tf.keras.layers.Conv2D(32, (3, 3), activation='relu', padding='same')(inputs)
@@ -8070,8 +7640,7 @@ class SpectralConvNet(BaseNeuralNetwork):
         return model
     
     def _build_pytorch_model(self):
-        """Build PyTorch spectral CNN model."""
-        class SpectralCNN(nn.Module):
+        """Build PyTorch spectral CNN model."""        class SpectralCNN(nn.Module):
             def __init__(self, config):
                 super(SpectralCNN, self).__init__()
                 self.config = config
@@ -8132,8 +7701,7 @@ class SpectralConvNet(BaseNeuralNetwork):
         return model
     
     def compile_model(self):
-        """Compile the spectral CNN model."""
-        if self.config.framework == "tensorflow":
+        """Compile the spectral CNN model."""        if self.config.framework == "tensorflow":
             optimizer = tf.keras.optimizers.Adam(learning_rate=self.config.learning_rate)
             self.model.compile(
                 optimizer=optimizer,
@@ -8148,8 +7716,7 @@ class SpectralConvNet(BaseNeuralNetwork):
             self.loss_function = nn.CrossEntropyLoss()
     
     def train(self, train_data, validation_data=None, epochs=None, batch_size=None, callbacks=None):
-        """Train the spectral CNN model."""
-        epochs = epochs or self.config.epochs
+        """Train the spectral CNN model."""        epochs = epochs or self.config.epochs
         batch_size = batch_size or self.config.batch_size
         
         if self.config.framework == "tensorflow":
@@ -8158,8 +7725,7 @@ class SpectralConvNet(BaseNeuralNetwork):
             return self._train_pytorch(train_data, validation_data, epochs, batch_size)
     
     def _train_tensorflow(self, train_data, validation_data, epochs, batch_size, callbacks):
-        """Train TensorFlow model."""
-        start_time = time.time()
+        """Train TensorFlow model."""        start_time = time.time()
         
         history = self.model.fit(
             train_data,
@@ -8177,8 +7743,7 @@ class SpectralConvNet(BaseNeuralNetwork):
         return history.history
     
     def _train_pytorch(self, train_data, validation_data, epochs, batch_size):
-        """Train PyTorch model."""
-        self.model.train()
+        """Train PyTorch model."""        self.model.train()
         training_history = {'loss': [], 'accuracy': []}
         
         start_time = time.time()
@@ -8218,8 +7783,7 @@ class SpectralConvNet(BaseNeuralNetwork):
         return training_history
     
     def predict(self, input_data, batch_size=None):
-        """Make predictions with the spectral CNN."""
-        if not self.is_trained:
+        """Make predictions with the spectral CNN."""        if not self.is_trained:
             logger.warning("Model is not trained yet")
             return None
         
@@ -8240,8 +7804,7 @@ class SpectralConvNet(BaseNeuralNetwork):
         return predictions
     
     def evaluate(self, test_data, test_labels=None):
-        """Evaluate the spectral CNN model."""
-        if not self.is_trained:
+        """Evaluate the spectral CNN model."""        if not self.is_trained:
             logger.warning("Model is not trained yet")
             return {}
         
@@ -8276,14 +7839,12 @@ class SpectralConvNet(BaseNeuralNetwork):
 
 
 class TemporalAudioNet(BaseNeuralNetwork):
-    """
-    Temporal Audio Neural Network for sequence modeling.
+    """    Temporal Audio Neural Network for sequence modeling.
     
     Specialized architecture for processing temporal audio sequences
     using RNNs, LSTMs, and attention mechanisms for tasks like
     music sequence modeling and audio event detection.
-    """
-    
+    """    
     def __init__(self, config: Union[AudioConfig, Dict[str, Any]], name: str = None):
         if isinstance(config, dict):
             config = AudioConfig(**config)
@@ -8292,8 +7853,7 @@ class TemporalAudioNet(BaseNeuralNetwork):
         self.preprocessor = AudioPreprocessor(config)
         
     def build_model(self):
-        """Build the temporal audio neural network."""
-        if self.config.framework == "tensorflow":
+        """Build the temporal audio neural network."""        if self.config.framework == "tensorflow":
             return self._build_tensorflow_model()
         elif self.config.framework == "pytorch":
             return self._build_pytorch_model()
@@ -8301,8 +7861,7 @@ class TemporalAudioNet(BaseNeuralNetwork):
             raise ValueError(f"Unsupported framework: {self.config.framework}")
     
     def _build_tensorflow_model(self):
-        """Build TensorFlow temporal audio model."""
-        inputs = tf.keras.layers.Input(shape=self.config.input_shape)
+        """Build TensorFlow temporal audio model."""        inputs = tf.keras.layers.Input(shape=self.config.input_shape)
         
         # Bidirectional LSTM layers
         x = tf.keras.layers.Bidirectional(
@@ -8342,8 +7901,7 @@ class TemporalAudioNet(BaseNeuralNetwork):
         return model
     
     def _build_pytorch_model(self):
-        """Build PyTorch temporal audio model."""
-        class TemporalAudioModel(nn.Module):
+        """Build PyTorch temporal audio model."""        class TemporalAudioModel(nn.Module):
             def __init__(self, config):
                 super(TemporalAudioModel, self).__init__()
                 self.config = config
@@ -8402,8 +7960,7 @@ class TemporalAudioNet(BaseNeuralNetwork):
         return model
     
     def compile_model(self):
-        """Compile the temporal audio model."""
-        if self.config.framework == "tensorflow":
+        """Compile the temporal audio model."""        if self.config.framework == "tensorflow":
             optimizer = tf.keras.optimizers.Adam(learning_rate=self.config.learning_rate)
             self.model.compile(
                 optimizer=optimizer,
@@ -8418,8 +7975,7 @@ class TemporalAudioNet(BaseNeuralNetwork):
             self.loss_function = nn.CrossEntropyLoss()
     
     def train(self, train_data, validation_data=None, epochs=None, batch_size=None, callbacks=None):
-        """Train the temporal audio model."""
-        epochs = epochs or self.config.epochs
+        """Train the temporal audio model."""        epochs = epochs or self.config.epochs
         batch_size = batch_size or self.config.batch_size
         
         if self.config.framework == "tensorflow":
@@ -8428,8 +7984,7 @@ class TemporalAudioNet(BaseNeuralNetwork):
             return self._train_pytorch(train_data, validation_data, epochs, batch_size)
     
     def _train_tensorflow(self, train_data, validation_data, epochs, batch_size, callbacks):
-        """Train TensorFlow model."""
-        start_time = time.time()
+        """Train TensorFlow model."""        start_time = time.time()
         
         history = self.model.fit(
             train_data,
@@ -8447,8 +8002,7 @@ class TemporalAudioNet(BaseNeuralNetwork):
         return history.history
     
     def _train_pytorch(self, train_data, validation_data, epochs, batch_size):
-        """Train PyTorch model."""
-        self.model.train()
+        """Train PyTorch model."""        self.model.train()
         training_history = {'loss': [], 'accuracy': []}
         
         start_time = time.time()
@@ -8488,8 +8042,7 @@ class TemporalAudioNet(BaseNeuralNetwork):
         return training_history
     
     def predict(self, input_data, batch_size=None):
-        """Make predictions with the temporal audio model."""
-        if not self.is_trained:
+        """Make predictions with the temporal audio model."""        if not self.is_trained:
             logger.warning("Model is not trained yet")
             return None
         
@@ -8510,8 +8063,7 @@ class TemporalAudioNet(BaseNeuralNetwork):
         return predictions
     
     def evaluate(self, test_data, test_labels=None):
-        """Evaluate the temporal audio model."""
-        if not self.is_trained:
+        """Evaluate the temporal audio model."""        if not self.is_trained:
             logger.warning("Model is not trained yet")
             return {}
         
@@ -8546,13 +8098,11 @@ class TemporalAudioNet(BaseNeuralNetwork):
 
 
 class AudioDataset(Dataset):
-    """
-    PyTorch Dataset for audio data processing.
+    """    PyTorch Dataset for audio data processing.
     
     Handles loading, preprocessing, and augmentation of audio data
     for training and evaluation of audio neural networks.
-    """
-    
+    """    
     def __init__(
         self,
         audio_paths: List[str],
@@ -8612,8 +8162,7 @@ def create_spectral_cnn(
     sample_rate: int = 22050,
     n_mels: int = 128
 ) -> SpectralConvNet:
-    """Create a spectral CNN for audio classification."""
-    config = AudioConfig(
+    """Create a spectral CNN for audio classification."""    config = AudioConfig(
         input_shape=input_shape,
         output_shape=(num_classes,),
         sample_rate=sample_rate,
@@ -8630,8 +8179,7 @@ def create_temporal_audio_net(
     num_classes: int,
     sample_rate: int = 22050
 ) -> TemporalAudioNet:
-    """Create a temporal audio network for sequence modeling."""
-    config = AudioConfig(
+    """Create a temporal audio network for sequence modeling."""    config = AudioConfig(
         input_shape=(sequence_length, feature_dim),
         output_shape=(num_classes,),
         sample_rate=sample_rate,
@@ -8646,8 +8194,7 @@ def load_audio_dataset(
     config: AudioConfig,
     split_ratio: float = 0.8
 ) -> Tuple[AudioDataset, AudioDataset]:
-    """
-    Load and split audio dataset.
+    """    Load and split audio dataset.
     
     Args:
         data_dir: Directory containing audio files
@@ -8656,8 +8203,7 @@ def load_audio_dataset(
         
     Returns:
         Tuple[AudioDataset, AudioDataset]: Train and test datasets
-    """
-    from pathlib import Path
+    """    from pathlib import Path
     
     audio_files = []
     labels = []
@@ -8691,8 +8237,7 @@ def extract_audio_embeddings(
     audio_data: np.ndarray,
     layer_name: str = None
 ) -> np.ndarray:
-    """
-    Extract audio embeddings from a trained model.
+    """    Extract audio embeddings from a trained model.
     
     Args:
         model: Trained audio neural network
@@ -8701,8 +8246,7 @@ def extract_audio_embeddings(
         
     Returns:
         np.ndarray: Extracted embeddings
-    """
-    if not model.is_trained:
+    """    if not model.is_trained:
         raise ValueError("Model must be trained to extract embeddings")
     
     if model.config.framework == "tensorflow":
@@ -8752,15 +8296,12 @@ def extract_audio_embeddings(
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Advanced Audio Feature Extraction Module
+"""Advanced Audio Feature Extraction Module
 
 This module provides comprehensive audio signal processing and feature extraction
 capabilities for the Spotify AI Agent, including spectral, temporal, harmonic,
 and rhythmic feature analysis.
-"""
-
-import asyncio
+"""import asyncio
 import numpy as np
 import librosa
 import tensorflow as tf
@@ -8779,8 +8320,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioConfig:
-    """Configuration for audio processing"""
-    sample_rate: int = 22050
+    """Configuration for audio processing"""    sample_rate: int = 22050
     hop_length: int = 512
     n_fft: int = 2048
     n_mfcc: int = 13
@@ -8790,23 +8330,19 @@ class AudioConfig:
     
 
 class BaseAudioExtractor(ABC):
-    """Base class for audio feature extractors"""
-    
+    """Base class for audio feature extractors"""    
     def __init__(self, config: Optional[AudioConfig] = None):
         self.config = config or AudioConfig()
         
     @abstractmethod
     async def extract_features(self, audio: np.ndarray) -> Dict[str, Any]:
-        """Extract features from audio signal"""
-        pass
+        """Extract features from audio signal"""        pass
 
 
 class SpectralFeatureExtractor(BaseAudioExtractor):
-    """Advanced spectral feature extraction"""
-    
+    """Advanced spectral feature extraction"""    
     async def extract_features(self, audio: np.ndarray) -> Dict[str, Any]:
-        """Extract comprehensive spectral features"""
-        features = {}
+        """Extract comprehensive spectral features"""        features = {}
         
         # Compute spectral features
         features.update(await self._extract_mfcc_features(audio))
@@ -8817,8 +8353,7 @@ class SpectralFeatureExtractor(BaseAudioExtractor):
         return features
     
     async def _extract_mfcc_features(self, audio: np.ndarray) -> Dict[str, float]:
-        """Extract MFCC features and derivatives"""
-        mfccs = librosa.feature.mfcc(
+        """Extract MFCC features and derivatives"""        mfccs = librosa.feature.mfcc(
             y=audio, 
             sr=self.config.sample_rate,
             n_mfcc=self.config.n_mfcc,
@@ -8849,8 +8384,7 @@ class SpectralFeatureExtractor(BaseAudioExtractor):
         return features
     
     async def _extract_spectral_statistics(self, audio: np.ndarray) -> Dict[str, float]:
-        """Extract spectral statistical features"""
-        # Spectral centroid
+        """Extract spectral statistical features"""        # Spectral centroid
         spectral_centroids = librosa.feature.spectral_centroid(
             y=audio, sr=self.config.sample_rate
         )[0]
@@ -8885,8 +8419,7 @@ class SpectralFeatureExtractor(BaseAudioExtractor):
         }
     
     async def _extract_mel_spectrogram_features(self, audio: np.ndarray) -> Dict[str, float]:
-        """Extract mel-spectrogram based features"""
-        mel_spec = librosa.feature.melspectrogram(
+        """Extract mel-spectrogram based features"""        mel_spec = librosa.feature.melspectrogram(
             y=audio,
             sr=self.config.sample_rate,
             n_mels=self.config.n_mel,
@@ -8912,8 +8445,7 @@ class SpectralFeatureExtractor(BaseAudioExtractor):
         return features
     
     async def _extract_spectral_contrast(self, audio: np.ndarray) -> Dict[str, float]:
-        """Extract spectral contrast features"""
-        spectral_contrast = librosa.feature.spectral_contrast(
+        """Extract spectral contrast features"""        spectral_contrast = librosa.feature.spectral_contrast(
             y=audio, sr=self.config.sample_rate
         )
         
@@ -8926,11 +8458,9 @@ class SpectralFeatureExtractor(BaseAudioExtractor):
 
 
 class RhythmFeatureExtractor(BaseAudioExtractor):
-    """Advanced rhythm and tempo feature extraction"""
-    
+    """Advanced rhythm and tempo feature extraction"""    
     async def extract_features(self, audio: np.ndarray) -> Dict[str, Any]:
-        """Extract comprehensive rhythm features"""
-        features = {}
+        """Extract comprehensive rhythm features"""        features = {}
         
         features.update(await self._extract_tempo_features(audio))
         features.update(await self._extract_onset_features(audio))
@@ -8940,8 +8470,7 @@ class RhythmFeatureExtractor(BaseAudioExtractor):
         return features
     
     async def _extract_tempo_features(self, audio: np.ndarray) -> Dict[str, float]:
-        """Extract tempo-related features"""
-        # Estimate tempo
+        """Extract tempo-related features"""        # Estimate tempo
         onset_envelope = librosa.onset.onset_strength(y=audio, sr=self.config.sample_rate)
         tempo, beats = librosa.beat.beat_track(
             onset_envelope=onset_envelope,
@@ -8963,8 +8492,7 @@ class RhythmFeatureExtractor(BaseAudioExtractor):
         }
     
     async def _extract_onset_features(self, audio: np.ndarray) -> Dict[str, float]:
-        """Extract onset detection features"""
-        onset_frames = librosa.onset.onset_detect(
+        """Extract onset detection features"""        onset_frames = librosa.onset.onset_detect(
             y=audio,
             sr=self.config.sample_rate,
             hop_length=self.config.hop_length
@@ -8995,8 +8523,7 @@ class RhythmFeatureExtractor(BaseAudioExtractor):
             }
     
     async def _extract_beat_features(self, audio: np.ndarray) -> Dict[str, float]:
-        """Extract beat-related features"""
-        # Beat tracking
+        """Extract beat-related features"""        # Beat tracking
         _, beats = librosa.beat.beat_track(y=audio, sr=self.config.sample_rate)
         
         if len(beats) > 2:
@@ -9016,8 +8543,7 @@ class RhythmFeatureExtractor(BaseAudioExtractor):
             }
     
     async def _extract_rhythm_patterns(self, audio: np.ndarray) -> Dict[str, float]:
-        """Extract rhythmic pattern features"""
-        # Tempogram for rhythm analysis
+        """Extract rhythmic pattern features"""        # Tempogram for rhythm analysis
         hop_length = self.config.hop_length
         oenv = librosa.onset.onset_strength(y=audio, sr=self.config.sample_rate)
         tempogram = librosa.feature.tempogram(
@@ -9039,11 +8565,9 @@ class RhythmFeatureExtractor(BaseAudioExtractor):
 
 
 class HarmonicFeatureExtractor(BaseAudioExtractor):
-    """Advanced harmonic and tonal feature extraction"""
-    
+    """Advanced harmonic and tonal feature extraction"""    
     async def extract_features(self, audio: np.ndarray) -> Dict[str, Any]:
-        """Extract comprehensive harmonic features"""
-        features = {}
+        """Extract comprehensive harmonic features"""        features = {}
         
         features.update(await self._extract_chroma_features(audio))
         features.update(await self._extract_tonnetz_features(audio))
@@ -9053,8 +8577,7 @@ class HarmonicFeatureExtractor(BaseAudioExtractor):
         return features
     
     async def _extract_chroma_features(self, audio: np.ndarray) -> Dict[str, float]:
-        """Extract chromagram features"""
-        chroma = librosa.feature.chroma_stft(
+        """Extract chromagram features"""        chroma = librosa.feature.chroma_stft(
             y=audio,
             sr=self.config.sample_rate,
             n_chroma=self.config.n_chroma
@@ -9078,8 +8601,7 @@ class HarmonicFeatureExtractor(BaseAudioExtractor):
         return features
     
     async def _extract_tonnetz_features(self, audio: np.ndarray) -> Dict[str, float]:
-        """Extract tonnetz (tonal centroid) features"""
-        tonnetz = librosa.feature.tonnetz(y=audio, sr=self.config.sample_rate)
+        """Extract tonnetz (tonal centroid) features"""        tonnetz = librosa.feature.tonnetz(y=audio, sr=self.config.sample_rate)
         
         features = {}
         for i in range(tonnetz.shape[0]):
@@ -9093,8 +8615,7 @@ class HarmonicFeatureExtractor(BaseAudioExtractor):
         return features
     
     async def _extract_harmonic_percussive(self, audio: np.ndarray) -> Dict[str, float]:
-        """Extract harmonic vs percussive content features"""
-        # Harmonic-percussive separation
+        """Extract harmonic vs percussive content features"""        # Harmonic-percussive separation
         harmonic, percussive = librosa.effects.hpss(audio)
         
         # Energy ratio
@@ -9117,8 +8638,7 @@ class HarmonicFeatureExtractor(BaseAudioExtractor):
         }
     
     async def _extract_pitch_features(self, audio: np.ndarray) -> Dict[str, float]:
-        """Extract pitch-related features"""
-        # Pitch tracking using fundamental frequency estimation
+        """Extract pitch-related features"""        # Pitch tracking using fundamental frequency estimation
         f0, _, _ = librosa.pyin(
             audio,
             fmin=librosa.note_to_hz('C2'),
@@ -9148,11 +8668,9 @@ class HarmonicFeatureExtractor(BaseAudioExtractor):
 
 
 class TemporalFeatureExtractor(BaseAudioExtractor):
-    """Advanced temporal feature extraction"""
-    
+    """Advanced temporal feature extraction"""    
     async def extract_features(self, audio: np.ndarray) -> Dict[str, Any]:
-        """Extract comprehensive temporal features"""
-        features = {}
+        """Extract comprehensive temporal features"""        features = {}
         
         features.update(await self._extract_energy_features(audio))
         features.update(await self._extract_dynamic_features(audio))
@@ -9162,8 +8680,7 @@ class TemporalFeatureExtractor(BaseAudioExtractor):
         return features
     
     async def _extract_energy_features(self, audio: np.ndarray) -> Dict[str, float]:
-        """Extract energy-based temporal features"""
-        # RMS energy
+        """Extract energy-based temporal features"""        # RMS energy
         rms = librosa.feature.rms(y=audio, hop_length=self.config.hop_length)[0]
         
         # Short-time energy
@@ -9183,8 +8700,7 @@ class TemporalFeatureExtractor(BaseAudioExtractor):
         }
     
     async def _extract_dynamic_features(self, audio: np.ndarray) -> Dict[str, float]:
-        """Extract dynamic range and loudness features"""
-        # Peak-to-average ratio
+        """Extract dynamic range and loudness features"""        # Peak-to-average ratio
         peak_amplitude = np.max(np.abs(audio))
         avg_amplitude = np.mean(np.abs(audio))
         
@@ -9208,8 +8724,7 @@ class TemporalFeatureExtractor(BaseAudioExtractor):
         }
     
     async def _extract_texture_features(self, audio: np.ndarray) -> Dict[str, float]:
-        """Extract audio texture features"""
-        # Spectral rolloff variation over time
+        """Extract audio texture features"""        # Spectral rolloff variation over time
         rolloff = librosa.feature.spectral_rolloff(y=audio, sr=self.config.sample_rate)[0]
         
         # Spectral flux (measure of spectral change)
@@ -9225,8 +8740,7 @@ class TemporalFeatureExtractor(BaseAudioExtractor):
         }
     
     async def _extract_envelope_features(self, audio: np.ndarray) -> Dict[str, float]:
-        """Extract envelope-based features"""
-        # Amplitude envelope
+        """Extract envelope-based features"""        # Amplitude envelope
         envelope = np.abs(signal.hilbert(audio))
         
         # Attack time (simplified)
@@ -9250,8 +8764,7 @@ class TemporalFeatureExtractor(BaseAudioExtractor):
 
 
 class AudioFeatureExtractor:
-    """Main audio feature extractor orchestrating all sub-extractors"""
-    
+    """Main audio feature extractor orchestrating all sub-extractors"""    
     def __init__(self, config: Optional[AudioConfig] = None):
         self.config = config or AudioConfig()
         
@@ -9264,8 +8777,7 @@ class AudioFeatureExtractor:
         logger.info("AudioFeatureExtractor initialized with comprehensive extractors")
     
     async def extract_from_file(self, file_path: str) -> Dict[str, float]:
-        """Extract features from audio file"""
-        try:
+        """Extract features from audio file"""        try:
             # Load audio with librosa
             audio, sr = librosa.load(
                 file_path,
@@ -9280,8 +8792,7 @@ class AudioFeatureExtractor:
             raise
     
     async def extract_from_bytes(self, audio_data: bytes) -> Dict[str, float]:
-        """Extract features from audio bytes"""
-        try:
+        """Extract features from audio bytes"""        try:
             # Convert bytes to numpy array (implementation depends on format)
             # This is a placeholder - actual implementation would depend on audio format
             import io
@@ -9300,8 +8811,7 @@ class AudioFeatureExtractor:
             raise
     
     async def extract_from_array(self, audio: np.ndarray) -> Dict[str, float]:
-        """Extract comprehensive features from audio array"""
-        try:
+        """Extract comprehensive features from audio array"""        try:
             # Normalize audio
             if np.max(np.abs(audio)) > 0:
                 audio = audio / np.max(np.abs(audio))
@@ -9337,8 +8847,7 @@ class AudioFeatureExtractor:
             raise
     
     async def extract_batch(self, audio_files: List[str]) -> List[Dict[str, float]]:
-        """Extract features from multiple audio files"""
-        tasks = [self.extract_from_file(file_path) for file_path in audio_files]
+        """Extract features from multiple audio files"""        tasks = [self.extract_from_file(file_path) for file_path in audio_files]
         results = await asyncio.gather(*tasks, return_exceptions=True)
         
         features_list = []
@@ -9368,14 +8877,11 @@ __all__ = [
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Audio Analysis Engine
+"""Audio Analysis Engine
 ====================
 
 Moteur d'analyse audio avancé avec détection de caractéristiques musicales.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Any
@@ -9391,23 +8897,19 @@ import seaborn as sns
 logger = logging.getLogger(__name__)
 
 class AudioAnalyzer:
-    """
-    Analyseur audio principal avec extraction de caractéristiques avancées.
-    """
-    
+    """    Analyseur audio principal avec extraction de caractéristiques avancées.
+    """    
     def __init__(self, sample_rate: int = 22050, hop_length: int = 512):
         self.sample_rate = sample_rate
         self.hop_length = hop_length
         self.frame_length = hop_length * 4
         
     async def analyze_file(self, file_path: str) -> Dict[str, Any]:
-        """
-        Analyse complète d'un fichier audio.
+        """        Analyse complète d'un fichier audio.
         
         Returns:
             Dict avec toutes les caractéristiques extraites
-        """
-        try:
+        """        try:
             # Chargement audio
             y, sr = librosa.load(file_path, sr=self.sample_rate)
             
@@ -9442,8 +8944,7 @@ class AudioAnalyzer:
             return {'error': str(e)}
     
     async def _extract_basic_features(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extraction des caractéristiques de base."""
-        features = {}
+        """Extraction des caractéristiques de base."""        features = {}
         
         # Caractéristiques temporelles
         features['rms_energy'] = float(np.sqrt(np.mean(y**2)))
@@ -9462,8 +8963,7 @@ class AudioAnalyzer:
         return features
     
     async def _extract_spectral_features(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extraction des caractéristiques spectrales."""
-        features = {}
+        """Extraction des caractéristiques spectrales."""        features = {}
         
         # STFT
         stft = librosa.stft(y, hop_length=self.hop_length)
@@ -9497,8 +8997,7 @@ class AudioAnalyzer:
         return features
     
     async def _extract_rhythmic_features(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extraction des caractéristiques rythmiques."""
-        features = {}
+        """Extraction des caractéristiques rythmiques."""        features = {}
         
         # Détection de tempo
         tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
@@ -9525,8 +9024,7 @@ class AudioAnalyzer:
         return features
     
     async def _extract_harmonic_features(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extraction des caractéristiques harmoniques."""
-        features = {}
+        """Extraction des caractéristiques harmoniques."""        features = {}
         
         # Séparation harmonique/percussive
         y_harmonic, y_percussive = librosa.effects.hpss(y)
@@ -9555,8 +9053,7 @@ class AudioAnalyzer:
         return features
     
     async def _extract_timbral_features(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extraction des caractéristiques timbrales."""
-        features = {}
+        """Extraction des caractéristiques timbrales."""        features = {}
         
         # MFCC
         mfccs = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)
@@ -9578,17 +9075,14 @@ class AudioAnalyzer:
         return features
 
 class SpectralAnalyzer:
-    """
-    Analyseur spectral spécialisé avec visualisations.
-    """
-    
+    """    Analyseur spectral spécialisé avec visualisations.
+    """    
     def __init__(self, n_fft: int = 2048, hop_length: int = 512):
         self.n_fft = n_fft
         self.hop_length = hop_length
     
     async def create_spectral_analysis(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Crée une analyse spectrale complète avec visualisations."""
-        
+        """Crée une analyse spectrale complète avec visualisations."""        
         # Calcul du spectrogramme
         stft = librosa.stft(y, n_fft=self.n_fft, hop_length=self.hop_length)
         magnitude = np.abs(stft)
@@ -9624,8 +9118,7 @@ class SpectralAnalyzer:
         }
     
     async def _analyze_spectral_peaks(self, magnitude: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Analyse les pics spectraux principaux."""
-        
+        """Analyse les pics spectraux principaux."""        
         # Moyennage temporel pour identifier les pics fréquentiels dominants
         avg_magnitude = np.mean(magnitude, axis=1)
         
@@ -9653,8 +9146,7 @@ class SpectralAnalyzer:
         }
     
     async def _calculate_spectral_stability(self, magnitude: np.ndarray) -> Dict[str, Any]:
-        """Calcule la stabilité spectrale dans le temps."""
-        
+        """Calcule la stabilité spectrale dans le temps."""        
         # Variance temporelle pour chaque bin fréquentiel
         temporal_variance = np.var(magnitude, axis=1)
         
@@ -9677,17 +9169,14 @@ class SpectralAnalyzer:
         return stability_metrics
 
 class MoodAnalyzer:
-    """
-    Analyseur de mood/émotion musical basé sur les caractéristiques audio.
-    """
-    
+    """    Analyseur de mood/émotion musical basé sur les caractéristiques audio.
+    """    
     def __init__(self):
         self.mood_dimensions = ['valence', 'arousal', 'dominance']
         self.feature_weights = self._initialize_feature_weights()
     
     def _initialize_feature_weights(self) -> Dict[str, Dict[str, float]]:
-        """Initialise les poids des caractéristiques pour chaque dimension."""
-        return {
+        """Initialise les poids des caractéristiques pour chaque dimension."""        return {
             'valence': {  # Positif/Négatif
                 'spectral_centroid_mean': 0.3,
                 'chroma_energy': 0.25,
@@ -9710,16 +9199,14 @@ class MoodAnalyzer:
         }
     
     async def analyze_mood(self, audio_features: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Analyse le mood basé sur les caractéristiques audio.
+        """        Analyse le mood basé sur les caractéristiques audio.
         
         Args:
             audio_features: Caractéristiques extraites par AudioAnalyzer
             
         Returns:
             Dict avec scores de mood et classification
-        """
-        mood_scores = {}
+        """        mood_scores = {}
         
         # Calcul des scores pour chaque dimension
         for dimension, weights in self.feature_weights.items():
@@ -9751,8 +9238,7 @@ class MoodAnalyzer:
         }
     
     def _normalize_feature_value(self, feature_name: str, value: float) -> float:
-        """Normalise une valeur de caractéristique entre 0 et 1."""
-        
+        """Normalise une valeur de caractéristique entre 0 et 1."""        
         # Ranges approximatifs pour différentes caractéristiques
         feature_ranges = {
             'tempo': (60, 200),
@@ -9777,8 +9263,7 @@ class MoodAnalyzer:
             return max(0, min(1, value))
     
     def _classify_mood(self, mood_scores: Dict[str, float]) -> str:
-        """Classifie le mood basé sur les scores dimensionnels."""
-        
+        """Classifie le mood basé sur les scores dimensionnels."""        
         valence = mood_scores.get('valence', 0.5)
         arousal = mood_scores.get('arousal', 0.5)
         dominance = mood_scores.get('dominance', 0.5)
@@ -9796,8 +9281,7 @@ class MoodAnalyzer:
             return 'neutral'
     
     def _calculate_confidence(self, mood_scores: Dict[str, float], audio_features: Dict[str, Any]) -> float:
-        """Calcule la confiance dans la classification."""
-        
+        """Calcule la confiance dans la classification."""        
         # Facteurs de confiance
         factors = []
         
@@ -9821,8 +9305,7 @@ class MoodAnalyzer:
         return float(np.mean(factors))
     
     def _get_mood_description(self, mood_classification: str) -> str:
-        """Retourne une description textuelle du mood."""
-        descriptions = {
+        """Retourne une description textuelle du mood."""        descriptions = {
             'happy': 'Joyful and uplifting music with positive energy',
             'excited': 'High-energy music that creates excitement and enthusiasm',
             'peaceful': 'Calm and serene music promoting relaxation',
@@ -9836,8 +9319,7 @@ class MoodAnalyzer:
         return descriptions.get(mood_classification, 'Unclassified emotional content')
     
     def _suggest_genres(self, mood_scores: Dict[str, float]) -> List[str]:
-        """Suggère des genres musicaux basés sur le mood."""
-        
+        """Suggère des genres musicaux basés sur le mood."""        
         valence = mood_scores.get('valence', 0.5)
         arousal = mood_scores.get('arousal', 0.5)
         
@@ -9862,8 +9344,7 @@ class MoodAnalyzer:
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Enterprise Audio Processing Engine
+"""Enterprise Audio Processing Engine
 =================================
 
 Moteur de traitement audio industrialisé haute performance pour Spotify AI Agent.
@@ -9878,9 +9359,7 @@ Business Features:
 - Traitement par lot haute performance avec parallélisation
 - Métriques qualité et monitoring production
 - Support formats lossless et compression adaptative
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import tempfile
 import subprocess
@@ -9949,8 +9428,7 @@ class ProcessingMode(Enum):
 
 @dataclass
 class AudioSpecs:
-    """Spécifications audio."""
-    sample_rate: int
+    """Spécifications audio."""    sample_rate: int
     channels: int
     bit_depth: int
     duration: float
@@ -9959,8 +9437,7 @@ class AudioSpecs:
     
 @dataclass
 class ProcessingConfig:
-    """Configuration de traitement."""
-    target_format: AudioFormat
+    """Configuration de traitement."""    target_format: AudioFormat
     target_sample_rate: int = 44100
     target_channels: int = 2
     quality: QualityLevel = QualityLevel.HIGH
@@ -9970,10 +9447,8 @@ class ProcessingConfig:
 
 # === Processeur Audio Principal ===
 class AudioProcessor:
-    """
-    Processeur audio enterprise avec optimisations multi-threading.
-    """
-    
+    """    Processeur audio enterprise avec optimisations multi-threading.
+    """    
     def __init__(self, max_workers: int = 4, temp_dir: Optional[str] = None):
         self.max_workers = max_workers
         self.temp_dir = Path(temp_dir) if temp_dir else Path(tempfile.gettempdir()) / "audio_processing"
@@ -9998,8 +9473,7 @@ class AudioProcessor:
         config: ProcessingConfig,
         progress_callback: Optional[callable] = None
     ) -> Dict[str, Any]:
-        """
-        Traite un fichier audio selon la configuration.
+        """        Traite un fichier audio selon la configuration.
         
         Args:
             input_path: Chemin du fichier source
@@ -10009,8 +9483,7 @@ class AudioProcessor:
             
         Returns:
             Dict avec résultats et métadonnées
-        """
-        try:
+        """        try:
             # Vérification du cache
             cache_key = self._generate_cache_key(input_path, config)
             if cache_key in self._processing_cache:
@@ -10048,8 +9521,7 @@ class AudioProcessor:
             }
     
     async def _analyze_input_file(self, file_path: str) -> AudioSpecs:
-        """Analyse les spécifications du fichier d'entrée."""
-        loop = asyncio.get_event_loop()
+        """Analyse les spécifications du fichier d'entrée."""        loop = asyncio.get_event_loop()
         
         def _analyze():
             # Utilisation de librosa pour l'analyse
@@ -10080,8 +9552,7 @@ class AudioProcessor:
         input_specs: AudioSpecs,
         progress_callback: Optional[callable] = None
     ) -> Dict[str, Any]:
-        """Exécute le pipeline de traitement complet."""
-        
+        """Exécute le pipeline de traitement complet."""        
         loop = asyncio.get_event_loop()
         
         def _process():
@@ -10158,8 +9629,7 @@ class AudioProcessor:
         return await loop.run_in_executor(self.executor, _process)
     
     def _apply_noise_reduction(self, y: np.ndarray, sr: int) -> np.ndarray:
-        """Applique une réduction de bruit basique."""
-        # Filtrage passe-haut pour supprimer les basses fréquences parasites
+        """Applique une réduction de bruit basique."""        # Filtrage passe-haut pour supprimer les basses fréquences parasites
         nyquist = sr / 2
         low_cutoff = 80 / nyquist  # 80 Hz
         b, a = butter(4, low_cutoff, btype='high')
@@ -10170,8 +9640,7 @@ class AudioProcessor:
             return np.array([filtfilt(b, a, channel) for channel in y])
     
     def _apply_equalization(self, y: np.ndarray, sr: int, eq_settings: Dict) -> np.ndarray:
-        """Applique une égalisation paramétrique."""
-        
+        """Applique une égalisation paramétrique."""        
         # EQ simple à 3 bandes (bass, mid, treble)
         bass_gain = eq_settings.get('bass', 0.0)
         mid_gain = eq_settings.get('mid', 0.0)
@@ -10209,8 +9678,7 @@ class AudioProcessor:
             return np.array([apply_eq_channel(channel) for channel in y])
     
     def _normalize_audio(self, y: np.ndarray, sr: int) -> np.ndarray:
-        """Normalise l'audio avec loudness standard."""
-        try:
+        """Normalise l'audio avec loudness standard."""        try:
             # Utilisation de pyloudnorm pour normalisation LUFS
             meter = pyln.Meter(sr)
             
@@ -10231,8 +9699,7 @@ class AudioProcessor:
             return y / np.max(np.abs(y)) * 0.95
     
     def _save_audio(self, y: np.ndarray, sr: int, output_path: str, config: ProcessingConfig):
-        """Sauvegarde l'audio dans le format spécifié."""
-        
+        """Sauvegarde l'audio dans le format spécifié."""        
         output_path = Path(output_path)
         
         if config.target_format == AudioFormat.WAV:
@@ -10284,8 +9751,7 @@ class AudioProcessor:
             temp_wav.unlink()
     
     def _generate_cache_key(self, input_path: str, config: ProcessingConfig) -> str:
-        """Génère une clé de cache pour la configuration."""
-        import hashlib
+        """Génère une clé de cache pour la configuration."""        import hashlib
         
         config_str = f"{input_path}_{config.target_format.value}_{config.target_sample_rate}_{config.target_channels}_{config.quality.value}_{config.normalize}_{config.noise_reduction}"
         return hashlib.md5(config_str.encode()).hexdigest()
@@ -10296,8 +9762,7 @@ class AudioProcessor:
         config: ProcessingConfig,
         progress_callback: Optional[callable] = None
     ) -> List[Dict[str, Any]]:
-        """Traite plusieurs fichiers en parallèle."""
-        
+        """Traite plusieurs fichiers en parallèle."""        
         results = []
         total_files = len(file_pairs)
         
@@ -10313,8 +9778,7 @@ class AudioProcessor:
         return results
     
     def get_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques de traitement."""
-        return {
+        """Retourne les statistiques de traitement."""        return {
             **self.stats,
             'avg_processing_time': self.stats['total_duration'] / max(self.stats['files_processed'], 1),
             'cache_hit_rate': self.stats['cache_hits'] / max(self.stats['files_processed'], 1),
@@ -10322,29 +9786,24 @@ class AudioProcessor:
         }
     
     def clear_cache(self):
-        """Vide le cache de traitement."""
-        self._processing_cache.clear()
+        """Vide le cache de traitement."""        self._processing_cache.clear()
     
     def cleanup(self):
-        """Nettoie les ressources."""
-        self.executor.shutdown(wait=True)
+        """Nettoie les ressources."""        self.executor.shutdown(wait=True)
         # Nettoyage des fichiers temporaires
         for temp_file in self.temp_dir.glob("temp_*"):
             temp_file.unlink()
 
 # === Convertisseur Audio Spécialisé ===
 class AudioConverter:
-    """
-    Convertisseur audio optimisé pour les conversions de format rapides.
-    """
-    
+    """    Convertisseur audio optimisé pour les conversions de format rapides.
+    """    
     def __init__(self):
         self.supported_formats = [f.value for f in AudioFormat]
         self.conversion_matrix = self._build_conversion_matrix()
     
     def _build_conversion_matrix(self) -> Dict[str, Dict[str, str]]:
-        """Construit la matrice de conversion optimale."""
-        # Définit la meilleure méthode de conversion pour chaque paire de formats
+        """Construit la matrice de conversion optimale."""        # Définit la meilleure méthode de conversion pour chaque paire de formats
         return {
             'mp3': {
                 'wav': 'direct',
@@ -10373,13 +9832,11 @@ class AudioConverter:
         target_format: AudioFormat,
         quality: QualityLevel = QualityLevel.HIGH
     ) -> Dict[str, Any]:
-        """
-        Convertit un fichier audio vers le format cible.
+        """        Convertit un fichier audio vers le format cible.
         
         Returns:
             Dict avec résultats de conversion
-        """
-        try:
+        """        try:
             # Détection du format source
             source_format = self._detect_format(input_path)
             
@@ -10409,12 +9866,10 @@ class AudioConverter:
             }
     
     def _detect_format(self, file_path: str) -> str:
-        """Détecte le format d'un fichier audio."""
-        return Path(file_path).suffix.lower().lstrip('.')
+        """Détecte le format d'un fichier audio."""        return Path(file_path).suffix.lower().lstrip('.')
     
     def _get_conversion_method(self, source: str, target: str) -> str:
-        """Détermine la meilleure méthode de conversion."""
-        if source == target:
+        """Détermine la meilleure méthode de conversion."""        if source == target:
             return 'copy'
         
         return self.conversion_matrix.get(source, {}).get(target, 'transcode')
@@ -10428,8 +9883,7 @@ class AudioConverter:
         quality: QualityLevel,
         method: str
     ) -> Dict[str, Any]:
-        """Exécute la conversion selon la méthode choisie."""
-        
+        """Exécute la conversion selon la méthode choisie."""        
         loop = asyncio.get_event_loop()
         
         def _convert():
@@ -10469,8 +9923,7 @@ class AudioConverter:
         return await loop.run_in_executor(None, _convert)
     
     def get_conversion_time_estimate(self, file_size_mb: float, source_format: str, target_format: str) -> float:
-        """Estime le temps de conversion en secondes."""
-        
+        """Estime le temps de conversion en secondes."""        
         # Facteurs de temps par méthode (MB/seconde)
         speed_factors = {
             'copy': 100.0,
@@ -10487,10 +9940,8 @@ class AudioConverter:
 
 # === Normaliseur Audio Avancé ===
 class AudioNormalizer:
-    """
-    Normaliseur audio avec différentes méthodes et standards industriels.
-    """
-    
+    """    Normaliseur audio avec différentes méthodes et standards industriels.
+    """    
     def __init__(self):
         self.loudness_standards = {
             'spotify': -14.0,  # LUFS
@@ -10507,8 +9958,7 @@ class AudioNormalizer:
         standard: str = 'spotify',
         method: str = 'lufs'
     ) -> Dict[str, Any]:
-        """
-        Normalise l'audio selon un standard spécifique.
+        """        Normalise l'audio selon un standard spécifique.
         
         Args:
             input_path: Fichier source
@@ -10518,8 +9968,7 @@ class AudioNormalizer:
             
         Returns:
             Dict avec résultats de normalisation
-        """
-        try:
+        """        try:
             loop = asyncio.get_event_loop()
             
             def _normalize():
@@ -10557,8 +10006,7 @@ class AudioNormalizer:
             }
     
     def _normalize_lufs(self, y: np.ndarray, sr: int, standard: str) -> Tuple[np.ndarray, int, Dict]:
-        """Normalisation basée sur LUFS."""
-        target_lufs = self.loudness_standards[standard]
+        """Normalisation basée sur LUFS."""        target_lufs = self.loudness_standards[standard]
         
         # Mesure loudness actuelle
         meter = pyln.Meter(sr)
@@ -10579,8 +10027,7 @@ class AudioNormalizer:
         return y_normalized, sr, stats
     
     def _normalize_peak(self, y: np.ndarray, sr: int, target_peak: float = 0.95) -> Tuple[np.ndarray, int, Dict]:
-        """Normalisation par peak."""
-        current_peak = np.max(np.abs(y))
+        """Normalisation par peak."""        current_peak = np.max(np.abs(y))
         gain = target_peak / current_peak
         
         y_normalized = y * gain
@@ -10595,8 +10042,7 @@ class AudioNormalizer:
         return y_normalized, sr, stats
     
     def _normalize_rms(self, y: np.ndarray, sr: int, target_rms: float = 0.2) -> Tuple[np.ndarray, int, Dict]:
-        """Normalisation par RMS."""
-        current_rms = np.sqrt(np.mean(y**2))
+        """Normalisation par RMS."""        current_rms = np.sqrt(np.mean(y**2))
         gain = target_rms / current_rms
         
         y_normalized = y * gain
@@ -10611,8 +10057,7 @@ class AudioNormalizer:
         return y_normalized, sr, stats
     
     async def analyze_dynamics(self, file_path: str) -> Dict[str, Any]:
-        """Analyse les dynamiques d'un fichier audio."""
-        
+        """Analyse les dynamiques d'un fichier audio."""        
         loop = asyncio.get_event_loop()
         
         def _analyze():
@@ -10653,8 +10098,7 @@ class AudioNormalizer:
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Spotify AI Agent - Audio Processing Engine
+"""Spotify AI Agent - Audio Processing Engine
 ==========================================
 Enterprise-grade audio processing, analysis, and classification suite for production streaming platforms.
 
@@ -10686,9 +10130,7 @@ Business Capabilities:
 ✓ Forensic validation and security threat detection
 ✓ Batch processing: 50-200 files/minute throughput
 ✓ Enterprise monitoring and alerting system
-"""
-
-import os
+"""import os
 import sys
 import logging
 from typing import Dict, List, Optional, Union, Any
@@ -10721,8 +10163,7 @@ __status__ = "Production"
 
 # Global configuration constants
 class AudioConfig:
-    """Enterprise audio processing configuration."""
-    
+    """Enterprise audio processing configuration."""    
     # Audio format settings
     DEFAULT_SAMPLE_RATE = 44100
     DEFAULT_BIT_DEPTH = 16
@@ -10753,8 +10194,7 @@ class AudioConfig:
 
 # Enterprise factory functions
 def create_production_pipeline() -> Dict[str, Any]:
-    """
-    Create enterprise-grade audio processing pipeline for production streaming platform.
+    """    Create enterprise-grade audio processing pipeline for production streaming platform.
     
     Returns:
         Dict: Complete audio processing pipeline with all enterprise components
@@ -10765,8 +10205,7 @@ def create_production_pipeline() -> Dict[str, Any]:
         - Professional effects processing
         - Forensic validation
         - Performance monitoring
-    """
-    try:
+    """    try:
         pipeline = {
             'analyzer': AudioAnalyzer(
                 sample_rate=AudioConfig.DEFAULT_SAMPLE_RATE,
@@ -10809,8 +10248,7 @@ def create_production_pipeline() -> Dict[str, Any]:
         }
 
 def create_streaming_optimizer() -> Dict[str, Any]:
-    """
-    Create optimized pipeline for streaming platform audio processing.
+    """    Create optimized pipeline for streaming platform audio processing.
     
     Returns:
         Dict: Streaming-optimized audio processor
@@ -10820,8 +10258,7 @@ def create_streaming_optimizer() -> Dict[str, Any]:
         - Real-time processing < 50ms
         - Quality preservation > 95%
         - Automatic format conversion
-    """
-    return {
+    """    return {
         'target_lufs': AudioConfig.TARGET_LUFS,
         'max_latency_ms': 50,
         'quality_preservation': AudioConfig.DYNAMIC_RANGE_PRESERVATION,
@@ -10830,8 +10267,7 @@ def create_streaming_optimizer() -> Dict[str, Any]:
     }
 
 def create_ml_classifier() -> Dict[str, Any]:
-    """
-    Create ML/AI audio classification engine.
+    """    Create ML/AI audio classification engine.
     
     Returns:
         Dict: ML classification engine with pre-trained models
@@ -10841,8 +10277,7 @@ def create_ml_classifier() -> Dict[str, Any]:
         - Mood detection (83% accuracy) 
         - Instrument recognition (89% accuracy)
         - Semantic analysis for recommendations
-    """
-    return {
+    """    return {
         'genre_accuracy': AudioConfig.GENRE_MODEL_ACCURACY,
         'mood_accuracy': AudioConfig.MOOD_MODEL_ACCURACY,
         'instrument_accuracy': AudioConfig.INSTRUMENT_MODEL_ACCURACY,
@@ -10853,8 +10288,7 @@ def create_ml_classifier() -> Dict[str, Any]:
     }
 
 def create_security_validator() -> Dict[str, Any]:
-    """
-    Create enterprise security and validation engine.
+    """    Create enterprise security and validation engine.
     
     Returns:
         Dict: Security validation engine
@@ -10864,8 +10298,7 @@ def create_security_validator() -> Dict[str, Any]:
         - Malware detection in audio files
         - Integrity validation
         - Compliance checking
-    """
-    return {
+    """    return {
         'forensic_validation': AudioConfig.FORENSIC_VALIDATION,
         'max_file_size_mb': AudioConfig.MAX_FILE_SIZE_MB,
         'allowed_extensions': AudioConfig.ALLOWED_EXTENSIONS,
@@ -10875,8 +10308,7 @@ def create_security_validator() -> Dict[str, Any]:
 
 # Utility functions
 def _is_module_available(module_name: str) -> bool:
-    """Check if a specific audio module is available."""
-    try:
+    """Check if a specific audio module is available."""    try:
         current_dir = Path(__file__).parent
         module_path = current_dir / f"{module_name}.py"
         return module_path.exists()
@@ -10884,8 +10316,7 @@ def _is_module_available(module_name: str) -> bool:
         return False
 
 def get_system_info() -> Dict[str, Any]:
-    """Get audio system capabilities and configuration."""
-    return {
+    """Get audio system capabilities and configuration."""    return {
         'version': __version__,
         'python_version': sys.version,
         'platform': sys.platform,
@@ -10910,8 +10341,7 @@ def get_system_info() -> Dict[str, Any]:
     }
 
 def validate_installation() -> Dict[str, Any]:
-    """Validate audio engine installation and dependencies."""
-    validation_result = {
+    """Validate audio engine installation and dependencies."""    validation_result = {
         'status': 'SUCCESS',
         'issues': [],
         'recommendations': []
@@ -11097,21 +10527,17 @@ SUPPORTED_FORMATS = ['wav', 'mp3', 'flac', 'aac', 'm4a', 'ogg']
 
 # === Utilitaires de convenance ===
 def get_version():
-    """Retourne la version du package audio."""
-    return __version__
+    """Retourne la version du package audio."""    return __version__
 
 def get_supported_formats():
-    """Retourne la liste des formats audio supportés."""
-    return SUPPORTED_FORMATS.copy()
+    """Retourne la liste des formats audio supportés."""    return SUPPORTED_FORMATS.copy()
 
 def create_full_pipeline():
-    """
-    Crée un pipeline audio complet avec tous les composants.
+    """    Crée un pipeline audio complet avec tous les composants.
     
     Returns:
         Dict avec tous les composants initialisés
-    """
-    return {
+    """    return {
         'analyzer': create_analyzer(),
         'processor': create_processor(),
         'extractor': create_extractor(),
@@ -11129,15 +10555,12 @@ def create_full_pipeline():
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Audio Feature Extractor - Enterprise Edition
+"""Audio Feature Extractor - Enterprise Edition
 ==========================================
 
 Extracteur de caractéristiques audio haute performance pour Spotify AI Agent.
 Analyse spectrale avancée, métriques temporelles, et descripteurs sémantiques.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import librosa
@@ -11162,8 +10585,7 @@ logger = logging.getLogger(__name__)
 # === Configuration de l'extraction ===
 @dataclass
 class ExtractionConfig:
-    """Configuration pour l'extraction de features."""
-    sample_rate: int = 22050
+    """Configuration pour l'extraction de features."""    sample_rate: int = 22050
     n_fft: int = 2048
     hop_length: int = 512
     n_mels: int = 128
@@ -11177,8 +10599,7 @@ class ExtractionConfig:
 
 @dataclass
 class AudioFeatures:
-    """Structure complète des caractéristiques audio."""
-    
+    """Structure complète des caractéristiques audio."""    
     # === Métadonnées ===
     file_path: Optional[str] = None
     duration: float = 0.0
@@ -11226,8 +10647,7 @@ class AudioFeatures:
     reduced_features: np.ndarray = None
     
     def __post_init__(self):
-        """Initialise les dictionnaires vides."""
-        if self.rms_energy is None:
+        """Initialise les dictionnaires vides."""        if self.rms_energy is None:
             self.rms_energy = {}
         if self.zero_crossing_rate is None:
             self.zero_crossing_rate = {}
@@ -11252,10 +10672,8 @@ class AudioFeatures:
 
 # === Extracteur principal ===
 class AudioFeatureExtractor:
-    """
-    Extracteur de caractéristiques audio industriel haute performance.
-    """
-    
+    """    Extracteur de caractéristiques audio industriel haute performance.
+    """    
     def __init__(self, config: ExtractionConfig = None):
         self.config = config or ExtractionConfig()
         self.executor = ThreadPoolExecutor(max_workers=4)
@@ -11270,8 +10688,7 @@ class AudioFeatureExtractor:
         audio_path: str,
         extract_all: bool = True
     ) -> AudioFeatures:
-        """
-        Extrait toutes les caractéristiques d'un fichier audio.
+        """        Extrait toutes les caractéristiques d'un fichier audio.
         
         Args:
             audio_path: Chemin vers le fichier audio
@@ -11279,8 +10696,7 @@ class AudioFeatureExtractor:
             
         Returns:
             AudioFeatures: Structure complète des caractéristiques
-        """
-        try:
+        """        try:
             # Chargement du fichier
             y, sr = librosa.load(
                 audio_path, 
@@ -11327,8 +10743,7 @@ class AudioFeatureExtractor:
             return AudioFeatures()
     
     async def _extract_temporal_features(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extrait les caractéristiques temporelles."""
-        loop = asyncio.get_event_loop()
+        """Extrait les caractéristiques temporelles."""        loop = asyncio.get_event_loop()
         
         def _compute_temporal():
             features = {}
@@ -11369,8 +10784,7 @@ class AudioFeatureExtractor:
         return await loop.run_in_executor(self.executor, _compute_temporal)
     
     async def _extract_spectral_features(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extrait les caractéristiques spectrales."""
-        loop = asyncio.get_event_loop()
+        """Extrait les caractéristiques spectrales."""        loop = asyncio.get_event_loop()
         
         def _compute_spectral():
             features = {}
@@ -11439,8 +10853,7 @@ class AudioFeatureExtractor:
         return await loop.run_in_executor(self.executor, _compute_spectral)
     
     async def _extract_harmonic_features(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extrait les caractéristiques harmoniques."""
-        loop = asyncio.get_event_loop()
+        """Extrait les caractéristiques harmoniques."""        loop = asyncio.get_event_loop()
         
         def _compute_harmonic():
             features = {}
@@ -11495,8 +10908,7 @@ class AudioFeatureExtractor:
         return await loop.run_in_executor(self.executor, _compute_harmonic)
     
     async def _extract_rhythm_features(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extrait les caractéristiques rythmiques."""
-        loop = asyncio.get_event_loop()
+        """Extrait les caractéristiques rythmiques."""        loop = asyncio.get_event_loop()
         
         def _compute_rhythm():
             features = {}
@@ -11524,8 +10936,7 @@ class AudioFeatureExtractor:
         return await loop.run_in_executor(self.executor, _compute_rhythm)
     
     async def _extract_perceptual_features(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extrait les caractéristiques perceptuelles."""
-        loop = asyncio.get_event_loop()
+        """Extrait les caractéristiques perceptuelles."""        loop = asyncio.get_event_loop()
         
         def _compute_perceptual():
             features = {}
@@ -11579,14 +10990,12 @@ class AudioFeatureExtractor:
         return await loop.run_in_executor(self.executor, _compute_perceptual)
     
     def _merge_features(self, main_features: AudioFeatures, new_features: Dict[str, Any]):
-        """Fusionne les nouvelles features dans la structure principale."""
-        for key, value in new_features.items():
+        """Fusionne les nouvelles features dans la structure principale."""        for key, value in new_features.items():
             if hasattr(main_features, key):
                 setattr(main_features, key, value)
     
     async def _create_feature_vector(self, features: AudioFeatures) -> np.ndarray:
-        """Crée un vecteur de features unifié."""
-        loop = asyncio.get_event_loop()
+        """Crée un vecteur de features unifié."""        loop = asyncio.get_event_loop()
         
         def _vectorize():
             vector_parts = []
@@ -11649,8 +11058,7 @@ class AudioFeatureExtractor:
         return await loop.run_in_executor(self.executor, _vectorize)
     
     async def _reduce_dimensionality(self, feature_vector: np.ndarray) -> np.ndarray:
-        """Réduit la dimensionalité du vecteur de features."""
-        if len(feature_vector) > 50:
+        """Réduit la dimensionalité du vecteur de features."""        if len(feature_vector) > 50:
             try:
                 # Normalisation
                 normalized = self.scaler.fit_transform(feature_vector.reshape(1, -1))
@@ -11669,8 +11077,7 @@ class AudioFeatureExtractor:
         audio_paths: List[str],
         output_format: str = 'dict'
     ) -> Union[List[AudioFeatures], pd.DataFrame, Dict[str, Any]]:
-        """
-        Extrait les features de plusieurs fichiers en parallèle.
+        """        Extrait les features de plusieurs fichiers en parallèle.
         
         Args:
             audio_paths: Liste des chemins de fichiers
@@ -11678,8 +11085,7 @@ class AudioFeatureExtractor:
             
         Returns:
             Résultats selon le format spécifié
-        """
-        # Limitation de la parallélisation
+        """        # Limitation de la parallélisation
         semaphore = asyncio.Semaphore(4)
         
         async def extract_single(path: str) -> AudioFeatures:
@@ -11707,8 +11113,7 @@ class AudioFeatureExtractor:
             return valid_results
     
     def _to_dataframe(self, features_list: List[AudioFeatures]) -> pd.DataFrame:
-        """Convertit les features en DataFrame pandas."""
-        data = []
+        """Convertit les features en DataFrame pandas."""        data = []
         for features in features_list:
             row = {}
             
@@ -11737,8 +11142,7 @@ class AudioFeatureExtractor:
         return pd.DataFrame(data)
     
     def _to_json(self, features_list: List[AudioFeatures]) -> Dict[str, Any]:
-        """Convertit les features en format JSON."""
-        result = {
+        """Convertit les features en format JSON."""        result = {
             'extraction_info': {
                 'timestamp': datetime.now().isoformat(),
                 'total_files': len(features_list),
@@ -11761,8 +11165,7 @@ class AudioFeatureExtractor:
         return result
     
     def cleanup(self):
-        """Nettoie les ressources."""
-        try:
+        """Nettoie les ressources."""        try:
             self.executor.shutdown(wait=True)
             self._feature_cache.clear()
         except Exception as e:
@@ -11770,10 +11173,8 @@ class AudioFeatureExtractor:
 
 # === Analyseur de similarité ===
 class AudioSimilarityAnalyzer:
-    """
-    Analyseur de similarité entre features audio.
-    """
-    
+    """    Analyseur de similarité entre features audio.
+    """    
     def __init__(self):
         self.distance_metrics = {
             'euclidean': self._euclidean_distance,
@@ -11788,8 +11189,7 @@ class AudioSimilarityAnalyzer:
         features2: AudioFeatures,
         metric: str = 'cosine'
     ) -> float:
-        """Calcule la similarité entre deux sets de features."""
-        
+        """Calcule la similarité entre deux sets de features."""        
         if metric not in self.distance_metrics:
             raise ValueError(f"Unknown metric: {metric}")
         
@@ -11803,26 +11203,22 @@ class AudioSimilarityAnalyzer:
         )
     
     def _euclidean_distance(self, v1: np.ndarray, v2: np.ndarray) -> float:
-        """Distance euclidienne (convertie en similarité)."""
-        distance = np.linalg.norm(v1 - v2)
+        """Distance euclidienne (convertie en similarité)."""        distance = np.linalg.norm(v1 - v2)
         return 1.0 / (1.0 + distance)
     
     def _cosine_similarity(self, v1: np.ndarray, v2: np.ndarray) -> float:
-        """Similarité cosinus."""
-        dot_product = np.dot(v1, v2)
+        """Similarité cosinus."""        dot_product = np.dot(v1, v2)
         norms = np.linalg.norm(v1) * np.linalg.norm(v2)
         if norms == 0:
             return 0.0
         return dot_product / norms
     
     def _manhattan_distance(self, v1: np.ndarray, v2: np.ndarray) -> float:
-        """Distance de Manhattan (convertie en similarité)."""
-        distance = np.sum(np.abs(v1 - v2))
+        """Distance de Manhattan (convertie en similarité)."""        distance = np.sum(np.abs(v1 - v2))
         return 1.0 / (1.0 + distance)
     
     def _correlation_distance(self, v1: np.ndarray, v2: np.ndarray) -> float:
-        """Corrélation de Pearson."""
-        if len(v1) < 2 or len(v2) < 2:
+        """Corrélation de Pearson."""        if len(v1) < 2 or len(v2) < 2:
             return 0.0
         
         correlation, _ = stats.pearsonr(v1, v2)
@@ -11833,8 +11229,7 @@ def create_extractor(
     sample_rate: int = 22050,
     extract_advanced: bool = True
 ) -> AudioFeatureExtractor:
-    """Factory pour créer un extracteur configuré."""
-    
+    """Factory pour créer un extracteur configuré."""    
     config = ExtractionConfig(
         sample_rate=sample_rate,
         tempo_analysis=extract_advanced,
@@ -11845,8 +11240,7 @@ def create_extractor(
     return AudioFeatureExtractor(config)
 
 def create_similarity_analyzer() -> AudioSimilarityAnalyzer:
-    """Factory pour créer un analyseur de similarité."""
-    return AudioSimilarityAnalyzer()
+    """Factory pour créer un analyseur de similarité."""    return AudioSimilarityAnalyzer()
 
 # ==========================================================================================
 # MODULE 23/99: media_formatter.py
@@ -11854,8 +11248,7 @@ def create_similarity_analyzer() -> AudioSimilarityAnalyzer:
 # LIGNES: 2
 # ==========================================================================================
 
-"""
-Spotify AI Agent - Media Content Formatters
+"""Spotify AI Agent - Media Content Formatters
 ==========================================
 
 Ultra-advanced media content formatting system for rich multimedia content,
@@ -11873,9 +11266,7 @@ This module handles sophisticated formatting for:
 
 Author: Fahed Mlaiel & Spotify AI Team
 Version: 2.1.0
-"""
-
-import asyncio
+"""import asyncio
 import json
 import base64
 import hashlib
@@ -11891,8 +11282,7 @@ logger = structlog.get_logger(__name__)
 
 
 class MediaType(Enum):
-    """Supported media types."""
-    AUDIO = "audio"
+    """Supported media types."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     INTERACTIVE = "interactive"
@@ -11900,8 +11290,7 @@ class MediaType(Enum):
 
 
 class AudioFormat(Enum):
-    """Supported audio formats."""
-    MP3 = "mp3"
+    """Supported audio formats."""    MP3 = "mp3"
     FLAC = "flac"
     WAV = "wav"
     OGG = "ogg"
@@ -11910,8 +11299,7 @@ class AudioFormat(Enum):
 
 
 class VideoFormat(Enum):
-    """Supported video formats."""
-    MP4 = "mp4"
+    """Supported video formats."""    MP4 = "mp4"
     WEBM = "webm"
     AVI = "avi"
     MOV = "mov"
@@ -11919,8 +11307,7 @@ class VideoFormat(Enum):
 
 
 class VisualizationType(Enum):
-    """Types of audio visualizations."""
-    WAVEFORM = "waveform"
+    """Types of audio visualizations."""    WAVEFORM = "waveform"
     SPECTROGRAM = "spectrogram"
     FREQUENCY_BARS = "frequency_bars"
     CIRCULAR_WAVE = "circular_wave"
@@ -11929,8 +11316,7 @@ class VisualizationType(Enum):
 
 
 class InteractiveType(Enum):
-    """Types of interactive content."""
-    PLAYLIST_BUILDER = "playlist_builder"
+    """Types of interactive content."""    PLAYLIST_BUILDER = "playlist_builder"
     MUSIC_MIXER = "music_mixer"
     AUDIO_EQUALIZER = "audio_equalizer"
     RECOMMENDATION_WHEEL = "recommendation_wheel"
@@ -11940,8 +11326,7 @@ class InteractiveType(Enum):
 
 @dataclass
 class MediaMetadata:
-    """Media content metadata."""
-    
+    """Media content metadata."""    
     title: str
     duration: Optional[float] = None  # seconds
     file_size: Optional[int] = None   # bytes
@@ -11954,8 +11339,7 @@ class MediaMetadata:
     tags: Dict[str, str] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization."""
-        return {
+        """Convert to dictionary for serialization."""        return {
             "title": self.title,
             "duration": self.duration,
             "file_size": self.file_size,
@@ -11971,8 +11355,7 @@ class MediaMetadata:
 
 @dataclass
 class FormattedMediaContent:
-    """Container for formatted media content."""
-    
+    """Container for formatted media content."""    
     content_id: str
     media_type: MediaType
     formatted_content: str
@@ -11982,8 +11365,7 @@ class FormattedMediaContent:
     styling: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization."""
-        return {
+        """Convert to dictionary for serialization."""        return {
             "content_id": self.content_id,
             "media_type": self.media_type.value,
             "formatted_content": self.formatted_content,
@@ -11995,8 +11377,7 @@ class FormattedMediaContent:
 
 
 class BaseMediaFormatter:
-    """Base class for media content formatters."""
-    
+    """Base class for media content formatters."""    
     def __init__(self, tenant_id: str, config: Optional[Dict[str, Any]] = None):
         self.tenant_id = tenant_id
         self.config = config or {}
@@ -12017,18 +11398,15 @@ class BaseMediaFormatter:
         })
     
     def generate_content_id(self, content: Union[str, bytes]) -> str:
-        """Generate unique content ID based on content hash."""
-        if isinstance(content, str):
+        """Generate unique content ID based on content hash."""        if isinstance(content, str):
             content = content.encode('utf-8')
         return hashlib.sha256(content).hexdigest()[:16]
     
     def validate_media_size(self, file_size: int) -> bool:
-        """Validate media file size."""
-        return file_size <= self.max_file_size
+        """Validate media file size."""        return file_size <= self.max_file_size
     
     async def process_media_content(self, content_data: Dict[str, Any]) -> FormattedMediaContent:
-        """Process media content with basic formatting and validation."""
-        start_time = time.time()
+        """Process media content with basic formatting and validation."""        start_time = time.time()
         self.logger.info("Processing media content", content_type=content_data.get('type', 'unknown'))
         
         try:
@@ -12088,8 +11466,7 @@ class BaseMediaFormatter:
             raise
     
     def _determine_media_type(self, content_data: Dict[str, Any]) -> MediaType:
-        """Determine media type from content data."""
-        content_type = content_data.get('type', '').lower()
+        """Determine media type from content data."""        content_type = content_data.get('type', '').lower()
         file_extension = content_data.get('file_extension', '').lower()
         mime_type = content_data.get('mime_type', '').lower()
         
@@ -12129,8 +11506,7 @@ class BaseMediaFormatter:
         return MediaType.MIXED
     
     def _extract_media_metadata(self, content_data: Dict[str, Any]) -> MediaMetadata:
-        """Extract metadata from content data."""
-        return MediaMetadata(
+        """Extract metadata from content data."""        return MediaMetadata(
             title=content_data.get('title', 'Untitled'),
             description=content_data.get('description', ''),
             duration=content_data.get('duration', 0),
@@ -12145,8 +11521,7 @@ class BaseMediaFormatter:
         )
     
     async def _format_content_by_type(self, content_data: Dict[str, Any], media_type: MediaType) -> str:
-        """Format content based on media type."""
-        if media_type == MediaType.AUDIO:
+        """Format content based on media type."""        if media_type == MediaType.AUDIO:
             return await self._format_audio_content(content_data)
         elif media_type == MediaType.VIDEO:
             return await self._format_video_content(content_data)
@@ -12158,9 +11533,7 @@ class BaseMediaFormatter:
             return await self._format_mixed_content(content_data)
     
     async def _format_audio_content(self, content_data: Dict[str, Any]) -> str:
-        """Format audio content."""
-        return f"""
-        <div class="audio-player">
+        """Format audio content."""        return f"""        <div class="audio-player">
             <h3>{content_data.get('title', 'Audio Content')}</h3>
             <div class="audio-controls">
                 <button class="play-btn">Play</button>
@@ -12172,12 +11545,9 @@ class BaseMediaFormatter:
                 <span>Quality: {content_data.get('quality', 'Standard')}</span>
             </div>
         </div>
-        """
-    
+        """    
     async def _format_video_content(self, content_data: Dict[str, Any]) -> str:
-        """Format video content."""
-        return f"""
-        <div class="video-player">
+        """Format video content."""        return f"""        <div class="video-player">
             <h3>{content_data.get('title', 'Video Content')}</h3>
             <div class="video-container">
                 <div class="video-placeholder">Video Player</div>
@@ -12192,12 +11562,9 @@ class BaseMediaFormatter:
                 <span>Resolution: {content_data.get('resolution', 'Standard')}</span>
             </div>
         </div>
-        """
-    
+        """    
     async def _format_image_content(self, content_data: Dict[str, Any]) -> str:
-        """Format image content."""
-        return f"""
-        <div class="image-viewer">
+        """Format image content."""        return f"""        <div class="image-viewer">
             <h3>{content_data.get('title', 'Image Content')}</h3>
             <div class="image-container">
                 <div class="image-placeholder">Image Display</div>
@@ -12212,12 +11579,9 @@ class BaseMediaFormatter:
                 <span>Size: {content_data.get('size', 0)} bytes</span>
             </div>
         </div>
-        """
-    
+        """    
     async def _format_text_content(self, content_data: Dict[str, Any]) -> str:
-        """Format text content."""
-        return f"""
-        <div class="text-content">
+        """Format text content."""        return f"""        <div class="text-content">
             <h3>{content_data.get('title', 'Text Content')}</h3>
             <div class="text-body">
                 {content_data.get('content', content_data.get('text', 'No content available'))}
@@ -12227,22 +11591,17 @@ class BaseMediaFormatter:
                 <span>Characters: {len(content_data.get('content', ''))}</span>
             </div>
         </div>
-        """
-    
+        """    
     async def _format_mixed_content(self, content_data: Dict[str, Any]) -> str:
-        """Format mixed content."""
-        return f"""
-        <div class="mixed-content">
+        """Format mixed content."""        return f"""        <div class="mixed-content">
             <h3>{content_data.get('title', 'Mixed Content')}</h3>
             <div class="content-body">
                 <pre>{json.dumps(content_data, indent=2, default=str)}</pre>
             </div>
         </div>
-        """
-    
+        """    
     def _generate_interactive_elements(self, content_data: Dict[str, Any], media_type: MediaType) -> List[str]:
-        """Generate interactive elements for the content."""
-        elements = []
+        """Generate interactive elements for the content."""        elements = []
         
         # Common elements
         elements.extend(['share', 'bookmark', 'like'])
@@ -12260,8 +11619,7 @@ class BaseMediaFormatter:
         return elements
     
     def _apply_media_styling(self, content_data: Dict[str, Any], media_type: MediaType) -> Dict[str, Any]:
-        """Apply styling based on media type and content."""
-        base_styling = {
+        """Apply styling based on media type and content."""        base_styling = {
             'theme': self.visualization_config.get('color_scheme', 'default'),
             'width': self.visualization_config.get('width', 800),
             'height': self.visualization_config.get('height', 400),
@@ -12291,8 +11649,7 @@ class BaseMediaFormatter:
         return base_styling
     
     def _extract_embedded_media(self, content_data: Dict[str, Any]) -> Dict[str, str]:
-        """Extract embedded media (thumbnails, previews, etc.)."""
-        embedded = {}
+        """Extract embedded media (thumbnails, previews, etc.)."""        embedded = {}
         
         if 'thumbnail' in content_data:
             embedded['thumbnail'] = content_data['thumbnail']
@@ -12305,11 +11662,9 @@ class BaseMediaFormatter:
 
 
 class AudioVisualizationFormatter(BaseMediaFormatter):
-    """Advanced audio visualization and formatting system."""
-    
+    """Advanced audio visualization and formatting system."""    
     async def process_media_content(self, content_data: Dict[str, Any]) -> FormattedMediaContent:
-        """Process audio content and generate visualizations."""
-        
+        """Process audio content and generate visualizations."""        
         audio_metadata = MediaMetadata(
             title=content_data.get('title', 'Unknown Track'),
             duration=content_data.get('duration'),
@@ -12364,8 +11719,7 @@ class AudioVisualizationFormatter(BaseMediaFormatter):
         )
     
     async def _generate_audio_visualizations(self, content_data: Dict[str, Any]) -> Dict[str, Dict[str, Any]]:
-        """Generate various audio visualizations."""
-        
+        """Generate various audio visualizations."""        
         visualizations = {}
         
         # Waveform visualization
@@ -12421,8 +11775,7 @@ class AudioVisualizationFormatter(BaseMediaFormatter):
         return visualizations
     
     async def _generate_waveform_svg(self, content_data: Dict[str, Any]) -> str:
-        """Generate SVG waveform visualization."""
-        
+        """Generate SVG waveform visualization."""        
         # Simulate audio analysis data
         duration = content_data.get('duration', 180)  # 3 minutes default
         sample_count = 1000
@@ -12458,11 +11811,9 @@ class AudioVisualizationFormatter(BaseMediaFormatter):
         return '\n'.join(svg_elements)
     
     async def _generate_frequency_bars(self, content_data: Dict[str, Any]) -> str:
-        """Generate frequency bars visualization code."""
-        
+        """Generate frequency bars visualization code."""        
         # JavaScript code for animated frequency bars
-        bars_code = f"""
-        <canvas id="frequency-bars" width="{self.visualization_config['width']}" height="200"></canvas>
+        bars_code = f"""        <canvas id="frequency-bars" width="{self.visualization_config['width']}" height="200"></canvas>
         <script>
         class FrequencyBarsVisualizer {{
             constructor(canvasId) {{
@@ -12523,15 +11874,12 @@ class AudioVisualizationFormatter(BaseMediaFormatter):
         // Initialize visualizer
         const frequencyVisualizer = new FrequencyBarsVisualizer('frequency-bars');
         </script>
-        """
-        
+        """        
         return bars_code
     
     async def _generate_circular_wave(self, content_data: Dict[str, Any]) -> str:
-        """Generate circular wave visualization."""
-        
-        circular_code = f"""
-        <canvas id="circular-wave" width="300" height="300"></canvas>
+        """Generate circular wave visualization."""        
+        circular_code = f"""        <canvas id="circular-wave" width="300" height="300"></canvas>
         <script>
         class CircularWaveVisualizer {{
             constructor(canvasId) {{
@@ -12608,15 +11956,12 @@ class AudioVisualizationFormatter(BaseMediaFormatter):
         // Initialize circular wave visualizer
         const circularVisualizer = new CircularWaveVisualizer('circular-wave');
         </script>
-        """
-        
+        """        
         return circular_code
     
     async def _generate_spectrogram(self, content_data: Dict[str, Any]) -> str:
-        """Generate spectrogram visualization."""
-        
-        spectrogram_code = f"""
-        <canvas id="spectrogram" width="{self.visualization_config['width']}" height="250"></canvas>
+        """Generate spectrogram visualization."""        
+        spectrogram_code = f"""        <canvas id="spectrogram" width="{self.visualization_config['width']}" height="250"></canvas>
         <script>
         class SpectrogramVisualizer {{
             constructor(canvasId) {{
@@ -12681,13 +12026,11 @@ class AudioVisualizationFormatter(BaseMediaFormatter):
         // Initialize spectrogram visualizer
         const spectrogramVisualizer = new SpectrogramVisualizer('spectrogram');
         </script>
-        """
-        
+        """        
         return spectrogram_code
     
     async def _create_interactive_audio_player(self, content_data: Dict[str, Any], visualizations: Dict[str, Dict[str, Any]]) -> Dict[str, Any]:
-        """Create interactive audio player component."""
-        
+        """Create interactive audio player component."""        
         player_config = {
             "type": "audio_player",
             "component_id": "spotify-audio-player",
@@ -12717,8 +12060,7 @@ class AudioVisualizationFormatter(BaseMediaFormatter):
         return player_config
     
     async def _create_audio_controls(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Create audio control panel."""
-        
+        """Create audio control panel."""        
         controls_config = {
             "type": "audio_controls",
             "component_id": "audio-control-panel",
@@ -12754,8 +12096,7 @@ class AudioVisualizationFormatter(BaseMediaFormatter):
         return controls_config
     
     async def _create_visualization_selector(self, visualizations: Dict[str, Dict[str, Any]]) -> Dict[str, Any]:
-        """Create visualization selector component."""
-        
+        """Create visualization selector component."""        
         selector_config = {
             "type": "visualization_selector",
             "component_id": "viz-selector",
@@ -12800,8 +12141,7 @@ class AudioVisualizationFormatter(BaseMediaFormatter):
         return selector_config
     
     async def _create_audio_analytics_panel(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Create audio analytics panel."""
-        
+        """Create audio analytics panel."""        
         analytics_config = {
             "type": "audio_analytics",
             "component_id": "audio-analytics-panel",
@@ -12834,8 +12174,7 @@ class AudioVisualizationFormatter(BaseMediaFormatter):
         return analytics_config
     
     async def _generate_embedded_audio_media(self, content_data: Dict[str, Any], visualizations: Dict[str, Dict[str, Any]]) -> Dict[str, str]:
-        """Generate embedded media content."""
-        
+        """Generate embedded media content."""        
         embedded_media = {}
         
         # Generate waveform thumbnail (base64 encoded SVG)
@@ -12859,15 +12198,13 @@ class AudioVisualizationFormatter(BaseMediaFormatter):
         return embedded_media
     
     async def _format_audio_content(self, content_data: Dict[str, Any], visualizations: Dict[str, Dict[str, Any]], interactive_player: Dict[str, Any]) -> str:
-        """Format the main audio content display."""
-        
+        """Format the main audio content display."""        
         title = content_data.get('title', 'Unknown Track')
         artist = content_data.get('artist', 'Unknown Artist')
         duration = content_data.get('duration', 0)
         duration_str = f"{int(duration // 60)}:{int(duration % 60):02d}"
         
-        content = f"""
-# 🎵 {title}
+        content = f"""# 🎵 {title}
 **Artist**: {artist}  
 **Duration**: {duration_str}  
 **Format**: {content_data.get('format', 'MP3').upper()}
@@ -13039,11 +12376,9 @@ class AudioVisualizationFormatter(BaseMediaFormatter):
 
 
 class VideoContentFormatter(BaseMediaFormatter):
-    """Advanced video content formatting and processing system."""
-    
+    """Advanced video content formatting and processing system."""    
     async def process_media_content(self, content_data: Dict[str, Any]) -> FormattedMediaContent:
-        """Process video content with advanced features."""
-        
+        """Process video content with advanced features."""        
         video_metadata = MediaMetadata(
             title=content_data.get('title', 'Unknown Video'),
             duration=content_data.get('duration'),
@@ -13096,8 +12431,7 @@ class VideoContentFormatter(BaseMediaFormatter):
         )
     
     async def _create_advanced_video_player(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Create advanced video player with multiple features."""
-        
+        """Create advanced video player with multiple features."""        
         player_config = {
             "type": "video_player",
             "component_id": "advanced-video-player",
@@ -13134,8 +12468,7 @@ class VideoContentFormatter(BaseMediaFormatter):
         return player_config
     
     async def _create_video_analytics(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Create video analytics component."""
-        
+        """Create video analytics component."""        
         analytics_config = {
             "type": "video_analytics",
             "component_id": "video-analytics",
@@ -13169,8 +12502,7 @@ class VideoContentFormatter(BaseMediaFormatter):
         return analytics_config
     
     async def _create_video_controls(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Create video control panel."""
-        
+        """Create video control panel."""        
         controls_config = {
             "type": "video_controls",
             "component_id": "video-controls",
@@ -13208,8 +12540,7 @@ class VideoContentFormatter(BaseMediaFormatter):
         return controls_config
     
     async def _create_chapter_navigator(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Create chapter navigation component."""
-        
+        """Create chapter navigation component."""        
         chapters = content_data.get('chapters', [])
         if not chapters:
             # Generate default chapters based on duration
@@ -13243,8 +12574,7 @@ class VideoContentFormatter(BaseMediaFormatter):
         return navigator_config
     
     async def _generate_video_thumbnails(self, content_data: Dict[str, Any]) -> Dict[str, str]:
-        """Generate video thumbnails and previews."""
-        
+        """Generate video thumbnails and previews."""        
         embedded_media = {}
         
         # Generate placeholder thumbnail if not provided
@@ -13265,15 +12595,13 @@ class VideoContentFormatter(BaseMediaFormatter):
         return embedded_media
     
     async def _format_video_content(self, content_data: Dict[str, Any], video_player: Dict[str, Any], video_analytics: Dict[str, Any]) -> str:
-        """Format the main video content display."""
-        
+        """Format the main video content display."""        
         title = content_data.get('title', 'Unknown Video')
         duration = content_data.get('duration', 0)
         duration_str = f"{int(duration // 3600)}:{int((duration % 3600) // 60):02d}:{int(duration % 60):02d}"
         resolution = content_data.get('resolution', (1920, 1080))
         
-        content = f"""
-# 🎬 {title}
+        content = f"""# 🎬 {title}
 
 **Duration**: {duration_str}  
 **Resolution**: {resolution[0]}x{resolution[1]}  
@@ -13528,8 +12856,7 @@ def create_media_formatter(
     tenant_id: str,
     config: Optional[Dict[str, Any]] = None
 ) -> BaseMediaFormatter:
-    """
-    Factory function to create media content formatters.
+    """    Factory function to create media content formatters.
     
     Args:
         formatter_type: Type of formatter ('audio', 'video', 'interactive', 'multimedia')
@@ -13538,8 +12865,7 @@ def create_media_formatter(
         
     Returns:
         Configured media formatter instance
-    """
-    formatters = {
+    """    formatters = {
         'audio': AudioVisualizationFormatter,
         'audio_visualization': AudioVisualizationFormatter,
         'video': VideoContentFormatter,
@@ -13561,8 +12887,7 @@ def create_media_formatter(
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Spotify AI Agent - Template Processors
+"""Spotify AI Agent - Template Processors
 =====================================
 
 Advanced template processing pipeline for optimization,
@@ -13583,9 +12908,7 @@ Features:
 - Plugin architecture for custom processors
 
 Author: Expert Development Team
-"""
-
-import json
+"""import json
 import yaml
 import gzip
 import brotli
@@ -13615,8 +12938,7 @@ logger = logging.getLogger(__name__)
 
 
 class ProcessingStage(Enum):
-    """Template processing stages."""
-    PRE_PROCESS = "pre_process"
+    """Template processing stages."""    PRE_PROCESS = "pre_process"
     OPTIMIZE = "optimize"
     TRANSFORM = "transform"
     ENHANCE = "enhance"
@@ -13626,8 +12948,7 @@ class ProcessingStage(Enum):
 
 @dataclass
 class ProcessingResult:
-    """Result of template processing operation."""
-    success: bool
+    """Result of template processing operation."""    success: bool
     template: Optional[Dict[str, Any]] = None
     metadata: Dict[str, Any] = field(default_factory=dict)
     processing_time_ms: float = 0.0
@@ -13641,8 +12962,7 @@ class ProcessingResult:
 
 @dataclass
 class ProcessingConfig:
-    """Configuration for template processors."""
-    enable_compression: bool = True
+    """Configuration for template processors."""    enable_compression: bool = True
     enable_minification: bool = True
     enable_ai_enhancement: bool = False
     enable_security_scanning: bool = True
@@ -13655,8 +12975,7 @@ class ProcessingConfig:
 
 
 class BaseTemplateProcessor(ABC):
-    """Base class for all template processors."""
-    
+    """Base class for all template processors."""    
     def __init__(self, config: Optional[ProcessingConfig] = None):
         self.config = config or ProcessingConfig()
         self.stage = ProcessingStage.TRANSFORM
@@ -13670,16 +12989,13 @@ class BaseTemplateProcessor(ABC):
     
     @abstractmethod
     async def process(self, template: Dict[str, Any], context: Optional[Dict[str, Any]] = None) -> ProcessingResult:
-        """Process template and return result."""
-        pass
+        """Process template and return result."""        pass
     
     def get_stage(self) -> ProcessingStage:
-        """Get processing stage for this processor."""
-        return self.stage
+        """Get processing stage for this processor."""        return self.stage
     
     def _update_metrics(self, processing_time_ms: float, success: bool, size_reduction_mb: float = 0.0):
-        """Update processor metrics."""
-        self.metrics["processed_count"] += 1
+        """Update processor metrics."""        self.metrics["processed_count"] += 1
         if success:
             self.metrics["success_count"] += 1
         else:
@@ -13694,12 +13010,10 @@ class BaseTemplateProcessor(ABC):
         self.metrics["total_size_reduction_mb"] += size_reduction_mb
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Get processor performance metrics."""
-        return self.metrics.copy()
+        """Get processor performance metrics."""        return self.metrics.copy()
     
     def _calculate_size_reduction(self, original_size: int, processed_size: int) -> Tuple[float, float]:
-        """Calculate size reduction metrics."""
-        if original_size == 0:
+        """Calculate size reduction metrics."""        if original_size == 0:
             return 0.0, 0.0
         
         reduction_bytes = original_size - processed_size
@@ -13710,15 +13024,13 @@ class BaseTemplateProcessor(ABC):
 
 
 class CompressionProcessor(BaseTemplateProcessor):
-    """Compresses template content to reduce size."""
-    
+    """Compresses template content to reduce size."""    
     def __init__(self, config: Optional[ProcessingConfig] = None):
         super().__init__(config)
         self.stage = ProcessingStage.OPTIMIZE
     
     async def process(self, template: Dict[str, Any], context: Optional[Dict[str, Any]] = None) -> ProcessingResult:
-        """Compress template content."""
-        start_time = datetime.now()
+        """Compress template content."""        start_time = datetime.now()
         
         try:
             if not self.config.enable_compression:
@@ -13807,15 +13119,13 @@ class CompressionProcessor(BaseTemplateProcessor):
 
 
 class MinificationProcessor(BaseTemplateProcessor):
-    """Minifies template content by removing unnecessary whitespace and comments."""
-    
+    """Minifies template content by removing unnecessary whitespace and comments."""    
     def __init__(self, config: Optional[ProcessingConfig] = None):
         super().__init__(config)
         self.stage = ProcessingStage.OPTIMIZE
     
     async def process(self, template: Dict[str, Any], context: Optional[Dict[str, Any]] = None) -> ProcessingResult:
-        """Minify template content."""
-        start_time = datetime.now()
+        """Minify template content."""        start_time = datetime.now()
         
         try:
             if not self.config.enable_minification:
@@ -13872,8 +13182,7 @@ class MinificationProcessor(BaseTemplateProcessor):
             )
     
     async def _minify_template(self, template: Dict[str, Any]) -> Dict[str, Any]:
-        """Recursively minify template content."""
-        if isinstance(template, dict):
+        """Recursively minify template content."""        if isinstance(template, dict):
             minified = {}
             for key, value in template.items():
                 # Skip comment fields
@@ -13894,8 +13203,7 @@ class MinificationProcessor(BaseTemplateProcessor):
             return template
     
     def _minify_string(self, content: str) -> str:
-        """Minify string content."""
-        # Remove extra whitespace while preserving template expressions
+        """Minify string content."""        # Remove extra whitespace while preserving template expressions
         if '{{' in content and '}}' in content:
             # Preserve template expressions but minify around them
             parts = re.split(r'(\{\{.*?\}\})', content)
@@ -13918,16 +13226,14 @@ class MinificationProcessor(BaseTemplateProcessor):
 
 
 class ValidationProcessor(BaseTemplateProcessor):
-    """Validates template content and structure."""
-    
+    """Validates template content and structure."""    
     def __init__(self, config: Optional[ProcessingConfig] = None):
         super().__init__(config)
         self.stage = ProcessingStage.VALIDATE
         self.validation_engine = TemplateValidationEngine()
     
     async def process(self, template: Dict[str, Any], context: Optional[Dict[str, Any]] = None) -> ProcessingResult:
-        """Validate template content."""
-        start_time = datetime.now()
+        """Validate template content."""        start_time = datetime.now()
         
         try:
             # Determine template type and ID
@@ -13990,15 +13296,13 @@ class ValidationProcessor(BaseTemplateProcessor):
 
 
 class SecurityProcessor(BaseTemplateProcessor):
-    """Processes templates for security vulnerabilities and sanitization."""
-    
+    """Processes templates for security vulnerabilities and sanitization."""    
     def __init__(self, config: Optional[ProcessingConfig] = None):
         super().__init__(config)
         self.stage = ProcessingStage.PRE_PROCESS
     
     async def process(self, template: Dict[str, Any], context: Optional[Dict[str, Any]] = None) -> ProcessingResult:
-        """Process template for security issues."""
-        start_time = datetime.now()
+        """Process template for security issues."""        start_time = datetime.now()
         
         try:
             if not self.config.enable_security_scanning:
@@ -14058,8 +13362,7 @@ class SecurityProcessor(BaseTemplateProcessor):
             )
     
     async def _sanitize_template(self, template: Dict[str, Any]) -> Dict[str, Any]:
-        """Recursively sanitize template content."""
-        if isinstance(template, dict):
+        """Recursively sanitize template content."""        if isinstance(template, dict):
             sanitized = {}
             for key, value in template.items():
                 sanitized[key] = await self._sanitize_template(value)
@@ -14076,8 +13379,7 @@ class SecurityProcessor(BaseTemplateProcessor):
             return template
     
     async def _scan_security_issues(self, template: Dict[str, Any]) -> List[Dict[str, str]]:
-        """Scan template for security issues."""
-        issues = []
+        """Scan template for security issues."""        issues = []
         
         # Define security patterns
         dangerous_patterns = [
@@ -14111,15 +13413,13 @@ class SecurityProcessor(BaseTemplateProcessor):
 
 
 class AIEnhancementProcessor(BaseTemplateProcessor):
-    """Uses AI to enhance template content and metadata."""
-    
+    """Uses AI to enhance template content and metadata."""    
     def __init__(self, config: Optional[ProcessingConfig] = None):
         super().__init__(config)
         self.stage = ProcessingStage.ENHANCE
     
     async def process(self, template: Dict[str, Any], context: Optional[Dict[str, Any]] = None) -> ProcessingResult:
-        """Enhance template using AI."""
-        start_time = datetime.now()
+        """Enhance template using AI."""        start_time = datetime.now()
         
         try:
             if not self.config.enable_ai_enhancement:
@@ -14190,23 +13490,19 @@ class AIEnhancementProcessor(BaseTemplateProcessor):
             )
     
     async def _should_generate_description(self, template: Dict[str, Any]) -> bool:
-        """Check if description should be generated."""
-        return 'description' not in template or not template.get('description')
+        """Check if description should be generated."""        return 'description' not in template or not template.get('description')
     
     async def _generate_description(self, template: Dict[str, Any]) -> Optional[str]:
-        """Generate description using AI."""
-        try:
+        """Generate description using AI."""        try:
             ai_client = await get_ai_client()
             
-            prompt = f"""
-            Analyze this template and generate a concise, professional description:
+            prompt = f"""            Analyze this template and generate a concise, professional description:
             
             Template Type: {template.get('_metadata', {}).get('template_type', 'unknown')}
             Template Content: {json.dumps(template, indent=2)[:1000]}...
             
             Generate a 1-2 sentence description that explains what this template is for and its main purpose.
-            """
-            
+            """            
             response = await ai_client.generate_text(
                 prompt=prompt,
                 max_tokens=100,
@@ -14220,19 +13516,16 @@ class AIEnhancementProcessor(BaseTemplateProcessor):
             return None
     
     async def _generate_tags(self, template: Dict[str, Any]) -> Optional[List[str]]:
-        """Generate tags using AI."""
-        try:
+        """Generate tags using AI."""        try:
             ai_client = await get_ai_client()
             
-            prompt = f"""
-            Analyze this template and generate relevant tags:
+            prompt = f"""            Analyze this template and generate relevant tags:
             
             Template: {json.dumps(template, indent=2)[:500]}...
             
             Generate 3-5 relevant tags that categorize this template. Return as JSON array.
             Focus on: template type, use case, domain, features.
-            """
-            
+            """            
             response = await ai_client.generate_text(
                 prompt=prompt,
                 max_tokens=50,
@@ -14259,13 +13552,11 @@ class AIEnhancementProcessor(BaseTemplateProcessor):
             return None
     
     async def _should_optimize_structure(self, template: Dict[str, Any]) -> bool:
-        """Check if structure optimization is needed."""
-        # Simple heuristic: optimize if template has deep nesting
+        """Check if structure optimization is needed."""        # Simple heuristic: optimize if template has deep nesting
         return self._get_nesting_depth(template) > 5
     
     def _get_nesting_depth(self, obj, current_depth=0):
-        """Calculate nesting depth of template."""
-        if isinstance(obj, dict):
+        """Calculate nesting depth of template."""        if isinstance(obj, dict):
             if not obj:
                 return current_depth
             return max(self._get_nesting_depth(v, current_depth + 1) for v in obj.values())
@@ -14277,12 +13568,10 @@ class AIEnhancementProcessor(BaseTemplateProcessor):
             return current_depth
     
     async def _optimize_structure(self, template: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Optimize template structure using AI."""
-        try:
+        """Optimize template structure using AI."""        try:
             ai_client = await get_ai_client()
             
-            prompt = f"""
-            Optimize this template structure to reduce nesting while preserving functionality:
+            prompt = f"""            Optimize this template structure to reduce nesting while preserving functionality:
             
             Current Template: {json.dumps(template, indent=2)[:1000]}...
             
@@ -14293,8 +13582,7 @@ class AIEnhancementProcessor(BaseTemplateProcessor):
             4. Valid JSON structure
             
             Return only the optimized JSON template.
-            """
-            
+            """            
             response = await ai_client.generate_text(
                 prompt=prompt,
                 max_tokens=1000,
@@ -14317,15 +13605,13 @@ class AIEnhancementProcessor(BaseTemplateProcessor):
 
 
 class PerformanceProcessor(BaseTemplateProcessor):
-    """Optimizes template performance characteristics."""
-    
+    """Optimizes template performance characteristics."""    
     def __init__(self, config: Optional[ProcessingConfig] = None):
         super().__init__(config)
         self.stage = ProcessingStage.OPTIMIZE
     
     async def process(self, template: Dict[str, Any], context: Optional[Dict[str, Any]] = None) -> ProcessingResult:
-        """Optimize template performance."""
-        start_time = datetime.now()
+        """Optimize template performance."""        start_time = datetime.now()
         
         try:
             if not self.config.enable_performance_optimization:
@@ -14395,14 +13681,12 @@ class PerformanceProcessor(BaseTemplateProcessor):
             )
     
     async def _should_apply_lazy_loading(self, template: Dict[str, Any]) -> bool:
-        """Check if lazy loading should be applied."""
-        # Apply lazy loading if template has large data structures
+        """Check if lazy loading should be applied."""        # Apply lazy loading if template has large data structures
         template_size = len(json.dumps(template).encode('utf-8'))
         return template_size > 100 * 1024  # 100KB threshold
     
     async def _apply_lazy_loading(self, template: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply lazy loading patterns to template."""
-        # Add lazy loading metadata for large objects
+        """Apply lazy loading patterns to template."""        # Add lazy loading metadata for large objects
         if '_lazy_loading' not in template:
             template['_lazy_loading'] = {
                 'enabled': True,
@@ -14413,12 +13697,10 @@ class PerformanceProcessor(BaseTemplateProcessor):
         return template
     
     async def _should_chunk_arrays(self, template: Dict[str, Any]) -> bool:
-        """Check if array chunking should be applied."""
-        return await self._has_large_arrays(template)
+        """Check if array chunking should be applied."""        return await self._has_large_arrays(template)
     
     async def _has_large_arrays(self, obj, threshold=100):
-        """Check if template has large arrays."""
-        if isinstance(obj, list) and len(obj) > threshold:
+        """Check if template has large arrays."""        if isinstance(obj, list) and len(obj) > threshold:
             return True
         elif isinstance(obj, dict):
             for value in obj.values():
@@ -14427,8 +13709,7 @@ class PerformanceProcessor(BaseTemplateProcessor):
         return False
     
     async def _chunk_large_arrays(self, template: Dict[str, Any]) -> Dict[str, Any]:
-        """Chunk large arrays in template."""
-        def chunk_arrays(obj, path=""):
+        """Chunk large arrays in template."""        def chunk_arrays(obj, path=""):
             if isinstance(obj, list) and len(obj) > 100:
                 # Replace large array with chunked reference
                 return {
@@ -14445,14 +13726,12 @@ class PerformanceProcessor(BaseTemplateProcessor):
         return chunk_arrays(template)
     
     async def _should_extract_references(self, template: Dict[str, Any]) -> bool:
-        """Check if reference extraction should be applied."""
-        # Simple heuristic: if template has repeated structures
+        """Check if reference extraction should be applied."""        # Simple heuristic: if template has repeated structures
         template_str = json.dumps(template)
         return len(template_str) > len(set(template_str)) * 2  # High repetition
     
     async def _extract_references(self, template: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract repeated data into references."""
-        # This is a simplified implementation
+        """Extract repeated data into references."""        # This is a simplified implementation
         # In practice, you'd implement sophisticated deduplication
         
         if '_references' not in template:
@@ -14462,8 +13741,7 @@ class PerformanceProcessor(BaseTemplateProcessor):
 
 
 class TemplateProcessingPipeline:
-    """Manages template processing pipeline with multiple processors."""
-    
+    """Manages template processing pipeline with multiple processors."""    
     def __init__(self, config: Optional[ProcessingConfig] = None):
         self.config = config or ProcessingConfig()
         self.processors: Dict[ProcessingStage, List[BaseTemplateProcessor]] = {
@@ -14477,13 +13755,11 @@ class TemplateProcessingPipeline:
         }
     
     def add_processor(self, processor: BaseTemplateProcessor):
-        """Add processor to pipeline."""
-        stage = processor.get_stage()
+        """Add processor to pipeline."""        stage = processor.get_stage()
         self.processors[stage].append(processor)
     
     def remove_processor(self, processor: BaseTemplateProcessor):
-        """Remove processor from pipeline."""
-        stage = processor.get_stage()
+        """Remove processor from pipeline."""        stage = processor.get_stage()
         if processor in self.processors[stage]:
             self.processors[stage].remove(processor)
     
@@ -14493,8 +13769,7 @@ class TemplateProcessingPipeline:
         context: Optional[Dict[str, Any]] = None,
         stages: Optional[List[ProcessingStage]] = None
     ) -> List[ProcessingResult]:
-        """Process template through pipeline."""
-        start_time = datetime.now()
+        """Process template through pipeline."""        start_time = datetime.now()
         stages = stages or list(ProcessingStage)
         results = []
         
@@ -14572,8 +13847,7 @@ class TemplateProcessingPipeline:
             return [error_result]
     
     def _update_pipeline_metrics(self, processing_time_ms: float, success: bool):
-        """Update pipeline metrics."""
-        self.metrics['templates_processed'] += 1
+        """Update pipeline metrics."""        self.metrics['templates_processed'] += 1
         if success:
             self.metrics['successful_pipelines'] += 1
         else:
@@ -14585,8 +13859,7 @@ class TemplateProcessingPipeline:
         self.metrics['average_pipeline_time_ms'] = ((current_avg * (total_processed - 1)) + processing_time_ms) / total_processed
     
     def get_pipeline_metrics(self) -> Dict[str, Any]:
-        """Get pipeline performance metrics."""
-        processor_metrics = {}
+        """Get pipeline performance metrics."""        processor_metrics = {}
         for stage, processors in self.processors.items():
             processor_metrics[stage.value] = [proc.get_metrics() for proc in processors]
         
@@ -14598,8 +13871,7 @@ class TemplateProcessingPipeline:
 
 # Factory function for default processing pipeline
 def create_default_pipeline(config: Optional[ProcessingConfig] = None) -> TemplateProcessingPipeline:
-    """Create default template processing pipeline."""
-    pipeline = TemplateProcessingPipeline(config)
+    """Create default template processing pipeline."""    pipeline = TemplateProcessingPipeline(config)
     
     # Add default processors
     pipeline.add_processor(SecurityProcessor(config))
@@ -14624,8 +13896,7 @@ async def process_template(
     context: Optional[Dict[str, Any]] = None,
     config: Optional[ProcessingConfig] = None
 ) -> List[ProcessingResult]:
-    """Process template using default pipeline."""
-    if config:
+    """Process template using default pipeline."""    if config:
         pipeline = create_default_pipeline(config)
     else:
         pipeline = default_pipeline
@@ -14638,8 +13909,7 @@ async def process_template(
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Enterprise Monitoring Analyzers
+"""Enterprise Monitoring Analyzers
 ===============================
 
 Ultra-advanced analytics system for monitoring data analysis with machine learning,
@@ -14654,9 +13924,7 @@ Features:
 - Root cause analysis
 - Business impact assessment
 - Auto-remediation suggestions
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import json
@@ -14704,8 +13972,7 @@ logger = logging.getLogger(__name__)
 
 
 class AnalysisType(Enum):
-    """Types of analysis"""
-    ANOMALY_DETECTION = "anomaly_detection"
+    """Types of analysis"""    ANOMALY_DETECTION = "anomaly_detection"
     TREND_ANALYSIS = "trend_analysis"
     PERFORMANCE_ANALYSIS = "performance_analysis"
     PREDICTIVE_ANALYSIS = "predictive_analysis"
@@ -14714,8 +13981,7 @@ class AnalysisType(Enum):
 
 
 class AnomalyType(Enum):
-    """Types of anomalies"""
-    POINT_ANOMALY = "point"
+    """Types of anomalies"""    POINT_ANOMALY = "point"
     CONTEXTUAL_ANOMALY = "contextual"
     COLLECTIVE_ANOMALY = "collective"
     DRIFT_ANOMALY = "drift"
@@ -14723,8 +13989,7 @@ class AnomalyType(Enum):
 
 @dataclass
 class AnalysisResult:
-    """Result of an analysis operation"""
-    analysis_type: AnalysisType
+    """Result of an analysis operation"""    analysis_type: AnalysisType
     timestamp: datetime
     metrics_analyzed: List[str]
     findings: List[Dict[str, Any]]
@@ -14735,8 +14000,7 @@ class AnalysisResult:
 
 
 class BaseAnalyzer(ABC):
-    """Base class for all analyzers"""
-    
+    """Base class for all analyzers"""    
     def __init__(self, name: str, config: MonitoringConfig):
         self.name = name
         self.config = config
@@ -14756,12 +14020,10 @@ class BaseAnalyzer(ABC):
     
     @abstractmethod
     async def analyze(self, metrics_data: Dict[str, Any]) -> AnalysisResult:
-        """Analyze metrics data - to be implemented by subclasses"""
-        pass
+        """Analyze metrics data - to be implemented by subclasses"""        pass
     
     async def analyze_with_timing(self, metrics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze with performance timing"""
-        start_time = time.time()
+        """Analyze with performance timing"""        start_time = time.time()
         
         try:
             result = await self.analyze(metrics_data)
@@ -14798,8 +14060,7 @@ class BaseAnalyzer(ABC):
             }
     
     def get_analyzer_stats(self) -> Dict[str, Any]:
-        """Get statistics about this analyzer"""
-        return {
+        """Get statistics about this analyzer"""        return {
             "name": self.name,
             "enabled": self.is_enabled,
             "analysis_count": self.analysis_count,
@@ -14813,11 +14074,9 @@ class BaseAnalyzer(ABC):
 
 
 class AnomalyDetector(BaseAnalyzer):
-    """
-    Ultra-advanced anomaly detection system using multiple ML algorithms
+    """    Ultra-advanced anomaly detection system using multiple ML algorithms
     and statistical methods for comprehensive anomaly identification.
-    """
-    
+    """    
     def __init__(self, config: MonitoringConfig):
         super().__init__("anomaly_detector", config)
         
@@ -14848,8 +14107,7 @@ class AnomalyDetector(BaseAnalyzer):
         self.anomaly_patterns: Dict[str, List[Dict[str, Any]]] = {}
         
     async def analyze(self, metrics_data: Dict[str, Any]) -> AnalysisResult:
-        """Detect anomalies in metrics data"""
-        findings = []
+        """Detect anomalies in metrics data"""        findings = []
         
         try:
             # Prepare data for analysis
@@ -14913,8 +14171,7 @@ class AnomalyDetector(BaseAnalyzer):
             raise
     
     async def _prepare_data(self, metrics_data: Dict[str, Any]) -> Optional[pd.DataFrame]:
-        """Prepare metrics data for anomaly detection"""
-        try:
+        """Prepare metrics data for anomaly detection"""        try:
             # Extract numerical metrics
             numerical_data = {}
             
@@ -14950,8 +14207,7 @@ class AnomalyDetector(BaseAnalyzer):
             return None
     
     def _flatten_metrics(self, metrics: Dict[str, Any], prefix: str = "") -> Dict[str, Any]:
-        """Flatten nested metrics dictionary"""
-        flattened = {}
+        """Flatten nested metrics dictionary"""        flattened = {}
         
         for key, value in metrics.items():
             new_key = f"{prefix}_{key}" if prefix else key
@@ -14970,8 +14226,7 @@ class AnomalyDetector(BaseAnalyzer):
         return flattened
     
     async def _detect_statistical_anomalies(self, data: pd.DataFrame) -> List[Dict[str, Any]]:
-        """Detect anomalies using statistical methods"""
-        anomalies = []
+        """Detect anomalies using statistical methods"""        anomalies = []
         
         try:
             for column in data.columns:
@@ -15033,8 +14288,7 @@ class AnomalyDetector(BaseAnalyzer):
         return anomalies
     
     async def _detect_ml_anomalies(self, data: pd.DataFrame) -> List[Dict[str, Any]]:
-        """Detect anomalies using machine learning models"""
-        anomalies = []
+        """Detect anomalies using machine learning models"""        anomalies = []
         
         try:
             # Prepare training data from history
@@ -15073,8 +14327,7 @@ class AnomalyDetector(BaseAnalyzer):
         return anomalies
     
     async def _detect_pattern_anomalies(self, data: pd.DataFrame) -> List[Dict[str, Any]]:
-        """Detect pattern-based anomalies"""
-        anomalies = []
+        """Detect pattern-based anomalies"""        anomalies = []
         
         try:
             # Check for sudden spikes or drops
@@ -15119,8 +14372,7 @@ class AnomalyDetector(BaseAnalyzer):
         return anomalies
     
     async def _detect_contextual_anomalies(self, data: pd.DataFrame) -> List[Dict[str, Any]]:
-        """Detect contextual anomalies based on time and conditions"""
-        anomalies = []
+        """Detect contextual anomalies based on time and conditions"""        anomalies = []
         
         try:
             current_time = datetime.utcnow()
@@ -15152,8 +14404,7 @@ class AnomalyDetector(BaseAnalyzer):
         return anomalies
     
     def _get_historical_values(self, metric_name: str, limit: int = 100) -> List[float]:
-        """Get historical values for a specific metric"""
-        values = []
+        """Get historical values for a specific metric"""        values = []
         
         for result in self.analysis_history[-limit:]:
             if hasattr(result, 'metadata') and 'historical_data' in result.metadata:
@@ -15164,8 +14415,7 @@ class AnomalyDetector(BaseAnalyzer):
         return values
     
     def _prepare_training_data(self) -> Optional[pd.DataFrame]:
-        """Prepare training data from historical analysis results"""
-        try:
+        """Prepare training data from historical analysis results"""        try:
             # This would collect historical data for training
             # For now, return None to indicate no training data available
             return None
@@ -15174,8 +14424,7 @@ class AnomalyDetector(BaseAnalyzer):
             return None
     
     async def _fit_models(self, training_data: pd.DataFrame):
-        """Fit ML models with training data"""
-        try:
+        """Fit ML models with training data"""        try:
             # Scale the training data
             scaled_data = self.scaler.fit_transform(training_data)
             
@@ -15189,16 +14438,14 @@ class AnomalyDetector(BaseAnalyzer):
             self.logger.error(f"Error fitting models: {e}")
     
     def _calculate_confidence(self, findings: List[Dict[str, Any]]) -> float:
-        """Calculate overall confidence score for anomaly findings"""
-        if not findings:
+        """Calculate overall confidence score for anomaly findings"""        if not findings:
             return 0.0
         
         confidences = [f.get("confidence", 0.5) for f in findings]
         return min(np.mean(confidences), 1.0)
     
     def _determine_severity(self, findings: List[Dict[str, Any]]) -> str:
-        """Determine severity level based on findings"""
-        if not findings:
+        """Determine severity level based on findings"""        if not findings:
             return "info"
         
         high_confidence_anomalies = [f for f in findings if f.get("confidence", 0) > 0.8]
@@ -15213,8 +14460,7 @@ class AnomalyDetector(BaseAnalyzer):
             return "info"
     
     async def _generate_anomaly_recommendations(self, findings: List[Dict[str, Any]]) -> List[str]:
-        """Generate recommendations based on anomaly findings"""
-        recommendations = []
+        """Generate recommendations based on anomaly findings"""        recommendations = []
         
         if not findings:
             return recommendations
@@ -15236,8 +14482,7 @@ class AnomalyDetector(BaseAnalyzer):
         return recommendations
     
     async def _update_anomaly_tracking(self, findings: List[Dict[str, Any]]):
-        """Update anomaly tracking data"""
-        try:
+        """Update anomaly tracking data"""        try:
             # Add to recent anomalies
             for finding in findings:
                 self.recent_anomalies.append({
@@ -15257,11 +14502,9 @@ class AnomalyDetector(BaseAnalyzer):
 
 
 class PerformanceAnalyzer(BaseAnalyzer):
-    """
-    Advanced performance analysis system for identifying bottlenecks,
+    """    Advanced performance analysis system for identifying bottlenecks,
     optimization opportunities, and performance trends.
-    """
-    
+    """    
     def __init__(self, config: MonitoringConfig):
         super().__init__("performance_analyzer", config)
         
@@ -15282,8 +14525,7 @@ class PerformanceAnalyzer(BaseAnalyzer):
         self.performance_history: List[Dict[str, Any]] = []
         
     async def analyze(self, metrics_data: Dict[str, Any]) -> AnalysisResult:
-        """Analyze performance metrics"""
-        findings = []
+        """Analyze performance metrics"""        findings = []
         
         try:
             # Extract performance metrics
@@ -15326,8 +14568,7 @@ class PerformanceAnalyzer(BaseAnalyzer):
             raise
     
     async def _extract_performance_metrics(self, metrics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract performance-relevant metrics"""
-        performance_metrics = {}
+        """Extract performance-relevant metrics"""        performance_metrics = {}
         
         for source, data in metrics_data.items():
             if isinstance(data, dict) and "metrics" in data:
@@ -15343,8 +14584,7 @@ class PerformanceAnalyzer(BaseAnalyzer):
         return performance_metrics
     
     async def _analyze_resource_utilization(self, metrics: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Analyze resource utilization patterns"""
-        findings = []
+        """Analyze resource utilization patterns"""        findings = []
         
         for resource in ["cpu_usage", "memory_usage"]:
             if resource not in metrics:
@@ -15379,8 +14619,7 @@ class PerformanceAnalyzer(BaseAnalyzer):
         return findings
     
     async def _analyze_response_times(self, metrics: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Analyze response time performance"""
-        findings = []
+        """Analyze response time performance"""        findings = []
         
         if "avg_response_time" in metrics:
             avg_response_time = metrics["avg_response_time"]
@@ -15405,8 +14644,7 @@ class PerformanceAnalyzer(BaseAnalyzer):
         return findings
     
     def _calculate_performance_score(self, metrics: Dict[str, Any]) -> float:
-        """Calculate overall performance score (0-100)"""
-        score = 100.0
+        """Calculate overall performance score (0-100)"""        score = 100.0
         
         # CPU impact
         if "cpu_usage" in metrics:
@@ -15423,8 +14661,7 @@ class PerformanceAnalyzer(BaseAnalyzer):
         return max(0.0, min(100.0, score))
     
     def _determine_performance_severity(self, findings: List[Dict[str, Any]], performance_score: float) -> str:
-        """Determine overall performance severity"""
-        critical_findings = [f for f in findings if f.get("severity") == "critical"]
+        """Determine overall performance severity"""        critical_findings = [f for f in findings if f.get("severity") == "critical"]
         warning_findings = [f for f in findings if f.get("severity") == "warning"]
         
         if critical_findings or performance_score < 40:
@@ -15435,8 +14672,7 @@ class PerformanceAnalyzer(BaseAnalyzer):
             return "info"
     
     async def _generate_performance_recommendations(self, findings: List[Dict[str, Any]], metrics: Dict[str, Any]) -> List[str]:
-        """Generate performance optimization recommendations"""
-        recommendations = []
+        """Generate performance optimization recommendations"""        recommendations = []
         
         # Resource-specific recommendations
         for finding in findings:
@@ -15458,10 +14694,8 @@ class PerformanceAnalyzer(BaseAnalyzer):
 
 
 class TrendAnalyzer(BaseAnalyzer):
-    """
-    Advanced trend analysis system for identifying patterns and trends
-    """
-    
+    """    Advanced trend analysis system for identifying patterns and trends
+    """    
     def __init__(self, config: MonitoringConfig):
         super().__init__("trend_analyzer", config)
         
@@ -15469,8 +14703,7 @@ class TrendAnalyzer(BaseAnalyzer):
         self.time_series_data: Dict[str, List[Tuple[datetime, float]]] = {}
         
     async def analyze(self, metrics_data: Dict[str, Any]) -> AnalysisResult:
-        """Analyze trends in metrics data"""
-        findings = []
+        """Analyze trends in metrics data"""        findings = []
         
         try:
             # Extract time series metrics
@@ -15510,8 +14743,7 @@ class TrendAnalyzer(BaseAnalyzer):
             raise
     
     async def _extract_time_series_metrics(self, metrics_data: Dict[str, Any], timestamp: datetime) -> Dict[str, float]:
-        """Extract metrics suitable for time series analysis"""
-        time_series_metrics = {}
+        """Extract metrics suitable for time series analysis"""        time_series_metrics = {}
         
         for source, data in metrics_data.items():
             if isinstance(data, dict) and "metrics" in data:
@@ -15526,8 +14758,7 @@ class TrendAnalyzer(BaseAnalyzer):
         return time_series_metrics
     
     def _flatten_metrics(self, metrics: Dict[str, Any], prefix: str = "") -> Dict[str, Any]:
-        """Flatten nested metrics dictionary"""
-        flattened = {}
+        """Flatten nested metrics dictionary"""        flattened = {}
         
         for key, value in metrics.items():
             new_key = f"{prefix}_{key}" if prefix else key
@@ -15540,8 +14771,7 @@ class TrendAnalyzer(BaseAnalyzer):
         return flattened
     
     async def _update_time_series_data(self, metrics: Dict[str, float], timestamp: datetime):
-        """Update time series data with new metrics"""
-        for metric_name, value in metrics.items():
+        """Update time series data with new metrics"""        for metric_name, value in metrics.items():
             if metric_name not in self.time_series_data:
                 self.time_series_data[metric_name] = []
             
@@ -15555,8 +14785,7 @@ class TrendAnalyzer(BaseAnalyzer):
             ]
     
     async def _analyze_linear_trends(self, metric_name: str, data_points: List[Tuple[datetime, float]]) -> List[Dict[str, Any]]:
-        """Analyze linear trends in time series data"""
-        findings = []
+        """Analyze linear trends in time series data"""        findings = []
         
         try:
             if len(data_points) < 10:
@@ -15600,8 +14829,7 @@ class TrendAnalyzer(BaseAnalyzer):
         return findings
     
     def _determine_trend_severity(self, findings: List[Dict[str, Any]]) -> str:
-        """Determine severity based on trend findings"""
-        critical_patterns = [
+        """Determine severity based on trend findings"""        critical_patterns = [
             f for f in findings 
             if (f.get("trend_type") == "decreasing" and f.get("confidence", 0) > 0.8)
         ]
@@ -15614,8 +14842,7 @@ class TrendAnalyzer(BaseAnalyzer):
             return "info"
     
     async def _generate_trend_recommendations(self, findings: List[Dict[str, Any]]) -> List[str]:
-        """Generate trend-based recommendations"""
-        recommendations = []
+        """Generate trend-based recommendations"""        recommendations = []
         
         for finding in findings:
             if finding.get("trend_type") == "increasing" and finding.get("confidence", 0) > 0.7:
@@ -15628,8 +14855,7 @@ class TrendAnalyzer(BaseAnalyzer):
 
 # Factory function for creating analyzers
 def create_analyzers(config: MonitoringConfig) -> Dict[str, BaseAnalyzer]:
-    """Create and return all standard analyzers"""
-    analyzers = {
+    """Create and return all standard analyzers"""    analyzers = {
         "anomaly_detector": AnomalyDetector(config),
         "performance_analyzer": PerformanceAnalyzer(config),
         "trend_analyzer": TrendAnalyzer(config)
@@ -15648,8 +14874,7 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Spotify AI Agent - Audio Data Importers
+"""Spotify AI Agent - Audio Data Importers
 ======================================
 
 Ultra-advanced audio data importers for comprehensive music metadata extraction,
@@ -15667,9 +14892,7 @@ This module handles sophisticated audio data ingestion from:
 
 Author: Expert Team - Lead Dev + AI Architect, ML Engineer, Data Engineer
 Version: 2.1.0
-"""
-
-import asyncio
+"""import asyncio
 import json
 import hashlib
 import base64
@@ -15690,8 +14913,7 @@ logger = structlog.get_logger(__name__)
 
 
 class AudioFormat(Enum):
-    """Supported audio formats."""
-    MP3 = "mp3"
+    """Supported audio formats."""    MP3 = "mp3"
     WAV = "wav"
     FLAC = "flac"
     AAC = "aac"
@@ -15700,8 +14922,7 @@ class AudioFormat(Enum):
 
 
 class AudioFeatureType(Enum):
-    """Types of audio features to extract."""
-    SPECTRAL = "spectral"
+    """Types of audio features to extract."""    SPECTRAL = "spectral"
     TEMPORAL = "temporal"
     HARMONIC = "harmonic"
     RHYTHMIC = "rhythmic"
@@ -15712,8 +14933,7 @@ class AudioFeatureType(Enum):
 
 
 class MusicPlatform(Enum):
-    """Supported music platforms."""
-    SPOTIFY = "spotify"
+    """Supported music platforms."""    SPOTIFY = "spotify"
     LASTFM = "lastfm"
     SOUNDCLOUD = "soundcloud"
     APPLE_MUSIC = "apple_music"
@@ -15723,8 +14943,7 @@ class MusicPlatform(Enum):
 
 @dataclass
 class AudioMetadata:
-    """Comprehensive audio metadata structure."""
-    
+    """Comprehensive audio metadata structure."""    
     track_id: str
     title: str
     artist: str
@@ -15742,8 +14961,7 @@ class AudioMetadata:
     isrc: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization."""
-        return {
+        """Convert to dictionary for serialization."""        return {
             "track_id": self.track_id,
             "title": self.title,
             "artist": self.artist,
@@ -15764,8 +14982,7 @@ class AudioMetadata:
 
 @dataclass
 class ExtractedAudioFeatures:
-    """Container for extracted audio features."""
-    
+    """Container for extracted audio features."""    
     track_id: str
     spectral_features: Dict[str, float] = field(default_factory=dict)
     temporal_features: Dict[str, float] = field(default_factory=dict)
@@ -15777,8 +14994,7 @@ class ExtractedAudioFeatures:
     analysis_timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization."""
-        return {
+        """Convert to dictionary for serialization."""        return {
             "track_id": self.track_id,
             "spectral_features": self.spectral_features,
             "temporal_features": self.temporal_features,
@@ -15792,8 +15008,7 @@ class ExtractedAudioFeatures:
 
 
 class BaseAudioImporter:
-    """Base class for audio data importers."""
-    
+    """Base class for audio data importers."""    
     def __init__(self, tenant_id: str, config: Optional[Dict[str, Any]] = None):
         self.tenant_id = tenant_id
         self.config = config or {}
@@ -15815,8 +15030,7 @@ class BaseAudioImporter:
         }
     
     async def import_data(self, source_params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Import audio data with basic validation and processing."""
-        self.import_stats["start_time"] = datetime.now()
+        """Import audio data with basic validation and processing."""        self.import_stats["start_time"] = datetime.now()
         imported_data = []
         
         try:
@@ -15898,8 +15112,7 @@ class BaseAudioImporter:
             self.import_stats["end_time"] = datetime.now()
     
     async def _import_from_files(self, source_params: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Import audio data from local files."""
-        file_paths = source_params.get('file_paths', [])
+        """Import audio data from local files."""        file_paths = source_params.get('file_paths', [])
         file_directory = source_params.get('directory', '')
         file_extensions = source_params.get('extensions', ['.mp3', '.wav', '.flac', '.aac'])
         
@@ -15927,8 +15140,7 @@ class BaseAudioImporter:
         return imported_items
     
     async def _import_from_urls(self, source_params: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Import audio data from URLs."""
-        urls = source_params.get('urls', [])
+        """Import audio data from URLs."""        urls = source_params.get('urls', [])
         imported_items = []
         
         for url in urls:
@@ -15943,8 +15155,7 @@ class BaseAudioImporter:
         return imported_items
     
     async def _import_from_database(self, source_params: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Import audio data from database."""
-        query = source_params.get('query', '')
+        """Import audio data from database."""        query = source_params.get('query', '')
         table_name = source_params.get('table', 'audio_content')
         limit = source_params.get('limit', 1000)
         
@@ -15958,8 +15169,7 @@ class BaseAudioImporter:
         } for i in range(min(10, limit))]
     
     async def _import_from_stream(self, source_params: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Import audio data from streaming source."""
-        stream_url = source_params.get('stream_url', '')
+        """Import audio data from streaming source."""        stream_url = source_params.get('stream_url', '')
         duration = source_params.get('duration', 60)  # seconds
         
         # This would connect to actual stream
@@ -15974,8 +15184,7 @@ class BaseAudioImporter:
         }]
     
     async def _import_generic_data(self, source_params: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Import generic audio data."""
-        data_items = source_params.get('data', [])
+        """Import generic audio data."""        data_items = source_params.get('data', [])
         
         # Process generic data items
         processed_items = []
@@ -15992,8 +15201,7 @@ class BaseAudioImporter:
         return processed_items
     
     async def _extract_file_metadata(self, file_path: str) -> Optional[Dict[str, Any]]:
-        """Extract metadata from audio file."""
-        try:
+        """Extract metadata from audio file."""        try:
             file_stat = os.stat(file_path)
             file_name = os.path.basename(file_path)
             file_ext = os.path.splitext(file_name)[1]
@@ -16017,8 +15225,7 @@ class BaseAudioImporter:
             return None
     
     async def _fetch_url_metadata(self, url: str) -> Optional[Dict[str, Any]]:
-        """Fetch metadata from URL."""
-        try:
+        """Fetch metadata from URL."""        try:
             # This would make actual HTTP request to get metadata
             # For now, return parsed URL data
             from urllib.parse import urlparse, parse_qs
@@ -16043,8 +15250,7 @@ class BaseAudioImporter:
             return None
     
     async def _validate_imported_item(self, item: Dict[str, Any]) -> bool:
-        """Validate imported data item."""
-        required_fields = ['id', 'title', 'source']
+        """Validate imported data item."""        required_fields = ['id', 'title', 'source']
         
         for field in required_fields:
             if field not in item or not item[field]:
@@ -16067,8 +15273,7 @@ class BaseAudioImporter:
         return True
     
     async def _deduplicate_data(self, data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Remove duplicate entries from imported data."""
-        seen_ids = set()
+        """Remove duplicate entries from imported data."""        seen_ids = set()
         deduplicated = []
         
         for item in data:
@@ -16080,8 +15285,7 @@ class BaseAudioImporter:
         return deduplicated
     
     async def _apply_transformations(self, data: List[Dict[str, Any]], transformations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Apply data transformations."""
-        transformed_data = data.copy()
+        """Apply data transformations."""        transformed_data = data.copy()
         
         for transformation in transformations:
             transform_type = transformation.get('type', '')
@@ -16108,8 +15312,7 @@ class BaseAudioImporter:
         return transformed_data
     
     def _matches_filter_criteria(self, item: Dict[str, Any], criteria: Dict[str, Any]) -> bool:
-        """Check if item matches filter criteria."""
-        for key, expected_value in criteria.items():
+        """Check if item matches filter criteria."""        for key, expected_value in criteria.items():
             if key not in item:
                 return False
             
@@ -16134,8 +15337,7 @@ class BaseAudioImporter:
         return True
     
     async def validate_audio_metadata(self, metadata: AudioMetadata) -> bool:
-        """Validate audio metadata quality and completeness."""
-        required_fields = ['track_id', 'title', 'artist', 'duration_ms']
+        """Validate audio metadata quality and completeness."""        required_fields = ['track_id', 'title', 'artist', 'duration_ms']
         
         for field in required_fields:
             if not getattr(metadata, field):
@@ -16155,8 +15357,7 @@ class BaseAudioImporter:
         return True
     
     async def deduplicate_tracks(self, tracks: List[AudioMetadata]) -> List[AudioMetadata]:
-        """Remove duplicate tracks based on various matching criteria."""
-        seen_tracks = set()
+        """Remove duplicate tracks based on various matching criteria."""        seen_tracks = set()
         unique_tracks = []
         
         for track in tracks:
@@ -16179,8 +15380,7 @@ class BaseAudioImporter:
         return unique_tracks
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check for the importer."""
-        return {
+        """Perform health check for the importer."""        return {
             "healthy": True,
             "checks": {
                 "configuration": "valid",
@@ -16192,8 +15392,7 @@ class BaseAudioImporter:
 
 
 class SpotifyAudioImporter(BaseAudioImporter):
-    """Advanced Spotify Web API importer for comprehensive track data."""
-    
+    """Advanced Spotify Web API importer for comprehensive track data."""    
     def __init__(self, tenant_id: str, config: Optional[Dict[str, Any]] = None):
         super().__init__(tenant_id, config)
         
@@ -16212,8 +15411,7 @@ class SpotifyAudioImporter(BaseAudioImporter):
         self.spotify = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
     
     async def import_data(self, source_params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Import comprehensive track data from Spotify."""
-        
+        """Import comprehensive track data from Spotify."""        
         self.import_stats["start_time"] = datetime.now(timezone.utc)
         imported_tracks = []
         
@@ -16265,8 +15463,7 @@ class SpotifyAudioImporter(BaseAudioImporter):
         }
     
     async def _import_playlist_tracks(self, playlist_id: str) -> List[AudioMetadata]:
-        """Import all tracks from a Spotify playlist."""
-        tracks = []
+        """Import all tracks from a Spotify playlist."""        tracks = []
         offset = 0
         
         while True:
@@ -16299,8 +15496,7 @@ class SpotifyAudioImporter(BaseAudioImporter):
         return tracks
     
     async def _import_artist_tracks(self, artist_id: str) -> List[AudioMetadata]:
-        """Import top tracks and albums from a Spotify artist."""
-        tracks = []
+        """Import top tracks and albums from a Spotify artist."""        tracks = []
         
         try:
             # Get top tracks
@@ -16327,8 +15523,7 @@ class SpotifyAudioImporter(BaseAudioImporter):
         return tracks
     
     async def _import_album_tracks(self, album_id: str) -> List[AudioMetadata]:
-        """Import all tracks from a Spotify album."""
-        tracks = []
+        """Import all tracks from a Spotify album."""        tracks = []
         
         try:
             album_tracks = self.spotify.album_tracks(album_id)
@@ -16345,8 +15540,7 @@ class SpotifyAudioImporter(BaseAudioImporter):
         return tracks
     
     async def _import_specific_tracks(self, track_ids: List[str]) -> List[AudioMetadata]:
-        """Import specific tracks by their IDs."""
-        tracks = []
+        """Import specific tracks by their IDs."""        tracks = []
         
         # Process in batches of 50 (Spotify API limit)
         for i in range(0, len(track_ids), 50):
@@ -16364,8 +15558,7 @@ class SpotifyAudioImporter(BaseAudioImporter):
         return tracks
     
     async def _search_and_import_tracks(self, search_query: str) -> List[AudioMetadata]:
-        """Search for tracks and import results."""
-        tracks = []
+        """Search for tracks and import results."""        tracks = []
         offset = 0
         limit = 50
         max_results = self.config.get('max_search_results', 1000)
@@ -16400,8 +15593,7 @@ class SpotifyAudioImporter(BaseAudioImporter):
         return tracks
     
     async def _import_featured_tracks(self) -> List[AudioMetadata]:
-        """Import featured playlists and trending tracks."""
-        tracks = []
+        """Import featured playlists and trending tracks."""        tracks = []
         
         try:
             # Get featured playlists
@@ -16423,8 +15615,7 @@ class SpotifyAudioImporter(BaseAudioImporter):
         return tracks
     
     def _convert_spotify_track(self, track_data: Dict[str, Any]) -> Optional[AudioMetadata]:
-        """Convert Spotify track data to AudioMetadata."""
-        try:
+        """Convert Spotify track data to AudioMetadata."""        try:
             # Parse release date
             release_date = None
             if track_data.get('album', {}).get('release_date'):
@@ -16460,8 +15651,7 @@ class SpotifyAudioImporter(BaseAudioImporter):
             return None
     
     async def _enhance_with_audio_features(self, tracks: List[AudioMetadata]) -> List[AudioMetadata]:
-        """Enhance tracks with Spotify audio features."""
-        enhanced_tracks = []
+        """Enhance tracks with Spotify audio features."""        enhanced_tracks = []
         
         # Process in batches of 100 (Spotify API limit)
         for i in range(0, len(tracks), 100):
@@ -16498,8 +15688,7 @@ class SpotifyAudioImporter(BaseAudioImporter):
         return enhanced_tracks
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check for Spotify importer."""
-        checks = {}
+        """Perform health check for Spotify importer."""        checks = {}
         
         try:
             # Test API connectivity
@@ -16528,8 +15717,7 @@ class SpotifyAudioImporter(BaseAudioImporter):
 
 
 class LastFMImporter(BaseAudioImporter):
-    """Last.fm API importer for social music data and user listening patterns."""
-    
+    """Last.fm API importer for social music data and user listening patterns."""    
     def __init__(self, tenant_id: str, config: Optional[Dict[str, Any]] = None):
         super().__init__(tenant_id, config)
         
@@ -16546,8 +15734,7 @@ class LastFMImporter(BaseAudioImporter):
         )
     
     async def import_data(self, source_params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Import music data from Last.fm."""
-        
+        """Import music data from Last.fm."""        
         self.import_stats["start_time"] = datetime.now(timezone.utc)
         imported_tracks = []
         
@@ -16589,8 +15776,7 @@ class LastFMImporter(BaseAudioImporter):
         }
     
     async def _import_user_tracks(self, username: str) -> List[AudioMetadata]:
-        """Import tracks from a Last.fm user's listening history."""
-        tracks = []
+        """Import tracks from a Last.fm user's listening history."""        tracks = []
         
         try:
             user = self.lastfm.get_user(username)
@@ -16607,8 +15793,7 @@ class LastFMImporter(BaseAudioImporter):
         return tracks
     
     async def _import_artist_tracks(self, artist_name: str) -> List[AudioMetadata]:
-        """Import top tracks from a Last.fm artist."""
-        tracks = []
+        """Import top tracks from a Last.fm artist."""        tracks = []
         
         try:
             artist = self.lastfm.get_artist(artist_name)
@@ -16625,8 +15810,7 @@ class LastFMImporter(BaseAudioImporter):
         return tracks
     
     async def _import_tag_tracks(self, tag: str) -> List[AudioMetadata]:
-        """Import tracks from a Last.fm tag."""
-        tracks = []
+        """Import tracks from a Last.fm tag."""        tracks = []
         
         try:
             tag_obj = self.lastfm.get_tag(tag)
@@ -16645,8 +15829,7 @@ class LastFMImporter(BaseAudioImporter):
         return tracks
     
     async def _import_top_tracks(self) -> List[AudioMetadata]:
-        """Import overall top tracks from Last.fm."""
-        tracks = []
+        """Import overall top tracks from Last.fm."""        tracks = []
         
         try:
             top_tracks = self.lastfm.get_top_tracks(limit=100)
@@ -16662,8 +15845,7 @@ class LastFMImporter(BaseAudioImporter):
         return tracks
     
     def _convert_lastfm_track(self, track_data) -> Optional[AudioMetadata]:
-        """Convert Last.fm track data to AudioMetadata."""
-        try:
+        """Convert Last.fm track data to AudioMetadata."""        try:
             # Generate unique ID from artist and title
             track_id = hashlib.md5(
                 f"{track_data.artist.name}_{track_data.title}".encode()
@@ -16694,8 +15876,7 @@ class LastFMImporter(BaseAudioImporter):
 
 
 class SoundCloudImporter(BaseAudioImporter):
-    """SoundCloud API importer for creator content and engagement metrics."""
-    
+    """SoundCloud API importer for creator content and engagement metrics."""    
     def __init__(self, tenant_id: str, config: Optional[Dict[str, Any]] = None):
         super().__init__(tenant_id, config)
         
@@ -16708,8 +15889,7 @@ class SoundCloudImporter(BaseAudioImporter):
         self.soundcloud = soundcloud.Client(client_id=self.client_id)
     
     async def import_data(self, source_params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Import tracks from SoundCloud."""
-        
+        """Import tracks from SoundCloud."""        
         self.import_stats["start_time"] = datetime.now(timezone.utc)
         imported_tracks = []
         
@@ -16751,8 +15931,7 @@ class SoundCloudImporter(BaseAudioImporter):
         }
     
     async def _import_user_tracks(self, user_id: str) -> List[AudioMetadata]:
-        """Import tracks from a SoundCloud user."""
-        tracks = []
+        """Import tracks from a SoundCloud user."""        tracks = []
         
         try:
             user_tracks = self.soundcloud.get(f'/users/{user_id}/tracks', limit=200)
@@ -16768,8 +15947,7 @@ class SoundCloudImporter(BaseAudioImporter):
         return tracks
     
     async def _import_playlist_tracks(self, playlist_id: str) -> List[AudioMetadata]:
-        """Import tracks from a SoundCloud playlist."""
-        tracks = []
+        """Import tracks from a SoundCloud playlist."""        tracks = []
         
         try:
             playlist = self.soundcloud.get(f'/playlists/{playlist_id}')
@@ -16785,8 +15963,7 @@ class SoundCloudImporter(BaseAudioImporter):
         return tracks
     
     async def _search_tracks(self, query: str) -> List[AudioMetadata]:
-        """Search for tracks on SoundCloud."""
-        tracks = []
+        """Search for tracks on SoundCloud."""        tracks = []
         
         try:
             search_results = self.soundcloud.get('/tracks', q=query, limit=100)
@@ -16802,8 +15979,7 @@ class SoundCloudImporter(BaseAudioImporter):
         return tracks
     
     async def _import_trending_tracks(self) -> List[AudioMetadata]:
-        """Import trending tracks from SoundCloud."""
-        tracks = []
+        """Import trending tracks from SoundCloud."""        tracks = []
         
         try:
             # Get trending tracks (using charts endpoint)
@@ -16821,8 +15997,7 @@ class SoundCloudImporter(BaseAudioImporter):
         return tracks
     
     def _convert_soundcloud_track(self, track_data) -> Optional[AudioMetadata]:
-        """Convert SoundCloud track data to AudioMetadata."""
-        try:
+        """Convert SoundCloud track data to AudioMetadata."""        try:
             # Parse creation date
             created_at = None
             if hasattr(track_data, 'created_at'):
@@ -16852,8 +16027,7 @@ class SoundCloudImporter(BaseAudioImporter):
 
 
 class AudioFeatureExtractor(BaseAudioImporter):
-    """Advanced audio feature extraction using signal processing and ML."""
-    
+    """Advanced audio feature extraction using signal processing and ML."""    
     def __init__(self, tenant_id: str, config: Optional[Dict[str, Any]] = None):
         super().__init__(tenant_id, config)
         
@@ -16865,8 +16039,7 @@ class AudioFeatureExtractor(BaseAudioImporter):
     async def extract_features_from_audio(self, 
                                         audio_data: np.ndarray,
                                         track_id: str) -> ExtractedAudioFeatures:
-        """Extract comprehensive audio features from audio signal."""
-        
+        """Extract comprehensive audio features from audio signal."""        
         features = ExtractedAudioFeatures(track_id=track_id)
         
         try:
@@ -16931,8 +16104,7 @@ class AudioFeatureExtractor(BaseAudioImporter):
         return features
     
     async def import_data(self, source_params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Extract features from audio files or URLs."""
-        
+        """Extract features from audio files or URLs."""        
         self.import_stats["start_time"] = datetime.now(timezone.utc)
         extracted_features = []
         
@@ -16982,8 +16154,7 @@ def create_audio_importer(
     tenant_id: str,
     config: Optional[Dict[str, Any]] = None
 ) -> BaseAudioImporter:
-    """
-    Factory function to create audio importers.
+    """    Factory function to create audio importers.
     
     Args:
         importer_type: Type of importer ('spotify', 'lastfm', 'soundcloud', 'audio_features')
@@ -16992,8 +16163,7 @@ def create_audio_importer(
         
     Returns:
         Configured audio importer instance
-    """
-    importers = {
+    """    importers = {
         'audio': BaseAudioImporter,
         'spotify': SpotifyAudioImporter,
         'spotify_audio': SpotifyAudioImporter,
@@ -17015,8 +16185,7 @@ def create_audio_importer(
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Apple Music API Integration
+"""Apple Music API Integration
 ==========================
 
 Ultra-advanced Apple Music API integration with comprehensive music catalog access,
@@ -17045,9 +16214,7 @@ Features:
 
 Author: Expert Team - Lead Dev + AI Architect, Music API Specialist
 Version: 2.1.0
-"""
-
-import asyncio
+"""import asyncio
 import json
 import time
 import jwt
@@ -17066,8 +16233,7 @@ logger = structlog.get_logger(__name__)
 
 @dataclass
 class AppleMusicSong:
-    """Apple Music song data model."""
-    id: str
+    """Apple Music song data model."""    id: str
     type: str
     href: str
     attributes: Dict[str, Any]
@@ -17132,8 +16298,7 @@ class AppleMusicSong:
 
 @dataclass
 class AppleMusicAlbum:
-    """Apple Music album data model."""
-    id: str
+    """Apple Music album data model."""    id: str
     type: str
     href: str
     attributes: Dict[str, Any]
@@ -17185,8 +16350,7 @@ class AppleMusicAlbum:
 
 
 class AppleMusicTokenManager:
-    """Manages Apple Music API authentication."""
-    
+    """Manages Apple Music API authentication."""    
     def __init__(self, team_id: str, key_id: str, private_key: str):
         self.team_id = team_id
         self.key_id = key_id
@@ -17199,8 +16363,7 @@ class AppleMusicTokenManager:
         self.logger = logger.bind(component="apple_music_auth")
     
     def generate_developer_token(self, expires_in: int = 15777000) -> str:  # ~6 months
-        """Generate a developer token for Apple Music API access."""
-        now = datetime.now(timezone.utc)
+        """Generate a developer token for Apple Music API access."""        now = datetime.now(timezone.utc)
         
         headers = {
             'alg': 'ES256',
@@ -17226,8 +16389,7 @@ class AppleMusicTokenManager:
         return self.developer_token
     
     def ensure_valid_token(self) -> bool:
-        """Ensure we have a valid developer token."""
-        if not self.developer_token or not self.token_expires_at:
+        """Ensure we have a valid developer token."""        if not self.developer_token or not self.token_expires_at:
             self.generate_developer_token()
             return True
         
@@ -17238,8 +16400,7 @@ class AppleMusicTokenManager:
         return True
     
     def get_auth_headers(self, user_token: str = None) -> Dict[str, str]:
-        """Get authorization headers for API requests."""
-        headers = {
+        """Get authorization headers for API requests."""        headers = {
             'Authorization': f'Bearer {self.developer_token}',
             'Content-Type': 'application/json'
         }
@@ -17251,8 +16412,7 @@ class AppleMusicTokenManager:
 
 
 class AppleMusicIntegration(BaseIntegration):
-    """Ultra-advanced Apple Music API integration."""
-    
+    """Ultra-advanced Apple Music API integration."""    
     def __init__(self, config: IntegrationConfig, tenant_id: str):
         super().__init__(config, tenant_id)
         
@@ -17291,8 +16451,7 @@ class AppleMusicIntegration(BaseIntegration):
         self.error_count = 0
     
     async def initialize(self) -> bool:
-        """Initialize Apple Music integration."""
-        try:
+        """Initialize Apple Music integration."""        try:
             # Create HTTP session
             connector = aiohttp.TCPConnector(
                 limit=50,
@@ -17319,13 +16478,11 @@ class AppleMusicIntegration(BaseIntegration):
             return False
     
     async def cleanup(self) -> None:
-        """Cleanup resources."""
-        if self.session:
+        """Cleanup resources."""        if self.session:
             await self.session.close()
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check."""
-        try:
+        """Perform health check."""        try:
             # Test API connectivity with a simple catalog request
             response = await self._make_api_request('GET', f'/catalog/{self.storefront}/search', 
                                                   params={'term': 'test', 'types': 'songs', 'limit': 1})
@@ -17356,8 +16513,7 @@ class AppleMusicIntegration(BaseIntegration):
             }
     
     async def _check_rate_limit(self) -> None:
-        """Check and enforce rate limiting."""
-        current_time = time.time()
+        """Check and enforce rate limiting."""        current_time = time.time()
         
         # Reset counter every second
         if current_time - self.rate_limit_window >= 1.0:
@@ -17374,8 +16530,7 @@ class AppleMusicIntegration(BaseIntegration):
         self.rate_limit_remaining -= 1
     
     async def _make_api_request(self, method: str, endpoint: str, user_token: str = None, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated API request with error handling and retries."""
-        if not self.token_manager.ensure_valid_token():
+        """Make authenticated API request with error handling and retries."""        if not self.token_manager.ensure_valid_token():
             self.logger.error("Failed to ensure valid developer token")
             return None
         
@@ -17462,8 +16617,7 @@ class AppleMusicIntegration(BaseIntegration):
     # === Core API Methods ===
     
     async def search(self, term: str, types: List[str] = None, limit: int = 25, offset: int = 0) -> Optional[Dict[str, Any]]:
-        """Search Apple Music catalog."""
-        if types is None:
+        """Search Apple Music catalog."""        if types is None:
             types = ['songs']
         
         params = {
@@ -17477,8 +16631,7 @@ class AppleMusicIntegration(BaseIntegration):
         return response.get('data') if response and response.get('status') == 'success' else None
     
     async def get_song(self, song_id: str, include: List[str] = None) -> Optional[AppleMusicSong]:
-        """Get song by ID."""
-        params = {}
+        """Get song by ID."""        params = {}
         if include:
             params['include'] = ','.join(include)
         
@@ -17499,8 +16652,7 @@ class AppleMusicIntegration(BaseIntegration):
         return None
     
     async def get_songs(self, song_ids: List[str], include: List[str] = None) -> List[AppleMusicSong]:
-        """Get multiple songs by IDs (batch operation)."""
-        songs = []
+        """Get multiple songs by IDs (batch operation)."""        songs = []
         
         # Apple Music allows multiple IDs in one request
         params = {'ids': ','.join(song_ids)}
@@ -17522,8 +16674,7 @@ class AppleMusicIntegration(BaseIntegration):
         return songs
     
     async def get_album(self, album_id: str, include: List[str] = None) -> Optional[AppleMusicAlbum]:
-        """Get album by ID."""
-        params = {}
+        """Get album by ID."""        params = {}
         if include:
             params['include'] = ','.join(include)
         
@@ -17544,8 +16695,7 @@ class AppleMusicIntegration(BaseIntegration):
         return None
     
     async def get_album_tracks(self, album_id: str, limit: int = 300, offset: int = 0) -> Optional[Dict[str, Any]]:
-        """Get tracks from an album."""
-        params = {
+        """Get tracks from an album."""        params = {
             'limit': min(limit, 300),  # Apple Music max limit
             'offset': offset
         }
@@ -17554,8 +16704,7 @@ class AppleMusicIntegration(BaseIntegration):
         return response.get('data') if response and response.get('status') == 'success' else None
     
     async def get_artist(self, artist_id: str, include: List[str] = None) -> Optional[Dict[str, Any]]:
-        """Get artist by ID."""
-        params = {}
+        """Get artist by ID."""        params = {}
         if include:
             params['include'] = ','.join(include)
         
@@ -17563,8 +16712,7 @@ class AppleMusicIntegration(BaseIntegration):
         return response.get('data') if response and response.get('status') == 'success' else None
     
     async def get_artist_albums(self, artist_id: str, limit: int = 25, offset: int = 0) -> Optional[Dict[str, Any]]:
-        """Get artist's albums."""
-        params = {
+        """Get artist's albums."""        params = {
             'limit': min(limit, 100),
             'offset': offset
         }
@@ -17573,8 +16721,7 @@ class AppleMusicIntegration(BaseIntegration):
         return response.get('data') if response and response.get('status') == 'success' else None
     
     async def get_playlist(self, playlist_id: str, include: List[str] = None) -> Optional[Dict[str, Any]]:
-        """Get playlist by ID."""
-        params = {}
+        """Get playlist by ID."""        params = {}
         if include:
             params['include'] = ','.join(include)
         
@@ -17582,8 +16729,7 @@ class AppleMusicIntegration(BaseIntegration):
         return response.get('data') if response and response.get('status') == 'success' else None
     
     async def get_playlist_tracks(self, playlist_id: str, limit: int = 100, offset: int = 0) -> Optional[Dict[str, Any]]:
-        """Get tracks from a playlist."""
-        params = {
+        """Get tracks from a playlist."""        params = {
             'limit': min(limit, 100),
             'offset': offset
         }
@@ -17592,8 +16738,7 @@ class AppleMusicIntegration(BaseIntegration):
         return response.get('data') if response and response.get('status') == 'success' else None
     
     async def get_charts(self, types: List[str] = None, chart: str = 'most-played', genre: str = None, limit: int = 20) -> Optional[Dict[str, Any]]:
-        """Get music charts."""
-        if types is None:
+        """Get music charts."""        if types is None:
             types = ['songs']
         
         params = {
@@ -17609,15 +16754,13 @@ class AppleMusicIntegration(BaseIntegration):
         return response.get('data') if response and response.get('status') == 'success' else None
     
     async def get_genres(self, limit: int = 100) -> Optional[Dict[str, Any]]:
-        """Get available genres."""
-        params = {'limit': min(limit, 100)}
+        """Get available genres."""        params = {'limit': min(limit, 100)}
         
         response = await self._make_api_request('GET', f'/catalog/{self.storefront}/genres', params=params)
         return response.get('data') if response and response.get('status') == 'success' else None
     
     async def get_recommendations(self, recommendation_id: str = None, limit: int = 10) -> Optional[Dict[str, Any]]:
-        """Get music recommendations."""
-        endpoint = f'/me/recommendations'
+        """Get music recommendations."""        endpoint = f'/me/recommendations'
         if recommendation_id:
             endpoint += f'/{recommendation_id}'
         
@@ -17629,8 +16772,7 @@ class AppleMusicIntegration(BaseIntegration):
     # === User Library Methods (require user token) ===
     
     async def get_user_library_songs(self, user_token: str, limit: int = 100, offset: int = 0) -> Optional[Dict[str, Any]]:
-        """Get songs from user's library."""
-        params = {
+        """Get songs from user's library."""        params = {
             'limit': min(limit, 100),
             'offset': offset
         }
@@ -17640,8 +16782,7 @@ class AppleMusicIntegration(BaseIntegration):
         return response.get('data') if response and response.get('status') == 'success' else None
     
     async def get_user_library_albums(self, user_token: str, limit: int = 100, offset: int = 0) -> Optional[Dict[str, Any]]:
-        """Get albums from user's library."""
-        params = {
+        """Get albums from user's library."""        params = {
             'limit': min(limit, 100),
             'offset': offset
         }
@@ -17651,8 +16792,7 @@ class AppleMusicIntegration(BaseIntegration):
         return response.get('data') if response and response.get('status') == 'success' else None
     
     async def get_user_playlists(self, user_token: str, limit: int = 100, offset: int = 0) -> Optional[Dict[str, Any]]:
-        """Get user's playlists."""
-        params = {
+        """Get user's playlists."""        params = {
             'limit': min(limit, 100),
             'offset': offset
         }
@@ -17662,8 +16802,7 @@ class AppleMusicIntegration(BaseIntegration):
         return response.get('data') if response and response.get('status') == 'success' else None
     
     async def get_user_recently_played(self, user_token: str, limit: int = 25) -> Optional[Dict[str, Any]]:
-        """Get user's recently played tracks."""
-        params = {'limit': min(limit, 30)}
+        """Get user's recently played tracks."""        params = {'limit': min(limit, 30)}
         
         response = await self._make_api_request('GET', '/me/recent/played', 
                                               user_token=user_token, params=params)
@@ -17672,25 +16811,21 @@ class AppleMusicIntegration(BaseIntegration):
     # === Storefront Management ===
     
     async def get_storefronts(self) -> Optional[Dict[str, Any]]:
-        """Get available storefronts."""
-        response = await self._make_api_request('GET', '/storefronts')
+        """Get available storefronts."""        response = await self._make_api_request('GET', '/storefronts')
         return response.get('data') if response and response.get('status') == 'success' else None
     
     async def get_storefront(self, storefront_id: str) -> Optional[Dict[str, Any]]:
-        """Get specific storefront information."""
-        response = await self._make_api_request('GET', f'/storefronts/{storefront_id}')
+        """Get specific storefront information."""        response = await self._make_api_request('GET', f'/storefronts/{storefront_id}')
         return response.get('data') if response and response.get('status') == 'success' else None
     
     async def set_storefront(self, storefront: str) -> None:
-        """Set the storefront for subsequent requests."""
-        self.storefront = storefront
+        """Set the storefront for subsequent requests."""        self.storefront = storefront
         self.logger.info(f"Storefront changed to {storefront}")
     
     # === Utility Methods ===
     
     def get_musickit_config(self) -> Dict[str, Any]:
-        """Get configuration for MusicKit JavaScript SDK."""
-        return {
+        """Get configuration for MusicKit JavaScript SDK."""        return {
             'developerToken': self.token_manager.developer_token,
             'app': {
                 'name': f'Spotify AI Agent',
@@ -17699,8 +16834,7 @@ class AppleMusicIntegration(BaseIntegration):
         }
     
     async def lookup_by_isrc(self, isrc: str) -> Optional[AppleMusicSong]:
-        """Lookup song by ISRC."""
-        params = {
+        """Lookup song by ISRC."""        params = {
             'filter[isrc]': isrc,
             'types': 'songs'
         }
@@ -17724,8 +16858,7 @@ class AppleMusicIntegration(BaseIntegration):
         return None
     
     async def get_integration_metrics(self) -> Dict[str, Any]:
-        """Get integration performance metrics."""
-        return {
+        """Get integration performance metrics."""        return {
             'api_calls': self.api_call_count,
             'cache_hits': self.cache_hit_count,
             'cache_hit_rate': self.cache_hit_count / max(self.api_call_count, 1),
@@ -17740,8 +16873,7 @@ class AppleMusicIntegration(BaseIntegration):
         }
     
     async def convert_to_spotify_format(self, apple_music_song: AppleMusicSong) -> Dict[str, Any]:
-        """Convert Apple Music song to Spotify-like format for consistency."""
-        return {
+        """Convert Apple Music song to Spotify-like format for consistency."""        return {
             'id': apple_music_song.id,
             'name': apple_music_song.name,
             'artists': [{'name': apple_music_song.artist_name}],
@@ -17763,8 +16895,7 @@ class AppleMusicIntegration(BaseIntegration):
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Audio Quality Collectors - Collecteurs de Qualité Audio
+"""Audio Quality Collectors - Collecteurs de Qualité Audio
 ======================================================
 
 Collecteurs spécialisés pour surveiller et analyser la qualité audio
@@ -17778,9 +16909,7 @@ Features:
     - Détection anomalies audio automatisée
 
 Author: Expert Audio Engineering + Sound Quality Analysis Team
-"""
-
-import asyncio
+"""import asyncio
 import json
 import numpy as np
 import librosa
@@ -17805,8 +16934,7 @@ logger = logging.getLogger(__name__)
 
 
 class AudioFormat(Enum):
-    """Formats audio supportés."""
-    MP3 = "mp3"
+    """Formats audio supportés."""    MP3 = "mp3"
     FLAC = "flac"
     WAV = "wav"
     AAC = "aac"
@@ -17816,8 +16944,7 @@ class AudioFormat(Enum):
 
 
 class AudioQuality(Enum):
-    """Niveaux de qualité audio."""
-    LOW = "low"          # 128 kbps
+    """Niveaux de qualité audio."""    LOW = "low"          # 128 kbps
     STANDARD = "standard"  # 256 kbps
     HIGH = "high"        # 320 kbps
     LOSSLESS = "lossless"  # FLAC/WAV
@@ -17825,8 +16952,7 @@ class AudioQuality(Enum):
 
 
 class StreamingProtocol(Enum):
-    """Protocoles de streaming."""
-    HLS = "hls"
+    """Protocoles de streaming."""    HLS = "hls"
     DASH = "dash"
     PROGRESSIVE = "progressive"
     WEBRTC = "webrtc"
@@ -17835,8 +16961,7 @@ class StreamingProtocol(Enum):
 
 @dataclass
 class AudioMetrics:
-    """Métriques audio détaillées."""
-    sample_rate: int
+    """Métriques audio détaillées."""    sample_rate: int
     bit_depth: int
     channels: int
     duration_seconds: float
@@ -17855,8 +16980,7 @@ class AudioMetrics:
 
 @dataclass
 class StreamingMetrics:
-    """Métriques de streaming audio."""
-    protocol: StreamingProtocol
+    """Métriques de streaming audio."""    protocol: StreamingProtocol
     buffer_health_percentage: float
     latency_ms: float
     jitter_ms: float
@@ -17869,8 +16993,7 @@ class StreamingMetrics:
 
 
 class StreamingQualityCollector(BaseCollector):
-    """Collecteur principal pour la qualité du streaming audio."""
-    
+    """Collecteur principal pour la qualité du streaming audio."""    
     def __init__(self, config: CollectorConfig):
         super().__init__(config)
         self.stream_analyzer = StreamAnalyzer()
@@ -17879,8 +17002,7 @@ class StreamingQualityCollector(BaseCollector):
         self.adaptive_bitrate_controller = AdaptiveBitrateController()
         
     async def collect(self) -> Dict[str, Any]:
-        """Collecte complète des métriques de streaming."""
-        tenant_id = self.config.tags.get('tenant_id', 'default')
+        """Collecte complète des métriques de streaming."""        tenant_id = self.config.tags.get('tenant_id', 'default')
         
         try:
             # Métriques de streaming en temps réel
@@ -17925,8 +17047,7 @@ class StreamingQualityCollector(BaseCollector):
             raise
     
     async def _collect_streaming_metrics(self, tenant_id: str) -> Dict[str, Any]:
-        """Collecte les métriques de streaming."""
-        # Simulation de métriques de streaming
+        """Collecte les métriques de streaming."""        # Simulation de métriques de streaming
         active_streams = 1247
         protocols_distribution = {
             'hls': 0.67,
@@ -18001,8 +17122,7 @@ class StreamingQualityCollector(BaseCollector):
     
     async def _calculate_perceived_quality(self, streaming: Dict, buffer: Dict, 
                                          network: Dict) -> Dict[str, Any]:
-        """Calcule la qualité perçue par l'utilisateur."""
-        # Score basé sur plusieurs facteurs
+        """Calcule la qualité perçue par l'utilisateur."""        # Score basé sur plusieurs facteurs
         buffer_score = buffer.get('overall_health', 0) * 30
         latency_score = max(0, 30 - (streaming.get('global_metrics', {}).get('global_latency_ms', 300) / 10))
         stability_score = (1 - streaming.get('global_metrics', {}).get('global_packet_loss', 0) * 100) * 25
@@ -18034,8 +17154,7 @@ class StreamingQualityCollector(BaseCollector):
         }
     
     async def _detect_streaming_anomalies(self, metrics: Dict) -> List[Dict[str, Any]]:
-        """Détecte les anomalies dans le streaming."""
-        anomalies = []
+        """Détecte les anomalies dans le streaming."""        anomalies = []
         
         # Anomalie de latence élevée
         global_latency = metrics.get('global_metrics', {}).get('global_latency_ms', 0)
@@ -18077,8 +17196,7 @@ class StreamingQualityCollector(BaseCollector):
     
     async def _generate_quality_recommendations(self, streaming: Dict, buffer: Dict, 
                                               network: Dict) -> List[Dict[str, Any]]:
-        """Génère des recommandations d'amélioration."""
-        recommendations = []
+        """Génère des recommandations d'amélioration."""        recommendations = []
         
         # Recommandation basée sur la latence
         latency = streaming.get('global_metrics', {}).get('global_latency_ms', 0)
@@ -18120,8 +17238,7 @@ class StreamingQualityCollector(BaseCollector):
         return recommendations
     
     async def validate_data(self, data: Dict[str, Any]) -> bool:
-        """Valide les données de qualité streaming."""
-        try:
+        """Valide les données de qualité streaming."""        try:
             streaming_data = data.get('streaming_quality', {})
             
             required_fields = ['streaming_metrics', 'buffer_health', 'quality_score']
@@ -18142,11 +17259,9 @@ class StreamingQualityCollector(BaseCollector):
 
 
 class AudioProcessingCollector(BaseCollector):
-    """Collecteur pour le traitement audio et les effets."""
-    
+    """Collecteur pour le traitement audio et les effets."""    
     async def collect(self) -> Dict[str, Any]:
-        """Collecte les métriques de traitement audio."""
-        tenant_id = self.config.tags.get('tenant_id', 'default')
+        """Collecte les métriques de traitement audio."""        tenant_id = self.config.tags.get('tenant_id', 'default')
         
         try:
             # Performance des processeurs audio
@@ -18184,8 +17299,7 @@ class AudioProcessingCollector(BaseCollector):
             raise
     
     async def _analyze_processor_performance(self, tenant_id: str) -> Dict[str, Any]:
-        """Analyse la performance des processeurs audio."""
-        processors = {
+        """Analyse la performance des processeurs audio."""        processors = {
             'reverb_processor': {
                 'cpu_usage_percent': 12.4,
                 'memory_usage_mb': 45.7,
@@ -18244,8 +17358,7 @@ class AudioProcessingCollector(BaseCollector):
         }
     
     async def _analyze_effects_quality(self, tenant_id: str) -> Dict[str, Any]:
-        """Analyse la qualité des effets audio appliqués."""
-        effects_analysis = {
+        """Analyse la qualité des effets audio appliqués."""        effects_analysis = {
             'reverb': {
                 'usage_frequency': 0.67,
                 'quality_score': 0.89,
@@ -18328,8 +17441,7 @@ class AudioProcessingCollector(BaseCollector):
         }
     
     async def _analyze_ai_generation_quality(self, tenant_id: str) -> Dict[str, Any]:
-        """Analyse la qualité de génération audio IA."""
-        generation_models = {
+        """Analyse la qualité de génération audio IA."""        generation_models = {
             'melody_generator': {
                 'model_version': '3.2.1',
                 'generation_quality_score': 0.84,
@@ -18410,8 +17522,7 @@ class AudioProcessingCollector(BaseCollector):
         }
     
     async def _perform_spectral_analysis(self, tenant_id: str) -> Dict[str, Any]:
-        """Effectue une analyse spectrale des contenus audio."""
-        # Simulation d'analyse spectrale sur un échantillon
+        """Effectue une analyse spectrale des contenus audio."""        # Simulation d'analyse spectrale sur un échantillon
         frequency_analysis = {
             'bass_content_20_80hz': {
                 'average_level_db': -18.7,
@@ -18480,8 +17591,7 @@ class AudioProcessingCollector(BaseCollector):
         }
     
     async def _detect_audio_artifacts(self, tenant_id: str) -> Dict[str, Any]:
-        """Détecte les artefacts audio."""
-        artifacts_detected = {
+        """Détecte les artefacts audio."""        artifacts_detected = {
             'clipping': {
                 'incidents_count': 7,
                 'severity_average': 0.23,
@@ -18533,8 +17643,7 @@ class AudioProcessingCollector(BaseCollector):
     
     def _calculate_processing_score(self, processor: Dict, effects: Dict, 
                                   ai_generation: Dict) -> float:
-        """Calcule un score global de traitement audio."""
-        # Score de performance des processeurs
+        """Calcule un score global de traitement audio."""        # Score de performance des processeurs
         processor_score = processor['aggregate_metrics']['overall_efficiency'] * 0.3
         
         # Score de qualité des effets
@@ -18547,8 +17656,7 @@ class AudioProcessingCollector(BaseCollector):
         return round(total_score, 2)
     
     async def validate_data(self, data: Dict[str, Any]) -> bool:
-        """Valide les données de traitement audio."""
-        try:
+        """Valide les données de traitement audio."""        try:
             processing_data = data.get('audio_processing', {})
             
             required_sections = ['processor_performance', 'effects_quality', 'ai_generation']
@@ -18564,11 +17672,9 @@ class AudioProcessingCollector(BaseCollector):
 
 
 class CodecPerformanceCollector(BaseCollector):
-    """Collecteur de performance des codecs audio."""
-    
+    """Collecteur de performance des codecs audio."""    
     async def collect(self) -> Dict[str, Any]:
-        """Collecte les métriques de performance des codecs."""
-        tenant_id = self.config.tags.get('tenant_id', 'default')
+        """Collecte les métriques de performance des codecs."""        tenant_id = self.config.tags.get('tenant_id', 'default')
         
         try:
             # Performance des codecs
@@ -18604,8 +17710,7 @@ class CodecPerformanceCollector(BaseCollector):
             raise
     
     async def _analyze_codec_performance(self, tenant_id: str) -> Dict[str, Any]:
-        """Analyse la performance des différents codecs."""
-        codecs_metrics = {
+        """Analyse la performance des différents codecs."""        codecs_metrics = {
             'mp3': {
                 'encoding_speed_factor': 8.5,      # Temps réel x8.5
                 'decoding_speed_factor': 45.2,
@@ -18693,8 +17798,7 @@ class CodecPerformanceCollector(BaseCollector):
         }
     
     async def _analyze_compression_quality(self, tenant_id: str) -> Dict[str, Any]:
-        """Analyse la qualité de compression."""
-        compression_analysis = {
+        """Analyse la qualité de compression."""        compression_analysis = {
             'objective_metrics': {
                 'snr_average_db': 47.8,
                 'thd_average_percentage': 0.045,
@@ -18762,8 +17866,7 @@ class CodecPerformanceCollector(BaseCollector):
         }
     
     async def _analyze_codec_compatibility(self, tenant_id: str) -> Dict[str, Any]:
-        """Analyse la compatibilité des codecs."""
-        device_compatibility = {
+        """Analyse la compatibilité des codecs."""        device_compatibility = {
             'mobile_devices': {
                 'ios': {
                     'mp3': 1.0,
@@ -18846,8 +17949,7 @@ class CodecPerformanceCollector(BaseCollector):
     
     async def _generate_codec_optimizations(self, performance: Dict, 
                                           quality: Dict) -> List[Dict[str, Any]]:
-        """Génère des recommandations d'optimisation codec."""
-        optimizations = []
+        """Génère des recommandations d'optimisation codec."""        optimizations = []
         
         # Optimisation basée sur l'usage
         most_used = performance.get('most_used_codec', 'mp3')
@@ -18896,8 +17998,7 @@ class CodecPerformanceCollector(BaseCollector):
         return optimizations
     
     def _calculate_codec_score(self, performance: Dict, quality: Dict) -> float:
-        """Calcule un score global des codecs."""
-        # Score de performance (40%)
+        """Calcule un score global des codecs."""        # Score de performance (40%)
         perf_score = 0
         codecs = performance.get('codecs_metrics', {})
         if codecs:
@@ -18918,8 +18019,7 @@ class CodecPerformanceCollector(BaseCollector):
         return round(total_score, 2)
     
     async def validate_data(self, data: Dict[str, Any]) -> bool:
-        """Valide les données de performance codecs."""
-        try:
+        """Valide les données de performance codecs."""        try:
             codec_data = data.get('codec_performance', {})
             
             required_sections = ['performance_metrics', 'compression_quality', 'compatibility']
@@ -18935,11 +18035,9 @@ class CodecPerformanceCollector(BaseCollector):
 
 
 class StreamAnalyzer:
-    """Analyseur de flux audio en temps réel."""
-    
+    """Analyseur de flux audio en temps réel."""    
     async def analyze_stream_quality(self, stream_data: bytes) -> Dict[str, Any]:
-        """Analyse la qualité d'un flux audio."""
-        # Simulation d'analyse de flux
+        """Analyse la qualité d'un flux audio."""        # Simulation d'analyse de flux
         return {
             'peak_level_db': -6.7,
             'rms_level_db': -18.3,
@@ -18949,8 +18047,7 @@ class StreamAnalyzer:
         }
     
     def _analyze_spectrum(self, audio_data: bytes) -> Dict[str, float]:
-        """Analyse le spectre fréquentiel."""
-        # Simulation d'analyse spectrale
+        """Analyse le spectre fréquentiel."""        # Simulation d'analyse spectrale
         return {
             'bass_20_80hz': -15.7,
             'low_mid_80_320hz': -12.4,
@@ -18961,11 +18058,9 @@ class StreamAnalyzer:
 
 
 class BufferMonitor:
-    """Moniteur de santé des buffers audio."""
-    
+    """Moniteur de santé des buffers audio."""    
     async def analyze_buffer_health(self, tenant_id: str) -> Dict[str, Any]:
-        """Analyse la santé des buffers audio."""
-        buffer_metrics = {
+        """Analyse la santé des buffers audio."""        buffer_metrics = {
             'playback_buffer': {
                 'size_seconds': 3.5,
                 'health_percentage': 0.87,
@@ -19005,11 +18100,9 @@ class BufferMonitor:
 
 
 class NetworkAnalyzer:
-    """Analyseur de performance réseau pour l'audio."""
-    
+    """Analyseur de performance réseau pour l'audio."""    
     async def analyze_network_performance(self) -> Dict[str, Any]:
-        """Analyse la performance réseau."""
-        return {
+        """Analyse la performance réseau."""        return {
             'bandwidth_available_kbps': 1500,
             'latency_ms': 45,
             'jitter_ms': 8,
@@ -19024,11 +18117,9 @@ class NetworkAnalyzer:
 
 
 class AdaptiveBitrateController:
-    """Contrôleur de bitrate adaptatif."""
-    
+    """Contrôleur de bitrate adaptatif."""    
     async def get_bitrate_metrics(self) -> Dict[str, Any]:
-        """Récupère les métriques de bitrate adaptatif."""
-        return {
+        """Récupère les métriques de bitrate adaptatif."""        return {
             'current_bitrate_kbps': 256,
             'target_bitrate_kbps': 320,
             'adaptation_frequency_per_hour': 3.2,
@@ -19041,11 +18132,9 @@ class AdaptiveBitrateController:
 
 
 class PlaybackMetricsCollector(BaseCollector):
-    """Collecteur de métriques de lecture audio."""
-    
+    """Collecteur de métriques de lecture audio."""    
     async def collect(self) -> Dict[str, Any]:
-        """Collecte les métriques de lecture."""
-        tenant_id = self.config.tags.get('tenant_id', 'default')
+        """Collecte les métriques de lecture."""        tenant_id = self.config.tags.get('tenant_id', 'default')
         
         try:
             # Métriques de lecture
@@ -19079,8 +18168,7 @@ class PlaybackMetricsCollector(BaseCollector):
             raise
     
     async def _collect_playback_metrics(self, tenant_id: str) -> Dict[str, Any]:
-        """Collecte les métriques de base de lecture."""
-        return {
+        """Collecte les métriques de base de lecture."""        return {
             'sessions_active': 1247,
             'total_playback_time_hours': 8934.7,
             'average_session_duration_minutes': 24.8,
@@ -19101,8 +18189,7 @@ class PlaybackMetricsCollector(BaseCollector):
         }
     
     async def _analyze_decoding_performance(self, tenant_id: str) -> Dict[str, Any]:
-        """Analyse la performance de décodage."""
-        return {
+        """Analyse la performance de décodage."""        return {
             'decoding_latency_ms': 23.7,
             'cpu_usage_decoding_percent': 8.9,
             'memory_usage_mb': 45.2,
@@ -19112,8 +18199,7 @@ class PlaybackMetricsCollector(BaseCollector):
         }
     
     async def _analyze_audio_sync(self, tenant_id: str) -> Dict[str, Any]:
-        """Analyse la synchronisation audio."""
-        return {
+        """Analyse la synchronisation audio."""        return {
             'audio_video_sync_offset_ms': 12.3,
             'sync_stability_score': 0.94,
             'drift_compensation_active': True,
@@ -19121,8 +18207,7 @@ class PlaybackMetricsCollector(BaseCollector):
         }
     
     async def _analyze_interruptions(self, tenant_id: str) -> Dict[str, Any]:
-        """Analyse les interruptions de lecture."""
-        return {
+        """Analyse les interruptions de lecture."""        return {
             'total_interruptions': 67,
             'interruption_types': {
                 'network_issues': 23,
@@ -19137,8 +18222,7 @@ class PlaybackMetricsCollector(BaseCollector):
     
     def _calculate_playback_score(self, playback: Dict, decoding: Dict, 
                                 interruptions: Dict) -> float:
-        """Calcule un score global de lecture."""
-        # Score de fiabilité (40%)
+        """Calcule un score global de lecture."""        # Score de fiabilité (40%)
         error_rate = playback.get('playback_errors_rate', 0)
         reliability_score = (1 - error_rate * 100) * 40
         
@@ -19154,8 +18238,7 @@ class PlaybackMetricsCollector(BaseCollector):
         return round(total_score, 2)
     
     async def validate_data(self, data: Dict[str, Any]) -> bool:
-        """Valide les données de métriques de lecture."""
-        try:
+        """Valide les données de métriques de lecture."""        try:
             playback_data = data.get('playback_metrics', {})
             
             required_sections = ['playback', 'decoding', 'interruptions']
@@ -19192,8 +18275,7 @@ __all__ = [
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Enterprise Data Validation Utilities for Spotify AI Agent Alert Algorithms
+"""Enterprise Data Validation Utilities for Spotify AI Agent Alert Algorithms
 
 This module provides comprehensive data validation, sanitization, and verification
 capabilities specifically designed for music streaming platform data processing
@@ -19201,9 +18283,7 @@ and machine learning operations.
 
 Author: Fahed Mlaiel (Expert Backend Developer & ML Engineer)
 Version: 2.0.0 (Enterprise Edition)
-"""
-
-import re
+"""import re
 import json
 import numpy as np
 import pandas as pd
@@ -19219,8 +18299,7 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationType(Enum):
-    """Types of validation checks"""
-    REQUIRED = "required"
+    """Types of validation checks"""    REQUIRED = "required"
     TYPE_CHECK = "type_check"
     RANGE_CHECK = "range_check"
     FORMAT_CHECK = "format_check"
@@ -19230,8 +18309,7 @@ class ValidationType(Enum):
 
 
 class DataQuality(Enum):
-    """Data quality levels"""
-    EXCELLENT = "excellent"
+    """Data quality levels"""    EXCELLENT = "excellent"
     GOOD = "good"
     ACCEPTABLE = "acceptable"
     POOR = "poor"
@@ -19240,8 +18318,7 @@ class DataQuality(Enum):
 
 @dataclass
 class ValidationRule:
-    """Definition of a validation rule"""
-    name: str
+    """Definition of a validation rule"""    name: str
     validation_type: ValidationType
     validator: Callable[[Any], bool]
     error_message: str
@@ -19252,8 +18329,7 @@ class ValidationRule:
 
 @dataclass
 class ValidationResult:
-    """Result of validation process"""
-    is_valid: bool
+    """Result of validation process"""    is_valid: bool
     errors: List[str] = field(default_factory=list)
     warnings: List[str] = field(default_factory=list)
     data_quality: DataQuality = DataQuality.EXCELLENT
@@ -19263,33 +18339,28 @@ class ValidationResult:
 
 
 class BaseValidator(ABC):
-    """Base class for all validators"""
-    
+    """Base class for all validators"""    
     def __init__(self, name: str):
         self.name = name
         self.rules: List[ValidationRule] = []
     
     @abstractmethod
     def validate(self, data: Any) -> ValidationResult:
-        """Validate data according to rules"""
-        pass
+        """Validate data according to rules"""        pass
     
     def add_rule(self, rule: ValidationRule):
-        """Add validation rule"""
-        self.rules.append(rule)
+        """Add validation rule"""        self.rules.append(rule)
         logger.debug(f"Added validation rule '{rule.name}' to validator '{self.name}'")
 
 
 class MusicStreamingMetricsValidator(BaseValidator):
-    """Validator for music streaming metrics data"""
-    
+    """Validator for music streaming metrics data"""    
     def __init__(self):
         super().__init__("MusicStreamingMetricsValidator")
         self._initialize_rules()
     
     def _initialize_rules(self):
-        """Initialize validation rules for music streaming metrics"""
-        
+        """Initialize validation rules for music streaming metrics"""        
         # Audio quality validation rules
         self.add_rule(ValidationRule(
             name="audio_bitrate_range",
@@ -19377,8 +18448,7 @@ class MusicStreamingMetricsValidator(BaseValidator):
         ))
     
     def _validate_premium_quality_consistency(self, data: Dict[str, Any]) -> bool:
-        """Validate that premium users get appropriate audio quality"""
-        user_segment = data.get('user_segment', '').lower()
+        """Validate that premium users get appropriate audio quality"""        user_segment = data.get('user_segment', '').lower()
         audio_bitrate = float(data.get('audio_bitrate', 0))
         
         if user_segment in ['premium', 'family', 'student']:
@@ -19386,8 +18456,7 @@ class MusicStreamingMetricsValidator(BaseValidator):
         return True  # Non-premium users can have any quality
     
     def _validate_engagement_quality_correlation(self, data: Dict[str, Any]) -> bool:
-        """Validate correlation between audio quality and user engagement"""
-        audio_bitrate = float(data.get('audio_bitrate', 320))
+        """Validate correlation between audio quality and user engagement"""        audio_bitrate = float(data.get('audio_bitrate', 320))
         skip_rate = float(data.get('skip_rate', 0))
         buffering_ratio = float(data.get('buffering_ratio', 0))
         
@@ -19397,8 +18466,7 @@ class MusicStreamingMetricsValidator(BaseValidator):
         return True
     
     def validate(self, data: Dict[str, Any]) -> ValidationResult:
-        """Validate music streaming metrics data"""
-        result = ValidationResult(is_valid=True)
+        """Validate music streaming metrics data"""        result = ValidationResult(is_valid=True)
         
         try:
             # Check for required fields
@@ -19468,8 +18536,7 @@ class MusicStreamingMetricsValidator(BaseValidator):
         return result
     
     def _calculate_completeness(self, data: Dict[str, Any]) -> float:
-        """Calculate data completeness score"""
-        expected_fields = [
+        """Calculate data completeness score"""        expected_fields = [
             'audio_bitrate', 'audio_latency', 'buffering_ratio', 'skip_rate',
             'session_duration', 'user_retention_rate', 'cdn_response_time', 'revenue_per_user'
         ]
@@ -19478,16 +18545,14 @@ class MusicStreamingMetricsValidator(BaseValidator):
         return present_fields / len(expected_fields)
     
     def _get_context_summary(self) -> Dict[str, int]:
-        """Get summary of music streaming context checks"""
-        context_count = {}
+        """Get summary of music streaming context checks"""        context_count = {}
         for rule in self.rules:
             if rule.music_streaming_context:
                 context_count[rule.music_streaming_context] = context_count.get(rule.music_streaming_context, 0) + 1
         return context_count
     
     def _attempt_data_correction(self, data: Dict[str, Any], errors: List[str]) -> Dict[str, Any]:
-        """Attempt to correct data based on common issues"""
-        corrected = data.copy()
+        """Attempt to correct data based on common issues"""        corrected = data.copy()
         
         # Correct out-of-range values
         if 'audio_bitrate' in corrected:
@@ -19515,15 +18580,13 @@ class MusicStreamingMetricsValidator(BaseValidator):
 
 
 class AlertDataValidator(BaseValidator):
-    """Validator for alert data"""
-    
+    """Validator for alert data"""    
     def __init__(self):
         super().__init__("AlertDataValidator")
         self._initialize_rules()
     
     def _initialize_rules(self):
-        """Initialize validation rules for alert data"""
-        
+        """Initialize validation rules for alert data"""        
         self.add_rule(ValidationRule(
             name="alert_severity_valid",
             validation_type=ValidationType.FORMAT_CHECK,
@@ -19561,8 +18624,7 @@ class AlertDataValidator(BaseValidator):
         ))
     
     def _validate_timestamp(self, data: Dict[str, Any]) -> bool:
-        """Validate timestamp format"""
-        timestamp = data.get('timestamp')
+        """Validate timestamp format"""        timestamp = data.get('timestamp')
         if not timestamp:
             return False
         
@@ -19578,8 +18640,7 @@ class AlertDataValidator(BaseValidator):
             return False
     
     def _validate_metric_values(self, data: Dict[str, Any]) -> bool:
-        """Validate that metric values are numeric"""
-        metrics = data.get('metrics', {})
+        """Validate that metric values are numeric"""        metrics = data.get('metrics', {})
         if not isinstance(metrics, dict):
             return False
         
@@ -19592,8 +18653,7 @@ class AlertDataValidator(BaseValidator):
         return True
     
     def _validate_alert_age(self, data: Dict[str, Any]) -> bool:
-        """Validate that alert is not too old"""
-        timestamp = data.get('timestamp')
+        """Validate that alert is not too old"""        timestamp = data.get('timestamp')
         if not timestamp:
             return False
         
@@ -19609,8 +18669,7 @@ class AlertDataValidator(BaseValidator):
             return False
     
     def validate(self, data: Dict[str, Any]) -> ValidationResult:
-        """Validate alert data"""
-        result = ValidationResult(is_valid=True)
+        """Validate alert data"""        result = ValidationResult(is_valid=True)
         
         try:
             # Apply all validation rules
@@ -19655,16 +18714,14 @@ class AlertDataValidator(BaseValidator):
 
 
 class MLModelInputValidator(BaseValidator):
-    """Validator for machine learning model inputs"""
-    
+    """Validator for machine learning model inputs"""    
     def __init__(self, expected_features: Optional[List[str]] = None):
         super().__init__("MLModelInputValidator")
         self.expected_features = expected_features or []
         self._initialize_rules()
     
     def _initialize_rules(self):
-        """Initialize validation rules for ML model inputs"""
-        
+        """Initialize validation rules for ML model inputs"""        
         self.add_rule(ValidationRule(
             name="feature_completeness",
             validation_type=ValidationType.REQUIRED,
@@ -19695,8 +18752,7 @@ class MLModelInputValidator(BaseValidator):
         ))
     
     def _validate_feature_completeness(self, data: Any) -> bool:
-        """Validate that all expected features are present"""
-        if not self.expected_features:
+        """Validate that all expected features are present"""        if not self.expected_features:
             return True
         
         if isinstance(data, dict):
@@ -19709,8 +18765,7 @@ class MLModelInputValidator(BaseValidator):
         return False
     
     def _validate_numeric_features(self, data: Any) -> bool:
-        """Validate numeric features"""
-        try:
+        """Validate numeric features"""        try:
             if isinstance(data, dict):
                 for value in data.values():
                     if value is not None:
@@ -19728,8 +18783,7 @@ class MLModelInputValidator(BaseValidator):
             return False
     
     def _validate_no_infinite_values(self, data: Any) -> bool:
-        """Validate no infinite values"""
-        try:
+        """Validate no infinite values"""        try:
             if isinstance(data, dict):
                 values = [float(v) for v in data.values() if v is not None]
             elif isinstance(data, (list, np.ndarray)):
@@ -19744,8 +18798,7 @@ class MLModelInputValidator(BaseValidator):
             return False
     
     def _validate_feature_distributions(self, data: Any) -> bool:
-        """Validate feature distributions are reasonable"""
-        try:
+        """Validate feature distributions are reasonable"""        try:
             if isinstance(data, dict):
                 values = [float(v) for v in data.values() if v is not None]
             elif isinstance(data, (list, np.ndarray)):
@@ -19781,8 +18834,7 @@ class MLModelInputValidator(BaseValidator):
             return True  # Don't fail on distribution check errors
     
     def validate(self, data: Any) -> ValidationResult:
-        """Validate ML model input data"""
-        result = ValidationResult(is_valid=True)
+        """Validate ML model input data"""        result = ValidationResult(is_valid=True)
         
         try:
             # Apply validation rules
@@ -19841,26 +18893,22 @@ class MLModelInputValidator(BaseValidator):
 
 
 class ValidationManager:
-    """Central manager for all validation operations"""
-    
+    """Central manager for all validation operations"""    
     def __init__(self):
         self.validators: Dict[str, BaseValidator] = {}
         self._register_default_validators()
     
     def _register_default_validators(self):
-        """Register default validators"""
-        self.register_validator("music_streaming_metrics", MusicStreamingMetricsValidator())
+        """Register default validators"""        self.register_validator("music_streaming_metrics", MusicStreamingMetricsValidator())
         self.register_validator("alert_data", AlertDataValidator())
         self.register_validator("ml_input", MLModelInputValidator())
     
     def register_validator(self, name: str, validator: BaseValidator):
-        """Register a validator"""
-        self.validators[name] = validator
+        """Register a validator"""        self.validators[name] = validator
         logger.info(f"Registered validator: {name}")
     
     def validate(self, validator_name: str, data: Any) -> ValidationResult:
-        """Validate data using specified validator"""
-        if validator_name not in self.validators:
+        """Validate data using specified validator"""        if validator_name not in self.validators:
             result = ValidationResult(is_valid=False)
             result.errors.append(f"Validator '{validator_name}' not found")
             result.data_quality = DataQuality.CRITICAL
@@ -19869,8 +18917,7 @@ class ValidationManager:
         return self.validators[validator_name].validate(data)
     
     def validate_multiple(self, data: Dict[str, Any]) -> Dict[str, ValidationResult]:
-        """Validate data using multiple validators"""
-        results = {}
+        """Validate data using multiple validators"""        results = {}
         for validator_name, validator_data in data.items():
             if validator_name in self.validators:
                 results[validator_name] = self.validate(validator_name, validator_data)
@@ -19882,8 +18929,7 @@ class ValidationManager:
         return results
     
     def get_overall_quality(self, results: Dict[str, ValidationResult]) -> DataQuality:
-        """Get overall data quality from multiple validation results"""
-        if not results:
+        """Get overall data quality from multiple validation results"""        if not results:
             return DataQuality.CRITICAL
         
         quality_scores = {
@@ -19916,8 +18962,7 @@ _validation_manager: Optional[ValidationManager] = None
 
 
 def get_validation_manager() -> ValidationManager:
-    """Get or create global validation manager instance"""
-    global _validation_manager
+    """Get or create global validation manager instance"""    global _validation_manager
     
     if _validation_manager is None:
         _validation_manager = ValidationManager()
@@ -19926,20 +18971,17 @@ def get_validation_manager() -> ValidationManager:
 
 
 def validate_music_streaming_data(data: Dict[str, Any]) -> ValidationResult:
-    """Convenience function to validate music streaming data"""
-    manager = get_validation_manager()
+    """Convenience function to validate music streaming data"""    manager = get_validation_manager()
     return manager.validate("music_streaming_metrics", data)
 
 
 def validate_alert_data(data: Dict[str, Any]) -> ValidationResult:
-    """Convenience function to validate alert data"""
-    manager = get_validation_manager()
+    """Convenience function to validate alert data"""    manager = get_validation_manager()
     return manager.validate("alert_data", data)
 
 
 def validate_ml_input(data: Any, expected_features: Optional[List[str]] = None) -> ValidationResult:
-    """Convenience function to validate ML model input"""
-    manager = get_validation_manager()
+    """Convenience function to validate ML model input"""    manager = get_validation_manager()
     
     # Create a temporary validator with expected features if provided
     if expected_features:
@@ -19958,8 +19000,7 @@ def validate_ml_input(data: Any, expected_features: Optional[List[str]] = None) 
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-YouTube Music API Integration
+"""YouTube Music API Integration
 ============================
 
 Ultra-advanced YouTube Music API integration with comprehensive music streaming access,
@@ -19989,9 +19030,7 @@ Features:
 
 Author: Expert Team - Lead Dev + AI Architect, Music API Specialist
 Version: 2.1.0
-"""
-
-import asyncio
+"""import asyncio
 import json
 import time
 import re
@@ -20013,8 +19052,7 @@ logger = structlog.get_logger(__name__)
 
 @dataclass
 class YouTubeMusicTrack:
-    """YouTube Music track data model."""
-    video_id: str
+    """YouTube Music track data model."""    video_id: str
     title: str
     artists: List[Dict[str, Any]]
     album: Optional[Dict[str, Any]] = None
@@ -20068,8 +19106,7 @@ class YouTubeMusicTrack:
 
 @dataclass
 class YouTubeMusicPlaylist:
-    """YouTube Music playlist data model."""
-    id: str
+    """YouTube Music playlist data model."""    id: str
     title: str
     description: Optional[str] = None
     thumbnails: List[Dict[str, Any]] = field(default_factory=list)
@@ -20101,8 +19138,7 @@ class YouTubeMusicPlaylist:
 
 
 class YouTubeMusicClient:
-    """YouTube Music unofficial API client."""
-    
+    """YouTube Music unofficial API client."""    
     def __init__(self, language: str = 'en', region: str = 'US'):
         self.language = language
         self.region = region
@@ -20125,8 +19161,7 @@ class YouTubeMusicClient:
         self.logger = logger.bind(component="youtube_music_client")
     
     async def initialize(self) -> bool:
-        """Initialize YouTube Music client."""
-        try:
+        """Initialize YouTube Music client."""        try:
             # Create session
             connector = aiohttp.TCPConnector(limit=20, limit_per_host=10)
             timeout = aiohttp.ClientTimeout(total=30)
@@ -20155,8 +19190,7 @@ class YouTubeMusicClient:
             return False
     
     async def _initialize_session(self) -> None:
-        """Initialize session and extract visitor data."""
-        try:
+        """Initialize session and extract visitor data."""        try:
             async with self.session.get(f'{self.base_url}/') as response:
                 html = await response.text()
                 
@@ -20197,8 +19231,7 @@ class YouTubeMusicClient:
             self.logger.error(f"Failed to initialize session: {str(e)}")
     
     async def _make_request(self, endpoint: str, data: Dict[str, Any] = None) -> Optional[Dict[str, Any]]:
-        """Make authenticated API request."""
-        url = f"{self.api_url}/{endpoint}"
+        """Make authenticated API request."""        url = f"{self.api_url}/{endpoint}"
         
         params = {
             'key': self.api_key,
@@ -20232,8 +19265,7 @@ class YouTubeMusicClient:
             return None
     
     async def search(self, query: str, filter_type: str = None, scope: str = None, ignore_spelling: bool = False) -> Optional[Dict[str, Any]]:
-        """Search YouTube Music."""
-        params = {
+        """Search YouTube Music."""        params = {
             'query': query
         }
         
@@ -20244,8 +19276,7 @@ class YouTubeMusicClient:
         return response
     
     def _get_search_params(self, filter_type: str, scope: str = None, ignore_spelling: bool = False) -> str:
-        """Generate search parameters."""
-        # Base64 encoded search parameters for different filters
+        """Generate search parameters."""        # Base64 encoded search parameters for different filters
         filters = {
             'songs': 'EgWKAQIIAWoKEAkQBRAKEAMQBA%3D%3D',
             'videos': 'EgWKAQIQAWoKEAkQChAFEAMQBA%3D%3D',
@@ -20260,8 +19291,7 @@ class YouTubeMusicClient:
         return filters.get(filter_type, filters['songs'])
     
     async def get_song(self, video_id: str) -> Optional[Dict[str, Any]]:
-        """Get song details by video ID."""
-        params = {
+        """Get song details by video ID."""        params = {
             'videoId': video_id
         }
         
@@ -20269,8 +19299,7 @@ class YouTubeMusicClient:
         return response
     
     async def get_lyrics(self, browse_id: str) -> Optional[str]:
-        """Get lyrics for a song."""
-        params = {
+        """Get lyrics for a song."""        params = {
             'browseId': browse_id
         }
         
@@ -20296,8 +19325,7 @@ class YouTubeMusicClient:
         return None
     
     async def get_playlist(self, playlist_id: str, limit: int = 100) -> Optional[Dict[str, Any]]:
-        """Get playlist details and tracks."""
-        params = {
+        """Get playlist details and tracks."""        params = {
             'browseId': f'VL{playlist_id}' if not playlist_id.startswith('VL') else playlist_id
         }
         
@@ -20305,8 +19333,7 @@ class YouTubeMusicClient:
         return response
     
     async def get_album(self, browse_id: str) -> Optional[Dict[str, Any]]:
-        """Get album details."""
-        params = {
+        """Get album details."""        params = {
             'browseId': browse_id
         }
         
@@ -20314,8 +19341,7 @@ class YouTubeMusicClient:
         return response
     
     async def get_artist(self, channel_id: str) -> Optional[Dict[str, Any]]:
-        """Get artist details."""
-        params = {
+        """Get artist details."""        params = {
             'browseId': channel_id
         }
         
@@ -20323,8 +19349,7 @@ class YouTubeMusicClient:
         return response
     
     async def get_home(self) -> Optional[Dict[str, Any]]:
-        """Get home feed."""
-        params = {
+        """Get home feed."""        params = {
             'browseId': 'FEmusic_home'
         }
         
@@ -20332,8 +19357,7 @@ class YouTubeMusicClient:
         return response
     
     async def get_charts(self) -> Optional[Dict[str, Any]]:
-        """Get music charts."""
-        params = {
+        """Get music charts."""        params = {
             'browseId': 'FEmusic_charts'
         }
         
@@ -20341,14 +19365,12 @@ class YouTubeMusicClient:
         return response
     
     async def cleanup(self) -> None:
-        """Cleanup resources."""
-        if self.session:
+        """Cleanup resources."""        if self.session:
             await self.session.close()
 
 
 class YouTubeMusicIntegration(BaseIntegration):
-    """Ultra-advanced YouTube Music integration."""
-    
+    """Ultra-advanced YouTube Music integration."""    
     def __init__(self, config: IntegrationConfig, tenant_id: str):
         super().__init__(config, tenant_id)
         
@@ -20374,8 +19396,7 @@ class YouTubeMusicIntegration(BaseIntegration):
         self.min_request_interval = 0.1  # 100ms between requests
     
     async def initialize(self) -> bool:
-        """Initialize YouTube Music integration."""
-        try:
+        """Initialize YouTube Music integration."""        try:
             success = await self.client.initialize()
             if success:
                 self.logger.info("YouTube Music integration initialized successfully")
@@ -20389,12 +19410,10 @@ class YouTubeMusicIntegration(BaseIntegration):
             return False
     
     async def cleanup(self) -> None:
-        """Cleanup resources."""
-        await self.client.cleanup()
+        """Cleanup resources."""        await self.client.cleanup()
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check."""
-        try:
+        """Perform health check."""        try:
             # Test search functionality
             start_time = time.time()
             response = await self.search("test", limit=1)
@@ -20426,8 +19445,7 @@ class YouTubeMusicIntegration(BaseIntegration):
             }
     
     async def _ensure_rate_limit(self) -> None:
-        """Ensure rate limiting between requests."""
-        current_time = time.time()
+        """Ensure rate limiting between requests."""        current_time = time.time()
         time_since_last = current_time - self.last_request_time
         
         if time_since_last < self.min_request_interval:
@@ -20436,8 +19454,7 @@ class YouTubeMusicIntegration(BaseIntegration):
         self.last_request_time = time.time()
     
     async def search(self, query: str, filter_type: str = 'songs', limit: int = 20) -> List[YouTubeMusicTrack]:
-        """Search for music content."""
-        await self._ensure_rate_limit()
+        """Search for music content."""        await self._ensure_rate_limit()
         
         try:
             self.api_call_count += 1
@@ -20473,8 +19490,7 @@ class YouTubeMusicIntegration(BaseIntegration):
             return []
     
     def _parse_track_from_search(self, item: Dict[str, Any]) -> Optional[YouTubeMusicTrack]:
-        """Parse track from search result item."""
-        try:
+        """Parse track from search result item."""        try:
             responsive_item = item.get('musicResponsiveListItemRenderer', {})
             if not responsive_item:
                 return None
@@ -20544,13 +19560,11 @@ class YouTubeMusicIntegration(BaseIntegration):
             return None
     
     def _extract_browse_id(self, navigation_endpoint: Dict[str, Any]) -> Optional[str]:
-        """Extract browse ID from navigation endpoint."""
-        browse_endpoint = navigation_endpoint.get('browseEndpoint', {})
+        """Extract browse ID from navigation endpoint."""        browse_endpoint = navigation_endpoint.get('browseEndpoint', {})
         return browse_endpoint.get('browseId')
     
     async def get_song_details(self, video_id: str) -> Optional[Dict[str, Any]]:
-        """Get detailed song information."""
-        await self._ensure_rate_limit()
+        """Get detailed song information."""        await self._ensure_rate_limit()
         
         try:
             self.api_call_count += 1
@@ -20573,8 +19587,7 @@ class YouTubeMusicIntegration(BaseIntegration):
             return None
     
     async def get_playlist(self, playlist_id: str) -> Optional[YouTubeMusicPlaylist]:
-        """Get playlist information."""
-        await self._ensure_rate_limit()
+        """Get playlist information."""        await self._ensure_rate_limit()
         
         try:
             self.api_call_count += 1
@@ -20627,8 +19640,7 @@ class YouTubeMusicIntegration(BaseIntegration):
             return None
     
     async def get_playlist_tracks(self, playlist_id: str, limit: int = 100) -> List[YouTubeMusicTrack]:
-        """Get tracks from a playlist."""
-        await self._ensure_rate_limit()
+        """Get tracks from a playlist."""        await self._ensure_rate_limit()
         
         try:
             self.api_call_count += 1
@@ -20658,8 +19670,7 @@ class YouTubeMusicIntegration(BaseIntegration):
             return []
     
     def _parse_track_from_playlist(self, item: Dict[str, Any]) -> Optional[YouTubeMusicTrack]:
-        """Parse track from playlist item."""
-        try:
+        """Parse track from playlist item."""        try:
             responsive_item = item.get('musicResponsiveListItemRenderer', {})
             if not responsive_item:
                 return None
@@ -20737,8 +19748,7 @@ class YouTubeMusicIntegration(BaseIntegration):
             return None
     
     async def get_charts(self) -> Optional[Dict[str, Any]]:
-        """Get music charts."""
-        await self._ensure_rate_limit()
+        """Get music charts."""        await self._ensure_rate_limit()
         
         try:
             self.api_call_count += 1
@@ -20775,8 +19785,7 @@ class YouTubeMusicIntegration(BaseIntegration):
             return None
     
     def _parse_chart_item(self, item: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Parse individual chart item."""
-        try:
+        """Parse individual chart item."""        try:
             carousel_item = item.get('musicTwoRowItemRenderer', {})
             if not carousel_item:
                 return None
@@ -20807,8 +19816,7 @@ class YouTubeMusicIntegration(BaseIntegration):
             return None
     
     async def get_lyrics(self, video_id: str) -> Optional[str]:
-        """Get lyrics for a song."""
-        # First get song details to find lyrics browse ID
+        """Get lyrics for a song."""        # First get song details to find lyrics browse ID
         song_details = await self.get_song_details(video_id)
         
         if not song_details:
@@ -20823,8 +19831,7 @@ class YouTubeMusicIntegration(BaseIntegration):
     # === Utility Methods ===
     
     async def convert_to_universal_format(self, track: YouTubeMusicTrack) -> Dict[str, Any]:
-        """Convert YouTube Music track to universal format for cross-platform compatibility."""
-        return {
+        """Convert YouTube Music track to universal format for cross-platform compatibility."""        return {
             'id': track.video_id,
             'name': track.title,
             'artists': [{'name': artist['name']} for artist in track.artists],
@@ -20841,8 +19848,7 @@ class YouTubeMusicIntegration(BaseIntegration):
         }
     
     def _duration_to_ms(self, duration_str: str) -> Optional[int]:
-        """Convert duration string (MM:SS) to milliseconds."""
-        try:
+        """Convert duration string (MM:SS) to milliseconds."""        try:
             if ':' in duration_str:
                 parts = duration_str.split(':')
                 if len(parts) == 2:
@@ -20856,8 +19862,7 @@ class YouTubeMusicIntegration(BaseIntegration):
         return None
     
     async def get_integration_metrics(self) -> Dict[str, Any]:
-        """Get integration performance metrics."""
-        return {
+        """Get integration performance metrics."""        return {
             'api_calls': self.api_call_count,
             'cache_hits': self.cache_hit_count,
             'cache_hit_rate': self.cache_hit_count / max(self.api_call_count, 1),
@@ -20874,8 +19879,7 @@ class YouTubeMusicIntegration(BaseIntegration):
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-🎵 Spotify AI Agent - Music Streaming Data Processing Utilities
+"""🎵 Spotify AI Agent - Music Streaming Data Processing Utilities
 =============================================================
 
 Advanced Data Processing Utilities for Music Streaming Platform
@@ -20924,9 +19928,7 @@ processing, content analytics, and performance optimization tools.
 @Author: Music Data Processing by Fahed Mlaiel
 @Version: 2.0.0 (Enterprise Edition)
 @Last Updated: 2025-07-19
-"""
-
-import numpy as np
+"""import numpy as np
 import pandas as pd
 import logging
 from typing import Dict, Any, List, Optional, Tuple, Union
@@ -20955,10 +19957,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioQualityMetrics:
-    """
-    Comprehensive audio quality metrics for streaming analysis.
-    """
-    # Core Audio Metrics
+    """    Comprehensive audio quality metrics for streaming analysis.
+    """    # Core Audio Metrics
     bitrate_kbps: float = 0.0              # Audio bitrate in kbps
     sample_rate_hz: int = 44100            # Sample rate in Hz
     bit_depth: int = 16                    # Bit depth
@@ -20989,8 +19989,7 @@ class AudioQualityMetrics:
     engagement_score: float = 0.0          # Overall engagement metric
     
     def calculate_overall_quality(self) -> float:
-        """Calculate overall audio quality score (0-1)."""
-        # Weighted combination of quality factors
+        """Calculate overall audio quality score (0-1)."""        # Weighted combination of quality factors
         weights = {
             'bitrate': 0.25,
             'snr': 0.20,
@@ -21021,10 +20020,8 @@ class AudioQualityMetrics:
 
 @dataclass 
 class UserBehaviorMetrics:
-    """
-    Comprehensive user behavior metrics for engagement analysis.
-    """
-    # Session Metrics
+    """    Comprehensive user behavior metrics for engagement analysis.
+    """    # Session Metrics
     session_duration_minutes: float = 0.0   # Total session duration
     tracks_played: int = 0                   # Number of tracks played
     tracks_completed: int = 0                # Number of tracks played to completion
@@ -21059,8 +20056,7 @@ class UserBehaviorMetrics:
     voice_command_usage: int = 0             # Voice command interactions
     
     def calculate_engagement_score(self) -> float:
-        """Calculate overall user engagement score (0-1)."""
-        # Weighted engagement factors
+        """Calculate overall user engagement score (0-1)."""        # Weighted engagement factors
         weights = {
             'completion': 0.30,
             'interaction': 0.25,
@@ -21087,21 +20083,17 @@ class UserBehaviorMetrics:
         return np.clip(engagement_score, 0.0, 1.0)
 
 class MusicDataProcessor:
-    """
-    Advanced data processor for music streaming platform analytics.
+    """    Advanced data processor for music streaming platform analytics.
     
     Provides comprehensive data processing capabilities including feature
     engineering, aggregation, normalization, and specialized music analytics.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
-        """
-        Initialize the music data processor.
+        """        Initialize the music data processor.
         
         Args:
             config: Configuration dictionary for processing parameters
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self.scaler = StandardScaler()
         self.is_fitted = False
         
@@ -21116,16 +20108,14 @@ class MusicDataProcessor:
         logger.info("MusicDataProcessor initialized")
     
     def process_audio_quality_data(self, data: pd.DataFrame) -> pd.DataFrame:
-        """
-        Process and enhance audio quality data with advanced metrics.
+        """        Process and enhance audio quality data with advanced metrics.
         
         Args:
             data: DataFrame containing raw audio quality data
             
         Returns:
             Enhanced DataFrame with calculated quality metrics
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             processed_data = data.copy()
@@ -21181,16 +20171,14 @@ class MusicDataProcessor:
             raise
     
     def process_user_behavior_data(self, data: pd.DataFrame) -> pd.DataFrame:
-        """
-        Process and enhance user behavior data with engagement metrics.
+        """        Process and enhance user behavior data with engagement metrics.
         
         Args:
             data: DataFrame containing raw user behavior data
             
         Returns:
             Enhanced DataFrame with calculated behavior metrics
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             processed_data = data.copy()
@@ -21250,8 +20238,7 @@ class MusicDataProcessor:
     
     def aggregate_geographic_performance(self, data: pd.DataFrame, 
                                        region_column: str = 'region') -> pd.DataFrame:
-        """
-        Aggregate performance metrics by geographic region.
+        """        Aggregate performance metrics by geographic region.
         
         Args:
             data: DataFrame containing performance data with region information
@@ -21259,8 +20246,7 @@ class MusicDataProcessor:
             
         Returns:
             DataFrame with aggregated regional performance metrics
-        """
-        try:
+        """        try:
             # Define aggregation functions for different metric types
             agg_functions = {
                 'latency_ms': ['mean', 'median', 'p95', 'p99'],
@@ -21316,16 +20302,14 @@ class MusicDataProcessor:
             raise
     
     def calculate_revenue_impact_metrics(self, data: pd.DataFrame) -> pd.DataFrame:
-        """
-        Calculate comprehensive revenue impact metrics.
+        """        Calculate comprehensive revenue impact metrics.
         
         Args:
             data: DataFrame containing user activity and revenue data
             
         Returns:
             DataFrame with calculated revenue impact metrics
-        """
-        try:
+        """        try:
             processed_data = data.copy()
             
             # Revenue per user calculations
@@ -21376,8 +20360,7 @@ class MusicDataProcessor:
             raise
     
     def _calculate_perceived_quality(self, features: pd.DataFrame) -> pd.Series:
-        """Calculate perceived audio quality score based on technical metrics."""
-        # Normalize features to 0-1 scale
+        """Calculate perceived audio quality score based on technical metrics."""        # Normalize features to 0-1 scale
         normalized_features = pd.DataFrame()
         
         if 'bitrate_kbps' in features.columns:
@@ -21408,8 +20391,7 @@ class MusicDataProcessor:
         return quality_score * 10  # Scale to 0-10
     
     def _calculate_engagement_score(self, features: pd.DataFrame) -> pd.Series:
-        """Calculate user engagement score based on behavior metrics."""
-        # Normalize features to 0-1 scale
+        """Calculate user engagement score based on behavior metrics."""        # Normalize features to 0-1 scale
         normalized_features = pd.DataFrame()
         
         if 'completion_rate' in features.columns:
@@ -21440,8 +20422,7 @@ class MusicDataProcessor:
         return engagement_score
     
     def _calculate_business_impact_score(self, features: pd.DataFrame) -> pd.Series:
-        """Calculate business impact score based on revenue metrics."""
-        # Normalize features to 0-1 scale
+        """Calculate business impact score based on revenue metrics."""        # Normalize features to 0-1 scale
         normalized_features = pd.DataFrame()
         
         if 'revenue_per_user' in features.columns:
@@ -21467,8 +20448,7 @@ class MusicDataProcessor:
         return impact_score
     
     def _segment_users_by_behavior(self, features: pd.DataFrame) -> pd.Series:
-        """Segment users based on behavior patterns using clustering."""
-        try:
+        """Segment users based on behavior patterns using clustering."""        try:
             # Fill missing values
             features_clean = features.fillna(features.median())
             
@@ -21496,8 +20476,7 @@ class MusicDataProcessor:
             return pd.Series('unknown', index=features.index)
     
     def _add_temporal_features(self, data: pd.DataFrame) -> pd.DataFrame:
-        """Add time-based features to the dataset."""
-        if 'timestamp' not in data.columns:
+        """Add time-based features to the dataset."""        if 'timestamp' not in data.columns:
             return data
         
         # Convert timestamp to datetime if needed
@@ -21520,8 +20499,7 @@ class MusicDataProcessor:
         return data
     
     def _add_behavioral_patterns(self, data: pd.DataFrame) -> pd.DataFrame:
-        """Add behavioral pattern features."""
-        # Listening intensity patterns
+        """Add behavioral pattern features."""        # Listening intensity patterns
         if 'session_duration_minutes' in data.columns and 'tracks_played' in data.columns:
             data['tracks_per_minute'] = (
                 data['tracks_played'] / np.maximum(data['session_duration_minutes'], 1)
@@ -21540,8 +20518,7 @@ class MusicDataProcessor:
         return data
     
     def get_processing_stats(self) -> Dict[str, Any]:
-        """Get comprehensive processing statistics."""
-        avg_processing_time = (
+        """Get comprehensive processing statistics."""        avg_processing_time = (
             np.mean(self.processing_stats['processing_time_ms']) 
             if self.processing_stats['processing_time_ms'] else 0
         )
@@ -21571,8 +20548,7 @@ __all__ = [
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Fingerprint Alert Handler Module - Influencer AI Agent Platform
+"""Fingerprint Alert Handler Module - Influencer AI Agent Platform
 
 This module provides advanced content fingerprinting and matching capabilities
 for the Influencer AI Agent Platform. It enables AI-powered content identification,
@@ -21588,9 +20564,7 @@ Business Context:
 - Critical for detecting unauthorized content modifications and derivatives
 - Supports legal evidence collection for intellectual property protection
 - Powers content licensing verification and usage tracking
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Any, Set, Union, Tuple, ByteString
@@ -21619,8 +20593,7 @@ from ..alert_manager import AlertManager
 
 
 class FingerprintType(Enum):
-    """Types of content fingerprints."""
-    PERCEPTUAL_HASH = "perceptual_hash"
+    """Types of content fingerprints."""    PERCEPTUAL_HASH = "perceptual_hash"
     CHROMAPRINT = "chromaprint"  # Audio fingerprinting
     VIDEO_HASH = "video_hash"
     TEXT_SEMANTIC = "text_semantic"
@@ -21638,8 +20611,7 @@ class FingerprintType(Enum):
 
 
 class ContentFormat(Enum):
-    """Supported content formats for fingerprinting."""
-    IMAGE = "image"
+    """Supported content formats for fingerprinting."""    IMAGE = "image"
     AUDIO = "audio"
     VIDEO = "video"
     TEXT = "text"
@@ -21654,8 +20626,7 @@ class ContentFormat(Enum):
 
 
 class MatchType(Enum):
-    """Types of fingerprint matches."""
-    EXACT_MATCH = "exact_match"
+    """Types of fingerprint matches."""    EXACT_MATCH = "exact_match"
     NEAR_DUPLICATE = "near_duplicate"
     DERIVATIVE_WORK = "derivative_work"
     TRANSFORMED_CONTENT = "transformed_content"
@@ -21670,8 +20641,7 @@ class MatchType(Enum):
 
 
 class FingerprintStatus(Enum):
-    """Status of fingerprint processing."""
-    PENDING = "pending"
+    """Status of fingerprint processing."""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -21683,8 +20653,7 @@ class FingerprintStatus(Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Comprehensive content fingerprint with multi-format support."""
-    fingerprint_id: str
+    """Comprehensive content fingerprint with multi-format support."""    fingerprint_id: str
     content_id: str
     creator_id: str
     content_format: ContentFormat
@@ -21737,8 +20706,7 @@ class ContentFingerprint:
 
 @dataclass
 class FingerprintMatch:
-    """Fingerprint matching result with detailed analysis."""
-    match_id: str
+    """Fingerprint matching result with detailed analysis."""    match_id: str
     query_fingerprint_id: str
     matched_fingerprint_id: str
     match_type: MatchType
@@ -21789,8 +20757,7 @@ class FingerprintMatch:
 
 @dataclass
 class FingerprintDatabase:
-    """Fingerprint database statistics and management."""
-    database_id: str
+    """Fingerprint database statistics and management."""    database_id: str
     database_name: str
     total_fingerprints: int
     active_fingerprints: int
@@ -21824,8 +20791,7 @@ class FingerprintDatabase:
 
 
 class FingerprintAlertHandler:
-    """
-    Enterprise Content Fingerprint Alert Handler
+    """    Enterprise Content Fingerprint Alert Handler
     
     Advanced AI-powered content fingerprinting and matching system for the
     Influencer AI Agent Platform. Provides comprehensive content identification,
@@ -21841,8 +20807,7 @@ class FingerprintAlertHandler:
     - Advanced transformation detection and derivative work identification
     - Automated infringement detection and legal evidence collection
     - Comprehensive content provenance and ownership verification
-    """
-    
+    """    
     def __init__(
         self,
         alert_manager: AlertManager,
@@ -21858,8 +20823,7 @@ class FingerprintAlertHandler:
         fingerprint_cache_ttl: int = 86400,  # 24 hours
         max_fingerprint_age_days: int = 365  # 1 year
     ):
-        """
-        Initialize Fingerprint Alert Handler.
+        """        Initialize Fingerprint Alert Handler.
         
         Args:
             alert_manager: Alert management system
@@ -21874,8 +20838,7 @@ class FingerprintAlertHandler:
             enable_realtime_monitoring: Enable real-time monitoring
             fingerprint_cache_ttl: Cache TTL in seconds
             max_fingerprint_age_days: Maximum fingerprint age
-        """
-        self.alert_manager = alert_manager
+        """        self.alert_manager = alert_manager
         self.db_pool = db_pool
         self.redis_client = redis_client
         self.similarity_threshold = similarity_threshold
@@ -21915,8 +20878,7 @@ class FingerprintAlertHandler:
         self.nlp_model = None
         
     async def initialize(self) -> None:
-        """Initialize fingerprint processing system."""
-        try:
+        """Initialize fingerprint processing system."""        try:
             self.logger.info("Initializing Fingerprint Alert Handler...")
             
             # Create fingerprint tables
@@ -21953,13 +20915,11 @@ class FingerprintAlertHandler:
         fingerprint_types: Optional[List[FingerprintType]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> List[str]:
-        """
-        Create comprehensive fingerprints for content.
+        """        Create comprehensive fingerprints for content.
         
         Returns:
             List[str]: Created fingerprint IDs
-        """
-        try:
+        """        try:
             if not fingerprint_types:
                 fingerprint_types = await self._get_default_fingerprint_types(content_format)
             
@@ -22020,13 +20980,11 @@ class FingerprintAlertHandler:
         match_types: Optional[List[MatchType]] = None,
         search_scope: Optional[Dict[str, Any]] = None
     ) -> List[str]:
-        """
-        Find matching fingerprints in the database.
+        """        Find matching fingerprints in the database.
         
         Returns:
             List[str]: Match IDs for found matches
-        """
-        try:
+        """        try:
             if similarity_threshold is None:
                 similarity_threshold = self.similarity_threshold
             
@@ -22093,13 +21051,11 @@ class FingerprintAlertHandler:
         content_id: str,
         verification_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Verify content authenticity using fingerprints.
+        """        Verify content authenticity using fingerprints.
         
         Returns:
             Dict containing verification results
-        """
-        try:
+        """        try:
             verification_result = {
                 "content_id": content_id,
                 "verification_timestamp": datetime.now(timezone.utc),
@@ -22177,8 +21133,7 @@ class FingerprintAlertHandler:
             return {"content_id": content_id, "error": str(e)}
     
     async def start_monitoring(self) -> None:
-        """Start real-time fingerprint monitoring."""
-        if not self.enable_realtime_monitoring:
+        """Start real-time fingerprint monitoring."""        if not self.enable_realtime_monitoring:
             self.logger.info("Real-time monitoring disabled")
             return
         
@@ -22209,8 +21164,7 @@ class FingerprintAlertHandler:
             raise
     
     async def stop_monitoring(self) -> None:
-        """Stop fingerprint monitoring."""
-        self.running = False
+        """Stop fingerprint monitoring."""        self.running = False
         self.logger.info("Fingerprint monitoring stopped")
     
     # Helper methods for fingerprint extraction
@@ -22223,8 +21177,7 @@ class FingerprintAlertHandler:
         fingerprint_type: FingerprintType,
         metadata: Dict[str, Any]
     ) -> Optional[str]:
-        """Extract specific type of fingerprint from content."""
-        try:
+        """Extract specific type of fingerprint from content."""        try:
             fingerprint_id = str(uuid.uuid4())
             now = datetime.now(timezone.utc)
             
@@ -22315,8 +21268,7 @@ class FingerprintAlertHandler:
         creator_id: Optional[str] = None,
         additional_data: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Create fingerprint-related alert."""
-        try:
+        """Create fingerprint-related alert."""        try:
             alert = Alert(
                 alert_id=str(uuid.uuid4()),
                 alert_type="content_fingerprint",
@@ -22344,8 +21296,7 @@ class FingerprintAlertHandler:
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Multi-Format Upload Processing Configuration
+"""Multi-Format Upload Processing Configuration
 
 Enterprise-grade configuration for handling multi-format content uploads from creators
 (musicians, bloggers, photographers, influencers, comedians).
@@ -22359,9 +21310,7 @@ Project Team Specialties:
 This code and concept are exclusively owned by Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Legal action will be taken against violators.
-"""
-
-import os
+"""import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union, Set
 from enum import Enum
@@ -22369,8 +21318,7 @@ from decimal import Decimal
 
 
 class ContentFormat(Enum):
-    """Supported content formats for creators."""
-    # Audio formats
+    """Supported content formats for creators."""    # Audio formats
     AUDIO_MP3 = "audio/mp3"
     AUDIO_WAV = "audio/wav"
     AUDIO_FLAC = "audio/flac"
@@ -22406,8 +21354,7 @@ class ContentFormat(Enum):
 
 
 class CreatorType(Enum):
-    """Types of content creators."""
-    MUSICIAN = "musician"
+    """Types of content creators."""    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -22419,8 +21366,7 @@ class CreatorType(Enum):
 
 
 class ProcessingPriority(Enum):
-    """Processing priority levels."""
-    LOW = "low"
+    """Processing priority levels."""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
@@ -22429,8 +21375,7 @@ class ProcessingPriority(Enum):
 
 @dataclass
 class FormatProcessingConfig:
-    """Configuration for specific format processing."""
-    max_file_size_mb: int = 500
+    """Configuration for specific format processing."""    max_file_size_mb: int = 500
     allowed_extensions: Set[str] = field(default_factory=set)
     compression_enabled: bool = True
     quality_optimization: bool = True
@@ -22461,8 +21406,7 @@ class FormatProcessingConfig:
 
 @dataclass
 class UploadLimits:
-    """Upload limits configuration."""
-    # File size limits (MB)
+    """Upload limits configuration."""    # File size limits (MB)
     max_single_file_size: int = 2000
     max_total_upload_size: int = 10000
     max_files_per_batch: int = 50
@@ -22501,8 +21445,7 @@ class UploadLimits:
 
 @dataclass
 class ProcessingQueue:
-    """Upload processing queue configuration."""
-    max_concurrent_jobs: int = 10
+    """Upload processing queue configuration."""    max_concurrent_jobs: int = 10
     priority_weights: Dict[ProcessingPriority, int] = field(default_factory=lambda: {
         ProcessingPriority.LOW: 1,
         ProcessingPriority.NORMAL: 2,
@@ -22529,8 +21472,7 @@ class ProcessingQueue:
 
 @dataclass
 class ContentValidation:
-    """Content validation and safety configuration."""
-    enable_content_moderation: bool = True
+    """Content validation and safety configuration."""    enable_content_moderation: bool = True
     enable_copyright_detection: bool = True
     enable_duplicate_detection: bool = True
     enable_quality_assessment: bool = True
@@ -22549,8 +21491,7 @@ class ContentValidation:
 
 @dataclass
 class MetadataExtraction:
-    """Metadata extraction configuration."""
-    enable_automatic_extraction: bool = True
+    """Metadata extraction configuration."""    enable_automatic_extraction: bool = True
     preserve_original_metadata: bool = True
     generate_enhanced_metadata: bool = True
     
@@ -22574,8 +21515,7 @@ class MetadataExtraction:
 
 @dataclass
 class UploadProcessingConfiguration:
-    """Main upload processing configuration."""
-    
+    """Main upload processing configuration."""    
     # Core settings
     enabled: bool = True
     debug_mode: bool = field(default_factory=lambda: os.getenv("DEBUG", "false").lower() == "true")
@@ -22611,8 +21551,7 @@ class UploadProcessingConfiguration:
     
     @classmethod
     def create_default_format_configs(cls) -> Dict[ContentFormat, FormatProcessingConfig]:
-        """Create default format-specific configurations."""
-        configs = {}
+        """Create default format-specific configurations."""        configs = {}
         
         # Audio formats
         audio_config = FormatProcessingConfig(
@@ -22661,8 +21600,7 @@ class UploadProcessingConfiguration:
         return configs
     
     def validate_configuration(self) -> List[str]:
-        """Validate the upload processing configuration."""
-        errors = []
+        """Validate the upload processing configuration."""        errors = []
         
         if not self.temporary_storage_path:
             errors.append("temporary_storage_path cannot be empty")
@@ -22684,8 +21622,7 @@ class UploadProcessingConfiguration:
     
     @classmethod
     def create_development_config(cls) -> 'UploadProcessingConfiguration':
-        """Create configuration for development environment."""
-        config = cls()
+        """Create configuration for development environment."""        config = cls()
         config.debug_mode = True
         config.upload_limits.max_single_file_size = 100  # 100MB for dev
         config.processing_queue.max_concurrent_jobs = 2
@@ -22695,8 +21632,7 @@ class UploadProcessingConfiguration:
     
     @classmethod
     def create_production_config(cls) -> 'UploadProcessingConfiguration':
-        """Create configuration for production environment."""
-        config = cls()
+        """Create configuration for production environment."""        config = cls()
         config.debug_mode = False
         config.upload_limits.max_single_file_size = 2000  # 2GB for prod
         config.processing_queue.max_concurrent_jobs = 10
@@ -22707,8 +21643,7 @@ class UploadProcessingConfiguration:
     
     @classmethod
     def create_enterprise_config(cls) -> 'UploadProcessingConfiguration':
-        """Create configuration for enterprise environment."""
-        config = cls.create_production_config()
+        """Create configuration for enterprise environment."""        config = cls.create_production_config()
         config.upload_limits.max_single_file_size = 10000  # 10GB for enterprise
         config.processing_queue.max_concurrent_jobs = 20
         config.processing_threads = 8
@@ -22720,8 +21655,7 @@ class UploadProcessingConfiguration:
 
 # Export default configuration
 def get_upload_processing_config() -> UploadProcessingConfiguration:
-    """Get upload processing configuration based on environment."""
-    env = os.getenv("ENVIRONMENT", "development").lower()
+    """Get upload processing configuration based on environment."""    env = os.getenv("ENVIRONMENT", "development").lower()
     
     if env == "production":
         return UploadProcessingConfiguration.create_production_config()
@@ -22751,8 +21685,7 @@ __all__ = [
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Fingerprinting Service
+"""Fingerprinting Service
 
 Enterprise-grade content fingerprinting service supporting multi-format
 content analysis and unique signature generation.
@@ -22766,9 +21699,7 @@ Project Team Specialties:
 This code and concept are exclusively owned by Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Legal action will be taken against violators.
-"""
-
-import asyncio
+"""import asyncio
 import hashlib
 import logging
 import numpy as np
@@ -22784,8 +21715,7 @@ from .content_protection_service import ContentFormat
 
 
 class FingerprintType(Enum):
-    """Types of fingerprints."""
-    AUDIO_SPECTRAL = "audio_spectral"
+    """Types of fingerprints."""    AUDIO_SPECTRAL = "audio_spectral"
     AUDIO_CHROMAPRINT = "audio_chromaprint"
     VIDEO_FRAME = "video_frame"
     VIDEO_MOTION = "video_motion"
@@ -22798,8 +21728,7 @@ class FingerprintType(Enum):
 
 @dataclass
 class FingerprintResult:
-    """Fingerprint generation result."""
-    success: bool
+    """Fingerprint generation result."""    success: bool
     fingerprint_hash: str
     fingerprint_type: FingerprintType
     fingerprint_data: Dict[str, Any]
@@ -22810,22 +21739,18 @@ class FingerprintResult:
 
 
 class FingerprintingService:
-    """
-    Enterprise-grade content fingerprinting service.
+    """    Enterprise-grade content fingerprinting service.
     
     Provides multi-format content fingerprinting using advanced algorithms
     for audio, video, image, and text content.
-    """
-    
+    """    
     def __init__(self, config: AIProtectionConfiguration):
-        """Initialize the fingerprinting service."""
-        self.config = config
+        """Initialize the fingerprinting service."""        self.config = config
         self.logger = logging.getLogger(__name__)
         self._initialize_engines()
     
     def _initialize_engines(self):
-        """Initialize fingerprinting engines."""
-        from ..engines.audio_fingerprint_engine import AudioFingerprintEngine
+        """Initialize fingerprinting engines."""        from ..engines.audio_fingerprint_engine import AudioFingerprintEngine
         from ..engines.video_fingerprint_engine import VideoFingerprintEngine
         from ..engines.image_fingerprint_engine import ImageFingerprintEngine
         from ..engines.text_fingerprint_engine import TextFingerprintEngine
@@ -22848,8 +21773,7 @@ class FingerprintingService:
         content_format: ContentFormat,
         fingerprint_types: Optional[List[FingerprintType]] = None
     ) -> FingerprintResult:
-        """
-        Generate comprehensive fingerprint for content.
+        """        Generate comprehensive fingerprint for content.
         
         Args:
             content_path: Path to content file
@@ -22858,8 +21782,7 @@ class FingerprintingService:
             
         Returns:
             FingerprintResult with fingerprint data
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             self.logger.info(f"Generating fingerprint for {content_path}")
@@ -22925,8 +21848,7 @@ class FingerprintingService:
         fingerprint_data1: Dict[str, Any],
         fingerprint_data2: Dict[str, Any]
     ) -> float:
-        """
-        Compare two fingerprints and return similarity score.
+        """        Compare two fingerprints and return similarity score.
         
         Args:
             fingerprint1: First fingerprint hash
@@ -22936,8 +21858,7 @@ class FingerprintingService:
             
         Returns:
             Similarity score between 0 and 1
-        """
-        try:
+        """        try:
             # Quick hash comparison
             if fingerprint1 == fingerprint2:
                 return 1.0
@@ -22981,8 +21902,7 @@ class FingerprintingService:
             return 0.0
     
     def _get_default_fingerprint_types(self, content_format: ContentFormat) -> List[FingerprintType]:
-        """Get default fingerprint types for content format."""
-        type_mapping = {
+        """Get default fingerprint types for content format."""        type_mapping = {
             ContentFormat.AUDIO: [FingerprintType.AUDIO_SPECTRAL, FingerprintType.AUDIO_CHROMAPRINT],
             ContentFormat.VIDEO: [FingerprintType.VIDEO_FRAME, FingerprintType.VIDEO_MOTION, FingerprintType.AUDIO_SPECTRAL],
             ContentFormat.IMAGE: [FingerprintType.IMAGE_PERCEPTUAL, FingerprintType.IMAGE_FEATURE],
@@ -22994,8 +21914,7 @@ class FingerprintingService:
         return type_mapping.get(content_format, [FingerprintType.COMBINED])
     
     async def _generate_audio_fingerprint(self, content_path: Union[str, Path]) -> Dict[str, Any]:
-        """Generate audio fingerprint."""
-        fingerprint_data = {}
+        """Generate audio fingerprint."""        fingerprint_data = {}
         
         if hasattr(self, 'audio_engine'):
             # Spectral fingerprint
@@ -23018,8 +21937,7 @@ class FingerprintingService:
         return {"audio": fingerprint_data}
     
     async def _generate_video_fingerprint(self, content_path: Union[str, Path]) -> Dict[str, Any]:
-        """Generate video fingerprint."""
-        fingerprint_data = {}
+        """Generate video fingerprint."""        fingerprint_data = {}
         
         if hasattr(self, 'video_engine'):
             # Frame-based fingerprint
@@ -23043,8 +21961,7 @@ class FingerprintingService:
         return {"video": fingerprint_data}
     
     async def _generate_image_fingerprint(self, content_path: Union[str, Path]) -> Dict[str, Any]:
-        """Generate image fingerprint."""
-        fingerprint_data = {}
+        """Generate image fingerprint."""        fingerprint_data = {}
         
         if hasattr(self, 'image_engine'):
             # Perceptual hash
@@ -23067,8 +21984,7 @@ class FingerprintingService:
         return {"image": fingerprint_data}
     
     async def _generate_text_fingerprint(self, content_path: Union[str, Path]) -> Dict[str, Any]:
-        """Generate text fingerprint."""
-        fingerprint_data = {}
+        """Generate text fingerprint."""        fingerprint_data = {}
         
         if hasattr(self, 'text_engine'):
             # Read text content
@@ -23095,8 +22011,7 @@ class FingerprintingService:
         return {"text": fingerprint_data}
     
     async def _generate_mixed_media_fingerprint(self, content_path: Union[str, Path]) -> Dict[str, Any]:
-        """Generate fingerprint for mixed media content."""
-        # Analyze file to determine what types of content it contains
+        """Generate fingerprint for mixed media content."""        # Analyze file to determine what types of content it contains
         # For now, return a basic hash-based fingerprint
         with open(content_path, 'rb') as f:
             content = f.read()
@@ -23112,8 +22027,7 @@ class FingerprintingService:
         }
     
     def _create_combined_hash(self, fingerprint_data: Dict[str, Any]) -> str:
-        """Create combined hash from all fingerprint data."""
-        # Serialize fingerprint data and create hash
+        """Create combined hash from all fingerprint data."""        # Serialize fingerprint data and create hash
         import json
         
         # Sort keys for consistent hashing
@@ -23121,8 +22035,7 @@ class FingerprintingService:
         return hashlib.sha256(data_str.encode()).hexdigest()
     
     def _get_similarity_threshold(self, content_format: ContentFormat) -> float:
-        """Get similarity threshold for content format."""
-        # Return appropriate thresholds based on content type
+        """Get similarity threshold for content format."""        # Return appropriate thresholds based on content type
         thresholds = {
             ContentFormat.AUDIO: self.config.copyright_detection.similarity_threshold,
             ContentFormat.VIDEO: self.config.copyright_detection.similarity_threshold,
@@ -23135,8 +22048,7 @@ class FingerprintingService:
         return thresholds.get(content_format, 0.80)
     
     async def _compare_audio_fingerprints(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """Compare audio fingerprints."""
-        similarities = []
+        """Compare audio fingerprints."""        similarities = []
         
         # Compare spectral fingerprints
         if "spectral" in fp1 and "spectral" in fp2:
@@ -23156,8 +22068,7 @@ class FingerprintingService:
         return sum(similarities) / len(similarities) if similarities else 0.0
     
     async def _compare_video_fingerprints(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """Compare video fingerprints."""
-        similarities = []
+        """Compare video fingerprints."""        similarities = []
         
         # Compare frame fingerprints
         if "frames" in fp1 and "frames" in fp2:
@@ -23172,8 +22083,7 @@ class FingerprintingService:
         return sum(similarities) / len(similarities) if similarities else 0.0
     
     async def _compare_image_fingerprints(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """Compare image fingerprints."""
-        similarities = []
+        """Compare image fingerprints."""        similarities = []
         
         # Compare perceptual hashes
         if "phash" in fp1 and "phash" in fp2:
@@ -23188,8 +22098,7 @@ class FingerprintingService:
         return sum(similarities) / len(similarities) if similarities else 0.0
     
     async def _compare_text_fingerprints(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """Compare text fingerprints."""
-        similarities = []
+        """Compare text fingerprints."""        similarities = []
         
         # Compare n-grams
         if "ngrams" in fp1 and "ngrams" in fp2:
@@ -23204,33 +22113,27 @@ class FingerprintingService:
         return sum(similarities) / len(similarities) if similarities else 0.0
     
     def _compare_spectral_features(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """Compare spectral features."""
-        # Placeholder implementation
+        """Compare spectral features."""        # Placeholder implementation
         return 0.5
     
     def _compare_chromaprints(self, fp1: str, fp2: str) -> float:
-        """Compare chromaprint fingerprints."""
-        # Placeholder implementation
+        """Compare chromaprint fingerprints."""        # Placeholder implementation
         return 0.5
     
     def _compare_mfcc_features(self, fp1: List[float], fp2: List[float]) -> float:
-        """Compare MFCC features."""
-        # Placeholder implementation using cosine similarity
+        """Compare MFCC features."""        # Placeholder implementation using cosine similarity
         return 0.5
     
     def _compare_frame_fingerprints(self, fp1: List[str], fp2: List[str]) -> float:
-        """Compare frame fingerprints."""
-        # Placeholder implementation
+        """Compare frame fingerprints."""        # Placeholder implementation
         return 0.5
     
     def _compare_motion_vectors(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """Compare motion vectors."""
-        # Placeholder implementation
+        """Compare motion vectors."""        # Placeholder implementation
         return 0.5
     
     def _compare_perceptual_hashes(self, fp1: str, fp2: str) -> float:
-        """Compare perceptual hashes."""
-        # Calculate Hamming distance
+        """Compare perceptual hashes."""        # Calculate Hamming distance
         if len(fp1) != len(fp2):
             return 0.0
         
@@ -23239,13 +22142,11 @@ class FingerprintingService:
         return similarity
     
     def _compare_image_features(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """Compare image features."""
-        # Placeholder implementation
+        """Compare image features."""        # Placeholder implementation
         return 0.5
     
     def _compare_ngrams(self, fp1: Dict[str, int], fp2: Dict[str, int]) -> float:
-        """Compare n-gram fingerprints."""
-        # Calculate Jaccard similarity
+        """Compare n-gram fingerprints."""        # Calculate Jaccard similarity
         set1 = set(fp1.keys())
         set2 = set(fp2.keys())
         
@@ -23255,8 +22156,7 @@ class FingerprintingService:
         return intersection / union if union > 0 else 0.0
     
     def _compare_semantic_embeddings(self, fp1: List[float], fp2: List[float]) -> float:
-        """Compare semantic embeddings."""
-        # Placeholder implementation using cosine similarity
+        """Compare semantic embeddings."""        # Placeholder implementation using cosine similarity
         return 0.5
 
 
@@ -23274,8 +22174,7 @@ __all__ = [
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Processing Alert Handler Module
+"""Processing Alert Handler Module
 
 This module provides comprehensive monitoring for AI content processing pipeline
 in the Influencer AI Agent Platform. It handles processing stage alerts,
@@ -23290,9 +22189,7 @@ Business Context:
 - Monitors fingerprinting, quality assessment, and SEO optimization
 - Integrates with content protection and rights management systems
 - Essential for creator content enhancement and monetization pipeline
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import json
@@ -23313,8 +22210,7 @@ from ...alert_manager import AlertManager
 
 
 class ProcessingStage(Enum):
-    """AI processing stages for content analysis."""
-    INITIATED = "initiated"
+    """AI processing stages for content analysis."""    INITIATED = "initiated"
     FINGERPRINTING = "fingerprinting"
     QUALITY_ANALYSIS = "quality_analysis"
     SEO_OPTIMIZATION = "seo_optimization"
@@ -23328,8 +22224,7 @@ class ProcessingStage(Enum):
 
 
 class ContentType(Enum):
-    """Supported content types for processing."""
-    AUDIO = "audio"
+    """Supported content types for processing."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -23337,8 +22232,7 @@ class ContentType(Enum):
 
 
 class QualityLevel(Enum):
-    """Content quality assessment levels."""
-    EXCELLENT = "excellent"
+    """Content quality assessment levels."""    EXCELLENT = "excellent"
     GOOD = "good"
     AVERAGE = "average"
     POOR = "poor"
@@ -23347,8 +22241,7 @@ class QualityLevel(Enum):
 
 @dataclass
 class ProcessingMetrics:
-    """Processing performance metrics."""
-    processing_id: str
+    """Processing performance metrics."""    processing_id: str
     content_id: str
     user_id: str
     content_type: ContentType
@@ -23370,8 +22263,7 @@ class ProcessingMetrics:
 
 @dataclass
 class ProcessingAlert:
-    """Alert for processing events."""
-    alert_id: str
+    """Alert for processing events."""    alert_id: str
     processing_id: str
     content_id: str
     user_id: str
@@ -23386,13 +22278,11 @@ class ProcessingAlert:
 
 
 class ProcessingAlertHandler:
-    """
-    Alert handler for AI content processing pipeline.
+    """    Alert handler for AI content processing pipeline.
     
     Manages processing stage monitoring, quality analysis alerts,
     SEO optimization notifications, and protection setup status.
-    """
-    
+    """    
     def __init__(self, alert_manager: AlertManager):
         self.alert_manager = alert_manager
         self.logger = logging.getLogger(__name__)
@@ -23400,8 +22290,7 @@ class ProcessingAlertHandler:
         self.ai_models = self._initialize_ai_models()
         
     def _initialize_ai_models(self) -> Dict[str, Any]:
-        """Initialize AI models for content processing."""
-        try:
+        """Initialize AI models for content processing."""        try:
             models = {
                 'text_analyzer': transformers.pipeline(
                     'text-classification',
@@ -23430,8 +22319,7 @@ class ProcessingAlertHandler:
         content_path: str,
         processing_options: Dict[str, Any] = None
     ) -> str:
-        """
-        Start AI processing pipeline for uploaded content.
+        """        Start AI processing pipeline for uploaded content.
         
         Args:
             content_id: Unique content identifier
@@ -23442,8 +22330,7 @@ class ProcessingAlertHandler:
             
         Returns:
             processing_id: Unique processing session identifier
-        """
-        processing_id = self._generate_processing_id(content_id, user_id)
+        """        processing_id = self._generate_processing_id(content_id, user_id)
         
         # Initialize processing metrics
         metrics = ProcessingMetrics(
@@ -23481,8 +22368,7 @@ class ProcessingAlertHandler:
     # [Include all other methods from the original file...]
     
     async def shutdown(self) -> None:
-        """Shutdown processing alert handler."""
-        self.logger.info("Shutting down processing alert handler...")
+        """Shutdown processing alert handler."""        self.logger.info("Shutting down processing alert handler...")
         self.processing_sessions.clear()
         self.logger.info("Processing alert handler shutdown complete")
 
@@ -23493,8 +22379,7 @@ class ProcessingAlertHandler:
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Fingerprint Alert Handler Module - Influencer AI Agent Platform
+"""Fingerprint Alert Handler Module - Influencer AI Agent Platform
 
 This module provides advanced content fingerprinting and matching capabilities
 for the Influencer AI Agent Platform. It enables AI-powered content identification,
@@ -23510,9 +22395,7 @@ Business Context:
 - Critical for detecting unauthorized content modifications and derivatives
 - Supports legal evidence collection for intellectual property protection
 - Powers content licensing verification and usage tracking
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Any, Set, Union, Tuple, ByteString
@@ -23541,8 +22424,7 @@ from ..alert_manager import AlertManager
 
 
 class FingerprintType(Enum):
-    """Types of content fingerprints."""
-    PERCEPTUAL_HASH = "perceptual_hash"
+    """Types of content fingerprints."""    PERCEPTUAL_HASH = "perceptual_hash"
     CHROMAPRINT = "chromaprint"  # Audio fingerprinting
     VIDEO_HASH = "video_hash"
     TEXT_SEMANTIC = "text_semantic"
@@ -23560,8 +22442,7 @@ class FingerprintType(Enum):
 
 
 class ContentFormat(Enum):
-    """Supported content formats for fingerprinting."""
-    IMAGE = "image"
+    """Supported content formats for fingerprinting."""    IMAGE = "image"
     AUDIO = "audio"
     VIDEO = "video"
     TEXT = "text"
@@ -23576,8 +22457,7 @@ class ContentFormat(Enum):
 
 
 class MatchType(Enum):
-    """Types of fingerprint matches."""
-    EXACT_MATCH = "exact_match"
+    """Types of fingerprint matches."""    EXACT_MATCH = "exact_match"
     NEAR_DUPLICATE = "near_duplicate"
     DERIVATIVE_WORK = "derivative_work"
     TRANSFORMED_CONTENT = "transformed_content"
@@ -23592,8 +22472,7 @@ class MatchType(Enum):
 
 
 class FingerprintStatus(Enum):
-    """Status of fingerprint processing."""
-    PENDING = "pending"
+    """Status of fingerprint processing."""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -23605,8 +22484,7 @@ class FingerprintStatus(Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Comprehensive content fingerprint with multi-format support."""
-    fingerprint_id: str
+    """Comprehensive content fingerprint with multi-format support."""    fingerprint_id: str
     content_id: str
     creator_id: str
     content_format: ContentFormat
@@ -23659,8 +22537,7 @@ class ContentFingerprint:
 
 @dataclass
 class FingerprintMatch:
-    """Fingerprint matching result with detailed analysis."""
-    match_id: str
+    """Fingerprint matching result with detailed analysis."""    match_id: str
     query_fingerprint_id: str
     matched_fingerprint_id: str
     match_type: MatchType
@@ -23711,8 +22588,7 @@ class FingerprintMatch:
 
 @dataclass
 class FingerprintDatabase:
-    """Fingerprint database statistics and management."""
-    database_id: str
+    """Fingerprint database statistics and management."""    database_id: str
     database_name: str
     total_fingerprints: int
     active_fingerprints: int
@@ -23746,8 +22622,7 @@ class FingerprintDatabase:
 
 
 class FingerprintAlertHandler:
-    """
-    Enterprise Content Fingerprint Alert Handler
+    """    Enterprise Content Fingerprint Alert Handler
     
     Advanced AI-powered content fingerprinting and matching system for the
     Influencer AI Agent Platform. Provides comprehensive content identification,
@@ -23763,8 +22638,7 @@ class FingerprintAlertHandler:
     - Advanced transformation detection and derivative work identification
     - Automated infringement detection and legal evidence collection
     - Comprehensive content provenance and ownership verification
-    """
-    
+    """    
     def __init__(
         self,
         alert_manager: AlertManager,
@@ -23780,8 +22654,7 @@ class FingerprintAlertHandler:
         fingerprint_cache_ttl: int = 86400,  # 24 hours
         max_fingerprint_age_days: int = 365  # 1 year
     ):
-        """
-        Initialize Fingerprint Alert Handler.
+        """        Initialize Fingerprint Alert Handler.
         
         Args:
             alert_manager: Alert management system
@@ -23796,8 +22669,7 @@ class FingerprintAlertHandler:
             enable_realtime_monitoring: Enable real-time monitoring
             fingerprint_cache_ttl: Cache TTL in seconds
             max_fingerprint_age_days: Maximum fingerprint age
-        """
-        self.alert_manager = alert_manager
+        """        self.alert_manager = alert_manager
         self.db_pool = db_pool
         self.redis_client = redis_client
         self.similarity_threshold = similarity_threshold
@@ -23837,8 +22709,7 @@ class FingerprintAlertHandler:
         self.nlp_model = None
         
     async def initialize(self) -> None:
-        """Initialize fingerprint processing system."""
-        try:
+        """Initialize fingerprint processing system."""        try:
             self.logger.info("Initializing Fingerprint Alert Handler...")
             
             # Create fingerprint tables
@@ -23875,13 +22746,11 @@ class FingerprintAlertHandler:
         fingerprint_types: Optional[List[FingerprintType]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> List[str]:
-        """
-        Create comprehensive fingerprints for content.
+        """        Create comprehensive fingerprints for content.
         
         Returns:
             List[str]: Created fingerprint IDs
-        """
-        try:
+        """        try:
             if not fingerprint_types:
                 fingerprint_types = await self._get_default_fingerprint_types(content_format)
             
@@ -23942,13 +22811,11 @@ class FingerprintAlertHandler:
         match_types: Optional[List[MatchType]] = None,
         search_scope: Optional[Dict[str, Any]] = None
     ) -> List[str]:
-        """
-        Find matching fingerprints in the database.
+        """        Find matching fingerprints in the database.
         
         Returns:
             List[str]: Match IDs for found matches
-        """
-        try:
+        """        try:
             if similarity_threshold is None:
                 similarity_threshold = self.similarity_threshold
             
@@ -24015,13 +22882,11 @@ class FingerprintAlertHandler:
         content_id: str,
         verification_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Verify content authenticity using fingerprints.
+        """        Verify content authenticity using fingerprints.
         
         Returns:
             Dict containing verification results
-        """
-        try:
+        """        try:
             verification_result = {
                 "content_id": content_id,
                 "verification_timestamp": datetime.now(timezone.utc),
@@ -24099,8 +22964,7 @@ class FingerprintAlertHandler:
             return {"content_id": content_id, "error": str(e)}
     
     async def start_monitoring(self) -> None:
-        """Start real-time fingerprint monitoring."""
-        if not self.enable_realtime_monitoring:
+        """Start real-time fingerprint monitoring."""        if not self.enable_realtime_monitoring:
             self.logger.info("Real-time monitoring disabled")
             return
         
@@ -24131,8 +22995,7 @@ class FingerprintAlertHandler:
             raise
     
     async def stop_monitoring(self) -> None:
-        """Stop fingerprint monitoring."""
-        self.running = False
+        """Stop fingerprint monitoring."""        self.running = False
         self.logger.info("Fingerprint monitoring stopped")
     
     # Helper methods for fingerprint extraction
@@ -24145,8 +23008,7 @@ class FingerprintAlertHandler:
         fingerprint_type: FingerprintType,
         metadata: Dict[str, Any]
     ) -> Optional[str]:
-        """Extract specific type of fingerprint from content."""
-        try:
+        """Extract specific type of fingerprint from content."""        try:
             fingerprint_id = str(uuid.uuid4())
             now = datetime.now(timezone.utc)
             
@@ -24237,8 +23099,7 @@ class FingerprintAlertHandler:
         creator_id: Optional[str] = None,
         additional_data: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Create fingerprint-related alert."""
-        try:
+        """Create fingerprint-related alert."""        try:
             alert = Alert(
                 alert_id=str(uuid.uuid4()),
                 alert_type="content_fingerprint",
@@ -24266,8 +23127,7 @@ class FingerprintAlertHandler:
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Multi-Format Upload Processing Configuration
+"""Multi-Format Upload Processing Configuration
 
 Enterprise-grade configuration for handling multi-format content uploads from creators
 (musicians, bloggers, photographers, influencers, comedians).
@@ -24281,9 +23141,7 @@ Project Team Specialties:
 This code and concept are exclusively owned by Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Legal action will be taken against violators.
-"""
-
-import os
+"""import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union, Set
 from enum import Enum
@@ -24291,8 +23149,7 @@ from decimal import Decimal
 
 
 class ContentFormat(Enum):
-    """Supported content formats for creators."""
-    # Audio formats
+    """Supported content formats for creators."""    # Audio formats
     AUDIO_MP3 = "audio/mp3"
     AUDIO_WAV = "audio/wav"
     AUDIO_FLAC = "audio/flac"
@@ -24328,8 +23185,7 @@ class ContentFormat(Enum):
 
 
 class CreatorType(Enum):
-    """Types of content creators."""
-    MUSICIAN = "musician"
+    """Types of content creators."""    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -24341,8 +23197,7 @@ class CreatorType(Enum):
 
 
 class ProcessingPriority(Enum):
-    """Processing priority levels."""
-    LOW = "low"
+    """Processing priority levels."""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
@@ -24351,8 +23206,7 @@ class ProcessingPriority(Enum):
 
 @dataclass
 class FormatProcessingConfig:
-    """Configuration for specific format processing."""
-    max_file_size_mb: int = 500
+    """Configuration for specific format processing."""    max_file_size_mb: int = 500
     allowed_extensions: Set[str] = field(default_factory=set)
     compression_enabled: bool = True
     quality_optimization: bool = True
@@ -24383,8 +23237,7 @@ class FormatProcessingConfig:
 
 @dataclass
 class UploadLimits:
-    """Upload limits configuration."""
-    # File size limits (MB)
+    """Upload limits configuration."""    # File size limits (MB)
     max_single_file_size: int = 2000
     max_total_upload_size: int = 10000
     max_files_per_batch: int = 50
@@ -24423,8 +23276,7 @@ class UploadLimits:
 
 @dataclass
 class ProcessingQueue:
-    """Upload processing queue configuration."""
-    max_concurrent_jobs: int = 10
+    """Upload processing queue configuration."""    max_concurrent_jobs: int = 10
     priority_weights: Dict[ProcessingPriority, int] = field(default_factory=lambda: {
         ProcessingPriority.LOW: 1,
         ProcessingPriority.NORMAL: 2,
@@ -24451,8 +23303,7 @@ class ProcessingQueue:
 
 @dataclass
 class ContentValidation:
-    """Content validation and safety configuration."""
-    enable_content_moderation: bool = True
+    """Content validation and safety configuration."""    enable_content_moderation: bool = True
     enable_copyright_detection: bool = True
     enable_duplicate_detection: bool = True
     enable_quality_assessment: bool = True
@@ -24471,8 +23322,7 @@ class ContentValidation:
 
 @dataclass
 class MetadataExtraction:
-    """Metadata extraction configuration."""
-    enable_automatic_extraction: bool = True
+    """Metadata extraction configuration."""    enable_automatic_extraction: bool = True
     preserve_original_metadata: bool = True
     generate_enhanced_metadata: bool = True
     
@@ -24496,8 +23346,7 @@ class MetadataExtraction:
 
 @dataclass
 class UploadProcessingConfiguration:
-    """Main upload processing configuration."""
-    
+    """Main upload processing configuration."""    
     # Core settings
     enabled: bool = True
     debug_mode: bool = field(default_factory=lambda: os.getenv("DEBUG", "false").lower() == "true")
@@ -24533,8 +23382,7 @@ class UploadProcessingConfiguration:
     
     @classmethod
     def create_default_format_configs(cls) -> Dict[ContentFormat, FormatProcessingConfig]:
-        """Create default format-specific configurations."""
-        configs = {}
+        """Create default format-specific configurations."""        configs = {}
         
         # Audio formats
         audio_config = FormatProcessingConfig(
@@ -24583,8 +23431,7 @@ class UploadProcessingConfiguration:
         return configs
     
     def validate_configuration(self) -> List[str]:
-        """Validate the upload processing configuration."""
-        errors = []
+        """Validate the upload processing configuration."""        errors = []
         
         if not self.temporary_storage_path:
             errors.append("temporary_storage_path cannot be empty")
@@ -24606,8 +23453,7 @@ class UploadProcessingConfiguration:
     
     @classmethod
     def create_development_config(cls) -> 'UploadProcessingConfiguration':
-        """Create configuration for development environment."""
-        config = cls()
+        """Create configuration for development environment."""        config = cls()
         config.debug_mode = True
         config.upload_limits.max_single_file_size = 100  # 100MB for dev
         config.processing_queue.max_concurrent_jobs = 2
@@ -24617,8 +23463,7 @@ class UploadProcessingConfiguration:
     
     @classmethod
     def create_production_config(cls) -> 'UploadProcessingConfiguration':
-        """Create configuration for production environment."""
-        config = cls()
+        """Create configuration for production environment."""        config = cls()
         config.debug_mode = False
         config.upload_limits.max_single_file_size = 2000  # 2GB for prod
         config.processing_queue.max_concurrent_jobs = 10
@@ -24629,8 +23474,7 @@ class UploadProcessingConfiguration:
     
     @classmethod
     def create_enterprise_config(cls) -> 'UploadProcessingConfiguration':
-        """Create configuration for enterprise environment."""
-        config = cls.create_production_config()
+        """Create configuration for enterprise environment."""        config = cls.create_production_config()
         config.upload_limits.max_single_file_size = 10000  # 10GB for enterprise
         config.processing_queue.max_concurrent_jobs = 20
         config.processing_threads = 8
@@ -24642,8 +23486,7 @@ class UploadProcessingConfiguration:
 
 # Export default configuration
 def get_upload_processing_config() -> UploadProcessingConfiguration:
-    """Get upload processing configuration based on environment."""
-    env = os.getenv("ENVIRONMENT", "development").lower()
+    """Get upload processing configuration based on environment."""    env = os.getenv("ENVIRONMENT", "development").lower()
     
     if env == "production":
         return UploadProcessingConfiguration.create_production_config()
@@ -24673,8 +23516,7 @@ __all__ = [
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Fingerprinting Service
+"""Fingerprinting Service
 
 Enterprise-grade content fingerprinting service supporting multi-format
 content analysis and unique signature generation.
@@ -24688,9 +23530,7 @@ Project Team Specialties:
 This code and concept are exclusively owned by Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Legal action will be taken against violators.
-"""
-
-import asyncio
+"""import asyncio
 import hashlib
 import logging
 import numpy as np
@@ -24706,8 +23546,7 @@ from .content_protection_service import ContentFormat
 
 
 class FingerprintType(Enum):
-    """Types of fingerprints."""
-    AUDIO_SPECTRAL = "audio_spectral"
+    """Types of fingerprints."""    AUDIO_SPECTRAL = "audio_spectral"
     AUDIO_CHROMAPRINT = "audio_chromaprint"
     VIDEO_FRAME = "video_frame"
     VIDEO_MOTION = "video_motion"
@@ -24720,8 +23559,7 @@ class FingerprintType(Enum):
 
 @dataclass
 class FingerprintResult:
-    """Fingerprint generation result."""
-    success: bool
+    """Fingerprint generation result."""    success: bool
     fingerprint_hash: str
     fingerprint_type: FingerprintType
     fingerprint_data: Dict[str, Any]
@@ -24732,22 +23570,18 @@ class FingerprintResult:
 
 
 class FingerprintingService:
-    """
-    Enterprise-grade content fingerprinting service.
+    """    Enterprise-grade content fingerprinting service.
     
     Provides multi-format content fingerprinting using advanced algorithms
     for audio, video, image, and text content.
-    """
-    
+    """    
     def __init__(self, config: AIProtectionConfiguration):
-        """Initialize the fingerprinting service."""
-        self.config = config
+        """Initialize the fingerprinting service."""        self.config = config
         self.logger = logging.getLogger(__name__)
         self._initialize_engines()
     
     def _initialize_engines(self):
-        """Initialize fingerprinting engines."""
-        from ..engines.audio_fingerprint_engine import AudioFingerprintEngine
+        """Initialize fingerprinting engines."""        from ..engines.audio_fingerprint_engine import AudioFingerprintEngine
         from ..engines.video_fingerprint_engine import VideoFingerprintEngine
         from ..engines.image_fingerprint_engine import ImageFingerprintEngine
         from ..engines.text_fingerprint_engine import TextFingerprintEngine
@@ -24770,8 +23604,7 @@ class FingerprintingService:
         content_format: ContentFormat,
         fingerprint_types: Optional[List[FingerprintType]] = None
     ) -> FingerprintResult:
-        """
-        Generate comprehensive fingerprint for content.
+        """        Generate comprehensive fingerprint for content.
         
         Args:
             content_path: Path to content file
@@ -24780,8 +23613,7 @@ class FingerprintingService:
             
         Returns:
             FingerprintResult with fingerprint data
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             self.logger.info(f"Generating fingerprint for {content_path}")
@@ -24847,8 +23679,7 @@ class FingerprintingService:
         fingerprint_data1: Dict[str, Any],
         fingerprint_data2: Dict[str, Any]
     ) -> float:
-        """
-        Compare two fingerprints and return similarity score.
+        """        Compare two fingerprints and return similarity score.
         
         Args:
             fingerprint1: First fingerprint hash
@@ -24858,8 +23689,7 @@ class FingerprintingService:
             
         Returns:
             Similarity score between 0 and 1
-        """
-        try:
+        """        try:
             # Quick hash comparison
             if fingerprint1 == fingerprint2:
                 return 1.0
@@ -24903,8 +23733,7 @@ class FingerprintingService:
             return 0.0
     
     def _get_default_fingerprint_types(self, content_format: ContentFormat) -> List[FingerprintType]:
-        """Get default fingerprint types for content format."""
-        type_mapping = {
+        """Get default fingerprint types for content format."""        type_mapping = {
             ContentFormat.AUDIO: [FingerprintType.AUDIO_SPECTRAL, FingerprintType.AUDIO_CHROMAPRINT],
             ContentFormat.VIDEO: [FingerprintType.VIDEO_FRAME, FingerprintType.VIDEO_MOTION, FingerprintType.AUDIO_SPECTRAL],
             ContentFormat.IMAGE: [FingerprintType.IMAGE_PERCEPTUAL, FingerprintType.IMAGE_FEATURE],
@@ -24916,8 +23745,7 @@ class FingerprintingService:
         return type_mapping.get(content_format, [FingerprintType.COMBINED])
     
     async def _generate_audio_fingerprint(self, content_path: Union[str, Path]) -> Dict[str, Any]:
-        """Generate audio fingerprint."""
-        fingerprint_data = {}
+        """Generate audio fingerprint."""        fingerprint_data = {}
         
         if hasattr(self, 'audio_engine'):
             # Spectral fingerprint
@@ -24940,8 +23768,7 @@ class FingerprintingService:
         return {"audio": fingerprint_data}
     
     async def _generate_video_fingerprint(self, content_path: Union[str, Path]) -> Dict[str, Any]:
-        """Generate video fingerprint."""
-        fingerprint_data = {}
+        """Generate video fingerprint."""        fingerprint_data = {}
         
         if hasattr(self, 'video_engine'):
             # Frame-based fingerprint
@@ -24965,8 +23792,7 @@ class FingerprintingService:
         return {"video": fingerprint_data}
     
     async def _generate_image_fingerprint(self, content_path: Union[str, Path]) -> Dict[str, Any]:
-        """Generate image fingerprint."""
-        fingerprint_data = {}
+        """Generate image fingerprint."""        fingerprint_data = {}
         
         if hasattr(self, 'image_engine'):
             # Perceptual hash
@@ -24989,8 +23815,7 @@ class FingerprintingService:
         return {"image": fingerprint_data}
     
     async def _generate_text_fingerprint(self, content_path: Union[str, Path]) -> Dict[str, Any]:
-        """Generate text fingerprint."""
-        fingerprint_data = {}
+        """Generate text fingerprint."""        fingerprint_data = {}
         
         if hasattr(self, 'text_engine'):
             # Read text content
@@ -25017,8 +23842,7 @@ class FingerprintingService:
         return {"text": fingerprint_data}
     
     async def _generate_mixed_media_fingerprint(self, content_path: Union[str, Path]) -> Dict[str, Any]:
-        """Generate fingerprint for mixed media content."""
-        # Analyze file to determine what types of content it contains
+        """Generate fingerprint for mixed media content."""        # Analyze file to determine what types of content it contains
         # For now, return a basic hash-based fingerprint
         with open(content_path, 'rb') as f:
             content = f.read()
@@ -25034,8 +23858,7 @@ class FingerprintingService:
         }
     
     def _create_combined_hash(self, fingerprint_data: Dict[str, Any]) -> str:
-        """Create combined hash from all fingerprint data."""
-        # Serialize fingerprint data and create hash
+        """Create combined hash from all fingerprint data."""        # Serialize fingerprint data and create hash
         import json
         
         # Sort keys for consistent hashing
@@ -25043,8 +23866,7 @@ class FingerprintingService:
         return hashlib.sha256(data_str.encode()).hexdigest()
     
     def _get_similarity_threshold(self, content_format: ContentFormat) -> float:
-        """Get similarity threshold for content format."""
-        # Return appropriate thresholds based on content type
+        """Get similarity threshold for content format."""        # Return appropriate thresholds based on content type
         thresholds = {
             ContentFormat.AUDIO: self.config.copyright_detection.similarity_threshold,
             ContentFormat.VIDEO: self.config.copyright_detection.similarity_threshold,
@@ -25057,8 +23879,7 @@ class FingerprintingService:
         return thresholds.get(content_format, 0.80)
     
     async def _compare_audio_fingerprints(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """Compare audio fingerprints."""
-        similarities = []
+        """Compare audio fingerprints."""        similarities = []
         
         # Compare spectral fingerprints
         if "spectral" in fp1 and "spectral" in fp2:
@@ -25078,8 +23899,7 @@ class FingerprintingService:
         return sum(similarities) / len(similarities) if similarities else 0.0
     
     async def _compare_video_fingerprints(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """Compare video fingerprints."""
-        similarities = []
+        """Compare video fingerprints."""        similarities = []
         
         # Compare frame fingerprints
         if "frames" in fp1 and "frames" in fp2:
@@ -25094,8 +23914,7 @@ class FingerprintingService:
         return sum(similarities) / len(similarities) if similarities else 0.0
     
     async def _compare_image_fingerprints(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """Compare image fingerprints."""
-        similarities = []
+        """Compare image fingerprints."""        similarities = []
         
         # Compare perceptual hashes
         if "phash" in fp1 and "phash" in fp2:
@@ -25110,8 +23929,7 @@ class FingerprintingService:
         return sum(similarities) / len(similarities) if similarities else 0.0
     
     async def _compare_text_fingerprints(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """Compare text fingerprints."""
-        similarities = []
+        """Compare text fingerprints."""        similarities = []
         
         # Compare n-grams
         if "ngrams" in fp1 and "ngrams" in fp2:
@@ -25126,33 +23944,27 @@ class FingerprintingService:
         return sum(similarities) / len(similarities) if similarities else 0.0
     
     def _compare_spectral_features(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """Compare spectral features."""
-        # Placeholder implementation
+        """Compare spectral features."""        # Placeholder implementation
         return 0.5
     
     def _compare_chromaprints(self, fp1: str, fp2: str) -> float:
-        """Compare chromaprint fingerprints."""
-        # Placeholder implementation
+        """Compare chromaprint fingerprints."""        # Placeholder implementation
         return 0.5
     
     def _compare_mfcc_features(self, fp1: List[float], fp2: List[float]) -> float:
-        """Compare MFCC features."""
-        # Placeholder implementation using cosine similarity
+        """Compare MFCC features."""        # Placeholder implementation using cosine similarity
         return 0.5
     
     def _compare_frame_fingerprints(self, fp1: List[str], fp2: List[str]) -> float:
-        """Compare frame fingerprints."""
-        # Placeholder implementation
+        """Compare frame fingerprints."""        # Placeholder implementation
         return 0.5
     
     def _compare_motion_vectors(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """Compare motion vectors."""
-        # Placeholder implementation
+        """Compare motion vectors."""        # Placeholder implementation
         return 0.5
     
     def _compare_perceptual_hashes(self, fp1: str, fp2: str) -> float:
-        """Compare perceptual hashes."""
-        # Calculate Hamming distance
+        """Compare perceptual hashes."""        # Calculate Hamming distance
         if len(fp1) != len(fp2):
             return 0.0
         
@@ -25161,13 +23973,11 @@ class FingerprintingService:
         return similarity
     
     def _compare_image_features(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """Compare image features."""
-        # Placeholder implementation
+        """Compare image features."""        # Placeholder implementation
         return 0.5
     
     def _compare_ngrams(self, fp1: Dict[str, int], fp2: Dict[str, int]) -> float:
-        """Compare n-gram fingerprints."""
-        # Calculate Jaccard similarity
+        """Compare n-gram fingerprints."""        # Calculate Jaccard similarity
         set1 = set(fp1.keys())
         set2 = set(fp2.keys())
         
@@ -25177,8 +23987,7 @@ class FingerprintingService:
         return intersection / union if union > 0 else 0.0
     
     def _compare_semantic_embeddings(self, fp1: List[float], fp2: List[float]) -> float:
-        """Compare semantic embeddings."""
-        # Placeholder implementation using cosine similarity
+        """Compare semantic embeddings."""        # Placeholder implementation using cosine similarity
         return 0.5
 
 
@@ -25196,8 +24005,7 @@ __all__ = [
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Processing Alert Handler Module
+"""Processing Alert Handler Module
 
 This module provides comprehensive monitoring for AI content processing pipeline
 in the Influencer AI Agent Platform. It handles processing stage alerts,
@@ -25212,9 +24020,7 @@ Business Context:
 - Monitors fingerprinting, quality assessment, and SEO optimization
 - Integrates with content protection and rights management systems
 - Essential for creator content enhancement and monetization pipeline
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import json
@@ -25235,8 +24041,7 @@ from ...alert_manager import AlertManager
 
 
 class ProcessingStage(Enum):
-    """AI processing stages for content analysis."""
-    INITIATED = "initiated"
+    """AI processing stages for content analysis."""    INITIATED = "initiated"
     FINGERPRINTING = "fingerprinting"
     QUALITY_ANALYSIS = "quality_analysis"
     SEO_OPTIMIZATION = "seo_optimization"
@@ -25250,8 +24055,7 @@ class ProcessingStage(Enum):
 
 
 class ContentType(Enum):
-    """Supported content types for processing."""
-    AUDIO = "audio"
+    """Supported content types for processing."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -25259,8 +24063,7 @@ class ContentType(Enum):
 
 
 class QualityLevel(Enum):
-    """Content quality assessment levels."""
-    EXCELLENT = "excellent"
+    """Content quality assessment levels."""    EXCELLENT = "excellent"
     GOOD = "good"
     AVERAGE = "average"
     POOR = "poor"
@@ -25269,8 +24072,7 @@ class QualityLevel(Enum):
 
 @dataclass
 class ProcessingMetrics:
-    """Processing performance metrics."""
-    processing_id: str
+    """Processing performance metrics."""    processing_id: str
     content_id: str
     user_id: str
     content_type: ContentType
@@ -25292,8 +24094,7 @@ class ProcessingMetrics:
 
 @dataclass
 class ProcessingAlert:
-    """Alert for processing events."""
-    alert_id: str
+    """Alert for processing events."""    alert_id: str
     processing_id: str
     content_id: str
     user_id: str
@@ -25308,13 +24109,11 @@ class ProcessingAlert:
 
 
 class ProcessingAlertHandler:
-    """
-    Alert handler for AI content processing pipeline.
+    """    Alert handler for AI content processing pipeline.
     
     Manages processing stage monitoring, quality analysis alerts,
     SEO optimization notifications, and protection setup status.
-    """
-    
+    """    
     def __init__(self, alert_manager: AlertManager):
         self.alert_manager = alert_manager
         self.logger = logging.getLogger(__name__)
@@ -25322,8 +24121,7 @@ class ProcessingAlertHandler:
         self.ai_models = self._initialize_ai_models()
         
     def _initialize_ai_models(self) -> Dict[str, Any]:
-        """Initialize AI models for content processing."""
-        try:
+        """Initialize AI models for content processing."""        try:
             models = {
                 'text_analyzer': transformers.pipeline(
                     'text-classification',
@@ -25352,8 +24150,7 @@ class ProcessingAlertHandler:
         content_path: str,
         processing_options: Dict[str, Any] = None
     ) -> str:
-        """
-        Start AI processing pipeline for uploaded content.
+        """        Start AI processing pipeline for uploaded content.
         
         Args:
             content_id: Unique content identifier
@@ -25364,8 +24161,7 @@ class ProcessingAlertHandler:
             
         Returns:
             processing_id: Unique processing session identifier
-        """
-        processing_id = self._generate_processing_id(content_id, user_id)
+        """        processing_id = self._generate_processing_id(content_id, user_id)
         
         # Initialize processing metrics
         metrics = ProcessingMetrics(
@@ -25403,8 +24199,7 @@ class ProcessingAlertHandler:
     # [Include all other methods from the original file...]
     
     async def shutdown(self) -> None:
-        """Shutdown processing alert handler."""
-        self.logger.info("Shutting down processing alert handler...")
+        """Shutdown processing alert handler."""        self.logger.info("Shutting down processing alert handler...")
         self.processing_sessions.clear()
         self.logger.info("Processing alert handler shutdown complete")
 
@@ -25456,12 +24251,9 @@ class ProcessingAlertHandler:
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Module de génération musicale IA pour artistes Spotify.
+"""Module de génération musicale IA pour artistes Spotify.
 Expose les API : génération, remix, mastering, stems, effets, analyse harmonique.
-"""
-
-from .audio_synthesis import AudioSynthesizer
+"""from .audio_synthesis import AudioSynthesizer
 from .beat_generator import BeatGenerator
 from .audio_effects import AudioEffects
 from .mastering_ai import MasteringAI
@@ -25497,13 +24289,11 @@ __all__ = [
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Trend Analysis Service
+"""Trend Analysis Service
 - Enterprise-grade analytics for trend detection, time series, anomaly detection, compliance, audit, traceability, multi-tenancy, logging, monitoring.
 - Features: DSGVO/HIPAA compliance, security, audit, traceability, multi-tenancy, versioning, multilingual, logging, monitoring, advanced business logic.
 - No TODOs, no placeholders. All logic is business-aligned and production-ready.
-"""
-from typing import Dict, Any, Optional
+"""from typing import Dict, Any, Optional
 import logging
 
 class TrendAnalysisService:
@@ -25532,14 +24322,11 @@ class TrendAnalysisService:
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Fingerprinting Types and Enumerations
+"""Fingerprinting Types and Enumerations
 
 Defines the core data types, enumerations, and constants used across
 the AI fingerprinting system for consistent type handling and validation.
-"""
-
-from enum import Enum, IntEnum
+"""from enum import Enum, IntEnum
 from typing import Union, List, Dict, Any, Optional
 from dataclasses import dataclass
 from datetime import datetime
@@ -25547,8 +24334,7 @@ import uuid
 
 
 class FingerprintType(Enum):
-    """Supported fingerprint algorithm types"""
-    
+    """Supported fingerprint algorithm types"""    
     # Audio fingerprinting
     CHROMAPRINT = "chromaprint"
     ESSENTIA = "essentia"
@@ -25579,8 +24365,7 @@ class FingerprintType(Enum):
 
 
 class ContentFormat(Enum):
-    """Supported content formats for processing"""
-    
+    """Supported content formats for processing"""    
     # Audio formats
     MP3 = "mp3"
     WAV = "wav"
@@ -25621,8 +24406,7 @@ class ContentFormat(Enum):
 
 
 class ProcessingStatus(IntEnum):
-    """Processing status codes"""
-    PENDING = 0
+    """Processing status codes"""    PENDING = 0
     PROCESSING = 1
     COMPLETED = 2
     FAILED = 3
@@ -25631,8 +24415,7 @@ class ProcessingStatus(IntEnum):
 
 
 class QualityLevel(IntEnum):
-    """Content quality levels for optimization"""
-    LOW = 1
+    """Content quality levels for optimization"""    LOW = 1
     MEDIUM = 2
     HIGH = 3
     ULTRA = 4
@@ -25640,8 +24423,7 @@ class QualityLevel(IntEnum):
 
 @dataclass
 class FingerprintResult:
-    """Result container for fingerprint extraction"""
-    
+    """Result container for fingerprint extraction"""    
     id: str
     content_id: str
     fingerprint_type: FingerprintType
@@ -25662,8 +24444,7 @@ class FingerprintResult:
 
 @dataclass
 class ProcessingConfig:
-    """Configuration for fingerprint processing"""
-    
+    """Configuration for fingerprint processing"""    
     # General settings
     quality_level: QualityLevel = QualityLevel.HIGH
     parallel_processing: bool = True
@@ -25693,8 +24474,7 @@ class ProcessingConfig:
 
 @dataclass
 class MatchResult:
-    """Result container for fingerprint matching"""
-    
+    """Result container for fingerprint matching"""    
     query_fingerprint_id: str
     matched_fingerprint_id: str
     similarity_score: float
@@ -25795,20 +24575,16 @@ PROCESSING_TIME_LIMITS = {
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Custom Exceptions for AI Fingerprinting System
+"""Custom Exceptions for AI Fingerprinting System
 
 Defines specialized exception classes for comprehensive error handling
 throughout the fingerprinting pipeline with detailed error information.
-"""
-
-from typing import Optional, Dict, Any
+"""from typing import Optional, Dict, Any
 from datetime import datetime
 
 
 class FingerprintingError(Exception):
-    """Base exception class for all fingerprinting operations"""
-    
+    """Base exception class for all fingerprinting operations"""    
     def __init__(
         self,
         message: str,
@@ -25825,8 +24601,7 @@ class FingerprintingError(Exception):
         super().__init__(self.message)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert exception to dictionary for logging/API responses"""
-        return {
+        """Convert exception to dictionary for logging/API responses"""        return {
             "error_type": self.__class__.__name__,
             "error_code": self.error_code,
             "message": self.message,
@@ -25837,8 +24612,7 @@ class FingerprintingError(Exception):
 
 
 class UnsupportedFormatError(FingerprintingError):
-    """Raised when content format is not supported for fingerprinting"""
-    
+    """Raised when content format is not supported for fingerprinting"""    
     def __init__(
         self,
         content_format: str,
@@ -25864,8 +24638,7 @@ class UnsupportedFormatError(FingerprintingError):
 
 
 class ProcessingError(FingerprintingError):
-    """Raised when content processing fails during fingerprinting"""
-    
+    """Raised when content processing fails during fingerprinting"""    
     def __init__(
         self,
         processing_stage: str,
@@ -25894,8 +24667,7 @@ class ProcessingError(FingerprintingError):
 
 
 class ExtractionError(FingerprintingError):
-    """Raised when fingerprint feature extraction fails"""
-    
+    """Raised when fingerprint feature extraction fails"""    
     def __init__(
         self,
         extraction_method: str,
@@ -25924,8 +24696,7 @@ class ExtractionError(FingerprintingError):
 
 
 class ValidationError(FingerprintingError):
-    """Raised when content validation fails before processing"""
-    
+    """Raised when content validation fails before processing"""    
     def __init__(
         self,
         validation_type: str,
@@ -25952,8 +24723,7 @@ class ValidationError(FingerprintingError):
 
 
 class ModelLoadError(FingerprintingError):
-    """Raised when AI models fail to load for fingerprinting"""
-    
+    """Raised when AI models fail to load for fingerprinting"""    
     def __init__(
         self,
         model_name: str,
@@ -25982,8 +24752,7 @@ class ModelLoadError(FingerprintingError):
 
 
 class StorageError(FingerprintingError):
-    """Raised when fingerprint storage operations fail"""
-    
+    """Raised when fingerprint storage operations fail"""    
     def __init__(
         self,
         operation: str,
@@ -26012,8 +24781,7 @@ class StorageError(FingerprintingError):
 
 
 class MatchingError(FingerprintingError):
-    """Raised when fingerprint matching operations fail"""
-    
+    """Raised when fingerprint matching operations fail"""    
     def __init__(
         self,
         matching_algorithm: str,
@@ -26040,8 +24808,7 @@ class MatchingError(FingerprintingError):
 
 
 class ConfigurationError(FingerprintingError):
-    """Raised when fingerprinting configuration is invalid"""
-    
+    """Raised when fingerprinting configuration is invalid"""    
     def __init__(
         self,
         config_parameter: str,
@@ -26070,8 +24837,7 @@ class ConfigurationError(FingerprintingError):
 
 
 class ResourceError(FingerprintingError):
-    """Raised when system resources are insufficient for processing"""
-    
+    """Raised when system resources are insufficient for processing"""    
     def __init__(
         self,
         resource_type: str,
@@ -26100,8 +24866,7 @@ class ResourceError(FingerprintingError):
 
 
 class TimeoutError(FingerprintingError):
-    """Raised when processing operations exceed time limits"""
-    
+    """Raised when processing operations exceed time limits"""    
     def __init__(
         self,
         operation: str,
@@ -26170,8 +24935,7 @@ RECOVERY_STRATEGIES = {
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-AI Fingerprinting Engine for Multi-Format Content Protection
+"""AI Fingerprinting Engine for Multi-Format Content Protection
 
 This module provides comprehensive fingerprinting capabilities for audio, video,
 image, and text content using advanced AI algorithms for copyright protection
@@ -26186,9 +24950,7 @@ Supported content types:
 Author: Spotify AI Agent Team
 License: Proprietary
 Version: 1.0.0
-"""
-
-from .audio_fingerprint import AudioFingerprintEngine
+"""from .audio_fingerprint import AudioFingerprintEngine
 from .video_fingerprint import VideoFingerprintEngine
 from .image_fingerprint import ImageFingerprintEngine
 from .text_fingerprint import TextFingerprintEngine
@@ -26245,13 +25007,11 @@ __author__ = 'Spotify AI Agent Team'
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Music Analysis Service
+"""Music Analysis Service
 - Enterprise-grade AI music analysis: audio feature extraction, genre detection, mood, tempo, key, compliance, audit, explainability, multi-tenancy, logging, monitoring.
 - Features: DSGVO/HIPAA compliance, security, audit, traceability, explainability, multi-tenancy, versioning, multilingual, logging, monitoring.
 - No TODOs, no placeholders. All logic is business-aligned and production-ready.
-"""
-from typing import Dict, Any, Optional
+"""from typing import Dict, Any, Optional
 import logging
 
 class MusicAnalysisService:
@@ -26286,11 +25046,9 @@ class MusicAnalysisService:
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-AI Audio Fingerprinting Engine
+"""AI Audio Fingerprinting Engine
 Protection et identification de contenu audio pour créateurs
-"""
-import librosa
+"""import librosa
 import numpy as np
 import chromaprint
 from typing import Dict, List, Optional, Tuple
@@ -26302,13 +25060,11 @@ from app.services.ai.fingerprint_base import FingerprintBase
 
 
 class AudioFingerprintEngine(FingerprintBase):
-    """
-    Moteur de fingerprinting audio avancé
+    """    Moteur de fingerprinting audio avancé
     - Chromaprint pour la détection de similarité
     - Spectral hashing pour la robustesse
     - Extraction de features via Librosa
-    """
-    
+    """    
     def __init__(self):
         self.sample_rate = 22050
         self.n_fft = 2048
@@ -26316,16 +25072,14 @@ class AudioFingerprintEngine(FingerprintBase):
         self.n_mels = 128
         
     async def extract_fingerprint(self, audio_path: str) -> Dict:
-        """
-        Extrait le fingerprint audio multi-algorithmes
+        """        Extrait le fingerprint audio multi-algorithmes
         
         Args:
             audio_path: Chemin vers le fichier audio
             
         Returns:
             Dict contenant tous les fingerprints
-        """
-        try:
+        """        try:
             # Chargement audio avec Librosa
             y, sr = librosa.load(audio_path, sr=self.sample_rate)
             
@@ -26360,8 +25114,7 @@ class AudioFingerprintEngine(FingerprintBase):
             raise Exception(f"Erreur extraction fingerprint audio: {str(e)}")
     
     def _generate_chromaprint(self, audio_path: str) -> str:
-        """Génère le fingerprint Chromaprint"""
-        try:
+        """Génère le fingerprint Chromaprint"""        try:
             # Utilisation de chromaprint (Acoustid)
             import subprocess
             result = subprocess.run([
@@ -26380,8 +25133,7 @@ class AudioFingerprintEngine(FingerprintBase):
             return ""
     
     def _extract_spectral_features(self, y: np.ndarray, sr: int) -> np.ndarray:
-        """Extrait les features spectrales"""
-        # Spectral centroid
+        """Extrait les features spectrales"""        # Spectral centroid
         spectral_centroids = librosa.feature.spectral_centroid(y=y, sr=sr)[0]
         
         # Spectral rolloff
@@ -26404,8 +25156,7 @@ class AudioFingerprintEngine(FingerprintBase):
         return features
     
     def _extract_mfcc_features(self, y: np.ndarray, sr: int) -> np.ndarray:
-        """Extrait les MFCC (Mel-frequency cepstral coefficients)"""
-        mfccs = librosa.feature.mfcc(
+        """Extrait les MFCC (Mel-frequency cepstral coefficients)"""        mfccs = librosa.feature.mfcc(
             y=y, 
             sr=sr, 
             n_mfcc=13,
@@ -26420,8 +25171,7 @@ class AudioFingerprintEngine(FingerprintBase):
         return np.concatenate([mfcc_mean, mfcc_std])
     
     def _extract_tempo_features(self, y: np.ndarray, sr: int) -> Dict:
-        """Extrait les features de tempo et rythme"""
-        # Détection du tempo
+        """Extrait les features de tempo et rythme"""        # Détection du tempo
         tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
         
         # Onset detection
@@ -26436,8 +25186,7 @@ class AudioFingerprintEngine(FingerprintBase):
         }
     
     def _generate_perceptual_hash(self, y: np.ndarray, sr: int) -> str:
-        """Génère un hash perceptuel robuste"""
-        # Spectrogram
+        """Génère un hash perceptuel robuste"""        # Spectrogram
         S = np.abs(librosa.stft(y, n_fft=self.n_fft, hop_length=self.hop_length))
         
         # Mel-scale spectrogram
@@ -26468,8 +25217,7 @@ class AudioFingerprintEngine(FingerprintBase):
         fp2: Dict, 
         threshold: float = 0.8
     ) -> Dict:
-        """
-        Compare deux fingerprints audio
+        """        Compare deux fingerprints audio
         
         Args:
             fp1, fp2: Fingerprints à comparer
@@ -26477,8 +25225,7 @@ class AudioFingerprintEngine(FingerprintBase):
             
         Returns:
             Dict avec scores de similarité
-        """
-        similarity_scores = {}
+        """        similarity_scores = {}
         
         # 1. Comparaison Chromaprint
         if fp1.get("chromaprint") and fp2.get("chromaprint"):
@@ -26531,8 +25278,7 @@ class AudioFingerprintEngine(FingerprintBase):
         return similarity_scores
     
     def _compare_chromaprint(self, fp1: str, fp2: str) -> float:
-        """Compare deux fingerprints Chromaprint"""
-        try:
+        """Compare deux fingerprints Chromaprint"""        try:
             # Utilisation de la distance de Hamming normalisée
             if not fp1 or not fp2:
                 return 0.0
@@ -26561,8 +25307,7 @@ class AudioFingerprintEngine(FingerprintBase):
             return 0.0
     
     def _cosine_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Calcule la similarité cosinus entre deux vecteurs"""
-        try:
+        """Calcule la similarité cosinus entre deux vecteurs"""        try:
             # Normalisation
             vec1_norm = vec1 / (np.linalg.norm(vec1) + 1e-10)
             vec2_norm = vec2 / (np.linalg.norm(vec2) + 1e-10)
@@ -26577,8 +25322,7 @@ class AudioFingerprintEngine(FingerprintBase):
             return 0.0
     
     def _hamming_similarity(self, hash1: str, hash2: str) -> float:
-        """Calcule la similarité de Hamming entre deux hashs"""
-        try:
+        """Calcule la similarité de Hamming entre deux hashs"""        try:
             if not hash1 or not hash2 or len(hash1) != len(hash2):
                 return 0.0
                 
@@ -26598,8 +25342,7 @@ class AudioFingerprintEngine(FingerprintBase):
         metadata: Dict,
         db: Session
     ) -> AudioFingerprint:
-        """Stocke le fingerprint en base de données"""
-        try:
+        """Stocke le fingerprint en base de données"""        try:
             audio_fingerprint = AudioFingerprint(
                 user_id=user_id,
                 content_id=content_id,
@@ -26632,11 +25375,9 @@ class AudioFingerprintEngine(FingerprintBase):
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-AI Video Fingerprinting Engine
+"""AI Video Fingerprinting Engine
 Protection et identification de contenu vidéo pour créateurs
-"""
-import cv2
+"""import cv2
 import numpy as np
 import hashlib
 from typing import Dict, List, Optional, Tuple
@@ -26650,30 +25391,26 @@ from app.services.ai.fingerprint_base import FingerprintBase
 
 
 class VideoFingerprintEngine(FingerprintBase):
-    """
-    Moteur de fingerprinting vidéo avancé
+    """    Moteur de fingerprinting vidéo avancé
     - Extraction de frames clés
     - Hashing perceptuel par frame
     - Détection d'objets via YOLO/MobileNet
     - Analyse de mouvement et transitions
-    """
-    
+    """    
     def __init__(self):
         self.frame_sample_rate = 1.0  # 1 frame par seconde
         self.max_frames = 100  # Limite pour optimiser les performances
         self.hash_size = 16   # Taille des hashs perceptuels
         
     async def extract_fingerprint(self, video_path: str) -> Dict:
-        """
-        Extrait le fingerprint vidéo multi-algorithmes
+        """        Extrait le fingerprint vidéo multi-algorithmes
         
         Args:
             video_path: Chemin vers le fichier vidéo
             
         Returns:
             Dict contenant tous les fingerprints
-        """
-        try:
+        """        try:
             # Ouverture de la vidéo avec OpenCV
             cap = cv2.VideoCapture(video_path)
             
@@ -26728,8 +25465,7 @@ class VideoFingerprintEngine(FingerprintBase):
             raise Exception(f"Erreur extraction fingerprint vidéo: {str(e)}")
     
     async def _extract_key_frames(self, cap: cv2.VideoCapture, fps: float) -> List[np.ndarray]:
-        """Extrait les frames clés de la vidéo"""
-        key_frames = []
+        """Extrait les frames clés de la vidéo"""        key_frames = []
         frame_interval = max(1, int(fps / self.frame_sample_rate))
         frame_index = 0
         
@@ -26748,8 +25484,7 @@ class VideoFingerprintEngine(FingerprintBase):
         return key_frames
     
     def _generate_frame_hashes(self, frames: List[np.ndarray]) -> List[str]:
-        """Génère les hashs perceptuels pour chaque frame"""
-        frame_hashes = []
+        """Génère les hashs perceptuels pour chaque frame"""        frame_hashes = []
         
         for frame in frames:
             # Conversion BGR vers RGB pour PIL
@@ -26776,8 +25511,7 @@ class VideoFingerprintEngine(FingerprintBase):
         return frame_hashes
     
     def _analyze_motion(self, frames: List[np.ndarray]) -> Dict:
-        """Analyse les caractéristiques de mouvement"""
-        if len(frames) < 2:
+        """Analyse les caractéristiques de mouvement"""        if len(frames) < 2:
             return {"motion_intensity": 0.0, "motion_patterns": []}
         
         motion_scores = []
@@ -26817,8 +25551,7 @@ class VideoFingerprintEngine(FingerprintBase):
         }
     
     def _detect_transitions(self, frames: List[np.ndarray]) -> Dict:
-        """Détecte les transitions et coupures dans la vidéo"""
-        if len(frames) < 2:
+        """Détecte les transitions et coupures dans la vidéo"""        if len(frames) < 2:
             return {"transition_points": [], "transition_types": []}
         
         transition_points = []
@@ -26854,8 +25587,7 @@ class VideoFingerprintEngine(FingerprintBase):
         }
     
     def _analyze_colors(self, frames: List[np.ndarray]) -> Dict:
-        """Analyse les caractéristiques colorimétriques"""
-        if not frames:
+        """Analyse les caractéristiques colorimétriques"""        if not frames:
             return {"dominant_colors": [], "color_variance": 0.0}
         
         # Échantillonnage de frames pour l'analyse
@@ -26907,8 +25639,7 @@ class VideoFingerprintEngine(FingerprintBase):
         }
     
     def _generate_global_hash(self, frame_hashes: List[Dict], motion_features: Dict) -> str:
-        """Génère un hash global pour toute la vidéo"""
-        # Concaténation des hashs de frames
+        """Génère un hash global pour toute la vidéo"""        # Concaténation des hashs de frames
         combined_hashes = []
         for fh in frame_hashes[:20]:  # Limitation à 20 frames pour performance
             combined_hashes.append(fh.get("combined", ""))
@@ -26926,8 +25657,7 @@ class VideoFingerprintEngine(FingerprintBase):
         fp2: Dict, 
         threshold: float = 0.75
     ) -> Dict:
-        """
-        Compare deux fingerprints vidéo
+        """        Compare deux fingerprints vidéo
         
         Args:
             fp1, fp2: Fingerprints à comparer
@@ -26935,8 +25665,7 @@ class VideoFingerprintEngine(FingerprintBase):
             
         Returns:
             Dict avec scores de similarité
-        """
-        similarity_scores = {}
+        """        similarity_scores = {}
         
         # 1. Comparaison des hashs de frames
         if fp1.get("frame_hashes") and fp2.get("frame_hashes"):
@@ -26998,8 +25727,7 @@ class VideoFingerprintEngine(FingerprintBase):
         return similarity_scores
     
     def _compare_frame_hashes(self, hashes1: List[Dict], hashes2: List[Dict]) -> float:
-        """Compare les hashs de frames entre deux vidéos"""
-        if not hashes1 or not hashes2:
+        """Compare les hashs de frames entre deux vidéos"""        if not hashes1 or not hashes2:
             return 0.0
         
         # Comparaison avec fenêtre glissante pour gérer les décalages temporels
@@ -27042,8 +25770,7 @@ class VideoFingerprintEngine(FingerprintBase):
         return max_similarity
     
     def _compare_motion_features(self, motion1: Dict, motion2: Dict) -> float:
-        """Compare les features de mouvement"""
-        try:
+        """Compare les features de mouvement"""        try:
             # Comparaison de l'intensité de mouvement
             intensity1 = motion1.get("motion_intensity", 0)
             intensity2 = motion2.get("motion_intensity", 0)
@@ -27072,8 +25799,7 @@ class VideoFingerprintEngine(FingerprintBase):
             return 0.0
     
     def _compare_transitions(self, trans1: Dict, trans2: Dict) -> float:
-        """Compare les patterns de transitions"""
-        try:
+        """Compare les patterns de transitions"""        try:
             count1 = trans1.get("transition_count", 0)
             count2 = trans2.get("transition_count", 0)
             
@@ -27100,8 +25826,7 @@ class VideoFingerprintEngine(FingerprintBase):
             return 0.0
     
     def _compare_colors(self, colors1: Dict, colors2: Dict) -> float:
-        """Compare les caractéristiques colorimétriques"""
-        try:
+        """Compare les caractéristiques colorimétriques"""        try:
             # Comparaison des couleurs dominantes
             dom_colors1 = colors1.get("dominant_colors", [])
             dom_colors2 = colors2.get("dominant_colors", [])
@@ -27137,8 +25862,7 @@ class VideoFingerprintEngine(FingerprintBase):
             return 0.0
     
     def _hamming_similarity(self, hash1: str, hash2: str) -> float:
-        """Calcule la similarité de Hamming entre deux hashs"""
-        try:
+        """Calcule la similarité de Hamming entre deux hashs"""        try:
             if not hash1 or not hash2 or len(hash1) != len(hash2):
                 return 0.0
                 
@@ -27156,8 +25880,7 @@ class VideoFingerprintEngine(FingerprintBase):
         metadata: Dict,
         db: Session
     ) -> VideoFingerprint:
-        """Stocke le fingerprint en base de données"""
-        try:
+        """Stocke le fingerprint en base de données"""        try:
             video_fingerprint = VideoFingerprint(
                 user_id=user_id,
                 content_id=content_id,
@@ -27192,8 +25915,7 @@ class VideoFingerprintEngine(FingerprintBase):
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Advanced Data Processors
+"""Advanced Data Processors
 ========================
 
 Ultra-sophisticated data processing components providing enterprise-grade
@@ -27206,9 +25928,7 @@ Developed by Expert Team Led by Fahed Mlaiel:
 ✅ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
 ✅ Spécialiste Sécurité Backend
 ✅ Architecte Microservices
-"""
-
-import asyncio
+"""import asyncio
 import time
 import json
 import uuid
@@ -27227,8 +25947,7 @@ logger = structlog.get_logger(__name__)
 
 @dataclass
 class ProcessorConfig:
-    """Configuration for data processors."""
-    batch_size: int = 1000
+    """Configuration for data processors."""    batch_size: int = 1000
     max_workers: int = 10
     timeout_seconds: int = 30
     retry_attempts: int = 3
@@ -27239,11 +25958,9 @@ class ProcessorConfig:
 
 
 class StreamProcessor:
-    """
-    Ultra-advanced stream processor for real-time data processing
+    """    Ultra-advanced stream processor for real-time data processing
     with microsecond latency and unlimited scalability.
-    """
-    
+    """    
     def __init__(self, config: ProcessorConfig):
         self.config = config
         self.stream_id = str(uuid.uuid4())
@@ -27258,8 +25975,7 @@ class StreamProcessor:
         self.is_running = False
         
     async def initialize(self) -> None:
-        """Initialize the stream processor."""
-        try:
+        """Initialize the stream processor."""        try:
             logger.info(f"Initializing StreamProcessor {self.stream_id}")
             
             # Initialize processing pipeline
@@ -27277,8 +25993,7 @@ class StreamProcessor:
             raise
     
     async def process_event(self, event: Dict[str, Any]) -> Dict[str, Any]:
-        """Process a single event through the stream."""
-        try:
+        """Process a single event through the stream."""        try:
             start_time = time.perf_counter()
             
             # Add timestamp if not present
@@ -27318,13 +26033,11 @@ class StreamProcessor:
             }
     
     async def add_processor(self, processor_func: Callable) -> None:
-        """Add a processor function to the pipeline."""
-        self.processing_pipeline.append(processor_func)
+        """Add a processor function to the pipeline."""        self.processing_pipeline.append(processor_func)
         logger.debug(f"Added processor to pipeline: {processor_func.__name__}")
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for the stream processor."""
-        return {
+        """Health check for the stream processor."""        return {
             "healthy": self.is_running,
             "stream_id": self.stream_id,
             "buffer_size": len(self.stream_buffer),
@@ -27333,8 +26046,7 @@ class StreamProcessor:
         }
     
     async def get_stream_analytics(self) -> Dict[str, Any]:
-        """Get comprehensive stream analytics."""
-        return {
+        """Get comprehensive stream analytics."""        return {
             "stream_id": self.stream_id,
             "processing_metrics": self.metrics,
             "pipeline_info": {
@@ -27351,15 +26063,13 @@ class StreamProcessor:
     # ================== PRIVATE METHODS ==================
     
     async def _setup_processing_pipeline(self) -> None:
-        """Setup the processing pipeline."""
-        # Add default processors
+        """Setup the processing pipeline."""        # Add default processors
         await self.add_processor(self._validate_event)
         await self.add_processor(self._enrich_event)
         await self.add_processor(self._transform_event)
     
     async def _process_through_pipeline(self, event: Dict[str, Any]) -> Dict[str, Any]:
-        """Process event through all pipeline stages."""
-        current_event = event.copy()
+        """Process event through all pipeline stages."""        current_event = event.copy()
         
         for processor in self.processing_pipeline:
             try:
@@ -27373,8 +26083,7 @@ class StreamProcessor:
         return current_event
     
     async def _validate_event(self, event: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate event structure and data."""
-        required_fields = ["timestamp"]
+        """Validate event structure and data."""        required_fields = ["timestamp"]
         
         for field in required_fields:
             if field not in event:
@@ -27384,8 +26093,7 @@ class StreamProcessor:
         return event
     
     async def _enrich_event(self, event: Dict[str, Any]) -> Dict[str, Any]:
-        """Enrich event with additional metadata."""
-        event["processing_info"] = {
+        """Enrich event with additional metadata."""        event["processing_info"] = {
             "processor_id": self.stream_id,
             "processed_at": datetime.now(timezone.utc).isoformat(),
             "enriched": True
@@ -27393,8 +26101,7 @@ class StreamProcessor:
         return event
     
     async def _transform_event(self, event: Dict[str, Any]) -> Dict[str, Any]:
-        """Transform event data."""
-        # Add unique event ID if not present
+        """Transform event data."""        # Add unique event ID if not present
         if "id" not in event:
             event["id"] = str(uuid.uuid4())
         
@@ -27402,16 +26109,14 @@ class StreamProcessor:
         return event
     
     def _get_default_value(self, field: str) -> Any:
-        """Get default value for missing field."""
-        defaults = {
+        """Get default value for missing field."""        defaults = {
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "id": str(uuid.uuid4())
         }
         return defaults.get(field, None)
     
     async def _stream_processing_worker(self) -> None:
-        """Background worker for stream processing."""
-        while self.is_running:
+        """Background worker for stream processing."""        while self.is_running:
             try:
                 # Process buffered events
                 processed_count = 0
@@ -27437,13 +26142,11 @@ class StreamProcessor:
                 await asyncio.sleep(1)
     
     async def _process_buffered_event(self, event: Dict[str, Any]) -> None:
-        """Process a buffered event."""
-        # Additional processing for buffered events
+        """Process a buffered event."""        # Additional processing for buffered events
         pass
     
     async def _metrics_collection_worker(self) -> None:
-        """Background worker for metrics collection."""
-        while self.is_running:
+        """Background worker for metrics collection."""        while self.is_running:
             try:
                 # Collect and log metrics
                 await self._collect_stream_metrics()
@@ -27453,8 +26156,7 @@ class StreamProcessor:
                 await asyncio.sleep(30)
     
     async def _collect_stream_metrics(self) -> None:
-        """Collect comprehensive stream metrics."""
-        # Log current metrics
+        """Collect comprehensive stream metrics."""        # Log current metrics
         logger.info(
             "Stream metrics",
             stream_id=self.stream_id,
@@ -27465,11 +26167,9 @@ class StreamProcessor:
 
 
 class BatchProcessor:
-    """
-    Ultra-advanced batch processor for large-scale data processing
+    """    Ultra-advanced batch processor for large-scale data processing
     with distributed computing capabilities and intelligent optimization.
-    """
-    
+    """    
     def __init__(self, config: ProcessorConfig):
         self.config = config
         self.processor_id = str(uuid.uuid4())
@@ -27484,8 +26184,7 @@ class BatchProcessor:
         }
         
     async def initialize(self) -> None:
-        """Initialize the batch processor."""
-        try:
+        """Initialize the batch processor."""        try:
             logger.info(f"Initializing BatchProcessor {self.processor_id}")
             
             # Start batch processing worker
@@ -27498,8 +26197,7 @@ class BatchProcessor:
             raise
     
     async def submit_batch(self, data: List[Any], operation: str = "process") -> str:
-        """Submit a batch for processing."""
-        try:
+        """Submit a batch for processing."""        try:
             job_id = str(uuid.uuid4())
             batch_job = {
                 "job_id": job_id,
@@ -27521,12 +26219,10 @@ class BatchProcessor:
             raise
     
     async def get_job_status(self, job_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of a batch job."""
-        return self.processing_jobs.get(job_id)
+        """Get status of a batch job."""        return self.processing_jobs.get(job_id)
     
     async def process_batch_sync(self, data: List[Any], operation: str = "process") -> Dict[str, Any]:
-        """Process batch synchronously and return results."""
-        try:
+        """Process batch synchronously and return results."""        try:
             start_time = time.time()
             
             # Split into optimal chunks
@@ -27580,8 +26276,7 @@ class BatchProcessor:
             }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for the batch processor."""
-        return {
+        """Health check for the batch processor."""        return {
             "healthy": True,
             "processor_id": self.processor_id,
             "queue_size": self.batch_queue.qsize(),
@@ -27593,8 +26288,7 @@ class BatchProcessor:
     # ================== PRIVATE METHODS ==================
     
     def _create_optimal_chunks(self, data: List[Any]) -> List[List[Any]]:
-        """Create optimal chunks for parallel processing."""
-        chunk_size = max(1, len(data) // self.config.max_workers)
+        """Create optimal chunks for parallel processing."""        chunk_size = max(1, len(data) // self.config.max_workers)
         chunks = []
         
         for i in range(0, len(data), chunk_size):
@@ -27603,8 +26297,7 @@ class BatchProcessor:
         return chunks
     
     async def _process_chunk(self, chunk: List[Any], operation: str) -> List[Any]:
-        """Process a chunk of data."""
-        try:
+        """Process a chunk of data."""        try:
             # Process each item in the chunk
             results = []
             for item in chunk:
@@ -27618,8 +26311,7 @@ class BatchProcessor:
             raise
     
     async def _process_single_item(self, item: Any, operation: str) -> Any:
-        """Process a single item."""
-        try:
+        """Process a single item."""        try:
             if operation == "validate":
                 return await self._validate_item(item)
             elif operation == "transform":
@@ -27643,24 +26335,21 @@ class BatchProcessor:
             }
     
     async def _validate_item(self, item: Any) -> Dict[str, Any]:
-        """Validate a single item."""
-        return {
+        """Validate a single item."""        return {
             "item": item,
             "valid": True,
             "validation_timestamp": datetime.now(timezone.utc).isoformat()
         }
     
     async def _transform_item(self, item: Any) -> Dict[str, Any]:
-        """Transform a single item."""
-        return {
+        """Transform a single item."""        return {
             "original": item,
             "transformed": str(item).upper() if isinstance(item, str) else item,
             "transform_timestamp": datetime.now(timezone.utc).isoformat()
         }
     
     async def _analyze_item(self, item: Any) -> Dict[str, Any]:
-        """Analyze a single item."""
-        analysis = {
+        """Analyze a single item."""        analysis = {
             "type": type(item).__name__,
             "size": len(str(item)),
             "analysis_timestamp": datetime.now(timezone.utc).isoformat()
@@ -27686,8 +26375,7 @@ class BatchProcessor:
         }
     
     async def _batch_processing_worker(self) -> None:
-        """Background worker for batch processing."""
-        while True:
+        """Background worker for batch processing."""        while True:
             try:
                 # Get batch job from queue
                 batch_job = await asyncio.wait_for(self.batch_queue.get(), timeout=5.0)
@@ -27703,8 +26391,7 @@ class BatchProcessor:
                 await asyncio.sleep(5)
     
     async def _process_batch_job(self, batch_job: Dict[str, Any]) -> None:
-        """Process a batch job."""
-        try:
+        """Process a batch job."""        try:
             job_id = batch_job["job_id"]
             data = batch_job["data"]
             operation = batch_job["operation"]
@@ -27736,11 +26423,9 @@ class BatchProcessor:
 
 
 class EventProcessor:
-    """
-    Advanced event processor for complex event processing (CEP)
+    """    Advanced event processor for complex event processing (CEP)
     with pattern matching and real-time alerting capabilities.
-    """
-    
+    """    
     def __init__(self, config: ProcessorConfig):
         self.config = config
         self.processor_id = str(uuid.uuid4())
@@ -27754,8 +26439,7 @@ class EventProcessor:
         }
         
     async def initialize(self) -> None:
-        """Initialize the event processor."""
-        try:
+        """Initialize the event processor."""        try:
             logger.info(f"Initializing EventProcessor {self.processor_id}")
             
             # Setup default patterns
@@ -27771,8 +26455,7 @@ class EventProcessor:
             raise
     
     async def process_event(self, event: Dict[str, Any]) -> Dict[str, Any]:
-        """Process an event and check for pattern matches."""
-        try:
+        """Process an event and check for pattern matches."""        try:
             # Add timestamp if not present
             if "timestamp" not in event:
                 event["timestamp"] = datetime.now(timezone.utc)
@@ -27813,8 +26496,7 @@ class EventProcessor:
         pattern_id: str,
         pattern_config: Dict[str, Any]
     ) -> None:
-        """Add a new event pattern to monitor."""
-        self.patterns[pattern_id] = {
+        """Add a new event pattern to monitor."""        self.patterns[pattern_id] = {
             "config": pattern_config,
             "created_at": datetime.now(timezone.utc),
             "matches": 0
@@ -27827,8 +26509,7 @@ class EventProcessor:
         pattern_id: str,
         action: Callable
     ) -> None:
-        """Add a trigger action for a pattern."""
-        self.triggers[trigger_id] = {
+        """Add a trigger action for a pattern."""        self.triggers[trigger_id] = {
             "pattern_id": pattern_id,
             "action": action,
             "created_at": datetime.now(timezone.utc),
@@ -27837,8 +26518,7 @@ class EventProcessor:
         logger.info(f"Added trigger: {trigger_id} for pattern: {pattern_id}")
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for the event processor."""
-        return {
+        """Health check for the event processor."""        return {
             "healthy": True,
             "processor_id": self.processor_id,
             "buffer_size": len(self.event_buffer),
@@ -27850,8 +26530,7 @@ class EventProcessor:
     # ================== PRIVATE METHODS ==================
     
     async def _setup_default_patterns(self) -> None:
-        """Setup default event patterns."""
-        # High frequency pattern
+        """Setup default event patterns."""        # High frequency pattern
         await self.add_pattern("high_frequency", {
             "type": "frequency",
             "threshold": 100,
@@ -27877,8 +26556,7 @@ class EventProcessor:
         })
     
     async def _check_patterns(self, event: Dict[str, Any]) -> Dict[str, Any]:
-        """Check if event matches any patterns."""
-        matches = {}
+        """Check if event matches any patterns."""        matches = {}
         
         for pattern_id, pattern_info in self.patterns.items():
             pattern_config = pattern_info["config"]
@@ -27901,8 +26579,7 @@ class EventProcessor:
         event: Dict[str, Any],
         pattern_config: Dict[str, Any]
     ) -> bool:
-        """Check if event matches a specific pattern."""
-        try:
+        """Check if event matches a specific pattern."""        try:
             pattern_type = pattern_config.get("type")
             
             if pattern_type == "frequency":
@@ -27923,8 +26600,7 @@ class EventProcessor:
         event: Dict[str, Any],
         pattern_config: Dict[str, Any]
     ) -> bool:
-        """Check frequency-based pattern."""
-        field = pattern_config.get("field")
+        """Check frequency-based pattern."""        field = pattern_config.get("field")
         threshold = pattern_config.get("threshold", 100)
         window_seconds = pattern_config.get("window_seconds", 60)
         
@@ -27952,8 +26628,7 @@ class EventProcessor:
         event: Dict[str, Any],
         pattern_config: Dict[str, Any]
     ) -> bool:
-        """Check error rate pattern."""
-        error_field = pattern_config.get("error_field", "status")
+        """Check error rate pattern."""        error_field = pattern_config.get("error_field", "status")
         error_values = pattern_config.get("error_values", ["error"])
         threshold = pattern_config.get("threshold", 0.1)
         window_seconds = pattern_config.get("window_seconds", 300)
@@ -27986,8 +26661,7 @@ class EventProcessor:
         event: Dict[str, Any],
         pattern_config: Dict[str, Any]
     ) -> bool:
-        """Check anomaly pattern using statistical analysis."""
-        field = pattern_config.get("field")
+        """Check anomaly pattern using statistical analysis."""        field = pattern_config.get("field")
         threshold_stddev = pattern_config.get("threshold_stddev", 3.0)
         window_size = pattern_config.get("window_size", 100)
         
@@ -28020,8 +26694,7 @@ class EventProcessor:
         match_data: Dict[str, Any],
         event: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
-        """Trigger alert for pattern match."""
-        try:
+        """Trigger alert for pattern match."""        try:
             # Find triggers for this pattern
             pattern_triggers = [
                 (trigger_id, trigger_info)
@@ -28054,8 +26727,7 @@ class EventProcessor:
             return None
     
     async def _event_processing_worker(self) -> None:
-        """Background worker for event processing optimization."""
-        while True:
+        """Background worker for event processing optimization."""        while True:
             try:
                 # Cleanup old events from buffer
                 await self._cleanup_old_events()
@@ -28070,8 +26742,7 @@ class EventProcessor:
                 await asyncio.sleep(60)
     
     async def _cleanup_old_events(self) -> None:
-        """Remove old events from buffer."""
-        if not self.event_buffer:
+        """Remove old events from buffer."""        if not self.event_buffer:
             return
         
         current_time = datetime.now(timezone.utc)
@@ -28091,8 +26762,7 @@ class EventProcessor:
                 break
     
     async def _optimize_patterns(self) -> None:
-        """Optimize patterns based on performance metrics."""
-        # Remove patterns that haven't matched in a long time
+        """Optimize patterns based on performance metrics."""        # Remove patterns that haven't matched in a long time
         current_time = datetime.now(timezone.utc)
         patterns_to_remove = []
         
@@ -28112,8 +26782,7 @@ class EventProcessor:
 # ================== UTILITY FUNCTIONS ==================
 
 def performance_monitor(func):
-    """Decorator to monitor function performance."""
-    @wraps(func)
+    """Decorator to monitor function performance."""    @wraps(func)
     async def wrapper(*args, **kwargs):
         start_time = time.perf_counter()
         try:
@@ -28130,8 +26799,7 @@ async def create_processing_pipeline(
     processors: List[Callable],
     config: Optional[ProcessorConfig] = None
 ) -> Callable:
-    """Create a processing pipeline from a list of processors."""
-    if not config:
+    """Create a processing pipeline from a list of processors."""    if not config:
         config = ProcessorConfig()
     
     async def pipeline(data: Any) -> Any:
@@ -28156,8 +26824,7 @@ async def create_processing_pipeline(
 #
 # 🎖️ Expert: Ingénieur Machine Learning
 
-"""
-🎵 Advanced Audio Analysis & Processing
+"""🎵 Advanced Audio Analysis & Processing
 =======================================
 
 Enterprise-grade audio analysis system providing:
@@ -28167,9 +26834,7 @@ Enterprise-grade audio analysis system providing:
 - Mood and genre classification
 - Tempo and beat detection
 - Audio quality assessment
-"""
-
-import numpy as np
+"""import numpy as np
 import librosa
 import librosa.display
 import soundfile as sf
@@ -28204,8 +26869,7 @@ from .exceptions import ModelError, InferenceError
 
 @dataclass
 class AudioFeatures:
-    """Caractéristiques audio extraites"""
-    # Features temporelles
+    """Caractéristiques audio extraites"""    # Features temporelles
     duration: float
     tempo: float
     beats: np.ndarray
@@ -28240,8 +26904,7 @@ class AudioFeatures:
 
 @dataclass
 class AudioAnalysisResult:
-    """Résultat d'analyse audio complète"""
-    audio_id: str
+    """Résultat d'analyse audio complète"""    audio_id: str
     features: AudioFeatures
     
     # Classifications
@@ -28271,8 +26934,7 @@ class AudioAnalysisResult:
 
 
 class AudioAnalysisModel(IMLModel):
-    """Modèle d'analyse audio avancé"""
-    
+    """Modèle d'analyse audio avancé"""    
     def __init__(self, config: ModelConfig):
         self.config = config
         self.model_id = config.model_id
@@ -28304,8 +26966,7 @@ class AudioAnalysisModel(IMLModel):
         self.is_initialized = False
         
     async def initialize(self) -> bool:
-        """Initialisation du modèle d'analyse audio"""
-        try:
+        """Initialisation du modèle d'analyse audio"""        try:
             self.logger.info("Initialisation du modèle d'analyse audio...")
             
             # Initialisation des classificateurs
@@ -28326,8 +26987,7 @@ class AudioAnalysisModel(IMLModel):
             return False
     
     async def predict(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyse complète d'un fichier audio"""
-        try:
+        """Analyse complète d'un fichier audio"""        try:
             start_time = datetime.utcnow()
             
             # Extraction des paramètres
@@ -28382,8 +27042,7 @@ class AudioAnalysisModel(IMLModel):
             raise InferenceError(f"Erreur d'analyse audio: {e}")
     
     async def train(self, training_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Entraînement des modèles de classification audio"""
-        try:
+        """Entraînement des modèles de classification audio"""        try:
             self.logger.info("Début de l'entraînement du modèle d'analyse audio...")
             
             # Extraction des données d'entraînement
@@ -28450,8 +27109,7 @@ class AudioAnalysisModel(IMLModel):
             raise ModelError(f"Erreur d'entraînement: {e}")
     
     def get_metadata(self) -> Dict[str, Any]:
-        """Métadonnées du modèle"""
-        return {
+        """Métadonnées du modèle"""        return {
             'model_id': self.model_id,
             'model_type': ModelType.AUDIO_ANALYSIS.value,
             'version': self.config.version,
@@ -28474,12 +27132,10 @@ class AudioAnalysisModel(IMLModel):
         }
     
     def is_ready(self) -> bool:
-        """Vérification de l'état de préparation"""
-        return self.is_initialized
+        """Vérification de l'état de préparation"""        return self.is_initialized
     
     async def _preprocess_audio(self, audio: np.ndarray, sr: int) -> np.ndarray:
-        """Préprocessing de l'audio"""
-        
+        """Préprocessing de l'audio"""        
         # Normalisation
         audio = librosa.util.normalize(audio)
         
@@ -28498,8 +27154,7 @@ class AudioAnalysisModel(IMLModel):
         return audio
     
     async def _extract_audio_features(self, audio: np.ndarray, sr: int) -> AudioFeatures:
-        """Extraction complète des caractéristiques audio"""
-        
+        """Extraction complète des caractéristiques audio"""        
         # Features temporelles
         tempo, beats = librosa.beat.beat_track(y=audio, sr=sr, hop_length=self.hop_length)
         onset_frames = librosa.onset.onset_detect(y=audio, sr=sr, hop_length=self.hop_length)
@@ -28586,8 +27241,7 @@ class AudioAnalysisModel(IMLModel):
         audio: np.ndarray,
         sr: int
     ) -> AudioAnalysisResult:
-        """Analyse complète avec classification"""
-        
+        """Analyse complète avec classification"""        
         # Conversion des features en vecteur
         features_vector = await self._features_to_vector(features)
         features_vector = self.feature_scaler.transform([features_vector])[0]
@@ -28645,8 +27299,7 @@ class AudioAnalysisModel(IMLModel):
         )
     
     async def _features_to_vector(self, features: AudioFeatures) -> np.ndarray:
-        """Conversion des features en vecteur numérique"""
-        
+        """Conversion des features en vecteur numérique"""        
         feature_vector = []
         
         # Features temporelles
@@ -28679,8 +27332,7 @@ class AudioAnalysisModel(IMLModel):
         return np.array(feature_vector)
     
     async def _classify_genre(self, features_vector: np.ndarray) -> str:
-        """Classification du genre musical"""
-        if self.genre_classifier is None:
+        """Classification du genre musical"""        if self.genre_classifier is None:
             return "unknown"
         
         # Prédiction avec le modèle
@@ -28689,8 +27341,7 @@ class AudioAnalysisModel(IMLModel):
         return np.random.choice(genres)  # Placeholder
     
     async def _classify_mood(self, features_vector: np.ndarray) -> str:
-        """Classification de l'humeur"""
-        if self.mood_classifier is None:
+        """Classification de l'humeur"""        if self.mood_classifier is None:
             return "neutral"
         
         # Prédiction avec le modèle
@@ -28699,8 +27350,7 @@ class AudioAnalysisModel(IMLModel):
         return np.random.choice(moods)  # Placeholder
     
     async def _calculate_energy_level(self, features: AudioFeatures) -> float:
-        """Calcul du niveau d'énergie"""
-        rms_mean = np.mean(features.rms_energy)
+        """Calcul du niveau d'énergie"""        rms_mean = np.mean(features.rms_energy)
         spectral_centroid_mean = np.mean(features.spectral_centroid)
         
         # Normalisation et combinaison
@@ -28708,8 +27358,7 @@ class AudioAnalysisModel(IMLModel):
         return min(max(energy, 0.0), 1.0)
     
     async def _calculate_danceability(self, features: AudioFeatures) -> float:
-        """Calcul de la dansabilité"""
-        tempo_score = min(abs(features.tempo - 120) / 60, 1.0)
+        """Calcul de la dansabilité"""        tempo_score = min(abs(features.tempo - 120) / 60, 1.0)
         tempo_score = 1.0 - tempo_score  # Inverse (plus proche de 120 BPM = mieux)
         
         rhythm_regularity = len(features.beats) / (features.duration * features.tempo / 60)
@@ -28719,8 +27368,7 @@ class AudioAnalysisModel(IMLModel):
         return min(max(danceability, 0.0), 1.0)
     
     async def _calculate_valence(self, features: AudioFeatures) -> float:
-        """Calcul de la valence (positivité)"""
-        # Basé sur les features chromatiques et spectrales
+        """Calcul de la valence (positivité)"""        # Basé sur les features chromatiques et spectrales
         chroma_brightness = np.mean(features.chroma[:3, :])  # Notes majeures
         tempo_positivity = min(features.tempo / 140, 1.0)
         
@@ -28728,8 +27376,7 @@ class AudioAnalysisModel(IMLModel):
         return min(max(valence, 0.0), 1.0)
     
     async def _calculate_acousticness(self, features: AudioFeatures) -> float:
-        """Calcul de l'acoustique"""
-        # Ratio harmonique vs percussif
+        """Calcul de l'acoustique"""        # Ratio harmonique vs percussif
         harmonic_energy = np.mean(features.harmonic ** 2)
         percussive_energy = np.mean(features.percussive ** 2)
         
@@ -28741,8 +27388,7 @@ class AudioAnalysisModel(IMLModel):
         return min(max(acousticness, 0.0), 1.0)
     
     async def _calculate_instrumentalness(self, features: AudioFeatures) -> float:
-        """Calcul de l'instrumentalité"""
-        # Basé sur la régularité spectrale et l'absence de formants vocaux
+        """Calcul de l'instrumentalité"""        # Basé sur la régularité spectrale et l'absence de formants vocaux
         spectral_regularity = 1.0 - np.std(features.spectral_centroid) / np.mean(features.spectral_centroid)
         
         # Détection des formants vocaux (approximation)
@@ -28753,8 +27399,7 @@ class AudioAnalysisModel(IMLModel):
         return min(max(instrumentalness, 0.0), 1.0)
     
     async def _calculate_liveness(self, features: AudioFeatures) -> float:
-        """Calcul de l'aspect live"""
-        # Basé sur la variabilité et les artefacts de performance live
+        """Calcul de l'aspect live"""        # Basé sur la variabilité et les artefacts de performance live
         tempo_variability = np.std(np.diff(features.beats)) if len(features.beats) > 1 else 0
         spectral_variability = np.std(features.spectral_centroid)
         
@@ -28762,8 +27407,7 @@ class AudioAnalysisModel(IMLModel):
         return min(max(liveness, 0.0), 1.0)
     
     async def _calculate_speechiness(self, features: AudioFeatures) -> float:
-        """Calcul de l'aspect vocal/parlé"""
-        # Basé sur les MFCCs et la détection de parole
+        """Calcul de l'aspect vocal/parlé"""        # Basé sur les MFCCs et la détection de parole
         speech_mfccs = np.mean(np.abs(features.mfccs[1:5, :]))  # MFCCs caractéristiques de la parole
         zero_crossing_variability = np.std(features.zero_crossing_rate)
         
@@ -28771,8 +27415,7 @@ class AudioAnalysisModel(IMLModel):
         return min(max(speechiness, 0.0), 1.0)
     
     async def _assess_audio_quality(self, audio: np.ndarray, features: AudioFeatures) -> float:
-        """Évaluation de la qualité audio"""
-        # Facteurs de qualité
+        """Évaluation de la qualité audio"""        # Facteurs de qualité
         dynamic_range = np.max(features.rms_energy) - np.min(features.rms_energy)
         snr_estimate = np.mean(features.rms_energy) / (np.std(features.rms_energy) + 1e-6)
         spectral_flatness = np.mean(features.spectral_bandwidth) / (np.mean(features.spectral_centroid) + 1e-6)
@@ -28786,8 +27429,7 @@ class AudioAnalysisModel(IMLModel):
         return min(max(quality_score, 0.0), 1.0)
     
     async def _calculate_noise_level(self, audio: np.ndarray) -> float:
-        """Calcul du niveau de bruit"""
-        # Estimation du bruit via l'analyse spectrale
+        """Calcul du niveau de bruit"""        # Estimation du bruit via l'analyse spectrale
         stft = librosa.stft(audio, hop_length=self.hop_length, n_fft=self.n_fft)
         magnitude = np.abs(stft)
         
@@ -28798,8 +27440,7 @@ class AudioAnalysisModel(IMLModel):
         return min(max(noise_level, 0.0), 1.0)
     
     async def _calculate_dynamic_range(self, features: AudioFeatures) -> float:
-        """Calcul de la plage dynamique"""
-        max_rms = np.max(features.rms_energy)
+        """Calcul de la plage dynamique"""        max_rms = np.max(features.rms_energy)
         min_rms = np.min(features.rms_energy[features.rms_energy > 0])
         
         if min_rms > 0:
@@ -28810,8 +27451,7 @@ class AudioAnalysisModel(IMLModel):
         return min(max(dynamic_range_db / 60, 0.0), 1.0)  # Normalisation sur 60dB
     
     async def _generate_audio_fingerprint(self, features: AudioFeatures) -> str:
-        """Génération d'une empreinte audio unique"""
-        # Combinaison de features pour créer une empreinte
+        """Génération d'une empreinte audio unique"""        # Combinaison de features pour créer une empreinte
         fingerprint_data = np.concatenate([
             np.mean(features.mfccs, axis=1),
             np.mean(features.chroma, axis=1),
@@ -28825,8 +27465,7 @@ class AudioAnalysisModel(IMLModel):
         return f"fp_{fingerprint:08x}"
     
     async def _generate_similarity_hash(self, features: AudioFeatures) -> str:
-        """Génération d'un hash pour la similarité"""
-        # Hash basé sur les features principales pour la recherche de similarité
+        """Génération d'un hash pour la similarité"""        # Hash basé sur les features principales pour la recherche de similarité
         similarity_data = np.concatenate([
             np.mean(features.mfccs[:5], axis=1),  # 5 premiers MFCCs
             np.mean(features.chroma, axis=1),
@@ -28840,15 +27479,13 @@ class AudioAnalysisModel(IMLModel):
         return f"sh_{sim_hash:06x}"
     
     async def _load_audio_from_bytes(self, audio_bytes: bytes) -> Tuple[np.ndarray, int]:
-        """Chargement audio depuis bytes"""
-        with tempfile.NamedTemporaryFile(suffix='.wav') as temp_file:
+        """Chargement audio depuis bytes"""        with tempfile.NamedTemporaryFile(suffix='.wav') as temp_file:
             temp_file.write(audio_bytes)
             temp_file.flush()
             return librosa.load(temp_file.name, sr=self.sample_rate)
     
     async def _initialize_classifiers(self):
-        """Initialisation des classificateurs"""
-        # Classificateur de genre (exemple)
+        """Initialisation des classificateurs"""        # Classificateur de genre (exemple)
         self.genre_classifier = GenreClassifier()
         
         # Classificateur d'humeur
@@ -28858,34 +27495,28 @@ class AudioAnalysisModel(IMLModel):
         self.quality_assessor = QualityAssessor()
     
     async def _load_pretrained_models(self):
-        """Chargement des modèles pré-entraînés"""
-        # Implémentation du chargement des modèles sauvegardés
+        """Chargement des modèles pré-entraînés"""        # Implémentation du chargement des modèles sauvegardés
         pass
     
     async def _train_genre_classifier(self, features: np.ndarray, labels: List[str]) -> Dict:
-        """Entraînement du classificateur de genre"""
-        # Implémentation de l'entraînement
+        """Entraînement du classificateur de genre"""        # Implémentation de l'entraînement
         return {'accuracy': 0.85, 'num_classes': len(set(labels))}
     
     async def _train_mood_classifier(self, features: np.ndarray, labels: List[str]) -> Dict:
-        """Entraînement du classificateur d'humeur"""
-        # Implémentation de l'entraînement
+        """Entraînement du classificateur d'humeur"""        # Implémentation de l'entraînement
         return {'accuracy': 0.78, 'num_classes': len(set(labels))}
     
     async def _train_quality_assessor(self, features: np.ndarray, scores: List[float]) -> Dict:
-        """Entraînement de l'évaluateur de qualité"""
-        # Implémentation de l'entraînement
+        """Entraînement de l'évaluateur de qualité"""        # Implémentation de l'entraînement
         return {'mse': 0.02, 'r2_score': 0.92}
     
     async def _save_models(self):
-        """Sauvegarde des modèles entraînés"""
-        # Implémentation de la sauvegarde
+        """Sauvegarde des modèles entraînés"""        # Implémentation de la sauvegarde
         pass
 
 
 class GenreClassifier(nn.Module):
-    """Classificateur de genre musical"""
-    
+    """Classificateur de genre musical"""    
     def __init__(self, input_dim: int = 100, num_genres: int = 10):
         super().__init__()
         
@@ -28907,8 +27538,7 @@ class GenreClassifier(nn.Module):
 
 
 class MoodClassifier(nn.Module):
-    """Classificateur d'humeur musicale"""
-    
+    """Classificateur d'humeur musicale"""    
     def __init__(self, input_dim: int = 100, num_moods: int = 6):
         super().__init__()
         
@@ -28930,8 +27560,7 @@ class MoodClassifier(nn.Module):
 
 
 class QualityAssessor(nn.Module):
-    """Évaluateur de qualité audio"""
-    
+    """Évaluateur de qualité audio"""    
     def __init__(self, input_dim: int = 100):
         super().__init__()
         
@@ -29009,8 +27638,7 @@ __all__ = [
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-🎵 Tests SpleeterEngine - Moteur Principal
+"""🎵 Tests SpleeterEngine - Moteur Principal
 ==========================================
 
 Tests complets pour la classe SpleeterEngine incluant :
@@ -29021,9 +27649,7 @@ Tests complets pour la classe SpleeterEngine incluant :
 - Gestion d'erreurs
 
 🎖️ Développé par l'équipe d'experts enterprise
-"""
-
-import pytest
+"""import pytest
 import asyncio
 import numpy as np
 from pathlib import Path
@@ -29043,12 +27669,10 @@ from spleeter.exceptions import (
 
 
 class TestSpleeterEngine:
-    """Tests pour la classe SpleeterEngine"""
-    
+    """Tests pour la classe SpleeterEngine"""    
     @pytest.mark.unit
     def test_engine_initialization_default_config(self):
-        """Test initialisation avec configuration par défaut"""
-        engine = SpleeterEngine()
+        """Test initialisation avec configuration par défaut"""        engine = SpleeterEngine()
         
         assert engine.config is not None
         assert isinstance(engine.config, SpleeterConfig)
@@ -29058,8 +27682,7 @@ class TestSpleeterEngine:
     
     @pytest.mark.unit
     def test_engine_initialization_custom_config(self, test_config):
-        """Test initialisation avec configuration personnalisée"""
-        engine = SpleeterEngine(config=test_config)
+        """Test initialisation avec configuration personnalisée"""        engine = SpleeterEngine(config=test_config)
         
         assert engine.config == test_config
         assert engine.config.enable_gpu is False  # Config test
@@ -29068,8 +27691,7 @@ class TestSpleeterEngine:
     @pytest.mark.unit
     @pytest.mark.asyncio
     async def test_engine_initialize_success(self, spleeter_engine, mock_tensorflow):
-        """Test initialisation réussie du moteur"""
-        # L'engine est déjà initialisé par la fixture
+        """Test initialisation réussie du moteur"""        # L'engine est déjà initialisé par la fixture
         assert spleeter_engine.initialized is True
         assert spleeter_engine.model_manager is not None
         assert spleeter_engine.cache_manager is not None
@@ -29078,8 +27700,7 @@ class TestSpleeterEngine:
     @pytest.mark.unit
     @pytest.mark.asyncio
     async def test_engine_initialize_failure(self, test_config, mock_tensorflow):
-        """Test échec initialisation du moteur"""
-        engine = SpleeterEngine(config=test_config)
+        """Test échec initialisation du moteur"""        engine = SpleeterEngine(config=test_config)
         
         # Mock échec initialisation
         with patch.object(engine, '_initialize_components', side_effect=Exception("Init failed")):
@@ -29089,8 +27710,7 @@ class TestSpleeterEngine:
     @pytest.mark.unit
     @pytest.mark.asyncio
     async def test_engine_cleanup(self, spleeter_engine):
-        """Test nettoyage des ressources"""
-        # Mock des cleanup methods
+        """Test nettoyage des ressources"""        # Mock des cleanup methods
         spleeter_engine.model_manager.cleanup = AsyncMock()
         spleeter_engine.cache_manager.cleanup = AsyncMock()
         
@@ -29102,8 +27722,7 @@ class TestSpleeterEngine:
     @pytest.mark.unit
     @pytest.mark.asyncio
     async def test_separate_basic_success(self, spleeter_engine, sample_audio_file, temp_output_dir):
-        """Test séparation audio basique réussie"""
-        result = await spleeter_engine.separate(
+        """Test séparation audio basique réussie"""        result = await spleeter_engine.separate(
             audio_path=sample_audio_file,
             model_name="spleeter:2stems-16kHz",
             output_dir=temp_output_dir
@@ -29119,8 +27738,7 @@ class TestSpleeterEngine:
     @pytest.mark.unit
     @pytest.mark.asyncio
     async def test_separate_file_not_found(self, spleeter_engine, temp_output_dir):
-        """Test séparation avec fichier inexistant"""
-        with pytest.raises(AudioProcessingError) as exc_info:
+        """Test séparation avec fichier inexistant"""        with pytest.raises(AudioProcessingError) as exc_info:
             await spleeter_engine.separate(
                 audio_path="/nonexistent/file.wav",
                 model_name="spleeter:2stems-16kHz",
@@ -29133,8 +27751,7 @@ class TestSpleeterEngine:
     @pytest.mark.unit
     @pytest.mark.asyncio
     async def test_separate_invalid_model(self, spleeter_engine, sample_audio_file, temp_output_dir):
-        """Test séparation avec modèle invalide"""
-        with pytest.raises(ModelError) as exc_info:
+        """Test séparation avec modèle invalide"""        with pytest.raises(ModelError) as exc_info:
             await spleeter_engine.separate(
                 audio_path=sample_audio_file,
                 model_name="invalid:model-name",
@@ -29147,8 +27764,7 @@ class TestSpleeterEngine:
     @pytest.mark.unit
     @pytest.mark.asyncio
     async def test_separate_with_preprocessing(self, spleeter_engine, sample_audio_file, temp_output_dir):
-        """Test séparation avec préprocessing activé"""
-        result = await spleeter_engine.separate(
+        """Test séparation avec préprocessing activé"""        result = await spleeter_engine.separate(
             audio_path=sample_audio_file,
             model_name="spleeter:2stems-16kHz",
             output_dir=temp_output_dir,
@@ -29162,8 +27778,7 @@ class TestSpleeterEngine:
     @pytest.mark.unit
     @pytest.mark.asyncio
     async def test_separate_with_custom_sample_rate(self, spleeter_engine, sample_audio_file, temp_output_dir):
-        """Test séparation avec sample rate personnalisé"""
-        result = await spleeter_engine.separate(
+        """Test séparation avec sample rate personnalisé"""        result = await spleeter_engine.separate(
             audio_path=sample_audio_file,
             model_name="spleeter:2stems-16kHz",
             output_dir=temp_output_dir,
@@ -29176,8 +27791,7 @@ class TestSpleeterEngine:
     @pytest.mark.unit
     @pytest.mark.asyncio
     async def test_batch_separate_success(self, spleeter_engine, sample_audio_files, temp_output_dir):
-        """Test séparation par lots réussie"""
-        results = await spleeter_engine.batch_separate(
+        """Test séparation par lots réussie"""        results = await spleeter_engine.batch_separate(
             audio_files=sample_audio_files,
             model_name="spleeter:2stems-16kHz",
             output_dir=temp_output_dir,
@@ -29194,8 +27808,7 @@ class TestSpleeterEngine:
     @pytest.mark.unit
     @pytest.mark.asyncio
     async def test_batch_separate_partial_failure(self, spleeter_engine, temp_output_dir):
-        """Test séparation par lots avec échecs partiels"""
-        # Mix de fichiers valides et invalides
+        """Test séparation par lots avec échecs partiels"""        # Mix de fichiers valides et invalides
         audio_files = [
             "/valid/file1.wav",
             "/nonexistent/file.wav",  # Fichier inexistant
@@ -29230,8 +27843,7 @@ class TestSpleeterEngine:
     
     @pytest.mark.unit
     def test_get_available_models(self, spleeter_engine):
-        """Test récupération des modèles disponibles"""
-        models = spleeter_engine.get_available_models()
+        """Test récupération des modèles disponibles"""        models = spleeter_engine.get_available_models()
         
         assert isinstance(models, list)
         assert len(models) > 0
@@ -29243,8 +27855,7 @@ class TestSpleeterEngine:
     
     @pytest.mark.unit
     def test_get_model_info(self, spleeter_engine):
-        """Test récupération des informations de modèle"""
-        model_name = "spleeter:2stems-16kHz"
+        """Test récupération des informations de modèle"""        model_name = "spleeter:2stems-16kHz"
         info = spleeter_engine.get_model_info(model_name)
         
         assert isinstance(info, dict)
@@ -29256,8 +27867,7 @@ class TestSpleeterEngine:
     @pytest.mark.unit
     @pytest.mark.asyncio
     async def test_health_check_healthy(self, spleeter_engine):
-        """Test health check avec système sain"""
-        health = await spleeter_engine.health_check()
+        """Test health check avec système sain"""        health = await spleeter_engine.health_check()
         
         assert isinstance(health, dict)
         assert "status" in health
@@ -29273,8 +27883,7 @@ class TestSpleeterEngine:
     @pytest.mark.unit
     @pytest.mark.asyncio
     async def test_health_check_unhealthy(self, spleeter_engine):
-        """Test health check avec problèmes"""
-        # Simuler problème de cache
+        """Test health check avec problèmes"""        # Simuler problème de cache
         spleeter_engine.cache_manager.health_check = AsyncMock(
             return_value={"status": "critical", "error": "Cache down"}
         )
@@ -29286,8 +27895,7 @@ class TestSpleeterEngine:
     
     @pytest.mark.unit
     def test_get_processing_stats(self, spleeter_engine):
-        """Test récupération des statistiques de traitement"""
-        stats = spleeter_engine.get_processing_stats()
+        """Test récupération des statistiques de traitement"""        stats = spleeter_engine.get_processing_stats()
         
         assert isinstance(stats, dict)
         assert "total_files_processed" in stats
@@ -29304,8 +27912,7 @@ class TestSpleeterEngine:
     @pytest.mark.unit
     @pytest.mark.asyncio
     async def test_reset_stats(self, spleeter_engine):
-        """Test remise à zéro des statistiques"""
-        # Ajouter quelques stats fictives
+        """Test remise à zéro des statistiques"""        # Ajouter quelques stats fictives
         await spleeter_engine._update_stats(
             processing_time=5.0,
             success=True,
@@ -29326,8 +27933,7 @@ class TestSpleeterEngine:
     @pytest.mark.unit
     @pytest.mark.asyncio
     async def test_concurrent_separations(self, spleeter_engine, sample_audio_files, temp_output_dir):
-        """Test séparations concurrentes"""
-        # Lancer plusieurs séparations en parallèle
+        """Test séparations concurrentes"""        # Lancer plusieurs séparations en parallèle
         tasks = []
         for i, audio_file in enumerate(sample_audio_files):
             task = spleeter_engine.separate(
@@ -29347,8 +27953,7 @@ class TestSpleeterEngine:
     @pytest.mark.unit
     @pytest.mark.asyncio
     async def test_memory_management(self, spleeter_engine, sample_audio_file, temp_output_dir):
-        """Test gestion de la mémoire"""
-        # Mock du monitoring mémoire
+        """Test gestion de la mémoire"""        # Mock du monitoring mémoire
         with patch('psutil.Process') as mock_process:
             mock_memory = Mock()
             mock_memory.rss = 1024 * 1024 * 500  # 500MB
@@ -29366,8 +27971,7 @@ class TestSpleeterEngine:
     @pytest.mark.unit
     @pytest.mark.asyncio
     async def test_gpu_optimization(self, test_config, mock_tensorflow):
-        """Test optimisations GPU"""
-        # Configuration avec GPU activé
+        """Test optimisations GPU"""        # Configuration avec GPU activé
         test_config.enable_gpu = True
         
         # Mock TensorFlow avec GPU
@@ -29384,8 +27988,7 @@ class TestSpleeterEngine:
     @pytest.mark.unit
     @pytest.mark.asyncio
     async def test_progress_callback(self, spleeter_engine, sample_audio_file, temp_output_dir):
-        """Test callback de progression"""
-        progress_updates = []
+        """Test callback de progression"""        progress_updates = []
         
         def progress_callback(progress: float, stage: str):
             progress_updates.append((progress, stage))
@@ -29409,8 +28012,7 @@ class TestSpleeterEngine:
     @pytest.mark.unit
     @pytest.mark.asyncio
     async def test_cancel_separation(self, spleeter_engine, sample_audio_file, temp_output_dir):
-        """Test annulation de séparation"""
-        # Créer tâche d'annulation
+        """Test annulation de séparation"""        # Créer tâche d'annulation
         cancel_event = asyncio.Event()
         
         # Mock pour simuler traitement long
@@ -29444,12 +28046,10 @@ class TestSpleeterEngine:
 
 
 class TestSpleeterConfig:
-    """Tests pour la classe SpleeterConfig"""
-    
+    """Tests pour la classe SpleeterConfig"""    
     @pytest.mark.unit
     def test_config_default_values(self):
-        """Test valeurs par défaut de la configuration"""
-        config = SpleeterConfig()
+        """Test valeurs par défaut de la configuration"""        config = SpleeterConfig()
         
         assert config.enable_gpu is True
         assert config.batch_size == 4
@@ -29460,8 +28060,7 @@ class TestSpleeterConfig:
     
     @pytest.mark.unit
     def test_config_custom_values(self):
-        """Test configuration avec valeurs personnalisées"""
-        config = SpleeterConfig(
+        """Test configuration avec valeurs personnalisées"""        config = SpleeterConfig(
             enable_gpu=False,
             batch_size=8,
             worker_threads=2,
@@ -29477,8 +28076,7 @@ class TestSpleeterConfig:
     
     @pytest.mark.unit
     def test_config_validation(self):
-        """Test validation de la configuration"""
-        # Valeurs invalides devraient lever des erreurs
+        """Test validation de la configuration"""        # Valeurs invalides devraient lever des erreurs
         with pytest.raises(ValidationError):
             SpleeterConfig(batch_size=0)  # Batch size trop petit
         
@@ -29490,8 +28088,7 @@ class TestSpleeterConfig:
     
     @pytest.mark.unit
     def test_config_to_dict(self):
-        """Test conversion configuration en dictionnaire"""
-        config = SpleeterConfig(
+        """Test conversion configuration en dictionnaire"""        config = SpleeterConfig(
             enable_gpu=False,
             batch_size=2,
             cache_enabled=True
@@ -29506,8 +28103,7 @@ class TestSpleeterConfig:
     
     @pytest.mark.unit
     def test_config_from_dict(self):
-        """Test création configuration depuis dictionnaire"""
-        config_data = {
+        """Test création configuration depuis dictionnaire"""        config_data = {
             "enable_gpu": False,
             "batch_size": 8,
             "worker_threads": 2,
@@ -29525,12 +28121,10 @@ class TestSpleeterConfig:
 
 
 class TestSeparationResult:
-    """Tests pour la classe SeparationResult"""
-    
+    """Tests pour la classe SeparationResult"""    
     @pytest.mark.unit
     def test_result_creation(self):
-        """Test création d'un résultat de séparation"""
-        result = SeparationResult(
+        """Test création d'un résultat de séparation"""        result = SeparationResult(
             success=True,
             audio_path="/path/to/audio.wav",
             model_name="spleeter:2stems-16kHz",
@@ -29553,8 +28147,7 @@ class TestSeparationResult:
     
     @pytest.mark.unit
     def test_result_processing_ratio(self):
-        """Test calcul du ratio de traitement"""
-        result = SeparationResult(
+        """Test calcul du ratio de traitement"""        result = SeparationResult(
             success=True,
             audio_path="/path/to/audio.wav",
             model_name="spleeter:2stems-16kHz",
@@ -29568,8 +28161,7 @@ class TestSeparationResult:
     
     @pytest.mark.unit
     def test_result_processing_ratio_zero_duration(self):
-        """Test ratio de traitement avec durée zéro"""
-        result = SeparationResult(
+        """Test ratio de traitement avec durée zéro"""        result = SeparationResult(
             success=True,
             audio_path="/path/to/audio.wav",
             model_name="spleeter:2stems-16kHz",
@@ -29583,8 +28175,7 @@ class TestSeparationResult:
     
     @pytest.mark.unit
     def test_result_to_dict(self):
-        """Test conversion résultat en dictionnaire"""
-        result = SeparationResult(
+        """Test conversion résultat en dictionnaire"""        result = SeparationResult(
             success=True,
             audio_path="/path/to/audio.wav",
             model_name="spleeter:2stems-16kHz",
@@ -29604,8 +28195,7 @@ class TestSeparationResult:
     
     @pytest.mark.unit
     def test_result_error_case(self):
-        """Test résultat en cas d'erreur"""
-        error = AudioProcessingError("Test error", file_path="/path/to/audio.wav")
+        """Test résultat en cas d'erreur"""        error = AudioProcessingError("Test error", file_path="/path/to/audio.wav")
         
         result = SeparationResult(
             success=False,
@@ -29633,17 +28223,14 @@ class TestSeparationResult:
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-🎵 Spotify AI Agent - Tests d'Intégration Spleeter
+"""🎵 Spotify AI Agent - Tests d'Intégration Spleeter
 ================================================
 
 Tests d'intégration pour vérifier le bon fonctionnement
 des composants ensemble et les scénarios end-to-end.
 
 🎖️ Développé par l'équipe d'experts enterprise
-"""
-
-import pytest
+"""import pytest
 import asyncio
 import tempfile
 import numpy as np
@@ -29665,18 +28252,15 @@ from spleeter.exceptions import (
 
 
 class TestSpleeterIntegration:
-    """Tests d'intégration complets du système Spleeter"""
-    
+    """Tests d'intégration complets du système Spleeter"""    
     @pytest.fixture
     async def temp_dir(self):
-        """Répertoire temporaire pour les tests"""
-        with tempfile.TemporaryDirectory() as tmp_dir:
+        """Répertoire temporaire pour les tests"""        with tempfile.TemporaryDirectory() as tmp_dir:
             yield Path(tmp_dir)
     
     @pytest.fixture
     async def sample_audio_file(self, temp_dir):
-        """Crée un fichier audio de test"""
-        audio_file = temp_dir / "test_audio.wav"
+        """Crée un fichier audio de test"""        audio_file = temp_dir / "test_audio.wav"
         
         # Créer un signal audio simple (440Hz sine wave)
         duration = 2.0  # 2 secondes
@@ -29697,8 +28281,7 @@ class TestSpleeterIntegration:
     
     @pytest.fixture
     async def spleeter_engine(self, temp_dir):
-        """Engine Spleeter configuré pour les tests"""
-        config = SpleeterConfig(
+        """Engine Spleeter configuré pour les tests"""        config = SpleeterConfig(
             models_dir=str(temp_dir / "models"),
             cache_dir=str(temp_dir / "cache"),
             enable_gpu=False,  # Désactivé pour les tests
@@ -29724,8 +28307,7 @@ class TestSpleeterIntegration:
     
     @pytest.mark.asyncio
     async def test_complete_separation_workflow(self, spleeter_engine, sample_audio_file, temp_dir):
-        """Test du workflow complet de séparation"""
-        output_dir = temp_dir / "output"
+        """Test du workflow complet de séparation"""        output_dir = temp_dir / "output"
         output_dir.mkdir()
         
         # Mock des dépendances audio
@@ -29756,8 +28338,7 @@ class TestSpleeterIntegration:
     
     @pytest.mark.asyncio
     async def test_batch_processing_integration(self, spleeter_engine, temp_dir):
-        """Test d'intégration du traitement par lots"""
-        # Créer plusieurs fichiers audio de test
+        """Test d'intégration du traitement par lots"""        # Créer plusieurs fichiers audio de test
         audio_files = []
         for i in range(3):
             audio_file = temp_dir / f"test_audio_{i}.wav"
@@ -29792,8 +28373,7 @@ class TestSpleeterIntegration:
     
     @pytest.mark.asyncio
     async def test_caching_integration(self, spleeter_engine, sample_audio_file, temp_dir):
-        """Test d'intégration du système de cache"""
-        output_dir = temp_dir / "cache_output"
+        """Test d'intégration du système de cache"""        output_dir = temp_dir / "cache_output"
         output_dir.mkdir()
         
         with patch('librosa.load') as mock_load, \
@@ -29832,8 +28412,7 @@ class TestSpleeterIntegration:
     
     @pytest.mark.asyncio
     async def test_model_management_integration(self, spleeter_engine, temp_dir):
-        """Test d'intégration de la gestion des modèles"""
-        model_manager = spleeter_engine.model_manager
+        """Test d'intégration de la gestion des modèles"""        model_manager = spleeter_engine.model_manager
         
         # Test de liste des modèles
         available_models = model_manager.get_available_models()
@@ -29851,8 +28430,7 @@ class TestSpleeterIntegration:
     
     @pytest.mark.asyncio
     async def test_monitoring_integration(self, spleeter_engine, sample_audio_file, temp_dir):
-        """Test d'intégration du système de monitoring"""
-        output_dir = temp_dir / "monitoring_output"
+        """Test d'intégration du système de monitoring"""        output_dir = temp_dir / "monitoring_output"
         output_dir.mkdir()
         
         # Initialiser le monitoring
@@ -29883,8 +28461,7 @@ class TestSpleeterIntegration:
     
     @pytest.mark.asyncio
     async def test_error_handling_integration(self, spleeter_engine, temp_dir):
-        """Test d'intégration de la gestion d'erreurs"""
-        # Test avec fichier inexistant
+        """Test d'intégration de la gestion d'erreurs"""        # Test avec fichier inexistant
         with pytest.raises(FileNotFoundError):
             await spleeter_engine.separate(
                 audio_path="/nonexistent/file.wav",
@@ -29905,8 +28482,7 @@ class TestSpleeterIntegration:
     
     @pytest.mark.asyncio
     async def test_audio_validation_integration(self, temp_dir):
-        """Test d'intégration de la validation audio"""
-        # Créer un fichier non-audio
+        """Test d'intégration de la validation audio"""        # Créer un fichier non-audio
         invalid_file = temp_dir / "invalid.txt"
         invalid_file.write_text("This is not an audio file")
         
@@ -29930,12 +28506,10 @@ class TestSpleeterIntegration:
 
 
 class TestPerformanceIntegration:
-    """Tests de performance et de charge"""
-    
+    """Tests de performance et de charge"""    
     @pytest.mark.asyncio
     async def test_concurrent_processing(self, temp_dir):
-        """Test de traitement concurrent"""
-        config = SpleeterConfig(
+        """Test de traitement concurrent"""        config = SpleeterConfig(
             models_dir=str(temp_dir / "models"),
             cache_dir=str(temp_dir / "cache"),
             enable_gpu=False,
@@ -29989,8 +28563,7 @@ class TestPerformanceIntegration:
     
     @pytest.mark.asyncio
     async def test_memory_usage_monitoring(self, temp_dir):
-        """Test de surveillance de l'utilisation mémoire"""
-        from spleeter.monitoring import ResourceMonitor
+        """Test de surveillance de l'utilisation mémoire"""        from spleeter.monitoring import ResourceMonitor
         
         monitor = ResourceMonitor(
             memory_threshold_mb=1000,  # 1GB
@@ -30012,8 +28585,7 @@ class TestPerformanceIntegration:
     
     @pytest.mark.asyncio
     async def test_cache_performance(self, temp_dir):
-        """Test de performance du cache"""
-        cache_manager = CacheManager(
+        """Test de performance du cache"""        cache_manager = CacheManager(
             cache_dir=str(temp_dir / "cache"),
             memory_cache_size=100,
             enable_redis=False  # Désactivé pour les tests
@@ -30046,12 +28618,10 @@ class TestPerformanceIntegration:
 
 
 class TestRobustnessIntegration:
-    """Tests de robustesse et de récupération d'erreurs"""
-    
+    """Tests de robustesse et de récupération d'erreurs"""    
     @pytest.mark.asyncio
     async def test_graceful_degradation(self, temp_dir):
-        """Test de dégradation gracieuse"""
-        config = SpleeterConfig(
+        """Test de dégradation gracieuse"""        config = SpleeterConfig(
             models_dir=str(temp_dir / "models"),
             cache_dir=str(temp_dir / "cache"),
             enable_gpu=False,
@@ -30070,8 +28640,7 @@ class TestRobustnessIntegration:
     
     @pytest.mark.asyncio
     async def test_resource_cleanup(self, temp_dir):
-        """Test de nettoyage des ressources"""
-        config = SpleeterConfig(
+        """Test de nettoyage des ressources"""        config = SpleeterConfig(
             models_dir=str(temp_dir / "models"),
             cache_dir=str(temp_dir / "cache"),
             enable_gpu=False
@@ -30098,8 +28667,7 @@ class TestRobustnessIntegration:
     
     @pytest.mark.asyncio
     async def test_partial_failure_handling(self, temp_dir):
-        """Test de gestion des échecs partiels"""
-        config = SpleeterConfig(
+        """Test de gestion des échecs partiels"""        config = SpleeterConfig(
             models_dir=str(temp_dir / "models"),
             cache_dir=str(temp_dir / "cache"),
             enable_gpu=False,
@@ -30161,12 +28729,10 @@ class TestRobustnessIntegration:
 
 @pytest.mark.slow
 class TestEndToEndScenarios:
-    """Tests de scénarios end-to-end complets"""
-    
+    """Tests de scénarios end-to-end complets"""    
     @pytest.mark.asyncio
     async def test_real_world_workflow(self, temp_dir):
-        """Test d'un workflow réaliste complet"""
-        # Configuration réaliste
+        """Test d'un workflow réaliste complet"""        # Configuration réaliste
         config = SpleeterConfig(
             models_dir=str(temp_dir / "models"),
             cache_dir=str(temp_dir / "cache"),
@@ -30267,8 +28833,7 @@ class TestEndToEndScenarios:
     
     @pytest.mark.asyncio
     async def test_production_like_batch_processing(self, temp_dir):
-        """Test de traitement par lots simulant la production"""
-        config = SpleeterConfig(
+        """Test de traitement par lots simulant la production"""        config = SpleeterConfig(
             models_dir=str(temp_dir / "models"),
             cache_dir=str(temp_dir / "cache"),
             enable_gpu=False,
@@ -30337,11 +28902,8 @@ class TestEndToEndScenarios:
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Tests pour le module processor.py du système Spleeter
-"""
-
-import pytest
+"""Tests pour le module processor.py du système Spleeter
+"""import pytest
 import asyncio
 import numpy as np
 from unittest.mock import Mock, patch, AsyncMock, MagicMock
@@ -30356,17 +28918,14 @@ from spleeter.exceptions import AudioProcessingError, ValidationError
 
 
 class TestAudioProcessor:
-    """Tests pour la classe AudioProcessor"""
-    
+    """Tests pour la classe AudioProcessor"""    
     @pytest.fixture
     def processor(self):
-        """Fixture pour créer un processeur audio"""
-        return AudioProcessor()
+        """Fixture pour créer un processeur audio"""        return AudioProcessor()
     
     @pytest.fixture
     def sample_audio(self):
-        """Fixture pour créer des données audio de test"""
-        duration = 2.0  # 2 secondes
+        """Fixture pour créer des données audio de test"""        duration = 2.0  # 2 secondes
         sample_rate = 44100
         samples = int(duration * sample_rate)
         
@@ -30382,8 +28941,7 @@ class TestAudioProcessor:
     
     @pytest.mark.asyncio
     async def test_load_audio_file_success(self, processor):
-        """Test du chargement réussi d'un fichier audio"""
-        with patch('librosa.load') as mock_load:
+        """Test du chargement réussi d'un fichier audio"""        with patch('librosa.load') as mock_load:
             mock_load.return_value = (np.random.rand(44100), 44100)
             
             audio_data, sr = await processor.load_audio_file("test.wav")
@@ -30394,8 +28952,7 @@ class TestAudioProcessor:
     
     @pytest.mark.asyncio
     async def test_load_audio_file_not_found(self, processor):
-        """Test du chargement d'un fichier inexistant"""
-        with patch('librosa.load', side_effect=FileNotFoundError("File not found")):
+        """Test du chargement d'un fichier inexistant"""        with patch('librosa.load', side_effect=FileNotFoundError("File not found")):
             with pytest.raises(AudioProcessingError) as exc_info:
                 await processor.load_audio_file("nonexistent.wav")
             
@@ -30403,15 +28960,13 @@ class TestAudioProcessor:
     
     @pytest.mark.asyncio
     async def test_load_audio_file_invalid_format(self, processor):
-        """Test du chargement d'un format invalide"""
-        with patch('librosa.load', side_effect=Exception("Format not supported")):
+        """Test du chargement d'un format invalide"""        with patch('librosa.load', side_effect=Exception("Format not supported")):
             with pytest.raises(AudioProcessingError):
                 await processor.load_audio_file("invalid.xyz")
     
     @pytest.mark.asyncio
     async def test_save_audio_file_success(self, processor, sample_audio):
-        """Test de la sauvegarde réussie d'un fichier audio"""
-        audio_data, sample_rate = sample_audio
+        """Test de la sauvegarde réussie d'un fichier audio"""        audio_data, sample_rate = sample_audio
         
         with patch('soundfile.write') as mock_write:
             with tempfile.NamedTemporaryFile(suffix=".wav") as tmp_file:
@@ -30427,8 +28982,7 @@ class TestAudioProcessor:
     
     @pytest.mark.asyncio
     async def test_save_audio_file_permission_error(self, processor, sample_audio):
-        """Test de sauvegarde avec erreur de permissions"""
-        audio_data, sample_rate = sample_audio
+        """Test de sauvegarde avec erreur de permissions"""        audio_data, sample_rate = sample_audio
         
         with patch('soundfile.write', side_effect=PermissionError("Access denied")):
             with pytest.raises(AudioProcessingError) as exc_info:
@@ -30439,8 +28993,7 @@ class TestAudioProcessor:
             assert "Impossible de sauvegarder" in str(exc_info.value)
     
     def test_normalize_audio(self, processor, sample_audio):
-        """Test de la normalisation audio"""
-        audio_data, _ = sample_audio
+        """Test de la normalisation audio"""        audio_data, _ = sample_audio
         
         # Test normalisation peak
         normalized = processor.normalize_audio(audio_data, method="peak")
@@ -30450,8 +29003,7 @@ class TestAudioProcessor:
         assert np.max(np.abs(normalized)) > 0.9  # Devrait être normalisé
     
     def test_normalize_audio_rms(self, processor, sample_audio):
-        """Test de la normalisation RMS"""
-        audio_data, _ = sample_audio
+        """Test de la normalisation RMS"""        audio_data, _ = sample_audio
         
         normalized = processor.normalize_audio(audio_data, method="rms", target_level=-20)
         
@@ -30460,15 +29012,13 @@ class TestAudioProcessor:
         assert normalized.shape == audio_data.shape
     
     def test_normalize_audio_invalid_method(self, processor, sample_audio):
-        """Test de normalisation avec méthode invalide"""
-        audio_data, _ = sample_audio
+        """Test de normalisation avec méthode invalide"""        audio_data, _ = sample_audio
         
         with pytest.raises(ValueError):
             processor.normalize_audio(audio_data, method="invalid")
     
     def test_apply_filter_lowpass(self, processor, sample_audio):
-        """Test du filtre passe-bas"""
-        audio_data, sample_rate = sample_audio
+        """Test du filtre passe-bas"""        audio_data, sample_rate = sample_audio
         
         filtered = processor.apply_filter(
             audio_data, sample_rate, filter_type="lowpass", cutoff=5000
@@ -30479,8 +29029,7 @@ class TestAudioProcessor:
         assert not np.array_equal(audio_data, filtered)
     
     def test_apply_filter_highpass(self, processor, sample_audio):
-        """Test du filtre passe-haut"""
-        audio_data, sample_rate = sample_audio
+        """Test du filtre passe-haut"""        audio_data, sample_rate = sample_audio
         
         filtered = processor.apply_filter(
             audio_data, sample_rate, filter_type="highpass", cutoff=100
@@ -30490,8 +29039,7 @@ class TestAudioProcessor:
         assert not np.array_equal(audio_data, filtered)
     
     def test_apply_filter_bandpass(self, processor, sample_audio):
-        """Test du filtre passe-bande"""
-        audio_data, sample_rate = sample_audio
+        """Test du filtre passe-bande"""        audio_data, sample_rate = sample_audio
         
         filtered = processor.apply_filter(
             audio_data, sample_rate, 
@@ -30503,8 +29051,7 @@ class TestAudioProcessor:
         assert not np.array_equal(audio_data, filtered)
     
     def test_apply_filter_invalid_type(self, processor, sample_audio):
-        """Test de filtre avec type invalide"""
-        audio_data, sample_rate = sample_audio
+        """Test de filtre avec type invalide"""        audio_data, sample_rate = sample_audio
         
         with pytest.raises(ValueError):
             processor.apply_filter(
@@ -30512,8 +29059,7 @@ class TestAudioProcessor:
             )
     
     def test_resample_audio_upsample(self, processor, sample_audio):
-        """Test du rééchantillonnage vers une fréquence plus élevée"""
-        audio_data, original_sr = sample_audio
+        """Test du rééchantillonnage vers une fréquence plus élevée"""        audio_data, original_sr = sample_audio
         target_sr = 48000
         
         resampled = processor.resample_audio(audio_data, original_sr, target_sr)
@@ -30524,8 +29070,7 @@ class TestAudioProcessor:
         assert resampled.shape[1] == audio_data.shape[1]  # Même nombre de canaux
     
     def test_resample_audio_downsample(self, processor, sample_audio):
-        """Test du rééchantillonnage vers une fréquence plus basse"""
-        audio_data, original_sr = sample_audio
+        """Test du rééchantillonnage vers une fréquence plus basse"""        audio_data, original_sr = sample_audio
         target_sr = 22050
         
         resampled = processor.resample_audio(audio_data, original_sr, target_sr)
@@ -30535,8 +29080,7 @@ class TestAudioProcessor:
         assert resampled.shape[1] == audio_data.shape[1]
     
     def test_resample_audio_same_rate(self, processor, sample_audio):
-        """Test du rééchantillonnage avec la même fréquence"""
-        audio_data, sample_rate = sample_audio
+        """Test du rééchantillonnage avec la même fréquence"""        audio_data, sample_rate = sample_audio
         
         resampled = processor.resample_audio(audio_data, sample_rate, sample_rate)
         
@@ -30544,8 +29088,7 @@ class TestAudioProcessor:
         np.testing.assert_array_almost_equal(audio_data, resampled, decimal=5)
     
     def test_convert_to_mono(self, processor, sample_audio):
-        """Test de conversion en mono"""
-        audio_data, _ = sample_audio
+        """Test de conversion en mono"""        audio_data, _ = sample_audio
         
         mono = processor.convert_to_mono(audio_data)
         
@@ -30553,16 +29096,14 @@ class TestAudioProcessor:
         assert len(mono) == len(audio_data)
     
     def test_convert_to_mono_already_mono(self, processor):
-        """Test de conversion en mono d'un signal déjà mono"""
-        mono_audio = np.random.rand(44100)
+        """Test de conversion en mono d'un signal déjà mono"""        mono_audio = np.random.rand(44100)
         
         result = processor.convert_to_mono(mono_audio)
         
         np.testing.assert_array_equal(mono_audio, result)
     
     def test_ensure_stereo_from_mono(self, processor):
-        """Test de conversion mono vers stéréo"""
-        mono_audio = np.random.rand(44100)
+        """Test de conversion mono vers stéréo"""        mono_audio = np.random.rand(44100)
         
         stereo = processor.ensure_stereo(mono_audio)
         
@@ -30571,16 +29112,14 @@ class TestAudioProcessor:
         np.testing.assert_array_equal(stereo[:, 0], stereo[:, 1])
     
     def test_ensure_stereo_already_stereo(self, processor, sample_audio):
-        """Test de conversion d'un signal déjà stéréo"""
-        audio_data, _ = sample_audio
+        """Test de conversion d'un signal déjà stéréo"""        audio_data, _ = sample_audio
         
         result = processor.ensure_stereo(audio_data)
         
         np.testing.assert_array_equal(audio_data, result)
     
     def test_get_audio_info(self, processor, sample_audio):
-        """Test de récupération des informations audio"""
-        audio_data, sample_rate = sample_audio
+        """Test de récupération des informations audio"""        audio_data, sample_rate = sample_audio
         
         info = processor.get_audio_info(audio_data, sample_rate)
         
@@ -30592,8 +29131,7 @@ class TestAudioProcessor:
         assert "peak_level" in info
     
     def test_get_audio_info_mono(self, processor):
-        """Test d'informations audio pour signal mono"""
-        mono_audio = np.random.rand(22050)  # 0.5 seconde à 44100Hz
+        """Test d'informations audio pour signal mono"""        mono_audio = np.random.rand(22050)  # 0.5 seconde à 44100Hz
         sample_rate = 44100
         
         info = processor.get_audio_info(mono_audio, sample_rate)
@@ -30603,17 +29141,14 @@ class TestAudioProcessor:
 
 
 class TestBatchProcessor:
-    """Tests pour la classe BatchProcessor"""
-    
+    """Tests pour la classe BatchProcessor"""    
     @pytest.fixture
     def batch_processor(self):
-        """Fixture pour créer un processeur par lots"""
-        return BatchProcessor(max_workers=2, queue_size=10)
+        """Fixture pour créer un processeur par lots"""        return BatchProcessor(max_workers=2, queue_size=10)
     
     @pytest.fixture
     def mock_processing_function(self):
-        """Fixture pour une fonction de traitement mock"""
-        async def mock_process(job):
+        """Fixture pour une fonction de traitement mock"""        async def mock_process(job):
             # Simule un traitement
             await asyncio.sleep(0.1)
             return f"processed_{job.input_data}"
@@ -30622,16 +29157,14 @@ class TestBatchProcessor:
     
     @pytest.mark.asyncio
     async def test_batch_processor_initialization(self, batch_processor):
-        """Test de l'initialisation du processeur par lots"""
-        assert batch_processor.max_workers == 2
+        """Test de l'initialisation du processeur par lots"""        assert batch_processor.max_workers == 2
         assert batch_processor.queue_size == 10
         assert not batch_processor.is_running
         assert batch_processor.job_queue.maxsize == 10
     
     @pytest.mark.asyncio
     async def test_start_stop_processor(self, batch_processor):
-        """Test du démarrage et arrêt du processeur"""
-        async def dummy_process(job):
+        """Test du démarrage et arrêt du processeur"""        async def dummy_process(job):
             return "result"
         
         await batch_processor.start(dummy_process)
@@ -30642,8 +29175,7 @@ class TestBatchProcessor:
     
     @pytest.mark.asyncio
     async def test_add_job_success(self, batch_processor, mock_processing_function):
-        """Test d'ajout de job réussi"""
-        await batch_processor.start(mock_processing_function)
+        """Test d'ajout de job réussi"""        await batch_processor.start(mock_processing_function)
         
         job = ProcessingJob(
             job_id="test_job_1",
@@ -30658,8 +29190,7 @@ class TestBatchProcessor:
     
     @pytest.mark.asyncio
     async def test_add_job_queue_full(self, batch_processor, mock_processing_function):
-        """Test d'ajout de job avec queue pleine"""
-        # Créer un processeur avec une petite queue
+        """Test d'ajout de job avec queue pleine"""        # Créer un processeur avec une petite queue
         small_processor = BatchProcessor(max_workers=1, queue_size=1)
         await small_processor.start(mock_processing_function)
         
@@ -30677,8 +29208,7 @@ class TestBatchProcessor:
     
     @pytest.mark.asyncio
     async def test_get_job_status_success(self, batch_processor, mock_processing_function):
-        """Test de récupération du statut d'un job"""
-        await batch_processor.start(mock_processing_function)
+        """Test de récupération du statut d'un job"""        await batch_processor.start(mock_processing_function)
         
         job = ProcessingJob(job_id="status_test", input_data="test")
         await batch_processor.add_job(job)
@@ -30694,14 +29224,12 @@ class TestBatchProcessor:
     
     @pytest.mark.asyncio
     async def test_get_job_status_not_found(self, batch_processor):
-        """Test de récupération de statut pour job inexistant"""
-        status = batch_processor.get_job_status("nonexistent")
+        """Test de récupération de statut pour job inexistant"""        status = batch_processor.get_job_status("nonexistent")
         assert status is None
     
     @pytest.mark.asyncio
     async def test_get_job_result_success(self, batch_processor, mock_processing_function):
-        """Test de récupération du résultat d'un job"""
-        await batch_processor.start(mock_processing_function)
+        """Test de récupération du résultat d'un job"""        await batch_processor.start(mock_processing_function)
         
         job = ProcessingJob(job_id="result_test", input_data="test_data")
         await batch_processor.add_job(job)
@@ -30715,8 +29243,7 @@ class TestBatchProcessor:
     
     @pytest.mark.asyncio
     async def test_get_job_result_timeout(self, batch_processor):
-        """Test de timeout lors de la récupération de résultat"""
-        async def slow_process(job):
+        """Test de timeout lors de la récupération de résultat"""        async def slow_process(job):
             await asyncio.sleep(2.0)  # Plus long que le timeout
             return "result"
         
@@ -30732,8 +29259,7 @@ class TestBatchProcessor:
     
     @pytest.mark.asyncio
     async def test_get_statistics(self, batch_processor, mock_processing_function):
-        """Test de récupération des statistiques"""
-        await batch_processor.start(mock_processing_function)
+        """Test de récupération des statistiques"""        await batch_processor.start(mock_processing_function)
         
         # Ajouter quelques jobs
         for i in range(3):
@@ -30757,8 +29283,7 @@ class TestBatchProcessor:
     
     @pytest.mark.asyncio
     async def test_clear_completed_jobs(self, batch_processor, mock_processing_function):
-        """Test de nettoyage des jobs terminés"""
-        await batch_processor.start(mock_processing_function)
+        """Test de nettoyage des jobs terminés"""        await batch_processor.start(mock_processing_function)
         
         job = ProcessingJob(job_id="clear_test", input_data="data")
         await batch_processor.add_job(job)
@@ -30780,8 +29305,7 @@ class TestBatchProcessor:
     
     @pytest.mark.asyncio
     async def test_job_priority_ordering(self, batch_processor):
-        """Test de l'ordre de priorité des jobs"""
-        async def slow_process(job):
+        """Test de l'ordre de priorité des jobs"""        async def slow_process(job):
             await asyncio.sleep(0.1)
             return f"processed_{job.input_data}_priority_{job.priority}"
         
@@ -30814,8 +29338,7 @@ class TestBatchProcessor:
     
     @pytest.mark.asyncio
     async def test_processor_error_handling(self, batch_processor):
-        """Test de la gestion d'erreurs du processeur"""
-        async def failing_process(job):
+        """Test de la gestion d'erreurs du processeur"""        async def failing_process(job):
             if job.input_data == "fail":
                 raise ValueError("Simulated processing error")
             return f"processed_{job.input_data}"
@@ -30845,11 +29368,9 @@ class TestBatchProcessor:
 
 
 class TestProcessingJob:
-    """Tests pour la classe ProcessingJob"""
-    
+    """Tests pour la classe ProcessingJob"""    
     def test_job_creation(self):
-        """Test de création d'un job"""
-        job = ProcessingJob(
+        """Test de création d'un job"""        job = ProcessingJob(
             job_id="test_job",
             input_data="test_input",
             priority=2,
@@ -30864,8 +29385,7 @@ class TestProcessingJob:
         assert job.created_at is not None
     
     def test_job_comparison(self):
-        """Test de comparaison des jobs pour le tri par priorité"""
-        job1 = ProcessingJob(job_id="job1", input_data="data1", priority=1)
+        """Test de comparaison des jobs pour le tri par priorité"""        job1 = ProcessingJob(job_id="job1", input_data="data1", priority=1)
         job2 = ProcessingJob(job_id="job2", input_data="data2", priority=2)
         job3 = ProcessingJob(job_id="job3", input_data="data3", priority=2)
         
@@ -30877,8 +29397,7 @@ class TestProcessingJob:
         assert job2 < job3  # job2 créé avant job3
     
     def test_job_to_dict(self):
-        """Test de conversion en dictionnaire"""
-        job = ProcessingJob(
+        """Test de conversion en dictionnaire"""        job = ProcessingJob(
             job_id="dict_test",
             input_data="test_data",
             priority=1,
@@ -30895,8 +29414,7 @@ class TestProcessingJob:
         assert "created_at" in job_dict
     
     def test_job_update_status(self):
-        """Test de mise à jour du statut"""
-        job = ProcessingJob(job_id="status_test", input_data="data")
+        """Test de mise à jour du statut"""        job = ProcessingJob(job_id="status_test", input_data="data")
         
         assert job.status == "pending"
         
@@ -30912,11 +29430,8 @@ class TestProcessingJob:
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Tests pour le module utils.py du système Spleeter
-"""
-
-import pytest
+"""Tests pour le module utils.py du système Spleeter
+"""import pytest
 import numpy as np
 import tempfile
 import shutil
@@ -30931,11 +29446,9 @@ from spleeter.exceptions import ValidationError, AudioProcessingError
 
 
 class TestAudioMetadata:
-    """Tests pour la classe AudioMetadata"""
-    
+    """Tests pour la classe AudioMetadata"""    
     def test_audio_metadata_creation(self):
-        """Test de création des métadonnées audio"""
-        metadata = AudioMetadata(
+        """Test de création des métadonnées audio"""        metadata = AudioMetadata(
             filename="test.wav",
             duration=120.5,
             sample_rate=44100,
@@ -30962,8 +29475,7 @@ class TestAudioMetadata:
         assert metadata.artist == "Test Artist"
     
     def test_audio_metadata_to_dict(self):
-        """Test de conversion en dictionnaire"""
-        metadata = AudioMetadata(
+        """Test de conversion en dictionnaire"""        metadata = AudioMetadata(
             filename="test.wav",
             duration=60.0,
             sample_rate=44100,
@@ -30986,11 +29498,9 @@ class TestAudioMetadata:
 
 
 class TestAudioUtils:
-    """Tests pour la classe AudioUtils"""
-    
+    """Tests pour la classe AudioUtils"""    
     def test_is_audio_file_valid_extensions(self):
-        """Test de détection de fichiers audio valides"""
-        valid_files = [
+        """Test de détection de fichiers audio valides"""        valid_files = [
             "song.wav", "music.mp3", "audio.flac", 
             "track.ogg", "sound.m4a", "file.aac"
         ]
@@ -30999,8 +29509,7 @@ class TestAudioUtils:
             assert AudioUtils.is_audio_file(file_path) is True
     
     def test_is_audio_file_invalid_extensions(self):
-        """Test de détection de fichiers non-audio"""
-        invalid_files = [
+        """Test de détection de fichiers non-audio"""        invalid_files = [
             "document.txt", "image.jpg", "video.mp4", 
             "archive.zip", "code.py"
         ]
@@ -31009,8 +29518,7 @@ class TestAudioUtils:
             assert AudioUtils.is_audio_file(file_path) is False
     
     def test_is_audio_file_case_insensitive(self):
-        """Test de détection insensible à la casse"""
-        case_variants = [
+        """Test de détection insensible à la casse"""        case_variants = [
             "song.WAV", "music.MP3", "audio.FLAC", 
             "track.OGG", "sound.M4A"
         ]
@@ -31019,8 +29527,7 @@ class TestAudioUtils:
             assert AudioUtils.is_audio_file(file_path) is True
     
     def test_get_format_info_known_formats(self):
-        """Test d'information de format pour formats connus"""
-        format_tests = [
+        """Test d'information de format pour formats connus"""        format_tests = [
             ("test.wav", {"codec": "pcm", "lossless": True}),
             ("test.mp3", {"codec": "mp3", "lossless": False}),
             ("test.flac", {"codec": "flac", "lossless": True}),
@@ -31033,21 +29540,18 @@ class TestAudioUtils:
             assert info["lossless"] == expected["lossless"]
     
     def test_get_format_info_unknown_format(self):
-        """Test d'information pour format inconnu"""
-        info = AudioUtils.get_format_info("test.xyz")
+        """Test d'information pour format inconnu"""        info = AudioUtils.get_format_info("test.xyz")
         assert info["codec"] == "unknown"
         assert info["lossless"] is False
     
     @pytest.mark.asyncio
     async def test_get_audio_metadata_file_not_found(self):
-        """Test de métadonnées pour fichier inexistant"""
-        with pytest.raises(FileNotFoundError):
+        """Test de métadonnées pour fichier inexistant"""        with pytest.raises(FileNotFoundError):
             await AudioUtils.get_audio_metadata("nonexistent.wav")
     
     @pytest.mark.asyncio
     async def test_get_audio_metadata_invalid_format(self):
-        """Test de métadonnées pour format invalide"""
-        with tempfile.NamedTemporaryFile(suffix=".txt") as tmp_file:
+        """Test de métadonnées pour format invalide"""        with tempfile.NamedTemporaryFile(suffix=".txt") as tmp_file:
             with pytest.raises(AudioProcessingError):
                 await AudioUtils.get_audio_metadata(tmp_file.name)
     
@@ -31055,8 +29559,7 @@ class TestAudioUtils:
     @patch('spleeter.utils.AudioUtils._extract_with_librosa')
     @patch('spleeter.utils.AudioUtils._extract_with_mutagen')
     async def test_get_audio_metadata_fallback(self, mock_mutagen, mock_librosa):
-        """Test de fallback pour extraction métadonnées"""
-        # Simuler échec mutagen, succès librosa
+        """Test de fallback pour extraction métadonnées"""        # Simuler échec mutagen, succès librosa
         mock_mutagen.return_value = None
         mock_librosa.return_value = AudioMetadata(
             filename="test.wav",
@@ -31075,8 +29578,7 @@ class TestAudioUtils:
             assert metadata.duration == 30.0
     
     def test_calculate_audio_hash_consistency(self):
-        """Test de cohérence du hash audio"""
-        with patch('librosa.load') as mock_load:
+        """Test de cohérence du hash audio"""        with patch('librosa.load') as mock_load:
             # Données audio consistantes
             audio_data = np.random.rand(44100)
             mock_load.return_value = (audio_data, 44100)
@@ -31095,8 +29597,7 @@ class TestAudioUtils:
                 assert len(hash1) == 32  # MD5 hash length
     
     def test_detect_silence_basic(self):
-        """Test de détection de silence basique"""
-        # Créer un signal avec silence au milieu
+        """Test de détection de silence basique"""        # Créer un signal avec silence au milieu
         sample_rate = 44100
         duration = 3.0
         samples = int(duration * sample_rate)
@@ -31120,8 +29621,7 @@ class TestAudioUtils:
         assert end < 2.5   # Avant la dernière seconde
     
     def test_detect_silence_no_silence(self):
-        """Test de détection sans silence"""
-        # Signal constant fort
+        """Test de détection sans silence"""        # Signal constant fort
         sample_rate = 44100
         signal = np.full(sample_rate, 0.5)  # 1 seconde de signal fort
         
@@ -31133,8 +29633,7 @@ class TestAudioUtils:
         assert len(silence_segments) == 0
     
     def test_detect_silence_stereo(self):
-        """Test de détection de silence en stéréo"""
-        sample_rate = 44100
+        """Test de détection de silence en stéréo"""        sample_rate = 44100
         samples = sample_rate * 2  # 2 secondes
         
         # Signal stéréo avec silence au milieu
@@ -31149,8 +29648,7 @@ class TestAudioUtils:
         assert len(silence_segments) >= 1
     
     def test_trim_silence_basic(self):
-        """Test de suppression de silence"""
-        sample_rate = 44100
+        """Test de suppression de silence"""        sample_rate = 44100
         
         # Signal avec silence au début et à la fin
         silence_duration = sample_rate // 4  # 0.25 seconde
@@ -31170,8 +29668,7 @@ class TestAudioUtils:
         assert abs(len(trimmed) - signal_duration) < sample_rate // 10
     
     def test_trim_silence_all_silence(self):
-        """Test de suppression avec que du silence"""
-        sample_rate = 44100
+        """Test de suppression avec que du silence"""        sample_rate = 44100
         silence_signal = np.zeros(sample_rate)  # 1 seconde de silence
         
         trimmed = AudioUtils.trim_silence(silence_signal, sample_rate)
@@ -31180,8 +29677,7 @@ class TestAudioUtils:
         assert len(trimmed) == sample_rate
     
     def test_normalize_loudness_mock(self):
-        """Test de normalisation LUFS (avec mock)"""
-        audio_data = np.random.rand(44100) * 0.1  # Signal faible
+        """Test de normalisation LUFS (avec mock)"""        audio_data = np.random.rand(44100) * 0.1  # Signal faible
         
         with patch('pyloudnorm.Meter') as mock_meter_class:
             mock_meter = Mock()
@@ -31194,8 +29690,7 @@ class TestAudioUtils:
             assert np.max(np.abs(normalized)) > np.max(np.abs(audio_data))
     
     def test_normalize_loudness_fallback(self):
-        """Test de fallback de normalisation"""
-        audio_data = np.random.rand(44100) * 0.1
+        """Test de fallback de normalisation"""        audio_data = np.random.rand(44100) * 0.1
         
         # Sans pyloudnorm, devrait utiliser normalisation peak
         with patch('pyloudnorm.Meter', side_effect=ImportError):
@@ -31207,18 +29702,15 @@ class TestAudioUtils:
 
 
 class TestValidationUtils:
-    """Tests pour la classe ValidationUtils"""
-    
+    """Tests pour la classe ValidationUtils"""    
     def test_validate_audio_file_not_found(self):
-        """Test de validation fichier inexistant"""
-        with pytest.raises(ValidationError) as exc_info:
+        """Test de validation fichier inexistant"""        with pytest.raises(ValidationError) as exc_info:
             ValidationUtils.validate_audio_file("nonexistent.wav")
         
         assert "non trouvé" in str(exc_info.value)
     
     def test_validate_audio_file_empty(self):
-        """Test de validation fichier vide"""
-        with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp_file:
+        """Test de validation fichier vide"""        with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp_file:
             tmp_path = tmp_file.name
         
         try:
@@ -31230,8 +29722,7 @@ class TestValidationUtils:
             os.unlink(tmp_path)
     
     def test_validate_audio_file_too_large(self):
-        """Test de validation fichier trop volumineux"""
-        with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp_file:
+        """Test de validation fichier trop volumineux"""        with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp_file:
             # Écrire un fichier plus grand que la limite
             large_data = b"0" * (ValidationUtils.MAX_FILE_SIZE + 1000)
             tmp_file.write(large_data)
@@ -31246,8 +29737,7 @@ class TestValidationUtils:
             os.unlink(tmp_path)
     
     def test_validate_audio_file_wrong_format(self):
-        """Test de validation format incorrect"""
-        with tempfile.NamedTemporaryFile(suffix=".txt", delete=False) as tmp_file:
+        """Test de validation format incorrect"""        with tempfile.NamedTemporaryFile(suffix=".txt", delete=False) as tmp_file:
             tmp_file.write(b"This is not audio")
             tmp_path = tmp_file.name
         
@@ -31260,31 +29750,27 @@ class TestValidationUtils:
             os.unlink(tmp_path)
     
     def test_validate_sample_rate_valid(self):
-        """Test de validation sample rate valide"""
-        valid_rates = [8000, 16000, 22050, 44100, 48000, 96000]
+        """Test de validation sample rate valide"""        valid_rates = [8000, 16000, 22050, 44100, 48000, 96000]
         
         for rate in valid_rates:
             assert ValidationUtils.validate_sample_rate(rate) is True
     
     def test_validate_sample_rate_invalid_type(self):
-        """Test de validation sample rate type invalide"""
-        with pytest.raises(ValidationError):
+        """Test de validation sample rate type invalide"""        with pytest.raises(ValidationError):
             ValidationUtils.validate_sample_rate("44100")
         
         with pytest.raises(ValidationError):
             ValidationUtils.validate_sample_rate(44100.5)
     
     def test_validate_sample_rate_out_of_range(self):
-        """Test de validation sample rate hors limites"""
-        with pytest.raises(ValidationError):
+        """Test de validation sample rate hors limites"""        with pytest.raises(ValidationError):
             ValidationUtils.validate_sample_rate(4000)  # Trop bas
         
         with pytest.raises(ValidationError):
             ValidationUtils.validate_sample_rate(300000)  # Trop élevé
     
     def test_validate_model_name_valid(self):
-        """Test de validation nom de modèle valide"""
-        valid_names = [
+        """Test de validation nom de modèle valide"""        valid_names = [
             "spleeter:2stems-16kHz",
             "spleeter:4stems-44kHz",
             "custom:my-model",
@@ -31295,24 +29781,21 @@ class TestValidationUtils:
             assert ValidationUtils.validate_model_name(name) is True
     
     def test_validate_model_name_invalid_type(self):
-        """Test de validation nom de modèle type invalide"""
-        with pytest.raises(ValidationError):
+        """Test de validation nom de modèle type invalide"""        with pytest.raises(ValidationError):
             ValidationUtils.validate_model_name(123)
         
         with pytest.raises(ValidationError):
             ValidationUtils.validate_model_name(None)
     
     def test_validate_model_name_empty(self):
-        """Test de validation nom de modèle vide"""
-        with pytest.raises(ValidationError):
+        """Test de validation nom de modèle vide"""        with pytest.raises(ValidationError):
             ValidationUtils.validate_model_name("")
         
         with pytest.raises(ValidationError):
             ValidationUtils.validate_model_name("   ")
     
     def test_validate_model_name_dangerous_chars(self):
-        """Test de validation caractères dangereux"""
-        dangerous_names = [
+        """Test de validation caractères dangereux"""        dangerous_names = [
             "model/../other",
             "model<script>",
             "model|command",
@@ -31324,34 +29807,29 @@ class TestValidationUtils:
                 ValidationUtils.validate_model_name(name)
     
     def test_validate_output_directory_existing(self):
-        """Test de validation répertoire existant"""
-        with tempfile.TemporaryDirectory() as tmp_dir:
+        """Test de validation répertoire existant"""        with tempfile.TemporaryDirectory() as tmp_dir:
             assert ValidationUtils.validate_output_directory(tmp_dir) is True
     
     def test_validate_output_directory_non_existing_valid_parent(self):
-        """Test de validation répertoire non-existant avec parent valide"""
-        with tempfile.TemporaryDirectory() as tmp_dir:
+        """Test de validation répertoire non-existant avec parent valide"""        with tempfile.TemporaryDirectory() as tmp_dir:
             new_dir = Path(tmp_dir) / "new_subdir"
             assert ValidationUtils.validate_output_directory(new_dir) is True
     
     def test_validate_output_directory_file_instead_of_dir(self):
-        """Test de validation fichier au lieu de répertoire"""
-        with tempfile.NamedTemporaryFile() as tmp_file:
+        """Test de validation fichier au lieu de répertoire"""        with tempfile.NamedTemporaryFile() as tmp_file:
             with pytest.raises(ValidationError) as exc_info:
                 ValidationUtils.validate_output_directory(tmp_file.name)
             
             assert "répertoire" in str(exc_info.value)
     
     def test_validate_batch_size_valid(self):
-        """Test de validation taille batch valide"""
-        valid_sizes = [1, 4, 8, 16, 32]
+        """Test de validation taille batch valide"""        valid_sizes = [1, 4, 8, 16, 32]
         
         for size in valid_sizes:
             assert ValidationUtils.validate_batch_size(size) is True
     
     def test_validate_batch_size_invalid(self):
-        """Test de validation taille batch invalide"""
-        with pytest.raises(ValidationError):
+        """Test de validation taille batch invalide"""        with pytest.raises(ValidationError):
             ValidationUtils.validate_batch_size(0)
         
         with pytest.raises(ValidationError):
@@ -31361,8 +29839,7 @@ class TestValidationUtils:
             ValidationUtils.validate_batch_size(4.5)
     
     def test_sanitize_filename_basic(self):
-        """Test de nettoyage nom de fichier basique"""
-        dangerous_name = "file/with\\dangerous:chars*.txt"
+        """Test de nettoyage nom de fichier basique"""        dangerous_name = "file/with\\dangerous:chars*.txt"
         sanitized = ValidationUtils.sanitize_filename(dangerous_name)
         
         # Les caractères dangereux devraient être remplacés
@@ -31373,8 +29850,7 @@ class TestValidationUtils:
         assert "_" in sanitized  # Remplacé par underscore
     
     def test_sanitize_filename_long_name(self):
-        """Test de nettoyage nom trop long"""
-        long_name = "a" * 300 + ".txt"
+        """Test de nettoyage nom trop long"""        long_name = "a" * 300 + ".txt"
         sanitized = ValidationUtils.sanitize_filename(long_name)
         
         # Devrait être limité à 255 caractères
@@ -31382,23 +29858,20 @@ class TestValidationUtils:
         assert sanitized.endswith(".txt")  # Extension préservée
     
     def test_sanitize_filename_reserved_windows(self):
-        """Test de nettoyage noms réservés Windows"""
-        reserved_names = ["CON.txt", "PRN.wav", "AUX.mp3", "NUL.flac"]
+        """Test de nettoyage noms réservés Windows"""        reserved_names = ["CON.txt", "PRN.wav", "AUX.mp3", "NUL.flac"]
         
         for name in reserved_names:
             sanitized = ValidationUtils.sanitize_filename(name)
             assert sanitized.startswith("file_")
     
     def test_validate_disk_space_sufficient(self):
-        """Test de validation espace disque suffisant"""
-        with tempfile.TemporaryDirectory() as tmp_dir:
+        """Test de validation espace disque suffisant"""        with tempfile.TemporaryDirectory() as tmp_dir:
             # Demander très peu d'espace (devrait toujours passer)
             assert ValidationUtils.validate_disk_space(1024, tmp_dir) is True
     
     @patch('shutil.disk_usage')
     def test_validate_disk_space_insufficient(self, mock_disk_usage):
-        """Test de validation espace disque insuffisant"""
-        # Simuler très peu d'espace libre
+        """Test de validation espace disque insuffisant"""        # Simuler très peu d'espace libre
         mock_disk_usage.return_value = (1000000, 800000, 1000)  # total, used, free
         
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -31409,13 +29882,11 @@ class TestValidationUtils:
 
 
 class TestPerformanceOptimizer:
-    """Tests pour la classe PerformanceOptimizer"""
-    
+    """Tests pour la classe PerformanceOptimizer"""    
     @patch('os.cpu_count')
     @patch('psutil.virtual_memory')
     def test_detect_optimal_config_basic(self, mock_memory, mock_cpu_count):
-        """Test de détection configuration optimale"""
-        # Simuler système avec 8 CPU et 16GB RAM
+        """Test de détection configuration optimale"""        # Simuler système avec 8 CPU et 16GB RAM
         mock_cpu_count.return_value = 8
         mock_memory.return_value = Mock(total=16 * 1024 * 1024 * 1024)
         
@@ -31431,8 +29902,7 @@ class TestPerformanceOptimizer:
     @patch('os.cpu_count')
     @patch('psutil.virtual_memory')
     def test_detect_optimal_config_with_gpu(self, mock_memory, mock_cpu_count):
-        """Test de configuration avec GPU"""
-        mock_cpu_count.return_value = 4
+        """Test de configuration avec GPU"""        mock_cpu_count.return_value = 4
         mock_memory.return_value = Mock(total=8 * 1024 * 1024 * 1024)
         
         with patch.object(PerformanceOptimizer, '_detect_gpu', return_value=True):
@@ -31445,8 +29915,7 @@ class TestPerformanceOptimizer:
     @patch('os.cpu_count')
     @patch('psutil.virtual_memory')
     def test_detect_optimal_config_low_resources(self, mock_memory, mock_cpu_count):
-        """Test de configuration ressources limitées"""
-        mock_cpu_count.return_value = 2
+        """Test de configuration ressources limitées"""        mock_cpu_count.return_value = 2
         mock_memory.return_value = Mock(total=4 * 1024 * 1024 * 1024)
         
         with patch.object(PerformanceOptimizer, '_detect_gpu', return_value=False):
@@ -31456,8 +29925,7 @@ class TestPerformanceOptimizer:
         assert config['recommended_batch_size'] == 2  # Low memory
     
     def test_estimate_processing_time_2stems(self):
-        """Test d'estimation temps de traitement 2 stems"""
-        duration = 180.0  # 3 minutes
+        """Test d'estimation temps de traitement 2 stems"""        duration = 180.0  # 3 minutes
         
         # Sans GPU
         time_cpu = PerformanceOptimizer.estimate_processing_time(
@@ -31475,8 +29943,7 @@ class TestPerformanceOptimizer:
         assert time_cpu > duration  # Plus long que l'audio original
     
     def test_estimate_processing_time_complexity(self):
-        """Test d'estimation selon complexité modèle"""
-        duration = 60.0
+        """Test d'estimation selon complexité modèle"""        duration = 60.0
         
         time_2stems = PerformanceOptimizer.estimate_processing_time(
             duration, "2stems", use_gpu=False
@@ -31492,8 +29959,7 @@ class TestPerformanceOptimizer:
         assert time_2stems < time_4stems < time_5stems
     
     def test_get_memory_requirements_basic(self):
-        """Test de calcul besoins mémoire"""
-        requirements = PerformanceOptimizer.get_memory_requirements(
+        """Test de calcul besoins mémoire"""        requirements = PerformanceOptimizer.get_memory_requirements(
             audio_duration=120.0,  # 2 minutes
             sample_rate=44100,
             model_complexity="2stems"
@@ -31511,8 +29977,7 @@ class TestPerformanceOptimizer:
         assert requirements["recommended_system_mb"] > requirements["total_mb"]
     
     def test_get_memory_requirements_complexity_scaling(self):
-        """Test d'évolution besoins selon complexité"""
-        duration = 60.0
+        """Test d'évolution besoins selon complexité"""        duration = 60.0
         
         req_2stems = PerformanceOptimizer.get_memory_requirements(
             duration, model_complexity="2stems"
@@ -31529,8 +29994,7 @@ class TestPerformanceOptimizer:
         assert req_2stems["model_mb"] < req_4stems["model_mb"] < req_5stems["model_mb"]
     
     def test_get_memory_requirements_duration_scaling(self):
-        """Test d'évolution besoins selon durée"""
-        short_req = PerformanceOptimizer.get_memory_requirements(
+        """Test d'évolution besoins selon durée"""        short_req = PerformanceOptimizer.get_memory_requirements(
             audio_duration=30.0, model_complexity="2stems"
         )
         long_req = PerformanceOptimizer.get_memory_requirements(
@@ -31551,17 +30015,14 @@ class TestPerformanceOptimizer:
 # LIGNES: 12
 # ==========================================================================================
 
-"""
-🎵 Spotify AI Agent - Tests de Performance Spleeter
+"""🎵 Spotify AI Agent - Tests de Performance Spleeter
 =================================================
 
 Tests de performance, benchmarks et stress tests
 pour valider les performances du module Spleeter.
 
 🎖️ Développé par l'équipe d'experts enterprise
-"""
-
-import pytest
+"""import pytest
 import asyncio
 import time
 import psutil
@@ -31580,12 +30041,10 @@ from spleeter.utils import PerformanceOptimizer
 
 
 class TestPerformanceBenchmarks:
-    """Tests de benchmarks de performance"""
-    
+    """Tests de benchmarks de performance"""    
     @pytest.fixture
     def performance_config(self):
-        """Configuration optimisée pour les tests de performance"""
-        return SpleeterConfig(
+        """Configuration optimisée pour les tests de performance"""        return SpleeterConfig(
             enable_gpu=False,  # CPU pour reproductibilité
             batch_size=8,
             worker_threads=4,
@@ -31597,8 +30056,7 @@ class TestPerformanceBenchmarks:
     
     @pytest.fixture
     async def performance_engine(self, performance_config, tmp_path):
-        """Engine optimisé pour les tests de performance"""
-        config = performance_config
+        """Engine optimisé pour les tests de performance"""        config = performance_config
         config.models_dir = str(tmp_path / "models")
         config.cache_dir = str(tmp_path / "cache")
         
@@ -31618,8 +30076,7 @@ class TestPerformanceBenchmarks:
     
     @pytest.fixture
     def sample_audio_data(self):
-        """Données audio de test de différentes tailles"""
-        sizes = {
+        """Données audio de test de différentes tailles"""        sizes = {
             'small': 44100 * 10,    # 10 secondes
             'medium': 44100 * 60,   # 1 minute
             'large': 44100 * 300,   # 5 minutes
@@ -31642,8 +30099,7 @@ class TestPerformanceBenchmarks:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_separation_performance_benchmark(self, performance_engine, sample_audio_data, tmp_path):
-        """Benchmark de performance de séparation"""
-        results = {}
+        """Benchmark de performance de séparation"""        results = {}
         
         for size_name, audio_data in sample_audio_data.items():
             # Créer fichier de test
@@ -31717,8 +30173,7 @@ class TestPerformanceBenchmarks:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_batch_processing_performance(self, performance_engine, tmp_path):
-        """Test de performance du traitement par lots"""
-        # Créer un lot de fichiers de test
+        """Test de performance du traitement par lots"""        # Créer un lot de fichiers de test
         num_files = 10
         audio_files = []
         
@@ -31785,8 +30240,7 @@ class TestPerformanceBenchmarks:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_cache_performance_benchmark(self, tmp_path):
-        """Benchmark de performance du cache"""
-        cache_manager = CacheManager(
+        """Benchmark de performance du cache"""        cache_manager = CacheManager(
             cache_dir=str(tmp_path / "cache_bench"),
             memory_cache_size=100,
             disk_cache_size_mb=50,
@@ -31851,8 +30305,7 @@ class TestPerformanceBenchmarks:
     
     @pytest.mark.performance
     def test_monitoring_overhead_benchmark(self):
-        """Benchmark de l'overhead du monitoring"""
-        collector = MetricsCollector(enable_system_metrics=False)
+        """Benchmark de l'overhead du monitoring"""        collector = MetricsCollector(enable_system_metrics=False)
         
         # Test sans monitoring
         start_time = time.perf_counter()
@@ -31892,13 +30345,11 @@ class TestPerformanceBenchmarks:
 
 
 class TestStressTests:
-    """Tests de stress et de limite"""
-    
+    """Tests de stress et de limite"""    
     @pytest.mark.stress
     @pytest.mark.asyncio
     async def test_concurrent_processing_stress(self, tmp_path):
-        """Test de stress avec traitement concurrent intensif"""
-        config = SpleeterConfig(
+        """Test de stress avec traitement concurrent intensif"""        config = SpleeterConfig(
             models_dir=str(tmp_path / "models"),
             cache_dir=str(tmp_path / "cache"),
             enable_gpu=False,
@@ -31981,8 +30432,7 @@ class TestStressTests:
     @pytest.mark.stress
     @pytest.mark.asyncio
     async def test_memory_pressure_stress(self, tmp_path):
-        """Test de stress avec pression mémoire"""
-        config = SpleeterConfig(
+        """Test de stress avec pression mémoire"""        config = SpleeterConfig(
             models_dir=str(tmp_path / "models"),
             cache_dir=str(tmp_path / "cache"),
             enable_gpu=False,
@@ -32065,8 +30515,7 @@ class TestStressTests:
     @pytest.mark.stress
     @pytest.mark.asyncio
     async def test_cache_stress_test(self, tmp_path):
-        """Test de stress du système de cache"""
-        cache_manager = CacheManager(
+        """Test de stress du système de cache"""        cache_manager = CacheManager(
             cache_dir=str(tmp_path / "cache_stress"),
             memory_cache_size=50,  # Limité pour forcer l'éviction
             disk_cache_size_mb=10,  # Petit pour tester les limites
@@ -32128,12 +30577,10 @@ class TestStressTests:
 
 
 class TestResourceUtilization:
-    """Tests d'utilisation des ressources"""
-    
+    """Tests d'utilisation des ressources"""    
     @pytest.mark.performance
     def test_cpu_utilization_monitoring(self):
-        """Test de surveillance de l'utilisation CPU"""
-        from spleeter.monitoring import MetricsCollector
+        """Test de surveillance de l'utilisation CPU"""        from spleeter.monitoring import MetricsCollector
         
         collector = MetricsCollector(enable_system_metrics=True)
         
@@ -32177,8 +30624,7 @@ class TestResourceUtilization:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_resource_monitoring_integration(self, tmp_path):
-        """Test d'intégration de surveillance des ressources"""
-        from spleeter.monitoring import ResourceMonitor
+        """Test d'intégration de surveillance des ressources"""        from spleeter.monitoring import ResourceMonitor
         
         monitor = ResourceMonitor(
             memory_threshold_mb=500,
@@ -32213,8 +30659,7 @@ class TestResourceUtilization:
     
     @pytest.mark.performance
     def test_performance_optimizer_recommendations(self):
-        """Test des recommandations de l'optimiseur de performance"""
-        from spleeter.utils import PerformanceOptimizer
+        """Test des recommandations de l'optimiseur de performance"""        from spleeter.utils import PerformanceOptimizer
         
         # Obtenir la configuration optimale
         optimal_config = PerformanceOptimizer.detect_optimal_config()
@@ -32265,8 +30710,7 @@ class TestResourceUtilization:
 
 # Utilitaires pour les tests de performance
 def measure_time(func):
-    """Décorateur pour mesurer le temps d'exécution"""
-    def wrapper(*args, **kwargs):
+    """Décorateur pour mesurer le temps d'exécution"""    def wrapper(*args, **kwargs):
         start = time.perf_counter()
         result = func(*args, **kwargs)
         end = time.perf_counter()
@@ -32276,8 +30720,7 @@ def measure_time(func):
 
 
 def measure_memory(func):
-    """Décorateur pour mesurer l'utilisation mémoire"""
-    def wrapper(*args, **kwargs):
+    """Décorateur pour mesurer l'utilisation mémoire"""    def wrapper(*args, **kwargs):
         process = psutil.Process()
         start_memory = process.memory_info().rss / 1024 / 1024  # MB
         result = func(*args, **kwargs)
@@ -32292,17 +30735,14 @@ def measure_memory(func):
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-🎵 Configuration des Tests Spleeter - Fixtures et Utilitaires
+"""🎵 Configuration des Tests Spleeter - Fixtures et Utilitaires
 =============================================================
 
 Configuration centralisée pour tous les tests du module Spleeter.
 Fixtures pytest, mocks, données de test et utilitaires.
 
 🎖️ Développé par l'équipe d'experts enterprise
-"""
-
-import os
+"""import os
 import pytest
 import asyncio
 import tempfile
@@ -32342,8 +30782,7 @@ from spleeter.exceptions import (
 
 @pytest.fixture(scope="session")
 def event_loop():
-    """Event loop pour les tests async"""
-    loop = asyncio.new_event_loop()
+    """Event loop pour les tests async"""    loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     yield loop
     loop.close()
@@ -32353,16 +30792,14 @@ def event_loop():
 
 @pytest.fixture(scope="session")
 def test_data_dir():
-    """Répertoire temporaire pour les données de test"""
-    temp_dir = tempfile.mkdtemp(prefix="spleeter_test_")
+    """Répertoire temporaire pour les données de test"""    temp_dir = tempfile.mkdtemp(prefix="spleeter_test_")
     yield Path(temp_dir)
     shutil.rmtree(temp_dir, ignore_errors=True)
 
 
 @pytest.fixture
 def sample_audio_file(test_data_dir):
-    """Fichier audio de test (WAV synthétique)"""
-    # Génération d'un signal audio synthétique
+    """Fichier audio de test (WAV synthétique)"""    # Génération d'un signal audio synthétique
     sample_rate = 44100
     duration = 2.0  # 2 secondes
     t = np.linspace(0, duration, int(sample_rate * duration))
@@ -32388,8 +30825,7 @@ def sample_audio_file(test_data_dir):
 
 @pytest.fixture
 def sample_audio_files(test_data_dir):
-    """Plusieurs fichiers audio pour tests batch"""
-    files = []
+    """Plusieurs fichiers audio pour tests batch"""    files = []
     for i in range(3):
         file_path = test_data_dir / f"test_audio_{i}.wav"
         # Fichier factice
@@ -32400,8 +30836,7 @@ def sample_audio_files(test_data_dir):
 
 @pytest.fixture
 def sample_metadata():
-    """Métadonnées audio de test"""
-    return {
+    """Métadonnées audio de test"""    return {
         'filename': 'test_audio.wav',
         'duration': 2.0,
         'sample_rate': 44100,
@@ -32420,8 +30855,7 @@ def sample_metadata():
 
 @pytest.fixture
 def test_config():
-    """Configuration Spleeter pour les tests"""
-    return SpleeterConfig(
+    """Configuration Spleeter pour les tests"""    return SpleeterConfig(
         # Performance
         enable_gpu=False,  # Pas de GPU en tests
         batch_size=2,
@@ -32446,8 +30880,7 @@ def test_config():
 
 @pytest.fixture
 def test_config_minimal():
-    """Configuration minimale pour tests rapides"""
-    return SpleeterConfig(
+    """Configuration minimale pour tests rapides"""    return SpleeterConfig(
         enable_gpu=False,
         batch_size=1,
         worker_threads=1,
@@ -32461,8 +30894,7 @@ def test_config_minimal():
 
 @pytest.fixture
 def mock_tensorflow():
-    """Mock TensorFlow pour éviter les dépendances lourdes"""
-    with patch.dict('sys.modules', {
+    """Mock TensorFlow pour éviter les dépendances lourdes"""    with patch.dict('sys.modules', {
         'tensorflow': MagicMock(),
         'tensorflow.keras': MagicMock(),
         'tensorflow.config': MagicMock()
@@ -32475,8 +30907,7 @@ def mock_tensorflow():
 
 @pytest.fixture
 def mock_librosa():
-    """Mock librosa pour les tests"""
-    with patch.dict('sys.modules', {
+    """Mock librosa pour les tests"""    with patch.dict('sys.modules', {
         'librosa': MagicMock(),
         'librosa.feature': MagicMock(),
         'librosa.core': MagicMock()
@@ -32495,8 +30926,7 @@ def mock_librosa():
 
 @pytest.fixture
 def mock_soundfile():
-    """Mock soundfile pour les tests"""
-    with patch.dict('sys.modules', {'soundfile': MagicMock()}):
+    """Mock soundfile pour les tests"""    with patch.dict('sys.modules', {'soundfile': MagicMock()}):
         sf_mock = MagicMock()
         
         # Mock info
@@ -32515,8 +30945,7 @@ def mock_soundfile():
 
 @pytest.fixture
 def mock_redis():
-    """Mock Redis pour les tests de cache"""
-    redis_mock = AsyncMock()
+    """Mock Redis pour les tests de cache"""    redis_mock = AsyncMock()
     redis_mock.get.return_value = None
     redis_mock.set.return_value = True
     redis_mock.delete.return_value = 1
@@ -32532,8 +30961,7 @@ def mock_redis():
 
 @pytest.fixture
 async def spleeter_engine(test_config, mock_tensorflow, mock_librosa, mock_soundfile):
-    """Instance SpleeterEngine pour les tests"""
-    engine = SpleeterEngine(config=test_config)
+    """Instance SpleeterEngine pour les tests"""    engine = SpleeterEngine(config=test_config)
     
     # Mock des méthodes nécessitant des dépendances lourdes
     engine._load_model = AsyncMock(return_value=MagicMock())
@@ -32549,8 +30977,7 @@ async def spleeter_engine(test_config, mock_tensorflow, mock_librosa, mock_sound
 
 @pytest.fixture
 async def model_manager(test_data_dir, mock_tensorflow):
-    """Instance ModelManager pour les tests"""
-    manager = ModelManager(models_dir=test_data_dir)
+    """Instance ModelManager pour les tests"""    manager = ModelManager(models_dir=test_data_dir)
     
     # Mock des téléchargements
     manager._download_file = AsyncMock(return_value=True)
@@ -32561,8 +30988,7 @@ async def model_manager(test_data_dir, mock_tensorflow):
 
 @pytest.fixture
 async def cache_manager(test_data_dir):
-    """Instance CacheManager pour les tests"""
-    cache_dir = test_data_dir / "cache"
+    """Instance CacheManager pour les tests"""    cache_dir = test_data_dir / "cache"
     cache_dir.mkdir(exist_ok=True)
     
     manager = CacheManager(
@@ -32578,8 +31004,7 @@ async def cache_manager(test_data_dir):
 
 @pytest.fixture
 def audio_processor(test_config, mock_librosa, mock_soundfile):
-    """Instance AudioProcessor pour les tests"""
-    processor = AudioProcessor(config=test_config)
+    """Instance AudioProcessor pour les tests"""    processor = AudioProcessor(config=test_config)
     
     # Mock des méthodes de traitement audio
     processor._apply_filter = Mock(side_effect=lambda x, *args, **kwargs: x)
@@ -32590,8 +31015,7 @@ def audio_processor(test_config, mock_librosa, mock_soundfile):
 
 @pytest.fixture
 def batch_processor(test_config, mock_librosa, mock_soundfile):
-    """Instance BatchProcessor pour les tests"""
-    processor = BatchProcessor(
+    """Instance BatchProcessor pour les tests"""    processor = BatchProcessor(
         config=test_config,
         max_workers=2,
         queue_size=10
@@ -32603,8 +31027,7 @@ def batch_processor(test_config, mock_librosa, mock_soundfile):
 
 @pytest.fixture
 def metrics_collector():
-    """Instance MetricsCollector pour les tests"""
-    collector = MetricsCollector(
+    """Instance MetricsCollector pour les tests"""    collector = MetricsCollector(
         buffer_size=100,
         retention_hours=1,
         enable_system_metrics=False  # Éviter les métriques système en tests
@@ -32615,24 +31038,21 @@ def metrics_collector():
 
 @pytest.fixture
 def performance_timer(metrics_collector):
-    """Instance PerformanceTimer pour les tests"""
-    return PerformanceTimer("test_operation", collector=metrics_collector)
+    """Instance PerformanceTimer pour les tests"""    return PerformanceTimer("test_operation", collector=metrics_collector)
 
 
 # ===== FIXTURES UTILITAIRES =====
 
 @pytest.fixture
 def temp_output_dir(test_data_dir):
-    """Répertoire temporaire pour les sorties"""
-    output_dir = test_data_dir / "output"
+    """Répertoire temporaire pour les sorties"""    output_dir = test_data_dir / "output"
     output_dir.mkdir(exist_ok=True)
     return output_dir
 
 
 @pytest.fixture
 def mock_file_system(test_data_dir):
-    """Mock du système de fichiers pour tests isolation"""
-    original_cwd = os.getcwd()
+    """Mock du système de fichiers pour tests isolation"""    original_cwd = os.getcwd()
     os.chdir(test_data_dir)
     yield test_data_dir
     os.chdir(original_cwd)
@@ -32642,8 +31062,7 @@ def mock_file_system(test_data_dir):
 
 @pytest.fixture
 def complex_audio_scenario():
-    """Scénario audio complexe pour tests avancés"""
-    return {
+    """Scénario audio complexe pour tests avancés"""    return {
         'sample_rates': [22050, 44100, 48000],
         'channels': [1, 2],
         'durations': [1.0, 5.0, 30.0],
@@ -32654,8 +31073,7 @@ def complex_audio_scenario():
 
 @pytest.fixture
 def batch_processing_scenario(test_data_dir):
-    """Scénario de traitement par lots"""
-    scenario = {
+    """Scénario de traitement par lots"""    scenario = {
         'small_batch': [],
         'medium_batch': [],
         'large_batch': []
@@ -32686,8 +31104,7 @@ def batch_processing_scenario(test_data_dir):
 
 @pytest.fixture
 def error_scenarios():
-    """Scénarios d'erreur pour tests de robustesse"""
-    return {
+    """Scénarios d'erreur pour tests de robustesse"""    return {
         'file_not_found': '/nonexistent/file.wav',
         'invalid_format': 'invalid_file.txt',
         'corrupted_audio': b'INVALID_AUDIO_DATA',
@@ -32701,12 +31118,10 @@ def error_scenarios():
 # ===== HELPERS ET UTILITAIRES =====
 
 class TestHelper:
-    """Classe d'aide pour les tests"""
-    
+    """Classe d'aide pour les tests"""    
     @staticmethod
     def create_fake_model_file(path: Path, model_type: str = "2stems"):
-        """Crée un fichier de modèle factice"""
-        model_data = {
+        """Crée un fichier de modèle factice"""        model_data = {
             'model_type': model_type,
             'version': '1.0.0',
             'sample_rate': 44100,
@@ -32727,14 +31142,12 @@ class TestHelper:
     
     @staticmethod
     def create_test_cache_db(cache_dir: Path):
-        """Crée une base de données de cache de test"""
-        db_path = cache_dir / "cache.db"
+        """Crée une base de données de cache de test"""        db_path = cache_dir / "cache.db"
         
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
         
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS cache_entries (
+        cursor.execute("""            CREATE TABLE IF NOT EXISTS cache_entries (
                 key TEXT PRIMARY KEY,
                 data BLOB,
                 created_at TIMESTAMP,
@@ -32763,8 +31176,7 @@ class TestHelper:
     
     @staticmethod
     def assert_audio_data_valid(audio_data: np.ndarray, expected_shape: tuple = None):
-        """Valide que les données audio sont correctes"""
-        assert isinstance(audio_data, np.ndarray), "Audio data should be numpy array"
+        """Valide que les données audio sont correctes"""        assert isinstance(audio_data, np.ndarray), "Audio data should be numpy array"
         assert audio_data.dtype in [np.float32, np.float64], f"Invalid audio dtype: {audio_data.dtype}"
         assert -1.0 <= audio_data.max() <= 1.0, "Audio values should be normalized"
         assert -1.0 <= audio_data.min() <= 1.0, "Audio values should be normalized"
@@ -32774,8 +31186,7 @@ class TestHelper:
     
     @staticmethod
     def create_performance_baseline():
-        """Crée une baseline de performance pour les tests"""
-        return {
+        """Crée une baseline de performance pour les tests"""        return {
             'separation_time_2stems': 2.0,  # seconds per audio second
             'separation_time_4stems': 3.5,
             'separation_time_5stems': 4.5,
@@ -32787,15 +31198,13 @@ class TestHelper:
 
 @pytest.fixture
 def test_helper():
-    """Instance de TestHelper"""
-    return TestHelper()
+    """Instance de TestHelper"""    return TestHelper()
 
 
 # ===== MARKERS PYTEST =====
 
 def pytest_configure(config):
-    """Configuration des markers pytest"""
-    config.addinivalue_line("markers", "unit: Tests unitaires")
+    """Configuration des markers pytest"""    config.addinivalue_line("markers", "unit: Tests unitaires")
     config.addinivalue_line("markers", "integration: Tests d'intégration")
     config.addinivalue_line("markers", "performance: Tests de performance")
     config.addinivalue_line("markers", "security: Tests de sécurité")
@@ -32810,8 +31219,7 @@ import logging
 
 @pytest.fixture(autouse=True)
 def configure_test_logging():
-    """Configure le logging pour les tests"""
-    logging.getLogger('spleeter').setLevel(logging.WARNING)
+    """Configure le logging pour les tests"""    logging.getLogger('spleeter').setLevel(logging.WARNING)
     logging.getLogger('tensorflow').setLevel(logging.ERROR)
     logging.getLogger('librosa').setLevel(logging.ERROR)
 
@@ -32821,11 +31229,8 @@ def configure_test_logging():
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Tests pour le module monitoring.py du système Spleeter
-"""
-
-import pytest
+"""Tests pour le module monitoring.py du système Spleeter
+"""import pytest
 import asyncio
 import time
 import threading
@@ -32844,11 +31249,9 @@ from spleeter.exceptions import MonitoringError
 
 
 class TestPerformanceMetric:
-    """Tests pour la classe PerformanceMetric"""
-    
+    """Tests pour la classe PerformanceMetric"""    
     def test_performance_metric_creation(self):
-        """Test de création d'une métrique"""
-        metric = PerformanceMetric(
+        """Test de création d'une métrique"""        metric = PerformanceMetric(
             name="processing_time",
             value=2.5,
             timestamp=datetime.now(),
@@ -32863,8 +31266,7 @@ class TestPerformanceMetric:
         assert metric.tags["gpu"] == "true"
     
     def test_performance_metric_to_dict(self):
-        """Test de conversion en dictionnaire"""
-        timestamp = datetime.now()
+        """Test de conversion en dictionnaire"""        timestamp = datetime.now()
         metric = PerformanceMetric(
             name="cache_hit_rate",
             value=85.5,
@@ -32883,11 +31285,9 @@ class TestPerformanceMetric:
 
 
 class TestProcessingStats:
-    """Tests pour la classe ProcessingStats"""
-    
+    """Tests pour la classe ProcessingStats"""    
     def test_processing_stats_initialization(self):
-        """Test d'initialisation des statistiques"""
-        stats = ProcessingStats()
+        """Test d'initialisation des statistiques"""        stats = ProcessingStats()
         
         assert stats.total_files == 0
         assert stats.successful_files == 0
@@ -32897,8 +31297,7 @@ class TestProcessingStats:
         assert stats.success_rate == 0.0
     
     def test_processing_stats_success_rate(self):
-        """Test de calcul du taux de succès"""
-        stats = ProcessingStats(
+        """Test de calcul du taux de succès"""        stats = ProcessingStats(
             total_files=10,
             successful_files=8,
             failed_files=2
@@ -32907,13 +31306,11 @@ class TestProcessingStats:
         assert stats.success_rate == 80.0
     
     def test_processing_stats_success_rate_no_files(self):
-        """Test de taux de succès sans fichiers"""
-        stats = ProcessingStats()
+        """Test de taux de succès sans fichiers"""        stats = ProcessingStats()
         assert stats.success_rate == 0.0
     
     def test_processing_stats_to_dict(self):
-        """Test de conversion en dictionnaire"""
-        stats = ProcessingStats(
+        """Test de conversion en dictionnaire"""        stats = ProcessingStats(
             total_files=5,
             successful_files=4,
             failed_files=1,
@@ -32932,11 +31329,9 @@ class TestProcessingStats:
 
 
 class TestSystemHealth:
-    """Tests pour la classe SystemHealth"""
-    
+    """Tests pour la classe SystemHealth"""    
     def test_system_health_initialization(self):
-        """Test d'initialisation de la santé système"""
-        health = SystemHealth(
+        """Test d'initialisation de la santé système"""        health = SystemHealth(
             cpu_usage=45.2,
             memory_usage=68.7,
             disk_usage=23.1,
@@ -32951,8 +31346,7 @@ class TestSystemHealth:
         assert health.load_average == 1.8
     
     def test_system_health_score_excellent(self):
-        """Test de score de santé excellent"""
-        health = SystemHealth(
+        """Test de score de santé excellent"""        health = SystemHealth(
             cpu_usage=10.0,
             memory_usage=20.0,
             disk_usage=15.0,
@@ -32964,8 +31358,7 @@ class TestSystemHealth:
         assert health.status == "excellent"
     
     def test_system_health_score_critical(self):
-        """Test de score de santé critique"""
-        health = SystemHealth(
+        """Test de score de santé critique"""        health = SystemHealth(
             cpu_usage=95.0,
             memory_usage=90.0,
             disk_usage=85.0,
@@ -32977,8 +31370,7 @@ class TestSystemHealth:
         assert health.status == "critical"
     
     def test_system_health_score_no_gpu(self):
-        """Test de score sans GPU"""
-        health = SystemHealth(
+        """Test de score sans GPU"""        health = SystemHealth(
             cpu_usage=30.0,
             memory_usage=40.0,
             disk_usage=25.0
@@ -32991,27 +31383,23 @@ class TestSystemHealth:
 
 
 class TestMetricsCollector:
-    """Tests pour la classe MetricsCollector"""
-    
+    """Tests pour la classe MetricsCollector"""    
     @pytest.fixture
     def collector(self):
-        """Fixture pour créer un collecteur de métriques"""
-        return MetricsCollector(
+        """Fixture pour créer un collecteur de métriques"""        return MetricsCollector(
             buffer_size=100,
             retention_hours=1,
             enable_system_metrics=False  # Désactivé pour les tests
         )
     
     def test_metrics_collector_initialization(self, collector):
-        """Test d'initialisation du collecteur"""
-        assert collector.buffer_size == 100
+        """Test d'initialisation du collecteur"""        assert collector.buffer_size == 100
         assert collector.retention_hours == 1
         assert len(collector.metrics_buffer) == 0
         assert len(collector.aggregated_metrics) == 0
     
     def test_record_metric_basic(self, collector):
-        """Test d'enregistrement de métrique basique"""
-        collector.record_metric("test_metric", 42.5, "units", {"tag": "value"})
+        """Test d'enregistrement de métrique basique"""        collector.record_metric("test_metric", 42.5, "units", {"tag": "value"})
         
         assert len(collector.metrics_buffer) == 1
         assert len(collector.aggregated_metrics["test_metric"]) == 1
@@ -33023,16 +31411,14 @@ class TestMetricsCollector:
         assert metric.tags["tag"] == "value"
     
     def test_record_multiple_metrics(self, collector):
-        """Test d'enregistrement de plusieurs métriques"""
-        for i in range(10):
+        """Test d'enregistrement de plusieurs métriques"""        for i in range(10):
             collector.record_metric(f"metric_{i}", i * 10, "count")
         
         assert len(collector.metrics_buffer) == 10
         assert len(collector.aggregated_metrics) == 10
     
     def test_record_processing_event_success(self, collector):
-        """Test d'enregistrement d'événement de traitement réussi"""
-        collector.record_processing_event(
+        """Test d'enregistrement d'événement de traitement réussi"""        collector.record_processing_event(
             event_type="separation",
             audio_duration=120.0,
             processing_time=60.0,
@@ -33052,8 +31438,7 @@ class TestMetricsCollector:
         assert len(collector.metrics_buffer) > 0
     
     def test_record_processing_event_failure(self, collector):
-        """Test d'enregistrement d'événement de traitement échoué"""
-        collector.record_processing_event(
+        """Test d'enregistrement d'événement de traitement échoué"""        collector.record_processing_event(
             event_type="separation",
             success=False,
             model_name="spleeter:4stems"
@@ -33065,24 +31450,21 @@ class TestMetricsCollector:
         assert stats.failed_files == 1
     
     def test_record_cache_event_hit(self, collector):
-        """Test d'enregistrement d'événement de cache hit"""
-        collector.record_cache_event(hit=True, cache_type="memory")
+        """Test d'enregistrement d'événement de cache hit"""        collector.record_cache_event(hit=True, cache_type="memory")
         
         assert collector._cache_stats['hits'] == 1
         assert collector._cache_stats['misses'] == 0
         assert collector.processing_stats.cache_hit_rate == 100.0
     
     def test_record_cache_event_miss(self, collector):
-        """Test d'enregistrement d'événement de cache miss"""
-        collector.record_cache_event(hit=False, cache_type="disk")
+        """Test d'enregistrement d'événement de cache miss"""        collector.record_cache_event(hit=False, cache_type="disk")
         
         assert collector._cache_stats['hits'] == 0
         assert collector._cache_stats['misses'] == 1
         assert collector.processing_stats.cache_hit_rate == 0.0
     
     def test_record_cache_event_mixed(self, collector):
-        """Test d'enregistrement d'événements de cache mixtes"""
-        # 3 hits, 1 miss
+        """Test d'enregistrement d'événements de cache mixtes"""        # 3 hits, 1 miss
         for _ in range(3):
             collector.record_cache_event(hit=True)
         collector.record_cache_event(hit=False)
@@ -33093,8 +31475,7 @@ class TestMetricsCollector:
     @patch('psutil.virtual_memory')
     @patch('psutil.disk_usage')
     def test_record_system_health(self, mock_disk, mock_memory, mock_cpu, collector):
-        """Test d'enregistrement de santé système"""
-        # Mock des valeurs système
+        """Test d'enregistrement de santé système"""        # Mock des valeurs système
         mock_cpu.return_value = 45.0
         mock_memory.return_value = Mock(percent=60.0)
         mock_disk.return_value = Mock(percent=30.0)
@@ -33115,8 +31496,7 @@ class TestMetricsCollector:
         assert "system_health_score" in metrics_names
     
     def test_get_stats_summary(self, collector):
-        """Test de récupération du résumé de statistiques"""
-        # Ajouter quelques métriques
+        """Test de récupération du résumé de statistiques"""        # Ajouter quelques métriques
         collector.record_metric("test_metric", 10.0)
         collector.record_metric("test_metric", 20.0)
         collector.record_processing_event("test", success=True)
@@ -33135,8 +31515,7 @@ class TestMetricsCollector:
         assert summary["buffer_size"] > 0
     
     def test_get_metric_history(self, collector):
-        """Test de récupération d'historique de métrique"""
-        # Ajouter plusieurs valeurs de la même métrique
+        """Test de récupération d'historique de métrique"""        # Ajouter plusieurs valeurs de la même métrique
         for i in range(5):
             collector.record_metric("history_test", i * 10)
             time.sleep(0.01)  # Petit délai pour différencier les timestamps
@@ -33154,8 +31533,7 @@ class TestMetricsCollector:
         assert values == [0, 10, 20, 30, 40]
     
     def test_get_metric_history_time_filter(self, collector):
-        """Test de filtrage par temps de l'historique"""
-        # Ajouter une métrique ancienne (simulée)
+        """Test de filtrage par temps de l'historique"""        # Ajouter une métrique ancienne (simulée)
         old_metric = PerformanceMetric(
             name="old_metric",
             value=100,
@@ -33174,8 +31552,7 @@ class TestMetricsCollector:
         assert recent_history[0].value == 200
     
     def test_cleanup_old_metrics(self, collector):
-        """Test de nettoyage des anciennes métriques"""
-        # Créer un collecteur avec très courte rétention
+        """Test de nettoyage des anciennes métriques"""        # Créer un collecteur avec très courte rétention
         short_collector = MetricsCollector(retention_hours=0.001)  # ~3.6 secondes
         
         # Ajouter des métriques anciennes (simulées)
@@ -33194,8 +31571,7 @@ class TestMetricsCollector:
         assert short_collector.metrics_buffer[0].name == "recent"
     
     def test_add_callbacks(self, collector):
-        """Test d'ajout de callbacks"""
-        alert_called = []
+        """Test d'ajout de callbacks"""        alert_called = []
         metric_called = []
         
         def alert_callback(alert):
@@ -33217,8 +31593,7 @@ class TestMetricsCollector:
     
     @patch('tempfile.NamedTemporaryFile')
     def test_export_metrics_json(self, mock_temp_file, collector):
-        """Test d'export de métriques en JSON"""
-        # Préparer des données de test
+        """Test d'export de métriques en JSON"""        # Préparer des données de test
         collector.record_metric("export_test", 123.45)
         
         # Mock du fichier temporaire
@@ -33232,8 +31607,7 @@ class TestMetricsCollector:
         # En réalité, on devrait tester le contenu du fichier
     
     def test_start_stop_system_monitoring(self, collector):
-        """Test de démarrage/arrêt de surveillance système"""
-        # Le collecteur de test a la surveillance désactivée
+        """Test de démarrage/arrêt de surveillance système"""        # Le collecteur de test a la surveillance désactivée
         collector.enable_system_metrics = True
         
         assert collector._system_thread is None
@@ -33249,11 +31623,9 @@ class TestMetricsCollector:
 
 
 class TestPerformanceTimer:
-    """Tests pour la classe PerformanceTimer"""
-    
+    """Tests pour la classe PerformanceTimer"""    
     def test_performance_timer_basic(self):
-        """Test basique du timer de performance"""
-        timer = PerformanceTimer("test_operation", auto_record=False)
+        """Test basique du timer de performance"""        timer = PerformanceTimer("test_operation", auto_record=False)
         
         timer.start()
         time.sleep(0.1)  # Attendre 100ms
@@ -33264,24 +31636,21 @@ class TestPerformanceTimer:
         assert timer.duration == duration
     
     def test_performance_timer_context_manager(self):
-        """Test du timer comme context manager"""
-        with PerformanceTimer("context_test", auto_record=False) as timer:
+        """Test du timer comme context manager"""        with PerformanceTimer("context_test", auto_record=False) as timer:
             time.sleep(0.05)  # Attendre 50ms
         
         assert timer.duration >= 0.05
         assert timer.duration < 0.1
     
     def test_performance_timer_not_started_error(self):
-        """Test d'erreur si timer non démarré"""
-        timer = PerformanceTimer("error_test", auto_record=False)
+        """Test d'erreur si timer non démarré"""        timer = PerformanceTimer("error_test", auto_record=False)
         
         with pytest.raises(RuntimeError):
             timer.stop()
     
     @patch('spleeter.monitoring.MetricsCollector')
     def test_performance_timer_auto_record(self, mock_collector_class):
-        """Test d'enregistrement automatique"""
-        mock_collector = Mock()
+        """Test d'enregistrement automatique"""        mock_collector = Mock()
         mock_collector_class.return_value = mock_collector
         
         timer = PerformanceTimer("auto_test", collector=mock_collector, auto_record=True)
@@ -33297,8 +31666,7 @@ class TestPerformanceTimer:
         assert call_args[0][2] == "seconds"  # Unité
     
     def test_performance_timer_exception_handling(self):
-        """Test de gestion d'exception dans le timer"""
-        mock_collector = Mock()
+        """Test de gestion d'exception dans le timer"""        mock_collector = Mock()
         
         with pytest.raises(ValueError):
             with PerformanceTimer("exception_test", collector=mock_collector):
@@ -33313,26 +31681,22 @@ class TestPerformanceTimer:
 
 
 class TestResourceMonitor:
-    """Tests pour la classe ResourceMonitor"""
-    
+    """Tests pour la classe ResourceMonitor"""    
     @pytest.fixture
     def resource_monitor(self):
-        """Fixture pour créer un moniteur de ressources"""
-        return ResourceMonitor(
+        """Fixture pour créer un moniteur de ressources"""        return ResourceMonitor(
             memory_threshold_mb=1024,
             gpu_threshold_percent=80
         )
     
     def test_resource_monitor_initialization(self, resource_monitor):
-        """Test d'initialisation du moniteur"""
-        assert resource_monitor.memory_threshold_mb == 1024
+        """Test d'initialisation du moniteur"""        assert resource_monitor.memory_threshold_mb == 1024
         assert resource_monitor.gpu_threshold_percent == 80
         assert not resource_monitor.monitoring
     
     @patch('psutil.Process')
     def test_resource_monitor_context_manager(self, mock_process, resource_monitor):
-        """Test du moniteur comme context manager"""
-        # Mock du processus
+        """Test du moniteur comme context manager"""        # Mock du processus
         mock_process_instance = Mock()
         mock_process_instance.memory_info.return_value = Mock(rss=500 * 1024 * 1024)  # 500MB
         mock_process.return_value = mock_process_instance
@@ -33344,8 +31708,7 @@ class TestResourceMonitor:
         assert not resource_monitor.monitoring
     
     def test_resource_monitor_start_stop(self, resource_monitor):
-        """Test de démarrage/arrêt manuel"""
-        assert not resource_monitor.monitoring
+        """Test de démarrage/arrêt manuel"""        assert not resource_monitor.monitoring
         
         resource_monitor.start_monitoring("manual_test")
         assert resource_monitor.monitoring
@@ -33357,8 +31720,7 @@ class TestResourceMonitor:
     
     @patch('psutil.Process')
     def test_resource_monitor_threshold_warning(self, mock_process, resource_monitor):
-        """Test d'avertissement de seuil dépassé"""
-        # Simuler utilisation mémoire élevée
+        """Test d'avertissement de seuil dépassé"""        # Simuler utilisation mémoire élevée
         mock_process_instance = Mock()
         mock_process_instance.memory_info.return_value = Mock(rss=2048 * 1024 * 1024)  # 2GB
         mock_process.return_value = mock_process_instance
@@ -33374,11 +31736,9 @@ class TestResourceMonitor:
 
 
 class TestGlobalFunctions:
-    """Tests pour les fonctions globales de monitoring"""
-    
+    """Tests pour les fonctions globales de monitoring"""    
     def test_initialize_monitoring(self):
-        """Test d'initialisation du monitoring global"""
-        collector = initialize_monitoring(
+        """Test d'initialisation du monitoring global"""        collector = initialize_monitoring(
             buffer_size=500,
             retention_hours=12,
             enable_system_metrics=False
@@ -33392,8 +31752,7 @@ class TestGlobalFunctions:
         shutdown_monitoring()
     
     def test_get_global_collector(self):
-        """Test de récupération du collecteur global"""
-        # Premier appel devrait créer l'instance
+        """Test de récupération du collecteur global"""        # Premier appel devrait créer l'instance
         collector1 = get_global_collector()
         assert collector1 is not None
         
@@ -33405,8 +31764,7 @@ class TestGlobalFunctions:
         shutdown_monitoring()
     
     def test_shutdown_monitoring(self):
-        """Test d'arrêt du monitoring global"""
-        # Initialiser
+        """Test d'arrêt du monitoring global"""        # Initialiser
         get_global_collector()
         
         # Arrêter
@@ -33421,8 +31779,7 @@ class TestGlobalFunctions:
     
     @patch('spleeter.monitoring.get_global_collector')
     def test_record_metric_global(self, mock_get_collector):
-        """Test d'enregistrement de métrique global"""
-        from spleeter.monitoring import record_metric
+        """Test d'enregistrement de métrique global"""        from spleeter.monitoring import record_metric
         
         mock_collector = Mock()
         mock_get_collector.return_value = mock_collector
@@ -33435,8 +31792,7 @@ class TestGlobalFunctions:
     
     @patch('spleeter.monitoring.get_global_collector')
     def test_create_timer_global(self, mock_get_collector):
-        """Test de création de timer global"""
-        from spleeter.monitoring import create_timer
+        """Test de création de timer global"""        from spleeter.monitoring import create_timer
         
         mock_collector = Mock()
         mock_get_collector.return_value = mock_collector
@@ -33453,17 +31809,14 @@ class TestGlobalFunctions:
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-🎵 Spotify AI Agent - Tests Utilitaires Spleeter
+"""🎵 Spotify AI Agent - Tests Utilitaires Spleeter
 ==============================================
 
 Utilitaires et helpers pour faciliter les tests
 du module Spleeter avec mocks et fixtures.
 
 🎖️ Développé par l'équipe d'experts enterprise
-"""
-
-import pytest
+"""import pytest
 import asyncio
 import tempfile
 import numpy as np
@@ -33480,29 +31833,25 @@ from spleeter.utils import AudioMetadata
 
 
 class MockAudioData:
-    """Générateur de données audio de test"""
-    
+    """Générateur de données audio de test"""    
     @staticmethod
     def generate_sine_wave(frequency: float = 440.0, 
                           duration: float = 2.0, 
                           sample_rate: int = 44100) -> np.ndarray:
-        """Génère une onde sinusoïdale"""
-        t = np.linspace(0, duration, int(sample_rate * duration))
+        """Génère une onde sinusoïdale"""        t = np.linspace(0, duration, int(sample_rate * duration))
         return np.sin(2 * np.pi * frequency * t)
     
     @staticmethod
     def generate_stereo_audio(duration: float = 2.0, 
                             sample_rate: int = 44100) -> np.ndarray:
-        """Génère de l'audio stéréo de test"""
-        left = MockAudioData.generate_sine_wave(440.0, duration, sample_rate)
+        """Génère de l'audio stéréo de test"""        left = MockAudioData.generate_sine_wave(440.0, duration, sample_rate)
         right = MockAudioData.generate_sine_wave(880.0, duration, sample_rate)
         return np.column_stack([left, right])
     
     @staticmethod
     def generate_complex_audio(duration: float = 5.0, 
                              sample_rate: int = 44100) -> np.ndarray:
-        """Génère un signal audio complexe (multi-fréquences)"""
-        t = np.linspace(0, duration, int(sample_rate * duration))
+        """Génère un signal audio complexe (multi-fréquences)"""        t = np.linspace(0, duration, int(sample_rate * duration))
         
         # Mélange de plusieurs fréquences
         signal = (np.sin(2 * np.pi * 440 * t) +  # La
@@ -33525,8 +31874,7 @@ class MockAudioData:
     def create_audio_metadata(filename: str = "test.wav",
                             duration: float = 2.0,
                             sample_rate: int = 44100) -> AudioMetadata:
-        """Crée des métadonnées audio de test"""
-        return AudioMetadata(
+        """Crée des métadonnées audio de test"""        return AudioMetadata(
             filename=filename,
             duration=duration,
             sample_rate=sample_rate,
@@ -33549,15 +31897,13 @@ class MockAudioData:
 
 
 class MockTensorFlowModel:
-    """Mock pour les modèles TensorFlow"""
-    
+    """Mock pour les modèles TensorFlow"""    
     def __init__(self, model_name: str = "2stems"):
         self.model_name = model_name
         self.stems_count = int(model_name[0]) if model_name[0].isdigit() else 2
     
     def predict(self, x):
-        """Simule la prédiction TensorFlow"""
-        batch_size, time_frames, freq_bins, channels = x.shape
+        """Simule la prédiction TensorFlow"""        batch_size, time_frames, freq_bins, channels = x.shape
         
         # Générer des masques aléatoires réalistes pour chaque stem
         masks = []
@@ -33573,28 +31919,24 @@ class MockTensorFlowModel:
 
 
 class MockRedisConnection:
-    """Mock pour la connexion Redis"""
-    
+    """Mock pour la connexion Redis"""    
     def __init__(self):
         self._storage = {}
         self._ttl = {}
     
     async def get(self, key: str) -> Optional[bytes]:
-        """Récupère une valeur"""
-        if key in self._storage:
+        """Récupère une valeur"""        if key in self._storage:
             return self._storage[key]
         return None
     
     async def set(self, key: str, value: bytes, ex: Optional[int] = None) -> bool:
-        """Stocke une valeur"""
-        self._storage[key] = value
+        """Stocke une valeur"""        self._storage[key] = value
         if ex:
             self._ttl[key] = time.time() + ex
         return True
     
     async def delete(self, key: str) -> int:
-        """Supprime une clé"""
-        if key in self._storage:
+        """Supprime une clé"""        if key in self._storage:
             del self._storage[key]
             if key in self._ttl:
                 del self._ttl[key]
@@ -33602,35 +31944,29 @@ class MockRedisConnection:
         return 0
     
     async def exists(self, key: str) -> int:
-        """Vérifie l'existence d'une clé"""
-        return 1 if key in self._storage else 0
+        """Vérifie l'existence d'une clé"""        return 1 if key in self._storage else 0
     
     async def flushall(self) -> bool:
-        """Vide tout le cache"""
-        self._storage.clear()
+        """Vide tout le cache"""        self._storage.clear()
         self._ttl.clear()
         return True
     
     def close(self):
-        """Ferme la connexion"""
-        pass
+        """Ferme la connexion"""        pass
 
 
 class MockSQLiteCache:
-    """Mock pour le cache SQLite"""
-    
+    """Mock pour le cache SQLite"""    
     def __init__(self, db_path: str = ":memory:"):
         self.db_path = db_path
         self._connection = None
     
     def connect(self):
-        """Établit la connexion"""
-        self._connection = sqlite3.connect(self.db_path)
+        """Établit la connexion"""        self._connection = sqlite3.connect(self.db_path)
         self._create_tables()
     
     def _create_tables(self):
-        """Crée les tables nécessaires"""
-        if self._connection:
+        """Crée les tables nécessaires"""        if self._connection:
             cursor = self._connection.cursor()
             cursor.execute('''
                 CREATE TABLE IF NOT EXISTS cache_entries (
@@ -33644,8 +31980,7 @@ class MockSQLiteCache:
             self._connection.commit()
     
     def get(self, key: str) -> Optional[bytes]:
-        """Récupère une entrée"""
-        if not self._connection:
+        """Récupère une entrée"""        if not self._connection:
             return None
         
         cursor = self._connection.cursor()
@@ -33657,8 +31992,7 @@ class MockSQLiteCache:
         return result[0] if result else None
     
     def set(self, key: str, value: bytes, ttl: int = 0) -> bool:
-        """Stocke une entrée"""
-        if not self._connection:
+        """Stocke une entrée"""        if not self._connection:
             return False
         
         cursor = self._connection.cursor()
@@ -33670,8 +32004,7 @@ class MockSQLiteCache:
         return True
     
     def delete(self, key: str) -> bool:
-        """Supprime une entrée"""
-        if not self._connection:
+        """Supprime une entrée"""        if not self._connection:
             return False
         
         cursor = self._connection.cursor()
@@ -33680,27 +32013,23 @@ class MockSQLiteCache:
         return cursor.rowcount > 0
     
     def close(self):
-        """Ferme la connexion"""
-        if self._connection:
+        """Ferme la connexion"""        if self._connection:
             self._connection.close()
             self._connection = None
 
 
 class TestFixtures:
-    """Fixtures réutilisables pour les tests"""
-    
+    """Fixtures réutilisables pour les tests"""    
     @staticmethod
     @pytest.fixture
     async def temp_directory():
-        """Répertoire temporaire pour les tests"""
-        with tempfile.TemporaryDirectory() as tmp_dir:
+        """Répertoire temporaire pour les tests"""        with tempfile.TemporaryDirectory() as tmp_dir:
             yield Path(tmp_dir)
     
     @staticmethod
     @pytest.fixture
     def sample_config(temp_directory):
-        """Configuration de test standard"""
-        return SpleeterConfig(
+        """Configuration de test standard"""        return SpleeterConfig(
             models_dir=str(temp_directory / "models"),
             cache_dir=str(temp_directory / "cache"),
             enable_gpu=False,
@@ -33714,8 +32043,7 @@ class TestFixtures:
     @staticmethod
     @pytest.fixture
     async def mock_spleeter_engine(sample_config):
-        """Engine Spleeter mocké"""
-        engine = SpleeterEngine(config=sample_config)
+        """Engine Spleeter mocké"""        engine = SpleeterEngine(config=sample_config)
         
         # Mock TensorFlow
         with patch('tensorflow.keras.models.load_model') as mock_load:
@@ -33729,8 +32057,7 @@ class TestFixtures:
     @staticmethod
     @pytest.fixture
     def sample_audio_files(temp_directory):
-        """Fichiers audio de test"""
-        files = []
+        """Fichiers audio de test"""        files = []
         
         for i, (name, duration) in enumerate([
             ("short", 1.0),
@@ -33757,12 +32084,10 @@ class TestFixtures:
 
 
 class MockPatches:
-    """Collection de patches pour les tests"""
-    
+    """Collection de patches pour les tests"""    
     @staticmethod
     def patch_audio_loading():
-        """Patch pour le chargement audio"""
-        def mock_librosa_load(path, *args, **kwargs):
+        """Patch pour le chargement audio"""        def mock_librosa_load(path, *args, **kwargs):
             # Simuler différents types de fichiers basés sur le nom
             if "short" in str(path):
                 duration = 1.0
@@ -33782,8 +32107,7 @@ class MockPatches:
     
     @staticmethod
     def patch_audio_writing():
-        """Patch pour l'écriture audio"""
-        def mock_soundfile_write(file, data, samplerate, *args, **kwargs):
+        """Patch pour l'écriture audio"""        def mock_soundfile_write(file, data, samplerate, *args, **kwargs):
             # Simuler l'écriture réussie
             return len(data)
         
@@ -33791,8 +32115,7 @@ class MockPatches:
     
     @staticmethod
     def patch_audio_analysis():
-        """Patch pour l'analyse audio"""
-        patches = [
+        """Patch pour l'analyse audio"""        patches = [
             patch('librosa.stft', return_value=np.random.random((513, 1024)) + 1j * np.random.random((513, 1024))),
             patch('librosa.istft', return_value=np.random.random(88200)),
             patch('librosa.feature.rms', return_value=np.array([[0.1, 0.15, 0.12]])),
@@ -33803,19 +32126,16 @@ class MockPatches:
     
     @staticmethod
     def patch_tensorflow():
-        """Patch pour TensorFlow"""
-        return patch('tensorflow.keras.models.load_model', return_value=MockTensorFlowModel())
+        """Patch pour TensorFlow"""        return patch('tensorflow.keras.models.load_model', return_value=MockTensorFlowModel())
     
     @staticmethod
     def patch_redis():
-        """Patch pour Redis"""
-        mock_redis = MockRedisConnection()
+        """Patch pour Redis"""        mock_redis = MockRedisConnection()
         return patch('aioredis.from_url', return_value=mock_redis)
     
     @staticmethod
     def patch_file_operations():
-        """Patch pour les opérations de fichiers"""
-        return [
+        """Patch pour les opérations de fichiers"""        return [
             patch('pathlib.Path.exists', return_value=True),
             patch('pathlib.Path.is_file', return_value=True),
             patch('pathlib.Path.stat'),
@@ -33824,12 +32144,10 @@ class MockPatches:
 
 
 class AssertionHelpers:
-    """Helpers pour les assertions de tests"""
-    
+    """Helpers pour les assertions de tests"""    
     @staticmethod
     def assert_audio_result(result, expected_stems: int = 2):
-        """Vérifie un résultat de séparation audio"""
-        assert result is not None
+        """Vérifie un résultat de séparation audio"""        assert result is not None
         assert hasattr(result, 'success')
         assert result.success is True
         assert hasattr(result, 'output_files')
@@ -33839,8 +32157,7 @@ class AssertionHelpers:
     
     @staticmethod
     def assert_batch_results(results, expected_count: int, min_success_rate: float = 0.8):
-        """Vérifie des résultats de traitement par lots"""
-        assert len(results) == expected_count
+        """Vérifie des résultats de traitement par lots"""        assert len(results) == expected_count
         
         successful = sum(1 for r in results if getattr(r, 'success', False))
         success_rate = successful / len(results)
@@ -33849,16 +32166,14 @@ class AssertionHelpers:
     
     @staticmethod
     def assert_cache_stats(stats, min_hit_rate: float = 0.0):
-        """Vérifie les statistiques de cache"""
-        assert 'memory_cache' in stats
+        """Vérifie les statistiques de cache"""        assert 'memory_cache' in stats
         assert 'hit_rate' in stats['memory_cache']
         assert stats['memory_cache']['hit_rate'] >= min_hit_rate
         assert stats['memory_cache']['size'] >= 0
     
     @staticmethod
     def assert_processing_stats(stats):
-        """Vérifie les statistiques de traitement"""
-        required_fields = [
+        """Vérifie les statistiques de traitement"""        required_fields = [
             'total_files', 'successful_files', 'failed_files',
             'success_rate', 'total_processing_time'
         ]
@@ -33874,8 +32189,7 @@ class AssertionHelpers:
     
     @staticmethod
     def assert_monitoring_data(monitoring_data):
-        """Vérifie les données de monitoring"""
-        assert 'processing_stats' in monitoring_data
+        """Vérifie les données de monitoring"""        assert 'processing_stats' in monitoring_data
         assert 'system_health' in monitoring_data
         assert 'recent_metrics' in monitoring_data
         
@@ -33888,12 +32202,10 @@ class AssertionHelpers:
 
 
 class PerformanceHelpers:
-    """Helpers pour les tests de performance"""
-    
+    """Helpers pour les tests de performance"""    
     @staticmethod
     def measure_execution_time(func, *args, **kwargs):
-        """Mesure le temps d'exécution d'une fonction"""
-        start_time = time.perf_counter()
+        """Mesure le temps d'exécution d'une fonction"""        start_time = time.perf_counter()
         result = func(*args, **kwargs)
         end_time = time.perf_counter()
         
@@ -33901,8 +32213,7 @@ class PerformanceHelpers:
     
     @staticmethod
     async def measure_async_execution_time(coro):
-        """Mesure le temps d'exécution d'une coroutine"""
-        start_time = time.perf_counter()
+        """Mesure le temps d'exécution d'une coroutine"""        start_time = time.perf_counter()
         result = await coro
         end_time = time.perf_counter()
         
@@ -33910,8 +32221,7 @@ class PerformanceHelpers:
     
     @staticmethod
     def get_memory_usage():
-        """Obtient l'utilisation mémoire actuelle"""
-        try:
+        """Obtient l'utilisation mémoire actuelle"""        try:
             import psutil
             process = psutil.Process()
             return process.memory_info().rss / 1024 / 1024  # MB
@@ -33920,8 +32230,7 @@ class PerformanceHelpers:
     
     @staticmethod
     def benchmark_function(func, iterations: int = 10, *args, **kwargs):
-        """Benchmark une fonction sur plusieurs itérations"""
-        times = []
+        """Benchmark une fonction sur plusieurs itérations"""        times = []
         
         for _ in range(iterations):
             _, execution_time = PerformanceHelpers.measure_execution_time(func, *args, **kwargs)
@@ -33937,12 +32246,10 @@ class PerformanceHelpers:
 
 
 class TestDataGenerator:
-    """Générateur de données de test complexes"""
-    
+    """Générateur de données de test complexes"""    
     @staticmethod
     def generate_test_scenarios():
-        """Génère des scénarios de test variés"""
-        return [
+        """Génère des scénarios de test variés"""        return [
             {
                 'name': 'small_mono',
                 'duration': 2.0,
@@ -33975,8 +32282,7 @@ class TestDataGenerator:
     
     @staticmethod
     def generate_batch_test_data(count: int = 10):
-        """Génère des données pour tests de traitement par lots"""
-        scenarios = TestDataGenerator.generate_test_scenarios()
+        """Génère des données pour tests de traitement par lots"""        scenarios = TestDataGenerator.generate_test_scenarios()
         
         test_files = []
         for i in range(count):
@@ -33993,8 +32299,7 @@ class TestDataGenerator:
     
     @staticmethod
     def generate_error_scenarios():
-        """Génère des scénarios d'erreur pour les tests"""
-        return [
+        """Génère des scénarios d'erreur pour les tests"""        return [
             {
                 'name': 'file_not_found',
                 'file_path': '/nonexistent/file.wav',
@@ -34019,20 +32324,17 @@ class TestDataGenerator:
 
 
 class AsyncTestHelpers:
-    """Helpers pour les tests asynchrones"""
-    
+    """Helpers pour les tests asynchrones"""    
     @staticmethod
     async def run_with_timeout(coro, timeout: float = 10.0):
-        """Exécute une coroutine avec timeout"""
-        try:
+        """Exécute une coroutine avec timeout"""        try:
             return await asyncio.wait_for(coro, timeout=timeout)
         except asyncio.TimeoutError:
             pytest.fail(f"Operation timed out after {timeout} seconds")
     
     @staticmethod
     async def wait_for_condition(condition_func, timeout: float = 5.0, interval: float = 0.1):
-        """Attend qu'une condition soit vraie"""
-        start_time = time.time()
+        """Attend qu'une condition soit vraie"""        start_time = time.time()
         
         while time.time() - start_time < timeout:
             if condition_func():
@@ -34043,8 +32345,7 @@ class AsyncTestHelpers:
     
     @staticmethod
     async def run_concurrent_tasks(tasks: List, max_concurrent: int = 5):
-        """Exécute des tâches avec limitation de concurrence"""
-        semaphore = asyncio.Semaphore(max_concurrent)
+        """Exécute des tâches avec limitation de concurrence"""        semaphore = asyncio.Semaphore(max_concurrent)
         
         async def limited_task(task):
             async with semaphore:
@@ -34067,8 +32368,7 @@ TEST_CONFIG = {
 
 
 def pytest_configure(config):
-    """Configuration personnalisée pour pytest"""
-    # Ajouter des marqueurs personnalisés
+    """Configuration personnalisée pour pytest"""    # Ajouter des marqueurs personnalisés
     config.addinivalue_line(
         "markers", "slow: marks tests as slow (may take several seconds)"
     )
@@ -34084,8 +32384,7 @@ def pytest_configure(config):
 
 
 def pytest_collection_modifyitems(config, items):
-    """Modifie la collection de tests"""
-    # Ajouter le marqueur slow automatiquement pour certains tests
+    """Modifie la collection de tests"""    # Ajouter le marqueur slow automatiquement pour certains tests
     for item in items:
         if "performance" in item.nodeid or "stress" in item.nodeid:
             item.add_marker(pytest.mark.slow)
@@ -34250,17 +32549,14 @@ def test_analyze_track():
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Tests Enterprise - Data Processors
+"""Tests Enterprise - Data Processors
 =================================
 
 Suite de tests ultra-avancée pour le module data_processors avec tests ML,
 performance, edge cases, et validation business logic.
 
 Développé par l'équipe Test Engineering Expert sous la direction de Fahed Mlaiel.
-"""
-
-import pytest
+"""import pytest
 import numpy as np
 import pandas as pd
 import asyncio
@@ -34289,17 +32585,14 @@ except ImportError:
 
 
 class TestAudioDataProcessor:
-    """Tests enterprise pour AudioDataProcessor avec logique métier réelle."""
-    
+    """Tests enterprise pour AudioDataProcessor avec logique métier réelle."""    
     @pytest.fixture
     def audio_processor(self):
-        """Instance AudioDataProcessor pour tests."""
-        return AudioDataProcessor()
+        """Instance AudioDataProcessor pour tests."""        return AudioDataProcessor()
     
     @pytest.fixture
     def sample_audio_formats(self):
-        """Formats audio divers pour tests."""
-        return {
+        """Formats audio divers pour tests."""        return {
             'mp3_320': {'bitrate': 320, 'format': 'mp3', 'sample_rate': 44100},
             'flac': {'bitrate': 1411, 'format': 'flac', 'sample_rate': 44100},
             'aac_256': {'bitrate': 256, 'format': 'aac', 'sample_rate': 48000},
@@ -34307,8 +32600,7 @@ class TestAudioDataProcessor:
         }
     
     async def test_audio_processing_pipeline_comprehensive(self, audio_processor, sample_audio_data):
-        """Test pipeline processing audio complet avec validation métier."""
-        # Configuration pipeline avancée
+        """Test pipeline processing audio complet avec validation métier."""        # Configuration pipeline avancée
         pipeline_config = {
             'preprocessing': {
                 'normalize_loudness': True,
@@ -34358,8 +32650,7 @@ class TestAudioDataProcessor:
         assert features['tempo'] > 60 and features['tempo'] < 200  # Tempo réaliste
     
     async def test_real_time_audio_processing(self, audio_processor):
-        """Test traitement audio temps réel avec contraintes latence."""
-        # Configuration temps réel
+        """Test traitement audio temps réel avec contraintes latence."""        # Configuration temps réel
         rt_config = {
             'max_latency_ms': 10,
             'buffer_size': 1024,
@@ -34401,8 +32692,7 @@ class TestAudioDataProcessor:
         {'format': 'flac', 'bitrate': 1411, 'expected_quality': 0.95}
     ])
     async def test_format_specific_processing(self, audio_processor, format_config):
-        """Test traitement spécifique par format audio."""
-        # Mock traitement par format
+        """Test traitement spécifique par format audio."""        # Mock traitement par format
         audio_processor.process_by_format = AsyncMock(return_value={
             'quality_score': format_config['expected_quality'],
             'format_optimized': True,
@@ -34422,8 +32712,7 @@ class TestAudioDataProcessor:
             assert result['compression_artifacts'] is True
     
     async def test_batch_processing_performance(self, audio_processor):
-        """Test performance traitement batch avec optimisations."""
-        # Dataset batch test
+        """Test performance traitement batch avec optimisations."""        # Dataset batch test
         batch_size = 100
         audio_batch = [np.random.random(44100) for _ in range(batch_size)]
         
@@ -34457,17 +32746,14 @@ class TestAudioDataProcessor:
 
 
 class TestMLDataPipeline:
-    """Tests enterprise pour MLDataPipeline avec workflows ML complets."""
-    
+    """Tests enterprise pour MLDataPipeline avec workflows ML complets."""    
     @pytest.fixture
     def ml_pipeline(self):
-        """Instance MLDataPipeline pour tests."""
-        return MLDataPipeline()
+        """Instance MLDataPipeline pour tests."""        return MLDataPipeline()
     
     @pytest.fixture
     def sample_ml_dataset(self):
-        """Dataset ML échantillon."""
-        return pd.DataFrame({
+        """Dataset ML échantillon."""        return pd.DataFrame({
             'user_id': [f'user_{i}' for i in range(1000)],
             'track_id': [f'track_{i%500}' for i in range(1000)],
             'listening_duration': np.random.exponential(180, 1000),
@@ -34478,8 +32764,7 @@ class TestMLDataPipeline:
         })
     
     async def test_feature_engineering_pipeline(self, ml_pipeline, sample_ml_dataset):
-        """Test pipeline feature engineering complet."""
-        # Configuration feature engineering
+        """Test pipeline feature engineering complet."""        # Configuration feature engineering
         fe_config = {
             'user_features': {
                 'listening_history_stats': True,
@@ -34537,8 +32822,7 @@ class TestMLDataPipeline:
         assert metadata['track_features_count'] > 0
     
     async def test_data_validation_comprehensive(self, ml_pipeline, sample_ml_dataset):
-        """Test validation données ML complète."""
-        # Configuration validation
+        """Test validation données ML complète."""        # Configuration validation
         validation_config = {
             'data_quality_checks': {
                 'missing_values_threshold': 0.05,
@@ -34592,8 +32876,7 @@ class TestMLDataPipeline:
         assert 'recommendations' in validation_result
     
     async def test_data_preprocessing_pipeline(self, ml_pipeline, sample_ml_dataset):
-        """Test pipeline preprocessing données ML."""
-        # Configuration preprocessing
+        """Test pipeline preprocessing données ML."""        # Configuration preprocessing
         preprocessing_config = {
             'cleaning': {
                 'remove_duplicates': True,
@@ -34651,16 +32934,13 @@ class TestMLDataPipeline:
 
 
 class TestFeatureEngineer:
-    """Tests enterprise pour FeatureEngineer avec techniques avancées."""
-    
+    """Tests enterprise pour FeatureEngineer avec techniques avancées."""    
     @pytest.fixture
     def feature_engineer(self):
-        """Instance FeatureEngineer pour tests."""
-        return FeatureEngineer()
+        """Instance FeatureEngineer pour tests."""        return FeatureEngineer()
     
     async def test_temporal_feature_engineering(self, feature_engineer, sample_ml_dataset):
-        """Test engineering features temporelles avancées."""
-        # Configuration features temporelles
+        """Test engineering features temporelles avancées."""        # Configuration features temporelles
         temporal_config = {
             'time_windows': ['1h', '1d', '7d', '30d'],
             'aggregations': ['mean', 'sum', 'count', 'std', 'trend'],
@@ -34699,8 +32979,7 @@ class TestFeatureEngineer:
         assert result['aggregation_features_count'] > 0
     
     async def test_embedding_features_generation(self, feature_engineer):
-        """Test génération features embeddings."""
-        # Configuration embeddings
+        """Test génération features embeddings."""        # Configuration embeddings
         embedding_config = {
             'user_embeddings': {
                 'dimension': 128,
@@ -34750,16 +33029,13 @@ class TestFeatureEngineer:
 
 
 class TestDataValidator:
-    """Tests enterprise pour DataValidator avec validations métier."""
-    
+    """Tests enterprise pour DataValidator avec validations métier."""    
     @pytest.fixture
     def data_validator(self):
-        """Instance DataValidator pour tests."""
-        return DataValidator()
+        """Instance DataValidator pour tests."""        return DataValidator()
     
     async def test_schema_validation_comprehensive(self, data_validator):
-        """Test validation schéma données complète."""
-        # Schéma de validation
+        """Test validation schéma données complète."""        # Schéma de validation
         schema_config = {
             'user_data_schema': {
                 'user_id': {'type': 'string', 'required': True, 'pattern': r'^user_\d+$'},
@@ -34824,8 +33100,7 @@ class TestDataValidator:
         assert len(result['validation_results']['user_data']['validation_errors']) > 0
     
     async def test_business_rules_validation(self, data_validator):
-        """Test validation règles métier."""
-        # Règles métier
+        """Test validation règles métier."""        # Règles métier
         business_rules = {
             'user_behavior_rules': {
                 'max_daily_listening_hours': 24,
@@ -34885,11 +33160,9 @@ class TestDataValidator:
 
 @pytest.mark.integration
 class TestDataProcessorsIntegration:
-    """Tests d'intégration pour tous les processeurs de données."""
-    
+    """Tests d'intégration pour tous les processeurs de données."""    
     async def test_complete_data_processing_workflow(self):
-        """Test workflow complet processing données."""
-        # Configuration workflow complet
+        """Test workflow complet processing données."""        # Configuration workflow complet
         workflow_config = {
             'audio_processing': {
                 'quality_threshold': 0.8,
@@ -34954,11 +33227,9 @@ class TestDataProcessorsIntegration:
 
 @pytest.mark.performance
 class TestDataProcessorsPerformance:
-    """Tests performance pour processeurs de données."""
-    
+    """Tests performance pour processeurs de données."""    
     async def test_audio_processing_throughput(self):
-        """Test throughput traitement audio."""
-        processor = AudioDataProcessor()
+        """Test throughput traitement audio."""        processor = AudioDataProcessor()
         processor.process_audio_batch = AsyncMock(return_value={
             'throughput_files_per_second': 25.7,
             'average_latency_ms': 45.2,
@@ -34982,8 +33253,7 @@ class TestDataProcessorsPerformance:
             assert result['cpu_utilization'] < 0.8
     
     async def test_ml_pipeline_scalability(self):
-        """Test scalabilité pipeline ML."""
-        pipeline = MLDataPipeline()
+        """Test scalabilité pipeline ML."""        pipeline = MLDataPipeline()
         pipeline.process_large_dataset = AsyncMock(return_value={
             'processing_rate_records_per_second': 1000,
             'memory_efficiency': 0.85,
@@ -35011,8 +33281,7 @@ class TestDataProcessorsPerformance:
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Tests Enterprise - Streaming Audio Processing
+"""Tests Enterprise - Streaming Audio Processing
 =============================================
 
 Suite de tests ultra-avancée pour le streaming audio temps réel avec
@@ -35025,9 +33294,7 @@ Développé par l'équipe d'experts sous la direction de Fahed Mlaiel :
 ✅ Spécialiste Performance - Optimisations SIMD, GPU compute
 ✅ DevOps Engineer - Infrastructure audio cloud élastique
 ✅ Développeur Backend Senior - Pipeline streaming haute performance
-"""
-
-import pytest
+"""import pytest
 import numpy as np
 import asyncio
 import websockets
@@ -35078,8 +33345,7 @@ except ImportError:
 
 
 class StreamingProtocol(Enum):
-    """Protocoles streaming supportés."""
-    WEBRTC = "webrtc"
+    """Protocoles streaming supportés."""    WEBRTC = "webrtc"
     HLS = "hls"
     DASH = "dash"
     RTMP = "rtmp"
@@ -35089,8 +33355,7 @@ class StreamingProtocol(Enum):
 
 
 class QualityLevel(Enum):
-    """Niveaux qualité streaming."""
-    ULTRA_LOW_LATENCY = "ultra_low_latency"  # <10ms, qualité réduite
+    """Niveaux qualité streaming."""    ULTRA_LOW_LATENCY = "ultra_low_latency"  # <10ms, qualité réduite
     LOW_LATENCY = "low_latency"              # <50ms, qualité normale
     BALANCED = "balanced"                     # <100ms, haute qualité
     HIGH_QUALITY = "high_quality"            # <200ms, qualité maximale
@@ -35098,8 +33363,7 @@ class QualityLevel(Enum):
 
 
 class LoadBalancingStrategy(Enum):
-    """Stratégies load balancing."""
-    ROUND_ROBIN = "round_robin"
+    """Stratégies load balancing."""    ROUND_ROBIN = "round_robin"
     LEAST_CONNECTIONS = "least_connections"
     WEIGHTED_RESPONSE_TIME = "weighted_response_time"
     GEOGRAPHIC_PROXIMITY = "geographic_proximity"
@@ -35109,8 +33373,7 @@ class LoadBalancingStrategy(Enum):
 
 @dataclass
 class StreamingConfig:
-    """Configuration streaming audio."""
-    protocol: StreamingProtocol
+    """Configuration streaming audio."""    protocol: StreamingProtocol
     quality_level: QualityLevel
     sample_rate: int
     channels: int
@@ -35125,8 +33388,7 @@ class StreamingConfig:
 
 @dataclass
 class StreamingMetrics:
-    """Métriques streaming en temps réel."""
-    timestamp: datetime
+    """Métriques streaming en temps réel."""    timestamp: datetime
     latency_ms: float
     jitter_ms: float
     packet_loss_percent: float
@@ -35140,8 +33402,7 @@ class StreamingMetrics:
 
 @dataclass
 class StreamingSession:
-    """Session streaming active."""
-    session_id: str
+    """Session streaming active."""    session_id: str
     client_id: str
     start_time: datetime
     protocol: StreamingProtocol
@@ -35152,17 +33413,14 @@ class StreamingSession:
 
 
 class TestRealTimeAudioStreamer:
-    """Tests enterprise pour RealTimeAudioStreamer avec latence ultra-faible."""
-    
+    """Tests enterprise pour RealTimeAudioStreamer avec latence ultra-faible."""    
     @pytest.fixture
     def audio_streamer(self):
-        """Instance RealTimeAudioStreamer pour tests."""
-        return RealTimeAudioStreamer()
+        """Instance RealTimeAudioStreamer pour tests."""        return RealTimeAudioStreamer()
     
     @pytest.fixture
     def ultra_low_latency_config(self):
-        """Configuration streaming ultra-faible latence."""
-        return {
+        """Configuration streaming ultra-faible latence."""        return {
             'latency_target_ms': 8.0,           # Objectif <10ms
             'buffer_strategy': 'triple_buffer',  # Triple buffering optimisé
             'simd_acceleration': True,           # Vectorisation SIMD
@@ -35196,8 +33454,7 @@ class TestRealTimeAudioStreamer:
     
     @pytest.fixture
     def mock_audio_stream_data(self):
-        """Données streaming audio synthétiques."""
-        sample_rate = 48000
+        """Données streaming audio synthétiques."""        sample_rate = 48000
         duration_seconds = 10.0
         channels = 2
         
@@ -35235,8 +33492,7 @@ class TestRealTimeAudioStreamer:
         }
     
     async def test_ultra_low_latency_streaming(self, audio_streamer, ultra_low_latency_config, mock_audio_stream_data):
-        """Test streaming ultra-faible latence <10ms."""
-        # Mock streaming ultra-faible latence
+        """Test streaming ultra-faible latence <10ms."""        # Mock streaming ultra-faible latence
         audio_streamer.start_ultra_low_latency_stream = AsyncMock()
         audio_streamer.monitor_streaming_performance = AsyncMock()
         
@@ -35339,8 +33595,7 @@ class TestRealTimeAudioStreamer:
         assert monitoring_task['prediction_confidence'] > 0.8
     
     async def test_multi_protocol_streaming(self, audio_streamer):
-        """Test streaming multi-protocoles simultané."""
-        # Configuration multi-protocoles
+        """Test streaming multi-protocoles simultané."""        # Configuration multi-protocoles
         multi_protocol_config = {
             'webrtc_config': {
                 'ice_servers': ['stun:stun.l.google.com:19302'],
@@ -35438,16 +33693,13 @@ class TestRealTimeAudioStreamer:
 
 
 class TestDistributedAudioPipeline:
-    """Tests enterprise pour pipeline audio distribué."""
-    
+    """Tests enterprise pour pipeline audio distribué."""    
     @pytest.fixture
     def distributed_pipeline(self):
-        """Instance DistributedAudioPipeline pour tests."""
-        return DistributedAudioPipeline()
+        """Instance DistributedAudioPipeline pour tests."""        return DistributedAudioPipeline()
     
     async def test_microservices_audio_architecture(self, distributed_pipeline):
-        """Test architecture microservices audio distribuée."""
-        # Configuration microservices
+        """Test architecture microservices audio distribuée."""        # Configuration microservices
         microservices_config = {
             'services': {
                 'audio_ingestion': {
@@ -35593,8 +33845,7 @@ class TestDistributedAudioPipeline:
         assert microservices_result['resilience_testing']['fault_tolerance_rating'] > 0.85
     
     async def test_global_cdn_audio_distribution(self, distributed_pipeline):
-        """Test distribution audio CDN global."""
-        # Configuration CDN global
+        """Test distribution audio CDN global."""        # Configuration CDN global
         cdn_config = {
             'edge_locations': {
                 'north_america': {
@@ -35709,16 +33960,13 @@ class TestDistributedAudioPipeline:
 
 
 class TestStreamingLoadBalancer:
-    """Tests enterprise pour load balancer streaming audio."""
-    
+    """Tests enterprise pour load balancer streaming audio."""    
     @pytest.fixture
     def load_balancer(self):
-        """Instance StreamingLoadBalancer pour tests."""
-        return StreamingLoadBalancer()
+        """Instance StreamingLoadBalancer pour tests."""        return StreamingLoadBalancer()
     
     async def test_adaptive_load_balancing(self, load_balancer):
-        """Test load balancing adaptatif intelligent."""
-        # Configuration load balancing adaptatif
+        """Test load balancing adaptatif intelligent."""        # Configuration load balancing adaptatif
         adaptive_config = {
             'algorithms': {
                 'primary': 'adaptive_weighted_round_robin',
@@ -35840,8 +34088,7 @@ class TestStreamingLoadBalancer:
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Tests Enterprise - Audio Quality Assessment
+"""Tests Enterprise - Audio Quality Assessment
 ===========================================
 
 Suite de tests ultra-avancée pour l'évaluation qualité audio avec
@@ -35854,9 +34101,7 @@ Développé par l'équipe d'experts sous la direction de Fahed Mlaiel :
 ✅ Data Scientist Audio - ML pour prédiction qualité subjective
 ✅ Ingénieur Test - Benchmarks automatisés, validation continue
 ✅ Architecte Qualité - Systèmes assurance qualité temps réel
-"""
-
-import pytest
+"""import pytest
 import numpy as np
 import scipy.signal as signal
 import scipy.stats as stats
@@ -35899,8 +34144,7 @@ except ImportError:
 
 
 class QualityStandard(Enum):
-    """Standards qualité audio."""
-    EBU_R128 = "ebu_r128"           # European Broadcasting Union
+    """Standards qualité audio."""    EBU_R128 = "ebu_r128"           # European Broadcasting Union
     ITU_R_BS1770 = "itu_r_bs1770"  # International Telecommunication Union
     AES_17 = "aes_17"               # Audio Engineering Society
     SMPTE_RP200 = "smpte_rp200"    # Society of Motion Picture & Television Engineers
@@ -35911,8 +34155,7 @@ class QualityStandard(Enum):
 
 
 class QualityLevel(Enum):
-    """Niveaux qualité audio."""
-    POOR = "poor"                   # <2.0 MOS
+    """Niveaux qualité audio."""    POOR = "poor"                   # <2.0 MOS
     FAIR = "fair"                   # 2.0-3.0 MOS
     GOOD = "good"                   # 3.0-3.5 MOS
     VERY_GOOD = "very_good"         # 3.5-4.0 MOS
@@ -35921,8 +34164,7 @@ class QualityLevel(Enum):
 
 
 class ArtifactType(Enum):
-    """Types d'artefacts audio."""
-    CLIPPING = "clipping"
+    """Types d'artefacts audio."""    CLIPPING = "clipping"
     DROPOUT = "dropout"
     NOISE = "noise"
     DISTORTION = "distortion"
@@ -35936,8 +34178,7 @@ class ArtifactType(Enum):
 
 @dataclass
 class QualityMetrics:
-    """Métriques qualité audio complètes."""
-    objective_metrics: Dict[str, float]
+    """Métriques qualité audio complètes."""    objective_metrics: Dict[str, float]
     perceptual_metrics: Dict[str, float]
     subjective_prediction: Dict[str, float]
     artifact_detection: Dict[str, Any]
@@ -35949,8 +34190,7 @@ class QualityMetrics:
 
 @dataclass
 class AudioTestSignal:
-    """Signal audio test standardisé."""
-    signal_type: str
+    """Signal audio test standardisé."""    signal_type: str
     sample_rate: int
     duration_seconds: float
     parameters: Dict[str, Any]
@@ -35959,17 +34199,14 @@ class AudioTestSignal:
 
 
 class TestAudioQualityAnalyzer:
-    """Tests enterprise pour AudioQualityAnalyzer avec métriques complètes."""
-    
+    """Tests enterprise pour AudioQualityAnalyzer avec métriques complètes."""    
     @pytest.fixture
     def quality_analyzer(self):
-        """Instance AudioQualityAnalyzer pour tests."""
-        return AudioQualityAnalyzer()
+        """Instance AudioQualityAnalyzer pour tests."""        return AudioQualityAnalyzer()
     
     @pytest.fixture
     def comprehensive_quality_config(self):
-        """Configuration analyse qualité complète."""
-        return {
+        """Configuration analyse qualité complète."""        return {
             'objective_metrics': {
                 'snr_enabled': True,
                 'thd_enabled': True,
@@ -36015,8 +34252,7 @@ class TestAudioQualityAnalyzer:
     
     @pytest.fixture
     def reference_test_signals(self):
-        """Signaux test référence pour validation qualité."""
-        sample_rate = 48000
+        """Signaux test référence pour validation qualité."""        sample_rate = 48000
         duration = 5.0
         t = np.linspace(0, duration, int(sample_rate * duration))
         
@@ -36123,8 +34359,7 @@ class TestAudioQualityAnalyzer:
         return signals
     
     async def test_comprehensive_quality_analysis(self, quality_analyzer, comprehensive_quality_config, reference_test_signals):
-        """Test analyse qualité complète sur signaux référence."""
-        # Mock analyse qualité complète
+        """Test analyse qualité complète sur signaux référence."""        # Mock analyse qualité complète
         quality_analyzer.analyze_comprehensive_quality = AsyncMock()
         
         for signal_name, test_signal in reference_test_signals.items():
@@ -36214,8 +34449,7 @@ class TestAudioQualityAnalyzer:
                 assert quality_result['objective_metrics']['snr_db'] < 25
     
     def _calculate_expected_snr(self, test_signal: AudioTestSignal) -> float:
-        """Calcule SNR attendu selon type de signal."""
-        if test_signal.signal_type == 'pure_sine':
+        """Calcule SNR attendu selon type de signal."""        if test_signal.signal_type == 'pure_sine':
             return 96.0
         elif test_signal.signal_type == 'signal_plus_noise':
             return test_signal.reference_metrics.get('snr_db', 20.0)
@@ -36225,8 +34459,7 @@ class TestAudioQualityAnalyzer:
             return np.random.uniform(40, 80)
     
     def _calculate_expected_thd(self, test_signal: AudioTestSignal) -> float:
-        """Calcule THD attendu selon type de signal."""
-        if test_signal.signal_type == 'pure_sine':
+        """Calcule THD attendu selon type de signal."""        if test_signal.signal_type == 'pure_sine':
             return 0.0001
         elif test_signal.signal_type == 'controlled_distortion':
             return test_signal.reference_metrics.get('thd_percent', 5.0)
@@ -36236,22 +34469,19 @@ class TestAudioQualityAnalyzer:
             return np.random.uniform(0.01, 1.0)
     
     def _calculate_expected_thd_n(self, test_signal: AudioTestSignal) -> float:
-        """Calcule THD+N attendu."""
-        thd = self._calculate_expected_thd(test_signal)
+        """Calcule THD+N attendu."""        thd = self._calculate_expected_thd(test_signal)
         if test_signal.signal_type == 'signal_plus_noise':
             return thd + 5.0  # Contribution du bruit
         return thd + np.random.uniform(0.001, 0.01)
     
     def _calculate_expected_sinad(self, test_signal: AudioTestSignal) -> float:
-        """Calcule SINAD attendu."""
-        snr = self._calculate_expected_snr(test_signal)
+        """Calcule SINAD attendu."""        snr = self._calculate_expected_snr(test_signal)
         thd_n = self._calculate_expected_thd_n(test_signal)
         # SINAD ≈ SNR pour signaux propres
         return max(snr - 10 * np.log10(1 + (thd_n/100)**2), 20)
     
     def _calculate_expected_dynamic_range(self, test_signal: AudioTestSignal) -> float:
-        """Calcule gamme dynamique attendue."""
-        if test_signal.signal_type == 'clipped_signal':
+        """Calcule gamme dynamique attendue."""        if test_signal.signal_type == 'clipped_signal':
             return 20.0  # Limitée par écrêtage
         elif test_signal.signal_type == 'signal_plus_noise':
             return 50.0  # Limitée par bruit
@@ -36259,8 +34489,7 @@ class TestAudioQualityAnalyzer:
             return 90.0  # Excellente
     
     def _calculate_expected_crest_factor(self, test_signal: AudioTestSignal) -> float:
-        """Calcule facteur de crête attendu."""
-        if test_signal.signal_type == 'clipped_signal':
+        """Calcule facteur de crête attendu."""        if test_signal.signal_type == 'clipped_signal':
             return 0.0  # Aucune crête
         elif test_signal.signal_type == 'pure_sine':
             return 3.01  # √2 en dB
@@ -36268,22 +34497,19 @@ class TestAudioQualityAnalyzer:
             return np.random.uniform(6, 15)
     
     def _calculate_expected_peak_level(self, test_signal: AudioTestSignal) -> float:
-        """Calcule niveau de crête attendu."""
-        if test_signal.signal_type == 'clipped_signal':
+        """Calcule niveau de crête attendu."""        if test_signal.signal_type == 'clipped_signal':
             return 0.0  # Saturé à 0 dBFS
         else:
             amplitude = test_signal.parameters.get('amplitude', 0.5)
             return 20 * np.log10(amplitude)
     
     def _calculate_expected_rms_level(self, test_signal: AudioTestSignal) -> float:
-        """Calcule niveau RMS attendu."""
-        peak_level = self._calculate_expected_peak_level(test_signal)
+        """Calcule niveau RMS attendu."""        peak_level = self._calculate_expected_peak_level(test_signal)
         crest_factor = self._calculate_expected_crest_factor(test_signal)
         return peak_level - crest_factor
     
     def _calculate_expected_pesq(self, test_signal: AudioTestSignal) -> float:
-        """Calcule score PESQ attendu."""
-        quality_map = {
+        """Calcule score PESQ attendu."""        quality_map = {
             QualityLevel.REFERENCE: np.random.uniform(4.5, 5.0),
             QualityLevel.EXCELLENT: np.random.uniform(4.0, 4.5),
             QualityLevel.VERY_GOOD: np.random.uniform(3.5, 4.0),
@@ -36294,27 +34520,23 @@ class TestAudioQualityAnalyzer:
         return quality_map.get(test_signal.expected_quality, 3.0)
     
     def _calculate_expected_stoi(self, test_signal: AudioTestSignal) -> float:
-        """Calcule score STOI attendu."""
-        pesq_score = self._calculate_expected_pesq(test_signal)
+        """Calcule score STOI attendu."""        pesq_score = self._calculate_expected_pesq(test_signal)
         # Corrélation approximative PESQ-STOI
         return min(pesq_score / 5.0, 1.0)
     
     def _calculate_expected_loudness(self, test_signal: AudioTestSignal) -> float:
-        """Calcule loudness LUFS attendue."""
-        rms_level = self._calculate_expected_rms_level(test_signal)
+        """Calcule loudness LUFS attendue."""        rms_level = self._calculate_expected_rms_level(test_signal)
         # Approximation LUFS ≈ RMS level
         return rms_level
     
     def _calculate_expected_loudness_range(self, test_signal: AudioTestSignal) -> float:
-        """Calcule gamme de loudness attendue."""
-        if test_signal.signal_type in ['pure_sine', 'clipped_signal']:
+        """Calcule gamme de loudness attendue."""        if test_signal.signal_type in ['pure_sine', 'clipped_signal']:
             return 1.0  # Signal constant
         else:
             return np.random.uniform(3, 15)  # LU
     
     def _calculate_expected_sharpness(self, test_signal: AudioTestSignal) -> float:
-        """Calcule sharpness attendue."""
-        if 'frequency' in test_signal.parameters:
+        """Calcule sharpness attendue."""        if 'frequency' in test_signal.parameters:
             freq = test_signal.parameters['frequency']
             if freq > 4000:
                 return np.random.uniform(2.5, 4.0)  # Son aigu
@@ -36323,19 +34545,16 @@ class TestAudioQualityAnalyzer:
         return np.random.uniform(1.0, 2.0)
     
     def _calculate_expected_roughness(self, test_signal: AudioTestSignal) -> float:
-        """Calcule roughness attendue."""
-        if test_signal.signal_type == 'controlled_distortion':
+        """Calcule roughness attendue."""        if test_signal.signal_type == 'controlled_distortion':
             return np.random.uniform(0.3, 0.8)  # Distortion augmente roughness
         else:
             return np.random.uniform(0.05, 0.2)
     
     def _calculate_expected_fluctuation(self, test_signal: AudioTestSignal) -> float:
-        """Calcule fluctuation strength attendue."""
-        return np.random.uniform(0.1, 0.5)
+        """Calcule fluctuation strength attendue."""        return np.random.uniform(0.1, 0.5)
     
     def _calculate_expected_tonality(self, test_signal: AudioTestSignal) -> float:
-        """Calcule coefficient de tonalité attendu."""
-        if test_signal.signal_type in ['pure_sine', 'controlled_distortion']:
+        """Calcule coefficient de tonalité attendu."""        if test_signal.signal_type in ['pure_sine', 'controlled_distortion']:
             return np.random.uniform(0.8, 0.95)  # Très tonal
         elif test_signal.signal_type == 'signal_plus_noise':
             return np.random.uniform(0.4, 0.7)  # Partiellement tonal
@@ -36343,15 +34562,13 @@ class TestAudioQualityAnalyzer:
             return np.random.uniform(0.6, 0.9)
     
     def _calculate_noise_floor(self, test_signal: AudioTestSignal) -> float:
-        """Calcule plancher de bruit."""
-        if test_signal.signal_type == 'signal_plus_noise':
+        """Calcule plancher de bruit."""        if test_signal.signal_type == 'signal_plus_noise':
             return test_signal.reference_metrics.get('noise_power_db', -26.0)
         else:
             return np.random.uniform(-80, -60)
     
     def _detect_distortion_artifacts(self, test_signal: AudioTestSignal) -> Dict[str, Any]:
-        """Détecte artefacts de distortion."""
-        return {
+        """Détecte artefacts de distortion."""        return {
             'harmonic_distortion_detected': test_signal.signal_type == 'controlled_distortion',
             'intermodulation_distortion': test_signal.signal_type == 'complex_multitonal',
             'nonlinear_artifacts': test_signal.signal_type == 'clipped_signal',
@@ -36359,12 +34576,10 @@ class TestAudioQualityAnalyzer:
         }
     
     def _calculate_phase_coherence(self, test_signal: AudioTestSignal) -> float:
-        """Calcule cohérence de phase."""
-        return np.random.uniform(0.85, 0.98)
+        """Calcule cohérence de phase."""        return np.random.uniform(0.85, 0.98)
     
     def _detect_temporal_artifacts(self, test_signal: AudioTestSignal) -> Dict[str, Any]:
-        """Détecte artefacts temporels."""
-        return {
+        """Détecte artefacts temporels."""        return {
             'pre_echo_detected': False,
             'post_echo_detected': False,
             'temporal_masking_artifacts': False,
@@ -36372,32 +34587,26 @@ class TestAudioQualityAnalyzer:
         }
     
     def _check_ebu_r128_compliance(self, test_signal: AudioTestSignal) -> bool:
-        """Vérifie conformité EBU R128."""
-        loudness = self._calculate_expected_loudness(test_signal)
+        """Vérifie conformité EBU R128."""        loudness = self._calculate_expected_loudness(test_signal)
         return -30 <= loudness <= -16  # LUFS range for broadcast
     
     def _check_peak_level_compliance(self, test_signal: AudioTestSignal) -> bool:
-        """Vérifie conformité niveau de crête."""
-        peak_level = self._calculate_expected_peak_level(test_signal)
+        """Vérifie conformité niveau de crête."""        peak_level = self._calculate_expected_peak_level(test_signal)
         return peak_level <= -1.0  # dBFS
     
     def _check_loudness_range_compliance(self, test_signal: AudioTestSignal) -> bool:
-        """Vérifie conformité gamme de loudness."""
-        loudness_range = self._calculate_expected_loudness_range(test_signal)
+        """Vérifie conformité gamme de loudness."""        loudness_range = self._calculate_expected_loudness_range(test_signal)
         return loudness_range <= 20.0  # LU
     
     def _check_true_peak_compliance(self, test_signal: AudioTestSignal) -> bool:
-        """Vérifie conformité true peak."""
-        return test_signal.signal_type != 'clipped_signal'
+        """Vérifie conformité true peak."""        return test_signal.signal_type != 'clipped_signal'
     
     def _check_dialogue_compliance(self, test_signal: AudioTestSignal) -> bool:
-        """Vérifie conformité intelligibilité dialogue."""
-        stoi_score = self._calculate_expected_stoi(test_signal)
+        """Vérifie conformité intelligibilité dialogue."""        stoi_score = self._calculate_expected_stoi(test_signal)
         return stoi_score > 0.7
     
     def _calculate_overall_score(self, test_signal: AudioTestSignal) -> float:
-        """Calcule score qualité global."""
-        quality_scores = {
+        """Calcule score qualité global."""        quality_scores = {
             QualityLevel.REFERENCE: np.random.uniform(4.7, 5.0),
             QualityLevel.EXCELLENT: np.random.uniform(4.2, 4.7),
             QualityLevel.VERY_GOOD: np.random.uniform(3.7, 4.2),
@@ -36409,16 +34618,13 @@ class TestAudioQualityAnalyzer:
 
 
 class TestRealTimeQualityMonitor:
-    """Tests enterprise pour monitoring qualité temps réel."""
-    
+    """Tests enterprise pour monitoring qualité temps réel."""    
     @pytest.fixture
     def quality_monitor(self):
-        """Instance RealTimeQualityMonitor pour tests."""
-        return RealTimeQualityMonitor()
+        """Instance RealTimeQualityMonitor pour tests."""        return RealTimeQualityMonitor()
     
     async def test_continuous_quality_monitoring(self, quality_monitor):
-        """Test monitoring qualité continu temps réel."""
-        # Configuration monitoring temps réel
+        """Test monitoring qualité continu temps réel."""        # Configuration monitoring temps réel
         monitoring_config = {
             'sampling_interval_ms': 100,  # 10 fois par seconde
             'quality_thresholds': {
@@ -36554,8 +34760,7 @@ class TestRealTimeQualityMonitor:
         assert monitoring_result['predictive_analysis']['quality_forecast_10s']['prediction_confidence'] > 0.7
     
     async def test_adaptive_quality_control(self, quality_monitor):
-        """Test contrôle qualité adaptatif automatique."""
-        # Configuration contrôle adaptatif
+        """Test contrôle qualité adaptatif automatique."""        # Configuration contrôle adaptatif
         adaptive_config = {
             'control_strategies': {
                 'automatic_gain_control': {
@@ -36686,14 +34891,11 @@ class TestRealTimeQualityMonitor:
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Tests Enterprise - Audio Processors
+"""Tests Enterprise - Audio Processors
 ===================================
 
 Tests réels pour processeurs audio temps réel avec implémentations fonctionnelles.
-"""
-
-import pytest
+"""import pytest
 import numpy as np
 import librosa
 import soundfile as sf
@@ -36717,8 +34919,7 @@ import multiprocessing
 
 # Implémentation réelle des processeurs audio
 class RealtimeAudioProcessor:
-    """Processeur audio temps réel avec optimisations SIMD."""
-    
+    """Processeur audio temps réel avec optimisations SIMD."""    
     def __init__(self, sample_rate=48000, buffer_size=512):
         self.sample_rate = sample_rate
         self.buffer_size = buffer_size
@@ -36726,8 +34927,7 @@ class RealtimeAudioProcessor:
         self.output_buffer = np.zeros(buffer_size)
         
     def process_buffer(self, audio_data):
-        """Traite un buffer audio en temps réel."""
-        # Normalisation
+        """Traite un buffer audio en temps réel."""        # Normalisation
         normalized = audio_data / np.max(np.abs(audio_data) + 1e-8)
         
         # Filtrage passe-haut (suppression DC)
@@ -36746,21 +34946,18 @@ class RealtimeAudioProcessor:
         return compressed
     
     def get_latency_ms(self):
-        """Retourne la latence en millisecondes."""
-        return (self.buffer_size / self.sample_rate) * 1000
+        """Retourne la latence en millisecondes."""        return (self.buffer_size / self.sample_rate) * 1000
 
 
 class SpectralAnalyzer:
-    """Analyseur spectral temps réel."""
-    
+    """Analyseur spectral temps réel."""    
     def __init__(self, sample_rate=48000, fft_size=2048):
         self.sample_rate = sample_rate
         self.fft_size = fft_size
         self.window = np.hanning(fft_size)
         
     def analyze_spectrum(self, audio_data):
-        """Analyse spectrale complète."""
-        # Fenêtrage
+        """Analyse spectrale complète."""        # Fenêtrage
         windowed = audio_data[:self.fft_size] * self.window
         
         # FFT
@@ -36789,8 +34986,7 @@ class SpectralAnalyzer:
         }
     
     def extract_mfcc(self, audio_data, n_mfcc=13):
-        """Extraction MFCC réelle."""
-        return librosa.feature.mfcc(
+        """Extraction MFCC réelle."""        return librosa.feature.mfcc(
             y=audio_data, 
             sr=self.sample_rate, 
             n_mfcc=n_mfcc
@@ -36798,15 +34994,13 @@ class SpectralAnalyzer:
 
 
 class AudioFilterBank:
-    """Banque de filtres audio réels."""
-    
+    """Banque de filtres audio réels."""    
     def __init__(self, sample_rate=48000):
         self.sample_rate = sample_rate
         self.filters = self._create_filter_bank()
         
     def _create_filter_bank(self):
-        """Crée une banque de filtres."""
-        filters = {}
+        """Crée une banque de filtres."""        filters = {}
         
         # Filtre passe-bas
         b_low, a_low = scipy.signal.butter(4, 8000/(self.sample_rate/2), 'lowpass')
@@ -36832,16 +35026,14 @@ class AudioFilterBank:
         return filters
     
     def apply_filter(self, audio_data, filter_name):
-        """Applique un filtre spécifique."""
-        if filter_name not in self.filters:
+        """Applique un filtre spécifique."""        if filter_name not in self.filters:
             raise ValueError(f"Filtre {filter_name} non disponible")
             
         b, a = self.filters[filter_name]
         return scipy.signal.filtfilt(b, a, audio_data)
     
     def multiband_split(self, audio_data):
-        """Divise le signal en bandes de fréquences."""
-        bands = {}
+        """Divise le signal en bandes de fréquences."""        bands = {}
         for filter_name in ['vocal_low', 'vocal_mid', 'vocal_high']:
             bands[filter_name] = self.apply_filter(audio_data, filter_name)
         return bands
@@ -36851,17 +35043,14 @@ class AudioFilterBank:
 
 
 class TestRealtimeAudioProcessor:
-    """Tests réels pour processeur audio temps réel."""
-    
+    """Tests réels pour processeur audio temps réel."""    
     @pytest.fixture
     def processor(self):
-        """Instance réelle du processeur."""
-        return RealtimeAudioProcessor(sample_rate=48000, buffer_size=512)
+        """Instance réelle du processeur."""        return RealtimeAudioProcessor(sample_rate=48000, buffer_size=512)
     
     @pytest.fixture 
     def test_audio_data(self):
-        """Génère des données audio test réelles."""
-        sample_rate = 48000
+        """Génère des données audio test réelles."""        sample_rate = 48000
         duration = 1.0
         t = np.linspace(0, duration, int(sample_rate * duration))
         
@@ -36877,8 +35066,7 @@ class TestRealtimeAudioProcessor:
         return signal + noise
     
     def test_buffer_processing_functionality(self, processor, test_audio_data):
-        """Test traitement buffer réel."""
-        # Traitement par blocs
+        """Test traitement buffer réel."""        # Traitement par blocs
         buffer_size = processor.buffer_size
         output_chunks = []
         
@@ -36900,8 +35088,7 @@ class TestRealtimeAudioProcessor:
         assert np.std(output_signal) > 0  # Signal non constant
     
     def test_latency_measurement(self, processor):
-        """Test mesure latence réelle."""
-        latency_ms = processor.get_latency_ms()
+        """Test mesure latence réelle."""        latency_ms = processor.get_latency_ms()
         
         # Vérifications réalistes
         assert 5 <= latency_ms <= 50  # Latence acceptable
@@ -36915,8 +35102,7 @@ class TestRealtimeAudioProcessor:
             assert abs(actual_latency - expected_latency) < 0.1
     
     def test_dynamic_range_compression(self, processor):
-        """Test compression dynamique réelle."""
-        # Signal avec pics
+        """Test compression dynamique réelle."""        # Signal avec pics
         loud_signal = np.array([0.9, -0.95, 0.8, -0.85, 0.6, -0.7])
         compressed = processor.process_buffer(loud_signal)
         
@@ -36926,16 +35112,13 @@ class TestRealtimeAudioProcessor:
 
 
 class TestSpectralAnalyzer:
-    """Tests réels pour analyseur spectral."""
-    
+    """Tests réels pour analyseur spectral."""    
     @pytest.fixture
     def analyzer(self):
-        """Instance réelle de l'analyseur."""
-        return SpectralAnalyzer(sample_rate=48000, fft_size=2048)
+        """Instance réelle de l'analyseur."""        return SpectralAnalyzer(sample_rate=48000, fft_size=2048)
     
     def test_spectrum_analysis_accuracy(self, analyzer):
-        """Test précision analyse spectrale."""
-        # Signal test 1kHz pur
+        """Test précision analyse spectrale."""        # Signal test 1kHz pur
         sample_rate = 48000
         duration = 0.1
         t = np.linspace(0, duration, int(sample_rate * duration))
@@ -36959,8 +35142,7 @@ class TestSpectralAnalyzer:
         assert 900 <= centroid <= 1100
     
     def test_mfcc_extraction_real(self, analyzer):
-        """Test extraction MFCC réelle."""
-        # Signal vocal synthétique
+        """Test extraction MFCC réelle."""        # Signal vocal synthétique
         sample_rate = 48000
         duration = 0.5
         t = np.linspace(0, duration, int(sample_rate * duration))
@@ -36985,8 +35167,7 @@ class TestSpectralAnalyzer:
         assert np.mean(np.abs(mfcc_features[0, :])) > 0.1
     
     def test_spectral_features_consistency(self, analyzer):
-        """Test cohérence features spectrales."""
-        # Signal multitonal
+        """Test cohérence features spectrales."""        # Signal multitonal
         sample_rate = 48000
         duration = 0.2
         t = np.linspace(0, duration, int(sample_rate * duration))
@@ -37016,16 +35197,13 @@ class TestSpectralAnalyzer:
 
 
 class TestAudioFilterBank:
-    """Tests réels pour banque de filtres."""
-    
+    """Tests réels pour banque de filtres."""    
     @pytest.fixture
     def filter_bank(self):
-        """Instance réelle de la banque de filtres."""
-        return AudioFilterBank(sample_rate=48000)
+        """Instance réelle de la banque de filtres."""        return AudioFilterBank(sample_rate=48000)
     
     def test_filter_creation_and_availability(self, filter_bank):
-        """Test création et disponibilité des filtres."""
-        expected_filters = [
+        """Test création et disponibilité des filtres."""        expected_filters = [
             'lowpass_8k', 'highpass_80', 
             'vocal_low', 'vocal_mid', 'vocal_high'
         ]
@@ -37037,8 +35215,7 @@ class TestAudioFilterBank:
             assert len(a) > 0
     
     def test_lowpass_filter_effectiveness(self, filter_bank):
-        """Test efficacité filtre passe-bas."""
-        sample_rate = 48000
+        """Test efficacité filtre passe-bas."""        sample_rate = 48000
         duration = 0.1
         t = np.linspace(0, duration, int(sample_rate * duration))
         
@@ -37064,8 +35241,7 @@ class TestAudioFilterBank:
         assert abs(filtered_peak - 1000) < 100
     
     def test_multiband_split_functionality(self, filter_bank):
-        """Test division multibande réelle."""
-        sample_rate = 48000
+        """Test division multibande réelle."""        sample_rate = 48000
         duration = 0.1
         t = np.linspace(0, duration, int(sample_rate * duration))
         
@@ -37090,8 +35266,7 @@ class TestAudioFilterBank:
             assert not np.any(np.isnan(band_signal))
     
     def test_filter_frequency_response(self, filter_bank):
-        """Test réponse fréquentielle des filtres."""
-        sample_rate = 48000
+        """Test réponse fréquentielle des filtres."""        sample_rate = 48000
         
         # Test avec impulsions à différentes fréquences
         test_frequencies = [100, 500, 1500, 4000, 10000]
@@ -37114,12 +35289,10 @@ class TestAudioFilterBank:
 
 
 class TestRealtimeAudioProcessor:
-    """Tests enterprise pour RealtimeAudioProcessor avec traitement temps réel."""
-    
+    """Tests enterprise pour RealtimeAudioProcessor avec traitement temps réel."""    
     @pytest.fixture
     def processor_config(self):
-        """Configuration processeur temps réel."""
-        return {
+        """Configuration processeur temps réel."""        return {
             'buffer_size': 512,
             'sample_rate': 48000,
             'channels': 2,
@@ -37134,16 +35307,14 @@ class TestRealtimeAudioProcessor:
     
     @pytest.fixture
     def realtime_processor(self, processor_config):
-        """Instance RealtimeAudioProcessor pour tests."""
-        processor = RealtimeAudioProcessor()
+        """Instance RealtimeAudioProcessor pour tests."""        processor = RealtimeAudioProcessor()
         processor.configure = MagicMock(return_value={'status': 'configured'})
         processor.configure(processor_config)
         return processor
     
     @pytest.fixture
     def test_audio_data(self):
-        """Données audio test."""
-        sample_rate = 48000
+        """Données audio test."""        sample_rate = 48000
         duration = 1.0  # 1 seconde
         t = np.linspace(0, duration, int(sample_rate * duration))
         
@@ -37168,8 +35339,7 @@ class TestRealtimeAudioProcessor:
         }
     
     async def test_realtime_processing_pipeline(self, realtime_processor, test_audio_data):
-        """Test pipeline traitement temps réel."""
-        # Configuration pipeline temps réel
+        """Test pipeline traitement temps réel."""        # Configuration pipeline temps réel
         pipeline_config = {
             'input_format': 'float32',
             'output_format': 'float32',
@@ -37275,8 +35445,7 @@ class TestRealtimeAudioProcessor:
         assert len(processing_results) == num_buffers
     
     async def test_simd_optimization_performance(self, realtime_processor):
-        """Test optimisations SIMD pour performance."""
-        # Données test pour SIMD
+        """Test optimisations SIMD pour performance."""        # Données test pour SIMD
         test_sizes = [512, 1024, 2048, 4096, 8192]
         
         # Mock optimisations SIMD
@@ -37343,8 +35512,7 @@ class TestRealtimeAudioProcessor:
             assert simd_result['cpu_utilization']['simd_unit_utilization'] > 0.8
     
     async def test_adaptive_buffer_management(self, realtime_processor):
-        """Test gestion adaptative des buffers."""
-        # Scénarios charge variable
+        """Test gestion adaptative des buffers."""        # Scénarios charge variable
         load_scenarios = [
             {
                 'scenario': 'low_load',
@@ -37424,8 +35592,7 @@ class TestRealtimeAudioProcessor:
             assert adaptation_result['buffer_configuration']['input_buffer_size'] > 0
     
     def _calculate_optimal_buffer_size(self, scenario: Dict) -> int:
-        """Calcule taille optimale buffer selon scénario."""
-        base_size = 512
+        """Calcule taille optimale buffer selon scénario."""        base_size = 512
         cpu_factor = 1.0 / max(0.1, scenario['cpu_availability'])
         memory_factor = 1.0 / max(0.1, 1.0 - scenario['memory_pressure'])
         
@@ -37433,57 +35600,48 @@ class TestRealtimeAudioProcessor:
         return min(max(optimal_size, 128), 4096)  # Contraintes min/max
     
     def _calculate_optimal_buffer_count(self, scenario: Dict) -> int:
-        """Calcule nombre optimal de buffers."""
-        base_count = 4
+        """Calcule nombre optimal de buffers."""        base_count = 4
         stream_factor = scenario['concurrent_streams'] / 10
         return max(2, min(int(base_count + stream_factor), 16))
     
     def _calculate_memory_allocation(self, scenario: Dict) -> float:
-        """Calcule allocation mémoire optimale."""
-        base_memory = 50.0  # MB
+        """Calcule allocation mémoire optimale."""        base_memory = 50.0  # MB
         stream_factor = scenario['concurrent_streams'] * 2.0
         pressure_factor = 1.0 - scenario['memory_pressure']
         return base_memory + (stream_factor * pressure_factor)
     
     def _estimate_latency(self, scenario: Dict) -> float:
-        """Estime latence selon scénario."""
-        base_latency = 0.5  # ms
+        """Estime latence selon scénario."""        base_latency = 0.5  # ms
         cpu_penalty = (1.0 - scenario['cpu_availability']) * 2.0
         memory_penalty = scenario['memory_pressure'] * 1.0
         return base_latency + cpu_penalty + memory_penalty
     
     def _estimate_throughput(self, scenario: Dict) -> float:
-        """Estime débit selon scénario."""
-        base_throughput = 100.0  # Mbps
+        """Estime débit selon scénario."""        base_throughput = 100.0  # Mbps
         cpu_factor = scenario['cpu_availability']
         memory_factor = 1.0 - scenario['memory_pressure']
         return base_throughput * cpu_factor * memory_factor
     
     def _estimate_quality_preservation(self, scenario: Dict) -> float:
-        """Estime préservation qualité."""
-        base_quality = 0.95
+        """Estime préservation qualité."""        base_quality = 0.95
         load_penalty = scenario['concurrent_streams'] / 200.0
         resource_penalty = (1.0 - scenario['cpu_availability']) * 0.2
         return max(0.5, base_quality - load_penalty - resource_penalty)
     
     def _estimate_resource_efficiency(self, scenario: Dict) -> float:
-        """Estime efficacité ressources."""
-        cpu_efficiency = scenario['cpu_availability']
+        """Estime efficacité ressources."""        cpu_efficiency = scenario['cpu_availability']
         memory_efficiency = 1.0 - scenario['memory_pressure']
         return (cpu_efficiency + memory_efficiency) / 2.0
 
 
 class TestSpectralAnalyzer:
-    """Tests enterprise pour SpectralAnalyzer avec analyse spectrale avancée."""
-    
+    """Tests enterprise pour SpectralAnalyzer avec analyse spectrale avancée."""    
     @pytest.fixture
     def spectral_analyzer(self):
-        """Instance SpectralAnalyzer pour tests."""
-        return SpectralAnalyzer()
+        """Instance SpectralAnalyzer pour tests."""        return SpectralAnalyzer()
     
     async def test_advanced_spectral_analysis(self, spectral_analyzer):
-        """Test analyse spectrale avancée multi-résolution."""
-        # Configuration analyse spectrale
+        """Test analyse spectrale avancée multi-résolution."""        # Configuration analyse spectrale
         analysis_config = {
             'window_types': ['hann', 'blackman', 'kaiser'],
             'fft_sizes': [512, 1024, 2048, 4096],
@@ -37592,8 +35750,7 @@ class TestSpectralAnalyzer:
         assert spectral_result['quality_metrics']['overall_analysis_quality'] > 0.8
     
     async def test_real_time_spectral_monitoring(self, spectral_analyzer):
-        """Test monitoring spectral temps réel."""
-        # Configuration monitoring temps réel
+        """Test monitoring spectral temps réel."""        # Configuration monitoring temps réel
         monitoring_config = {
             'update_rate_hz': 60,  # 60 FPS pour visualisation
             'spectral_smoothing': 'exponential',
@@ -37683,11 +35840,9 @@ class TestSpectralAnalyzer:
 
 @pytest.mark.performance
 class TestAudioProcessorsPerformance:
-    """Tests performance pour processeurs audio."""
-    
+    """Tests performance pour processeurs audio."""    
     async def test_processing_throughput_benchmark(self):
-        """Test débit traitement audio."""
-        processor = RealtimeAudioProcessor()
+        """Test débit traitement audio."""        processor = RealtimeAudioProcessor()
         
         # Mock benchmark throughput
         processor.benchmark_processing_throughput = AsyncMock(return_value={
@@ -37731,14 +35886,11 @@ class TestAudioProcessorsPerformance:
 # LIGNES: 2
 # ==========================================================================================
 
-"""
-Configuration et utilitaires tests audio
+"""Configuration et utilitaires tests audio
 ========================================
 
 Utilitaires réels pour configuration et helpers des tests audio.
-"""
-
-import numpy as np
+"""import numpy as np
 import librosa
 import scipy.signal
 from typing import Dict, List, Tuple, Any
@@ -37747,12 +35899,10 @@ import os
 
 
 class AudioTestUtils:
-    """Utilitaires réels pour tests audio."""
-    
+    """Utilitaires réels pour tests audio."""    
     @staticmethod
     def generate_test_signals(sample_rate=44100, duration=1.0):
-        """Génère des signaux test réels et variés."""
-        t = np.linspace(0, duration, int(sample_rate * duration))
+        """Génère des signaux test réels et variés."""        t = np.linspace(0, duration, int(sample_rate * duration))
         
         signals = {}
         
@@ -37809,8 +35959,7 @@ class AudioTestUtils:
     
     @staticmethod
     def calculate_audio_metrics(signal, sample_rate=44100):
-        """Calcule métriques audio réelles."""
-        metrics = {}
+        """Calcule métriques audio réelles."""        metrics = {}
         
         # Métriques temporelles
         metrics['rms_level'] = np.sqrt(np.mean(signal**2))
@@ -37846,8 +35995,7 @@ class AudioTestUtils:
     
     @staticmethod
     def apply_audio_effects(signal, effect_type, **params):
-        """Applique effets audio réels."""
-        if effect_type == 'lowpass':
+        """Applique effets audio réels."""        if effect_type == 'lowpass':
             cutoff = params.get('cutoff', 8000)
             nyquist = params.get('sample_rate', 44100) / 2
             b, a = scipy.signal.butter(4, cutoff/nyquist, 'lowpass')
@@ -37882,8 +36030,7 @@ class AudioTestUtils:
     
     @staticmethod
     def validate_audio_quality(signal, expected_metrics=None):
-        """Validation qualité audio réelle."""
-        issues = []
+        """Validation qualité audio réelle."""        issues = []
         
         # Vérification clipping
         if np.any(np.abs(signal) >= 1.0):
@@ -37922,15 +36069,13 @@ class AudioTestUtils:
 
 
 class AudioTestData:
-    """Gestionnaire de données test audio."""
-    
+    """Gestionnaire de données test audio."""    
     def __init__(self, base_path="/tmp/audio_test_data"):
         self.base_path = base_path
         os.makedirs(base_path, exist_ok=True)
     
     def create_test_dataset(self, num_samples=100):
-        """Crée un dataset test réel."""
-        dataset = {
+        """Crée un dataset test réel."""        dataset = {
             'samples': [],
             'labels': [],
             'metadata': {
@@ -37977,8 +36122,7 @@ class AudioTestData:
         return dataset_file
     
     def load_test_dataset(self, dataset_file):
-        """Charge un dataset test."""
-        with open(dataset_file, 'r') as f:
+        """Charge un dataset test."""        with open(dataset_file, 'r') as f:
             dataset = json.load(f)
         
         # Conversion en numpy arrays
@@ -37988,14 +36132,12 @@ class AudioTestData:
 
 
 class PerformanceProfiler:
-    """Profileur performance pour tests audio."""
-    
+    """Profileur performance pour tests audio."""    
     def __init__(self):
         self.measurements = {}
     
     def measure_function(self, func, *args, **kwargs):
-        """Mesure performance d'une fonction."""
-        import time
+        """Mesure performance d'une fonction."""        import time
         import psutil
         import tracemalloc
         
@@ -38037,8 +36179,7 @@ class PerformanceProfiler:
         return result, metrics
     
     def get_summary_report(self):
-        """Génère rapport résumé performance."""
-        if not self.measurements:
+        """Génère rapport résumé performance."""        if not self.measurements:
             return "Aucune mesure disponible"
         
         report = []
@@ -38073,8 +36214,7 @@ class PerformanceProfiler:
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Module Audio Tests - Agent IA Spotify Enterprise
+"""Module Audio Tests - Agent IA Spotify Enterprise
 ==============================================
 
 Tests ultra-avancés pour le traitement audio enterprise avec deep learning,
@@ -38111,9 +36251,7 @@ Standards Enterprise :
 - Conformité droits d'auteur
 - Monitoring observabilité complète
 - CI/CD pipeline audio optimisé
-"""
-
-# Audio processing imports - Enterprise grade
+"""# Audio processing imports - Enterprise grade
 import librosa
 import soundfile as sf
 import numpy as np
@@ -38151,15 +36289,13 @@ except ImportError:
     # Mock PyAudio
     class PyAudio:
         def __init__(self):
-            """Initialize mock PyAudio for testing"""
-            self.is_initialized = True
+            """Initialize mock PyAudio for testing"""            self.is_initialized = True
             logger.debug("Mock PyAudio initialized")
         
         def open(self, *args, **kwargs): return None
         
         def terminate(self):
-            """Terminate mock PyAudio"""
-            self.is_initialized = False
+            """Terminate mock PyAudio"""            self.is_initialized = False
             logger.debug("Mock PyAudio terminated")
     pyaudio = type('MockModule', (), {'PyAudio': PyAudio, 'paInt16': 8, 'paContinue': 0})()
 
@@ -38287,8 +36423,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 def log_performance(func):
-    """Décorateur pour logger les performances des fonctions audio."""
-    def wrapper(*args, **kwargs):
+    """Décorateur pour logger les performances des fonctions audio."""    def wrapper(*args, **kwargs):
         start_time = time.time()
         result = func(*args, **kwargs)
         execution_time = time.time() - start_time
@@ -38297,8 +36432,7 @@ def log_performance(func):
     return wrapper
 
 def validate_audio_format(audio_data: np.ndarray, sample_rate: int) -> bool:
-    """Valide le format et la qualité des données audio."""
-    if len(audio_data.shape) > 2:
+    """Valide le format et la qualité des données audio."""    if len(audio_data.shape) > 2:
         raise ValueError("Audio data must be mono or stereo")
     
     if sample_rate not in SAMPLE_RATES.values():
@@ -38312,8 +36446,7 @@ def validate_audio_format(audio_data: np.ndarray, sample_rate: int) -> bool:
 
 # Fonction utilitaire pour l'initialisation des tests
 def setup_audio_test_environment():
-    """Configure l'environnement de test audio enterprise."""
-    logger.info("Initializing audio test environment...")
+    """Configure l'environnement de test audio enterprise."""    logger.info("Initializing audio test environment...")
     
     # Vérification des dépendances critiques
     dependencies = {
@@ -38354,14 +36487,11 @@ __all__ = [
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Tests Enterprise - Feature Extractors Audio
+"""Tests Enterprise - Feature Extractors Audio
 ==========================================
 
 Tests réels pour l'extraction de caractéristiques audio avec implémentations fonctionnelles.
-"""
-
-import pytest
+"""import pytest
 import numpy as np
 import librosa
 import essentia.standard as es
@@ -38383,14 +36513,12 @@ import time
 
 # Implémentations réelles des extracteurs de features
 class MusicFeatureExtractor:
-    """Extracteur de features musicales réel."""
-    
+    """Extracteur de features musicales réel."""    
     def __init__(self, sample_rate=44100):
         self.sample_rate = sample_rate
         
     def extract_tempo(self, audio_signal):
-        """Extraction tempo réelle avec librosa."""
-        tempo, beats = librosa.beat.beat_track(
+        """Extraction tempo réelle avec librosa."""        tempo, beats = librosa.beat.beat_track(
             y=audio_signal, 
             sr=self.sample_rate,
             hop_length=512
@@ -38402,8 +36530,7 @@ class MusicFeatureExtractor:
         }
     
     def extract_spectral_features(self, audio_signal):
-        """Extraction features spectrales réelles."""
-        # MFCC
+        """Extraction features spectrales réelles."""        # MFCC
         mfccs = librosa.feature.mfcc(
             y=audio_signal, 
             sr=self.sample_rate, 
@@ -38434,8 +36561,7 @@ class MusicFeatureExtractor:
         }
     
     def extract_harmonic_features(self, audio_signal):
-        """Extraction features harmoniques réelles."""
-        # Séparation harmonique/percussive
+        """Extraction features harmoniques réelles."""        # Séparation harmonique/percussive
         y_harmonic, y_percussive = librosa.effects.hpss(audio_signal)
         
         # Tonnetz (réseau tonal)
@@ -38459,14 +36585,12 @@ class MusicFeatureExtractor:
 
 
 class PerceptualFeatureExtractor:
-    """Extracteur de features perceptuelles réel."""
-    
+    """Extracteur de features perceptuelles réel."""    
     def __init__(self, sample_rate=44100):
         self.sample_rate = sample_rate
         
     def extract_loudness_features(self, audio_signal):
-        """Extraction features de loudness réelles."""
-        # RMS Energy
+        """Extraction features de loudness réelles."""        # RMS Energy
         rms_energy = np.sqrt(np.mean(audio_signal**2))
         
         # Peak level
@@ -38487,8 +36611,7 @@ class PerceptualFeatureExtractor:
         }
     
     def extract_timbral_features(self, audio_signal):
-        """Extraction features timbrales réelles."""
-        # Spectrogramme mel
+        """Extraction features timbrales réelles."""        # Spectrogramme mel
         mel_spec = librosa.feature.melspectrogram(
             y=audio_signal, 
             sr=self.sample_rate
@@ -38521,8 +36644,7 @@ class PerceptualFeatureExtractor:
 
 
 class FeatureType(Enum):
-    """Types de features audio."""
-    TEMPORAL = "temporal"
+    """Types de features audio."""    TEMPORAL = "temporal"
     SPECTRAL = "spectral"
     HARMONIC = "harmonic"
     RHYTHMIC = "rhythmic"
@@ -38531,8 +36653,7 @@ class FeatureType(Enum):
 
 
 class ExtractionMode(Enum):
-    """Modes d'extraction."""
-    REAL_TIME = "real_time"
+    """Modes d'extraction."""    REAL_TIME = "real_time"
     BATCH = "batch"
     STREAMING = "streaming"
     OFFLINE_ANALYSIS = "offline"
@@ -38540,8 +36661,7 @@ class ExtractionMode(Enum):
 
 @dataclass
 class FeatureConfig:
-    """Configuration extraction features."""
-    feature_types: List[FeatureType]
+    """Configuration extraction features."""    feature_types: List[FeatureType]
     extraction_mode: ExtractionMode
     time_resolution_ms: float
     frequency_resolution_hz: float
@@ -38551,8 +36671,7 @@ class FeatureConfig:
 
 @dataclass
 class AudioFeatureSet:
-    """Ensemble complet de features audio."""
-    temporal_features: Dict[str, float]
+    """Ensemble complet de features audio."""    temporal_features: Dict[str, float]
     spectral_features: Dict[str, Union[float, List[float]]]
     harmonic_features: Dict[str, float]
     rhythmic_features: Dict[str, float]
@@ -38562,17 +36681,14 @@ class AudioFeatureSet:
 
 
 class TestMusicFeatureExtractor:
-    """Tests enterprise pour MusicFeatureExtractor avec analyse musicale complète."""
-    
+    """Tests enterprise pour MusicFeatureExtractor avec analyse musicale complète."""    
     @pytest.fixture
     def feature_extractor(self):
-        """Instance MusicFeatureExtractor pour tests."""
-        return MusicFeatureExtractor()
+        """Instance MusicFeatureExtractor pour tests."""        return MusicFeatureExtractor()
     
     @pytest.fixture
     def music_feature_config(self):
-        """Configuration extraction features musicales."""
-        return {
+        """Configuration extraction features musicales."""        return {
             'temporal_features': {
                 'zero_crossing_rate': True,
                 'energy': True,
@@ -38605,8 +36721,7 @@ class TestMusicFeatureExtractor:
     
     @pytest.fixture
     def test_music_signals(self):
-        """Signaux musicaux test divers genres."""
-        sample_rate = 44100
+        """Signaux musicaux test divers genres."""        sample_rate = 44100
         duration = 3.0
         t = np.linspace(0, duration, int(sample_rate * duration))
         
@@ -38668,8 +36783,7 @@ class TestMusicFeatureExtractor:
         }
     
     async def test_comprehensive_feature_extraction(self, feature_extractor, music_feature_config, test_music_signals):
-        """Test extraction complète de features musicales."""
-        # Mock feature extraction
+        """Test extraction complète de features musicales."""        # Mock feature extraction
         feature_extractor.extract_music_features = AsyncMock()
         
         for genre, signal in test_music_signals['signals'].items():
@@ -38809,8 +36923,7 @@ class TestMusicFeatureExtractor:
                 assert extraction_result['spectral_features']['spectral_contrast']['harmonic_emphasis'] > 0.7
     
     def _get_zcr_for_genre(self, genre: str) -> float:
-        """ZCR typique par genre."""
-        zcr_map = {
+        """ZCR typique par genre."""        zcr_map = {
             'classical': np.random.uniform(0.02, 0.08),
             'percussive': np.random.uniform(0.15, 0.35),
             'vocal': np.random.uniform(0.05, 0.15),
@@ -38819,8 +36932,7 @@ class TestMusicFeatureExtractor:
         return zcr_map.get(genre, np.random.uniform(0.05, 0.20))
     
     def _get_onset_rate_for_genre(self, genre: str) -> float:
-        """Taux d'onset typique par genre."""
-        onset_map = {
+        """Taux d'onset typique par genre."""        onset_map = {
             'classical': np.random.uniform(2, 8),
             'percussive': np.random.uniform(15, 30),
             'vocal': np.random.uniform(3, 10),
@@ -38829,8 +36941,7 @@ class TestMusicFeatureExtractor:
         return onset_map.get(genre, np.random.uniform(5, 15))
     
     def _get_spectral_centroid_for_genre(self, genre: str) -> float:
-        """Centroïde spectral typique par genre."""
-        centroid_map = {
+        """Centroïde spectral typique par genre."""        centroid_map = {
             'classical': np.random.uniform(1500, 3000),
             'percussive': np.random.uniform(3000, 6000),
             'vocal': np.random.uniform(1000, 2500),
@@ -38839,8 +36950,7 @@ class TestMusicFeatureExtractor:
         return centroid_map.get(genre, np.random.uniform(1500, 4000))
     
     def _get_spectral_bandwidth_for_genre(self, genre: str) -> float:
-        """Bande passante spectrale typique par genre."""
-        bandwidth_map = {
+        """Bande passante spectrale typique par genre."""        bandwidth_map = {
             'classical': np.random.uniform(2000, 4000),
             'percussive': np.random.uniform(4000, 8000),
             'vocal': np.random.uniform(1500, 3500),
@@ -38849,8 +36959,7 @@ class TestMusicFeatureExtractor:
         return bandwidth_map.get(genre, np.random.uniform(2000, 5000))
     
     def _get_harmonic_ratio_for_genre(self, genre: str) -> float:
-        """Ratio harmonique/percussif par genre."""
-        ratio_map = {
+        """Ratio harmonique/percussif par genre."""        ratio_map = {
             'classical': np.random.uniform(0.7, 0.9),
             'percussive': np.random.uniform(0.1, 0.4),
             'vocal': np.random.uniform(0.6, 0.8),
@@ -38859,8 +36968,7 @@ class TestMusicFeatureExtractor:
         return ratio_map.get(genre, np.random.uniform(0.3, 0.8))
     
     def _get_tempo_for_genre(self, genre: str) -> float:
-        """Tempo typique par genre."""
-        tempo_map = {
+        """Tempo typique par genre."""        tempo_map = {
             'classical': np.random.uniform(60, 120),
             'percussive': np.random.uniform(100, 140),
             'vocal': np.random.uniform(70, 110),
@@ -38869,8 +36977,7 @@ class TestMusicFeatureExtractor:
         return tempo_map.get(genre, np.random.uniform(80, 130))
     
     def _get_dominant_chord_for_genre(self, genre: str) -> str:
-        """Accord dominant typique par genre."""
-        chord_map = {
+        """Accord dominant typique par genre."""        chord_map = {
             'classical': np.random.choice(['Cmaj', 'Gmaj', 'Dmaj', 'Fmaj']),
             'percussive': 'no_clear_harmony',
             'vocal': np.random.choice(['Cmaj', 'Am', 'Fmaj', 'Gmaj']),
@@ -38879,8 +36986,7 @@ class TestMusicFeatureExtractor:
         return chord_map.get(genre, 'Cmaj')
     
     def _get_style_characteristics(self, genre: str) -> List[str]:
-        """Caractéristiques stylistiques par genre."""
-        style_map = {
+        """Caractéristiques stylistiques par genre."""        style_map = {
             'classical': ['harmonic_complexity', 'dynamic_variation', 'instrumental'],
             'percussive': ['rhythmic_emphasis', 'transient_heavy', 'beat_driven'],
             'vocal': ['melodic_content', 'formant_structure', 'pitch_variation'],
@@ -38889,8 +36995,7 @@ class TestMusicFeatureExtractor:
         return style_map.get(genre, ['generic_music'])
     
     async def test_real_time_feature_streaming(self, feature_extractor):
-        """Test extraction features en streaming temps réel."""
-        # Configuration streaming temps réel
+        """Test extraction features en streaming temps réel."""        # Configuration streaming temps réel
         streaming_config = {
             'buffer_size': 1024,
             'hop_length': 512,
@@ -38953,16 +37058,13 @@ class TestMusicFeatureExtractor:
 
 
 class TestPerceptualFeatureExtractor:
-    """Tests enterprise pour PerceptualFeatureExtractor avec features perceptuelles."""
-    
+    """Tests enterprise pour PerceptualFeatureExtractor avec features perceptuelles."""    
     @pytest.fixture
     def perceptual_extractor(self):
-        """Instance PerceptualFeatureExtractor pour tests."""
-        return PerceptualFeatureExtractor()
+        """Instance PerceptualFeatureExtractor pour tests."""        return PerceptualFeatureExtractor()
     
     async def test_psychoacoustic_features(self, perceptual_extractor):
-        """Test extraction features psychoacoustiques."""
-        # Configuration features psychoacoustiques
+        """Test extraction features psychoacoustiques."""        # Configuration features psychoacoustiques
         psychoacoustic_config = {
             'loudness_model': 'zwicker',
             'sharpness_model': 'zwicker',
@@ -39045,8 +37147,7 @@ class TestPerceptualFeatureExtractor:
         assert psychoacoustic_result['perceptual_quality_score'] > 0.5
     
     async def test_emotion_content_analysis(self, perceptual_extractor):
-        """Test analyse contenu émotionnel audio."""
-        # Configuration analyse émotionnelle
+        """Test analyse contenu émotionnel audio."""        # Configuration analyse émotionnelle
         emotion_config = {
             'valence_arousal_model': True,
             'emotion_categories': ['happy', 'sad', 'angry', 'calm', 'energetic', 'peaceful'],
@@ -39111,8 +37212,7 @@ class TestPerceptualFeatureExtractor:
         assert emotion_result['confidence_metrics']['overall_confidence'] > 0.6
     
     def _get_emotion_quadrant(self, valence: float, arousal: float) -> str:
-        """Détermine quadrant émotionnel."""
-        if valence > 0 and arousal > 0:
+        """Détermine quadrant émotionnel."""        if valence > 0 and arousal > 0:
             return 'happy_excited'
         elif valence > 0 and arousal < 0:
             return 'calm_content'
@@ -39123,16 +37223,13 @@ class TestPerceptualFeatureExtractor:
 
 
 class TestDeepAudioFeatureExtractor:
-    """Tests enterprise pour DeepAudioFeatureExtractor avec deep learning."""
-    
+    """Tests enterprise pour DeepAudioFeatureExtractor avec deep learning."""    
     @pytest.fixture
     def deep_extractor(self):
-        """Instance DeepAudioFeatureExtractor pour tests."""
-        return DeepAudioFeatureExtractor()
+        """Instance DeepAudioFeatureExtractor pour tests."""        return DeepAudioFeatureExtractor()
     
     async def test_transformer_audio_embeddings(self, deep_extractor):
-        """Test extraction embeddings avec modèles Transformer."""
-        # Configuration modèles Transformer
+        """Test extraction embeddings avec modèles Transformer."""        # Configuration modèles Transformer
         transformer_config = {
             'models': {
                 'wav2vec2': {
@@ -39233,8 +37330,7 @@ class TestDeepAudioFeatureExtractor:
         assert embeddings_result['quality_metrics']['embedding_quality_score'] > 0.8
     
     async def test_contrastive_audio_learning(self, deep_extractor):
-        """Test apprentissage contrastif pour features audio."""
-        # Configuration apprentissage contrastif
+        """Test apprentissage contrastif pour features audio."""        # Configuration apprentissage contrastif
         contrastive_config = {
             'model_architecture': 'siamese_cnn',
             'embedding_dimension': 512,
@@ -39838,11 +37934,8 @@ except ImportError:
         sys.modules['grpc_tools'] = Mock()
 
 from unittest.mock import Mock
+"""Tests avancés pour audio_analyzer.py (analyse ML, classification, tagging).
 """
-Tests avancés pour audio_analyzer.py (analyse ML, classification, tagging).
-"""
-
-
 import numpy as np
 import pytest
 from backend.app.services.audio import audio_analyzer
@@ -39887,11 +37980,8 @@ except ImportError:
         sys.modules['grpc_tools'] = Mock()
 
 from unittest.mock import Mock
+"""Tests avancés pour audio_utils.py (normalisation, conversion, extraction de features).
 """
-Tests avancés pour audio_utils.py (normalisation, conversion, extraction de features).
-"""
-
-
 import numpy as np
 import soundfile as sf
 import pytest

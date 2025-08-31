@@ -1,5 +1,4 @@
-"""
-📊 Analytics Processor - IA Influencer Agent Platform Enterprise
+"""📊 Analytics Processor - IA Influencer Agent Platform Enterprise
 ===============================================================
 Module: backend/data_management/processors/analytics_processor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,9 +16,7 @@ Contact obligatoire: mlaiel@live.de
 LOGIQUE MÉTIER ANALYTICS:
 Raw Data Collection → Data Validation → Statistical Analysis → ML Predictions → 
 Trend Detection → Performance Insights → Business Intelligence → Actionable Recommendations
-"""
-
-import json
+"""import json
 import logging
 import asyncio
 import pandas as pd
@@ -40,8 +37,7 @@ from .base_processor import BaseProcessor, AsyncBaseProcessor
 
 
 class AnalyticsProcessor(BaseProcessor):
-    """Processeur d'analytics avancé avec ML - Production Enterprise"""
-    
+    """Processeur d'analytics avancé avec ML - Production Enterprise"""    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.logger = logging.getLogger(__name__)
@@ -121,8 +117,7 @@ class AnalyticsProcessor(BaseProcessor):
         }
     
     def process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traite les données analytics complètes"""
-        user_id = input_data.get('user_id')
+        """Traite les données analytics complètes"""        user_id = input_data.get('user_id')
         time_period = input_data.get('time_period', 'monthly')
         metrics_data = input_data.get('metrics_data', {})
         analysis_type = input_data.get('analysis_type', 'comprehensive')
@@ -192,8 +187,7 @@ class AnalyticsProcessor(BaseProcessor):
         return analytics_result
     
     def _perform_descriptive_analytics(self, metrics_data: Dict[str, Any], time_period: str) -> Dict[str, Any]:
-        """Effectue l'analyse descriptive des métriques"""
-        descriptive = {
+        """Effectue l'analyse descriptive des métriques"""        descriptive = {
             'summary_statistics': {},
             'trend_analysis': {},
             'correlation_analysis': {},
@@ -251,8 +245,7 @@ class AnalyticsProcessor(BaseProcessor):
         return descriptive
     
     def _prepare_dataframe(self, metrics_data: Dict[str, Any], time_period: str) -> pd.DataFrame:
-        """Prépare un DataFrame à partir des données métriques"""
-        try:
+        """Prépare un DataFrame à partir des données métriques"""        try:
             # Extract time series data
             data_points = []
             
@@ -295,8 +288,7 @@ class AnalyticsProcessor(BaseProcessor):
             return pd.DataFrame()
     
     def _analyze_trends(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Analyse les tendances dans les données"""
-        trends = {}
+        """Analyse les tendances dans les données"""        trends = {}
         
         try:
             for col in df.columns:
@@ -327,8 +319,7 @@ class AnalyticsProcessor(BaseProcessor):
         return trends
     
     def _find_strong_correlations(self, correlation_matrix: pd.DataFrame, threshold: float = 0.7) -> List[Dict[str, Any]]:
-        """Trouve les corrélations fortes"""
-        strong_correlations = []
+        """Trouve les corrélations fortes"""        strong_correlations = []
         
         try:
             for i in range(len(correlation_matrix.columns)):
@@ -353,8 +344,7 @@ class AnalyticsProcessor(BaseProcessor):
         return strong_correlations
     
     def _interpret_correlations(self, correlation_matrix: pd.DataFrame) -> List[str]:
-        """Interprète les corrélations pour insights business"""
-        insights = []
+        """Interprète les corrélations pour insights business"""        insights = []
         
         try:
             strong_correlations = self._find_strong_correlations(correlation_matrix)
@@ -382,8 +372,7 @@ class AnalyticsProcessor(BaseProcessor):
         return insights
     
     def _analyze_distributions(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Analyse les distributions des métriques"""
-        distributions = {}
+        """Analyse les distributions des métriques"""        distributions = {}
         
         try:
             for col in df.columns:
@@ -421,8 +410,7 @@ class AnalyticsProcessor(BaseProcessor):
         return distributions
     
     def _classify_distribution(self, skewness: float, kurtosis: float, is_normal: bool) -> str:
-        """Classifie le type de distribution"""
-        if is_normal:
+        """Classifie le type de distribution"""        if is_normal:
             return 'normal'
         elif skewness > 1:
             return 'right_skewed'
@@ -436,8 +424,7 @@ class AnalyticsProcessor(BaseProcessor):
             return 'approximately_normal'
     
     def _detect_outliers(self, data: pd.Series) -> Dict[str, Any]:
-        """Détecte les valeurs aberrantes"""
-        outliers = {
+        """Détecte les valeurs aberrantes"""        outliers = {
             'method': 'iqr',
             'count': 0,
             'indices': [],
@@ -470,8 +457,7 @@ class AnalyticsProcessor(BaseProcessor):
         return outliers
     
     def _decompose_time_series(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Décompose les séries temporelles"""
-        decomposition = {}
+        """Décompose les séries temporelles"""        decomposition = {}
         
         try:
             from statsmodels.tsa.seasonal import seasonal_decompose
@@ -512,8 +498,7 @@ class AnalyticsProcessor(BaseProcessor):
         return decomposition
     
     def _calculate_trend_strength(self, decomp) -> float:
-        """Calcule la force de la tendance"""
-        try:
+        """Calcule la force de la tendance"""        try:
             trend_var = np.var(decomp.trend.dropna())
             residual_var = np.var(decomp.resid.dropna())
             return trend_var / (trend_var + residual_var) if (trend_var + residual_var) > 0 else 0
@@ -521,8 +506,7 @@ class AnalyticsProcessor(BaseProcessor):
             return 0
     
     def _calculate_seasonal_strength(self, decomp) -> float:
-        """Calcule la force de la saisonnalité"""
-        try:
+        """Calcule la force de la saisonnalité"""        try:
             seasonal_var = np.var(decomp.seasonal.dropna())
             residual_var = np.var(decomp.resid.dropna())
             return seasonal_var / (seasonal_var + residual_var) if (seasonal_var + residual_var) > 0 else 0
@@ -530,8 +514,7 @@ class AnalyticsProcessor(BaseProcessor):
             return 0
     
     def _perform_predictive_analytics(self, metrics_data: Dict[str, Any], time_period: str) -> Dict[str, Any]:
-        """Effectue l'analyse prédictive"""
-        predictive = {
+        """Effectue l'analyse prédictive"""        predictive = {
             'growth_forecast': {},
             'engagement_prediction': {},
             'revenue_forecast': {},
@@ -573,8 +556,7 @@ class AnalyticsProcessor(BaseProcessor):
         return predictive
     
     def _forecast_growth(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Prévoit la croissance des followers"""
-        forecast = {
+        """Prévoit la croissance des followers"""        forecast = {
             'predictions': {},
             'model_performance': {},
             'confidence_intervals': {}
@@ -625,8 +607,7 @@ class AnalyticsProcessor(BaseProcessor):
         return forecast
     
     def _predict_engagement(self, df: pd.DataFrame, engagement_cols: List[str]) -> Dict[str, Any]:
-        """Prédit l'engagement futur"""
-        prediction = {
+        """Prédit l'engagement futur"""        prediction = {
             'predicted_rates': {},
             'optimal_posting_times': [],
             'content_recommendations': []
@@ -667,8 +648,7 @@ class AnalyticsProcessor(BaseProcessor):
         return prediction
     
     def _forecast_revenue(self, df: pd.DataFrame, revenue_cols: List[str]) -> Dict[str, Any]:
-        """Prévoit les revenus futurs"""
-        forecast = {
+        """Prévoit les revenus futurs"""        forecast = {
             'revenue_predictions': {},
             'growth_potential': {},
             'monetization_opportunities': []
@@ -703,8 +683,7 @@ class AnalyticsProcessor(BaseProcessor):
         return forecast
     
     def _project_trends(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Projette les tendances futures"""
-        projections = {}
+        """Projette les tendances futures"""        projections = {}
         
         try:
             for col in df.columns:
@@ -735,8 +714,7 @@ class AnalyticsProcessor(BaseProcessor):
         return projections
     
     def _perform_diagnostic_analytics(self, metrics_data: Dict[str, Any], descriptive: Dict[str, Any]) -> Dict[str, Any]:
-        """Effectue l'analyse diagnostique"""
-        diagnostic = {
+        """Effectue l'analyse diagnostique"""        diagnostic = {
             'performance_drivers': {},
             'bottleneck_analysis': {},
             'success_factors': {},
@@ -784,16 +762,14 @@ class AnalyticsProcessor(BaseProcessor):
         return diagnostic
     
     def _is_actionable_metric(self, metric: str) -> bool:
-        """Détermine si une métrique est actionnable"""
-        actionable_metrics = [
+        """Détermine si une métrique est actionnable"""        actionable_metrics = [
             'posts', 'content_frequency', 'hashtags', 'posting_time',
             'engagement_rate', 'response_time', 'collaboration_rate'
         ]
         return any(action in metric.lower() for action in actionable_metrics)
     
     def _perform_prescriptive_analytics(self, descriptive: Dict, predictive: Dict, diagnostic: Dict) -> Dict[str, Any]:
-        """Effectue l'analyse prescriptive"""
-        prescriptive = {
+        """Effectue l'analyse prescriptive"""        prescriptive = {
             'optimization_recommendations': [],
             'resource_allocation': {},
             'risk_mitigation': [],
@@ -878,8 +854,7 @@ class AnalyticsProcessor(BaseProcessor):
         return prescriptive
     
     def _get_mitigation_strategy(self, metric: str) -> str:
-        """Obtient une stratégie d'atténuation pour une métrique"""
-        mitigation_strategies = {
+        """Obtient une stratégie d'atténuation pour une métrique"""        mitigation_strategies = {
             'engagement': 'Increase content interactivity and community engagement',
             'followers': 'Improve content quality and posting consistency',
             'reach': 'Optimize posting times and use trending hashtags',
@@ -897,8 +872,7 @@ class AnalyticsProcessor(BaseProcessor):
         return f'Analyze root causes and implement targeted improvements for {metric}'
     
     def _detect_anomalies(self, metrics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Détecte les anomalies dans les métriques"""
-        anomalies = {
+        """Détecte les anomalies dans les métriques"""        anomalies = {
             'detected_anomalies': [],
             'anomaly_summary': {},
             'severity_assessment': {}
@@ -968,8 +942,7 @@ class AnalyticsProcessor(BaseProcessor):
         return anomalies
     
     def _assess_anomaly_severity(self, metric: str, anomalies: pd.Series, normal_data: pd.Series) -> str:
-        """Évalue la sévérité des anomalies"""
-        if len(anomalies) == 0:
+        """Évalue la sévérité des anomalies"""        if len(anomalies) == 0:
             return 'none'
         
         # Calculate deviation from normal
@@ -989,8 +962,7 @@ class AnalyticsProcessor(BaseProcessor):
             return 'low'
     
     def _suggest_anomaly_causes(self, metric: str, anomalies: pd.Series, normal_data: pd.Series) -> List[str]:
-        """Suggère les causes potentielles des anomalies"""
-        causes = []
+        """Suggère les causes potentielles des anomalies"""        causes = []
         
         # Determine if anomalies are spikes or drops
         normal_mean = normal_data.mean()
@@ -1024,8 +996,7 @@ class AnalyticsProcessor(BaseProcessor):
         return causes[:4]  # Return top 4 potential causes
     
     def _perform_benchmarking(self, descriptive: Dict, platforms: List[str]) -> Dict[str, Any]:
-        """Compare les performances avec les benchmarks industrie"""
-        benchmarking = {
+        """Compare les performances avec les benchmarks industrie"""        benchmarking = {
             'platform_comparisons': {},
             'performance_gaps': {},
             'competitive_position': {},
@@ -1084,8 +1055,7 @@ class AnalyticsProcessor(BaseProcessor):
         return benchmarking
     
     def _determine_creator_tier(self, followers: int) -> str:
-        """Détermine le tier du créateur basé sur les followers"""
-        if followers < 10000:
+        """Détermine le tier du créateur basé sur les followers"""        if followers < 10000:
             return 'micro'
         elif followers < 1000000:
             return 'macro'
@@ -1093,8 +1063,7 @@ class AnalyticsProcessor(BaseProcessor):
             return 'mega'
     
     def _assess_competitive_position(self, platform_comparisons: Dict) -> Dict[str, Any]:
-        """Évalue la position concurrentielle globale"""
-        position = {
+        """Évalue la position concurrentielle globale"""        position = {
             'overall_status': 'unknown',
             'strengths': [],
             'weaknesses': [],
@@ -1136,8 +1105,7 @@ class AnalyticsProcessor(BaseProcessor):
         return position
     
     def _generate_visualizations(self, descriptive: Dict, predictive: Dict) -> Dict[str, Any]:
-        """Génère les visualisations des données"""
-        visualizations = {
+        """Génère les visualisations des données"""        visualizations = {
             'charts_generated': [],
             'chart_urls': {},
             'visualization_summary': {}
@@ -1200,8 +1168,7 @@ class AnalyticsProcessor(BaseProcessor):
         return visualizations
     
     def _extract_insights(self, analytics_result: Dict[str, Any]) -> List[str]:
-        """Extrait les insights clés des analyses"""
-        insights = []
+        """Extrait les insights clés des analyses"""        insights = []
         
         try:
             # Insights from trends
@@ -1246,8 +1213,7 @@ class AnalyticsProcessor(BaseProcessor):
         return insights[:8]  # Return top 8 insights
     
     def _generate_recommendations(self, analytics_result: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Génère des recommandations basées sur l'analyse"""
-        recommendations = []
+        """Génère des recommandations basées sur l'analyse"""        recommendations = []
         
         try:
             # Get prescriptive analytics
@@ -1310,8 +1276,7 @@ class AnalyticsProcessor(BaseProcessor):
         return recommendations[:6]  # Return top 6 recommendations
     
     def validate_input(self, input_data: Any) -> bool:
-        """Valide les données d'entrée pour l'analyse"""
-        if not isinstance(input_data, dict):
+        """Valide les données d'entrée pour l'analyse"""        if not isinstance(input_data, dict):
             return False
         
         # User ID and metrics data are required
@@ -1326,16 +1291,14 @@ class AnalyticsProcessor(BaseProcessor):
 
 
 class AsyncAnalyticsProcessor(AsyncBaseProcessor):
-    """Version asynchrone du processeur d'analytics"""
-    
+    """Version asynchrone du processeur d'analytics"""    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.sync_processor = AnalyticsProcessor(config)
         self.executor = ThreadPoolExecutor(max_workers=4)
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Traitement asynchrone des analytics"""
-        loop = asyncio.get_event_loop()
+        """Traitement asynchrone des analytics"""        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
             self.sync_processor.process_with_stats, 
@@ -1343,5 +1306,4 @@ class AsyncAnalyticsProcessor(AsyncBaseProcessor):
         )
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Validation asynchrone"""
-        return self.sync_processor.validate_input(input_data)
+        """Validation asynchrone"""        return self.sync_processor.validate_input(input_data)

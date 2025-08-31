@@ -1,5 +1,4 @@
-"""
-Distribution Channels Database Module - Enterprise Multi-Platform Distribution Channel Management
+"""Distribution Channels Database Module - Enterprise Multi-Platform Distribution Channel Management
 
 Advanced database system for managing intelligent distribution channels, routing optimization,
 and platform-specific content delivery across the IA Influencer Agent ecosystem.
@@ -15,9 +14,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Team Specialties: Lead AI Developer + Senior Backend Engineer + Database Administrator + 
 Security Specialist + Microservices Architect + ML Engineer + Platform Integration Expert
-"""
-
-import asyncio
+"""import asyncio
 import json
 import uuid
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -43,8 +40,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class DistributionChannelType(str, Enum):
-    """Distribution channel types"""
-    SOCIAL_MEDIA = "social_media"
+    """Distribution channel types"""    SOCIAL_MEDIA = "social_media"
     STREAMING_PLATFORM = "streaming_platform"
     CONTENT_PLATFORM = "content_platform"
     COLLABORATION_NETWORK = "collaboration_network"
@@ -52,8 +48,7 @@ class DistributionChannelType(str, Enum):
     ENTERPRISE_API = "enterprise_api"
 
 class ChannelStatus(str, Enum):
-    """Channel operational status"""
-    ACTIVE = "active"
+    """Channel operational status"""    ACTIVE = "active"
     INACTIVE = "inactive"
     MAINTENANCE = "maintenance"
     ERROR = "error"
@@ -61,8 +56,7 @@ class ChannelStatus(str, Enum):
     SUSPENDED = "suspended"
 
 class PriorityLevel(str, Enum):
-    """Channel priority levels"""
-    CRITICAL = "critical"
+    """Channel priority levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -70,8 +64,7 @@ class PriorityLevel(str, Enum):
 
 @dataclass
 class ChannelMetrics:
-    """Channel performance metrics"""
-    success_rate: float = 0.0
+    """Channel performance metrics"""    success_rate: float = 0.0
     average_response_time: float = 0.0
     total_distributions: int = 0
     failed_distributions: int = 0
@@ -82,8 +75,7 @@ class ChannelMetrics:
 
 @dataclass
 class ChannelCapabilities:
-    """Channel technical capabilities"""
-    max_file_size: int = 0
+    """Channel technical capabilities"""    max_file_size: int = 0
     supported_formats: List[str] = field(default_factory=list)
     max_concurrent_uploads: int = 1
     supports_scheduling: bool = False
@@ -93,8 +85,7 @@ class ChannelCapabilities:
     requires_authentication: bool = True
 
 class DistributionChannel(Base):
-    """Distribution channel database model"""
-    __tablename__ = "distribution_channels"
+    """Distribution channel database model"""    __tablename__ = "distribution_channels"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     channel_name = Column(String(100), nullable=False, unique=True)
@@ -126,8 +117,7 @@ class DistributionChannel(Base):
     tags = Column(ARRAY(String))
 
 class ChannelRouting(Base):
-    """Channel routing configuration model"""
-    __tablename__ = "channel_routing"
+    """Channel routing configuration model"""    __tablename__ = "channel_routing"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     channel_id = Column(UUID(as_uuid=True), ForeignKey('distribution_channels.id'), nullable=False)
@@ -141,8 +131,7 @@ class ChannelRouting(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class ChannelPerformance(Base):
-    """Channel performance tracking model"""
-    __tablename__ = "channel_performance"
+    """Channel performance tracking model"""    __tablename__ = "channel_performance"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     channel_id = Column(UUID(as_uuid=True), ForeignKey('distribution_channels.id'), nullable=False)
@@ -170,8 +159,7 @@ class ChannelPerformance(Base):
 
 # Pydantic Models for API
 class ChannelConfigRequest(BaseModel):
-    """Channel configuration request model"""
-    channel_name: str = Field(..., min_length=1, max_length=100)
+    """Channel configuration request model"""    channel_name: str = Field(..., min_length=1, max_length=100)
     channel_type: DistributionChannelType
     platform_id: str = Field(..., min_length=1, max_length=100)
     priority_level: PriorityLevel = PriorityLevel.MEDIUM
@@ -182,8 +170,7 @@ class ChannelConfigRequest(BaseModel):
     tags: Optional[List[str]] = None
 
 class ChannelResponse(BaseModel):
-    """Channel response model"""
-    id: str
+    """Channel response model"""    id: str
     channel_name: str
     channel_type: str
     platform_id: str
@@ -195,8 +182,7 @@ class ChannelResponse(BaseModel):
     updated_at: datetime
 
 class DistributionChannelManager:
-    """Enterprise distribution channel management system"""
-    
+    """Enterprise distribution channel management system"""    
     def __init__(self, database_url: str, redis_url: str):
         self.database_url = database_url
         self.redis_url = redis_url
@@ -205,8 +191,7 @@ class DistributionChannelManager:
         self.redis_client = None
         
     async def initialize(self):
-        """Initialize database connections and create tables"""
-        try:
+        """Initialize database connections and create tables"""        try:
             self.engine = create_async_engine(
                 self.database_url,
                 pool_size=20,
@@ -240,8 +225,7 @@ class DistributionChannelManager:
 
     @asynccontextmanager
     async def get_session(self):
-        """Get async database session"""
-        async with self.session_factory() as session:
+        """Get async database session"""        async with self.session_factory() as session:
             try:
                 yield session
                 await session.commit()
@@ -256,8 +240,7 @@ class DistributionChannelManager:
         config: ChannelConfigRequest,
         user_id: str
     ) -> Dict[str, Any]:
-        """Create new distribution channel"""
-        try:
+        """Create new distribution channel"""        try:
             async with self.get_session() as session:
                 # Validate channel uniqueness
                 existing = await self._get_channel_by_name(session, config.channel_name)
@@ -309,8 +292,7 @@ class DistributionChannelManager:
         destination_config: Dict[str, Any],
         priority_score: float = 0.5
     ) -> Dict[str, Any]:
-        """Configure channel routing rules"""
-        try:
+        """Configure channel routing rules"""        try:
             async with self.get_session() as session:
                 # Validate channel exists
                 channel = await self._get_channel_by_id(session, channel_id)
@@ -351,8 +333,7 @@ class DistributionChannelManager:
         target_audience: Dict[str, Any],
         business_criteria: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Optimize channel selection using AI algorithms"""
-        try:
+        """Optimize channel selection using AI algorithms"""        try:
             # Get available channels
             async with self.get_session() as session:
                 channels = await self._get_active_channels(session)
@@ -397,8 +378,7 @@ class DistributionChannelManager:
         self,
         channel_id: str
     ) -> Dict[str, Any]:
-        """Monitor channel health and performance"""
-        try:
+        """Monitor channel health and performance"""        try:
             async with self.get_session() as session:
                 channel = await self._get_channel_by_id(session, channel_id)
                 if not channel:
@@ -447,8 +427,7 @@ class DistributionChannelManager:
         channel_id: str,
         time_range: Dict[str, datetime]
     ) -> Dict[str, Any]:
-        """Get comprehensive channel analytics"""
-        try:
+        """Get comprehensive channel analytics"""        try:
             async with self.get_session() as session:
                 # Get channel info
                 channel = await self._get_channel_by_id(session, channel_id)
@@ -491,32 +470,28 @@ class DistributionChannelManager:
 
     # Helper Methods
     async def _get_channel_by_name(self, session: AsyncSession, name: str):
-        """Get channel by name"""
-        from sqlalchemy import select
+        """Get channel by name"""        from sqlalchemy import select
         result = await session.execute(
             select(DistributionChannel).where(DistributionChannel.channel_name == name)
         )
         return result.scalar_one_or_none()
 
     async def _get_channel_by_id(self, session: AsyncSession, channel_id: str):
-        """Get channel by ID"""
-        from sqlalchemy import select
+        """Get channel by ID"""        from sqlalchemy import select
         result = await session.execute(
             select(DistributionChannel).where(DistributionChannel.id == uuid.UUID(channel_id))
         )
         return result.scalar_one_or_none()
 
     async def _get_active_channels(self, session: AsyncSession):
-        """Get all active channels"""
-        from sqlalchemy import select
+        """Get all active channels"""        from sqlalchemy import select
         result = await session.execute(
             select(DistributionChannel).where(DistributionChannel.status == ChannelStatus.ACTIVE)
         )
         return result.scalars().all()
 
     async def _initialize_channel_performance(self, session: AsyncSession, channel_id: uuid.UUID):
-        """Initialize performance tracking for new channel"""
-        performance = ChannelPerformance(
+        """Initialize performance tracking for new channel"""        performance = ChannelPerformance(
             channel_id=channel_id,
             response_time_ms=0.0,
             success_rate=1.0,
@@ -535,8 +510,7 @@ class DistributionChannelManager:
         session.add(performance)
 
     async def _cache_channel_config(self, channel_id: uuid.UUID, channel: DistributionChannel):
-        """Cache channel configuration in Redis"""
-        config_data = {
+        """Cache channel configuration in Redis"""        config_data = {
             "id": str(channel.id),
             "name": channel.channel_name,
             "type": channel.channel_type,
@@ -553,8 +527,7 @@ class DistributionChannelManager:
         )
 
     async def _update_routing_cache(self, channel_id: str, routing: ChannelRouting):
-        """Update routing cache"""
-        routing_key = f"channel:routing:{channel_id}"
+        """Update routing cache"""        routing_key = f"channel:routing:{channel_id}"
         routing_data = {
             "id": str(routing.id),
             "content_type": routing.content_type,
@@ -573,8 +546,7 @@ class DistributionChannelManager:
         target_audience: Dict[str, Any],
         business_criteria: Dict[str, Any]
     ) -> float:
-        """Calculate channel compatibility score"""
-        score = 0.0
+        """Calculate channel compatibility score"""        score = 0.0
         
         # Content compatibility (30%)
         content_score = await self._score_content_compatibility(channel, content_metadata)
@@ -603,8 +575,7 @@ class DistributionChannelManager:
         channel: DistributionChannel,
         content_metadata: Dict[str, Any]
     ) -> float:
-        """Score content compatibility with channel"""
-        capabilities = channel.channel_capabilities or {}
+        """Score content compatibility with channel"""        capabilities = channel.channel_capabilities or {}
         
         # Check format support
         content_format = content_metadata.get("format", "").lower()
@@ -628,8 +599,7 @@ class DistributionChannelManager:
         channel: DistributionChannel,
         target_audience: Dict[str, Any]
     ) -> float:
-        """Score audience alignment with channel"""
-        # Get channel audience data from analytics
+        """Score audience alignment with channel"""        # Get channel audience data from analytics
         channel_audience = await self._get_channel_audience_profile(channel.id)
         
         if not channel_audience:
@@ -656,8 +626,7 @@ class DistributionChannelManager:
         return (demo_score + interest_score + behavior_score) / 3.0
 
     async def _score_performance_history(self, channel: DistributionChannel) -> float:
-        """Score channel based on historical performance"""
-        metrics = channel.performance_metrics or {}
+        """Score channel based on historical performance"""        metrics = channel.performance_metrics or {}
         
         success_rate = metrics.get("success_rate", 0.0)
         engagement_rate = metrics.get("engagement_rate", 0.0)
@@ -670,8 +639,7 @@ class DistributionChannelManager:
         channel: DistributionChannel,
         business_criteria: Dict[str, Any]
     ) -> float:
-        """Score channel cost efficiency"""
-        metrics = channel.performance_metrics or {}
+        """Score channel cost efficiency"""        metrics = channel.performance_metrics or {}
         cost_per_distribution = metrics.get("cost_per_distribution", 0.0)
         revenue_generated = metrics.get("revenue_generated", 0.0)
         
@@ -692,8 +660,7 @@ class DistributionChannelManager:
         channel: DistributionChannel,
         business_criteria: Dict[str, Any]
     ) -> float:
-        """Score channel based on platform priority"""
-        platform_priorities = business_criteria.get("platform_priorities", {})
+        """Score channel based on platform priority"""        platform_priorities = business_criteria.get("platform_priorities", {})
         platform_score = platform_priorities.get(channel.platform_id, 0.5)
         
         # Adjust for channel priority level
@@ -708,8 +675,7 @@ class DistributionChannelManager:
         return platform_score * priority_multiplier
 
     async def _perform_health_checks(self, channel: DistributionChannel) -> Dict[str, Any]:
-        """Perform comprehensive health checks"""
-        health_status = {}
+        """Perform comprehensive health checks"""        health_status = {}
         
         # API connectivity check
         if channel.api_endpoint:
@@ -733,8 +699,7 @@ class DistributionChannelManager:
         health_status: Dict[str, Any],
         performance: Dict[str, Any]
     ) -> float:
-        """Calculate overall health score"""
-        scores = []
+        """Calculate overall health score"""        scores = []
         
         # Health check scores
         for check, status in health_status.items():
@@ -757,8 +722,7 @@ class DistributionChannelManager:
         content_metadata: Dict[str, Any],
         score: float
     ) -> str:
-        """Generate human-readable reasoning for channel selection"""
-        reasons = []
+        """Generate human-readable reasoning for channel selection"""        reasons = []
         
         if score > 0.8:
             reasons.append("Excellent compatibility with content and audience")
@@ -780,8 +744,7 @@ class DistributionChannelManager:
         channel: DistributionChannel,
         content_metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Predict content performance on channel"""
-        metrics = channel.performance_metrics or {}
+        """Predict content performance on channel"""        metrics = channel.performance_metrics or {}
         
         # Base predictions on historical data
         base_engagement = metrics.get("engagement_rate", 0.05)
@@ -807,8 +770,7 @@ class DistributionChannelManager:
     # Due to length constraints, implementing remaining helper methods
     
     async def cleanup(self):
-        """Cleanup resources"""
-        if self.redis_client:
+        """Cleanup resources"""        if self.redis_client:
             await self.redis_client.close()
         if self.engine:
             await self.engine.dispose()

@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
-"""
-Platform Integration Deployment Manager
+"""Platform Integration Deployment Manager
 Handles deployment of platform APIs integration for multi-platform content monitoring
-"""
-
-import os
+"""import os
 import sys
 import time
 import json
@@ -36,8 +33,7 @@ logger = logging.getLogger(__name__)
 
 
 class SupportedPlatform(Enum):
-    """Supported platforms for integration"""
-    SPOTIFY = "spotify"
+    """Supported platforms for integration"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -51,8 +47,7 @@ class SupportedPlatform(Enum):
 
 
 class IntegrationType(Enum):
-    """Type of platform integration"""
-    API_OFFICIAL = "api_official"
+    """Type of platform integration"""    API_OFFICIAL = "api_official"
     API_UNOFFICIAL = "api_unofficial"
     WEB_SCRAPING = "web_scraping"
     RSS_FEED = "rss_feed"
@@ -60,16 +55,14 @@ class IntegrationType(Enum):
 
 
 class MonitoringMode(Enum):
-    """Content monitoring mode"""
-    PASSIVE_MONITORING = "passive_monitoring"
+    """Content monitoring mode"""    PASSIVE_MONITORING = "passive_monitoring"
     ACTIVE_SCANNING = "active_scanning"
     REAL_TIME_ALERTS = "real_time_alerts"
     BATCH_PROCESSING = "batch_processing"
 
 
 class DataCollectionScope(Enum):
-    """Scope of data collection"""
-    METADATA_ONLY = "metadata_only"
+    """Scope of data collection"""    METADATA_ONLY = "metadata_only"
     FULL_CONTENT = "full_content"
     ANALYTICS_DATA = "analytics_data"
     USER_INTERACTIONS = "user_interactions"
@@ -78,8 +71,7 @@ class DataCollectionScope(Enum):
 
 @dataclass
 class PlatformIntegrationConfig:
-    """Platform integration configuration"""
-    platform: SupportedPlatform
+    """Platform integration configuration"""    platform: SupportedPlatform
     integration_type: IntegrationType
     monitoring_mode: MonitoringMode
     data_scope: DataCollectionScope
@@ -92,8 +84,7 @@ class PlatformIntegrationConfig:
 
 @dataclass
 class PlatformDeploymentConfig:
-    """Platform deployment configuration"""
-    platforms: List[PlatformIntegrationConfig]
+    """Platform deployment configuration"""    platforms: List[PlatformIntegrationConfig]
     global_settings: Dict[str, Any]
     monitoring_config: Dict[str, Any]
     storage_config: Dict[str, Any]
@@ -103,8 +94,7 @@ class PlatformDeploymentConfig:
 
 @dataclass
 class PlatformStatus:
-    """Status of platform integration"""
-    platform: SupportedPlatform
+    """Status of platform integration"""    platform: SupportedPlatform
     status: str
     last_sync: datetime
     api_health: bool
@@ -115,14 +105,11 @@ class PlatformStatus:
 
 
 class PlatformIntegrationDeploymentManager:
-    """
-    Manages deployment of platform integration services for content monitoring
+    """    Manages deployment of platform integration services for content monitoring
     and revenue tracking across multiple platforms
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize platform integration deployment manager"""
-        self.config_path = config_path or "/etc/ia-influencer/platform-integration-deployment.yaml"
+        """Initialize platform integration deployment manager"""        self.config_path = config_path or "/etc/ia-influencer/platform-integration-deployment.yaml"
         self.config = self._load_configuration()
         self.docker_client = docker.from_env()
         self.redis_client = redis.Redis(
@@ -137,8 +124,7 @@ class PlatformIntegrationDeploymentManager:
         self._initialize_platform_configurations()
         
     def _load_configuration(self) -> Dict[str, Any]:
-        """Load platform integration deployment configuration"""
-        try:
+        """Load platform integration deployment configuration"""        try:
             with open(self.config_path, 'r') as f:
                 config = yaml.safe_load(f)
             logger.info(f"Platform integration configuration loaded from {self.config_path}")
@@ -148,8 +134,7 @@ class PlatformIntegrationDeploymentManager:
             return self._get_default_platform_config()
     
     def _get_default_platform_config(self) -> Dict[str, Any]:
-        """Get default platform integration configuration"""
-        return {
+        """Get default platform integration configuration"""        return {
             'platforms': {
                 'spotify': {
                     'enabled': True,
@@ -293,8 +278,7 @@ class PlatformIntegrationDeploymentManager:
         }
     
     def _initialize_platform_configurations(self) -> None:
-        """Initialize platform-specific configurations"""
-        platforms_config = self.config.get('platforms', {})
+        """Initialize platform-specific configurations"""        platforms_config = self.config.get('platforms', {})
         
         for platform, config in platforms_config.items():
             if config.get('enabled', False):
@@ -313,8 +297,7 @@ class PlatformIntegrationDeploymentManager:
                 logger.info(f"Platform configuration initialized: {platform}")
     
     def deploy_platform_integrations(self, deployment_config: PlatformDeploymentConfig) -> str:
-        """Deploy platform integration services"""
-        deployment_id = f"platform-integration-{int(time.time())}"
+        """Deploy platform integration services"""        deployment_id = f"platform-integration-{int(time.time())}"
         
         try:
             logger.info(f"Starting platform integration deployment: {deployment_id}")
@@ -351,8 +334,7 @@ class PlatformIntegrationDeploymentManager:
             raise
     
     def _deploy_shared_infrastructure(self, config: PlatformDeploymentConfig) -> None:
-        """Deploy shared infrastructure for platform integrations"""
-        logger.info("Deploying shared infrastructure...")
+        """Deploy shared infrastructure for platform integrations"""        logger.info("Deploying shared infrastructure...")
         
         # Deploy API gateway
         gateway_manifest = self._create_api_gateway_manifest(config)
@@ -383,8 +365,7 @@ class PlatformIntegrationDeploymentManager:
         self._deploy_proxy_service(config.global_settings)
     
     def _deploy_platform_integration(self, platform_config: PlatformIntegrationConfig, deployment_config: PlatformDeploymentConfig) -> None:
-        """Deploy specific platform integration"""
-        logger.info(f"Deploying platform integration: {platform_config.platform.value}")
+        """Deploy specific platform integration"""        logger.info(f"Deploying platform integration: {platform_config.platform.value}")
         
         # Create deployment manifest
         deployment_manifest = self._create_platform_integration_manifest(platform_config, deployment_config)
@@ -412,8 +393,7 @@ class PlatformIntegrationDeploymentManager:
             raise
     
     def _deploy_platform_orchestrator(self, config: PlatformDeploymentConfig) -> None:
-        """Deploy platform orchestrator for coordinating integrations"""
-        logger.info("Deploying platform orchestrator...")
+        """Deploy platform orchestrator for coordinating integrations"""        logger.info("Deploying platform orchestrator...")
         
         orchestrator_manifest = self._create_platform_orchestrator_manifest(config)
         
@@ -437,8 +417,7 @@ class PlatformIntegrationDeploymentManager:
             raise
     
     def _deploy_compliance_system(self, config: PlatformDeploymentConfig) -> None:
-        """Deploy compliance monitoring system"""
-        logger.info("Deploying compliance system...")
+        """Deploy compliance monitoring system"""        logger.info("Deploying compliance system...")
         
         compliance_manifest = self._create_compliance_system_manifest(config)
         
@@ -455,8 +434,7 @@ class PlatformIntegrationDeploymentManager:
             raise
     
     def _initialize_integration_workflows(self, config: PlatformDeploymentConfig) -> None:
-        """Initialize integration workflows and automation"""
-        logger.info("Initializing integration workflows...")
+        """Initialize integration workflows and automation"""        logger.info("Initializing integration workflows...")
         
         # Setup data collection workflows
         self._setup_data_collection_workflows(config.platforms)
@@ -471,8 +449,7 @@ class PlatformIntegrationDeploymentManager:
         self._setup_alert_workflows(config.monitoring_config)
     
     def _setup_data_collection_workflows(self, platforms: List[PlatformIntegrationConfig]) -> None:
-        """Setup data collection workflows for each platform"""
-        logger.info("Setting up data collection workflows...")
+        """Setup data collection workflows for each platform"""        logger.info("Setting up data collection workflows...")
         
         for platform_config in platforms:
             workflow_config = {
@@ -493,8 +470,7 @@ class PlatformIntegrationDeploymentManager:
         logger.info("Data collection workflows configured")
     
     def _create_platform_integration_manifest(self, platform_config: PlatformIntegrationConfig, deployment_config: PlatformDeploymentConfig) -> Dict[str, Any]:
-        """Create platform integration deployment manifest"""
-        platform_name = platform_config.platform.value.replace('_', '-')
+        """Create platform integration deployment manifest"""        platform_name = platform_config.platform.value.replace('_', '-')
         
         # Environment variables
         env_vars = [
@@ -585,8 +561,7 @@ class PlatformIntegrationDeploymentManager:
         }
     
     def _create_platform_orchestrator_manifest(self, config: PlatformDeploymentConfig) -> Dict[str, Any]:
-        """Create platform orchestrator deployment manifest"""
-        return {
+        """Create platform orchestrator deployment manifest"""        return {
             'apiVersion': 'apps/v1',
             'kind': 'Deployment',
             'metadata': {
@@ -638,8 +613,7 @@ class PlatformIntegrationDeploymentManager:
         }
     
     def get_platform_integration_status(self) -> Dict[str, Any]:
-        """Get comprehensive platform integration status"""
-        status = {
+        """Get comprehensive platform integration status"""        status = {
             'timestamp': datetime.now().isoformat(),
             'platforms': self._get_platforms_status(),
             'orchestrator': self._get_orchestrator_status(),
@@ -660,8 +634,7 @@ class PlatformIntegrationDeploymentManager:
         return status
     
     def _get_platforms_status(self) -> Dict[str, Any]:
-        """Get status of all platform integrations"""
-        platforms_status = {}
+        """Get status of all platform integrations"""        platforms_status = {}
         
         for platform in SupportedPlatform:
             platform_name = platform.value.replace('_', '-')
@@ -708,8 +681,7 @@ class PlatformIntegrationDeploymentManager:
         return platforms_status
     
     def _get_platform_status(self, platform: SupportedPlatform) -> PlatformStatus:
-        """Get detailed status for specific platform"""
-        # In production, these would be real metrics from monitoring system
+        """Get detailed status for specific platform"""        # In production, these would be real metrics from monitoring system
         return PlatformStatus(
             platform=platform,
             status="active",
@@ -722,8 +694,7 @@ class PlatformIntegrationDeploymentManager:
         )
     
     def _verify_platform_deployment(self, deployment_id: str) -> bool:
-        """Verify platform integration deployment"""
-        logger.info(f"Verifying platform integration deployment: {deployment_id}")
+        """Verify platform integration deployment"""        logger.info(f"Verifying platform integration deployment: {deployment_id}")
         
         try:
             status = self.get_platform_integration_status()
@@ -747,8 +718,7 @@ class PlatformIntegrationDeploymentManager:
             return False
     
     def _rollback_platform_deployment(self, deployment_id: str) -> None:
-        """Rollback failed platform deployment"""
-        logger.info(f"Rolling back platform integration deployment: {deployment_id}")
+        """Rollback failed platform deployment"""        logger.info(f"Rolling back platform integration deployment: {deployment_id}")
         
         try:
             # Delete failed deployments
@@ -783,8 +753,7 @@ class PlatformIntegrationDeploymentManager:
 
 
 def main():
-    """Main function for CLI usage"""
-    import argparse
+    """Main function for CLI usage"""    import argparse
     
     parser = argparse.ArgumentParser(description='Platform Integration Deployment Manager')
     parser.add_argument('--config', help='Configuration file path')

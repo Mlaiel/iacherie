@@ -1,5 +1,4 @@
-"""
-Content Distribution Database Model
+"""Content Distribution Database Model
 
 Enterprise-grade SQLAlchemy model for managing multi-platform content distribution,
 scheduling, syndication, and cross-platform analytics.
@@ -23,9 +22,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-
-from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric, ARRAY
+"""from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID, JSONB
@@ -38,8 +35,7 @@ Base = declarative_base()
 
 
 class Platform(Enum):
-    """Social media and distribution platforms"""
-    SPOTIFY = "spotify"
+    """Social media and distribution platforms"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -73,8 +69,7 @@ class Platform(Enum):
 
 
 class DistributionStatus(Enum):
-    """Distribution status enumeration"""
-    DRAFT = "draft"
+    """Distribution status enumeration"""    DRAFT = "draft"
     SCHEDULED = "scheduled"
     PENDING = "pending"
     PROCESSING = "processing"
@@ -90,8 +85,7 @@ class DistributionStatus(Enum):
 
 
 class DistributionStrategy(Enum):
-    """Distribution strategy types"""
-    IMMEDIATE = "immediate"
+    """Distribution strategy types"""    IMMEDIATE = "immediate"
     SCHEDULED = "scheduled"
     OPTIMAL_TIMING = "optimal_timing"
     SEQUENTIAL = "sequential"
@@ -105,8 +99,7 @@ class DistributionStrategy(Enum):
 
 
 class ContentFormat(Enum):
-    """Content format adaptations"""
-    ORIGINAL = "original"
+    """Content format adaptations"""    ORIGINAL = "original"
     SQUARE = "square"
     VERTICAL = "vertical"
     HORIZONTAL = "horizontal"
@@ -123,8 +116,7 @@ class ContentFormat(Enum):
 
 
 class OptimizationType(Enum):
-    """Content optimization types"""
-    NONE = "none"
+    """Content optimization types"""    NONE = "none"
     RESIZE = "resize"
     COMPRESS = "compress"
     TRANSCODE = "transcode"
@@ -140,8 +132,7 @@ class OptimizationType(Enum):
 
 
 class SyncStatus(Enum):
-    """Synchronization status"""
-    SYNCED = "synced"
+    """Synchronization status"""    SYNCED = "synced"
     OUT_OF_SYNC = "out_of_sync"
     SYNC_PENDING = "sync_pending"
     SYNC_FAILED = "sync_failed"
@@ -151,13 +142,11 @@ class SyncStatus(Enum):
 
 
 class ContentDistribution(Base):
-    """
-    Enterprise Content Distribution Model
+    """    Enterprise Content Distribution Model
     
     Comprehensive multi-platform content distribution with intelligent scheduling,
     format optimization, analytics tracking, and cross-platform synchronization.
-    """
-    __tablename__ = 'content_distributions'
+    """    __tablename__ = 'content_distributions'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -362,8 +351,7 @@ class ContentDistribution(Base):
         scheduled_at: datetime,
         config: Dict[str, Any]
     ) -> 'ContentDistribution':
-        """Create scheduled distribution"""
-        return cls(
+        """Create scheduled distribution"""        return cls(
             content_id=content_id,
             user_id=user_id,
             platform=platform,
@@ -384,8 +372,7 @@ class ContentDistribution(Base):
         platform: Platform,
         config: Dict[str, Any]
     ) -> 'ContentDistribution':
-        """Create immediate distribution"""
-        return cls(
+        """Create immediate distribution"""        return cls(
             content_id=content_id,
             user_id=user_id,
             platform=platform,
@@ -398,8 +385,7 @@ class ContentDistribution(Base):
         )
     
     def update_engagement_metrics(self, metrics: Dict[str, Any]) -> None:
-        """Update engagement metrics"""
-        self.views_count = metrics.get('views', self.views_count)
+        """Update engagement metrics"""        self.views_count = metrics.get('views', self.views_count)
         self.likes_count = metrics.get('likes', self.likes_count)
         self.shares_count = metrics.get('shares', self.shares_count)
         self.comments_count = metrics.get('comments', self.comments_count)
@@ -414,16 +400,14 @@ class ContentDistribution(Base):
         self.updated_at = datetime.now(timezone.utc)
     
     def mark_as_published(self, platform_post_id: str, platform_url: str) -> None:
-        """Mark distribution as published"""
-        self.status = DistributionStatus.PUBLISHED
+        """Mark distribution as published"""        self.status = DistributionStatus.PUBLISHED
         self.published_at = datetime.now(timezone.utc)
         self.platform_post_id = platform_post_id
         self.platform_url = platform_url
         self.updated_at = datetime.now(timezone.utc)
     
     def mark_as_failed(self, error_message: str, error_details: Dict[str, Any] = None) -> None:
-        """Mark distribution as failed"""
-        self.status = DistributionStatus.FAILED
+        """Mark distribution as failed"""        self.status = DistributionStatus.FAILED
         self.error_message = error_message
         self.error_details = error_details or {}
         self.last_error_at = datetime.now(timezone.utc)
@@ -431,15 +415,13 @@ class ContentDistribution(Base):
         self.updated_at = datetime.now(timezone.utc)
     
     def can_retry(self) -> bool:
-        """Check if distribution can be retried"""
-        return (
+        """Check if distribution can be retried"""        return (
             self.status == DistributionStatus.FAILED and
             self.retry_count < self.max_retries
         )
     
     def get_performance_summary(self) -> Dict[str, Any]:
-        """Get performance summary"""
-        return {
+        """Get performance summary"""        return {
             'engagement_metrics': {
                 'views': self.views_count,
                 'likes': self.likes_count,
@@ -464,16 +446,14 @@ class ContentDistribution(Base):
         }
     
     def calculate_roi(self) -> float:
-        """Calculate return on investment"""
-        # This would include cost calculation in a real implementation
+        """Calculate return on investment"""        # This would include cost calculation in a real implementation
         if self.revenue_generated > 0:
             # Simplified ROI calculation
             return float(self.revenue_generated) * 100
         return 0.0
     
     def get_optimization_recommendations(self) -> List[str]:
-        """Get optimization recommendations based on performance"""
-        recommendations = []
+        """Get optimization recommendations based on performance"""        recommendations = []
         
         if self.engagement_rate < 2.0:
             recommendations.append("Consider improving content quality or posting time")

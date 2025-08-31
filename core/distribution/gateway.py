@@ -1,5 +1,4 @@
-"""
-Distribution Gateway - Unified API Gateway for Distribution Services
+"""Distribution Gateway - Unified API Gateway for Distribution Services
 ===================================================================
 
 Centralized gateway providing unified access to all distribution services
@@ -7,9 +6,7 @@ with authentication, rate limiting, monitoring, and service orchestration.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple, Callable
@@ -28,8 +25,7 @@ from ..core.events import EventEmitter
 
 
 class RequestMethod(Enum):
-    """HTTP request methods."""
-    GET = "GET"
+    """HTTP request methods."""    GET = "GET"
     POST = "POST"
     PUT = "PUT"
     DELETE = "DELETE"
@@ -39,8 +35,7 @@ class RequestMethod(Enum):
 
 
 class ServiceStatus(Enum):
-    """Service status enumeration."""
-    HEALTHY = "healthy"
+    """Service status enumeration."""    HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
     MAINTENANCE = "maintenance"
@@ -48,8 +43,7 @@ class ServiceStatus(Enum):
 
 
 class RateLimitType(Enum):
-    """Rate limit type enumeration."""
-    REQUESTS_PER_MINUTE = "requests_per_minute"
+    """Rate limit type enumeration."""    REQUESTS_PER_MINUTE = "requests_per_minute"
     REQUESTS_PER_HOUR = "requests_per_hour"
     REQUESTS_PER_DAY = "requests_per_day"
     CONCURRENT_REQUESTS = "concurrent_requests"
@@ -58,8 +52,7 @@ class RateLimitType(Enum):
 
 @dataclass
 class APIRequest:
-    """API request data structure."""
-    request_id: UUID = field(default_factory=uuid4)
+    """API request data structure."""    request_id: UUID = field(default_factory=uuid4)
     
     # Request details
     method: RequestMethod = RequestMethod.GET
@@ -98,8 +91,7 @@ class APIRequest:
 
 @dataclass
 class APIResponse:
-    """API response data structure."""
-    request_id: UUID
+    """API response data structure."""    request_id: UUID
     
     # Response details
     status_code: int = 200
@@ -126,8 +118,7 @@ class APIResponse:
 
 @dataclass
 class RateLimitRule:
-    """Rate limit rule configuration."""
-    rule_id: UUID = field(default_factory=uuid4)
+    """Rate limit rule configuration."""    rule_id: UUID = field(default_factory=uuid4)
     name: str = ""
     description: str = ""
     
@@ -154,8 +145,7 @@ class RateLimitRule:
 
 @dataclass
 class ServiceEndpoint:
-    """Service endpoint configuration."""
-    endpoint_id: UUID = field(default_factory=uuid4)
+    """Service endpoint configuration."""    endpoint_id: UUID = field(default_factory=uuid4)
     service_name: str = ""
     
     # Endpoint details
@@ -192,16 +182,13 @@ class ServiceEndpoint:
 
 
 class DistributionGateway:
-    """
-    Distribution Gateway Engine
+    """    Distribution Gateway Engine
     
     Unified API gateway providing centralized access to all distribution services
     with comprehensive security, monitoring, and optimization features.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize distribution gateway."""
-        self.config = config or {}
+        """Initialize distribution gateway."""        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
         # Core components
@@ -257,13 +244,11 @@ class DistributionGateway:
         }
     
     async def initialize(self) -> bool:
-        """
-        Initialize the distribution gateway.
+        """        Initialize the distribution gateway.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             self.logger.info("Initializing Distribution Gateway")
             
             # Initialize core components
@@ -299,8 +284,7 @@ class DistributionGateway:
             return False
     
     async def shutdown(self) -> None:
-        """Shutdown the distribution gateway."""
-        try:
+        """Shutdown the distribution gateway."""        try:
             self.logger.info("Shutting down Distribution Gateway")
             
             # Stop gateway server
@@ -324,16 +308,14 @@ class DistributionGateway:
             self.logger.error(f"Error during Distribution Gateway shutdown: {e}")
     
     async def handle_request(self, request: APIRequest) -> APIResponse:
-        """
-        Handle incoming API request.
+        """        Handle incoming API request.
         
         Args:
             request: API request to handle
             
         Returns:
             APIResponse: Response from handling the request
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             return self._create_error_response(
                 request.request_id, 503, "SERVICE_UNAVAILABLE", "Gateway not initialized"
             )
@@ -478,16 +460,14 @@ class DistributionGateway:
             })
     
     async def register_service_endpoint(self, endpoint: ServiceEndpoint) -> bool:
-        """
-        Register new service endpoint.
+        """        Register new service endpoint.
         
         Args:
             endpoint: Service endpoint to register
             
         Returns:
             bool: True if registration successful
-        """
-        try:
+        """        try:
             # Validate endpoint configuration
             if not endpoint.service_name or not endpoint.path:
                 raise ValueError("Service name and path are required")
@@ -525,16 +505,14 @@ class DistributionGateway:
             return False
     
     async def unregister_service_endpoint(self, endpoint_key: str) -> bool:
-        """
-        Unregister service endpoint.
+        """        Unregister service endpoint.
         
         Args:
             endpoint_key: Endpoint key to unregister
             
         Returns:
             bool: True if unregistration successful
-        """
-        try:
+        """        try:
             if endpoint_key in self.service_endpoints:
                 endpoint = self.service_endpoints[endpoint_key]
                 
@@ -567,16 +545,14 @@ class DistributionGateway:
             return False
     
     async def add_rate_limit_rule(self, rule: RateLimitRule) -> bool:
-        """
-        Add rate limit rule.
+        """        Add rate limit rule.
         
         Args:
             rule: Rate limit rule to add
             
         Returns:
             bool: True if rule added successfully
-        """
-        try:
+        """        try:
             # Validate rule
             if rule.limit_value <= 0:
                 raise ValueError("Limit value must be positive")
@@ -596,16 +572,14 @@ class DistributionGateway:
             return False
     
     async def remove_rate_limit_rule(self, rule_id: UUID) -> bool:
-        """
-        Remove rate limit rule.
+        """        Remove rate limit rule.
         
         Args:
             rule_id: Rule ID to remove
             
         Returns:
             bool: True if rule removed successfully
-        """
-        try:
+        """        try:
             if rule_id in self.rate_limit_rules:
                 rule = self.rate_limit_rules[rule_id]
                 del self.rate_limit_rules[rule_id]
@@ -621,13 +595,11 @@ class DistributionGateway:
             return False
     
     async def get_service_health(self) -> Dict[str, Any]:
-        """
-        Get overall service health status.
+        """        Get overall service health status.
         
         Returns:
             Dict containing service health information
-        """
-        try:
+        """        try:
             service_health = {}
             
             for endpoint_key, endpoint in self.service_endpoints.items():
@@ -677,13 +649,11 @@ class DistributionGateway:
             }
     
     async def get_gateway_metrics(self) -> Dict[str, Any]:
-        """
-        Get comprehensive gateway metrics.
+        """        Get comprehensive gateway metrics.
         
         Returns:
             Dict containing gateway metrics
-        """
-        try:
+        """        try:
             # Calculate additional metrics
             current_time = datetime.utcnow()
             
@@ -735,8 +705,7 @@ class DistributionGateway:
     
     # Internal implementation methods
     async def _load_service_endpoints(self) -> None:
-        """Load service endpoints configuration."""
-        # Load default distribution service endpoints
+        """Load service endpoints configuration."""        # Load default distribution service endpoints
         default_endpoints = [
             ServiceEndpoint(
                 service_name="distribution_manager",
@@ -809,8 +778,7 @@ class DistributionGateway:
         self.logger.info(f"Loaded {len(default_endpoints)} default service endpoints")
     
     async def _load_rate_limit_rules(self) -> None:
-        """Load rate limit rules configuration."""
-        default_rules = [
+        """Load rate limit rules configuration."""        default_rules = [
             RateLimitRule(
                 name="Global Request Limit",
                 description="Global rate limit for all requests",
@@ -853,8 +821,7 @@ class DistributionGateway:
         self.logger.info(f"Loaded {len(default_rules)} default rate limit rules")
     
     async def _initialize_service_discovery(self) -> None:
-        """Initialize service discovery mechanism."""
-        # Mock service discovery - in production this would integrate with 
+        """Initialize service discovery mechanism."""        # Mock service discovery - in production this would integrate with 
         # service discovery systems like Consul, etcd, or Kubernetes
         self.service_instances = {
             'distribution_manager': [
@@ -875,14 +842,12 @@ class DistributionGateway:
         }
     
     async def _initialize_circuit_breakers(self) -> None:
-        """Initialize circuit breakers for all services."""
-        for endpoint in self.service_endpoints.values():
+        """Initialize circuit breakers for all services."""        for endpoint in self.service_endpoints.values():
             if endpoint.circuit_breaker_enabled:
                 await self._initialize_endpoint_circuit_breaker(endpoint)
     
     async def _initialize_endpoint_circuit_breaker(self, endpoint: ServiceEndpoint) -> None:
-        """Initialize circuit breaker for specific endpoint."""
-        circuit_breaker_key = f"{endpoint.service_name}:{endpoint.path}"
+        """Initialize circuit breaker for specific endpoint."""        circuit_breaker_key = f"{endpoint.service_name}:{endpoint.path}"
         
         self.circuit_breakers[circuit_breaker_key] = {
             'state': 'closed',  # closed, open, half_open
@@ -898,8 +863,7 @@ class DistributionGateway:
         }
     
     async def _initialize_endpoint_load_balancer(self, endpoint: ServiceEndpoint) -> None:
-        """Initialize load balancer state for endpoint."""
-        load_balancer_key = f"{endpoint.service_name}:{endpoint.path}"
+        """Initialize load balancer state for endpoint."""        load_balancer_key = f"{endpoint.service_name}:{endpoint.path}"
         
         self.load_balancer_state[load_balancer_key] = {
             'algorithm': 'round_robin',  # round_robin, weighted, least_connections
@@ -909,25 +873,21 @@ class DistributionGateway:
         }
     
     async def _start_background_tasks(self) -> None:
-        """Start background maintenance tasks."""
-        asyncio.create_task(self._cleanup_rate_limit_counters())
+        """Start background maintenance tasks."""        asyncio.create_task(self._cleanup_rate_limit_counters())
         asyncio.create_task(self._monitor_circuit_breakers())
         asyncio.create_task(self._cleanup_response_cache())
         asyncio.create_task(self._health_check_services())
     
     async def _start_gateway_server(self) -> None:
-        """Start the gateway HTTP server."""
-        # In a real implementation, this would start an HTTP server
+        """Start the gateway HTTP server."""        # In a real implementation, this would start an HTTP server
         # For now, just log that the server would be started
         self.logger.info(f"Gateway server would start on port {self.gateway_port}")
     
     async def _stop_gateway_server(self) -> None:
-        """Stop the gateway HTTP server."""
-        self.logger.info("Gateway server would stop")
+        """Stop the gateway HTTP server."""        self.logger.info("Gateway server would stop")
     
     async def _complete_active_requests(self) -> None:
-        """Complete all active requests before shutdown."""
-        if self.active_requests:
+        """Complete all active requests before shutdown."""        if self.active_requests:
             self.logger.info(f"Waiting for {len(self.active_requests)} active requests to complete")
             
             # Wait for active requests to complete (with timeout)
@@ -941,14 +901,12 @@ class DistributionGateway:
                 self.logger.warning(f"{len(self.active_requests)} requests did not complete before timeout")
     
     async def _save_gateway_state(self) -> None:
-        """Save gateway state to persistent storage."""
-        # In production, this would save state to database or file system
+        """Save gateway state to persistent storage."""        # In production, this would save state to database or file system
         pass
     
     # Request processing methods
     async def _check_rate_limits(self, request: APIRequest) -> Dict[str, Any]:
-        """Check if request is within rate limits."""
-        current_time = datetime.utcnow()
+        """Check if request is within rate limits."""        current_time = datetime.utcnow()
         
         for rule in self.rate_limit_rules.values():
             if not rule.enabled:
@@ -984,8 +942,7 @@ class DistributionGateway:
         return {'allowed': True}
     
     async def _authenticate_request(self, request: APIRequest) -> Dict[str, Any]:
-        """Authenticate the request."""
-        try:
+        """Authenticate the request."""        try:
             # Check for JWT token
             if request.jwt_token:
                 auth_result = await self.auth_manager.validate_jwt_token(request.jwt_token)
@@ -1030,8 +987,7 @@ class DistributionGateway:
             }
     
     async def _find_service_endpoint(self, request: APIRequest) -> Optional[ServiceEndpoint]:
-        """Find matching service endpoint for request."""
-        endpoint_key = f"{request.method.value}:{request.path}"
+        """Find matching service endpoint for request."""        endpoint_key = f"{request.method.value}:{request.path}"
         
         # Exact match
         if endpoint_key in self.service_endpoints:
@@ -1047,8 +1003,7 @@ class DistributionGateway:
         return None
     
     async def _check_permissions(self, request: APIRequest, endpoint: ServiceEndpoint) -> Dict[str, Any]:
-        """Check if request has required permissions for endpoint."""
-        if not endpoint.authentication_required:
+        """Check if request has required permissions for endpoint."""        if not endpoint.authentication_required:
             return {'authorized': True}
         
         if not endpoint.required_permissions:
@@ -1067,8 +1022,7 @@ class DistributionGateway:
             }
     
     async def _check_response_cache(self, request: APIRequest, endpoint: ServiceEndpoint) -> Optional[APIResponse]:
-        """Check if response is cached."""
-        if not endpoint.cache_enabled:
+        """Check if response is cached."""        if not endpoint.cache_enabled:
             return None
         
         cache_key = self._generate_cache_key(request, endpoint)
@@ -1089,8 +1043,7 @@ class DistributionGateway:
         return None
     
     async def _check_circuit_breaker(self, endpoint: ServiceEndpoint) -> Dict[str, Any]:
-        """Check circuit breaker status for endpoint."""
-        if not endpoint.circuit_breaker_enabled:
+        """Check circuit breaker status for endpoint."""        if not endpoint.circuit_breaker_enabled:
             return {'allow_request': True}
         
         circuit_breaker_key = f"{endpoint.service_name}:{endpoint.path}"
@@ -1124,8 +1077,7 @@ class DistributionGateway:
         return {'allow_request': True}
     
     async def _route_request_to_service(self, request: APIRequest, endpoint: ServiceEndpoint) -> APIResponse:
-        """Route request to appropriate service instance."""
-        service_start_time = time.time()
+        """Route request to appropriate service instance."""        service_start_time = time.time()
         
         try:
             # Select service instance using load balancing
@@ -1172,8 +1124,7 @@ class DistributionGateway:
             )
     
     async def _select_service_instance(self, endpoint: ServiceEndpoint) -> str:
-        """Select service instance using load balancing algorithm."""
-        service_instances = self.service_instances.get(endpoint.service_name, [])
+        """Select service instance using load balancing algorithm."""        service_instances = self.service_instances.get(endpoint.service_name, [])
         
         if not service_instances:
             raise RuntimeError(f"No healthy instances available for service {endpoint.service_name}")
@@ -1198,8 +1149,7 @@ class DistributionGateway:
         return selected_instance['url']
     
     async def _update_circuit_breaker(self, endpoint: ServiceEndpoint, success: bool) -> None:
-        """Update circuit breaker state based on request result."""
-        if not endpoint.circuit_breaker_enabled:
+        """Update circuit breaker state based on request result."""        if not endpoint.circuit_breaker_enabled:
             return
         
         circuit_breaker_key = f"{endpoint.service_name}:{endpoint.path}"
@@ -1234,8 +1184,7 @@ class DistributionGateway:
         self.circuit_breakers[circuit_breaker_key] = circuit_breaker
     
     async def _cache_response(self, request: APIRequest, endpoint: ServiceEndpoint, response: APIResponse) -> None:
-        """Cache response for future requests."""
-        cache_key = self._generate_cache_key(request, endpoint)
+        """Cache response for future requests."""        cache_key = self._generate_cache_key(request, endpoint)
         
         self.response_cache[cache_key] = {
             'response': response,
@@ -1244,8 +1193,7 @@ class DistributionGateway:
         }
     
     async def _log_request_metrics(self, request: APIRequest, response: APIResponse) -> None:
-        """Log request metrics."""
-        await self.metrics_collector.record_request({
+        """Log request metrics."""        await self.metrics_collector.record_request({
             'request_id': str(request.request_id),
             'endpoint': request.endpoint,
             'method': request.method.value,
@@ -1259,8 +1207,7 @@ class DistributionGateway:
     
     # Utility methods
     def _create_error_response(self, request_id: UUID, status_code: int, error_code: str, message: str) -> APIResponse:
-        """Create error response."""
-        return APIResponse(
+        """Create error response."""        return APIResponse(
             request_id=request_id,
             status_code=status_code,
             headers={'Content-Type': 'application/json'},
@@ -1270,8 +1217,7 @@ class DistributionGateway:
         )
     
     def _rule_applies_to_request(self, rule: RateLimitRule, request: APIRequest) -> bool:
-        """Check if rate limit rule applies to request."""
-        if rule.applies_to == "global":
+        """Check if rate limit rule applies to request."""        if rule.applies_to == "global":
             return True
         elif rule.applies_to == "user" and request.user_id:
             return True
@@ -1285,8 +1231,7 @@ class DistributionGateway:
         return False
     
     def _generate_rate_limit_key(self, rule: RateLimitRule, request: APIRequest) -> str:
-        """Generate rate limit key for request."""
-        if rule.applies_to == "global":
+        """Generate rate limit key for request."""        if rule.applies_to == "global":
             return "global"
         elif rule.applies_to == "user":
             return f"user:{request.user_id}"
@@ -1300,8 +1245,7 @@ class DistributionGateway:
         return "unknown"
     
     def _generate_cache_key(self, request: APIRequest, endpoint: ServiceEndpoint) -> str:
-        """Generate cache key for request."""
-        key_parts = [
+        """Generate cache key for request."""        key_parts = [
             endpoint.path,
             request.method.value,
             json.dumps(request.query_params, sort_keys=True) if request.query_params else "",
@@ -1312,15 +1256,13 @@ class DistributionGateway:
         return hashlib.md5(cache_key.encode()).hexdigest()
     
     def _path_matches_pattern(self, request_path: str, endpoint_path: str) -> bool:
-        """Check if request path matches endpoint path pattern."""
-        # Simple pattern matching - in production this would be more sophisticated
+        """Check if request path matches endpoint path pattern."""        # Simple pattern matching - in production this would be more sophisticated
         # For now, just exact match
         return request_path == endpoint_path
     
     # Background task methods
     async def _cleanup_rate_limit_counters(self) -> None:
-        """Clean up expired rate limit counters."""
-        while self.is_initialized:
+        """Clean up expired rate limit counters."""        while self.is_initialized:
             try:
                 current_time = datetime.utcnow()
                 
@@ -1343,8 +1285,7 @@ class DistributionGateway:
                 await asyncio.sleep(300)
     
     async def _monitor_circuit_breakers(self) -> None:
-        """Monitor and update circuit breaker states."""
-        while self.is_initialized:
+        """Monitor and update circuit breaker states."""        while self.is_initialized:
             try:
                 current_time = datetime.utcnow()
                 
@@ -1367,8 +1308,7 @@ class DistributionGateway:
                 await asyncio.sleep(30)
     
     async def _cleanup_response_cache(self) -> None:
-        """Clean up expired response cache entries."""
-        while self.is_initialized:
+        """Clean up expired response cache entries."""        while self.is_initialized:
             try:
                 current_time = datetime.utcnow()
                 expired_keys = []
@@ -1390,8 +1330,7 @@ class DistributionGateway:
                 await asyncio.sleep(60)
     
     async def _health_check_services(self) -> None:
-        """Perform health checks on registered services."""
-        while self.is_initialized:
+        """Perform health checks on registered services."""        while self.is_initialized:
             try:
                 for service_name, instances in self.service_instances.items():
                     for instance in instances:
@@ -1407,8 +1346,7 @@ class DistributionGateway:
                 await asyncio.sleep(30)
     
     def get_system_status(self) -> Dict[str, Any]:
-        """Get current system status."""
-        return {
+        """Get current system status."""        return {
             'initialized': self.is_initialized,
             'gateway_port': self.gateway_port,
             'enable_cors': self.enable_cors,

@@ -16,8 +16,7 @@ explicit written permission is STRICTLY PROHIBITED and will result in immediate 
 
 Contact: mlaiel@live.de for licensing inquiries.
 Legal violations will be prosecuted to the full extent of international law.
-"""
-# Core protection modules
+"""# Core protection modules
 from .protection_storage import ProtectionStorageManager, ProtectionStorageError
 from .alert_repository import ProtectionAlertRepository, ProtectionAlertRepositoryError
 from .violation_tracker import ViolationTracker, ViolationTrackerError

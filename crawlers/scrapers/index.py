@@ -1,5 +1,4 @@
-"""
-Advanced Scrapers Index - IA-Influencer-Agent
+"""Advanced Scrapers Index - IA-Influencer-Agent
 ==============================================
 
 Central index for professional web scraping components.
@@ -19,9 +18,7 @@ Team Specializations:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 - Audio Processing & Digital Rights Management Expert
-"""
-
-from .web_scraper import WebScraper
+"""from .web_scraper import WebScraper
 from .content_scraper import ContentScraper
 from .platform_scraper import PlatformScraper
 from .stealth_scraper import StealthScraper
@@ -54,13 +51,11 @@ __all__ = [
 ]
 
 class ScrapersManager:
-    """
-    Central manager for all scraping components.
+    """    Central manager for all scraping components.
     
     Provides unified access to all available scrapers with proper
     initialization and resource management.
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -81,8 +76,7 @@ class ScrapersManager:
         self.logger.info("ScrapersManager initialized with all scraping components")
         
     def get_scraper(self, scraper_type: str) -> Optional[Any]:
-        """Get specific scraper by type."""
-        scrapers = {
+        """Get specific scraper by type."""        scrapers = {
             'web': self.web_scraper,
             'content': self.content_scraper,
             'platform': self.platform_scraper,
@@ -99,8 +93,7 @@ class ScrapersManager:
         return scrapers.get(scraper_type.lower())
         
     def get_all_scrapers(self) -> Dict[str, Any]:
-        """Get all available scrapers."""
-        return {
+        """Get all available scrapers."""        return {
             'web': self.web_scraper,
             'content': self.content_scraper,
             'platform': self.platform_scraper,
@@ -116,6 +109,5 @@ class ScrapersManager:
         }
         
     def list_available_scrapers(self) -> list:
-        """List all available scraper types."""
-        return ['web', 'content', 'platform', 'stealth', 'batch', 'realtime', 
+        """List all available scraper types."""        return ['web', 'content', 'platform', 'stealth', 'batch', 'realtime', 
                 'social', 'media', 'selenium', 'api', 'proxy', 'mobile']

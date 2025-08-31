@@ -1,5 +1,4 @@
-"""
-Financial Instruments - Advanced Financial Modeling and Investment Tracking
+"""Financial Instruments - Advanced Financial Modeling and Investment Tracking
 
 Ultra-advanced financial instruments system for content creators including
 investment tracking, portfolio management, tax optimization, and financial analytics.
@@ -25,9 +24,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
-"""
-
-from sqlalchemy import (
+"""from sqlalchemy import (
     Column, String, Text, DateTime, Float, Integer, Boolean, JSON, 
     ForeignKey, Index, Enum as SQLEnum, Numeric, UniqueConstraint,
     CheckConstraint, event
@@ -45,8 +42,7 @@ Base = declarative_base()
 
 
 class InvestmentType(Enum):
-    """Types of financial investments available to creators"""
-    # Traditional investments
+    """Types of financial investments available to creators"""    # Traditional investments
     STOCKS = "stocks"
     BONDS = "bonds"
     MUTUAL_FUNDS = "mutual_funds"
@@ -79,16 +75,14 @@ class InvestmentType(Enum):
 
 
 class RiskLevel(Enum):
-    """Investment risk levels"""
-    CONSERVATIVE = "conservative"
+    """Investment risk levels"""    CONSERVATIVE = "conservative"
     MODERATE = "moderate"
     AGGRESSIVE = "aggressive"
     SPECULATIVE = "speculative"
 
 
 class TaxCategory(Enum):
-    """Tax categories for different income types"""
-    ORDINARY_INCOME = "ordinary_income"
+    """Tax categories for different income types"""    ORDINARY_INCOME = "ordinary_income"
     CAPITAL_GAINS_SHORT = "capital_gains_short"
     CAPITAL_GAINS_LONG = "capital_gains_long"
     DIVIDEND_INCOME = "dividend_income"
@@ -99,8 +93,7 @@ class TaxCategory(Enum):
 
 
 class FinancialAccount(Base):
-    """User financial accounts for investment and tax management"""
-    __tablename__ = "financial_accounts"
+    """User financial accounts for investment and tax management"""    __tablename__ = "financial_accounts"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
@@ -158,8 +151,7 @@ class FinancialAccount(Base):
 
 
 class Investment(Base):
-    """Individual investment holdings and tracking"""
-    __tablename__ = "investments"
+    """Individual investment holdings and tracking"""    __tablename__ = "investments"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     account_id = Column(UUID(as_uuid=True), ForeignKey("financial_accounts.id"), nullable=False)
@@ -232,8 +224,7 @@ class Investment(Base):
 
 
 class FinancialTransaction(Base):
-    """Financial transactions including buys, sells, dividends, etc."""
-    __tablename__ = "financial_transactions"
+    """Financial transactions including buys, sells, dividends, etc."""    __tablename__ = "financial_transactions"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     account_id = Column(UUID(as_uuid=True), ForeignKey("financial_accounts.id"), nullable=False)
@@ -300,8 +291,7 @@ class FinancialTransaction(Base):
 
 
 class InvestmentPerformance(Base):
-    """Historical performance tracking for investments"""
-    __tablename__ = "investment_performance"
+    """Historical performance tracking for investments"""    __tablename__ = "investment_performance"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     investment_id = Column(UUID(as_uuid=True), ForeignKey("investments.id"), nullable=False)
@@ -365,8 +355,7 @@ class InvestmentPerformance(Base):
 
 
 class TaxOptimizationStrategy(Base):
-    """Tax optimization strategies and recommendations"""
-    __tablename__ = "tax_optimization_strategies"
+    """Tax optimization strategies and recommendations"""    __tablename__ = "tax_optimization_strategies"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
@@ -415,8 +404,7 @@ class TaxOptimizationStrategy(Base):
 
 
 class PortfolioAllocation(Base):
-    """Portfolio allocation tracking and rebalancing"""
-    __tablename__ = "portfolio_allocations"
+    """Portfolio allocation tracking and rebalancing"""    __tablename__ = "portfolio_allocations"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
@@ -487,8 +475,7 @@ class PortfolioAllocation(Base):
 
 
 class CreatorRevenueDiversification(Base):
-    """Revenue diversification tracking for content creators"""
-    __tablename__ = "creator_revenue_diversification"
+    """Revenue diversification tracking for content creators"""    __tablename__ = "creator_revenue_diversification"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
@@ -547,8 +534,7 @@ class CreatorRevenueDiversification(Base):
 # SQLAlchemy event listeners
 @event.listens_for(Investment, 'before_update')
 def investment_before_update(mapper, connection, target):
-    """Calculate performance metrics before updating investment"""
-    if target.quantity and target.current_price and target.average_cost_basis:
+    """Calculate performance metrics before updating investment"""    if target.quantity and target.current_price and target.average_cost_basis:
         target.market_value = target.quantity * target.current_price
         target.unrealized_gain_loss = target.market_value - (target.quantity * target.average_cost_basis)
         if target.total_investment and target.total_investment > 0:
@@ -558,8 +544,7 @@ def investment_before_update(mapper, connection, target):
 @event.listens_for(PortfolioAllocation, 'before_insert')
 @event.listens_for(PortfolioAllocation, 'before_update')
 def portfolio_allocation_validation(mapper, connection, target):
-    """Validate portfolio allocation percentages"""
-    total_allocation = (
+    """Validate portfolio allocation percentages"""    total_allocation = (
         (target.stocks_allocation or 0) +
         (target.bonds_allocation or 0) +
         (target.real_estate_allocation or 0) +

@@ -1,21 +1,17 @@
-"""
-Environment Configurations - IA Influencer Agent Platform
+"""Environment Configurations - IA Influencer Agent Platform
 Environment-specific configuration classes for different deployment stages
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""
-
-import os
+"""import os
 from typing import List, Dict, Any
 from datetime import timedelta
 from .app_config import AppConfig
 
 
 class DevelopmentConfig(AppConfig):
-    """Development environment configuration"""
-    
+    """Development environment configuration"""    
     def __init__(self):
         super().__init__()
         
@@ -92,8 +88,7 @@ class DevelopmentConfig(AppConfig):
 
 
 class TestingConfig(AppConfig):
-    """Testing environment configuration"""
-    
+    """Testing environment configuration"""    
     def __init__(self):
         super().__init__()
         
@@ -168,8 +163,7 @@ class TestingConfig(AppConfig):
 
 
 class StagingConfig(AppConfig):
-    """Staging environment configuration"""
-    
+    """Staging environment configuration"""    
     def __init__(self):
         super().__init__()
         
@@ -246,8 +240,7 @@ class StagingConfig(AppConfig):
 
 
 class ProductionConfig(AppConfig):
-    """Production environment configuration"""
-    
+    """Production environment configuration"""    
     def __init__(self):
         super().__init__()
         
@@ -359,8 +352,7 @@ class ProductionConfig(AppConfig):
 
 
 def get_config_class(environment: str = None):
-    """Get configuration class based on environment"""
-    if environment is None:
+    """Get configuration class based on environment"""    if environment is None:
         environment = os.getenv("ENVIRONMENT", "development").lower()
     
     config_map = {
@@ -378,14 +370,12 @@ def get_config_class(environment: str = None):
 
 
 def get_config(environment: str = None) -> AppConfig:
-    """Get configuration instance based on environment"""
-    config_class = get_config_class(environment)
+    """Get configuration instance based on environment"""    config_class = get_config_class(environment)
     return config_class()
 
 
 def validate_environment_config(config: AppConfig) -> Dict[str, Any]:
-    """Validate environment-specific configuration"""
-    issues = []
+    """Validate environment-specific configuration"""    issues = []
     
     # Production-specific validations
     if config.is_production:

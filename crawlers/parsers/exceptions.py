@@ -1,5 +1,4 @@
-"""
-Parsing Exceptions Module
+"""Parsing Exceptions Module
 ========================
 
 Custom exceptions for content parsing operations in the IA Influencer Agent platform.
@@ -12,14 +11,11 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
-"""
-
-from typing import Optional, Dict, Any
+"""from typing import Optional, Dict, Any
 
 
 class ParsingError(Exception):
-    """Base exception for all parsing-related errors"""
-    
+    """Base exception for all parsing-related errors"""    
     def __init__(
         self, 
         message: str, 
@@ -49,8 +45,7 @@ class ParsingError(Exception):
 
 
 class UnsupportedFormatError(ParsingError):
-    """Raised when attempting to parse an unsupported format"""
-    
+    """Raised when attempting to parse an unsupported format"""    
     def __init__(
         self, 
         format_type: str, 
@@ -73,8 +68,7 @@ class UnsupportedFormatError(ParsingError):
 
 
 class ValidationError(ParsingError):
-    """Raised when content validation fails during parsing"""
-    
+    """Raised when content validation fails during parsing"""    
     def __init__(
         self, 
         message: str, 
@@ -103,8 +97,7 @@ class ValidationError(ParsingError):
 
 
 class ContentExtractionError(ParsingError):
-    """Raised when content extraction fails"""
-    
+    """Raised when content extraction fails"""    
     def __init__(
         self, 
         message: str, 
@@ -129,8 +122,7 @@ class ContentExtractionError(ParsingError):
 
 
 class MetadataParsingError(ParsingError):
-    """Raised when metadata parsing fails"""
-    
+    """Raised when metadata parsing fails"""    
     def __init__(
         self, 
         message: str, 
@@ -155,8 +147,7 @@ class MetadataParsingError(ParsingError):
 
 
 class PlatformParsingError(ParsingError):
-    """Raised when platform-specific parsing fails"""
-    
+    """Raised when platform-specific parsing fails"""    
     def __init__(
         self, 
         message: str, 
@@ -185,8 +176,7 @@ class PlatformParsingError(ParsingError):
 
 
 class MediaParsingError(ParsingError):
-    """Raised when media file parsing fails"""
-    
+    """Raised when media file parsing fails"""    
     def __init__(
         self, 
         message: str, 
@@ -215,8 +205,7 @@ class MediaParsingError(ParsingError):
 
 
 class FingerprintParsingError(ParsingError):
-    """Raised when fingerprint generation/parsing fails"""
-    
+    """Raised when fingerprint generation/parsing fails"""    
     def __init__(
         self, 
         message: str, 
@@ -245,8 +234,7 @@ class FingerprintParsingError(ParsingError):
 
 
 class AnalyticsParsingError(ParsingError):
-    """Raised when analytics data parsing fails"""
-    
+    """Raised when analytics data parsing fails"""    
     def __init__(
         self, 
         message: str, 
@@ -275,8 +263,7 @@ class AnalyticsParsingError(ParsingError):
 
 
 class RevenueParsingError(ParsingError):
-    """Raised when revenue data parsing fails"""
-    
+    """Raised when revenue data parsing fails"""    
     def __init__(
         self, 
         message: str, 
@@ -305,8 +292,7 @@ class RevenueParsingError(ParsingError):
 
 
 class TimeoutError(ParsingError):
-    """Raised when parsing operations timeout"""
-    
+    """Raised when parsing operations timeout"""    
     def __init__(
         self, 
         message: str, 
@@ -331,8 +317,7 @@ class TimeoutError(ParsingError):
 
 
 class RateLimitError(ParsingError):
-    """Raised when API rate limits are exceeded"""
-    
+    """Raised when API rate limits are exceeded"""    
     def __init__(
         self, 
         message: str, 
@@ -361,8 +346,7 @@ class RateLimitError(ParsingError):
 
 
 class AuthenticationError(ParsingError):
-    """Raised when authentication fails for platform APIs"""
-    
+    """Raised when authentication fails for platform APIs"""    
     def __init__(
         self, 
         message: str, 

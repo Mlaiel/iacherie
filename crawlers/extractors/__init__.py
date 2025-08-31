@@ -43,8 +43,7 @@ Ce module fournit des extracteurs industriels avancés pour :
 
 Tous les extracteurs utilisent des algorithmes d'IA propriétaires
 pour fournir des analyses précises et des détections en temps réel.
-"""
-# Import core extraction components
+"""# Import core extraction components
 from .extraction_engine import (
     BaseExtractor, ExtractionRequest, ExtractionResult, 
     ExtractionStatus, ContentType, ExtractionPriority,

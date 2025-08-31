@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Logging Configuration
+"""IA Influencer Agent - Logging Configuration
 Default configuration for logging infrastructure
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -9,19 +8,15 @@ WARNING: This code is the intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit 
 written permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import os
+"""import os
 from typing import Dict, Any, List
 
 
 class LoggingConfiguration:
-    """Central configuration for IA Influencer Agent logging system"""
-    
+    """Central configuration for IA Influencer Agent logging system"""    
     @staticmethod
     def get_default_config() -> Dict[str, Any]:
-        """Get default logging configuration"""
-        
+        """Get default logging configuration"""        
         return {
             # Log Aggregator Configuration
             "aggregator": {
@@ -424,8 +419,7 @@ class LoggingConfiguration:
     
     @staticmethod
     def get_fluentd_config_yaml() -> str:
-        """Get Fluentd configuration as YAML"""
-        
+        """Get Fluentd configuration as YAML"""        
         return '''
 # IA Influencer Agent Fluentd Configuration
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -556,8 +550,7 @@ class LoggingConfiguration:
     
     @staticmethod
     def get_docker_compose_config() -> str:
-        """Get Docker Compose configuration for logging stack"""
-        
+        """Get Docker Compose configuration for logging stack"""        
         return '''
 version: '3.8'
 
@@ -668,8 +661,7 @@ networks:
     
     @staticmethod
     def get_kubernetes_manifests() -> Dict[str, str]:
-        """Get Kubernetes manifests for logging infrastructure"""
-        
+        """Get Kubernetes manifests for logging infrastructure"""        
         return {
             "namespace.yaml": '''
 apiVersion: v1

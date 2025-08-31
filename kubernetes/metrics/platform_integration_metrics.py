@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Platform Integration Metrics Collector
+"""IA Influencer Agent - Platform Integration Metrics Collector
 Enterprise metrics for external platform integrations and API performance
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -29,9 +28,7 @@ Features:
 - Authentication and authorization metrics
 - Data synchronization performance
 - Real-time platform status monitoring
-"""
-
-import time
+"""import time
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -47,8 +44,7 @@ logger = get_logger(__name__)
 
 
 class Platform(Enum):
-    """Supported external platforms"""
-    SPOTIFY = "spotify"
+    """Supported external platforms"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -65,8 +61,7 @@ class Platform(Enum):
 
 
 class IntegrationType(Enum):
-    """Types of platform integrations"""
-    API_DIRECT = "api_direct"
+    """Types of platform integrations"""    API_DIRECT = "api_direct"
     OAUTH2 = "oauth2"
     WEBHOOK = "webhook"
     SCRAPING = "scraping"
@@ -76,8 +71,7 @@ class IntegrationType(Enum):
 
 
 class APIEndpointType(Enum):
-    """Types of API endpoints"""
-    AUTHENTICATION = "authentication"
+    """Types of API endpoints"""    AUTHENTICATION = "authentication"
     USER_PROFILE = "user_profile"
     CONTENT_UPLOAD = "content_upload"
     CONTENT_DOWNLOAD = "content_download"
@@ -90,8 +84,7 @@ class APIEndpointType(Enum):
 
 
 class ConnectionStatus(Enum):
-    """Platform connection status"""
-    CONNECTED = "connected"
+    """Platform connection status"""    CONNECTED = "connected"
     DISCONNECTED = "disconnected"
     RATE_LIMITED = "rate_limited"
     AUTHENTICATION_FAILED = "authentication_failed"
@@ -101,8 +94,7 @@ class ConnectionStatus(Enum):
 
 @dataclass
 class PlatformConnection:
-    """Platform connection information"""
-    platform: Platform
+    """Platform connection information"""    platform: Platform
     user_id: str
     integration_type: IntegrationType
     status: ConnectionStatus
@@ -113,8 +105,7 @@ class PlatformConnection:
 
 @dataclass
 class APICall:
-    """API call details"""
-    call_id: str
+    """API call details"""    call_id: str
     platform: Platform
     endpoint_type: APIEndpointType
     method: str
@@ -127,8 +118,7 @@ class APICall:
 
 
 class PlatformIntegrationMetricsCollector:
-    """
-    Comprehensive metrics collector for platform integrations
+    """    Comprehensive metrics collector for platform integrations
     
     Tracks:
     - API call performance and reliability
@@ -137,8 +127,7 @@ class PlatformIntegrationMetricsCollector:
     - Authentication success rates
     - Data synchronization metrics
     - Integration error patterns
-    """
-    
+    """    
     def __init__(self, prometheus_manager=None):
         self.prometheus_manager = prometheus_manager
         self.redis_manager = RedisManager()
@@ -148,8 +137,7 @@ class PlatformIntegrationMetricsCollector:
         self._initialize_metrics()
     
     def _initialize_metrics(self) -> None:
-        """Initialize comprehensive platform integration metrics"""
-        
+        """Initialize comprehensive platform integration metrics"""        
         if not self.prometheus_manager:
             self.logger.warning("No Prometheus manager provided, metrics disabled")
             return
@@ -313,8 +301,7 @@ class PlatformIntegrationMetricsCollector:
         self.logger.info("Platform integration metrics initialized")
     
     def _register_metrics(self) -> None:
-        """Register all metrics with Prometheus manager"""
-        
+        """Register all metrics with Prometheus manager"""        
         metrics_to_register = [
             self.api_calls_total,
             self.api_response_time,
@@ -345,8 +332,7 @@ class PlatformIntegrationMetricsCollector:
             self.prometheus_manager.register_metric(metric)
     
     async def record_api_call(self, api_call: APICall) -> None:
-        """Record API call metrics"""
-        
+        """Record API call metrics"""        
         self.api_calls_total.labels(
             platform=api_call.platform.value,
             endpoint_type=api_call.endpoint_type.value,
@@ -398,8 +384,7 @@ class PlatformIntegrationMetricsCollector:
         self,
         connection: PlatformConnection
     ) -> None:
-        """Establish new platform connection"""
-        
+        """Establish new platform connection"""        
         connection_key = f"{connection.platform.value}:{connection.user_id}"
         self._active_connections[connection_key] = connection
         
@@ -433,8 +418,7 @@ class PlatformIntegrationMetricsCollector:
         user_id: str,
         disconnect_reason: str = "user_initiated"
     ) -> None:
-        """Disconnect from platform"""
-        
+        """Disconnect from platform"""        
         connection_key = f"{platform.value}:{user_id}"
         
         if connection_key not in self._active_connections:
@@ -474,8 +458,7 @@ class PlatformIntegrationMetricsCollector:
         success: bool,
         failure_reason: Optional[str] = None
     ) -> None:
-        """Record authentication attempt"""
-        
+        """Record authentication attempt"""        
         result = "success" if success else "failure"
         
         self.authentication_attempts_total.labels(
@@ -508,8 +491,7 @@ class PlatformIntegrationMetricsCollector:
         success: bool,
         refresh_reason: str = "automatic"
     ) -> None:
-        """Record token refresh operation"""
-        
+        """Record token refresh operation"""        
         result = "success" if success else "failure"
         
         self.token_refresh_total.labels(
@@ -527,8 +509,7 @@ class PlatformIntegrationMetricsCollector:
         usage_percent: float,
         time_window: str = "1h"
     ) -> None:
-        """Update API quota usage metrics"""
-        
+        """Update API quota usage metrics"""        
         self.api_quota_usage.labels(
             platform=platform.value,
             quota_type=quota_type,
@@ -548,8 +529,7 @@ class PlatformIntegrationMetricsCollector:
         duration_seconds: float,
         data_size_bytes: int = 0
     ) -> None:
-        """Record data synchronization operation"""
-        
+        """Record data synchronization operation"""        
         result = "success" if success else "failure"
         
         # Determine data size range
@@ -588,8 +568,7 @@ class PlatformIntegrationMetricsCollector:
         processing_duration_seconds: float,
         success: bool = True
     ) -> None:
-        """Record webhook reception and processing"""
-        
+        """Record webhook reception and processing"""        
         status = "success" if success else "failure"
         
         self.webhooks_received_total.labels(
@@ -617,8 +596,7 @@ class PlatformIntegrationMetricsCollector:
         endpoint_type: APIEndpointType,
         error_details: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Record integration error"""
-        
+        """Record integration error"""        
         self.integration_errors_total.labels(
             platform=platform.value,
             error_type=error_type,
@@ -649,8 +627,7 @@ class PlatformIntegrationMetricsCollector:
         integration_type: IntegrationType,
         health_score: float
     ) -> None:
-        """Update platform integration health score"""
-        
+        """Update platform integration health score"""        
         self.platform_health_score.labels(
             platform=platform.value,
             integration_type=integration_type.value
@@ -666,8 +643,7 @@ class PlatformIntegrationMetricsCollector:
         quota_type: str,
         usage_percent: float
     ) -> None:
-        """Trigger quota usage alert"""
-        
+        """Trigger quota usage alert"""        
         alert_data = {
             "timestamp": datetime.utcnow().isoformat(),
             "alert_type": "api_quota_high",
@@ -689,8 +665,7 @@ class PlatformIntegrationMetricsCollector:
         integration_type: IntegrationType,
         health_score: float
     ) -> None:
-        """Trigger platform health alert"""
-        
+        """Trigger platform health alert"""        
         alert_data = {
             "timestamp": datetime.utcnow().isoformat(),
             "alert_type": "platform_health_low",
@@ -710,8 +685,7 @@ class PlatformIntegrationMetricsCollector:
         self,
         platform: Optional[Platform] = None
     ) -> Dict[str, Any]:
-        """Get comprehensive platform integration summary"""
-        
+        """Get comprehensive platform integration summary"""        
         summary = {
             "timestamp": datetime.utcnow().isoformat(),
             "overall_statistics": {},
@@ -744,8 +718,7 @@ class PlatformIntegrationMetricsCollector:
         return summary
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Get health status of the platform integration metrics collector"""
-        
+        """Get health status of the platform integration metrics collector"""        
         return {
             "status": "healthy",
             "active_connections": len(self._active_connections),

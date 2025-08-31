@@ -1,27 +1,21 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Simple test for new surveillance modules
+"""Simple test for new surveillance modules
 =======================================
 
 Basic test to verify new surveillance modules work in isolation.
-"""
-
-import sys
+"""import sys
 import os
 
 # Add the project root to the path
@@ -42,8 +36,7 @@ from crawlers.surveillance.violation_alert_system import ViolationAlertSystem
 from crawlers.surveillance.content_matching_engine import ContentMatchingEngine
 
 async def test_surveillance_modules():
-    """Test basic functionality of surveillance modules."""
-    
+    """Test basic functionality of surveillance modules."""    
     print("Testing new surveillance modules...")
     
     # Test module instantiation

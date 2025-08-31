@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Data Pipelines Index Module
+"""IA Influencer Agent - Data Pipelines Index Module
 ================================================
 
 Central index module providing unified access to all pipeline components,
@@ -24,9 +23,7 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 This comprehensive pipeline system and orchestration architecture belongs
 exclusively to Fahed Mlaiel. Any unauthorized access, copying, or competitive
 implementation will result in immediate legal prosecution under international law.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime
@@ -50,10 +47,8 @@ settings = get_settings()
 
 
 class PipelineRegistry:
-    """
-    Central registry for all pipeline components and services
-    """
-    
+    """    Central registry for all pipeline components and services
+    """    
     def __init__(self):
         self._pipelines = {}
         self._engines = {}
@@ -64,8 +59,7 @@ class PipelineRegistry:
         self._initialize_pipelines()
         
     def _initialize_pipelines(self):
-        """Initialize all pipeline components"""
-        try:
+        """Initialize all pipeline components"""        try:
             # Core pipelines
             self._pipelines = {
                 "content_ingestion": ContentIngestionPipeline(),
@@ -105,32 +99,27 @@ class PipelineRegistry:
             raise PipelineError(f"Registry initialization failed: {str(e)}")
     
     def get_pipeline(self, pipeline_name: str):
-        """Get pipeline by name"""
-        if pipeline_name not in self._pipelines:
+        """Get pipeline by name"""        if pipeline_name not in self._pipelines:
             raise PipelineError(f"Pipeline '{pipeline_name}' not found")
         return self._pipelines[pipeline_name]
     
     def get_engine(self, engine_name: str):
-        """Get processing engine by name"""
-        if engine_name not in self._engines:
+        """Get processing engine by name"""        if engine_name not in self._engines:
             raise PipelineError(f"Engine '{engine_name}' not found")
         return self._engines[engine_name]
     
     def get_manager(self, manager_name: str):
-        """Get manager component by name"""
-        if manager_name not in self._managers:
+        """Get manager component by name"""        if manager_name not in self._managers:
             raise PipelineError(f"Manager '{manager_name}' not found")
         return self._managers[manager_name]
     
     def get_monitor(self, monitor_name: str):
-        """Get monitoring component by name"""
-        if monitor_name not in self._monitors:
+        """Get monitoring component by name"""        if monitor_name not in self._monitors:
             raise PipelineError(f"Monitor '{monitor_name}' not found")
         return self._monitors[monitor_name]
     
     def list_available_components(self) -> Dict[str, List[str]]:
-        """List all available pipeline components"""
-        return {
+        """List all available pipeline components"""        return {
             "pipelines": list(self._pipelines.keys()),
             "engines": list(self._engines.keys()),
             "managers": list(self._managers.keys()),
@@ -139,10 +128,8 @@ class PipelineRegistry:
 
 
 class PipelineFactory:
-    """
-    Factory class for creating and configuring pipeline workflows
-    """
-    
+    """    Factory class for creating and configuring pipeline workflows
+    """    
     def __init__(self):
         self.registry = PipelineRegistry()
     
@@ -151,10 +138,8 @@ class PipelineFactory:
         user_id: int,
         content_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Create complete content lifecycle workflow
-        """
-        try:
+        """        Create complete content lifecycle workflow
+        """        try:
             logger.info(f"Creating content lifecycle workflow for user {user_id}")
             
             workflow_manager = self.registry.get_manager("workflow_manager")
@@ -184,10 +169,8 @@ class PipelineFactory:
         content_id: str,
         protection_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Create content protection workflow
-        """
-        try:
+        """        Create content protection workflow
+        """        try:
             logger.info(f"Creating protection workflow for content {content_id}")
             
             workflow_manager = self.registry.get_manager("workflow_manager")
@@ -215,10 +198,8 @@ class PipelineFactory:
         user_id: int,
         monetization_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Create revenue optimization workflow
-        """
-        try:
+        """        Create revenue optimization workflow
+        """        try:
             logger.info(f"Creating monetization workflow for user {user_id}")
             
             workflow_manager = self.registry.get_manager("workflow_manager")
@@ -246,10 +227,8 @@ class PipelineFactory:
         creator_id: int,
         collaboration_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Create collaboration discovery and matching workflow
-        """
-        try:
+        """        Create collaboration discovery and matching workflow
+        """        try:
             logger.info(f"Creating collaboration workflow for creator {creator_id}")
             
             workflow_manager = self.registry.get_manager("workflow_manager")
@@ -277,10 +256,8 @@ class PipelineFactory:
         content_id: str,
         distribution_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Create multi-platform distribution workflow
-        """
-        try:
+        """        Create multi-platform distribution workflow
+        """        try:
             logger.info(f"Creating distribution workflow for content {content_id}")
             
             workflow_manager = self.registry.get_manager("workflow_manager")
@@ -305,10 +282,8 @@ class PipelineFactory:
 
 
 class PipelineService:
-    """
-    High-level service interface for pipeline operations
-    """
-    
+    """    High-level service interface for pipeline operations
+    """    
     def __init__(self):
         self.factory = PipelineFactory()
         self.registry = PipelineRegistry()
@@ -319,10 +294,8 @@ class PipelineService:
         file_data: bytes,
         upload_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Process complete content upload with all pipelines
-        """
-        try:
+        """        Process complete content upload with all pipelines
+        """        try:
             logger.info(f"Processing content upload for user {user_id}")
             
             # Step 1: Content ingestion
@@ -386,10 +359,8 @@ class PipelineService:
             raise PipelineError(f"Upload processing failed: {str(e)}")
     
     async def get_system_health(self) -> Dict[str, Any]:
-        """
-        Get comprehensive system health status
-        """
-        try:
+        """        Get comprehensive system health status
+        """        try:
             health_checker = self.registry.get_monitor("health_checker")
             pipeline_monitor = self.registry.get_monitor("pipeline_monitor")
             
@@ -414,10 +385,8 @@ class PipelineService:
         user_id: int,
         analytics_config: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive user analytics
-        """
-        try:
+        """        Get comprehensive user analytics
+        """        try:
             analytics_pipeline = self.registry.get_pipeline("analytics")
             
             # Generate comprehensive report
@@ -444,8 +413,7 @@ async def upload_content(
     file_data: bytes,
     upload_config: Dict[str, Any]
 ) -> Dict[str, Any]:
-    """Convenience function for content upload"""
-    return await pipeline_service.process_content_upload(user_id, file_data, upload_config)
+    """Convenience function for content upload"""    return await pipeline_service.process_content_upload(user_id, file_data, upload_config)
 
 
 async def protect_content(
@@ -453,8 +421,7 @@ async def protect_content(
     user_id: int,
     protection_level: str = "standard"
 ) -> Dict[str, Any]:
-    """Convenience function for content protection"""
-    protection_pipeline = pipeline_service.registry.get_pipeline("protection")
+    """Convenience function for content protection"""    protection_pipeline = pipeline_service.registry.get_pipeline("protection")
     return await protection_pipeline.protect_content(content_id, user_id, protection_level)
 
 
@@ -462,8 +429,7 @@ async def get_analytics(
     user_id: int,
     report_type: str = "monthly"
 ) -> Dict[str, Any]:
-    """Convenience function for analytics"""
-    return await pipeline_service.get_user_analytics(user_id, {"report_type": report_type})
+    """Convenience function for analytics"""    return await pipeline_service.get_user_analytics(user_id, {"report_type": report_type})
 
 
 async def find_collaborators(
@@ -471,8 +437,7 @@ async def find_collaborators(
     collaboration_type: str = "duet",
     filters: Optional[Dict[str, Any]] = None
 ) -> List[Dict[str, Any]]:
-    """Convenience function for finding collaborators"""
-    collaboration_pipeline = pipeline_service.registry.get_pipeline("collaboration")
+    """Convenience function for finding collaborators"""    collaboration_pipeline = pipeline_service.registry.get_pipeline("collaboration")
     matching_engine = pipeline_service.registry.get_engine("matching_engine")
     
     from .collaboration_pipeline import CollaborationType
@@ -489,8 +454,7 @@ async def distribute_content(
     platforms: List[str],
     distribution_config: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
-    """Convenience function for content distribution"""
-    distribution_pipeline = pipeline_service.registry.get_pipeline("distribution")
+    """Convenience function for content distribution"""    distribution_pipeline = pipeline_service.registry.get_pipeline("distribution")
     
     config = distribution_config or {}
     config["platforms"] = platforms
@@ -499,8 +463,7 @@ async def distribute_content(
 
 
 async def check_system_health() -> Dict[str, Any]:
-    """Convenience function for system health check"""
-    return await pipeline_service.get_system_health()
+    """Convenience function for system health check"""    return await pipeline_service.get_system_health()
 
 
 # Export all components

@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Quality Metrics Tests
+"""Quality Metrics Tests
 
 Comprehensive tests for quality metrics system that evaluates
 content quality, readability, SEO, and overall content effectiveness.
@@ -25,9 +21,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -49,20 +43,16 @@ from ai.content_generation.content_models import ContentType, Platform
 
 
 class TestQualityMetrics:
-    """Test suite for QualityMetrics"""
-    
+    """Test suite for QualityMetrics"""    
     @pytest.fixture
     def quality_metrics(self):
-        """Create a quality metrics instance"""
-        return QualityMetrics()
+        """Create a quality metrics instance"""        return QualityMetrics()
     
     @pytest.fixture
     def sample_content(self):
-        """Create sample content for quality analysis"""
-        return {
+        """Create sample content for quality analysis"""        return {
             "title": "The Ultimate Guide to AI Content Creation: 10 Tools That Will Transform Your Workflow",
-            "content": """
-# The Ultimate Guide to AI Content Creation: 10 Tools That Will Transform Your Workflow
+            "content": """# The Ultimate Guide to AI Content Creation: 10 Tools That Will Transform Your Workflow
 
 Artificial intelligence has revolutionized the way we create, optimize, and distribute content. In today's fast-paced digital landscape, content creators who leverage AI tools gain a significant competitive advantage.
 
@@ -116,11 +106,9 @@ The future of content creation lies in the synergy between human creativity and 
     
     @pytest.fixture
     def low_quality_content(self):
-        """Create low quality content for testing"""
-        return {
+        """Create low quality content for testing"""        return {
             "title": "ai tools",
-            "content": """
-ai is good. it helps with writing stuff. here are some tools:
+            "content": """ai is good. it helps with writing stuff. here are some tools:
 
 chatgpt - writes things
 jasper - also writes
@@ -142,8 +130,7 @@ end.
         }
     
     def test_quality_metrics_initialization(self, quality_metrics):
-        """Test quality metrics initialization"""
-        assert quality_metrics is not None
+        """Test quality metrics initialization"""        assert quality_metrics is not None
         assert hasattr(quality_metrics, 'quality_dimensions')
         assert hasattr(quality_metrics, 'grade_boundaries')
         assert hasattr(quality_metrics, 'readability_formulas')
@@ -154,8 +141,7 @@ end.
     
     @pytest.mark.asyncio
     async def test_analyze_content_quality(self, quality_metrics, sample_content):
-        """Test comprehensive content quality analysis"""
-        with patch.object(quality_metrics, '_analyze_quality') as mock_analyze:
+        """Test comprehensive content quality analysis"""        with patch.object(quality_metrics, '_analyze_quality') as mock_analyze:
             mock_analyze.return_value = {
                 "success": True,
                 "overall_quality_score": 92.5,
@@ -243,8 +229,7 @@ end.
     
     @pytest.mark.asyncio
     async def test_readability_analysis(self, quality_metrics, sample_content):
-        """Test readability analysis"""
-        with patch.object(quality_metrics, '_analyze_readability') as mock_readability:
+        """Test readability analysis"""        with patch.object(quality_metrics, '_analyze_readability') as mock_readability:
             mock_readability.return_value = {
                 "success": True,
                 "readability_scores": {
@@ -296,8 +281,7 @@ end.
     
     @pytest.mark.asyncio
     async def test_seo_quality_analysis(self, quality_metrics, sample_content):
-        """Test SEO quality analysis"""
-        with patch.object(quality_metrics, '_analyze_seo') as mock_seo:
+        """Test SEO quality analysis"""        with patch.object(quality_metrics, '_analyze_seo') as mock_seo:
             mock_seo.return_value = {
                 "success": True,
                 "seo_score": 88.5,
@@ -373,8 +357,7 @@ end.
     
     @pytest.mark.asyncio
     async def test_engagement_prediction(self, quality_metrics, sample_content):
-        """Test engagement prediction based on content quality"""
-        with patch.object(quality_metrics, '_predict_engagement') as mock_engagement:
+        """Test engagement prediction based on content quality"""        with patch.object(quality_metrics, '_predict_engagement') as mock_engagement:
             mock_engagement.return_value = {
                 "success": True,
                 "engagement_prediction": {
@@ -423,8 +406,7 @@ end.
     
     @pytest.mark.asyncio
     async def test_low_quality_content_analysis(self, quality_metrics, low_quality_content):
-        """Test analysis of low quality content"""
-        with patch.object(quality_metrics, '_analyze_quality') as mock_analyze:
+        """Test analysis of low quality content"""        with patch.object(quality_metrics, '_analyze_quality') as mock_analyze:
             mock_analyze.return_value = {
                 "success": True,
                 "overall_quality_score": 23.5,
@@ -516,8 +498,7 @@ end.
     
     @pytest.mark.asyncio
     async def test_batch_quality_analysis(self, quality_metrics):
-        """Test batch analysis of multiple content pieces"""
-        content_batch = [
+        """Test batch analysis of multiple content pieces"""        content_batch = [
             {"id": "content_1", "title": "High Quality Article", "content": "Well-written comprehensive content..."},
             {"id": "content_2", "title": "Medium Quality Post", "content": "Decent content with some issues..."},
             {"id": "content_3", "title": "low quality", "content": "short bad content"}
@@ -569,8 +550,7 @@ end.
     
     @pytest.mark.asyncio
     async def test_quality_improvement_suggestions(self, quality_metrics, sample_content):
-        """Test specific improvement suggestions generation"""
-        with patch.object(quality_metrics, '_generate_improvements') as mock_improvements:
+        """Test specific improvement suggestions generation"""        with patch.object(quality_metrics, '_generate_improvements') as mock_improvements:
             mock_improvements.return_value = {
                 "success": True,
                 "improvement_plan": {
@@ -638,24 +618,20 @@ end.
 
 
 class TestContentQualityAnalyzer:
-    """Test suite for ContentQualityAnalyzer"""
-    
+    """Test suite for ContentQualityAnalyzer"""    
     @pytest.fixture
     def content_analyzer(self):
-        """Create a content quality analyzer instance"""
-        return ContentQualityAnalyzer()
+        """Create a content quality analyzer instance"""        return ContentQualityAnalyzer()
     
     def test_content_analyzer_initialization(self, content_analyzer):
-        """Test content analyzer initialization"""
-        assert content_analyzer is not None
+        """Test content analyzer initialization"""        assert content_analyzer is not None
         assert hasattr(content_analyzer, 'quality_criteria')
         assert hasattr(content_analyzer, 'scoring_algorithm')
         assert hasattr(content_analyzer, 'improvement_engine')
     
     @pytest.mark.asyncio
     async def test_structural_analysis(self, content_analyzer):
-        """Test content structural analysis"""
-        content = {
+        """Test content structural analysis"""        content = {
             "title": "Complete Guide to AI Content Creation",
             "content": "# Introduction\n\nContent with proper structure...\n\n## Section 1\n\nDetailed content...\n\n## Conclusion\n\nSummary and next steps.",
             "word_count": 500

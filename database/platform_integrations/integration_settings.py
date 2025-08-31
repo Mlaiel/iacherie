@@ -1,5 +1,4 @@
-"""
-Integration Settings Management Module
+"""Integration Settings Management Module
 
 Gestion des paramètres d'intégration pour les plateformes externes
 dans la plateforme IA Influencer Agent.
@@ -22,9 +21,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 judiciaires selon le droit allemand et international.
 
 Contact pour autorisation: mlaiel@live.de
-"""
-
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, Text, JSON, Enum as SQLEnum, Float
+"""from sqlalchemy import Column, Integer, String, Boolean, DateTime, Text, JSON, Enum as SQLEnum, Float
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
@@ -41,8 +38,7 @@ logger = logging.getLogger(__name__)
 
 
 class IntegrationSettingType(Enum):
-    """Types de paramètres d'intégration."""
-    STRING = "string"
+    """Types de paramètres d'intégration."""    STRING = "string"
     INTEGER = "integer"
     FLOAT = "float"
     BOOLEAN = "boolean"
@@ -58,8 +54,7 @@ class IntegrationSettingType(Enum):
 
 
 class IntegrationStatus(Enum):
-    """Statuts d'intégration."""
-    ACTIVE = "active"
+    """Statuts d'intégration."""    ACTIVE = "active"
     INACTIVE = "inactive"
     PENDING = "pending"
     SUSPENDED = "suspended"
@@ -69,8 +64,7 @@ class IntegrationStatus(Enum):
 
 
 class CapabilityType(Enum):
-    """Types de capacités des plateformes."""
-    READ_CONTENT = "read_content"
+    """Types de capacités des plateformes."""    READ_CONTENT = "read_content"
     WRITE_CONTENT = "write_content"
     DELETE_CONTENT = "delete_content"
     READ_ANALYTICS = "read_analytics"
@@ -89,13 +83,11 @@ class CapabilityType(Enum):
 
 
 class PlatformIntegrationSetting(BaseModel):
-    """
-    Modèle pour les paramètres de configuration des intégrations plateformes.
+    """    Modèle pour les paramètres de configuration des intégrations plateformes.
     
     Stocke les configurations personnalisables par utilisateur et par plateforme,
     avec validation et valeurs par défaut.
-    """
-    
+    """    
     __tablename__ = "platform_integration_settings"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -142,8 +134,7 @@ class PlatformIntegrationSetting(BaseModel):
         return f"<PlatformIntegrationSetting(platform={self.platform_name}, key={self.setting_key})>"
     
     def validate_value(self, value: Any) -> bool:
-        """Valide une valeur selon le type et les règles de validation."""
-        if self.required and (value is None or value == ""):
+        """Valide une valeur selon le type et les règles de validation."""        if self.required and (value is None or value == ""):
             return False
         
         if value is None:
@@ -203,8 +194,7 @@ class PlatformIntegrationSetting(BaseModel):
         return True
     
     def set_value(self, value: Any, modified_by: str = None, reason: str = None) -> bool:
-        """Définit une nouvelle valeur après validation."""
-        if not self.validate_value(value):
+        """Définit une nouvelle valeur après validation."""        if not self.validate_value(value):
             return False
         
         self.previous_value = self.setting_value
@@ -216,14 +206,12 @@ class PlatformIntegrationSetting(BaseModel):
         return True
     
     def reset_to_default(self):
-        """Remet la valeur par défaut."""
-        self.previous_value = self.setting_value
+        """Remet la valeur par défaut."""        self.previous_value = self.setting_value
         self.setting_value = self.default_value
         self.updated_at = datetime.utcnow()
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit le setting en dictionnaire."""
-        return {
+        """Convertit le setting en dictionnaire."""        return {
             "key": self.setting_key,
             "name": self.setting_name,
             "description": self.setting_description,
@@ -238,13 +226,11 @@ class PlatformIntegrationSetting(BaseModel):
 
 
 class IntegrationProfile(BaseModel):
-    """
-    Modèle pour les profils d'intégration prédéfinis.
+    """    Modèle pour les profils d'intégration prédéfinis.
     
     Permet de définir des templates de configuration
     pour différents cas d'usage et types d'utilisateurs.
-    """
-    
+    """    
     __tablename__ = "integration_profiles"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -280,12 +266,10 @@ class IntegrationProfile(BaseModel):
         return f"<IntegrationProfile(name={self.profile_name}, type={self.target_user_type})>"
     
     def get_platform_settings(self, platform_name: str) -> Dict[str, Any]:
-        """Récupère les settings pour une plateforme spécifique."""
-        return self.profile_settings.get(platform_name, {})
+        """Récupère les settings pour une plateforme spécifique."""        return self.profile_settings.get(platform_name, {})
     
     def is_compatible_with_user(self, user_type: str, platforms: List[str]) -> bool:
-        """Vérifie si le profil est compatible avec un utilisateur."""
-        if self.target_user_type and self.target_user_type != user_type:
+        """Vérifie si le profil est compatible avec un utilisateur."""        if self.target_user_type and self.target_user_type != user_type:
             return False
         
         if self.target_platform_types:
@@ -300,13 +284,11 @@ class IntegrationProfile(BaseModel):
 
 
 class PlatformCapability(BaseModel):
-    """
-    Modèle pour les capacités disponibles par plateforme.
+    """    Modèle pour les capacités disponibles par plateforme.
     
     Définit quelles fonctionnalités sont supportées
     par chaque plateforme et leurs limitations.
-    """
-    
+    """    
     __tablename__ = "platform_capabilities"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -350,8 +332,7 @@ class PlatformCapability(BaseModel):
         return f"<PlatformCapability(platform={self.platform_name}, capability={self.capability_type.value})>"
     
     def is_functional(self) -> bool:
-        """Vérifie si la capacité est fonctionnelle."""
-        return (
+        """Vérifie si la capacité est fonctionnelle."""        return (
             self.is_available and 
             not self.is_deprecated and 
             self.success_rate > 50.0
@@ -359,13 +340,11 @@ class PlatformCapability(BaseModel):
 
 
 class IntegrationHealthCheck(BaseModel):
-    """
-    Modèle pour les vérifications de santé des intégrations.
+    """    Modèle pour les vérifications de santé des intégrations.
     
     Enregistre les résultats des tests de connectivité
     et de fonctionnement des intégrations.
-    """
-    
+    """    
     __tablename__ = "integration_health_checks"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -408,8 +387,7 @@ class IntegrationHealthCheck(BaseModel):
     
     @property
     def duration_ms(self) -> int:
-        """Calcule la durée du check en millisecondes."""
-        if not self.completed_at or not self.started_at:
+        """Calcule la durée du check en millisecondes."""        if not self.completed_at or not self.started_at:
             return 0
         
         duration = self.completed_at - self.started_at
@@ -417,8 +395,7 @@ class IntegrationHealthCheck(BaseModel):
     
     @property
     def success_rate(self) -> float:
-        """Calcule le taux de succès du check."""
-        total_checks = self.successful_checks + self.failed_checks + self.warning_checks
+        """Calcule le taux de succès du check."""        total_checks = self.successful_checks + self.failed_checks + self.warning_checks
         if total_checks == 0:
             return 100.0
         
@@ -490,8 +467,7 @@ def create_default_settings_for_platform(
     user_id: str,
     platform_name: str
 ) -> List[PlatformIntegrationSetting]:
-    """
-    Crée les paramètres par défaut pour une plateforme et un utilisateur.
+    """    Crée les paramètres par défaut pour une plateforme et un utilisateur.
     
     Args:
         user_id: ID de l'utilisateur
@@ -499,8 +475,7 @@ def create_default_settings_for_platform(
         
     Returns:
         Liste des settings créés
-    """
-    if platform_name not in DEFAULT_PLATFORM_SETTINGS:
+    """    if platform_name not in DEFAULT_PLATFORM_SETTINGS:
         raise ValueError(f"No default settings defined for platform: {platform_name}")
     
     default_settings = DEFAULT_PLATFORM_SETTINGS[platform_name]
@@ -549,8 +524,7 @@ logger = logging.getLogger(__name__)
 
 
 class IntegrationSettingType(str, Enum):
-    """Types de paramètres d'intégration."""
-    STRING = "string"
+    """Types de paramètres d'intégration."""    STRING = "string"
     INTEGER = "integer"
     FLOAT = "float"
     BOOLEAN = "boolean"
@@ -560,8 +534,7 @@ class IntegrationSettingType(str, Enum):
 
 
 class IntegrationStatus(str, Enum):
-    """Statuts d'intégration."""
-    ACTIVE = "active"
+    """Statuts d'intégration."""    ACTIVE = "active"
     INACTIVE = "inactive"
     PENDING = "pending"
     ERROR = "error"
@@ -570,13 +543,11 @@ class IntegrationStatus(str, Enum):
 
 
 class PlatformIntegrationSetting(BaseModel):
-    """
-    Modèle pour les paramètres d'intégration des plateformes.
+    """    Modèle pour les paramètres d'intégration des plateformes.
     
     Stocke la configuration personnalisable pour chaque intégration
     de plateforme par utilisateur ou globalement.
-    """
-    
+    """    
     __tablename__ = "platform_integration_settings"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -616,8 +587,7 @@ class PlatformIntegrationSetting(BaseModel):
         return f"<PlatformIntegrationSetting(platform={self.platform_name}, key={self.setting_key})>"
     
     def get_value(self) -> Union[str, int, float, bool, dict, list]:
-        """Récupère la valeur du paramètre selon son type."""
-        if self.setting_type == IntegrationSettingType.STRING:
+        """Récupère la valeur du paramètre selon son type."""        if self.setting_type == IntegrationSettingType.STRING:
             return self.string_value
         elif self.setting_type == IntegrationSettingType.INTEGER:
             return self.integer_value
@@ -631,8 +601,7 @@ class PlatformIntegrationSetting(BaseModel):
             return self.string_value
     
     def set_value(self, value: Union[str, int, float, bool, dict, list]):
-        """Définit la valeur du paramètre selon son type."""
-        # Réinitialise toutes les valeurs
+        """Définit la valeur du paramètre selon son type."""        # Réinitialise toutes les valeurs
         self.string_value = None
         self.integer_value = None
         self.float_value = None
@@ -653,8 +622,7 @@ class PlatformIntegrationSetting(BaseModel):
             self.string_value = str(value)
     
     def validate_value(self) -> bool:
-        """Valide la valeur selon les règles définies."""
-        if not self.validation_rules:
+        """Valide la valeur selon les règles définies."""        if not self.validation_rules:
             return True
         
         value = self.get_value()
@@ -690,13 +658,11 @@ class PlatformIntegrationSetting(BaseModel):
 
 
 class IntegrationProfile(BaseModel):
-    """
-    Modèle pour les profils d'intégration.
+    """    Modèle pour les profils d'intégration.
     
     Groupe de paramètres prédéfinis pour différents cas d'usage
     ou types d'utilisateurs.
-    """
-    
+    """    
     __tablename__ = "integration_profiles"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -727,8 +693,7 @@ class IntegrationProfile(BaseModel):
         return f"<IntegrationProfile(name={self.profile_name}, platform={self.platform_name})>"
     
     def apply_to_user(self, user_id: str) -> List[PlatformIntegrationSetting]:
-        """Applique ce profil à un utilisateur spécifique."""
-        settings = []
+        """Applique ce profil à un utilisateur spécifique."""        settings = []
         
         for setting_key, setting_config in self.settings_template.items():
             setting = PlatformIntegrationSetting(
@@ -745,13 +710,11 @@ class IntegrationProfile(BaseModel):
 
 
 class PlatformCapability(BaseModel):
-    """
-    Modèle pour les capacités des plateformes.
+    """    Modèle pour les capacités des plateformes.
     
     Définit les fonctionnalités disponibles et leurs limitations
     pour chaque plateforme intégrée.
-    """
-    
+    """    
     __tablename__ = "platform_capabilities"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -795,8 +758,7 @@ class PlatformCapability(BaseModel):
         return f"<PlatformCapability(platform={self.platform_name}, capability={self.capability_name})>"
     
     def is_supported_for_user(self, user_tier: str = "free") -> bool:
-        """Vérifie si la capacité est supportée pour un niveau d'utilisateur."""
-        if not self.is_available:
+        """Vérifie si la capacité est supportée pour un niveau d'utilisateur."""        if not self.is_available:
             return False
         
         if self.requires_premium and user_tier == "free":
@@ -809,13 +771,11 @@ class PlatformCapability(BaseModel):
 
 
 class IntegrationHealthCheck(BaseModel):
-    """
-    Modèle pour les vérifications de santé des intégrations.
+    """    Modèle pour les vérifications de santé des intégrations.
     
     Stocke les résultats des tests de connectivité et de performance
     pour chaque intégration.
-    """
-    
+    """    
     __tablename__ = "integration_health_checks"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -854,16 +814,14 @@ class IntegrationHealthCheck(BaseModel):
     
     @property
     def duration_ms(self) -> int:
-        """Calcule la durée de la vérification en millisecondes."""
-        if not self.check_completed or not self.check_started:
+        """Calcule la durée de la vérification en millisecondes."""        if not self.check_completed or not self.check_started:
             return 0
         
         delta = self.check_completed - self.check_started
         return int(delta.total_seconds() * 1000)
     
     def get_health_score(self) -> float:
-        """Calcule un score de santé (0-100) basé sur les résultats."""
-        base_score = 100.0 if self.success else 0.0
+        """Calcule un score de santé (0-100) basé sur les résultats."""        base_score = 100.0 if self.success else 0.0
         
         # Pénalités pour les warnings et erreurs
         if self.warning_count > 0:
@@ -952,8 +910,7 @@ DEFAULT_PLATFORM_SETTINGS = {
 
 
 def create_default_settings_for_platform(platform_name: str, user_id: str = None) -> List[PlatformIntegrationSetting]:
-    """
-    Crée les paramètres par défaut pour une plateforme.
+    """    Crée les paramètres par défaut pour une plateforme.
     
     Args:
         platform_name: Nom de la plateforme
@@ -961,8 +918,7 @@ def create_default_settings_for_platform(platform_name: str, user_id: str = None
     
     Returns:
         List[PlatformIntegrationSetting]: Liste des paramètres créés
-    """
-    if platform_name not in DEFAULT_PLATFORM_SETTINGS:
+    """    if platform_name not in DEFAULT_PLATFORM_SETTINGS:
         return []
     
     settings = []

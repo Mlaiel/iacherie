@@ -1,5 +1,4 @@
-"""
-Reddit Crawler Implementation
+"""Reddit Crawler Implementation
 =============================
 
 Advanced Reddit community and content monitoring crawler.
@@ -22,9 +21,7 @@ will be prosecuted to the FULL EXTENT OF THE LAW under German and
 International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -43,8 +40,7 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class RedditUser:
-    """Reddit user information"""
-    username: str
+    """Reddit user information"""    username: str
     user_id: str
     created_utc: datetime
     comment_karma: int
@@ -92,8 +88,7 @@ class RedditUser:
 
 @dataclass
 class RedditPost:
-    """Reddit post/submission information"""
-    post_id: str
+    """Reddit post/submission information"""    post_id: str
     title: str
     selftext: str
     selftext_html: Optional[str]
@@ -167,8 +162,7 @@ class RedditPost:
 
 @dataclass
 class RedditComment:
-    """Reddit comment information"""
-    comment_id: str
+    """Reddit comment information"""    comment_id: str
     post_id: str
     parent_id: str
     subreddit: str
@@ -218,8 +212,7 @@ class RedditComment:
 
 @dataclass
 class RedditSubreddit:
-    """Reddit subreddit information"""
-    subreddit_id: str
+    """Reddit subreddit information"""    subreddit_id: str
     name: str
     display_name: str
     display_name_prefixed: str
@@ -288,8 +281,7 @@ class RedditSubreddit:
 
 
 class RedditCrawler(PlatformCrawler):
-    """
-    Advanced Reddit crawler for community content monitoring and analysis.
+    """    Advanced Reddit crawler for community content monitoring and analysis.
     
     Features:
     - Subreddit discovery and analysis
@@ -302,8 +294,7 @@ class RedditCrawler(PlatformCrawler):
     - Cross-subreddit analysis
     - Vote pattern analysis
     - Content quality assessment
-    """
-    
+    """    
     def __init__(self, config: CrawlerConfig, vector_matcher=None, 
                  client_id: str = None, client_secret: str = None, 
                  user_agent: str = None, username: str = None, password: str = None):
@@ -357,8 +348,7 @@ class RedditCrawler(PlatformCrawler):
         self._setup_session_headers()
     
     def _setup_session_headers(self):
-        """Setup Reddit-specific headers"""
-        self.session_headers.update({
+        """Setup Reddit-specific headers"""        self.session_headers.update({
             'Accept': 'application/json',
             'Accept-Encoding': 'gzip, deflate, br',
             'Accept-Language': 'en-US,en;q=0.9',
@@ -372,8 +362,7 @@ class RedditCrawler(PlatformCrawler):
     
     async def search_content(self, query: str, content_type: str = "posts", 
                            max_results: int = 50, subreddit: str = None) -> List[CrawlerResult]:
-        """
-        Search for content on Reddit.
+        """        Search for content on Reddit.
         
         Args:
             query: Search query
@@ -383,8 +372,7 @@ class RedditCrawler(PlatformCrawler):
             
         Returns:
             List of crawler results
-        """
-        try:
+        """        try:
             await self._check_rate_limit()
             
             if content_type not in self.content_types:
@@ -402,8 +390,7 @@ class RedditCrawler(PlatformCrawler):
             return []
     
     async def _crawl_posts(self, query: str, max_results: int, subreddit: str = None) -> List[CrawlerResult]:
-        """Crawl Reddit posts/submissions"""
-        try:
+        """Crawl Reddit posts/submissions"""        try:
             results = []
             
             if not self.reddit:
@@ -457,8 +444,7 @@ class RedditCrawler(PlatformCrawler):
             return []
     
     async def _crawl_comments(self, query: str, max_results: int, subreddit: str = None) -> List[CrawlerResult]:
-        """Crawl Reddit comments"""
-        try:
+        """Crawl Reddit comments"""        try:
             results = []
             
             if not self.reddit:
@@ -523,8 +509,7 @@ class RedditCrawler(PlatformCrawler):
             return []
     
     async def _crawl_users(self, query: str, max_results: int, subreddit: str = None) -> List[CrawlerResult]:
-        """Crawl Reddit users"""
-        try:
+        """Crawl Reddit users"""        try:
             results = []
             
             if not self.reddit:
@@ -585,8 +570,7 @@ class RedditCrawler(PlatformCrawler):
             return []
     
     async def _crawl_subreddits(self, query: str, max_results: int, subreddit: str = None) -> List[CrawlerResult]:
-        """Crawl Reddit subreddits"""
-        try:
+        """Crawl Reddit subreddits"""        try:
             results = []
             
             if not self.reddit:
@@ -636,8 +620,7 @@ class RedditCrawler(PlatformCrawler):
             return []
     
     async def _crawl_search(self, query: str, max_results: int, subreddit: str = None) -> List[CrawlerResult]:
-        """General Reddit search across all content types"""
-        try:
+        """General Reddit search across all content types"""        try:
             results = []
             
             # Search across different content types
@@ -656,8 +639,7 @@ class RedditCrawler(PlatformCrawler):
             return []
     
     async def _crawl_trending(self, query: str, max_results: int, subreddit: str = None) -> List[CrawlerResult]:
-        """Crawl trending content on Reddit"""
-        try:
+        """Crawl trending content on Reddit"""        try:
             results = []
             
             if not self.reddit:
@@ -703,20 +685,16 @@ class RedditCrawler(PlatformCrawler):
             return []
     
     async def _crawl_hot(self, query: str, max_results: int, subreddit: str = None) -> List[CrawlerResult]:
-        """Crawl hot posts on Reddit"""
-        return await self._crawl_by_sort("hot", query, max_results, subreddit)
+        """Crawl hot posts on Reddit"""        return await self._crawl_by_sort("hot", query, max_results, subreddit)
     
     async def _crawl_new(self, query: str, max_results: int, subreddit: str = None) -> List[CrawlerResult]:
-        """Crawl new posts on Reddit"""
-        return await self._crawl_by_sort("new", query, max_results, subreddit)
+        """Crawl new posts on Reddit"""        return await self._crawl_by_sort("new", query, max_results, subreddit)
     
     async def _crawl_top(self, query: str, max_results: int, subreddit: str = None) -> List[CrawlerResult]:
-        """Crawl top posts on Reddit"""
-        return await self._crawl_by_sort("top", query, max_results, subreddit)
+        """Crawl top posts on Reddit"""        return await self._crawl_by_sort("top", query, max_results, subreddit)
     
     async def _crawl_by_sort(self, sort_type: str, query: str, max_results: int, subreddit: str = None) -> List[CrawlerResult]:
-        """Crawl posts by sort type"""
-        try:
+        """Crawl posts by sort type"""        try:
             results = []
             
             if not self.reddit:
@@ -772,8 +750,7 @@ class RedditCrawler(PlatformCrawler):
     # Helper methods
     
     async def _parse_submission_data(self, submission) -> Optional[RedditPost]:
-        """Parse submission data from PRAW"""
-        try:
+        """Parse submission data from PRAW"""        try:
             created_utc = datetime.utcfromtimestamp(submission.created_utc)
             edited = None
             if submission.edited:
@@ -859,8 +836,7 @@ class RedditCrawler(PlatformCrawler):
             return None
     
     async def _parse_comment_data(self, comment) -> Optional[RedditComment]:
-        """Parse comment data from PRAW"""
-        try:
+        """Parse comment data from PRAW"""        try:
             created_utc = datetime.utcfromtimestamp(comment.created_utc)
             edited = None
             if comment.edited:
@@ -932,8 +908,7 @@ class RedditCrawler(PlatformCrawler):
             return None
     
     async def _get_detailed_user_info(self, username: str) -> Optional[RedditUser]:
-        """Get detailed user information"""
-        try:
+        """Get detailed user information"""        try:
             user = self.reddit.redditor(username)
             created_utc = datetime.utcfromtimestamp(user.created_utc)
             
@@ -994,8 +969,7 @@ class RedditCrawler(PlatformCrawler):
             return None
     
     async def _get_detailed_subreddit_info(self, subreddit_name: str) -> Optional[RedditSubreddit]:
-        """Get detailed subreddit information"""
-        try:
+        """Get detailed subreddit information"""        try:
             subreddit = self.reddit.subreddit(subreddit_name)
             created_utc = datetime.utcfromtimestamp(subreddit.created_utc)
             
@@ -1088,8 +1062,7 @@ class RedditCrawler(PlatformCrawler):
             return None
     
     def _calculate_engagement_score(self, submission) -> float:
-        """Calculate engagement score for a submission"""
-        try:
+        """Calculate engagement score for a submission"""        try:
             # Simple engagement calculation
             score = submission.score
             comments = submission.num_comments
@@ -1110,8 +1083,7 @@ class RedditCrawler(PlatformCrawler):
             return 0.0
     
     def _calculate_trending_score(self, submission) -> float:
-        """Calculate trending score for a submission"""
-        try:
+        """Calculate trending score for a submission"""        try:
             # Trending calculation based on velocity
             score = submission.score
             comments = submission.num_comments
@@ -1133,8 +1105,7 @@ class RedditCrawler(PlatformCrawler):
             return 0.0
     
     async def _check_rate_limit(self):
-        """Check and enforce rate limiting"""
-        try:
+        """Check and enforce rate limiting"""        try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
             
@@ -1150,8 +1121,7 @@ class RedditCrawler(PlatformCrawler):
             self.logger.error(f"Error in rate limiting: {str(e)}")
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
-        """Extract metadata from Reddit content"""
-        try:
+        """Extract metadata from Reddit content"""        try:
             # Parse Reddit URL
             parsed_url = urlparse(url)
             path_parts = parsed_url.path.strip('/').split('/')
@@ -1202,8 +1172,7 @@ class RedditCrawler(PlatformCrawler):
             return {'error': str(e)}
     
     def get_platform_info(self) -> Dict[str, Any]:
-        """Get Reddit platform information"""
-        return {
+        """Get Reddit platform information"""        return {
             'platform_name': 'Reddit',
             'base_url': self.base_url,
             'api_base_url': self.api_base_url,

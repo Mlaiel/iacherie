@@ -1,5 +1,4 @@
-"""
-Advanced Memory Cache Implementation for IA Influencer Agent Platform
+"""Advanced Memory Cache Implementation for IA Influencer Agent Platform
 Enterprise-grade in-memory caching with multiple eviction policies, compression, and monitoring
 
 Business Logic Integration:
@@ -13,9 +12,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
       Microservices Architect + Audio Processing Expert + DevOps Engineer + IA Prompt Engineer
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import threading
 import time
@@ -41,8 +38,7 @@ logger = logging.getLogger(__name__)
 T = TypeVar('T')
 
 class EvictionPolicy(Enum):
-    """Advanced cache eviction policies for IA Influencer Agent"""
-    LRU = "lru"              # Least Recently Used
+    """Advanced cache eviction policies for IA Influencer Agent"""    LRU = "lru"              # Least Recently Used
     LFU = "lfu"              # Least Frequently Used  
     TTL = "ttl"              # Time To Live
     FIFO = "fifo"            # First In First Out
@@ -52,15 +48,13 @@ class EvictionPolicy(Enum):
     CONTENT_VALUE = "content_value"        # Content monetization value
 
 class CompressionType(Enum):
-    """Compression algorithms for memory optimization"""
-    NONE = "none"
+    """Compression algorithms for memory optimization"""    NONE = "none"
     GZIP = "gzip"
     ZLIB = "zlib"
     PICKLE = "pickle"
 
 class CacheNamespace(Enum):
-    """Cache namespaces for IA Influencer Agent business logic"""
-    CREATOR_CONTENT = "creator_content"
+    """Cache namespaces for IA Influencer Agent business logic"""    CREATOR_CONTENT = "creator_content"
     AI_PROCESSING = "ai_processing"
     CONTENT_PROTECTION = "content_protection"
     REVENUE_ANALYTICS = "revenue_analytics"
@@ -72,8 +66,7 @@ class CacheNamespace(Enum):
     COLLABORATION = "collaboration"
 
 class CachePriority(Enum):
-    """Cache priority levels for intelligent eviction"""
-    CRITICAL = 5    # Revenue-critical data
+    """Cache priority levels for intelligent eviction"""    CRITICAL = 5    # Revenue-critical data
     HIGH = 4        # User-facing content
     MEDIUM = 3      # Processing results
     LOW = 2         # Analytics data
@@ -81,8 +74,7 @@ class CachePriority(Enum):
 
 @dataclass
 class CacheEntry:
-    """Enhanced cache entry with comprehensive metadata for IA Influencer Agent"""
-    value: Any
+    """Enhanced cache entry with comprehensive metadata for IA Influencer Agent"""    value: Any
     created_at: float
     accessed_at: float
     access_count: int = 0
@@ -113,32 +105,27 @@ class CacheEntry:
     
     @property
     def is_expired(self) -> bool:
-        """Check if entry is expired"""
-        if self.ttl is None:
+        """Check if entry is expired"""        if self.ttl is None:
             return False
         return time.time() > (self.created_at + self.ttl)
     
     @property
     def age(self) -> float:
-        """Get entry age in seconds"""
-        return time.time() - self.created_at
+        """Get entry age in seconds"""        return time.time() - self.created_at
     
     @property
     def time_since_access(self) -> float:
-        """Time since last access"""
-        return time.time() - self.accessed_at
+        """Time since last access"""        return time.time() - self.accessed_at
     
     @property
     def access_frequency(self) -> float:
-        """Calculate access frequency (accesses per hour)"""
-        if self.age <= 0:
+        """Calculate access frequency (accesses per hour)"""        if self.age <= 0:
             return float('inf')
         return (self.access_count / (self.age / 3600))
     
     @property
     def value_score(self) -> float:
-        """Calculate overall value score for eviction decisions"""
-        base_score = self.priority.value * 10
+        """Calculate overall value score for eviction decisions"""        base_score = self.priority.value * 10
         
         # Factor in monetization value
         monetization_bonus = min(self.monetization_value * 5, 20)
@@ -152,8 +139,7 @@ class CacheEntry:
         return base_score + monetization_bonus + frequency_bonus + recency_factor
     
     def update_access(self):
-        """Update access metadata"""
-        current_time = time.time()
+        """Update access metadata"""        current_time = time.time()
         self.accessed_at = current_time
         self.access_count += 1
         
@@ -163,17 +149,14 @@ class CacheEntry:
             self.access_pattern.pop(0)
     
     def add_tag(self, tag: str):
-        """Add tag to entry"""
-        self.tags.add(tag)
+        """Add tag to entry"""        self.tags.add(tag)
     
     def has_tag(self, tag: str) -> bool:
-        """Check if entry has tag"""
-        return tag in self.tags
+        """Check if entry has tag"""        return tag in self.tags
 
 @dataclass 
 class CacheConfig:
-    """Configuration for enterprise memory cache"""
-    max_size: int = 10000
+    """Configuration for enterprise memory cache"""    max_size: int = 10000
     max_memory_bytes: int = 500 * 1024 * 1024  # 500MB
     eviction_policy: EvictionPolicy = EvictionPolicy.ADAPTIVE
     default_ttl: Optional[float] = None
@@ -201,14 +184,12 @@ class CacheConfig:
     health_check_interval: float = 300.0  # 5 minutes
 
 class CacheMetrics:
-    """Advanced metrics tracking for cache performance"""
-    
+    """Advanced metrics tracking for cache performance"""    
     def __init__(self):
         self.reset()
     
     def reset(self):
-        """Reset all metrics"""
-        self.hits = 0
+        """Reset all metrics"""        self.hits = 0
         self.misses = 0
         self.sets = 0
         self.deletes = 0
@@ -235,25 +216,21 @@ class CacheMetrics:
     
     @property
     def hit_rate(self) -> float:
-        """Calculate hit rate"""
-        total = self.hits + self.misses
+        """Calculate hit rate"""        total = self.hits + self.misses
         return self.hits / total if total > 0 else 0.0
     
     @property
     def operations_per_second(self) -> float:
-        """Calculate operations per second"""
-        duration = time.time() - self.start_time
+        """Calculate operations per second"""        duration = time.time() - self.start_time
         total_ops = self.hits + self.misses + self.sets + self.deletes
         return total_ops / duration if duration > 0 else 0.0
     
     @property
     def average_compression_ratio(self) -> float:
-        """Calculate average compression ratio"""
-        return self.compression_ratio_total / max(1, self.compressions)
+        """Calculate average compression ratio"""        return self.compression_ratio_total / max(1, self.compressions)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert metrics to dictionary"""
-        return {
+        """Convert metrics to dictionary"""        return {
             'cache_stats': {
                 'hits': self.hits,
                 'misses': self.misses,
@@ -279,8 +256,7 @@ class CacheMetrics:
         }
 
 class EnterpriseMemoryCache(Generic[T]):
-    """
-    Enterprise-grade memory cache for IA Influencer Agent Platform
+    """    Enterprise-grade memory cache for IA Influencer Agent Platform
     
     Features:
     - Multi-tenant creator isolation
@@ -289,8 +265,7 @@ class EnterpriseMemoryCache(Generic[T]):
     - Advanced compression and optimization
     - Real-time performance monitoring
     - AI-driven adaptive eviction
-    """
-    
+    """    
     def __init__(self, config: Optional[CacheConfig] = None):
         self.config = config or CacheConfig()
         
@@ -325,8 +300,7 @@ class EnterpriseMemoryCache(Generic[T]):
         logger.info(f"EnterpriseMemoryCache initialized - Policy: {self.config.eviction_policy}")
     
     def _start_background_tasks(self):
-        """Start background maintenance tasks"""
-        def cleanup_worker():
+        """Start background maintenance tasks"""        def cleanup_worker():
             while not self._stop_tasks.wait(self.config.cleanup_interval):
                 try:
                     if self.config.enable_async_cleanup:
@@ -350,8 +324,7 @@ class EnterpriseMemoryCache(Generic[T]):
         self._health_task.start()
     
     def _get_object_size(self, obj: Any) -> int:
-        """Advanced object size calculation with caching awareness"""
-        try:
+        """Advanced object size calculation with caching awareness"""        try:
             if hasattr(obj, '__sizeof__'):
                 size = obj.__sizeof__()
             else:
@@ -376,8 +349,7 @@ class EnterpriseMemoryCache(Generic[T]):
             return 256  # Conservative estimate for unknown objects
     
     def _compress_value(self, value: Any) -> Tuple[Any, CompressionType, float, float]:
-        """Compress value if beneficial"""
-        if not self.config.enable_compression:
+        """Compress value if beneficial"""        if not self.config.enable_compression:
             return value, CompressionType.NONE, 1.0, 0.0
         
         start_time = time.time()
@@ -424,8 +396,7 @@ class EnterpriseMemoryCache(Generic[T]):
             return value, CompressionType.NONE, 1.0, compression_time
     
     def _decompress_value(self, compressed_value: Any, compression_type: CompressionType) -> Tuple[Any, float]:
-        """Decompress value"""
-        if compression_type == CompressionType.NONE:
+        """Decompress value"""        if compression_type == CompressionType.NONE:
             return compressed_value, 0.0
         
         start_time = time.time()
@@ -455,8 +426,7 @@ class EnterpriseMemoryCache(Generic[T]):
             return compressed_value, decompression_time
     
     def _update_access_tracking(self, key: str, entry: CacheEntry):
-        """Update access tracking for various eviction policies"""
-        entry.update_access()
+        """Update access tracking for various eviction policies"""        entry.update_access()
         
         if self.config.eviction_policy == EvictionPolicy.LRU:
             with self._lock:
@@ -469,20 +439,17 @@ class EnterpriseMemoryCache(Generic[T]):
                 self._frequency_counter[key] = self._frequency_counter.get(key, 0) + 1
     
     def _calculate_memory_pressure(self) -> float:
-        """Calculate current memory pressure"""
-        current_memory = sum(entry.size for entry in self._cache.values())
+        """Calculate current memory pressure"""        current_memory = sum(entry.size for entry in self._cache.values())
         return current_memory / self.config.max_memory_bytes
     
     def _should_evict(self) -> bool:
-        """Intelligent eviction decision"""
-        size_pressure = len(self._cache) >= self.config.max_size
+        """Intelligent eviction decision"""        size_pressure = len(self._cache) >= self.config.max_size
         memory_pressure = self._calculate_memory_pressure() >= self.config.memory_pressure_threshold
         
         return size_pressure or memory_pressure
     
     def _select_eviction_candidate(self) -> Optional[str]:
-        """Advanced eviction candidate selection"""
-        if not self._cache:
+        """Advanced eviction candidate selection"""        if not self._cache:
             return None
         
         with self._lock:
@@ -531,8 +498,7 @@ class EnterpriseMemoryCache(Generic[T]):
             return next(iter(self._cache))
     
     def _adaptive_eviction_selection(self) -> Optional[str]:
-        """AI-driven adaptive eviction using value scoring"""
-        if not self._cache:
+        """AI-driven adaptive eviction using value scoring"""        if not self._cache:
             return None
         
         # Calculate value scores for all entries
@@ -547,8 +513,7 @@ class EnterpriseMemoryCache(Generic[T]):
         return scored_entries[0][0] if scored_entries else None
     
     def _creator_priority_eviction(self) -> Optional[str]:
-        """Evict based on creator priority and usage patterns"""
-        # Prioritize evicting content from creators with lower engagement
+        """Evict based on creator priority and usage patterns"""        # Prioritize evicting content from creators with lower engagement
         creator_scores = {}
         
         for creator_id, keys in self._creator_cache.items():
@@ -578,16 +543,14 @@ class EnterpriseMemoryCache(Generic[T]):
         return next(iter(self._cache))
     
     def _content_value_eviction(self) -> Optional[str]:
-        """Evict based on content monetization value"""
-        if not self._cache:
+        """Evict based on content monetization value"""        if not self._cache:
             return None
         
         # Find entry with lowest value score
         return min(self._cache.keys(), key=lambda k: self._cache[k].value_score)
     
     def _evict_entries(self, target_count: int = 1):
-        """Evict multiple entries efficiently"""
-        evicted_count = 0
+        """Evict multiple entries efficiently"""        evicted_count = 0
         
         while evicted_count < target_count and self._cache and self._should_evict():
             key = self._select_eviction_candidate()
@@ -609,8 +572,7 @@ class EnterpriseMemoryCache(Generic[T]):
             logger.debug(f"Evicted {evicted_count} cache entries")
     
     def _remove_entry(self, key: str) -> bool:
-        """Remove entry and update all tracking structures"""
-        if key not in self._cache:
+        """Remove entry and update all tracking structures"""        if key not in self._cache:
             return False
         
         entry = self._cache[key]
@@ -647,8 +609,7 @@ class EnterpriseMemoryCache(Generic[T]):
         return True
     
     def _async_cleanup(self):
-        """Asynchronous cleanup of expired entries"""
-        def cleanup_batch():
+        """Asynchronous cleanup of expired entries"""        def cleanup_batch():
             expired_keys = []
             current_time = time.time()
             
@@ -678,8 +639,7 @@ class EnterpriseMemoryCache(Generic[T]):
             logger.warning(f"Async cleanup failed: {e}")
     
     def _cleanup_expired(self):
-        """Synchronous cleanup of expired entries"""
-        expired_keys = []
+        """Synchronous cleanup of expired entries"""        expired_keys = []
         current_time = time.time()
         
         with self._lock:
@@ -696,8 +656,7 @@ class EnterpriseMemoryCache(Generic[T]):
             logger.debug(f"Cleanup removed {removed_count} expired entries")
     
     def _health_check(self):
-        """Comprehensive health check"""
-        try:
+        """Comprehensive health check"""        try:
             memory_pressure = self._calculate_memory_pressure()
             
             # Check memory pressure
@@ -743,8 +702,7 @@ class EnterpriseMemoryCache(Generic[T]):
     # Public API methods
     
     def get(self, key: str, default: Optional[T] = None) -> Optional[T]:
-        """Get value from cache with comprehensive tracking"""
-        operation_start = time.time()
+        """Get value from cache with comprehensive tracking"""        operation_start = time.time()
         
         try:
             with self._lock:
@@ -806,8 +764,7 @@ class EnterpriseMemoryCache(Generic[T]):
             revenue_impact: float = 0.0,
             processing_cost: float = 0.0,
             tags: Optional[Set[str]] = None) -> bool:
-        """Set value in cache with business logic integration"""
-        
+        """Set value in cache with business logic integration"""        
         operation_start = time.time()
         
         try:
@@ -892,16 +849,14 @@ class EnterpriseMemoryCache(Generic[T]):
             return False
     
     def delete(self, key: str) -> bool:
-        """Delete key from cache"""
-        with self._lock:
+        """Delete key from cache"""        with self._lock:
             if self._remove_entry(key):
                 self.metrics.deletes += 1
                 return True
             return False
     
     def exists(self, key: str) -> bool:
-        """Check if key exists and is not expired"""
-        with self._lock:
+        """Check if key exists and is not expired"""        with self._lock:
             if key not in self._cache:
                 return False
             
@@ -913,8 +868,7 @@ class EnterpriseMemoryCache(Generic[T]):
             return True
     
     def touch(self, key: str, ttl: Optional[float] = None) -> bool:
-        """Update TTL and access time for existing key"""
-        with self._lock:
+        """Update TTL and access time for existing key"""        with self._lock:
             if key not in self._cache:
                 return False
             
@@ -935,8 +889,7 @@ class EnterpriseMemoryCache(Generic[T]):
     
     def increment(self, key: str, amount: Union[int, float] = 1, 
                   default: Union[int, float] = 0) -> Union[int, float]:
-        """Increment numeric value"""
-        with self._lock:
+        """Increment numeric value"""        with self._lock:
             if key not in self._cache:
                 self.set(key, default + amount)
                 return default + amount
@@ -970,8 +923,7 @@ class EnterpriseMemoryCache(Generic[T]):
     # Business logic methods for IA Influencer Agent
     
     def get_creator_stats(self, creator_id: str) -> Dict[str, Any]:
-        """Get comprehensive statistics for a creator"""
-        with self._lock:
+        """Get comprehensive statistics for a creator"""        with self._lock:
             creator_keys = self._creator_cache.get(creator_id, set())
             
             if not creator_keys:
@@ -1014,8 +966,7 @@ class EnterpriseMemoryCache(Generic[T]):
             }
     
     def get_namespace_stats(self, namespace: CacheNamespace) -> Dict[str, Any]:
-        """Get statistics for a cache namespace"""
-        with self._lock:
+        """Get statistics for a cache namespace"""        with self._lock:
             namespace_keys = self._namespace_cache.get(namespace, set())
             namespace_stat = self.metrics.namespace_stats[namespace]
             
@@ -1042,8 +993,7 @@ class EnterpriseMemoryCache(Generic[T]):
             }
     
     def clear_creator_cache(self, creator_id: str) -> int:
-        """Clear all cached content for a specific creator"""
-        with self._lock:
+        """Clear all cached content for a specific creator"""        with self._lock:
             creator_keys = self._creator_cache.get(creator_id, set()).copy()
             cleared_count = 0
             
@@ -1058,8 +1008,7 @@ class EnterpriseMemoryCache(Generic[T]):
             return cleared_count
     
     def clear_namespace(self, namespace: CacheNamespace) -> int:
-        """Clear all entries in a specific namespace"""
-        with self._lock:
+        """Clear all entries in a specific namespace"""        with self._lock:
             namespace_keys = self._namespace_cache.get(namespace, set()).copy()
             cleared_count = 0
             
@@ -1074,8 +1023,7 @@ class EnterpriseMemoryCache(Generic[T]):
             return cleared_count
     
     def get_priority_queue_stats(self) -> Dict[CachePriority, Dict[str, Any]]:
-        """Get statistics for each priority queue"""
-        stats = {}
+        """Get statistics for each priority queue"""        stats = {}
         
         with self._lock:
             for priority, keys in self._priority_queues.items():
@@ -1100,8 +1048,7 @@ class EnterpriseMemoryCache(Generic[T]):
         return stats
     
     def search_by_tags(self, tags: Set[str], match_all: bool = False) -> List[str]:
-        """Search cache entries by tags"""
-        matching_keys = []
+        """Search cache entries by tags"""        matching_keys = []
         
         with self._lock:
             for key, entry in self._cache.items():
@@ -1120,8 +1067,7 @@ class EnterpriseMemoryCache(Generic[T]):
         return matching_keys
     
     def get_memory_breakdown(self) -> Dict[str, Any]:
-        """Get detailed memory usage breakdown"""
-        breakdown = {
+        """Get detailed memory usage breakdown"""        breakdown = {
             'total_entries': 0,
             'total_size_mb': 0,
             'by_namespace': {},
@@ -1195,8 +1141,7 @@ class EnterpriseMemoryCache(Generic[T]):
     # Standard cache operations
     
     def clear(self):
-        """Clear all cache entries"""
-        with self._lock:
+        """Clear all cache entries"""        with self._lock:
             self._cache.clear()
             self._access_order.clear()
             self._frequency_counter.clear()
@@ -1207,8 +1152,7 @@ class EnterpriseMemoryCache(Generic[T]):
             self.metrics.reset()
     
     def clear_pattern(self, pattern: str):
-        """Clear entries matching pattern (simple prefix/suffix matching)"""
-        keys_to_remove = []
+        """Clear entries matching pattern (simple prefix/suffix matching)"""        keys_to_remove = []
         
         with self._lock:
             for key in self._cache.keys():
@@ -1232,8 +1176,7 @@ class EnterpriseMemoryCache(Generic[T]):
         return removed_count
     
     def keys(self, pattern: str = "*") -> List[str]:
-        """Get keys matching pattern"""
-        with self._lock:
+        """Get keys matching pattern"""        with self._lock:
             if pattern == "*":
                 return list(self._cache.keys())
             
@@ -1253,8 +1196,7 @@ class EnterpriseMemoryCache(Generic[T]):
             return matched_keys
     
     def get_comprehensive_stats(self) -> Dict[str, Any]:
-        """Get comprehensive cache statistics"""
-        base_stats = self.metrics.to_dict()
+        """Get comprehensive cache statistics"""        base_stats = self.metrics.to_dict()
         
         with self._lock:
             total_entries = len(self._cache)
@@ -1278,8 +1220,7 @@ class EnterpriseMemoryCache(Generic[T]):
             return {**base_stats, **additional_stats}
     
     def get_entry_info(self, key: str) -> Optional[Dict[str, Any]]:
-        """Get detailed information about cache entry"""
-        with self._lock:
+        """Get detailed information about cache entry"""        with self._lock:
             if key not in self._cache:
                 return None
             
@@ -1311,16 +1252,13 @@ class EnterpriseMemoryCache(Generic[T]):
             }
     
     def __len__(self) -> int:
-        """Get number of entries in cache"""
-        return len(self._cache)
+        """Get number of entries in cache"""        return len(self._cache)
     
     def __contains__(self, key: str) -> bool:
-        """Check if key exists in cache"""
-        return self.exists(key)
+        """Check if key exists in cache"""        return self.exists(key)
     
     def close(self):
-        """Close cache and cleanup resources"""
-        self._stop_tasks.set()
+        """Close cache and cleanup resources"""        self._stop_tasks.set()
         
         # Wait for background tasks to complete
         if self._cleanup_task:
@@ -1337,8 +1275,7 @@ class EnterpriseMemoryCache(Generic[T]):
 # Specialized cache implementations for IA Influencer Agent
 
 class CreatorContentCache(EnterpriseMemoryCache[T]):
-    """Specialized cache for creator content with content-aware policies"""
-    
+    """Specialized cache for creator content with content-aware policies"""    
     def __init__(self, max_size: int = 5000, **kwargs):
         config = CacheConfig(
             max_size=max_size,
@@ -1359,8 +1296,7 @@ class CreatorContentCache(EnterpriseMemoryCache[T]):
                      content_type: str,
                      monetization_value: float = 0.0,
                      tags: Optional[Set[str]] = None) -> bool:
-        """Cache creator content with appropriate metadata"""
-        return self.set(
+        """Cache creator content with appropriate metadata"""        return self.set(
             key=f"content:{creator_id}:{content_id}",
             value=content,
             creator_id=creator_id,
@@ -1372,8 +1308,7 @@ class CreatorContentCache(EnterpriseMemoryCache[T]):
         )
 
 class AIProcessingCache(EnterpriseMemoryCache[T]):
-    """Specialized cache for AI processing results"""
-    
+    """Specialized cache for AI processing results"""    
     def __init__(self, max_size: int = 2000, **kwargs):
         config = CacheConfig(
             max_size=max_size,
@@ -1392,8 +1327,7 @@ class AIProcessingCache(EnterpriseMemoryCache[T]):
                        processing_result: T,
                        processing_cost: float,
                        model_version: str) -> bool:
-        """Cache AI processing result"""
-        tags = {f"model:{model_version}", "ai_processed"}
+        """Cache AI processing result"""        tags = {f"model:{model_version}", "ai_processed"}
         
         return self.set(
             key=f"ai:{creator_id}:{content_id}",
@@ -1406,8 +1340,7 @@ class AIProcessingCache(EnterpriseMemoryCache[T]):
         )
 
 class RevenueAnalyticsCache(EnterpriseMemoryCache[T]):
-    """Specialized cache for revenue and analytics data"""
-    
+    """Specialized cache for revenue and analytics data"""    
     def __init__(self, max_size: int = 1000, **kwargs):
         config = CacheConfig(
             max_size=max_size,
@@ -1424,8 +1357,7 @@ class RevenueAnalyticsCache(EnterpriseMemoryCache[T]):
                           creator_id: str,
                           data: T,
                           revenue_impact: float) -> bool:
-        """Cache revenue analytics data"""
-        return self.set(
+        """Cache revenue analytics data"""        return self.set(
             key=f"revenue:{creator_id}:{metric_key}",
             value=data,
             creator_id=creator_id,
@@ -1442,20 +1374,16 @@ TTLCache = EnterpriseMemoryCache
 
 # Factory functions for easy instantiation
 def create_memory_cache(config: Optional[CacheConfig] = None) -> EnterpriseMemoryCache:
-    """Create standard memory cache"""
-    return EnterpriseMemoryCache(config)
+    """Create standard memory cache"""    return EnterpriseMemoryCache(config)
 
 def create_creator_cache(max_size: int = 5000) -> CreatorContentCache:
-    """Create creator content cache"""
-    return CreatorContentCache(max_size=max_size)
+    """Create creator content cache"""    return CreatorContentCache(max_size=max_size)
 
 def create_ai_cache(max_size: int = 2000) -> AIProcessingCache:
-    """Create AI processing cache"""
-    return AIProcessingCache(max_size=max_size)
+    """Create AI processing cache"""    return AIProcessingCache(max_size=max_size)
 
 def create_revenue_cache(max_size: int = 1000) -> RevenueAnalyticsCache:
-    """Create revenue analytics cache"""
-    return RevenueAnalyticsCache(max_size=max_size)
+    """Create revenue analytics cache"""    return RevenueAnalyticsCache(max_size=max_size)
 
 # Global cache instances
 _memory_cache_instance: Optional[EnterpriseMemoryCache] = None
@@ -1464,29 +1392,25 @@ _ai_cache_instance: Optional[AIProcessingCache] = None
 _revenue_cache_instance: Optional[RevenueAnalyticsCache] = None
 
 def get_memory_cache() -> EnterpriseMemoryCache:
-    """Get or create global memory cache instance"""
-    global _memory_cache_instance
+    """Get or create global memory cache instance"""    global _memory_cache_instance
     if _memory_cache_instance is None:
         _memory_cache_instance = create_memory_cache()
     return _memory_cache_instance
 
 def get_creator_cache() -> CreatorContentCache:
-    """Get or create global creator cache instance"""
-    global _creator_cache_instance
+    """Get or create global creator cache instance"""    global _creator_cache_instance
     if _creator_cache_instance is None:
         _creator_cache_instance = create_creator_cache()
     return _creator_cache_instance
 
 def get_ai_cache() -> AIProcessingCache:
-    """Get or create global AI cache instance"""
-    global _ai_cache_instance
+    """Get or create global AI cache instance"""    global _ai_cache_instance
     if _ai_cache_instance is None:
         _ai_cache_instance = create_ai_cache()
     return _ai_cache_instance
 
 def get_revenue_cache() -> RevenueAnalyticsCache:
-    """Get or create global revenue cache instance"""
-    global _revenue_cache_instance
+    """Get or create global revenue cache instance"""    global _revenue_cache_instance
     if _revenue_cache_instance is None:
         _revenue_cache_instance = create_revenue_cache()
     return _revenue_cache_instance

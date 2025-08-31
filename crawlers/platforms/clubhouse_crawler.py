@@ -1,5 +1,4 @@
-"""
-Clubhouse Platform Crawler - Ultra-Advanced Implementation
+"""Clubhouse Platform Crawler - Ultra-Advanced Implementation
 Audio-First Social Network Content Monitoring System
 
 This module provides comprehensive crawling capabilities for Clubhouse platform,
@@ -12,9 +11,7 @@ Created by: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
-"""
-
-import asyncio
+"""import asyncio
 import aiohttp
 import json
 import logging
@@ -41,31 +38,27 @@ logger = logging.getLogger(__name__)
 
 
 class ClubhouseRoomType(str, Enum):
-    """Clubhouse room types"""
-    OPEN = "open"
+    """Clubhouse room types"""    OPEN = "open"
     SOCIAL = "social"
     CLOSED = "closed"
 
 
 class ClubhouseRoomStatus(str, Enum):
-    """Clubhouse room status"""
-    LIVE = "live"
+    """Clubhouse room status"""    LIVE = "live"
     ENDED = "ended"
     SCHEDULED = "scheduled"
     CANCELLED = "cancelled"
 
 
 class ClubhouseUserRole(str, Enum):
-    """User roles in Clubhouse rooms"""
-    MODERATOR = "moderator"
+    """User roles in Clubhouse rooms"""    MODERATOR = "moderator"
     SPEAKER = "speaker"
     LISTENER = "listener"
     FOLLOWER = "follower"
 
 
 class ClubhouseContentType(str, Enum):
-    """Clubhouse content types"""
-    ROOM = "room"
+    """Clubhouse content types"""    ROOM = "room"
     CONVERSATION = "conversation"
     ANNOUNCEMENT = "announcement"
     EVENT = "event"
@@ -73,8 +66,7 @@ class ClubhouseContentType(str, Enum):
 
 
 class ClubhouseAudioSegment(BaseModel):
-    """Audio segment data model"""
-    segment_id: str
+    """Audio segment data model"""    segment_id: str
     speaker_user_id: str
     start_time: float  # seconds from room start
     end_time: float
@@ -89,8 +81,7 @@ class ClubhouseAudioSegment(BaseModel):
 
 
 class ClubhouseUser(BaseModel):
-    """Clubhouse user data model"""
-    user_id: str
+    """Clubhouse user data model"""    user_id: str
     username: str
     name: str
     bio: Optional[str] = None
@@ -113,8 +104,7 @@ class ClubhouseUser(BaseModel):
 
 
 class ClubhouseClub(BaseModel):
-    """Clubhouse club data model"""
-    club_id: str
+    """Clubhouse club data model"""    club_id: str
     name: str
     description: Optional[str] = None
     photo_url: Optional[str] = None
@@ -131,8 +121,7 @@ class ClubhouseClub(BaseModel):
 
 
 class ClubhouseRoom(BaseModel):
-    """Clubhouse room data model"""
-    channel: str  # room ID
+    """Clubhouse room data model"""    channel: str  # room ID
     channel_user: ClubhouseUser
     topic: str
     is_private: bool = False
@@ -165,8 +154,7 @@ class ClubhouseRoom(BaseModel):
 
 
 class ClubhouseConversation(BaseModel):
-    """Clubhouse conversation data model"""
-    conversation_id: str
+    """Clubhouse conversation data model"""    conversation_id: str
     room: ClubhouseRoom
     audio_segments: List[ClubhouseAudioSegment] = Field(default_factory=list)
     duration: int = 0  # seconds
@@ -188,8 +176,7 @@ class ClubhouseConversation(BaseModel):
 
 
 class ClubhouseEvent(BaseModel):
-    """Clubhouse event data model"""
-    event_id: str
+    """Clubhouse event data model"""    event_id: str
     name: str
     description: Optional[str] = None
     time_start: datetime
@@ -202,8 +189,7 @@ class ClubhouseEvent(BaseModel):
 
 
 class ClubhouseSearchResults(BaseModel):
-    """Clubhouse search results data model"""
-    query: str
+    """Clubhouse search results data model"""    query: str
     total_results: int
     rooms: List[ClubhouseRoom] = Field(default_factory=list)
     conversations: List[ClubhouseConversation] = Field(default_factory=list)
@@ -218,8 +204,7 @@ class ClubhouseSearchResults(BaseModel):
 
 
 class ClubhouseAnalytics(BaseModel):
-    """Clubhouse analytics data model"""
-    user_id: str
+    """Clubhouse analytics data model"""    user_id: str
     analysis_period: Tuple[datetime, datetime]
     total_rooms_created: int
     total_rooms_joined: int
@@ -243,13 +228,11 @@ class ClubhouseAnalytics(BaseModel):
 
 
 class ClubhouseCrawler(BaseCrawler):
-    """
-    Ultra-Advanced Clubhouse Platform Crawler
+    """    Ultra-Advanced Clubhouse Platform Crawler
     
     Provides comprehensive crawling and monitoring capabilities for Clubhouse platform,
     specializing in live audio content, conversation analysis, and real-time protection.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         
@@ -300,13 +283,11 @@ class ClubhouseCrawler(BaseCrawler):
         logger.info("Clubhouse crawler initialized with ultra-advanced audio monitoring")
 
     def _generate_device_id(self) -> str:
-        """Generate unique device identifier"""
-        import uuid
+        """Generate unique device identifier"""        import uuid
         return str(uuid.uuid4()).replace('-', '').upper()[:16]
 
     async def authenticate(self, phone_number: str, verification_code: Optional[str] = None) -> bool:
-        """
-        Authenticate with Clubhouse platform
+        """        Authenticate with Clubhouse platform
         
         Args:
             phone_number: Phone number for authentication
@@ -314,8 +295,7 @@ class ClubhouseCrawler(BaseCrawler):
             
         Returns:
             bool: Authentication success status
-        """
-        try:
+        """        try:
             headers = {
                 "CH-Languages": "en-US",
                 "CH-Locale": "en_US",
@@ -398,8 +378,7 @@ class ClubhouseCrawler(BaseCrawler):
         is_live_only: bool = False,
         limit: int = 50
     ) -> ClubhouseSearchResults:
-        """
-        Search Clubhouse content with advanced filtering
+        """        Search Clubhouse content with advanced filtering
         
         Args:
             query: Search query
@@ -410,8 +389,7 @@ class ClubhouseCrawler(BaseCrawler):
             
         Returns:
             ClubhouseSearchResults: Comprehensive search results
-        """
-        await self.rate_limiter.acquire()
+        """        await self.rate_limiter.acquire()
         
         try:
             # Check cache first
@@ -486,8 +464,7 @@ class ClubhouseCrawler(BaseCrawler):
         is_live_only: bool,
         limit: int
     ) -> List[ClubhouseRoom]:
-        """Search for Clubhouse rooms"""
-        try:
+        """Search for Clubhouse rooms"""        try:
             # Get current live rooms
             async with self.session.get(f"{self.base_url}/get_channels") as response:
                 if response.status == 200:
@@ -524,8 +501,7 @@ class ClubhouseCrawler(BaseCrawler):
             return []
 
     async def _search_users(self, query: str, limit: int) -> List[ClubhouseUser]:
-        """Search for Clubhouse users"""
-        try:
+        """Search for Clubhouse users"""        try:
             search_data = {
                 "query": query,
                 "followers_only": False,
@@ -558,8 +534,7 @@ class ClubhouseCrawler(BaseCrawler):
             return []
 
     async def _search_clubs(self, query: str, limit: int) -> List[ClubhouseClub]:
-        """Search for Clubhouse clubs"""
-        try:
+        """Search for Clubhouse clubs"""        try:
             search_data = {
                 "query": query
             }
@@ -589,8 +564,7 @@ class ClubhouseCrawler(BaseCrawler):
             return []
 
     async def _search_events(self, query: str, limit: int) -> List[ClubhouseEvent]:
-        """Search for Clubhouse events"""
-        try:
+        """Search for Clubhouse events"""        try:
             async with self.session.get(f"{self.base_url}/get_events") as response:
                 if response.status == 200:
                     data = await response.json()
@@ -614,16 +588,14 @@ class ClubhouseCrawler(BaseCrawler):
             return []
 
     async def get_content_details(self, room_id: str) -> Optional[ClubhouseConversation]:
-        """
-        Get detailed information about specific Clubhouse room/conversation
+        """        Get detailed information about specific Clubhouse room/conversation
         
         Args:
             room_id: Room/channel ID
             
         Returns:
             Optional[ClubhouseConversation]: Detailed conversation data
-        """
-        await self.rate_limiter.acquire()
+        """        await self.rate_limiter.acquire()
         
         try:
             # Check cache first
@@ -677,8 +649,7 @@ class ClubhouseCrawler(BaseCrawler):
         keywords: List[str] = None,
         check_interval: int = 300
     ) -> AsyncGenerator[ClubhouseConversation, None]:
-        """
-        Real-time content monitoring for Clubhouse
+        """        Real-time content monitoring for Clubhouse
         
         Args:
             user_ids: User IDs to monitor
@@ -688,8 +659,7 @@ class ClubhouseCrawler(BaseCrawler):
             
         Yields:
             ClubhouseConversation: New conversations detected
-        """
-        user_ids = user_ids or []
+        """        user_ids = user_ids or []
         topics = topics or []
         keywords = keywords or []
         
@@ -743,8 +713,7 @@ class ClubhouseCrawler(BaseCrawler):
                 await asyncio.sleep(60)
 
     async def _analyze_room_content(self, room: ClubhouseRoom) -> Optional[ClubhouseConversation]:
-        """Analyze room content and create conversation object"""
-        try:
+        """Analyze room content and create conversation object"""        try:
             conversation = ClubhouseConversation(
                 conversation_id=f"conv_{room.channel}",
                 room=room,
@@ -770,8 +739,7 @@ class ClubhouseCrawler(BaseCrawler):
             return None
 
     async def _extract_topics(self, text: str) -> List[str]:
-        """Extract topics from text"""
-        # Simplified topic extraction
+        """Extract topics from text"""        # Simplified topic extraction
         topics = []
         common_topics = [
             "technology", "business", "startup", "investing", "crypto", "nft",
@@ -787,15 +755,13 @@ class ClubhouseCrawler(BaseCrawler):
         return topics
 
     async def _extract_keywords(self, text: str) -> List[str]:
-        """Extract keywords from text"""
-        # Simple keyword extraction
+        """Extract keywords from text"""        # Simple keyword extraction
         words = text.lower().split()
         keywords = [word.strip('.,!?') for word in words if len(word) > 3]
         return keywords[:10]  # Limit to 10 keywords
 
     async def _detect_content_warnings(self, text: str) -> List[str]:
-        """Detect content warnings in text"""
-        warnings = []
+        """Detect content warnings in text"""        warnings = []
         warning_keywords = [
             "explicit", "adult", "sensitive", "trigger", "warning",
             "violence", "drug", "alcohol", "mental health"
@@ -814,8 +780,7 @@ class ClubhouseCrawler(BaseCrawler):
         comparison_set: List[ClubhouseConversation],
         threshold: float = None
     ) -> List[Tuple[ClubhouseConversation, float]]:
-        """
-        Detect conversation similarity
+        """        Detect conversation similarity
         
         Args:
             target_conversation: Conversation to compare
@@ -824,8 +789,7 @@ class ClubhouseCrawler(BaseCrawler):
             
         Returns:
             List[Tuple[ClubhouseConversation, float]]: Similar conversations with scores
-        """
-        threshold = threshold or self.similarity_threshold
+        """        threshold = threshold or self.similarity_threshold
         similar_conversations = []
         
         try:
@@ -853,8 +817,7 @@ class ClubhouseCrawler(BaseCrawler):
             return []
 
     async def _extract_conversation_features(self, conversation: ClubhouseConversation) -> Dict[str, Any]:
-        """Extract features for similarity comparison"""
-        features = {
+        """Extract features for similarity comparison"""        features = {
             "topic": conversation.room.topic.lower(),
             "participant_count": conversation.participant_count,
             "duration": conversation.duration,
@@ -872,8 +835,7 @@ class ClubhouseCrawler(BaseCrawler):
         features1: Dict[str, Any],
         features2: Dict[str, Any]
     ) -> float:
-        """Calculate similarity between conversation features"""
-        try:
+        """Calculate similarity between conversation features"""        try:
             scores = []
             
             # Topic similarity
@@ -912,8 +874,7 @@ class ClubhouseCrawler(BaseCrawler):
         user_id: str,
         analysis_period: Tuple[datetime, datetime]
     ) -> ClubhouseAnalytics:
-        """
-        Generate comprehensive analytics for Clubhouse user
+        """        Generate comprehensive analytics for Clubhouse user
         
         Args:
             user_id: User ID to analyze
@@ -921,8 +882,7 @@ class ClubhouseCrawler(BaseCrawler):
             
         Returns:
             ClubhouseAnalytics: Comprehensive analytics data
-        """
-        try:
+        """        try:
             start_time, end_time = analysis_period
             
             # This would require extensive API calls to gather user activity
@@ -982,8 +942,7 @@ class ClubhouseCrawler(BaseCrawler):
             )
 
     async def _parse_room_data(self, data: Dict[str, Any]) -> ClubhouseRoom:
-        """Parse room data from API response"""
-        try:
+        """Parse room data from API response"""        try:
             # Parse channel user
             channel_user_data = data.get("channel_user", {})
             channel_user = ClubhouseUser(
@@ -1068,8 +1027,7 @@ class ClubhouseCrawler(BaseCrawler):
             raise
 
     async def _parse_user_data(self, data: Dict[str, Any]) -> ClubhouseUser:
-        """Parse user data from API response"""
-        return ClubhouseUser(
+        """Parse user data from API response"""        return ClubhouseUser(
             user_id=data.get("user_id", ""),
             username=data.get("username", ""),
             name=data.get("name", ""),
@@ -1089,8 +1047,7 @@ class ClubhouseCrawler(BaseCrawler):
         )
 
     async def _parse_club_data(self, data: Dict[str, Any]) -> ClubhouseClub:
-        """Parse club data from API response"""
-        return ClubhouseClub(
+        """Parse club data from API response"""        return ClubhouseClub(
             club_id=data.get("club_id", ""),
             name=data.get("name", ""),
             description=data.get("description"),
@@ -1108,8 +1065,7 @@ class ClubhouseCrawler(BaseCrawler):
         )
 
     async def _parse_event_data(self, data: Dict[str, Any]) -> ClubhouseEvent:
-        """Parse event data from API response"""
-        hosts = []
+        """Parse event data from API response"""        hosts = []
         for host_data in data.get("hosts", []):
             host = ClubhouseUser(
                 user_id=host_data.get("user_id", ""),
@@ -1137,19 +1093,16 @@ class ClubhouseCrawler(BaseCrawler):
         )
 
     async def _calculate_similarity(self, conversation: ClubhouseConversation) -> float:
-        """Calculate similarity score against protected content"""
-        # Simplified similarity calculation
+        """Calculate similarity score against protected content"""        # Simplified similarity calculation
         return 0.0
 
     async def _check_protection_status(self, conversation: ClubhouseConversation) -> str:
-        """Check protection status of conversation"""
-        if conversation.content_warnings:
+        """Check protection status of conversation"""        if conversation.content_warnings:
             return "flagged"
         return "unprotected"
 
     async def _handle_rate_limit(self, response: aiohttp.ClientResponse) -> bool:
-        """Handle rate limiting responses"""
-        if response.status == 429:
+        """Handle rate limiting responses"""        if response.status == 429:
             retry_after = int(response.headers.get('Retry-After', 60))
             logger.warning(f"Rate limited. Waiting {retry_after} seconds")
             await asyncio.sleep(retry_after)
@@ -1157,8 +1110,7 @@ class ClubhouseCrawler(BaseCrawler):
         return False
 
     async def close(self):
-        """Close crawler and cleanup resources"""
-        try:
+        """Close crawler and cleanup resources"""        try:
             await self.cache_manager.close()
             await super().close()
             logger.info("Clubhouse crawler closed successfully")

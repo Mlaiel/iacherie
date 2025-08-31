@@ -1,5 +1,4 @@
-"""
-Queue Management Manager
+"""Queue Management Manager
 =======================
 
 Advanced queue management system for crawler operations with priority handling,
@@ -7,9 +6,7 @@ load balancing, retry logic, and distributed processing capabilities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 import time
@@ -33,8 +30,7 @@ from ...monitoring.metrics_collector import MetricsCollector
 
 
 class TaskPriority(Enum):
-    """Task priority levels for queue management."""
-    CRITICAL = 1
+    """Task priority levels for queue management."""    CRITICAL = 1
     HIGH = 2
     NORMAL = 3
     LOW = 4
@@ -42,8 +38,7 @@ class TaskPriority(Enum):
 
 
 class TaskStatus(Enum):
-    """Task execution status."""
-    PENDING = "pending"
+    """Task execution status."""    PENDING = "pending"
     QUEUED = "queued"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -54,8 +49,7 @@ class TaskStatus(Enum):
 
 
 class QueueType(Enum):
-    """Queue type enumeration."""
-    PRIORITY = "priority"
+    """Queue type enumeration."""    PRIORITY = "priority"
     FIFO = "fifo"
     LIFO = "lifo"
     DELAY = "delay"
@@ -65,8 +59,7 @@ class QueueType(Enum):
 
 @dataclass
 class CrawlerTask:
-    """Crawler task definition."""
-    task_id: str
+    """Crawler task definition."""    task_id: str
     task_type: str
     url: str
     priority: TaskPriority
@@ -89,8 +82,7 @@ class CrawlerTask:
 
 @dataclass
 class QueueMetrics:
-    """Queue performance metrics."""
-    queue_name: str
+    """Queue performance metrics."""    queue_name: str
     total_tasks: int = 0
     pending_tasks: int = 0
     processing_tasks: int = 0
@@ -105,8 +97,7 @@ class QueueMetrics:
 
 @dataclass
 class WorkerMetrics:
-    """Worker performance metrics."""
-    worker_id: str
+    """Worker performance metrics."""    worker_id: str
     tasks_processed: int = 0
     tasks_completed: int = 0
     tasks_failed: int = 0
@@ -116,13 +107,10 @@ class WorkerMetrics:
 
 
 class TaskQueue:
-    """
-    Advanced task queue implementation with priority and scheduling support.
-    """
-    
+    """    Advanced task queue implementation with priority and scheduling support.
+    """    
     def __init__(self, name: str, queue_type: QueueType = QueueType.PRIORITY):
-        """Initialize task queue."""
-        self.name = name
+        """Initialize task queue."""        self.name = name
         self.queue_type = queue_type
         self.logger = get_logger(f"Queue-{name}")
         
@@ -143,8 +131,7 @@ class TaskQueue:
         self._wait_times: deque = deque(maxlen=1000)
         
     async def put(self, task: CrawlerTask) -> bool:
-        """Add task to queue."""
-        async with self._lock:
+        """Add task to queue."""        async with self._lock:
             try:
                 if self._paused:
                     self.logger.warning(f"Queue {self.name} is paused, rejecting task: {task.task_id}")
@@ -181,8 +168,7 @@ class TaskQueue:
                 return False
                 
     async def get(self, timeout: Optional[float] = None) -> Optional[CrawlerTask]:
-        """Get next task from queue."""
-        start_time = time.time()
+        """Get next task from queue."""        start_time = time.time()
         
         while True:
             async with self._lock:
@@ -228,8 +214,7 @@ class TaskQueue:
             await asyncio.sleep(0.01)
             
     async def _process_scheduled_tasks(self):
-        """Move scheduled tasks to main queue if ready."""
-        current_time = datetime.utcnow()
+        """Move scheduled tasks to main queue if ready."""        current_time = datetime.utcnow()
         ready_tasks = []
         
         for task_id, task in self._scheduled_tasks.items():
@@ -250,8 +235,7 @@ class TaskQueue:
             self.metrics.pending_tasks += 1
             
     async def complete_task(self, task_id: str, result: Optional[Dict[str, Any]] = None) -> bool:
-        """Mark task as completed."""
-        async with self._lock:
+        """Mark task as completed."""        async with self._lock:
             if task_id not in self._processing_tasks:
                 return False
                 
@@ -273,8 +257,7 @@ class TaskQueue:
             return True
             
     async def fail_task(self, task_id: str, error: str, retry: bool = True) -> bool:
-        """Mark task as failed and optionally retry."""
-        async with self._lock:
+        """Mark task as failed and optionally retry."""        async with self._lock:
             if task_id not in self._processing_tasks:
                 return False
                 
@@ -303,8 +286,7 @@ class TaskQueue:
             return True
             
     async def cancel_task(self, task_id: str) -> bool:
-        """Cancel a task."""
-        async with self._lock:
+        """Cancel a task."""        async with self._lock:
             # Check processing tasks
             if task_id in self._processing_tasks:
                 task = self._processing_tasks.pop(task_id)
@@ -333,18 +315,15 @@ class TaskQueue:
             return False
             
     async def pause(self):
-        """Pause queue processing."""
-        self._paused = True
+        """Pause queue processing."""        self._paused = True
         self.logger.info(f"Queue {self.name} paused")
         
     async def resume(self):
-        """Resume queue processing."""
-        self._paused = False
+        """Resume queue processing."""        self._paused = False
         self.logger.info(f"Queue {self.name} resumed")
         
     async def clear(self):
-        """Clear all tasks from queue."""
-        async with self._lock:
+        """Clear all tasks from queue."""        async with self._lock:
             self._priority_queue.clear()
             self._fifo_queue.clear()
             self._scheduled_tasks.clear()
@@ -363,13 +342,11 @@ class TaskQueue:
             self.logger.info(f"Queue {self.name} cleared")
             
     def get_size(self) -> int:
-        """Get current queue size."""
-        return (len(self._priority_queue) + len(self._fifo_queue) + 
+        """Get current queue size."""        return (len(self._priority_queue) + len(self._fifo_queue) + 
                 len(self._scheduled_tasks) + len(self._processing_tasks))
                 
     def get_metrics(self) -> QueueMetrics:
-        """Get queue metrics."""
-        # Update average times
+        """Get queue metrics."""        # Update average times
         if self._processing_times:
             self.metrics.average_processing_time = sum(self._processing_times) / len(self._processing_times)
             
@@ -392,16 +369,13 @@ class TaskQueue:
 
 
 class QueueManager:
-    """
-    Advanced queue management system for crawler operations.
+    """    Advanced queue management system for crawler operations.
     
     Provides multiple queues, load balancing, worker management,
     and distributed processing capabilities.
-    """
-    
+    """    
     def __init__(self, config: Optional[QueueConfig] = None):
-        """Initialize queue manager."""
-        self.config = config or QueueConfig()
+        """Initialize queue manager."""        self.config = config or QueueConfig()
         self.logger = get_logger(self.__class__.__name__)
         self.metrics_collector = MetricsCollector()
         
@@ -434,8 +408,7 @@ class QueueManager:
         }
         
     def _initialize_redis(self):
-        """Initialize Redis connection for distributed queues."""
-        try:
+        """Initialize Redis connection for distributed queues."""        try:
             self.redis_client = redis.Redis(
                 host=self.config.REDIS_HOST,
                 port=self.config.REDIS_PORT,
@@ -454,8 +427,7 @@ class QueueManager:
             self.config.ENABLE_REDIS = False
             
     async def start(self):
-        """Start queue manager."""
-        try:
+        """Start queue manager."""        try:
             # Create default queues
             await self.create_queue("default", QueueType.PRIORITY)
             await self.create_queue("high_priority", QueueType.PRIORITY)
@@ -474,8 +446,7 @@ class QueueManager:
             raise
             
     async def create_queue(self, name: str, queue_type: QueueType = QueueType.PRIORITY) -> bool:
-        """Create a new queue."""
-        try:
+        """Create a new queue."""        try:
             if name in self.queues:
                 self.logger.warning(f"Queue {name} already exists")
                 return False
@@ -494,8 +465,7 @@ class QueueManager:
             return False
             
     async def submit_task(self, task: CrawlerTask, queue_name: str = "default") -> bool:
-        """Submit task to specified queue."""
-        try:
+        """Submit task to specified queue."""        try:
             if queue_name not in self.queues:
                 self.logger.error(f"Queue {queue_name} does not exist")
                 return False
@@ -519,8 +489,7 @@ class QueueManager:
             return False
             
     async def _store_task_in_redis(self, task: CrawlerTask, queue_name: str):
-        """Store task in Redis for distributed processing."""
-        try:
+        """Store task in Redis for distributed processing."""        try:
             task_data = {
                 'task': asdict(task),
                 'queue_name': queue_name,
@@ -540,8 +509,7 @@ class QueueManager:
             self.logger.error(f"Failed to store task in Redis: {e}")
             
     async def get_task(self, queue_name: str = None, worker_id: str = None, timeout: float = 5.0) -> Optional[CrawlerTask]:
-        """Get next task from queue(s)."""
-        try:
+        """Get next task from queue(s)."""        try:
             # Register worker if provided
             if worker_id:
                 await self.register_worker(worker_id)
@@ -567,8 +535,7 @@ class QueueManager:
             return None
             
     async def _get_balanced_task(self, worker_id: Optional[str], timeout: float) -> Optional[CrawlerTask]:
-        """Get task using load balancing algorithm."""
-        if not self.queues:
+        """Get task using load balancing algorithm."""        if not self.queues:
             return None
             
         # Try round-robin with weights
@@ -596,8 +563,7 @@ class QueueManager:
         return None
         
     async def complete_task(self, task_id: str, result: Optional[Dict[str, Any]] = None, queue_name: str = "default") -> bool:
-        """Mark task as completed."""
-        try:
+        """Mark task as completed."""        try:
             if queue_name not in self.queues:
                 return False
                 
@@ -622,8 +588,7 @@ class QueueManager:
             return False
             
     async def fail_task(self, task_id: str, error: str, queue_name: str = "default", retry: bool = True) -> bool:
-        """Mark task as failed."""
-        try:
+        """Mark task as failed."""        try:
             if queue_name not in self.queues:
                 return False
                 
@@ -649,8 +614,7 @@ class QueueManager:
             return False
             
     async def register_worker(self, worker_id: str) -> bool:
-        """Register a worker."""
-        try:
+        """Register a worker."""        try:
             if worker_id not in self.workers:
                 self.workers[worker_id] = WorkerMetrics(worker_id=worker_id)
                 self.global_stats['active_workers'] = len(self.workers)
@@ -667,8 +631,7 @@ class QueueManager:
             return False
             
     async def unregister_worker(self, worker_id: str) -> bool:
-        """Unregister a worker."""
-        try:
+        """Unregister a worker."""        try:
             if worker_id in self.workers:
                 self.workers.pop(worker_id)
                 self.global_stats['active_workers'] = len(self.workers)
@@ -682,8 +645,7 @@ class QueueManager:
             return False
             
     def _update_worker_metrics(self, worker_id: str, event: str):
-        """Update worker metrics."""
-        if worker_id not in self.workers:
+        """Update worker metrics."""        if worker_id not in self.workers:
             return
             
         worker = self.workers[worker_id]
@@ -700,8 +662,7 @@ class QueueManager:
             worker.status = "idle"
             
     async def set_queue_weight(self, queue_name: str, weight: float) -> bool:
-        """Set queue weight for load balancing."""
-        try:
+        """Set queue weight for load balancing."""        try:
             if queue_name not in self.queues:
                 return False
                 
@@ -714,58 +675,49 @@ class QueueManager:
             return False
             
     async def pause_queue(self, queue_name: str) -> bool:
-        """Pause a queue."""
-        if queue_name not in self.queues:
+        """Pause a queue."""        if queue_name not in self.queues:
             return False
             
         await self.queues[queue_name].pause()
         return True
         
     async def resume_queue(self, queue_name: str) -> bool:
-        """Resume a queue."""
-        if queue_name not in self.queues:
+        """Resume a queue."""        if queue_name not in self.queues:
             return False
             
         await self.queues[queue_name].resume()
         return True
         
     async def clear_queue(self, queue_name: str) -> bool:
-        """Clear a queue."""
-        if queue_name not in self.queues:
+        """Clear a queue."""        if queue_name not in self.queues:
             return False
             
         await self.queues[queue_name].clear()
         return True
         
     async def get_queue_metrics(self, queue_name: str) -> Optional[QueueMetrics]:
-        """Get metrics for a specific queue."""
-        if queue_name not in self.queues:
+        """Get metrics for a specific queue."""        if queue_name not in self.queues:
             return None
             
         return self.queues[queue_name].get_metrics()
         
     async def get_all_queue_metrics(self) -> Dict[str, QueueMetrics]:
-        """Get metrics for all queues."""
-        metrics = {}
+        """Get metrics for all queues."""        metrics = {}
         for name, queue in self.queues.items():
             metrics[name] = queue.get_metrics()
         return metrics
         
     async def get_worker_metrics(self, worker_id: str) -> Optional[WorkerMetrics]:
-        """Get metrics for a specific worker."""
-        return self.workers.get(worker_id)
+        """Get metrics for a specific worker."""        return self.workers.get(worker_id)
         
     async def get_all_worker_metrics(self) -> Dict[str, WorkerMetrics]:
-        """Get metrics for all workers."""
-        return self.workers.copy()
+        """Get metrics for all workers."""        return self.workers.copy()
         
     async def get_global_stats(self) -> Dict[str, Any]:
-        """Get global queue manager statistics."""
-        return self.global_stats.copy()
+        """Get global queue manager statistics."""        return self.global_stats.copy()
         
     async def _monitoring_loop(self):
-        """Background monitoring loop."""
-        while self.monitoring_active:
+        """Background monitoring loop."""        while self.monitoring_active:
             try:
                 # Update global statistics
                 await self._update_global_stats()
@@ -786,8 +738,7 @@ class QueueManager:
                 await asyncio.sleep(1)
                 
     async def _update_global_stats(self):
-        """Update global statistics."""
-        total_processing_time = 0.0
+        """Update global statistics."""        total_processing_time = 0.0
         total_processed = 0
         
         for queue in self.queues.values():
@@ -800,8 +751,7 @@ class QueueManager:
             self.global_stats['average_response_time'] = total_processing_time / total_processed
             
     async def _cleanup_inactive_workers(self):
-        """Clean up inactive workers."""
-        current_time = datetime.utcnow()
+        """Clean up inactive workers."""        current_time = datetime.utcnow()
         inactive_threshold = timedelta(seconds=self.config.WORKER_TIMEOUT)
         
         inactive_workers = []
@@ -814,8 +764,7 @@ class QueueManager:
             self.logger.info(f"Cleaned up inactive worker: {worker_id}")
             
     async def _collect_and_send_metrics(self):
-        """Collect and send metrics to monitoring system."""
-        try:
+        """Collect and send metrics to monitoring system."""        try:
             # Collect queue metrics
             queue_metrics = await self.get_all_queue_metrics()
             worker_metrics = await self.get_all_worker_metrics()
@@ -835,8 +784,7 @@ class QueueManager:
             self.logger.error(f"Failed to collect and send metrics: {e}")
             
     async def shutdown(self):
-        """Shutdown queue manager."""
-        try:
+        """Shutdown queue manager."""        try:
             # Stop monitoring
             if self.monitoring_task:
                 self.monitoring_active = False
@@ -862,14 +810,12 @@ class QueueManager:
 
 # Factory function
 def create_queue_manager(config: Optional[QueueConfig] = None) -> QueueManager:
-    """Create and return a queue manager instance."""
-    return QueueManager(config)
+    """Create and return a queue manager instance."""    return QueueManager(config)
 
 
 # Utility functions
 async def submit_batch_tasks(manager: QueueManager, tasks: List[CrawlerTask], queue_name: str = "default") -> Dict[str, bool]:
-    """Submit multiple tasks in batch."""
-    results = {}
+    """Submit multiple tasks in batch."""    results = {}
     
     for task in tasks:
         success = await manager.submit_task(task, queue_name)
@@ -879,8 +825,7 @@ async def submit_batch_tasks(manager: QueueManager, tasks: List[CrawlerTask], qu
 
 
 async def create_crawler_task(task_type: str, url: str, priority: TaskPriority = TaskPriority.NORMAL, **kwargs) -> CrawlerTask:
-    """Create a crawler task with generated ID."""
-    task_id = f"{task_type}_{uuid.uuid4().hex[:8]}"
+    """Create a crawler task with generated ID."""    task_id = f"{task_type}_{uuid.uuid4().hex[:8]}"
     
     return CrawlerTask(
         task_id=task_id,

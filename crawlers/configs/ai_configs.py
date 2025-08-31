@@ -1,5 +1,4 @@
-"""
-AI-Powered Crawler Configurations
+"""AI-Powered Crawler Configurations
 =================================
 
 Advanced AI configuration system for intelligent content crawling and analysis.
@@ -15,9 +14,7 @@ Contact: mlaiel@live.de | www.fahed-mlaiel.de
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, modification, or distribution is strictly prohibited.
 Legal action will be taken against violators.
-"""
-
-import os
+"""import os
 from typing import Dict, List, Optional, Union, Any, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -26,8 +23,7 @@ import json
 from pathlib import Path
 
 class AIModelType(Enum):
-    """Types of AI models for content analysis."""
-    CONTENT_CLASSIFIER = "content_classifier"
+    """Types of AI models for content analysis."""    CONTENT_CLASSIFIER = "content_classifier"
     FINGERPRINT_EXTRACTOR = "fingerprint_extractor"
     SIMILARITY_DETECTOR = "similarity_detector"
     BRAND_RECOGNIZER = "brand_recognizer"
@@ -41,8 +37,7 @@ class AIModelType(Enum):
     VIOLATION_DETECTOR = "violation_detector"
 
 class AIProvider(Enum):
-    """AI service providers."""
-    OPENAI = "openai"
+    """AI service providers."""    OPENAI = "openai"
     ANTHROPIC = "anthropic"
     GOOGLE_AI = "google_ai"
     AZURE_AI = "azure_ai"
@@ -52,16 +47,14 @@ class AIProvider(Enum):
     LOCAL_MODEL = "local_model"
 
 class ProcessingMode(Enum):
-    """Content processing modes."""
-    REAL_TIME = "real_time"
+    """Content processing modes."""    REAL_TIME = "real_time"
     BATCH = "batch"
     STREAMING = "streaming"
     ADAPTIVE = "adaptive"
     PRIORITY_BASED = "priority_based"
 
 class ConfidenceLevel(Enum):
-    """AI confidence levels."""
-    VERY_LOW = "very_low"  # 0-20%
+    """AI confidence levels."""    VERY_LOW = "very_low"  # 0-20%
     LOW = "low"           # 20-40%
     MEDIUM = "medium"     # 40-60%
     HIGH = "high"         # 60-80%
@@ -69,8 +62,7 @@ class ConfidenceLevel(Enum):
 
 @dataclass
 class ModelConfig:
-    """Configuration for individual AI models."""
-    model_id: str
+    """Configuration for individual AI models."""    model_id: str
     model_type: AIModelType
     provider: AIProvider
     version: str
@@ -102,8 +94,7 @@ class ModelConfig:
 
 @dataclass
 class ContentAnalysisConfig:
-    """Configuration for content analysis workflows."""
-    enabled: bool = True
+    """Configuration for content analysis workflows."""    enabled: bool = True
     supported_formats: List[str] = field(default_factory=lambda: [
         "mp3", "wav", "flac", "aac", "mp4", "avi", "mov", "webm",
         "jpg", "jpeg", "png", "gif", "webp", "txt", "md", "pdf"
@@ -144,8 +135,7 @@ class ContentAnalysisConfig:
 
 @dataclass
 class SmartCrawlConfig:
-    """Configuration for AI-powered smart crawling."""
-    enabled: bool = True
+    """Configuration for AI-powered smart crawling."""    enabled: bool = True
     
     # Intelligent prioritization
     content_priority_scoring: bool = True
@@ -173,8 +163,7 @@ class SmartCrawlConfig:
 
 @dataclass
 class AIPerformanceConfig:
-    """Configuration for AI performance monitoring."""
-    monitoring_enabled: bool = True
+    """Configuration for AI performance monitoring."""    monitoring_enabled: bool = True
     
     # Metrics tracking
     response_time_tracking: bool = True
@@ -203,8 +192,7 @@ class AIPerformanceConfig:
 
 @dataclass
 class ViolationDetectionConfig:
-    """Configuration for AI-powered violation detection."""
-    enabled: bool = True
+    """Configuration for AI-powered violation detection."""    enabled: bool = True
     
     # Detection methods
     fingerprint_matching: bool = True
@@ -232,11 +220,9 @@ class ViolationDetectionConfig:
     licensing_verification: bool = True
 
 class AIConfigManager:
-    """Manager for AI crawler configurations."""
-    
+    """Manager for AI crawler configurations."""    
     def __init__(self, config_dir: Optional[str] = None):
-        """Initialize AI configuration manager."""
-        self.config_dir = Path(config_dir) if config_dir else Path(__file__).parent
+        """Initialize AI configuration manager."""        self.config_dir = Path(config_dir) if config_dir else Path(__file__).parent
         self.models: Dict[str, ModelConfig] = {}
         self.content_analysis = ContentAnalysisConfig()
         self.smart_crawl = SmartCrawlConfig()
@@ -245,8 +231,7 @@ class AIConfigManager:
         self._load_configurations()
     
     def _load_configurations(self) -> None:
-        """Load AI configurations from files."""
-        try:
+        """Load AI configurations from files."""        try:
             config_file = self.config_dir / "ai_models.json"
             if config_file.exists():
                 with open(config_file, 'r', encoding='utf-8') as f:
@@ -257,30 +242,24 @@ class AIConfigManager:
             print(f"Error loading AI configurations: {e}")
     
     def register_model(self, model_config: ModelConfig) -> None:
-        """Register a new AI model."""
-        self.models[model_config.model_id] = model_config
+        """Register a new AI model."""        self.models[model_config.model_id] = model_config
         self._save_configurations()
     
     def get_model(self, model_id: str) -> Optional[ModelConfig]:
-        """Get model configuration by ID."""
-        return self.models.get(model_id)
+        """Get model configuration by ID."""        return self.models.get(model_id)
     
     def get_models_by_type(self, model_type: AIModelType) -> List[ModelConfig]:
-        """Get all models of a specific type."""
-        return [model for model in self.models.values() if model.model_type == model_type]
+        """Get all models of a specific type."""        return [model for model in self.models.values() if model.model_type == model_type]
     
     def get_enabled_models(self) -> List[ModelConfig]:
-        """Get all enabled models."""
-        return [model for model in self.models.values() if model.enabled]
+        """Get all enabled models."""        return [model for model in self.models.values() if model.enabled]
     
     def update_model_performance(self, model_id: str, response_time: float, accuracy: float) -> None:
-        """Update model performance metrics."""
-        # Implementation for performance tracking
+        """Update model performance metrics."""        # Implementation for performance tracking
         pass
     
     def optimize_model_selection(self, content_type: str, priority: str) -> Optional[ModelConfig]:
-        """Select optimal model based on content type and priority."""
-        # Implementation for intelligent model selection
+        """Select optimal model based on content type and priority."""        # Implementation for intelligent model selection
         available_models = self.get_enabled_models()
         
         # Filter by content type compatibility
@@ -303,8 +282,7 @@ class AIConfigManager:
             return compatible_models[0]
     
     def _is_model_compatible(self, model: ModelConfig, content_type: str) -> bool:
-        """Check if model is compatible with content type."""
-        compatibility_map = {
+        """Check if model is compatible with content type."""        compatibility_map = {
             "audio": [AIModelType.AUDIO_ANALYZER, AIModelType.FINGERPRINT_EXTRACTOR],
             "video": [AIModelType.VIDEO_ANALYZER, AIModelType.FINGERPRINT_EXTRACTOR],
             "image": [AIModelType.IMAGE_ANALYZER, AIModelType.FINGERPRINT_EXTRACTOR],
@@ -315,8 +293,7 @@ class AIConfigManager:
         return model.model_type in compatible_types
     
     def _save_configurations(self) -> None:
-        """Save configurations to file."""
-        try:
+        """Save configurations to file."""        try:
             config_file = self.config_dir / "ai_models.json"
             config_data = {
                 "models": {
@@ -340,8 +317,7 @@ class AIConfigManager:
             print(f"Error saving AI configurations: {e}")
     
     def validate_configuration(self) -> Dict[str, List[str]]:
-        """Validate AI configuration setup."""
-        issues = {"errors": [], "warnings": []}
+        """Validate AI configuration setup."""        issues = {"errors": [], "warnings": []}
         
         if not self.models:
             issues["errors"].append("No AI models configured")

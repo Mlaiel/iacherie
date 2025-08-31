@@ -1,5 +1,4 @@
-"""
-GCP Deployment Manager - Enterprise Google Cloud Platform Infrastructure Management
+"""GCP Deployment Manager - Enterprise Google Cloud Platform Infrastructure Management
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -14,9 +13,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 This module provides comprehensive GCP deployment and management capabilities
 for the IA Influencer Agent platform, including Compute Engine, Cloud Run,
 Cloud Functions, Cloud SQL, Cloud Storage, and other GCP services.
-"""
-
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
@@ -36,8 +33,7 @@ import googleapiclient.discovery
 logger = logging.getLogger(__name__)
 
 class GCPRegion(Enum):
-    """GCP regions for global deployment"""
-    EUROPE_WEST1 = "europe-west1"
+    """GCP regions for global deployment"""    EUROPE_WEST1 = "europe-west1"
     EUROPE_WEST3 = "europe-west3"
     US_CENTRAL1 = "us-central1"
     US_EAST1 = "us-east1"
@@ -45,8 +41,7 @@ class GCPRegion(Enum):
     ASIA_NORTHEAST1 = "asia-northeast1"
 
 class GCPServiceType(Enum):
-    """GCP service types"""
-    COMPUTE_ENGINE = "compute_engine"
+    """GCP service types"""    COMPUTE_ENGINE = "compute_engine"
     CLOUD_RUN = "cloud_run"
     CLOUD_FUNCTIONS = "cloud_functions"
     CLOUD_SQL = "cloud_sql"
@@ -61,16 +56,14 @@ class GCPServiceType(Enum):
 
 @dataclass
 class GCPCredentials:
-    """GCP credentials configuration"""
-    project_id: str
+    """GCP credentials configuration"""    project_id: str
     service_account_path: str
     region: str = "europe-west1"
     zone: str = "europe-west1-b"
 
 @dataclass
 class GCPDeploymentConfig:
-    """GCP deployment configuration"""
-    environment: str
+    """GCP deployment configuration"""    environment: str
     project_id: str
     region: GCPRegion
     zone: str
@@ -88,8 +81,7 @@ class GCPDeploymentConfig:
 
 @dataclass
 class GCPResource:
-    """GCP resource representation"""
-    resource_id: str
+    """GCP resource representation"""    resource_id: str
     resource_type: GCPServiceType
     region: GCPRegion
     zone: str
@@ -102,11 +94,9 @@ class GCPResource:
     security_compliance: bool = True
 
 class GCPDeploymentManager:
-    """Enterprise GCP deployment and management system"""
-    
+    """Enterprise GCP deployment and management system"""    
     def __init__(self, credentials: GCPCredentials):
-        """Initialize GCP deployment manager"""
-        self.logger = logging.getLogger(self.__class__.__name__)
+        """Initialize GCP deployment manager"""        self.logger = logging.getLogger(self.__class__.__name__)
         self.credentials = credentials
         
         # Initialize service account credentials
@@ -129,8 +119,7 @@ class GCPDeploymentManager:
         self.deployment_history: List[Dict[str, Any]] = []
         
     async def initialize(self) -> bool:
-        """Initialize GCP connection and validate credentials"""
-        try:
+        """Initialize GCP connection and validate credentials"""        try:
             # Test connectivity by listing compute instances
             instances_request = compute_v1.ListInstancesRequest(
                 project=self.credentials.project_id,
@@ -144,8 +133,7 @@ class GCPDeploymentManager:
             return False
     
     async def deploy_infrastructure(self, config: GCPDeploymentConfig) -> Dict[str, Any]:
-        """Deploy complete infrastructure stack"""
-        deployment_id = f"deploy-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
+        """Deploy complete infrastructure stack"""        deployment_id = f"deploy-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
         self.logger.info(f"Starting GCP infrastructure deployment: {deployment_id}")
         
         try:
@@ -206,8 +194,7 @@ class GCPDeploymentManager:
             raise
     
     async def _deploy_vpc_infrastructure(self, config: GCPDeploymentConfig) -> Dict[str, Any]:
-        """Deploy VPC network infrastructure"""
-        vpc_config = config.vpc_config
+        """Deploy VPC network infrastructure"""        vpc_config = config.vpc_config
         
         # Create VPC network
         network_body = {
@@ -302,8 +289,7 @@ class GCPDeploymentManager:
         }
     
     async def _deploy_security_infrastructure(self, config: GCPDeploymentConfig) -> Dict[str, Any]:
-        """Deploy security infrastructure"""
-        security_config = config.security_config
+        """Deploy security infrastructure"""        security_config = config.security_config
         
         # Create Cloud KMS key ring and keys
         kms_config = {
@@ -349,8 +335,7 @@ class GCPDeploymentManager:
         }
     
     async def _deploy_database_infrastructure(self, config: GCPDeploymentConfig) -> Dict[str, Any]:
-        """Deploy Cloud SQL database infrastructure"""
-        db_config = config.database_config
+        """Deploy Cloud SQL database infrastructure"""        db_config = config.database_config
         
         # Create Cloud SQL instance
         instance_body = {
@@ -453,8 +438,7 @@ class GCPDeploymentManager:
         }
     
     async def _deploy_application_services(self, config: GCPDeploymentConfig) -> Dict[str, Any]:
-        """Deploy application services"""
-        services = {}
+        """Deploy application services"""        services = {}
         
         for service_config in config.services:
             if service_config['type'] == 'cloud_run':
@@ -470,8 +454,7 @@ class GCPDeploymentManager:
         return services
     
     async def _deploy_cloud_run_service(self, service_config: Dict[str, Any], config: GCPDeploymentConfig) -> Dict[str, Any]:
-        """Deploy Cloud Run service"""
-        service_body = {
+        """Deploy Cloud Run service"""        service_body = {
             "apiVersion": "serving.knative.dev/v1",
             "kind": "Service",
             "metadata": {
@@ -541,8 +524,7 @@ class GCPDeploymentManager:
         }
     
     async def _deploy_compute_engine_instance(self, service_config: Dict[str, Any], config: GCPDeploymentConfig) -> Dict[str, Any]:
-        """Deploy Compute Engine instance"""
-        instance_body = {
+        """Deploy Compute Engine instance"""        instance_body = {
             "name": service_config['name'],
             "machineType": f"zones/{config.zone}/machineTypes/{service_config.get('machine_type', 'e2-medium')}",
             "description": service_config.get('description', ''),
@@ -609,8 +591,7 @@ class GCPDeploymentManager:
         }
     
     async def _deploy_cloud_function(self, service_config: Dict[str, Any], config: GCPDeploymentConfig) -> Dict[str, Any]:
-        """Deploy Cloud Function"""
-        function_body = {
+        """Deploy Cloud Function"""        function_body = {
             "name": f"projects/{config.project_id}/locations/{config.region.value}/functions/{service_config['name']}",
             "description": service_config.get('description', ''),
             "sourceArchiveUrl": service_config.get('source_archive_url', ''),
@@ -649,8 +630,7 @@ class GCPDeploymentManager:
         }
     
     async def _deploy_load_balancers(self, config: GCPDeploymentConfig) -> Dict[str, Any]:
-        """Deploy GCP load balancers"""
-        lb_config = config.load_balancer_config
+        """Deploy GCP load balancers"""        lb_config = config.load_balancer_config
         
         # Global Load Balancer configuration
         global_lb = {
@@ -705,8 +685,7 @@ class GCPDeploymentManager:
         }
     
     async def _deploy_storage_infrastructure(self, config: GCPDeploymentConfig) -> Dict[str, Any]:
-        """Deploy Cloud Storage infrastructure"""
-        storage_config = config.storage_config
+        """Deploy Cloud Storage infrastructure"""        storage_config = config.storage_config
         buckets = {}
         
         for bucket_config in storage_config.get('buckets', []):
@@ -757,8 +736,7 @@ class GCPDeploymentManager:
         return buckets
     
     async def _deploy_monitoring_infrastructure(self, config: GCPDeploymentConfig) -> Dict[str, Any]:
-        """Deploy Cloud Monitoring infrastructure"""
-        monitoring_config = config.monitoring_config
+        """Deploy Cloud Monitoring infrastructure"""        monitoring_config = config.monitoring_config
         
         # Configure Cloud Logging
         logging_config = {
@@ -827,8 +805,7 @@ class GCPDeploymentManager:
         }
     
     async def _configure_auto_scaling(self, config: GCPDeploymentConfig) -> Dict[str, Any]:
-        """Configure auto-scaling policies"""
-        scaling_config = config.scaling_config
+        """Configure auto-scaling policies"""        scaling_config = config.scaling_config
         scaling_policies = {}
         
         # Compute Engine auto-scaling
@@ -863,8 +840,7 @@ class GCPDeploymentManager:
         }
     
     async def _configure_backup_systems(self, config: GCPDeploymentConfig) -> Dict[str, Any]:
-        """Configure GCP backup systems"""
-        backup_config = config.backup_config
+        """Configure GCP backup systems"""        backup_config = config.backup_config
         
         # Compute Engine snapshots
         snapshot_policies = []
@@ -906,8 +882,7 @@ class GCPDeploymentManager:
         }
     
     def _wait_for_operation(self, operation, project_id: str, region: str = None, zone: str = None) -> Dict[str, Any]:
-        """Wait for GCP operation to complete"""
-        # This is a simplified implementation
+        """Wait for GCP operation to complete"""        # This is a simplified implementation
         # In reality, you would poll the operation status until completion
         return {
             "operation_id": operation.name if hasattr(operation, 'name') else 'unknown',
@@ -915,8 +890,7 @@ class GCPDeploymentManager:
         }
     
     async def _get_deployment_endpoints(self) -> Dict[str, str]:
-        """Get deployment endpoints"""
-        return {
+        """Get deployment endpoints"""        return {
             "api_gateway": "https://api.ia-influencer.com",
             "web_app": "https://app.ia-influencer.com",
             "admin_panel": "https://admin.ia-influencer.com",
@@ -924,8 +898,7 @@ class GCPDeploymentManager:
         }
     
     async def _calculate_deployment_cost(self) -> Dict[str, float]:
-        """Calculate estimated deployment cost"""
-        return {
+        """Calculate estimated deployment cost"""        return {
             "monthly_estimate": 2400.0,
             "compute_cost": 750.0,
             "storage_cost": 160.0,
@@ -937,14 +910,12 @@ class GCPDeploymentManager:
         }
     
     async def _rollback_deployment(self, deployment_id: str) -> bool:
-        """Rollback failed deployment"""
-        self.logger.info(f"Rolling back deployment: {deployment_id}")
+        """Rollback failed deployment"""        self.logger.info(f"Rolling back deployment: {deployment_id}")
         # Implementation for rollback logic
         return True
     
     async def scale_cloud_run_service(self, service_name: str, min_instances: int, max_instances: int) -> bool:
-        """Scale Cloud Run service"""
-        try:
+        """Scale Cloud Run service"""        try:
             # Update Cloud Run service scaling configuration
             # This would require proper Cloud Run API usage
             self.logger.info(f"Scaled Cloud Run service {service_name} to {min_instances}-{max_instances} instances")
@@ -954,8 +925,7 @@ class GCPDeploymentManager:
             return False
     
     async def get_service_status(self, service_name: str, service_type: str) -> Dict[str, Any]:
-        """Get service status"""
-        try:
+        """Get service status"""        try:
             if service_type == 'cloud_run':
                 # Get Cloud Run service status
                 return {
@@ -992,8 +962,7 @@ class GCPDeploymentManager:
             return {"service_name": service_name, "status": "error", "error": str(e)}
     
     async def get_deployment_costs(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get deployment costs for period"""
-        try:
+        """Get deployment costs for period"""        try:
             # GCP billing would require Cloud Billing API
             # This is a placeholder implementation
             
@@ -1017,8 +986,7 @@ class GCPDeploymentManager:
             return {"error": str(e)}
     
     async def cleanup_resources(self, deployment_id: str) -> bool:
-        """Cleanup deployment resources"""
-        try:
+        """Cleanup deployment resources"""        try:
             self.logger.info(f"Cleaning up resources for deployment: {deployment_id}")
             # Implementation for cleanup logic
             return True

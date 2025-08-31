@@ -1,5 +1,4 @@
-"""
-Crawler Deployment Module
+"""Crawler Deployment Module
 
 Enterprise-grade web crawler deployment infrastructure for content surveillance
 and copyright protection. Supports multi-platform monitoring (YouTube, TikTok,
@@ -19,9 +18,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import random
@@ -58,8 +55,7 @@ import undetected_chromedriver as uc
 
 
 class PlatformType(Enum):
-    """Supported social media platforms"""
-    YOUTUBE = "youtube"
+    """Supported social media platforms"""    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     TWITTER = "twitter"
@@ -73,8 +69,7 @@ class PlatformType(Enum):
 
 
 class CrawlerType(Enum):
-    """Types of crawlers"""
-    API_CRAWLER = "api_crawler"
+    """Types of crawlers"""    API_CRAWLER = "api_crawler"
     WEB_SCRAPER = "web_scraper"
     SELENIUM_CRAWLER = "selenium_crawler"
     HEADLESS_BROWSER = "headless_browser"
@@ -83,8 +78,7 @@ class CrawlerType(Enum):
 
 
 class CrawlStatus(Enum):
-    """Crawl task status"""
-    PENDING = "pending"
+    """Crawl task status"""    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -95,8 +89,7 @@ class CrawlStatus(Enum):
 
 @dataclass
 class CrawlTarget:
-    """Target for crawling"""
-    target_id: str
+    """Target for crawling"""    target_id: str
     platform: PlatformType
     url: Optional[str] = None
     search_terms: List[str] = field(default_factory=list)
@@ -110,8 +103,7 @@ class CrawlTarget:
 
 @dataclass
 class CrawlTask:
-    """Individual crawl task"""
-    task_id: str
+    """Individual crawl task"""    task_id: str
     target: CrawlTarget
     crawler_type: CrawlerType
     status: CrawlStatus = CrawlStatus.PENDING
@@ -125,8 +117,7 @@ class CrawlTask:
 
 @dataclass
 class CrawlResult:
-    """Result from crawling operation"""
-    task_id: str
+    """Result from crawling operation"""    task_id: str
     platform: PlatformType
     content_url: str
     content_type: str
@@ -141,8 +132,7 @@ class CrawlResult:
 
 
 class ContentCrawlerOrchestrator:
-    """
-    Enterprise-grade crawler orchestration system for multi-platform content surveillance
+    """    Enterprise-grade crawler orchestration system for multi-platform content surveillance
     
     Features:
     - Multi-platform crawler deployment (YouTube, TikTok, Instagram, etc.)
@@ -152,8 +142,7 @@ class ContentCrawlerOrchestrator:
     - DMCA compliance and automation
     - Advanced monitoring and alerting
     - Kubernetes-based scalability
-    """
-    
+    """    
     def __init__(self,
                  redis_host: str = "localhost",
                  redis_port: int = 6379,
@@ -196,8 +185,7 @@ class ContentCrawlerOrchestrator:
         self.logger.info("ContentCrawlerOrchestrator initialized successfully")
     
     def _init_kubernetes_client(self):
-        """Initialize Kubernetes client"""
-        try:
+        """Initialize Kubernetes client"""        try:
             config.load_incluster_config()
         except:
             config.load_kube_config()
@@ -207,8 +195,7 @@ class ContentCrawlerOrchestrator:
         self.k8s_autoscaling = client.AutoscalingV1Api()
     
     def _init_platform_crawlers(self):
-        """Initialize platform-specific crawlers"""
-        platforms = [
+        """Initialize platform-specific crawlers"""        platforms = [
             PlatformType.YOUTUBE,
             PlatformType.TIKTOK,
             PlatformType.INSTAGRAM,
@@ -226,16 +213,14 @@ class ContentCrawlerOrchestrator:
             self.active_crawlers[platform.value] = crawler_manager
     
     async def deploy_crawler_cluster(self, deployment_config: Dict[str, Any]) -> bool:
-        """
-        Deploy distributed crawler cluster with Kubernetes
+        """        Deploy distributed crawler cluster with Kubernetes
         
         Args:
             deployment_config: Cluster deployment configuration
             
         Returns:
             bool: True if deployment successful
-        """
-        try:
+        """        try:
             self.logger.info("Deploying crawler cluster")
             
             # Deploy crawler pods for each platform
@@ -261,8 +246,7 @@ class ContentCrawlerOrchestrator:
             return False
     
     async def schedule_crawl_task(self, target: CrawlTarget, crawler_type: CrawlerType) -> str:
-        """
-        Schedule a new crawling task
+        """        Schedule a new crawling task
         
         Args:
             target: Crawl target specification
@@ -270,8 +254,7 @@ class ContentCrawlerOrchestrator:
             
         Returns:
             str: Task ID
-        """
-        task_id = f"crawl_{int(time.time())}_{random.randint(1000, 9999)}"
+        """        task_id = f"crawl_{int(time.time())}_{random.randint(1000, 9999)}"
         
         task = CrawlTask(
             task_id=task_id,
@@ -293,16 +276,14 @@ class ContentCrawlerOrchestrator:
         return task_id
     
     async def execute_crawl_task(self, task: CrawlTask) -> List[CrawlResult]:
-        """
-        Execute a crawling task
+        """        Execute a crawling task
         
         Args:
             task: Crawl task to execute
             
         Returns:
             List[CrawlResult]: Discovered content results
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         results = []
         
         try:
@@ -382,8 +363,7 @@ class ContentCrawlerOrchestrator:
                                           fingerprint_data: Dict[str, Any],
                                           platforms: List[PlatformType],
                                           search_depth: str = "standard") -> List[CrawlResult]:
-        """
-        Search for content matching specific fingerprints across platforms
+        """        Search for content matching specific fingerprints across platforms
         
         Args:
             fingerprint_data: Content fingerprints to search for
@@ -392,8 +372,7 @@ class ContentCrawlerOrchestrator:
             
         Returns:
             List[CrawlResult]: Matching content found
-        """
-        results = []
+        """        results = []
         
         for platform in platforms:
             try:
@@ -425,8 +404,7 @@ class ContentCrawlerOrchestrator:
                                     creator_id: str,
                                     platforms: List[PlatformType],
                                     monitoring_frequency: str = "daily") -> bool:
-        """
-        Set up continuous monitoring for a creator's content across platforms
+        """        Set up continuous monitoring for a creator's content across platforms
         
         Args:
             creator_id: Creator identifier
@@ -435,8 +413,7 @@ class ContentCrawlerOrchestrator:
             
         Returns:
             bool: True if monitoring setup successful
-        """
-        try:
+        """        try:
             for platform in platforms:
                 # Create monitoring target
                 target = CrawlTarget(
@@ -462,8 +439,7 @@ class ContentCrawlerOrchestrator:
             return False
     
     async def _deploy_platform_crawlers(self, platform: str, config: Dict[str, Any]):
-        """Deploy crawler pods for specific platform"""
-        crawler_manifest = self._create_crawler_deployment_manifest(platform, config)
+        """Deploy crawler pods for specific platform"""        crawler_manifest = self._create_crawler_deployment_manifest(platform, config)
         
         try:
             self.k8s_apps_v1.create_namespaced_deployment(
@@ -484,8 +460,7 @@ class ContentCrawlerOrchestrator:
             self.logger.error(f"Failed to deploy {platform} crawlers: {str(e)}")
     
     def _create_crawler_deployment_manifest(self, platform: str, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Create Kubernetes deployment manifest for platform crawler"""
-        return {
+        """Create Kubernetes deployment manifest for platform crawler"""        return {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -557,8 +532,7 @@ class ContentCrawlerOrchestrator:
         }
     
     def _create_crawler_service_manifest(self, platform: str) -> Dict[str, Any]:
-        """Create Kubernetes service manifest for platform crawler"""
-        return {
+        """Create Kubernetes service manifest for platform crawler"""        return {
             "apiVersion": "v1",
             "kind": "Service",
             "metadata": {
@@ -582,8 +556,7 @@ class ContentCrawlerOrchestrator:
         }
     
     async def _deploy_proxy_management(self):
-        """Deploy proxy management service"""
-        proxy_manifest = {
+        """Deploy proxy management service"""        proxy_manifest = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -624,8 +597,7 @@ class ContentCrawlerOrchestrator:
         )
     
     async def _deploy_rate_limiting_service(self):
-        """Deploy rate limiting service"""
-        rate_limit_manifest = {
+        """Deploy rate limiting service"""        rate_limit_manifest = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -665,8 +637,7 @@ class ContentCrawlerOrchestrator:
         )
     
     async def _setup_crawler_monitoring(self):
-        """Setup monitoring and alerting for crawlers"""
-        # Deploy Prometheus monitoring
+        """Setup monitoring and alerting for crawlers"""        # Deploy Prometheus monitoring
         monitoring_manifest = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
@@ -704,8 +675,7 @@ class ContentCrawlerOrchestrator:
         )
     
     async def _check_rate_limit(self, platform: PlatformType) -> bool:
-        """Check if platform rate limit allows new request"""
-        current_time = time.time()
+        """Check if platform rate limit allows new request"""        current_time = time.time()
         platform_limiters = self.rate_limiters[platform]
         
         # Platform-specific rate limits (requests per minute)
@@ -735,8 +705,7 @@ class ContentCrawlerOrchestrator:
     async def _validate_and_process_results(self, 
                                           results: List[CrawlResult], 
                                           task: CrawlTask) -> List[CrawlResult]:
-        """Validate and process crawl results"""
-        validated_results = []
+        """Validate and process crawl results"""        validated_results = []
         
         for result in results:
             try:
@@ -769,16 +738,14 @@ class ContentCrawlerOrchestrator:
         return validated_results
     
     def _is_valid_url(self, url: str) -> bool:
-        """Validate URL format"""
-        try:
+        """Validate URL format"""        try:
             parsed = urllib.parse.urlparse(url)
             return all([parsed.scheme, parsed.netloc])
         except:
             return False
     
     def _requires_fingerprinting(self, result: CrawlResult) -> bool:
-        """Determine if content requires fingerprinting"""
-        # All audio and video content requires fingerprinting
+        """Determine if content requires fingerprinting"""        # All audio and video content requires fingerprinting
         if result.content_type in ['audio', 'video']:
             return True
         
@@ -795,8 +762,7 @@ class ContentCrawlerOrchestrator:
         return False
     
     async def _assess_dmca_potential(self, result: CrawlResult) -> bool:
-        """Assess if content is potential DMCA violation"""
-        # Basic heuristics for DMCA assessment
+        """Assess if content is potential DMCA violation"""        # Basic heuristics for DMCA assessment
         
         # Check for copyrighted keywords in title/description
         copyright_keywords = [
@@ -822,8 +788,7 @@ class ContentCrawlerOrchestrator:
         return False  # Default to non-violation
     
     async def _store_crawl_task(self, task: CrawlTask):
-        """Store crawl task in Redis"""
-        task_data = {
+        """Store crawl task in Redis"""        task_data = {
             'task_id': task.task_id,
             'target': json.dumps(task.target.__dict__, default=str),
             'crawler_type': task.crawler_type.value,
@@ -839,8 +804,7 @@ class ContentCrawlerOrchestrator:
         )
     
     async def _update_crawl_task(self, task: CrawlTask):
-        """Update crawl task in storage"""
-        task_data = {
+        """Update crawl task in storage"""        task_data = {
             'status': task.status.value,
             'results_count': task.results_count,
             'retry_count': task.retry_count,
@@ -861,8 +825,7 @@ class ContentCrawlerOrchestrator:
         )
     
     async def _store_crawl_results(self, results: List[CrawlResult]):
-        """Store crawl results in database"""
-        try:
+        """Store crawl results in database"""        try:
             # Store in PostgreSQL for permanent storage
             # This would use asyncpg to store results
             for result in results:
@@ -884,15 +847,13 @@ class ContentCrawlerOrchestrator:
             self.logger.error(f"Error storing crawl results: {str(e)}")
     
     async def _check_dmca_violations(self, results: List[CrawlResult]):
-        """Check results for potential DMCA violations"""
-        for result in results:
+        """Check results for potential DMCA violations"""        for result in results:
             if result.dmca_candidate:
                 # Trigger DMCA enforcement workflow
                 await self._trigger_dmca_enforcement(result)
     
     async def _trigger_dmca_enforcement(self, result: CrawlResult):
-        """Trigger DMCA enforcement for potential violation"""
-        try:
+        """Trigger DMCA enforcement for potential violation"""        try:
             # Add to DMCA processing queue
             dmca_task = {
                 'content_url': result.content_url,
@@ -914,14 +875,12 @@ class ContentCrawlerOrchestrator:
             self.logger.error(f"Error triggering DMCA enforcement: {str(e)}")
     
     async def _schedule_recurring_task(self, target: CrawlTarget):
-        """Schedule recurring crawl task"""
-        # Implementation for scheduling recurring tasks
+        """Schedule recurring crawl task"""        # Implementation for scheduling recurring tasks
         # This would typically use a job scheduler like Celery
         pass
     
     async def _wait_for_task_completion(self, task_id: str, timeout: int) -> List[CrawlResult]:
-        """Wait for task completion and return results"""
-        start_time = time.time()
+        """Wait for task completion and return results"""        start_time = time.time()
         
         while time.time() - start_time < timeout:
             task = self.task_registry.get(task_id)
@@ -934,15 +893,12 @@ class ContentCrawlerOrchestrator:
         raise TimeoutError(f"Task {task_id} did not complete within {timeout} seconds")
     
     async def _get_task_results(self, task_id: str) -> List[CrawlResult]:
-        """Get results for completed task"""
-        # Implementation to retrieve results from storage
+        """Get results for completed task"""        # Implementation to retrieve results from storage
         return []
     
     def _start_background_workers(self):
-        """Start background worker threads"""
-        def queue_processor():
-            """Process crawl queue"""
-            loop = asyncio.new_event_loop()
+        """Start background worker threads"""        def queue_processor():
+            """Process crawl queue"""            loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
             
             async def process_queue():
@@ -957,8 +913,7 @@ class ContentCrawlerOrchestrator:
             loop.run_until_complete(process_queue())
         
         def health_monitor():
-            """Monitor crawler health"""
-            while True:
+            """Monitor crawler health"""            while True:
                 try:
                     self._update_health_metrics()
                 except Exception as e:
@@ -973,14 +928,12 @@ class ContentCrawlerOrchestrator:
         health_thread.start()
     
     def _update_health_metrics(self):
-        """Update health and performance metrics"""
-        self.queue_size.set(self.crawl_queue.qsize())
+        """Update health and performance metrics"""        self.queue_size.set(self.crawl_queue.qsize())
         self.active_crawlers_gauge.set(len(self.active_crawlers))
 
 
 class PlatformCrawlerManager:
-    """
-    Platform-specific crawler manager for individual social media platforms
+    """    Platform-specific crawler manager for individual social media platforms
     
     Features:
     - Platform-specific API integration
@@ -988,8 +941,7 @@ class PlatformCrawlerManager:
     - Selenium-based dynamic content crawling
     - Intelligent retry mechanisms
     - Content extraction and normalization
-    """
-    
+    """    
     def __init__(self, 
                  platform: PlatformType,
                  redis_client: redis.Redis,
@@ -1013,8 +965,7 @@ class PlatformCrawlerManager:
         self.logger = logging.getLogger(f"{__name__}.{platform.value}")
     
     def _get_api_endpoints(self) -> Dict[str, str]:
-        """Get platform-specific API endpoints"""
-        endpoints = {
+        """Get platform-specific API endpoints"""        endpoints = {
             PlatformType.YOUTUBE: {
                 'search': 'https://www.googleapis.com/youtube/v3/search',
                 'videos': 'https://www.googleapis.com/youtube/v3/videos',
@@ -1033,8 +984,7 @@ class PlatformCrawlerManager:
         return endpoints.get(self.platform, {})
     
     def _get_scraping_configs(self) -> Dict[str, Any]:
-        """Get platform-specific scraping configurations"""
-        configs = {
+        """Get platform-specific scraping configurations"""        configs = {
             PlatformType.TIKTOK: {
                 'base_url': 'https://www.tiktok.com',
                 'selectors': {
@@ -1056,8 +1006,7 @@ class PlatformCrawlerManager:
         return configs.get(self.platform, {})
     
     def _get_browser_options(self) -> Options:
-        """Get browser options for Selenium"""
-        options = Options()
+        """Get browser options for Selenium"""        options = Options()
         options.add_argument('--headless')
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
@@ -1068,8 +1017,7 @@ class PlatformCrawlerManager:
         return options
     
     async def crawl_via_api(self, target: CrawlTarget) -> List[CrawlResult]:
-        """Crawl using official platform APIs"""
-        results = []
+        """Crawl using official platform APIs"""        results = []
         
         try:
             if self.platform == PlatformType.YOUTUBE:
@@ -1103,8 +1051,7 @@ class PlatformCrawlerManager:
         return results
     
     async def crawl_via_scraping(self, target: CrawlTarget) -> List[CrawlResult]:
-        """Crawl using web scraping techniques"""
-        results = []
+        """Crawl using web scraping techniques"""        results = []
         
         try:
             if self.platform == PlatformType.TIKTOK:
@@ -1120,8 +1067,7 @@ class PlatformCrawlerManager:
         return results
     
     async def crawl_via_selenium(self, target: CrawlTarget) -> List[CrawlResult]:
-        """Crawl using Selenium browser automation"""
-        results = []
+        """Crawl using Selenium browser automation"""        results = []
         
         try:
             driver = uc.Chrome(options=self.browser_options)
@@ -1145,8 +1091,7 @@ class PlatformCrawlerManager:
     
     # Platform-specific implementation methods would go here
     async def _crawl_youtube_api(self, target: CrawlTarget) -> List[CrawlResult]:
-        """YouTube API crawling implementation"""
-        results = []
+        """YouTube API crawling implementation"""        results = []
         
         try:
             import aiohttp
@@ -1246,8 +1191,7 @@ class PlatformCrawlerManager:
         return results
     
     async def _crawl_twitter_api(self, target: CrawlTarget) -> List[CrawlResult]:
-        """Twitter API crawling implementation"""
-        results = []
+        """Twitter API crawling implementation"""        results = []
         
         try:
             import aiohttp
@@ -1392,8 +1336,7 @@ class PlatformCrawlerManager:
         return results
     
     async def _crawl_spotify_api(self, target: CrawlTarget) -> List[CrawlResult]:
-        """Spotify API crawling implementation"""
-        results = []
+        """Spotify API crawling implementation"""        results = []
         
         try:
             import aiohttp
@@ -1590,8 +1533,7 @@ class PlatformCrawlerManager:
         return results
     
     async def _crawl_instagram_api(self, target: CrawlTarget) -> List[CrawlResult]:
-        """Instagram API crawling implementation"""
-        results = []
+        """Instagram API crawling implementation"""        results = []
         
         try:
             # Check rate limits
@@ -1649,8 +1591,7 @@ class PlatformCrawlerManager:
         return results
     
     async def _crawl_tiktok_api(self, target: CrawlTarget) -> List[CrawlResult]:
-        """TikTok API crawling implementation"""
-        results = []
+        """TikTok API crawling implementation"""        results = []
         
         try:
             # Check rate limits
@@ -1710,8 +1651,7 @@ class PlatformCrawlerManager:
         return results
     
     async def _crawl_facebook_api(self, target: CrawlTarget) -> List[CrawlResult]:
-        """Facebook API crawling implementation"""
-        results = []
+        """Facebook API crawling implementation"""        results = []
         
         try:
             # Check rate limits
@@ -1768,8 +1708,7 @@ class PlatformCrawlerManager:
         return results
     
     async def _crawl_soundcloud_api(self, target: CrawlTarget) -> List[CrawlResult]:
-        """SoundCloud API crawling implementation"""
-        results = []
+        """SoundCloud API crawling implementation"""        results = []
         
         try:
             # Check rate limits
@@ -1830,8 +1769,7 @@ class PlatformCrawlerManager:
         return results
     
     async def _crawl_pinterest_api(self, target: CrawlTarget) -> List[CrawlResult]:
-        """Pinterest API crawling implementation"""
-        results = []
+        """Pinterest API crawling implementation"""        results = []
         
         try:
             # Check rate limits
@@ -1888,8 +1826,7 @@ class PlatformCrawlerManager:
         return results
     
     async def _crawl_reddit_api(self, target: CrawlTarget) -> List[CrawlResult]:
-        """Reddit API crawling implementation"""
-        results = []
+        """Reddit API crawling implementation"""        results = []
         
         try:
             # Check rate limits
@@ -1956,8 +1893,7 @@ class PlatformCrawlerManager:
         return results
     
     async def _crawl_linkedin_api(self, target: CrawlTarget) -> List[CrawlResult]:
-        """LinkedIn API crawling implementation"""
-        results = []
+        """LinkedIn API crawling implementation"""        results = []
         
         try:
             # Check rate limits
@@ -2016,8 +1952,7 @@ class PlatformCrawlerManager:
         return results
     
     async def _crawl_generic_api(self, target: CrawlTarget) -> List[CrawlResult]:
-        """Generic API crawling fallback implementation"""
-        results = []
+        """Generic API crawling fallback implementation"""        results = []
         
         try:
             self.logger.info(f"Performing generic API crawl for {self.platform.value}")
@@ -2063,8 +1998,7 @@ class PlatformCrawlerManager:
         return results
     
     async def _crawl_tiktok_scraping(self, target: CrawlTarget) -> List[CrawlResult]:
-        """TikTok web scraping implementation"""
-        results = []
+        """TikTok web scraping implementation"""        results = []
         
         try:
             import aiohttp
@@ -2159,8 +2093,7 @@ class PlatformCrawlerManager:
         return results
     
     async def _crawl_instagram_scraping(self, target: CrawlTarget) -> List[CrawlResult]:
-        """Instagram web scraping implementation"""
-        results = []
+        """Instagram web scraping implementation"""        results = []
         
         try:
             import aiohttp
@@ -2273,8 +2206,7 @@ class PlatformCrawlerManager:
         return results
     
     async def _crawl_generic_scraping(self, target: CrawlTarget) -> List[CrawlResult]:
-        """Generic web scraping implementation"""
-        results = []
+        """Generic web scraping implementation"""        results = []
         
         try:
             import aiohttp
@@ -2439,21 +2371,17 @@ class PlatformCrawlerManager:
         return results
     
     async def _crawl_tiktok_selenium(self, target: CrawlTarget, driver) -> List[CrawlResult]:
-        """TikTok Selenium crawling implementation"""
-        return []
+        """TikTok Selenium crawling implementation"""        return []
     
     async def _crawl_instagram_selenium(self, target: CrawlTarget, driver) -> List[CrawlResult]:
-        """Instagram Selenium crawling implementation"""
-        return []
+        """Instagram Selenium crawling implementation"""        return []
     
     async def _crawl_generic_selenium(self, target: CrawlTarget, driver) -> List[CrawlResult]:
-        """Generic Selenium crawling implementation"""
-        return []
+        """Generic Selenium crawling implementation"""        return []
     
     # Helper methods for API implementations
     async def _get_youtube_video_details(self, video_id: str, api_key: str, session) -> Dict[str, Any]:
-        """Get detailed YouTube video information"""
-        try:
+        """Get detailed YouTube video information"""        try:
             details_url = "https://www.googleapis.com/youtube/v3/videos"
             params = {
                 "part": "statistics,contentDetails,snippet",
@@ -2483,8 +2411,7 @@ class PlatformCrawlerManager:
         return {}
     
     async def _get_spotify_access_token(self, client_id: str, client_secret: str) -> Optional[str]:
-        """Get Spotify access token using Client Credentials Flow"""
-        try:
+        """Get Spotify access token using Client Credentials Flow"""        try:
             import aiohttp
             import base64
             
@@ -2513,8 +2440,7 @@ class PlatformCrawlerManager:
         return None
     
     async def _get_spotify_audio_features(self, track_id: str, access_token: str, session) -> Optional[Dict[str, Any]]:
-        """Get Spotify audio features for a track"""
-        try:
+        """Get Spotify audio features for a track"""        try:
             features_url = f"https://api.spotify.com/v1/audio-features/{track_id}"
             headers = {
                 "Authorization": f"Bearer {access_token}",
@@ -2536,8 +2462,7 @@ class PlatformCrawlerManager:
         return None
     
     async def _check_rate_limit(self, platform: PlatformType) -> bool:
-        """Check if platform API rate limit allows request"""
-        try:
+        """Check if platform API rate limit allows request"""        try:
             current_time = datetime.now()
             
             # Initialize rate limiter for platform if not exists
@@ -2574,8 +2499,7 @@ class PlatformCrawlerManager:
             return False  # Fail safe
     
     async def _record_api_request(self, platform: PlatformType):
-        """Record an API request for rate limiting"""
-        try:
+        """Record an API request for rate limiting"""        try:
             current_time = datetime.now()
             
             if platform not in self.rate_limiters:
@@ -2587,8 +2511,7 @@ class PlatformCrawlerManager:
             self.logger.error(f"Error recording API request: {str(e)}")
     
     def _extract_tiktok_videos_from_data(self, data: Dict[str, Any], task_id: str) -> List[CrawlResult]:
-        """Extract TikTok video data from JSON structure"""
-        results = []
+        """Extract TikTok video data from JSON structure"""        results = []
         
         try:
             # Navigate through TikTok's data structure
@@ -2627,8 +2550,7 @@ class PlatformCrawlerManager:
         return results
     
     def _create_tiktok_result_from_data(self, video_data: Dict[str, Any], task_id: str) -> Optional[CrawlResult]:
-        """Create CrawlResult from TikTok video data"""
-        try:
+        """Create CrawlResult from TikTok video data"""        try:
             video_id = video_data.get('id', '')
             if not video_id:
                 return None
@@ -2679,8 +2601,7 @@ class PlatformCrawlerManager:
             return None
     
     def _extract_tiktok_video_from_element(self, element, task_id: str) -> Optional[CrawlResult]:
-        """Extract TikTok video data from HTML element"""
-        try:
+        """Extract TikTok video data from HTML element"""        try:
             # This is a fallback method for when JSON parsing fails
             # Extract what we can from HTML structure
             
@@ -2729,8 +2650,7 @@ class PlatformCrawlerManager:
             return None
     
     def _extract_instagram_posts_from_data(self, data: Dict[str, Any], task_id: str) -> List[CrawlResult]:
-        """Extract Instagram post data from JSON structure"""
-        results = []
+        """Extract Instagram post data from JSON structure"""        results = []
         
         try:
             # Navigate Instagram's complex data structure
@@ -2791,8 +2711,7 @@ class PlatformCrawlerManager:
         return results
     
     def _create_instagram_result_from_node(self, node: Dict[str, Any], task_id: str, username: str) -> Optional[CrawlResult]:
-        """Create CrawlResult from Instagram node data"""
-        try:
+        """Create CrawlResult from Instagram node data"""        try:
             shortcode = node.get('shortcode', '')
             if not shortcode:
                 return None
@@ -2847,8 +2766,7 @@ class PlatformCrawlerManager:
             return None
     
     def _extract_instagram_caption(self, node: Dict[str, Any]) -> str:
-        """Extract caption text from Instagram node"""
-        try:
+        """Extract caption text from Instagram node"""        try:
             edge_media_to_caption = node.get('edge_media_to_caption', {})
             edges = edge_media_to_caption.get('edges', [])
             
@@ -2864,8 +2782,7 @@ class PlatformCrawlerManager:
 
 # Utility functions
 def create_crawler_deployment_config() -> Dict[str, Any]:
-    """Create default crawler deployment configuration"""
-    return {
+    """Create default crawler deployment configuration"""    return {
         'platforms': {
             'youtube': {
                 'enabled': True,

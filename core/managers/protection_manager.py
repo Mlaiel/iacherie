@@ -1,5 +1,4 @@
-"""
-Content Protection Manager - IA-Influencer-Agent
+"""Content Protection Manager - IA-Influencer-Agent
 ================================================================================
 Module: backend/core/managers/protection_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,9 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Upload créateur → Analyse IA multi-format → Protection automatisée → 
 Surveillance continue → Détection violations → Action légale automatique
-"""
-
-from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set
+"""from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set
 import logging
 import asyncio
 from contextlib import asynccontextmanager
@@ -37,8 +34,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Types de contenu supportés pour la protection"""
-    AUDIO = "audio"
+    """Types de contenu supportés pour la protection"""    AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
     TEXT = "text"
@@ -47,8 +43,7 @@ class ContentType(Enum):
 
 
 class ProtectionLevel(Enum):
-    """Niveaux de protection disponibles"""
-    BASIC = "basic"
+    """Niveaux de protection disponibles"""    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
@@ -56,8 +51,7 @@ class ProtectionLevel(Enum):
 
 
 class ViolationSeverity(Enum):
-    """Sévérité des violations détectées"""
-    LOW = "low"
+    """Sévérité des violations détectées"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -65,8 +59,7 @@ class ViolationSeverity(Enum):
 
 @dataclass
 class ProtectionConfig:
-    """Configuration avancée du gestionnaire de protection"""
-    # Core protection settings
+    """Configuration avancée du gestionnaire de protection"""    # Core protection settings
     enabled_content_types: Set[ContentType] = field(default_factory=lambda: set(ContentType))
     protection_level: ProtectionLevel = ProtectionLevel.PREMIUM
     real_time_monitoring: bool = True
@@ -106,8 +99,7 @@ class ProtectionConfig:
 
 @dataclass
 class ContentFingerprint:
-    """Empreinte digitale complète d'un contenu"""
-    id: str
+    """Empreinte digitale complète d'un contenu"""    id: str
     user_id: str
     content_type: ContentType
     original_filename: str
@@ -136,8 +128,7 @@ class ContentFingerprint:
 
 @dataclass
 class ViolationAlert:
-    """Alerte de violation de droits d'auteur"""
-    id: str
+    """Alerte de violation de droits d'auteur"""    id: str
     fingerprint_id: str
     detected_url: str
     platform: str
@@ -164,8 +155,7 @@ class ViolationAlert:
 
 
 class ProtectionManager(ABC):
-    """
-    🛡️ Advanced Content Protection Manager - IA-Influencer-Agent
+    """    🛡️ Advanced Content Protection Manager - IA-Influencer-Agent
     
     Responsabilité:
     Gestionnaire industriel de protection de contenu avec IA avancée
@@ -186,8 +176,7 @@ class ProtectionManager(ABC):
     - Evidence forensique automatique
     - Dashboard analytics avancé
     - API REST/GraphQL complète
-    """
-    
+    """    
     def __init__(self, config: ProtectionConfig = None):
         self.config = config or ProtectionConfig()
         self._fingerprints: Dict[str, ContentFingerprint] = {}
@@ -216,13 +205,11 @@ class ProtectionManager(ABC):
     
     @abstractmethod
     async def initialize_pool(self) -> bool:
-        """
-        Initialize protection engine pool and AI models
+        """        Initialize protection engine pool and AI models
         
         Returns:
             bool: True if initialization successful
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def generate_fingerprint(
@@ -231,8 +218,7 @@ class ProtectionManager(ABC):
         content_type: ContentType,
         metadata: Dict[str, Any] = None
     ) -> ContentFingerprint:
-        """
-        Generate advanced AI fingerprint for content
+        """        Generate advanced AI fingerprint for content
         
         Args:
             content_data: Raw content bytes
@@ -241,8 +227,7 @@ class ProtectionManager(ABC):
             
         Returns:
             ContentFingerprint: Complete fingerprint with AI vectors
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def detect_violations(
@@ -250,8 +235,7 @@ class ProtectionManager(ABC):
         fingerprint: ContentFingerprint,
         platforms: Optional[Set[str]] = None
     ) -> List[ViolationAlert]:
-        """
-        Detect copyright violations across platforms
+        """        Detect copyright violations across platforms
         
         Args:
             fingerprint: Content fingerprint to check
@@ -259,21 +243,18 @@ class ProtectionManager(ABC):
             
         Returns:
             List[ViolationAlert]: Detected violations
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def process_takedown(self, violation: ViolationAlert) -> bool:
-        """
-        Process automated takedown notice
+        """        Process automated takedown notice
         
         Args:
             violation: Violation to process
             
         Returns:
             bool: True if takedown successful
-        """
-        pass
+        """        pass
     
     async def protect_content(
         self,
@@ -283,8 +264,7 @@ class ProtectionManager(ABC):
         filename: str,
         metadata: Dict[str, Any] = None
     ) -> ContentFingerprint:
-        """
-        Complete content protection workflow
+        """        Complete content protection workflow
         
         Args:
             user_id: User owning the content
@@ -295,8 +275,7 @@ class ProtectionManager(ABC):
             
         Returns:
             ContentFingerprint: Generated fingerprint with protection
-        """
-        try:
+        """        try:
             # Generate AI fingerprint
             fingerprint = await self.generate_fingerprint(
                 content_data, content_type, metadata or {}
@@ -329,8 +308,7 @@ class ProtectionManager(ABC):
         fingerprint_id: Optional[str] = None,
         user_id: Optional[str] = None
     ) -> List[ViolationAlert]:
-        """
-        Scan for violations across all monitored platforms
+        """        Scan for violations across all monitored platforms
         
         Args:
             fingerprint_id: Specific fingerprint to scan
@@ -338,8 +316,7 @@ class ProtectionManager(ABC):
             
         Returns:
             List[ViolationAlert]: All detected violations
-        """
-        violations = []
+        """        violations = []
         
         try:
             # Determine fingerprints to scan
@@ -403,8 +380,7 @@ class ProtectionManager(ABC):
         user_id: Optional[str] = None,
         time_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive protection analytics
+        """        Get comprehensive protection analytics
         
         Args:
             user_id: User-specific analytics
@@ -412,8 +388,7 @@ class ProtectionManager(ABC):
             
         Returns:
             Dict: Complete analytics data
-        """
-        with self._lock:
+        """        with self._lock:
             # Filter data by user and time range
             fingerprints = list(self._fingerprints.values())
             violations = list(self._violations.values())
@@ -513,8 +488,7 @@ class ProtectionManager(ABC):
             }
     
     async def _start_monitoring(self, fingerprint: ContentFingerprint) -> None:
-        """Start real-time monitoring for a fingerprint"""
-        if fingerprint.id in self._monitoring_tasks:
+        """Start real-time monitoring for a fingerprint"""        if fingerprint.id in self._monitoring_tasks:
             return
         
         async def monitor_loop():
@@ -540,8 +514,7 @@ class ProtectionManager(ABC):
         self._monitoring_tasks[fingerprint.id] = task
     
     async def _process_critical_violations(self, violations: List[ViolationAlert]) -> None:
-        """Process critical violations with immediate action"""
-        tasks = []
+        """Process critical violations with immediate action"""        tasks = []
         for violation in violations:
             task = self.process_takedown(violation)
             tasks.append(task)
@@ -554,8 +527,7 @@ class ProtectionManager(ABC):
         logger.info(f"⚡ Processed {successful}/{len(violations)} critical violations")
     
     async def _register_blockchain(self, fingerprint: ContentFingerprint) -> bool:
-        """Register fingerprint on blockchain for immutable verification"""
-        try:
+        """Register fingerprint on blockchain for immutable verification"""        try:
             if not self._blockchain_client:
                 return False
             
@@ -576,8 +548,7 @@ class ProtectionManager(ABC):
             return False
     
     def _calculate_violation_trend(self, violations: List[ViolationAlert]) -> Dict[str, float]:
-        """Calculate violation trends over time"""
-        now = datetime.utcnow()
+        """Calculate violation trends over time"""        now = datetime.utcnow()
         periods = {
             "last_7_days": now - timedelta(days=7),
             "last_30_days": now - timedelta(days=30),
@@ -606,8 +577,7 @@ class ProtectionManager(ABC):
     
     @asynccontextmanager
     async def get_protection_session(self):
-        """Context manager for protection operations"""
-        session_id = str(uuid.uuid4())
+        """Context manager for protection operations"""        session_id = str(uuid.uuid4())
         try:
             logger.info(f"🔒 Protection session started: {session_id}")
             yield session_id
@@ -615,8 +585,7 @@ class ProtectionManager(ABC):
             logger.info(f"🔓 Protection session ended: {session_id}")
     
     async def cleanup(self) -> bool:
-        """Cleanup protection resources"""
-        try:
+        """Cleanup protection resources"""        try:
             # Cancel all monitoring tasks
             for task in self._monitoring_tasks.values():
                 task.cancel()
@@ -649,8 +618,7 @@ class ProtectionManager(ABC):
             return False
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get protection system statistics"""
-        with self._lock:
+        """Get protection system statistics"""        with self._lock:
             return {
                 "fingerprints_count": len(self._fingerprints),
                 "violations_count": len(self._violations),
@@ -676,13 +644,11 @@ protection_manager = None
 
 
 def get_protection_manager() -> ProtectionManager:
-    """
-    Get the global protection manager instance
+    """    Get the global protection manager instance
     
     Returns:
         ProtectionManager: Global protection manager
-    """
-    global protection_manager
+    """    global protection_manager
     if protection_manager is None:
         from ..implementations.protection_manager_impl import ProtectionManagerImpl
         protection_manager = ProtectionManagerImpl()

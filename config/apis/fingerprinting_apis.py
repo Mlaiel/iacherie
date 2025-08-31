@@ -1,5 +1,4 @@
-"""
-AI Fingerprinting APIs Configuration - Advanced Content Identification & Matching
+"""AI Fingerprinting APIs Configuration - Advanced Content Identification & Matching
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -20,17 +19,14 @@ This module provides ultra-advanced AI fingerprinting configuration for multi-fo
 
 Business Logic: Content Upload → AI Fingerprint Generation → Vector Storage → 
 Similarity Matching → Copyright Protection → Automated DMCA → Revenue Tracking
-"""
-
-import os
+"""import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Any, Optional, Tuple
 from enum import Enum
 from decimal import Decimal
 
 class FingerprintAlgorithm(Enum):
-    """Fingerprinting algorithm types"""
-    CHROMAPRINT = "chromaprint"
+    """Fingerprinting algorithm types"""    CHROMAPRINT = "chromaprint"
     ESSENTIA = "essentia"
     SPECTRAL_HASH = "spectral_hash"
     PERCEPTUAL_HASH = "perceptual_hash"
@@ -42,8 +38,7 @@ class FingerprintAlgorithm(Enum):
     DCT_HASH = "dct_hash"
 
 class ContentModalityType(Enum):
-    """Content modality for fingerprinting"""
-    AUDIO_WAVEFORM = "audio_waveform"
+    """Content modality for fingerprinting"""    AUDIO_WAVEFORM = "audio_waveform"
     AUDIO_SPECTROGRAM = "audio_spectrogram"
     VIDEO_FRAMES = "video_frames"
     VIDEO_MOTION = "video_motion"
@@ -54,8 +49,7 @@ class ContentModalityType(Enum):
     MULTIMODAL = "multimodal"
 
 class MatchingStrategy(Enum):
-    """Fingerprint matching strategies"""
-    EXACT_MATCH = "exact_match"
+    """Fingerprint matching strategies"""    EXACT_MATCH = "exact_match"
     FUZZY_MATCH = "fuzzy_match"
     SEMANTIC_SIMILARITY = "semantic_similarity"
     PERCEPTUAL_SIMILARITY = "perceptual_similarity"
@@ -64,8 +58,7 @@ class MatchingStrategy(Enum):
 
 @dataclass
 class FingerprintEngine:
-    """Configuration for fingerprinting engine"""
-    engine_name: str
+    """Configuration for fingerprinting engine"""    engine_name: str
     algorithm: FingerprintAlgorithm
     content_modality: ContentModalityType
     matching_strategy: MatchingStrategy
@@ -309,8 +302,7 @@ MULTIMODAL_ENGINE = FingerprintEngine(
 
 @dataclass
 class FingerprintingAPIConfig:
-    """Master configuration for AI fingerprinting system"""
-    
+    """Master configuration for AI fingerprinting system"""    
     # Engine configurations
     engines: Dict[str, FingerprintEngine] = field(default_factory=dict)
     
@@ -348,8 +340,7 @@ class FingerprintingAPIConfig:
     enable_request_signing: bool = True
     
     def __post_init__(self):
-        """Initialize engines dictionary"""
-        self.engines = {
+        """Initialize engines dictionary"""        self.engines = {
             "chromaprint": CHROMAPRINT_ENGINE,
             "essentia": ESSENTIA_ENGINE,
             "opencv_video": OPENCV_VIDEO_ENGINE,
@@ -395,8 +386,7 @@ PRODUCTION_CONFIG = {
 
 def get_optimal_engine(content_type: str, file_size_mb: float, 
                       accuracy_required: float = 0.90) -> Optional[FingerprintEngine]:
-    """
-    Select optimal fingerprinting engine based on content type, file size and accuracy requirements
+    """    Select optimal fingerprinting engine based on content type, file size and accuracy requirements
     
     Args:
         content_type: Type of content (audio, video, image, text)
@@ -405,8 +395,7 @@ def get_optimal_engine(content_type: str, file_size_mb: float,
         
     Returns:
         Optimal FingerprintEngine or None if no suitable engine found
-    """
-    available_engines = CONTENT_ENGINE_MAPPING.get(content_type, [])
+    """    available_engines = CONTENT_ENGINE_MAPPING.get(content_type, [])
     
     suitable_engines = []
     for engine_name in available_engines:
@@ -427,8 +416,7 @@ def get_optimal_engine(content_type: str, file_size_mb: float,
 
 def calculate_processing_cost(engine: FingerprintEngine, num_items: int, 
                             num_searches: int = 0) -> Decimal:
-    """
-    Calculate total processing cost for fingerprinting and searching
+    """    Calculate total processing cost for fingerprinting and searching
     
     Args:
         engine: FingerprintEngine instance
@@ -437,8 +425,7 @@ def calculate_processing_cost(engine: FingerprintEngine, num_items: int,
         
     Returns:
         Total cost as Decimal
-    """
-    fingerprint_cost = engine.cost_per_fingerprint * num_items
+    """    fingerprint_cost = engine.cost_per_fingerprint * num_items
     search_cost = engine.cost_per_search * num_searches
     
     total_cost = fingerprint_cost + search_cost

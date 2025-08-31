@@ -1,14 +1,11 @@
-"""
-BeReal Platform Integration
+"""BeReal Platform Integration
 
 BeReal API integration for authentic social sharing.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta
@@ -25,11 +22,9 @@ logger = logging.getLogger(__name__)
 
 
 class BeRealPlatform(PlatformBase):
-    """BeReal platform integration"""
-    
+    """BeReal platform integration"""    
     def __init__(self, config: PlatformConfig):
-        """Initialize BeReal platform"""
-        super().__init__(config)
+        """Initialize BeReal platform"""        super().__init__(config)
         self.api_base = "https://mobile.bereal.com/api"
         self.session: Optional[aiohttp.ClientSession] = None
         
@@ -38,16 +33,14 @@ class BeRealPlatform(PlatformBase):
         self.device_id = config.credentials.get('device_id', 'default_device_id')
         
     async def _get_session(self) -> aiohttp.ClientSession:
-        """Get or create HTTP session"""
-        if not self.session or self.session.closed:
+        """Get or create HTTP session"""        if not self.session or self.session.closed:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=self.config.timeout)
             )
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with BeReal"""
-        try:
+        """Authenticate with BeReal"""        try:
             # Note: BeReal has no official public API
             # This is a placeholder implementation for when/if they provide one
             
@@ -83,8 +76,7 @@ class BeRealPlatform(PlatformBase):
             return False
     
     async def _refresh_with_token(self, refresh_token: str) -> bool:
-        """Refresh BeReal token"""
-        try:
+        """Refresh BeReal token"""        try:
             session = await self._get_session()
             
             headers = {
@@ -119,8 +111,7 @@ class BeRealPlatform(PlatformBase):
             return False
     
     async def _authenticate_with_phone(self, phone_number: str, verification_code: str) -> bool:
-        """Authenticate with phone number"""
-        try:
+        """Authenticate with phone number"""        try:
             # Step 1: Request verification code
             await self._send_verification_code(phone_number)
             
@@ -156,8 +147,7 @@ class BeRealPlatform(PlatformBase):
             return False
     
     async def _send_verification_code(self, phone_number: str) -> bool:
-        """Send verification code to phone"""
-        try:
+        """Send verification code to phone"""        try:
             session = await self._get_session()
             
             headers = {
@@ -178,15 +168,13 @@ class BeRealPlatform(PlatformBase):
             return False
     
     async def refresh_token(self) -> bool:
-        """Refresh BeReal token"""
-        refresh_token = self.config.credentials.get('refresh_token')
+        """Refresh BeReal token"""        refresh_token = self.config.credentials.get('refresh_token')
         if refresh_token:
             return await self._refresh_with_token(refresh_token)
         return False
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to BeReal API"""
-        try:
+        """Make authenticated request to BeReal API"""        try:
             session = await self._get_session()
             
             headers = kwargs.get('headers', {})
@@ -229,8 +217,7 @@ class BeRealPlatform(PlatformBase):
             return None
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Upload BeReal post"""
-        try:
+        """Upload BeReal post"""        try:
             # BeReal requires both front and back camera photos
             # For now, we'll use a placeholder implementation
             
@@ -307,8 +294,7 @@ class BeRealPlatform(PlatformBase):
             )
     
     async def _upload_media(self, file_path: str, description: str = None) -> Optional[Dict[str, Any]]:
-        """Upload media to BeReal"""
-        try:
+        """Upload media to BeReal"""        try:
             # Get upload URL
             session = await self._get_session()
             headers = {
@@ -344,8 +330,7 @@ class BeRealPlatform(PlatformBase):
     
     async def get_analytics(self, content_id: str, start_date: datetime, 
                            end_date: datetime) -> AnalyticsData:
-        """Get BeReal post analytics"""
-        try:
+        """Get BeReal post analytics"""        try:
             result = await self._make_request('GET', f'/content/posts/{content_id}')
             
             if result:
@@ -377,8 +362,7 @@ class BeRealPlatform(PlatformBase):
             raise
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search content on BeReal (limited API)"""
-        try:
+        """Search content on BeReal (limited API)"""        try:
             # BeReal doesn't have a traditional search API
             logger.warning("BeReal doesn't support content search")
             return []
@@ -388,8 +372,7 @@ class BeRealPlatform(PlatformBase):
             return []
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
-        """Get user's BeReal posts"""
-        try:
+        """Get user's BeReal posts"""        try:
             target_user_id = user_id or self.config.credentials.get('user_id')
             if not target_user_id:
                 return []
@@ -421,8 +404,7 @@ class BeRealPlatform(PlatformBase):
             return []
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete BeReal post"""
-        try:
+        """Delete BeReal post"""        try:
             result = await self._make_request('DELETE', f'/content/posts/{content_id}')
             return result is not None
                 
@@ -431,8 +413,7 @@ class BeRealPlatform(PlatformBase):
             return False
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
-        """Update BeReal post (limited editing)"""
-        try:
+        """Update BeReal post (limited editing)"""        try:
             # BeReal typically doesn't allow editing posts
             logger.warning("BeReal doesn't support post editing")
             return False
@@ -442,8 +423,7 @@ class BeRealPlatform(PlatformBase):
             return False
     
     async def get_friends_feed(self, limit: int = 20) -> List[Dict[str, Any]]:
-        """Get friends' BeReal feed"""
-        try:
+        """Get friends' BeReal feed"""        try:
             result = await self._make_request('GET', '/feeds/friends')
             
             if result and result.get('data'):
@@ -475,8 +455,7 @@ class BeRealPlatform(PlatformBase):
             return []
     
     async def add_real_moji(self, post_id: str, emoji: str) -> bool:
-        """Add RealMoji reaction to a post"""
-        try:
+        """Add RealMoji reaction to a post"""        try:
             data = {
                 'emoji': emoji,
                 'isInstant': False
@@ -490,8 +469,7 @@ class BeRealPlatform(PlatformBase):
             return False
     
     async def get_discovery_feed(self, limit: int = 20) -> List[Dict[str, Any]]:
-        """Get discovery feed"""
-        try:
+        """Get discovery feed"""        try:
             result = await self._make_request('GET', '/feeds/discovery')
             
             if result and result.get('posts'):
@@ -515,6 +493,5 @@ class BeRealPlatform(PlatformBase):
             return []
     
     async def close(self):
-        """Close HTTP session"""
-        if self.session and not self.session.closed:
+        """Close HTTP session"""        if self.session and not self.session.closed:
             await self.session.close()

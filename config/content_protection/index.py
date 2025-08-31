@@ -1,5 +1,4 @@
-"""
-Content Protection Configuration Index
+"""Content Protection Configuration Index
 =====================================
 
 Central index and factory for content protection configuration management.
@@ -17,9 +16,7 @@ without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strict
 Violators will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-from typing import Dict, Any, Optional, List, Set, Type, Union
+"""from typing import Dict, Any, Optional, List, Set, Type, Union
 import os
 from datetime import datetime
 
@@ -124,21 +121,17 @@ from .analytics_reporting_config import (
 
 
 class ContentProtectionConfigIndex:
-    """
-    Central configuration index and factory for content protection system.
+    """    Central configuration index and factory for content protection system.
     Provides unified access to all configuration modules and environment-specific
     configuration creation.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the configuration index."""
-        self._config_registry = {}
+        """Initialize the configuration index."""        self._config_registry = {}
         self._factory_registry = {}
         self._initialize_registries()
     
     def _initialize_registries(self):
-        """Initialize configuration and factory registries."""
-        # Configuration class registry
+        """Initialize configuration and factory registries."""        # Configuration class registry
         self._config_registry = {
             'fingerprint_engine': FingerprintEngineConfig,
             'web_crawler': WebCrawlerConfig,
@@ -219,12 +212,10 @@ class ContentProtectionConfigIndex:
         }
     
     def get_config_class(self, config_type: str) -> Optional[Type]:
-        """Get configuration class by type name."""
-        return self._config_registry.get(config_type)
+        """Get configuration class by type name."""        return self._config_registry.get(config_type)
     
     def create_config(self, config_type: str, environment: str = 'production') -> Any:
-        """
-        Create configuration instance for specified type and environment.
+        """        Create configuration instance for specified type and environment.
         
         Args:
             config_type: Type of configuration ('fingerprint_engine', 'web_crawler', etc.)
@@ -232,8 +223,7 @@ class ContentProtectionConfigIndex:
         
         Returns:
             Configuration instance or None if not found
-        """
-        factories = self._factory_registry.get(config_type, {})
+        """        factories = self._factory_registry.get(config_type, {})
         factory = factories.get(environment)
         
         if factory:
@@ -247,16 +237,14 @@ class ContentProtectionConfigIndex:
         return None
     
     def create_complete_config_set(self, environment: str = 'production') -> Dict[str, Any]:
-        """
-        Create complete set of configurations for specified environment.
+        """        Create complete set of configurations for specified environment.
         
         Args:
             environment: Target environment
         
         Returns:
             Dictionary of all configuration instances
-        """
-        configs = {}
+        """        configs = {}
         
         for config_type in self._config_registry.keys():
             configs[config_type] = self.create_config(config_type, environment)
@@ -264,16 +252,14 @@ class ContentProtectionConfigIndex:
         return configs
     
     def validate_all_configs(self, configs: Dict[str, Any]) -> Dict[str, bool]:
-        """
-        Validate all configurations in the provided set.
+        """        Validate all configurations in the provided set.
         
         Args:
             configs: Dictionary of configuration instances
         
         Returns:
             Dictionary of validation results
-        """
-        validation_results = {}
+        """        validation_results = {}
         
         for config_name, config_instance in configs.items():
             if hasattr(config_instance, 'validate_config'):
@@ -284,24 +270,20 @@ class ContentProtectionConfigIndex:
         return validation_results
     
     def get_supported_environments(self) -> List[str]:
-        """Get list of supported environments."""
-        return ['production', 'development', 'testing']
+        """Get list of supported environments."""        return ['production', 'development', 'testing']
     
     def get_available_config_types(self) -> List[str]:
-        """Get list of available configuration types."""
-        return list(self._config_registry.keys())
+        """Get list of available configuration types."""        return list(self._config_registry.keys())
     
     def export_config_summary(self, configs: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Export summary information for all configurations.
+        """        Export summary information for all configurations.
         
         Args:
             configs: Dictionary of configuration instances
         
         Returns:
             Summary dictionary
-        """
-        summary = {
+        """        summary = {
             'timestamp': datetime.now().isoformat(),
             'total_configs': len(configs),
             'config_details': {}
@@ -325,8 +307,7 @@ class ContentProtectionConfigIndex:
 # Factory functions for different deployment scenarios
 
 def create_enterprise_production_config() -> Dict[str, Any]:
-    """Create enterprise production configuration set."""
-    index = ContentProtectionConfigIndex()
+    """Create enterprise production configuration set."""    index = ContentProtectionConfigIndex()
     configs = index.create_complete_config_set('production')
     
     # Apply enterprise-specific optimizations
@@ -339,8 +320,7 @@ def create_enterprise_production_config() -> Dict[str, Any]:
 
 
 def create_startup_config() -> Dict[str, Any]:
-    """Create cost-optimized configuration for startups."""
-    index = ContentProtectionConfigIndex()
+    """Create cost-optimized configuration for startups."""    index = ContentProtectionConfigIndex()
     configs = index.create_complete_config_set('development')
     
     # Apply cost optimizations
@@ -352,8 +332,7 @@ def create_startup_config() -> Dict[str, Any]:
 
 
 def create_compliance_focused_config() -> Dict[str, Any]:
-    """Create compliance-heavy configuration for regulated industries."""
-    index = ContentProtectionConfigIndex()
+    """Create compliance-heavy configuration for regulated industries."""    index = ContentProtectionConfigIndex()
     configs = index.create_complete_config_set('production')
     
     # Apply compliance focus
@@ -367,8 +346,7 @@ def create_compliance_focused_config() -> Dict[str, Any]:
 
 
 def create_development_environment_config() -> Dict[str, Any]:
-    """Create development-friendly configuration."""
-    index = ContentProtectionConfigIndex()
+    """Create development-friendly configuration."""    index = ContentProtectionConfigIndex()
     configs = index.create_complete_config_set('development')
     
     # Apply development optimizations
@@ -382,8 +360,7 @@ def create_development_environment_config() -> Dict[str, Any]:
 
 
 def create_testing_environment_config() -> Dict[str, Any]:
-    """Create testing configuration with minimal resource usage."""
-    index = ContentProtectionConfigIndex()
+    """Create testing configuration with minimal resource usage."""    index = ContentProtectionConfigIndex()
     configs = index.create_complete_config_set('testing')
     
     # Apply testing optimizations

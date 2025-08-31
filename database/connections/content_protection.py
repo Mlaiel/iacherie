@@ -1,5 +1,4 @@
-"""
-Content Protection Database Connections - IA Influencer Agent Platform
+"""Content Protection Database Connections - IA Influencer Agent Platform
 
 Specialized database connections for content protection operations:
 - Content fingerprint storage and retrieval
@@ -18,9 +17,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is proprietary and confidential. Any unauthorized use, modification,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Tuple, Union
 from contextlib import asynccontextmanager
@@ -43,8 +40,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Supported content types for protection"""
-    AUDIO = "audio"
+    """Supported content types for protection"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -52,8 +48,7 @@ class ContentType(Enum):
 
 
 class ProtectionStatus(Enum):
-    """Content protection status"""
-    ACTIVE = "active"
+    """Content protection status"""    ACTIVE = "active"
     SUSPENDED = "suspended"
     VIOLATION_DETECTED = "violation_detected"
     TAKEDOWN_REQUESTED = "takedown_requested"
@@ -61,8 +56,7 @@ class ProtectionStatus(Enum):
 
 
 class AlertPriority(Enum):
-    """Protection alert priority levels"""
-    LOW = "low"
+    """Protection alert priority levels"""    LOW = "low"
     MEDIUM = "medium" 
     HIGH = "high"
     CRITICAL = "critical"
@@ -70,8 +64,7 @@ class AlertPriority(Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint data structure"""
-    fingerprint_id: str
+    """Content fingerprint data structure"""    fingerprint_id: str
     tenant_id: str
     content_type: ContentType
     original_filename: str
@@ -83,8 +76,7 @@ class ContentFingerprint:
     protection_status: ProtectionStatus = ProtectionStatus.ACTIVE
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage"""
-        return {
+        """Convert to dictionary for storage"""        return {
             "fingerprint_id": self.fingerprint_id,
             "tenant_id": self.tenant_id,
             "content_type": self.content_type.value,
@@ -100,8 +92,7 @@ class ContentFingerprint:
 
 @dataclass 
 class ProtectionAlert:
-    """Protection alert data structure"""
-    alert_id: str
+    """Protection alert data structure"""    alert_id: str
     fingerprint_id: str
     tenant_id: str
     detected_url: str
@@ -115,8 +106,7 @@ class ProtectionAlert:
     resolved_at: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage"""
-        return {
+        """Convert to dictionary for storage"""        return {
             "alert_id": self.alert_id,
             "fingerprint_id": self.fingerprint_id, 
             "tenant_id": self.tenant_id,
@@ -133,8 +123,7 @@ class ProtectionAlert:
 
 
 class ContentProtectionConnections:
-    """
-    Specialized connection manager for content protection operations.
+    """    Specialized connection manager for content protection operations.
     
     Coordinates multiple databases for:
     - Fingerprint storage (PostgreSQL + Vector DB)
@@ -142,8 +131,7 @@ class ContentProtectionConnections:
     - Evidence collection (Object Storage + MongoDB)
     - Search and discovery (Elasticsearch)
     - Real-time monitoring (Redis + WebSockets)
-    """
-    
+    """    
     def __init__(self, connection_handlers: Dict[str, Any]):
         self.logger = logging.getLogger(__name__)
         
@@ -181,8 +169,7 @@ class ContentProtectionConnections:
         vector_embedding: List[float],
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Store content fingerprint across multiple databases for protection.
+        """        Store content fingerprint across multiple databases for protection.
         
         Args:
             tenant_id: Content creator tenant ID
@@ -195,8 +182,7 @@ class ContentProtectionConnections:
             
         Returns:
             Fingerprint ID for tracking
-        """
-        try:
+        """        try:
             # Generate unique fingerprint ID
             fingerprint_id = self._generate_fingerprint_id(tenant_id, file_content)
             
@@ -258,8 +244,7 @@ class ContentProtectionConnections:
         similarity_threshold: float = 0.85,
         max_results: int = 100
     ) -> List[Tuple[str, float]]:
-        """
-        Search for similar content using vector similarity.
+        """        Search for similar content using vector similarity.
         
         Args:
             tenant_id: Tenant ID for isolation
@@ -269,8 +254,7 @@ class ContentProtectionConnections:
             
         Returns:
             List of (fingerprint_id, similarity_score) tuples
-        """
-        try:
+        """        try:
             # Perform vector similarity search
             similar_vectors = await self.vector_store.similarity_search(
                 query_vector=query_vector,
@@ -300,8 +284,7 @@ class ContentProtectionConnections:
         similarity_score: float,
         evidence_data: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Create protection alert for detected content violation.
+        """        Create protection alert for detected content violation.
         
         Args:
             fingerprint_id: Original content fingerprint ID
@@ -312,8 +295,7 @@ class ContentProtectionConnections:
             
         Returns:
             Alert ID for tracking
-        """
-        try:
+        """        try:
             # Get fingerprint data
             fingerprint = await self._get_fingerprint_data(fingerprint_id)
             if not fingerprint:
@@ -378,8 +360,7 @@ class ContentProtectionConnections:
         tenant_id: str,
         days_back: int = 30
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive protection summary for tenant.
+        """        Get comprehensive protection summary for tenant.
         
         Args:
             tenant_id: Tenant ID
@@ -387,8 +368,7 @@ class ContentProtectionConnections:
             
         Returns:
             Protection summary with metrics and recent activity
-        """
-        try:
+        """        try:
             start_date = datetime.utcnow() - timedelta(days=days_back)
             
             # Get fingerprint count
@@ -443,8 +423,7 @@ class ContentProtectionConnections:
         new_status: str,
         resolution_notes: Optional[str] = None
     ) -> bool:
-        """
-        Update protection alert status.
+        """        Update protection alert status.
         
         Args:
             alert_id: Alert ID to update
@@ -453,8 +432,7 @@ class ContentProtectionConnections:
             
         Returns:
             True if update successful
-        """
-        try:
+        """        try:
             # Get current alert data
             alert_data = await self._get_alert_data(alert_id)
             if not alert_data:
@@ -491,8 +469,7 @@ class ContentProtectionConnections:
     
     @asynccontextmanager
     async def _protection_transaction(self, tenant_id: str):
-        """Context manager for protection operations transaction."""
-        # This would implement distributed transaction logic
+        """Context manager for protection operations transaction."""        # This would implement distributed transaction logic
         # For now, return a simple namespace object
         class TransactionContext:
             def __init__(self, handlers):
@@ -504,8 +481,7 @@ class ContentProtectionConnections:
                 self.elasticsearch = handlers.get("elasticsearch")
             
             async def commit(self):
-                """Commit transaction across all database connections"""
-                try:
+                """Commit transaction across all database connections"""                try:
                     # PostgreSQL commit
                     if hasattr(self.postgresql, 'commit'):
                         await self.postgresql.commit()
@@ -532,8 +508,7 @@ class ContentProtectionConnections:
                     raise
             
             async def rollback(self):
-                """Rollback transaction across all database connections"""
-                try:
+                """Rollback transaction across all database connections"""                try:
                     # PostgreSQL rollback
                     if hasattr(self.postgresql, 'rollback'):
                         await self.postgresql.rollback()
@@ -573,20 +548,17 @@ class ContentProtectionConnections:
             raise
     
     def _generate_fingerprint_id(self, tenant_id: str, file_content: bytes) -> str:
-        """Generate unique fingerprint ID."""
-        content_hash = hashlib.sha256(file_content).hexdigest()[:16]
+        """Generate unique fingerprint ID."""        content_hash = hashlib.sha256(file_content).hexdigest()[:16]
         timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
         return f"fp_{tenant_id}_{timestamp}_{content_hash}"
     
     def _generate_alert_id(self, fingerprint_id: str, detected_url: str) -> str:
-        """Generate unique alert ID."""
-        url_hash = hashlib.md5(detected_url.encode()).hexdigest()[:8]
+        """Generate unique alert ID."""        url_hash = hashlib.md5(detected_url.encode()).hexdigest()[:8]
         timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
         return f"alert_{fingerprint_id}_{timestamp}_{url_hash}"
     
     def _calculate_alert_priority(self, similarity_score: float, platform: str) -> AlertPriority:
-        """Calculate alert priority based on similarity and platform."""
-        if similarity_score >= 0.95:
+        """Calculate alert priority based on similarity and platform."""        if similarity_score >= 0.95:
             return AlertPriority.CRITICAL
         elif similarity_score >= 0.90:
             return AlertPriority.HIGH
@@ -596,14 +568,11 @@ class ContentProtectionConnections:
             return AlertPriority.LOW
     
     async def _store_fingerprint_metadata(self, pg_handler, fingerprint: ContentFingerprint):
-        """Store fingerprint metadata in PostgreSQL."""
-        query = """
-        INSERT INTO content_fingerprints (
+        """Store fingerprint metadata in PostgreSQL."""        query = """        INSERT INTO content_fingerprints (
             fingerprint_id, tenant_id, content_type, original_filename,
             file_hash, ai_fingerprint, metadata, created_at, protection_status
         ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-        """
-        await pg_handler.execute_query(
+        """        await pg_handler.execute_query(
             query,
             fingerprint.fingerprint_id,
             fingerprint.tenant_id,
@@ -617,8 +586,7 @@ class ContentProtectionConnections:
         )
     
     async def _store_vector_embedding(self, vector_handler, fingerprint: ContentFingerprint):
-        """Store vector embedding in vector database."""
-        await vector_handler.store_vector(
+        """Store vector embedding in vector database."""        await vector_handler.store_vector(
             vector_id=fingerprint.fingerprint_id,
             vector=fingerprint.vector_embedding,
             namespace=f"tenant_{fingerprint.tenant_id}",
@@ -626,25 +594,20 @@ class ContentProtectionConnections:
         )
     
     async def _store_content_file(self, storage_handler, fingerprint: ContentFingerprint, content: bytes):
-        """Store original content file in object storage."""
-        file_key = f"fingerprints/{fingerprint.tenant_id}/{fingerprint.fingerprint_id}"
+        """Store original content file in object storage."""        file_key = f"fingerprints/{fingerprint.tenant_id}/{fingerprint.fingerprint_id}"
         await storage_handler.put_object(file_key, content)
     
     async def _cache_fingerprint_data(self, redis_handler, fingerprint: ContentFingerprint):
-        """Cache fingerprint data in Redis."""
-        cache_key = f"fingerprint:{fingerprint.fingerprint_id}"
+        """Cache fingerprint data in Redis."""        cache_key = f"fingerprint:{fingerprint.fingerprint_id}"
         await redis_handler.set(cache_key, json.dumps(fingerprint.to_dict()), expire=86400)
     
     async def _store_protection_alert(self, pg_handler, alert: ProtectionAlert):
-        """Store protection alert in PostgreSQL."""
-        query = """
-        INSERT INTO protection_alerts (
+        """Store protection alert in PostgreSQL."""        query = """        INSERT INTO protection_alerts (
             alert_id, fingerprint_id, tenant_id, detected_url, platform,
             similarity_score, alert_priority, evidence_urls, metadata, 
             status, created_at
         ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
-        """
-        await pg_handler.execute_query(
+        """        await pg_handler.execute_query(
             query,
             alert.alert_id,
             alert.fingerprint_id,
@@ -678,8 +641,7 @@ class ContentProtectionConnections:
     # - _update_alert_index
     
     async def get_protection_metrics(self) -> Dict[str, Any]:
-        """Get protection operation metrics."""
-        return {
+        """Get protection operation metrics."""        return {
             "operations_count": self.operations_count,
             "fingerprints_stored": self.fingerprints_stored,
             "alerts_generated": self.alerts_generated,

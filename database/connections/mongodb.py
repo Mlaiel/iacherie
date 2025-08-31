@@ -1,5 +1,4 @@
-"""
-MongoDB Connection Handler - IA Influencer Agent Platform
+"""MongoDB Connection Handler - IA Influencer Agent Platform
 
 Manages MongoDB connections for content metadata and analytics:
 - Content fingerprint metadata and embeddings
@@ -11,9 +10,7 @@ Manages MongoDB connections for content metadata and analytics:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Union
 from dataclasses import dataclass
@@ -27,8 +24,7 @@ from pymongo.errors import ConnectionFailure, ServerSelectionTimeoutError
 
 @dataclass
 class MongoDBConfig:
-    """MongoDB connection configuration"""
-    host: str = "localhost"
+    """MongoDB connection configuration"""    host: str = "localhost"
     port: int = 27017
     database: str = "ia_influencer_content"
     username: Optional[str] = None
@@ -49,8 +45,7 @@ class MongoDBConfig:
 
 
 class MongoDBConnectionHandler:
-    """
-    MongoDB connection handler for IA Influencer platform.
+    """    MongoDB connection handler for IA Influencer platform.
     
     Manages MongoDB for:
     - Content fingerprint metadata storage
@@ -59,8 +54,7 @@ class MongoDBConnectionHandler:
     - Platform integration metrics
     - Collaboration and recommendation data
     - Revenue analytics and reporting
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = MongoDBConfig(**config)
         self.logger = logging.getLogger(__name__)
@@ -78,8 +72,7 @@ class MongoDBConnectionHandler:
         self.last_health_check = None
     
     async def initialize(self) -> None:
-        """Initialize MongoDB connection"""
-        try:
+        """Initialize MongoDB connection"""        try:
             self.logger.info("Initializing MongoDB connection...")
             
             # Build connection URI
@@ -112,8 +105,7 @@ class MongoDBConnectionHandler:
             raise
     
     def _build_connection_uri(self) -> str:
-        """Build MongoDB connection URI"""
-        if self.config.username and self.config.password:
+        """Build MongoDB connection URI"""        if self.config.username and self.config.password:
             auth_part = f"{self.config.username}:{self.config.password}@"
         else:
             auth_part = ""
@@ -144,8 +136,7 @@ class MongoDBConnectionHandler:
         return uri
     
     async def _create_indexes(self) -> None:
-        """Create necessary indexes for collections"""
-        try:
+        """Create necessary indexes for collections"""        try:
             # Content fingerprints collection indexes
             fingerprints = self.database.content_fingerprints
             await fingerprints.create_index([("user_id", ASCENDING)])
@@ -200,23 +191,20 @@ class MongoDBConnectionHandler:
             # Don't raise here, indexes might already exist
     
     async def get_connection(self) -> AsyncIOMotorDatabase:
-        """Get MongoDB database connection"""
-        if not self.database:
+        """Get MongoDB database connection"""        if not self.database:
             raise RuntimeError("MongoDB not initialized")
         
         self.connection_count += 1
         return self.database
     
     async def get_tenant_connection(self, tenant_id: str) -> AsyncIOMotorDatabase:
-        """Get tenant-specific database connection"""
-        if tenant_id not in self.tenant_databases:
+        """Get tenant-specific database connection"""        if tenant_id not in self.tenant_databases:
             await self._create_tenant_database(tenant_id)
         
         return self.tenant_databases[tenant_id]
     
     async def _create_tenant_database(self, tenant_id: str) -> None:
-        """Create database for specific tenant"""
-        if not self.client:
+        """Create database for specific tenant"""        if not self.client:
             raise RuntimeError("MongoDB client not initialized")
         
         db_name = f"{self.config.tenant_database_prefix}{tenant_id}"
@@ -228,13 +216,11 @@ class MongoDBConnectionHandler:
         self.tenant_databases[tenant_id] = tenant_db
     
     async def _create_tenant_indexes(self, database: AsyncIOMotorDatabase) -> None:
-        """Create indexes for tenant database"""
-        # Create same indexes as main database for tenant isolation
+        """Create indexes for tenant database"""        # Create same indexes as main database for tenant isolation
         await self._create_indexes_for_database(database)
     
     async def _create_indexes_for_database(self, database: AsyncIOMotorDatabase) -> None:
-        """Create indexes for a specific database"""
-        try:
+        """Create indexes for a specific database"""        try:
             # Content fingerprints
             fingerprints = database.content_fingerprints
             await fingerprints.create_index([("user_id", ASCENDING)])
@@ -255,8 +241,7 @@ class MongoDBConnectionHandler:
     async def get_collection(self, 
                            collection_name: str, 
                            tenant_id: Optional[str] = None) -> AsyncIOMotorCollection:
-        """Get collection from database"""
-        if tenant_id:
+        """Get collection from database"""        if tenant_id:
             database = await self.get_tenant_connection(tenant_id)
         else:
             database = await self.get_connection()
@@ -268,8 +253,7 @@ class MongoDBConnectionHandler:
                         collection_name: str, 
                         document: Dict[str, Any],
                         tenant_id: Optional[str] = None) -> str:
-        """Insert single document"""
-        try:
+        """Insert single document"""        try:
             collection = await self.get_collection(collection_name, tenant_id)
             
             # Add timestamp if not present
@@ -290,8 +274,7 @@ class MongoDBConnectionHandler:
                          collection_name: str, 
                          documents: List[Dict[str, Any]],
                          tenant_id: Optional[str] = None) -> List[str]:
-        """Insert multiple documents"""
-        try:
+        """Insert multiple documents"""        try:
             collection = await self.get_collection(collection_name, tenant_id)
             
             # Add timestamps if not present
@@ -314,8 +297,7 @@ class MongoDBConnectionHandler:
                       filter_dict: Dict[str, Any],
                       projection: Optional[Dict[str, Any]] = None,
                       tenant_id: Optional[str] = None) -> Optional[Dict[str, Any]]:
-        """Find single document"""
-        try:
+        """Find single document"""        try:
             collection = await self.get_collection(collection_name, tenant_id)
             result = await collection.find_one(filter_dict, projection)
             self.operation_count += 1
@@ -335,8 +317,7 @@ class MongoDBConnectionHandler:
                   limit: Optional[int] = None,
                   skip: Optional[int] = None,
                   tenant_id: Optional[str] = None) -> List[Dict[str, Any]]:
-        """Find multiple documents"""
-        try:
+        """Find multiple documents"""        try:
             collection = await self.get_collection(collection_name, tenant_id)
             
             cursor = collection.find(filter_dict, projection)
@@ -366,8 +347,7 @@ class MongoDBConnectionHandler:
                         update_dict: Dict[str, Any],
                         upsert: bool = False,
                         tenant_id: Optional[str] = None) -> Dict[str, Any]:
-        """Update single document"""
-        try:
+        """Update single document"""        try:
             collection = await self.get_collection(collection_name, tenant_id)
             
             # Add updated_at timestamp
@@ -394,8 +374,7 @@ class MongoDBConnectionHandler:
                          filter_dict: Dict[str, Any],
                          update_dict: Dict[str, Any],
                          tenant_id: Optional[str] = None) -> Dict[str, Any]:
-        """Update multiple documents"""
-        try:
+        """Update multiple documents"""        try:
             collection = await self.get_collection(collection_name, tenant_id)
             
             # Add updated_at timestamp
@@ -420,8 +399,7 @@ class MongoDBConnectionHandler:
                         collection_name: str, 
                         filter_dict: Dict[str, Any],
                         tenant_id: Optional[str] = None) -> int:
-        """Delete single document"""
-        try:
+        """Delete single document"""        try:
             collection = await self.get_collection(collection_name, tenant_id)
             result = await collection.delete_one(filter_dict)
             self.operation_count += 1
@@ -437,8 +415,7 @@ class MongoDBConnectionHandler:
                          collection_name: str, 
                          filter_dict: Dict[str, Any],
                          tenant_id: Optional[str] = None) -> int:
-        """Delete multiple documents"""
-        try:
+        """Delete multiple documents"""        try:
             collection = await self.get_collection(collection_name, tenant_id)
             result = await collection.delete_many(filter_dict)
             self.operation_count += 1
@@ -454,8 +431,7 @@ class MongoDBConnectionHandler:
                             collection_name: str, 
                             filter_dict: Dict[str, Any],
                             tenant_id: Optional[str] = None) -> int:
-        """Count documents in collection"""
-        try:
+        """Count documents in collection"""        try:
             collection = await self.get_collection(collection_name, tenant_id)
             result = await collection.count_documents(filter_dict)
             self.operation_count += 1
@@ -471,8 +447,7 @@ class MongoDBConnectionHandler:
                        collection_name: str, 
                        pipeline: List[Dict[str, Any]],
                        tenant_id: Optional[str] = None) -> List[Dict[str, Any]]:
-        """Execute aggregation pipeline"""
-        try:
+        """Execute aggregation pipeline"""        try:
             collection = await self.get_collection(collection_name, tenant_id)
             cursor = collection.aggregate(pipeline)
             results = await cursor.to_list(length=None)
@@ -486,8 +461,7 @@ class MongoDBConnectionHandler:
             raise
     
     async def health_check(self) -> Dict[str, Any]:
-        """Check MongoDB connection health"""
-        try:
+        """Check MongoDB connection health"""        try:
             start_time = datetime.utcnow()
             
             if not self.client:
@@ -536,8 +510,7 @@ class MongoDBConnectionHandler:
             }
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get detailed MongoDB metrics"""
-        try:
+        """Get detailed MongoDB metrics"""        try:
             if not self.client:
                 return {"status": "not_initialized"}
             
@@ -592,8 +565,7 @@ class MongoDBConnectionHandler:
             return {"error": str(e)}
     
     async def shutdown(self) -> None:
-        """Shutdown MongoDB connections"""
-        self.logger.info("Shutting down MongoDB connections...")
+        """Shutdown MongoDB connections"""        self.logger.info("Shutting down MongoDB connections...")
         
         if self.client:
             self.client.close()

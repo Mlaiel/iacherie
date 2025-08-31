@@ -1,5 +1,4 @@
-"""
-Advanced Analytics & Metrics Module for IA Influencer Agent Platform
+"""Advanced Analytics & Metrics Module for IA Influencer Agent Platform
 
 Comprehensive analytics system for content performance, engagement metrics,
 audience insights, and business intelligence for creators and influencers.
@@ -9,9 +8,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
@@ -31,8 +28,7 @@ import json
 logger = logging.getLogger(__name__)
 
 class MetricCategory(Enum):
-    """Categories of metrics"""
-    ENGAGEMENT = "engagement"
+    """Categories of metrics"""    ENGAGEMENT = "engagement"
     REACH = "reach"
     GROWTH = "growth"
     CONTENT_PERFORMANCE = "content_performance"
@@ -44,8 +40,7 @@ class MetricCategory(Enum):
     PREDICTIVE = "predictive"
 
 class TimeFrame(Enum):
-    """Time frame options for analytics"""
-    REAL_TIME = "real_time"
+    """Time frame options for analytics"""    REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -55,8 +50,7 @@ class TimeFrame(Enum):
     CUSTOM = "custom"
 
 class Platform(Enum):
-    """Supported platforms for analytics"""
-    INSTAGRAM = "instagram"
+    """Supported platforms for analytics"""    INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
     TWITTER = "twitter"
@@ -68,8 +62,7 @@ class Platform(Enum):
 
 @dataclass
 class MetricPoint:
-    """Individual metric data point"""
-    metric_name: str
+    """Individual metric data point"""    metric_name: str
     value: float
     timestamp: datetime
     platform: Optional[Platform] = None
@@ -78,8 +71,7 @@ class MetricPoint:
 
 @dataclass
 class EngagementMetrics:
-    """Comprehensive engagement metrics"""
-    likes: int = 0
+    """Comprehensive engagement metrics"""    likes: int = 0
     comments: int = 0
     shares: int = 0
     saves: int = 0
@@ -95,8 +87,7 @@ class EngagementMetrics:
 
 @dataclass
 class AudienceMetrics:
-    """Audience analytics and insights"""
-    total_followers: int = 0
+    """Audience analytics and insights"""    total_followers: int = 0
     follower_growth_rate: float = 0.0
     follower_quality_score: float = 0.0
     age_distribution: Dict[str, float] = field(default_factory=dict)
@@ -110,8 +101,7 @@ class AudienceMetrics:
 
 @dataclass
 class ContentPerformanceMetrics:
-    """Content performance analytics"""
-    total_content_pieces: int = 0
+    """Content performance analytics"""    total_content_pieces: int = 0
     avg_performance_score: float = 0.0
     top_performing_content: List[str] = field(default_factory=list)
     content_type_performance: Dict[str, float] = field(default_factory=dict)
@@ -122,8 +112,7 @@ class ContentPerformanceMetrics:
 
 @dataclass
 class BusinessMetrics:
-    """Business and revenue metrics"""
-    total_revenue: float = 0.0
+    """Business and revenue metrics"""    total_revenue: float = 0.0
     revenue_growth_rate: float = 0.0
     revenue_per_follower: float = 0.0
     conversion_rate: float = 0.0
@@ -135,8 +124,7 @@ class BusinessMetrics:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report"""
-    report_id: str
+    """Comprehensive analytics report"""    report_id: str
     creator_id: str
     time_period: Dict[str, datetime]
     platforms: List[Platform] = field(default_factory=list)
@@ -151,8 +139,7 @@ class AnalyticsReport:
     generated_at: datetime = field(default_factory=datetime.utcnow)
 
 class AdvancedAnalyticsEngine:
-    """
-    Ultra-advanced analytics and metrics engine
+    """    Ultra-advanced analytics and metrics engine
     
     Capabilities:
     - Real-time performance monitoring
@@ -165,8 +152,7 @@ class AdvancedAnalyticsEngine:
     - Automated report generation
     - Custom dashboard creation
     - Alert system for anomalies
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or self._get_default_config()
         self.metric_store: Dict[str, List[MetricPoint]] = defaultdict(list)
@@ -176,8 +162,7 @@ class AdvancedAnalyticsEngine:
         self.report_templates = {}
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration"""
-        return {
+        """Get default configuration"""        return {
             'update_frequency': timedelta(minutes=5),
             'retention_period': timedelta(days=365),
             'enable_real_time': True,
@@ -193,8 +178,7 @@ class AdvancedAnalyticsEngine:
         }
     
     async def initialize(self):
-        """Initialize analytics engine"""
-        try:
+        """Initialize analytics engine"""        try:
             logger.info("Initializing advanced analytics engine...")
             
             # Initialize ML models
@@ -222,8 +206,7 @@ class AdvancedAnalyticsEngine:
         metrics: Dict[str, Any],
         timestamp: Optional[datetime] = None
     ) -> bool:
-        """Collect and store metrics"""
-        try:
+        """Collect and store metrics"""        try:
             timestamp = timestamp or datetime.utcnow()
             
             # Store individual metric points
@@ -260,8 +243,7 @@ class AdvancedAnalyticsEngine:
         platforms: List[Platform] = None,
         categories: List[MetricCategory] = None
     ) -> AnalyticsReport:
-        """Generate comprehensive analytics report"""
-        try:
+        """Generate comprehensive analytics report"""        try:
             platforms = platforms or self.config['platforms']
             categories = categories or list(MetricCategory)
             
@@ -330,8 +312,7 @@ class AdvancedAnalyticsEngine:
         time_period: Dict[str, datetime],
         platforms: List[Platform]
     ) -> EngagementMetrics:
-        """Calculate comprehensive engagement metrics"""
-        try:
+        """Calculate comprehensive engagement metrics"""        try:
             metrics = EngagementMetrics()
             
             total_metrics = defaultdict(list)
@@ -380,8 +361,7 @@ class AdvancedAnalyticsEngine:
         time_period: Dict[str, datetime],
         platforms: List[Platform]
     ) -> AudienceMetrics:
-        """Calculate comprehensive audience metrics"""
-        try:
+        """Calculate comprehensive audience metrics"""        try:
             metrics = AudienceMetrics()
             
             # Get follower data
@@ -422,8 +402,7 @@ class AdvancedAnalyticsEngine:
         time_period: Dict[str, datetime],
         platforms: List[Platform]
     ) -> ContentPerformanceMetrics:
-        """Calculate content performance metrics"""
-        try:
+        """Calculate content performance metrics"""        try:
             metrics = ContentPerformanceMetrics()
             
             # Get content data
@@ -472,8 +451,7 @@ class AdvancedAnalyticsEngine:
         time_period: Dict[str, datetime],
         platforms: List[Platform]
     ) -> BusinessMetrics:
-        """Calculate business and revenue metrics"""
-        try:
+        """Calculate business and revenue metrics"""        try:
             metrics = BusinessMetrics()
             
             # Get revenue data
@@ -511,8 +489,7 @@ class AdvancedAnalyticsEngine:
             return BusinessMetrics()
     
     async def _generate_insights(self, report: AnalyticsReport) -> List[str]:
-        """Generate actionable insights from analytics data"""
-        try:
+        """Generate actionable insights from analytics data"""        try:
             insights = []
             
             # Engagement insights
@@ -547,8 +524,7 @@ class AdvancedAnalyticsEngine:
             return ["Analysis temporarily unavailable"]
     
     async def _generate_recommendations(self, report: AnalyticsReport) -> List[str]:
-        """Generate actionable recommendations"""
-        try:
+        """Generate actionable recommendations"""        try:
             recommendations = []
             
             # Engagement recommendations
@@ -591,8 +567,7 @@ class AdvancedAnalyticsEngine:
         creator_id: str,
         time_window: timedelta = None
     ) -> List[Dict[str, Any]]:
-        """Detect unusual patterns or anomalies in metrics"""
-        try:
+        """Detect unusual patterns or anomalies in metrics"""        try:
             time_window = time_window or timedelta(days=7)
             anomalies = []
             
@@ -640,8 +615,7 @@ class AdvancedAnalyticsEngine:
         industry: str = None,
         follower_range: str = None
     ) -> Dict[str, Any]:
-        """Benchmark creator performance against industry standards"""
-        try:
+        """Benchmark creator performance against industry standards"""        try:
             # Get creator metrics
             time_period = {
                 'start': datetime.utcnow() - timedelta(days=30),
@@ -704,8 +678,7 @@ class AdvancedAnalyticsEngine:
         creator_id: str,
         dashboard_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create customized analytics dashboard"""
-        try:
+        """Create customized analytics dashboard"""        try:
             dashboard_id = f"dashboard_{creator_id}_{int(datetime.utcnow().timestamp())}"
             
             # Extract configuration
@@ -758,8 +731,7 @@ class AdvancedAnalyticsEngine:
         content_metadata: Dict[str, Any],
         prediction_horizon: timedelta = None
     ) -> Dict[str, Any]:
-        """Predict content performance using ML models"""
-        try:
+        """Predict content performance using ML models"""        try:
             if not self.config['enable_predictive']:
                 return {'error': 'Predictive analytics disabled'}
             
@@ -808,8 +780,7 @@ class AdvancedAnalyticsEngine:
     
     # Placeholder methods for complex operations (would be implemented with real ML models and data sources)
     async def _get_platform_metrics(self, creator_id: str, platform: Platform, time_period: Dict[str, datetime]) -> Dict[str, List[float]]:
-        """Get metrics for a specific platform (placeholder)"""
-        # Would fetch real platform data
+        """Get metrics for a specific platform (placeholder)"""        # Would fetch real platform data
         return {
             'likes': [100, 150, 200, 120, 180],
             'comments': [20, 30, 40, 25, 35],
@@ -818,8 +789,7 @@ class AdvancedAnalyticsEngine:
         }
     
     async def _initialize_ml_models(self):
-        """Initialize ML models for analytics"""
-        # Placeholder - would load real trained models
+        """Initialize ML models for analytics"""        # Placeholder - would load real trained models
         self.ml_models = {
             'engagement_predictor': None,
             'reach_predictor': None,
@@ -828,8 +798,7 @@ class AdvancedAnalyticsEngine:
         }
     
     async def _load_industry_benchmarks(self):
-        """Load industry benchmark data"""
-        # Placeholder - would load real benchmark data
+        """Load industry benchmark data"""        # Placeholder - would load real benchmark data
         self.benchmarks = {
             'general': {
                 'engagement_rate': 0.03,
@@ -839,8 +808,7 @@ class AdvancedAnalyticsEngine:
         }
     
     async def _initialize_report_templates(self):
-        """Initialize report templates"""
-        self.report_templates = {
+        """Initialize report templates"""        self.report_templates = {
             'standard': {'sections': ['engagement', 'growth', 'content']},
             'detailed': {'sections': ['engagement', 'growth', 'content', 'audience', 'business']},
             'competitive': {'sections': ['engagement', 'growth', 'benchmarking']}

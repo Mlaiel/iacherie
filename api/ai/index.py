@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - AI Module Index
+"""IA Influencer Agent - AI Module Index
 Quick access to all AI processing capabilities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -11,9 +10,7 @@ permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will re
 in legal action.
 
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-# Quick import access for all AI modules
+"""# Quick import access for all AI modules
 try:
     from content_analysis import (
         ContentAnalysisEngine,
@@ -63,8 +60,7 @@ except ImportError as e:
     _imports_successful = False
 
 def get_ai_system_info():
-    """Get comprehensive information about the AI system."""
-    return {
+    """Get comprehensive information about the AI system."""    return {
         "system_name": "IA Influencer Agent AI Module",
         "version": "1.0.0",
         "author": "Fahed Mlaiel",
@@ -91,8 +87,7 @@ def get_ai_system_info():
     }
 
 def demo_ai_processing():
-    """Demonstrate AI processing capabilities."""
-    info = get_ai_system_info()
+    """Demonstrate AI processing capabilities."""    info = get_ai_system_info()
     
     print("🚀 IA Influencer Agent AI System")
     print("=" * 50)

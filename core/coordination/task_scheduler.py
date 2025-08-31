@@ -1,5 +1,4 @@
-"""
-Task Scheduler - Enterprise Task Scheduling & Execution Management
+"""Task Scheduler - Enterprise Task Scheduling & Execution Management
 
 Advanced task scheduling system providing sophisticated task management, dependency
 resolution, priority handling, and execution coordination for the IA-Influencer-Agent platform.
@@ -14,9 +13,7 @@ Contact: mlaiel@live.de for authorization.
 
 🎯 BUSINESS LOGIC:
 Task Creation → Scheduling → Dependency Resolution → Resource Allocation → Execution → Monitoring
-"""
-
-import asyncio
+"""import asyncio
 import uuid
 import heapq
 from datetime import datetime, timezone, timedelta
@@ -34,8 +31,7 @@ logger = logging.getLogger(__name__)
 
 
 class ScheduleType(Enum):
-    """Task scheduling types"""
-    IMMEDIATE = "immediate"
+    """Task scheduling types"""    IMMEDIATE = "immediate"
     DELAYED = "delayed"
     PERIODIC = "periodic"
     CRON = "cron"
@@ -45,8 +41,7 @@ class ScheduleType(Enum):
 
 
 class TaskPriority(Enum):
-    """Task execution priority levels"""
-    URGENT = 1
+    """Task execution priority levels"""    URGENT = 1
     HIGH = 2
     NORMAL = 3
     LOW = 4
@@ -54,8 +49,7 @@ class TaskPriority(Enum):
 
 
 class TaskStatus(Enum):
-    """Task execution status"""
-    SCHEDULED = "scheduled"
+    """Task execution status"""    SCHEDULED = "scheduled"
     PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -66,8 +60,7 @@ class TaskStatus(Enum):
 
 
 class TaskType(Enum):
-    """Types of tasks in the system"""
-    CONTENT_ANALYSIS = "content_analysis"
+    """Types of tasks in the system"""    CONTENT_ANALYSIS = "content_analysis"
     FINGERPRINT_GENERATION = "fingerprint_generation"
     PROTECTION_SCAN = "protection_scan"
     REVENUE_SYNC = "revenue_sync"
@@ -79,16 +72,14 @@ class TaskType(Enum):
 
 @dataclass
 class TaskDependency:
-    """Task dependency definition"""
-    task_id: str
+    """Task dependency definition"""    task_id: str
     dependency_type: str = "completion"  # completion, success, failure
     timeout_seconds: int = 3600
 
 
 @dataclass
 class TaskSchedule:
-    """Task scheduling configuration"""
-    schedule_type: ScheduleType
+    """Task scheduling configuration"""    schedule_type: ScheduleType
     start_time: Optional[datetime] = None
     end_time: Optional[datetime] = None
     interval_seconds: Optional[int] = None
@@ -100,8 +91,7 @@ class TaskSchedule:
 
 @dataclass
 class TaskConfiguration:
-    """Complete task configuration"""
-    task_id: str
+    """Complete task configuration"""    task_id: str
     name: str
     description: str
     task_type: TaskType
@@ -119,8 +109,7 @@ class TaskConfiguration:
 
 @dataclass
 class TaskExecution:
-    """Task execution state and tracking"""
-    execution_id: str
+    """Task execution state and tracking"""    execution_id: str
     task_id: str
     configuration: TaskConfiguration
     status: TaskStatus
@@ -136,8 +125,7 @@ class TaskExecution:
 
 @dataclass
 class ScheduledTask:
-    """Task in the scheduler queue"""
-    execution_time: datetime
+    """Task in the scheduler queue"""    execution_time: datetime
     priority: int
     task_id: str
     execution_id: str
@@ -149,8 +137,7 @@ class ScheduledTask:
 
 
 class TaskScheduler:
-    """Enterprise task scheduling and execution management system"""
-    
+    """Enterprise task scheduling and execution management system"""    
     def __init__(self, max_concurrent_tasks: int = 20):
         self.max_concurrent_tasks = max_concurrent_tasks
         
@@ -186,8 +173,7 @@ class TaskScheduler:
         logger.info("TaskScheduler initialized successfully")
     
     def _initialize_standard_tasks(self):
-        """Initialize standard business task configurations"""
-        # Content Analysis Task
+        """Initialize standard business task configurations"""        # Content Analysis Task
         content_analysis_task = TaskConfiguration(
             task_id="content_analysis_periodic",
             name="Periodic Content Analysis",
@@ -283,8 +269,7 @@ class TaskScheduler:
         self.register_task(maintenance_task)
     
     def register_task(self, configuration: TaskConfiguration) -> bool:
-        """Register a new task configuration"""
-        try:
+        """Register a new task configuration"""        try:
             # Validate configuration
             if not self._validate_task_configuration(configuration):
                 return False
@@ -307,8 +292,7 @@ class TaskScheduler:
             return False
     
     def _validate_task_configuration(self, config: TaskConfiguration) -> bool:
-        """Validate task configuration"""
-        try:
+        """Validate task configuration"""        try:
             # Required fields validation
             if not all([config.task_id, config.name, config.task_type]):
                 logger.error("Missing required task configuration fields")
@@ -332,8 +316,7 @@ class TaskScheduler:
             return False
     
     def _validate_schedule(self, schedule: TaskSchedule) -> bool:
-        """Validate task schedule configuration"""
-        try:
+        """Validate task schedule configuration"""        try:
             if schedule.schedule_type == ScheduleType.CRON:
                 if not schedule.cron_expression:
                     return False
@@ -358,13 +341,11 @@ class TaskScheduler:
             return False
     
     def _update_dependency_graph(self, config: TaskConfiguration):
-        """Update dependency graph for task"""
-        for dep in config.dependencies:
+        """Update dependency graph for task"""        for dep in config.dependencies:
             self.dependency_graph[dep.task_id].add(config.task_id)
     
     def _schedule_next_execution(self, config: TaskConfiguration):
-        """Schedule next execution for a task"""
-        try:
+        """Schedule next execution for a task"""        try:
             next_time = self._calculate_next_execution_time(config)
             if next_time:
                 execution_id = str(uuid.uuid4())
@@ -385,8 +366,7 @@ class TaskScheduler:
             logger.error(f"Task scheduling failed: {e}")
     
     def _calculate_next_execution_time(self, config: TaskConfiguration) -> Optional[datetime]:
-        """Calculate next execution time for a task"""
-        try:
+        """Calculate next execution time for a task"""        try:
             now = datetime.now(pytz.timezone(config.schedule.timezone))
             
             if config.schedule.schedule_type == ScheduleType.IMMEDIATE:
@@ -425,8 +405,7 @@ class TaskScheduler:
             return None
     
     def start_scheduler(self):
-        """Start the task scheduler"""
-        if not self.scheduler_active:
+        """Start the task scheduler"""        if not self.scheduler_active:
             self.scheduler_active = True
             self.scheduler_thread = threading.Thread(
                 target=self._scheduler_loop,
@@ -436,15 +415,13 @@ class TaskScheduler:
             logger.info("Task scheduler started")
     
     def stop_scheduler(self):
-        """Stop the task scheduler"""
-        self.scheduler_active = False
+        """Stop the task scheduler"""        self.scheduler_active = False
         if self.scheduler_thread:
             self.scheduler_thread.join(timeout=5)
         logger.info("Task scheduler stopped")
     
     def _scheduler_loop(self):
-        """Main scheduler loop"""
-        while self.scheduler_active:
+        """Main scheduler loop"""        while self.scheduler_active:
             try:
                 self._process_scheduled_tasks()
                 self._check_dependency_resolutions()
@@ -454,8 +431,7 @@ class TaskScheduler:
                 logger.error(f"Scheduler loop error: {e}")
     
     def _process_scheduled_tasks(self):
-        """Process tasks that are ready for execution"""
-        now = datetime.now(timezone.utc)
+        """Process tasks that are ready for execution"""        now = datetime.now(timezone.utc)
         
         with self.execution_lock:
             ready_tasks = []
@@ -474,8 +450,7 @@ class TaskScheduler:
                     heapq.heappush(self.scheduled_tasks, scheduled_task)
     
     def _check_dependency_resolutions(self):
-        """Check if any waiting tasks can now be executed"""
-        resolved_tasks = []
+        """Check if any waiting tasks can now be executed"""        resolved_tasks = []
         
         for task_id, waiting_list in self.waiting_tasks.items():
             if self._are_dependencies_satisfied(task_id):
@@ -487,8 +462,7 @@ class TaskScheduler:
             self._schedule_dependency_resolved_task(execution_id)
     
     def _are_dependencies_satisfied(self, task_id: str) -> bool:
-        """Check if all dependencies for a task are satisfied"""
-        try:
+        """Check if all dependencies for a task are satisfied"""        try:
             config = self.task_configurations.get(task_id)
             if not config:
                 return False
@@ -505,8 +479,7 @@ class TaskScheduler:
             return False
     
     def _is_dependency_satisfied(self, dependency: TaskDependency) -> bool:
-        """Check if a specific dependency is satisfied"""
-        # Look for recent successful execution of dependency task
+        """Check if a specific dependency is satisfied"""        # Look for recent successful execution of dependency task
         for execution in self.completed_executions.values():
             if (execution.task_id == dependency.task_id and
                 execution.status == TaskStatus.COMPLETED and
@@ -517,13 +490,11 @@ class TaskScheduler:
         return False
     
     def _schedule_dependency_resolved_task(self, execution_id: str):
-        """Schedule a task whose dependencies are now resolved"""
-        # This would integrate with the actual task execution
+        """Schedule a task whose dependencies are now resolved"""        # This would integrate with the actual task execution
         logger.info(f"Dependencies resolved for task execution {execution_id}")
     
     def _handle_retry_tasks(self):
-        """Handle tasks that need to be retried"""
-        now = datetime.now(timezone.utc)
+        """Handle tasks that need to be retried"""        now = datetime.now(timezone.utc)
         
         retry_tasks = []
         for execution in list(self.active_executions.values()):
@@ -536,8 +507,7 @@ class TaskScheduler:
             asyncio.create_task(self._retry_task_execution(execution))
     
     async def _execute_task(self, scheduled_task: ScheduledTask):
-        """Execute a scheduled task"""
-        try:
+        """Execute a scheduled task"""        try:
             config = self.task_configurations.get(scheduled_task.task_id)
             if not config:
                 logger.error(f"Task configuration not found: {scheduled_task.task_id}")
@@ -601,8 +571,7 @@ class TaskScheduler:
             logger.error(f"Task execution failed: {e}")
     
     async def _execute_task_logic(self, execution: TaskExecution) -> Dict[str, Any]:
-        """Execute the actual task business logic"""
-        # Simulate task processing based on task type
+        """Execute the actual task business logic"""        # Simulate task processing based on task type
         processing_time = {
             TaskType.CONTENT_ANALYSIS: 30,
             TaskType.FINGERPRINT_GENERATION: 60,
@@ -626,16 +595,14 @@ class TaskScheduler:
         }
     
     def _is_recurring_task(self, config: TaskConfiguration) -> bool:
-        """Check if task is recurring"""
-        return config.schedule.schedule_type in [
+        """Check if task is recurring"""        return config.schedule.schedule_type in [
             ScheduleType.INTERVAL,
             ScheduleType.CRON,
             ScheduleType.PERIODIC
         ]
     
     async def _complete_task_execution(self, execution: TaskExecution):
-        """Complete task execution and cleanup"""
-        try:
+        """Complete task execution and cleanup"""        try:
             # Calculate execution time
             if execution.started_at:
                 execution.execution_time = (
@@ -659,8 +626,7 @@ class TaskScheduler:
             logger.error(f"Task completion failed: {e}")
     
     async def _handle_task_failure(self, execution: TaskExecution):
-        """Handle task execution failure"""
-        try:
+        """Handle task execution failure"""        try:
             # Check for retry
             if execution.retry_count < execution.configuration.retry_count:
                 execution.retry_count += 1
@@ -689,8 +655,7 @@ class TaskScheduler:
             logger.error(f"Task failure handling failed: {e}")
     
     async def _retry_task_execution(self, execution: TaskExecution):
-        """Retry failed task execution"""
-        try:
+        """Retry failed task execution"""        try:
             execution.status = TaskStatus.RUNNING
             execution.started_at = datetime.now(timezone.utc)
             execution.next_retry_time = None
@@ -722,8 +687,7 @@ class TaskScheduler:
             logger.error(f"Task retry failed: {e}")
     
     async def _emit_task_event(self, event_type: str, execution: TaskExecution):
-        """Emit task events to registered handlers"""
-        try:
+        """Emit task events to registered handlers"""        try:
             event_data = {
                 "event_type": event_type,
                 "execution_id": execution.execution_id,
@@ -755,8 +719,7 @@ class TaskScheduler:
         schedule_time: Optional[datetime] = None,
         parameters: Dict[str, Any] = None
     ) -> str:
-        """Schedule a one-time task execution"""
-        try:
+        """Schedule a one-time task execution"""        try:
             if task_id not in self.task_configurations:
                 raise ValueError(f"Task '{task_id}' not found")
             
@@ -786,8 +749,7 @@ class TaskScheduler:
             raise
     
     def cancel_task(self, execution_id: str) -> bool:
-        """Cancel a scheduled or running task"""
-        try:
+        """Cancel a scheduled or running task"""        try:
             # Check if task is active
             if execution_id in self.active_executions:
                 execution = self.active_executions[execution_id]
@@ -817,8 +779,7 @@ class TaskScheduler:
             return False
     
     def get_task_status(self, execution_id: str) -> Optional[Dict[str, Any]]:
-        """Get task execution status"""
-        execution = (self.active_executions.get(execution_id) or 
+        """Get task execution status"""        execution = (self.active_executions.get(execution_id) or 
                     self.completed_executions.get(execution_id))
         
         if not execution:
@@ -838,8 +799,7 @@ class TaskScheduler:
         }
     
     def get_scheduler_metrics(self) -> Dict[str, Any]:
-        """Get scheduler performance metrics"""
-        active_count = len(self.active_executions)
+        """Get scheduler performance metrics"""        active_count = len(self.active_executions)
         scheduled_count = len(self.scheduled_tasks)
         completed_count = len(self.completed_executions)
         
@@ -854,16 +814,13 @@ class TaskScheduler:
         }
     
     def register_event_handler(self, event_type: str, handler: Callable):
-        """Register event handler for task events"""
-        self.event_handlers[event_type].append(handler)
+        """Register event handler for task events"""        self.event_handlers[event_type].append(handler)
     
     def register_task_listener(self, task_id: str, listener: Callable):
-        """Register listener for specific task"""
-        self.task_listeners[task_id].append(listener)
+        """Register listener for specific task"""        self.task_listeners[task_id].append(listener)
     
     def enable_task(self, task_id: str) -> bool:
-        """Enable a task for scheduling"""
-        try:
+        """Enable a task for scheduling"""        try:
             if task_id in self.task_configurations:
                 config = self.task_configurations[task_id]
                 config.enabled = True
@@ -876,8 +833,7 @@ class TaskScheduler:
             return False
     
     def disable_task(self, task_id: str) -> bool:
-        """Disable a task from scheduling"""
-        try:
+        """Disable a task from scheduling"""        try:
             if task_id in self.task_configurations:
                 self.task_configurations[task_id].enabled = False
                 
@@ -897,8 +853,7 @@ class TaskScheduler:
             return False
     
     def shutdown(self):
-        """Shutdown task scheduler and cleanup"""
-        try:
+        """Shutdown task scheduler and cleanup"""        try:
             self.stop_scheduler()
             
             # Cancel all active tasks

@@ -1,5 +1,4 @@
-"""
-🎯 Batch & Metadata Processors - IA Influencer Agent Platform Enterprise
+"""🎯 Batch & Metadata Processors - IA Influencer Agent Platform Enterprise
 =======================================================================
 Module: backend/data_management/processors/[batch/metadata]_processor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,9 +7,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 import asyncio
 import logging
 from pathlib import Path
@@ -24,8 +21,7 @@ from .video_processor import VideoProcessor, AsyncVideoProcessor, ImageProcessor
 
 @dataclass
 class BatchJob:
-    """Représente un job de traitement en lot"""
-    id: str
+    """Représente un job de traitement en lot"""    id: str
     files: List[str]
     processor_type: str
     status: str = "pending"
@@ -35,8 +31,7 @@ class BatchJob:
     errors: List[str] = None
 
 class BatchProcessor(BaseProcessor):
-    """Processeur pour traitement en lot de multiples fichiers"""
-    
+    """Processeur pour traitement en lot de multiples fichiers"""    
     def __init__(self, max_workers: int = 4):
         super().__init__()
         self.max_workers = max_workers
@@ -49,8 +44,7 @@ class BatchProcessor(BaseProcessor):
         }
     
     def validate_input(self, input_data: Any) -> bool:
-        """Valide les données d'entrée pour traitement en lot"""
-        if not isinstance(input_data, dict):
+        """Valide les données d'entrée pour traitement en lot"""        if not isinstance(input_data, dict):
             return False
         
         files = input_data.get('files', [])
@@ -61,8 +55,7 @@ class BatchProcessor(BaseProcessor):
                 processor_type in self.processors)
     
     def process(self, input_data: Any) -> Dict[str, Any]:
-        """Lance un traitement en lot"""
-        job_id = f"batch_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        """Lance un traitement en lot"""        job_id = f"batch_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         files = input_data.get('files', [])
         processor_type = input_data.get('processor_type')
         
@@ -110,12 +103,10 @@ class BatchProcessor(BaseProcessor):
         }
     
     def _process_single_file(self, processor: BaseProcessor, file_path: str) -> Dict[str, Any]:
-        """Traite un seul fichier"""
-        return processor.process({"file_path": file_path})
+        """Traite un seul fichier"""        return processor.process({"file_path": file_path})
     
     def get_job_status(self, job_id: str) -> Optional[Dict[str, Any]]:
-        """Récupère le statut d'un job"""
-        job = self.jobs.get(job_id)
+        """Récupère le statut d'un job"""        job = self.jobs.get(job_id)
         if not job:
             return None
         
@@ -130,8 +121,7 @@ class BatchProcessor(BaseProcessor):
         }
 
 class AsyncBatchProcessor(AsyncBaseProcessor):
-    """Version asynchrone du processeur de lot"""
-    
+    """Version asynchrone du processeur de lot"""    
     def __init__(self, max_concurrent: int = 10):
         super().__init__()
         self.max_concurrent = max_concurrent
@@ -144,8 +134,7 @@ class AsyncBatchProcessor(AsyncBaseProcessor):
         }
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Valide les données d'entrée pour traitement en lot asynchrone"""
-        if not isinstance(input_data, dict):
+        """Valide les données d'entrée pour traitement en lot asynchrone"""        if not isinstance(input_data, dict):
             return False
         
         files = input_data.get('files', [])
@@ -156,8 +145,7 @@ class AsyncBatchProcessor(AsyncBaseProcessor):
                 processor_type in self.processors)
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Lance un traitement en lot asynchrone"""
-        job_id = f"async_batch_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        """Lance un traitement en lot asynchrone"""        job_id = f"async_batch_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         files = input_data.get('files', [])
         processor_type = input_data.get('processor_type')
         
@@ -204,8 +192,7 @@ class AsyncBatchProcessor(AsyncBaseProcessor):
         }
 
 class MetadataProcessor(BaseProcessor):
-    """Processeur spécialisé pour extraction et normalisation de métadonnées"""
-    
+    """Processeur spécialisé pour extraction et normalisation de métadonnées"""    
     def __init__(self):
         super().__init__()
         self.extractors = {
@@ -216,8 +203,7 @@ class MetadataProcessor(BaseProcessor):
         }
     
     def validate_input(self, input_data: Any) -> bool:
-        """Valide les données d'entrée pour extraction de métadonnées"""
-        if not isinstance(input_data, dict):
+        """Valide les données d'entrée pour extraction de métadonnées"""        if not isinstance(input_data, dict):
             return False
         
         file_path = input_data.get('file_path')
@@ -227,8 +213,7 @@ class MetadataProcessor(BaseProcessor):
                 content_type in self.extractors)
     
     def process(self, input_data: Any) -> Dict[str, Any]:
-        """Extrait et normalise les métadonnées"""
-        file_path = input_data.get('file_path')
+        """Extrait et normalise les métadonnées"""        file_path = input_data.get('file_path')
         content_type = input_data.get('content_type')
         
         extractor = self.extractors[content_type]
@@ -246,8 +231,7 @@ class MetadataProcessor(BaseProcessor):
         }
     
     def _extract_audio_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extrait métadonnées audio"""
-        return {
+        """Extrait métadonnées audio"""        return {
             "duration": 240.5,
             "sample_rate": 44100,
             "channels": 2,
@@ -261,8 +245,7 @@ class MetadataProcessor(BaseProcessor):
         }
     
     def _extract_video_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extrait métadonnées vidéo"""
-        return {
+        """Extrait métadonnées vidéo"""        return {
             "duration": 300.0,
             "resolution": [1920, 1080],
             "fps": 30,
@@ -273,8 +256,7 @@ class MetadataProcessor(BaseProcessor):
         }
     
     def _extract_image_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extrait métadonnées image"""
-        return {
+        """Extrait métadonnées image"""        return {
             "resolution": [1920, 1080],
             "color_space": "RGB",
             "compression": "JPEG",
@@ -285,8 +267,7 @@ class MetadataProcessor(BaseProcessor):
         }
     
     def _extract_document_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extrait métadonnées document"""
-        return {
+        """Extrait métadonnées document"""        return {
             "word_count": 1500,
             "page_count": 5,
             "language": "en",
@@ -297,8 +278,7 @@ class MetadataProcessor(BaseProcessor):
         }
     
     def _normalize_metadata(self, raw_metadata: Dict[str, Any], content_type: str) -> Dict[str, Any]:
-        """Normalise les métadonnées selon le type de contenu"""
-        normalized = {
+        """Normalise les métadonnées selon le type de contenu"""        normalized = {
             "content_type": content_type,
             "file_size": raw_metadata.get("file_size", 0),
             "creation_date": raw_metadata.get("creation_date"),
@@ -329,8 +309,7 @@ class MetadataProcessor(BaseProcessor):
         return normalized
     
     def _calculate_resolution_score(self, resolution: List[int]) -> float:
-        """Calcule un score de qualité basé sur la résolution"""
-        if len(resolution) < 2:
+        """Calcule un score de qualité basé sur la résolution"""        if len(resolution) < 2:
             return 0.0
         
         pixels = resolution[0] * resolution[1]

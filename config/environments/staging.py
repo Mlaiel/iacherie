@@ -1,5 +1,4 @@
-"""
-🔧 Staging Environment Configuration - IA-Influencer-Agent
+"""🔧 Staging Environment Configuration - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps + Backend Senior + ML Engineer + DBA + Security
@@ -14,9 +13,7 @@ Contact: mlaiel@live.de
 
 Configuration environnement staging pour tests pré-production.
 ==================================================================
-"""
-
-import os
+"""import os
 from typing import Dict, Any, List, Optional
 from .base import (
     BaseEnvironmentConfigManager, 
@@ -32,11 +29,9 @@ from .base import (
 
 
 class StagingConfigManager(BaseEnvironmentConfigManager):
-    """
-    Configuration manager pour l'environnement de staging.
+    """    Configuration manager pour l'environnement de staging.
     Réplication de production avec données de test sécurisées.
-    """
-    
+    """    
     def __init__(self):
         super().__init__(
             environment=EnvironmentType.STAGING,
@@ -50,8 +45,7 @@ class StagingConfigManager(BaseEnvironmentConfigManager):
         )
         
     def _get_staging_cors_origins(self) -> List[str]:
-        """Définit les origins CORS autorisées en staging"""
-        origins_env = os.getenv("STAGING_CORS_ORIGINS", "")
+        """Définit les origins CORS autorisées en staging"""        origins_env = os.getenv("STAGING_CORS_ORIGINS", "")
         if origins_env:
             return [origin.strip() for origin in origins_env.split(",")]
         return [
@@ -62,8 +56,7 @@ class StagingConfigManager(BaseEnvironmentConfigManager):
         ]
         
     def _get_staging_allowed_hosts(self) -> List[str]:
-        """Définit les hosts autorisés en staging"""
-        hosts_env = os.getenv("STAGING_ALLOWED_HOSTS", "")
+        """Définit les hosts autorisés en staging"""        hosts_env = os.getenv("STAGING_ALLOWED_HOSTS", "")
         if hosts_env:
             return [host.strip() for host in hosts_env.split(",")]
         return [
@@ -74,8 +67,7 @@ class StagingConfigManager(BaseEnvironmentConfigManager):
         ]
         
     def load_environment_specific_config(self) -> None:
-        """Charge la configuration spécifique au staging"""
-        
+        """Charge la configuration spécifique au staging"""        
         # Configuration Base de Données Staging
         self.database_config = DatabaseConfig(
             host=os.getenv("STAGING_DB_HOST"),
@@ -152,8 +144,7 @@ class StagingConfigManager(BaseEnvironmentConfigManager):
         )
         
     def validate_configuration(self) -> bool:
-        """Valide la configuration staging"""
-        try:
+        """Valide la configuration staging"""        try:
             # Vérifications importantes pour staging
             assert self.database_config is not None, "Configuration base de données requise"
             assert self.redis_config is not None, "Configuration Redis requise"
@@ -188,8 +179,7 @@ class StagingConfigManager(BaseEnvironmentConfigManager):
             return False
             
     def get_staging_features(self) -> Dict[str, Any]:
-        """Retourne les fonctionnalités spécifiques au staging"""
-        return {
+        """Retourne les fonctionnalités spécifiques au staging"""        return {
             "hot_reload": False,
             "debug_mode": False,
             "detailed_logging": True,  # Plus verbeux pour debug
@@ -209,8 +199,7 @@ class StagingConfigManager(BaseEnvironmentConfigManager):
         }
         
     def get_testing_settings(self) -> Dict[str, Any]:
-        """Paramètres spécifiques aux tests en staging"""
-        return {
+        """Paramètres spécifiques aux tests en staging"""        return {
             "load_testing_enabled": True,
             "integration_tests_enabled": True,
             "api_testing_enabled": True,
@@ -222,8 +211,7 @@ class StagingConfigManager(BaseEnvironmentConfigManager):
         }
         
     def get_staging_urls(self) -> Dict[str, str]:
-        """URLs utiles pour staging"""
-        return {
+        """URLs utiles pour staging"""        return {
             "api_docs": f"https://staging-api.ia-influencer.com/docs",
             "redoc": f"https://staging-api.ia-influencer.com/redoc",
             "admin_panel": f"https://staging-api.ia-influencer.com/admin",
@@ -233,8 +221,7 @@ class StagingConfigManager(BaseEnvironmentConfigManager):
         }
         
     def get_data_management_settings(self) -> Dict[str, Any]:
-        """Paramètres de gestion des données staging"""
-        return {
+        """Paramètres de gestion des données staging"""        return {
             "data_anonymization": True,
             "synthetic_data_generation": True,
             "data_masking": True,
@@ -245,8 +232,7 @@ class StagingConfigManager(BaseEnvironmentConfigManager):
         }
         
     def create_staging_directories(self) -> None:
-        """Crée les répertoires nécessaires au staging"""
-        import os
+        """Crée les répertoires nécessaires au staging"""        import os
         from pathlib import Path
         
         directories = [
@@ -264,8 +250,7 @@ class StagingConfigManager(BaseEnvironmentConfigManager):
             Path(directory).mkdir(parents=True, exist_ok=True)
             
     def export_to_dict(self) -> Dict[str, Any]:
-        """Exporte la configuration staging complète"""
-        base_config = super().export_to_dict()
+        """Exporte la configuration staging complète"""        base_config = super().export_to_dict()
         base_config.update({
             "staging_features": self.get_staging_features(),
             "testing_settings": self.get_testing_settings(),
@@ -278,8 +263,7 @@ class StagingConfigManager(BaseEnvironmentConfigManager):
 
 # Fonction utilitaire pour configuration staging
 def create_staging_config() -> StagingConfigManager:
-    """Crée et initialise la configuration staging"""
-    config = StagingConfigManager()
+    """Crée et initialise la configuration staging"""    config = StagingConfigManager()
     config.initialize_configuration()
     config.create_staging_directories()
     return config

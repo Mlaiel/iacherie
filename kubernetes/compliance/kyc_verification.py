@@ -1,12 +1,9 @@
-"""
-IA Influencer Agent - KYC Verification System
+"""IA Influencer Agent - KYC Verification System
 Know Your Customer verification and identity management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -31,16 +28,14 @@ logger = get_logger(__name__)
 
 
 class KYCLevel(str, Enum):
-    """KYC verification levels"""
-    BASIC = "basic"
+    """KYC verification levels"""    BASIC = "basic"
     ENHANCED = "enhanced"
     PREMIUM = "premium"
     INSTITUTIONAL = "institutional"
 
 
 class VerificationStatus(str, Enum):
-    """Verification status states"""
-    PENDING = "pending"
+    """Verification status states"""    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     APPROVED = "approved"
     REJECTED = "rejected"
@@ -50,8 +45,7 @@ class VerificationStatus(str, Enum):
 
 
 class DocumentType(str, Enum):
-    """Identity document types"""
-    PASSPORT = "passport"
+    """Identity document types"""    PASSPORT = "passport"
     NATIONAL_ID = "national_id"
     DRIVERS_LICENSE = "drivers_license"
     RESIDENCE_PERMIT = "residence_permit"
@@ -62,8 +56,7 @@ class DocumentType(str, Enum):
 
 
 class RiskLevel(str, Enum):
-    """Risk assessment levels"""
-    LOW = "low"
+    """Risk assessment levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -71,8 +64,7 @@ class RiskLevel(str, Enum):
 
 @dataclass
 class IdentityVerificationResult:
-    """Identity verification analysis result"""
-    document_type: DocumentType
+    """Identity verification analysis result"""    document_type: DocumentType
     authenticity_score: float
     ocr_confidence: float
     face_match_score: Optional[float]
@@ -85,8 +77,7 @@ class IdentityVerificationResult:
 
 @dataclass
 class ComplianceRequirement:
-    """KYC compliance requirement definition"""
-    requirement_id: str
+    """KYC compliance requirement definition"""    requirement_id: str
     name: str
     description: str
     required_documents: List[DocumentType]
@@ -98,8 +89,7 @@ class ComplianceRequirement:
 
 
 class KYCVerificationSystem:
-    """Enterprise KYC verification and compliance system"""
-    
+    """Enterprise KYC verification and compliance system"""    
     def __init__(self):
         self.logger = logger
         self.audit_logger = AuditLogger()
@@ -136,8 +126,7 @@ class KYCVerificationSystem:
         jurisdiction: str = "EU",
         business_purpose: str = "platform_access"
     ) -> Dict[str, Any]:
-        """Initiate KYC verification process for user"""
-        try:
+        """Initiate KYC verification process for user"""        try:
             # Check existing verification
             existing_verification = await self._get_existing_verification(user_id)
             if existing_verification and existing_verification.status == VerificationStatus.APPROVED:
@@ -216,8 +205,7 @@ class KYCVerificationSystem:
         selfie_file: Optional[UploadFile] = None,
         additional_data: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Submit identity document for verification"""
-        try:
+        """Submit identity document for verification"""        try:
             # Get verification record
             async with get_db_session() as session:
                 verification_result = await session.execute(
@@ -328,8 +316,7 @@ class KYCVerificationSystem:
         decision: VerificationStatus,
         review_notes: str = None
     ) -> Dict[str, Any]:
-        """Complete manual review of KYC verification"""
-        try:
+        """Complete manual review of KYC verification"""        try:
             if decision not in [VerificationStatus.APPROVED, VerificationStatus.REJECTED]:
                 raise ValueError("Decision must be APPROVED or REJECTED")
             
@@ -428,8 +415,7 @@ class KYCVerificationSystem:
         user_id: int,
         verification_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Check current KYC verification status for user"""
-        try:
+        """Check current KYC verification status for user"""        try:
             async with get_db_session() as session:
                 query = select(KYCVerification).where(KYCVerification.user_id == user_id)
                 
@@ -490,8 +476,7 @@ class KYCVerificationSystem:
         document_type: DocumentType,
         selfie_path: Optional[str] = None
     ) -> IdentityVerificationResult:
-        """Verify document authenticity using AI"""
-        try:
+        """Verify document authenticity using AI"""        try:
             # Perform document verification
             document_analysis = await analyze_document_authenticity(document_path, document_type.value)
             
@@ -550,8 +535,7 @@ class KYCVerificationSystem:
             raise
     
     def _load_compliance_requirements(self) -> Dict[str, ComplianceRequirement]:
-        """Load KYC compliance requirements by jurisdiction"""
-        return {
+        """Load KYC compliance requirements by jurisdiction"""        return {
             "EU_BASIC": ComplianceRequirement(
                 requirement_id="EU_BASIC",
                 name="EU Basic KYC",

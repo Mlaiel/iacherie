@@ -1,5 +1,4 @@
-"""
-🔄 Content Format Converter - IA Influencer Agent Platform Enterprise
+"""🔄 Content Format Converter - IA Influencer Agent Platform Enterprise
 ===================================================================
 Module: backend/data_management/transformers/format_converter.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -21,9 +20,7 @@ poursuivie selon les lois allemandes et internationales.
 - DevOps Engineer: Fahed Mlaiel (mlaiel@live.de)
 - DBA: Fahed Mlaiel (mlaiel@live.de)
 - Sécurité Expert: Fahed Mlaiel (mlaiel@live.de)
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import tempfile
@@ -63,8 +60,7 @@ settings = get_settings()
 logger = logging.getLogger(__name__)
 
 class SupportedFormat(Enum):
-    """Formats supportés pour conversion"""
-    # Image formats
+    """Formats supportés pour conversion"""    # Image formats
     JPEG = "jpg"
     PNG = "png"
     GIF = "gif"
@@ -111,8 +107,7 @@ class SupportedFormat(Enum):
     XLS = "xls"
 
 class ConversionType(Enum):
-    """Types de conversion"""
-    FORMAT_CHANGE = "format_change"        # Changement de format uniquement
+    """Types de conversion"""    FORMAT_CHANGE = "format_change"        # Changement de format uniquement
     QUALITY_OPTIMIZATION = "quality_opt"   # Optimisation qualité
     SIZE_OPTIMIZATION = "size_opt"         # Optimisation taille
     PLATFORM_OPTIMIZATION = "platform_opt" # Optimisation plateforme
@@ -121,8 +116,7 @@ class ConversionType(Enum):
 
 @dataclass
 class ConversionConfig:
-    """Configuration de conversion"""
-    source_format: SupportedFormat
+    """Configuration de conversion"""    source_format: SupportedFormat
     target_format: SupportedFormat
     conversion_type: ConversionType
     quality_level: str = "standard"  # low, standard, high, ultra
@@ -133,8 +127,7 @@ class ConversionConfig:
 
 @dataclass
 class FormatConversionResult:
-    """Résultat de conversion de format"""
-    success: bool
+    """Résultat de conversion de format"""    success: bool
     source_file: str
     target_file: Optional[str]
     source_format: SupportedFormat
@@ -148,8 +141,7 @@ class FormatConversionResult:
     errors: List[str]
 
 class ImageFormatConverter:
-    """Convertisseur spécialisé pour images"""
-    
+    """Convertisseur spécialisé pour images"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -186,8 +178,7 @@ class ImageFormatConverter:
         target_path: str,
         config: ConversionConfig
     ) -> FormatConversionResult:
-        """Convertit une image vers le format cible"""
-        
+        """Convertit une image vers le format cible"""        
         start_time = time.time()
         warnings = []
         errors = []
@@ -275,8 +266,7 @@ class ImageFormatConverter:
             )
     
     def _prepare_image(self, img: Image.Image, config: ConversionConfig, warnings: List[str]) -> Image.Image:
-        """Prépare l'image selon la configuration"""
-        
+        """Prépare l'image selon la configuration"""        
         processed = img.copy()
         
         # Optimisation selon la plateforme
@@ -325,8 +315,7 @@ class ImageFormatConverter:
         return processed
     
     def _get_save_parameters(self, config: ConversionConfig) -> Dict[str, Any]:
-        """Récupère les paramètres de sauvegarde selon la configuration"""
-        
+        """Récupère les paramètres de sauvegarde selon la configuration"""        
         params = {}
         
         # Qualité selon le niveau configuré
@@ -360,8 +349,7 @@ class ImageFormatConverter:
         return params
     
     def _estimate_quality(self, config: ConversionConfig) -> float:
-        """Estime la qualité de la conversion"""
-        
+        """Estime la qualité de la conversion"""        
         quality_scores = {
             'low': 0.6,
             'standard': 0.8,
@@ -380,8 +368,7 @@ class ImageFormatConverter:
         return min(1.0, max(0.0, base_score))
     
     def _detect_format(self, file_path: str) -> SupportedFormat:
-        """Détecte le format d'un fichier"""
-        
+        """Détecte le format d'un fichier"""        
         ext = Path(file_path).suffix.lower().lstrip('.')
         
         try:
@@ -396,8 +383,7 @@ class ImageFormatConverter:
         processed_img: Image.Image,
         config: ConversionConfig
     ) -> ConversionMetadata:
-        """Crée les métadonnées de conversion"""
-        
+        """Crée les métadonnées de conversion"""        
         return ConversionMetadata(
             source_format=self._detect_format(original_img.filename or ""),
             target_format=config.target_format,
@@ -411,8 +397,7 @@ class ImageFormatConverter:
         )
 
 class AudioFormatConverter:
-    """Convertisseur spécialisé pour audio"""
-    
+    """Convertisseur spécialisé pour audio"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -447,8 +432,7 @@ class AudioFormatConverter:
         target_path: str,
         config: ConversionConfig
     ) -> FormatConversionResult:
-        """Convertit un fichier audio"""
-        
+        """Convertit un fichier audio"""        
         start_time = time.time()
         warnings = []
         errors = []
@@ -526,8 +510,7 @@ class AudioFormatConverter:
         config: ConversionConfig,
         warnings: List[str]
     ) -> Tuple[np.ndarray, int]:
-        """Traite l'audio selon la configuration"""
-        
+        """Traite l'audio selon la configuration"""        
         processed = audio.copy()
         target_sr = sample_rate
         
@@ -569,8 +552,7 @@ class AudioFormatConverter:
         target_path: str,
         config: ConversionConfig
     ) -> None:
-        """Sauvegarde audio compressé via pydub"""
-        
+        """Sauvegarde audio compressé via pydub"""        
         # Conversion en format pydub
         audio_int = (audio * 32767).astype(np.int16)
         
@@ -605,8 +587,7 @@ class AudioFormatConverter:
         audio_segment.export(target_path, **export_params)
     
     def _get_target_bitrate(self, config: ConversionConfig) -> int:
-        """Détermine le bitrate cible"""
-        
+        """Détermine le bitrate cible"""        
         # Bitrate selon la qualité
         bitrate_mapping = {
             'low': 96,
@@ -626,8 +607,7 @@ class AudioFormatConverter:
         return base_bitrate
     
     def _detect_audio_format(self, file_path: str) -> SupportedFormat:
-        """Détecte le format audio"""
-        
+        """Détecte le format audio"""        
         ext = Path(file_path).suffix.lower().lstrip('.')
         
         try:
@@ -643,8 +623,7 @@ class AudioFormatConverter:
         target_sr: int,
         config: ConversionConfig
     ) -> ConversionMetadata:
-        """Crée les métadonnées de conversion audio"""
-        
+        """Crée les métadonnées de conversion audio"""        
         return ConversionMetadata(
             source_format=SupportedFormat.WAV,  # Format intermédiaire
             target_format=config.target_format,
@@ -658,8 +637,7 @@ class AudioFormatConverter:
         )
 
 class DocumentFormatConverter:
-    """Convertisseur spécialisé pour documents"""
-    
+    """Convertisseur spécialisé pour documents"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
     
@@ -669,8 +647,7 @@ class DocumentFormatConverter:
         target_path: str,
         config: ConversionConfig
     ) -> FormatConversionResult:
-        """Convertit un document"""
-        
+        """Convertit un document"""        
         start_time = time.time()
         warnings = []
         errors = []
@@ -734,8 +711,7 @@ class DocumentFormatConverter:
             )
     
     def _read_document(self, file_path: str, format_type: SupportedFormat) -> str:
-        """Lit le contenu d'un document"""
-        
+        """Lit le contenu d'un document"""        
         if format_type == SupportedFormat.PDF:
             return self._read_pdf(file_path)
         elif format_type == SupportedFormat.DOCX:
@@ -751,8 +727,7 @@ class DocumentFormatConverter:
             raise ConversionError(f"Format de lecture non supporté: {format_type}")
     
     def _read_pdf(self, file_path: str) -> str:
-        """Lit un PDF"""
-        doc = pymupdf.open(file_path)
+        """Lit un PDF"""        doc = pymupdf.open(file_path)
         text_content = ""
         
         for page in doc:
@@ -762,8 +737,7 @@ class DocumentFormatConverter:
         return text_content
     
     def _read_docx(self, file_path: str) -> str:
-        """Lit un document DOCX"""
-        doc = Document(file_path)
+        """Lit un document DOCX"""        doc = Document(file_path)
         content = []
         
         for paragraph in doc.paragraphs:
@@ -772,16 +746,14 @@ class DocumentFormatConverter:
         return '\n'.join(content)
     
     def _read_html(self, file_path: str) -> str:
-        """Lit un fichier HTML"""
-        with open(file_path, 'r', encoding='utf-8') as f:
+        """Lit un fichier HTML"""        with open(file_path, 'r', encoding='utf-8') as f:
             html_content = f.read()
         
         soup = BeautifulSoup(html_content, 'html.parser')
         return soup.get_text()
     
     def _read_markdown(self, file_path: str) -> str:
-        """Lit un fichier Markdown"""
-        with open(file_path, 'r', encoding='utf-8') as f:
+        """Lit un fichier Markdown"""        with open(file_path, 'r', encoding='utf-8') as f:
             return f.read()
     
     def _write_document(
@@ -791,8 +763,7 @@ class DocumentFormatConverter:
         format_type: SupportedFormat,
         config: ConversionConfig
     ) -> None:
-        """Écrit le contenu dans le format cible"""
-        
+        """Écrit le contenu dans le format cible"""        
         if format_type == SupportedFormat.PDF:
             self._write_pdf(content, file_path)
         elif format_type == SupportedFormat.DOCX:
@@ -808,8 +779,7 @@ class DocumentFormatConverter:
             raise ConversionError(f"Format d'écriture non supporté: {format_type}")
     
     def _write_pdf(self, content: str, file_path: str) -> None:
-        """Écrit en PDF (méthode simplifiée)"""
-        # Utilisation d'une librairie de génération PDF
+        """Écrit en PDF (méthode simplifiée)"""        # Utilisation d'une librairie de génération PDF
         doc = pymupdf.open()  # Document vide
         page = doc.new_page()
         
@@ -821,8 +791,7 @@ class DocumentFormatConverter:
         doc.close()
     
     def _write_docx(self, content: str, file_path: str) -> None:
-        """Écrit en DOCX"""
-        doc = Document()
+        """Écrit en DOCX"""        doc = Document()
         
         # Division du contenu en paragraphes
         paragraphs = content.split('\n\n')
@@ -833,8 +802,7 @@ class DocumentFormatConverter:
         doc.save(file_path)
     
     def _write_html(self, content: str, file_path: str) -> None:
-        """Écrit en HTML"""
-        # Conversion du texte en HTML simple
+        """Écrit en HTML"""        # Conversion du texte en HTML simple
         html_content = f"""<!DOCTYPE html>
 <html>
 <head>
@@ -844,14 +812,12 @@ class DocumentFormatConverter:
 <body>
 {''.join(f'<p>{para}</p>' for para in content.split('\n\n') if para.strip())}
 </body>
-</html>"""
-        
+</html>"""        
         with open(file_path, 'w', encoding='utf-8') as f:
             f.write(html_content)
     
     def _write_markdown(self, content: str, file_path: str) -> None:
-        """Écrit en Markdown"""
-        with open(file_path, 'w', encoding='utf-8') as f:
+        """Écrit en Markdown"""        with open(file_path, 'w', encoding='utf-8') as f:
             f.write(content)
     
     def _process_document_content(
@@ -860,8 +826,7 @@ class DocumentFormatConverter:
         config: ConversionConfig,
         warnings: List[str]
     ) -> str:
-        """Traite le contenu du document"""
-        
+        """Traite le contenu du document"""        
         processed = content
         
         # Nettoyage si conversion vers format simple
@@ -878,20 +843,17 @@ class DocumentFormatConverter:
         return processed
     
     def _clean_text_formatting(self, text: str) -> str:
-        """Nettoie le formatage du texte"""
-        # Suppression des caractères de formatage courants
+        """Nettoie le formatage du texte"""        # Suppression des caractères de formatage courants
         cleaned = re.sub(r'\s+', ' ', text)  # Espaces multiples
         cleaned = re.sub(r'\n{3,}', '\n\n', cleaned)  # Lignes vides multiples
         return cleaned.strip()
     
     def _optimize_for_web(self, text: str) -> str:
-        """Optimise le texte pour le web"""
-        # Ajout de balises HTML basiques si nécessaire
+        """Optimise le texte pour le web"""        # Ajout de balises HTML basiques si nécessaire
         return text
     
     def _create_document_metadata(self, config: ConversionConfig) -> ConversionMetadata:
-        """Crée les métadonnées de conversion document"""
-        
+        """Crée les métadonnées de conversion document"""        
         return ConversionMetadata(
             source_format=config.source_format,
             target_format=config.target_format,
@@ -905,8 +867,7 @@ class DocumentFormatConverter:
         )
 
 class FormatConverter:
-    """Convertisseur de format principal"""
-    
+    """Convertisseur de format principal"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.file_manager = FileManager()
@@ -951,8 +912,7 @@ class FormatConverter:
         conversion_type: ConversionType = ConversionType.FORMAT_CHANGE,
         **kwargs
     ) -> FormatConversionResult:
-        """Convertit un fichier vers le format cible"""
-        
+        """Convertit un fichier vers le format cible"""        
         try:
             # Validation des formats
             if source_format not in self.format_converters:
@@ -1002,8 +962,7 @@ class FormatConverter:
             )
     
     def detect_format(self, file_path: str) -> Optional[SupportedFormat]:
-        """Détecte automatiquement le format d'un fichier"""
-        
+        """Détecte automatiquement le format d'un fichier"""        
         try:
             # Détection par extension
             ext = Path(file_path).suffix.lower().lstrip('.')
@@ -1045,8 +1004,7 @@ class FormatConverter:
         conversion_type: ConversionType = ConversionType.BATCH_CONVERSION,
         **kwargs
     ) -> List[FormatConversionResult]:
-        """Conversion en lot"""
-        
+        """Conversion en lot"""        
         results = []
         
         for source_path, target_path, source_format, target_format in file_list:
@@ -1079,8 +1037,7 @@ class FormatConverter:
         return results
 
 class AsyncFormatConverter:
-    """Version asynchrone du convertisseur de format"""
-    
+    """Version asynchrone du convertisseur de format"""    
     def __init__(self):
         self.sync_converter = FormatConverter()
         self.logger = logging.getLogger(__name__)
@@ -1093,8 +1050,7 @@ class AsyncFormatConverter:
         target_format: SupportedFormat,
         **kwargs
     ) -> FormatConversionResult:
-        """Conversion asynchrone"""
-        
+        """Conversion asynchrone"""        
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             None,
@@ -1112,8 +1068,7 @@ class AsyncFormatConverter:
         max_concurrent: int = 4,
         **kwargs
     ) -> List[FormatConversionResult]:
-        """Conversion en lot asynchrone"""
-        
+        """Conversion en lot asynchrone"""        
         semaphore = asyncio.Semaphore(max_concurrent)
         
         async def convert_single(file_tuple):

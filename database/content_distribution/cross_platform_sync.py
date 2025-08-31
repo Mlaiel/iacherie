@@ -1,5 +1,4 @@
-"""
-Cross-Platform Synchronization Database Module - Enterprise Multi-Platform Content Sync
+"""Cross-Platform Synchronization Database Module - Enterprise Multi-Platform Content Sync
 
 Advanced database architecture for intelligent cross-platform content synchronization,
 state management, and coordinated distribution within the IA Influencer Agent ecosystem.
@@ -15,9 +14,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Team Specialties: Lead AI Developer + Senior Backend Engineer + Database Administrator + 
 Distributed Systems Engineer + Synchronization Expert + State Management Specialist
-"""
-
-import asyncio
+"""import asyncio
 import json
 import uuid
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -43,8 +40,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class SyncStrategy(str, Enum):
-    """Cross-platform synchronization strategies"""
-    IMMEDIATE = "immediate"
+    """Cross-platform synchronization strategies"""    IMMEDIATE = "immediate"
     BATCH = "batch"
     SCHEDULED = "scheduled"
     EVENT_DRIVEN = "event_driven"
@@ -53,15 +49,13 @@ class SyncStrategy(str, Enum):
     ADAPTIVE = "adaptive"
 
 class SyncDirection(str, Enum):
-    """Synchronization direction"""
-    UNIDIRECTIONAL = "unidirectional"
+    """Synchronization direction"""    UNIDIRECTIONAL = "unidirectional"
     BIDIRECTIONAL = "bidirectional"
     MASTER_SLAVE = "master_slave"
     PEER_TO_PEER = "peer_to_peer"
 
 class SyncStatus(str, Enum):
-    """Synchronization status"""
-    PENDING = "pending"
+    """Synchronization status"""    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -70,8 +64,7 @@ class SyncStatus(str, Enum):
     RETRYING = "retrying"
 
 class ConflictResolution(str, Enum):
-    """Conflict resolution strategies"""
-    LATEST_WINS = "latest_wins"
+    """Conflict resolution strategies"""    LATEST_WINS = "latest_wins"
     MANUAL_REVIEW = "manual_review"
     PLATFORM_PRIORITY = "platform_priority"
     MERGE = "merge"
@@ -79,8 +72,7 @@ class ConflictResolution(str, Enum):
     CUSTOM_RULE = "custom_rule"
 
 class SyncTrigger(str, Enum):
-    """Synchronization triggers"""
-    CONTENT_UPLOAD = "content_upload"
+    """Synchronization triggers"""    CONTENT_UPLOAD = "content_upload"
     METADATA_UPDATE = "metadata_update"
     ENGAGEMENT_CHANGE = "engagement_change"
     SCHEDULE_TRIGGER = "schedule_trigger"
@@ -90,8 +82,7 @@ class SyncTrigger(str, Enum):
 
 @dataclass
 class SyncConfiguration:
-    """Synchronization configuration parameters"""
-    sync_frequency_minutes: int = 60
+    """Synchronization configuration parameters"""    sync_frequency_minutes: int = 60
     batch_size: int = 100
     max_retry_attempts: int = 3
     retry_delay_seconds: int = 60
@@ -105,8 +96,7 @@ class SyncConfiguration:
 
 @dataclass
 class PlatformState:
-    """Platform-specific state information"""
-    platform_id: str
+    """Platform-specific state information"""    platform_id: str
     content_id: str
     last_modified: datetime
     content_hash: str
@@ -116,8 +106,7 @@ class PlatformState:
     custom_properties: Dict[str, Any] = field(default_factory=dict)
 
 class CrossPlatformSync(Base):
-    """Cross-platform synchronization database model"""
-    __tablename__ = "cross_platform_syncs"
+    """Cross-platform synchronization database model"""    __tablename__ = "cross_platform_syncs"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -166,8 +155,7 @@ class CrossPlatformSync(Base):
     created_by = Column(String(100), nullable=True)
 
 class SyncOperation(Base):
-    """Individual synchronization operation database model"""
-    __tablename__ = "sync_operations"
+    """Individual synchronization operation database model"""    __tablename__ = "sync_operations"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     sync_id = Column(UUID(as_uuid=True), ForeignKey('cross_platform_syncs.id'), nullable=False)
@@ -214,8 +202,7 @@ class SyncOperation(Base):
     created_by_trigger = Column(String(50), nullable=True)
 
 class SyncConflict(Base):
-    """Synchronization conflicts database model"""
-    __tablename__ = "sync_conflicts"
+    """Synchronization conflicts database model"""    __tablename__ = "sync_conflicts"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     sync_operation_id = Column(UUID(as_uuid=True), ForeignKey('sync_operations.id'), nullable=False)
@@ -255,8 +242,7 @@ class SyncConflict(Base):
     updated_at = Column(DateTime(timezone=True), nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class SyncSchedule(Base):
-    """Synchronization scheduling database model"""
-    __tablename__ = "sync_schedules"
+    """Synchronization scheduling database model"""    __tablename__ = "sync_schedules"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     sync_id = Column(UUID(as_uuid=True), ForeignKey('cross_platform_syncs.id'), nullable=False)
@@ -296,8 +282,7 @@ class SyncSchedule(Base):
     created_by = Column(String(100), nullable=True)
 
 class StateSnapshot(Base):
-    """Platform state snapshots database model"""
-    __tablename__ = "state_snapshots"
+    """Platform state snapshots database model"""    __tablename__ = "state_snapshots"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     content_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -332,8 +317,7 @@ class StateSnapshot(Base):
 
 # Pydantic Models for API
 class SyncConfigurationRequest(BaseModel):
-    """Request model for sync configuration"""
-    content_id: str
+    """Request model for sync configuration"""    content_id: str
     campaign_id: Optional[str] = None
     sync_strategy: SyncStrategy = SyncStrategy.EVENT_DRIVEN
     sync_direction: SyncDirection = SyncDirection.UNIDIRECTIONAL
@@ -345,8 +329,7 @@ class SyncConfigurationRequest(BaseModel):
     custom_rules: Optional[Dict[str, Any]] = None
 
 class SyncOperationRequest(BaseModel):
-    """Request model for sync operations"""
-    sync_id: str
+    """Request model for sync operations"""    sync_id: str
     source_platform: str
     target_platform: str
     operation_type: str
@@ -355,15 +338,13 @@ class SyncOperationRequest(BaseModel):
     force_sync: bool = False
 
 class ConflictResolutionRequest(BaseModel):
-    """Request model for conflict resolution"""
-    conflict_id: str
+    """Request model for conflict resolution"""    conflict_id: str
     resolution_strategy: ConflictResolution
     resolved_value: Optional[Any] = None
     resolution_notes: Optional[str] = None
 
 class SyncResponse(BaseModel):
-    """Response model for sync operations"""
-    sync_id: str
+    """Response model for sync operations"""    sync_id: str
     operation_id: str
     status: str
     duration_ms: Optional[int]
@@ -374,8 +355,7 @@ class SyncResponse(BaseModel):
     next_scheduled_sync: Optional[datetime]
 
 class CrossPlatformSyncManager:
-    """Enterprise cross-platform synchronization management system"""
-    
+    """Enterprise cross-platform synchronization management system"""    
     def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -387,8 +367,7 @@ class CrossPlatformSyncManager:
         user_id: str,
         sync_request: SyncConfigurationRequest
     ) -> CrossPlatformSync:
-        """Create new cross-platform sync configuration"""
-        try:
+        """Create new cross-platform sync configuration"""        try:
             # Validate platforms and configuration
             await self._validate_sync_configuration(sync_request)
             
@@ -445,8 +424,7 @@ class CrossPlatformSyncManager:
         user_id: str,
         operation_request: SyncOperationRequest
     ) -> SyncOperation:
-        """Execute synchronization operation"""
-        try:
+        """Execute synchronization operation"""        try:
             # Get sync configuration
             sync_config = await self._get_sync_config_by_id(operation_request.sync_id)
             if not sync_config or str(sync_config.user_id) != user_id:
@@ -478,8 +456,7 @@ class CrossPlatformSyncManager:
         sync_config: CrossPlatformSync,
         operation_request: SyncOperationRequest
     ) -> SyncOperation:
-        """Internal sync operation execution"""
-        # Create operation record
+        """Internal sync operation execution"""        # Create operation record
         operation = SyncOperation(
             sync_id=sync_config.id,
             source_platform=operation_request.source_platform,
@@ -587,8 +564,7 @@ class CrossPlatformSyncManager:
         sync_id: str,
         auto_resolve: bool = True
     ) -> List[SyncConflict]:
-        """Detect and optionally resolve synchronization conflicts"""
-        try:
+        """Detect and optionally resolve synchronization conflicts"""        try:
             sync_config = await self._get_sync_config_by_id(sync_id)
             if not sync_config:
                 raise ValueError(f"Sync configuration {sync_id} not found")
@@ -651,8 +627,7 @@ class CrossPlatformSyncManager:
         sync_id: str,
         schedule_config: Dict[str, Any]
     ) -> SyncSchedule:
-        """Schedule recurring sync operations"""
-        try:
+        """Schedule recurring sync operations"""        try:
             sync_config = await self._get_sync_config_by_id(sync_id)
             if not sync_config:
                 raise ValueError(f"Sync configuration {sync_id} not found")
@@ -693,8 +668,7 @@ class CrossPlatformSyncManager:
         user_id: str,
         sync_id: str
     ) -> Dict[str, Any]:
-        """Get comprehensive sync status and analytics"""
-        try:
+        """Get comprehensive sync status and analytics"""        try:
             sync_config = await self._get_sync_config_by_id(sync_id)
             if not sync_config or str(sync_config.user_id) != user_id:
                 raise ValueError(f"Sync configuration {sync_id} not found")
@@ -749,8 +723,7 @@ class CrossPlatformSyncManager:
             return {'error': str(e)}
     
     async def _validate_sync_configuration(self, request: SyncConfigurationRequest):
-        """Validate sync configuration parameters"""
-        if len(request.target_platforms) < 2:
+        """Validate sync configuration parameters"""        if len(request.target_platforms) < 2:
             raise ValueError("At least 2 platforms required for synchronization")
         
         if request.sync_direction == SyncDirection.MASTER_SLAVE and not request.master_platform:
@@ -760,8 +733,7 @@ class CrossPlatformSyncManager:
             raise ValueError("Master platform must be in target platforms list")
     
     async def _cache_sync_config(self, sync_config: CrossPlatformSync):
-        """Cache sync configuration in Redis"""
-        try:
+        """Cache sync configuration in Redis"""        try:
             cache_key = f"sync_config:{sync_config.id}"
             config_data = {
                 'id': str(sync_config.id),
@@ -783,8 +755,7 @@ class CrossPlatformSyncManager:
             logger.warning(f"Error caching sync config: {str(e)}")
     
     async def _get_sync_config_by_id(self, sync_id: str) -> Optional[CrossPlatformSync]:
-        """Get sync configuration by ID with caching"""
-        try:
+        """Get sync configuration by ID with caching"""        try:
             sync_uuid = uuid.UUID(sync_id)
             sync_config = await self.db_session.query(CrossPlatformSync).filter(
                 CrossPlatformSync.id == sync_uuid

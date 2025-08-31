@@ -19,8 +19,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 WILL FACE IMMEDIATE LEGAL ACTION under German and international intellectual property law.
 
 📧 Contact: mlaiel@live.de for licensing and usage permissions ONLY.
-"""
-from .docker_config import DockerConfig
+"""from .docker_config import DockerConfig
 from .kubernetes_config import KubernetesConfig
 from .aws_config import AWSConfig
 from .azure_config import AzureConfig

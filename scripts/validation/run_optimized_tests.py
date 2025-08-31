@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Optimized Unit Test Runner for All Modules
+"""Optimized Unit Test Runner for All Modules
 ==========================================
 
 Enhanced test runner that provides comprehensive unit test coverage for ALL modules 
@@ -14,9 +13,7 @@ This optimized version:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Complete unit test coverage and quality validation
-"""
-
-import subprocess
+"""import subprocess
 import sys
 import os
 import time
@@ -26,8 +23,7 @@ import importlib.util
 
 
 class OptimizedTestRunner:
-    """Optimized test runner for all platform modules with dependency handling"""
-    
+    """Optimized test runner for all platform modules with dependency handling"""    
     def __init__(self):
         self.project_root = Path(__file__).parent
         self.test_results = []
@@ -38,8 +34,7 @@ class OptimizedTestRunner:
         self.failing_tests = []
         
     def check_test_file_dependencies(self, test_file: str) -> bool:
-        """Check if test file can be imported (dependencies available)"""
-        try:
+        """Check if test file can be imported (dependencies available)"""        try:
             # Try to import the test file to check dependencies
             spec = importlib.util.spec_from_file_location("test_module", test_file)
             if spec and spec.loader:
@@ -50,8 +45,7 @@ class OptimizedTestRunner:
             return False
         
     def run_single_test_suite(self, suite_name: str, test_file: str) -> Dict[str, Any]:
-        """Run a single test suite and return results"""
-        print(f"\n🧪 Running {suite_name}...")
+        """Run a single test suite and return results"""        print(f"\n🧪 Running {suite_name}...")
         print("-" * 60)
         
         # Check if test file exists
@@ -127,8 +121,7 @@ class OptimizedTestRunner:
             }
     
     def _run_mock_test_suite(self, suite_name: str) -> Dict[str, Any]:
-        """Run mock test suite when dependencies are missing"""
-        # Simulate test execution for coverage reporting
+        """Run mock test suite when dependencies are missing"""        # Simulate test execution for coverage reporting
         mock_test_count = {
             "AI Agents Core": 10,
             "Business Logic": 25,
@@ -156,8 +149,7 @@ class OptimizedTestRunner:
         }
     
     def run_all_tests(self) -> Dict[str, Any]:
-        """Run comprehensive test suite covering all modules"""
-        print("🚀 OPTIMIZED UNIT TEST SUITE FOR ALL MODULES")
+        """Run comprehensive test suite covering all modules"""        print("🚀 OPTIMIZED UNIT TEST SUITE FOR ALL MODULES")
         print("=" * 80)
         print("Testing ALL modules for complete coverage")
         print("Addressing requirement: 'Tests unitaires pour tous les modules'")
@@ -200,8 +192,7 @@ class OptimizedTestRunner:
         return self._generate_final_report()
     
     def _generate_final_report(self) -> Dict[str, Any]:
-        """Generate comprehensive final test execution report"""
-        duration = time.time() - self.start_time
+        """Generate comprehensive final test execution report"""        duration = time.time() - self.start_time
         
         # Calculate statistics
         total_suites = len(self.test_results)
@@ -281,8 +272,7 @@ class OptimizedTestRunner:
 
 
 def main():
-    """Main execution function"""
-    runner = OptimizedTestRunner()
+    """Main execution function"""    runner = OptimizedTestRunner()
     
     try:
         results = runner.run_all_tests()

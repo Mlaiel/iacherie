@@ -2,8 +2,7 @@
 
 © 2025 Fahed Mlaiel - All Rights Reserved.
 This module provides advanced auto-scaling capabilities for the IA Influencer Agent platform.
-"""
-from .auto_scaling_manager import AutoScalingManager
+"""from .auto_scaling_manager import AutoScalingManager
 from .load_balancer import IntelligentLoadBalancer
 from .resource_monitor import ResourceMonitor
 from .scaling_engine import ScalingEngine

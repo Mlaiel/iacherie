@@ -1,5 +1,4 @@
-"""
-🎼 Container Orchestrator - IA-Influencer-Agent Infrastructure
+"""🎼 Container Orchestrator - IA-Influencer-Agent Infrastructure
 ============================================================
 Expert Team: DevOps Engineer + Cloud Architect + Microservices Specialist + SRE
 Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -18,9 +17,7 @@ Advanced container orchestration for IA-Influencer-Agent platform.
 Includes intelligent service mesh, predictive auto-scaling, advanced load balancing,
 traffic management, canary deployments, and complete container lifecycle management
 optimized for AI processing, content protection, and monetization workflows.
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple, Set, Callable
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Set, Callable
 import asyncio
 import logging
 import json
@@ -46,40 +43,35 @@ import base64
 logger = logging.getLogger(__name__)
 
 class OrchestrationStrategy(Enum):
-    """Advanced container orchestration strategies for IA-Influencer-Agent"""
-    DOCKER_SWARM = "docker_swarm"
+    """Advanced container orchestration strategies for IA-Influencer-Agent"""    DOCKER_SWARM = "docker_swarm"
     KUBERNETES = "kubernetes"
     NOMAD = "nomad"
     MESOS = "mesos"
     DOCKER_COMPOSE = "docker_compose"
 
 class ServiceMeshType(Enum):
-    """Service mesh implementations for microservices communication"""
-    ISTIO = "istio"
+    """Service mesh implementations for microservices communication"""    ISTIO = "istio"
     LINKERD = "linkerd"
     CONSUL_CONNECT = "consul_connect"
     ENVOY = "envoy"
     NGINX_MESH = "nginx_mesh"
 
 class ScalingStrategy(Enum):
-    """Container scaling strategies"""
-    HORIZONTAL = "horizontal"
+    """Container scaling strategies"""    HORIZONTAL = "horizontal"
     VERTICAL = "vertical"
     PREDICTIVE = "predictive"
     REACTIVE = "reactive"
     AI_DRIVEN = "ai_driven"
 
 class DeploymentStrategy(Enum):
-    """Deployment strategies for zero-downtime updates"""
-    ROLLING_UPDATE = "rolling_update"
+    """Deployment strategies for zero-downtime updates"""    ROLLING_UPDATE = "rolling_update"
     BLUE_GREEN = "blue_green"
     CANARY = "canary"
     A_B_TESTING = "a_b_testing"
     FEATURE_FLAGS = "feature_flags"
 
 class LoadBalancingAlgorithm(Enum):
-    """Load balancing algorithms"""
-    ROUND_ROBIN = "round_robin"
+    """Load balancing algorithms"""    ROUND_ROBIN = "round_robin"
     LEAST_CONNECTIONS = "least_connections"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
     IP_HASH = "ip_hash"
@@ -87,8 +79,7 @@ class LoadBalancingAlgorithm(Enum):
     AI_OPTIMIZED = "ai_optimized"
 
 class HealthCheckType(Enum):
-    """Health check types for services"""
-    HTTP = "http"
+    """Health check types for services"""    HTTP = "http"
     TCP = "tcp"
     EXEC = "exec"
     GRPC = "grpc"
@@ -96,8 +87,7 @@ class HealthCheckType(Enum):
 
 @dataclass
 class ServiceDefinition:
-    """Advanced service definition for IA-Influencer-Agent orchestration"""
-    name: str
+    """Advanced service definition for IA-Influencer-Agent orchestration"""    name: str
     image: str
     version: str
     replicas: int
@@ -123,8 +113,7 @@ class ServiceDefinition:
 
 @dataclass
 class ScalingRule:
-    """Advanced auto-scaling rule configuration"""
-    service_name: str
+    """Advanced auto-scaling rule configuration"""    service_name: str
     metric_type: str  # cpu, memory, requests_per_second, custom, ai_queue_length
     threshold: float
     min_replicas: int
@@ -141,8 +130,7 @@ class ScalingRule:
 
 @dataclass
 class DeploymentConfig:
-    """Deployment configuration for services"""
-    strategy: DeploymentStrategy
+    """Deployment configuration for services"""    strategy: DeploymentStrategy
     max_unavailable: Union[int, str] = "25%"
     max_surge: Union[int, str] = "25%"
     canary_percentage: float = 10.0
@@ -155,8 +143,7 @@ class DeploymentConfig:
 
 @dataclass
 class ServiceMeshConfig:
-    """Service mesh configuration"""
-    mesh_type: ServiceMeshType
+    """Service mesh configuration"""    mesh_type: ServiceMeshType
     enabled: bool = True
     tls_enabled: bool = True
     mtls_enabled: bool = True
@@ -168,8 +155,7 @@ class ServiceMeshConfig:
 
 @dataclass
 class LoadBalancerConfig:
-    """Load balancer configuration"""
-    algorithm: LoadBalancingAlgorithm
+    """Load balancer configuration"""    algorithm: LoadBalancingAlgorithm
     health_check_config: Dict[str, Any]
     session_affinity: bool = False
     sticky_sessions: bool = False
@@ -180,8 +166,7 @@ class LoadBalancerConfig:
 
 @dataclass
 class OrchestrationMetrics:
-    """Orchestration metrics and status"""
-    total_services: int
+    """Orchestration metrics and status"""    total_services: int
     running_services: int
     failed_services: int
     scaling_events: int
@@ -194,8 +179,7 @@ class OrchestrationMetrics:
 
 
 class ContainerOrchestrator:
-    """Enterprise-grade container orchestrator for IA-Influencer-Agent platform"""
-    
+    """Enterprise-grade container orchestrator for IA-Influencer-Agent platform"""    
     def __init__(self, 
                  strategy: OrchestrationStrategy = OrchestrationStrategy.KUBERNETES,
                  config_path: str = "/app/config/orchestration"):
@@ -230,8 +214,7 @@ class ContainerOrchestrator:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def initialize(self) -> bool:
-        """Initialize the container orchestrator with all required components"""
-        try:
+        """Initialize the container orchestrator with all required components"""        try:
             self.logger.info("🚀 Initializing IA-Influencer Container Orchestrator...")
             
             # Create configuration directories
@@ -268,8 +251,7 @@ class ContainerOrchestrator:
             return False
     
     async def _initialize_clients(self) -> None:
-        """Initialize orchestration platform clients"""
-        try:
+        """Initialize orchestration platform clients"""        try:
             if self.strategy == OrchestrationStrategy.KUBERNETES:
                 # Initialize Kubernetes client
                 try:
@@ -314,14 +296,12 @@ class ContainerOrchestrator:
             raise
     
     async def _test_redis_connection(self) -> None:
-        """Test Redis connection"""
-        loop = asyncio.get_event_loop()
+        """Test Redis connection"""        loop = asyncio.get_event_loop()
         with ThreadPoolExecutor() as executor:
             await loop.run_in_executor(executor, self.redis_client.ping)
     
     async def _load_configurations(self) -> None:
-        """Load orchestration configurations from filesystem"""
-        try:
+        """Load orchestration configurations from filesystem"""        try:
             # Load service definitions
             services_dir = self.config_path / "services"
             if services_dir.exists():
@@ -353,8 +333,7 @@ class ContainerOrchestrator:
             self.logger.warning(f"⚠️ Error loading configurations: {e}")
     
     async def _initialize_ia_influencer_services(self) -> None:
-        """Initialize IA-Influencer-Agent specific service definitions"""
-        try:
+        """Initialize IA-Influencer-Agent specific service definitions"""        try:
             # Define IA-Influencer service specifications based on cahier des charges
             ia_services = {
                 "web-api": {
@@ -553,8 +532,7 @@ class ContainerOrchestrator:
         self.consul_client = None
         
     async def initialize(self) -> bool:
-        """Initialize container orchestrator"""
-        try:
+        """Initialize container orchestrator"""        try:
             if self.strategy == OrchestrationStrategy.KUBERNETES:
                 await self._initialize_kubernetes()
             elif self.strategy == OrchestrationStrategy.DOCKER_SWARM:
@@ -575,8 +553,7 @@ class ContainerOrchestrator:
             return False
     
     async def _initialize_kubernetes(self) -> None:
-        """Initialize Kubernetes orchestration"""
-        try:
+        """Initialize Kubernetes orchestration"""        try:
             from kubernetes import config
             config.load_incluster_config()
             self.k8s_apps_api = k8s_client.AppsV1Api()
@@ -588,8 +565,7 @@ class ContainerOrchestrator:
             raise
     
     async def _initialize_docker_swarm(self) -> None:
-        """Initialize Docker Swarm orchestration"""
-        try:
+        """Initialize Docker Swarm orchestration"""        try:
             import docker
             self.docker_client = docker.from_env()
             self.logger.info("🐳 Docker Swarm orchestration initialized")
@@ -599,8 +575,7 @@ class ContainerOrchestrator:
             raise
     
     async def _save_service_definition(self, service_def: ServiceDefinition) -> None:
-        """Save service definition to filesystem"""
-        try:
+        """Save service definition to filesystem"""        try:
             service_file = self.config_path / "services" / f"{service_def.name}.yml"
             with open(service_file, 'w') as f:
                 yaml.dump(asdict(service_def), f, default_flow_style=False)
@@ -608,8 +583,7 @@ class ContainerOrchestrator:
             self.logger.error(f"❌ Error saving service definition for {service_def.name}: {e}")
     
     async def _create_default_scaling_rules(self) -> None:
-        """Create default scaling rules for IA-Influencer services"""
-        try:
+        """Create default scaling rules for IA-Influencer services"""        try:
             default_rules = {
                 "web-api": ScalingRule(
                     service_name="web-api",
@@ -647,8 +621,7 @@ class ContainerOrchestrator:
             self.logger.error(f"❌ Error creating default scaling rules: {e}")
     
     async def _save_scaling_rule(self, rule: ScalingRule) -> None:
-        """Save scaling rule to filesystem"""
-        try:
+        """Save scaling rule to filesystem"""        try:
             rule_file = self.config_path / "scaling" / f"{rule.service_name}.yml"
             with open(rule_file, 'w') as f:
                 yaml.dump(asdict(rule), f, default_flow_style=False)
@@ -656,8 +629,7 @@ class ContainerOrchestrator:
             self.logger.error(f"❌ Error saving scaling rule for {rule.service_name}: {e}")
     
     async def _create_default_service_mesh_config(self) -> None:
-        """Create default service mesh configuration"""
-        try:
+        """Create default service mesh configuration"""        try:
             if not self.service_mesh_config:
                 self.service_mesh_config = ServiceMeshConfig(
                     mesh_type=ServiceMeshType.ISTIO,
@@ -695,8 +667,7 @@ class ContainerOrchestrator:
             self.logger.error(f"❌ Error creating service mesh config: {e}")
     
     async def _setup_service_mesh(self) -> None:
-        """Setup service mesh infrastructure"""
-        try:
+        """Setup service mesh infrastructure"""        try:
             if not self.service_mesh_config or not self.service_mesh_config.enabled:
                 return
             
@@ -711,8 +682,7 @@ class ContainerOrchestrator:
             self.logger.error(f"❌ Error setting up service mesh: {e}")
     
     async def _setup_istio_mesh(self) -> None:
-        """Setup Istio service mesh"""
-        try:
+        """Setup Istio service mesh"""        try:
             # Create Istio namespace and configurations
             # This would involve creating Istio CRDs, VirtualServices, DestinationRules, etc.
             self.logger.info("🌐 Setting up Istio service mesh for IA-Influencer services")
@@ -724,8 +694,7 @@ class ContainerOrchestrator:
             self.logger.error(f"❌ Error setting up Istio: {e}")
     
     async def _setup_linkerd_mesh(self) -> None:
-        """Setup Linkerd service mesh"""
-        try:
+        """Setup Linkerd service mesh"""        try:
             self.logger.info("🌐 Setting up Linkerd service mesh for IA-Influencer services")
             # Linkerd-specific setup logic would go here
             
@@ -733,8 +702,7 @@ class ContainerOrchestrator:
             self.logger.error(f"❌ Error setting up Linkerd: {e}")
     
     async def _start_background_tasks(self) -> None:
-        """Start background monitoring and scaling tasks"""
-        try:
+        """Start background monitoring and scaling tasks"""        try:
             if self.running:
                 # Start monitoring task
                 self.monitoring_task = asyncio.create_task(self._monitoring_loop())
@@ -751,8 +719,7 @@ class ContainerOrchestrator:
             self.logger.error(f"❌ Error starting background tasks: {e}")
     
     async def _monitoring_loop(self) -> None:
-        """Continuous monitoring loop for services and metrics"""
-        while self.running:
+        """Continuous monitoring loop for services and metrics"""        while self.running:
             try:
                 # Update metrics
                 await self._update_metrics()
@@ -773,8 +740,7 @@ class ContainerOrchestrator:
                 await asyncio.sleep(60)  # Wait longer on error
     
     async def _scaling_loop(self) -> None:
-        """Continuous auto-scaling loop"""
-        while self.running:
+        """Continuous auto-scaling loop"""        while self.running:
             try:
                 for service_name, scaling_rule in self.scaling_rules.items():
                     if not scaling_rule.enabled:
@@ -797,8 +763,7 @@ class ContainerOrchestrator:
                 await asyncio.sleep(120)  # Wait longer on error
     
     async def _health_check_loop(self) -> None:
-        """Continuous health check loop for all services"""
-        while self.running:
+        """Continuous health check loop for all services"""        while self.running:
             try:
                 unhealthy_services = []
                 
@@ -822,8 +787,7 @@ class ContainerOrchestrator:
                 await asyncio.sleep(90)
     
     async def _update_metrics(self) -> None:
-        """Update orchestration metrics"""
-        try:
+        """Update orchestration metrics"""        try:
             total_services = len(self.services)
             running_services = 0
             failed_services = 0
@@ -857,8 +821,7 @@ class ContainerOrchestrator:
             self.logger.error(f"❌ Error updating metrics: {e}")
     
     async def _check_services_health(self) -> None:
-        """Check health of all services"""
-        try:
+        """Check health of all services"""        try:
             for service_name, service_def in self.services.items():
                 health_status = await self._check_service_health(service_def)
                 
@@ -869,8 +832,7 @@ class ContainerOrchestrator:
             self.logger.error(f"❌ Error checking services health: {e}")
     
     async def _check_service_health(self, service_def: ServiceDefinition) -> bool:
-        """Check health of a specific service"""
-        try:
+        """Check health of a specific service"""        try:
             health_config = service_def.health_check
             
             if health_config.get("type") == "http":
@@ -886,8 +848,7 @@ class ContainerOrchestrator:
             return False
     
     async def _check_http_health(self, service_def: ServiceDefinition, health_config: Dict[str, Any]) -> bool:
-        """Perform HTTP health check"""
-        try:
+        """Perform HTTP health check"""        try:
             health_url = f"http://{service_def.name}:{health_config.get('port', 8000)}{health_config.get('path', '/health')}"
             timeout = health_config.get("timeout", 5)
             
@@ -899,8 +860,7 @@ class ContainerOrchestrator:
             return False
     
     async def _check_tcp_health(self, service_def: ServiceDefinition, health_config: Dict[str, Any]) -> bool:
-        """Perform TCP health check"""
-        try:
+        """Perform TCP health check"""        try:
             port = health_config.get("port", 8000)
             timeout = health_config.get("timeout", 5)
             
@@ -917,8 +877,7 @@ class ContainerOrchestrator:
             return False
     
     async def _is_service_healthy(self, service_name: str) -> bool:
-        """Check if a service is healthy"""
-        try:
+        """Check if a service is healthy"""        try:
             service_def = self.services.get(service_name)
             if not service_def:
                 return False
@@ -930,8 +889,7 @@ class ContainerOrchestrator:
             return False
     
     async def _is_service_running(self, service_name: str) -> bool:
-        """Check if a service is running based on orchestration platform"""
-        try:
+        """Check if a service is running based on orchestration platform"""        try:
             if self.strategy == OrchestrationStrategy.KUBERNETES:
                 return await self._is_k8s_service_running(service_name)
             elif self.strategy == OrchestrationStrategy.DOCKER_SWARM:
@@ -944,8 +902,7 @@ class ContainerOrchestrator:
             return False
     
     async def _is_k8s_service_running(self, service_name: str) -> bool:
-        """Check if Kubernetes service is running"""
-        try:
+        """Check if Kubernetes service is running"""        try:
             if not self.k8s_client:
                 return False
             
@@ -966,8 +923,7 @@ class ContainerOrchestrator:
             return False
     
     async def _is_docker_service_running(self, service_name: str) -> bool:
-        """Check if Docker service is running"""
-        try:
+        """Check if Docker service is running"""        try:
             if not self.docker_client:
                 return False
             
@@ -989,8 +945,7 @@ class ContainerOrchestrator:
             return False
     
     async def _get_service_metrics(self, service_name: str) -> Dict[str, float]:
-        """Get current metrics for a service"""
-        try:
+        """Get current metrics for a service"""        try:
             metrics = {
                 "cpu_utilization": 0.0,
                 "memory_utilization": 0.0,
@@ -1012,8 +967,7 @@ class ContainerOrchestrator:
             return {}
     
     async def _get_k8s_service_metrics(self, service_name: str) -> Dict[str, float]:
-        """Get Kubernetes service metrics"""
-        try:
+        """Get Kubernetes service metrics"""        try:
             # This would integrate with Prometheus or other monitoring systems
             # For now, returning simulated metrics
             return {
@@ -1029,8 +983,7 @@ class ContainerOrchestrator:
             return {}
     
     async def _get_docker_service_metrics(self, service_name: str) -> Dict[str, float]:
-        """Get Docker service metrics"""
-        try:
+        """Get Docker service metrics"""        try:
             # This would get actual Docker stats
             # For now, returning simulated metrics
             return {
@@ -1046,8 +999,7 @@ class ContainerOrchestrator:
             return {}
     
     async def _evaluate_scaling_decision(self, service_name: str, scaling_rule: ScalingRule, metrics: Dict[str, float]) -> Dict[str, Any]:
-        """Evaluate whether scaling action is needed"""
-        try:
+        """Evaluate whether scaling action is needed"""        try:
             decision = {
                 "action": "none",  # scale_up, scale_down, none
                 "target_replicas": 0,
@@ -1078,8 +1030,7 @@ class ContainerOrchestrator:
             return {"action": "none", "target_replicas": 0, "reason": "error", "confidence": 0.0}
     
     async def _evaluate_reactive_scaling(self, scaling_rule: ScalingRule, metric_value: float, current_replicas: int) -> Dict[str, Any]:
-        """Evaluate reactive scaling based on current metrics"""
-        decision = {"action": "none", "target_replicas": current_replicas, "reason": "", "confidence": 0.0}
+        """Evaluate reactive scaling based on current metrics"""        decision = {"action": "none", "target_replicas": current_replicas, "reason": "", "confidence": 0.0}
         
         try:
             if metric_value > scaling_rule.threshold:
@@ -1117,8 +1068,7 @@ class ContainerOrchestrator:
             return decision
     
     async def _evaluate_predictive_scaling(self, service_name: str, scaling_rule: ScalingRule, metrics: Dict[str, float], current_replicas: int) -> Dict[str, Any]:
-        """Evaluate predictive scaling based on trends and patterns"""
-        decision = {"action": "none", "target_replicas": current_replicas, "reason": "", "confidence": 0.0}
+        """Evaluate predictive scaling based on trends and patterns"""        decision = {"action": "none", "target_replicas": current_replicas, "reason": "", "confidence": 0.0}
         
         try:
             # Get historical metrics for trend analysis
@@ -1156,8 +1106,7 @@ class ContainerOrchestrator:
             return decision
     
     async def _evaluate_ai_driven_scaling(self, service_name: str, scaling_rule: ScalingRule, metrics: Dict[str, float], current_replicas: int) -> Dict[str, Any]:
-        """Evaluate AI-driven scaling using machine learning models"""
-        decision = {"action": "none", "target_replicas": current_replicas, "reason": "", "confidence": 0.0}
+        """Evaluate AI-driven scaling using machine learning models"""        decision = {"action": "none", "target_replicas": current_replicas, "reason": "", "confidence": 0.0}
         
         try:
             # This would integrate with an AI model for scaling decisions
@@ -1169,8 +1118,7 @@ class ContainerOrchestrator:
             return decision
     
     def _calculate_trend(self, values: List[float]) -> float:
-        """Calculate trend from a series of values"""
-        try:
+        """Calculate trend from a series of values"""        try:
             if len(values) < 2:
                 return 0.0
             
@@ -1190,8 +1138,7 @@ class ContainerOrchestrator:
             return 0.0
     
     async def _get_historical_metrics(self, service_name: str, window_seconds: int) -> List[Dict[str, float]]:
-        """Get historical metrics for a service"""
-        try:
+        """Get historical metrics for a service"""        try:
             # This would query historical metrics from a time-series database
             # For now, returning empty list
             return []
@@ -1201,8 +1148,7 @@ class ContainerOrchestrator:
             return []
     
     async def _execute_scaling_action(self, service_name: str, scaling_decision: Dict[str, Any]) -> bool:
-        """Execute scaling action for a service"""
-        try:
+        """Execute scaling action for a service"""        try:
             action = scaling_decision["action"]
             target_replicas = scaling_decision["target_replicas"]
             reason = scaling_decision["reason"]
@@ -1253,8 +1199,7 @@ class ContainerOrchestrator:
             return False
     
     async def _scale_k8s_service(self, service_name: str, target_replicas: int) -> bool:
-        """Scale Kubernetes service"""
-        try:
+        """Scale Kubernetes service"""        try:
             if not self.k8s_client:
                 return False
             
@@ -1281,8 +1226,7 @@ class ContainerOrchestrator:
             return False
     
     async def _scale_docker_service(self, service_name: str, target_replicas: int) -> bool:
-        """Scale Docker Swarm service"""
-        try:
+        """Scale Docker Swarm service"""        try:
             if not self.docker_client:
                 return False
             
@@ -1303,8 +1247,7 @@ class ContainerOrchestrator:
             return False
     
     async def _attempt_service_recovery(self, service_name: str) -> bool:
-        """Attempt to recover a failed service"""
-        try:
+        """Attempt to recover a failed service"""        try:
             self.logger.info(f"🔄 Attempting recovery for service: {service_name}")
             
             # Recovery strategies
@@ -1334,8 +1277,7 @@ class ContainerOrchestrator:
             return False
     
     async def _restart_service(self, service_name: str) -> bool:
-        """Restart a service"""
-        try:
+        """Restart a service"""        try:
             if self.strategy == OrchestrationStrategy.KUBERNETES:
                 return await self._restart_k8s_service(service_name)
             elif self.strategy == OrchestrationStrategy.DOCKER_SWARM:
@@ -1348,8 +1290,7 @@ class ContainerOrchestrator:
             return False
     
     async def _restart_k8s_service(self, service_name: str) -> bool:
-        """Restart Kubernetes service by rolling restart"""
-        try:
+        """Restart Kubernetes service by rolling restart"""        try:
             if not self.k8s_client:
                 return False
             
@@ -1379,8 +1320,7 @@ class ContainerOrchestrator:
             return False
     
     async def _restart_docker_service(self, service_name: str) -> bool:
-        """Restart Docker Swarm service"""
-        try:
+        """Restart Docker Swarm service"""        try:
             if not self.docker_client:
                 return False
             
@@ -1403,8 +1343,7 @@ class ContainerOrchestrator:
             return False
     
     async def _restart_via_scaling(self, service_name: str) -> bool:
-        """Restart service by scaling down and up"""
-        try:
+        """Restart service by scaling down and up"""        try:
             service_def = self.services.get(service_name)
             if not service_def:
                 return False
@@ -1434,8 +1373,7 @@ class ContainerOrchestrator:
             return False
     
     async def _redeploy_service(self, service_name: str) -> bool:
-        """Redeploy a service completely"""
-        try:
+        """Redeploy a service completely"""        try:
             service_def = self.services.get(service_name)
             if not service_def:
                 return False
@@ -1620,8 +1558,7 @@ class ContainerOrchestrator:
             self.services[name] = service
     
     async def _setup_scaling_rules(self) -> None:
-        """Setup auto-scaling rules for services"""
-        
+        """Setup auto-scaling rules for services"""        
         scaling_rules = [
             ScalingRule(
                 service_name="web-api",
@@ -1669,8 +1606,7 @@ class ContainerOrchestrator:
             self.scaling_rules[rule.service_name] = rule
     
     async def deploy_service(self, service_name: str) -> bool:
-        """Deploy a service using the configured orchestration platform"""
-        try:
+        """Deploy a service using the configured orchestration platform"""        try:
             if service_name not in self.services:
                 self.logger.error(f"❌ Service {service_name} not found")
                 return False
@@ -1690,8 +1626,7 @@ class ContainerOrchestrator:
             return False
     
     async def _deploy_service_kubernetes(self, service: ServiceDefinition) -> bool:
-        """Deploy service to Kubernetes"""
-        try:
+        """Deploy service to Kubernetes"""        try:
             # Create deployment
             deployment_body = k8s_client.V1Deployment(
                 api_version="apps/v1",
@@ -1815,8 +1750,7 @@ class ContainerOrchestrator:
             return False
     
     async def _deploy_service_docker_swarm(self, service: ServiceDefinition) -> bool:
-        """Deploy service to Docker Swarm"""
-        try:
+        """Deploy service to Docker Swarm"""        try:
             # Create Docker service
             service_spec = {
                 'name': service.name,
@@ -1883,8 +1817,7 @@ class ContainerOrchestrator:
             return False
     
     def _parse_memory(self, memory_str: str) -> int:
-        """Parse memory string to bytes"""
-        if memory_str.endswith('Gi'):
+        """Parse memory string to bytes"""        if memory_str.endswith('Gi'):
             return int(memory_str[:-2]) * 1024 * 1024 * 1024
         elif memory_str.endswith('Mi'):
             return int(memory_str[:-2]) * 1024 * 1024
@@ -1894,8 +1827,7 @@ class ContainerOrchestrator:
             return int(memory_str)
     
     async def scale_service(self, service_name: str, replicas: int) -> bool:
-        """Scale service to specified number of replicas"""
-        try:
+        """Scale service to specified number of replicas"""        try:
             if service_name not in self.services:
                 self.logger.error(f"❌ Service {service_name} not found")
                 return False
@@ -1910,8 +1842,7 @@ class ContainerOrchestrator:
             return False
     
     async def _scale_service_kubernetes(self, service_name: str, replicas: int) -> bool:
-        """Scale Kubernetes deployment"""
-        try:
+        """Scale Kubernetes deployment"""        try:
             scale_body = k8s_client.V1Scale(
                 spec=k8s_client.V1ScaleSpec(replicas=replicas)
             )
@@ -1930,8 +1861,7 @@ class ContainerOrchestrator:
             return False
     
     async def _scale_service_docker_swarm(self, service_name: str, replicas: int) -> bool:
-        """Scale Docker Swarm service"""
-        try:
+        """Scale Docker Swarm service"""        try:
             service = self.docker_client.services.get(service_name)
             service.update(mode={'Replicated': {'Replicas': replicas}})
             
@@ -1943,8 +1873,7 @@ class ContainerOrchestrator:
             return False
     
     async def get_service_status(self, service_name: str) -> Dict[str, Any]:
-        """Get status of deployed service"""
-        try:
+        """Get status of deployed service"""        try:
             if self.strategy == OrchestrationStrategy.KUBERNETES:
                 return await self._get_service_status_kubernetes(service_name)
             elif self.strategy == OrchestrationStrategy.DOCKER_SWARM:
@@ -1955,8 +1884,7 @@ class ContainerOrchestrator:
             return {"status": "error", "error": str(e)}
     
     async def _get_service_status_kubernetes(self, service_name: str) -> Dict[str, Any]:
-        """Get Kubernetes service status"""
-        try:
+        """Get Kubernetes service status"""        try:
             deployment = self.k8s_apps_api.read_namespaced_deployment_status(
                 name=service_name,
                 namespace="ia-influencer"
@@ -1974,8 +1902,7 @@ class ContainerOrchestrator:
             return {"status": "error", "error": str(e)}
     
     async def _get_service_status_docker_swarm(self, service_name: str) -> Dict[str, Any]:
-        """Get Docker Swarm service status"""
-        try:
+        """Get Docker Swarm service status"""        try:
             service = self.docker_client.services.get(service_name)
             tasks = service.tasks()
             
@@ -1992,8 +1919,7 @@ class ContainerOrchestrator:
             return {"status": "error", "error": str(e)}
     
     async def deploy_all_services(self) -> bool:
-        """Deploy all IA-Influencer services"""
-        try:
+        """Deploy all IA-Influencer services"""        try:
             deployment_order = [
                 "web-api",
                 "ai-engine", 
@@ -2025,8 +1951,7 @@ class ContainerOrchestrator:
             return False
 
 class ServiceMeshManager:
-    """Professional service mesh management"""
-    
+    """Professional service mesh management"""    
     def __init__(self, mesh_type: ServiceMeshType = ServiceMeshType.ISTIO):
         self.mesh_type = mesh_type
         self.mesh_config = {}
@@ -2036,8 +1961,7 @@ class ServiceMeshManager:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def initialize(self) -> bool:
-        """Initialize service mesh"""
-        try:
+        """Initialize service mesh"""        try:
             if self.mesh_type == ServiceMeshType.ISTIO:
                 await self._initialize_istio()
             elif self.mesh_type == ServiceMeshType.LINKERD:
@@ -2054,8 +1978,7 @@ class ServiceMeshManager:
             return False
     
     async def _initialize_istio(self) -> None:
-        """Initialize Istio service mesh"""
-        try:
+        """Initialize Istio service mesh"""        try:
             # Configure Istio for IA-Influencer services
             self.mesh_config = {
                 "gateway": {
@@ -2094,8 +2017,7 @@ class ServiceMeshManager:
             raise
     
     async def _initialize_linkerd(self) -> None:
-        """Initialize Linkerd service mesh"""
-        try:
+        """Initialize Linkerd service mesh"""        try:
             self.mesh_config = {
                 "annotations": {
                     "linkerd.io/inject": "enabled"
@@ -2113,8 +2035,7 @@ class ServiceMeshManager:
             raise
     
     async def _initialize_consul_connect(self) -> None:
-        """Initialize Consul Connect service mesh"""
-        try:
+        """Initialize Consul Connect service mesh"""        try:
             self.consul_client = consul.Consul()
             
             self.mesh_config = {
@@ -2136,8 +2057,7 @@ class ServiceMeshManager:
             raise
     
     async def configure_traffic_management(self, service_name: str, traffic_policy: Dict[str, Any]) -> bool:
-        """Configure traffic management for service"""
-        try:
+        """Configure traffic management for service"""        try:
             self.traffic_policies[service_name] = traffic_policy
             
             if self.mesh_type == ServiceMeshType.ISTIO:
@@ -2150,8 +2070,7 @@ class ServiceMeshManager:
             return False
     
     async def _configure_istio_traffic(self, service_name: str, policy: Dict[str, Any]) -> bool:
-        """Configure Istio traffic management"""
-        try:
+        """Configure Istio traffic management"""        try:
             # Configure virtual service
             virtual_service = {
                 "apiVersion": "networking.istio.io/v1beta1",
@@ -2187,8 +2106,7 @@ class ServiceMeshManager:
             return False
     
     async def enable_mutual_tls(self, service_name: str) -> bool:
-        """Enable mutual TLS for service"""
-        try:
+        """Enable mutual TLS for service"""        try:
             if self.mesh_type == ServiceMeshType.ISTIO:
                 # Configure PeerAuthentication
                 peer_auth = {
@@ -2218,8 +2136,7 @@ class ServiceMeshManager:
             return False
 
 class ContainerScaler:
-    """Professional container auto-scaler"""
-    
+    """Professional container auto-scaler"""    
     def __init__(self, orchestrator: ContainerOrchestrator):
         self.orchestrator = orchestrator
         self.scaling_policies = {}
@@ -2229,8 +2146,7 @@ class ContainerScaler:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def initialize(self) -> bool:
-        """Initialize container scaler"""
-        try:
+        """Initialize container scaler"""        try:
             # Load scaling policies from orchestrator
             self.scaling_policies = self.orchestrator.scaling_rules
             
@@ -2248,12 +2164,10 @@ class ContainerScaler:
             return False
     
     async def _start_metrics_collection(self) -> None:
-        """Start collecting metrics for scaling decisions"""
-        asyncio.create_task(self._collect_metrics_loop())
+        """Start collecting metrics for scaling decisions"""        asyncio.create_task(self._collect_metrics_loop())
     
     async def _collect_metrics_loop(self) -> None:
-        """Continuous metrics collection loop"""
-        while True:
+        """Continuous metrics collection loop"""        while True:
             try:
                 for service_name in self.scaling_policies:
                     metrics = await self._collect_service_metrics(service_name)
@@ -2280,8 +2194,7 @@ class ContainerScaler:
                 await asyncio.sleep(60)
     
     async def _collect_service_metrics(self, service_name: str) -> Optional[Dict[str, float]]:
-        """Collect metrics for specific service"""
-        try:
+        """Collect metrics for specific service"""        try:
             if self.orchestrator.strategy == OrchestrationStrategy.KUBERNETES:
                 return await self._collect_kubernetes_metrics(service_name)
             elif self.orchestrator.strategy == OrchestrationStrategy.DOCKER_SWARM:
@@ -2292,8 +2205,7 @@ class ContainerScaler:
             return None
     
     async def _collect_kubernetes_metrics(self, service_name: str) -> Optional[Dict[str, float]]:
-        """Collect Kubernetes metrics"""
-        try:
+        """Collect Kubernetes metrics"""        try:
             # Get deployment status
             deployment = self.orchestrator.k8s_apps_api.read_namespaced_deployment_status(
                 name=service_name,
@@ -2324,8 +2236,7 @@ class ContainerScaler:
             return None
     
     async def _auto_scaling_loop(self) -> None:
-        """Auto-scaling decision loop"""
-        while True:
+        """Auto-scaling decision loop"""        while True:
             try:
                 if not self.active_scaling:
                     await asyncio.sleep(60)
@@ -2341,8 +2252,7 @@ class ContainerScaler:
                 await asyncio.sleep(300)
     
     async def _evaluate_scaling_decision(self, service_name: str, policy: ScalingRule) -> None:
-        """Evaluate if scaling is needed for service"""
-        try:
+        """Evaluate if scaling is needed for service"""        try:
             if service_name not in self.metrics_history:
                 return
             
@@ -2401,13 +2311,11 @@ class ContainerScaler:
             self.logger.error(f"❌ Error evaluating scaling decision: {e}")
     
     async def enable_auto_scaling(self) -> None:
-        """Enable auto-scaling"""
-        self.active_scaling = True
+        """Enable auto-scaling"""        self.active_scaling = True
         self.logger.info("✅ Auto-scaling enabled")
     
     async def disable_auto_scaling(self) -> None:
-        """Disable auto-scaling"""
-        self.active_scaling = False
+        """Disable auto-scaling"""        self.active_scaling = False
         self.logger.info("⏸️ Auto-scaling disabled")
 
 __all__ = [

@@ -1,12 +1,9 @@
-"""
-Advanced workflow scheduling and task management.
+"""Advanced workflow scheduling and task management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
-"""
-
-import asyncio
+"""import asyncio
 from typing import Dict, List, Optional, Callable, Any, Union
 from enum import Enum
 from datetime import datetime, timedelta
@@ -25,8 +22,7 @@ from ..utils.metrics import MetricsCollector
 
 
 class TaskType(Enum):
-    """Task types for workflow scheduling."""
-    ONE_TIME = "one_time"
+    """Task types for workflow scheduling."""    ONE_TIME = "one_time"
     RECURRING = "recurring"
     CONDITIONAL = "conditional"
     EVENT_DRIVEN = "event_driven"
@@ -35,8 +31,7 @@ class TaskType(Enum):
 
 
 class TaskStatus(Enum):
-    """Task execution status."""
-    SCHEDULED = "scheduled"
+    """Task execution status."""    SCHEDULED = "scheduled"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -47,8 +42,7 @@ class TaskStatus(Enum):
 
 
 class TaskPriority(Enum):
-    """Task priority levels."""
-    LOW = 1
+    """Task priority levels."""    LOW = 1
     NORMAL = 2
     HIGH = 3
     CRITICAL = 4
@@ -57,8 +51,7 @@ class TaskPriority(Enum):
 
 @dataclass
 class ScheduleConfiguration:
-    """Configuration for task scheduling."""
-    task_type: TaskType
+    """Configuration for task scheduling."""    task_type: TaskType
     cron_expression: Optional[str] = None
     start_time: Optional[datetime] = None
     end_time: Optional[datetime] = None
@@ -71,8 +64,7 @@ class ScheduleConfiguration:
 
 @dataclass
 class TaskDefinition:
-    """Definition of a scheduled task."""
-    id: str
+    """Definition of a scheduled task."""    id: str
     name: str
     description: str
     handler: str
@@ -89,8 +81,7 @@ class TaskDefinition:
 
 @dataclass
 class TaskExecutionContext:
-    """Context for task execution."""
-    task_id: str
+    """Context for task execution."""    task_id: str
     execution_id: str
     scheduled_time: datetime
     actual_start_time: datetime
@@ -101,15 +92,13 @@ class TaskExecutionContext:
 
 
 class TaskHandler:
-    """Base class for task handlers."""
-    
+    """Base class for task handlers."""    
     def __init__(self, handler_type: str):
         self.handler_type = handler_type
         self.logger = logging.getLogger(f"scheduler.handler.{handler_type}")
     
     async def execute(self, context: TaskExecutionContext) -> Dict[str, Any]:
-        """Execute the task."""
-        start_time = datetime.utcnow()
+        """Execute the task."""        start_time = datetime.utcnow()
         
         try:
             self.logger.info(f"Executing task {context.task_id}")
@@ -146,12 +135,10 @@ class TaskHandler:
             }
     
     async def _validate_execution(self, context: TaskExecutionContext) -> None:
-        """Validate task can be executed."""
-        pass
+        """Validate task can be executed."""        pass
     
     async def _execute_task(self, context: TaskExecutionContext) -> Dict[str, Any]:
-        """Execute the actual task logic - to be overridden."""
-        # Default implementation for task executors without specific implementation
+        """Execute the actual task logic - to be overridden."""        # Default implementation for task executors without specific implementation
         logging.warning(f"Task execution not implemented for {self.__class__.__name__}")
         return {
             "status": "not_implemented",
@@ -165,19 +152,16 @@ class TaskHandler:
         context: TaskExecutionContext, 
         result: Dict[str, Any]
     ) -> None:
-        """Post-execution processing."""
-        pass
+        """Post-execution processing."""        pass
 
 
 class ContentAnalysisTaskHandler(TaskHandler):
-    """Handler for content analysis tasks."""
-    
+    """Handler for content analysis tasks."""    
     def __init__(self):
         super().__init__("content_analysis")
     
     async def _execute_task(self, context: TaskExecutionContext) -> Dict[str, Any]:
-        """Execute content analysis task."""
-        content_items = context.parameters.get("content_items", [])
+        """Execute content analysis task."""        content_items = context.parameters.get("content_items", [])
         analysis_type = context.parameters.get("analysis_type", "batch")
         
         # Placeholder for actual content analysis
@@ -204,14 +188,12 @@ class ContentAnalysisTaskHandler(TaskHandler):
 
 
 class ContentProtectionTaskHandler(TaskHandler):
-    """Handler for content protection tasks."""
-    
+    """Handler for content protection tasks."""    
     def __init__(self):
         super().__init__("content_protection")
     
     async def _execute_task(self, context: TaskExecutionContext) -> Dict[str, Any]:
-        """Execute content protection task."""
-        protection_type = context.parameters.get("protection_type", "fingerprint_scan")
+        """Execute content protection task."""        protection_type = context.parameters.get("protection_type", "fingerprint_scan")
         scan_platforms = context.parameters.get("scan_platforms", [])
         
         # Placeholder for actual protection scanning
@@ -248,14 +230,12 @@ class ContentProtectionTaskHandler(TaskHandler):
 
 
 class MonitoringTaskHandler(TaskHandler):
-    """Handler for monitoring and health check tasks."""
-    
+    """Handler for monitoring and health check tasks."""    
     def __init__(self):
         super().__init__("monitoring")
     
     async def _execute_task(self, context: TaskExecutionContext) -> Dict[str, Any]:
-        """Execute monitoring task."""
-        monitoring_type = context.parameters.get("monitoring_type", "system_health")
+        """Execute monitoring task."""        monitoring_type = context.parameters.get("monitoring_type", "system_health")
         metrics_to_collect = context.parameters.get("metrics", [])
         
         # Placeholder for actual monitoring
@@ -293,14 +273,12 @@ class MonitoringTaskHandler(TaskHandler):
 
 
 class ReportGenerationTaskHandler(TaskHandler):
-    """Handler for report generation tasks."""
-    
+    """Handler for report generation tasks."""    
     def __init__(self):
         super().__init__("report_generation")
     
     async def _execute_task(self, context: TaskExecutionContext) -> Dict[str, Any]:
-        """Execute report generation task."""
-        report_type = context.parameters.get("report_type", "daily_summary")
+        """Execute report generation task."""        report_type = context.parameters.get("report_type", "daily_summary")
         date_range = context.parameters.get("date_range", {})
         include_charts = context.parameters.get("include_charts", True)
         
@@ -327,8 +305,7 @@ class ReportGenerationTaskHandler(TaskHandler):
 
 
 class AdvancedWorkflowScheduler:
-    """Advanced scheduler for workflow tasks and automation."""
-    
+    """Advanced scheduler for workflow tasks and automation."""    
     def __init__(self):
         self.logger = logging.getLogger("workflow.scheduler")
         self.notification_manager = NotificationManager()
@@ -359,8 +336,7 @@ class AdvancedWorkflowScheduler:
         self.maintenance_mode = False
     
     async def register_task(self, task_definition: TaskDefinition) -> str:
-        """Register a new scheduled task."""
-        task_id = task_definition.id
+        """Register a new scheduled task."""        task_id = task_definition.id
         
         # Validate task definition
         await self._validate_task_definition(task_definition)
@@ -376,8 +352,7 @@ class AdvancedWorkflowScheduler:
         return task_id
     
     async def _validate_task_definition(self, task_definition: TaskDefinition):
-        """Validate task definition."""
-        if task_definition.handler not in self.task_handlers:
+        """Validate task definition."""        if task_definition.handler not in self.task_handlers:
             raise SchedulerException(f"Unknown task handler: {task_definition.handler}")
         
         # Validate cron expression if provided
@@ -394,8 +369,7 @@ class AdvancedWorkflowScheduler:
         content_filter: Dict[str, Any],
         analysis_config: Dict[str, Any]
     ) -> str:
-        """Create scheduled content analysis task."""
-        task_id = f"content_analysis_{user_id}_{uuid.uuid4().hex[:8]}"
+        """Create scheduled content analysis task."""        task_id = f"content_analysis_{user_id}_{uuid.uuid4().hex[:8]}"
         
         # Default to daily analysis at 2 AM
         cron_expression = analysis_config.get("cron_expression", "0 2 * * *")
@@ -440,8 +414,7 @@ class AdvancedWorkflowScheduler:
         content_ids: List[str],
         monitoring_config: Dict[str, Any]
     ) -> str:
-        """Create scheduled content protection monitoring."""
-        task_id = f"protection_monitoring_{user_id}_{uuid.uuid4().hex[:8]}"
+        """Create scheduled content protection monitoring."""        task_id = f"protection_monitoring_{user_id}_{uuid.uuid4().hex[:8]}"
         
         # Default to hourly monitoring
         cron_expression = monitoring_config.get("cron_expression", "0 * * * *")
@@ -482,8 +455,7 @@ class AdvancedWorkflowScheduler:
         return task_id
     
     async def create_system_monitoring_schedule(self) -> str:
-        """Create system monitoring schedule."""
-        task_id = "system_monitoring"
+        """Create system monitoring schedule."""        task_id = "system_monitoring"
         
         schedule_config = ScheduleConfiguration(
             task_type=TaskType.RECURRING,
@@ -525,8 +497,7 @@ class AdvancedWorkflowScheduler:
         user_id: str,
         report_config: Dict[str, Any]
     ) -> str:
-        """Create automated reporting schedule."""
-        task_id = f"reporting_{user_id}_{uuid.uuid4().hex[:8]}"
+        """Create automated reporting schedule."""        task_id = f"reporting_{user_id}_{uuid.uuid4().hex[:8]}"
         
         # Default to weekly reports on Monday at 9 AM
         cron_expression = report_config.get("cron_expression", "0 9 * * 1")
@@ -565,8 +536,7 @@ class AdvancedWorkflowScheduler:
         return task_id
     
     async def start_scheduler(self):
-        """Start the workflow scheduler."""
-        if self.running:
+        """Start the workflow scheduler."""        if self.running:
             self.logger.warning("Scheduler already running")
             return
         
@@ -582,13 +552,11 @@ class AdvancedWorkflowScheduler:
         await self.create_system_monitoring_schedule()
     
     async def stop_scheduler(self):
-        """Stop the workflow scheduler."""
-        self.running = False
+        """Stop the workflow scheduler."""        self.running = False
         self.logger.info("Stopping workflow scheduler")
     
     async def _schedule_manager_loop(self):
-        """Main scheduling loop to queue tasks for execution."""
-        while self.running:
+        """Main scheduling loop to queue tasks for execution."""        while self.running:
             try:
                 current_time = datetime.utcnow()
                 
@@ -607,8 +575,7 @@ class AdvancedWorkflowScheduler:
                 await asyncio.sleep(60)  # Back off on error
     
     async def _should_execute_task(self, task_def: TaskDefinition, current_time: datetime) -> bool:
-        """Check if task should be executed at current time."""
-        schedule_config = task_def.schedule_config
+        """Check if task should be executed at current time."""        schedule_config = task_def.schedule_config
         
         if schedule_config.task_type == TaskType.ONE_TIME:
             # Check if already executed
@@ -640,8 +607,7 @@ class AdvancedWorkflowScheduler:
         return False
     
     async def _schedule_task_execution(self, task_id: str):
-        """Schedule a task for execution."""
-        execution_id = f"{task_id}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
+        """Schedule a task for execution."""        execution_id = f"{task_id}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
         
         execution_info = {
             "execution_id": execution_id,
@@ -660,8 +626,7 @@ class AdvancedWorkflowScheduler:
         self.logger.info(f"Scheduled task {task_id} for execution with ID {execution_id}")
     
     async def _execution_manager_loop(self):
-        """Main execution loop to process queued tasks."""
-        while self.running:
+        """Main execution loop to process queued tasks."""        while self.running:
             try:
                 # Check for available execution slots
                 running_count = sum(
@@ -692,8 +657,7 @@ class AdvancedWorkflowScheduler:
                 await asyncio.sleep(10)
     
     async def _execute_task(self, execution_id: str):
-        """Execute a scheduled task."""
-        execution_info = self.task_executions.get(execution_id)
+        """Execute a scheduled task."""        execution_info = self.task_executions.get(execution_id)
         if not execution_info:
             self.logger.error(f"Execution {execution_id} not found")
             return
@@ -777,8 +741,7 @@ class AdvancedWorkflowScheduler:
         execution_info: Dict, 
         result: Dict
     ):
-        """Send notifications for task completion/failure."""
-        notification_config = task_def.notification_config
+        """Send notifications for task completion/failure."""        notification_config = task_def.notification_config
         
         if result["success"] and notification_config.get("on_completion"):
             await self.notification_manager.send_notification(
@@ -805,8 +768,7 @@ class AdvancedWorkflowScheduler:
             )
     
     async def _cleanup_manager_loop(self):
-        """Cleanup old task executions."""
-        while self.running:
+        """Cleanup old task executions."""        while self.running:
             try:
                 cutoff_date = datetime.utcnow() - timedelta(days=self.cleanup_executions_after_days)
                 
@@ -831,24 +793,21 @@ class AdvancedWorkflowScheduler:
                 await asyncio.sleep(3600)
     
     def pause_task(self, task_id: str) -> bool:
-        """Pause a scheduled task."""
-        if task_id in self.task_definitions:
+        """Pause a scheduled task."""        if task_id in self.task_definitions:
             self.paused_tasks.add(task_id)
             self.logger.info(f"Paused task {task_id}")
             return True
         return False
     
     def resume_task(self, task_id: str) -> bool:
-        """Resume a paused task."""
-        if task_id in self.paused_tasks:
+        """Resume a paused task."""        if task_id in self.paused_tasks:
             self.paused_tasks.remove(task_id)
             self.logger.info(f"Resumed task {task_id}")
             return True
         return False
     
     def cancel_task_execution(self, execution_id: str) -> bool:
-        """Cancel a specific task execution."""
-        execution_info = self.task_executions.get(execution_id)
+        """Cancel a specific task execution."""        execution_info = self.task_executions.get(execution_id)
         if execution_info and execution_info["status"] in [TaskStatus.SCHEDULED, TaskStatus.RUNNING]:
             execution_info["status"] = TaskStatus.CANCELLED
             execution_info["cancelled_at"] = datetime.utcnow().isoformat()
@@ -857,8 +816,7 @@ class AdvancedWorkflowScheduler:
         return False
     
     def get_task_status(self, task_id: str) -> Optional[Dict]:
-        """Get task status and recent executions."""
-        task_def = self.task_definitions.get(task_id)
+        """Get task status and recent executions."""        task_def = self.task_definitions.get(task_id)
         if not task_def:
             return None
         
@@ -902,8 +860,7 @@ class AdvancedWorkflowScheduler:
         }
     
     def _calculate_success_rate(self, executions: List[Dict]) -> float:
-        """Calculate success rate for executions."""
-        if not executions:
+        """Calculate success rate for executions."""        if not executions:
             return 0.0
         
         completed_executions = [
@@ -918,8 +875,7 @@ class AdvancedWorkflowScheduler:
         return (successful / len(completed_executions)) * 100
     
     def _calculate_avg_duration(self, executions: List[Dict]) -> float:
-        """Calculate average execution duration."""
-        durations = [
+        """Calculate average execution duration."""        durations = [
             exec.get("duration", 0) for exec in executions
             if exec.get("duration") and exec.get("status") == TaskStatus.COMPLETED
         ]
@@ -927,8 +883,7 @@ class AdvancedWorkflowScheduler:
         return sum(durations) / len(durations) if durations else 0.0
     
     def get_scheduler_status(self) -> Dict:
-        """Get overall scheduler status."""
-        total_tasks = len(self.task_definitions)
+        """Get overall scheduler status."""        total_tasks = len(self.task_definitions)
         active_tasks = sum(1 for task_id in self.task_definitions if task_id not in self.paused_tasks)
         
         running_executions = sum(

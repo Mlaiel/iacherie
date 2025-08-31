@@ -1,5 +1,4 @@
-"""
-📊 Performance Monitor - IA-Influencer-Agent CI/CD Enterprise Platform
+"""📊 Performance Monitor - IA-Influencer-Agent CI/CD Enterprise Platform
 ================================================================
 Team Expertise: SRE Engineer + Performance Specialist + ML Engineer + Audio Engineer
 Created: 2025-08-24
@@ -23,9 +22,7 @@ Business Logic Monitoring:
 - SEO optimization processing metrics
 - Multi-platform distribution performance
 ================================================================
-"""
-
-from typing import Dict, List, Optional, Any, Tuple, Callable, Union
+"""from typing import Dict, List, Optional, Any, Tuple, Callable, Union
 import asyncio
 import logging
 import time
@@ -51,8 +48,7 @@ import hashlib
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Performance metric type enumeration for IA Influencer platform"""
-    # Standard performance metrics
+    """Performance metric type enumeration for IA Influencer platform"""    # Standard performance metrics
     RESPONSE_TIME = "response_time"
     THROUGHPUT = "throughput"
     ERROR_RATE = "error_rate"
@@ -95,16 +91,14 @@ class MetricType(Enum):
     PROTECTION_EFFECTIVENESS = "protection_effectiveness"
 
 class SeverityLevel(Enum):
-    """Alert severity level enumeration"""
-    CRITICAL = "critical"
+    """Alert severity level enumeration"""    CRITICAL = "critical"
     HIGH = "high"
     WARNING = "warning"
     INFO = "info"
     DEBUG = "debug"
 
 class ComponentType(Enum):
-    """System component type enumeration for IA Influencer platform"""
-    # Core infrastructure
+    """System component type enumeration for IA Influencer platform"""    # Core infrastructure
     API_GATEWAY = "api_gateway"
     LOAD_BALANCER = "load_balancer"
     DATABASE = "database"
@@ -138,16 +132,14 @@ class ComponentType(Enum):
     NOTIFICATION_SERVICE = "notification_service"
 
 class MonitoringMode(Enum):
-    """Monitoring mode enumeration"""
-    REAL_TIME = "real_time"
+    """Monitoring mode enumeration"""    REAL_TIME = "real_time"
     BATCH = "batch"
     CONTINUOUS = "continuous"
     ON_DEMAND = "on_demand"
 
 @dataclass
 class PerformanceMetric:
-    """Performance metric data point"""
-    component: ComponentType
+    """Performance metric data point"""    component: ComponentType
     metric_type: MetricType
     value: float
     timestamp: datetime
@@ -167,8 +159,7 @@ class PerformanceMetric:
 
 @dataclass
 class SLAThreshold:
-    """SLA threshold configuration"""
-    metric_type: MetricType
+    """SLA threshold configuration"""    metric_type: MetricType
     component: ComponentType
     warning_threshold: float
     critical_threshold: float
@@ -185,8 +176,7 @@ class SLAThreshold:
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert"""
-    alert_id: str
+    """Performance alert"""    alert_id: str
     component: ComponentType
     metric_type: MetricType
     severity: SeverityLevel
@@ -207,8 +197,7 @@ class PerformanceAlert:
 
 @dataclass
 class CreatorExperienceMetrics:
-    """Creator experience performance metrics"""
-    creator_id: str
+    """Creator experience performance metrics"""    creator_id: str
     creator_type: str  # "musician", "blogger", "photographer", "influencer", "comedian"
     session_id: str
     start_time: datetime
@@ -237,8 +226,7 @@ class CreatorExperienceMetrics:
 
 @dataclass
 class AIModelPerformanceMetrics:
-    """AI model performance tracking"""
-    model_name: str
+    """AI model performance tracking"""    model_name: str
     model_version: str
     component: ComponentType
     timestamp: datetime
@@ -266,8 +254,7 @@ class AIModelPerformanceMetrics:
 
 @dataclass
 class SLAReport:
-    """SLA compliance report"""
-    component: ComponentType
+    """SLA compliance report"""    component: ComponentType
     metric_type: MetricType
     period_start: datetime
     period_end: datetime
@@ -288,8 +275,7 @@ class SLAReport:
     recommendations: List[str] = field(default_factory=list)
 
 class CreatorPerformanceTracker:
-    """Advanced creator experience performance tracking"""
-    
+    """Advanced creator experience performance tracking"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.creator_sessions: Dict[str, CreatorExperienceMetrics] = {}
@@ -301,8 +287,7 @@ class CreatorPerformanceTracker:
         creator_type: str,
         session_context: Dict[str, Any] = None
     ) -> str:
-        """Start tracking creator performance session"""
-        session_id = f"session_{creator_id}_{int(time.time())}"
+        """Start tracking creator performance session"""        session_id = f"session_{creator_id}_{int(time.time())}"
         
         session_metrics = CreatorExperienceMetrics(
             creator_id=creator_id,
@@ -328,8 +313,7 @@ class CreatorPerformanceTracker:
         end_time: datetime,
         quality_metrics: Dict[str, float] = None
     ):
-        """Track individual workflow stage performance"""
-        if session_id not in self.creator_sessions:
+        """Track individual workflow stage performance"""        if session_id not in self.creator_sessions:
             self.logger.warning(f"Session not found: {session_id}")
             return
         
@@ -367,8 +351,7 @@ class CreatorPerformanceTracker:
         completion_status: str = "completed",
         satisfaction_rating: Optional[int] = None
     ) -> CreatorExperienceMetrics:
-        """End creator session and calculate final metrics"""
-        if session_id not in self.creator_sessions:
+        """End creator session and calculate final metrics"""        if session_id not in self.creator_sessions:
             raise ValueError(f"Session not found: {session_id}")
         
         session = self.creator_sessions[session_id]
@@ -410,8 +393,7 @@ class CreatorPerformanceTracker:
         creator_id: str,
         days: int = 30
     ) -> Dict[str, Any]:
-        """Get creator performance summary for specified period"""
-        cutoff_date = datetime.now() - timedelta(days=days)
+        """Get creator performance summary for specified period"""        cutoff_date = datetime.now() - timedelta(days=days)
         
         recent_sessions = [
             session for session in self.creator_analytics[creator_id]
@@ -463,8 +445,7 @@ class CreatorPerformanceTracker:
         self,
         sessions: List[CreatorExperienceMetrics]
     ) -> Dict[str, str]:
-        """Calculate performance trends for creator"""
-        if len(sessions) < 2:
+        """Calculate performance trends for creator"""        if len(sessions) < 2:
             return {"trend": "insufficient_data"}
         
         # Sort sessions by time
@@ -503,8 +484,7 @@ class CreatorPerformanceTracker:
         return trends
 
 class AIProcessingPerformanceMonitor:
-    """Specialized monitoring for AI processing performance"""
-    
+    """Specialized monitoring for AI processing performance"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.model_metrics: Dict[str, List[AIModelPerformanceMetrics]] = defaultdict(list)
@@ -523,8 +503,7 @@ class AIProcessingPerformanceMonitor:
         prediction_category: str,
         resource_usage: Dict[str, float] = None
     ) -> AIModelPerformanceMetrics:
-        """Track AI model inference performance"""
-        
+        """Track AI model inference performance"""        
         inference_time_ms = (inference_end - inference_start).total_seconds() * 1000
         
         # Create performance metrics
@@ -569,8 +548,7 @@ class AIProcessingPerformanceMonitor:
         model_version: str,
         time_window_minutes: int = 5
     ) -> float:
-        """Calculate model throughput for specified time window"""
-        model_key = f"{model_name}_{model_version}"
+        """Calculate model throughput for specified time window"""        model_key = f"{model_name}_{model_version}"
         
         if model_key not in self.model_metrics:
             return 0.0
@@ -600,8 +578,7 @@ class AIProcessingPerformanceMonitor:
         model_version: str,
         hours: int = 24
     ) -> Dict[str, Any]:
-        """Get comprehensive model performance summary"""
-        model_key = f"{model_name}_{model_version}"
+        """Get comprehensive model performance summary"""        model_key = f"{model_name}_{model_version}"
         
         if model_key not in self.model_metrics:
             return {"error": "No metrics found for model"}
@@ -652,8 +629,7 @@ class AIProcessingPerformanceMonitor:
         model_key: str,
         current_metrics: AIModelPerformanceMetrics
     ) -> float:
-        """Calculate model drift score compared to baseline"""
-        if model_key not in self.model_baselines:
+        """Calculate model drift score compared to baseline"""        if model_key not in self.model_baselines:
             return 0.0
         
         baseline = self.model_baselines[model_key]
@@ -671,8 +647,7 @@ class AIProcessingPerformanceMonitor:
         self,
         metrics: List[AIModelPerformanceMetrics]
     ) -> str:
-        """Assess overall model health based on metrics"""
-        if not metrics:
+        """Assess overall model health based on metrics"""        if not metrics:
             return "unknown"
         
         avg_accuracy = statistics.mean([m.accuracy_score for m in metrics])
@@ -693,8 +668,7 @@ class AIProcessingPerformanceMonitor:
         self,
         metrics: List[AIModelPerformanceMetrics]
     ) -> List[str]:
-        """Generate performance improvement recommendations"""
-        recommendations = []
+        """Generate performance improvement recommendations"""        recommendations = []
         
         if not metrics:
             return ["Insufficient data for recommendations"]
@@ -726,11 +700,9 @@ class AIProcessingPerformanceMonitor:
         return recommendations
 
 class PerformanceMonitor:
-    """Enterprise performance monitoring system for IA Influencer platform"""
-    
+    """Enterprise performance monitoring system for IA Influencer platform"""    
     def __init__(self):
-        """Initialize performance monitor"""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize performance monitor"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.metrics_storage: Dict[str, deque] = defaultdict(lambda: deque(maxlen=10000))
         self.sla_thresholds: Dict[Tuple[ComponentType, MetricType], SLAThreshold] = {}
         self.active_alerts: List[PerformanceAlert] = []
@@ -755,8 +727,7 @@ class PerformanceMonitor:
         }
     
     async def initialize(self) -> bool:
-        """Initialize performance monitoring system"""
-        try:
+        """Initialize performance monitoring system"""        try:
             # Initialize connections
             await self._initialize_connections()
             
@@ -786,8 +757,7 @@ class PerformanceMonitor:
             return False
     
     async def _initialize_connections(self) -> None:
-        """Initialize database and cache connections"""
-        try:
+        """Initialize database and cache connections"""        try:
             # Redis for real-time metrics caching
             self.redis_client = aioredis.from_url(
                 "redis://localhost:6379/3",
@@ -808,8 +778,7 @@ class PerformanceMonitor:
             self.logger.warning(f"Failed to initialize connections: {e}")
     
     async def _setup_ia_influencer_sla_thresholds(self) -> None:
-        """Setup SLA thresholds for IA-Influencer platform"""
-        
+        """Setup SLA thresholds for IA-Influencer platform"""        
         # API Gateway Response Time
         self.sla_thresholds[(ComponentType.API_GATEWAY, MetricType.RESPONSE_TIME)] = SLAThreshold(
             metric_type=MetricType.RESPONSE_TIME,
@@ -931,8 +900,7 @@ class PerformanceMonitor:
         environment: str = "production",
         tags: Optional[Dict[str, str]] = None
     ) -> None:
-        """Record a performance metric"""
-        try:
+        """Record a performance metric"""        try:
             metric = PerformanceMetric(
                 component=component,
                 metric_type=metric_type,
@@ -962,8 +930,7 @@ class PerformanceMonitor:
             self.logger.error(f"Failed to record metric: {e}")
     
     async def _store_metric_in_redis(self, metric: PerformanceMetric) -> None:
-        """Store metric in Redis"""
-        try:
+        """Store metric in Redis"""        try:
             key = f"metrics:{metric.component.value}:{metric.metric_type.value}:{metric.environment}"
             
             # Store latest value
@@ -988,11 +955,9 @@ class PerformanceMonitor:
             self.logger.error(f"Failed to store metric in Redis: {e}")
     
     async def _store_metric_in_database(self, metric: PerformanceMetric) -> None:
-        """Store metric in PostgreSQL"""
-        try:
+        """Store metric in PostgreSQL"""        try:
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""
-                    INSERT INTO performance_metrics 
+                await conn.execute("""                    INSERT INTO performance_metrics 
                     (component, metric_type, value, unit, environment, tags, timestamp)
                     VALUES ($1, $2, $3, $4, $5, $6, $7)
                 """, 
@@ -1008,8 +973,7 @@ class PerformanceMonitor:
             self.logger.error(f"Failed to store metric in database: {e}")
     
     async def _check_sla_threshold(self, metric: PerformanceMetric) -> None:
-        """Check if metric violates SLA thresholds"""
-        try:
+        """Check if metric violates SLA thresholds"""        try:
             threshold_key = (metric.component, metric.metric_type)
             if threshold_key not in self.sla_thresholds:
                 return
@@ -1075,8 +1039,7 @@ class PerformanceMonitor:
             self.logger.error(f"Failed to check SLA threshold: {e}")
     
     def _compare_value(self, value: float, threshold: float, operator: str) -> bool:
-        """Compare value against threshold with given operator"""
-        if operator == ">":
+        """Compare value against threshold with given operator"""        if operator == ">":
             return value > threshold
         elif operator == "<":
             return value < threshold
@@ -1089,15 +1052,13 @@ class PerformanceMonitor:
         return False
     
     def _find_active_alert(self, component: ComponentType, metric_type: MetricType) -> Optional[PerformanceAlert]:
-        """Find active alert for component and metric type"""
-        for alert in self.active_alerts:
+        """Find active alert for component and metric type"""        for alert in self.active_alerts:
             if alert.component == component and alert.metric_type == metric_type and not alert.resolved:
                 return alert
         return None
     
     async def _check_alert_resolution(self, component: ComponentType, metric_type: MetricType) -> None:
-        """Check if alerts can be resolved"""
-        active_alert = self._find_active_alert(component, metric_type)
+        """Check if alerts can be resolved"""        active_alert = self._find_active_alert(component, metric_type)
         if not active_alert:
             return
         
@@ -1137,8 +1098,7 @@ class PerformanceMonitor:
         environment: str,
         window_minutes: int
     ) -> List[PerformanceMetric]:
-        """Get recent metrics within time window"""
-        cutoff_time = datetime.now() - timedelta(minutes=window_minutes)
+        """Get recent metrics within time window"""        cutoff_time = datetime.now() - timedelta(minutes=window_minutes)
         metric_key = f"{component.value}:{metric_type.value}:{environment}"
         
         if metric_key in self.metrics_storage:
@@ -1155,16 +1115,14 @@ class PerformanceMonitor:
         current_value: float,
         threshold_value: float
     ) -> str:
-        """Generate alert message"""
-        return (
+        """Generate alert message"""        return (
             f"{severity.value.upper()}: {metric.component.value} {metric.metric_type.value} "
             f"is {current_value:.2f} {metric.unit} (threshold: {threshold_value:.2f} {metric.unit}) "
             f"in {metric.environment} environment"
         )
     
     async def _send_performance_alert(self, alert: PerformanceAlert) -> None:
-        """Send performance alert notification"""
-        # This would integrate with the notification system
+        """Send performance alert notification"""        # This would integrate with the notification system
         self.logger.info(f"Sending alert notification: {alert.message}")
     
     async def get_component_metrics(
@@ -1173,8 +1131,7 @@ class PerformanceMonitor:
         environment: str = "production",
         hours: int = 24
     ) -> Dict[MetricType, List[PerformanceMetric]]:
-        """Get metrics for a specific component"""
-        cutoff_time = datetime.now() - timedelta(hours=hours)
+        """Get metrics for a specific component"""        cutoff_time = datetime.now() - timedelta(hours=hours)
         component_metrics = {}
         
         for metric_type in MetricType:
@@ -1196,8 +1153,7 @@ class PerformanceMonitor:
         environment: str = "production",
         hours: int = 24
     ) -> SLAReport:
-        """Generate SLA compliance report"""
-        period_start = datetime.now() - timedelta(hours=hours)
+        """Generate SLA compliance report"""        period_start = datetime.now() - timedelta(hours=hours)
         period_end = datetime.now()
         
         # Get metrics for the period
@@ -1266,8 +1222,7 @@ class PerformanceMonitor:
         )
     
     async def get_system_health_dashboard(self, environment: str = "production") -> Dict[str, Any]:
-        """Get system health dashboard data"""
-        dashboard_data = {
+        """Get system health dashboard data"""        dashboard_data = {
             "timestamp": datetime.now().isoformat(),
             "environment": environment,
             "components": {},
@@ -1315,8 +1270,7 @@ class PerformanceMonitor:
         return dashboard_data
     
     async def _start_monitoring_tasks(self) -> None:
-        """Start background monitoring tasks"""
-        # System metrics collection
+        """Start background monitoring tasks"""        # System metrics collection
         self.monitoring_tasks.append(
             asyncio.create_task(self._collect_system_metrics())
         )
@@ -1329,8 +1283,7 @@ class PerformanceMonitor:
         self.logger.info("Background monitoring tasks started")
     
     async def _collect_system_metrics(self) -> None:
-        """Collect system-level metrics"""
-        while True:
+        """Collect system-level metrics"""        while True:
             try:
                 # CPU usage
                 cpu_percent = psutil.cpu_percent(interval=1)
@@ -1367,8 +1320,7 @@ class PerformanceMonitor:
                 await asyncio.sleep(60)
     
     async def _cleanup_old_alerts(self) -> None:
-        """Cleanup old resolved alerts"""
-        while True:
+        """Cleanup old resolved alerts"""        while True:
             try:
                 cutoff_time = datetime.now() - timedelta(days=7)
                 
@@ -1385,12 +1337,10 @@ class PerformanceMonitor:
                 await asyncio.sleep(3600)
     
     async def _initialize_metric_collection(self) -> None:
-        """Initialize metric collection for IA-Influencer components"""
-        self.logger.info("Metric collection initialized for IA-Influencer platform")
+        """Initialize metric collection for IA-Influencer components"""        self.logger.info("Metric collection initialized for IA-Influencer platform")
     
     async def shutdown(self) -> None:
-        """Shutdown performance monitor"""
-        # Cancel monitoring tasks
+        """Shutdown performance monitor"""        # Cancel monitoring tasks
         for task in self.monitoring_tasks:
             task.cancel()
         

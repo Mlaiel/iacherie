@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Distribution Service Tests
+"""Distribution Service Tests
 
 Comprehensive tests for the DistributionService class that handles
 multi-platform content publishing and scheduling.
@@ -25,9 +21,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -51,23 +45,18 @@ from ai.content_generation.content_models import Platform
 
 
 class TestDistributionService:
-    """Test suite for DistributionService"""
-    
+    """Test suite for DistributionService"""    
     @pytest.fixture
     def service(self):
-        """Create a distribution service instance"""
-        return DistributionService()
+        """Create a distribution service instance"""        return DistributionService()
     
     @pytest.fixture
     def sample_content(self):
-        """Create sample content for testing"""
-        return "This is a sample social media post about AI technology trends. #AI #tech #innovation"
+        """Create sample content for testing"""        return "This is a sample social media post about AI technology trends. #AI #tech #innovation"
     
     @pytest.fixture
     def blog_content(self):
-        """Create sample blog content"""
-        return """
-        # The Future of AI Technology
+        """Create sample blog content"""        return """        # The Future of AI Technology
         
         Artificial Intelligence is transforming our world in unprecedented ways.
         This comprehensive guide explores the latest trends and developments.
@@ -78,11 +67,9 @@ class TestDistributionService:
         - Computer Vision breakthroughs
         
         Read more to discover how these technologies will shape our future.
-        """
-    
+        """    
     def test_service_initialization(self, service):
-        """Test distribution service initialization"""
-        assert service is not None
+        """Test distribution service initialization"""        assert service is not None
         assert hasattr(service, 'platform_configs')
         assert hasattr(service, 'publishing_queue')
         assert hasattr(service, 'active_tasks')
@@ -98,8 +85,7 @@ class TestDistributionService:
     
     @pytest.mark.asyncio
     async def test_schedule_publication_single_platform(self, service, sample_content):
-        """Test scheduling publication to a single platform"""
-        scheduled_time = datetime.now() + timedelta(hours=1)
+        """Test scheduling publication to a single platform"""        scheduled_time = datetime.now() + timedelta(hours=1)
         
         task_ids = await service.schedule_publication(
             content_id="test_001",
@@ -114,8 +100,7 @@ class TestDistributionService:
     
     @pytest.mark.asyncio
     async def test_schedule_publication_multiple_platforms(self, service, sample_content):
-        """Test scheduling publication to multiple platforms"""
-        scheduled_time = datetime.now() + timedelta(hours=2)
+        """Test scheduling publication to multiple platforms"""        scheduled_time = datetime.now() + timedelta(hours=2)
         platforms = [Platform.INSTAGRAM, Platform.TWITTER, Platform.LINKEDIN]
         
         task_ids = await service.schedule_publication(
@@ -132,8 +117,7 @@ class TestDistributionService:
     
     @pytest.mark.asyncio
     async def test_immediate_publication(self, service, sample_content):
-        """Test immediate publication to platforms"""
-        platforms = [Platform.TWITTER, Platform.LINKEDIN]
+        """Test immediate publication to platforms"""        platforms = [Platform.TWITTER, Platform.LINKEDIN]
         
         with patch.object(service, '_call_platform_api') as mock_api:
             mock_api.return_value = {
@@ -155,8 +139,7 @@ class TestDistributionService:
     
     @pytest.mark.asyncio
     async def test_content_optimization_for_platforms(self, service, blog_content):
-        """Test content optimization for different platforms"""
-        # Test Instagram optimization
+        """Test content optimization for different platforms"""        # Test Instagram optimization
         instagram_content = await service._optimize_for_platform(blog_content, Platform.INSTAGRAM)
         assert len(instagram_content) <= service.platform_configs[Platform.INSTAGRAM].content_limits["max_caption_length"]
         
@@ -170,8 +153,7 @@ class TestDistributionService:
     
     @pytest.mark.asyncio
     async def test_content_validation_success(self, service, sample_content):
-        """Test successful content validation"""
-        validation_result = await service._validate_content_for_platform(sample_content, Platform.INSTAGRAM)
+        """Test successful content validation"""        validation_result = await service._validate_content_for_platform(sample_content, Platform.INSTAGRAM)
         
         assert validation_result["valid"] is True
         assert len(validation_result["errors"]) == 0
@@ -180,8 +162,7 @@ class TestDistributionService:
     
     @pytest.mark.asyncio
     async def test_content_validation_failure(self, service):
-        """Test content validation failure scenarios"""
-        # Test empty content
+        """Test content validation failure scenarios"""        # Test empty content
         empty_validation = await service._validate_content_for_platform("", Platform.TWITTER)
         assert empty_validation["valid"] is False
         assert "Content is empty" in empty_validation["errors"]
@@ -194,8 +175,7 @@ class TestDistributionService:
     
     @pytest.mark.asyncio
     async def test_optimal_timing_calculation(self, service):
-        """Test optimal publishing time calculation"""
-        now = datetime.now()
+        """Test optimal publishing time calculation"""        now = datetime.now()
         immediate_time = now + timedelta(minutes=2)
         
         # Test immediate publication gets next optimal time
@@ -209,8 +189,7 @@ class TestDistributionService:
     
     @pytest.mark.asyncio
     async def test_publication_tracking(self, service, sample_content):
-        """Test publication tracking and metrics"""
-        content_id = "tracking_test_001"
+        """Test publication tracking and metrics"""        content_id = "tracking_test_001"
         
         result = {
             "success": True,
@@ -226,8 +205,7 @@ class TestDistributionService:
     
     @pytest.mark.asyncio
     async def test_publication_status_retrieval(self, service, sample_content):
-        """Test retrieving publication status"""
-        # Schedule a publication
+        """Test retrieving publication status"""        # Schedule a publication
         task_ids = await service.schedule_publication(
             content_id="status_test",
             content=sample_content,
@@ -247,8 +225,7 @@ class TestDistributionService:
     
     @pytest.mark.asyncio
     async def test_publication_cancellation(self, service, sample_content):
-        """Test publication cancellation"""
-        # Schedule a publication
+        """Test publication cancellation"""        # Schedule a publication
         task_ids = await service.schedule_publication(
             content_id="cancel_test",
             content=sample_content,
@@ -269,8 +246,7 @@ class TestDistributionService:
     
     @pytest.mark.asyncio
     async def test_platform_api_simulation(self, service, sample_content):
-        """Test platform API call simulation"""
-        # Test successful API call
+        """Test platform API call simulation"""        # Test successful API call
         result = await service._call_platform_api(
             Platform.INSTAGRAM,
             sample_content,
@@ -284,8 +260,7 @@ class TestDistributionService:
     
     @pytest.mark.asyncio
     async def test_error_handling_in_publication(self, service, sample_content):
-        """Test error handling during publication"""
-        with patch.object(service, '_call_platform_api') as mock_api:
+        """Test error handling during publication"""        with patch.object(service, '_call_platform_api') as mock_api:
             # Mock API failure
             mock_api.return_value = {
                 "success": False,
@@ -304,8 +279,7 @@ class TestDistributionService:
     
     @pytest.mark.asyncio
     async def test_batch_publication(self, service):
-        """Test batch publication functionality"""
-        content_items = [
+        """Test batch publication functionality"""        content_items = [
             {
                 "content_id": "batch_001",
                 "content": "First batch content #batch1",
@@ -341,8 +315,7 @@ class TestDistributionService:
     
     @pytest.mark.asyncio
     async def test_platform_analytics(self, service):
-        """Test platform analytics functionality"""
-        # Add some mock metrics
+        """Test platform analytics functionality"""        # Add some mock metrics
         content_id = "analytics_test"
         await service._track_publication(
             content_id,
@@ -358,8 +331,7 @@ class TestDistributionService:
         assert analytics["platform"] == Platform.INSTAGRAM.value
     
     def test_queue_status(self, service):
-        """Test queue status reporting"""
-        status = service.get_queue_status()
+        """Test queue status reporting"""        status = service.get_queue_status()
         
         assert status is not None
         assert "scheduled_tasks" in status
@@ -370,8 +342,7 @@ class TestDistributionService:
     
     @pytest.mark.asyncio
     async def test_content_formatting_instagram(self, service):
-        """Test Instagram-specific content formatting"""
-        raw_content = "This is raw content that needs Instagram formatting.\n\nIt has multiple paragraphs."
+        """Test Instagram-specific content formatting"""        raw_content = "This is raw content that needs Instagram formatting.\n\nIt has multiple paragraphs."
         
         formatted_content = service._add_instagram_formatting(raw_content)
         
@@ -382,8 +353,7 @@ class TestDistributionService:
     
     @pytest.mark.asyncio
     async def test_content_formatting_linkedin(self, service):
-        """Test LinkedIn-specific content formatting"""
-        raw_content = "Professional content for LinkedIn\n\nWith business focus\nAnd proper formatting"
+        """Test LinkedIn-specific content formatting"""        raw_content = "Professional content for LinkedIn\n\nWith business focus\nAnd proper formatting"
         
         formatted_content = service._add_linkedin_formatting(raw_content)
         
@@ -393,8 +363,7 @@ class TestDistributionService:
     
     @pytest.mark.asyncio
     async def test_concurrent_scheduling(self, service, sample_content):
-        """Test concurrent scheduling operations"""
-        # Schedule multiple publications concurrently
+        """Test concurrent scheduling operations"""        # Schedule multiple publications concurrently
         tasks = []
         for i in range(5):
             task = service.schedule_publication(
@@ -416,8 +385,7 @@ class TestDistributionService:
     
     @pytest.mark.asyncio
     async def test_platform_specific_validation(self, service):
-        """Test platform-specific validation rules"""
-        # Test TikTok validation (shorter content)
+        """Test platform-specific validation rules"""        # Test TikTok validation (shorter content)
         tiktok_content = "Short TikTok content #viral"
         tiktok_validation = await service._validate_content_for_platform(tiktok_content, Platform.TIKTOK)
         assert tiktok_validation["valid"] is True
@@ -430,8 +398,7 @@ class TestDistributionService:
     
     @pytest.mark.asyncio
     async def test_retry_mechanism_simulation(self, service, sample_content):
-        """Test retry mechanism for failed publications"""
-        with patch.object(service, '_call_platform_api') as mock_api:
+        """Test retry mechanism for failed publications"""        with patch.object(service, '_call_platform_api') as mock_api:
             # First call fails, second succeeds
             mock_api.side_effect = [
                 {"success": False, "error": "Temporary failure"},
@@ -448,8 +415,7 @@ class TestDistributionService:
     
     @pytest.mark.asyncio
     async def test_metadata_handling(self, service, sample_content):
-        """Test metadata handling in publications"""
-        metadata = {
+        """Test metadata handling in publications"""        metadata = {
             "campaign_id": "test_campaign_001",
             "source": "automated_system",
             "priority": "high",
@@ -478,8 +444,7 @@ class TestDistributionService:
     
     @pytest.mark.asyncio
     async def test_content_length_optimization(self, service):
-        """Test content length optimization for different platforms"""
-        long_content = "Very long content " * 100  # Much longer than any platform limit
+        """Test content length optimization for different platforms"""        long_content = "Very long content " * 100  # Much longer than any platform limit
         
         # Test optimization for each platform
         platforms_to_test = [Platform.TWITTER, Platform.INSTAGRAM, Platform.TIKTOK]
@@ -498,16 +463,13 @@ class TestDistributionService:
 
 
 class TestPlatformConfig:
-    """Test suite for platform configuration"""
-    
+    """Test suite for platform configuration"""    
     @pytest.fixture
     def service(self):
-        """Create service for platform config testing"""
-        return DistributionService()
+        """Create service for platform config testing"""        return DistributionService()
     
     def test_platform_configurations_exist(self, service):
-        """Test that all platform configurations exist"""
-        required_platforms = [
+        """Test that all platform configurations exist"""        required_platforms = [
             Platform.INSTAGRAM,
             Platform.TWITTER,
             Platform.LINKEDIN,
@@ -521,8 +483,7 @@ class TestPlatformConfig:
             assert isinstance(config, PlatformConfig)
     
     def test_platform_config_completeness(self, service):
-        """Test platform configuration completeness"""
-        for platform, config in service.platform_configs.items():
+        """Test platform configuration completeness"""        for platform, config in service.platform_configs.items():
             assert config.platform == platform
             assert config.api_endpoint is not None
             assert config.auth_type is not None
@@ -532,8 +493,7 @@ class TestPlatformConfig:
             assert isinstance(config.supported_formats, list)
     
     def test_rate_limits_configuration(self, service):
-        """Test rate limits configuration"""
-        for platform, config in service.platform_configs.items():
+        """Test rate limits configuration"""        for platform, config in service.platform_configs.items():
             rate_limits = config.rate_limits
             
             # Should have some form of rate limiting
@@ -545,8 +505,7 @@ class TestPlatformConfig:
                 assert limit_value > 0
     
     def test_content_limits_configuration(self, service):
-        """Test content limits configuration"""
-        for platform, config in service.platform_configs.items():
+        """Test content limits configuration"""        for platform, config in service.platform_configs.items():
             content_limits = config.content_limits
             
             # Should have content limits
@@ -558,8 +517,7 @@ class TestPlatformConfig:
             assert has_length_limit
     
     def test_optimal_times_configuration(self, service):
-        """Test optimal times configuration"""
-        for platform, config in service.platform_configs.items():
+        """Test optimal times configuration"""        for platform, config in service.platform_configs.items():
             optimal_times = config.optimal_times
             
             # Should have optimal times defined
@@ -575,11 +533,9 @@ class TestPlatformConfig:
 
 
 class TestPublishingTask:
-    """Test suite for PublishingTask"""
-    
+    """Test suite for PublishingTask"""    
     def test_task_creation(self):
-        """Test publishing task creation"""
-        task = PublishingTask(
+        """Test publishing task creation"""        task = PublishingTask(
             task_id="test_task_123",
             content_id="content_456",
             platform=Platform.INSTAGRAM,
@@ -599,8 +555,7 @@ class TestPublishingTask:
         assert task.created_at is not None
     
     def test_task_status_transitions(self):
-        """Test task status transitions"""
-        task = PublishingTask(
+        """Test task status transitions"""        task = PublishingTask(
             task_id="status_test",
             content_id="content_status",
             platform=Platform.TWITTER,

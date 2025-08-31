@@ -1,5 +1,4 @@
-"""
-Metrics Configuration Module for IA-Influencer Agent Platform
+"""Metrics Configuration Module for IA-Influencer Agent Platform
 =============================================================
 
 Professional metrics collection and instrumentation configuration for
@@ -15,9 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import os
+"""import os
 import time
 from typing import Dict, List, Any, Optional, Callable
 from dataclasses import dataclass, field
@@ -28,8 +25,7 @@ import threading
 
 
 class MetricCategory(Enum):
-    """Metric categories for organization"""
-    SYSTEM = "system"
+    """Metric categories for organization"""    SYSTEM = "system"
     APPLICATION = "application"
     BUSINESS = "business"
     AI_SERVICES = "ai_services"
@@ -41,8 +37,7 @@ class MetricCategory(Enum):
 
 @dataclass
 class MetricDefinition:
-    """Metric definition with metadata"""
-    name: str
+    """Metric definition with metadata"""    name: str
     metric_type: str
     description: str
     category: MetricCategory
@@ -53,8 +48,7 @@ class MetricDefinition:
 
 
 class MetricsRegistry:
-    """Professional metrics registry with automatic instrumentation"""
-    
+    """Professional metrics registry with automatic instrumentation"""    
     def __init__(self):
         self.registry = CollectorRegistry()
         self._metrics = {}
@@ -64,8 +58,7 @@ class MetricsRegistry:
         self._start_background_collection()
     
     def _setup_standard_metrics(self):
-        """Setup standard platform metrics"""
-        # System metrics
+        """Setup standard platform metrics"""        # System metrics
         self.system_cpu_usage = Gauge(
             'system_cpu_usage_percent',
             'System CPU usage percentage',
@@ -287,8 +280,7 @@ class MetricsRegistry:
         )
     
     def _start_background_collection(self):
-        """Start background metric collection"""
-        def collect_system_metrics():
+        """Start background metric collection"""        def collect_system_metrics():
             while True:
                 try:
                     # CPU usage
@@ -317,8 +309,7 @@ class MetricsRegistry:
     
     def record_http_request(self, method: str, endpoint: str, status: str, 
                            service: str, duration: float):
-        """Record HTTP request metrics"""
-        self.http_requests_total.labels(
+        """Record HTTP request metrics"""        self.http_requests_total.labels(
             method=method, endpoint=endpoint, status=status, service=service
         ).inc()
         
@@ -327,15 +318,13 @@ class MetricsRegistry:
         ).observe(duration)
     
     def record_db_query(self, query_type: str, database: str, duration: float):
-        """Record database query metrics"""
-        self.db_query_duration.labels(
+        """Record database query metrics"""        self.db_query_duration.labels(
             query_type=query_type, database=database
         ).observe(duration)
     
     def record_ai_inference(self, model_type: str, content_type: str, 
                            duration: float, accuracy: Optional[float] = None):
-        """Record AI inference metrics"""
-        self.ai_inference_duration.labels(
+        """Record AI inference metrics"""        self.ai_inference_duration.labels(
             model_type=model_type, content_type=content_type
         ).observe(duration)
         
@@ -345,26 +334,22 @@ class MetricsRegistry:
             ).set(accuracy)
     
     def record_content_upload(self, user_id: str, content_type: str, platform: str):
-        """Record content upload metrics"""
-        self.content_uploads_total.labels(
+        """Record content upload metrics"""        self.content_uploads_total.labels(
             user_id=user_id, content_type=content_type, platform=platform
         ).inc()
     
     def record_protection_match(self, content_type: str, confidence: str, platform: str):
-        """Record content protection match metrics"""
-        self.protection_matches_total.labels(
+        """Record content protection match metrics"""        self.protection_matches_total.labels(
             content_type=content_type, match_confidence=confidence, platform=platform
         ).inc()
     
     def record_audio_processing(self, processing_type: str, duration: float):
-        """Record audio processing metrics"""
-        self.audio_processing_duration.labels(
+        """Record audio processing metrics"""        self.audio_processing_duration.labels(
             processing_type=processing_type
         ).observe(duration)
     
     def record_fingerprint_generation(self, content_type: str, audio_format: str, duration: float):
-        """Record fingerprint generation metrics"""
-        self.fingerprint_generation_duration.labels(
+        """Record fingerprint generation metrics"""        self.fingerprint_generation_duration.labels(
             content_type=content_type
         ).observe(duration)
         
@@ -374,76 +359,62 @@ class MetricsRegistry:
             ).inc()
     
     def record_auth_attempt(self, status: str, method: str):
-        """Record authentication attempt metrics"""
-        self.auth_attempts_total.labels(status=status, method=method).inc()
+        """Record authentication attempt metrics"""        self.auth_attempts_total.labels(status=status, method=method).inc()
     
     def record_security_incident(self, severity: str, incident_type: str):
-        """Record security incident metrics"""
-        self.security_incidents_total.labels(
+        """Record security incident metrics"""        self.security_incidents_total.labels(
             severity=severity, incident_type=incident_type
         ).inc()
     
     def record_revenue(self, user_id: str, platform: str, content_type: str, amount: float):
-        """Record revenue metrics"""
-        self.revenue_generated_total.labels(
+        """Record revenue metrics"""        self.revenue_generated_total.labels(
             user_id=user_id, platform=platform, content_type=content_type
         ).inc(amount)
     
     def record_payment_processing(self, provider: str, payment_type: str, duration: float):
-        """Record payment processing metrics"""
-        self.payment_processing_duration.labels(
+        """Record payment processing metrics"""        self.payment_processing_duration.labels(
             provider=provider, payment_type=payment_type
         ).observe(duration)
     
     def update_active_users(self, count: int):
-        """Update active users count"""
-        self.active_users_count.set(count)
+        """Update active users count"""        self.active_users_count.set(count)
     
     def update_platform_usage(self, platform: str, count: int):
-        """Update platform usage statistics"""
-        self.platform_usage_count.labels(platform=platform).set(count)
+        """Update platform usage statistics"""        self.platform_usage_count.labels(platform=platform).set(count)
     
     def update_gpu_utilization(self, device_id: str, utilization: float):
-        """Update GPU utilization metrics"""
-        self.ai_gpu_utilization.labels(device_id=device_id).set(utilization)
+        """Update GPU utilization metrics"""        self.ai_gpu_utilization.labels(device_id=device_id).set(utilization)
     
     def update_queue_size(self, queue_type: str, size: int):
-        """Update queue size metrics"""
-        if queue_type.startswith("ai_"):
+        """Update queue size metrics"""        if queue_type.startswith("ai_"):
             self.ai_processing_queue_size.labels(queue_type=queue_type).set(size)
         elif queue_type == "spectral_analysis":
             self.spectral_analysis_queue_size.set(size)
     
     def update_fingerprint_database_size(self, content_type: str, shard: str, size: int):
-        """Update fingerprint database size"""
-        self.fingerprint_database_size.labels(
+        """Update fingerprint database size"""        self.fingerprint_database_size.labels(
             content_type=content_type, database_shard=shard
         ).set(size)
     
     def update_license_agreements(self, license_type: str, count: int):
-        """Update active license agreements"""
-        self.license_agreements_active.labels(license_type=license_type).set(count)
+        """Update active license agreements"""        self.license_agreements_active.labels(license_type=license_type).set(count)
     
     def set_suspicious_activity_score(self, source_ip: str, activity_type: str, score: float):
-        """Set suspicious activity score"""
-        self.suspicious_activity_score.labels(
+        """Set suspicious activity score"""        self.suspicious_activity_score.labels(
             source_ip=source_ip, activity_type=activity_type
         ).set(score)
     
     def increment_collaboration_matches(self, match_type: str, success: bool):
-        """Increment collaboration matches"""
-        self.collaboration_matches_total.labels(
+        """Increment collaboration matches"""        self.collaboration_matches_total.labels(
             match_type=match_type, success=str(success).lower()
         ).inc()
     
     def get_metrics_export(self) -> str:
-        """Export metrics in Prometheus format"""
-        return generate_latest(self.registry).decode('utf-8')
+        """Export metrics in Prometheus format"""        return generate_latest(self.registry).decode('utf-8')
 
 
 class MetricsConfig:
-    """Professional metrics configuration for IA-Influencer platform"""
-    
+    """Professional metrics configuration for IA-Influencer platform"""    
     def __init__(self):
         self.metrics_port = int(os.getenv("METRICS_PORT", "8000"))
         self.metrics_path = os.getenv("METRICS_PATH", "/metrics")
@@ -452,8 +423,7 @@ class MetricsConfig:
         self.registry = MetricsRegistry()
     
     def get_metric_definitions(self) -> List[MetricDefinition]:
-        """Get all metric definitions"""
-        return [
+        """Get all metric definitions"""        return [
             # System metrics
             MetricDefinition(
                 name="system_cpu_usage_percent",
@@ -581,8 +551,7 @@ class MetricsConfig:
         ]
     
     def get_configuration_dict(self) -> Dict[str, Any]:
-        """Get metrics configuration as dictionary"""
-        return {
+        """Get metrics configuration as dictionary"""        return {
             "metrics_port": self.metrics_port,
             "metrics_path": self.metrics_path,
             "collection_interval": self.collection_interval,

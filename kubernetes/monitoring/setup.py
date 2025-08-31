@@ -1,5 +1,4 @@
-"""
-Monitoring System Setup and Initialization for IA Influencer Agent
+"""Monitoring System Setup and Initialization for IA Influencer Agent
 ===================================================================
 
 Comprehensive setup script for initializing the monitoring infrastructure,
@@ -18,9 +17,7 @@ Setup Components:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import os
 import sys
@@ -45,8 +42,7 @@ from utils.logger import setup_monitoring_logger
 
 @dataclass
 class SetupStatus:
-    """Status tracking for setup operations"""
-    component: str
+    """Status tracking for setup operations"""    component: str
     status: str  # pending, running, completed, failed
     start_time: Optional[datetime] = None
     end_time: Optional[datetime] = None
@@ -55,14 +51,12 @@ class SetupStatus:
 
 
 class MonitoringSetupManager:
-    """
-    Comprehensive setup manager for IA Influencer Agent monitoring system.
+    """    Comprehensive setup manager for IA Influencer Agent monitoring system.
     
     Handles complete initialization of monitoring infrastructure including
     database setup, Redis configuration, alerting verification, and
     system readiness validation.
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None, force_recreate: bool = False):
         self.config_path = config_path
         self.force_recreate = force_recreate
@@ -82,8 +76,7 @@ class MonitoringSetupManager:
         self.db_connection: Optional[psycopg2.extensions.connection] = None
     
     async def run_complete_setup(self) -> bool:
-        """Run complete monitoring system setup"""
-        
+        """Run complete monitoring system setup"""        
         self.logger.info("🚀 Starting IA Influencer Agent Monitoring System Setup")
         self.logger.info(f"Environment: {os.getenv('ENVIRONMENT', 'development')}")
         self.logger.info(f"Configuration Profile: {self.config.get('profile', 'unknown')}")
@@ -150,8 +143,7 @@ class MonitoringSetupManager:
         return success
     
     async def _verify_system_requirements(self) -> bool:
-        """Verify system requirements and dependencies"""
-        
+        """Verify system requirements and dependencies"""        
         self.logger.info("Checking system requirements...")
         
         requirements = {
@@ -201,8 +193,7 @@ class MonitoringSetupManager:
         return True
     
     async def _setup_database(self) -> bool:
-        """Setup PostgreSQL database for monitoring"""
-        
+        """Setup PostgreSQL database for monitoring"""        
         self.logger.info("Setting up PostgreSQL database...")
         
         db_config = self.config_manager.get_database_config()
@@ -257,8 +248,7 @@ class MonitoringSetupManager:
             return False
     
     async def _setup_redis(self) -> bool:
-        """Setup Redis connection and configuration"""
-        
+        """Setup Redis connection and configuration"""        
         self.logger.info("Setting up Redis connection...")
         
         redis_config = self.config_manager.get_redis_config()
@@ -311,16 +301,14 @@ class MonitoringSetupManager:
             return False
     
     async def _create_database_schema(self) -> bool:
-        """Create database schema for monitoring data"""
-        
+        """Create database schema for monitoring data"""        
         self.logger.info("Creating database schema...")
         
         try:
             cursor = self.db_connection.cursor()
             
             # Create monitoring schema
-            schema_sql = """
-            -- Monitoring metrics table
+            schema_sql = """            -- Monitoring metrics table
             CREATE TABLE IF NOT EXISTS monitoring_metrics (
                 id SERIAL PRIMARY KEY,
                 timestamp TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
@@ -444,15 +432,13 @@ class MonitoringSetupManager:
             
             -- Create partitioning for large tables (if PostgreSQL version supports)
             -- This helps with performance on large datasets
-            """
-            
+            """            
             # Execute schema creation
             cursor.execute(schema_sql)
             self.db_connection.commit()
             
             # Verify tables were created
-            cursor.execute("""
-                SELECT table_name FROM information_schema.tables 
+            cursor.execute("""                SELECT table_name FROM information_schema.tables 
                 WHERE table_schema = 'public' AND table_name LIKE '%monitoring%' 
                    OR table_name LIKE '%ai_%' 
                    OR table_name LIKE '%revenue_%'
@@ -475,8 +461,7 @@ class MonitoringSetupManager:
             return False
     
     async def _initialize_redis_structures(self) -> bool:
-        """Initialize Redis data structures for monitoring"""
-        
+        """Initialize Redis data structures for monitoring"""        
         self.logger.info("Initializing Redis data structures...")
         
         try:
@@ -553,8 +538,7 @@ class MonitoringSetupManager:
             return False
     
     async def _setup_alerting_channels(self) -> bool:
-        """Setup and test alerting channels"""
-        
+        """Setup and test alerting channels"""        
         self.logger.info("Setting up alerting channels...")
         
         alerting_config = self.config_manager.get_alerting_config()
@@ -635,8 +619,7 @@ class MonitoringSetupManager:
         return True
     
     async def _setup_dashboard(self) -> bool:
-        """Setup monitoring dashboard configuration"""
-        
+        """Setup monitoring dashboard configuration"""        
         self.logger.info("Setting up monitoring dashboard...")
         
         dashboard_config = self.config_manager.get_dashboard_config()
@@ -675,8 +658,7 @@ class MonitoringSetupManager:
             return False
     
     async def _deploy_security_rules(self) -> bool:
-        """Deploy security monitoring rules"""
-        
+        """Deploy security monitoring rules"""        
         self.logger.info("Deploying security monitoring rules...")
         
         try:
@@ -731,8 +713,7 @@ class MonitoringSetupManager:
             return False
     
     async def _initialize_ai_models(self) -> bool:
-        """Initialize AI model monitoring configuration"""
-        
+        """Initialize AI model monitoring configuration"""        
         self.logger.info("Initializing AI model monitoring...")
         
         try:
@@ -797,8 +778,7 @@ class MonitoringSetupManager:
             return False
     
     async def _setup_business_intelligence(self) -> bool:
-        """Setup business intelligence monitoring"""
-        
+        """Setup business intelligence monitoring"""        
         self.logger.info("Setting up business intelligence monitoring...")
         
         try:
@@ -853,8 +833,7 @@ class MonitoringSetupManager:
             return False
     
     async def _establish_performance_baseline(self) -> bool:
-        """Establish performance baseline metrics"""
-        
+        """Establish performance baseline metrics"""        
         self.logger.info("Establishing performance baseline...")
         
         try:
@@ -904,8 +883,7 @@ class MonitoringSetupManager:
             return False
     
     async def _run_comprehensive_health_check(self) -> bool:
-        """Run comprehensive system health check"""
-        
+        """Run comprehensive system health check"""        
         self.logger.info("Running comprehensive health check...")
         
         health_results = {}
@@ -975,8 +953,7 @@ class MonitoringSetupManager:
         return True  # Always return True as this is the final step
     
     def _validate_complete_configuration(self) -> Dict[str, Any]:
-        """Validate complete monitoring configuration"""
-        
+        """Validate complete monitoring configuration"""        
         validation_results = {
             "valid": True,
             "warnings": [],
@@ -1015,8 +992,7 @@ class MonitoringSetupManager:
         return validation_results
     
     async def _generate_setup_report(self):
-        """Generate comprehensive setup report"""
-        
+        """Generate comprehensive setup report"""        
         report_lines = [
             "=" * 80,
             "IA INFLUENCER AGENT MONITORING SYSTEM SETUP REPORT",
@@ -1088,8 +1064,7 @@ class MonitoringSetupManager:
 
 
 async def main():
-    """Main setup function"""
-    
+    """Main setup function"""    
     import argparse
     
     parser = argparse.ArgumentParser(description="IA Influencer Agent Monitoring Setup")

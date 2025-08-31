@@ -1,5 +1,4 @@
-"""
-💰 Revenue Protection Service - IA-Influencer-Agent  
+"""💰 Revenue Protection Service - IA-Influencer-Agent  
 ==================================================================
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
@@ -14,9 +13,7 @@ prosecuted to the full extent of the law.
 Advanced revenue protection and recovery system for content creators.
 Provides automated revenue claim management, loss calculation, and
 multi-platform monetization protection.
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from enum import Enum, IntEnum
@@ -38,8 +35,7 @@ logger = logging.getLogger(__name__)
 # =============== ENUMS & CONFIGURATION ===============
 
 class RevenueProtectionStatus(Enum):
-    """Revenue protection service operational status"""
-    ACTIVE = "active"
+    """Revenue protection service operational status"""    ACTIVE = "active"
     INACTIVE = "inactive"
     PROCESSING = "processing"
     CALCULATING = "calculating"
@@ -49,8 +45,7 @@ class RevenueProtectionStatus(Enum):
     MAINTENANCE = "maintenance"
 
 class ViolationType(Enum):
-    """Types of revenue violations"""
-    UNAUTHORIZED_MONETIZATION = "unauthorized_monetization"
+    """Types of revenue violations"""    UNAUTHORIZED_MONETIZATION = "unauthorized_monetization"
     AD_REVENUE_THEFT = "ad_revenue_theft"
     STREAMING_FRAUD = "streaming_fraud"
     SUBSCRIPTION_BYPASS = "subscription_bypass"
@@ -59,8 +54,7 @@ class ViolationType(Enum):
     DIRECT_INFRINGEMENT = "direct_infringement"
 
 class ClaimStatus(Enum):
-    """Status of revenue claims"""
-    PENDING = "pending"
+    """Status of revenue claims"""    PENDING = "pending"
     SUBMITTED = "submitted"
     UNDER_REVIEW = "under_review"
     APPROVED = "approved"
@@ -70,8 +64,7 @@ class ClaimStatus(Enum):
     EXPIRED = "expired"
 
 class PlatformRevenueModel(Enum):
-    """Platform revenue sharing models"""
-    AD_REVENUE_SHARE = "ad_revenue_share"
+    """Platform revenue sharing models"""    AD_REVENUE_SHARE = "ad_revenue_share"
     SUBSCRIPTION_SPLIT = "subscription_split"
     PAY_PER_VIEW = "pay_per_view"
     LICENSING_FEE = "licensing_fee"
@@ -79,8 +72,7 @@ class PlatformRevenueModel(Enum):
     STREAMING_ROYALTY = "streaming_royalty"
 
 class Currency(Enum):
-    """Supported currencies"""
-    USD = "USD"
+    """Supported currencies"""    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     JPY = "JPY"
@@ -89,8 +81,7 @@ class Currency(Enum):
 
 @dataclass
 class RevenueProtectionConfig:
-    """Configuration for revenue protection service"""
-    enabled: bool = True
+    """Configuration for revenue protection service"""    enabled: bool = True
     auto_claim_enabled: bool = True
     claim_threshold_amount: Decimal = Decimal('10.00')
     max_concurrent_claims: int = 50
@@ -104,8 +95,7 @@ class RevenueProtectionConfig:
 
 @dataclass
 class RevenueViolation:
-    """Revenue violation with comprehensive details"""
-    violation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Revenue violation with comprehensive details"""    violation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_id: str = ""
     violator_platform: str = ""
     violator_url: str = ""
@@ -133,8 +123,7 @@ class RevenueViolation:
 
 @dataclass
 class RevenueClaim:
-    """Revenue claim for violated content"""
-    claim_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Revenue claim for violated content"""    claim_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     violation_id: str = ""
     claimant_id: str = ""
     
@@ -173,33 +162,27 @@ class RevenueClaim:
 # =============== CORE INTERFACES ===============
 
 class IRevenueProtectionService(ABC):
-    """Interface for revenue protection service"""
-    
+    """Interface for revenue protection service"""    
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialize revenue protection service"""
-        pass
+        """Initialize revenue protection service"""        pass
     
     @abstractmethod
     async def calculate_revenue_loss(self, violation: RevenueViolation) -> Decimal:
-        """Calculate estimated revenue loss from violation"""
-        pass
+        """Calculate estimated revenue loss from violation"""        pass
     
     @abstractmethod
     async def submit_revenue_claim(self, claim: RevenueClaim) -> bool:
-        """Submit revenue claim to platform"""
-        pass
+        """Submit revenue claim to platform"""        pass
     
     @abstractmethod
     async def monitor_revenue_claims(self) -> List[RevenueClaim]:
-        """Monitor status of submitted claims"""
-        pass
+        """Monitor status of submitted claims"""        pass
 
 # =============== REVENUE CALCULATION ENGINE ===============
 
 class RevenueCalculationEngine:
-    """Advanced revenue calculation and estimation engine"""
-    
+    """Advanced revenue calculation and estimation engine"""    
     def __init__(self, config: RevenueProtectionConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.CalculationEngine")
@@ -228,8 +211,7 @@ class RevenueCalculationEngine:
         }
         
     async def calculate_estimated_loss(self, violation: RevenueViolation) -> Decimal:
-        """Calculate estimated revenue loss from violation"""
-        try:
+        """Calculate estimated revenue loss from violation"""        try:
             platform = violation.violator_platform.lower()
             
             if platform in ['youtube', 'instagram', 'tiktok']:
@@ -244,8 +226,7 @@ class RevenueCalculationEngine:
             return Decimal('0.00')
     
     async def _calculate_video_platform_loss(self, violation: RevenueViolation) -> Decimal:
-        """Calculate loss for video platforms (YouTube, Instagram, TikTok)"""
-        try:
+        """Calculate loss for video platforms (YouTube, Instagram, TikTok)"""        try:
             platform = violation.violator_platform.lower()
             platform_config = self.platform_rates.get(platform, {})
             
@@ -276,8 +257,7 @@ class RevenueCalculationEngine:
             return Decimal('0.00')
     
     async def _calculate_audio_platform_loss(self, violation: RevenueViolation) -> Decimal:
-        """Calculate loss for audio platforms (Spotify, Apple Music)"""
-        try:
+        """Calculate loss for audio platforms (Spotify, Apple Music)"""        try:
             platform_config = self.platform_rates.get('spotify', {})
             
             # Estimate streams based on view count or other metrics
@@ -300,8 +280,7 @@ class RevenueCalculationEngine:
             return Decimal('0.00')
     
     async def _calculate_generic_platform_loss(self, violation: RevenueViolation) -> Decimal:
-        """Calculate loss for generic platforms"""
-        try:
+        """Calculate loss for generic platforms"""        try:
             # Use conservative estimation
             view_count = violation.view_count or 500
             estimated_cpm = Decimal('1.5')  # Conservative CPM
@@ -318,8 +297,7 @@ class RevenueCalculationEngine:
             return Decimal('0.00')
     
     def _calculate_engagement_score(self, engagement_metrics: Dict[str, float]) -> Decimal:
-        """Calculate engagement score multiplier"""
-        try:
+        """Calculate engagement score multiplier"""        try:
             if not engagement_metrics:
                 return Decimal('1.0')
             
@@ -345,8 +323,7 @@ class RevenueCalculationEngine:
             return Decimal('1.0')
     
     def _calculate_time_degradation_factor(self, violation: RevenueViolation) -> Decimal:
-        """Calculate time-based revenue degradation"""
-        try:
+        """Calculate time-based revenue degradation"""        try:
             if not violation.loss_period_start or not violation.loss_period_end:
                 return Decimal('1.0')
             
@@ -371,8 +348,7 @@ class RevenueCalculationEngine:
 # =============== CLAIM MANAGEMENT SYSTEM ===============
 
 class RevenueClaimManager:
-    """Advanced revenue claim management and submission system"""
-    
+    """Advanced revenue claim management and submission system"""    
     def __init__(self, config: RevenueProtectionConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.ClaimManager")
@@ -380,8 +356,7 @@ class RevenueClaimManager:
         self.claim_templates = self._load_claim_templates()
         
     async def submit_claim_to_platform(self, claim: RevenueClaim) -> bool:
-        """Submit revenue claim to specific platform"""
-        try:
+        """Submit revenue claim to specific platform"""        try:
             platform = claim.target_platform.lower()
             
             if platform == 'youtube':
@@ -400,8 +375,7 @@ class RevenueClaimManager:
             return False
     
     async def _submit_youtube_claim(self, claim: RevenueClaim) -> bool:
-        """Submit claim to YouTube Content ID system"""
-        try:
+        """Submit claim to YouTube Content ID system"""        try:
             # YouTube Content ID API integration
             api_endpoint = "https://www.googleapis.com/youtube/v3/claimSearch"
             api_key = self.config.platform_apis.get('youtube', '')
@@ -440,8 +414,7 @@ class RevenueClaimManager:
             return False
     
     async def _submit_instagram_claim(self, claim: RevenueClaim) -> bool:
-        """Submit claim to Instagram"""
-        try:
+        """Submit claim to Instagram"""        try:
             # Instagram copyright reporting
             # Note: Instagram uses Facebook's Rights Manager
             api_endpoint = "https://graph.facebook.com/v18.0/rights_manager_claims"
@@ -478,8 +451,7 @@ class RevenueClaimManager:
             return False
     
     async def _submit_tiktok_claim(self, claim: RevenueClaim) -> bool:
-        """Submit claim to TikTok"""
-        try:
+        """Submit claim to TikTok"""        try:
             # TikTok copyright claim process (simplified)
             # Note: TikTok's copyright system is more manual
             
@@ -495,8 +467,7 @@ class RevenueClaimManager:
             return False
     
     async def _submit_spotify_claim(self, claim: RevenueClaim) -> bool:
-        """Submit claim to Spotify"""
-        try:
+        """Submit claim to Spotify"""        try:
             # Spotify copyright claim process
             api_endpoint = "https://api.spotify.com/v1/copyright/claims"
             access_token = self.config.platform_apis.get('spotify', '')
@@ -533,8 +504,7 @@ class RevenueClaimManager:
             return False
     
     async def _submit_generic_claim(self, claim: RevenueClaim) -> bool:
-        """Submit generic copyright claim"""
-        try:
+        """Submit generic copyright claim"""        try:
             # Generic claim submission (email/form based)
             claim.status = ClaimStatus.SUBMITTED
             claim.submitted_at = datetime.now(timezone.utc)
@@ -548,8 +518,7 @@ class RevenueClaimManager:
             return False
     
     async def monitor_claim_status(self, claim_id: str) -> Optional[RevenueClaim]:
-        """Monitor and update claim status"""
-        claim = self.active_claims.get(claim_id)
+        """Monitor and update claim status"""        claim = self.active_claims.get(claim_id)
         if not claim:
             return None
         
@@ -571,10 +540,8 @@ class RevenueClaimManager:
         return claim
     
     def _load_claim_templates(self) -> Dict[str, str]:
-        """Load claim submission templates"""
-        return {
-            'youtube': """
-            Copyright Claim - Revenue Recovery
+        """Load claim submission templates"""        return {
+            'youtube': """            Copyright Claim - Revenue Recovery
             
             Dear YouTube Copyright Team,
             
@@ -590,8 +557,7 @@ class RevenueClaimManager:
             Best regards,
             {claimant_name}
             """,
-            'generic': """
-            Copyright Infringement Claim
+            'generic': """            Copyright Infringement Claim
             
             Subject: Unauthorized Use of Copyrighted Content
             
@@ -608,39 +574,32 @@ class RevenueClaimManager:
             
             Sincerely,
             {claimant_name}
-            """
-        }
+            """        }
     
     def _extract_youtube_video_id(self, violation_id: str) -> str:
-        """Extract YouTube video ID from violation data"""
-        # This would extract actual video ID from violation data
+        """Extract YouTube video ID from violation data"""        # This would extract actual video ID from violation data
         return f"sample_video_id_{violation_id[:8]}"
     
     def _extract_spotify_track_id(self, violation_id: str) -> str:
-        """Extract Spotify track ID from violation data"""
-        # This would extract actual track ID from violation data
+        """Extract Spotify track ID from violation data"""        # This would extract actual track ID from violation data
         return f"sample_track_id_{violation_id[:8]}"
     
     async def _update_youtube_claim_status(self, claim: RevenueClaim) -> None:
-        """Update YouTube claim status"""
-        # YouTube claim status checking would go here
+        """Update YouTube claim status"""        # YouTube claim status checking would go here
         pass
     
     async def _update_instagram_claim_status(self, claim: RevenueClaim) -> None:
-        """Update Instagram claim status"""
-        # Instagram claim status checking would go here
+        """Update Instagram claim status"""        # Instagram claim status checking would go here
         pass
     
     async def _update_spotify_claim_status(self, claim: RevenueClaim) -> None:
-        """Update Spotify claim status"""
-        # Spotify claim status checking would go here
+        """Update Spotify claim status"""        # Spotify claim status checking would go here
         pass
 
 # =============== MAIN SERVICE IMPLEMENTATION ===============
 
 class RevenueProtectionService(IRevenueProtectionService):
-    """Professional revenue protection service implementation"""
-    
+    """Professional revenue protection service implementation"""    
     def __init__(self, config: RevenueProtectionConfig):
         self.config = config
         self.status = RevenueProtectionStatus.INACTIVE
@@ -655,8 +614,7 @@ class RevenueProtectionService(IRevenueProtectionService):
         self.active_claims: Dict[str, RevenueClaim] = {}
         
     async def initialize(self) -> bool:
-        """Initialize revenue protection service"""
-        try:
+        """Initialize revenue protection service"""        try:
             self.logger.info("🚀 Initializing Revenue Protection Service")
             
             # Setup payment processors
@@ -675,8 +633,7 @@ class RevenueProtectionService(IRevenueProtectionService):
             return False
     
     async def calculate_revenue_loss(self, violation: RevenueViolation) -> Decimal:
-        """Calculate estimated revenue loss from violation"""
-        try:
+        """Calculate estimated revenue loss from violation"""        try:
             self.status = RevenueProtectionStatus.CALCULATING
             
             estimated_loss = await self.calculation_engine.calculate_estimated_loss(violation)
@@ -696,8 +653,7 @@ class RevenueProtectionService(IRevenueProtectionService):
             return Decimal('0.00')
     
     async def submit_revenue_claim(self, claim: RevenueClaim) -> bool:
-        """Submit revenue claim to platform"""
-        try:
+        """Submit revenue claim to platform"""        try:
             self.status = RevenueProtectionStatus.CLAIMING
             
             # Validate claim
@@ -723,8 +679,7 @@ class RevenueProtectionService(IRevenueProtectionService):
             return False
     
     async def monitor_revenue_claims(self) -> List[RevenueClaim]:
-        """Monitor status of submitted claims"""
-        updated_claims = []
+        """Monitor status of submitted claims"""        updated_claims = []
         
         try:
             self.status = RevenueProtectionStatus.MONITORING
@@ -747,8 +702,7 @@ class RevenueProtectionService(IRevenueProtectionService):
     # =============== PRIVATE HELPER METHODS ===============
     
     async def _setup_payment_processors(self) -> None:
-        """Setup payment processor integrations"""
-        try:
+        """Setup payment processor integrations"""        try:
             # Stripe setup
             stripe_config = self.config.payment_processors.get('stripe', {})
             if stripe_config.get('api_key'):
@@ -765,8 +719,7 @@ class RevenueProtectionService(IRevenueProtectionService):
             self.logger.error(f"Payment processor setup failed: {e}")
     
     async def _load_platform_configurations(self) -> None:
-        """Load platform-specific configurations"""
-        self.platform_configs = {
+        """Load platform-specific configurations"""        self.platform_configs = {
             'youtube': {
                 'api_base': 'https://www.googleapis.com/youtube/v3',
                 'claim_endpoint': '/claimSearch',
@@ -785,8 +738,7 @@ class RevenueProtectionService(IRevenueProtectionService):
         }
     
     async def _validate_claim(self, claim: RevenueClaim) -> bool:
-        """Validate revenue claim before submission"""
-        try:
+        """Validate revenue claim before submission"""        try:
             # Check required fields
             if not claim.violation_id or not claim.claimant_id:
                 return False
@@ -815,12 +767,10 @@ class RevenueProtectionService(IRevenueProtectionService):
 # =============== FACTORY & UTILITIES ===============
 
 class RevenueProtectionServiceFactory:
-    """Factory for creating revenue protection service instances"""
-    
+    """Factory for creating revenue protection service instances"""    
     @staticmethod
     def create_service(config: Optional[RevenueProtectionConfig] = None) -> RevenueProtectionService:
-        """Create configured revenue protection service"""
-        if config is None:
+        """Create configured revenue protection service"""        if config is None:
             config = RevenueProtectionConfig()
         
         return RevenueProtectionService(config)
@@ -831,8 +781,7 @@ class RevenueProtectionServiceFactory:
         claim_threshold_amount: Decimal = Decimal('10.00'),
         **kwargs
     ) -> RevenueProtectionConfig:
-        """Create revenue protection configuration"""
-        return RevenueProtectionConfig(
+        """Create revenue protection configuration"""        return RevenueProtectionConfig(
             auto_claim_enabled=auto_claim_enabled,
             claim_threshold_amount=claim_threshold_amount,
             **kwargs
@@ -840,8 +789,7 @@ class RevenueProtectionServiceFactory:
 
 
 def format_currency(amount: Decimal, currency: Currency) -> str:
-    """Format currency amount for display"""
-    symbols = {
+    """Format currency amount for display"""    symbols = {
         Currency.USD: '$',
         Currency.EUR: '€',
         Currency.GBP: '£',
@@ -855,8 +803,7 @@ def format_currency(amount: Decimal, currency: Currency) -> str:
 
 
 def calculate_total_revenue_loss(violations: List[RevenueViolation]) -> Dict[Currency, Decimal]:
-    """Calculate total revenue loss by currency"""
-    totals = {}
+    """Calculate total revenue loss by currency"""    totals = {}
     
     for violation in violations:
         currency = violation.currency

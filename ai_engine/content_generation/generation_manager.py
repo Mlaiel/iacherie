@@ -1,5 +1,4 @@
-"""
-Generation Manager - Central orchestrator for all content generation operations
+"""Generation Manager - Central orchestrator for all content generation operations
 
 Professional enterprise-grade content generation management system providing
 centralized control, resource management, and coordination of all generators.
@@ -9,9 +8,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 from typing import Dict, Any, List, Optional, Set
@@ -27,16 +24,14 @@ from ..monitoring.metrics import MetricsCollector
 
 
 class GenerationPriority(str, Enum):
-    """Generation request priorities"""
-    LOW = "low"
+    """Generation request priorities"""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
 
 
 class GenerationStatus(str, Enum):
-    """Generation request statuses"""
-    PENDING = "pending"
+    """Generation request statuses"""    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -44,8 +39,7 @@ class GenerationStatus(str, Enum):
 
 
 class GenerationRequest(BaseModel):
-    """Comprehensive generation request model"""
-    request_id: str = Field(description="Unique request identifier")
+    """Comprehensive generation request model"""    request_id: str = Field(description="Unique request identifier")
     user_id: str = Field(description="User identifier")
     content_types: List[str] = Field(description="Types of content to generate")
     prompt: str = Field(description="Generation prompt or instruction")
@@ -59,8 +53,7 @@ class GenerationRequest(BaseModel):
 
 
 class GenerationResponse(BaseModel):
-    """Comprehensive generation response model"""
-    request_id: str = Field(description="Original request identifier")
+    """Comprehensive generation response model"""    request_id: str = Field(description="Original request identifier")
     status: GenerationStatus = Field(description="Generation status")
     generated_content: Dict[str, Any] = Field(description="Generated content")
     metadata: Dict[str, Any] = Field(description="Response metadata")
@@ -72,8 +65,7 @@ class GenerationResponse(BaseModel):
 
 
 class ResourceLimits(BaseModel):
-    """Resource limits configuration"""
-    max_concurrent_generations: int = Field(default=5)
+    """Resource limits configuration"""    max_concurrent_generations: int = Field(default=5)
     max_memory_usage_mb: int = Field(default=8192)
     max_cpu_usage_percent: float = Field(default=80.0)
     max_queue_size: int = Field(default=100)
@@ -81,8 +73,7 @@ class ResourceLimits(BaseModel):
 
 
 class GenerationManager:
-    """
-    Central manager for all content generation operations in the IA Influencer platform.
+    """    Central manager for all content generation operations in the IA Influencer platform.
     
     This manager provides:
     - Centralized generation orchestration
@@ -92,16 +83,13 @@ class GenerationManager:
     - Caching and optimization
     - Load balancing and scaling
     - Error handling and recovery
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize the generation manager.
+        """        Initialize the generation manager.
         
         Args:
             config: Manager configuration settings
-        """
-        self.config = config
+        """        self.config = config
         self.logger = logging.getLogger(self.__class__.__name__)
         
         # Initialize resource limits
@@ -137,8 +125,7 @@ class GenerationManager:
         self._start_background_tasks()
     
     def _initialize_components(self) -> None:
-        """Initialize all manager components"""
-        try:
+        """Initialize all manager components"""        try:
             # Initialize pipeline with configuration
             pipeline_config = PipelineConfiguration(
                 **self.config.get('pipeline', {})
@@ -162,8 +149,7 @@ class GenerationManager:
             raise
     
     def _start_background_tasks(self) -> None:
-        """Start background management tasks"""
-        # Resource monitoring task
+        """Start background management tasks"""        # Resource monitoring task
         resource_task = asyncio.create_task(self._monitor_resources())
         self._background_tasks.add(resource_task)
         resource_task.add_done_callback(self._background_tasks.discard)
@@ -182,16 +168,14 @@ class GenerationManager:
         self,
         request: GenerationRequest
     ) -> str:
-        """
-        Submit a new content generation request.
+        """        Submit a new content generation request.
         
         Args:
             request: Complete generation request
             
         Returns:
             Request ID for tracking
-        """
-        try:
+        """        try:
             # Validate request
             await self._validate_generation_request(request)
             
@@ -220,16 +204,14 @@ class GenerationManager:
             raise
     
     async def get_generation_status(self, request_id: str) -> Optional[GenerationResponse]:
-        """
-        Get the status of a generation request.
+        """        Get the status of a generation request.
         
         Args:
             request_id: Request identifier
             
         Returns:
             Current request status and results if available
-        """
-        # Check active requests
+        """        # Check active requests
         if request_id in self.active_requests:
             request = self.active_requests[request_id]
             return GenerationResponse(
@@ -266,16 +248,14 @@ class GenerationManager:
         return None
     
     async def cancel_generation_request(self, request_id: str) -> bool:
-        """
-        Cancel a pending or active generation request.
+        """        Cancel a pending or active generation request.
         
         Args:
             request_id: Request identifier
             
         Returns:
             True if cancellation was successful
-        """
-        try:
+        """        try:
             # Cancel active request
             if request_id in self.active_requests:
                 request = self.active_requests[request_id]
@@ -303,8 +283,7 @@ class GenerationManager:
             return False
     
     async def _process_generation_request(self, request: GenerationRequest) -> None:
-        """Process a generation request through the pipeline"""
-        try:
+        """Process a generation request through the pipeline"""        try:
             # Add to active requests
             self.active_requests[request.request_id] = request
             
@@ -370,8 +349,7 @@ class GenerationManager:
             await self._handle_request_error(request, str(e))
     
     async def _validate_generation_request(self, request: GenerationRequest) -> None:
-        """Validate generation request parameters"""
-        if not request.request_id:
+        """Validate generation request parameters"""        if not request.request_id:
             raise ValueError("Request ID is required")
         
         if not request.user_id:
@@ -394,8 +372,7 @@ class GenerationManager:
                 raise ValueError(f"Unsupported content type: {content_type}")
     
     async def _check_resource_availability(self) -> bool:
-        """Check if resources are available for immediate processing"""
-        # Check concurrent generations limit
+        """Check if resources are available for immediate processing"""        # Check concurrent generations limit
         if (self.current_resource_usage['concurrent_generations'] >= 
             self.resource_limits.max_concurrent_generations):
             return False
@@ -417,8 +394,7 @@ class GenerationManager:
         request: GenerationRequest,
         cached_result: GenerationResponse
     ) -> None:
-        """Complete request using cached result"""
-        # Update cached result with new request ID
+        """Complete request using cached result"""        # Update cached result with new request ID
         cached_result.request_id = request.request_id
         cached_result.completed_at = datetime.now()
         
@@ -430,8 +406,7 @@ class GenerationManager:
         self.manager_stats['successful_requests'] += 1
     
     async def _handle_request_error(self, request: GenerationRequest, error: str) -> None:
-        """Handle request processing error"""
-        response = GenerationResponse(
+        """Handle request processing error"""        response = GenerationResponse(
             request_id=request.request_id,
             status=GenerationStatus.FAILED,
             generated_content={},
@@ -452,8 +427,7 @@ class GenerationManager:
             self.current_resource_usage['concurrent_generations'] -= 1
     
     def _update_average_processing_time(self, execution_time: float) -> None:
-        """Update average processing time statistic"""
-        total_successful = self.manager_stats['successful_requests']
+        """Update average processing time statistic"""        total_successful = self.manager_stats['successful_requests']
         if total_successful > 0:
             current_avg = self.manager_stats['average_processing_time']
             self.manager_stats['average_processing_time'] = (
@@ -461,8 +435,7 @@ class GenerationManager:
             )
     
     async def _monitor_resources(self) -> None:
-        """Background task to monitor resource usage"""
-        while True:
+        """Background task to monitor resource usage"""        while True:
             try:
                 # Update resource usage
                 self.current_resource_usage['memory_mb'] = await self.resource_monitor.get_memory_usage()
@@ -483,8 +456,7 @@ class GenerationManager:
                 await asyncio.sleep(60)  # Wait longer on error
     
     async def _process_queue(self) -> None:
-        """Background task to process queued requests"""
-        while True:
+        """Background task to process queued requests"""        while True:
             try:
                 # Check if we can process more requests
                 if await self._check_resource_availability():
@@ -502,8 +474,7 @@ class GenerationManager:
                 await asyncio.sleep(30)  # Wait longer on error
     
     async def _cleanup_completed_requests(self) -> None:
-        """Background task to cleanup old completed requests"""
-        while True:
+        """Background task to cleanup old completed requests"""        while True:
             try:
                 cutoff_time = datetime.now() - timedelta(hours=24)  # Keep for 24 hours
                 
@@ -535,8 +506,7 @@ class GenerationManager:
                 await asyncio.sleep(3600)  # Wait hour on error
     
     def get_manager_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive manager statistics"""
-        return {
+        """Get comprehensive manager statistics"""        return {
             **self.manager_stats,
             'resource_usage': self.current_resource_usage,
             'active_requests_count': len(self.active_requests),
@@ -550,8 +520,7 @@ class GenerationManager:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown the generation manager gracefully"""
-        try:
+        """Shutdown the generation manager gracefully"""        try:
             self.logger.info("Shutting down generation manager...")
             
             # Cancel background tasks
@@ -573,51 +542,42 @@ class GenerationManager:
 
 
 class QueueManager:
-    """Queue management for generation requests"""
-    
+    """Queue management for generation requests"""    
     def __init__(self, max_size: int = 100):
         self.max_size = max_size
         self.queue = []
     
     def enqueue(self, item: Any) -> bool:
-        """Add item to queue"""
-        if len(self.queue) < self.max_size:
+        """Add item to queue"""        if len(self.queue) < self.max_size:
             self.queue.append(item)
             return True
         return False
     
     def dequeue(self) -> Optional[Any]:
-        """Remove item from queue"""
-        return self.queue.pop(0) if self.queue else None
+        """Remove item from queue"""        return self.queue.pop(0) if self.queue else None
     
     def size(self) -> int:
-        """Get queue size"""
-        return len(self.queue)
+        """Get queue size"""        return len(self.queue)
 
 
 class ResourceMonitor:
-    """Monitor system resources for generation management"""
-    
+    """Monitor system resources for generation management"""    
     def __init__(self):
         self.cpu_threshold = 80.0
         self.memory_threshold = 85.0
     
     def get_cpu_usage(self) -> float:
-        """Get current CPU usage"""
-        return 50.0  # Mock implementation
+        """Get current CPU usage"""        return 50.0  # Mock implementation
     
     def get_memory_usage(self) -> float:
-        """Get current memory usage"""
-        return 60.0  # Mock implementation
+        """Get current memory usage"""        return 60.0  # Mock implementation
     
     def is_resource_available(self) -> bool:
-        """Check if resources are available"""
-        return (self.get_cpu_usage() < self.cpu_threshold and 
+        """Check if resources are available"""        return (self.get_cpu_usage() < self.cpu_threshold and 
                 self.get_memory_usage() < self.memory_threshold)
     
     def get_resource_alerts(self) -> List[str]:
-        """Get resource alerts"""
-        alerts = []
+        """Get resource alerts"""        alerts = []
         if self.get_cpu_usage() > self.cpu_threshold:
             alerts.append("High CPU usage")
         if self.get_memory_usage() > self.memory_threshold:
@@ -626,33 +586,28 @@ class ResourceMonitor:
 
 
 class QueueManager:
-    """Queue management for generation requests"""
-    
+    """Queue management for generation requests"""    
     def __init__(self, max_size: int = 100):
         self.max_size = max_size
         self.queue = []
     
     def enqueue(self, task: Any) -> bool:
-        """Add task to queue"""
-        if len(self.queue) < self.max_size:
+        """Add task to queue"""        if len(self.queue) < self.max_size:
             self.queue.append(task)
             return True
         return False
     
     def dequeue(self) -> Any:
-        """Remove task from queue"""
-        if self.queue:
+        """Remove task from queue"""        if self.queue:
             return self.queue.pop(0)
         return None
     
     def size(self) -> int:
-        """Get queue size"""
-        return len(self.queue)
+        """Get queue size"""        return len(self.queue)
 
 
 class ResourceMonitor:
-    """Resource monitoring for system health"""
-    
+    """Resource monitoring for system health"""    
     def __init__(self):
         self.cpu_usage = 0.0
         self.memory_usage = 0.0
@@ -661,8 +616,7 @@ class ResourceMonitor:
         self._update_metrics()
     
     def _update_metrics(self):
-        """Update system metrics"""
-        try:
+        """Update system metrics"""        try:
             import psutil
             self.cpu_usage = psutil.cpu_percent(interval=0.1)
             self.memory_usage = psutil.virtual_memory().percent
@@ -673,28 +627,23 @@ class ResourceMonitor:
             self.memory_usage = random.uniform(20, 60)
     
     def get_cpu_usage(self) -> float:
-        """Get CPU usage percentage"""
-        self._update_metrics()
+        """Get CPU usage percentage"""        self._update_metrics()
         return self.cpu_usage
     
     def get_memory_usage(self) -> float:
-        """Get memory usage percentage"""
-        self._update_metrics()
+        """Get memory usage percentage"""        self._update_metrics()
         return self.memory_usage
     
     def is_resource_available(self) -> bool:
-        """Check if resources are available"""
-        return self.cpu_usage < 80.0 and self.memory_usage < 80.0
+        """Check if resources are available"""        return self.cpu_usage < 80.0 and self.memory_usage < 80.0
     
     def configure_thresholds(self, cpu_threshold: float, memory_threshold: float) -> None:
-        """Configure resource thresholds"""
-        self.cpu_threshold = cpu_threshold
+        """Configure resource thresholds"""        self.cpu_threshold = cpu_threshold
         self.memory_threshold = memory_threshold
         logger.info(f"Resource thresholds configured: CPU={cpu_threshold}%, Memory={memory_threshold}%")
     
     def send_alert(self, message: str) -> None:
-        """Send resource alert"""
-        timestamp = datetime.now().isoformat()
+        """Send resource alert"""        timestamp = datetime.now().isoformat()
         alert_data = {
             'timestamp': timestamp,
             'message': message,
@@ -707,8 +656,7 @@ class ResourceMonitor:
 
 
 class GenerationCache:
-    """Intelligent caching system for generation results"""
-    
+    """Intelligent caching system for generation results"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.cache = {}
@@ -717,14 +665,12 @@ class GenerationCache:
         self.access_times = {}
         
     def _generate_cache_key(self, prompt: str, params: Dict[str, Any]) -> str:
-        """Generate unique cache key"""
-        import hashlib
+        """Generate unique cache key"""        import hashlib
         key_data = f"{prompt}:{json.dumps(sorted(params.items()))}"
         return hashlib.md5(key_data.encode()).hexdigest()
     
     def get(self, prompt: str, params: Dict[str, Any]) -> Optional[Any]:
-        """Get cached generation result"""
-        key = self._generate_cache_key(prompt, params)
+        """Get cached generation result"""        key = self._generate_cache_key(prompt, params)
         if key in self.cache:
             # Check TTL
             cached_time = self.access_times.get(key, 0)
@@ -737,8 +683,7 @@ class GenerationCache:
         return None
     
     def set(self, prompt: str, params: Dict[str, Any], result: Any) -> None:
-        """Cache generation result"""
-        key = self._generate_cache_key(prompt, params)
+        """Cache generation result"""        key = self._generate_cache_key(prompt, params)
         
         # Evict oldest items if cache is full
         if len(self.cache) >= self.max_size:
@@ -748,27 +693,23 @@ class GenerationCache:
         self.access_times[key] = time.time()
     
     def _remove(self, key: str) -> None:
-        """Remove item from cache"""
-        if key in self.cache:
+        """Remove item from cache"""        if key in self.cache:
             del self.cache[key]
         if key in self.access_times:
             del self.access_times[key]
     
     def _evict_oldest(self) -> None:
-        """Evict oldest accessed items"""
-        if not self.access_times:
+        """Evict oldest accessed items"""        if not self.access_times:
             return
         oldest_key = min(self.access_times.keys(), key=lambda k: self.access_times[k])
         self._remove(oldest_key)
     
     def clear(self) -> None:
-        """Clear all cached items"""
-        self.cache.clear()
+        """Clear all cached items"""        self.cache.clear()
         self.access_times.clear()
     
     def stats(self) -> Dict[str, Any]:
-        """Get cache statistics"""
-        return {
+        """Get cache statistics"""        return {
             'size': len(self.cache),
             'max_size': self.max_size,
             'hit_rate': getattr(self, '_hit_count', 0) / max(getattr(self, '_total_requests', 1), 1),
@@ -777,8 +718,7 @@ class GenerationCache:
 
 
 class GenerationQueue:
-    """Priority queue for generation requests"""
-    
+    """Priority queue for generation requests"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.max_size = config.get('max_size', 500)
@@ -791,8 +731,7 @@ class GenerationQueue:
         self.total_size = 0
         
     def enqueue(self, request: GenerationRequest) -> bool:
-        """Add request to appropriate priority queue"""
-        if self.total_size >= self.max_size:
+        """Add request to appropriate priority queue"""        if self.total_size >= self.max_size:
             return False
         
         priority = request.priority
@@ -801,8 +740,7 @@ class GenerationQueue:
         return True
     
     def dequeue(self) -> Optional[GenerationRequest]:
-        """Get next request based on priority"""
-        # Process in priority order
+        """Get next request based on priority"""        # Process in priority order
         for priority in [GenerationPriority.URGENT, GenerationPriority.HIGH, 
                         GenerationPriority.NORMAL, GenerationPriority.LOW]:
             if self.queues[priority]:
@@ -812,19 +750,16 @@ class GenerationQueue:
         return None
     
     def size(self) -> int:
-        """Get total queue size"""
-        return self.total_size
+        """Get total queue size"""        return self.total_size
     
     def size_by_priority(self) -> Dict[str, int]:
-        """Get queue size by priority"""
-        return {
+        """Get queue size by priority"""        return {
             priority.value: len(queue) 
             for priority, queue in self.queues.items()
         }
     
     def clear_priority(self, priority: GenerationPriority) -> int:
-        """Clear requests of specific priority"""
-        count = len(self.queues[priority])
+        """Clear requests of specific priority"""        count = len(self.queues[priority])
         self.queues[priority].clear()
         self.total_size -= count
         return count

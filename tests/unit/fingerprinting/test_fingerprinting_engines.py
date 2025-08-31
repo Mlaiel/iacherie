@@ -1,30 +1,24 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Unit tests for fingerprinting engines.
+"""Unit tests for fingerprinting engines.
 
 Tests for video, audio, image, and text fingerprinting capabilities
 with comprehensive coverage of all core functionalities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -53,12 +47,10 @@ except ImportError as e:
 
 
 class TestFingerprintingService:
-    """Test suite for main fingerprinting service."""
-    
+    """Test suite for main fingerprinting service."""    
     @pytest.fixture
     def service(self):
-        """Create fingerprinting service instance."""
-        config = {
+        """Create fingerprinting service instance."""        config = {
             'enable_video': True,
             'enable_audio': True,
             'enable_image': True,
@@ -70,8 +62,7 @@ class TestFingerprintingService:
     
     @pytest.fixture
     def sample_video_file(self):
-        """Create temporary video file for testing."""
-        with tempfile.NamedTemporaryFile(suffix='.mp4', delete=False) as f:
+        """Create temporary video file for testing."""        with tempfile.NamedTemporaryFile(suffix='.mp4', delete=False) as f:
             # Create minimal valid MP4 header for testing
             f.write(b'\x00\x00\x00\x20ftypmp42')
             f.write(b'\x00' * 24)
@@ -80,8 +71,7 @@ class TestFingerprintingService:
     
     @pytest.fixture
     def sample_audio_file(self):
-        """Create temporary audio file for testing."""
-        with tempfile.NamedTemporaryFile(suffix='.mp3', delete=False) as f:
+        """Create temporary audio file for testing."""        with tempfile.NamedTemporaryFile(suffix='.mp3', delete=False) as f:
             # Create minimal MP3 header for testing
             f.write(b'ID3\x03\x00\x00\x00')
             f.write(b'\x00' * 20)
@@ -90,8 +80,7 @@ class TestFingerprintingService:
     
     @pytest.fixture
     def sample_image_file(self):
-        """Create temporary image file for testing."""
-        with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as f:
+        """Create temporary image file for testing."""        with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as f:
             # Create minimal JPEG header for testing
             f.write(b'\xff\xd8\xff\xe0\x00\x10JFIF')
             f.write(b'\x00' * 20)
@@ -99,15 +88,13 @@ class TestFingerprintingService:
         os.unlink(f.name)
     
     def test_service_initialization(self, service):
-        """Test service initializes correctly."""
-        assert service is not None
+        """Test service initializes correctly."""        assert service is not None
         assert service.config['enable_video'] is True
         assert service.config['quality_threshold'] == 0.85
     
     @pytest.mark.asyncio
     async def test_fingerprint_video_content(self, service, sample_video_file):
-        """Test video content fingerprinting."""
-        request = FingerprintRequest(
+        """Test video content fingerprinting."""        request = FingerprintRequest(
             content_id="test_video_001",
             content_type=ContentType.VIDEO,
             file_path=sample_video_file,
@@ -133,8 +120,7 @@ class TestFingerprintingService:
     
     @pytest.mark.asyncio
     async def test_fingerprint_audio_content(self, service, sample_audio_file):
-        """Test audio content fingerprinting."""
-        request = FingerprintRequest(
+        """Test audio content fingerprinting."""        request = FingerprintRequest(
             content_id="test_audio_001",
             content_type=ContentType.AUDIO,
             file_path=sample_audio_file,
@@ -160,8 +146,7 @@ class TestFingerprintingService:
     
     @pytest.mark.asyncio
     async def test_fingerprint_batch_processing(self, service):
-        """Test batch processing of multiple files."""
-        requests = [
+        """Test batch processing of multiple files."""        requests = [
             FingerprintRequest(
                 content_id=f"batch_item_{i}",
                 content_type=ContentType.TEXT,
@@ -189,8 +174,7 @@ class TestFingerprintingService:
     
     @pytest.mark.asyncio
     async def test_similarity_matching(self, service):
-        """Test fingerprint similarity matching."""
-        fingerprint_1 = "hash_abc123def456"
+        """Test fingerprint similarity matching."""        fingerprint_1 = "hash_abc123def456"
         fingerprint_2 = "hash_abc123def789"  # Similar but not identical
         
         with patch.object(service, '_calculate_similarity') as mock_similarity:
@@ -202,8 +186,7 @@ class TestFingerprintingService:
             mock_similarity.assert_called_once_with(fingerprint_1, fingerprint_2)
     
     def test_invalid_content_type(self, service):
-        """Test handling of invalid content types."""
-        with pytest.raises(ValueError):
+        """Test handling of invalid content types."""        with pytest.raises(ValueError):
             FingerprintRequest(
                 content_id="invalid_001",
                 content_type="invalid_type",
@@ -213,8 +196,7 @@ class TestFingerprintingService:
     
     @pytest.mark.asyncio
     async def test_error_handling_missing_file(self, service):
-        """Test error handling for missing files."""
-        request = FingerprintRequest(
+        """Test error handling for missing files."""        request = FingerprintRequest(
             content_id="missing_file_001",
             content_type=ContentType.VIDEO,
             file_path="/non/existent/file.mp4",
@@ -226,8 +208,7 @@ class TestFingerprintingService:
     
     @pytest.mark.asyncio
     async def test_performance_metrics_collection(self, service):
-        """Test that performance metrics are collected."""
-        request = FingerprintRequest(
+        """Test that performance metrics are collected."""        request = FingerprintRequest(
             content_id="perf_test_001",
             content_type=ContentType.TEXT,
             content_text="Performance testing content",
@@ -250,12 +231,10 @@ class TestFingerprintingService:
 
 
 class TestVideoFingerprintingService:
-    """Test suite for video fingerprinting service."""
-    
+    """Test suite for video fingerprinting service."""    
     @pytest.fixture
     def video_service(self):
-        """Create video fingerprinting service."""
-        config = {
+        """Create video fingerprinting service."""        config = {
             'frame_sampling_rate': 1.0,
             'hash_size': 16,
             'quality_threshold': 0.8
@@ -264,8 +243,7 @@ class TestVideoFingerprintingService:
     
     @pytest.mark.asyncio
     async def test_extract_video_metadata(self, video_service):
-        """Test video metadata extraction."""
-        with patch('cv2.VideoCapture') as mock_cap:
+        """Test video metadata extraction."""        with patch('cv2.VideoCapture') as mock_cap:
             mock_cap_instance = Mock()
             mock_cap.return_value = mock_cap_instance
             mock_cap_instance.isOpened.return_value = True
@@ -280,8 +258,7 @@ class TestVideoFingerprintingService:
     
     @pytest.mark.asyncio
     async def test_frame_hash_extraction(self, video_service):
-        """Test video frame hash extraction."""
-        with patch('cv2.VideoCapture') as mock_cap:
+        """Test video frame hash extraction."""        with patch('cv2.VideoCapture') as mock_cap:
             mock_cap_instance = Mock()
             mock_cap.return_value = mock_cap_instance
             mock_cap_instance.isOpened.return_value = True
@@ -293,8 +270,7 @@ class TestVideoFingerprintingService:
             # Additional assertions would depend on implementation details
     
     def test_scene_change_detection(self, video_service):
-        """Test scene change detection in videos."""
-        # Mock frame data for scene change detection
+        """Test scene change detection in videos."""        # Mock frame data for scene change detection
         frame_hashes = ["hash1", "hash1", "hash2", "hash2", "hash3"]
         
         scene_changes = video_service.detect_scene_changes(frame_hashes)
@@ -304,12 +280,10 @@ class TestVideoFingerprintingService:
 
 
 class TestAudioFingerprintingService:
-    """Test suite for audio fingerprinting service."""
-    
+    """Test suite for audio fingerprinting service."""    
     @pytest.fixture
     def audio_service(self):
-        """Create audio fingerprinting service."""
-        config = {
+        """Create audio fingerprinting service."""        config = {
             'sampling_rate': 22050,
             'frame_size': 2048,
             'hop_length': 512
@@ -318,8 +292,7 @@ class TestAudioFingerprintingService:
     
     @pytest.mark.asyncio
     async def test_extract_audio_features(self, audio_service):
-        """Test audio feature extraction."""
-        with patch('librosa.load') as mock_load:
+        """Test audio feature extraction."""        with patch('librosa.load') as mock_load:
             mock_load.return_value = (Mock(), 22050)  # audio data, sample rate
             
             with patch('librosa.feature.mfcc') as mock_mfcc:
@@ -333,8 +306,7 @@ class TestAudioFingerprintingService:
     
     @pytest.mark.asyncio
     async def test_chromagram_analysis(self, audio_service):
-        """Test chromagram analysis for pitch content."""
-        with patch('librosa.feature.chroma') as mock_chroma:
+        """Test chromagram analysis for pitch content."""        with patch('librosa.feature.chroma') as mock_chroma:
             mock_chroma.return_value = Mock()
             
             chromagram = await audio_service.extract_chromagram(Mock())
@@ -344,12 +316,10 @@ class TestAudioFingerprintingService:
 
 
 class TestImageFingerprintingService:
-    """Test suite for image fingerprinting service."""
-    
+    """Test suite for image fingerprinting service."""    
     @pytest.fixture
     def image_service(self):
-        """Create image fingerprinting service."""
-        config = {
+        """Create image fingerprinting service."""        config = {
             'hash_size': 16,
             'enable_phash': True,
             'enable_dhash': True
@@ -358,8 +328,7 @@ class TestImageFingerprintingService:
     
     @pytest.mark.asyncio
     async def test_perceptual_hash_generation(self, image_service):
-        """Test perceptual hash generation."""
-        with patch('PIL.Image.open') as mock_open:
+        """Test perceptual hash generation."""        with patch('PIL.Image.open') as mock_open:
             mock_image = Mock()
             mock_open.return_value = mock_image
             
@@ -374,8 +343,7 @@ class TestImageFingerprintingService:
     
     @pytest.mark.asyncio
     async def test_difference_hash_generation(self, image_service):
-        """Test difference hash generation."""
-        with patch('PIL.Image.open') as mock_open:
+        """Test difference hash generation."""        with patch('PIL.Image.open') as mock_open:
             mock_image = Mock()
             mock_open.return_value = mock_image
             
@@ -390,12 +358,10 @@ class TestImageFingerprintingService:
 
 
 class TestTextFingerprintingService:
-    """Test suite for text fingerprinting service."""
-    
+    """Test suite for text fingerprinting service."""    
     @pytest.fixture
     def text_service(self):
-        """Create text fingerprinting service."""
-        config = {
+        """Create text fingerprinting service."""        config = {
             'min_similarity': 0.8,
             'enable_semantic': True,
             'model_name': 'sentence-transformers/all-MiniLM-L6-v2'
@@ -404,8 +370,7 @@ class TestTextFingerprintingService:
     
     @pytest.mark.asyncio
     async def test_semantic_similarity(self, text_service):
-        """Test semantic similarity calculation."""
-        text1 = "This is a sample text about machine learning."
+        """Test semantic similarity calculation."""        text1 = "This is a sample text about machine learning."
         text2 = "This text discusses artificial intelligence and ML."
         
         with patch.object(text_service, 'get_embeddings') as mock_embeddings:
@@ -421,8 +386,7 @@ class TestTextFingerprintingService:
     
     @pytest.mark.asyncio
     async def test_text_preprocessing(self, text_service):
-        """Test text preprocessing and normalization."""
-        raw_text = "  This Is A Test TEXT with Extra    Spaces! @#$%  "
+        """Test text preprocessing and normalization."""        raw_text = "  This Is A Test TEXT with Extra    Spaces! @#$%  "
         
         processed = await text_service.preprocess_text(raw_text)
         
@@ -431,8 +395,7 @@ class TestTextFingerprintingService:
         # Additional preprocessing checks would depend on implementation
     
     def test_n_gram_extraction(self, text_service):
-        """Test n-gram feature extraction."""
-        text = "this is a test sentence for n-gram extraction"
+        """Test n-gram feature extraction."""        text = "this is a test sentence for n-gram extraction"
         
         bigrams = text_service.extract_ngrams(text, n=2)
         trigrams = text_service.extract_ngrams(text, n=3)
@@ -443,8 +406,7 @@ class TestTextFingerprintingService:
     
     @pytest.mark.asyncio
     async def test_language_detection(self, text_service):
-        """Test automatic language detection."""
-        english_text = "This is an English text sample for testing."
+        """Test automatic language detection."""        english_text = "This is an English text sample for testing."
         
         with patch('langdetect.detect') as mock_detect:
             mock_detect.return_value = 'en'
@@ -457,19 +419,16 @@ class TestTextFingerprintingService:
 
 # Integration tests
 class TestFingerprintingIntegration:
-    """Integration tests for fingerprinting services."""
-    
+    """Integration tests for fingerprinting services."""    
     @pytest.mark.asyncio
     async def test_end_to_end_fingerprinting_workflow(self):
-        """Test complete fingerprinting workflow."""
-        # This would test the entire pipeline from file upload to similarity matching
+        """Test complete fingerprinting workflow."""        # This would test the entire pipeline from file upload to similarity matching
         # Implementation would depend on the full system architecture
         pass
     
     @pytest.mark.asyncio
     async def test_cross_modal_similarity(self):
-        """Test similarity matching across different content types."""
-        # Test comparing video, audio, and image content
+        """Test similarity matching across different content types."""        # Test comparing video, audio, and image content
         # This is advanced functionality that might not be implemented yet
         pass
 

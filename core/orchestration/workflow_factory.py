@@ -1,5 +1,4 @@
-"""
-Workflow Factory - Advanced Workflow Construction & Template System
+"""Workflow Factory - Advanced Workflow Construction & Template System
 
 Intelligent workflow factory for creating, templating, and managing complex
 orchestration workflows with dynamic generation and reusable components.
@@ -11,9 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Callable, Union
@@ -28,8 +25,7 @@ from backend.core.utils.event_dispatcher import EventDispatcher
 
 
 class WorkflowType(Enum):
-    """Workflow type classification."""
-    SEQUENTIAL = "sequential"
+    """Workflow type classification."""    SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     CONDITIONAL = "conditional"
     LOOP = "loop"
@@ -40,8 +36,7 @@ class WorkflowType(Enum):
 
 
 class ComponentType(Enum):
-    """Workflow component types."""
-    TASK = "task"
+    """Workflow component types."""    TASK = "task"
     CONDITION = "condition"
     LOOP = "loop"
     PARALLEL_GROUP = "parallel_group"
@@ -54,8 +49,7 @@ class ComponentType(Enum):
 
 
 class TemplateScope(Enum):
-    """Template scope levels."""
-    GLOBAL = "global"
+    """Template scope levels."""    GLOBAL = "global"
     DOMAIN = "domain"
     PROJECT = "project"
     TEAM = "team"
@@ -64,8 +58,7 @@ class TemplateScope(Enum):
 
 @dataclass
 class WorkflowComponent:
-    """Individual workflow component."""
-    component_id: str
+    """Individual workflow component."""    component_id: str
     name: str
     component_type: ComponentType
     implementation: Dict[str, Any]
@@ -81,8 +74,7 @@ class WorkflowComponent:
 
 @dataclass
 class WorkflowTemplate:
-    """Workflow template definition."""
-    template_id: str
+    """Workflow template definition."""    template_id: str
     name: str
     description: str
     workflow_type: WorkflowType
@@ -100,8 +92,7 @@ class WorkflowTemplate:
 
 @dataclass
 class WorkflowDefinition:
-    """Complete workflow definition."""
-    workflow_id: str
+    """Complete workflow definition."""    workflow_id: str
     name: str
     description: str
     workflow_type: WorkflowType
@@ -120,8 +111,7 @@ class WorkflowDefinition:
 
 @dataclass
 class ComponentLibrary:
-    """Reusable component library."""
-    library_id: str
+    """Reusable component library."""    library_id: str
     name: str
     description: str
     components: Dict[str, WorkflowComponent] = field(default_factory=dict)
@@ -134,8 +124,7 @@ class ComponentLibrary:
 
 @dataclass
 class WorkflowBlueprint:
-    """Workflow blueprint for generation."""
-    blueprint_id: str
+    """Workflow blueprint for generation."""    blueprint_id: str
     name: str
     description: str
     pattern: str
@@ -147,8 +136,7 @@ class WorkflowBlueprint:
 
 
 class WorkflowFactory:
-    """
-    Advanced workflow factory for creating and managing orchestration workflows.
+    """    Advanced workflow factory for creating and managing orchestration workflows.
     
     Provides comprehensive workflow construction capabilities including:
     - Template-based workflow creation with reusable components
@@ -157,8 +145,7 @@ class WorkflowFactory:
     - Workflow validation and optimization
     - Multi-format import/export (JSON, YAML, BPMN)
     - Intelligent workflow suggestions and recommendations
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.metrics_collector = MetricsCollector()
@@ -186,8 +173,7 @@ class WorkflowFactory:
         self.logger.info("WorkflowFactory initialized")
     
     def _initialize_builtin_components(self) -> None:
-        """Initialize built-in workflow components."""
-        builtin_library = ComponentLibrary(
+        """Initialize built-in workflow components."""        builtin_library = ComponentLibrary(
             library_id="builtin",
             name="Built-in Components",
             description="Standard workflow components"
@@ -236,16 +222,14 @@ class WorkflowFactory:
         self.component_libraries[builtin_library.library_id] = builtin_library
     
     async def register_template(self, template: WorkflowTemplate) -> bool:
-        """
-        Register workflow template.
+        """        Register workflow template.
         
         Args:
             template: Workflow template to register
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             # Validate template
             validation_result = await self._validate_template(template)
             if not validation_result['valid']:
@@ -276,8 +260,7 @@ class WorkflowFactory:
         workflow_name: str,
         parameters: Optional[Dict[str, Any]] = None
     ) -> Optional[str]:
-        """
-        Create workflow from template.
+        """        Create workflow from template.
         
         Args:
             template_id: Template identifier
@@ -286,8 +269,7 @@ class WorkflowFactory:
             
         Returns:
             Optional[str]: Workflow ID if successful
-        """
-        try:
+        """        try:
             if template_id not in self.workflow_templates:
                 raise ValueError(f"Template not found: {template_id}")
             
@@ -338,16 +320,14 @@ class WorkflowFactory:
             return None
     
     async def create_workflow_from_blueprint(self, blueprint: WorkflowBlueprint) -> Optional[str]:
-        """
-        Create workflow from blueprint.
+        """        Create workflow from blueprint.
         
         Args:
             blueprint: Workflow blueprint
             
         Returns:
             Optional[str]: Workflow ID if successful
-        """
-        try:
+        """        try:
             workflow_id = str(uuid.uuid4())
             
             # Generate workflow from blueprint
@@ -393,8 +373,7 @@ class WorkflowFactory:
         workflow_type: WorkflowType,
         components: List[WorkflowComponent]
     ) -> Optional[str]:
-        """
-        Build custom workflow from components.
+        """        Build custom workflow from components.
         
         Args:
             name: Workflow name
@@ -403,8 +382,7 @@ class WorkflowFactory:
             
         Returns:
             Optional[str]: Workflow ID if successful
-        """
-        try:
+        """        try:
             workflow_id = str(uuid.uuid4())
             
             # Validate components
@@ -451,16 +429,14 @@ class WorkflowFactory:
             return None
     
     async def register_component_library(self, library: ComponentLibrary) -> bool:
-        """
-        Register component library.
+        """        Register component library.
         
         Args:
             library: Component library to register
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             # Validate library components
             for component in library.components.values():
                 if not await self._validate_component(component):
@@ -489,8 +465,7 @@ class WorkflowFactory:
         workflow_type: WorkflowType,
         requirements: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """
-        Get component suggestions for workflow.
+        """        Get component suggestions for workflow.
         
         Args:
             workflow_type: Type of workflow
@@ -498,8 +473,7 @@ class WorkflowFactory:
             
         Returns:
             List of suggested components
-        """
-        try:
+        """        try:
             suggestions = []
             
             # Search through all component libraries
@@ -529,16 +503,14 @@ class WorkflowFactory:
             return []
     
     async def optimize_workflow(self, workflow_id: str) -> bool:
-        """
-        Optimize existing workflow.
+        """        Optimize existing workflow.
         
         Args:
             workflow_id: Workflow identifier
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             if workflow_id not in self.workflow_definitions:
                 raise ValueError(f"Workflow not found: {workflow_id}")
             
@@ -582,8 +554,7 @@ class WorkflowFactory:
             return False
     
     async def export_workflow(self, workflow_id: str, format_type: str = "json") -> Optional[str]:
-        """
-        Export workflow definition.
+        """        Export workflow definition.
         
         Args:
             workflow_id: Workflow identifier
@@ -591,8 +562,7 @@ class WorkflowFactory:
             
         Returns:
             Optional[str]: Exported workflow string
-        """
-        try:
+        """        try:
             if workflow_id not in self.workflow_definitions:
                 raise ValueError(f"Workflow not found: {workflow_id}")
             
@@ -610,8 +580,7 @@ class WorkflowFactory:
             return None
     
     async def import_workflow(self, workflow_data: str, format_type: str = "json") -> Optional[str]:
-        """
-        Import workflow definition.
+        """        Import workflow definition.
         
         Args:
             workflow_data: Workflow data string
@@ -619,8 +588,7 @@ class WorkflowFactory:
             
         Returns:
             Optional[str]: Workflow ID if successful
-        """
-        try:
+        """        try:
             if format_type.lower() == "yaml":
                 workflow = await self._import_from_yaml(workflow_data)
             elif format_type.lower() == "bpmn":
@@ -663,8 +631,7 @@ class WorkflowFactory:
         components: List[WorkflowComponent],
         parameters: Dict[str, Any]
     ) -> List[WorkflowComponent]:
-        """Apply template parameters to components."""
-        applied_components = []
+        """Apply template parameters to components."""        applied_components = []
         
         for component in components:
             # Create copy of component
@@ -699,8 +666,7 @@ class WorkflowFactory:
         return applied_components
     
     async def _substitute_parameters(self, data: Dict[str, Any], parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Substitute template parameters in data."""
-        result = {}
+        """Substitute template parameters in data."""        result = {}
         
         for key, value in data.items():
             if isinstance(value, str) and value.startswith("{{") and value.endswith("}}"):
@@ -723,8 +689,7 @@ class WorkflowFactory:
         components: List[WorkflowComponent],
         workflow_type: WorkflowType
     ) -> Dict[str, Any]:
-        """Generate flow definition from components."""
-        flow_definition = {
+        """Generate flow definition from components."""        flow_definition = {
             'type': workflow_type.value,
             'start': components[0].component_id if components else None,
             'nodes': {},
@@ -778,8 +743,7 @@ class WorkflowFactory:
         blueprint: WorkflowBlueprint,
         workflow_id: str
     ) -> Optional[WorkflowDefinition]:
-        """Generate workflow from blueprint."""
-        try:
+        """Generate workflow from blueprint."""        try:
             # Parse blueprint pattern
             pattern = blueprint.pattern
             requirements = blueprint.requirements
@@ -815,8 +779,7 @@ class WorkflowFactory:
             return None
     
     async def _generate_data_pipeline_components(self, requirements: Dict[str, Any]) -> List[WorkflowComponent]:
-        """Generate components for data processing pipeline."""
-        components = []
+        """Generate components for data processing pipeline."""        components = []
         
         # Data ingestion component
         components.append(WorkflowComponent(
@@ -869,8 +832,7 @@ class WorkflowFactory:
         return components
     
     async def _generate_approval_workflow_components(self, requirements: Dict[str, Any]) -> List[WorkflowComponent]:
-        """Generate components for approval workflow."""
-        components = []
+        """Generate components for approval workflow."""        components = []
         
         # Request submission
         components.append(WorkflowComponent(
@@ -926,8 +888,7 @@ class WorkflowFactory:
         return components
     
     async def _generate_monitoring_workflow_components(self, requirements: Dict[str, Any]) -> List[WorkflowComponent]:
-        """Generate components for monitoring workflow."""
-        components = []
+        """Generate components for monitoring workflow."""        components = []
         
         # Metric collection
         components.append(WorkflowComponent(
@@ -983,8 +944,7 @@ class WorkflowFactory:
         return components
     
     async def _generate_generic_components(self, requirements: Dict[str, Any]) -> List[WorkflowComponent]:
-        """Generate generic components based on requirements."""
-        components = []
+        """Generate generic components based on requirements."""        components = []
         
         # Generate basic task components
         task_count = requirements.get('task_count', 3)
@@ -1009,8 +969,7 @@ class WorkflowFactory:
         workflow_type: WorkflowType,
         requirements: Dict[str, Any]
     ) -> float:
-        """Calculate relevance score for component suggestion."""
-        score = 0.0
+        """Calculate relevance score for component suggestion."""        score = 0.0
         
         # Base score for component type compatibility
         if workflow_type == WorkflowType.SEQUENTIAL and component.component_type == ComponentType.TASK:
@@ -1045,8 +1004,7 @@ class WorkflowFactory:
         workflow_type: WorkflowType,
         requirements: Dict[str, Any]
     ) -> str:
-        """Get reason for component recommendation."""
-        reasons = []
+        """Get reason for component recommendation."""        reasons = []
         
         if component.component_type == ComponentType.TASK:
             reasons.append("Suitable for task execution")
@@ -1064,8 +1022,7 @@ class WorkflowFactory:
         return "; ".join(reasons)
     
     async def _remove_redundant_components(self, workflow: WorkflowDefinition) -> bool:
-        """Remove redundant components from workflow."""
-        original_count = len(workflow.components)
+        """Remove redundant components from workflow."""        original_count = len(workflow.components)
         
         # Simple redundancy check - remove duplicate component IDs
         seen_ids = set()
@@ -1081,8 +1038,7 @@ class WorkflowFactory:
         return len(workflow.components) < original_count
     
     async def _optimize_parallel_execution(self, workflow: WorkflowDefinition) -> bool:
-        """Optimize parallel execution in workflow."""
-        if workflow.workflow_type != WorkflowType.PARALLEL:
+        """Optimize parallel execution in workflow."""        if workflow.workflow_type != WorkflowType.PARALLEL:
             return False
         
         # Group independent tasks for parallel execution
@@ -1128,8 +1084,7 @@ class WorkflowFactory:
         return optimized
     
     async def _optimize_resource_usage(self, workflow: WorkflowDefinition) -> bool:
-        """Optimize resource usage in workflow."""
-        optimized = False
+        """Optimize resource usage in workflow."""        optimized = False
         
         # Add resource constraints to components that don't have them
         for component in workflow.components:
@@ -1148,8 +1103,7 @@ class WorkflowFactory:
         workflow: WorkflowDefinition,
         validation_result: Dict[str, Any]
     ) -> WorkflowDefinition:
-        """Auto-fix common workflow issues."""
-        # Fix missing component IDs
+        """Auto-fix common workflow issues."""        # Fix missing component IDs
         for i, component in enumerate(workflow.components):
             if not component.component_id:
                 component.component_id = f"component_{i}"
@@ -1162,8 +1116,7 @@ class WorkflowFactory:
         return workflow
     
     async def _validate_template(self, template: WorkflowTemplate) -> Dict[str, Any]:
-        """Validate workflow template."""
-        result = {'valid': True, 'errors': [], 'warnings': []}
+        """Validate workflow template."""        result = {'valid': True, 'errors': [], 'warnings': []}
         
         if not template.template_id:
             result['valid'] = False
@@ -1183,8 +1136,7 @@ class WorkflowFactory:
         return result
     
     async def _validate_workflow(self, workflow: WorkflowDefinition) -> Dict[str, Any]:
-        """Validate workflow definition."""
-        result = {'valid': True, 'errors': [], 'warnings': []}
+        """Validate workflow definition."""        result = {'valid': True, 'errors': [], 'warnings': []}
         
         if not workflow.workflow_id:
             result['valid'] = False
@@ -1214,8 +1166,7 @@ class WorkflowFactory:
         return result
     
     async def _validate_component(self, component: WorkflowComponent) -> bool:
-        """Validate individual component."""
-        if not component.component_id:
+        """Validate individual component."""        if not component.component_id:
             return False
         
         if not component.name:
@@ -1227,8 +1178,7 @@ class WorkflowFactory:
         return True
     
     async def _has_circular_dependencies(self, components: List[WorkflowComponent]) -> bool:
-        """Check for circular dependencies."""
-        # Simple circular dependency check
+        """Check for circular dependencies."""        # Simple circular dependency check
         component_map = {comp.component_id: comp for comp in components}
         
         def has_cycle(node, visited, rec_stack):
@@ -1256,8 +1206,7 @@ class WorkflowFactory:
         return False
     
     async def _export_to_json(self, workflow: WorkflowDefinition) -> str:
-        """Export workflow to JSON format."""
-        workflow_dict = {
+        """Export workflow to JSON format."""        workflow_dict = {
             'workflow_id': workflow.workflow_id,
             'name': workflow.name,
             'description': workflow.description,
@@ -1284,8 +1233,7 @@ class WorkflowFactory:
         return json.dumps(workflow_dict, indent=2, default=str)
     
     async def _export_to_yaml(self, workflow: WorkflowDefinition) -> str:
-        """Export workflow to YAML format."""
-        workflow_dict = {
+        """Export workflow to YAML format."""        workflow_dict = {
             'workflow_id': workflow.workflow_id,
             'name': workflow.name,
             'description': workflow.description,
@@ -1312,13 +1260,11 @@ class WorkflowFactory:
         return yaml.dump(workflow_dict, default_flow_style=False)
     
     async def _export_to_bpmn(self, workflow: WorkflowDefinition) -> str:
-        """Export workflow to BPMN format."""
-        # Simplified BPMN export
+        """Export workflow to BPMN format."""        # Simplified BPMN export
         bpmn_xml = f"""<?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL">
   <process id="{workflow.workflow_id}" name="{workflow.name}">
-"""
-        
+"""        
         for component in workflow.components:
             if component.component_type == ComponentType.TASK:
                 bpmn_xml += f'    <task id="{component.component_id}" name="{component.name}" />\n'
@@ -1326,13 +1272,11 @@ class WorkflowFactory:
                 bpmn_xml += f'    <exclusiveGateway id="{component.component_id}" name="{component.name}" />\n'
         
         bpmn_xml += """  </process>
-</definitions>"""
-        
+</definitions>"""        
         return bpmn_xml
     
     async def _import_from_json(self, workflow_data: str) -> Optional[WorkflowDefinition]:
-        """Import workflow from JSON format."""
-        try:
+        """Import workflow from JSON format."""        try:
             data = json.loads(workflow_data)
             
             components = []
@@ -1366,8 +1310,7 @@ class WorkflowFactory:
             return None
     
     async def _import_from_yaml(self, workflow_data: str) -> Optional[WorkflowDefinition]:
-        """Import workflow from YAML format."""
-        try:
+        """Import workflow from YAML format."""        try:
             data = yaml.safe_load(workflow_data)
             return await self._import_from_json(json.dumps(data))
         except Exception as e:
@@ -1375,8 +1318,7 @@ class WorkflowFactory:
             return None
     
     async def _import_from_bpmn(self, workflow_data: str) -> Optional[WorkflowDefinition]:
-        """Import workflow from BPMN format."""
-        # Simplified BPMN import
+        """Import workflow from BPMN format."""        # Simplified BPMN import
         # In production, use proper BPMN parsing library
         try:
             # Extract basic information from BPMN XML
@@ -1417,12 +1359,10 @@ class WorkflowFactory:
             return None
     
     async def get_workflow(self, workflow_id: str) -> Optional[WorkflowDefinition]:
-        """Get workflow definition by ID."""
-        return self.workflow_definitions.get(workflow_id)
+        """Get workflow definition by ID."""        return self.workflow_definitions.get(workflow_id)
     
     async def list_workflows(self) -> List[Dict[str, Any]]:
-        """List all workflows."""
-        return [
+        """List all workflows."""        return [
             {
                 'workflow_id': workflow.workflow_id,
                 'name': workflow.name,
@@ -1437,8 +1377,7 @@ class WorkflowFactory:
         ]
     
     async def list_templates(self) -> List[Dict[str, Any]]:
-        """List all workflow templates."""
-        return [
+        """List all workflow templates."""        return [
             {
                 'template_id': template.template_id,
                 'name': template.name,
@@ -1453,8 +1392,7 @@ class WorkflowFactory:
         ]
     
     async def get_factory_stats(self) -> Dict[str, Any]:
-        """Get workflow factory statistics."""
-        return {
+        """Get workflow factory statistics."""        return {
             **self.factory_stats,
             'total_workflows': len(self.workflow_definitions),
             'total_templates': len(self.workflow_templates),

@@ -1,5 +1,4 @@
-"""
-Content Ingestion module __init__.py
+"""Content Ingestion module __init__.py
 ===================================
 
 Professional multi-format content ingestion for IA Influencer Agent platform.
@@ -23,9 +22,7 @@ PROJECT TEAM SPECIALTIES:
 - Audio/Video Specialist: Multimedia processing and codec optimization
 - Microservices Architect: Distributed systems and service orchestration
 - IA Prompt Engineer: AI model fine-tuning and content analysis
-"""
-
-# Core ingestion components
+"""# Core ingestion components
 from .content_ingestion_manager import (
     ContentIngestionManager,
     IngestionRequest,

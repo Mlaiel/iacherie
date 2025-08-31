@@ -1,5 +1,4 @@
-"""
-Analytics Data Model
+"""Analytics Data Model
 ===================
 
 Professional analytics data model for comprehensive performance tracking.
@@ -13,9 +12,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use without explicit written 
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-from datetime import datetime, date
+"""from datetime import datetime, date
 from typing import Optional, Dict, List, Any
 from decimal import Decimal
 from enum import Enum
@@ -30,8 +27,7 @@ Base = declarative_base()
 
 
 class AnalyticsType(Enum):
-    """Analytics type enumeration"""
-    PERFORMANCE = "performance"
+    """Analytics type enumeration"""    PERFORMANCE = "performance"
     AUDIENCE = "audience"
     ENGAGEMENT = "engagement"
     REVENUE = "revenue"
@@ -46,8 +42,7 @@ class AnalyticsType(Enum):
 
 
 class MetricType(Enum):
-    """Metric type enumeration"""
-    VIEWS = "views"
+    """Metric type enumeration"""    VIEWS = "views"
     PLAYS = "plays"
     STREAMS = "streams"
     DOWNLOADS = "downloads"
@@ -68,8 +63,7 @@ class MetricType(Enum):
 
 
 class TimeGranularity(Enum):
-    """Time granularity enumeration"""
-    HOURLY = "hourly"
+    """Time granularity enumeration"""    HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -79,13 +73,11 @@ class TimeGranularity(Enum):
 
 
 class AnalyticsModel(Base):
-    """
-    Professional analytics data model for IA Influencer Agent platform.
+    """    Professional analytics data model for IA Influencer Agent platform.
     
     Comprehensive analytics tracking with multi-dimensional metrics,
     audience insights, performance analytics, and predictive modeling.
-    """
-    
+    """    
     __tablename__ = "analytics"
     
     # Primary identification
@@ -250,8 +242,7 @@ class AnalyticsModel(Base):
         return f"<AnalyticsModel(id='{self.id}', type='{self.analytics_type}', metric='{self.metric_type}')>"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert model to dictionary representation"""
-        return {
+        """Convert model to dictionary representation"""        return {
             'id': self.id,
             'user_id': self.user_id,
             'content_id': self.content_id,
@@ -300,40 +291,33 @@ class AnalyticsModel(Base):
     
     @property
     def is_performance_analytics(self) -> bool:
-        """Check if analytics is performance type"""
-        return self.analytics_type == AnalyticsType.PERFORMANCE.value
+        """Check if analytics is performance type"""        return self.analytics_type == AnalyticsType.PERFORMANCE.value
     
     @property
     def is_audience_analytics(self) -> bool:
-        """Check if analytics is audience type"""
-        return self.analytics_type == AnalyticsType.AUDIENCE.value
+        """Check if analytics is audience type"""        return self.analytics_type == AnalyticsType.AUDIENCE.value
     
     @property
     def is_revenue_analytics(self) -> bool:
-        """Check if analytics is revenue type"""
-        return self.analytics_type == AnalyticsType.REVENUE.value
+        """Check if analytics is revenue type"""        return self.analytics_type == AnalyticsType.REVENUE.value
     
     @property
     def is_trending_up(self) -> bool:
-        """Check if metric is trending upward"""
-        return self.trend_direction == "up"
+        """Check if metric is trending upward"""        return self.trend_direction == "up"
     
     @property
     def is_trending_down(self) -> bool:
-        """Check if metric is trending downward"""
-        return self.trend_direction == "down"
+        """Check if metric is trending downward"""        return self.trend_direction == "down"
     
     @property
     def has_significant_change(self) -> bool:
-        """Check if change is statistically significant"""
-        if self.change_percentage:
+        """Check if change is statistically significant"""        if self.change_percentage:
             return abs(float(self.change_percentage)) >= 5.0  # 5% threshold
         return False
     
     @property
     def value_formatted(self) -> str:
-        """Get formatted value with appropriate units"""
-        if not self.value:
+        """Get formatted value with appropriate units"""        if not self.value:
             return "0"
         
         value = float(self.value)
@@ -352,8 +336,7 @@ class AnalyticsModel(Base):
     
     @property
     def change_formatted(self) -> str:
-        """Get formatted change with direction indicator"""
-        if not self.change_percentage:
+        """Get formatted change with direction indicator"""        if not self.change_percentage:
             return "0%"
         
         change = float(self.change_percentage)
@@ -362,8 +345,7 @@ class AnalyticsModel(Base):
     
     @property
     def performance_grade(self) -> str:
-        """Get performance grade based on industry percentile"""
-        if not self.industry_percentile:
+        """Get performance grade based on industry percentile"""        if not self.industry_percentile:
             return "N/A"
         
         percentile = self.industry_percentile
@@ -388,8 +370,7 @@ class AnalyticsModel(Base):
     
     @property
     def engagement_level(self) -> str:
-        """Get engagement level category"""
-        if not self.engagement_rate:
+        """Get engagement level category"""        if not self.engagement_rate:
             return "Unknown"
         
         rate = float(self.engagement_rate)
@@ -407,8 +388,7 @@ class AnalyticsModel(Base):
             return "Very Low"
     
     def calculate_change(self):
-        """Calculate change metrics from previous value"""
-        if self.previous_value and self.value:
+        """Calculate change metrics from previous value"""        if self.previous_value and self.value:
             self.change_absolute = self.value - self.previous_value
             
             if self.previous_value != 0:
@@ -425,8 +405,7 @@ class AnalyticsModel(Base):
         self.updated_at = datetime.utcnow()
     
     def calculate_engagement_rate(self):
-        """Calculate engagement rate based on available metrics"""
-        if self.impressions_count and self.impressions_count > 0:
+        """Calculate engagement rate based on available metrics"""        if self.impressions_count and self.impressions_count > 0:
             total_engagements = (
                 (self.likes_count or 0) +
                 (self.comments_count or 0) +
@@ -445,8 +424,7 @@ class AnalyticsModel(Base):
         self.updated_at = datetime.utcnow()
     
     def calculate_retention_rate(self):
-        """Calculate content retention rate"""
-        if self.complete_plays_count and self.plays_count and self.plays_count > 0:
+        """Calculate content retention rate"""        if self.complete_plays_count and self.plays_count and self.plays_count > 0:
             self.retention_rate = (self.complete_plays_count / self.plays_count) * 100
         elif self.average_view_duration and self.content:
             # Simplified retention based on view duration vs content duration
@@ -456,8 +434,7 @@ class AnalyticsModel(Base):
         self.updated_at = datetime.utcnow()
     
     def set_demographic_data(self, demographics: Dict[str, Any]):
-        """Set demographic breakdown data"""
-        if 'age' in demographics:
+        """Set demographic breakdown data"""        if 'age' in demographics:
             self.age_demographics = demographics['age']
         if 'gender' in demographics:
             self.gender_demographics = demographics['gender']
@@ -469,8 +446,7 @@ class AnalyticsModel(Base):
         self.updated_at = datetime.utcnow()
     
     def set_geographic_data(self, geographic: Dict[str, Any]):
-        """Set geographic breakdown data"""
-        if 'countries' in geographic:
+        """Set geographic breakdown data"""        if 'countries' in geographic:
             self.top_countries = geographic['countries']
         if 'cities' in geographic:
             self.top_cities = geographic['cities']
@@ -480,8 +456,7 @@ class AnalyticsModel(Base):
         self.updated_at = datetime.utcnow()
     
     def set_ai_insights(self, insights: List[str], scores: Dict[str, float] = None):
-        """Set AI-generated insights"""
-        self.ai_insights = {
+        """Set AI-generated insights"""        self.ai_insights = {
             'insights': insights,
             'generated_at': datetime.utcnow().isoformat(),
             'scores': scores or {}
@@ -498,8 +473,7 @@ class AnalyticsModel(Base):
         self.updated_at = datetime.utcnow()
     
     def detect_anomaly(self, threshold: float = 2.0):
-        """Detect anomalies in metrics"""
-        if not self.previous_value or not self.value:
+        """Detect anomalies in metrics"""        if not self.previous_value or not self.value:
             return False
         
         # Simple z-score based anomaly detection
@@ -514,8 +488,7 @@ class AnalyticsModel(Base):
         return False
     
     def set_predictions(self, predictions: Dict[str, Any], confidence: float):
-        """Set predictive analytics data"""
-        self.predicted_metrics = predictions
+        """Set predictive analytics data"""        self.predicted_metrics = predictions
         self.forecast_confidence = confidence
         
         if 'growth_rate' in predictions:
@@ -524,8 +497,7 @@ class AnalyticsModel(Base):
         self.updated_at = datetime.utcnow()
     
     def compare_to_industry(self, industry_avg: Decimal, percentile: float):
-        """Set industry comparison data"""
-        self.industry_average = industry_avg
+        """Set industry comparison data"""        self.industry_average = industry_avg
         self.industry_percentile = percentile
         
         # Determine competitive position
@@ -543,8 +515,7 @@ class AnalyticsModel(Base):
         self.updated_at = datetime.utcnow()
     
     def aggregate_from_children(self, child_analytics: List['AnalyticsModel']):
-        """Aggregate analytics from child records"""
-        if not child_analytics:
+        """Aggregate analytics from child records"""        if not child_analytics:
             return
         
         # Sum numeric values
@@ -567,8 +538,7 @@ class AnalyticsModel(Base):
         self.updated_at = datetime.utcnow()
     
     def validate_data_quality(self):
-        """Validate and score data quality"""
-        score = 100.0
+        """Validate and score data quality"""        score = 100.0
         required_fields = ['value', 'period_start', 'period_end', 'analytics_type', 'metric_type']
         
         # Check required fields
@@ -594,13 +564,11 @@ class AnalyticsModel(Base):
         self.updated_at = datetime.utcnow()
     
     def soft_delete(self):
-        """Soft delete analytics record"""
-        self.is_deleted = True
+        """Soft delete analytics record"""        self.is_deleted = True
         self.deleted_at = datetime.utcnow()
         self.updated_at = datetime.utcnow()
     
     def restore(self):
-        """Restore soft-deleted analytics record"""
-        self.is_deleted = False
+        """Restore soft-deleted analytics record"""        self.is_deleted = False
         self.deleted_at = None
         self.updated_at = datetime.utcnow()

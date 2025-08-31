@@ -1,14 +1,11 @@
-"""
-Communication Engine - Advanced Processing Core
+"""Communication Engine - Advanced Processing Core
 
 Core engine for communication operations including chat, video calls,
 messaging, notifications, and real-time collaboration.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime
@@ -18,8 +15,7 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class MessageType(Enum):
-    """Message type enumeration"""
-    TEXT = "text"
+    """Message type enumeration"""    TEXT = "text"
     IMAGE = "image"
     VIDEO = "video"
     AUDIO = "audio"
@@ -27,15 +23,13 @@ class MessageType(Enum):
     NOTIFICATION = "notification"
 
 class SessionStatus(Enum):
-    """Communication session status"""
-    ACTIVE = "active"
+    """Communication session status"""    ACTIVE = "active"
     IDLE = "idle"
     DISCONNECTED = "disconnected"
 
 @dataclass
 class CommunicationJob:
-    """Communication operation job"""
-    job_id: str
+    """Communication operation job"""    job_id: str
     operation_type: str
     session_id: Optional[str] = None
     message_data: Optional[Dict[str, Any]] = None
@@ -44,8 +38,7 @@ class CommunicationJob:
 
 @dataclass
 class CommunicationResult:
-    """Communication operation result"""
-    job_id: str
+    """Communication operation result"""    job_id: str
     success: bool
     result_data: Optional[Dict[str, Any]] = None
     error_message: Optional[str] = None
@@ -53,8 +46,7 @@ class CommunicationResult:
     completed_at: datetime = None
 
 class CommunicationEngine:
-    """Core communication processing engine"""
-    
+    """Core communication processing engine"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.is_running = False
@@ -65,21 +57,18 @@ class CommunicationEngine:
         logger.info("CommunicationEngine initialized")
 
     async def start(self) -> None:
-        """Start the communication engine"""
-        if self.is_running:
+        """Start the communication engine"""        if self.is_running:
             return
         
         self.is_running = True
         logger.info("Communication Engine started")
 
     async def shutdown(self) -> None:
-        """Shutdown the communication engine"""
-        self.is_running = False
+        """Shutdown the communication engine"""        self.is_running = False
         logger.info("Communication Engine shut down")
 
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process communication operation"""
-        operation = data.get("operation", "status")
+        """Process communication operation"""        operation = data.get("operation", "status")
         
         if operation == "send_message":
             return await self._send_message(data)
@@ -95,8 +84,7 @@ class CommunicationEngine:
             return await self._get_status(data)
 
     async def _send_message(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Send a message"""
-        session_id = data.get("session_id")
+        """Send a message"""        session_id = data.get("session_id")
         message_data = data.get("message", {})
         sender_id = data.get("sender_id")
         
@@ -126,8 +114,7 @@ class CommunicationEngine:
         }
 
     async def _create_session(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Create a new communication session"""
-        session_id = data.get("session_id", f"session_{datetime.now().timestamp()}")
+        """Create a new communication session"""        session_id = data.get("session_id", f"session_{datetime.now().timestamp()}")
         session_name = data.get("name", "New Session")
         creator_id = data.get("creator_id")
         
@@ -151,8 +138,7 @@ class CommunicationEngine:
         }
 
     async def _join_session(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Join an existing session"""
-        session_id = data.get("session_id")
+        """Join an existing session"""        session_id = data.get("session_id")
         user_id = data.get("user_id")
         
         if session_id not in self.active_sessions:
@@ -181,8 +167,7 @@ class CommunicationEngine:
         }
 
     async def _start_video_call(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Start a video call"""
-        session_id = data.get("session_id")
+        """Start a video call"""        session_id = data.get("session_id")
         initiator_id = data.get("initiator_id")
         
         if session_id not in self.active_sessions:
@@ -212,8 +197,7 @@ class CommunicationEngine:
         }
 
     async def _send_notification(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Send notification to users"""
-        recipients = data.get("recipients", [])
+        """Send notification to users"""        recipients = data.get("recipients", [])
         notification = {
             "id": f"notif_{datetime.now().timestamp()}",
             "title": data.get("title", "Notification"),
@@ -236,16 +220,14 @@ class CommunicationEngine:
         }
 
     async def _notify_session_participants(self, session_id: str, message: Dict[str, Any]) -> None:
-        """Notify all participants in a session of a new message"""
-        if session_id in self.active_sessions:
+        """Notify all participants in a session of a new message"""        if session_id in self.active_sessions:
             session = self.active_sessions[session_id]
             for participant in session["participants"]:
                 # In real implementation, this would send real-time notifications
                 pass
 
     async def _get_status(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Get overall communication status"""
-        total_messages = sum(len(session["messages"]) for session in self.active_sessions.values())
+        """Get overall communication status"""        total_messages = sum(len(session["messages"]) for session in self.active_sessions.values())
         total_participants = sum(len(session["participants"]) for session in self.active_sessions.values())
         
         return {

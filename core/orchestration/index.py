@@ -1,5 +1,4 @@
-"""
-Orchestration Module Index - Enterprise Orchestration System Entry Point
+"""Orchestration Module Index - Enterprise Orchestration System Entry Point
 
 Centralized initialization and configuration management for the IA Influencer Agent
 orchestration core module, providing streamlined access to all orchestration
@@ -12,9 +11,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import uuid
 from typing import Dict, List, Optional, Any, Union
@@ -36,8 +33,7 @@ from backend.core.orchestration.performance_optimizer import PerformanceOptimize
 
 @dataclass
 class OrchestrationSystemConfig:
-    """Complete orchestration system configuration."""
-    # System Configuration
+    """Complete orchestration system configuration."""    # System Configuration
     environment: str = "production"
     debug_mode: bool = False
     log_level: str = "INFO"
@@ -78,8 +74,7 @@ class OrchestrationSystemConfig:
 
 
 class OrchestrationSystem:
-    """
-    Complete orchestration system manager for IA Influencer Agent platform.
+    """    Complete orchestration system manager for IA Influencer Agent platform.
     
     Features:
     - Centralized system initialization
@@ -88,11 +83,8 @@ class OrchestrationSystem:
     - Health monitoring and diagnostics
     - Performance optimization
     - Graceful shutdown handling
-    """
-
-    def __init__(self, config: Optional[OrchestrationSystemConfig] = None):
-        """Initialize the orchestration system."""
-        self.config = config or OrchestrationSystemConfig()
+    """    def __init__(self, config: Optional[OrchestrationSystemConfig] = None):
+        """Initialize the orchestration system."""        self.config = config or OrchestrationSystemConfig()
         self.logger = self._setup_logging()
         
         # Core components
@@ -111,8 +103,7 @@ class OrchestrationSystem:
         self.component_health: Dict[str, bool] = {}
 
     def _setup_logging(self) -> logging.Logger:
-        """Set up logging configuration."""
-        logging.basicConfig(
+        """Set up logging configuration."""        logging.basicConfig(
             level=getattr(logging, self.config.log_level.upper()),
             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
             handlers=[
@@ -125,13 +116,11 @@ class OrchestrationSystem:
         return logging.getLogger(__name__)
 
     async def initialize(self) -> bool:
-        """
-        Initialize the complete orchestration system.
+        """        Initialize the complete orchestration system.
         
         Returns:
             bool: True if initialization successful, False otherwise
-        """
-        try:
+        """        try:
             self.logger.info("Initializing IA Influencer Agent Orchestration System...")
             self.startup_time = datetime.utcnow()
             
@@ -163,8 +152,7 @@ class OrchestrationSystem:
             return False
 
     async def _load_configuration(self):
-        """Load and validate system configuration."""
-        if self.config.config_path:
+        """Load and validate system configuration."""        if self.config.config_path:
             # Load configuration from file
             config_path = Path(self.config.config_path)
             if config_path.exists():
@@ -181,8 +169,7 @@ class OrchestrationSystem:
             )
 
     async def _initialize_components(self):
-        """Initialize all orchestration components."""
-        try:
+        """Initialize all orchestration components."""        try:
             # Initialize Resource Manager first (other components depend on it)
             self.logger.info("Initializing Resource Manager...")
             self.resource_manager = ResourceManager()
@@ -231,8 +218,7 @@ class OrchestrationSystem:
             raise
 
     async def _verify_system_health(self):
-        """Verify the health of all system components."""
-        unhealthy_components = []
+        """Verify the health of all system components."""        unhealthy_components = []
         
         for component_name, is_healthy in self.component_health.items():
             if not is_healthy:
@@ -250,8 +236,7 @@ class OrchestrationSystem:
                 self.logger.warning(f"System health issues: {health_status['issues']}")
 
     async def _start_monitoring(self):
-        """Start system monitoring and health checks."""
-        if self.config.monitoring_config.get("enabled", True):
+        """Start system monitoring and health checks."""        if self.config.monitoring_config.get("enabled", True):
             # Start background monitoring tasks
             asyncio.create_task(self._health_monitoring_loop())
             asyncio.create_task(self._performance_monitoring_loop())
@@ -259,8 +244,7 @@ class OrchestrationSystem:
             self.logger.info("System monitoring started")
 
     async def _health_monitoring_loop(self):
-        """Background health monitoring loop."""
-        interval = self.config.monitoring_config.get("health_check_interval", 60)
+        """Background health monitoring loop."""        interval = self.config.monitoring_config.get("health_check_interval", 60)
         
         while self.running:
             try:
@@ -286,8 +270,7 @@ class OrchestrationSystem:
                 self.logger.error(f"Health monitoring error: {str(e)}")
 
     async def _performance_monitoring_loop(self):
-        """Background performance monitoring loop."""
-        interval = self.config.performance_config.get("optimization_interval", 300)
+        """Background performance monitoring loop."""        interval = self.config.performance_config.get("optimization_interval", 300)
         
         while self.running:
             try:
@@ -301,8 +284,7 @@ class OrchestrationSystem:
                 self.logger.error(f"Performance monitoring error: {str(e)}")
 
     async def _check_component_health(self, component_name: str) -> bool:
-        """Check the health of a specific component."""
-        try:
+        """Check the health of a specific component."""        try:
             component = getattr(self, component_name, None)
             if component is None:
                 return False
@@ -318,8 +300,7 @@ class OrchestrationSystem:
             return False
 
     async def _auto_remediate(self, health_status: Dict[str, Any]):
-        """Attempt automatic remediation of health issues."""
-        try:
+        """Attempt automatic remediation of health issues."""        try:
             for issue in health_status.get("issues", []):
                 if "High" in issue and "usage" in issue:
                     # Scale resources if high usage detected
@@ -334,8 +315,7 @@ class OrchestrationSystem:
             self.logger.error(f"Auto-remediation failed: {str(e)}")
 
     async def _restart_unhealthy_components(self):
-        """Restart unhealthy components."""
-        for component_name, is_healthy in self.component_health.items():
+        """Restart unhealthy components."""        for component_name, is_healthy in self.component_health.items():
             if not is_healthy:
                 self.logger.info(f"Restarting unhealthy component: {component_name}")
                 # Implement component restart logic
@@ -351,8 +331,7 @@ class OrchestrationSystem:
         user_id: Optional[str] = None,
         tenant_id: Optional[str] = None
     ) -> str:
-        """
-        Submit a workflow for execution through the orchestration system.
+        """        Submit a workflow for execution through the orchestration system.
         
         Args:
             workflow_name: Name of the workflow
@@ -365,8 +344,7 @@ class OrchestrationSystem:
             
         Returns:
             str: Execution ID for tracking
-        """
-        if not self.controller:
+        """        if not self.controller:
             raise RuntimeError("Orchestration system not initialized")
         
         # Import necessary classes for workflow request
@@ -396,22 +374,19 @@ class OrchestrationSystem:
         return execution_id
 
     async def get_workflow_status(self, execution_id: str) -> Dict[str, Any]:
-        """Get workflow execution status."""
-        if not self.controller:
+        """Get workflow execution status."""        if not self.controller:
             raise RuntimeError("Orchestration system not initialized")
         
         return await self.controller.get_workflow_status(execution_id)
 
     async def cancel_workflow(self, execution_id: str) -> bool:
-        """Cancel a workflow execution."""
-        if not self.controller:
+        """Cancel a workflow execution."""        if not self.controller:
             raise RuntimeError("Orchestration system not initialized")
         
         return await self.controller.cancel_workflow(execution_id)
 
     async def get_system_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive system metrics."""
-        if not self.controller:
+        """Get comprehensive system metrics."""        if not self.controller:
             raise RuntimeError("Orchestration system not initialized")
         
         metrics = await self.controller.get_system_metrics()
@@ -427,8 +402,7 @@ class OrchestrationSystem:
         return metrics_dict
 
     async def list_active_workflows(self) -> List[Dict[str, Any]]:
-        """List all active workflows."""
-        if not self.controller:
+        """List all active workflows."""        if not self.controller:
             raise RuntimeError("Orchestration system not initialized")
         
         return await self.controller.list_active_workflows()
@@ -439,8 +413,7 @@ class OrchestrationSystem:
         requirements: Dict[str, Any],
         optimization_level: str = "balanced"
     ) -> str:
-        """Create a dynamic pipeline based on content type and requirements."""
-        if not self.pipeline_builder:
+        """Create a dynamic pipeline based on content type and requirements."""        if not self.pipeline_builder:
             raise RuntimeError("Pipeline builder not initialized")
         
         workflow = await self.pipeline_builder.build_dynamic_pipeline(
@@ -459,8 +432,7 @@ class OrchestrationSystem:
         return execution_id
 
     async def shutdown(self):
-        """Gracefully shutdown the orchestration system."""
-        try:
+        """Gracefully shutdown the orchestration system."""        try:
             self.logger.info("Shutting down orchestration system...")
             self.running = False
             
@@ -490,8 +462,7 @@ class OrchestrationSystem:
             self.logger.error(f"Error during shutdown: {str(e)}")
 
     async def _cleanup_partial_initialization(self):
-        """Clean up after partial initialization failure."""
-        components = [
+        """Clean up after partial initialization failure."""        components = [
             self.controller,
             self.performance_optimizer,
             self.resource_manager,
@@ -507,12 +478,10 @@ class OrchestrationSystem:
                     pass  # Ignore errors during cleanup
 
     def is_healthy(self) -> bool:
-        """Check if the orchestration system is healthy."""
-        return self.initialized and self.running and all(self.component_health.values())
+        """Check if the orchestration system is healthy."""        return self.initialized and self.running and all(self.component_health.values())
 
     def get_component_status(self) -> Dict[str, Any]:
-        """Get detailed status of all components."""
-        return {
+        """Get detailed status of all components."""        return {
             "initialized": self.initialized,
             "running": self.running,
             "startup_time": self.startup_time.isoformat() if self.startup_time else None,
@@ -528,16 +497,14 @@ _orchestration_system: Optional[OrchestrationSystem] = None
 async def initialize_orchestration_system(
     config: Optional[OrchestrationSystemConfig] = None
 ) -> OrchestrationSystem:
-    """
-    Initialize the global orchestration system.
+    """    Initialize the global orchestration system.
     
     Args:
         config: System configuration
         
     Returns:
         OrchestrationSystem: Initialized system instance
-    """
-    global _orchestration_system
+    """    global _orchestration_system
     
     if _orchestration_system is not None:
         return _orchestration_system
@@ -553,13 +520,11 @@ async def initialize_orchestration_system(
 
 
 def get_orchestration_system() -> Optional[OrchestrationSystem]:
-    """Get the global orchestration system instance."""
-    return _orchestration_system
+    """Get the global orchestration system instance."""    return _orchestration_system
 
 
 async def shutdown_orchestration_system():
-    """Shutdown the global orchestration system."""
-    global _orchestration_system
+    """Shutdown the global orchestration system."""    global _orchestration_system
     
     if _orchestration_system:
         await _orchestration_system.shutdown()
@@ -573,8 +538,7 @@ async def submit_content_processing_workflow(
     tenant_id: Optional[str] = None,
     priority: str = "normal"
 ) -> str:
-    """Submit a content processing workflow."""
-    system = get_orchestration_system()
+    """Submit a content processing workflow."""    system = get_orchestration_system()
     if not system:
         raise RuntimeError("Orchestration system not initialized")
     
@@ -594,8 +558,7 @@ async def submit_protection_workflow(
     tenant_id: Optional[str] = None,
     priority: str = "high"
 ) -> str:
-    """Submit a content protection workflow."""
-    system = get_orchestration_system()
+    """Submit a content protection workflow."""    system = get_orchestration_system()
     if not system:
         raise RuntimeError("Orchestration system not initialized")
     
@@ -615,8 +578,7 @@ async def submit_monetization_workflow(
     tenant_id: Optional[str] = None,
     priority: str = "normal"
 ) -> str:
-    """Submit a monetization workflow."""
-    system = get_orchestration_system()
+    """Submit a monetization workflow."""    system = get_orchestration_system()
     if not system:
         raise RuntimeError("Orchestration system not initialized")
     

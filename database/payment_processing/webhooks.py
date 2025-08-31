@@ -1,5 +1,4 @@
-"""
-Advanced Webhook Management System - Enterprise Grade
+"""Advanced Webhook Management System - Enterprise Grade
 
 Comprehensive webhook processing infrastructure with real-time event handling,
 retry mechanisms, security validation, and analytics.
@@ -24,9 +23,7 @@ ENTERPRISE FEATURES:
 - Event replay and recovery capabilities
 - Comprehensive webhook analytics and monitoring
 - Circuit breaker pattern for fault tolerance
-"""
-
-from typing import Dict, Any, Optional, List, Union, Tuple, Callable
+"""from typing import Dict, Any, Optional, List, Union, Tuple, Callable
 from decimal import Decimal
 from datetime import datetime, timedelta
 from dataclasses import dataclass, field
@@ -59,8 +56,7 @@ settings = get_settings()
 
 
 class WebhookEventType(Enum):
-    """Webhook event types"""
-    PAYMENT_COMPLETED = "payment.completed"
+    """Webhook event types"""    PAYMENT_COMPLETED = "payment.completed"
     PAYMENT_FAILED = "payment.failed"
     PAYMENT_REFUNDED = "payment.refunded"
     PAYMENT_DISPUTED = "payment.disputed"
@@ -76,8 +72,7 @@ class WebhookEventType(Enum):
 
 
 class WebhookStatus(Enum):
-    """Webhook processing status"""
-    RECEIVED = "received"
+    """Webhook processing status"""    RECEIVED = "received"
     PROCESSING = "processing"
     PROCESSED = "processed"
     FAILED = "failed"
@@ -86,8 +81,7 @@ class WebhookStatus(Enum):
 
 
 class WebhookPriority(Enum):
-    """Webhook processing priority"""
-    LOW = 1
+    """Webhook processing priority"""    LOW = 1
     NORMAL = 2
     HIGH = 3
     CRITICAL = 4
@@ -96,8 +90,7 @@ class WebhookPriority(Enum):
 
 @dataclass
 class WebhookEvent:
-    """Webhook event data structure"""
-    id: str
+    """Webhook event data structure"""    id: str
     provider: PaymentProvider
     event_type: WebhookEventType
     data: Dict[str, Any]
@@ -112,8 +105,7 @@ class WebhookEvent:
 
 @dataclass
 class WebhookProcessingResult:
-    """Result of webhook processing"""
-    success: bool
+    """Result of webhook processing"""    success: bool
     event_id: str
     processing_time: float
     error_message: Optional[str] = None
@@ -125,8 +117,7 @@ class WebhookProcessingResult:
 
 @dataclass
 class WebhookConfiguration:
-    """Webhook configuration for providers"""
-    provider: PaymentProvider
+    """Webhook configuration for providers"""    provider: PaymentProvider
     endpoint_url: str
     secret_key: str
     enabled_events: List[WebhookEventType]
@@ -138,10 +129,8 @@ class WebhookConfiguration:
 
 
 class AdvancedWebhookManager:
-    """
-    Enterprise-grade webhook management system
-    """
-    
+    """    Enterprise-grade webhook management system
+    """    
     def __init__(self):
         # Repository dependencies
         self.webhook_repo = PaymentWebhookRepository()
@@ -172,8 +161,7 @@ class AdvancedWebhookManager:
         logger.info("Advanced Webhook Manager initialized")
     
     def _initialize_webhook_configs(self):
-        """Initialize webhook configurations for different providers"""
-        
+        """Initialize webhook configurations for different providers"""        
         # Stripe configuration
         self.webhook_configs[PaymentProvider.STRIPE] = WebhookConfiguration(
             provider=PaymentProvider.STRIPE,
@@ -222,10 +210,8 @@ class AdvancedWebhookManager:
         headers: Dict[str, str],
         body: str
     ) -> WebhookProcessingResult:
-        """
-        Process incoming webhook from payment provider
-        """
-        start_time = datetime.utcnow()
+        """        Process incoming webhook from payment provider
+        """        start_time = datetime.utcnow()
         
         try:
             # Validate webhook signature
@@ -285,8 +271,7 @@ class AdvancedWebhookManager:
         headers: Dict[str, str],
         body: str
     ) -> bool:
-        """Validate webhook signature"""
-        try:
+        """Validate webhook signature"""        try:
             config = self.webhook_configs.get(provider)
             if not config:
                 logger.error(f"No webhook configuration for provider {provider.value}")
@@ -311,8 +296,7 @@ class AdvancedWebhookManager:
             return False
     
     def _validate_stripe_signature(self, signature: str, body: str, secret: str) -> bool:
-        """Validate Stripe webhook signature"""
-        try:
+        """Validate Stripe webhook signature"""        try:
             # Parse Stripe signature format: t=timestamp,v1=signature
             elements = signature.split(',')
             timestamp = None
@@ -348,8 +332,7 @@ class AdvancedWebhookManager:
             return False
     
     def _validate_paypal_signature(self, headers: Dict[str, str], body: str, secret: str) -> bool:
-        """Validate PayPal webhook signature"""
-        try:
+        """Validate PayPal webhook signature"""        try:
             # PayPal signature validation is more complex
             # This is a simplified version
             transmission_id = headers.get('PAYPAL-TRANSMISSION-ID')
@@ -378,8 +361,7 @@ class AdvancedWebhookManager:
             return False
     
     def _validate_wise_signature(self, signature: str, body: str, secret: str) -> bool:
-        """Validate Wise webhook signature"""
-        try:
+        """Validate Wise webhook signature"""        try:
             expected_signature = hmac.new(
                 secret.encode('utf-8'),
                 body.encode('utf-8'),
@@ -393,8 +375,7 @@ class AdvancedWebhookManager:
             return False
     
     def _validate_generic_signature(self, signature: str, body: str, secret: str) -> bool:
-        """Generic HMAC signature validation"""
-        try:
+        """Generic HMAC signature validation"""        try:
             expected_signature = hmac.new(
                 secret.encode('utf-8'),
                 body.encode('utf-8'),
@@ -431,8 +412,7 @@ __all__ = [
 
 
 class WebhookProcessor:
-    """Base webhook processor"""
-    
+    """Base webhook processor"""    
     def __init__(self, security_manager: PaymentSecurityManager):
         self.security_manager = security_manager
         self.event_handlers: Dict[WebhookEventType, List[Callable]] = {}
@@ -440,16 +420,14 @@ class WebhookProcessor:
         self.retry_delay = 5  # seconds
     
     def register_handler(self, event_type: WebhookEventType, handler: Callable):
-        """Register event handler"""
-        if event_type not in self.event_handlers:
+        """Register event handler"""        if event_type not in self.event_handlers:
             self.event_handlers[event_type] = []
         
         self.event_handlers[event_type].append(handler)
         logger.info(f"Registered handler for {event_type.value}")
     
     async def process_webhook(self, webhook_event: WebhookEvent) -> Dict[str, Any]:
-        """Process webhook event"""
-        try:
+        """Process webhook event"""        try:
             logger.info(f"Processing webhook event: {webhook_event.id} ({webhook_event.event_type.value})")
             
             # Validate webhook signature if present
@@ -499,8 +477,7 @@ class WebhookProcessor:
             }
     
     def _validate_signature(self, webhook_event: WebhookEvent) -> bool:
-        """Validate webhook signature"""
-        try:
+        """Validate webhook signature"""        try:
             payload = json.dumps(webhook_event.data, sort_keys=True)
             
             # Provider-specific signature validation
@@ -516,8 +493,7 @@ class WebhookProcessor:
             return False
     
     def _validate_stripe_signature(self, payload: str, signature: str) -> bool:
-        """Validate Stripe webhook signature"""
-        # Stripe signature format: t=timestamp,v1=signature
+        """Validate Stripe webhook signature"""        # Stripe signature format: t=timestamp,v1=signature
         try:
             elements = signature.split(',')
             timestamp = next(e.split('=')[1] for e in elements if e.startswith('t='))
@@ -540,8 +516,7 @@ class WebhookProcessor:
             return False
     
     def _validate_paypal_signature(self, payload: str, signature: str) -> bool:
-        """Validate PayPal webhook signature"""
-        try:
+        """Validate PayPal webhook signature"""        try:
             # PayPal signature validation logic
             webhook_secret = "paypal_webhook_secret"  # Should come from config
             
@@ -559,15 +534,13 @@ class WebhookProcessor:
 
 
 class StripeWebhookHandler:
-    """Stripe-specific webhook handler"""
-    
+    """Stripe-specific webhook handler"""    
     def __init__(self, webhook_processor: WebhookProcessor):
         self.processor = webhook_processor
         self._register_handlers()
     
     def _register_handlers(self):
-        """Register Stripe event handlers"""
-        self.processor.register_handler(
+        """Register Stripe event handlers"""        self.processor.register_handler(
             WebhookEventType.PAYMENT_SUCCEEDED,
             self.handle_payment_succeeded
         )
@@ -585,8 +558,7 @@ class StripeWebhookHandler:
         )
     
     async def handle_payment_succeeded(self, event: WebhookEvent) -> Dict[str, Any]:
-        """Handle successful payment"""
-        try:
+        """Handle successful payment"""        try:
             payment_intent = event.data.get('object', {})
             transaction_id = payment_intent.get('id')
             amount = payment_intent.get('amount', 0) / 100  # Convert from cents
@@ -609,8 +581,7 @@ class StripeWebhookHandler:
             raise
     
     async def handle_payment_failed(self, event: WebhookEvent) -> Dict[str, Any]:
-        """Handle failed payment"""
-        try:
+        """Handle failed payment"""        try:
             payment_intent = event.data.get('object', {})
             transaction_id = payment_intent.get('id')
             failure_reason = payment_intent.get('last_payment_error', {}).get('message', 'Unknown')
@@ -631,8 +602,7 @@ class StripeWebhookHandler:
             raise
     
     async def handle_payment_refunded(self, event: WebhookEvent) -> Dict[str, Any]:
-        """Handle payment refund"""
-        try:
+        """Handle payment refund"""        try:
             charge = event.data.get('object', {})
             refund_id = charge.get('id')
             amount_refunded = charge.get('amount_refunded', 0) / 100
@@ -653,8 +623,7 @@ class StripeWebhookHandler:
             raise
     
     async def handle_payment_disputed(self, event: WebhookEvent) -> Dict[str, Any]:
-        """Handle payment dispute/chargeback"""
-        try:
+        """Handle payment dispute/chargeback"""        try:
             dispute = event.data.get('object', {})
             dispute_id = dispute.get('id')
             charge_id = dispute.get('charge')
@@ -676,8 +645,7 @@ class StripeWebhookHandler:
             raise
     
     async def _activate_service(self, transaction_id: str, payment_data: Dict[str, Any]):
-        """Activate service after successful payment"""
-        # Business logic for service activation
+        """Activate service after successful payment"""        # Business logic for service activation
         customer_id = payment_data.get('customer')
         metadata = payment_data.get('metadata', {})
         service_type = metadata.get('service_type', 'premium')
@@ -691,8 +659,7 @@ class StripeWebhookHandler:
         # 4. Update analytics
     
     async def _handle_payment_failure(self, transaction_id: str, reason: str):
-        """Handle payment failure"""
-        logger.info(f"Processing payment failure: {transaction_id}")
+        """Handle payment failure"""        logger.info(f"Processing payment failure: {transaction_id}")
         
         # Implementation would:
         # 1. Update transaction status
@@ -701,8 +668,7 @@ class StripeWebhookHandler:
         # 4. Update retry schedule if applicable
     
     async def _process_refund(self, refund_id: str, amount: float):
-        """Process refund business logic"""
-        logger.info(f"Processing refund: {refund_id}, Amount: {amount}")
+        """Process refund business logic"""        logger.info(f"Processing refund: {refund_id}, Amount: {amount}")
         
         # Implementation would:
         # 1. Update transaction records
@@ -711,8 +677,7 @@ class StripeWebhookHandler:
         # 4. Update financial records
     
     async def _handle_dispute(self, dispute_id: str, charge_id: str, reason: str):
-        """Handle payment dispute"""
-        logger.info(f"Processing dispute: {dispute_id}")
+        """Handle payment dispute"""        logger.info(f"Processing dispute: {dispute_id}")
         
         # Implementation would:
         # 1. Gather evidence for dispute response
@@ -722,15 +687,13 @@ class StripeWebhookHandler:
 
 
 class PayPalWebhookHandler:
-    """PayPal-specific webhook handler"""
-    
+    """PayPal-specific webhook handler"""    
     def __init__(self, webhook_processor: WebhookProcessor):
         self.processor = webhook_processor
         self._register_handlers()
     
     def _register_handlers(self):
-        """Register PayPal event handlers"""
-        self.processor.register_handler(
+        """Register PayPal event handlers"""        self.processor.register_handler(
             WebhookEventType.PAYMENT_SUCCEEDED,
             self.handle_payment_completed
         )
@@ -740,8 +703,7 @@ class PayPalWebhookHandler:
         )
     
     async def handle_payment_completed(self, event: WebhookEvent) -> Dict[str, Any]:
-        """Handle PayPal payment completion"""
-        try:
+        """Handle PayPal payment completion"""        try:
             resource = event.data.get('resource', {})
             payment_id = resource.get('id')
             state = resource.get('state')
@@ -761,8 +723,7 @@ class PayPalWebhookHandler:
             raise
     
     async def handle_payment_cancelled(self, event: WebhookEvent) -> Dict[str, Any]:
-        """Handle PayPal payment cancellation"""
-        try:
+        """Handle PayPal payment cancellation"""        try:
             resource = event.data.get('resource', {})
             payment_id = resource.get('id')
             
@@ -780,25 +741,21 @@ class PayPalWebhookHandler:
             raise
     
     async def _complete_paypal_order(self, payment_id: str, payment_data: Dict[str, Any]):
-        """Complete PayPal order"""
-        logger.info(f"Completing PayPal order: {payment_id}")
+        """Complete PayPal order"""        logger.info(f"Completing PayPal order: {payment_id}")
         # Implementation for PayPal-specific order completion
     
     async def _handle_paypal_cancellation(self, payment_id: str):
-        """Handle PayPal payment cancellation"""
-        logger.info(f"Handling PayPal cancellation: {payment_id}")
+        """Handle PayPal payment cancellation"""        logger.info(f"Handling PayPal cancellation: {payment_id}")
         # Implementation for PayPal-specific cancellation handling
 
 
 class WebhookEventLogger:
-    """Log webhook events for audit and debugging"""
-    
+    """Log webhook events for audit and debugging"""    
     def __init__(self):
         self.events_log = []
     
     async def log_event(self, event: WebhookEvent, result: Dict[str, Any]):
-        """Log webhook event and processing result"""
-        log_entry = {
+        """Log webhook event and processing result"""        log_entry = {
             'timestamp': datetime.now().isoformat(),
             'event_id': event.id,
             'event_type': event.event_type.value,
@@ -812,13 +769,11 @@ class WebhookEventLogger:
         logger.info(f"Webhook event logged: {event.id}")
     
     def get_event_history(self, limit: int = 100) -> List[Dict[str, Any]]:
-        """Get recent webhook event history"""
-        return self.events_log[-limit:]
+        """Get recent webhook event history"""        return self.events_log[-limit:]
 
 
 class WebhookManager:
-    """Main webhook management system"""
-    
+    """Main webhook management system"""    
     def __init__(self, security_manager: PaymentSecurityManager):
         self.processor = WebhookProcessor(security_manager)
         self.logger = WebhookEventLogger()
@@ -837,8 +792,7 @@ class WebhookManager:
         payload: Dict[str, Any],
         signature: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Receive and queue webhook event"""
-        try:
+        """Receive and queue webhook event"""        try:
             # Convert event type string to enum
             webhook_event_type = WebhookEventType(event_type)
             
@@ -877,8 +831,7 @@ class WebhookManager:
             }
     
     async def start_processing(self):
-        """Start webhook event processing"""
-        self.processing_active = True
+        """Start webhook event processing"""        self.processing_active = True
         logger.info("Webhook processing started")
         
         while self.processing_active:
@@ -905,13 +858,11 @@ class WebhookManager:
                 logger.error(f"Webhook processing error: {str(e)}")
     
     def stop_processing(self):
-        """Stop webhook event processing"""
-        self.processing_active = False
+        """Stop webhook event processing"""        self.processing_active = False
         logger.info("Webhook processing stopped")
     
     async def get_processing_status(self) -> Dict[str, Any]:
-        """Get webhook processing status"""
-        return {
+        """Get webhook processing status"""        return {
             'processing_active': self.processing_active,
             'queue_size': self.event_queue.qsize(),
             'recent_events': self.logger.get_event_history(10)

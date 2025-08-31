@@ -1,5 +1,4 @@
-"""
-Content Validation Configuration Module
+"""Content Validation Configuration Module
 =======================================
 
 Advanced content validation and security scanning configuration for 
@@ -20,17 +19,14 @@ This code is proprietary and belongs to Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit 
 written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import os
+"""import os
 from typing import Dict, List, Optional, Set, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
 
 
 class ContentType(Enum):
-    """Supported content types for validation."""
-    AUDIO = "audio"
+    """Supported content types for validation."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -40,8 +36,7 @@ class ContentType(Enum):
 
 
 class ValidationSeverity(Enum):
-    """Validation result severity levels."""
-    INFO = "info"
+    """Validation result severity levels."""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
@@ -49,8 +44,7 @@ class ValidationSeverity(Enum):
 
 
 class ThreatType(Enum):
-    """Types of security threats to detect."""
-    MALWARE = "malware"
+    """Types of security threats to detect."""    MALWARE = "malware"
     VIRUS = "virus"
     TROJAN = "trojan"
     RANSOMWARE = "ransomware"
@@ -63,8 +57,7 @@ class ThreatType(Enum):
 
 
 class ScanEngine(Enum):
-    """Available scanning engines."""
-    CLAMAV = "clamav"
+    """Available scanning engines."""    CLAMAV = "clamav"
     VIRUSTOTAL = "virustotal"
     WINDOWS_DEFENDER = "windows_defender"
     YARA = "yara"
@@ -74,8 +67,7 @@ class ScanEngine(Enum):
 
 @dataclass
 class FileTypeValidation:
-    """File type specific validation rules."""
-    allowed_extensions: Set[str] = field(default_factory=set)
+    """File type specific validation rules."""    allowed_extensions: Set[str] = field(default_factory=set)
     max_file_size_mb: int = 100
     mime_type_validation: bool = True
     magic_number_validation: bool = True
@@ -93,8 +85,7 @@ class FileTypeValidation:
 
 @dataclass
 class AudioValidationConfig:
-    """Audio-specific validation configuration."""
-    allowed_formats: Set[str] = field(default_factory=lambda: {
+    """Audio-specific validation configuration."""    allowed_formats: Set[str] = field(default_factory=lambda: {
         "mp3", "wav", "flac", "ogg", "m4a", "aac", "wma"
     })
     max_file_size_mb: int = 500
@@ -125,8 +116,7 @@ class AudioValidationConfig:
 
 @dataclass
 class VideoValidationConfig:
-    """Video-specific validation configuration."""
-    allowed_formats: Set[str] = field(default_factory=lambda: {
+    """Video-specific validation configuration."""    allowed_formats: Set[str] = field(default_factory=lambda: {
         "mp4", "avi", "mov", "wmv", "mkv", "webm", "flv"
     })
     max_file_size_mb: int = 2048  # 2GB
@@ -164,8 +154,7 @@ class VideoValidationConfig:
 
 @dataclass
 class ImageValidationConfig:
-    """Image-specific validation configuration."""
-    allowed_formats: Set[str] = field(default_factory=lambda: {
+    """Image-specific validation configuration."""    allowed_formats: Set[str] = field(default_factory=lambda: {
         "jpg", "jpeg", "png", "gif", "webp", "tiff", "bmp"
     })
     max_file_size_mb: int = 50
@@ -199,8 +188,7 @@ class ImageValidationConfig:
 
 @dataclass
 class TextValidationConfig:
-    """Text content validation configuration."""
-    max_length_chars: int = 1000000  # 1M characters
+    """Text content validation configuration."""    max_length_chars: int = 1000000  # 1M characters
     encoding_validation: bool = True
     allowed_encodings: Set[str] = field(default_factory=lambda: {
         "utf-8", "utf-16", "ascii", "iso-8859-1"
@@ -228,8 +216,7 @@ class TextValidationConfig:
 
 @dataclass
 class MalwareScanningConfig:
-    """Malware and virus scanning configuration."""
-    enabled: bool = True
+    """Malware and virus scanning configuration."""    enabled: bool = True
     scan_engines: List[ScanEngine] = field(default_factory=lambda: [
         ScanEngine.CLAMAV,
         ScanEngine.YARA,
@@ -277,8 +264,7 @@ class MalwareScanningConfig:
 
 @dataclass
 class ContentModerationConfig:
-    """Content moderation and policy enforcement configuration."""
-    enabled: bool = True
+    """Content moderation and policy enforcement configuration."""    enabled: bool = True
     
     # Platform-specific policies
     platform_policies: Dict[str, Dict[str, Any]] = field(default_factory=lambda: {
@@ -329,8 +315,7 @@ class ContentModerationConfig:
 
 @dataclass
 class CopyrightValidationConfig:
-    """Copyright and intellectual property validation configuration."""
-    enabled: bool = True
+    """Copyright and intellectual property validation configuration."""    enabled: bool = True
     
     # Content identification
     audio_fingerprinting: bool = True
@@ -371,8 +356,7 @@ class CopyrightValidationConfig:
 
 @dataclass
 class PerformanceOptimization:
-    """Validation performance optimization configuration."""
-    
+    """Validation performance optimization configuration."""    
     # Parallel processing
     parallel_validation: bool = True
     max_worker_threads: int = 8
@@ -401,8 +385,7 @@ class PerformanceOptimization:
 
 @dataclass
 class ValidationReporting:
-    """Validation results reporting configuration."""
-    
+    """Validation results reporting configuration."""    
     # Report generation
     detailed_reports: bool = True
     summary_reports: bool = True
@@ -435,8 +418,7 @@ class ValidationReporting:
 
 @dataclass
 class ContentValidationConfig:
-    """Main content validation configuration container."""
-    
+    """Main content validation configuration container."""    
     # Type-specific configurations
     audio: AudioValidationConfig = field(default_factory=AudioValidationConfig)
     video: VideoValidationConfig = field(default_factory=VideoValidationConfig)
@@ -503,13 +485,11 @@ content_validation_config = ContentValidationConfig()
 
 
 def get_content_validation_config() -> ContentValidationConfig:
-    """Get the content validation configuration instance."""
-    return content_validation_config
+    """Get the content validation configuration instance."""    return content_validation_config
 
 
 def get_validation_config_for_content_type(content_type: ContentType) -> Any:
-    """Get validation configuration for specific content type."""
-    config = get_content_validation_config()
+    """Get validation configuration for specific content type."""    config = get_content_validation_config()
     
     mapping = {
         ContentType.AUDIO: config.audio,
@@ -524,14 +504,12 @@ def get_validation_config_for_content_type(content_type: ContentType) -> Any:
 
 
 def get_tier_validation_settings(tier: str) -> Dict[str, Any]:
-    """Get validation settings for specific subscription tier."""
-    config = get_content_validation_config()
+    """Get validation settings for specific subscription tier."""    config = get_content_validation_config()
     return config.tier_based_validation.get(tier, config.tier_based_validation["basic"])
 
 
 def validate_content_validation_config(config: ContentValidationConfig) -> bool:
-    """Validate content validation configuration settings."""
-    # Validate file size limits
+    """Validate content validation configuration settings."""    # Validate file size limits
     for content_config in [config.audio, config.video, config.image]:
         if hasattr(content_config, 'max_file_size_mb') and content_config.max_file_size_mb <= 0:
             raise ValueError(f"Invalid max file size: {content_config.max_file_size_mb}")

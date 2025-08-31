@@ -1,5 +1,4 @@
-"""
-Trend Analysis AI Agents
+"""Trend Analysis AI Agents
 
 Specialized agents for trend identification, analysis, and prediction.
 
@@ -8,9 +7,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 This module contains AI agents specialized in trend analysis, viral content prediction,
 market trend identification, and content timing optimization.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -23,8 +20,7 @@ from .base_agent import BaseAIAgent
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis results"""
-    trend_score: float
+    """Trend analysis results"""    trend_score: float
     trend_direction: str  # rising, stable, declining
     peak_prediction: datetime
     longevity_estimate: int  # days
@@ -36,8 +32,7 @@ class TrendAnalysis:
 
 @dataclass
 class ViralPrediction:
-    """Viral content prediction structure"""
-    content_id: str
+    """Viral content prediction structure"""    content_id: str
     viral_probability: float
     predicted_reach: int
     optimal_timing: datetime
@@ -47,13 +42,11 @@ class ViralPrediction:
 
 
 class TrendAnalystAgent(BaseAIAgent):
-    """
-    AI agent specialized in trend analysis and viral content prediction.
+    """    AI agent specialized in trend analysis and viral content prediction.
     
     Provides comprehensive analysis of emerging trends, viral potential assessment,
     market trend identification, and strategic timing recommendations.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(agent_id="trend_analyst", config=config)
         
@@ -87,8 +80,7 @@ class TrendAnalystAgent(BaseAIAgent):
 
     async def analyze_emerging_trends(self, niche: str, 
                                     timeframe: str = "7_days") -> List[TrendAnalysis]:
-        """
-        Analyze emerging trends in specified niche and timeframe.
+        """        Analyze emerging trends in specified niche and timeframe.
         
         Args:
             niche: Content niche to analyze
@@ -96,8 +88,7 @@ class TrendAnalystAgent(BaseAIAgent):
             
         Returns:
             List of emerging trends with analysis
-        """
-        try:
+        """        try:
             trends = []
             
             # Get trend data for analysis period
@@ -153,16 +144,14 @@ class TrendAnalystAgent(BaseAIAgent):
             return []
 
     async def predict_viral_content(self, content_data: Dict[str, Any]) -> ViralPrediction:
-        """
-        Predict viral potential of content based on various factors.
+        """        Predict viral potential of content based on various factors.
         
         Args:
             content_data: Content metadata, performance, and characteristics
             
         Returns:
             Viral prediction analysis
-        """
-        try:
+        """        try:
             content_id = content_data.get('content_id', 'unknown')
             
             # Analyze viral factors
@@ -247,8 +236,7 @@ class TrendAnalystAgent(BaseAIAgent):
 
     async def optimize_content_timing(self, creator_profile: Dict[str, Any],
                                     content_strategy: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Optimize content timing based on trends and audience behavior.
+        """        Optimize content timing based on trends and audience behavior.
         
         Args:
             creator_profile: Creator's audience and performance data
@@ -256,8 +244,7 @@ class TrendAnalystAgent(BaseAIAgent):
             
         Returns:
             Optimized timing recommendations
-        """
-        try:
+        """        try:
             audience_demographics = creator_profile.get('audience_demographics', {})
             content_calendar = content_strategy.get('content_calendar', [])
             target_platforms = content_strategy.get('platforms', ['general'])
@@ -316,8 +303,7 @@ class TrendAnalystAgent(BaseAIAgent):
 
     async def monitor_trend_lifecycle(self, tracked_trends: List[str],
                                     niche: str) -> Dict[str, Any]:
-        """
-        Monitor the lifecycle of tracked trends and predict their evolution.
+        """        Monitor the lifecycle of tracked trends and predict their evolution.
         
         Args:
             tracked_trends: List of trends to monitor
@@ -325,8 +311,7 @@ class TrendAnalystAgent(BaseAIAgent):
             
         Returns:
             Trend lifecycle monitoring report
-        """
-        try:
+        """        try:
             lifecycle_report = {
                 "monitoring_date": datetime.now().isoformat(),
                 "trend_statuses": {},
@@ -374,8 +359,7 @@ class TrendAnalystAgent(BaseAIAgent):
             }
 
     async def _collect_trend_data(self, niche: str, timeframe: str) -> List[Dict[str, Any]]:
-        """Collect trend data for analysis"""
-        # Simulate trend data collection
+        """Collect trend data for analysis"""        # Simulate trend data collection
         # In production, this would collect from various APIs and data sources
         
         trend_data = []
@@ -434,8 +418,7 @@ class TrendAnalystAgent(BaseAIAgent):
         return trend_data
 
     def _calculate_trend_momentum(self, trend_item: Dict[str, Any]) -> float:
-        """Calculate trend momentum score"""
-        growth_rate = trend_item.get('growth_rate', 0.5)
+        """Calculate trend momentum score"""        growth_rate = trend_item.get('growth_rate', 0.5)
         mention_count = trend_item.get('mention_count', 1000)
         
         # Normalize mention count (log scale)
@@ -456,8 +439,7 @@ class TrendAnalystAgent(BaseAIAgent):
         return min(momentum, 1.0)
 
     def _predict_trend_direction(self, trend_item: Dict[str, Any]) -> str:
-        """Predict trend direction based on current data"""
-        growth_rate = trend_item.get('growth_rate', 0.5)
+        """Predict trend direction based on current data"""        growth_rate = trend_item.get('growth_rate', 0.5)
         
         if growth_rate > 0.7:
             return "rising"
@@ -467,8 +449,7 @@ class TrendAnalystAgent(BaseAIAgent):
             return "declining"
 
     def _assess_viral_potential(self, trend_item: Dict[str, Any]) -> float:
-        """Assess viral potential of trend"""
-        platform_distribution = trend_item.get('platform_distribution', {})
+        """Assess viral potential of trend"""        platform_distribution = trend_item.get('platform_distribution', {})
         demographic_appeal = trend_item.get('demographic_appeal', {})
         
         # Multi-platform presence increases viral potential
@@ -486,8 +467,7 @@ class TrendAnalystAgent(BaseAIAgent):
         return min(viral_potential, 1.0)
 
     def _predict_trend_peak(self, trend_item: Dict[str, Any], momentum: float) -> datetime:
-        """Predict when trend will reach its peak"""
-        growth_rate = trend_item.get('growth_rate', 0.5)
+        """Predict when trend will reach its peak"""        growth_rate = trend_item.get('growth_rate', 0.5)
         
         # Higher momentum = earlier peak
         if momentum > 0.8:
@@ -502,8 +482,7 @@ class TrendAnalystAgent(BaseAIAgent):
         return datetime.now() + timedelta(days=days_to_peak)
 
     def _estimate_trend_longevity(self, trend_item: Dict[str, Any], direction: str) -> int:
-        """Estimate how long trend will remain relevant"""
-        trend_type = trend_item.get('type', 'general')
+        """Estimate how long trend will remain relevant"""        trend_type = trend_item.get('type', 'general')
         
         # Different types have different longevities
         type_longevity = {
@@ -527,8 +506,7 @@ class TrendAnalystAgent(BaseAIAgent):
             return base_longevity
 
     def _identify_trend_audience(self, trend_item: Dict[str, Any]) -> List[str]:
-        """Identify primary audience segments for trend"""
-        demographic_appeal = trend_item.get('demographic_appeal', {})
+        """Identify primary audience segments for trend"""        demographic_appeal = trend_item.get('demographic_appeal', {})
         
         # Find segments with highest appeal
         sorted_segments = sorted(demographic_appeal.items(), key=lambda x: x[1], reverse=True)
@@ -541,8 +519,7 @@ class TrendAnalystAgent(BaseAIAgent):
         return primary_segments[:3]  # Top 3 segments
 
     def _generate_content_opportunities(self, trend_item: Dict[str, Any], niche: str) -> List[str]:
-        """Generate content opportunities based on trend"""
-        trend_name = trend_item.get('name', 'Unknown Trend')
+        """Generate content opportunities based on trend"""        trend_name = trend_item.get('name', 'Unknown Trend')
         trend_type = trend_item.get('type', 'general')
         
         opportunities = []
@@ -575,8 +552,7 @@ class TrendAnalystAgent(BaseAIAgent):
         return opportunities[:5]
 
     def _identify_trend_risks(self, trend_item: Dict[str, Any]) -> List[str]:
-        """Identify potential risks with trend adoption"""
-        risks = []
+        """Identify potential risks with trend adoption"""        risks = []
         
         growth_rate = trend_item.get('growth_rate', 0.5)
         trend_type = trend_item.get('type', 'general')
@@ -608,8 +584,7 @@ class TrendAnalystAgent(BaseAIAgent):
         return risks
 
     def _calculate_engagement_velocity(self, content_data: Dict[str, Any]) -> float:
-        """Calculate how quickly content is gaining engagement"""
-        performance = content_data.get('performance', {})
+        """Calculate how quickly content is gaining engagement"""        performance = content_data.get('performance', {})
         publish_time = content_data.get('published_at')
         
         if not publish_time:
@@ -636,8 +611,7 @@ class TrendAnalystAgent(BaseAIAgent):
         return velocity_score
 
     def _analyze_share_rate(self, content_data: Dict[str, Any]) -> float:
-        """Analyze content share rate"""
-        performance = content_data.get('performance', {})
+        """Analyze content share rate"""        performance = content_data.get('performance', {})
         views = performance.get('views', 0)
         shares = performance.get('shares', 0)
         
@@ -650,8 +624,7 @@ class TrendAnalystAgent(BaseAIAgent):
         return min(share_rate / 0.05, 1.0)
 
     def _analyze_platform_presence(self, content_data: Dict[str, Any]) -> float:
-        """Analyze cross-platform presence"""
-        platforms = content_data.get('platforms', [])
+        """Analyze cross-platform presence"""        platforms = content_data.get('platforms', [])
         
         # Score based on number of platforms
         platform_score = len(platforms) / 4  # Max 4 platforms for full score
@@ -659,8 +632,7 @@ class TrendAnalystAgent(BaseAIAgent):
         return min(platform_score, 1.0)
 
     async def _analyze_influencer_adoption(self, content_data: Dict[str, Any]) -> float:
-        """Analyze influencer adoption of content/trend"""
-        # Simulate influencer adoption analysis
+        """Analyze influencer adoption of content/trend"""        # Simulate influencer adoption analysis
         # In production, this would analyze actual influencer engagement
         
         content_type = content_data.get('type', 'general')
@@ -676,8 +648,7 @@ class TrendAnalystAgent(BaseAIAgent):
             return np.random.uniform(0.0, 0.3)
 
     def _assess_algorithm_alignment(self, content_data: Dict[str, Any]) -> float:
-        """Assess how well content aligns with platform algorithms"""
-        performance = content_data.get('performance', {})
+        """Assess how well content aligns with platform algorithms"""        performance = content_data.get('performance', {})
         content_features = content_data.get('features', {})
         
         score = 0.0
@@ -713,8 +684,7 @@ class TrendAnalystAgent(BaseAIAgent):
         return min(score, 1.0)
 
     def _analyze_posting_timing(self, content_data: Dict[str, Any]) -> float:
-        """Analyze posting timing optimization"""
-        publish_time = content_data.get('published_at')
+        """Analyze posting timing optimization"""        publish_time = content_data.get('published_at')
         
         if not publish_time:
             return 0.5  # Default score
@@ -736,8 +706,7 @@ class TrendAnalystAgent(BaseAIAgent):
         return (hour_score + weekday_score) / 2
 
     def _assess_content_quality(self, content_data: Dict[str, Any]) -> float:
-        """Assess overall content quality"""
-        features = content_data.get('features', {})
+        """Assess overall content quality"""        features = content_data.get('features', {})
         
         quality_score = 0.5  # Base score
         
@@ -759,8 +728,7 @@ class TrendAnalystAgent(BaseAIAgent):
         return min(quality_score, 1.0)
 
     def _predict_viral_reach(self, viral_score: float, content_data: Dict[str, Any]) -> int:
-        """Predict potential viral reach"""
-        current_followers = content_data.get('creator_followers', 1000)
+        """Predict potential viral reach"""        current_followers = content_data.get('creator_followers', 1000)
         
         # Base reach multiplier based on viral score
         if viral_score > 0.8:
@@ -777,8 +745,7 @@ class TrendAnalystAgent(BaseAIAgent):
         return predicted_reach
 
     def _calculate_optimal_viral_timing(self, content_data: Dict[str, Any]) -> datetime:
-        """Calculate optimal timing for viral content"""
-        # Consider current trends and audience behavior
+        """Calculate optimal timing for viral content"""        # Consider current trends and audience behavior
         now = datetime.now()
         
         # Generally, weekday evenings and weekend afternoons perform well
@@ -797,8 +764,7 @@ class TrendAnalystAgent(BaseAIAgent):
 
     def _generate_amplification_strategies(self, viral_score: float,
                                          content_data: Dict[str, Any]) -> List[str]:
-        """Generate strategies to amplify viral potential"""
-        strategies = []
+        """Generate strategies to amplify viral potential"""        strategies = []
         
         if viral_score > 0.6:
             strategies.extend([
@@ -827,8 +793,7 @@ class TrendAnalystAgent(BaseAIAgent):
         return strategies[:8]
 
     def _identify_viral_indicators(self, content_data: Dict[str, Any]) -> List[str]:
-        """Identify indicators to monitor for viral success"""
-        indicators = [
+        """Identify indicators to monitor for viral success"""        indicators = [
             "Engagement rate above 5% within first hour",
             "Share rate above 2% within first 24 hours",
             "Cross-platform mentions and shares",
@@ -842,8 +807,7 @@ class TrendAnalystAgent(BaseAIAgent):
         return indicators
 
     def _analyze_audience_activity(self, demographics: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze audience activity patterns"""
-        # Simulate audience activity analysis
+        """Analyze audience activity patterns"""        # Simulate audience activity analysis
         # In production, this would use actual audience data
         
         return {
@@ -865,8 +829,7 @@ class TrendAnalystAgent(BaseAIAgent):
 
     def _calculate_platform_optimal_times(self, platform: str,
                                         audience_patterns: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate optimal posting times for specific platform"""
-        peak_hours = audience_patterns.get("peak_hours", [19, 20, 21])
+        """Calculate optimal posting times for specific platform"""        peak_hours = audience_patterns.get("peak_hours", [19, 20, 21])
         
         platform_specific = {
             "tiktok": {"hours": [18, 19, 20, 21], "best_day": "wednesday"},
@@ -884,8 +847,7 @@ class TrendAnalystAgent(BaseAIAgent):
     def _create_weekly_schedule(self, content_calendar: List[Dict],
                               audience_patterns: Dict[str, Any],
                               platforms: List[str]) -> Dict[str, Any]:
-        """Create optimized weekly posting schedule"""
-        schedule = {}
+        """Create optimized weekly posting schedule"""        schedule = {}
         
         optimal_days = ["monday", "tuesday", "wednesday", "thursday"]
         
@@ -908,8 +870,7 @@ class TrendAnalystAgent(BaseAIAgent):
         return schedule
 
     async def _generate_seasonal_timing(self, niche: str) -> Dict[str, List[str]]:
-        """Generate seasonal content timing recommendations"""
-        seasonal_recs = {
+        """Generate seasonal content timing recommendations"""        seasonal_recs = {
             "Q1": [
                 "New Year resolution content",
                 "Winter indoor activities",
@@ -943,8 +904,7 @@ class TrendAnalystAgent(BaseAIAgent):
         return seasonal_recs
 
     async def _optimize_trend_timing(self, niche: str, platforms: List[str]) -> Dict[str, Any]:
-        """Optimize timing for trend integration"""
-        return {
+        """Optimize timing for trend integration"""        return {
             "trend_monitoring_frequency": "daily",
             "optimal_trend_adoption_timing": "24-48 hours after trend emergence",
             "trend_content_posting_schedule": {
@@ -959,8 +919,7 @@ class TrendAnalystAgent(BaseAIAgent):
         }
 
     def _create_sync_strategy(self, platforms: List[str], content_calendar: List[Dict]) -> Dict[str, Any]:
-        """Create cross-platform synchronization strategy"""
-        return {
+        """Create cross-platform synchronization strategy"""        return {
             "simultaneous_posting": len(platforms) <= 3,
             "staggered_posting_intervals": {
                 "primary_platform": "immediate",
@@ -978,8 +937,7 @@ class TrendAnalystAgent(BaseAIAgent):
         }
 
     def _plan_event_timing(self, niche: str) -> Dict[str, Any]:
-        """Plan timing around special events and holidays"""
-        return {
+        """Plan timing around special events and holidays"""        return {
             "major_holidays": {
                 "preparation_content": "2-4 weeks before",
                 "celebration_content": "during event",
@@ -998,8 +956,7 @@ class TrendAnalystAgent(BaseAIAgent):
         }
 
     async def _get_trend_current_status(self, trend: str, niche: str) -> Dict[str, Any]:
-        """Get current status of tracked trend"""
-        # Simulate trend status check
+        """Get current status of tracked trend"""        # Simulate trend status check
         return {
             "stage": np.random.choice(self.trend_lifecycle_stages),
             "momentum": np.random.uniform(0.1, 1.0),
@@ -1011,8 +968,7 @@ class TrendAnalystAgent(BaseAIAgent):
         }
 
     def _predict_lifecycle_evolution(self, trend: str, current_status: Dict[str, Any]) -> Dict[str, Any]:
-        """Predict how trend will evolve"""
-        current_stage = current_status.get("stage", "emerging")
+        """Predict how trend will evolve"""        current_stage = current_status.get("stage", "emerging")
         momentum = current_status.get("momentum", 0.5)
         
         # Simple lifecycle progression logic
@@ -1035,8 +991,7 @@ class TrendAnalystAgent(BaseAIAgent):
 
     def _generate_trend_actions(self, trend: str, current_status: Dict[str, Any],
                               prediction: Dict[str, Any]) -> List[str]:
-        """Generate actionable recommendations for trend"""
-        actions = []
+        """Generate actionable recommendations for trend"""        actions = []
         current_stage = current_status.get("stage", "emerging")
         
         if current_stage == "emerging":
@@ -1064,8 +1019,7 @@ class TrendAnalystAgent(BaseAIAgent):
 
     async def _identify_new_opportunities(self, niche: str, 
                                         current_trends: List[str]) -> List[Dict[str, Any]]:
-        """Identify new emerging trend opportunities"""
-        # Simulate new trend identification
+        """Identify new emerging trend opportunities"""        # Simulate new trend identification
         new_opportunities = []
         
         # Generate mock new trends

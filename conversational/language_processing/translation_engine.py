@@ -1,5 +1,4 @@
-"""
-Enterprise Translation Engine Module
+"""Enterprise Translation Engine Module
 ===================================
 
 World-class multi-language translation system for global content creators:
@@ -25,9 +24,7 @@ Copyright: Fahed Mlaiel - All Rights Reserved
     
     Contact: mlaiel@live.de for licensing inquiries ONLY.
     Violators will be prosecuted to the full extent of German and EU law.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
 from dataclasses import dataclass, field
@@ -57,8 +54,7 @@ logger = get_logger(__name__)
 
 
 class TranslationProvider(Enum):
-    """Translation service providers"""
-    GOOGLE_TRANSLATE = "google_translate"
+    """Translation service providers"""    GOOGLE_TRANSLATE = "google_translate"
     DEEPL = "deepl"
     MICROSOFT_TRANSLATOR = "microsoft_translator"
     MARIAN_MT = "marian_mt"
@@ -67,8 +63,7 @@ class TranslationProvider(Enum):
 
 
 class TranslationQuality(Enum):
-    """Translation quality levels"""
-    EXCELLENT = "excellent"
+    """Translation quality levels"""    EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair"
     POOR = "poor"
@@ -76,8 +71,7 @@ class TranslationQuality(Enum):
 
 
 class LocalizationContext(Enum):
-    """Localization contexts for cultural adaptation"""
-    SOCIAL_MEDIA = "social_media"
+    """Localization contexts for cultural adaptation"""    SOCIAL_MEDIA = "social_media"
     BUSINESS_FORMAL = "business_formal"
     MARKETING = "marketing"
     EDUCATIONAL = "educational"
@@ -89,8 +83,7 @@ class LocalizationContext(Enum):
 
 @dataclass
 class TranslationRequest:
-    """Translation request configuration"""
-    source_text: str
+    """Translation request configuration"""    source_text: str
     source_language: SupportedLanguage
     target_language: SupportedLanguage
     content_type: str = "general"
@@ -103,8 +96,7 @@ class TranslationRequest:
 
 @dataclass
 class TranslationResult:
-    """Translation result with quality metrics"""
-    translated_text: str
+    """Translation result with quality metrics"""    translated_text: str
     source_language: SupportedLanguage
     target_language: SupportedLanguage
     provider_used: TranslationProvider
@@ -123,8 +115,7 @@ class TranslationResult:
 
 @dataclass
 class MultilingualContent:
-    """Multilingual content structure"""
-    original_text: str
+    """Multilingual content structure"""    original_text: str
     original_language: SupportedLanguage
     translations: Dict[SupportedLanguage, TranslationResult] = field(default_factory=dict)
     localization_notes: Dict[str, List[str]] = field(default_factory=dict)
@@ -133,8 +124,7 @@ class MultilingualContent:
 
 
 class TranslationEngine:
-    """Advanced translation engine with multiple providers"""
-    
+    """Advanced translation engine with multiple providers"""    
     def __init__(self):
         self.providers = {}
         self.language_detector = LanguageDetector()
@@ -144,8 +134,7 @@ class TranslationEngine:
         self._load_cultural_data()
         
     def _initialize_providers(self):
-        """Initialize translation providers"""
-        try:
+        """Initialize translation providers"""        try:
             # Google Translate
             self.providers[TranslationProvider.GOOGLE_TRANSLATE] = GoogleTranslator()
             
@@ -167,8 +156,7 @@ class TranslationEngine:
             logger.error(f"Failed to initialize translation providers: {e}")
             
     def _initialize_marian_models(self):
-        """Initialize Marian MT models for specific language pairs"""
-        try:
+        """Initialize Marian MT models for specific language pairs"""        try:
             # High-priority language pairs
             priority_pairs = [
                 ("en", "de"),  # English to German
@@ -201,8 +189,7 @@ class TranslationEngine:
             logger.error(f"Failed to initialize Marian models: {e}")
             
     def _load_cultural_data(self):
-        """Load cultural adaptation data"""
-        try:
+        """Load cultural adaptation data"""        try:
             # Cultural adaptation rules by language/region
             self.cultural_adaptations = {
                 SupportedLanguage.GERMAN: {
@@ -249,16 +236,14 @@ class TranslationEngine:
             logger.error(f"Failed to load cultural data: {e}")
             
     async def translate_text(self, request: TranslationRequest) -> TranslationResult:
-        """
-        Translate text with quality assessment and cultural adaptation
+        """        Translate text with quality assessment and cultural adaptation
         
         Args:
             request: Translation request configuration
             
         Returns:
             TranslationResult with quality metrics and adaptations
-        """
-        try:
+        """        try:
             start_time = datetime.now()
             
             # Check cache first
@@ -358,13 +343,11 @@ class TranslationEngine:
             )
             
     def _generate_cache_key(self, request: TranslationRequest) -> str:
-        """Generate cache key for translation request"""
-        key_data = f"{request.source_text}_{request.source_language.value}_{request.target_language.value}_{request.content_type}_{request.cultural_adaptation}"
+        """Generate cache key for translation request"""        key_data = f"{request.source_text}_{request.source_language.value}_{request.target_language.value}_{request.content_type}_{request.cultural_adaptation}"
         return f"translation_{hashlib.md5(key_data.encode()).hexdigest()}"
         
     async def _select_best_provider(self, request: TranslationRequest) -> TranslationProvider:
-        """Select the best translation provider for the request"""
-        try:
+        """Select the best translation provider for the request"""        try:
             # If user specified preference, use it
             if request.provider_preference and request.provider_preference in self.providers:
                 return request.provider_preference
@@ -403,8 +386,7 @@ class TranslationEngine:
         provider: TranslationProvider,
         request: TranslationRequest
     ) -> str:
-        """Translate text using specified provider"""
-        try:
+        """Translate text using specified provider"""        try:
             if provider == TranslationProvider.GOOGLE_TRANSLATE:
                 return await self._translate_with_google(text, src_lang.value, tgt_lang.value)
                 
@@ -427,8 +409,7 @@ class TranslationEngine:
             return await self._translate_with_google(text, src_lang.value, tgt_lang.value)
             
     async def _translate_with_google(self, text: str, src_lang: str, tgt_lang: str) -> str:
-        """Translate using Google Translate"""
-        try:
+        """Translate using Google Translate"""        try:
             translator = GoogleTranslator(source=src_lang, target=tgt_lang)
             result = translator.translate(text)
             return result
@@ -437,8 +418,7 @@ class TranslationEngine:
             return text
             
     async def _translate_with_deepl(self, text: str, src_lang: str, tgt_lang: str) -> str:
-        """Translate using DeepL"""
-        try:
+        """Translate using DeepL"""        try:
             if TranslationProvider.DEEPL in self.providers:
                 translator = self.providers[TranslationProvider.DEEPL]
                 result = translator.translate(text, source_language=src_lang, target_language=tgt_lang)
@@ -450,8 +430,7 @@ class TranslationEngine:
             return await self._translate_with_google(text, src_lang, tgt_lang)
             
     async def _translate_with_marian(self, text: str, src_lang: str, tgt_lang: str) -> str:
-        """Translate using Marian MT model"""
-        try:
+        """Translate using Marian MT model"""        try:
             model_key = f"{src_lang}-{tgt_lang}"
             if hasattr(self, 'marian_models') and model_key in self.marian_models:
                 tokenizer = self.marian_models[model_key]['tokenizer']
@@ -481,11 +460,9 @@ class TranslationEngine:
         tgt_lang: SupportedLanguage,
         request: TranslationRequest
     ) -> str:
-        """Translate using OpenAI GPT with context awareness"""
-        try:
+        """Translate using OpenAI GPT with context awareness"""        try:
             # Construct context-aware prompt
-            prompt = f"""
-            Translate the following {request.content_type} content from {src_lang.value} to {tgt_lang.value}.
+            prompt = f"""            Translate the following {request.content_type} content from {src_lang.value} to {tgt_lang.value}.
             Consider the cultural context: {request.localization_context.value}
             
             Instructions:
@@ -498,8 +475,7 @@ class TranslationEngine:
             {text}
             
             Translation:
-            """
-            
+            """            
             response = await openai.ChatCompletion.acreate(
                 model="gpt-3.5-turbo",
                 messages=[
@@ -524,8 +500,7 @@ class TranslationEngine:
         context: LocalizationContext,
         content_type: str
     ) -> Tuple[str, List[str]]:
-        """Apply cultural adaptations to translated text"""
-        try:
+        """Apply cultural adaptations to translated text"""        try:
             adaptations_applied = []
             adapted_text = text
             
@@ -587,8 +562,7 @@ class TranslationEngine:
         src_lang: SupportedLanguage,
         tgt_lang: SupportedLanguage
     ) -> Tuple[float, TranslationQuality]:
-        """Assess translation quality"""
-        try:
+        """Assess translation quality"""        try:
             quality_factors = []
             
             # Length ratio check
@@ -660,8 +634,7 @@ class TranslationEngine:
         request: TranslationRequest,
         primary_provider: TranslationProvider
     ) -> List[str]:
-        """Get alternative translations from different providers"""
-        try:
+        """Get alternative translations from different providers"""        try:
             alternatives = []
             
             # Try up to 2 alternative providers
@@ -695,8 +668,7 @@ class TranslationEngine:
         src_lang: SupportedLanguage,
         tgt_lang: SupportedLanguage
     ) -> List[str]:
-        """Check for glossary term matches"""
-        try:
+        """Check for glossary term matches"""        try:
             matches = []
             
             # Get relevant glossary
@@ -719,8 +691,7 @@ class TranslationEngine:
         quality_score: float,
         translated_text: str
     ) -> List[str]:
-        """Generate warnings based on translation analysis"""
-        try:
+        """Generate warnings based on translation analysis"""        try:
             warnings = []
             
             # Quality warnings
@@ -753,8 +724,7 @@ class TranslationEngine:
 
 
 class MultilingualProcessor:
-    """Processor for handling multilingual content operations"""
-    
+    """Processor for handling multilingual content operations"""    
     def __init__(self):
         self.translation_engine = TranslationEngine()
         
@@ -766,8 +736,7 @@ class MultilingualProcessor:
         content_type: str = "general",
         localization_context: LocalizationContext = LocalizationContext.SOCIAL_MEDIA
     ) -> MultilingualContent:
-        """
-        Create multilingual content package
+        """        Create multilingual content package
         
         Args:
             source_text: Original text content
@@ -778,8 +747,7 @@ class MultilingualProcessor:
             
         Returns:
             MultilingualContent with all translations
-        """
-        try:
+        """        try:
             multilingual_content = MultilingualContent(
                 original_text=source_text,
                 original_language=source_language
@@ -817,8 +785,7 @@ class MultilingualProcessor:
         multilingual_content: MultilingualContent,
         base_keywords: List[str]
     ) -> MultilingualContent:
-        """Optimize multilingual content for global SEO"""
-        try:
+        """Optimize multilingual content for global SEO"""        try:
             # Generate localized keywords for each language
             for language, translation_result in multilingual_content.translations.items():
                 # Translate base keywords

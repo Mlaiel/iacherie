@@ -1,5 +1,4 @@
-"""
-SSL/TLS Configuration Module for IA-Influencer Agent Platform
+"""SSL/TLS Configuration Module for IA-Influencer Agent Platform
 ===========================================================
 
 Professional SSL certificate management and TLS configuration
@@ -15,9 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import os
+"""import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -29,8 +26,7 @@ from pathlib import Path
 
 
 class CertificateType(Enum):
-    """SSL certificate types"""
-    SELF_SIGNED = "self_signed"
+    """SSL certificate types"""    SELF_SIGNED = "self_signed"
     LETS_ENCRYPT = "lets_encrypt"
     COMMERCIAL = "commercial"
     WILDCARD = "wildcard"
@@ -39,15 +35,13 @@ class CertificateType(Enum):
 
 
 class TLSVersion(Enum):
-    """Supported TLS versions"""
-    TLS_1_2 = "TLSv1.2"
+    """Supported TLS versions"""    TLS_1_2 = "TLSv1.2"
     TLS_1_3 = "TLSv1.3"
 
 
 @dataclass
 class CertificateConfig:
-    """SSL certificate configuration"""
-    domain: str
+    """SSL certificate configuration"""    domain: str
     cert_type: CertificateType
     key_size: int = 4096
     validity_days: int = 365
@@ -64,8 +58,7 @@ class CertificateConfig:
 
 @dataclass
 class NginxSSLConfig:
-    """Nginx SSL configuration"""
-    ssl_certificate: str
+    """Nginx SSL configuration"""    ssl_certificate: str
     ssl_certificate_key: str
     ssl_protocols: List[str] = field(default_factory=lambda: ["TLSv1.2", "TLSv1.3"])
     ssl_ciphers: str = "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384"
@@ -80,8 +73,7 @@ class NginxSSLConfig:
 
 @dataclass
 class LoadBalancerSSLConfig:
-    """Load balancer SSL configuration"""
-    ssl_policy: str
+    """Load balancer SSL configuration"""    ssl_policy: str
     certificate_arn: str
     backend_protocol: str = "HTTP"
     backend_port: int = 80
@@ -90,8 +82,7 @@ class LoadBalancerSSLConfig:
 
 
 class SSLConfig:
-    """
-    Professional SSL/TLS configuration manager for IA-Influencer Agent Platform.
+    """    Professional SSL/TLS configuration manager for IA-Influencer Agent Platform.
     
     Manages secure communications for:
     - API endpoints and web services
@@ -101,8 +92,7 @@ class SSLConfig:
     - Database connections (SSL/TLS)
     - Inter-service mesh security
     - CDN and load balancer termination
-    """
-    
+    """    
     def __init__(self, environment: str = "development"):
         self.environment = environment
         self.project_name = "ia-influencer-agent"
@@ -110,8 +100,7 @@ class SSLConfig:
         self.cert_directory = self._get_cert_directory()
         
     def _get_base_domain(self) -> str:
-        """Get base domain based on environment"""
-        domains = {
+        """Get base domain based on environment"""        domains = {
             "development": "dev.ia-influencer.com",
             "staging": "staging.ia-influencer.com",
             "production": "ia-influencer.com"
@@ -119,13 +108,11 @@ class SSLConfig:
         return domains.get(self.environment, "localhost")
     
     def _get_cert_directory(self) -> str:
-        """Get certificate storage directory"""
-        base_path = f"/etc/ssl/certs/{self.project_name}"
+        """Get certificate storage directory"""        base_path = f"/etc/ssl/certs/{self.project_name}"
         return f"{base_path}/{self.environment}"
     
     def get_domains_config(self) -> Dict[str, CertificateConfig]:
-        """Get SSL certificate configuration for all domains"""
-        base_config = {
+        """Get SSL certificate configuration for all domains"""        base_config = {
             "country": "DE",
             "state": "Bavaria", 
             "city": "Munich",
@@ -252,9 +239,7 @@ class SSLConfig:
         return domains
     
     def generate_openssl_config(self, cert_config: CertificateConfig) -> str:
-        """Generate OpenSSL configuration for certificate"""
-        config = f"""
-[req]
+        """Generate OpenSSL configuration for certificate"""        config = f"""[req]
 default_bits = {cert_config.key_size}
 prompt = no
 distinguished_name = req_distinguished_name
@@ -275,8 +260,7 @@ keyUsage = nonRepudiation, digitalSignature, keyEncipherment
 subjectAltName = @alt_names
 
 [alt_names]
-"""
-        
+"""        
         # Add subject alternative names
         for i, san in enumerate(cert_config.subject_alt_names, 1):
             if san.startswith("*.") or "." in san:
@@ -287,8 +271,7 @@ subjectAltName = @alt_names
         return config
     
     def generate_self_signed_certificate(self, cert_config: CertificateConfig) -> Dict[str, str]:
-        """Generate self-signed certificate"""
-        cert_dir = Path(f"{self.cert_directory}/{cert_config.domain}")
+        """Generate self-signed certificate"""        cert_dir = Path(f"{self.cert_directory}/{cert_config.domain}")
         cert_dir.mkdir(parents=True, exist_ok=True)
         
         key_file = cert_dir / "private.key"
@@ -330,8 +313,7 @@ subjectAltName = @alt_names
         }
     
     def get_lets_encrypt_config(self, domains: List[str]) -> Dict[str, Any]:
-        """Get Let's Encrypt configuration"""
-        return {
+        """Get Let's Encrypt configuration"""        return {
             "client": "certbot",
             "email": "mlaiel@live.de",
             "domains": domains,
@@ -350,8 +332,7 @@ subjectAltName = @alt_names
         }
     
     def get_nginx_ssl_config(self, domain: str) -> NginxSSLConfig:
-        """Generate Nginx SSL configuration"""
-        cert_path = f"{self.cert_directory}/{domain}"
+        """Generate Nginx SSL configuration"""        cert_path = f"{self.cert_directory}/{domain}"
         
         return NginxSSLConfig(
             ssl_certificate=f"{cert_path}/certificate.crt",
@@ -368,11 +349,9 @@ subjectAltName = @alt_names
         )
     
     def generate_nginx_server_block(self, domain: str, upstream_name: str, upstream_port: int = 8000) -> str:
-        """Generate Nginx server block with SSL configuration"""
-        ssl_config = self.get_nginx_ssl_config(domain)
+        """Generate Nginx server block with SSL configuration"""        ssl_config = self.get_nginx_ssl_config(domain)
         
-        return f"""
-# HTTP redirect to HTTPS
+        return f"""# HTTP redirect to HTTPS
 server {{
     listen 80;
     listen [::]:80;
@@ -516,11 +495,9 @@ upstream {upstream_name} {{
     
     keepalive 32;
 }}
-"""
-    
+"""    
     def get_aws_alb_ssl_config(self) -> LoadBalancerSSLConfig:
-        """Get AWS Application Load Balancer SSL configuration"""
-        return LoadBalancerSSLConfig(
+        """Get AWS Application Load Balancer SSL configuration"""        return LoadBalancerSSLConfig(
             ssl_policy="ELBSecurityPolicy-TLS-1-2-2019-07",
             certificate_arn=f"arn:aws:acm:eu-central-1:123456789012:certificate/{self.project_name}-{self.environment}",
             backend_protocol="HTTP",
@@ -530,8 +507,7 @@ upstream {upstream_name} {{
         )
     
     def get_cloudflare_ssl_config(self) -> Dict[str, Any]:
-        """Get Cloudflare SSL configuration"""
-        return {
+        """Get Cloudflare SSL configuration"""        return {
             "ssl_mode": "full_strict" if self.environment == "production" else "full",
             "min_tls_version": "1.2",
             "cipher_suites": [
@@ -563,8 +539,7 @@ upstream {upstream_name} {{
         }
     
     def check_certificate_expiry(self, domain: str, port: int = 443) -> Dict[str, Any]:
-        """Check SSL certificate expiry"""
-        try:
+        """Check SSL certificate expiry"""        try:
             context = ssl.create_default_context()
             with socket.create_connection((domain, port), timeout=10) as sock:
                 with context.wrap_socket(sock, server_hostname=domain) as ssock:
@@ -600,8 +575,7 @@ upstream {upstream_name} {{
             }
     
     def generate_cert_renewal_script(self) -> str:
-        """Generate certificate renewal script"""
-        script = f"""#!/bin/bash
+        """Generate certificate renewal script"""        script = f"""#!/bin/bash
 # SSL Certificate Renewal Script for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
 
@@ -697,12 +671,10 @@ if command -v kubectl >/dev/null 2>&1; then
 fi
 
 log "SSL certificate renewal completed successfully"
-"""
-        return script
+"""        return script
     
     def export_configurations(self, output_dir: str = "./ssl-configs") -> Dict[str, str]:
-        """Export all SSL configurations to files"""
-        import os
+        """Export all SSL configurations to files"""        import os
         os.makedirs(output_dir, exist_ok=True)
         
         configs = {}

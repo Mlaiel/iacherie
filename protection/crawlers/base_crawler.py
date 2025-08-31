@@ -1,5 +1,4 @@
-"""
-🔍 Enterprise Base Platform Crawler Infrastructure
+"""🔍 Enterprise Base Platform Crawler Infrastructure
 =================================================
 
 Advanced abstract base class and standardized structures for enterprise-grade 
@@ -23,9 +22,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 ⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import random
@@ -41,8 +38,7 @@ import json
 logger = logging.getLogger(__name__)
 
 class CrawlerStatus(str, Enum):
-    """Comprehensive crawler status enumeration."""
-    ACTIVE = "active"
+    """Comprehensive crawler status enumeration."""    ACTIVE = "active"
     INACTIVE = "inactive"
     ERROR = "error"
     RATE_LIMITED = "rate_limited"
@@ -52,8 +48,7 @@ class CrawlerStatus(str, Enum):
     SHUTTING_DOWN = "shutting_down"
 
 class ContentType(str, Enum):
-    """Content type enumeration for standardized classification."""
-    VIDEO = "video"
+    """Content type enumeration for standardized classification."""    VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
     TEXT = "text"
@@ -68,8 +63,7 @@ class ContentType(str, Enum):
     UNKNOWN = "unknown"
 
 class Priority(str, Enum):
-    """Task priority levels for intelligent scheduling."""
-    CRITICAL = "critical"
+    """Task priority levels for intelligent scheduling."""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -77,8 +71,7 @@ class Priority(str, Enum):
 
 @dataclass
 class CrawlResult:
-    """Enhanced standardized crawl result structure with comprehensive metadata."""
-    platform: str
+    """Enhanced standardized crawl result structure with comprehensive metadata."""    platform: str
     url: str
     title: Optional[str]
     description: Optional[str]
@@ -105,8 +98,7 @@ class CrawlResult:
 
 @dataclass
 class RateLimitInfo:
-    """Rate limiting information structure."""
-    requests_per_minute: int
+    """Rate limiting information structure."""    requests_per_minute: int
     requests_per_hour: int
     requests_per_day: int
     current_minute_count: int = 0
@@ -118,16 +110,14 @@ class RateLimitInfo:
 
 @dataclass
 class CircuitBreakerState:
-    """Circuit breaker pattern implementation for fault tolerance."""
-    failure_threshold: int = 5
+    """Circuit breaker pattern implementation for fault tolerance."""    failure_threshold: int = 5
     recovery_timeout: int = 60
     failure_count: int = 0
     last_failure_time: Optional[datetime] = None
     state: str = "closed"  # closed, open, half_open
 
 class PerformanceMetrics:
-    """Advanced performance monitoring and analytics."""
-    
+    """Advanced performance monitoring and analytics."""    
     def __init__(self):
         self.request_times: deque = deque(maxlen=1000)
         self.error_rates: Dict[str, int] = defaultdict(int)
@@ -138,8 +128,7 @@ class PerformanceMetrics:
         self.cache_misses = 0
         
     def record_request(self, duration: float, success: bool, error_type: str = None):
-        """Record request performance metrics."""
-        self.request_times.append(duration)
+        """Record request performance metrics."""        self.request_times.append(duration)
         self.total_requests += 1
         
         if success:
@@ -148,16 +137,13 @@ class PerformanceMetrics:
             self.error_rates[error_type] += 1
     
     def get_avg_response_time(self) -> float:
-        """Calculate average response time."""
-        return sum(self.request_times) / len(self.request_times) if self.request_times else 0.0
+        """Calculate average response time."""        return sum(self.request_times) / len(self.request_times) if self.request_times else 0.0
     
     def get_success_rate(self) -> float:
-        """Calculate success rate percentage."""
-        return (self.success_count / max(self.total_requests, 1)) * 100
+        """Calculate success rate percentage."""        return (self.success_count / max(self.total_requests, 1)) * 100
 
 class BasePlatformCrawler(ABC):
-    """
-    Enterprise-grade abstract base class for platform crawlers.
+    """    Enterprise-grade abstract base class for platform crawlers.
     
     Provides comprehensive standardized interface and advanced functionality for:
     - Intelligent content discovery and search
@@ -168,8 +154,7 @@ class BasePlatformCrawler(ABC):
     - Result standardization and quality scoring
     - Fault tolerance and recovery mechanisms
     - Distributed crawling coordination
-    """
-    
+    """    
     # Class-level configuration requirements
     REQUIRED_CONFIG_FIELDS: List[str] = []
     DEFAULT_RATE_LIMITS = RateLimitInfo(
@@ -179,8 +164,7 @@ class BasePlatformCrawler(ABC):
     )
     
     def __init__(self, platform: str, config: Dict[str, Any]):
-        """Initialize enhanced base crawler with enterprise features."""
-        self.platform = platform
+        """Initialize enhanced base crawler with enterprise features."""        self.platform = platform
         self.config = config
         self.status = CrawlerStatus.INITIALIZING
         self.last_crawl = None
@@ -225,8 +209,7 @@ class BasePlatformCrawler(ABC):
         filters: Optional[Dict[str, Any]] = None,
         priority: Priority = Priority.MEDIUM
     ) -> List[CrawlResult]:
-        """
-        Advanced content search with intelligent filtering and prioritization.
+        """        Advanced content search with intelligent filtering and prioritization.
         
         Args:
             query: Search query string with support for advanced operators
@@ -237,55 +220,46 @@ class BasePlatformCrawler(ABC):
             
         Returns:
             List of enhanced CrawlResult objects with quality scoring
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def check_rate_limits(self) -> bool:
-        """
-        Advanced rate limit checking with predictive analysis.
+        """        Advanced rate limit checking with predictive analysis.
         
         Returns:
             True if within limits, False if rate limited
-        """
-        pass
+        """        pass
     
     @abstractmethod 
     async def authenticate(self) -> bool:
-        """
-        Platform-specific authentication with automatic token refresh.
+        """        Platform-specific authentication with automatic token refresh.
         
         Returns:
             True if authentication successful
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def get_content_details(self, content_url: str) -> Optional[CrawlResult]:
-        """
-        Extract detailed information from specific content URL.
+        """        Extract detailed information from specific content URL.
         
         Args:
             content_url: Direct URL to content
             
         Returns:
             Detailed CrawlResult or None if not accessible
-        """
-        pass
+        """        pass
     
     # Enterprise utility methods
     
     def _load_rate_limits(self) -> RateLimitInfo:
-        """Load platform-specific rate limits from configuration."""
-        return RateLimitInfo(
+        """Load platform-specific rate limits from configuration."""        return RateLimitInfo(
             requests_per_minute=self.config.get('rate_limit_rpm', self.DEFAULT_RATE_LIMITS.requests_per_minute),
             requests_per_hour=self.config.get('rate_limit_rph', self.DEFAULT_RATE_LIMITS.requests_per_hour),
             requests_per_day=self.config.get('rate_limit_rpd', self.DEFAULT_RATE_LIMITS.requests_per_day)
         )
     
     def _load_user_agents(self) -> List[str]:
-        """Load diverse user agent strings for anti-detection."""
-        default_agents = [
+        """Load diverse user agent strings for anti-detection."""        default_agents = [
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
             'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
             'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
@@ -295,8 +269,7 @@ class BasePlatformCrawler(ABC):
         return self.config.get('user_agents', default_agents)
     
     async def _check_circuit_breaker(self) -> bool:
-        """Check and manage circuit breaker state for fault tolerance."""
-        now = datetime.utcnow()
+        """Check and manage circuit breaker state for fault tolerance."""        now = datetime.utcnow()
         
         if self.circuit_breaker.state == "open":
             if (now - self.circuit_breaker.last_failure_time).seconds >= self.circuit_breaker.recovery_timeout:
@@ -308,8 +281,7 @@ class BasePlatformCrawler(ABC):
         return self.circuit_breaker.state != "open"
     
     async def _record_circuit_breaker_result(self, success: bool):
-        """Record request result for circuit breaker pattern."""
-        if success:
+        """Record request result for circuit breaker pattern."""        if success:
             if self.circuit_breaker.state == "half_open":
                 self.circuit_breaker.state = "closed"
                 self.circuit_breaker.failure_count = 0
@@ -324,8 +296,7 @@ class BasePlatformCrawler(ABC):
                 logger.warning(f"{self.platform} circuit breaker opened due to failures")
     
     async def _apply_rate_limiting(self) -> bool:
-        """Advanced rate limiting with exponential backoff."""
-        now = datetime.utcnow()
+        """Advanced rate limiting with exponential backoff."""        now = datetime.utcnow()
         
         # Check if in backoff period
         if self.rate_limits.backoff_until and now < self.rate_limits.backoff_until:
@@ -358,12 +329,10 @@ class BasePlatformCrawler(ABC):
         return True
     
     def _get_random_user_agent(self) -> str:
-        """Get random user agent for anti-detection."""
-        return random.choice(self.user_agents)
+        """Get random user agent for anti-detection."""        return random.choice(self.user_agents)
     
     def _get_next_proxy(self) -> Optional[str]:
-        """Get next proxy from rotation pool."""
-        if not self.proxy_pool:
+        """Get next proxy from rotation pool."""        if not self.proxy_pool:
             return None
         
         proxy = self.proxy_pool[self.current_proxy_index]
@@ -371,18 +340,15 @@ class BasePlatformCrawler(ABC):
         return proxy
     
     def _generate_content_hash(self, content: Union[str, bytes]) -> str:
-        """Generate SHA-256 hash for content deduplication."""
-        if isinstance(content, str):
+        """Generate SHA-256 hash for content deduplication."""        if isinstance(content, str):
             content = content.encode('utf-8')
         return hashlib.sha256(content).hexdigest()
     
     def _is_duplicate_content(self, content_hash: str) -> bool:
-        """Check if content has been seen before."""
-        return content_hash in self.seen_content_hashes
+        """Check if content has been seen before."""        return content_hash in self.seen_content_hashes
     
     def _add_to_content_cache(self, result: CrawlResult):
-        """Add result to content cache with size management."""
-        if len(self.content_cache) > 10000:  # Limit cache size
+        """Add result to content cache with size management."""        if len(self.content_cache) > 10000:  # Limit cache size
             # Remove oldest entries
             oldest_keys = list(self.content_cache.keys())[:1000]
             for key in oldest_keys:
@@ -392,8 +358,7 @@ class BasePlatformCrawler(ABC):
         self.content_cache[cache_key] = result
     
     async def _trigger_webhooks(self, event_type: str, data: Dict[str, Any]):
-        """Trigger registered webhook callbacks for events."""
-        for callback in self.webhook_callbacks:
+        """Trigger registered webhook callbacks for events."""        for callback in self.webhook_callbacks:
             try:
                 if asyncio.iscoroutinefunction(callback):
                     await callback(event_type, data)
@@ -403,12 +368,10 @@ class BasePlatformCrawler(ABC):
                 logger.error(f"Webhook callback error: {e}")
     
     def register_webhook(self, callback: Callable):
-        """Register webhook callback for real-time notifications."""
-        self.webhook_callbacks.append(callback)
+        """Register webhook callback for real-time notifications."""        self.webhook_callbacks.append(callback)
     
     async def _check_alert_conditions(self):
-        """Check performance metrics against alert thresholds."""
-        metrics = self.performance_metrics
+        """Check performance metrics against alert thresholds."""        metrics = self.performance_metrics
         
         # Check error rate
         error_rate = (1 - metrics.get_success_rate() / 100) * 100
@@ -436,13 +399,11 @@ class BasePlatformCrawler(ABC):
                 'success_rate': success_rate,
                 'threshold': self.alert_thresholds['success_rate']
             })
-        """
-        Check if crawler is within rate limits.
+        """        Check if crawler is within rate limits.
         
         Returns:
             True if within limits, False if rate limited
-        """
-        pass
+        """        pass
     
     async def start_monitoring(
         self,
@@ -451,8 +412,7 @@ class BasePlatformCrawler(ABC):
         callback_func: callable = None,
         interval_minutes: int = 30
     ) -> bool:
-        """
-        Start continuous monitoring for content.
+        """        Start continuous monitoring for content.
         
         Args:
             monitor_id: Unique identifier for monitoring task
@@ -462,8 +422,7 @@ class BasePlatformCrawler(ABC):
             
         Returns:
             True if monitoring started successfully
-        """
-        try:
+        """        try:
             if monitor_id in self.monitoring_tasks:
                 logger.warning(f"Monitoring already active for {monitor_id}")
                 return False
@@ -482,16 +441,14 @@ class BasePlatformCrawler(ABC):
             return False
     
     async def stop_monitoring(self, monitor_id: str) -> bool:
-        """
-        Stop continuous monitoring.
+        """        Stop continuous monitoring.
         
         Args:
             monitor_id: Identifier of monitoring task to stop
             
         Returns:
             True if monitoring stopped successfully
-        """
-        try:
+        """        try:
             if monitor_id in self.monitoring_tasks:
                 self.monitoring_tasks[monitor_id].cancel()
                 del self.monitoring_tasks[monitor_id]
@@ -517,16 +474,14 @@ class BasePlatformCrawler(ABC):
         callback_func: callable,
         interval_minutes: int
     ):
-        """
-        Continuous monitoring loop.
+        """        Continuous monitoring loop.
         
         Args:
             monitor_id: Monitoring task identifier
             search_queries: Queries to monitor
             callback_func: Callback function for results
             interval_minutes: Monitoring interval
-        """
-        logger.info(f"Starting continuous monitoring {monitor_id} on {self.platform}")
+        """        logger.info(f"Starting continuous monitoring {monitor_id} on {self.platform}")
         
         last_results = set()
         
@@ -564,13 +519,11 @@ class BasePlatformCrawler(ABC):
             logger.error(f"Monitoring error for {monitor_id}: {e}")
     
     async def get_status(self) -> Dict[str, Any]:
-        """
-        Get crawler status information.
+        """        Get crawler status information.
         
         Returns:
             Dictionary with status information
-        """
-        return {
+        """        return {
             "platform": self.platform,
             "status": self.status.value,
             "last_crawl": self.last_crawl.isoformat() if self.last_crawl else None,
@@ -583,13 +536,11 @@ class BasePlatformCrawler(ABC):
         }
     
     async def validate_config(self) -> bool:
-        """
-        Validate crawler configuration.
+        """        Validate crawler configuration.
         
         Returns:
             True if configuration is valid
-        """
-        required_fields = getattr(self, 'REQUIRED_CONFIG_FIELDS', [])
+        """        required_fields = getattr(self, 'REQUIRED_CONFIG_FIELDS', [])
         
         for field in required_fields:
             if field not in self.config:
@@ -603,8 +554,7 @@ class BasePlatformCrawler(ABC):
         return True
     
     def _update_stats(self, success: bool):
-        """Update crawler statistics."""
-        self.total_requests += 1
+        """Update crawler statistics."""        self.total_requests += 1
         if success:
             self.successful_requests += 1
         else:
@@ -622,8 +572,7 @@ class BasePlatformCrawler(ABC):
         metadata: Dict[str, Any],
         file_url: Optional[str] = None
     ) -> CrawlResult:
-        """
-        Create standardized crawl result.
+        """        Create standardized crawl result.
         
         Args:
             platform: Platform name
@@ -636,8 +585,7 @@ class BasePlatformCrawler(ABC):
             
         Returns:
             CrawlResult object
-        """
-        # Generate fingerprint candidates
+        """        # Generate fingerprint candidates
         fingerprint_candidates = [url]
         
         if title:
@@ -669,12 +617,10 @@ class BasePlatformCrawler(ABC):
         )
     
     async def cleanup(self):
-        """
-        Cleanup crawler resources.
+        """        Cleanup crawler resources.
         
         Should be called when shutting down the crawler.
-        """
-        logger.info(f"Cleaning up {self.platform} crawler...")
+        """        logger.info(f"Cleaning up {self.platform} crawler...")
         
         # Cancel all monitoring tasks
         for monitor_id, task in self.monitoring_tasks.items():

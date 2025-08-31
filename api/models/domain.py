@@ -1,6 +1,4 @@
-"""Domain models using SQLAlchemy ORM."""
-
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
+"""Domain models using SQLAlchemy ORM."""from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from sqlalchemy import String, Integer, ForeignKey, DateTime, Text, JSON
 from datetime import datetime
 from typing import List, Optional

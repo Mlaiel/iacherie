@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Cache Persistence - Persistent Storage and Backup Management
+"""Cache Persistence - Persistent Storage and Backup Management
 ===========================================================
 
 Advanced persistence layer for cache data with backup, recovery,
@@ -9,9 +8,7 @@ and distributed storage capabilities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import pickle
 import json
@@ -31,31 +28,27 @@ from ...core.utils import generate_uuid, get_timestamp
 logger = logging.getLogger(__name__)
 
 class StorageFormat(Enum):
-    """Persistent storage formats."""
-    PICKLE = "pickle"
+    """Persistent storage formats."""    PICKLE = "pickle"
     JSON = "json"
     COMPRESSED_PICKLE = "compressed_pickle"
     COMPRESSED_JSON = "compressed_json"
 
 class BackupStrategy(Enum):
-    """Backup strategies."""
-    FULL = "full"
+    """Backup strategies."""    FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
     SNAPSHOT = "snapshot"
 
 @dataclass
 class PersistentEntry:
-    """Persistent cache entry."""
-    key: str
+    """Persistent cache entry."""    key: str
     value: Any
     timestamp: datetime
     metadata: Dict[str, Any] = field(default_factory=dict)
     checksum: Optional[str] = None
     
     def calculate_checksum(self) -> str:
-        """Calculate entry checksum."""
-        data = json.dumps({
+        """Calculate entry checksum."""        data = json.dumps({
             'key': self.key,
             'timestamp': self.timestamp.isoformat(),
             'metadata': self.metadata
@@ -63,15 +56,13 @@ class PersistentEntry:
         return hashlib.sha256(data.encode()).hexdigest()
     
     def verify_checksum(self) -> bool:
-        """Verify entry integrity."""
-        if not self.checksum:
+        """Verify entry integrity."""        if not self.checksum:
             return True
         return self.checksum == self.calculate_checksum()
 
 @dataclass
 class BackupInfo:
-    """Backup information."""
-    backup_id: str
+    """Backup information."""    backup_id: str
     strategy: BackupStrategy
     format: StorageFormat
     created_at: datetime
@@ -82,8 +73,7 @@ class BackupInfo:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class CachePersistence:
-    """
-    Advanced cache persistence system.
+    """    Advanced cache persistence system.
     
     Features:
     - Multiple storage formats
@@ -91,20 +81,17 @@ class CachePersistence:
     - Integrity checking
     - Incremental backups
     - Recovery mechanisms
-    """
-    
+    """    
     def __init__(self, storage_path: str, 
                  format: StorageFormat = StorageFormat.COMPRESSED_PICKLE,
                  auto_backup_interval: int = 3600):
-        """
-        Initialize cache persistence.
+        """        Initialize cache persistence.
         
         Args:
             storage_path: Base storage directory
             format: Default storage format
             auto_backup_interval: Auto backup interval in seconds
-        """
-        self.storage_path = Path(storage_path)
+        """        self.storage_path = Path(storage_path)
         self.format = format
         self.auto_backup_interval = auto_backup_interval
         self.logger = logging.getLogger(f"{__name__}.CachePersistence")
@@ -132,8 +119,7 @@ class CachePersistence:
         self.logger.info(f"Cache persistence initialized at {storage_path}")
     
     def _load_index(self) -> Dict[str, Dict[str, Any]]:
-        """Load persistence index."""
-        try:
+        """Load persistence index."""        try:
             if self.index_file.exists():
                 with open(self.index_file, 'r') as f:
                     return json.load(f)
@@ -142,16 +128,14 @@ class CachePersistence:
         return {}
     
     def _save_index(self) -> None:
-        """Save persistence index."""
-        try:
+        """Save persistence index."""        try:
             with open(self.index_file, 'w') as f:
                 json.dump(self.index, f, indent=2, default=str)
         except Exception as e:
             self.logger.error(f"Error saving index: {e}")
     
     def _get_entry_path(self, key: str) -> Path:
-        """Get file path for cache entry."""
-        # Create hash-based directory structure
+        """Get file path for cache entry."""        # Create hash-based directory structure
         key_hash = hashlib.sha256(key.encode()).hexdigest()
         dir_name = key_hash[:2]
         file_name = f"{key_hash[2:]}.dat"
@@ -163,8 +147,7 @@ class CachePersistence:
     
     def _serialize_entry(self, entry: PersistentEntry, 
                         format: StorageFormat) -> bytes:
-        """Serialize entry to bytes."""
-        data = {
+        """Serialize entry to bytes."""        data = {
             'key': entry.key,
             'value': entry.value,
             'timestamp': entry.timestamp.isoformat(),
@@ -184,8 +167,7 @@ class CachePersistence:
     
     def _deserialize_entry(self, data: bytes, 
                           format: StorageFormat) -> PersistentEntry:
-        """Deserialize entry from bytes."""
-        if format in [StorageFormat.COMPRESSED_PICKLE, StorageFormat.COMPRESSED_JSON]:
+        """Deserialize entry from bytes."""        if format in [StorageFormat.COMPRESSED_PICKLE, StorageFormat.COMPRESSED_JSON]:
             data = gzip.decompress(data)
         
         if format in [StorageFormat.PICKLE, StorageFormat.COMPRESSED_PICKLE]:
@@ -204,8 +186,7 @@ class CachePersistence:
     async def store_entry(self, key: str, value: Any, 
                          metadata: Optional[Dict[str, Any]] = None,
                          format: Optional[StorageFormat] = None) -> bool:
-        """
-        Store cache entry persistently.
+        """        Store cache entry persistently.
         
         Args:
             key: Cache key
@@ -215,8 +196,7 @@ class CachePersistence:
             
         Returns:
             True if successful
-        """
-        try:
+        """        try:
             entry = PersistentEntry(
                 key=key,
                 value=value,
@@ -255,16 +235,14 @@ class CachePersistence:
             return False
     
     async def load_entry(self, key: str) -> Optional[PersistentEntry]:
-        """
-        Load cache entry from storage.
+        """        Load cache entry from storage.
         
         Args:
             key: Cache key
             
         Returns:
             Persistent entry or None if not found
-        """
-        try:
+        """        try:
             if key not in self.index:
                 return None
             
@@ -296,8 +274,7 @@ class CachePersistence:
             return None
     
     async def delete_entry(self, key: str) -> bool:
-        """Delete persistent entry."""
-        try:
+        """Delete persistent entry."""        try:
             if key not in self.index:
                 return False
             
@@ -319,8 +296,7 @@ class CachePersistence:
             return False
     
     async def list_entries(self, pattern: Optional[str] = None) -> List[str]:
-        """List all persistent entries."""
-        try:
+        """List all persistent entries."""        try:
             keys = list(self.index.keys())
             
             if pattern:
@@ -335,8 +311,7 @@ class CachePersistence:
     
     async def create_backup(self, strategy: BackupStrategy = BackupStrategy.FULL,
                           format: Optional[StorageFormat] = None) -> Optional[str]:
-        """
-        Create cache backup.
+        """        Create cache backup.
         
         Args:
             strategy: Backup strategy
@@ -344,8 +319,7 @@ class CachePersistence:
             
         Returns:
             Backup ID if successful
-        """
-        try:
+        """        try:
             backup_id = generate_uuid()
             backup_format = format or self.format
             timestamp = datetime.now()
@@ -424,8 +398,7 @@ class CachePersistence:
     
     async def restore_backup(self, backup_id: str, 
                            overwrite: bool = False) -> bool:
-        """
-        Restore from backup.
+        """        Restore from backup.
         
         Args:
             backup_id: Backup ID to restore
@@ -433,8 +406,7 @@ class CachePersistence:
             
         Returns:
             True if successful
-        """
-        try:
+        """        try:
             if backup_id not in self.backup_info:
                 self.logger.error(f"Backup {backup_id} not found")
                 return False
@@ -489,8 +461,7 @@ class CachePersistence:
             return False
     
     def _get_incremental_entries(self) -> List[str]:
-        """Get entries for incremental backup."""
-        if not self.last_backup_time:
+        """Get entries for incremental backup."""        if not self.last_backup_time:
             return list(self.index.keys())
         
         incremental_entries = []
@@ -502,8 +473,7 @@ class CachePersistence:
         return incremental_entries
     
     async def start_auto_backup(self) -> None:
-        """Start automatic backup process."""
-        if self.auto_backup_task is not None:
+        """Start automatic backup process."""        if self.auto_backup_task is not None:
             return
         
         async def auto_backup_loop():
@@ -520,8 +490,7 @@ class CachePersistence:
         self.logger.info("Started automatic backup process")
     
     async def stop_auto_backup(self) -> None:
-        """Stop automatic backup process."""
-        if self.auto_backup_task:
+        """Stop automatic backup process."""        if self.auto_backup_task:
             self.auto_backup_task.cancel()
             try:
                 await self.auto_backup_task
@@ -531,8 +500,7 @@ class CachePersistence:
             self.logger.info("Stopped automatic backup process")
     
     async def cleanup_old_backups(self, keep_count: int = 10) -> int:
-        """Clean up old backup files."""
-        try:
+        """Clean up old backup files."""        try:
             # Sort backups by creation time
             sorted_backups = sorted(
                 self.backup_info.items(),
@@ -556,8 +524,7 @@ class CachePersistence:
             return 0
     
     async def get_stats(self) -> Dict[str, Any]:
-        """Get persistence statistics."""
-        try:
+        """Get persistence statistics."""        try:
             total_entries = len(self.index)
             total_size = sum(info['size'] for info in self.index.values())
             
@@ -580,15 +547,12 @@ class CachePersistence:
             return {}
 
 class BackupManager:
-    """
-    Backup management system for cache persistence.
+    """    Backup management system for cache persistence.
     
     Provides advanced backup scheduling and management capabilities.
-    """
-    
+    """    
     def __init__(self, persistence: CachePersistence):
-        """Initialize backup manager."""
-        self.persistence = persistence
+        """Initialize backup manager."""        self.persistence = persistence
         self.logger = logging.getLogger(f"{__name__}.BackupManager")
         
         # Backup schedules
@@ -599,8 +563,7 @@ class BackupManager:
                           strategy: BackupStrategy,
                           interval_seconds: int,
                           enabled: bool = True) -> bool:
-        """Add backup schedule."""
-        try:
+        """Add backup schedule."""        try:
             schedule = {
                 'strategy': strategy,
                 'interval_seconds': interval_seconds,
@@ -621,8 +584,7 @@ class BackupManager:
             return False
     
     async def _start_schedule(self, schedule_id: str) -> None:
-        """Start scheduled backup task."""
-        if schedule_id in self.schedule_tasks:
+        """Start scheduled backup task."""        if schedule_id in self.schedule_tasks:
             return
         
         schedule = self.backup_schedules[schedule_id]
@@ -646,8 +608,7 @@ class BackupManager:
         self.schedule_tasks[schedule_id] = asyncio.create_task(schedule_loop())
     
     async def stop_all_schedules(self) -> None:
-        """Stop all backup schedules."""
-        for task in self.schedule_tasks.values():
+        """Stop all backup schedules."""        for task in self.schedule_tasks.values():
             task.cancel()
         
         # Wait for all tasks to complete

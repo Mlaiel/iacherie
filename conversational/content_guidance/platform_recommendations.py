@@ -1,5 +1,4 @@
-"""
-Platform Recommendations Engine - AI-Powered Multi-Platform Strategy System
+"""Platform Recommendations Engine - AI-Powered Multi-Platform Strategy System
 =========================================================================
 
 This module provides intelligent platform-specific recommendations and content
@@ -9,9 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use prohibited and legally prosecuted.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from dataclasses import dataclass, asdict
@@ -36,8 +33,7 @@ settings = get_settings()
 
 
 class PlatformType(Enum):
-    """Supported platform types for recommendations."""
-    YOUTUBE = "youtube"
+    """Supported platform types for recommendations."""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -50,8 +46,7 @@ class PlatformType(Enum):
 
 
 class ContentFormat(Enum):
-    """Content format types for platform optimization."""
-    SHORT_VIDEO = "short_video"
+    """Content format types for platform optimization."""    SHORT_VIDEO = "short_video"
     LONG_VIDEO = "long_video"
     IMAGE = "image"
     CAROUSEL = "carousel"
@@ -64,8 +59,7 @@ class ContentFormat(Enum):
 
 
 class AudienceSegment(Enum):
-    """Target audience segments."""
-    GEN_Z = "gen_z"
+    """Target audience segments."""    GEN_Z = "gen_z"
     MILLENNIALS = "millennials"
     GEN_X = "gen_x"
     BOOMERS = "boomers"
@@ -77,8 +71,7 @@ class AudienceSegment(Enum):
 
 @dataclass
 class PlatformMetrics:
-    """Platform-specific performance metrics."""
-    platform: PlatformType
+    """Platform-specific performance metrics."""    platform: PlatformType
     reach: int
     engagement_rate: float
     follower_count: int
@@ -92,8 +85,7 @@ class PlatformMetrics:
 
 @dataclass
 class ContentStrategy:
-    """Content strategy recommendation."""
-    strategy_id: str
+    """Content strategy recommendation."""    strategy_id: str
     platform: PlatformType
     content_format: ContentFormat
     posting_frequency: str
@@ -107,8 +99,7 @@ class ContentStrategy:
 
 @dataclass
 class PlatformRecommendation:
-    """Platform-specific recommendation."""
-    platform: PlatformType
+    """Platform-specific recommendation."""    platform: PlatformType
     recommendation_type: str
     title: str
     description: str
@@ -122,8 +113,7 @@ class PlatformRecommendation:
 
 @dataclass
 class CrossPlatformStrategy:
-    """Cross-platform content strategy."""
-    strategy_name: str
+    """Cross-platform content strategy."""    strategy_name: str
     primary_platforms: List[PlatformType]
     content_flow: Dict[str, Any]
     content_adaptation: Dict[PlatformType, Dict[str, Any]]
@@ -133,14 +123,11 @@ class CrossPlatformStrategy:
 
 
 class PlatformRecommendationEngine:
-    """
-    Advanced AI-powered platform recommendation engine that analyzes creator
+    """    Advanced AI-powered platform recommendation engine that analyzes creator
     performance across platforms and provides strategic recommendations.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the platform recommendation engine."""
-        self.logger = get_logger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize the platform recommendation engine."""        self.logger = get_logger(f"{__name__}.{self.__class__.__name__}")
         self.analytics_service = PlatformAnalyticsService()
         self.ml_engine = PredictiveModelEngine()
         
@@ -159,8 +146,7 @@ class PlatformRecommendationEngine:
         self.format_compatibility = self._build_format_compatibility_matrix()
         
     def _initialize_platform_data(self) -> Dict[PlatformType, Dict[str, Any]]:
-        """Initialize comprehensive platform characteristics data."""
-        
+        """Initialize comprehensive platform characteristics data."""        
         return {
             PlatformType.YOUTUBE: {
                 "algorithm_factors": {
@@ -298,8 +284,7 @@ class PlatformRecommendationEngine:
         }
     
     def _load_optimization_rules(self) -> Dict[str, Any]:
-        """Load platform-specific optimization rules."""
-        
+        """Load platform-specific optimization rules."""        
         return {
             "hashtag_strategies": {
                 "instagram": {
@@ -336,8 +321,7 @@ class PlatformRecommendationEngine:
         }
     
     def _build_format_compatibility_matrix(self) -> Dict[PlatformType, List[ContentFormat]]:
-        """Build content format compatibility matrix for platforms."""
-        
+        """Build content format compatibility matrix for platforms."""        
         return {
             PlatformType.YOUTUBE: [
                 ContentFormat.LONG_VIDEO,
@@ -376,8 +360,7 @@ class PlatformRecommendationEngine:
         creator_id: str, 
         platforms: List[PlatformType]
     ) -> Dict[PlatformType, PlatformMetrics]:
-        """Analyze creator's performance across specified platforms."""
-        
+        """Analyze creator's performance across specified platforms."""        
         platform_performance = {}
         
         for platform in platforms:
@@ -406,8 +389,7 @@ class PlatformRecommendationEngine:
         analytics_data: Dict[str, Any], 
         platform: PlatformType
     ) -> PlatformMetrics:
-        """Calculate comprehensive platform metrics."""
-        
+        """Calculate comprehensive platform metrics."""        
         # Extract key metrics from analytics data
         reach = analytics_data.get("reach", 0)
         impressions = analytics_data.get("impressions", 0)
@@ -454,8 +436,7 @@ class PlatformRecommendationEngine:
         )
     
     def _analyze_best_posting_times(self, posting_history: List[Dict[str, Any]]) -> List[str]:
-        """Analyze posting history to identify optimal posting times."""
-        
+        """Analyze posting history to identify optimal posting times."""        
         if not posting_history:
             return ["12:00", "18:00", "20:00"]  # Default times
         
@@ -489,8 +470,7 @@ class PlatformRecommendationEngine:
         self, 
         content_performance: Dict[str, Any]
     ) -> List[ContentFormat]:
-        """Identify top-performing content types."""
-        
+        """Identify top-performing content types."""        
         if not content_performance:
             return [ContentFormat.IMAGE, ContentFormat.SHORT_VIDEO]  # Defaults
         
@@ -512,8 +492,7 @@ class PlatformRecommendationEngine:
         return top_types
     
     def _calculate_growth_rate(self, growth_history: List[Dict[str, Any]]) -> float:
-        """Calculate follower growth rate over the last 30 days."""
-        
+        """Calculate follower growth rate over the last 30 days."""        
         if len(growth_history) < 2:
             return 0.0
         
@@ -529,8 +508,7 @@ class PlatformRecommendationEngine:
         return round(growth_rate, 2)
     
     def _get_default_metrics(self, platform: PlatformType) -> PlatformMetrics:
-        """Provide default metrics when data is unavailable."""
-        
+        """Provide default metrics when data is unavailable."""        
         default_times = self.platform_characteristics[platform].get("peak_hours", ["12:00"])
         default_formats = self.platform_characteristics[platform].get("content_formats", [ContentFormat.IMAGE])
         
@@ -553,8 +531,7 @@ class PlatformRecommendationEngine:
         platform_metrics: Dict[PlatformType, PlatformMetrics],
         goals: List[str]
     ) -> List[PlatformRecommendation]:
-        """Generate actionable platform-specific recommendations."""
-        
+        """Generate actionable platform-specific recommendations."""        
         recommendations = []
         
         for platform, metrics in platform_metrics.items():
@@ -585,8 +562,7 @@ class PlatformRecommendationEngine:
         metrics: PlatformMetrics, 
         goals: List[str]
     ) -> List[PlatformRecommendation]:
-        """Analyze performance gaps and generate improvement recommendations."""
-        
+        """Analyze performance gaps and generate improvement recommendations."""        
         recommendations = []
         platform_data = self.platform_characteristics[platform]
         
@@ -671,8 +647,7 @@ class PlatformRecommendationEngine:
         logger.info("Platform recommendation engine initialized successfully")
     
     def _initialize_platform_data(self) -> Dict[PlatformType, Dict[str, Any]]:
-        """Initialize platform-specific characteristics and optimization data."""
-        
+        """Initialize platform-specific characteristics and optimization data."""        
         return {
             PlatformType.YOUTUBE: {
                 'algorithm_type': 'watch_time_focused',
@@ -765,8 +740,7 @@ class PlatformRecommendationEngine:
         }
     
     def _load_and_train_models(self):
-        """Load historical data and train ML models for recommendations."""
-        try:
+        """Load historical data and train ML models for recommendations."""        try:
             # This would load actual historical data in production
             # For now, we'll use synthetic data for model training
             
@@ -799,8 +773,7 @@ class PlatformRecommendationEngine:
         goals: List[str],
         target_audience: Optional[AudienceSegment] = None
     ) -> List[PlatformRecommendation]:
-        """
-        Generate comprehensive platform-specific recommendations.
+        """        Generate comprehensive platform-specific recommendations.
         
         Args:
             user_id: User identifier
@@ -811,8 +784,7 @@ class PlatformRecommendationEngine:
             
         Returns:
             List of platform-specific recommendations
-        """
-        recommendations = []
+        """        recommendations = []
         
         try:
             # Get current performance data
@@ -854,8 +826,7 @@ class PlatformRecommendationEngine:
         platforms: List[PlatformType],
         content_types: List[ContentFormat]
     ) -> Dict[str, Any]:
-        """Analyze effectiveness of current content strategy."""
-        
+        """Analyze effectiveness of current content strategy."""        
         analysis = {
             'overall_performance': 0.0,
             'best_performing_platform': None,
@@ -931,8 +902,7 @@ class PlatformRecommendationEngine:
         goals: List[str],
         target_audience: Optional[AudienceSegment]
     ) -> List[PlatformRecommendation]:
-        """Generate recommendations specific to a platform."""
-        
+        """Generate recommendations specific to a platform."""        
         recommendations = []
         platform_chars = self.platform_characteristics.get(platform, {})
         
@@ -1016,8 +986,7 @@ class PlatformRecommendationEngine:
         goals: List[str],
         target_audience: Optional[AudienceSegment]
     ) -> List[PlatformRecommendation]:
-        """Suggest new platforms based on user profile and goals."""
-        
+        """Suggest new platforms based on user profile and goals."""        
         suggestions = []
         all_platforms = set(PlatformType)
         new_platforms = all_platforms - set(current_platforms)
@@ -1068,8 +1037,7 @@ class PlatformRecommendationEngine:
         goals: List[str],
         target_audience: Optional[AudienceSegment]
     ) -> float:
-        """Calculate how well a platform fits user's profile and goals."""
-        
+        """Calculate how well a platform fits user's profile and goals."""        
         score = 0.0
         platform_chars = self.platform_characteristics.get(platform, {})
         
@@ -1149,8 +1117,7 @@ class PlatformRecommendationEngine:
         performance_data: Optional[Dict[str, Any]],
         goals: List[str]
     ) -> List[PlatformRecommendation]:
-        """Generate YouTube-specific recommendations."""
-        
+        """Generate YouTube-specific recommendations."""        
         recommendations = []
         
         # Watch time optimization
@@ -1201,8 +1168,7 @@ class PlatformRecommendationEngine:
         performance_data: Optional[Dict[str, Any]],
         goals: List[str]
     ) -> List[PlatformRecommendation]:
-        """Generate Instagram-specific recommendations."""
-        
+        """Generate Instagram-specific recommendations."""        
         recommendations = []
         
         # Reels strategy
@@ -1253,8 +1219,7 @@ class PlatformRecommendationEngine:
         performance_data: Optional[Dict[str, Any]],
         goals: List[str]
     ) -> List[PlatformRecommendation]:
-        """Generate TikTok-specific recommendations."""
-        
+        """Generate TikTok-specific recommendations."""        
         recommendations = []
         
         # Trend participation
@@ -1304,8 +1269,7 @@ class PlatformRecommendationEngine:
         platform: PlatformType, 
         metrics: PlatformMetrics
     ) -> List[PlatformRecommendation]:
-        """Generate content-specific recommendations for the platform."""
-        
+        """Generate content-specific recommendations for the platform."""        
         recommendations = []
         platform_data = self.platform_characteristics[platform]
         
@@ -1364,8 +1328,7 @@ class PlatformRecommendationEngine:
         platform: PlatformType,
         performance_data: Optional[Dict[str, Any]]
     ) -> Optional[PlatformRecommendation]:
-        """Generate platform-specific monetization recommendations."""
-        
+        """Generate platform-specific monetization recommendations."""        
         if not performance_data:
             return None
         
@@ -1423,14 +1386,11 @@ class PlatformRecommendationEngine:
 
 
 class ContentStrategyAnalyzer:
-    """
-    Advanced content strategy analyzer that evaluates and optimizes
+    """    Advanced content strategy analyzer that evaluates and optimizes
     cross-platform content strategies for maximum impact.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the content strategy analyzer."""
-        self.recommendation_engine = PlatformRecommendationEngine()
+        """Initialize the content strategy analyzer."""        self.recommendation_engine = PlatformRecommendationEngine()
         self.performance_history = {}
         logger.info("Content strategy analyzer initialized")
     
@@ -1441,8 +1401,7 @@ class ContentStrategyAnalyzer:
         content_calendar: List[Dict[str, Any]],
         performance_goals: Dict[str, float]
     ) -> CrossPlatformStrategy:
-        """
-        Analyze and optimize cross-platform content strategy.
+        """        Analyze and optimize cross-platform content strategy.
         
         Args:
             user_id: User identifier
@@ -1452,8 +1411,7 @@ class ContentStrategyAnalyzer:
             
         Returns:
             Optimized cross-platform strategy
-        """
-        
+        """        
         # Analyze current content distribution
         content_analysis = await self._analyze_content_distribution(
             content_calendar, platforms
@@ -1502,8 +1460,7 @@ class ContentStrategyAnalyzer:
         content_calendar: List[Dict[str, Any]],
         platforms: List[PlatformType]
     ) -> Dict[str, Any]:
-        """Analyze how content is distributed across platforms."""
-        
+        """Analyze how content is distributed across platforms."""        
         distribution = {
             'content_by_platform': {},
             'content_by_type': {},
@@ -1548,8 +1505,7 @@ class ContentStrategyAnalyzer:
         platforms: List[PlatformType],
         content_analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize content flow between platforms."""
-        
+        """Optimize content flow between platforms."""        
         flow = {
             'primary_platform': None,
             'content_repurposing': {},
@@ -1606,8 +1562,7 @@ class ContentStrategyAnalyzer:
         platforms: List[PlatformType],
         content_calendar: List[Dict[str, Any]]
     ) -> Dict[PlatformType, Dict[str, Any]]:
-        """Generate platform-specific content adaptations."""
-        
+        """Generate platform-specific content adaptations."""        
         adaptations = {}
         
         for platform in platforms:
@@ -1678,8 +1633,7 @@ class ContentStrategyAnalyzer:
         content_calendar: List[Dict[str, Any]],
         performance_goals: Dict[str, float]
     ) -> Dict[str, List[str]]:
-        """Optimize posting schedule across platforms."""
-        
+        """Optimize posting schedule across platforms."""        
         schedule = {}
         
         # Platform-specific optimal posting times
@@ -1721,8 +1675,7 @@ class ContentStrategyAnalyzer:
         platforms: List[PlatformType],
         performance_goals: Dict[str, float]
     ) -> Dict[PlatformType, float]:
-        """Calculate optimal budget allocation across platforms."""
-        
+        """Calculate optimal budget allocation across platforms."""        
         allocation = {}
         total_platforms = len(platforms)
         
@@ -1756,8 +1709,7 @@ class ContentStrategyAnalyzer:
         platforms: List[PlatformType],
         performance_goals: Dict[str, float]
     ) -> Dict[str, float]:
-        """Define cross-platform performance KPIs."""
-        
+        """Define cross-platform performance KPIs."""        
         kpis = {}
         
         # Overall KPIs
@@ -1798,8 +1750,7 @@ class ContentStrategyAnalyzer:
         actual_performance: Dict[str, float],
         time_period: int = 30  # days
     ) -> Dict[str, Any]:
-        """
-        Evaluate the performance of a cross-platform strategy.
+        """        Evaluate the performance of a cross-platform strategy.
         
         Args:
             strategy: The implemented strategy
@@ -1808,8 +1759,7 @@ class ContentStrategyAnalyzer:
             
         Returns:
             Performance evaluation results
-        """
-        
+        """        
         evaluation = {
             'overall_score': 0.0,
             'kpi_achievement': {},

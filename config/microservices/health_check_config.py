@@ -1,5 +1,4 @@
-"""
-Health Check Configuration for IA-Influencer Agent Platform
+"""Health Check Configuration for IA-Influencer Agent Platform
 ===========================================================
 
 Professional health check configuration for microservices monitoring.
@@ -14,9 +13,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import os
+"""import os
 import time
 import asyncio
 from typing import Dict, List, Optional, Any, Callable, Union
@@ -31,16 +28,14 @@ from datetime import datetime, timedelta
 
 
 class HealthStatus(str, Enum):
-    """Health check status types."""
-    HEALTHY = "healthy"
+    """Health check status types."""    HEALTHY = "healthy"
     UNHEALTHY = "unhealthy"
     DEGRADED = "degraded"
     UNKNOWN = "unknown"
 
 
 class HealthCheckType(str, Enum):
-    """Health check types."""
-    HTTP = "http"
+    """Health check types."""    HTTP = "http"
     TCP = "tcp"
     DATABASE = "database"
     REDIS = "redis"
@@ -49,8 +44,7 @@ class HealthCheckType(str, Enum):
 
 
 class ServiceType(str, Enum):
-    """Service types for health checking."""
-    WEB_SERVICE = "web_service"
+    """Service types for health checking."""    WEB_SERVICE = "web_service"
     DATABASE = "database"
     CACHE = "cache"
     MESSAGE_BROKER = "message_broker"
@@ -60,8 +54,7 @@ class ServiceType(str, Enum):
 
 @dataclass
 class HealthCheckResult:
-    """Health check result data."""
-    service_name: str
+    """Health check result data."""    service_name: str
     status: HealthStatus
     response_time: float
     timestamp: datetime
@@ -69,8 +62,7 @@ class HealthCheckResult:
     error: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
-        return {
+        """Convert to dictionary."""        return {
             "service_name": self.service_name,
             "status": self.status.value,
             "response_time": self.response_time,
@@ -82,8 +74,7 @@ class HealthCheckResult:
 
 @dataclass
 class HealthCheckDefinition:
-    """Health check definition."""
-    name: str
+    """Health check definition."""    name: str
     type: HealthCheckType
     service_type: ServiceType
     enabled: bool = True
@@ -129,11 +120,9 @@ class HealthCheckDefinition:
 
 
 class HealthCheckConfig(BaseSettings):
-    """
-    Centralized health check configuration for microservices monitoring.
+    """    Centralized health check configuration for microservices monitoring.
     Supports HTTP, TCP, database, Redis, and custom health checks.
-    """
-    
+    """    
     # Global health check settings
     enabled: bool = Field(True, env="HEALTH_CHECK_ENABLED")
     global_interval: int = Field(30, env="HEALTH_CHECK_GLOBAL_INTERVAL")
@@ -181,10 +170,8 @@ class HealthCheckConfig(BaseSettings):
 
 
 class HealthChecker:
-    """
-    Production-ready health checker with support for multiple check types.
-    """
-    
+    """    Production-ready health checker with support for multiple check types.
+    """    
     def __init__(self, config: HealthCheckConfig):
         self.config = config
         self.checks: Dict[str, HealthCheckDefinition] = {}
@@ -206,29 +193,24 @@ class HealthChecker:
                 print(f"Warning: Failed to connect to Redis for health check storage: {e}")
     
     async def __aenter__(self):
-        """Async context manager entry."""
-        self.session = aiohttp.ClientSession()
+        """Async context manager entry."""        self.session = aiohttp.ClientSession()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
-        if self.session:
+        """Async context manager exit."""        if self.session:
             await self.session.close()
     
     def add_check(self, check: HealthCheckDefinition):
-        """Add health check definition."""
-        self.checks[check.name] = check
+        """Add health check definition."""        self.checks[check.name] = check
     
     def remove_check(self, name: str):
-        """Remove health check definition."""
-        if name in self.checks:
+        """Remove health check definition."""        if name in self.checks:
             del self.checks[name]
         if name in self.results:
             del self.results[name]
     
     async def check_http(self, check: HealthCheckDefinition) -> HealthCheckResult:
-        """Perform HTTP health check."""
-        start_time = time.time()
+        """Perform HTTP health check."""        start_time = time.time()
         
         try:
             if not self.session:
@@ -285,8 +267,7 @@ class HealthChecker:
             )
     
     async def check_tcp(self, check: HealthCheckDefinition) -> HealthCheckResult:
-        """Perform TCP health check."""
-        start_time = time.time()
+        """Perform TCP health check."""        start_time = time.time()
         
         try:
             reader, writer = await asyncio.wait_for(
@@ -319,8 +300,7 @@ class HealthChecker:
             )
     
     async def check_database(self, check: HealthCheckDefinition) -> HealthCheckResult:
-        """Perform database health check."""
-        start_time = time.time()
+        """Perform database health check."""        start_time = time.time()
         
         try:
             conn = psycopg2.connect(check.connection_string)
@@ -356,8 +336,7 @@ class HealthChecker:
             )
     
     async def check_redis(self, check: HealthCheckDefinition) -> HealthCheckResult:
-        """Perform Redis health check."""
-        start_time = time.time()
+        """Perform Redis health check."""        start_time = time.time()
         
         try:
             redis_client = redis.Redis(
@@ -402,8 +381,7 @@ class HealthChecker:
             )
     
     async def check_custom(self, check: HealthCheckDefinition) -> HealthCheckResult:
-        """Perform custom health check."""
-        start_time = time.time()
+        """Perform custom health check."""        start_time = time.time()
         
         try:
             if asyncio.iscoroutinefunction(check.custom_function):
@@ -442,8 +420,7 @@ class HealthChecker:
             )
     
     async def check_composite(self, check: HealthCheckDefinition) -> HealthCheckResult:
-        """Perform composite health check."""
-        start_time = time.time()
+        """Perform composite health check."""        start_time = time.time()
         
         results = []
         for check_name in check.composite_checks:
@@ -485,8 +462,7 @@ class HealthChecker:
         )
     
     async def check_system_resources(self) -> HealthCheckResult:
-        """Check system resource usage."""
-        start_time = time.time()
+        """Check system resource usage."""        start_time = time.time()
         
         try:
             cpu_percent = psutil.cpu_percent(interval=1)
@@ -534,8 +510,7 @@ class HealthChecker:
             )
     
     async def run_single_check(self, check: HealthCheckDefinition) -> HealthCheckResult:
-        """Run a single health check with retries."""
-        if not check.enabled:
+        """Run a single health check with retries."""        if not check.enabled:
             return HealthCheckResult(
                 service_name=check.name,
                 status=HealthStatus.UNKNOWN,
@@ -598,8 +573,7 @@ class HealthChecker:
         return result
     
     async def run_all_checks(self) -> Dict[str, HealthCheckResult]:
-        """Run all configured health checks."""
-        tasks = []
+        """Run all configured health checks."""        tasks = []
         
         # Add system resource check if enabled
         if self.config.monitor_system_resources:
@@ -630,8 +604,7 @@ class HealthChecker:
         return processed_results
     
     async def _store_result(self, result: HealthCheckResult):
-        """Store health check result in Redis."""
-        if not self.config.store_results or not self.redis_client:
+        """Store health check result in Redis."""        if not self.config.store_results or not self.redis_client:
             return
         
         try:
@@ -645,8 +618,7 @@ class HealthChecker:
             print(f"Warning: Failed to store health check result: {e}")
     
     def get_overall_status(self) -> HealthStatus:
-        """Get overall system health status."""
-        if not self.results:
+        """Get overall system health status."""        if not self.results:
             return HealthStatus.UNKNOWN
         
         healthy_count = sum(

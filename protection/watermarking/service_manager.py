@@ -1,9 +1,6 @@
-"""
-Watermarking Service Manager
+"""Watermarking Service Manager
 Central orchestration and management for all watermarking operations
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union, BinaryIO
 from dataclasses import dataclass, asdict
@@ -26,8 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Supported content types for watermarking"""
-    IMAGE = "image"
+    """Supported content types for watermarking"""    IMAGE = "image"
     VIDEO = "video"
     AUDIO = "audio"
     TEXT = "text"
@@ -36,8 +32,7 @@ class ContentType(Enum):
 
 
 class WatermarkOperation(Enum):
-    """Watermarking operations"""
-    EMBED = "embed"
+    """Watermarking operations"""    EMBED = "embed"
     DETECT = "detect"
     VERIFY = "verify"
     EXTRACT = "extract"
@@ -46,8 +41,7 @@ class WatermarkOperation(Enum):
 
 @dataclass
 class WatermarkRequest:
-    """Watermark operation request"""
-    operation: WatermarkOperation
+    """Watermark operation request"""    operation: WatermarkOperation
     content_type: ContentType
     content_data: bytes
     watermark_data: Optional[bytes] = None
@@ -63,8 +57,7 @@ class WatermarkRequest:
 
 @dataclass
 class WatermarkResponse:
-    """Watermark operation response"""
-    success: bool
+    """Watermark operation response"""    success: bool
     operation: WatermarkOperation
     content_type: ContentType
     watermark_id: str
@@ -82,11 +75,9 @@ class WatermarkResponse:
 
 
 class WatermarkServiceManager:
-    """
-    Central watermarking service manager
+    """    Central watermarking service manager
     Orchestrates all watermarking operations across different content types
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.engines = {}
@@ -104,8 +95,7 @@ class WatermarkServiceManager:
         self._initialize_engines()
     
     def _initialize_engines(self):
-        """Initialize all watermarking engines"""
-        try:
+        """Initialize all watermarking engines"""        try:
             # Initialize content-specific engines
             self.engines[ContentType.IMAGE] = ImageWatermarkEngine()
             self.engines[ContentType.VIDEO] = VideoWatermarkEngine()
@@ -126,11 +116,9 @@ class WatermarkServiceManager:
             raise
     
     async def process_watermark_request(self, request: WatermarkRequest) -> WatermarkResponse:
-        """
-        Main entry point for all watermarking operations
+        """        Main entry point for all watermarking operations
         Routes requests to appropriate engines and handles responses
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         watermark_id = str(uuid.uuid4())
         
         try:
@@ -197,8 +185,7 @@ class WatermarkServiceManager:
             )
     
     async def _handle_embed_operation(self, request: WatermarkRequest, watermark_id: str) -> WatermarkResponse:
-        """Handles watermark embedding operations"""
-        try:
+        """Handles watermark embedding operations"""        try:
             engine = self.engines.get(request.content_type)
             if not engine:
                 raise ValueError(f"No engine available for content type: {request.content_type}")
@@ -259,8 +246,7 @@ class WatermarkServiceManager:
             raise
     
     async def _handle_detect_operation(self, request: WatermarkRequest, watermark_id: str) -> WatermarkResponse:
-        """Handles watermark detection operations"""
-        try:
+        """Handles watermark detection operations"""        try:
             engine = self.engines.get(request.content_type)
             if not engine:
                 raise ValueError(f"No engine available for content type: {request.content_type}")
@@ -299,8 +285,7 @@ class WatermarkServiceManager:
             raise
     
     async def _handle_verify_operation(self, request: WatermarkRequest, watermark_id: str) -> WatermarkResponse:
-        """Handles watermark verification operations"""
-        try:
+        """Handles watermark verification operations"""        try:
             # First detect watermark
             detection_response = await self._handle_detect_operation(request, watermark_id)
             
@@ -355,8 +340,7 @@ class WatermarkServiceManager:
             raise
     
     async def _handle_extract_operation(self, request: WatermarkRequest, watermark_id: str) -> WatermarkResponse:
-        """Handles watermark extraction operations"""
-        try:
+        """Handles watermark extraction operations"""        try:
             # Detection includes extraction for most methods
             detection_response = await self._handle_detect_operation(request, watermark_id)
             
@@ -405,8 +389,7 @@ class WatermarkServiceManager:
             raise
     
     async def _handle_analyze_operation(self, request: WatermarkRequest, watermark_id: str) -> WatermarkResponse:
-        """Handles forensic analysis operations"""
-        try:
+        """Handles forensic analysis operations"""        try:
             if not self.forensic_analyzer:
                 raise ValueError("Forensic analyzer not available")
             
@@ -447,8 +430,7 @@ class WatermarkServiceManager:
         strength: str,
         method: str
     ) -> Tuple[bytes, Dict[str, Any]]:
-        """Embeds watermark in image content"""
-        try:
+        """Embeds watermark in image content"""        try:
             # Convert bytes to numpy array
             import numpy as np
             from PIL import Image
@@ -490,8 +472,7 @@ class WatermarkServiceManager:
         strength: str,
         method: str
     ) -> Tuple[bytes, Dict[str, Any]]:
-        """Embeds watermark in video content"""
-        try:
+        """Embeds watermark in video content"""        try:
             # Save content to temporary file
             with tempfile.NamedTemporaryFile(suffix='.mp4', delete=False) as temp_input:
                 temp_input.write(content_data)
@@ -536,8 +517,7 @@ class WatermarkServiceManager:
         strength: str,
         method: str
     ) -> Tuple[bytes, Dict[str, Any]]:
-        """Embeds watermark in text content"""
-        try:
+        """Embeds watermark in text content"""        try:
             text_content = content_data.decode('utf-8')
             
             # Choose embedding method
@@ -570,8 +550,7 @@ class WatermarkServiceManager:
         content_data: bytes,
         method: str
     ) -> Dict[str, Any]:
-        """Detects watermark in image content"""
-        try:
+        """Detects watermark in image content"""        try:
             # Implementation would detect watermark using various methods
             return {
                 'watermark_detected': False,
@@ -590,8 +569,7 @@ class WatermarkServiceManager:
         content_data: bytes,
         method: str
     ) -> Dict[str, Any]:
-        """Detects watermark in video content"""
-        try:
+        """Detects watermark in video content"""        try:
             # Save content to temporary file
             with tempfile.NamedTemporaryFile(suffix='.mp4', delete=False) as temp_file:
                 temp_file.write(content_data)
@@ -615,8 +593,7 @@ class WatermarkServiceManager:
         content_data: bytes,
         method: str
     ) -> Dict[str, Any]:
-        """Detects watermark in text content"""
-        try:
+        """Detects watermark in text content"""        try:
             text_content = content_data.decode('utf-8')
             
             # Detect watermark
@@ -633,8 +610,7 @@ class WatermarkServiceManager:
     # Utility methods
     
     async def _validate_request(self, request: WatermarkRequest) -> Dict[str, Any]:
-        """Validates watermark request"""
-        try:
+        """Validates watermark request"""        try:
             # Check content data
             if not request.content_data:
                 return {'valid': False, 'error': 'Content data is required'}
@@ -658,8 +634,7 @@ class WatermarkServiceManager:
             return {'valid': False, 'error': str(e)}
     
     async def _log_operation(self, request: WatermarkRequest, response: WatermarkResponse, processing_time: float):
-        """Logs watermark operation"""
-        try:
+        """Logs watermark operation"""        try:
             log_entry = {
                 'timestamp': datetime.now().isoformat(),
                 'operation': request.operation.value,
@@ -679,8 +654,7 @@ class WatermarkServiceManager:
             logger.error(f"Operation logging failed: {e}")
     
     def get_operation_statistics(self) -> Dict[str, Any]:
-        """Returns operation statistics"""
-        try:
+        """Returns operation statistics"""        try:
             processing_times = self.operation_stats['processing_times']
             
             stats = {
@@ -708,8 +682,7 @@ class WatermarkServiceManager:
             return {}
     
     def detect_content_type(self, content_data: bytes, filename: str = "") -> ContentType:
-        """Automatically detects content type from data and filename"""
-        try:
+        """Automatically detects content type from data and filename"""        try:
             # Check file extension
             if filename:
                 ext = Path(filename).suffix.lower()

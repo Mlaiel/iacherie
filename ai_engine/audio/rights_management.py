@@ -1,5 +1,4 @@
-"""
-Rights Management - Advanced Digital Rights Management and Licensing
+"""Rights Management - Advanced Digital Rights Management and Licensing
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -12,9 +11,7 @@ Email: mlaiel@live.de
 
 This module provides comprehensive digital rights management including
 licensing, royalty tracking, and automated rights enforcement.
-"""
-
-import logging
+"""import logging
 import uuid
 from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional, Union, Tuple, Set, TYPE_CHECKING
@@ -31,15 +28,13 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 class RightsLevel(Enum):
-    """Rights management levels"""
-    BASIC = "basic"
+    """Rights management levels"""    BASIC = "basic"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
     GLOBAL = "global"
 
 class LicenseType(Enum):
-    """Types of content licenses"""
-    EXCLUSIVE = "exclusive"
+    """Types of content licenses"""    EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     CREATIVE_COMMONS = "creative_commons"
     ROYALTY_FREE = "royalty_free"
@@ -51,8 +46,7 @@ class LicenseType(Enum):
     SAMPLING_LICENSE = "sampling_license"
 
 class UsageType(Enum):
-    """Types of content usage"""
-    STREAMING = "streaming"
+    """Types of content usage"""    STREAMING = "streaming"
     DOWNLOAD = "download"
     BROADCAST = "broadcast"
     SYNC_VIDEO = "sync_video"
@@ -64,8 +58,7 @@ class UsageType(Enum):
     COVER_VERSION = "cover_version"
 
 class RoyaltyType(Enum):
-    """Types of royalties"""
-    MECHANICAL = "mechanical"
+    """Types of royalties"""    MECHANICAL = "mechanical"
     PERFORMANCE = "performance"
     SYNCHRONIZATION = "synchronization"
     DIGITAL = "digital"
@@ -73,8 +66,7 @@ class RoyaltyType(Enum):
     NEIGHBORING = "neighboring"
 
 class RightsStatus(Enum):
-    """Status of rights"""
-    ACTIVE = "active"
+    """Status of rights"""    ACTIVE = "active"
     PENDING = "pending"
     EXPIRED = "expired"
     REVOKED = "revoked"
@@ -83,8 +75,7 @@ class RightsStatus(Enum):
 
 @dataclass
 class RightsHolder:
-    """Rights holder information"""
-    holder_id: str
+    """Rights holder information"""    holder_id: str
     name: str
     email: str
     percentage_share: Decimal  # 0.00 to 100.00
@@ -96,8 +87,7 @@ class RightsHolder:
 
 @dataclass
 class LicenseTerms:
-    """License terms and conditions"""
-    license_id: str
+    """License terms and conditions"""    license_id: str
     license_type: LicenseType
     usage_types: List[UsageType]
     territory: str = "worldwide"
@@ -117,8 +107,7 @@ class LicenseTerms:
 
 @dataclass
 class RightsRegistration:
-    """Rights registration record"""
-    registration_id: str
+    """Rights registration record"""    registration_id: str
     fingerprint_id: str
     content_title: str
     content_type: "ContentType"
@@ -136,8 +125,7 @@ class RightsRegistration:
 
 @dataclass
 class RoyaltyPayment:
-    """Royalty payment record"""
-    payment_id: str
+    """Royalty payment record"""    payment_id: str
     registration_id: str
     rights_holder_id: str
     royalty_type: RoyaltyType
@@ -158,8 +146,7 @@ class RoyaltyPayment:
 
 @dataclass
 class UsageReport:
-    """Content usage report"""
-    report_id: str
+    """Content usage report"""    report_id: str
     registration_id: str
     usage_type: UsageType
     platform: str
@@ -175,8 +162,7 @@ class UsageReport:
 
 @dataclass
 class RightsResult:
-    """Rights management operation result"""
-    operation_id: str
+    """Rights management operation result"""    operation_id: str
     registration_id: Optional[str] = None
     success: bool = True
     message: str = ""
@@ -188,8 +174,7 @@ class RightsResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class RightsManager:
-    """
-    Advanced Digital Rights Management System
+    """    Advanced Digital Rights Management System
     
     Provides comprehensive rights management including:
     - Rights registration and verification
@@ -197,8 +182,7 @@ class RightsManager:
     - Royalty calculation and distribution
     - Usage tracking and reporting
     - Automated compliance monitoring
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.config = config or {}
@@ -235,8 +219,7 @@ class RightsManager:
         self.logger.info("RightsManager initialized successfully")
     
     def _setup_rights_organization_apis(self):
-        """Setup APIs for rights organizations"""
-        # Mock setup for rights organizations like ASCAP, BMI, SESAC, etc.
+        """Setup APIs for rights organizations"""        # Mock setup for rights organizations like ASCAP, BMI, SESAC, etc.
         self.rights_orgs = {
             'ASCAP': {'api_key': self.config.get('ascap_api_key'), 'base_url': 'https://api.ascap.com'},
             'BMI': {'api_key': self.config.get('bmi_api_key'), 'base_url': 'https://api.bmi.com'},
@@ -253,8 +236,7 @@ class RightsManager:
         rights_holders: Optional[List[RightsHolder]] = None,
         license_terms: Optional[LicenseTerms] = None
     ) -> RightsResult:
-        """
-        Register rights for audio content
+        """        Register rights for audio content
         
         Args:
             fingerprint: Audio fingerprint
@@ -266,8 +248,7 @@ class RightsManager:
             
         Returns:
             RightsResult with registration details
-        """
-        operation_id = str(uuid.uuid4())
+        """        operation_id = str(uuid.uuid4())
         registration_id = str(uuid.uuid4())
         
         try:
@@ -359,8 +340,7 @@ class RightsManager:
             )
     
     async def _generate_isrc_code(self, registration: RightsRegistration) -> str:
-        """Generate ISRC code for music track"""
-        # ISRC format: CC-XXX-YY-NNNNN
+        """Generate ISRC code for music track"""        # ISRC format: CC-XXX-YY-NNNNN
         country = 'US'  # Default to US
         registrant = 'FAH'  # Fahed's code
         year = str(datetime.utcnow().year)[-2:]
@@ -381,8 +361,7 @@ class RightsManager:
         return isrc_code
     
     async def _generate_iswc_code(self, registration: RightsRegistration) -> str:
-        """Generate ISWC code for musical work"""
-        # ISWC format: T-NNNNNNNNN-C
+        """Generate ISWC code for musical work"""        # ISWC format: T-NNNNNNNNN-C
         # Simplified generation
         next_number = len(self.rights_registrations) + 1
         base_number = f"{next_number:09d}"
@@ -397,8 +376,7 @@ class RightsManager:
         return iswc_code
     
     async def _register_on_blockchain(self, registration: RightsRegistration) -> str:
-        """Register rights on blockchain"""
-        # Mock blockchain registration
+        """Register rights on blockchain"""        # Mock blockchain registration
         import hashlib
         
         registration_data = {
@@ -422,8 +400,7 @@ class RightsManager:
         return f"0x{blockchain_hash}"
     
     async def _submit_to_rights_organizations(self, registration: RightsRegistration):
-        """Submit registration to rights organizations"""
-        # Mock submission to rights organizations
+        """Submit registration to rights organizations"""        # Mock submission to rights organizations
         for org_name, org_config in self.rights_orgs.items():
             try:
                 # Simulate API call to rights organization
@@ -454,8 +431,7 @@ class RightsManager:
         period_start: datetime,
         period_end: datetime
     ) -> RightsResult:
-        """
-        Calculate royalties based on usage data
+        """        Calculate royalties based on usage data
         
         Args:
             registration_id: Rights registration ID
@@ -465,8 +441,7 @@ class RightsManager:
             
         Returns:
             RightsResult with royalty calculations
-        """
-        operation_id = str(uuid.uuid4())
+        """        operation_id = str(uuid.uuid4())
         
         try:
             registration = self.rights_registrations.get(registration_id)
@@ -578,8 +553,7 @@ class RightsManager:
         license_terms: LicenseTerms,
         custom_terms: Dict[str, Any] = None
     ) -> RightsResult:
-        """Grant license for registered content"""
-        operation_id = str(uuid.uuid4())
+        """Grant license for registered content"""        operation_id = str(uuid.uuid4())
         
         try:
             registration = self.rights_registrations.get(registration_id)
@@ -642,12 +616,10 @@ class RightsManager:
             )
     
     def get_rights_registration(self, registration_id: str) -> Optional[RightsRegistration]:
-        """Get rights registration by ID"""
-        return self.rights_registrations.get(registration_id)
+        """Get rights registration by ID"""        return self.rights_registrations.get(registration_id)
     
     def get_user_registrations(self, user_id: str) -> List[RightsRegistration]:
-        """Get all rights registrations for user"""
-        return [
+        """Get all rights registrations for user"""        return [
             reg for reg in self.rights_registrations.values()
             if any(holder.holder_id == user_id for holder in reg.rights_holders)
         ]
@@ -658,8 +630,7 @@ class RightsManager:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> List[RoyaltyPayment]:
-        """Get royalty payments for registration"""
-        payments = self.royalty_payments.get(registration_id, [])
+        """Get royalty payments for registration"""        payments = self.royalty_payments.get(registration_id, [])
         
         if start_date or end_date:
             filtered_payments = []
@@ -677,8 +648,7 @@ class RightsManager:
         self,
         registration_id: str
     ) -> List[LicenseTerms]:
-        """Get all license agreements for registration"""
-        return [
+        """Get all license agreements for registration"""        return [
             license_terms for license_terms in self.license_agreements.values()
             if license_terms.custom_terms.get('registration_id') == registration_id
         ]
@@ -689,8 +659,7 @@ class RightsManager:
         usage_type: UsageType,
         user_id: str
     ) -> RightsResult:
-        """Verify if user has rights for specific usage"""
-        operation_id = str(uuid.uuid4())
+        """Verify if user has rights for specific usage"""        operation_id = str(uuid.uuid4())
         
         try:
             # Find registration by fingerprint
@@ -767,8 +736,7 @@ class RightsManager:
         registration_id: str,
         usage_data: Dict[str, Any]
     ) -> RightsResult:
-        """Report content usage for royalty calculation"""
-        operation_id = str(uuid.uuid4())
+        """Report content usage for royalty calculation"""        operation_id = str(uuid.uuid4())
         
         try:
             registration = self.rights_registrations.get(registration_id)

@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Core Business Logic Unit Tests
+"""Core Business Logic Unit Tests
 =============================
 
 Real unit tests for core business logic validation including content processing,
@@ -23,9 +19,7 @@ user management, and workflow validation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Implement centralized unit tests for business logic quality validation
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -39,13 +33,10 @@ from decimal import Decimal
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 class TestContentProcessing:
-    """Test core content processing business logic"""
-    
+    """Test core content processing business logic"""    
     def test_content_type_detection(self):
-        """Test content type detection from file extensions"""
-        def detect_content_type(filename):
-            """Mock content type detection function"""
-            extension = filename.lower().split('.')[-1] if '.' in filename else ''
+        """Test content type detection from file extensions"""        def detect_content_type(filename):
+            """Mock content type detection function"""            extension = filename.lower().split('.')[-1] if '.' in filename else ''
             
             audio_formats = ['mp3', 'wav', 'flac', 'aac', 'm4a']
             video_formats = ['mp4', 'avi', 'mov', 'mkv', 'webm']
@@ -77,10 +68,8 @@ class TestContentProcessing:
         assert detect_content_type('document.txt') == 'unknown'
     
     def test_content_validation_rules(self):
-        """Test content validation business rules"""
-        def validate_content(content_data):
-            """Mock content validation function"""
-            errors = []
+        """Test content validation business rules"""        def validate_content(content_data):
+            """Mock content validation function"""            errors = []
             
             # File size validation (max 100MB)
             max_size = 100 * 1024 * 1024  # 100MB
@@ -132,13 +121,10 @@ class TestContentProcessing:
         assert any("Title is required" in error for error in result["errors"])
 
 class TestUserManagement:
-    """Test user management business logic"""
-    
+    """Test user management business logic"""    
     def test_user_registration_validation(self):
-        """Test user registration validation logic"""
-        def validate_user_registration(user_data):
-            """Mock user registration validation"""
-            errors = []
+        """Test user registration validation logic"""        def validate_user_registration(user_data):
+            """Mock user registration validation"""            errors = []
             
             # Email validation
             email = user_data.get('email', '').strip()
@@ -200,10 +186,8 @@ class TestUserManagement:
         assert len(result["errors"]) > 0
     
     def test_user_permission_levels(self):
-        """Test user permission level validation"""
-        def get_user_permissions(user_type, subscription_level):
-            """Mock user permission function"""
-            base_permissions = ['view_content', 'upload_content']
+        """Test user permission level validation"""        def get_user_permissions(user_type, subscription_level):
+            """Mock user permission function"""            base_permissions = ['view_content', 'upload_content']
             
             if user_type == 'creator':
                 base_permissions.extend(['monetize_content', 'analytics_access'])
@@ -241,13 +225,10 @@ class TestUserManagement:
         assert 'advanced_analytics' in premium_perms
 
 class TestWorkflowValidation:
-    """Test business workflow validation"""
-    
+    """Test business workflow validation"""    
     def test_content_publishing_workflow(self):
-        """Test content publishing workflow steps"""
-        def validate_publishing_workflow(content, user):
-            """Mock publishing workflow validation"""
-            steps = []
+        """Test content publishing workflow steps"""        def validate_publishing_workflow(content, user):
+            """Mock publishing workflow validation"""            steps = []
             errors = []
             
             # Step 1: Content validation
@@ -300,10 +281,8 @@ class TestWorkflowValidation:
         assert any("upload permissions" in error for error in result["errors"])
     
     def test_monetization_workflow(self):
-        """Test monetization workflow validation"""
-        def validate_monetization_setup(content, creator):
-            """Mock monetization setup validation"""
-            requirements = []
+        """Test monetization workflow validation"""        def validate_monetization_setup(content, creator):
+            """Mock monetization setup validation"""            requirements = []
             errors = []
             
             # Check content eligibility

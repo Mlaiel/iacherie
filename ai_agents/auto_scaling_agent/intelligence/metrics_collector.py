@@ -1,5 +1,4 @@
-"""
-Metrics Collector - Enterprise Metrics Collection & Aggregation System
+"""Metrics Collector - Enterprise Metrics Collection & Aggregation System
 
 This module provides comprehensive metrics collection, aggregation, and export
 capabilities for monitoring and scaling decisions in the IA Influencer Agent platform.
@@ -7,9 +6,7 @@ capabilities for monitoring and scaling decisions in the IA Influencer Agent pla
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 © 2025 All Rights Reserved
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import threading
@@ -40,8 +37,7 @@ from ...core.monitoring import get_metrics_client
 
 
 class MetricType(Enum):
-    """Types of metrics"""
-    COUNTER = "counter"
+    """Types of metrics"""    COUNTER = "counter"
     GAUGE = "gauge" 
     HISTOGRAM = "histogram"
     TIMER = "timer"
@@ -49,8 +45,7 @@ class MetricType(Enum):
 
 
 class AggregationType(Enum):
-    """Types of metric aggregation"""
-    SUM = "sum"
+    """Types of metric aggregation"""    SUM = "sum"
     AVERAGE = "average"
     MIN = "min"
     MAX = "max"
@@ -63,8 +58,7 @@ class AggregationType(Enum):
 
 @dataclass
 class MetricPoint:
-    """Individual metric data point"""
-    name: str
+    """Individual metric data point"""    name: str
     value: float
     timestamp: datetime
     tags: Dict[str, str] = field(default_factory=dict)
@@ -74,8 +68,7 @@ class MetricPoint:
 
 @dataclass
 class AggregatedMetric:
-    """Aggregated metric result"""
-    name: str
+    """Aggregated metric result"""    name: str
     aggregation_type: AggregationType
     value: float
     count: int
@@ -86,8 +79,7 @@ class AggregatedMetric:
 
 @dataclass
 class MetricDefinition:
-    """Metric definition and configuration"""
-    name: str
+    """Metric definition and configuration"""    name: str
     metric_type: MetricType
     description: str
     unit: str
@@ -98,8 +90,7 @@ class MetricDefinition:
 
 
 class MetricsCollector(BaseAgent):
-    """
-    Enterprise Metrics Collector
+    """    Enterprise Metrics Collector
     
     Features:
     - Multi-source metrics collection
@@ -110,8 +101,7 @@ class MetricsCollector(BaseAgent):
     - Alert integration
     - Performance optimization
     - Batch processing support
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
         self.logger = logging.getLogger(__name__)
@@ -160,8 +150,7 @@ class MetricsCollector(BaseAgent):
         self.logger.info("MetricsCollector initialized successfully")
 
     async def start_collection(self):
-        """Start metrics collection"""
-        try:
+        """Start metrics collection"""        try:
             if self.is_collecting:
                 self.logger.warning("Metrics collection already active")
                 return
@@ -190,8 +179,7 @@ class MetricsCollector(BaseAgent):
             raise MetricsException(f"Collection startup failed: {e}")
 
     async def stop_collection(self):
-        """Stop metrics collection"""
-        try:
+        """Stop metrics collection"""        try:
             self.is_collecting = False
             
             # Cancel all collection tasks
@@ -210,8 +198,7 @@ class MetricsCollector(BaseAgent):
             self.logger.error(f"Error stopping metrics collection: {e}")
 
     async def _metrics_collection_loop(self):
-        """Main metrics collection loop"""
-        self.logger.info("Starting metrics collection loop")
+        """Main metrics collection loop"""        self.logger.info("Starting metrics collection loop")
         
         while self.is_collecting:
             try:
@@ -237,8 +224,7 @@ class MetricsCollector(BaseAgent):
                 await asyncio.sleep(self.collection_interval)
 
     async def _aggregation_loop(self):
-        """Metrics aggregation loop"""
-        while self.is_collecting:
+        """Metrics aggregation loop"""        while self.is_collecting:
             try:
                 # Perform aggregation for each interval
                 for interval in self.aggregation_intervals:
@@ -255,8 +241,7 @@ class MetricsCollector(BaseAgent):
                 await asyncio.sleep(60)
 
     async def _export_loop(self):
-        """Metrics export loop"""
-        while self.is_collecting:
+        """Metrics export loop"""        while self.is_collecting:
             try:
                 # Export metrics to configured destinations
                 await self._export_metrics()
@@ -272,8 +257,7 @@ class MetricsCollector(BaseAgent):
                 await asyncio.sleep(300)
 
     async def _cleanup_loop(self):
-        """Metrics cleanup loop"""
-        while self.is_collecting:
+        """Metrics cleanup loop"""        while self.is_collecting:
             try:
                 # Clean up old metrics
                 await self._cleanup_old_metrics()
@@ -286,8 +270,7 @@ class MetricsCollector(BaseAgent):
                 await asyncio.sleep(3600)
 
     async def _collect_all_metrics(self) -> List[MetricPoint]:
-        """Collect metrics from all configured sources"""
-        all_metrics = []
+        """Collect metrics from all configured sources"""        all_metrics = []
         
         try:
             # Collect from data sources
@@ -313,8 +296,7 @@ class MetricsCollector(BaseAgent):
             return []
 
     async def _safe_collect(self, collector_func: Callable, source_name: str) -> List[MetricPoint]:
-        """Safely execute a collector function"""
-        try:
+        """Safely execute a collector function"""        try:
             if asyncio.iscoroutinefunction(collector_func):
                 result = await collector_func()
             else:
@@ -341,8 +323,7 @@ class MetricsCollector(BaseAgent):
             return []
 
     async def _store_raw_metrics(self, metrics: List[MetricPoint]):
-        """Store raw metrics in memory"""
-        try:
+        """Store raw metrics in memory"""        try:
             with self.metrics_lock:
                 for metric in metrics:
                     self.raw_metrics[metric.name].append(metric)
@@ -363,8 +344,7 @@ class MetricsCollector(BaseAgent):
             self.logger.error(f"Error storing raw metrics: {e}")
 
     async def _perform_aggregation(self, interval_seconds: int):
-        """Perform aggregation for a specific time interval"""
-        try:
+        """Perform aggregation for a specific time interval"""        try:
             current_time = datetime.now()
             start_time = current_time - timedelta(seconds=interval_seconds)
             
@@ -401,8 +381,7 @@ class MetricsCollector(BaseAgent):
                                 interval_seconds: int,
                                 start_time: datetime,
                                 end_time: datetime) -> List[AggregatedMetric]:
-        """Aggregate a list of metric points"""
-        try:
+        """Aggregate a list of metric points"""        try:
             if not points:
                 return []
             
@@ -463,8 +442,7 @@ class MetricsCollector(BaseAgent):
             return []
 
     async def _export_metrics(self):
-        """Export metrics to configured destinations"""
-        try:
+        """Export metrics to configured destinations"""        try:
             for format_name, handler in self.export_handlers.items():
                 try:
                     await self._export_to_format(format_name, handler)
@@ -475,8 +453,7 @@ class MetricsCollector(BaseAgent):
             self.logger.error(f"Error in metrics export: {e}")
 
     async def _export_to_format(self, format_name: str, handler: Callable):
-        """Export metrics using specific format handler"""
-        try:
+        """Export metrics using specific format handler"""        try:
             # Prepare export data
             export_data = await self._prepare_export_data()
             
@@ -490,8 +467,7 @@ class MetricsCollector(BaseAgent):
             self.logger.error(f"Error exporting to {format_name}: {e}")
 
     async def _prepare_export_data(self) -> Dict[str, Any]:
-        """Prepare data for export"""
-        try:
+        """Prepare data for export"""        try:
             export_data = {
                 "timestamp": datetime.now().isoformat(),
                 "raw_metrics": {},
@@ -550,8 +526,7 @@ class MetricsCollector(BaseAgent):
             return {}
 
     async def _cleanup_old_metrics(self):
-        """Clean up old metrics data"""
-        try:
+        """Clean up old metrics data"""        try:
             current_time = datetime.now()
             
             with self.metrics_lock:
@@ -579,8 +554,7 @@ class MetricsCollector(BaseAgent):
             self.logger.error(f"Error cleaning up old metrics: {e}")
 
     async def _initialize_default_metrics(self):
-        """Initialize default metric definitions"""
-        try:
+        """Initialize default metric definitions"""        try:
             default_metrics = {
                 "cpu_utilization": MetricDefinition(
                     name="cpu_utilization",
@@ -644,8 +618,7 @@ class MetricsCollector(BaseAgent):
             self.logger.error(f"Error initializing default metrics: {e}")
 
     async def _initialize_data_sources(self):
-        """Initialize default data sources"""
-        try:
+        """Initialize default data sources"""        try:
             # System metrics collector
             self.data_sources["system"] = self._collect_system_metrics
             
@@ -659,8 +632,7 @@ class MetricsCollector(BaseAgent):
             self.logger.error(f"Error initializing data sources: {e}")
 
     async def _collect_system_metrics(self) -> List[MetricPoint]:
-        """Collect system-level metrics"""
-        try:
+        """Collect system-level metrics"""        try:
             import psutil
             
             metrics = []
@@ -713,8 +685,7 @@ class MetricsCollector(BaseAgent):
             return []
 
     async def _collect_application_metrics(self) -> List[MetricPoint]:
-        """Collect application-level metrics"""
-        try:
+        """Collect application-level metrics"""        try:
             metrics = []
             timestamp = datetime.now()
             
@@ -757,8 +728,7 @@ class MetricsCollector(BaseAgent):
             return []
 
     async def _collect_custom_metrics(self) -> List[MetricPoint]:
-        """Collect custom metrics"""
-        try:
+        """Collect custom metrics"""        try:
             metrics = []
             timestamp = datetime.now()
             
@@ -780,8 +750,7 @@ class MetricsCollector(BaseAgent):
             return []
 
     async def add_metric_definition(self, definition: MetricDefinition):
-        """Add a new metric definition"""
-        try:
+        """Add a new metric definition"""        try:
             self.metric_definitions[definition.name] = definition
             self.logger.info(f"Added metric definition: {definition.name}")
             
@@ -790,8 +759,7 @@ class MetricsCollector(BaseAgent):
             raise MetricsException(f"Failed to add metric definition: {e}")
 
     async def add_custom_collector(self, collector_func: Callable):
-        """Add a custom metrics collector function"""
-        try:
+        """Add a custom metrics collector function"""        try:
             self.custom_collectors.append(collector_func)
             self.logger.info(f"Added custom collector")
             
@@ -802,8 +770,7 @@ class MetricsCollector(BaseAgent):
     async def record_metric(self, name: str, value: float, 
                            metric_type: MetricType = MetricType.GAUGE,
                            tags: Optional[Dict[str, str]] = None):
-        """Record a single metric point"""
-        try:
+        """Record a single metric point"""        try:
             metric_point = MetricPoint(
                 name=name,
                 value=value,
@@ -831,8 +798,7 @@ class MetricsCollector(BaseAgent):
 
     async def get_metric_data(self, metric_name: str, 
                              hours: int = 1) -> List[MetricPoint]:
-        """Get raw metric data for a specific metric"""
-        try:
+        """Get raw metric data for a specific metric"""        try:
             cutoff_time = datetime.now() - timedelta(hours=hours)
             
             with self.metrics_lock:
@@ -846,8 +812,7 @@ class MetricsCollector(BaseAgent):
     async def get_aggregated_data(self, metric_name: str, 
                                  interval_seconds: int = 300,
                                  hours: int = 1) -> List[AggregatedMetric]:
-        """Get aggregated metric data"""
-        try:
+        """Get aggregated metric data"""        try:
             cutoff_time = datetime.now() - timedelta(hours=hours)
             
             with self.aggregation_lock:
@@ -859,8 +824,7 @@ class MetricsCollector(BaseAgent):
             return []
 
     async def get_collector_status(self) -> Dict[str, Any]:
-        """Get comprehensive collector status"""
-        try:
+        """Get comprehensive collector status"""        try:
             return {
                 "collecting": self.is_collecting,
                 "active_tasks": len([task for task in self.collection_tasks if not task.done()]),
@@ -880,8 +844,7 @@ class MetricsCollector(BaseAgent):
             return {"error": str(e)}
 
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for metrics collector"""
-        try:
+        """Health check for metrics collector"""        try:
             active_tasks = len([task for task in self.collection_tasks if not task.done()])
             collection_health = self.is_collecting and active_tasks > 0
             

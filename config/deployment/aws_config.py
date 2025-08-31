@@ -1,5 +1,4 @@
-"""
-AWS Configuration Module for IA-Influencer Agent Platform
+"""AWS Configuration Module for IA-Influencer Agent Platform
 =========================================================
 
 Professional AWS cloud infrastructure configuration
@@ -15,9 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import boto3
+"""import boto3
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 import json
@@ -26,8 +23,7 @@ from pathlib import Path
 
 @dataclass
 class AWSResourceConfig:
-    """AWS resource configuration"""
-    resource_type: str
+    """AWS resource configuration"""    resource_type: str
     name: str
     region: str
     tags: Dict[str, str] = field(default_factory=dict)
@@ -36,8 +32,7 @@ class AWSResourceConfig:
 
 @dataclass 
 class AWSEC2Config:
-    """AWS EC2 instance configuration"""
-    instance_type: str
+    """AWS EC2 instance configuration"""    instance_type: str
     ami_id: str
     key_name: str
     security_groups: List[str] = field(default_factory=list)
@@ -48,8 +43,7 @@ class AWSEC2Config:
 
 @dataclass
 class AWSRDSConfig:
-    """AWS RDS database configuration"""
-    engine: str
+    """AWS RDS database configuration"""    engine: str
     engine_version: str
     instance_class: str
     allocated_storage: int
@@ -59,8 +53,7 @@ class AWSRDSConfig:
 
 
 class AWSConfig:
-    """
-    Professional AWS cloud configuration manager for IA-Influencer Agent Platform.
+    """    Professional AWS cloud configuration manager for IA-Influencer Agent Platform.
     
     Provides enterprise-grade AWS services integration:
     - EKS clusters for Kubernetes orchestration
@@ -73,8 +66,7 @@ class AWSConfig:
     - SageMaker for ML model training and inference
     - Rekognition/Transcribe for content analysis
     - CloudWatch monitoring and alerting
-    """
-    
+    """    
     def __init__(self, environment: str = "development", region: str = "us-east-1"):
         self.environment = environment
         self.region = region
@@ -94,16 +86,14 @@ class AWSConfig:
         }
     
     def _get_account_id(self) -> str:
-        """Get AWS account ID"""
-        try:
+        """Get AWS account ID"""        try:
             sts_client = boto3.client('sts', region_name=self.region)
             return sts_client.get_caller_identity()["Account"]
         except Exception:
             return "123456789012"  # Placeholder for template generation
     
     def _get_availability_zones(self) -> List[str]:
-        """Get available AZs in region"""
-        try:
+        """Get available AZs in region"""        try:
             ec2_client = boto3.client('ec2', region_name=self.region)
             azs = ec2_client.describe_availability_zones()
             return [az['ZoneName'] for az in azs['AvailabilityZones'][:3]]
@@ -111,8 +101,7 @@ class AWSConfig:
             return [f"{self.region}a", f"{self.region}b", f"{self.region}c"]
     
     def get_vpc_configuration(self) -> Dict[str, Any]:
-        """Generate VPC configuration"""
-        return {
+        """Generate VPC configuration"""        return {
             "VPC": {
                 "Type": "AWS::EC2::VPC",
                 "Properties": {
@@ -144,8 +133,7 @@ class AWSConfig:
         }
     
     def get_subnet_configurations(self) -> Dict[str, Any]:
-        """Generate subnet configurations"""
-        subnets = {}
+        """Generate subnet configurations"""        subnets = {}
         
         # Public subnets for load balancers
         for i, az in enumerate(self.availability_zones):
@@ -204,8 +192,7 @@ class AWSConfig:
         return subnets
     
     def get_security_group_configurations(self) -> Dict[str, Any]:
-        """Generate security group configurations"""
-        security_groups = {}
+        """Generate security group configurations"""        security_groups = {}
         
         # API Load Balancer Security Group
         security_groups["ALBSecurityGroup"] = {
@@ -325,8 +312,7 @@ class AWSConfig:
         return security_groups
     
     def get_eks_configuration(self) -> Dict[str, Any]:
-        """Generate EKS cluster configuration"""
-        return {
+        """Generate EKS cluster configuration"""        return {
             "EKSClusterRole": {
                 "Type": "AWS::IAM::Role",
                 "Properties": {
@@ -391,8 +377,7 @@ class AWSConfig:
         }
     
     def get_eks_node_group_configuration(self) -> Dict[str, Any]:
-        """Generate EKS node group configuration"""
-        return {
+        """Generate EKS node group configuration"""        return {
             "EKSNodeGroupRole": {
                 "Type": "AWS::IAM::Role",
                 "Properties": {
@@ -485,8 +470,7 @@ class AWSConfig:
         }
     
     def get_rds_configuration(self) -> Dict[str, Any]:
-        """Generate RDS configuration"""
-        return {
+        """Generate RDS configuration"""        return {
             "DBSubnetGroup": {
                 "Type": "AWS::RDS::DBSubnetGroup",
                 "Properties": {
@@ -535,8 +519,7 @@ class AWSConfig:
         }
     
     def get_elasticache_configuration(self) -> Dict[str, Any]:
-        """Generate ElastiCache Redis configuration"""
-        return {
+        """Generate ElastiCache Redis configuration"""        return {
             "ElastiCacheSubnetGroup": {
                 "Type": "AWS::ElastiCache::SubnetGroup",
                 "Properties": {
@@ -570,8 +553,7 @@ class AWSConfig:
         }
     
     def get_s3_configuration(self) -> Dict[str, Any]:
-        """Generate S3 bucket configurations"""
-        return {
+        """Generate S3 bucket configurations"""        return {
             "ContentStorageBucket": {
                 "Type": "AWS::S3::Bucket",
                 "Properties": {
@@ -698,8 +680,7 @@ class AWSConfig:
         }
     
     def get_lambda_configuration(self) -> Dict[str, Any]:
-        """Generate Lambda function configurations"""
-        return {
+        """Generate Lambda function configurations"""        return {
             "LambdaExecutionRole": {
                 "Type": "AWS::IAM::Role",
                 "Properties": {
@@ -755,11 +736,9 @@ import json
 import boto3
 
 def handler(event, context):
-    """
-    Lambda function for AI-powered content analysis
+    """    Lambda function for AI-powered content analysis
     Author: Fahed Mlaiel <mlaiel@live.de>
-    """
-    
+    """    
     rekognition = boto3.client('rekognition')
     s3 = boto3.client('s3')
     
@@ -815,8 +794,7 @@ def handler(event, context):
         }
     
     def get_cloudfront_configuration(self) -> Dict[str, Any]:
-        """Generate CloudFront CDN configuration"""
-        return {
+        """Generate CloudFront CDN configuration"""        return {
             "CloudFrontDistribution": {
                 "Type": "AWS::CloudFront::Distribution",
                 "Properties": {
@@ -874,8 +852,7 @@ def handler(event, context):
         }
     
     def generate_cloudformation_template(self, output_file: str = "aws-infrastructure.yaml") -> None:
-        """Generate complete CloudFormation template"""
-        template = {
+        """Generate complete CloudFormation template"""        template = {
             "AWSTemplateFormatVersion": "2010-09-09",
             "Description": f"IA-Influencer Agent Platform Infrastructure - {self.environment} Environment",
             "Parameters": {
@@ -943,8 +920,7 @@ def handler(event, context):
             yaml.dump(template, f, default_flow_style=False, sort_keys=False)
     
     def get_deployment_script(self) -> str:
-        """Generate AWS deployment script"""
-        return f'''#!/bin/bash
+        """Generate AWS deployment script"""        return f'''#!/bin/bash
 # AWS deployment script for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
 

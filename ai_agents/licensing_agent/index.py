@@ -1,5 +1,4 @@
-"""
-Licensing Agent Index - Module Entry Point & Quick Access
+"""Licensing Agent Index - Module Entry Point & Quick Access
 
 Industrial-grade entry point for the Licensing Agent module providing
 quick access to all core functionality and streamlined initialization.
@@ -18,9 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from contextlib import asynccontextmanager
@@ -71,18 +68,15 @@ from .compliance_checker import (
 logger = logging.getLogger(__name__)
 
 class LicensingAgentFactory:
-    """
-    Factory class for creating and managing licensing agent instances
+    """    Factory class for creating and managing licensing agent instances
     with proper initialization and configuration management.
-    """
-    
+    """    
     _instances = {}
     _initialized = False
     
     @classmethod
     async def initialize(cls, config: Optional[Dict[str, Any]] = None) -> None:
-        """Initialize the licensing agent factory with configuration"""
-        if cls._initialized:
+        """Initialize the licensing agent factory with configuration"""        if cls._initialized:
             logger.warning("LicensingAgentFactory already initialized")
             return
             
@@ -109,8 +103,7 @@ class LicensingAgentFactory:
         agent_id: Optional[str] = None,
         specialized_config: Optional[Dict[str, Any]] = None
     ) -> LicensingAgent:
-        """Create a new licensing agent instance"""
-        if not cls._initialized:
+        """Create a new licensing agent instance"""        if not cls._initialized:
             await cls.initialize()
             
         if not agent_id:
@@ -137,8 +130,7 @@ class LicensingAgentFactory:
         cls,
         manager_id: Optional[str] = None
     ) -> RightsManager:
-        """Create a new rights manager instance"""
-        if not cls._initialized:
+        """Create a new rights manager instance"""        if not cls._initialized:
             await cls.initialize()
             
         rights_manager = RightsManager(config=cls._config)
@@ -151,8 +143,7 @@ class LicensingAgentFactory:
         cls,
         suite_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Create a complete licensing suite with all components"""
-        if not cls._initialized:
+        """Create a complete licensing suite with all components"""        if not cls._initialized:
             await cls.initialize()
             
         if not suite_id:
@@ -187,18 +178,15 @@ class LicensingAgentFactory:
     
     @classmethod
     def get_instance(cls, instance_id: str) -> Optional[Any]:
-        """Get an existing instance by ID"""
-        return cls._instances.get(instance_id)
+        """Get an existing instance by ID"""        return cls._instances.get(instance_id)
     
     @classmethod
     def list_instances(cls) -> List[str]:
-        """List all created instances"""
-        return list(cls._instances.keys())
+        """List all created instances"""        return list(cls._instances.keys())
     
     @classmethod
     async def cleanup_instance(cls, instance_id: str) -> bool:
-        """Cleanup and remove an instance"""
-        if instance_id in cls._instances:
+        """Cleanup and remove an instance"""        if instance_id in cls._instances:
             instance = cls._instances[instance_id]
             
             # Cleanup based on instance type
@@ -218,8 +206,7 @@ class LicensingAgentFactory:
     
     @classmethod
     async def cleanup_all(cls) -> None:
-        """Cleanup all instances"""
-        for instance_id in list(cls._instances.keys()):
+        """Cleanup all instances"""        for instance_id in list(cls._instances.keys()):
             await cls.cleanup_instance(instance_id)
             
         cls._initialized = False
@@ -227,14 +214,12 @@ class LicensingAgentFactory:
 
 @asynccontextmanager
 async def licensing_context(config: Optional[Dict[str, Any]] = None):
-    """
-    Context manager for licensing operations with automatic cleanup
+    """    Context manager for licensing operations with automatic cleanup
     
     Usage:
         async with licensing_context() as suite:
             result = await suite['licensing_agent'].process_license_request(request)
-    """
-    await LicensingAgentFactory.initialize(config)
+    """    await LicensingAgentFactory.initialize(config)
     suite = await LicensingAgentFactory.create_complete_licensing_suite()
     
     try:
@@ -249,8 +234,7 @@ async def quick_license_generation(
     license_type: Union[str, LicenseType],
     terms: Dict[str, Any]
 ) -> Dict[str, Any]:
-    """Quick function for simple license generation"""
-    async with licensing_context() as suite:
+    """Quick function for simple license generation"""    async with licensing_context() as suite:
         agent = suite['licensing_agent']
         
         request = LicenseRequest(
@@ -266,8 +250,7 @@ async def quick_rights_verification(
     content_id: str,
     owner_id: str
 ) -> Dict[str, Any]:
-    """Quick function for rights verification"""
-    async with licensing_context() as suite:
+    """Quick function for rights verification"""    async with licensing_context() as suite:
         rights_manager = suite['rights_manager']
         return await rights_manager.verify_ownership(content_id, owner_id)
 
@@ -275,8 +258,7 @@ async def quick_compliance_check(
     contract_data: Dict[str, Any],
     jurisdiction: str
 ) -> Dict[str, Any]:
-    """Quick function for compliance checking"""
-    async with licensing_context() as suite:
+    """Quick function for compliance checking"""    async with licensing_context() as suite:
         compliance_checker = suite['compliance_checker']
         return await compliance_checker.check_contract_compliance(contract_data, jurisdiction)
 

@@ -1,5 +1,4 @@
-"""
-Distribution Rights Engine - Advanced content distribution and rights management
+"""Distribution Rights Engine - Advanced content distribution and rights management
 
 Manages distribution rights across multiple platforms, territories, and formats
 with automated rights clearance and revenue optimization.
@@ -11,9 +10,7 @@ WARNING - COPYRIGHT PROTECTION:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 authorization from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
-"""
-
-from typing import Dict, List, Optional, Any, Set, Tuple
+"""from typing import Dict, List, Optional, Any, Set, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
 from dataclasses import dataclass, field
@@ -33,8 +30,7 @@ from ..ai.revenue_optimization import RevenueOptimizationEngine
 
 
 class DistributionType(Enum):
-    """Types of content distribution"""
-    STREAMING = "streaming"
+    """Types of content distribution"""    STREAMING = "streaming"
     DOWNLOAD = "download"
     PHYSICAL = "physical"
     BROADCAST = "broadcast"
@@ -47,8 +43,7 @@ class DistributionType(Enum):
 
 
 class PlatformCategory(Enum):
-    """Platform categories for distribution"""
-    MUSIC_STREAMING = "music_streaming"        # Spotify, Apple Music, etc.
+    """Platform categories for distribution"""    MUSIC_STREAMING = "music_streaming"        # Spotify, Apple Music, etc.
     VIDEO_PLATFORMS = "video_platforms"        # YouTube, Vimeo, etc.
     SOCIAL_MEDIA = "social_media"              # Instagram, TikTok, etc.
     BROADCAST_TV = "broadcast_tv"              # Traditional TV networks
@@ -61,8 +56,7 @@ class PlatformCategory(Enum):
 
 
 class RightsScope(Enum):
-    """Scope of distribution rights"""
-    EXCLUSIVE = "exclusive"
+    """Scope of distribution rights"""    EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     LIMITED_EXCLUSIVE = "limited_exclusive"
     FIRST_NEGOTIATION = "first_negotiation"
@@ -70,8 +64,7 @@ class RightsScope(Enum):
 
 
 class TerritoryType(Enum):
-    """Territory classification types"""
-    GLOBAL = "global"
+    """Territory classification types"""    GLOBAL = "global"
     REGIONAL = "regional"       # EU, NAFTA, etc.
     NATIONAL = "national"       # Country-specific
     LOCAL = "local"             # City/state specific
@@ -80,8 +73,7 @@ class TerritoryType(Enum):
 
 @dataclass
 class DistributionStrategy:
-    """Distribution strategy configuration"""
-    content_type: str
+    """Distribution strategy configuration"""    content_type: str
     target_platforms: List[str]
     territory_priority: List[str]
     revenue_model: str
@@ -93,8 +85,7 @@ class DistributionStrategy:
 
 @dataclass
 class RightsConflict:
-    """Rights conflict detection result"""
-    conflict_type: str
+    """Rights conflict detection result"""    conflict_type: str
     conflicting_rights: List[str]
     affected_territories: List[str]
     affected_platforms: List[str]
@@ -103,8 +94,7 @@ class RightsConflict:
 
 
 class DistributionRequest(BaseModel):
-    """Distribution rights request structure"""
-    content_id: str = Field(..., description="Content to distribute")
+    """Distribution rights request structure"""    content_id: str = Field(..., description="Content to distribute")
     requester_id: str = Field(..., description="Entity requesting distribution rights")
     distribution_types: List[DistributionType] = Field(..., description="Types of distribution")
     target_platforms: List[str] = Field(..., description="Target distribution platforms")
@@ -116,11 +106,9 @@ class DistributionRequest(BaseModel):
 
 
 class DistributionRightsEngine:
-    """
-    Advanced distribution rights management system with AI-driven optimization,
+    """    Advanced distribution rights management system with AI-driven optimization,
     automated rights clearance, and intelligent revenue maximization.
-    """
-    
+    """    
     def __init__(self, db: Session = None):
         self.db = db or next(get_db())
         self.logger = get_logger(__name__)
@@ -135,16 +123,14 @@ class DistributionRightsEngine:
         self,
         request: DistributionRequest
     ) -> Dict[str, Any]:
-        """
-        Process distribution rights request with automated clearance and optimization
+        """        Process distribution rights request with automated clearance and optimization
         
         Args:
             request: Distribution request details
             
         Returns:
             Distribution rights processing result with recommendations
-        """
-        try:
+        """        try:
             self.logger.info(f"Processing distribution request for content {request.content_id}")
             
             # Validate content and rights availability
@@ -210,8 +196,7 @@ class DistributionRightsEngine:
         distribution_rights_id: str,
         performance_data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Optimize existing distribution strategy based on performance data and market intelligence
+        """        Optimize existing distribution strategy based on performance data and market intelligence
         
         Args:
             distribution_rights_id: Distribution rights to optimize
@@ -219,8 +204,7 @@ class DistributionRightsEngine:
             
         Returns:
             Optimized strategy recommendations
-        """
-        try:
+        """        try:
             # Get current distribution setup
             current_distribution = await self._get_distribution_rights(distribution_rights_id)
             
@@ -284,8 +268,7 @@ class DistributionRightsEngine:
         content_id: str,
         territory_operations: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """
-        Manage territory-specific rights operations (add, modify, remove territories)
+        """        Manage territory-specific rights operations (add, modify, remove territories)
         
         Args:
             content_id: Content for territory management
@@ -293,8 +276,7 @@ class DistributionRightsEngine:
             
         Returns:
             Territory management results
-        """
-        try:
+        """        try:
             self.logger.info(f"Managing territory rights for content {content_id}")
             
             # Validate content exists and user has rights
@@ -359,8 +341,7 @@ class DistributionRightsEngine:
         distribution_rights_id: str,
         detailed_analysis: bool = True
     ) -> Dict[str, Any]:
-        """
-        Track and analyze distribution performance across all platforms and territories
+        """        Track and analyze distribution performance across all platforms and territories
         
         Args:
             distribution_rights_id: Distribution rights to track
@@ -368,8 +349,7 @@ class DistributionRightsEngine:
             
         Returns:
             Comprehensive performance tracking results
-        """
-        try:
+        """        try:
             distribution_rights = await self._get_distribution_rights(distribution_rights_id)
             
             if not distribution_rights:
@@ -443,8 +423,7 @@ class DistributionRightsEngine:
         date_range: Optional[Dict[str, datetime]] = None,
         analytics_type: str = "comprehensive"
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive distribution analytics and business intelligence
+        """        Generate comprehensive distribution analytics and business intelligence
         
         Args:
             content_ids: Specific content to analyze (None for all)
@@ -453,8 +432,7 @@ class DistributionRightsEngine:
             
         Returns:
             Detailed distribution analytics and insights
-        """
-        try:
+        """        try:
             # Get distribution data for analysis
             if content_ids:
                 distribution_data = await self._get_distribution_data_by_content(content_ids, date_range)
@@ -514,8 +492,7 @@ class DistributionRightsEngine:
             raise DistributionRightsError(f"Analytics generation failed: {str(e)}")
     
     def _initialize_platform_database(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize comprehensive platform database with capabilities and requirements"""
-        return {
+        """Initialize comprehensive platform database with capabilities and requirements"""        return {
             "spotify": {
                 "category": PlatformCategory.MUSIC_STREAMING,
                 "supported_formats": ["audio"],
@@ -554,8 +531,7 @@ class DistributionRightsEngine:
         }
     
     def _initialize_territory_database(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize comprehensive territory database with legal and market information"""
-        return {
+        """Initialize comprehensive territory database with legal and market information"""        return {
             "US": {
                 "type": TerritoryType.NATIONAL,
                 "region": "North America",
@@ -599,16 +575,13 @@ class DistributionRightsEngine:
     
     # Helper methods for internal operations
     async def _validate_distribution_eligibility(self, request: DistributionRequest) -> Dict[str, Any]:
-        """Validate if content is eligible for requested distribution"""
-        # Implementation for eligibility validation
+        """Validate if content is eligible for requested distribution"""        # Implementation for eligibility validation
         pass
     
     async def _analyze_rights_conflicts(self, request: DistributionRequest) -> Dict[str, Any]:
-        """Analyze potential rights conflicts for distribution request"""
-        # Implementation for rights conflict analysis
+        """Analyze potential rights conflicts for distribution request"""        # Implementation for rights conflict analysis
         pass
     
     async def _generate_distribution_strategy(self, request: DistributionRequest) -> DistributionStrategy:
-        """Generate optimal distribution strategy using AI"""
-        # Implementation for strategy generation
+        """Generate optimal distribution strategy using AI"""        # Implementation for strategy generation
         pass

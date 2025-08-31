@@ -1,5 +1,4 @@
-"""
-Compliance Reporter Module
+"""Compliance Reporter Module
 
 Ultra-advanced compliance reporting system for content protection with comprehensive
 GDPR, CCPA, SOC2, and international compliance reporting capabilities.
@@ -16,9 +15,7 @@ explicit written permission is STRICTLY PROHIBITED and will result in immediate 
 
 Contact: mlaiel@live.de for licensing inquiries.
 Legal violations will be prosecuted to the full extent of international law.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timedelta, timezone
@@ -45,8 +42,7 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks"""
-    GDPR = "gdpr"
+    """Supported compliance frameworks"""    GDPR = "gdpr"
     CCPA = "ccpa"
     SOC2 = "soc2"
     ISO27001 = "iso27001"
@@ -56,8 +52,7 @@ class ComplianceFramework(Enum):
 
 
 class ReportType(Enum):
-    """Available report types"""
-    DATA_PROCESSING = "data_processing"
+    """Available report types"""    DATA_PROCESSING = "data_processing"
     CONSENT_MANAGEMENT = "consent_management"
     BREACH_NOTIFICATION = "breach_notification"
     DATA_SUBJECT_RIGHTS = "data_subject_rights"
@@ -68,21 +63,18 @@ class ReportType(Enum):
 
 
 class ComplianceReporterError(Exception):
-    """Custom exception for compliance reporting operations"""
-    pass
+    """Custom exception for compliance reporting operations"""    pass
 
 
 class ComplianceReporter:
-    """
-    Ultra-advanced compliance reporting system with enterprise features:
+    """    Ultra-advanced compliance reporting system with enterprise features:
     - Automated compliance report generation for multiple frameworks
     - Real-time compliance monitoring and alerting
     - Data privacy impact assessments (DPIA)
     - Breach notification automation
     - Audit trail generation and management
     - Cross-jurisdictional compliance support
-    """
-    
+    """    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -126,8 +118,7 @@ class ComplianceReporter:
         include_detailed_logs: bool = True,
         export_format: str = "pdf"
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive GDPR compliance report
+        """        Generate comprehensive GDPR compliance report
         
         Args:
             start_date: Report period start date
@@ -137,8 +128,7 @@ class ComplianceReporter:
             
         Returns:
             Dict containing report data and metadata
-        """
-        try:
+        """        try:
             logger.info(f"Generating GDPR compliance report for period {start_date} to {end_date}")
             
             # Data processing activities
@@ -214,8 +204,7 @@ class ComplianceReporter:
         business_category: str = "service_provider",
         export_format: str = "pdf"
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive CCPA compliance report
+        """        Generate comprehensive CCPA compliance report
         
         Args:
             start_date: Report period start date
@@ -225,8 +214,7 @@ class ComplianceReporter:
             
         Returns:
             Dict containing report data and metadata
-        """
-        try:
+        """        try:
             logger.info(f"Generating CCPA compliance report for period {start_date} to {end_date}")
             
             # Personal information collection
@@ -295,8 +283,7 @@ class ComplianceReporter:
         affected_jurisdictions: List[str],
         notification_timeline: Dict[str, datetime]
     ) -> Dict[str, Any]:
-        """
-        Generate data breach notification report for regulatory authorities
+        """        Generate data breach notification report for regulatory authorities
         
         Args:
             incident_id: Unique incident identifier
@@ -306,8 +293,7 @@ class ComplianceReporter:
             
         Returns:
             Dict containing breach notification report
-        """
-        try:
+        """        try:
             logger.info(f"Generating breach notification report for incident: {incident_id}")
             
             # Analyze breach impact
@@ -367,8 +353,7 @@ class ComplianceReporter:
         processing_purposes: List[str],
         data_subjects: List[str]
     ) -> Dict[str, Any]:
-        """
-        Conduct Data Privacy Impact Assessment (DPIA)
+        """        Conduct Data Privacy Impact Assessment (DPIA)
         
         Args:
             processing_activity: Description of processing activity
@@ -378,8 +363,7 @@ class ComplianceReporter:
             
         Returns:
             Dict containing DPIA results
-        """
-        try:
+        """        try:
             logger.info(f"Conducting DPIA for activity: {processing_activity}")
             
             # Risk assessment
@@ -433,8 +417,7 @@ class ComplianceReporter:
         frameworks: List[ComplianceFramework],
         alert_thresholds: Dict[str, float]
     ) -> Dict[str, Any]:
-        """
-        Monitor real-time compliance metrics across frameworks
+        """        Monitor real-time compliance metrics across frameworks
         
         Args:
             frameworks: List of compliance frameworks to monitor
@@ -442,8 +425,7 @@ class ComplianceReporter:
             
         Returns:
             Dict containing compliance metrics and alerts
-        """
-        try:
+        """        try:
             logger.info(f"Monitoring compliance metrics for frameworks: {frameworks}")
             
             compliance_metrics = {}
@@ -491,26 +473,22 @@ class ComplianceReporter:
     async def _get_data_processing_activities(
         self, start_date: datetime, end_date: datetime
     ) -> List[Dict[str, Any]]:
-        """Get data processing activities for the specified period"""
-        # Implementation for retrieving data processing activities
+        """Get data processing activities for the specified period"""        # Implementation for retrieving data processing activities
         # This would query the database for processing logs and activities
         pass
     
     async def _get_consent_management_metrics(
         self, start_date: datetime, end_date: datetime
     ) -> Dict[str, Any]:
-        """Get consent management metrics"""
-        # Implementation for consent metrics calculation
+        """Get consent management metrics"""        # Implementation for consent metrics calculation
         pass
     
     async def _calculate_gdpr_compliance_score(self) -> float:
-        """Calculate overall GDPR compliance score"""
-        # Implementation for compliance score calculation
+        """Calculate overall GDPR compliance score"""        # Implementation for compliance score calculation
         return 0.95  # Placeholder
     
     async def _store_compliance_report(self, report_data: Dict[str, Any]) -> None:
-        """Store compliance report in database"""
-        try:
+        """Store compliance report in database"""        try:
             compliance_report = ComplianceReport(
                 id=uuid4(),
                 report_id=report_data["report_id"],

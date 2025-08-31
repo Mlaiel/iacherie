@@ -1,5 +1,4 @@
-"""
-Quality Assessment Engine - Comprehensive Content Quality Evaluation
+"""Quality Assessment Engine - Comprehensive Content Quality Evaluation
 ===================================================================
 
 Industrial-grade content quality assessment engine providing:
@@ -14,9 +13,7 @@ Industrial-grade content quality assessment engine providing:
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use strictly prohibited
-"""
-
-import numpy as np
+"""import numpy as np
 import cv2
 import librosa
 import torch
@@ -36,8 +33,7 @@ warnings.filterwarnings('ignore')
 logger = logging.getLogger(__name__)
 
 class QualityDimension(Enum):
-    """Quality dimensions for assessment"""
-    TECHNICAL = "technical"         # Technical quality (resolution, bitrate, etc.)
+    """Quality dimensions for assessment"""    TECHNICAL = "technical"         # Technical quality (resolution, bitrate, etc.)
     AESTHETIC = "aesthetic"         # Visual/auditory appeal
     STRUCTURAL = "structural"       # Content organization and structure
     CONTENT = "content"            # Content relevance and value
@@ -45,8 +41,7 @@ class QualityDimension(Enum):
     ACCESSIBILITY = "accessibility" # Accessibility compliance
 
 class ContentQuality(Enum):
-    """Content quality levels"""
-    POOR = "poor"           # 0-2.5
+    """Content quality levels"""    POOR = "poor"           # 0-2.5
     BELOW_AVERAGE = "below_average"  # 2.5-4.0
     AVERAGE = "average"     # 4.0-6.0
     GOOD = "good"          # 6.0-7.5
@@ -55,8 +50,7 @@ class ContentQuality(Enum):
 
 @dataclass
 class QualityMetric:
-    """Individual quality metric"""
-    name: str
+    """Individual quality metric"""    name: str
     score: float
     max_score: float
     dimension: QualityDimension
@@ -65,8 +59,7 @@ class QualityMetric:
 
 @dataclass
 class QualityAssessment:
-    """Comprehensive quality assessment result"""
-    content_id: str
+    """Comprehensive quality assessment result"""    content_id: str
     content_type: str
     overall_score: float
     quality_level: ContentQuality
@@ -77,10 +70,8 @@ class QualityAssessment:
     assessment_timestamp: datetime
 
 class QualityAssessmentEngine:
-    """
-    Industrial-grade content quality assessment engine
-    """
-    
+    """    Industrial-grade content quality assessment engine
+    """    
     def __init__(self):
         self.quality_standards = self._initialize_quality_standards()
         self.assessment_history: Dict[str, QualityAssessment] = {}
@@ -91,8 +82,7 @@ class QualityAssessmentEngine:
         logger.info("QualityAssessmentEngine initialized successfully")
     
     def _initialize_quality_standards(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize quality standards for different content types"""
-        return {
+        """Initialize quality standards for different content types"""        return {
             'audio': {
                 'sample_rate_min': 44100,
                 'bit_depth_min': 16,
@@ -120,8 +110,7 @@ class QualityAssessmentEngine:
         }
     
     def _initialize_assessment_models(self) -> None:
-        """Initialize AI models for quality assessment"""
-        try:
+        """Initialize AI models for quality assessment"""        try:
             # Initialize aesthetic assessment models
             self.aesthetic_models = {
                 'image_aesthetic': self._load_image_aesthetic_model(),
@@ -135,25 +124,21 @@ class QualityAssessmentEngine:
             logger.error(f"Failed to initialize assessment models: {e}")
     
     def _load_image_aesthetic_model(self):
-        """Load image aesthetic assessment model"""
-        # Placeholder for actual model loading
+        """Load image aesthetic assessment model"""        # Placeholder for actual model loading
         # In production, load a pre-trained aesthetic assessment model
         return None
     
     def _load_video_aesthetic_model(self):
-        """Load video aesthetic assessment model"""
-        # Placeholder for actual model loading
+        """Load video aesthetic assessment model"""        # Placeholder for actual model loading
         return None
     
     def _load_audio_aesthetic_model(self):
-        """Load audio aesthetic assessment model"""
-        # Placeholder for actual model loading
+        """Load audio aesthetic assessment model"""        # Placeholder for actual model loading
         return None
     
     def assess_quality(self, content_data: Any, content_type: str, 
                       content_id: str = None) -> QualityAssessment:
-        """Perform comprehensive quality assessment"""
-        try:
+        """Perform comprehensive quality assessment"""        try:
             content_id = content_id or f"content_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
             # Perform content-type specific assessment
@@ -179,8 +164,7 @@ class QualityAssessmentEngine:
             raise
     
     def _assess_audio_quality(self, audio_data: Any, content_id: str) -> QualityAssessment:
-        """Assess audio content quality"""
-        try:
+        """Assess audio content quality"""        try:
             if isinstance(audio_data, str):
                 # Audio file path
                 y, sr = librosa.load(audio_data, sr=None)
@@ -233,8 +217,7 @@ class QualityAssessmentEngine:
             raise
     
     def _assess_audio_technical_quality(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Assess technical quality of audio"""
-        metrics = []
+        """Assess technical quality of audio"""        metrics = []
         details = {}
         
         try:
@@ -297,8 +280,7 @@ class QualityAssessmentEngine:
             return {'metrics': [], 'details': {}}
     
     def _assess_audio_aesthetic_quality(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Assess aesthetic quality of audio"""
-        metrics = []
+        """Assess aesthetic quality of audio"""        metrics = []
         
         try:
             # Spectral balance
@@ -342,8 +324,7 @@ class QualityAssessmentEngine:
             return {'metrics': []}
     
     def _assess_audio_structural_quality(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Assess structural quality of audio"""
-        metrics = []
+        """Assess structural quality of audio"""        metrics = []
         
         try:
             # Duration appropriateness
@@ -376,8 +357,7 @@ class QualityAssessmentEngine:
             return {'metrics': []}
     
     def _assess_video_quality(self, video_data: Any, content_id: str) -> QualityAssessment:
-        """Assess video content quality"""
-        try:
+        """Assess video content quality"""        try:
             if isinstance(video_data, str):
                 cap = cv2.VideoCapture(video_data)
             else:
@@ -425,8 +405,7 @@ class QualityAssessmentEngine:
             raise
     
     def _assess_video_technical_quality(self, cap) -> Dict[str, Any]:
-        """Assess technical quality of video"""
-        metrics = []
+        """Assess technical quality of video"""        metrics = []
         details = {}
         
         try:
@@ -496,8 +475,7 @@ class QualityAssessmentEngine:
             return {'metrics': [], 'details': {}}
     
     def _assess_video_aesthetic_quality(self, cap) -> Dict[str, Any]:
-        """Assess aesthetic quality of video"""
-        metrics = []
+        """Assess aesthetic quality of video"""        metrics = []
         
         try:
             # Sample frames for aesthetic analysis
@@ -534,8 +512,7 @@ class QualityAssessmentEngine:
             return {'metrics': []}
     
     def _assess_video_content_quality(self, cap) -> Dict[str, Any]:
-        """Assess content quality of video"""
-        metrics = []
+        """Assess content quality of video"""        metrics = []
         
         try:
             # Motion analysis
@@ -567,8 +544,7 @@ class QualityAssessmentEngine:
             return {'metrics': []}
     
     def _assess_image_quality(self, image_data: Any, content_id: str) -> QualityAssessment:
-        """Assess image content quality"""
-        try:
+        """Assess image content quality"""        try:
             if isinstance(image_data, str):
                 image = cv2.imread(image_data)
                 pil_image = Image.open(image_data)
@@ -611,8 +587,7 @@ class QualityAssessmentEngine:
             raise
     
     def _assess_image_technical_quality(self, image: np.ndarray, pil_image: Image.Image) -> Dict[str, Any]:
-        """Assess technical quality of image"""
-        metrics = []
+        """Assess technical quality of image"""        metrics = []
         details = {}
         
         try:
@@ -671,8 +646,7 @@ class QualityAssessmentEngine:
             return {'metrics': [], 'details': {}}
     
     def _assess_image_aesthetic_quality(self, image: np.ndarray, pil_image: Image.Image) -> Dict[str, Any]:
-        """Assess aesthetic quality of image"""
-        metrics = []
+        """Assess aesthetic quality of image"""        metrics = []
         
         try:
             # Composition (rule of thirds)
@@ -715,8 +689,7 @@ class QualityAssessmentEngine:
             return {'metrics': []}
     
     def _assess_text_quality(self, text_data: Any, content_id: str) -> QualityAssessment:
-        """Assess text content quality"""
-        try:
+        """Assess text content quality"""        try:
             if isinstance(text_data, str):
                 if text_data.endswith('.txt'):
                     with open(text_data, 'r', encoding='utf-8') as f:
@@ -765,8 +738,7 @@ class QualityAssessmentEngine:
             raise
     
     def _assess_text_readability(self, text: str) -> Dict[str, Any]:
-        """Assess text readability"""
-        metrics = []
+        """Assess text readability"""        metrics = []
         details = {}
         
         try:
@@ -822,8 +794,7 @@ class QualityAssessmentEngine:
             return {'metrics': [], 'details': {}}
     
     def _assess_text_content_quality(self, text: str) -> Dict[str, Any]:
-        """Assess text content quality"""
-        metrics = []
+        """Assess text content quality"""        metrics = []
         
         try:
             # Vocabulary richness (Type-Token Ratio)
@@ -859,8 +830,7 @@ class QualityAssessmentEngine:
             return {'metrics': []}
     
     def _assess_text_structure(self, text: str) -> Dict[str, Any]:
-        """Assess text structural quality"""
-        metrics = []
+        """Assess text structural quality"""        metrics = []
         
         try:
             # Paragraph structure
@@ -894,8 +864,7 @@ class QualityAssessmentEngine:
     
     # Helper methods for quality assessment
     def _estimate_snr(self, y: np.ndarray) -> float:
-        """Estimate signal-to-noise ratio"""
-        try:
+        """Estimate signal-to-noise ratio"""        try:
             # Simple SNR estimation using signal power vs noise floor
             signal_power = np.mean(y**2)
             noise_floor = np.percentile(np.abs(y), 10)  # Bottom 10% as noise estimate
@@ -908,8 +877,7 @@ class QualityAssessmentEngine:
             return 30.0  # Default moderate SNR
     
     def _evaluate_spectral_balance(self, spectral_centroid: np.ndarray, sr: int) -> float:
-        """Evaluate spectral balance in audio"""
-        try:
+        """Evaluate spectral balance in audio"""        try:
             # Ideal spectral centroid should be in middle frequencies
             ideal_centroid = sr / 4  # Quarter of sample rate
             avg_centroid = np.mean(spectral_centroid)
@@ -924,8 +892,7 @@ class QualityAssessmentEngine:
             return 5.0  # Default average score
     
     def _calculate_harmonic_richness(self, y: np.ndarray, sr: int) -> float:
-        """Calculate harmonic richness of audio"""
-        try:
+        """Calculate harmonic richness of audio"""        try:
             # Use chromagram to assess harmonic content
             chroma = librosa.feature.chroma_stft(y=y, sr=sr)
             harmonic_diversity = np.mean(np.std(chroma, axis=1))
@@ -938,8 +905,7 @@ class QualityAssessmentEngine:
             return 5.0
     
     def _evaluate_rhythmic_consistency(self, y: np.ndarray, sr: int) -> float:
-        """Evaluate rhythmic consistency"""
-        try:
+        """Evaluate rhythmic consistency"""        try:
             # Extract tempo and beat tracking
             tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
             
@@ -960,8 +926,7 @@ class QualityAssessmentEngine:
             return 5.0
     
     def _evaluate_duration_appropriateness(self, duration: float, content_type: str) -> float:
-        """Evaluate if duration is appropriate for content type"""
-        # Define ideal duration ranges for different content types
+        """Evaluate if duration is appropriate for content type"""        # Define ideal duration ranges for different content types
         ideal_ranges = {
             'audio': (30, 300),    # 30 seconds to 5 minutes
             'video': (15, 600),    # 15 seconds to 10 minutes
@@ -982,8 +947,7 @@ class QualityAssessmentEngine:
             return max(5.0, 10 - (duration - max_duration) / max_duration * 5)
     
     def _get_duration_recommendations(self, duration: float, content_type: str) -> List[str]:
-        """Get recommendations for content duration"""
-        recommendations = []
+        """Get recommendations for content duration"""        recommendations = []
         
         if content_type == 'audio':
             if duration < 30:
@@ -999,8 +963,7 @@ class QualityAssessmentEngine:
         return recommendations
     
     def _evaluate_audio_coherence(self, y: np.ndarray, sr: int) -> float:
-        """Evaluate structural coherence in audio"""
-        try:
+        """Evaluate structural coherence in audio"""        try:
             # Use MFCC features to assess consistency
             mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)
             
@@ -1028,8 +991,7 @@ class QualityAssessmentEngine:
             return 5.0
     
     def _assess_frame_quality(self, frame: np.ndarray) -> float:
-        """Assess quality of a single video frame"""
-        try:
+        """Assess quality of a single video frame"""        try:
             # Convert to grayscale for analysis
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             
@@ -1045,8 +1007,7 @@ class QualityAssessmentEngine:
             return 5.0
     
     def _assess_frame_aesthetics(self, frame: np.ndarray) -> float:
-        """Assess aesthetic quality of a video frame"""
-        try:
+        """Assess aesthetic quality of a video frame"""        try:
             # Basic aesthetic assessment
             composition = self._evaluate_composition(frame)
             color_harmony = self._evaluate_color_harmony(frame)
@@ -1058,8 +1019,7 @@ class QualityAssessmentEngine:
             return 5.0
     
     def _analyze_video_motion(self, cap) -> float:
-        """Analyze motion quality in video"""
-        try:
+        """Analyze motion quality in video"""        try:
             motion_scores = []
             prev_frame = None
             
@@ -1094,8 +1054,7 @@ class QualityAssessmentEngine:
             return 5.0
     
     def _analyze_scene_diversity(self, cap) -> float:
-        """Analyze scene diversity in video"""
-        try:
+        """Analyze scene diversity in video"""        try:
             if hasattr(cap, 'get'):
                 total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
                 sample_count = min(10, total_frames // 10)
@@ -1132,8 +1091,7 @@ class QualityAssessmentEngine:
             return 5.0
     
     def _calculate_image_sharpness(self, image: np.ndarray) -> float:
-        """Calculate image sharpness using Laplacian variance"""
-        try:
+        """Calculate image sharpness using Laplacian variance"""        try:
             if len(image.shape) == 3:
                 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             else:
@@ -1150,8 +1108,7 @@ class QualityAssessmentEngine:
             return 5.0
     
     def _calculate_image_noise(self, image: np.ndarray) -> float:
-        """Calculate image noise level"""
-        try:
+        """Calculate image noise level"""        try:
             if len(image.shape) == 3:
                 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             else:
@@ -1168,8 +1125,7 @@ class QualityAssessmentEngine:
             return 5.0
     
     def _calculate_dynamic_range(self, image: np.ndarray) -> float:
-        """Calculate dynamic range of image"""
-        try:
+        """Calculate dynamic range of image"""        try:
             if len(image.shape) == 3:
                 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             else:
@@ -1186,8 +1142,7 @@ class QualityAssessmentEngine:
             return 5.0
     
     def _evaluate_composition(self, image: np.ndarray) -> float:
-        """Evaluate image composition (simplified rule of thirds)"""
-        try:
+        """Evaluate image composition (simplified rule of thirds)"""        try:
             if len(image.shape) == 3:
                 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             else:
@@ -1227,8 +1182,7 @@ class QualityAssessmentEngine:
             return 5.0
     
     def _evaluate_color_harmony(self, image: np.ndarray) -> float:
-        """Evaluate color harmony in image"""
-        try:
+        """Evaluate color harmony in image"""        try:
             if len(image.shape) != 3:
                 return 5.0  # Can't evaluate color harmony on grayscale
             
@@ -1253,8 +1207,7 @@ class QualityAssessmentEngine:
             return 5.0
     
     def _evaluate_lighting_quality(self, image: np.ndarray) -> float:
-        """Evaluate lighting quality in image"""
-        try:
+        """Evaluate lighting quality in image"""        try:
             if len(image.shape) == 3:
                 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             else:
@@ -1283,8 +1236,7 @@ class QualityAssessmentEngine:
             return 5.0
     
     def _count_syllables(self, text: str) -> int:
-        """Count syllables in text (simplified)"""
-        try:
+        """Count syllables in text (simplified)"""        try:
             words = text.lower().split()
             syllable_count = 0
             
@@ -1317,16 +1269,14 @@ class QualityAssessmentEngine:
     
     def _calculate_flesch_score(self, avg_words_per_sentence: float, 
                                avg_syllables_per_word: float) -> float:
-        """Calculate Flesch Reading Ease Score"""
-        try:
+        """Calculate Flesch Reading Ease Score"""        try:
             score = 206.835 - (1.015 * avg_words_per_sentence) - (84.6 * avg_syllables_per_word)
             return max(0, min(score, 100))  # Clamp to 0-100 range
         except Exception:
             return 50.0  # Default moderate score
     
     def _estimate_text_coherence(self, text: str) -> float:
-        """Estimate text coherence (simplified)"""
-        try:
+        """Estimate text coherence (simplified)"""        try:
             sentences = [s.strip() for s in text.split('.') if s.strip()]
             
             if len(sentences) < 2:
@@ -1347,8 +1297,7 @@ class QualityAssessmentEngine:
             return 5.0
     
     def _calculate_dimension_scores(self, metrics: List[QualityMetric]) -> Dict[QualityDimension, float]:
-        """Calculate average scores for each quality dimension"""
-        dimension_scores = {}
+        """Calculate average scores for each quality dimension"""        dimension_scores = {}
         
         for dimension in QualityDimension:
             dimension_metrics = [m for m in metrics if m.dimension == dimension]
@@ -1361,8 +1310,7 @@ class QualityAssessmentEngine:
         return dimension_scores
     
     def _determine_quality_level(self, overall_score: float) -> ContentQuality:
-        """Determine quality level based on overall score"""
-        if overall_score >= 8.5:
+        """Determine quality level based on overall score"""        if overall_score >= 8.5:
             return ContentQuality.PROFESSIONAL
         elif overall_score >= 7.5:
             return ContentQuality.EXCELLENT
@@ -1377,8 +1325,7 @@ class QualityAssessmentEngine:
     
     def _generate_audio_recommendations(self, metrics: List[QualityMetric], 
                                       details: Dict[str, Any]) -> List[str]:
-        """Generate recommendations for audio improvement"""
-        recommendations = []
+        """Generate recommendations for audio improvement"""        recommendations = []
         
         for metric in metrics:
             recommendations.extend(metric.recommendations)
@@ -1391,8 +1338,7 @@ class QualityAssessmentEngine:
     
     def _generate_video_recommendations(self, metrics: List[QualityMetric], 
                                       details: Dict[str, Any]) -> List[str]:
-        """Generate recommendations for video improvement"""
-        recommendations = []
+        """Generate recommendations for video improvement"""        recommendations = []
         
         for metric in metrics:
             recommendations.extend(metric.recommendations)
@@ -1405,8 +1351,7 @@ class QualityAssessmentEngine:
     
     def _generate_image_recommendations(self, metrics: List[QualityMetric], 
                                       details: Dict[str, Any]) -> List[str]:
-        """Generate recommendations for image improvement"""
-        recommendations = []
+        """Generate recommendations for image improvement"""        recommendations = []
         
         for metric in metrics:
             recommendations.extend(metric.recommendations)
@@ -1415,8 +1360,7 @@ class QualityAssessmentEngine:
     
     def _generate_text_recommendations(self, metrics: List[QualityMetric], 
                                      details: Dict[str, Any]) -> List[str]:
-        """Generate recommendations for text improvement"""
-        recommendations = []
+        """Generate recommendations for text improvement"""        recommendations = []
         
         for metric in metrics:
             recommendations.extend(metric.recommendations)
@@ -1431,8 +1375,7 @@ class QualityAssessmentEngine:
         return list(set(recommendations))
     
     def compare_quality(self, content_id1: str, content_id2: str) -> Dict[str, Any]:
-        """Compare quality between two content items"""
-        try:
+        """Compare quality between two content items"""        try:
             if content_id1 not in self.assessment_history:
                 return {'error': f'Assessment not found for {content_id1}'}
             if content_id2 not in self.assessment_history:
@@ -1474,8 +1417,7 @@ class QualityAssessmentEngine:
             return {'error': str(e)}
     
     def get_quality_analytics(self) -> Dict[str, Any]:
-        """Get quality analytics across all assessments"""
-        try:
+        """Get quality analytics across all assessments"""        try:
             if not self.assessment_history:
                 return {'total_assessments': 0}
             

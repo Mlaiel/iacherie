@@ -1,13 +1,10 @@
-"""
-Security Policies and Incident Response Procedures
+"""Security Policies and Incident Response Procedures
 Comprehensive security governance, policies, and incident response framework.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use prohibited
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timezone, timedelta
@@ -22,8 +19,7 @@ logger = logging.getLogger(__name__)
 
 
 class PolicyType(Enum):
-    """Types of security policies"""
-    ACCESS_CONTROL = "access_control"
+    """Types of security policies"""    ACCESS_CONTROL = "access_control"
     DATA_PROTECTION = "data_protection"
     INCIDENT_RESPONSE = "incident_response"
     VULNERABILITY_MANAGEMENT = "vulnerability_management"
@@ -34,8 +30,7 @@ class PolicyType(Enum):
 
 
 class PolicyStatus(Enum):
-    """Policy implementation status"""
-    DRAFT = "draft"
+    """Policy implementation status"""    DRAFT = "draft"
     UNDER_REVIEW = "under_review"
     APPROVED = "approved"
     IMPLEMENTED = "implemented"
@@ -44,8 +39,7 @@ class PolicyStatus(Enum):
 
 @dataclass
 class SecurityPolicy:
-    """Security policy definition"""
-    policy_id: str
+    """Security policy definition"""    policy_id: str
     title: str
     policy_type: PolicyType
     description: str
@@ -61,8 +55,7 @@ class SecurityPolicy:
     approved_by: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             "policy_id": self.policy_id,
             "title": self.title,
             "policy_type": self.policy_type.value,
@@ -81,8 +74,7 @@ class SecurityPolicy:
 
 
 class IncidentResponseProcedures:
-    """Comprehensive incident response procedures framework"""
-    
+    """Comprehensive incident response procedures framework"""    
     def __init__(self):
         self.response_playbooks = {}
         self.escalation_matrix = {}
@@ -90,8 +82,7 @@ class IncidentResponseProcedures:
         self._initialize_procedures()
     
     def _initialize_procedures(self):
-        """Initialize standard incident response procedures"""
-        
+        """Initialize standard incident response procedures"""        
         # Define response playbooks for different incident types
         self.response_playbooks = {
             "data_breach": {
@@ -222,8 +213,7 @@ class IncidentResponseProcedures:
         self.communication_templates = {
             "initial_alert": {
                 "subject": "SECURITY INCIDENT: {incident_type} - {severity}",
-                "body": """
-                Security Incident Alert
+                "body": """                Security Incident Alert
                 
                 Incident ID: {incident_id}
                 Type: {incident_type}
@@ -240,12 +230,10 @@ class IncidentResponseProcedures:
                 {next_steps}
                 
                 Point of Contact: {poc_name} ({poc_contact})
-                """
-            },
+                """            },
             "status_update": {
                 "subject": "INCIDENT UPDATE: {incident_id} - {status}",
-                "body": """
-                Security Incident Status Update
+                "body": """                Security Incident Status Update
                 
                 Incident ID: {incident_id}
                 Current Status: {status}
@@ -261,12 +249,10 @@ class IncidentResponseProcedures:
                 {next_steps}
                 
                 Estimated Resolution: {eta}
-                """
-            },
+                """            },
             "resolution_notice": {
                 "subject": "INCIDENT RESOLVED: {incident_id}",
-                "body": """
-                Security Incident Resolution Notice
+                "body": """                Security Incident Resolution Notice
                 
                 Incident ID: {incident_id}
                 Resolved At: {resolution_time}
@@ -282,8 +268,7 @@ class IncidentResponseProcedures:
                 {preventive_measures}
                 
                 Post-Incident Review Scheduled: {review_date}
-                """
-            }
+                """            }
         }
     
     async def execute_response_procedure(
@@ -293,8 +278,7 @@ class IncidentResponseProcedures:
         severity: str,
         phase: str = "detection"
     ) -> Dict[str, Any]:
-        """Execute incident response procedure for specific phase"""
-        
+        """Execute incident response procedure for specific phase"""        
         # Log procedure execution
         await security_audit_trail.log_security_event(
             action=f"incident_response_{phase}",
@@ -342,8 +326,7 @@ class IncidentResponseProcedures:
         }
     
     def _get_escalation_requirements(self, severity: str) -> Dict[str, Any]:
-        """Get escalation requirements based on severity"""
-        
+        """Get escalation requirements based on severity"""        
         severity_lower = severity.lower()
         escalation = self.escalation_matrix.get(severity_lower, {})
         
@@ -356,8 +339,7 @@ class IncidentResponseProcedures:
         }
     
     def _get_next_phase(self, current_phase: str, incident_type: str) -> Optional[str]:
-        """Determine next recommended phase"""
-        
+        """Determine next recommended phase"""        
         phase_sequence = {
             "data_breach": ["detection", "containment", "investigation", "notification", "recovery"],
             "malware_infection": ["detection", "containment", "eradication", "recovery"],
@@ -378,8 +360,7 @@ class IncidentResponseProcedures:
         template_type: str,
         incident_data: Dict[str, Any]
     ) -> Dict[str, str]:
-        """Generate incident communication from template"""
-        
+        """Generate incident communication from template"""        
         template = self.communication_templates.get(template_type)
         if not template:
             return {
@@ -405,16 +386,14 @@ class IncidentResponseProcedures:
 
 
 class SecurityPolicyManager:
-    """Comprehensive security policy management system"""
-    
+    """Comprehensive security policy management system"""    
     def __init__(self):
         self.policies: Dict[str, SecurityPolicy] = {}
         self.incident_procedures = IncidentResponseProcedures()
         self._initialize_standard_policies()
     
     def _initialize_standard_policies(self):
-        """Initialize standard security policies"""
-        
+        """Initialize standard security policies"""        
         # Access Control Policy
         access_policy = SecurityPolicy(
             policy_id="SEC-POL-001",
@@ -550,20 +529,16 @@ class SecurityPolicyManager:
             self.policies[policy.policy_id] = policy
     
     async def get_policy(self, policy_id: str) -> Optional[SecurityPolicy]:
-        """Get specific security policy"""
-        return self.policies.get(policy_id)
+        """Get specific security policy"""        return self.policies.get(policy_id)
     
     async def get_all_policies(self) -> List[SecurityPolicy]:
-        """Get all security policies"""
-        return list(self.policies.values())
+        """Get all security policies"""        return list(self.policies.values())
     
     async def get_policies_by_type(self, policy_type: PolicyType) -> List[SecurityPolicy]:
-        """Get policies by type"""
-        return [p for p in self.policies.values() if p.policy_type == policy_type]
+        """Get policies by type"""        return [p for p in self.policies.values() if p.policy_type == policy_type]
     
     async def add_policy(self, policy: SecurityPolicy) -> str:
-        """Add new security policy"""
-        
+        """Add new security policy"""        
         self.policies[policy.policy_id] = policy
         
         # Log policy creation
@@ -587,8 +562,7 @@ class SecurityPolicyManager:
         status: PolicyStatus,
         approved_by: Optional[str] = None
     ) -> bool:
-        """Update policy status"""
-        
+        """Update policy status"""        
         policy = self.policies.get(policy_id)
         if not policy:
             return False
@@ -621,8 +595,7 @@ class SecurityPolicyManager:
         return True
     
     async def get_policies_due_for_review(self) -> List[SecurityPolicy]:
-        """Get policies that are due for review"""
-        
+        """Get policies that are due for review"""        
         current_date = datetime.now(timezone.utc)
         due_policies = []
         
@@ -633,8 +606,7 @@ class SecurityPolicyManager:
         return due_policies
     
     async def generate_policy_compliance_report(self) -> Dict[str, Any]:
-        """Generate policy compliance report"""
-        
+        """Generate policy compliance report"""        
         total_policies = len(self.policies)
         implemented_policies = len([p for p in self.policies.values() if p.status == PolicyStatus.IMPLEMENTED])
         
@@ -688,8 +660,7 @@ class SecurityPolicyManager:
         severity: str,
         phase: str = "detection"
     ) -> Dict[str, Any]:
-        """Execute incident response procedures"""
-        
+        """Execute incident response procedures"""        
         return await self.incident_procedures.execute_response_procedure(
             incident_id=incident_id,
             incident_type=incident_type,
@@ -702,8 +673,7 @@ class SecurityPolicyManager:
         template_type: str,
         incident_data: Dict[str, Any]
     ) -> Dict[str, str]:
-        """Generate incident communication"""
-        
+        """Generate incident communication"""        
         return await self.incident_procedures.generate_incident_communication(
             template_type=template_type,
             incident_data=incident_data
@@ -716,14 +686,12 @@ security_policy_manager = SecurityPolicyManager()
 
 # Helper functions for easy integration
 async def get_security_policies() -> List[Dict[str, Any]]:
-    """Get all security policies"""
-    policies = await security_policy_manager.get_all_policies()
+    """Get all security policies"""    policies = await security_policy_manager.get_all_policies()
     return [p.to_dict() for p in policies]
 
 
 async def get_policy_compliance_report() -> Dict[str, Any]:
-    """Get policy compliance report"""
-    return await security_policy_manager.generate_policy_compliance_report()
+    """Get policy compliance report"""    return await security_policy_manager.generate_policy_compliance_report()
 
 
 async def execute_incident_response_procedure(
@@ -732,8 +700,7 @@ async def execute_incident_response_procedure(
     severity: str,
     phase: str = "detection"
 ) -> Dict[str, Any]:
-    """Execute incident response procedure"""
-    return await security_policy_manager.execute_incident_response(
+    """Execute incident response procedure"""    return await security_policy_manager.execute_incident_response(
         incident_id=incident_id,
         incident_type=incident_type,
         severity=severity,

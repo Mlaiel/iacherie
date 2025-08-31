@@ -1,5 +1,4 @@
-"""
-Monetization Tracking Database Models and Operations
+"""Monetization Tracking Database Models and Operations
 
 Gestion complète du suivi de monétisation avec revenus automatisés,
 analytics financières et optimisation IA.
@@ -13,9 +12,7 @@ Toute utilisation, reproduction ou distribution sans autorisation
 écrite explicite est strictement interdite et fera l'objet de 
 poursuites judiciaires selon la loi allemande.
 Email: mlaiel@live.de pour autorisation d'utilisation.
-"""
-
-from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, JSON, Enum, ForeignKey, Decimal, Index
+"""from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, JSON, Enum, ForeignKey, Decimal, Index
 from sqlalchemy.orm import relationship, Session
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime, timedelta
@@ -32,8 +29,7 @@ Base = declarative_base()
 
 
 class RevenueSource(PyEnum):
-    """Sources de revenus supportées."""
-    STREAMING_ROYALTIES = "streaming_royalties"
+    """Sources de revenus supportées."""    STREAMING_ROYALTIES = "streaming_royalties"
     DOWNLOAD_SALES = "download_sales"
     LICENSING_FEES = "licensing_fees"
     SYNC_RIGHTS = "sync_rights"
@@ -48,8 +44,7 @@ class RevenueSource(PyEnum):
 
 
 class PaymentStatus(PyEnum):
-    """Statuts de paiement."""
-    PENDING = "pending"
+    """Statuts de paiement."""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -59,8 +54,7 @@ class PaymentStatus(PyEnum):
 
 
 class RevenueType(PyEnum):
-    """Types de revenus."""
-    GROSS = "gross"
+    """Types de revenus."""    GROSS = "gross"
     NET = "net"
     COMMISSION = "commission"
     ROYALTY = "royalty"
@@ -69,8 +63,7 @@ class RevenueType(PyEnum):
 
 
 class Currency(PyEnum):
-    """Devises supportées."""
-    USD = "USD"
+    """Devises supportées."""    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     CAD = "CAD"
@@ -83,10 +76,8 @@ class Currency(PyEnum):
 
 
 class RevenueTransaction(Base):
-    """
-    Transaction de revenus avec tracking complet et attribution.
-    """
-    __tablename__ = "revenue_transactions"
+    """    Transaction de revenus avec tracking complet et attribution.
+    """    __tablename__ = "revenue_transactions"
 
     # Identifiants principaux
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -152,10 +143,8 @@ class RevenueTransaction(Base):
 
 
 class RevenueProjection(Base):
-    """
-    Projections de revenus basées sur l'IA et l'analyse prédictive.
-    """
-    __tablename__ = "revenue_projections"
+    """    Projections de revenus basées sur l'IA et l'analyse prédictive.
+    """    __tablename__ = "revenue_projections"
 
     # Identifiants principaux
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -209,10 +198,8 @@ class RevenueProjection(Base):
 
 
 class RevenueAnalytics(Base):
-    """
-    Analytics détaillées des revenus avec insights IA.
-    """
-    __tablename__ = "revenue_analytics"
+    """    Analytics détaillées des revenus avec insights IA.
+    """    __tablename__ = "revenue_analytics"
 
     # Identifiants principaux
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -279,10 +266,8 @@ class RevenueAnalytics(Base):
 
 
 class PayoutRequest(Base):
-    """
-    Demandes de paiement avec gestion automatisée.
-    """
-    __tablename__ = "payout_requests"
+    """    Demandes de paiement avec gestion automatisée.
+    """    __tablename__ = "payout_requests"
 
     # Identifiants principaux
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -338,16 +323,12 @@ Index('idx_analytics_creator_period', RevenueAnalytics.creator_id, RevenueAnalyt
 
 
 class MonetizationRepository:
-    """
-    Repository pour la gestion de la monétisation et des revenus.
-    """
-
-    def __init__(self, db_session: Session):
+    """    Repository pour la gestion de la monétisation et des revenus.
+    """    def __init__(self, db_session: Session):
         self.db = db_session
 
     def record_transaction(self, transaction_data: Dict[str, Any]) -> RevenueTransaction:
-        """Enregistrer une nouvelle transaction de revenu."""
-        try:
+        """Enregistrer une nouvelle transaction de revenu."""        try:
             transaction = RevenueTransaction(**transaction_data)
             
             # Calculer le montant USD si nécessaire
@@ -369,8 +350,7 @@ class MonetizationRepository:
             raise
 
     def get_revenue_summary(self, creator_id: str, days: int = 30) -> Dict[str, Any]:
-        """Obtenir un résumé des revenus pour une période."""
-        try:
+        """Obtenir un résumé des revenus pour une période."""        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=days)
             
@@ -431,8 +411,7 @@ class MonetizationRepository:
             return {}
 
     def create_revenue_projection(self, creator_id: str, projection_data: Dict[str, Any]) -> RevenueProjection:
-        """Créer une projection de revenus."""
-        try:
+        """Créer une projection de revenus."""        try:
             # Analyser les données historiques pour la projection
             historical_data = self._get_historical_revenue_data(creator_id, 
                                                               projection_data.get('historical_period_months', 12))
@@ -460,8 +439,7 @@ class MonetizationRepository:
             raise
 
     def generate_revenue_analytics(self, creator_id: str, period: str = "monthly") -> RevenueAnalytics:
-        """Générer des analytics de revenus avec insights IA."""
-        try:
+        """Générer des analytics de revenus avec insights IA."""        try:
             # Déterminer la période d'analyse
             end_date = datetime.utcnow()
             if period == "daily":
@@ -520,8 +498,7 @@ class MonetizationRepository:
             raise
 
     def request_payout(self, creator_id: str, payout_data: Dict[str, Any]) -> PayoutRequest:
-        """Créer une demande de paiement."""
-        try:
+        """Créer une demande de paiement."""        try:
             # Vérifier le solde disponible
             available_balance = self._calculate_available_balance(creator_id)
             
@@ -553,8 +530,7 @@ class MonetizationRepository:
             raise
 
     def get_monetization_opportunities(self, creator_id: str) -> Dict[str, Any]:
-        """Identifier des opportunités de monétisation via IA."""
-        try:
+        """Identifier des opportunités de monétisation via IA."""        try:
             # Analyser l'historique de revenus
             revenue_data = self._get_historical_revenue_data(creator_id, 6)
             
@@ -590,8 +566,7 @@ class MonetizationRepository:
             return {}
 
     def _get_historical_revenue_data(self, creator_id: str, months: int) -> List[Dict[str, Any]]:
-        """Récupérer les données historiques de revenus."""
-        try:
+        """Récupérer les données historiques de revenus."""        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=months * 30)
             
@@ -630,8 +605,7 @@ class MonetizationRepository:
 
     def _calculate_projections(self, historical_data: List[Dict[str, Any]], 
                              projection_params: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculer les projections basées sur les données historiques."""
-        if not historical_data:
+        """Calculer les projections basées sur les données historiques."""        if not historical_data:
             return {"total_projection": 0, "confidence_score": 0}
         
         # Calcul de tendance simple
@@ -649,8 +623,7 @@ class MonetizationRepository:
 
     def _generate_ai_insights(self, transactions: List[RevenueTransaction], 
                             revenue_by_source: Dict[str, float]) -> List[str]:
-        """Générer des insights IA basés sur les données."""
-        insights = []
+        """Générer des insights IA basés sur les données."""        insights = []
         
         if not transactions:
             return ["Aucune transaction dans la période analysée."]
@@ -675,8 +648,7 @@ class MonetizationRepository:
         return insights
 
     def _calculate_available_balance(self, creator_id: str) -> PyDecimal:
-        """Calculer le solde disponible pour paiement."""
-        try:
+        """Calculer le solde disponible pour paiement."""        try:
             # Revenus complétés non encore payés
             completed_revenue = self.db.query(RevenueTransaction).filter(
                 RevenueTransaction.creator_id == creator_id,
@@ -700,8 +672,7 @@ class MonetizationRepository:
             return PyDecimal('0')
 
     def _calculate_processing_fee(self, amount: PyDecimal, method: str) -> PyDecimal:
-        """Calculer les frais de traitement."""
-        fee_rates = {
+        """Calculer les frais de traitement."""        fee_rates = {
             "bank_transfer": PyDecimal('0.02'),  # 2%
             "paypal": PyDecimal('0.035'),  # 3.5%
             "stripe": PyDecimal('0.029'),  # 2.9%
@@ -712,8 +683,7 @@ class MonetizationRepository:
         return amount * rate
 
     def _generate_source_recommendation(self, source: str, revenue_data: List[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
-        """Générer une recommandation pour une source de revenus."""
-        recommendations = {
+        """Générer une recommandation pour une source de revenus."""        recommendations = {
             "licensing_fees": {
                 "title": "Monétisez via les licences",
                 "description": "Proposez vos contenus pour des licences commerciales.",
@@ -737,8 +707,7 @@ class MonetizationRepository:
         return recommendations.get(source)
 
     def _analyze_performance_trends(self, revenue_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyser les tendances de performance."""
-        if len(revenue_data) < 2:
+        """Analyser les tendances de performance."""        if len(revenue_data) < 2:
             return {"trend": "insufficient_data"}
         
         revenues = [month["total"] for month in revenue_data]
@@ -761,8 +730,7 @@ class MonetizationRepository:
         }
 
     def _calculate_optimization_score(self, current_sources: set, revenue_data: List[Dict[str, Any]]) -> float:
-        """Calculer un score d'optimisation de la monétisation."""
-        # Score basé sur la diversification et la croissance
+        """Calculer un score d'optimisation de la monétisation."""        # Score basé sur la diversification et la croissance
         diversification_score = min(len(current_sources) / 8, 1.0) * 0.6  # Max 8 sources principales
         
         growth_score = 0

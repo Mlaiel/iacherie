@@ -1,19 +1,15 @@
 #!/usr/bin/env python3
-"""
-🎯 DASHBOARD TODOs CRITIQUES - MONITORING TEMPS RÉEL
+"""🎯 DASHBOARD TODOs CRITIQUES - MONITORING TEMPS RÉEL
 Script de surveillance des TODOs par impact métier pour priorisation
 
 Usage: python dashboard_todos_critiques.py
 Output: Rapport priorité business + fichiers critiques
-"""
-
-import json
+"""import json
 import os
 from pathlib import Path
 
 def load_audit_report():
-    """Charge le rapport d'audit existant"""
-    report_file = "AUDIT_CODE_BUSINESS_IMPACT_REPORT.json"
+    """Charge le rapport d'audit existant"""    report_file = "AUDIT_CODE_BUSINESS_IMPACT_REPORT.json"
     
     if not os.path.exists(report_file):
         print(f"❌ Rapport d'audit non trouvé: {report_file}")
@@ -24,8 +20,7 @@ def load_audit_report():
         return json.load(f)
 
 def extract_critical_todos(report):
-    """Extrait les TODOs les plus critiques pour action immédiate"""
-    
+    """Extrait les TODOs les plus critiques pour action immédiate"""    
     critical_files = []
     
     # Analyser les fichiers critiques avec issues
@@ -43,8 +38,7 @@ def extract_critical_todos(report):
     return sorted(critical_files, key=lambda x: (x['score'], x['issues']), reverse=True)
 
 def display_dashboard(report):
-    """Affiche le dashboard de monitoring"""
-    
+    """Affiche le dashboard de monitoring"""    
     print("=" * 80)
     print("🚨 DASHBOARD TODOs CRITIQUES - MONITORING TEMPS RÉEL")
     print("=" * 80)
@@ -124,8 +118,7 @@ def display_dashboard(report):
     print("=" * 80)
 
 def generate_quick_action_list(critical_todos):
-    """Génère une liste d'actions rapides pour les développeurs"""
-    
+    """Génère une liste d'actions rapides pour les développeurs"""    
     action_file = "QUICK_ACTIONS_TODOS_CRITIQUES.md"
     
     with open(action_file, 'w', encoding='utf-8') as f:
@@ -176,8 +169,7 @@ def generate_quick_action_list(critical_todos):
     print(f"✅ Liste d'actions générée: {action_file}")
 
 def main():
-    """Fonction principale du dashboard"""
-    
+    """Fonction principale du dashboard"""    
     # Charger le rapport d'audit
     report = load_audit_report()
     if not report:

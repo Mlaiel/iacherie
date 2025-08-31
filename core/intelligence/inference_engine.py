@@ -1,5 +1,4 @@
-"""
-Inference Engine - Real-time Intelligent Reasoning and Prediction
+"""Inference Engine - Real-time Intelligent Reasoning and Prediction
 
 Advanced inference system for real-time content analysis, prediction,
 and intelligent decision making. Implements multiple inference methods
@@ -15,9 +14,7 @@ Features:
 - Neural inference systems
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union, Callable
 from dataclasses import dataclass
@@ -62,8 +59,7 @@ from ..storage.inference_storage import InferenceStorage
 
 
 class InferenceType(Enum):
-    """Inference algorithm types"""
-    RULE_BASED = "rule_based"
+    """Inference algorithm types"""    RULE_BASED = "rule_based"
     PROBABILISTIC = "probabilistic"
     FUZZY = "fuzzy"
     BAYESIAN = "bayesian"
@@ -74,8 +70,7 @@ class InferenceType(Enum):
 
 
 class ConfidenceLevel(Enum):
-    """Confidence levels for inferences"""
-    VERY_LOW = 0.2
+    """Confidence levels for inferences"""    VERY_LOW = 0.2
     LOW = 0.4
     MEDIUM = 0.6
     HIGH = 0.8
@@ -84,8 +79,7 @@ class ConfidenceLevel(Enum):
 
 @dataclass
 class InferenceRule:
-    """Inference rule representation"""
-    rule_id: str
+    """Inference rule representation"""    rule_id: str
     condition: str
     conclusion: str
     confidence: float
@@ -96,8 +90,7 @@ class InferenceRule:
 
 @dataclass
 class InferenceResult:
-    """Inference result"""
-    inference_id: str
+    """Inference result"""    inference_id: str
     predictions: Dict[str, Any]
     confidence_scores: Dict[str, float]
     reasoning_path: List[str]
@@ -107,16 +100,14 @@ class InferenceResult:
 
 
 class RuleBasedInference:
-    """Rule-based inference engine"""
-    
+    """Rule-based inference engine"""    
     def __init__(self):
         self.rules = {}
         self.facts = {}
         self.inference_chain = []
         
     def add_rule(self, rule: InferenceRule) -> bool:
-        """Add inference rule"""
-        try:
+        """Add inference rule"""        try:
             self.rules[rule.rule_id] = rule
             return True
         except Exception as e:
@@ -124,8 +115,7 @@ class RuleBasedInference:
             return False
     
     def add_fact(self, fact_id: str, fact_data: Dict[str, Any]) -> bool:
-        """Add fact to knowledge base"""
-        try:
+        """Add fact to knowledge base"""        try:
             self.facts[fact_id] = fact_data
             return True
         except Exception as e:
@@ -133,8 +123,7 @@ class RuleBasedInference:
             return False
     
     def infer(self, query: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform rule-based inference"""
-        try:
+        """Perform rule-based inference"""        try:
             self.inference_chain = []
             conclusions = {}
             
@@ -167,8 +156,7 @@ class RuleBasedInference:
             return {}
     
     def _evaluate_condition(self, condition: str, data: Dict[str, Any]) -> bool:
-        """Evaluate rule condition"""
-        try:
+        """Evaluate rule condition"""        try:
             # Simple condition evaluation (expandable)
             # Format: "key operator value" (e.g., "engagement > 0.5")
             
@@ -212,8 +200,7 @@ class RuleBasedInference:
             return False
     
     def _apply_rule(self, rule: InferenceRule, data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Apply inference rule"""
-        try:
+        """Apply inference rule"""        try:
             # Parse conclusion (format: "key = value")
             if "=" in rule.conclusion:
                 key, value = rule.conclusion.split("=", 1)
@@ -239,8 +226,7 @@ class RuleBasedInference:
 
 
 class ProbabilisticInference:
-    """Probabilistic inference using Bayesian methods"""
-    
+    """Probabilistic inference using Bayesian methods"""    
     def __init__(self):
         self.variables = {}
         self.distributions = {}
@@ -253,8 +239,7 @@ class ProbabilisticInference:
         parameters: Dict[str, Any],
         dependencies: Optional[List[str]] = None
     ) -> bool:
-        """Add probabilistic variable"""
-        try:
+        """Add probabilistic variable"""        try:
             self.variables[var_name] = {
                 'distribution': distribution,
                 'parameters': parameters,
@@ -271,8 +256,7 @@ class ProbabilisticInference:
             return False
     
     def infer(self, evidence: Dict[str, Any], query_vars: List[str]) -> Dict[str, Any]:
-        """Perform probabilistic inference"""
-        try:
+        """Perform probabilistic inference"""        try:
             results = {}
             
             for var in query_vars:
@@ -314,8 +298,7 @@ class ProbabilisticInference:
             return {}
     
     def _compute_probability(self, var: str, evidence: Dict[str, Any]) -> float:
-        """Compute probability for binary variable"""
-        var_info = self.variables[var]
+        """Compute probability for binary variable"""        var_info = self.variables[var]
         base_prob = var_info['parameters'].get('prob', 0.5)
         
         # Adjust based on dependencies
@@ -332,8 +315,7 @@ class ProbabilisticInference:
         return max(0.0, min(1.0, base_prob))
     
     def _compute_normal_parameters(self, var: str, evidence: Dict[str, Any]) -> Tuple[float, float]:
-        """Compute mean and std for normal variable"""
-        var_info = self.variables[var]
+        """Compute mean and std for normal variable"""        var_info = self.variables[var]
         base_mean = var_info['parameters'].get('mean', 0.0)
         base_std = var_info['parameters'].get('std', 1.0)
         
@@ -349,8 +331,7 @@ class ProbabilisticInference:
         return base_mean, max(0.1, base_std)
     
     def _compute_categorical_probabilities(self, var: str, evidence: Dict[str, Any]) -> Dict[str, float]:
-        """Compute probabilities for categorical variable"""
-        var_info = self.variables[var]
+        """Compute probabilities for categorical variable"""        var_info = self.variables[var]
         base_probs = var_info['parameters'].get('probabilities', {})
         
         # Adjust based on dependencies
@@ -374,8 +355,7 @@ class ProbabilisticInference:
 
 
 class FuzzyInference:
-    """Fuzzy logic inference system"""
-    
+    """Fuzzy logic inference system"""    
     def __init__(self):
         self.linguistic_variables = {}
         self.rules = []
@@ -387,8 +367,7 @@ class FuzzyInference:
         universe: np.ndarray,
         membership_functions: Dict[str, Any]
     ) -> bool:
-        """Add fuzzy linguistic variable"""
-        try:
+        """Add fuzzy linguistic variable"""        try:
             # Create fuzzy variable
             if var_name.endswith('_input'):
                 var = ctrl.Antecedent(universe, var_name)
@@ -412,8 +391,7 @@ class FuzzyInference:
             return False
     
     def add_fuzzy_rule(self, antecedent: str, consequent: str) -> bool:
-        """Add fuzzy rule"""
-        try:
+        """Add fuzzy rule"""        try:
             # Parse and create fuzzy rule
             # Format: "IF input1 is high AND input2 is medium THEN output is good"
             
@@ -431,8 +409,7 @@ class FuzzyInference:
             return False
     
     def infer(self, inputs: Dict[str, float]) -> Dict[str, float]:
-        """Perform fuzzy inference"""
-        try:
+        """Perform fuzzy inference"""        try:
             results = {}
             
             # Simple fuzzy inference implementation
@@ -451,8 +428,7 @@ class FuzzyInference:
             return {}
     
     def _defuzzify(self, inputs: Dict[str, float], output_var: str) -> float:
-        """Defuzzify output using centroid method"""
-        try:
+        """Defuzzify output using centroid method"""        try:
             # Simplified defuzzification
             # Would implement proper fuzzy inference in production
             
@@ -476,8 +452,7 @@ class FuzzyInference:
 
 
 class NeuralInference:
-    """Neural network-based inference"""
-    
+    """Neural network-based inference"""    
     def __init__(self, input_dim: int, hidden_dims: List[int], output_dim: int):
         self.input_dim = input_dim
         self.hidden_dims = hidden_dims
@@ -488,8 +463,7 @@ class NeuralInference:
         self.is_trained = False
         
     def _build_network(self) -> nn.Module:
-        """Build neural inference network"""
-        layers = []
+        """Build neural inference network"""        layers = []
         prev_dim = self.input_dim
         
         for hidden_dim in self.hidden_dims:
@@ -505,8 +479,7 @@ class NeuralInference:
         return nn.Sequential(*layers)
     
     def train(self, training_data: List[Tuple[np.ndarray, np.ndarray]], epochs: int = 100) -> bool:
-        """Train neural inference model"""
-        try:
+        """Train neural inference model"""        try:
             if not training_data:
                 return False
             
@@ -538,8 +511,7 @@ class NeuralInference:
             return False
     
     def infer(self, inputs: np.ndarray) -> np.ndarray:
-        """Perform neural inference"""
-        try:
+        """Perform neural inference"""        try:
             if not self.is_trained:
                 logging.warning("Neural model not trained, returning random predictions")
                 return np.random.rand(self.output_dim)
@@ -556,18 +528,14 @@ class NeuralInference:
 
 
 class InferenceEngine:
-    """
-    Comprehensive inference engine for real-time reasoning
-    """
-    
+    """    Comprehensive inference engine for real-time reasoning
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize inference engine
+        """        Initialize inference engine
         
         Args:
             config: Configuration dictionary
-        """
-        self.config = config
+        """        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize inference methods
@@ -593,8 +561,7 @@ class InferenceEngine:
         self.cache_size = config.get("cache_size", 1000)
     
     def _initialize_inference_methods(self) -> None:
-        """Initialize inference methods"""
-        try:
+        """Initialize inference methods"""        try:
             # Rule-based inference
             self.rule_engine = RuleBasedInference()
             self._setup_default_rules()
@@ -621,8 +588,7 @@ class InferenceEngine:
             raise
     
     def _initialize_processors(self) -> None:
-        """Initialize inference processors"""
-        try:
+        """Initialize inference processors"""        try:
             self.inference_processor = InferenceProcessor(self.config)
             self.rule_engine_processor = RuleEngine(self.config)
             self.bayesian_network = BayesianNetwork(self.config)
@@ -631,8 +597,7 @@ class InferenceEngine:
             self.logger.warning(f"Some processors could not be initialized: {e}")
     
     def _setup_default_rules(self) -> None:
-        """Setup default inference rules"""
-        default_rules = [
+        """Setup default inference rules"""        default_rules = [
             InferenceRule(
                 rule_id="high_engagement_viral",
                 condition="engagement_rate > 0.1",
@@ -675,8 +640,7 @@ class InferenceEngine:
             self.rule_engine.add_rule(rule)
     
     def _setup_probabilistic_variables(self) -> None:
-        """Setup probabilistic variables"""
-        # Engagement prediction
+        """Setup probabilistic variables"""        # Engagement prediction
         self.probabilistic_engine.add_variable(
             "engagement_success",
             "bernoulli",
@@ -707,8 +671,7 @@ class InferenceEngine:
         )
     
     def _setup_fuzzy_variables(self) -> None:
-        """Setup fuzzy variables"""
-        # Quality assessment
+        """Setup fuzzy variables"""        # Quality assessment
         quality_universe = np.arange(0, 1.1, 0.1)
         quality_mfs = {
             "low": {"type": "triangular", "points": [0, 0, 0.4]},
@@ -741,8 +704,7 @@ class InferenceEngine:
         inference_type: InferenceType = InferenceType.HYBRID,
         real_time: bool = False
     ) -> InferenceResult:
-        """
-        Perform inference on input data
+        """        Perform inference on input data
         
         Args:
             input_data: Input data for inference
@@ -751,8 +713,7 @@ class InferenceEngine:
             
         Returns:
             InferenceResult: Inference results and metadata
-        """
-        if real_time:
+        """        if real_time:
             # Add to real-time processing queue
             return await self._queue_inference(input_data, inference_type)
         else:
@@ -763,8 +724,7 @@ class InferenceEngine:
         input_data: Dict[str, Any],
         inference_type: InferenceType
     ) -> InferenceResult:
-        """Queue inference for real-time processing"""
-        inference_id = f"inf_{int(datetime.now().timestamp())}"
+        """Queue inference for real-time processing"""        inference_id = f"inf_{int(datetime.now().timestamp())}"
         
         self.inference_queue.put({
             'inference_id': inference_id,
@@ -796,8 +756,7 @@ class InferenceEngine:
         )
     
     async def _start_real_time_processing(self) -> None:
-        """Start real-time inference processing"""
-        if self.is_processing:
+        """Start real-time inference processing"""        if self.is_processing:
             return
         
         self.is_processing = True
@@ -805,8 +764,7 @@ class InferenceEngine:
         self.processing_thread.start()
     
     def _process_queue(self) -> None:
-        """Process inference queue"""
-        while self.is_processing:
+        """Process inference queue"""        while self.is_processing:
             try:
                 if not self.inference_queue.empty():
                     item = self.inference_queue.get(timeout=1)
@@ -839,8 +797,7 @@ class InferenceEngine:
         input_data: Dict[str, Any],
         inference_type: InferenceType
     ) -> InferenceResult:
-        """Process single inference"""
-        start_time = datetime.now()
+        """Process single inference"""        start_time = datetime.now()
         inference_id = f"inf_{int(start_time.timestamp())}"
         
         try:
@@ -945,8 +902,7 @@ class InferenceEngine:
             )
     
     def _prepare_fuzzy_inputs(self, input_data: Dict[str, Any]) -> Optional[Dict[str, float]]:
-        """Prepare inputs for fuzzy inference"""
-        try:
+        """Prepare inputs for fuzzy inference"""        try:
             fuzzy_inputs = {}
             
             if 'quality_score' in input_data:
@@ -962,8 +918,7 @@ class InferenceEngine:
             return None
     
     def _prepare_neural_inputs(self, input_data: Dict[str, Any]) -> Optional[np.ndarray]:
-        """Prepare inputs for neural inference"""
-        try:
+        """Prepare inputs for neural inference"""        try:
             # Extract numerical features
             features = []
             
@@ -995,8 +950,7 @@ class InferenceEngine:
         result: InferenceResult,
         inference_type: InferenceType
     ) -> None:
-        """Update performance metrics"""
-        self.performance_metrics["total_inferences"] += 1
+        """Update performance metrics"""        self.performance_metrics["total_inferences"] += 1
         
         # Update average inference time
         current_avg = self.performance_metrics["average_inference_time"]
@@ -1027,8 +981,7 @@ class InferenceEngine:
         self,
         training_data: List[Tuple[Dict[str, Any], Dict[str, Any]]]
     ) -> bool:
-        """Train neural inference model"""
-        try:
+        """Train neural inference model"""        try:
             # Prepare training data
             processed_data = []
             
@@ -1061,12 +1014,10 @@ class InferenceEngine:
             return False
     
     async def add_inference_rule(self, rule: InferenceRule) -> bool:
-        """Add new inference rule"""
-        return self.rule_engine.add_rule(rule)
+        """Add new inference rule"""        return self.rule_engine.add_rule(rule)
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get inference engine performance metrics"""
-        metrics = self.performance_metrics.copy()
+        """Get inference engine performance metrics"""        metrics = self.performance_metrics.copy()
         
         # Calculate additional metrics
         if metrics["confidence_scores"]:
@@ -1084,12 +1035,10 @@ class InferenceEngine:
         return metrics
     
     def stop_real_time_processing(self) -> None:
-        """Stop real-time processing"""
-        self.is_processing = False
+        """Stop real-time processing"""        self.is_processing = False
         if self.processing_thread and self.processing_thread.is_alive():
             self.processing_thread.join(timeout=5)
     
     def clear_cache(self) -> None:
-        """Clear results cache"""
-        self.results_cache.clear()
+        """Clear results cache"""        self.results_cache.clear()
         self.logger.info("Inference cache cleared")

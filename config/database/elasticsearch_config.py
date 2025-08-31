@@ -1,5 +1,4 @@
-"""
-Elasticsearch Configuration Module for IA-Influencer Agent Platform
+"""Elasticsearch Configuration Module for IA-Influencer Agent Platform
 ===================================================================
 
 Professional Elasticsearch configuration for search, analytics, content indexing,
@@ -15,9 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import os
+"""import os
 import json
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -33,23 +30,20 @@ logger = logging.getLogger(__name__)
 
 
 class ElasticsearchEnvironment(Enum):
-    """Elasticsearch environment configurations"""
-    DEVELOPMENT = "development"
+    """Elasticsearch environment configurations"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
 
 
 class ElasticsearchClusterType(Enum):
-    """Elasticsearch cluster deployment types"""
-    SINGLE_NODE = "single_node"
+    """Elasticsearch cluster deployment types"""    SINGLE_NODE = "single_node"
     CLUSTER = "cluster"
     CLOUD = "cloud"
 
 
 class ElasticsearchWorkloadType(Enum):
-    """Elasticsearch workload optimization types"""
-    SEARCH = "search"
+    """Elasticsearch workload optimization types"""    SEARCH = "search"
     ANALYTICS = "analytics"
     LOGGING = "logging"
     MONITORING = "monitoring"
@@ -58,8 +52,7 @@ class ElasticsearchWorkloadType(Enum):
 
 @dataclass
 class ElasticsearchCredentials:
-    """Elasticsearch authentication credentials"""
-    hosts: List[str] = field(default_factory=lambda: ["localhost:9200"])
+    """Elasticsearch authentication credentials"""    hosts: List[str] = field(default_factory=lambda: ["localhost:9200"])
     username: Optional[str] = None
     password: Optional[str] = None
     api_key: Optional[str] = None
@@ -73,8 +66,7 @@ class ElasticsearchCredentials:
 
 @dataclass
 class ElasticsearchConnectionConfig:
-    """Elasticsearch connection configuration"""
-    timeout: int = 30
+    """Elasticsearch connection configuration"""    timeout: int = 30
     max_retries: int = 3
     retry_on_timeout: bool = True
     retry_on_status: List[int] = field(default_factory=lambda: [502, 503, 504])
@@ -86,8 +78,7 @@ class ElasticsearchConnectionConfig:
 
 @dataclass
 class ElasticsearchIndexConfig:
-    """Elasticsearch index configuration templates"""
-    content_protection: Dict[str, Any] = field(default_factory=lambda: {
+    """Elasticsearch index configuration templates"""    content_protection: Dict[str, Any] = field(default_factory=lambda: {
         "settings": {
             "number_of_shards": 3,
             "number_of_replicas": 1,
@@ -184,8 +175,7 @@ class ElasticsearchIndexConfig:
 
 @dataclass
 class ElasticsearchPerformanceConfig:
-    """Elasticsearch performance optimization settings"""
-    bulk_size: int = 1000
+    """Elasticsearch performance optimization settings"""    bulk_size: int = 1000
     bulk_timeout: str = "60s"
     scroll_size: int = 5000
     scroll_timeout: str = "10m"
@@ -199,14 +189,11 @@ class ElasticsearchPerformanceConfig:
 
 
 class ElasticsearchConfig:
-    """
-    Professional Elasticsearch configuration manager for IA-Influencer Agent Platform
+    """    Professional Elasticsearch configuration manager for IA-Influencer Agent Platform
     
     Handles search indexing, analytics, content discovery, and monitoring
     across multi-tenant content protection platform.
-    """
-
-    def __init__(self, 
+    """    def __init__(self, 
                  environment: ElasticsearchEnvironment = ElasticsearchEnvironment.DEVELOPMENT,
                  workload_type: ElasticsearchWorkloadType = ElasticsearchWorkloadType.SEARCH,
                  cluster_type: ElasticsearchClusterType = ElasticsearchClusterType.SINGLE_NODE):
@@ -222,8 +209,7 @@ class ElasticsearchConfig:
         self._setup_logging()
 
     def _setup_logging(self) -> None:
-        """Setup Elasticsearch-specific logging"""
-        self.logger = logging.getLogger(f"elasticsearch.{self.environment.value}.{self.workload_type.value}")
+        """Setup Elasticsearch-specific logging"""        self.logger = logging.getLogger(f"elasticsearch.{self.environment.value}.{self.workload_type.value}")
         if not self.logger.handlers:
             handler = logging.StreamHandler()
             formatter = logging.Formatter(
@@ -234,8 +220,7 @@ class ElasticsearchConfig:
             self.logger.setLevel(logging.INFO)
 
     def _load_credentials(self) -> ElasticsearchCredentials:
-        """Load Elasticsearch credentials from environment"""
-        env_prefix = f"ELASTICSEARCH_{self.environment.value.upper()}"
+        """Load Elasticsearch credentials from environment"""        env_prefix = f"ELASTICSEARCH_{self.environment.value.upper()}"
         
         # Parse hosts
         hosts_str = os.getenv(f"{env_prefix}_HOSTS", "localhost:9200")
@@ -255,8 +240,7 @@ class ElasticsearchConfig:
         )
 
     def _get_connection_config(self) -> ElasticsearchConnectionConfig:
-        """Get connection configuration based on environment and workload"""
-        base_configs = {
+        """Get connection configuration based on environment and workload"""        base_configs = {
             ElasticsearchEnvironment.DEVELOPMENT: ElasticsearchConnectionConfig(
                 timeout=15, max_connections=10
             ),
@@ -283,8 +267,7 @@ class ElasticsearchConfig:
         return config
 
     def _get_performance_config(self) -> ElasticsearchPerformanceConfig:
-        """Get performance configuration based on workload type"""
-        workload_configs = {
+        """Get performance configuration based on workload type"""        workload_configs = {
             ElasticsearchWorkloadType.SEARCH: ElasticsearchPerformanceConfig(
                 bulk_size=500,
                 search_timeout="10s",
@@ -316,8 +299,7 @@ class ElasticsearchConfig:
         return workload_configs.get(self.workload_type, ElasticsearchPerformanceConfig())
 
     def _create_ssl_context(self) -> Optional[ssl.SSLContext]:
-        """Create SSL context if SSL is enabled"""
-        if not self.credentials.use_ssl:
+        """Create SSL context if SSL is enabled"""        if not self.credentials.use_ssl:
             return None
         
         try:
@@ -340,16 +322,14 @@ class ElasticsearchConfig:
             raise
 
     def create_client(self, client_name: str = "default") -> Elasticsearch:
-        """
-        Create Elasticsearch client
+        """        Create Elasticsearch client
         
         Args:
             client_name: Unique client identifier
             
         Returns:
             Configured Elasticsearch client
-        """
-        if client_name in self._clients:
+        """        if client_name in self._clients:
             return self._clients[client_name]
         
         try:
@@ -399,16 +379,14 @@ class ElasticsearchConfig:
             raise
 
     def create_async_client(self, client_name: str = "async_default") -> AsyncElasticsearch:
-        """
-        Create async Elasticsearch client
+        """        Create async Elasticsearch client
         
         Args:
             client_name: Unique client identifier
             
         Returns:
             Configured async Elasticsearch client
-        """
-        if client_name in self._async_clients:
+        """        if client_name in self._async_clients:
             return self._async_clients[client_name]
         
         try:
@@ -451,12 +429,10 @@ class ElasticsearchConfig:
             raise
 
     def get_content_protection_client(self) -> Elasticsearch:
-        """Get Elasticsearch client for content protection operations"""
-        return self.create_client("content_protection")
+        """Get Elasticsearch client for content protection operations"""        return self.create_client("content_protection")
 
     def get_analytics_client(self) -> Elasticsearch:
-        """Get Elasticsearch client optimized for analytics"""
-        analytics_config = ElasticsearchConfig(
+        """Get Elasticsearch client optimized for analytics"""        analytics_config = ElasticsearchConfig(
             self.environment, 
             ElasticsearchWorkloadType.ANALYTICS, 
             self.cluster_type
@@ -464,12 +440,10 @@ class ElasticsearchConfig:
         return analytics_config.create_client("analytics")
 
     def get_search_client(self) -> Elasticsearch:
-        """Get Elasticsearch client for search operations"""
-        return self.create_client("search")
+        """Get Elasticsearch client for search operations"""        return self.create_client("search")
 
     def get_monitoring_client(self) -> Elasticsearch:
-        """Get Elasticsearch client for monitoring and logging"""
-        monitoring_config = ElasticsearchConfig(
+        """Get Elasticsearch client for monitoring and logging"""        monitoring_config = ElasticsearchConfig(
             self.environment, 
             ElasticsearchWorkloadType.MONITORING, 
             self.cluster_type
@@ -477,8 +451,7 @@ class ElasticsearchConfig:
         return monitoring_config.create_client("monitoring")
 
     def create_index(self, client: Elasticsearch, index_name: str, index_type: str) -> bool:
-        """
-        Create index with predefined configuration
+        """        Create index with predefined configuration
         
         Args:
             client: Elasticsearch client
@@ -487,8 +460,7 @@ class ElasticsearchConfig:
             
         Returns:
             True if index created successfully
-        """
-        try:
+        """        try:
             # Get index configuration
             index_configs = {
                 "content_protection": self.index_config.content_protection,
@@ -524,8 +496,7 @@ class ElasticsearchConfig:
 
     def create_index_template(self, client: Elasticsearch, template_name: str, 
                             pattern: str, index_type: str) -> bool:
-        """
-        Create index template for automatic index creation
+        """        Create index template for automatic index creation
         
         Args:
             client: Elasticsearch client
@@ -535,8 +506,7 @@ class ElasticsearchConfig:
             
         Returns:
             True if template created successfully
-        """
-        try:
+        """        try:
             index_configs = {
                 "content_protection": self.index_config.content_protection,
                 "analytics_events": self.index_config.analytics_events,
@@ -574,8 +544,7 @@ class ElasticsearchConfig:
 
     def bulk_index_documents(self, client: Elasticsearch, index_name: str, 
                            documents: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """
-        Bulk index documents
+        """        Bulk index documents
         
         Args:
             client: Elasticsearch client
@@ -584,8 +553,7 @@ class ElasticsearchConfig:
             
         Returns:
             Bulk operation results
-        """
-        try:
+        """        try:
             actions = []
             for doc in documents:
                 action = {
@@ -633,8 +601,7 @@ class ElasticsearchConfig:
 
     def search_documents(self, client: Elasticsearch, index_name: str, 
                         query: Dict[str, Any], **kwargs) -> Dict[str, Any]:
-        """
-        Search documents in index
+        """        Search documents in index
         
         Args:
             client: Elasticsearch client
@@ -644,8 +611,7 @@ class ElasticsearchConfig:
             
         Returns:
             Search results
-        """
-        try:
+        """        try:
             search_params = {
                 "index": index_name,
                 "body": {"query": query},
@@ -664,13 +630,11 @@ class ElasticsearchConfig:
             raise
 
     def health_check(self) -> Dict[str, Any]:
-        """
-        Perform comprehensive health check on Elasticsearch
+        """        Perform comprehensive health check on Elasticsearch
         
         Returns:
             Health check results dictionary
-        """
-        health_status = {
+        """        health_status = {
             "status": "healthy",
             "environment": self.environment.value,
             "workload_type": self.workload_type.value,
@@ -741,8 +705,7 @@ class ElasticsearchConfig:
         return health_status
 
     def close_all_connections(self) -> None:
-        """Close all Elasticsearch connections and cleanup resources"""
-        # Close sync clients
+        """Close all Elasticsearch connections and cleanup resources"""        # Close sync clients
         for client_name, client in self._clients.items():
             try:
                 client.transport.close()
@@ -762,5 +725,4 @@ class ElasticsearchConfig:
         self._async_clients.clear()
 
     def __del__(self):
-        """Cleanup on object destruction"""
-        self.close_all_connections()
+        """Cleanup on object destruction"""        self.close_all_connections()

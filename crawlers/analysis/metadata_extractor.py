@@ -1,5 +1,4 @@
-"""
-Metadata Extractor
+"""Metadata Extractor
 ==================
 
 Advanced metadata extraction system for comprehensive content analysis.
@@ -22,9 +21,7 @@ Expertise combinée:
 - Audio/Vidéo: Traitement multimédia et analyse de contenu
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import re
@@ -53,16 +50,14 @@ import chardet
 logger = logging.getLogger(__name__)
 
 class ExtractionStrategy(Enum):
-    """Metadata extraction strategies."""
-    COMPREHENSIVE = "comprehensive"
+    """Metadata extraction strategies."""    COMPREHENSIVE = "comprehensive"
     FAST = "fast"
     DEEP_ANALYSIS = "deep_analysis"
     SECURITY_FOCUSED = "security_focused"
     COMPLIANCE = "compliance"
 
 class MetadataCategory(Enum):
-    """Metadata categories."""
-    TECHNICAL = "technical"
+    """Metadata categories."""    TECHNICAL = "technical"
     DESCRIPTIVE = "descriptive"
     RIGHTS = "rights"
     STRUCTURAL = "structural"
@@ -70,8 +65,7 @@ class MetadataCategory(Enum):
     PRESERVATION = "preservation"
 
 class ContentFormat(Enum):
-    """Supported content formats."""
-    IMAGE = "image"
+    """Supported content formats."""    IMAGE = "image"
     AUDIO = "audio"
     VIDEO = "video"
     DOCUMENT = "document"
@@ -81,8 +75,7 @@ class ContentFormat(Enum):
 
 @dataclass
 class ContentMetadata:
-    """Comprehensive content metadata structure."""
-    content_id: str
+    """Comprehensive content metadata structure."""    content_id: str
     format_type: ContentFormat
     extraction_strategy: ExtractionStrategy
     
@@ -149,8 +142,7 @@ class ContentMetadata:
     custom_fields: Dict[str, Any] = field(default_factory=dict)
 
 class MetadataExtractor:
-    """
-    Advanced metadata extraction system with comprehensive format support.
+    """    Advanced metadata extraction system with comprehensive format support.
     
     Features:
     - Multi-format metadata extraction (images, audio, video, documents, web)
@@ -159,8 +151,7 @@ class MetadataExtractor:
     - Compliance-ready metadata standardization
     - Real-time and batch processing capabilities
     - Quality assessment and validation
-    """
-    
+    """    
     def __init__(
         self,
         cache_dir: str = "/tmp/metadata_cache",
@@ -169,8 +160,7 @@ class MetadataExtractor:
         max_file_size: int = 100 * 1024 * 1024,  # 100MB
         timeout: int = 30
     ):
-        """
-        Initialize metadata extractor.
+        """        Initialize metadata extractor.
         
         Args:
             cache_dir: Directory for caching extracted metadata
@@ -178,8 +168,7 @@ class MetadataExtractor:
             enable_external_apis: Enable external API calls for enrichment
             max_file_size: Maximum file size to process
             timeout: Extraction timeout in seconds
-        """
-        self.cache_dir = Path(cache_dir)
+        """        self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         
         self.default_strategy = default_strategy
@@ -219,8 +208,7 @@ class MetadataExtractor:
         strategy: Optional[ExtractionStrategy] = None,
         content_format: Optional[ContentFormat] = None
     ) -> ContentMetadata:
-        """
-        Extract comprehensive metadata from content.
+        """        Extract comprehensive metadata from content.
         
         Args:
             content_id: Unique content identifier
@@ -230,8 +218,7 @@ class MetadataExtractor:
             
         Returns:
             ContentMetadata: Extracted metadata
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         strategy = strategy or self.default_strategy
         
         # Check cache first
@@ -306,8 +293,7 @@ class MetadataExtractor:
             )
     
     async def _detect_content_format(self, content_source: Union[str, bytes, Path]) -> ContentFormat:
-        """Detect content format from source."""
-        try:
+        """Detect content format from source."""        try:
             if isinstance(content_source, str) and content_source.startswith(('http://', 'https://')):
                 # Web URL
                 parsed_url = urlparse(content_source)
@@ -366,8 +352,7 @@ class MetadataExtractor:
         metadata: ContentMetadata,
         content_source: Union[str, bytes, Path]
     ) -> None:
-        """Extract basic metadata common to all content types."""
-        try:
+        """Extract basic metadata common to all content types."""        try:
             if isinstance(content_source, (str, Path)) and Path(content_source).exists():
                 path = Path(content_source)
                 stat = path.stat()
@@ -433,8 +418,7 @@ class MetadataExtractor:
         metadata: ContentMetadata,
         content_source: Union[str, bytes, Path]
     ) -> None:
-        """Extract image-specific metadata."""
-        try:
+        """Extract image-specific metadata."""        try:
             # Load image
             if isinstance(content_source, (str, Path)):
                 image = Image.open(content_source)
@@ -523,8 +507,7 @@ class MetadataExtractor:
         metadata: ContentMetadata,
         content_source: Union[str, bytes, Path]
     ) -> None:
-        """Extract audio-specific metadata."""
-        try:
+        """Extract audio-specific metadata."""        try:
             audio_metadata = {}
             
             # Try with eyed3 for MP3 files
@@ -595,8 +578,7 @@ class MetadataExtractor:
         metadata: ContentMetadata,
         content_source: Union[str, bytes, Path]
     ) -> None:
-        """Extract video-specific metadata."""
-        try:
+        """Extract video-specific metadata."""        try:
             video_metadata = {}
             
             # Use ffmpeg-python for video metadata
@@ -723,8 +705,7 @@ class MetadataExtractor:
         metadata: ContentMetadata,
         content_source: Union[str, bytes, Path]
     ) -> None:
-        """Extract document-specific metadata."""
-        try:
+        """Extract document-specific metadata."""        try:
             document_metadata = {}
             
             if isinstance(content_source, (str, Path)):
@@ -789,8 +770,7 @@ class MetadataExtractor:
         metadata: ContentMetadata,
         content_source: str
     ) -> None:
-        """Extract web page metadata."""
-        try:
+        """Extract web page metadata."""        try:
             web_metadata = {}
             
             # Fetch web page
@@ -867,8 +847,7 @@ class MetadataExtractor:
         metadata: ContentMetadata,
         content_source: str
     ) -> None:
-        """Extract social media post metadata."""
-        try:
+        """Extract social media post metadata."""        try:
             social_metadata = {}
             parsed_url = urlparse(content_source)
             platform = None
@@ -965,8 +944,7 @@ class MetadataExtractor:
         metadata: ContentMetadata,
         strategy: ExtractionStrategy
     ) -> None:
-        """Enhance metadata with additional information and external APIs."""
-        try:
+        """Enhance metadata with additional information and external APIs."""        try:
             if strategy == ExtractionStrategy.DEEP_ANALYSIS and self.enable_external_apis:
                 # Placeholder for external API enhancements
                 # This would include reverse image search, content recognition, etc.
@@ -992,8 +970,7 @@ class MetadataExtractor:
             logger.warning(f"Metadata enhancement failed: {e}")
     
     async def _validate_metadata(self, metadata: ContentMetadata) -> None:
-        """Validate extracted metadata for consistency and completeness."""
-        try:
+        """Validate extracted metadata for consistency and completeness."""        try:
             validation_errors = []
             
             # Check required fields
@@ -1038,8 +1015,7 @@ class MetadataExtractor:
             metadata.extraction_errors.append(f"Validation error: {str(e)}")
     
     async def _assess_metadata_quality(self, metadata: ContentMetadata) -> None:
-        """Assess the quality and completeness of extracted metadata."""
-        try:
+        """Assess the quality and completeness of extracted metadata."""        try:
             # Count non-empty fields
             total_fields = 0
             filled_fields = 0
@@ -1090,8 +1066,7 @@ class MetadataExtractor:
             metadata.reliability_score = 0.5
     
     def _assess_format_specific_quality(self, metadata: ContentMetadata) -> float:
-        """Assess quality specific to content format."""
-        if metadata.format_type == ContentFormat.IMAGE and metadata.image_metadata:
+        """Assess quality specific to content format."""        if metadata.format_type == ContentFormat.IMAGE and metadata.image_metadata:
             # Image quality factors
             factors = []
             img_meta = metadata.image_metadata
@@ -1143,8 +1118,7 @@ class MetadataExtractor:
         content_source: Union[str, bytes, Path],
         strategy: ExtractionStrategy
     ) -> str:
-        """Generate cache key for metadata."""
-        if isinstance(content_source, bytes):
+        """Generate cache key for metadata."""        if isinstance(content_source, bytes):
             source_hash = hashlib.md5(content_source).hexdigest()
         else:
             source_hash = hashlib.md5(str(content_source).encode()).hexdigest()
@@ -1152,8 +1126,7 @@ class MetadataExtractor:
         return f"{content_id}_{source_hash}_{strategy.value}"
     
     def _parse_gps_coordinates(self, gps_info: Dict) -> Tuple[Optional[float], Optional[float]]:
-        """Parse GPS coordinates from EXIF data."""
-        try:
+        """Parse GPS coordinates from EXIF data."""        try:
             lat_ref = gps_info.get(1)  # GPSLatitudeRef
             lat = gps_info.get(2)      # GPSLatitude
             lon_ref = gps_info.get(3)  # GPSLongitudeRef
@@ -1182,8 +1155,7 @@ class MetadataExtractor:
             return None, None
     
     def _parse_date(self, date_string: Optional[str]) -> Optional[datetime]:
-        """Parse date string to datetime object."""
-        if not date_string:
+        """Parse date string to datetime object."""        if not date_string:
             return None
         
         # Try common date formats
@@ -1205,8 +1177,7 @@ class MetadataExtractor:
         return None
     
     def _detect_language(self, text: str) -> Optional[str]:
-        """Detect language of text content."""
-        # Simplified language detection
+        """Detect language of text content."""        # Simplified language detection
         english_words = {'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by'}
         french_words = {'le', 'la', 'les', 'et', 'ou', 'mais', 'dans', 'sur', 'à', 'pour', 'de', 'avec'}
         german_words = {'der', 'die', 'das', 'und', 'oder', 'aber', 'in', 'auf', 'zu', 'für', 'von', 'mit'}
@@ -1225,8 +1196,7 @@ class MetadataExtractor:
             return "de"
     
     def _extract_keywords(self, text: str, max_keywords: int = 10) -> List[str]:
-        """Extract keywords from text content."""
-        # Simple keyword extraction
+        """Extract keywords from text content."""        # Simple keyword extraction
         words = re.findall(r'\b[a-zA-Z]{3,}\b', text.lower())
         
         # Remove common stop words
@@ -1240,8 +1210,7 @@ class MetadataExtractor:
         return [word for word, count in word_counts.most_common(max_keywords)]
     
     def _infer_content_category(self, terms: List[str]) -> str:
-        """Infer content category from keywords and tags."""
-        categories = {
+        """Infer content category from keywords and tags."""        categories = {
             'music': ['music', 'song', 'album', 'artist', 'band', 'audio', 'sound'],
             'photography': ['photo', 'photography', 'image', 'picture', 'camera', 'lens'],
             'video': ['video', 'film', 'movie', 'cinema', 'documentary', 'vlog'],
@@ -1269,8 +1238,7 @@ class MetadataExtractor:
         self,
         content_batch: List[Tuple[str, Union[str, bytes, Path], Optional[ExtractionStrategy], Optional[ContentFormat]]]
     ) -> List[ContentMetadata]:
-        """Extract metadata from multiple content items in batch."""
-        tasks = []
+        """Extract metadata from multiple content items in batch."""        tasks = []
         
         for content_id, content_source, strategy, content_format in content_batch:
             task = asyncio.create_task(
@@ -1287,8 +1255,7 @@ class MetadataExtractor:
         return valid_results
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get extraction statistics and performance metrics."""
-        avg_extraction_time = np.mean(self.extraction_times) if self.extraction_times else 0
+        """Get extraction statistics and performance metrics."""        avg_extraction_time = np.mean(self.extraction_times) if self.extraction_times else 0
         cache_hit_rate = self.cache_hits / max(1, self.extraction_count)
         
         return {
@@ -1306,8 +1273,7 @@ class MetadataExtractor:
         }
     
     async def cleanup(self) -> None:
-        """Cleanup resources and clear caches."""
-        self.metadata_cache.clear()
+        """Cleanup resources and clear caches."""        self.metadata_cache.clear()
         self.extraction_times.clear()
         self.format_counts.clear()
         

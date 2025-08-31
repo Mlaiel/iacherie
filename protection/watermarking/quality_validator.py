@@ -1,5 +1,4 @@
-"""
-Watermark Quality Assessment and Validation System
+"""Watermark Quality Assessment and Validation System
 Professional quality assurance for digital watermarking operations
 
 Developed by: Fahed Mlaiel (mlaiel@live.de)
@@ -11,9 +10,7 @@ This watermark quality assessment system, concept, and all associated code are t
 intellectual property of Fahed Mlaiel. Any unauthorized use, copying, modification, or 
 distribution without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is 
 strictly prohibited and will result in legal action.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -40,8 +37,7 @@ logger = logging.getLogger(__name__)
 
 
 class QualityMetric(Enum):
-    """Quality assessment metrics"""
-    SNR = "signal_to_noise_ratio"
+    """Quality assessment metrics"""    SNR = "signal_to_noise_ratio"
     PSNR = "peak_signal_to_noise_ratio"
     SSIM = "structural_similarity_index"
     MSE = "mean_squared_error"
@@ -56,8 +52,7 @@ class QualityMetric(Enum):
 
 
 class QualityThreshold(Enum):
-    """Quality threshold levels"""
-    EXCELLENT = "excellent"      # >95% quality retention
+    """Quality threshold levels"""    EXCELLENT = "excellent"      # >95% quality retention
     GOOD = "good"               # 85-95% quality retention  
     ACCEPTABLE = "acceptable"   # 70-85% quality retention
     POOR = "poor"              # 50-70% quality retention
@@ -65,8 +60,7 @@ class QualityThreshold(Enum):
 
 
 class ValidationStatus(Enum):
-    """Validation status codes"""
-    PASSED = "passed"
+    """Validation status codes"""    PASSED = "passed"
     WARNING = "warning"
     FAILED = "failed"
     ERROR = "error"
@@ -75,8 +69,7 @@ class ValidationStatus(Enum):
 
 @dataclass
 class QualityScore:
-    """Individual quality score"""
-    metric: QualityMetric
+    """Individual quality score"""    metric: QualityMetric
     value: float
     max_value: float
     threshold: float
@@ -98,8 +91,7 @@ class QualityScore:
 
 @dataclass
 class QualityAssessmentResult:
-    """Complete quality assessment result"""
-    content_type: str
+    """Complete quality assessment result"""    content_type: str
     assessment_timestamp: datetime
     overall_score: float
     overall_status: ValidationStatus
@@ -119,20 +111,17 @@ class QualityAssessmentResult:
         }
     
     def get_metric_score(self, metric: QualityMetric) -> Optional[QualityScore]:
-        """Get score for specific metric"""
-        for score in self.individual_scores:
+        """Get score for specific metric"""        for score in self.individual_scores:
             if score.metric == metric:
                 return score
         return None
     
     def get_failed_metrics(self) -> List[QualityScore]:
-        """Get metrics that failed validation"""
-        return [score for score in self.individual_scores if score.status == ValidationStatus.FAILED]
+        """Get metrics that failed validation"""        return [score for score in self.individual_scores if score.status == ValidationStatus.FAILED]
 
 
 class AudioQualityAssessor:
-    """Professional audio quality assessment"""
-    
+    """Professional audio quality assessment"""    
     def __init__(self, sample_rate: int = 44100):
         self.sample_rate = sample_rate
         
@@ -146,8 +135,7 @@ class AudioQualityAssessor:
     async def assess_audio_quality(self, 
                                  original_audio: np.ndarray,
                                  watermarked_audio: np.ndarray) -> QualityAssessmentResult:
-        """Comprehensive audio quality assessment"""
-        start_time = datetime.now()
+        """Comprehensive audio quality assessment"""        start_time = datetime.now()
         
         try:
             if not MULTIMEDIA_AVAILABLE:
@@ -208,8 +196,7 @@ class AudioQualityAssessor:
             raise
     
     async def _calculate_snr(self, original: np.ndarray, watermarked: np.ndarray) -> QualityScore:
-        """Calculate Signal-to-Noise Ratio"""
-        try:
+        """Calculate Signal-to-Noise Ratio"""        try:
             noise = watermarked - original
             signal_power = np.mean(original ** 2)
             noise_power = np.mean(noise ** 2)
@@ -253,8 +240,7 @@ class AudioQualityAssessor:
             )
     
     async def _calculate_thd(self, original: np.ndarray, watermarked: np.ndarray) -> QualityScore:
-        """Calculate Total Harmonic Distortion"""
-        try:
+        """Calculate Total Harmonic Distortion"""        try:
             # Simplified THD calculation
             noise = watermarked - original
             signal_rms = np.sqrt(np.mean(original ** 2))
@@ -299,8 +285,7 @@ class AudioQualityAssessor:
             )
     
     async def _calculate_spectral_distortion(self, original: np.ndarray, watermarked: np.ndarray) -> QualityScore:
-        """Calculate spectral distortion"""
-        try:
+        """Calculate spectral distortion"""        try:
             # FFT analysis
             original_fft = np.abs(fft(original))
             watermarked_fft = np.abs(fft(watermarked))
@@ -354,8 +339,7 @@ class AudioQualityAssessor:
             )
     
     async def _calculate_perceptual_quality(self, original: np.ndarray, watermarked: np.ndarray) -> QualityScore:
-        """Calculate perceptual audio quality"""
-        try:
+        """Calculate perceptual audio quality"""        try:
             # Simplified perceptual model based on psychoacoustics
             
             # STFT for frequency analysis
@@ -419,8 +403,7 @@ class AudioQualityAssessor:
             )
     
     async def _calculate_dynamic_range_preservation(self, original: np.ndarray, watermarked: np.ndarray) -> QualityScore:
-        """Calculate dynamic range preservation"""
-        try:
+        """Calculate dynamic range preservation"""        try:
             # Calculate RMS in overlapping windows
             window_size = int(0.1 * self.sample_rate)  # 100ms windows
             hop_size = window_size // 2
@@ -480,8 +463,7 @@ class AudioQualityAssessor:
             )
     
     def _determine_overall_status(self, scores: List[QualityScore]) -> ValidationStatus:
-        """Determine overall validation status"""
-        failed_count = sum(1 for score in scores if score.status == ValidationStatus.FAILED)
+        """Determine overall validation status"""        failed_count = sum(1 for score in scores if score.status == ValidationStatus.FAILED)
         warning_count = sum(1 for score in scores if score.status == ValidationStatus.WARNING)
         error_count = sum(1 for score in scores if score.status == ValidationStatus.ERROR)
         
@@ -495,8 +477,7 @@ class AudioQualityAssessor:
             return ValidationStatus.PASSED
     
     def _generate_audio_recommendations(self, scores: List[QualityScore]) -> List[str]:
-        """Generate recommendations based on scores"""
-        recommendations = []
+        """Generate recommendations based on scores"""        recommendations = []
         
         for score in scores:
             if score.status == ValidationStatus.FAILED:
@@ -522,8 +503,7 @@ class AudioQualityAssessor:
 
 
 class ImageQualityAssessor:
-    """Professional image quality assessment"""
-    
+    """Professional image quality assessment"""    
     def __init__(self):
         self.thresholds = {
             QualityMetric.PSNR: {'excellent': 40, 'good': 35, 'acceptable': 30, 'poor': 25},
@@ -534,8 +514,7 @@ class ImageQualityAssessor:
     async def assess_image_quality(self, 
                                  original_image: np.ndarray,
                                  watermarked_image: np.ndarray) -> QualityAssessmentResult:
-        """Comprehensive image quality assessment"""
-        start_time = datetime.now()
+        """Comprehensive image quality assessment"""        start_time = datetime.now()
         
         try:
             if not MULTIMEDIA_AVAILABLE:
@@ -591,8 +570,7 @@ class ImageQualityAssessor:
             raise
     
     async def _calculate_psnr(self, original: np.ndarray, watermarked: np.ndarray) -> QualityScore:
-        """Calculate Peak Signal-to-Noise Ratio"""
-        try:
+        """Calculate Peak Signal-to-Noise Ratio"""        try:
             mse = np.mean((original.astype(float) - watermarked.astype(float)) ** 2)
             
             if mse == 0:
@@ -635,8 +613,7 @@ class ImageQualityAssessor:
             )
     
     async def _calculate_ssim(self, original: np.ndarray, watermarked: np.ndarray) -> QualityScore:
-        """Calculate Structural Similarity Index"""
-        try:
+        """Calculate Structural Similarity Index"""        try:
             # Convert to grayscale if needed
             if len(original.shape) == 3:
                 original_gray = cv2.cvtColor(original, cv2.COLOR_RGB2GRAY)
@@ -684,8 +661,7 @@ class ImageQualityAssessor:
             )
     
     async def _calculate_mse(self, original: np.ndarray, watermarked: np.ndarray) -> QualityScore:
-        """Calculate Mean Squared Error"""
-        try:
+        """Calculate Mean Squared Error"""        try:
             mse_value = np.mean((original.astype(float) - watermarked.astype(float)) ** 2)
             
             # Normalize score (lower MSE is better)
@@ -722,8 +698,7 @@ class ImageQualityAssessor:
             )
     
     async def _calculate_visual_quality(self, original: np.ndarray, watermarked: np.ndarray) -> QualityScore:
-        """Calculate visual quality score"""
-        try:
+        """Calculate visual quality score"""        try:
             # Edge preservation assessment
             original_edges = cv2.Canny(cv2.cvtColor(original, cv2.COLOR_RGB2GRAY), 50, 150)
             watermarked_edges = cv2.Canny(cv2.cvtColor(watermarked, cv2.COLOR_RGB2GRAY), 50, 150)
@@ -771,8 +746,7 @@ class ImageQualityAssessor:
             )
     
     async def _calculate_color_fidelity(self, original: np.ndarray, watermarked: np.ndarray) -> QualityScore:
-        """Calculate color fidelity preservation"""
-        try:
+        """Calculate color fidelity preservation"""        try:
             # Color histogram comparison
             color_diff = 0.0
             for channel in range(min(original.shape[2], watermarked.shape[2])):
@@ -821,8 +795,7 @@ class ImageQualityAssessor:
             )
     
     def _determine_overall_status(self, scores: List[QualityScore]) -> ValidationStatus:
-        """Determine overall validation status"""
-        failed_count = sum(1 for score in scores if score.status == ValidationStatus.FAILED)
+        """Determine overall validation status"""        failed_count = sum(1 for score in scores if score.status == ValidationStatus.FAILED)
         warning_count = sum(1 for score in scores if score.status == ValidationStatus.WARNING)
         error_count = sum(1 for score in scores if score.status == ValidationStatus.ERROR)
         
@@ -836,8 +809,7 @@ class ImageQualityAssessor:
             return ValidationStatus.PASSED
     
     def _generate_image_recommendations(self, scores: List[QualityScore]) -> List[str]:
-        """Generate recommendations based on scores"""
-        recommendations = []
+        """Generate recommendations based on scores"""        recommendations = []
         
         for score in scores:
             if score.status == ValidationStatus.FAILED:
@@ -857,13 +829,11 @@ class ImageQualityAssessor:
 
 
 class WatermarkValidationSystem:
-    """
-    Professional Watermark Quality Validation System
+    """    Professional Watermark Quality Validation System
     
     Comprehensive quality assessment and validation for all content types
     with detailed reporting and recommendations.
-    """
-    
+    """    
     def __init__(self):
         self.audio_assessor = AudioQualityAssessor()
         self.image_assessor = ImageQualityAssessor()
@@ -874,8 +844,7 @@ class WatermarkValidationSystem:
                                          watermarked_content: Union[np.ndarray, str],
                                          content_type: str,
                                          validation_config: Optional[Dict[str, Any]] = None) -> QualityAssessmentResult:
-        """
-        Validate watermarked content quality
+        """        Validate watermarked content quality
         
         Args:
             original_content: Original content (array or file path)
@@ -885,8 +854,7 @@ class WatermarkValidationSystem:
             
         Returns:
             QualityAssessmentResult with comprehensive metrics
-        """
-        try:
+        """        try:
             # Load content if file paths provided
             if isinstance(original_content, str):
                 original_data = await self._load_content(original_content, content_type)
@@ -926,8 +894,7 @@ class WatermarkValidationSystem:
             raise
     
     async def _load_content(self, file_path: str, content_type: str) -> np.ndarray:
-        """Load content from file"""
-        try:
+        """Load content from file"""        try:
             file_path = Path(file_path)
             
             if content_type.lower() == 'audio':
@@ -944,8 +911,7 @@ class WatermarkValidationSystem:
             raise
     
     async def _validate_video_quality(self, original: np.ndarray, watermarked: np.ndarray) -> QualityAssessmentResult:
-        """Validate video quality with comprehensive assessment"""
-        try:
+        """Validate video quality with comprehensive assessment"""        try:
             start_time = asyncio.get_event_loop().time()
             individual_scores = []
             recommendations = []
@@ -1021,8 +987,7 @@ class WatermarkValidationSystem:
             )
     
     async def _validate_text_quality(self, original: str, watermarked: str) -> QualityAssessmentResult:
-        """Validate text quality with readability and coherence analysis"""
-        try:
+        """Validate text quality with readability and coherence analysis"""        try:
             start_time = asyncio.get_event_loop().time()
             individual_scores = []
             recommendations = []
@@ -1134,16 +1099,14 @@ class WatermarkValidationSystem:
     
     async def batch_validate(self, 
                            validation_tasks: List[Tuple[str, str, str]]) -> List[QualityAssessmentResult]:
-        """
-        Batch validation of multiple content items
+        """        Batch validation of multiple content items
         
         Args:
             validation_tasks: List of (original_path, watermarked_path, content_type) tuples
             
         Returns:
             List of QualityAssessmentResult
-        """
-        try:
+        """        try:
             results = []
             
             for original_path, watermarked_path, content_type in validation_tasks:
@@ -1173,8 +1136,7 @@ class WatermarkValidationSystem:
             return []
     
     def get_validation_statistics(self) -> Dict[str, Any]:
-        """Get validation statistics from history"""
-        try:
+        """Get validation statistics from history"""        try:
             if not self.validation_history:
                 return {"message": "No validation history available"}
             
@@ -1217,8 +1179,7 @@ class WatermarkValidationSystem:
     def export_validation_report(self, 
                                output_path: Optional[str] = None,
                                format: str = 'json') -> bool:
-        """Export comprehensive validation report"""
-        try:
+        """Export comprehensive validation report"""        try:
             if not self.validation_history:
                 logger.warning("No validation history to export")
                 return False
@@ -1256,8 +1217,7 @@ class WatermarkValidationSystem:
 
 # Factory function
 def create_validation_system() -> WatermarkValidationSystem:
-    """Create validation system with standard configuration"""
-    return WatermarkValidationSystem()
+    """Create validation system with standard configuration"""    return WatermarkValidationSystem()
 
 
 __all__ = [

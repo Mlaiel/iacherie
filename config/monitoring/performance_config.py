@@ -1,5 +1,4 @@
-"""
-Performance Monitoring Configuration Module for IA-Influencer Agent Platform
+"""Performance Monitoring Configuration Module for IA-Influencer Agent Platform
 =============================================================================
 
 Professional performance monitoring configuration for comprehensive
@@ -15,17 +14,14 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import os
+"""import os
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, field
 from enum import Enum
 
 
 class PerformanceMetricType(Enum):
-    """Performance metric types"""
-    LATENCY = "latency"
+    """Performance metric types"""    LATENCY = "latency"
     THROUGHPUT = "throughput"
     RESOURCE_USAGE = "resource_usage"
     ERROR_RATE = "error_rate"
@@ -34,16 +30,14 @@ class PerformanceMetricType(Enum):
 
 
 class ProfilingMode(Enum):
-    """Profiling modes"""
-    DISABLED = "disabled"
+    """Profiling modes"""    DISABLED = "disabled"
     SAMPLING = "sampling"
     CONTINUOUS = "continuous"
     ON_DEMAND = "on_demand"
 
 
 class AlertSeverity(Enum):
-    """Performance alert severity levels"""
-    LOW = "low"
+    """Performance alert severity levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -51,8 +45,7 @@ class AlertSeverity(Enum):
 
 @dataclass
 class PerformanceThreshold:
-    """Performance threshold configuration"""
-    name: str
+    """Performance threshold configuration"""    name: str
     metric: str
     operator: str  # >, <, >=, <=, ==
     value: float
@@ -63,8 +56,7 @@ class PerformanceThreshold:
 
 @dataclass
 class ProfilingConfig:
-    """Profiling configuration"""
-    enabled: bool
+    """Profiling configuration"""    enabled: bool
     mode: ProfilingMode
     sampling_rate: float = 0.01
     profile_duration: int = 300  # seconds
@@ -74,8 +66,7 @@ class ProfilingConfig:
 
 
 class PerformanceMonitoringConfig:
-    """Professional performance monitoring configuration for IA-Influencer platform"""
-    
+    """Professional performance monitoring configuration for IA-Influencer platform"""    
     def __init__(self):
         self.monitoring_enabled = os.getenv("PERFORMANCE_MONITORING_ENABLED", "true").lower() == "true"
         self.profiling_enabled = os.getenv("PROFILING_ENABLED", "false").lower() == "true"
@@ -87,8 +78,7 @@ class PerformanceMonitoringConfig:
         self.service_name = os.getenv("SERVICE_NAME", "ia-influencer-agent")
     
     def get_system_performance_config(self) -> Dict[str, Any]:
-        """Get system-level performance monitoring configuration"""
-        return {
+        """Get system-level performance monitoring configuration"""        return {
             "enabled": self.monitoring_enabled,
             "collection_interval": self.metrics_collection_interval,
             "metrics": {
@@ -129,8 +119,7 @@ class PerformanceMonitoringConfig:
         }
     
     def get_application_performance_config(self) -> Dict[str, Any]:
-        """Get application-level performance monitoring configuration"""
-        return {
+        """Get application-level performance monitoring configuration"""        return {
             "enabled": self.monitoring_enabled,
             "metrics": {
                 "request_latency": {
@@ -175,8 +164,7 @@ class PerformanceMonitoringConfig:
         }
     
     def get_ai_services_performance_config(self) -> Dict[str, Any]:
-        """Get AI services performance monitoring configuration"""
-        return {
+        """Get AI services performance monitoring configuration"""        return {
             "enabled": self.monitoring_enabled,
             "metrics": {
                 "inference_latency": {
@@ -229,8 +217,7 @@ class PerformanceMonitoringConfig:
         }
     
     def get_content_protection_performance_config(self) -> Dict[str, Any]:
-        """Get content protection performance monitoring configuration"""
-        return {
+        """Get content protection performance monitoring configuration"""        return {
             "enabled": self.monitoring_enabled,
             "metrics": {
                 "fingerprint_generation": {
@@ -261,8 +248,7 @@ class PerformanceMonitoringConfig:
         }
     
     def get_audio_processing_performance_config(self) -> Dict[str, Any]:
-        """Get audio processing performance monitoring configuration"""
-        return {
+        """Get audio processing performance monitoring configuration"""        return {
             "enabled": self.monitoring_enabled,
             "metrics": {
                 "audio_analysis": {
@@ -287,8 +273,7 @@ class PerformanceMonitoringConfig:
         }
     
     def get_monetization_performance_config(self) -> Dict[str, Any]:
-        """Get monetization performance monitoring configuration"""
-        return {
+        """Get monetization performance monitoring configuration"""        return {
             "enabled": self.monitoring_enabled,
             "metrics": {
                 "payment_processing": {
@@ -312,8 +297,7 @@ class PerformanceMonitoringConfig:
         }
     
     def get_performance_thresholds(self) -> List[PerformanceThreshold]:
-        """Get performance alert thresholds"""
-        return [
+        """Get performance alert thresholds"""        return [
             # System thresholds
             PerformanceThreshold(
                 name="High CPU Usage",
@@ -418,8 +402,7 @@ class PerformanceMonitoringConfig:
         ]
     
     def get_profiling_config(self) -> ProfilingConfig:
-        """Get profiling configuration"""
-        mode = ProfilingMode.DISABLED
+        """Get profiling configuration"""        mode = ProfilingMode.DISABLED
         if self.profiling_enabled:
             if self.environment == "development":
                 mode = ProfilingMode.CONTINUOUS
@@ -437,8 +420,7 @@ class PerformanceMonitoringConfig:
         )
     
     def get_optimization_recommendations(self) -> Dict[str, Any]:
-        """Get performance optimization recommendations"""
-        return {
+        """Get performance optimization recommendations"""        return {
             "database_optimizations": {
                 "connection_pooling": {
                     "min_connections": 5,
@@ -503,8 +485,7 @@ class PerformanceMonitoringConfig:
         }
     
     def get_performance_testing_config(self) -> Dict[str, Any]:
-        """Get performance testing configuration"""
-        return {
+        """Get performance testing configuration"""        return {
             "load_testing": {
                 "enabled": self.environment != "production",
                 "scenarios": {
@@ -540,8 +521,7 @@ class PerformanceMonitoringConfig:
         }
     
     def get_monitoring_dashboards_config(self) -> Dict[str, Any]:
-        """Get performance monitoring dashboards configuration"""
-        return {
+        """Get performance monitoring dashboards configuration"""        return {
             "system_performance": {
                 "refresh_interval": "30s",
                 "time_range": "1h",
@@ -577,8 +557,7 @@ class PerformanceMonitoringConfig:
         }
     
     def get_complete_config(self) -> Dict[str, Any]:
-        """Get complete performance monitoring configuration"""
-        return {
+        """Get complete performance monitoring configuration"""        return {
             "global": {
                 "enabled": self.monitoring_enabled,
                 "service_name": self.service_name,

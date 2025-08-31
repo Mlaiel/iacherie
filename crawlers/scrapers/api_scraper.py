@@ -1,5 +1,4 @@
-"""
-API Scraper - IA-Influencer-Agent
+"""API Scraper - IA-Influencer-Agent
 =================================
 
 Specialized scraper for API-based data collection.
@@ -11,9 +10,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 ⚠️ CRITICAL LEGAL WARNING ⚠️
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
-"""
-
-import asyncio
+"""import asyncio
 import aiohttp
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -29,8 +26,7 @@ from collections import defaultdict
 
 @dataclass
 class ApiConfig:
-    """API configuration settings."""
-    base_url: str
+    """API configuration settings."""    base_url: str
     api_key: Optional[str] = None
     secret_key: Optional[str] = None
     auth_type: str = 'api_key'  # api_key, oauth, jwt, basic
@@ -43,8 +39,7 @@ class ApiConfig:
 
 @dataclass
 class ApiEndpoint:
-    """API endpoint definition."""
-    name: str
+    """API endpoint definition."""    name: str
     path: str
     method: str = 'GET'
     auth_required: bool = True
@@ -53,8 +48,7 @@ class ApiEndpoint:
     response_format: str = 'json'
 
 class ApiScraper:
-    """
-    Professional API scraper with comprehensive features.
+    """    Professional API scraper with comprehensive features.
     
     Features:
     - Multiple authentication methods
@@ -65,8 +59,7 @@ class ApiScraper:
     - Real-time data streaming
     - Webhook handling
     - API monitoring
-    """
-    
+    """    
     def __init__(self, config: ApiConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -90,18 +83,15 @@ class ApiScraper:
         }
         
     async def __aenter__(self):
-        """Async context manager entry."""
-        await self._initialize_session()
+        """Async context manager entry."""        await self._initialize_session()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
-        if self.session:
+        """Async context manager exit."""        if self.session:
             await self.session.close()
             
     async def _initialize_session(self):
-        """Initialize HTTP session with authentication."""
-        headers = {
+        """Initialize HTTP session with authentication."""        headers = {
             'User-Agent': 'IA-Influencer-Agent/1.0',
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -134,8 +124,7 @@ class ApiScraper:
         )
         
     async def _get_auth_headers(self) -> Dict[str, str]:
-        """Generate authentication headers."""
-        headers = {}
+        """Generate authentication headers."""        headers = {}
         
         if self.config.auth_type == 'api_key':
             if self.config.api_key:
@@ -165,8 +154,7 @@ class ApiScraper:
         return headers
         
     async def _check_rate_limit(self, endpoint: str):
-        """Check and enforce rate limiting."""
-        now = time.time()
+        """Check and enforce rate limiting."""        now = time.time()
         
         # Clean old requests (older than 1 minute)
         cutoff = now - 60
@@ -193,8 +181,7 @@ class ApiScraper:
                           params: Optional[Dict[str, Any]] = None,
                           data: Optional[Dict[str, Any]] = None,
                           use_cache: bool = True) -> Dict[str, Any]:
-        """Make API request with error handling and retries."""
-        if not self.session:
+        """Make API request with error handling and retries."""        if not self.session:
             await self._initialize_session()
             
         # Generate cache key
@@ -255,8 +242,7 @@ class ApiScraper:
                 
     async def _process_response(self, response: aiohttp.ClientResponse,
                               cache_key: str, use_cache: bool) -> Dict[str, Any]:
-        """Process API response."""
-        if response.status == 200:
+        """Process API response."""        if response.status == 200:
             self.stats['successful_requests'] += 1
             
             if response.content_type == 'application/json':
@@ -289,8 +275,7 @@ class ApiScraper:
     def _generate_cache_key(self, endpoint: ApiEndpoint,
                            params: Optional[Dict[str, Any]],
                            data: Optional[Dict[str, Any]]) -> str:
-        """Generate cache key for request."""
-        key_components = [
+        """Generate cache key for request."""        key_components = [
             endpoint.name,
             endpoint.path,
             endpoint.method,
@@ -306,8 +291,7 @@ class ApiScraper:
                              page_param: str = 'page',
                              limit_param: str = 'limit',
                              max_pages: int = 10) -> List[Dict[str, Any]]:
-        """Handle paginated API requests."""
-        all_results = []
+        """Handle paginated API requests."""        all_results = []
         page = 1
         
         if not params:
@@ -354,8 +338,7 @@ class ApiScraper:
     async def stream_data(self, endpoint: ApiEndpoint,
                          params: Optional[Dict[str, Any]] = None,
                          interval: int = 60) -> AsyncGenerator[Dict[str, Any], None]:
-        """Stream data from API at regular intervals."""
-        while True:
+        """Stream data from API at regular intervals."""        while True:
             try:
                 data = await self.make_request(endpoint, params, use_cache=False)
                 yield data
@@ -367,8 +350,7 @@ class ApiScraper:
                 
     async def batch_request(self, requests: List[Dict[str, Any]],
                            concurrent_limit: int = 5) -> List[Dict[str, Any]]:
-        """Execute multiple API requests concurrently."""
-        semaphore = asyncio.Semaphore(concurrent_limit)
+        """Execute multiple API requests concurrently."""        semaphore = asyncio.Semaphore(concurrent_limit)
         
         async def make_single_request(request_data: Dict[str, Any]) -> Dict[str, Any]:
             async with semaphore:
@@ -388,8 +370,7 @@ class ApiScraper:
         return results
         
     async def webhook_handler(self, webhook_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle incoming webhook data."""
-        try:
+        """Handle incoming webhook data."""        try:
             # Validate webhook (implement signature verification if needed)
             if not self._validate_webhook(webhook_data):
                 return {'status': 'error', 'message': 'Invalid webhook'}
@@ -404,18 +385,15 @@ class ApiScraper:
             return {'status': 'error', 'message': str(e)}
             
     def _validate_webhook(self, webhook_data: Dict[str, Any]) -> bool:
-        """Validate webhook authenticity."""
-        # Implement webhook signature validation
+        """Validate webhook authenticity."""        # Implement webhook signature validation
         return True  # Placeholder
         
     async def _process_webhook_data(self, webhook_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process incoming webhook data."""
-        # Implement webhook data processing logic
+        """Process incoming webhook data."""        # Implement webhook data processing logic
         return webhook_data
         
     async def get_api_status(self) -> Dict[str, Any]:
-        """Get API health and status information."""
-        try:
+        """Get API health and status information."""        try:
             # Create a simple health check endpoint
             health_endpoint = ApiEndpoint(
                 name='health',
@@ -440,8 +418,7 @@ class ApiScraper:
             }
             
     def get_stats(self) -> Dict[str, Any]:
-        """Get API scraper statistics."""
-        return {
+        """Get API scraper statistics."""        return {
             **self.stats,
             'cache_size': len(self.cache),
             'rate_limit_remaining': self._get_remaining_rate_limit(),
@@ -450,8 +427,7 @@ class ApiScraper:
         }
         
     def _get_remaining_rate_limit(self) -> int:
-        """Get remaining rate limit for current minute."""
-        now = time.time()
+        """Get remaining rate limit for current minute."""        now = time.time()
         cutoff = now - 60
         
         total_recent_requests = sum(
@@ -462,13 +438,11 @@ class ApiScraper:
         return max(0, self.config.rate_limit - total_recent_requests)
         
     def clear_cache(self):
-        """Clear response cache."""
-        self.cache.clear()
+        """Clear response cache."""        self.cache.clear()
         self.logger.info("API response cache cleared")
         
     async def refresh_auth(self):
-        """Refresh authentication credentials."""
-        if self.session:
+        """Refresh authentication credentials."""        if self.session:
             auth_headers = await self._get_auth_headers()
             self.session.headers.update(auth_headers)
             self.logger.info("Authentication credentials refreshed")

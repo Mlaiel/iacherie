@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Firewall Network Manager
+"""IA Influencer Agent - Firewall Network Manager
 Enterprise firewall configuration and security rules for content protection platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -12,9 +11,7 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import ipaddress
 from typing import Dict, List, Optional, Set, Union, Any
@@ -43,8 +40,7 @@ logger = logging.getLogger(__name__)
 
 
 class FirewallAction(Enum):
-    """Firewall actions"""
-    ALLOW = "allow"
+    """Firewall actions"""    ALLOW = "allow"
     DENY = "deny"
     DROP = "drop"
     REJECT = "reject"
@@ -53,8 +49,7 @@ class FirewallAction(Enum):
 
 
 class ProtocolType(Enum):
-    """Network protocols"""
-    TCP = "tcp"
+    """Network protocols"""    TCP = "tcp"
     UDP = "udp"
     ICMP = "icmp"
     HTTP = "http"
@@ -65,8 +60,7 @@ class ProtocolType(Enum):
 
 
 class ThreatLevel(Enum):
-    """Security threat levels"""
-    LOW = "low"
+    """Security threat levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -74,8 +68,7 @@ class ThreatLevel(Enum):
 
 @dataclass
 class IPRange:
-    """IP address range specification"""
-    network: str
+    """IP address range specification"""    network: str
     description: str = ""
     country: Optional[str] = None
     organization: Optional[str] = None
@@ -91,8 +84,7 @@ class IPRange:
 
 @dataclass
 class FirewallRule:
-    """Firewall rule configuration"""
-    name: str
+    """Firewall rule configuration"""    name: str
     priority: int
     action: FirewallAction
     protocol: ProtocolType
@@ -113,8 +105,7 @@ class FirewallRule:
 
 @dataclass
 class SecurityPolicy:
-    """Security policy configuration"""
-    name: str
+    """Security policy configuration"""    name: str
     rules: List[FirewallRule]
     default_action: FirewallAction = FirewallAction.DENY
     log_level: str = "INFO"
@@ -129,8 +120,7 @@ class SecurityPolicy:
 
 @dataclass
 class ThreatIntelligence:
-    """Threat intelligence data"""
-    ip_address: str
+    """Threat intelligence data"""    ip_address: str
     threat_type: str
     threat_level: ThreatLevel
     description: str
@@ -142,11 +132,9 @@ class ThreatIntelligence:
 
 
 class FirewallManager:
-    """
-    Enterprise firewall manager for IA Influencer Agent Platform
+    """    Enterprise firewall manager for IA Influencer Agent Platform
     Provides advanced security, DDoS protection, geo-blocking, and threat intelligence
-    """
-    
+    """    
     def __init__(
         self,
         config_path: str = "/etc/firewall/config.yaml",
@@ -177,8 +165,7 @@ class FirewallManager:
         self._initialize_components()
     
     async def initialize(self) -> None:
-        """Initialize firewall manager"""
-        try:
+        """Initialize firewall manager"""        try:
             logger.info("Initializing Firewall Manager...")
             
             # Load configuration
@@ -209,8 +196,7 @@ class FirewallManager:
             raise
     
     async def add_firewall_rule(self, rule: FirewallRule) -> bool:
-        """Add new firewall rule"""
-        try:
+        """Add new firewall rule"""        try:
             logger.info(f"Adding firewall rule: {rule.name}")
             
             # Validate rule
@@ -245,8 +231,7 @@ class FirewallManager:
             return False
     
     async def remove_firewall_rule(self, rule_name: str) -> bool:
-        """Remove firewall rule"""
-        try:
+        """Remove firewall rule"""        try:
             if rule_name not in self.rules:
                 logger.warning(f"Firewall rule not found: {rule_name}")
                 return False
@@ -267,8 +252,7 @@ class FirewallManager:
             return False
     
     async def apply_security_policy(self, policy: SecurityPolicy) -> bool:
-        """Apply comprehensive security policy"""
-        try:
+        """Apply comprehensive security policy"""        try:
             logger.info(f"Applying security policy: {policy.name}")
             
             # Validate policy
@@ -300,8 +284,7 @@ class FirewallManager:
         reason: str = "Manual block",
         duration: Optional[timedelta] = None
     ) -> bool:
-        """Block specific IP address"""
-        try:
+        """Block specific IP address"""        try:
             logger.info(f"Blocking IP address: {ip_address} - {reason}")
             
             # Validate IP address
@@ -343,8 +326,7 @@ class FirewallManager:
             return False
     
     async def unblock_ip_address(self, ip_address: str) -> bool:
-        """Unblock specific IP address"""
-        try:
+        """Unblock specific IP address"""        try:
             if ip_address not in self.blocked_ips:
                 logger.warning(f"IP address not blocked: {ip_address}")
                 return False
@@ -374,8 +356,7 @@ class FirewallManager:
         blocked_countries: List[str],
         allowed_countries: Optional[List[str]] = None
     ) -> bool:
-        """Enable geographic blocking"""
-        try:
+        """Enable geographic blocking"""        try:
             logger.info(f"Enabling geo-blocking for countries: {blocked_countries}")
             
             # Create geo-blocking rule
@@ -404,8 +385,7 @@ class FirewallManager:
         threshold: int = 1000,  # requests per minute
         action: FirewallAction = FirewallAction.RATE_LIMIT
     ) -> bool:
-        """Enable DDoS protection"""
-        try:
+        """Enable DDoS protection"""        try:
             logger.info(f"Enabling DDoS protection with threshold: {threshold}")
             
             # Create DDoS protection rule
@@ -432,8 +412,7 @@ class FirewallManager:
             return False
     
     async def update_threat_intelligence(self, threat_data: ThreatIntelligence) -> bool:
-        """Update threat intelligence data"""
-        try:
+        """Update threat intelligence data"""        try:
             logger.info(f"Updating threat intelligence for IP: {threat_data.ip_address}")
             
             # Store threat data
@@ -455,8 +434,7 @@ class FirewallManager:
             return False
     
     async def get_firewall_status(self) -> Dict[str, Any]:
-        """Get comprehensive firewall status"""
-        try:
+        """Get comprehensive firewall status"""        try:
             status = {
                 'total_rules': len(self.rules),
                 'active_policies': len(self.policies),
@@ -502,8 +480,7 @@ class FirewallManager:
     # Private methods
     
     def _initialize_components(self) -> None:
-        """Initialize firewall components"""
-        try:
+        """Initialize firewall components"""        try:
             # Initialize iptables if available
             try:
                 import iptc
@@ -529,8 +506,7 @@ class FirewallManager:
             logger.error(f"Failed to initialize components: {e}")
     
     async def _load_configuration(self) -> None:
-        """Load firewall configuration"""
-        try:
+        """Load firewall configuration"""        try:
             with open(self.config_path, 'r') as f:
                 config_data = yaml.safe_load(f)
             
@@ -556,8 +532,7 @@ class FirewallManager:
             logger.error(f"Failed to load configuration: {e}")
     
     async def _initialize_geoip(self) -> None:
-        """Initialize GeoIP database"""
-        try:
+        """Initialize GeoIP database"""        try:
             import geoip2.database
             self.geoip_reader = geoip2.database.Reader(self.geoip_database_path)
             logger.info("GeoIP database initialized")
@@ -565,8 +540,7 @@ class FirewallManager:
             logger.warning(f"Failed to initialize GeoIP database: {e}")
     
     async def _initialize_threat_intelligence(self) -> None:
-        """Initialize threat intelligence feeds"""
-        try:
+        """Initialize threat intelligence feeds"""        try:
             # Load existing threat data
             for feed_url in self.threat_feeds:
                 await self._update_threat_feed(feed_url)
@@ -576,8 +550,7 @@ class FirewallManager:
             logger.error(f"Failed to initialize threat intelligence: {e}")
     
     async def _setup_firewall_backends(self) -> None:
-        """Setup firewall backend systems"""
-        try:
+        """Setup firewall backend systems"""        try:
             # Configure iptables rules
             if self.iptables_manager:
                 await self._configure_iptables()
@@ -591,8 +564,7 @@ class FirewallManager:
             logger.error(f"Failed to setup firewall backends: {e}")
     
     async def _apply_default_policies(self) -> None:
-        """Apply default security policies"""
-        try:
+        """Apply default security policies"""        try:
             # Create default policy for IA platform protection
             default_policy = SecurityPolicy(
                 name="ia_platform_default",
@@ -625,8 +597,7 @@ class FirewallManager:
             logger.error(f"Failed to apply default policies: {e}")
     
     async def _validate_rule(self, rule: FirewallRule) -> bool:
-        """Validate firewall rule"""
-        if not rule.name:
+        """Validate firewall rule"""        if not rule.name:
             logger.error("Rule name is required")
             return False
         
@@ -651,8 +622,7 @@ class FirewallManager:
         return True
     
     async def _check_rule_conflicts(self, rule: FirewallRule) -> bool:
-        """Check for rule conflicts"""
-        # Check for duplicate names
+        """Check for rule conflicts"""        # Check for duplicate names
         if rule.name in self.rules:
             return True
         
@@ -664,16 +634,13 @@ class FirewallManager:
         return False
     
     async def _start_monitoring(self) -> None:
-        """Start firewall monitoring"""
-        asyncio.create_task(self._monitoring_loop())
+        """Start firewall monitoring"""        asyncio.create_task(self._monitoring_loop())
     
     async def _start_threat_feed_updates(self) -> None:
-        """Start threat feed updates"""
-        asyncio.create_task(self._threat_feed_update_loop())
+        """Start threat feed updates"""        asyncio.create_task(self._threat_feed_update_loop())
     
     async def _monitoring_loop(self) -> None:
-        """Main monitoring loop"""
-        while True:
+        """Main monitoring loop"""        while True:
             try:
                 # Check rule expiration
                 await self._check_rule_expiration()
@@ -691,8 +658,7 @@ class FirewallManager:
                 await asyncio.sleep(60)
     
     async def _threat_feed_update_loop(self) -> None:
-        """Threat feed update loop"""
-        while True:
+        """Threat feed update loop"""        while True:
             try:
                 for feed_url in self.threat_feeds:
                     await self._update_threat_feed(feed_url)

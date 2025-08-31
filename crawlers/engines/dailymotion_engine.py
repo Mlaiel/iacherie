@@ -1,5 +1,4 @@
-"""
-Advanced Dailymotion Extraction Engine
+"""Advanced Dailymotion Extraction Engine
 
 Ultra-advanced video extraction and content analysis engine for Dailymotion platform with AI-powered
 quality detection, bandwidth optimization, and real-time metadata enrichment.
@@ -7,9 +6,7 @@ quality detection, bandwidth optimization, and real-time metadata enrichment.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import aiohttp
 import aiofiles
 import json
@@ -46,8 +43,7 @@ logger = logging.getLogger(__name__)
 
 
 class VideoQuality(str, Enum):
-    """Video quality enumeration"""
-    AUTO = "auto"
+    """Video quality enumeration"""    AUTO = "auto"
     UHD_4K = "2160p"
     QHD_2K = "1440p"
     FHD = "1080p"
@@ -58,8 +54,7 @@ class VideoQuality(str, Enum):
 
 
 class ContentType(str, Enum):
-    """Content type enumeration"""
-    VIDEO = "video"
+    """Content type enumeration"""    VIDEO = "video"
     PLAYLIST = "playlist"
     CHANNEL = "channel"
     LIVE_STREAM = "live_stream"
@@ -67,16 +62,14 @@ class ContentType(str, Enum):
 
 
 class ExtractionMode(str, Enum):
-    """Extraction mode enumeration"""
-    FAST = "fast"
+    """Extraction mode enumeration"""    FAST = "fast"
     COMPLETE = "complete"
     METADATA_ONLY = "metadata_only"
     PREMIUM = "premium"
 
 
 class VideoFormat(BaseModel):
-    """Video format data model"""
-    format_id: str = Field(..., description="Unique format identifier")
+    """Video format data model"""    format_id: str = Field(..., description="Unique format identifier")
     url: str = Field(..., description="Direct video URL")
     quality: VideoQuality = Field(..., description="Video quality")
     width: Optional[int] = Field(None, description="Video width in pixels")
@@ -98,8 +91,7 @@ class VideoFormat(BaseModel):
 
 
 class AudioFormat(BaseModel):
-    """Audio format data model"""
-    format_id: str = Field(..., description="Unique format identifier")
+    """Audio format data model"""    format_id: str = Field(..., description="Unique format identifier")
     url: str = Field(..., description="Direct audio URL")
     codec: str = Field(..., description="Audio codec")
     bitrate: int = Field(..., description="Audio bitrate in kbps")
@@ -110,24 +102,21 @@ class AudioFormat(BaseModel):
 
 
 class Thumbnail(BaseModel):
-    """Thumbnail data model"""
-    url: str = Field(..., description="Thumbnail URL")
+    """Thumbnail data model"""    url: str = Field(..., description="Thumbnail URL")
     width: int = Field(..., description="Thumbnail width")
     height: int = Field(..., description="Thumbnail height")
     quality: str = Field(default="medium", description="Thumbnail quality")
 
 
 class Subtitle(BaseModel):
-    """Subtitle data model"""
-    language: str = Field(..., description="Subtitle language code")
+    """Subtitle data model"""    language: str = Field(..., description="Subtitle language code")
     url: str = Field(..., description="Subtitle file URL")
     format: str = Field(..., description="Subtitle format (vtt, srt, etc.)")
     auto_generated: bool = Field(default=False, description="Auto-generated subtitle")
 
 
 class DailymotionMetadata(BaseModel):
-    """Complete video metadata model"""
-    video_id: str = Field(..., description="Unique video identifier")
+    """Complete video metadata model"""    video_id: str = Field(..., description="Unique video identifier")
     title: str = Field(..., description="Video title")
     description: Optional[str] = Field(None, description="Video description")
     uploader: Optional[str] = Field(None, description="Channel/uploader name")
@@ -157,8 +146,7 @@ class DailymotionMetadata(BaseModel):
 
 
 class PlaylistMetadata(BaseModel):
-    """Playlist metadata model"""
-    playlist_id: str = Field(..., description="Unique playlist identifier")
+    """Playlist metadata model"""    playlist_id: str = Field(..., description="Unique playlist identifier")
     title: str = Field(..., description="Playlist title")
     description: Optional[str] = Field(None, description="Playlist description")
     creator: Optional[str] = Field(None, description="Playlist creator")
@@ -176,8 +164,7 @@ class PlaylistMetadata(BaseModel):
 
 
 class ChannelMetadata(BaseModel):
-    """Channel metadata model"""
-    channel_id: str = Field(..., description="Unique channel identifier")
+    """Channel metadata model"""    channel_id: str = Field(..., description="Unique channel identifier")
     username: str = Field(..., description="Channel username")
     display_name: Optional[str] = Field(None, description="Channel display name")
     description: Optional[str] = Field(None, description="Channel description")
@@ -197,8 +184,7 @@ class ChannelMetadata(BaseModel):
 
 
 class ExtractionResult(BaseModel):
-    """Complete extraction result model"""
-    success: bool = Field(..., description="Extraction success status")
+    """Complete extraction result model"""    success: bool = Field(..., description="Extraction success status")
     content_type: ContentType = Field(..., description="Content type")
     extraction_time: float = Field(..., description="Extraction duration")
     video_metadata: Optional[DailymotionMetadata] = Field(None, description="Video metadata")
@@ -216,8 +202,7 @@ class ExtractionResult(BaseModel):
 
 @dataclass
 class ExtractionConfig:
-    """Extraction configuration"""
-    mode: ExtractionMode = ExtractionMode.COMPLETE
+    """Extraction configuration"""    mode: ExtractionMode = ExtractionMode.COMPLETE
     quality_preference: List[VideoQuality] = field(default_factory=lambda: [
         VideoQuality.FHD, VideoQuality.HD, VideoQuality.SD
     ])
@@ -236,8 +221,7 @@ class ExtractionConfig:
 
 
 class DailymotionEngine:
-    """
-    Ultra-advanced Dailymotion content extraction engine
+    """    Ultra-advanced Dailymotion content extraction engine
     
     Features:
     - Multi-quality video extraction with adaptive streaming
@@ -250,11 +234,9 @@ class DailymotionEngine:
     - Proxy rotation and IP management
     - Content quality assessment and filtering
     - Live stream support with real-time monitoring
-    """
-    
+    """    
     def __init__(self, config: ExtractionConfig = None):
-        """Initialize Dailymotion extraction engine"""
-        self.config = config or ExtractionConfig()
+        """Initialize Dailymotion extraction engine"""        self.config = config or ExtractionConfig()
         self.session: Optional[aiohttp.ClientSession] = None
         self.selenium_driver: Optional[webdriver.Chrome] = None
         self.base_url = "https://www.dailymotion.com"
@@ -282,8 +264,7 @@ class DailymotionEngine:
         self._setup_logging()
     
     def _setup_logging(self):
-        """Configure logging for extraction engine"""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Configure logging for extraction engine"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         if not self.logger.handlers:
             handler = logging.StreamHandler()
             formatter = logging.Formatter(
@@ -294,8 +275,7 @@ class DailymotionEngine:
             self.logger.setLevel(logging.INFO)
     
     async def _get_session(self) -> aiohttp.ClientSession:
-        """Get or create HTTP session with optimized settings"""
-        if not self.session or self.session.closed:
+        """Get or create HTTP session with optimized settings"""        if not self.session or self.session.closed:
             timeout = aiohttp.ClientTimeout(total=self.config.timeout)
             connector = aiohttp.TCPConnector(
                 limit=100,
@@ -328,8 +308,7 @@ class DailymotionEngine:
         return self.session
     
     def _get_selenium_driver(self) -> webdriver.Chrome:
-        """Get or create Selenium WebDriver with stealth configuration"""
-        if not self.selenium_driver:
+        """Get or create Selenium WebDriver with stealth configuration"""        if not self.selenium_driver:
             options = Options()
             if self.config.headless_browser:
                 options.add_argument('--headless')
@@ -362,12 +341,10 @@ class DailymotionEngine:
         return self.selenium_driver
     
     def _is_cache_valid(self, cache_time: datetime) -> bool:
-        """Check if cached data is still valid"""
-        return datetime.utcnow() - cache_time < self.cache_ttl
+        """Check if cached data is still valid"""        return datetime.utcnow() - cache_time < self.cache_ttl
     
     def _get_cached_result(self, key: str) -> Optional[Any]:
-        """Get result from cache if valid"""
-        if key in self.cache:
+        """Get result from cache if valid"""        if key in self.cache:
             result, cache_time = self.cache[key]
             if self._is_cache_valid(cache_time):
                 self.stats['cache_hits'] += 1
@@ -377,12 +354,10 @@ class DailymotionEngine:
         return None
     
     def _cache_result(self, key: str, result: Any):
-        """Cache extraction result"""
-        self.cache[key] = (result, datetime.utcnow())
+        """Cache extraction result"""        self.cache[key] = (result, datetime.utcnow())
     
     async def _rate_limit(self):
-        """Implement intelligent rate limiting"""
-        current_time = time.time()
+        """Implement intelligent rate limiting"""        current_time = time.time()
         time_since_last = current_time - self.last_request_time
         
         if time_since_last < self.config.request_delay:
@@ -392,8 +367,7 @@ class DailymotionEngine:
         self.last_request_time = time.time()
     
     async def _make_request(self, url: str, **kwargs) -> aiohttp.ClientResponse:
-        """Make HTTP request with rate limiting and retry logic"""
-        async with self.request_semaphore:
+        """Make HTTP request with rate limiting and retry logic"""        async with self.request_semaphore:
             await self._rate_limit()
             
             session = await self._get_session()
@@ -423,8 +397,7 @@ class DailymotionEngine:
             raise Exception(f"Failed to fetch {url} after {self.config.max_retries} attempts")
     
     def _extract_video_id(self, url: str) -> Optional[str]:
-        """Extract video ID from Dailymotion URL"""
-        patterns = [
+        """Extract video ID from Dailymotion URL"""        patterns = [
             r'dailymotion\.com/video/([a-zA-Z0-9]+)',
             r'dai\.ly/([a-zA-Z0-9]+)',
             r'dailymotion\.com/embed/video/([a-zA-Z0-9]+)',
@@ -438,8 +411,7 @@ class DailymotionEngine:
         return None
     
     def _extract_playlist_id(self, url: str) -> Optional[str]:
-        """Extract playlist ID from Dailymotion URL"""
-        patterns = [
+        """Extract playlist ID from Dailymotion URL"""        patterns = [
             r'dailymotion\.com/playlist/([a-zA-Z0-9]+)',
             r'dailymotion\.com/user/[^/]+/playlists/([a-zA-Z0-9]+)',
         ]
@@ -452,8 +424,7 @@ class DailymotionEngine:
         return None
     
     def _extract_channel_id(self, url: str) -> Optional[str]:
-        """Extract channel ID from Dailymotion URL"""
-        patterns = [
+        """Extract channel ID from Dailymotion URL"""        patterns = [
             r'dailymotion\.com/([a-zA-Z0-9_-]+)$',
             r'dailymotion\.com/user/([a-zA-Z0-9_-]+)',
         ]
@@ -466,8 +437,7 @@ class DailymotionEngine:
         return None
     
     def _determine_content_type(self, url: str) -> ContentType:
-        """Determine content type from URL"""
-        if '/video/' in url or 'dai.ly/' in url:
+        """Determine content type from URL"""        if '/video/' in url or 'dai.ly/' in url:
             return ContentType.VIDEO
         elif '/playlist/' in url:
             return ContentType.PLAYLIST
@@ -477,8 +447,7 @@ class DailymotionEngine:
             return ContentType.VIDEO  # Default assumption
     
     async def _extract_video_metadata_api(self, video_id: str) -> Optional[DailymotionMetadata]:
-        """Extract video metadata using Dailymotion API"""
-        try:
+        """Extract video metadata using Dailymotion API"""        try:
             api_url = f"{self.api_url}/video/{video_id}"
             response = await self._make_request(api_url)
             
@@ -525,8 +494,7 @@ class DailymotionEngine:
             return None
     
     async def _extract_video_formats(self, video_id: str) -> Tuple[List[VideoFormat], List[AudioFormat]]:
-        """Extract video and audio formats"""
-        video_formats = []
+        """Extract video and audio formats"""        video_formats = []
         audio_formats = []
         
         try:
@@ -588,8 +556,7 @@ class DailymotionEngine:
         return video_formats, audio_formats
     
     async def _extract_subtitles(self, video_id: str) -> List[Subtitle]:
-        """Extract subtitle tracks"""
-        subtitles = []
+        """Extract subtitle tracks"""        subtitles = []
         
         try:
             # Try to get subtitle information from metadata API
@@ -616,8 +583,7 @@ class DailymotionEngine:
         return subtitles
     
     async def _extract_video_selenium(self, video_id: str) -> Optional[DailymotionMetadata]:
-        """Extract video metadata using Selenium for JavaScript-heavy content"""
-        if not self.config.use_selenium:
+        """Extract video metadata using Selenium for JavaScript-heavy content"""        if not self.config.use_selenium:
             return None
         
         try:
@@ -670,8 +636,7 @@ class DailymotionEngine:
             return None
     
     def _parse_count(self, count_text: str) -> Optional[int]:
-        """Parse view/like count from text"""
-        if not count_text:
+        """Parse view/like count from text"""        if not count_text:
             return None
         
         # Remove non-numeric characters except K, M, B
@@ -690,8 +655,7 @@ class DailymotionEngine:
             return None
     
     async def extract_video(self, url: str) -> ExtractionResult:
-        """Extract complete video information"""
-        start_time = time.time()
+        """Extract complete video information"""        start_time = time.time()
         
         try:
             video_id = self._extract_video_id(url)
@@ -760,8 +724,7 @@ class DailymotionEngine:
             )
     
     async def extract_playlist(self, url: str) -> ExtractionResult:
-        """Extract playlist information"""
-        start_time = time.time()
+        """Extract playlist information"""        start_time = time.time()
         
         try:
             playlist_id = self._extract_playlist_id(url)
@@ -841,8 +804,7 @@ class DailymotionEngine:
             )
     
     async def extract_channel(self, url: str) -> ExtractionResult:
-        """Extract channel information"""
-        start_time = time.time()
+        """Extract channel information"""        start_time = time.time()
         
         try:
             channel_id = self._extract_channel_id(url)
@@ -926,8 +888,7 @@ class DailymotionEngine:
             )
     
     async def extract(self, url: str) -> ExtractionResult:
-        """Universal content extraction method"""
-        content_type = self._determine_content_type(url)
+        """Universal content extraction method"""        content_type = self._determine_content_type(url)
         
         if content_type == ContentType.VIDEO:
             return await self.extract_video(url)
@@ -944,8 +905,7 @@ class DailymotionEngine:
             )
     
     async def batch_extract(self, urls: List[str]) -> List[ExtractionResult]:
-        """Extract multiple URLs concurrently"""
-        semaphore = asyncio.Semaphore(self.config.max_concurrent)
+        """Extract multiple URLs concurrently"""        semaphore = asyncio.Semaphore(self.config.max_concurrent)
         
         async def extract_with_semaphore(url: str) -> ExtractionResult:
             async with semaphore:
@@ -955,8 +915,7 @@ class DailymotionEngine:
         return await asyncio.gather(*tasks, return_exceptions=False)
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get extraction statistics"""
-        uptime = (datetime.utcnow() - self.stats['start_time']).total_seconds()
+        """Get extraction statistics"""        uptime = (datetime.utcnow() - self.stats['start_time']).total_seconds()
         
         return {
             'uptime_seconds': uptime,
@@ -973,13 +932,11 @@ class DailymotionEngine:
         }
     
     async def clear_cache(self):
-        """Clear extraction cache"""
-        self.cache.clear()
+        """Clear extraction cache"""        self.cache.clear()
         self.logger.info("Extraction cache cleared")
     
     async def close(self):
-        """Clean up resources"""
-        if self.session and not self.session.closed:
+        """Clean up resources"""        if self.session and not self.session.closed:
             await self.session.close()
         
         if self.selenium_driver:
@@ -996,8 +953,7 @@ def create_dailymotion_engine(
     use_selenium: bool = False,
     **kwargs
 ) -> DailymotionEngine:
-    """Create and configure a DailymotionEngine instance"""
-    
+    """Create and configure a DailymotionEngine instance"""    
     config = ExtractionConfig(
         mode=mode,
         quality_preference=quality_preference or [VideoQuality.FHD, VideoQuality.HD],
@@ -1011,8 +967,7 @@ def create_dailymotion_engine(
 
 # Example usage and testing
 async def main():
-    """Example usage of DailymotionEngine"""
-    
+    """Example usage of DailymotionEngine"""    
     # Create engine with custom configuration
     config = ExtractionConfig(
         mode=ExtractionMode.COMPLETE,

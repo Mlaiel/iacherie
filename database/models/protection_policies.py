@@ -1,5 +1,4 @@
-"""
-Protection Policies Database Model
+"""Protection Policies Database Model
 
 Enterprise-grade SQLAlchemy model for managing content protection policies,
 rules, enforcement strategies, and automated protection workflows.
@@ -23,9 +22,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-
-from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, ARRAY
+"""from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID, JSONB
@@ -38,8 +35,7 @@ Base = declarative_base()
 
 
 class PolicyType(Enum):
-    """Protection policy type enumeration"""
-    COPYRIGHT_PROTECTION = "copyright_protection"
+    """Protection policy type enumeration"""    COPYRIGHT_PROTECTION = "copyright_protection"
     TRADEMARK_PROTECTION = "trademark_protection"
     CONTENT_MONITORING = "content_monitoring"
     AUTOMATED_TAKEDOWN = "automated_takedown"
@@ -57,8 +53,7 @@ class PolicyType(Enum):
 
 
 class EnforcementLevel(Enum):
-    """Enforcement level enumeration"""
-    MONITORING_ONLY = "monitoring_only"
+    """Enforcement level enumeration"""    MONITORING_ONLY = "monitoring_only"
     WARNING = "warning"
     SOFT_ENFORCEMENT = "soft_enforcement"
     STANDARD_ENFORCEMENT = "standard_enforcement"
@@ -68,8 +63,7 @@ class EnforcementLevel(Enum):
 
 
 class ActionType(Enum):
-    """Automated action types"""
-    NOTIFY_OWNER = "notify_owner"
+    """Automated action types"""    NOTIFY_OWNER = "notify_owner"
     SEND_WARNING = "send_warning"
     SEND_TAKEDOWN_NOTICE = "send_takedown_notice"
     FILE_DMCA = "file_dmca"
@@ -86,8 +80,7 @@ class ActionType(Enum):
 
 
 class TriggerCondition(Enum):
-    """Policy trigger conditions"""
-    EXACT_MATCH = "exact_match"
+    """Policy trigger conditions"""    EXACT_MATCH = "exact_match"
     PARTIAL_MATCH = "partial_match"
     SIMILARITY_THRESHOLD = "similarity_threshold"
     DURATION_THRESHOLD = "duration_threshold"
@@ -102,8 +95,7 @@ class TriggerCondition(Enum):
 
 
 class PolicyStatus(Enum):
-    """Policy status enumeration"""
-    DRAFT = "draft"
+    """Policy status enumeration"""    DRAFT = "draft"
     ACTIVE = "active"
     INACTIVE = "inactive"
     SUSPENDED = "suspended"
@@ -115,8 +107,7 @@ class PolicyStatus(Enum):
 
 
 class Scope(Enum):
-    """Policy scope enumeration"""
-    GLOBAL = "global"
+    """Policy scope enumeration"""    GLOBAL = "global"
     PLATFORM_SPECIFIC = "platform_specific"
     GEOGRAPHIC = "geographic"
     CONTENT_TYPE_SPECIFIC = "content_type_specific"
@@ -126,13 +117,11 @@ class Scope(Enum):
 
 
 class ProtectionPolicy(Base):
-    """
-    Enterprise Protection Policy Model
+    """    Enterprise Protection Policy Model
     
     Comprehensive content protection policy management with automated enforcement,
     customizable rules, and intelligent detection mechanisms.
-    """
-    __tablename__ = 'protection_policies'
+    """    __tablename__ = 'protection_policies'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -311,8 +300,7 @@ class ProtectionPolicy(Base):
         name: str,
         enforcement_level: EnforcementLevel = EnforcementLevel.STANDARD_ENFORCEMENT
     ) -> 'ProtectionPolicy':
-        """Create a default protection policy"""
-        return cls(
+        """Create a default protection policy"""        return cls(
             user_id=user_id,
             policy_type=policy_type,
             name=name,
@@ -323,8 +311,7 @@ class ProtectionPolicy(Base):
     
     @classmethod
     def create_copyright_policy(cls, user_id: str, content_id: str = None) -> 'ProtectionPolicy':
-        """Create a standard copyright protection policy"""
-        return cls(
+        """Create a standard copyright protection policy"""        return cls(
             user_id=user_id,
             content_id=content_id,
             policy_type=PolicyType.COPYRIGHT_PROTECTION,
@@ -362,8 +349,7 @@ class ProtectionPolicy(Base):
         )
     
     def is_triggered(self, detection_data: Dict[str, Any]) -> bool:
-        """Check if policy should be triggered based on detection data"""
-        if not self.is_active or self.status != PolicyStatus.ACTIVE:
+        """Check if policy should be triggered based on detection data"""        if not self.is_active or self.status != PolicyStatus.ACTIVE:
             return False
         
         # Check if current time is within active hours
@@ -381,8 +367,7 @@ class ProtectionPolicy(Base):
         return self.condition_logic == "AND"
     
     def _is_within_active_hours(self) -> bool:
-        """Check if current time is within active hours"""
-        if not self.active_hours:
+        """Check if current time is within active hours"""        if not self.active_hours:
             return True
         
         now = datetime.now(timezone.utc)
@@ -396,8 +381,7 @@ class ProtectionPolicy(Base):
         return True
     
     def _evaluate_condition(self, condition: Dict[str, Any], data: Dict[str, Any]) -> bool:
-        """Evaluate a single trigger condition"""
-        condition_type = condition.get('type')
+        """Evaluate a single trigger condition"""        condition_type = condition.get('type')
         
         if condition_type == TriggerCondition.SIMILARITY_THRESHOLD.value:
             similarity = data.get('similarity_score', 0.0)
@@ -422,8 +406,7 @@ class ProtectionPolicy(Base):
         return False
     
     def execute_automated_actions(self, detection_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Execute automated actions based on policy configuration"""
-        if not self.auto_execution_enabled:
+        """Execute automated actions based on policy configuration"""        if not self.auto_execution_enabled:
             return []
         
         executed_actions = []
@@ -452,8 +435,7 @@ class ProtectionPolicy(Base):
         return executed_actions
     
     def _execute_action(self, action_type: str, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute a specific action type"""
-        # This would contain the actual implementation for each action type
+        """Execute a specific action type"""        # This would contain the actual implementation for each action type
         # For now, return a mock result
         return {
             'action_type': action_type,
@@ -463,8 +445,7 @@ class ProtectionPolicy(Base):
         }
     
     def update_performance_metrics(self, success: bool, false_positive: bool = False) -> None:
-        """Update performance metrics based on action results"""
-        if success:
+        """Update performance metrics based on action results"""        if success:
             self.successful_actions += 1
         
         if false_positive:
@@ -478,8 +459,7 @@ class ProtectionPolicy(Base):
         self.updated_at = datetime.now(timezone.utc)
     
     def get_performance_summary(self) -> Dict[str, Any]:
-        """Get comprehensive performance summary"""
-        return {
+        """Get comprehensive performance summary"""        return {
             'execution_metrics': {
                 'total_executions': self.executions_count,
                 'successful_actions': self.successful_actions,
@@ -500,8 +480,7 @@ class ProtectionPolicy(Base):
         }
     
     def clone_policy(self, new_name: str, user_id: str = None) -> 'ProtectionPolicy':
-        """Clone policy with new configuration"""
-        new_policy = ProtectionPolicy(
+        """Clone policy with new configuration"""        new_policy = ProtectionPolicy(
             user_id=user_id or self.user_id,
             policy_type=self.policy_type,
             enforcement_level=self.enforcement_level,
@@ -518,8 +497,7 @@ class ProtectionPolicy(Base):
         return new_policy
     
     def validate_configuration(self) -> List[str]:
-        """Validate policy configuration and return any errors"""
-        errors = []
+        """Validate policy configuration and return any errors"""        errors = []
         
         if not self.name or len(self.name.strip()) == 0:
             errors.append("Policy name is required")

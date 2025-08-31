@@ -1,14 +1,10 @@
 #!/usr/bin/env python3
-"""
-Simple validation script for enhanced multilingual support
-"""
-
-import json
+"""Simple validation script for enhanced multilingual support
+"""import json
 import os
 
 def test_ui_translations_enhanced():
-    """Test that UI translation files have enhanced keys"""
-    print("Testing enhanced UI translations...")
+    """Test that UI translation files have enhanced keys"""    print("Testing enhanced UI translations...")
     locale_dir = "/home/runner/work/Ainflue/Ainflue/frontend/src/locales"
     
     # New keys that should be in all translation files
@@ -49,8 +45,7 @@ def test_ui_translations_enhanced():
     return results
 
 def test_dialect_detection_patterns():
-    """Test dialect detection pattern structure"""
-    print("\nTesting dialect detection enhancements...")
+    """Test dialect detection pattern structure"""    print("\nTesting dialect detection enhancements...")
     
     # Simulate checking the structure we added (ENHANCED with my improvements)
     expected_languages = ['en', 'de', 'es', 'fr', 'pt', 'ar', 'it', 'zh', 'hi', 'ru']
@@ -99,8 +94,7 @@ def test_dialect_detection_patterns():
     }
 
 def test_cultural_adaptation_coverage():
-    """Test cultural adaptation improvements"""
-    print("\nTesting cultural adaptation enhancements...")
+    """Test cultural adaptation improvements"""    print("\nTesting cultural adaptation enhancements...")
     
     # Cultural contexts we added
     contexts = [
@@ -128,8 +122,7 @@ def test_cultural_adaptation_coverage():
     }
 
 def calculate_overall_improvement():
-    """Calculate overall conformity improvement"""
-    print("\nCalculating overall improvement...")
+    """Calculate overall conformity improvement"""    print("\nCalculating overall improvement...")
     
     # Original stats
     original_conformity = 40  # 40% vs required
@@ -189,8 +182,7 @@ def calculate_overall_improvement():
     }
 
 def main():
-    """Run all validation tests"""
-    print("=" * 60)
+    """Run all validation tests"""    print("=" * 60)
     print("ENHANCED MULTILINGUAL SUPPORT VALIDATION")
     print("=" * 60)
     

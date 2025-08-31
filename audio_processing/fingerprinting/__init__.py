@@ -1,5 +1,4 @@
-"""
-Advanced Audio Fingerprinting System for Content Protection.
+"""Advanced Audio Fingerprinting System for Content Protection.
 Industrial-grade implementation for multi-format audio content identification and protection.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -20,9 +19,7 @@ Team Specialization:
 - Audio Processing Expert: Advanced signal processing
 - DevOps Engineer: Production deployment and monitoring
 - AI Prompt Engineer: Intelligent content analysis
-"""
-
-from .core import AudioFingerprintCore, FingerprintResult, MatchResult
+"""from .core import AudioFingerprintCore, FingerprintResult, MatchResult
 from .hash_generator import (
     PerceptualHashGenerator, 
     HashComparator, 
@@ -149,8 +146,7 @@ __all__ = [
 
 
 def get_system_info() -> dict:
-    """Get comprehensive system information and capabilities."""
-    try:
+    """Get comprehensive system information and capabilities."""    try:
         import platform
         import psutil
         
@@ -180,16 +176,14 @@ def get_system_info() -> dict:
 
 
 def create_fingerprinting_pipeline(config: dict = None) -> AudioFingerprintCore:
-    """
-    Create a complete fingerprinting pipeline with default configuration.
+    """    Create a complete fingerprinting pipeline with default configuration.
     
     Args:
         config: Optional configuration dictionary
         
     Returns:
         Configured AudioFingerprintCore instance
-    """
-    try:
+    """    try:
         # Initialize configuration
         config_manager = FingerprintingConfigManager()
         
@@ -220,8 +214,7 @@ def create_fingerprinting_pipeline(config: dict = None) -> AudioFingerprintCore:
 
 
 def create_complete_system(config: dict = None, database_url: str = None) -> AudioFingerprintingService:
-    """
-    Create a complete fingerprinting system ready for production use.
+    """    Create a complete fingerprinting system ready for production use.
     
     Args:
         config: Optional configuration dictionary
@@ -229,8 +222,7 @@ def create_complete_system(config: dict = None, database_url: str = None) -> Aud
         
     Returns:
         Fully configured AudioFingerprintingService instance
-    """
-    try:
+    """    try:
         # Create service with configuration
         service = create_service(database_url=database_url)
         

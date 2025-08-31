@@ -1,5 +1,4 @@
-"""
-Content Protection Engine - IA Influencer Agent Platform
+"""Content Protection Engine - IA Influencer Agent Platform
 ========================================================
 
 Industrial-grade content protection system with AI fingerprinting, copyright detection,
@@ -15,9 +14,7 @@ Expert Team Specialties:
 Any unauthorized copying, modification, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
-"""
-
-import asyncio
+"""import asyncio
 import hashlib
 import json
 import logging
@@ -53,8 +50,7 @@ settings = get_settings()
 
 
 class ContentProtectionEngine:
-    """Industrial content protection system with AI fingerprinting and anti-piracy."""
-    
+    """Industrial content protection system with AI fingerprinting and anti-piracy."""    
     def __init__(self):
         self.db = get_database()
         self.vector_search = VectorSearchEngine()
@@ -144,8 +140,7 @@ class ContentProtectionEngine:
         content_type: str,
         protection_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Register content for protection with AI fingerprinting.
+        """        Register content for protection with AI fingerprinting.
         
         Args:
             creator_id: Content creator ID
@@ -156,8 +151,7 @@ class ContentProtectionEngine:
             
         Returns:
             Protection registration result with fingerprint IDs
-        """
-        try:
+        """        try:
             # Validate content type
             if content_type not in self.fingerprint_configs:
                 raise ContentProtectionError(f"Unsupported content type: {content_type}")
@@ -250,8 +244,7 @@ class ContentProtectionEngine:
         protection_id: UUID,
         scan_config: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Scan for content violations across monitored platforms.
+        """        Scan for content violations across monitored platforms.
         
         Args:
             protection_id: Protection record to scan for
@@ -259,8 +252,7 @@ class ContentProtectionEngine:
             
         Returns:
             Scan results with potential violations found
-        """
-        try:
+        """        try:
             # Get protection record
             protection = await self.db.content_protection.get_by_id(protection_id)
             if not protection:
@@ -365,8 +357,7 @@ class ContentProtectionEngine:
         takedown_type: str = 'dmca',
         custom_message: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Process takedown request for content violation.
+        """        Process takedown request for content violation.
         
         Args:
             creator_id: Creator requesting takedown
@@ -376,8 +367,7 @@ class ContentProtectionEngine:
             
         Returns:
             Takedown processing result
-        """
-        try:
+        """        try:
             # Get violation record
             violation = await self.db.content_violations.get_by_id(violation_id)
             if not violation or violation.creator_id != creator_id:
@@ -468,8 +458,7 @@ class ContentProtectionEngine:
         period: str = 'month',
         protection_filter: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """
-        Get protection analytics and violation statistics.
+        """        Get protection analytics and violation statistics.
         
         Args:
             creator_id: Creator to analyze
@@ -478,8 +467,7 @@ class ContentProtectionEngine:
             
         Returns:
             Protection analytics and insights
-        """
-        try:
+        """        try:
             # Calculate period dates
             end_date = datetime.utcnow()
             start_date = self._calculate_period_start(period, end_date)
@@ -548,8 +536,7 @@ class ContentProtectionEngine:
         content_type: str,
         config: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate content fingerprints based on type."""
-        try:
+        """Generate content fingerprints based on type."""        try:
             if content_type == 'audio':
                 return await self._generate_audio_fingerprints(content_path, config)
             elif content_type == 'image':
@@ -570,8 +557,7 @@ class ContentProtectionEngine:
         audio_path: str,
         config: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate audio fingerprints using multiple techniques."""
-        try:
+        """Generate audio fingerprints using multiple techniques."""        try:
             fingerprints = []
             audio_config = self.fingerprint_configs['audio']
             
@@ -662,8 +648,7 @@ class ContentProtectionEngine:
         image_path: str,
         config: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate image fingerprints using multiple techniques."""
-        try:
+        """Generate image fingerprints using multiple techniques."""        try:
             fingerprints = []
             image_config = self.fingerprint_configs['image']
             
@@ -749,8 +734,7 @@ class ContentProtectionEngine:
         video_path: str,
         config: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate video fingerprints using frame analysis."""
-        try:
+        """Generate video fingerprints using frame analysis."""        try:
             fingerprints = []
             video_config = self.fingerprint_configs['video']
             
@@ -842,8 +826,7 @@ class ContentProtectionEngine:
         text_path: str,
         config: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate text fingerprints using NLP techniques."""
-        try:
+        """Generate text fingerprints using NLP techniques."""        try:
             fingerprints = []
             text_config = self.fingerprint_configs['text']
             
@@ -920,8 +903,7 @@ class ContentProtectionEngine:
     # Due to length constraints, I'm providing the core structure and key methods
     
     async def _initialize_models(self):
-        """Initialize AI models for fingerprinting."""
-        try:
+        """Initialize AI models for fingerprinting."""        try:
             # Initialize CLIP for image/video analysis
             self.models['clip'] = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
             self.models['clip_processor'] = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -935,14 +917,12 @@ class ContentProtectionEngine:
             logger.error(f"Failed to initialize protection models: {str(e)}")
     
     def _get_adjusted_threshold(self, content_type: str, policy: str) -> float:
-        """Get adjusted similarity threshold based on policy."""
-        base_threshold = self.fingerprint_configs[content_type]['similarity_threshold']
+        """Get adjusted similarity threshold based on policy."""        base_threshold = self.fingerprint_configs[content_type]['similarity_threshold']
         policy_adjustment = self.protection_policies[policy]['similarity_threshold_adjustment']
         return base_threshold + policy_adjustment
     
     def _calculate_protection_strength(self, fingerprints: List[Dict[str, Any]]) -> float:
-        """Calculate protection strength score based on fingerprints."""
-        if not fingerprints:
+        """Calculate protection strength score based on fingerprints."""        if not fingerprints:
             return 0.0
         
         # Base score from number of fingerprints
@@ -957,8 +937,7 @@ class ContentProtectionEngine:
         return min(fingerprint_score + multimodal_bonus, 1.0)
     
     def _estimate_detection_accuracy(self, content_type: str, fingerprint_count: int) -> float:
-        """Estimate detection accuracy based on content type and fingerprint quality."""
-        base_accuracies = {
+        """Estimate detection accuracy based on content type and fingerprint quality."""        base_accuracies = {
             'audio': 0.92,
             'image': 0.88,
             'video': 0.85,
@@ -971,8 +950,7 @@ class ContentProtectionEngine:
         return min(base_accuracy + fingerprint_bonus, 0.98)
     
     def _extract_ngrams(self, text: str, n: int) -> Dict[str, int]:
-        """Extract n-grams from text."""
-        words = text.lower().split()
+        """Extract n-grams from text."""        words = text.lower().split()
         ngrams = {}
         
         for i in range(len(words) - n + 1):
@@ -982,8 +960,7 @@ class ContentProtectionEngine:
         return ngrams
     
     def _calculate_temporal_consistency(self, embeddings: List[List[float]]) -> float:
-        """Calculate temporal consistency of video frames."""
-        if len(embeddings) < 2:
+        """Calculate temporal consistency of video frames."""        if len(embeddings) < 2:
             return 1.0
         
         similarities = []
@@ -994,8 +971,7 @@ class ContentProtectionEngine:
         return float(np.mean(similarities))
     
     def _calculate_period_start(self, period: str, end_date: datetime) -> datetime:
-        """Calculate start date for analysis period."""
-        if period == 'day':
+        """Calculate start date for analysis period."""        if period == 'day':
             return end_date - timedelta(days=1)
         elif period == 'week':
             return end_date - timedelta(weeks=1)

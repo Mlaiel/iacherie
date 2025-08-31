@@ -23,8 +23,7 @@ Team Specialties:
 - ✅ IA Prompt Engineer
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
-"""
-import asyncio
+"""import asyncio
 import pytest
 import logging
 from typing import Any, Dict, List, Optional

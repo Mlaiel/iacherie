@@ -1,28 +1,22 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Integration tests for Ainflue upload API endpoints.
+"""Integration tests for Ainflue upload API endpoints.
 Tests the complete upload workflow and fingerprinting process.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -38,12 +32,10 @@ API_BASE_URL = "http://localhost:8000"
 TEST_FILES_DIR = "/tmp/test_files"
 
 class TestUploadAPI:
-    """Test suite for upload API endpoints."""
-    
+    """Test suite for upload API endpoints."""    
     @pytest.fixture(autouse=True)
     async def setup(self):
-        """Setup test environment."""
-        # Create test files directory
+        """Setup test environment."""        # Create test files directory
         os.makedirs(TEST_FILES_DIR, exist_ok=True)
         
         # Create sample test files
@@ -58,8 +50,7 @@ class TestUploadAPI:
         await self.client.aclose()
     
     def create_test_files(self):
-        """Create sample test files for upload testing."""
-        # Audio file (MP3)
+        """Create sample test files for upload testing."""        # Audio file (MP3)
         self.audio_file = Path(TEST_FILES_DIR) / "test_audio.mp3"
         with open(self.audio_file, "wb") as f:
             # Create a minimal MP3-like file structure
@@ -88,8 +79,7 @@ class TestUploadAPI:
     
     @pytest.mark.asyncio
     async def test_upload_audio_file(self):
-        """Test uploading an audio file."""
-        with open(self.audio_file, "rb") as f:
+        """Test uploading an audio file."""        with open(self.audio_file, "rb") as f:
             files = {"file": ("test_audio.mp3", f, "audio/mpeg")}
             data = {
                 "title": "Test Audio Track",
@@ -110,8 +100,7 @@ class TestUploadAPI:
     
     @pytest.mark.asyncio
     async def test_upload_video_file(self):
-        """Test uploading a video file."""
-        with open(self.video_file, "rb") as f:
+        """Test uploading a video file."""        with open(self.video_file, "rb") as f:
             files = {"file": ("test_video.mp4", f, "video/mp4")}
             data = {
                 "title": "Test Video Content",
@@ -130,8 +119,7 @@ class TestUploadAPI:
     
     @pytest.mark.asyncio
     async def test_upload_image_file(self):
-        """Test uploading an image file."""
-        with open(self.image_file, "rb") as f:
+        """Test uploading an image file."""        with open(self.image_file, "rb") as f:
             files = {"file": ("test_image.png", f, "image/png")}
             data = {
                 "title": "Test Image",
@@ -148,8 +136,7 @@ class TestUploadAPI:
     
     @pytest.mark.asyncio
     async def test_upload_text_file(self):
-        """Test uploading a text file."""
-        with open(self.text_file, "rb") as f:
+        """Test uploading a text file."""        with open(self.text_file, "rb") as f:
             files = {"file": ("test_text.txt", f, "text/plain")}
             data = {
                 "title": "Test Text Content",
@@ -166,8 +153,7 @@ class TestUploadAPI:
     
     @pytest.mark.asyncio
     async def test_upload_file_size_limit(self):
-        """Test file size limit enforcement."""
-        # Create a large file (simulate oversized upload)
+        """Test file size limit enforcement."""        # Create a large file (simulate oversized upload)
         large_file = Path(TEST_FILES_DIR) / "large_file.mp3"
         with open(large_file, "wb") as f:
             f.write(b"\x00" * (105 * 1024 * 1024))  # 105MB file
@@ -185,8 +171,7 @@ class TestUploadAPI:
     
     @pytest.mark.asyncio
     async def test_upload_unsupported_format(self):
-        """Test uploading unsupported file format."""
-        unsupported_file = Path(TEST_FILES_DIR) / "test.xyz"
+        """Test uploading unsupported file format."""        unsupported_file = Path(TEST_FILES_DIR) / "test.xyz"
         with open(unsupported_file, "wb") as f:
             f.write(b"unsupported content")
         
@@ -205,8 +190,7 @@ class TestUploadAPI:
     
     @pytest.mark.asyncio
     async def test_upload_missing_title(self):
-        """Test upload with missing required title."""
-        with open(self.audio_file, "rb") as f:
+        """Test upload with missing required title."""        with open(self.audio_file, "rb") as f:
             files = {"file": ("test_audio.mp3", f, "audio/mpeg")}
             data = {"description": "Missing title"}
             
@@ -218,8 +202,7 @@ class TestUploadAPI:
     
     @pytest.mark.asyncio
     async def test_fingerprinting_process(self):
-        """Test the fingerprinting process after upload."""
-        # Upload a file first
+        """Test the fingerprinting process after upload."""        # Upload a file first
         with open(self.audio_file, "rb") as f:
             files = {"file": ("test_audio.mp3", f, "audio/mpeg")}
             data = {"title": "Test Fingerprinting", "description": "Test"}
@@ -250,8 +233,7 @@ class TestUploadAPI:
     
     @pytest.mark.asyncio
     async def test_content_retrieval(self):
-        """Test retrieving uploaded content."""
-        # Upload a file first
+        """Test retrieving uploaded content."""        # Upload a file first
         with open(self.image_file, "rb") as f:
             files = {"file": ("test_image.png", f, "image/png")}
             data = {"title": "Test Retrieval", "description": "Test"}
@@ -272,8 +254,7 @@ class TestUploadAPI:
     
     @pytest.mark.asyncio
     async def test_content_list(self):
-        """Test listing user content."""
-        # Upload multiple files
+        """Test listing user content."""        # Upload multiple files
         files_to_upload = [
             (self.audio_file, "audio/mpeg", "Test Audio"),
             (self.video_file, "video/mp4", "Test Video"),
@@ -306,8 +287,7 @@ class TestUploadAPI:
     
     @pytest.mark.asyncio
     async def test_content_filtering(self):
-        """Test content filtering by type."""
-        # Upload different types
+        """Test content filtering by type."""        # Upload different types
         with open(self.audio_file, "rb") as f:
             files = {"file": ("audio.mp3", f, "audio/mpeg")}
             data = {"title": "Audio Content", "description": "Test"}
@@ -330,8 +310,7 @@ class TestUploadAPI:
     
     @pytest.mark.asyncio
     async def test_upload_authentication(self):
-        """Test upload requires authentication."""
-        # Create client without authentication
+        """Test upload requires authentication."""        # Create client without authentication
         unauth_client = httpx.AsyncClient(base_url=API_BASE_URL)
         
         with open(self.audio_file, "rb") as f:
@@ -346,8 +325,7 @@ class TestUploadAPI:
     
     @pytest.mark.asyncio
     async def test_upload_rate_limiting(self):
-        """Test upload rate limiting."""
-        # Simulate multiple rapid uploads
+        """Test upload rate limiting."""        # Simulate multiple rapid uploads
         for i in range(5):
             with open(self.audio_file, "rb") as f:
                 files = {"file": (f"test{i}.mp3", f, "audio/mpeg")}
@@ -364,8 +342,7 @@ class TestUploadAPI:
     
     @pytest.mark.asyncio
     async def test_concurrent_uploads(self):
-        """Test handling concurrent uploads."""
-        async def upload_file(file_path, title):
+        """Test handling concurrent uploads."""        async def upload_file(file_path, title):
             with open(file_path, "rb") as f:
                 files = {"file": (file_path.name, f, "audio/mpeg")}
                 data = {"title": title, "description": "Concurrent test"}
@@ -387,8 +364,7 @@ class TestUploadAPI:
     
     @pytest.mark.asyncio
     async def test_upload_metadata_extraction(self):
-        """Test metadata extraction from uploaded files."""
-        with open(self.audio_file, "rb") as f:
+        """Test metadata extraction from uploaded files."""        with open(self.audio_file, "rb") as f:
             files = {"file": ("test_audio.mp3", f, "audio/mpeg")}
             data = {"title": "Metadata Test", "description": "Test metadata"}
             
@@ -406,12 +382,10 @@ class TestUploadAPI:
 
 
 class TestFingerprintingPerformance:
-    """Performance tests for fingerprinting system."""
-    
+    """Performance tests for fingerprinting system."""    
     @pytest.mark.asyncio
     async def test_fingerprinting_speed(self):
-        """Test fingerprinting processing time."""
-        client = httpx.AsyncClient(base_url=API_BASE_URL)
+        """Test fingerprinting processing time."""        client = httpx.AsyncClient(base_url=API_BASE_URL)
         
         # Create a test file
         test_file = Path(TEST_FILES_DIR) / "perf_test.mp3"

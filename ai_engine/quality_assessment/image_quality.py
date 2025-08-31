@@ -1,5 +1,4 @@
-"""
-Image Quality Assessment Module
+"""Image Quality Assessment Module
 
 Advanced image quality analysis for photographers, visual content creators, and influencers.
 Implements professional image metrics and industry-standard quality assessment.
@@ -13,9 +12,7 @@ intellectual property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, re
 distribution, modification, or appropriation of this code, in whole or in part, without 
 explicit written permission from Fahed Mlaiel is strictly prohibited and will be prosecuted 
 to the full extent of the law.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime
 from pathlib import Path
@@ -36,8 +33,7 @@ logger = logging.getLogger(__name__)
 
 
 class ImageFormat(Enum):
-    """Supported image formats"""
-    JPEG = "jpeg"
+    """Supported image formats"""    JPEG = "jpeg"
     PNG = "png"
     TIFF = "tiff"
     RAW = "raw"
@@ -46,8 +42,7 @@ class ImageFormat(Enum):
 
 
 class ImageSharpness(Enum):
-    """Image sharpness categories"""
-    EXCELLENT = "excellent"
+    """Image sharpness categories"""    EXCELLENT = "excellent"
     GOOD = "good"
     ACCEPTABLE = "acceptable"
     SOFT = "soft"
@@ -55,8 +50,7 @@ class ImageSharpness(Enum):
 
 
 class ColorAccuracy(Enum):
-    """Color accuracy categories"""
-    PROFESSIONAL = "professional"
+    """Color accuracy categories"""    PROFESSIONAL = "professional"
     ACCURATE = "accurate"
     ACCEPTABLE = "acceptable"
     POOR = "poor"
@@ -66,8 +60,7 @@ class ColorAccuracy(Enum):
 
 @dataclass
 class CompositionAnalysis:
-    """Image composition analysis results"""
-    rule_of_thirds_score: float = field(default=0.0)
+    """Image composition analysis results"""    rule_of_thirds_score: float = field(default=0.0)
     symmetry_score: float = field(default=0.0)
     balance_score: float = field(default=0.0)
     leading_lines_score: float = field(default=0.0)
@@ -90,8 +83,7 @@ class CompositionAnalysis:
 
 @dataclass
 class ImageQualityProfile:
-    """Comprehensive image quality profile"""
-    # Basic properties
+    """Comprehensive image quality profile"""    # Basic properties
     width: int = field(default=0)
     height: int = field(default=0)
     megapixels: float = field(default=0.0)
@@ -151,8 +143,7 @@ class ImageQualityProfile:
 
 @dataclass
 class ImageQualityMetrics:
-    """Image quality metrics container"""
-    profile: ImageQualityProfile = field(default_factory=ImageQualityProfile)
+    """Image quality metrics container"""    profile: ImageQualityProfile = field(default_factory=ImageQualityProfile)
     
     # Platform readiness
     instagram_ready: bool = field(default=False)
@@ -179,8 +170,7 @@ class ImageQualityMetrics:
 
 
 class ImageQualityAnalyzer(BaseAIModel):
-    """
-    Professional Image Quality Analyzer
+    """    Professional Image Quality Analyzer
     
     Provides comprehensive image quality assessment for:
     - Photographers and visual artists
@@ -188,11 +178,9 @@ class ImageQualityAnalyzer(BaseAIModel):
     - E-commerce product photography
     - Print and digital media optimization
     - Platform-specific requirements
-    """
-    
+    """    
     def __init__(self, config: Optional[ModelConfig] = None):
-        """Initialize image quality analyzer"""
-        super().__init__(config or ModelConfig(
+        """Initialize image quality analyzer"""        super().__init__(config or ModelConfig(
             name="image_quality_analyzer",
             model_type=ModelType.IMAGE_MODEL,
             provider=ModelProvider.LOCAL
@@ -251,8 +239,7 @@ class ImageQualityAnalyzer(BaseAIModel):
         image_path: Union[str, Path],
         analysis_options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Comprehensive image quality analysis
+        """        Comprehensive image quality analysis
         
         Args:
             image_path: Path to image file
@@ -264,8 +251,7 @@ class ImageQualityAnalyzer(BaseAIModel):
         Raises:
             QualityCheckError: If analysis fails
             ContentValidationError: If image file is invalid
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             image_path = Path(image_path)
@@ -389,16 +375,13 @@ class ImageQualityAnalyzer(BaseAIModel):
             raise QualityCheckError(f"Image quality analysis failed: {str(e)}") from e
     
     async def connect(self) -> bool:
-        """Connect to image processing services."""
-        return True
+        """Connect to image processing services."""        return True
     
     async def disconnect(self) -> bool:
-        """Disconnect from image processing services."""
-        return True
+        """Disconnect from image processing services."""        return True
     
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process image quality assessment."""
-        return await self.analyze_image_quality(data.get('image_data', b''), 
+        """Process image quality assessment."""        return await self.analyze_image_quality(data.get('image_data', b''), 
                                                data.get('profile', ImageQualityProfile()))
     
     async def _extract_basic_properties(
@@ -407,8 +390,7 @@ class ImageQualityAnalyzer(BaseAIModel):
         image_path: Path,
         profile: ImageQualityProfile
     ):
-        """Extract basic image properties"""
-        try:
+        """Extract basic image properties"""        try:
             profile.width, profile.height = pil_image.size
             profile.megapixels = (profile.width * profile.height) / 1000000
             profile.aspect_ratio = profile.width / profile.height if profile.height > 0 else 1.0
@@ -438,8 +420,7 @@ class ImageQualityAnalyzer(BaseAIModel):
         pil_image: Image.Image,
         profile: ImageQualityProfile
     ):
-        """Extract EXIF metadata"""
-        try:
+        """Extract EXIF metadata"""        try:
             exif_data = pil_image._getexif()
             if exif_data is not None:
                 for tag_id, value in exif_data.items():
@@ -471,8 +452,7 @@ class ImageQualityAnalyzer(BaseAIModel):
         cv_image: np.ndarray,
         profile: ImageQualityProfile
     ):
-        """Analyze technical image quality"""
-        try:
+        """Analyze technical image quality"""        try:
             # Convert to grayscale for analysis
             gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
             
@@ -513,8 +493,7 @@ class ImageQualityAnalyzer(BaseAIModel):
             logger.warning(f"Technical quality analysis failed: {str(e)}")
     
     def _estimate_noise_level(self, gray_image: np.ndarray) -> float:
-        """Estimate noise level in image"""
-        try:
+        """Estimate noise level in image"""        try:
             # Use high-pass filter to detect noise
             kernel = np.array([[-1, -1, -1],
                               [-1,  8, -1],
@@ -535,8 +514,7 @@ class ImageQualityAnalyzer(BaseAIModel):
         cv_image: np.ndarray,
         profile: ImageQualityProfile
     ):
-        """Analyze color quality and accuracy"""
-        try:
+        """Analyze color quality and accuracy"""        try:
             # Convert to different color spaces for analysis
             hsv = cv2.cvtColor(cv_image, cv2.COLOR_BGR2HSV)
             lab = cv2.cvtColor(cv_image, cv2.COLOR_BGR2LAB)
@@ -593,8 +571,7 @@ class ImageQualityAnalyzer(BaseAIModel):
         cv_image: np.ndarray,
         profile: ImageQualityProfile
     ):
-        """Analyze exposure and dynamic range"""
-        try:
+        """Analyze exposure and dynamic range"""        try:
             gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
             
             # Calculate histogram
@@ -627,8 +604,7 @@ class ImageQualityAnalyzer(BaseAIModel):
         cv_image: np.ndarray,
         profile: ImageQualityProfile
     ):
-        """Analyze image composition"""
-        try:
+        """Analyze image composition"""        try:
             gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
             h, w = gray.shape
             
@@ -709,8 +685,7 @@ class ImageQualityAnalyzer(BaseAIModel):
             logger.warning(f"Composition analysis failed: {str(e)}")
     
     def _calculate_quality_scores(self, profile: ImageQualityProfile):
-        """Calculate comprehensive quality scores"""
-        try:
+        """Calculate comprehensive quality scores"""        try:
             # Technical score
             tech_score = (
                 profile.sharpness_score * 0.35 +
@@ -789,8 +764,7 @@ class ImageQualityAnalyzer(BaseAIModel):
             profile.quality_level = "needs_improvement"
     
     def _generate_image_recommendations(self, profile: ImageQualityProfile):
-        """Generate image-specific recommendations"""
-        recommendations = []
+        """Generate image-specific recommendations"""        recommendations = []
         
         # Resolution recommendations
         if profile.megapixels < 6:
@@ -855,8 +829,7 @@ class ImageQualityAnalyzer(BaseAIModel):
         profile: ImageQualityProfile,
         metrics: ImageQualityMetrics
     ):
-        """Analyze compliance with platform requirements"""
-        try:
+        """Analyze compliance with platform requirements"""        try:
             # Instagram compliance
             instagram_req = self.platform_requirements['instagram']
             metrics.instagram_ready = (
@@ -930,8 +903,7 @@ class ImageQualityAnalyzer(BaseAIModel):
         cv_image: np.ndarray,
         metrics: ImageQualityMetrics
     ):
-        """Analyze image content characteristics"""
-        try:
+        """Analyze image content characteristics"""        try:
             # Image type classification based on aspect ratio and composition
             aspect_ratio = metrics.profile.aspect_ratio
             
@@ -987,8 +959,7 @@ class ImageQualityAnalyzer(BaseAIModel):
             metrics.lighting_type = "unknown"
     
     def _calculate_confidence(self, profile: ImageQualityProfile) -> float:
-        """Calculate analysis confidence score"""
-        confidence = 0.85  # Base confidence
+        """Calculate analysis confidence score"""        confidence = 0.85  # Base confidence
         
         # Adjust based on image resolution
         if profile.megapixels >= 12:
@@ -1016,16 +987,14 @@ class ImageQualityAnalyzer(BaseAIModel):
 
 
 async def analyze_image_quality(image_path: Union[str, Path]) -> Dict[str, Any]:
-    """
-    Convenient function for image quality analysis
+    """    Convenient function for image quality analysis
     
     Args:
         image_path: Path to image file
         
     Returns:
         Dict containing image quality analysis results
-    """
-    try:
+    """    try:
         result = await image_quality_analyzer.analyze_quality(image_path)
         return result
     except Exception as e:

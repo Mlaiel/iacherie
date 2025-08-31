@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -15,11 +12,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 #!/usr/bin/env python3
-"""
-Test suite for Grafana dashboards and visualization setup
-"""
-
-import pytest
+"""Test suite for Grafana dashboards and visualization setup
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -29,8 +23,7 @@ from pathlib import Path
 from typing import Dict, Any, List
 
 class TestGrafanaDashboards:
-    """Test suite for Grafana dashboard configurations"""
-    
+    """Test suite for Grafana dashboard configurations"""    
     @pytest.fixture
     def project_root(self):
         return Path("/home/runner/work/Ainflue/Ainflue")
@@ -44,17 +37,14 @@ class TestGrafanaDashboards:
         return list(grafana_dir.glob("*.json"))
     
     def test_grafana_directory_exists(self, grafana_dir):
-        """Test that Grafana directory exists"""
-        assert grafana_dir.exists(), f"Grafana directory not found: {grafana_dir}"
+        """Test that Grafana directory exists"""        assert grafana_dir.exists(), f"Grafana directory not found: {grafana_dir}"
     
     def test_dashboard_files_exist(self, dashboard_files):
-        """Test that dashboard JSON files exist"""
-        assert len(dashboard_files) > 0, "No dashboard files found"
+        """Test that dashboard JSON files exist"""        assert len(dashboard_files) > 0, "No dashboard files found"
         assert len(dashboard_files) >= 7, f"Expected at least 7 dashboards, found {len(dashboard_files)}"
     
     def test_required_dashboards_exist(self, grafana_dir):
-        """Test that all required dashboard types exist"""
-        required_dashboards = [
+        """Test that all required dashboard types exist"""        required_dashboards = [
             "business_metrics",
             "api_analytics", 
             "security_monitoring",
@@ -71,8 +61,7 @@ class TestGrafanaDashboards:
             assert len(matching_files) > 0, f"Missing required dashboard type: {required}"
     
     def test_dashboard_json_validity(self, dashboard_files):
-        """Test that all dashboard files are valid JSON"""
-        for dashboard_file in dashboard_files:
+        """Test that all dashboard files are valid JSON"""        for dashboard_file in dashboard_files:
             with open(dashboard_file) as f:
                 try:
                     data = json.load(f)
@@ -81,8 +70,7 @@ class TestGrafanaDashboards:
                     pytest.fail(f"Invalid JSON in {dashboard_file.name}: {str(e)}")
     
     def test_dashboard_structure(self, dashboard_files):
-        """Test that dashboards have required structure"""
-        for dashboard_file in dashboard_files:
+        """Test that dashboards have required structure"""        for dashboard_file in dashboard_files:
             with open(dashboard_file) as f:
                 data = json.load(f)
             
@@ -101,8 +89,7 @@ class TestGrafanaDashboards:
             assert isinstance(panels, list), f"Dashboard {dashboard_file.name} panels should be a list"
     
     def test_dashboard_panels_content(self, dashboard_files):
-        """Test that dashboards have meaningful panel content"""
-        for dashboard_file in dashboard_files:
+        """Test that dashboards have meaningful panel content"""        for dashboard_file in dashboard_files:
             with open(dashboard_file) as f:
                 data = json.load(f)
             
@@ -123,8 +110,7 @@ class TestGrafanaDashboards:
                 assert "type" in panel, f"Panel {i} in {dashboard_file.name} missing type"
     
     def test_prometheus_metrics_in_panels(self, dashboard_files):
-        """Test that panels contain valid Prometheus metric queries"""
-        for dashboard_file in dashboard_files:
+        """Test that panels contain valid Prometheus metric queries"""        for dashboard_file in dashboard_files:
             with open(dashboard_file) as f:
                 data = json.load(f)
             
@@ -157,8 +143,7 @@ class TestGrafanaDashboards:
                             print(f"Warning: Panel {i} target {j} in {dashboard_file.name} may have non-standard metric: {expr[:50]}...")
 
 class TestGrafanaProvisioning:
-    """Test suite for Grafana provisioning configuration"""
-    
+    """Test suite for Grafana provisioning configuration"""    
     @pytest.fixture
     def project_root(self):
         return Path("/home/runner/work/Ainflue/Ainflue")
@@ -168,28 +153,24 @@ class TestGrafanaProvisioning:
         return project_root / "monitoring" / "grafana" / "provisioning"
     
     def test_provisioning_directory_exists(self, provisioning_dir):
-        """Test that provisioning directory exists"""
-        assert provisioning_dir.exists(), f"Provisioning directory not found: {provisioning_dir}"
+        """Test that provisioning directory exists"""        assert provisioning_dir.exists(), f"Provisioning directory not found: {provisioning_dir}"
     
     def test_datasources_config_exists(self, provisioning_dir):
-        """Test that datasources configuration exists"""
-        datasources_dir = provisioning_dir / "datasources"
+        """Test that datasources configuration exists"""        datasources_dir = provisioning_dir / "datasources"
         assert datasources_dir.exists(), "Datasources provisioning directory missing"
         
         config_files = list(datasources_dir.glob("*.yml"))
         assert len(config_files) > 0, "No datasources configuration files found"
     
     def test_dashboards_config_exists(self, provisioning_dir):
-        """Test that dashboards provisioning configuration exists"""
-        dashboards_dir = provisioning_dir / "dashboards"
+        """Test that dashboards provisioning configuration exists"""        dashboards_dir = provisioning_dir / "dashboards"
         assert dashboards_dir.exists(), "Dashboards provisioning directory missing"
         
         config_files = list(dashboards_dir.glob("*.yml"))
         assert len(config_files) > 0, "No dashboards configuration files found"
     
     def test_datasources_config_valid(self, provisioning_dir):
-        """Test that datasources configuration is valid YAML"""
-        datasources_dir = provisioning_dir / "datasources"
+        """Test that datasources configuration is valid YAML"""        datasources_dir = provisioning_dir / "datasources"
         
         for config_file in datasources_dir.glob("*.yml"):
             with open(config_file) as f:
@@ -201,8 +182,7 @@ class TestGrafanaProvisioning:
                     pytest.fail(f"Invalid YAML in datasources config {config_file.name}: {str(e)}")
 
 class TestDockerComposeMonitoring:
-    """Test suite for Docker Compose monitoring configuration"""
-    
+    """Test suite for Docker Compose monitoring configuration"""    
     @pytest.fixture
     def project_root(self):
         return Path("/home/runner/work/Ainflue/Ainflue")
@@ -212,12 +192,10 @@ class TestDockerComposeMonitoring:
         return project_root / "docker-compose.monitoring.yml"
     
     def test_monitoring_compose_exists(self, compose_file):
-        """Test that monitoring Docker Compose file exists"""
-        assert compose_file.exists(), f"Monitoring compose file not found: {compose_file}"
+        """Test that monitoring Docker Compose file exists"""        assert compose_file.exists(), f"Monitoring compose file not found: {compose_file}"
     
     def test_monitoring_compose_valid(self, compose_file):
-        """Test that monitoring Docker Compose file is valid YAML"""
-        with open(compose_file) as f:
+        """Test that monitoring Docker Compose file is valid YAML"""        with open(compose_file) as f:
             try:
                 data = yaml.safe_load(f)
                 assert isinstance(data, dict), "Docker compose file should be a YAML object"
@@ -226,8 +204,7 @@ class TestDockerComposeMonitoring:
                 pytest.fail(f"Invalid YAML in monitoring compose file: {str(e)}")
     
     def test_required_services_present(self, compose_file):
-        """Test that required monitoring services are present"""
-        with open(compose_file) as f:
+        """Test that required monitoring services are present"""        with open(compose_file) as f:
             data = yaml.safe_load(f)
         
         services = data.get("services", {})
@@ -237,8 +214,7 @@ class TestDockerComposeMonitoring:
             assert service in services, f"Required service '{service}' not found in monitoring compose"
     
     def test_grafana_volumes_configured(self, compose_file):
-        """Test that Grafana volumes are properly configured"""
-        with open(compose_file) as f:
+        """Test that Grafana volumes are properly configured"""        with open(compose_file) as f:
             data = yaml.safe_load(f)
         
         grafana_service = data.get("services", {}).get("grafana", {})

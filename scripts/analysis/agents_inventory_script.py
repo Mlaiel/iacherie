@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
-"""
-AI Agents Inventory Script
+"""AI Agents Inventory Script
 Comprehensive analysis of all implemented agents in the Ainflue platform
 
 Author: GitHub Copilot Analysis
 Purpose: CRITIQUE - AGENTS IA verification
-"""
-
-import os
+"""import os
 import ast
 import json
 import re
@@ -18,8 +15,7 @@ from datetime import datetime
 
 @dataclass
 class AgentInfo:
-    """Information about an implemented agent"""
-    name: str
+    """Information about an implemented agent"""    name: str
     file_path: str
     directory: str
     class_name: str
@@ -32,8 +28,7 @@ class AgentInfo:
     implementation_quality: str  # "complete", "partial", "skeleton"
 
 class AgentInventoryAnalyzer:
-    """Analyzes all agent implementations in the repository"""
-    
+    """Analyzes all agent implementations in the repository"""    
     def __init__(self, repo_path: str):
         self.repo_path = Path(repo_path)
         self.agents: Dict[str, AgentInfo] = {}
@@ -46,8 +41,7 @@ class AgentInventoryAnalyzer:
         ]
         
     def analyze_all_agents(self) -> Dict[str, Any]:
-        """Perform comprehensive analysis of all agents"""
-        print("🔍 Starting comprehensive AI agents inventory...")
+        """Perform comprehensive analysis of all agents"""        print("🔍 Starting comprehensive AI agents inventory...")
         
         # Scan both agent directories
         self._scan_directory(self.repo_path / "ai_engine" / "ai_agents")
@@ -66,8 +60,7 @@ class AgentInventoryAnalyzer:
         return results
         
     def _scan_directory(self, directory: Path):
-        """Scan a directory for agent implementations"""
-        if not directory.exists():
+        """Scan a directory for agent implementations"""        if not directory.exists():
             print(f"⚠️  Directory not found: {directory}")
             return
             
@@ -83,8 +76,7 @@ class AgentInventoryAnalyzer:
                 print(f"❌ Error analyzing {py_file}: {e}")
                 
     def _analyze_python_file(self, file_path: Path):
-        """Analyze a Python file for agent classes"""
-        try:
+        """Analyze a Python file for agent classes"""        try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
                 
@@ -102,8 +94,7 @@ class AgentInventoryAnalyzer:
             print(f"⚠️  Could not parse {file_path}: {e}")
             
     def _extract_agent_info(self, class_node: ast.ClassDef, file_path: Path, content: str) -> AgentInfo:
-        """Extract detailed information about an agent class"""
-        
+        """Extract detailed information about an agent class"""        
         # Get methods
         methods = []
         has_init = False
@@ -156,8 +147,7 @@ class AgentInventoryAnalyzer:
         )
         
     def _extract_imports(self, content: str) -> List[str]:
-        """Extract import statements from file content"""
-        imports = []
+        """Extract import statements from file content"""        imports = []
         for line in content.split('\n'):
             line = line.strip()
             if line.startswith(('import ', 'from ')):
@@ -165,16 +155,14 @@ class AgentInventoryAnalyzer:
         return imports[:10]  # Limit to first 10 imports
         
     def _extract_dependencies(self, imports: List[str]) -> List[str]:
-        """Extract dependencies from imports"""
-        dependencies = []
+        """Extract dependencies from imports"""        dependencies = []
         for imp in imports:
             if 'agent' in imp.lower() or 'base' in imp.lower():
                 dependencies.append(imp)
         return dependencies
         
     def _assess_implementation_quality(self, methods: List[str], line_count: int, content: str) -> str:
-        """Assess the quality/completeness of implementation"""
-        
+        """Assess the quality/completeness of implementation"""        
         # Count substantive methods (not just __init__, __str__, etc.)
         substantive_methods = [m for m in methods if not m.startswith('__') or m == '__init__']
         
@@ -221,8 +209,7 @@ class AgentInventoryAnalyzer:
             return "skeleton"
             
     def _check_target_agents(self) -> Dict[str, Any]:
-        """Check status of the 5 target agents"""
-        target_status = {}
+        """Check status of the 5 target agents"""        target_status = {}
         
         for target in self.target_agents:
             if target in self.agents:
@@ -244,8 +231,7 @@ class AgentInventoryAnalyzer:
         return target_status
         
     def _categorize_by_quality(self) -> Dict[str, List[str]]:
-        """Categorize agents by implementation quality"""
-        categories = {
+        """Categorize agents by implementation quality"""        categories = {
             "complete": [],
             "partial": [],
             "skeleton": []
@@ -257,8 +243,7 @@ class AgentInventoryAnalyzer:
         return categories
         
     def _generate_summary(self) -> Dict[str, Any]:
-        """Generate summary statistics"""
-        total = len(self.agents)
+        """Generate summary statistics"""        total = len(self.agents)
         
         if total == 0:
             return {"error": "No agents found"}
@@ -284,8 +269,7 @@ class AgentInventoryAnalyzer:
         }
 
 def main():
-    """Main execution function"""
-    repo_path = "/home/runner/work/Ainflue/Ainflue"
+    """Main execution function"""    repo_path = "/home/runner/work/Ainflue/Ainflue"
     
     analyzer = AgentInventoryAnalyzer(repo_path)
     results = analyzer.analyze_all_agents()

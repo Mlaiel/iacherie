@@ -1,5 +1,4 @@
-"""
-Advanced Data Pipeline Orchestrator
+"""Advanced Data Pipeline Orchestrator
 Professional Industrial Data Processing Engine
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -9,9 +8,7 @@ License: Proprietary - All Rights Reserved
 WARNING: This code is proprietary and confidential. Any unauthorized copying,
 distribution, or use without explicit written permission from Fahed Mlaiel
 is strictly prohibited and may result in legal action.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 import uuid
@@ -34,8 +31,7 @@ logger = logging.getLogger(__name__)
 
 
 class PipelineStatus(Enum):
-    """Pipeline execution status"""
-    PENDING = "pending"
+    """Pipeline execution status"""    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -45,8 +41,7 @@ class PipelineStatus(Enum):
 
 
 class TaskType(Enum):
-    """Data processing task types"""
-    EXTRACTION = "extraction"
+    """Data processing task types"""    EXTRACTION = "extraction"
     TRANSFORMATION = "transformation"
     VALIDATION = "validation"
     ENRICHMENT = "enrichment"
@@ -57,8 +52,7 @@ class TaskType(Enum):
 
 
 class Priority(Enum):
-    """Task priority levels"""
-    LOW = 1
+    """Task priority levels"""    LOW = 1
     NORMAL = 2
     HIGH = 3
     CRITICAL = 4
@@ -66,8 +60,7 @@ class Priority(Enum):
 
 @dataclass
 class PipelineTask:
-    """Data pipeline task definition"""
-    id: str
+    """Data pipeline task definition"""    id: str
     name: str
     task_type: TaskType
     processor_class: str
@@ -89,8 +82,7 @@ class PipelineTask:
 
 @dataclass
 class PipelineDefinition:
-    """Data pipeline definition"""
-    id: str
+    """Data pipeline definition"""    id: str
     name: str
     description: str
     user_id: str
@@ -102,22 +94,18 @@ class PipelineDefinition:
 
 
 class TaskProcessor(ABC):
-    """Abstract base class for task processors"""
-    
+    """Abstract base class for task processors"""    
     @abstractmethod
     async def process(self, input_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-        """Process task with input data and configuration"""
-        pass
+        """Process task with input data and configuration"""        pass
     
     @abstractmethod
     def validate_config(self, config: Dict[str, Any]) -> bool:
-        """Validate task configuration"""
-        pass
+        """Validate task configuration"""        pass
 
 
 class DataPipelineOrchestrator:
-    """Advanced data pipeline orchestration engine"""
-    
+    """Advanced data pipeline orchestration engine"""    
     def __init__(self):
         self.db = get_database()
         self.security = SecurityManager()
@@ -141,8 +129,7 @@ class DataPipelineOrchestrator:
         self._register_builtin_processors()
 
     def _register_builtin_processors(self):
-        """Register built-in task processors"""
-        try:
+        """Register built-in task processors"""        try:
             # Register core content processing processors
             builtin_processors = [
                 {
@@ -197,8 +184,7 @@ class DataPipelineOrchestrator:
             raise
 
     async def start(self):
-        """Start the pipeline orchestrator"""
-        logger.info("Starting data pipeline orchestrator")
+        """Start the pipeline orchestrator"""        logger.info("Starting data pipeline orchestrator")
         
         # Start worker tasks
         for i in range(self.max_concurrent_tasks):
@@ -211,13 +197,11 @@ class DataPipelineOrchestrator:
         asyncio.create_task(self._scheduler_worker())
 
     async def register_processor(self, name: str, processor: TaskProcessor):
-        """Register a custom task processor"""
-        self.processors[name] = processor
+        """Register a custom task processor"""        self.processors[name] = processor
         logger.info(f"Registered processor: {name}")
 
     async def create_pipeline(self, definition: PipelineDefinition) -> str:
-        """Create a new data pipeline"""
-        try:
+        """Create a new data pipeline"""        try:
             # Validate pipeline definition
             await self._validate_pipeline_definition(definition)
             
@@ -232,8 +216,7 @@ class DataPipelineOrchestrator:
             raise ProcessingError(f"Pipeline creation failed: {str(e)}")
 
     async def _validate_pipeline_definition(self, definition: PipelineDefinition):
-        """Validate pipeline definition"""
-        if not definition.name:
+        """Validate pipeline definition"""        if not definition.name:
             raise ValidationError("Pipeline name is required")
         
         if not definition.tasks:
@@ -260,8 +243,7 @@ class DataPipelineOrchestrator:
                 raise ValidationError(f"Invalid config for task {task.id}")
 
     def _has_circular_dependencies(self, tasks: List[PipelineTask]) -> bool:
-        """Check for circular dependencies in tasks"""
-        # Build dependency graph
+        """Check for circular dependencies in tasks"""        # Build dependency graph
         graph = {task.id: task.dependencies for task in tasks}
         
         # Use DFS to detect cycles
@@ -292,16 +274,13 @@ class DataPipelineOrchestrator:
         return False
 
     async def _store_pipeline_definition(self, definition: PipelineDefinition) -> str:
-        """Store pipeline definition in database"""
-        try:
-            query = """
-            INSERT INTO data_pipelines (
+        """Store pipeline definition in database"""        try:
+            query = """            INSERT INTO data_pipelines (
                 id, name, description, user_id, definition,
                 schedule, enabled, created_at, updated_at
             ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
             RETURNING id
-            """
-            
+            """            
             pipeline_data = {
                 'tasks': [self._task_to_dict(task) for task in definition.tasks],
                 'metadata': {
@@ -330,8 +309,7 @@ class DataPipelineOrchestrator:
             raise ProcessingError(f"Pipeline storage failed: {str(e)}")
 
     def _task_to_dict(self, task: PipelineTask) -> Dict[str, Any]:
-        """Convert task to dictionary for storage"""
-        return {
+        """Convert task to dictionary for storage"""        return {
             'id': task.id,
             'name': task.name,
             'task_type': task.task_type.value,
@@ -358,8 +336,7 @@ class DataPipelineOrchestrator:
         input_data: Optional[Dict[str, Any]] = None,
         override_config: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Execute a data pipeline"""
-        try:
+        """Execute a data pipeline"""        try:
             # Load pipeline definition
             definition = await self._load_pipeline_definition(pipeline_id)
             
@@ -394,15 +371,12 @@ class DataPipelineOrchestrator:
             raise ProcessingError(f"Pipeline execution failed: {str(e)}")
 
     async def _load_pipeline_definition(self, pipeline_id: str) -> PipelineDefinition:
-        """Load pipeline definition from database"""
-        try:
-            query = """
-            SELECT id, name, description, user_id, definition,
+        """Load pipeline definition from database"""        try:
+            query = """            SELECT id, name, description, user_id, definition,
                    schedule, enabled, created_at, updated_at
             FROM data_pipelines
             WHERE id = $1
-            """
-            
+            """            
             row = await self.db.fetchrow(query, pipeline_id)
             
             if not row:
@@ -428,8 +402,7 @@ class DataPipelineOrchestrator:
             raise ProcessingError(f"Pipeline loading failed: {str(e)}")
 
     def _dict_to_task(self, task_data: Dict[str, Any]) -> PipelineTask:
-        """Convert dictionary to task object"""
-        return PipelineTask(
+        """Convert dictionary to task object"""        return PipelineTask(
             id=task_data['id'],
             name=task_data['name'],
             task_type=TaskType(task_data['task_type']),
@@ -456,8 +429,7 @@ class DataPipelineOrchestrator:
         input_data: Dict[str, Any],
         override_config: Dict[str, Any]
     ) -> List[PipelineTask]:
-        """Prepare tasks for execution with input data and config overrides"""
-        prepared_tasks = []
+        """Prepare tasks for execution with input data and config overrides"""        prepared_tasks = []
         
         for task in tasks:
             # Create a copy of the task
@@ -486,14 +458,11 @@ class DataPipelineOrchestrator:
         pipeline_id: str,
         tasks: List[PipelineTask]
     ):
-        """Create execution record in database"""
-        try:
-            query = """
-            INSERT INTO pipeline_executions (
+        """Create execution record in database"""        try:
+            query = """            INSERT INTO pipeline_executions (
                 id, pipeline_id, status, tasks, created_at, updated_at
             ) VALUES ($1, $2, $3, $4, $5, $6)
-            """
-            
+            """            
             tasks_data = [self._task_to_dict(task) for task in tasks]
             
             await self.db.execute(
@@ -515,8 +484,7 @@ class DataPipelineOrchestrator:
         execution_id: str,
         tasks: List[PipelineTask]
     ):
-        """Execute pipeline asynchronously"""
-        try:
+        """Execute pipeline asynchronously"""        try:
             logger.info(f"Executing pipeline: {execution_id}")
             
             # Build task dependency graph
@@ -590,15 +558,13 @@ class DataPipelineOrchestrator:
                 del self.running_pipelines[execution_id]
 
     def _build_task_graph(self, tasks: List[PipelineTask]) -> Dict[str, List[str]]:
-        """Build task dependency graph"""
-        graph = {}
+        """Build task dependency graph"""        graph = {}
         for task in tasks:
             graph[task.id] = task.dependencies
         return graph
 
     async def _execute_task(self, task: PipelineTask) -> Dict[str, Any]:
-        """Execute a single task"""
-        try:
+        """Execute a single task"""        try:
             logger.info(f"Executing task: {task.id}")
             
             task.status = PipelineStatus.RUNNING
@@ -650,8 +616,7 @@ class DataPipelineOrchestrator:
             raise ProcessingError(error_msg)
 
     def _get_memory_usage(self) -> float:
-        """Get current memory usage in MB"""
-        try:
+        """Get current memory usage in MB"""        try:
             import psutil
             process = psutil.Process()
             return process.memory_info().rss / 1024 / 1024
@@ -659,10 +624,8 @@ class DataPipelineOrchestrator:
             return 0.0
 
     async def _update_task_status(self, execution_id: str, task: PipelineTask):
-        """Update task status in database"""
-        try:
-            query = """
-            UPDATE pipeline_executions
+        """Update task status in database"""        try:
+            query = """            UPDATE pipeline_executions
             SET tasks = jsonb_set(
                 tasks,
                 '{tasks}',
@@ -679,8 +642,7 @@ class DataPipelineOrchestrator:
             ),
             updated_at = NOW()
             WHERE id = $1
-            """
-            
+            """            
             task_data = json.dumps(self._task_to_dict(task))
             await self.db.execute(query, execution_id, task.id, task_data)
             
@@ -693,25 +655,21 @@ class DataPipelineOrchestrator:
         status: PipelineStatus,
         error_message: Optional[str] = None
     ):
-        """Update execution status in database"""
-        try:
-            query = """
-            UPDATE pipeline_executions
+        """Update execution status in database"""        try:
+            query = """            UPDATE pipeline_executions
             SET status = $2,
                 error_message = $3,
                 completed_at = CASE WHEN $2 IN ('completed', 'failed', 'cancelled') THEN NOW() ELSE completed_at END,
                 updated_at = NOW()
             WHERE id = $1
-            """
-            
+            """            
             await self.db.execute(query, execution_id, status.value, error_message)
             
         except Exception as e:
             logger.error(f"Error updating execution status: {str(e)}")
 
     async def _task_worker(self, worker_id: str):
-        """Task worker for processing queued tasks"""
-        logger.info(f"Started task worker: {worker_id}")
+        """Task worker for processing queued tasks"""        logger.info(f"Started task worker: {worker_id}")
         
         while True:
             try:
@@ -732,8 +690,7 @@ class DataPipelineOrchestrator:
                 await asyncio.sleep(1)
 
     async def _process_queued_task(self, task_info: Dict[str, Any]):
-        """Process a queued task from the pipeline"""
-        try:
+        """Process a queued task from the pipeline"""        try:
             import time
             import uuid
             
@@ -796,8 +753,7 @@ class DataPipelineOrchestrator:
             }
 
     async def _cleanup_worker(self):
-        """Worker for cleaning up old executions"""
-        while True:
+        """Worker for cleaning up old executions"""        while True:
             try:
                 await self._cleanup_old_executions()
                 await asyncio.sleep(self.cleanup_interval)
@@ -806,17 +762,14 @@ class DataPipelineOrchestrator:
                 await asyncio.sleep(60)
 
     async def _cleanup_old_executions(self):
-        """Clean up old pipeline executions"""
-        try:
+        """Clean up old pipeline executions"""        try:
             # Delete executions older than 30 days
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=30)
             
-            query = """
-            DELETE FROM pipeline_executions
+            query = """            DELETE FROM pipeline_executions
             WHERE created_at < $1
             AND status IN ('completed', 'failed', 'cancelled')
-            """
-            
+            """            
             result = await self.db.execute(query, cutoff_date)
             
             if result:
@@ -827,8 +780,7 @@ class DataPipelineOrchestrator:
             logger.error(f"Error cleaning up executions: {str(e)}")
 
     async def _scheduler_worker(self):
-        """Worker for scheduled pipeline executions"""
-        while True:
+        """Worker for scheduled pipeline executions"""        while True:
             try:
                 await self._check_scheduled_pipelines()
                 await asyncio.sleep(60)  # Check every minute
@@ -837,15 +789,12 @@ class DataPipelineOrchestrator:
                 await asyncio.sleep(60)
 
     async def _check_scheduled_pipelines(self):
-        """Check for scheduled pipelines that need to run"""
-        try:
-            query = """
-            SELECT id, schedule, user_id
+        """Check for scheduled pipelines that need to run"""        try:
+            query = """            SELECT id, schedule, user_id
             FROM data_pipelines
             WHERE enabled = true
             AND schedule IS NOT NULL
-            """
-            
+            """            
             rows = await self.db.fetch(query)
             
             for row in rows:
@@ -856,21 +805,17 @@ class DataPipelineOrchestrator:
             logger.error(f"Error checking scheduled pipelines: {str(e)}")
 
     def _should_run_scheduled_pipeline(self, schedule: str) -> bool:
-        """Check if scheduled pipeline should run now"""
-        # This would implement cron-like scheduling logic
+        """Check if scheduled pipeline should run now"""        # This would implement cron-like scheduling logic
         # For now, return False
         return False
 
     async def get_pipeline_status(self, execution_id: str) -> Dict[str, Any]:
-        """Get pipeline execution status"""
-        try:
-            query = """
-            SELECT id, pipeline_id, status, tasks, created_at, 
+        """Get pipeline execution status"""        try:
+            query = """            SELECT id, pipeline_id, status, tasks, created_at, 
                    completed_at, error_message, updated_at
             FROM pipeline_executions
             WHERE id = $1
-            """
-            
+            """            
             row = await self.db.fetchrow(query, execution_id)
             
             if not row:
@@ -894,8 +839,7 @@ class DataPipelineOrchestrator:
             raise ProcessingError(f"Status retrieval failed: {str(e)}")
 
     async def cancel_pipeline(self, execution_id: str) -> bool:
-        """Cancel a running pipeline execution"""
-        try:
+        """Cancel a running pipeline execution"""        try:
             if execution_id in self.running_pipelines:
                 # Cancel the task
                 task = self.running_pipelines[execution_id]
@@ -918,16 +862,13 @@ class DataPipelineOrchestrator:
             raise ProcessingError(f"Pipeline cancellation failed: {str(e)}")
 
     async def list_pipelines(self, user_id: str) -> List[Dict[str, Any]]:
-        """List pipelines for a user"""
-        try:
-            query = """
-            SELECT id, name, description, schedule, enabled, 
+        """List pipelines for a user"""        try:
+            query = """            SELECT id, name, description, schedule, enabled, 
                    created_at, updated_at
             FROM data_pipelines
             WHERE user_id = $1
             ORDER BY updated_at DESC
-            """
-            
+            """            
             rows = await self.db.fetch(query, user_id)
             
             pipelines = []
@@ -949,17 +890,14 @@ class DataPipelineOrchestrator:
             raise ProcessingError(f"Pipeline listing failed: {str(e)}")
 
     async def get_pipeline_metrics(self, pipeline_id: str) -> Dict[str, Any]:
-        """Get pipeline execution metrics"""
-        try:
-            query = """
-            SELECT status, COUNT(*) as count,
+        """Get pipeline execution metrics"""        try:
+            query = """            SELECT status, COUNT(*) as count,
                    AVG(EXTRACT(EPOCH FROM (completed_at - created_at))) as avg_duration
             FROM pipeline_executions
             WHERE pipeline_id = $1
             AND created_at >= NOW() - INTERVAL '30 days'
             GROUP BY status
-            """
-            
+            """            
             rows = await self.db.fetch(query, pipeline_id)
             
             metrics = {

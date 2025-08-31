@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -98,18 +95,15 @@ except ImportError:
     TENSORFLOW_AVAILABLE = False
 
 class TestVisionModelManager(unittest.TestCase):
-    """Test suite for VisionModelManager class"""
-    
+    """Test suite for VisionModelManager class"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.manager = VisionModelManager()
+        """Set up test fixtures"""        self.manager = VisionModelManager()
         self.test_image = self._create_test_image()
         self.test_dataset = self._create_test_dataset()
         self.model_config = self._create_model_config()
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for ML processing"""
-        image = np.zeros((224, 224, 3), dtype=np.uint8)
+        """Create a test image for ML processing"""        image = np.zeros((224, 224, 3), dtype=np.uint8)
         
         # Add rich visual features for ML testing
         cv2.rectangle(image, (50, 50), (174, 174), (100, 150, 200), -1)
@@ -126,8 +120,7 @@ class TestVisionModelManager(unittest.TestCase):
         return image
     
     def _create_test_dataset(self) -> List[Dict[str, Any]]:
-        """Create a test dataset for training"""
-        dataset = []
+        """Create a test dataset for training"""        dataset = []
         for i in range(10):
             # Create varied test images
             image = np.random.randint(0, 255, (224, 224, 3), dtype=np.uint8)
@@ -153,8 +146,7 @@ class TestVisionModelManager(unittest.TestCase):
         return dataset
     
     def _create_model_config(self):
-        """Create model configuration for testing"""
-        try:
+        """Create model configuration for testing"""        try:
             return ModelConfig(
                 model_type='cnn',
                 input_shape=(224, 224, 3),
@@ -176,12 +168,10 @@ class TestVisionModelManager(unittest.TestCase):
             }
     
     def test_manager_initialization(self):
-        """Test VisionModelManager initialization"""
-        self.assertIsInstance(self.manager, VisionModelManager)
+        """Test VisionModelManager initialization"""        self.assertIsInstance(self.manager, VisionModelManager)
     
     def test_model_registration(self):
-        """Test model registration and management"""
-        try:
+        """Test model registration and management"""        try:
             # Register a test model
             model_id = self.manager.register_model(
                 model_name="test_cnn",
@@ -205,8 +195,7 @@ class TestVisionModelManager(unittest.TestCase):
             self.skipTest(f"Skipping due to import or framework error: {e}")
     
     def test_model_loading_and_saving(self):
-        """Test model loading and saving functionality"""
-        try:
+        """Test model loading and saving functionality"""        try:
             # Create a simple model
             model = self.manager.create_model(
                 model_type="cnn",
@@ -234,8 +223,7 @@ class TestVisionModelManager(unittest.TestCase):
                 shutil.rmtree(temp_dir, ignore_errors=True)
     
     def test_model_training_workflow(self):
-        """Test model training workflow"""
-        try:
+        """Test model training workflow"""        try:
             # Create model
             model = self.manager.create_model(
                 model_type="cnn",
@@ -263,8 +251,7 @@ class TestVisionModelManager(unittest.TestCase):
             self.skipTest(f"Skipping due to import or framework error: {e}")
     
     def test_model_inference(self):
-        """Test model inference capabilities"""
-        try:
+        """Test model inference capabilities"""        try:
             # Load or create a pre-trained model
             model = self.manager.create_model(
                 model_type="cnn",
@@ -290,8 +277,7 @@ class TestVisionModelManager(unittest.TestCase):
             self.skipTest(f"Skipping due to import or framework error: {e}")
     
     def test_model_evaluation(self):
-        """Test model evaluation metrics"""
-        try:
+        """Test model evaluation metrics"""        try:
             model = self.manager.create_model(
                 model_type="cnn",
                 config=self.model_config
@@ -318,17 +304,14 @@ class TestVisionModelManager(unittest.TestCase):
             self.skipTest(f"Skipping due to import or framework error: {e}")
 
 class TestContentCNN(unittest.TestCase):
-    """Test suite for ContentCNN class"""
-    
+    """Test suite for ContentCNN class"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.cnn = ContentCNN()
+        """Set up test fixtures"""        self.cnn = ContentCNN()
         self.test_image = self._create_test_image()
         self.test_batch = self._create_test_batch()
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for CNN processing"""
-        image = np.zeros((224, 224, 3), dtype=np.uint8)
+        """Create a test image for CNN processing"""        image = np.zeros((224, 224, 3), dtype=np.uint8)
         
         # Add CNN-friendly features
         cv2.rectangle(image, (50, 50), (174, 174), (128, 128, 128), -1)
@@ -338,8 +321,7 @@ class TestContentCNN(unittest.TestCase):
         return image
     
     def _create_test_batch(self) -> np.ndarray:
-        """Create a batch of test images"""
-        batch = np.zeros((4, 224, 224, 3), dtype=np.uint8)
+        """Create a batch of test images"""        batch = np.zeros((4, 224, 224, 3), dtype=np.uint8)
         
         for i in range(4):
             batch[i] = self.test_image.copy()
@@ -349,13 +331,11 @@ class TestContentCNN(unittest.TestCase):
         return batch
     
     def test_cnn_initialization(self):
-        """Test ContentCNN initialization"""
-        self.assertIsInstance(self.cnn, ContentCNN)
+        """Test ContentCNN initialization"""        self.assertIsInstance(self.cnn, ContentCNN)
     
     @unittest.skipUnless(TORCH_AVAILABLE or TENSORFLOW_AVAILABLE, "ML framework not available")
     def test_cnn_architecture_creation(self):
-        """Test CNN architecture creation"""
-        try:
+        """Test CNN architecture creation"""        try:
             architecture = self.cnn.create_architecture(
                 input_shape=(224, 224, 3),
                 num_classes=10,
@@ -380,8 +360,7 @@ class TestContentCNN(unittest.TestCase):
             self.skipTest(f"Skipping due to import or framework error: {e}")
     
     def test_feature_extraction(self):
-        """Test CNN feature extraction"""
-        try:
+        """Test CNN feature extraction"""        try:
             features = self.cnn.extract_features(
                 self.test_image,
                 layer_names=['conv1', 'conv2', 'conv3']
@@ -400,8 +379,7 @@ class TestContentCNN(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_content_classification(self):
-        """Test content classification"""
-        try:
+        """Test content classification"""        try:
             classification_result = self.cnn.classify_content(
                 self.test_image,
                 classes=['object', 'scene', 'text', 'face']
@@ -419,8 +397,7 @@ class TestContentCNN(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_object_detection(self):
-        """Test object detection capabilities"""
-        try:
+        """Test object detection capabilities"""        try:
             detection_result = self.cnn.detect_objects(
                 self.test_image,
                 confidence_threshold=0.5,
@@ -442,8 +419,7 @@ class TestContentCNN(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_batch_processing(self):
-        """Test batch processing capabilities"""
-        try:
+        """Test batch processing capabilities"""        try:
             batch_result = self.cnn.process_batch(
                 self.test_batch,
                 operation='classify'
@@ -460,17 +436,14 @@ class TestContentCNN(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
 
 class TestStyleTransferModel(unittest.TestCase):
-    """Test suite for StyleTransferModel class"""
-    
+    """Test suite for StyleTransferModel class"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.style_model = StyleTransferModel()
+        """Set up test fixtures"""        self.style_model = StyleTransferModel()
         self.content_image = self._create_content_image()
         self.style_image = self._create_style_image()
     
     def _create_content_image(self) -> np.ndarray:
-        """Create a content image for style transfer"""
-        image = np.zeros((256, 256, 3), dtype=np.uint8)
+        """Create a content image for style transfer"""        image = np.zeros((256, 256, 3), dtype=np.uint8)
         
         # Add content structure
         cv2.rectangle(image, (50, 50), (206, 206), (100, 150, 200), -1)
@@ -480,8 +453,7 @@ class TestStyleTransferModel(unittest.TestCase):
         return image
     
     def _create_style_image(self) -> np.ndarray:
-        """Create a style image for style transfer"""
-        image = np.zeros((256, 256, 3), dtype=np.uint8)
+        """Create a style image for style transfer"""        image = np.zeros((256, 256, 3), dtype=np.uint8)
         
         # Add artistic style patterns
         for i in range(0, 256, 10):
@@ -499,12 +471,10 @@ class TestStyleTransferModel(unittest.TestCase):
         return image
     
     def test_style_model_initialization(self):
-        """Test StyleTransferModel initialization"""
-        self.assertIsInstance(self.style_model, StyleTransferModel)
+        """Test StyleTransferModel initialization"""        self.assertIsInstance(self.style_model, StyleTransferModel)
     
     def test_neural_style_transfer(self):
-        """Test neural style transfer"""
-        try:
+        """Test neural style transfer"""        try:
             stylized_image = self.style_model.apply_neural_style_transfer(
                 content_image=self.content_image,
                 style_image=self.style_image,
@@ -523,8 +493,7 @@ class TestStyleTransferModel(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_fast_style_transfer(self):
-        """Test fast style transfer (pre-trained models)"""
-        try:
+        """Test fast style transfer (pre-trained models)"""        try:
             stylized_image = self.style_model.apply_fast_style_transfer(
                 content_image=self.content_image,
                 style_name="abstract",
@@ -538,8 +507,7 @@ class TestStyleTransferModel(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_style_extraction(self):
-        """Test style feature extraction"""
-        try:
+        """Test style feature extraction"""        try:
             style_features = self.style_model.extract_style_features(
                 self.style_image,
                 layers=['conv1_1', 'conv2_1', 'conv3_1', 'conv4_1', 'conv5_1']
@@ -557,8 +525,7 @@ class TestStyleTransferModel(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_content_preservation(self):
-        """Test content preservation during style transfer"""
-        try:
+        """Test content preservation during style transfer"""        try:
             stylized_image = self.style_model.apply_neural_style_transfer(
                 content_image=self.content_image,
                 style_image=self.style_image,
@@ -581,8 +548,7 @@ class TestStyleTransferModel(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_multi_style_transfer(self):
-        """Test multi-style transfer"""
-        try:
+        """Test multi-style transfer"""        try:
             # Create multiple style images
             style_images = [self.style_image]
             
@@ -603,17 +569,14 @@ class TestStyleTransferModel(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
 
 class TestGANProcessor(unittest.TestCase):
-    """Test suite for GANProcessor class"""
-    
+    """Test suite for GANProcessor class"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.gan = GANProcessor()
+        """Set up test fixtures"""        self.gan = GANProcessor()
         self.test_image = self._create_test_image()
         self.test_noise = self._create_test_noise()
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for GAN processing"""
-        image = np.zeros((128, 128, 3), dtype=np.uint8)
+        """Create a test image for GAN processing"""        image = np.zeros((128, 128, 3), dtype=np.uint8)
         
         # Add some structure for GAN processing
         cv2.rectangle(image, (20, 20), (108, 108), (150, 150, 150), -1)
@@ -622,16 +585,13 @@ class TestGANProcessor(unittest.TestCase):
         return image
     
     def _create_test_noise(self) -> np.ndarray:
-        """Create test noise vector for GAN generation"""
-        return np.random.randn(100).astype(np.float32)
+        """Create test noise vector for GAN generation"""        return np.random.randn(100).astype(np.float32)
     
     def test_gan_initialization(self):
-        """Test GANProcessor initialization"""
-        self.assertIsInstance(self.gan, GANProcessor)
+        """Test GANProcessor initialization"""        self.assertIsInstance(self.gan, GANProcessor)
     
     def test_image_generation(self):
-        """Test image generation from noise"""
-        try:
+        """Test image generation from noise"""        try:
             generated_image = self.gan.generate_image(
                 noise_vector=self.test_noise,
                 target_size=(128, 128)
@@ -645,8 +605,7 @@ class TestGANProcessor(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_image_to_image_translation(self):
-        """Test image-to-image translation (pix2pix style)"""
-        try:
+        """Test image-to-image translation (pix2pix style)"""        try:
             translated_image = self.gan.translate_image(
                 source_image=self.test_image,
                 target_domain="artistic",
@@ -661,8 +620,7 @@ class TestGANProcessor(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_super_resolution(self):
-        """Test super-resolution using GAN"""
-        try:
+        """Test super-resolution using GAN"""        try:
             # Create low-resolution image
             low_res = cv2.resize(self.test_image, (64, 64))
             
@@ -683,8 +641,7 @@ class TestGANProcessor(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_image_inpainting(self):
-        """Test image inpainting using GAN"""
-        try:
+        """Test image inpainting using GAN"""        try:
             # Create mask for inpainting
             mask = np.zeros((128, 128), dtype=np.uint8)
             cv2.rectangle(mask, (40, 40), (88, 88), 255, -1)
@@ -703,8 +660,7 @@ class TestGANProcessor(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_adversarial_training(self):
-        """Test adversarial training simulation"""
-        try:
+        """Test adversarial training simulation"""        try:
             training_result = self.gan.simulate_adversarial_training(
                 generator_input=self.test_noise,
                 real_images=[self.test_image],
@@ -724,8 +680,7 @@ class TestGANProcessor(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_latent_space_interpolation(self):
-        """Test latent space interpolation"""
-        try:
+        """Test latent space interpolation"""        try:
             noise1 = np.random.randn(100).astype(np.float32)
             noise2 = np.random.randn(100).astype(np.float32)
             
@@ -746,17 +701,14 @@ class TestGANProcessor(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
 
 class TestTransformerVision(unittest.TestCase):
-    """Test suite for TransformerVision class"""
-    
+    """Test suite for TransformerVision class"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.transformer = TransformerVision()
+        """Set up test fixtures"""        self.transformer = TransformerVision()
         self.test_image = self._create_test_image()
         self.test_sequence = self._create_test_sequence()
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for transformer processing"""
-        image = np.zeros((224, 224, 3), dtype=np.uint8)
+        """Create a test image for transformer processing"""        image = np.zeros((224, 224, 3), dtype=np.uint8)
         
         # Add patch-like structure suitable for Vision Transformer
         patch_size = 32
@@ -772,8 +724,7 @@ class TestTransformerVision(unittest.TestCase):
         return image
     
     def _create_test_sequence(self) -> List[np.ndarray]:
-        """Create a sequence of images for transformer processing"""
-        sequence = []
+        """Create a sequence of images for transformer processing"""        sequence = []
         for i in range(5):
             img = self.test_image.copy()
             # Add temporal variation
@@ -782,12 +733,10 @@ class TestTransformerVision(unittest.TestCase):
         return sequence
     
     def test_transformer_initialization(self):
-        """Test TransformerVision initialization"""
-        self.assertIsInstance(self.transformer, TransformerVision)
+        """Test TransformerVision initialization"""        self.assertIsInstance(self.transformer, TransformerVision)
     
     def test_patch_embedding(self):
-        """Test image patch embedding"""
-        try:
+        """Test image patch embedding"""        try:
             patch_embeddings = self.transformer.create_patch_embeddings(
                 image=self.test_image,
                 patch_size=16,
@@ -807,8 +756,7 @@ class TestTransformerVision(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_attention_mechanism(self):
-        """Test attention mechanism"""
-        try:
+        """Test attention mechanism"""        try:
             # Create dummy feature maps
             feature_maps = np.random.randn(196, 768).astype(np.float32)  # 196 patches, 768 dim
             
@@ -826,8 +774,7 @@ class TestTransformerVision(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_vision_transformer_classification(self):
-        """Test Vision Transformer for image classification"""
-        try:
+        """Test Vision Transformer for image classification"""        try:
             classification_result = self.transformer.classify_image(
                 image=self.test_image,
                 num_classes=1000,
@@ -846,8 +793,7 @@ class TestTransformerVision(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_object_detection_with_detr(self):
-        """Test object detection using DETR (Detection Transformer)"""
-        try:
+        """Test object detection using DETR (Detection Transformer)"""        try:
             detection_result = self.transformer.detect_objects_detr(
                 image=self.test_image,
                 confidence_threshold=0.5,
@@ -866,8 +812,7 @@ class TestTransformerVision(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_video_sequence_processing(self):
-        """Test video sequence processing with temporal attention"""
-        try:
+        """Test video sequence processing with temporal attention"""        try:
             sequence_result = self.transformer.process_video_sequence(
                 image_sequence=self.test_sequence,
                 temporal_modeling=True,
@@ -886,8 +831,7 @@ class TestTransformerVision(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_attention_visualization(self):
-        """Test attention map visualization"""
-        try:
+        """Test attention map visualization"""        try:
             attention_maps = self.transformer.visualize_attention(
                 image=self.test_image,
                 layer_index=11,  # Last layer
@@ -904,8 +848,7 @@ class TestTransformerVision(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_feature_pyramid_extraction(self):
-        """Test multi-scale feature extraction"""
-        try:
+        """Test multi-scale feature extraction"""        try:
             pyramid_features = self.transformer.extract_pyramid_features(
                 image=self.test_image,
                 scales=[1, 2, 4, 8],
@@ -923,11 +866,9 @@ class TestTransformerVision(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
 
 class TestMLModelsIntegration(unittest.TestCase):
-    """Test suite for ML models integration and workflows"""
-    
+    """Test suite for ML models integration and workflows"""    
     def setUp(self):
-        """Set up integration test fixtures"""
-        self.model_manager = VisionModelManager()
+        """Set up integration test fixtures"""        self.model_manager = VisionModelManager()
         self.cnn = ContentCNN()
         self.style_transfer = StyleTransferModel()
         self.gan = GANProcessor()
@@ -936,8 +877,7 @@ class TestMLModelsIntegration(unittest.TestCase):
         self.test_image = self._create_comprehensive_test_image()
     
     def _create_comprehensive_test_image(self) -> np.ndarray:
-        """Create comprehensive test image for integration testing"""
-        image = np.zeros((256, 256, 3), dtype=np.uint8)
+        """Create comprehensive test image for integration testing"""        image = np.zeros((256, 256, 3), dtype=np.uint8)
         
         # Add multiple objects for detection
         cv2.rectangle(image, (50, 50), (120, 120), (100, 150, 200), -1)
@@ -954,8 +894,7 @@ class TestMLModelsIntegration(unittest.TestCase):
         return image
     
     def test_end_to_end_content_analysis(self):
-        """Test end-to-end content analysis pipeline"""
-        try:
+        """Test end-to-end content analysis pipeline"""        try:
             # Step 1: Feature extraction with CNN
             cnn_features = self.cnn.extract_features(
                 self.test_image,
@@ -990,8 +929,7 @@ class TestMLModelsIntegration(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_model_ensemble_prediction(self):
-        """Test ensemble prediction using multiple models"""
-        try:
+        """Test ensemble prediction using multiple models"""        try:
             # Get predictions from different models
             predictions = {}
             
@@ -1024,8 +962,7 @@ class TestMLModelsIntegration(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_content_generation_pipeline(self):
-        """Test content generation pipeline"""
-        try:
+        """Test content generation pipeline"""        try:
             # Step 1: Generate base image with GAN
             noise_vector = np.random.randn(100).astype(np.float32)
             generated_image = self.gan.generate_image(
@@ -1054,8 +991,7 @@ class TestMLModelsIntegration(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_model_performance_benchmarking(self):
-        """Test model performance benchmarking"""
-        try:
+        """Test model performance benchmarking"""        try:
             benchmark_results = {}
             
             # Benchmark CNN
@@ -1080,8 +1016,7 @@ class TestMLModelsIntegration(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_model_comparison_analysis(self):
-        """Test model comparison and analysis"""
-        try:
+        """Test model comparison and analysis"""        try:
             comparison_results = self.model_manager.compare_models(
                 models=['cnn', 'transformer', 'gan'],
                 test_data=[self.test_image],
@@ -1100,8 +1035,7 @@ class TestMLModelsIntegration(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_adaptive_model_selection(self):
-        """Test adaptive model selection based on content"""
-        try:
+        """Test adaptive model selection based on content"""        try:
             # Analyze content to determine best model
             content_analysis = self.model_manager.analyze_content_for_model_selection(
                 self.test_image

@@ -1,5 +1,4 @@
-"""
-Cloud Provider Management System
+"""Cloud Provider Management System
 
 Provides multi-cloud support for AWS, GCP, Azure with unified interface
 for infrastructure provisioning and management.
@@ -8,9 +7,7 @@ Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -26,16 +23,14 @@ import json
 logger = logging.getLogger(__name__)
 
 class CloudProvider(Enum):
-    """Supported cloud providers"""
-    AWS = "aws"
+    """Supported cloud providers"""    AWS = "aws"
     GCP = "gcp"
     AZURE = "azure"
     MULTI_CLOUD = "multi_cloud"
 
 @dataclass
 class CloudCredentials:
-    """Cloud provider credentials"""
-    provider: CloudProvider
+    """Cloud provider credentials"""    provider: CloudProvider
     access_key: Optional[str] = None
     secret_key: Optional[str] = None
     project_id: Optional[str] = None
@@ -45,8 +40,7 @@ class CloudCredentials:
 
 @dataclass
 class InfrastructureSpec:
-    """Infrastructure specification"""
-    provider: CloudProvider
+    """Infrastructure specification"""    provider: CloudProvider
     region: str
     compute_instances: Dict[str, Any]
     storage_config: Dict[str, Any]
@@ -56,36 +50,29 @@ class InfrastructureSpec:
     auto_scaling_config: Optional[Dict[str, Any]] = None
 
 class CloudProviderInterface(ABC):
-    """Abstract interface for cloud providers"""
-    
+    """Abstract interface for cloud providers"""    
     @abstractmethod
     async def provision_compute(self, spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Provision compute resources"""
-        pass
+        """Provision compute resources"""        pass
     
     @abstractmethod
     async def provision_storage(self, spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Provision storage resources"""
-        pass
+        """Provision storage resources"""        pass
     
     @abstractmethod
     async def setup_networking(self, spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup networking infrastructure"""
-        pass
+        """Setup networking infrastructure"""        pass
     
     @abstractmethod
     async def configure_security(self, spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Configure security settings"""
-        pass
+        """Configure security settings"""        pass
     
     @abstractmethod
     async def deploy_load_balancer(self, spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy load balancer"""
-        pass
+        """Deploy load balancer"""        pass
 
 class AWSProvider(CloudProviderInterface):
-    """AWS cloud provider implementation"""
-    
+    """AWS cloud provider implementation"""    
     def __init__(self, credentials: CloudCredentials):
         self.credentials = credentials
         self.session = boto3.Session(
@@ -99,8 +86,7 @@ class AWSProvider(CloudProviderInterface):
         self.autoscaling = self.session.client('autoscaling')
         
     async def provision_compute(self, spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Provision EC2 instances"""
-        try:
+        """Provision EC2 instances"""        try:
             response = self.ec2.run_instances(
                 ImageId=spec.get('ami_id', 'ami-0c02fb55956c7d316'),
                 MinCount=spec.get('min_count', 1),
@@ -133,8 +119,7 @@ class AWSProvider(CloudProviderInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def provision_storage(self, spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Provision S3 storage"""
-        try:
+        """Provision S3 storage"""        try:
             bucket_name = spec.get('bucket_name', f"ia-influencer-{self.credentials.region}")
             
             # Create S3 bucket
@@ -176,8 +161,7 @@ class AWSProvider(CloudProviderInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def setup_networking(self, spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup VPC and networking"""
-        try:
+        """Setup VPC and networking"""        try:
             # Create VPC
             vpc_response = self.ec2.create_vpc(
                 CidrBlock=spec.get('vpc_cidr', '10.0.0.0/16'),
@@ -228,8 +212,7 @@ class AWSProvider(CloudProviderInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def configure_security(self, spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Configure security groups and IAM roles"""
-        try:
+        """Configure security groups and IAM roles"""        try:
             # Create security group
             sg_response = self.ec2.create_security_group(
                 GroupName='ia-influencer-sg',
@@ -274,8 +257,7 @@ class AWSProvider(CloudProviderInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def deploy_load_balancer(self, spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy Application Load Balancer"""
-        try:
+        """Deploy Application Load Balancer"""        try:
             # Create load balancer
             lb_response = self.elbv2.create_load_balancer(
                 Name='ia-influencer-alb',
@@ -327,8 +309,7 @@ class AWSProvider(CloudProviderInterface):
             return {'status': 'error', 'message': str(e)}
 
 class GCPProvider(CloudProviderInterface):
-    """Google Cloud Platform provider implementation"""
-    
+    """Google Cloud Platform provider implementation"""    
     def __init__(self, credentials: CloudCredentials):
         self.credentials = credentials
         self.project_id = credentials.project_id
@@ -337,8 +318,7 @@ class GCPProvider(CloudProviderInterface):
         self.storage_client = storage.Client(project=self.project_id)
         
     async def provision_compute(self, spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Provision Compute Engine instances"""
-        try:
+        """Provision Compute Engine instances"""        try:
             # Implementation for GCP compute provisioning
             logger.info("Provisioning GCP Compute Engine instances")
             return {'status': 'success', 'message': 'GCP compute provisioned'}
@@ -347,8 +327,7 @@ class GCPProvider(CloudProviderInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def provision_storage(self, spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Provision Cloud Storage"""
-        try:
+        """Provision Cloud Storage"""        try:
             # Implementation for GCP storage provisioning
             logger.info("Provisioning GCP Cloud Storage")
             return {'status': 'success', 'message': 'GCP storage provisioned'}
@@ -357,8 +336,7 @@ class GCPProvider(CloudProviderInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def setup_networking(self, spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup VPC networking"""
-        try:
+        """Setup VPC networking"""        try:
             # Implementation for GCP networking
             logger.info("Setting up GCP VPC networking")
             return {'status': 'success', 'message': 'GCP networking setup'}
@@ -367,8 +345,7 @@ class GCPProvider(CloudProviderInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def configure_security(self, spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Configure firewall and IAM"""
-        try:
+        """Configure firewall and IAM"""        try:
             # Implementation for GCP security
             logger.info("Configuring GCP security")
             return {'status': 'success', 'message': 'GCP security configured'}
@@ -377,8 +354,7 @@ class GCPProvider(CloudProviderInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def deploy_load_balancer(self, spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy Cloud Load Balancing"""
-        try:
+        """Deploy Cloud Load Balancing"""        try:
             # Implementation for GCP load balancer
             logger.info("Deploying GCP Load Balancer")
             return {'status': 'success', 'message': 'GCP load balancer deployed'}
@@ -387,8 +363,7 @@ class GCPProvider(CloudProviderInterface):
             return {'status': 'error', 'message': str(e)}
 
 class AzureProvider(CloudProviderInterface):
-    """Microsoft Azure provider implementation"""
-    
+    """Microsoft Azure provider implementation"""    
     def __init__(self, credentials: CloudCredentials):
         self.credentials = credentials
         self.credential = DefaultAzureCredential()
@@ -398,8 +373,7 @@ class AzureProvider(CloudProviderInterface):
         )
         
     async def provision_compute(self, spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Provision Azure VMs"""
-        try:
+        """Provision Azure VMs"""        try:
             # Implementation for Azure compute provisioning
             logger.info("Provisioning Azure Virtual Machines")
             return {'status': 'success', 'message': 'Azure compute provisioned'}
@@ -408,8 +382,7 @@ class AzureProvider(CloudProviderInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def provision_storage(self, spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Provision Azure Storage"""
-        try:
+        """Provision Azure Storage"""        try:
             # Implementation for Azure storage provisioning
             logger.info("Provisioning Azure Storage")
             return {'status': 'success', 'message': 'Azure storage provisioned'}
@@ -418,8 +391,7 @@ class AzureProvider(CloudProviderInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def setup_networking(self, spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup Azure Virtual Network"""
-        try:
+        """Setup Azure Virtual Network"""        try:
             # Implementation for Azure networking
             logger.info("Setting up Azure Virtual Network")
             return {'status': 'success', 'message': 'Azure networking setup'}
@@ -428,8 +400,7 @@ class AzureProvider(CloudProviderInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def configure_security(self, spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Configure NSG and Azure AD"""
-        try:
+        """Configure NSG and Azure AD"""        try:
             # Implementation for Azure security
             logger.info("Configuring Azure security")
             return {'status': 'success', 'message': 'Azure security configured'}
@@ -438,8 +409,7 @@ class AzureProvider(CloudProviderInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def deploy_load_balancer(self, spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy Azure Load Balancer"""
-        try:
+        """Deploy Azure Load Balancer"""        try:
             # Implementation for Azure load balancer
             logger.info("Deploying Azure Load Balancer")
             return {'status': 'success', 'message': 'Azure load balancer deployed'}
@@ -448,15 +418,13 @@ class AzureProvider(CloudProviderInterface):
             return {'status': 'error', 'message': str(e)}
 
 class CloudProviderManager:
-    """Multi-cloud provider manager"""
-    
+    """Multi-cloud provider manager"""    
     def __init__(self):
         self.providers: Dict[CloudProvider, CloudProviderInterface] = {}
         self.active_provider: Optional[CloudProvider] = None
         
     def register_provider(self, provider: CloudProvider, credentials: CloudCredentials):
-        """Register a cloud provider"""
-        try:
+        """Register a cloud provider"""        try:
             if provider == CloudProvider.AWS:
                 self.providers[provider] = AWSProvider(credentials)
             elif provider == CloudProvider.GCP:
@@ -470,16 +438,14 @@ class CloudProviderManager:
             raise
     
     def set_active_provider(self, provider: CloudProvider):
-        """Set the active cloud provider"""
-        if provider not in self.providers:
+        """Set the active cloud provider"""        if provider not in self.providers:
             raise ValueError(f"Provider {provider.value} not registered")
         
         self.active_provider = provider
         logger.info(f"Set active provider: {provider.value}")
     
     async def deploy_infrastructure(self, spec: InfrastructureSpec) -> Dict[str, Any]:
-        """Deploy complete infrastructure"""
-        if not self.active_provider:
+        """Deploy complete infrastructure"""        if not self.active_provider:
             raise ValueError("No active provider set")
         
         provider = self.providers[self.active_provider]
@@ -540,8 +506,7 @@ class CloudProviderManager:
             }
     
     async def destroy_infrastructure(self, infrastructure_id: str) -> Dict[str, Any]:
-        """Destroy infrastructure resources"""
-        if not self.active_provider:
+        """Destroy infrastructure resources"""        if not self.active_provider:
             raise ValueError("No active provider set")
         
         try:
@@ -553,8 +518,7 @@ class CloudProviderManager:
             return {'status': 'error', 'message': str(e)}
     
     async def get_infrastructure_status(self, infrastructure_id: str) -> Dict[str, Any]:
-        """Get infrastructure status"""
-        if not self.active_provider:
+        """Get infrastructure status"""        if not self.active_provider:
             raise ValueError("No active provider set")
         
         try:

@@ -1,5 +1,4 @@
-"""
-Video Transformer - Professional video processing for IA Influencer Agent Platform
+"""Video Transformer - Professional video processing for IA Influencer Agent Platform
 ===================================================================================
 
 Advanced video transformation, conversion, and enhancement capabilities
@@ -8,9 +7,7 @@ for creators' video content workflows.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import os
 import tempfile
@@ -36,8 +33,7 @@ logger = logging.getLogger(__name__)
 
 
 class VideoFormat(Enum):
-    """Supported video formats."""
-    MP4 = "mp4"
+    """Supported video formats."""    MP4 = "mp4"
     AVI = "avi"
     MOV = "mov"
     MKV = "mkv"
@@ -48,8 +44,7 @@ class VideoFormat(Enum):
 
 
 class VideoQuality(Enum):
-    """Video quality presets."""
-    LOW = "low"          # 480p, low bitrate
+    """Video quality presets."""    LOW = "low"          # 480p, low bitrate
     MEDIUM = "medium"    # 720p, medium bitrate
     HIGH = "high"        # 1080p, high bitrate
     ULTRA = "ultra"      # 1440p/4K, ultra bitrate
@@ -58,8 +53,7 @@ class VideoQuality(Enum):
 
 
 class VideoCodec(Enum):
-    """Video codecs."""
-    H264 = "libx264"
+    """Video codecs."""    H264 = "libx264"
     H265 = "libx265"
     VP9 = "libvpx-vp9"
     AV1 = "libaom-av1"
@@ -68,8 +62,7 @@ class VideoCodec(Enum):
 
 
 class VideoProfile(Enum):
-    """Video encoding profiles."""
-    BASELINE = "baseline"
+    """Video encoding profiles."""    BASELINE = "baseline"
     MAIN = "main"
     HIGH = "high"
     HIGH444 = "high444p"
@@ -77,8 +70,7 @@ class VideoProfile(Enum):
 
 @dataclass
 class VideoSettings:
-    """Video processing settings."""
-    format: VideoFormat = VideoFormat.MP4
+    """Video processing settings."""    format: VideoFormat = VideoFormat.MP4
     quality: VideoQuality = VideoQuality.HIGH
     codec: Optional[VideoCodec] = None
     width: Optional[int] = None
@@ -103,8 +95,7 @@ class VideoSettings:
 
 @dataclass
 class VideoMetadata:
-    """Video file metadata."""
-    title: Optional[str] = None
+    """Video file metadata."""    title: Optional[str] = None
     duration: Optional[float] = None
     width: Optional[int] = None
     height: Optional[int] = None
@@ -123,28 +114,24 @@ class VideoMetadata:
 
 
 class VideoTransformer:
-    """
-    Professional video transformation engine for the IA Influencer Agent Platform.
+    """    Professional video transformation engine for the IA Influencer Agent Platform.
     
     Provides advanced video processing, conversion, and enhancement capabilities
     optimized for creator content workflows.
-    """
-    
+    """    
     def __init__(
         self,
         enable_gpu: bool = True,
         config: Optional[Dict[str, Any]] = None,
         temp_dir: Optional[str] = None
     ):
-        """
-        Initialize video transformer.
+        """        Initialize video transformer.
         
         Args:
             enable_gpu: Enable GPU acceleration if available
             config: Configuration options
             temp_dir: Temporary directory for processing
-        """
-        self.enable_gpu = enable_gpu
+        """        self.enable_gpu = enable_gpu
         self.config = config or {}
         self.temp_dir = Path(temp_dir) if temp_dir else Path(tempfile.gettempdir()) / "video_transform"
         
@@ -192,8 +179,7 @@ class VideoTransformer:
         logger.info(f"VideoTransformer initialized (GPU: {self.gpu_available}, FFmpeg: {self.ffmpeg_available})")
     
     def _check_ffmpeg(self) -> bool:
-        """Check if FFmpeg is available."""
-        try:
+        """Check if FFmpeg is available."""        try:
             subprocess.run(["ffmpeg", "-version"], capture_output=True, check=True)
             return True
         except (subprocess.CalledProcessError, FileNotFoundError):
@@ -201,8 +187,7 @@ class VideoTransformer:
             return False
     
     def _check_gpu_acceleration(self) -> bool:
-        """Check for GPU acceleration support."""
-        if not self.ffmpeg_available:
+        """Check for GPU acceleration support."""        if not self.ffmpeg_available:
             return False
         
         try:
@@ -219,16 +204,14 @@ class VideoTransformer:
             return False
     
     async def transform(self, request) -> Any:
-        """
-        Transform video based on request configuration.
+        """        Transform video based on request configuration.
         
         Args:
             request: Transformation request with video settings
             
         Returns:
             TransformationResult with processing metrics
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Parse request
@@ -288,8 +271,7 @@ class VideoTransformer:
         quality: Union[str, VideoQuality] = VideoQuality.HIGH,
         **kwargs
     ) -> bool:
-        """
-        Convert video file to specified format and quality.
+        """        Convert video file to specified format and quality.
         
         Args:
             input_path: Input video file path
@@ -300,8 +282,7 @@ class VideoTransformer:
             
         Returns:
             Success status
-        """
-        settings = VideoSettings(
+        """        settings = VideoSettings(
             format=format if isinstance(format, VideoFormat) else VideoFormat(format),
             quality=quality if isinstance(quality, VideoQuality) else VideoQuality(quality),
             **kwargs
@@ -324,8 +305,7 @@ class VideoTransformer:
         output_path: str,
         enhancement_options: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """
-        Enhance video quality using AI and signal processing.
+        """        Enhance video quality using AI and signal processing.
         
         Args:
             input_path: Input video file path
@@ -334,8 +314,7 @@ class VideoTransformer:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             options = enhancement_options or {}
             settings = VideoSettings(
                 stabilize=options.get('stabilize', False),
@@ -355,16 +334,14 @@ class VideoTransformer:
             return False
     
     async def get_metadata(self, file_path: str) -> VideoMetadata:
-        """
-        Extract comprehensive video metadata.
+        """        Extract comprehensive video metadata.
         
         Args:
             file_path: Video file path
             
         Returns:
             VideoMetadata object
-        """
-        try:
+        """        try:
             metadata = VideoMetadata()
             file_path_obj = Path(file_path)
             
@@ -455,8 +432,7 @@ class VideoTransformer:
         output_path: Path,
         settings: VideoSettings
     ) -> Path:
-        """Convert video with specified settings."""
-        if not self.ffmpeg_available:
+        """Convert video with specified settings."""        if not self.ffmpeg_available:
             raise RuntimeError("FFmpeg required for video conversion")
         
         # Get quality settings
@@ -574,8 +550,7 @@ class VideoTransformer:
         settings: VideoSettings,
         output_path: Optional[Path] = None
     ) -> Path:
-        """Enhance video quality using advanced processing."""
-        if not output_path:
+        """Enhance video quality using advanced processing."""        if not output_path:
             output_path = input_path.parent / f"{input_path.stem}_enhanced{input_path.suffix}"
         
         try:
@@ -642,8 +617,7 @@ class VideoTransformer:
             return input_path
     
     async def _calculate_quality_score(self, input_path: str, output_path: str) -> Optional[float]:
-        """Calculate video quality score comparing input and output."""
-        try:
+        """Calculate video quality score comparing input and output."""        try:
             if not VIDEO_LIBS_AVAILABLE:
                 return None
             
@@ -694,8 +668,7 @@ class VideoTransformer:
             return None
     
     def _parse_video_settings(self, request) -> VideoSettings:
-        """Parse transformation request into video settings."""
-        settings = VideoSettings()
+        """Parse transformation request into video settings."""        settings = VideoSettings()
         
         if hasattr(request, 'target_format') and request.target_format:
             settings.format = VideoFormat(request.target_format)
@@ -737,8 +710,7 @@ class VideoTransformer:
         settings: VideoSettings,
         requested_output: Optional[str] = None
     ) -> Path:
-        """Generate output file path."""
-        if requested_output:
+        """Generate output file path."""        if requested_output:
             return Path(requested_output)
         
         # Generate based on input and settings
@@ -746,8 +718,7 @@ class VideoTransformer:
         return input_path.parent / output_name
     
     async def cleanup(self):
-        """Cleanup temporary files and resources."""
-        try:
+        """Cleanup temporary files and resources."""        try:
             # Clean temp directory
             if self.temp_dir.exists():
                 import shutil
@@ -760,8 +731,7 @@ class VideoTransformer:
 
 
 class VideoConverter:
-    """Simplified video converter interface."""
-    
+    """Simplified video converter interface."""    
     def __init__(self, transformer: Optional[VideoTransformer] = None):
         self.transformer = transformer or VideoTransformer()
     
@@ -772,13 +742,11 @@ class VideoConverter:
         format: str = "mp4",
         quality: str = "high"
     ) -> bool:
-        """Convert video file."""
-        return await self.transformer.convert(input_path, output_path, format, quality)
+        """Convert video file."""        return await self.transformer.convert(input_path, output_path, format, quality)
 
 
 class VideoEnhancer:
-    """Simplified video enhancer interface."""
-    
+    """Simplified video enhancer interface."""    
     def __init__(self, transformer: Optional[VideoTransformer] = None):
         self.transformer = transformer or VideoTransformer()
     
@@ -788,5 +756,4 @@ class VideoEnhancer:
         output_path: str,
         options: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """Enhance video quality."""
-        return await self.transformer.enhance(input_path, output_path, options)
+        """Enhance video quality."""        return await self.transformer.enhance(input_path, output_path, options)

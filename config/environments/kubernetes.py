@@ -1,5 +1,4 @@
-"""
-🔧 Kubernetes Environment Configuration - IA-Influencer-Agent
+"""🔧 Kubernetes Environment Configuration - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps + Backend Senior + ML Engineer + Cloud Architect
@@ -14,9 +13,7 @@ Contact: mlaiel@live.de
 
 Configuration environnement Kubernetes avec auto-scaling et HA.
 ==================================================================
-"""
-
-import os
+"""import os
 from typing import Dict, Any, List, Optional
 from .base import (
     BaseEnvironmentConfigManager, 
@@ -32,11 +29,9 @@ from .base import (
 
 
 class KubernetesConfigManager(BaseEnvironmentConfigManager):
-    """
-    Configuration manager pour l'environnement Kubernetes.
+    """    Configuration manager pour l'environnement Kubernetes.
     Optimisé pour orchestration cloud-native avec high availability.
-    """
-    
+    """    
     def __init__(self):
         super().__init__(
             environment=EnvironmentType.PRODUCTION,  # K8s = production ready
@@ -48,8 +43,7 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
         )
         
     def _get_kubernetes_cors_origins(self) -> List[str]:
-        """Définit les origins CORS pour Kubernetes"""
-        origins_env = os.getenv("K8S_CORS_ORIGINS", "")
+        """Définit les origins CORS pour Kubernetes"""        origins_env = os.getenv("K8S_CORS_ORIGINS", "")
         if origins_env:
             return [origin.strip() for origin in origins_env.split(",")]
         return [
@@ -59,8 +53,7 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
         ]
         
     def load_environment_specific_config(self) -> None:
-        """Charge la configuration spécifique Kubernetes"""
-        
+        """Charge la configuration spécifique Kubernetes"""        
         # Configuration Base de Données Kubernetes (service externe)
         self.database_config = DatabaseConfig(
             host=os.getenv("DATABASE_SERVICE_HOST", "postgres-service"),
@@ -137,8 +130,7 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
         )
         
     def validate_configuration(self) -> bool:
-        """Valide la configuration Kubernetes"""
-        try:
+        """Valide la configuration Kubernetes"""        try:
             # Vérifications critiques K8s
             assert self.database_config is not None, "Configuration base de données requise"
             assert self.redis_config is not None, "Configuration Redis requise"
@@ -159,8 +151,7 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
             return False
             
     def get_kubernetes_features(self) -> Dict[str, Any]:
-        """Fonctionnalités spécifiques Kubernetes"""
-        return {
+        """Fonctionnalités spécifiques Kubernetes"""        return {
             "cloud_native": True,
             "auto_scaling": True,
             "high_availability": True,
@@ -176,8 +167,7 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
         }
         
     def get_deployment_config(self) -> Dict[str, Any]:
-        """Configuration Kubernetes Deployment"""
-        return {
+        """Configuration Kubernetes Deployment"""        return {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -223,8 +213,7 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
         }
         
     def get_service_config(self) -> Dict[str, Any]:
-        """Configuration Kubernetes Service"""
-        return {
+        """Configuration Kubernetes Service"""        return {
             "apiVersion": "v1",
             "kind": "Service",
             "metadata": {
@@ -243,8 +232,7 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
         }
         
     def get_ingress_config(self) -> Dict[str, Any]:
-        """Configuration Kubernetes Ingress"""
-        return {
+        """Configuration Kubernetes Ingress"""        return {
             "apiVersion": "networking.k8s.io/v1",
             "kind": "Ingress",
             "metadata": {
@@ -279,8 +267,7 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
         }
         
     def get_hpa_config(self) -> Dict[str, Any]:
-        """Configuration Horizontal Pod Autoscaler"""
-        return {
+        """Configuration Horizontal Pod Autoscaler"""        return {
             "apiVersion": "autoscaling/v2",
             "kind": "HorizontalPodAutoscaler",
             "metadata": {"name": "ia-influencer-hpa"},
@@ -318,8 +305,7 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
         }
         
     def get_resource_limits(self) -> Dict[str, Any]:
-        """Limites de ressources Kubernetes"""
-        return {
+        """Limites de ressources Kubernetes"""        return {
             "requests": {
                 "memory": os.getenv("K8S_MEMORY_REQUEST", "512Mi"),
                 "cpu": os.getenv("K8S_CPU_REQUEST", "500m")
@@ -331,8 +317,7 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
         }
         
     def get_liveness_probe(self) -> Dict[str, Any]:
-        """Configuration liveness probe"""
-        return {
+        """Configuration liveness probe"""        return {
             "httpGet": {
                 "path": "/health",
                 "port": 8000
@@ -344,8 +329,7 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
         }
         
     def get_readiness_probe(self) -> Dict[str, Any]:
-        """Configuration readiness probe"""
-        return {
+        """Configuration readiness probe"""        return {
             "httpGet": {
                 "path": "/ready",
                 "port": 8000
@@ -357,8 +341,7 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
         }
         
     def get_volume_mounts(self) -> List[Dict[str, Any]]:
-        """Configuration volume mounts"""
-        return [
+        """Configuration volume mounts"""        return [
             {
                 "name": "model-cache",
                 "mountPath": "/app/models"
@@ -374,8 +357,7 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
         ]
         
     def get_volumes(self) -> List[Dict[str, Any]]:
-        """Configuration volumes"""
-        return [
+        """Configuration volumes"""        return [
             {
                 "name": "model-cache",
                 "persistentVolumeClaim": {
@@ -397,8 +379,7 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
         ]
         
     def _get_kubernetes_env_vars(self) -> List[Dict[str, Any]]:
-        """Variables d'environnement Kubernetes avec secrets"""
-        return [
+        """Variables d'environnement Kubernetes avec secrets"""        return [
             {"name": "ENVIRONMENT", "value": self.environment.value},
             {"name": "LOG_LEVEL", "value": self.monitoring_config.log_level},
             {"name": "WORKERS", "value": str(self.workers)},
@@ -432,8 +413,7 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
         ]
         
     def generate_kubernetes_manifests(self) -> Dict[str, str]:
-        """Génère tous les manifestes Kubernetes"""
-        import yaml
+        """Génère tous les manifestes Kubernetes"""        import yaml
         
         manifests = {
             "deployment.yaml": yaml.dump(self.get_deployment_config(), default_flow_style=False),
@@ -445,8 +425,7 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
         return manifests
         
     def export_to_dict(self) -> Dict[str, Any]:
-        """Exporte la configuration Kubernetes complète"""
-        base_config = super().export_to_dict()
+        """Exporte la configuration Kubernetes complète"""        base_config = super().export_to_dict()
         base_config.update({
             "kubernetes_features": self.get_kubernetes_features(),
             "deployment_config": self.get_deployment_config(),
@@ -460,7 +439,6 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
 
 
 def create_kubernetes_config() -> KubernetesConfigManager:
-    """Crée et initialise la configuration Kubernetes"""
-    config = KubernetesConfigManager()
+    """Crée et initialise la configuration Kubernetes"""    config = KubernetesConfigManager()
     config.initialize_configuration()
     return config

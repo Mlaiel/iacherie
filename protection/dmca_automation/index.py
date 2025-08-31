@@ -1,5 +1,4 @@
-"""
-DMCA Automation Module - Central Index
+"""DMCA Automation Module - Central Index
 
 Central access point for the advanced DMCA automation system providing
 intelligent takedown notice generation, multi-platform delivery, and
@@ -18,9 +17,7 @@ All rights reserved © 2025 Fahed Mlaiel
 
 Team Expertise:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timezone
@@ -38,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 class DMCAAutomationSuite:
-    """
-    Comprehensive DMCA Automation Suite - Central Orchestrator
+    """    Comprehensive DMCA Automation Suite - Central Orchestrator
     
     The main orchestrator class that provides a unified interface to all
     DMCA automation capabilities including notice generation, delivery,
@@ -52,16 +48,13 @@ class DMCAAutomationSuite:
     - Intelligent enforcement escalation
     - Real-time monitoring and analytics
     - Enterprise-grade reliability
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize the DMCA Automation Suite
+        """        Initialize the DMCA Automation Suite
         
         Args:
             config: Optional configuration dictionary
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self.logger = logger
         
         # Initialize all components
@@ -82,8 +75,7 @@ class DMCAAutomationSuite:
                                        owner_contact: Dict[str, str],
                                        infringing_urls: List[str],
                                        workflow_options: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """
-        Execute complete end-to-end DMCA workflow
+        """        Execute complete end-to-end DMCA workflow
         
         Args:
             content_id: ID of the content being protected
@@ -94,8 +86,7 @@ class DMCAAutomationSuite:
             
         Returns:
             Comprehensive workflow execution result
-        """
-        try:
+        """        try:
             self.logger.info(f"Starting full DMCA workflow for content: {content_id}")
             
             workflow_id = f"DMCA_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}_{content_id}"
@@ -227,16 +218,14 @@ class DMCAAutomationSuite:
             }
     
     async def monitor_workflow_progress(self, workflow_id: str) -> Dict[str, Any]:
-        """
-        Monitor progress of an active DMCA workflow
+        """        Monitor progress of an active DMCA workflow
         
         Args:
             workflow_id: ID of the workflow to monitor
             
         Returns:
             Comprehensive workflow progress report
-        """
-        try:
+        """        try:
             self.logger.info(f"Monitoring workflow progress: {workflow_id}")
             
             # Retrieve workflow components (would be stored in database)
@@ -293,16 +282,14 @@ class DMCAAutomationSuite:
     
     async def generate_comprehensive_analytics(self, 
                                              time_range: Optional[Dict[str, datetime]] = None) -> Dict[str, Any]:
-        """
-        Generate comprehensive analytics across all DMCA automation components
+        """        Generate comprehensive analytics across all DMCA automation components
         
         Args:
             time_range: Optional time range for analytics
             
         Returns:
             Comprehensive analytics report
-        """
-        try:
+        """        try:
             self.logger.info("Generating comprehensive DMCA analytics")
             
             # Generate analytics from each component
@@ -367,8 +354,7 @@ class DMCAAutomationSuite:
     # Private helper methods
     
     async def _extract_platform_ids(self, urls: List[str]) -> List[str]:
-        """Extract platform IDs from infringing URLs"""
-        platforms = set()
+        """Extract platform IDs from infringing URLs"""        platforms = set()
         for url in urls:
             try:
                 from urllib.parse import urlparse
@@ -383,8 +369,7 @@ class DMCAAutomationSuite:
                                            delivery_success_rate: float,
                                            tracking_id: Optional[str],
                                            enforcement_id: Optional[str]) -> List[str]:
-        """Determine next steps for workflow"""
-        next_steps = []
+        """Determine next steps for workflow"""        next_steps = []
         
         if delivery_success_rate < 1.0:
             next_steps.append("Review failed deliveries and retry with alternative methods")
@@ -403,8 +388,7 @@ class DMCAAutomationSuite:
     def _estimate_workflow_resolution_time(self, 
                                          platform_ids: List[str],
                                          workflow_options: Dict[str, Any]) -> str:
-        """Estimate workflow resolution time"""
-        # Base estimation logic (would be more sophisticated in production)
+        """Estimate workflow resolution time"""        # Base estimation logic (would be more sophisticated in production)
         base_time = 7  # days
         
         # Adjust based on platform cooperation
@@ -423,8 +407,7 @@ class DMCAAutomationSuite:
         return f"{base_time}-{base_time + 7} days"
     
     async def _get_workflow_data(self, workflow_id: str) -> Optional[Dict[str, Any]]:
-        """Retrieve workflow data from storage"""
-        # This would retrieve from database in production
+        """Retrieve workflow data from storage"""        # This would retrieve from database in production
         return {
             'workflow_id': workflow_id,
             'notice_id': 'sample_notice_id',
@@ -433,8 +416,7 @@ class DMCAAutomationSuite:
         }
     
     async def _check_platform_responses(self, workflow_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Check for responses from platforms"""
-        # This would check for actual responses in production
+        """Check for responses from platforms"""        # This would check for actual responses in production
         return {
             'responses_received': 0,
             'pending_responses': 1,
@@ -445,8 +427,7 @@ class DMCAAutomationSuite:
                                         compliance_status: Optional[Dict[str, Any]],
                                         enforcement_progress: Optional[Dict[str, Any]],
                                         platform_responses: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate overall workflow progress"""
-        progress_percentage = 0.0
+        """Calculate overall workflow progress"""        progress_percentage = 0.0
         
         # Base progress from delivery
         progress_percentage += 25.0  # Notice generated and delivered
@@ -474,8 +455,7 @@ class DMCAAutomationSuite:
     def _determine_current_stage(self, 
                                compliance_status: Optional[Dict[str, Any]],
                                enforcement_progress: Optional[Dict[str, Any]]) -> str:
-        """Determine current stage of workflow"""
-        if compliance_status:
+        """Determine current stage of workflow"""        if compliance_status:
             if compliance_status.get('status') == 'complied':
                 return 'completed'
             elif compliance_status.get('status') == 'processing':
@@ -487,8 +467,7 @@ class DMCAAutomationSuite:
         return 'notice_delivered'
     
     def _estimate_completion_time(self, progress_percentage: float) -> str:
-        """Estimate completion time based on progress"""
-        if progress_percentage >= 90:
+        """Estimate completion time based on progress"""        if progress_percentage >= 90:
             return "1-2 days"
         elif progress_percentage >= 60:
             return "3-7 days"
@@ -527,8 +506,7 @@ async def execute_dmca_workflow(content_id: str,
                               owner_contact: Dict[str, str],
                               infringing_urls: List[str],
                               **kwargs) -> Dict[str, Any]:
-    """
-    Convenience function to execute DMCA workflow with minimal setup
+    """    Convenience function to execute DMCA workflow with minimal setup
     
     Args:
         content_id: ID of the content being protected
@@ -539,8 +517,7 @@ async def execute_dmca_workflow(content_id: str,
         
     Returns:
         Workflow execution result
-    """
-    suite = DMCAAutomationSuite()
+    """    suite = DMCAAutomationSuite()
     return await suite.execute_full_dmca_workflow(
         content_id, copyright_owner, owner_contact, infringing_urls, kwargs
     )

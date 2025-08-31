@@ -1,5 +1,4 @@
-"""
-Performance Utilities Module
+"""Performance Utilities Module
 ============================
 
 Professional performance optimization utilities for web crawlers.
@@ -22,9 +21,7 @@ Project Team Specialties:
 - Audio Engineer: Advanced audio processing and analysis
 - DevOps Engineer: CI/CD and infrastructure automation
 - IA Prompt Engineer: Intelligent prompt optimization
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import psutil
@@ -51,16 +48,14 @@ import tracemalloc
 logger = logging.getLogger(__name__)
 
 class CacheStrategy(Enum):
-    """Cache strategies."""
-    LRU = "lru"  # Least Recently Used
+    """Cache strategies."""    LRU = "lru"  # Least Recently Used
     LFU = "lfu"  # Least Frequently Used
     TTL = "ttl"  # Time To Live
     FIFO = "fifo"  # First In First Out
     ADAPTIVE = "adaptive"  # Adaptive based on access patterns
 
 class MetricType(Enum):
-    """Performance metric types."""
-    RESPONSE_TIME = "response_time"
+    """Performance metric types."""    RESPONSE_TIME = "response_time"
     THROUGHPUT = "throughput"
     ERROR_RATE = "error_rate"
     MEMORY_USAGE = "memory_usage"
@@ -70,8 +65,7 @@ class MetricType(Enum):
 
 @dataclass
 class PerformanceMetric:
-    """Performance metric data."""
-    metric_type: MetricType
+    """Performance metric data."""    metric_type: MetricType
     value: float
     timestamp: datetime
     tags: Dict[str, str] = field(default_factory=dict)
@@ -79,8 +73,7 @@ class PerformanceMetric:
 
 @dataclass
 class CacheEntry:
-    """Cache entry structure."""
-    key: str
+    """Cache entry structure."""    key: str
     value: Any
     created_at: datetime
     last_accessed: datetime
@@ -89,15 +82,13 @@ class CacheEntry:
     size_bytes: int
     
     def is_expired(self) -> bool:
-        """Check if cache entry is expired."""
-        if self.ttl is None:
+        """Check if cache entry is expired."""        if self.ttl is None:
             return False
         return (datetime.now() - self.created_at).total_seconds() > self.ttl
 
 @dataclass
 class PerformanceReport:
-    """Comprehensive performance report."""
-    start_time: datetime
+    """Comprehensive performance report."""    start_time: datetime
     end_time: datetime
     total_requests: int
     successful_requests: int
@@ -115,8 +106,7 @@ class PerformanceReport:
     metrics: List[PerformanceMetric] = field(default_factory=list)
 
 class AdvancedCache:
-    """
-    Advanced caching system with multiple strategies and optimization.
+    """    Advanced caching system with multiple strategies and optimization.
     
     Features:
     - Multiple cache strategies (LRU, LFU, TTL, etc.)
@@ -125,8 +115,7 @@ class AdvancedCache:
     - Cache warming and prefetching
     - Performance monitoring
     - Adaptive cache management
-    """
-    
+    """    
     def __init__(
         self,
         max_size: int = 10000,
@@ -135,8 +124,7 @@ class AdvancedCache:
         default_ttl: Optional[int] = None,
         redis_client: Optional[redis.Redis] = None
     ):
-        """Initialize advanced cache."""
-        self.max_size = max_size
+        """Initialize advanced cache."""        self.max_size = max_size
         self.max_memory_bytes = max_memory_mb * 1024 * 1024
         self.strategy = strategy
         self.default_ttl = default_ttl
@@ -159,8 +147,7 @@ class AdvancedCache:
         logger.info(f"Advanced cache initialized with strategy: {strategy}")
     
     def get(self, key: str) -> Optional[Any]:
-        """Get value from cache."""
-        with self._lock:
+        """Get value from cache."""        with self._lock:
             entry = self.cache.get(key)
             
             if entry is None:
@@ -185,8 +172,7 @@ class AdvancedCache:
         value: Any, 
         ttl: Optional[int] = None
     ) -> bool:
-        """Set value in cache."""
-        with self._lock:
+        """Set value in cache."""        with self._lock:
             # Calculate size
             size_bytes = self._calculate_size(value)
             
@@ -227,8 +213,7 @@ class AdvancedCache:
             return True
     
     def delete(self, key: str) -> bool:
-        """Delete entry from cache."""
-        with self._lock:
+        """Delete entry from cache."""        with self._lock:
             if key in self.cache:
                 self._remove_entry(key)
                 
@@ -243,8 +228,7 @@ class AdvancedCache:
             return False
     
     def clear(self) -> None:
-        """Clear all cache entries."""
-        with self._lock:
+        """Clear all cache entries."""        with self._lock:
             self.cache.clear()
             self.access_order.clear()
             self.access_frequency.clear()
@@ -262,8 +246,7 @@ class AdvancedCache:
                     logger.warning(f"Redis clear failed: {e}")
     
     def _ensure_space(self, required_bytes: int) -> None:
-        """Ensure enough space in cache."""
-        while (self.current_memory_bytes + required_bytes > self.max_memory_bytes or
+        """Ensure enough space in cache."""        while (self.current_memory_bytes + required_bytes > self.max_memory_bytes or
                len(self.cache) >= self.max_size):
             
             if not self.cache:
@@ -278,8 +261,7 @@ class AdvancedCache:
                 break
     
     def _select_victim(self) -> Optional[str]:
-        """Select cache entry for eviction based on strategy."""
-        if not self.cache:
+        """Select cache entry for eviction based on strategy."""        if not self.cache:
             return None
         
         if self.strategy == CacheStrategy.LRU:
@@ -328,8 +310,7 @@ class AdvancedCache:
         return list(self.cache.keys())[0] if self.cache else None
     
     def _adaptive_victim_selection(self) -> Optional[str]:
-        """Adaptive victim selection based on access patterns."""
-        if not self.cache:
+        """Adaptive victim selection based on access patterns."""        if not self.cache:
             return None
         
         # Score entries based on multiple factors
@@ -355,8 +336,7 @@ class AdvancedCache:
         return max(scores.keys(), key=lambda k: scores[k])
     
     def _remove_entry(self, key: str) -> None:
-        """Remove entry from cache."""
-        if key in self.cache:
+        """Remove entry from cache."""        if key in self.cache:
             entry = self.cache[key]
             self.current_memory_bytes -= entry.size_bytes
             del self.cache[key]
@@ -372,8 +352,7 @@ class AdvancedCache:
                 pass
     
     def _update_access_patterns(self, key: str, entry: CacheEntry) -> None:
-        """Update access patterns for cache strategies."""
-        entry.last_accessed = datetime.now()
+        """Update access patterns for cache strategies."""        entry.last_accessed = datetime.now()
         entry.access_count += 1
         self.access_frequency[key] += 1
         
@@ -385,8 +364,7 @@ class AdvancedCache:
         self.access_order.append(key)
     
     def _calculate_size(self, value: Any) -> int:
-        """Calculate size of value in bytes."""
-        try:
+        """Calculate size of value in bytes."""        try:
             return len(pickle.dumps(value))
         except Exception:
             # Fallback estimation
@@ -394,8 +372,7 @@ class AdvancedCache:
             return sys.getsizeof(value)
     
     def _store_in_redis(self, key: str, value: Any, ttl: Optional[int]) -> None:
-        """Store value in Redis."""
-        try:
+        """Store value in Redis."""        try:
             redis_key = f"cache:{key}"
             serialized_value = pickle.dumps(value)
             
@@ -408,8 +385,7 @@ class AdvancedCache:
             logger.warning(f"Redis store failed: {e}")
     
     def get_cache_stats(self) -> Dict[str, Any]:
-        """Get cache performance statistics."""
-        total_requests = self.hit_count + self.miss_count
+        """Get cache performance statistics."""        total_requests = self.hit_count + self.miss_count
         hit_rate = self.hit_count / total_requests if total_requests > 0 else 0
         
         return {
@@ -426,8 +402,7 @@ class AdvancedCache:
         }
 
 class PerformanceMonitor:
-    """
-    Comprehensive performance monitoring system.
+    """    Comprehensive performance monitoring system.
     
     Features:
     - Real-time metric collection
@@ -435,11 +410,9 @@ class PerformanceMonitor:
     - Performance reporting
     - Resource monitoring
     - Bottleneck detection
-    """
-    
+    """    
     def __init__(self, history_size: int = 10000):
-        """Initialize performance monitor."""
-        self.history_size = history_size
+        """Initialize performance monitor."""        self.history_size = history_size
         self.metrics: Dict[MetricType, deque] = {
             metric_type: deque(maxlen=history_size)
             for metric_type in MetricType
@@ -459,23 +432,20 @@ class PerformanceMonitor:
         logger.info("Performance monitor initialized")
     
     def start_monitoring(self, interval_seconds: float = 1.0) -> None:
-        """Start background monitoring."""
-        if self._monitor_task is None or self._monitor_task.done():
+        """Start background monitoring."""        if self._monitor_task is None or self._monitor_task.done():
             self._monitor_task = asyncio.create_task(
                 self._background_monitoring(interval_seconds)
             )
             logger.info("Background monitoring started")
     
     def stop_monitoring(self) -> None:
-        """Stop background monitoring."""
-        self.monitoring_enabled = False
+        """Stop background monitoring."""        self.monitoring_enabled = False
         if self._monitor_task:
             self._monitor_task.cancel()
             logger.info("Background monitoring stopped")
     
     async def _background_monitoring(self, interval: float) -> None:
-        """Background monitoring loop."""
-        try:
+        """Background monitoring loop."""        try:
             while self.monitoring_enabled:
                 # Collect system metrics
                 await self._collect_system_metrics()
@@ -491,8 +461,7 @@ class PerformanceMonitor:
             logger.error(f"Background monitoring error: {e}")
     
     async def _collect_system_metrics(self) -> None:
-        """Collect system performance metrics."""
-        try:
+        """Collect system performance metrics."""        try:
             # CPU usage
             cpu_percent = self.system_process.cpu_percent()
             self.record_metric(MetricType.CPU_USAGE, cpu_percent)
@@ -510,8 +479,7 @@ class PerformanceMonitor:
             logger.error(f"System metrics collection failed: {e}")
     
     async def _collect_memory_metrics(self) -> None:
-        """Collect memory usage metrics."""
-        try:
+        """Collect memory usage metrics."""        try:
             if tracemalloc.is_tracing():
                 current, peak = tracemalloc.get_traced_memory()
                 current_mb = current / (1024 * 1024)
@@ -527,8 +495,7 @@ class PerformanceMonitor:
         tags: Optional[Dict[str, str]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Record a performance metric."""
-        metric = PerformanceMetric(
+        """Record a performance metric."""        metric = PerformanceMetric(
             metric_type=metric_type,
             value=value,
             timestamp=datetime.now(),
@@ -539,12 +506,10 @@ class PerformanceMonitor:
         self.metrics[metric_type].append(metric)
     
     def start_request(self, request_id: str) -> None:
-        """Start tracking a request."""
-        self.active_requests[request_id] = datetime.now()
+        """Start tracking a request."""        self.active_requests[request_id] = datetime.now()
     
     def end_request(self, request_id: str, success: bool = True) -> Optional[float]:
-        """End tracking a request and return response time."""
-        if request_id not in self.active_requests:
+        """End tracking a request and return response time."""        if request_id not in self.active_requests:
             return None
         
         start_time = self.active_requests.pop(request_id)
@@ -570,8 +535,7 @@ class PerformanceMonitor:
         return response_time
     
     def _calculate_current_error_rate(self) -> float:
-        """Calculate current error rate."""
-        if not self.completed_requests:
+        """Calculate current error rate."""        if not self.completed_requests:
             return 0.0
         
         # Look at recent requests (last 100)
@@ -581,8 +545,7 @@ class PerformanceMonitor:
         return failed_requests / len(recent_requests)
     
     def get_metric_statistics(self, metric_type: MetricType) -> Dict[str, float]:
-        """Get statistical summary of metrics."""
-        metrics = self.metrics[metric_type]
+        """Get statistical summary of metrics."""        metrics = self.metrics[metric_type]
         if not metrics:
             return {}
         
@@ -604,8 +567,7 @@ class PerformanceMonitor:
             return {}
     
     def _percentile(self, values: List[float], percentile: float) -> float:
-        """Calculate percentile value."""
-        if not values:
+        """Calculate percentile value."""        if not values:
             return 0.0
         
         sorted_values = sorted(values)
@@ -620,8 +582,7 @@ class PerformanceMonitor:
         start_time: Optional[datetime] = None,
         end_time: Optional[datetime] = None
     ) -> PerformanceReport:
-        """Generate comprehensive performance report."""
-        if start_time is None:
+        """Generate comprehensive performance report."""        if start_time is None:
             start_time = datetime.now() - timedelta(hours=1)
         if end_time is None:
             end_time = datetime.now()
@@ -701,10 +662,8 @@ class PerformanceMonitor:
         )
 
 class ConnectionPool:
-    """
-    Advanced connection pool for HTTP clients.
-    """
-    
+    """    Advanced connection pool for HTTP clients.
+    """    
     def __init__(
         self,
         max_connections: int = 100,
@@ -712,8 +671,7 @@ class ConnectionPool:
         connection_timeout: float = 30.0,
         read_timeout: float = 60.0
     ):
-        """Initialize connection pool."""
-        self.max_connections = max_connections
+        """Initialize connection pool."""        self.max_connections = max_connections
         self.max_connections_per_host = max_connections_per_host
         self.connection_timeout = connection_timeout
         self.read_timeout = read_timeout
@@ -727,8 +685,7 @@ class ConnectionPool:
         self._lock = asyncio.Lock()
     
     async def get_session(self, host: str) -> aiohttp.ClientSession:
-        """Get HTTP session with connection limits."""
-        async with self._lock:
+        """Get HTTP session with connection limits."""        async with self._lock:
             # Ensure host semaphore exists
             if host not in self.host_semaphores:
                 self.host_semaphores[host] = asyncio.Semaphore(self.max_connections_per_host)
@@ -771,8 +728,7 @@ class ConnectionPool:
             raise
     
     async def release_session(self, session: aiohttp.ClientSession, host: str) -> None:
-        """Release HTTP session and connection slots."""
-        try:
+        """Release HTTP session and connection slots."""        try:
             await session.close()
         finally:
             # Release connection tracking
@@ -785,8 +741,7 @@ class ConnectionPool:
                 self.host_semaphores[host].release()
     
     def get_connection_stats(self) -> Dict[str, Any]:
-        """Get connection pool statistics."""
-        return {
+        """Get connection pool statistics."""        return {
             'total_connections': self.total_connections,
             'max_connections': self.max_connections,
             'connections_by_host': dict(self.active_connections),
@@ -794,19 +749,15 @@ class ConnectionPool:
         }
 
 class ResourceOptimizer:
-    """
-    Resource optimization utilities.
-    """
-    
+    """    Resource optimization utilities.
+    """    
     def __init__(self):
-        """Initialize resource optimizer."""
-        self.memory_threshold_mb = 1024  # 1GB
+        """Initialize resource optimizer."""        self.memory_threshold_mb = 1024  # 1GB
         self.cpu_threshold_percent = 80
         self.optimization_enabled = True
     
     async def optimize_memory(self) -> Dict[str, Any]:
-        """Optimize memory usage."""
-        results = {
+        """Optimize memory usage."""        results = {
             'before_mb': 0,
             'after_mb': 0,
             'freed_mb': 0,
@@ -842,8 +793,7 @@ class ResourceOptimizer:
             return results
     
     async def optimize_connections(self, session_manager) -> Dict[str, Any]:
-        """Optimize connection usage."""
-        results = {
+        """Optimize connection usage."""        results = {
             'closed_sessions': 0,
             'actions_taken': []
         }
@@ -864,25 +814,20 @@ def create_advanced_cache(
     strategy: CacheStrategy = CacheStrategy.LRU,
     redis_client: Optional[redis.Redis] = None
 ) -> AdvancedCache:
-    """Create advanced cache instance."""
-    return AdvancedCache(max_size=max_size, strategy=strategy, redis_client=redis_client)
+    """Create advanced cache instance."""    return AdvancedCache(max_size=max_size, strategy=strategy, redis_client=redis_client)
 
 def create_performance_monitor(history_size: int = 10000) -> PerformanceMonitor:
-    """Create performance monitor instance."""
-    return PerformanceMonitor(history_size=history_size)
+    """Create performance monitor instance."""    return PerformanceMonitor(history_size=history_size)
 
 def create_connection_pool(max_connections: int = 100) -> ConnectionPool:
-    """Create connection pool instance."""
-    return ConnectionPool(max_connections=max_connections)
+    """Create connection pool instance."""    return ConnectionPool(max_connections=max_connections)
 
 def create_resource_optimizer() -> ResourceOptimizer:
-    """Create resource optimizer instance."""
-    return ResourceOptimizer()
+    """Create resource optimizer instance."""    return ResourceOptimizer()
 
 # Decorator for performance monitoring
 def monitor_performance(monitor: PerformanceMonitor):
-    """Decorator to monitor function performance."""
-    def decorator(func):
+    """Decorator to monitor function performance."""    def decorator(func):
         if asyncio.iscoroutinefunction(func):
             async def async_wrapper(*args, **kwargs):
                 request_id = f"{func.__name__}_{int(time.time() * 1000000)}"

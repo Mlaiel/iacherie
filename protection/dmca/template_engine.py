@@ -1,5 +1,4 @@
-"""
-🚨 DMCA Template Engine - Professional Legal Document Generator
+"""🚨 DMCA Template Engine - Professional Legal Document Generator
 ==============================================================
 
 Enterprise-grade template system for automated DMCA notice generation with multi-language support.
@@ -30,9 +29,7 @@ Project Team Specialties:
 - Audio Processing Engineer: Digital signal processing
 - Database Administrator: High-performance data systems
 - Microservices Architect: Distributed systems design
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass
@@ -53,8 +50,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TemplateContext:
-    """Template rendering context for DMCA notices"""
-    case_id: str
+    """Template rendering context for DMCA notices"""    case_id: str
     notice_id: str
     current_date: str
     priority_level: DMCAPriority
@@ -70,8 +66,7 @@ class TemplateContext:
 
 
 class DMCATemplateEngine:
-    """Professional DMCA template engine with multi-language support"""
-    
+    """Professional DMCA template engine with multi-language support"""    
     def __init__(self):
         self.templates = self._initialize_templates()
         self.jinja_env = Environment(
@@ -81,8 +76,7 @@ class DMCATemplateEngine:
         )
         
     def _initialize_templates(self) -> Dict[str, str]:
-        """Initialize all professional DMCA templates"""
-        return {
+        """Initialize all professional DMCA templates"""        return {
             # English Templates
             'takedown_urgent_en': self._get_urgent_takedown_template_en(),
             'takedown_standard_en': self._get_standard_takedown_template_en(),
@@ -107,8 +101,7 @@ class DMCATemplateEngine:
         context: TemplateContext,
         language: str = 'en'
     ) -> Dict[str, str]:
-        """Generate professional DMCA notice"""
-        template_key = self._get_template_key(context.notification_type, context.priority_level, language)
+        """Generate professional DMCA notice"""        template_key = self._get_template_key(context.notification_type, context.priority_level, language)
         
         try:
             template = self.jinja_env.get_template(template_key)
@@ -184,8 +177,7 @@ class DMCATemplateEngine:
             raise
     
     def _get_template_key(self, notification_type: NotificationType, priority: DMCAPriority, language: str) -> str:
-        """Determine appropriate template key"""
-        if notification_type == NotificationType.TAKEDOWN_URGENT or priority >= DMCAPriority.URGENT:
+        """Determine appropriate template key"""        if notification_type == NotificationType.TAKEDOWN_URGENT or priority >= DMCAPriority.URGENT:
             return f'takedown_urgent_{language}'
         elif notification_type == NotificationType.ESCALATION_FORMAL:
             return f'escalation_formal_{language}'
@@ -199,8 +191,7 @@ class DMCATemplateEngine:
             return f'takedown_standard_{language}'
     
     def _generate_subject_line(self, context: TemplateContext, language: str) -> str:
-        """Generate appropriate subject line"""
-        if language == 'de':
+        """Generate appropriate subject line"""        if language == 'de':
             if context.priority_level >= DMCAPriority.URGENT:
                 return f"🚨 DRINGEND: DMCA Löschungsantrag - Fall {context.case_id}"
             else:
@@ -217,8 +208,7 @@ class DMCATemplateEngine:
                 return f"DMCA Takedown Notice - Case {context.case_id}"
     
     def _calculate_response_days(self, priority: DMCAPriority) -> int:
-        """Calculate response deadline based on priority"""
-        if priority == DMCAPriority.CRITICAL:
+        """Calculate response deadline based on priority"""        if priority == DMCAPriority.CRITICAL:
             return 1  # 24 hours
         elif priority == DMCAPriority.URGENT:
             return 2  # 48 hours
@@ -228,8 +218,7 @@ class DMCATemplateEngine:
             return 14  # 2 weeks
     
     def _format_number(self, number: Optional[int]) -> str:
-        """Format large numbers for display"""
-        if not number:
+        """Format large numbers for display"""        if not number:
             return "Unknown"
         if number >= 1_000_000:
             return f"{number/1_000_000:.1f}M"
@@ -239,15 +228,13 @@ class DMCATemplateEngine:
             return str(number)
     
     def _format_currency(self, amount: Optional[float]) -> str:
-        """Format currency for display"""
-        if not amount:
+        """Format currency for display"""        if not amount:
             return "Not specified"
         return f"${amount:,.2f}"
     
     # Template definitions (English)
     def _get_urgent_takedown_template_en(self) -> str:
-        return """
-<!DOCTYPE html>
+        return """<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -368,11 +355,9 @@ class DMCATemplateEngine:
     </div>
 </body>
 </html>
-        """
-    
+        """    
     def _get_standard_takedown_template_en(self) -> str:
-        return """
-<!DOCTYPE html>
+        return """<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -459,11 +444,9 @@ class DMCATemplateEngine:
     </div>
 </body>
 </html>
-        """
-    
+        """    
     def _get_formal_escalation_template_en(self) -> str:
-        return """
-<!DOCTYPE html>
+        return """<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -523,14 +506,12 @@ class DMCATemplateEngine:
     </div>
 </body>
 </html>
-        """
-    
+        """    
     # Additional template methods for German and French would follow...
     # For brevity, including key templates only
     
     def _get_urgent_takedown_template_de(self) -> str:
-        return """
-<!DOCTYPE html>
+        return """<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -563,11 +544,9 @@ class DMCATemplateEngine:
     </div>
 </body>
 </html>
-        """
-    
+        """    
     def _get_urgent_takedown_template_fr(self) -> str:
-        return """
-<!DOCTYPE html>
+        return """<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -600,8 +579,7 @@ class DMCATemplateEngine:
     </div>
 </body>
 </html>
-        """
-    
+        """    
     # Placeholder methods for other language templates
     def _get_standard_takedown_template_de(self) -> str:
         return "<!-- German standard template -->"
@@ -627,5 +605,4 @@ class DMCATemplateEngine:
 
 # Factory function
 def create_template_engine() -> DMCATemplateEngine:
-    """Factory function to create DMCA template engine"""
-    return DMCATemplateEngine()
+    """Factory function to create DMCA template engine"""    return DMCATemplateEngine()

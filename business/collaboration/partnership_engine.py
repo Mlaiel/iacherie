@@ -1,12 +1,9 @@
-"""
-Advanced Partnership Engine for IA Influencer Agent
+"""Advanced Partnership Engine for IA Influencer Agent
 Professional partnership discovery and management system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-
-from typing import Dict, List, Optional, Any, Set, Tuple, Union
+"""from typing import Dict, List, Optional, Any, Set, Tuple, Union
 from datetime import datetime, timedelta
 from enum import Enum
 from dataclasses import dataclass, field
@@ -26,8 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 class PartnershipType(Enum):
-    """Types of partnerships in the ecosystem"""
-    BRAND_SPONSORSHIP = "brand_sponsorship"
+    """Types of partnerships in the ecosystem"""    BRAND_SPONSORSHIP = "brand_sponsorship"
     CROSS_PROMOTION = "cross_promotion"
     REVENUE_SHARING = "revenue_sharing"
     SKILL_EXCHANGE = "skill_exchange"
@@ -38,8 +34,7 @@ class PartnershipType(Enum):
 
 
 class PartnershipPriority(Enum):
-    """Partnership priority levels for matching"""
-    LOW = "low"
+    """Partnership priority levels for matching"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     URGENT = "urgent"
@@ -48,8 +43,7 @@ class PartnershipPriority(Enum):
 
 @dataclass
 class PartnershipCriteria:
-    """Criteria for partnership matching"""
-    content_types: Set[str] = field(default_factory=set)
+    """Criteria for partnership matching"""    content_types: Set[str] = field(default_factory=set)
     minimum_followers: int = 0
     minimum_engagement_rate: float = 0.0
     required_skills: List[str] = field(default_factory=list)
@@ -62,8 +56,7 @@ class PartnershipCriteria:
 
 @dataclass
 class PartnershipMetrics:
-    """Partnership performance metrics"""
-    total_reach: int = 0
+    """Partnership performance metrics"""    total_reach: int = 0
     combined_engagement_rate: float = 0.0
     estimated_roi: float = 0.0
     brand_alignment_score: float = 0.0
@@ -74,8 +67,7 @@ class PartnershipMetrics:
 
 
 class PartnershipProposal(BaseModel):
-    """Partnership proposal model"""
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Partnership proposal model"""    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     partnership_type: PartnershipType
     priority: PartnershipPriority = PartnershipPriority.MEDIUM
     
@@ -118,11 +110,9 @@ class PartnershipProposal(BaseModel):
 
 
 class PartnershipEngine:
-    """
-    Advanced Partnership Engine
+    """    Advanced Partnership Engine
     Manages partnership discovery, evaluation, negotiation, and execution
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.active_proposals: Dict[str, PartnershipProposal] = {}
@@ -135,8 +125,7 @@ class PartnershipEngine:
         asyncio.create_task(self._initialize_engine())
     
     async def _initialize_engine(self):
-        """Initialize partnership engine components"""
-        try:
+        """Initialize partnership engine components"""        try:
             await self._load_matching_algorithms()
             await self._setup_evaluation_metrics()
             await self._initialize_negotiation_workflows()
@@ -154,10 +143,8 @@ class PartnershipEngine:
         criteria: PartnershipCriteria,
         partnership_types: List[PartnershipType] = None
     ) -> List[Dict[str, Any]]:
-        """
-        Discover potential partnerships based on creator profile and criteria
-        """
-        try:
+        """        Discover potential partnerships based on creator profile and criteria
+        """        try:
             partnership_types = partnership_types or list(PartnershipType)
             discovered_partnerships = []
             
@@ -188,10 +175,8 @@ class PartnershipEngine:
         self, 
         proposal: PartnershipProposal
     ) -> Dict[str, Any]:
-        """
-        Comprehensive partnership evaluation
-        """
-        try:
+        """        Comprehensive partnership evaluation
+        """        try:
             evaluation_results = {
                 'partnership_id': proposal.id,
                 'overall_score': 0.0,
@@ -257,10 +242,8 @@ class PartnershipEngine:
         self,
         partnership_data: Dict[str, Any]
     ) -> PartnershipProposal:
-        """
-        Create a new partnership proposal
-        """
-        try:
+        """        Create a new partnership proposal
+        """        try:
             # Validate partnership data
             validated_data = await self._validate_partnership_data(partnership_data)
             
@@ -288,10 +271,8 @@ class PartnershipEngine:
         negotiation_points: Dict[str, Any],
         negotiator_id: str
     ) -> Dict[str, Any]:
-        """
-        Handle partnership negotiation process
-        """
-        try:
+        """        Handle partnership negotiation process
+        """        try:
             if proposal_id not in self.active_proposals:
                 raise ValueError(f"Proposal {proposal_id} not found")
             
@@ -327,10 +308,8 @@ class PartnershipEngine:
         proposal_id: str,
         execution_plan: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Execute approved partnership
-        """
-        try:
+        """        Execute approved partnership
+        """        try:
             if proposal_id not in self.active_proposals:
                 raise ValueError(f"Proposal {proposal_id} not found")
             
@@ -371,10 +350,8 @@ class PartnershipEngine:
         partnership_id: str,
         time_period: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """
-        Track and analyze partnership performance
-        """
-        try:
+        """        Track and analyze partnership performance
+        """        try:
             # Get partnership data
             partnership_data = await self._get_partnership_data(partnership_id)
             
@@ -410,8 +387,7 @@ class PartnershipEngine:
     
     # Private helper methods
     async def _load_matching_algorithms(self):
-        """Load partnership matching algorithms"""
-        self.matching_algorithms = {
+        """Load partnership matching algorithms"""        self.matching_algorithms = {
             'content_similarity': self._content_similarity_matching,
             'audience_overlap': self._audience_overlap_matching,
             'skill_complement': self._skill_complement_matching,
@@ -420,8 +396,7 @@ class PartnershipEngine:
         }
     
     async def _setup_evaluation_metrics(self):
-        """Setup partnership evaluation metrics"""
-        self.evaluation_metrics = {
+        """Setup partnership evaluation metrics"""        self.evaluation_metrics = {
             'financial_viability': ['budget_alignment', 'roi_potential', 'cost_effectiveness'],
             'strategic_alignment': ['brand_fit', 'goal_alignment', 'value_proposition'],
             'content_synergy': ['style_compatibility', 'audience_interest', 'quality_match'],
@@ -429,8 +404,7 @@ class PartnershipEngine:
         }
     
     async def _initialize_negotiation_workflows(self):
-        """Initialize negotiation workflow templates"""
-        self.negotiation_workflows = {
+        """Initialize negotiation workflow templates"""        self.negotiation_workflows = {
             'standard': ['initial_proposal', 'counter_proposal', 'final_terms', 'agreement'],
             'expedited': ['proposal', 'quick_review', 'agreement'],
             'complex': ['initial_proposal', 'technical_review', 'legal_review', 'counter_proposal', 'revision', 'agreement']
@@ -442,8 +416,7 @@ class PartnershipEngine:
         criteria: PartnershipCriteria,
         partnership_type: PartnershipType
     ) -> List[Dict[str, Any]]:
-        """Discover partnerships by specific type"""
-        # This would integrate with external APIs and databases
+        """Discover partnerships by specific type"""        # This would integrate with external APIs and databases
         # For now, returning mock data structure
         return [
             {
@@ -461,8 +434,7 @@ class PartnershipEngine:
         partnerships: List[Dict[str, Any]],
         creator_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Rank partnerships by potential value"""
-        # Sort by compatibility score and estimated value
+        """Rank partnerships by potential value"""        # Sort by compatibility score and estimated value
         return sorted(
             partnerships,
             key=lambda p: (p.get('compatibility_score', 0) + p.get('estimated_value', 0) / 10000),
@@ -474,8 +446,7 @@ class PartnershipEngine:
         partnerships: List[Dict[str, Any]],
         criteria: PartnershipCriteria
     ) -> List[Dict[str, Any]]:
-        """Filter partnerships based on criteria"""
-        filtered = []
+        """Filter partnerships based on criteria"""        filtered = []
         for partnership in partnerships:
             if self._meets_criteria(partnership, criteria):
                 filtered.append(partnership)
@@ -486,30 +457,24 @@ class PartnershipEngine:
         partnership: Dict[str, Any],
         criteria: PartnershipCriteria
     ) -> bool:
-        """Check if partnership meets specified criteria"""
-        # Implementation would check against all criteria
+        """Check if partnership meets specified criteria"""        # Implementation would check against all criteria
         return True  # Simplified for now
     
     async def _evaluate_financial_viability(self, proposal: PartnershipProposal) -> float:
-        """Evaluate financial viability of partnership"""
-        # Complex financial analysis would go here
+        """Evaluate financial viability of partnership"""        # Complex financial analysis would go here
         return 0.85  # Mock score
     
     async def _evaluate_strategic_alignment(self, proposal: PartnershipProposal) -> float:
-        """Evaluate strategic alignment of partnership"""
-        return 0.78  # Mock score
+        """Evaluate strategic alignment of partnership"""        return 0.78  # Mock score
     
     async def _evaluate_content_synergy(self, proposal: PartnershipProposal) -> float:
-        """Evaluate content synergy potential"""
-        return 0.82  # Mock score
+        """Evaluate content synergy potential"""        return 0.82  # Mock score
     
     async def _evaluate_audience_compatibility(self, proposal: PartnershipProposal) -> float:
-        """Evaluate audience compatibility"""
-        return 0.76  # Mock score
+        """Evaluate audience compatibility"""        return 0.76  # Mock score
     
     async def _assess_partnership_risks(self, proposal: PartnershipProposal) -> Dict[str, Any]:
-        """Assess risks associated with partnership"""
-        return {
+        """Assess risks associated with partnership"""        return {
             'financial_risk': 'low',
             'reputation_risk': 'medium',
             'operational_risk': 'low',
@@ -522,8 +487,7 @@ class PartnershipEngine:
         evaluation: Dict[str, Any],
         proposal: PartnershipProposal
     ) -> List[str]:
-        """Generate actionable recommendations"""
-        recommendations = []
+        """Generate actionable recommendations"""        recommendations = []
         
         if evaluation['overall_score'] > 0.8:
             recommendations.append("Highly recommended - proceed with negotiation")
@@ -535,13 +499,11 @@ class PartnershipEngine:
         return recommendations
     
     async def _validate_partnership_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate and clean partnership data"""
-        # Add validation logic
+        """Validate and clean partnership data"""        # Add validation logic
         return data
     
     async def _enrich_proposal_with_ai(self, proposal: PartnershipProposal) -> PartnershipProposal:
-        """Enrich proposal with AI-generated insights"""
-        # Add AI enhancement logic
+        """Enrich proposal with AI-generated insights"""        # Add AI enhancement logic
         return proposal
     
     async def _process_negotiation(
@@ -550,8 +512,7 @@ class PartnershipEngine:
         negotiation_points: Dict[str, Any],
         negotiator_id: str
     ) -> Dict[str, Any]:
-        """Process negotiation points"""
-        return {
+        """Process negotiation points"""        return {
             'status': 'in_progress',
             'updated_terms': negotiation_points,
             'next_steps': ['review_counter_proposal'],
@@ -563,8 +524,7 @@ class PartnershipEngine:
         proposal: PartnershipProposal,
         execution_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create detailed execution plan"""
-        return {
+        """Create detailed execution plan"""        return {
             'phases': [
                 {'name': 'kickoff', 'duration_days': 7},
                 {'name': 'content_creation', 'duration_days': 30},
@@ -577,8 +537,7 @@ class PartnershipEngine:
         }
     
     async def _setup_partnership_monitoring(self, proposal: PartnershipProposal) -> Dict[str, Any]:
-        """Setup monitoring for active partnership"""
-        return {
+        """Setup monitoring for active partnership"""        return {
             'metrics_to_track': ['reach', 'engagement', 'conversion', 'revenue'],
             'reporting_frequency': 'weekly',
             'alert_thresholds': {'performance_drop': 0.2, 'budget_overrun': 0.1},
@@ -586,8 +545,7 @@ class PartnershipEngine:
         }
     
     async def _get_partnership_data(self, partnership_id: str) -> Dict[str, Any]:
-        """Get partnership data for analysis"""
-        if partnership_id in self.active_proposals:
+        """Get partnership data for analysis"""        if partnership_id in self.active_proposals:
             proposal = self.active_proposals[partnership_id]
             return {
                 'proposal': proposal,
@@ -601,8 +559,7 @@ class PartnershipEngine:
         partnership_id: str,
         time_period: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
-        """Collect performance metrics for partnership"""
-        return {
+        """Collect performance metrics for partnership"""        return {
             'reach': {'total': 50000, 'growth': 0.15},
             'engagement': {'rate': 0.045, 'growth': 0.08},
             'conversion': {'rate': 0.023, 'total_conversions': 1150},
@@ -610,8 +567,7 @@ class PartnershipEngine:
         }
     
     async def _analyze_performance_trends(self, metrics: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze performance trends"""
-        return {
+        """Analyze performance trends"""        return {
             'overall_trend': 'positive',
             'best_performing_metric': 'revenue',
             'areas_for_improvement': ['engagement_rate'],
@@ -624,8 +580,7 @@ class PartnershipEngine:
         metrics: Dict[str, Any],
         trends: Dict[str, Any]
     ) -> List[str]:
-        """Generate actionable performance insights"""
-        return [
+        """Generate actionable performance insights"""        return [
             "Partnership exceeding revenue targets by 22%",
             "Consider scaling successful content formats",
             "Optimize posting times for better engagement",

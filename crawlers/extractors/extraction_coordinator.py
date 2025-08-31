@@ -1,5 +1,4 @@
-"""
-Extraction Coordinator - Industrial IA Extraction Management System
+"""Extraction Coordinator - Industrial IA Extraction Management System
 ===================================================================
 
 Ultra-advanced professional extraction coordinator for managing multiple extraction types and workflows.
@@ -28,9 +27,7 @@ Technical Team Expertise:
 - IA Prompt Engineer: Prompt optimization and AI interaction
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import json
@@ -77,8 +74,7 @@ logger = logging.getLogger(__name__)
 
 
 class ExtractionStrategy(Enum):
-    """Extraction strategy enumeration"""
-    SEQUENTIAL = "sequential"
+    """Extraction strategy enumeration"""    SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     ADAPTIVE = "adaptive"
     PRIORITY_BASED = "priority_based"
@@ -86,8 +82,7 @@ class ExtractionStrategy(Enum):
 
 
 class CoordinationMode(Enum):
-    """Coordination mode enumeration"""
-    SINGLE_EXTRACTOR = "single_extractor"
+    """Coordination mode enumeration"""    SINGLE_EXTRACTOR = "single_extractor"
     MULTI_EXTRACTOR = "multi_extractor"
     CASCADING = "cascading"
     COMPETITIVE = "competitive"
@@ -96,8 +91,7 @@ class CoordinationMode(Enum):
 
 @dataclass
 class ExtractionPlan:
-    """Extraction execution plan"""
-    
+    """Extraction execution plan"""    
     plan_id: str
     request: ExtractionRequest
     strategy: ExtractionStrategy
@@ -114,8 +108,7 @@ class ExtractionPlan:
 
 @dataclass
 class ExtractionMetrics:
-    """Extraction performance metrics"""
-    
+    """Extraction performance metrics"""    
     total_requests: int = 0
     successful_extractions: int = 0
     failed_extractions: int = 0
@@ -128,8 +121,7 @@ class ExtractionMetrics:
 
 
 class ExtractionQueue:
-    """Priority-based extraction queue"""
-    
+    """Priority-based extraction queue"""    
     def __init__(self, max_size: int = 1000):
         self.max_size = max_size
         self.queue = []
@@ -138,8 +130,7 @@ class ExtractionQueue:
         self.current_index = 0
         
     def put(self, plan: ExtractionPlan, priority: Optional[int] = None):
-        """Add extraction plan to queue"""
-        with self.condition:
+        """Add extraction plan to queue"""        with self.condition:
             if len(self.queue) >= self.max_size:
                 # Remove lowest priority item
                 self.queue.sort(key=lambda x: x[0])
@@ -157,8 +148,7 @@ class ExtractionQueue:
             self.condition.notify()
     
     def get(self, timeout: Optional[float] = None) -> Optional[ExtractionPlan]:
-        """Get highest priority extraction plan"""
-        with self.condition:
+        """Get highest priority extraction plan"""        with self.condition:
             if not self.queue:
                 if timeout:
                     self.condition.wait(timeout)
@@ -172,20 +162,17 @@ class ExtractionQueue:
             return None
     
     def size(self) -> int:
-        """Get queue size"""
-        with self.lock:
+        """Get queue size"""        with self.lock:
             return len(self.queue)
     
     def clear(self):
-        """Clear queue"""
-        with self.condition:
+        """Clear queue"""        with self.condition:
             self.queue.clear()
             self.condition.notify_all()
 
 
 class ExtractionRouter:
-    """Intelligent extraction router"""
-    
+    """Intelligent extraction router"""    
     def __init__(self):
         self.content_extractors = [
             AudioContentExtractor(),
@@ -205,8 +192,7 @@ class ExtractionRouter:
         self.extractor_metrics: Dict[str, Dict[str, float]] = {}
         
     async def route_request(self, request: ExtractionRequest) -> List[BaseExtractor]:
-        """Route extraction request to appropriate extractors"""
-        extractors = []
+        """Route extraction request to appropriate extractors"""        extractors = []
         
         # Route based on source type
         if request.source_url:
@@ -223,8 +209,7 @@ class ExtractionRouter:
         return await self._rank_extractors(filtered_extractors, request)
     
     async def _route_url_request(self, request: ExtractionRequest) -> List[BaseExtractor]:
-        """Route URL-based requests"""
-        extractors = []
+        """Route URL-based requests"""        extractors = []
         
         # Check platform extractors
         platform_extractor = self.platform_factory.get_extractor_for_url(request.source_url)
@@ -244,8 +229,7 @@ class ExtractionRouter:
         return extractors
     
     async def _route_file_request(self, request: ExtractionRequest) -> List[BaseExtractor]:
-        """Route file-based requests"""
-        extractors = []
+        """Route file-based requests"""        extractors = []
         
         # Check data extractors
         data_extractor = self.data_factory.get_extractor(request)
@@ -260,8 +244,7 @@ class ExtractionRouter:
         return extractors
     
     async def _route_data_request(self, request: ExtractionRequest) -> List[BaseExtractor]:
-        """Route data-based requests"""
-        extractors = []
+        """Route data-based requests"""        extractors = []
         
         # Check data extractors
         data_extractor = self.data_factory.get_extractor(request)
@@ -276,8 +259,7 @@ class ExtractionRouter:
         return extractors
     
     async def _filter_extractors(self, extractors: List[BaseExtractor], request: ExtractionRequest) -> List[BaseExtractor]:
-        """Filter extractors based on capabilities"""
-        filtered = []
+        """Filter extractors based on capabilities"""        filtered = []
         
         for extractor in extractors:
             try:
@@ -289,8 +271,7 @@ class ExtractionRouter:
         return filtered
     
     async def _rank_extractors(self, extractors: List[BaseExtractor], request: ExtractionRequest) -> List[BaseExtractor]:
-        """Rank extractors by performance and suitability"""
-        if not extractors:
+        """Rank extractors by performance and suitability"""        if not extractors:
             return []
         
         scored_extractors = []
@@ -305,8 +286,7 @@ class ExtractionRouter:
         return [extractor for _, extractor in scored_extractors]
     
     async def _calculate_extractor_score(self, extractor: BaseExtractor, request: ExtractionRequest) -> float:
-        """Calculate extractor suitability score"""
-        score = 50.0  # Base score
+        """Calculate extractor suitability score"""        score = 50.0  # Base score
         
         # Performance metrics
         if extractor.name in self.extractor_metrics:
@@ -337,8 +317,7 @@ class ExtractionRouter:
         return score
     
     def update_extractor_metrics(self, extractor_name: str, processing_time: float, success: bool):
-        """Update extractor performance metrics"""
-        if extractor_name not in self.extractor_metrics:
+        """Update extractor performance metrics"""        if extractor_name not in self.extractor_metrics:
             self.extractor_metrics[extractor_name] = {
                 'total_requests': 0,
                 'successful_requests': 0,
@@ -365,8 +344,7 @@ class ExtractionRouter:
 
 
 class ExtractionOrchestrator:
-    """Orchestrates complex extraction workflows"""
-    
+    """Orchestrates complex extraction workflows"""    
     def __init__(self):
         self.router = ExtractionRouter()
         self.queue = ExtractionQueue()
@@ -377,8 +355,7 @@ class ExtractionOrchestrator:
         self.is_running = False
         
     async def start(self):
-        """Start the orchestrator"""
-        self.is_running = True
+        """Start the orchestrator"""        self.is_running = True
         
         # Start worker tasks
         for i in range(5):  # 5 worker tasks
@@ -387,15 +364,13 @@ class ExtractionOrchestrator:
         logger.info("Extraction orchestrator started")
     
     async def stop(self):
-        """Stop the orchestrator"""
-        self.is_running = False
+        """Stop the orchestrator"""        self.is_running = False
         self.queue.clear()
         self.executor.shutdown(wait=True)
         logger.info("Extraction orchestrator stopped")
     
     async def submit_extraction(self, request: ExtractionRequest, strategy: ExtractionStrategy = ExtractionStrategy.INTELLIGENT) -> str:
-        """Submit extraction request"""
-        # Create extraction plan
+        """Submit extraction request"""        # Create extraction plan
         plan = await self._create_extraction_plan(request, strategy)
         
         # Add to queue
@@ -407,12 +382,10 @@ class ExtractionOrchestrator:
         return plan.plan_id
     
     async def get_extraction_result(self, plan_id: str) -> Optional[ExtractionResult]:
-        """Get extraction result"""
-        return self.completed_extractions.get(plan_id)
+        """Get extraction result"""        return self.completed_extractions.get(plan_id)
     
     async def get_extraction_status(self, plan_id: str) -> Optional[ExtractionStatus]:
-        """Get extraction status"""
-        if plan_id in self.completed_extractions:
+        """Get extraction status"""        if plan_id in self.completed_extractions:
             return self.completed_extractions[plan_id].status
         elif plan_id in self.active_extractions:
             return ExtractionStatus.RUNNING
@@ -420,8 +393,7 @@ class ExtractionOrchestrator:
             return None
     
     async def cancel_extraction(self, plan_id: str) -> bool:
-        """Cancel extraction"""
-        if plan_id in self.active_extractions:
+        """Cancel extraction"""        if plan_id in self.active_extractions:
             # Mark for cancellation
             plan = self.active_extractions[plan_id]
             plan.request.metadata['cancelled'] = True
@@ -429,8 +401,7 @@ class ExtractionOrchestrator:
         return False
     
     async def _create_extraction_plan(self, request: ExtractionRequest, strategy: ExtractionStrategy) -> ExtractionPlan:
-        """Create extraction execution plan"""
-        import uuid
+        """Create extraction execution plan"""        import uuid
         plan_id = str(uuid.uuid4())
         
         # Route to appropriate extractors
@@ -454,8 +425,7 @@ class ExtractionOrchestrator:
         return plan
     
     async def _determine_coordination_mode(self, extractors: List[BaseExtractor], strategy: ExtractionStrategy) -> CoordinationMode:
-        """Determine appropriate coordination mode"""
-        if len(extractors) == 0:
+        """Determine appropriate coordination mode"""        if len(extractors) == 0:
             return CoordinationMode.SINGLE_EXTRACTOR
         elif len(extractors) == 1:
             return CoordinationMode.SINGLE_EXTRACTOR
@@ -470,8 +440,7 @@ class ExtractionOrchestrator:
             return CoordinationMode.MULTI_EXTRACTOR
     
     async def _estimate_duration(self, extractors: List[BaseExtractor], request: ExtractionRequest) -> float:
-        """Estimate extraction duration"""
-        if not extractors:
+        """Estimate extraction duration"""        if not extractors:
             return 0.0
         
         total_estimate = 0.0
@@ -491,8 +460,7 @@ class ExtractionOrchestrator:
         return total_estimate
     
     async def _worker_task(self, worker_name: str):
-        """Worker task for processing extractions"""
-        logger.info(f"Worker {worker_name} started")
+        """Worker task for processing extractions"""        logger.info(f"Worker {worker_name} started")
         
         while self.is_running:
             try:
@@ -532,8 +500,7 @@ class ExtractionOrchestrator:
         logger.info(f"Worker {worker_name} stopped")
     
     async def _execute_plan(self, plan: ExtractionPlan) -> ExtractionResult:
-        """Execute extraction plan"""
-        start_time = time.time()
+        """Execute extraction plan"""        start_time = time.time()
         
         try:
             if plan.coordination_mode == CoordinationMode.SINGLE_EXTRACTOR:
@@ -562,8 +529,7 @@ class ExtractionOrchestrator:
             )
     
     async def _execute_single_extractor(self, plan: ExtractionPlan) -> ExtractionResult:
-        """Execute with single extractor"""
-        if not plan.extractors:
+        """Execute with single extractor"""        if not plan.extractors:
             return ExtractionResult(
                 request_id=plan.request.request_id,
                 status=ExtractionStatus.FAILED,
@@ -592,8 +558,7 @@ class ExtractionOrchestrator:
             )
     
     async def _execute_cascading(self, plan: ExtractionPlan) -> ExtractionResult:
-        """Execute extractors in sequence (cascading)"""
-        combined_result = ExtractionResult(
+        """Execute extractors in sequence (cascading)"""        combined_result = ExtractionResult(
             request_id=plan.request.request_id,
             status=ExtractionStatus.COMPLETED,
             extracted_data={},
@@ -625,8 +590,7 @@ class ExtractionOrchestrator:
         return combined_result
     
     async def _execute_competitive(self, plan: ExtractionPlan) -> ExtractionResult:
-        """Execute extractors in parallel (competitive)"""
-        if not plan.extractors:
+        """Execute extractors in parallel (competitive)"""        if not plan.extractors:
             return ExtractionResult(
                 request_id=plan.request.request_id,
                 status=ExtractionStatus.FAILED,
@@ -684,8 +648,7 @@ class ExtractionOrchestrator:
                     task.cancel()
     
     async def _execute_collaborative(self, plan: ExtractionPlan) -> ExtractionResult:
-        """Execute extractors collaboratively"""
-        if not plan.extractors:
+        """Execute extractors collaboratively"""        if not plan.extractors:
             return ExtractionResult(
                 request_id=plan.request.request_id,
                 status=ExtractionStatus.FAILED,
@@ -723,20 +686,17 @@ class ExtractionOrchestrator:
         return await self._combine_results(plan.request.request_id, results)
     
     async def _execute_multi_extractor(self, plan: ExtractionPlan) -> ExtractionResult:
-        """Execute multiple extractors with default strategy"""
-        return await self._execute_collaborative(plan)
+        """Execute multiple extractors with default strategy"""        return await self._execute_collaborative(plan)
     
     async def _is_better_result(self, result1: ExtractionResult, result2: ExtractionResult) -> bool:
-        """Compare extraction results to determine which is better"""
-        # Simple scoring based on data completeness
+        """Compare extraction results to determine which is better"""        # Simple scoring based on data completeness
         score1 = await self._calculate_result_score(result1)
         score2 = await self._calculate_result_score(result2)
         
         return score1 > score2
     
     async def _calculate_result_score(self, result: ExtractionResult) -> float:
-        """Calculate result quality score"""
-        score = 0.0
+        """Calculate result quality score"""        score = 0.0
         
         if result.status == ExtractionStatus.COMPLETED:
             score += 50.0
@@ -758,8 +718,7 @@ class ExtractionOrchestrator:
         return score
     
     async def _combine_results(self, request_id: str, results: List[Tuple[BaseExtractor, ExtractionResult]]) -> ExtractionResult:
-        """Intelligently combine multiple extraction results"""
-        combined_result = ExtractionResult(
+        """Intelligently combine multiple extraction results"""        combined_result = ExtractionResult(
             request_id=request_id,
             status=ExtractionStatus.COMPLETED,
             extracted_data={},
@@ -792,8 +751,7 @@ class ExtractionOrchestrator:
         return combined_result
     
     async def _create_consensus_data(self, results: List[Tuple[BaseExtractor, ExtractionResult]]) -> Dict[str, Any]:
-        """Create consensus data from multiple extraction results"""
-        consensus = {}
+        """Create consensus data from multiple extraction results"""        consensus = {}
         
         # Simple consensus for common fields
         common_fields = ['title', 'description', 'author', 'content', 'url']
@@ -815,8 +773,7 @@ class ExtractionOrchestrator:
         return consensus
     
     async def _update_metrics(self, plan: ExtractionPlan, result: ExtractionResult):
-        """Update orchestrator metrics"""
-        if result.status == ExtractionStatus.COMPLETED:
+        """Update orchestrator metrics"""        if result.status == ExtractionStatus.COMPLETED:
             self.metrics.successful_extractions += 1
         else:
             self.metrics.failed_extractions += 1
@@ -838,12 +795,10 @@ class ExtractionOrchestrator:
             )
     
     def get_metrics(self) -> ExtractionMetrics:
-        """Get current metrics"""
-        return self.metrics
+        """Get current metrics"""        return self.metrics
     
     def get_active_extractions(self) -> Dict[str, ExtractionPlan]:
-        """Get currently active extractions"""
-        return self.active_extractions.copy()
+        """Get currently active extractions"""        return self.active_extractions.copy()
 
 
 # Global orchestrator instance

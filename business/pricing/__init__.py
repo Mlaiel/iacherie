@@ -41,8 +41,7 @@ Business Logic Flow:
 Creator Registration → Content Analysis → Market Intelligence → Pricing Optimization →
 Tier Recommendation → Usage Monitoring → Revenue Analytics → Performance Optimization
 ================================================================================
-"""
-# Core pricing components
+"""# Core pricing components
 from .pricing_engine import PricingEngine, PricingStrategy, PricingRequest, PricingResult
 from .tier_manager import TierManager, TierConfiguration, TierUsageMetrics
 from .pricing_service import PricingService, BulkPricingRequest, BulkPricingResponse

@@ -1,5 +1,4 @@
-"""
-Backup Environment Manager - IA Influencer Agent
+"""Backup Environment Manager - IA Influencer Agent
 =================================================
 Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -16,9 +15,7 @@ Enterprise backup and disaster recovery environment management.
 Handles automated backups, restore procedures, and disaster recovery
 for multi-format content, AI models, and monetization data.
 =================================================
-"""
-
-import os
+"""import os
 import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Set
@@ -31,8 +28,7 @@ logger = logging.getLogger(__name__)
 
 
 class BackupType(Enum):
-    """Backup type enumeration"""
-    FULL = "full"
+    """Backup type enumeration"""    FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
     SNAPSHOT = "snapshot"
@@ -40,8 +36,7 @@ class BackupType(Enum):
 
 
 class BackupStatus(Enum):
-    """Backup status enumeration"""
-    PENDING = "pending"
+    """Backup status enumeration"""    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -51,8 +46,7 @@ class BackupStatus(Enum):
 
 @dataclass
 class BackupConfiguration:
-    """Backup configuration settings"""
-    backup_interval_hours: int = int(os.getenv('BACKUP_INTERVAL_HOURS', '6'))
+    """Backup configuration settings"""    backup_interval_hours: int = int(os.getenv('BACKUP_INTERVAL_HOURS', '6'))
     retention_policy_days: int = int(os.getenv('BACKUP_RETENTION_DAYS', '90'))
     compression_enabled: bool = bool(os.getenv('BACKUP_COMPRESSION', 'true').lower() == 'true')
     encryption_enabled: bool = bool(os.getenv('BACKUP_ENCRYPTION', 'true').lower() == 'true')
@@ -66,8 +60,7 @@ class BackupConfiguration:
 
 @dataclass
 class DatabaseBackupConfig:
-    """Database backup configuration"""
-    backup_databases: List[str] = field(default_factory=lambda: [
+    """Database backup configuration"""    backup_databases: List[str] = field(default_factory=lambda: [
         'ia_influencer_prod', 'ia_influencer_analytics', 'ia_influencer_content'
     ])
     pg_dump_options: List[str] = field(default_factory=lambda: [
@@ -84,8 +77,7 @@ class DatabaseBackupConfig:
 
 @dataclass
 class StorageBackupConfig:
-    """Storage backup configuration"""
-    s3_buckets: List[str] = field(default_factory=lambda: [
+    """Storage backup configuration"""    s3_buckets: List[str] = field(default_factory=lambda: [
         'ia-influencer-content-prod', 'ia-influencer-fingerprints',
         'ia-influencer-models', 'ia-influencer-analytics'
     ])
@@ -103,8 +95,7 @@ class StorageBackupConfig:
 
 @dataclass
 class AIModelsBackupConfig:
-    """AI models backup configuration"""
-    model_directories: List[str] = field(default_factory=lambda: [
+    """AI models backup configuration"""    model_directories: List[str] = field(default_factory=lambda: [
         '/app/models/fingerprinting', '/app/models/audio_analysis',
         '/app/models/content_protection', '/app/models/monetization'
     ])
@@ -117,8 +108,7 @@ class AIModelsBackupConfig:
 
 
 class BackupEnvironmentManager:
-    """
-    Backup environment manager for comprehensive data protection.
+    """    Backup environment manager for comprehensive data protection.
     
     Features:
     - Automated database backups with point-in-time recovery
@@ -129,8 +119,7 @@ class BackupEnvironmentManager:
     - Automated restore procedures
     - Backup monitoring and alerting
     - Compliance and audit trails
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None):
         self.config_path = config_path or "/config/backup.yml"
         self.environment = "backup"
@@ -149,8 +138,7 @@ class BackupEnvironmentManager:
         logger.info(f"Backup environment manager initialized: {self.environment}")
     
     def load_configuration(self) -> Dict[str, Any]:
-        """Load backup environment configuration"""
-        try:
+        """Load backup environment configuration"""        try:
             config = {
                 'environment': self.environment,
                 'backup_interval': self.backup_config.backup_interval_hours,
@@ -198,8 +186,7 @@ class BackupEnvironmentManager:
             raise
     
     async def create_full_backup(self, backup_name: str = None) -> Dict[str, Any]:
-        """Create a full system backup"""
-        try:
+        """Create a full system backup"""        try:
             backup_id = backup_name or f"full_backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
             backup_job = {
@@ -263,8 +250,7 @@ class BackupEnvironmentManager:
             raise
     
     async def create_incremental_backup(self, reference_backup: str = None) -> Dict[str, Any]:
-        """Create an incremental backup"""
-        try:
+        """Create an incremental backup"""        try:
             backup_id = f"incremental_backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
             # Find reference backup if not provided
@@ -303,8 +289,7 @@ class BackupEnvironmentManager:
             raise
     
     async def restore_from_backup(self, backup_id: str, components: List[str] = None) -> Dict[str, Any]:
-        """Restore system from backup"""
-        try:
+        """Restore system from backup"""        try:
             restore_job = {
                 'restore_id': f"restore_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
                 'backup_id': backup_id,
@@ -357,8 +342,7 @@ class BackupEnvironmentManager:
             raise
     
     def get_backup_status(self, backup_id: str = None) -> Dict[str, Any]:
-        """Get backup status and progress"""
-        if backup_id:
+        """Get backup status and progress"""        if backup_id:
             return self.active_backups.get(backup_id, {})
         
         return {
@@ -370,8 +354,7 @@ class BackupEnvironmentManager:
         }
     
     def cleanup_old_backups(self) -> Dict[str, Any]:
-        """Cleanup old backups based on retention policy"""
-        try:
+        """Cleanup old backups based on retention policy"""        try:
             cutoff_date = datetime.now() - timedelta(days=self.backup_config.retention_policy_days)
             
             cleanup_result = {
@@ -406,8 +389,7 @@ class BackupEnvironmentManager:
             raise
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Get backup environment health status"""
-        return {
+        """Get backup environment health status"""        return {
             'environment': self.environment,
             'status': 'healthy',
             'active_backups': len(self.active_backups),
@@ -421,8 +403,7 @@ class BackupEnvironmentManager:
     
     # Private helper methods
     async def _backup_databases(self, backup_id: str) -> bool:
-        """Backup databases"""
-        try:
+        """Backup databases"""        try:
             # Implement database backup logic
             logger.info(f"Starting database backup for {backup_id}")
             
@@ -448,8 +429,7 @@ class BackupEnvironmentManager:
             return False
     
     async def _backup_storage(self, backup_id: str) -> bool:
-        """Backup storage files"""
-        try:
+        """Backup storage files"""        try:
             logger.info(f"Starting storage backup for {backup_id}")
             
             if backup_id in self.active_backups:
@@ -471,8 +451,7 @@ class BackupEnvironmentManager:
             return False
     
     async def _backup_ai_models(self, backup_id: str) -> bool:
-        """Backup AI models and training data"""
-        try:
+        """Backup AI models and training data"""        try:
             logger.info(f"Starting AI models backup for {backup_id}")
             
             if backup_id in self.active_backups:
@@ -494,8 +473,7 @@ class BackupEnvironmentManager:
             return False
     
     async def _backup_configuration(self, backup_id: str) -> bool:
-        """Backup system configuration"""
-        try:
+        """Backup system configuration"""        try:
             logger.info(f"Starting configuration backup for {backup_id}")
             
             if backup_id in self.active_backups:
@@ -517,8 +495,7 @@ class BackupEnvironmentManager:
             return False
     
     async def _verify_backup(self, backup_id: str) -> bool:
-        """Verify backup integrity"""
-        try:
+        """Verify backup integrity"""        try:
             logger.info(f"Verifying backup integrity for {backup_id}")
             await asyncio.sleep(1)  # Replace with actual verification logic
             return True
@@ -527,8 +504,7 @@ class BackupEnvironmentManager:
             return False
     
     async def _create_incremental_backup_data(self, backup_id: str, reference_backup: str) -> bool:
-        """Create incremental backup data"""
-        try:
+        """Create incremental backup data"""        try:
             logger.info(f"Creating incremental backup {backup_id} from reference {reference_backup}")
             await asyncio.sleep(2)  # Replace with actual incremental backup logic
             return True
@@ -537,8 +513,7 @@ class BackupEnvironmentManager:
             return False
     
     async def _validate_backup_for_restore(self, backup_id: str) -> bool:
-        """Validate backup before restore"""
-        try:
+        """Validate backup before restore"""        try:
             # Implement backup validation logic
             return True
         except Exception as e:
@@ -546,8 +521,7 @@ class BackupEnvironmentManager:
             return False
     
     async def _restore_databases(self, backup_id: str) -> bool:
-        """Restore databases from backup"""
-        try:
+        """Restore databases from backup"""        try:
             logger.info(f"Restoring databases from backup {backup_id}")
             await asyncio.sleep(3)  # Replace with actual restore logic
             return True
@@ -556,8 +530,7 @@ class BackupEnvironmentManager:
             return False
     
     async def _restore_storage(self, backup_id: str) -> bool:
-        """Restore storage from backup"""
-        try:
+        """Restore storage from backup"""        try:
             logger.info(f"Restoring storage from backup {backup_id}")
             await asyncio.sleep(4)  # Replace with actual restore logic
             return True
@@ -566,8 +539,7 @@ class BackupEnvironmentManager:
             return False
     
     async def _restore_ai_models(self, backup_id: str) -> bool:
-        """Restore AI models from backup"""
-        try:
+        """Restore AI models from backup"""        try:
             logger.info(f"Restoring AI models from backup {backup_id}")
             await asyncio.sleep(2)  # Replace with actual restore logic
             return True
@@ -576,8 +548,7 @@ class BackupEnvironmentManager:
             return False
     
     async def _restore_configuration(self, backup_id: str) -> bool:
-        """Restore configuration from backup"""
-        try:
+        """Restore configuration from backup"""        try:
             logger.info(f"Restoring configuration from backup {backup_id}")
             await asyncio.sleep(1)  # Replace with actual restore logic
             return True
@@ -586,24 +557,21 @@ class BackupEnvironmentManager:
             return False
     
     async def _send_backup_notification(self, backup_job: Dict):
-        """Send backup completion notification"""
-        try:
+        """Send backup completion notification"""        try:
             # Implement notification logic
             pass
         except Exception as e:
             logger.error(f"Failed to send backup notification: {e}")
     
     async def _send_restore_notification(self, restore_job: Dict):
-        """Send restore completion notification"""
-        try:
+        """Send restore completion notification"""        try:
             # Implement notification logic
             pass
         except Exception as e:
             logger.error(f"Failed to send restore notification: {e}")
     
     def _get_latest_backup(self) -> str:
-        """Get the latest successful backup ID"""
-        successful_backups = [
+        """Get the latest successful backup ID"""        successful_backups = [
             backup for backup in self.backup_history
             if backup.get('status') in ['completed', 'verified']
         ]
@@ -612,8 +580,7 @@ class BackupEnvironmentManager:
         return None
     
     def _delete_backup_files(self, backup_id: str) -> bool:
-        """Delete backup files from storage"""
-        try:
+        """Delete backup files from storage"""        try:
             # Implement backup file deletion logic
             return True
         except Exception as e:
@@ -621,21 +588,18 @@ class BackupEnvironmentManager:
             return False
     
     def _count_recent_failures(self) -> int:
-        """Count recent backup failures"""
-        cutoff = datetime.now() - timedelta(days=7)
+        """Count recent backup failures"""        cutoff = datetime.now() - timedelta(days=7)
         return len([
             backup for backup in self.backup_history
             if backup.get('status') == 'failed' and backup.get('started_at', datetime.min) > cutoff
         ])
     
     def _get_storage_usage_percent(self) -> float:
-        """Get backup storage usage percentage"""
-        # Implement storage usage calculation
+        """Get backup storage usage percentage"""        # Implement storage usage calculation
         return 65.5
     
     def _get_last_successful_backup(self) -> str:
-        """Get timestamp of last successful backup"""
-        latest = self._get_latest_backup()
+        """Get timestamp of last successful backup"""        latest = self._get_latest_backup()
         if latest:
             backup = next((b for b in self.backup_history if b['backup_id'] == latest), None)
             if backup:
@@ -643,8 +607,7 @@ class BackupEnvironmentManager:
         return ''
     
     def _get_next_scheduled_backup(self) -> str:
-        """Get next scheduled backup time"""
-        # Calculate next backup time based on interval
+        """Get next scheduled backup time"""        # Calculate next backup time based on interval
         if self.backup_history:
             last_backup = max(self.backup_history, key=lambda x: x.get('started_at', datetime.min))
             next_backup = last_backup.get('started_at', datetime.now()) + timedelta(hours=self.backup_config.backup_interval_hours)
@@ -652,8 +615,7 @@ class BackupEnvironmentManager:
         return datetime.now().isoformat()
     
     def _check_retention_compliance(self) -> bool:
-        """Check if backup retention policy is compliant"""
-        cutoff = datetime.now() - timedelta(days=self.backup_config.retention_policy_days)
+        """Check if backup retention policy is compliant"""        cutoff = datetime.now() - timedelta(days=self.backup_config.retention_policy_days)
         old_backups = [
             backup for backup in self.backup_history
             if backup.get('completed_at', datetime.now()) < cutoff
@@ -661,8 +623,7 @@ class BackupEnvironmentManager:
         return len(old_backups) == 0
     
     def _get_verification_success_rate(self) -> float:
-        """Get backup verification success rate"""
-        verified_backups = [
+        """Get backup verification success rate"""        verified_backups = [
             backup for backup in self.backup_history
             if backup.get('status') == 'verified'
         ]
@@ -670,8 +631,7 @@ class BackupEnvironmentManager:
         return (len(verified_backups) / total_backups * 100) if total_backups > 0 else 0.0
     
     def _get_backup_storage_usage(self) -> Dict[str, Any]:
-        """Get backup storage usage statistics"""
-        return {
+        """Get backup storage usage statistics"""        return {
             'total_size_gb': 1250.5,
             'used_space_gb': 820.3,
             'available_space_gb': 430.2,

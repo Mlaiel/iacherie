@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Collaboration Filters
+"""IA Influencer Agent - Collaboration Filters
 ==========================================
 
 Ultra-advanced professional collaboration assessment system for content matching.
@@ -28,9 +27,7 @@ Technical Team Expertise:
 - IA Prompt Engineer: Prompt optimization and AI interaction
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import json
@@ -46,8 +43,7 @@ from .filter_engine import FilterResponse, FilterResult, FilterType, ContentItem
 
 
 class CollaborationType(Enum):
-    """Types of collaboration opportunities."""
-    REMIX = "remix"
+    """Types of collaboration opportunities."""    REMIX = "remix"
     COVER_VERSION = "cover_version"
     FEATURING = "featuring"
     PRODUCTION = "production"
@@ -62,8 +58,7 @@ class CollaborationType(Enum):
 
 
 class CompatibilityLevel(Enum):
-    """Collaboration compatibility levels."""
-    PERFECT_MATCH = "perfect_match"    # 90-100%
+    """Collaboration compatibility levels."""    PERFECT_MATCH = "perfect_match"    # 90-100%
     EXCELLENT = "excellent"            # 80-89%
     GOOD = "good"                     # 70-79%
     FAIR = "fair"                     # 60-69%
@@ -72,8 +67,7 @@ class CompatibilityLevel(Enum):
 
 
 class CreatorProfile(Enum):
-    """Creator profile types."""
-    MUSICIAN_SOLO = "musician_solo"
+    """Creator profile types."""    MUSICIAN_SOLO = "musician_solo"
     MUSICIAN_BAND = "musician_band"
     PRODUCER = "producer"
     SONGWRITER = "songwriter"
@@ -89,8 +83,7 @@ class CreatorProfile(Enum):
 
 @dataclass
 class CollaborationOpportunity:
-    """Collaboration opportunity data structure."""
-    collaboration_type: CollaborationType
+    """Collaboration opportunity data structure."""    collaboration_type: CollaborationType
     compatibility_score: float
     potential_reach_multiplier: float
     estimated_completion_time: int  # days
@@ -101,8 +94,7 @@ class CollaborationOpportunity:
     success_probability: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
-        return {
+        """Convert to dictionary."""        return {
             "type": self.collaboration_type.value,
             "compatibility": self.compatibility_score,
             "reach_multiplier": self.potential_reach_multiplier,
@@ -117,8 +109,7 @@ class CollaborationOpportunity:
 
 @dataclass
 class CollaborationMetrics:
-    """Collaboration assessment metrics."""
-    overall_collaboration_score: float = 0.0
+    """Collaboration assessment metrics."""    overall_collaboration_score: float = 0.0
     compatibility_level: CompatibilityLevel = CompatibilityLevel.INCOMPATIBLE
     recommended_opportunities: List[CollaborationOpportunity] = None
     creator_profile_match: Dict[str, float] = None
@@ -144,11 +135,9 @@ class CollaborationMetrics:
 
 
 class CreatorProfileAnalyzer:
-    """Analyzes creator profiles for collaboration matching."""
-    
+    """Analyzes creator profiles for collaboration matching."""    
     def __init__(self):
-        """Initialize creator profile analyzer."""
-        self.logger = logging.getLogger(__name__)
+        """Initialize creator profile analyzer."""        self.logger = logging.getLogger(__name__)
         
         # Profile characteristics mapping
         self.profile_characteristics = {
@@ -219,8 +208,7 @@ class CreatorProfileAnalyzer:
         }
     
     async def analyze_creator_profile(self, content_item: ContentItem) -> Dict[str, Any]:
-        """Analyze creator profile from content characteristics."""
-        try:
+        """Analyze creator profile from content characteristics."""        try:
             profile_analysis = {
                 "detected_profiles": await self._detect_creator_profiles(content_item),
                 "skill_indicators": await self._analyze_skill_indicators(content_item),
@@ -236,8 +224,7 @@ class CreatorProfileAnalyzer:
             return {"error": str(e)}
     
     async def _detect_creator_profiles(self, content_item: ContentItem) -> Dict[str, float]:
-        """Detect potential creator profiles with confidence scores."""
-        try:
+        """Detect potential creator profiles with confidence scores."""        try:
             profile_scores = {}
             
             # Analyze content type
@@ -291,8 +278,7 @@ class CreatorProfileAnalyzer:
             return {}
     
     async def _analyze_skill_indicators(self, content_item: ContentItem) -> Dict[str, float]:
-        """Analyze skill indicators from content."""
-        try:
+        """Analyze skill indicators from content."""        try:
             skill_scores = {}
             
             # Technical skills from metadata
@@ -340,8 +326,7 @@ class CreatorProfileAnalyzer:
             return {}
     
     async def _assess_collaboration_readiness(self, content_item: ContentItem) -> float:
-        """Assess readiness for collaboration."""
-        try:
+        """Assess readiness for collaboration."""        try:
             readiness_score = 0.5  # Base score
             
             # Metadata completeness indicates professionalism
@@ -364,8 +349,7 @@ class CreatorProfileAnalyzer:
             return 0.5
     
     async def _assess_professional_level(self, content_item: ContentItem) -> float:
-        """Assess professional level of creator."""
-        try:
+        """Assess professional level of creator."""        try:
             professional_score = 0.4  # Base score
             
             # Technical quality indicators
@@ -393,8 +377,7 @@ class CreatorProfileAnalyzer:
             return 0.4
     
     async def _analyze_market_position(self, content_item: ContentItem) -> Dict[str, float]:
-        """Analyze market position and reach potential."""
-        try:
+        """Analyze market position and reach potential."""        try:
             market_analysis = {
                 "commercial_appeal": 0.5,
                 "niche_expertise": 0.5,
@@ -434,8 +417,7 @@ class CreatorProfileAnalyzer:
                    "trend_alignment": 0.5, "innovation_factor": 0.5}
     
     def _get_content_type(self, content_item: ContentItem) -> str:
-        """Determine content type from item."""
-        if content_item.mime_type:
+        """Determine content type from item."""        if content_item.mime_type:
             if content_item.mime_type.startswith("audio/"):
                 return "audio"
             elif content_item.mime_type.startswith("video/"):
@@ -449,17 +431,14 @@ class CreatorProfileAnalyzer:
 
 
 class CollaborationMatcher:
-    """Matches collaboration opportunities based on content analysis."""
-    
+    """Matches collaboration opportunities based on content analysis."""    
     def __init__(self, profile_analyzer: CreatorProfileAnalyzer):
-        """Initialize collaboration matcher."""
-        self.logger = logging.getLogger(__name__)
+        """Initialize collaboration matcher."""        self.logger = logging.getLogger(__name__)
         self.profile_analyzer = profile_analyzer
     
     async def find_collaboration_opportunities(self, content_item: ContentItem, 
                                              creator_profile: Dict[str, Any]) -> List[CollaborationOpportunity]:
-        """Find potential collaboration opportunities."""
-        try:
+        """Find potential collaboration opportunities."""        try:
             opportunities = []
             
             detected_profiles = creator_profile.get("detected_profiles", {})
@@ -491,8 +470,7 @@ class CollaborationMatcher:
                                                 detected_profiles: Dict[str, float],
                                                 skill_indicators: Dict[str, float],
                                                 collaboration_readiness: float) -> Optional[CollaborationOpportunity]:
-        """Evaluate a specific collaboration opportunity."""
-        try:
+        """Evaluate a specific collaboration opportunity."""        try:
             # Check content type compatibility
             content_type = self.profile_analyzer._get_content_type(content_item)
             if content_type not in requirements.get("compatible_content", []):
@@ -544,8 +522,7 @@ class CollaborationMatcher:
     
     async def _calculate_skill_match(self, collab_type: CollaborationType, 
                                    skill_indicators: Dict[str, float]) -> float:
-        """Calculate skill match for collaboration type."""
-        try:
+        """Calculate skill match for collaboration type."""        try:
             # Skill requirements for each collaboration type
             skill_requirements = {
                 CollaborationType.REMIX: ["audio_production", "mixing"],
@@ -568,8 +545,7 @@ class CollaborationMatcher:
     
     async def _calculate_reach_multiplier(self, collab_type: CollaborationType, 
                                         detected_profiles: Dict[str, float]) -> float:
-        """Calculate potential reach multiplier for collaboration."""
-        try:
+        """Calculate potential reach multiplier for collaboration."""        try:
             # Base multipliers for collaboration types
             base_multipliers = {
                 CollaborationType.REMIX: 1.5,
@@ -594,8 +570,7 @@ class CollaborationMatcher:
             return 1.2
     
     async def _identify_required_skills(self, collab_type: CollaborationType) -> List[str]:
-        """Identify skills required for collaboration type."""
-        skill_map = {
+        """Identify skills required for collaboration type."""        skill_map = {
             CollaborationType.REMIX: ["audio_production", "mixing", "arrangement"],
             CollaborationType.FEATURING: ["vocal_performance", "recording", "collaboration"],
             CollaborationType.PRODUCTION: ["audio_engineering", "mixing", "mastering"],
@@ -608,8 +583,7 @@ class CollaborationMatcher:
     
     async def _suggest_collaboration_roles(self, collab_type: CollaborationType, 
                                          detected_profiles: Dict[str, float]) -> Dict[str, str]:
-        """Suggest roles for collaboration participants."""
-        role_suggestions = {
+        """Suggest roles for collaboration participants."""        role_suggestions = {
             CollaborationType.REMIX: {
                 "original_artist": "content_provider",
                 "remixer": "production_lead"
@@ -628,8 +602,7 @@ class CollaborationMatcher:
     
     async def _suggest_revenue_split(self, collab_type: CollaborationType, 
                                    detected_profiles: Dict[str, float]) -> Dict[str, float]:
-        """Suggest revenue split for collaboration."""
-        try:
+        """Suggest revenue split for collaboration."""        try:
             # Default splits by collaboration type
             default_splits = {
                 CollaborationType.REMIX: {"original_artist": 0.6, "remixer": 0.4},
@@ -647,8 +620,7 @@ class CollaborationMatcher:
     
     async def _assess_collaboration_risk(self, collab_type: CollaborationType, 
                                        compatibility_score: float) -> float:
-        """Assess risk level of collaboration."""
-        try:
+        """Assess risk level of collaboration."""        try:
             # Base risk levels
             base_risks = {
                 CollaborationType.CROSS_PROMOTION: 0.2,  # Low risk
@@ -672,8 +644,7 @@ class CollaborationMatcher:
     async def _calculate_success_probability(self, collab_type: CollaborationType,
                                            compatibility_score: float,
                                            collaboration_readiness: float) -> float:
-        """Calculate success probability of collaboration."""
-        try:
+        """Calculate success probability of collaboration."""        try:
             # Base success rates
             base_success_rates = {
                 CollaborationType.CROSS_PROMOTION: 0.8,
@@ -696,18 +667,15 @@ class CollaborationMatcher:
 
 
 class CollaborationEngine:
-    """Main collaboration assessment engine."""
-    
+    """Main collaboration assessment engine."""    
     def __init__(self, config_manager: FilterConfigManager):
-        """Initialize collaboration engine."""
-        self.config_manager = config_manager
+        """Initialize collaboration engine."""        self.config_manager = config_manager
         self.logger = logging.getLogger(__name__)
         self.profile_analyzer = CreatorProfileAnalyzer()
         self.collaboration_matcher = CollaborationMatcher(self.profile_analyzer)
     
     async def assess_collaboration_potential(self, content_item: ContentItem) -> CollaborationMetrics:
-        """Assess comprehensive collaboration potential."""
-        try:
+        """Assess comprehensive collaboration potential."""        try:
             start_time = time.time()
             
             # Analyze creator profile
@@ -770,8 +738,7 @@ class CollaborationEngine:
             )
     
     def _determine_compatibility_level(self, score: float) -> CompatibilityLevel:
-        """Determine compatibility level from score."""
-        if score >= 0.9:
+        """Determine compatibility level from score."""        if score >= 0.9:
             return CompatibilityLevel.PERFECT_MATCH
         elif score >= 0.8:
             return CompatibilityLevel.EXCELLENT
@@ -786,8 +753,7 @@ class CollaborationEngine:
     
     async def _calculate_market_synergy(self, content_item: ContentItem, 
                                       creator_profile: Dict[str, Any]) -> float:
-        """Calculate market synergy potential."""
-        try:
+        """Calculate market synergy potential."""        try:
             synergy_score = 0.5
             
             market_position = creator_profile.get("market_position", {})
@@ -816,8 +782,7 @@ class CollaborationEngine:
     
     async def _analyze_audience_overlap_potential(self, content_item: ContentItem, 
                                                 opportunities: List[CollaborationOpportunity]) -> Dict[str, Any]:
-        """Analyze potential audience overlap and growth."""
-        try:
+        """Analyze potential audience overlap and growth."""        try:
             overlap_analysis = {
                 "estimated_reach_growth": 0.0,
                 "audience_complementarity": 0.5,
@@ -851,8 +816,7 @@ class CollaborationEngine:
     async def _generate_collaboration_suggestions(self, content_item: ContentItem,
                                                 creator_profile: Dict[str, Any],
                                                 opportunities: List[CollaborationOpportunity]) -> List[str]:
-        """Generate collaboration improvement suggestions."""
-        suggestions = []
+        """Generate collaboration improvement suggestions."""        suggestions = []
         
         try:
             collaboration_readiness = creator_profile.get("collaboration_readiness", 0.5)
@@ -892,8 +856,7 @@ class CollaborationEngine:
     async def _generate_partnership_recommendations(self, content_item: ContentItem,
                                                   creator_profile: Dict[str, Any],
                                                   opportunities: List[CollaborationOpportunity]) -> List[str]:
-        """Generate specific partnership recommendations."""
-        recommendations = []
+        """Generate specific partnership recommendations."""        recommendations = []
         
         try:
             detected_profiles = creator_profile.get("detected_profiles", {})

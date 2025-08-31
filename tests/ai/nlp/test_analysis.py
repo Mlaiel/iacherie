@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Text Analysis Tests for IA Influencer Agent Platform
+"""Text Analysis Tests for IA Influencer Agent Platform
 
 Comprehensive test suite for text analysis components
 with industrial-grade testing standards.
@@ -25,9 +21,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
-"""
-
-import unittest
+"""import unittest
 import asyncio
 import pytest
 import sys
@@ -47,17 +41,14 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(level
 logger = logging.getLogger(__name__)
 
 class TextAnalysisTests(unittest.TestCase):
-    """
-    Ultra-Advanced Industrial-Grade Text Analysis Test Suite
+    """    Ultra-Advanced Industrial-Grade Text Analysis Test Suite
     
     🎯 Target: 100% coverage, 0 errors, 0 warnings
     🔒 Enterprise-level quality assurance
     ⚡ High-performance testing with comprehensive validation
-    """
-    
+    """    
     def setUp(self):
-        """Initialize test environment with professional configuration"""
-        logger.info("🔧 Setting up Text Analysis Tests - Industrial Grade Configuration")
+        """Initialize test environment with professional configuration"""        logger.info("🔧 Setting up Text Analysis Tests - Industrial Grade Configuration")
         self.test_config = {
             'timeout': 30.0,
             'batch_size': 100,
@@ -78,12 +69,10 @@ class TextAnalysisTests(unittest.TestCase):
         logger.info("✅ Text Analysis Tests setup completed successfully")
     
     def tearDown(self):
-        """Clean up test environment"""
-        logger.info("🧹 Text Analysis Tests cleanup completed")
+        """Clean up test environment"""        logger.info("🧹 Text Analysis Tests cleanup completed")
     
     def test_sentiment_analysis(self):
-        """Test sentiment analysis functionality"""
-        logger.info("🧪 Testing sentiment analysis functionality")
+        """Test sentiment analysis functionality"""        logger.info("🧪 Testing sentiment analysis functionality")
         
         # Mock sentiment analysis results
         mock_results = [
@@ -101,8 +90,7 @@ class TextAnalysisTests(unittest.TestCase):
         logger.info("✅ Sentiment analysis test passed")
     
     def test_entity_recognition(self):
-        """Test named entity recognition"""
-        logger.info("🧪 Testing named entity recognition")
+        """Test named entity recognition"""        logger.info("🧪 Testing named entity recognition")
         
         # Mock NER results
         mock_entities = [
@@ -120,8 +108,7 @@ class TextAnalysisTests(unittest.TestCase):
         logger.info("✅ Entity recognition test passed")
     
     def test_text_classification(self):
-        """Test text classification functionality"""
-        logger.info("🧪 Testing text classification")
+        """Test text classification functionality"""        logger.info("🧪 Testing text classification")
         
         # Mock classification results
         mock_classifications = [
@@ -139,8 +126,7 @@ class TextAnalysisTests(unittest.TestCase):
         logger.info("✅ Text classification test passed")
     
     def test_language_detection(self):
-        """Test language detection functionality"""
-        logger.info("🧪 Testing language detection")
+        """Test language detection functionality"""        logger.info("🧪 Testing language detection")
         
         # Mock language detection results
         mock_languages = [
@@ -158,8 +144,7 @@ class TextAnalysisTests(unittest.TestCase):
         logger.info("✅ Language detection test passed")
     
     def test_text_summarization(self):
-        """Test text summarization functionality"""
-        logger.info("🧪 Testing text summarization")
+        """Test text summarization functionality"""        logger.info("🧪 Testing text summarization")
         
         # Mock summarization
         original_text = "This is a long text that needs to be summarized. " * 10
@@ -173,8 +158,7 @@ class TextAnalysisTests(unittest.TestCase):
         logger.info("✅ Text summarization test passed")
     
     def test_keyword_extraction(self):
-        """Test keyword extraction functionality"""
-        logger.info("🧪 Testing keyword extraction")
+        """Test keyword extraction functionality"""        logger.info("🧪 Testing keyword extraction")
         
         # Mock keyword extraction
         mock_keywords = [
@@ -192,8 +176,7 @@ class TextAnalysisTests(unittest.TestCase):
         logger.info("✅ Keyword extraction test passed")
     
     def test_text_similarity(self):
-        """Test text similarity calculation"""
-        logger.info("🧪 Testing text similarity")
+        """Test text similarity calculation"""        logger.info("🧪 Testing text similarity")
         
         # Mock similarity scores
         text1 = "This is the first text"
@@ -208,8 +191,7 @@ class TextAnalysisTests(unittest.TestCase):
         logger.info("✅ Text similarity test passed")
     
     def test_performance_benchmarks(self):
-        """Test performance benchmarks for text analysis"""
-        logger.info("🧪 Testing performance benchmarks")
+        """Test performance benchmarks for text analysis"""        logger.info("🧪 Testing performance benchmarks")
         
         # Mock performance metrics
         mock_metrics = {
@@ -228,8 +210,7 @@ class TextAnalysisTests(unittest.TestCase):
     
     @pytest.mark.asyncio
     async def test_async_text_processing(self):
-        """Test asynchronous text processing capabilities"""
-        logger.info("🧪 Testing async text processing")
+        """Test asynchronous text processing capabilities"""        logger.info("🧪 Testing async text processing")
         
         # Mock async processing
         async def mock_process_text(text: str) -> dict:
@@ -249,8 +230,7 @@ class TextAnalysisTests(unittest.TestCase):
         logger.info("✅ Async text processing test passed")
     
     def test_error_handling(self):
-        """Test error handling and recovery mechanisms"""
-        logger.info("🧪 Testing error handling")
+        """Test error handling and recovery mechanisms"""        logger.info("🧪 Testing error handling")
         
         # Mock error scenarios
         error_cases = [
@@ -276,13 +256,10 @@ class TextAnalysisTests(unittest.TestCase):
 
 
 class AdvancedTextAnalysisTests(TextAnalysisTests):
-    """
-    Extended test suite for advanced text analysis features
-    """
-    
+    """    Extended test suite for advanced text analysis features
+    """    
     def test_multi_language_support(self):
-        """Test multi-language text analysis support"""
-        logger.info("🧪 Testing multi-language support")
+        """Test multi-language text analysis support"""        logger.info("🧪 Testing multi-language support")
         
         # Mock multi-language texts
         multi_lang_texts = [
@@ -302,8 +279,7 @@ class AdvancedTextAnalysisTests(TextAnalysisTests):
         logger.info("✅ Multi-language support test passed")
     
     def test_real_time_processing(self):
-        """Test real-time text processing capabilities"""
-        logger.info("🧪 Testing real-time processing")
+        """Test real-time text processing capabilities"""        logger.info("🧪 Testing real-time processing")
         
         # Mock real-time processing
         start_time = datetime.utcnow()

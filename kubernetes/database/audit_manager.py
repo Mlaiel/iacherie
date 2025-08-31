@@ -1,5 +1,4 @@
-"""
-Enterprise Database Audit Manager
+"""Enterprise Database Audit Manager
 Advanced audit logging and compliance tracking for IA Influencer Agent
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -71,9 +70,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Compressed audit storage
 - Index optimization
 - Query performance monitoring
-"""
-
-import asyncio
+"""import asyncio
 import json
 import hashlib
 import hmac
@@ -99,8 +96,7 @@ from backend.deployment.database.encryption_manager import get_encryption_manage
 
 
 class AuditEventType(Enum):
-    """Types d'événements d'audit"""
-    # Database operations
+    """Types d'événements d'audit"""    # Database operations
     DATABASE_CREATE = "database_create"
     DATABASE_DROP = "database_drop"
     DATABASE_BACKUP = "database_backup"
@@ -150,8 +146,7 @@ class AuditEventType(Enum):
 
 
 class AuditSeverity(Enum):
-    """Niveaux de gravité des événements"""
-    INFO = "info"
+    """Niveaux de gravité des événements"""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
@@ -159,8 +154,7 @@ class AuditSeverity(Enum):
 
 
 class ComplianceFramework(Enum):
-    """Frameworks de compliance supportés"""
-    GDPR = "gdpr"
+    """Frameworks de compliance supportés"""    GDPR = "gdpr"
     CCPA = "ccpa"
     SOX = "sox"
     HIPAA = "hipaa"
@@ -170,8 +164,7 @@ class ComplianceFramework(Enum):
 
 @dataclass
 class AuditEvent:
-    """Événement d'audit structuré"""
-    event_id: str
+    """Événement d'audit structuré"""    event_id: str
     event_type: AuditEventType
     severity: AuditSeverity
     timestamp: datetime
@@ -220,11 +213,9 @@ class AuditEvent:
 
 
 class DatabaseAuditManager:
-    """
-    Gestionnaire d'audit enterprise pour bases de données
+    """    Gestionnaire d'audit enterprise pour bases de données
     Fournit un audit complet et conforme aux réglementations
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or get_settings()
         self.logger = get_logger(f"{__name__}.DatabaseAuditManager")
@@ -266,8 +257,7 @@ class DatabaseAuditManager:
         asyncio.create_task(self._initialize_audit_system())
     
     async def _initialize_audit_system(self):
-        """Initialise le système d'audit"""
-        try:
+        """Initialise le système d'audit"""        try:
             self.logger.info("📊 Initializing enterprise audit system...")
             
             # Configuration cryptographique
@@ -289,8 +279,7 @@ class DatabaseAuditManager:
             raise
     
     async def _setup_cryptographic_signing(self):
-        """Configure la signature cryptographique des audits"""
-        try:
+        """Configure la signature cryptographique des audits"""        try:
             if not self.signature_enabled:
                 return
             
@@ -348,8 +337,7 @@ class DatabaseAuditManager:
             raise
     
     async def _setup_audit_database(self):
-        """Configure la base de données d'audit"""
-        try:
+        """Configure la base de données d'audit"""        try:
             if not self.audit_database_url:
                 return
             
@@ -372,13 +360,11 @@ class DatabaseAuditManager:
             self.audit_pool = None
     
     async def _create_audit_tables(self):
-        """Crée les tables d'audit nécessaires"""
-        try:
+        """Crée les tables d'audit nécessaires"""        try:
             if not self.audit_pool:
                 return
             
-            create_table_sql = """
-            CREATE TABLE IF NOT EXISTS audit_events (
+            create_table_sql = """            CREATE TABLE IF NOT EXISTS audit_events (
                 id BIGSERIAL PRIMARY KEY,
                 event_id UUID UNIQUE NOT NULL,
                 event_type VARCHAR(100) NOT NULL,
@@ -442,8 +428,7 @@ class DatabaseAuditManager:
             CREATE TABLE IF NOT EXISTS audit_events_archive (
                 LIKE audit_events INCLUDING ALL
             );
-            """
-            
+            """            
             async with self.audit_pool.acquire() as conn:
                 await conn.execute(create_table_sql)
             
@@ -454,8 +439,7 @@ class DatabaseAuditManager:
             raise
     
     async def _setup_audit_directories(self):
-        """Configure les répertoires de logs d'audit"""
-        try:
+        """Configure les répertoires de logs d'audit"""        try:
             # Création des répertoires
             directories = [
                 self.audit_file_path,
@@ -476,8 +460,7 @@ class DatabaseAuditManager:
             raise
     
     async def _start_maintenance_tasks(self):
-        """Démarre les tâches de maintenance d'audit"""
-        try:
+        """Démarre les tâches de maintenance d'audit"""        try:
             # Tâche de flush du buffer
             asyncio.create_task(self._buffer_flush_task())
             
@@ -503,8 +486,7 @@ class DatabaseAuditManager:
         ip_address: Optional[str] = None,
         **kwargs
     ) -> str:
-        """
-        Enregistre un événement d'audit
+        """        Enregistre un événement d'audit
         
         Args:
             event_type: Type d'événement
@@ -515,8 +497,7 @@ class DatabaseAuditManager:
             
         Returns:
             ID de l'événement d'audit
-        """
-        try:
+        """        try:
             if not self.audit_enabled:
                 return ""
             
@@ -593,8 +574,7 @@ class DatabaseAuditManager:
             return ""
     
     async def _encrypt_audit_data(self, event: AuditEvent):
-        """Chiffre les données sensibles dans l'événement d'audit"""
-        try:
+        """Chiffre les données sensibles dans l'événement d'audit"""        try:
             if event.data_before:
                 encrypted_data = self.encryption_manager.encrypt_sensitive_data(
                     json.dumps(event.data_before),
@@ -621,8 +601,7 @@ class DatabaseAuditManager:
             self.logger.warning(f"Failed to encrypt audit data: {e}")
     
     async def _sign_audit_event(self, event: AuditEvent):
-        """Signe cryptographiquement l'événement d'audit"""
-        try:
+        """Signe cryptographiquement l'événement d'audit"""        try:
             if not self.signing_key:
                 return
             
@@ -654,8 +633,7 @@ class DatabaseAuditManager:
             self.logger.warning(f"Failed to sign audit event: {e}")
     
     def _calculate_checksum(self, event: AuditEvent) -> str:
-        """Calcule le checksum de l'événement d'audit"""
-        try:
+        """Calcule le checksum de l'événement d'audit"""        try:
             # Exclusion signature et checksum du calcul
             event_dict = asdict(event)
             event_dict.pop('signature', None)
@@ -672,8 +650,7 @@ class DatabaseAuditManager:
             return ""
     
     async def _flush_audit_buffer(self):
-        """Flush le buffer d'audit vers le stockage persistant"""
-        try:
+        """Flush le buffer d'audit vers le stockage persistant"""        try:
             if not self.audit_buffer:
                 return
             
@@ -695,13 +672,11 @@ class DatabaseAuditManager:
             self.audit_buffer.extend(buffer_copy)
     
     async def _write_to_database(self, events: List[AuditEvent]):
-        """Écrit les événements d'audit en base de données"""
-        try:
+        """Écrit les événements d'audit en base de données"""        try:
             if not self.audit_pool:
                 return
             
-            insert_sql = """
-            INSERT INTO audit_events (
+            insert_sql = """            INSERT INTO audit_events (
                 event_id, event_type, severity, timestamp, user_id, session_id,
                 ip_address, user_agent, database_name, table_name, schema_name,
                 operation, sql_query, affected_rows, execution_time_ms,
@@ -714,8 +689,7 @@ class DatabaseAuditManager:
                 $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15,
                 $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30
             )
-            """
-            
+            """            
             async with self.audit_pool.acquire() as conn:
                 async with conn.transaction():
                     for event in events:
@@ -758,8 +732,7 @@ class DatabaseAuditManager:
             raise
     
     async def _write_to_files(self, events: List[AuditEvent]):
-        """Écrit les événements d'audit dans des fichiers"""
-        try:
+        """Écrit les événements d'audit dans des fichiers"""        try:
             today = datetime.utcnow().strftime('%Y-%m-%d')
             log_file = os.path.join(self.audit_file_path, 'daily', f'audit_{today}.jsonl')
             
@@ -796,8 +769,7 @@ class DatabaseAuditManager:
             self.logger.error(f"Failed to write audit events to files: {e}")
     
     async def _buffer_flush_task(self):
-        """Tâche de flush périodique du buffer"""
-        while True:
+        """Tâche de flush périodique du buffer"""        while True:
             try:
                 await asyncio.sleep(self.flush_interval)
                 if self.audit_buffer:
@@ -806,8 +778,7 @@ class DatabaseAuditManager:
                 self.logger.error(f"Buffer flush task error: {e}")
     
     async def _log_rotation_task(self):
-        """Tâche de rotation des logs d'audit"""
-        while True:
+        """Tâche de rotation des logs d'audit"""        while True:
             try:
                 # Rotation quotidienne à minuit
                 now = datetime.utcnow()
@@ -824,8 +795,7 @@ class DatabaseAuditManager:
                 await asyncio.sleep(3600)  # Retry in 1 hour
     
     async def _cleanup_task(self):
-        """Tâche de nettoyage des anciens logs"""
-        while True:
+        """Tâche de nettoyage des anciens logs"""        while True:
             try:
                 # Nettoyage hebdomadaire
                 await asyncio.sleep(7 * 24 * 3600)  # 1 semaine
@@ -836,8 +806,7 @@ class DatabaseAuditManager:
                 self.logger.error(f"Cleanup task error: {e}")
     
     async def _integrity_check_task(self):
-        """Tâche de vérification d'intégrité"""
-        while True:
+        """Tâche de vérification d'intégrité"""        while True:
             try:
                 # Vérification quotidienne
                 await asyncio.sleep(24 * 3600)  # 1 jour
@@ -848,8 +817,7 @@ class DatabaseAuditManager:
                 self.logger.error(f"Integrity check task error: {e}")
     
     async def _archive_daily_logs(self):
-        """Archive les logs quotidiens"""
-        try:
+        """Archive les logs quotidiens"""        try:
             yesterday = (datetime.utcnow() - timedelta(days=1)).strftime('%Y-%m-%d')
             daily_dir = os.path.join(self.audit_file_path, 'daily')
             archive_dir = os.path.join(self.audit_file_path, 'archive')
@@ -879,8 +847,7 @@ class DatabaseAuditManager:
             self.logger.error(f"Failed to archive daily logs: {e}")
     
     async def _cleanup_expired_logs(self):
-        """Nettoie les logs expirés selon les politiques de rétention"""
-        try:
+        """Nettoie les logs expirés selon les politiques de rétention"""        try:
             # Nettoyage base de données
             if self.audit_pool:
                 await self._cleanup_database_audit()
@@ -894,20 +861,15 @@ class DatabaseAuditManager:
             self.logger.error(f"Failed to cleanup expired logs: {e}")
     
     async def _cleanup_database_audit(self):
-        """Nettoie les anciennes entrées d'audit en base"""
-        try:
+        """Nettoie les anciennes entrées d'audit en base"""        try:
             # Archive les anciennes entrées avant suppression
-            archive_sql = """
-            INSERT INTO audit_events_archive 
+            archive_sql = """            INSERT INTO audit_events_archive 
             SELECT * FROM audit_events 
             WHERE timestamp < NOW() - INTERVAL '%s days'
-            """
-            
-            delete_sql = """
-            DELETE FROM audit_events 
+            """            
+            delete_sql = """            DELETE FROM audit_events 
             WHERE timestamp < NOW() - INTERVAL '%s days'
-            """
-            
+            """            
             async with self.audit_pool.acquire() as conn:
                 async with conn.transaction():
                     # Archive puis suppression
@@ -921,8 +883,7 @@ class DatabaseAuditManager:
             self.logger.error(f"Failed to cleanup database audit: {e}")
     
     async def _cleanup_file_audit(self):
-        """Nettoie les anciens fichiers d'audit"""
-        try:
+        """Nettoie les anciens fichiers d'audit"""        try:
             archive_dir = os.path.join(self.audit_file_path, 'archive')
             cutoff_date = datetime.utcnow() - timedelta(days=self.default_retention_days)
             
@@ -945,8 +906,7 @@ class DatabaseAuditManager:
             self.logger.error(f"Failed to cleanup file audit: {e}")
     
     async def _verify_audit_integrity(self):
-        """Vérifie l'intégrité des logs d'audit"""
-        try:
+        """Vérifie l'intégrité des logs d'audit"""        try:
             verification_results = {
                 'total_checked': 0,
                 'signature_valid': 0,
@@ -974,18 +934,15 @@ class DatabaseAuditManager:
             self.logger.error(f"Failed to verify audit integrity: {e}")
     
     async def _verify_database_integrity(self, results: Dict[str, Any]):
-        """Vérifie l'intégrité des audits en base"""
-        try:
+        """Vérifie l'intégrité des audits en base"""        try:
             # Échantillonnage des entrées récentes
-            select_sql = """
-            SELECT event_id, event_type, timestamp, user_id, operation, 
+            select_sql = """            SELECT event_id, event_type, timestamp, user_id, operation, 
                    signature, checksum
             FROM audit_events 
             WHERE timestamp >= NOW() - INTERVAL '24 hours'
             ORDER BY timestamp DESC
             LIMIT 1000
-            """
-            
+            """            
             async with self.audit_pool.acquire() as conn:
                 rows = await conn.fetch(select_sql)
                 
@@ -1011,8 +968,7 @@ class DatabaseAuditManager:
             self.logger.error(f"Database integrity verification failed: {e}")
     
     async def _verify_file_integrity(self, results: Dict[str, Any]):
-        """Vérifie l'intégrité des fichiers d'audit"""
-        try:
+        """Vérifie l'intégrité des fichiers d'audit"""        try:
             # Vérification des fichiers récents
             daily_dir = os.path.join(self.audit_file_path, 'daily')
             
@@ -1025,8 +981,7 @@ class DatabaseAuditManager:
             self.logger.error(f"File integrity verification failed: {e}")
     
     async def _verify_file_content(self, file_path: str, results: Dict[str, Any]):
-        """Vérifie le contenu d'un fichier d'audit"""
-        try:
+        """Vérifie le contenu d'un fichier d'audit"""        try:
             if file_path.endswith('.gz'):
                 # Fichier compressé
                 with gzip.open(file_path, 'rt') as f:
@@ -1065,8 +1020,7 @@ class DatabaseAuditManager:
             self.logger.error(f"Failed to verify file content {file_path}: {e}")
     
     async def _verify_signature(self, audit_record: Dict[str, Any]) -> bool:
-        """Vérifie la signature d'un enregistrement d'audit"""
-        try:
+        """Vérifie la signature d'un enregistrement d'audit"""        try:
             if not self.verify_key or not audit_record.get('signature'):
                 return False
             
@@ -1100,8 +1054,7 @@ class DatabaseAuditManager:
             return False
     
     async def _verify_checksum(self, audit_record: Dict[str, Any]) -> bool:
-        """Vérifie le checksum d'un enregistrement d'audit"""
-        try:
+        """Vérifie le checksum d'un enregistrement d'audit"""        try:
             if not audit_record.get('checksum'):
                 return False
             
@@ -1121,10 +1074,8 @@ class DatabaseAuditManager:
             return False
     
     async def _send_integrity_alert(self, results: Dict[str, Any]):
-        """Envoie une alerte en cas de problème d'intégrité"""
-        try:
-            alert_message = f"""
-            🚨 AUDIT INTEGRITY ALERT 🚨
+        """Envoie une alerte en cas de problème d'intégrité"""        try:
+            alert_message = f"""            🚨 AUDIT INTEGRITY ALERT 🚨
             
             Integrity check detected issues:
             - Total checked: {results['total_checked']}
@@ -1135,8 +1086,7 @@ class DatabaseAuditManager:
             {chr(10).join(results['errors'][:10])}
             
             Immediate investigation required!
-            """
-            
+            """            
             # Log critique
             self.logger.critical(alert_message)
             
@@ -1165,8 +1115,7 @@ class DatabaseAuditManager:
         severity: Optional[AuditSeverity] = None,
         limit: int = 1000
     ) -> List[Dict[str, Any]]:
-        """
-        Recherche dans les événements d'audit
+        """        Recherche dans les événements d'audit
         
         Args:
             start_date: Date de début
@@ -1179,8 +1128,7 @@ class DatabaseAuditManager:
             
         Returns:
             Liste des événements trouvés
-        """
-        try:
+        """        try:
             if not self.audit_pool:
                 return []
             
@@ -1221,16 +1169,14 @@ class DatabaseAuditManager:
             
             where_clause = " AND ".join(where_conditions) if where_conditions else "TRUE"
             
-            search_sql = f"""
-            SELECT event_id, event_type, severity, timestamp, user_id, 
+            search_sql = f"""            SELECT event_id, event_type, severity, timestamp, user_id, 
                    database_name, table_name, operation, affected_rows,
                    authentication_method, risk_score, metadata
             FROM audit_events 
             WHERE {where_clause}
             ORDER BY timestamp DESC
             LIMIT {limit}
-            """
-            
+            """            
             async with self.audit_pool.acquire() as conn:
                 rows = await conn.fetch(search_sql, *params)
                 
@@ -1246,8 +1192,7 @@ class DatabaseAuditManager:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """
-        Génère un rapport de compliance
+        """        Génère un rapport de compliance
         
         Args:
             framework: Framework de compliance
@@ -1256,8 +1201,7 @@ class DatabaseAuditManager:
             
         Returns:
             Rapport de compliance
-        """
-        try:
+        """        try:
             report = {
                 'framework': framework.value,
                 'period': {
@@ -1319,8 +1263,7 @@ class DatabaseAuditManager:
             return {'error': str(e)}
     
     async def _analyze_gdpr_compliance(self, events: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyse de conformité GDPR"""
-        try:
+        """Analyse de conformité GDPR"""        try:
             gdpr_analysis = {
                 'data_subject_requests': 0,
                 'data_deletions': 0,
@@ -1349,8 +1292,7 @@ class DatabaseAuditManager:
             return {}
     
     async def _analyze_sox_compliance(self, events: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyse de conformité SOX"""
-        # Implementation similar to GDPR but for SOX requirements
+        """Analyse de conformité SOX"""        # Implementation similar to GDPR but for SOX requirements
         return {
             'financial_data_access': 0,
             'privilege_changes': 0,
@@ -1359,8 +1301,7 @@ class DatabaseAuditManager:
         }
     
     async def _analyze_hipaa_compliance(self, events: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyse de conformité HIPAA"""
-        # Implementation for HIPAA healthcare compliance
+        """Analyse de conformité HIPAA"""        # Implementation for HIPAA healthcare compliance
         return {
             'phi_access': 0,
             'minimum_necessary': 0,
@@ -1369,8 +1310,7 @@ class DatabaseAuditManager:
         }
     
     async def _analyze_pci_compliance(self, events: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyse de conformité PCI DSS"""
-        # Implementation for PCI payment card compliance
+        """Analyse de conformité PCI DSS"""        # Implementation for PCI payment card compliance
         return {
             'cardholder_data_access': 0,
             'network_access': 0,
@@ -1383,8 +1323,7 @@ class DatabaseAuditManager:
         events: List[Dict[str, Any]],
         framework: ComplianceFramework
     ) -> List[Dict[str, Any]]:
-        """Détecte les violations de compliance"""
-        violations = []
+        """Détecte les violations de compliance"""        violations = []
         
         try:
             for event in events:
@@ -1411,8 +1350,7 @@ class DatabaseAuditManager:
             return []
     
     async def _detect_gdpr_violations(self, event: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Détecte les violations GDPR spécifiques"""
-        violations = []
+        """Détecte les violations GDPR spécifiques"""        violations = []
         
         # Exemple: accès données sans consentement
         if (event.get('event_type') == AuditEventType.DATA_SELECT.value and
@@ -1432,8 +1370,7 @@ class DatabaseAuditManager:
         report: Dict[str, Any],
         framework: ComplianceFramework
     ) -> List[str]:
-        """Génère des recommandations de compliance"""
-        recommendations = []
+        """Génère des recommandations de compliance"""        recommendations = []
         
         try:
             violations_count = len(report.get('violations', []))
@@ -1464,8 +1401,7 @@ class DatabaseAuditManager:
             return []
     
     async def health_check(self) -> Dict[str, Any]:
-        """Vérification de santé du système d'audit"""
-        try:
+        """Vérification de santé du système d'audit"""        try:
             health_status = {
                 'status': 'healthy',
                 'timestamp': datetime.utcnow().isoformat(),
@@ -1544,16 +1480,14 @@ class DatabaseAuditManager:
         message: str, 
         metadata: Dict[str, Any] = None
     ) -> None:
-        """
-        Envoie des notifications externes pour les alertes critiques
+        """        Envoie des notifications externes pour les alertes critiques
         
         Args:
             alert_type: Type d'alerte (database_integrity_failure, etc.)
             severity: Niveau de sévérité (critical, high, medium, low)
             message: Message d'alerte
             metadata: Métadonnées additionnelles
-        """
-        try:
+        """        try:
             notification_data = {
                 "alert_type": alert_type,
                 "severity": severity,
@@ -1582,8 +1516,7 @@ class DatabaseAuditManager:
             self.logger.error(f"Failed to send external notifications: {e}")
     
     async def _send_email_notification(self, notification_data: Dict[str, Any]) -> None:
-        """Envoi notification par email"""
-        try:
+        """Envoi notification par email"""        try:
             import smtplib
             from email.mime.text import MIMEText
             from email.mime.multipart import MIMEMultipart
@@ -1606,8 +1539,7 @@ class DatabaseAuditManager:
             msg['Subject'] = f"[AINFLUE AUDIT] {notification_data['severity'].upper()}: {notification_data['alert_type']}"
             
             # Corps du message
-            body = f"""
-            AINFLUE AUDIT ALERT
+            body = f"""            AINFLUE AUDIT ALERT
             ==================
             
             Type: {notification_data['alert_type']}
@@ -1621,8 +1553,7 @@ class DatabaseAuditManager:
             {json.dumps(notification_data['metadata'], indent=2)}
             
             System: {notification_data['system']}
-            """
-            
+            """            
             msg.attach(MIMEText(body, 'plain'))
             
             # Envoi
@@ -1638,8 +1569,7 @@ class DatabaseAuditManager:
             self.logger.error(f"Failed to send email notification: {e}")
     
     async def _send_slack_notification(self, notification_data: Dict[str, Any]) -> None:
-        """Envoi notification Slack"""
-        try:
+        """Envoi notification Slack"""        try:
             import aiohttp
             
             webhook_url = os.environ.get('AUDIT_SLACK_WEBHOOK_URL')
@@ -1695,8 +1625,7 @@ class DatabaseAuditManager:
             self.logger.error(f"Failed to send Slack notification: {e}")
     
     async def _send_webhook_notification(self, notification_data: Dict[str, Any]) -> None:
-        """Envoi notification via webhook générique"""
-        try:
+        """Envoi notification via webhook générique"""        try:
             import aiohttp
             
             webhook_url = os.environ.get('AUDIT_WEBHOOK_URL')
@@ -1716,8 +1645,7 @@ class DatabaseAuditManager:
             self.logger.error(f"Failed to send webhook notification: {e}")
     
     async def _send_sms_notification(self, notification_data: Dict[str, Any]) -> None:
-        """Envoi notification SMS pour les alertes critiques"""
-        try:
+        """Envoi notification SMS pour les alertes critiques"""        try:
             # Configuration SMS (exemple avec Twilio)
             account_sid = os.environ.get('AUDIT_TWILIO_ACCOUNT_SID')
             auth_token = os.environ.get('AUDIT_TWILIO_AUTH_TOKEN')
@@ -1749,8 +1677,7 @@ class DatabaseAuditManager:
             self.logger.error(f"Failed to send SMS notification: {e}")
     
     async def shutdown(self):
-        """Arrêt propre du système d'audit"""
-        try:
+        """Arrêt propre du système d'audit"""        try:
             self.logger.info("🔒 Shutting down audit system...")
             
             # Flush final du buffer
@@ -1772,8 +1699,7 @@ _audit_manager: Optional[DatabaseAuditManager] = None
 
 
 def get_audit_manager(config: Optional[Dict[str, Any]] = None) -> DatabaseAuditManager:
-    """Récupère ou crée l'instance du gestionnaire d'audit"""
-    global _audit_manager
+    """Récupère ou crée l'instance du gestionnaire d'audit"""    global _audit_manager
     
     if _audit_manager is None:
         _audit_manager = DatabaseAuditManager(config)
@@ -1787,8 +1713,7 @@ async def audit_log(
     user_id: Optional[str] = None,
     **kwargs
 ) -> str:
-    """Interface simplifiée pour l'audit logging"""
-    manager = get_audit_manager()
+    """Interface simplifiée pour l'audit logging"""    manager = get_audit_manager()
     return await manager.log_audit_event(event_type, user_id, **kwargs)
 
 

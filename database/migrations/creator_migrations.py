@@ -1,5 +1,4 @@
-"""
-🎭 Creator Database Migrations - Multi-Format Content Creator Schema Evolution
+"""🎭 Creator Database Migrations - Multi-Format Content Creator Schema Evolution
 ==============================================================================
 Module: backend/database/migrations/creator_migrations.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -24,9 +23,7 @@ Content Creator Types Supported:
 - Influencers: Social media content, brand partnerships, campaigns
 - Comedians: Stand-up videos, sketches, podcasts, live shows
 - Video Creators: YouTube videos, TikToks, documentaries, tutorials
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Tuple, Any, Union
 from datetime import datetime, timedelta
@@ -48,8 +45,7 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorType(Enum):
-    """Supported creator types with specialized workflows"""
-    MUSICIAN = "musician"
+    """Supported creator types with specialized workflows"""    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -60,8 +56,7 @@ class CreatorType(Enum):
 
 
 class ContentFormat(Enum):
-    """Content formats supported by creator type"""
-    AUDIO = "audio"
+    """Content formats supported by creator type"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -72,8 +67,7 @@ class ContentFormat(Enum):
 
 @dataclass
 class CreatorMigrationPlan:
-    """Migration plan for creator-specific database schema"""
-    creator_types: Set[CreatorType]
+    """Migration plan for creator-specific database schema"""    creator_types: Set[CreatorType]
     content_formats: Set[ContentFormat]
     enable_collaboration: bool = True
     enable_monetization: bool = True
@@ -82,8 +76,7 @@ class CreatorMigrationPlan:
 
 
 class CreatorMigrations:
-    """
-    Ultra-advanced creator database migrations for multi-format content platform
+    """    Ultra-advanced creator database migrations for multi-format content platform
     
     Handles schema evolution for:
     - Creator profiles and preferences
@@ -91,21 +84,17 @@ class CreatorMigrations:
     - Upload and processing workflows
     - Protection and monetization settings
     - Collaboration and partnership management
-    """
-    
+    """    
     def __init__(self, migration_manager: EnterpriseMigrationManager):
         self.migration_manager = migration_manager
         self.logger = logging.getLogger(__name__)
     
     async def create_creator_profiles_table(self) -> str:
-        """
-        Create comprehensive creator profiles table with multi-format support
+        """        Create comprehensive creator profiles table with multi-format support
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        CREATE TABLE IF NOT EXISTS creator_profiles (
+        """        migration_sql = """        CREATE TABLE IF NOT EXISTS creator_profiles (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
             creator_type VARCHAR(50) NOT NULL CHECK (creator_type IN (
@@ -186,8 +175,7 @@ class CreatorMigrations:
         CREATE INDEX IF NOT EXISTS idx_creator_profiles_genres ON creator_profiles USING GIN(genres);
         CREATE INDEX IF NOT EXISTS idx_creator_profiles_platforms ON creator_profiles USING GIN(platform_accounts);
         CREATE INDEX IF NOT EXISTS idx_creator_profiles_collaboration_types ON creator_profiles USING GIN(collaboration_types);
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.SCHEMA,
@@ -196,14 +184,11 @@ class CreatorMigrations:
         )
     
     async def create_content_types_table(self) -> str:
-        """
-        Create content types configuration table for creator-specific content management
+        """        Create content types configuration table for creator-specific content management
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        CREATE TABLE IF NOT EXISTS creator_content_types (
+        """        migration_sql = """        CREATE TABLE IF NOT EXISTS creator_content_types (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             creator_id UUID NOT NULL REFERENCES creator_profiles(id) ON DELETE CASCADE,
             content_type VARCHAR(100) NOT NULL,
@@ -266,8 +251,7 @@ class CreatorMigrations:
         -- JSONB indexes
         CREATE INDEX IF NOT EXISTS idx_content_types_extensions ON creator_content_types USING GIN(file_extensions);
         CREATE INDEX IF NOT EXISTS idx_content_types_platforms ON creator_content_types USING GIN(distribution_platforms);
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.SCHEMA,
@@ -276,14 +260,11 @@ class CreatorMigrations:
         )
     
     async def create_creator_collaborations_table(self) -> str:
-        """
-        Create creator collaboration management table for cross-creator partnerships
+        """        Create creator collaboration management table for cross-creator partnerships
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        CREATE TABLE IF NOT EXISTS creator_collaborations (
+        """        migration_sql = """        CREATE TABLE IF NOT EXISTS creator_collaborations (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             initiator_id UUID NOT NULL REFERENCES creator_profiles(id) ON DELETE CASCADE,
             collaborator_id UUID NOT NULL REFERENCES creator_profiles(id) ON DELETE CASCADE,
@@ -348,8 +329,7 @@ class CreatorMigrations:
         -- Composite indexes for queries
         CREATE INDEX IF NOT EXISTS idx_collaborations_creator_status ON creator_collaborations(initiator_id, status);
         CREATE INDEX IF NOT EXISTS idx_collaborations_active ON creator_collaborations(status) WHERE status IN ('pending', 'accepted', 'in_progress');
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.SCHEMA,
@@ -358,14 +338,11 @@ class CreatorMigrations:
         )
     
     async def create_creator_monetization_table(self) -> str:
-        """
-        Create creator monetization tracking and configuration table
+        """        Create creator monetization tracking and configuration table
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        CREATE TABLE IF NOT EXISTS creator_monetization (
+        """        migration_sql = """        CREATE TABLE IF NOT EXISTS creator_monetization (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             creator_id UUID NOT NULL REFERENCES creator_profiles(id) ON DELETE CASCADE,
             
@@ -432,8 +409,7 @@ class CreatorMigrations:
         -- JSONB indexes for analytics
         CREATE INDEX IF NOT EXISTS idx_monetization_platform_earnings ON creator_monetization USING GIN(platform_earnings);
         CREATE INDEX IF NOT EXISTS idx_monetization_content_pricing ON creator_monetization USING GIN(content_pricing);
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.SCHEMA,
@@ -442,14 +418,11 @@ class CreatorMigrations:
         )
     
     async def create_creator_analytics_table(self) -> str:
-        """
-        Create creator analytics and performance tracking table
+        """        Create creator analytics and performance tracking table
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        CREATE TABLE IF NOT EXISTS creator_analytics (
+        """        migration_sql = """        CREATE TABLE IF NOT EXISTS creator_analytics (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             creator_id UUID NOT NULL REFERENCES creator_profiles(id) ON DELETE CASCADE,
             
@@ -518,8 +491,7 @@ class CreatorMigrations:
         -- JSONB indexes for detailed analytics
         CREATE INDEX IF NOT EXISTS idx_analytics_platform_metrics ON creator_analytics USING GIN(platform_metrics);
         CREATE INDEX IF NOT EXISTS idx_analytics_geographic ON creator_analytics USING GIN(geographic_reach);
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.SCHEMA,
@@ -528,16 +500,14 @@ class CreatorMigrations:
         )
     
     async def execute_full_creator_migration(self, plan: CreatorMigrationPlan) -> List[str]:
-        """
-        Execute complete creator database migration according to business requirements
+        """        Execute complete creator database migration according to business requirements
         
         Args:
             plan: CreatorMigrationPlan with specific configuration
             
         Returns:
             List[str]: Migration IDs for tracking
-        """
-        migration_ids = []
+        """        migration_ids = []
         
         try:
             self.logger.info("Starting comprehensive creator database migration")
@@ -564,14 +534,11 @@ class CreatorMigrations:
             raise
     
     async def add_creator_type_specific_constraints(self) -> str:
-        """
-        Add creator type-specific database constraints and validations
+        """        Add creator type-specific database constraints and validations
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        -- Creator type-specific constraints
+        """        migration_sql = """        -- Creator type-specific constraints
         ALTER TABLE creator_profiles 
         ADD CONSTRAINT chk_musician_requirements 
         CHECK (
@@ -619,8 +586,7 @@ class CreatorMigrations:
             )) OR
             content_format IN ('mixed_media', 'live_stream')
         );
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.CONSTRAINT,

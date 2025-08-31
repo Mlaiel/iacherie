@@ -1,5 +1,4 @@
-"""
-Production Configuration for Parsers Module
+"""Production Configuration for Parsers Module
 ===========================================
 
 Ultra-professional production configuration with enterprise-grade settings.
@@ -11,9 +10,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
-"""
-
-import os
+"""import os
 from typing import Dict, Any, Optional, List
 from dataclasses import dataclass, field
 from enum import Enum
@@ -22,16 +19,14 @@ import json
 
 
 class EnvironmentType(Enum):
-    """Environment types"""
-    DEVELOPMENT = "development"
+    """Environment types"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
 
 
 class LogLevel(Enum):
-    """Logging levels"""
-    DEBUG = "DEBUG"
+    """Logging levels"""    DEBUG = "DEBUG"
     INFO = "INFO"
     WARNING = "WARNING"
     ERROR = "ERROR"
@@ -40,8 +35,7 @@ class LogLevel(Enum):
 
 @dataclass
 class DatabaseConfig:
-    """Database configuration"""
-    host: str = "localhost"
+    """Database configuration"""    host: str = "localhost"
     port: int = 5432
     database: str = "ia_influencer"
     username: str = "postgres"
@@ -56,8 +50,7 @@ class DatabaseConfig:
 
 @dataclass
 class RedisConfig:
-    """Redis cache configuration"""
-    host: str = "localhost"
+    """Redis cache configuration"""    host: str = "localhost"
     port: int = 6379
     database: int = 0
     password: Optional[str] = None
@@ -70,8 +63,7 @@ class RedisConfig:
 
 @dataclass
 class AIModelConfig:
-    """AI model configuration"""
-    # Semantic analysis models
+    """AI model configuration"""    # Semantic analysis models
     sentiment_model: str = "cardiffnlp/twitter-roberta-base-sentiment-latest"
     entity_model: str = "dbmdz/bert-large-cased-finetuned-conll03-english"
     embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"
@@ -100,8 +92,7 @@ class AIModelConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance optimization configuration"""
-    # Concurrency settings
+    """Performance optimization configuration"""    # Concurrency settings
     max_concurrent_parsers: int = 100
     max_concurrent_requests: int = 1000
     worker_threads: int = 8
@@ -128,8 +119,7 @@ class PerformanceConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration"""
-    # API keys and secrets
+    """Security configuration"""    # API keys and secrets
     youtube_api_key: Optional[str] = None
     instagram_api_key: Optional[str] = None
     tiktok_api_key: Optional[str] = None
@@ -158,8 +148,7 @@ class SecurityConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring and observability configuration"""
-    # Logging
+    """Monitoring and observability configuration"""    # Logging
     log_level: LogLevel = LogLevel.INFO
     log_format: str = "json"
     log_file: Optional[str] = "/var/log/ia-influencer/parsers.log"
@@ -188,8 +177,7 @@ class MonitoringConfig:
 
 @dataclass
 class ProductionConfig:
-    """Complete production configuration"""
-    # Environment
+    """Complete production configuration"""    # Environment
     environment: EnvironmentType = EnvironmentType.PRODUCTION
     debug: bool = False
     testing: bool = False
@@ -223,8 +211,7 @@ class ProductionConfig:
     
     @classmethod
     def from_environment(cls) -> 'ProductionConfig':
-        """Create configuration from environment variables"""
-        config = cls()
+        """Create configuration from environment variables"""        config = cls()
         
         # Override from environment variables
         config.environment = EnvironmentType(os.getenv('ENVIRONMENT', 'production'))
@@ -258,8 +245,7 @@ class ProductionConfig:
     
     @classmethod
     def from_file(cls, config_path: str) -> 'ProductionConfig':
-        """Load configuration from YAML file"""
-        with open(config_path, 'r') as f:
+        """Load configuration from YAML file"""        with open(config_path, 'r') as f:
             if config_path.endswith('.yaml') or config_path.endswith('.yml'):
                 data = yaml.safe_load(f)
             else:
@@ -269,8 +255,7 @@ class ProductionConfig:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'ProductionConfig':
-        """Create configuration from dictionary"""
-        config = cls()
+        """Create configuration from dictionary"""        config = cls()
         
         # Apply configuration from dictionary
         for key, value in data.items():
@@ -289,8 +274,7 @@ class ProductionConfig:
         return config
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""
-        result = {}
+        """Convert configuration to dictionary"""        result = {}
         
         for key, value in self.__dict__.items():
             if hasattr(value, '__dict__'):
@@ -304,8 +288,7 @@ class ProductionConfig:
         return result
     
     def save_to_file(self, config_path: str):
-        """Save configuration to file"""
-        data = self.to_dict()
+        """Save configuration to file"""        data = self.to_dict()
         
         with open(config_path, 'w') as f:
             if config_path.endswith('.yaml') or config_path.endswith('.yml'):
@@ -314,8 +297,7 @@ class ProductionConfig:
                 json.dump(data, f, indent=2)
     
     def validate(self) -> List[str]:
-        """Validate configuration and return list of errors"""
-        errors = []
+        """Validate configuration and return list of errors"""        errors = []
         
         # Required API keys for production
         if self.environment == EnvironmentType.PRODUCTION:
@@ -342,8 +324,7 @@ class ProductionConfig:
         return errors
     
     def is_valid(self) -> bool:
-        """Check if configuration is valid"""
-        return len(self.validate()) == 0
+        """Check if configuration is valid"""        return len(self.validate()) == 0
 
 
 # Predefined production configurations
@@ -420,8 +401,7 @@ DEVELOPMENT_CONFIG = ProductionConfig(
 
 
 def get_config(environment: str = None) -> ProductionConfig:
-    """Get configuration for specified environment"""
-    if environment is None:
+    """Get configuration for specified environment"""    if environment is None:
         environment = os.getenv('ENVIRONMENT', 'development')
     
     env_type = EnvironmentType(environment.lower())
@@ -438,8 +418,7 @@ def get_config(environment: str = None) -> ProductionConfig:
 
 
 def create_config_template(output_path: str = "parsers_config_template.yaml"):
-    """Create a configuration template file"""
-    template_config = ProductionConfig()
+    """Create a configuration template file"""    template_config = ProductionConfig()
     template_config.save_to_file(output_path)
     print(f"Configuration template created at: {output_path}")
 

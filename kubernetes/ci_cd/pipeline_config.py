@@ -1,5 +1,4 @@
-"""
-🔧 Pipeline Configuration Manager - IA-Influencer-Agent CI/CD Enterprise
+"""🔧 Pipeline Configuration Manager - IA-Influencer-Agent CI/CD Enterprise
 ================================================================
 Team Expertise: DevOps Engineer + Cloud Architect + ML Engineer + Security Expert
 Created: 2025-08-24
@@ -22,9 +21,7 @@ Business Logic Features:
 - SEO optimization service integration
 - Real-time analytics and monitoring pipeline
 ================================================================
-"""
-
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 import asyncio
 import logging
 import yaml
@@ -38,23 +35,20 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class DeploymentStrategy(Enum):
-    """Deployment strategy enumeration"""
-    BLUE_GREEN = "blue_green"
+    """Deployment strategy enumeration"""    BLUE_GREEN = "blue_green"
     CANARY = "canary" 
     ROLLING = "rolling"
     RECREATE = "recreate"
 
 class Environment(Enum):
-    """Environment enumeration"""
-    DEVELOPMENT = "development"
+    """Environment enumeration"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
 
 @dataclass
 class PipelineConfiguration:
-    """Pipeline configuration data structure for IA Influencer platform"""
-    name: str
+    """Pipeline configuration data structure for IA Influencer platform"""    name: str
     version: str
     environment: Environment
     deployment_strategy: DeploymentStrategy
@@ -173,26 +167,22 @@ class PipelineConfiguration:
     alerting_enabled: bool = True
 
 class PipelineConfigManager:
-    """Enterprise pipeline configuration manager"""
-    
+    """Enterprise pipeline configuration manager"""    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize pipeline configuration manager"""
-        self.initialized = False
+        """Initialize pipeline configuration manager"""        self.initialized = False
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.config_path = config_path or self._get_default_config_path()
         self.configurations: Dict[str, PipelineConfiguration] = {}
         self.active_config: Optional[PipelineConfiguration] = None
         
     def _get_default_config_path(self) -> str:
-        """Get default configuration file path"""
-        return os.path.join(
+        """Get default configuration file path"""        return os.path.join(
             os.path.dirname(__file__),
             "..", "..", "config", "ci_cd_config.yml"
         )
     
     async def initialize(self) -> bool:
-        """Initialize configuration manager"""
-        try:
+        """Initialize configuration manager"""        try:
             await self._load_configurations()
             await self._validate_configurations()
             self.initialized = True
@@ -203,8 +193,7 @@ class PipelineConfigManager:
             return False
     
     async def _load_configurations(self) -> None:
-        """Load pipeline configurations from files"""
-        try:
+        """Load pipeline configurations from files"""        try:
             # Load from YAML config file
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r') as f:
@@ -232,8 +221,7 @@ class PipelineConfigManager:
             await self._create_default_configurations()
     
     async def _load_environment_configs(self) -> None:
-        """Load environment-specific configurations"""
-        env_configs = {
+        """Load environment-specific configurations"""        env_configs = {
             'development': self._get_development_config(),
             'staging': self._get_staging_config(),
             'production': self._get_production_config(),
@@ -244,8 +232,7 @@ class PipelineConfigManager:
                 self.configurations[env_name] = config
     
     def _get_development_config(self) -> PipelineConfiguration:
-        """Get development environment configuration"""
-        return PipelineConfiguration(
+        """Get development environment configuration"""        return PipelineConfiguration(
             name="ia-influencer-dev",
             version="dev",
             environment=Environment.DEVELOPMENT,
@@ -261,8 +248,7 @@ class PipelineConfigManager:
         )
     
     def _get_staging_config(self) -> PipelineConfiguration:
-        """Get staging environment configuration"""
-        return PipelineConfiguration(
+        """Get staging environment configuration"""        return PipelineConfiguration(
             name="ia-influencer-staging",
             version="staging",
             environment=Environment.STAGING,
@@ -278,8 +264,7 @@ class PipelineConfigManager:
         )
     
     def _get_production_config(self) -> PipelineConfiguration:
-        """Get production environment configuration"""
-        return PipelineConfiguration(
+        """Get production environment configuration"""        return PipelineConfiguration(
             name="ia-influencer-prod",
             version="1.0.0",
             environment=Environment.PRODUCTION,
@@ -295,8 +280,7 @@ class PipelineConfigManager:
         )
     
     async def _create_default_configurations(self) -> None:
-        """Create default configurations"""
-        default_configs = {
+        """Create default configurations"""        default_configs = {
             'development': self._get_development_config(),
             'staging': self._get_staging_config(),
             'production': self._get_production_config(),
@@ -306,14 +290,12 @@ class PipelineConfigManager:
         await self._save_configurations()
     
     async def _validate_configurations(self) -> None:
-        """Validate loaded configurations"""
-        for env_name, config in self.configurations.items():
+        """Validate loaded configurations"""        for env_name, config in self.configurations.items():
             if not self._validate_config(config):
                 raise ValueError(f"Invalid configuration for environment: {env_name}")
     
     def _validate_config(self, config: PipelineConfiguration) -> bool:
-        """Validate single configuration"""
-        try:
+        """Validate single configuration"""        try:
             # Validate timeouts
             if config.build_timeout <= 0 or config.deployment_timeout <= 0:
                 return False
@@ -331,12 +313,10 @@ class PipelineConfigManager:
             return False
     
     async def get_configuration(self, environment: str) -> Optional[PipelineConfiguration]:
-        """Get configuration for specific environment"""
-        return self.configurations.get(environment)
+        """Get configuration for specific environment"""        return self.configurations.get(environment)
     
     async def set_active_configuration(self, environment: str) -> bool:
-        """Set active configuration"""
-        config = await self.get_configuration(environment)
+        """Set active configuration"""        config = await self.get_configuration(environment)
         if config:
             self.active_config = config
             self.logger.info(f"Active configuration set to: {environment}")
@@ -348,8 +328,7 @@ class PipelineConfigManager:
         environment: str, 
         updates: Dict[str, Any]
     ) -> bool:
-        """Update configuration for environment"""
-        try:
+        """Update configuration for environment"""        try:
             if environment in self.configurations:
                 config = self.configurations[environment]
                 for key, value in updates.items():
@@ -366,8 +345,7 @@ class PipelineConfigManager:
             return False
     
     async def _save_configurations(self) -> None:
-        """Save configurations to file"""
-        try:
+        """Save configurations to file"""        try:
             config_dir = os.path.dirname(self.config_path)
             os.makedirs(config_dir, exist_ok=True)
             
@@ -384,8 +362,7 @@ class PipelineConfigManager:
             self.logger.error(f"Failed to save configurations: {e}")
     
     async def export_configuration(self, environment: str, format_type: str = "yaml") -> str:
-        """Export configuration in specified format"""
-        config = await self.get_configuration(environment)
+        """Export configuration in specified format"""        config = await self.get_configuration(environment)
         if not config:
             return ""
         
@@ -397,8 +374,7 @@ class PipelineConfigManager:
             return yaml.dump(config_dict, default_flow_style=False)
 
 class PipelineTemplateManager:
-    """Manage pipeline templates for different content types"""
-    
+    """Manage pipeline templates for different content types"""    
     def __init__(self):
         self.templates = {
             "ai_music_processing": self._get_ai_music_template(),
@@ -411,8 +387,7 @@ class PipelineTemplateManager:
         }
     
     def _get_ai_music_template(self) -> Dict[str, Any]:
-        """Template for AI music processing pipeline"""
-        return {
+        """Template for AI music processing pipeline"""        return {
             "name": "AI Music Processing Pipeline",
             "description": "Advanced AI pipeline for music analysis, recommendation and generation",
             "stages": [
@@ -469,8 +444,7 @@ class PipelineTemplateManager:
         }
     
     def _get_content_protection_template(self) -> Dict[str, Any]:
-        """Template for content protection pipeline"""
-        return {
+        """Template for content protection pipeline"""        return {
             "name": "Content Protection Pipeline",
             "description": "Multi-format content fingerprinting and protection system",
             "stages": [
@@ -521,8 +495,7 @@ class PipelineTemplateManager:
         }
     
     def _get_revenue_tracking_template(self) -> Dict[str, Any]:
-        """Template for revenue tracking pipeline"""
-        return {
+        """Template for revenue tracking pipeline"""        return {
             "name": "Revenue Tracking Pipeline",
             "description": "Automated revenue tracking and monetization analytics",
             "stages": [
@@ -565,8 +538,7 @@ class PipelineTemplateManager:
         }
     
     def _get_collaboration_template(self) -> Dict[str, Any]:
-        """Template for collaboration platform pipeline"""
-        return {
+        """Template for collaboration platform pipeline"""        return {
             "name": "Collaboration Platform Pipeline",
             "description": "Creator matching and collaboration management system",
             "stages": [
@@ -608,8 +580,7 @@ class PipelineTemplateManager:
         }
     
     def _get_seo_template(self) -> Dict[str, Any]:
-        """Template for SEO optimization pipeline"""
-        return {
+        """Template for SEO optimization pipeline"""        return {
             "name": "SEO Optimization Pipeline",
             "description": "Advanced SEO analysis and content optimization",
             "stages": [
@@ -652,8 +623,7 @@ class PipelineTemplateManager:
         }
     
     def _get_multi_format_template(self) -> Dict[str, Any]:
-        """Template for multi-format content processing"""
-        return {
+        """Template for multi-format content processing"""        return {
             "name": "Multi-Format Processing Pipeline",
             "description": "Universal content processing for all media types",
             "stages": [
@@ -691,8 +661,7 @@ class PipelineTemplateManager:
         }
     
     def _get_fingerprint_template(self) -> Dict[str, Any]:
-        """Template for fingerprint analysis pipeline"""
-        return {
+        """Template for fingerprint analysis pipeline"""        return {
             "name": "Fingerprint Analysis Pipeline",
             "description": "Advanced fingerprinting and similarity analysis",
             "stages": [
@@ -730,16 +699,13 @@ class PipelineTemplateManager:
         }
     
     def get_template(self, template_name: str) -> Optional[Dict[str, Any]]:
-        """Get pipeline template by name"""
-        return self.templates.get(template_name)
+        """Get pipeline template by name"""        return self.templates.get(template_name)
     
     def get_all_templates(self) -> Dict[str, Dict[str, Any]]:
-        """Get all available templates"""
-        return self.templates.copy()
+        """Get all available templates"""        return self.templates.copy()
     
     def merge_templates(self, template_names: List[str]) -> Dict[str, Any]:
-        """Merge multiple templates into comprehensive pipeline"""
-        merged = {
+        """Merge multiple templates into comprehensive pipeline"""        merged = {
             "name": "Combined Pipeline",
             "description": "Merged pipeline from multiple templates",
             "stages": [],
@@ -762,8 +728,7 @@ class PipelineTemplateManager:
         return merged
     
     def customize_template(self, template_name: str, customizations: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Customize template with specific modifications"""
-        template = self.get_template(template_name)
+        """Customize template with specific modifications"""        template = self.get_template(template_name)
         if not template:
             return None
         
@@ -790,8 +755,7 @@ class PipelineTemplateManager:
         return customized
 
 class PipelineSecurityConfig:
-    """Security configuration for CI/CD pipelines"""
-    
+    """Security configuration for CI/CD pipelines"""    
     def __init__(self):
         self.security_policies = {
             "secret_management": self._get_secret_management_policy(),
@@ -801,8 +765,7 @@ class PipelineSecurityConfig:
         }
     
     def _get_secret_management_policy(self) -> Dict[str, Any]:
-        """Secret management security policy"""
-        return {
+        """Secret management security policy"""        return {
             "vault_integration": True,
             "secret_rotation": {
                 "enabled": True,
@@ -820,8 +783,7 @@ class PipelineSecurityConfig:
         }
     
     def _get_access_control_policy(self) -> Dict[str, Any]:
-        """Access control security policy"""
-        return {
+        """Access control security policy"""        return {
             "rbac_enabled": True,
             "mfa_required": True,
             "session_timeout": 3600,
@@ -836,8 +798,7 @@ class PipelineSecurityConfig:
         }
     
     def _get_vulnerability_scanning_policy(self) -> Dict[str, Any]:
-        """Vulnerability scanning security policy"""
-        return {
+        """Vulnerability scanning security policy"""        return {
             "scan_frequency": "daily",
             "severity_thresholds": {
                 "critical": 0,
@@ -860,8 +821,7 @@ class PipelineSecurityConfig:
         }
     
     def _get_compliance_policy(self) -> Dict[str, Any]:
-        """Compliance security policy"""
-        return {
+        """Compliance security policy"""        return {
             "frameworks": ["gdpr", "ccpa", "sox", "iso27001", "pci_dss"],
             "data_classification": True,
             "retention_policies": {
@@ -877,12 +837,10 @@ class PipelineSecurityConfig:
         }
     
     def get_security_config(self, policy_type: str) -> Optional[Dict[str, Any]]:
-        """Get security configuration by policy type"""
-        return self.security_policies.get(policy_type)
+        """Get security configuration by policy type"""        return self.security_policies.get(policy_type)
     
     def validate_security_config(self, config: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        """Validate security configuration"""
-        errors = []
+        """Validate security configuration"""        errors = []
         
         # Validate required security settings
         required_settings = [
@@ -904,8 +862,7 @@ template_manager = PipelineTemplateManager()
 security_config = PipelineSecurityConfig()
     
     async def validate_pipeline_requirements(self, environment: str) -> Dict[str, bool]:
-        """Validate pipeline requirements for environment"""
-        config = await self.get_configuration(environment)
+        """Validate pipeline requirements for environment"""        config = await self.get_configuration(environment)
         if not config:
             return {"valid": False, "error": "Configuration not found"}
         
@@ -921,12 +878,10 @@ security_config = PipelineSecurityConfig()
         return requirements
     
     def get_environment_list(self) -> List[str]:
-        """Get list of configured environments"""
-        return list(self.configurations.keys())
+        """Get list of configured environments"""        return list(self.configurations.keys())
     
     def get_active_environment(self) -> Optional[str]:
-        """Get active environment name"""
-        if self.active_config:
+        """Get active environment name"""        if self.active_config:
             return self.active_config.environment.value
         return None
 

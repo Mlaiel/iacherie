@@ -1,5 +1,4 @@
-"""
-🚀 Performance Optimization Engine for Content Fingerprinting
+"""🚀 Performance Optimization Engine for Content Fingerprinting
 =============================================================
 
 Advanced performance optimization system with GPU acceleration, 
@@ -12,9 +11,7 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission from Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import gc
@@ -56,15 +53,13 @@ from .utils import get_optimal_batch_size
 logger = logging.getLogger(__name__)
 
 class OptimizationLevel(str, Enum):
-    """Performance optimization levels."""
-    MINIMAL = "minimal"
+    """Performance optimization levels."""    MINIMAL = "minimal"
     BALANCED = "balanced"
     AGGRESSIVE = "aggressive"
     MAXIMUM = "maximum"
 
 class ResourceType(str, Enum):
-    """System resource types."""
-    CPU = "cpu"
+    """System resource types."""    CPU = "cpu"
     MEMORY = "memory"
     GPU = "gpu"
     DISK = "disk"
@@ -72,8 +67,7 @@ class ResourceType(str, Enum):
 
 @dataclass
 class ResourceProfile:
-    """System resource profile for optimization."""
-    cpu_cores: int
+    """System resource profile for optimization."""    cpu_cores: int
     cpu_frequency: float
     memory_total_gb: float
     memory_available_gb: float
@@ -85,8 +79,7 @@ class ResourceProfile:
 
 @dataclass
 class OptimizationConfig:
-    """Configuration for performance optimization."""
-    level: OptimizationLevel = OptimizationLevel.BALANCED
+    """Configuration for performance optimization."""    level: OptimizationLevel = OptimizationLevel.BALANCED
     enable_gpu: bool = True
     enable_multiprocessing: bool = True
     enable_caching: bool = True
@@ -100,8 +93,7 @@ class OptimizationConfig:
     enable_async_io: bool = True
 
 class GPUAccelerator:
-    """GPU acceleration utilities for fingerprinting operations."""
-    
+    """GPU acceleration utilities for fingerprinting operations."""    
     def __init__(self):
         self.available = TORCH_AVAILABLE and torch.cuda.is_available()
         self.device_count = torch.cuda.device_count() if self.available else 0
@@ -112,8 +104,7 @@ class GPUAccelerator:
             self._initialize_gpu()
     
     def _initialize_gpu(self):
-        """Initialize GPU environment for optimal performance."""
-        try:
+        """Initialize GPU environment for optimal performance."""        try:
             # Set memory fraction
             torch.cuda.set_per_process_memory_fraction(0.8)
             
@@ -135,8 +126,7 @@ class GPUAccelerator:
             self.available = False
     
     def get_optimal_device(self) -> int:
-        """Get the optimal GPU device based on memory availability."""
-        if not self.available:
+        """Get the optimal GPU device based on memory availability."""        if not self.available:
             return -1
         
         best_device = 0
@@ -151,8 +141,7 @@ class GPUAccelerator:
         return best_device
     
     def optimize_tensor_operations(self, tensor: torch.Tensor) -> torch.Tensor:
-        """Optimize tensor for GPU operations."""
-        if not self.available:
+        """Optimize tensor for GPU operations."""        if not self.available:
             return tensor
         
         device = self.get_optimal_device()
@@ -165,8 +154,7 @@ class GPUAccelerator:
     
     def batch_gpu_operation(self, data_list: List[torch.Tensor], 
                            operation: Callable) -> List[torch.Tensor]:
-        """Perform batched GPU operations for efficiency."""
-        if not self.available or not data_list:
+        """Perform batched GPU operations for efficiency."""        if not self.available or not data_list:
             return [operation(item) for item in data_list]
         
         device = self.get_optimal_device()
@@ -192,14 +180,12 @@ class GPUAccelerator:
         return results
     
     def clear_cache(self):
-        """Clear GPU memory cache."""
-        if self.available:
+        """Clear GPU memory cache."""        if self.available:
             torch.cuda.empty_cache()
             gc.collect()
 
 class IntelligentCache:
-    """Intelligent caching system with LRU eviction and compression."""
-    
+    """Intelligent caching system with LRU eviction and compression."""    
     def __init__(self, max_size_mb: int = 1024, compression: bool = True):
         self.max_size_bytes = max_size_mb * 1024 * 1024
         self.compression = compression
@@ -219,8 +205,7 @@ class IntelligentCache:
             logger.debug("Redis not available, using in-memory cache only")
     
     def _serialize(self, obj: Any) -> bytes:
-        """Serialize object with optional compression."""
-        data = pickle.dumps(obj)
+        """Serialize object with optional compression."""        data = pickle.dumps(obj)
         
         if self.compression:
             import gzip
@@ -229,20 +214,17 @@ class IntelligentCache:
         return data
     
     def _deserialize(self, data: bytes) -> Any:
-        """Deserialize object with optional decompression."""
-        if self.compression:
+        """Deserialize object with optional decompression."""        if self.compression:
             import gzip
             data = gzip.decompress(data)
         
         return pickle.loads(data)
     
     def _generate_key(self, key: str) -> str:
-        """Generate cache key with hash for consistency."""
-        return hashlib.md5(key.encode()).hexdigest()
+        """Generate cache key with hash for consistency."""        return hashlib.md5(key.encode()).hexdigest()
     
     def get(self, key: str) -> Optional[Any]:
-        """Get item from cache."""
-        cache_key = self._generate_key(key)
+        """Get item from cache."""        cache_key = self._generate_key(key)
         
         with self.lock:
             # Check local cache first
@@ -269,8 +251,7 @@ class IntelligentCache:
             return None
     
     def put(self, key: str, value: Any, ttl_seconds: int = 3600):
-        """Put item in cache."""
-        cache_key = self._generate_key(key)
+        """Put item in cache."""        cache_key = self._generate_key(key)
         serialized_value = self._serialize(value)
         
         with self.lock:
@@ -285,8 +266,7 @@ class IntelligentCache:
                     pass
     
     def _put_local(self, cache_key: str, serialized_value: bytes):
-        """Put item in local cache with LRU eviction."""
-        value_size = len(serialized_value)
+        """Put item in local cache with LRU eviction."""        value_size = len(serialized_value)
         
         # Remove item if it already exists
         if cache_key in self.cache:
@@ -309,8 +289,7 @@ class IntelligentCache:
         self.current_size += value_size
     
     def clear(self):
-        """Clear all cache."""
-        with self.lock:
+        """Clear all cache."""        with self.lock:
             self.cache.clear()
             self.size_tracker.clear()
             self.current_size = 0
@@ -325,8 +304,7 @@ class IntelligentCache:
                 pass
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get cache statistics."""
-        hit_rate = self.hits / (self.hits + self.misses) if (self.hits + self.misses) > 0 else 0
+        """Get cache statistics."""        hit_rate = self.hits / (self.hits + self.misses) if (self.hits + self.misses) > 0 else 0
         
         return {
             'hit_rate': hit_rate,
@@ -338,16 +316,14 @@ class IntelligentCache:
         }
 
 class MemoryManager:
-    """Advanced memory management and optimization."""
-    
+    """Advanced memory management and optimization."""    
     def __init__(self, memory_limit_gb: Optional[float] = None):
         self.memory_limit_bytes = (memory_limit_gb * 1024**3) if memory_limit_gb else None
         self.allocations = {}
         self.peak_usage = 0
         
     def track_allocation(self, name: str, size_bytes: int):
-        """Track memory allocation."""
-        self.allocations[name] = size_bytes
+        """Track memory allocation."""        self.allocations[name] = size_bytes
         total_usage = sum(self.allocations.values())
         
         if total_usage > self.peak_usage:
@@ -359,8 +335,7 @@ class MemoryManager:
             self._trigger_cleanup()
     
     def _trigger_cleanup(self):
-        """Trigger memory cleanup when approaching limits."""
-        # Force garbage collection
+        """Trigger memory cleanup when approaching limits."""        # Force garbage collection
         gc.collect()
         
         # Clear PyTorch cache if available
@@ -372,8 +347,7 @@ class MemoryManager:
         logger.info(f"Memory cleanup triggered. System: {memory.percent}% used")
     
     def get_optimal_chunk_size(self, total_size: int, available_memory: int) -> int:
-        """Calculate optimal chunk size for processing large data."""
-        # Use 50% of available memory for processing
+        """Calculate optimal chunk size for processing large data."""        # Use 50% of available memory for processing
         max_chunk_size = int(available_memory * 0.5)
         
         # Ensure at least 10 chunks for parallelism
@@ -382,8 +356,7 @@ class MemoryManager:
         return min(max_chunk_size, max(min_chunk_size, total_size // 100))
 
 class ProcessingPipeline:
-    """Optimized processing pipeline with intelligent batching."""
-    
+    """Optimized processing pipeline with intelligent batching."""    
     def __init__(self, config: OptimizationConfig):
         self.config = config
         self.gpu_accelerator = GPUAccelerator()
@@ -400,20 +373,16 @@ class ProcessingPipeline:
         self.process_pool = None
         
     def add_preprocessor(self, func: Callable):
-        """Add preprocessing function to pipeline."""
-        self.preprocessors.append(func)
+        """Add preprocessing function to pipeline."""        self.preprocessors.append(func)
     
     def add_processor(self, func: Callable):
-        """Add main processing function to pipeline."""
-        self.processors.append(func)
+        """Add main processing function to pipeline."""        self.processors.append(func)
     
     def add_postprocessor(self, func: Callable):
-        """Add postprocessing function to pipeline."""
-        self.postprocessors.append(func)
+        """Add postprocessing function to pipeline."""        self.postprocessors.append(func)
     
     async def process_batch(self, items: List[Any]) -> List[Any]:
-        """Process batch of items through optimized pipeline."""
-        if not items:
+        """Process batch of items through optimized pipeline."""        if not items:
             return []
         
         # Initialize execution pools if needed
@@ -438,8 +407,7 @@ class ProcessingPipeline:
             raise
     
     async def _run_stage(self, items: List[Any], functions: List[Callable], stage_name: str) -> List[Any]:
-        """Run pipeline stage with optimizations."""
-        if not functions:
+        """Run pipeline stage with optimizations."""        if not functions:
             return items
         
         stage_start = time.time()
@@ -482,8 +450,7 @@ class ProcessingPipeline:
         return current_items
     
     async def _execute_function(self, func: Callable, items: List[Any]) -> List[Any]:
-        """Execute function with optimal parallelization."""
-        if not items:
+        """Execute function with optimal parallelization."""        if not items:
             return []
         
         # Determine execution strategy
@@ -519,8 +486,7 @@ class ProcessingPipeline:
             return results
     
     def cleanup(self):
-        """Cleanup pipeline resources."""
-        if self.thread_pool:
+        """Cleanup pipeline resources."""        if self.thread_pool:
             self.thread_pool.shutdown(wait=True)
         if self.process_pool:
             self.process_pool.shutdown(wait=True)
@@ -529,8 +495,7 @@ class ProcessingPipeline:
         self.cache.clear()
 
 class PerformanceOptimizer:
-    """
-    Master performance optimization system for content fingerprinting.
+    """    Master performance optimization system for content fingerprinting.
     
     Features:
     - GPU acceleration and intelligent device selection
@@ -539,8 +504,7 @@ class PerformanceOptimizer:
     - Adaptive batch sizing and resource allocation
     - Pipeline optimization with parallel execution
     - Real-time performance monitoring and adjustment
-    """
-    
+    """    
     def __init__(self, config: OptimizationConfig = None):
         self.config = config or OptimizationConfig()
         
@@ -568,8 +532,7 @@ class PerformanceOptimizer:
         logger.info(f"Performance optimizer initialized with {self.config.level.value} optimization")
     
     def _detect_system_profile(self) -> ResourceProfile:
-        """Detect system capabilities for optimization."""
-        # CPU information
+        """Detect system capabilities for optimization."""        # CPU information
         cpu_count = psutil.cpu_count()
         cpu_freq = psutil.cpu_freq().current if psutil.cpu_freq() else 2000.0
         
@@ -603,8 +566,7 @@ class PerformanceOptimizer:
         )
     
     def optimize_for_content_type(self, content_type: ContentType) -> Dict[str, Any]:
-        """Get optimized configuration for specific content type."""
-        base_config = {
+        """Get optimized configuration for specific content type."""        base_config = {
             'batch_size': get_optimal_batch_size(content_type, self.resource_profile.memory_available_gb),
             'use_gpu': self.gpu_accelerator.available,
             'cache_enabled': self.config.enable_caching,
@@ -641,8 +603,7 @@ class PerformanceOptimizer:
         return base_config
     
     async def optimize_processing_function(self, func: Callable) -> Callable:
-        """Wrap function with performance optimizations."""
-        
+        """Wrap function with performance optimizations."""        
         @wraps(func)
         async def optimized_wrapper(*args, **kwargs):
             start_time = time.time()
@@ -686,8 +647,7 @@ class PerformanceOptimizer:
         return optimized_wrapper
     
     async def _gpu_optimized_execution(self, func: Callable, *args, **kwargs):
-        """Execute function with GPU optimizations."""
-        device = self.gpu_accelerator.get_optimal_device()
+        """Execute function with GPU optimizations."""        device = self.gpu_accelerator.get_optimal_device()
         
         with torch.cuda.device(device):
             # Convert numpy arrays to GPU tensors if present
@@ -710,8 +670,7 @@ class PerformanceOptimizer:
             return result
     
     async def _cpu_optimized_execution(self, func: Callable, *args, **kwargs):
-        """Execute function with CPU optimizations."""
-        loop = asyncio.get_event_loop()
+        """Execute function with CPU optimizations."""        loop = asyncio.get_event_loop()
         
         # Use thread pool for I/O bound operations
         if hasattr(func, '_io_bound') and func._io_bound:
@@ -731,8 +690,7 @@ class PerformanceOptimizer:
             return func(*args, **kwargs)
     
     def get_optimization_report(self) -> Dict[str, Any]:
-        """Generate optimization performance report."""
-        cache_stats = self.cache.get_stats()
+        """Generate optimization performance report."""        cache_stats = self.cache.get_stats()
         
         return {
             'optimization_level': self.config.level.value,
@@ -752,8 +710,7 @@ class PerformanceOptimizer:
         }
     
     def _generate_optimization_recommendations(self) -> List[str]:
-        """Generate optimization recommendations based on performance."""
-        recommendations = []
+        """Generate optimization recommendations based on performance."""        recommendations = []
         
         cache_stats = self.cache.get_stats()
         
@@ -772,8 +729,7 @@ class PerformanceOptimizer:
         return recommendations
     
     async def cleanup(self):
-        """Clean up optimization resources."""
-        self.pipeline.cleanup()
+        """Clean up optimization resources."""        self.pipeline.cleanup()
         self.gpu_accelerator.clear_cache()
         self.cache.clear()
 

@@ -1,5 +1,4 @@
-"""
-🔧 Base Configuration Manager - IA-Influencer-Agent
+"""🔧 Base Configuration Manager - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps + Backend Senior + Cloud Architect + Infrastructure Engineer
@@ -14,9 +13,7 @@ Contact: mlaiel@live.de
 
 Core configuration management foundation for enterprise deployment.
 ==================================================================
-"""
-
-import os
+"""import os
 import yaml
 import json
 import logging
@@ -27,28 +24,24 @@ from dataclasses import dataclass, field
 from enum import Enum
 
 class ConfigurationError(Exception):
-    """Base exception for configuration-related errors"""
-    pass
+    """Base exception for configuration-related errors"""    pass
 
 class ConfigFormat(Enum):
-    """Supported configuration formats"""
-    YAML = "yaml"
+    """Supported configuration formats"""    YAML = "yaml"
     JSON = "json"
     TOML = "toml"
     INI = "ini"
     ENV = "env"
 
 class ValidationLevel(Enum):
-    """Configuration validation levels"""
-    BASIC = "basic"
+    """Configuration validation levels"""    BASIC = "basic"
     STANDARD = "standard"
     STRICT = "strict"
     PARANOID = "paranoid"
 
 @dataclass
 class ConfigurationSchema:
-    """Configuration schema definition"""
-    name: str
+    """Configuration schema definition"""    name: str
     version: str
     required_fields: List[str] = field(default_factory=list)
     optional_fields: List[str] = field(default_factory=list)
@@ -59,8 +52,7 @@ class ConfigurationSchema:
 
 @dataclass
 class ConfigurationSource:
-    """Configuration source definition"""
-    name: str
+    """Configuration source definition"""    name: str
     path: str
     format_type: ConfigFormat
     priority: int = 100
@@ -70,8 +62,7 @@ class ConfigurationSource:
     validation_schema: Optional[str] = None
 
 class BaseConfigurationManager:
-    """
-    Enterprise-grade base configuration manager.
+    """    Enterprise-grade base configuration manager.
     
     Provides comprehensive configuration management capabilities:
     - Multi-format configuration support (YAML, JSON, TOML, INI, ENV)
@@ -82,16 +73,13 @@ class BaseConfigurationManager:
     - Hot-reload capabilities
     - Configuration versioning and rollback
     - Audit logging and change tracking
-    """
-    
+    """    
     def __init__(self, config_dir: Optional[str] = None):
-        """
-        Initialize base configuration manager.
+        """        Initialize base configuration manager.
         
         Args:
             config_dir: Base configuration directory path
-        """
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration directories
         self.config_dir = Path(config_dir) if config_dir else Path("/app/config")
@@ -115,13 +103,11 @@ class BaseConfigurationManager:
         self.logger.info("Base configuration manager initialized")
     
     async def initialize(self) -> bool:
-        """
-        Initialize configuration manager with all sources.
+        """        Initialize configuration manager with all sources.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             # Create configuration directories
             await self._ensure_directories()
             
@@ -145,8 +131,7 @@ class BaseConfigurationManager:
             return False
     
     async def _ensure_directories(self) -> None:
-        """Ensure all required directories exist"""
-        directories = [
+        """Ensure all required directories exist"""        directories = [
             self.config_dir,
             self.schemas_dir,
             self.environments_dir,
@@ -158,8 +143,7 @@ class BaseConfigurationManager:
             self.logger.debug(f"Ensured directory exists: {directory}")
     
     async def _load_schemas(self) -> None:
-        """Load configuration schemas"""
-        schema_files = list(self.schemas_dir.glob("*.yaml"))
+        """Load configuration schemas"""        schema_files = list(self.schemas_dir.glob("*.yaml"))
         
         for schema_file in schema_files:
             try:
@@ -184,8 +168,7 @@ class BaseConfigurationManager:
                 self.logger.warning(f"Failed to load schema {schema_file}: {e}")
     
     async def _register_default_sources(self) -> None:
-        """Register default configuration sources"""
-        default_sources = [
+        """Register default configuration sources"""        default_sources = [
             ConfigurationSource(
                 name="base",
                 path=str(self.config_dir / "base.yaml"),
@@ -217,19 +200,16 @@ class BaseConfigurationManager:
             await self.register_source(source)
     
     async def register_source(self, source: ConfigurationSource) -> None:
-        """
-        Register a configuration source.
+        """        Register a configuration source.
         
         Args:
             source: Configuration source to register
-        """
-        self.sources.append(source)
+        """        self.sources.append(source)
         self.sources.sort(key=lambda x: x.priority, reverse=True)
         self.logger.info(f"Registered configuration source: {source.name}")
     
     async def _load_all_configurations(self) -> None:
-        """Load configurations from all registered sources"""
-        for source in self.sources:
+        """Load configurations from all registered sources"""        for source in self.sources:
             try:
                 config_data = await self._load_configuration_source(source)
                 if config_data:
@@ -244,16 +224,14 @@ class BaseConfigurationManager:
         self.last_reload = datetime.now()
     
     async def _load_configuration_source(self, source: ConfigurationSource) -> Optional[Dict[str, Any]]:
-        """
-        Load configuration from a single source.
+        """        Load configuration from a single source.
         
         Args:
             source: Configuration source to load
             
         Returns:
             Configuration data or None if not found
-        """
-        if source.format_type == ConfigFormat.ENV:
+        """        if source.format_type == ConfigFormat.ENV:
             return await self._load_environment_variables()
         
         if not source.path or not os.path.exists(source.path):
@@ -272,8 +250,7 @@ class BaseConfigurationManager:
             return None
     
     async def _load_environment_variables(self) -> Dict[str, Any]:
-        """Load configuration from environment variables"""
-        env_config = {}
+        """Load configuration from environment variables"""        env_config = {}
         
         # Load environment variables with prefix
         for key, value in os.environ.items():
@@ -285,8 +262,7 @@ class BaseConfigurationManager:
         return env_config
     
     async def _set_nested_value(self, config: Dict[str, Any], key: str, value: str) -> None:
-        """Set nested configuration value from dot notation"""
-        keys = key.split('.')
+        """Set nested configuration value from dot notation"""        keys = key.split('.')
         current = config
         
         for k in keys[:-1]:
@@ -308,8 +284,7 @@ class BaseConfigurationManager:
             current[keys[-1]] = value
     
     async def _merge_configurations(self) -> Dict[str, Any]:
-        """Merge configurations from all sources based on priority"""
-        merged = {}
+        """Merge configurations from all sources based on priority"""        merged = {}
         
         # Start with lowest priority and merge upwards
         for source in reversed(self.sources):
@@ -319,37 +294,32 @@ class BaseConfigurationManager:
         return merged
     
     async def _deep_merge(self, target: Dict[str, Any], source: Dict[str, Any]) -> None:
-        """Deep merge source configuration into target"""
-        for key, value in source.items():
+        """Deep merge source configuration into target"""        for key, value in source.items():
             if key in target and isinstance(target[key], dict) and isinstance(value, dict):
                 await self._deep_merge(target[key], value)
             else:
                 target[key] = value
     
     async def _setup_file_watchers(self) -> None:
-        """Setup file watchers for hot configuration reload"""
-        # Implementation would use file system watchers
+        """Setup file watchers for hot configuration reload"""        # Implementation would use file system watchers
         # For now, we'll just log that watchers are set up
         self.logger.info("File watchers set up for configuration hot-reload")
     
     async def get_configuration(self, key: Optional[str] = None) -> Union[Dict[str, Any], Any]:
-        """
-        Get configuration value(s).
+        """        Get configuration value(s).
         
         Args:
             key: Dot-notation key for specific value, or None for full config
             
         Returns:
             Configuration value or full configuration
-        """
-        if key is None:
+        """        if key is None:
             return self.merged_config
         
         return await self._get_nested_value(self.merged_config, key)
     
     async def _get_nested_value(self, config: Dict[str, Any], key: str) -> Any:
-        """Get nested configuration value using dot notation"""
-        keys = key.split('.')
+        """Get nested configuration value using dot notation"""        keys = key.split('.')
         current = config
         
         for k in keys:
@@ -361,8 +331,7 @@ class BaseConfigurationManager:
         return current
     
     async def set_configuration(self, key: str, value: Any, source: str = "runtime") -> bool:
-        """
-        Set configuration value at runtime.
+        """        Set configuration value at runtime.
         
         Args:
             key: Dot-notation key
@@ -371,8 +340,7 @@ class BaseConfigurationManager:
             
         Returns:
             bool: True if successful
-        """
-        try:
+        """        try:
             await self._set_nested_value(self.merged_config, key, value)
             
             # Record change in history
@@ -392,16 +360,14 @@ class BaseConfigurationManager:
             return False
     
     async def validate_configuration(self, config: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """
-        Validate configuration against schemas.
+        """        Validate configuration against schemas.
         
         Args:
             config: Configuration to validate, or None for current config
             
         Returns:
             Validation result
-        """
-        if config is None:
+        """        if config is None:
             config = self.merged_config
         
         validation_result = {
@@ -427,8 +393,7 @@ class BaseConfigurationManager:
         schema: ConfigurationSchema, 
         result: Dict[str, Any]
     ) -> None:
-        """Validate configuration against a specific schema"""
-        # Check required fields
+        """Validate configuration against a specific schema"""        # Check required fields
         for field in schema.required_fields:
             if not await self._get_nested_value(config, field):
                 result["errors"].append(f"Required field missing: {field}")
@@ -447,8 +412,7 @@ class BaseConfigurationManager:
         rules: Dict[str, Any], 
         result: Dict[str, Any]
     ) -> None:
-        """Apply validation rules to a field"""
-        # Type validation
+        """Apply validation rules to a field"""        # Type validation
         if "type" in rules:
             expected_type = rules["type"]
             if not isinstance(value, eval(expected_type)):
@@ -472,13 +436,11 @@ class BaseConfigurationManager:
                 result["valid"] = False
     
     async def reload_configuration(self) -> bool:
-        """
-        Reload configuration from all sources.
+        """        Reload configuration from all sources.
         
         Returns:
             bool: True if successful
-        """
-        try:
+        """        try:
             # Clear existing configurations
             self.configurations.clear()
             
@@ -493,8 +455,7 @@ class BaseConfigurationManager:
             return False
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get configuration manager status"""
-        return {
+        """Get configuration manager status"""        return {
             "initialized": True,
             "version": self.version,
             "config_dir": str(self.config_dir),
@@ -506,5 +467,4 @@ class BaseConfigurationManager:
         }
     
     def get_change_history(self, limit: int = 100) -> List[Dict[str, Any]]:
-        """Get recent configuration changes"""
-        return self.change_history[-limit:]
+        """Get recent configuration changes"""        return self.change_history[-limit:]

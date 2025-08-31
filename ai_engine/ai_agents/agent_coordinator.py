@@ -1,5 +1,4 @@
-"""
-Agent Coordinator - Coordination des Agents IA Consolidés
+"""Agent Coordinator - Coordination des Agents IA Consolidés
 
 Système de coordination pour les agents IA consolidés du module ai/ai_agents,
 optimisé pour l'architecture regroupée par fonctionnalité métier.
@@ -10,9 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 from typing import Dict, List, Optional, Any, Union
@@ -38,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 class CoordinationStrategy(Enum):
-    """Stratégies de coordination des agents"""
-    SEQUENTIAL = "sequential"        # Séquentiel
+    """Stratégies de coordination des agents"""    SEQUENTIAL = "sequential"        # Séquentiel
     PARALLEL = "parallel"            # Parallèle
     PIPELINE = "pipeline"            # Pipeline
     COLLABORATIVE = "collaborative"  # Collaboratif
@@ -48,8 +44,7 @@ class CoordinationStrategy(Enum):
 
 @dataclass
 class AgentCoordination:
-    """Configuration de coordination d'agents"""
-    agents: List[str] = field(default_factory=list)
+    """Configuration de coordination d'agents"""    agents: List[str] = field(default_factory=list)
     strategy: CoordinationStrategy = CoordinationStrategy.SEQUENTIAL
     timeout: int = 300
     retry_attempts: int = 3
@@ -59,8 +54,7 @@ class AgentCoordination:
 
 @dataclass
 class CoordinationResult:
-    """Résultat de coordination multi-agents"""
-    success: bool
+    """Résultat de coordination multi-agents"""    success: bool
     coordination_id: str
     results: Dict[str, Any] = field(default_factory=dict)
     errors: List[str] = field(default_factory=list)
@@ -70,8 +64,7 @@ class CoordinationResult:
 
 
 class AgentCoordinator:
-    """
-    Coordinateur centralisé pour agents IA consolidés.
+    """    Coordinateur centralisé pour agents IA consolidés.
     
     Fonctionnalités:
     - Coordination multi-agents par workflow métier
@@ -79,8 +72,7 @@ class AgentCoordinator:
     - Load balancing et failover
     - Monitoring et métriques
     - Optimisation des performances
-    """
-    
+    """    
     def __init__(self):
         self.orchestrator = AIOrchestrator()
         self.agents: Dict[str, BaseAIAgent] = {}
@@ -101,8 +93,7 @@ class AgentCoordinator:
         logger.info("AgentCoordinator initialized")
     
     async def initialize(self):
-        """Initialise le coordinateur et tous les agents"""
-        try:
+        """Initialise le coordinateur et tous les agents"""        try:
             # Initialisation de l'orchestrateur
             await self.orchestrator.initialize()
             
@@ -140,10 +131,8 @@ class AgentCoordinator:
         coordination: AgentCoordination,
         task_data: Dict[str, Any]
     ) -> CoordinationResult:
-        """
-        Coordonne l'exécution de plusieurs agents selon la stratégie définie.
-        """
-        coordination_id = str(uuid.uuid4())
+        """        Coordonne l'exécution de plusieurs agents selon la stratégie définie.
+        """        coordination_id = str(uuid.uuid4())
         start_time = time.time()
         
         result = CoordinationResult(
@@ -201,8 +190,7 @@ class AgentCoordinator:
         task_data: Dict[str, Any],
         result: CoordinationResult
     ) -> CoordinationResult:
-        """Exécution séquentielle des agents"""
-        
+        """Exécution séquentielle des agents"""        
         current_data = task_data.copy()
         
         for agent_name in coordination.agents:
@@ -244,8 +232,7 @@ class AgentCoordinator:
         task_data: Dict[str, Any],
         result: CoordinationResult
     ) -> CoordinationResult:
-        """Exécution parallèle des agents"""
-        
+        """Exécution parallèle des agents"""        
         tasks = []
         
         for agent_name in coordination.agents:
@@ -288,8 +275,7 @@ class AgentCoordinator:
         task_data: Dict[str, Any],
         result: CoordinationResult
     ) -> CoordinationResult:
-        """Exécution en pipeline avec flux de données"""
-        
+        """Exécution en pipeline avec flux de données"""        
         # Utilisation de l'orchestrateur pour le pipeline
         try:
             pipeline_result = await self.orchestrator.execute_workflow(
@@ -312,8 +298,7 @@ class AgentCoordinator:
         task_data: Dict[str, Any],
         result: CoordinationResult
     ) -> CoordinationResult:
-        """Exécution collaborative avec communication inter-agents"""
-        
+        """Exécution collaborative avec communication inter-agents"""        
         # Implémentation collaborative simplifiée
         # Les agents travaillent ensemble en partageant des données
         shared_context = {'shared_data': {}, 'agent_communications': []}
@@ -356,8 +341,7 @@ class AgentCoordinator:
         task_data: Dict[str, Any],
         result: CoordinationResult
     ) -> CoordinationResult:
-        """Exécution adaptive basée sur les performances et conditions"""
-        
+        """Exécution adaptive basée sur les performances et conditions"""        
         # Analyse des performances passées pour optimiser l'exécution
         # Démarrer par les agents les plus performants
         agent_performance = await self._get_agent_performance_scores()
@@ -405,16 +389,14 @@ class AgentCoordinator:
         task: AgentTask,
         agent_name: str
     ) -> Any:
-        """Exécute une tâche sur un agent spécifique"""
-        try:
+        """Exécute une tâche sur un agent spécifique"""        try:
             return await agent.execute_task(task)
         except Exception as e:
             logger.error(f"Task execution failed for agent {agent_name}: {e}")
             raise
     
     async def _get_agent_performance_scores(self) -> Dict[str, float]:
-        """Calcule les scores de performance des agents"""
-        
+        """Calcule les scores de performance des agents"""        
         # Scores basés sur les statistiques historiques
         # Dans une implémentation complète, ceci viendrait de métriques stockées
         performance_scores = {}
@@ -426,12 +408,10 @@ class AgentCoordinator:
         return performance_scores
     
     async def get_coordination_status(self, coordination_id: str) -> Optional[CoordinationResult]:
-        """Récupère le statut d'une coordination"""
-        return self.coordinations.get(coordination_id)
+        """Récupère le statut d'une coordination"""        return self.coordinations.get(coordination_id)
     
     async def get_agent_health(self, agent_name: str) -> Dict[str, Any]:
-        """Vérifie la santé d'un agent spécifique"""
-        if agent_name not in self.agents:
+        """Vérifie la santé d'un agent spécifique"""        if agent_name not in self.agents:
             return {'status': 'not_found', 'message': f'Agent {agent_name} not found'}
         
         agent = self.agents[agent_name]
@@ -455,8 +435,7 @@ class AgentCoordinator:
             }
     
     async def get_system_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques système du coordinateur"""
-        uptime = datetime.now(timezone.utc) - self.started_at
+        """Retourne les statistiques système du coordinateur"""        uptime = datetime.now(timezone.utc) - self.started_at
         
         return {
             'coordinator_status': 'running' if self.is_running else 'stopped',
@@ -468,8 +447,7 @@ class AgentCoordinator:
         }
     
     async def shutdown(self):
-        """Arrêt gracieux du coordinateur"""
-        logger.info("Shutting down AgentCoordinator...")
+        """Arrêt gracieux du coordinateur"""        logger.info("Shutting down AgentCoordinator...")
         
         # Arrêt de l'orchestrateur
         if hasattr(self.orchestrator, 'shutdown'):
@@ -490,7 +468,6 @@ class AgentCoordinator:
 
 # Factory function pour création du coordinateur
 async def create_agent_coordinator() -> AgentCoordinator:
-    """Crée et initialise un coordinateur d'agents"""
-    coordinator = AgentCoordinator()
+    """Crée et initialise un coordinateur d'agents"""    coordinator = AgentCoordinator()
     await coordinator.initialize()
     return coordinator

@@ -1,5 +1,4 @@
-"""
-Crawler Utils Index
+"""Crawler Utils Index
 ===================
 
 Central index and factory module for crawler utilities.
@@ -22,9 +21,7 @@ Project Team Specialties:
 - Audio Engineer: Advanced audio processing and analysis
 - DevOps Engineer: CI/CD and infrastructure automation
 - IA Prompt Engineer: Intelligent prompt optimization
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Optional, Any, List
 from dataclasses import dataclass
@@ -72,8 +69,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CrawlerConfig:
-    """Configuration for crawler utilities."""
-    # Rate limiting
+    """Configuration for crawler utilities."""    # Rate limiting
     enable_rate_limiting: bool = True
     rate_limit_strategy: str = "platform_specific"  # platform_specific, adaptive, conservative
     
@@ -116,16 +112,13 @@ class CrawlerConfig:
             self.captcha_api_keys = {}
 
 class CrawlerUtilsManager:
-    """
-    Central manager for all crawler utilities.
+    """    Central manager for all crawler utilities.
     
     Provides a unified interface to access and configure all crawler utilities
     with intelligent defaults and automatic setup.
-    """
-    
+    """    
     def __init__(self, config: Optional[CrawlerConfig] = None):
-        """Initialize crawler utilities manager."""
-        self.config = config or CrawlerConfig()
+        """Initialize crawler utilities manager."""        self.config = config or CrawlerConfig()
         
         # Initialize components
         self.redis_client = None
@@ -152,8 +145,7 @@ class CrawlerUtilsManager:
         logger.info("Crawler utilities manager initialized")
     
     def _setup_redis(self) -> None:
-        """Setup Redis connection."""
-        if self.config.redis_url:
+        """Setup Redis connection."""        if self.config.redis_url:
             try:
                 self.redis_client = redis.from_url(self.config.redis_url)
                 self.redis_client.ping()  # Test connection
@@ -163,49 +155,42 @@ class CrawlerUtilsManager:
                 self.redis_client = None
     
     def _setup_proxy_manager(self) -> None:
-        """Setup proxy manager."""
-        if self.config.enable_proxy_rotation:
+        """Setup proxy manager."""        if self.config.enable_proxy_rotation:
             self.proxy_manager = ProxyManager()
             logger.info("Proxy manager initialized")
     
     def _setup_user_agent_rotator(self) -> None:
-        """Setup user agent rotator."""
-        if self.config.enable_user_agent_rotation:
+        """Setup user agent rotator."""        if self.config.enable_user_agent_rotation:
             self.user_agent_rotator = UserAgentRotator()
             self.user_agent_rotator.set_rotation_strategy(self.config.user_agent_strategy)
             self.user_agent_rotator.set_mobile_ratio(self.config.mobile_traffic_ratio)
             logger.info("User agent rotator initialized")
     
     def _setup_content_extractor(self) -> None:
-        """Setup content extractor."""
-        self.content_extractor = ContentExtractor()
+        """Setup content extractor."""        self.content_extractor = ContentExtractor()
         logger.info("Content extractor initialized")
     
     def _setup_url_validator(self) -> None:
-        """Setup URL validator."""
-        if self.config.enable_url_validation:
+        """Setup URL validator."""        if self.config.enable_url_validation:
             self.url_validator = URLValidator()
             logger.info("URL validator initialized")
     
     def _setup_cookie_manager(self) -> None:
-        """Setup cookie manager."""
-        self.cookie_manager = CookieManager(
+        """Setup cookie manager."""        self.cookie_manager = CookieManager(
             redis_client=self.redis_client,
             enable_encryption=True
         )
         logger.info("Cookie manager initialized")
     
     def _setup_captcha_solver(self) -> None:
-        """Setup CAPTCHA solver."""
-        if self.config.enable_captcha_solving and self.config.captcha_api_keys:
+        """Setup CAPTCHA solver."""        if self.config.enable_captcha_solving and self.config.captcha_api_keys:
             self.captcha_solver = setup_default_captcha_solver(
                 self.config.captcha_api_keys
             )
             logger.info("CAPTCHA solver initialized")
     
     def _setup_session_manager(self) -> None:
-        """Setup session manager."""
-        self.session_manager = SessionManager(
+        """Setup session manager."""        self.session_manager = SessionManager(
             proxy_manager=self.proxy_manager,
             user_agent_rotator=self.user_agent_rotator
         )
@@ -216,8 +201,7 @@ class CrawlerUtilsManager:
         logger.info("Session manager initialized")
     
     def _setup_rate_limiters(self) -> None:
-        """Setup rate limiters for different platforms."""
-        if not self.config.enable_rate_limiting:
+        """Setup rate limiters for different platforms."""        if not self.config.enable_rate_limiting:
             return
         
         platforms = [
@@ -238,8 +222,7 @@ class CrawlerUtilsManager:
         logger.info(f"Rate limiters initialized for {len(platforms)} platforms")
     
     def get_rate_limiter(self, platform: str) -> Optional[RateLimiter]:
-        """Get rate limiter for specific platform."""
-        return self.rate_limiters.get(platform.lower(), self.rate_limiters.get('generic'))
+        """Get rate limiter for specific platform."""        return self.rate_limiters.get(platform.lower(), self.rate_limiters.get('generic'))
     
     async def create_crawler_session(
         self, 
@@ -248,8 +231,7 @@ class CrawlerUtilsManager:
         mobile: Optional[bool] = None,
         country: Optional[str] = None
     ) -> str:
-        """Create a new crawler session with all utilities configured."""
-        session_id = await self.session_manager.create_session(
+        """Create a new crawler session with all utilities configured."""        session_id = await self.session_manager.create_session(
             platform=platform,
             domain=domain,
             mobile=mobile,
@@ -267,8 +249,7 @@ class CrawlerUtilsManager:
         extract_content: bool = True,
         solve_captcha: bool = True
     ) -> Dict[str, Any]:
-        """
-        Comprehensive URL crawling with all utilities.
+        """        Comprehensive URL crawling with all utilities.
         
         Args:
             url: URL to crawl
@@ -279,8 +260,7 @@ class CrawlerUtilsManager:
             
         Returns:
             Dictionary with crawling results
-        """
-        result = {
+        """        result = {
             'url': url,
             'success': False,
             'validation': None,
@@ -401,8 +381,7 @@ class CrawlerUtilsManager:
         max_concurrent: int = 5,
         **crawl_kwargs
     ) -> List[Dict[str, Any]]:
-        """
-        Crawl multiple URLs concurrently.
+        """        Crawl multiple URLs concurrently.
         
         Args:
             urls: List of URLs to crawl
@@ -411,8 +390,7 @@ class CrawlerUtilsManager:
             
         Returns:
             List of crawling results
-        """
-        semaphore = asyncio.Semaphore(max_concurrent)
+        """        semaphore = asyncio.Semaphore(max_concurrent)
         
         async def crawl_with_semaphore(url: str) -> Dict[str, Any]:
             async with semaphore:
@@ -437,8 +415,7 @@ class CrawlerUtilsManager:
         return final_results
     
     async def get_comprehensive_stats(self) -> Dict[str, Any]:
-        """Get comprehensive statistics from all utilities."""
-        stats = {
+        """Get comprehensive statistics from all utilities."""        stats = {
             'config': {
                 'rate_limiting_enabled': self.config.enable_rate_limiting,
                 'proxy_rotation_enabled': self.config.enable_proxy_rotation,
@@ -478,8 +455,7 @@ class CrawlerUtilsManager:
         return stats
     
     async def cleanup(self) -> None:
-        """Cleanup all resources."""
-        if self.session_manager:
+        """Cleanup all resources."""        if self.session_manager:
             await self.session_manager.close_all_sessions()
         
         if self.cookie_manager:
@@ -489,16 +465,14 @@ class CrawlerUtilsManager:
 
 # Factory functions for easy setup
 def create_crawler_manager(config: Optional[CrawlerConfig] = None) -> CrawlerUtilsManager:
-    """Create crawler utilities manager with configuration."""
-    return CrawlerUtilsManager(config)
+    """Create crawler utilities manager with configuration."""    return CrawlerUtilsManager(config)
 
 def create_basic_crawler_config(
     enable_proxy: bool = False,
     enable_captcha: bool = False,
     redis_url: Optional[str] = None
 ) -> CrawlerConfig:
-    """Create basic crawler configuration."""
-    return CrawlerConfig(
+    """Create basic crawler configuration."""    return CrawlerConfig(
         enable_proxy_rotation=enable_proxy,
         enable_captcha_solving=enable_captcha,
         redis_url=redis_url
@@ -509,8 +483,7 @@ def create_advanced_crawler_config(
     proxy_enabled: bool = True,
     captcha_api_keys: Optional[Dict[str, str]] = None
 ) -> CrawlerConfig:
-    """Create advanced crawler configuration."""
-    return CrawlerConfig(
+    """Create advanced crawler configuration."""    return CrawlerConfig(
         enable_rate_limiting=True,
         rate_limit_strategy="adaptive",
         enable_proxy_rotation=proxy_enabled,
@@ -530,8 +503,7 @@ def create_advanced_crawler_config(
 
 # Quick access functions
 async def quick_crawl(url: str, **kwargs) -> Dict[str, Any]:
-    """Quick crawl a single URL with default settings."""
-    manager = create_crawler_manager()
+    """Quick crawl a single URL with default settings."""    manager = create_crawler_manager()
     try:
         result = await manager.crawl_url(url, **kwargs)
         return result
@@ -539,8 +511,7 @@ async def quick_crawl(url: str, **kwargs) -> Dict[str, Any]:
         await manager.cleanup()
 
 async def quick_extract_content(url: str) -> Optional[Dict[str, Any]]:
-    """Quick content extraction from URL."""
-    result = await quick_crawl(url, extract_content=True)
+    """Quick content extraction from URL."""    result = await quick_crawl(url, extract_content=True)
     return result.get('content') if result.get('success') else None
 
 # Export main components

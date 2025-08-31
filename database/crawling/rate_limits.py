@@ -1,5 +1,4 @@
-"""
-Enterprise Rate Limits Manager
+"""Enterprise Rate Limits Manager
 
 Advanced rate limiting and quota management for API crawling operations
 with platform-specific limits and intelligent throttling.
@@ -11,9 +10,7 @@ Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security Expert
 Copyright: All rights reserved
-"""
-
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, desc, asc, func, text
@@ -35,8 +32,7 @@ from ..core.exceptions import (
 
 
 class RateLimitPeriod(Enum):
-    """Rate limit time periods."""
-    MINUTE = 'minute'
+    """Rate limit time periods."""    MINUTE = 'minute'
     HOUR = 'hour'
     DAY = 'day'
     WEEK = 'week'
@@ -44,8 +40,7 @@ class RateLimitPeriod(Enum):
 
 
 class PlatformLimits:
-    """Default rate limits for different platforms."""
-    
+    """Default rate limits for different platforms."""    
     YOUTUBE = {
         'requests_per_hour': 10000,
         'requests_per_day': 100000,
@@ -78,8 +73,7 @@ class PlatformLimits:
 
 
 class RateLimitManager(DatabaseManager):
-    """
-    Enterprise-grade rate limit manager for crawling operations.
+    """    Enterprise-grade rate limit manager for crawling operations.
     
     Handles:
     - Platform-specific rate limits
@@ -87,16 +81,13 @@ class RateLimitManager(DatabaseManager):
     - Real-time usage tracking
     - Intelligent throttling
     - Quota recovery and resets
-    """
-    
+    """    
     def __init__(self, db_session: Session):
-        """
-        Initialize rate limit manager.
+        """        Initialize rate limit manager.
         
         Args:
             db_session: SQLAlchemy database session
-        """
-        super().__init__(db_session)
+        """        super().__init__(db_session)
         self.table = RateLimit
         self.platform_limits = {
             'youtube': PlatformLimits.YOUTUBE,
@@ -112,8 +103,7 @@ class RateLimitManager(DatabaseManager):
         user_id: str,
         requested_quota: int = 1
     ) -> bool:
-        """
-        Check if user has sufficient quota for platform operations.
+        """        Check if user has sufficient quota for platform operations.
         
         Args:
             platform: Target platform
@@ -122,8 +112,7 @@ class RateLimitManager(DatabaseManager):
             
         Returns:
             bool indicating if quota is available
-        """
-        try:
+        """        try:
             # Get platform limits
             limits = self.platform_limits.get(platform, PlatformLimits.GENERIC)
             
@@ -157,8 +146,7 @@ class RateLimitManager(DatabaseManager):
         limit: int,
         requested: int
     ) -> bool:
-        """
-        Check quota for specific time period.
+        """        Check quota for specific time period.
         
         Args:
             platform: Target platform
@@ -169,8 +157,7 @@ class RateLimitManager(DatabaseManager):
             
         Returns:
             bool indicating if quota is available
-        """
-        try:
+        """        try:
             # Calculate period start time
             now = datetime.utcnow()
             if period == RateLimitPeriod.HOUR.value:
@@ -189,8 +176,7 @@ class RateLimitManager(DatabaseManager):
             
             # Get current usage for period
             current_usage = await self.db.execute(
-                text("""
-                SELECT COALESCE(SUM(usage_count), 0) as total_usage
+                text("""                SELECT COALESCE(SUM(usage_count), 0) as total_usage
                 FROM rate_limits
                 WHERE platform = :platform
                   AND user_id = :user_id
@@ -220,8 +206,7 @@ class RateLimitManager(DatabaseManager):
         user_id: str,
         max_concurrent: int
     ) -> bool:
-        """
-        Check concurrent sessions limit.
+        """        Check concurrent sessions limit.
         
         Args:
             platform: Target platform
@@ -230,12 +215,10 @@ class RateLimitManager(DatabaseManager):
             
         Returns:
             bool indicating if concurrent limit allows new session
-        """
-        try:
+        """        try:
             # Count active sessions for user on platform
             active_sessions = await self.db.execute(
-                text("""
-                SELECT COUNT(*) as session_count
+                text("""                SELECT COUNT(*) as session_count
                 FROM crawling_sessions
                 WHERE platform = :platform
                   AND user_id = :user_id
@@ -262,8 +245,7 @@ class RateLimitManager(DatabaseManager):
         usage_count: int = 1,
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """
-        Increment usage count for platform and user.
+        """        Increment usage count for platform and user.
         
         Args:
             platform: Target platform
@@ -273,8 +255,7 @@ class RateLimitManager(DatabaseManager):
             
         Returns:
             bool indicating success
-        """
-        try:
+        """        try:
             now = datetime.utcnow()
             
             # Update usage for different time periods
@@ -307,8 +288,7 @@ class RateLimitManager(DatabaseManager):
         usage_count: int,
         metadata: Optional[Dict[str, Any]]
     ) -> None:
-        """
-        Insert or update rate limit record for specific period.
+        """        Insert or update rate limit record for specific period.
         
         Args:
             platform: Target platform
@@ -317,12 +297,10 @@ class RateLimitManager(DatabaseManager):
             period_start: Start of the time period
             usage_count: Usage count to add
             metadata: Optional metadata
-        """
-        try:
+        """        try:
             # Try to update existing record
             result = await self.db.execute(
-                text("""
-                UPDATE rate_limits 
+                text("""                UPDATE rate_limits 
                 SET usage_count = usage_count + :usage_count,
                     last_request_at = :now,
                     updated_at = :now,
@@ -372,8 +350,7 @@ class RateLimitManager(DatabaseManager):
             raise DatabaseError(f"Failed to upsert rate limit record: {str(e)}")
     
     def _get_limit_for_period(self, platform: str, period_type: str) -> int:
-        """
-        Get the rate limit value for platform and period.
+        """        Get the rate limit value for platform and period.
         
         Args:
             platform: Target platform
@@ -381,8 +358,7 @@ class RateLimitManager(DatabaseManager):
             
         Returns:
             Rate limit value
-        """
-        limits = self.platform_limits.get(platform, PlatformLimits.GENERIC)
+        """        limits = self.platform_limits.get(platform, PlatformLimits.GENERIC)
         
         if period_type == RateLimitPeriod.HOUR.value:
             return limits['requests_per_hour']
@@ -401,8 +377,7 @@ class RateLimitManager(DatabaseManager):
         user_id: str,
         period_type: str = RateLimitPeriod.HOUR.value
     ) -> Dict[str, Any]:
-        """
-        Get remaining quota for user on platform.
+        """        Get remaining quota for user on platform.
         
         Args:
             platform: Target platform
@@ -411,8 +386,7 @@ class RateLimitManager(DatabaseManager):
             
         Returns:
             Dict containing quota information
-        """
-        try:
+        """        try:
             # Calculate period start
             now = datetime.utcnow()
             if period_type == RateLimitPeriod.HOUR.value:
@@ -424,8 +398,7 @@ class RateLimitManager(DatabaseManager):
             
             # Get current usage
             usage_result = await self.db.execute(
-                text("""
-                SELECT usage_count, limit_value, last_request_at
+                text("""                SELECT usage_count, limit_value, last_request_at
                 FROM rate_limits
                 WHERE platform = :platform
                   AND user_id = :user_id
@@ -478,16 +451,14 @@ class RateLimitManager(DatabaseManager):
             raise DatabaseError(f"Failed to get remaining quota: {str(e)}")
     
     async def get_user_status(self, user_id: str) -> Dict[str, Any]:
-        """
-        Get comprehensive rate limit status for user across all platforms.
+        """        Get comprehensive rate limit status for user across all platforms.
         
         Args:
             user_id: User identifier
             
         Returns:
             Dict containing user's rate limit status
-        """
-        try:
+        """        try:
             platform_status = {}
             
             for platform in self.platform_limits.keys():
@@ -501,8 +472,7 @@ class RateLimitManager(DatabaseManager):
                 
                 # Check concurrent sessions
                 concurrent_result = await self.db.execute(
-                    text("""
-                    SELECT COUNT(*) as active_sessions
+                    text("""                    SELECT COUNT(*) as active_sessions
                     FROM crawling_sessions
                     WHERE platform = :platform
                       AND user_id = :user_id
@@ -544,8 +514,7 @@ class RateLimitManager(DatabaseManager):
         user_id: str,
         period_type: str = RateLimitPeriod.DAY.value
     ) -> bool:
-        """
-        Reset quota for user on platform (admin function).
+        """        Reset quota for user on platform (admin function).
         
         Args:
             platform: Target platform
@@ -554,11 +523,9 @@ class RateLimitManager(DatabaseManager):
             
         Returns:
             bool indicating success
-        """
-        try:
+        """        try:
             result = await self.db.execute(
-                text("""
-                DELETE FROM rate_limits
+                text("""                DELETE FROM rate_limits
                 WHERE platform = :platform
                   AND user_id = :user_id
                   AND period_type = :period_type
@@ -581,22 +548,19 @@ class RateLimitManager(DatabaseManager):
         self,
         time_range: timedelta = timedelta(days=7)
     ) -> Dict[str, Any]:
-        """
-        Get global rate limiting statistics.
+        """        Get global rate limiting statistics.
         
         Args:
             time_range: Time range for statistics
             
         Returns:
             Dict containing global statistics
-        """
-        try:
+        """        try:
             since = datetime.utcnow() - time_range
             
             # Get platform usage statistics
             platform_stats = await self.db.execute(
-                text("""
-                SELECT 
+                text("""                SELECT 
                     platform,
                     COUNT(DISTINCT user_id) as unique_users,
                     SUM(usage_count) as total_requests,
@@ -611,8 +575,7 @@ class RateLimitManager(DatabaseManager):
             
             # Get period type breakdown
             period_stats = await self.db.execute(
-                text("""
-                SELECT 
+                text("""                SELECT 
                     period_type,
                     COUNT(*) as record_count,
                     SUM(usage_count) as total_usage,
@@ -626,8 +589,7 @@ class RateLimitManager(DatabaseManager):
             
             # Get top users by usage
             top_users = await self.db.execute(
-                text("""
-                SELECT 
+                text("""                SELECT 
                     user_id,
                     platform,
                     SUM(usage_count) as total_usage
@@ -683,16 +645,14 @@ class RateLimitManager(DatabaseManager):
         self,
         retention_days: int = 30
     ) -> Dict[str, int]:
-        """
-        Clean up expired rate limit records.
+        """        Clean up expired rate limit records.
         
         Args:
             retention_days: Number of days to retain rate limit records
             
         Returns:
             Dict containing cleanup statistics
-        """
-        try:
+        """        try:
             cutoff_date = datetime.utcnow() - timedelta(days=retention_days)
             
             result = await self.db.execute(
@@ -713,13 +673,11 @@ class RateLimitManager(DatabaseManager):
             raise DatabaseError(f"Failed to cleanup expired limits: {str(e)}")
     
     async def health_check(self) -> Dict[str, Any]:
-        """
-        Perform health check of rate limiting system.
+        """        Perform health check of rate limiting system.
         
         Returns:
             Dict containing health status
-        """
-        try:
+        """        try:
             # Check recent rate limit activity
             recent_activity = await self.db.query(func.count(RateLimit.limit_id)).filter(
                 RateLimit.updated_at >= datetime.utcnow() - timedelta(hours=1)
@@ -727,8 +685,7 @@ class RateLimitManager(DatabaseManager):
             
             # Check for users hitting limits
             users_at_limit = await self.db.execute(
-                text("""
-                SELECT COUNT(DISTINCT user_id) as count
+                text("""                SELECT COUNT(DISTINCT user_id) as count
                 FROM rate_limits
                 WHERE usage_count >= limit_value
                   AND updated_at >= :since

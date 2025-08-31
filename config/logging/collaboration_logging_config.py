@@ -1,5 +1,4 @@
-"""
-Collaboration Logging Configuration for IA-Influencer Agent Platform
+"""Collaboration Logging Configuration for IA-Influencer Agent Platform
 ====================================================================
 
 Industrial-grade logging configuration for creator collaboration matching,
@@ -17,9 +16,7 @@ without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICT
 and will result in immediate legal action under German and International copyright laws.
 
 Contact: mlaiel@live.de for licensing inquiries only.
-"""
-
-import logging
+"""import logging
 import json
 from datetime import datetime
 from typing import Dict, Any, Optional, List
@@ -31,8 +28,7 @@ from pythonjsonlogger import jsonlogger
 
 
 class CollaborationType(str, Enum):
-    """Types of creator collaborations"""
-    MUSIC_COLLABORATION = "music_collaboration"
+    """Types of creator collaborations"""    MUSIC_COLLABORATION = "music_collaboration"
     VIDEO_COLLABORATION = "video_collaboration"
     PODCAST_COLLABORATION = "podcast_collaboration"
     BLOG_COLLABORATION = "blog_collaboration"
@@ -49,8 +45,7 @@ class CollaborationType(str, Enum):
 
 
 class CollaborationStatus(str, Enum):
-    """Collaboration project status"""
-    PROPOSAL_CREATED = "proposal_created"
+    """Collaboration project status"""    PROPOSAL_CREATED = "proposal_created"
     MATCH_SUGGESTED = "match_suggested"
     INVITATION_SENT = "invitation_sent"
     INVITATION_ACCEPTED = "invitation_accepted"
@@ -68,8 +63,7 @@ class CollaborationStatus(str, Enum):
 
 
 class MatchingAlgorithm(str, Enum):
-    """AI matching algorithms for collaboration"""
-    CONTENT_SIMILARITY = "content_similarity"
+    """AI matching algorithms for collaboration"""    CONTENT_SIMILARITY = "content_similarity"
     AUDIENCE_OVERLAP = "audience_overlap"
     GENRE_COMPATIBILITY = "genre_compatibility"
     ENGAGEMENT_SYNERGY = "engagement_synergy"
@@ -83,8 +77,7 @@ class MatchingAlgorithm(str, Enum):
 
 @dataclass
 class CollaborationLogConfig:
-    """Configuration for collaboration logging"""
-    enable_matching_logging: bool = True
+    """Configuration for collaboration logging"""    enable_matching_logging: bool = True
     enable_project_tracking: bool = True
     enable_communication_logging: bool = True
     enable_revenue_sharing_logging: bool = True
@@ -116,15 +109,13 @@ class CollaborationLogConfig:
 
 
 class CollaborationLogger:
-    """Specialized logger for collaboration operations"""
-    
+    """Specialized logger for collaboration operations"""    
     def __init__(self, config: CollaborationLogConfig):
         self.config = config
         self.logger = self._setup_logger()
         
     def _setup_logger(self) -> structlog.BoundLogger:
-        """Setup structured logger for collaboration"""
-        structlog.configure(
+        """Setup structured logger for collaboration"""        structlog.configure(
             processors=[
                 structlog.threadlocal.merge_threadlocal_context,
                 structlog.processors.TimeStamper(fmt="iso"),
@@ -151,8 +142,7 @@ class CollaborationLogger:
         matching_scores: List[float],
         processing_time: float
     ) -> None:
-        """Log AI-powered collaboration matching"""
-        if not self.config.enable_matching_logging:
+        """Log AI-powered collaboration matching"""        if not self.config.enable_matching_logging:
             return
             
         log_data = {
@@ -188,8 +178,7 @@ class CollaborationLogger:
         deadline: datetime,
         estimated_reach: int
     ) -> None:
-        """Log collaboration proposal creation"""
-        if not self.config.enable_project_tracking:
+        """Log collaboration proposal creation"""        if not self.config.enable_project_tracking:
             return
             
         log_data = {
@@ -219,8 +208,7 @@ class CollaborationLogger:
         status_reason: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Log collaboration status changes"""
-        if not self.config.enable_project_tracking:
+        """Log collaboration status changes"""        if not self.config.enable_project_tracking:
             return
             
         log_data = {
@@ -257,8 +245,7 @@ class CollaborationLogger:
         quality_score: Optional[float] = None,
         approval_status: str = "pending"
     ) -> None:
-        """Log content creation milestones"""
-        if not self.config.enable_project_tracking:
+        """Log content creation milestones"""        if not self.config.enable_project_tracking:
             return
             
         log_data = {
@@ -286,8 +273,7 @@ class CollaborationLogger:
         channel: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Log collaboration communication events"""
-        if not self.config.enable_communication_logging:
+        """Log collaboration communication events"""        if not self.config.enable_communication_logging:
             return
             
         log_data = {
@@ -316,8 +302,7 @@ class CollaborationLogger:
         payment_processing_id: str,
         platform_source: str
     ) -> None:
-        """Log revenue sharing events"""
-        if not self.config.enable_revenue_sharing_logging:
+        """Log revenue sharing events"""        if not self.config.enable_revenue_sharing_logging:
             return
             
         log_data = {
@@ -341,8 +326,7 @@ class CollaborationLogger:
         cross_platform_stats: Dict[str, Any],
         roi_analysis: Dict[str, float]
     ) -> None:
-        """Log collaboration performance analytics"""
-        if not self.config.enable_performance_analytics:
+        """Log collaboration performance analytics"""        if not self.config.enable_performance_analytics:
             return
             
         log_data = {
@@ -370,8 +354,7 @@ class CollaborationLogger:
         resolution_method: str,
         resolution_outcome: Optional[str] = None
     ) -> None:
-        """Log dispute resolution events"""
-        if not self.config.enable_dispute_resolution:
+        """Log dispute resolution events"""        if not self.config.enable_dispute_resolution:
             return
             
         log_data = {
@@ -402,8 +385,7 @@ class CollaborationLogger:
         legal_terms: Dict[str, Any],
         digital_signature_status: str
     ) -> None:
-        """Log contract management events"""
-        if not self.config.enable_contract_management:
+        """Log contract management events"""        if not self.config.enable_contract_management:
             return
             
         log_data = {
@@ -435,8 +417,7 @@ class CollaborationLogger:
         synchronization_status: str,
         cross_promotion_metrics: Dict[str, Any]
     ) -> None:
-        """Log cross-platform collaboration activities"""
-        if not self.config.enable_cross_platform_tracking:
+        """Log cross-platform collaboration activities"""        if not self.config.enable_cross_platform_tracking:
             return
             
         log_data = {
@@ -452,8 +433,7 @@ class CollaborationLogger:
         self.logger.info("Cross-platform activity logged", **log_data)
     
     def get_collaboration_metrics(self) -> Dict[str, Any]:
-        """Get collaboration system metrics"""
-        return {
+        """Get collaboration system metrics"""        return {
             "matching_logging_enabled": self.config.enable_matching_logging,
             "project_tracking_enabled": self.config.enable_project_tracking,
             "communication_logging_enabled": self.config.enable_communication_logging,
@@ -469,17 +449,14 @@ class CollaborationLogger:
 
 
 class CollaborationLoggingConfig:
-    """Main configuration class for collaboration logging"""
-    
+    """Main configuration class for collaboration logging"""    
     @staticmethod
     def create_default_config() -> CollaborationLogConfig:
-        """Create default collaboration logging configuration"""
-        return CollaborationLogConfig()
+        """Create default collaboration logging configuration"""        return CollaborationLogConfig()
     
     @staticmethod
     def create_enterprise_config() -> CollaborationLogConfig:
-        """Create enterprise collaboration logging configuration"""
-        return CollaborationLogConfig(
+        """Create enterprise collaboration logging configuration"""        return CollaborationLogConfig(
             enable_matching_logging=True,
             enable_project_tracking=True,
             enable_communication_logging=True,

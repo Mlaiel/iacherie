@@ -1,5 +1,4 @@
-"""
-🔧 Security Scanner - IA-Influencer-Agent CI/CD
+"""🔧 Security Scanner - IA-Influencer-Agent CI/CD
 ================================================================
 Expert: SECURITY_ENGINEER + DEVOPS_ENGINEER
 Created: 2025-08-24
@@ -8,9 +7,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Enterprise security scanning engine for multi-layer vulnerability detection.
 Integrates SAST, DAST, dependency scanning, and container security analysis.
 ================================================================
-"""
-
-from typing import Dict, List, Optional, Any, Tuple
+"""from typing import Dict, List, Optional, Any, Tuple
 import asyncio
 import logging
 import subprocess
@@ -26,8 +23,7 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class ScanType(Enum):
-    """Security scan type enumeration"""
-    STATIC_ANALYSIS = "static_analysis"
+    """Security scan type enumeration"""    STATIC_ANALYSIS = "static_analysis"
     DEPENDENCY_SCAN = "dependency_scan"
     CONTAINER_SCAN = "container_scan"
     SECRET_SCAN = "secret_scan"
@@ -35,8 +31,7 @@ class ScanType(Enum):
     INFRASTRUCTURE_SCAN = "infrastructure_scan"
 
 class VulnerabilitySeverity(Enum):
-    """Vulnerability severity levels"""
-    CRITICAL = "critical"
+    """Vulnerability severity levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -44,8 +39,7 @@ class VulnerabilitySeverity(Enum):
 
 @dataclass
 class Vulnerability:
-    """Vulnerability data structure"""
-    scan_type: ScanType
+    """Vulnerability data structure"""    scan_type: ScanType
     severity: VulnerabilitySeverity
     title: str
     description: str
@@ -59,8 +53,7 @@ class Vulnerability:
 
 @dataclass
 class SecurityScanConfig:
-    """Security scan configuration"""
-    scan_types: List[ScanType]
+    """Security scan configuration"""    scan_types: List[ScanType]
     severity_threshold: VulnerabilitySeverity = VulnerabilitySeverity.MEDIUM
     fail_on_critical: bool = True
     fail_on_high: bool = True
@@ -70,8 +63,7 @@ class SecurityScanConfig:
 
 @dataclass
 class SecurityScanResult:
-    """Security scan result"""
-    scan_id: str
+    """Security scan result"""    scan_id: str
     scan_timestamp: datetime
     config: SecurityScanConfig
     vulnerabilities: List[Vulnerability]
@@ -84,11 +76,9 @@ class SecurityScanResult:
     error_message: Optional[str] = None
 
 class SecurityScanEngine:
-    """Enterprise security scanning engine"""
-    
+    """Enterprise security scanning engine"""    
     def __init__(self):
-        """Initialize security scan engine"""
-        self.initialized = False
+        """Initialize security scan engine"""        self.initialized = False
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.scan_history: List[SecurityScanResult] = []
         self.docker_client = None
@@ -104,8 +94,7 @@ class SecurityScanEngine:
         }
         
     async def initialize(self) -> bool:
-        """Initialize security scanner"""
-        try:
+        """Initialize security scanner"""        try:
             # Initialize Docker client for container scanning
             self.docker_client = docker.from_env()
             
@@ -120,8 +109,7 @@ class SecurityScanEngine:
             return False
     
     async def _verify_security_tools(self) -> None:
-        """Verify security tools are available"""
-        essential_tools = ["bandit", "safety", "trivy"]
+        """Verify security tools are available"""        essential_tools = ["bandit", "safety", "trivy"]
         missing_tools = []
         
         for tool in essential_tools:
@@ -133,8 +121,7 @@ class SecurityScanEngine:
             # Don't fail initialization, log warning instead
     
     async def _check_tool_available(self, tool: str) -> bool:
-        """Check if security tool is available"""
-        try:
+        """Check if security tool is available"""        try:
             result = await self._run_command([tool, "--version"], timeout=30)
             return result.returncode == 0
         except:
@@ -146,8 +133,7 @@ class SecurityScanEngine:
         config: SecurityScanConfig,
         image_tag: Optional[str] = None
     ) -> SecurityScanResult:
-        """Execute comprehensive security scan"""
-        scan_id = self._generate_scan_id()
+        """Execute comprehensive security scan"""        scan_id = self._generate_scan_id()
         start_time = datetime.now()
         
         try:
@@ -225,8 +211,7 @@ class SecurityScanEngine:
             return result
     
     def _generate_scan_id(self) -> str:
-        """Generate unique scan ID"""
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        """Generate unique scan ID"""        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         return f"security_scan_{timestamp}"
     
     async def _execute_scan_type(
@@ -236,8 +221,7 @@ class SecurityScanEngine:
         config: SecurityScanConfig,
         image_tag: Optional[str] = None
     ) -> List[Vulnerability]:
-        """Execute specific scan type"""
-        if scan_type == ScanType.STATIC_ANALYSIS:
+        """Execute specific scan type"""        if scan_type == ScanType.STATIC_ANALYSIS:
             return await self._run_static_analysis(source_path, config)
         elif scan_type == ScanType.DEPENDENCY_SCAN:
             return await self._run_dependency_scan(source_path, config)
@@ -258,8 +242,7 @@ class SecurityScanEngine:
         source_path: str,
         config: SecurityScanConfig
     ) -> List[Vulnerability]:
-        """Run static application security testing (SAST)"""
-        vulnerabilities = []
+        """Run static application security testing (SAST)"""        vulnerabilities = []
         
         try:
             # Run Bandit for Python security issues
@@ -306,8 +289,7 @@ class SecurityScanEngine:
         return vulnerabilities
     
     async def _run_semgrep_scan(self, source_path: str) -> List[Vulnerability]:
-        """Run Semgrep security analysis"""
-        vulnerabilities = []
+        """Run Semgrep security analysis"""        vulnerabilities = []
         
         try:
             semgrep_cmd = [
@@ -346,8 +328,7 @@ class SecurityScanEngine:
         source_path: str,
         config: SecurityScanConfig
     ) -> List[Vulnerability]:
-        """Run dependency vulnerability scanning"""
-        vulnerabilities = []
+        """Run dependency vulnerability scanning"""        vulnerabilities = []
         
         try:
             # Run Safety check
@@ -381,8 +362,7 @@ class SecurityScanEngine:
         return vulnerabilities
     
     async def _run_pip_audit(self, source_path: str) -> List[Vulnerability]:
-        """Run pip-audit for dependency vulnerabilities"""
-        vulnerabilities = []
+        """Run pip-audit for dependency vulnerabilities"""        vulnerabilities = []
         
         try:
             pip_audit_cmd = ["pip-audit", "--format=json"]
@@ -411,8 +391,7 @@ class SecurityScanEngine:
         image_tag: str,
         config: SecurityScanConfig
     ) -> List[Vulnerability]:
-        """Run container image security scanning"""
-        vulnerabilities = []
+        """Run container image security scanning"""        vulnerabilities = []
         
         try:
             # Run Trivy container scan
@@ -451,8 +430,7 @@ class SecurityScanEngine:
         source_path: str,
         config: SecurityScanConfig
     ) -> List[Vulnerability]:
-        """Run secret detection scanning"""
-        vulnerabilities = []
+        """Run secret detection scanning"""        vulnerabilities = []
         
         try:
             # Run detect-secrets
@@ -494,8 +472,7 @@ class SecurityScanEngine:
         source_path: str,
         config: SecurityScanConfig
     ) -> List[Vulnerability]:
-        """Run license compliance scanning"""
-        vulnerabilities = []
+        """Run license compliance scanning"""        vulnerabilities = []
         
         try:
             # Run pip-licenses
@@ -532,8 +509,7 @@ class SecurityScanEngine:
         source_path: str,
         config: SecurityScanConfig
     ) -> List[Vulnerability]:
-        """Run infrastructure security scanning"""
-        vulnerabilities = []
+        """Run infrastructure security scanning"""        vulnerabilities = []
         
         try:
             # Look for Terraform files and scan them
@@ -575,8 +551,7 @@ class SecurityScanEngine:
         vulnerabilities: List[Vulnerability],
         threshold: VulnerabilitySeverity
     ) -> List[Vulnerability]:
-        """Filter vulnerabilities by severity threshold"""
-        severity_order = {
+        """Filter vulnerabilities by severity threshold"""        severity_order = {
             VulnerabilitySeverity.CRITICAL: 4,
             VulnerabilitySeverity.HIGH: 3,
             VulnerabilitySeverity.MEDIUM: 2,
@@ -592,8 +567,7 @@ class SecurityScanEngine:
         ]
     
     def _calculate_security_score(self, vulnerabilities: List[Vulnerability]) -> float:
-        """Calculate overall security score (0-100)"""
-        if not vulnerabilities:
+        """Calculate overall security score (0-100)"""        if not vulnerabilities:
             return 100.0
         
         # Severity weights
@@ -614,8 +588,7 @@ class SecurityScanEngine:
         return max(0.0, 100.0 - penalty)
     
     def _determine_risk_level(self, vulnerabilities: List[Vulnerability]) -> str:
-        """Determine overall risk level"""
-        critical_count = sum(1 for v in vulnerabilities if v.severity == VulnerabilitySeverity.CRITICAL)
+        """Determine overall risk level"""        critical_count = sum(1 for v in vulnerabilities if v.severity == VulnerabilitySeverity.CRITICAL)
         high_count = sum(1 for v in vulnerabilities if v.severity == VulnerabilitySeverity.HIGH)
         
         if critical_count > 0:
@@ -628,8 +601,7 @@ class SecurityScanEngine:
             return "low"
     
     def _generate_security_summary(self, vulnerabilities: List[Vulnerability]) -> Dict[str, Any]:
-        """Generate security scan summary"""
-        summary = {
+        """Generate security scan summary"""        summary = {
             "total_vulnerabilities": len(vulnerabilities),
             "by_severity": {},
             "by_scan_type": {},
@@ -666,8 +638,7 @@ class SecurityScanEngine:
         return summary
     
     def _generate_security_recommendations(self, vulnerabilities: List[Vulnerability]) -> List[str]:
-        """Generate security recommendations"""
-        recommendations = []
+        """Generate security recommendations"""        recommendations = []
         
         # Count vulnerabilities by type and severity
         critical_count = sum(1 for v in vulnerabilities if v.severity == VulnerabilitySeverity.CRITICAL)
@@ -696,8 +667,7 @@ class SecurityScanEngine:
         return recommendations
     
     def _map_bandit_severity(self, bandit_severity: str) -> VulnerabilitySeverity:
-        """Map Bandit severity to standard severity"""
-        mapping = {
+        """Map Bandit severity to standard severity"""        mapping = {
             "HIGH": VulnerabilitySeverity.HIGH,
             "MEDIUM": VulnerabilitySeverity.MEDIUM,
             "LOW": VulnerabilitySeverity.LOW
@@ -705,8 +675,7 @@ class SecurityScanEngine:
         return mapping.get(bandit_severity.upper(), VulnerabilitySeverity.MEDIUM)
     
     def _map_semgrep_severity(self, semgrep_severity: str) -> VulnerabilitySeverity:
-        """Map Semgrep severity to standard severity"""
-        mapping = {
+        """Map Semgrep severity to standard severity"""        mapping = {
             "ERROR": VulnerabilitySeverity.HIGH,
             "WARNING": VulnerabilitySeverity.MEDIUM,
             "INFO": VulnerabilitySeverity.LOW
@@ -714,8 +683,7 @@ class SecurityScanEngine:
         return mapping.get(semgrep_severity.upper(), VulnerabilitySeverity.MEDIUM)
     
     def _map_trivy_severity(self, trivy_severity: str) -> VulnerabilitySeverity:
-        """Map Trivy severity to standard severity"""
-        mapping = {
+        """Map Trivy severity to standard severity"""        mapping = {
             "CRITICAL": VulnerabilitySeverity.CRITICAL,
             "HIGH": VulnerabilitySeverity.HIGH,
             "MEDIUM": VulnerabilitySeverity.MEDIUM,
@@ -725,8 +693,7 @@ class SecurityScanEngine:
         return mapping.get(trivy_severity.upper(), VulnerabilitySeverity.MEDIUM)
     
     def _map_cvss_to_severity(self, cvss_score: float) -> VulnerabilitySeverity:
-        """Map CVSS score to severity level"""
-        if cvss_score >= 9.0:
+        """Map CVSS score to severity level"""        if cvss_score >= 9.0:
             return VulnerabilitySeverity.CRITICAL
         elif cvss_score >= 7.0:
             return VulnerabilitySeverity.HIGH
@@ -741,8 +708,7 @@ class SecurityScanEngine:
         cwd: Optional[str] = None,
         timeout: int = 1800
     ) -> subprocess.CompletedProcess:
-        """Run command asynchronously"""
-        try:
+        """Run command asynchronously"""        try:
             process = await asyncio.create_subprocess_exec(
                 *cmd,
                 cwd=cwd,
@@ -768,12 +734,10 @@ class SecurityScanEngine:
             raise RuntimeError(f"Security scan failed: {e}")
     
     def get_scan_history(self, limit: int = 10) -> List[SecurityScanResult]:
-        """Get security scan history"""
-        return self.scan_history[-limit:]
+        """Get security scan history"""        return self.scan_history[-limit:]
     
     def get_security_trends(self) -> Dict[str, Any]:
-        """Get security trends over time"""
-        if not self.scan_history:
+        """Get security trends over time"""        if not self.scan_history:
             return {}
         
         recent_scans = self.scan_history[-10:]

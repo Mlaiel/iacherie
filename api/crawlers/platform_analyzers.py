@@ -1,5 +1,4 @@
-"""
-Professional platform analysis system for content monitoring and competitor intelligence.
+"""Professional platform analysis system for content monitoring and competitor intelligence.
 
 This module implements specialized analyzers for different content platforms,
 providing comprehensive insights into platform-specific metrics, trends,
@@ -23,9 +22,7 @@ LEGAL WARNING: This software and all associated intellectual property
 belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
-"""
-
-from typing import Dict, Any, List, Optional, Union, Set, Tuple, AsyncIterator
+"""from typing import Dict, Any, List, Optional, Union, Set, Tuple, AsyncIterator
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
@@ -78,8 +75,7 @@ from ..utils.cache_manager import CacheManager
 
 
 class PlatformAnalysisType(Enum):
-    """Types of platform analysis."""
-    COMPETITOR_ANALYSIS = "competitor_analysis"
+    """Types of platform analysis."""    COMPETITOR_ANALYSIS = "competitor_analysis"
     TREND_ANALYSIS = "trend_analysis"
     CONTENT_PERFORMANCE = "content_performance"
     AUDIENCE_ANALYSIS = "audience_analysis"
@@ -92,8 +88,7 @@ class PlatformAnalysisType(Enum):
 
 
 class AnalysisMetrics(Enum):
-    """Key metrics for platform analysis."""
-    ENGAGEMENT_RATE = "engagement_rate"
+    """Key metrics for platform analysis."""    ENGAGEMENT_RATE = "engagement_rate"
     REACH = "reach"
     IMPRESSIONS = "impressions"
     FOLLOWER_GROWTH = "follower_growth"
@@ -106,8 +101,7 @@ class AnalysisMetrics(Enum):
 
 
 class CompetitorTier(Enum):
-    """Competitor classification tiers."""
-    DIRECT_COMPETITOR = "direct_competitor"
+    """Competitor classification tiers."""    DIRECT_COMPETITOR = "direct_competitor"
     INDIRECT_COMPETITOR = "indirect_competitor"
     MARKET_LEADER = "market_leader"
     EMERGING_PLAYER = "emerging_player"
@@ -117,8 +111,7 @@ class CompetitorTier(Enum):
 
 @dataclass
 class PlatformMetrics:
-    """Platform-specific metrics collection."""
-    platform: str
+    """Platform-specific metrics collection."""    platform: str
     account_id: str
     followers_count: int = 0
     following_count: int = 0
@@ -146,8 +139,7 @@ class PlatformMetrics:
 
 @dataclass
 class CompetitorProfile:
-    """Comprehensive competitor profile."""
-    competitor_id: str
+    """Comprehensive competitor profile."""    competitor_id: str
     name: str
     tier: CompetitorTier
     platforms: Dict[str, PlatformMetrics] = field(default_factory=dict)
@@ -168,8 +160,7 @@ class CompetitorProfile:
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis results."""
-    trend_id: str
+    """Trend analysis results."""    trend_id: str
     trend_name: str
     platform: str
     category: str
@@ -192,8 +183,7 @@ class TrendAnalysis:
 
 
 class PlatformAnalyzer:
-    """
-    Advanced platform analysis engine for competitive intelligence.
+    """    Advanced platform analysis engine for competitive intelligence.
     
     Provides comprehensive analysis capabilities including:
     - Multi-platform competitor monitoring
@@ -201,8 +191,7 @@ class PlatformAnalyzer:
     - Content performance optimization
     - Audience insights and demographics
     - Market intelligence and opportunities
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger("analyzer.platform")
@@ -229,8 +218,7 @@ class PlatformAnalyzer:
         self.trend_cache: Dict[str, TrendAnalysis] = {}
         
     def _setup_platform_clients(self):
-        """Setup platform API clients."""
-        try:
+        """Setup platform API clients."""        try:
             # Instagram client
             if self.config.get("instagram_credentials"):
                 self.instagram_client = InstagramClient()
@@ -272,8 +260,7 @@ class PlatformAnalyzer:
             raise PlatformException(f"Platform client setup failed: {e}")
     
     def _setup_ml_models(self):
-        """Setup machine learning models for analysis."""
-        try:
+        """Setup machine learning models for analysis."""        try:
             # Sentiment analysis
             self.sentiment_analyzer = pipeline(
                 "sentiment-analysis",
@@ -301,8 +288,7 @@ class PlatformAnalyzer:
         platforms: List[str],
         analysis_type: PlatformAnalysisType = PlatformAnalysisType.COMPETITOR_ANALYSIS
     ) -> CompetitorProfile:
-        """
-        Comprehensive competitor analysis across platforms.
+        """        Comprehensive competitor analysis across platforms.
         
         Args:
             competitor_id: Unique competitor identifier
@@ -311,8 +297,7 @@ class PlatformAnalyzer:
             
         Returns:
             CompetitorProfile: Complete competitor analysis
-        """
-        try:
+        """        try:
             self.logger.info(f"Starting competitor analysis: {competitor_id}")
             
             # Check cache first
@@ -381,8 +366,7 @@ class PlatformAnalyzer:
         competitor_id: str,
         platform: str
     ) -> Optional[PlatformMetrics]:
-        """Analyze competitor on specific platform."""
-        try:
+        """Analyze competitor on specific platform."""        try:
             if platform == "instagram":
                 return await self._analyze_instagram_competitor(competitor_id)
             elif platform == "twitter":
@@ -402,8 +386,7 @@ class PlatformAnalyzer:
             return None
     
     async def _analyze_instagram_competitor(self, competitor_id: str) -> PlatformMetrics:
-        """Analyze Instagram competitor metrics."""
-        try:
+        """Analyze Instagram competitor metrics."""        try:
             # Rate limiting
             await self.rate_limiter.acquire("instagram")
             
@@ -461,8 +444,7 @@ class PlatformAnalyzer:
             return None
     
     async def _analyze_twitter_competitor(self, competitor_id: str) -> PlatformMetrics:
-        """Analyze Twitter competitor metrics."""
-        try:
+        """Analyze Twitter competitor metrics."""        try:
             # Rate limiting
             await self.rate_limiter.acquire("twitter")
             
@@ -515,8 +497,7 @@ class PlatformAnalyzer:
             return None
     
     async def _analyze_youtube_competitor(self, competitor_id: str) -> PlatformMetrics:
-        """Analyze YouTube competitor metrics."""
-        try:
+        """Analyze YouTube competitor metrics."""        try:
             # Rate limiting
             await self.rate_limiter.acquire("youtube")
             
@@ -561,8 +542,7 @@ class PlatformAnalyzer:
             return None
     
     async def _analyze_tiktok_competitor(self, competitor_id: str) -> PlatformMetrics:
-        """Analyze TikTok competitor metrics using web scraping."""
-        try:
+        """Analyze TikTok competitor metrics using web scraping."""        try:
             # Rate limiting
             await self.rate_limiter.acquire("tiktok")
             
@@ -604,8 +584,7 @@ class PlatformAnalyzer:
             return None
     
     async def _analyze_spotify_competitor(self, competitor_id: str) -> PlatformMetrics:
-        """Analyze Spotify artist metrics."""
-        try:
+        """Analyze Spotify artist metrics."""        try:
             # Rate limiting
             await self.rate_limiter.acquire("spotify")
             
@@ -647,14 +626,12 @@ class PlatformAnalyzer:
             return None
     
     def _calculate_engagement_rate(self, total_engagement: float, followers: int) -> float:
-        """Calculate engagement rate percentage."""
-        if followers == 0:
+        """Calculate engagement rate percentage."""        if followers == 0:
             return 0.0
         return (total_engagement / followers) * 100
     
     async def _cross_platform_analysis(self, profile: CompetitorProfile):
-        """Perform cross-platform analysis for competitor."""
-        try:
+        """Perform cross-platform analysis for competitor."""        try:
             # Calculate total reach across platforms
             total_followers = sum(
                 metrics.followers_count for metrics in profile.platforms.values()
@@ -696,8 +673,7 @@ class PlatformAnalyzer:
             self.logger.error(f"Cross-platform analysis failed: {e}")
     
     def _calculate_competitive_score(self, profile: CompetitorProfile) -> float:
-        """Calculate overall competitive score."""
-        try:
+        """Calculate overall competitive score."""        try:
             score = 0.0
             total_weight = 0.0
             
@@ -748,8 +724,7 @@ class PlatformAnalyzer:
             return 0.0
     
     def _determine_market_position(self, profile: CompetitorProfile) -> str:
-        """Determine competitor's market position."""
-        try:
+        """Determine competitor's market position."""        try:
             score = profile.competitive_score
             
             if score >= 90:
@@ -770,8 +745,7 @@ class PlatformAnalyzer:
             return "Unknown"
     
     def _identify_strengths(self, profile: CompetitorProfile) -> List[str]:
-        """Identify competitor strengths."""
-        strengths = []
+        """Identify competitor strengths."""        strengths = []
         
         try:
             # High engagement rate
@@ -808,8 +782,7 @@ class PlatformAnalyzer:
         return strengths
     
     def _identify_weaknesses(self, profile: CompetitorProfile) -> List[str]:
-        """Identify competitor weaknesses."""
-        weaknesses = []
+        """Identify competitor weaknesses."""        weaknesses = []
         
         try:
             # Low engagement rate
@@ -843,8 +816,7 @@ class PlatformAnalyzer:
         return weaknesses
     
     def _identify_opportunities(self, profile: CompetitorProfile) -> List[str]:
-        """Identify market opportunities."""
-        opportunities = []
+        """Identify market opportunities."""        opportunities = []
         
         try:
             # Underutilized platforms
@@ -877,8 +849,7 @@ class PlatformAnalyzer:
         return opportunities
     
     def _identify_threats(self, profile: CompetitorProfile) -> List[str]:
-        """Identify competitive threats."""
-        threats = []
+        """Identify competitive threats."""        threats = []
         
         try:
             # Declining engagement
@@ -905,8 +876,7 @@ class PlatformAnalyzer:
         return threats
     
     def _is_fresh_analysis(self, cached_data: Dict[str, Any]) -> bool:
-        """Check if cached analysis is still fresh."""
-        try:
+        """Check if cached analysis is still fresh."""        try:
             last_analyzed = datetime.fromisoformat(cached_data.get("last_analyzed", ""))
             return (datetime.utcnow() - last_analyzed).total_seconds() < 3600  # 1 hour
         except:
@@ -918,8 +888,7 @@ class PlatformAnalyzer:
         category: str,
         region: str = "global"
     ) -> List[TrendAnalysis]:
-        """
-        Analyze trending topics and content for a platform and category.
+        """        Analyze trending topics and content for a platform and category.
         
         Args:
             platform: Target platform (instagram, twitter, tiktok, etc.)
@@ -928,8 +897,7 @@ class PlatformAnalyzer:
             
         Returns:
             List[TrendAnalysis]: Trending content analysis
-        """
-        try:
+        """        try:
             self.logger.info(f"Analyzing trends for {platform} in {category}")
             
             # Check cache
@@ -964,8 +932,7 @@ class PlatformAnalyzer:
             raise CrawlerException(f"Failed to analyze trends for {platform}: {e}")
     
     async def _analyze_twitter_trends(self, category: str, region: str) -> List[TrendAnalysis]:
-        """Analyze Twitter trends."""
-        trends = []
+        """Analyze Twitter trends."""        trends = []
         
         try:
             # Get trending topics
@@ -994,8 +961,7 @@ class PlatformAnalyzer:
         return trends
     
     async def _analyze_instagram_trends(self, category: str, region: str) -> List[TrendAnalysis]:
-        """Analyze Instagram trends using hashtag popularity."""
-        trends = []
+        """Analyze Instagram trends using hashtag popularity."""        trends = []
         
         try:
             # Popular hashtags by category
@@ -1033,8 +999,7 @@ class PlatformAnalyzer:
         return trends
     
     async def _analyze_youtube_trends(self, category: str, region: str) -> List[TrendAnalysis]:
-        """Analyze YouTube trending videos."""
-        trends = []
+        """Analyze YouTube trending videos."""        trends = []
         
         try:
             # Get trending videos by category
@@ -1064,8 +1029,7 @@ class PlatformAnalyzer:
         return trends
     
     async def _analyze_tiktok_trends(self, category: str, region: str) -> List[TrendAnalysis]:
-        """Analyze TikTok trends using web scraping."""
-        trends = []
+        """Analyze TikTok trends using web scraping."""        trends = []
         
         try:
             # TikTok discover page
@@ -1100,8 +1064,7 @@ class PlatformAnalyzer:
         competitor_ids: List[str],
         analysis_period: timedelta = timedelta(days=30)
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive insights report.
+        """        Generate comprehensive insights report.
         
         Args:
             competitor_ids: List of competitor IDs to analyze
@@ -1109,8 +1072,7 @@ class PlatformAnalyzer:
             
         Returns:
             Dict containing comprehensive insights and recommendations
-        """
-        try:
+        """        try:
             self.logger.info("Generating comprehensive insights report")
             
             report = {
@@ -1161,8 +1123,7 @@ class PlatformAnalyzer:
             raise CrawlerException(f"Failed to generate insights report: {e}")
     
     def _generate_market_analysis(self, profiles: List[CompetitorProfile]) -> Dict[str, Any]:
-        """Generate market analysis from competitor profiles."""
-        analysis = {
+        """Generate market analysis from competitor profiles."""        analysis = {
             "market_size": 0,
             "competition_level": "medium",
             "growth_potential": "medium",
@@ -1223,8 +1184,7 @@ class PlatformAnalyzer:
         return analysis
     
     def _identify_market_opportunities(self, profiles: List[CompetitorProfile]) -> List[str]:
-        """Identify market opportunities from competitor analysis."""
-        opportunities = []
+        """Identify market opportunities from competitor analysis."""        opportunities = []
         
         try:
             # Underutilized platforms
@@ -1267,8 +1227,7 @@ class PlatformAnalyzer:
         return opportunities
     
     def _generate_strategic_recommendations(self, profiles: List[CompetitorProfile]) -> List[str]:
-        """Generate strategic recommendations based on analysis."""
-        recommendations = []
+        """Generate strategic recommendations based on analysis."""        recommendations = []
         
         try:
             # Platform strategy
@@ -1324,8 +1283,7 @@ class PlatformAnalyzer:
         return recommendations
     
     def _identify_most_competitive_platform(self, profiles: List[CompetitorProfile]) -> str:
-        """Identify the most competitive platform."""
-        try:
+        """Identify the most competitive platform."""        try:
             platform_scores = defaultdict(list)
             
             for profile in profiles:
@@ -1352,8 +1310,7 @@ class PlatformAnalyzer:
             return "unknown"
     
     def _extract_key_insights(self, profiles: List[CompetitorProfile]) -> List[str]:
-        """Extract key insights from competitor analysis."""
-        insights = []
+        """Extract key insights from competitor analysis."""        insights = []
         
         try:
             # Top performers
@@ -1384,8 +1341,7 @@ class PlatformAnalyzer:
 
 
 class PlatformRateLimiter:
-    """Platform-specific rate limiting."""
-    
+    """Platform-specific rate limiting."""    
     def __init__(self):
         self.limits = {
             "instagram": {"requests": 200, "window": 3600},  # 200/hour
@@ -1397,8 +1353,7 @@ class PlatformRateLimiter:
         self.usage = defaultdict(list)
     
     async def can_make_request(self, platform: str) -> bool:
-        """Check if request can be made within rate limits."""
-        now = datetime.utcnow()
+        """Check if request can be made within rate limits."""        now = datetime.utcnow()
         limit_config = self.limits.get(platform, {"requests": 60, "window": 3600})
         
         # Clean old requests
@@ -1411,5 +1366,4 @@ class PlatformRateLimiter:
         return len(self.usage[platform]) < limit_config["requests"]
     
     async def record_request(self, platform: str):
-        """Record a request for rate limiting."""
-        self.usage[platform].append(datetime.utcnow())
+        """Record a request for rate limiting."""        self.usage[platform].append(datetime.utcnow())

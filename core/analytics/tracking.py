@@ -1,5 +1,4 @@
-"""
-Analytics Tracking - User, Content and Revenue Tracking Systems
+"""Analytics Tracking - User, Content and Revenue Tracking Systems
 
 Advanced tracking systems for comprehensive analytics of user behavior,
 content performance, and revenue optimization for multi-format content creators.
@@ -23,9 +22,7 @@ Team Specialists:
 - Audio Processing Specialist: Advanced audio AI algorithms
 - DevOps Engineer: Production-ready infrastructure
 - IA Prompt Engineer: Optimized AI model interactions
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Union, Set
 from datetime import datetime, timedelta
@@ -43,8 +40,7 @@ logger = logging.getLogger(__name__)
 
 
 class EventType(Enum):
-    """Types of trackable events"""
-    # User Events
+    """Types of trackable events"""    # User Events
     USER_LOGIN = "user_login"
     USER_LOGOUT = "user_logout"
     USER_REGISTRATION = "user_registration"
@@ -75,8 +71,7 @@ class EventType(Enum):
 
 
 class SessionState(Enum):
-    """User session states"""
-    ACTIVE = "active"
+    """User session states"""    ACTIVE = "active"
     IDLE = "idle"
     EXPIRED = "expired"
     TERMINATED = "terminated"
@@ -84,8 +79,7 @@ class SessionState(Enum):
 
 @dataclass
 class TrackingEvent:
-    """Tracking event data structure"""
-    event_id: str
+    """Tracking event data structure"""    event_id: str
     event_type: EventType
     user_id: Optional[str]
     session_id: Optional[str]
@@ -94,8 +88,7 @@ class TrackingEvent:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert event to dictionary"""
-        return {
+        """Convert event to dictionary"""        return {
             'event_id': self.event_id,
             'event_type': self.event_type.value,
             'user_id': self.user_id,
@@ -108,8 +101,7 @@ class TrackingEvent:
 
 @dataclass
 class UserSession:
-    """User session tracking"""
-    session_id: str
+    """User session tracking"""    session_id: str
     user_id: str
     start_time: datetime
     last_activity: datetime
@@ -118,8 +110,7 @@ class UserSession:
     properties: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert session to dictionary"""
-        return {
+        """Convert session to dictionary"""        return {
             'session_id': self.session_id,
             'user_id': self.user_id,
             'start_time': self.start_time.isoformat(),
@@ -132,13 +123,11 @@ class UserSession:
 
 
 class UserTracker:
-    """
-    Advanced user behavior tracking system.
+    """    Advanced user behavior tracking system.
     
     Tracks user activities, sessions, engagement patterns, and provides
     comprehensive analytics for user behavior optimization.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -162,8 +151,7 @@ class UserTracker:
         }
     
     async def initialize(self) -> None:
-        """Initialize user tracker"""
-        try:
+        """Initialize user tracker"""        try:
             self.logger.info("Initializing UserTracker...")
             
             # Start session cleanup task
@@ -177,8 +165,7 @@ class UserTracker:
             raise TrackingError(f"Initialization failed: {str(e)}")
     
     async def shutdown(self) -> None:
-        """Shutdown user tracker"""
-        try:
+        """Shutdown user tracker"""        try:
             self.logger.info("Shutting down UserTracker...")
             
             # Save active sessions
@@ -196,8 +183,7 @@ class UserTracker:
         activity: Dict[str, Any],
         session_id: Optional[str] = None
     ) -> str:
-        """Track user activity"""
-        try:
+        """Track user activity"""        try:
             # Generate event ID
             event_id = self._generate_event_id()
             
@@ -246,8 +232,7 @@ class UserTracker:
         user_id: str,
         session_properties: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Start a new user session"""
-        try:
+        """Start a new user session"""        try:
             session_id = self._generate_session_id(user_id)
             
             session = UserSession(
@@ -269,8 +254,7 @@ class UserTracker:
             raise TrackingError(f"Session start failed: {str(e)}")
     
     async def end_session(self, session_id: str) -> None:
-        """End a user session"""
-        try:
+        """End a user session"""        try:
             session = self.active_sessions.get(session_id)
             if session:
                 session.state = SessionState.TERMINATED
@@ -293,8 +277,7 @@ class UserTracker:
         user_id: str,
         period_days: int = 30
     ) -> Dict[str, Any]:
-        """Get analytics for a specific user"""
-        try:
+        """Get analytics for a specific user"""        try:
             end_time = datetime.now()
             start_time = end_time - timedelta(days=period_days)
             
@@ -328,8 +311,7 @@ class UserTracker:
             raise TrackingError(f"User analytics failed: {str(e)}")
     
     async def get_realtime_metrics(self) -> Dict[str, Any]:
-        """Get real-time tracking metrics"""
-        try:
+        """Get real-time tracking metrics"""        try:
             # Calculate active users (last 5 minutes)
             cutoff_time = datetime.now() - timedelta(minutes=5)
             recent_users = set()
@@ -360,8 +342,7 @@ class UserTracker:
             raise TrackingError(f"Realtime metrics failed: {str(e)}")
     
     async def get_user_segmentation(self) -> Dict[str, Any]:
-        """Get user segmentation analysis"""
-        try:
+        """Get user segmentation analysis"""        try:
             segments = {
                 'new_users': [],
                 'active_users': [],
@@ -400,19 +381,16 @@ class UserTracker:
     # Private Methods
     
     def _generate_event_id(self) -> str:
-        """Generate unique event ID"""
-        return f"evt_{uuid.uuid4().hex[:16]}"
+        """Generate unique event ID"""        return f"evt_{uuid.uuid4().hex[:16]}"
     
     def _generate_session_id(self, user_id: str) -> str:
-        """Generate unique session ID"""
-        timestamp = str(int(datetime.now().timestamp()))
+        """Generate unique session ID"""        timestamp = str(int(datetime.now().timestamp()))
         hash_input = f"{user_id}_{timestamp}_{uuid.uuid4().hex[:8]}"
         session_hash = hashlib.md5(hash_input.encode()).hexdigest()[:16]
         return f"ses_{session_hash}"
     
     def _determine_event_type(self, activity: Dict[str, Any]) -> EventType:
-        """Determine event type from activity data"""
-        action = activity.get('action', '').lower()
+        """Determine event type from activity data"""        action = activity.get('action', '').lower()
         
         # Map actions to event types
         action_mapping = {
@@ -432,8 +410,7 @@ class UserTracker:
         return action_mapping.get(action, EventType.FEATURE_USAGE)
     
     async def _get_or_create_session(self, user_id: str) -> str:
-        """Get existing session or create new one"""
-        # Find active session for user
+        """Get existing session or create new one"""        # Find active session for user
         for session_id, session in self.active_sessions.items():
             if (session.user_id == user_id and 
                 session.state == SessionState.ACTIVE and
@@ -444,13 +421,11 @@ class UserTracker:
         return await self.start_session(user_id)
     
     def _is_session_valid(self, session: UserSession) -> bool:
-        """Check if session is still valid"""
-        timeout = timedelta(minutes=self.session_timeout)
+        """Check if session is still valid"""        timeout = timedelta(minutes=self.session_timeout)
         return datetime.now() - session.last_activity < timeout
     
     async def _store_event(self, event: TrackingEvent) -> None:
-        """Store tracking event"""
-        user_events = self.user_events[event.user_id]
+        """Store tracking event"""        user_events = self.user_events[event.user_id]
         user_events.append(event)
         
         # Maintain size limit
@@ -458,8 +433,7 @@ class UserTracker:
             user_events.popleft()
     
     async def _update_session(self, session_id: str, event: TrackingEvent) -> None:
-        """Update session with new event"""
-        session = self.active_sessions.get(session_id)
+        """Update session with new event"""        session = self.active_sessions.get(session_id)
         if session:
             session.last_activity = event.timestamp
             session.events.append(event)
@@ -468,8 +442,7 @@ class UserTracker:
         self,
         events: List[TrackingEvent]
     ) -> Dict[str, Any]:
-        """Calculate event analytics"""
-        if not events:
+        """Calculate event analytics"""        if not events:
             return {'total_events': 0}
         
         event_types = defaultdict(int)
@@ -488,8 +461,7 @@ class UserTracker:
         self,
         sessions: List[UserSession]
     ) -> Dict[str, Any]:
-        """Calculate session analytics"""
-        if not sessions:
+        """Calculate session analytics"""        if not sessions:
             return {'total_sessions': 0}
         
         durations = [
@@ -509,8 +481,7 @@ class UserTracker:
         user_id: str,
         period_days: int
     ) -> Dict[str, Any]:
-        """Calculate user engagement metrics"""
-        # Get recent events
+        """Calculate user engagement metrics"""        # Get recent events
         cutoff_time = datetime.now() - timedelta(days=period_days)
         recent_events = [
             event for event in self.user_events[user_id]
@@ -539,8 +510,7 @@ class UserTracker:
         }
     
     def _classify_engagement_level(self, score: int, period_days: int) -> str:
-        """Classify user engagement level"""
-        daily_average = score / max(1, period_days)
+        """Classify user engagement level"""        daily_average = score / max(1, period_days)
         
         if daily_average >= 10:
             return 'high'
@@ -555,8 +525,7 @@ class UserTracker:
         self,
         events: List[TrackingEvent]
     ) -> Dict[str, Any]:
-        """Analyze user behavior patterns"""
-        if not events:
+        """Analyze user behavior patterns"""        if not events:
             return {}
         
         # Analyze time patterns
@@ -582,8 +551,7 @@ class UserTracker:
         }
     
     def _calculate_behavior_consistency(self, events: List[TrackingEvent]) -> float:
-        """Calculate behavior consistency score"""
-        if len(events) < 2:
+        """Calculate behavior consistency score"""        if len(events) < 2:
             return 0.0
         
         # Calculate time intervals between events
@@ -604,8 +572,7 @@ class UserTracker:
         return consistency
     
     async def _calculate_average_session_duration(self) -> float:
-        """Calculate average session duration"""
-        if not self.active_sessions:
+        """Calculate average session duration"""        if not self.active_sessions:
             return 0.0
         
         total_duration = 0
@@ -620,8 +587,7 @@ class UserTracker:
         return total_duration / max(1, valid_sessions)
     
     async def _session_cleanup_task(self) -> None:
-        """Cleanup expired sessions"""
-        while True:
+        """Cleanup expired sessions"""        while True:
             try:
                 current_time = datetime.now()
                 expired_sessions = []
@@ -649,19 +615,16 @@ class UserTracker:
                 await asyncio.sleep(60)
     
     async def _save_active_sessions(self) -> None:
-        """Save active sessions before shutdown"""
-        for session in self.active_sessions.values():
+        """Save active sessions before shutdown"""        for session in self.active_sessions.values():
             self.session_history[session.user_id].append(session)
 
 
 class ContentTracker:
-    """
-    Advanced content performance tracking system.
+    """    Advanced content performance tracking system.
     
     Tracks content interactions, performance metrics, engagement patterns,
     and provides analytics for content optimization.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -683,8 +646,7 @@ class ContentTracker:
         }
     
     async def initialize(self) -> None:
-        """Initialize content tracker"""
-        try:
+        """Initialize content tracker"""        try:
             self.logger.info("Initializing ContentTracker...")
             
             # Start performance calculation task
@@ -697,8 +659,7 @@ class ContentTracker:
             raise TrackingError(f"Initialization failed: {str(e)}")
     
     async def shutdown(self) -> None:
-        """Shutdown content tracker"""
-        try:
+        """Shutdown content tracker"""        try:
             self.logger.info("Shutting down ContentTracker...")
             
             # Save content metrics
@@ -715,8 +676,7 @@ class ContentTracker:
         content_id: str,
         metrics: Dict[str, Any]
     ) -> None:
-        """Track content performance metrics"""
-        try:
+        """Track content performance metrics"""        try:
             # Validate content ID
             if not content_id:
                 raise ValueError("Content ID is required")
@@ -757,8 +717,7 @@ class ContentTracker:
         user_id: Optional[str] = None,
         properties: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Track content interaction"""
-        try:
+        """Track content interaction"""        try:
             interaction = {
                 'type': interaction_type,
                 'user_id': user_id,
@@ -783,8 +742,7 @@ class ContentTracker:
         content_id: str,
         period_days: int = 30
     ) -> Dict[str, Any]:
-        """Get analytics for specific content"""
-        try:
+        """Get analytics for specific content"""        try:
             cutoff_time = datetime.now() - timedelta(days=period_days)
             
             # Get interactions in period
@@ -812,8 +770,7 @@ class ContentTracker:
             raise TrackingError(f"Content analytics failed: {str(e)}")
     
     async def get_realtime_metrics(self) -> Dict[str, Any]:
-        """Get real-time content metrics"""
-        try:
+        """Get real-time content metrics"""        try:
             # Calculate recent activity (last 5 minutes)
             cutoff_time = datetime.now() - timedelta(minutes=5)
             recent_interactions = 0
@@ -844,8 +801,7 @@ class ContentTracker:
         metric: str = "engagement_score",
         limit: int = 10
     ) -> List[Dict[str, Any]]:
-        """Get content leaderboard by metric"""
-        try:
+        """Get content leaderboard by metric"""        try:
             content_scores = []
             
             for content_id in self.content_metrics.keys():
@@ -878,8 +834,7 @@ class ContentTracker:
         content_id: str,
         interaction_type: str
     ) -> None:
-        """Update content metrics based on interaction"""
-        metrics = self.content_metrics[content_id]
+        """Update content metrics based on interaction"""        metrics = self.content_metrics[content_id]
         
         # Update interaction counts
         interaction_key = f"{interaction_type}_count"
@@ -895,8 +850,7 @@ class ContentTracker:
         self,
         interactions: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate interaction analytics"""
-        if not interactions:
+        """Calculate interaction analytics"""        if not interactions:
             return {'total_interactions': 0}
         
         interaction_types = defaultdict(int)
@@ -920,8 +874,7 @@ class ContentTracker:
         content_id: str,
         period_days: int
     ) -> Dict[str, Any]:
-        """Calculate performance analytics"""
-        metrics = self.content_metrics.get(content_id, {})
+        """Calculate performance analytics"""        metrics = self.content_metrics.get(content_id, {})
         
         return {
             'views': metrics.get('views', 0),
@@ -934,8 +887,7 @@ class ContentTracker:
         }
     
     async def _calculate_engagement_score(self, content_id: str) -> float:
-        """Calculate engagement score for content"""
-        metrics = self.content_metrics.get(content_id, {})
+        """Calculate engagement score for content"""        metrics = self.content_metrics.get(content_id, {})
         
         # Weighted engagement calculation
         views = metrics.get('views', 0)
@@ -953,8 +905,7 @@ class ContentTracker:
         return min(100, engagement_rate * 100)
     
     async def _calculate_viral_potential(self, content_id: str) -> float:
-        """Calculate viral potential score"""
-        metrics = self.content_metrics.get(content_id, {})
+        """Calculate viral potential score"""        metrics = self.content_metrics.get(content_id, {})
         interactions = self.content_interactions.get(content_id, [])
         
         # Calculate viral indicators
@@ -979,8 +930,7 @@ class ContentTracker:
         return min(100, viral_score)
     
     async def _calculate_performance_trend(self, content_id: str) -> str:
-        """Calculate performance trend"""
-        interactions = self.content_interactions.get(content_id, [])
+        """Calculate performance trend"""        interactions = self.content_interactions.get(content_id, [])
         
         if len(interactions) < 5:
             return 'insufficient_data'
@@ -1003,8 +953,7 @@ class ContentTracker:
             return 'stable'
     
     async def _get_top_performing_content(self, limit: int) -> List[Dict[str, Any]]:
-        """Get top performing content"""
-        content_scores = []
+        """Get top performing content"""        content_scores = []
         
         for content_id in self.content_metrics.keys():
             score = await self._calculate_engagement_score(content_id)
@@ -1017,8 +966,7 @@ class ContentTracker:
         return content_scores[:limit]
     
     async def _performance_calculation_task(self) -> None:
-        """Background task for performance calculations"""
-        while True:
+        """Background task for performance calculations"""        while True:
             try:
                 # Update performance metrics for all content
                 for content_id in list(self.content_metrics.keys()):
@@ -1034,8 +982,7 @@ class ContentTracker:
                 await asyncio.sleep(60)
     
     async def _update_performance_calculations(self, content_id: str) -> None:
-        """Update performance calculations for content"""
-        try:
+        """Update performance calculations for content"""        try:
             # Calculate and store derived metrics
             engagement_score = await self._calculate_engagement_score(content_id)
             viral_potential = await self._calculate_viral_potential(content_id)
@@ -1050,19 +997,16 @@ class ContentTracker:
             self.logger.error(f"Error updating performance calculations: {str(e)}")
     
     async def _save_content_data(self) -> None:
-        """Save content data before shutdown"""
-        # Placeholder for data persistence
+        """Save content data before shutdown"""        # Placeholder for data persistence
         pass
 
 
 class RevenueTracker:
-    """
-    Advanced revenue tracking and analytics system.
+    """    Advanced revenue tracking and analytics system.
     
     Tracks revenue events, calculates revenue metrics, analyzes revenue trends,
     and provides comprehensive financial analytics.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -1087,8 +1031,7 @@ class RevenueTracker:
         }
     
     async def initialize(self) -> None:
-        """Initialize revenue tracker"""
-        try:
+        """Initialize revenue tracker"""        try:
             self.logger.info("Initializing RevenueTracker...")
             
             # Start revenue calculation task
@@ -1101,8 +1044,7 @@ class RevenueTracker:
             raise TrackingError(f"Initialization failed: {str(e)}")
     
     async def shutdown(self) -> None:
-        """Shutdown revenue tracker"""
-        try:
+        """Shutdown revenue tracker"""        try:
             self.logger.info("Shutting down RevenueTracker...")
             
             # Save revenue data
@@ -1120,8 +1062,7 @@ class RevenueTracker:
         amount: float,
         metadata: Dict[str, Any]
     ) -> str:
-        """Track revenue event"""
-        try:
+        """Track revenue event"""        try:
             # Validate amount
             if amount < 0:
                 raise ValueError("Revenue amount cannot be negative")
@@ -1173,8 +1114,7 @@ class RevenueTracker:
         period_days: int = 30,
         currency: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Get comprehensive revenue analytics"""
-        try:
+        """Get comprehensive revenue analytics"""        try:
             cutoff_time = datetime.now() - timedelta(days=period_days)
             currency = currency or self.default_currency
             
@@ -1204,8 +1144,7 @@ class RevenueTracker:
             raise TrackingError(f"Revenue analytics failed: {str(e)}")
     
     async def get_realtime_metrics(self) -> Dict[str, Any]:
-        """Get real-time revenue metrics"""
-        try:
+        """Get real-time revenue metrics"""        try:
             # Calculate recent revenue (last hour)
             cutoff_time = datetime.now() - timedelta(hours=1)
             recent_events = [
@@ -1249,8 +1188,7 @@ class RevenueTracker:
         self,
         events: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate revenue summary"""
-        if not events:
+        """Calculate revenue summary"""        if not events:
             return {'total_revenue': 0, 'total_events': 0}
         
         total_revenue = sum(event['amount'] for event in events)
@@ -1272,8 +1210,7 @@ class RevenueTracker:
         self,
         events: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate revenue breakdown by source"""
-        source_revenue = defaultdict(float)
+        """Calculate revenue breakdown by source"""        source_revenue = defaultdict(float)
         source_events = defaultdict(int)
         
         for event in events:
@@ -1291,8 +1228,7 @@ class RevenueTracker:
         self,
         events: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate revenue trends"""
-        if len(events) < 2:
+        """Calculate revenue trends"""        if len(events) < 2:
             return {'trend': 'insufficient_data'}
         
         # Group by day
@@ -1328,8 +1264,7 @@ class RevenueTracker:
         events: List[Dict[str, Any]],
         limit: int
     ) -> List[Dict[str, Any]]:
-        """Get top revenue generating users"""
-        user_revenue = defaultdict(float)
+        """Get top revenue generating users"""        user_revenue = defaultdict(float)
         user_events = defaultdict(int)
         
         for event in events:
@@ -1358,8 +1293,7 @@ class RevenueTracker:
         self,
         events: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Generate revenue forecasts"""
-        if len(events) < 7:
+        """Generate revenue forecasts"""        if len(events) < 7:
             return {'forecast': 'insufficient_data'}
         
         # Simple trend-based forecast
@@ -1395,8 +1329,7 @@ class RevenueTracker:
         }
     
     async def _revenue_calculation_task(self) -> None:
-        """Background task for revenue calculations"""
-        while True:
+        """Background task for revenue calculations"""        while True:
             try:
                 # Update revenue summaries
                 await self._update_revenue_summaries()
@@ -1409,8 +1342,7 @@ class RevenueTracker:
                 await asyncio.sleep(60)
     
     async def _update_revenue_summaries(self) -> None:
-        """Update revenue summaries"""
-        try:
+        """Update revenue summaries"""        try:
             # Recalculate summaries from recent events
             cutoff_time = datetime.now() - timedelta(hours=1)
             recent_events = [
@@ -1425,6 +1357,5 @@ class RevenueTracker:
             self.logger.error(f"Error updating revenue summaries: {str(e)}")
     
     async def _save_revenue_data(self) -> None:
-        """Save revenue data before shutdown"""
-        # Placeholder for data persistence
+        """Save revenue data before shutdown"""        # Placeholder for data persistence
         pass

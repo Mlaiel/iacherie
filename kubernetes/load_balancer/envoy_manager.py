@@ -1,5 +1,4 @@
-"""
-Envoy Proxy Load Balancer Manager
+"""Envoy Proxy Load Balancer Manager
 
 Modern service mesh and edge proxy configuration for the IA Influencer
 Agent platform, providing advanced traffic management, observability,
@@ -12,9 +11,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
-"""
-
-import os
+"""import os
 import json
 import yaml
 import logging
@@ -30,8 +27,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class EnvoyEndpoint:
-    """Envoy cluster endpoint configuration"""
-    address: str
+    """Envoy cluster endpoint configuration"""    address: str
     port: int
     weight: int = 1
     health_check_config: Optional[Dict[str, Any]] = None
@@ -39,8 +35,7 @@ class EnvoyEndpoint:
 
 @dataclass
 class EnvoyCluster:
-    """Envoy cluster configuration"""
-    name: str
+    """Envoy cluster configuration"""    name: str
     type: str = "STRICT_DNS"  # STATIC, STRICT_DNS, LOGICAL_DNS, EDS
     lb_policy: str = "ROUND_ROBIN"  # ROUND_ROBIN, LEAST_REQUEST, RING_HASH, RANDOM
     endpoints: List[EnvoyEndpoint] = None
@@ -53,8 +48,7 @@ class EnvoyCluster:
 
 @dataclass
 class EnvoyRoute:
-    """Envoy route configuration"""
-    match: Dict[str, Any]
+    """Envoy route configuration"""    match: Dict[str, Any]
     route: Dict[str, Any]
     decorator: Optional[Dict[str, Any]] = None
     metadata: Optional[Dict[str, Any]] = None
@@ -63,8 +57,7 @@ class EnvoyRoute:
 
 @dataclass
 class EnvoyListener:
-    """Envoy listener configuration"""
-    name: str
+    """Envoy listener configuration"""    name: str
     address: str
     port: int
     filter_chains: List[Dict[str, Any]] = None
@@ -72,8 +65,7 @@ class EnvoyListener:
 
 
 class EnvoyConfigGenerator:
-    """Generate Envoy Proxy configurations"""
-    
+    """Generate Envoy Proxy configurations"""    
     def __init__(self):
         self.admin_config = {
             "access_log_path": "/dev/stdout",
@@ -97,8 +89,7 @@ class EnvoyConfigGenerator:
         }
     
     def generate_cluster_config(self, cluster: EnvoyCluster) -> Dict[str, Any]:
-        """Generate cluster configuration"""
-        config = {
+        """Generate cluster configuration"""        config = {
             "name": cluster.name,
             "type": cluster.type,
             "lb_policy": cluster.lb_policy,
@@ -156,8 +147,7 @@ class EnvoyConfigGenerator:
         return config
     
     def generate_listener_config(self, listener: EnvoyListener) -> Dict[str, Any]:
-        """Generate listener configuration"""
-        config = {
+        """Generate listener configuration"""        config = {
             "name": listener.name,
             "address": {
                 "socket_address": {
@@ -180,8 +170,7 @@ class EnvoyConfigGenerator:
                                        access_log: bool = True,
                                        tracing: bool = True,
                                        stats_prefix: str = "ingress_http") -> Dict[str, Any]:
-        """Generate HTTP connection manager filter"""
-        config = {
+        """Generate HTTP connection manager filter"""        config = {
             "name": "envoy.filters.network.http_connection_manager",
             "typed_config": {
                 "@type": "type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager",
@@ -253,8 +242,7 @@ class EnvoyConfigGenerator:
     def generate_complete_config(self, 
                                clusters: List[EnvoyCluster],
                                listeners: List[EnvoyListener]) -> Dict[str, Any]:
-        """Generate complete Envoy configuration"""
-        config = {
+        """Generate complete Envoy configuration"""        config = {
             "admin": self.admin_config,
             "static_resources": {
                 "listeners": [self.generate_listener_config(listener) for listener in listeners],
@@ -279,8 +267,7 @@ class EnvoyConfigGenerator:
 
 
 class EnvoyManager:
-    """Enterprise Envoy Proxy Load Balancer Manager"""
-    
+    """Enterprise Envoy Proxy Load Balancer Manager"""    
     def __init__(self, config_file: str = "/etc/envoy/envoy.yaml"):
         self.config_file = Path(config_file)
         self.config_dir = self.config_file.parent
@@ -292,8 +279,7 @@ class EnvoyManager:
         self.config_dir.mkdir(parents=True, exist_ok=True)
     
     def add_cluster(self, cluster: EnvoyCluster) -> bool:
-        """Add cluster configuration"""
-        try:
+        """Add cluster configuration"""        try:
             # Check if cluster already exists
             existing = next((c for c in self.clusters if c.name == cluster.name), None)
             if existing:
@@ -308,8 +294,7 @@ class EnvoyManager:
             return False
     
     def add_listener(self, listener: EnvoyListener) -> bool:
-        """Add listener configuration"""
-        try:
+        """Add listener configuration"""        try:
             # Check if listener already exists
             existing = next((l for l in self.listeners if l.name == listener.name), None)
             if existing:
@@ -324,8 +309,7 @@ class EnvoyManager:
             return False
     
     def configure_platform_services(self) -> bool:
-        """Configure Envoy for platform services"""
-        try:
+        """Configure Envoy for platform services"""        try:
             # Define health check configurations
             http_health_check = {
                 "timeout": "5s",
@@ -576,8 +560,7 @@ class EnvoyManager:
             return False
     
     def generate_configuration(self) -> Dict[str, Any]:
-        """Generate complete Envoy configuration"""
-        try:
+        """Generate complete Envoy configuration"""        try:
             return self.config_generator.generate_complete_config(
                 clusters=self.clusters,
                 listeners=self.listeners
@@ -588,8 +571,7 @@ class EnvoyManager:
             return {}
     
     def write_configuration(self) -> bool:
-        """Write configuration to file"""
-        try:
+        """Write configuration to file"""        try:
             config_data = self.generate_configuration()
             if not config_data:
                 logger.error("Failed to generate configuration data")
@@ -613,8 +595,7 @@ class EnvoyManager:
             return False
     
     def test_configuration(self) -> bool:
-        """Test Envoy configuration validity"""
-        try:
+        """Test Envoy configuration validity"""        try:
             result = subprocess.run(
                 ['envoy', '--mode', 'validate', '--config-path', str(self.config_file)],
                 capture_output=True,
@@ -633,8 +614,7 @@ class EnvoyManager:
             return False
     
     def get_admin_stats(self) -> Dict[str, Any]:
-        """Get Envoy admin statistics"""
-        try:
+        """Get Envoy admin statistics"""        try:
             # Try to connect to admin interface
             response = requests.get("http://127.0.0.1:9901/stats/prometheus", timeout=5)
             if response.status_code == 200:
@@ -659,8 +639,7 @@ class EnvoyManager:
             }
     
     def get_status(self) -> Dict[str, Any]:
-        """Get Envoy status and health"""
-        try:
+        """Get Envoy status and health"""        try:
             # Check if Envoy is running
             ps_result = subprocess.run(['pgrep', 'envoy'], capture_output=True, text=True)
             is_running = ps_result.returncode == 0

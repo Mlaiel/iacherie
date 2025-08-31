@@ -1,5 +1,4 @@
-"""
-Content Distributor - Multi-Platform Content Distribution Engine
+"""Content Distributor - Multi-Platform Content Distribution Engine
 ================================================================
 
 The ContentDistributor manages content distribution across multiple platforms
@@ -7,9 +6,7 @@ and channels according to platform-specific requirements and user preferences.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
@@ -26,8 +23,7 @@ from ..platforms.soundcloud_api import SoundCloudAPI
 
 
 class DistributionStatus(Enum):
-    """Distribution status enumeration"""
-    PENDING = "pending"
+    """Distribution status enumeration"""    PENDING = "pending"
     UPLOADING = "uploading"
     PROCESSING = "processing"
     PUBLISHED = "published"
@@ -37,8 +33,7 @@ class DistributionStatus(Enum):
 
 @dataclass
 class DistributionConfig:
-    """Distribution configuration"""
-    auto_publish: bool = False
+    """Distribution configuration"""    auto_publish: bool = False
     schedule_time: Optional[datetime] = None
     platforms: List[str] = None
     custom_metadata: Dict[str, Any] = None
@@ -46,8 +41,7 @@ class DistributionConfig:
 
 
 class ContentDistributor:
-    """
-    Multi-Platform Content Distribution Engine
+    """    Multi-Platform Content Distribution Engine
     
     Handles automated distribution of content across multiple platforms
     including YouTube, Instagram, TikTok, Spotify, SoundCloud, and more.
@@ -58,8 +52,7 @@ class ContentDistributor:
     - Cross-platform synchronization
     - Performance tracking
     - Automated metadata optimization
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession):
         self.db = db_session
         self.logger = logging.getLogger(__name__)
@@ -82,8 +75,7 @@ class ContentDistributor:
         platforms: List[str],
         config: DistributionConfig = None
     ) -> Dict[str, Any]:
-        """
-        Distribute content across specified platforms
+        """        Distribute content across specified platforms
         
         Args:
             content_id: Content identifier
@@ -92,8 +84,7 @@ class ContentDistributor:
             
         Returns:
             Distribution result with status per platform
-        """
-        try:
+        """        try:
             distribution_id = str(uuid.uuid4())
             config = config or DistributionConfig()
             
@@ -176,8 +167,7 @@ class ContentDistributor:
         platform: str,
         config: DistributionConfig
     ) -> Dict[str, Any]:
-        """
-        Distribute content to specific platform
+        """        Distribute content to specific platform
         
         Args:
             content: Content object
@@ -186,8 +176,7 @@ class ContentDistributor:
             
         Returns:
             Platform-specific distribution result
-        """
-        try:
+        """        try:
             platform_api = self.platforms[platform]
             
             # Prepare platform-specific metadata
@@ -229,8 +218,7 @@ class ContentDistributor:
         platform: str,
         config: DistributionConfig
     ) -> Dict[str, Any]:
-        """
-        Prepare platform-specific metadata
+        """        Prepare platform-specific metadata
         
         Args:
             content: Content object
@@ -239,8 +227,7 @@ class ContentDistributor:
             
         Returns:
             Platform-optimized metadata
-        """
-        base_metadata = {
+        """        base_metadata = {
             "title": content.title,
             "description": content.metadata.get("description", ""),
             "tags": content.metadata.get("tags", []),
@@ -266,8 +253,7 @@ class ContentDistributor:
             return base_metadata
 
     async def _optimize_youtube_metadata(self, metadata: Dict, content) -> Dict[str, Any]:
-        """Optimize metadata for YouTube"""
-        optimized = metadata.copy()
+        """Optimize metadata for YouTube"""        optimized = metadata.copy()
         
         # YouTube-specific optimizations
         optimized["title"] = metadata["title"][:100]  # YouTube title limit
@@ -281,8 +267,7 @@ class ContentDistributor:
         return optimized
 
     async def _optimize_instagram_metadata(self, metadata: Dict, content) -> Dict[str, Any]:
-        """Optimize metadata for Instagram"""
-        optimized = metadata.copy()
+        """Optimize metadata for Instagram"""        optimized = metadata.copy()
         
         # Instagram-specific optimizations
         optimized["caption"] = f"{metadata['title']}\n\n{metadata['description']}"[:2200]
@@ -291,8 +276,7 @@ class ContentDistributor:
         return optimized
 
     async def _optimize_tiktok_metadata(self, metadata: Dict, content) -> Dict[str, Any]:
-        """Optimize metadata for TikTok"""
-        optimized = metadata.copy()
+        """Optimize metadata for TikTok"""        optimized = metadata.copy()
         
         # TikTok-specific optimizations
         optimized["description"] = metadata["description"][:150]  # TikTok caption limit
@@ -301,8 +285,7 @@ class ContentDistributor:
         return optimized
 
     async def _optimize_spotify_metadata(self, metadata: Dict, content) -> Dict[str, Any]:
-        """Optimize metadata for Spotify"""
-        optimized = metadata.copy()
+        """Optimize metadata for Spotify"""        optimized = metadata.copy()
         
         # Spotify-specific fields for podcasts/music
         optimized["artist"] = content.metadata.get("artist", "Unknown Artist")
@@ -312,8 +295,7 @@ class ContentDistributor:
         return optimized
 
     async def _optimize_soundcloud_metadata(self, metadata: Dict, content) -> Dict[str, Any]:
-        """Optimize metadata for SoundCloud"""
-        optimized = metadata.copy()
+        """Optimize metadata for SoundCloud"""        optimized = metadata.copy()
         
         # SoundCloud-specific optimizations
         optimized["track_type"] = content.metadata.get("track_type", "original")
@@ -323,8 +305,7 @@ class ContentDistributor:
         return optimized
 
     def _get_youtube_category_id(self, category: str) -> str:
-        """Map content category to YouTube category ID"""
-        category_mapping = {
+        """Map content category to YouTube category ID"""        category_mapping = {
             "music": "10",
             "education": "27",
             "entertainment": "24",
@@ -336,26 +317,22 @@ class ContentDistributor:
         return category_mapping.get(category.lower(), "24")  # Default to Entertainment
 
     def _format_instagram_hashtags(self, tags: List[str]) -> str:
-        """Format tags for Instagram hashtags"""
-        hashtags = [f"#{tag.replace(' ', '').lower()}" for tag in tags[:30]]  # Instagram limit
+        """Format tags for Instagram hashtags"""        hashtags = [f"#{tag.replace(' ', '').lower()}" for tag in tags[:30]]  # Instagram limit
         return " ".join(hashtags)
 
     def _format_tiktok_hashtags(self, tags: List[str]) -> str:
-        """Format tags for TikTok hashtags"""
-        hashtags = [f"#{tag.replace(' ', '').lower()}" for tag in tags[:10]]  # TikTok practical limit
+        """Format tags for TikTok hashtags"""        hashtags = [f"#{tag.replace(' ', '').lower()}" for tag in tags[:10]]  # TikTok practical limit
         return " ".join(hashtags)
 
     async def get_distribution_status(self, distribution_id: str) -> Dict[str, Any]:
-        """
-        Get distribution status
+        """        Get distribution status
         
         Args:
             distribution_id: Distribution identifier
             
         Returns:
             Distribution status information
-        """
-        try:
+        """        try:
             if distribution_id in self.active_distributions:
                 distribution = self.active_distributions[distribution_id]
                 return {
@@ -386,8 +363,7 @@ class ContentDistributor:
         schedule_time: datetime,
         config: DistributionConfig = None
     ) -> Dict[str, Any]:
-        """
-        Schedule content distribution for later
+        """        Schedule content distribution for later
         
         Args:
             content_id: Content identifier
@@ -397,8 +373,7 @@ class ContentDistributor:
             
         Returns:
             Scheduling result
-        """
-        try:
+        """        try:
             schedule_id = str(uuid.uuid4())
             
             # Store scheduled distribution
@@ -431,16 +406,14 @@ class ContentDistributor:
             }
 
     async def cancel_distribution(self, distribution_id: str) -> Dict[str, Any]:
-        """
-        Cancel ongoing or scheduled distribution
+        """        Cancel ongoing or scheduled distribution
         
         Args:
             distribution_id: Distribution identifier
             
         Returns:
             Cancellation result
-        """
-        try:
+        """        try:
             if distribution_id in self.active_distributions:
                 distribution = self.active_distributions[distribution_id]
                 
@@ -475,8 +448,7 @@ class ContentDistributor:
             }
 
     async def _cancel_platform_upload(self, platform: str, platform_id: str) -> Dict[str, Any]:
-        """Cancel upload on specific platform"""
-        try:
+        """Cancel upload on specific platform"""        try:
             platform_api = self.platforms[platform]
             if hasattr(platform_api, 'cancel_upload'):
                 return await platform_api.cancel_upload(platform_id)
@@ -492,8 +464,7 @@ class ContentDistributor:
             }
 
     async def _get_content(self, content_id: str):
-        """Get content from database"""
-        # This would query the actual database
+        """Get content from database"""        # This would query the actual database
         # For now, return a mock content object
         class MockContent:
             def __init__(self):
@@ -510,16 +481,14 @@ class ContentDistributor:
         return MockContent()
 
     async def get_platform_analytics(self, content_id: str) -> Dict[str, Any]:
-        """
-        Get analytics from all platforms for specific content
+        """        Get analytics from all platforms for specific content
         
         Args:
             content_id: Content identifier
             
         Returns:
             Aggregated platform analytics
-        """
-        try:
+        """        try:
             analytics = {}
             
             # Collect analytics from each platform

@@ -1,5 +1,4 @@
-"""
-Multimedia Metadata - Enterprise Metadata Management System
+"""Multimedia Metadata - Enterprise Metadata Management System
 
 Comprehensive metadata extraction, management, and manipulation for multimedia content.
 Supports advanced metadata operations, EXIF data, technical specifications, and custom fields.
@@ -11,9 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import hashlib
@@ -73,8 +70,7 @@ logger = logging.getLogger(__name__)
 
 
 class MetadataFormat(Enum):
-    """Metadata formats"""
-    EXIF = "exif"
+    """Metadata formats"""    EXIF = "exif"
     IPTC = "iptc"
     XMP = "xmp"
     ID3 = "id3"
@@ -85,8 +81,7 @@ class MetadataFormat(Enum):
 
 
 class MetadataCategory(Enum):
-    """Metadata categories"""
-    TECHNICAL = "technical"
+    """Metadata categories"""    TECHNICAL = "technical"
     DESCRIPTIVE = "descriptive"
     ADMINISTRATIVE = "administrative"
     STRUCTURAL = "structural"
@@ -97,8 +92,7 @@ class MetadataCategory(Enum):
 
 @dataclass
 class GeolocationData:
-    """Geolocation information"""
-    latitude: Optional[float] = None
+    """Geolocation information"""    latitude: Optional[float] = None
     longitude: Optional[float] = None
     altitude: Optional[float] = None
     gps_timestamp: Optional[datetime] = None
@@ -110,8 +104,7 @@ class GeolocationData:
 
 @dataclass
 class TechnicalMetadata:
-    """Technical metadata"""
-    # File information
+    """Technical metadata"""    # File information
     file_size: int = 0
     file_format: Optional[str] = None
     mime_type: Optional[str] = None
@@ -149,8 +142,7 @@ class TechnicalMetadata:
     pixel_aspect_ratio: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        result = {}
+        """Convert to dictionary"""        result = {}
         for key, value in asdict(self).items():
             if value is not None:
                 if isinstance(value, datetime):
@@ -162,8 +154,7 @@ class TechnicalMetadata:
 
 @dataclass
 class DescriptiveMetadata:
-    """Descriptive metadata"""
-    title: Optional[str] = None
+    """Descriptive metadata"""    title: Optional[str] = None
     description: Optional[str] = None
     keywords: List[str] = field(default_factory=list)
     tags: List[str] = field(default_factory=list)
@@ -180,14 +171,12 @@ class DescriptiveMetadata:
     rating: Optional[float] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {k: v for k, v in asdict(self).items() if v is not None and v != []}
+        """Convert to dictionary"""        return {k: v for k, v in asdict(self).items() if v is not None and v != []}
 
 
 @dataclass
 class AdministrativeMetadata:
-    """Administrative metadata"""
-    file_id: Optional[str] = None
+    """Administrative metadata"""    file_id: Optional[str] = None
     checksum: Optional[str] = None
     ingestion_date: Optional[datetime] = None
     last_accessed: Optional[datetime] = None
@@ -200,8 +189,7 @@ class AdministrativeMetadata:
     provenance: List[Dict[str, Any]] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        result = {}
+        """Convert to dictionary"""        result = {}
         for key, value in asdict(self).items():
             if value is not None and value != {} and value != []:
                 if isinstance(value, datetime):
@@ -213,8 +201,7 @@ class AdministrativeMetadata:
 
 @dataclass
 class MultimediaMetadataSet:
-    """Complete multimedia metadata set"""
-    file_path: str
+    """Complete multimedia metadata set"""    file_path: str
     technical: TechnicalMetadata = field(default_factory=TechnicalMetadata)
     descriptive: DescriptiveMetadata = field(default_factory=DescriptiveMetadata)
     administrative: AdministrativeMetadata = field(default_factory=AdministrativeMetadata)
@@ -233,8 +220,7 @@ class MultimediaMetadataSet:
     updated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             "file_path": self.file_path,
             "technical": self.technical.to_dict(),
             "descriptive": self.descriptive.to_dict(),
@@ -251,8 +237,7 @@ class MultimediaMetadataSet:
         }
         
     def get_summary(self) -> Dict[str, Any]:
-        """Get metadata summary"""
-        return {
+        """Get metadata summary"""        return {
             "title": self.descriptive.title,
             "format": self.technical.file_format,
             "size": self.technical.file_size,
@@ -266,8 +251,7 @@ class MultimediaMetadataSet:
 
 
 class MultimediaMetadata:
-    """Enterprise multimedia metadata management system"""
-    
+    """Enterprise multimedia metadata management system"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         
@@ -295,8 +279,7 @@ class MultimediaMetadata:
         }
         
     async def initialize(self):
-        """Initialize metadata system"""
-        try:
+        """Initialize metadata system"""        try:
             # Initialize metadata extractors
             await self._initialize_extractors()
             
@@ -312,8 +295,7 @@ class MultimediaMetadata:
         force_refresh: bool = False,
         extract_custom: bool = True
     ) -> MultimediaMetadataSet:
-        """Extract comprehensive metadata from multimedia file"""
-        start_time = datetime.now()
+        """Extract comprehensive metadata from multimedia file"""        start_time = datetime.now()
         
         try:
             # Check cache first
@@ -377,8 +359,7 @@ class MultimediaMetadata:
         file_paths: List[str],
         max_concurrent: int = 5
     ) -> List[MultimediaMetadataSet]:
-        """Extract metadata from multiple files in batch"""
-        try:
+        """Extract metadata from multiple files in batch"""        try:
             semaphore = asyncio.Semaphore(max_concurrent)
             
             async def extract_with_semaphore(file_path):
@@ -408,8 +389,7 @@ class MultimediaMetadata:
         updates: Dict[str, Any],
         category: MetadataCategory = MetadataCategory.DESCRIPTIVE
     ) -> bool:
-        """Update metadata for a file"""
-        try:
+        """Update metadata for a file"""        try:
             # Get existing metadata
             metadata_set = await self.extract_metadata(file_path)
             
@@ -454,8 +434,7 @@ class MultimediaMetadata:
         query: Dict[str, Any],
         file_paths: Optional[List[str]] = None
     ) -> List[MultimediaMetadataSet]:
-        """Search metadata by criteria"""
-        try:
+        """Search metadata by criteria"""        try:
             results = []
             
             # If no file paths provided, search cache
@@ -479,8 +458,7 @@ class MultimediaMetadata:
         file_path1: str, 
         file_path2: str
     ) -> Dict[str, Any]:
-        """Compare metadata between two files"""
-        try:
+        """Compare metadata between two files"""        try:
             metadata1 = await self.extract_metadata(file_path1)
             metadata2 = await self.extract_metadata(file_path2)
             
@@ -504,8 +482,7 @@ class MultimediaMetadata:
         export_format: str = "json",
         include_raw: bool = False
     ) -> str:
-        """Export metadata to various formats"""
-        try:
+        """Export metadata to various formats"""        try:
             metadata_set = await self.extract_metadata(file_path)
             
             if export_format.lower() == "json":
@@ -530,16 +507,14 @@ class MultimediaMetadata:
             return ""
             
     async def get_metadata_stats(self) -> Dict[str, Any]:
-        """Get metadata extraction statistics"""
-        return {
+        """Get metadata extraction statistics"""        return {
             **self.extraction_stats,
             "cache_size": len(self.metadata_cache),
             "timestamp": datetime.now(timezone.utc).isoformat()
         }
         
     async def health_check(self) -> Dict[str, Any]:
-        """Metadata system health check"""
-        try:
+        """Metadata system health check"""        try:
             status = "healthy"
             
             # Check available libraries
@@ -574,13 +549,11 @@ class MultimediaMetadata:
     # Private methods
     
     async def _initialize_extractors(self):
-        """Initialize metadata extractors"""
-        # This would initialize any external metadata extraction tools
+        """Initialize metadata extractors"""        # This would initialize any external metadata extraction tools
         pass
         
     async def _extract_file_info(self, file_path: str, metadata_set: MultimediaMetadataSet):
-        """Extract basic file information"""
-        try:
+        """Extract basic file information"""        try:
             path_obj = Path(file_path)
             stat_info = path_obj.stat()
             
@@ -603,8 +576,7 @@ class MultimediaMetadata:
             logger.error(f"Failed to extract file info: {e}")
             
     async def _extract_image_metadata(self, file_path: str, metadata_set: MultimediaMetadataSet):
-        """Extract image-specific metadata"""
-        if not PIL_AVAILABLE:
+        """Extract image-specific metadata"""        if not PIL_AVAILABLE:
             return
             
         try:
@@ -627,8 +599,7 @@ class MultimediaMetadata:
             logger.error(f"Image metadata extraction failed: {e}")
             
     async def _extract_video_metadata(self, file_path: str, metadata_set: MultimediaMetadataSet):
-        """Extract video-specific metadata"""
-        # Try MediaInfo first
+        """Extract video-specific metadata"""        # Try MediaInfo first
         if MEDIAINFO_AVAILABLE:
             try:
                 media_info = MediaInfo.parse(file_path)
@@ -673,8 +644,7 @@ class MultimediaMetadata:
                 logger.error(f"FFmpeg probe failed: {e}")
                 
     async def _extract_audio_metadata(self, file_path: str, metadata_set: MultimediaMetadataSet):
-        """Extract audio-specific metadata"""
-        if MUTAGEN_AVAILABLE:
+        """Extract audio-specific metadata"""        if MUTAGEN_AVAILABLE:
             try:
                 audio_file = mutagen.File(file_path)
                 
@@ -698,8 +668,7 @@ class MultimediaMetadata:
                 logger.error(f"Audio metadata extraction failed: {e}")
                 
     async def _extract_document_metadata(self, file_path: str, metadata_set: MultimediaMetadataSet):
-        """Extract document-specific metadata"""
-        file_ext = Path(file_path).suffix.lower()
+        """Extract document-specific metadata"""        file_ext = Path(file_path).suffix.lower()
         
         if file_ext == '.pdf' and DOCUMENT_AVAILABLE:
             try:
@@ -739,8 +708,7 @@ class MultimediaMetadata:
                 logger.error(f"Document metadata extraction failed: {e}")
                 
     async def _extract_geolocation(self, metadata_set: MultimediaMetadataSet):
-        """Extract geolocation data from EXIF GPS tags"""
-        try:
+        """Extract geolocation data from EXIF GPS tags"""        try:
             gps_info = metadata_set.exif_data.get('GPSInfo')
             if not gps_info:
                 return
@@ -785,8 +753,7 @@ class MultimediaMetadata:
             logger.error(f"Geolocation extraction failed: {e}")
             
     async def _extract_custom_metadata(self, file_path: str, metadata_set: MultimediaMetadataSet):
-        """Extract custom metadata using configured extractors"""
-        try:
+        """Extract custom metadata using configured extractors"""        try:
             for extractor_name, extractor_config in self.custom_extractors.items():
                 # This would implement custom metadata extraction logic
                 # based on the extractor configuration
@@ -796,8 +763,7 @@ class MultimediaMetadata:
             logger.error(f"Custom metadata extraction failed: {e}")
             
     async def _map_exif_to_metadata(self, tag: str, value: Any, metadata_set: MultimediaMetadataSet):
-        """Map EXIF tags to structured metadata"""
-        try:
+        """Map EXIF tags to structured metadata"""        try:
             if tag == 'Make':
                 metadata_set.technical.camera_make = str(value)
             elif tag == 'Model':
@@ -827,8 +793,7 @@ class MultimediaMetadata:
             logger.error(f"EXIF mapping failed for {tag}: {e}")
             
     async def _map_audio_tags_to_metadata(self, key: str, value: Any, metadata_set: MultimediaMetadataSet):
-        """Map audio tags to structured metadata"""
-        try:
+        """Map audio tags to structured metadata"""        try:
             key_lower = key.lower()
             
             if 'title' in key_lower:
@@ -856,8 +821,7 @@ class MultimediaMetadata:
         updates: Dict[str, Any],
         category: MetadataCategory
     ):
-        """Write metadata back to file (if supported)"""
-        try:
+        """Write metadata back to file (if supported)"""        try:
             file_format = metadata_set.technical.file_format
             
             # Image files with EXIF support
@@ -880,8 +844,7 @@ class MultimediaMetadata:
         updates: Dict[str, Any],
         category: MetadataCategory
     ):
-        """Write metadata to image files"""
-        # This is a simplified implementation
+        """Write metadata to image files"""        # This is a simplified implementation
         # In production, you would use more sophisticated metadata writing
         pass
         
@@ -892,19 +855,16 @@ class MultimediaMetadata:
         updates: Dict[str, Any],
         category: MetadataCategory
     ):
-        """Write metadata to audio files"""
-        # This is a simplified implementation
+        """Write metadata to audio files"""        # This is a simplified implementation
         # In production, you would use mutagen to write tags
         pass
         
     def _convert_gps_coordinate(self, coord_tuple: Tuple) -> float:
-        """Convert GPS coordinate tuple to decimal degrees"""
-        degrees, minutes, seconds = coord_tuple
+        """Convert GPS coordinate tuple to decimal degrees"""        degrees, minutes, seconds = coord_tuple
         return float(degrees) + float(minutes)/60 + float(seconds)/3600
         
     def _generate_cache_key(self, file_path: str) -> str:
-        """Generate cache key for metadata"""
-        try:
+        """Generate cache key for metadata"""        try:
             stat_info = Path(file_path).stat()
             key_string = f"{file_path}_{stat_info.st_mtime}_{stat_info.st_size}"
             return hashlib.md5(key_string.encode()).hexdigest()
@@ -912,12 +872,10 @@ class MultimediaMetadata:
             return hashlib.md5(file_path.encode()).hexdigest()
             
     def _generate_file_id(self, file_path: str) -> str:
-        """Generate unique file ID"""
-        return hashlib.sha256(file_path.encode()).hexdigest()
+        """Generate unique file ID"""        return hashlib.sha256(file_path.encode()).hexdigest()
         
     async def _calculate_checksum(self, file_path: str) -> str:
-        """Calculate file checksum"""
-        hash_obj = hashlib.sha256()
+        """Calculate file checksum"""        hash_obj = hashlib.sha256()
         
         try:
             with open(file_path, 'rb') as f:
@@ -929,8 +887,7 @@ class MultimediaMetadata:
             return ""
             
     async def _cache_metadata(self, cache_key: str, metadata_set: MultimediaMetadataSet):
-        """Cache metadata set"""
-        if len(self.metadata_cache) >= self.max_cache_size:
+        """Cache metadata set"""        if len(self.metadata_cache) >= self.max_cache_size:
             # Remove oldest entry
             oldest_key = next(iter(self.metadata_cache))
             del self.metadata_cache[oldest_key]
@@ -938,8 +895,7 @@ class MultimediaMetadata:
         self.metadata_cache[cache_key] = metadata_set
         
     def _matches_query(self, metadata_set: MultimediaMetadataSet, query: Dict[str, Any]) -> bool:
-        """Check if metadata matches search query"""
-        try:
+        """Check if metadata matches search query"""        try:
             for key, value in query.items():
                 if key == 'format':
                     if metadata_set.technical.file_format != value:
@@ -965,8 +921,7 @@ class MultimediaMetadata:
             return False
             
     def _compare_technical_metadata(self, meta1: TechnicalMetadata, meta2: TechnicalMetadata) -> Dict[str, Any]:
-        """Compare technical metadata between two files"""
-        differences = {}
+        """Compare technical metadata between two files"""        differences = {}
         
         for field in ['width', 'height', 'duration', 'bitrate', 'file_size', 'file_format']:
             value1 = getattr(meta1, field)
@@ -978,8 +933,7 @@ class MultimediaMetadata:
         return differences
         
     def _compare_descriptive_metadata(self, meta1: DescriptiveMetadata, meta2: DescriptiveMetadata) -> Dict[str, Any]:
-        """Compare descriptive metadata between two files"""
-        differences = {}
+        """Compare descriptive metadata between two files"""        differences = {}
         
         for field in ['title', 'creator', 'description', 'keywords', 'tags']:
             value1 = getattr(meta1, field)
@@ -991,8 +945,7 @@ class MultimediaMetadata:
         return differences
         
     def _calculate_similarity_score(self, meta1: MultimediaMetadataSet, meta2: MultimediaMetadataSet) -> float:
-        """Calculate similarity score between two metadata sets"""
-        score = 0.0
+        """Calculate similarity score between two metadata sets"""        score = 0.0
         total_checks = 0
         
         # Format similarity
@@ -1036,20 +989,17 @@ class MultimediaMetadata:
         return score / total_checks if total_checks > 0 else 0.0
         
     async def _export_to_xml(self, metadata_set: MultimediaMetadataSet, include_raw: bool) -> str:
-        """Export metadata to XML format"""
-        # This would implement XML export
+        """Export metadata to XML format"""        # This would implement XML export
         # For now, return empty string
         return ""
         
     async def _export_to_csv(self, metadata_set: MultimediaMetadataSet) -> str:
-        """Export metadata to CSV format"""
-        # This would implement CSV export
+        """Export metadata to CSV format"""        # This would implement CSV export
         # For now, return empty string
         return ""
         
     def _update_extraction_stats(self, start_time: datetime, success: bool, file_format: str):
-        """Update extraction statistics"""
-        self.extraction_stats["total_extractions"] += 1
+        """Update extraction statistics"""        self.extraction_stats["total_extractions"] += 1
         
         if success:
             self.extraction_stats["successful_extractions"] += 1

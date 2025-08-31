@@ -1,5 +1,4 @@
-"""
-🚀 Validation Rules Engine - IA Influencer Agent Platform Enterprise
+"""🚀 Validation Rules Engine - IA Influencer Agent Platform Enterprise
 =================================================================
 Module: backend/data_management/validation/rules_engine.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -15,9 +14,7 @@ Système de règles flexibles pour validation personnalisée
 - Moteur d'évaluation dynamique
 - Support conditions complexes
 - Gestion des exceptions et cas spéciaux
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple, Callable
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Callable
 import asyncio
 import logging
 from pathlib import Path
@@ -37,8 +34,7 @@ from collections import defaultdict
 logger = logging.getLogger(__name__)
 
 class RuleType(Enum):
-    """Types de règles de validation"""
-    FILE_SIZE = "file_size"
+    """Types de règles de validation"""    FILE_SIZE = "file_size"
     FILE_FORMAT = "file_format"
     CONTENT_QUALITY = "content_quality"
     METADATA = "metadata"
@@ -47,8 +43,7 @@ class RuleType(Enum):
     CUSTOM = "custom"
 
 class RuleOperator(Enum):
-    """Opérateurs pour les règles"""
-    EQUALS = "equals"
+    """Opérateurs pour les règles"""    EQUALS = "equals"
     NOT_EQUALS = "not_equals"
     GREATER_THAN = "greater_than"
     LESS_THAN = "less_than"
@@ -65,22 +60,19 @@ class RuleOperator(Enum):
     IS_NOT_EMPTY = "is_not_empty"
 
 class RuleCondition(Enum):
-    """Conditions de combinaison des règles"""
-    AND = "and"
+    """Conditions de combinaison des règles"""    AND = "and"
     OR = "or"
     NOT = "not"
 
 class RuleSeverity(Enum):
-    """Niveaux de sévérité des règles"""
-    INFO = "info"
+    """Niveaux de sévérité des règles"""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
 
 @dataclass
 class ValidationRule:
-    """Définition d'une règle de validation"""
-    id: str
+    """Définition d'une règle de validation"""    id: str
     name: str
     description: str
     rule_type: RuleType
@@ -100,8 +92,7 @@ class ValidationRule:
 
 @dataclass
 class RuleEvaluationResult:
-    """Résultat d'évaluation d'une règle"""
-    rule_id: str
+    """Résultat d'évaluation d'une règle"""    rule_id: str
     rule_name: str
     passed: bool
     severity: RuleSeverity
@@ -113,8 +104,7 @@ class RuleEvaluationResult:
 
 @dataclass
 class RulesEvaluationResult:
-    """Résultat global d'évaluation des règles"""
-    is_valid: bool
+    """Résultat global d'évaluation des règles"""    is_valid: bool
     total_rules: int
     passed_rules: int
     failed_rules: int
@@ -125,8 +115,7 @@ class RulesEvaluationResult:
     evaluation_summary: Dict[str, Any]
 
 class RuleEvaluator:
-    """Évaluateur de règles"""
-    
+    """Évaluateur de règles"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.RuleEvaluator")
         
@@ -145,8 +134,7 @@ class RuleEvaluator:
         self._register_builtin_functions()
     
     def evaluate_rule(self, rule: ValidationRule, data: Dict[str, Any]) -> RuleEvaluationResult:
-        """Évalue une règle individuelle"""
-        start_time = datetime.now()
+        """Évalue une règle individuelle"""        start_time = datetime.now()
         
         try:
             # Extraction de la valeur du champ
@@ -212,8 +200,7 @@ class RuleEvaluator:
             )
     
     def _extract_field_value(self, data: Dict[str, Any], field_path: str) -> Any:
-        """Extrait une valeur depuis un chemin de champ"""
-        try:
+        """Extrait une valeur depuis un chemin de champ"""        try:
             parts = field_path.split('.')
             value = data
             
@@ -236,8 +223,7 @@ class RuleEvaluator:
             return None
     
     def _evaluate_operator(self, op: RuleOperator, actual: Any, expected: Any) -> bool:
-        """Évalue un opérateur"""
-        try:
+        """Évalue un opérateur"""        try:
             if op in self.operators:
                 return self.operators[op](actual, expected)
             
@@ -276,18 +262,15 @@ class RuleEvaluator:
             return False
     
     def _generate_default_message(self, rule: ValidationRule, actual_value: Any, passed: bool) -> str:
-        """Génère un message par défaut"""
-        if passed:
+        """Génère un message par défaut"""        if passed:
             return f"Rule '{rule.name}' passed"
         else:
             return f"Rule '{rule.name}' failed: expected {rule.expected_value}, got {actual_value}"
     
     def _register_builtin_functions(self):
-        """Enregistre les fonctions intégrées"""
-        
+        """Enregistre les fonctions intégrées"""        
         def validate_audio_duration(actual, expected, data):
-            """Valide la durée audio selon le type de créateur"""
-            creator_type = data.get('creator_type', '')
+            """Valide la durée audio selon le type de créateur"""            creator_type = data.get('creator_type', '')
             
             if creator_type == 'musician':
                 return 10 <= actual <= 3600  # 10s à 1h
@@ -297,8 +280,7 @@ class RuleEvaluator:
                 return actual <= expected
         
         def validate_image_resolution(actual, expected, data):
-            """Valide la résolution image selon le type de créateur"""
-            if not isinstance(actual, (list, tuple)) or len(actual) != 2:
+            """Valide la résolution image selon le type de créateur"""            if not isinstance(actual, (list, tuple)) or len(actual) != 2:
                 return False
             
             width, height = actual
@@ -314,8 +296,7 @@ class RuleEvaluator:
                 return width >= min_width and height >= min_height
         
         def validate_file_extension_coherence(actual, expected, data):
-            """Valide la cohérence extension/type de contenu"""
-            file_extension = data.get('file_extension', '').lower()
+            """Valide la cohérence extension/type de contenu"""            file_extension = data.get('file_extension', '').lower()
             content_type = data.get('content_type', '')
             
             coherence_map = {
@@ -334,8 +315,7 @@ class RuleEvaluator:
         }
 
 class RuleSetManager:
-    """Gestionnaire de jeux de règles"""
-    
+    """Gestionnaire de jeux de règles"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.RuleSetManager")
         self.rule_sets: Dict[str, List[ValidationRule]] = {}
@@ -345,8 +325,7 @@ class RuleSetManager:
         self._load_default_rules()
     
     def load_rules_from_config(self, config_path: str) -> bool:
-        """Charge les règles depuis un fichier de configuration"""
-        try:
+        """Charge les règles depuis un fichier de configuration"""        try:
             with open(config_path, 'r', encoding='utf-8') as f:
                 config = json.load(f)
             
@@ -366,8 +345,7 @@ class RuleSetManager:
             return False
     
     def save_rules_to_config(self, config_path: str) -> bool:
-        """Sauvegarde les règles dans un fichier de configuration"""
-        try:
+        """Sauvegarde les règles dans un fichier de configuration"""        try:
             config = {}
             
             for rule_set_name, rules in self.rule_sets.items():
@@ -384,8 +362,7 @@ class RuleSetManager:
             return False
     
     def add_rule(self, rule_set_name: str, rule: ValidationRule):
-        """Ajoute une règle à un jeu de règles"""
-        if rule_set_name not in self.rule_sets:
+        """Ajoute une règle à un jeu de règles"""        if rule_set_name not in self.rule_sets:
             self.rule_sets[rule_set_name] = []
         
         # Vérification unicité ID
@@ -397,8 +374,7 @@ class RuleSetManager:
         self.logger.info(f"Added rule {rule.id} to set {rule_set_name}")
     
     def remove_rule(self, rule_set_name: str, rule_id: str) -> bool:
-        """Supprime une règle d'un jeu de règles"""
-        if rule_set_name not in self.rule_sets:
+        """Supprime une règle d'un jeu de règles"""        if rule_set_name not in self.rule_sets:
             return False
         
         original_count = len(self.rule_sets[rule_set_name])
@@ -411,8 +387,7 @@ class RuleSetManager:
         return removed
     
     def get_applicable_rules(self, rule_set_name: str, creator_type: str, content_type: str) -> List[ValidationRule]:
-        """Récupère les règles applicables selon le contexte"""
-        if rule_set_name not in self.rule_sets:
+        """Récupère les règles applicables selon le contexte"""        if rule_set_name not in self.rule_sets:
             return []
         
         applicable_rules = []
@@ -434,8 +409,7 @@ class RuleSetManager:
         return applicable_rules
     
     def evaluate_rules(self, rule_set_name: str, data: Dict[str, Any], creator_type: str = "", content_type: str = "") -> RulesEvaluationResult:
-        """Évalue un jeu de règles contre des données"""
-        
+        """Évalue un jeu de règles contre des données"""        
         applicable_rules = self.get_applicable_rules(rule_set_name, creator_type, content_type)
         
         if not applicable_rules:
@@ -502,8 +476,7 @@ class RuleSetManager:
         )
     
     def _create_rule_from_dict(self, rule_data: Dict[str, Any]) -> ValidationRule:
-        """Crée une règle depuis un dictionnaire"""
-        return ValidationRule(
+        """Crée une règle depuis un dictionnaire"""        return ValidationRule(
             id=rule_data['id'],
             name=rule_data['name'],
             description=rule_data.get('description', ''),
@@ -522,8 +495,7 @@ class RuleSetManager:
         )
     
     def _rule_to_dict(self, rule: ValidationRule) -> Dict[str, Any]:
-        """Convertit une règle en dictionnaire"""
-        return {
+        """Convertit une règle en dictionnaire"""        return {
             'id': rule.id,
             'name': rule.name,
             'description': rule.description,
@@ -542,8 +514,7 @@ class RuleSetManager:
         }
     
     def _load_default_rules(self):
-        """Charge les règles par défaut"""
-        
+        """Charge les règles par défaut"""        
         # Règles générales de taille de fichier
         file_size_rules = [
             ValidationRule(
@@ -666,8 +637,7 @@ class RuleSetManager:
         self.rule_sets["security"] = security_rules
 
 class RulesEngine:
-    """Moteur principal de règles de validation"""
-    
+    """Moteur principal de règles de validation"""    
     def __init__(self, config_path: Optional[str] = None):
         self.logger = logging.getLogger(f"{__name__}.RulesEngine")
         self.rule_set_manager = RuleSetManager()
@@ -687,8 +657,7 @@ class RulesEngine:
         content_type: str = "",
         use_cache: bool = True
     ) -> RulesEvaluationResult:
-        """Valide des données avec des jeux de règles spécifiques"""
-        
+        """Valide des données avec des jeux de règles spécifiques"""        
         # Vérification cache
         cache_key = self._generate_cache_key(data, rule_sets, creator_type, content_type)
         if use_cache and cache_key in self._evaluation_cache:
@@ -754,8 +723,7 @@ class RulesEngine:
         content_type: str,
         additional_data: Optional[Dict[str, Any]] = None
     ) -> RulesEvaluationResult:
-        """Valide un fichier avec les règles appropriées"""
-        
+        """Valide un fichier avec les règles appropriées"""        
         # Compilation des données de base
         data = {
             'file_path': file_path,
@@ -781,8 +749,7 @@ class RulesEngine:
         return self.validate_with_rules(data, rule_sets, creator_type, content_type)
     
     def add_custom_rule(self, rule_set_name: str, rule_config: Dict[str, Any]) -> bool:
-        """Ajoute une règle personnalisée"""
-        try:
+        """Ajoute une règle personnalisée"""        try:
             rule = ValidationRule(
                 id=rule_config['id'],
                 name=rule_config['name'],
@@ -807,8 +774,7 @@ class RulesEngine:
             return False
     
     def get_validation_summary(self, result: RulesEvaluationResult) -> Dict[str, Any]:
-        """Génère un résumé de validation formaté"""
-        return {
+        """Génère un résumé de validation formaté"""        return {
             'status': 'VALID' if result.is_valid else 'INVALID',
             'overall_score': (result.passed_rules / result.total_rules) * 100 if result.total_rules > 0 else 100,
             'rules_summary': {
@@ -833,8 +799,7 @@ class RulesEngine:
         }
     
     def _generate_cache_key(self, data: Dict[str, Any], rule_sets: List[str], creator_type: str, content_type: str) -> str:
-        """Génère une clé de cache pour les résultats"""
-        import hashlib
+        """Génère une clé de cache pour les résultats"""        import hashlib
         
         # Création d'une signature des données importantes
         key_data = {
@@ -849,8 +814,7 @@ class RulesEngine:
         return hashlib.md5(key_string.encode()).hexdigest()
 
 class AsyncRulesEngine:
-    """Version asynchrone du moteur de règles"""
-    
+    """Version asynchrone du moteur de règles"""    
     def __init__(self, config_path: Optional[str] = None):
         self.sync_engine = RulesEngine(config_path)
         self.logger = logging.getLogger(f"{__name__}.AsyncRulesEngine")
@@ -863,8 +827,7 @@ class AsyncRulesEngine:
         content_type: str = "",
         use_cache: bool = True
     ) -> RulesEvaluationResult:
-        """Valide avec des règles de manière asynchrone"""
-        loop = asyncio.get_event_loop()
+        """Valide avec des règles de manière asynchrone"""        loop = asyncio.get_event_loop()
         
         result = await loop.run_in_executor(
             None,
@@ -885,8 +848,7 @@ class AsyncRulesEngine:
         content_type: str,
         additional_data: Optional[Dict[str, Any]] = None
     ) -> RulesEvaluationResult:
-        """Valide un fichier avec des règles de manière asynchrone"""
-        loop = asyncio.get_event_loop()
+        """Valide un fichier avec des règles de manière asynchrone"""        loop = asyncio.get_event_loop()
         
         result = await loop.run_in_executor(
             None,

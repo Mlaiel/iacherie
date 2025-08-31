@@ -1,5 +1,4 @@
-"""
-⚖️ Takedown Manager - IA Influencer Agent Surveillance Module
+"""⚖️ Takedown Manager - IA Influencer Agent Surveillance Module
 ============================================================
 
 Automated takedown notice management system for copyright infringement
@@ -7,9 +6,7 @@ enforcement across multiple digital platforms.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 from typing import Dict, List, Optional, Any, Union
@@ -23,8 +20,7 @@ logger = logging.getLogger(__name__)
 
 
 class TakedownStatus(Enum):
-    """Status of takedown requests"""
-    PENDING = "pending"
+    """Status of takedown requests"""    PENDING = "pending"
     SUBMITTED = "submitted"
     ACKNOWLEDGED = "acknowledged"
     IN_REVIEW = "in_review"
@@ -35,8 +31,7 @@ class TakedownStatus(Enum):
 
 
 class TakedownType(Enum):
-    """Types of takedown requests"""
-    DMCA = "dmca"
+    """Types of takedown requests"""    DMCA = "dmca"
     COPYRIGHT_CLAIM = "copyright_claim"
     TRADEMARK_VIOLATION = "trademark_violation"
     PLATFORM_ABUSE = "platform_abuse"
@@ -45,8 +40,7 @@ class TakedownType(Enum):
 
 @dataclass
 class TakedownRequest:
-    """Takedown request structure"""
-    request_id: str
+    """Takedown request structure"""    request_id: str
     creator_id: str
     content_id: str
     infringement_url: str
@@ -86,8 +80,7 @@ class TakedownRequest:
 
 @dataclass
 class TakedownTemplate:
-    """Template for takedown notices"""
-    template_id: str
+    """Template for takedown notices"""    template_id: str
     takedown_type: TakedownType
     platform: str
     title: str
@@ -99,8 +92,7 @@ class TakedownTemplate:
 
 
 class PlatformTakedownHandler:
-    """Base class for platform-specific takedown handlers"""
-    
+    """Base class for platform-specific takedown handlers"""    
     def __init__(self, platform: str, config: Dict[str, Any]):
         self.platform = platform
         self.config = config
@@ -108,20 +100,17 @@ class PlatformTakedownHandler:
         self.api_credentials = config.get(f"{platform}_api_credentials", {})
     
     async def submit_takedown(self, request: TakedownRequest) -> bool:
-        """Submit takedown request to platform"""
-        # Default implementation for platforms without takedown support
+        """Submit takedown request to platform"""        # Default implementation for platforms without takedown support
         logging.warning(f"Takedown submission not implemented for {self.platform}")
         return False
     
     async def check_status(self, request: TakedownRequest) -> TakedownStatus:
-        """Check status of submitted takedown request"""
-        # Default implementation for platforms without status checking
+        """Check status of submitted takedown request"""        # Default implementation for platforms without status checking
         logging.warning(f"Takedown status checking not implemented for {self.platform}")
         return TakedownStatus.UNKNOWN
     
     async def format_request(self, request: TakedownRequest) -> Dict[str, Any]:
-        """Format request for platform-specific submission"""
-        # Default implementation providing basic request format
+        """Format request for platform-specific submission"""        # Default implementation providing basic request format
         return {
             "platform": self.platform,
             "content_url": request.content_url,
@@ -132,15 +121,13 @@ class PlatformTakedownHandler:
 
 
 class YouTubeTakedownHandler(PlatformTakedownHandler):
-    """YouTube-specific takedown handler"""
-    
+    """YouTube-specific takedown handler"""    
     def __init__(self, config: Dict[str, Any]):
         super().__init__("youtube", config)
         self.copyright_match_tool_url = "https://www.youtube.com/copyright_match_tool"
     
     async def submit_takedown(self, request: TakedownRequest) -> bool:
-        """Submit takedown request to YouTube"""
-        try:
+        """Submit takedown request to YouTube"""        try:
             # Format request for YouTube
             formatted_request = await self.format_request(request)
             
@@ -164,8 +151,7 @@ class YouTubeTakedownHandler(PlatformTakedownHandler):
             return False
     
     async def check_status(self, request: TakedownRequest) -> TakedownStatus:
-        """Check YouTube takedown status"""
-        try:
+        """Check YouTube takedown status"""        try:
             if not request.platform_reference_id:
                 return TakedownStatus.PENDING
             
@@ -194,8 +180,7 @@ class YouTubeTakedownHandler(PlatformTakedownHandler):
             return TakedownStatus.FAILED
     
     async def format_request(self, request: TakedownRequest) -> Dict[str, Any]:
-        """Format request for YouTube submission"""
-        return {
+        """Format request for YouTube submission"""        return {
             "video_url": request.infringement_url,
             "original_content_url": request.original_content_url,
             "infringement_type": "copyright",
@@ -210,14 +195,12 @@ class YouTubeTakedownHandler(PlatformTakedownHandler):
 
 
 class TikTokTakedownHandler(PlatformTakedownHandler):
-    """TikTok-specific takedown handler"""
-    
+    """TikTok-specific takedown handler"""    
     def __init__(self, config: Dict[str, Any]):
         super().__init__("tiktok", config)
     
     async def submit_takedown(self, request: TakedownRequest) -> bool:
-        """Submit takedown request to TikTok"""
-        try:
+        """Submit takedown request to TikTok"""        try:
             formatted_request = await self.format_request(request)
             
             # Simulate TikTok API submission
@@ -238,8 +221,7 @@ class TikTokTakedownHandler(PlatformTakedownHandler):
             return False
     
     async def check_status(self, request: TakedownRequest) -> TakedownStatus:
-        """Check TikTok takedown status"""
-        try:
+        """Check TikTok takedown status"""        try:
             if not request.platform_reference_id:
                 return TakedownStatus.PENDING
             
@@ -266,8 +248,7 @@ class TikTokTakedownHandler(PlatformTakedownHandler):
             return TakedownStatus.FAILED
     
     async def format_request(self, request: TakedownRequest) -> Dict[str, Any]:
-        """Format request for TikTok submission"""
-        return {
+        """Format request for TikTok submission"""        return {
             "video_url": request.infringement_url,
             "original_content": request.original_content_url,
             "infringement_reason": request.infringement_description,
@@ -280,14 +261,12 @@ class TikTokTakedownHandler(PlatformTakedownHandler):
 
 
 class InstagramTakedownHandler(PlatformTakedownHandler):
-    """Instagram-specific takedown handler"""
-    
+    """Instagram-specific takedown handler"""    
     def __init__(self, config: Dict[str, Any]):
         super().__init__("instagram", config)
     
     async def submit_takedown(self, request: TakedownRequest) -> bool:
-        """Submit takedown request to Instagram"""
-        try:
+        """Submit takedown request to Instagram"""        try:
             formatted_request = await self.format_request(request)
             
             # Simulate Instagram/Meta API submission
@@ -308,8 +287,7 @@ class InstagramTakedownHandler(PlatformTakedownHandler):
             return False
     
     async def check_status(self, request: TakedownRequest) -> TakedownStatus:
-        """Check Instagram takedown status"""
-        try:
+        """Check Instagram takedown status"""        try:
             if not request.platform_reference_id:
                 return TakedownStatus.PENDING
             
@@ -335,8 +313,7 @@ class InstagramTakedownHandler(PlatformTakedownHandler):
             return TakedownStatus.FAILED
     
     async def format_request(self, request: TakedownRequest) -> Dict[str, Any]:
-        """Format request for Instagram submission"""
-        return {
+        """Format request for Instagram submission"""        return {
             "post_url": request.infringement_url,
             "original_content_url": request.original_content_url,
             "violation_type": "copyright",
@@ -350,14 +327,12 @@ class InstagramTakedownHandler(PlatformTakedownHandler):
 
 
 class GenericTakedownHandler(PlatformTakedownHandler):
-    """Generic takedown handler for other platforms"""
-    
+    """Generic takedown handler for other platforms"""    
     def __init__(self, platform: str, config: Dict[str, Any]):
         super().__init__(platform, config)
     
     async def submit_takedown(self, request: TakedownRequest) -> bool:
-        """Submit generic takedown request"""
-        try:
+        """Submit generic takedown request"""        try:
             # Generic submission process
             formatted_request = await self.format_request(request)
             
@@ -378,8 +353,7 @@ class GenericTakedownHandler(PlatformTakedownHandler):
             return False
     
     async def check_status(self, request: TakedownRequest) -> TakedownStatus:
-        """Check generic takedown status"""
-        try:
+        """Check generic takedown status"""        try:
             if not request.platform_reference_id:
                 return TakedownStatus.PENDING
             
@@ -406,8 +380,7 @@ class GenericTakedownHandler(PlatformTakedownHandler):
             return TakedownStatus.FAILED
     
     async def format_request(self, request: TakedownRequest) -> Dict[str, Any]:
-        """Format generic takedown request"""
-        return {
+        """Format generic takedown request"""        return {
             "platform": self.platform,
             "infringing_url": request.infringement_url,
             "original_url": request.original_content_url,
@@ -418,11 +391,9 @@ class GenericTakedownHandler(PlatformTakedownHandler):
 
 
 class TakedownManager:
-    """
-    Central takedown management system for automated copyright enforcement
+    """    Central takedown management system for automated copyright enforcement
     across multiple digital platforms
-    """
-    
+    """    
     def __init__(self, surveillance_config):
         self.config = surveillance_config
         self.handlers: Dict[str, PlatformTakedownHandler] = {}
@@ -431,8 +402,7 @@ class TakedownManager:
         self.initialized = False
     
     async def initialize(self) -> None:
-        """Initialize takedown manager and platform handlers"""
-        try:
+        """Initialize takedown manager and platform handlers"""        try:
             # Initialize platform-specific handlers
             handler_config = {
                 "max_attempts": 3,
@@ -472,8 +442,7 @@ class TakedownManager:
         infringement_data: Any,
         priority: str = "normal"
     ) -> TakedownRequest:
-        """Create a new takedown request from infringement data"""
-        request_id = f"takedown_{int(time.time())}_{uuid.uuid4().hex[:8]}"
+        """Create a new takedown request from infringement data"""        request_id = f"takedown_{int(time.time())}_{uuid.uuid4().hex[:8]}"
         
         # Extract infringement information
         infringement_url = getattr(infringement_data, 'infringing_url', '')
@@ -519,8 +488,7 @@ class TakedownManager:
         return request
     
     async def _submit_takedown_request(self, request: TakedownRequest) -> bool:
-        """Submit takedown request using appropriate platform handler"""
-        platform = request.platform.lower()
+        """Submit takedown request using appropriate platform handler"""        platform = request.platform.lower()
         
         if platform not in self.handlers:
             logger.warning(f"No handler available for platform: {platform}")
@@ -544,8 +512,7 @@ class TakedownManager:
             return False
     
     async def check_request_status(self, request_id: str) -> Optional[TakedownStatus]:
-        """Check status of a specific takedown request"""
-        if request_id not in self.active_requests:
+        """Check status of a specific takedown request"""        if request_id not in self.active_requests:
             logger.warning(f"Takedown request not found: {request_id}")
             return None
         
@@ -572,8 +539,7 @@ class TakedownManager:
             return request.status
     
     async def check_all_active_requests(self) -> Dict[str, TakedownStatus]:
-        """Check status of all active takedown requests"""
-        status_results = {}
+        """Check status of all active takedown requests"""        status_results = {}
         
         for request_id in list(self.active_requests.keys()):
             status = await self.check_request_status(request_id)
@@ -589,8 +555,7 @@ class TakedownManager:
         return status_results
     
     async def retry_failed_requests(self) -> Dict[str, bool]:
-        """Retry failed takedown requests that haven't exceeded max attempts"""
-        retry_results = {}
+        """Retry failed takedown requests that haven't exceeded max attempts"""        retry_results = {}
         
         for request_id, request in list(self.active_requests.items()):
             if (request.status == TakedownStatus.FAILED and 
@@ -616,8 +581,7 @@ class TakedownManager:
         return retry_results
     
     def _generate_infringement_description(self, infringement_data: Any) -> str:
-        """Generate detailed infringement description"""
-        infringement_type = getattr(infringement_data, 'infringement_type', 'unknown')
+        """Generate detailed infringement description"""        infringement_type = getattr(infringement_data, 'infringement_type', 'unknown')
         similarity_score = getattr(infringement_data, 'similarity_score', 0.0)
         
         description = f"Copyright infringement detected - {infringement_type.value if hasattr(infringement_type, 'value') else infringement_type}. "
@@ -627,8 +591,7 @@ class TakedownManager:
         return description
     
     def _get_creator_contact(self, creator_id: str) -> Dict[str, str]:
-        """Get creator contact information"""
-        # In production, this would fetch from database
+        """Get creator contact information"""        # In production, this would fetch from database
         return {
             "name": f"Creator {creator_id}",
             "email": f"creator_{creator_id}@example.com",
@@ -636,8 +599,7 @@ class TakedownManager:
         }
     
     def _extract_platform_data(self, infringement_data: Any) -> Dict[str, Any]:
-        """Extract platform-specific data from infringement"""
-        return {
+        """Extract platform-specific data from infringement"""        return {
             "detected_features": getattr(infringement_data, 'detected_features', {}),
             "uploader_info": getattr(infringement_data, 'uploader_info', {}),
             "engagement_metrics": getattr(infringement_data, 'engagement_metrics', {}),
@@ -648,8 +610,7 @@ class TakedownManager:
         }
     
     def _calculate_deadline(self, priority: str) -> datetime:
-        """Calculate deadline based on priority"""
-        hours_map = {
+        """Calculate deadline based on priority"""        hours_map = {
             "critical": 4,
             "high": 24,
             "normal": 72,
@@ -660,15 +621,13 @@ class TakedownManager:
         return datetime.now(timezone.utc) + timedelta(hours=hours)
     
     async def _load_takedown_templates(self) -> None:
-        """Load takedown notice templates"""
-        # Default DMCA template
+        """Load takedown notice templates"""        # Default DMCA template
         dmca_template = TakedownTemplate(
             template_id="dmca_standard",
             takedown_type=TakedownType.DMCA,
             platform="generic",
             title="DMCA Takedown Notice",
-            body_template="""
-I am writing to notify you of copyright infringement occurring on your platform.
+            body_template="""I am writing to notify you of copyright infringement occurring on your platform.
 
 Original Content: {original_content_url}
 Infringing Content: {infringing_url}
@@ -693,8 +652,7 @@ Date: {date}
         logger.info("Takedown templates loaded")
     
     async def get_request_details(self, request_id: str) -> Optional[Dict[str, Any]]:
-        """Get detailed information about a takedown request"""
-        if request_id not in self.active_requests:
+        """Get detailed information about a takedown request"""        if request_id not in self.active_requests:
             return None
         
         request = self.active_requests[request_id]
@@ -718,8 +676,7 @@ Date: {date}
         }
     
     async def get_takedown_statistics(self, creator_id: Optional[str] = None) -> Dict[str, Any]:
-        """Get takedown statistics"""
-        all_requests = list(self.active_requests.values())
+        """Get takedown statistics"""        all_requests = list(self.active_requests.values())
         
         # Filter by creator if specified
         if creator_id:
@@ -769,8 +726,7 @@ Date: {date}
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on takedown manager"""
-        health_status = {
+        """Perform health check on takedown manager"""        health_status = {
             "manager": "healthy" if self.initialized else "unhealthy",
             "active_requests": len(self.active_requests),
             "handlers": {},
@@ -784,8 +740,7 @@ Date: {date}
         return health_status
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown takedown manager"""
-        logger.info("Shutting down Takedown Manager")
+        """Gracefully shutdown takedown manager"""        logger.info("Shutting down Takedown Manager")
         
         # Archive all active requests
         for request_id, request in self.active_requests.items():

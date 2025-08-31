@@ -1,5 +1,4 @@
-"""
-Quality Assessment Utilities
+"""Quality Assessment Utilities
 
 Utility functions and helpers for the quality assessment module.
 Provides common functionality, data processing, and helper methods.
@@ -13,9 +12,7 @@ intellectual property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, re
 distribution, modification, or appropriation of this code, in whole or in part, without 
 explicit written permission from Fahed Mlaiel is strictly prohibited and will be prosecuted 
 to the full extent of the law.
-"""
-
-import os
+"""import os
 import re
 import hashlib
 import mimetypes
@@ -41,12 +38,10 @@ logger = logging.getLogger(__name__)
 
 
 class FileValidator:
-    """
-    File validation utilities
+    """    File validation utilities
     
     Provides comprehensive file validation, format detection, and integrity checking.
-    """
-    
+    """    
     # Supported MIME types by category
     SUPPORTED_MIME_TYPES = {
         'audio': {
@@ -87,8 +82,7 @@ class FileValidator:
     
     @staticmethod
     def detect_file_type(file_path: Union[str, Path]) -> str:
-        """
-        Detect file type using multiple methods
+        """        Detect file type using multiple methods
         
         Args:
             file_path: Path to the file
@@ -98,8 +92,7 @@ class FileValidator:
             
         Raises:
             UnsupportedFormatError: If format is not supported
-        """
-        file_path = Path(file_path)
+        """        file_path = Path(file_path)
         
         if not file_path.exists():
             raise ContentValidationError(
@@ -137,16 +130,14 @@ class FileValidator:
     
     @staticmethod
     def get_all_supported_formats() -> Set[str]:
-        """Get all supported MIME types"""
-        all_formats = set()
+        """Get all supported MIME types"""        all_formats = set()
         for mime_types in FileValidator.SUPPORTED_MIME_TYPES.values():
             all_formats.update(mime_types)
         return all_formats
     
     @staticmethod
     def validate_file_integrity(file_path: Union[str, Path]) -> bool:
-        """
-        Validate file integrity
+        """        Validate file integrity
         
         Args:
             file_path: Path to the file
@@ -156,8 +147,7 @@ class FileValidator:
             
         Raises:
             ContentValidationError: If file is corrupted
-        """
-        file_path = Path(file_path)
+        """        file_path = Path(file_path)
         
         try:
             # Basic file existence and readability check
@@ -197,8 +187,7 @@ class FileValidator:
     
     @staticmethod
     def get_file_hash(file_path: Union[str, Path], algorithm: str = 'sha256') -> str:
-        """
-        Calculate file hash for integrity checking
+        """        Calculate file hash for integrity checking
         
         Args:
             file_path: Path to the file
@@ -206,8 +195,7 @@ class FileValidator:
             
         Returns:
             Hexadecimal hash string
-        """
-        hash_func = hashlib.new(algorithm)
+        """        hash_func = hashlib.new(algorithm)
         
         with open(file_path, 'rb') as f:
             while chunk := f.read(8192):
@@ -217,16 +205,14 @@ class FileValidator:
     
     @staticmethod
     def get_file_metadata(file_path: Union[str, Path]) -> Dict[str, Any]:
-        """
-        Extract comprehensive file metadata
+        """        Extract comprehensive file metadata
         
         Args:
             file_path: Path to the file
             
         Returns:
             Dictionary containing file metadata
-        """
-        file_path = Path(file_path)
+        """        file_path = Path(file_path)
         stat = file_path.stat()
         
         metadata = {
@@ -259,16 +245,13 @@ class FileValidator:
 
 
 class DataProcessor:
-    """
-    Data processing utilities
+    """    Data processing utilities
     
     Provides data transformation, normalization, and processing functions.
-    """
-    
+    """    
     @staticmethod
     def normalize_score(value: float, min_val: float = 0.0, max_val: float = 100.0) -> float:
-        """
-        Normalize a score to 0-100 range
+        """        Normalize a score to 0-100 range
         
         Args:
             value: Input value
@@ -277,8 +260,7 @@ class DataProcessor:
             
         Returns:
             Normalized score (0-100)
-        """
-        if max_val == min_val:
+        """        if max_val == min_val:
             return 50.0  # Default middle value
         
         normalized = ((value - min_val) / (max_val - min_val)) * 100
@@ -289,8 +271,7 @@ class DataProcessor:
         scores: Dict[str, float],
         weights: Dict[str, float]
     ) -> float:
-        """
-        Calculate weighted average score
+        """        Calculate weighted average score
         
         Args:
             scores: Dictionary of metric names and scores
@@ -298,8 +279,7 @@ class DataProcessor:
             
         Returns:
             Weighted average score
-        """
-        if not scores or not weights:
+        """        if not scores or not weights:
             return 0.0
         
         total_weighted_score = 0.0
@@ -317,8 +297,7 @@ class DataProcessor:
     
     @staticmethod
     def percentile_rank(value: float, values: List[float]) -> float:
-        """
-        Calculate percentile rank of a value
+        """        Calculate percentile rank of a value
         
         Args:
             value: Target value
@@ -326,8 +305,7 @@ class DataProcessor:
             
         Returns:
             Percentile rank (0-100)
-        """
-        if not values:
+        """        if not values:
             return 50.0
         
         values_sorted = sorted(values)
@@ -336,8 +314,7 @@ class DataProcessor:
     
     @staticmethod
     def smooth_values(values: List[float], window_size: int = 3) -> List[float]:
-        """
-        Apply moving average smoothing to values
+        """        Apply moving average smoothing to values
         
         Args:
             values: List of values to smooth
@@ -345,8 +322,7 @@ class DataProcessor:
             
         Returns:
             List of smoothed values
-        """
-        if len(values) < window_size:
+        """        if len(values) < window_size:
             return values.copy()
         
         smoothed = []
@@ -362,8 +338,7 @@ class DataProcessor:
     
     @staticmethod
     def detect_outliers(values: List[float], threshold: float = 2.0) -> List[int]:
-        """
-        Detect outliers using z-score method
+        """        Detect outliers using z-score method
         
         Args:
             values: List of values
@@ -371,8 +346,7 @@ class DataProcessor:
             
         Returns:
             List of indices of outlier values
-        """
-        if len(values) < 3:
+        """        if len(values) < 3:
             return []
         
         mean_val = np.mean(values)
@@ -391,16 +365,13 @@ class DataProcessor:
 
 
 class TextProcessor:
-    """
-    Text processing utilities
+    """    Text processing utilities
     
     Provides text analysis, cleaning, and processing functions.
-    """
-    
+    """    
     @staticmethod
     def clean_text(text: str, remove_html: bool = True, remove_urls: bool = True) -> str:
-        """
-        Clean and normalize text
+        """        Clean and normalize text
         
         Args:
             text: Input text
@@ -409,8 +380,7 @@ class TextProcessor:
             
         Returns:
             Cleaned text
-        """
-        if not text:
+        """        if not text:
             return ""
         
         # Remove HTML tags
@@ -429,8 +399,7 @@ class TextProcessor:
     
     @staticmethod
     def extract_keywords(text: str, top_k: int = 10) -> List[str]:
-        """
-        Extract keywords from text
+        """        Extract keywords from text
         
         Args:
             text: Input text
@@ -438,8 +407,7 @@ class TextProcessor:
             
         Returns:
             List of keywords
-        """
-        # Simple keyword extraction using word frequency
+        """        # Simple keyword extraction using word frequency
         # In production, use more sophisticated NLP libraries
         
         # Clean text
@@ -472,16 +440,14 @@ class TextProcessor:
     
     @staticmethod
     def calculate_readability_score(text: str) -> Dict[str, float]:
-        """
-        Calculate various readability scores
+        """        Calculate various readability scores
         
         Args:
             text: Input text
             
         Returns:
             Dictionary of readability scores
-        """
-        if not text or len(text.strip()) < 10:
+        """        if not text or len(text.strip()) < 10:
             return {
                 'flesch_kincaid_grade': 0.0,
                 'flesch_reading_ease': 0.0,
@@ -534,24 +500,20 @@ class TextProcessor:
 
 
 class MediaProcessor:
-    """
-    Media processing utilities
+    """    Media processing utilities
     
     Provides image and video processing helper functions.
-    """
-    
+    """    
     @staticmethod
     def get_image_info(image_path: Union[str, Path]) -> Dict[str, Any]:
-        """
-        Extract comprehensive image information
+        """        Extract comprehensive image information
         
         Args:
             image_path: Path to the image
             
         Returns:
             Dictionary containing image information
-        """
-        try:
+        """        try:
             with Image.open(image_path) as img:
                 info = {
                     'width': img.width,
@@ -588,16 +550,14 @@ class MediaProcessor:
     
     @staticmethod
     def calculate_image_sharpness(image_path: Union[str, Path]) -> float:
-        """
-        Calculate image sharpness using Laplacian variance
+        """        Calculate image sharpness using Laplacian variance
         
         Args:
             image_path: Path to the image
             
         Returns:
             Sharpness score (higher = sharper)
-        """
-        try:
+        """        try:
             # Read image
             image = cv2.imread(str(image_path))
             if image is None:
@@ -617,16 +577,14 @@ class MediaProcessor:
     
     @staticmethod
     def detect_faces(image_path: Union[str, Path]) -> List[Dict[str, Any]]:
-        """
-        Detect faces in image
+        """        Detect faces in image
         
         Args:
             image_path: Path to the image
             
         Returns:
             List of face detection results
-        """
-        try:
+        """        try:
             # Load OpenCV's face cascade
             face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
             
@@ -660,21 +618,17 @@ class MediaProcessor:
 
 
 class SystemUtils:
-    """
-    System utilities
+    """    System utilities
     
     Provides system information and resource monitoring functions.
-    """
-    
+    """    
     @staticmethod
     def get_system_info() -> Dict[str, Any]:
-        """
-        Get system information
+        """        Get system information
         
         Returns:
             Dictionary containing system information
-        """
-        import psutil
+        """        import psutil
         
         try:
             info = {
@@ -703,16 +657,14 @@ class SystemUtils:
     
     @staticmethod
     def check_available_memory(required_mb: int = 1024) -> bool:
-        """
-        Check if sufficient memory is available
+        """        Check if sufficient memory is available
         
         Args:
             required_mb: Required memory in MB
             
         Returns:
             True if sufficient memory is available
-        """
-        try:
+        """        try:
             import psutil
             available_mb = psutil.virtual_memory().available / (1024 * 1024)
             return available_mb >= required_mb
@@ -721,13 +673,11 @@ class SystemUtils:
     
     @staticmethod
     def check_gpu_availability() -> Dict[str, Any]:
-        """
-        Check GPU availability and information
+        """        Check GPU availability and information
         
         Returns:
             Dictionary containing GPU information
-        """
-        gpu_info = {
+        """        gpu_info = {
             'available': False,
             'count': 0,
             'devices': []
@@ -756,23 +706,19 @@ class SystemUtils:
 
 # Utility function shortcuts
 def detect_content_type(file_path: Union[str, Path]) -> str:
-    """Shortcut for FileValidator.detect_file_type"""
-    return FileValidator.detect_file_type(file_path)
+    """Shortcut for FileValidator.detect_file_type"""    return FileValidator.detect_file_type(file_path)
 
 
 def validate_file(file_path: Union[str, Path]) -> bool:
-    """Shortcut for FileValidator.validate_file_integrity"""
-    return FileValidator.validate_file_integrity(file_path)
+    """Shortcut for FileValidator.validate_file_integrity"""    return FileValidator.validate_file_integrity(file_path)
 
 
 def normalize_score(value: float, min_val: float = 0.0, max_val: float = 100.0) -> float:
-    """Shortcut for DataProcessor.normalize_score"""
-    return DataProcessor.normalize_score(value, min_val, max_val)
+    """Shortcut for DataProcessor.normalize_score"""    return DataProcessor.normalize_score(value, min_val, max_val)
 
 
 def clean_text(text: str) -> str:
-    """Shortcut for TextProcessor.clean_text"""
-    return TextProcessor.clean_text(text)
+    """Shortcut for TextProcessor.clean_text"""    return TextProcessor.clean_text(text)
 
 
 # Export all utility classes and functions

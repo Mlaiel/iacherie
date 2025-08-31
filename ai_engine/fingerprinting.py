@@ -1,12 +1,9 @@
-"""
-Advanced AI Fingerprinting Engine
+"""Advanced AI Fingerprinting Engine
 Multi-modal content fingerprinting with high-precision similarity matching.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import hashlib
 import numpy as np
 from typing import Dict, Any, List, Optional, Tuple
@@ -35,15 +32,13 @@ from ..core.logging import logger
 
 
 class AudioFingerprinter:
-    """Advanced audio fingerprinting using multiple algorithms"""
-    
+    """Advanced audio fingerprinting using multiple algorithms"""    
     def __init__(self):
         self.sample_rate = 22050
         self.duration_limit = 300  # 5 minutes for fingerprinting
     
     async def generate_fingerprint(self, audio_data: np.ndarray) -> Dict[str, Any]:
-        """Generate comprehensive audio fingerprint"""
-        try:
+        """Generate comprehensive audio fingerprint"""        try:
             fingerprint_data = {}
             
             # Chromaprint fingerprint (industry standard)
@@ -73,8 +68,7 @@ class AudioFingerprinter:
             raise
     
     async def _generate_chromaprint(self, audio_data: np.ndarray) -> str:
-        """Generate Chromaprint fingerprint"""
-        # Convert to format expected by chromaprint
+        """Generate Chromaprint fingerprint"""        # Convert to format expected by chromaprint
         audio_int16 = (audio_data * 32767).astype(np.int16)
         
         # Generate fingerprint
@@ -85,8 +79,7 @@ class AudioFingerprinter:
         return fingerprint
     
     async def _generate_spectral_fingerprint(self, audio_data: np.ndarray) -> List[float]:
-        """Generate spectral-based fingerprint"""
-        # Compute spectrogram
+        """Generate spectral-based fingerprint"""        # Compute spectrogram
         stft = librosa.stft(audio_data, n_fft=2048, hop_length=512)
         magnitude = np.abs(stft)
         
@@ -105,8 +98,7 @@ class AudioFingerprinter:
         return fingerprint.tolist()
     
     async def _generate_mfcc_fingerprint(self, audio_data: np.ndarray) -> List[List[float]]:
-        """Generate MFCC-based fingerprint"""
-        # Extract MFCCs
+        """Generate MFCC-based fingerprint"""        # Extract MFCCs
         mfccs = librosa.feature.mfcc(y=audio_data, sr=self.sample_rate, n_mfcc=13)
         
         # Statistical summary
@@ -117,8 +109,7 @@ class AudioFingerprinter:
         return [mfcc_mean.tolist(), mfcc_std.tolist(), mfcc_delta.tolist()]
     
     async def _generate_chroma_fingerprint(self, audio_data: np.ndarray) -> List[float]:
-        """Generate chroma-based fingerprint"""
-        # Extract chroma features
+        """Generate chroma-based fingerprint"""        # Extract chroma features
         chroma = librosa.feature.chroma_stft(y=audio_data, sr=self.sample_rate)
         
         # Compress to fingerprint
@@ -128,8 +119,7 @@ class AudioFingerprinter:
         return np.concatenate([chroma_mean, chroma_std]).tolist()
     
     async def _generate_combined_hash(self, fingerprint_data: Dict) -> str:
-        """Generate combined hash from all fingerprints"""
-        # Combine all fingerprint data
+        """Generate combined hash from all fingerprints"""        # Combine all fingerprint data
         combined_str = ""
         for key, value in fingerprint_data.items():
             if key != "combined_hash":
@@ -139,16 +129,14 @@ class AudioFingerprinter:
 
 
 class VideoFingerprinter:
-    """Advanced video fingerprinting using frame analysis"""
-    
+    """Advanced video fingerprinting using frame analysis"""    
     def __init__(self):
         self.frame_sample_rate = 1  # 1 frame per second
         self.max_frames = 100  # Limit number of frames
     
     async def generate_fingerprint(self, video_frames: List[np.ndarray], 
                                  fps: float) -> Dict[str, Any]:
-        """Generate comprehensive video fingerprint"""
-        try:
+        """Generate comprehensive video fingerprint"""        try:
             fingerprint_data = {}
             
             # Sample frames
@@ -181,8 +169,7 @@ class VideoFingerprinter:
             raise
     
     async def _sample_frames(self, frames: List[np.ndarray], fps: float) -> List[np.ndarray]:
-        """Sample frames at regular intervals"""
-        if not frames:
+        """Sample frames at regular intervals"""        if not frames:
             return []
         
         # Calculate sampling interval
@@ -194,8 +181,7 @@ class VideoFingerprinter:
         return sampled
     
     async def _generate_phash_fingerprint(self, frames: List[np.ndarray]) -> List[str]:
-        """Generate perceptual hash for each frame"""
-        hashes = []
+        """Generate perceptual hash for each frame"""        hashes = []
         for frame in frames:
             # Convert to PIL Image
             if frame.shape[2] == 3:  # RGB
@@ -210,8 +196,7 @@ class VideoFingerprinter:
         return hashes
     
     async def _generate_histogram_fingerprint(self, frames: List[np.ndarray]) -> List[List[float]]:
-        """Generate color histogram fingerprint"""
-        histograms = []
+        """Generate color histogram fingerprint"""        histograms = []
         
         for frame in frames:
             # Convert to RGB if needed
@@ -236,8 +221,7 @@ class VideoFingerprinter:
         return histograms
     
     async def _generate_edge_fingerprint(self, frames: List[np.ndarray]) -> List[float]:
-        """Generate edge-based fingerprint"""
-        edge_features = []
+        """Generate edge-based fingerprint"""        edge_features = []
         
         for frame in frames:
             # Convert to grayscale
@@ -256,8 +240,7 @@ class VideoFingerprinter:
         return edge_features
     
     async def _generate_temporal_fingerprint(self, frames: List[np.ndarray]) -> List[float]:
-        """Generate temporal motion fingerprint"""
-        if len(frames) < 2:
+        """Generate temporal motion fingerprint"""        if len(frames) < 2:
             return []
         
         motion_features = []
@@ -283,8 +266,7 @@ class VideoFingerprinter:
         return motion_features
     
     async def _generate_combined_hash(self, fingerprint_data: Dict) -> str:
-        """Generate combined hash from all fingerprints"""
-        combined_str = ""
+        """Generate combined hash from all fingerprints"""        combined_str = ""
         for key, value in fingerprint_data.items():
             if key != "combined_hash":
                 combined_str += str(value)
@@ -293,8 +275,7 @@ class VideoFingerprinter:
 
 
 class ImageFingerprinter:
-    """Advanced image fingerprinting using multiple algorithms"""
-    
+    """Advanced image fingerprinting using multiple algorithms"""    
     def __init__(self):
         # Load CLIP model for semantic fingerprinting
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -305,8 +286,7 @@ class ImageFingerprinter:
             logger.warning("CLIP model not available, semantic fingerprinting disabled")
     
     async def generate_fingerprint(self, image: Image.Image) -> Dict[str, Any]:
-        """Generate comprehensive image fingerprint"""
-        try:
+        """Generate comprehensive image fingerprint"""        try:
             fingerprint_data = {}
             
             # Perceptual hashes
@@ -337,8 +317,7 @@ class ImageFingerprinter:
             raise
     
     async def _generate_perceptual_hashes(self, image: Image.Image) -> Dict[str, str]:
-        """Generate multiple perceptual hashes"""
-        return {
+        """Generate multiple perceptual hashes"""        return {
             "phash": str(imagehash.phash(image)),
             "dhash": str(imagehash.dhash(image)),
             "whash": str(imagehash.whash(image)),
@@ -346,8 +325,7 @@ class ImageFingerprinter:
         }
     
     async def _generate_color_histogram(self, image: Image.Image) -> List[float]:
-        """Generate color histogram fingerprint"""
-        # Convert to RGB if needed
+        """Generate color histogram fingerprint"""        # Convert to RGB if needed
         if image.mode != 'RGB':
             image = image.convert('RGB')
         
@@ -366,8 +344,7 @@ class ImageFingerprinter:
         return combined_hist.tolist()
     
     async def _generate_texture_fingerprint(self, image: Image.Image) -> Dict[str, float]:
-        """Generate texture-based fingerprint"""
-        # Convert to grayscale
+        """Generate texture-based fingerprint"""        # Convert to grayscale
         gray_image = image.convert('L')
         img_array = np.array(gray_image)
         
@@ -385,8 +362,7 @@ class ImageFingerprinter:
         return features
     
     async def _generate_semantic_fingerprint(self, image: Image.Image) -> List[float]:
-        """Generate semantic fingerprint using CLIP"""
-        if not self.clip_model:
+        """Generate semantic fingerprint using CLIP"""        if not self.clip_model:
             return []
         
         try:
@@ -405,8 +381,7 @@ class ImageFingerprinter:
             return []
     
     async def _generate_combined_hash(self, fingerprint_data: Dict) -> str:
-        """Generate combined hash from all fingerprints"""
-        combined_str = ""
+        """Generate combined hash from all fingerprints"""        combined_str = ""
         for key, value in fingerprint_data.items():
             if key != "combined_hash":
                 combined_str += str(value)
@@ -415,8 +390,7 @@ class ImageFingerprinter:
 
 
 class TextFingerprinter:
-    """Advanced text fingerprinting using NLP models"""
-    
+    """Advanced text fingerprinting using NLP models"""    
     def __init__(self):
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         
@@ -436,8 +410,7 @@ class TextFingerprinter:
             logger.warning("BERT model not available")
     
     async def generate_fingerprint(self, text: str) -> Dict[str, Any]:
-        """Generate comprehensive text fingerprint"""
-        try:
+        """Generate comprehensive text fingerprint"""        try:
             fingerprint_data = {}
             
             # Lexical fingerprint
@@ -468,8 +441,7 @@ class TextFingerprinter:
             raise
     
     async def _generate_lexical_fingerprint(self, text: str) -> Dict[str, Any]:
-        """Generate lexical-based fingerprint"""
-        words = text.lower().split()
+        """Generate lexical-based fingerprint"""        words = text.lower().split()
         
         # Word frequency
         word_freq = {}
@@ -493,8 +465,7 @@ class TextFingerprinter:
         }
     
     async def _generate_ngram_fingerprint(self, text: str) -> Dict[str, List[str]]:
-        """Generate n-gram based fingerprint"""
-        words = text.lower().split()
+        """Generate n-gram based fingerprint"""        words = text.lower().split()
         
         fingerprints = {}
         
@@ -516,8 +487,7 @@ class TextFingerprinter:
         return fingerprints
     
     async def _generate_semantic_fingerprint(self, text: str) -> List[float]:
-        """Generate semantic fingerprint using sentence transformers"""
-        if not self.sentence_model:
+        """Generate semantic fingerprint using sentence transformers"""        if not self.sentence_model:
             return []
         
         try:
@@ -537,8 +507,7 @@ class TextFingerprinter:
             return []
     
     async def _generate_structural_fingerprint(self, text: str) -> Dict[str, Any]:
-        """Generate structural fingerprint"""
-        return {
+        """Generate structural fingerprint"""        return {
             "sentence_count": text.count('.') + text.count('!') + text.count('?'),
             "paragraph_count": text.count('\n\n') + 1,
             "punctuation_density": sum(1 for c in text if c in '.,!?;:') / len(text),
@@ -547,8 +516,7 @@ class TextFingerprinter:
         }
     
     async def _generate_combined_hash(self, fingerprint_data: Dict) -> str:
-        """Generate combined hash from all fingerprints"""
-        combined_str = ""
+        """Generate combined hash from all fingerprints"""        combined_str = ""
         for key, value in fingerprint_data.items():
             if key != "combined_hash":
                 combined_str += str(value)
@@ -557,8 +525,7 @@ class TextFingerprinter:
 
 
 class FingerprintEngine:
-    """Main fingerprinting engine orchestrator"""
-    
+    """Main fingerprinting engine orchestrator"""    
     def __init__(self):
         self.audio_fingerprinter = AudioFingerprinter()
         self.video_fingerprinter = VideoFingerprinter()
@@ -566,8 +533,7 @@ class FingerprintEngine:
         self.text_fingerprinter = TextFingerprinter()
     
     async def generate_fingerprint(self, content_type: str, content_data: Any) -> Dict[str, Any]:
-        """Generate fingerprint for any content type"""
-        try:
+        """Generate fingerprint for any content type"""        try:
             logger.info(f"Generating fingerprint for {content_type} content")
             
             if content_type == "audio":
@@ -589,8 +555,7 @@ class FingerprintEngine:
     
     async def compare_fingerprints(self, fp1: Dict[str, Any], fp2: Dict[str, Any], 
                                  content_type: str) -> float:
-        """Compare two fingerprints and return similarity score"""
-        try:
+        """Compare two fingerprints and return similarity score"""        try:
             if content_type == "audio":
                 return await self._compare_audio_fingerprints(fp1, fp2)
             elif content_type == "video":
@@ -607,8 +572,7 @@ class FingerprintEngine:
             return 0.0
     
     async def _compare_audio_fingerprints(self, fp1: Dict, fp2: Dict) -> float:
-        """Compare audio fingerprints"""
-        scores = []
+        """Compare audio fingerprints"""        scores = []
         
         # Compare MFCC features
         if "mfcc" in fp1 and "mfcc" in fp2:
@@ -628,8 +592,7 @@ class FingerprintEngine:
         return np.mean(scores) if scores else 0.0
     
     async def _compare_video_fingerprints(self, fp1: Dict, fp2: Dict) -> float:
-        """Compare video fingerprints"""
-        scores = []
+        """Compare video fingerprints"""        scores = []
         
         # Compare perceptual hashes
         if "phash" in fp1 and "phash" in fp2:
@@ -644,8 +607,7 @@ class FingerprintEngine:
         return np.mean(scores) if scores else 0.0
     
     async def _compare_image_fingerprints(self, fp1: Dict, fp2: Dict) -> float:
-        """Compare image fingerprints"""
-        scores = []
+        """Compare image fingerprints"""        scores = []
         
         # Compare perceptual hashes
         if "perceptual_hashes" in fp1 and "perceptual_hashes" in fp2:
@@ -665,8 +627,7 @@ class FingerprintEngine:
         return np.mean(scores) if scores else 0.0
     
     async def _compare_text_fingerprints(self, fp1: Dict, fp2: Dict) -> float:
-        """Compare text fingerprints"""
-        scores = []
+        """Compare text fingerprints"""        scores = []
         
         # Compare semantic features
         if "semantic" in fp1 and "semantic" in fp2:
@@ -681,8 +642,7 @@ class FingerprintEngine:
         return np.mean(scores) if scores else 0.0
     
     def _cosine_similarity(self, vec1: List[float], vec2: List[float]) -> float:
-        """Calculate cosine similarity between two vectors"""
-        if len(vec1) != len(vec2):
+        """Calculate cosine similarity between two vectors"""        if len(vec1) != len(vec2):
             return 0.0
         
         vec1 = np.array(vec1)
@@ -698,8 +658,7 @@ class FingerprintEngine:
         return dot_product / (norm1 * norm2)
     
     def _compare_phash_sequences(self, seq1: List[str], seq2: List[str]) -> float:
-        """Compare sequences of perceptual hashes"""
-        if not seq1 or not seq2:
+        """Compare sequences of perceptual hashes"""        if not seq1 or not seq2:
             return 0.0
         
         # Find best alignment and compare
@@ -719,8 +678,7 @@ class FingerprintEngine:
         return max_score
     
     def _compare_histogram_sequences(self, seq1: List[List[float]], seq2: List[List[float]]) -> float:
-        """Compare sequences of histograms"""
-        if not seq1 or not seq2:
+        """Compare sequences of histograms"""        if not seq1 or not seq2:
             return 0.0
         
         scores = []
@@ -733,8 +691,7 @@ class FingerprintEngine:
         return np.mean(scores) if scores else 0.0
     
     def _compare_image_hashes(self, hashes1: Dict[str, str], hashes2: Dict[str, str]) -> float:
-        """Compare image hash dictionaries"""
-        scores = []
+        """Compare image hash dictionaries"""        scores = []
         
         for hash_type in hashes1:
             if hash_type in hashes2:
@@ -745,8 +702,7 @@ class FingerprintEngine:
         return np.mean(scores) if scores else 0.0
     
     def _compare_ngrams(self, ngrams1: Dict, ngrams2: Dict) -> float:
-        """Compare n-gram dictionaries"""
-        scores = []
+        """Compare n-gram dictionaries"""        scores = []
         
         for n in ngrams1:
             if n in ngrams2:

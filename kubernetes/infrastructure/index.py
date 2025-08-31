@@ -1,5 +1,4 @@
-"""
-Infrastructure Deployment Module - Main Index
+"""Infrastructure Deployment Module - Main Index
 
 This index file provides a convenient entry point for the IA Influencer Agent
 infrastructure deployment system with comprehensive cloud provider support,
@@ -9,9 +8,7 @@ Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -112,23 +109,20 @@ from .vector_database import (
 logger = logging.getLogger(__name__)
 
 class DeploymentMode(Enum):
-    """Infrastructure deployment modes"""
-    DEVELOPMENT = "development"
+    """Infrastructure deployment modes"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
 
 class DeploymentEnvironment(Enum):
-    """Deployment environments"""
-    LOCAL = "local"
+    """Deployment environments"""    LOCAL = "local"
     CLOUD = "cloud"
     HYBRID = "hybrid"
     MULTI_CLOUD = "multi_cloud"
 
 @dataclass
 class IAInfluencerInfrastructureConfig:
-    """Complete infrastructure configuration for IA Influencer platform"""
-    deployment_mode: DeploymentMode
+    """Complete infrastructure configuration for IA Influencer platform"""    deployment_mode: DeploymentMode
     environment: DeploymentEnvironment
     cloud_provider: CloudProvider
     region: str
@@ -161,8 +155,7 @@ class IAInfluencerInfrastructureConfig:
     custom_configs: Dict[str, Any] = field(default_factory=dict)
 
 class IAInfluencerInfrastructureManager:
-    """
-    Comprehensive infrastructure manager for IA Influencer Agent platform
+    """    Comprehensive infrastructure manager for IA Influencer Agent platform
     
     This manager orchestrates the deployment of all infrastructure components
     required for the IA Influencer Agent platform including:
@@ -173,8 +166,7 @@ class IAInfluencerInfrastructureManager:
     - Database provisioning and management
     - Storage management with backup strategies
     - Security and compliance features
-    """
-    
+    """    
     def __init__(self, config: IAInfluencerInfrastructureConfig):
         self.config = config
         self.cloud_manager = CloudProviderManager()
@@ -202,13 +194,11 @@ class IAInfluencerInfrastructureManager:
         }
     
     async def deploy_complete_infrastructure(self) -> Dict[str, Any]:
-        """
-        Deploy complete IA Influencer infrastructure
+        """        Deploy complete IA Influencer infrastructure
         
         This method orchestrates the deployment of all infrastructure components
         in the correct order with proper dependencies and health checks.
-        """
-        try:
+        """        try:
             results = {}
             logger.info(f"Starting complete infrastructure deployment for IA Influencer platform")
             logger.info(f"Mode: {self.config.deployment_mode.value}, Environment: {self.config.environment.value}")
@@ -309,8 +299,7 @@ class IAInfluencerInfrastructureManager:
             }
     
     async def _setup_cloud_provider(self) -> Dict[str, Any]:
-        """Setup cloud provider infrastructure"""
-        try:
+        """Setup cloud provider infrastructure"""        try:
             logger.info(f"Setting up {self.config.cloud_provider.value} cloud provider")
             
             # Register cloud provider based on configuration
@@ -351,8 +340,7 @@ class IAInfluencerInfrastructureManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _setup_networking(self) -> Dict[str, Any]:
-        """Setup networking infrastructure"""
-        try:
+        """Setup networking infrastructure"""        try:
             logger.info("Setting up networking infrastructure")
             
             # Create VPC specification for IA Influencer platform
@@ -385,8 +373,7 @@ class IAInfluencerInfrastructureManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _setup_storage(self) -> Dict[str, Any]:
-        """Setup storage infrastructure"""
-        try:
+        """Setup storage infrastructure"""        try:
             logger.info("Setting up storage infrastructure")
             
             # Object storage for content files (images, audio, video)
@@ -458,8 +445,7 @@ class IAInfluencerInfrastructureManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_databases(self) -> Dict[str, Any]:
-        """Deploy database infrastructure"""
-        try:
+        """Deploy database infrastructure"""        try:
             logger.info("Deploying database infrastructure")
             
             results = {}
@@ -550,8 +536,7 @@ class IAInfluencerInfrastructureManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_vector_databases(self) -> Dict[str, Any]:
-        """Deploy vector databases for AI content fingerprinting"""
-        try:
+        """Deploy vector databases for AI content fingerprinting"""        try:
             logger.info("Deploying vector databases for AI content fingerprinting")
             
             # Create comprehensive vector database setup for IA Influencer platform
@@ -566,8 +551,7 @@ class IAInfluencerInfrastructureManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _setup_container_orchestration(self) -> Dict[str, Any]:
-        """Setup container orchestration with Kubernetes"""
-        try:
+        """Setup container orchestration with Kubernetes"""        try:
             logger.info("Setting up container orchestration")
             
             # Deploy IA Influencer application services
@@ -624,8 +608,7 @@ class IAInfluencerInfrastructureManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_service_mesh(self) -> Dict[str, Any]:
-        """Deploy service mesh for microservices communication"""
-        try:
+        """Deploy service mesh for microservices communication"""        try:
             logger.info("Deploying service mesh")
             
             # Configure Istio service mesh for IA Influencer platform
@@ -646,8 +629,7 @@ class IAInfluencerInfrastructureManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _setup_monitoring(self) -> Dict[str, Any]:
-        """Setup monitoring and observability stack"""
-        try:
+        """Setup monitoring and observability stack"""        try:
             logger.info("Setting up monitoring and observability")
             
             # Configure comprehensive monitoring for IA Influencer platform
@@ -669,8 +651,7 @@ class IAInfluencerInfrastructureManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_load_balancer(self) -> Dict[str, Any]:
-        """Deploy load balancer and ingress"""
-        try:
+        """Deploy load balancer and ingress"""        try:
             logger.info("Deploying load balancer")
             
             # Configure load balancer for IA Influencer platform
@@ -691,8 +672,7 @@ class IAInfluencerInfrastructureManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _setup_auto_scaling(self) -> Dict[str, Any]:
-        """Setup auto-scaling for services"""
-        try:
+        """Setup auto-scaling for services"""        try:
             logger.info("Setting up auto-scaling")
             
             # Configure auto-scaling for IA Influencer services
@@ -730,8 +710,7 @@ class IAInfluencerInfrastructureManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _get_deployment_endpoints(self) -> Dict[str, Any]:
-        """Get deployment endpoints and access information"""
-        try:
+        """Get deployment endpoints and access information"""        try:
             endpoints = {
                 'api_endpoint': f"https://api.ia-influencer.{self.config.region}.com",
                 'grafana_dashboard': f"https://grafana.ia-influencer.{self.config.region}.com",
@@ -748,8 +727,7 @@ class IAInfluencerInfrastructureManager:
             return {}
     
     async def get_infrastructure_status(self) -> Dict[str, Any]:
-        """Get comprehensive infrastructure status"""
-        try:
+        """Get comprehensive infrastructure status"""        try:
             status = {
                 'deployment_status': self.deployment_status,
                 'config': {
@@ -774,8 +752,7 @@ class IAInfluencerInfrastructureManager:
             return {'status': 'error', 'message': str(e)}
     
     async def destroy_infrastructure(self) -> Dict[str, Any]:
-        """Destroy complete infrastructure (use with caution)"""
-        try:
+        """Destroy complete infrastructure (use with caution)"""        try:
             logger.warning("Starting infrastructure destruction - THIS WILL DELETE ALL RESOURCES")
             
             results = {}
@@ -843,8 +820,7 @@ async def deploy_ia_influencer_production_infrastructure(
     region: str,
     custom_configs: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
-    """
-    Deploy production-ready IA Influencer infrastructure
+    """    Deploy production-ready IA Influencer infrastructure
     
     Args:
         cloud_provider: Cloud provider to use (AWS, GCP, Azure)
@@ -853,8 +829,7 @@ async def deploy_ia_influencer_production_infrastructure(
     
     Returns:
         Dict containing deployment results and status
-    """
-    config = IAInfluencerInfrastructureConfig(
+    """    config = IAInfluencerInfrastructureConfig(
         deployment_mode=DeploymentMode.PRODUCTION,
         environment=DeploymentEnvironment.CLOUD,
         cloud_provider=cloud_provider,
@@ -885,8 +860,7 @@ async def deploy_ia_influencer_development_infrastructure(
     cloud_provider: CloudProvider,
     region: str
 ) -> Dict[str, Any]:
-    """
-    Deploy development IA Influencer infrastructure
+    """    Deploy development IA Influencer infrastructure
     
     Args:
         cloud_provider: Cloud provider to use (AWS, GCP, Azure)
@@ -894,8 +868,7 @@ async def deploy_ia_influencer_development_infrastructure(
     
     Returns:
         Dict containing deployment results and status
-    """
-    config = IAInfluencerInfrastructureConfig(
+    """    config = IAInfluencerInfrastructureConfig(
         deployment_mode=DeploymentMode.DEVELOPMENT,
         environment=DeploymentEnvironment.CLOUD,
         cloud_provider=cloud_provider,

@@ -1,5 +1,4 @@
-"""
-Content Quality Assessor - Multi-Format Content Quality Assessment
+"""Content Quality Assessor - Multi-Format Content Quality Assessment
 ==================================================================
 
 Enterprise-grade content quality assessment system for audio, video, image, and text content.
@@ -16,9 +15,7 @@ Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security +
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""
-
-from typing import Dict, Any, List, Optional, Union, Tuple, Set, Callable
+"""from typing import Dict, Any, List, Optional, Union, Tuple, Set, Callable
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -64,8 +61,7 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class ContentQualityDimension(Enum):
-    """Content quality assessment dimensions"""
-    TECHNICAL_QUALITY = "technical_quality"     # Technical specifications and standards
+    """Content quality assessment dimensions"""    TECHNICAL_QUALITY = "technical_quality"     # Technical specifications and standards
     AESTHETIC_QUALITY = "aesthetic_quality"     # Visual/auditory appeal and composition
     CONTENT_CLARITY = "content_clarity"         # Clarity, sharpness, readability
     ENGAGEMENT_POTENTIAL = "engagement_potential" # Audience engagement and interest
@@ -77,8 +73,7 @@ class ContentQualityDimension(Enum):
     TECHNICAL_COMPLIANCE = "technical_compliance" # Format and standard compliance
 
 class QualityLevel(Enum):
-    """Content quality levels"""
-    EXCEPTIONAL = "exceptional"    # 95-100 - Industry-leading quality
+    """Content quality levels"""    EXCEPTIONAL = "exceptional"    # 95-100 - Industry-leading quality
     PROFESSIONAL = "professional"  # 85-94  - Professional broadcast quality
     HIGH = "high"                  # 75-84  - High-quality content
     GOOD = "good"                  # 65-74  - Good quality content
@@ -87,8 +82,7 @@ class QualityLevel(Enum):
     UNACCEPTABLE = "unacceptable"  # 0-34   - Requires major improvement
 
 class ContentFormat(Enum):
-    """Supported content formats"""
-    AUDIO_WAV = "audio/wav"
+    """Supported content formats"""    AUDIO_WAV = "audio/wav"
     AUDIO_MP3 = "audio/mp3"
     AUDIO_FLAC = "audio/flac"
     AUDIO_AAC = "audio/aac"
@@ -106,8 +100,7 @@ class ContentFormat(Enum):
 
 @dataclass
 class QualityMetric:
-    """Individual quality metric result"""
-    name: str
+    """Individual quality metric result"""    name: str
     value: float
     weight: float
     max_value: float = 100.0
@@ -117,8 +110,7 @@ class QualityMetric:
     
     @property
     def normalized_score(self) -> float:
-        """Get normalized score (0-100)"""
-        return min(100.0, max(0.0, (self.value / self.max_value) * 100))
+        """Get normalized score (0-100)"""        return min(100.0, max(0.0, (self.value / self.max_value) * 100))
     
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -133,8 +125,7 @@ class QualityMetric:
 
 @dataclass
 class DimensionAssessment:
-    """Assessment result for a quality dimension"""
-    dimension: ContentQualityDimension
+    """Assessment result for a quality dimension"""    dimension: ContentQualityDimension
     score: float
     metrics: List[QualityMetric] = field(default_factory=list)
     issues: List[str] = field(default_factory=list)
@@ -142,12 +133,10 @@ class DimensionAssessment:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def add_metric(self, metric: QualityMetric):
-        """Add quality metric to dimension"""
-        self.metrics.append(metric)
+        """Add quality metric to dimension"""        self.metrics.append(metric)
     
     def calculate_score(self) -> float:
-        """Calculate dimension score from metrics"""
-        if not self.metrics:
+        """Calculate dimension score from metrics"""        if not self.metrics:
             return 0.0
         
         total_weighted_score = sum(m.normalized_score * m.weight for m in self.metrics)
@@ -168,8 +157,7 @@ class DimensionAssessment:
 
 @dataclass
 class ContentQualityReport:
-    """Comprehensive content quality assessment report"""
-    content_type: str
+    """Comprehensive content quality assessment report"""    content_type: str
     content_format: Optional[str] = None
     overall_score: float = 0.0
     quality_level: QualityLevel = QualityLevel.UNACCEPTABLE
@@ -183,8 +171,7 @@ class ContentQualityReport:
     timestamp: datetime = field(default_factory=datetime.utcnow)
     
     def calculate_overall_score(self, weights: Dict[ContentQualityDimension, float]) -> float:
-        """Calculate overall quality score from dimension assessments"""
-        if not self.dimension_assessments:
+        """Calculate overall quality score from dimension assessments"""        if not self.dimension_assessments:
             return 0.0
         
         total_weighted_score = 0.0
@@ -199,8 +186,7 @@ class ContentQualityReport:
         return self.overall_score
     
     def determine_quality_level(self) -> QualityLevel:
-        """Determine quality level based on overall score"""
-        score = self.overall_score
+        """Determine quality level based on overall score"""        score = self.overall_score
         
         if score >= 95:
             self.quality_level = QualityLevel.EXCEPTIONAL
@@ -220,8 +206,7 @@ class ContentQualityReport:
         return self.quality_level
     
     def get_dimension_score(self, dimension: ContentQualityDimension) -> float:
-        """Get score for specific dimension"""
-        for assessment in self.dimension_assessments:
+        """Get score for specific dimension"""        for assessment in self.dimension_assessments:
             if assessment.dimension == dimension:
                 return assessment.score
         return 0.0
@@ -249,8 +234,7 @@ class ContentQualityReport:
         }
     
     def _calculate_improvement_potential(self) -> float:
-        """Calculate potential score improvement"""
-        if not self.dimension_assessments:
+        """Calculate potential score improvement"""        if not self.dimension_assessments:
             return 0.0
         
         current_avg = statistics.mean([da.score for da in self.dimension_assessments])
@@ -258,22 +242,18 @@ class ContentQualityReport:
         return round(potential_avg - current_avg, 2)
 
 class ContentQualityAssessor:
-    """
-    Enterprise-grade content quality assessment system.
+    """    Enterprise-grade content quality assessment system.
     
     Provides comprehensive quality analysis across multiple dimensions including
     technical quality, aesthetic appeal, engagement potential, and optimization
     for different platforms and distribution channels.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize the content quality assessor.
+        """        Initialize the content quality assessor.
         
         Args:
             config: Content assessment configuration
-        """
-        self.config = config
+        """        self.config = config
         self.logger = logger
         
         # Quality assessment weights by content type
@@ -368,8 +348,7 @@ class ContentQualityAssessor:
         metadata: Optional[Dict[str, Any]] = None,
         assessment_options: Optional[Dict[str, Any]] = None
     ) -> ContentQualityReport:
-        """
-        Comprehensive content quality assessment.
+        """        Comprehensive content quality assessment.
         
         Args:
             content_data: Content to assess
@@ -379,8 +358,7 @@ class ContentQualityAssessor:
             
         Returns:
             Comprehensive quality assessment report
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         metadata = metadata or {}
         assessment_options = assessment_options or {}
         
@@ -483,8 +461,7 @@ class ContentQualityAssessor:
         content_type: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Extract technical specifications from content"""
-        
+        """Extract technical specifications from content"""        
         specs = {
             'content_type': content_type,
             'size_bytes': self._get_content_size(content_data),
@@ -509,8 +486,7 @@ class ContentQualityAssessor:
         return specs
     
     async def _extract_audio_specs(self, content_data: Any) -> Dict[str, Any]:
-        """Extract audio technical specifications"""
-        if not HAS_LIBROSA:
+        """Extract audio technical specifications"""        if not HAS_LIBROSA:
             return {'error': 'Audio analysis not available'}
         
         # This would need actual audio data processing
@@ -523,8 +499,7 @@ class ContentQualityAssessor:
         }
     
     async def _extract_video_specs(self, content_data: Any) -> Dict[str, Any]:
-        """Extract video technical specifications"""
-        if not HAS_FFMPEG:
+        """Extract video technical specifications"""        if not HAS_FFMPEG:
             return {'error': 'Video analysis not available'}
         
         return {
@@ -537,8 +512,7 @@ class ContentQualityAssessor:
         }
     
     async def _extract_image_specs(self, content_data: Any) -> Dict[str, Any]:
-        """Extract image technical specifications"""
-        if not HAS_VISION:
+        """Extract image technical specifications"""        if not HAS_VISION:
             return {'error': 'Image analysis not available'}
         
         return {
@@ -550,8 +524,7 @@ class ContentQualityAssessor:
         }
     
     async def _extract_text_specs(self, content_data: Any) -> Dict[str, Any]:
-        """Extract text specifications"""
-        if isinstance(content_data, str):
+        """Extract text specifications"""        if isinstance(content_data, str):
             text = content_data
         else:
             text = str(content_data)
@@ -565,8 +538,7 @@ class ContentQualityAssessor:
         }
     
     def _get_content_size(self, content_data: Any) -> int:
-        """Get content size in bytes"""
-        if hasattr(content_data, '__len__'):
+        """Get content size in bytes"""        if hasattr(content_data, '__len__'):
             return len(content_data)
         elif isinstance(content_data, str):
             return len(content_data.encode('utf-8'))
@@ -577,8 +549,7 @@ class ContentQualityAssessor:
         self, 
         report: ContentQualityReport
     ) -> List[str]:
-        """Generate content optimization recommendations"""
-        
+        """Generate content optimization recommendations"""        
         recommendations = []
         
         # Analyze dimension scores for recommendations
@@ -646,8 +617,7 @@ class ContentQualityAssessor:
         return list(set(recommendations))  # Remove duplicates
     
     async def _create_improvement_plan(self, report: ContentQualityReport) -> List[Dict[str, Any]]:
-        """Create detailed improvement plan"""
-        
+        """Create detailed improvement plan"""        
         plan = []
         
         # Sort dimensions by score (lowest first for priority)
@@ -692,8 +662,7 @@ class ContentQualityAssessor:
         return plan
     
     def _get_success_metrics(self, dimension: ContentQualityDimension) -> List[str]:
-        """Get success metrics for dimension improvement"""
-        
+        """Get success metrics for dimension improvement"""        
         metrics_map = {
             ContentQualityDimension.TECHNICAL_QUALITY: [
                 "Technical specifications meet industry standards",
@@ -730,8 +699,7 @@ class ContentQualityAssessor:
         return metrics_map.get(dimension, ["Quality metrics improved", "Standards compliance achieved"])
     
     async def _check_quality_compliance(self, report: ContentQualityReport) -> Dict[str, bool]:
-        """Check compliance with quality standards"""
-        
+        """Check compliance with quality standards"""        
         compliance = {}
         standards = self.quality_standards.get(report.content_type, {})
         specs = report.technical_specs
@@ -763,8 +731,7 @@ class ContentQualityAssessor:
         return compliance
     
     async def _analyze_quality_trends(self, current_report: ContentQualityReport) -> Dict[str, Any]:
-        """Analyze quality trends from assessment history"""
-        
+        """Analyze quality trends from assessment history"""        
         if len(self.assessment_history) < 2:
             return {'message': 'Insufficient data for trend analysis'}
         
@@ -812,8 +779,7 @@ class ContentQualityAssessor:
         return trend_analysis
     
     def get_assessment_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive assessment statistics"""
-        
+        """Get comprehensive assessment statistics"""        
         if not self.assessment_history:
             return {'message': 'No assessment history available'}
         
@@ -863,8 +829,7 @@ class ContentQualityAssessor:
 # Content-specific quality assessors
 
 class AudioQualityAssessor:
-    """Specialized audio quality assessment"""
-    
+    """Specialized audio quality assessment"""    
     def __init__(self, parent_assessor):
         self.parent = parent_assessor
         self.logger = parent_assessor.logger
@@ -876,8 +841,7 @@ class AudioQualityAssessor:
         metadata: Dict[str, Any],
         technical_specs: Dict[str, Any]
     ) -> Optional[DimensionAssessment]:
-        """Assess specific dimension for audio content"""
-        
+        """Assess specific dimension for audio content"""        
         assessment = DimensionAssessment(dimension=dimension, score=0.0)
         
         if dimension == ContentQualityDimension.TECHNICAL_QUALITY:
@@ -911,8 +875,7 @@ class AudioQualityAssessor:
         content_data: Any, 
         specs: Dict[str, Any]
     ):
-        """Assess audio technical quality"""
-        
+        """Assess audio technical quality"""        
         # Sample rate assessment
         sample_rate = specs.get('sample_rate', 44100)
         sample_rate_score = min(100, (sample_rate / 96000) * 100) if sample_rate > 0 else 50
@@ -974,8 +937,7 @@ class AudioQualityAssessor:
         ))
 
 class VideoQualityAssessor:
-    """Specialized video quality assessment"""
-    
+    """Specialized video quality assessment"""    
     def __init__(self, parent_assessor):
         self.parent = parent_assessor
         self.logger = parent_assessor.logger
@@ -987,8 +949,7 @@ class VideoQualityAssessor:
         metadata: Dict[str, Any],
         technical_specs: Dict[str, Any]
     ) -> Optional[DimensionAssessment]:
-        """Assess specific dimension for video content"""
-        
+        """Assess specific dimension for video content"""        
         assessment = DimensionAssessment(dimension=dimension, score=0.0)
         
         if dimension == ContentQualityDimension.TECHNICAL_QUALITY:
@@ -1022,8 +983,7 @@ class VideoQualityAssessor:
         content_data: Any, 
         specs: Dict[str, Any]
     ):
-        """Assess video technical quality"""
-        
+        """Assess video technical quality"""        
         # Resolution assessment
         width = specs.get('width', 1920)
         height = specs.get('height', 1080)
@@ -1108,8 +1068,7 @@ class VideoQualityAssessor:
         ))
 
 class ImageQualityAssessor:
-    """Specialized image quality assessment"""
-    
+    """Specialized image quality assessment"""    
     def __init__(self, parent_assessor):
         self.parent = parent_assessor
         self.logger = parent_assessor.logger
@@ -1121,8 +1080,7 @@ class ImageQualityAssessor:
         metadata: Dict[str, Any],
         technical_specs: Dict[str, Any]
     ) -> Optional[DimensionAssessment]:
-        """Assess specific dimension for image content"""
-        
+        """Assess specific dimension for image content"""        
         assessment = DimensionAssessment(dimension=dimension, score=0.0)
         
         if dimension == ContentQualityDimension.TECHNICAL_QUALITY:
@@ -1154,8 +1112,7 @@ class ImageQualityAssessor:
         content_data: Any, 
         specs: Dict[str, Any]
     ):
-        """Assess image technical quality"""
-        
+        """Assess image technical quality"""        
         # Resolution assessment
         width = specs.get('width', 1920)
         height = specs.get('height', 1080)
@@ -1216,8 +1173,7 @@ class ImageQualityAssessor:
         ))
 
 class TextQualityAssessor:
-    """Specialized text quality assessment"""
-    
+    """Specialized text quality assessment"""    
     def __init__(self, parent_assessor):
         self.parent = parent_assessor
         self.logger = parent_assessor.logger
@@ -1229,8 +1185,7 @@ class TextQualityAssessor:
         metadata: Dict[str, Any],
         technical_specs: Dict[str, Any]
     ) -> Optional[DimensionAssessment]:
-        """Assess specific dimension for text content"""
-        
+        """Assess specific dimension for text content"""        
         assessment = DimensionAssessment(dimension=dimension, score=0.0)
         
         if dimension == ContentQualityDimension.TECHNICAL_QUALITY:
@@ -1264,8 +1219,7 @@ class TextQualityAssessor:
         content_data: Any, 
         specs: Dict[str, Any]
     ):
-        """Assess text technical quality (grammar, spelling, etc.)"""
-        
+        """Assess text technical quality (grammar, spelling, etc.)"""        
         text = str(content_data) if not isinstance(content_data, str) else content_data
         
         # Length assessment
@@ -1357,8 +1311,7 @@ class TextQualityAssessor:
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Assess content quality across all dimensions.
+        """        Assess content quality across all dimensions.
         
         Args:
             content_data: Content to assess
@@ -1367,8 +1320,7 @@ class TextQualityAssessor:
             
         Returns:
             Comprehensive quality assessment results
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         
         try:
             # Get appropriate assessor
@@ -1428,8 +1380,7 @@ class TextQualityAssessor:
         dimension_scores: Dict[ContentQualityDimension, float],
         content_type: str
     ) -> float:
-        """Calculate overall quality score from dimension scores"""
-        
+        """Calculate overall quality score from dimension scores"""        
         # Adjust weights based on content type
         adjusted_weights = self._adjust_weights_for_content_type(content_type)
         
@@ -1444,8 +1395,7 @@ class TextQualityAssessor:
         return total_score / total_weight if total_weight > 0 else 0
     
     def _adjust_weights_for_content_type(self, content_type: str) -> Dict[ContentQualityDimension, float]:
-        """Adjust dimension weights based on content type"""
-        
+        """Adjust dimension weights based on content type"""        
         weights = self.dimension_weights.copy()
         
         if content_type == 'audio':
@@ -1480,8 +1430,7 @@ class TextQualityAssessor:
         return weights
     
     def _determine_quality_level(self, score: float, content_type: str) -> QualityLevel:
-        """Determine quality level based on score and content type"""
-        
+        """Determine quality level based on score and content type"""        
         thresholds = self.quality_thresholds.get(content_type, self.quality_thresholds['text'])
         
         if score >= thresholds['professional']:
@@ -1501,8 +1450,7 @@ class TextQualityAssessor:
         content_data: Any,
         metadata: Optional[Dict[str, Any]]
     ) -> Dict[ContentQualityDimension, float]:
-        """Assess audio content quality"""
-        
+        """Assess audio content quality"""        
         scores = {}
         
         # Technical Quality (bit rate, sample rate, compression, noise)
@@ -1542,8 +1490,7 @@ class TextQualityAssessor:
         content_data: Any,
         metadata: Optional[Dict[str, Any]]
     ) -> Dict[ContentQualityDimension, float]:
-        """Assess video content quality"""
-        
+        """Assess video content quality"""        
         scores = {}
         
         # Technical Quality (resolution, frame rate, encoding)
@@ -1583,8 +1530,7 @@ class TextQualityAssessor:
         content_data: Any,
         metadata: Optional[Dict[str, Any]]
     ) -> Dict[ContentQualityDimension, float]:
-        """Assess image content quality"""
-        
+        """Assess image content quality"""        
         scores = {}
         
         # Technical Quality (resolution, compression, artifacts)
@@ -1624,8 +1570,7 @@ class TextQualityAssessor:
         content_data: Any,
         metadata: Optional[Dict[str, Any]]
     ) -> Dict[ContentQualityDimension, float]:
-        """Assess text content quality"""
-        
+        """Assess text content quality"""        
         scores = {}
         
         # Technical Quality (grammar, spelling, syntax)
@@ -1662,33 +1607,27 @@ class TextQualityAssessor:
     
     # Audio assessment methods (placeholders for actual implementation)
     async def _assess_audio_technical_quality(self, content_data: Any, metadata: Optional[Dict[str, Any]]) -> float:
-        """Assess audio technical quality"""
-        # Placeholder - would analyze bitrate, sample rate, compression artifacts, etc.
+        """Assess audio technical quality"""        # Placeholder - would analyze bitrate, sample rate, compression artifacts, etc.
         return 85.0
     
     async def _assess_audio_clarity(self, content_data: Any, metadata: Optional[Dict[str, Any]]) -> float:
-        """Assess audio clarity"""
-        # Placeholder - would analyze audio clarity, balance, noise levels, etc.
+        """Assess audio clarity"""        # Placeholder - would analyze audio clarity, balance, noise levels, etc.
         return 80.0
     
     async def _assess_audio_production_value(self, content_data: Any, metadata: Optional[Dict[str, Any]]) -> float:
-        """Assess audio production value"""
-        # Placeholder - would analyze mixing, mastering, effects quality, etc.
+        """Assess audio production value"""        # Placeholder - would analyze mixing, mastering, effects quality, etc.
         return 75.0
     
     async def _assess_audio_engagement(self, content_data: Any, metadata: Optional[Dict[str, Any]]) -> float:
-        """Assess audio engagement potential"""
-        # Placeholder - would analyze rhythm, melody, structure, etc.
+        """Assess audio engagement potential"""        # Placeholder - would analyze rhythm, melody, structure, etc.
         return 78.0
     
     async def _assess_audio_aesthetics(self, content_data: Any, metadata: Optional[Dict[str, Any]]) -> float:
-        """Assess audio aesthetic quality"""
-        # Placeholder - would analyze musical appeal, composition, etc.
+        """Assess audio aesthetic quality"""        # Placeholder - would analyze musical appeal, composition, etc.
         return 82.0
     
     async def _assess_audio_optimization(self, content_data: Any, metadata: Optional[Dict[str, Any]]) -> float:
-        """Assess audio optimization"""
-        # Placeholder - would analyze format optimization, compression efficiency, etc.
+        """Assess audio optimization"""        # Placeholder - would analyze format optimization, compression efficiency, etc.
         return 90.0
     
     # Video assessment methods (placeholders)
@@ -1754,8 +1693,7 @@ class TextQualityAssessor:
         content_type: str,
         metadata: Optional[Dict[str, Any]]
     ) -> List[str]:
-        """Generate content optimization recommendations"""
-        
+        """Generate content optimization recommendations"""        
         recommendations = []
         
         # Find dimensions that need improvement
@@ -1800,8 +1738,7 @@ class TextQualityAssessor:
         dimension_scores: Dict[ContentQualityDimension, float],
         content_type: str
     ) -> List[Dict[str, Any]]:
-        """Generate specific improvement suggestions with priority"""
-        
+        """Generate specific improvement suggestions with priority"""        
         suggestions = []
         
         # Sort dimensions by score (lowest first)
@@ -1825,8 +1762,7 @@ class TextQualityAssessor:
         return suggestions
     
     def _calculate_potential_score(self, dimension_scores: Dict[ContentQualityDimension, float]) -> float:
-        """Calculate potential score with realistic improvements"""
-        
+        """Calculate potential score with realistic improvements"""        
         improved_scores = {}
         
         for dimension, score in dimension_scores.items():
@@ -1846,8 +1782,7 @@ class TextQualityAssessor:
         return total_score / total_weight if total_weight > 0 else 0
     
     def _get_technical_details(self, content_data: Any, content_type: str) -> Dict[str, Any]:
-        """Get technical details about the content"""
-        
+        """Get technical details about the content"""        
         details = {
             'content_type': content_type,
             'size_bytes': len(content_data) if hasattr(content_data, '__len__') else None,

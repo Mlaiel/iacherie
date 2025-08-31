@@ -1,30 +1,24 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Utility Functions Tests
+"""Utility Functions Tests
 
 Comprehensive tests for utility functions, helpers, and common operations.
 Tests data processing, validation, transformation, and configuration utilities.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -58,16 +52,12 @@ from ai.personalization.utils import (
 
 
 class TestDataValidator(IsolatedAsyncioTestCase):
-    """Comprehensive tests for DataProcessor utility"""
-
-    async def asyncSetUp(self):
-        """Set up test environment"""
-        self.processor = DataProcessor()
+    """Comprehensive tests for DataProcessor utility"""    async def asyncSetUp(self):
+        """Set up test environment"""        self.processor = DataProcessor()
         self.test_data = self._generate_test_data()
 
     def _generate_test_data(self) -> Dict[str, Any]:
-        """Generate test data for processing"""
-        return {
+        """Generate test data for processing"""        return {
             'user_interactions': [
                 {
                     'user_id': 'user_1',
@@ -108,8 +98,7 @@ class TestDataValidator(IsolatedAsyncioTestCase):
         }
 
     async def test_data_cleaning(self):
-        """Test data cleaning functionality"""
-        # Add some dirty data
+        """Test data cleaning functionality"""        # Add some dirty data
         dirty_data = self.test_data['user_interactions'].copy()
         dirty_data.extend([
             {
@@ -143,8 +132,7 @@ class TestDataValidator(IsolatedAsyncioTestCase):
                 self.assertLessEqual(entry['rating'], 5.0)
 
     async def test_data_transformation(self):
-        """Test data transformation utilities"""
-        # Transform interaction data to matrix format
+        """Test data transformation utilities"""        # Transform interaction data to matrix format
         interaction_matrix = await self.processor.to_interaction_matrix(
             self.test_data['user_interactions']
         )
@@ -161,8 +149,7 @@ class TestDataValidator(IsolatedAsyncioTestCase):
             self.assertIsInstance(vector, np.ndarray)
 
     async def test_data_aggregation(self):
-        """Test data aggregation operations"""
-        # Aggregate user interactions by time periods
+        """Test data aggregation operations"""        # Aggregate user interactions by time periods
         aggregated = await self.processor.aggregate_by_time(
             self.test_data['user_interactions'],
             period='daily',
@@ -173,8 +160,7 @@ class TestDataValidator(IsolatedAsyncioTestCase):
         self.assertIn('daily', aggregated)
 
     async def test_data_sampling(self):
-        """Test data sampling methods"""
-        # Generate larger dataset for sampling
+        """Test data sampling methods"""        # Generate larger dataset for sampling
         large_dataset = []
         for i in range(1000):
             large_dataset.append({
@@ -196,8 +182,7 @@ class TestDataValidator(IsolatedAsyncioTestCase):
         self.assertEqual(len(stratified_sample), 200)
 
     async def test_data_splitting(self):
-        """Test data splitting for train/validation/test"""
-        splits = await self.processor.train_test_split(
+        """Test data splitting for train/validation/test"""        splits = await self.processor.train_test_split(
             self.test_data['user_interactions'],
             test_size=0.2,
             temporal_split=True
@@ -209,8 +194,7 @@ class TestDataValidator(IsolatedAsyncioTestCase):
         self.assertGreater(len(splits['test']), 0)
 
     async def test_missing_data_handling(self):
-        """Test missing data handling"""
-        # Create data with missing values
+        """Test missing data handling"""        # Create data with missing values
         data_with_missing = [
             {'user_id': 'user_1', 'rating': 4.0, 'feature_a': 0.8},
             {'user_id': 'user_2', 'rating': None, 'feature_a': 0.6},
@@ -229,11 +213,8 @@ class TestDataValidator(IsolatedAsyncioTestCase):
 
 
 class TestConfigManager(IsolatedAsyncioTestCase):
-    """Comprehensive tests for ConfigManager utility"""
-
-    async def asyncSetUp(self):
-        """Set up test environment"""
-        self.config_manager = ConfigManager()
+    """Comprehensive tests for ConfigManager utility"""    async def asyncSetUp(self):
+        """Set up test environment"""        self.config_manager = ConfigManager()
         self.test_config = {
             'model': {
                 'type': 'collaborative_filtering',
@@ -254,8 +235,7 @@ class TestConfigManager(IsolatedAsyncioTestCase):
         }
 
     async def test_config_loading(self):
-        """Test configuration loading from various sources"""
-        # Load from dictionary
+        """Test configuration loading from various sources"""        # Load from dictionary
         await self.config_manager.load_from_dict(self.test_config)
         
         # Verify loading
@@ -264,8 +244,7 @@ class TestConfigManager(IsolatedAsyncioTestCase):
         self.assertEqual(model_config['n_factors'], 50)
 
     async def test_config_validation(self):
-        """Test configuration validation"""
-        # Define schema for validation
+        """Test configuration validation"""        # Define schema for validation
         schema = {
             'model': {
                 'type': str,
@@ -290,8 +269,7 @@ class TestConfigManager(IsolatedAsyncioTestCase):
         self.assertFalse(is_valid)
 
     async def test_config_merging(self):
-        """Test configuration merging"""
-        base_config = {'model': {'n_factors': 50}, 'data': {'batch_size': 256}}
+        """Test configuration merging"""        base_config = {'model': {'n_factors': 50}, 'data': {'batch_size': 256}}
         override_config = {'model': {'n_factors': 100}, 'system': {'debug': True}}
         
         merged = await self.config_manager.merge_configs(base_config, override_config)
@@ -301,8 +279,7 @@ class TestConfigManager(IsolatedAsyncioTestCase):
         self.assertTrue(merged['system']['debug'])           # New key
 
     async def test_environment_variable_substitution(self):
-        """Test environment variable substitution"""
-        # Set environment variable
+        """Test environment variable substitution"""        # Set environment variable
         os.environ['TEST_LEARNING_RATE'] = '0.05'
         
         config_with_env = {
@@ -322,8 +299,7 @@ class TestConfigManager(IsolatedAsyncioTestCase):
         del os.environ['TEST_LEARNING_RATE']
 
     async def test_config_encryption(self):
-        """Test configuration encryption/decryption"""
-        sensitive_config = {
+        """Test configuration encryption/decryption"""        sensitive_config = {
             'api_keys': {
                 'spotify': 'secret_spotify_key',
                 'database': 'secret_db_password'
@@ -355,15 +331,11 @@ class TestConfigManager(IsolatedAsyncioTestCase):
 
 
 class TestValidationUtils(IsolatedAsyncioTestCase):
-    """Comprehensive tests for ValidationUtils"""
-
-    async def asyncSetUp(self):
-        """Set up test environment"""
-        self.validator = ValidationUtils()
+    """Comprehensive tests for ValidationUtils"""    async def asyncSetUp(self):
+        """Set up test environment"""        self.validator = ValidationUtils()
 
     async def test_data_type_validation(self):
-        """Test data type validation"""
-        # Valid data types
+        """Test data type validation"""        # Valid data types
         self.assertTrue(await self.validator.validate_type('hello', str))
         self.assertTrue(await self.validator.validate_type(42, int))
         self.assertTrue(await self.validator.validate_type(3.14, float))
@@ -374,8 +346,7 @@ class TestValidationUtils(IsolatedAsyncioTestCase):
         self.assertFalse(await self.validator.validate_type(42, str))
 
     async def test_range_validation(self):
-        """Test range validation"""
-        # Valid ranges
+        """Test range validation"""        # Valid ranges
         self.assertTrue(await self.validator.validate_range(5, 1, 10))
         self.assertTrue(await self.validator.validate_range(0.5, 0.0, 1.0))
         
@@ -384,8 +355,7 @@ class TestValidationUtils(IsolatedAsyncioTestCase):
         self.assertFalse(await self.validator.validate_range(-0.5, 0.0, 1.0))
 
     async def test_format_validation(self):
-        """Test format validation"""
-        # Email validation
+        """Test format validation"""        # Email validation
         self.assertTrue(await self.validator.validate_email('test@example.com'))
         self.assertFalse(await self.validator.validate_email('invalid_email'))
         
@@ -398,8 +368,7 @@ class TestValidationUtils(IsolatedAsyncioTestCase):
         self.assertFalse(await self.validator.validate_user_id(''))
 
     async def test_schema_validation(self):
-        """Test schema validation"""
-        schema = {
+        """Test schema validation"""        schema = {
             'name': str,
             'age': int,
             'rating': float,
@@ -424,8 +393,7 @@ class TestValidationUtils(IsolatedAsyncioTestCase):
         self.assertFalse(await self.validator.validate_schema(invalid_data, schema))
 
     async def test_custom_validation_rules(self):
-        """Test custom validation rules"""
-        # Define custom validator
+        """Test custom validation rules"""        # Define custom validator
         async def validate_positive_number(value):
             return isinstance(value, (int, float)) and value > 0
         
@@ -438,15 +406,11 @@ class TestValidationUtils(IsolatedAsyncioTestCase):
 
 
 class TestTransformationUtils(IsolatedAsyncioTestCase):
-    """Comprehensive tests for TransformationUtils"""
-
-    async def asyncSetUp(self):
-        """Set up test environment"""
-        self.transformer = TransformationUtils()
+    """Comprehensive tests for TransformationUtils"""    async def asyncSetUp(self):
+        """Set up test environment"""        self.transformer = TransformationUtils()
 
     async def test_data_normalization(self):
-        """Test data normalization methods"""
-        data = [1, 2, 3, 4, 5]
+        """Test data normalization methods"""        data = [1, 2, 3, 4, 5]
         
         # Min-max normalization
         normalized = await self.transformer.min_max_normalize(data)
@@ -459,8 +423,7 @@ class TestTransformationUtils(IsolatedAsyncioTestCase):
         self.assertAlmostEqual(np.std(z_normalized), 1.0, places=5)
 
     async def test_categorical_encoding(self):
-        """Test categorical encoding methods"""
-        categories = ['pop', 'rock', 'jazz', 'pop', 'electronic', 'rock']
+        """Test categorical encoding methods"""        categories = ['pop', 'rock', 'jazz', 'pop', 'electronic', 'rock']
         
         # One-hot encoding
         one_hot = await self.transformer.one_hot_encode(categories)
@@ -473,8 +436,7 @@ class TestTransformationUtils(IsolatedAsyncioTestCase):
         self.assertEqual(len(label_encoded), len(categories))
 
     async def test_feature_scaling(self):
-        """Test feature scaling methods"""
-        features = np.random.randn(100, 5)
+        """Test feature scaling methods"""        features = np.random.randn(100, 5)
         
         # Standard scaling
         scaled = await self.transformer.standard_scale(features)
@@ -487,8 +449,7 @@ class TestTransformationUtils(IsolatedAsyncioTestCase):
         self.assertEqual(robust_scaled.shape, features.shape)
 
     async def test_dimensionality_reduction(self):
-        """Test dimensionality reduction methods"""
-        high_dim_data = np.random.randn(100, 50)
+        """Test dimensionality reduction methods"""        high_dim_data = np.random.randn(100, 50)
         
         # PCA
         pca_reduced = await self.transformer.apply_pca(high_dim_data, n_components=10)
@@ -500,8 +461,7 @@ class TestTransformationUtils(IsolatedAsyncioTestCase):
         self.assertEqual(tsne_reduced.shape, (20, 2))
 
     async def test_text_transformation(self):
-        """Test text transformation utilities"""
-        texts = ['This is a sample text', 'Another example document', 'Machine learning rocks']
+        """Test text transformation utilities"""        texts = ['This is a sample text', 'Another example document', 'Machine learning rocks']
         
         # TF-IDF transformation
         tfidf_matrix = await self.transformer.text_to_tfidf(texts)
@@ -515,15 +475,11 @@ class TestTransformationUtils(IsolatedAsyncioTestCase):
 
 
 class TestCachingUtils(IsolatedAsyncioTestCase):
-    """Comprehensive tests for CachingUtils"""
-
-    async def asyncSetUp(self):
-        """Set up test environment"""
-        self.cache = CachingUtils(max_size=100, ttl=3600)
+    """Comprehensive tests for CachingUtils"""    async def asyncSetUp(self):
+        """Set up test environment"""        self.cache = CachingUtils(max_size=100, ttl=3600)
 
     async def test_basic_caching(self):
-        """Test basic cache operations"""
-        # Set cache value
+        """Test basic cache operations"""        # Set cache value
         await self.cache.set('key1', 'value1')
         
         # Get cache value
@@ -540,8 +496,7 @@ class TestCachingUtils(IsolatedAsyncioTestCase):
         self.assertIsNone(value)
 
     async def test_cache_expiration(self):
-        """Test cache expiration (TTL)"""
-        # Set value with short TTL
+        """Test cache expiration (TTL)"""        # Set value with short TTL
         await self.cache.set('temp_key', 'temp_value', ttl=1)
         
         # Should exist immediately
@@ -556,8 +511,7 @@ class TestCachingUtils(IsolatedAsyncioTestCase):
         self.assertIsNone(value)
 
     async def test_cache_size_limit(self):
-        """Test cache size limitations"""
-        small_cache = CachingUtils(max_size=3)
+        """Test cache size limitations"""        small_cache = CachingUtils(max_size=3)
         
         # Fill cache beyond limit
         await small_cache.set('key1', 'value1')
@@ -573,8 +527,7 @@ class TestCachingUtils(IsolatedAsyncioTestCase):
         self.assertEqual(value4, 'value4')
 
     async def test_cache_patterns(self):
-        """Test common caching patterns"""
-        # Memoization pattern
+        """Test common caching patterns"""        # Memoization pattern
         call_count = 0
         
         async def expensive_function(x):
@@ -594,15 +547,11 @@ class TestCachingUtils(IsolatedAsyncioTestCase):
 
 
 class TestSimilarityCalculator(IsolatedAsyncioTestCase):
-    """Comprehensive tests for SimilarityCalculator"""
-
-    async def asyncSetUp(self):
-        """Set up test environment"""
-        self.calculator = SimilarityCalculator()
+    """Comprehensive tests for SimilarityCalculator"""    async def asyncSetUp(self):
+        """Set up test environment"""        self.calculator = SimilarityCalculator()
 
     async def test_cosine_similarity(self):
-        """Test cosine similarity calculation"""
-        vector1 = np.array([1, 2, 3])
+        """Test cosine similarity calculation"""        vector1 = np.array([1, 2, 3])
         vector2 = np.array([2, 4, 6])  # Parallel vector
         vector3 = np.array([-1, -2, -3])  # Opposite vector
         
@@ -615,16 +564,14 @@ class TestSimilarityCalculator(IsolatedAsyncioTestCase):
         self.assertAlmostEqual(sim2, -1.0, places=5)
 
     async def test_euclidean_distance(self):
-        """Test Euclidean distance calculation"""
-        point1 = np.array([0, 0])
+        """Test Euclidean distance calculation"""        point1 = np.array([0, 0])
         point2 = np.array([3, 4])
         
         distance = await self.calculator.euclidean_distance(point1, point2)
         self.assertAlmostEqual(distance, 5.0, places=5)  # 3-4-5 triangle
 
     async def test_jaccard_similarity(self):
-        """Test Jaccard similarity for sets"""
-        set1 = {'a', 'b', 'c', 'd'}
+        """Test Jaccard similarity for sets"""        set1 = {'a', 'b', 'c', 'd'}
         set2 = {'b', 'c', 'd', 'e'}
         
         jaccard = await self.calculator.jaccard_similarity(set1, set2)
@@ -632,16 +579,14 @@ class TestSimilarityCalculator(IsolatedAsyncioTestCase):
         self.assertAlmostEqual(jaccard, expected, places=5)
 
     async def test_pearson_correlation(self):
-        """Test Pearson correlation coefficient"""
-        x = np.array([1, 2, 3, 4, 5])
+        """Test Pearson correlation coefficient"""        x = np.array([1, 2, 3, 4, 5])
         y = np.array([2, 4, 6, 8, 10])  # Perfect positive correlation
         
         correlation = await self.calculator.pearson_correlation(x, y)
         self.assertAlmostEqual(correlation, 1.0, places=5)
 
     async def test_similarity_matrix(self):
-        """Test similarity matrix computation"""
-        vectors = [
+        """Test similarity matrix computation"""        vectors = [
             np.array([1, 0, 0]),
             np.array([0, 1, 0]),
             np.array([0, 0, 1]),
@@ -665,15 +610,11 @@ class TestSimilarityCalculator(IsolatedAsyncioTestCase):
 
 
 class TestFeatureEngineering(IsolatedAsyncioTestCase):
-    """Comprehensive tests for FeatureEngineering"""
-
-    async def asyncSetUp(self):
-        """Set up test environment"""
-        self.feature_engineer = FeatureEngineering()
+    """Comprehensive tests for FeatureEngineering"""    async def asyncSetUp(self):
+        """Set up test environment"""        self.feature_engineer = FeatureEngineering()
 
     async def test_polynomial_features(self):
-        """Test polynomial feature generation"""
-        features = np.array([[1, 2], [3, 4], [5, 6]])
+        """Test polynomial feature generation"""        features = np.array([[1, 2], [3, 4], [5, 6]])
         
         poly_features = await self.feature_engineer.create_polynomial_features(
             features, degree=2
@@ -683,8 +624,7 @@ class TestFeatureEngineering(IsolatedAsyncioTestCase):
         self.assertGreater(poly_features.shape[1], features.shape[1])
 
     async def test_interaction_features(self):
-        """Test interaction feature creation"""
-        categorical_features = {
+        """Test interaction feature creation"""        categorical_features = {
             'genre': ['pop', 'rock', 'jazz'],
             'mood': ['happy', 'sad', 'energetic']
         }
@@ -697,8 +637,7 @@ class TestFeatureEngineering(IsolatedAsyncioTestCase):
         self.assertIn('genre_mood', interactions)
 
     async def test_temporal_features(self):
-        """Test temporal feature extraction"""
-        timestamps = [
+        """Test temporal feature extraction"""        timestamps = [
             datetime(2024, 1, 15, 14, 30),  # Monday afternoon
             datetime(2024, 1, 16, 9, 15),   # Tuesday morning
             datetime(2024, 1, 20, 20, 45)   # Saturday evening
@@ -715,8 +654,7 @@ class TestFeatureEngineering(IsolatedAsyncioTestCase):
             self.assertIn('is_weekend', features)
 
     async def test_statistical_features(self):
-        """Test statistical feature computation"""
-        user_interactions = {
+        """Test statistical feature computation"""        user_interactions = {
             'user_1': [4.5, 3.0, 4.0, 5.0, 2.5],
             'user_2': [3.5, 3.5, 3.5, 3.5, 3.5],
             'user_3': [1.0, 5.0, 2.0, 4.0, 3.0]
@@ -734,8 +672,7 @@ class TestFeatureEngineering(IsolatedAsyncioTestCase):
             self.assertIn('median', features)
 
     async def test_frequency_features(self):
-        """Test frequency-based feature extraction"""
-        item_interactions = [
+        """Test frequency-based feature extraction"""        item_interactions = [
             'track_1', 'track_2', 'track_1', 'track_3', 'track_1', 'track_2'
         ]
         
@@ -749,8 +686,7 @@ class TestFeatureEngineering(IsolatedAsyncioTestCase):
         self.assertEqual(freq_features['track_3'], 1)
 
     async def test_embedding_features(self):
-        """Test embedding-based feature creation"""
-        # Mock item embeddings
+        """Test embedding-based feature creation"""        # Mock item embeddings
         item_embeddings = {
             'track_1': np.random.randn(50),
             'track_2': np.random.randn(50),
@@ -768,15 +704,11 @@ class TestFeatureEngineering(IsolatedAsyncioTestCase):
 
 
 class TestPerformanceUtils(IsolatedAsyncioTestCase):
-    """Comprehensive tests for PerformanceUtils"""
-
-    async def asyncSetUp(self):
-        """Set up test environment"""
-        self.perf_utils = PerformanceUtils()
+    """Comprehensive tests for PerformanceUtils"""    async def asyncSetUp(self):
+        """Set up test environment"""        self.perf_utils = PerformanceUtils()
 
     async def test_timing_decorator(self):
-        """Test timing decorator functionality"""
-        @self.perf_utils.time_it
+        """Test timing decorator functionality"""        @self.perf_utils.time_it
         async def slow_function():
             await asyncio.sleep(0.1)
             return "completed"
@@ -788,8 +720,7 @@ class TestPerformanceUtils(IsolatedAsyncioTestCase):
         self.assertLess(execution_time, 0.2)  # Should be close to 0.1
 
     async def test_memory_profiling(self):
-        """Test memory profiling utilities"""
-        initial_memory = await self.perf_utils.get_memory_usage()
+        """Test memory profiling utilities"""        initial_memory = await self.perf_utils.get_memory_usage()
         
         # Allocate some memory
         large_list = [i for i in range(100000)]
@@ -804,8 +735,7 @@ class TestPerformanceUtils(IsolatedAsyncioTestCase):
         self.assertGreater(peak_memory, initial_memory)
 
     async def test_performance_monitoring(self):
-        """Test performance monitoring context manager"""
-        async with self.perf_utils.monitor_performance() as monitor:
+        """Test performance monitoring context manager"""        async with self.perf_utils.monitor_performance() as monitor:
             # Simulate some work
             await asyncio.sleep(0.05)
             data = [i ** 2 for i in range(1000)]
@@ -817,8 +747,7 @@ class TestPerformanceUtils(IsolatedAsyncioTestCase):
         self.assertGreater(metrics['execution_time'], 0.05)
 
     async def test_batching_utility(self):
-        """Test data batching for performance"""
-        large_dataset = list(range(1000))
+        """Test data batching for performance"""        large_dataset = list(range(1000))
         
         batches = await self.perf_utils.create_batches(large_dataset, batch_size=100)
         
@@ -827,8 +756,7 @@ class TestPerformanceUtils(IsolatedAsyncioTestCase):
             self.assertLessEqual(len(batch), 100)
 
     async def test_parallel_processing(self):
-        """Test parallel processing utilities"""
-        async def square_number(x):
+        """Test parallel processing utilities"""        async def square_number(x):
             await asyncio.sleep(0.001)  # Simulate work
             return x ** 2
         
@@ -857,15 +785,11 @@ class TestPerformanceUtils(IsolatedAsyncioTestCase):
 
 
 class TestSecurityUtils(IsolatedAsyncioTestCase):
-    """Comprehensive tests for SecurityUtils"""
-
-    async def asyncSetUp(self):
-        """Set up test environment"""
-        self.security = SecurityUtils()
+    """Comprehensive tests for SecurityUtils"""    async def asyncSetUp(self):
+        """Set up test environment"""        self.security = SecurityUtils()
 
     async def test_data_encryption(self):
-        """Test data encryption and decryption"""
-        sensitive_data = "user_password_123"
+        """Test data encryption and decryption"""        sensitive_data = "user_password_123"
         encryption_key = "test_encryption_key"
         
         # Encrypt data
@@ -877,8 +801,7 @@ class TestSecurityUtils(IsolatedAsyncioTestCase):
         self.assertEqual(decrypted, sensitive_data)
 
     async def test_data_anonymization(self):
-        """Test data anonymization"""
-        personal_data = {
+        """Test data anonymization"""        personal_data = {
             'user_id': 'user_12345',
             'email': 'john.doe@example.com',
             'name': 'John Doe',
@@ -897,8 +820,7 @@ class TestSecurityUtils(IsolatedAsyncioTestCase):
         self.assertNotEqual(anonymized['name'], personal_data['name'])  # Anonymized
 
     async def test_input_sanitization(self):
-        """Test input sanitization"""
-        dangerous_input = "<script>alert('xss')</script>Hello World"
+        """Test input sanitization"""        dangerous_input = "<script>alert('xss')</script>Hello World"
         
         sanitized = await self.security.sanitize_input(dangerous_input)
         
@@ -907,8 +829,7 @@ class TestSecurityUtils(IsolatedAsyncioTestCase):
         self.assertIn('Hello World', sanitized)
 
     async def test_access_control(self):
-        """Test access control mechanisms"""
-        user_permissions = {
+        """Test access control mechanisms"""        user_permissions = {
             'user_1': ['read', 'write'],
             'user_2': ['read'],
             'admin': ['read', 'write', 'delete']
@@ -923,8 +844,7 @@ class TestSecurityUtils(IsolatedAsyncioTestCase):
         self.assertFalse(await self.security.check_permission('user_2', 'write', user_permissions))
 
     async def test_rate_limiting(self):
-        """Test rate limiting functionality"""
-        rate_limiter = await self.security.create_rate_limiter(
+        """Test rate limiting functionality"""        rate_limiter = await self.security.create_rate_limiter(
             max_requests=3,
             time_window=1  # 1 second
         )
@@ -945,11 +865,8 @@ class TestSecurityUtils(IsolatedAsyncioTestCase):
 
 
 class TestUtilsPerformanceAndIntegration(IsolatedAsyncioTestCase):
-    """Performance and integration tests for utilities"""
-
-    async def test_large_dataset_processing(self):
-        """Test utility performance on large datasets"""
-        processor = DataProcessor()
+    """Performance and integration tests for utilities"""    async def test_large_dataset_processing(self):
+        """Test utility performance on large datasets"""        processor = DataProcessor()
         
         # Generate large dataset
         large_dataset = []
@@ -977,8 +894,7 @@ class TestUtilsPerformanceAndIntegration(IsolatedAsyncioTestCase):
         self.assertIsNotNone(matrix)
 
     async def test_utility_integration(self):
-        """Test integration between different utilities"""
-        # Use multiple utilities together
+        """Test integration between different utilities"""        # Use multiple utilities together
         processor = DataProcessor()
         transformer = TransformationUtils()
         cache = CachingUtils()

@@ -1,5 +1,4 @@
-"""
-Medium Crawler Implementation
+"""Medium Crawler Implementation
 =============================
 
 Advanced Medium platform crawler for publishing and content monitoring.
@@ -22,9 +21,7 @@ will be prosecuted to the FULL EXTENT OF THE LAW under German and
 International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -41,8 +38,7 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class MediumArticle:
-    """Medium article information"""
-    article_id: str
+    """Medium article information"""    article_id: str
     title: str
     subtitle: str
     content: str
@@ -80,8 +76,7 @@ class MediumArticle:
 
 @dataclass
 class MediumAuthor:
-    """Medium author information"""
-    author_id: str
+    """Medium author information"""    author_id: str
     username: str
     name: str
     bio: str
@@ -113,8 +108,7 @@ class MediumAuthor:
 
 @dataclass
 class MediumPublication:
-    """Medium publication information"""
-    publication_id: str
+    """Medium publication information"""    publication_id: str
     name: str
     description: str
     url: str
@@ -145,8 +139,7 @@ class MediumPublication:
 
 @dataclass
 class MediumTopic:
-    """Medium topic information"""
-    topic_id: str
+    """Medium topic information"""    topic_id: str
     name: str
     slug: str
     description: str
@@ -164,8 +157,7 @@ class MediumTopic:
 
 @dataclass
 class MediumResponse:
-    """Medium response (comment) information"""
-    response_id: str
+    """Medium response (comment) information"""    response_id: str
     content: str
     author_id: str
     author_name: str
@@ -182,8 +174,7 @@ class MediumResponse:
 
 
 class MediumCrawler(PlatformCrawler):
-    """
-    Advanced Medium crawler for publishing and content monitoring.
+    """    Advanced Medium crawler for publishing and content monitoring.
     
     Features:
     - Article content tracking
@@ -196,8 +187,7 @@ class MediumCrawler(PlatformCrawler):
     - SEO and metadata extraction
     - Social sharing analysis
     - Monetization tracking
-    """
-    
+    """    
     def __init__(self, config: CrawlerConfig, vector_matcher=None):
         super().__init__(config, vector_matcher)
         self.platform_name = "medium"
@@ -229,8 +219,7 @@ class MediumCrawler(PlatformCrawler):
         self._setup_session_headers()
     
     def _setup_session_headers(self):
-        """Setup Medium-specific headers"""
-        self.session_headers.update({
+        """Setup Medium-specific headers"""        self.session_headers.update({
             'Accept': 'application/json',
             'Accept-Encoding': 'gzip, deflate, br',
             'Accept-Language': 'en-US,en;q=0.9',
@@ -242,8 +231,7 @@ class MediumCrawler(PlatformCrawler):
     
     async def search_content(self, query: str, content_type: str = "articles", 
                            max_results: int = 50, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """
-        Search for content on Medium.
+        """        Search for content on Medium.
         
         Args:
             query: Search query
@@ -253,8 +241,7 @@ class MediumCrawler(PlatformCrawler):
             
         Returns:
             List of crawler results
-        """
-        try:
+        """        try:
             await self._check_rate_limit()
             
             if content_type not in self.content_types:
@@ -272,8 +259,7 @@ class MediumCrawler(PlatformCrawler):
             return []
     
     async def _crawl_articles(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl Medium articles"""
-        try:
+        """Crawl Medium articles"""        try:
             results = []
             
             # Mock article data
@@ -321,8 +307,7 @@ class MediumCrawler(PlatformCrawler):
             return []
     
     async def _crawl_authors(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl Medium authors"""
-        try:
+        """Crawl Medium authors"""        try:
             results = []
             
             # Mock author data
@@ -368,8 +353,7 @@ class MediumCrawler(PlatformCrawler):
             return []
     
     async def _crawl_publications(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl Medium publications"""
-        try:
+        """Crawl Medium publications"""        try:
             results = []
             
             # Mock publication data
@@ -415,8 +399,7 @@ class MediumCrawler(PlatformCrawler):
             return []
     
     async def _crawl_topics(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl Medium topics"""
-        try:
+        """Crawl Medium topics"""        try:
             results = []
             
             # Mock topic data
@@ -459,8 +442,7 @@ class MediumCrawler(PlatformCrawler):
             return []
     
     async def _crawl_responses(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl Medium responses"""
-        try:
+        """Crawl Medium responses"""        try:
             results = []
             
             # Mock response data
@@ -500,8 +482,7 @@ class MediumCrawler(PlatformCrawler):
             return []
     
     async def _crawl_trending(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl trending Medium content"""
-        try:
+        """Crawl trending Medium content"""        try:
             results = []
             
             # Get trending content
@@ -532,8 +513,7 @@ class MediumCrawler(PlatformCrawler):
             return []
     
     async def _crawl_featured(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl featured Medium content"""
-        try:
+        """Crawl featured Medium content"""        try:
             results = []
             
             # Get featured content
@@ -564,8 +544,7 @@ class MediumCrawler(PlatformCrawler):
             return []
     
     async def _crawl_search(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """General Medium search"""
-        try:
+        """General Medium search"""        try:
             results = []
             
             # Search across different content types
@@ -586,8 +565,7 @@ class MediumCrawler(PlatformCrawler):
     # Mock data generators (for demonstration)
     
     async def _get_mock_articles(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock article data"""
-        articles = []
+        """Generate mock article data"""        articles = []
         
         for i in range(min(max_results, 25)):
             published_at = datetime.utcnow() - timedelta(days=random.randint(1, 365))
@@ -622,8 +600,7 @@ class MediumCrawler(PlatformCrawler):
         return articles
     
     async def _get_mock_authors(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock author data"""
-        authors = []
+        """Generate mock author data"""        authors = []
         
         for i in range(min(max_results, 15)):
             joined_at = datetime.utcnow() - timedelta(days=random.randint(365, 2555))
@@ -654,8 +631,7 @@ class MediumCrawler(PlatformCrawler):
         return authors
     
     async def _get_mock_publications(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock publication data"""
-        publications = []
+        """Generate mock publication data"""        publications = []
         
         for i in range(min(max_results, 10)):
             created_at = datetime.utcnow() - timedelta(days=random.randint(30, 1095))
@@ -682,8 +658,7 @@ class MediumCrawler(PlatformCrawler):
         return publications
     
     async def _get_mock_topics(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock topic data"""
-        topics = []
+        """Generate mock topic data"""        topics = []
         
         for i in range(min(max_results, 20)):
             created_at = datetime.utcnow() - timedelta(days=random.randint(1, 365))
@@ -710,8 +685,7 @@ class MediumCrawler(PlatformCrawler):
         return topics
     
     async def _get_mock_responses(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock response data"""
-        responses = []
+        """Generate mock response data"""        responses = []
         
         for i in range(min(max_results, 30)):
             created_at = datetime.utcnow() - timedelta(hours=random.randint(1, 168))
@@ -733,8 +707,7 @@ class MediumCrawler(PlatformCrawler):
         return responses
     
     async def _get_trending_content(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Get trending content"""
-        content = []
+        """Get trending content"""        content = []
         
         for i in range(min(max_results, 10)):
             content.append({
@@ -748,8 +721,7 @@ class MediumCrawler(PlatformCrawler):
         return content
     
     async def _get_featured_content(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Get featured content"""
-        content = []
+        """Get featured content"""        content = []
         
         for i in range(min(max_results, 10)):
             content.append({
@@ -765,8 +737,7 @@ class MediumCrawler(PlatformCrawler):
     # Parser methods
     
     async def _parse_article_data(self, article_data: Dict[str, Any]) -> Optional[MediumArticle]:
-        """Parse article data"""
-        try:
+        """Parse article data"""        try:
             published_at = datetime.fromisoformat(article_data.get('published_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
             article = MediumArticle(
@@ -813,8 +784,7 @@ class MediumCrawler(PlatformCrawler):
             return None
     
     async def _parse_author_data(self, author_data: Dict[str, Any]) -> Optional[MediumAuthor]:
-        """Parse author data"""
-        try:
+        """Parse author data"""        try:
             joined_at = datetime.fromisoformat(author_data.get('joined_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             medium_member_at = None
             if author_data.get('medium_member_at'):
@@ -858,8 +828,7 @@ class MediumCrawler(PlatformCrawler):
             return None
     
     async def _parse_publication_data(self, publication_data: Dict[str, Any]) -> Optional[MediumPublication]:
-        """Parse publication data"""
-        try:
+        """Parse publication data"""        try:
             created_at = datetime.fromisoformat(publication_data.get('created_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
             publication = MediumPublication(
@@ -899,8 +868,7 @@ class MediumCrawler(PlatformCrawler):
             return None
     
     async def _parse_topic_data(self, topic_data: Dict[str, Any]) -> Optional[MediumTopic]:
-        """Parse topic data"""
-        try:
+        """Parse topic data"""        try:
             created_at = datetime.fromisoformat(topic_data.get('created_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
             topic = MediumTopic(
@@ -927,8 +895,7 @@ class MediumCrawler(PlatformCrawler):
             return None
     
     async def _parse_response_data(self, response_data: Dict[str, Any]) -> Optional[MediumResponse]:
-        """Parse response data"""
-        try:
+        """Parse response data"""        try:
             created_at = datetime.fromisoformat(response_data.get('created_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
             response = MediumResponse(
@@ -955,8 +922,7 @@ class MediumCrawler(PlatformCrawler):
             return None
     
     async def _check_rate_limit(self):
-        """Check and enforce rate limiting"""
-        try:
+        """Check and enforce rate limiting"""        try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
             
@@ -972,8 +938,7 @@ class MediumCrawler(PlatformCrawler):
             self.logger.error(f"Error in rate limiting: {str(e)}")
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
-        """Extract metadata from Medium content"""
-        try:
+        """Extract metadata from Medium content"""        try:
             # Parse Medium URL
             parsed_url = urlparse(url)
             
@@ -1032,8 +997,7 @@ class MediumCrawler(PlatformCrawler):
             return {'error': str(e)}
     
     def get_platform_info(self) -> Dict[str, Any]:
-        """Get Medium platform information"""
-        return {
+        """Get Medium platform information"""        return {
             'platform_name': 'Medium',
             'base_url': self.base_url,
             'api_base_url': self.api_base_url,

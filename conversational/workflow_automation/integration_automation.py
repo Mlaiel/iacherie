@@ -1,5 +1,4 @@
-"""
-Integration Automation - External Service Orchestration System
+"""Integration Automation - External Service Orchestration System
 
 Enterprise-grade integration automation for multi-platform content distribution,
 API orchestration, cross-platform synchronization, and external service management.
@@ -16,9 +15,7 @@ without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICT
 and will result in immediate legal action under German and International copyright laws.
 
 Contact mlaiel@live.de for licensing inquiries only.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import uuid
 from datetime import datetime, timedelta
@@ -37,8 +34,7 @@ logger = logging.getLogger(__name__)
 
 
 class IntegrationStatus(Enum):
-    """Integration execution status"""
-    PENDING = "pending"
+    """Integration execution status"""    PENDING = "pending"
     CONNECTING = "connecting"
     SYNCING = "syncing"
     COMPLETED = "completed"
@@ -48,8 +44,7 @@ class IntegrationStatus(Enum):
 
 
 class PlatformType(Enum):
-    """Supported platform types"""
-    SPOTIFY = "spotify"
+    """Supported platform types"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -64,16 +59,14 @@ class PlatformType(Enum):
 
 
 class SyncDirection(Enum):
-    """Data synchronization direction"""
-    PULL = "pull"
+    """Data synchronization direction"""    PULL = "pull"
     PUSH = "push"
     BIDIRECTIONAL = "bidirectional"
 
 
 @dataclass
 class PlatformCredentials:
-    """Platform API credentials"""
-    platform: PlatformType
+    """Platform API credentials"""    platform: PlatformType
     api_key: Optional[str] = None
     access_token: Optional[str] = None
     refresh_token: Optional[str] = None
@@ -86,8 +79,7 @@ class PlatformCredentials:
 
 @dataclass
 class IntegrationTask:
-    """Individual integration task"""
-    task_id: str
+    """Individual integration task"""    task_id: str
     platform: PlatformType
     operation: str
     endpoint: str
@@ -107,8 +99,7 @@ class IntegrationTask:
 
 @dataclass
 class SyncConfiguration:
-    """Cross-platform synchronization configuration"""
-    sync_id: str
+    """Cross-platform synchronization configuration"""    sync_id: str
     name: str
     source_platform: PlatformType
     target_platforms: List[PlatformType]
@@ -122,10 +113,8 @@ class SyncConfiguration:
 
 
 class IntegrationAutomator:
-    """
-    Core integration automation orchestrator for external services
-    """
-    
+    """    Core integration automation orchestrator for external services
+    """    
     def __init__(self):
         self.active_integrations: Dict[str, IntegrationTask] = {}
         self.platform_configs: Dict[PlatformType, Dict[str, Any]] = {}
@@ -135,8 +124,7 @@ class IntegrationAutomator:
         self._setup_platform_configurations()
     
     def _setup_platform_configurations(self):
-        """Setup platform-specific configurations"""
-        self.platform_configs = {
+        """Setup platform-specific configurations"""        self.platform_configs = {
             PlatformType.SPOTIFY: {
                 "base_url": "https://api.spotify.com/v1",
                 "auth_url": "https://accounts.spotify.com/api/token",
@@ -194,8 +182,7 @@ class IntegrationAutomator:
         platform: PlatformType,
         credentials: PlatformCredentials
     ) -> bool:
-        """Register platform API credentials"""
-        try:
+        """Register platform API credentials"""        try:
             # Validate credentials
             if await self._validate_credentials(platform, credentials):
                 self.credentials_store[platform] = credentials
@@ -213,8 +200,7 @@ class IntegrationAutomator:
         platform: PlatformType,
         credentials: PlatformCredentials
     ) -> bool:
-        """Validate platform credentials"""
-        try:
+        """Validate platform credentials"""        try:
             config = self.platform_configs.get(platform)
             if not config:
                 return False
@@ -236,8 +222,7 @@ class IntegrationAutomator:
             return False
     
     def _get_test_endpoint(self, platform: PlatformType) -> str:
-        """Get test endpoint for credential validation"""
-        endpoints = {
+        """Get test endpoint for credential validation"""        endpoints = {
             PlatformType.SPOTIFY: "https://api.spotify.com/v1/me",
             PlatformType.YOUTUBE: "https://www.googleapis.com/youtube/v3/channels?part=snippet&mine=true",
             PlatformType.INSTAGRAM: "https://graph.instagram.com/me?fields=id,username",
@@ -250,8 +235,7 @@ class IntegrationAutomator:
         platform: PlatformType,
         credentials: PlatformCredentials
     ) -> Dict[str, str]:
-        """Build authentication headers for platform"""
-        headers = {"Content-Type": "application/json"}
+        """Build authentication headers for platform"""        headers = {"Content-Type": "application/json"}
         
         if credentials.access_token:
             if platform in [PlatformType.SPOTIFY, PlatformType.INSTAGRAM]:
@@ -270,8 +254,7 @@ class IntegrationAutomator:
         self,
         task: IntegrationTask
     ) -> Dict[str, Any]:
-        """Execute individual integration task"""
-        try:
+        """Execute individual integration task"""        try:
             task.status = IntegrationStatus.CONNECTING
             self.active_integrations[task.task_id] = task
             
@@ -364,8 +347,7 @@ class IntegrationAutomator:
                 del self.active_integrations[task.task_id]
     
     async def _is_rate_limited(self, platform: PlatformType) -> bool:
-        """Check if platform is rate limited"""
-        current_time = time.time()
+        """Check if platform is rate limited"""        current_time = time.time()
         platform_limits = self.rate_limiters.get(platform, {})
         
         config = self.platform_configs.get(platform, {})
@@ -384,14 +366,12 @@ class IntegrationAutomator:
         return total_requests >= requests_per_minute
     
     def _get_rate_limit_delay(self, platform: PlatformType) -> float:
-        """Get delay for rate limiting"""
-        config = self.platform_configs.get(platform, {})
+        """Get delay for rate limiting"""        config = self.platform_configs.get(platform, {})
         rate_limit = config.get("rate_limit", {})
         return 60.0 / rate_limit.get("requests_per_minute", 60)
     
     def _update_rate_limiter(self, platform: PlatformType):
-        """Update rate limiter after successful request"""
-        current_time = time.time()
+        """Update rate limiter after successful request"""        current_time = time.time()
         if platform not in self.rate_limiters:
             self.rate_limiters[platform] = {}
         
@@ -399,18 +379,15 @@ class IntegrationAutomator:
 
 
 class PlatformWorkflows:
-    """
-    Platform-specific workflow automation
-    """
-    
+    """    Platform-specific workflow automation
+    """    
     def __init__(self, integrator: IntegrationAutomator):
         self.integrator = integrator
         self.platform_workflows: Dict[PlatformType, Dict[str, Callable]] = {}
         self._setup_platform_workflows()
     
     def _setup_platform_workflows(self):
-        """Setup platform-specific workflows"""
-        self.platform_workflows = {
+        """Setup platform-specific workflows"""        self.platform_workflows = {
             PlatformType.SPOTIFY: {
                 "sync_playlists": self._spotify_sync_playlists,
                 "analyze_listening_data": self._spotify_analyze_data,
@@ -432,8 +409,7 @@ class PlatformWorkflows:
         }
     
     async def _spotify_sync_playlists(self, user_id: str) -> Dict[str, Any]:
-        """Sync Spotify playlists"""
-        task = IntegrationTask(
+        """Sync Spotify playlists"""        task = IntegrationTask(
             task_id=str(uuid.uuid4()),
             platform=PlatformType.SPOTIFY,
             operation="sync_playlists",
@@ -444,8 +420,7 @@ class PlatformWorkflows:
         return await self.integrator.execute_integration_task(task)
     
     async def _spotify_analyze_data(self, user_id: str) -> Dict[str, Any]:
-        """Analyze Spotify listening data"""
-        tasks = [
+        """Analyze Spotify listening data"""        tasks = [
             IntegrationTask(
                 task_id=str(uuid.uuid4()),
                 platform=PlatformType.SPOTIFY,
@@ -473,8 +448,7 @@ class PlatformWorkflows:
         self,
         video_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Upload video to YouTube"""
-        task = IntegrationTask(
+        """Upload video to YouTube"""        task = IntegrationTask(
             task_id=str(uuid.uuid4()),
             platform=PlatformType.YOUTUBE,
             operation="upload_video",
@@ -489,8 +463,7 @@ class PlatformWorkflows:
         self,
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Post content to Instagram"""
-        task = IntegrationTask(
+        """Post content to Instagram"""        task = IntegrationTask(
             task_id=str(uuid.uuid4()),
             platform=PlatformType.INSTAGRAM,
             operation="post_content",
@@ -503,10 +476,8 @@ class PlatformWorkflows:
 
 
 class APIAutomation:
-    """
-    Generic API automation and orchestration
-    """
-    
+    """    Generic API automation and orchestration
+    """    
     def __init__(self):
         self.api_clients: Dict[str, httpx.AsyncClient] = {}
         self.request_queue: asyncio.Queue = asyncio.Queue()
@@ -520,8 +491,7 @@ class APIAutomation:
         headers: Optional[Dict[str, str]] = None,
         timeout: int = 30
     ) -> bool:
-        """Register a new API client"""
-        try:
+        """Register a new API client"""        try:
             client = httpx.AsyncClient(
                 base_url=base_url,
                 headers=headers or {},
@@ -541,8 +511,7 @@ class APIAutomation:
         endpoint: str,
         **kwargs
     ) -> Dict[str, Any]:
-        """Execute API request using registered client"""
-        try:
+        """Execute API request using registered client"""        try:
             client = self.api_clients.get(client_name)
             if not client:
                 raise ValueError(f"API client '{client_name}' not found")
@@ -569,8 +538,7 @@ class APIAutomation:
         self,
         requests: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Execute batch API requests"""
-        tasks = []
+        """Execute batch API requests"""        tasks = []
         for req in requests:
             task = self.execute_api_request(**req)
             tasks.append(task)
@@ -595,8 +563,7 @@ class APIAutomation:
         event_type: str,
         handler: Callable
     ):
-        """Register webhook event handler"""
-        self.webhook_handlers[event_type] = handler
+        """Register webhook event handler"""        self.webhook_handlers[event_type] = handler
         logger.info(f"Webhook handler registered for '{event_type}'")
     
     async def handle_webhook(
@@ -604,8 +571,7 @@ class APIAutomation:
         event_type: str,
         payload: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Handle incoming webhook"""
-        try:
+        """Handle incoming webhook"""        try:
             handler = self.webhook_handlers.get(event_type)
             if not handler:
                 return {
@@ -630,10 +596,8 @@ class APIAutomation:
 
 
 class CrossPlatformSync:
-    """
-    Cross-platform data synchronization manager
-    """
-    
+    """    Cross-platform data synchronization manager
+    """    
     def __init__(self, integrator: IntegrationAutomator):
         self.integrator = integrator
         self.sync_configurations: Dict[str, SyncConfiguration] = {}
@@ -641,13 +605,11 @@ class CrossPlatformSync:
         self.sync_scheduler = None
     
     def add_sync_configuration(self, config: SyncConfiguration):
-        """Add synchronization configuration"""
-        self.sync_configurations[config.sync_id] = config
+        """Add synchronization configuration"""        self.sync_configurations[config.sync_id] = config
         logger.info(f"Sync configuration added: {config.name}")
     
     async def execute_sync(self, sync_id: str) -> Dict[str, Any]:
-        """Execute cross-platform synchronization"""
-        try:
+        """Execute cross-platform synchronization"""        try:
             config = self.sync_configurations.get(sync_id)
             if not config or not config.enabled:
                 return {
@@ -724,8 +686,7 @@ class CrossPlatformSync:
         platform: PlatformType,
         filters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Pull data from source platform"""
-        # Implementation would depend on platform-specific APIs
+        """Pull data from source platform"""        # Implementation would depend on platform-specific APIs
         # This is a simplified version
         task = IntegrationTask(
             task_id=str(uuid.uuid4()),
@@ -742,8 +703,7 @@ class CrossPlatformSync:
         platform: PlatformType,
         data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Push data to target platform"""
-        task = IntegrationTask(
+        """Push data to target platform"""        task = IntegrationTask(
             task_id=str(uuid.uuid4()),
             platform=platform,
             operation="push_data",
@@ -759,8 +719,7 @@ class CrossPlatformSync:
         source_data: Dict[str, Any],
         mapping: Dict[str, str]
     ) -> Dict[str, Any]:
-        """Transform data according to field mapping"""
-        transformed = {}
+        """Transform data according to field mapping"""        transformed = {}
         
         for source_field, target_field in mapping.items():
             if source_field in source_data:
@@ -769,8 +728,7 @@ class CrossPlatformSync:
         return transformed
     
     def get_sync_status(self, sync_id: str) -> Dict[str, Any]:
-        """Get synchronization status"""
-        config = self.sync_configurations.get(sync_id)
+        """Get synchronization status"""        config = self.sync_configurations.get(sync_id)
         active_sync = self.active_syncs.get(sync_id)
         
         if not config:
@@ -787,10 +745,8 @@ class CrossPlatformSync:
 
 
 class ExternalServiceOrchestrator:
-    """
-    External service orchestration and management
-    """
-    
+    """    External service orchestration and management
+    """    
     def __init__(self):
         self.service_registry: Dict[str, Dict[str, Any]] = {}
         self.service_monitors: Dict[str, Dict[str, Any]] = {}
@@ -806,8 +762,7 @@ class ExternalServiceOrchestrator:
         retry_attempts: int = 3,
         circuit_breaker_threshold: int = 5
     ):
-        """Register external service for orchestration"""
-        self.service_registry[service_name] = {
+        """Register external service for orchestration"""        self.service_registry[service_name] = {
             "base_url": base_url,
             "health_check_endpoint": health_check_endpoint,
             "timeout": timeout,
@@ -828,8 +783,7 @@ class ExternalServiceOrchestrator:
         logger.info(f"External service '{service_name}' registered")
     
     async def check_service_health(self, service_name: str) -> Dict[str, Any]:
-        """Check health of external service"""
-        try:
+        """Check health of external service"""        try:
             service = self.service_registry.get(service_name)
             if not service:
                 return {
@@ -893,8 +847,7 @@ class ExternalServiceOrchestrator:
             }
     
     def _handle_service_failure(self, service_name: str):
-        """Handle service failure and update circuit breaker"""
-        breaker = self.circuit_breakers[service_name]
+        """Handle service failure and update circuit breaker"""        breaker = self.circuit_breakers[service_name]
         breaker["failure_count"] += 1
         breaker["last_failure"] = datetime.utcnow()
         
@@ -915,8 +868,7 @@ class ExternalServiceOrchestrator:
         method: str = "GET",
         **kwargs
     ) -> Dict[str, Any]:
-        """Orchestrate call to external service with circuit breaker"""
-        try:
+        """Orchestrate call to external service with circuit breaker"""        try:
             # Check service health first
             health_check = await self.check_service_health(service_name)
             if not health_check["success"] and health_check.get("status") == "circuit_open":
@@ -946,8 +898,7 @@ class ExternalServiceOrchestrator:
             }
     
     async def monitor_all_services(self) -> Dict[str, Any]:
-        """Monitor health of all registered services"""
-        results = {}
+        """Monitor health of all registered services"""        results = {}
         
         for service_name in self.service_registry.keys():
             results[service_name] = await self.check_service_health(service_name)
@@ -967,8 +918,7 @@ class ExternalServiceOrchestrator:
 
 
 class CloudIntegration:
-    """Cloud service integration and orchestration"""
-    
+    """Cloud service integration and orchestration"""    
     def __init__(self):
         self.cloud_providers: Dict[str, Dict[str, Any]] = {}
         self.storage_backends: Dict[str, Dict[str, Any]] = {}
@@ -980,8 +930,7 @@ class CloudIntegration:
         provider_name: str,
         provider_config: Dict[str, Any]
     ):
-        """Register cloud service provider"""
-        self.cloud_providers[provider_name] = {
+        """Register cloud service provider"""        self.cloud_providers[provider_name] = {
             **provider_config,
             "registered_at": datetime.utcnow(),
             "status": "active"
@@ -993,8 +942,7 @@ class CloudIntegration:
         provider_name: str,
         deployment_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Deploy workflow automation to cloud provider"""
-        if provider_name not in self.cloud_providers:
+        """Deploy workflow automation to cloud provider"""        if provider_name not in self.cloud_providers:
             return {"success": False, "error": "Provider not registered"}
         
         provider = self.cloud_providers[provider_name]
@@ -1034,8 +982,7 @@ class CloudIntegration:
             return {"success": False, "error": str(e), "deployment": deployment}
     
     async def _deploy_to_aws(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy to AWS cloud"""
-        # Simulate AWS deployment
+        """Deploy to AWS cloud"""        # Simulate AWS deployment
         await asyncio.sleep(2)
         
         return {
@@ -1052,8 +999,7 @@ class CloudIntegration:
         }
     
     async def _deploy_to_azure(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy to Azure cloud"""
-        # Simulate Azure deployment
+        """Deploy to Azure cloud"""        # Simulate Azure deployment
         await asyncio.sleep(2)
         
         return {
@@ -1070,8 +1016,7 @@ class CloudIntegration:
         }
     
     async def _deploy_to_gcp(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy to Google Cloud Platform"""
-        # Simulate GCP deployment
+        """Deploy to Google Cloud Platform"""        # Simulate GCP deployment
         await asyncio.sleep(2)
         
         return {
@@ -1088,8 +1033,7 @@ class CloudIntegration:
         }
     
     async def _deploy_generic(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy to generic cloud provider"""
-        await asyncio.sleep(1)
+        """Deploy to generic cloud provider"""        await asyncio.sleep(1)
         
         return {
             "resources": {
@@ -1107,8 +1051,7 @@ class CloudIntegration:
         deployment_id: str,
         scale_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Scale cloud deployment based on load"""
-        if deployment_id not in self.deployment_configs:
+        """Scale cloud deployment based on load"""        if deployment_id not in self.deployment_configs:
             return {"success": False, "error": "Deployment not found"}
         
         deployment = self.deployment_configs[deployment_id]
@@ -1127,8 +1070,7 @@ class CloudIntegration:
 
 
 class DatabaseIntegration:
-    """Database integration and data synchronization"""
-    
+    """Database integration and data synchronization"""    
     def __init__(self):
         self.database_connections: Dict[str, Dict[str, Any]] = {}
         self.sync_configurations: Dict[str, Dict[str, Any]] = {}
@@ -1139,8 +1081,7 @@ class DatabaseIntegration:
         db_name: str,
         connection_config: Dict[str, Any]
     ):
-        """Register database connection"""
-        self.database_connections[db_name] = {
+        """Register database connection"""        self.database_connections[db_name] = {
             **connection_config,
             "registered_at": datetime.utcnow(),
             "status": "connected"
@@ -1153,8 +1094,7 @@ class DatabaseIntegration:
         target_dbs: List[str],
         sync_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Synchronize workflow data across databases"""
-        sync_id = str(uuid.uuid4())
+        """Synchronize workflow data across databases"""        sync_id = str(uuid.uuid4())
         
         sync_result = {
             "sync_id": sync_id,
@@ -1197,8 +1137,7 @@ class DatabaseIntegration:
         pipeline_name: str,
         pipeline_config: Dict[str, Any]
     ) -> str:
-        """Create data processing pipeline"""
-        pipeline_id = str(uuid.uuid4())
+        """Create data processing pipeline"""        pipeline_id = str(uuid.uuid4())
         
         pipeline = {
             "pipeline_id": pipeline_id,
@@ -1221,8 +1160,7 @@ class DatabaseIntegration:
         db_name: str,
         workflow_id: str
     ) -> List[Dict[str, Any]]:
-        """Fetch workflow data from database"""
-        # Simulate database query
+        """Fetch workflow data from database"""        # Simulate database query
         await asyncio.sleep(0.5)
         
         return [
@@ -1241,16 +1179,14 @@ class DatabaseIntegration:
         data: List[Dict[str, Any]],
         sync_config: Dict[str, Any]
     ):
-        """Sync data to target database"""
-        # Simulate database write
+        """Sync data to target database"""        # Simulate database write
         await asyncio.sleep(1)
         
         # Would implement actual database sync logic here
         logger.info(f"Synced {len(data)} records to {db_name}")
     
     async def _run_data_pipeline(self, pipeline_id: str):
-        """Run data processing pipeline"""
-        pipeline = self.data_pipelines[pipeline_id]
+        """Run data processing pipeline"""        pipeline = self.data_pipelines[pipeline_id]
         
         while pipeline["status"] == "active":
             try:
@@ -1266,8 +1202,7 @@ class DatabaseIntegration:
                 pipeline["error"] = str(e)
     
     async def _process_pipeline_batch(self, pipeline: Dict[str, Any]):
-        """Process a batch of pipeline data"""
-        # Simulate batch processing
+        """Process a batch of pipeline data"""        # Simulate batch processing
         await asyncio.sleep(2)
         
         batch_size = pipeline["config"].get("batch_size", 100)
@@ -1276,8 +1211,7 @@ class DatabaseIntegration:
 
 
 class EventDrivenIntegration:
-    """Event-driven integration system for real-time workflow automation"""
-    
+    """Event-driven integration system for real-time workflow automation"""    
     def __init__(self):
         self.event_streams: Dict[str, Dict[str, Any]] = {}
         self.event_handlers: Dict[str, List[Callable]] = {}
@@ -1289,8 +1223,7 @@ class EventDrivenIntegration:
         stream_name: str,
         stream_config: Dict[str, Any]
     ) -> str:
-        """Create event stream for real-time integration"""
-        stream_id = str(uuid.uuid4())
+        """Create event stream for real-time integration"""        stream_id = str(uuid.uuid4())
         
         stream = {
             "stream_id": stream_id,
@@ -1314,8 +1247,7 @@ class EventDrivenIntegration:
         event_type: str,
         handler: Callable
     ):
-        """Register event handler for specific event type"""
-        if event_type not in self.event_handlers:
+        """Register event handler for specific event type"""        if event_type not in self.event_handlers:
             self.event_handlers[event_type] = []
         
         self.event_handlers[event_type].append(handler)
@@ -1326,8 +1258,7 @@ class EventDrivenIntegration:
         event_data: Dict[str, Any],
         stream_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Publish event to integration system"""
-        event = {
+        """Publish event to integration system"""        event = {
             "event_id": str(uuid.uuid4()),
             "event_type": event_type,
             "data": event_data,
@@ -1370,8 +1301,7 @@ class EventDrivenIntegration:
         }
     
     async def _process_event_stream(self, stream_id: str):
-        """Process events from stream"""
-        stream = self.event_streams[stream_id]
+        """Process events from stream"""        stream = self.event_streams[stream_id]
         
         while stream["status"] == "active":
             try:

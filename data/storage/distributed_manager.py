@@ -1,5 +1,4 @@
-"""
-Professional Distributed Storage Manager - IA Influencer Agent Platform
+"""Professional Distributed Storage Manager - IA Influencer Agent Platform
 =======================================================================
 Module: backend/data/storage/distributed_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -23,9 +22,7 @@ LOGIQUE MÉTIER INTÉGRÉE:
 Content Distribution → Provider Selection → Load Balancing → 
 Fault Detection → Automatic Failover → Performance Optimization → 
 Geographic Distribution → Latency Minimization → Cost Optimization
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 from datetime import datetime, timedelta
@@ -47,8 +44,7 @@ logger = logging.getLogger(__name__)
 
 
 class DistributionStrategy(Enum):
-    """File distribution strategies"""
-    SINGLE_PRIMARY = "single_primary"
+    """File distribution strategies"""    SINGLE_PRIMARY = "single_primary"
     MULTI_REGION = "multi_region"
     GEOGRAPHIC = "geographic"
     COST_OPTIMIZED = "cost_optimized"
@@ -57,8 +53,7 @@ class DistributionStrategy(Enum):
 
 
 class ProviderHealth(Enum):
-    """Provider health status"""
-    HEALTHY = "healthy"
+    """Provider health status"""    HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
     OFFLINE = "offline"
@@ -67,8 +62,7 @@ class ProviderHealth(Enum):
 
 @dataclass
 class ProviderMetrics:
-    """Provider performance metrics"""
-    provider: StorageProvider
+    """Provider performance metrics"""    provider: StorageProvider
     response_time_ms: float
     success_rate: float
     error_rate: float
@@ -81,8 +75,7 @@ class ProviderMetrics:
 
 @dataclass
 class DistributionConfig:
-    """Distribution configuration"""
-    strategy: DistributionStrategy
+    """Distribution configuration"""    strategy: DistributionStrategy
     primary_providers: List[StorageProvider]
     backup_providers: List[StorageProvider]
     min_replicas: int = 2
@@ -96,8 +89,7 @@ class DistributionConfig:
 
 @dataclass
 class FileDistribution:
-    """File distribution information"""
-    file_path: str
+    """File distribution information"""    file_path: str
     file_hash: str
     primary_location: Dict[str, Any]
     replica_locations: List[Dict[str, Any]]
@@ -109,23 +101,19 @@ class FileDistribution:
 
 
 class DistributedStorageManager:
-    """
-    Professional distributed storage manager for IA Influencer Agent platform.
+    """    Professional distributed storage manager for IA Influencer Agent platform.
     
     Provides intelligent multi-cloud storage distribution with automatic
     failover, load balancing, and performance optimization.
-    """
-    
+    """    
     def __init__(self, storage_managers: Dict[StorageProvider, StorageManager],
                  distribution_config: DistributionConfig):
-        """
-        Initialize DistributedStorageManager.
+        """        Initialize DistributedStorageManager.
         
         Args:
             storage_managers: Dictionary of provider to StorageManager instances
             distribution_config: Distribution configuration
-        """
-        self.storage_managers = storage_managers
+        """        self.storage_managers = storage_managers
         self.config = distribution_config
         self.logger = logging.getLogger(__name__)
         
@@ -155,8 +143,7 @@ class DistributedStorageManager:
         self._start_monitoring()
     
     def _start_monitoring(self):
-        """Start background monitoring tasks"""
-        if self.monitoring_enabled:
+        """Start background monitoring tasks"""        if self.monitoring_enabled:
             # Start provider health monitoring
             asyncio.create_task(self._monitor_provider_health())
             
@@ -169,8 +156,7 @@ class DistributedStorageManager:
     async def store_file_distributed(self, file_data: Union[bytes, BinaryIO], 
                                    file_path: str, metadata: Dict[str, Any] = None,
                                    strategy: DistributionStrategy = None) -> Dict[str, Any]:
-        """
-        Store file with distributed strategy.
+        """        Store file with distributed strategy.
         
         Args:
             file_data: File data to store
@@ -180,8 +166,7 @@ class DistributedStorageManager:
             
         Returns:
             Distribution result with all storage locations
-        """
-        try:
+        """        try:
             # Determine strategy
             target_strategy = strategy or self.config.strategy
             
@@ -263,8 +248,7 @@ class DistributedStorageManager:
     
     async def retrieve_file_distributed(self, file_path: str = None, 
                                        file_hash: str = None) -> Optional[bytes]:
-        """
-        Retrieve file from optimal provider.
+        """        Retrieve file from optimal provider.
         
         Args:
             file_path: Path to file (if known)
@@ -272,8 +256,7 @@ class DistributedStorageManager:
             
         Returns:
             File content or None if not found
-        """
-        try:
+        """        try:
             # Find distribution record
             distribution = None
             if file_hash and file_hash in self.file_registry:
@@ -340,8 +323,7 @@ class DistributedStorageManager:
     async def delete_file_distributed(self, file_path: str = None, 
                                      file_hash: str = None, 
                                      permanent: bool = False) -> bool:
-        """
-        Delete file from all distributed locations.
+        """        Delete file from all distributed locations.
         
         Args:
             file_path: Path to file
@@ -350,8 +332,7 @@ class DistributedStorageManager:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             # Find distribution record
             distribution = None
             if file_hash and file_hash in self.file_registry:
@@ -412,8 +393,7 @@ class DistributedStorageManager:
     
     async def migrate_file(self, file_hash: str, 
                           new_strategy: DistributionStrategy) -> bool:
-        """
-        Migrate file to new distribution strategy.
+        """        Migrate file to new distribution strategy.
         
         Args:
             file_hash: File to migrate
@@ -421,8 +401,7 @@ class DistributedStorageManager:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             if file_hash not in self.file_registry:
                 return False
             
@@ -507,13 +486,11 @@ class DistributedStorageManager:
             return False
     
     async def rebalance_storage(self) -> Dict[str, Any]:
-        """
-        Rebalance storage across providers based on performance and cost.
+        """        Rebalance storage across providers based on performance and cost.
         
         Returns:
             Rebalancing statistics
-        """
-        try:
+        """        try:
             rebalance_stats = {
                 'files_analyzed': 0,
                 'files_migrated': 0,
@@ -548,13 +525,11 @@ class DistributedStorageManager:
             return {}
     
     async def get_distribution_statistics(self) -> Dict[str, Any]:
-        """
-        Get comprehensive distribution statistics.
+        """        Get comprehensive distribution statistics.
         
         Returns:
             Distribution statistics
-        """
-        try:
+        """        try:
             stats = {
                 'total_files': len(self.file_registry),
                 'total_storage_size': 0,
@@ -609,8 +584,7 @@ class DistributedStorageManager:
     
     async def _select_providers_for_strategy(self, strategy: DistributionStrategy,
                                            file_path: str, metadata: Dict[str, Any]) -> List[StorageProvider]:
-        """Select providers based on distribution strategy"""
-        try:
+        """Select providers based on distribution strategy"""        try:
             available_providers = list(self.storage_managers.keys())
             healthy_providers = await self._get_healthy_providers()
             
@@ -644,8 +618,7 @@ class DistributedStorageManager:
             return list(self.storage_managers.keys())[:self.config.min_replicas]
     
     async def _get_healthy_providers(self) -> List[StorageProvider]:
-        """Get list of healthy providers"""
-        healthy_providers = []
+        """Get list of healthy providers"""        healthy_providers = []
         
         for provider in self.storage_managers.keys():
             if provider in self.provider_metrics:
@@ -659,8 +632,7 @@ class DistributedStorageManager:
         return healthy_providers
     
     async def _get_best_performing_provider(self, providers: List[StorageProvider]) -> Optional[StorageProvider]:
-        """Get best performing provider based on metrics"""
-        if not providers:
+        """Get best performing provider based on metrics"""        if not providers:
             return None
         
         best_provider = None
@@ -679,16 +651,14 @@ class DistributedStorageManager:
         return best_provider or providers[0]
     
     async def _select_optimal_retrieval_provider(self, distribution: FileDistribution) -> StorageProvider:
-        """Select optimal provider for file retrieval"""
-        all_providers = [distribution.primary_location['provider']]
+        """Select optimal provider for file retrieval"""        all_providers = [distribution.primary_location['provider']]
         all_providers.extend([r['provider'] for r in distribution.replica_locations])
         
         # Select provider with best current performance
         return await self._get_best_performing_provider(all_providers) or all_providers[0]
     
     async def _monitor_provider_health(self):
-        """Background task to monitor provider health"""
-        while self.monitoring_enabled:
+        """Background task to monitor provider health"""        while self.monitoring_enabled:
             try:
                 for provider in self.storage_managers.keys():
                     await self._check_provider_health(provider)
@@ -700,8 +670,7 @@ class DistributedStorageManager:
                 await asyncio.sleep(self.monitoring_interval)
     
     async def _check_provider_health(self, provider: StorageProvider):
-        """Check health of specific provider"""
-        try:
+        """Check health of specific provider"""        try:
             start_time = time.time()
             
             # Perform health check (simple list operation)
@@ -744,8 +713,7 @@ class DistributedStorageManager:
                 self.provider_metrics[provider].last_updated = datetime.utcnow()
     
     async def _monitor_performance(self):
-        """Background task to monitor performance metrics"""
-        while self.monitoring_enabled:
+        """Background task to monitor performance metrics"""        while self.monitoring_enabled:
             try:
                 # Update access patterns
                 await self._update_hot_cold_files()
@@ -760,8 +728,7 @@ class DistributedStorageManager:
                 await asyncio.sleep(300)
     
     async def _optimize_load_balancing(self):
-        """Background task to optimize load balancing"""
-        while self.monitoring_enabled:
+        """Background task to optimize load balancing"""        while self.monitoring_enabled:
             try:
                 # Analyze provider loads
                 total_load = sum(self.provider_load.values())
@@ -785,8 +752,7 @@ class DistributedStorageManager:
     # Additional helper methods
     
     async def _update_access_patterns(self, file_hash: str, provider: StorageProvider):
-        """Update access patterns for optimization"""
-        if file_hash not in self.access_patterns:
+        """Update access patterns for optimization"""        if file_hash not in self.access_patterns:
             self.access_patterns[file_hash] = {
                 'total_accesses': 0,
                 'last_access': datetime.utcnow(),
@@ -801,8 +767,7 @@ class DistributedStorageManager:
         pattern['provider_usage'][provider_key] = pattern['provider_usage'].get(provider_key, 0) + 1
     
     async def _update_hot_cold_files(self):
-        """Update hot and cold file classifications"""
-        now = datetime.utcnow()
+        """Update hot and cold file classifications"""        now = datetime.utcnow()
         threshold_hot = 10  # Access count threshold for hot files
         threshold_cold_days = 30  # Days threshold for cold files
         
@@ -818,8 +783,7 @@ class DistributedStorageManager:
                 self.cold_files.add(file_hash)
     
     async def _optimize_storage_tiers(self):
-        """Optimize storage tiers based on access patterns"""
-        # Move cold files to cheaper storage tiers
+        """Optimize storage tiers based on access patterns"""        # Move cold files to cheaper storage tiers
         for file_hash in self.cold_files:
             if file_hash in self.file_registry:
                 distribution = self.file_registry[file_hash]
@@ -836,8 +800,7 @@ class DistributedStorageManager:
     
     async def _determine_optimal_strategy(self, file_hash: str, 
                                         distribution: FileDistribution) -> DistributionStrategy:
-        """Determine optimal distribution strategy for file"""
-        # Check access patterns
+        """Determine optimal distribution strategy for file"""        # Check access patterns
         if file_hash in self.hot_files:
             return DistributionStrategy.PERFORMANCE_OPTIMIZED
         elif file_hash in self.cold_files:
@@ -846,8 +809,7 @@ class DistributedStorageManager:
             return DistributionStrategy.MULTI_REGION
     
     def _format_distribution_result(self, distribution: FileDistribution) -> Dict[str, Any]:
-        """Format distribution result for API response"""
-        return {
+        """Format distribution result for API response"""        return {
             'file_path': distribution.file_path,
             'file_hash': distribution.file_hash,
             'strategy': distribution.distribution_strategy.value,
@@ -865,13 +827,11 @@ class DistributedStorageManager:
     # Placeholder methods for specific provider selection strategies
     
     async def _select_multi_region_providers(self, providers: List[StorageProvider]) -> List[StorageProvider]:
-        """Select providers from different regions"""
-        # Placeholder - would implement region-aware selection
+        """Select providers from different regions"""        # Placeholder - would implement region-aware selection
         return providers[:min(3, len(providers))]
     
     async def _select_cost_optimized_providers(self, providers: List[StorageProvider]) -> List[StorageProvider]:
-        """Select cheapest providers"""
-        # Sort by cost per GB
+        """Select cheapest providers"""        # Sort by cost per GB
         sorted_providers = sorted(providers, key=lambda p: self.provider_metrics.get(p, ProviderMetrics(
             provider=p, response_time_ms=0, success_rate=1.0, error_rate=0, 
             bandwidth_mbps=0, cost_per_gb=0.10, availability=1.0, last_updated=datetime.utcnow()
@@ -880,8 +840,7 @@ class DistributedStorageManager:
         return sorted_providers[:self.config.min_replicas]
     
     async def _select_performance_optimized_providers(self, providers: List[StorageProvider]) -> List[StorageProvider]:
-        """Select fastest providers"""
-        # Sort by response time
+        """Select fastest providers"""        # Sort by response time
         sorted_providers = sorted(providers, key=lambda p: self.provider_metrics.get(p, ProviderMetrics(
             provider=p, response_time_ms=1000, success_rate=1.0, error_rate=0,
             bandwidth_mbps=0, cost_per_gb=0.10, availability=1.0, last_updated=datetime.utcnow()
@@ -891,8 +850,7 @@ class DistributedStorageManager:
     
     async def _select_geographic_providers(self, providers: List[StorageProvider], 
                                          metadata: Dict[str, Any]) -> List[StorageProvider]:
-        """Select providers based on geographic location"""
-        # Placeholder - would implement geographic selection based on user location
+        """Select providers based on geographic location"""        # Placeholder - would implement geographic selection based on user location
         return providers[:self.config.min_replicas]
 
 

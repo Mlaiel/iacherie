@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Critical Crawler Unit Tests
+"""Critical Crawler Unit Tests
 ===========================
 
 Focused unit tests for the most critical crawler modules:
@@ -25,9 +21,7 @@ Focused unit tests for the most critical crawler modules:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -46,12 +40,10 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 
 class TestSpotifyCrawler:
-    """Unit tests for Spotify Crawler - critical for music platform integration"""
-    
+    """Unit tests for Spotify Crawler - critical for music platform integration"""    
     @pytest.fixture
     def mock_spotify_crawler(self):
-        """Mock Spotify crawler with core methods"""
-        crawler = Mock()
+        """Mock Spotify crawler with core methods"""        crawler = Mock()
         crawler.authenticate = AsyncMock()
         crawler.search_tracks = AsyncMock()
         crawler.get_track_details = AsyncMock()
@@ -63,8 +55,7 @@ class TestSpotifyCrawler:
     
     @pytest.fixture
     def sample_track_query(self):
-        """Sample track search query"""
-        return {
+        """Sample track search query"""        return {
             'title': 'Test Song',
             'artist': 'Test Artist',
             'album': 'Test Album',
@@ -74,8 +65,7 @@ class TestSpotifyCrawler:
     
     @pytest.fixture
     def mock_spotify_api_response(self):
-        """Mock Spotify API response"""
-        return {
+        """Mock Spotify API response"""        return {
             'tracks': {
                 'items': [
                     {
@@ -101,8 +91,7 @@ class TestSpotifyCrawler:
     
     @pytest.mark.asyncio
     async def test_spotify_authentication(self, mock_spotify_crawler):
-        """Test Spotify API authentication"""
-        # Mock successful authentication
+        """Test Spotify API authentication"""        # Mock successful authentication
         expected_auth = {
             'access_token': 'BQC4YL1vJ9J5J1J5J1J5J1J5',
             'token_type': 'Bearer',
@@ -121,8 +110,7 @@ class TestSpotifyCrawler:
     
     @pytest.mark.asyncio
     async def test_track_search(self, mock_spotify_crawler, sample_track_query, mock_spotify_api_response):
-        """Test track search functionality"""
-        # Mock search results
+        """Test track search functionality"""        # Mock search results
         expected_tracks = [
             {
                 'id': '4iV5W9uYEdYUVa79Axb7Rh',
@@ -148,8 +136,7 @@ class TestSpotifyCrawler:
     
     @pytest.mark.asyncio
     async def test_audio_features_extraction(self, mock_spotify_crawler):
-        """Test audio features extraction from Spotify"""
-        track_id = '4iV5W9uYEdYUVa79Axb7Rh'
+        """Test audio features extraction from Spotify"""        track_id = '4iV5W9uYEdYUVa79Axb7Rh'
         
         # Mock audio features response
         expected_features = {
@@ -181,8 +168,7 @@ class TestSpotifyCrawler:
     
     @pytest.mark.asyncio
     async def test_content_validation(self, mock_spotify_crawler):
-        """Test content validation against fingerprint"""
-        # Mock validation parameters
+        """Test content validation against fingerprint"""        # Mock validation parameters
         content_data = {
             'spotify_track_id': '4iV5W9uYEdYUVa79Axb7Rh',
             'original_fingerprint': 'AQAHxImYaAkSFZygJAq0JMlQg',
@@ -214,12 +200,10 @@ class TestSpotifyCrawler:
 
 
 class TestYouTubeCrawler:
-    """Unit tests for YouTube Crawler - critical for video platform integration"""
-    
+    """Unit tests for YouTube Crawler - critical for video platform integration"""    
     @pytest.fixture
     def mock_youtube_crawler(self):
-        """Mock YouTube crawler with core methods"""
-        crawler = Mock()
+        """Mock YouTube crawler with core methods"""        crawler = Mock()
         crawler.authenticate = AsyncMock()
         crawler.search_videos = AsyncMock()
         crawler.get_video_details = AsyncMock()
@@ -231,8 +215,7 @@ class TestYouTubeCrawler:
     
     @pytest.fixture
     def sample_video_query(self):
-        """Sample video search query"""
-        return {
+        """Sample video search query"""        return {
             'title': 'Test Music Video',
             'channel': 'Test Channel',
             'duration': 240,
@@ -242,8 +225,7 @@ class TestYouTubeCrawler:
     
     @pytest.fixture
     def mock_youtube_api_response(self):
-        """Mock YouTube API response"""
-        return {
+        """Mock YouTube API response"""        return {
             'items': [
                 {
                     'id': {'videoId': 'dQw4w9WgXcQ'},
@@ -272,8 +254,7 @@ class TestYouTubeCrawler:
     
     @pytest.mark.asyncio
     async def test_youtube_authentication(self, mock_youtube_crawler):
-        """Test YouTube API authentication"""
-        # Mock successful authentication
+        """Test YouTube API authentication"""        # Mock successful authentication
         expected_auth = {
             'api_key': 'AIzaSyC4J5J1J5J1J5J1J5J1J5J1J5J1J5J1J5J',
             'client_id': 'test_client_id',
@@ -292,8 +273,7 @@ class TestYouTubeCrawler:
     
     @pytest.mark.asyncio
     async def test_video_search(self, mock_youtube_crawler, sample_video_query, mock_youtube_api_response):
-        """Test video search functionality"""
-        # Mock search results
+        """Test video search functionality"""        # Mock search results
         expected_videos = [
             {
                 'video_id': 'dQw4w9WgXcQ',
@@ -321,8 +301,7 @@ class TestYouTubeCrawler:
     
     @pytest.mark.asyncio
     async def test_audio_extraction(self, mock_youtube_crawler):
-        """Test audio track extraction from YouTube video"""
-        video_id = 'dQw4w9WgXcQ'
+        """Test audio track extraction from YouTube video"""        video_id = 'dQw4w9WgXcQ'
         
         # Mock audio extraction result
         expected_audio = {
@@ -348,8 +327,7 @@ class TestYouTubeCrawler:
     
     @pytest.mark.asyncio
     async def test_content_id_matching(self, mock_youtube_crawler):
-        """Test YouTube Content ID system integration"""
-        # Mock Content ID check parameters
+        """Test YouTube Content ID system integration"""        # Mock Content ID check parameters
         content_check = {
             'video_id': 'dQw4w9WgXcQ',
             'reference_fingerprint': 'original_content_fingerprint',
@@ -382,12 +360,10 @@ class TestYouTubeCrawler:
 
 
 class TestPlatformIntegrationEngine:
-    """Unit tests for Platform Integration Engine - manages multi-platform operations"""
-    
+    """Unit tests for Platform Integration Engine - manages multi-platform operations"""    
     @pytest.fixture
     def mock_integration_engine(self):
-        """Mock platform integration engine"""
-        engine = Mock()
+        """Mock platform integration engine"""        engine = Mock()
         engine.register_platform = AsyncMock()
         engine.coordinate_multi_platform_search = AsyncMock()
         engine.aggregate_platform_results = AsyncMock()
@@ -398,8 +374,7 @@ class TestPlatformIntegrationEngine:
     
     @pytest.fixture
     def sample_platforms_config(self):
-        """Sample platform configuration"""
-        return {
+        """Sample platform configuration"""        return {
             'platforms': [
                 {
                     'name': 'spotify',
@@ -427,8 +402,7 @@ class TestPlatformIntegrationEngine:
     
     @pytest.mark.asyncio
     async def test_multi_platform_search_coordination(self, mock_integration_engine, sample_platforms_config):
-        """Test coordinated search across multiple platforms"""
-        # Mock search query
+        """Test coordinated search across multiple platforms"""        # Mock search query
         search_query = {
             'content_fingerprint': 'unified_fingerprint_hash',
             'metadata': {
@@ -487,8 +461,7 @@ class TestPlatformIntegrationEngine:
     
     @pytest.mark.asyncio
     async def test_result_aggregation(self, mock_integration_engine):
-        """Test aggregation and ranking of multi-platform results"""
-        # Mock raw platform results
+        """Test aggregation and ranking of multi-platform results"""        # Mock raw platform results
         raw_results = {
             'spotify_results': [
                 {'id': 'sp_1', 'similarity': 0.95, 'platform': 'spotify'},
@@ -538,8 +511,7 @@ class TestPlatformIntegrationEngine:
     
     @pytest.mark.asyncio
     async def test_rate_limit_management(self, mock_integration_engine):
-        """Test rate limit management across platforms"""
-        # Mock rate limit status
+        """Test rate limit management across platforms"""        # Mock rate limit status
         rate_limit_info = {
             'platform': 'spotify',
             'current_usage': {
@@ -577,8 +549,7 @@ class TestPlatformIntegrationEngine:
 if __name__ == "__main__":
     # Simple test runner for development
     async def run_simple_tests():
-        """Run basic tests without pytest for development"""
-        print("Running Critical Crawlers Tests...")
+        """Run basic tests without pytest for development"""        print("Running Critical Crawlers Tests...")
         
         print("✓ Spotify Crawler test structure created")
         print("✓ YouTube Crawler test structure created")

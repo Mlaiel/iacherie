@@ -1,5 +1,4 @@
-"""
-Business Intent Analysis for Creative Industry
+"""Business Intent Analysis for Creative Industry
 
 Specialized intent analysis for business operations, monetization strategies,
 and commercial workflows in the creative industry ecosystem.
@@ -12,9 +11,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 import logging
@@ -29,8 +26,7 @@ logger = logging.getLogger(__name__)
 
 
 class BusinessIntentCategory(Enum):
-    """Business intent categories for creative professionals"""
-    MONETIZATION = "monetization"
+    """Business intent categories for creative professionals"""    MONETIZATION = "monetization"
     REVENUE_TRACKING = "revenue_tracking"
     BRAND_PARTNERSHIPS = "brand_partnerships"
     CONTENT_LICENSING = "content_licensing"
@@ -45,8 +41,7 @@ class BusinessIntentCategory(Enum):
 
 
 class RevenueStreamType(Enum):
-    """Types of revenue streams for creators"""
-    STREAMING_ROYALTIES = "streaming_royalties"
+    """Types of revenue streams for creators"""    STREAMING_ROYALTIES = "streaming_royalties"
     BRAND_SPONSORSHIPS = "brand_sponsorships"
     MERCHANDISE_SALES = "merchandise_sales"
     LIVE_PERFORMANCES = "live_performances"
@@ -61,8 +56,7 @@ class RevenueStreamType(Enum):
 
 
 class BusinessPriority(Enum):
-    """Business priority levels"""
-    CRITICAL = "critical"
+    """Business priority levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -71,8 +65,7 @@ class BusinessPriority(Enum):
 
 @dataclass
 class BusinessIntentAnalysis:
-    """Business intent analysis result"""
-    
+    """Business intent analysis result"""    
     # Primary business intent
     business_category: BusinessIntentCategory
     revenue_stream_type: Optional[RevenueStreamType] = None
@@ -106,8 +99,7 @@ class BusinessIntentAnalysis:
 
 @dataclass
 class MonetizationOpportunity:
-    """Monetization opportunity identification"""
-    
+    """Monetization opportunity identification"""    
     opportunity_type: RevenueStreamType
     potential_revenue: float
     implementation_effort: str  # low, medium, high
@@ -129,8 +121,7 @@ class MonetizationOpportunity:
 
 
 class BusinessIntentAnalyzer:
-    """
-    Specialized analyzer for business and monetization intents
+    """    Specialized analyzer for business and monetization intents
     
     Provides deep analysis of business-related intentions including:
     - Revenue stream optimization
@@ -138,8 +129,7 @@ class BusinessIntentAnalyzer:
     - Partnership opportunity identification
     - Financial planning assistance
     - Compliance and legal considerations
-    """
-    
+    """    
     def __init__(self, config: IntentRecognitionConfig):
         self.config = config
         self.business_patterns = self._initialize_business_patterns()
@@ -148,8 +138,7 @@ class BusinessIntentAnalyzer:
         self.market_data = self._load_market_data()
     
     def _initialize_business_patterns(self) -> Dict[str, re.Pattern]:
-        """Initialize business-related pattern matching"""
-        return {
+        """Initialize business-related pattern matching"""        return {
             "monetization": re.compile(
                 r'\b(monetize|revenue|income|earnings|profit|money|financial|payment)\b',
                 re.IGNORECASE
@@ -185,8 +174,7 @@ class BusinessIntentAnalyzer:
         }
     
     def _initialize_revenue_keywords(self) -> Dict[RevenueStreamType, List[str]]:
-        """Initialize revenue stream specific keywords"""
-        return {
+        """Initialize revenue stream specific keywords"""        return {
             RevenueStreamType.STREAMING_ROYALTIES: [
                 "spotify", "streaming", "royalties", "streams", "plays", "listens"
             ],
@@ -214,8 +202,7 @@ class BusinessIntentAnalyzer:
         }
     
     def _initialize_priority_indicators(self) -> Dict[BusinessPriority, List[str]]:
-        """Initialize priority level indicators"""
-        return {
+        """Initialize priority level indicators"""        return {
             BusinessPriority.CRITICAL: [
                 "urgent", "critical", "emergency", "immediately", "asap", "deadline"
             ],
@@ -234,8 +221,7 @@ class BusinessIntentAnalyzer:
         }
     
     def _load_market_data(self) -> Dict[str, Any]:
-        """Load market data and trends (simplified for demo)"""
-        return {
+        """Load market data and trends (simplified for demo)"""        return {
             "creator_economy_size": 104_000_000_000,  # $104B
             "average_creator_income": {
                 "musician": 35000,
@@ -261,8 +247,7 @@ class BusinessIntentAnalyzer:
         conversation_context: Dict[str, Any],
         current_business_state: Optional[Dict[str, Any]] = None
     ) -> BusinessIntentAnalysis:
-        """
-        Analyze business-related intent with comprehensive context
+        """        Analyze business-related intent with comprehensive context
         
         Args:
             message_text: User's message
@@ -272,8 +257,7 @@ class BusinessIntentAnalyzer:
             
         Returns:
             BusinessIntentAnalysis: Comprehensive business intent analysis
-        """
-        try:
+        """        try:
             # Identify primary business category
             business_category = self._identify_business_category(message_text)
             
@@ -333,8 +317,7 @@ class BusinessIntentAnalyzer:
             raise BusinessAnalysisError(f"Analysis failed: {e}")
     
     def _identify_business_category(self, message_text: str) -> BusinessIntentCategory:
-        """Identify the primary business category from message"""
-        text_lower = message_text.lower()
+        """Identify the primary business category from message"""        text_lower = message_text.lower()
         
         # Check for specific business patterns
         if self.business_patterns["monetization"].search(text_lower):
@@ -375,8 +358,7 @@ class BusinessIntentAnalyzer:
         message_text: str, 
         user_profile: Dict[str, Any]
     ) -> Optional[RevenueStreamType]:
-        """Identify the specific revenue stream type"""
-        text_lower = message_text.lower()
+        """Identify the specific revenue stream type"""        text_lower = message_text.lower()
         
         # Check each revenue stream type
         for stream_type, keywords in self.revenue_stream_keywords.items():
@@ -400,8 +382,7 @@ class BusinessIntentAnalyzer:
         message_text: str, 
         conversation_context: Dict[str, Any]
     ) -> BusinessPriority:
-        """Assess the priority level of the business intent"""
-        text_lower = message_text.lower()
+        """Assess the priority level of the business intent"""        text_lower = message_text.lower()
         
         # Check for priority indicators
         for priority, indicators in self.priority_indicators.items():
@@ -425,8 +406,7 @@ class BusinessIntentAnalyzer:
         user_profile: Dict[str, Any],
         current_business_state: Optional[Dict[str, Any]]
     ) -> Dict[str, float]:
-        """Analyze financial implications of the business intent"""
-        
+        """Analyze financial implications of the business intent"""        
         creator_type = user_profile.get("creator_type", "unknown")
         follower_count = user_profile.get("total_followers", 1000)
         
@@ -464,8 +444,7 @@ class BusinessIntentAnalyzer:
         message_text: str, 
         business_category: BusinessIntentCategory
     ) -> Dict[str, Any]:
-        """Analyze timeline and urgency factors"""
-        
+        """Analyze timeline and urgency factors"""        
         # Default timelines by category
         category_timelines = {
             BusinessIntentCategory.PAYMENT_PROCESSING: timedelta(days=1),
@@ -500,8 +479,7 @@ class BusinessIntentAnalyzer:
         revenue_stream_type: Optional[RevenueStreamType],
         user_profile: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze market context and opportunities"""
-        
+        """Analyze market context and opportunities"""        
         # Market opportunity scoring
         opportunity_score = 0.5
         
@@ -536,8 +514,7 @@ class BusinessIntentAnalyzer:
         revenue_stream_type: Optional[RevenueStreamType],
         current_business_state: Optional[Dict[str, Any]]
     ) -> Dict[str, List[str]]:
-        """Assess business risks and compliance requirements"""
-        
+        """Assess business risks and compliance requirements"""        
         risk_factors = []
         mitigation_strategies = []
         compliance_requirements = []
@@ -595,8 +572,7 @@ class BusinessIntentAnalyzer:
         market_analysis: Dict[str, Any],
         user_profile: Dict[str, Any]
     ) -> Dict[str, List[str]]:
-        """Generate business recommendations and next steps"""
-        
+        """Generate business recommendations and next steps"""        
         recommendations = []
         next_steps = []
         required_resources = []
@@ -647,8 +623,7 @@ class BusinessIntentAnalyzer:
         current_revenue_streams: List[str],
         audience_metrics: Dict[str, Any]
     ) -> List[MonetizationOpportunity]:
-        """Identify potential monetization opportunities"""
-        
+        """Identify potential monetization opportunities"""        
         opportunities = []
         creator_type = user_profile.get("creator_type", "")
         follower_count = audience_metrics.get("total_followers", 0)
@@ -713,8 +688,7 @@ class BusinessIntentAnalyzer:
         user_metrics: Dict[str, Any],
         market_conditions: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Calculate revenue projections for specific revenue streams"""
-        
+        """Calculate revenue projections for specific revenue streams"""        
         projections = {
             "conservative": 0.0,
             "realistic": 0.0,

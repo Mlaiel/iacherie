@@ -1,5 +1,4 @@
-"""
-Enterprise Proxy Management System
+"""Enterprise Proxy Management System
 ==================================
 
 Professional proxy management and rotation for industrial-grade web automation.
@@ -20,9 +19,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 This code is proprietary and confidential. Any unauthorized copying, modification, 
 distribution, or use without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and may result in legal action.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import random
 import time
@@ -47,24 +44,21 @@ logger = logging.getLogger(__name__)
 
 
 class ProxyType(Enum):
-    """Supported proxy types"""
-    HTTP = "http"
+    """Supported proxy types"""    HTTP = "http"
     HTTPS = "https"
     SOCKS4 = "socks4"
     SOCKS5 = "socks5"
 
 
 class ProxyProvider(Enum):
-    """Supported proxy providers"""
-    RESIDENTIAL = "residential"
+    """Supported proxy providers"""    RESIDENTIAL = "residential"
     DATACENTER = "datacenter"
     MOBILE = "mobile"
     CUSTOM = "custom"
 
 
 class ProxyStatus(Enum):
-    """Proxy operational status"""
-    ACTIVE = "active"
+    """Proxy operational status"""    ACTIVE = "active"
     INACTIVE = "inactive"
     FAILED = "failed"
     RATE_LIMITED = "rate_limited"
@@ -74,8 +68,7 @@ class ProxyStatus(Enum):
 
 @dataclass
 class ProxyCredentials:
-    """Proxy authentication credentials"""
-    username: Optional[str] = None
+    """Proxy authentication credentials"""    username: Optional[str] = None
     password: Optional[str] = None
     auth_token: Optional[str] = None
     session_id: Optional[str] = None
@@ -83,8 +76,7 @@ class ProxyCredentials:
 
 @dataclass
 class ProxyConfiguration:
-    """Comprehensive proxy configuration"""
-    host: str
+    """Comprehensive proxy configuration"""    host: str
     port: int
     proxy_type: ProxyType = ProxyType.HTTP
     provider: ProxyProvider = ProxyProvider.DATACENTER
@@ -104,8 +96,7 @@ class ProxyConfiguration:
 
 @dataclass
 class ProxyMetrics:
-    """Proxy performance and usage metrics"""
-    total_requests: int = 0
+    """Proxy performance and usage metrics"""    total_requests: int = 0
     successful_requests: int = 0
     failed_requests: int = 0
     average_response_time: float = 0.0
@@ -120,8 +111,7 @@ class ProxyMetrics:
 
 @dataclass
 class ProxyInstance:
-    """Proxy instance with metrics and management"""
-    config: ProxyConfiguration
+    """Proxy instance with metrics and management"""    config: ProxyConfiguration
     status: ProxyStatus = ProxyStatus.INACTIVE
     metrics: ProxyMetrics = field(default_factory=ProxyMetrics)
     created_at: float = field(default_factory=time.time)
@@ -139,8 +129,7 @@ class ProxyInstance:
 
 
 class ProxyValidator:
-    """Proxy validation and testing utilities"""
-    
+    """Proxy validation and testing utilities"""    
     def __init__(self):
         self.test_urls = [
             "http://httpbin.org/ip",
@@ -150,8 +139,7 @@ class ProxyValidator:
         ]
     
     async def validate_proxy(self, proxy: ProxyInstance) -> bool:
-        """Validate proxy functionality and performance"""
-        try:
+        """Validate proxy functionality and performance"""        try:
             proxy_url = self._build_proxy_url(proxy.config)
             
             # Test basic connectivity
@@ -230,8 +218,7 @@ class ProxyValidator:
             return False
     
     def _build_proxy_url(self, config: ProxyConfiguration) -> str:
-        """Build proxy URL for aiohttp"""
-        auth_part = ""
+        """Build proxy URL for aiohttp"""        auth_part = ""
         if config.credentials and config.credentials.username:
             auth_part = f"{config.credentials.username}:{config.credentials.password}@"
         
@@ -239,8 +226,7 @@ class ProxyValidator:
 
 
 class ProxyRotator:
-    """Intelligent proxy rotation and selection"""
-    
+    """Intelligent proxy rotation and selection"""    
     def __init__(self, strategy: str = "round_robin"):
         self.strategy = strategy
         self.current_index = 0
@@ -248,8 +234,7 @@ class ProxyRotator:
     
     def select_proxy(self, proxies: List[ProxyInstance], 
                     requirements: Optional[Dict[str, Any]] = None) -> Optional[ProxyInstance]:
-        """Select optimal proxy based on strategy and requirements"""
-        
+        """Select optimal proxy based on strategy and requirements"""        
         # Filter active proxies
         active_proxies = [p for p in proxies if p.status == ProxyStatus.ACTIVE]
         
@@ -278,8 +263,7 @@ class ProxyRotator:
         return active_proxies[0]
     
     def _round_robin_selection(self, proxies: List[ProxyInstance]) -> ProxyInstance:
-        """Round-robin proxy selection"""
-        if self.current_index >= len(proxies):
+        """Round-robin proxy selection"""        if self.current_index >= len(proxies):
             self.current_index = 0
         
         selected = proxies[self.current_index]
@@ -287,12 +271,10 @@ class ProxyRotator:
         return selected
     
     def _least_used_selection(self, proxies: List[ProxyInstance]) -> ProxyInstance:
-        """Select least used proxy"""
-        return min(proxies, key=lambda p: p.metrics.total_requests)
+        """Select least used proxy"""        return min(proxies, key=lambda p: p.metrics.total_requests)
     
     def _performance_based_selection(self, proxies: List[ProxyInstance]) -> ProxyInstance:
-        """Select proxy based on performance metrics"""
-        def score(proxy: ProxyInstance) -> float:
+        """Select proxy based on performance metrics"""        def score(proxy: ProxyInstance) -> float:
             # Weight factors: success rate (50%), response time (30%), health score (20%)
             success_weight = proxy.metrics.success_rate * 0.5
             time_weight = (1.0 / max(proxy.metrics.average_response_time, 0.1)) * 0.3
@@ -303,8 +285,7 @@ class ProxyRotator:
     
     def _geographic_selection(self, proxies: List[ProxyInstance], 
                             requirements: Dict[str, Any]) -> ProxyInstance:
-        """Select proxy based on geographic requirements"""
-        preferred_country = requirements.get('country')
+        """Select proxy based on geographic requirements"""        preferred_country = requirements.get('country')
         preferred_city = requirements.get('city')
         
         if preferred_country:
@@ -321,8 +302,7 @@ class ProxyRotator:
     
     def _filter_by_requirements(self, proxies: List[ProxyInstance], 
                               requirements: Dict[str, Any]) -> List[ProxyInstance]:
-        """Filter proxies by specific requirements"""
-        filtered = proxies
+        """Filter proxies by specific requirements"""        filtered = proxies
         
         # Filter by provider
         if 'provider' in requirements:
@@ -346,13 +326,11 @@ class ProxyRotator:
 
 
 class ProxyManager:
-    """
-    Enterprise Proxy Management System
+    """    Enterprise Proxy Management System
     
     Manages proxy pools, rotation, health monitoring, and performance optimization
     for industrial-grade web automation and crawling operations.
-    """
-    
+    """    
     def __init__(self, validation_interval: int = 300, max_concurrent_validations: int = 10):
         self.proxies: Dict[str, ProxyInstance] = {}
         self.proxy_groups: Dict[str, List[str]] = {}  # Group proxies by purpose
@@ -385,8 +363,7 @@ class ProxyManager:
         logger.info("ProxyManager initialized")
     
     async def initialize(self) -> None:
-        """Initialize proxy manager and start monitoring"""
-        try:
+        """Initialize proxy manager and start monitoring"""        try:
             # Start validation monitoring
             self.validation_task = asyncio.create_task(self._monitor_proxy_health())
             
@@ -398,8 +375,7 @@ class ProxyManager:
     
     async def add_proxy(self, config: ProxyConfiguration, 
                        group: str = "default") -> str:
-        """Add proxy to management pool"""
-        proxy_id = f"{config.host}:{config.port}"
+        """Add proxy to management pool"""        proxy_id = f"{config.host}:{config.port}"
         
         if proxy_id in self.proxies:
             logger.warning(f"Proxy {proxy_id} already exists")
@@ -435,8 +411,7 @@ class ProxyManager:
             raise ProxyError(f"Failed to add proxy: {str(e)}")
     
     async def remove_proxy(self, proxy_id: str) -> bool:
-        """Remove proxy from management pool"""
-        proxy = self.proxies.get(proxy_id)
+        """Remove proxy from management pool"""        proxy = self.proxies.get(proxy_id)
         if not proxy:
             return False
         
@@ -463,8 +438,7 @@ class ProxyManager:
     
     async def get_proxy(self, group: str = "default", 
                        requirements: Optional[Dict[str, Any]] = None) -> Optional[ProxyInstance]:
-        """Get optimal proxy for use"""
-        try:
+        """Get optimal proxy for use"""        try:
             # Get proxies from group
             proxy_ids = self.proxy_groups.get(group, [])
             if not proxy_ids:
@@ -504,8 +478,7 @@ class ProxyManager:
     async def report_proxy_result(self, proxy: ProxyInstance, 
                                  success: bool, response_time: float = 0.0,
                                  error: Optional[str] = None) -> None:
-        """Report proxy usage result for metrics update"""
-        try:
+        """Report proxy usage result for metrics update"""        try:
             if success:
                 proxy.metrics.successful_requests += 1
                 proxy.metrics.last_success = time.time()
@@ -550,8 +523,7 @@ class ProxyManager:
     
     async def bulk_add_proxies(self, proxy_configs: List[ProxyConfiguration],
                               group: str = "default") -> Dict[str, bool]:
-        """Add multiple proxies in bulk"""
-        results = {}
+        """Add multiple proxies in bulk"""        results = {}
         
         # Create semaphore to limit concurrent validations
         semaphore = asyncio.Semaphore(self.max_concurrent_validations)
@@ -584,8 +556,7 @@ class ProxyManager:
         return results
     
     async def _monitor_proxy_health(self) -> None:
-        """Monitor proxy health and performance"""
-        while self.monitoring_active:
+        """Monitor proxy health and performance"""        while self.monitoring_active:
             try:
                 # Create validation tasks for all proxies
                 validation_tasks = []
@@ -617,8 +588,7 @@ class ProxyManager:
                 await asyncio.sleep(30)
     
     async def _validate_single_proxy(self, proxy_id: str) -> None:
-        """Validate single proxy"""
-        proxy = self.proxies.get(proxy_id)
+        """Validate single proxy"""        proxy = self.proxies.get(proxy_id)
         if not proxy:
             return
         
@@ -640,8 +610,7 @@ class ProxyManager:
             logger.error(f"Proxy validation failed for {proxy_id}: {str(e)}")
     
     def _update_statistics(self) -> None:
-        """Update global statistics"""
-        active_count = sum(1 for p in self.proxies.values() if p.status == ProxyStatus.ACTIVE)
+        """Update global statistics"""        active_count = sum(1 for p in self.proxies.values() if p.status == ProxyStatus.ACTIVE)
         failed_count = sum(1 for p in self.proxies.values() if p.status == ProxyStatus.FAILED)
         
         self.stats['active_proxies'] = active_count
@@ -654,8 +623,7 @@ class ProxyManager:
         self.stats['average_response_time'] = total_time / proxy_count if proxy_count > 0 else 0.0
     
     async def get_proxy_status(self, group: Optional[str] = None) -> Dict[str, Any]:
-        """Get comprehensive proxy status information"""
-        if group:
+        """Get comprehensive proxy status information"""        if group:
             proxy_ids = self.proxy_groups.get(group, [])
             group_proxies = {pid: self.proxies[pid] for pid in proxy_ids if pid in self.proxies}
         else:
@@ -674,8 +642,7 @@ class ProxyManager:
     
     async def get_best_proxies(self, count: int = 10, 
                              group: str = "default") -> List[ProxyInstance]:
-        """Get best performing proxies"""
-        proxy_ids = self.proxy_groups.get(group, [])
+        """Get best performing proxies"""        proxy_ids = self.proxy_groups.get(group, [])
         group_proxies = [self.proxies[pid] for pid in proxy_ids if pid in self.proxies]
         
         # Filter active proxies and sort by performance
@@ -691,8 +658,7 @@ class ProxyManager:
         return best_proxies[:count]
     
     async def cleanup_failed_proxies(self, group: Optional[str] = None) -> int:
-        """Remove failed proxies from management"""
-        proxies_to_remove = []
+        """Remove failed proxies from management"""        proxies_to_remove = []
         
         if group:
             proxy_ids = self.proxy_groups.get(group, [])
@@ -717,8 +683,7 @@ class ProxyManager:
         return removed_count
     
     async def shutdown(self) -> None:
-        """Shutdown proxy manager and cleanup resources"""
-        logger.info("Shutting down ProxyManager")
+        """Shutdown proxy manager and cleanup resources"""        logger.info("Shutting down ProxyManager")
         
         # Stop monitoring
         self.monitoring_active = False
@@ -739,8 +704,7 @@ class ProxyManager:
 # Factory functions for common proxy configurations
 def create_residential_proxy_config(host: str, port: int, 
                                    username: str, password: str) -> ProxyConfiguration:
-    """Create residential proxy configuration"""
-    return ProxyConfiguration(
+    """Create residential proxy configuration"""    return ProxyConfiguration(
         host=host,
         port=port,
         proxy_type=ProxyType.HTTP,
@@ -756,8 +720,7 @@ def create_residential_proxy_config(host: str, port: int,
 def create_datacenter_proxy_config(host: str, port: int,
                                   username: Optional[str] = None,
                                   password: Optional[str] = None) -> ProxyConfiguration:
-    """Create datacenter proxy configuration"""
-    credentials = None
+    """Create datacenter proxy configuration"""    credentials = None
     if username and password:
         credentials = ProxyCredentials(username=username, password=password)
     

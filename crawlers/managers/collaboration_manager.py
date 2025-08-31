@@ -1,5 +1,4 @@
-"""
-Collaboration Management System
+"""Collaboration Management System
 ==============================
 
 Enterprise-grade collaboration management platform for content creators, influencers,
@@ -20,9 +19,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 This code is the intellectual property of Fahed Mlaiel. Any unauthorized use,
 reproduction, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in legal action.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import uuid
@@ -61,8 +58,7 @@ from ...models.collaboration import (
 
 
 class CollaborationType(Enum):
-    """Types of collaboration projects."""
-    MUSIC_PRODUCTION = "music_production"
+    """Types of collaboration projects."""    MUSIC_PRODUCTION = "music_production"
     VIDEO_CONTENT = "video_content"
     PODCAST = "podcast"
     SOCIAL_MEDIA = "social_media"
@@ -75,8 +71,7 @@ class CollaborationType(Enum):
 
 
 class CollaboratorRole(Enum):
-    """Roles in collaboration projects."""
-    LEAD_CREATOR = "lead_creator"
+    """Roles in collaboration projects."""    LEAD_CREATOR = "lead_creator"
     CO_CREATOR = "co_creator"
     FEATURED_ARTIST = "featured_artist"
     PRODUCER = "producer"
@@ -90,8 +85,7 @@ class CollaboratorRole(Enum):
 
 
 class ProjectStatus(Enum):
-    """Project lifecycle statuses."""
-    PLANNING = "planning"
+    """Project lifecycle statuses."""    PLANNING = "planning"
     RECRUITING = "recruiting"
     IN_PROGRESS = "in_progress"
     REVIEW = "review"
@@ -101,8 +95,7 @@ class ProjectStatus(Enum):
 
 
 class MatchingCriteria(Enum):
-    """Criteria for collaborator matching."""
-    CONTENT_SIMILARITY = "content_similarity"
+    """Criteria for collaborator matching."""    CONTENT_SIMILARITY = "content_similarity"
     AUDIENCE_OVERLAP = "audience_overlap"
     SKILL_COMPLEMENT = "skill_complement"
     GENRE_MATCH = "genre_match"
@@ -114,8 +107,7 @@ class MatchingCriteria(Enum):
 
 @dataclass
 class CollaboratorProfile:
-    """Profile of a potential collaborator."""
-    user_id: str
+    """Profile of a potential collaborator."""    user_id: str
     username: str
     display_name: str
     bio: str
@@ -138,8 +130,7 @@ class CollaboratorProfile:
 
 @dataclass
 class CollaborationProject:
-    """Collaboration project information."""
-    project_id: str
+    """Collaboration project information."""    project_id: str
     title: str
     description: str
     collaboration_type: CollaborationType
@@ -160,8 +151,7 @@ class CollaborationProject:
 
 @dataclass
 class CollaboratorMatch:
-    """Potential collaborator match result."""
-    user_id: str
+    """Potential collaborator match result."""    user_id: str
     project_id: str
     match_score: float
     matching_criteria: Dict[MatchingCriteria, float]
@@ -176,8 +166,7 @@ class CollaboratorMatch:
 
 @dataclass
 class CollaborationInvitation:
-    """Collaboration invitation data."""
-    invitation_id: str
+    """Collaboration invitation data."""    invitation_id: str
     project_id: str
     inviter_id: str
     invitee_id: str
@@ -193,8 +182,7 @@ class CollaborationInvitation:
 
 @dataclass
 class ProjectMilestone:
-    """Project milestone tracking."""
-    milestone_id: str
+    """Project milestone tracking."""    milestone_id: str
     project_id: str
     title: str
     description: str
@@ -208,8 +196,7 @@ class ProjectMilestone:
 
 
 class CollaborationManager:
-    """
-    Enterprise-grade collaboration management system for content creators.
+    """    Enterprise-grade collaboration management system for content creators.
     
     Features:
     - Intelligent collaborator matching using ML algorithms
@@ -218,11 +205,9 @@ class CollaborationManager:
     - Communication and messaging platform
     - Performance analytics and reputation system
     - Automated contract generation and management
-    """
-    
+    """    
     def __init__(self, config: Optional[CollaborationConfig] = None):
-        """Initialize collaboration manager."""
-        self.config = config or CollaborationConfig()
+        """Initialize collaboration manager."""        self.config = config or CollaborationConfig()
         self.logger = get_logger(__name__)
         self.storage_manager = StorageManager()
         
@@ -260,8 +245,7 @@ class CollaborationManager:
         preferred_roles: List[CollaboratorRole],
         **kwargs
     ) -> str:
-        """
-        Create a new collaborator profile.
+        """        Create a new collaborator profile.
         
         Args:
             user_id: Unique user identifier
@@ -277,8 +261,7 @@ class CollaborationManager:
             
         Returns:
             str: Profile ID
-        """
-        try:
+        """        try:
             # Get follower counts from platforms if available
             follower_counts = await self._fetch_follower_counts(platforms)
             
@@ -327,8 +310,7 @@ class CollaborationManager:
         timeline: Optional[datetime] = None,
         **kwargs
     ) -> str:
-        """
-        Create a new collaboration project.
+        """        Create a new collaboration project.
         
         Args:
             creator_id: Project creator ID
@@ -343,8 +325,7 @@ class CollaborationManager:
             
         Returns:
             str: Project ID
-        """
-        try:
+        """        try:
             project_id = str(uuid.uuid4())
             
             project = CollaborationProject(
@@ -386,8 +367,7 @@ class CollaborationManager:
         project_id: str,
         limit: int = 50
     ) -> List[CollaboratorMatch]:
-        """
-        Find potential collaborators for a project using ML-based matching.
+        """        Find potential collaborators for a project using ML-based matching.
         
         Args:
             project_id: Project identifier
@@ -395,8 +375,7 @@ class CollaborationManager:
             
         Returns:
             List[CollaboratorMatch]: Ranked list of potential collaborators
-        """
-        try:
+        """        try:
             # Check cache first
             cache_key = f"{project_id}_{limit}"
             if cache_key in self.match_cache:
@@ -447,8 +426,7 @@ class CollaborationManager:
         project: CollaborationProject,
         collaborator: CollaboratorProfile
     ) -> CollaboratorMatch:
-        """Calculate match score between project and collaborator."""
-        try:
+        """Calculate match score between project and collaborator."""        try:
             criteria_scores = {}
             
             # Content type compatibility
@@ -558,8 +536,7 @@ class CollaborationManager:
         proposed_revenue_share: float,
         expires_in_days: int = 7
     ) -> str:
-        """
-        Send a collaboration invitation.
+        """        Send a collaboration invitation.
         
         Args:
             project_id: Project identifier
@@ -571,8 +548,7 @@ class CollaborationManager:
             
         Returns:
             str: Invitation ID
-        """
-        try:
+        """        try:
             project = self.projects.get(project_id)
             if not project:
                 raise ValueError(f"Project not found: {project_id}")
@@ -617,8 +593,7 @@ class CollaborationManager:
         response: str,  # "accept" or "decline"
         message: Optional[str] = None
     ) -> bool:
-        """
-        Respond to a collaboration invitation.
+        """        Respond to a collaboration invitation.
         
         Args:
             invitation_id: Invitation identifier
@@ -627,8 +602,7 @@ class CollaborationManager:
             
         Returns:
             bool: True if response processed successfully
-        """
-        try:
+        """        try:
             invitation = self.invitations.get(invitation_id)
             if not invitation:
                 raise ValueError(f"Invitation not found: {invitation_id}")
@@ -678,8 +652,7 @@ class CollaborationManager:
         due_date: datetime,
         deliverables: Optional[List[str]] = None
     ) -> str:
-        """
-        Create a project milestone.
+        """        Create a project milestone.
         
         Args:
             project_id: Project identifier
@@ -691,8 +664,7 @@ class CollaborationManager:
             
         Returns:
             str: Milestone ID
-        """
-        try:
+        """        try:
             milestone_id = str(uuid.uuid4())
             
             milestone = ProjectMilestone(
@@ -727,8 +699,7 @@ class CollaborationManager:
         status: Optional[str] = None,
         notes: Optional[str] = None
     ) -> bool:
-        """
-        Update milestone progress.
+        """        Update milestone progress.
         
         Args:
             milestone_id: Milestone identifier
@@ -738,8 +709,7 @@ class CollaborationManager:
             
         Returns:
             bool: True if update successful
-        """
-        try:
+        """        try:
             milestone = self.milestones.get(milestone_id)
             if not milestone:
                 raise ValueError(f"Milestone not found: {milestone_id}")
@@ -771,8 +741,7 @@ class CollaborationManager:
         user_id: str,
         status_filter: Optional[ProjectStatus] = None
     ) -> List[CollaborationProject]:
-        """
-        Get all collaborations for a user.
+        """        Get all collaborations for a user.
         
         Args:
             user_id: User identifier
@@ -780,8 +749,7 @@ class CollaborationManager:
             
         Returns:
             List[CollaborationProject]: User's collaborations
-        """
-        try:
+        """        try:
             collaborations = [
                 project for project in self.projects.values()
                 if user_id in project.participants
@@ -803,16 +771,14 @@ class CollaborationManager:
         self,
         project_id: str
     ) -> Dict[str, Any]:
-        """
-        Get collaboration analytics and performance metrics.
+        """        Get collaboration analytics and performance metrics.
         
         Args:
             project_id: Project identifier
             
         Returns:
             Dict[str, Any]: Analytics data
-        """
-        try:
+        """        try:
             project = self.projects.get(project_id)
             if not project:
                 raise ValueError(f"Project not found: {project_id}")
@@ -868,8 +834,7 @@ class CollaborationManager:
         project: CollaborationProject,
         collaborator: CollaboratorProfile
     ) -> CollaboratorRole:
-        """Determine the best role for a collaborator in a project."""
-        # Check if collaborator's preferred roles match project requirements
+        """Determine the best role for a collaborator in a project."""        # Check if collaborator's preferred roles match project requirements
         matching_roles = set(collaborator.preferred_roles) & set(project.required_roles)
         
         if matching_roles:
@@ -899,8 +864,7 @@ class CollaborationManager:
         match_score: float,
         collaborator: CollaboratorProfile
     ) -> float:
-        """Estimate the contribution level of a collaborator."""
-        # Base contribution on match score and experience
+        """Estimate the contribution level of a collaborator."""        # Base contribution on match score and experience
         base_contribution = match_score * 0.7
         
         # Adjust based on experience
@@ -914,8 +878,7 @@ class CollaborationManager:
         return min(total_contribution, 1.0)
     
     def _assess_collaboration_risk(self, collaborator: CollaboratorProfile) -> str:
-        """Assess the risk level of collaborating with a user."""
-        if collaborator.completed_collaborations == 0:
+        """Assess the risk level of collaborating with a user."""        if collaborator.completed_collaborations == 0:
             return "high"  # New collaborator
         elif collaborator.rating < 3.0:
             return "high"  # Low rating
@@ -929,8 +892,7 @@ class CollaborationManager:
         criteria_scores: Dict[MatchingCriteria, float],
         collaborator: CollaboratorProfile
     ) -> str:
-        """Generate human-readable match explanation."""
-        strong_points = []
+        """Generate human-readable match explanation."""        strong_points = []
         
         if criteria_scores.get(MatchingCriteria.SKILL_COMPLEMENT, 0) > 0.7:
             strong_points.append("strong skill match")
@@ -950,14 +912,12 @@ class CollaborationManager:
         return f"Excellent match with {collaborator.display_name}: {', '.join(strong_points)}"
     
     async def _fetch_follower_counts(self, platforms: Dict[str, str]) -> Dict[str, int]:
-        """Fetch follower counts from platform APIs."""
-        # This would integrate with platform APIs to get real follower counts
+        """Fetch follower counts from platform APIs."""        # This would integrate with platform APIs to get real follower counts
         # For now, return placeholder values
         return {platform: 1000 for platform in platforms.keys()}
     
     async def _update_matching_models(self):
-        """Update ML models with new profile data."""
-        # This would retrain the matching models with new data
+        """Update ML models with new profile data."""        # This would retrain the matching models with new data
         pass
     
     async def _notify_potential_collaborators(
@@ -965,8 +925,7 @@ class CollaborationManager:
         project: CollaborationProject,
         matches: List[CollaboratorMatch]
     ):
-        """Send notifications to potential collaborators."""
-        for match in matches:
+        """Send notifications to potential collaborators."""        for match in matches:
             if match.contact_priority >= 3:  # Only notify high-priority matches
                 collaborator = self.collaborator_profiles.get(match.user_id)
                 if collaborator:
@@ -980,8 +939,7 @@ class CollaborationManager:
         project: CollaborationProject,
         invitee: CollaboratorProfile
     ):
-        """Send invitation notification."""
-        await self.notification_service.send_invitation_notification(
+        """Send invitation notification."""        await self.notification_service.send_invitation_notification(
             invitation, project, invitee
         )
     
@@ -991,14 +949,12 @@ class CollaborationManager:
         response: str,
         message: Optional[str]
     ):
-        """Send invitation response notification."""
-        await self.notification_service.send_response_notification(
+        """Send invitation response notification."""        await self.notification_service.send_response_notification(
             invitation, response, message
         )
     
     async def _notify_milestone_assignment(self, milestone: ProjectMilestone):
-        """Notify users of milestone assignment."""
-        for user_id in milestone.assigned_to:
+        """Notify users of milestone assignment."""        for user_id in milestone.assigned_to:
             collaborator = self.collaborator_profiles.get(user_id)
             if collaborator:
                 await self.notification_service.send_milestone_notification(
@@ -1006,13 +962,11 @@ class CollaborationManager:
                 )
     
     async def _create_project_milestones(self, project: CollaborationProject):
-        """Create initial milestones for a project."""
-        # This would create standard milestones based on project type
+        """Create initial milestones for a project."""        # This would create standard milestones based on project type
         pass
     
     async def _check_project_completion(self, project_id: str):
-        """Check if project is completed based on milestone progress."""
-        project_milestones = [
+        """Check if project is completed based on milestone progress."""        project_milestones = [
             milestone for milestone in self.milestones.values()
             if milestone.project_id == project_id
         ]
@@ -1027,12 +981,10 @@ class CollaborationManager:
     
     # Database operations
     async def _store_collaborator_profile(self, profile: CollaboratorProfile):
-        """Store collaborator profile in database."""
-        try:
+        """Store collaborator profile in database."""        try:
             async with get_database_session() as db:
                 await db.execute(
-                    """
-                    INSERT INTO collaborator_profiles (
+                    """                    INSERT INTO collaborator_profiles (
                         user_id, username, display_name, bio, skills, genres,
                         platforms, follower_counts, content_types, preferred_roles,
                         location, timezone, languages, collaboration_preferences,
@@ -1073,12 +1025,10 @@ class CollaborationManager:
             raise
     
     async def _store_project(self, project: CollaborationProject):
-        """Store project in database."""
-        try:
+        """Store project in database."""        try:
             async with get_database_session() as db:
                 await db.execute(
-                    """
-                    INSERT INTO collaboration_projects (
+                    """                    INSERT INTO collaboration_projects (
                         project_id, title, description, collaboration_type, creator_id,
                         required_skills, required_roles, budget_min, budget_max, timeline,
                         revenue_split, participants, status, tags, requirements,
@@ -1118,12 +1068,10 @@ class CollaborationManager:
             raise
     
     async def _store_invitation(self, invitation: CollaborationInvitation):
-        """Store invitation in database."""
-        try:
+        """Store invitation in database."""        try:
             async with get_database_session() as db:
                 await db.execute(
-                    """
-                    INSERT INTO collaboration_invitations (
+                    """                    INSERT INTO collaboration_invitations (
                         invitation_id, project_id, inviter_id, invitee_id, proposed_role,
                         message, proposed_revenue_share, terms_conditions, expires_at,
                         status, sent_at
@@ -1154,12 +1102,10 @@ class CollaborationManager:
             raise
     
     async def _store_milestone(self, milestone: ProjectMilestone):
-        """Store milestone in database."""
-        try:
+        """Store milestone in database."""        try:
             async with get_database_session() as db:
                 await db.execute(
-                    """
-                    INSERT INTO project_milestones (
+                    """                    INSERT INTO project_milestones (
                         milestone_id, project_id, title, description, assigned_to,
                         due_date, completion_percentage, status, deliverables,
                         dependencies, created_at
@@ -1190,24 +1136,20 @@ class CollaborationManager:
             raise
     
     async def _update_project(self, project: CollaborationProject):
-        """Update project in database."""
-        project.updated_at = datetime.utcnow()
+        """Update project in database."""        project.updated_at = datetime.utcnow()
         # Database update implementation
         pass
     
     async def _update_invitation(self, invitation: CollaborationInvitation):
-        """Update invitation in database."""
-        # Database update implementation
+        """Update invitation in database."""        # Database update implementation
         pass
     
     async def _update_milestone(self, milestone: ProjectMilestone):
-        """Update milestone in database."""
-        # Database update implementation
+        """Update milestone in database."""        # Database update implementation
         pass
     
     async def close(self):
-        """Close and cleanup resources."""
-        try:
+        """Close and cleanup resources."""        try:
             # Clear caches
             self.collaborator_profiles.clear()
             self.projects.clear()
@@ -1223,8 +1165,7 @@ class CollaborationManager:
 
 # Factory functions
 async def create_collaboration_manager(config: Optional[CollaborationConfig] = None) -> CollaborationManager:
-    """Create and initialize collaboration manager."""
-    return CollaborationManager(config)
+    """Create and initialize collaboration manager."""    return CollaborationManager(config)
 
 
 async def find_collaboration_opportunities(
@@ -1232,8 +1173,7 @@ async def find_collaboration_opportunities(
     user_id: str,
     content_type: Optional[CollaborationType] = None
 ) -> List[CollaborationProject]:
-    """Find collaboration opportunities for a user."""
-    # Get available projects that match user's profile
+    """Find collaboration opportunities for a user."""    # Get available projects that match user's profile
     user_profile = manager.collaborator_profiles.get(user_id)
     if not user_profile:
         return []

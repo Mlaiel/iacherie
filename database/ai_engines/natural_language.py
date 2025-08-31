@@ -1,5 +1,4 @@
-"""
-Natural Language Processing - AI Engines Database Module
+"""Natural Language Processing - AI Engines Database Module
 
 This module provides advanced NLP capabilities for the IA Influencer Agent platform,
 including model registry, text processing pipelines, language model management,
@@ -20,9 +19,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 WARNING: This code is proprietary and confidential. Any unauthorized use, modification,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-from typing import Dict, List, Any, Optional, Union, Tuple, Callable
+"""from typing import Dict, List, Any, Optional, Union, Tuple, Callable
 import json
 import logging
 import asyncio
@@ -41,8 +38,7 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification, Auto
 logger = logging.getLogger(__name__)
 
 class NLPModelType(str, Enum):
-    """NLP model type enumeration."""
-    CLASSIFICATION = "classification"
+    """NLP model type enumeration."""    CLASSIFICATION = "classification"
     GENERATION = "generation"
     EMBEDDING = "embedding"
     SUMMARIZATION = "summarization"
@@ -53,8 +49,7 @@ class NLPModelType(str, Enum):
     TOPIC_MODELING = "topic_modeling"
 
 class LanguageModelFramework(str, Enum):
-    """Language model framework enumeration."""
-    TRANSFORMERS = "transformers"
+    """Language model framework enumeration."""    TRANSFORMERS = "transformers"
     PYTORCH = "pytorch"
     TENSORFLOW = "tensorflow"
     SPACY = "spacy"
@@ -62,8 +57,7 @@ class LanguageModelFramework(str, Enum):
 
 @dataclass
 class TextProcessingConfig:
-    """Text processing configuration."""
-    language: str
+    """Text processing configuration."""    language: str
     normalization: bool
     stemming: bool
     lemmatization: bool
@@ -75,8 +69,7 @@ class TextProcessingConfig:
 
 @dataclass
 class SentimentResult:
-    """Sentiment analysis result."""
-    text_id: str
+    """Sentiment analysis result."""    text_id: str
     sentiment: str
     score: float
     confidence: float
@@ -85,16 +78,14 @@ class SentimentResult:
 
 @dataclass
 class ClassificationResult:
-    """Content classification result."""
-    text_id: str
+    """Content classification result."""    text_id: str
     categories: List[str]
     scores: List[float]
     model_id: str
     timestamp: datetime
 
 class NLPModelConfig(BaseModel):
-    """NLP model configuration."""
-    model_id: str = Field(..., min_length=1)
+    """NLP model configuration."""    model_id: str = Field(..., min_length=1)
     name: str = Field(..., min_length=1, max_length=255)
     model_type: NLPModelType
     framework: LanguageModelFramework
@@ -105,12 +96,10 @@ class NLPModelConfig(BaseModel):
     performance_metrics: Dict[str, float] = Field(default_factory=dict)
 
 class NLPModelRegistry:
-    """
-    Central registry for NLP models.
+    """    Central registry for NLP models.
     
     Manages NLP models, tokenizers, and performance metrics.
-    """
-    
+    """    
     def __init__(self):
         self.models = {}
         self.tokenizers = {}
@@ -210,13 +199,11 @@ class NLPModelRegistry:
             }
 
 class TextProcessingPipeline:
-    """
-    Advanced text processing pipeline.
+    """    Advanced text processing pipeline.
     
     Provides normalization, tokenization, stemming, lemmatization,
     and custom rule-based processing for multi-language support.
-    """
-    def __init__(self):
+    """    def __init__(self):
         self.pipelines = {}
         self.stats = {}
     
@@ -261,13 +248,11 @@ class TextProcessingPipeline:
             }
 
 class LanguageModelManager:
-    """
-    Management of large language models.
+    """    Management of large language models.
     
     Handles loading, optimization, and deployment of transformer-based
     and custom language models for generation and classification.
-    """
-    def __init__(self, registry: NLPModelRegistry):
+    """    def __init__(self, registry: NLPModelRegistry):
         self.registry = registry
         self.optimization_configs = {}
         self.deployment_stats = {}
@@ -294,13 +279,11 @@ class LanguageModelManager:
             }
 
 class SentimentAnalysisEngine:
-    """
-    Sentiment detection and scoring engine.
+    """    Sentiment detection and scoring engine.
     
     Provides sentiment analysis for text content using transformer models
     and custom scoring algorithms.
-    """
-    def __init__(self, registry: NLPModelRegistry):
+    """    def __init__(self, registry: NLPModelRegistry):
         self.registry = registry
         self.sentiment_cache = {}
     
@@ -343,13 +326,11 @@ class SentimentAnalysisEngine:
             }
 
 class ContentClassificationAI:
-    """
-    AI-powered content classification engine.
+    """    AI-powered content classification engine.
     
     Provides multi-label classification for text content using transformer
     models and custom rule-based classifiers.
-    """
-    def __init__(self, registry: NLPModelRegistry):
+    """    def __init__(self, registry: NLPModelRegistry):
         self.registry = registry
         self.classification_cache = {}
     

@@ -1,5 +1,4 @@
-"""
-Ultra-Advanced Content Analyzer for Enterprise Recommendation System
+"""Ultra-Advanced Content Analyzer for Enterprise Recommendation System
 Multi-modal content analysis and feature extraction using state-of-the-art AI models
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -19,9 +18,7 @@ Development Team Specialties:
 - DevOps Engineer
 - AI Prompt Engineer
 Email: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 from typing import Dict, List, Optional, Any, Union, Tuple, Set, Callable
@@ -75,8 +72,7 @@ logger = structlog.get_logger(__name__)
 
 
 class AnalysisType(Enum):
-    """Ultra-comprehensive content analysis type enumeration"""
-    # Core Analysis Types
+    """Ultra-comprehensive content analysis type enumeration"""    # Core Analysis Types
     SEMANTIC_ANALYSIS = "semantic_analysis"
     SENTIMENT_ANALYSIS = "sentiment_analysis"
     EMOTION_ANALYSIS = "emotion_analysis"
@@ -133,8 +129,7 @@ class AnalysisType(Enum):
 
 
 class ContentQualityMetric(Enum):
-    """Content quality assessment metrics"""
-    TECHNICAL_QUALITY = "technical_quality"
+    """Content quality assessment metrics"""    TECHNICAL_QUALITY = "technical_quality"
     CREATIVE_QUALITY = "creative_quality"
     PRODUCTION_VALUE = "production_value"
     ORIGINALITY_SCORE = "originality_score"
@@ -145,8 +140,7 @@ class ContentQualityMetric(Enum):
 
 
 class AudioFeatureType(Enum):
-    """Advanced audio feature types for music analysis"""
-    TEMPO = "tempo"
+    """Advanced audio feature types for music analysis"""    TEMPO = "tempo"
     KEY_SIGNATURE = "key_signature"
     TIME_SIGNATURE = "time_signature"
     ENERGY_LEVEL = "energy_level"
@@ -165,8 +159,7 @@ class AudioFeatureType(Enum):
 
 @dataclass
 class ContentAnalysisResult:
-    """Comprehensive content analysis result structure"""
-    content_id: str
+    """Comprehensive content analysis result structure"""    content_id: str
     analysis_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     
     # Core Analysis Results
@@ -226,8 +219,7 @@ class ContentAnalysisResult:
     confidence_score: float = 0.0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert analysis result to dictionary"""
-        return {
+        """Convert analysis result to dictionary"""        return {
             'content_id': self.content_id,
             'analysis_id': self.analysis_id,
             'core_analysis': {
@@ -285,8 +277,7 @@ class ContentAnalysisResult:
 
 
 class ContentComplexity(Enum):
-    """Content complexity levels"""
-    SIMPLE = "simple"
+    """Content complexity levels"""    SIMPLE = "simple"
     MODERATE = "moderate"
     COMPLEX = "complex"
     EXPERT = "expert"
@@ -294,8 +285,7 @@ class ContentComplexity(Enum):
 
 @dataclass
 class ContentFeatures:
-    """Extracted content features structure"""
-    content_id: str
+    """Extracted content features structure"""    content_id: str
     content_type: ContentType
     semantic_embeddings: List[float] = field(default_factory=list)
     textual_features: Dict[str, Any] = field(default_factory=dict)
@@ -318,8 +308,7 @@ class ContentFeatures:
 
 @dataclass
 class SimilarityResult:
-    """Content similarity analysis result"""
-    content_a_id: str
+    """Content similarity analysis result"""    content_a_id: str
     content_b_id: str
     overall_similarity: float
     semantic_similarity: float
@@ -332,8 +321,7 @@ class SimilarityResult:
 
 
 class ContentAnalyzer:
-    """
-    Advanced content analyzer for extracting features and insights
+    """    Advanced content analyzer for extracting features and insights
     
     Provides comprehensive content analysis including:
     - Multi-modal feature extraction
@@ -342,11 +330,9 @@ class ContentAnalyzer:
     - Similarity matching
     - Trend alignment analysis
     - Cross-platform optimization
-    """
-    
+    """    
     def __init__(self):
-        """Initialize content analyzer"""
-        self.logger = logging.getLogger(__name__)
+        """Initialize content analyzer"""        self.logger = logging.getLogger(__name__)
         self.status = ModelStatus.INITIALIZING
         
         # Analysis models dictionary
@@ -381,8 +367,7 @@ class ContentAnalyzer:
         self.logger.info("ContentAnalyzer initialized")
     
     async def initialize(self) -> bool:
-        """Initialize content analysis models"""
-        try:
+        """Initialize content analysis models"""        try:
             self.logger.info("Initializing content analysis models...")
             
             # Load core analysis models
@@ -422,8 +407,7 @@ class ContentAnalyzer:
             raise ContentAnalysisError(f"Initialization failed: {str(e)}")
 
     async def _load_analysis_models(self):
-        """Load core analysis models"""
-        try:
+        """Load core analysis models"""        try:
             self.logger.info("Loading core analysis models...")
             
             # Simulate model loading for testing
@@ -445,8 +429,7 @@ class ContentAnalyzer:
             raise ContentAnalysisError(f"Core model loading failed: {str(e)}")
 
     async def _initialize_feature_extractors(self):
-        """Initialize feature extractors"""
-        try:
+        """Initialize feature extractors"""        try:
             self.logger.info("Initializing feature extractors...")
             
             # Initialize all extractors with proper configurations
@@ -476,8 +459,7 @@ class ContentAnalyzer:
         analysis_types: Optional[List[AnalysisType]] = None,
         **kwargs
     ) -> ContentFeatures:
-        """
-        Perform comprehensive content analysis
+        """        Perform comprehensive content analysis
         
         Args:
             content_id: Unique content identifier
@@ -489,8 +471,7 @@ class ContentAnalyzer:
             
         Returns:
             Extracted content features and insights
-        """
-        try:
+        """        try:
             start_time = datetime.now()
             self.analysis_metrics["total_analyses"] += 1
             
@@ -604,8 +585,7 @@ class ContentAnalyzer:
         content_b: ContentFeatures,
         similarity_types: Optional[List[str]] = None
     ) -> SimilarityResult:
-        """
-        Calculate similarity between two pieces of content
+        """        Calculate similarity between two pieces of content
         
         Args:
             content_a: First content features
@@ -614,8 +594,7 @@ class ContentAnalyzer:
             
         Returns:
             Detailed similarity analysis result
-        """
-        try:
+        """        try:
             self.logger.info(f"Calculating similarity between {content_a.content_id} and {content_b.content_id}")
             
             # Check cache
@@ -699,8 +678,7 @@ class ContentAnalyzer:
         max_results: int = 10,
         min_similarity: float = 0.5
     ) -> List[Tuple[ContentFeatures, float]]:
-        """
-        Find similar content from a list of candidates
+        """        Find similar content from a list of candidates
         
         Args:
             target_content: Content to find similarities for
@@ -710,8 +688,7 @@ class ContentAnalyzer:
             
         Returns:
             List of similar content with similarity scores
-        """
-        try:
+        """        try:
             similar_contents = []
             
             for candidate in candidate_contents:
@@ -736,56 +713,47 @@ class ContentAnalyzer:
     # Private helper methods for content analysis
     
     async def _load_text_models(self):
-        """Load text analysis models"""
-        self.logger.info("Loading text analysis models...")
+        """Load text analysis models"""        self.logger.info("Loading text analysis models...")
         # Implementation for loading text models
         pass
     
     async def _load_image_models(self):
-        """Load image analysis models"""
-        self.logger.info("Loading image analysis models...")
+        """Load image analysis models"""        self.logger.info("Loading image analysis models...")
         # Implementation for loading image models
         pass
     
     async def _load_audio_models(self):
-        """Load audio analysis models"""
-        self.logger.info("Loading audio analysis models...")
+        """Load audio analysis models"""        self.logger.info("Loading audio analysis models...")
         # Implementation for loading audio models
         pass
     
     async def _load_video_models(self):
-        """Load video analysis models"""
-        self.logger.info("Loading video analysis models...")
+        """Load video analysis models"""        self.logger.info("Loading video analysis models...")
         # Implementation for loading video models
         pass
     
     async def _load_semantic_models(self):
-        """Load semantic understanding models"""
-        self.logger.info("Loading semantic models...")
+        """Load semantic understanding models"""        self.logger.info("Loading semantic models...")
         # Implementation for loading semantic models
         pass
     
     async def _load_quality_models(self):
-        """Load quality assessment models"""
-        self.logger.info("Loading quality assessment models...")
+        """Load quality assessment models"""        self.logger.info("Loading quality assessment models...")
         # Implementation for loading quality models
         pass
     
     async def _load_engagement_models(self):
-        """Load engagement prediction models"""
-        self.logger.info("Loading engagement prediction models...")
+        """Load engagement prediction models"""        self.logger.info("Loading engagement prediction models...")
         # Implementation for loading engagement models
         pass
     
     async def _initialize_feature_extractors(self):
-        """Initialize feature extraction pipelines"""
-        self.logger.info("Initializing feature extractors...")
+        """Initialize feature extraction pipelines"""        self.logger.info("Initializing feature extractors...")
         # Implementation for feature extractors
         pass
     
     async def _analyze_text_content(self, features: ContentFeatures, content_data: str, analysis_types: List[AnalysisType]) -> ContentFeatures:
-        """Analyze text content"""
-        # Implementation for text content analysis
+        """Analyze text content"""        # Implementation for text content analysis
         features.textual_features = {
             "word_count": len(content_data.split()) if isinstance(content_data, str) else 0,
             "character_count": len(content_data) if isinstance(content_data, str) else 0,
@@ -796,8 +764,7 @@ class ContentAnalyzer:
         return features
     
     async def _analyze_audio_content(self, features: ContentFeatures, content_data: bytes, analysis_types: List[AnalysisType]) -> ContentFeatures:
-        """Analyze audio content"""
-        # Implementation for audio content analysis
+        """Analyze audio content"""        # Implementation for audio content analysis
         features.audio_features = {
             "duration": 0.0,
             "sample_rate": 44100,
@@ -810,8 +777,7 @@ class ContentAnalyzer:
         return features
     
     async def _analyze_image_content(self, features: ContentFeatures, content_data: bytes, analysis_types: List[AnalysisType]) -> ContentFeatures:
-        """Analyze image content"""
-        # Implementation for image content analysis
+        """Analyze image content"""        # Implementation for image content analysis
         features.visual_features = {
             "resolution": "1920x1080",
             "aspect_ratio": 16/9,
@@ -824,8 +790,7 @@ class ContentAnalyzer:
         return features
     
     async def _analyze_video_content(self, features: ContentFeatures, content_data: bytes, analysis_types: List[AnalysisType]) -> ContentFeatures:
-        """Analyze video content"""
-        # Implementation for video content analysis
+        """Analyze video content"""        # Implementation for video content analysis
         features.visual_features = {
             "duration": 0.0,
             "frame_rate": 30,
@@ -842,13 +807,11 @@ class ContentAnalyzer:
         return features
     
     async def _analyze_multimodal_content(self, features: ContentFeatures, content_data: Dict[str, Any], analysis_types: List[AnalysisType]) -> ContentFeatures:
-        """Analyze multimodal content"""
-        # Implementation for multimodal content analysis
+        """Analyze multimodal content"""        # Implementation for multimodal content analysis
         return features
     
     async def _extract_metadata_features(self, metadata: ContentMetadata) -> Dict[str, Any]:
-        """Extract features from content metadata"""
-        return {
+        """Extract features from content metadata"""        return {
             "title_length": len(metadata.title),
             "has_description": bool(metadata.description),
             "tag_count": len(metadata.tags),
@@ -859,13 +822,11 @@ class ContentAnalyzer:
         }
     
     async def _extract_semantic_embeddings(self, content_data: Any, content_type: ContentType) -> List[float]:
-        """Extract semantic embeddings from content"""
-        # Implementation for semantic embedding extraction
+        """Extract semantic embeddings from content"""        # Implementation for semantic embedding extraction
         return [0.1] * 512  # Placeholder 512-dimensional embedding
     
     async def _analyze_sentiment(self, content_data: Any, content_type: ContentType) -> Dict[str, float]:
-        """Analyze content sentiment"""
-        # Implementation for sentiment analysis
+        """Analyze content sentiment"""        # Implementation for sentiment analysis
         return {
             "positive": 0.6,
             "negative": 0.2,
@@ -874,8 +835,7 @@ class ContentAnalyzer:
         }
     
     async def _extract_topics(self, content_data: Any, content_type: ContentType) -> Dict[str, float]:
-        """Extract topic distribution from content"""
-        # Implementation for topic modeling
+        """Extract topic distribution from content"""        # Implementation for topic modeling
         return {
             "entertainment": 0.4,
             "technology": 0.3,
@@ -884,8 +844,7 @@ class ContentAnalyzer:
         }
     
     async def _assess_quality(self, features: ContentFeatures, content_data: Any) -> Dict[str, float]:
-        """Assess content quality"""
-        # Implementation for quality assessment
+        """Assess content quality"""        # Implementation for quality assessment
         return {
             "overall_quality": 0.8,
             "technical_quality": 0.85,
@@ -895,8 +854,7 @@ class ContentAnalyzer:
         }
     
     async def _predict_engagement(self, features: ContentFeatures) -> Dict[str, Any]:
-        """Predict content engagement potential"""
-        # Implementation for engagement prediction
+        """Predict content engagement potential"""        # Implementation for engagement prediction
         return {
             "predicted_views": 10000,
             "predicted_likes": 800,
@@ -907,23 +865,19 @@ class ContentAnalyzer:
         }
     
     async def _analyze_viral_potential(self, features: ContentFeatures) -> float:
-        """Analyze viral potential of content"""
-        # Implementation for viral potential analysis
+        """Analyze viral potential of content"""        # Implementation for viral potential analysis
         return 0.7
     
     async def _calculate_monetization_score(self, features: ContentFeatures) -> float:
-        """Calculate monetization potential score"""
-        # Implementation for monetization scoring
+        """Calculate monetization potential score"""        # Implementation for monetization scoring
         return 0.75
     
     async def _analyze_trend_alignment(self, features: ContentFeatures) -> float:
-        """Analyze alignment with current trends"""
-        # Implementation for trend alignment analysis
+        """Analyze alignment with current trends"""        # Implementation for trend alignment analysis
         return 0.6
     
     async def _analyze_cross_platform_compatibility(self, features: ContentFeatures) -> Dict[str, float]:
-        """Analyze cross-platform compatibility"""
-        # Implementation for cross-platform analysis
+        """Analyze cross-platform compatibility"""        # Implementation for cross-platform analysis
         return {
             "youtube": 0.9,
             "tiktok": 0.7,
@@ -933,33 +887,27 @@ class ContentAnalyzer:
         }
     
     async def _calculate_uniqueness_score(self, features: ContentFeatures) -> float:
-        """Calculate content uniqueness score"""
-        # Implementation for uniqueness calculation
+        """Calculate content uniqueness score"""        # Implementation for uniqueness calculation
         return 0.8
     
     async def _calculate_authenticity_score(self, features: ContentFeatures) -> float:
-        """Calculate content authenticity score"""
-        # Implementation for authenticity calculation
+        """Calculate content authenticity score"""        # Implementation for authenticity calculation
         return 0.85
     
     async def _calculate_production_quality(self, features: ContentFeatures) -> float:
-        """Calculate production quality score"""
-        # Implementation for production quality calculation
+        """Calculate production quality score"""        # Implementation for production quality calculation
         return 0.82
     
     async def _calculate_accessibility_score(self, features: ContentFeatures) -> float:
-        """Calculate accessibility score"""
-        # Implementation for accessibility calculation
+        """Calculate accessibility score"""        # Implementation for accessibility calculation
         return 0.75
     
     async def _determine_complexity_level(self, features: ContentFeatures) -> ContentComplexity:
-        """Determine content complexity level"""
-        # Implementation for complexity determination
+        """Determine content complexity level"""        # Implementation for complexity determination
         return ContentComplexity.MODERATE
     
     async def _calculate_semantic_similarity(self, embeddings_a: List[float], embeddings_b: List[float]) -> float:
-        """Calculate semantic similarity between embeddings"""
-        # Implementation for semantic similarity calculation
+        """Calculate semantic similarity between embeddings"""        # Implementation for semantic similarity calculation
         if not embeddings_a or not embeddings_b:
             return 0.0
         
@@ -974,13 +922,11 @@ class ContentAnalyzer:
         return dot_product / (norm_a * norm_b)
     
     async def _calculate_style_similarity(self, style_a: Dict[str, Any], style_b: Dict[str, Any]) -> float:
-        """Calculate style similarity"""
-        # Implementation for style similarity calculation
+        """Calculate style similarity"""        # Implementation for style similarity calculation
         return 0.7
     
     async def _calculate_topic_similarity(self, topics_a: Dict[str, float], topics_b: Dict[str, float]) -> float:
-        """Calculate topic similarity"""
-        # Implementation for topic similarity calculation
+        """Calculate topic similarity"""        # Implementation for topic similarity calculation
         if not topics_a or not topics_b:
             return 0.0
         
@@ -993,13 +939,11 @@ class ContentAnalyzer:
         return similarity
     
     async def _calculate_quality_similarity(self, quality_a: Dict[str, float], quality_b: Dict[str, float]) -> float:
-        """Calculate quality similarity"""
-        # Implementation for quality similarity calculation
+        """Calculate quality similarity"""        # Implementation for quality similarity calculation
         return 0.8
     
     async def _calculate_feature_similarities(self, content_a: ContentFeatures, content_b: ContentFeatures) -> Dict[str, float]:
-        """Calculate specific feature similarities"""
-        # Implementation for feature-specific similarities
+        """Calculate specific feature similarities"""        # Implementation for feature-specific similarities
         return {
             "textual_similarity": 0.7,
             "visual_similarity": 0.8,
@@ -1008,8 +952,7 @@ class ContentAnalyzer:
         }
     
     async def _generate_similarity_explanation(self, result: SimilarityResult) -> List[str]:
-        """Generate human-readable similarity explanation"""
-        explanations = []
+        """Generate human-readable similarity explanation"""        explanations = []
         
         if result.semantic_similarity > 0.8:
             explanations.append("Contents have very similar semantic meaning and topics")
@@ -1028,8 +971,7 @@ class ContentAnalyzer:
         return explanations
     
     async def _calculate_similarity_confidence(self, result: SimilarityResult) -> float:
-        """Calculate confidence in similarity result"""
-        # Implementation for confidence calculation
+        """Calculate confidence in similarity result"""        # Implementation for confidence calculation
         similarities = [
             result.semantic_similarity,
             result.style_similarity,
@@ -1044,8 +986,7 @@ class ContentAnalyzer:
         return confidence
     
     def _update_analysis_metrics(self, processing_time: float, success: bool):
-        """Update analysis performance metrics"""
-        if success:
+        """Update analysis performance metrics"""        if success:
             self.analysis_metrics["successful_analyses"] += 1
         
         # Update average analysis time
@@ -1056,8 +997,7 @@ class ContentAnalyzer:
         )
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get content analyzer performance metrics"""
-        return {
+        """Get content analyzer performance metrics"""        return {
             **self.analysis_metrics,
             "status": self.status.value,
             "cache_size": len(self.feature_cache),
@@ -1065,8 +1005,7 @@ class ContentAnalyzer:
         }
     
     async def cleanup(self):
-        """Cleanup resources"""
-        try:
+        """Cleanup resources"""        try:
             self.feature_cache.clear()
             self.similarity_cache.clear()
             self.status = ModelStatus.MAINTENANCE
@@ -1076,17 +1015,14 @@ class ContentAnalyzer:
 
 
 class ContentFeatureExtractor:
-    """
-    Specialized feature extractor for different content types
-    """
-    
+    """    Specialized feature extractor for different content types
+    """    
     def __init__(self, content_type: ContentType):
         self.content_type = content_type
         self.logger = logging.getLogger(__name__)
     
     async def extract_features(self, content_data: Any, **kwargs) -> Dict[str, Any]:
-        """Extract type-specific features from content"""
-        if self.content_type == ContentType.TEXT:
+        """Extract type-specific features from content"""        if self.content_type == ContentType.TEXT:
             return await self._extract_text_features(content_data, **kwargs)
         elif self.content_type == ContentType.AUDIO:
             return await self._extract_audio_features(content_data, **kwargs)
@@ -1098,8 +1034,7 @@ class ContentFeatureExtractor:
             return {}
     
     async def _extract_text_features(self, text: str, **kwargs) -> Dict[str, Any]:
-        """Extract text-specific features"""
-        return {
+        """Extract text-specific features"""        return {
             "word_count": len(text.split()),
             "character_count": len(text),
             "sentence_count": text.count('.') + text.count('!') + text.count('?'),
@@ -1110,8 +1045,7 @@ class ContentFeatureExtractor:
         }
     
     async def _extract_audio_features(self, audio_data: bytes, **kwargs) -> Dict[str, Any]:
-        """Extract audio-specific features"""
-        return {
+        """Extract audio-specific features"""        return {
             "duration": 0.0,  # Placeholder
             "sample_rate": 44100,  # Placeholder
             "channels": 2,  # Placeholder
@@ -1122,8 +1056,7 @@ class ContentFeatureExtractor:
         }
     
     async def _extract_image_features(self, image_data: bytes, **kwargs) -> Dict[str, Any]:
-        """Extract image-specific features"""
-        return {
+        """Extract image-specific features"""        return {
             "width": 1920,  # Placeholder
             "height": 1080,  # Placeholder
             "aspect_ratio": 16/9,  # Placeholder
@@ -1134,8 +1067,7 @@ class ContentFeatureExtractor:
         }
     
     async def _extract_video_features(self, video_data: bytes, **kwargs) -> Dict[str, Any]:
-        """Extract video-specific features"""
-        return {
+        """Extract video-specific features"""        return {
             "duration": 0.0,  # Placeholder
             "width": 1920,  # Placeholder
             "height": 1080,  # Placeholder
@@ -1148,18 +1080,15 @@ class ContentFeatureExtractor:
 
 
 class VideoAnalyzer:
-    """Specialized video content analyzer for recommendation system."""
-    
+    """Specialized video content analyzer for recommendation system."""    
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize video analyzer with configuration."""
-        self.config = config or {}
+        """Initialize video analyzer with configuration."""        self.config = config or {}
         self.frame_extraction_interval = self.config.get('frame_interval', 1.0)
         self.quality_threshold = self.config.get('quality_threshold', 0.7)
         self.max_duration = self.config.get('max_duration', 3600)  # 1 hour
         
     async def analyze_video(self, video_data: bytes, metadata: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Analyze video content and extract features."""
-        try:
+        """Analyze video content and extract features."""        try:
             # Video metadata extraction
             video_metadata = await self._extract_video_metadata(video_data)
             
@@ -1194,8 +1123,7 @@ class VideoAnalyzer:
             raise ContentAnalysisError(f"Video analysis error: {str(e)}")
             
     async def _extract_video_metadata(self, video_data: bytes) -> Dict[str, Any]:
-        """Extract basic video metadata."""
-        return {
+        """Extract basic video metadata."""        return {
             'duration': 120.5,  # seconds
             'width': 1920,
             'height': 1080,
@@ -1209,8 +1137,7 @@ class VideoAnalyzer:
         }
         
     async def _analyze_frames(self, video_data: bytes) -> Dict[str, Any]:
-        """Analyze individual frames for content features."""
-        return {
+        """Analyze individual frames for content features."""        return {
             'total_frames': 3615,
             'keyframes': 120,
             'average_brightness': 0.65,
@@ -1223,8 +1150,7 @@ class VideoAnalyzer:
         }
         
     async def _analyze_motion(self, video_data: bytes) -> Dict[str, Any]:
-        """Analyze motion patterns in video."""
-        return {
+        """Analyze motion patterns in video."""        return {
             'motion_intensity': 0.4,  # 0-1 scale
             'camera_movement': 'static',
             'subject_movement': 'moderate',
@@ -1238,8 +1164,7 @@ class VideoAnalyzer:
         }
         
     async def _assess_quality(self, video_data: bytes) -> Dict[str, Any]:
-        """Assess video quality metrics."""
-        return {
+        """Assess video quality metrics."""        return {
             'overall_quality': 0.8,  # 0-1 scale
             'resolution_quality': 0.9,
             'compression_artifacts': 0.1,
@@ -1251,8 +1176,7 @@ class VideoAnalyzer:
         }
         
     async def _detect_scenes(self, video_data: bytes) -> Dict[str, Any]:
-        """Detect scene changes and segments."""
-        return {
+        """Detect scene changes and segments."""        return {
             'scene_count': 3,
             'scene_transitions': [30.5, 95.2],  # timestamps in seconds
             'scene_types': ['intro', 'main_content', 'outro'],
@@ -1262,8 +1186,7 @@ class VideoAnalyzer:
         }
         
     async def _analyze_colors(self, video_data: bytes) -> Dict[str, Any]:
-        """Analyze color distribution and palette."""
-        return {
+        """Analyze color distribution and palette."""        return {
             'dominant_colors': ['#1a1a1a', '#ffffff', '#ff6b35'],
             'color_distribution': {
                 'dark': 0.4,
@@ -1278,18 +1201,15 @@ class VideoAnalyzer:
 
 
 class AudioAnalyzer:
-    """Specialized audio content analyzer for recommendation system."""
-    
+    """Specialized audio content analyzer for recommendation system."""    
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize audio analyzer with configuration."""
-        self.config = config or {}
+        """Initialize audio analyzer with configuration."""        self.config = config or {}
         self.sample_rate = self.config.get('sample_rate', 44100)
         self.chunk_size = self.config.get('chunk_size', 1024)
         self.analysis_window = self.config.get('analysis_window', 2048)
         
     async def analyze_audio(self, audio_data: bytes, metadata: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Analyze audio content and extract features."""
-        try:
+        """Analyze audio content and extract features."""        try:
             # Audio metadata extraction
             audio_metadata = await self._extract_audio_metadata(audio_data)
             
@@ -1328,8 +1248,7 @@ class AudioAnalyzer:
             raise ContentAnalysisError(f"Audio analysis error: {str(e)}")
             
     async def _extract_audio_metadata(self, audio_data: bytes) -> Dict[str, Any]:
-        """Extract basic audio metadata."""
-        return {
+        """Extract basic audio metadata."""        return {
             'duration': 120.5,  # seconds
             'sample_rate': 44100,
             'bit_depth': 16,
@@ -1342,8 +1261,7 @@ class AudioAnalyzer:
         }
         
     async def _analyze_spectrum(self, audio_data: bytes) -> Dict[str, Any]:
-        """Analyze frequency spectrum characteristics."""
-        return {
+        """Analyze frequency spectrum characteristics."""        return {
             'frequency_range': {'min': 20, 'max': 20000},  # Hz
             'dominant_frequencies': [440, 880, 1320],  # Hz
             'spectral_centroid': 2500.0,  # Hz
@@ -1360,8 +1278,7 @@ class AudioAnalyzer:
         }
         
     async def _analyze_rhythm(self, audio_data: bytes) -> Dict[str, Any]:
-        """Analyze rhythm and tempo patterns."""
-        return {
+        """Analyze rhythm and tempo patterns."""        return {
             'tempo_bpm': 120.0,
             'time_signature': '4/4',
             'rhythm_complexity': 0.6,  # 0-1 scale
@@ -1376,8 +1293,7 @@ class AudioAnalyzer:
         }
         
     async def _analyze_voice(self, audio_data: bytes) -> Dict[str, Any]:
-        """Analyze voice characteristics."""
-        return {
+        """Analyze voice characteristics."""        return {
             'voice_detected': True,
             'speaker_count': 1,
             'gender_prediction': 'neutral',
@@ -1401,8 +1317,7 @@ class AudioAnalyzer:
         }
         
     async def _analyze_music(self, audio_data: bytes) -> Dict[str, Any]:
-        """Analyze musical characteristics."""
-        return {
+        """Analyze musical characteristics."""        return {
             'music_detected': True,
             'genre_prediction': 'electronic',
             'key_signature': 'C major',
@@ -1421,8 +1336,7 @@ class AudioAnalyzer:
         }
         
     async def _assess_audio_quality(self, audio_data: bytes) -> Dict[str, Any]:
-        """Assess audio quality metrics."""
-        return {
+        """Assess audio quality metrics."""        return {
             'overall_quality': 0.85,  # 0-1 scale
             'signal_to_noise_ratio': 45.0,  # dB
             'dynamic_range': 72.5,  # dB
@@ -1434,8 +1348,7 @@ class AudioAnalyzer:
         }
         
     async def _detect_emotions(self, audio_data: bytes) -> Dict[str, Any]:
-        """Detect emotional content in audio."""
-        return {
+        """Detect emotional content in audio."""        return {
             'primary_emotion': 'neutral',
             'emotion_confidence': 0.7,
             'emotion_distribution': {
@@ -1452,19 +1365,16 @@ class AudioAnalyzer:
 
 
 class TextAnalyzer:
-    """Specialized text content analyzer for recommendation system."""
-    
+    """Specialized text content analyzer for recommendation system."""    
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize text analyzer with configuration."""
-        self.config = config or {}
+        """Initialize text analyzer with configuration."""        self.config = config or {}
         self.language_detection = self.config.get('language_detection', True)
         self.sentiment_analysis = self.config.get('sentiment_analysis', True)
         self.entity_recognition = self.config.get('entity_recognition', True)
         self.max_text_length = self.config.get('max_text_length', 100000)
         
     async def analyze_text(self, text_content: str, metadata: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Analyze text content and extract features."""
-        try:
+        """Analyze text content and extract features."""        try:
             # Basic text statistics
             basic_stats = await self._extract_basic_statistics(text_content)
             
@@ -1507,8 +1417,7 @@ class TextAnalyzer:
             raise ContentAnalysisError(f"Text analysis error: {str(e)}")
             
     async def _extract_basic_statistics(self, text: str) -> Dict[str, Any]:
-        """Extract basic text statistics."""
-        words = text.split()
+        """Extract basic text statistics."""        words = text.split()
         sentences = text.split('.')
         paragraphs = text.split('\n\n')
         
@@ -1524,8 +1433,7 @@ class TextAnalyzer:
         }
         
     async def _detect_language(self, text: str) -> Dict[str, Any]:
-        """Detect language and linguistic features."""
-        return {
+        """Detect language and linguistic features."""        return {
             'primary_language': 'en',
             'language_confidence': 0.95,
             'detected_languages': [{'language': 'en', 'confidence': 0.95}],
@@ -1535,8 +1443,7 @@ class TextAnalyzer:
         }
         
     async def _analyze_sentiment(self, text: str) -> Dict[str, Any]:
-        """Analyze sentiment and emotional tone."""
-        return {
+        """Analyze sentiment and emotional tone."""        return {
             'overall_sentiment': 'positive',
             'sentiment_score': 0.65,  # -1 to 1
             'confidence': 0.8,
@@ -1559,8 +1466,7 @@ class TextAnalyzer:
         }
         
     async def _recognize_entities(self, text: str) -> Dict[str, Any]:
-        """Recognize named entities and their types."""
-        return {
+        """Recognize named entities and their types."""        return {
             'entities': [
                 {'text': 'AI Influencer', 'type': 'PRODUCT', 'confidence': 0.9},
                 {'text': 'Python', 'type': 'TECHNOLOGY', 'confidence': 0.95},
@@ -1580,8 +1486,7 @@ class TextAnalyzer:
         }
         
     async def _analyze_topics(self, text: str) -> Dict[str, Any]:
-        """Analyze topics and themes."""
-        return {
+        """Analyze topics and themes."""        return {
             'primary_topics': ['artificial intelligence', 'content creation', 'technology'],
             'topic_scores': {
                 'artificial intelligence': 0.8,
@@ -1596,8 +1501,7 @@ class TextAnalyzer:
         }
         
     async def _assess_readability(self, text: str) -> Dict[str, Any]:
-        """Assess text readability and complexity."""
-        return {
+        """Assess text readability and complexity."""        return {
             'flesch_kincaid_grade': 8.5,
             'flesch_reading_ease': 65.0,
             'gunning_fog_index': 9.2,
@@ -1609,8 +1513,7 @@ class TextAnalyzer:
         }
         
     async def _extract_keywords(self, text: str) -> Dict[str, Any]:
-        """Extract keywords and key phrases."""
-        return {
+        """Extract keywords and key phrases."""        return {
             'keywords': [
                 {'word': 'AI', 'score': 0.95, 'frequency': 8},
                 {'word': 'influencer', 'score': 0.9, 'frequency': 6},
@@ -1631,8 +1534,7 @@ class TextAnalyzer:
         }
         
     async def _analyze_style(self, text: str) -> Dict[str, Any]:
-        """Analyze writing style and characteristics."""
-        return {
+        """Analyze writing style and characteristics."""        return {
             'writing_style': 'technical',
             'formality_level': 'semi-formal',
             'tone': 'informative',
@@ -1651,18 +1553,15 @@ class TextAnalyzer:
 
 
 class FeatureExtractor:
-    """Advanced feature extraction engine for multi-modal content analysis."""
-    
+    """Advanced feature extraction engine for multi-modal content analysis."""    
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize feature extractor with configuration."""
-        self.config = config or {}
+        """Initialize feature extractor with configuration."""        self.config = config or {}
         self.feature_types = self.config.get('feature_types', ['statistical', 'semantic', 'structural'])
         self.normalization = self.config.get('normalization', True)
         self.dimensionality_reduction = self.config.get('dimensionality_reduction', False)
         
     async def extract_features(self, content_data: Any, content_type: str, metadata: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Extract comprehensive features from content."""
-        try:
+        """Extract comprehensive features from content."""        try:
             # Initialize feature vectors
             feature_vectors = {}
             
@@ -1711,8 +1610,7 @@ class FeatureExtractor:
             raise ContentAnalysisError(f"Feature extraction error: {str(e)}")
             
     async def _extract_statistical_features(self, content_data: Any, content_type: str) -> Dict[str, float]:
-        """Extract statistical features from content."""
-        if content_type == 'text':
+        """Extract statistical features from content."""        if content_type == 'text':
             return {
                 'length_normalized': 0.7,
                 'complexity_score': 0.6,
@@ -1740,8 +1638,7 @@ class FeatureExtractor:
             return {}
             
     async def _extract_semantic_features(self, content_data: Any, content_type: str) -> Dict[str, float]:
-        """Extract semantic features from content."""
-        return {
+        """Extract semantic features from content."""        return {
             'topic_coherence': 0.8,
             'semantic_similarity': 0.75,
             'conceptual_density': 0.7,
@@ -1753,8 +1650,7 @@ class FeatureExtractor:
         }
         
     async def _extract_structural_features(self, content_data: Any, content_type: str) -> Dict[str, float]:
-        """Extract structural features from content."""
-        if content_type == 'text':
+        """Extract structural features from content."""        if content_type == 'text':
             return {
                 'hierarchical_depth': 0.6,
                 'structural_balance': 0.8,
@@ -1782,8 +1678,7 @@ class FeatureExtractor:
             return {}
             
     async def _extract_behavioral_features(self, content_data: Any, metadata: Dict[str, Any]) -> Dict[str, float]:
-        """Extract behavioral features from engagement data."""
-        return {
+        """Extract behavioral features from engagement data."""        return {
             'engagement_velocity': 0.7,
             'interaction_pattern': 0.8,
             'virality_potential': 0.6,
@@ -1795,8 +1690,7 @@ class FeatureExtractor:
         }
         
     async def _extract_temporal_features(self, content_data: Any, metadata: Dict[str, Any]) -> Dict[str, float]:
-        """Extract temporal features from content."""
-        return {
+        """Extract temporal features from content."""        return {
             'trend_alignment': 0.8,
             'timing_relevance': 0.7,
             'seasonal_score': 0.6,
@@ -1808,16 +1702,14 @@ class FeatureExtractor:
         }
         
     async def _combine_features(self, feature_vectors: Dict[str, Dict[str, float]]) -> Dict[str, float]:
-        """Combine different feature types into unified vector."""
-        combined = {}
+        """Combine different feature types into unified vector."""        combined = {}
         for feature_type, features in feature_vectors.items():
             for feature_name, value in features.items():
                 combined[f"{feature_type}_{feature_name}"] = value
         return combined
         
     async def _normalize_features(self, features: Dict[str, float]) -> Dict[str, float]:
-        """Normalize feature values to standard range."""
-        # Simple min-max normalization for example
+        """Normalize feature values to standard range."""        # Simple min-max normalization for example
         values = list(features.values())
         if values:
             min_val, max_val = min(values), max(values)
@@ -1826,19 +1718,16 @@ class FeatureExtractor:
         return features
         
     async def _reduce_dimensions(self, features: Dict[str, float]) -> Dict[str, float]:
-        """Reduce feature dimensionality if requested."""
-        # Simple example - keep top features by value
+        """Reduce feature dimensionality if requested."""        # Simple example - keep top features by value
         sorted_features = sorted(features.items(), key=lambda x: abs(x[1]), reverse=True)
         top_features = dict(sorted_features[:50])  # Keep top 50 features
         return top_features
 
 
 class MultiModalAnalyzer:
-    """Advanced multi-modal content analyzer combining text, audio, and video analysis."""
-    
+    """Advanced multi-modal content analyzer combining text, audio, and video analysis."""    
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize multi-modal analyzer with specialized analyzers."""
-        self.config = config or {}
+        """Initialize multi-modal analyzer with specialized analyzers."""        self.config = config or {}
         self.text_analyzer = TextAnalyzer(self.config.get('text_config', {}))
         self.audio_analyzer = AudioAnalyzer(self.config.get('audio_config', {}))
         self.video_analyzer = VideoAnalyzer(self.config.get('video_config', {}))
@@ -1850,8 +1739,7 @@ class MultiModalAnalyzer:
         self.fusion_strategy = self.config.get('fusion_strategy', 'weighted_average')
         
     async def analyze_multi_modal_content(self, content_package: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze content with multiple modalities."""
-        try:
+        """Analyze content with multiple modalities."""        try:
             analysis_results = {}
             modality_features = {}
             
@@ -1937,8 +1825,7 @@ class MultiModalAnalyzer:
             raise ContentAnalysisError(f"Multi-modal analysis error: {str(e)}")
             
     async def _analyze_cross_modal_relationships(self, analyses: Dict[str, Any], features: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze relationships between different modalities."""
-        relationships = {}
+        """Analyze relationships between different modalities."""        relationships = {}
         
         # Text-Audio relationships
         if 'text' in analyses and 'audio' in analyses:
@@ -1973,8 +1860,7 @@ class MultiModalAnalyzer:
         return relationships
         
     async def _analyze_synchronization(self, analyses: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze temporal synchronization between modalities."""
-        return {
+        """Analyze temporal synchronization between modalities."""        return {
             'overall_sync_score': 0.85,
             'temporal_alignment': 0.9,
             'rhythm_synchronization': 0.8,
@@ -1986,8 +1872,7 @@ class MultiModalAnalyzer:
         }
         
     async def _analyze_correlations(self, features: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze feature correlations across modalities."""
-        return {
+        """Analyze feature correlations across modalities."""        return {
             'cross_modal_correlation': 0.7,
             'feature_redundancy': 0.3,
             'complementarity_score': 0.8,
@@ -2008,8 +1893,7 @@ class MultiModalAnalyzer:
                                        cross_modal: Dict[str, Any], 
                                        sync_features: Dict[str, Any], 
                                        correlation_features: Dict[str, Any]) -> Dict[str, Any]:
-        """Fuse features from all modalities into unified representation."""
-        fused = {}
+        """Fuse features from all modalities into unified representation."""        fused = {}
         
         # Weight-based fusion
         if self.fusion_strategy == 'weighted_average':
@@ -2041,8 +1925,7 @@ class MultiModalAnalyzer:
         return fused
         
     async def _assess_multi_modal_quality(self, analyses: Dict[str, Any], features: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess overall quality of multi-modal content."""
-        return {
+        """Assess overall quality of multi-modal content."""        return {
             'overall_quality_score': 0.85,  # 0-1 scale
             'modality_quality_scores': {
                 'text': 0.8,
@@ -2068,8 +1951,7 @@ class MultiModalAnalyzer:
     async def _generate_multi_modal_recommendations(self, analyses: Dict[str, Any], 
                                                   features: Dict[str, Any], 
                                                   quality: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate recommendations based on multi-modal analysis."""
-        return {
+        """Generate recommendations based on multi-modal analysis."""        return {
             'content_optimization': [
                 'Enhance color grading to improve visual appeal',
                 'Adjust audio levels for better balance',

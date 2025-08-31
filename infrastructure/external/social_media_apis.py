@@ -1,5 +1,4 @@
-"""
-🌐 Social Media Apis - IA-Influencer-Agent API Layer
+"""🌐 Social Media Apis - IA-Influencer-Agent API Layer
 ==================================================================
 Expert: BACKEND_SENIOR + MICROSERVICES_ARCHITECT
 Architecture: RESTful API + GraphQL + WebSocket
@@ -8,9 +7,7 @@ Date: 2025-07-31 06:28:26
 API professionnel avec authentification, validation, et monitoring.
 Routes consolidées: 0
 ==================================================================
-"""
-
-from fastapi import FastAPI, HTTPException, Depends, status, Request, Response
+"""from fastapi import FastAPI, HTTPException, Depends, status, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
@@ -29,16 +26,14 @@ logger = logging.getLogger(__name__)
 security = HTTPBearer()
 
 class APIResponse(BaseModel):
-    """Réponse API standardisée"""
-    success: bool = True
+    """Réponse API standardisée"""    success: bool = True
     data: Optional[Any] = None
     message: str = ""
     timestamp: datetime = Field(default_factory=datetime.now)
     request_id: Optional[str] = None
 
 class APIError(BaseModel):
-    """Erreur API standardisée"""
-    error_code: str
+    """Erreur API standardisée"""    error_code: str
     message: str
     details: Optional[Dict[str, Any]] = None
     timestamp: datetime = Field(default_factory=datetime.now)
@@ -46,8 +41,7 @@ class APIError(BaseModel):
 # =============== MIDDLEWARE ===============
 
 async def authentication_middleware(request: Request, credentials: HTTPAuthorizationCredentials = Depends(security)):
-    """Middleware d'authentification"""
-    try:
+    """Middleware d'authentification"""    try:
         # JWT validation for social media API integrations
         token = credentials.credentials
         
@@ -91,8 +85,7 @@ async def authentication_middleware(request: Request, credentials: HTTPAuthoriza
         )
 
 async def rate_limiting_middleware(request: Request):
-    """Middleware de limitation de débit"""
-    # Social media API rate limiting with platform-specific limits
+    """Middleware de limitation de débit"""    # Social media API rate limiting with platform-specific limits
     client_ip = request.client.host
     endpoint = request.url.path
     
@@ -155,16 +148,14 @@ async def rate_limiting_middleware(request: Request):
 # =============== API ROUTES ===============
 
 class SocialMediaApisAPI:
-    """API principale Social Media Apis"""
-    
+    """API principale Social Media Apis"""    
     def __init__(self, app: FastAPI):
         self.app = app
         self.setup_routes()
         self.setup_middleware()
     
     def setup_middleware(self):
-        """Configuration des middlewares"""
-        self.app.add_middleware(
+        """Configuration des middlewares"""        self.app.add_middleware(
             CORSMiddleware,
             allow_origins=["https://app.ainflue.com", "https://dashboard.ainflue.com", "https://social.ainflue.com"],  # Social media app origins
             allow_credentials=True,
@@ -174,12 +165,10 @@ class SocialMediaApisAPI:
         self.app.add_middleware(GZipMiddleware, minimum_size=1000)
     
     def setup_routes(self):
-        """Configuration des routes API"""
-        
+        """Configuration des routes API"""        
         @self.app.get("/health")
         async def health_check():
-            """Vérification de santé de l'API"""
-            return APIResponse(
+            """Vérification de santé de l'API"""            return APIResponse(
                 success=True,
                 data={"status": "healthy", "version": "1.0.0"},
                 message="API Social Media Apis opérationnelle"
@@ -190,8 +179,7 @@ class SocialMediaApisAPI:
             request: Request,
             auth_data: dict = Depends(authentication_middleware)
         ):
-            """Récupération des données"""
-            try:
+            """Récupération des données"""            try:
                 # Social media API business logic implementation
                 # Handle platform-specific data retrieval
                 if not hasattr(self, '_social_media_cache'):
@@ -274,8 +262,7 @@ class SocialMediaApisAPI:
             data: Dict[str, Any],
             auth_data: dict = Depends(authentication_middleware)
         ):
-            """Création de données"""
-            try:
+            """Création de données"""            try:
                 # Social media content validation and creation
                 # Support multi-platform content publishing
                 if not data or not isinstance(data, dict):
@@ -355,30 +342,25 @@ class SocialMediaApisAPI:
 # =============== WebSocket Support ===============
 
 class WebSocketManager:
-    """Gestionnaire WebSocket pour temps réel"""
-    
+    """Gestionnaire WebSocket pour temps réel"""    
     def __init__(self):
         self.active_connections: List = []
     
     async def connect(self, websocket):
-        """Connexion WebSocket"""
-        await websocket.accept()
+        """Connexion WebSocket"""        await websocket.accept()
         self.active_connections.append(websocket)
     
     def disconnect(self, websocket):
-        """Déconnexion WebSocket"""
-        self.active_connections.remove(websocket)
+        """Déconnexion WebSocket"""        self.active_connections.remove(websocket)
     
     async def broadcast(self, message: str):
-        """Diffusion message à tous les clients"""
-        for connection in self.active_connections:
+        """Diffusion message à tous les clients"""        for connection in self.active_connections:
             await connection.send_text(message)
 
 # =============== EXPORT MODULE ===============
 
 def create_socialmediaapis_api(app: FastAPI) -> SocialMediaApisAPI:
-    """Factory pour créer l'API Social Media Apis"""
-    return SocialMediaApisAPI(app)
+    """Factory pour créer l'API Social Media Apis"""    return SocialMediaApisAPI(app)
 
 __all__ = [
     "SocialMediaApisAPI",

@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Network Security & Compliance Manager
+"""IA Influencer Agent - Network Security & Compliance Manager
 Advanced security and compliance enforcement for content protection platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -12,9 +11,7 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
 from dataclasses import dataclass, field
@@ -45,8 +42,7 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks"""
-    GDPR = "gdpr"
+    """Supported compliance frameworks"""    GDPR = "gdpr"
     CCPA = "ccpa" 
     SOC2 = "soc2"
     PCI_DSS = "pci_dss"
@@ -57,16 +53,14 @@ class ComplianceFramework(Enum):
 
 
 class SecurityThreatLevel(Enum):
-    """Security threat severity levels"""
-    LOW = "low"
+    """Security threat severity levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class SecurityScanType(Enum):
-    """Types of security scans"""
-    VULNERABILITY_SCAN = "vulnerability"
+    """Types of security scans"""    VULNERABILITY_SCAN = "vulnerability"
     PENETRATION_TEST = "penetration"
     COMPLIANCE_AUDIT = "compliance"
     SSL_CERTIFICATE_CHECK = "ssl_certificate"
@@ -76,8 +70,7 @@ class SecurityScanType(Enum):
 
 @dataclass
 class SecurityThreat:
-    """Security threat detection result"""
-    threat_id: str
+    """Security threat detection result"""    threat_id: str
     threat_type: str
     severity: SecurityThreatLevel
     source_ip: str
@@ -91,8 +84,7 @@ class SecurityThreat:
 
 @dataclass
 class ComplianceViolation:
-    """Compliance violation detection"""
-    violation_id: str
+    """Compliance violation detection"""    violation_id: str
     framework: ComplianceFramework
     violation_type: str
     severity: str
@@ -105,8 +97,7 @@ class ComplianceViolation:
 
 @dataclass
 class SecurityPolicy:
-    """Network security policy definition"""
-    policy_id: str
+    """Network security policy definition"""    policy_id: str
     name: str
     description: str
     enabled: bool
@@ -117,11 +108,9 @@ class SecurityPolicy:
 
 
 class NetworkSecurityComplianceManager:
-    """
-    Network Security & Compliance Manager for IA Influencer Agent Platform
+    """    Network Security & Compliance Manager for IA Influencer Agent Platform
     Provides comprehensive security monitoring and compliance enforcement
-    """
-    
+    """    
     def __init__(
         self,
         database_url: str,
@@ -159,8 +148,7 @@ class NetworkSecurityComplianceManager:
         self.security_scan_interval = 3600  # 1 hour
     
     async def initialize(self) -> bool:
-        """Initialize security and compliance manager"""
-        try:
+        """Initialize security and compliance manager"""        try:
             logger.info("Initializing Network Security & Compliance Manager...")
             
             # Initialize database connection
@@ -201,8 +189,7 @@ class NetworkSecurityComplianceManager:
         self,
         traffic_data: List[Dict[str, Any]]
     ) -> List[SecurityThreat]:
-        """Detect security threats from traffic data"""
-        threats = []
+        """Detect security threats from traffic data"""        threats = []
         
         try:
             for traffic in traffic_data:
@@ -249,8 +236,7 @@ class NetworkSecurityComplianceManager:
         framework: ComplianceFramework,
         resource_data: Dict[str, Any]
     ) -> List[ComplianceViolation]:
-        """Enforce compliance policies for specific framework"""
-        violations = []
+        """Enforce compliance policies for specific framework"""        violations = []
         
         try:
             if framework == ComplianceFramework.GDPR:
@@ -281,8 +267,7 @@ class NetworkSecurityComplianceManager:
         scan_type: SecurityScanType,
         target_resources: List[str]
     ) -> Dict[str, Any]:
-        """Perform comprehensive security scan"""
-        scan_results = {
+        """Perform comprehensive security scan"""        scan_results = {
             'scan_id': hashlib.sha256(f"{scan_type.value}_{datetime.now().isoformat()}".encode()).hexdigest()[:16],
             'scan_type': scan_type.value,
             'started_at': datetime.now(),
@@ -319,8 +304,7 @@ class NetworkSecurityComplianceManager:
             return scan_results
     
     async def get_security_dashboard_data(self) -> Dict[str, Any]:
-        """Get comprehensive security dashboard data"""
-        try:
+        """Get comprehensive security dashboard data"""        try:
             dashboard_data = {
                 'timestamp': datetime.now(),
                 'threat_summary': {
@@ -384,8 +368,7 @@ class NetworkSecurityComplianceManager:
         threat: SecurityThreat,
         response_actions: Optional[List[str]] = None
     ) -> bool:
-        """Respond to security incident automatically"""
-        try:
+        """Respond to security incident automatically"""        try:
             if not self.automatic_threat_response:
                 logger.info(f"Automatic response disabled for threat: {threat.threat_id}")
                 return False
@@ -431,8 +414,7 @@ class NetworkSecurityComplianceManager:
     # Private methods
     
     async def _load_threat_intelligence(self) -> None:
-        """Load threat intelligence feeds"""
-        try:
+        """Load threat intelligence feeds"""        try:
             for feed_url in self.threat_intelligence_feeds:
                 async with aiohttp.ClientSession() as session:
                     async with session.get(feed_url) as response:
@@ -446,8 +428,7 @@ class NetworkSecurityComplianceManager:
             logger.error(f"Error loading threat intelligence: {e}")
     
     async def _detect_ddos_attack(self, traffic_data: Dict[str, Any]) -> Optional[SecurityThreat]:
-        """Detect DDoS attack patterns"""
-        try:
+        """Detect DDoS attack patterns"""        try:
             source_ip = traffic_data.get('source_ip')
             if not source_ip:
                 return None
@@ -489,8 +470,7 @@ class NetworkSecurityComplianceManager:
             return None
     
     async def _detect_malicious_ip(self, traffic_data: Dict[str, Any]) -> Optional[SecurityThreat]:
-        """Detect traffic from known malicious IPs"""
-        try:
+        """Detect traffic from known malicious IPs"""        try:
             source_ip = traffic_data.get('source_ip')
             if not source_ip or source_ip not in self.malicious_ips:
                 return None
@@ -514,8 +494,7 @@ class NetworkSecurityComplianceManager:
             return None
     
     async def _perform_ssl_certificate_check(self, domains: List[str]) -> Dict[str, Any]:
-        """Check SSL certificate status for domains"""
-        results = {}
+        """Check SSL certificate status for domains"""        results = {}
         
         for domain in domains:
             try:
@@ -558,8 +537,7 @@ class NetworkSecurityComplianceManager:
         return results
     
     async def _check_gdpr_compliance(self, resource_data: Dict[str, Any]) -> List[ComplianceViolation]:
-        """Check GDPR compliance violations"""
-        violations = []
+        """Check GDPR compliance violations"""        violations = []
         
         # Check for data retention policy compliance
         if 'user_data' in resource_data:
@@ -590,8 +568,7 @@ class NetworkSecurityComplianceManager:
         return violations
     
     async def _threat_detection_loop(self) -> None:
-        """Background threat detection loop"""
-        while True:
+        """Background threat detection loop"""        while True:
             try:
                 if self.threat_detection_enabled:
                     # Get recent traffic data for analysis
@@ -612,8 +589,7 @@ class NetworkSecurityComplianceManager:
                 await asyncio.sleep(60)
     
     async def _compliance_monitoring_loop(self) -> None:
-        """Background compliance monitoring loop"""
-        while True:
+        """Background compliance monitoring loop"""        while True:
             try:
                 if self.compliance_monitoring_enabled:
                     # Check compliance for all monitored frameworks
@@ -636,8 +612,7 @@ class NetworkSecurityComplianceManager:
 
 
 async def main():
-    """Demo of Network Security & Compliance Manager"""
-    
+    """Demo of Network Security & Compliance Manager"""    
     # Initialize security manager
     security_manager = NetworkSecurityComplianceManager(
         database_url="postgresql://localhost/ia_security",

@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Log Aggregation Service
+"""IA Influencer Agent - Log Aggregation Service
 Advanced log aggregation and centralized logging management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -19,9 +18,7 @@ Team Expertise:
 - Security Specialist: Enterprise Security & Compliance
 - Microservices Architect: Distributed Systems
 - IA Prompt Engineer: Advanced AI Integration
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 import structlog
@@ -51,8 +48,7 @@ from ...core.exceptions import LoggingError, ConfigurationError
 
 
 class LogLevel(str, Enum):
-    """Log levels enumeration for structured logging"""
-    DEBUG = "DEBUG"
+    """Log levels enumeration for structured logging"""    DEBUG = "DEBUG"
     INFO = "INFO"
     WARNING = "WARNING"
     ERROR = "ERROR"
@@ -60,8 +56,7 @@ class LogLevel(str, Enum):
 
 
 class LogFormat(str, Enum):
-    """Log output format types"""
-    JSON = "json"
+    """Log output format types"""    JSON = "json"
     STRUCTURED = "structured"
     PLAIN = "plain"
     CONSOLE = "console"
@@ -70,8 +65,7 @@ class LogFormat(str, Enum):
 
 
 class LogDestination(str, Enum):
-    """Log destination types for multi-target logging"""
-    CONSOLE = "console"
+    """Log destination types for multi-target logging"""    CONSOLE = "console"
     FILE = "file"
     ELASTICSEARCH = "elasticsearch"
     REDIS = "redis"
@@ -85,8 +79,7 @@ class LogDestination(str, Enum):
 
 @dataclass
 class LogEntry:
-    """Structured log entry data class for IA Influencer Agent"""
-    
+    """Structured log entry data class for IA Influencer Agent"""    
     # Core fields
     timestamp: datetime
     level: LogLevel
@@ -130,8 +123,7 @@ class LogEntry:
     pipeline_stage: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert log entry to dictionary for serialization"""
-        data = asdict(self)
+        """Convert log entry to dictionary for serialization"""        data = asdict(self)
         
         # Convert datetime to ISO format
         if self.timestamp:
@@ -141,12 +133,10 @@ class LogEntry:
         return {k: v for k, v in data.items() if v is not None}
     
     def to_json(self) -> str:
-        """Convert log entry to JSON string"""
-        return json.dumps(self.to_dict())
+        """Convert log entry to JSON string"""        return json.dumps(self.to_dict())
     
     def to_ecs_format(self) -> Dict[str, Any]:
-        """Convert to Elastic Common Schema format"""
-        ecs_data = {
+        """Convert to Elastic Common Schema format"""        ecs_data = {
             "@timestamp": self.timestamp.isoformat(),
             "log": {
                 "level": self.level.value,
@@ -183,16 +173,14 @@ class LogEntry:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'LogEntry':
-        """Create LogEntry from dictionary"""
-        if 'timestamp' in data and isinstance(data['timestamp'], str):
+        """Create LogEntry from dictionary"""        if 'timestamp' in data and isinstance(data['timestamp'], str):
             data['timestamp'] = datetime.fromisoformat(data['timestamp'])
         
         return cls(**data)
 
 
 class LogProcessor:
-    """Advanced log processor with enrichment and filtering capabilities"""
-    
+    """Advanced log processor with enrichment and filtering capabilities"""    
     def __init__(self, 
                  service_name: str = "ia-influencer-agent",
                  environment: str = "production",
@@ -204,16 +192,13 @@ class LogProcessor:
         self.filters: List[Callable[[LogEntry], bool]] = []
         
     def add_enricher(self, enricher_func: Callable[[LogEntry], LogEntry]):
-        """Add log enricher function"""
-        self.enrichers.append(enricher_func)
+        """Add log enricher function"""        self.enrichers.append(enricher_func)
     
     def add_filter(self, filter_func: Callable[[LogEntry], bool]):
-        """Add log filter function"""
-        self.filters.append(filter_func)
+        """Add log filter function"""        self.filters.append(filter_func)
     
     def process(self, log_entry: LogEntry) -> Optional[LogEntry]:
-        """Process log entry through enrichers and filters"""
-        try:
+        """Process log entry through enrichers and filters"""        try:
             # Apply filters first
             for filter_func in self.filters:
                 if not filter_func(log_entry):
@@ -242,8 +227,7 @@ class LogProcessor:
 
 
 class LogBuffer:
-    """High-performance log buffer with configurable flushing strategies"""
-    
+    """High-performance log buffer with configurable flushing strategies"""    
     def __init__(self, 
                  max_size: int = 1000,
                  flush_interval: float = 30.0,
@@ -256,8 +240,7 @@ class LogBuffer:
         self._lock = asyncio.Lock()
         
     async def add(self, log_entry: LogEntry) -> bool:
-        """Add log entry to buffer, returns True if flush is needed"""
-        async with self._lock:
+        """Add log entry to buffer, returns True if flush is needed"""        async with self._lock:
             self.buffer.append(log_entry)
             
             # Force flush on critical errors
@@ -276,34 +259,28 @@ class LogBuffer:
             return False
     
     async def flush(self) -> List[LogEntry]:
-        """Flush buffer and return all entries"""
-        async with self._lock:
+        """Flush buffer and return all entries"""        async with self._lock:
             entries = self.buffer.copy()
             self.buffer.clear()
             self.last_flush = datetime.now(timezone.utc)
             return entries
     
     async def size(self) -> int:
-        """Get current buffer size"""
-        async with self._lock:
+        """Get current buffer size"""        async with self._lock:
             return len(self.buffer)
 
 
 class LogWriter(Protocol):
-    """Protocol for log writers"""
-    
+    """Protocol for log writers"""    
     async def write(self, entries: List[LogEntry]) -> bool:
-        """Write log entries to destination"""
-        ...
+        """Write log entries to destination"""        ...
     
     async def close(self) -> None:
-        """Close writer and cleanup resources"""
-        ...
+        """Close writer and cleanup resources"""        ...
 
 
 class ConsoleLogWriter:
-    """Console log writer with colored output"""
-    
+    """Console log writer with colored output"""    
     def __init__(self, format_type: LogFormat = LogFormat.JSON):
         self.format_type = format_type
         
@@ -318,8 +295,7 @@ class ConsoleLogWriter:
         self.reset_color = "\033[0m"
     
     async def write(self, entries: List[LogEntry]) -> bool:
-        """Write entries to console with colors"""
-        try:
+        """Write entries to console with colors"""        try:
             for entry in entries:
                 if self.format_type == LogFormat.JSON:
                     output = entry.to_json()
@@ -336,13 +312,11 @@ class ConsoleLogWriter:
             return False
     
     async def close(self) -> None:
-        """Nothing to close for console"""
-        pass
+        """Nothing to close for console"""        pass
 
 
 class FileLogWriter:
-    """File log writer with rotation and compression"""
-    
+    """File log writer with rotation and compression"""    
     def __init__(self, 
                  file_path: str,
                  max_file_size: int = 100 * 1024 * 1024,  # 100MB
@@ -361,8 +335,7 @@ class FileLogWriter:
         self.file_path.parent.mkdir(parents=True, exist_ok=True)
     
     async def write(self, entries: List[LogEntry]) -> bool:
-        """Write entries to file with rotation"""
-        async with self._lock:
+        """Write entries to file with rotation"""        async with self._lock:
             try:
                 # Check if rotation is needed
                 await self._rotate_if_needed()
@@ -388,8 +361,7 @@ class FileLogWriter:
                 return False
     
     async def _rotate_if_needed(self):
-        """Rotate log file if size exceeds limit"""
-        if not self.file_path.exists():
+        """Rotate log file if size exceeds limit"""        if not self.file_path.exists():
             return
         
         if self.file_path.stat().st_size >= self.max_file_size:
@@ -418,8 +390,7 @@ class FileLogWriter:
                 await self._compress_file(rotated_file)
     
     async def _compress_file(self, file_path: Path):
-        """Compress rotated log file"""
-        try:
+        """Compress rotated log file"""        try:
             compressed_path = file_path.with_suffix(file_path.suffix + ".gz")
             
             with open(file_path, 'rb') as f_in:
@@ -432,15 +403,13 @@ class FileLogWriter:
             logging.error(f"Compression error: {e}")
     
     async def close(self) -> None:
-        """Close file handle"""
-        if self.current_file:
+        """Close file handle"""        if self.current_file:
             self.current_file.close()
             self.current_file = None
 
 
 class ElasticsearchLogWriter:
-    """Elasticsearch log writer with bulk operations"""
-    
+    """Elasticsearch log writer with bulk operations"""    
     def __init__(self, 
                  hosts: List[str],
                  index_pattern: str = "ia-influencer-logs-%Y.%m.%d",
@@ -461,8 +430,7 @@ class ElasticsearchLogWriter:
         )
     
     async def write(self, entries: List[LogEntry]) -> bool:
-        """Write entries to Elasticsearch using bulk API"""
-        try:
+        """Write entries to Elasticsearch using bulk API"""        try:
             if not entries:
                 return True
             
@@ -502,13 +470,11 @@ class ElasticsearchLogWriter:
             return False
     
     async def close(self) -> None:
-        """Close Elasticsearch client"""
-        await self.client.close()
+        """Close Elasticsearch client"""        await self.client.close()
 
 
 class RedisLogWriter:
-    """Redis log writer using streams"""
-    
+    """Redis log writer using streams"""    
     def __init__(self, 
                  redis_url: str,
                  stream_name: str = "ia-influencer-logs",
@@ -519,14 +485,12 @@ class RedisLogWriter:
         self.redis = None
     
     async def _get_redis(self):
-        """Get or create Redis connection"""
-        if not self.redis:
+        """Get or create Redis connection"""        if not self.redis:
             self.redis = await aioredis.from_url(self.redis_url)
         return self.redis
     
     async def write(self, entries: List[LogEntry]) -> bool:
-        """Write entries to Redis stream"""
-        try:
+        """Write entries to Redis stream"""        try:
             redis = await self._get_redis()
             
             # Use pipeline for efficiency
@@ -549,14 +513,12 @@ class RedisLogWriter:
             return False
     
     async def close(self) -> None:
-        """Close Redis connection"""
-        if self.redis:
+        """Close Redis connection"""        if self.redis:
             await self.redis.close()
 
 
 class S3LogWriter:
-    """S3 log writer for long-term storage"""
-    
+    """S3 log writer for long-term storage"""    
     def __init__(self, 
                  bucket_name: str,
                  prefix: str = "logs",
@@ -569,8 +531,7 @@ class S3LogWriter:
         self.s3_client = boto3.client('s3', region_name=region)
     
     async def write(self, entries: List[LogEntry]) -> bool:
-        """Write entries to S3 as compressed JSON"""
-        try:
+        """Write entries to S3 as compressed JSON"""        try:
             if not entries:
                 return True
             
@@ -607,13 +568,11 @@ class S3LogWriter:
             return False
     
     async def close(self) -> None:
-        """Nothing to close for S3"""
-        pass
+        """Nothing to close for S3"""        pass
 
 
 class FluentdLogWriter:
-    """Fluentd log writer"""
-    
+    """Fluentd log writer"""    
     def __init__(self, 
                  host: str = "localhost",
                  port: int = 24224,
@@ -624,8 +583,7 @@ class FluentdLogWriter:
         self.sender = fluentd.FluentSender(tag, host=host, port=port)
     
     async def write(self, entries: List[LogEntry]) -> bool:
-        """Write entries to Fluentd"""
-        try:
+        """Write entries to Fluentd"""        try:
             for entry in entries:
                 self.sender.emit(entry.to_dict())
             return True
@@ -635,13 +593,11 @@ class FluentdLogWriter:
             return False
     
     async def close(self) -> None:
-        """Close Fluentd sender"""
-        self.sender.close()
+        """Close Fluentd sender"""        self.sender.close()
 
 
 class LogAggregator:
-    """Advanced log aggregator with multiple destinations and buffering"""
-    
+    """Advanced log aggregator with multiple destinations and buffering"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.processor = LogProcessor(
@@ -666,8 +622,7 @@ class LogAggregator:
         self._setup_default_filters()
     
     def _setup_sentry(self):
-        """Setup Sentry integration if configured"""
-        sentry_config = self.config.get("sentry", {})
+        """Setup Sentry integration if configured"""        sentry_config = self.config.get("sentry", {})
         if sentry_config.get("enabled") and sentry_config.get("dsn"):
             sentry_sdk.init(
                 dsn=sentry_config["dsn"],
@@ -677,19 +632,16 @@ class LogAggregator:
             )
     
     def _setup_default_enrichers(self):
-        """Setup default log enrichers"""
-        
+        """Setup default log enrichers"""        
         def add_trace_context(entry: LogEntry) -> LogEntry:
-            """Add distributed tracing context"""
-            # This would integrate with your tracing system (e.g., OpenTelemetry)
+            """Add distributed tracing context"""            # This would integrate with your tracing system (e.g., OpenTelemetry)
             # For now, just ensure we have some context
             if not entry.trace_id:
                 entry.trace_id = f"trace-{datetime.now().timestamp()}"
             return entry
         
         def add_performance_metrics(entry: LogEntry) -> LogEntry:
-            """Add basic performance metrics"""
-            if not entry.metadata:
+            """Add basic performance metrics"""            if not entry.metadata:
                 entry.metadata = {}
             
             # Add basic system metrics
@@ -703,18 +655,15 @@ class LogAggregator:
         self.processor.add_enricher(add_performance_metrics)
     
     def _setup_default_filters(self):
-        """Setup default log filters"""
-        
+        """Setup default log filters"""        
         def filter_sensitive_data(entry: LogEntry) -> bool:
-            """Filter out logs containing sensitive data"""
-            sensitive_patterns = ["password", "token", "secret", "key", "credential"]
+            """Filter out logs containing sensitive data"""            sensitive_patterns = ["password", "token", "secret", "key", "credential"]
             message_lower = entry.message.lower()
             
             return not any(pattern in message_lower for pattern in sensitive_patterns)
         
         def filter_noisy_logs(entry: LogEntry) -> bool:
-            """Filter out noisy debug logs in production"""
-            if self.config.get("environment") == "production" and entry.level == LogLevel.DEBUG:
+            """Filter out noisy debug logs in production"""            if self.config.get("environment") == "production" and entry.level == LogLevel.DEBUG:
                 # Only allow debug logs from critical modules
                 critical_modules = ["ai", "fingerprinting", "monetization", "protection"]
                 return any(module in entry.module.lower() for module in critical_modules)
@@ -724,12 +673,10 @@ class LogAggregator:
         self.processor.add_filter(filter_noisy_logs)
     
     def add_writer(self, destination: LogDestination, writer: LogWriter):
-        """Add a log writer for a destination"""
-        self.writers[destination] = writer
+        """Add a log writer for a destination"""        self.writers[destination] = writer
     
     def setup_console_writer(self, format_type: LogFormat = LogFormat.JSON):
-        """Setup console log writer"""
-        writer = ConsoleLogWriter(format_type)
+        """Setup console log writer"""        writer = ConsoleLogWriter(format_type)
         self.add_writer(LogDestination.CONSOLE, writer)
     
     def setup_file_writer(self, 
@@ -737,8 +684,7 @@ class LogAggregator:
                          max_file_size: int = 100 * 1024 * 1024,
                          max_files: int = 10,
                          compress: bool = True):
-        """Setup file log writer"""
-        writer = FileLogWriter(file_path, max_file_size, max_files, compress)
+        """Setup file log writer"""        writer = FileLogWriter(file_path, max_file_size, max_files, compress)
         self.add_writer(LogDestination.FILE, writer)
     
     def setup_elasticsearch_writer(self, 
@@ -746,23 +692,20 @@ class LogAggregator:
                                   index_pattern: str = "ia-influencer-logs-%Y.%m.%d",
                                   username: Optional[str] = None,
                                   password: Optional[str] = None):
-        """Setup Elasticsearch log writer"""
-        writer = ElasticsearchLogWriter(hosts, index_pattern, username, password)
+        """Setup Elasticsearch log writer"""        writer = ElasticsearchLogWriter(hosts, index_pattern, username, password)
         self.add_writer(LogDestination.ELASTICSEARCH, writer)
     
     def setup_redis_writer(self, 
                           redis_url: str,
                           stream_name: str = "ia-influencer-logs"):
-        """Setup Redis log writer"""
-        writer = RedisLogWriter(redis_url, stream_name)
+        """Setup Redis log writer"""        writer = RedisLogWriter(redis_url, stream_name)
         self.add_writer(LogDestination.REDIS, writer)
     
     def setup_s3_writer(self, 
                        bucket_name: str,
                        prefix: str = "logs",
                        region: str = "eu-central-1"):
-        """Setup S3 log writer"""
-        writer = S3LogWriter(bucket_name, prefix, region)
+        """Setup S3 log writer"""        writer = S3LogWriter(bucket_name, prefix, region)
         self.add_writer(LogDestination.S3, writer)
     
     async def log(self, 
@@ -770,8 +713,7 @@ class LogAggregator:
                   message: str,
                   module: str,
                   **kwargs):
-        """Log a message"""
-        
+        """Log a message"""        
         # Create log entry
         entry = LogEntry(
             timestamp=datetime.now(timezone.utc),
@@ -795,8 +737,7 @@ class LogAggregator:
             await self._flush_buffer()
     
     async def _flush_buffer(self):
-        """Flush buffer to all writers"""
-        entries = await self.buffer.flush()
+        """Flush buffer to all writers"""        entries = await self.buffer.flush()
         if not entries:
             return
         
@@ -814,8 +755,7 @@ class LogAggregator:
                          writer: LogWriter, 
                          entries: List[LogEntry],
                          destination: LogDestination):
-        """Safely write to a destination with error handling"""
-        try:
+        """Safely write to a destination with error handling"""        try:
             success = await writer.write(entries)
             if not success:
                 logging.error(f"Failed to write to {destination}")
@@ -823,8 +763,7 @@ class LogAggregator:
             logging.error(f"Error writing to {destination}: {e}")
     
     async def start(self):
-        """Start the aggregator"""
-        if self.running:
+        """Start the aggregator"""        if self.running:
             return
         
         self.running = True
@@ -833,8 +772,7 @@ class LogAggregator:
         self.flush_task = asyncio.create_task(self._background_flush())
     
     async def stop(self):
-        """Stop the aggregator and flush remaining logs"""
-        if not self.running:
+        """Stop the aggregator and flush remaining logs"""        if not self.running:
             return
         
         self.running = False
@@ -855,8 +793,7 @@ class LogAggregator:
             await writer.close()
     
     async def _background_flush(self):
-        """Background task to periodically flush buffer"""
-        while self.running:
+        """Background task to periodically flush buffer"""        while self.running:
             try:
                 await asyncio.sleep(5)  # Check every 5 seconds
                 
@@ -874,8 +811,7 @@ class LogAggregator:
     
     @asynccontextmanager
     async def context(self):
-        """Context manager for the aggregator"""
-        await self.start()
+        """Context manager for the aggregator"""        await self.start()
         try:
             yield self
         finally:
@@ -884,8 +820,7 @@ class LogAggregator:
 
 # Factory function for creating pre-configured aggregators
 def create_production_aggregator(config: Dict[str, Any]) -> LogAggregator:
-    """Create a production-ready log aggregator"""
-    
+    """Create a production-ready log aggregator"""    
     aggregator = LogAggregator(config)
     
     # Setup writers based on configuration
@@ -929,24 +864,19 @@ def create_production_aggregator(config: Dict[str, Any]) -> LogAggregator:
 
 # Convenience functions for different log levels
 async def log_debug(aggregator: LogAggregator, message: str, module: str, **kwargs):
-    """Log debug message"""
-    await aggregator.log(LogLevel.DEBUG, message, module, **kwargs)
+    """Log debug message"""    await aggregator.log(LogLevel.DEBUG, message, module, **kwargs)
 
 async def log_info(aggregator: LogAggregator, message: str, module: str, **kwargs):
-    """Log info message"""
-    await aggregator.log(LogLevel.INFO, message, module, **kwargs)
+    """Log info message"""    await aggregator.log(LogLevel.INFO, message, module, **kwargs)
 
 async def log_warning(aggregator: LogAggregator, message: str, module: str, **kwargs):
-    """Log warning message"""
-    await aggregator.log(LogLevel.WARNING, message, module, **kwargs)
+    """Log warning message"""    await aggregator.log(LogLevel.WARNING, message, module, **kwargs)
 
 async def log_error(aggregator: LogAggregator, message: str, module: str, **kwargs):
-    """Log error message"""
-    await aggregator.log(LogLevel.ERROR, message, module, **kwargs)
+    """Log error message"""    await aggregator.log(LogLevel.ERROR, message, module, **kwargs)
 
 async def log_critical(aggregator: LogAggregator, message: str, module: str, **kwargs):
-    """Log critical message"""
-    await aggregator.log(LogLevel.CRITICAL, message, module, **kwargs)
+    """Log critical message"""    await aggregator.log(LogLevel.CRITICAL, message, module, **kwargs)
     timestamp: datetime
     level: LogLevel
     message: str
@@ -960,39 +890,32 @@ async def log_critical(aggregator: LogAggregator, message: str, module: str, **k
     environment: str = "production"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert log entry to dictionary"""
-        data = asdict(self)
+        """Convert log entry to dictionary"""        data = asdict(self)
         data['timestamp'] = self.timestamp.isoformat()
         return data
     
     def to_json(self) -> str:
-        """Convert log entry to JSON string"""
-        return json.dumps(self.to_dict())
+        """Convert log entry to JSON string"""        return json.dumps(self.to_dict())
 
 
 class LogProcessor:
-    """Advanced log processing and filtering"""
-    
+    """Advanced log processing and filtering"""    
     def __init__(self):
         self.filters = []
         self.enrichers = []
         self.sanitizers = []
     
     def add_filter(self, filter_func):
-        """Add log filter function"""
-        self.filters.append(filter_func)
+        """Add log filter function"""        self.filters.append(filter_func)
     
     def add_enricher(self, enricher_func):
-        """Add log enrichment function"""
-        self.enrichers.append(enricher_func)
+        """Add log enrichment function"""        self.enrichers.append(enricher_func)
     
     def add_sanitizer(self, sanitizer_func):
-        """Add data sanitization function"""
-        self.sanitizers.append(sanitizer_func)
+        """Add data sanitization function"""        self.sanitizers.append(sanitizer_func)
     
     def process_log(self, log_entry: LogEntry) -> Optional[LogEntry]:
-        """Process log entry through all filters and enrichers"""
-        # Apply filters
+        """Process log entry through all filters and enrichers"""        # Apply filters
         for filter_func in self.filters:
             if not filter_func(log_entry):
                 return None
@@ -1009,8 +932,7 @@ class LogProcessor:
 
 
 class LogBuffer:
-    """Buffered logging for batch processing"""
-    
+    """Buffered logging for batch processing"""    
     def __init__(self, max_size: int = 1000, flush_interval: int = 30):
         self.max_size = max_size
         self.flush_interval = flush_interval
@@ -1019,8 +941,7 @@ class LogBuffer:
         self._lock = asyncio.Lock()
     
     async def add_log(self, log_entry: LogEntry) -> bool:
-        """Add log entry to buffer"""
-        async with self._lock:
+        """Add log entry to buffer"""        async with self._lock:
             self.buffer.append(log_entry)
             
             # Check if buffer needs flushing
@@ -1030,8 +951,7 @@ class LogBuffer:
         return False
     
     async def get_logs(self, clear: bool = True) -> List[LogEntry]:
-        """Get logs from buffer"""
-        async with self._lock:
+        """Get logs from buffer"""        async with self._lock:
             logs = self.buffer.copy()
             if clear:
                 self.buffer.clear()
@@ -1040,30 +960,25 @@ class LogBuffer:
 
 
 class LogDestination:
-    """Base class for log destinations"""
-    
+    """Base class for log destinations"""    
     async def send_logs(self, logs: List[LogEntry]) -> bool:
-        """Send logs to destination"""
-        # Default implementation for log destinations without sending support
+        """Send logs to destination"""        # Default implementation for log destinations without sending support
         logging.warning(f"Log sending not implemented for {self.__class__.__name__}")
         return False
 
 
 class ElasticsearchDestination(LogDestination):
-    """Elasticsearch log destination"""
-    
+    """Elasticsearch log destination"""    
     def __init__(self, hosts: List[str], index_pattern: str = "ia-influencer-logs-%Y.%m.%d"):
         self.hosts = hosts
         self.index_pattern = index_pattern
         self.client = None
     
     async def connect(self):
-        """Connect to Elasticsearch"""
-        self.client = AsyncElasticsearch(hosts=self.hosts)
+        """Connect to Elasticsearch"""        self.client = AsyncElasticsearch(hosts=self.hosts)
     
     async def send_logs(self, logs: List[LogEntry]) -> bool:
-        """Send logs to Elasticsearch"""
-        if not self.client:
+        """Send logs to Elasticsearch"""        if not self.client:
             await self.connect()
         
         try:
@@ -1087,20 +1002,17 @@ class ElasticsearchDestination(LogDestination):
 
 
 class RedisDestination(LogDestination):
-    """Redis log destination for real-time processing"""
-    
+    """Redis log destination for real-time processing"""    
     def __init__(self, redis_url: str, stream_name: str = "ia-influencer-logs"):
         self.redis_url = redis_url
         self.stream_name = stream_name
         self.client = None
     
     async def connect(self):
-        """Connect to Redis"""
-        self.client = await aioredis.from_url(self.redis_url)
+        """Connect to Redis"""        self.client = await aioredis.from_url(self.redis_url)
     
     async def send_logs(self, logs: List[LogEntry]) -> bool:
-        """Send logs to Redis stream"""
-        if not self.client:
+        """Send logs to Redis stream"""        if not self.client:
             await self.connect()
         
         try:
@@ -1117,16 +1029,14 @@ class RedisDestination(LogDestination):
 
 
 class FileDestination(LogDestination):
-    """File-based log destination"""
-    
+    """File-based log destination"""    
     def __init__(self, log_directory: str, rotation_size: int = 100 * 1024 * 1024):
         self.log_directory = Path(log_directory)
         self.rotation_size = rotation_size
         self.log_directory.mkdir(parents=True, exist_ok=True)
     
     async def send_logs(self, logs: List[LogEntry]) -> bool:
-        """Send logs to file"""
-        try:
+        """Send logs to file"""        try:
             for log in logs:
                 log_file = self.log_directory / f"{log.service}-{datetime.now().strftime('%Y-%m-%d')}.log"
                 
@@ -1146,8 +1056,7 @@ class FileDestination(LogDestination):
 
 
 class LogAggregator:
-    """Advanced log aggregation service for IA Influencer Agent"""
-    
+    """Advanced log aggregation service for IA Influencer Agent"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.processor = LogProcessor()
@@ -1162,8 +1071,7 @@ class LogAggregator:
         self._setup_filters()
     
     def _setup_logging(self):
-        """Setup structured logging configuration"""
-        # Configure structlog
+        """Setup structured logging configuration"""        # Configure structlog
         structlog.configure(
             processors=[
                 structlog.stdlib.filter_by_level,
@@ -1195,8 +1103,7 @@ class LogAggregator:
             )
     
     def _setup_destinations(self):
-        """Setup log destinations based on configuration"""
-        # Elasticsearch destination
+        """Setup log destinations based on configuration"""        # Elasticsearch destination
         if self.config.get('elasticsearch', {}).get('enabled', False):
             es_config = self.config['elasticsearch']
             es_dest = ElasticsearchDestination(
@@ -1224,11 +1131,9 @@ class LogAggregator:
             self.destinations.append(file_dest)
     
     def _setup_filters(self):
-        """Setup default log filters and enrichers"""
-        # Filter sensitive data
+        """Setup default log filters and enrichers"""        # Filter sensitive data
         def sanitize_sensitive_data(log_entry: LogEntry) -> LogEntry:
-            """Remove sensitive information from logs"""
-            if log_entry.metadata:
+            """Remove sensitive information from logs"""            if log_entry.metadata:
                 sensitive_fields = ['password', 'token', 'secret', 'key', 'credential']
                 for field in sensitive_fields:
                     if field in log_entry.metadata:
@@ -1237,8 +1142,7 @@ class LogAggregator:
         
         # Enrich with service metadata
         def enrich_service_metadata(log_entry: LogEntry) -> LogEntry:
-            """Add service-specific metadata"""
-            if not log_entry.metadata:
+            """Add service-specific metadata"""            if not log_entry.metadata:
                 log_entry.metadata = {}
             
             log_entry.metadata.update({
@@ -1251,8 +1155,7 @@ class LogAggregator:
         
         # Add rate limiting filter
         def rate_limit_filter(log_entry: LogEntry) -> bool:
-            """Rate limit log entries to prevent spam"""
-            # Implement rate limiting logic based on service and level
+            """Rate limit log entries to prevent spam"""            # Implement rate limiting logic based on service and level
             if log_entry.level == LogLevel.DEBUG:
                 # Limit debug logs more aggressively
                 return True  # Simplified - implement actual rate limiting
@@ -1272,8 +1175,7 @@ class LogAggregator:
                   trace_id: Optional[str] = None,
                   span_id: Optional[str] = None,
                   metadata: Optional[Dict[str, Any]] = None) -> bool:
-        """Log a message through the aggregation system"""
-        
+        """Log a message through the aggregation system"""        
         log_entry = LogEntry(
             timestamp=datetime.now(timezone.utc),
             level=level,
@@ -1302,8 +1204,7 @@ class LogAggregator:
         return True
     
     async def _flush_logs(self):
-        """Flush logs to all destinations"""
-        logs = await self.buffer.get_logs()
+        """Flush logs to all destinations"""        logs = await self.buffer.get_logs()
         if not logs:
             return
         
@@ -1320,8 +1221,7 @@ class LogAggregator:
                 logging.error(f"Failed to send logs to destination {i}: {result}")
     
     async def start(self):
-        """Start the log aggregator service"""
-        self.is_running = True
+        """Start the log aggregator service"""        self.is_running = True
         
         # Start background flush task
         asyncio.create_task(self._background_flush())
@@ -1329,8 +1229,7 @@ class LogAggregator:
         logging.info("Log aggregator service started")
     
     async def stop(self):
-        """Stop the log aggregator service"""
-        self.is_running = False
+        """Stop the log aggregator service"""        self.is_running = False
         
         # Final flush
         await self._flush_logs()
@@ -1338,8 +1237,7 @@ class LogAggregator:
         logging.info("Log aggregator service stopped")
     
     async def _background_flush(self):
-        """Background task to periodically flush logs"""
-        while self.is_running:
+        """Background task to periodically flush logs"""        while self.is_running:
             await asyncio.sleep(self.buffer.flush_interval)
             await self._flush_logs()
     
@@ -1349,14 +1247,12 @@ class LogAggregator:
                       start_time: Optional[datetime] = None,
                       end_time: Optional[datetime] = None,
                       limit: int = 100) -> List[Dict[str, Any]]:
-        """Query logs from destinations"""
-        # This would typically query Elasticsearch or other destinations
+        """Query logs from destinations"""        # This would typically query Elasticsearch or other destinations
         # Simplified implementation for now
         return []
     
     def create_service_logger(self, service_name: str, module_name: str):
-        """Create a service-specific logger"""
-        class ServiceLogger:
+        """Create a service-specific logger"""        class ServiceLogger:
             def __init__(self, aggregator: LogAggregator, service: str, module: str):
                 self.aggregator = aggregator
                 self.service = service

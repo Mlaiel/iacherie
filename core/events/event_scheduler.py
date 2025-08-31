@@ -1,5 +1,4 @@
-"""
-IA-Influencer-Agent - Event Scheduler System
+"""IA-Influencer-Agent - Event Scheduler System
 Module: backend/core/events/event_scheduler.py
 Architecture: Delayed and Scheduled Event Processing
 Auteur: Fahed Mlaiel <mlaiel@live.de>
@@ -10,9 +9,7 @@ Auteur: Fahed Mlaiel <mlaiel@live.de>
 Description:
     Système de planification d'événements avec support des événements différés,
     récurrents et conditionnels pour la plateforme IA-Influencer-Agent.
-"""
-
-from typing import Any, Dict, List, Optional, Union, Callable, Tuple
+"""from typing import Any, Dict, List, Optional, Union, Callable, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from enum import Enum
@@ -31,16 +28,14 @@ logger = logging.getLogger(__name__)
 
 
 class ScheduleType(Enum):
-    """Types de planification"""
-    ONCE = "once"              # Exécution unique
+    """Types de planification"""    ONCE = "once"              # Exécution unique
     RECURRING = "recurring"    # Récurrent
     CRON = "cron"             # Expression cron
     CONDITIONAL = "conditional" # Basé sur condition
 
 
 class ScheduleStatus(Enum):
-    """Statut des tâches planifiées"""
-    PENDING = "pending"
+    """Statut des tâches planifiées"""    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     CANCELLED = "cancelled"
@@ -50,8 +45,7 @@ class ScheduleStatus(Enum):
 
 @dataclass
 class ScheduledTask:
-    """Tâche planifiée"""
-    task_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Tâche planifiée"""    task_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     schedule_type: ScheduleType = ScheduleType.ONCE
     scheduled_at: Optional[datetime] = None
@@ -100,18 +94,15 @@ class ScheduledTask:
 
 
 class ConditionEvaluator:
-    """Évaluateur de conditions pour tâches conditionnelles"""
-    
+    """Évaluateur de conditions pour tâches conditionnelles"""    
     def __init__(self):
         self._context: Dict[str, Any] = {}
     
     def update_context(self, context: Dict[str, Any]):
-        """Met à jour le contexte d'évaluation"""
-        self._context.update(context)
+        """Met à jour le contexte d'évaluation"""        self._context.update(context)
     
     def evaluate(self, condition: str) -> bool:
-        """Évalue une condition"""
-        try:
+        """Évalue une condition"""        try:
             # Sécurisation de l'évaluation (simple)
             allowed_names = {
                 'len', 'sum', 'max', 'min', 'abs',
@@ -137,12 +128,10 @@ class ConditionEvaluator:
 
 
 class CronScheduler:
-    """Planificateur cron simplifié"""
-    
+    """Planificateur cron simplifié"""    
     @staticmethod
     def parse_cron(expression: str) -> Dict[str, Any]:
-        """Parse une expression cron (format simplifié)"""
-        try:
+        """Parse une expression cron (format simplifié)"""        try:
             parts = expression.split()
             if len(parts) != 5:
                 raise ValueError("Cron expression must have 5 parts")
@@ -160,8 +149,7 @@ class CronScheduler:
     
     @staticmethod
     def get_next_execution(cron_expr: str, from_time: datetime) -> Optional[datetime]:
-        """Calcule la prochaine exécution selon expression cron"""
-        try:
+        """Calcule la prochaine exécution selon expression cron"""        try:
             # Implementation simplifiée - nécessiterait une librairie cron complète
             # Pour démo, retourne dans 1 heure
             return from_time + timedelta(hours=1)
@@ -171,15 +159,13 @@ class CronScheduler:
 
 
 class DelayedEventHandler:
-    """Handler pour événements différés"""
-    
+    """Handler pour événements différés"""    
     def __init__(self, task: ScheduledTask):
         self.task = task
         self.is_running = False
     
     async def execute(self, scheduler: "EventScheduler") -> bool:
-        """Exécute la tâche planifiée"""
-        if self.is_running:
+        """Exécute la tâche planifiée"""        if self.is_running:
             logger.warning("Task %s is already running", self.task.task_id)
             return False
         
@@ -233,8 +219,7 @@ class DelayedEventHandler:
             self.is_running = False
     
     async def _execute_event_creation(self, scheduler: "EventScheduler") -> bool:
-        """Exécute la création d'un événement"""
-        try:
+        """Exécute la création d'un événement"""        try:
             if not self.task.event_template:
                 return False
             
@@ -264,8 +249,7 @@ class DelayedEventHandler:
             return False
     
     async def _execute_handler_function(self, scheduler: "EventScheduler") -> bool:
-        """Exécute une fonction handler"""
-        try:
+        """Exécute une fonction handler"""        try:
             if not self.task.handler_function:
                 return False
             
@@ -300,8 +284,7 @@ class DelayedEventHandler:
             return False
     
     def _substitute_variables(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Substitue les variables dans les données"""
-        try:
+        """Substitue les variables dans les données"""        try:
             variables = {
                 'now': datetime.now(timezone.utc).isoformat(),
                 'task_id': self.task.task_id,
@@ -322,8 +305,7 @@ class DelayedEventHandler:
             return data
     
     def _should_reschedule(self) -> bool:
-        """Vérifie si la tâche doit être replanifiée"""
-        if self.task.schedule_type == ScheduleType.ONCE:
+        """Vérifie si la tâche doit être replanifiée"""        if self.task.schedule_type == ScheduleType.ONCE:
             return False
         
         if self.task.max_executions and self.task.execution_count >= self.task.max_executions:
@@ -332,8 +314,7 @@ class DelayedEventHandler:
         return True
     
     def _calculate_next_execution(self):
-        """Calcule la prochaine exécution"""
-        now = datetime.now(timezone.utc)
+        """Calcule la prochaine exécution"""        now = datetime.now(timezone.utc)
         
         if self.task.schedule_type == ScheduleType.RECURRING and self.task.interval_seconds:
             self.task.next_execution = now + timedelta(seconds=self.task.interval_seconds)
@@ -348,10 +329,8 @@ class DelayedEventHandler:
 
 
 class EventScheduler:
-    """
-    Système principal de planification d'événements
-    """
-    
+    """    Système principal de planification d'événements
+    """    
     def __init__(
         self,
         event_bus=None,
@@ -387,8 +366,7 @@ class EventScheduler:
         logger.info("EventScheduler initialized")
     
     async def start(self):
-        """Démarre le planificateur"""
-        if self._running:
+        """Démarre le planificateur"""        if self._running:
             return
         
         self._running = True
@@ -396,13 +374,11 @@ class EventScheduler:
         logger.info("EventScheduler started")
     
     async def stop(self):
-        """Arrête le planificateur"""
-        self._running = False
+        """Arrête le planificateur"""        self._running = False
         logger.info("EventScheduler stopped")
     
     def schedule_task(self, task: ScheduledTask) -> str:
-        """Planifie une tâche"""
-        try:
+        """Planifie une tâche"""        try:
             # Validation
             if not self._validate_task(task):
                 raise ValueError("Invalid task configuration")
@@ -435,8 +411,7 @@ class EventScheduler:
         scheduled_at: Optional[datetime] = None,
         name: Optional[str] = None
     ) -> str:
-        """Planifie la publication d'un événement"""
-        task = ScheduledTask(
+        """Planifie la publication d'un événement"""        task = ScheduledTask(
             name=name or f"event_{event_template.get('type', 'unknown')}",
             schedule_type=ScheduleType.ONCE,
             scheduled_at=scheduled_at,
@@ -455,8 +430,7 @@ class EventScheduler:
         max_executions: Optional[int] = None,
         name: Optional[str] = None
     ) -> str:
-        """Planifie un événement récurrent"""
-        task = ScheduledTask(
+        """Planifie un événement récurrent"""        task = ScheduledTask(
             name=name or f"recurring_{event_template.get('type', 'unknown')}",
             schedule_type=ScheduleType.RECURRING,
             interval_seconds=interval_seconds,
@@ -474,8 +448,7 @@ class EventScheduler:
         max_executions: Optional[int] = None,
         name: Optional[str] = None
     ) -> str:
-        """Planifie un événement avec expression cron"""
-        task = ScheduledTask(
+        """Planifie un événement avec expression cron"""        task = ScheduledTask(
             name=name or f"cron_{event_template.get('type', 'unknown')}",
             schedule_type=ScheduleType.CRON,
             cron_expression=cron_expression,
@@ -493,8 +466,7 @@ class EventScheduler:
         payload: Optional[Dict[str, Any]] = None,
         name: Optional[str] = None
     ) -> str:
-        """Planifie l'exécution d'une fonction"""
-        task = ScheduledTask(
+        """Planifie l'exécution d'une fonction"""        task = ScheduledTask(
             name=name or f"function_{handler_function}",
             schedule_type=ScheduleType.ONCE,
             scheduled_at=scheduled_at,
@@ -508,17 +480,14 @@ class EventScheduler:
         return self.schedule_task(task)
     
     def register_handler_function(self, name: str, function: Callable):
-        """Enregistre une fonction handler"""
-        self._handler_functions[name] = function
+        """Enregistre une fonction handler"""        self._handler_functions[name] = function
         logger.debug("Handler function registered: %s", name)
     
     def get_handler_function(self, name: str) -> Optional[Callable]:
-        """Récupère une fonction handler"""
-        return self._handler_functions.get(name)
+        """Récupère une fonction handler"""        return self._handler_functions.get(name)
     
     def cancel_task(self, task_id: str) -> bool:
-        """Annule une tâche planifiée"""
-        if task_id not in self._tasks:
+        """Annule une tâche planifiée"""        if task_id not in self._tasks:
             return False
         
         task = self._tasks[task_id]
@@ -531,8 +500,7 @@ class EventScheduler:
         return True
     
     def pause_task(self, task_id: str) -> bool:
-        """Met en pause une tâche"""
-        if task_id not in self._tasks:
+        """Met en pause une tâche"""        if task_id not in self._tasks:
             return False
         
         task = self._tasks[task_id]
@@ -544,8 +512,7 @@ class EventScheduler:
         return False
     
     def resume_task(self, task_id: str) -> bool:
-        """Remet en marche une tâche"""
-        if task_id not in self._tasks:
+        """Remet en marche une tâche"""        if task_id not in self._tasks:
             return False
         
         task = self._tasks[task_id]
@@ -563,16 +530,14 @@ class EventScheduler:
         return False
     
     def get_task(self, task_id: str) -> Optional[ScheduledTask]:
-        """Récupère une tâche par ID"""
-        return self._tasks.get(task_id)
+        """Récupère une tâche par ID"""        return self._tasks.get(task_id)
     
     def get_tasks(
         self,
         status: Optional[ScheduleStatus] = None,
         schedule_type: Optional[ScheduleType] = None
     ) -> List[ScheduledTask]:
-        """Récupère les tâches selon critères"""
-        tasks = list(self._tasks.values())
+        """Récupère les tâches selon critères"""        tasks = list(self._tasks.values())
         
         if status:
             tasks = [t for t in tasks if t.status == status]
@@ -583,12 +548,10 @@ class EventScheduler:
         return tasks
     
     def update_condition_context(self, context: Dict[str, Any]):
-        """Met à jour le contexte pour l'évaluation des conditions"""
-        self._condition_evaluator.update_context(context)
+        """Met à jour le contexte pour l'évaluation des conditions"""        self._condition_evaluator.update_context(context)
     
     async def _execution_loop(self):
-        """Boucle principale d'exécution"""
-        while self._running:
+        """Boucle principale d'exécution"""        while self._running:
             try:
                 await self._process_due_tasks()
                 await asyncio.sleep(1.0)  # Vérification chaque seconde
@@ -597,8 +560,7 @@ class EventScheduler:
                 logger.error("Error in scheduler execution loop: %s", e)
     
     async def _process_due_tasks(self):
-        """Traite les tâches à exécuter"""
-        now = datetime.now(timezone.utc)
+        """Traite les tâches à exécuter"""        now = datetime.now(timezone.utc)
         due_tasks = []
         
         # Récupération des tâches dues
@@ -623,8 +585,7 @@ class EventScheduler:
             await asyncio.gather(*tasks, return_exceptions=True)
     
     def _should_execute_task(self, task: ScheduledTask) -> bool:
-        """Vérifie si une tâche doit être exécutée"""
-        if task.status != ScheduleStatus.PENDING:
+        """Vérifie si une tâche doit être exécutée"""        if task.status != ScheduleStatus.PENDING:
             return False
         
         # Vérification des conditions
@@ -637,8 +598,7 @@ class EventScheduler:
         return True
     
     async def _execute_task(self, task_id: str):
-        """Exécute une tâche"""
-        async with self._execution_semaphore:
+        """Exécute une tâche"""        async with self._execution_semaphore:
             try:
                 if task_id not in self._handlers:
                     logger.error("Handler not found for task %s", task_id)
@@ -665,8 +625,7 @@ class EventScheduler:
                 self._stats["tasks_failed"] += 1
     
     def _validate_task(self, task: ScheduledTask) -> bool:
-        """Valide la configuration d'une tâche"""
-        if not task.name:
+        """Valide la configuration d'une tâche"""        if not task.name:
             return False
         
         if task.schedule_type == ScheduleType.CRON and not task.cron_expression:
@@ -681,8 +640,7 @@ class EventScheduler:
         return True
     
     def _calculate_initial_execution(self, task: ScheduledTask):
-        """Calcule la première exécution d'une tâche"""
-        now = datetime.now(timezone.utc)
+        """Calcule la première exécution d'une tâche"""        now = datetime.now(timezone.utc)
         
         if task.scheduled_at:
             task.next_execution = task.scheduled_at
@@ -696,8 +654,7 @@ class EventScheduler:
             task.next_execution = now
     
     def get_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques"""
-        pending_tasks = len([t for t in self._tasks.values() 
+        """Retourne les statistiques"""        pending_tasks = len([t for t in self._tasks.values() 
                            if t.status == ScheduleStatus.PENDING])
         
         return {

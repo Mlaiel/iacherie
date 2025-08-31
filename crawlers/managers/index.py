@@ -1,5 +1,4 @@
-"""
-Crawler Managers Index
+"""Crawler Managers Index
 =====================
 
 Central index and factory for all crawler management systems in the IA Influencer Agent platform.
@@ -13,9 +12,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 This code is the exclusive intellectual property of Fahed Mlaiel. Any unauthorized use,
 reproduction, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in legal action.
-"""
-
-from typing import Dict, Any, Optional
+"""from typing import Dict, Any, Optional
 import asyncio
 import logging
 
@@ -35,35 +32,30 @@ from ...core.logging import get_logger
 
 
 class ManagerRegistry:
-    """
-    Central registry for all crawler managers with lifecycle management.
+    """    Central registry for all crawler managers with lifecycle management.
     
     Features:
     - Centralized manager creation and initialization
     - Dependency injection and configuration management
     - Health monitoring and status reporting
     - Graceful shutdown and resource cleanup
-    """
-    
+    """    
     def __init__(self):
-        """Initialize manager registry."""
-        self.logger = get_logger(__name__)
+        """Initialize manager registry."""        self.logger = get_logger(__name__)
         self.managers: Dict[str, Any] = {}
         self.configurations: Dict[str, Any] = {}
         self.health_status: Dict[str, bool] = {}
         self._initialized = False
     
     async def initialize_all_managers(self, configurations: Optional[Dict[str, Any]] = None) -> bool:
-        """
-        Initialize all managers with their configurations.
+        """        Initialize all managers with their configurations.
         
         Args:
             configurations: Manager-specific configurations
             
         Returns:
             bool: True if all managers initialized successfully
-        """
-        try:
+        """        try:
             if self._initialized:
                 self.logger.warning("Managers already initialized")
                 return True
@@ -117,65 +109,51 @@ class ManagerRegistry:
             return False
     
     def get_manager(self, manager_name: str) -> Optional[Any]:
-        """
-        Get a specific manager instance.
+        """        Get a specific manager instance.
         
         Args:
             manager_name: Name of the manager
             
         Returns:
             Manager instance or None if not found
-        """
-        return self.managers.get(manager_name)
+        """        return self.managers.get(manager_name)
     
     def get_content_discovery_manager(self) -> Optional[ContentDiscoveryManager]:
-        """Get content discovery manager."""
-        return self.get_manager("content_discovery")
+        """Get content discovery manager."""        return self.get_manager("content_discovery")
     
     def get_resource_allocation_manager(self) -> Optional[ResourceAllocationManager]:
-        """Get resource allocation manager."""
-        return self.get_manager("resource_allocation")
+        """Get resource allocation manager."""        return self.get_manager("resource_allocation")
     
     def get_session_manager(self) -> Optional[SessionManager]:
-        """Get session manager."""
-        return self.get_manager("session")
+        """Get session manager."""        return self.get_manager("session")
     
     def get_queue_manager(self) -> Optional[QueueManager]:
-        """Get queue manager."""
-        return self.get_manager("queue")
+        """Get queue manager."""        return self.get_manager("queue")
     
     def get_data_pipeline_manager(self) -> Optional[DataPipelineManager]:
-        """Get data pipeline manager."""
-        return self.get_manager("data_pipeline")
+        """Get data pipeline manager."""        return self.get_manager("data_pipeline")
     
     def get_error_recovery_manager(self) -> Optional[ErrorRecoveryManager]:
-        """Get error recovery manager."""
-        return self.get_manager("error_recovery")
+        """Get error recovery manager."""        return self.get_manager("error_recovery")
     
     def get_platform_integration_manager(self) -> Optional[PlatformIntegrationManager]:
-        """Get platform integration manager."""
-        return self.get_manager("platform_integration")
+        """Get platform integration manager."""        return self.get_manager("platform_integration")
     
     def get_content_protection_manager(self) -> Optional[ContentProtectionManager]:
-        """Get content protection manager."""
-        return self.get_manager("content_protection")
+        """Get content protection manager."""        return self.get_manager("content_protection")
     
     def get_monetization_manager(self) -> Optional[MonetizationManager]:
-        """Get monetization manager."""
-        return self.get_manager("monetization")
+        """Get monetization manager."""        return self.get_manager("monetization")
     
     def get_collaboration_manager(self) -> Optional[CollaborationManager]:
-        """Get collaboration manager."""
-        return self.get_manager("collaboration")
+        """Get collaboration manager."""        return self.get_manager("collaboration")
     
     async def check_health(self) -> Dict[str, bool]:
-        """
-        Check health status of all managers.
+        """        Check health status of all managers.
         
         Returns:
             Dict[str, bool]: Health status of each manager
-        """
-        health_results = {}
+        """        health_results = {}
         
         for manager_name, manager in self.managers.items():
             try:
@@ -198,13 +176,11 @@ class ManagerRegistry:
         return health_results
     
     async def get_manager_statistics(self) -> Dict[str, Dict[str, Any]]:
-        """
-        Get statistics from all managers.
+        """        Get statistics from all managers.
         
         Returns:
             Dict[str, Dict[str, Any]]: Statistics from each manager
-        """
-        statistics = {}
+        """        statistics = {}
         
         for manager_name, manager in self.managers.items():
             try:
@@ -223,16 +199,14 @@ class ManagerRegistry:
         return statistics
     
     async def restart_manager(self, manager_name: str) -> bool:
-        """
-        Restart a specific manager.
+        """        Restart a specific manager.
         
         Args:
             manager_name: Name of the manager to restart
             
         Returns:
             bool: True if restart successful
-        """
-        try:
+        """        try:
             if manager_name not in self.managers:
                 self.logger.error(f"Manager '{manager_name}' not found")
                 return False
@@ -277,8 +251,7 @@ class ManagerRegistry:
             return False
     
     async def close_all(self):
-        """Close all managers and cleanup resources."""
-        try:
+        """Close all managers and cleanup resources."""        try:
             for manager_name, manager in self.managers.items():
                 try:
                     if hasattr(manager, 'close'):
@@ -298,12 +271,10 @@ class ManagerRegistry:
             self.logger.error(f"Error closing managers: {str(e)}")
     
     async def __aenter__(self):
-        """Async context manager entry."""
-        return self
+        """Async context manager entry."""        return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
-        await self.close_all()
+        """Async context manager exit."""        await self.close_all()
 
 
 # Global registry instance
@@ -311,16 +282,14 @@ _manager_registry: Optional[ManagerRegistry] = None
 
 
 async def get_manager_registry(configurations: Optional[Dict[str, Any]] = None) -> ManagerRegistry:
-    """
-    Get or create the global manager registry.
+    """    Get or create the global manager registry.
     
     Args:
         configurations: Manager configurations for initialization
         
     Returns:
         ManagerRegistry: Global manager registry instance
-    """
-    global _manager_registry
+    """    global _manager_registry
     
     if _manager_registry is None:
         _manager_registry = ManagerRegistry()
@@ -330,8 +299,7 @@ async def get_manager_registry(configurations: Optional[Dict[str, Any]] = None) 
 
 
 async def shutdown_manager_registry():
-    """Shutdown the global manager registry."""
-    global _manager_registry
+    """Shutdown the global manager registry."""    global _manager_registry
     
     if _manager_registry:
         await _manager_registry.close_all()
@@ -340,23 +308,20 @@ async def shutdown_manager_registry():
 
 # Convenience functions for common operations
 async def create_complete_manager_suite(configurations: Optional[Dict[str, Any]] = None) -> ManagerRegistry:
-    """
-    Create a complete suite of all managers.
+    """    Create a complete suite of all managers.
     
     Args:
         configurations: Manager-specific configurations
         
     Returns:
         ManagerRegistry: Initialized manager registry
-    """
-    registry = ManagerRegistry()
+    """    registry = ManagerRegistry()
     await registry.initialize_all_managers(configurations)
     return registry
 
 
 async def get_content_discovery_manager(config: Optional[Any] = None) -> ContentDiscoveryManager:
-    """Quick access to content discovery manager."""
-    if config:
+    """Quick access to content discovery manager."""    if config:
         return await create_content_discovery_manager(config)
     else:
         registry = await get_manager_registry()
@@ -364,8 +329,7 @@ async def get_content_discovery_manager(config: Optional[Any] = None) -> Content
 
 
 async def get_platform_integration_manager(config: Optional[Any] = None) -> PlatformIntegrationManager:
-    """Quick access to platform integration manager."""
-    if config:
+    """Quick access to platform integration manager."""    if config:
         return await create_platform_integration_manager(config)
     else:
         registry = await get_manager_registry()
@@ -373,8 +337,7 @@ async def get_platform_integration_manager(config: Optional[Any] = None) -> Plat
 
 
 async def get_content_protection_manager(config: Optional[Any] = None) -> ContentProtectionManager:
-    """Quick access to content protection manager."""
-    if config:
+    """Quick access to content protection manager."""    if config:
         return await create_content_protection_manager(config)
     else:
         registry = await get_manager_registry()
@@ -382,8 +345,7 @@ async def get_content_protection_manager(config: Optional[Any] = None) -> Conten
 
 
 async def get_monetization_manager(config: Optional[Any] = None) -> MonetizationManager:
-    """Quick access to monetization manager."""
-    if config:
+    """Quick access to monetization manager."""    if config:
         return await create_monetization_manager(config)
     else:
         registry = await get_manager_registry()
@@ -391,8 +353,7 @@ async def get_monetization_manager(config: Optional[Any] = None) -> Monetization
 
 
 async def get_collaboration_manager(config: Optional[Any] = None) -> CollaborationManager:
-    """Quick access to collaboration manager."""
-    if config:
+    """Quick access to collaboration manager."""    if config:
         return await create_collaboration_manager(config)
     else:
         registry = await get_manager_registry()

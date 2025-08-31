@@ -1,5 +1,4 @@
-"""
-Advanced Performance Monitoring Module
+"""Advanced Performance Monitoring Module
 
 Enterprise-grade performance monitoring and optimization for industrial AI content platform.
 Supports comprehensive monitoring of multi-format content processing workflows.
@@ -8,9 +7,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
-"""
-
-import time
+"""import time
 import psutil
 import threading
 import asyncio
@@ -33,8 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 class PerformanceLevel(Enum):
-    """Performance level classifications"""
-    EXCELLENT = "excellent"
+    """Performance level classifications"""    EXCELLENT = "excellent"
     GOOD = "good"
     ACCEPTABLE = "acceptable"
     POOR = "poor"
@@ -42,8 +38,7 @@ class PerformanceLevel(Enum):
 
 
 class ResourceType(Enum):
-    """Types of system resources"""
-    CPU = "cpu"
+    """Types of system resources"""    CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
     NETWORK = "network"
@@ -54,8 +49,7 @@ class ResourceType(Enum):
 
 @dataclass
 class PerformanceMetrics:
-    """Comprehensive performance metrics data structure"""
-    timestamp: datetime = field(default_factory=datetime.utcnow)
+    """Comprehensive performance metrics data structure"""    timestamp: datetime = field(default_factory=datetime.utcnow)
     
     # System metrics
     cpu_usage: float = 0.0
@@ -103,8 +97,7 @@ class PerformanceMetrics:
     custom_metrics: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert metrics to dictionary"""
-        return {
+        """Convert metrics to dictionary"""        return {
             "timestamp": self.timestamp.isoformat(),
             "system": {
                 "cpu_usage": self.cpu_usage,
@@ -152,8 +145,7 @@ class PerformanceMetrics:
         }
         
     def get_performance_level(self) -> PerformanceLevel:
-        """Determine overall performance level"""
-        score = self.performance_score
+        """Determine overall performance level"""        score = self.performance_score
         
         if score >= 95:
             return PerformanceLevel.EXCELLENT
@@ -169,8 +161,7 @@ class PerformanceMetrics:
 
 @dataclass
 class ResourceAlert:
-    """Resource usage alert"""
-    resource_type: ResourceType
+    """Resource usage alert"""    resource_type: ResourceType
     current_usage: float
     threshold: float
     severity: str
@@ -178,8 +169,7 @@ class ResourceAlert:
     message: str = ""
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert alert to dictionary"""
-        return {
+        """Convert alert to dictionary"""        return {
             "resource_type": self.resource_type.value,
             "current_usage": self.current_usage,
             "threshold": self.threshold,
@@ -190,8 +180,7 @@ class ResourceAlert:
 
 
 class PerformanceProfiler:
-    """Advanced performance profiler for detailed analysis"""
-    
+    """Advanced performance profiler for detailed analysis"""    
     def __init__(self, profile_name: str):
         self.profile_name = profile_name
         self.start_time = None
@@ -201,31 +190,26 @@ class PerformanceProfiler:
         self.resource_usage: Dict[str, List[float]] = defaultdict(list)
         
     def start(self):
-        """Start profiling"""
-        self.start_time = time.perf_counter()
+        """Start profiling"""        self.start_time = time.perf_counter()
         self.add_checkpoint("start")
         self.add_memory_snapshot("start")
         
     def add_checkpoint(self, name: str):
-        """Add a timing checkpoint"""
-        if self.start_time is None:
+        """Add a timing checkpoint"""        if self.start_time is None:
             self.start()
         current_time = time.perf_counter()
         elapsed = current_time - self.start_time
         self.checkpoints.append((name, elapsed))
         
     def add_memory_snapshot(self, name: str):
-        """Add memory usage snapshot"""
-        memory_mb = psutil.Process().memory_info().rss / 1024 / 1024
+        """Add memory usage snapshot"""        memory_mb = psutil.Process().memory_info().rss / 1024 / 1024
         self.memory_snapshots.append((name, memory_mb))
         
     def track_resource(self, resource_name: str, value: float):
-        """Track custom resource usage"""
-        self.resource_usage[resource_name].append(value)
+        """Track custom resource usage"""        self.resource_usage[resource_name].append(value)
         
     def end(self) -> Dict[str, Any]:
-        """End profiling and return results"""
-        self.end_time = time.perf_counter()
+        """End profiling and return results"""        self.end_time = time.perf_counter()
         self.add_checkpoint("end")
         self.add_memory_snapshot("end")
         
@@ -246,19 +230,16 @@ class PerformanceProfiler:
 
 
 class PerformanceOptimizer:
-    """Automatic performance optimization engine"""
-    
+    """Automatic performance optimization engine"""    
     def __init__(self):
         self.optimization_rules: List[Callable] = []
         self.optimization_history: List[Dict[str, Any]] = []
         
     def add_optimization_rule(self, rule: Callable[[PerformanceMetrics], Optional[Dict[str, Any]]]):
-        """Add optimization rule"""
-        self.optimization_rules.append(rule)
+        """Add optimization rule"""        self.optimization_rules.append(rule)
         
     def analyze_and_optimize(self, metrics: PerformanceMetrics) -> List[Dict[str, Any]]:
-        """Analyze metrics and apply optimizations"""
-        optimizations = []
+        """Analyze metrics and apply optimizations"""        optimizations = []
         
         for rule in self.optimization_rules:
             try:
@@ -276,8 +257,7 @@ class PerformanceOptimizer:
         return optimizations
         
     def get_optimization_suggestions(self, metrics: PerformanceMetrics) -> List[str]:
-        """Get optimization suggestions based on current metrics"""
-        suggestions = []
+        """Get optimization suggestions based on current metrics"""        suggestions = []
         
         # CPU optimization suggestions
         if metrics.cpu_usage > 80:
@@ -306,8 +286,7 @@ class PerformanceOptimizer:
 
 
 class PerformanceMonitor:
-    """
-    Enterprise-grade performance monitoring system
+    """    Enterprise-grade performance monitoring system
     
     Features:
     - Real-time system monitoring
@@ -316,8 +295,7 @@ class PerformanceMonitor:
     - Advanced alerting system
     - Performance profiling
     - Resource usage prediction
-    """
-    
+    """    
     def __init__(
         self,
         monitoring_interval: int = 30,
@@ -366,8 +344,7 @@ class PerformanceMonitor:
             self._start_monitoring()
             
     def _get_default_thresholds(self) -> Dict[str, Dict[str, float]]:
-        """Get default alert thresholds"""
-        return {
+        """Get default alert thresholds"""        return {
             "cpu_usage": {"warning": 70, "critical": 85},
             "memory_usage": {"warning": 80, "critical": 90},
             "disk_usage": {"warning": 85, "critical": 95},
@@ -377,8 +354,7 @@ class PerformanceMonitor:
         }
         
     def _setup_optimization_rules(self):
-        """Setup default optimization rules"""
-        
+        """Setup default optimization rules"""        
         def memory_optimization_rule(metrics: PerformanceMetrics) -> Optional[Dict[str, Any]]:
             if metrics.memory_usage > 85:
                 gc.collect()  # Force garbage collection
@@ -402,8 +378,7 @@ class PerformanceMonitor:
         self.optimizer.add_optimization_rule(cpu_optimization_rule)
         
     def _start_monitoring(self):
-        """Start background monitoring thread"""
-        if self._monitor_thread is None:
+        """Start background monitoring thread"""        if self._monitor_thread is None:
             self._monitor_thread = threading.Thread(
                 target=self._monitoring_loop,
                 daemon=True
@@ -411,8 +386,7 @@ class PerformanceMonitor:
             self._monitor_thread.start()
             
     def _monitoring_loop(self):
-        """Main monitoring loop"""
-        while not self._stop_event.wait(self.monitoring_interval):
+        """Main monitoring loop"""        while not self._stop_event.wait(self.monitoring_interval):
             try:
                 metrics = self.collect_metrics()
                 
@@ -433,8 +407,7 @@ class PerformanceMonitor:
                 logger.error(f"Error in monitoring loop: {e}")
                 
     def start_request(self, request_id: str, request_type: str = "default") -> None:
-        """Start tracking a request with detailed context"""
-        if not self.monitoring_enabled:
+        """Start tracking a request with detailed context"""        if not self.monitoring_enabled:
             return
             
         with self._lock:
@@ -447,8 +420,7 @@ class PerformanceMonitor:
         success: bool = True,
         request_type: str = "default"
     ) -> float:
-        """End tracking a request and return detailed timing"""
-        if not self.monitoring_enabled:
+        """End tracking a request and return detailed timing"""        if not self.monitoring_enabled:
             return 0.0
             
         with self._lock:
@@ -467,23 +439,20 @@ class PerformanceMonitor:
         return 0.0
         
     def start_profiler(self, profile_name: str) -> PerformanceProfiler:
-        """Start a new performance profiler"""
-        profiler = PerformanceProfiler(profile_name)
+        """Start a new performance profiler"""        profiler = PerformanceProfiler(profile_name)
         profiler.start()
         self.active_profilers[profile_name] = profiler
         return profiler
         
     def end_profiler(self, profile_name: str) -> Optional[Dict[str, Any]]:
-        """End profiler and get results"""
-        profiler = self.active_profilers.pop(profile_name, None)
+        """End profiler and get results"""        profiler = self.active_profilers.pop(profile_name, None)
         if profiler:
             return profiler.end()
         return None
         
     @contextmanager
     def profile_operation(self, operation_name: str):
-        """Context manager for profiling operations"""
-        profiler = self.start_profiler(operation_name)
+        """Context manager for profiling operations"""        profiler = self.start_profiler(operation_name)
         try:
             yield profiler
         finally:
@@ -492,8 +461,7 @@ class PerformanceMonitor:
                 logger.debug(f"Profile completed for {operation_name}: {result['total_time']:.3f}s")
                 
     def collect_metrics(self) -> PerformanceMetrics:
-        """Collect comprehensive performance metrics"""
-        if not self.monitoring_enabled:
+        """Collect comprehensive performance metrics"""        if not self.monitoring_enabled:
             return PerformanceMetrics()
             
         try:
@@ -585,8 +553,7 @@ class PerformanceMonitor:
         response_time: float,
         error_rate: float
     ) -> float:
-        """Calculate overall performance score (0-100)"""
-        # Weights for different metrics
+        """Calculate overall performance score (0-100)"""        # Weights for different metrics
         weights = {
             "cpu": 0.25,
             "memory": 0.25,
@@ -614,8 +581,7 @@ class PerformanceMonitor:
         return round(performance_score, 2)
         
     def _check_alerts(self, metrics: PerformanceMetrics):
-        """Check metrics against alert thresholds"""
-        for metric_name, thresholds in self.alert_thresholds.items():
+        """Check metrics against alert thresholds"""        for metric_name, thresholds in self.alert_thresholds.items():
             value = getattr(metrics, metric_name, 0)
             
             if value >= thresholds.get("critical", float('inf')):
@@ -624,8 +590,7 @@ class PerformanceMonitor:
                 self._trigger_alert(metric_name, value, "warning", thresholds["warning"])
                 
     def _trigger_alert(self, metric_name: str, value: float, severity: str, threshold: float):
-        """Trigger performance alert"""
-        alert = ResourceAlert(
+        """Trigger performance alert"""        alert = ResourceAlert(
             resource_type=ResourceType(metric_name.split('_')[0]) if '_' in metric_name else ResourceType.CPU,
             current_usage=value,
             threshold=threshold,
@@ -646,8 +611,7 @@ class PerformanceMonitor:
         logger.warning(f"Performance alert: {alert.message}")
         
     def add_alert_callback(self, callback: Callable[[Dict[str, Any]], None]):
-        """Add callback for performance alerts"""
-        self.alert_callbacks.append(callback)
+        """Add callback for performance alerts"""        self.alert_callbacks.append(callback)
         
     def set_alert_threshold(
         self,
@@ -655,8 +619,7 @@ class PerformanceMonitor:
         warning_threshold: Optional[float] = None,
         critical_threshold: Optional[float] = None
     ):
-        """Set custom alert thresholds"""
-        if metric_name not in self.alert_thresholds:
+        """Set custom alert thresholds"""        if metric_name not in self.alert_thresholds:
             self.alert_thresholds[metric_name] = {}
             
         if warning_threshold is not None:
@@ -665,8 +628,7 @@ class PerformanceMonitor:
             self.alert_thresholds[metric_name]["critical"] = critical_threshold
             
     def get_metrics_summary(self, time_range_minutes: int = 60) -> Dict[str, Any]:
-        """Get metrics summary for specified time range"""
-        cutoff_time = datetime.utcnow() - timedelta(minutes=time_range_minutes)
+        """Get metrics summary for specified time range"""        cutoff_time = datetime.utcnow() - timedelta(minutes=time_range_minutes)
         
         with self._lock:
             recent_metrics = [
@@ -709,8 +671,7 @@ class PerformanceMonitor:
         return summary
         
     def get_performance_report(self) -> Dict[str, Any]:
-        """Generate comprehensive performance report"""
-        current_metrics = self.collect_metrics()
+        """Generate comprehensive performance report"""        current_metrics = self.collect_metrics()
         summary = self.get_metrics_summary()
         
         report = {
@@ -730,8 +691,7 @@ class PerformanceMonitor:
         return report
         
     def stop(self):
-        """Stop performance monitoring"""
-        self.monitoring_enabled = False
+        """Stop performance monitoring"""        self.monitoring_enabled = False
         self._stop_event.set()
         
         if self._monitor_thread:
@@ -749,15 +709,13 @@ def monitor_performance(
     alert_on_slow: bool = True,
     slow_threshold: float = 5.0
 ):
-    """
-    Decorator to monitor function performance
+    """    Decorator to monitor function performance
     
     Args:
         operation_name: Name for the operation (defaults to function name)
         alert_on_slow: Whether to alert on slow operations
         slow_threshold: Threshold in seconds for slow operation alert
-    """
-    def decorator(func):
+    """    def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
             operation = operation_name or f"{func.__module__}.{func.__name__}"
@@ -807,15 +765,13 @@ def monitor_performance(
 
 
 class SystemMonitor:
-    """System-level performance monitoring"""
-    
+    """System-level performance monitoring"""    
     def __init__(self):
         self.monitoring_enabled = True
         self.metrics_history = []
     
     def get_current_metrics(self) -> PerformanceMetrics:
-        """Get current system performance metrics"""
-        try:
+        """Get current system performance metrics"""        try:
             # Collect system metrics
             metrics = PerformanceMetrics()
             
@@ -832,8 +788,7 @@ class SystemMonitor:
             )
     
     def get_average_metrics(self, duration_minutes: int = 5) -> Optional[PerformanceMetrics]:
-        """Get average metrics over specified duration"""
-        if not self.monitoring_enabled or not self.metrics_history:
+        """Get average metrics over specified duration"""        if not self.monitoring_enabled or not self.metrics_history:
             return None
             
         cutoff_time = datetime.now() - timedelta(minutes=duration_minutes)
@@ -860,8 +815,7 @@ class SystemMonitor:
         )
     
     def get_performance_summary(self) -> Dict[str, Any]:
-        """Get performance summary"""
-        current_metrics = self.collect_metrics()
+        """Get performance summary"""        current_metrics = self.collect_metrics()
         avg_metrics = self.get_average_metrics(5)
         
         uptime = time.time() - self.start_time
@@ -890,8 +844,7 @@ class SystemMonitor:
         return summary
     
     def reset_metrics(self) -> None:
-        """Reset all metrics"""
-        with self._lock:
+        """Reset all metrics"""        with self._lock:
             self.metrics_history.clear()
             self.active_requests.clear()
             self.total_requests = 0
@@ -899,16 +852,13 @@ class SystemMonitor:
             self.start_time = time.time()
     
     def enable_monitoring(self) -> None:
-        """Enable performance monitoring"""
-        self.monitoring_enabled = True
+        """Enable performance monitoring"""        self.monitoring_enabled = True
     
     def disable_monitoring(self) -> None:
-        """Disable performance monitoring"""
-        self.monitoring_enabled = False
+        """Disable performance monitoring"""        self.monitoring_enabled = False
     
     def add_custom_metric(self, name: str, value: Any) -> None:
-        """Add a custom metric to the latest metrics entry"""
-        if self.monitoring_enabled and self.metrics_history:
+        """Add a custom metric to the latest metrics entry"""        if self.monitoring_enabled and self.metrics_history:
             self.metrics_history[-1].custom_metrics[name] = value
 
 

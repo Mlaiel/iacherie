@@ -1,14 +1,11 @@
-"""
-Reddit Platform Integration
+"""Reddit Platform Integration
 
 Reddit API integration for community engagement and content sharing.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta
@@ -25,26 +22,22 @@ logger = logging.getLogger(__name__)
 
 
 class RedditPlatform(PlatformBase):
-    """Reddit platform integration"""
-    
+    """Reddit platform integration"""    
     def __init__(self, config: PlatformConfig):
-        """Initialize Reddit platform"""
-        super().__init__(config)
+        """Initialize Reddit platform"""        super().__init__(config)
         self.api_base = "https://oauth.reddit.com"
         self.auth_url = "https://www.reddit.com/api/v1/access_token"
         self.session: Optional[aiohttp.ClientSession] = None
         
     async def _get_session(self) -> aiohttp.ClientSession:
-        """Get or create HTTP session"""
-        if not self.session or self.session.closed:
+        """Get or create HTTP session"""        if not self.session or self.session.closed:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=self.config.timeout)
             )
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Reddit OAuth2"""
-        try:
+        """Authenticate with Reddit OAuth2"""        try:
             session = await self._get_session()
             
             # Reddit uses OAuth2 with client credentials
@@ -98,12 +91,10 @@ class RedditPlatform(PlatformBase):
             return False
     
     async def refresh_token(self) -> bool:
-        """Refresh Reddit token"""
-        return await self.authenticate()
+        """Refresh Reddit token"""        return await self.authenticate()
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to Reddit API"""
-        try:
+        """Make authenticated request to Reddit API"""        try:
             session = await self._get_session()
             
             # Add authentication headers
@@ -143,8 +134,7 @@ class RedditPlatform(PlatformBase):
             return None
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Submit content to Reddit (post to subreddit)"""
-        try:
+        """Submit content to Reddit (post to subreddit)"""        try:
             subreddit = metadata.tags[0] if metadata.tags else 'test'
             
             # Determine post type based on content
@@ -200,8 +190,7 @@ class RedditPlatform(PlatformBase):
             )
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
-        """Get Reddit post analytics"""
-        try:
+        """Get Reddit post analytics"""        try:
             # Get post details
             post_data = await self._make_request('GET', f'/api/info?id={content_id}')
             
@@ -237,8 +226,7 @@ class RedditPlatform(PlatformBase):
             raise
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search content on Reddit"""
-        try:
+        """Search content on Reddit"""        try:
             params = {
                 'q': query,
                 'sort': 'relevance',
@@ -274,8 +262,7 @@ class RedditPlatform(PlatformBase):
             return []
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
-        """Get user's posts from Reddit"""
-        try:
+        """Get user's posts from Reddit"""        try:
             username = user_id or self.config.credentials.get('username')
             if not username:
                 return []
@@ -307,8 +294,7 @@ class RedditPlatform(PlatformBase):
             return []
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete Reddit post"""
-        try:
+        """Delete Reddit post"""        try:
             data = {'id': content_id}
             result = await self._make_request('POST', '/api/del', data=data)
             
@@ -325,8 +311,7 @@ class RedditPlatform(PlatformBase):
             return False
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
-        """Update Reddit post (edit text posts only)"""
-        try:
+        """Update Reddit post (edit text posts only)"""        try:
             data = {
                 'thing_id': content_id,
                 'text': metadata.description or ''
@@ -347,8 +332,7 @@ class RedditPlatform(PlatformBase):
             return False
     
     async def get_subreddit_info(self, subreddit_name: str) -> Optional[Dict[str, Any]]:
-        """Get information about a subreddit"""
-        try:
+        """Get information about a subreddit"""        try:
             result = await self._make_request('GET', f'/r/{subreddit_name}/about')
             
             if result and result.get('data'):
@@ -374,8 +358,7 @@ class RedditPlatform(PlatformBase):
             return None
     
     async def get_trending_subreddits(self) -> List[Dict[str, Any]]:
-        """Get trending subreddits"""
-        try:
+        """Get trending subreddits"""        try:
             result = await self._make_request('GET', '/subreddits/popular')
             
             if result and result.get('data', {}).get('children'):
@@ -398,8 +381,7 @@ class RedditPlatform(PlatformBase):
             return []
     
     async def post_comment(self, post_id: str, comment_text: str) -> Optional[str]:
-        """Post a comment on a Reddit post"""
-        try:
+        """Post a comment on a Reddit post"""        try:
             data = {
                 'api_type': 'json',
                 'thing_id': post_id,
@@ -421,8 +403,7 @@ class RedditPlatform(PlatformBase):
             return None
     
     async def vote_on_content(self, content_id: str, direction: int) -> bool:
-        """Vote on Reddit content (1 = upvote, -1 = downvote, 0 = remove vote)"""
-        try:
+        """Vote on Reddit content (1 = upvote, -1 = downvote, 0 = remove vote)"""        try:
             data = {
                 'id': content_id,
                 'dir': str(direction)
@@ -438,8 +419,7 @@ class RedditPlatform(PlatformBase):
             return False
     
     async def get_user_karma(self, username: str = None) -> Dict[str, Any]:
-        """Get user karma breakdown"""
-        try:
+        """Get user karma breakdown"""        try:
             user = username or self.config.credentials.get('username')
             result = await self._make_request('GET', f'/user/{user}/about')
             
@@ -460,6 +440,5 @@ class RedditPlatform(PlatformBase):
             return {}
     
     async def close(self):
-        """Close HTTP session"""
-        if self.session and not self.session.closed:
+        """Close HTTP session"""        if self.session and not self.session.closed:
             await self.session.close()

@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-IA Influencer Agent - Algorithms Index Module
+"""IA Influencer Agent - Algorithms Index Module
 =============================================
 
 Centralized access point for all algorithm modules and engines.
@@ -23,9 +22,7 @@ Project Team Specialties:
 - Audio Processing Specialist: Fahed Mlaiel
 - DevOps Engineer: Fahed Mlaiel
 - AI Prompt Engineer: Fahed Mlaiel
-"""
-
-import logging
+"""import logging
 from typing import Dict, List, Any, Optional, Type, Union
 from dataclasses import dataclass
 from enum import Enum
@@ -52,8 +49,7 @@ logger = logging.getLogger(__name__)
 
 
 class AlgorithmCategory(Enum):
-    """Algorithm categories for better organization."""
-    CONTENT_ANALYSIS = "content_analysis"
+    """Algorithm categories for better organization."""    CONTENT_ANALYSIS = "content_analysis"
     MEDIA_PROCESSING = "media_processing"
     BUSINESS_LOGIC = "business_logic"
     PROTECTION = "protection"
@@ -63,8 +59,7 @@ class AlgorithmCategory(Enum):
 
 @dataclass
 class AlgorithmMetadata:
-    """Metadata for algorithm engines."""
-    name: str
+    """Metadata for algorithm engines."""    name: str
     category: AlgorithmCategory
     description: str
     version: str
@@ -75,11 +70,9 @@ class AlgorithmMetadata:
 
 
 class AlgorithmRegistry:
-    """
-    Central registry for all algorithm engines.
+    """    Central registry for all algorithm engines.
     Provides discovery, instantiation, and management capabilities.
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self._engines: Dict[str, Type] = {}
@@ -88,8 +81,7 @@ class AlgorithmRegistry:
         self._initialize_registry()
     
     def _initialize_registry(self) -> None:
-        """Initialize the algorithm registry with all available engines."""
-        try:
+        """Initialize the algorithm registry with all available engines."""        try:
             # Register all algorithm engines
             self._register_engine(
                 "audio_analysis", 
@@ -286,14 +278,12 @@ class AlgorithmRegistry:
             raise
     
     def _register_engine(self, name: str, engine_class: Type, metadata: AlgorithmMetadata) -> None:
-        """Register an algorithm engine with metadata."""
-        self._engines[name] = engine_class
+        """Register an algorithm engine with metadata."""        self._engines[name] = engine_class
         self._metadata[name] = metadata
         self.logger.debug(f"Registered engine: {name}")
     
     def get_engine(self, name: str, **kwargs) -> Any:
-        """Get an algorithm engine instance."""
-        if name not in self._engines:
+        """Get an algorithm engine instance."""        if name not in self._engines:
             raise ValueError(f"Unknown algorithm engine: {name}")
         
         # Return cached instance if available and no new kwargs
@@ -316,38 +306,32 @@ class AlgorithmRegistry:
             raise
     
     def get_engines_by_category(self, category: AlgorithmCategory) -> List[str]:
-        """Get all engine names in a specific category."""
-        return [
+        """Get all engine names in a specific category."""        return [
             name for name, metadata in self._metadata.items()
             if metadata.category == category
         ]
     
     def get_engines_by_format(self, file_format: str) -> List[str]:
-        """Get all engines that support a specific file format."""
-        compatible_engines = []
+        """Get all engines that support a specific file format."""        compatible_engines = []
         for name, metadata in self._metadata.items():
             if "all" in metadata.supported_formats or file_format.lower() in metadata.supported_formats:
                 compatible_engines.append(name)
         return compatible_engines
     
     def get_gpu_engines(self) -> List[str]:
-        """Get all engines that require GPU."""
-        return [
+        """Get all engines that require GPU."""        return [
             name for name, metadata in self._metadata.items()
             if metadata.requires_gpu
         ]
     
     def get_engine_metadata(self, name: str) -> Optional[AlgorithmMetadata]:
-        """Get metadata for a specific engine."""
-        return self._metadata.get(name)
+        """Get metadata for a specific engine."""        return self._metadata.get(name)
     
     def list_engines(self) -> List[str]:
-        """List all available engine names."""
-        return list(self._engines.keys())
+        """List all available engine names."""        return list(self._engines.keys())
     
     def get_registry_info(self) -> Dict[str, Any]:
-        """Get comprehensive registry information."""
-        return {
+        """Get comprehensive registry information."""        return {
             "total_engines": len(self._engines),
             "categories": {
                 category.value: len(self.get_engines_by_category(category))
@@ -369,8 +353,7 @@ _registry = AlgorithmRegistry()
 
 
 def get_algorithm_engine(name: str, **kwargs) -> Any:
-    """
-    Get an algorithm engine instance.
+    """    Get an algorithm engine instance.
     
     Args:
         name: Engine name
@@ -382,50 +365,41 @@ def get_algorithm_engine(name: str, **kwargs) -> Any:
     Example:
         >>> audio_engine = get_algorithm_engine("audio_analysis")
         >>> result = audio_engine.analyze_audio("path/to/file.mp3")
-    """
-    return _registry.get_engine(name, **kwargs)
+    """    return _registry.get_engine(name, **kwargs)
 
 
 def list_available_algorithms() -> List[str]:
-    """List all available algorithm engine names."""
-    return _registry.list_engines()
+    """List all available algorithm engine names."""    return _registry.list_engines()
 
 
 def get_algorithms_by_category(category: Union[str, AlgorithmCategory]) -> List[str]:
-    """Get algorithms by category."""
-    if isinstance(category, str):
+    """Get algorithms by category."""    if isinstance(category, str):
         category = AlgorithmCategory(category)
     return _registry.get_engines_by_category(category)
 
 
 def get_algorithms_for_format(file_format: str) -> List[str]:
-    """Get compatible algorithms for a file format."""
-    return _registry.get_engines_by_format(file_format)
+    """Get compatible algorithms for a file format."""    return _registry.get_engines_by_format(file_format)
 
 
 def get_algorithm_metadata(name: str) -> Optional[AlgorithmMetadata]:
-    """Get metadata for an algorithm."""
-    return _registry.get_engine_metadata(name)
+    """Get metadata for an algorithm."""    return _registry.get_engine_metadata(name)
 
 
 def get_registry_statistics() -> Dict[str, Any]:
-    """Get algorithm registry statistics."""
-    return _registry.get_registry_info()
+    """Get algorithm registry statistics."""    return _registry.get_registry_info()
 
 
 class AlgorithmPipeline:
-    """
-    Pipeline for chaining multiple algorithm engines.
+    """    Pipeline for chaining multiple algorithm engines.
     Enables complex processing workflows.
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.steps: List[Dict[str, Any]] = []
     
     def add_step(self, engine_name: str, method: str, **kwargs) -> 'AlgorithmPipeline':
-        """Add a processing step to the pipeline."""
-        self.steps.append({
+        """Add a processing step to the pipeline."""        self.steps.append({
             "engine": engine_name,
             "method": method,
             "kwargs": kwargs
@@ -433,8 +407,7 @@ class AlgorithmPipeline:
         return self
     
     def execute(self, input_data: Any) -> Any:
-        """Execute the pipeline on input data."""
-        result = input_data
+        """Execute the pipeline on input data."""        result = input_data
         
         for i, step in enumerate(self.steps):
             try:
@@ -452,13 +425,11 @@ class AlgorithmPipeline:
         return result
     
     def clear(self) -> None:
-        """Clear all pipeline steps."""
-        self.steps.clear()
+        """Clear all pipeline steps."""        self.steps.clear()
 
 
 def create_content_analysis_pipeline() -> AlgorithmPipeline:
-    """Create a standard content analysis pipeline."""
-    pipeline = AlgorithmPipeline()
+    """Create a standard content analysis pipeline."""    pipeline = AlgorithmPipeline()
     return (pipeline
             .add_step("feature_extraction", "extract_features")
             .add_step("quality_assessment", "assess_quality")
@@ -467,8 +438,7 @@ def create_content_analysis_pipeline() -> AlgorithmPipeline:
 
 
 def create_monetization_pipeline() -> AlgorithmPipeline:
-    """Create a standard monetization pipeline."""
-    pipeline = AlgorithmPipeline()
+    """Create a standard monetization pipeline."""    pipeline = AlgorithmPipeline()
     return (pipeline
             .add_step("seo_enhancement", "enhance_seo")
             .add_step("content_distribution", "optimize_distribution")
@@ -476,8 +446,7 @@ def create_monetization_pipeline() -> AlgorithmPipeline:
 
 
 def create_collaboration_pipeline() -> AlgorithmPipeline:
-    """Create a standard collaboration pipeline."""
-    pipeline = AlgorithmPipeline()
+    """Create a standard collaboration pipeline."""    pipeline = AlgorithmPipeline()
     return (pipeline
             .add_step("similarity_matching", "find_similar_content")
             .add_step("collaboration_matching", "match_creators")
@@ -486,42 +455,35 @@ def create_collaboration_pipeline() -> AlgorithmPipeline:
 
 # Algorithm shortcuts for common use cases
 class AlgorithmShortcuts:
-    """Convenient shortcuts for common algorithm operations."""
-    
+    """Convenient shortcuts for common algorithm operations."""    
     @staticmethod
     def analyze_audio_file(file_path: str) -> Dict[str, Any]:
-        """Quick audio analysis."""
-        engine = get_algorithm_engine("audio_analysis")
+        """Quick audio analysis."""        engine = get_algorithm_engine("audio_analysis")
         return engine.analyze_audio(file_path)
     
     @staticmethod
     def process_video_file(file_path: str) -> Dict[str, Any]:
-        """Quick video processing."""
-        engine = get_algorithm_engine("video_processing")
+        """Quick video processing."""        engine = get_algorithm_engine("video_processing")
         return engine.process_video(file_path)
     
     @staticmethod
     def recognize_image(file_path: str) -> Dict[str, Any]:
-        """Quick image recognition."""
-        engine = get_algorithm_engine("image_recognition")
+        """Quick image recognition."""        engine = get_algorithm_engine("image_recognition")
         return engine.recognize_objects(file_path)
     
     @staticmethod
     def protect_content(content_data: Any) -> Dict[str, Any]:
-        """Quick content protection."""
-        engine = get_algorithm_engine("rights_protection")
+        """Quick content protection."""        engine = get_algorithm_engine("rights_protection")
         return engine.protect_content(content_data)
     
     @staticmethod
     def optimize_seo(content: str, metadata: Dict) -> Dict[str, Any]:
-        """Quick SEO optimization."""
-        engine = get_algorithm_engine("seo_enhancement")
+        """Quick SEO optimization."""        engine = get_algorithm_engine("seo_enhancement")
         return engine.optimize_content(content, metadata)
     
     @staticmethod
     def find_collaborators(creator_profile: Dict) -> List[Dict]:
-        """Quick collaboration matching."""
-        engine = get_algorithm_engine("collaboration_matching")
+        """Quick collaboration matching."""        engine = get_algorithm_engine("collaboration_matching")
         return engine.find_matches(creator_profile)
 
 

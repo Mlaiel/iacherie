@@ -1,29 +1,23 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive Security Audit and Compliance Test Suite
+"""Comprehensive Security Audit and Compliance Test Suite
 Tests for security audit trail, monitoring, and compliance features.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use prohibited
-"""
-
-import asyncio
+"""import asyncio
 import pytest
 import sys
 import os
@@ -49,17 +43,14 @@ from security.vulnerability_scanner import SecurityScanner, VulnerabilitySeverit
 
 
 class TestSecurityAuditTrail:
-    """Test security audit trail functionality"""
-    
+    """Test security audit trail functionality"""    
     @pytest.fixture
     async def audit_trail(self):
-        """Create audit trail instance for testing"""
-        return SecurityAuditTrail()
+        """Create audit trail instance for testing"""        return SecurityAuditTrail()
     
     @pytest.mark.asyncio
     async def test_log_security_event(self, audit_trail):
-        """Test logging security events"""
-        
+        """Test logging security events"""        
         event_id = await audit_trail.log_security_event(
             action="test_login",
             resource="user:test_user",
@@ -82,8 +73,7 @@ class TestSecurityAuditTrail:
     
     @pytest.mark.asyncio
     async def test_get_audit_trail_filtering(self, audit_trail):
-        """Test audit trail filtering"""
-        
+        """Test audit trail filtering"""        
         # Log multiple events
         await audit_trail.log_security_event(
             action="login",
@@ -123,8 +113,7 @@ class TestSecurityAuditTrail:
     
     @pytest.mark.asyncio
     async def test_compliance_report_generation(self, audit_trail):
-        """Test compliance report generation"""
-        
+        """Test compliance report generation"""        
         # Log events with compliance flags
         await audit_trail.log_security_event(
             action="data_access",
@@ -157,8 +146,7 @@ class TestSecurityAuditTrail:
     
     @pytest.mark.asyncio
     async def test_audit_integrity_verification(self, audit_trail):
-        """Test audit trail integrity verification"""
-        
+        """Test audit trail integrity verification"""        
         # Log some events
         await audit_trail.log_security_event(
             action="test1",
@@ -179,8 +167,7 @@ class TestSecurityAuditTrail:
     
     @pytest.mark.asyncio
     async def test_helper_functions(self):
-        """Test helper functions"""
-        
+        """Test helper functions"""        
         # Test authentication event logging
         event_id = await log_authentication_event(
             user_id="test_user",
@@ -200,17 +187,14 @@ class TestSecurityAuditTrail:
 
 
 class TestSecurityMonitoring:
-    """Test security monitoring dashboard functionality"""
-    
+    """Test security monitoring dashboard functionality"""    
     @pytest.fixture
     async def monitoring_dashboard(self):
-        """Create monitoring dashboard instance for testing"""
-        return SecurityMonitoringDashboard()
+        """Create monitoring dashboard instance for testing"""        return SecurityMonitoringDashboard()
     
     @pytest.mark.asyncio
     async def test_create_incident(self, monitoring_dashboard):
-        """Test security incident creation"""
-        
+        """Test security incident creation"""        
         incident_id = await monitoring_dashboard.create_incident(
             title="Suspicious Login Activity",
             description="Multiple failed login attempts detected",
@@ -229,8 +213,7 @@ class TestSecurityMonitoring:
     
     @pytest.mark.asyncio
     async def test_update_incident_status(self, monitoring_dashboard):
-        """Test incident status updates"""
-        
+        """Test incident status updates"""        
         # Create incident
         incident_id = await monitoring_dashboard.create_incident(
             title="Test Incident",
@@ -275,8 +258,7 @@ class TestSecurityMonitoring:
     
     @pytest.mark.asyncio
     async def test_generate_incident_report(self, monitoring_dashboard):
-        """Test incident report generation"""
-        
+        """Test incident report generation"""        
         # Create and resolve incident
         incident_id = await monitoring_dashboard.create_incident(
             title="Test Incident Report",
@@ -304,8 +286,7 @@ class TestSecurityMonitoring:
     
     @pytest.mark.asyncio
     async def test_security_dashboard_data(self, monitoring_dashboard):
-        """Test security dashboard data retrieval"""
-        
+        """Test security dashboard data retrieval"""        
         # Create some test incidents
         await monitoring_dashboard.create_incident(
             title="Critical Issue",
@@ -338,8 +319,7 @@ class TestSecurityMonitoring:
     
     @pytest.mark.asyncio
     async def test_helper_functions(self):
-        """Test helper functions"""
-        
+        """Test helper functions"""        
         # Test get security status
         status = await get_security_status()
         assert isinstance(status, dict)
@@ -356,17 +336,14 @@ class TestSecurityMonitoring:
 
 
 class TestSecurityPolicies:
-    """Test security policies and incident response procedures"""
-    
+    """Test security policies and incident response procedures"""    
     @pytest.fixture
     async def policy_manager(self):
-        """Create policy manager instance for testing"""
-        return SecurityPolicyManager()
+        """Create policy manager instance for testing"""        return SecurityPolicyManager()
     
     @pytest.mark.asyncio
     async def test_get_standard_policies(self, policy_manager):
-        """Test retrieval of standard policies"""
-        
+        """Test retrieval of standard policies"""        
         policies = await policy_manager.get_all_policies()
         assert len(policies) >= 5  # Should have at least 5 standard policies
         
@@ -380,8 +357,7 @@ class TestSecurityPolicies:
     
     @pytest.mark.asyncio
     async def test_add_custom_policy(self, policy_manager):
-        """Test adding custom security policy"""
-        
+        """Test adding custom security policy"""        
         custom_policy = SecurityPolicy(
             policy_id="TEST-POL-001",
             title="Test Security Policy",
@@ -401,8 +377,7 @@ class TestSecurityPolicies:
     
     @pytest.mark.asyncio
     async def test_policy_status_updates(self, policy_manager):
-        """Test policy status updates"""
-        
+        """Test policy status updates"""        
         # Get an existing policy
         policies = await policy_manager.get_all_policies()
         test_policy = policies[0]
@@ -432,8 +407,7 @@ class TestSecurityPolicies:
     
     @pytest.mark.asyncio
     async def test_policies_by_type(self, policy_manager):
-        """Test retrieving policies by type"""
-        
+        """Test retrieving policies by type"""        
         access_policies = await policy_manager.get_policies_by_type(PolicyType.ACCESS_CONTROL)
         assert len(access_policies) >= 1
         
@@ -442,8 +416,7 @@ class TestSecurityPolicies:
     
     @pytest.mark.asyncio
     async def test_policy_compliance_report(self, policy_manager):
-        """Test policy compliance report generation"""
-        
+        """Test policy compliance report generation"""        
         report = await policy_manager.generate_policy_compliance_report()
         
         assert "report_date" in report
@@ -463,8 +436,7 @@ class TestSecurityPolicies:
     
     @pytest.mark.asyncio
     async def test_incident_response_procedures(self, policy_manager):
-        """Test incident response procedure execution"""
-        
+        """Test incident response procedure execution"""        
         # Test data breach response
         response = await policy_manager.execute_incident_response(
             incident_id="TEST-INC-001",
@@ -483,8 +455,7 @@ class TestSecurityPolicies:
     
     @pytest.mark.asyncio
     async def test_incident_communication_generation(self, policy_manager):
-        """Test incident communication generation"""
-        
+        """Test incident communication generation"""        
         incident_data = {
             "incident_id": "TEST-INC-002",
             "incident_type": "malware_infection",
@@ -510,8 +481,7 @@ class TestSecurityPolicies:
     
     @pytest.mark.asyncio
     async def test_helper_functions(self):
-        """Test helper functions"""
-        
+        """Test helper functions"""        
         # Test get security policies
         policies = await get_security_policies()
         assert isinstance(policies, list)
@@ -525,12 +495,10 @@ class TestSecurityPolicies:
 
 
 class TestSecurityIntegration:
-    """Integration tests for security audit and compliance system"""
-    
+    """Integration tests for security audit and compliance system"""    
     @pytest.mark.asyncio
     async def test_end_to_end_incident_workflow(self):
-        """Test complete incident workflow from detection to resolution"""
-        
+        """Test complete incident workflow from detection to resolution"""        
         # 1. Create security incident
         incident_id = await create_security_incident(
             title="Suspicious Data Access",
@@ -584,8 +552,7 @@ class TestSecurityIntegration:
     
     @pytest.mark.asyncio
     async def test_compliance_reporting_integration(self):
-        """Test compliance reporting across all modules"""
-        
+        """Test compliance reporting across all modules"""        
         # Log various compliance-related events
         await log_data_access_event(
             user_id="gdpr_test_user",
@@ -626,8 +593,7 @@ class TestSecurityIntegration:
     
     @pytest.mark.asyncio
     async def test_vulnerability_scanning_integration(self):
-        """Test vulnerability scanning integration with audit trail"""
-        
+        """Test vulnerability scanning integration with audit trail"""        
         scanner = SecurityScanner()
         
         # Run vulnerability scan
@@ -654,8 +620,7 @@ class TestSecurityIntegration:
 # Test configuration
 @pytest.fixture(scope="session")
 def event_loop():
-    """Create an instance of the default event loop for the test session."""
-    loop = asyncio.new_event_loop()
+    """Create an instance of the default event loop for the test session."""    loop = asyncio.new_event_loop()
     yield loop
     loop.close()
 

@@ -1,5 +1,4 @@
-"""
-Business Metrics Collector for IA Influencer Agent Platform
+"""Business Metrics Collector for IA Influencer Agent Platform
 ===========================================================
 
 Industrial-grade business intelligence and KPI tracking system specialized
@@ -17,9 +16,7 @@ Core Business Domains:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
-"""
-
-import asyncio
+"""import asyncio
 import time
 import logging
 import statistics
@@ -38,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Enhanced business metric types for comprehensive analytics"""
-    COUNTER = "counter"
+    """Enhanced business metric types for comprehensive analytics"""    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     RATE = "rate"
@@ -50,8 +46,7 @@ class MetricType(Enum):
 
 
 class BusinessDomain(Enum):
-    """Business domain classification for metrics"""
-    CONTENT_PROTECTION = "content_protection"
+    """Business domain classification for metrics"""    CONTENT_PROTECTION = "content_protection"
     AI_FINGERPRINTING = "ai_fingerprinting"
     REVENUE_TRACKING = "revenue_tracking"
     USER_ENGAGEMENT = "user_engagement"
@@ -63,8 +58,7 @@ class BusinessDomain(Enum):
 
 @dataclass
 class BusinessMetric:
-    """Enhanced business metric with domain context and impact assessment"""
-    name: str
+    """Enhanced business metric with domain context and impact assessment"""    name: str
     value: Union[int, float]
     metric_type: MetricType
     domain: BusinessDomain
@@ -81,8 +75,7 @@ class BusinessMetric:
 
 @dataclass
 class MetricAggregation:
-    """Enhanced metric aggregation with statistical analysis"""
-    name: str
+    """Enhanced metric aggregation with statistical analysis"""    name: str
     domain: BusinessDomain
     period: str
     sum_value: float = 0.0
@@ -101,8 +94,7 @@ class MetricAggregation:
 
 @dataclass
 class BusinessKPI:
-    """Key Performance Indicator definition and tracking"""
-    name: str
+    """Key Performance Indicator definition and tracking"""    name: str
     description: str
     metric_source: str
     target_value: float
@@ -115,20 +107,17 @@ class BusinessKPI:
 
 
 class ContentProtectionMetrics:
-    """Specialized metrics for content protection and fingerprinting"""
-    
+    """Specialized metrics for content protection and fingerprinting"""    
     def __init__(self, db_engine: AsyncEngine):
         self.db_engine = db_engine
     
     async def collect_fingerprint_metrics(self) -> List[BusinessMetric]:
-        """Collect AI fingerprinting performance metrics"""
-        metrics = []
+        """Collect AI fingerprinting performance metrics"""        metrics = []
         
         try:
             async with self.db_engine.begin() as conn:
                 # Fingerprint processing metrics
-                result = await conn.execute(text("""
-                    SELECT 
+                result = await conn.execute(text("""                    SELECT 
                         content_type,
                         COUNT(*) as total_fingerprints,
                         COUNT(CASE WHEN created_at > NOW() - INTERVAL '1 hour' THEN 1 END) as hourly_fingerprints,
@@ -184,8 +173,7 @@ class ContentProtectionMetrics:
                         ))
                 
                 # Protection alert metrics
-                result = await conn.execute(text("""
-                    SELECT 
+                result = await conn.execute(text("""                    SELECT 
                         platform,
                         COUNT(*) as total_alerts,
                         COUNT(CASE WHEN status = 'confirmed' THEN 1 END) as confirmed_violations,
@@ -246,20 +234,17 @@ class ContentProtectionMetrics:
 
 
 class RevenueTrackingMetrics:
-    """Specialized metrics for revenue tracking and monetization"""
-    
+    """Specialized metrics for revenue tracking and monetization"""    
     def __init__(self, db_engine: AsyncEngine):
         self.db_engine = db_engine
     
     async def collect_revenue_metrics(self) -> List[BusinessMetric]:
-        """Collect revenue and monetization metrics"""
-        metrics = []
+        """Collect revenue and monetization metrics"""        metrics = []
         
         try:
             async with self.db_engine.begin() as conn:
                 # Revenue tracking metrics
-                result = await conn.execute(text("""
-                    SELECT 
+                result = await conn.execute(text("""                    SELECT 
                         platform,
                         currency,
                         COUNT(*) as revenue_records,
@@ -336,8 +321,7 @@ class RevenueTrackingMetrics:
                 ))
                 
                 # Revenue growth metrics
-                result = await conn.execute(text("""
-                    SELECT 
+                result = await conn.execute(text("""                    SELECT 
                         SUM(CASE WHEN created_at > NOW() - INTERVAL '7 days' THEN revenue_amount ELSE 0 END) as week_revenue,
                         SUM(CASE WHEN created_at BETWEEN NOW() - INTERVAL '14 days' AND NOW() - INTERVAL '7 days' THEN revenue_amount ELSE 0 END) as prev_week_revenue
                     FROM revenue_tracking
@@ -367,20 +351,17 @@ class RevenueTrackingMetrics:
 
 
 class UserEngagementMetrics:
-    """User engagement and platform usage metrics"""
-    
+    """User engagement and platform usage metrics"""    
     def __init__(self, db_engine: AsyncEngine):
         self.db_engine = db_engine
     
     async def collect_engagement_metrics(self) -> List[BusinessMetric]:
-        """Collect user engagement and activity metrics"""
-        metrics = []
+        """Collect user engagement and activity metrics"""        metrics = []
         
         try:
             async with self.db_engine.begin() as conn:
                 # User activity metrics
-                result = await conn.execute(text("""
-                    SELECT 
+                result = await conn.execute(text("""                    SELECT 
                         COUNT(DISTINCT user_id) as daily_active_users,
                         COUNT(DISTINCT CASE WHEN created_at > NOW() - INTERVAL '1 hour' THEN user_id END) as hourly_active_users,
                         COUNT(*) as total_user_actions
@@ -429,8 +410,7 @@ class UserEngagementMetrics:
                     ))
                 
                 # Content creation metrics
-                result = await conn.execute(text("""
-                    SELECT 
+                result = await conn.execute(text("""                    SELECT 
                         content_type,
                         COUNT(*) as content_uploads,
                         COUNT(DISTINCT user_id) as unique_creators,
@@ -471,8 +451,7 @@ class UserEngagementMetrics:
                     ))
                 
                 # Collaboration metrics
-                result = await conn.execute(text("""
-                    SELECT 
+                result = await conn.execute(text("""                    SELECT 
                         COUNT(*) as collaboration_requests,
                         COUNT(CASE WHEN status = 'accepted' THEN 1 END) as accepted_collaborations,
                         COUNT(DISTINCT requester_id) as unique_requesters,
@@ -517,20 +496,17 @@ class UserEngagementMetrics:
 
 
 class PlatformPerformanceMetrics:
-    """Platform performance and operational metrics"""
-    
+    """Platform performance and operational metrics"""    
     def __init__(self, db_engine: AsyncEngine):
         self.db_engine = db_engine
     
     async def collect_performance_metrics(self) -> List[BusinessMetric]:
-        """Collect platform performance metrics"""
-        metrics = []
+        """Collect platform performance metrics"""        metrics = []
         
         try:
             async with self.db_engine.begin() as conn:
                 # API performance metrics
-                result = await conn.execute(text("""
-                    SELECT 
+                result = await conn.execute(text("""                    SELECT 
                         endpoint,
                         COUNT(*) as request_count,
                         AVG(response_time_ms) as avg_response_time,
@@ -587,8 +563,7 @@ class PlatformPerformanceMetrics:
                     ))
                 
                 # System resource utilization
-                result = await conn.execute(text("""
-                    SELECT 
+                result = await conn.execute(text("""                    SELECT 
                         AVG(cpu_usage_percent) as avg_cpu,
                         AVG(memory_usage_percent) as avg_memory,
                         AVG(disk_usage_percent) as avg_disk
@@ -631,12 +606,10 @@ class PlatformPerformanceMetrics:
 
 
 class BusinessMetricsCollector:
-    """
-    Industrial-grade business metrics collection system specialized for
+    """    Industrial-grade business metrics collection system specialized for
     IA Influencer Agent Platform with comprehensive KPI tracking,
     predictive analytics, and automated business intelligence.
-    """
-    
+    """    
     def __init__(
         self,
         redis_client: Optional[aioredis.Redis] = None,
@@ -680,8 +653,7 @@ class BusinessMetricsCollector:
         self._initialize_business_kpis()
         
     def _initialize_business_kpis(self):
-        """Initialize key business KPIs for the platform"""
-        
+        """Initialize key business KPIs for the platform"""        
         # Content Protection KPIs
         self._kpis["fingerprint_success_rate"] = BusinessKPI(
             name="AI Fingerprint Success Rate",
@@ -767,8 +739,7 @@ class BusinessMetricsCollector:
             business_impact="high",
             calculation_method="(accepted_collaborations / total_requests) * 100"
         )
-        """Register default business metrics"""
-        
+        """Register default business metrics"""        
         # Content protection metrics
         self.register_metric("content.fingerprints.created", MetricType.COUNTER, "count")
         self.register_metric("content.fingerprints.processed", MetricType.COUNTER, "count")
@@ -801,8 +772,7 @@ class BusinessMetricsCollector:
         self.register_metric("ai.processing.time", MetricType.HISTOGRAM, "milliseconds")
         
     async def start_collection(self):
-        """Start business metrics collection"""
-        if self._collecting:
+        """Start business metrics collection"""        if self._collecting:
             logger.warning("Business metrics collection already running")
             return
             
@@ -813,8 +783,7 @@ class BusinessMetricsCollector:
         logger.info("Business metrics collection started")
         
     async def stop_collection(self):
-        """Stop business metrics collection"""
-        self._collecting = False
+        """Stop business metrics collection"""        self._collecting = False
         
         if self._collection_task:
             self._collection_task.cancel()
@@ -836,8 +805,7 @@ class BusinessMetricsCollector:
         logger.info("Business metrics collection stopped")
         
     async def _collection_loop(self):
-        """Main collection loop"""
-        while self._collecting:
+        """Main collection loop"""        while self._collecting:
             try:
                 await self._collect_platform_metrics()
                 await self._collect_content_metrics()
@@ -853,8 +821,7 @@ class BusinessMetricsCollector:
                 await asyncio.sleep(10)
                 
     async def _aggregation_loop(self):
-        """Aggregation processing loop"""
-        while self._collecting:
+        """Aggregation processing loop"""        while self._collecting:
             try:
                 await self._process_aggregations()
                 await asyncio.sleep(60)  # Run aggregations every minute
@@ -866,32 +833,27 @@ class BusinessMetricsCollector:
                 await asyncio.sleep(10)
                 
     async def _collect_platform_metrics(self):
-        """Collect platform-level metrics"""
-        metrics = await self._platform_metrics.collect()
+        """Collect platform-level metrics"""        metrics = await self._platform_metrics.collect()
         for metric in metrics:
             self._metrics_buffer.append(metric)
             
     async def _collect_content_metrics(self):
-        """Collect content protection metrics"""
-        metrics = await self._content_metrics.collect()
+        """Collect content protection metrics"""        metrics = await self._content_metrics.collect()
         for metric in metrics:
             self._metrics_buffer.append(metric)
             
     async def _collect_revenue_metrics(self):
-        """Collect revenue tracking metrics"""
-        metrics = await self._revenue_metrics.collect()
+        """Collect revenue tracking metrics"""        metrics = await self._revenue_metrics.collect()
         for metric in metrics:
             self._metrics_buffer.append(metric)
             
     async def _collect_user_metrics(self):
-        """Collect user engagement metrics"""
-        metrics = await self._user_metrics.collect()
+        """Collect user engagement metrics"""        metrics = await self._user_metrics.collect()
         for metric in metrics:
             self._metrics_buffer.append(metric)
             
     async def _process_metrics_buffer(self):
-        """Process metrics buffer"""
-        if not self._metrics_buffer:
+        """Process metrics buffer"""        if not self._metrics_buffer:
             return
             
         metrics_to_process = self._metrics_buffer.copy()
@@ -905,8 +867,7 @@ class BusinessMetricsCollector:
         await self._update_aggregations(metrics_to_process)
         
     async def _store_metrics(self, metrics: List[BusinessMetric]):
-        """Store metrics in Redis"""
-        try:
+        """Store metrics in Redis"""        try:
             pipeline = self.redis_client.pipeline()
             
             for metric in metrics:
@@ -938,8 +899,7 @@ class BusinessMetricsCollector:
             logger.error(f"Error storing business metrics: {e}")
             
     async def _update_aggregations(self, metrics: List[BusinessMetric]):
-        """Update metric aggregations"""
-        for metric in metrics:
+        """Update metric aggregations"""        for metric in metrics:
             for interval in self.aggregation_intervals:
                 period_key = self._get_period_key(metric.timestamp, interval)
                 agg_key = f"{metric.name}:{period_key}"
@@ -971,8 +931,7 @@ class BusinessMetricsCollector:
                 agg.unique_dimensions = len(agg._unique_dims)
                 
     async def _process_aggregations(self):
-        """Process and store aggregations"""
-        if not self.redis_client:
+        """Process and store aggregations"""        if not self.redis_client:
             return
             
         try:
@@ -1000,15 +959,13 @@ class BusinessMetricsCollector:
             logger.error(f"Error processing aggregations: {e}")
             
     def _get_period_key(self, timestamp: datetime, interval: int) -> str:
-        """Get period key for aggregation"""
-        epoch = int(timestamp.timestamp())
+        """Get period key for aggregation"""        epoch = int(timestamp.timestamp())
         period_start = (epoch // interval) * interval
         return f"{interval}s_{period_start}"
         
     # Public interface methods
     def register_metric(self, name: str, metric_type: MetricType, unit: str = "count"):
-        """Register a business metric"""
-        self._metric_definitions[name] = {
+        """Register a business metric"""        self._metric_definitions[name] = {
             "type": metric_type,
             "unit": unit,
             "registered_at": datetime.utcnow().isoformat()
@@ -1022,8 +979,7 @@ class BusinessMetricsCollector:
         dimensions: Optional[Dict[str, str]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ):
-        """Record a business metric"""
-        if name not in self._metric_definitions:
+        """Record a business metric"""        if name not in self._metric_definitions:
             logger.warning(f"Unknown metric: {name}")
             return
             
@@ -1042,8 +998,7 @@ class BusinessMetricsCollector:
         self._metrics_buffer.append(metric)
         
     async def get_metric_current(self, name: str) -> Optional[Dict[str, Any]]:
-        """Get current value of a metric"""
-        if not self.redis_client:
+        """Get current value of a metric"""        if not self.redis_client:
             return None
             
         try:
@@ -1062,8 +1017,7 @@ class BusinessMetricsCollector:
         start_time: Optional[datetime] = None,
         end_time: Optional[datetime] = None
     ) -> List[Dict[str, Any]]:
-        """Get metric history"""
-        if not self.redis_client:
+        """Get metric history"""        if not self.redis_client:
             return []
             
         try:
@@ -1093,8 +1047,7 @@ class BusinessMetricsCollector:
         names: Optional[List[str]] = None,
         interval: int = 3600
     ) -> Dict[str, Dict[str, Any]]:
-        """Get aggregated metrics"""
-        if not self.redis_client:
+        """Get aggregated metrics"""        if not self.redis_client:
             return {}
             
         metric_names = names or list(self._metric_definitions.keys())
@@ -1124,8 +1077,7 @@ class BusinessMetricsCollector:
         return results
         
     async def get_business_kpis(self) -> Dict[str, Any]:
-        """Get key business KPIs"""
-        kpis = {}
+        """Get key business KPIs"""        kpis = {}
         
         try:
             # Content protection KPIs
@@ -1178,27 +1130,23 @@ class BusinessMetricsCollector:
         return kpis
         
     def get_metric_definitions(self) -> Dict[str, Dict[str, Any]]:
-        """Get all metric definitions"""
-        return self._metric_definitions.copy()
+        """Get all metric definitions"""        return self._metric_definitions.copy()
 
 
 class PlatformMetricsTracker:
-    """Track platform-level metrics"""
-    
+    """Track platform-level metrics"""    
     def __init__(self, db_engine: Optional[AsyncEngine]):
         self.db_engine = db_engine
         
     async def collect(self) -> List[BusinessMetric]:
-        """Collect platform metrics"""
-        metrics = []
+        """Collect platform metrics"""        metrics = []
         timestamp = datetime.utcnow()
         
         if self.db_engine:
             try:
                 async with self.db_engine.begin() as conn:
                     # API request count (last hour)
-                    result = await conn.execute(text("""
-                        SELECT COUNT(*) FROM api_requests 
+                    result = await conn.execute(text("""                        SELECT COUNT(*) FROM api_requests 
                         WHERE created_at > NOW() - INTERVAL '1 hour'
                     """))
                     api_requests = result.scalar() or 0
@@ -1230,22 +1178,19 @@ class PlatformMetricsTracker:
 
 
 class ContentMetricsTracker:
-    """Track content protection metrics"""
-    
+    """Track content protection metrics"""    
     def __init__(self, db_engine: Optional[AsyncEngine]):
         self.db_engine = db_engine
         
     async def collect(self) -> List[BusinessMetric]:
-        """Collect content metrics"""
-        metrics = []
+        """Collect content metrics"""        metrics = []
         timestamp = datetime.utcnow()
         
         if self.db_engine:
             try:
                 async with self.db_engine.begin() as conn:
                     # Fingerprints created (last hour)
-                    result = await conn.execute(text("""
-                        SELECT content_type, COUNT(*) 
+                    result = await conn.execute(text("""                        SELECT content_type, COUNT(*) 
                         FROM content_fingerprints 
                         WHERE created_at > NOW() - INTERVAL '1 hour'
                         GROUP BY content_type
@@ -1263,8 +1208,7 @@ class ContentMetricsTracker:
                         ))
                         
                     # Protection alerts (last hour)
-                    result = await conn.execute(text("""
-                        SELECT platform, status, COUNT(*) 
+                    result = await conn.execute(text("""                        SELECT platform, status, COUNT(*) 
                         FROM protection_alerts 
                         WHERE created_at > NOW() - INTERVAL '1 hour'
                         GROUP BY platform, status
@@ -1288,22 +1232,19 @@ class ContentMetricsTracker:
 
 
 class RevenueMetricsTracker:
-    """Track revenue metrics"""
-    
+    """Track revenue metrics"""    
     def __init__(self, db_engine: Optional[AsyncEngine]):
         self.db_engine = db_engine
         
     async def collect(self) -> List[BusinessMetric]:
-        """Collect revenue metrics"""
-        metrics = []
+        """Collect revenue metrics"""        metrics = []
         timestamp = datetime.utcnow()
         
         if self.db_engine:
             try:
                 async with self.db_engine.begin() as conn:
                     # Revenue tracked (last 24 hours)
-                    result = await conn.execute(text("""
-                        SELECT platform, currency, SUM(revenue_amount) 
+                    result = await conn.execute(text("""                        SELECT platform, currency, SUM(revenue_amount) 
                         FROM revenue_tracking 
                         WHERE created_at > NOW() - INTERVAL '1 day'
                         GROUP BY platform, currency
@@ -1327,22 +1268,19 @@ class RevenueMetricsTracker:
 
 
 class UserMetricsTracker:
-    """Track user engagement metrics"""
-    
+    """Track user engagement metrics"""    
     def __init__(self, db_engine: Optional[AsyncEngine]):
         self.db_engine = db_engine
         
     async def collect(self) -> List[BusinessMetric]:
-        """Collect user metrics"""
-        metrics = []
+        """Collect user metrics"""        metrics = []
         timestamp = datetime.utcnow()
         
         if self.db_engine:
             try:
                 async with self.db_engine.begin() as conn:
                     # Daily active users
-                    result = await conn.execute(text("""
-                        SELECT COUNT(DISTINCT user_id) 
+                    result = await conn.execute(text("""                        SELECT COUNT(DISTINCT user_id) 
                         FROM user_sessions 
                         WHERE created_at > NOW() - INTERVAL '1 day'
                     """))
@@ -1357,8 +1295,7 @@ class UserMetricsTracker:
                     ))
                     
                     # New registrations (last 24 hours)
-                    result = await conn.execute(text("""
-                        SELECT COUNT(*) 
+                    result = await conn.execute(text("""                        SELECT COUNT(*) 
                         FROM users 
                         WHERE created_at > NOW() - INTERVAL '1 day'
                     """))

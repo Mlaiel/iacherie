@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Pipeline Configuration Management
+"""IA Influencer Agent - Pipeline Configuration Management
 Enterprise-Grade Pipeline Configuration System
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -17,9 +16,7 @@ Features:
 
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
-"""
-
-import yaml
+"""import yaml
 import json
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -32,13 +29,11 @@ from datetime import datetime
 from . import Environment, PipelineType, PipelineConfig
 
 class ConfigurationError(Exception):
-    """Configuration-related error"""
-    pass
+    """Configuration-related error"""    pass
 
 @dataclass
 class EnvironmentConfig:
-    """Environment-specific configuration settings"""
-    name: str
+    """Environment-specific configuration settings"""    name: str
     description: str
     cluster_config: Dict[str, Any]
     namespace: str
@@ -49,8 +44,7 @@ class EnvironmentConfig:
     
 @dataclass
 class PipelineTemplate:
-    """Pipeline template definition"""
-    name: str
+    """Pipeline template definition"""    name: str
     description: str
     pipeline_type: PipelineType
     base_steps: List[str]
@@ -59,8 +53,7 @@ class PipelineTemplate:
     optional_variables: Dict[str, Any]
 
 class PipelineConfigManager:
-    """
-    Advanced Pipeline Configuration Management System
+    """    Advanced Pipeline Configuration Management System
     
     Provides enterprise-grade configuration management with:
     - Template-based pipeline definitions
@@ -68,8 +61,7 @@ class PipelineConfigManager:
     - Dynamic configuration generation
     - Configuration validation and schema enforcement
     - Version control and rollback capabilities
-    """
-    
+    """    
     def __init__(self, config_dir: Optional[Path] = None):
         self.config_dir = config_dir or Path(__file__).parent / "configs"
         self.templates_dir = self.config_dir / "templates"
@@ -86,8 +78,7 @@ class PipelineConfigManager:
         self._load_configurations()
         
     def _ensure_directories(self):
-        """Ensure all required directories exist"""
-        directories = [
+        """Ensure all required directories exist"""        directories = [
             self.config_dir,
             self.templates_dir,
             self.environments_dir,
@@ -99,14 +90,12 @@ class PipelineConfigManager:
             directory.mkdir(parents=True, exist_ok=True)
             
     def _load_configurations(self):
-        """Load all configuration files"""
-        self._load_environment_configs()
+        """Load all configuration files"""        self._load_environment_configs()
         self._load_pipeline_templates()
         self._generate_default_configs()
         
     def _load_environment_configs(self):
-        """Load environment configuration files"""
-        for env_file in self.environments_dir.glob("*.yaml"):
+        """Load environment configuration files"""        for env_file in self.environments_dir.glob("*.yaml"):
             try:
                 with open(env_file, 'r') as f:
                     config_data = yaml.safe_load(f)
@@ -129,8 +118,7 @@ class PipelineConfigManager:
                 self.logger.error(f"Failed to load environment config {env_file}: {str(e)}")
                 
     def _load_pipeline_templates(self):
-        """Load pipeline template files"""
-        for template_file in self.templates_dir.glob("*.yaml"):
+        """Load pipeline template files"""        for template_file in self.templates_dir.glob("*.yaml"):
             try:
                 with open(template_file, 'r') as f:
                     template_data = yaml.safe_load(f)
@@ -152,8 +140,7 @@ class PipelineConfigManager:
                 self.logger.error(f"Failed to load pipeline template {template_file}: {str(e)}")
                 
     def _generate_default_configs(self):
-        """Generate default configuration files if they don't exist"""
-        # Generate default environment configs
+        """Generate default configuration files if they don't exist"""        # Generate default environment configs
         default_environments = {
             'development': {
                 'name': 'development',
@@ -327,8 +314,7 @@ class PipelineConfigManager:
                 
     def generate_pipeline_config(self, template_name: str, environment: str,
                                 variables: Dict[str, Any]) -> PipelineConfig:
-        """Generate pipeline configuration from template and environment"""
-        if template_name not in self.pipeline_templates:
+        """Generate pipeline configuration from template and environment"""        if template_name not in self.pipeline_templates:
             raise ConfigurationError(f"Pipeline template not found: {template_name}")
             
         if environment not in self.environment_configs:
@@ -374,8 +360,7 @@ class PipelineConfigManager:
         
     def save_generated_config(self, config: PipelineConfig, 
                             filename: Optional[str] = None) -> Path:
-        """Save generated pipeline configuration to file"""
-        if not filename:
+        """Save generated pipeline configuration to file"""        if not filename:
             timestamp = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
             filename = f"{config.name}_{timestamp}.yaml"
             
@@ -388,8 +373,7 @@ class PipelineConfigManager:
         return output_file
         
     def validate_configuration(self, config: PipelineConfig) -> List[str]:
-        """Validate pipeline configuration and return list of issues"""
-        issues = []
+        """Validate pipeline configuration and return list of issues"""        issues = []
         
         # Validate basic fields
         if not config.name:
@@ -411,16 +395,13 @@ class PipelineConfigManager:
         return issues
         
     def list_templates(self) -> List[str]:
-        """List all available pipeline templates"""
-        return list(self.pipeline_templates.keys())
+        """List all available pipeline templates"""        return list(self.pipeline_templates.keys())
         
     def list_environments(self) -> List[str]:
-        """List all configured environments"""
-        return list(self.environment_configs.keys())
+        """List all configured environments"""        return list(self.environment_configs.keys())
         
     def get_template_info(self, template_name: str) -> Optional[Dict[str, Any]]:
-        """Get detailed information about pipeline template"""
-        if template_name not in self.pipeline_templates:
+        """Get detailed information about pipeline template"""        if template_name not in self.pipeline_templates:
             return None
             
         template = self.pipeline_templates[template_name]
@@ -435,8 +416,7 @@ class PipelineConfigManager:
         }
         
     def get_environment_info(self, environment: str) -> Optional[Dict[str, Any]]:
-        """Get detailed information about environment configuration"""
-        if environment not in self.environment_configs:
+        """Get detailed information about environment configuration"""        if environment not in self.environment_configs:
             return None
             
         env_config = self.environment_configs[environment]

@@ -1,5 +1,4 @@
-"""
-IA-Influencer-Agent - Events Module Index
+"""IA-Influencer-Agent - Events Module Index
 Module: backend/core/events/index.py
 Architecture: Central Access Point for Event Management System
 Auteur: Fahed Mlaiel <mlaiel@live.de>
@@ -15,9 +14,7 @@ Description:
     Point d'accès central pour le système de gestion d'événements de la plateforme
     IA-Influencer-Agent. Facilite l'initialisation et la configuration de tous
     les composants d'événements.
-"""
-
-from typing import Any, Dict, List, Optional, Union
+"""from typing import Any, Dict, List, Optional, Union
 import asyncio
 import logging
 from datetime import timedelta
@@ -47,10 +44,8 @@ logger = logging.getLogger(__name__)
 
 
 class EventSystemManager:
-    """
-    Gestionnaire centralisé du système d'événements IA-Influencer-Agent
-    """
-    
+    """    Gestionnaire centralisé du système d'événements IA-Influencer-Agent
+    """    
     def __init__(self):
         self._initialized = False
         self._config: Dict[str, Any] = {}
@@ -72,13 +67,11 @@ class EventSystemManager:
         logger.info("EventSystemManager created")
     
     async def initialize(self, config: Dict[str, Any]):
-        """
-        Initialise complètement le système d'événements
+        """        Initialise complètement le système d'événements
         
         Args:
             config: Configuration complète du système
-        """
-        if self._initialized:
+        """        if self._initialized:
             logger.warning("EventSystemManager already initialized")
             return
         
@@ -133,8 +126,7 @@ class EventSystemManager:
             raise
     
     async def _initialize_event_bus(self, config: Dict[str, Any]):
-        """Initialise le bus d'événements"""
-        self.event_bus = EventBus(
+        """Initialise le bus d'événements"""        self.event_bus = EventBus(
             name=config.get("name", "main"),
             max_workers=config.get("max_workers", 20),
             enable_persistence=config.get("enable_persistence", True),
@@ -144,8 +136,7 @@ class EventSystemManager:
         logger.info("EventBus initialized")
     
     async def _initialize_event_store(self, config: Dict[str, Any]):
-        """Initialise le stockage d'événements"""
-        if config.get("enabled", True):
+        """Initialise le stockage d'événements"""        if config.get("enabled", True):
             self.event_store = EventStore(
                 storage_backend=config.get("backend", "postgresql"),
                 connection_config=config.get("connection", {}),
@@ -156,8 +147,7 @@ class EventSystemManager:
             logger.info("EventStore initialized")
     
     async def _initialize_event_publisher(self, config: Dict[str, Any]):
-        """Initialise le système de publication"""
-        self.event_publisher = EventPublisher(
+        """Initialise le système de publication"""        self.event_publisher = EventPublisher(
             redis_client=config.get("redis_client"),
             enable_persistence=config.get("enable_persistence", True)
         )
@@ -165,8 +155,7 @@ class EventSystemManager:
         logger.info("EventPublisher initialized")
     
     async def _initialize_event_dispatcher(self, config: Dict[str, Any]):
-        """Initialise le dispatcher"""
-        self.event_dispatcher = EventDispatcher(
+        """Initialise le dispatcher"""        self.event_dispatcher = EventDispatcher(
             event_bus=self.event_bus,
             max_workers=config.get("max_workers", 10),
             enable_metrics=config.get("enable_metrics", True)
@@ -175,8 +164,7 @@ class EventSystemManager:
         logger.info("EventDispatcher initialized")
     
     async def _initialize_event_aggregator(self, config: Dict[str, Any]):
-        """Initialise l'agrégateur"""
-        self.event_aggregator = EventAggregator(
+        """Initialise l'agrégateur"""        self.event_aggregator = EventAggregator(
             event_bus=self.event_bus,
             aggregation_window=timedelta(seconds=config.get("window_seconds", 60)),
             max_batch_size=config.get("max_batch_size", 100)
@@ -185,8 +173,7 @@ class EventSystemManager:
         logger.info("EventAggregator initialized")
     
     async def _initialize_event_scheduler(self, config: Dict[str, Any]):
-        """Initialise le scheduler"""
-        self.event_scheduler = EventScheduler(
+        """Initialise le scheduler"""        self.event_scheduler = EventScheduler(
             event_bus=self.event_bus,
             persistence_backend=config.get("persistence_backend", "redis"),
             check_interval=config.get("check_interval", 30)
@@ -195,21 +182,18 @@ class EventSystemManager:
         logger.info("EventScheduler initialized")
     
     async def _initialize_metrics_manager(self, config: Dict[str, Any]):
-        """Initialise le gestionnaire de métriques"""
-        if config.get("enabled", True):
+        """Initialise le gestionnaire de métriques"""        if config.get("enabled", True):
             self.metrics_manager = event_metrics_manager
             await self.metrics_manager.start()
             logger.info("EventMetricsManager initialized")
     
     async def _initialize_workflow_engine(self, config: Dict[str, Any]):
-        """Initialise le moteur de workflows"""
-        if config.get("enabled", True):
+        """Initialise le moteur de workflows"""        if config.get("enabled", True):
             self.workflow_engine = initialize_workflow_engine(self.event_bus)
             logger.info("WorkflowEngine initialized")
     
     async def _initialize_replication_manager(self, config: Dict[str, Any]):
-        """Initialise le gestionnaire de réplication"""
-        if config.get("enabled", False):
+        """Initialise le gestionnaire de réplication"""        if config.get("enabled", False):
             self.replication_manager = initialize_replication_manager(
                 self.event_bus,
                 self.event_store,
@@ -234,8 +218,7 @@ class EventSystemManager:
                        len(config.get("targets", [])))
     
     async def _initialize_resilience_manager(self, config: Dict[str, Any]):
-        """Initialise le gestionnaire de résilience"""
-        if config.get("enabled", True):
+        """Initialise le gestionnaire de résilience"""        if config.get("enabled", True):
             self.resilience_manager = initialize_resilience_manager(self.event_bus)
             
             # Configuration personnalisée si fournie
@@ -254,14 +237,12 @@ class EventSystemManager:
             logger.info("EventResilienceManager initialized")
     
     async def _initialize_notification_service(self, config: Dict[str, Any]):
-        """Initialise le service de notifications"""
-        if config.get("enabled", True):
+        """Initialise le service de notifications"""        if config.get("enabled", True):
             await notification_service.initialize(config)
             logger.info("NotificationService initialized")
     
     async def _setup_predefined_workflows(self):
-        """Configure les workflows prédéfinis pour IA-Influencer-Agent"""
-        if not self.workflow_engine:
+        """Configure les workflows prédéfinis pour IA-Influencer-Agent"""        if not self.workflow_engine:
             return
         
         # Les workflows sont déjà enregistrés lors de l'initialisation
@@ -270,8 +251,7 @@ class EventSystemManager:
         logger.info("Predefined workflows configured")
     
     async def _setup_default_monitoring(self):
-        """Configure le monitoring par défaut"""
-        if not self.metrics_manager:
+        """Configure le monitoring par défaut"""        if not self.metrics_manager:
             return
         
         # Les alertes par défaut sont déjà configurées
@@ -285,16 +265,14 @@ class EventSystemManager:
         logger.info("Default monitoring configured")
     
     async def start_all(self):
-        """Démarre tous les composants"""
-        if not self._initialized:
+        """Démarre tous les composants"""        if not self._initialized:
             raise RuntimeError("EventSystemManager not initialized")
         
         # Les composants sont déjà démarrés lors de l'initialisation
         logger.info("All event system components started")
     
     async def stop_all(self):
-        """Arrête tous les composants"""
-        logger.info("Stopping all event system components")
+        """Arrête tous les composants"""        logger.info("Stopping all event system components")
         
         # Arrêt dans l'ordre inverse de l'initialisation
         if self.replication_manager:
@@ -321,8 +299,7 @@ class EventSystemManager:
         logger.info("All event system components stopped")
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Retourne le statut de santé global"""
-        status = {
+        """Retourne le statut de santé global"""        status = {
             "initialized": self._initialized,
             "components": {}
         }
@@ -345,8 +322,7 @@ class EventSystemManager:
         return status
     
     def get_configuration(self) -> Dict[str, Any]:
-        """Retourne la configuration actuelle"""
-        return self._config.copy()
+        """Retourne la configuration actuelle"""        return self._config.copy()
 
 
 # Instance globale du gestionnaire
@@ -431,16 +407,14 @@ DEFAULT_EVENT_SYSTEM_CONFIG = {
 
 
 async def initialize_event_system(config: Optional[Dict[str, Any]] = None) -> EventSystemManager:
-    """
-    Fonction d'initialisation rapide du système d'événements
+    """    Fonction d'initialisation rapide du système d'événements
     
     Args:
         config: Configuration personnalisée (utilise la config par défaut si None)
         
     Returns:
         Instance configurée du gestionnaire
-    """
-    config = config or DEFAULT_EVENT_SYSTEM_CONFIG
+    """    config = config or DEFAULT_EVENT_SYSTEM_CONFIG
     await event_system_manager.initialize(config)
     return event_system_manager
 
@@ -454,8 +428,7 @@ async def publish_content_event(
     tenant_id: str,
     **kwargs
 ) -> bool:
-    """Publie un événement de contenu"""
-    if not event_system_manager.event_bus:
+    """Publie un événement de contenu"""    if not event_system_manager.event_bus:
         raise RuntimeError("Event system not initialized")
     
     event = ContentEvent.create_uploaded(
@@ -479,8 +452,7 @@ async def publish_protection_event(
     user_id: str,
     tenant_id: str
 ) -> bool:
-    """Publie un événement de protection"""
-    if not event_system_manager.event_bus:
+    """Publie un événement de protection"""    if not event_system_manager.event_bus:
         raise RuntimeError("Event system not initialized")
     
     event = ProtectionEvent.create_violation_detected(
@@ -503,8 +475,7 @@ async def publish_monetization_event(
     user_id: str,
     tenant_id: str
 ) -> bool:
-    """Publie un événement de monétisation"""
-    if not event_system_manager.event_bus:
+    """Publie un événement de monétisation"""    if not event_system_manager.event_bus:
         raise RuntimeError("Event system not initialized")
     
     event = MonetizationEvent.create_revenue_detected(

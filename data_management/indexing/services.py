@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Advanced Indexing Services
+"""IA Influencer Agent - Advanced Indexing Services
 ===============================================
 
 Business logic layer for indexing operations with high-level services
@@ -13,9 +12,7 @@ This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from dataclasses import dataclass, asdict
@@ -47,8 +44,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class IndexingRequest:
-    """Request structure for content indexing"""
-    content_id: Optional[str] = None
+    """Request structure for content indexing"""    content_id: Optional[str] = None
     creator_id: str = ""
     file_path: Optional[str] = None
     content_data: Optional[Dict] = None
@@ -66,8 +62,7 @@ class IndexingRequest:
 
 @dataclass
 class IndexingResult:
-    """Result structure for indexing operations"""
-    content_id: str
+    """Result structure for indexing operations"""    content_id: str
     success: bool
     indexed_at: datetime
     processing_time_ms: int
@@ -81,8 +76,7 @@ class IndexingResult:
 
 @dataclass
 class SearchRequest:
-    """Request structure for search operations"""
-    query_text: Optional[str] = None
+    """Request structure for search operations"""    query_text: Optional[str] = None
     query_vector: Optional[List[float]] = None
     content_types: Optional[List[str]] = None
     creator_ids: Optional[List[str]] = None
@@ -99,8 +93,7 @@ class SearchRequest:
 
 @dataclass
 class SearchResult:
-    """Result structure for search operations"""
-    results: List[Dict[str, Any]]
+    """Result structure for search operations"""    results: List[Dict[str, Any]]
     total_count: int
     query_time_ms: int
     aggregations: Dict[str, Any]
@@ -109,8 +102,7 @@ class SearchResult:
 
 
 class IndexingService:
-    """High-level service for content indexing operations"""
-    
+    """High-level service for content indexing operations"""    
     def __init__(self, 
                  indexing_config: IndexingConfig,
                  processing_config: ProcessingConfig,
@@ -141,8 +133,7 @@ class IndexingService:
         self._initialized = False
     
     async def initialize(self) -> None:
-        """Initialize all components"""
-        try:
+        """Initialize all components"""        try:
             # Initialize engines
             await asyncio.gather(
                 self.content_engine.initialize(),
@@ -162,8 +153,7 @@ class IndexingService:
             raise
     
     async def index_content(self, request: IndexingRequest) -> IndexingResult:
-        """Index content with comprehensive feature extraction"""
-        try:
+        """Index content with comprehensive feature extraction"""        try:
             if not self._initialized:
                 await self.initialize()
             
@@ -281,8 +271,7 @@ class IndexingService:
     
     async def _generate_embeddings(self, content_id: str, processed_data: Dict, 
                                  index_record: IndexRecord) -> List[str]:
-        """Generate embeddings for content"""
-        try:
+        """Generate embeddings for content"""        try:
             embeddings_generated = []
             
             # Text embeddings
@@ -351,8 +340,7 @@ class IndexingService:
             return []
     
     async def _create_audio_embedding(self, audio_features: Dict) -> Optional[List[float]]:
-        """Create embedding from audio features"""
-        try:
+        """Create embedding from audio features"""        try:
             # Extract key audio features and create a simple embedding
             features = []
             
@@ -383,8 +371,7 @@ class IndexingService:
     
     async def _generate_fingerprints(self, content_id: str, processed_data: Dict, 
                                    file_path: Optional[str]) -> List[str]:
-        """Generate fingerprints for content"""
-        try:
+        """Generate fingerprints for content"""        try:
             fingerprints_created = []
             
             if not file_path:
@@ -410,8 +397,7 @@ class IndexingService:
             return []
     
     async def update_index(self, content_id: str, updates: Dict[str, Any]) -> bool:
-        """Update existing index"""
-        try:
+        """Update existing index"""        try:
             # Update in repository
             repo_updated = await self.index_repo.update(content_id, updates)
             
@@ -430,8 +416,7 @@ class IndexingService:
             return False
     
     async def delete_index(self, content_id: str) -> bool:
-        """Delete content from all indexes"""
-        try:
+        """Delete content from all indexes"""        try:
             # Delete from all engines
             engine_results = await asyncio.gather(
                 self.content_engine.delete_index(content_id),
@@ -461,8 +446,7 @@ class IndexingService:
             return False
     
     async def _delete_vectors_by_content(self, content_id: str) -> bool:
-        """Delete all vectors for a content ID"""
-        try:
+        """Delete all vectors for a content ID"""        try:
             vectors = await self.vector_repo.get_by_content_id(content_id)
             
             for vector in vectors:
@@ -475,8 +459,7 @@ class IndexingService:
             return False
     
     async def _delete_fingerprints_by_content(self, content_id: str) -> bool:
-        """Delete all fingerprints for a content ID"""
-        try:
+        """Delete all fingerprints for a content ID"""        try:
             fingerprints = await self.fingerprint_repo.get_by_content_id(content_id)
             
             for fingerprint in fingerprints:
@@ -489,8 +472,7 @@ class IndexingService:
             return False
     
     async def get_indexing_stats(self, creator_id: Optional[str] = None) -> Dict[str, Any]:
-        """Get indexing statistics"""
-        try:
+        """Get indexing statistics"""        try:
             stats = {
                 "total_indexed": 0,
                 "by_content_type": {},
@@ -539,8 +521,7 @@ class IndexingService:
 
 
 class SearchService:
-    """High-level service for search operations"""
-    
+    """High-level service for search operations"""    
     def __init__(self,
                  indexing_config: IndexingConfig,
                  search_repo: SearchRepository,
@@ -566,8 +547,7 @@ class SearchService:
         self._initialized = False
     
     async def initialize(self) -> None:
-        """Initialize search components"""
-        try:
+        """Initialize search components"""        try:
             await asyncio.gather(
                 self.content_engine.initialize(),
                 self.vector_engine.initialize()
@@ -581,8 +561,7 @@ class SearchService:
             raise
     
     async def search(self, request: SearchRequest) -> SearchResult:
-        """Perform comprehensive search"""
-        try:
+        """Perform comprehensive search"""        try:
             if not self._initialized:
                 await self.initialize()
             
@@ -659,8 +638,7 @@ class SearchService:
             )
     
     async def _generate_aggregations(self, results: List[Dict]) -> Dict[str, Any]:
-        """Generate aggregations from search results"""
-        try:
+        """Generate aggregations from search results"""        try:
             aggregations = {
                 "content_types": {},
                 "creators": {},
@@ -692,8 +670,7 @@ class SearchService:
             return {}
     
     async def _generate_suggestions(self, query_text: Optional[str]) -> List[str]:
-        """Generate search suggestions"""
-        try:
+        """Generate search suggestions"""        try:
             if not query_text:
                 return []
             
@@ -724,8 +701,7 @@ class SearchService:
             return []
     
     async def find_similar_content(self, content_id: str, limit: int = 10) -> List[Dict[str, Any]]:
-        """Find content similar to the given content"""
-        try:
+        """Find content similar to the given content"""        try:
             return await self.search_repo.find_duplicate_content(content_id)
             
         except Exception as e:
@@ -733,8 +709,7 @@ class SearchService:
             return []
     
     async def get_recommendations(self, content_id: str, limit: int = 10) -> List[Dict[str, Any]]:
-        """Get content recommendations"""
-        try:
+        """Get content recommendations"""        try:
             return await self.search_repo.get_content_recommendations(content_id, limit)
             
         except Exception as e:
@@ -743,8 +718,7 @@ class SearchService:
 
 
 class VectorService:
-    """Specialized service for vector operations"""
-    
+    """Specialized service for vector operations"""    
     def __init__(self, 
                  indexing_config: IndexingConfig,
                  vector_repo: VectorRepository,
@@ -759,8 +733,7 @@ class VectorService:
     
     async def create_embedding(self, content_id: str, text: str, 
                              embedding_type: str = "text") -> Optional[str]:
-        """Create text embedding for content"""
-        try:
+        """Create text embedding for content"""        try:
             # Generate embedding using engine
             result = await self.vector_engine.index_content(content_id, {
                 "text": text,
@@ -792,8 +765,7 @@ class VectorService:
     
     async def similarity_search_by_text(self, query_text: str, 
                                       top_k: int = 10) -> List[Dict[str, Any]]:
-        """Perform similarity search using text query"""
-        try:
+        """Perform similarity search using text query"""        try:
             # Generate query embedding
             query_result = await self.vector_engine._generate_embedding(query_text)
             
@@ -820,8 +792,7 @@ class VectorService:
             return []
     
     async def get_content_vectors(self, content_id: str) -> List[VectorRecord]:
-        """Get all vectors for a content ID"""
-        try:
+        """Get all vectors for a content ID"""        try:
             return await self.vector_repo.get_by_content_id(content_id)
             
         except Exception as e:
@@ -830,8 +801,7 @@ class VectorService:
 
 
 class RealtimeIndexService:
-    """Service for real-time indexing and updates"""
-    
+    """Service for real-time indexing and updates"""    
     def __init__(self, indexing_service: IndexingService):
         self.indexing_service = indexing_service
         self.pending_operations = asyncio.Queue()
@@ -840,8 +810,7 @@ class RealtimeIndexService:
         self._running = False
     
     async def start(self, num_workers: int = 3) -> None:
-        """Start real-time processing workers"""
-        try:
+        """Start real-time processing workers"""        try:
             self._running = True
             
             # Start worker tasks
@@ -856,8 +825,7 @@ class RealtimeIndexService:
             raise
     
     async def stop(self) -> None:
-        """Stop real-time processing"""
-        try:
+        """Stop real-time processing"""        try:
             self._running = False
             
             # Cancel all worker tasks
@@ -875,8 +843,7 @@ class RealtimeIndexService:
             self.logger.error(f"Failed to stop real-time service: {e}")
     
     async def queue_indexing(self, request: IndexingRequest) -> None:
-        """Queue content for real-time indexing"""
-        try:
+        """Queue content for real-time indexing"""        try:
             await self.pending_operations.put(("index", request))
             self.logger.debug(f"Queued indexing for content: {request.content_id}")
             
@@ -884,8 +851,7 @@ class RealtimeIndexService:
             self.logger.error(f"Failed to queue indexing: {e}")
     
     async def queue_update(self, content_id: str, updates: Dict[str, Any]) -> None:
-        """Queue content update"""
-        try:
+        """Queue content update"""        try:
             await self.pending_operations.put(("update", (content_id, updates)))
             self.logger.debug(f"Queued update for content: {content_id}")
             
@@ -893,8 +859,7 @@ class RealtimeIndexService:
             self.logger.error(f"Failed to queue update: {e}")
     
     async def queue_deletion(self, content_id: str) -> None:
-        """Queue content deletion"""
-        try:
+        """Queue content deletion"""        try:
             await self.pending_operations.put(("delete", content_id))
             self.logger.debug(f"Queued deletion for content: {content_id}")
             
@@ -902,8 +867,7 @@ class RealtimeIndexService:
             self.logger.error(f"Failed to queue deletion: {e}")
     
     async def _process_worker(self, worker_id: str) -> None:
-        """Process queued operations"""
-        self.logger.info(f"Started real-time worker: {worker_id}")
+        """Process queued operations"""        self.logger.info(f"Started real-time worker: {worker_id}")
         
         while self._running:
             try:
@@ -964,8 +928,7 @@ class RealtimeIndexService:
         self.logger.info(f"Stopped real-time worker: {worker_id}")
     
     async def get_queue_status(self) -> Dict[str, Any]:
-        """Get queue status information"""
-        return {
+        """Get queue status information"""        return {
             "pending_operations": self.pending_operations.qsize(),
             "active_workers": len([t for t in self.worker_tasks if not t.done()]),
             "total_workers": len(self.worker_tasks),

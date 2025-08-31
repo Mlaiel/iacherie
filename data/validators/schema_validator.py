@@ -1,5 +1,4 @@
-"""
-Schema Validator - Advanced schema validation for IA Influencer Agent Platform
+"""Schema Validator - Advanced schema validation for IA Influencer Agent Platform
 ==============================================================================
 
 Comprehensive schema validation system with Pydantic models and JSON Schema
@@ -8,9 +7,7 @@ support for data integrity and structure validation.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Type, Callable
 from pathlib import Path
@@ -27,16 +24,14 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationLevel(Enum):
-    """Schema validation levels."""
-    BASIC = "basic"
+    """Schema validation levels."""    BASIC = "basic"
     STANDARD = "standard"
     STRICT = "strict"
     ENTERPRISE = "enterprise"
 
 
 class SchemaType(Enum):
-    """Supported schema types."""
-    JSON_SCHEMA = "json_schema"
+    """Supported schema types."""    JSON_SCHEMA = "json_schema"
     PYDANTIC = "pydantic"
     OPENAPI = "openapi"
     AVRO = "avro"
@@ -44,8 +39,7 @@ class SchemaType(Enum):
 
 
 class ValidationStatus(Enum):
-    """Schema validation status."""
-    VALID = "valid"
+    """Schema validation status."""    VALID = "valid"
     INVALID = "invalid"
     WARNING = "warning"
     ERROR = "error"
@@ -54,8 +48,7 @@ class ValidationStatus(Enum):
 
 @dataclass
 class SchemaError:
-    """Individual schema validation error."""
-    field_path: str
+    """Individual schema validation error."""    field_path: str
     error_type: str
     message: str
     expected_type: Optional[str] = None
@@ -66,8 +59,7 @@ class SchemaError:
 
 @dataclass
 class SchemaValidationResult:
-    """Comprehensive schema validation result."""
-    is_valid: bool
+    """Comprehensive schema validation result."""    is_valid: bool
     status: ValidationStatus
     validation_level: ValidationLevel
     
@@ -100,8 +92,7 @@ class SchemaValidationResult:
 
 # Base Pydantic models for content validation
 class BaseContentModel(BaseModel):
-    """Base model for content validation."""
-    
+    """Base model for content validation."""    
     class Config:
         extra = "forbid"
         validate_assignment = True
@@ -109,15 +100,13 @@ class BaseContentModel(BaseModel):
         
     @validator('*', pre=True)
     def validate_not_empty_string(cls, v):
-        """Validate that string fields are not empty."""
-        if isinstance(v, str) and v.strip() == '':
+        """Validate that string fields are not empty."""        if isinstance(v, str) and v.strip() == '':
             raise ValueError('Field cannot be empty string')
         return v
 
 
 class ContentMetadataModel(BaseContentModel):
-    """Pydantic model for content metadata."""
-    
+    """Pydantic model for content metadata."""    
     title: StrictStr = Field(..., min_length=1, max_length=200, description="Content title")
     description: Optional[StrictStr] = Field(None, max_length=2000, description="Content description")
     creator_id: StrictStr = Field(..., min_length=1, description="Creator identifier")
@@ -142,8 +131,7 @@ class ContentMetadataModel(BaseContentModel):
     
     @validator('resolution')
     def validate_resolution(cls, v):
-        """Validate resolution format."""
-        if v is not None:
+        """Validate resolution format."""        if v is not None:
             parts = v.split('x')
             if len(parts) != 2:
                 raise ValueError('Resolution must be in format WIDTHxHEIGHT')
@@ -157,16 +145,14 @@ class ContentMetadataModel(BaseContentModel):
     
     @validator('tags', 'categories')
     def validate_string_lists(cls, v):
-        """Validate string lists."""
-        for item in v:
+        """Validate string lists."""        for item in v:
             if not isinstance(item, str) or len(item.strip()) == 0:
                 raise ValueError('List items must be non-empty strings')
         return v
 
 
 class AudioContentModel(ContentMetadataModel):
-    """Pydantic model for audio content."""
-    
+    """Pydantic model for audio content."""    
     content_type: StrictStr = Field("audio", const=True)
     sample_rate: Optional[StrictInt] = Field(None, gt=0, description="Sample rate in Hz")
     channels: Optional[StrictInt] = Field(None, gt=0, le=8, description="Number of audio channels")
@@ -174,15 +160,13 @@ class AudioContentModel(ContentMetadataModel):
     
     @validator('sample_rate')
     def validate_sample_rate(cls, v):
-        """Validate sample rate."""
-        if v is not None and v not in [8000, 11025, 16000, 22050, 44100, 48000, 96000, 192000]:
+        """Validate sample rate."""        if v is not None and v not in [8000, 11025, 16000, 22050, 44100, 48000, 96000, 192000]:
             raise ValueError('Invalid sample rate')
         return v
 
 
 class VideoContentModel(ContentMetadataModel):
-    """Pydantic model for video content."""
-    
+    """Pydantic model for video content."""    
     content_type: StrictStr = Field("video", const=True)
     frame_rate: Optional[StrictFloat] = Field(None, gt=0, le=120, description="Frame rate in fps")
     video_codec: Optional[StrictStr] = Field(None, description="Video codec")
@@ -190,8 +174,7 @@ class VideoContentModel(ContentMetadataModel):
     
     @validator('frame_rate')
     def validate_frame_rate(cls, v):
-        """Validate frame rate."""
-        if v is not None:
+        """Validate frame rate."""        if v is not None:
             common_rates = [23.976, 24, 25, 29.97, 30, 50, 59.94, 60, 120]
             if not any(abs(v - rate) < 0.1 for rate in common_rates):
                 raise ValueError('Uncommon frame rate detected')
@@ -199,8 +182,7 @@ class VideoContentModel(ContentMetadataModel):
 
 
 class ImageContentModel(ContentMetadataModel):
-    """Pydantic model for image content."""
-    
+    """Pydantic model for image content."""    
     content_type: StrictStr = Field("image", const=True)
     color_space: Optional[StrictStr] = Field(None, description="Color space")
     has_transparency: Optional[StrictBool] = Field(None, description="Has transparency")
@@ -208,8 +190,7 @@ class ImageContentModel(ContentMetadataModel):
 
 
 class TextContentModel(ContentMetadataModel):
-    """Pydantic model for text content."""
-    
+    """Pydantic model for text content."""    
     content_type: StrictStr = Field("text", const=True)
     word_count: Optional[StrictInt] = Field(None, ge=0, description="Word count")
     language: Optional[StrictStr] = Field(None, min_length=2, max_length=5, description="Language code")
@@ -217,8 +198,7 @@ class TextContentModel(ContentMetadataModel):
     
     @validator('language')
     def validate_language(cls, v):
-        """Validate language code."""
-        if v is not None:
+        """Validate language code."""        if v is not None:
             # Basic language code validation (ISO 639-1 or extended)
             if not re.match(r'^[a-z]{2}(-[A-Z]{2})?$', v):
                 raise ValueError('Invalid language code format')
@@ -226,8 +206,7 @@ class TextContentModel(ContentMetadataModel):
 
 
 class PlatformRequirementsModel(BaseContentModel):
-    """Pydantic model for platform requirements."""
-    
+    """Pydantic model for platform requirements."""    
     platform_name: StrictStr = Field(..., description="Platform name")
     max_file_size: StrictInt = Field(..., gt=0, description="Maximum file size")
     max_duration: Optional[StrictFloat] = Field(None, gt=0, description="Maximum duration")
@@ -238,8 +217,7 @@ class PlatformRequirementsModel(BaseContentModel):
     
     @root_validator
     def validate_resolution_constraints(cls, values):
-        """Validate resolution constraints."""
-        min_res = values.get('min_resolution')
+        """Validate resolution constraints."""        min_res = values.get('min_resolution')
         max_res = values.get('max_resolution')
         
         if min_res and max_res:
@@ -256,26 +234,22 @@ class PlatformRequirementsModel(BaseContentModel):
 
 
 class SchemaValidator:
-    """
-    Advanced schema validator for the IA Influencer Agent Platform.
+    """    Advanced schema validator for the IA Influencer Agent Platform.
     
     Provides comprehensive schema validation with Pydantic models,
     JSON Schema validation, and custom validation rules.
-    """
-    
+    """    
     def __init__(
         self,
         config: Optional[Dict[str, Any]] = None,
         enable_strict_mode: bool = False
     ):
-        """
-        Initialize schema validator.
+        """        Initialize schema validator.
         
         Args:
             config: Validator configuration
             enable_strict_mode: Enable strict validation mode
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self.enable_strict_mode = enable_strict_mode
         
         # Pydantic models registry
@@ -299,8 +273,7 @@ class SchemaValidator:
         schema_type: SchemaType = SchemaType.PYDANTIC,
         validation_level: ValidationLevel = ValidationLevel.STANDARD
     ) -> SchemaValidationResult:
-        """
-        Validate data against schema.
+        """        Validate data against schema.
         
         Args:
             data: Data to validate
@@ -310,8 +283,7 @@ class SchemaValidator:
             
         Returns:
             Schema validation result
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             result = SchemaValidationResult(
@@ -373,8 +345,7 @@ class SchemaValidator:
         validation_level: ValidationLevel = ValidationLevel.STANDARD,
         max_workers: int = 4
     ) -> List[SchemaValidationResult]:
-        """
-        Validate multiple data items in batch.
+        """        Validate multiple data items in batch.
         
         Args:
             data_items: List of data items to validate
@@ -385,8 +356,7 @@ class SchemaValidator:
             
         Returns:
             List of validation results
-        """
-        try:
+        """        try:
             semaphore = asyncio.Semaphore(max_workers)
             
             async def validate_item(index, data):
@@ -423,8 +393,7 @@ class SchemaValidator:
         schema_definition: Dict[str, Any],
         schema_type: SchemaType = SchemaType.JSON_SCHEMA
     ) -> SchemaValidationResult:
-        """
-        Validate schema definition itself.
+        """        Validate schema definition itself.
         
         Args:
             schema_definition: Schema definition to validate
@@ -432,8 +401,7 @@ class SchemaValidator:
             
         Returns:
             Validation result for schema definition
-        """
-        try:
+        """        try:
             result = SchemaValidationResult(
                 is_valid=True,
                 status=ValidationStatus.VALID,
@@ -468,16 +436,14 @@ class SchemaValidator:
         self,
         model_name: str
     ) -> Optional[Dict[str, Any]]:
-        """
-        Convert Pydantic model to JSON Schema.
+        """        Convert Pydantic model to JSON Schema.
         
         Args:
             model_name: Name of Pydantic model
             
         Returns:
             JSON Schema definition or None if model not found
-        """
-        try:
+        """        try:
             if model_name not in self.pydantic_models:
                 return None
             
@@ -493,8 +459,7 @@ class SchemaValidator:
         schema_name: str,
         schema_type: SchemaType = SchemaType.PYDANTIC
     ) -> Optional[Dict[str, Any]]:
-        """
-        Generate sample data for schema.
+        """        Generate sample data for schema.
         
         Args:
             schema_name: Schema name
@@ -502,8 +467,7 @@ class SchemaValidator:
             
         Returns:
             Sample data or None if generation failed
-        """
-        try:
+        """        try:
             if schema_type == SchemaType.PYDANTIC and schema_name in self.pydantic_models:
                 model_class = self.pydantic_models[schema_name]
                 schema = model_class.schema()
@@ -525,8 +489,7 @@ class SchemaValidator:
         schema_name: str,
         result: SchemaValidationResult
     ):
-        """Validate data with Pydantic model."""
-        try:
+        """Validate data with Pydantic model."""        try:
             if schema_name not in self.pydantic_models:
                 result.errors.append(SchemaError(
                     field_path="",
@@ -570,8 +533,7 @@ class SchemaValidator:
         schema_name: str,
         result: SchemaValidationResult
     ):
-        """Validate data with JSON Schema."""
-        try:
+        """Validate data with JSON Schema."""        try:
             if schema_name not in self.json_schemas:
                 result.errors.append(SchemaError(
                     field_path="",
@@ -616,8 +578,7 @@ class SchemaValidator:
         result: SchemaValidationResult,
         level: ValidationLevel
     ):
-        """Apply validation rules based on level."""
-        try:
+        """Apply validation rules based on level."""        try:
             if level == ValidationLevel.BASIC:
                 # Basic validation - only check required fields
                 pass
@@ -648,8 +609,7 @@ class SchemaValidator:
         schema_name: str,
         result: SchemaValidationResult
     ):
-        """Apply custom validation rules."""
-        try:
+        """Apply custom validation rules."""        try:
             if schema_name in self.custom_validators:
                 validators = self.custom_validators[schema_name]
                 
@@ -670,8 +630,7 @@ class SchemaValidator:
             logger.error(f"Custom validation failed: {str(e)}")
     
     async def _check_data_types(self, data: Dict[str, Any], result: SchemaValidationResult):
-        """Check data types consistency."""
-        try:
+        """Check data types consistency."""        try:
             for key, value in data.items():
                 if isinstance(value, str) and value.strip() == "":
                     result.warnings.append(SchemaError(
@@ -694,8 +653,7 @@ class SchemaValidator:
             logger.error(f"Data type check failed: {str(e)}")
     
     async def _check_business_rules(self, data: Dict[str, Any], result: SchemaValidationResult):
-        """Check business logic rules."""
-        try:
+        """Check business logic rules."""        try:
             # Content-specific business rules
             if "content_type" in data:
                 content_type = data["content_type"]
@@ -733,8 +691,7 @@ class SchemaValidator:
             logger.error(f"Business rules check failed: {str(e)}")
     
     async def _check_data_consistency(self, data: Dict[str, Any], result: SchemaValidationResult):
-        """Check data consistency across fields."""
-        try:
+        """Check data consistency across fields."""        try:
             # Check timestamp consistency
             if "created_at" in data and "updated_at" in data:
                 # In a real implementation, would parse timestamps and compare
@@ -766,8 +723,7 @@ class SchemaValidator:
             logger.error(f"Data consistency check failed: {str(e)}")
     
     async def _check_security_constraints(self, data: Dict[str, Any], result: SchemaValidationResult):
-        """Check security-related constraints."""
-        try:
+        """Check security-related constraints."""        try:
             # Check for potentially dangerous values
             for key, value in data.items():
                 if isinstance(value, str):
@@ -793,8 +749,7 @@ class SchemaValidator:
             logger.error(f"Security constraints check failed: {str(e)}")
     
     async def _generate_schema_recommendations(self, result: SchemaValidationResult):
-        """Generate schema validation recommendations."""
-        try:
+        """Generate schema validation recommendations."""        try:
             recommendations = []
             
             # Error-based recommendations
@@ -829,8 +784,7 @@ class SchemaValidator:
             logger.error(f"Failed to generate recommendations: {str(e)}")
     
     def _count_fields_recursive(self, data: Any, path: str = "") -> int:
-        """Count fields recursively in data structure."""
-        try:
+        """Count fields recursively in data structure."""        try:
             if isinstance(data, dict):
                 count = 0
                 for key, value in data.items():
@@ -857,8 +811,7 @@ class SchemaValidator:
             return 0
     
     def _get_pydantic_error_suggestion(self, error: Dict[str, Any]) -> Optional[str]:
-        """Get suggestion for Pydantic validation error."""
-        error_type = error.get("type", "")
+        """Get suggestion for Pydantic validation error."""        error_type = error.get("type", "")
         
         suggestions = {
             "missing": "Provide the required field",
@@ -873,8 +826,7 @@ class SchemaValidator:
         return suggestions.get(error_type)
     
     def _get_json_schema_error_suggestion(self, error) -> Optional[str]:
-        """Get suggestion for JSON Schema validation error."""
-        validator = error.validator
+        """Get suggestion for JSON Schema validation error."""        validator = error.validator
         
         suggestions = {
             "required": "Add the missing required property",
@@ -892,8 +844,7 @@ class SchemaValidator:
         return suggestions.get(validator)
     
     def _generate_sample_from_json_schema(self, schema: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate sample data from JSON Schema."""
-        try:
+        """Generate sample data from JSON Schema."""        try:
             def generate_value(prop_schema):
                 prop_type = prop_schema.get("type", "string")
                 
@@ -935,8 +886,7 @@ class SchemaValidator:
             return {}
     
     def _create_error_result(self, error_message: str, validation_level: ValidationLevel) -> SchemaValidationResult:
-        """Create error validation result."""
-        return SchemaValidationResult(
+        """Create error validation result."""        return SchemaValidationResult(
             is_valid=False,
             status=ValidationStatus.ERROR,
             validation_level=validation_level,
@@ -949,8 +899,7 @@ class SchemaValidator:
         )
     
     def _init_pydantic_models(self) -> Dict[str, Type[BaseModel]]:
-        """Initialize Pydantic models registry."""
-        return {
+        """Initialize Pydantic models registry."""        return {
             "base_content": BaseContentModel,
             "content_metadata": ContentMetadataModel,
             "audio_content": AudioContentModel,
@@ -961,8 +910,7 @@ class SchemaValidator:
         }
     
     def _init_json_schemas(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize JSON schemas registry."""
-        return {
+        """Initialize JSON schemas registry."""        return {
             "basic_content": {
                 "type": "object",
                 "properties": {
@@ -989,10 +937,8 @@ class SchemaValidator:
         }
     
     def _init_custom_validators(self) -> Dict[str, List[Callable]]:
-        """Initialize custom validators."""
-        async def validate_content_title(data):
-            """Custom validator for content titles."""
-            title = data.get("title", "")
+        """Initialize custom validators."""        async def validate_content_title(data):
+            """Custom validator for content titles."""            title = data.get("title", "")
             if len(title) < 5:
                 return {
                     "valid": False,
@@ -1003,8 +949,7 @@ class SchemaValidator:
             return {"valid": True}
         
         async def validate_quality_metrics(data):
-            """Custom validator for quality metrics."""
-            quality_score = data.get("quality_score")
+            """Custom validator for quality metrics."""            quality_score = data.get("quality_score")
             file_size = data.get("file_size")
             
             if quality_score and file_size:
@@ -1026,8 +971,7 @@ class SchemaValidator:
         }
     
     def _init_validation_rules(self) -> Dict[str, Any]:
-        """Initialize validation rules configuration."""
-        return {
+        """Initialize validation rules configuration."""        return {
             "strict_types": self.enable_strict_mode,
             "allow_extra_fields": not self.enable_strict_mode,
             "validate_formats": True,

@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Fingerprint Manager
+"""IA Influencer Agent - Fingerprint Manager
 =========================================
 
 Centralized fingerprint management system for comprehensive content protection
@@ -22,9 +21,7 @@ will be prosecuted to the FULL EXTENT OF THE LAW under German and
 International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import json
@@ -49,8 +46,7 @@ from .performance import PerformanceMonitor, performance_timer
 
 
 class ContentType(Enum):
-    """Supported content types"""
-    AUDIO = "audio"
+    """Supported content types"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -58,8 +54,7 @@ class ContentType(Enum):
 
 
 class FingerprintStatus(Enum):
-    """Fingerprint processing status"""
-    PENDING = "pending"
+    """Fingerprint processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -68,8 +63,7 @@ class FingerprintStatus(Enum):
 
 @dataclass
 class FingerprintJob:
-    """Fingerprint processing job"""
-    job_id: str
+    """Fingerprint processing job"""    job_id: str
     content_id: str
     content_path: str
     content_type: ContentType
@@ -87,8 +81,7 @@ class FingerprintJob:
 
 @dataclass
 class FingerprintResult:
-    """Complete fingerprint result"""
-    content_id: str
+    """Complete fingerprint result"""    content_id: str
     content_type: ContentType
     fingerprints: Dict[str, Any]  # Type -> fingerprint data
     metadata: Optional[ContentMetadata] = None
@@ -100,8 +93,7 @@ class FingerprintResult:
 
 
 class FingerprintManager:
-    """
-    Centralized fingerprint management system.
+    """    Centralized fingerprint management system.
     
     Features:
     - Multi-modal content fingerprinting
@@ -113,23 +105,20 @@ class FingerprintManager:
     - Batch processing capabilities
     - Real-time monitoring
     - Error handling and recovery
-    """
-    
+    """    
     def __init__(self, 
                  config: Optional[FingerprintingSystemConfig] = None,
                  storage_path: str = "/tmp/fingerprints",
                  max_workers: int = 8,
                  enable_caching: bool = True):
-        """
-        Initialize fingerprint manager.
+        """        Initialize fingerprint manager.
         
         Args:
             config: System configuration
             storage_path: Path for storing fingerprints
             max_workers: Maximum concurrent workers
             enable_caching: Enable result caching
-        """
-        self.config = config or get_config("production")
+        """        self.config = config or get_config("production")
         self.storage_path = Path(storage_path)
         self.max_workers = max_workers
         self.enable_caching = enable_caching
@@ -172,8 +161,7 @@ class FingerprintManager:
         self.logger.info("Fingerprint manager initialized successfully")
     
     def _initialize_fingerprinters(self):
-        """Initialize all fingerprinting components"""
-        try:
+        """Initialize all fingerprinting components"""        try:
             self.audio_fingerprinter = AudioFingerprinter(
                 max_workers=self.max_workers // 4,
                 gpu_acceleration=self.config.audio.enable_gpu
@@ -203,8 +191,7 @@ class FingerprintManager:
             raise
     
     async def start_workers(self):
-        """Start background worker tasks"""
-        try:
+        """Start background worker tasks"""        try:
             if self.workers_running:
                 self.logger.warning("Workers already running")
                 return
@@ -223,8 +210,7 @@ class FingerprintManager:
             raise
     
     async def stop_workers(self):
-        """Stop background worker tasks"""
-        try:
+        """Stop background worker tasks"""        try:
             self.workers_running = False
             
             # Cancel all worker tasks
@@ -249,8 +235,7 @@ class FingerprintManager:
                                    fingerprint_types: Optional[List[str]] = None,
                                    priority: int = 5,
                                    metadata: Optional[Dict[str, Any]] = None) -> str:
-        """
-        Submit a fingerprinting job.
+        """        Submit a fingerprinting job.
         
         Args:
             content_id: Unique content identifier
@@ -262,8 +247,7 @@ class FingerprintManager:
             
         Returns:
             Job ID for tracking
-        """
-        try:
+        """        try:
             # Auto-detect content type if not provided
             if content_type is None:
                 content_type = self._detect_content_type(content_path)
@@ -303,8 +287,7 @@ class FingerprintManager:
             raise
     
     async def get_job_status(self, job_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of a fingerprinting job"""
-        try:
+        """Get status of a fingerprinting job"""        try:
             # Check active jobs
             if job_id in self.active_jobs:
                 job = self.active_jobs[job_id]
@@ -351,8 +334,7 @@ class FingerprintManager:
     async def get_fingerprint_result(self, 
                                    job_id: Optional[str] = None,
                                    content_id: Optional[str] = None) -> Optional[FingerprintResult]:
-        """
-        Get fingerprint result by job ID or content ID.
+        """        Get fingerprint result by job ID or content ID.
         
         Args:
             job_id: Job identifier
@@ -360,8 +342,7 @@ class FingerprintManager:
             
         Returns:
             Fingerprint result if available
-        """
-        try:
+        """        try:
             if job_id and job_id in self.completed_jobs:
                 return self.completed_jobs[job_id]
             
@@ -387,8 +368,7 @@ class FingerprintManager:
                                  content_types: Optional[List[ContentType]] = None,
                                  similarity_threshold: float = 0.8,
                                  max_results: int = 50) -> List[Dict[str, Any]]:
-        """
-        Find similar content using fingerprint matching.
+        """        Find similar content using fingerprint matching.
         
         Args:
             query_content_id: ID of query content
@@ -398,8 +378,7 @@ class FingerprintManager:
             
         Returns:
             List of similar content matches
-        """
-        try:
+        """        try:
             # Get query fingerprint
             query_result = await self.get_fingerprint_result(content_id=query_content_id)
             if not query_result:
@@ -442,8 +421,7 @@ class FingerprintManager:
     async def batch_fingerprint(self, 
                               content_items: List[Dict[str, Any]],
                               batch_size: int = 20) -> Dict[str, str]:
-        """
-        Submit multiple fingerprinting jobs in batches.
+        """        Submit multiple fingerprinting jobs in batches.
         
         Args:
             content_items: List of content item dictionaries
@@ -451,8 +429,7 @@ class FingerprintManager:
             
         Returns:
             Dictionary mapping content_id to job_id
-        """
-        try:
+        """        try:
             job_mapping = {}
             
             # Process in batches
@@ -486,8 +463,7 @@ class FingerprintManager:
             return {}
     
     async def cleanup_expired_jobs(self, max_age_hours: int = 24):
-        """Clean up expired jobs and results"""
-        try:
+        """Clean up expired jobs and results"""        try:
             cutoff_time = datetime.utcnow() - timedelta(hours=max_age_hours)
             
             # Clean up completed jobs
@@ -523,8 +499,7 @@ class FingerprintManager:
             self.logger.error(f"Error cleaning up expired jobs: {e}")
     
     def get_system_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive system statistics"""
-        try:
+        """Get comprehensive system statistics"""        try:
             performance_stats = self.performance_monitor.get_performance_report()
             
             return {
@@ -563,8 +538,7 @@ class FingerprintManager:
     # Private helper methods
     
     async def _worker_loop(self, worker_name: str):
-        """Main worker loop for processing jobs"""
-        self.logger.info(f"Worker {worker_name} started")
+        """Main worker loop for processing jobs"""        self.logger.info(f"Worker {worker_name} started")
         
         while self.workers_running:
             try:
@@ -585,8 +559,7 @@ class FingerprintManager:
     
     @performance_timer
     async def _process_job(self, job: FingerprintJob, worker_name: str):
-        """Process a single fingerprinting job"""
-        try:
+        """Process a single fingerprinting job"""        try:
             self.logger.info(f"Worker {worker_name} processing job {job.job_id}")
             
             # Update job status
@@ -670,8 +643,7 @@ class FingerprintManager:
             await self._handle_job_failure(job, str(e))
     
     async def _store_result(self, job: FingerprintJob, result: FingerprintResult):
-        """Store fingerprint result"""
-        try:
+        """Store fingerprint result"""        try:
             # Add to completed jobs
             job.status = FingerprintStatus.COMPLETED
             job.completed_at = datetime.utcnow()
@@ -696,8 +668,7 @@ class FingerprintManager:
             self.logger.error(f"Error storing result for job {job.job_id}: {e}")
     
     async def _handle_job_failure(self, job: FingerprintJob, error_message: str):
-        """Handle job failure with retry logic"""
-        try:
+        """Handle job failure with retry logic"""        try:
             job.retry_count += 1
             job.error_message = error_message
             
@@ -724,8 +695,7 @@ class FingerprintManager:
             self.logger.error(f"Error handling job failure: {e}")
     
     def _detect_content_type(self, file_path: str) -> ContentType:
-        """Auto-detect content type from file extension"""
-        try:
+        """Auto-detect content type from file extension"""        try:
             file_ext = Path(file_path).suffix.lower()
             
             audio_extensions = {'.mp3', '.wav', '.flac', '.aac', '.ogg', '.m4a', '.wma'}
@@ -749,8 +719,7 @@ class FingerprintManager:
             return ContentType.UNKNOWN
     
     def _get_default_fingerprint_types(self, content_type: ContentType) -> List[str]:
-        """Get default fingerprint types for content type"""
-        defaults = {
+        """Get default fingerprint types for content type"""        defaults = {
             ContentType.AUDIO: ['perceptual_hash', 'spectral_features', 'chromaprint'],
             ContentType.VIDEO: ['frame_hash', 'color_histogram', 'motion_analysis'],
             ContentType.IMAGE: ['perceptual_hash', 'feature_descriptor', 'color_histogram'],
@@ -760,8 +729,7 @@ class FingerprintManager:
         return defaults.get(content_type, [])
     
     def _generate_cache_key(self, content_id: str, content_path: str, fingerprint_types: Optional[List[str]]) -> str:
-        """Generate cache key for fingerprint result"""
-        components = [content_id, content_path]
+        """Generate cache key for fingerprint result"""        components = [content_id, content_path]
         if fingerprint_types:
             components.extend(sorted(fingerprint_types))
         
@@ -769,8 +737,7 @@ class FingerprintManager:
         return hashlib.sha256(cache_string.encode()).hexdigest()
     
     def _calculate_job_progress(self, job: FingerprintJob) -> int:
-        """Calculate job progress percentage"""
-        if job.status == FingerprintStatus.PENDING:
+        """Calculate job progress percentage"""        if job.status == FingerprintStatus.PENDING:
             return 0
         elif job.status == FingerprintStatus.PROCESSING:
             # Estimate progress based on processing time
@@ -788,8 +755,7 @@ class FingerprintManager:
             return 0
     
     def _calculate_confidence_score(self, fingerprints: Dict[str, Any]) -> float:
-        """Calculate overall confidence score for fingerprints"""
-        try:
+        """Calculate overall confidence score for fingerprints"""        try:
             if not fingerprints:
                 return 0.0
             
@@ -814,8 +780,7 @@ class FingerprintManager:
     async def _calculate_content_similarity(self, 
                                           result1: FingerprintResult, 
                                           result2: FingerprintResult) -> Dict[str, float]:
-        """Calculate similarity between two fingerprint results"""
-        try:
+        """Calculate similarity between two fingerprint results"""        try:
             similarities = {}
             
             # Compare fingerprints of the same type
@@ -850,8 +815,7 @@ class FingerprintManager:
             return {}
     
     async def _compare_audio_fingerprints(self, fp1, fp2) -> float:
-        """Compare audio fingerprints"""
-        try:
+        """Compare audio fingerprints"""        try:
             # Placeholder - would use actual audio fingerprint comparison
             return 0.8  # Dummy similarity
         except Exception as e:
@@ -859,8 +823,7 @@ class FingerprintManager:
             return 0.0
     
     async def _compare_video_fingerprints(self, fp1, fp2) -> float:
-        """Compare video fingerprints"""
-        try:
+        """Compare video fingerprints"""        try:
             # Placeholder - would use actual video fingerprint comparison
             return 0.7  # Dummy similarity
         except Exception as e:
@@ -868,8 +831,7 @@ class FingerprintManager:
             return 0.0
     
     async def _compare_image_fingerprints(self, fp1, fp2) -> float:
-        """Compare image fingerprints"""
-        try:
+        """Compare image fingerprints"""        try:
             # Use the image fingerprinter's comparison method
             if hasattr(fp1, 'fingerprint_type') and hasattr(fp2, 'fingerprint_type'):
                 result = await self.image_fingerprinter.compare_fingerprints(fp1, fp2)
@@ -880,8 +842,7 @@ class FingerprintManager:
             return 0.0
     
     async def _compare_text_fingerprints(self, fp1, fp2) -> float:
-        """Compare text fingerprints"""
-        try:
+        """Compare text fingerprints"""        try:
             # Use the text fingerprinter's comparison method
             if hasattr(fp1, 'fingerprint_type') and hasattr(fp2, 'fingerprint_type'):
                 result = await self.text_fingerprinter.compare_fingerprints(fp1, fp2)
@@ -892,8 +853,7 @@ class FingerprintManager:
             return 0.0
     
     async def _save_to_persistent_storage(self, result: FingerprintResult):
-        """Save result to persistent storage"""
-        try:
+        """Save result to persistent storage"""        try:
             # Create content-specific directory
             content_dir = self.storage_path / result.content_type.value / result.content_id
             content_dir.mkdir(parents=True, exist_ok=True)
@@ -921,8 +881,7 @@ class FingerprintManager:
             self.logger.error(f"Error saving to persistent storage: {e}")
     
     async def close(self):
-        """Cleanup resources"""
-        try:
+        """Cleanup resources"""        try:
             # Stop workers
             await self.stop_workers()
             
@@ -945,15 +904,13 @@ class FingerprintManager:
 _manager_instance: Optional[FingerprintManager] = None
 
 def get_fingerprint_manager(config: Optional[FingerprintingSystemConfig] = None) -> FingerprintManager:
-    """Get global fingerprint manager instance"""
-    global _manager_instance
+    """Get global fingerprint manager instance"""    global _manager_instance
     if _manager_instance is None:
         _manager_instance = FingerprintManager(config)
     return _manager_instance
 
 def reset_fingerprint_manager():
-    """Reset global fingerprint manager instance"""
-    global _manager_instance
+    """Reset global fingerprint manager instance"""    global _manager_instance
     if _manager_instance:
         asyncio.create_task(_manager_instance.close())
     _manager_instance = None

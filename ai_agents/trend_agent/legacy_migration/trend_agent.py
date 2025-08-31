@@ -1,5 +1,4 @@
-"""
-Trend Agent - Advanced AI-Powered Trend Analysis & Prediction System
+"""Trend Agent - Advanced AI-Powered Trend Analysis & Prediction System
 
 Real-time trend detection, viral content analysis, and future trend prediction engine
 for multi-format content creators in the IA-Influencer-Agent ecosystem.
@@ -25,9 +24,7 @@ Team Specialties:
 - Database Administrator & Security Expert: High-performance data storage and protection
 - Microservices Architect & DevOps Engineer: Scalable distributed systems and deployment
 - AI Prompt Engineer & Content Protection: Intelligent content optimization and rights protection
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 import time
@@ -67,8 +64,7 @@ from ...data_management.trend_storage import TrendDataManager
 logger = logging.getLogger(__name__)
 
 class TrendCategory(Enum):
-    """Trend categorization for content optimization"""
-    VIRAL_CONTENT = "viral_content"
+    """Trend categorization for content optimization"""    VIRAL_CONTENT = "viral_content"
     EMERGING_HASHTAGS = "emerging_hashtags"
     MUSIC_TRENDS = "music_trends"
     VIDEO_TRENDS = "video_trends"
@@ -80,8 +76,7 @@ class TrendCategory(Enum):
     BRAND_TRENDS = "brand_trends"
 
 class TrendSource(Enum):
-    """External trend data sources"""
-    TIKTOK = "tiktok"
+    """External trend data sources"""    TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     YOUTUBE = "youtube"
     TWITTER = "twitter"
@@ -93,8 +88,7 @@ class TrendSource(Enum):
 
 @dataclass
 class TrendAnalysisRequest:
-    """Request structure for trend analysis"""
-    user_id: str
+    """Request structure for trend analysis"""    user_id: str
     content_type: ContentType
     target_platforms: List[TrendSource]
     analysis_depth: str = "comprehensive"  # basic, standard, comprehensive
@@ -105,8 +99,7 @@ class TrendAnalysisRequest:
 
 @dataclass
 class TrendInsights:
-    """Comprehensive trend analysis results"""
-    trending_topics: List[Dict[str, Any]]
+    """Comprehensive trend analysis results"""    trending_topics: List[Dict[str, Any]]
     viral_patterns: Dict[str, Any]
     optimal_timing: Dict[str, List[str]]
     hashtag_suggestions: List[Dict[str, Any]]
@@ -118,13 +111,11 @@ class TrendInsights:
     generated_at: datetime
 
 class TrendAgent(BaseAgent):
-    """
-    Advanced Trend Analysis Agent
+    """    Advanced Trend Analysis Agent
     
     Provides comprehensive trend analysis, viral content prediction, and optimization
     recommendations for content creators across all platforms and content types.
-    """
-    
+    """    
     def __init__(
         self,
         agent_id: Optional[str] = None,
@@ -157,8 +148,7 @@ class TrendAgent(BaseAgent):
         self._executor = ThreadPoolExecutor(max_workers=self.max_concurrent_analyses)
 
     async def initialize(self) -> bool:
-        """Initialize all trend analysis components and connections"""
-        try:
+        """Initialize all trend analysis components and connections"""        try:
             logger.info(f"Initializing TrendAgent {self.agent_id}")
             
             # Initialize Redis connection for caching
@@ -207,16 +197,14 @@ class TrendAgent(BaseAgent):
         self, 
         request: TrendAnalysisRequest
     ) -> TrendInsights:
-        """
-        Perform comprehensive trend analysis
+        """        Perform comprehensive trend analysis
         
         Args:
             request: Trend analysis request with parameters
             
         Returns:
             TrendInsights: Complete trend analysis results
-        """
-        if request.user_id in self._active_analyses:
+        """        if request.user_id in self._active_analyses:
             raise ProcessingError(f"Analysis already in progress for user {request.user_id}")
         
         self._active_analyses.add(request.user_id)
@@ -303,8 +291,7 @@ class TrendAgent(BaseAgent):
         content_metadata: ContentMetadata,
         creator_profile: CreatorProfile
     ) -> ViralityScore:
-        """
-        Predict virality potential of content
+        """        Predict virality potential of content
         
         Args:
             content_metadata: Content to analyze
@@ -312,8 +299,7 @@ class TrendAgent(BaseAgent):
             
         Returns:
             ViralityScore: Virality prediction with confidence
-        """
-        try:
+        """        try:
             with self._performance_monitor.time_operation("virality_prediction"):
                 # Prepare features for ML model
                 features = await self._prepare_virality_features(
@@ -350,8 +336,7 @@ class TrendAgent(BaseAgent):
         platforms: List[TrendSource],
         limit: int = 50
     ) -> List[Dict[str, Any]]:
-        """Get trending hashtags for specific content type and platforms"""
-        try:
+        """Get trending hashtags for specific content type and platforms"""        try:
             cache_key = f"trending_hashtags:{content_type.value}:{':'.join(p.value for p in platforms)}"
             
             # Check cache first
@@ -387,8 +372,7 @@ class TrendAgent(BaseAgent):
         self, 
         request: TrendAnalysisRequest
     ) -> Dict[str, Any]:
-        """Collect trending data from multiple platforms"""
-        trending_data = {
+        """Collect trending data from multiple platforms"""        trending_data = {
             "topics": [],
             "hashtags": [],
             "content_samples": [],
@@ -422,8 +406,7 @@ class TrendAgent(BaseAgent):
         platform: TrendSource,
         content_type: ContentType
     ) -> Dict[str, Any]:
-        """Collect trending data from a specific platform"""
-        try:
+        """Collect trending data from a specific platform"""        try:
             return await self._platform_integrator.get_trending_data(
                 platform.value, content_type
             )
@@ -436,8 +419,7 @@ class TrendAgent(BaseAgent):
         trending_data: Dict[str, Any],
         content_type: ContentType
     ) -> Dict[str, Any]:
-        """Analyze patterns in viral content"""
-        viral_patterns = {
+        """Analyze patterns in viral content"""        viral_patterns = {
             "common_elements": [],
             "timing_patterns": {},
             "engagement_triggers": [],
@@ -470,8 +452,7 @@ class TrendAgent(BaseAgent):
         platforms: List[TrendSource],
         creator_profile: Optional[CreatorProfile]
     ) -> Dict[str, List[str]]:
-        """Calculate optimal posting times for each platform"""
-        optimal_timing = {}
+        """Calculate optimal posting times for each platform"""        optimal_timing = {}
         
         for platform in platforms:
             # Get platform-specific optimal times
@@ -487,8 +468,7 @@ class TrendAgent(BaseAgent):
         trending_data: Dict[str, Any],
         content_type: ContentType
     ) -> List[Dict[str, Any]]:
-        """Generate hashtag suggestions based on trending data"""
-        hashtags = trending_data.get("hashtags", [])
+        """Generate hashtag suggestions based on trending data"""        hashtags = trending_data.get("hashtags", [])
         
         # Rank hashtags by relevance and trending score
         ranked_hashtags = []
@@ -520,8 +500,7 @@ class TrendAgent(BaseAgent):
         trending_data: Dict[str, Any],
         creator_profile: Optional[CreatorProfile]
     ) -> Dict[str, Any]:
-        """Generate content optimization recommendations"""
-        optimization = {
+        """Generate content optimization recommendations"""        optimization = {
             "content_themes": [],
             "visual_elements": {},
             "audio_recommendations": {},
@@ -543,8 +522,7 @@ class TrendAgent(BaseAgent):
         return optimization
 
     async def _background_trend_monitoring(self):
-        """Background task for continuous trend monitoring"""
-        while self.status == AgentStatus.ACTIVE:
+        """Background task for continuous trend monitoring"""        while self.status == AgentStatus.ACTIVE:
             try:
                 # Update global trends every interval
                 if (
@@ -561,8 +539,7 @@ class TrendAgent(BaseAgent):
                 await asyncio.sleep(300)  # Wait 5 minutes on error
 
     async def _update_global_trends(self):
-        """Update global trend data in background"""
-        try:
+        """Update global trend data in background"""        try:
             logger.info("Updating global trend data")
             
             # Collect data from all platforms
@@ -598,8 +575,7 @@ class TrendAgent(BaseAgent):
             logger.error(f"Failed to update global trends: {str(e)}")
 
     async def cleanup(self):
-        """Clean up resources and connections"""
-        try:
+        """Clean up resources and connections"""        try:
             logger.info(f"Cleaning up TrendAgent {self.agent_id}")
             
             self.status = AgentStatus.STOPPING
@@ -630,10 +606,8 @@ class TrendAgent(BaseAgent):
     # (Implementation of remaining private methods for space efficiency)
 
 class TrendAgentManager:
-    """
-    Manager for TrendAgent instances with load balancing and resource management
-    """
-    
+    """    Manager for TrendAgent instances with load balancing and resource management
+    """    
     def __init__(self, max_agents: int = 5):
         self.max_agents = max_agents
         self.agents: Dict[str, TrendAgent] = {}
@@ -641,8 +615,7 @@ class TrendAgentManager:
         self._lock = asyncio.Lock()
 
     async def get_agent(self, user_id: str) -> TrendAgent:
-        """Get or create an available TrendAgent instance"""
-        async with self._lock:
+        """Get or create an available TrendAgent instance"""        async with self._lock:
             # Find least loaded agent
             if self.agents:
                 agent_id = min(self.agent_loads.items(), key=lambda x: x[1])[0]
@@ -665,14 +638,12 @@ class TrendAgentManager:
             return self.agents[agent_id]
 
     async def release_agent(self, agent: TrendAgent):
-        """Release agent back to pool"""
-        async with self._lock:
+        """Release agent back to pool"""        async with self._lock:
             if agent.agent_id in self.agent_loads:
                 self.agent_loads[agent.agent_id] = max(0, self.agent_loads[agent.agent_id] - 1)
 
     async def shutdown_all(self):
-        """Shutdown all agent instances"""
-        tasks = []
+        """Shutdown all agent instances"""        tasks = []
         for agent in self.agents.values():
             tasks.append(agent.cleanup())
         

@@ -1,5 +1,4 @@
-"""
-🕷️ Intelligent Platform Crawler System
+"""🕷️ Intelligent Platform Crawler System
 ======================================
 
 Advanced AI-powered web crawling for content piracy detection across platforms.
@@ -30,9 +29,7 @@ This module provides:
 - Dynamic content extraction and analysis
 - Real-time monitoring and alerting
 - Scalable distributed crawling architecture
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Set
 from datetime import datetime, timedelta
@@ -55,8 +52,7 @@ import time
 logger = logging.getLogger(__name__)
 
 class PlatformType(Enum):
-    """Types of platforms for crawling."""
-    VIDEO_STREAMING = "video_streaming"
+    """Types of platforms for crawling."""    VIDEO_STREAMING = "video_streaming"
     AUDIO_STREAMING = "audio_streaming"
     SOCIAL_MEDIA = "social_media"
     FILE_SHARING = "file_sharing"
@@ -67,8 +63,7 @@ class PlatformType(Enum):
     MARKETPLACE = "marketplace"
 
 class CrawlStatus(Enum):
-    """Status of crawling operations."""
-    PENDING = "pending"
+    """Status of crawling operations."""    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -77,8 +72,7 @@ class CrawlStatus(Enum):
     REQUIRES_CAPTCHA = "requires_captcha"
 
 class ContentDetectionMethod(Enum):
-    """Methods for detecting content on platforms."""
-    METADATA_ANALYSIS = "metadata_analysis"
+    """Methods for detecting content on platforms."""    METADATA_ANALYSIS = "metadata_analysis"
     VISUAL_SIMILARITY = "visual_similarity"
     AUDIO_FINGERPRINT = "audio_fingerprint"
     TEXT_MATCHING = "text_matching"
@@ -87,8 +81,7 @@ class ContentDetectionMethod(Enum):
 
 @dataclass
 class PlatformConfig:
-    """Configuration for specific platform crawling."""
-    platform_name: str
+    """Configuration for specific platform crawling."""    platform_name: str
     platform_type: PlatformType
     base_url: str
     search_endpoints: List[str]
@@ -103,8 +96,7 @@ class PlatformConfig:
 
 @dataclass
 class CrawlResult:
-    """Result of a crawling operation."""
-    platform: str
+    """Result of a crawling operation."""    platform: str
     search_query: str
     crawl_timestamp: datetime
     urls_discovered: List[str]
@@ -116,8 +108,7 @@ class CrawlResult:
 
 @dataclass
 class DetectedContent:
-    """Content detected during crawling."""
-    detection_id: str
+    """Content detected during crawling."""    detection_id: str
     platform: str
     content_url: str
     content_type: str
@@ -134,16 +125,14 @@ class DetectedContent:
     evidence_data: Dict[str, Any]
 
 class UserAgentRotator:
-    """Rotates user agents to avoid detection."""
-    
+    """Rotates user agents to avoid detection."""    
     def __init__(self):
         self.ua = fake_useragent.UserAgent()
         self.used_agents = set()
         self.agent_history = []
         
     def get_random_agent(self) -> str:
-        """Get a random user agent."""
-        agent = self.ua.random
+        """Get a random user agent."""        agent = self.ua.random
         
         # Ensure we don't repeat agents too quickly
         if agent in self.used_agents and len(self.used_agents) < 50:
@@ -160,16 +149,14 @@ class UserAgentRotator:
         return agent
 
 class ProxyManager:
-    """Manages proxy rotation for crawling."""
-    
+    """Manages proxy rotation for crawling."""    
     def __init__(self, proxy_list: List[str]):
         self.proxy_list = proxy_list
         self.current_proxy_index = 0
         self.failed_proxies = set()
         
     def get_next_proxy(self) -> Optional[str]:
-        """Get the next available proxy."""
-        available_proxies = [p for p in self.proxy_list if p not in self.failed_proxies]
+        """Get the next available proxy."""        available_proxies = [p for p in self.proxy_list if p not in self.failed_proxies]
         
         if not available_proxies:
             # Reset failed proxies if all are failed
@@ -184,19 +171,16 @@ class ProxyManager:
         return None
     
     def mark_proxy_failed(self, proxy: str):
-        """Mark a proxy as failed."""
-        self.failed_proxies.add(proxy)
+        """Mark a proxy as failed."""        self.failed_proxies.add(proxy)
 
 class RateLimiter:
-    """Manages rate limiting for different platforms."""
-    
+    """Manages rate limiting for different platforms."""    
     def __init__(self):
         self.platform_timers = {}
         self.global_timer = 0
         
     async def wait_if_needed(self, platform: str, delay: float):
-        """Wait if rate limiting is needed for platform."""
-        now = time.time()
+        """Wait if rate limiting is needed for platform."""        now = time.time()
         
         # Check platform-specific rate limit
         last_request = self.platform_timers.get(platform, 0)
@@ -219,8 +203,7 @@ class RateLimiter:
         self.global_timer = time.time()
 
 class ContentExtractor:
-    """Extracts content information from web pages."""
-    
+    """Extracts content information from web pages."""    
     def __init__(self):
         self.audio_extensions = {'.mp3', '.wav', '.flac', '.aac', '.ogg', '.m4a', '.wma'}
         self.video_extensions = {'.mp4', '.avi', '.mkv', '.mov', '.wmv', '.flv', '.webm'}
@@ -230,8 +213,7 @@ class ContentExtractor:
                                  html_content: str, 
                                  url: str,
                                  platform_config: PlatformConfig) -> List[DetectedContent]:
-        """Extract content information from HTML."""
-        try:
+        """Extract content information from HTML."""        try:
             soup = BeautifulSoup(html_content, 'html.parser')
             detected_contents = []
             
@@ -273,8 +255,7 @@ class ContentExtractor:
             return []
     
     async def _extract_video_info(self, video_element, page_url: str, platform: str) -> Optional[DetectedContent]:
-        """Extract video content information."""
-        try:
+        """Extract video content information."""        try:
             src = video_element.get('src')
             if not src:
                 source = video_element.find('source')
@@ -316,8 +297,7 @@ class ContentExtractor:
             return None
     
     async def _extract_audio_info(self, audio_element, page_url: str, platform: str) -> Optional[DetectedContent]:
-        """Extract audio content information."""
-        try:
+        """Extract audio content information."""        try:
             src = audio_element.get('src')
             if not src:
                 source = audio_element.find('source')
@@ -355,8 +335,7 @@ class ContentExtractor:
             return None
     
     async def _extract_download_link_info(self, link_element, page_url: str, platform: str) -> Optional[DetectedContent]:
-        """Extract download link information."""
-        try:
+        """Extract download link information."""        try:
             href = link_element.get('href')
             if not href:
                 return None
@@ -406,8 +385,7 @@ class ContentExtractor:
             return None
     
     async def _extract_embed_info(self, embed_element, page_url: str, platform: str) -> Optional[DetectedContent]:
-        """Extract embedded content information."""
-        try:
+        """Extract embedded content information."""        try:
             src = embed_element.get('src')
             if not src:
                 return None
@@ -448,8 +426,7 @@ class ContentExtractor:
             return None
     
     async def _extract_surrounding_metadata(self, element) -> Dict[str, Any]:
-        """Extract metadata from surrounding HTML elements."""
-        metadata = {}
+        """Extract metadata from surrounding HTML elements."""        metadata = {}
         
         try:
             # Look for view count
@@ -491,21 +468,17 @@ class ContentExtractor:
         return metadata
 
 class IntelligentPlatformCrawler:
-    """
-    Advanced intelligent platform crawler system.
+    """    Advanced intelligent platform crawler system.
     
     Provides comprehensive web crawling capabilities for content piracy detection
     across multiple platforms with anti-detection and scalability features.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize the Intelligent Platform Crawler.
+        """        Initialize the Intelligent Platform Crawler.
         
         Args:
             config: Crawler configuration parameters
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self._initialized = False
         
         # Initialize components
@@ -547,13 +520,11 @@ class IntelligentPlatformCrawler:
         logger.info("Intelligent Platform Crawler initialized")
     
     async def initialize(self) -> bool:
-        """
-        Initialize crawler components and sessions.
+        """        Initialize crawler components and sessions.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             # Initialize HTTP session
             timeout = aiohttp.ClientTimeout(total=self.default_timeout)
             self.session = aiohttp.ClientSession(timeout=timeout)
@@ -574,8 +545,7 @@ class IntelligentPlatformCrawler:
                            platform_name: str,
                            search_queries: List[str],
                            max_depth: int = 3) -> List[CrawlResult]:
-        """
-        Crawl a specific platform for content.
+        """        Crawl a specific platform for content.
         
         Args:
             platform_name: Name of platform to crawl
@@ -584,8 +554,7 @@ class IntelligentPlatformCrawler:
             
         Returns:
             List of crawl results
-        """
-        if not self._initialized:
+        """        if not self._initialized:
             await self.initialize()
         
         if platform_name not in self.platform_configs:
@@ -627,16 +596,14 @@ class IntelligentPlatformCrawler:
     
     async def monitor_platforms_continuously(self, 
                                           monitoring_config: Dict[str, Any]) -> asyncio.Task:
-        """
-        Start continuous monitoring of multiple platforms.
+        """        Start continuous monitoring of multiple platforms.
         
         Args:
             monitoring_config: Configuration for continuous monitoring
             
         Returns:
             Async task for monitoring
-        """
-        async def monitoring_loop():
+        """        async def monitoring_loop():
             while True:
                 try:
                     platforms = monitoring_config.get('platforms', [])
@@ -677,8 +644,7 @@ class IntelligentPlatformCrawler:
                                 platform_config: PlatformConfig,
                                 query: str,
                                 max_depth: int) -> CrawlResult:
-        """Crawl a single query on a platform."""
-        start_time = datetime.now()
+        """Crawl a single query on a platform."""        start_time = datetime.now()
         urls_discovered = []
         content_matches = []
         
@@ -742,8 +708,7 @@ class IntelligentPlatformCrawler:
             )
     
     async def _fetch_page_content(self, url: str, platform_config: PlatformConfig) -> Optional[str]:
-        """Fetch page content with anti-detection measures."""
-        try:
+        """Fetch page content with anti-detection measures."""        try:
             headers = {
                 'User-Agent': self.user_agent_rotator.get_random_agent(),
                 **platform_config.custom_headers
@@ -780,8 +745,7 @@ class IntelligentPlatformCrawler:
             return None
     
     async def _fetch_with_selenium(self, url: str, headers: Dict[str, str]) -> Optional[str]:
-        """Fetch page content using Selenium for JavaScript rendering."""
-        try:
+        """Fetch page content using Selenium for JavaScript rendering."""        try:
             if not self.selenium_driver:
                 await self._initialize_selenium_driver()
             
@@ -805,8 +769,7 @@ class IntelligentPlatformCrawler:
             return None
     
     async def _initialize_selenium_driver(self):
-        """Initialize Selenium WebDriver with stealth options."""
-        try:
+        """Initialize Selenium WebDriver with stealth options."""        try:
             chrome_options = Options()
             chrome_options.add_argument('--headless')
             chrome_options.add_argument('--no-sandbox')
@@ -829,8 +792,7 @@ class IntelligentPlatformCrawler:
             self.enable_javascript = False
     
     def _load_platform_configurations(self):
-        """Load platform-specific crawling configurations."""
-        # Predefined platform configurations
+        """Load platform-specific crawling configurations."""        # Predefined platform configurations
         self.platform_configs = {
             'youtube': PlatformConfig(
                 platform_name='youtube',
@@ -897,8 +859,7 @@ class IntelligentPlatformCrawler:
                 logger.error(f"Failed to load platform config for {name}: {e}")
     
     async def _generate_search_urls(self, platform_config: PlatformConfig, query: str) -> List[str]:
-        """Generate search URLs for a platform and query."""
-        urls = []
+        """Generate search URLs for a platform and query."""        urls = []
         
         for endpoint in platform_config.search_endpoints:
             search_url = platform_config.base_url + endpoint.format(query.replace(' ', '+'))
@@ -907,8 +868,7 @@ class IntelligentPlatformCrawler:
         return urls
     
     async def _extract_page_urls(self, html_content: str, base_url: str) -> List[str]:
-        """Extract additional URLs from a page."""
-        try:
+        """Extract additional URLs from a page."""        try:
             soup = BeautifulSoup(html_content, 'html.parser')
             urls = []
             
@@ -930,8 +890,7 @@ class IntelligentPlatformCrawler:
             return []
     
     async def cleanup(self):
-        """Clean up crawler resources."""
-        try:
+        """Clean up crawler resources."""        try:
             if self.session:
                 await self.session.close()
             
@@ -944,8 +903,7 @@ class IntelligentPlatformCrawler:
             logger.error(f"Cleanup failed: {e}")
     
     def get_crawl_statistics(self) -> Dict[str, Any]:
-        """Get crawling statistics."""
-        return {
+        """Get crawling statistics."""        return {
             **self.crawl_stats,
             'crawl_results_count': len(self.crawl_results),
             'detected_content_count': len(self.detected_content),

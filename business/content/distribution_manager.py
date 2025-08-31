@@ -1,5 +1,4 @@
-"""
-Content Distribution Manager - IA Influencer Agent Platform
+"""Content Distribution Manager - IA Influencer Agent Platform
 =========================================================
 
 Advanced multi-platform content distribution system with automated publishing,
@@ -7,9 +6,7 @@ scheduling, and platform-specific optimization for maximum reach and engagement.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -30,8 +27,7 @@ settings = get_settings()
 
 
 class ContentDistributionManager:
-    """Advanced multi-platform content distribution system."""
-    
+    """Advanced multi-platform content distribution system."""    
     def __init__(self):
         self.db = get_database()
         self.platform_manager = SocialPlatformManager()
@@ -105,8 +101,7 @@ class ContentDistributionManager:
         user_id: UUID,
         distribution_plan: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Distribute content across multiple platforms.
+        """        Distribute content across multiple platforms.
         
         Args:
             content_id: ID of content to distribute
@@ -115,8 +110,7 @@ class ContentDistributionManager:
             
         Returns:
             Distribution results and tracking information
-        """
-        try:
+        """        try:
             # Validate distribution plan
             await self._validate_distribution_plan(distribution_plan, user_id)
             
@@ -171,8 +165,7 @@ class ContentDistributionManager:
         distribution_plan: Dict[str, Any], 
         user_id: UUID
     ) -> None:
-        """Validate distribution plan and user permissions."""
-        required_fields = ['platforms']
+        """Validate distribution plan and user permissions."""        required_fields = ['platforms']
         for field in required_fields:
             if field not in distribution_plan:
                 raise DistributionError(f"Missing required field: {field}")
@@ -201,8 +194,7 @@ class ContentDistributionManager:
         user_id: UUID,
         distribution_plan: Dict[str, Any]
     ) -> DistributionJob:
-        """Create distribution job record."""
-        job_data = {
+        """Create distribution job record."""        job_data = {
             'content_id': content_id,
             'user_id': user_id,
             'platforms': list(distribution_plan['platforms'].keys()),
@@ -220,8 +212,7 @@ class ContentDistributionManager:
         content_info: Any,
         distribution_plan: Dict[str, Any]
     ) -> Dict[str, Dict[str, Any]]:
-        """Prepare content variants for each platform."""
-        platform_preparations = {}
+        """Prepare content variants for each platform."""        platform_preparations = {}
         platforms_config = distribution_plan['platforms']
         
         for platform, platform_settings in platforms_config.items():
@@ -270,8 +261,7 @@ class ContentDistributionManager:
         platform: str,
         platform_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Check if content complies with platform requirements."""
-        compliance = {
+        """Check if content complies with platform requirements."""        compliance = {
             'compliant': True,
             'issues': [],
             'required_changes': []
@@ -327,8 +317,7 @@ class ContentDistributionManager:
         platform: str,
         platform_config: Dict[str, Any]
     ) -> Any:
-        """Optimize content for specific platform requirements."""
-        # This would interface with the MultiFormatHandler
+        """Optimize content for specific platform requirements."""        # This would interface with the MultiFormatHandler
         from .format_handler import MultiFormatHandler
         
         format_handler = MultiFormatHandler()
@@ -377,8 +366,7 @@ class ContentDistributionManager:
         platform_settings: Dict[str, Any],
         platform_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Prepare metadata for specific platform."""
-        metadata = {}
+        """Prepare metadata for specific platform."""        metadata = {}
         
         # Common metadata
         if 'title' in platform_settings:
@@ -403,8 +391,7 @@ class ContentDistributionManager:
         platform: str,
         platform_settings: Dict[str, Any]
     ) -> datetime:
-        """Calculate optimal posting time for platform."""
-        # If specific time is provided, use it
+        """Calculate optimal posting time for platform."""        # If specific time is provided, use it
         if 'scheduled_time' in platform_settings:
             return datetime.fromisoformat(platform_settings['scheduled_time'])
         
@@ -440,8 +427,7 @@ class ContentDistributionManager:
         platform_preparations: Dict[str, Dict[str, Any]],
         distribution_plan: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute distribution based on chosen strategy."""
-        strategy = distribution_plan.get('strategy', 'simultaneous')
+        """Execute distribution based on chosen strategy."""        strategy = distribution_plan.get('strategy', 'simultaneous')
         
         if strategy == 'simultaneous':
             return await self._execute_simultaneous_distribution(
@@ -467,8 +453,7 @@ class ContentDistributionManager:
         distribution_job_id: UUID,
         platform_preparations: Dict[str, Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Execute simultaneous distribution to all platforms."""
-        results = {}
+        """Execute simultaneous distribution to all platforms."""        results = {}
         
         # Create tasks for all platforms
         tasks = []
@@ -498,8 +483,7 @@ class ContentDistributionManager:
         platform_preparations: Dict[str, Dict[str, Any]],
         distribution_plan: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute sequential distribution with delays."""
-        results = {}
+        """Execute sequential distribution with delays."""        results = {}
         delay_between_uploads = distribution_plan.get('sequential_delay', 300)  # 5 minutes
         
         for i, (platform, preparation) in enumerate(platform_preparations.items()):
@@ -527,8 +511,7 @@ class ContentDistributionManager:
         platform_preparations: Dict[str, Dict[str, Any]],
         distribution_plan: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute distribution based on platform priorities."""
-        results = {}
+        """Execute distribution based on platform priorities."""        results = {}
         
         # Get platform priorities
         platform_priorities = distribution_plan.get('platform_priorities', {})
@@ -585,8 +568,7 @@ class ContentDistributionManager:
         distribution_job_id: UUID,
         platform_preparations: Dict[str, Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Execute distribution at optimal engagement times."""
-        results = {}
+        """Execute distribution at optimal engagement times."""        results = {}
         
         # Schedule uploads at optimal times
         scheduled_uploads = []
@@ -638,8 +620,7 @@ class ContentDistributionManager:
         platform: str,
         preparation: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Upload content to specific platform."""
-        try:
+        """Upload content to specific platform."""        try:
             # Respect API rate limits
             await self._check_rate_limits(platform)
             
@@ -683,8 +664,7 @@ class ContentDistributionManager:
             }
     
     async def _check_rate_limits(self, platform: str) -> None:
-        """Check and enforce API rate limits."""
-        platform_config = self.platform_configs.get(platform, {})
+        """Check and enforce API rate limits."""        platform_config = self.platform_configs.get(platform, {})
         api_limits = platform_config.get('api_limits', {})
         
         # This would check against rate limit tracking in database
@@ -692,49 +672,40 @@ class ContentDistributionManager:
         await asyncio.sleep(1)
     
     async def _update_rate_limit_tracking(self, platform: str) -> None:
-        """Update rate limit tracking after API call."""
-        # This would update rate limit counters in database
+        """Update rate limit tracking after API call."""        # This would update rate limit counters in database
         pass
     
     # Platform-specific upload methods
     async def _upload_to_youtube(self, preparation: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload content to YouTube."""
-        # This would use YouTube Data API
+        """Upload content to YouTube."""        # This would use YouTube Data API
         return await self.platform_manager.upload_to_youtube(preparation)
     
     async def _upload_to_instagram(self, preparation: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload content to Instagram."""
-        # This would use Instagram Basic Display API
+        """Upload content to Instagram."""        # This would use Instagram Basic Display API
         return await self.platform_manager.upload_to_instagram(preparation)
     
     async def _upload_to_tiktok(self, preparation: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload content to TikTok."""
-        # This would use TikTok API
+        """Upload content to TikTok."""        # This would use TikTok API
         return await self.platform_manager.upload_to_tiktok(preparation)
     
     async def _upload_to_twitter(self, preparation: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload content to Twitter."""
-        # This would use Twitter API v2
+        """Upload content to Twitter."""        # This would use Twitter API v2
         return await self.platform_manager.upload_to_twitter(preparation)
     
     async def _upload_to_facebook(self, preparation: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload content to Facebook."""
-        # This would use Facebook Graph API
+        """Upload content to Facebook."""        # This would use Facebook Graph API
         return await self.platform_manager.upload_to_facebook(preparation)
     
     async def _upload_to_linkedin(self, preparation: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload content to LinkedIn."""
-        # This would use LinkedIn API
+        """Upload content to LinkedIn."""        # This would use LinkedIn API
         return await self.platform_manager.upload_to_linkedin(preparation)
     
     async def _upload_to_spotify(self, preparation: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload content to Spotify."""
-        # This would use Spotify Web API
+        """Upload content to Spotify."""        # This would use Spotify Web API
         return await self.platform_manager.upload_to_spotify(preparation)
     
     async def _upload_to_soundcloud(self, preparation: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload content to SoundCloud."""
-        # This would use SoundCloud API
+        """Upload content to SoundCloud."""        # This would use SoundCloud API
         return await self.platform_manager.upload_to_soundcloud(preparation)
     
     async def _update_distribution_job(
@@ -742,8 +713,7 @@ class ContentDistributionManager:
         distribution_job_id: UUID,
         distribution_results: Dict[str, Any]
     ) -> None:
-        """Update distribution job with results."""
-        # Calculate overall status
+        """Update distribution job with results."""        # Calculate overall status
         successful_uploads = sum(1 for result in distribution_results.values() 
                                if result.get('status') == 'success')
         total_uploads = len(distribution_results)
@@ -769,8 +739,7 @@ class ContentDistributionManager:
         distribution_job_id: UUID,
         distribution_plan: Dict[str, Any]
     ) -> None:
-        """Schedule follow-up actions after distribution."""
-        post_actions = distribution_plan.get('post_distribution_actions', {})
+        """Schedule follow-up actions after distribution."""        post_actions = distribution_plan.get('post_distribution_actions', {})
         
         # Schedule analytics collection
         if post_actions.get('collect_analytics', True):
@@ -803,8 +772,7 @@ class ContentDistributionManager:
                 )
     
     def _calculate_completion_time(self, distribution_plan: Dict[str, Any]) -> datetime:
-        """Calculate estimated completion time."""
-        strategy = distribution_plan.get('strategy', 'simultaneous')
+        """Calculate estimated completion time."""        strategy = distribution_plan.get('strategy', 'simultaneous')
         platform_count = len(distribution_plan['platforms'])
         
         if strategy == 'simultaneous':
@@ -824,8 +792,7 @@ class ContentDistributionManager:
         self, 
         distribution_results: Dict[str, Any]
     ) -> Dict[str, str]:
-        """Generate tracking URLs for uploaded content."""
-        tracking_urls = {}
+        """Generate tracking URLs for uploaded content."""        tracking_urls = {}
         
         for platform, result in distribution_results.items():
             if result.get('status') == 'success':
@@ -841,8 +808,7 @@ class ContentDistributionManager:
         distribution_job_id: UUID, 
         user_id: UUID
     ) -> Dict[str, Any]:
-        """Get distribution job status."""
-        job = await self.db.distribution_jobs.get_by_id(distribution_job_id)
+        """Get distribution job status."""        job = await self.db.distribution_jobs.get_by_id(distribution_job_id)
         if not job or job.user_id != user_id:
             raise DistributionError("Distribution job not found or access denied")
         
@@ -859,8 +825,7 @@ class ContentDistributionManager:
         }
     
     def _calculate_progress(self, job: DistributionJob) -> int:
-        """Calculate distribution progress percentage."""
-        if job.status == DistributionStatus.PENDING:
+        """Calculate distribution progress percentage."""        if job.status == DistributionStatus.PENDING:
             return 0
         elif job.status == DistributionStatus.IN_PROGRESS:
             return 50
@@ -874,8 +839,7 @@ class ContentDistributionManager:
         distribution_job_id: UUID, 
         user_id: UUID
     ) -> Dict[str, Any]:
-        """Cancel pending distribution job."""
-        job = await self.db.distribution_jobs.get_by_id(distribution_job_id)
+        """Cancel pending distribution job."""        job = await self.db.distribution_jobs.get_by_id(distribution_job_id)
         if not job or job.user_id != user_id:
             raise DistributionError("Distribution job not found or access denied")
         
@@ -902,8 +866,7 @@ class ContentDistributionManager:
         distribution_job_id: UUID, 
         user_id: UUID
     ) -> Dict[str, Any]:
-        """Get analytics for distributed content."""
-        job = await self.db.distribution_jobs.get_by_id(distribution_job_id)
+        """Get analytics for distributed content."""        job = await self.db.distribution_jobs.get_by_id(distribution_job_id)
         if not job or job.user_id != user_id:
             raise DistributionError("Distribution job not found or access denied")
         
@@ -930,8 +893,7 @@ class ContentDistributionManager:
         self, 
         platform_analytics: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate analytics summary across platforms."""
-        total_views = 0
+        """Generate analytics summary across platforms."""        total_views = 0
         total_engagement = 0
         total_shares = 0
         successful_platforms = 0
@@ -953,8 +915,7 @@ class ContentDistributionManager:
         }
     
     async def get_supported_platforms(self) -> Dict[str, Any]:
-        """Get list of supported platforms and their configurations."""
-        return {
+        """Get list of supported platforms and their configurations."""        return {
             platform: {
                 'name': platform.title(),
                 'supported_formats': config.get('supported_formats', []),
@@ -966,8 +927,7 @@ class ContentDistributionManager:
         }
     
     def _get_platform_features(self, platform: str) -> List[str]:
-        """Get list of features supported by platform."""
-        features_map = {
+        """Get list of features supported by platform."""        features_map = {
             'youtube': ['video', 'audio', 'live_streaming', 'shorts', 'monetization'],
             'instagram': ['image', 'video', 'stories', 'reels', 'shopping'],
             'tiktok': ['video', 'effects', 'duets', 'sounds'],

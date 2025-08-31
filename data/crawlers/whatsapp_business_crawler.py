@@ -1,5 +1,4 @@
-"""
-WhatsApp Business API Crawler Implementation
+"""WhatsApp Business API Crawler Implementation
 ===========================================
 
 Enterprise-grade WhatsApp Business API content monitoring and analysis crawler.
@@ -22,9 +21,7 @@ will be prosecuted to the FULL EXTENT OF THE LAW under German and
 International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -43,8 +40,7 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class WhatsAppMessage:
-    """WhatsApp Business message information"""
-    message_id: str
+    """WhatsApp Business message information"""    message_id: str
     wa_id: str  # WhatsApp ID of sender
     phone_number: str
     profile_name: Optional[str]
@@ -78,8 +74,7 @@ class WhatsAppMessage:
 
 @dataclass
 class WhatsAppContact:
-    """WhatsApp Business contact information"""
-    wa_id: str
+    """WhatsApp Business contact information"""    wa_id: str
     phone_number: str
     profile_name: Optional[str]
     profile_picture_url: Optional[str]
@@ -102,8 +97,7 @@ class WhatsAppContact:
 
 @dataclass
 class WhatsAppBusinessAccount:
-    """WhatsApp Business account information"""
-    business_account_id: str
+    """WhatsApp Business account information"""    business_account_id: str
     business_phone_number_id: str
     display_phone_number: str
     verified_name: str
@@ -124,8 +118,7 @@ class WhatsAppBusinessAccount:
 
 
 class WhatsAppBusinessCrawler(PlatformCrawler):
-    """
-    Advanced WhatsApp Business API crawler for messaging content monitoring.
+    """    Advanced WhatsApp Business API crawler for messaging content monitoring.
     
     Features:
     - Message content analysis
@@ -138,8 +131,7 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
     - Compliance and audit trails
     - Multi-language support
     - Real-time notifications
-    """
-    
+    """    
     def __init__(self, config: CrawlerConfig, vector_matcher=None, 
                  access_token: str = None, business_account_id: str = None,
                  phone_number_id: str = None, webhook_verify_token: str = None):
@@ -178,8 +170,7 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
         self._setup_session_headers()
     
     def _setup_session_headers(self):
-        """Setup WhatsApp Business API specific headers"""
-        self.session_headers.update({
+        """Setup WhatsApp Business API specific headers"""        self.session_headers.update({
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             'Authorization': f'Bearer {self.access_token}' if self.access_token else '',
@@ -188,8 +179,7 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
     
     async def search_content(self, query: str, content_type: str = "messages", 
                            max_results: int = 50, **kwargs) -> List[CrawlerResult]:
-        """
-        Search for content via WhatsApp Business API.
+        """        Search for content via WhatsApp Business API.
         
         Args:
             query: Search query (phone number, contact name, etc.)
@@ -199,8 +189,7 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
             
         Returns:
             List of crawler results
-        """
-        try:
+        """        try:
             await self._check_rate_limit()
             
             if content_type not in self.content_types:
@@ -222,8 +211,7 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
             return []
     
     async def _crawl_messages(self, query: str, max_results: int, **kwargs) -> List[CrawlerResult]:
-        """Crawl WhatsApp Business messages"""
-        try:
+        """Crawl WhatsApp Business messages"""        try:
             results = []
             
             if not self.phone_number_id:
@@ -344,8 +332,7 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
             return []
     
     async def _crawl_contacts(self, query: str, max_results: int, **kwargs) -> List[CrawlerResult]:
-        """Crawl WhatsApp Business contacts"""
-        try:
+        """Crawl WhatsApp Business contacts"""        try:
             results = []
             
             if not self.business_account_id:
@@ -419,8 +406,7 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
             return []
     
     async def _crawl_templates(self, query: str, max_results: int, **kwargs) -> List[CrawlerResult]:
-        """Crawl WhatsApp Business message templates"""
-        try:
+        """Crawl WhatsApp Business message templates"""        try:
             results = []
             
             if not self.business_account_id:
@@ -536,8 +522,7 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
             return []
     
     async def _crawl_media(self, query: str, max_results: int, **kwargs) -> List[CrawlerResult]:
-        """Crawl WhatsApp Business media messages"""
-        try:
+        """Crawl WhatsApp Business media messages"""        try:
             results = []
             
             # Get all messages and filter for media
@@ -580,8 +565,7 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
             return []
     
     async def _crawl_conversations(self, query: str, max_results: int, **kwargs) -> List[CrawlerResult]:
-        """Crawl WhatsApp Business conversations (grouped by contact)"""
-        try:
+        """Crawl WhatsApp Business conversations (grouped by contact)"""        try:
             results = []
             
             # Get contacts first
@@ -628,8 +612,7 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
             return []
     
     async def _crawl_analytics(self, query: str, max_results: int, **kwargs) -> List[CrawlerResult]:
-        """Crawl WhatsApp Business analytics data"""
-        try:
+        """Crawl WhatsApp Business analytics data"""        try:
             results = []
             
             if not self.business_account_id:
@@ -696,8 +679,7 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
             return []
     
     async def _crawl_webhooks(self, query: str, max_results: int, **kwargs) -> List[CrawlerResult]:
-        """Crawl WhatsApp Business webhook events (simulation)"""
-        try:
+        """Crawl WhatsApp Business webhook events (simulation)"""        try:
             results = []
             
             # Note: This is a simulation as webhook events are received in real-time
@@ -760,8 +742,7 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
     # Helper methods
     
     async def _parse_message_data(self, message_data: Dict[str, Any]) -> Optional[WhatsAppMessage]:
-        """Parse message data from WhatsApp Business API"""
-        try:
+        """Parse message data from WhatsApp Business API"""        try:
             # Extract basic message info
             message_id = message_data.get('id', '')
             wa_id = message_data.get('from', '')
@@ -863,8 +844,7 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
             return None
     
     async def _check_rate_limit(self):
-        """Check and enforce rate limiting"""
-        try:
+        """Check and enforce rate limiting"""        try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
             
@@ -880,8 +860,7 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
             self.logger.error(f"Error in rate limiting: {str(e)}")
     
     async def download_media(self, media_id: str, output_path: str = None) -> Optional[str]:
-        """Download media file from WhatsApp Business API"""
-        try:
+        """Download media file from WhatsApp Business API"""        try:
             # Get media URL
             url = f"{self.base_url}/{media_id}"
             
@@ -913,8 +892,7 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
             return None
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
-        """Extract metadata from WhatsApp Business content"""
-        try:
+        """Extract metadata from WhatsApp Business content"""        try:
             metadata = {
                 'platform': 'whatsapp_business',
                 'url': url,
@@ -949,8 +927,7 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
             return {'error': str(e)}
     
     def get_platform_info(self) -> Dict[str, Any]:
-        """Get WhatsApp Business platform information"""
-        return {
+        """Get WhatsApp Business platform information"""        return {
             'platform_name': 'WhatsApp Business',
             'base_url': self.base_url,
             'supported_content_types': list(self.content_types.keys()),

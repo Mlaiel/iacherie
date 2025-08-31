@@ -1,5 +1,4 @@
-"""
-API Credentials Management Module
+"""API Credentials Management Module
 
 Gestion sécurisée des credentials d'API pour les intégrations plateformes
 dans la plateforme IA Influencer Agent.
@@ -22,9 +21,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 judiciaires selon le droit allemand et international.
 
 Contact pour autorisation: mlaiel@live.de
-"""
-
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, Text, JSON, Enum as SQLEnum
+"""from sqlalchemy import Column, Integer, String, Boolean, DateTime, Text, JSON, Enum as SQLEnum
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
@@ -44,8 +41,7 @@ logger = logging.getLogger(__name__)
 
 
 class CredentialType(Enum):
-    """Types de credentials supportés."""
-    API_KEY = "api_key"
+    """Types de credentials supportés."""    API_KEY = "api_key"
     OAUTH2 = "oauth2"
     BEARER_TOKEN = "bearer_token"
     BASIC_AUTH = "basic_auth"
@@ -55,8 +51,7 @@ class CredentialType(Enum):
 
 
 class CredentialStatus(Enum):
-    """Statuts des credentials."""
-    ACTIVE = "active"
+    """Statuts des credentials."""    ACTIVE = "active"
     INACTIVE = "inactive"
     EXPIRED = "expired"
     REVOKED = "revoked"
@@ -65,8 +60,7 @@ class CredentialStatus(Enum):
 
 
 class PlatformType(Enum):
-    """Types de plateformes supportées."""
-    SOCIAL_MEDIA = "social_media"
+    """Types de plateformes supportées."""    SOCIAL_MEDIA = "social_media"
     MUSIC_STREAMING = "music_streaming"
     VIDEO_PLATFORM = "video_platform"
     BLOGGING_PLATFORM = "blogging_platform"
@@ -163,13 +157,11 @@ SUPPORTED_PLATFORMS = {
 
 
 class APICredential(BaseModel):
-    """
-    Modèle pour les credentials d'API sécurisés.
+    """    Modèle pour les credentials d'API sécurisés.
     
     Stocke de manière chiffrée les clés d'API, tokens OAuth,
     et autres credentials nécessaires aux intégrations.
-    """
-    
+    """    
     __tablename__ = "api_credentials"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -232,31 +224,26 @@ class APICredential(BaseModel):
     
     @property
     def is_expired(self) -> bool:
-        """Vérifie si le credential est expiré."""
-        if not self.expires_at:
+        """Vérifie si le credential est expiré."""        if not self.expires_at:
             return False
         return datetime.utcnow() > self.expires_at
     
     @property
     def needs_rotation(self) -> bool:
-        """Vérifie si le credential nécessite une rotation."""
-        if not self.rotation_enabled or not self.next_rotation_at:
+        """Vérifie si le credential nécessite une rotation."""        if not self.rotation_enabled or not self.next_rotation_at:
             return False
         return datetime.utcnow() > self.next_rotation_at
     
     @property
     def daily_quota_remaining(self) -> int:
-        """Calcule le quota journalier restant."""
-        return max(0, self.daily_quota - self.current_daily_usage)
+        """Calcule le quota journalier restant."""        return max(0, self.daily_quota - self.current_daily_usage)
     
     @property
     def hourly_quota_remaining(self) -> int:
-        """Calcule le quota horaire restant."""
-        return max(0, self.hourly_quota - self.current_hourly_usage)
+        """Calcule le quota horaire restant."""        return max(0, self.hourly_quota - self.current_hourly_usage)
     
     def encrypt_credential(self, value: str, field_name: str) -> str:
-        """Chiffre une valeur de credential."""
-        if not value:
+        """Chiffre une valeur de credential."""        if not value:
             return None
         
         # Utilise la clé de chiffrement depuis les variables d'environnement
@@ -269,8 +256,7 @@ class APICredential(BaseModel):
         return encrypted_value.decode()
     
     def decrypt_credential(self, encrypted_value: str) -> str:
-        """Déchiffre une valeur de credential."""
-        if not encrypted_value:
+        """Déchiffre une valeur de credential."""        if not encrypted_value:
             return None
         
         encryption_key = os.getenv("CREDENTIAL_ENCRYPTION_KEY")
@@ -282,43 +268,34 @@ class APICredential(BaseModel):
         return decrypted_value.decode()
     
     def set_client_secret(self, secret: str):
-        """Définit le client secret de manière chiffrée."""
-        self.encrypted_client_secret = self.encrypt_credential(secret, "client_secret")
+        """Définit le client secret de manière chiffrée."""        self.encrypted_client_secret = self.encrypt_credential(secret, "client_secret")
     
     def get_client_secret(self) -> str:
-        """Récupère le client secret déchiffré."""
-        return self.decrypt_credential(self.encrypted_client_secret)
+        """Récupère le client secret déchiffré."""        return self.decrypt_credential(self.encrypted_client_secret)
     
     def set_api_key(self, api_key: str):
-        """Définit la clé API de manière chiffrée."""
-        self.encrypted_api_key = self.encrypt_credential(api_key, "api_key")
+        """Définit la clé API de manière chiffrée."""        self.encrypted_api_key = self.encrypt_credential(api_key, "api_key")
     
     def get_api_key(self) -> str:
-        """Récupère la clé API déchiffrée."""
-        return self.decrypt_credential(self.encrypted_api_key)
+        """Récupère la clé API déchiffrée."""        return self.decrypt_credential(self.encrypted_api_key)
     
     def increment_usage(self):
-        """Incrémente les compteurs d'utilisation."""
-        self.usage_count += 1
+        """Incrémente les compteurs d'utilisation."""        self.usage_count += 1
         self.current_daily_usage += 1
         self.current_hourly_usage += 1
         self.last_used_at = datetime.utcnow()
     
     def reset_daily_quota(self):
-        """Remet à zéro le quota journalier."""
-        self.current_daily_usage = 0
+        """Remet à zéro le quota journalier."""        self.current_daily_usage = 0
         self.quota_reset_at = datetime.utcnow() + timedelta(days=1)
     
     def reset_hourly_quota(self):
-        """Remet à zéro le quota horaire."""
-        self.current_hourly_usage = 0
+        """Remet à zéro le quota horaire."""        self.current_hourly_usage = 0
 
 
 class CredentialUsageLog(BaseModel):
-    """
-    Log d'utilisation des credentials pour audit et monitoring.
-    """
-    
+    """    Log d'utilisation des credentials pour audit et monitoring.
+    """    
     __tablename__ = "credential_usage_logs"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -354,13 +331,11 @@ class CredentialUsageLog(BaseModel):
 
 
 class PlatformAPIMapping(BaseModel):
-    """
-    Mapping des APIs et endpoints par plateforme.
+    """    Mapping des APIs et endpoints par plateforme.
     
     Définit quels credentials utiliser pour quels endpoints,
     avec les configurations spécifiques.
-    """
-    
+    """    
     __tablename__ = "platform_api_mappings"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -402,10 +377,8 @@ class PlatformAPIMapping(BaseModel):
 
 
 class CredentialRotationHistory(BaseModel):
-    """
-    Historique des rotations de credentials pour audit et rollback.
-    """
-    
+    """    Historique des rotations de credentials pour audit et rollback.
+    """    
     __tablename__ = "credential_rotation_history"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -452,8 +425,7 @@ def create_platform_credential(
     environment: str = "production",
     metadata: Dict[str, Any] = None
 ) -> APICredential:
-    """
-    Crée un nouveau credential pour une plateforme.
+    """    Crée un nouveau credential pour une plateforme.
     
     Args:
         platform_name: Nom de la plateforme
@@ -465,8 +437,7 @@ def create_platform_credential(
     
     Returns:
         Instance d'APICredential
-    """
-    if platform_name not in SUPPORTED_PLATFORMS:
+    """    if platform_name not in SUPPORTED_PLATFORMS:
         raise ValueError(f"Platform {platform_name} not supported")
     
     platform_config = SUPPORTED_PLATFORMS[platform_name]
@@ -519,13 +490,11 @@ def create_platform_credential(
 
 
 def generate_encryption_key() -> str:
-    """Génère une nouvelle clé de chiffrement Fernet."""
-    return Fernet.generate_key().decode()
+    """Génère une nouvelle clé de chiffrement Fernet."""    return Fernet.generate_key().decode()
 
 
 def hash_credential(credential_value: str) -> str:
-    """Génère un hash sécurisé d'un credential pour l'audit."""
-    salt = secrets.token_hex(16)
+    """Génère un hash sécurisé d'un credential pour l'audit."""    salt = secrets.token_hex(16)
     credential_hash = hashlib.pbkdf2_hmac(
         'sha256',
         credential_value.encode('utf-8'),
@@ -577,8 +546,7 @@ def hash_credential(credential_value: str) -> str:
     
     @classmethod
     def get_encryption_key(cls) -> bytes:
-        """Récupère la clé de chiffrement depuis les variables d'environnement."""
-        key = os.environ.get('CREDENTIALS_ENCRYPTION_KEY')
+        """Récupère la clé de chiffrement depuis les variables d'environnement."""        key = os.environ.get('CREDENTIALS_ENCRYPTION_KEY')
         if not key:
             # Génération d'une nouvelle clé si elle n'existe pas
             key = Fernet.generate_key()
@@ -590,70 +558,58 @@ def hash_credential(credential_value: str) -> str:
         return key
     
     def encrypt_value(self, value: str) -> bytes:
-        """Chiffre une valeur sensible."""
-        if not value:
+        """Chiffre une valeur sensible."""        if not value:
             return None
         
         fernet = Fernet(self.get_encryption_key())
         return fernet.encrypt(value.encode())
     
     def decrypt_value(self, encrypted_value: bytes) -> str:
-        """Déchiffre une valeur sensible."""
-        if not encrypted_value:
+        """Déchiffre une valeur sensible."""        if not encrypted_value:
             return None
         
         fernet = Fernet(self.get_encryption_key())
         return fernet.decrypt(encrypted_value).decode()
     
     def set_client_secret(self, secret: str):
-        """Définit le client secret de manière chiffrée."""
-        self.client_secret = self.encrypt_value(secret)
+        """Définit le client secret de manière chiffrée."""        self.client_secret = self.encrypt_value(secret)
     
     def get_client_secret(self) -> str:
-        """Récupère le client secret déchiffré."""
-        return self.decrypt_value(self.client_secret)
+        """Récupère le client secret déchiffré."""        return self.decrypt_value(self.client_secret)
     
     def set_api_key(self, key: str):
-        """Définit la clé API de manière chiffrée."""
-        self.api_key = self.encrypt_value(key)
+        """Définit la clé API de manière chiffrée."""        self.api_key = self.encrypt_value(key)
     
     def get_api_key(self) -> str:
-        """Récupère la clé API déchiffrée."""
-        return self.decrypt_value(self.api_key)
+        """Récupère la clé API déchiffrée."""        return self.decrypt_value(self.api_key)
     
     def set_api_secret(self, secret: str):
-        """Définit le secret API de manière chiffré."""
-        self.api_secret = self.encrypt_value(secret)
+        """Définit le secret API de manière chiffré."""        self.api_secret = self.encrypt_value(secret)
     
     def get_api_secret(self) -> str:
-        """Récupère le secret API déchiffré."""
-        return self.decrypt_value(self.api_secret)
+        """Récupère le secret API déchiffré."""        return self.decrypt_value(self.api_secret)
     
     @property
     def is_expired(self) -> bool:
-        """Vérifie si les credentials sont expirés."""
-        if not self.expires_at:
+        """Vérifie si les credentials sont expirés."""        if not self.expires_at:
             return False
         return datetime.utcnow() > self.expires_at
     
     @property
     def needs_rotation(self) -> bool:
-        """Vérifie si les credentials ont besoin d'une rotation."""
-        if not self.last_rotated or not self.rotation_frequency_days:
+        """Vérifie si les credentials ont besoin d'une rotation."""        if not self.last_rotated or not self.rotation_frequency_days:
             return False
         
         rotation_due = self.last_rotated + timedelta(days=self.rotation_frequency_days)
         return datetime.utcnow() > rotation_due
     
     def validate_credentials(self) -> bool:
-        """Valide les credentials avec une requête test à l'API."""
-        # Cette méthode sera implémentée par les services spécifiques
+        """Valide les credentials avec une requête test à l'API."""        # Cette méthode sera implémentée par les services spécifiques
         # pour chaque plateforme
         pass
     
     def to_dict_safe(self) -> Dict[str, Any]:
-        """Retourne un dictionnaire sans les données sensibles."""
-        return {
+        """Retourne un dictionnaire sans les données sensibles."""        return {
             "id": str(self.id),
             "platform_name": self.platform_name,
             "credential_type": self.credential_type,
@@ -669,13 +625,11 @@ def hash_credential(credential_value: str) -> str:
 
 
 class CredentialUsageLog(BaseModel):
-    """
-    Modèle pour les logs d'utilisation des credentials.
+    """    Modèle pour les logs d'utilisation des credentials.
     
     Trace l'utilisation des credentials pour audit de sécurité
     et monitoring des quotas.
-    """
-    
+    """    
     __tablename__ = "credential_usage_logs"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -707,13 +661,11 @@ class CredentialUsageLog(BaseModel):
 
 
 class PlatformAPIMapping(BaseModel):
-    """
-    Modèle pour le mapping des APIs des plateformes.
+    """    Modèle pour le mapping des APIs des plateformes.
     
     Définit la correspondance entre les opérations internes
     et les endpoints des APIs externes.
-    """
-    
+    """    
     __tablename__ = "platform_api_mappings"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -754,13 +706,11 @@ class PlatformAPIMapping(BaseModel):
 
 
 class CredentialRotationHistory(BaseModel):
-    """
-    Modèle pour l'historique de rotation des credentials.
+    """    Modèle pour l'historique de rotation des credentials.
     
     Maintient un audit trail des rotations de credentials
     pour la sécurité et la conformité.
-    """
-    
+    """    
     __tablename__ = "credential_rotation_history"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -851,8 +801,7 @@ SUPPORTED_PLATFORMS = {
 
 
 def create_platform_credential(platform_name: str, **kwargs) -> APICredential:
-    """
-    Crée un credential pour une plateforme spécifique.
+    """    Crée un credential pour une plateforme spécifique.
     
     Args:
         platform_name: Nom de la plateforme
@@ -860,8 +809,7 @@ def create_platform_credential(platform_name: str, **kwargs) -> APICredential:
     
     Returns:
         APICredential: Instance du credential créé
-    """
-    if platform_name not in SUPPORTED_PLATFORMS:
+    """    if platform_name not in SUPPORTED_PLATFORMS:
         raise ValueError(f"Plateforme non supportée: {platform_name}")
     
     platform_config = SUPPORTED_PLATFORMS[platform_name]

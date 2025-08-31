@@ -1,5 +1,4 @@
-"""
-Locale Detection AI Engine - Ainflue Platform
+"""Locale Detection AI Engine - Ainflue Platform
 ================================================================================
 Module: core/i18n/locale_detection_ai.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,9 +15,7 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC:
 Content input → Language detection → Cultural markers → Geographic indicators → 
 Regional patterns → Temporal analysis → Context enrichment → Locale prediction
-"""
-
-import logging
+"""import logging
 import asyncio
 import re
 from typing import Dict, List, Any, Optional, Tuple, Union, Set
@@ -32,8 +29,7 @@ logger = logging.getLogger(__name__)
 
 
 class LocaleFeature(Enum):
-    """Features used for locale detection"""
-    LANGUAGE = "language"
+    """Features used for locale detection"""    LANGUAGE = "language"
     SCRIPT = "script"
     CURRENCY = "currency"
     TIMEZONE = "timezone"
@@ -48,8 +44,7 @@ class LocaleFeature(Enum):
 
 
 class DetectionMethod(Enum):
-    """AI detection methods"""
-    NEURAL_CLASSIFIER = "neural_classifier"
+    """AI detection methods"""    NEURAL_CLASSIFIER = "neural_classifier"
     PATTERN_MATCHING = "pattern_matching"
     STATISTICAL_ANALYSIS = "statistical_analysis"
     ENSEMBLE_VOTING = "ensemble_voting"
@@ -59,8 +54,7 @@ class DetectionMethod(Enum):
 
 
 class ConfidenceLevel(Enum):
-    """Confidence levels for detection"""
-    VERY_HIGH = "very_high"    # > 0.9
+    """Confidence levels for detection"""    VERY_HIGH = "very_high"    # > 0.9
     HIGH = "high"              # 0.8 - 0.9
     MEDIUM = "medium"          # 0.6 - 0.8
     LOW = "low"                # 0.4 - 0.6
@@ -69,8 +63,7 @@ class ConfidenceLevel(Enum):
 
 @dataclass
 class LocaleContext:
-    """Comprehensive locale context information"""
-    locale_code: str           # Full locale (e.g., en-US, ar-EG)
+    """Comprehensive locale context information"""    locale_code: str           # Full locale (e.g., en-US, ar-EG)
     language_code: str         # Language part (e.g., en, ar)
     country_code: str          # Country part (e.g., US, EG)
     region: str               # Geographic region
@@ -88,8 +81,7 @@ class LocaleContext:
 
 @dataclass
 class DetectionFeature:
-    """Individual detection feature"""
-    feature_type: LocaleFeature
+    """Individual detection feature"""    feature_type: LocaleFeature
     value: str
     confidence: float
     source_position: Tuple[int, int]  # Start, end positions
@@ -101,8 +93,7 @@ class DetectionFeature:
 
 @dataclass
 class DetectionConfidence:
-    """Confidence scoring for locale detection"""
-    overall_confidence: float
+    """Confidence scoring for locale detection"""    overall_confidence: float
     language_confidence: float
     country_confidence: float
     cultural_confidence: float
@@ -116,8 +107,7 @@ class DetectionConfidence:
 
 @dataclass
 class LocaleDetectionResult:
-    """Complete locale detection result"""
-    detected_locale: str
+    """Complete locale detection result"""    detected_locale: str
     primary_alternatives: List[Tuple[str, float]]  # (locale, confidence)
     locale_context: LocaleContext
     detection_confidence: DetectionConfidence
@@ -132,8 +122,7 @@ class LocaleDetectionResult:
 
 
 class LocaleDetectionAI:
-    """Advanced AI-powered locale detection and cultural analysis engine"""
-    
+    """Advanced AI-powered locale detection and cultural analysis engine"""    
     def __init__(self):
         self.locale_models: Dict[str, Dict[str, Any]] = {}
         self.cultural_patterns: Dict[str, List[Dict[str, Any]]] = {}
@@ -158,8 +147,7 @@ class LocaleDetectionAI:
         logger.info("Locale Detection AI Engine initialized")
     
     def _initialize_locale_models(self):
-        """Initialize locale-specific detection models"""
-        
+        """Initialize locale-specific detection models"""        
         # English locales
         self.locale_models["en-US"] = {
             "language": "en",
@@ -303,8 +291,7 @@ class LocaleDetectionAI:
         logger.info(f"Initialized {len(self.locale_models)} locale models")
     
     def _initialize_cultural_patterns(self):
-        """Initialize cultural pattern recognition"""
-        
+        """Initialize cultural pattern recognition"""        
         self.cultural_patterns = {
             "western": [
                 {
@@ -347,8 +334,7 @@ class LocaleDetectionAI:
         logger.info(f"Initialized cultural patterns for {len(self.cultural_patterns)} cultural areas")
     
     def _initialize_geographic_markers(self):
-        """Initialize geographic location markers"""
-        
+        """Initialize geographic location markers"""        
         self.geographic_markers = {
             "US": {
                 "states", "california", "texas", "florida", "new_york", "washington_dc",
@@ -379,8 +365,7 @@ class LocaleDetectionAI:
         logger.info(f"Initialized geographic markers for {len(self.geographic_markers)} countries")
     
     def _initialize_temporal_patterns(self):
-        """Initialize temporal and date/time patterns"""
-        
+        """Initialize temporal and date/time patterns"""        
         self.temporal_patterns = {
             "en-US": {
                 "date_regex": [r"\d{1,2}/\d{1,2}/\d{4}", r"\d{1,2}-\d{1,2}-\d{4}"],
@@ -420,8 +405,7 @@ class LocaleDetectionAI:
         logger.info(f"Initialized temporal patterns for {len(self.temporal_patterns)} locales")
     
     def _initialize_linguistic_variants(self):
-        """Initialize linguistic variant detection"""
-        
+        """Initialize linguistic variant detection"""        
         self.linguistic_variants = {
             "en": {
                 "US": {
@@ -464,8 +448,7 @@ class LocaleDetectionAI:
         logger.info(f"Initialized linguistic variants for {len(self.linguistic_variants)} languages")
     
     def _setup_ai_models(self):
-        """Setup AI models for locale detection"""
-        
+        """Setup AI models for locale detection"""        
         # Mock AI model configurations - in production, these would be actual ML models
         self.neural_classifiers = {
             "language_classifier": {
@@ -517,8 +500,7 @@ class LocaleDetectionAI:
         additional_context: Dict[str, Any] = None,
         detection_methods: List[DetectionMethod] = None
     ) -> LocaleDetectionResult:
-        """Comprehensive AI-powered locale detection"""
-        try:
+        """Comprehensive AI-powered locale detection"""        try:
             start_time = datetime.now()
             
             # Check cache
@@ -630,8 +612,7 @@ class LocaleDetectionAI:
         method: DetectionMethod,
         context: Dict[str, Any] = None
     ) -> List[DetectionFeature]:
-        """Extract features using specific detection method"""
-        features = []
+        """Extract features using specific detection method"""        features = []
         
         if method == DetectionMethod.PATTERN_MATCHING:
             # Extract pattern-based features
@@ -652,8 +633,7 @@ class LocaleDetectionAI:
         return features
     
     async def _extract_pattern_features(self, text: str) -> List[DetectionFeature]:
-        """Extract features using pattern matching"""
-        features = []
+        """Extract features using pattern matching"""        features = []
         
         # Check for locale-specific patterns
         for locale_code, locale_model in self.locale_models.items():
@@ -696,8 +676,7 @@ class LocaleDetectionAI:
         return features
     
     async def _extract_neural_features(self, text: str) -> List[DetectionFeature]:
-        """Extract features using neural classifiers"""
-        features = []
+        """Extract features using neural classifiers"""        features = []
         
         # Mock neural classification - in production, use actual ML models
         classifier = self.neural_classifiers["language_classifier"]
@@ -721,8 +700,7 @@ class LocaleDetectionAI:
         return features
     
     async def _extract_statistical_features(self, text: str) -> List[DetectionFeature]:
-        """Extract features using statistical analysis"""
-        features = []
+        """Extract features using statistical analysis"""        features = []
         
         # Character frequency analysis
         char_stats = self._analyze_character_frequency(text)
@@ -744,8 +722,7 @@ class LocaleDetectionAI:
         return features
     
     async def _extract_cultural_features(self, text: str) -> List[DetectionFeature]:
-        """Extract cultural embedding features"""
-        features = []
+        """Extract cultural embedding features"""        features = []
         
         # Check cultural patterns
         for cultural_area, patterns in self.cultural_patterns.items():
@@ -768,8 +745,7 @@ class LocaleDetectionAI:
         return features
     
     def _mock_language_classification(self, text: str) -> List[Tuple[str, float]]:
-        """Mock language classification"""
-        # Simple heuristic-based language detection
+        """Mock language classification"""        # Simple heuristic-based language detection
         results = []
         
         # Check for Arabic script
@@ -799,8 +775,7 @@ class LocaleDetectionAI:
         return sorted(results, key=lambda x: x[1], reverse=True)[:3]
     
     def _analyze_character_frequency(self, text: str) -> Dict[str, float]:
-        """Analyze character frequency by script"""
-        total_chars = len(text)
+        """Analyze character frequency by script"""        total_chars = len(text)
         if total_chars == 0:
             return {}
         
@@ -827,8 +802,7 @@ class LocaleDetectionAI:
         return {script: count / total_chars for script, count in script_counts.items()}
     
     async def _analyze_cultural_context(self, text: str, features: List[DetectionFeature]) -> Dict[str, Any]:
-        """Analyze cultural context from features"""
-        cultural_analysis = {
+        """Analyze cultural context from features"""        cultural_analysis = {
             "cultural_markers": [],
             "religious_context": [],
             "social_context": [],
@@ -852,8 +826,7 @@ class LocaleDetectionAI:
         return cultural_analysis
     
     async def _analyze_temporal_patterns(self, text: str, features: List[DetectionFeature]) -> Dict[str, Any]:
-        """Analyze temporal patterns"""
-        temporal_analysis = {
+        """Analyze temporal patterns"""        temporal_analysis = {
             "date_formats": [],
             "time_patterns": [],
             "calendar_systems": [],
@@ -875,8 +848,7 @@ class LocaleDetectionAI:
         return temporal_analysis
     
     async def _analyze_geographic_indicators(self, text: str, features: List[DetectionFeature]) -> Dict[str, Any]:
-        """Analyze geographic indicators"""
-        geographic_analysis = {
+        """Analyze geographic indicators"""        geographic_analysis = {
             "locations_mentioned": [],
             "geographic_markers": [],
             "regional_indicators": [],
@@ -901,8 +873,7 @@ class LocaleDetectionAI:
         return geographic_analysis
     
     async def _analyze_linguistic_variants(self, text: str, features: List[DetectionFeature]) -> Dict[str, Any]:
-        """Analyze linguistic variants"""
-        linguistic_analysis = {
+        """Analyze linguistic variants"""        linguistic_analysis = {
             "detected_variants": [],
             "vocabulary_markers": [],
             "grammatical_patterns": [],
@@ -947,8 +918,7 @@ class LocaleDetectionAI:
         geographic_analysis: Dict[str, Any],
         linguistic_analysis: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Score potential locales based on all evidence"""
-        locale_scores = {locale: 0.0 for locale in self.locale_models.keys()}
+        """Score potential locales based on all evidence"""        locale_scores = {locale: 0.0 for locale in self.locale_models.keys()}
         
         # Score based on features
         for feature in features:
@@ -990,8 +960,7 @@ class LocaleDetectionAI:
         return locale_scores
     
     def _select_best_locale(self, locale_scores: Dict[str, float]) -> Tuple[str, List[Tuple[str, float]]]:
-        """Select best locale and alternatives"""
-        sorted_locales = sorted(locale_scores.items(), key=lambda x: x[1], reverse=True)
+        """Select best locale and alternatives"""        sorted_locales = sorted(locale_scores.items(), key=lambda x: x[1], reverse=True)
         
         best_locale = sorted_locales[0][0] if sorted_locales else "en-US"
         alternatives = sorted_locales[1:6]  # Top 5 alternatives
@@ -999,8 +968,7 @@ class LocaleDetectionAI:
         return best_locale, alternatives
     
     def _build_locale_context(self, locale_code: str, features: List[DetectionFeature]) -> LocaleContext:
-        """Build comprehensive locale context"""
-        if locale_code not in self.locale_models:
+        """Build comprehensive locale context"""        if locale_code not in self.locale_models:
             locale_code = "en-US"  # Fallback
         
         locale_model = self.locale_models[locale_code]
@@ -1028,8 +996,7 @@ class LocaleDetectionAI:
         features: List[DetectionFeature],
         method_results: Dict[DetectionMethod, List[DetectionFeature]]
     ) -> DetectionConfidence:
-        """Calculate comprehensive detection confidence"""
-        
+        """Calculate comprehensive detection confidence"""        
         sorted_scores = sorted(locale_scores.values(), reverse=True)
         best_score = sorted_scores[0] if sorted_scores else 0.0
         second_score = sorted_scores[1] if len(sorted_scores) > 1 else 0.0
@@ -1082,13 +1049,11 @@ class LocaleDetectionAI:
         )
     
     def _generate_cache_key(self, text: str, context: Dict[str, Any] = None) -> str:
-        """Generate cache key for detection result"""
-        content = f"{text}_{json.dumps(context, sort_keys=True) if context else ''}"
+        """Generate cache key for detection result"""        content = f"{text}_{json.dumps(context, sort_keys=True) if context else ''}"
         return hashlib.md5(content.encode()).hexdigest()
     
     async def get_detection_statistics(self) -> Dict[str, Any]:
-        """Get locale detection statistics"""
-        if not self.detection_cache:
+        """Get locale detection statistics"""        if not self.detection_cache:
             return {"message": "No detections cached yet"}
         
         detections = list(self.detection_cache.values())
@@ -1128,8 +1093,7 @@ class LocaleDetectionAI:
         }
     
     async def health_check(self) -> bool:
-        """Health check for locale detection AI service"""
-        try:
+        """Health check for locale detection AI service"""        try:
             # Check if models are loaded
             if not self.locale_models:
                 return False

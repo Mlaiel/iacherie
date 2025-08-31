@@ -1,5 +1,4 @@
-"""
-Storage Management System
+"""Storage Management System
 
 Provides comprehensive storage infrastructure including object storage (S3),
 persistent volumes, backup strategies, and data lifecycle management.
@@ -8,9 +7,7 @@ Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import yaml
@@ -25,37 +22,32 @@ from kubernetes import client, config
 logger = logging.getLogger(__name__)
 
 class StorageType(Enum):
-    """Storage types"""
-    OBJECT_STORAGE = "object_storage"
+    """Storage types"""    OBJECT_STORAGE = "object_storage"
     BLOCK_STORAGE = "block_storage"
     FILE_STORAGE = "file_storage"
     DATABASE_STORAGE = "database_storage"
 
 class StorageClass(Enum):
-    """Kubernetes storage classes"""
-    STANDARD = "standard"
+    """Kubernetes storage classes"""    STANDARD = "standard"
     FAST_SSD = "fast-ssd"
     SLOW_HDD = "slow-hdd"
     NETWORK_ATTACHED = "network-attached"
 
 class BackupStrategy(Enum):
-    """Backup strategies"""
-    FULL_BACKUP = "full_backup"
+    """Backup strategies"""    FULL_BACKUP = "full_backup"
     INCREMENTAL_BACKUP = "incremental_backup"
     DIFFERENTIAL_BACKUP = "differential_backup"
     SNAPSHOT = "snapshot"
 
 class DataTier(Enum):
-    """Data storage tiers"""
-    HOT = "hot"
+    """Data storage tiers"""    HOT = "hot"
     WARM = "warm"
     COLD = "cold"
     ARCHIVE = "archive"
 
 @dataclass
 class StorageConfig:
-    """Storage configuration"""
-    name: str
+    """Storage configuration"""    name: str
     storage_type: StorageType
     size: str
     storage_class: StorageClass
@@ -68,8 +60,7 @@ class StorageConfig:
 
 @dataclass
 class ObjectStorageConfig:
-    """Object storage configuration"""
-    bucket_name: str
+    """Object storage configuration"""    bucket_name: str
     region: str
     storage_class: str = "STANDARD"
     versioning_enabled: bool = True
@@ -80,8 +71,7 @@ class ObjectStorageConfig:
 
 @dataclass
 class BackupConfig:
-    """Backup configuration"""
-    name: str
+    """Backup configuration"""    name: str
     source_volumes: List[str]
     backup_strategy: BackupStrategy
     schedule: str  # Cron expression
@@ -92,8 +82,7 @@ class BackupConfig:
 
 @dataclass
 class PersistentVolumeSpec:
-    """Persistent Volume specification"""
-    name: str
+    """Persistent Volume specification"""    name: str
     size: str
     storage_class: str
     access_modes: List[str]
@@ -104,8 +93,7 @@ class PersistentVolumeSpec:
 
 @dataclass
 class PersistentVolumeClaimSpec:
-    """Persistent Volume Claim specification"""
-    name: str
+    """Persistent Volume Claim specification"""    name: str
     namespace: str
     size: str
     storage_class: str
@@ -113,8 +101,7 @@ class PersistentVolumeClaimSpec:
     selector: Optional[Dict[str, Any]] = None
 
 class StorageManager:
-    """Main storage management system"""
-    
+    """Main storage management system"""    
     def __init__(self, k8s_client=None, aws_session=None):
         self.k8s_client = k8s_client
         self.aws_session = aws_session
@@ -124,8 +111,7 @@ class StorageManager:
         self.ebs_client = aws_session.client('ec2') if aws_session else None
         
     async def create_storage_infrastructure(self, configs: List[StorageConfig]) -> Dict[str, Any]:
-        """Create complete storage infrastructure"""
-        try:
+        """Create complete storage infrastructure"""        try:
             results = {}
             
             for config in configs:
@@ -153,8 +139,7 @@ class StorageManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _create_object_storage(self, config: StorageConfig) -> Dict[str, Any]:
-        """Create object storage (S3 buckets)"""
-        try:
+        """Create object storage (S3 buckets)"""        try:
             if not self.s3_client:
                 return {'status': 'error', 'message': 'S3 client not configured'}
             
@@ -283,8 +268,7 @@ class StorageManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _create_block_storage(self, config: StorageConfig) -> Dict[str, Any]:
-        """Create block storage (Persistent Volumes)"""
-        try:
+        """Create block storage (Persistent Volumes)"""        try:
             results = {}
             
             # Create StorageClass
@@ -327,8 +311,7 @@ class StorageManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _create_file_storage(self, config: StorageConfig) -> Dict[str, Any]:
-        """Create file storage (NFS, EFS)"""
-        try:
+        """Create file storage (NFS, EFS)"""        try:
             # Create NFS-based file storage
             nfs_pv_spec = PersistentVolumeSpec(
                 name=f"{config.name}-nfs-pv",
@@ -366,8 +349,7 @@ class StorageManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _create_database_storage(self, config: StorageConfig) -> Dict[str, Any]:
-        """Create database storage"""
-        try:
+        """Create database storage"""        try:
             # Create high-performance storage for databases
             db_pv_spec = PersistentVolumeSpec(
                 name=f"{config.name}-db-pv",
@@ -404,8 +386,7 @@ class StorageManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _create_storage_class(self, config: StorageConfig) -> Dict[str, Any]:
-        """Create Kubernetes StorageClass"""
-        try:
+        """Create Kubernetes StorageClass"""        try:
             # Define provisioner based on storage class
             provisioner_map = {
                 StorageClass.STANDARD: "kubernetes.io/aws-ebs",
@@ -455,8 +436,7 @@ class StorageManager:
             return {'status': 'error', 'message': str(e)}
     
     async def create_persistent_volume(self, pv_spec: PersistentVolumeSpec) -> Dict[str, Any]:
-        """Create Kubernetes PersistentVolume"""
-        try:
+        """Create Kubernetes PersistentVolume"""        try:
             # Configure volume source based on type
             volume_source = None
             
@@ -527,8 +507,7 @@ class StorageManager:
             return {'status': 'error', 'message': str(e)}
     
     async def create_persistent_volume_claim(self, pvc_spec: PersistentVolumeClaimSpec) -> Dict[str, Any]:
-        """Create Kubernetes PersistentVolumeClaim"""
-        try:
+        """Create Kubernetes PersistentVolumeClaim"""        try:
             pvc_spec_obj = client.V1PersistentVolumeClaimSpec(
                 access_modes=pvc_spec.access_modes,
                 resources=client.V1ResourceRequirements(
@@ -577,8 +556,7 @@ class StorageManager:
             return {'status': 'error', 'message': str(e)}
     
     async def create_backup_system(self, backup_config: BackupConfig) -> Dict[str, Any]:
-        """Create backup system with Velero"""
-        try:
+        """Create backup system with Velero"""        try:
             # Create Velero backup schedule
             backup_schedule = {
                 'apiVersion': 'velero.io/v1',
@@ -650,8 +628,7 @@ class StorageManager:
             return {'status': 'error', 'message': str(e)}
     
     async def create_ia_influencer_storage(self, namespace: str = "ia-influencer") -> Dict[str, Any]:
-        """Create complete storage setup for IA Influencer platform"""
-        try:
+        """Create complete storage setup for IA Influencer platform"""        try:
             results = {}
             
             # Storage configurations for different components
@@ -761,8 +738,7 @@ class StorageManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _create_s3_buckets(self, configs: List[ObjectStorageConfig]) -> Dict[str, Any]:
-        """Create S3 buckets with configurations"""
-        try:
+        """Create S3 buckets with configurations"""        try:
             if not self.s3_client:
                 return {'status': 'error', 'message': 'S3 client not configured'}
             
@@ -834,8 +810,7 @@ class StorageManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _create_storage_monitoring(self, namespace: str) -> Dict[str, Any]:
-        """Create storage monitoring and alerting"""
-        try:
+        """Create storage monitoring and alerting"""        try:
             # Create ServiceMonitor for storage metrics
             service_monitor = {
                 'apiVersion': 'monitoring.coreos.com/v1',
@@ -918,8 +893,7 @@ class StorageManager:
             return {'status': 'error', 'message': str(e)}
     
     async def get_storage_status(self, namespace: str = "ia-influencer") -> Dict[str, Any]:
-        """Get storage infrastructure status"""
-        try:
+        """Get storage infrastructure status"""        try:
             status = {
                 'persistent_volumes': {'total': 5, 'bound': 5, 'available': 0},
                 'persistent_volume_claims': {'total': 5, 'bound': 5, 'pending': 0},

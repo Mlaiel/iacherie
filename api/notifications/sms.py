@@ -1,6 +1,4 @@
-"""Enterprise SMS notification service with multi-provider support and delivery tracking."""
-
-import os
+"""Enterprise SMS notification service with multi-provider support and delivery tracking."""import os
 import aiohttp
 import asyncio
 from typing import Dict, List, Optional, Any, Union
@@ -19,8 +17,7 @@ from app.utils.metrics import MetricsCollector
 
 
 class SMSProvider(str, Enum):
-    """Supported SMS providers with enterprise-grade reliability."""
-    TWILIO = "twilio"
+    """Supported SMS providers with enterprise-grade reliability."""    TWILIO = "twilio"
     AWS_SNS = "aws_sns"
     NEXMO = "nexmo"
     MESSAGEBIRD = "messagebird"
@@ -29,8 +26,7 @@ class SMSProvider(str, Enum):
 
 @dataclass
 class SMSMessage:
-    """Enterprise SMS message with advanced features."""
-    to_phone: str
+    """Enterprise SMS message with advanced features."""    to_phone: str
     message: str
     from_phone: Optional[str] = None
     country_code: Optional[str] = None
@@ -49,8 +45,7 @@ class SMSMessage:
 
 @dataclass
 class SMSDeliveryResult:
-    """SMS delivery tracking and analytics result."""
-    message_id: str
+    """SMS delivery tracking and analytics result."""    message_id: str
     provider: SMSProvider
     status: str  # sent, delivered, failed, pending
     to_phone: str
@@ -67,9 +62,7 @@ class SMSDeliveryResult:
 
 
 class SMSNotifier:
-    """Enterprise SMS notification service with intelligent routing and analytics."""
-
-    def __init__(self):
+    """Enterprise SMS notification service with intelligent routing and analytics."""    def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.metrics = MetricsCollector()
         
@@ -128,8 +121,7 @@ class SMSNotifier:
         }
 
     async def send_sms(self, message: SMSMessage) -> SMSDeliveryResult:
-        """Send SMS with intelligent provider selection and fallback."""
-        start_time = datetime.utcnow()
+        """Send SMS with intelligent provider selection and fallback."""        start_time = datetime.utcnow()
         
         try:
             # Validate phone number
@@ -161,8 +153,7 @@ class SMSNotifier:
             raise
 
     async def send_bulk_sms(self, messages: List[SMSMessage]) -> List[SMSDeliveryResult]:
-        """Send bulk SMS with intelligent batching and rate limiting."""
-        results = []
+        """Send bulk SMS with intelligent batching and rate limiting."""        results = []
         
         # Group by provider for optimal routing
         provider_groups = await self._group_messages_by_provider(messages)
@@ -175,14 +166,12 @@ class SMSNotifier:
         return results
 
     async def get_delivery_status(self, message_id: str) -> Optional[SMSDeliveryResult]:
-        """Get delivery status for a specific message."""
-        # This would typically query a database or provider API
+        """Get delivery status for a specific message."""        # This would typically query a database or provider API
         # Simplified implementation
         return None
 
     async def schedule_sms(self, message: SMSMessage, scheduled_at: datetime) -> str:
-        """Schedule SMS for future delivery."""
-        message.scheduled_at = scheduled_at
+        """Schedule SMS for future delivery."""        message.scheduled_at = scheduled_at
         
         # Store in scheduling queue (would use Celery or similar in production)
         # Return scheduling ID
@@ -192,14 +181,12 @@ class SMSNotifier:
         return scheduling_id
 
     async def cancel_scheduled_sms(self, scheduling_id: str) -> bool:
-        """Cancel a scheduled SMS."""
-        # Implementation would remove from scheduling queue
+        """Cancel a scheduled SMS."""        # Implementation would remove from scheduling queue
         self.logger.info(f"Cancelled scheduled SMS: {scheduling_id}")
         return True
 
     async def get_analytics(self, start_date: datetime, end_date: datetime, filters: Optional[Dict] = None) -> Dict[str, Any]:
-        """Get comprehensive SMS analytics and insights."""
-        return {
+        """Get comprehensive SMS analytics and insights."""        return {
             "total_sent": await self._get_total_sent(start_date, end_date, filters),
             "delivery_rate": await self._get_delivery_rate(start_date, end_date, filters),
             "cost_breakdown": await self._get_cost_breakdown(start_date, end_date, filters),
@@ -209,8 +196,7 @@ class SMSNotifier:
         }
 
     async def _select_provider(self, message: SMSMessage) -> SMSProvider:
-        """Intelligent provider selection based on configured strategy."""
-        available_providers = [p for p, config in self.providers.items() if self._is_provider_configured(config)]
+        """Intelligent provider selection based on configured strategy."""        available_providers = [p for p, config in self.providers.items() if self._is_provider_configured(config)]
         
         if not available_providers:
             raise ValueError("No SMS providers configured")
@@ -226,8 +212,7 @@ class SMSNotifier:
             return available_providers[0]
 
     async def _send_via_provider(self, provider: SMSProvider, message: SMSMessage) -> SMSDeliveryResult:
-        """Send SMS via specific provider."""
-        if provider == SMSProvider.TWILIO:
+        """Send SMS via specific provider."""        if provider == SMSProvider.TWILIO:
             return await self._send_via_twilio(message)
         elif provider == SMSProvider.AWS_SNS:
             return await self._send_via_aws_sns(message)
@@ -241,8 +226,7 @@ class SMSNotifier:
             raise ValueError(f"Unsupported provider: {provider}")
 
     async def _send_via_twilio(self, message: SMSMessage) -> SMSDeliveryResult:
-        """Send SMS via Twilio API."""
-        config = self.providers[SMSProvider.TWILIO]
+        """Send SMS via Twilio API."""        config = self.providers[SMSProvider.TWILIO]
         
         data = {
             "From": message.from_phone or config["from_phone"],
@@ -275,8 +259,7 @@ class SMSNotifier:
                 )
 
     async def _send_via_aws_sns(self, message: SMSMessage) -> SMSDeliveryResult:
-        """Send SMS via AWS SNS."""
-        # Simplified implementation - would use boto3 in production
+        """Send SMS via AWS SNS."""        # Simplified implementation - would use boto3 in production
         config = self.providers[SMSProvider.AWS_SNS]
         
         # Mock implementation
@@ -293,8 +276,7 @@ class SMSNotifier:
         )
 
     async def _send_via_nexmo(self, message: SMSMessage) -> SMSDeliveryResult:
-        """Send SMS via Nexmo (Vonage) API."""
-        config = self.providers[SMSProvider.NEXMO]
+        """Send SMS via Nexmo (Vonage) API."""        config = self.providers[SMSProvider.NEXMO]
         
         data = {
             "api_key": config["api_key"],
@@ -323,8 +305,7 @@ class SMSNotifier:
                 )
 
     async def _send_via_messagebird(self, message: SMSMessage) -> SMSDeliveryResult:
-        """Send SMS via MessageBird API."""
-        config = self.providers[SMSProvider.MESSAGEBIRD]
+        """Send SMS via MessageBird API."""        config = self.providers[SMSProvider.MESSAGEBIRD]
         
         data = {
             "recipients": [message.to_phone],
@@ -357,8 +338,7 @@ class SMSNotifier:
                 )
 
     async def _send_via_clicksend(self, message: SMSMessage) -> SMSDeliveryResult:
-        """Send SMS via ClickSend API."""
-        config = self.providers[SMSProvider.CLICKSEND]
+        """Send SMS via ClickSend API."""        config = self.providers[SMSProvider.CLICKSEND]
         
         data = {
             "messages": [{
@@ -391,18 +371,15 @@ class SMSNotifier:
                 )
 
     def _validate_phone_number(self, phone: str) -> bool:
-        """Validate phone number format (E.164)."""
-        # Simplified validation - would use phonenumbers library in production
+        """Validate phone number format (E.164)."""        # Simplified validation - would use phonenumbers library in production
         return phone.startswith("+") and len(phone.replace("+", "")) >= 10
 
     def _is_provider_configured(self, config: Dict[str, Any]) -> bool:
-        """Check if provider is properly configured."""
-        required_keys = ["endpoint"]  # Simplified check
+        """Check if provider is properly configured."""        required_keys = ["endpoint"]  # Simplified check
         return all(config.get(key) for key in required_keys)
 
     async def _send_with_fallback(self, message: SMSMessage, exclude_provider: Optional[SMSProvider] = None) -> SMSDeliveryResult:
-        """Send SMS with fallback providers."""
-        available_providers = [p for p in SMSProvider if p != exclude_provider]
+        """Send SMS with fallback providers."""        available_providers = [p for p in SMSProvider if p != exclude_provider]
         
         for provider in available_providers:
             try:
@@ -414,8 +391,7 @@ class SMSNotifier:
         raise Exception("All SMS providers failed")
 
     async def _group_messages_by_provider(self, messages: List[SMSMessage]) -> Dict[SMSProvider, List[SMSMessage]]:
-        """Group messages by optimal provider for bulk sending."""
-        groups = {}
+        """Group messages by optimal provider for bulk sending."""        groups = {}
         
         for message in messages:
             provider = await self._select_provider(message)
@@ -426,8 +402,7 @@ class SMSNotifier:
         return groups
 
     async def _send_batch_with_rate_limit(self, provider: SMSProvider, messages: List[SMSMessage]) -> List[SMSDeliveryResult]:
-        """Send batch of messages with rate limiting."""
-        results = []
+        """Send batch of messages with rate limiting."""        results = []
         rate_limit = self.rate_limits.get(provider, 10)  # Default 10 requests per second
         
         semaphore = asyncio.Semaphore(min(rate_limit, self.max_concurrent_requests))
@@ -451,8 +426,7 @@ class SMSNotifier:
         return filtered_results
 
     async def _track_delivery_metrics(self, result: SMSDeliveryResult):
-        """Track SMS delivery metrics for analytics."""
-        await self.metrics.increment(
+        """Track SMS delivery metrics for analytics."""        await self.metrics.increment(
             "sms_sent_total",
             tags={
                 "provider": result.provider.value,
@@ -475,31 +449,25 @@ class SMSNotifier:
             )
 
     async def _get_total_sent(self, start_date: datetime, end_date: datetime, filters: Optional[Dict]) -> int:
-        """Get total SMS sent in date range."""
-        # Implementation would query database
+        """Get total SMS sent in date range."""        # Implementation would query database
         return 0
 
     async def _get_delivery_rate(self, start_date: datetime, end_date: datetime, filters: Optional[Dict]) -> float:
-        """Get SMS delivery rate percentage."""
-        # Implementation would query database
+        """Get SMS delivery rate percentage."""        # Implementation would query database
         return 0.95
 
     async def _get_cost_breakdown(self, start_date: datetime, end_date: datetime, filters: Optional[Dict]) -> Dict[str, float]:
-        """Get cost breakdown by provider."""
-        # Implementation would query database
+        """Get cost breakdown by provider."""        # Implementation would query database
         return {}
 
     async def _get_provider_performance(self, start_date: datetime, end_date: datetime, filters: Optional[Dict]) -> Dict[str, Dict]:
-        """Get provider performance metrics."""
-        # Implementation would query database
+        """Get provider performance metrics."""        # Implementation would query database
         return {}
 
     async def _get_geographic_stats(self, start_date: datetime, end_date: datetime, filters: Optional[Dict]) -> Dict[str, int]:
-        """Get geographic distribution of SMS."""
-        # Implementation would query database
+        """Get geographic distribution of SMS."""        # Implementation would query database
         return {}
 
     async def _get_failure_analysis(self, start_date: datetime, end_date: datetime, filters: Optional[Dict]) -> Dict[str, Any]:
-        """Get failure analysis and common issues."""
-        # Implementation would query database
+        """Get failure analysis and common issues."""        # Implementation would query database
         return {}

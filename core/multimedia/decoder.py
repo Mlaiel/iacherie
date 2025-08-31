@@ -1,5 +1,4 @@
-"""
-Multimedia Decoder - Advanced Decoding Engine
+"""Multimedia Decoder - Advanced Decoding Engine
 
 Enterprise-grade decoding system for multimedia content with support for multiple formats and codecs.
 Provides intelligent content analysis and format detection capabilities.
@@ -18,9 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Union, Tuple, BinaryIO
 from dataclasses import dataclass, field
@@ -42,8 +39,7 @@ logger = logging.getLogger(__name__)
 
 
 class DecodingFormat(Enum):
-    """Supported decoding formats"""
-    # Video formats
+    """Supported decoding formats"""    # Video formats
     MP4 = "mp4"
     AVI = "avi"
     MOV = "mov"
@@ -76,8 +72,7 @@ class DecodingFormat(Enum):
 
 
 class DecodingQuality(Enum):
-    """Decoding quality levels"""
-    LOSSLESS = "lossless"
+    """Decoding quality levels"""    LOSSLESS = "lossless"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -85,8 +80,7 @@ class DecodingQuality(Enum):
 
 
 class ContentType(Enum):
-    """Content type categories"""
-    VIDEO = "video"
+    """Content type categories"""    VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
     UNKNOWN = "unknown"
@@ -94,8 +88,7 @@ class ContentType(Enum):
 
 @dataclass
 class DecodingOptions:
-    """Decoding configuration options"""
-    quality: DecodingQuality = DecodingQuality.HIGH
+    """Decoding configuration options"""    quality: DecodingQuality = DecodingQuality.HIGH
     extract_metadata: bool = True
     generate_thumbnails: bool = False
     extract_audio: bool = False
@@ -108,8 +101,7 @@ class DecodingOptions:
 
 @dataclass
 class DecodedContent:
-    """Decoded content information"""
-    content_id: str
+    """Decoded content information"""    content_id: str
     content_type: ContentType
     format: DecodingFormat
     file_path: Optional[str] = None
@@ -125,8 +117,7 @@ class DecodedContent:
 
 @dataclass
 class DecodingResult:
-    """Decoding operation result"""
-    success: bool
+    """Decoding operation result"""    success: bool
     content: Optional[DecodedContent] = None
     error_message: Optional[str] = None
     processing_time: float = 0.0
@@ -134,8 +125,7 @@ class DecodingResult:
 
 
 class MultimediaDecoder:
-    """
-    Advanced multimedia decoding engine with comprehensive format support.
+    """    Advanced multimedia decoding engine with comprehensive format support.
     
     Features:
     - Multi-format decoding (video, audio, image)
@@ -146,11 +136,9 @@ class MultimediaDecoder:
     - Audio track extraction
     - Content validation
     - Batch processing
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize multimedia decoder"""
-        self.config = config or {}
+        """Initialize multimedia decoder"""        self.config = config or {}
         self.metrics = MetricsCollector()
         self.events = EventDispatcher()
         self.metadata_analyzer = MultimediaMetadata()
@@ -172,8 +160,7 @@ class MultimediaDecoder:
         logger.info("Multimedia decoder initialized successfully")
     
     def _initialize_format_mappings(self) -> Dict[str, ContentType]:
-        """Initialize format to content type mappings"""
-        return {
+        """Initialize format to content type mappings"""        return {
             # Video formats
             'mp4': ContentType.VIDEO,
             'avi': ContentType.VIDEO,
@@ -207,8 +194,7 @@ class MultimediaDecoder:
         }
     
     def _initialize_magic_bytes(self) -> Dict[bytes, DecodingFormat]:
-        """Initialize magic bytes for format detection"""
-        return {
+        """Initialize magic bytes for format detection"""        return {
             # Video formats
             b'\x00\x00\x00\x18ftypmp4': DecodingFormat.MP4,
             b'\x00\x00\x00\x1cftypisom': DecodingFormat.MP4,
@@ -238,8 +224,7 @@ class MultimediaDecoder:
         source: Union[str, bytes, BinaryIO],
         options: Optional[DecodingOptions] = None
     ) -> DecodingResult:
-        """
-        Decode multimedia content from various sources
+        """        Decode multimedia content from various sources
         
         Args:
             source: File path, raw bytes, or file-like object
@@ -247,8 +232,7 @@ class MultimediaDecoder:
             
         Returns:
             DecodingResult: Decoding result with content information
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         options = options or DecodingOptions()
         
         try:
@@ -355,8 +339,7 @@ class MultimediaDecoder:
         self,
         source: Union[str, bytes, BinaryIO]
     ) -> Optional[Tuple[DecodingFormat, ContentType]]:
-        """Detect content format and type"""
-        try:
+        """Detect content format and type"""        try:
             # Get first few bytes for magic byte detection
             if isinstance(source, str):
                 with open(source, 'rb') as f:
@@ -402,15 +385,13 @@ class MultimediaDecoder:
             return None
     
     def _detect_by_magic_bytes(self, magic_bytes: bytes) -> Optional[DecodingFormat]:
-        """Detect format by magic bytes"""
-        for magic, format_type in self.magic_bytes.items():
+        """Detect format by magic bytes"""        for magic, format_type in self.magic_bytes.items():
             if magic_bytes.startswith(magic):
                 return format_type
         return None
     
     def _detect_by_mime_type(self, mime_type: str) -> Optional[DecodingFormat]:
-        """Detect format by MIME type"""
-        mime_mappings = {
+        """Detect format by MIME type"""        mime_mappings = {
             'video/mp4': DecodingFormat.MP4,
             'video/avi': DecodingFormat.AVI,
             'video/quicktime': DecodingFormat.MOV,
@@ -427,8 +408,7 @@ class MultimediaDecoder:
         return mime_mappings.get(mime_type)
     
     def _get_content_type_from_format(self, format_type: DecodingFormat) -> ContentType:
-        """Get content type from format"""
-        format_name = format_type.value
+        """Get content type from format"""        format_name = format_type.value
         return self.format_mappings.get(format_name, ContentType.UNKNOWN)
     
     async def _extract_detailed_metadata(
@@ -436,8 +416,7 @@ class MultimediaDecoder:
         content: DecodedContent,
         options: DecodingOptions
     ) -> Dict[str, Any]:
-        """Extract detailed metadata from content"""
-        metadata = {}
+        """Extract detailed metadata from content"""        metadata = {}
         
         try:
             if content.file_path:
@@ -463,8 +442,7 @@ class MultimediaDecoder:
         return metadata
     
     async def _extract_metadata_from_bytes(self, content: DecodedContent) -> Dict[str, Any]:
-        """Extract metadata from raw bytes"""
-        metadata = {
+        """Extract metadata from raw bytes"""        metadata = {
             'size_bytes': len(content.raw_data),
             'format': content.format.value,
             'content_type': content.content_type.value
@@ -481,8 +459,7 @@ class MultimediaDecoder:
         return metadata
     
     def _parse_jpeg_metadata(self, data: bytes) -> Dict[str, Any]:
-        """Parse JPEG metadata"""
-        metadata = {}
+        """Parse JPEG metadata"""        metadata = {}
         try:
             # Basic JPEG header parsing
             if data[:2] == b'\xff\xd8':
@@ -494,8 +471,7 @@ class MultimediaDecoder:
         return metadata
     
     def _parse_png_metadata(self, data: bytes) -> Dict[str, Any]:
-        """Parse PNG metadata"""
-        metadata = {}
+        """Parse PNG metadata"""        metadata = {}
         try:
             if data[:8] == b'\x89PNG\r\n\x1a\n':
                 metadata['valid_png'] = True
@@ -506,8 +482,7 @@ class MultimediaDecoder:
         return metadata
     
     def _parse_mp3_metadata(self, data: bytes) -> Dict[str, Any]:
-        """Parse MP3 metadata"""
-        metadata = {}
+        """Parse MP3 metadata"""        metadata = {}
         try:
             if data[:3] == b'ID3':
                 metadata['has_id3'] = True
@@ -517,8 +492,7 @@ class MultimediaDecoder:
         return metadata
     
     async def _extract_video_metadata(self, content: DecodedContent) -> Dict[str, Any]:
-        """Extract video-specific metadata"""
-        # This would use video analysis libraries
+        """Extract video-specific metadata"""        # This would use video analysis libraries
         return {
             'type': 'video',
             'estimated_duration': 120.0,  # Placeholder
@@ -527,8 +501,7 @@ class MultimediaDecoder:
         }
     
     async def _extract_audio_metadata(self, content: DecodedContent) -> Dict[str, Any]:
-        """Extract audio-specific metadata"""
-        # This would use audio analysis libraries
+        """Extract audio-specific metadata"""        # This would use audio analysis libraries
         return {
             'type': 'audio',
             'estimated_duration': 180.0,  # Placeholder
@@ -537,8 +510,7 @@ class MultimediaDecoder:
         }
     
     async def _extract_image_metadata(self, content: DecodedContent) -> Dict[str, Any]:
-        """Extract image-specific metadata"""
-        # This would use image analysis libraries
+        """Extract image-specific metadata"""        # This would use image analysis libraries
         return {
             'type': 'image',
             'estimated_resolution': (1920, 1080),  # Placeholder
@@ -550,8 +522,7 @@ class MultimediaDecoder:
         content: DecodedContent,
         options: DecodingOptions
     ) -> List[str]:
-        """Generate thumbnails for content"""
-        thumbnails = []
+        """Generate thumbnails for content"""        thumbnails = []
         
         try:
             if content.content_type == ContentType.VIDEO:
@@ -580,8 +551,7 @@ class MultimediaDecoder:
         content: DecodedContent,
         options: DecodingOptions
     ) -> Optional[str]:
-        """Extract audio track from video content"""
-        try:
+        """Extract audio track from video content"""        try:
             if content.content_type == ContentType.VIDEO:
                 audio_path = f"/tmp/audio_{content.content_id}.wav"
                 # Would extract actual audio track here using FFmpeg
@@ -596,8 +566,7 @@ class MultimediaDecoder:
         content: DecodedContent,
         options: DecodingOptions
     ) -> List[str]:
-        """Extract frames from video content"""
-        frames = []
+        """Extract frames from video content"""        frames = []
         
         try:
             if content.content_type == ContentType.VIDEO:
@@ -619,8 +588,7 @@ class MultimediaDecoder:
         options: Optional[DecodingOptions] = None,
         max_concurrent: int = 5
     ) -> List[DecodingResult]:
-        """
-        Batch decode multiple sources
+        """        Batch decode multiple sources
         
         Args:
             sources: List of sources to decode
@@ -629,8 +597,7 @@ class MultimediaDecoder:
             
         Returns:
             List[DecodingResult]: List of decoding results
-        """
-        semaphore = asyncio.Semaphore(max_concurrent)
+        """        semaphore = asyncio.Semaphore(max_concurrent)
         
         async def decode_single(source: Union[str, bytes]) -> DecodingResult:
             async with semaphore:
@@ -654,8 +621,7 @@ class MultimediaDecoder:
         return valid_results
     
     def get_supported_formats(self) -> Dict[str, List[str]]:
-        """Get supported formats by content type"""
-        formats_by_type = {
+        """Get supported formats by content type"""        formats_by_type = {
             'video': [],
             'audio': [],
             'image': []
@@ -672,8 +638,7 @@ class MultimediaDecoder:
         return formats_by_type
     
     def validate_content(self, content: DecodedContent) -> Dict[str, Any]:
-        """Validate decoded content integrity"""
-        validation_result = {
+        """Validate decoded content integrity"""        validation_result = {
             'is_valid': True,
             'checks_passed': [],
             'checks_failed': [],
@@ -709,8 +674,7 @@ class MultimediaDecoder:
         return validation_result
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get decoding statistics"""
-        stats = self.stats.copy()
+        """Get decoding statistics"""        stats = self.stats.copy()
         if stats['files_decoded'] > 0:
             stats['average_processing_time'] = stats['total_processing_time'] / stats['files_decoded']
         else:
@@ -719,8 +683,7 @@ class MultimediaDecoder:
         return stats
     
     def reset_statistics(self):
-        """Reset decoding statistics"""
-        self.stats = {
+        """Reset decoding statistics"""        self.stats = {
             'files_decoded': 0,
             'total_processing_time': 0.0,
             'formats_processed': {},

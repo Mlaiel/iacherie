@@ -1,5 +1,4 @@
-"""
-Crawler Configuration Management
+"""Crawler Configuration Management
 ===============================
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -11,24 +10,20 @@ Unauthorized use, copying or distribution prohibited.
 Professional configuration management for web crawling operations.
 Handles platform-specific settings, rate limiting, API credentials,
 and monitoring thresholds for optimal crawling performance.
-"""
-
-import os
+"""import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 from enum import Enum
 
 class CrawlerType(Enum):
-    """Supported crawler types for content monitoring."""
-    YOUTUBE = "youtube"
+    """Supported crawler types for content monitoring."""    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     TWITTER = "twitter"
     GENERIC_WEB = "generic_web"
 
 class ContentType(Enum):
-    """Content types for fingerprint matching."""
-    AUDIO = "audio"
+    """Content types for fingerprint matching."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -36,8 +31,7 @@ class ContentType(Enum):
 
 @dataclass
 class PlatformConfig:
-    """Configuration for individual platform crawlers."""
-    
+    """Configuration for individual platform crawlers."""    
     name: str
     enabled: bool = True
     api_key: Optional[str] = None
@@ -65,8 +59,7 @@ class PlatformConfig:
 
 @dataclass 
 class CrawlerConfig:
-    """Main configuration class for the crawling system."""
-    
+    """Main configuration class for the crawling system."""    
     # Global crawler settings
     concurrent_crawlers: int = 5
     max_workers_per_crawler: int = 10
@@ -92,13 +85,11 @@ class CrawlerConfig:
     platforms: Dict[str, PlatformConfig] = field(default_factory=dict)
     
     def __post_init__(self):
-        """Initialize default platform configurations."""
-        if not self.platforms:
+        """Initialize default platform configurations."""        if not self.platforms:
             self._initialize_default_platforms()
     
     def _initialize_default_platforms(self):
-        """Set up default configurations for supported platforms."""
-        
+        """Set up default configurations for supported platforms."""        
         # YouTube configuration
         self.platforms[CrawlerType.YOUTUBE.value] = PlatformConfig(
             name="YouTube",
@@ -174,17 +165,14 @@ class CrawlerConfig:
         )
     
     def get_platform_config(self, platform: CrawlerType) -> Optional[PlatformConfig]:
-        """Get configuration for a specific platform."""
-        return self.platforms.get(platform.value)
+        """Get configuration for a specific platform."""        return self.platforms.get(platform.value)
     
     def is_platform_enabled(self, platform: CrawlerType) -> bool:
-        """Check if a platform crawler is enabled."""
-        config = self.get_platform_config(platform)
+        """Check if a platform crawler is enabled."""        config = self.get_platform_config(platform)
         return config.enabled if config else False
     
     def get_similarity_threshold(self, platform: CrawlerType, content_type: ContentType) -> float:
-        """Get similarity threshold for platform and content type combination."""
-        config = self.get_platform_config(platform)
+        """Get similarity threshold for platform and content type combination."""        config = self.get_platform_config(platform)
         if not config:
             return 0.80  # Default threshold
         
@@ -201,8 +189,7 @@ class CrawlerConfig:
     
     @classmethod
     def from_environment(cls) -> 'CrawlerConfig':
-        """Create configuration from environment variables."""
-        return cls(
+        """Create configuration from environment variables."""        return cls(
             concurrent_crawlers=int(os.getenv("CRAWLER_CONCURRENT_CRAWLERS", "5")),
             max_workers_per_crawler=int(os.getenv("CRAWLER_MAX_WORKERS", "10")),
             crawl_interval_minutes=int(os.getenv("CRAWLER_INTERVAL_MINUTES", "30")),
@@ -217,8 +204,7 @@ class CrawlerConfig:
         )
     
     def validate(self) -> List[str]:
-        """Validate configuration and return list of errors."""
-        errors = []
+        """Validate configuration and return list of errors."""        errors = []
         
         if not self.database_url:
             errors.append("Database URL is required")

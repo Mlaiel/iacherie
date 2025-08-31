@@ -1,5 +1,4 @@
-"""
-Enterprise Quality Controller - Ultra-Advanced AI-Powered Content Quality Intelligence System
+"""Enterprise Quality Controller - Ultra-Advanced AI-Powered Content Quality Intelligence System
 
 Revolutionary quality assessment and enhancement engine providing industrial-strength capabilities
 for comprehensive content quality analysis, real-time enhancement, and brand compliance across
@@ -28,9 +27,7 @@ Business Logic: Content Analysis → Quality Assessment → Enhancement Recommen
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
 from dataclasses import dataclass, field
@@ -70,8 +67,7 @@ from .exceptions import QualityError, UnsupportedFormatError, ComplianceError
 
 
 class QualityMetric(str, Enum):
-    """Comprehensive quality assessment metrics for all content types"""
-    TECHNICAL_QUALITY = "technical_quality"
+    """Comprehensive quality assessment metrics for all content types"""    TECHNICAL_QUALITY = "technical_quality"
     VISUAL_QUALITY = "visual_quality"
     AUDIO_QUALITY = "audio_quality"
     CONTENT_CLARITY = "content_clarity"
@@ -94,8 +90,7 @@ class QualityMetric(str, Enum):
 
 
 class CreatorQualityMetric(str, Enum):
-    """Creator-specific quality metrics"""
-    # Musicians
+    """Creator-specific quality metrics"""    # Musicians
     AUDIO_FIDELITY = "audio_fidelity"
     MASTERING_QUALITY = "mastering_quality"
     HARMONIC_ANALYSIS = "harmonic_analysis"
@@ -132,8 +127,7 @@ class CreatorQualityMetric(str, Enum):
 
 
 class QualityLevel(str, Enum):
-    """Advanced quality assessment levels with industry standards"""
-    EXCEPTIONAL = "exceptional"     # 95-100% - Industry leading
+    """Advanced quality assessment levels with industry standards"""    EXCEPTIONAL = "exceptional"     # 95-100% - Industry leading
     EXCELLENT = "excellent"         # 85-94% - Professional grade
     GOOD = "good"                  # 75-84% - Above average
     AVERAGE = "average"            # 60-74% - Standard quality
@@ -143,8 +137,7 @@ class QualityLevel(str, Enum):
 
 
 class ContentType(str, Enum):
-    """Comprehensive content types for quality assessment"""
-    VIDEO = "video"
+    """Comprehensive content types for quality assessment"""    VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
     TEXT = "text"
@@ -162,8 +155,7 @@ class ContentType(str, Enum):
 
 
 class EnhancementType(str, Enum):
-    """Types of quality enhancement available"""
-    AUTOMATIC = "automatic"        # AI-powered automatic enhancement
+    """Types of quality enhancement available"""    AUTOMATIC = "automatic"        # AI-powered automatic enhancement
     GUIDED = "guided"             # Step-by-step guided improvement
     MANUAL = "manual"             # Manual recommendations only
     REAL_TIME = "real_time"       # Real-time processing enhancement
@@ -173,8 +165,7 @@ class EnhancementType(str, Enum):
 
 @dataclass
 class QualityAssessment:
-    """Comprehensive quality assessment result with advanced analytics"""
-    metric: QualityMetric
+    """Comprehensive quality assessment result with advanced analytics"""    metric: QualityMetric
     score: float  # 0.0 to 1.0
     level: QualityLevel
     details: Dict[str, Any]
@@ -194,8 +185,7 @@ class QualityAssessment:
 
 @dataclass
 class EnhancementRecommendation:
-    """Advanced enhancement recommendation with implementation details"""
-    recommendation_id: str
+    """Advanced enhancement recommendation with implementation details"""    recommendation_id: str
     priority: str  # 'critical', 'high', 'medium', 'low'
     category: str
     title: str
@@ -214,8 +204,7 @@ class EnhancementRecommendation:
 
 @dataclass
 class QualityRequest:
-    """Enterprise-grade quality assessment request with comprehensive configuration"""
-    content_id: str
+    """Enterprise-grade quality assessment request with comprehensive configuration"""    content_id: str
     creator_id: str
     creator_type: str
     content_type: ContentType
@@ -242,8 +231,7 @@ class QualityRequest:
 
 @dataclass
 class ComplianceStatus:
-    """Comprehensive compliance status tracking"""
-    platform_compliance: Dict[str, bool]
+    """Comprehensive compliance status tracking"""    platform_compliance: Dict[str, bool]
     accessibility_compliance: Dict[str, bool]
     legal_compliance: Dict[str, bool]
     brand_compliance: Dict[str, bool]
@@ -256,8 +244,7 @@ class ComplianceStatus:
 
 @dataclass
 class QualityResult:
-    """Comprehensive result of quality assessment and enhancement with actionable insights"""
-    assessment_id: str
+    """Comprehensive result of quality assessment and enhancement with actionable insights"""    assessment_id: str
     creator_id: str
     creator_type: str
     content_id: str
@@ -284,8 +271,7 @@ class QualityResult:
 
 
 class QualityController:
-    """
-    Ultra-Advanced Enterprise Quality Control Engine
+    """    Ultra-Advanced Enterprise Quality Control Engine
     
     Revolutionary quality intelligence system providing industrial-strength assessment
     and enhancement capabilities with AI-powered analysis, real-time optimization,
@@ -308,8 +294,7 @@ class QualityController:
     - Photographers: Image quality analysis, color grading, technical perfection
     - Influencers: Content authenticity, engagement quality, brand alignment
     - Comedians: Timing analysis, audio clarity, visual composition quality
-    """
-    
+    """    
     def __init__(self):
         self.settings = get_settings()
         self.logger = logging.getLogger(__name__)
@@ -347,8 +332,7 @@ class QualityController:
 
 
 class QualityController:
-    """
-    Advanced content quality assessment and enhancement engine
+    """    Advanced content quality assessment and enhancement engine
     
     Features:
     - Multi-metric quality assessment
@@ -357,8 +341,7 @@ class QualityController:
     - Accessibility compliance checking
     - Brand consistency validation
     - SEO optimization assessment
-    """
-    
+    """    
     def __init__(self):
         self.settings = get_settings()
         self.logger = logging.getLogger(__name__)
@@ -371,8 +354,7 @@ class QualityController:
         request: QualityRequest,
         session: AsyncSession = None
     ) -> QualityResult:
-        """
-        Perform comprehensive quality assessment of content
+        """        Perform comprehensive quality assessment of content
         
         Args:
             request: Quality assessment configuration
@@ -380,8 +362,7 @@ class QualityController:
             
         Returns:
             QualityResult: Complete quality assessment and recommendations
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         assessment_id = f"quality_{request.content_id}_{int(start_time.timestamp())}"
         
         try:
@@ -480,8 +461,7 @@ class QualityController:
         enhancement_plan: Dict[str, Any],
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """
-        Apply automated quality enhancements to content
+        """        Apply automated quality enhancements to content
         
         Args:
             content_id: Content identifier
@@ -490,8 +470,7 @@ class QualityController:
             
         Returns:
             Dict containing enhancement results
-        """
-        enhancement_results = {
+        """        enhancement_results = {
             'enhanced_content_id': f"{content_id}_enhanced",
             'applied_enhancements': [],
             'quality_improvements': {},
@@ -561,8 +540,7 @@ class QualityController:
         standards: Dict[str, float],
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """
-        Validate content against specific quality standards
+        """        Validate content against specific quality standards
         
         Args:
             content_id: Content identifier
@@ -571,8 +549,7 @@ class QualityController:
             
         Returns:
             Dict containing validation results
-        """
-        validation_results = {
+        """        validation_results = {
             'passes_standards': True,
             'standard_compliance': {},
             'failed_standards': [],
@@ -616,8 +593,7 @@ class QualityController:
         assessment_data: Dict[str, Any],
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive quality report
+        """        Generate comprehensive quality report
         
         Args:
             content_id: Content identifier
@@ -626,8 +602,7 @@ class QualityController:
             
         Returns:
             Dict containing comprehensive quality report
-        """
-        report = {
+        """        report = {
             'content_id': content_id,
             'report_timestamp': datetime.utcnow(),
             'executive_summary': {},
@@ -671,8 +646,7 @@ class QualityController:
         request: QualityRequest,
         session: AsyncSession
     ) -> QualityAssessment:
-        """Assess specific quality metric"""
-        
+        """Assess specific quality metric"""        
         if metric == QualityMetric.TECHNICAL_QUALITY:
             return await self._assess_technical_quality(content_data, request)
         elif metric == QualityMetric.VISUAL_QUALITY:
@@ -701,8 +675,7 @@ class QualityController:
         content_data: Dict[str, Any],
         request: QualityRequest
     ) -> QualityAssessment:
-        """Assess technical quality of content"""
-        score = 0.0
+        """Assess technical quality of content"""        score = 0.0
         details = {}
         recommendations = []
         
@@ -825,8 +798,7 @@ class QualityController:
         content_data: Dict[str, Any],
         request: QualityRequest
     ) -> QualityAssessment:
-        """Assess visual quality using computer vision techniques"""
-        score = 0.8  # Default score
+        """Assess visual quality using computer vision techniques"""        score = 0.8  # Default score
         details = {}
         recommendations = []
         
@@ -873,8 +845,7 @@ class QualityController:
         content_data: Dict[str, Any],
         request: QualityRequest
     ) -> QualityAssessment:
-        """Assess audio quality metrics"""
-        score = 0.8  # Default score
+        """Assess audio quality metrics"""        score = 0.8  # Default score
         details = {}
         recommendations = []
         
@@ -917,8 +888,7 @@ class QualityController:
         )
     
     def _score_to_level(self, score: float) -> QualityLevel:
-        """Convert numerical score to quality level"""
-        if score >= 0.9:
+        """Convert numerical score to quality level"""        if score >= 0.9:
             return QualityLevel.EXCELLENT
         elif score >= 0.75:
             return QualityLevel.GOOD
@@ -930,8 +900,7 @@ class QualityController:
             return QualityLevel.CRITICAL
     
     def _load_quality_standards(self) -> Dict[str, Dict[str, float]]:
-        """Load quality standards for different platforms"""
-        return {
+        """Load quality standards for different platforms"""        return {
             'youtube': {
                 'technical_quality': 0.85,
                 'visual_quality': 0.9,
@@ -954,8 +923,7 @@ class QualityController:
         }
     
     def _load_benchmark_data(self) -> Dict[str, float]:
-        """Load industry benchmark data for quality metrics"""
-        return {
+        """Load industry benchmark data for quality metrics"""        return {
             'technical_quality': 0.8,
             'visual_quality': 0.85,
             'audio_quality': 0.8,
@@ -969,8 +937,7 @@ class QualityController:
         }
     
     def _initialize_enhancement_algorithms(self) -> Dict[str, Any]:
-        """Initialize quality enhancement algorithms"""
-        return {
+        """Initialize quality enhancement algorithms"""        return {
             'visual_enhancement': {
                 'brightness_adjustment': True,
                 'contrast_enhancement': True,
@@ -1012,8 +979,7 @@ class QualityController:
         content_id: str,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Load content data from storage"""
-        # Implementation would load from database/storage
+        """Load content data from storage"""        # Implementation would load from database/storage
         return {
             'id': content_id,
             'data': {},
@@ -1034,6 +1000,5 @@ class QualityController:
         recommendations: List[Dict[str, Any]],
         session: AsyncSession
     ) -> None:
-        """Store quality assessment results in database"""
-        # Implementation would store in database
+        """Store quality assessment results in database"""        # Implementation would store in database
         pass

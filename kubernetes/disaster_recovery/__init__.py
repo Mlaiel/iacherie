@@ -36,8 +36,7 @@ Project Team Specialties:
 - Security Specialist: Content protection, encryption, compliance
 - DevOps Engineer: Kubernetes, CI/CD, cloud infrastructure
 - Audio Specialist: Music processing, fingerprinting, codec optimization
-"""
-__version__ = "1.0.0"
+"""__version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 

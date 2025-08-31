@@ -1,5 +1,4 @@
-"""
-📊 Scoring System - IA Influencer Agent Platform Enterprise
+"""📊 Scoring System - IA Influencer Agent Platform Enterprise
 ===========================================================
 Module: backend/core/challenges/scoring_system.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -20,9 +19,7 @@ Real-time Leaderboards → Tier Classification → Reward Distribution
 SCORING ARCHITECTURE:
 Metric Collection → Score Algorithms → Ranking Engine → 
 Leaderboard Manager → Performance Analytics → Fraud Detection
-"""
-
-from typing import Dict, List, Optional, Any, Union, Callable, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Callable, Tuple
 from dataclasses import dataclass, field
 from enum import Enum, IntEnum
 from datetime import datetime, timedelta, timezone
@@ -34,8 +31,7 @@ import statistics
 from abc import ABC, abstractmethod
 
 class ScoreMetric(Enum):
-    """Available scoring metrics"""
-    EXPERIENCE_POINTS = "experience_points"
+    """Available scoring metrics"""    EXPERIENCE_POINTS = "experience_points"
     CONTENT_QUALITY = "content_quality"
     ENGAGEMENT_RATE = "engagement_rate"
     COLLABORATION_COUNT = "collaboration_count"
@@ -57,8 +53,7 @@ class ScoreMetric(Enum):
     CONSISTENCY_SCORE = "consistency_score"
 
 class ScoreWeight(Enum):
-    """Score weight categories"""
-    MINIMAL = 0.1
+    """Score weight categories"""    MINIMAL = 0.1
     LOW = 0.25
     NORMAL = 0.5
     HIGH = 0.75
@@ -67,8 +62,7 @@ class ScoreWeight(Enum):
     MAXIMUM = 2.0
 
 class RankingTier(Enum):
-    """User ranking tiers"""
-    BRONZE = "bronze"
+    """User ranking tiers"""    BRONZE = "bronze"
     SILVER = "silver"
     GOLD = "gold"
     PLATINUM = "platinum"
@@ -78,8 +72,7 @@ class RankingTier(Enum):
     LEGEND = "legend"
 
 class ScoreModifier(Enum):
-    """Score modifiers for special conditions"""
-    EARLY_COMPLETION = "early_completion"
+    """Score modifiers for special conditions"""    EARLY_COMPLETION = "early_completion"
     PERFECT_SCORE = "perfect_score"
     FIRST_ATTEMPT = "first_attempt"
     COMEBACK_BONUS = "comeback_bonus"
@@ -92,8 +85,7 @@ class ScoreModifier(Enum):
 
 @dataclass
 class ScoreComponent:
-    """Individual score component"""
-    metric: ScoreMetric
+    """Individual score component"""    metric: ScoreMetric
     value: Union[int, float, Decimal]
     weight: float
     max_value: Optional[Union[int, float, Decimal]] = None
@@ -103,8 +95,7 @@ class ScoreComponent:
 
 @dataclass
 class ScoreCalculation:
-    """Complete score calculation result"""
-    total_score: Decimal
+    """Complete score calculation result"""    total_score: Decimal
     weighted_score: Decimal
     normalized_score: Decimal
     percentile_rank: float
@@ -116,8 +107,7 @@ class ScoreCalculation:
 
 @dataclass
 class LeaderboardEntry:
-    """Leaderboard entry with comprehensive data"""
-    rank: int
+    """Leaderboard entry with comprehensive data"""    rank: int
     user_id: str
     username: str
     total_score: Decimal
@@ -131,11 +121,9 @@ class LeaderboardEntry:
     profile_data: Dict[str, Any] = field(default_factory=dict)
 
 class ScoreCalculator:
-    """Advanced score calculation engine"""
-    
+    """Advanced score calculation engine"""    
     def __init__(self):
-        """Initialize score calculator with algorithms"""
-        self.logger = logging.getLogger(__name__)
+        """Initialize score calculator with algorithms"""        self.logger = logging.getLogger(__name__)
         
         # Score normalization ranges
         self._normalization_ranges = {
@@ -179,8 +167,7 @@ class ScoreCalculator:
                        components: List[ScoreComponent],
                        modifiers: Optional[List[ScoreModifier]] = None,
                        context: Optional[Dict[str, Any]] = None) -> ScoreCalculation:
-        """Calculate comprehensive score from components"""
-        try:
+        """Calculate comprehensive score from components"""        try:
             total_score = Decimal('0.00')
             weighted_score = Decimal('0.00')
             component_details = []
@@ -265,8 +252,7 @@ class ScoreCalculator:
                         value: Union[int, float, Decimal],
                         method: str,
                         max_value: Optional[Union[int, float, Decimal]] = None) -> Decimal:
-        """Normalize value to 0-100 range using specified method"""
-        value = Decimal(str(value))
+        """Normalize value to 0-100 range using specified method"""        value = Decimal(str(value))
         
         # Get normalization range
         min_val, max_val = self._normalization_ranges.get(metric, (0, 100))
@@ -299,8 +285,7 @@ class ScoreCalculator:
             return ((value - min_val) / (max_val - min_val)) * 100
     
     def _normalize_final_score(self, score: Decimal) -> Decimal:
-        """Normalize final score to 0-100 range"""
-        # Apply sigmoid-like function for smooth distribution
+        """Normalize final score to 0-100 range"""        # Apply sigmoid-like function for smooth distribution
         if score <= 0:
             return Decimal('0')
         
@@ -309,8 +294,7 @@ class ScoreCalculator:
         return Decimal(str(normalized))
     
     def _determine_tier(self, score: Decimal, context: Optional[Dict[str, Any]] = None) -> RankingTier:
-        """Determine tier based on score"""
-        score_float = float(score)
+        """Determine tier based on score"""        score_float = float(score)
         
         for tier, threshold in reversed(list(self._tier_thresholds.items())):
             if score_float >= threshold:
@@ -319,8 +303,7 @@ class ScoreCalculator:
         return RankingTier.BRONZE
     
     def _calculate_percentile_rank(self, score: Decimal, context: Optional[Dict[str, Any]] = None) -> float:
-        """Calculate percentile rank (simplified without population data)"""
-        # In real implementation, this would use actual population statistics
+        """Calculate percentile rank (simplified without population data)"""        # In real implementation, this would use actual population statistics
         score_float = float(score)
         
         # Rough estimation based on score distribution
@@ -342,8 +325,7 @@ class ScoreCalculator:
             return score_float / 20 * 15
     
     def _get_modifier_description(self, modifier: ScoreModifier) -> str:
-        """Get description for score modifier"""
-        descriptions = {
+        """Get description for score modifier"""        descriptions = {
             ScoreModifier.EARLY_COMPLETION: "Completed ahead of schedule",
             ScoreModifier.PERFECT_SCORE: "Achieved perfect performance",
             ScoreModifier.FIRST_ATTEMPT: "Succeeded on first try",
@@ -358,11 +340,9 @@ class ScoreCalculator:
         return descriptions.get(modifier, "Special performance bonus")
 
 class RankingEngine:
-    """Advanced ranking and tier management engine"""
-    
+    """Advanced ranking and tier management engine"""    
     def __init__(self, score_calculator: ScoreCalculator):
-        """Initialize ranking engine"""
-        self.score_calculator = score_calculator
+        """Initialize ranking engine"""        self.score_calculator = score_calculator
         self.logger = logging.getLogger(__name__)
         
         # Tier promotion requirements
@@ -390,8 +370,7 @@ class RankingEngine:
     def calculate_user_ranking(self, 
                              user_data: Dict[str, Any],
                              historical_performance: Optional[List[Dict[str, Any]]] = None) -> Dict[str, Any]:
-        """Calculate comprehensive user ranking"""
-        try:
+        """Calculate comprehensive user ranking"""        try:
             # Extract score components from user data
             components = self._extract_score_components(user_data)
             
@@ -427,8 +406,7 @@ class RankingEngine:
             raise
     
     def _extract_score_components(self, user_data: Dict[str, Any]) -> List[ScoreComponent]:
-        """Extract score components from user data"""
-        components = []
+        """Extract score components from user data"""        components = []
         
         # Experience points (high weight)
         if "experience_points" in user_data:
@@ -498,8 +476,7 @@ class RankingEngine:
     def _determine_modifiers(self, 
                            user_data: Dict[str, Any],
                            historical_performance: Optional[List[Dict[str, Any]]] = None) -> List[ScoreModifier]:
-        """Determine applicable score modifiers"""
-        modifiers = []
+        """Determine applicable score modifiers"""        modifiers = []
         
         # Streak bonus
         if user_data.get("current_streak", 0) >= 7:
@@ -533,8 +510,7 @@ class RankingEngine:
                                 user_data: Dict[str, Any],
                                 score_calculation: ScoreCalculation,
                                 historical_performance: Optional[List[Dict[str, Any]]] = None) -> Dict[str, Any]:
-        """Analyze tier promotion/demotion eligibility"""
-        current_tier = score_calculation.tier
+        """Analyze tier promotion/demotion eligibility"""        current_tier = score_calculation.tier
         current_score = float(score_calculation.normalized_score)
         
         # Check for promotion eligibility
@@ -587,8 +563,7 @@ class RankingEngine:
     
     def _calculate_trend_analysis(self, 
                                 historical_performance: Optional[List[Dict[str, Any]]] = None) -> Dict[str, Any]:
-        """Calculate performance trend analysis"""
-        if not historical_performance or len(historical_performance) < 2:
+        """Calculate performance trend analysis"""        if not historical_performance or len(historical_performance) < 2:
             return {
                 "trend_direction": "stable",
                 "trend_strength": 0.0,
@@ -632,8 +607,7 @@ class RankingEngine:
         }
     
     def _calculate_linear_trend(self, scores: List[float]) -> float:
-        """Calculate linear trend coefficient"""
-        if len(scores) < 2:
+        """Calculate linear trend coefficient"""        if len(scores) < 2:
             return 0.0
         
         n = len(scores)
@@ -652,8 +626,7 @@ class RankingEngine:
         return numerator / denominator
     
     def _get_ranking_factors(self, user_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Get factors contributing to user ranking"""
-        factors = []
+        """Get factors contributing to user ranking"""        factors = []
         
         # Top contributing factors
         if user_data.get("content_quality_avg", 0) >= 8.0:
@@ -692,8 +665,7 @@ class RankingEngine:
         return factors
     
     def _get_improvement_suggestions(self, score_calculation: ScoreCalculation) -> List[str]:
-        """Get personalized improvement suggestions"""
-        suggestions = []
+        """Get personalized improvement suggestions"""        suggestions = []
         
         # Analyze component contributions
         components = score_calculation.components
@@ -719,8 +691,7 @@ class RankingEngine:
         return suggestions[:5]  # Limit to top 5 suggestions
     
     def _get_next_milestone(self, current_tier: RankingTier) -> Dict[str, Any]:
-        """Get next milestone information"""
-        tier_list = list(RankingTier)
+        """Get next milestone information"""        tier_list = list(RankingTier)
         current_index = tier_list.index(current_tier)
         
         if current_index < len(tier_list) - 1:
@@ -740,8 +711,7 @@ class RankingEngine:
         }
     
     def _get_tier_benefits(self, tier: RankingTier) -> List[str]:
-        """Get benefits for reaching specific tier"""
-        benefits = {
+        """Get benefits for reaching specific tier"""        benefits = {
             RankingTier.SILVER: ["Increased visibility", "Basic analytics access"],
             RankingTier.GOLD: ["Premium features access", "Priority support"],
             RankingTier.PLATINUM: ["Advanced analytics", "Collaboration matching"],
@@ -753,11 +723,9 @@ class RankingEngine:
         return benefits.get(tier, ["Exclusive benefits"])
 
 class LeaderboardManager:
-    """Enterprise leaderboard management system"""
-    
+    """Enterprise leaderboard management system"""    
     def __init__(self, ranking_engine: RankingEngine):
-        """Initialize leaderboard manager"""
-        self.ranking_engine = ranking_engine
+        """Initialize leaderboard manager"""        self.ranking_engine = ranking_engine
         self.logger = logging.getLogger(__name__)
         
         # Leaderboard update frequencies
@@ -774,8 +742,7 @@ class LeaderboardManager:
                                  leaderboard_type: str = "global",
                                  limit: int = 100,
                                  include_trends: bool = True) -> List[LeaderboardEntry]:
-        """Generate comprehensive leaderboard"""
-        try:
+        """Generate comprehensive leaderboard"""        try:
             # Calculate rankings for all users
             ranked_users = []
             
@@ -842,8 +809,7 @@ class LeaderboardManager:
             raise
     
     def _calculate_rank_change(self, user_data: Dict[str, Any], current_rank: int) -> int:
-        """Calculate rank change from previous period"""
-        # In real implementation, this would compare with historical leaderboard data
+        """Calculate rank change from previous period"""        # In real implementation, this would compare with historical leaderboard data
         # For now, return a placeholder calculation
         trend_direction = user_data.get("trend_direction", "stable")
         
@@ -855,15 +821,13 @@ class LeaderboardManager:
             return 0  # No change
 
 class ScoringSystem:
-    """Main scoring system orchestrator"""
-    
+    """Main scoring system orchestrator"""    
     def __init__(self,
                  analytics_service=None,
                  user_service=None,
                  cache_service=None,
                  notification_service=None):
-        """Initialize scoring system"""
-        self.analytics_service = analytics_service
+        """Initialize scoring system"""        self.analytics_service = analytics_service
         self.user_service = user_service
         self.cache_service = cache_service
         self.notification_service = notification_service
@@ -876,8 +840,7 @@ class ScoringSystem:
         self.logger = logging.getLogger(__name__)
     
     async def calculate_user_score(self, user_id: str) -> Dict[str, Any]:
-        """Calculate comprehensive user score"""
-        try:
+        """Calculate comprehensive user score"""        try:
             # Get user data
             user_data = await self._get_user_data(user_id)
             if not user_data:
@@ -910,8 +873,7 @@ class ScoringSystem:
             return {"success": False, "error": str(e)}
     
     async def generate_global_leaderboard(self, limit: int = 100) -> Dict[str, Any]:
-        """Generate global leaderboard"""
-        try:
+        """Generate global leaderboard"""        try:
             # Get top users data
             users_data = await self._get_top_users_data(limit * 2)  # Get more for filtering
             
@@ -940,8 +902,7 @@ class ScoringSystem:
             return {"success": False, "error": str(e)}
     
     async def _get_user_data(self, user_id: str) -> Optional[Dict[str, Any]]:
-        """Get comprehensive user data for scoring"""
-        if self.user_service:
+        """Get comprehensive user data for scoring"""        if self.user_service:
             try:
                 return await self.user_service.get_user_scoring_data(user_id)
             except Exception as e:
@@ -963,8 +924,7 @@ class ScoringSystem:
         }
     
     async def _get_historical_performance(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get historical performance data"""
-        if self.analytics_service:
+        """Get historical performance data"""        if self.analytics_service:
             try:
                 return await self.analytics_service.get_user_performance_history(user_id)
             except Exception as e:
@@ -974,8 +934,7 @@ class ScoringSystem:
         return []
     
     async def _get_top_users_data(self, limit: int) -> List[Dict[str, Any]]:
-        """Get data for top users"""
-        if self.user_service:
+        """Get data for top users"""        if self.user_service:
             try:
                 return await self.user_service.get_top_users_data(limit)
             except Exception as e:

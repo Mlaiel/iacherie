@@ -7,8 +7,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
-"""
-import asyncio
+"""import asyncio
 import json
 from typing import Dict, Any, List, Optional, Union, Callable
 from datetime import datetime, timedelta
@@ -32,8 +31,7 @@ logger = logging.getLogger(__name__)
 
 
 class MonitoringServiceStatus(Enum):
-    """Status of monitoring services"""
-    STARTING = "starting"
+    """Status of monitoring services"""    STARTING = "starting"
     RUNNING = "running"
     STOPPING = "stopping"
     STOPPED = "stopped"
@@ -41,8 +39,7 @@ class MonitoringServiceStatus(Enum):
 
 
 class MonitoringLevel(Enum):
-    """Monitoring detail levels"""
-    BASIC = "basic"
+    """Monitoring detail levels"""    BASIC = "basic"
     STANDARD = "standard"
     COMPREHENSIVE = "comprehensive"
     DEBUG = "debug"
@@ -50,8 +47,7 @@ class MonitoringLevel(Enum):
 
 @dataclass
 class MonitoringConfig:
-    """Configuration for the monitoring system"""
-    level: MonitoringLevel = MonitoringLevel.STANDARD
+    """Configuration for the monitoring system"""    level: MonitoringLevel = MonitoringLevel.STANDARD
     ai_monitoring_enabled: bool = True
     content_monitoring_enabled: bool = True
     business_monitoring_enabled: bool = True
@@ -81,8 +77,7 @@ class MonitoringConfig:
 
 @dataclass
 class ServiceHealth:
-    """Health status of a monitoring service"""
-    service_name: str
+    """Health status of a monitoring service"""    service_name: str
     status: MonitoringServiceStatus
     last_update: datetime
     error_message: Optional[str] = None
@@ -94,8 +89,7 @@ class ServiceHealth:
 
 @dataclass
 class MonitoringSnapshot:
-    """Complete monitoring system snapshot"""
-    timestamp: datetime
+    """Complete monitoring system snapshot"""    timestamp: datetime
     overall_status: MonitoringServiceStatus
     services: Dict[str, ServiceHealth]
     system_metrics: Dict[str, Any]
@@ -147,8 +141,7 @@ class MonitoringHub:
         self._initialize_services()
 
     def _initialize_services(self):
-        """Initialize monitoring services based on configuration"""
-        try:
+        """Initialize monitoring services based on configuration"""        try:
             # Initialize basic services without external dependencies
             from .real_time_alerts import RealTimeAlerts
             from .health_checks import HealthChecks

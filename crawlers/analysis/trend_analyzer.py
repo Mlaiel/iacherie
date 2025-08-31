@@ -1,5 +1,4 @@
-"""
-Trend Analyzer
+"""Trend Analyzer
 ==============
 
 Advanced trend detection and social media analytics system.
@@ -22,9 +21,7 @@ Expertise combinée:
 - Audio/Vidéo: Traitement multimédia et analyse de contenu
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple, Set
@@ -43,8 +40,7 @@ import pandas as pd
 logger = logging.getLogger(__name__)
 
 class TrendCategory(Enum):
-    """Trend category types."""
-    VIRAL_CONTENT = "viral_content"
+    """Trend category types."""    VIRAL_CONTENT = "viral_content"
     HASHTAG_TREND = "hashtag_trend"
     TOPIC_TREND = "topic_trend"
     CELEBRITY_TREND = "celebrity_trend"
@@ -58,8 +54,7 @@ class TrendCategory(Enum):
     FASHION_TREND = "fashion_trend"
 
 class TrendVelocity(Enum):
-    """Trend velocity levels."""
-    EXPLOSIVE = "explosive"      # Sudden spike
+    """Trend velocity levels."""    EXPLOSIVE = "explosive"      # Sudden spike
     RAPID = "rapid"             # Fast growth
     STEADY = "steady"           # Consistent growth
     SLOW = "slow"               # Gradual growth
@@ -67,8 +62,7 @@ class TrendVelocity(Enum):
     STABLE = "stable"           # Plateaued
 
 class TrendScope(Enum):
-    """Trend geographical scope."""
-    GLOBAL = "global"
+    """Trend geographical scope."""    GLOBAL = "global"
     CONTINENTAL = "continental"
     NATIONAL = "national"
     REGIONAL = "regional"
@@ -77,8 +71,7 @@ class TrendScope(Enum):
 
 @dataclass
 class TrendMetrics:
-    """Trend analysis metrics."""
-    volume: int                     # Number of mentions/posts
+    """Trend analysis metrics."""    volume: int                     # Number of mentions/posts
     engagement_rate: float          # Average engagement per post
     reach_estimate: int            # Estimated total reach
     velocity: TrendVelocity        # Growth velocity
@@ -102,8 +95,7 @@ class TrendMetrics:
 
 @dataclass
 class TrendItem:
-    """Individual trending item."""
-    trend_id: str
+    """Individual trending item."""    trend_id: str
     keyword: str
     category: TrendCategory
     scope: TrendScope
@@ -126,8 +118,7 @@ class TrendItem:
 
 @dataclass
 class TrendAnalysisResult:
-    """Complete trend analysis result."""
-    content_id: str
+    """Complete trend analysis result."""    content_id: str
     detected_trends: List[TrendItem]
     
     # Content trend scoring
@@ -147,8 +138,7 @@ class TrendAnalysisResult:
     data_freshness: float = 0.0  # How recent is the trend data
 
 class TrendAnalyzer:
-    """
-    Advanced trend detection and social media analytics system.
+    """    Advanced trend detection and social media analytics system.
     
     Features:
     - Real-time trend detection across multiple platforms
@@ -159,8 +149,7 @@ class TrendAnalyzer:
     - Geographic trend mapping
     - Influencer trend participation tracking
     - Bot and spam detection
-    """
-    
+    """    
     def __init__(
         self,
         enable_realtime: bool = True,
@@ -168,16 +157,14 @@ class TrendAnalyzer:
         min_volume_threshold: int = 100,
         enable_predictive: bool = True
     ):
-        """
-        Initialize trend analyzer.
+        """        Initialize trend analyzer.
         
         Args:
             enable_realtime: Enable real-time trend monitoring
             trend_window_hours: Time window for trend analysis
             min_volume_threshold: Minimum volume to consider as trend
             enable_predictive: Enable predictive trend analytics
-        """
-        self.enable_realtime = enable_realtime
+        """        self.enable_realtime = enable_realtime
         self.trend_window_hours = trend_window_hours
         self.min_volume_threshold = min_volume_threshold
         self.enable_predictive = enable_predictive
@@ -205,8 +192,7 @@ class TrendAnalyzer:
         logger.info(f"TrendAnalyzer initialized with {trend_window_hours}h window")
     
     def _initialize_trend_keywords(self) -> None:
-        """Initialize trending keywords and patterns."""
-        self.trend_keywords = {
+        """Initialize trending keywords and patterns."""        self.trend_keywords = {
             TrendCategory.VIRAL_CONTENT: [
                 'viral', 'trending', 'going viral', 'breaking the internet',
                 'everyone is talking about', 'viral sensation', 'internet famous'
@@ -258,8 +244,7 @@ class TrendAnalyzer:
         }
     
     def _initialize_ml_models(self) -> None:
-        """Initialize machine learning models for trend analysis."""
-        try:
+        """Initialize machine learning models for trend analysis."""        try:
             # TF-IDF vectorizer for text analysis
             self.tfidf_vectorizer = TfidfVectorizer(
                 max_features=10000,
@@ -295,8 +280,7 @@ class TrendAnalyzer:
         metadata: Optional[Dict[str, Any]] = None,
         platform: str = "general"
     ) -> TrendAnalysisResult:
-        """
-        Analyze trends in content and detect trending elements.
+        """        Analyze trends in content and detect trending elements.
         
         Args:
             content_id: Unique content identifier
@@ -306,8 +290,7 @@ class TrendAnalyzer:
             
         Returns:
             TrendAnalysisResult: Complete trend analysis
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             metadata = metadata or {}
@@ -383,8 +366,7 @@ class TrendAnalyzer:
         keywords: List[str],
         platform: str
     ) -> List[TrendItem]:
-        """Detect active trends in content."""
-        detected_trends = []
+        """Detect active trends in content."""        detected_trends = []
         
         try:
             # Hashtag trend detection
@@ -419,8 +401,7 @@ class TrendAnalyzer:
             return []
     
     async def _analyze_hashtag_trend(self, hashtag: str, platform: str) -> Optional[TrendItem]:
-        """Analyze if a hashtag is trending."""
-        try:
+        """Analyze if a hashtag is trending."""        try:
             # Get hashtag mention history
             mentions = self.hashtag_mentions.get(hashtag.lower(), [])
             
@@ -471,8 +452,7 @@ class TrendAnalyzer:
             return None
     
     async def _analyze_keyword_trend(self, keyword: str, context: str) -> Optional[TrendItem]:
-        """Analyze if a keyword is trending."""
-        try:
+        """Analyze if a keyword is trending."""        try:
             # Get keyword mention history
             mentions = self.keyword_mentions.get(keyword.lower(), [])
             
@@ -520,8 +500,7 @@ class TrendAnalyzer:
             return None
     
     async def _detect_topic_trends(self, text_content: str) -> List[TrendItem]:
-        """Detect trending topics using topic modeling."""
-        try:
+        """Detect trending topics using topic modeling."""        try:
             if not self.topic_model or len(text_content.split()) < 10:
                 return []
             
@@ -560,8 +539,7 @@ class TrendAnalyzer:
             return []
     
     async def _detect_viral_content(self, text_content: str, hashtags: List[str]) -> Optional[TrendItem]:
-        """Detect if content has viral characteristics."""
-        try:
+        """Detect if content has viral characteristics."""        try:
             viral_indicators = []
             
             # Check for viral keywords
@@ -609,18 +587,15 @@ class TrendAnalyzer:
             return None
     
     def _extract_hashtags(self, text: str) -> List[str]:
-        """Extract hashtags from text."""
-        hashtags = re.findall(r'#(\w+)', text)
+        """Extract hashtags from text."""        hashtags = re.findall(r'#(\w+)', text)
         return [tag.lower() for tag in hashtags]
     
     def _extract_mentions(self, text: str) -> List[str]:
-        """Extract mentions from text."""
-        mentions = re.findall(r'@(\w+)', text)
+        """Extract mentions from text."""        mentions = re.findall(r'@(\w+)', text)
         return [mention.lower() for mention in mentions]
     
     def _extract_keywords(self, text: str, max_keywords: int = 20) -> List[str]:
-        """Extract keywords from text."""
-        # Remove stop words and extract meaningful keywords
+        """Extract keywords from text."""        # Remove stop words and extract meaningful keywords
         stop_words = {
             'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for',
             'of', 'with', 'by', 'from', 'is', 'are', 'was', 'were',
@@ -643,8 +618,7 @@ class TrendAnalyzer:
         keywords: List[str],
         timestamp: datetime
     ) -> None:
-        """Update mention tracking for trend detection."""
-        # Update hashtag mentions
+        """Update mention tracking for trend detection."""        # Update hashtag mentions
         for hashtag in hashtags:
             self.hashtag_mentions[hashtag].append(timestamp)
         
@@ -670,8 +644,7 @@ class TrendAnalyzer:
                 del self.keyword_mentions[keyword]
     
     def _calculate_velocity(self, timestamps: List[datetime]) -> TrendVelocity:
-        """Calculate trend velocity based on timestamps."""
-        if len(timestamps) < 2:
+        """Calculate trend velocity based on timestamps."""        if len(timestamps) < 2:
             return TrendVelocity.STABLE
         
         # Sort timestamps
@@ -699,8 +672,7 @@ class TrendAnalyzer:
             return TrendVelocity.STABLE
     
     def _categorize_keyword(self, keyword: str, context: str) -> TrendCategory:
-        """Categorize keyword into trend category."""
-        keyword_lower = keyword.lower()
+        """Categorize keyword into trend category."""        keyword_lower = keyword.lower()
         context_lower = context.lower()
         
         # Check against category keywords
@@ -723,8 +695,7 @@ class TrendAnalyzer:
             return TrendCategory.TOPIC_TREND
     
     def _deduplicate_trends(self, trends: List[TrendItem]) -> List[TrendItem]:
-        """Remove duplicate trends based on similarity."""
-        if not trends:
+        """Remove duplicate trends based on similarity."""        if not trends:
             return []
         
         deduplicated = []
@@ -752,8 +723,7 @@ class TrendAnalyzer:
         return deduplicated
     
     def _calculate_trend_participation(self, trends: List[TrendItem], hashtags: List[str]) -> float:
-        """Calculate how much the content participates in current trends."""
-        if not trends:
+        """Calculate how much the content participates in current trends."""        if not trends:
             return 0.0
         
         participation_scores = []
@@ -772,8 +742,7 @@ class TrendAnalyzer:
         return np.mean(participation_scores) if participation_scores else 0.0
     
     def _calculate_trend_originality(self, keywords: List[str], hashtags: List[str]) -> float:
-        """Calculate content originality vs trend following."""
-        if not keywords and not hashtags:
+        """Calculate content originality vs trend following."""        if not keywords and not hashtags:
             return 0.5
         
         all_terms = keywords + hashtags
@@ -793,8 +762,7 @@ class TrendAnalyzer:
         return (uniqueness_ratio + originality_factor) / 2
     
     def _calculate_trend_timing(self, trends: List[TrendItem]) -> float:
-        """Calculate timing score based on trend lifecycle stage."""
-        if not trends:
+        """Calculate timing score based on trend lifecycle stage."""        if not trends:
             return 0.5
         
         timing_scores = []
@@ -825,8 +793,7 @@ class TrendAnalyzer:
         trends: List[TrendItem],
         metadata: Dict[str, Any]
     ) -> float:
-        """Calculate viral potential score."""
-        factors = []
+        """Calculate viral potential score."""        factors = []
         
         # Trend participation factor
         if trends:
@@ -866,8 +833,7 @@ class TrendAnalyzer:
         trends: List[TrendItem],
         max_recommendations: int = 10
     ) -> List[str]:
-        """Recommend hashtags based on content and trends."""
-        recommendations = []
+        """Recommend hashtags based on content and trends."""        recommendations = []
         
         # Add trending hashtags
         for trend in trends:
@@ -897,8 +863,7 @@ class TrendAnalyzer:
         return unique_recommendations[:max_recommendations]
     
     def _calculate_optimal_timing(self, trends: List[TrendItem]) -> Optional[datetime]:
-        """Calculate optimal posting time based on trends."""
-        if not trends:
+        """Calculate optimal posting time based on trends."""        if not trends:
             return None
         
         # Simple heuristic: recommend posting during peak social media hours
@@ -921,8 +886,7 @@ class TrendAnalyzer:
         return next_peak
     
     def _generate_trend_recommendations(self, trends: List[TrendItem]) -> List[str]:
-        """Generate trend-based content recommendations."""
-        recommendations = []
+        """Generate trend-based content recommendations."""        recommendations = []
         
         if not trends:
             return ["Create original content to start new trends"]
@@ -946,8 +910,7 @@ class TrendAnalyzer:
         return recommendations[:10]
     
     def _calculate_data_freshness(self) -> float:
-        """Calculate how fresh the trend data is."""
-        # Simple metric based on recent analysis activity
+        """Calculate how fresh the trend data is."""        # Simple metric based on recent analysis activity
         recent_analyses = [
             t for t in self.processing_times[-100:] 
             if t is not None
@@ -968,8 +931,7 @@ class TrendAnalyzer:
         scope: Optional[TrendScope] = None,
         limit: int = 20
     ) -> List[TrendItem]:
-        """Get current trending topics with optional filtering."""
-        try:
+        """Get current trending topics with optional filtering."""        try:
             # For now, return simulated trending topics
             # In real implementation, this would query the trend database
             
@@ -1025,8 +987,7 @@ class TrendAnalyzer:
         trend_id: str,
         hours_ahead: int = 24
     ) -> Dict[str, Any]:
-        """Predict trend future performance."""
-        try:
+        """Predict trend future performance."""        try:
             # Simple trend prediction based on current velocity
             # In real implementation, this would use ML models
             
@@ -1081,8 +1042,7 @@ class TrendAnalyzer:
             }
     
     def get_analytics(self) -> Dict[str, Any]:
-        """Get trend analysis analytics and performance metrics."""
-        avg_processing_time = np.mean(self.processing_times) if self.processing_times else 0
+        """Get trend analysis analytics and performance metrics."""        avg_processing_time = np.mean(self.processing_times) if self.processing_times else 0
         
         # Calculate trend categories distribution
         trend_categories = {}
@@ -1109,8 +1069,7 @@ class TrendAnalyzer:
         }
     
     async def cleanup(self) -> None:
-        """Cleanup resources and clear caches."""
-        # Clear tracking data
+        """Cleanup resources and clear caches."""        # Clear tracking data
         self.active_trends.clear()
         self.trend_history.clear()
         self.keyword_mentions.clear()

@@ -1,5 +1,4 @@
-"""
-Revenue and Monetization Notification Manager
+"""Revenue and Monetization Notification Manager
 
 Gestionnaire spécialisé pour les notifications de revenus et monétisation dans
 l'écosystème IA Influencer Agent. Tracking financier, alertes revenus et analytics.
@@ -20,9 +19,7 @@ Ce code constitue la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou tentative de reverse engineering
 non autorisée par écrit est formellement interdite et passible de poursuites judiciaires
 selon le droit allemand et international. Contact: mlaiel@live.de
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, date
 from enum import Enum
@@ -46,8 +43,7 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueSource(Enum):
-    """Sources de revenus dans l'écosystème IA Influencer"""
-    STREAMING_ROYALTIES = "streaming_royalties"
+    """Sources de revenus dans l'écosystème IA Influencer"""    STREAMING_ROYALTIES = "streaming_royalties"
     SYNC_LICENSING = "sync_licensing"
     MERCHANDISE = "merchandise"
     LIVE_PERFORMANCES = "live_performances"
@@ -62,8 +58,7 @@ class RevenueSource(Enum):
 
 
 class RevenueStatus(Enum):
-    """États des transactions de revenus"""
-    PENDING = "pending"
+    """États des transactions de revenus"""    PENDING = "pending"
     PROCESSING = "processing"
     CONFIRMED = "confirmed"
     PAID = "paid"
@@ -74,8 +69,7 @@ class RevenueStatus(Enum):
 
 
 class NotificationTrigger(Enum):
-    """Déclencheurs de notifications de revenus"""
-    THRESHOLD_REACHED = "threshold_reached"
+    """Déclencheurs de notifications de revenus"""    THRESHOLD_REACHED = "threshold_reached"
     DAILY_SUMMARY = "daily_summary"
     WEEKLY_REPORT = "weekly_report"
     MONTHLY_STATEMENT = "monthly_statement"
@@ -87,8 +81,7 @@ class NotificationTrigger(Enum):
 
 @dataclass
 class RevenueTransaction:
-    """Modèle de transaction de revenus"""
-    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Modèle de transaction de revenus"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = None
     content_id: str = None
     source: RevenueSource = RevenueSource.STREAMING_ROYALTIES
@@ -108,8 +101,7 @@ class RevenueTransaction:
 
 @dataclass
 class RevenueGoal:
-    """Objectifs de revenus utilisateur"""
-    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Objectifs de revenus utilisateur"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = None
     target_amount: Decimal = field(default_factory=lambda: Decimal('0.00'))
     currency: str = "EUR"
@@ -125,8 +117,7 @@ class RevenueGoal:
 
 @dataclass
 class RevenueNotification:
-    """Configuration de notification de revenus"""
-    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Configuration de notification de revenus"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = None
     trigger: NotificationTrigger = NotificationTrigger.THRESHOLD_REACHED
     threshold_amount: Decimal = field(default_factory=lambda: Decimal('100.00'))
@@ -138,8 +129,7 @@ class RevenueNotification:
 
 
 class RevenueNotificationManager:
-    """
-    Gestionnaire avancé des notifications de revenus et monétisation
+    """    Gestionnaire avancé des notifications de revenus et monétisation
     
     Responsabilités:
     - Tracking revenus temps réel multi-sources
@@ -147,9 +137,7 @@ class RevenueNotificationManager:
     - Rapports et analytics de performance
     - Intégration systèmes de paiement
     - Prédictions revenus avec IA
-    """
-
-    def __init__(self, db_pool: asyncpg.Pool, redis_client: aioredis.Redis):
+    """    def __init__(self, db_pool: asyncpg.Pool, redis_client: aioredis.Redis):
         self.db_pool = db_pool
         self.redis = redis_client
         self.currency_converter = CurrencyRates()
@@ -157,10 +145,8 @@ class RevenueNotificationManager:
         self.payment_providers = self._init_payment_providers()
         
     def _load_revenue_templates(self) -> Dict[str, Template]:
-        """Charge les templates de notification de revenus"""
-        templates = {
-            "payment_received": Template("""
-                💰 PAIEMENT REÇU - {{ amount }} {{ currency }}
+        """Charge les templates de notification de revenus"""        templates = {
+            "payment_received": Template("""                💰 PAIEMENT REÇU - {{ amount }} {{ currency }}
                 
                 Source: {{ source }}
                 Plateforme: {{ platform }}
@@ -176,8 +162,7 @@ class RevenueNotificationManager:
                 🔗 Voir détails: {{ transaction_url }}
             """),
             
-            "threshold_reached": Template("""
-                🎯 SEUIL DE REVENUS ATTEINT!
+            "threshold_reached": Template("""                🎯 SEUIL DE REVENUS ATTEINT!
                 
                 💰 Vous avez atteint {{ threshold_amount }} {{ currency }}
                 📅 Période: {{ period }}
@@ -191,8 +176,7 @@ class RevenueNotificationManager:
                 📊 Dashboard: {{ dashboard_url }}
             """),
             
-            "goal_achieved": Template("""
-                🏆 OBJECTIF ATTEINT! 🎉
+            "goal_achieved": Template("""                🏆 OBJECTIF ATTEINT! 🎉
                 
                 🎯 Objectif: {{ goal_amount }} {{ currency }}
                 ⏰ Atteint {{ days_early }} jours en avance!
@@ -207,8 +191,7 @@ class RevenueNotificationManager:
                 🎯 Définir nouvel objectif: {{ new_goal_url }}
             """),
             
-            "weekly_report": Template("""
-                📊 RAPPORT HEBDOMADAIRE DE REVENUS
+            "weekly_report": Template("""                📊 RAPPORT HEBDOMADAIRE DE REVENUS
                 
                 📅 Semaine du {{ week_start }} au {{ week_end }}
                 
@@ -227,8 +210,7 @@ class RevenueNotificationManager:
                 📈 Prédiction semaine prochaine: {{ next_week_prediction }} {{ currency }}
             """),
             
-            "anomaly_detected": Template("""
-                ⚠️ ANOMALIE REVENUS DÉTECTÉE
+            "anomaly_detected": Template("""                ⚠️ ANOMALIE REVENUS DÉTECTÉE
                 
                 📊 Variation inhabituelle détectée:
                 {{ anomaly_description }}
@@ -250,8 +232,7 @@ class RevenueNotificationManager:
         return templates
 
     def _init_payment_providers(self) -> Dict[str, Any]:
-        """Initialise les fournisseurs de paiement"""
-        return {
+        """Initialise les fournisseurs de paiement"""        return {
             "stripe": {
                 "client": stripe,
                 "webhook_secret": "whsec_stripe_secret",
@@ -272,16 +253,14 @@ class RevenueNotificationManager:
         self,
         transaction: RevenueTransaction
     ) -> Dict[str, Any]:
-        """
-        Traite une nouvelle transaction de revenus avec notifications automatiques
+        """        Traite une nouvelle transaction de revenus avec notifications automatiques
         
         Args:
             transaction: Données de la transaction
             
         Returns:
             Dict contenant les résultats du traitement
-        """
-        try:
+        """        try:
             # Validation et enrichissement transaction
             validated_transaction = await self._validate_and_enrich_transaction(transaction)
             
@@ -329,8 +308,7 @@ class RevenueNotificationManager:
         user_id: str,
         goals: List[RevenueGoal]
     ) -> Dict[str, Any]:
-        """Configure les objectifs de revenus pour un utilisateur"""
-        try:
+        """Configure les objectifs de revenus pour un utilisateur"""        try:
             saved_goals = []
             
             for goal in goals:
@@ -370,19 +348,16 @@ class RevenueNotificationManager:
         period_end: date,
         report_type: str = "detailed"
     ) -> Dict[str, Any]:
-        """Génère un rapport détaillé de revenus pour une période"""
-        async with self.db_pool.acquire() as conn:
+        """Génère un rapport détaillé de revenus pour une période"""        async with self.db_pool.acquire() as conn:
             # Transactions de la période
-            transactions = await conn.fetch("""
-                SELECT * FROM revenue_transactions 
+            transactions = await conn.fetch("""                SELECT * FROM revenue_transactions 
                 WHERE user_id = $1 
                 AND transaction_date BETWEEN $2 AND $3
                 ORDER BY transaction_date DESC
             """, user_id, period_start, period_end)
             
             # Agrégations par source
-            source_breakdown = await conn.fetch("""
-                SELECT 
+            source_breakdown = await conn.fetch("""                SELECT 
                     source,
                     COUNT(*) as transaction_count,
                     SUM(net_amount) as total_net,
@@ -396,8 +371,7 @@ class RevenueNotificationManager:
             """, user_id, period_start, period_end)
             
             # Performance mensuelle comparative
-            monthly_comparison = await conn.fetch("""
-                SELECT 
+            monthly_comparison = await conn.fetch("""                SELECT 
                     DATE_TRUNC('month', transaction_date) as month,
                     SUM(net_amount) as monthly_total,
                     COUNT(*) as transaction_count
@@ -444,8 +418,7 @@ class RevenueNotificationManager:
         user_id: str,
         alert_configs: List[RevenueNotification]
     ) -> Dict[str, Any]:
-        """Configure les alertes de revenus personnalisées"""
-        configured_alerts = []
+        """Configure les alertes de revenus personnalisées"""        configured_alerts = []
         
         for alert_config in alert_configs:
             try:
@@ -480,8 +453,7 @@ class RevenueNotificationManager:
         }
 
     async def get_real_time_revenue_dashboard(self, user_id: str) -> Dict[str, Any]:
-        """Récupère les données temps réel du dashboard de revenus"""
-        # Cache Redis pour performance
+        """Récupère les données temps réel du dashboard de revenus"""        # Cache Redis pour performance
         cache_key = f"revenue_dashboard:{user_id}"
         cached_data = await self.redis.get(cache_key)
         
@@ -490,8 +462,7 @@ class RevenueNotificationManager:
         
         async with self.db_pool.acquire() as conn:
             # Revenus aujourd'hui
-            today_revenue = await conn.fetchrow("""
-                SELECT 
+            today_revenue = await conn.fetchrow("""                SELECT 
                     COALESCE(SUM(net_amount), 0) as today_total,
                     COUNT(*) as today_count
                 FROM revenue_transactions 
@@ -500,8 +471,7 @@ class RevenueNotificationManager:
             """, user_id)
             
             # Revenus du mois
-            month_revenue = await conn.fetchrow("""
-                SELECT 
+            month_revenue = await conn.fetchrow("""                SELECT 
                     COALESCE(SUM(net_amount), 0) as month_total,
                     COUNT(*) as month_count
                 FROM revenue_transactions 
@@ -510,16 +480,14 @@ class RevenueNotificationManager:
             """, user_id)
             
             # Dernières transactions
-            recent_transactions = await conn.fetch("""
-                SELECT * FROM revenue_transactions 
+            recent_transactions = await conn.fetch("""                SELECT * FROM revenue_transactions 
                 WHERE user_id = $1 
                 ORDER BY transaction_date DESC 
                 LIMIT 10
             """, user_id)
             
             # Objectifs en cours
-            active_goals = await conn.fetch("""
-                SELECT * FROM revenue_goals 
+            active_goals = await conn.fetch("""                SELECT * FROM revenue_goals 
                 WHERE user_id = $1 
                 AND is_active = true 
                 AND end_date >= CURRENT_DATE
@@ -547,8 +515,7 @@ class RevenueNotificationManager:
 
     # Méthodes utilitaires privées
     async def _validate_and_enrich_transaction(self, transaction: RevenueTransaction) -> RevenueTransaction:
-        """Valide et enrichit une transaction avec métadonnées"""
-        # Calcul montant net
+        """Valide et enrichit une transaction avec métadonnées"""        # Calcul montant net
         transaction.net_amount = transaction.amount - transaction.fees
         
         # Enrichissement métadonnées
@@ -562,8 +529,7 @@ class RevenueNotificationManager:
         return transaction
 
     async def _normalize_currency(self, transaction: RevenueTransaction) -> RevenueTransaction:
-        """Normalise la devise vers EUR si nécessaire"""
-        if transaction.currency != "EUR":
+        """Normalise la devise vers EUR si nécessaire"""        if transaction.currency != "EUR":
             try:
                 eur_rate = self.currency_converter.get_rate(transaction.currency, "EUR")
                 transaction.metadata["original_amount"] = float(transaction.amount)
@@ -580,10 +546,8 @@ class RevenueNotificationManager:
         return transaction
 
     async def _save_transaction_to_db(self, transaction: RevenueTransaction) -> str:
-        """Sauvegarde transaction en base de données"""
-        async with self.db_pool.acquire() as conn:
-            transaction_id = await conn.fetchval("""
-                INSERT INTO revenue_transactions (
+        """Sauvegarde transaction en base de données"""        async with self.db_pool.acquire() as conn:
+            transaction_id = await conn.fetchval("""                INSERT INTO revenue_transactions (
                     id, user_id, content_id, source, amount, currency,
                     description, platform, reference_id, status,
                     transaction_date, settlement_date, fees, net_amount,
@@ -603,13 +567,11 @@ class RevenueNotificationManager:
         return transaction_id
 
     async def _check_revenue_thresholds(self, transaction: RevenueTransaction) -> List[Dict[str, Any]]:
-        """Vérifie les seuils de revenus et retourne les alertes déclenchées"""
-        threshold_alerts = []
+        """Vérifie les seuils de revenus et retourne les alertes déclenchées"""        threshold_alerts = []
         
         async with self.db_pool.acquire() as conn:
             # Récupération alertes actives pour l'utilisateur
-            active_alerts = await conn.fetch("""
-                SELECT * FROM revenue_notifications 
+            active_alerts = await conn.fetch("""                SELECT * FROM revenue_notifications 
                 WHERE user_id = $1 
                 AND is_active = true
             """, transaction.user_id)
@@ -633,8 +595,7 @@ class RevenueNotificationManager:
         return threshold_alerts
 
     async def _generate_revenue_predictions(self, user_id: str, transactions: List[Dict]) -> Dict[str, Any]:
-        """Génère des prédictions de revenus basées sur l'historique et ML"""
-        if not transactions:
+        """Génère des prédictions de revenus basées sur l'historique et ML"""        if not transactions:
             return {"status": "insufficient_data"}
         
         # Analyse des tendances

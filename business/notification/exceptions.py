@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-IA Influencer Agent - Advanced Business Exception Management
+"""IA Influencer Agent - Advanced Business Exception Management
 
 This module provides comprehensive exception handling for the notification system,
 ensuring robust error management and detailed error reporting for business operations.
@@ -16,9 +15,7 @@ Architecture Pattern: Exception Hierarchy with Business Context
 Processing Level: Industrial-Grade Error Management
 Creation Pattern: Enterprise Exception Handling
 Business Logic Integration: Complete Error Tracking and Recovery
-"""
-
-import traceback
+"""import traceback
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Union
 from dataclasses import dataclass
@@ -26,8 +23,7 @@ from enum import Enum
 
 
 class ErrorSeverity(Enum):
-    """Error severity levels for business operations."""
-    LOW = "low"
+    """Error severity levels for business operations."""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -35,8 +31,7 @@ class ErrorSeverity(Enum):
 
 
 class ErrorCategory(Enum):
-    """Categorization of business errors."""
-    VALIDATION = "validation"
+    """Categorization of business errors."""    VALIDATION = "validation"
     CONFIGURATION = "configuration"
     BUSINESS_RULE = "business_rule"
     TECHNICAL = "technical"
@@ -50,8 +45,7 @@ class ErrorCategory(Enum):
 
 @dataclass
 class ErrorContext:
-    """Comprehensive error context for business operations."""
-    error_id: str
+    """Comprehensive error context for business operations."""    error_id: str
     timestamp: datetime
     user_id: Optional[str] = None
     creator_type: Optional[str] = None
@@ -66,8 +60,7 @@ class ErrorContext:
 
 @dataclass
 class BusinessImpact:
-    """Assessment of business impact for errors."""
-    revenue_impact: float  # Estimated revenue impact in USD
+    """Assessment of business impact for errors."""    revenue_impact: float  # Estimated revenue impact in USD
     user_affected_count: int  # Number of users affected
     service_disruption: bool  # Whether service is disrupted
     data_integrity_risk: bool  # Whether data integrity is at risk
@@ -77,13 +70,11 @@ class BusinessImpact:
 
 
 class NotificationBusinessException(Exception):
-    """
-    Base exception class for all notification business errors.
+    """    Base exception class for all notification business errors.
     
     This class provides comprehensive error handling with business context,
     impact assessment, and recovery guidance for enterprise operations.
-    """
-    
+    """    
     def __init__(
         self,
         message: str,
@@ -107,16 +98,14 @@ class NotificationBusinessException(Exception):
         self.occurred_at = datetime.utcnow()
     
     def _create_default_context(self) -> ErrorContext:
-        """Create default error context."""
-        return ErrorContext(
+        """Create default error context."""        return ErrorContext(
             error_id=f"ERR_{datetime.utcnow().strftime('%Y%m%d_%H%M%S_%f')}",
             timestamp=datetime.utcnow(),
             stack_trace=traceback.format_exc()
         )
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert exception to dictionary for logging and monitoring."""
-        return {
+        """Convert exception to dictionary for logging and monitoring."""        return {
             "error_code": self.error_code,
             "message": self.message,
             "severity": self.severity.value,
@@ -149,12 +138,10 @@ class NotificationBusinessException(Exception):
         }
     
     def get_user_friendly_message(self) -> str:
-        """Get user-friendly error message."""
-        return self.message
+        """Get user-friendly error message."""        return self.message
     
     def get_technical_details(self) -> Dict[str, Any]:
-        """Get technical details for debugging."""
-        return {
+        """Get technical details for debugging."""        return {
             "error_code": self.error_code,
             "category": self.category.value,
             "severity": self.severity.value,
@@ -166,8 +153,7 @@ class NotificationBusinessException(Exception):
 # Validation Exceptions
 
 class NotificationValidationError(NotificationBusinessException):
-    """Exception raised for notification validation errors."""
-    
+    """Exception raised for notification validation errors."""    
     def __init__(
         self,
         message: str,
@@ -194,8 +180,7 @@ class NotificationValidationError(NotificationBusinessException):
 
 
 class InvalidNotificationTypeError(NotificationValidationError):
-    """Exception raised for invalid notification types."""
-    
+    """Exception raised for invalid notification types."""    
     def __init__(self, notification_type: str, valid_types: List[str], **kwargs):
         message = f"Invalid notification type '{notification_type}'. Valid types are: {', '.join(valid_types)}"
         super().__init__(
@@ -210,8 +195,7 @@ class InvalidNotificationTypeError(NotificationValidationError):
 
 
 class InvalidRecipientError(NotificationValidationError):
-    """Exception raised for invalid recipients."""
-    
+    """Exception raised for invalid recipients."""    
     def __init__(self, recipient: str, reason: str, **kwargs):
         message = f"Invalid recipient '{recipient}': {reason}"
         super().__init__(
@@ -226,8 +210,7 @@ class InvalidRecipientError(NotificationValidationError):
 
 
 class InvalidPriorityError(NotificationValidationError):
-    """Exception raised for invalid priority values."""
-    
+    """Exception raised for invalid priority values."""    
     def __init__(self, priority: str, valid_priorities: List[str], **kwargs):
         message = f"Invalid priority '{priority}'. Valid priorities are: {', '.join(valid_priorities)}"
         super().__init__(
@@ -244,8 +227,7 @@ class InvalidPriorityError(NotificationValidationError):
 # Configuration Exceptions
 
 class NotificationConfigurationError(NotificationBusinessException):
-    """Exception raised for configuration-related errors."""
-    
+    """Exception raised for configuration-related errors."""    
     def __init__(self, message: str, config_key: Optional[str] = None, **kwargs):
         super().__init__(
             message=message,
@@ -258,8 +240,7 @@ class NotificationConfigurationError(NotificationBusinessException):
 
 
 class MissingConfigurationError(NotificationConfigurationError):
-    """Exception raised for missing configuration values."""
-    
+    """Exception raised for missing configuration values."""    
     def __init__(self, config_key: str, **kwargs):
         message = f"Missing required configuration: {config_key}"
         super().__init__(
@@ -271,8 +252,7 @@ class MissingConfigurationError(NotificationConfigurationError):
 
 
 class InvalidConfigurationError(NotificationConfigurationError):
-    """Exception raised for invalid configuration values."""
-    
+    """Exception raised for invalid configuration values."""    
     def __init__(self, config_key: str, config_value: Any, reason: str, **kwargs):
         message = f"Invalid configuration '{config_key}' = '{config_value}': {reason}"
         super().__init__(
@@ -288,8 +268,7 @@ class InvalidConfigurationError(NotificationConfigurationError):
 # Business Rule Exceptions
 
 class BusinessRuleViolationError(NotificationBusinessException):
-    """Exception raised for business rule violations."""
-    
+    """Exception raised for business rule violations."""    
     def __init__(
         self,
         message: str,
@@ -309,8 +288,7 @@ class BusinessRuleViolationError(NotificationBusinessException):
 
 
 class RateLimitExceededError(BusinessRuleViolationError):
-    """Exception raised when rate limits are exceeded."""
-    
+    """Exception raised when rate limits are exceeded."""    
     def __init__(
         self,
         limit: int,
@@ -334,8 +312,7 @@ class RateLimitExceededError(BusinessRuleViolationError):
 
 
 class QuotaExceededError(BusinessRuleViolationError):
-    """Exception raised when quotas are exceeded."""
-    
+    """Exception raised when quotas are exceeded."""    
     def __init__(
         self,
         quota_type: str,
@@ -359,8 +336,7 @@ class QuotaExceededError(BusinessRuleViolationError):
 # Technical Exceptions
 
 class NotificationDeliveryError(NotificationBusinessException):
-    """Exception raised for delivery-related errors."""
-    
+    """Exception raised for delivery-related errors."""    
     def __init__(
         self,
         message: str,
@@ -382,8 +358,7 @@ class NotificationDeliveryError(NotificationBusinessException):
 
 
 class ChannelUnavailableError(NotificationDeliveryError):
-    """Exception raised when a delivery channel is unavailable."""
-    
+    """Exception raised when a delivery channel is unavailable."""    
     def __init__(self, channel: str, reason: str, **kwargs):
         message = f"Channel '{channel}' is unavailable: {reason}"
         super().__init__(
@@ -396,8 +371,7 @@ class ChannelUnavailableError(NotificationDeliveryError):
 
 
 class ProviderError(NotificationDeliveryError):
-    """Exception raised for third-party provider errors."""
-    
+    """Exception raised for third-party provider errors."""    
     def __init__(
         self,
         provider: str,
@@ -424,8 +398,7 @@ class ProviderError(NotificationDeliveryError):
 # Processing Exceptions
 
 class NotificationProcessingError(NotificationBusinessException):
-    """Exception raised for processing-related errors."""
-    
+    """Exception raised for processing-related errors."""    
     def __init__(
         self,
         message: str,
@@ -445,8 +418,7 @@ class NotificationProcessingError(NotificationBusinessException):
 
 
 class TemplateProcessingError(NotificationProcessingError):
-    """Exception raised for template processing errors."""
-    
+    """Exception raised for template processing errors."""    
     def __init__(
         self,
         template_name: str,
@@ -467,8 +439,7 @@ class TemplateProcessingError(NotificationProcessingError):
 
 
 class PersonalizationError(NotificationProcessingError):
-    """Exception raised for personalization errors."""
-    
+    """Exception raised for personalization errors."""    
     def __init__(
         self,
         personalization_type: str,
@@ -491,8 +462,7 @@ class PersonalizationError(NotificationProcessingError):
 # Workflow Exceptions
 
 class WorkflowExecutionError(NotificationBusinessException):
-    """Exception raised for workflow execution errors."""
-    
+    """Exception raised for workflow execution errors."""    
     def __init__(
         self,
         message: str,
@@ -514,8 +484,7 @@ class WorkflowExecutionError(NotificationBusinessException):
 
 
 class WorkflowTimeoutError(WorkflowExecutionError):
-    """Exception raised when workflow execution times out."""
-    
+    """Exception raised when workflow execution times out."""    
     def __init__(
         self,
         workflow_id: str,
@@ -535,8 +504,7 @@ class WorkflowTimeoutError(WorkflowExecutionError):
 
 
 class WorkflowStepError(WorkflowExecutionError):
-    """Exception raised for workflow step errors."""
-    
+    """Exception raised for workflow step errors."""    
     def __init__(
         self,
         workflow_id: str,
@@ -560,8 +528,7 @@ class WorkflowStepError(WorkflowExecutionError):
 # Security Exceptions
 
 class SecurityViolationError(NotificationBusinessException):
-    """Exception raised for security violations."""
-    
+    """Exception raised for security violations."""    
     def __init__(
         self,
         message: str,
@@ -582,8 +549,7 @@ class SecurityViolationError(NotificationBusinessException):
 
 
 class UnauthorizedAccessError(SecurityViolationError):
-    """Exception raised for unauthorized access attempts."""
-    
+    """Exception raised for unauthorized access attempts."""    
     def __init__(
         self,
         resource: str,
@@ -612,8 +578,7 @@ class UnauthorizedAccessError(SecurityViolationError):
 
 
 class DataIntegrityError(NotificationBusinessException):
-    """Exception raised for data integrity violations."""
-    
+    """Exception raised for data integrity violations."""    
     def __init__(
         self,
         message: str,
@@ -635,8 +600,7 @@ class DataIntegrityError(NotificationBusinessException):
 # Performance Exceptions
 
 class PerformanceThresholdError(NotificationBusinessException):
-    """Exception raised when performance thresholds are exceeded."""
-    
+    """Exception raised when performance thresholds are exceeded."""    
     def __init__(
         self,
         metric_name: str,
@@ -660,8 +624,7 @@ class PerformanceThresholdError(NotificationBusinessException):
 
 
 class ResourceExhaustedError(PerformanceThresholdError):
-    """Exception raised when system resources are exhausted."""
-    
+    """Exception raised when system resources are exhausted."""    
     def __init__(
         self,
         resource_type: str,
@@ -684,8 +647,7 @@ class ResourceExhaustedError(PerformanceThresholdError):
 # Integration Exceptions
 
 class ExternalServiceError(NotificationBusinessException):
-    """Exception raised for external service errors."""
-    
+    """Exception raised for external service errors."""    
     def __init__(
         self,
         service_name: str,
@@ -706,8 +668,7 @@ class ExternalServiceError(NotificationBusinessException):
 
 
 class DatabaseConnectionError(NotificationBusinessException):
-    """Exception raised for database connection errors."""
-    
+    """Exception raised for database connection errors."""    
     def __init__(
         self,
         database_name: str,
@@ -734,8 +695,7 @@ def create_validation_error(
     rule: str,
     user_message: Optional[str] = None
 ) -> NotificationValidationError:
-    """Create a standardized validation error."""
-    message = user_message or f"Validation failed for field '{field_name}'"
+    """Create a standardized validation error."""    message = user_message or f"Validation failed for field '{field_name}'"
     return NotificationValidationError(
         message=message,
         field_name=field_name,
@@ -749,8 +709,7 @@ def create_business_rule_error(
     violation_details: str,
     severity: ErrorSeverity = ErrorSeverity.HIGH
 ) -> BusinessRuleViolationError:
-    """Create a standardized business rule violation error."""
-    return BusinessRuleViolationError(
+    """Create a standardized business rule violation error."""    return BusinessRuleViolationError(
         message=f"Business rule violation: {violation_details}",
         rule_name=rule_name,
         severity=severity
@@ -762,8 +721,7 @@ def create_processing_error(
     error_details: str,
     notification_id: Optional[str] = None
 ) -> NotificationProcessingError:
-    """Create a standardized processing error."""
-    context = ErrorContext(
+    """Create a standardized processing error."""    context = ErrorContext(
         error_id=f"PROC_{datetime.utcnow().strftime('%Y%m%d_%H%M%S_%f')}",
         timestamp=datetime.utcnow(),
         notification_id=notification_id,
@@ -782,8 +740,7 @@ def create_delivery_error(
     provider_error: str,
     notification_id: Optional[str] = None
 ) -> NotificationDeliveryError:
-    """Create a standardized delivery error."""
-    return NotificationDeliveryError(
+    """Create a standardized delivery error."""    return NotificationDeliveryError(
         message=f"Delivery failed for channel '{channel}': {provider_error}",
         channel=channel,
         notification_id=notification_id,
@@ -794,8 +751,7 @@ def create_delivery_error(
 # Error Handler Registry
 
 class ErrorHandlerRegistry:
-    """Registry for error handlers and recovery strategies."""
-    
+    """Registry for error handlers and recovery strategies."""    
     def __init__(self):
         self._handlers = {}
         self._recovery_strategies = {}
@@ -806,8 +762,7 @@ class ErrorHandlerRegistry:
         handler_func,
         priority: int = 100
     ):
-        """Register an error handler for a specific error type."""
-        if error_type not in self._handlers:
+        """Register an error handler for a specific error type."""        if error_type not in self._handlers:
             self._handlers[error_type] = []
         
         self._handlers[error_type].append({
@@ -824,15 +779,13 @@ class ErrorHandlerRegistry:
         strategy_func,
         conditions: Optional[Dict[str, Any]] = None
     ):
-        """Register a recovery strategy for an error code."""
-        self._recovery_strategies[error_code] = {
+        """Register a recovery strategy for an error code."""        self._recovery_strategies[error_code] = {
             "strategy": strategy_func,
             "conditions": conditions or {}
         }
     
     def handle_error(self, error: NotificationBusinessException) -> bool:
-        """Handle an error using registered handlers."""
-        error_type = type(error)
+        """Handle an error using registered handlers."""        error_type = type(error)
         
         if error_type in self._handlers:
             for handler_info in self._handlers[error_type]:
@@ -851,8 +804,7 @@ class ErrorHandlerRegistry:
         error: NotificationBusinessException,
         context: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """Attempt to recover from an error using registered strategies."""
-        if error.error_code in self._recovery_strategies:
+        """Attempt to recover from an error using registered strategies."""        if error.error_code in self._recovery_strategies:
             strategy_info = self._recovery_strategies[error.error_code]
             
             # Check if conditions are met

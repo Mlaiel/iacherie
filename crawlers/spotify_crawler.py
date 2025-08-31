@@ -1,5 +1,4 @@
-"""
-Spotify Crawler
+"""Spotify Crawler
 ===============
 
 Professional Spotify content crawler with Web API integration.
@@ -11,9 +10,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator
 from datetime import datetime, timedelta
@@ -37,8 +34,7 @@ settings = get_settings()
 
 @dataclass
 class SpotifyTrack:
-    """Spotify track data structure."""
-    track_id: str
+    """Spotify track data structure."""    track_id: str
     name: str
     artists: List[Dict]
     album: Dict
@@ -60,8 +56,7 @@ class SpotifyTrack:
 
 @dataclass
 class SpotifyArtist:
-    """Spotify artist data structure."""
-    artist_id: str
+    """Spotify artist data structure."""    artist_id: str
     name: str
     external_urls: Dict
     followers: Dict
@@ -74,8 +69,7 @@ class SpotifyArtist:
 
 @dataclass
 class SpotifyAlbum:
-    """Spotify album data structure."""
-    album_id: str
+    """Spotify album data structure."""    album_id: str
     name: str
     album_type: str
     total_tracks: int
@@ -98,8 +92,7 @@ class SpotifyAlbum:
 
 @dataclass
 class SpotifyPlaylist:
-    """Spotify playlist data structure."""
-    playlist_id: str
+    """Spotify playlist data structure."""    playlist_id: str
     name: str
     description: str
     collaborative: bool
@@ -116,8 +109,7 @@ class SpotifyPlaylist:
     uri: str
 
 class SpotifyCrawler:
-    """
-    Professional Spotify crawler implementation.
+    """    Professional Spotify crawler implementation.
     
     Features:
     - Spotify Web API integration
@@ -128,11 +120,9 @@ class SpotifyCrawler:
     - Recommendation engine integration
     - Real-time streaming data
     - Market and genre analysis
-    """
-    
+    """    
     def __init__(self):
-        """Initialize Spotify crawler."""
-        self.client_id = settings.SPOTIFY_CLIENT_ID
+        """Initialize Spotify crawler."""        self.client_id = settings.SPOTIFY_CLIENT_ID
         self.client_secret = settings.SPOTIFY_CLIENT_SECRET
         self.access_token = None
         self.token_expires_at = None
@@ -160,8 +150,7 @@ class SpotifyCrawler:
         self.web_base_url = "https://open.spotify.com"
     
     async def __aenter__(self):
-        """Async context manager entry."""
-        headers = {
+        """Async context manager entry."""        headers = {
             'User-Agent': self.user_agent_rotator.get_user_agent(),
             'Content-Type': 'application/json'
         }
@@ -174,13 +163,11 @@ class SpotifyCrawler:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
-        if self.session:
+        """Async context manager exit."""        if self.session:
             await self.session.close()
     
     async def _get_access_token(self):
-        """Get Spotify access token using client credentials flow."""
-        try:
+        """Get Spotify access token using client credentials flow."""        try:
             if (self.access_token and self.token_expires_at and 
                 datetime.now() < self.token_expires_at):
                 return self.access_token
@@ -230,8 +217,7 @@ class SpotifyCrawler:
         market: str = 'US',
         include_external: str = None
     ) -> List[SpotifyTrack]:
-        """
-        Search Spotify tracks.
+        """        Search Spotify tracks.
         
         Args:
             query: Search query
@@ -241,8 +227,7 @@ class SpotifyCrawler:
             
         Returns:
             List of Spotify track objects
-        """
-        try:
+        """        try:
             await self.rate_limiter.wait_if_needed()
             
             if self.spotify_client:
@@ -258,8 +243,7 @@ class SpotifyCrawler:
             return []
     
     async def _search_tracks_spotipy(self, query: str, max_results: int, market: str) -> List[SpotifyTrack]:
-        """Search tracks using Spotipy library."""
-        try:
+        """Search tracks using Spotipy library."""        try:
             tracks = []
             offset = 0
             limit = min(50, max_results)  # Spotify API limit
@@ -302,8 +286,7 @@ class SpotifyCrawler:
         market: str,
         include_external: str
     ) -> List[SpotifyTrack]:
-        """Search tracks using direct API calls."""
-        try:
+        """Search tracks using direct API calls."""        try:
             await self._ensure_valid_token()
             
             tracks = []
@@ -350,8 +333,7 @@ class SpotifyCrawler:
             return []
     
     def _parse_track_data(self, track_data: dict) -> Optional[SpotifyTrack]:
-        """Parse Spotify track data."""
-        try:
+        """Parse Spotify track data."""        try:
             return SpotifyTrack(
                 track_id=track_data.get('id', ''),
                 name=track_data.get('name', ''),
@@ -379,8 +361,7 @@ class SpotifyCrawler:
             return None
     
     async def get_artist_info(self, artist_id: str) -> Optional[SpotifyArtist]:
-        """Get detailed artist information."""
-        try:
+        """Get detailed artist information."""        try:
             await self.rate_limiter.wait_if_needed()
             await self._ensure_valid_token()
             
@@ -410,8 +391,7 @@ class SpotifyCrawler:
             return None
     
     async def get_artist_top_tracks(self, artist_id: str, market: str = 'US') -> List[SpotifyTrack]:
-        """Get artist's top tracks."""
-        try:
+        """Get artist's top tracks."""        try:
             await self.rate_limiter.wait_if_needed()
             await self._ensure_valid_token()
             
@@ -440,8 +420,7 @@ class SpotifyCrawler:
             return []
     
     async def get_audio_features(self, track_ids: List[str]) -> List[Dict]:
-        """Get audio features for tracks."""
-        try:
+        """Get audio features for tracks."""        try:
             await self.rate_limiter.wait_if_needed()
             await self._ensure_valid_token()
             
@@ -475,8 +454,7 @@ class SpotifyCrawler:
         max_results: int = 50,
         market: str = 'US'
     ) -> List[SpotifyPlaylist]:
-        """Search Spotify playlists."""
-        try:
+        """Search Spotify playlists."""        try:
             await self.rate_limiter.wait_if_needed()
             await self._ensure_valid_token()
             
@@ -521,8 +499,7 @@ class SpotifyCrawler:
             return []
     
     def _parse_playlist_data(self, playlist_data: dict) -> Optional[SpotifyPlaylist]:
-        """Parse Spotify playlist data."""
-        try:
+        """Parse Spotify playlist data."""        try:
             return SpotifyPlaylist(
                 playlist_id=playlist_data.get('id', ''),
                 name=playlist_data.get('name', ''),
@@ -546,8 +523,7 @@ class SpotifyCrawler:
             return None
     
     async def get_new_releases(self, country: str = 'US', max_results: int = 50) -> List[SpotifyAlbum]:
-        """Get new album releases."""
-        try:
+        """Get new album releases."""        try:
             await self.rate_limiter.wait_if_needed()
             await self._ensure_valid_token()
             
@@ -593,8 +569,7 @@ class SpotifyCrawler:
             return []
     
     def _parse_album_data(self, album_data: dict) -> Optional[SpotifyAlbum]:
-        """Parse Spotify album data."""
-        try:
+        """Parse Spotify album data."""        try:
             return SpotifyAlbum(
                 album_id=album_data.get('id', ''),
                 name=album_data.get('name', ''),
@@ -627,8 +602,7 @@ class SpotifyCrawler:
         artist_id: str,
         check_interval: int = 3600  # 1 hour
     ) -> AsyncGenerator[List[SpotifyAlbum], None]:
-        """Monitor artist for new releases."""
-        seen_albums = set()
+        """Monitor artist for new releases."""        seen_albums = set()
         
         while True:
             try:
@@ -658,8 +632,7 @@ class SpotifyCrawler:
         market: str = 'US',
         max_results: int = 50
     ) -> List[SpotifyAlbum]:
-        """Get artist's albums."""
-        try:
+        """Get artist's albums."""        try:
             await self.rate_limiter.wait_if_needed()
             await self._ensure_valid_token()
             
@@ -706,13 +679,11 @@ class SpotifyCrawler:
             return []
     
     async def _ensure_valid_token(self):
-        """Ensure we have a valid access token."""
-        if not self.access_token or (self.token_expires_at and datetime.now() >= self.token_expires_at):
+        """Ensure we have a valid access token."""        if not self.access_token or (self.token_expires_at and datetime.now() >= self.token_expires_at):
             await self._get_access_token()
     
     async def analyze_track_popularity(self, track: SpotifyTrack) -> Dict:
-        """Analyze track popularity and metrics."""
-        try:
+        """Analyze track popularity and metrics."""        try:
             # Get audio features
             audio_features = await self.get_audio_features([track.track_id])
             features = audio_features[0] if audio_features else {}

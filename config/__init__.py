@@ -15,8 +15,7 @@ judiciaires selon la loi allemande.
 Module configuration enterprise multi-environnements pour
 plateforme IA de protection multi-contenu et monétisation.
 ==================================================================
-"""
-from typing import Dict, List, Optional, Any, Union, Callable
+"""from typing import Dict, List, Optional, Any, Union, Callable
 import asyncio
 import logging
 import os

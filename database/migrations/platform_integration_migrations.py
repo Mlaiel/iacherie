@@ -1,5 +1,4 @@
-"""
-🔗 Platform Integration Migrations - Ultra-Industrial Multi-Platform Engine
+"""🔗 Platform Integration Migrations - Ultra-Industrial Multi-Platform Engine
 ============================================================================
 Module: backend/database/migrations/platform_integration_migrations.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -23,9 +22,7 @@ Platform integration migrations for:
 MIGRATION STRATEGY:
 Platform Schema → API Management → Content Distribution → 
 Cross-Platform Analytics → Sync Engine → Integration Monitoring
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -43,8 +40,7 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformIntegrationMigrationSuite:
-    """
-    Ultra-advanced platform integration migration suite
+    """    Ultra-advanced platform integration migration suite
     
     Provides comprehensive migrations for:
     - Multi-platform connectivity and orchestration
@@ -52,8 +48,7 @@ class PlatformIntegrationMigrationSuite:
     - API integration and management
     - Platform-specific monetization tracking
     - Unified analytics across platforms
-    """
-    
+    """    
     def __init__(self):
         self.metadata = MetaData()
         self.migration_history: List[Dict[str, Any]] = []
@@ -61,8 +56,7 @@ class PlatformIntegrationMigrationSuite:
         logger.info("✅ Platform Integration Migration Suite initialized")
     
     async def create_platform_registry_schema(self, engine: sa.Engine) -> Dict[str, Any]:
-        """Create platform registry and configuration schema"""
-        
+        """Create platform registry and configuration schema"""        
         migration_id = f"platform_registry_schema_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
         logger.info("🔗 Creating platform registry schema")
@@ -70,8 +64,7 @@ class PlatformIntegrationMigrationSuite:
         try:
             async with engine.begin() as conn:
                 # 1. Supported Platforms Table
-                await conn.execute(text("""
-                    CREATE TABLE IF NOT EXISTS supported_platforms (
+                await conn.execute(text("""                    CREATE TABLE IF NOT EXISTS supported_platforms (
                         platform_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         platform_name VARCHAR(100) NOT NULL UNIQUE,
                         platform_display_name VARCHAR(255),
@@ -122,8 +115,7 @@ class PlatformIntegrationMigrationSuite:
                 """))
                 
                 # 2. Creator Platform Connections Table
-                await conn.execute(text("""
-                    CREATE TABLE IF NOT EXISTS creator_platform_connections (
+                await conn.execute(text("""                    CREATE TABLE IF NOT EXISTS creator_platform_connections (
                         connection_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         creator_id UUID NOT NULL REFERENCES content_creators(creator_id) ON DELETE CASCADE,
                         platform_id UUID NOT NULL REFERENCES supported_platforms(platform_id),
@@ -188,8 +180,7 @@ class PlatformIntegrationMigrationSuite:
                 """))
                 
                 # 3. API Integration Configs Table
-                await conn.execute(text("""
-                    CREATE TABLE IF NOT EXISTS api_integration_configs (
+                await conn.execute(text("""                    CREATE TABLE IF NOT EXISTS api_integration_configs (
                         config_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         platform_id UUID NOT NULL REFERENCES supported_platforms(platform_id),
                         config_name VARCHAR(255) NOT NULL,
@@ -244,8 +235,7 @@ class PlatformIntegrationMigrationSuite:
                 """))
                 
                 # 4. Cross-Platform Content Mapping Table
-                await conn.execute(text("""
-                    CREATE TABLE IF NOT EXISTS cross_platform_content_mapping (
+                await conn.execute(text("""                    CREATE TABLE IF NOT EXISTS cross_platform_content_mapping (
                         mapping_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         content_id UUID NOT NULL REFERENCES content_items(content_id),
                         creator_id UUID NOT NULL REFERENCES content_creators(creator_id),
@@ -325,8 +315,7 @@ class PlatformIntegrationMigrationSuite:
             }
     
     async def create_sync_orchestration_schema(self, engine: sa.Engine) -> Dict[str, Any]:
-        """Create sync orchestration and management schema"""
-        
+        """Create sync orchestration and management schema"""        
         migration_id = f"sync_orchestration_schema_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
         logger.info("🔄 Creating sync orchestration schema")
@@ -334,8 +323,7 @@ class PlatformIntegrationMigrationSuite:
         try:
             async with engine.begin() as conn:
                 # 1. Sync Jobs Table
-                await conn.execute(text("""
-                    CREATE TABLE IF NOT EXISTS sync_jobs (
+                await conn.execute(text("""                    CREATE TABLE IF NOT EXISTS sync_jobs (
                         job_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         creator_id UUID NOT NULL REFERENCES content_creators(creator_id),
                         connection_id UUID NOT NULL REFERENCES creator_platform_connections(connection_id),
@@ -399,8 +387,7 @@ class PlatformIntegrationMigrationSuite:
                 """))
                 
                 # 2. Sync Rules Table
-                await conn.execute(text("""
-                    CREATE TABLE IF NOT EXISTS sync_rules (
+                await conn.execute(text("""                    CREATE TABLE IF NOT EXISTS sync_rules (
                         rule_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         creator_id UUID NOT NULL REFERENCES content_creators(creator_id),
                         platform_id UUID NOT NULL REFERENCES supported_platforms(platform_id),
@@ -459,8 +446,7 @@ class PlatformIntegrationMigrationSuite:
                 """))
                 
                 # 3. Platform Events Table
-                await conn.execute(text("""
-                    CREATE TABLE IF NOT EXISTS platform_events (
+                await conn.execute(text("""                    CREATE TABLE IF NOT EXISTS platform_events (
                         event_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         connection_id UUID NOT NULL REFERENCES creator_platform_connections(connection_id),
                         platform_id UUID NOT NULL REFERENCES supported_platforms(platform_id),
@@ -552,8 +538,7 @@ class PlatformIntegrationMigrationSuite:
             }
     
     async def create_cross_platform_analytics_schema(self, engine: sa.Engine) -> Dict[str, Any]:
-        """Create cross-platform analytics and reporting schema"""
-        
+        """Create cross-platform analytics and reporting schema"""        
         migration_id = f"cross_platform_analytics_schema_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
         logger.info("📊 Creating cross-platform analytics schema")
@@ -561,8 +546,7 @@ class PlatformIntegrationMigrationSuite:
         try:
             async with engine.begin() as conn:
                 # 1. Platform Performance Metrics Table
-                await conn.execute(text("""
-                    CREATE TABLE IF NOT EXISTS platform_performance_metrics (
+                await conn.execute(text("""                    CREATE TABLE IF NOT EXISTS platform_performance_metrics (
                         metrics_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         creator_id UUID NOT NULL REFERENCES content_creators(creator_id),
                         platform_id UUID NOT NULL REFERENCES supported_platforms(platform_id),
@@ -682,8 +666,7 @@ class PlatformIntegrationMigrationSuite:
                 """))
                 
                 # 2. Cross-Platform Comparisons Table
-                await conn.execute(text("""
-                    CREATE TABLE IF NOT EXISTS cross_platform_comparisons (
+                await conn.execute(text("""                    CREATE TABLE IF NOT EXISTS cross_platform_comparisons (
                         comparison_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         creator_id UUID NOT NULL REFERENCES content_creators(creator_id),
                         comparison_name VARCHAR(255) NOT NULL,
@@ -772,8 +755,7 @@ class PlatformIntegrationMigrationSuite:
     # Private helper methods for creating indexes and triggers
     
     async def _create_platform_registry_indexes(self, conn):
-        """Create performance indexes for platform registry tables"""
-        
+        """Create performance indexes for platform registry tables"""        
         indexes = [
             # Supported platforms indexes
             "CREATE INDEX IF NOT EXISTS idx_supported_platforms_name ON supported_platforms(platform_name)",
@@ -806,8 +788,7 @@ class PlatformIntegrationMigrationSuite:
             await conn.execute(text(index_sql))
     
     async def _create_sync_orchestration_indexes(self, conn):
-        """Create indexes for sync orchestration tables"""
-        
+        """Create indexes for sync orchestration tables"""        
         indexes = [
             # Sync jobs indexes
             "CREATE INDEX IF NOT EXISTS idx_sync_jobs_creator_id ON sync_jobs(creator_id)",
@@ -844,8 +825,7 @@ class PlatformIntegrationMigrationSuite:
             await conn.execute(text(index_sql))
     
     async def _create_cross_platform_analytics_indexes(self, conn):
-        """Create indexes for cross-platform analytics tables"""
-        
+        """Create indexes for cross-platform analytics tables"""        
         indexes = [
             # Platform performance metrics indexes
             "CREATE INDEX IF NOT EXISTS idx_platform_performance_metrics_creator_id ON platform_performance_metrics(creator_id)",
@@ -868,8 +848,7 @@ class PlatformIntegrationMigrationSuite:
             await conn.execute(text(index_sql))
     
     async def _create_platform_registry_triggers(self, conn):
-        """Create triggers for updated_at fields"""
-        
+        """Create triggers for updated_at fields"""        
         # Apply triggers to tables with updated_at columns
         tables_with_updated_at = [
             "supported_platforms",
@@ -882,8 +861,7 @@ class PlatformIntegrationMigrationSuite:
         ]
         
         for table in tables_with_updated_at:
-            await conn.execute(text(f"""
-                CREATE TRIGGER update_{table}_updated_at 
+            await conn.execute(text(f"""                CREATE TRIGGER update_{table}_updated_at 
                 BEFORE UPDATE ON {table}
                 FOR EACH ROW EXECUTE FUNCTION update_updated_at_column()
             """))

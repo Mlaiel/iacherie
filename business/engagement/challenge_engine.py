@@ -1,5 +1,4 @@
-"""
-Enterprise Challenge Engine - Advanced creative challenge system for IA Influencer platform.
+"""Enterprise Challenge Engine - Advanced creative challenge system for IA Influencer platform.
 
 This module provides a comprehensive challenge management system that creates
 engaging creative challenges, competitions, and collaborative events for
@@ -26,9 +25,7 @@ For licensing inquiries ONLY: mlaiel@live.de
 Business Logic Integration:
 Creator Upload → AI Processing → Protection → SEO → Collaboration Matching + Gamification →
 Challenge Participation → Distribution → Monetization → Analytics
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple, Union, Set
@@ -43,8 +40,7 @@ logger = logging.getLogger(__name__)
 
 
 class ChallengeType(str, Enum):
-    """Types of challenges available in the system."""
-    CREATIVE = "creative"
+    """Types of challenges available in the system."""    CREATIVE = "creative"
     TECHNICAL = "technical"
     COLLABORATIVE = "collaborative"
     COMPETITIVE = "competitive"
@@ -55,8 +51,7 @@ class ChallengeType(str, Enum):
 
 
 class ChallengeDifficulty(str, Enum):
-    """Difficulty levels for challenges."""
-    BEGINNER = "beginner"
+    """Difficulty levels for challenges."""    BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
     EXPERT = "expert"
@@ -64,8 +59,7 @@ class ChallengeDifficulty(str, Enum):
 
 
 class ChallengeStatus(str, Enum):
-    """Status of a challenge."""
-    DRAFT = "draft"
+    """Status of a challenge."""    DRAFT = "draft"
     ACTIVE = "active"
     COMPLETED = "completed"
     CANCELLED = "cancelled"
@@ -73,8 +67,7 @@ class ChallengeStatus(str, Enum):
 
 
 class ParticipationStatus(str, Enum):
-    """Status of user participation in a challenge."""
-    REGISTERED = "registered"
+    """Status of user participation in a challenge."""    REGISTERED = "registered"
     IN_PROGRESS = "in_progress"
     SUBMITTED = "submitted"
     COMPLETED = "completed"
@@ -83,8 +76,7 @@ class ParticipationStatus(str, Enum):
 
 
 class ContentFormat(str, Enum):
-    """Content formats for challenges."""
-    AUDIO = "audio"
+    """Content formats for challenges."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -95,8 +87,7 @@ class ContentFormat(str, Enum):
 
 @dataclass
 class ChallengeReward:
-    """Represents rewards for challenge completion."""
-    reward_id: str = field(default_factory=lambda: str(uuid4()))
+    """Represents rewards for challenge completion."""    reward_id: str = field(default_factory=lambda: str(uuid4()))
     reward_type: str = "points"  # points, badge, currency, premium_feature, etc.
     value: Union[int, str, Dict[str, Any]] = 0
     description: str = ""
@@ -106,8 +97,7 @@ class ChallengeReward:
 
 @dataclass
 class ChallengeCriteria:
-    """Evaluation criteria for challenges."""
-    criterion_id: str = field(default_factory=lambda: str(uuid4()))
+    """Evaluation criteria for challenges."""    criterion_id: str = field(default_factory=lambda: str(uuid4()))
     name: str = ""
     description: str = ""
     weight: float = 1.0  # Weighting for this criterion in overall score
@@ -118,8 +108,7 @@ class ChallengeCriteria:
 
 @dataclass
 class Challenge:
-    """Represents a challenge in the system."""
-    challenge_id: str = field(default_factory=lambda: str(uuid4()))
+    """Represents a challenge in the system."""    challenge_id: str = field(default_factory=lambda: str(uuid4()))
     title: str = ""
     description: str = ""
     challenge_type: ChallengeType = ChallengeType.CREATIVE
@@ -170,8 +159,7 @@ class Challenge:
     updated_at: datetime = field(default_factory=datetime.utcnow)
     
     def is_active(self) -> bool:
-        """Check if the challenge is currently active."""
-        if self.status != ChallengeStatus.ACTIVE:
+        """Check if the challenge is currently active."""        if self.status != ChallengeStatus.ACTIVE:
             return False
         
         now = datetime.utcnow()
@@ -185,8 +173,7 @@ class Challenge:
         return True
     
     def can_register(self) -> bool:
-        """Check if new participants can register."""
-        if not self.is_active():
+        """Check if new participants can register."""        if not self.is_active():
             return False
         
         if self.max_participants and self.participant_count >= self.max_participants:
@@ -195,8 +182,7 @@ class Challenge:
         return True
     
     def get_time_remaining(self) -> Optional[timedelta]:
-        """Get time remaining in the challenge."""
-        if not self.end_date:
+        """Get time remaining in the challenge."""        if not self.end_date:
             return None
         
         now = datetime.utcnow()
@@ -208,8 +194,7 @@ class Challenge:
 
 @dataclass
 class ChallengeParticipation:
-    """Represents a user's participation in a challenge."""
-    participation_id: str = field(default_factory=lambda: str(uuid4()))
+    """Represents a user's participation in a challenge."""    participation_id: str = field(default_factory=lambda: str(uuid4()))
     challenge_id: str = ""
     user_id: str = ""
     team_id: Optional[str] = None
@@ -239,25 +224,20 @@ class ChallengeParticipation:
     completed_at: Optional[datetime] = None
     
     def is_completed(self) -> bool:
-        """Check if participation is completed."""
-        return self.status in [ParticipationStatus.COMPLETED, ParticipationStatus.SUBMITTED]
+        """Check if participation is completed."""        return self.status in [ParticipationStatus.COMPLETED, ParticipationStatus.SUBMITTED]
     
     def can_submit(self) -> bool:
-        """Check if user can submit for this challenge."""
-        return self.status in [ParticipationStatus.REGISTERED, ParticipationStatus.IN_PROGRESS]
+        """Check if user can submit for this challenge."""        return self.status in [ParticipationStatus.REGISTERED, ParticipationStatus.IN_PROGRESS]
 
 
 class ChallengeEngine:
-    """
-    Enterprise-grade challenge management system.
+    """    Enterprise-grade challenge management system.
     
     Manages creative challenges, competitions, and collaborative events
     to drive user engagement and skill development.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the challenge engine."""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize the challenge engine."""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self._challenges: Dict[str, Challenge] = {}
         self._participations: Dict[str, ChallengeParticipation] = {}
         self._challenge_templates = self._initialize_challenge_templates()
@@ -265,8 +245,7 @@ class ChallengeEngine:
         self.logger.info("ChallengeEngine initialized successfully")
     
     def _initialize_challenge_templates(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize predefined challenge templates."""
-        templates = {
+        """Initialize predefined challenge templates."""        templates = {
             "30_day_challenge": {
                 "title": "30-Day Content Creation Challenge",
                 "description": "Create and upload content every day for 30 consecutive days",
@@ -446,8 +425,7 @@ class ChallengeEngine:
         template_name: Optional[str] = None,
         custom_params: Optional[Dict[str, Any]] = None
     ) -> Challenge:
-        """Create a new challenge from template or custom parameters."""
-        try:
+        """Create a new challenge from template or custom parameters."""        try:
             if template_name and template_name in self._challenge_templates:
                 # Create from template
                 template = self._challenge_templates[template_name].copy()
@@ -486,8 +464,7 @@ class ChallengeEngine:
             raise
     
     def _create_default_criteria(self, challenge_type: ChallengeType) -> List[ChallengeCriteria]:
-        """Create default evaluation criteria based on challenge type."""
-        criteria_by_type = {
+        """Create default evaluation criteria based on challenge type."""        criteria_by_type = {
             ChallengeType.CREATIVE: [
                 ChallengeCriteria(
                     name="Creativity",
@@ -588,8 +565,7 @@ class ChallengeEngine:
         user_id: str,
         team_id: Optional[str] = None
     ) -> ChallengeParticipation:
-        """Register a user for a challenge."""
-        try:
+        """Register a user for a challenge."""        try:
             if challenge_id not in self._challenges:
                 raise ValueError(f"Challenge {challenge_id} not found")
             
@@ -629,8 +605,7 @@ class ChallengeEngine:
         challenge_id: str,
         user_id: str
     ) -> Optional[ChallengeParticipation]:
-        """Get user's participation in a specific challenge."""
-        for participation in self._participations.values():
+        """Get user's participation in a specific challenge."""        for participation in self._participations.values():
             if (participation.challenge_id == challenge_id and 
                 participation.user_id == user_id):
                 return participation
@@ -642,8 +617,7 @@ class ChallengeEngine:
         user_id: str,
         submission_data: Dict[str, Any]
     ) -> bool:
-        """Submit an entry for a challenge."""
-        try:
+        """Submit an entry for a challenge."""        try:
             participation = self._get_user_participation(challenge_id, user_id)
             if not participation:
                 raise ValueError(f"User {user_id} not registered for challenge {challenge_id}")
@@ -684,8 +658,7 @@ class ChallengeEngine:
         challenge: Challenge,
         participation: ChallengeParticipation
     ) -> None:
-        """Automatically evaluate a challenge submission."""
-        try:
+        """Automatically evaluate a challenge submission."""        try:
             total_score = 0.0
             total_weight = 0.0
             
@@ -719,8 +692,7 @@ class ChallengeEngine:
         participation: ChallengeParticipation,
         challenge: Challenge
     ) -> float:
-        """Evaluate a specific criterion for a submission."""
-        try:
+        """Evaluate a specific criterion for a submission."""        try:
             if criterion.evaluation_method == "metric_based":
                 return await self._evaluate_metric_based_criterion(criterion, participation, challenge)
             elif criterion.evaluation_method == "ai_analysis":
@@ -739,8 +711,7 @@ class ChallengeEngine:
         participation: ChallengeParticipation,
         challenge: Challenge
     ) -> float:
-        """Evaluate criterion based on metrics."""
-        # This would integrate with actual metrics from the platform
+        """Evaluate criterion based on metrics."""        # This would integrate with actual metrics from the platform
         # For now, return simulated scores based on submission data
         
         submission_data = participation.submission_data
@@ -775,8 +746,7 @@ class ChallengeEngine:
         participation: ChallengeParticipation,
         challenge: Challenge
     ) -> float:
-        """Evaluate criterion using AI analysis."""
-        # This would integrate with AI analysis services
+        """Evaluate criterion using AI analysis."""        # This would integrate with AI analysis services
         # For now, return simulated AI scores
         
         submission_data = participation.submission_data
@@ -805,8 +775,7 @@ class ChallengeEngine:
         challenge: Challenge,
         participation: ChallengeParticipation
     ) -> None:
-        """Award rewards for challenge completion."""
-        try:
+        """Award rewards for challenge completion."""        try:
             # Award completion rewards
             for reward in challenge.completion_rewards:
                 participation.rewards_earned.append(reward)
@@ -834,8 +803,7 @@ class ChallengeEngine:
         challenge: Challenge,
         participation: ChallengeParticipation
     ) -> int:
-        """Calculate user's ranking in a competitive challenge."""
-        # Get all completed participations for this challenge
+        """Calculate user's ranking in a competitive challenge."""        # Get all completed participations for this challenge
         completed_participations = [
             p for p in self._participations.values()
             if p.challenge_id == challenge.challenge_id and p.is_completed()
@@ -857,8 +825,7 @@ class ChallengeEngine:
         challenge_type: Optional[ChallengeType] = None,
         difficulty: Optional[ChallengeDifficulty] = None
     ) -> List[Challenge]:
-        """Get list of active challenges with optional filtering."""
-        challenges = []
+        """Get list of active challenges with optional filtering."""        challenges = []
         
         for challenge in self._challenges.values():
             if not challenge.is_active():
@@ -888,8 +855,7 @@ class ChallengeEngine:
         user_id: str,
         status_filter: Optional[ParticipationStatus] = None
     ) -> List[Tuple[Challenge, ChallengeParticipation]]:
-        """Get challenges that a user is participating in."""
-        user_challenges = []
+        """Get challenges that a user is participating in."""        user_challenges = []
         
         for participation in self._participations.values():
             if participation.user_id != user_id:
@@ -912,8 +878,7 @@ class ChallengeEngine:
         challenge_id: str,
         limit: int = 50
     ) -> List[Tuple[ChallengeParticipation, int]]:
-        """Get leaderboard for a specific challenge."""
-        if challenge_id not in self._challenges:
+        """Get leaderboard for a specific challenge."""        if challenge_id not in self._challenges:
             raise ValueError(f"Challenge {challenge_id} not found")
         
         # Get all participations for this challenge
@@ -933,8 +898,7 @@ class ChallengeEngine:
         return leaderboard
     
     async def get_challenge_statistics(self, challenge_id: str) -> Dict[str, Any]:
-        """Get comprehensive statistics for a challenge."""
-        if challenge_id not in self._challenges:
+        """Get comprehensive statistics for a challenge."""        if challenge_id not in self._challenges:
             raise ValueError(f"Challenge {challenge_id} not found")
         
         challenge = self._challenges[challenge_id]
@@ -983,8 +947,7 @@ class ChallengeEngine:
         user_id: str,
         progress_data: Dict[str, Any]
     ) -> bool:
-        """Update user's progress in a challenge."""
-        try:
+        """Update user's progress in a challenge."""        try:
             participation = self._get_user_participation(challenge_id, user_id)
             if not participation:
                 raise ValueError(f"User {user_id} not registered for challenge {challenge_id}")
@@ -1017,8 +980,7 @@ class ChallengeEngine:
         user_profile: Dict[str, Any],
         limit: int = 10
     ) -> List[Tuple[Challenge, float]]:
-        """Get personalized challenge recommendations for a user."""
-        active_challenges = await self.get_active_challenges(user_id=user_id)
+        """Get personalized challenge recommendations for a user."""        active_challenges = await self.get_active_challenges(user_id=user_id)
         
         recommendations = []
         
@@ -1037,8 +999,7 @@ class ChallengeEngine:
         challenge: Challenge,
         user_profile: Dict[str, Any]
     ) -> float:
-        """Calculate recommendation score for a challenge based on user profile."""
-        score = 0.0
+        """Calculate recommendation score for a challenge based on user profile."""        score = 0.0
         
         # Difficulty matching
         user_level = user_profile.get("level", 1)
@@ -1091,8 +1052,7 @@ _challenge_engine: Optional[ChallengeEngine] = None
 
 
 async def get_challenge_engine() -> ChallengeEngine:
-    """Get the global challenge engine instance."""
-    global _challenge_engine
+    """Get the global challenge engine instance."""    global _challenge_engine
     
     if _challenge_engine is None:
         _challenge_engine = ChallengeEngine()
@@ -1105,8 +1065,7 @@ async def create_challenge_from_template(
     template_name: str,
     custom_params: Optional[Dict[str, Any]] = None
 ) -> Challenge:
-    """Create a challenge from a template (convenience function)."""
-    engine = await get_challenge_engine()
+    """Create a challenge from a template (convenience function)."""    engine = await get_challenge_engine()
     return await engine.create_challenge(template_name, custom_params)
 
 
@@ -1115,6 +1074,5 @@ async def register_for_challenge(
     user_id: str,
     team_id: Optional[str] = None
 ) -> ChallengeParticipation:
-    """Register a user for a challenge (convenience function)."""
-    engine = await get_challenge_engine()
+    """Register a user for a challenge (convenience function)."""    engine = await get_challenge_engine()
     return await engine.register_participant(challenge_id, user_id, team_id)

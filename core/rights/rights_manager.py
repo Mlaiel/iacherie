@@ -1,5 +1,4 @@
-"""
-Enterprise Rights Management System
+"""Enterprise Rights Management System
 ==================================
 
 Core orchestrator for comprehensive intellectual property rights management
@@ -11,9 +10,7 @@ Enterprise Content Protection Platform - Rights Management Core
 ⚠️  COPYRIGHT NOTICE ⚠️
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 from datetime import datetime, timedelta
@@ -38,8 +35,7 @@ settings = get_settings()
 
 
 class ContentType(str, Enum):
-    """Supported content types for rights management."""
-    AUDIO = "audio"
+    """Supported content types for rights management."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -47,16 +43,14 @@ class ContentType(str, Enum):
 
 
 class RightsLevel(str, Enum):
-    """Rights protection levels."""
-    BASIC = "basic"
+    """Rights protection levels."""    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
 
 
 class ProtectionStatus(str, Enum):
-    """Content protection status."""
-    PENDING = "pending"
+    """Content protection status."""    PENDING = "pending"
     PROTECTED = "protected"
     MONITORING = "monitoring"
     VIOLATION_DETECTED = "violation_detected"
@@ -66,8 +60,7 @@ class ProtectionStatus(str, Enum):
 
 @dataclass
 class RightsMetadata:
-    """Comprehensive rights metadata structure."""
-    content_id: str
+    """Comprehensive rights metadata structure."""    content_id: str
     owner_id: str
     content_type: ContentType
     creation_date: datetime
@@ -84,8 +77,7 @@ class RightsMetadata:
 
 
 class RightsRegistrationRequest(BaseModel):
-    """Rights registration request model."""
-    content_file: bytes = Field(..., description="Content binary data")
+    """Rights registration request model."""    content_file: bytes = Field(..., description="Content binary data")
     content_type: ContentType = Field(..., description="Type of content")
     title: str = Field(..., min_length=1, max_length=255)
     description: Optional[str] = Field(None, max_length=2000)
@@ -104,8 +96,7 @@ class RightsRegistrationRequest(BaseModel):
 
 
 class RightsValidationResult(BaseModel):
-    """Rights validation result model."""
-    is_valid: bool
+    """Rights validation result model."""    is_valid: bool
     confidence_score: float
     validation_details: Dict[str, Any]
     potential_conflicts: List[Dict[str, Any]]
@@ -114,16 +105,13 @@ class RightsValidationResult(BaseModel):
 
 
 class RightsManager:
-    """
-    Enterprise-grade rights management system for digital content protection.
+    """    Enterprise-grade rights management system for digital content protection.
     
     Provides comprehensive IP management including registration, validation,
     monitoring, and enforcement across multiple content types and platforms.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession):
-        """Initialize RightsManager with database session."""
-        self.db = db_session
+        """Initialize RightsManager with database session."""        self.db = db_session
         self.encryption = AdvancedEncryption()
         self._rights_cache = {}
         self._validation_cache = {}
@@ -142,8 +130,7 @@ class RightsManager:
         user_id: str,
         registration_request: RightsRegistrationRequest
     ) -> Dict[str, Any]:
-        """
-        Register comprehensive rights for new content.
+        """        Register comprehensive rights for new content.
         
         Args:
             user_id: Owner user ID
@@ -151,8 +138,7 @@ class RightsManager:
             
         Returns:
             Registration result with rights ID and protection details
-        """
-        try:
+        """        try:
             # Validate user permissions
             user = await self._get_user(user_id)
             if not user:
@@ -236,8 +222,7 @@ class RightsManager:
         content_type: ContentType,
         user_id: Optional[str] = None
     ) -> RightsValidationResult:
-        """
-        Validate rights for existing or new content.
+        """        Validate rights for existing or new content.
         
         Args:
             content_data: Content binary data
@@ -246,8 +231,7 @@ class RightsManager:
             
         Returns:
             Comprehensive validation result
-        """
-        try:
+        """        try:
             # Generate fingerprint for validation
             fingerprint_result = await self._generate_fingerprint(
                 content_data, content_type
@@ -309,8 +293,7 @@ class RightsManager:
         new_owner_id: str,
         transfer_terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Transfer content rights between users.
+        """        Transfer content rights between users.
         
         Args:
             content_id: Content identifier
@@ -320,8 +303,7 @@ class RightsManager:
             
         Returns:
             Transfer result with updated rights information
-        """
-        try:
+        """        try:
             # Validate current ownership
             rights_record = await self._get_rights_record(content_id)
             if not rights_record or rights_record.owner_id != current_owner_id:
@@ -381,8 +363,7 @@ class RightsManager:
         owner_id: str,
         revocation_reason: str
     ) -> Dict[str, Any]:
-        """
-        Revoke content rights and disable protection.
+        """        Revoke content rights and disable protection.
         
         Args:
             content_id: Content identifier
@@ -391,8 +372,7 @@ class RightsManager:
             
         Returns:
             Revocation result
-        """
-        try:
+        """        try:
             # Validate ownership
             rights_record = await self._get_rights_record(content_id)
             if not rights_record or rights_record.owner_id != owner_id:
@@ -430,84 +410,71 @@ class RightsManager:
     async def _generate_fingerprint(
         self, content_data: bytes, content_type: ContentType
     ) -> Any:
-        """Generate digital fingerprint for content."""
-        # This would integrate with DigitalFingerprintEngine
+        """Generate digital fingerprint for content."""        # This would integrate with DigitalFingerprintEngine
         pass
     
     async def _check_content_conflicts(
         self, fingerprint_hash: str, content_type: ContentType
     ) -> List[Dict[str, Any]]:
-        """Check for existing content conflicts."""
-        # Implementation for conflict detection
+        """Check for existing content conflicts."""        # Implementation for conflict detection
         pass
     
     async def _create_rights_record(
         self, rights_metadata: RightsMetadata
     ) -> Any:
-        """Create database rights record."""
-        # Database creation logic
+        """Create database rights record."""        # Database creation logic
         pass
     
     async def _initialize_protection_monitoring(
         self, content_id: str, rights_metadata: RightsMetadata
     ) -> None:
-        """Initialize content protection monitoring."""
-        # Protection monitoring setup
+        """Initialize content protection monitoring."""        # Protection monitoring setup
         pass
     
     async def _generate_rights_certificate(
         self, rights_metadata: RightsMetadata
     ) -> Dict[str, Any]:
-        """Generate digital rights certificate."""
-        # Certificate generation logic
+        """Generate digital rights certificate."""        # Certificate generation logic
         pass
     
     async def _get_user(self, user_id: str) -> Optional[Any]:
-        """Get user from database."""
-        # User retrieval logic
+        """Get user from database."""        # User retrieval logic
         pass
     
     async def _get_rights_record(self, content_id: str) -> Optional[Any]:
-        """Get rights record from database."""
-        # Rights record retrieval
+        """Get rights record from database."""        # Rights record retrieval
         pass
     
     async def _search_existing_rights(
         self, fingerprint_hash: str, content_type: ContentType
     ) -> List[Any]:
-        """Search for existing rights records."""
-        # Rights search logic
+        """Search for existing rights records."""        # Rights search logic
         pass
     
     async def _calculate_confidence_score(
         self, fingerprint_result: Any, existing_rights: List[Any]
     ) -> float:
-        """Calculate validation confidence score."""
-        # Confidence calculation algorithm
+        """Calculate validation confidence score."""        # Confidence calculation algorithm
         pass
     
     async def _identify_potential_conflicts(
         self, fingerprint_result: Any, existing_rights: List[Any], user_id: Optional[str]
     ) -> List[Dict[str, Any]]:
-        """Identify potential rights conflicts."""
-        # Conflict identification logic
+        """Identify potential rights conflicts."""        # Conflict identification logic
         pass
     
     async def _generate_validation_recommendation(
         self, existing_rights: List[Any], conflicts: List[Dict[str, Any]], confidence: float
     ) -> str:
-        """Generate validation recommendation."""
-        # Recommendation generation logic
+        """Generate validation recommendation."""        # Recommendation generation logic
         pass
     
     async def _update_protection_monitoring(
         self, content_id: str, new_owner_id: str
     ) -> None:
-        """Update protection monitoring for new owner."""
-        # Monitoring update logic
+        """Update protection monitoring for new owner."""        # Monitoring update logic
         pass
     
     async def _disable_protection_monitoring(self, content_id: str) -> None:
-        """Disable protection monitoring for content."""
-        # Monitoring disable logic
+        """Disable protection monitoring for content."""        # Monitoring disable logic
         pass

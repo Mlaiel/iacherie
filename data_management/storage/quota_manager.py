@@ -1,5 +1,4 @@
-"""
-💾 Quota Manager - IA Influencer Agent Platform Enterprise
+"""💾 Quota Manager - IA Influencer Agent Platform Enterprise
 =========================================================
 Module: backend/data_management/storage/quota_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,9 +16,7 @@ Contact: mlaiel@live.de
 - Backend Senior: Fahed Mlaiel  
 - FinOps: Fahed Mlaiel
 - DevOps: Fahed Mlaiel
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple, Callable
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Callable
 import logging
 import asyncio
 import json
@@ -36,8 +33,7 @@ import statistics
 logger = logging.getLogger(__name__)
 
 class QuotaType(Enum):
-    """Types of quotas"""
-    STORAGE_SIZE = "storage_size"
+    """Types of quotas"""    STORAGE_SIZE = "storage_size"
     FILE_COUNT = "file_count"
     BANDWIDTH = "bandwidth"
     API_REQUESTS = "api_requests"
@@ -48,8 +44,7 @@ class QuotaType(Enum):
     TEMP_SIZE = "temp_size"
 
 class UsageMetric(Enum):
-    """Usage metrics for tracking"""
-    BYTES_STORED = "bytes_stored"
+    """Usage metrics for tracking"""    BYTES_STORED = "bytes_stored"
     FILES_STORED = "files_stored"
     BYTES_TRANSFERRED = "bytes_transferred"
     REQUESTS_MADE = "requests_made"
@@ -58,15 +53,13 @@ class UsageMetric(Enum):
     ARCHIVE_OPERATIONS = "archive_operations"
 
 class BillingModel(Enum):
-    """Billing models"""
-    FIXED = "fixed"
+    """Billing models"""    FIXED = "fixed"
     USAGE_BASED = "usage_based"
     TIERED = "tiered"
     HYBRID = "hybrid"
 
 class QuotaPeriod(Enum):
-    """Quota reset periods"""
-    HOURLY = "hourly"
+    """Quota reset periods"""    HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -74,23 +67,20 @@ class QuotaPeriod(Enum):
     NEVER = "never"
 
 class AlertLevel(Enum):
-    """Alert levels for quota warnings"""
-    INFO = "info"
+    """Alert levels for quota warnings"""    INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
 
 class OptimizationStrategy(Enum):
-    """Resource optimization strategies"""
-    CONSERVATIVE = "conservative"
+    """Resource optimization strategies"""    CONSERVATIVE = "conservative"
     BALANCED = "balanced"
     AGGRESSIVE = "aggressive"
     CUSTOM = "custom"
 
 @dataclass
 class QuotaLimit:
-    """Represents a quota limit"""
-    quota_id: str
+    """Represents a quota limit"""    quota_id: str
     quota_type: QuotaType
     limit_value: int
     
@@ -131,8 +121,7 @@ class QuotaLimit:
 
 @dataclass
 class UsageRecord:
-    """Represents usage tracking record"""
-    record_id: str
+    """Represents usage tracking record"""    record_id: str
     user_id: str
     quota_type: QuotaType
     metric: UsageMetric
@@ -151,8 +140,7 @@ class UsageRecord:
 
 @dataclass
 class QuotaUsage:
-    """Current quota usage state"""
-    quota_id: str
+    """Current quota usage state"""    quota_id: str
     user_id: str
     quota_type: QuotaType
     
@@ -179,8 +167,7 @@ class QuotaUsage:
 
 @dataclass
 class QuotaAlert:
-    """Quota alert notification"""
-    alert_id: str
+    """Quota alert notification"""    alert_id: str
     quota_id: str
     user_id: str
     
@@ -204,8 +191,7 @@ class QuotaAlert:
 
 @dataclass
 class ResourceRecommendation:
-    """Resource optimization recommendation"""
-    recommendation_id: str
+    """Resource optimization recommendation"""    recommendation_id: str
     user_id: str
     
     # Recommendation details
@@ -235,8 +221,7 @@ class ResourceRecommendation:
 
 @dataclass
 class QuotaConfig:
-    """Configuration for quota manager"""
-    storage_root_path: str
+    """Configuration for quota manager"""    storage_root_path: str
     quotas_directory: str
     usage_directory: str
     billing_directory: str
@@ -283,8 +268,7 @@ class QuotaConfig:
     alert_retention_days: int = 90
 
 class QuotaManager:
-    """
-    Enterprise quota management system for storage resources.
+    """    Enterprise quota management system for storage resources.
     
     Features:
     - Multi-dimensional quota management
@@ -294,11 +278,9 @@ class QuotaManager:
     - Automated billing
     - Resource recommendations
     - Alert system
-    """
-    
+    """    
     def __init__(self, config: QuotaConfig):
-        """Initialize quota manager"""
-        self.config = config
+        """Initialize quota manager"""        self.config = config
         self.quota_limits: Dict[str, QuotaLimit] = {}
         self.quota_usage: Dict[str, QuotaUsage] = {}
         self.usage_records: List[UsageRecord] = []
@@ -339,8 +321,7 @@ class QuotaManager:
         logger.info("QuotaManager initialized successfully")
     
     def _initialize_quota_directories(self) -> None:
-        """Initialize quota management directories"""
-        try:
+        """Initialize quota management directories"""        try:
             directories = [
                 self.config.storage_root_path,
                 self.config.quotas_directory,
@@ -374,8 +355,7 @@ class QuotaManager:
             raise
     
     async def create_quota(self, quota_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Create new quota limit"""
-        try:
+        """Create new quota limit"""        try:
             # Validate required fields
             required_fields = ['quota_type', 'limit_value', 'name']
             for field in required_fields:
@@ -465,8 +445,7 @@ class QuotaManager:
         value: int,
         context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Track resource usage"""
-        try:
+        """Track resource usage"""        try:
             if not self.config.usage_tracking_enabled:
                 return {'success': True, 'message': 'Usage tracking disabled'}
             
@@ -523,8 +502,7 @@ class QuotaManager:
         quota_type: QuotaType,
         requested_amount: int
     ) -> Dict[str, Any]:
-        """Check if quota is available for requested amount"""
-        try:
+        """Check if quota is available for requested amount"""        try:
             start_time = time.time()
             
             # Get applicable quotas
@@ -596,8 +574,7 @@ class QuotaManager:
             }
     
     async def get_current_usage(self, user_id: str, quota_type: Optional[QuotaType] = None) -> Dict[str, Any]:
-        """Get current usage for user"""
-        try:
+        """Get current usage for user"""        try:
             if quota_type:
                 # Get usage for specific quota type
                 applicable_quotas = self._get_applicable_quotas(user_id, quota_type)
@@ -668,8 +645,7 @@ class QuotaManager:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """Generate comprehensive cost report"""
-        try:
+        """Generate comprehensive cost report"""        try:
             if not start_date:
                 start_date = datetime.now() - timedelta(days=30)
             if not end_date:
@@ -685,8 +661,7 @@ class QuotaManager:
             }
     
     async def get_optimization_recommendations(self, user_id: str) -> Dict[str, Any]:
-        """Get resource optimization recommendations"""
-        try:
+        """Get resource optimization recommendations"""        try:
             return await self.optimization_manager.generate_recommendations(user_id)
             
         except Exception as e:
@@ -697,8 +672,7 @@ class QuotaManager:
             }
     
     async def apply_optimization(self, recommendation_id: str) -> Dict[str, Any]:
-        """Apply optimization recommendation"""
-        try:
+        """Apply optimization recommendation"""        try:
             if recommendation_id not in self.recommendations:
                 return {
                     'success': False,
@@ -735,8 +709,7 @@ class QuotaManager:
             }
     
     def get_quota_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive quota statistics"""
-        try:
+        """Get comprehensive quota statistics"""        try:
             # Basic quota statistics
             total_quotas = len(self.quota_limits)
             active_quotas = len([q for q in self.quota_limits.values() if q.is_active])
@@ -803,8 +776,7 @@ class QuotaManager:
     # Private implementation methods
     
     def _get_applicable_quotas(self, user_id: str, quota_type: QuotaType) -> List[QuotaLimit]:
-        """Get quotas applicable to user and quota type"""
-        applicable_quotas = []
+        """Get quotas applicable to user and quota type"""        applicable_quotas = []
         
         for quota in self.quota_limits.values():
             if not quota.is_active:
@@ -836,8 +808,7 @@ class QuotaManager:
         return applicable_quotas
     
     def _calculate_period_bounds(self, period: QuotaPeriod) -> Tuple[datetime, datetime]:
-        """Calculate period start and end dates"""
-        now = datetime.now()
+        """Calculate period start and end dates"""        now = datetime.now()
         
         if period == QuotaPeriod.HOURLY:
             start = now.replace(minute=0, second=0, microsecond=0)
@@ -865,8 +836,7 @@ class QuotaManager:
         return start, end
     
     async def _update_quota_usage(self, user_id: str, quota_type: QuotaType, value: int) -> None:
-        """Update quota usage with new value"""
-        try:
+        """Update quota usage with new value"""        try:
             applicable_quotas = self._get_applicable_quotas(user_id, quota_type)
             
             for quota in applicable_quotas:
@@ -916,8 +886,7 @@ class QuotaManager:
             logger.error(f"Failed to update quota usage: {str(e)}")
     
     async def _update_usage_cost(self, usage: QuotaUsage, quota: QuotaLimit) -> None:
-        """Update usage cost calculations"""
-        try:
+        """Update usage cost calculations"""        try:
             if quota.billing_model == BillingModel.FIXED:
                 # Fixed cost regardless of usage
                 usage.current_cost = quota.cost_per_unit
@@ -955,8 +924,7 @@ class QuotaManager:
             logger.error(f"Failed to update usage cost: {str(e)}")
     
     def _calculate_tiered_cost(self, usage: int, quota: QuotaLimit) -> Decimal:
-        """Calculate tiered pricing cost (simplified)"""
-        # This is a simplified implementation
+        """Calculate tiered pricing cost (simplified)"""        # This is a simplified implementation
         # In a real system, you would have configurable tiers
         base_cost = quota.cost_per_unit
         
@@ -970,8 +938,7 @@ class QuotaManager:
             return base_cost_total + overage_cost
     
     async def _check_quota_violations(self, user_id: str, quota_type: QuotaType) -> List[Dict[str, Any]]:
-        """Check for quota violations and trigger alerts"""
-        violations = []
+        """Check for quota violations and trigger alerts"""        violations = []
         
         try:
             applicable_quotas = self._get_applicable_quotas(user_id, quota_type)
@@ -1017,8 +984,7 @@ class QuotaManager:
             return []
     
     def _calculate_usage_trends(self) -> Dict[str, Any]:
-        """Calculate usage trends across time periods"""
-        try:
+        """Calculate usage trends across time periods"""        try:
             # This is a simplified implementation
             # In a real system, you would analyze historical data
             
@@ -1052,8 +1018,7 @@ class QuotaManager:
             return {}
     
     async def _load_initial_data(self) -> None:
-        """Load initial data from disk"""
-        try:
+        """Load initial data from disk"""        try:
             # Load quotas
             quotas_dir = Path(self.config.quotas_directory) / "active"
             if quotas_dir.exists():
@@ -1101,8 +1066,7 @@ class QuotaManager:
             logger.error(f"Failed to load initial data: {str(e)}")
     
     async def _get_user_groups(self, user_id: str) -> List[str]:
-        """Get list of groups that user belongs to"""
-        try:
+        """Get list of groups that user belongs to"""        try:
             # In a production system, this would query the user management system
             # For now, simulate group membership
             user_groups_map = {
@@ -1119,8 +1083,7 @@ class QuotaManager:
             return []
     
     async def _get_user_plan(self, user_id: str) -> Optional[str]:
-        """Get user's current subscription plan"""
-        try:
+        """Get user's current subscription plan"""        try:
             # In a production system, this would query the subscription management system
             # For now, simulate plan assignments
             user_plans_map = {
@@ -1136,8 +1099,7 @@ class QuotaManager:
             return None
     
     async def _start_background_tasks(self) -> None:
-        """Start background maintenance tasks"""
-        try:
+        """Start background maintenance tasks"""        try:
             # Start quota monitoring
             if self.config.enforce_quotas:
                 asyncio.create_task(self._quota_monitoring_task())
@@ -1158,8 +1120,7 @@ class QuotaManager:
             logger.error(f"Failed to start background tasks: {str(e)}")
     
     async def _quota_monitoring_task(self) -> None:
-        """Monitor quota usage and enforce limits"""
-        while True:
+        """Monitor quota usage and enforce limits"""        while True:
             try:
                 await asyncio.sleep(self.config.quota_check_interval_seconds)
                 
@@ -1177,8 +1138,7 @@ class QuotaManager:
                 logger.error(f"Quota monitoring error: {str(e)}")
     
     async def _usage_aggregation_task(self) -> None:
-        """Aggregate usage data for reporting"""
-        while True:
+        """Aggregate usage data for reporting"""        while True:
             try:
                 await asyncio.sleep(self.config.usage_aggregation_interval_minutes * 60)
                 
@@ -1190,8 +1150,7 @@ class QuotaManager:
                 logger.error(f"Usage aggregation error: {str(e)}")
     
     async def _optimization_task(self) -> None:
-        """Generate optimization recommendations"""
-        while True:
+        """Generate optimization recommendations"""        while True:
             try:
                 await asyncio.sleep(self.config.recommendation_frequency_hours * 3600)
                 
@@ -1208,8 +1167,7 @@ class QuotaManager:
                 logger.error(f"Optimization task error: {str(e)}")
     
     async def _billing_task(self) -> None:
-        """Process billing calculations"""
-        while True:
+        """Process billing calculations"""        while True:
             try:
                 await asyncio.sleep(3600)  # Run every hour
                 
@@ -1220,8 +1178,7 @@ class QuotaManager:
                 logger.error(f"Billing task error: {str(e)}")
     
     async def _save_quota(self, quota: QuotaLimit) -> None:
-        """Save quota to disk"""
-        try:
+        """Save quota to disk"""        try:
             quota_path = Path(self.config.quotas_directory) / "active" / f"{quota.quota_id}.json"
             
             quota_data = {
@@ -1258,8 +1215,7 @@ class QuotaManager:
             logger.error(f"Failed to save quota: {str(e)}")
     
     async def _save_usage_record(self, record: UsageRecord) -> None:
-        """Save usage record to disk"""
-        try:
+        """Save usage record to disk"""        try:
             # Create date-based directory structure
             date_str = record.timestamp.strftime("%Y/%m/%d")
             usage_dir = Path(self.config.usage_directory) / "realtime" / date_str
@@ -1289,19 +1245,15 @@ class QuotaManager:
 
 
 class UsageTracker:
-    """Tracks resource usage"""
-    
+    """Tracks resource usage"""    
     def __init__(self, quota_manager: QuotaManager):
-        """Initialize usage tracker"""
-        self.quota_manager = quota_manager
+        """Initialize usage tracker"""        self.quota_manager = quota_manager
 
 
 class BillingManager:
-    """Manages billing and cost calculations"""
-    
+    """Manages billing and cost calculations"""    
     def __init__(self, quota_manager: QuotaManager):
-        """Initialize billing manager"""
-        self.quota_manager = quota_manager
+        """Initialize billing manager"""        self.quota_manager = quota_manager
     
     async def generate_cost_report(
         self,
@@ -1309,8 +1261,7 @@ class BillingManager:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Generate comprehensive cost report"""
-        try:
+        """Generate comprehensive cost report"""        try:
             # This would implement actual cost report generation
             # For now, return a placeholder
             
@@ -1336,8 +1287,7 @@ class BillingManager:
             }
     
     async def process_billing_updates(self) -> None:
-        """Process billing updates"""
-        try:
+        """Process billing updates"""        try:
             # Update all usage costs
             for usage in self.quota_manager.quota_usage.values():
                 quota = self.quota_manager.quota_limits.get(usage.quota_id)
@@ -1349,15 +1299,12 @@ class BillingManager:
 
 
 class OptimizationManager:
-    """Manages resource optimization"""
-    
+    """Manages resource optimization"""    
     def __init__(self, quota_manager: QuotaManager):
-        """Initialize optimization manager"""
-        self.quota_manager = quota_manager
+        """Initialize optimization manager"""        self.quota_manager = quota_manager
     
     async def generate_recommendations(self, user_id: str) -> Dict[str, Any]:
-        """Generate optimization recommendations for user"""
-        try:
+        """Generate optimization recommendations for user"""        try:
             recommendations = []
             
             # Analyze user's usage patterns
@@ -1424,8 +1371,7 @@ class OptimizationManager:
             }
     
     async def apply_recommendation(self, recommendation: ResourceRecommendation) -> Dict[str, Any]:
-        """Apply optimization recommendation"""
-        try:
+        """Apply optimization recommendation"""        try:
             # This would implement actual recommendation application
             # For now, return a placeholder
             
@@ -1444,15 +1390,12 @@ class OptimizationManager:
 
 
 class AlertManager:
-    """Manages quota alerts"""
-    
+    """Manages quota alerts"""    
     def __init__(self, quota_manager: QuotaManager):
-        """Initialize alert manager"""
-        self.quota_manager = quota_manager
+        """Initialize alert manager"""        self.quota_manager = quota_manager
     
     async def trigger_alert(self, quota: QuotaLimit, usage: QuotaUsage, level: AlertLevel) -> None:
-        """Trigger quota alert"""
-        try:
+        """Trigger quota alert"""        try:
             if not self.quota_manager.config.alerts_enabled:
                 return
             

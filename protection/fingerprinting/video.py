@@ -1,5 +1,4 @@
-"""
-🎬 Video Content Fingerprinting Service
+"""🎬 Video Content Fingerprinting Service
 =======================================
 
 Enterprise-grade video fingerprinting with advanced computer vision:
@@ -16,9 +15,7 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission from Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -50,8 +47,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class VideoMetadata:
-    """Comprehensive video metadata extraction."""
-    duration: float
+    """Comprehensive video metadata extraction."""    duration: float
     width: int
     height: int
     fps: float
@@ -65,23 +61,20 @@ class VideoMetadata:
     object_detections: Optional[Dict[str, int]]
 
 class PerceptualHashExtractor:
-    """Advanced perceptual hashing for video frames."""
-    
+    """Advanced perceptual hashing for video frames."""    
     def __init__(self, hash_size: int = 16):
         self.hash_size = hash_size
         self.sampling_rate = 1.0  # Sample every second
         
     def extract_frame_hashes(self, video_path: str) -> Dict[str, Any]:
-        """
-        Extract perceptual hashes from video frames.
+        """        Extract perceptual hashes from video frames.
         
         Args:
             video_path: Path to video file
             
         Returns:
             Dictionary containing frame hashes and metadata
-        """
-        try:
+        """        try:
             cap = cv2.VideoCapture(video_path)
             
             if not cap.isOpened():
@@ -146,13 +139,11 @@ class PerceptualHashExtractor:
             return {"error": str(e)}
     
     def _combine_hashes(self, phash: str, dhash: str, ahash: str, whash: str) -> str:
-        """Combine multiple hash types into a single fingerprint."""
-        combined = f"{phash}|{dhash}|{ahash}|{whash}"
+        """Combine multiple hash types into a single fingerprint."""        combined = f"{phash}|{dhash}|{ahash}|{whash}"
         return hashlib.md5(combined.encode()).hexdigest()
     
     def _generate_sequence_fingerprint(self, frame_hashes: List[Dict[str, str]]) -> str:
-        """Generate fingerprint from frame sequence."""
-        if not frame_hashes:
+        """Generate fingerprint from frame sequence."""        if not frame_hashes:
             return ""
         
         # Extract combined hashes
@@ -163,8 +154,7 @@ class PerceptualHashExtractor:
         return hashlib.sha256(sequence_string.encode()).hexdigest()
 
 class OpticalFlowAnalyzer:
-    """Optical flow analysis for motion-based fingerprinting."""
-    
+    """Optical flow analysis for motion-based fingerprinting."""    
     def __init__(self):
         self.flow_method = cv2.optflow.calcOpticalFlowPyrLK
         self.feature_params = {
@@ -175,16 +165,14 @@ class OpticalFlowAnalyzer:
         }
         
     def analyze_motion(self, video_path: str) -> Dict[str, Any]:
-        """
-        Analyze motion patterns in video using optical flow.
+        """        Analyze motion patterns in video using optical flow.
         
         Args:
             video_path: Path to video file
             
         Returns:
             Dictionary containing motion analysis results
-        """
-        try:
+        """        try:
             cap = cv2.VideoCapture(video_path)
             
             if not cap.isOpened():
@@ -255,8 +243,7 @@ class OpticalFlowAnalyzer:
             return {"error": str(e)}
     
     def _generate_motion_fingerprint(self, magnitudes: List[float], directions: List[float]) -> str:
-        """Generate fingerprint from motion data."""
-        if not magnitudes or not directions:
+        """Generate fingerprint from motion data."""        if not magnitudes or not directions:
             return ""
         
         # Quantize motion data
@@ -270,8 +257,7 @@ class OpticalFlowAnalyzer:
         return hashlib.md5(fingerprint_string.encode()).hexdigest()
     
     def _quantize_values(self, values: List[float], bins: int = 16) -> List[int]:
-        """Quantize continuous values into discrete bins."""
-        if not values:
+        """Quantize continuous values into discrete bins."""        if not values:
             return []
         
         min_val, max_val = min(values), max(values)
@@ -282,31 +268,27 @@ class OpticalFlowAnalyzer:
         return [min(int((v - min_val) / bin_size), bins - 1) for v in values]
 
 class ObjectDetectionAnalyzer:
-    """YOLO-based object detection for content analysis."""
-    
+    """YOLO-based object detection for content analysis."""    
     def __init__(self, model_name: str = "yolov8n.pt"):
         self.model_name = model_name
         self.model = None
         self._initialize_model()
         
     def _initialize_model(self):
-        """Initialize YOLO model."""
-        try:
+        """Initialize YOLO model."""        try:
             self.model = YOLO(self.model_name)
         except Exception as e:
             logger.warning(f"YOLO model initialization failed: {e}")
     
     def detect_objects(self, video_path: str) -> Dict[str, Any]:
-        """
-        Detect objects in video frames.
+        """        Detect objects in video frames.
         
         Args:
             video_path: Path to video file
             
         Returns:
             Dictionary containing object detection results
-        """
-        if not self.model:
+        """        if not self.model:
             return {"error": "YOLO model not initialized"}
             
         try:
@@ -376,8 +358,7 @@ class ObjectDetectionAnalyzer:
             return {"error": str(e)}
     
     def _generate_object_fingerprint(self, object_detections: Dict[str, int]) -> str:
-        """Generate fingerprint from object detection data."""
-        if not object_detections:
+        """Generate fingerprint from object detection data."""        if not object_detections:
             return ""
         
         # Sort by frequency and create signature
@@ -387,8 +368,7 @@ class ObjectDetectionAnalyzer:
         return hashlib.md5(fingerprint_string.encode()).hexdigest()
 
 class CNNFeatureExtractor:
-    """CNN-based feature extraction for video frames."""
-    
+    """CNN-based feature extraction for video frames."""    
     def __init__(self, model_name: str = "resnet50"):
         self.model_name = model_name
         self.model = None
@@ -396,8 +376,7 @@ class CNNFeatureExtractor:
         self._initialize_model()
         
     def _initialize_model(self):
-        """Initialize pre-trained CNN model."""
-        try:
+        """Initialize pre-trained CNN model."""        try:
             if self.model_name == "resnet50":
                 self.model = models.resnet50(pretrained=True)
                 self.model.fc = nn.Identity()  # Remove final layer
@@ -415,16 +394,14 @@ class CNNFeatureExtractor:
             logger.warning(f"CNN model initialization failed: {e}")
     
     def extract_features(self, video_path: str) -> Dict[str, Any]:
-        """
-        Extract CNN features from video frames.
+        """        Extract CNN features from video frames.
         
         Args:
             video_path: Path to video file
             
         Returns:
             Dictionary containing extracted features
-        """
-        if not self.model or not self.transform:
+        """        if not self.model or not self.transform:
             return {"error": "CNN model not initialized"}
             
         try:
@@ -488,8 +465,7 @@ class CNNFeatureExtractor:
             return {"error": str(e)}
     
     def _generate_feature_fingerprint(self, frame_features: List[Dict[str, Any]]) -> str:
-        """Generate fingerprint from CNN features."""
-        if not frame_features:
+        """Generate fingerprint from CNN features."""        if not frame_features:
             return ""
         
         # Extract feature vectors
@@ -507,8 +483,7 @@ class CNNFeatureExtractor:
         return hashlib.md5(hash_string.encode()).hexdigest()
     
     def _compute_average_features(self, frame_features: List[Dict[str, Any]]) -> List[float]:
-        """Compute average feature vector across all frames."""
-        if not frame_features:
+        """Compute average feature vector across all frames."""        if not frame_features:
             return []
         
         features = [ff["features"] for ff in frame_features]
@@ -516,22 +491,19 @@ class CNNFeatureExtractor:
         return avg_features.tolist()
 
 class SceneChangeDetector:
-    """Detect scene changes and transitions in video."""
-    
+    """Detect scene changes and transitions in video."""    
     def __init__(self, threshold: float = 0.3):
         self.threshold = threshold
         
     def detect_scenes(self, video_path: str) -> Dict[str, Any]:
-        """
-        Detect scene changes in video.
+        """        Detect scene changes in video.
         
         Args:
             video_path: Path to video file
             
         Returns:
             Dictionary containing scene change data
-        """
-        try:
+        """        try:
             cap = cv2.VideoCapture(video_path)
             
             if not cap.isOpened():
@@ -584,8 +556,7 @@ class SceneChangeDetector:
             return {"error": str(e)}
     
     def _generate_scene_fingerprint(self, scene_changes: List[Dict[str, Any]]) -> str:
-        """Generate fingerprint from scene change data."""
-        if not scene_changes:
+        """Generate fingerprint from scene change data."""        if not scene_changes:
             return ""
         
         # Extract timestamps
@@ -603,8 +574,7 @@ class SceneChangeDetector:
         return ""
 
 class VideoFingerprintingService:
-    """
-    Comprehensive video fingerprinting service combining multiple techniques.
+    """    Comprehensive video fingerprinting service combining multiple techniques.
     
     Features:
     - Perceptual frame hashing
@@ -613,8 +583,7 @@ class VideoFingerprintingService:
     - CNN feature extraction
     - Scene change detection
     - Temporal pattern analysis
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.hash_extractor = PerceptualHashExtractor()
@@ -634,8 +603,7 @@ class VideoFingerprintingService:
         }
         
     async def process_video(self, video_path: str, user_id: int) -> FingerprintResult:
-        """
-        Process video file and generate comprehensive fingerprint.
+        """        Process video file and generate comprehensive fingerprint.
         
         Args:
             video_path: Path to video file
@@ -643,8 +611,7 @@ class VideoFingerprintingService:
             
         Returns:
             FingerprintResult containing all fingerprint data
-        """
-        try:
+        """        try:
             logger.info(f"Processing video fingerprint for: {video_path}")
             
             # Extract metadata
@@ -696,8 +663,7 @@ class VideoFingerprintingService:
             raise
     
     async def _extract_metadata(self, video_path: str) -> VideoMetadata:
-        """Extract comprehensive video metadata."""
-        try:
+        """Extract comprehensive video metadata."""        try:
             # Use OpenCV for basic metadata
             cap = cv2.VideoCapture(video_path)
             
@@ -759,38 +725,32 @@ class VideoFingerprintingService:
             )
     
     async def _run_perceptual_hash(self, video_path: str) -> Dict[str, Any]:
-        """Run perceptual hash extraction."""
-        return await asyncio.get_event_loop().run_in_executor(
+        """Run perceptual hash extraction."""        return await asyncio.get_event_loop().run_in_executor(
             None, self.hash_extractor.extract_frame_hashes, video_path
         )
     
     async def _run_motion_analysis(self, video_path: str) -> Dict[str, Any]:
-        """Run motion analysis."""
-        return await asyncio.get_event_loop().run_in_executor(
+        """Run motion analysis."""        return await asyncio.get_event_loop().run_in_executor(
             None, self.motion_analyzer.analyze_motion, video_path
         )
     
     async def _run_object_detection(self, video_path: str) -> Dict[str, Any]:
-        """Run object detection."""
-        return await asyncio.get_event_loop().run_in_executor(
+        """Run object detection."""        return await asyncio.get_event_loop().run_in_executor(
             None, self.object_detector.detect_objects, video_path
         )
     
     async def _run_cnn_features(self, video_path: str) -> Dict[str, Any]:
-        """Run CNN feature extraction."""
-        return await asyncio.get_event_loop().run_in_executor(
+        """Run CNN feature extraction."""        return await asyncio.get_event_loop().run_in_executor(
             None, self.cnn_extractor.extract_features, video_path
         )
     
     async def _run_scene_detection(self, video_path: str) -> Dict[str, Any]:
-        """Run scene change detection."""
-        return await asyncio.get_event_loop().run_in_executor(
+        """Run scene change detection."""        return await asyncio.get_event_loop().run_in_executor(
             None, self.scene_detector.detect_scenes, video_path
         )
     
     def _generate_combined_hash(self, fingerprint_data: Dict[str, Any]) -> str:
-        """Generate combined hash from all fingerprint components."""
-        hash_components = []
+        """Generate combined hash from all fingerprint components."""        hash_components = []
         
         # Extract key hash components
         if "perceptual" in fingerprint_data and "sequence_fingerprint" in fingerprint_data["perceptual"]:
@@ -813,8 +773,7 @@ class VideoFingerprintingService:
         return hashlib.sha256(combined_string.encode()).hexdigest()
     
     async def find_similar(self, fingerprint_data: Dict[str, Any], threshold: float = 0.8) -> List[SimilarityMatch]:
-        """
-        Find similar video content based on fingerprint data.
+        """        Find similar video content based on fingerprint data.
         
         Args:
             fingerprint_data: Fingerprint data to match against
@@ -822,15 +781,13 @@ class VideoFingerprintingService:
             
         Returns:
             List of similarity matches
-        """
-        # This would typically interface with a vector database
+        """        # This would typically interface with a vector database
         # For now, return empty list (implementation depends on storage backend)
         logger.info(f"Searching for similar video with threshold {threshold}")
         return []
     
     def calculate_similarity(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """
-        Calculate similarity score between two video fingerprints.
+        """        Calculate similarity score between two video fingerprints.
         
         Args:
             fp1: First fingerprint data
@@ -838,8 +795,7 @@ class VideoFingerprintingService:
             
         Returns:
             Similarity score (0.0 to 1.0)
-        """
-        similarity_scores = []
+        """        similarity_scores = []
         
         # Perceptual similarity
         if ("perceptual" in fp1 and "perceptual" in fp2 and
@@ -880,16 +836,14 @@ class VideoFingerprintingService:
         return sum(similarity_scores) if similarity_scores else 0.0
     
     def _hash_similarity(self, hash1: str, hash2: str) -> float:
-        """Calculate hash similarity using Hamming distance."""
-        if len(hash1) != len(hash2):
+        """Calculate hash similarity using Hamming distance."""        if len(hash1) != len(hash2):
             return 0.0
         
         matches = sum(c1 == c2 for c1, c2 in zip(hash1, hash2))
         return matches / len(hash1)
     
     def _feature_similarity(self, feat1: List[float], feat2: List[float]) -> float:
-        """Calculate feature similarity using cosine similarity."""
-        try:
+        """Calculate feature similarity using cosine similarity."""        try:
             feat1_array = np.array(feat1)
             feat2_array = np.array(feat2)
             

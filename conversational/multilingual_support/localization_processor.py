@@ -1,5 +1,4 @@
-"""
-Localization Processor - Advanced Content Format Localization
+"""Localization Processor - Advanced Content Format Localization
 
 Enterprise-grade content formatting and localization system for dates,
 numbers, currency, and various content types with cultural sensitivity
@@ -15,9 +14,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
@@ -46,8 +43,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Types of content that can be localized"""
-    DATETIME = "datetime"
+    """Types of content that can be localized"""    DATETIME = "datetime"
     DATE = "date"
     TIME = "time"
     DURATION = "duration"
@@ -68,8 +64,7 @@ class ContentType(Enum):
 
 
 class LocalizationFormat(Enum):
-    """Localization format preferences"""
-    SHORT = "short"
+    """Localization format preferences"""    SHORT = "short"
     MEDIUM = "medium"
     LONG = "long"
     FULL = "full"
@@ -78,8 +73,7 @@ class LocalizationFormat(Enum):
 
 @dataclass
 class LocalizationRequest:
-    """Request for content localization"""
-    content: Any
+    """Request for content localization"""    content: Any
     content_type: ContentType
     target_language: SupportedLanguage
     cultural_context: Optional[CulturalContext] = None
@@ -91,8 +85,7 @@ class LocalizationRequest:
 
 @dataclass
 class LocalizationResult:
-    """Result of content localization"""
-    original_content: Any
+    """Result of content localization"""    original_content: Any
     localized_content: str
     content_type: ContentType
     target_language: SupportedLanguage
@@ -104,14 +97,12 @@ class LocalizationResult:
 
 
 class DateTimeLocalizer:
-    """Specialized datetime localization"""
-    
+    """Specialized datetime localization"""    
     def __init__(self):
         self.format_patterns = self._initialize_format_patterns()
         
     def _initialize_format_patterns(self) -> Dict[str, Dict[str, str]]:
-        """Initialize cultural datetime format patterns"""
-        return {
+        """Initialize cultural datetime format patterns"""        return {
             "en_US": {
                 "short_date": "%m/%d/%Y",
                 "medium_date": "%b %d, %Y",
@@ -171,8 +162,7 @@ class DateTimeLocalizer:
         cultural_context: Optional[CulturalContext] = None,
         format_preference: LocalizationFormat = LocalizationFormat.MEDIUM
     ) -> LocalizationResult:
-        """Localize datetime with cultural formatting"""
-        try:
+        """Localize datetime with cultural formatting"""        try:
             # Determine locale
             locale_str = self._get_locale_string(target_language, cultural_context)
             
@@ -228,8 +218,7 @@ class DateTimeLocalizer:
         cultural_context: Optional[CulturalContext] = None,
         format_preference: LocalizationFormat = LocalizationFormat.MEDIUM
     ) -> LocalizationResult:
-        """Localize date with cultural formatting"""
-        try:
+        """Localize date with cultural formatting"""        try:
             # Convert to date if datetime
             if isinstance(date_obj, datetime):
                 date_obj = date_obj.date()
@@ -285,8 +274,7 @@ class DateTimeLocalizer:
         cultural_context: Optional[CulturalContext] = None,
         format_preference: LocalizationFormat = LocalizationFormat.MEDIUM
     ) -> LocalizationResult:
-        """Localize time with cultural formatting"""
-        try:
+        """Localize time with cultural formatting"""        try:
             locale_str = self._get_locale_string(target_language, cultural_context)
             
             # Extract time if datetime
@@ -340,8 +328,7 @@ class DateTimeLocalizer:
         language: SupportedLanguage,
         cultural_context: Optional[CulturalContext]
     ) -> str:
-        """Get locale string for babel"""
-        if cultural_context and cultural_context.country_code:
+        """Get locale string for babel"""        if cultural_context and cultural_context.country_code:
             return f"{language.value}_{cultural_context.country_code}"
         
         # Default country mappings
@@ -362,15 +349,13 @@ class DateTimeLocalizer:
 
 
 class CurrencyLocalizer:
-    """Specialized currency localization"""
-    
+    """Specialized currency localization"""    
     def __init__(self):
         self.currency_symbols = self._initialize_currency_symbols()
         self.currency_info = self._initialize_currency_info()
     
     def _initialize_currency_symbols(self) -> Dict[str, str]:
-        """Initialize currency symbol mappings"""
-        return {
+        """Initialize currency symbol mappings"""        return {
             "USD": "$",
             "EUR": "€",
             "GBP": "£",
@@ -402,8 +387,7 @@ class CurrencyLocalizer:
         }
     
     def _initialize_currency_info(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize currency formatting information"""
-        return {
+        """Initialize currency formatting information"""        return {
             "USD": {"decimal_places": 2, "group_separator": ",", "decimal_separator": "."},
             "EUR": {"decimal_places": 2, "group_separator": ".", "decimal_separator": ","},
             "GBP": {"decimal_places": 2, "group_separator": ",", "decimal_separator": "."},
@@ -420,8 +404,7 @@ class CurrencyLocalizer:
         cultural_context: Optional[CulturalContext] = None,
         format_preference: LocalizationFormat = LocalizationFormat.MEDIUM
     ) -> LocalizationResult:
-        """Localize currency with cultural formatting"""
-        try:
+        """Localize currency with cultural formatting"""        try:
             locale_str = self._get_locale_string(target_language, cultural_context)
             
             # Use babel for currency formatting
@@ -465,8 +448,7 @@ class CurrencyLocalizer:
         language: SupportedLanguage,
         cultural_context: Optional[CulturalContext]
     ) -> str:
-        """Get locale string for currency formatting"""
-        if cultural_context and cultural_context.country_code:
+        """Get locale string for currency formatting"""        if cultural_context and cultural_context.country_code:
             return f"{language.value}_{cultural_context.country_code}"
         
         # Default mappings
@@ -484,8 +466,7 @@ class CurrencyLocalizer:
 
 
 class NumberLocalizer:
-    """Specialized number localization"""
-    
+    """Specialized number localization"""    
     async def localize_number(
         self,
         number: Union[int, float, Decimal],
@@ -493,8 +474,7 @@ class NumberLocalizer:
         cultural_context: Optional[CulturalContext] = None,
         format_preference: LocalizationFormat = LocalizationFormat.MEDIUM
     ) -> LocalizationResult:
-        """Localize number with cultural formatting"""
-        try:
+        """Localize number with cultural formatting"""        try:
             locale_str = self._get_locale_string(target_language, cultural_context)
             
             # Use cultural context separators if available
@@ -535,8 +515,7 @@ class NumberLocalizer:
         target_language: SupportedLanguage,
         cultural_context: Optional[CulturalContext] = None
     ) -> LocalizationResult:
-        """Localize percentage with cultural formatting"""
-        try:
+        """Localize percentage with cultural formatting"""        try:
             locale_str = self._get_locale_string(target_language, cultural_context)
             formatted_percentage = format_percent(percentage, locale=locale_str)
             
@@ -567,8 +546,7 @@ class NumberLocalizer:
         number: Union[int, float, Decimal],
         cultural_context: CulturalContext
     ) -> str:
-        """Format number using cultural context separators"""
-        # Convert to string with standard formatting
+        """Format number using cultural context separators"""        # Convert to string with standard formatting
         if isinstance(number, int):
             formatted = f"{number:,}"
         else:
@@ -586,8 +564,7 @@ class NumberLocalizer:
         language: SupportedLanguage,
         cultural_context: Optional[CulturalContext]
     ) -> str:
-        """Get locale string for number formatting"""
-        if cultural_context and cultural_context.country_code:
+        """Get locale string for number formatting"""        if cultural_context and cultural_context.country_code:
             return f"{language.value}_{cultural_context.country_code}"
         
         default_countries = {
@@ -602,14 +579,12 @@ class NumberLocalizer:
 
 
 class ContentLocalizer:
-    """Advanced content localization for various content types"""
-    
+    """Advanced content localization for various content types"""    
     def __init__(self):
         self.unit_conversions = self._initialize_unit_conversions()
         
     def _initialize_unit_conversions(self) -> Dict[str, Dict[str, float]]:
-        """Initialize unit conversion factors"""
-        return {
+        """Initialize unit conversion factors"""        return {
             "temperature": {
                 "celsius_to_fahrenheit": lambda c: (c * 9/5) + 32,
                 "fahrenheit_to_celsius": lambda f: (f - 32) * 5/9,
@@ -642,8 +617,7 @@ class ContentLocalizer:
         target_language: SupportedLanguage,
         cultural_context: Optional[CulturalContext] = None
     ) -> LocalizationResult:
-        """Localize address format"""
-        try:
+        """Localize address format"""        try:
             localized_address = address
             adaptations = []
             
@@ -691,8 +665,7 @@ class ContentLocalizer:
         target_language: SupportedLanguage,
         cultural_context: Optional[CulturalContext] = None
     ) -> LocalizationResult:
-        """Localize phone number format"""
-        try:
+        """Localize phone number format"""        try:
             localized_phone = phone
             
             # Apply country-specific phone formatting
@@ -734,8 +707,7 @@ class ContentLocalizer:
         target_language: SupportedLanguage,
         cultural_context: Optional[CulturalContext] = None
     ) -> LocalizationResult:
-        """Localize file size with appropriate units"""
-        try:
+        """Localize file size with appropriate units"""        try:
             # Determine unit system preference
             use_binary = True  # Default to binary (1024) units
             
@@ -795,8 +767,7 @@ class ContentLocalizer:
             )
     
     def _adapt_german_address(self, address: str) -> str:
-        """Adapt address to German format"""
-        # German format: Street Number, PLZ City
+        """Adapt address to German format"""        # German format: Street Number, PLZ City
         import re
         
         # Extract components using regex patterns
@@ -823,8 +794,7 @@ class ContentLocalizer:
         return address  # Return original if can't parse
     
     def _adapt_japanese_address(self, address: str) -> str:
-        """Adapt address to Japanese format"""
-        # Japanese format: 〒ZIP Prefecture City District Street
+        """Adapt address to Japanese format"""        # Japanese format: 〒ZIP Prefecture City District Street
         import re
         
         # Basic adaptation for Japanese addressing
@@ -838,8 +808,7 @@ class ContentLocalizer:
         return address
     
     def _adapt_french_address(self, address: str) -> str:
-        """Adapt address to French format"""
-        # French format: Number rue/avenue Street, PLZ City
+        """Adapt address to French format"""        # French format: Number rue/avenue Street, PLZ City
         import re
         
         # Extract components
@@ -863,24 +832,21 @@ class ContentLocalizer:
         return address
     
     def _format_german_phone(self, phone: str) -> str:
-        """Format phone number for Germany"""
-        # German format: +49 (0)123 456789 or 0123 456789
+        """Format phone number for Germany"""        # German format: +49 (0)123 456789 or 0123 456789
         digits = re.sub(r'[^\d]', '', phone)
         if len(digits) >= 10:
             return f"+49 (0){digits[-10:-7]} {digits[-7:]}"
         return phone
     
     def _format_french_phone(self, phone: str) -> str:
-        """Format phone number for France"""
-        # French format: 01 23 45 67 89
+        """Format phone number for France"""        # French format: 01 23 45 67 89
         digits = re.sub(r'[^\d]', '', phone)
         if len(digits) == 10:
             return f"{digits[:2]} {digits[2:4]} {digits[4:6]} {digits[6:8]} {digits[8:]}"
         return phone
     
     def _format_us_phone(self, phone: str) -> str:
-        """Format phone number for US"""
-        # US format: (123) 456-7890
+        """Format phone number for US"""        # US format: (123) 456-7890
         digits = re.sub(r'[^\d]', '', phone)
         if len(digits) == 10:
             return f"({digits[:3]}) {digits[3:6]}-{digits[6:]}"
@@ -889,8 +855,7 @@ class ContentLocalizer:
         return phone
     
     def _format_japanese_phone(self, phone: str) -> str:
-        """Format phone number for Japan"""
-        # Japanese format: 03-1234-5678
+        """Format phone number for Japan"""        # Japanese format: 03-1234-5678
         digits = re.sub(r'[^\d]', '', phone)
         if len(digits) >= 10:
             if digits.startswith('03') or digits.startswith('06'):
@@ -901,8 +866,7 @@ class ContentLocalizer:
 
 
 class FormatLocalizer:
-    """Advanced format localization orchestrator"""
-    
+    """Advanced format localization orchestrator"""    
     def __init__(self):
         self.datetime_localizer = DateTimeLocalizer()
         self.currency_localizer = CurrencyLocalizer()
@@ -914,8 +878,7 @@ class FormatLocalizer:
         self,
         request: LocalizationRequest
     ) -> LocalizationResult:
-        """Localize content based on type"""
-        try:
+        """Localize content based on type"""        try:
             # Route to appropriate localizer
             if request.content_type == ContentType.DATETIME:
                 result = await self.datetime_localizer.localize_datetime(
@@ -1014,8 +977,7 @@ class FormatLocalizer:
         self,
         requests: List[LocalizationRequest]
     ) -> List[LocalizationResult]:
-        """Batch localize multiple content items"""
-        results = []
+        """Batch localize multiple content items"""        results = []
         
         # Process requests in parallel for better performance
         tasks = [self.localize_content(request) for request in requests]
@@ -1043,8 +1005,7 @@ class FormatLocalizer:
         return final_results
     
     async def get_localization_statistics(self) -> Dict[str, Any]:
-        """Get localization usage statistics"""
-        return {
+        """Get localization usage statistics"""        return {
             "localization_stats": dict(self.localization_stats),
             "supported_content_types": [ct.value for ct in ContentType],
             "supported_languages": [lang.value for lang in SupportedLanguage]
@@ -1052,8 +1013,7 @@ class FormatLocalizer:
 
 
 class LocalizationProcessor:
-    """Master localization processor coordinating all localization services"""
-    
+    """Master localization processor coordinating all localization services"""    
     def __init__(self):
         self.format_localizer = FormatLocalizer()
         self.processing_stats = defaultdict(int)
@@ -1062,8 +1022,7 @@ class LocalizationProcessor:
         self,
         request: LocalizationRequest
     ) -> LocalizationResult:
-        """Process single localization request"""
-        try:
+        """Process single localization request"""        try:
             self.processing_stats["requests_processed"] += 1
             result = await self.format_localizer.localize_content(request)
             
@@ -1093,15 +1052,13 @@ class LocalizationProcessor:
         self,
         requests: List[LocalizationRequest]
     ) -> List[LocalizationResult]:
-        """Process batch localization requests"""
-        self.processing_stats["batch_requests"] += 1
+        """Process batch localization requests"""        self.processing_stats["batch_requests"] += 1
         self.processing_stats["batch_items"] += len(requests)
         
         return await self.format_localizer.batch_localize(requests)
     
     async def get_comprehensive_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive localization statistics"""
-        format_stats = await self.format_localizer.get_localization_statistics()
+        """Get comprehensive localization statistics"""        format_stats = await self.format_localizer.get_localization_statistics()
         
         return {
             "processing_stats": dict(self.processing_stats),

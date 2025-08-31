@@ -1,5 +1,4 @@
-"""
-Advanced Security Middleware - Enterprise-Grade Security Layer
+"""Advanced Security Middleware - Enterprise-Grade Security Layer
 ==============================================================
 
 Advanced security middleware providing enterprise-level protection including:
@@ -20,9 +19,7 @@ License: Proprietary - Unauthorized use prohibited
 ⚠️  PROPRIETARY SECURITY CODE ⚠️
 This security implementation contains proprietary algorithms and methods.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import hashlib
 import hmac
 import json
@@ -45,8 +42,7 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityConfig:
-    """Advanced security configuration"""
-    
+    """Advanced security configuration"""    
     # JWT Configuration
     JWT_SECRET_KEY: str = "your-super-secret-jwt-key-change-in-production"
     JWT_ALGORITHM: str = "HS256"
@@ -91,15 +87,13 @@ class SecurityConfig:
 
 
 class SecurityException(HTTPException):
-    """Custom security exception"""
-    
+    """Custom security exception"""    
     def __init__(self, detail: str, status_code: int = status.HTTP_403_FORBIDDEN):
         super().__init__(status_code=status_code, detail=detail)
 
 
 class SecurityLogger:
-    """Enhanced security logging"""
-    
+    """Enhanced security logging"""    
     def __init__(self):
         self.logger = logging.getLogger("security")
         self.security_events = []
@@ -111,8 +105,7 @@ class SecurityLogger:
         details: Dict[str, Any],
         request: Optional[Request] = None
     ):
-        """Log security event with context"""
-        event = {
+        """Log security event with context"""        event = {
             "timestamp": datetime.utcnow().isoformat(),
             "event_type": event_type,
             "severity": severity,
@@ -139,8 +132,7 @@ class SecurityLogger:
 
 
 class JWTManager:
-    """Advanced JWT token management"""
-    
+    """Advanced JWT token management"""    
     def __init__(self, config: SecurityConfig):
         self.config = config
         self.pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -152,8 +144,7 @@ class JWTManager:
         expires_delta: Optional[timedelta] = None,
         additional_claims: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Create JWT access token"""
-        if expires_delta:
+        """Create JWT access token"""        if expires_delta:
             expire = datetime.utcnow() + expires_delta
         else:
             expire = datetime.utcnow() + timedelta(
@@ -178,8 +169,7 @@ class JWTManager:
         )
     
     def create_refresh_token(self, subject: Union[str, Any]) -> str:
-        """Create JWT refresh token"""
-        expire = datetime.utcnow() + timedelta(
+        """Create JWT refresh token"""        expire = datetime.utcnow() + timedelta(
             days=self.config.JWT_REFRESH_TOKEN_EXPIRE_DAYS
         )
         
@@ -202,8 +192,7 @@ class JWTManager:
         token: str,
         token_type: str = "access"
     ) -> Dict[str, Any]:
-        """Verify and decode JWT token"""
-        try:
+        """Verify and decode JWT token"""        try:
             payload = jwt.decode(
                 token,
                 self.config.JWT_SECRET_KEY,
@@ -226,14 +215,12 @@ class JWTManager:
             raise SecurityException("Invalid token")
     
     def refresh_access_token(self, refresh_token: str) -> str:
-        """Create new access token from refresh token"""
-        payload = self.verify_token(refresh_token, "refresh")
+        """Create new access token from refresh token"""        payload = self.verify_token(refresh_token, "refresh")
         return self.create_access_token(payload["sub"])
 
 
 class RateLimitManager:
-    """Advanced rate limiting with multiple strategies"""
-    
+    """Advanced rate limiting with multiple strategies"""    
     def __init__(self, config: SecurityConfig):
         self.config = config
         self.memory_storage = {}
@@ -244,8 +231,7 @@ class RateLimitManager:
         identifier: str,
         limit_type: str = "general"
     ) -> bool:
-        """Check if request is within rate limits"""
-        current_time = int(time.time())
+        """Check if request is within rate limits"""        current_time = int(time.time())
         
         # Define limits based on type
         limits = {
@@ -271,8 +257,7 @@ class RateLimitManager:
         window_seconds: int,
         current_time: int
     ) -> bool:
-        """Check rate limit using memory storage"""
-        if identifier not in self.memory_storage:
+        """Check rate limit using memory storage"""        if identifier not in self.memory_storage:
             self.memory_storage[identifier] = []
         
         requests = self.memory_storage[identifier]
@@ -301,8 +286,7 @@ class RateLimitManager:
 
 
 class InputValidator:
-    """Advanced input validation and sanitization"""
-    
+    """Advanced input validation and sanitization"""    
     def __init__(self, config: SecurityConfig):
         self.config = config
         self.security_logger = SecurityLogger()
@@ -338,8 +322,7 @@ class InputValidator:
         ]
     
     def validate_input(self, data: Any, field_name: str = "input") -> Any:
-        """Validate and sanitize input data"""
-        if isinstance(data, str):
+        """Validate and sanitize input data"""        if isinstance(data, str):
             return self._validate_string(data, field_name)
         elif isinstance(data, dict):
             return self._validate_dict(data, field_name)
@@ -349,8 +332,7 @@ class InputValidator:
             return data
     
     def _validate_string(self, value: str, field_name: str) -> str:
-        """Validate string input"""
-        # Check length
+        """Validate string input"""        # Check length
         if len(value) > self.config.MAX_FIELD_LENGTH:
             raise SecurityException(
                 f"Field '{field_name}' exceeds maximum length"
@@ -389,23 +371,20 @@ class InputValidator:
         return value
     
     def _validate_dict(self, data: Dict[str, Any], field_name: str) -> Dict[str, Any]:
-        """Validate dictionary input"""
-        validated = {}
+        """Validate dictionary input"""        validated = {}
         for key, value in data.items():
             validated[key] = self.validate_input(value, f"{field_name}.{key}")
         return validated
     
     def _validate_list(self, data: List[Any], field_name: str) -> List[Any]:
-        """Validate list input"""
-        return [
+        """Validate list input"""        return [
             self.validate_input(item, f"{field_name}[{i}]")
             for i, item in enumerate(data)
         ]
 
 
 class BotDetector:
-    """Advanced bot detection system"""
-    
+    """Advanced bot detection system"""    
     def __init__(self, config: SecurityConfig):
         self.config = config
         self.security_logger = SecurityLogger()
@@ -413,8 +392,7 @@ class BotDetector:
         self.request_patterns = {}
     
     def is_bot_request(self, request: Request) -> bool:
-        """Detect if request is from a bot"""
-        if not self.config.BOT_DETECTION_ENABLED:
+        """Detect if request is from a bot"""        if not self.config.BOT_DETECTION_ENABLED:
             return False
         
         # Check user agent
@@ -449,8 +427,7 @@ class BotDetector:
         return False
     
     def _is_suspicious_pattern(self, client_ip: str, request: Request) -> bool:
-        """Check for suspicious request patterns"""
-        current_time = time.time()
+        """Check for suspicious request patterns"""        current_time = time.time()
         
         if client_ip not in self.request_patterns:
             self.request_patterns[client_ip] = []
@@ -489,16 +466,14 @@ class BotDetector:
 
 
 class CSRFProtection:
-    """CSRF protection implementation"""
-    
+    """CSRF protection implementation"""    
     def __init__(self, config: SecurityConfig):
         self.config = config
         self.tokens = {}  # In production, use Redis or database
         self.security_logger = SecurityLogger()
     
     def generate_csrf_token(self, session_id: str) -> str:
-        """Generate CSRF token for session"""
-        token = secrets.token_urlsafe(self.config.CSRF_TOKEN_LENGTH)
+        """Generate CSRF token for session"""        token = secrets.token_urlsafe(self.config.CSRF_TOKEN_LENGTH)
         expires_at = datetime.utcnow() + timedelta(
             minutes=self.config.CSRF_TOKEN_EXPIRE_MINUTES
         )
@@ -516,8 +491,7 @@ class CSRFProtection:
         token: str,
         request: Optional[Request] = None
     ) -> bool:
-        """Validate CSRF token"""
-        if session_id not in self.tokens:
+        """Validate CSRF token"""        if session_id not in self.tokens:
             self.security_logger.log_security_event(
                 "csrf_validation_failed",
                 "MEDIUM",
@@ -553,8 +527,7 @@ class CSRFProtection:
 
 
 class SecurityMiddleware:
-    """Main security middleware coordinating all security features"""
-    
+    """Main security middleware coordinating all security features"""    
     def __init__(self, config: Optional[SecurityConfig] = None):
         self.config = config or SecurityConfig()
         
@@ -569,16 +542,13 @@ class SecurityMiddleware:
         self.rate_limited_endpoints = set()
     
     def add_protected_endpoint(self, endpoint: str):
-        """Add endpoint that requires authentication"""
-        self.protected_endpoints.add(endpoint)
+        """Add endpoint that requires authentication"""        self.protected_endpoints.add(endpoint)
     
     def add_rate_limited_endpoint(self, endpoint: str):
-        """Add endpoint that has rate limiting"""
-        self.rate_limited_endpoints.add(endpoint)
+        """Add endpoint that has rate limiting"""        self.rate_limited_endpoints.add(endpoint)
     
     async def __call__(self, request: Request, call_next: Callable):
-        """Main middleware processing"""
-        start_time = time.time()
+        """Main middleware processing"""        start_time = time.time()
         
         try:
             # Process security checks before handling request
@@ -617,8 +587,7 @@ class SecurityMiddleware:
             )
     
     async def process_request(self, request: Request):
-        """Process incoming request through security checks"""
-        # Check request size
+        """Process incoming request through security checks"""        # Check request size
         if hasattr(request, "content_length"):
             if request.content_length and request.content_length > self.config.MAX_REQUEST_SIZE:
                 raise SecurityException("Request too large")
@@ -644,8 +613,7 @@ class SecurityMiddleware:
             await self._validate_request_body(request)
     
     async def _authenticate_request(self, request: Request):
-        """Authenticate request using JWT"""
-        auth_header = request.headers.get("authorization")
+        """Authenticate request using JWT"""        auth_header = request.headers.get("authorization")
         if not auth_header or not auth_header.startswith("Bearer "):
             raise SecurityException("Missing or invalid authorization header")
         
@@ -658,8 +626,7 @@ class SecurityMiddleware:
             raise
     
     async def _validate_request_body(self, request: Request):
-        """Validate request body"""
-        try:
+        """Validate request body"""        try:
             if request.headers.get("content-type", "").startswith("application/json"):
                 body = await request.body()
                 if body:
@@ -673,15 +640,13 @@ class SecurityMiddleware:
             # Continue processing if basic validation passed
     
     def _add_security_headers(self, response: Response):
-        """Add security headers to response"""
-        for header, value in self.config.SECURITY_HEADERS.items():
+        """Add security headers to response"""        for header, value in self.config.SECURITY_HEADERS.items():
             response.headers[header] = value
 
 
 # Utility decorators and functions
 def require_auth(func: Callable):
-    """Decorator to require authentication for endpoint"""
-    @wraps(func)
+    """Decorator to require authentication for endpoint"""    @wraps(func)
     async def wrapper(*args, **kwargs):
         # Authentication will be handled by middleware
         return await func(*args, **kwargs)
@@ -689,8 +654,7 @@ def require_auth(func: Callable):
 
 
 def rate_limit(limit_type: str = "general"):
-    """Decorator to add rate limiting to endpoint"""
-    def decorator(func: Callable):
+    """Decorator to add rate limiting to endpoint"""    def decorator(func: Callable):
         @wraps(func)
         async def wrapper(*args, **kwargs):
             # Rate limiting will be handled by middleware
@@ -700,8 +664,7 @@ def rate_limit(limit_type: str = "general"):
 
 
 def validate_input(validator_func: Optional[Callable] = None):
-    """Decorator to add input validation to endpoint"""
-    def decorator(func: Callable):
+    """Decorator to add input validation to endpoint"""    def decorator(func: Callable):
         @wraps(func)
         async def wrapper(*args, **kwargs):
             # Input validation will be handled by middleware

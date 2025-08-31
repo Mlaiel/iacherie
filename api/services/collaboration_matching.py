@@ -1,5 +1,4 @@
-"""
-Enterprise Collaboration Matching Service - AI-Powered Partner Discovery
+"""Enterprise Collaboration Matching Service - AI-Powered Partner Discovery
 Intelligent matching system connecting creators with brands, collaborators, and opportunities
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -9,9 +8,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + Business Intelligence + DevOp
 This code and concept are proprietary to Fahed Mlaiel.
 Unauthorized copying, distribution, or use without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
@@ -75,11 +72,9 @@ class MatchingCriteria:
 
 
 class CollaborationMatchingService:
-    """
-    Professional collaboration matching service using AI algorithms
+    """    Professional collaboration matching service using AI algorithms
     for optimal creator-brand partnerships and cross-creator collaborations
-    """
-    
+    """    
     def __init__(self, redis_client: Optional[redis.Redis] = None):
         self.redis_client = redis_client or redis.Redis(host='localhost', port=6379, db=0)
         self.analytics_service = AnalyticsService(redis_client)
@@ -113,12 +108,10 @@ class CollaborationMatchingService:
         }
 
     def _get_cache_key(self, asset_id: int, criteria_hash: str) -> str:
-        """Generate cache key for matching results"""
-        return f"collaboration:matches:{asset_id}:{criteria_hash}"
+        """Generate cache key for matching results"""        return f"collaboration:matches:{asset_id}:{criteria_hash}"
 
     async def _cache_get(self, key: str) -> Optional[List[Dict]]:
-        """Get cached matching results"""
-        try:
+        """Get cached matching results"""        try:
             cached = self.redis_client.get(key)
             return json.loads(cached) if cached else None
         except Exception as e:
@@ -126,8 +119,7 @@ class CollaborationMatchingService:
             return None
 
     async def _cache_set(self, key: str, matches: List[Dict], ttl: int = None) -> None:
-        """Cache matching results"""
-        try:
+        """Cache matching results"""        try:
             self.redis_client.setex(
                 key, 
                 ttl or self.cache_ttl, 
@@ -143,10 +135,8 @@ class CollaborationMatchingService:
         criteria: Optional[MatchingCriteria] = None,
         limit: int = 20
     ) -> List[CollaborationMatch]:
-        """
-        Find optimal collaboration matches using AI-powered algorithms
-        """
-        criteria = criteria or MatchingCriteria()
+        """        Find optimal collaboration matches using AI-powered algorithms
+        """        criteria = criteria or MatchingCriteria()
         criteria_hash = self._hash_criteria(criteria)
         cache_key = self._get_cache_key(asset.id, criteria_hash)
         
@@ -200,8 +190,7 @@ class CollaborationMatchingService:
         analytics: Any,
         criteria: MatchingCriteria
     ) -> List[CollaborationMatch]:
-        """Find relevant brand partnership opportunities"""
-        matches = []
+        """Find relevant brand partnership opportunities"""        matches = []
         
         # Determine content category for brand matching
         content_category = self._categorize_content(asset)
@@ -249,8 +238,7 @@ class CollaborationMatchingService:
         analytics: Any,
         criteria: MatchingCriteria
     ) -> List[CollaborationMatch]:
-        """Find creator-to-creator collaboration opportunities"""
-        matches = []
+        """Find creator-to-creator collaboration opportunities"""        matches = []
         
         # Find similar creators in the database
         similar_creators = await self._find_similar_creators(db, asset, creator, criteria)
@@ -292,8 +280,7 @@ class CollaborationMatchingService:
         analytics: Any,
         criteria: MatchingCriteria
     ) -> List[CollaborationMatch]:
-        """Find content licensing opportunities"""
-        matches = []
+        """Find content licensing opportunities"""        matches = []
         
         # Licensing opportunities based on content type
         licensing_opportunities = {
@@ -344,8 +331,7 @@ class CollaborationMatchingService:
         brand_name: str, 
         content_category: str
     ) -> float:
-        """Calculate compatibility score between creator and brand"""
-        factors = []
+        """Calculate compatibility score between creator and brand"""        factors = []
         
         # Content alignment factor
         content_factor = 0.8  # High base score for category match
@@ -380,8 +366,7 @@ class CollaborationMatchingService:
         creator: Creator, 
         criteria: MatchingCriteria
     ) -> List[Tuple[Creator, float]]:
-        """Find creators with similar content and audience"""
-        # Get creators with similar content types
+        """Find creators with similar content and audience"""        # Get creators with similar content types
         similar_creators = db.query(Creator).join(ContentAsset).filter(
             and_(
                 ContentAsset.media_type == asset.media_type,
@@ -410,8 +395,7 @@ class CollaborationMatchingService:
         creator2: Creator, 
         reference_asset: ContentAsset
     ) -> float:
-        """Calculate similarity between two creators"""
-        factors = []
+        """Calculate similarity between two creators"""        factors = []
         
         # Content type similarity (already filtered)
         factors.append(1.0)
@@ -427,8 +411,7 @@ class CollaborationMatchingService:
         return sum(factors) / len(factors)
 
     def _categorize_content(self, asset: ContentAsset) -> str:
-        """Categorize content for brand matching"""
-        # Analyze metadata and content type to determine category
+        """Categorize content for brand matching"""        # Analyze metadata and content type to determine category
         metadata = asset.metadata or {}
         
         # Check for explicit category
@@ -453,8 +436,7 @@ class CollaborationMatchingService:
         partner_name: str, 
         collaboration_type: str
     ) -> int:
-        """Estimate potential reach from collaboration"""
-        base_reach = analytics.reach
+        """Estimate potential reach from collaboration"""        base_reach = analytics.reach
         
         # Collaboration multipliers
         multipliers = {
@@ -475,8 +457,7 @@ class CollaborationMatchingService:
         collaboration_type: str,
         estimated_reach: int
     ) -> float:
-        """Estimate potential revenue from collaboration"""
-        # Revenue estimation based on reach and collaboration type
+        """Estimate potential revenue from collaboration"""        # Revenue estimation based on reach and collaboration type
         revenue_per_thousand = {
             'brand_partnership': 5.0,  # $5 per 1k reach
             'creator_collaboration': 2.0,  # $2 per 1k reach
@@ -494,8 +475,7 @@ class CollaborationMatchingService:
         brand_name: str, 
         content_category: str
     ) -> List[str]:
-        """Get specific compatibility factors for brand partnership"""
-        factors = [
+        """Get specific compatibility factors for brand partnership"""        factors = [
             f"Content aligns with {brand_name} brand values",
             f"Target audience matches {brand_name} demographics",
             f"High engagement in {content_category} category",
@@ -514,8 +494,7 @@ class CollaborationMatchingService:
         creator1: Creator, 
         creator2: Creator
     ) -> List[str]:
-        """Get compatibility factors between creators"""
-        return [
+        """Get compatibility factors between creators"""        return [
             "Similar content style and quality",
             "Complementary audience demographics",
             "Aligned creative vision",
@@ -523,8 +502,7 @@ class CollaborationMatchingService:
         ]
 
     async def _get_brand_requirements(self, brand_name: str) -> List[str]:
-        """Get typical requirements for brand partnerships"""
-        return [
+        """Get typical requirements for brand partnerships"""        return [
             "Minimum 10K followers",
             "High-quality content standards",
             "Brand guideline compliance",
@@ -533,8 +511,7 @@ class CollaborationMatchingService:
         ]
 
     async def _get_brand_contact_info(self, brand_name: str) -> Optional[Dict[str, Any]]:
-        """Get brand contact information (would connect to real database)"""
-        # This would fetch real contact info from partnerships database
+        """Get brand contact information (would connect to real database)"""        # This would fetch real contact info from partnerships database
         return {
             "department": "Creator Partnerships",
             "website": f"https://partnerships.{brand_name.lower().replace(' ', '')}.com",
@@ -547,8 +524,7 @@ class CollaborationMatchingService:
         analytics: Any, 
         opportunity_type: str
     ) -> float:
-        """Calculate licensing potential score"""
-        factors = []
+        """Calculate licensing potential score"""        factors = []
         
         # Content quality factor
         if asset.file_size and asset.file_size > 1024 * 1024:  # > 1MB = higher quality
@@ -576,8 +552,7 @@ class CollaborationMatchingService:
         return sum(factors) / len(factors)
 
     def _determine_collaboration_tier(self, analytics: Any, match_score: float) -> CollaborationTier:
-        """Determine collaboration tier based on analytics and match score"""
-        if analytics.views > 100000 and match_score > 0.8:
+        """Determine collaboration tier based on analytics and match score"""        if analytics.views > 100000 and match_score > 0.8:
             return CollaborationTier.PREMIUM
         elif analytics.views > 10000 and match_score > 0.6:
             return CollaborationTier.STANDARD
@@ -589,8 +564,7 @@ class CollaborationMatchingService:
         matches: List[CollaborationMatch], 
         criteria: MatchingCriteria
     ) -> List[CollaborationMatch]:
-        """Apply user-specified criteria filters"""
-        filtered_matches = matches
+        """Apply user-specified criteria filters"""        filtered_matches = matches
         
         if criteria.collaboration_types:
             type_names = [t.value for t in criteria.collaboration_types]
@@ -606,8 +580,7 @@ class CollaborationMatchingService:
         return filtered_matches
 
     def _hash_criteria(self, criteria: MatchingCriteria) -> str:
-        """Generate hash for criteria caching"""
-        criteria_str = f"{criteria.content_type}_{criteria.genre}_{criteria.target_audience}_{criteria.min_reach}"
+        """Generate hash for criteria caching"""        criteria_str = f"{criteria.content_type}_{criteria.genre}_{criteria.target_audience}_{criteria.min_reach}"
         return str(hash(criteria_str))
 
     async def create_collaboration_request(
@@ -618,8 +591,7 @@ class CollaborationMatchingService:
         message: str,
         proposal_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create a collaboration request"""
-        try:
+        """Create a collaboration request"""        try:
             request_data = {
                 'creator_id': creator_id,
                 'partner_id': match.partner_id,
@@ -652,8 +624,7 @@ class CollaborationMatchingService:
             raise CollaborationError(f"Failed to create request: {str(e)}")
 
     async def _get_collaboration_next_steps(self, match: CollaborationMatch) -> List[str]:
-        """Get next steps for collaboration process"""
-        if match.partner_type == 'brand':
+        """Get next steps for collaboration process"""        if match.partner_type == 'brand':
             return [
                 "Brand team will review your proposal within 5-7 business days",
                 "Prepare content samples and media kit",
@@ -674,8 +645,7 @@ class CollaborationMatchingService:
 
     # Legacy method for backward compatibility
     def match(self, asset: ContentAsset) -> List[dict]:
-        """Legacy match method - deprecated, use find_collaboration_matches instead"""
-        logger.warning("Using deprecated match method. Switch to find_collaboration_matches")
+        """Legacy match method - deprecated, use find_collaboration_matches instead"""        logger.warning("Using deprecated match method. Switch to find_collaboration_matches")
         
         tags = list((asset.metadata or {}).get("tags", []))
         partners = []

@@ -1,18 +1,14 @@
-"""
-Core Configuration for AI Agents Business Logic
+"""Core Configuration for AI Agents Business Logic
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import os
+"""import os
 from typing import Dict, Any, Optional
 from dataclasses import dataclass
 
 
 @dataclass
 class Settings:
-    """Core settings for the AI agents system"""
-    
+    """Core settings for the AI agents system"""    
     # Database settings
     DATABASE_URL: str = os.getenv("DATABASE_URL", "postgresql://localhost/ainflue")
     
@@ -65,5 +61,4 @@ class Settings:
 settings = Settings()
 
 def get_settings() -> Settings:
-    """Get global settings instance"""
-    return settings
+    """Get global settings instance"""    return settings

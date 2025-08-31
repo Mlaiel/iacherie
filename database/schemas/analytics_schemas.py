@@ -1,5 +1,4 @@
-"""
-Advanced Analytics and Reporting Schemas
+"""Advanced Analytics and Reporting Schemas
 
 Comprehensive Pydantic schemas for advanced analytics, KPIs, reporting,
 and business intelligence in the IA Influencer Agent platform.
@@ -7,9 +6,7 @@ and business intelligence in the IA Influencer Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-
-from datetime import datetime, date, timedelta
+"""from datetime import datetime, date, timedelta
 from decimal import Decimal
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -20,8 +17,7 @@ from pydantic.types import PositiveInt, PositiveFloat
 
 
 class ReportTypeEnum(str, Enum):
-    """Types of reports"""
-    REVENUE = "revenue"
+    """Types of reports"""    REVENUE = "revenue"
     PROTECTION = "protection"
     ENGAGEMENT = "engagement"
     PERFORMANCE = "performance"
@@ -38,8 +34,7 @@ class ReportTypeEnum(str, Enum):
 
 
 class ReportFormatEnum(str, Enum):
-    """Report output formats"""
-    PDF = "pdf"
+    """Report output formats"""    PDF = "pdf"
     EXCEL = "excel"
     CSV = "csv"
     JSON = "json"
@@ -50,8 +45,7 @@ class ReportFormatEnum(str, Enum):
 
 
 class AnalyticsPeriodEnum(str, Enum):
-    """Analytics time periods"""
-    REALTIME = "realtime"
+    """Analytics time periods"""    REALTIME = "realtime"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -62,8 +56,7 @@ class AnalyticsPeriodEnum(str, Enum):
 
 
 class MetricTypeEnum(str, Enum):
-    """Types of metrics"""
-    COUNTER = "counter"
+    """Types of metrics"""    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     RATE = "rate"
@@ -74,8 +67,7 @@ class MetricTypeEnum(str, Enum):
 
 
 class AggregationTypeEnum(str, Enum):
-    """Data aggregation types"""
-    SUM = "sum"
+    """Data aggregation types"""    SUM = "sum"
     AVERAGE = "average"
     COUNT = "count"
     DISTINCT_COUNT = "distinct_count"
@@ -88,8 +80,7 @@ class AggregationTypeEnum(str, Enum):
 
 
 class TrendDirectionEnum(str, Enum):
-    """Trend directions"""
-    UP = "up"
+    """Trend directions"""    UP = "up"
     DOWN = "down"
     STABLE = "stable"
     VOLATILE = "volatile"
@@ -97,8 +88,7 @@ class TrendDirectionEnum(str, Enum):
 
 
 class DashboardTypeEnum(str, Enum):
-    """Types of dashboards"""
-    EXECUTIVE = "executive"
+    """Types of dashboards"""    EXECUTIVE = "executive"
     OPERATIONAL = "operational"
     ANALYTICAL = "analytical"
     STRATEGIC = "strategic"
@@ -107,8 +97,7 @@ class DashboardTypeEnum(str, Enum):
 
 
 class VisualizationTypeEnum(str, Enum):
-    """Types of data visualizations"""
-    LINE_CHART = "line_chart"
+    """Types of data visualizations"""    LINE_CHART = "line_chart"
     BAR_CHART = "bar_chart"
     PIE_CHART = "pie_chart"
     AREA_CHART = "area_chart"
@@ -124,8 +113,7 @@ class VisualizationTypeEnum(str, Enum):
 
 
 class MetricDefinitionSchema(BaseModel):
-    """Schema for metric definitions"""
-    metric_id: str = Field(..., description="Unique metric identifier")
+    """Schema for metric definitions"""    metric_id: str = Field(..., description="Unique metric identifier")
     metric_name: str = Field(..., description="Human-readable metric name")
     metric_type: MetricTypeEnum = Field(..., description="Type of metric")
     
@@ -171,8 +159,7 @@ class MetricDefinitionSchema(BaseModel):
 
 
 class KPISchema(BaseModel):
-    """Schema for Key Performance Indicators"""
-    kpi_id: str = Field(..., description="Unique KPI identifier")
+    """Schema for Key Performance Indicators"""    kpi_id: str = Field(..., description="Unique KPI identifier")
     kpi_name: str = Field(..., description="KPI name")
     metric_id: str = Field(..., description="Associated metric ID")
     
@@ -215,8 +202,7 @@ class KPISchema(BaseModel):
 
 
 class AnalyticsDataPointSchema(BaseModel):
-    """Schema for individual analytics data points"""
-    timestamp: datetime = Field(..., description="Data point timestamp")
+    """Schema for individual analytics data points"""    timestamp: datetime = Field(..., description="Data point timestamp")
     metric_id: str = Field(..., description="Metric identifier")
     value: float = Field(..., description="Metric value")
     
@@ -244,8 +230,7 @@ class AnalyticsDataPointSchema(BaseModel):
 
 
 class ReportParametersSchema(BaseModel):
-    """Schema for report parameters"""
-    # Time range
+    """Schema for report parameters"""    # Time range
     start_date: date = Field(..., description="Report start date")
     end_date: date = Field(..., description="Report end date")
     period_granularity: AnalyticsPeriodEnum = Field(..., description="Data granularity")
@@ -286,8 +271,7 @@ class ReportParametersSchema(BaseModel):
 
 
 class ReportBaseSchema(BaseModel):
-    """Base schema for reports"""
-    report_type: ReportTypeEnum = Field(..., description="Type of report")
+    """Base schema for reports"""    report_type: ReportTypeEnum = Field(..., description="Type of report")
     title: str = Field(..., description="Report title")
     description: Optional[str] = Field(None, description="Report description")
     
@@ -307,8 +291,7 @@ class ReportBaseSchema(BaseModel):
 
 
 class ReportCreateSchema(ReportBaseSchema):
-    """Schema for creating reports"""
-    # Scheduling options
+    """Schema for creating reports"""    # Scheduling options
     scheduled: bool = Field(False, description="Whether report is scheduled")
     schedule_frequency: Optional[AnalyticsPeriodEnum] = Field(None, description="Schedule frequency")
     schedule_time: Optional[str] = Field(None, description="Schedule time (HH:MM)")
@@ -339,8 +322,7 @@ class ReportCreateSchema(ReportBaseSchema):
 
 
 class ReportResponseSchema(ReportBaseSchema):
-    """Schema for report responses"""
-    id: PositiveInt = Field(..., description="Unique report ID")
+    """Schema for report responses"""    id: PositiveInt = Field(..., description="Unique report ID")
     report_reference: str = Field(..., description="Human-readable report reference")
     
     # Generation status
@@ -388,8 +370,7 @@ class ReportResponseSchema(ReportBaseSchema):
 
 
 class DashboardWidgetSchema(BaseModel):
-    """Schema for dashboard widgets"""
-    widget_id: str = Field(..., description="Unique widget identifier")
+    """Schema for dashboard widgets"""    widget_id: str = Field(..., description="Unique widget identifier")
     widget_title: str = Field(..., description="Widget title")
     widget_type: VisualizationTypeEnum = Field(..., description="Widget visualization type")
     
@@ -430,8 +411,7 @@ class DashboardWidgetSchema(BaseModel):
 
 
 class DashboardBaseSchema(BaseModel):
-    """Base schema for dashboards"""
-    dashboard_type: DashboardTypeEnum = Field(..., description="Type of dashboard")
+    """Base schema for dashboards"""    dashboard_type: DashboardTypeEnum = Field(..., description="Type of dashboard")
     title: str = Field(..., description="Dashboard title")
     description: Optional[str] = Field(None, description="Dashboard description")
     
@@ -451,8 +431,7 @@ class DashboardBaseSchema(BaseModel):
 
 
 class DashboardCreateSchema(DashboardBaseSchema):
-    """Schema for creating dashboards"""
-    template_id: Optional[str] = Field(None, description="Dashboard template ID")
+    """Schema for creating dashboards"""    template_id: Optional[str] = Field(None, description="Dashboard template ID")
     clone_from: Optional[PositiveInt] = Field(None, description="Dashboard ID to clone from")
     
     class Config:
@@ -470,8 +449,7 @@ class DashboardCreateSchema(DashboardBaseSchema):
 
 
 class DashboardResponseSchema(DashboardBaseSchema):
-    """Schema for dashboard responses"""
-    id: PositiveInt = Field(..., description="Unique dashboard ID")
+    """Schema for dashboard responses"""    id: PositiveInt = Field(..., description="Unique dashboard ID")
     dashboard_reference: str = Field(..., description="Human-readable dashboard reference")
     
     # Usage statistics
@@ -504,8 +482,7 @@ class DashboardResponseSchema(DashboardBaseSchema):
 
 
 class AnalyticsInsightSchema(BaseModel):
-    """Schema for AI-generated analytics insights"""
-    insight_id: str = Field(..., description="Unique insight identifier")
+    """Schema for AI-generated analytics insights"""    insight_id: str = Field(..., description="Unique insight identifier")
     insight_type: str = Field(..., description="Type of insight")
     title: str = Field(..., description="Insight title")
     description: str = Field(..., description="Detailed insight description")
@@ -549,8 +526,7 @@ class AnalyticsInsightSchema(BaseModel):
 
 
 class AnalyticsExportSchema(BaseModel):
-    """Schema for analytics data exports"""
-    export_id: str = Field(..., description="Unique export identifier")
+    """Schema for analytics data exports"""    export_id: str = Field(..., description="Unique export identifier")
     export_type: str = Field(..., description="Type of export")
     data_scope: Dict[str, Any] = Field(..., description="Data scope and filters")
     

@@ -1,5 +1,4 @@
-"""
-Creator Advisor Module
+"""Creator Advisor Module
 ====================
 
 Intelligent advisory system for content creators.
@@ -7,9 +6,7 @@ Provides strategic guidance, mentorship, and expert recommendations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
@@ -27,8 +24,7 @@ logger = logging.getLogger(__name__)
 
 
 class AdvisoryCategory(Enum):
-    """Advisory categories"""
-    CAREER_DEVELOPMENT = "career_development"
+    """Advisory categories"""    CAREER_DEVELOPMENT = "career_development"
     CONTENT_STRATEGY = "content_strategy"
     BUSINESS_GROWTH = "business_growth"
     CREATIVE_GUIDANCE = "creative_guidance"
@@ -40,16 +36,14 @@ class AdvisoryCategory(Enum):
 
 
 class AdvisoryLevel(Enum):
-    """Advisory depth levels"""
-    QUICK_TIP = "quick_tip"
+    """Advisory depth levels"""    QUICK_TIP = "quick_tip"
     DETAILED_GUIDANCE = "detailed_guidance"
     COMPREHENSIVE_PLAN = "comprehensive_plan"
     MENTORSHIP = "mentorship"
 
 
 class ExpertiseArea(Enum):
-    """Areas of expertise"""
-    MUSIC_PRODUCTION = "music_production"
+    """Areas of expertise"""    MUSIC_PRODUCTION = "music_production"
     VIDEO_CREATION = "video_creation"
     PHOTOGRAPHY = "photography"
     WRITING = "writing"
@@ -62,8 +56,7 @@ class ExpertiseArea(Enum):
 
 @dataclass
 class CreatorProfile:
-    """Comprehensive creator profile"""
-    user_id: str
+    """Comprehensive creator profile"""    user_id: str
     creator_type: str
     experience_level: str  # beginner, intermediate, advanced, expert
     specializations: List[str]
@@ -79,8 +72,7 @@ class CreatorProfile:
 
 @dataclass
 class AdvisoryRequest:
-    """Advisory request structure"""
-    request_id: str
+    """Advisory request structure"""    request_id: str
     user_id: str
     category: AdvisoryCategory
     level: AdvisoryLevel
@@ -93,8 +85,7 @@ class AdvisoryRequest:
 
 @dataclass
 class AdvisoryResponse:
-    """Advisory response structure"""
-    response_id: str
+    """Advisory response structure"""    response_id: str
     request_id: str
     category: AdvisoryCategory
     expert_advice: str
@@ -112,13 +103,11 @@ class AdvisoryResponse:
 
 
 class CreatorAdvisor:
-    """
-    Intelligent Creator Advisory System
+    """    Intelligent Creator Advisory System
     
     Provides personalized guidance, strategic advice, and mentorship
     for content creators across all formats and platforms.
-    """
-    
+    """    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.ai_models = AIModelManager()
@@ -128,8 +117,7 @@ class CreatorAdvisor:
         self._advisory_templates = {}
         
     async def initialize(self) -> None:
-        """Initialize the creator advisor"""
-        try:
+        """Initialize the creator advisor"""        try:
             await self.ai_models.load_advisory_models()
             await self.performance_tracker.initialize()
             await self.prediction_engine.initialize()
@@ -145,8 +133,7 @@ class CreatorAdvisor:
         user_id: str,
         advisory_request: AdvisoryRequest
     ) -> AdvisoryResponse:
-        """
-        Provide strategic advice for creator
+        """        Provide strategic advice for creator
         
         Args:
             user_id: User identifier
@@ -154,8 +141,7 @@ class CreatorAdvisor:
             
         Returns:
             Comprehensive advisory response
-        """
-        try:
+        """        try:
             # Get creator profile
             creator_profile = await self._build_creator_profile(user_id)
             
@@ -236,8 +222,7 @@ class CreatorAdvisor:
         career_goals: Dict[str, Any],
         timeframe: str = "1_year"
     ) -> Dict[str, Any]:
-        """
-        Provide comprehensive career guidance
+        """        Provide comprehensive career guidance
         
         Args:
             user_id: User identifier
@@ -246,8 +231,7 @@ class CreatorAdvisor:
             
         Returns:
             Detailed career guidance plan
-        """
-        try:
+        """        try:
             # Build creator profile
             creator_profile = await self._build_creator_profile(user_id)
             
@@ -298,8 +282,7 @@ class CreatorAdvisor:
         block_description: str,
         context: Optional[Dict] = None
     ) -> Dict[str, Any]:
-        """
-        Analyze and provide solutions for creative blocks
+        """        Analyze and provide solutions for creative blocks
         
         Args:
             user_id: User identifier
@@ -308,8 +291,7 @@ class CreatorAdvisor:
             
         Returns:
             Creative block analysis and solutions
-        """
-        try:
+        """        try:
             # Get creator profile
             creator_profile = await self._build_creator_profile(user_id)
             
@@ -360,8 +342,7 @@ class CreatorAdvisor:
         crisis_description: str,
         urgency_level: str = "high"
     ) -> Dict[str, Any]:
-        """
-        Provide crisis management guidance
+        """        Provide crisis management guidance
         
         Args:
             user_id: User identifier
@@ -370,8 +351,7 @@ class CreatorAdvisor:
             
         Returns:
             Crisis management plan and immediate actions
-        """
-        try:
+        """        try:
             # Get creator profile
             creator_profile = await self._build_creator_profile(user_id)
             
@@ -421,8 +401,7 @@ class CreatorAdvisor:
         financial_goals: Dict[str, Any],
         current_situation: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Provide financial planning advice for creators
+        """        Provide financial planning advice for creators
         
         Args:
             user_id: User identifier
@@ -431,8 +410,7 @@ class CreatorAdvisor:
             
         Returns:
             Financial planning guidance
-        """
-        try:
+        """        try:
             # Get creator profile
             creator_profile = await self._build_creator_profile(user_id)
             
@@ -482,8 +460,7 @@ class CreatorAdvisor:
         collaboration_type: str,
         partner_criteria: Optional[Dict] = None
     ) -> Dict[str, Any]:
-        """
-        Provide collaboration strategy guidance
+        """        Provide collaboration strategy guidance
         
         Args:
             user_id: User identifier
@@ -492,8 +469,7 @@ class CreatorAdvisor:
             
         Returns:
             Collaboration strategy and recommendations
-        """
-        try:
+        """        try:
             # Get creator profile
             creator_profile = await self._build_creator_profile(user_id)
             
@@ -539,8 +515,7 @@ class CreatorAdvisor:
     
     # Private helper methods
     async def _build_creator_profile(self, user_id: str) -> CreatorProfile:
-        """Build comprehensive creator profile"""
-        try:
+        """Build comprehensive creator profile"""        try:
             # Get basic user data
             user_data = await self._get_user_data(user_id)
             
@@ -592,8 +567,7 @@ class CreatorAdvisor:
         request: AdvisoryRequest,
         profile: CreatorProfile
     ) -> Dict[str, Any]:
-        """Analyze advisory request for context and requirements"""
-        try:
+        """Analyze advisory request for context and requirements"""        try:
             # Analyze request complexity
             complexity = await self._assess_request_complexity(request)
             
@@ -625,8 +599,7 @@ class CreatorAdvisor:
         profile: CreatorProfile,
         analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate expert advice using AI models"""
-        try:
+        """Generate expert advice using AI models"""        try:
             # Prepare advice generation context
             advice_context = {
                 "request_details": {
@@ -672,8 +645,7 @@ class CreatorAdvisor:
         advice: Dict[str, Any],
         profile: CreatorProfile
     ) -> List[Dict[str, Any]]:
-        """Create detailed action plan"""
-        try:
+        """Create detailed action plan"""        try:
             action_plan = []
             
             # Immediate actions (0-7 days)
@@ -709,8 +681,7 @@ class CreatorAdvisor:
     
     # Additional helper methods for specific advisory functions
     async def _load_expertise_database(self) -> None:
-        """Load expertise database with knowledge areas"""
-        self._expertise_database = {
+        """Load expertise database with knowledge areas"""        self._expertise_database = {
             ExpertiseArea.MUSIC_PRODUCTION: {
                 "knowledge_areas": ["recording", "mixing", "mastering", "composition"],
                 "tools": ["DAWs", "plugins", "hardware"],
@@ -729,8 +700,7 @@ class CreatorAdvisor:
         }
     
     async def _load_advisory_templates(self) -> None:
-        """Load advisory response templates"""
-        self._advisory_templates = {
+        """Load advisory response templates"""        self._advisory_templates = {
             AdvisoryCategory.CAREER_DEVELOPMENT: {
                 "structure": ["assessment", "roadmap", "milestones", "resources"],
                 "key_areas": ["skills", "networking", "opportunities", "growth"]
@@ -747,8 +717,7 @@ class CreatorAdvisor:
     
     # Placeholder implementations for various analysis methods
     async def _get_user_data(self, user_id: str) -> Dict[str, Any]:
-        """Get basic user data"""
-        return {
+        """Get basic user data"""        return {
             "creator_type": "musician",
             "specializations": ["electronic_music", "live_performance"],
             "goals": [{"type": "growth", "target": "10k_followers", "deadline": "6_months"}],
@@ -757,8 +726,7 @@ class CreatorAdvisor:
         }
     
     async def _determine_experience_level(self, user_id: str, performance_data: Dict) -> str:
-        """Determine creator experience level"""
-        # Basic heuristic - in production would use more sophisticated analysis
+        """Determine creator experience level"""        # Basic heuristic - in production would use more sophisticated analysis
         total_content = performance_data.get("total_content", 0)
         avg_engagement = performance_data.get("avg_engagement", 0)
         
@@ -772,8 +740,7 @@ class CreatorAdvisor:
             return "beginner"
     
     async def _identify_current_challenges(self, user_id: str, performance_data: Dict) -> List[Dict]:
-        """Identify current creator challenges"""
-        challenges = []
+        """Identify current creator challenges"""        challenges = []
         
         if performance_data.get("engagement_rate", 0) < 0.03:
             challenges.append({
@@ -792,8 +759,7 @@ class CreatorAdvisor:
         return challenges
     
     async def _analyze_creator_strengths(self, user_id: str, performance_data: Dict) -> Dict[str, List]:
-        """Analyze creator strengths and improvement areas"""
-        strengths = []
+        """Analyze creator strengths and improvement areas"""        strengths = []
         improvement_areas = []
         
         # Analyze performance metrics to identify strengths and weaknesses

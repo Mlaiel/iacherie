@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Notification Alerts Deployment Manager
+"""Notification Alerts Deployment Manager
 Enterprise-grade deployment system for comprehensive notification system,
 real-time alerts, multi-channel communication, and intelligent notification routing.
 
@@ -24,9 +23,7 @@ and international copyright laws.
 
 Project: IA Influencer Agent Platform - Notification & Alert System
 Copyright: Fahed Mlaiel - All rights reserved
-"""
-
-import os
+"""import os
 import sys
 import time
 import json
@@ -73,8 +70,7 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationChannel(Enum):
-    """Types of notification channels"""
-    EMAIL = "email"
+    """Types of notification channels"""    EMAIL = "email"
     SMS = "sms"
     PUSH_NOTIFICATION = "push_notification"
     WEBSOCKET = "websocket"
@@ -90,8 +86,7 @@ class NotificationChannel(Enum):
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
-    INFO = "info"
+    """Alert severity levels"""    INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -100,8 +95,7 @@ class AlertSeverity(Enum):
 
 
 class NotificationPriority(Enum):
-    """Notification priority levels"""
-    LOW = "low"
+    """Notification priority levels"""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
@@ -109,8 +103,7 @@ class NotificationPriority(Enum):
 
 
 class NotificationCategory(Enum):
-    """Categories of notifications"""
-    SECURITY_ALERT = "security_alert"
+    """Categories of notifications"""    SECURITY_ALERT = "security_alert"
     CONTENT_PROTECTION = "content_protection"
     REVENUE_UPDATE = "revenue_update"
     SYSTEM_STATUS = "system_status"
@@ -125,8 +118,7 @@ class NotificationCategory(Enum):
 
 
 class DeliveryStatus(Enum):
-    """Notification delivery status"""
-    PENDING = "pending"
+    """Notification delivery status"""    PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
     FAILED = "failed"
@@ -137,8 +129,7 @@ class DeliveryStatus(Enum):
 
 
 class TemplateType(Enum):
-    """Notification template types"""
-    HTML_EMAIL = "html_email"
+    """Notification template types"""    HTML_EMAIL = "html_email"
     PLAIN_TEXT = "plain_text"
     SMS_TEXT = "sms_text"
     PUSH_NOTIFICATION = "push_notification"
@@ -149,8 +140,7 @@ class TemplateType(Enum):
 
 @dataclass
 class NotificationTemplate:
-    """Template for notifications"""
-    template_id: str
+    """Template for notifications"""    template_id: str
     template_name: str
     template_type: TemplateType
     category: NotificationCategory
@@ -180,8 +170,7 @@ class NotificationTemplate:
 
 @dataclass
 class NotificationRule:
-    """Rules for notification routing and delivery"""
-    rule_id: str
+    """Rules for notification routing and delivery"""    rule_id: str
     rule_name: str
     conditions: Dict[str, Any]
     channels: List[NotificationChannel]
@@ -213,8 +202,7 @@ class NotificationRule:
 
 @dataclass
 class NotificationRequest:
-    """Request to send notification"""
-    request_id: str
+    """Request to send notification"""    request_id: str
     user_id: str
     template_id: str
     category: NotificationCategory
@@ -244,8 +232,7 @@ class NotificationRequest:
 
 @dataclass
 class DeploymentConfig:
-    """Notification system deployment configuration"""
-    replicas: int = 3
+    """Notification system deployment configuration"""    replicas: int = 3
     resource_limits: Dict[str, str] = field(default_factory=lambda: {
         'cpu': '1000m',
         'memory': '2Gi',
@@ -284,14 +271,11 @@ class DeploymentConfig:
 
 
 class NotificationAlertsDeploymentManager:
-    """
-    Enterprise Notification Alerts Deployment Manager
+    """    Enterprise Notification Alerts Deployment Manager
     Handles deployment and management of comprehensive notification and alerting systems
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize the Notification Alerts Deployment Manager"""
-        self.config_path = config_path or os.getenv('NOTIFICATIONS_CONFIG_PATH', '/etc/notifications/config.yaml')
+        """Initialize the Notification Alerts Deployment Manager"""        self.config_path = config_path or os.getenv('NOTIFICATIONS_CONFIG_PATH', '/etc/notifications/config.yaml')
         self.templates: Dict[str, NotificationTemplate] = {}
         self.rules: Dict[str, NotificationRule] = {}
         self.deployments: Dict[str, DeploymentConfig] = {}
@@ -310,8 +294,7 @@ class NotificationAlertsDeploymentManager:
         logger.info("Notification Alerts Deployment Manager initialized successfully")
     
     def _init_kubernetes_client(self):
-        """Initialize Kubernetes client"""
-        try:
+        """Initialize Kubernetes client"""        try:
             config.load_incluster_config()
         except:
             try:
@@ -329,8 +312,7 @@ class NotificationAlertsDeploymentManager:
         logger.info("Kubernetes client initialized")
     
     def _init_docker_client(self):
-        """Initialize Docker client"""
-        try:
+        """Initialize Docker client"""        try:
             self.docker_client = docker.from_env()
             logger.info("Docker client initialized")
         except Exception as e:
@@ -338,8 +320,7 @@ class NotificationAlertsDeploymentManager:
             self.docker_client = None
     
     def _init_database_client(self):
-        """Initialize database client"""
-        try:
+        """Initialize database client"""        try:
             db_url = os.getenv('DATABASE_URL', 'postgresql://user:pass@localhost:5432/ia_influencer')
             self.db_engine = create_engine(db_url)
             logger.info("Database client initialized")
@@ -348,8 +329,7 @@ class NotificationAlertsDeploymentManager:
             self.db_engine = None
     
     def _init_redis_client(self):
-        """Initialize Redis client for caching and rate limiting"""
-        try:
+        """Initialize Redis client for caching and rate limiting"""        try:
             redis_host = os.getenv('REDIS_HOST', 'localhost')
             redis_port = int(os.getenv('REDIS_PORT', '6379'))
             redis_password = os.getenv('REDIS_PASSWORD')
@@ -367,8 +347,7 @@ class NotificationAlertsDeploymentManager:
             self.redis_client = None
     
     def _init_message_queue_client(self):
-        """Initialize message queue for notification processing"""
-        try:
+        """Initialize message queue for notification processing"""        try:
             # RabbitMQ or similar message queue
             rabbitmq_url = os.getenv('RABBITMQ_URL', 'amqp://guest:guest@localhost:5672/')
             # Implementation would initialize actual RabbitMQ client
@@ -379,8 +358,7 @@ class NotificationAlertsDeploymentManager:
             self.message_queue_client = None
     
     def _init_notification_clients(self):
-        """Initialize various notification service clients"""
-        # Email client (SMTP)
+        """Initialize various notification service clients"""        # Email client (SMTP)
         try:
             self.smtp_host = os.getenv('SMTP_HOST', 'localhost')
             self.smtp_port = int(os.getenv('SMTP_PORT', '587'))
@@ -437,8 +415,7 @@ class NotificationAlertsDeploymentManager:
             self.firebase_messaging = None
     
     def _load_config(self):
-        """Load notification configurations"""
-        if os.path.exists(self.config_path):
+        """Load notification configurations"""        if os.path.exists(self.config_path):
             try:
                 with open(self.config_path, 'r') as f:
                     config_data = yaml.safe_load(f)
@@ -483,8 +460,7 @@ class NotificationAlertsDeploymentManager:
                 logger.error(f"Failed to load configuration: {e}")
     
     def deploy_notification_system(self, deployment_config: DeploymentConfig) -> bool:
-        """Deploy complete notification and alerting system"""
-        if not self.k8s_client:
+        """Deploy complete notification and alerting system"""        if not self.k8s_client:
             logger.error("Kubernetes client not available")
             return False
         
@@ -538,8 +514,7 @@ class NotificationAlertsDeploymentManager:
             return False
     
     def _create_notification_configmaps(self):
-        """Create ConfigMaps for notification templates and rules"""
-        # Templates ConfigMap
+        """Create ConfigMaps for notification templates and rules"""        # Templates ConfigMap
         templates_data = {}
         for template_id, template in self.templates.items():
             templates_data[f"{template_id}.yaml"] = yaml.dump(template.to_dict())
@@ -605,8 +580,7 @@ class NotificationAlertsDeploymentManager:
         logger.info("Created notification ConfigMaps")
     
     def _create_notification_secrets(self):
-        """Create secrets for notification service credentials"""
-        secrets_data = {
+        """Create secrets for notification service credentials"""        secrets_data = {
             "database-url": os.getenv('DATABASE_URL', ''),
             "redis-password": os.getenv('REDIS_PASSWORD', ''),
             "smtp-username": self.smtp_username,
@@ -659,8 +633,7 @@ class NotificationAlertsDeploymentManager:
                 logger.info("Updated notification secrets")
     
     def _create_notification_storage(self, deployment_config: DeploymentConfig):
-        """Create PersistentVolumeClaims for notification storage"""
-        storage_configs = [
+        """Create PersistentVolumeClaims for notification storage"""        storage_configs = [
             {
                 "name": "notification-logs-storage",
                 "size": deployment_config.resource_limits['storage'],
@@ -713,8 +686,7 @@ class NotificationAlertsDeploymentManager:
                     raise
     
     def _deploy_redis_cache(self):
-        """Deploy Redis for caching and rate limiting"""
-        redis_deployment = {
+        """Deploy Redis for caching and rate limiting"""        redis_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -793,8 +765,7 @@ class NotificationAlertsDeploymentManager:
         logger.info("Deployed Redis cache for notification system")
     
     def _deploy_message_queue(self):
-        """Deploy RabbitMQ message queue"""
-        rabbitmq_deployment = {
+        """Deploy RabbitMQ message queue"""        rabbitmq_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -901,8 +872,7 @@ class NotificationAlertsDeploymentManager:
         logger.info("Deployed RabbitMQ message queue")
     
     def _deploy_notification_core_services(self, deployment_config: DeploymentConfig):
-        """Deploy core notification services"""
-        services = [
+        """Deploy core notification services"""        services = [
             {
                 "name": "notification-api",
                 "image": "ia-influencer/notification-api:latest",
@@ -1051,8 +1021,7 @@ class NotificationAlertsDeploymentManager:
             logger.info(f"Deployed notification service: {service_config['name']}")
     
     def _deploy_email_service(self, deployment_config: DeploymentConfig):
-        """Deploy email notification service"""
-        email_deployment = {
+        """Deploy email notification service"""        email_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -1103,8 +1072,7 @@ class NotificationAlertsDeploymentManager:
         logger.info("Deployed email notification service")
     
     def _deploy_sms_service(self, deployment_config: DeploymentConfig):
-        """Deploy SMS notification service"""
-        sms_deployment = {
+        """Deploy SMS notification service"""        sms_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -1155,8 +1123,7 @@ class NotificationAlertsDeploymentManager:
         logger.info("Deployed SMS notification service")
     
     def _deploy_push_notification_service(self, deployment_config: DeploymentConfig):
-        """Deploy push notification service"""
-        push_deployment = {
+        """Deploy push notification service"""        push_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -1206,8 +1173,7 @@ class NotificationAlertsDeploymentManager:
         logger.info("Deployed push notification service")
     
     def _deploy_websocket_service(self, deployment_config: DeploymentConfig):
-        """Deploy WebSocket service for real-time notifications"""
-        websocket_deployment = {
+        """Deploy WebSocket service for real-time notifications"""        websocket_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -1257,8 +1223,7 @@ class NotificationAlertsDeploymentManager:
         logger.info("Deployed WebSocket notification service")
     
     def _deploy_notification_gateway(self, deployment_config: DeploymentConfig):
-        """Deploy notification gateway for unified API"""
-        gateway_deployment = {
+        """Deploy notification gateway for unified API"""        gateway_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -1308,8 +1273,7 @@ class NotificationAlertsDeploymentManager:
         logger.info("Deployed notification gateway")
     
     def _create_notification_services(self):
-        """Create services for notification system components"""
-        services = [
+        """Create services for notification system components"""        services = [
             {"name": "notification-email", "port": 8083},
             {"name": "notification-sms", "port": 8084},
             {"name": "notification-push", "port": 8085},
@@ -1349,14 +1313,12 @@ class NotificationAlertsDeploymentManager:
                     logger.info(f"Service {service_config['name']} already exists")
     
     def _deploy_notification_monitoring(self):
-        """Deploy monitoring for notification system"""
-        # This would deploy metrics collection, alerting, etc.
+        """Deploy monitoring for notification system"""        # This would deploy metrics collection, alerting, etc.
         # Implementation depends on existing monitoring infrastructure
         logger.info("Notification monitoring deployment completed")
     
     def send_notification(self, notification_request: NotificationRequest) -> Dict[str, Any]:
-        """Send notification through the system"""
-        try:
+        """Send notification through the system"""        try:
             # Validate request
             if notification_request.template_id not in self.templates:
                 raise ValueError(f"Template not found: {notification_request.template_id}")
@@ -1399,8 +1361,7 @@ class NotificationAlertsDeploymentManager:
             }
     
     def _apply_notification_rules(self, request: NotificationRequest, template: NotificationTemplate) -> List[NotificationChannel]:
-        """Apply notification rules to determine effective channels"""
-        effective_channels = request.channels.copy()
+        """Apply notification rules to determine effective channels"""        effective_channels = request.channels.copy()
         
         # Apply rate limiting
         for channel in effective_channels:
@@ -1416,8 +1377,7 @@ class NotificationAlertsDeploymentManager:
         return effective_channels
     
     def _is_rate_limited(self, user_id: str, channel: NotificationChannel) -> bool:
-        """Check if user is rate limited for specific channel"""
-        if not self.redis_client:
+        """Check if user is rate limited for specific channel"""        if not self.redis_client:
             return False
         
         try:
@@ -1450,8 +1410,7 @@ class NotificationAlertsDeploymentManager:
             return False
     
     def _create_namespace(self, namespace: str):
-        """Create Kubernetes namespace if it doesn't exist"""
-        try:
+        """Create Kubernetes namespace if it doesn't exist"""        try:
             self.core_v1.read_namespace(name=namespace)
         except ApiException as e:
             if e.status == 404:
@@ -1464,8 +1423,7 @@ class NotificationAlertsDeploymentManager:
                 logger.info(f"Created namespace: {namespace}")
     
     def _create_or_update_configmap(self, configmap_manifest: Dict[str, Any]):
-        """Create or update ConfigMap"""
-        try:
+        """Create or update ConfigMap"""        try:
             self.core_v1.read_namespaced_config_map(
                 name=configmap_manifest['metadata']['name'],
                 namespace=configmap_manifest['metadata']['namespace']
@@ -1485,8 +1443,7 @@ class NotificationAlertsDeploymentManager:
                 )
     
     def health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive health check"""
-        health_status = {
+        """Perform comprehensive health check"""        health_status = {
             'timestamp': datetime.now().isoformat(),
             'overall_status': 'healthy',
             'components': {
@@ -1518,8 +1475,7 @@ class NotificationAlertsDeploymentManager:
 
 
 def main():
-    """Main function for testing the Notification Alerts Deployment Manager"""
-    # Initialize manager
+    """Main function for testing the Notification Alerts Deployment Manager"""    # Initialize manager
     manager = NotificationAlertsDeploymentManager()
     
     # Example configurations

@@ -1,5 +1,4 @@
-"""
-Edge Computing Deployment Manager
+"""Edge Computing Deployment Manager
 Enterprise edge computing infrastructure for AI workloads
 
 This module provides comprehensive edge computing deployment capabilities
@@ -8,9 +7,7 @@ and distributed edge nodes with real-time processing capabilities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -31,8 +28,7 @@ logger = logging.getLogger(__name__)
 
 
 class EdgePlatform(Enum):
-    """Supported edge platforms"""
-    KUBERNETES_EDGE = "kubernetes_edge"
+    """Supported edge platforms"""    KUBERNETES_EDGE = "kubernetes_edge"
     DOCKER_SWARM = "docker_swarm"
     IOT_CORE = "iot_core"
     MOBILE_EDGE = "mobile_edge"
@@ -45,8 +41,7 @@ class EdgePlatform(Enum):
 
 
 class EdgeRuntime(Enum):
-    """Edge runtime environments"""
-    ONNX_RUNTIME = "onnx_runtime"
+    """Edge runtime environments"""    ONNX_RUNTIME = "onnx_runtime"
     TENSORFLOW_LITE = "tensorflow_lite"
     PYTORCH_MOBILE = "pytorch_mobile"
     NVIDIA_TENSORRT = "nvidia_tensorrt"
@@ -57,8 +52,7 @@ class EdgeRuntime(Enum):
 
 
 class EdgeOptimization(Enum):
-    """Edge optimization techniques"""
-    QUANTIZATION_INT8 = "quantization_int8"
+    """Edge optimization techniques"""    QUANTIZATION_INT8 = "quantization_int8"
     QUANTIZATION_FP16 = "quantization_fp16"
     PRUNING = "pruning"
     KNOWLEDGE_DISTILLATION = "knowledge_distillation"
@@ -70,8 +64,7 @@ class EdgeOptimization(Enum):
 
 @dataclass
 class EdgeDeploymentConfig:
-    """Edge deployment configuration"""
-    deployment_name: str
+    """Edge deployment configuration"""    deployment_name: str
     platform: EdgePlatform
     runtime: EdgeRuntime
     optimization: List[EdgeOptimization]
@@ -99,8 +92,7 @@ class EdgeDeploymentConfig:
 
 
 class EdgeComputingDeployment:
-    """
-    Enterprise edge computing deployment system
+    """    Enterprise edge computing deployment system
     
     Provides comprehensive edge AI deployment with:
     - Multi-platform edge device support
@@ -110,16 +102,13 @@ class EdgeComputingDeployment:
     - Fault tolerance and auto-failover
     - Privacy-preserving edge computing
     - Distributed edge orchestration
-    """
-    
+    """    
     def __init__(self, namespace: str = "ia-influencer-edge"):
-        """
-        Initialize edge computing deployment
+        """        Initialize edge computing deployment
         
         Args:
             namespace: Kubernetes namespace for edge infrastructure
-        """
-        self.namespace = namespace
+        """        self.namespace = namespace
         self.edge_clusters = {}
         self.deployed_models = {}
         self.edge_nodes = {}
@@ -129,8 +118,7 @@ class EdgeComputingDeployment:
         self._initialize_clients()
     
     def _initialize_clients(self) -> None:
-        """Initialize Kubernetes, Docker, and edge clients"""
-        try:
+        """Initialize Kubernetes, Docker, and edge clients"""        try:
             # Kubernetes client for edge orchestration
             config.load_incluster_config()
             self.k8s_apps_v1 = client.AppsV1Api()
@@ -158,13 +146,11 @@ class EdgeComputingDeployment:
             raise
     
     async def deploy_edge_infrastructure(self) -> Dict[str, Any]:
-        """
-        Deploy complete edge computing infrastructure
+        """        Deploy complete edge computing infrastructure
         
         Returns:
             Edge infrastructure deployment summary
-        """
-        try:
+        """        try:
             self.status = "deploying_edge_infrastructure"
             logger.info("Deploying edge computing infrastructure")
             
@@ -231,16 +217,14 @@ class EdgeComputingDeployment:
             raise
     
     async def deploy_edge_model(self, config: EdgeDeploymentConfig) -> Dict[str, Any]:
-        """
-        Deploy AI model to edge infrastructure
+        """        Deploy AI model to edge infrastructure
         
         Args:
             config: Edge deployment configuration
             
         Returns:
             Edge model deployment result
-        """
-        try:
+        """        try:
             deployment_id = f"{config.deployment_name}-{int(time.time())}"
             logger.info(f"Deploying edge model: {deployment_id}")
             
@@ -306,8 +290,7 @@ class EdgeComputingDeployment:
             raise
     
     async def _ensure_edge_namespace(self) -> None:
-        """Create edge namespace"""
-        try:
+        """Create edge namespace"""        try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
             if e.status == 404:
@@ -326,8 +309,7 @@ class EdgeComputingDeployment:
                 logger.info(f"Created edge namespace: {self.namespace}")
     
     async def _deploy_edge_orchestrator(self) -> Dict[str, Any]:
-        """Deploy edge orchestration layer"""
-        orchestrator = {
+        """Deploy edge orchestration layer"""        orchestrator = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -376,8 +358,7 @@ class EdgeComputingDeployment:
         }
     
     async def _deploy_device_manager(self) -> Dict[str, Any]:
-        """Deploy edge device management system"""
-        device_manager = {
+        """Deploy edge device management system"""        device_manager = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -426,8 +407,7 @@ class EdgeComputingDeployment:
         }
     
     async def _deploy_edge_model_registry(self) -> Dict[str, Any]:
-        """Deploy edge-optimized model registry"""
-        edge_registry = {
+        """Deploy edge-optimized model registry"""        edge_registry = {
             "apiVersion": "apps/v1",
             "kind": "StatefulSet",
             "metadata": {
@@ -488,8 +468,7 @@ class EdgeComputingDeployment:
         }
     
     async def _deploy_edge_monitoring(self) -> Dict[str, Any]:
-        """Deploy edge monitoring and analytics"""
-        edge_monitor = {
+        """Deploy edge monitoring and analytics"""        edge_monitor = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -538,8 +517,7 @@ class EdgeComputingDeployment:
         }
     
     async def _deploy_edge_security(self) -> Dict[str, Any]:
-        """Deploy edge security infrastructure"""
-        edge_security = {
+        """Deploy edge security infrastructure"""        edge_security = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -588,8 +566,7 @@ class EdgeComputingDeployment:
         }
     
     async def _deploy_edge_sync(self) -> Dict[str, Any]:
-        """Deploy edge data synchronization system"""
-        edge_sync = {
+        """Deploy edge data synchronization system"""        edge_sync = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -638,8 +615,7 @@ class EdgeComputingDeployment:
         }
     
     async def _deploy_edge_runtimes(self) -> Dict[str, Any]:
-        """Deploy edge-specific AI runtimes"""
-        runtimes_result = {}
+        """Deploy edge-specific AI runtimes"""        runtimes_result = {}
         
         # ONNX Runtime for edge
         onnx_runtime = await self._deploy_onnx_edge_runtime()
@@ -656,8 +632,7 @@ class EdgeComputingDeployment:
         return runtimes_result
     
     async def _deploy_onnx_edge_runtime(self) -> Dict[str, Any]:
-        """Deploy ONNX Runtime for edge"""
-        onnx_edge = {
+        """Deploy ONNX Runtime for edge"""        onnx_edge = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -705,8 +680,7 @@ class EdgeComputingDeployment:
         }
     
     async def _deploy_tflite_edge_runtime(self) -> Dict[str, Any]:
-        """Deploy TensorFlow Lite runtime for edge"""
-        tflite_edge = {
+        """Deploy TensorFlow Lite runtime for edge"""        tflite_edge = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -754,8 +728,7 @@ class EdgeComputingDeployment:
         }
     
     async def _deploy_pytorch_mobile_runtime(self) -> Dict[str, Any]:
-        """Deploy PyTorch Mobile runtime for edge"""
-        pytorch_mobile = {
+        """Deploy PyTorch Mobile runtime for edge"""        pytorch_mobile = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -803,8 +776,7 @@ class EdgeComputingDeployment:
         }
     
     async def _configure_edge_networking(self) -> None:
-        """Configure networking for edge infrastructure"""
-        # Edge network policy for security
+        """Configure networking for edge infrastructure"""        # Edge network policy for security
         network_policy = {
             "apiVersion": "networking.k8s.io/v1",
             "kind": "NetworkPolicy",
@@ -840,8 +812,7 @@ class EdgeComputingDeployment:
         logger.info("Configured edge networking policies")
     
     async def _validate_edge_infrastructure(self) -> bool:
-        """Validate edge infrastructure deployment"""
-        try:
+        """Validate edge infrastructure deployment"""        try:
             # Check essential edge services
             essential_services = [
                 "edge-orchestrator", "edge-device-manager", "edge-model-registry",
@@ -877,8 +848,7 @@ class EdgeComputingDeployment:
             return False
     
     async def _validate_edge_config(self, config: EdgeDeploymentConfig) -> None:
-        """Validate edge deployment configuration"""
-        if not config.deployment_name:
+        """Validate edge deployment configuration"""        if not config.deployment_name:
             raise ValueError("Deployment name is required")
         
         if config.target_latency_ms <= 0:
@@ -893,8 +863,7 @@ class EdgeComputingDeployment:
         logger.info(f"Edge config validation passed for {config.deployment_name}")
     
     async def _optimize_model_for_edge(self, config: EdgeDeploymentConfig) -> Dict[str, Any]:
-        """Optimize model for edge deployment"""
-        optimization_result = {
+        """Optimize model for edge deployment"""        optimization_result = {
             "original_size_mb": 0,
             "optimized_size_mb": 0,
             "compression_ratio": 0,
@@ -923,8 +892,7 @@ class EdgeComputingDeployment:
         return optimization_result
     
     async def _create_edge_deployment_spec(self, config: EdgeDeploymentConfig, optimized_model: Dict[str, Any]) -> Dict[str, Any]:
-        """Create edge deployment specification"""
-        deployment_spec = {
+        """Create edge deployment specification"""        deployment_spec = {
             "deployment_name": config.deployment_name,
             "platform": config.platform.value,
             "runtime": config.runtime.value,
@@ -958,8 +926,7 @@ class EdgeComputingDeployment:
         return deployment_spec
     
     async def _deploy_kubernetes_edge(self, config: EdgeDeploymentConfig, edge_spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy to Kubernetes edge clusters"""
-        edge_deployment = {
+        """Deploy to Kubernetes edge clusters"""        edge_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -1018,8 +985,7 @@ class EdgeComputingDeployment:
         }
     
     async def _deploy_iot_core(self, config: EdgeDeploymentConfig, edge_spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy to IoT Core infrastructure"""
-        # IoT Core deployment logic
+        """Deploy to IoT Core infrastructure"""        # IoT Core deployment logic
         logger.info(f"Deploying to IoT Core: {config.deployment_name}")
         
         return {
@@ -1029,8 +995,7 @@ class EdgeComputingDeployment:
         }
     
     async def _deploy_mobile_edge(self, config: EdgeDeploymentConfig, edge_spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy to mobile edge infrastructure"""
-        # Mobile edge deployment logic
+        """Deploy to mobile edge infrastructure"""        # Mobile edge deployment logic
         logger.info(f"Deploying to mobile edge: {config.deployment_name}")
         
         return {
@@ -1040,8 +1005,7 @@ class EdgeComputingDeployment:
         }
     
     async def _deploy_cdn_edge(self, config: EdgeDeploymentConfig, edge_spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy to CDN edge locations"""
-        # CDN edge deployment logic
+        """Deploy to CDN edge locations"""        # CDN edge deployment logic
         logger.info(f"Deploying to CDN edge: {config.deployment_name}")
         
         return {
@@ -1051,8 +1015,7 @@ class EdgeComputingDeployment:
         }
     
     async def _deploy_generic_edge(self, config: EdgeDeploymentConfig, edge_spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy to generic edge infrastructure"""
-        # Generic edge deployment logic
+        """Deploy to generic edge infrastructure"""        # Generic edge deployment logic
         logger.info(f"Deploying to generic edge: {config.deployment_name}")
         
         return {
@@ -1062,8 +1025,7 @@ class EdgeComputingDeployment:
         }
     
     async def _setup_edge_monitoring(self, config: EdgeDeploymentConfig, deployment_id: str) -> None:
-        """Set up monitoring for edge deployment"""
-        monitoring_config = {
+        """Set up monitoring for edge deployment"""        monitoring_config = {
             "deployment_id": deployment_id,
             "metrics": ["latency", "throughput", "battery_level", "temperature", "bandwidth"],
             "alerting": True,
@@ -1079,8 +1041,7 @@ class EdgeComputingDeployment:
         logger.info(f"Configured edge monitoring for {deployment_id}")
     
     async def _setup_edge_analytics(self, config: EdgeDeploymentConfig, deployment_id: str) -> None:
-        """Set up analytics for edge deployment"""
-        analytics_config = {
+        """Set up analytics for edge deployment"""        analytics_config = {
             "deployment_id": deployment_id,
             "local_analytics": True,
             "privacy_preserving": config.privacy_preserving,
@@ -1096,8 +1057,7 @@ class EdgeComputingDeployment:
         logger.info(f"Configured edge analytics for {deployment_id}")
     
     async def _configure_edge_sync(self, config: EdgeDeploymentConfig, deployment_id: str) -> None:
-        """Configure edge data synchronization"""
-        sync_config = {
+        """Configure edge data synchronization"""        sync_config = {
             "deployment_id": deployment_id,
             "sync_interval": config.data_sync_interval,
             "compression": True,
@@ -1114,8 +1074,7 @@ class EdgeComputingDeployment:
         logger.info(f"Configured edge sync for {deployment_id}")
     
     async def get_edge_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive edge computing metrics"""
-        try:
+        """Get comprehensive edge computing metrics"""        try:
             metrics = {
                 "infrastructure_status": self.status,
                 "deployed_models": len(self.deployed_models),
@@ -1148,8 +1107,7 @@ class EdgeComputingDeployment:
             return {"error": str(e)}
     
     async def _cleanup_failed_edge_infrastructure(self) -> None:
-        """Clean up failed edge infrastructure deployment"""
-        try:
+        """Clean up failed edge infrastructure deployment"""        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
             logger.info("Cleaned up failed edge infrastructure")
@@ -1157,8 +1115,7 @@ class EdgeComputingDeployment:
             logger.error(f"Edge infrastructure cleanup failed: {e}")
     
     async def _cleanup_failed_edge_deployment(self, deployment_name: str) -> None:
-        """Clean up failed edge deployment"""
-        try:
+        """Clean up failed edge deployment"""        try:
             # Delete edge deployment
             try:
                 self.k8s_apps_v1.delete_namespaced_deployment(
@@ -1174,8 +1131,7 @@ class EdgeComputingDeployment:
             logger.error(f"Edge deployment cleanup failed: {e}")
     
     async def cleanup(self) -> None:
-        """Clean up entire edge computing infrastructure"""
-        try:
+        """Clean up entire edge computing infrastructure"""        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
             

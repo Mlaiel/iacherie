@@ -1,5 +1,4 @@
-"""
-Advanced FAISS Backend Implementation for Vector Database Management
+"""Advanced FAISS Backend Implementation for Vector Database Management
 ==================================================================
 
 High-performance vector similarity search using Facebook AI Similarity Search (FAISS).
@@ -10,9 +9,7 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
 ATTENTION: Ce code est protégé par les droits d'auteur.
 Toute reproduction, distribution ou modification non autorisée est strictement interdite.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import pickle
@@ -38,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class FAISSIndexConfig:
-    """Configuration for FAISS index creation."""
-    name: str
+    """Configuration for FAISS index creation."""    name: str
     dimension: int
     metric: str = "cosine"
     index_type: str = "flat"  # flat, ivf, hnsw, pq
@@ -53,16 +49,14 @@ class FAISSIndexConfig:
 
 
 class FAISSIndexManager:
-    """
-    Advanced FAISS index manager with multiple index types and optimizations.
+    """    Advanced FAISS index manager with multiple index types and optimizations.
     
     Supports:
     - Flat indexes for exact search
     - IVF indexes for large-scale approximate search
     - HNSW indexes for ultra-fast approximate search
     - PQ indexes for memory-efficient storage
-    """
-    
+    """    
     def __init__(self, config: FAISSIndexConfig):
         self.config = config
         self.index = None
@@ -81,8 +75,7 @@ class FAISSIndexManager:
         self._create_index()
     
     def _initialize_gpu_resources(self):
-        """Initialize GPU resources for FAISS."""
-        try:
+        """Initialize GPU resources for FAISS."""        try:
             if self.config.gpu_ids:
                 # Multi-GPU setup
                 self.gpu_resources = [faiss.StandardGpuResources() 
@@ -98,8 +91,7 @@ class FAISSIndexManager:
             self.use_gpu = False
     
     def _create_index(self):
-        """Create FAISS index based on configuration."""
-        try:
+        """Create FAISS index based on configuration."""        try:
             dimension = self.config.dimension
             
             if self.config.index_type == "flat":
@@ -140,8 +132,7 @@ class FAISSIndexManager:
             raise
     
     def _move_to_gpu(self, index):
-        """Move index to GPU."""
-        try:
+        """Move index to GPU."""        try:
             if isinstance(self.gpu_resources, list):
                 # Multi-GPU setup (not implemented in this version)
                 gpu_index = faiss.index_cpu_to_gpu(self.gpu_resources[0], 0, index)
@@ -157,8 +148,7 @@ class FAISSIndexManager:
             return index
     
     def train_index(self, training_vectors: np.ndarray) -> bool:
-        """Train index if required (IVF, PQ)."""
-        try:
+        """Train index if required (IVF, PQ)."""        try:
             with self.lock:
                 if hasattr(self.index, 'is_trained') and not self.index.is_trained:
                     if self.config.metric == "cosine":
@@ -176,8 +166,7 @@ class FAISSIndexManager:
     
     def add_vectors(self, vectors: np.ndarray, ids: List[str], 
                    metadata: List[Dict[str, Any]]) -> bool:
-        """Add vectors to the index."""
-        try:
+        """Add vectors to the index."""        try:
             with self.lock:
                 # Normalize for cosine similarity
                 if self.config.metric == "cosine":
@@ -208,8 +197,7 @@ class FAISSIndexManager:
     
     def search(self, query_vector: np.ndarray, k: int = 10, 
               threshold: float = 0.8) -> List[VectorSearchResult]:
-        """Search for similar vectors."""
-        try:
+        """Search for similar vectors."""        try:
             with self.lock:
                 # Normalize query vector for cosine similarity
                 if self.config.metric == "cosine":
@@ -252,8 +240,7 @@ class FAISSIndexManager:
             return []
     
     def remove_vectors(self, ids: List[str]) -> bool:
-        """Remove vectors from index (requires rebuild for FAISS)."""
-        try:
+        """Remove vectors from index (requires rebuild for FAISS)."""        try:
             with self.lock:
                 # Remove from mappings and metadata
                 removed_count = 0
@@ -274,8 +261,7 @@ class FAISSIndexManager:
             return False
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get index statistics."""
-        try:
+        """Get index statistics."""        try:
             with self.lock:
                 stats = {
                     'name': self.config.name,
@@ -296,8 +282,7 @@ class FAISSIndexManager:
             return {}
     
     def save_index(self, file_path: str) -> bool:
-        """Save index to disk."""
-        try:
+        """Save index to disk."""        try:
             with self.lock:
                 # Save FAISS index
                 if self.use_gpu:
@@ -325,8 +310,7 @@ class FAISSIndexManager:
             return False
     
     def load_index(self, file_path: str) -> bool:
-        """Load index from disk."""
-        try:
+        """Load index from disk."""        try:
             with self.lock:
                 # Load FAISS index
                 self.index = faiss.read_index(file_path)
@@ -353,8 +337,7 @@ class FAISSIndexManager:
 
 
 class FAISSBackend(VectorBackend):
-    """
-    Enhanced FAISS backend with advanced index management and optimization.
+    """    Enhanced FAISS backend with advanced index management and optimization.
     
     Features:
     - Multiple index types (Flat, IVF, HNSW, PQ)
@@ -362,8 +345,7 @@ class FAISSBackend(VectorBackend):
     - Automatic index optimization
     - Persistent storage
     - Multi-index management
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.base_path = config.get('storage_path', './data/faiss_indices')
@@ -381,8 +363,7 @@ class FAISSBackend(VectorBackend):
         logger.info(f"FAISS backend initialized with storage path: {self.base_path}")
     
     async def create_index(self, name: str, dimension: int, metric: str = "cosine") -> bool:
-        """Create a new FAISS index."""
-        try:
+        """Create a new FAISS index."""        try:
             if name in self.index_managers:
                 logger.warning(f"Index '{name}' already exists")
                 return True
@@ -414,8 +395,7 @@ class FAISSBackend(VectorBackend):
     
     async def add_vectors(self, index_name: str, vectors: np.ndarray,
                          ids: List[str], metadata: List[Dict]) -> bool:
-        """Add vectors to FAISS index."""
-        try:
+        """Add vectors to FAISS index."""        try:
             if index_name not in self.index_managers:
                 raise ValueError(f"Index '{index_name}' not found")
             
@@ -440,8 +420,7 @@ class FAISSBackend(VectorBackend):
     
     async def search(self, index_name: str, query_vector: np.ndarray,
                     k: int = 10, threshold: float = 0.8) -> List[VectorSearchResult]:
-        """Search for similar vectors in FAISS index."""
-        try:
+        """Search for similar vectors in FAISS index."""        try:
             if index_name not in self.index_managers:
                 raise ValueError(f"Index '{index_name}' not found")
             
@@ -458,8 +437,7 @@ class FAISSBackend(VectorBackend):
             return []
     
     async def delete_vectors(self, index_name: str, ids: List[str]) -> bool:
-        """Delete vectors from FAISS index."""
-        try:
+        """Delete vectors from FAISS index."""        try:
             if index_name not in self.index_managers:
                 raise ValueError(f"Index '{index_name}' not found")
             
@@ -476,8 +454,7 @@ class FAISSBackend(VectorBackend):
             return False
     
     async def save_index(self, index_name: str) -> bool:
-        """Save index to persistent storage."""
-        try:
+        """Save index to persistent storage."""        try:
             if index_name not in self.index_managers:
                 raise ValueError(f"Index '{index_name}' not found")
             
@@ -495,8 +472,7 @@ class FAISSBackend(VectorBackend):
             return False
     
     async def load_index(self, index_name: str) -> bool:
-        """Load index from persistent storage."""
-        try:
+        """Load index from persistent storage."""        try:
             file_path = os.path.join(self.base_path, f"{index_name}.faiss")
             
             if not os.path.exists(file_path):
@@ -538,8 +514,7 @@ class FAISSBackend(VectorBackend):
             return False
     
     def get_index_stats(self, index_name: str) -> Dict[str, Any]:
-        """Get statistics for a specific index."""
-        try:
+        """Get statistics for a specific index."""        try:
             if index_name not in self.index_managers:
                 return {}
             
@@ -551,8 +526,7 @@ class FAISSBackend(VectorBackend):
             return {}
     
     def get_system_stats(self) -> Dict[str, Any]:
-        """Get system-wide statistics."""
-        try:
+        """Get system-wide statistics."""        try:
             stats = {
                 'backend': 'faiss',
                 'total_indices': len(self.index_managers),
@@ -570,8 +544,7 @@ class FAISSBackend(VectorBackend):
             return {}
     
     async def optimize_index(self, index_name: str) -> bool:
-        """Optimize index for better performance."""
-        try:
+        """Optimize index for better performance."""        try:
             if index_name not in self.index_managers:
                 raise ValueError(f"Index '{index_name}' not found")
             
@@ -585,8 +558,7 @@ class FAISSBackend(VectorBackend):
             return False
     
     async def backup_index(self, index_name: str, backup_path: str) -> bool:
-        """Create a backup of the index."""
-        try:
+        """Create a backup of the index."""        try:
             if index_name not in self.index_managers:
                 raise ValueError(f"Index '{index_name}' not found")
             

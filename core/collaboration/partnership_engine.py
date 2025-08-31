@@ -1,5 +1,4 @@
-"""
-🤝 PARTNERSHIP ENGINE - Advanced Partnership Management System
+"""🤝 PARTNERSHIP ENGINE - Advanced Partnership Management System
 ============================================================
 
 Developed by: Fahed Mlaiel
@@ -28,9 +27,7 @@ Features:
 - Multi-Currency Support
 - Tax Compliance & Reporting
 - Performance-Based Contract Adjustments
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -46,8 +43,7 @@ from cryptography.fernet import Fernet
 logger = logging.getLogger(__name__)
 
 class PartnershipType(Enum):
-    """Comprehensive partnership type enumeration"""
-    CONTENT_COLLABORATION = "content_collaboration"
+    """Comprehensive partnership type enumeration"""    CONTENT_COLLABORATION = "content_collaboration"
     REVENUE_SHARING = "revenue_sharing"
     CROSS_PROMOTION = "cross_promotion"
     SKILL_EXCHANGE = "skill_exchange"
@@ -69,8 +65,7 @@ class PartnershipType(Enum):
     AFFILIATE_PARTNERSHIP = "affiliate_partnership"
 
 class PartnershipStatus(Enum):
-    """Partnership status enumeration"""
-    DRAFT = "draft"
+    """Partnership status enumeration"""    DRAFT = "draft"
     PROPOSAL_SENT = "proposal_sent"
     UNDER_NEGOTIATION = "under_negotiation"
     PENDING_APPROVAL = "pending_approval"
@@ -85,8 +80,7 @@ class PartnershipStatus(Enum):
     BREACHED = "breached"
 
 class ContractType(Enum):
-    """Contract type enumeration"""
-    STANDARD_COLLABORATION = "standard_collaboration"
+    """Contract type enumeration"""    STANDARD_COLLABORATION = "standard_collaboration"
     REVENUE_SHARE = "revenue_share"
     FIXED_FEE = "fixed_fee"
     PERFORMANCE_BASED = "performance_based"
@@ -98,8 +92,7 @@ class ContractType(Enum):
     NON_DISCLOSURE = "non_disclosure"
 
 class NegotiationStage(Enum):
-    """Negotiation stage enumeration"""
-    INITIAL_PROPOSAL = "initial_proposal"
+    """Negotiation stage enumeration"""    INITIAL_PROPOSAL = "initial_proposal"
     TERMS_DISCUSSION = "terms_discussion"
     FINANCIAL_NEGOTIATION = "financial_negotiation"
     LEGAL_REVIEW = "legal_review"
@@ -108,8 +101,7 @@ class NegotiationStage(Enum):
     IMPLEMENTATION = "implementation"
 
 class DisputeType(Enum):
-    """Dispute type enumeration"""
-    PAYMENT_DISPUTE = "payment_dispute"
+    """Dispute type enumeration"""    PAYMENT_DISPUTE = "payment_dispute"
     DELIVERABLE_DISPUTE = "deliverable_dispute"
     TIMELINE_DISPUTE = "timeline_dispute"
     QUALITY_DISPUTE = "quality_dispute"
@@ -120,8 +112,7 @@ class DisputeType(Enum):
 
 @dataclass
 class PartnershipTerms:
-    """Comprehensive partnership terms"""
-    duration_months: Optional[int] = None
+    """Comprehensive partnership terms"""    duration_months: Optional[int] = None
     start_date: Optional[datetime] = None
     end_date: Optional[datetime] = None
     revenue_split: Dict[str, float] = field(default_factory=dict)
@@ -143,8 +134,7 @@ class PartnershipTerms:
 
 @dataclass
 class PartnershipContract:
-    """Advanced partnership contract"""
-    contract_id: str
+    """Advanced partnership contract"""    contract_id: str
     partnership_id: str
     contract_type: ContractType
     terms: PartnershipTerms
@@ -164,8 +154,7 @@ class PartnershipContract:
 
 @dataclass
 class NegotiationSession:
-    """Partnership negotiation session"""
-    session_id: str
+    """Partnership negotiation session"""    session_id: str
     partnership_id: str
     stage: NegotiationStage
     participants: List[str]
@@ -181,8 +170,7 @@ class NegotiationSession:
 
 @dataclass
 class Partnership:
-    """Advanced partnership entity"""
-    partnership_id: str
+    """Advanced partnership entity"""    partnership_id: str
     partnership_type: PartnershipType
     status: PartnershipStatus
     participants: List[str]
@@ -206,8 +194,7 @@ class Partnership:
     last_interaction: datetime = field(default_factory=datetime.utcnow)
 
 class PartnershipEngine:
-    """Advanced partnership management system"""
-    
+    """Advanced partnership management system"""    
     def __init__(
         self, 
         db_session, 
@@ -238,8 +225,7 @@ class PartnershipEngine:
         proposed_terms: PartnershipTerms,
         auto_generate_contract: bool = True
     ) -> Partnership:
-        """Create a new partnership with advanced features"""
-        try:
+        """Create a new partnership with advanced features"""        try:
             logger.info(f"Creating partnership: {title}")
             
             # Validate participants
@@ -303,8 +289,7 @@ class PartnershipEngine:
         counter_offer: Dict[str, Any],
         ai_assistance: bool = True
     ) -> NegotiationSession:
-        """Advanced terms negotiation with AI assistance"""
-        try:
+        """Advanced terms negotiation with AI assistance"""        try:
             # Get partnership and validate access
             partnership = await self._get_partnership(partnership_id)
             await self._validate_partnership_access(partnership, user_id)
@@ -378,8 +363,7 @@ class PartnershipEngine:
         digital_signature: Dict[str, Any],
         blockchain_integration: bool = True
     ) -> Partnership:
-        """Finalize partnership with smart contracts and blockchain"""
-        try:
+        """Finalize partnership with smart contracts and blockchain"""        try:
             # Get partnership and validate
             partnership = await self._get_partnership(partnership_id)
             await self._validate_partnership_access(partnership, user_id)
@@ -450,8 +434,7 @@ class PartnershipEngine:
         partnership_id: str,
         user_id: str
     ) -> Dict[str, Any]:
-        """Monitor partnership performance with advanced analytics"""
-        try:
+        """Monitor partnership performance with advanced analytics"""        try:
             # Get partnership and validate access
             partnership = await self._get_partnership(partnership_id)
             await self._validate_partnership_access(partnership, user_id)
@@ -513,8 +496,7 @@ class PartnershipEngine:
         evidence: List[Dict[str, Any]],
         auto_mediation: bool = True
     ) -> Dict[str, Any]:
-        """Advanced dispute resolution system"""
-        try:
+        """Advanced dispute resolution system"""        try:
             # Get partnership and validate access
             partnership = await self._get_partnership(partnership_id)
             await self._validate_partnership_access(partnership, user_id)
@@ -567,15 +549,12 @@ class PartnershipEngine:
             
     # Helper methods for advanced functionality
     async def _validate_participants(self, initiator_id: str, partner_ids: List[str]) -> None:
-        """Validate all participants exist and are eligible"""
-        all_ids = [initiator_id] + partner_ids
+        """Validate all participants exist and are eligible"""        all_ids = [initiator_id] + partner_ids
         
-        query = """
-        SELECT id, creator_type, verification_status, reputation_score 
+        query = """        SELECT id, creator_type, verification_status, reputation_score 
         FROM creators 
         WHERE id = ANY(%s) AND is_active = true
-        """
-        result = await self.db_session.execute(query, (all_ids,))
+        """        result = await self.db_session.execute(query, (all_ids,))
         found_creators = result.fetchall()
         
         if len(found_creators) != len(all_ids):
@@ -594,8 +573,7 @@ class PartnershipEngine:
         partnership_type: PartnershipType,
         terms: PartnershipTerms
     ) -> Dict[str, Any]:
-        """Perform comprehensive risk assessment"""
-        # Implementation would analyze various risk factors
+        """Perform comprehensive risk assessment"""        # Implementation would analyze various risk factors
         return {
             'overall_risk_score': 0.2,
             'financial_risk': 0.1,
@@ -610,8 +588,7 @@ class PartnershipEngine:
         }
         
     async def _generate_smart_contract(self, partnership: Partnership) -> PartnershipContract:
-        """Generate smart contract with legal templates"""
-        contract_id = str(uuid.uuid4())
+        """Generate smart contract with legal templates"""        contract_id = str(uuid.uuid4())
         
         # Select appropriate legal template
         template = await self._select_legal_template(partnership.partnership_type)
@@ -630,25 +607,20 @@ class PartnershipEngine:
         
     # Additional placeholder methods for comprehensive functionality
     async def _save_partnership(self, partnership: Partnership) -> None:
-        """Save partnership to database"""
-        pass
+        """Save partnership to database"""        pass
         
     async def _get_partnership(self, partnership_id: str) -> Partnership:
-        """Get partnership by ID"""
-        pass
+        """Get partnership by ID"""        pass
         
     async def _update_partnership(self, partnership: Partnership) -> None:
-        """Update partnership in database"""
-        pass
+        """Update partnership in database"""        pass
         
     async def _validate_partnership_access(self, partnership: Partnership, user_id: str) -> None:
-        """Validate user has access to partnership"""
-        if user_id not in partnership.participants:
+        """Validate user has access to partnership"""        if user_id not in partnership.participants:
             raise ValueError("User does not have access to this partnership")
             
     async def _create_negotiation_session(self, partnership: Partnership) -> NegotiationSession:
-        """Create negotiation session"""
-        return NegotiationSession(
+        """Create negotiation session"""        return NegotiationSession(
             session_id=str(uuid.uuid4()),
             partnership_id=partnership.partnership_id,
             stage=NegotiationStage.INITIAL_PROPOSAL,
@@ -656,8 +628,7 @@ class PartnershipEngine:
         )
         
     async def _perform_compliance_checks(self, partnership: Partnership) -> None:
-        """Perform compliance checks"""
-        pass
+        """Perform compliance checks"""        pass
         
     # More placeholder methods for full functionality
     async def _generate_ai_negotiation_suggestions(self, partnership, session, counter_offer) -> List[Dict[str, Any]]:
@@ -670,8 +641,7 @@ class PartnershipEngine:
         return False
         
     async def _accept_offer(self, partnership, counter_offer, user_id) -> None:
-        """Accept a partnership offer and update partnership status"""
-        try:
+        """Accept a partnership offer and update partnership status"""        try:
             # Validate the counter offer
             if not counter_offer or not isinstance(counter_offer, dict):
                 raise ValueError("Invalid counter offer provided")
@@ -684,13 +654,11 @@ class PartnershipEngine:
             
             # Save to database
             if hasattr(self, 'db_manager') and self.db_manager:
-                update_query = """
-                UPDATE partnerships 
+                update_query = """                UPDATE partnerships 
                 SET status = $1, accepted_at = $2, accepted_by = $3, 
                     final_terms = $4, updated_at = $5
                 WHERE partnership_id = $6
-                """
-                await self.db_manager.execute(
+                """                await self.db_manager.execute(
                     update_query,
                     partnership.status,
                     partnership.accepted_at.isoformat(),
@@ -736,8 +704,7 @@ class PartnershipEngine:
             raise
     
     async def _initialize_performance_tracking(self, partnership) -> None:
-        """Initialize performance tracking for the partnership"""
-        try:
+        """Initialize performance tracking for the partnership"""        try:
             # Create performance tracking configuration
             tracking_config = {
                 "partnership_id": partnership.partnership_id,
@@ -760,13 +727,11 @@ class PartnershipEngine:
             
             # Save tracking configuration
             if hasattr(self, 'db_manager') and self.db_manager:
-                insert_query = """
-                INSERT INTO partnership_performance_tracking 
+                insert_query = """                INSERT INTO partnership_performance_tracking 
                 (partnership_id, metrics_config, tracking_frequency, 
                  alert_thresholds, initialized_at, status)
                 VALUES ($1, $2, $3, $4, $5, $6)
-                """
-                await self.db_manager.execute(
+                """                await self.db_manager.execute(
                     insert_query,
                     partnership.partnership_id,
                     json.dumps(tracking_config["metrics"]),
@@ -800,8 +765,7 @@ class PartnershipEngine:
             raise
     
     async def _setup_automated_payments(self, partnership) -> None:
-        """Setup automated payment system for the partnership"""
-        try:
+        """Setup automated payment system for the partnership"""        try:
             # Get payment configuration from partnership terms
             payment_terms = getattr(partnership, 'payment_terms', {})
             
@@ -820,14 +784,12 @@ class PartnershipEngine:
             
             # Save payment configuration
             if hasattr(self, 'db_manager') and self.db_manager:
-                insert_query = """
-                INSERT INTO partnership_payment_automation 
+                insert_query = """                INSERT INTO partnership_payment_automation 
                 (partnership_id, payment_schedule, payment_method, currency,
                  split_rules, escrow_enabled, auto_release_conditions, 
                  setup_date, status)
                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-                """
-                await self.db_manager.execute(
+                """                await self.db_manager.execute(
                     insert_query,
                     partnership.partnership_id,
                     payment_config["payment_schedule"],
@@ -916,8 +878,7 @@ class PartnershipEngine:
     MENTOR_MENTEE = "mentor_mentee"
 
 class PartnershipStatus(Enum):
-    """Partnership status enumeration"""
-    PROPOSED = "proposed"
+    """Partnership status enumeration"""    PROPOSED = "proposed"
     NEGOTIATING = "negotiating"
     PENDING_APPROVAL = "pending_approval"
     ACTIVE = "active"
@@ -929,8 +890,7 @@ class PartnershipStatus(Enum):
     TERMINATED = "terminated"
 
 class ContractType(Enum):
-    """Contract type enumeration"""
-    SIMPLE_AGREEMENT = "simple_agreement"
+    """Contract type enumeration"""    SIMPLE_AGREEMENT = "simple_agreement"
     DETAILED_CONTRACT = "detailed_contract"
     NDA = "nda"
     LICENSING_AGREEMENT = "licensing_agreement"
@@ -940,8 +900,7 @@ class ContractType(Enum):
 
 @dataclass
 class PartnershipTerms:
-    """Partnership terms and conditions"""
-    partnership_type: PartnershipType
+    """Partnership terms and conditions"""    partnership_type: PartnershipType
     duration_months: Optional[int] = None
     revenue_split: Dict[str, float] = field(default_factory=dict)
     deliverables: List[str] = field(default_factory=list)
@@ -956,8 +915,7 @@ class PartnershipTerms:
     confidentiality_level: str = "standard"
     
 class Partnership:
-    """Core partnership entity"""
-    
+    """Core partnership entity"""    
     def __init__(
         self,
         partnership_id: str,
@@ -980,8 +938,7 @@ class Partnership:
         self.metadata = {}
         
     def to_dict(self) -> Dict[str, Any]:
-        """Convert partnership to dictionary"""
-        return {
+        """Convert partnership to dictionary"""        return {
             'partnership_id': self.partnership_id,
             'initiator_id': self.initiator_id,
             'partner_id': self.partner_id,
@@ -1010,8 +967,7 @@ class Partnership:
         }
 
 class PartnershipEngine:
-    """Advanced partnership management engine"""
-    
+    """Advanced partnership management engine"""    
     def __init__(self, db_session, notification_service, contract_generator, blockchain_service=None):
         self.db_session = db_session
         self.notification_service = notification_service
@@ -1026,8 +982,7 @@ class PartnershipEngine:
         terms: PartnershipTerms,
         auto_generate_contract: bool = True
     ) -> Partnership:
-        """Create a new partnership"""
-        try:
+        """Create a new partnership"""        try:
             logger.info(f"Creating partnership between {initiator_id} and {partner_id}")
             
             # Validate creators exist
@@ -1084,8 +1039,7 @@ class PartnershipEngine:
         user_id: str,
         reason: Optional[str] = None
     ) -> Partnership:
-        """Update partnership status"""
-        try:
+        """Update partnership status"""        try:
             # Get existing partnership
             partnership = await self._get_partnership(partnership_id)
             if not partnership:
@@ -1130,8 +1084,7 @@ class PartnershipEngine:
         proposed_changes: Dict[str, Any],
         negotiation_message: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Handle partnership terms negotiation"""
-        try:
+        """Handle partnership terms negotiation"""        try:
             # Get partnership
             partnership = await self._get_partnership(partnership_id)
             if not partnership:
@@ -1186,8 +1139,7 @@ class PartnershipEngine:
         counter_proposal: Optional[Dict[str, Any]] = None,
         response_message: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Respond to partnership negotiation"""
-        try:
+        """Respond to partnership negotiation"""        try:
             # Get negotiation
             negotiation = await self._get_negotiation(negotiation_id)
             if not negotiation:
@@ -1259,8 +1211,7 @@ class PartnershipEngine:
         partnership_id: str,
         user_id: str
     ) -> Dict[str, Any]:
-        """Get comprehensive partnership analytics"""
-        try:
+        """Get comprehensive partnership analytics"""        try:
             # Get partnership
             partnership = await self._get_partnership(partnership_id)
             if not partnership:
@@ -1295,8 +1246,7 @@ class PartnershipEngine:
         reason: str,
         immediate: bool = False
     ) -> Dict[str, Any]:
-        """Terminate partnership with proper procedures"""
-        try:
+        """Terminate partnership with proper procedures"""        try:
             # Get partnership
             partnership = await self._get_partnership(partnership_id)
             if not partnership:
@@ -1355,12 +1305,9 @@ class PartnershipEngine:
             raise
             
     async def _validate_creators(self, creator_ids: List[str]) -> None:
-        """Validate that creators exist and are active"""
-        query = """
-        SELECT id FROM creators 
+        """Validate that creators exist and are active"""        query = """        SELECT id FROM creators 
         WHERE id = ANY(%s) AND is_active = true
-        """
-        result = await self.db_session.execute(query, (creator_ids,))
+        """        result = await self.db_session.execute(query, (creator_ids,))
         found_ids = [row['id'] for row in result.fetchall()]
         
         missing_ids = set(creator_ids) - set(found_ids)
@@ -1372,14 +1319,11 @@ class PartnershipEngine:
         creator1_id: str, 
         creator2_id: str
     ) -> Optional[Partnership]:
-        """Check for existing active partnership between creators"""
-        query = """
-        SELECT * FROM partnerships 
+        """Check for existing active partnership between creators"""        query = """        SELECT * FROM partnerships 
         WHERE ((initiator_id = %s AND partner_id = %s) OR 
                (initiator_id = %s AND partner_id = %s))
         AND status IN ('proposed', 'negotiating', 'active', 'paused')
-        """
-        result = await self.db_session.execute(query, (creator1_id, creator2_id, creator2_id, creator1_id))
+        """        result = await self.db_session.execute(query, (creator1_id, creator2_id, creator2_id, creator1_id))
         row = result.fetchone()
         
         if row:
@@ -1387,15 +1331,12 @@ class PartnershipEngine:
         return None
         
     async def _save_partnership(self, partnership: Partnership) -> None:
-        """Save partnership to database"""
-        query = """
-        INSERT INTO partnerships (
+        """Save partnership to database"""        query = """        INSERT INTO partnerships (
             partnership_id, initiator_id, partner_id, partnership_type,
             status, terms, created_at, last_updated, contract_hash,
             blockchain_address, metadata
         ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-        """
-        
+        """        
         await self.db_session.execute(query, (
             partnership.partnership_id,
             partnership.initiator_id,
@@ -1411,14 +1352,11 @@ class PartnershipEngine:
         ))
         
     async def _update_partnership(self, partnership: Partnership) -> None:
-        """Update partnership in database"""
-        query = """
-        UPDATE partnerships SET
+        """Update partnership in database"""        query = """        UPDATE partnerships SET
             status = %s, terms = %s, last_updated = %s,
             contract_hash = %s, blockchain_address = %s, metadata = %s
         WHERE partnership_id = %s
-        """
-        
+        """        
         await self.db_session.execute(query, (
             partnership.status.value,
             json.dumps(partnership.terms.__dict__, default=str),
@@ -1430,11 +1368,8 @@ class PartnershipEngine:
         ))
         
     async def _get_partnership(self, partnership_id: str) -> Optional[Partnership]:
-        """Get partnership by ID"""
-        query = """
-        SELECT * FROM partnerships WHERE partnership_id = %s
-        """
-        result = await self.db_session.execute(query, (partnership_id,))
+        """Get partnership by ID"""        query = """        SELECT * FROM partnerships WHERE partnership_id = %s
+        """        result = await self.db_session.execute(query, (partnership_id,))
         row = result.fetchone()
         
         if row:
@@ -1442,8 +1377,7 @@ class PartnershipEngine:
         return None
         
     async def _row_to_partnership(self, row: Dict[str, Any]) -> Partnership:
-        """Convert database row to Partnership object"""
-        terms_data = json.loads(row['terms'])
+        """Convert database row to Partnership object"""        terms_data = json.loads(row['terms'])
         terms = PartnershipTerms(
             partnership_type=PartnershipType(terms_data['partnership_type']),
             duration_months=terms_data.get('duration_months'),
@@ -1482,8 +1416,7 @@ class PartnershipEngine:
         current_status: PartnershipStatus, 
         new_status: PartnershipStatus
     ) -> bool:
-        """Validate status transition"""
-        valid_transitions = {
+        """Validate status transition"""        valid_transitions = {
             PartnershipStatus.PROPOSED: [
                 PartnershipStatus.NEGOTIATING,
                 PartnershipStatus.ACTIVE,
@@ -1521,13 +1454,10 @@ class PartnershipEngine:
         user_id: str,
         reason: Optional[str]
     ) -> None:
-        """Log partnership status change"""
-        query = """
-        INSERT INTO partnership_status_log (
+        """Log partnership status change"""        query = """        INSERT INTO partnership_status_log (
             partnership_id, old_status, new_status, changed_by, reason, timestamp
         ) VALUES (%s, %s, %s, %s, %s, %s)
-        """
-        
+        """        
         await self.db_session.execute(query, (
             partnership_id,
             old_status.value,
@@ -1543,8 +1473,7 @@ class PartnershipEngine:
         old_status: PartnershipStatus,
         new_status: PartnershipStatus
     ) -> None:
-        """Handle status-specific actions"""
-        if new_status == PartnershipStatus.ACTIVE:
+        """Handle status-specific actions"""        if new_status == PartnershipStatus.ACTIVE:
             # Initialize partnership metrics tracking
             await self._initialize_partnership_tracking(partnership)
             
@@ -1557,14 +1486,11 @@ class PartnershipEngine:
             await self._handle_partnership_termination(partnership)
             
     async def _save_negotiation(self, negotiation: Dict[str, Any]) -> None:
-        """Save negotiation to database"""
-        query = """
-        INSERT INTO partnership_negotiations (
+        """Save negotiation to database"""        query = """        INSERT INTO partnership_negotiations (
             negotiation_id, partnership_id, proposer_id, proposed_changes,
             message, timestamp, status
         ) VALUES (%s, %s, %s, %s, %s, %s, %s)
-        """
-        
+        """        
         await self.db_session.execute(query, (
             negotiation['negotiation_id'],
             negotiation['partnership_id'],
@@ -1576,11 +1502,8 @@ class PartnershipEngine:
         ))
         
     async def _get_negotiation(self, negotiation_id: str) -> Optional[Dict[str, Any]]:
-        """Get negotiation by ID"""
-        query = """
-        SELECT * FROM partnership_negotiations WHERE negotiation_id = %s
-        """
-        result = await self.db_session.execute(query, (negotiation_id,))
+        """Get negotiation by ID"""        query = """        SELECT * FROM partnership_negotiations WHERE negotiation_id = %s
+        """        result = await self.db_session.execute(query, (negotiation_id,))
         row = result.fetchone()
         
         if row:
@@ -1590,14 +1513,11 @@ class PartnershipEngine:
         return None
         
     async def _update_negotiation(self, negotiation: Dict[str, Any]) -> None:
-        """Update negotiation in database"""
-        query = """
-        UPDATE partnership_negotiations SET
+        """Update negotiation in database"""        query = """        UPDATE partnership_negotiations SET
             response = %s, responder_id = %s, response_message = %s,
             response_timestamp = %s, status = %s, counter_negotiation_id = %s
         WHERE negotiation_id = %s
-        """
-        
+        """        
         await self.db_session.execute(query, (
             negotiation.get('response'),
             negotiation.get('responder_id'),
@@ -1613,8 +1533,7 @@ class PartnershipEngine:
         partnership: Partnership,
         proposed_changes: Dict[str, Any]
     ) -> None:
-        """Apply negotiated changes to partnership terms"""
-        for field, value in proposed_changes.items():
+        """Apply negotiated changes to partnership terms"""        for field, value in proposed_changes.items():
             if hasattr(partnership.terms, field):
                 setattr(partnership.terms, field, value)
                 
@@ -1622,36 +1541,28 @@ class PartnershipEngine:
         
     # Placeholder methods for analytics and other complex operations
     async def _get_partnership_overview(self, partnership: Partnership) -> Dict[str, Any]:
-        """Get partnership overview metrics"""
-        return {'placeholder': 'partnership_overview'}
+        """Get partnership overview metrics"""        return {'placeholder': 'partnership_overview'}
         
     async def _get_performance_metrics(self, partnership: Partnership) -> Dict[str, Any]:
-        """Get performance metrics"""
-        return {'placeholder': 'performance_metrics'}
+        """Get performance metrics"""        return {'placeholder': 'performance_metrics'}
         
     async def _get_revenue_analytics(self, partnership: Partnership) -> Dict[str, Any]:
-        """Get revenue analytics"""
-        return {'placeholder': 'revenue_analytics'}
+        """Get revenue analytics"""        return {'placeholder': 'revenue_analytics'}
         
     async def _get_collaboration_insights(self, partnership: Partnership) -> Dict[str, Any]:
-        """Get collaboration insights"""
-        return {'placeholder': 'collaboration_insights'}
+        """Get collaboration insights"""        return {'placeholder': 'collaboration_insights'}
         
     async def _get_milestone_progress(self, partnership: Partnership) -> Dict[str, Any]:
-        """Get milestone progress"""
-        return {'placeholder': 'milestone_progress'}
+        """Get milestone progress"""        return {'placeholder': 'milestone_progress'}
         
     async def _get_engagement_metrics(self, partnership: Partnership) -> Dict[str, Any]:
-        """Get engagement metrics"""
-        return {'placeholder': 'engagement_metrics'}
+        """Get engagement metrics"""        return {'placeholder': 'engagement_metrics'}
         
     async def _get_content_performance(self, partnership: Partnership) -> Dict[str, Any]:
-        """Get content performance"""
-        return {'placeholder': 'content_performance'}
+        """Get content performance"""        return {'placeholder': 'content_performance'}
         
     async def _get_trend_analysis(self, partnership: Partnership) -> Dict[str, Any]:
-        """Get trend analysis"""
-        return {'placeholder': 'trend_analysis'}
+        """Get trend analysis"""        return {'placeholder': 'trend_analysis'}
         
     async def _check_termination_conditions(
         self, 
@@ -1659,16 +1570,13 @@ class PartnershipEngine:
         user_id: str, 
         reason: str
     ) -> Dict[str, Any]:
-        """Check if termination is allowed"""
-        return {'allowed': True, 'reason': None}
+        """Check if termination is allowed"""        return {'allowed': True, 'reason': None}
         
     async def _calculate_final_revenue_distribution(self, partnership: Partnership) -> Dict[str, Any]:
-        """Calculate final revenue distribution"""
-        return {'placeholder': 'revenue_distribution'}
+        """Calculate final revenue distribution"""        return {'placeholder': 'revenue_distribution'}
         
     async def _process_pending_payments(self, partnership: Partnership) -> None:
-        """Process any pending payments"""
-        pass
+        """Process any pending payments"""        pass
         
     async def _log_partnership_termination(
         self, 
@@ -1677,21 +1585,16 @@ class PartnershipEngine:
         reason: str, 
         immediate: bool
     ) -> None:
-        """Log partnership termination"""
-        pass
+        """Log partnership termination"""        pass
         
     async def _generate_termination_report(self, partnership: Partnership) -> Dict[str, Any]:
-        """Generate termination report"""
-        return {'placeholder': 'termination_report'}
+        """Generate termination report"""        return {'placeholder': 'termination_report'}
         
     async def _initialize_partnership_tracking(self, partnership: Partnership) -> None:
-        """Initialize partnership tracking"""
-        pass
+        """Initialize partnership tracking"""        pass
         
     async def _process_final_revenue_distribution(self, partnership: Partnership) -> None:
-        """Process final revenue distribution"""
-        pass
+        """Process final revenue distribution"""        pass
         
     async def _handle_partnership_termination(self, partnership: Partnership) -> None:
-        """Handle partnership termination"""
-        pass
+        """Handle partnership termination"""        pass

@@ -1,5 +1,4 @@
-"""
-Conversation Memory Storage Systems - Multi-Layer Storage Architecture
+"""Conversation Memory Storage Systems - Multi-Layer Storage Architecture
 
 Enterprise storage systems for conversation memory including long-term database
 storage, short-term caching, and vector storage for semantic search capabilities.
@@ -9,9 +8,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  LEGAL WARNING: Unauthorized use strictly prohibited ⚠️
 Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import pickle
 import json
@@ -48,37 +45,30 @@ logger = logging.getLogger(__name__)
 
 
 class StorageInterface(ABC):
-    """Abstract interface for storage systems"""
-    
+    """Abstract interface for storage systems"""    
     @abstractmethod
     async def store(self, data: Any) -> bool:
-        """Store data"""
-        pass
+        """Store data"""        pass
     
     @abstractmethod
     async def retrieve(self, key: str) -> Optional[Any]:
-        """Retrieve data by key"""
-        pass
+        """Retrieve data by key"""        pass
     
     @abstractmethod
     async def delete(self, key: str) -> bool:
-        """Delete data by key"""
-        pass
+        """Delete data by key"""        pass
     
     @abstractmethod
     async def search(self, query: Dict[str, Any]) -> List[Any]:
-        """Search data"""
-        pass
+        """Search data"""        pass
 
 
 class LongTermMemory(StorageInterface):
-    """
-    PostgreSQL-based long-term memory storage
+    """    PostgreSQL-based long-term memory storage
     
     Provides persistent storage for conversation records with full ACID
     compliance, indexing, and complex query capabilities.
-    """
-    
+    """    
     def __init__(self):
         self.encryption_manager = EncryptionManager()
         self.metrics = MetricsCollector("long_term_memory")
@@ -87,8 +77,7 @@ class LongTermMemory(StorageInterface):
         logger.info("LongTermMemory storage initialized")
     
     async def initialize(self):
-        """Initialize database connections and indexes"""
-        try:
+        """Initialize database connections and indexes"""        try:
             # Create any missing indexes
             await self._ensure_indexes()
             logger.info("LongTermMemory database initialized")
@@ -98,16 +87,14 @@ class LongTermMemory(StorageInterface):
             raise
     
     async def store(self, record: ConversationRecord) -> bool:
-        """
-        Store conversation record in PostgreSQL
+        """        Store conversation record in PostgreSQL
         
         Args:
             record: ConversationRecord to store
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             async with get_async_session() as session:
                 # Encrypt conversation data if needed
                 if record.conversation_data and not record.is_encrypted:
@@ -144,16 +131,14 @@ class LongTermMemory(StorageInterface):
             return False
     
     async def retrieve(self, conversation_id: str) -> Optional[ConversationRecord]:
-        """
-        Retrieve conversation record by ID
+        """        Retrieve conversation record by ID
         
         Args:
             conversation_id: Conversation identifier
             
         Returns:
             ConversationRecord or None
-        """
-        try:
+        """        try:
             async with get_async_session() as session:
                 query = select(ConversationRecord).where(
                     ConversationRecord.conversation_id == conversation_id
@@ -175,20 +160,17 @@ class LongTermMemory(StorageInterface):
             return None
     
     async def get(self, conversation_id: str) -> Optional[ConversationRecord]:
-        """Alias for retrieve method"""
-        return await self.retrieve(conversation_id)
+        """Alias for retrieve method"""        return await self.retrieve(conversation_id)
     
     async def delete(self, conversation_id: str) -> bool:
-        """
-        Delete conversation record
+        """        Delete conversation record
         
         Args:
             conversation_id: Conversation identifier
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             async with get_async_session() as session:
                 query = delete(ConversationRecord).where(
                     ConversationRecord.conversation_id == conversation_id
@@ -209,16 +191,14 @@ class LongTermMemory(StorageInterface):
             return False
     
     async def search(self, query: Dict[str, Any]) -> List[ConversationRecord]:
-        """
-        Search conversation records with complex queries
+        """        Search conversation records with complex queries
         
         Args:
             query: Search parameters
             
         Returns:
             List of matching conversation records
-        """
-        try:
+        """        try:
             async with get_async_session() as session:
                 # Build query based on parameters
                 db_query = select(ConversationRecord)
@@ -311,8 +291,7 @@ class LongTermMemory(StorageInterface):
         offset: int = 0,
         content_type: Optional[str] = None
     ) -> List[ConversationRecord]:
-        """
-        Get paginated conversations for a user
+        """        Get paginated conversations for a user
         
         Args:
             user_id: User identifier
@@ -322,8 +301,7 @@ class LongTermMemory(StorageInterface):
             
         Returns:
             List of conversation records
-        """
-        query_params = {
+        """        query_params = {
             "user_id": user_id,
             "limit": limit,
             "offset": offset,
@@ -337,16 +315,14 @@ class LongTermMemory(StorageInterface):
         return await self.search(query_params)
     
     async def cleanup_before_date(self, cutoff_date: datetime) -> int:
-        """
-        Clean up records before a specific date
+        """        Clean up records before a specific date
         
         Args:
             cutoff_date: Date before which to delete records
             
         Returns:
             Number of records deleted
-        """
-        try:
+        """        try:
             async with get_async_session() as session:
                 # First, archive records that are not already archived
                 archive_query = update(ConversationRecord).where(
@@ -385,8 +361,7 @@ class LongTermMemory(StorageInterface):
             return 0
     
     def _extract_searchable_text(self, conversation_data: Dict[str, Any]) -> str:
-        """Extract searchable text from conversation data"""
-        text_parts = []
+        """Extract searchable text from conversation data"""        text_parts = []
         
         if isinstance(conversation_data, dict):
             if "messages" in conversation_data:
@@ -402,8 +377,7 @@ class LongTermMemory(StorageInterface):
         return " ".join(text_parts)
     
     async def _ensure_indexes(self):
-        """Ensure required database indexes exist"""
-        try:
+        """Ensure required database indexes exist"""        try:
             async with get_async_session() as session:
                 # Create indexes for common queries
                 indexes = [
@@ -430,13 +404,11 @@ class LongTermMemory(StorageInterface):
 
 
 class ShortTermMemory(StorageInterface):
-    """
-    Redis-based short-term memory storage
+    """    Redis-based short-term memory storage
     
     Provides fast caching for frequently accessed conversations
     and temporary storage for active conversations.
-    """
-    
+    """    
     def __init__(self, ttl_seconds: int = 3600):
         self.ttl_seconds = ttl_seconds
         self.metrics = MetricsCollector("short_term_memory")
@@ -445,8 +417,7 @@ class ShortTermMemory(StorageInterface):
         logger.info("ShortTermMemory storage initialized")
     
     async def initialize(self):
-        """Initialize Redis connection"""
-        try:
+        """Initialize Redis connection"""        try:
             self.redis_client = aioredis.from_url(
                 settings.REDIS_URL,
                 decode_responses=False  # We'll handle encoding for pickle
@@ -461,16 +432,14 @@ class ShortTermMemory(StorageInterface):
             raise
     
     async def store(self, record: ConversationRecord) -> bool:
-        """
-        Store conversation record in Redis cache
+        """        Store conversation record in Redis cache
         
         Args:
             record: ConversationRecord to cache
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             if not self.redis_client:
                 await self.initialize()
             
@@ -502,16 +471,14 @@ class ShortTermMemory(StorageInterface):
             return False
     
     async def retrieve(self, conversation_id: str) -> Optional[ConversationRecord]:
-        """
-        Retrieve conversation record from cache
+        """        Retrieve conversation record from cache
         
         Args:
             conversation_id: Conversation identifier
             
         Returns:
             ConversationRecord or None
-        """
-        try:
+        """        try:
             if not self.redis_client:
                 await self.initialize()
             
@@ -532,20 +499,17 @@ class ShortTermMemory(StorageInterface):
             return None
     
     async def get(self, conversation_id: str) -> Optional[ConversationRecord]:
-        """Alias for retrieve method"""
-        return await self.retrieve(conversation_id)
+        """Alias for retrieve method"""        return await self.retrieve(conversation_id)
     
     async def delete(self, conversation_id: str) -> bool:
-        """
-        Delete conversation record from cache
+        """        Delete conversation record from cache
         
         Args:
             conversation_id: Conversation identifier
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             if not self.redis_client:
                 await self.initialize()
             
@@ -563,16 +527,14 @@ class ShortTermMemory(StorageInterface):
             return False
     
     async def search(self, query: Dict[str, Any]) -> List[ConversationRecord]:
-        """
-        Search cached conversations (limited search capabilities)
+        """        Search cached conversations (limited search capabilities)
         
         Args:
             query: Search parameters
             
         Returns:
             List of matching conversation records
-        """
-        try:
+        """        try:
             if not self.redis_client:
                 await self.initialize()
             
@@ -602,13 +564,11 @@ class ShortTermMemory(StorageInterface):
             return []
     
     async def cleanup_expired(self) -> int:
-        """
-        Clean up expired cache entries
+        """        Clean up expired cache entries
         
         Returns:
             Number of entries cleaned
-        """
-        try:
+        """        try:
             if not self.redis_client:
                 await self.initialize()
             
@@ -641,8 +601,7 @@ class ShortTermMemory(StorageInterface):
             return 0
     
     async def _update_user_conversation_list(self, user_id: str, conversation_id: str):
-        """Update user's conversation list for faster lookup"""
-        try:
+        """Update user's conversation list for faster lookup"""        try:
             key = f"user_conversations:{user_id}"
             
             # Add to front of list (most recent first)
@@ -658,8 +617,7 @@ class ShortTermMemory(StorageInterface):
             logger.error(f"Failed to update user conversation list: {e}")
     
     async def _get_user_conversation_list(self, user_id: str) -> List[str]:
-        """Get user's conversation list from cache"""
-        try:
+        """Get user's conversation list from cache"""        try:
             key = f"user_conversations:{user_id}"
             conversation_ids = await self.redis_client.lrange(key, 0, -1)
             
@@ -670,8 +628,7 @@ class ShortTermMemory(StorageInterface):
             return []
     
     def _matches_query(self, record: ConversationRecord, query: Dict[str, Any]) -> bool:
-        """Check if record matches query parameters"""
-        
+        """Check if record matches query parameters"""        
         # Content type filter
         if "content_type" in query:
             if record.content_type != query["content_type"]:
@@ -698,8 +655,7 @@ class ShortTermMemory(StorageInterface):
         results: List[ConversationRecord],
         query: Dict[str, Any]
     ) -> List[ConversationRecord]:
-        """Sort and limit search results"""
-        
+        """Sort and limit search results"""        
         # Apply ordering
         order_by = query.get("order_by", "timestamp")
         order_dir = query.get("order_dir", "desc")
@@ -719,13 +675,11 @@ class ShortTermMemory(StorageInterface):
 
 
 class VectorStore:
-    """
-    FAISS-based vector storage for semantic search
+    """    FAISS-based vector storage for semantic search
     
     Provides vector indexing and similarity search capabilities
     for conversation embeddings.
-    """
-    
+    """    
     def __init__(self, dimension: int = 384):
         self.dimension = dimension
         self.metrics = MetricsCollector("vector_store")
@@ -741,8 +695,7 @@ class VectorStore:
         logger.info(f"VectorStore initialized with dimension {dimension}")
     
     async def initialize(self):
-        """Initialize FAISS index"""
-        try:
+        """Initialize FAISS index"""        try:
             # Create FAISS index for similarity search
             self.index = faiss.IndexFlatIP(self.dimension)  # Inner product for cosine similarity
             
@@ -761,8 +714,7 @@ class VectorStore:
         vector: np.ndarray,
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """
-        Add vector to index
+        """        Add vector to index
         
         Args:
             conversation_id: Conversation identifier
@@ -771,8 +723,7 @@ class VectorStore:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             if self.index is None:
                 await self.initialize()
             
@@ -805,8 +756,7 @@ class VectorStore:
         user_id: Optional[str] = None,
         limit: Optional[int] = None
     ) -> List[Dict[str, Any]]:
-        """
-        Search for similar vectors
+        """        Search for similar vectors
         
         Args:
             query_vector: Query embedding vector
@@ -816,8 +766,7 @@ class VectorStore:
             
         Returns:
             List of similar conversations with scores
-        """
-        try:
+        """        try:
             if self.index is None or self.index.ntotal == 0:
                 return []
             
@@ -864,16 +813,14 @@ class VectorStore:
             return []
     
     async def remove_vector(self, conversation_id: str) -> bool:
-        """
-        Remove vector from index
+        """        Remove vector from index
         
         Args:
             conversation_id: Conversation identifier
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             # Find index position
             if conversation_id not in self.conversation_ids:
                 return False
@@ -896,16 +843,14 @@ class VectorStore:
             return False
     
     async def cleanup_before_date(self, cutoff_date: datetime) -> int:
-        """
-        Clean up vectors before a specific date
+        """        Clean up vectors before a specific date
         
         Args:
             cutoff_date: Date before which to remove vectors
             
         Returns:
             Number of vectors removed
-        """
-        try:
+        """        try:
             removed_count = 0
             conversations_to_remove = []
             
@@ -935,14 +880,12 @@ class VectorStore:
             return 0
     
     async def _load_existing_vectors(self):
-        """Load existing vectors from persistent storage"""
-        # In production, would load from file or database
+        """Load existing vectors from persistent storage"""        # In production, would load from file or database
         # This is a simplified version
         pass
     
     async def save_index(self, file_path: str) -> bool:
-        """Save FAISS index to file"""
-        try:
+        """Save FAISS index to file"""        try:
             if self.index:
                 faiss.write_index(self.index, file_path)
                 
@@ -961,8 +904,7 @@ class VectorStore:
             return False
     
     async def load_index(self, file_path: str) -> bool:
-        """Load FAISS index from file"""
-        try:
+        """Load FAISS index from file"""        try:
             self.index = faiss.read_index(file_path)
             
             # Load metadata
@@ -980,13 +922,11 @@ class VectorStore:
 
 
 class ConversationDatabase:
-    """
-    Unified database interface for conversation storage
+    """    Unified database interface for conversation storage
     
     Provides a unified interface for all conversation database operations
     across different storage systems.
-    """
-    
+    """    
     def __init__(self):
         self.long_term_memory = LongTermMemory()
         self.short_term_memory = ShortTermMemory()
@@ -996,8 +936,7 @@ class ConversationDatabase:
         logger.info("ConversationDatabase unified interface initialized")
     
     async def initialize(self):
-        """Initialize all storage systems"""
-        await asyncio.gather(
+        """Initialize all storage systems"""        await asyncio.gather(
             self.long_term_memory.initialize(),
             self.short_term_memory.initialize(),
             self.vector_store.initialize()
@@ -1010,8 +949,7 @@ class ConversationDatabase:
         record: ConversationRecord,
         store_vector: bool = True
     ) -> bool:
-        """
-        Store conversation across all storage systems
+        """        Store conversation across all storage systems
         
         Args:
             record: ConversationRecord to store
@@ -1019,8 +957,7 @@ class ConversationDatabase:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             # Store in long-term database
             db_success = await self.long_term_memory.store(record)
             
@@ -1060,16 +997,14 @@ class ConversationDatabase:
             return False
     
     async def get_conversation(self, conversation_id: str) -> Optional[ConversationRecord]:
-        """
-        Get conversation from the fastest available source
+        """        Get conversation from the fastest available source
         
         Args:
             conversation_id: Conversation identifier
             
         Returns:
             ConversationRecord or None
-        """
-        # Try cache first
+        """        # Try cache first
         record = await self.short_term_memory.get(conversation_id)
         
         if not record:
@@ -1084,13 +1019,11 @@ class ConversationDatabase:
 
 
 class MemoryCache:
-    """
-    Specialized caching system for memory entries
+    """    Specialized caching system for memory entries
     
     Provides intelligent caching for conversation memory entries
     with automatic expiration and importance-based retention.
-    """
-    
+    """    
     def __init__(self, max_entries: int = 10000):
         self.max_entries = max_entries
         self.cache: Dict[str, MemoryEntry] = {}
@@ -1100,16 +1033,14 @@ class MemoryCache:
         logger.info(f"MemoryCache initialized with capacity {max_entries}")
     
     async def store_entry(self, entry: MemoryEntry) -> bool:
-        """
-        Store memory entry in cache
+        """        Store memory entry in cache
         
         Args:
             entry: MemoryEntry to store
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             # Check if cache is full
             if len(self.cache) >= self.max_entries:
                 await self._evict_entries()
@@ -1127,16 +1058,14 @@ class MemoryCache:
             return False
     
     async def get_entry(self, entry_id: str) -> Optional[MemoryEntry]:
-        """
-        Get memory entry from cache
+        """        Get memory entry from cache
         
         Args:
             entry_id: Entry identifier
             
         Returns:
             MemoryEntry or None
-        """
-        try:
+        """        try:
             entry = self.cache.get(entry_id)
             
             if entry:
@@ -1156,8 +1085,7 @@ class MemoryCache:
             return None
     
     async def _evict_entries(self):
-        """Evict least important entries from cache"""
-        try:
+        """Evict least important entries from cache"""        try:
             # Calculate eviction scores
             eviction_candidates = []
             

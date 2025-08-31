@@ -1,14 +1,11 @@
-"""
-Gestionnaire de ressources système
+"""Gestionnaire de ressources système
 ================================================================================
 Module: backend/core/managers/license_manager.py
 Type: Manager Core - IA-Influencer-Agent
 Responsabilité: Fonctionnalité spécialisée IA-Influencer-Agent
 Technologies: Python, FastAPI, AsyncIO
 ================================================================================
-"""
-
-from typing import Any, Dict, List, Optional, Union, Callable
+"""from typing import Any, Dict, List, Optional, Union, Callable
 import logging
 import asyncio
 from contextlib import asynccontextmanager
@@ -21,8 +18,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class LicenseManagerConfig:
-    """Configuration du gestionnaire LicenseManager"""
-    pool_size: int = 10
+    """Configuration du gestionnaire LicenseManager"""    pool_size: int = 10
     max_connections: int = 100
     timeout_seconds: int = 30
     retry_policy: Dict[str, Any] = field(default_factory=dict)
@@ -30,8 +26,7 @@ class LicenseManagerConfig:
 
 
 class LicenseManager(ABC):
-    """
-    🎯 Gestionnaire LicenseManager - IA-Influencer-Agent
+    """    🎯 Gestionnaire LicenseManager - IA-Influencer-Agent
     
     Responsabilité:
     Fonctionnalité spécialisée IA-Influencer-Agent
@@ -45,8 +40,7 @@ class LicenseManager(ABC):
     - Auto-scaling basé sur la charge
     - Gestion d'erreurs avec circuit breaker
     - Nettoyage automatique des ressources
-    """
-    
+    """    
     def __init__(self, config: LicenseManagerConfig = None):
         self.config = config or LicenseManagerConfig()
         self._pool = []
@@ -62,46 +56,38 @@ class LicenseManager(ABC):
     
     @abstractmethod
     async def initialize_pool(self) -> bool:
-        """
-        Initialise le pool de ressources
+        """        Initialise le pool de ressources
         
         Returns:
             bool: True si initialisation réussie
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def acquire_resource(self) -> Any:
-        """
-        Acquiert une ressource du pool
+        """        Acquiert une ressource du pool
         
         Returns:
             Any: Ressource acquise
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def release_resource(self, resource: Any) -> bool:
-        """
-        Libère une ressource vers le pool
+        """        Libère une ressource vers le pool
         
         Args:
             resource: Ressource à libérer
             
         Returns:
             bool: True si libération réussie
-        """
-        pass
+        """        pass
     
     @asynccontextmanager
     async def get_resource(self):
-        """
-        Context manager pour gestion automatique des ressources
+        """        Context manager pour gestion automatique des ressources
         
         Yields:
             Any: Ressource gérée automatiquement
-        """
-        resource = None
+        """        resource = None
         try:
             resource = await self.acquire_resource()
             yield resource
@@ -110,26 +96,22 @@ class LicenseManager(ABC):
                 await self.release_resource(resource)
     
     async def cleanup(self) -> bool:
-        """
-        Nettoyage des ressources
+        """        Nettoyage des ressources
         
         Returns:
             bool: True si nettoyage réussi
-        """
-        with self._lock:
+        """        with self._lock:
             self._pool.clear()
             self._active_connections = 0
         logger.info(f"🧹 Nettoyage {self.__class__.__name__} terminé")
         return True
     
     def get_stats(self) -> Dict[str, Any]:
-        """
-        Statistiques du gestionnaire
+        """        Statistiques du gestionnaire
         
         Returns:
             Dict: Métriques actuelles
-        """
-        with self._lock:
+        """        with self._lock:
             return {
                 "pool_size": len(self._pool),
                 "active_connections": self._active_connections,
@@ -143,13 +125,11 @@ license_manager = None
 
 
 def get_license_manager() -> LicenseManager:
-    """
-    Obtient l'instance du gestionnaire
+    """    Obtient l'instance du gestionnaire
     
     Returns:
         LicenseManager: Instance du gestionnaire
-    """
-    global license_manager
+    """    global license_manager
     if license_manager is None:
         license_manager = LicenseManager()
     return license_manager

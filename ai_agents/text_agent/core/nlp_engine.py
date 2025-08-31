@@ -1,5 +1,4 @@
-"""
-NLP Engine - Advanced Natural Language Processing and Analysis
+"""NLP Engine - Advanced Natural Language Processing and Analysis
 
 Industrial-grade NLP engine providing comprehensive language processing, 
 semantic analysis, and intelligent text understanding for content creators.
@@ -18,9 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -57,8 +54,7 @@ except LookupError:
 logger = logging.getLogger(__name__)
 
 class AnalysisType(Enum):
-    """NLP analysis types"""
-    SENTIMENT = "sentiment"
+    """NLP analysis types"""    SENTIMENT = "sentiment"
     EMOTION = "emotion"
     INTENT = "intent"
     TOPIC = "topic"
@@ -68,16 +64,14 @@ class AnalysisType(Enum):
     COHERENCE = "coherence"
 
 class SentimentPolarity(Enum):
-    """Sentiment polarity levels"""
-    VERY_POSITIVE = "very_positive"
+    """Sentiment polarity levels"""    VERY_POSITIVE = "very_positive"
     POSITIVE = "positive"
     NEUTRAL = "neutral"
     NEGATIVE = "negative"
     VERY_NEGATIVE = "very_negative"
 
 class EmotionType(Enum):
-    """Basic emotion types"""
-    JOY = "joy"
+    """Basic emotion types"""    JOY = "joy"
     SADNESS = "sadness"
     ANGER = "anger"
     FEAR = "fear"
@@ -88,8 +82,7 @@ class EmotionType(Enum):
 
 @dataclass
 class SentimentResult:
-    """Sentiment analysis result"""
-    polarity: float  # -1 to 1
+    """Sentiment analysis result"""    polarity: float  # -1 to 1
     subjectivity: float  # 0 to 1
     confidence: float  # 0 to 1
     label: SentimentPolarity
@@ -98,8 +91,7 @@ class SentimentResult:
 
 @dataclass
 class EntityResult:
-    """Named entity recognition result"""
-    text: str
+    """Named entity recognition result"""    text: str
     label: str
     start: int
     end: int
@@ -108,25 +100,21 @@ class EntityResult:
 
 @dataclass
 class TopicResult:
-    """Topic modeling result"""
-    topic_id: int
+    """Topic modeling result"""    topic_id: int
     keywords: List[str]
     coherence_score: float
     probability: float
 
 @dataclass
 class SemanticResult:
-    """Semantic analysis result"""
-    embeddings: np.ndarray
+    """Semantic analysis result"""    embeddings: np.ndarray
     similarity_scores: Dict[str, float]
     semantic_concepts: List[str]
     coherence_score: float
 
 class NLPEngine:
-    """
-    Advanced NLP processing engine with comprehensive language analysis capabilities
-    """
-    
+    """    Advanced NLP processing engine with comprehensive language analysis capabilities
+    """    
     def __init__(self):
         self.sentiment_analyzers = {}
         self.emotion_analyzer = None
@@ -156,8 +144,7 @@ class NLPEngine:
         logger.info("NLPEngine initialized with advanced analysis capabilities")
     
     def _init_sentiment_analyzers(self):
-        """Initialize multiple sentiment analysis models"""
-        try:
+        """Initialize multiple sentiment analysis models"""        try:
             # VADER sentiment analyzer (rule-based)
             self.sentiment_analyzers['vader'] = VaderAnalyzer()
             
@@ -180,8 +167,7 @@ class NLPEngine:
             logger.error(f"Error initializing sentiment analyzers: {e}")
     
     def _init_emotion_analyzer(self):
-        """Initialize emotion analysis model"""
-        try:
+        """Initialize emotion analysis model"""        try:
             self.emotion_analyzer = pipeline(
                 "text-classification",
                 model="j-hartmann/emotion-english-distilroberta-base",
@@ -194,8 +180,7 @@ class NLPEngine:
             self.emotion_analyzer = None
     
     def _init_language_models(self):
-        """Initialize spaCy language models"""
-        try:
+        """Initialize spaCy language models"""        try:
             # Load multiple language models
             language_models = {
                 'en': 'en_core_web_sm',
@@ -220,8 +205,7 @@ class NLPEngine:
             logger.error(f"Error loading language models: {e}")
     
     def _init_semantic_models(self):
-        """Initialize semantic analysis models"""
-        try:
+        """Initialize semantic analysis models"""        try:
             # Sentence transformer for embeddings
             self.sentence_transformer = SentenceTransformer('all-MiniLM-L6-v2')
             
@@ -243,8 +227,7 @@ class NLPEngine:
         analyzer: str = "ensemble",
         language: str = "en"
     ) -> SentimentResult:
-        """
-        Comprehensive sentiment analysis with multiple models
+        """        Comprehensive sentiment analysis with multiple models
         
         Args:
             text: Input text for sentiment analysis
@@ -253,8 +236,7 @@ class NLPEngine:
             
         Returns:
             SentimentResult: Comprehensive sentiment analysis results
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             if analyzer == "ensemble":
@@ -341,8 +323,7 @@ class NLPEngine:
         language: str = "en",
         confidence_threshold: float = 0.5
     ) -> List[EntityResult]:
-        """
-        Extract named entities from text
+        """        Extract named entities from text
         
         Args:
             text: Input text for entity extraction
@@ -351,8 +332,7 @@ class NLPEngine:
             
         Returns:
             List of EntityResult objects
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Get appropriate language model
@@ -407,8 +387,7 @@ class NLPEngine:
         num_topics: int = 5,
         method: str = "lda"
     ) -> List[TopicResult]:
-        """
-        Extract topics from multiple texts using topic modeling
+        """        Extract topics from multiple texts using topic modeling
         
         Args:
             texts: List of texts for topic modeling
@@ -417,8 +396,7 @@ class NLPEngine:
             
         Returns:
             List of TopicResult objects
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             if not texts or len(texts) < 2:
@@ -455,8 +433,7 @@ class NLPEngine:
         text: str,
         reference_texts: Optional[List[str]] = None
     ) -> SemanticResult:
-        """
-        Comprehensive semantic analysis of text
+        """        Comprehensive semantic analysis of text
         
         Args:
             text: Input text for semantic analysis
@@ -464,8 +441,7 @@ class NLPEngine:
             
         Returns:
             SemanticResult: Comprehensive semantic analysis results
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Generate embeddings
@@ -509,8 +485,7 @@ class NLPEngine:
             )
     
     async def _ensemble_sentiment_scores(self, scores: Dict[str, Dict]) -> Tuple[float, float, float]:
-        """Combine sentiment scores from multiple analyzers"""
-        try:
+        """Combine sentiment scores from multiple analyzers"""        try:
             polarities = []
             subjectivities = []
             confidences = []
@@ -546,8 +521,7 @@ class NLPEngine:
             return 0.0, 0.5, 0.0
     
     async def _single_analyzer_sentiment(self, text: str, analyzer: str) -> Tuple[float, float, float]:
-        """Get sentiment from single analyzer"""
-        if analyzer == 'vader' and analyzer in self.sentiment_analyzers:
+        """Get sentiment from single analyzer"""        if analyzer == 'vader' and analyzer in self.sentiment_analyzers:
             scores = self.sentiment_analyzers['vader'].polarity_scores(text)
             return scores['compound'], 0.5, abs(scores['compound'])
         
@@ -560,8 +534,7 @@ class NLPEngine:
             return 0.0, 0.5, 0.0
     
     async def _determine_sentiment_label(self, polarity: float) -> SentimentPolarity:
-        """Determine sentiment label based on polarity score"""
-        if polarity >= 0.6:
+        """Determine sentiment label based on polarity score"""        if polarity >= 0.6:
             return SentimentPolarity.VERY_POSITIVE
         elif polarity >= 0.2:
             return SentimentPolarity.POSITIVE
@@ -573,8 +546,7 @@ class NLPEngine:
             return SentimentPolarity.VERY_NEGATIVE
     
     async def _analyze_emotions(self, text: str) -> Dict[str, float]:
-        """Extract emotional content from text"""
-        try:
+        """Extract emotional content from text"""        try:
             if not self.emotion_analyzer:
                 return {}
             
@@ -593,8 +565,7 @@ class NLPEngine:
             return {}
     
     async def _extract_nltk_entities(self, text: str) -> List[EntityResult]:
-        """Extract entities using NLTK"""
-        try:
+        """Extract entities using NLTK"""        try:
             # Tokenize and tag
             tokens = word_tokenize(text)
             pos_tags = pos_tag(tokens)
@@ -628,8 +599,7 @@ class NLPEngine:
             return []
     
     async def _extract_topics_lda(self, tfidf_matrix, feature_names, num_topics) -> List[TopicResult]:
-        """Extract topics using Latent Dirichlet Allocation"""
-        try:
+        """Extract topics using Latent Dirichlet Allocation"""        try:
             lda = LatentDirichletAllocation(
                 n_components=num_topics,
                 random_state=42,
@@ -661,8 +631,7 @@ class NLPEngine:
             return []
     
     async def _extract_topics_kmeans(self, tfidf_matrix, feature_names, num_topics) -> List[TopicResult]:
-        """Extract topics using K-means clustering"""
-        try:
+        """Extract topics using K-means clustering"""        try:
             kmeans = KMeans(n_clusters=num_topics, random_state=42, n_init=10)
             kmeans.fit(tfidf_matrix)
             
@@ -692,8 +661,7 @@ class NLPEngine:
             return []
     
     async def _extract_semantic_concepts(self, text: str) -> List[str]:
-        """Extract semantic concepts from text"""
-        try:
+        """Extract semantic concepts from text"""        try:
             # Simple concept extraction using TF-IDF
             tfidf_matrix = self.tfidf_vectorizer.fit_transform([text])
             feature_names = self.tfidf_vectorizer.get_feature_names_out()
@@ -710,8 +678,7 @@ class NLPEngine:
             return []
     
     async def _calculate_coherence(self, text: str) -> float:
-        """Calculate text coherence score"""
-        try:
+        """Calculate text coherence score"""        try:
             sentences = sent_tokenize(text)
             if len(sentences) < 2:
                 return 1.0
@@ -736,8 +703,7 @@ class NLPEngine:
             return 0.5
     
     def _update_processing_time(self, processing_time: float):
-        """Update average processing time"""
-        total_time = (
+        """Update average processing time"""        total_time = (
             self.analysis_stats["average_processing_time"] * 
             (self.analysis_stats["total_analyses"] - 1) +
             processing_time
@@ -745,8 +711,7 @@ class NLPEngine:
         self.analysis_stats["average_processing_time"] = total_time / self.analysis_stats["total_analyses"]
     
     def get_analysis_stats(self) -> Dict[str, Any]:
-        """Get analysis statistics"""
-        return {
+        """Get analysis statistics"""        return {
             **self.analysis_stats,
             "models_loaded": len(self.nlp_models),
             "analyzers_available": len(self.sentiment_analyzers)
@@ -754,10 +719,8 @@ class NLPEngine:
 
 
 class SentimentAnalyzer:
-    """
-    Specialized sentiment analysis component with advanced features
-    """
-    
+    """    Specialized sentiment analysis component with advanced features
+    """    
     def __init__(self):
         self.nlp_engine = NLPEngine()
         self.sentiment_history = []
@@ -777,8 +740,7 @@ class SentimentAnalyzer:
         context: Optional[Dict[str, Any]] = None,
         track_trends: bool = True
     ) -> Dict[str, Any]:
-        """
-        Analyze sentiment with contextual information and trend tracking
+        """        Analyze sentiment with contextual information and trend tracking
         
         Args:
             text: Text to analyze
@@ -787,8 +749,7 @@ class SentimentAnalyzer:
             
         Returns:
             Dict containing detailed sentiment analysis with context
-        """
-        try:
+        """        try:
             # Basic sentiment analysis
             sentiment_result = await self.nlp_engine.analyze_sentiment(text)
             
@@ -828,8 +789,7 @@ class SentimentAnalyzer:
             return {'error': str(e)}
     
     async def _adjust_for_context(self, sentiment_result: SentimentResult, context: Dict[str, Any]) -> float:
-        """Adjust sentiment score based on context"""
-        adjusted_score = sentiment_result.polarity
+        """Adjust sentiment score based on context"""        adjusted_score = sentiment_result.polarity
         
         # Adjust based on platform
         if 'platform' in context:
@@ -854,8 +814,7 @@ class SentimentAnalyzer:
         return max(-1.0, min(1.0, adjusted_score))
     
     def _track_sentiment_trend(self, sentiment_score: float):
-        """Track sentiment trends over time"""
-        self.sentiment_history.append({
+        """Track sentiment trends over time"""        self.sentiment_history.append({
             'score': sentiment_score,
             'timestamp': time.time()
         })

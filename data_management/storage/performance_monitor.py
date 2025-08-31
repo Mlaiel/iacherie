@@ -1,5 +1,4 @@
-"""
-📈 Performance Monitor - IA Influencer Agent Platform Enterprise
+"""📈 Performance Monitor - IA Influencer Agent Platform Enterprise
 ================================================================
 Module: backend/data_management/storage/performance_monitor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -27,9 +26,7 @@ interdite et fera l'objet de poursuites judiciaires.
 - Audio Engineer: Fahed Mlaiel
 - DevOps: Fahed Mlaiel
 - IA Prompt Engineer: Fahed Mlaiel
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 import logging
 import asyncio
 import time
@@ -45,8 +42,7 @@ import json
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Types of performance metrics"""
-    LATENCY = "latency"
+    """Types of performance metrics"""    LATENCY = "latency"
     THROUGHPUT = "throughput"
     ERROR_RATE = "error_rate"
     RESOURCE_USAGE = "resource_usage"
@@ -56,16 +52,14 @@ class MetricType(Enum):
     IOPS = "iops"
 
 class AlertLevel(Enum):
-    """Alert severity levels"""
-    INFO = "info"
+    """Alert severity levels"""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
 
 @dataclass
 class PerformanceMetric:
-    """Performance metric data point"""
-    metric_type: MetricType
+    """Performance metric data point"""    metric_type: MetricType
     value: float
     timestamp: datetime
     tags: Dict[str, str] = field(default_factory=dict)
@@ -73,8 +67,7 @@ class PerformanceMetric:
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert"""
-    alert_id: str
+    """Performance alert"""    alert_id: str
     level: AlertLevel
     message: str
     metric_type: MetricType
@@ -86,8 +79,7 @@ class PerformanceAlert:
 
 @dataclass
 class PerformanceThreshold:
-    """Performance threshold configuration"""
-    metric_type: MetricType
+    """Performance threshold configuration"""    metric_type: MetricType
     warning_threshold: float
     error_threshold: float
     critical_threshold: float
@@ -96,15 +88,13 @@ class PerformanceThreshold:
     enabled: bool = True
 
 class ResourceMonitor:
-    """System resource monitoring"""
-    
+    """System resource monitoring"""    
     def __init__(self):
         self.monitoring = False
         self.monitor_thread = None
         
     def start_monitoring(self, interval: float = 1.0):
-        """Start resource monitoring"""
-        if self.monitoring:
+        """Start resource monitoring"""        if self.monitoring:
             return
         
         self.monitoring = True
@@ -117,15 +107,13 @@ class ResourceMonitor:
         logger.info("Resource monitoring started")
     
     def stop_monitoring(self):
-        """Stop resource monitoring"""
-        self.monitoring = False
+        """Stop resource monitoring"""        self.monitoring = False
         if self.monitor_thread:
             self.monitor_thread.join(timeout=2.0)
         logger.info("Resource monitoring stopped")
     
     def _monitor_resources(self, interval: float):
-        """Monitor system resources in background thread"""
-        while self.monitoring:
+        """Monitor system resources in background thread"""        while self.monitoring:
             try:
                 # CPU usage
                 cpu_percent = psutil.cpu_percent(interval=0.1)
@@ -165,8 +153,7 @@ class ResourceMonitor:
                 time.sleep(interval)
     
     def get_current_usage(self) -> Dict[str, float]:
-        """Get current resource usage"""
-        try:
+        """Get current resource usage"""        try:
             return {
                 'cpu_percent': psutil.cpu_percent(),
                 'memory_percent': psutil.virtual_memory().percent,
@@ -178,21 +165,18 @@ class ResourceMonitor:
             return {}
 
 class MetricsAggregator:
-    """Aggregates and analyzes performance metrics"""
-    
+    """Aggregates and analyzes performance metrics"""    
     def __init__(self, window_size: int = 1000):
         self.window_size = window_size
         self.metrics: Dict[MetricType, deque] = defaultdict(lambda: deque(maxlen=window_size))
         self.lock = threading.Lock()
     
     def add_metric(self, metric: PerformanceMetric):
-        """Add a performance metric"""
-        with self.lock:
+        """Add a performance metric"""        with self.lock:
             self.metrics[metric.metric_type].append(metric)
     
     def get_aggregated_stats(self, metric_type: MetricType, duration_minutes: int = 60) -> Dict[str, float]:
-        """Get aggregated statistics for a metric type"""
-        with self.lock:
+        """Get aggregated statistics for a metric type"""        with self.lock:
             cutoff_time = datetime.now() - timedelta(minutes=duration_minutes)
             recent_metrics = [
                 m for m in self.metrics[metric_type]
@@ -216,8 +200,7 @@ class MetricsAggregator:
             }
     
     def _percentile(self, values: List[float], percentile: int) -> float:
-        """Calculate percentile"""
-        if not values:
+        """Calculate percentile"""        if not values:
             return 0.0
         
         sorted_values = sorted(values)
@@ -231,8 +214,7 @@ class MetricsAggregator:
             return sorted_values[f] * (1 - c) + sorted_values[f + 1] * c
     
     def get_trend_analysis(self, metric_type: MetricType, duration_minutes: int = 60) -> Dict[str, Any]:
-        """Analyze trends in metrics"""
-        with self.lock:
+        """Analyze trends in metrics"""        with self.lock:
             cutoff_time = datetime.now() - timedelta(minutes=duration_minutes)
             recent_metrics = [
                 m for m in self.metrics[metric_type]
@@ -274,8 +256,7 @@ class MetricsAggregator:
             return {'trend': 'stable'}
 
 class PerformanceMonitor:
-    """
-    Comprehensive performance monitoring system.
+    """    Comprehensive performance monitoring system.
     
     Features:
     - Real-time metric collection
@@ -285,11 +266,9 @@ class PerformanceMonitor:
     - Performance bottleneck detection
     - Custom metric support
     - Historical data analysis
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize performance monitor"""
-        self.config = config or {}
+        """Initialize performance monitor"""        self.config = config or {}
         
         # Core components
         self.aggregator = MetricsAggregator(window_size=self.config.get('window_size', 10000))
@@ -318,8 +297,7 @@ class PerformanceMonitor:
         logger.info("PerformanceMonitor initialized")
     
     def _initialize_default_thresholds(self):
-        """Initialize default performance thresholds"""
-        default_thresholds = {
+        """Initialize default performance thresholds"""        default_thresholds = {
             MetricType.LATENCY: PerformanceThreshold(
                 metric_type=MetricType.LATENCY,
                 warning_threshold=1.0,  # 1 second
@@ -353,8 +331,7 @@ class PerformanceMonitor:
         self.thresholds.update(default_thresholds)
     
     async def start_monitoring(self):
-        """Start performance monitoring"""
-        if self.monitoring_active:
+        """Start performance monitoring"""        if self.monitoring_active:
             return
         
         self.monitoring_active = True
@@ -372,8 +349,7 @@ class PerformanceMonitor:
         logger.info("Performance monitoring started")
     
     async def stop_monitoring(self):
-        """Stop performance monitoring"""
-        self.monitoring_active = False
+        """Stop performance monitoring"""        self.monitoring_active = False
         
         # Stop resource monitoring
         self.resource_monitor.stop_monitoring()
@@ -395,8 +371,7 @@ class PerformanceMonitor:
         file_size: int = 0,
         tags: Optional[Dict[str, str]] = None
     ):
-        """Record a storage operation"""
-        timestamp = datetime.now()
+        """Record a storage operation"""        timestamp = datetime.now()
         operation_id = f"{operation}_{int(time.time())}"
         
         # Record individual metrics
@@ -435,8 +410,7 @@ class PerformanceMonitor:
         tags: Optional[Dict[str, str]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ):
-        """Record a performance metric"""
-        metric = PerformanceMetric(
+        """Record a performance metric"""        metric = PerformanceMetric(
             metric_type=metric_type,
             value=value,
             timestamp=datetime.now(),
@@ -447,16 +421,14 @@ class PerformanceMonitor:
         self.aggregator.add_metric(metric)
     
     def start_operation(self, operation_id: str, operation_type: str, metadata: Optional[Dict[str, Any]] = None):
-        """Start tracking an operation"""
-        self.active_operations[operation_id] = {
+        """Start tracking an operation"""        self.active_operations[operation_id] = {
             'operation_type': operation_type,
             'start_time': time.time(),
             'metadata': metadata or {}
         }
     
     def end_operation(self, operation_id: str, success: bool, file_size: int = 0):
-        """End tracking an operation"""
-        if operation_id not in self.active_operations:
+        """End tracking an operation"""        if operation_id not in self.active_operations:
             logger.warning(f"Operation {operation_id} not found in active operations")
             return
         
@@ -472,17 +444,14 @@ class PerformanceMonitor:
         )
     
     def add_threshold(self, threshold: PerformanceThreshold):
-        """Add a performance threshold"""
-        self.thresholds[threshold.metric_type] = threshold
+        """Add a performance threshold"""        self.thresholds[threshold.metric_type] = threshold
         logger.info(f"Added threshold for {threshold.metric_type.value}")
     
     def add_alert_callback(self, callback: callable):
-        """Add an alert callback function"""
-        self.alert_callbacks.append(callback)
+        """Add an alert callback function"""        self.alert_callbacks.append(callback)
     
     async def get_metrics(self, duration_minutes: int = 60) -> Dict[str, Any]:
-        """Get comprehensive performance metrics"""
-        
+        """Get comprehensive performance metrics"""        
         cache_key = f"metrics_{duration_minutes}"
         if cache_key in self.analytics_cache:
             cached_data, cached_time = self.analytics_cache[cache_key]
@@ -516,8 +485,7 @@ class PerformanceMonitor:
         return metrics
     
     async def get_performance_report(self, duration_hours: int = 24) -> Dict[str, Any]:
-        """Generate comprehensive performance report"""
-        
+        """Generate comprehensive performance report"""        
         report = {
             'report_period_hours': duration_hours,
             'generated_at': datetime.now().isoformat(),
@@ -578,8 +546,7 @@ class PerformanceMonitor:
         return report
     
     def _get_operation_statistics(self, duration_minutes: int) -> Dict[str, Any]:
-        """Get operation statistics"""
-        cutoff_time = datetime.now() - timedelta(minutes=duration_minutes)
+        """Get operation statistics"""        cutoff_time = datetime.now() - timedelta(minutes=duration_minutes)
         recent_ops = [op for op in self.operation_history if op['timestamp'] > cutoff_time]
         
         if not recent_ops:
@@ -614,8 +581,7 @@ class PerformanceMonitor:
         return stats
     
     def _get_alert_summary(self) -> Dict[str, Any]:
-        """Get alert summary"""
-        active_alerts = [alert for alert in self.alerts if not alert.resolved]
+        """Get alert summary"""        active_alerts = [alert for alert in self.alerts if not alert.resolved]
         
         summary = {
             'total_alerts': len(self.alerts),
@@ -638,8 +604,7 @@ class PerformanceMonitor:
         return summary
     
     def _generate_performance_recommendations(self, metrics: Dict[str, Any]) -> List[str]:
-        """Generate performance improvement recommendations"""
-        recommendations = []
+        """Generate performance improvement recommendations"""        recommendations = []
         
         # Check latency
         if 'latency' in metrics:
@@ -684,8 +649,7 @@ class PerformanceMonitor:
         return recommendations
     
     async def _threshold_monitor(self):
-        """Background task to monitor thresholds and generate alerts"""
-        while self.monitoring_active:
+        """Background task to monitor thresholds and generate alerts"""        while self.monitoring_active:
             try:
                 for metric_type, threshold in self.thresholds.items():
                     if not threshold.enabled:
@@ -747,8 +711,7 @@ class PerformanceMonitor:
         current_value: float,
         threshold_value: float
     ):
-        """Generate a performance alert"""
-        
+        """Generate a performance alert"""        
         # Check if similar alert already exists
         existing_alert = None
         for alert in self.alerts:
@@ -794,8 +757,7 @@ class PerformanceMonitor:
                 logger.error(f"Alert callback error: {str(e)}")
     
     async def _analytics_updater(self):
-        """Background task to update analytics cache"""
-        while self.monitoring_active:
+        """Background task to update analytics cache"""        while self.monitoring_active:
             try:
                 # Clear expired cache entries
                 current_time = datetime.now()
@@ -816,8 +778,7 @@ class PerformanceMonitor:
                 await asyncio.sleep(300)
     
     async def _cleanup_old_data(self):
-        """Background task to cleanup old data"""
-        while self.monitoring_active:
+        """Background task to cleanup old data"""        while self.monitoring_active:
             try:
                 # Clean up old alerts (keep last 30 days)
                 cutoff_time = datetime.now() - timedelta(days=30)

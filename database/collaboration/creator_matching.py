@@ -1,14 +1,11 @@
-"""
-Creator Matching Database Module
+"""Creator Matching Database Module
 
 AI-powered creator matching system for intelligent collaboration recommendations.
 Utilizes machine learning, vector embeddings, and behavioral analysis.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices
-"""
-
-from typing import List, Dict, Any, Optional, Union, Tuple, Set
+"""from typing import List, Dict, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timedelta
 from enum import Enum
 import json
@@ -36,8 +33,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class MatchingCriteria(Enum):
-    """Creator matching criteria enumeration"""
-    CONTENT_TYPE = "content_type"
+    """Creator matching criteria enumeration"""    CONTENT_TYPE = "content_type"
     SKILL_COMPLEMENT = "skill_complement"
     AUDIENCE_OVERLAP = "audience_overlap"
     COLLABORATION_HISTORY = "collaboration_history"
@@ -47,8 +43,7 @@ class MatchingCriteria(Enum):
     STYLE_SIMILARITY = "style_similarity"
 
 class MatchingStatus(Enum):
-    """Matching status enumeration"""
-    PENDING = "pending"
+    """Matching status enumeration"""    PENDING = "pending"
     SUGGESTED = "suggested"
     CONTACTED = "contacted"
     ACCEPTED = "accepted"
@@ -56,11 +51,9 @@ class MatchingStatus(Enum):
     EXPIRED = "expired"
 
 class CreatorProfile(Base):
-    """
-    Comprehensive creator profile for AI-powered matching.
+    """    Comprehensive creator profile for AI-powered matching.
     Stores skills, preferences, history, and vector embeddings.
-    """
-    __tablename__ = 'creator_profiles'
+    """    __tablename__ = 'creator_profiles'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -145,11 +138,9 @@ class CreatorProfile(Base):
     )
 
 class MatchingSuggestion(Base):
-    """
-    AI-generated matching suggestions between creators.
+    """    AI-generated matching suggestions between creators.
     Stores match scores, reasoning, and interaction history.
-    """
-    __tablename__ = 'matching_suggestions'
+    """    __tablename__ = 'matching_suggestions'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -204,8 +195,7 @@ class MatchingSuggestion(Base):
 
 @dataclass
 class MatchingRequest:
-    """Data class for creator matching requests"""
-    requester_id: str
+    """Data class for creator matching requests"""    requester_id: str
     project_id: Optional[str] = None
     content_types: List[str] = None
     required_skills: List[str] = None
@@ -218,8 +208,7 @@ class MatchingRequest:
 
 @dataclass
 class MatchingFilter:
-    """Data class for filtering criteria"""
-    content_types: List[str] = None
+    """Data class for filtering criteria"""    content_types: List[str] = None
     experience_min: int = None
     location_radius_km: int = None
     availability_required: bool = False
@@ -228,11 +217,9 @@ class MatchingFilter:
     exclude_previous_collaborators: bool = False
 
 class CreatorMatchingEngine:
-    """
-    Enterprise AI-powered creator matching engine.
+    """    Enterprise AI-powered creator matching engine.
     Utilizes machine learning, vector similarity, and behavioral analysis.
-    """
-    
+    """    
     def __init__(self, db_session, redis_client: aioredis.Redis = None):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -260,8 +247,7 @@ class CreatorMatchingEngine:
         request: MatchingRequest, 
         filters: MatchingFilter = None
     ) -> List[MatchingSuggestion]:
-        """
-        Find optimal creator matches using AI algorithms.
+        """        Find optimal creator matches using AI algorithms.
         
         Args:
             request: Matching request parameters
@@ -269,8 +255,7 @@ class CreatorMatchingEngine:
             
         Returns:
             List of matching suggestions
-        """
-        try:
+        """        try:
             # Get requester profile
             requester_profile = await self._get_creator_profile(request.requester_id)
             if not requester_profile:
@@ -321,8 +306,7 @@ class CreatorMatchingEngine:
         user_id: str, 
         profile_data: Dict[str, Any]
     ) -> Optional[CreatorProfile]:
-        """
-        Update creator profile with AI vector generation.
+        """        Update creator profile with AI vector generation.
         
         Args:
             user_id: User UUID
@@ -330,8 +314,7 @@ class CreatorMatchingEngine:
             
         Returns:
             Updated profile instance
-        """
-        try:
+        """        try:
             # Get or create profile
             profile = await self.db_session.query(CreatorProfile)\
                 .filter(CreatorProfile.user_id == uuid.UUID(user_id))\
@@ -376,16 +359,14 @@ class CreatorMatchingEngine:
             return None
     
     async def get_creator_analytics(self, user_id: str) -> Dict[str, Any]:
-        """
-        Get comprehensive creator analytics for matching optimization.
+        """        Get comprehensive creator analytics for matching optimization.
         
         Args:
             user_id: User UUID
             
         Returns:
             Analytics data dictionary
-        """
-        try:
+        """        try:
             profile = await self._get_creator_profile(user_id)
             if not profile:
                 return {}
@@ -452,8 +433,7 @@ class CreatorMatchingEngine:
         user_id: str, 
         feedback: Dict[str, Any]
     ) -> bool:
-        """
-        Provide feedback on matching suggestions for ML model improvement.
+        """        Provide feedback on matching suggestions for ML model improvement.
         
         Args:
             suggestion_id: Matching suggestion ID
@@ -462,8 +442,7 @@ class CreatorMatchingEngine:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             suggestion = await self.db_session.query(MatchingSuggestion)\
                 .filter(MatchingSuggestion.suggestion_id == suggestion_id)\
                 .first()
@@ -511,8 +490,7 @@ class CreatorMatchingEngine:
     # Private helper methods
     
     async def _get_creator_profile(self, user_id: str) -> Optional[CreatorProfile]:
-        """Get creator profile by user ID"""
-        try:
+        """Get creator profile by user ID"""        try:
             # Check cache first
             if self.redis_client:
                 cached_data = await self.redis_client.get(f"creator_profile:{user_id}")
@@ -539,8 +517,7 @@ class CreatorMatchingEngine:
         requester: CreatorProfile, 
         filters: MatchingFilter = None
     ) -> List[CreatorProfile]:
-        """Get candidate profiles for matching"""
-        try:
+        """Get candidate profiles for matching"""        try:
             query = self.db_session.query(CreatorProfile)\
                 .filter(CreatorProfile.id != requester.id)
             
@@ -581,8 +558,7 @@ class CreatorMatchingEngine:
         candidate: CreatorProfile, 
         request: MatchingRequest
     ) -> Tuple[float, Dict[str, float], Dict[str, Any]]:
-        """Calculate comprehensive match score using multiple criteria"""
-        criteria_scores = {}
+        """Calculate comprehensive match score using multiple criteria"""        criteria_scores = {}
         reasoning = {}
         
         # Content type compatibility
@@ -638,8 +614,7 @@ class CreatorMatchingEngine:
         candidate: CreatorProfile, 
         request: MatchingRequest
     ) -> float:
-        """Calculate content type compatibility score"""
-        requester_types = set(requester.primary_content_types or [])
+        """Calculate content type compatibility score"""        requester_types = set(requester.primary_content_types or [])
         candidate_types = set(candidate.primary_content_types or [])
         
         if request.content_types:
@@ -666,8 +641,7 @@ class CreatorMatchingEngine:
         requester: CreatorProfile, 
         candidate: CreatorProfile
     ) -> float:
-        """Calculate skill complementarity score"""
-        requester_skills = requester.skills or {}
+        """Calculate skill complementarity score"""        requester_skills = requester.skills or {}
         candidate_skills = candidate.skills or {}
         
         if not requester_skills or not candidate_skills:
@@ -705,8 +679,7 @@ class CreatorMatchingEngine:
         requester: CreatorProfile, 
         candidate: CreatorProfile
     ) -> float:
-        """Calculate audience overlap and synergy score"""
-        req_demographics = requester.audience_demographics or {}
+        """Calculate audience overlap and synergy score"""        req_demographics = requester.audience_demographics or {}
         cand_demographics = candidate.audience_demographics or {}
         
         if not req_demographics or not cand_demographics:
@@ -735,8 +708,7 @@ class CreatorMatchingEngine:
         requester: CreatorProfile, 
         candidate: CreatorProfile
     ) -> float:
-        """Calculate collaboration style compatibility"""
-        req_style = requester.working_style or {}
+        """Calculate collaboration style compatibility"""        req_style = requester.working_style or {}
         cand_style = candidate.working_style or {}
         
         # Communication style compatibility
@@ -764,8 +736,7 @@ class CreatorMatchingEngine:
         requester: CreatorProfile, 
         candidate: CreatorProfile
     ) -> float:
-        """Calculate location proximity score"""
-        if requester.remote_work_preference and candidate.remote_work_preference:
+        """Calculate location proximity score"""        if requester.remote_work_preference and candidate.remote_work_preference:
             return 1.0
         
         req_location = requester.location or {}
@@ -808,8 +779,7 @@ class CreatorMatchingEngine:
         requester: CreatorProfile, 
         candidate: CreatorProfile
     ) -> float:
-        """Calculate availability synchronization score"""
-        req_schedule = requester.availability_schedule or {}
+        """Calculate availability synchronization score"""        req_schedule = requester.availability_schedule or {}
         cand_schedule = candidate.availability_schedule or {}
         
         if not req_schedule or not cand_schedule:
@@ -839,8 +809,7 @@ class CreatorMatchingEngine:
         candidate: CreatorProfile, 
         request: MatchingRequest
     ) -> float:
-        """Calculate budget compatibility score"""
-        cand_rates = candidate.rate_ranges or {}
+        """Calculate budget compatibility score"""        cand_rates = candidate.rate_ranges or {}
         
         if not cand_rates:
             return 0.5
@@ -874,8 +843,7 @@ class CreatorMatchingEngine:
         requester: CreatorProfile, 
         candidate: CreatorProfile
     ) -> float:
-        """Calculate style similarity score"""
-        if requester.style_vector and candidate.style_vector:
+        """Calculate style similarity score"""        if requester.style_vector and candidate.style_vector:
             similarity = cosine_similarity(
                 [requester.style_vector], 
                 [candidate.style_vector]
@@ -903,8 +871,7 @@ class CreatorMatchingEngine:
         reasoning: Dict[str, Any],
         request: MatchingRequest
     ) -> MatchingSuggestion:
-        """Create a matching suggestion record"""
-        suggestion_id = f"MATCH-{datetime.utcnow().strftime('%Y%m%d%H%M')}-{str(uuid.uuid4())[:8]}"
+        """Create a matching suggestion record"""        suggestion_id = f"MATCH-{datetime.utcnow().strftime('%Y%m%d%H%M')}-{str(uuid.uuid4())[:8]}"
         
         # Generate AI insights
         collaboration_prediction = await self._generate_collaboration_prediction(
@@ -937,8 +904,7 @@ class CreatorMatchingEngine:
     # For brevity, I'm including the key structural methods
     
     async def _update_profile_vectors(self, profile: CreatorProfile):
-        """Update AI vectors for profile"""
-        # Generate skill vector
+        """Update AI vectors for profile"""        # Generate skill vector
         if profile.skills:
             skill_text = " ".join(profile.skills.keys())
             profile.skill_vector = self.sentence_transformer.encode(skill_text).tolist()
@@ -954,8 +920,7 @@ class CreatorMatchingEngine:
             profile.content_vector = self.sentence_transformer.encode(content_text).tolist()
     
     async def _ensure_faiss_index(self):
-        """Ensure FAISS index is initialized and up-to-date"""
-        if self.faiss_index is None:
+        """Ensure FAISS index is initialized and up-to-date"""        if self.faiss_index is None:
             # Initialize FAISS index
             dimension = 384  # MiniLM embedding dimension
             self.faiss_index = faiss.IndexFlatIP(dimension)
@@ -973,8 +938,7 @@ class CreatorMatchingEngine:
                 self.profile_vectors = {i: str(p.id) for i, p in enumerate(profiles)}
     
     def _calculate_profile_completeness(self, profile: CreatorProfile) -> float:
-        """Calculate profile completeness percentage"""
-        total_fields = 20
+        """Calculate profile completeness percentage"""        total_fields = 20
         completed_fields = 0
         
         # Check essential fields
@@ -1003,8 +967,7 @@ class CreatorMatchingEngine:
     
     # Cache and utility methods
     async def _cache_creator_profile(self, profile: CreatorProfile):
-        """Cache creator profile data"""
-        try:
+        """Cache creator profile data"""        try:
             profile_data = {
                 'id': str(profile.id),
                 'user_id': str(profile.user_id),

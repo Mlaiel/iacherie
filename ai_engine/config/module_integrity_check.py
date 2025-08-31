@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Ultra-Advanced Configuration Module Integrity Checker
+"""Ultra-Advanced Configuration Module Integrity Checker
 =====================================================
 
 PROPRIETARY SOFTWARE - ALL RIGHTS RESERVED
@@ -14,9 +13,7 @@ without explicit written permission from Fahed Mlaiel is strictly prohibited
 and will result in legal action.
 
 Contact: mlaiel@live.de for licensing and permissions.
-"""
-
-import os
+"""import os
 import sys
 import importlib
 import logging
@@ -29,16 +26,14 @@ logger = logging.getLogger(__name__)
 
 
 class ConfigurationModuleChecker:
-    """Ultra-advanced configuration module integrity checker"""
-    
+    """Ultra-advanced configuration module integrity checker"""    
     def __init__(self, config_path: str = None):
         self.config_path = config_path or os.path.dirname(__file__)
         self.results = {}
         self.errors = []
         
     def check_all_modules(self) -> Dict[str, Any]:
-        """Check all configuration modules"""
-        logger.info("🔍 Starting comprehensive configuration module check...")
+        """Check all configuration modules"""        logger.info("🔍 Starting comprehensive configuration module check...")
         
         # Define expected modules
         expected_modules = [
@@ -68,8 +63,7 @@ class ConfigurationModuleChecker:
         return self._generate_report()
     
     def _check_module(self, module_name: str) -> Dict[str, Any]:
-        """Check individual module"""
-        result = {
+        """Check individual module"""        result = {
             'status': 'unknown',
             'imports': False,
             'classes': [],
@@ -114,8 +108,7 @@ class ConfigurationModuleChecker:
         return result
     
     def _check_init_module(self) -> Dict[str, Any]:
-        """Check main __init__.py module"""
-        result = {
+        """Check main __init__.py module"""        result = {
             'status': 'unknown',
             'master_config_manager': False,
             'configuration_registry': False,
@@ -155,8 +148,7 @@ class ConfigurationModuleChecker:
         return result
     
     def _check_documentation(self) -> Dict[str, Any]:
-        """Check documentation files"""
-        result = {
+        """Check documentation files"""        result = {
             'status': 'success',
             'files': {},
             'errors': []
@@ -196,8 +188,7 @@ class ConfigurationModuleChecker:
         return result
     
     def _generate_report(self) -> Dict[str, Any]:
-        """Generate comprehensive report"""
-        total_modules = len([k for k in self.results.keys() if k not in ['documentation']])
+        """Generate comprehensive report"""        total_modules = len([k for k in self.results.keys() if k not in ['documentation']])
         successful_modules = len([k for k, v in self.results.items() 
                                 if k != 'documentation' and v.get('status') == 'success'])
         
@@ -216,8 +207,7 @@ class ConfigurationModuleChecker:
         return report
     
     def _get_recommendations(self) -> List[str]:
-        """Get recommendations based on check results"""
-        recommendations = []
+        """Get recommendations based on check results"""        recommendations = []
         
         if self.errors:
             recommendations.append("Fix import errors before deployment")
@@ -236,8 +226,7 @@ class ConfigurationModuleChecker:
         return recommendations
     
     def print_summary(self):
-        """Print summary of check results"""
-        report = self._generate_report()
+        """Print summary of check results"""        report = self._generate_report()
         summary = report['summary']
         
         print("\n" + "="*80)
@@ -271,8 +260,7 @@ class ConfigurationModuleChecker:
 
 
 def main():
-    """Main function to run configuration check"""
-    checker = ConfigurationModuleChecker()
+    """Main function to run configuration check"""    checker = ConfigurationModuleChecker()
     
     try:
         print("🚀 Starting IA Influencer Agent Configuration Module Check...")

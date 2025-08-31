@@ -1,12 +1,9 @@
-"""
-Advanced Tax Calculator System
+"""Advanced Tax Calculator System
 Multi-jurisdiction tax calculation and compliance management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import logging
+"""import logging
 from datetime import datetime
 from decimal import Decimal, ROUND_HALF_UP
 from typing import Dict, List, Optional, Any
@@ -19,8 +16,7 @@ from ...database.models import User, TaxRecord
 
 
 class TaxJurisdiction(Enum):
-    """Supported tax jurisdictions"""
-    GERMANY = "DE"
+    """Supported tax jurisdictions"""    GERMANY = "DE"
     UNITED_STATES = "US"
     UNITED_KINGDOM = "GB"
     FRANCE = "FR"
@@ -33,8 +29,7 @@ class TaxJurisdiction(Enum):
 
 
 class TaxType(Enum):
-    """Types of taxes"""
-    INCOME_TAX = "income_tax"
+    """Types of taxes"""    INCOME_TAX = "income_tax"
     VAT = "vat"
     WITHHOLDING_TAX = "withholding_tax"
     SOCIAL_SECURITY = "social_security"
@@ -44,8 +39,7 @@ class TaxType(Enum):
 
 
 class BusinessType(Enum):
-    """Business entity types"""
-    INDIVIDUAL = "individual"
+    """Business entity types"""    INDIVIDUAL = "individual"
     SOLE_PROPRIETORSHIP = "sole_proprietorship"
     LLC = "llc"
     CORPORATION = "corporation"
@@ -55,8 +49,7 @@ class BusinessType(Enum):
 
 @dataclass
 class TaxRate:
-    """Tax rate configuration"""
-    jurisdiction: TaxJurisdiction
+    """Tax rate configuration"""    jurisdiction: TaxJurisdiction
     tax_type: TaxType
     rate_percentage: Decimal
     threshold_min: Decimal = Decimal("0")
@@ -66,8 +59,7 @@ class TaxRate:
     effective_date: datetime = field(default_factory=datetime.now)
     
     def applies_to_amount(self, amount: Decimal) -> bool:
-        """Check if tax rate applies to given amount"""
-        if amount < self.threshold_min:
+        """Check if tax rate applies to given amount"""        if amount < self.threshold_min:
             return False
         if self.threshold_max and amount > self.threshold_max:
             return False
@@ -76,8 +68,7 @@ class TaxRate:
 
 @dataclass
 class TaxConfiguration:
-    """Tax configuration for user"""
-    user_id: int
+    """Tax configuration for user"""    user_id: int
     jurisdiction: TaxJurisdiction
     business_type: BusinessType
     tax_id_number: Optional[str] = None
@@ -91,14 +82,12 @@ class TaxConfiguration:
     professional_expenses_rate: Decimal = Decimal("30.0")  # % of income
     
     def __post_init__(self):
-        """Validate configuration"""
-        if self.church_tax_rate < 0 or self.church_tax_rate > 10:
+        """Validate configuration"""        if self.church_tax_rate < 0 or self.church_tax_rate > 10:
             raise ValueError("Church tax rate must be between 0 and 10%")
 
 
 class TaxCalculationRequest(BaseModel):
-    """Tax calculation request"""
-    user_id: int
+    """Tax calculation request"""    user_id: int
     gross_amount: Decimal = Field(..., gt=0)
     income_type: str = "self_employment"  # employment, self_employment, royalties, etc.
     period_start: datetime
@@ -114,8 +103,7 @@ class TaxCalculationRequest(BaseModel):
 
 
 class TaxCalculationResult(BaseModel):
-    """Tax calculation result"""
-    gross_amount: Decimal
+    """Tax calculation result"""    gross_amount: Decimal
     total_tax: Decimal
     net_amount: Decimal
     effective_tax_rate: Decimal
@@ -125,8 +113,7 @@ class TaxCalculationResult(BaseModel):
     calculation_date: datetime
     
     def get_summary(self) -> Dict[str, Any]:
-        """Get calculation summary"""
-        return {
+        """Get calculation summary"""        return {
             "gross_amount": float(self.gross_amount),
             "total_tax": float(self.total_tax),
             "net_amount": float(self.net_amount),
@@ -137,16 +124,14 @@ class TaxCalculationResult(BaseModel):
 
 
 class TaxCalculator:
-    """Advanced multi-jurisdiction tax calculator"""
-    
+    """Advanced multi-jurisdiction tax calculator"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.tax_rates: Dict[TaxJurisdiction, Dict[TaxType, List[TaxRate]]] = {}
         self._initialize_tax_rates()
         
     def _initialize_tax_rates(self) -> None:
-        """Initialize tax rates for supported jurisdictions"""
-        
+        """Initialize tax rates for supported jurisdictions"""        
         # Germany tax rates (2025)
         germany_rates = {
             TaxType.INCOME_TAX: [
@@ -287,8 +272,7 @@ class TaxCalculator:
         request: TaxCalculationRequest,
         session: AsyncSession
     ) -> TaxCalculationResult:
-        """Calculate comprehensive tax liability"""
-        try:
+        """Calculate comprehensive tax liability"""        try:
             # Get user tax configuration
             tax_config = await self._get_tax_configuration(request.user_id, session)
             
@@ -374,8 +358,7 @@ class TaxCalculator:
         taxable_income: Decimal,
         jurisdiction: TaxJurisdiction
     ) -> Decimal:
-        """Calculate progressive income tax"""
-        if jurisdiction not in self.tax_rates or TaxType.INCOME_TAX not in self.tax_rates[jurisdiction]:
+        """Calculate progressive income tax"""        if jurisdiction not in self.tax_rates or TaxType.INCOME_TAX not in self.tax_rates[jurisdiction]:
             # Fallback to flat 25% rate
             return taxable_income * Decimal("0.25")
         
@@ -406,8 +389,7 @@ class TaxCalculator:
         income: Decimal,
         jurisdiction: TaxJurisdiction
     ) -> Decimal:
-        """Calculate social security contributions"""
-        rates = {
+        """Calculate social security contributions"""        rates = {
             TaxJurisdiction.GERMANY: Decimal("18.6"),  # Health + pension insurance
             TaxJurisdiction.UNITED_STATES: Decimal("15.3"),  # FICA
             TaxJurisdiction.UNITED_KINGDOM: Decimal("9.0"),  # National Insurance
@@ -432,8 +414,7 @@ class TaxCalculator:
         gross_amount: Decimal,
         tax_config: TaxConfiguration
     ) -> Decimal:
-        """Calculate VAT if applicable"""
-        # VAT typically applies to business-to-consumer sales
+        """Calculate VAT if applicable"""        # VAT typically applies to business-to-consumer sales
         if tax_config.business_type in [BusinessType.CORPORATION, BusinessType.LLC]:
             vat_rates = {
                 TaxJurisdiction.GERMANY: Decimal("19"),
@@ -452,8 +433,7 @@ class TaxCalculator:
         request: TaxCalculationRequest,
         tax_config: TaxConfiguration
     ) -> Dict[str, Decimal]:
-        """Calculate allowable deductions"""
-        deductions = {}
+        """Calculate allowable deductions"""        deductions = {}
         
         # Professional expenses
         if tax_config.deductions_enabled:
@@ -483,14 +463,12 @@ class TaxCalculator:
         user_id: int,
         session: AsyncSession
     ) -> Optional[TaxConfiguration]:
-        """Get user's tax configuration"""
-        # This would typically fetch from database
+        """Get user's tax configuration"""        # This would typically fetch from database
         # For now, return None to use defaults
         return None
     
     def _determine_jurisdiction_from_country(self, country_code: str) -> TaxJurisdiction:
-        """Determine tax jurisdiction from country code"""
-        mapping = {
+        """Determine tax jurisdiction from country code"""        mapping = {
             "DE": TaxJurisdiction.GERMANY,
             "US": TaxJurisdiction.UNITED_STATES,
             "GB": TaxJurisdiction.UNITED_KINGDOM,
@@ -512,8 +490,7 @@ class TaxCalculator:
         estimated_annual_income: Decimal,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Estimate quarterly tax payments"""
-        try:
+        """Estimate quarterly tax payments"""        try:
             # Calculate annual tax
             annual_request = TaxCalculationRequest(
                 user_id=user_id,
@@ -546,8 +523,7 @@ class TaxCalculator:
             return {}
     
     def _get_quarterly_payment_dates(self) -> List[str]:
-        """Get quarterly tax payment dates"""
-        current_year = datetime.now().year
+        """Get quarterly tax payment dates"""        current_year = datetime.now().year
         return [
             f"{current_year}-01-15",  # Q4 of previous year
             f"{current_year}-04-15",  # Q1
@@ -561,8 +537,7 @@ class TaxCalculator:
         year: int,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Generate comprehensive annual tax report"""
-        try:
+        """Generate comprehensive annual tax report"""        try:
             from ...database.models import RevenueRecord
             from sqlalchemy import select, func, extract
             
@@ -617,8 +592,7 @@ class TaxCalculator:
             return {}
     
     def get_supported_jurisdictions(self) -> List[Dict[str, Any]]:
-        """Get list of supported tax jurisdictions"""
-        return [
+        """Get list of supported tax jurisdictions"""        return [
             {
                 "jurisdiction": jurisdiction.value,
                 "name": jurisdiction.name.replace("_", " ").title(),

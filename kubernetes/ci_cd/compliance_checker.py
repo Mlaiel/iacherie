@@ -1,5 +1,4 @@
-"""
-🔧 Compliance Checker - IA-Influencer-Agent CI/CD
+"""🔧 Compliance Checker - IA-Influencer-Agent CI/CD
 ================================================================
 Expert: COMPLIANCE_ENGINEER + SECURITY_SPECIALIST
 Created: 2025-08-24
@@ -8,9 +7,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Enterprise compliance verification system for CI/CD pipelines.
 Ensures adherence to GDPR, SOC2, ISO27001, and industry standards for content platforms.
 ================================================================
-"""
-
-from typing import Dict, List, Optional, Any, Tuple, Set
+"""from typing import Dict, List, Optional, Any, Tuple, Set
 import asyncio
 import logging
 import json
@@ -26,8 +23,7 @@ import xml.etree.ElementTree as ET
 logger = logging.getLogger(__name__)
 
 class ComplianceFramework(Enum):
-    """Compliance framework enumeration"""
-    GDPR = "gdpr"
+    """Compliance framework enumeration"""    GDPR = "gdpr"
     SOC2 = "soc2"
     ISO27001 = "iso27001"
     PCI_DSS = "pci_dss"
@@ -39,16 +35,14 @@ class ComplianceFramework(Enum):
     DMCA = "dmca"
 
 class ComplianceLevel(Enum):
-    """Compliance level enumeration"""
-    CRITICAL = "critical"
+    """Compliance level enumeration"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
     INFO = "info"
 
 class ViolationType(Enum):
-    """Compliance violation type enumeration"""
-    DATA_PRIVACY = "data_privacy"
+    """Compliance violation type enumeration"""    DATA_PRIVACY = "data_privacy"
     SECURITY_CONTROL = "security_control"
     ACCESS_CONTROL = "access_control"
     AUDIT_LOGGING = "audit_logging"
@@ -61,8 +55,7 @@ class ViolationType(Enum):
 
 @dataclass
 class ComplianceRule:
-    """Compliance rule definition"""
-    rule_id: str
+    """Compliance rule definition"""    rule_id: str
     framework: ComplianceFramework
     title: str
     description: str
@@ -81,8 +74,7 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceViolation:
-    """Compliance violation result"""
-    rule_id: str
+    """Compliance violation result"""    rule_id: str
     framework: ComplianceFramework
     violation_type: ViolationType
     severity: ComplianceLevel
@@ -99,8 +91,7 @@ class ComplianceViolation:
 
 @dataclass
 class ComplianceReport:
-    """Compliance assessment report"""
-    framework: ComplianceFramework
+    """Compliance assessment report"""    framework: ComplianceFramework
     assessment_date: datetime
     total_rules: int
     passed_rules: int
@@ -112,11 +103,9 @@ class ComplianceReport:
     next_assessment_date: datetime
 
 class ComplianceChecker:
-    """Enterprise compliance verification system"""
-    
+    """Enterprise compliance verification system"""    
     def __init__(self):
-        """Initialize compliance checker"""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize compliance checker"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.compliance_rules: Dict[ComplianceFramework, List[ComplianceRule]] = {}
         self.violation_history: List[ComplianceViolation] = []
         self.compliance_reports: List[ComplianceReport] = []
@@ -124,8 +113,7 @@ class ComplianceChecker:
         self.initialized = False
     
     async def initialize(self) -> bool:
-        """Initialize compliance checker"""
-        try:
+        """Initialize compliance checker"""        try:
             # Setup compliance rules for IA-Influencer platform
             await self._setup_ia_influencer_compliance_rules()
             
@@ -144,8 +132,7 @@ class ComplianceChecker:
             return False
     
     async def _setup_ia_influencer_compliance_rules(self) -> None:
-        """Setup compliance rules for IA-Influencer platform"""
-        
+        """Setup compliance rules for IA-Influencer platform"""        
         # GDPR Compliance Rules
         gdpr_rules = [
             ComplianceRule(
@@ -389,8 +376,7 @@ class ComplianceChecker:
         self.compliance_rules[ComplianceFramework.ISO27001] = iso27001_rules
     
     async def _initialize_sensitive_data_patterns(self) -> None:
-        """Initialize patterns for detecting sensitive data"""
-        self.sensitive_data_patterns = {
+        """Initialize patterns for detecting sensitive data"""        self.sensitive_data_patterns = {
             "email": re.compile(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'),
             "phone": re.compile(r'\b(\+?1[-.\s]?)?\(?([0-9]{3})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})\b'),
             "ssn": re.compile(r'\b\d{3}-?\d{2}-?\d{4}\b'),
@@ -408,8 +394,7 @@ class ComplianceChecker:
         component_paths: List[str],
         exclude_patterns: Optional[List[str]] = None
     ) -> ComplianceReport:
-        """Run comprehensive compliance assessment"""
-        try:
+        """Run comprehensive compliance assessment"""        try:
             self.logger.info(f"Starting compliance assessment for {framework.value}")
             
             assessment_start = datetime.now()
@@ -486,8 +471,7 @@ class ComplianceChecker:
         component_paths: List[str],
         exclude_patterns: Optional[List[str]] = None
     ) -> List[ComplianceViolation]:
-        """Execute a specific compliance rule"""
-        violations = []
+        """Execute a specific compliance rule"""        violations = []
         
         try:
             # Get the check function
@@ -513,8 +497,7 @@ class ComplianceChecker:
         component_paths: List[str],
         exclude_patterns: Optional[List[str]] = None
     ) -> List[ComplianceViolation]:
-        """Check if personal data is encrypted at rest"""
-        violations = []
+        """Check if personal data is encrypted at rest"""        violations = []
         
         # Check database schemas and configurations
         for path in component_paths:
@@ -562,8 +545,7 @@ class ComplianceChecker:
         component_paths: List[str],
         exclude_patterns: Optional[List[str]] = None
     ) -> List[ComplianceViolation]:
-        """Check if consent management is implemented"""
-        violations = []
+        """Check if consent management is implemented"""        violations = []
         
         # Look for consent-related code
         consent_indicators = ["consent", "agreement", "opt_in", "permission", "authorize"]
@@ -607,8 +589,7 @@ class ComplianceChecker:
         component_paths: List[str],
         exclude_patterns: Optional[List[str]] = None
     ) -> List[ComplianceViolation]:
-        """Check if data subject rights are implemented"""
-        violations = []
+        """Check if data subject rights are implemented"""        violations = []
         
         # Check for GDPR rights implementation
         required_rights = {
@@ -658,8 +639,7 @@ class ComplianceChecker:
         component_paths: List[str],
         exclude_patterns: Optional[List[str]] = None
     ) -> List[ComplianceViolation]:
-        """Check if data retention policies are implemented"""
-        violations = []
+        """Check if data retention policies are implemented"""        violations = []
         
         # Look for retention policy implementation
         retention_keywords = ["retention", "expire", "ttl", "delete_after", "cleanup"]
@@ -703,8 +683,7 @@ class ComplianceChecker:
         component_paths: List[str],
         exclude_patterns: Optional[List[str]] = None
     ) -> List[ComplianceViolation]:
-        """Check if privacy by design principles are followed"""
-        violations = []
+        """Check if privacy by design principles are followed"""        violations = []
         
         # Look for privacy-related implementations
         privacy_indicators = [
@@ -753,8 +732,7 @@ class ComplianceChecker:
         component_paths: List[str],
         exclude_patterns: Optional[List[str]] = None
     ) -> List[ComplianceViolation]:
-        """Check if proper access controls are implemented"""
-        violations = []
+        """Check if proper access controls are implemented"""        violations = []
         
         # Look for access control implementations
         rbac_keywords = ["role", "permission", "access_control", "authorize", "rbac"]
@@ -819,8 +797,7 @@ class ComplianceChecker:
         component_paths: List[str],
         exclude_patterns: Optional[List[str]] = None
     ) -> List[ComplianceViolation]:
-        """Check if security logging is implemented"""
-        violations = []
+        """Check if security logging is implemented"""        violations = []
         
         # Look for logging implementations
         logging_keywords = ["logger", "audit", "log", "monitoring", "event"]
@@ -885,8 +862,7 @@ class ComplianceChecker:
         component_paths: List[str],
         exclude_patterns: Optional[List[str]] = None
     ) -> List[ComplianceViolation]:
-        """Check if change management processes are in place"""
-        violations = []
+        """Check if change management processes are in place"""        violations = []
         
         # Look for CI/CD and change management files
         cicd_files = []
@@ -920,8 +896,7 @@ class ComplianceChecker:
         component_paths: List[str],
         exclude_patterns: Optional[List[str]] = None
     ) -> List[ComplianceViolation]:
-        """Check if incident response procedures are documented"""
-        violations = []
+        """Check if incident response procedures are documented"""        violations = []
         
         # Look for incident response documentation
         incident_keywords = ["incident", "response", "emergency", "escalation", "playbook"]
@@ -965,8 +940,7 @@ class ComplianceChecker:
         component_paths: List[str],
         exclude_patterns: Optional[List[str]] = None
     ) -> List[ComplianceViolation]:
-        """Check if content fingerprinting is implemented"""
-        violations = []
+        """Check if content fingerprinting is implemented"""        violations = []
         
         # Look for fingerprinting implementations
         fingerprint_keywords = ["fingerprint", "hash", "chromaprint", "perceptual", "signature"]
@@ -1013,8 +987,7 @@ class ComplianceChecker:
         component_paths: List[str],
         exclude_patterns: Optional[List[str]] = None
     ) -> List[ComplianceViolation]:
-        """Check if DMCA takedown system is implemented"""
-        violations = []
+        """Check if DMCA takedown system is implemented"""        violations = []
         
         # Look for takedown system implementation
         takedown_keywords = ["takedown", "dmca", "copyright", "notice", "removal"]
@@ -1058,8 +1031,7 @@ class ComplianceChecker:
         component_paths: List[str],
         exclude_patterns: Optional[List[str]] = None
     ) -> List[ComplianceViolation]:
-        """Check if counter-notification system is implemented"""
-        violations = []
+        """Check if counter-notification system is implemented"""        violations = []
         
         # Look for counter-notification implementation
         counter_keywords = ["counter", "dispute", "appeal", "restore", "reinstate"]
@@ -1103,8 +1075,7 @@ class ComplianceChecker:
         component_paths: List[str],
         exclude_patterns: Optional[List[str]] = None
     ) -> List[ComplianceViolation]:
-        """Check if ISMS documentation exists"""
-        violations = []
+        """Check if ISMS documentation exists"""        violations = []
         
         # Look for security policy documentation
         isms_keywords = ["isms", "security_policy", "information_security", "risk_assessment"]
@@ -1151,8 +1122,7 @@ class ComplianceChecker:
         component_paths: List[str],
         exclude_patterns: Optional[List[str]] = None
     ) -> List[ComplianceViolation]:
-        """Check if asset management is implemented"""
-        violations = []
+        """Check if asset management is implemented"""        violations = []
         
         # Look for asset inventory and management
         asset_keywords = ["asset", "inventory", "classification", "protect"]
@@ -1194,8 +1164,7 @@ class ComplianceChecker:
         self,
         violations: List[ComplianceViolation]
     ) -> List[str]:
-        """Generate compliance recommendations based on violations"""
-        recommendations = []
+        """Generate compliance recommendations based on violations"""        recommendations = []
         
         # Group violations by type
         violation_types = {}
@@ -1235,8 +1204,7 @@ class ComplianceChecker:
         return list(set(recommendations))  # Remove duplicates
     
     async def scan_sensitive_data(self, file_paths: List[str]) -> Dict[str, List[Dict[str, Any]]]:
-        """Scan files for sensitive data patterns"""
-        findings = {}
+        """Scan files for sensitive data patterns"""        findings = {}
         
         for file_path in file_paths:
             try:
@@ -1267,8 +1235,7 @@ class ComplianceChecker:
         return findings
     
     async def get_compliance_summary(self) -> Dict[str, Any]:
-        """Get compliance summary across all frameworks"""
-        summary = {
+        """Get compliance summary across all frameworks"""        summary = {
             "total_assessments": len(self.compliance_reports),
             "frameworks": {},
             "overall_compliance_score": 0.0,
@@ -1306,8 +1273,7 @@ class ComplianceChecker:
         return summary
     
     async def _load_compliance_configurations(self) -> None:
-        """Load compliance configurations from files"""
-        # In production, this would load from configuration files
+        """Load compliance configurations from files"""        # In production, this would load from configuration files
         self.logger.info("Compliance configurations loaded")
 
 # Global instance

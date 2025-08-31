@@ -1,5 +1,4 @@
-"""
-🎯 DISCOVERY MANAGER - Central Discovery Engine Orchestration
+"""🎯 DISCOVERY MANAGER - Central Discovery Engine Orchestration
 ===========================================================
 
 Team Specialties:
@@ -34,9 +33,7 @@ Features:
 - Cross-component performance optimization
 - Discovery workflow automation and scheduling
 - Enterprise-grade monitoring and logging
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple, Union, Set, Callable
@@ -64,8 +61,7 @@ from .performance_tracker import PerformanceTracker, SearchPerformance, UserEnga
 logger = logging.getLogger(__name__)
 
 class SearchStrategy(Enum):
-    """Discovery search strategies"""
-    COMPREHENSIVE = "comprehensive"
+    """Discovery search strategies"""    COMPREHENSIVE = "comprehensive"
     FAST = "fast"
     DEEP = "deep"
     SEMANTIC_ONLY = "semantic_only"
@@ -76,8 +72,7 @@ class SearchStrategy(Enum):
     EXPLORATORY = "exploratory"
 
 class DiscoveryMode(Enum):
-    """Discovery operation modes"""
-    SEARCH = "search"
+    """Discovery operation modes"""    SEARCH = "search"
     BROWSE = "browse"
     RECOMMEND = "recommend"
     EXPLORE = "explore"
@@ -85,16 +80,14 @@ class DiscoveryMode(Enum):
     MONITOR = "monitor"
 
 class QualityLevel(Enum):
-    """Quality assurance levels"""
-    BASIC = "basic"
+    """Quality assurance levels"""    BASIC = "basic"
     STANDARD = "standard"
     HIGH = "high"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
 
 class PipelineStage(Enum):
-    """Discovery pipeline stages"""
-    PREPROCESSING = "preprocessing"
+    """Discovery pipeline stages"""    PREPROCESSING = "preprocessing"
     SEARCH = "search"
     FILTERING = "filtering"
     RANKING = "ranking"
@@ -104,8 +97,7 @@ class PipelineStage(Enum):
 
 @dataclass
 class DiscoveryConfig:
-    """Discovery engine configuration"""
-    strategy: SearchStrategy = SearchStrategy.COMPREHENSIVE
+    """Discovery engine configuration"""    strategy: SearchStrategy = SearchStrategy.COMPREHENSIVE
     mode: DiscoveryMode = DiscoveryMode.SEARCH
     quality_level: QualityLevel = QualityLevel.STANDARD
     timeout_seconds: int = 30
@@ -120,8 +112,7 @@ class DiscoveryConfig:
 
 @dataclass
 class DiscoverySession:
-    """Discovery session tracking"""
-    session_id: str
+    """Discovery session tracking"""    session_id: str
     user_id: Optional[str]
     created_at: datetime
     updated_at: datetime
@@ -137,8 +128,7 @@ class DiscoverySession:
 
 @dataclass
 class ResultRanking:
-    """Result ranking configuration and metrics"""
-    ranking_algorithm: str
+    """Result ranking configuration and metrics"""    ranking_algorithm: str
     ranking_factors: Dict[str, float]
     personalization_weight: float = 0.3
     freshness_weight: float = 0.2
@@ -150,8 +140,7 @@ class ResultRanking:
 
 @dataclass
 class QualityAssurance:
-    """Quality assurance metrics and thresholds"""
-    min_relevance_score: float = 0.6
+    """Quality assurance metrics and thresholds"""    min_relevance_score: float = 0.6
     min_quality_score: float = 0.7
     max_response_time_ms: float = 5000
     min_result_diversity: float = 0.3
@@ -161,13 +150,10 @@ class QualityAssurance:
     custom_quality_rules: List[str] = field(default_factory=list)
 
 class DiscoveryManager:
-    """
-    Central discovery engine manager and orchestrator
-    """
-    
+    """    Central discovery engine manager and orchestrator
+    """    
     def __init__(self, config: Optional[DiscoveryConfig] = None):
-        """Initialize discovery manager"""
-        self.config = config or DiscoveryConfig()
+        """Initialize discovery manager"""        self.config = config or DiscoveryConfig()
         self.logger = logging.getLogger(__name__)
         
         # Discovery components
@@ -210,8 +196,7 @@ class DiscoveryManager:
         self._cleanup_task: Optional[asyncio.Task] = None
 
     async def initialize(self) -> bool:
-        """Initialize all discovery components"""
-        try:
+        """Initialize all discovery components"""        try:
             # Initialize individual discovery components
             await self._initialize_discovery_components()
             
@@ -248,8 +233,7 @@ class DiscoveryManager:
         context: Optional[SearchContext] = None,
         config: Optional[DiscoveryConfig] = None
     ) -> str:
-        """Create a new discovery session"""
-        try:
+        """Create a new discovery session"""        try:
             session_id = str(uuid.uuid4())
             session_config = config or self.config
             session_context = context or SearchContext()
@@ -280,10 +264,8 @@ class DiscoveryManager:
         filters: Optional[Dict[str, Any]] = None,
         options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Main discovery method - orchestrates all discovery components
-        """
-        start_time = datetime.now()
+        """        Main discovery method - orchestrates all discovery components
+        """        start_time = datetime.now()
         
         try:
             # Get or create session
@@ -363,8 +345,7 @@ class DiscoveryManager:
         recommendation_type: RecommendationType,
         context: Optional[Dict[str, Any]] = None
     ) -> List[RecommendationResult]:
-        """Get personalized recommendations"""
-        try:
+        """Get personalized recommendations"""        try:
             if session_id not in self.active_sessions:
                 raise ValueError(f"Session not found: {session_id}")
             
@@ -396,8 +377,7 @@ class DiscoveryManager:
         category: Optional[str] = None,
         time_window: Optional[timedelta] = None
     ) -> List[TrendPrediction]:
-        """Analyze current trends"""
-        try:
+        """Analyze current trends"""        try:
             if not self.trend_analyzer:
                 raise RuntimeError("Trend analyzer not initialized")
             
@@ -419,8 +399,7 @@ class DiscoveryManager:
         user_id: str,
         opportunity_type: Optional[str] = None
     ) -> List[BusinessOpportunity]:
-        """Find business opportunities"""
-        try:
+        """Find business opportunities"""        try:
             if not self.opportunity_scanner:
                 raise RuntimeError("Opportunity scanner not initialized")
             
@@ -438,8 +417,7 @@ class DiscoveryManager:
             return []
 
     async def optimize_discovery(self, session_id: str) -> Dict[str, Any]:
-        """Optimize discovery performance for session"""
-        try:
+        """Optimize discovery performance for session"""        try:
             if session_id not in self.active_sessions:
                 raise ValueError(f"Session not found: {session_id}")
             
@@ -465,8 +443,7 @@ class DiscoveryManager:
             return {}
 
     async def get_session_analytics(self, session_id: str) -> Dict[str, Any]:
-        """Get analytics for a discovery session"""
-        try:
+        """Get analytics for a discovery session"""        try:
             if session_id not in self.active_sessions:
                 raise ValueError(f"Session not found: {session_id}")
             
@@ -492,8 +469,7 @@ class DiscoveryManager:
             return {}
 
     async def close_session(self, session_id: str) -> bool:
-        """Close a discovery session"""
-        try:
+        """Close a discovery session"""        try:
             with self.session_lock:
                 if session_id in self.active_sessions:
                     session = self.active_sessions[session_id]
@@ -519,8 +495,7 @@ class DiscoveryManager:
     # Private methods for internal processing
 
     async def _initialize_components(self):
-        """Initialize all discovery components"""
-        try:
+        """Initialize all discovery components"""        try:
             # Initialize content explorer
             self.content_explorer = ContentExplorer()
             await self.content_explorer.initialize()
@@ -556,8 +531,7 @@ class DiscoveryManager:
             raise
 
     async def _setup_discovery_pipelines(self):
-        """Setup discovery pipelines for different strategies"""
-        try:
+        """Setup discovery pipelines for different strategies"""        try:
             # Comprehensive strategy pipeline
             self.discovery_pipelines[SearchStrategy.COMPREHENSIVE.value] = [
                 self._semantic_search_stage,
@@ -604,8 +578,7 @@ class DiscoveryManager:
             raise
 
     async def _initialize_optimization_models(self):
-        """Initialize ML models for optimization"""
-        try:
+        """Initialize ML models for optimization"""        try:
             # Performance optimization model
             self.optimization_model = RandomForestRegressor(
                 n_estimators=100,
@@ -624,8 +597,7 @@ class DiscoveryManager:
             self.logger.error(f"Failed to initialize optimization models: {e}")
 
     async def _start_background_tasks(self):
-        """Start background optimization and cleanup tasks"""
-        try:
+        """Start background optimization and cleanup tasks"""        try:
             # Start optimization task
             self._optimization_task = asyncio.create_task(self._optimization_loop())
             
@@ -644,8 +616,7 @@ class DiscoveryManager:
         filters: Optional[Dict[str, Any]],
         options: Optional[Dict[str, Any]]
     ) -> SearchStrategy:
-        """Determine optimal discovery strategy"""
-        try:
+        """Determine optimal discovery strategy"""        try:
             # Use configured strategy by default
             strategy = session.config.strategy
             
@@ -683,8 +654,7 @@ class DiscoveryManager:
         filters: Optional[Dict[str, Any]],
         options: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Execute discovery pipeline based on strategy"""
-        try:
+        """Execute discovery pipeline based on strategy"""        try:
             pipeline = self.discovery_pipelines.get(strategy.value, [])
             
             if not pipeline:
@@ -718,8 +688,7 @@ class DiscoveryManager:
     # Pipeline stage implementations
 
     async def _semantic_search_stage(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Semantic search pipeline stage"""
-        try:
+        """Semantic search pipeline stage"""        try:
             if not self.semantic_search:
                 return {}
             
@@ -741,8 +710,7 @@ class DiscoveryManager:
             return {}
 
     async def _content_exploration_stage(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Content exploration pipeline stage"""
-        try:
+        """Content exploration pipeline stage"""        try:
             if not self.content_explorer:
                 return {}
             
@@ -761,8 +729,7 @@ class DiscoveryManager:
             return {}
 
     async def _creator_discovery_stage(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Creator discovery pipeline stage"""
-        try:
+        """Creator discovery pipeline stage"""        try:
             if not self.creator_finder:
                 return {}
             
@@ -781,8 +748,7 @@ class DiscoveryManager:
             return {}
 
     async def _trend_analysis_stage(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Trend analysis pipeline stage"""
-        try:
+        """Trend analysis pipeline stage"""        try:
             if not self.trend_analyzer:
                 return {}
             
@@ -798,8 +764,7 @@ class DiscoveryManager:
             return {}
 
     async def _opportunity_detection_stage(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Opportunity detection pipeline stage"""
-        try:
+        """Opportunity detection pipeline stage"""        try:
             if not self.opportunity_scanner:
                 return {}
             
@@ -819,8 +784,7 @@ class DiscoveryManager:
             return {}
 
     async def _recommendation_stage(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Recommendation pipeline stage"""
-        try:
+        """Recommendation pipeline stage"""        try:
             if not self.recommendation_engine:
                 return {}
             
@@ -842,8 +806,7 @@ class DiscoveryManager:
             return {}
 
     async def _deep_analysis_stage(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Deep analysis pipeline stage for comprehensive strategy"""
-        try:
+        """Deep analysis pipeline stage for comprehensive strategy"""        try:
             # Combine and analyze all results for deeper insights
             all_results = context['results']
             
@@ -865,8 +828,7 @@ class DiscoveryManager:
         results: Dict[str, Any],
         config: DiscoveryConfig
     ) -> Dict[str, Any]:
-        """Apply quality assurance to discovery results"""
-        try:
+        """Apply quality assurance to discovery results"""        try:
             qa_config = QualityAssurance()
             
             # Filter and validate results
@@ -893,8 +855,7 @@ class DiscoveryManager:
             return results
 
     async def _validate_result_item(self, item: Any, qa_config: QualityAssurance) -> bool:
-        """Validate individual result item"""
-        try:
+        """Validate individual result item"""        try:
             # Basic validation rules
             if hasattr(item, 'relevance_score'):
                 if item.relevance_score < qa_config.min_relevance_score:
@@ -915,8 +876,7 @@ class DiscoveryManager:
         results: Dict[str, Any],
         success: bool = True
     ):
-        """Track discovery performance metrics"""
-        try:
+        """Track discovery performance metrics"""        try:
             if not self.performance_tracker:
                 return
             
@@ -945,8 +905,7 @@ class DiscoveryManager:
     # Background task implementations
 
     async def _optimization_loop(self):
-        """Background optimization loop"""
-        while True:
+        """Background optimization loop"""        while True:
             try:
                 await asyncio.sleep(300)  # Optimize every 5 minutes
                 
@@ -960,8 +919,7 @@ class DiscoveryManager:
                 self.logger.error(f"Error in optimization loop: {e}")
 
     async def _cleanup_loop(self):
-        """Background cleanup loop"""
-        while True:
+        """Background cleanup loop"""        while True:
             try:
                 await asyncio.sleep(1800)  # Cleanup every 30 minutes
                 
@@ -975,8 +933,7 @@ class DiscoveryManager:
                 self.logger.error(f"Error in cleanup loop: {e}")
 
     async def get_discovery_metrics(self) -> Dict[str, Any]:
-        """Get discovery engine metrics"""
-        try:
+        """Get discovery engine metrics"""        try:
             performance_metrics = {}
             if self.performance_tracker:
                 performance_metrics = await self.performance_tracker.get_performance_metrics()
@@ -994,8 +951,7 @@ class DiscoveryManager:
             return {}
 
     async def shutdown(self):
-        """Shutdown discovery manager and cleanup resources"""
-        try:
+        """Shutdown discovery manager and cleanup resources"""        try:
             # Cancel background tasks
             if self._optimization_task:
                 self._optimization_task.cancel()

@@ -1,13 +1,10 @@
-"""
-Optimization Module - Content, Strategy, and Campaign Optimization
+"""Optimization Module - Content, Strategy, and Campaign Optimization
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides optimization engines for content, strategies, and campaigns
 with advanced AI-driven optimization algorithms.
-"""
-
-import logging
+"""import logging
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass
 from enum import Enum
@@ -18,15 +15,13 @@ from datetime import datetime
 logger = logging.getLogger(__name__)
 
 class OptimizationType(Enum):
-    """Types of optimization"""
-    CONTENT = "content"
+    """Types of optimization"""    CONTENT = "content"
     STRATEGY = "strategy"
     CAMPAIGN = "campaign"
     PERFORMANCE = "performance"
 
 class OptimizationObjective(Enum):
-    """Optimization objectives"""
-    MAXIMIZE_ENGAGEMENT = "maximize_engagement"
+    """Optimization objectives"""    MAXIMIZE_ENGAGEMENT = "maximize_engagement"
     MINIMIZE_COST = "minimize_cost"
     MAXIMIZE_REACH = "maximize_reach"
     MAXIMIZE_CONVERSION = "maximize_conversion"
@@ -34,8 +29,7 @@ class OptimizationObjective(Enum):
 
 @dataclass
 class OptimizationConfig:
-    """Configuration for optimization"""
-    objective: OptimizationObjective
+    """Configuration for optimization"""    objective: OptimizationObjective
     constraints: Dict[str, Any]
     max_iterations: int = 100
     learning_rate: float = 0.01
@@ -43,28 +37,24 @@ class OptimizationConfig:
 
 @dataclass
 class OptimizationResult:
-    """Result of optimization"""
-    optimized_parameters: Dict[str, Any]
+    """Result of optimization"""    optimized_parameters: Dict[str, Any]
     performance_score: float
     iterations: int
     convergence_time: float
     metadata: Dict[str, Any]
 
 class BaseOptimizer(ABC):
-    """Base class for all optimizers"""
-    
+    """Base class for all optimizers"""    
     def __init__(self, config: OptimizationConfig):
         self.config = config
         self.logger = logging.getLogger(self.__class__.__name__)
     
     @abstractmethod
     def optimize(self, data: Dict[str, Any]) -> OptimizationResult:
-        """Abstract method to perform optimization"""
-        pass
+        """Abstract method to perform optimization"""        pass
 
 class ContentOptimizer(BaseOptimizer):
-    """Optimizer for content optimization"""
-    
+    """Optimizer for content optimization"""    
     def __init__(self, config: Optional[OptimizationConfig] = None):
         if config is None:
             config = OptimizationConfig(
@@ -76,8 +66,7 @@ class ContentOptimizer(BaseOptimizer):
         self.logger.info("ContentOptimizer initialized successfully")
     
     def optimize(self, data: Dict[str, Any]) -> OptimizationResult:
-        """Optimize content for maximum engagement"""
-        try:
+        """Optimize content for maximum engagement"""        try:
             # Simulate content optimization
             optimized_params = {
                 "title": self._optimize_title(data.get("title", "")),
@@ -101,29 +90,25 @@ class ContentOptimizer(BaseOptimizer):
             raise
     
     def _optimize_title(self, title: str) -> str:
-        """Optimize content title"""
-        # Simple title optimization simulation
+        """Optimize content title"""        # Simple title optimization simulation
         if len(title) < 10:
             return f"Engaging: {title}"
         return title
     
     def _optimize_tags(self, tags: List[str]) -> List[str]:
-        """Optimize content tags"""
-        # Add trending tags simulation
+        """Optimize content tags"""        # Add trending tags simulation
         trending_tags = ["AI", "tech", "innovation"]
         return list(set(tags + trending_tags))
     
     def _optimize_timing(self, timing: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize posting timing"""
-        return {
+        """Optimize posting timing"""        return {
             "best_hour": 18,
             "best_day": "Tuesday",
             "timezone": "UTC"
         }
     
     def _optimize_format(self, format_type: str) -> str:
-        """Optimize content format"""
-        format_scores = {
+        """Optimize content format"""        format_scores = {
             "text": 0.6,
             "image": 0.8,
             "video": 0.9,
@@ -132,8 +117,7 @@ class ContentOptimizer(BaseOptimizer):
         return max(format_scores, key=format_scores.get)
     
     def _calculate_performance_score(self, params: Dict[str, Any]) -> float:
-        """Calculate performance score for optimized parameters"""
-        # Simulate performance calculation
+        """Calculate performance score for optimized parameters"""        # Simulate performance calculation
         base_score = 0.75
         if len(params.get("tags", [])) > 5:
             base_score += 0.1
@@ -142,8 +126,7 @@ class ContentOptimizer(BaseOptimizer):
         return min(base_score, 1.0)
 
 class StrategyOptimizer(BaseOptimizer):
-    """Optimizer for strategy optimization"""
-    
+    """Optimizer for strategy optimization"""    
     def __init__(self, config: Optional[OptimizationConfig] = None):
         if config is None:
             config = OptimizationConfig(
@@ -155,8 +138,7 @@ class StrategyOptimizer(BaseOptimizer):
         self.logger.info("StrategyOptimizer initialized successfully")
     
     def optimize(self, data: Dict[str, Any]) -> OptimizationResult:
-        """Optimize strategy for maximum ROI"""
-        try:
+        """Optimize strategy for maximum ROI"""        try:
             optimized_params = {
                 "target_audience": self._optimize_audience(data.get("audience", {})),
                 "content_mix": self._optimize_content_mix(data.get("content_types", [])),
@@ -179,8 +161,7 @@ class StrategyOptimizer(BaseOptimizer):
             raise
     
     def _optimize_audience(self, audience: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize target audience"""
-        return {
+        """Optimize target audience"""        return {
             "age_range": "25-44",
             "interests": ["technology", "business", "innovation"],
             "behavior": "high_engagement",
@@ -188,8 +169,7 @@ class StrategyOptimizer(BaseOptimizer):
         }
     
     def _optimize_content_mix(self, content_types: List[str]) -> Dict[str, float]:
-        """Optimize content type mix"""
-        return {
+        """Optimize content type mix"""        return {
             "educational": 0.4,
             "entertaining": 0.3,
             "promotional": 0.2,
@@ -197,8 +177,7 @@ class StrategyOptimizer(BaseOptimizer):
         }
     
     def _optimize_budget(self, budget: Dict[str, Any]) -> Dict[str, float]:
-        """Optimize budget allocation"""
-        total_budget = budget.get("total", 10000)
+        """Optimize budget allocation"""        total_budget = budget.get("total", 10000)
         return {
             "content_creation": total_budget * 0.4,
             "advertising": total_budget * 0.35,
@@ -207,8 +186,7 @@ class StrategyOptimizer(BaseOptimizer):
         }
     
     def _optimize_channels(self, channels: List[str]) -> List[Dict[str, Any]]:
-        """Optimize channel selection and allocation"""
-        return [
+        """Optimize channel selection and allocation"""        return [
             {"name": "instagram", "priority": 0.35, "budget_share": 0.4},
             {"name": "tiktok", "priority": 0.3, "budget_share": 0.35},
             {"name": "youtube", "priority": 0.25, "budget_share": 0.2},
@@ -216,8 +194,7 @@ class StrategyOptimizer(BaseOptimizer):
         ]
     
     def _calculate_strategy_score(self, params: Dict[str, Any]) -> float:
-        """Calculate strategy performance score"""
-        # Simulate strategy scoring
+        """Calculate strategy performance score"""        # Simulate strategy scoring
         base_score = 0.8
         if len(params.get("channels", [])) >= 3:
             base_score += 0.1
@@ -226,8 +203,7 @@ class StrategyOptimizer(BaseOptimizer):
         return min(base_score, 1.0)
 
 class CampaignOptimizer(BaseOptimizer):
-    """Optimizer for campaign optimization"""
-    
+    """Optimizer for campaign optimization"""    
     def __init__(self, config: Optional[OptimizationConfig] = None):
         if config is None:
             config = OptimizationConfig(
@@ -239,8 +215,7 @@ class CampaignOptimizer(BaseOptimizer):
         self.logger.info("CampaignOptimizer initialized successfully")
     
     def optimize(self, data: Dict[str, Any]) -> OptimizationResult:
-        """Optimize campaign for maximum conversion"""
-        try:
+        """Optimize campaign for maximum conversion"""        try:
             optimized_params = {
                 "messaging": self._optimize_messaging(data.get("message", {})),
                 "creative_assets": self._optimize_creatives(data.get("assets", [])),
@@ -264,8 +239,7 @@ class CampaignOptimizer(BaseOptimizer):
             raise
     
     def _optimize_messaging(self, message: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize campaign messaging"""
-        return {
+        """Optimize campaign messaging"""        return {
             "headline": "Transform Your Business Today",
             "cta": "Start Free Trial",
             "value_proposition": "Increase efficiency by 300%",
@@ -273,16 +247,14 @@ class CampaignOptimizer(BaseOptimizer):
         }
     
     def _optimize_creatives(self, assets: List[str]) -> List[Dict[str, Any]]:
-        """Optimize creative assets"""
-        return [
+        """Optimize creative assets"""        return [
             {"type": "video", "performance_score": 0.92, "recommended": True},
             {"type": "carousel", "performance_score": 0.87, "recommended": True},
             {"type": "static_image", "performance_score": 0.75, "recommended": False}
         ]
     
     def _optimize_targeting(self, targeting: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize audience targeting"""
-        return {
+        """Optimize audience targeting"""        return {
             "demographics": {
                 "age": "25-54",
                 "gender": "all",
@@ -294,8 +266,7 @@ class CampaignOptimizer(BaseOptimizer):
         }
     
     def _optimize_scheduling(self, schedule: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize campaign scheduling"""
-        return {
+        """Optimize campaign scheduling"""        return {
             "duration": "14_days",
             "dayparting": {
                 "weekdays": "9am-6pm",
@@ -306,8 +277,7 @@ class CampaignOptimizer(BaseOptimizer):
         }
     
     def _optimize_bidding(self, bidding: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize bidding strategy"""
-        return {
+        """Optimize bidding strategy"""        return {
             "strategy": "target_cost_per_conversion",
             "bid_amount": 25.0,
             "budget_daily": 500.0,
@@ -315,8 +285,7 @@ class CampaignOptimizer(BaseOptimizer):
         }
     
     def _calculate_campaign_score(self, params: Dict[str, Any]) -> float:
-        """Calculate campaign performance score"""
-        # Simulate campaign scoring
+        """Calculate campaign performance score"""        # Simulate campaign scoring
         base_score = 0.82
         if params.get("targeting", {}).get("lookalike_audiences"):
             base_score += 0.08
@@ -325,8 +294,7 @@ class CampaignOptimizer(BaseOptimizer):
         return min(base_score, 1.0)
 
 class ModelOptimizer:
-    """Model optimization with quantization and pruning"""
-    
+    """Model optimization with quantization and pruning"""    
     def __init__(self, model_config: Dict[str, Any] = None):
         self.model_config = model_config or {}
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -335,8 +303,7 @@ class ModelOptimizer:
         self.logger.info("ModelOptimizer initialized successfully")
     
     def optimize_model(self, model: Any, optimization_type: str = "speed") -> Dict[str, Any]:
-        """Optimize model for speed or size"""
-        try:
+        """Optimize model for speed or size"""        try:
             self.logger.info(f"Optimizing model for {optimization_type}")
             
             optimization_result = {
@@ -369,8 +336,7 @@ class ModelOptimizer:
             return {}
     
     def benchmark_model(self, model: Any) -> Dict[str, Any]:
-        """Benchmark model performance"""
-        try:
+        """Benchmark model performance"""        try:
             self.logger.info("Benchmarking model performance")
             
             benchmark_result = {
@@ -391,8 +357,7 @@ class ModelOptimizer:
             return {}
 
 class QuantizationEngine:
-    """Model quantization engine for size and speed optimization"""
-    
+    """Model quantization engine for size and speed optimization"""    
     def __init__(self, quantization_config: Dict[str, Any] = None):
         self.config = quantization_config or {
             "precision": "int8",
@@ -404,8 +369,7 @@ class QuantizationEngine:
         self.logger.info("QuantizationEngine initialized successfully")
     
     def quantize_model(self, model: Any) -> Dict[str, Any]:
-        """Quantize model to reduce size and improve inference speed"""
-        try:
+        """Quantize model to reduce size and improve inference speed"""        try:
             self.logger.info(f"Quantizing model to {self.config['precision']}")
             
             quantization_result = {
@@ -425,8 +389,7 @@ class QuantizationEngine:
             return {}
     
     def post_training_quantization(self, model: Any, calibration_data: Any) -> Dict[str, Any]:
-        """Apply post-training quantization"""
-        try:
+        """Apply post-training quantization"""        try:
             self.logger.info("Applying post-training quantization")
             
             ptq_result = {
@@ -446,8 +409,7 @@ class QuantizationEngine:
             return {}
     
     def quantization_aware_training(self, model: Any, training_data: Any) -> Dict[str, Any]:
-        """Apply quantization-aware training"""
-        try:
+        """Apply quantization-aware training"""        try:
             self.logger.info("Applying quantization-aware training")
             
             qat_result = {
@@ -467,8 +429,7 @@ class QuantizationEngine:
             return {}
 
 class PruningEngine:
-    """Model pruning engine for reducing model complexity"""
-    
+    """Model pruning engine for reducing model complexity"""    
     def __init__(self, pruning_config: Dict[str, Any] = None):
         self.config = pruning_config or {
             "pruning_ratio": 0.5,
@@ -481,8 +442,7 @@ class PruningEngine:
         self.logger.info("PruningEngine initialized successfully")
     
     def prune_model(self, model: Any) -> Dict[str, Any]:
-        """Prune model to reduce parameters and improve efficiency"""
-        try:
+        """Prune model to reduce parameters and improve efficiency"""        try:
             self.logger.info(f"Pruning model with {self.config['pruning_ratio']} ratio")
             
             pruning_result = {
@@ -502,8 +462,7 @@ class PruningEngine:
             return {}
     
     def structured_pruning(self, model: Any) -> Dict[str, Any]:
-        """Apply structured pruning (remove entire channels/filters)"""
-        try:
+        """Apply structured pruning (remove entire channels/filters)"""        try:
             self.logger.info("Applying structured pruning")
             
             structured_result = {
@@ -523,8 +482,7 @@ class PruningEngine:
             return {}
     
     def unstructured_pruning(self, model: Any) -> Dict[str, Any]:
-        """Apply unstructured pruning (remove individual weights)"""
-        try:
+        """Apply unstructured pruning (remove individual weights)"""        try:
             self.logger.info("Applying unstructured pruning")
             
             unstructured_result = {
@@ -544,8 +502,7 @@ class PruningEngine:
             return {}
     
     def gradual_pruning(self, model: Any, training_schedule: List[int]) -> Dict[str, Any]:
-        """Apply gradual pruning during training"""
-        try:
+        """Apply gradual pruning during training"""        try:
             self.logger.info("Applying gradual pruning")
             
             gradual_result = {

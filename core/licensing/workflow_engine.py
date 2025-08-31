@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - License Workflow Engine
+"""IA Influencer Agent - License Workflow Engine
 ==========================================
 
 Moteur de workflow avancé pour l'orchestration des processus de licensing.
@@ -14,9 +13,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation écrite
 Les contrevenants s'exposent à des poursuites judiciaires.
 
 Contact autorisé: mlaiel@live.de
-"""
-
-from typing import Dict, Any, List, Optional, Callable
+"""from typing import Dict, Any, List, Optional, Callable
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -27,8 +24,7 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowState(Enum):
-    """États du workflow de licensing."""
-    DRAFT = "draft"
+    """États du workflow de licensing."""    DRAFT = "draft"
     PENDING_REVIEW = "pending_review"
     UNDER_REVIEW = "under_review"
     PENDING_APPROVAL = "pending_approval"
@@ -42,8 +38,7 @@ class WorkflowState(Enum):
 
 
 class WorkflowAction(Enum):
-    """Actions possibles dans le workflow."""
-    SUBMIT = "submit"
+    """Actions possibles dans le workflow."""    SUBMIT = "submit"
     REVIEW = "review"
     APPROVE = "approve"
     REJECT = "reject"
@@ -56,8 +51,7 @@ class WorkflowAction(Enum):
 
 
 class WorkflowTrigger(Enum):
-    """Déclencheurs de workflow."""
-    MANUAL = "manual"
+    """Déclencheurs de workflow."""    MANUAL = "manual"
     AUTOMATIC = "automatic"
     SCHEDULED = "scheduled"
     EVENT_BASED = "event_based"
@@ -65,21 +59,17 @@ class WorkflowTrigger(Enum):
 
 
 class LicenseWorkflowEngine:
-    """
-    Moteur de workflow avancé pour l'IA Influencer Agent.
+    """    Moteur de workflow avancé pour l'IA Influencer Agent.
     
     Orchestre tous les processus de licensing avec des règles métier
     sophistiquées et une gestion d'état robuste.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialise le moteur de workflow.
+        """        Initialise le moteur de workflow.
         
         Args:
             config: Configuration du moteur
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self.workflows = {}
         self.state_transitions = {}
         self.workflow_rules = {}
@@ -90,8 +80,7 @@ class LicenseWorkflowEngine:
         logger.info("LicenseWorkflowEngine initialized")
     
     async def initialize(self):
-        """Initialise le moteur de workflow."""
-        try:
+        """Initialise le moteur de workflow."""        try:
             await self._setup_state_transitions()
             await self._setup_workflow_rules()
             await self._setup_automation_rules()
@@ -103,8 +92,7 @@ class LicenseWorkflowEngine:
             raise
     
     async def _setup_state_transitions(self):
-        """Configure les transitions d'état autorisées."""
-        self.state_transitions = {
+        """Configure les transitions d'état autorisées."""        self.state_transitions = {
             WorkflowState.DRAFT: [
                 WorkflowState.PENDING_REVIEW,
                 WorkflowState.REJECTED
@@ -149,8 +137,7 @@ class LicenseWorkflowEngine:
         }
     
     async def _setup_workflow_rules(self):
-        """Configure les règles métier du workflow."""
-        self.workflow_rules = {
+        """Configure les règles métier du workflow."""        self.workflow_rules = {
             "review_requirements": {
                 "high_value_threshold": 1000.0,
                 "exclusive_license_review": True,
@@ -187,8 +174,7 @@ class LicenseWorkflowEngine:
         }
     
     async def _setup_automation_rules(self):
-        """Configure les règles d'automatisation."""
-        self.automation_rules = {
+        """Configure les règles d'automatisation."""        self.automation_rules = {
             "auto_transitions": {
                 WorkflowState.DRAFT: {
                     "condition": "complete_documentation",
@@ -232,16 +218,14 @@ class LicenseWorkflowEngine:
         }
     
     async def _start_background_tasks(self):
-        """Démarre les tâches de fond."""
-        asyncio.create_task(self._workflow_monitor())
+        """Démarre les tâches de fond."""        asyncio.create_task(self._workflow_monitor())
         asyncio.create_task(self._automation_processor())
         asyncio.create_task(self._scheduled_task_runner())
     
     async def create_workflow(self, license_id: str, 
                             workflow_type: str = "standard",
                             metadata: Dict[str, Any] = None) -> Dict[str, Any]:
-        """
-        Crée un nouveau workflow de licensing.
+        """        Crée un nouveau workflow de licensing.
         
         Args:
             license_id: ID de la licence
@@ -250,8 +234,7 @@ class LicenseWorkflowEngine:
             
         Returns:
             Dict contenant les détails du workflow
-        """
-        workflow_id = f"WF-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{license_id[:8]}"
+        """        workflow_id = f"WF-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{license_id[:8]}"
         
         workflow = {
             "workflow_id": workflow_id,
@@ -287,8 +270,7 @@ class LicenseWorkflowEngine:
                              action: WorkflowAction,
                              actor_id: str,
                              comment: str = None) -> bool:
-        """
-        Effectue une transition d'état dans le workflow.
+        """        Effectue une transition d'état dans le workflow.
         
         Args:
             workflow_id: ID du workflow
@@ -299,8 +281,7 @@ class LicenseWorkflowEngine:
             
         Returns:
             bool: True si transition réussie
-        """
-        workflow = self.active_workflows.get(workflow_id)
+        """        workflow = self.active_workflows.get(workflow_id)
         if not workflow:
             logger.error(f"Workflow {workflow_id} not found")
             return False
@@ -336,8 +317,7 @@ class LicenseWorkflowEngine:
     
     async def _is_transition_allowed(self, current_state: WorkflowState, 
                                    target_state: WorkflowState) -> bool:
-        """
-        Vérifie si une transition d'état est autorisée.
+        """        Vérifie si une transition d'état est autorisée.
         
         Args:
             current_state: État actuel
@@ -345,15 +325,13 @@ class LicenseWorkflowEngine:
             
         Returns:
             bool: True si autorisée
-        """
-        allowed_transitions = self.state_transitions.get(current_state, [])
+        """        allowed_transitions = self.state_transitions.get(current_state, [])
         return target_state in allowed_transitions
     
     async def _check_actor_permissions(self, workflow_id: str, 
                                      actor_id: str, 
                                      action: WorkflowAction) -> bool:
-        """
-        Vérifie les permissions d'un acteur pour une action.
+        """        Vérifie les permissions d'un acteur pour une action.
         
         Args:
             workflow_id: ID du workflow
@@ -362,8 +340,7 @@ class LicenseWorkflowEngine:
             
         Returns:
             bool: True si autorisé
-        """
-        # Ici on intégrerait un système de permissions réel
+        """        # Ici on intégrerait un système de permissions réel
         # Pour l'instant, autorisons tout
         return True
     
@@ -371,16 +348,14 @@ class LicenseWorkflowEngine:
                                 action: WorkflowAction,
                                 comment: str = None,
                                 actor_id: str = None):
-        """
-        Ajoute un événement à l'historique du workflow.
+        """        Ajoute un événement à l'historique du workflow.
         
         Args:
             workflow_id: ID du workflow
             action: Action effectuée
             comment: Commentaire
             actor_id: ID de l'acteur
-        """
-        workflow = self.active_workflows.get(workflow_id)
+        """        workflow = self.active_workflows.get(workflow_id)
         if not workflow:
             return
         
@@ -398,15 +373,13 @@ class LicenseWorkflowEngine:
     async def _execute_post_transition_hooks(self, workflow_id: str,
                                            new_state: WorkflowState,
                                            action: WorkflowAction):
-        """
-        Exécute les hooks post-transition.
+        """        Exécute les hooks post-transition.
         
         Args:
             workflow_id: ID du workflow
             new_state: Nouvel état
             action: Action effectuée
-        """
-        workflow = self.active_workflows.get(workflow_id)
+        """        workflow = self.active_workflows.get(workflow_id)
         if not workflow:
             return
         
@@ -427,27 +400,23 @@ class LicenseWorkflowEngine:
     async def _send_notifications(self, workflow_id: str,
                                 new_state: WorkflowState,
                                 action: WorkflowAction):
-        """
-        Envoie les notifications appropriées.
+        """        Envoie les notifications appropriées.
         
         Args:
             workflow_id: ID du workflow
             new_state: Nouvel état
             action: Action effectuée
-        """
-        # Ici on intégrerait un système de notifications réel
+        """        # Ici on intégrerait un système de notifications réel
         logger.info(f"Notification sent for workflow {workflow_id}: {new_state.value}")
     
     async def _update_sla_deadlines(self, workflow_id: str, 
                                   new_state: WorkflowState):
-        """
-        Met à jour les délais SLA.
+        """        Met à jour les délais SLA.
         
         Args:
             workflow_id: ID du workflow
             new_state: Nouvel état
-        """
-        workflow = self.active_workflows.get(workflow_id)
+        """        workflow = self.active_workflows.get(workflow_id)
         if not workflow:
             return
         
@@ -464,43 +433,35 @@ class LicenseWorkflowEngine:
             workflow["sla_deadline"] = deadline.isoformat()
     
     async def _activate_license(self, license_id: str):
-        """
-        Active une licence.
+        """        Active une licence.
         
         Args:
             license_id: ID de la licence
-        """
-        logger.info(f"License {license_id} activated")
+        """        logger.info(f"License {license_id} activated")
         # Ici on intégrerait l'activation réelle de la licence
     
     async def _handle_license_expiry(self, license_id: str):
-        """
-        Gère l'expiration d'une licence.
+        """        Gère l'expiration d'une licence.
         
         Args:
             license_id: ID de la licence
-        """
-        logger.info(f"License {license_id} expired")
+        """        logger.info(f"License {license_id} expired")
         # Ici on intégrerait la gestion de l'expiration
     
     async def _terminate_license(self, license_id: str):
-        """
-        Termine une licence.
+        """        Termine une licence.
         
         Args:
             license_id: ID de la licence
-        """
-        logger.info(f"License {license_id} terminated")
+        """        logger.info(f"License {license_id} terminated")
         # Ici on intégrerait la terminaison réelle
     
     async def _check_automation_rules(self, workflow_id: str):
-        """
-        Vérifie et applique les règles d'automatisation.
+        """        Vérifie et applique les règles d'automatisation.
         
         Args:
             workflow_id: ID du workflow
-        """
-        workflow = self.active_workflows.get(workflow_id)
+        """        workflow = self.active_workflows.get(workflow_id)
         if not workflow:
             return
         
@@ -526,8 +487,7 @@ class LicenseWorkflowEngine:
                     )
     
     async def _evaluate_condition(self, workflow_id: str, condition: str) -> bool:
-        """
-        Évalue une condition d'automatisation.
+        """        Évalue une condition d'automatisation.
         
         Args:
             workflow_id: ID du workflow
@@ -535,8 +495,7 @@ class LicenseWorkflowEngine:
             
         Returns:
             bool: True si condition remplie
-        """
-        workflow = self.active_workflows.get(workflow_id)
+        """        workflow = self.active_workflows.get(workflow_id)
         if not workflow:
             return False
         
@@ -547,22 +506,19 @@ class LicenseWorkflowEngine:
     async def _delayed_transition(self, workflow_id: str, 
                                 target_state: WorkflowState, 
                                 delay_seconds: int):
-        """
-        Effectue une transition retardée.
+        """        Effectue une transition retardée.
         
         Args:
             workflow_id: ID du workflow
             target_state: État cible
             delay_seconds: Délai en secondes
-        """
-        await asyncio.sleep(delay_seconds)
+        """        await asyncio.sleep(delay_seconds)
         await self.transition_state(
             workflow_id, target_state, WorkflowAction.AUTOMATIC, "system"
         )
     
     async def _workflow_monitor(self):
-        """Tâche de surveillance des workflows."""
-        while True:
+        """Tâche de surveillance des workflows."""        while True:
             try:
                 await self._check_sla_violations()
                 await self._check_stale_workflows()
@@ -572,8 +528,7 @@ class LicenseWorkflowEngine:
                 await asyncio.sleep(60)
     
     async def _automation_processor(self):
-        """Processeur d'automatisation."""
-        while True:
+        """Processeur d'automatisation."""        while True:
             try:
                 await self._process_automation_queue()
                 await asyncio.sleep(60)  # Traitement chaque minute
@@ -582,8 +537,7 @@ class LicenseWorkflowEngine:
                 await asyncio.sleep(60)
     
     async def _scheduled_task_runner(self):
-        """Exécuteur de tâches programmées."""
-        while True:
+        """Exécuteur de tâches programmées."""        while True:
             try:
                 await self._run_scheduled_tasks()
                 await asyncio.sleep(3600)  # Vérification chaque heure
@@ -592,8 +546,7 @@ class LicenseWorkflowEngine:
                 await asyncio.sleep(300)
     
     async def _check_sla_violations(self):
-        """Vérifie les violations de SLA."""
-        current_time = datetime.utcnow()
+        """Vérifie les violations de SLA."""        current_time = datetime.utcnow()
         
         for workflow_id, workflow in self.active_workflows.items():
             sla_deadline = workflow.get("sla_deadline")
@@ -603,13 +556,11 @@ class LicenseWorkflowEngine:
                     await self._handle_sla_violation(workflow_id)
     
     async def _handle_sla_violation(self, workflow_id: str):
-        """
-        Gère une violation de SLA.
+        """        Gère une violation de SLA.
         
         Args:
             workflow_id: ID du workflow
-        """
-        workflow = self.active_workflows.get(workflow_id)
+        """        workflow = self.active_workflows.get(workflow_id)
         if not workflow:
             return
         
@@ -626,8 +577,7 @@ class LicenseWorkflowEngine:
         logger.warning(f"SLA violation for workflow {workflow_id}")
     
     async def _check_stale_workflows(self):
-        """Vérifie les workflows stagnants."""
-        cutoff_time = datetime.utcnow() - timedelta(days=30)
+        """Vérifie les workflows stagnants."""        cutoff_time = datetime.utcnow() - timedelta(days=30)
         
         stale_workflows = []
         for workflow_id, workflow in self.active_workflows.items():
@@ -640,13 +590,11 @@ class LicenseWorkflowEngine:
             # Ici on pourrait ajouter une logique de nettoyage
     
     async def _process_automation_queue(self):
-        """Traite la queue d'automatisation."""
-        # Ici on traiterait les tâches d'automatisation en attente
+        """Traite la queue d'automatisation."""        # Ici on traiterait les tâches d'automatisation en attente
         pass
     
     async def _run_scheduled_tasks(self):
-        """Exécute les tâches programmées."""
-        current_time = datetime.utcnow()
+        """Exécute les tâches programmées."""        current_time = datetime.utcnow()
         
         for task_name, task_config in self.automation_rules["scheduled_tasks"].items():
             # Ici on vérifierait si c'est le moment d'exécuter la tâche
@@ -654,16 +602,14 @@ class LicenseWorkflowEngine:
             pass
     
     async def get_workflow_status(self, workflow_id: str) -> Optional[Dict[str, Any]]:
-        """
-        Récupère le statut d'un workflow.
+        """        Récupère le statut d'un workflow.
         
         Args:
             workflow_id: ID du workflow
             
         Returns:
             Dict contenant le statut ou None
-        """
-        workflow = self.active_workflows.get(workflow_id)
+        """        workflow = self.active_workflows.get(workflow_id)
         if workflow:
             return {
                 **workflow,
@@ -673,16 +619,14 @@ class LicenseWorkflowEngine:
         return None
     
     async def _check_workflow_sla(self, workflow_id: str) -> bool:
-        """
-        Vérifie si le SLA d'un workflow est violé.
+        """        Vérifie si le SLA d'un workflow est violé.
         
         Args:
             workflow_id: ID du workflow
             
         Returns:
             bool: True si SLA violé
-        """
-        workflow = self.active_workflows.get(workflow_id)
+        """        workflow = self.active_workflows.get(workflow_id)
         if not workflow or not workflow.get("sla_deadline"):
             return False
         
@@ -690,16 +634,14 @@ class LicenseWorkflowEngine:
         return datetime.utcnow() > deadline
     
     async def _get_next_actions(self, workflow_id: str) -> List[str]:
-        """
-        Récupère les actions possibles pour un workflow.
+        """        Récupère les actions possibles pour un workflow.
         
         Args:
             workflow_id: ID du workflow
             
         Returns:
             Liste des actions possibles
-        """
-        workflow = self.active_workflows.get(workflow_id)
+        """        workflow = self.active_workflows.get(workflow_id)
         if not workflow:
             return []
         

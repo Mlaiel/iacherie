@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""
-IA Influencer Agent - Core Surveillance Engine
+"""IA Influencer Agent - Core Surveillance Engine
 ==============================================
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
@@ -21,9 +20,7 @@ legal action. Contact mlaiel@live.de for licensing.
 
 Core surveillance engine that orchestrates all surveillance activities
 across the IA Influencer Agent platform.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Callable
 from datetime import datetime, timedelta
@@ -35,8 +32,7 @@ logger = logging.getLogger(__name__)
 
 
 class EngineStatus(Enum):
-    """Surveillance engine status."""
-    STOPPED = "stopped"
+    """Surveillance engine status."""    STOPPED = "stopped"
     STARTING = "starting"
     RUNNING = "running"
     STOPPING = "stopping"
@@ -45,8 +41,7 @@ class EngineStatus(Enum):
 
 @dataclass
 class SurveillanceTask:
-    """Represents a surveillance task."""
-    task_id: str
+    """Represents a surveillance task."""    task_id: str
     task_type: str
     creator_id: str
     platform: str
@@ -61,8 +56,7 @@ class SurveillanceTask:
 
 @dataclass
 class EngineMetrics:
-    """Engine performance metrics."""
-    tasks_processed: int = 0
+    """Engine performance metrics."""    tasks_processed: int = 0
     tasks_pending: int = 0
     tasks_failed: int = 0
     uptime_seconds: float = 0.0
@@ -73,8 +67,7 @@ class EngineMetrics:
 
 
 class SurveillanceEngine:
-    """
-    Core surveillance engine for the IA Influencer Agent platform.
+    """    Core surveillance engine for the IA Influencer Agent platform.
     
     This engine orchestrates all surveillance activities including:
     - Task scheduling and execution
@@ -82,16 +75,13 @@ class SurveillanceEngine:
     - Performance monitoring
     - Error handling and recovery
     - Component coordination
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize the surveillance engine.
+        """        Initialize the surveillance engine.
         
         Args:
             config: Engine configuration
-        """
-        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
         self.config = config or {}
@@ -131,8 +121,7 @@ class SurveillanceEngine:
         self._logger.info("Surveillance engine initialized")
     
     async def initialize(self) -> None:
-        """Initialize the surveillance engine."""
-        try:
+        """Initialize the surveillance engine."""        try:
             self._logger.info("Initializing surveillance engine...")
             
             # Validate configuration
@@ -152,8 +141,7 @@ class SurveillanceEngine:
             raise
     
     async def start(self) -> None:
-        """Start the surveillance engine."""
-        try:
+        """Start the surveillance engine."""        try:
             if self.status == EngineStatus.RUNNING:
                 self._logger.warning("Surveillance engine is already running")
                 return
@@ -184,8 +172,7 @@ class SurveillanceEngine:
             raise
     
     async def stop(self) -> None:
-        """Stop the surveillance engine."""
-        try:
+        """Stop the surveillance engine."""        try:
             if self.status == EngineStatus.STOPPED:
                 self._logger.warning("Surveillance engine is already stopped")
                 return
@@ -223,16 +210,14 @@ class SurveillanceEngine:
             raise
     
     async def submit_task(self, task: SurveillanceTask) -> str:
-        """
-        Submit a surveillance task for execution.
+        """        Submit a surveillance task for execution.
         
         Args:
             task: Surveillance task to execute
             
         Returns:
             Task ID
-        """
-        try:
+        """        try:
             if self.status != EngineStatus.RUNNING:
                 raise RuntimeError(f"Engine not running (status: {self.status})")
             
@@ -250,16 +235,14 @@ class SurveillanceEngine:
             raise
     
     async def cancel_task(self, task_id: str) -> bool:
-        """
-        Cancel a running task.
+        """        Cancel a running task.
         
         Args:
             task_id: Task to cancel
             
         Returns:
             True if cancelled successfully
-        """
-        try:
+        """        try:
             # Check if task is running
             if task_id in self.running_tasks:
                 task = self.running_tasks[task_id]
@@ -286,8 +269,7 @@ class SurveillanceEngine:
             return False
     
     def get_status(self) -> Dict[str, Any]:
-        """Get engine status and metrics."""
-        return {
+        """Get engine status and metrics."""        return {
             'status': self.status.value,
             'uptime_seconds': (
                 (datetime.utcnow() - self.start_time).total_seconds()
@@ -313,32 +295,27 @@ class SurveillanceEngine:
         }
     
     def add_callback(self, event: str, callback: Callable) -> None:
-        """
-        Add event callback.
+        """        Add event callback.
         
         Args:
             event: Event name
             callback: Callback function
-        """
-        if event in self.task_callbacks:
+        """        if event in self.task_callbacks:
             self.task_callbacks[event].append(callback)
         else:
             self._logger.warning(f"Unknown event type: {event}")
     
     def remove_callback(self, event: str, callback: Callable) -> None:
-        """
-        Remove event callback.
+        """        Remove event callback.
         
         Args:
             event: Event name
             callback: Callback function
-        """
-        if event in self.task_callbacks and callback in self.task_callbacks[event]:
+        """        if event in self.task_callbacks and callback in self.task_callbacks[event]:
             self.task_callbacks[event].remove(callback)
     
     async def _validate_config(self) -> None:
-        """Validate engine configuration."""
-        if self.max_concurrent_tasks <= 0:
+        """Validate engine configuration."""        if self.max_concurrent_tasks <= 0:
             raise ValueError("max_concurrent_tasks must be positive")
         
         if self.task_timeout_seconds <= 0:
@@ -347,8 +324,7 @@ class SurveillanceEngine:
         self._logger.debug("Configuration validated successfully")
     
     async def _setup_workers(self) -> None:
-        """Setup task worker coroutines."""
-        # Create worker tasks
+        """Setup task worker coroutines."""        # Create worker tasks
         for i in range(self.max_concurrent_tasks):
             worker = asyncio.create_task(self._task_worker(f"worker-{i}"))
             self.worker_tasks.append(worker)
@@ -356,13 +332,11 @@ class SurveillanceEngine:
         self._logger.debug(f"Created {len(self.worker_tasks)} task workers")
     
     async def _start_workers(self) -> None:
-        """Start task workers."""
-        # Workers are already started in _setup_workers
+        """Start task workers."""        # Workers are already started in _setup_workers
         self._logger.debug("Task workers started")
     
     async def _stop_workers(self) -> None:
-        """Stop task workers."""
-        # Cancel all worker tasks
+        """Stop task workers."""        # Cancel all worker tasks
         for worker in self.worker_tasks:
             if not worker.done():
                 worker.cancel()
@@ -375,13 +349,11 @@ class SurveillanceEngine:
         self._logger.debug("Task workers stopped")
     
     async def _task_worker(self, worker_id: str) -> None:
-        """
-        Task worker coroutine.
+        """        Task worker coroutine.
         
         Args:
             worker_id: Worker identifier
-        """
-        self._logger.debug(f"Task worker {worker_id} started")
+        """        self._logger.debug(f"Task worker {worker_id} started")
         
         try:
             while True:
@@ -410,14 +382,12 @@ class SurveillanceEngine:
         self._logger.debug(f"Task worker {worker_id} stopped")
     
     async def _execute_task(self, task: SurveillanceTask, worker_id: str) -> None:
-        """
-        Execute a surveillance task.
+        """        Execute a surveillance task.
         
         Args:
             task: Task to execute
             worker_id: Worker executing the task
-        """
-        try:
+        """        try:
             self._logger.debug(f"Worker {worker_id} executing task {task.task_id}")
             
             # Move task to running
@@ -481,13 +451,11 @@ class SurveillanceEngine:
                 del self.running_tasks[task.task_id]
     
     async def _run_task(self, task: SurveillanceTask) -> None:
-        """
-        Run the actual task logic.
+        """        Run the actual task logic.
         
         Args:
             task: Task to run
-        """
-        # This is a placeholder for actual task execution
+        """        # This is a placeholder for actual task execution
         # In a real implementation, this would dispatch to appropriate handlers
         # based on task type
         
@@ -507,26 +475,22 @@ class SurveillanceEngine:
             self._logger.warning(f"Unknown task type: {task.task_type}")
     
     async def _execute_content_scan(self, task: SurveillanceTask) -> None:
-        """Execute content scanning task."""
-        # Placeholder for content scanning logic
+        """Execute content scanning task."""        # Placeholder for content scanning logic
         await asyncio.sleep(0.5)  # Simulate scanning
         self._logger.debug(f"Content scan completed for task {task.task_id}")
     
     async def _execute_threat_analysis(self, task: SurveillanceTask) -> None:
-        """Execute threat analysis task."""
-        # Placeholder for threat analysis logic
+        """Execute threat analysis task."""        # Placeholder for threat analysis logic
         await asyncio.sleep(0.3)  # Simulate analysis
         self._logger.debug(f"Threat analysis completed for task {task.task_id}")
     
     async def _execute_compliance_check(self, task: SurveillanceTask) -> None:
-        """Execute compliance check task."""
-        # Placeholder for compliance checking logic
+        """Execute compliance check task."""        # Placeholder for compliance checking logic
         await asyncio.sleep(0.2)  # Simulate checking
         self._logger.debug(f"Compliance check completed for task {task.task_id}")
     
     async def _wait_for_tasks_completion(self, timeout: int = 30) -> None:
-        """Wait for running tasks to complete."""
-        if not self.running_tasks:
+        """Wait for running tasks to complete."""        if not self.running_tasks:
             return
         
         try:
@@ -543,8 +507,7 @@ class SurveillanceEngine:
                 self._logger.warning(f"Force cancelled task {task_id}")
     
     async def _clear_queues(self) -> None:
-        """Clear task queues."""
-        # Clear pending tasks
+        """Clear task queues."""        # Clear pending tasks
         self.pending_tasks.clear()
         
         # Clear task queue
@@ -561,13 +524,11 @@ class SurveillanceEngine:
         self._logger.debug("Task queues cleared")
     
     async def _setup_metrics(self) -> None:
-        """Setup metrics collection."""
-        self.metrics = EngineMetrics()
+        """Setup metrics collection."""        self.metrics = EngineMetrics()
         self._logger.debug("Metrics collection setup complete")
     
     async def _metrics_collector(self) -> None:
-        """Collect engine metrics periodically."""
-        self._logger.debug("Metrics collector started")
+        """Collect engine metrics periodically."""        self._logger.debug("Metrics collector started")
         
         try:
             while True:
@@ -585,8 +546,7 @@ class SurveillanceEngine:
         self._logger.debug("Metrics collector stopped")
     
     async def _update_metrics(self) -> None:
-        """Update engine metrics."""
-        try:
+        """Update engine metrics."""        try:
             # Update task counts
             self.metrics.tasks_pending = len(self.pending_tasks)
             
@@ -615,8 +575,7 @@ class SurveillanceEngine:
             self._logger.error(f"Error updating metrics: {e}")
     
     async def _record_error(self, error: Exception, context: str = "") -> None:
-        """Record an error for tracking."""
-        error_record = {
+        """Record an error for tracking."""        error_record = {
             'timestamp': datetime.utcnow(),
             'error_type': type(error).__name__,
             'error_message': str(error),
@@ -633,8 +592,7 @@ class SurveillanceEngine:
         ]
     
     async def _notify_callbacks(self, event: str, **kwargs) -> None:
-        """Notify event callbacks."""
-        try:
+        """Notify event callbacks."""        try:
             callbacks = self.task_callbacks.get(event, [])
             
             for callback in callbacks:
@@ -650,8 +608,7 @@ class SurveillanceEngine:
             self._logger.error(f"Error notifying callbacks for event {event}: {e}")
     
     async def shutdown(self) -> None:
-        """Shutdown the surveillance engine."""
-        await self.stop()
+        """Shutdown the surveillance engine."""        await self.stop()
         self._logger.info("Surveillance engine shutdown complete")
 
 
@@ -663,8 +620,7 @@ def create_surveillance_task(
     priority: int = 1,
     metadata: Optional[Dict[str, Any]] = None
 ) -> SurveillanceTask:
-    """
-    Create a surveillance task.
+    """    Create a surveillance task.
     
     Args:
         task_type: Type of surveillance task
@@ -675,8 +631,7 @@ def create_surveillance_task(
         
     Returns:
         Created surveillance task
-    """
-    return SurveillanceTask(
+    """    return SurveillanceTask(
         task_id=str(uuid.uuid4()),
         task_type=task_type,
         creator_id=creator_id,

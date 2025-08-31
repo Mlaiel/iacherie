@@ -1,5 +1,4 @@
-"""
-AI Processing Deployment Manager
+"""AI Processing Deployment Manager
 ===============================
 
 Enterprise deployment management system for AI processing infrastructure
@@ -13,9 +12,7 @@ Features:
 - Enterprise security and compliance
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import os
 import time
@@ -50,8 +47,7 @@ logger = logging.getLogger(__name__)
 
 
 class DeploymentStatus(Enum):
-    """Deployment status states."""
-    INITIALIZING = "initializing"
+    """Deployment status states."""    INITIALIZING = "initializing"
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -62,8 +58,7 @@ class DeploymentStatus(Enum):
 
 
 class ScalingPolicy(Enum):
-    """Auto-scaling policies."""
-    DISABLED = "disabled"
+    """Auto-scaling policies."""    DISABLED = "disabled"
     CONSERVATIVE = "conservative"
     MODERATE = "moderate"
     AGGRESSIVE = "aggressive"
@@ -72,8 +67,7 @@ class ScalingPolicy(Enum):
 
 @dataclass
 class DeploymentMetrics:
-    """Deployment metrics and statistics."""
-    cpu_usage_percent: float
+    """Deployment metrics and statistics."""    cpu_usage_percent: float
     memory_usage_percent: float
     disk_usage_percent: float
     network_io_mbps: float
@@ -88,8 +82,7 @@ class DeploymentMetrics:
 
 @dataclass
 class ScalingConfiguration:
-    """Auto-scaling configuration."""
-    enabled: bool = True
+    """Auto-scaling configuration."""    enabled: bool = True
     policy: ScalingPolicy = ScalingPolicy.MODERATE
     min_replicas: int = 2
     max_replicas: int = 20
@@ -104,8 +97,7 @@ class ScalingConfiguration:
 
 @dataclass
 class AlertConfiguration:
-    """Alert configuration for monitoring."""
-    enabled: bool = True
+    """Alert configuration for monitoring."""    enabled: bool = True
     error_rate_threshold: float = 5.0
     response_time_threshold_ms: float = 5000.0
     cpu_threshold_percent: float = 90.0
@@ -116,20 +108,17 @@ class AlertConfiguration:
 
 
 class DeploymentManager:
-    """
-    Enterprise AI Processing Deployment Manager
+    """    Enterprise AI Processing Deployment Manager
     
     Manages complete lifecycle of AI processing deployments with
     enterprise-grade monitoring, scaling, and operational capabilities.
-    """
-    
+    """    
     def __init__(
         self,
         deployment_id: str,
         config_path: Optional[str] = None
     ):
-        """Initialize deployment manager."""
-        self.deployment_id = deployment_id
+        """Initialize deployment manager."""        self.deployment_id = deployment_id
         self.config_path = config_path
         self.start_time = datetime.utcnow()
         
@@ -165,8 +154,7 @@ class DeploymentManager:
         asyncio.create_task(self._initialize_manager())
     
     async def _initialize_manager(self):
-        """Initialize deployment manager components."""
-        try:
+        """Initialize deployment manager components."""        try:
             logger.info(f"Initializing deployment manager: {self.deployment_id}")
             
             # Load configuration
@@ -196,8 +184,7 @@ class DeploymentManager:
             raise
     
     async def _load_configuration(self):
-        """Load deployment configuration from file or defaults."""
-        try:
+        """Load deployment configuration from file or defaults."""        try:
             if self.config_path and os.path.exists(self.config_path):
                 async with aiofiles.open(self.config_path, 'r') as f:
                     content = await f.read()
@@ -261,8 +248,7 @@ class DeploymentManager:
             raise
     
     async def _initialize_infrastructure(self):
-        """Initialize infrastructure connections."""
-        try:
+        """Initialize infrastructure connections."""        try:
             # Redis connection
             redis_url = os.getenv('REDIS_URL', 'redis://localhost:6379')
             self.redis_client = aioredis.from_url(redis_url, decode_responses=True)
@@ -297,8 +283,7 @@ class DeploymentManager:
             raise
     
     async def _initialize_database_schema(self):
-        """Initialize database schema for deployment tracking."""
-        try:
+        """Initialize database schema for deployment tracking."""        try:
             metadata = MetaData()
             
             # Deployment status table
@@ -331,8 +316,7 @@ class DeploymentManager:
             logger.error(f"Failed to initialize database schema: {e}")
     
     async def _initialize_components(self):
-        """Initialize core AI processing components."""
-        try:
+        """Initialize core AI processing components."""        try:
             # Initialize AI processing deployment
             processing_config = ProcessingConfig(
                 **self.deployment_config.get('processing', {})
@@ -366,8 +350,7 @@ class DeploymentManager:
             raise
     
     async def _load_ai_models(self):
-        """Load AI models for processing."""
-        try:
+        """Load AI models for processing."""        try:
             models_config = self.deployment_config.get('models', {})
             
             # Default model configurations
@@ -418,8 +401,7 @@ class DeploymentManager:
             logger.error(f"Failed to load AI models: {e}")
     
     async def _start_monitoring(self):
-        """Start monitoring background tasks."""
-        try:
+        """Start monitoring background tasks."""        try:
             # Start monitoring tasks
             self._monitoring_task = asyncio.create_task(self._monitoring_loop())
             self._health_check_task = asyncio.create_task(self._health_check_loop())
@@ -434,8 +416,7 @@ class DeploymentManager:
             raise
     
     async def _monitoring_loop(self):
-        """Main monitoring loop for metrics collection."""
-        while True:
+        """Main monitoring loop for metrics collection."""        while True:
             try:
                 # Collect current metrics
                 metrics = await self._collect_metrics()
@@ -473,8 +454,7 @@ class DeploymentManager:
                 await asyncio.sleep(60)  # Wait longer on error
     
     async def _collect_metrics(self) -> DeploymentMetrics:
-        """Collect comprehensive deployment metrics."""
-        try:
+        """Collect comprehensive deployment metrics."""        try:
             # System metrics
             cpu_percent = psutil.cpu_percent(interval=1)
             memory = psutil.virtual_memory()
@@ -522,8 +502,7 @@ class DeploymentManager:
             )
     
     def _calculate_health_score(self, cpu_percent: float, memory_percent: float, disk_percent: float) -> float:
-        """Calculate overall health score based on system metrics."""
-        try:
+        """Calculate overall health score based on system metrics."""        try:
             # Weight factors for different metrics
             cpu_weight = 0.3
             memory_weight = 0.4
@@ -547,8 +526,7 @@ class DeploymentManager:
             return 0.5  # Default score on error
     
     async def _store_metrics_in_database(self, metrics: DeploymentMetrics):
-        """Store metrics in database for historical analysis."""
-        try:
+        """Store metrics in database for historical analysis."""        try:
             if not self.db_engine:
                 return
             
@@ -567,8 +545,7 @@ class DeploymentManager:
                 }
                 
                 # Use raw SQL for upsert
-                session.execute("""
-                    INSERT INTO deployment_status (deployment_id, status, metrics, configuration, last_updated, created_at)
+                session.execute("""                    INSERT INTO deployment_status (deployment_id, status, metrics, configuration, last_updated, created_at)
                     VALUES (:deployment_id, :status, :metrics, :configuration, :last_updated, :created_at)
                     ON CONFLICT (deployment_id) DO UPDATE SET
                     status = EXCLUDED.status,
@@ -586,8 +563,7 @@ class DeploymentManager:
             logger.error(f"Failed to store metrics in database: {e}")
     
     async def _check_alerts(self, metrics: DeploymentMetrics):
-        """Check alert conditions and trigger notifications."""
-        try:
+        """Check alert conditions and trigger notifications."""        try:
             if not self.alert_config.enabled:
                 return
             
@@ -641,8 +617,7 @@ class DeploymentManager:
             logger.error(f"Failed to check alerts: {e}")
     
     async def _process_alert(self, alert: Dict[str, Any]):
-        """Process and handle an alert."""
-        try:
+        """Process and handle an alert."""        try:
             alert['timestamp'] = datetime.utcnow().isoformat()
             alert['deployment_id'] = self.deployment_id
             
@@ -667,8 +642,7 @@ class DeploymentManager:
             logger.error(f"Failed to process alert: {e}")
     
     async def _store_alert_in_database(self, alert: Dict[str, Any]):
-        """Store alert in database."""
-        try:
+        """Store alert in database."""        try:
             if not self.db_engine:
                 return
             
@@ -676,8 +650,7 @@ class DeploymentManager:
             session = Session()
             
             try:
-                session.execute("""
-                    INSERT INTO deployment_events (deployment_id, event_type, event_data, timestamp)
+                session.execute("""                    INSERT INTO deployment_events (deployment_id, event_type, event_data, timestamp)
                     VALUES (:deployment_id, :event_type, :event_data, :timestamp)
                 """, {
                     'deployment_id': self.deployment_id,
@@ -694,8 +667,7 @@ class DeploymentManager:
             logger.error(f"Failed to store alert in database: {e}")
     
     async def _send_alert_notification(self, alert: Dict[str, Any]):
-        """Send alert notification to configured channels."""
-        try:
+        """Send alert notification to configured channels."""        try:
             # Placeholder for notification system
             # Would integrate with Slack, email, PagerDuty, etc.
             logger.info(f"Alert notification: {alert['message']}")
@@ -704,8 +676,7 @@ class DeploymentManager:
             logger.error(f"Failed to send alert notification: {e}")
     
     async def _health_check_loop(self):
-        """Health check monitoring loop."""
-        while True:
+        """Health check monitoring loop."""        while True:
             try:
                 # Perform health checks
                 health_status = await self._perform_health_checks()
@@ -728,8 +699,7 @@ class DeploymentManager:
                 await asyncio.sleep(60)
     
     async def _perform_health_checks(self) -> Dict[str, Any]:
-        """Perform comprehensive health checks."""
-        try:
+        """Perform comprehensive health checks."""        try:
             health_checks = {}
             
             # Component health checks
@@ -777,8 +747,7 @@ class DeploymentManager:
             }
     
     async def _check_redis_health(self) -> bool:
-        """Check Redis connection health."""
-        try:
+        """Check Redis connection health."""        try:
             if not self.redis_client:
                 return False
             await self.redis_client.ping()
@@ -787,8 +756,7 @@ class DeploymentManager:
             return False
     
     async def _check_database_health(self) -> bool:
-        """Check database connection health."""
-        try:
+        """Check database connection health."""        try:
             if not self.db_engine:
                 return False
             with self.db_engine.connect() as conn:
@@ -798,8 +766,7 @@ class DeploymentManager:
             return False
     
     async def _scaling_loop(self):
-        """Auto-scaling monitoring and execution loop."""
-        while True:
+        """Auto-scaling monitoring and execution loop."""        while True:
             try:
                 if self.scaling_config.enabled and self.current_metrics:
                     await self._evaluate_scaling_decisions()
@@ -812,8 +779,7 @@ class DeploymentManager:
                 await asyncio.sleep(300)  # Wait longer on error
     
     async def _evaluate_scaling_decisions(self):
-        """Evaluate and execute scaling decisions."""
-        try:
+        """Evaluate and execute scaling decisions."""        try:
             metrics = self.current_metrics
             if not metrics:
                 return
@@ -840,22 +806,19 @@ class DeploymentManager:
             logger.error(f"Failed to evaluate scaling decisions: {e}")
     
     def _should_scale_up(self, metrics: DeploymentMetrics) -> bool:
-        """Determine if scaling up is needed."""
-        cpu_trigger = metrics.cpu_usage_percent > self.scaling_config.scale_up_threshold
+        """Determine if scaling up is needed."""        cpu_trigger = metrics.cpu_usage_percent > self.scaling_config.scale_up_threshold
         memory_trigger = metrics.memory_usage_percent > self.scaling_config.scale_up_threshold
         
         return cpu_trigger or memory_trigger
     
     def _should_scale_down(self, metrics: DeploymentMetrics) -> bool:
-        """Determine if scaling down is possible."""
-        cpu_ok = metrics.cpu_usage_percent < self.scaling_config.scale_down_threshold
+        """Determine if scaling down is possible."""        cpu_ok = metrics.cpu_usage_percent < self.scaling_config.scale_down_threshold
         memory_ok = metrics.memory_usage_percent < self.scaling_config.scale_down_threshold
         
         return cpu_ok and memory_ok
     
     async def _scale_up(self):
-        """Execute scale up operation."""
-        try:
+        """Execute scale up operation."""        try:
             self.status = DeploymentStatus.SCALING
             current_replicas = await self._get_current_replicas()
             
@@ -875,8 +838,7 @@ class DeploymentManager:
             self.status = DeploymentStatus.FAILED
     
     async def _scale_down(self):
-        """Execute scale down operation."""
-        try:
+        """Execute scale down operation."""        try:
             self.status = DeploymentStatus.SCALING
             current_replicas = await self._get_current_replicas()
             
@@ -896,8 +858,7 @@ class DeploymentManager:
             self.status = DeploymentStatus.FAILED
     
     async def _get_current_replicas(self) -> int:
-        """Get current number of replicas."""
-        try:
+        """Get current number of replicas."""        try:
             if self.k8s_client:
                 deployment = self.k8s_client.read_namespaced_deployment(
                     name=f"ai-processing-{self.deployment_id}",
@@ -913,8 +874,7 @@ class DeploymentManager:
             return 1
     
     async def _set_replicas(self, target_replicas: int):
-        """Set target number of replicas."""
-        try:
+        """Set target number of replicas."""        try:
             if self.k8s_client:
                 deployment = self.k8s_client.read_namespaced_deployment(
                     name=f"ai-processing-{self.deployment_id}",
@@ -935,8 +895,7 @@ class DeploymentManager:
             raise
     
     async def get_deployment_status(self) -> Dict[str, Any]:
-        """Get comprehensive deployment status."""
-        try:
+        """Get comprehensive deployment status."""        try:
             status_data = {
                 'deployment_id': self.deployment_id,
                 'status': self.status.value,
@@ -967,8 +926,7 @@ class DeploymentManager:
             }
     
     async def shutdown(self):
-        """Gracefully shutdown deployment manager."""
-        try:
+        """Gracefully shutdown deployment manager."""        try:
             logger.info(f"Shutting down deployment manager: {self.deployment_id}")
             self.status = DeploymentStatus.SHUTDOWN
             
@@ -1003,10 +961,8 @@ class DeploymentManager:
 
 # Factory functions
 def create_deployment_manager(deployment_id: str, config_path: Optional[str] = None) -> DeploymentManager:
-    """Create deployment manager with configuration."""
-    return DeploymentManager(deployment_id, config_path)
+    """Create deployment manager with configuration."""    return DeploymentManager(deployment_id, config_path)
 
 
 def create_production_deployment_manager(deployment_id: str) -> DeploymentManager:
-    """Create production-ready deployment manager."""
-    return DeploymentManager(deployment_id, None)
+    """Create production-ready deployment manager."""    return DeploymentManager(deployment_id, None)

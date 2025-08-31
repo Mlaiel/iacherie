@@ -1,5 +1,4 @@
-"""
-Video Fingerprinter Implementation
+"""Video Fingerprinter Implementation
 ==================================
 
 Professional video fingerprinting system for content protection and similarity detection.
@@ -22,9 +21,7 @@ will be prosecuted to the FULL EXTENT OF THE LAW under German and
 International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import cv2
 import numpy as np
 import hashlib
@@ -58,8 +55,7 @@ except ImportError:
 
 
 class VideoFingerprintType(Enum):
-    """Types of video fingerprints"""
-    FRAME_HASH = "frame_hash"
+    """Types of video fingerprints"""    FRAME_HASH = "frame_hash"
     PERCEPTUAL_HASH = "perceptual_hash"
     FEATURE_DESCRIPTOR = "feature_descriptor"
     MOTION_VECTOR = "motion_vector"
@@ -69,8 +65,7 @@ class VideoFingerprintType(Enum):
 
 
 class FrameSamplingMethod(Enum):
-    """Methods for sampling frames from video"""
-    UNIFORM = "uniform"
+    """Methods for sampling frames from video"""    UNIFORM = "uniform"
     KEYFRAME = "keyframe"
     ADAPTIVE = "adaptive"
     MOTION_BASED = "motion_based"
@@ -78,8 +73,7 @@ class FrameSamplingMethod(Enum):
 
 @dataclass
 class VideoFingerprint:
-    """Video fingerprint data structure"""
-    video_id: str
+    """Video fingerprint data structure"""    video_id: str
     fingerprint_type: VideoFingerprintType
     fingerprint_data: Union[str, List[str], np.ndarray]
     frame_count: int
@@ -94,8 +88,7 @@ class VideoFingerprint:
 
 @dataclass
 class VideoMatchResult:
-    """Video similarity match result"""
-    query_video_id: str
+    """Video similarity match result"""    query_video_id: str
     matched_video_id: str
     similarity_score: float
     fingerprint_type: VideoFingerprintType
@@ -107,8 +100,7 @@ class VideoMatchResult:
 
 
 class VideoFingerprinter:
-    """
-    Professional video fingerprinting system for content protection.
+    """    Professional video fingerprinting system for content protection.
     
     Features:
     - Multiple fingerprinting algorithms
@@ -120,21 +112,18 @@ class VideoFingerprinter:
     - Temporal signature generation
     - GPU acceleration support
     - Batch processing capabilities
-    """
-    
+    """    
     def __init__(self, 
                  max_workers: int = 4,
                  gpu_acceleration: bool = True,
                  cache_frames: bool = True):
-        """
-        Initialize video fingerprinter.
+        """        Initialize video fingerprinter.
         
         Args:
             max_workers: Maximum worker threads
             gpu_acceleration: Enable GPU acceleration if available
             cache_frames: Cache extracted frames for performance
-        """
-        self.max_workers = max_workers
+        """        self.max_workers = max_workers
         self.gpu_acceleration = gpu_acceleration and TORCH_AVAILABLE
         self.cache_frames = cache_frames
         self.logger = logging.getLogger(__name__)
@@ -156,8 +145,7 @@ class VideoFingerprinter:
             self._initialize_ai_models()
     
     def _initialize_ai_models(self):
-        """Initialize AI models for feature extraction"""
-        try:
+        """Initialize AI models for feature extraction"""        try:
             if TORCH_AVAILABLE:
                 # Load pre-trained MobileNet for feature extraction
                 self.feature_extractor = mobilenet_v3_large(pretrained=True)
@@ -189,8 +177,7 @@ class VideoFingerprinter:
                                 fingerprint_types: List[VideoFingerprintType] = None,
                                 sampling_method: FrameSamplingMethod = FrameSamplingMethod.ADAPTIVE,
                                 max_frames: int = 100) -> List[VideoFingerprint]:
-        """
-        Extract video fingerprints using multiple algorithms.
+        """        Extract video fingerprints using multiple algorithms.
         
         Args:
             video_path: Path to video file
@@ -201,8 +188,7 @@ class VideoFingerprinter:
             
         Returns:
             List of video fingerprints
-        """
-        try:
+        """        try:
             start_time = datetime.utcnow()
             
             if fingerprint_types is None:
@@ -252,8 +238,7 @@ class VideoFingerprinter:
     async def compare_fingerprints(self, 
                                  fingerprint1: VideoFingerprint,
                                  fingerprint2: VideoFingerprint) -> VideoMatchResult:
-        """
-        Compare two video fingerprints for similarity.
+        """        Compare two video fingerprints for similarity.
         
         Args:
             fingerprint1: First video fingerprint
@@ -261,8 +246,7 @@ class VideoFingerprinter:
             
         Returns:
             Video match result with similarity metrics
-        """
-        try:
+        """        try:
             if fingerprint1.fingerprint_type != fingerprint2.fingerprint_type:
                 raise ValueError("Cannot compare different fingerprint types")
             
@@ -331,8 +315,7 @@ class VideoFingerprinter:
                                 query_fingerprint: VideoFingerprint,
                                 candidate_fingerprints: List[VideoFingerprint],
                                 similarity_threshold: float = 0.8) -> List[VideoMatchResult]:
-        """
-        Find similar videos from a list of candidates.
+        """        Find similar videos from a list of candidates.
         
         Args:
             query_fingerprint: Query video fingerprint
@@ -341,8 +324,7 @@ class VideoFingerprinter:
             
         Returns:
             List of matching video results sorted by similarity
-        """
-        try:
+        """        try:
             # Filter candidates by fingerprint type
             compatible_candidates = [
                 fp for fp in candidate_fingerprints 
@@ -378,8 +360,7 @@ class VideoFingerprinter:
     # Private helper methods
     
     async def _extract_video_info(self, video_path: str) -> Dict[str, Any]:
-        """Extract basic video information"""
-        try:
+        """Extract basic video information"""        try:
             cap = cv2.VideoCapture(video_path)
             
             frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -410,8 +391,7 @@ class VideoFingerprinter:
                            video_path: str, 
                            sampling_method: FrameSamplingMethod,
                            max_frames: int) -> Tuple[List[np.ndarray], List[int]]:
-        """Sample frames from video based on specified method"""
-        try:
+        """Sample frames from video based on specified method"""        try:
             cap = cv2.VideoCapture(video_path)
             frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
             
@@ -445,16 +425,14 @@ class VideoFingerprinter:
             return [], []
     
     def _get_uniform_frame_indices(self, frame_count: int, max_frames: int) -> List[int]:
-        """Get uniformly distributed frame indices"""
-        if frame_count <= max_frames:
+        """Get uniformly distributed frame indices"""        if frame_count <= max_frames:
             return list(range(frame_count))
         
         step = frame_count // max_frames
         return [i * step for i in range(max_frames)]
     
     async def _detect_keyframes(self, cap: cv2.VideoCapture, max_frames: int) -> List[int]:
-        """Detect keyframes using scene change detection"""
-        try:
+        """Detect keyframes using scene change detection"""        try:
             frame_indices = []
             prev_frame = None
             frame_idx = 0
@@ -490,8 +468,7 @@ class VideoFingerprinter:
             return self._get_uniform_frame_indices(int(cap.get(cv2.CAP_PROP_FRAME_COUNT)), max_frames)
     
     async def _adaptive_frame_sampling(self, cap: cv2.VideoCapture, max_frames: int) -> List[int]:
-        """Adaptive frame sampling based on content complexity"""
-        try:
+        """Adaptive frame sampling based on content complexity"""        try:
             frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
             frame_indices = []
             
@@ -522,8 +499,7 @@ class VideoFingerprinter:
             return self._get_uniform_frame_indices(int(cap.get(cv2.CAP_PROP_FRAME_COUNT)), max_frames)
     
     async def _motion_based_sampling(self, cap: cv2.VideoCapture, max_frames: int) -> List[int]:
-        """Motion-based frame sampling"""
-        try:
+        """Motion-based frame sampling"""        try:
             frame_indices = []
             prev_frame = None
             frame_idx = 0
@@ -573,8 +549,7 @@ class VideoFingerprinter:
                                         fingerprint_type: VideoFingerprintType,
                                         video_info: Dict[str, Any],
                                         sampling_method: FrameSamplingMethod) -> VideoFingerprint:
-        """Extract single type of fingerprint"""
-        try:
+        """Extract single type of fingerprint"""        try:
             if fingerprint_type == VideoFingerprintType.PERCEPTUAL_HASH:
                 fingerprint_data = await self._extract_perceptual_hashes(frames)
             elif fingerprint_type == VideoFingerprintType.COLOR_HISTOGRAM:
@@ -605,8 +580,7 @@ class VideoFingerprinter:
             raise
     
     async def _extract_perceptual_hashes(self, frames: List[np.ndarray]) -> List[str]:
-        """Extract perceptual hashes from frames"""
-        try:
+        """Extract perceptual hashes from frames"""        try:
             hashes = []
             
             if IMAGEHASH_AVAILABLE:
@@ -639,8 +613,7 @@ class VideoFingerprinter:
             return []
     
     async def _extract_color_histograms(self, frames: List[np.ndarray]) -> List[np.ndarray]:
-        """Extract color histograms from frames"""
-        try:
+        """Extract color histograms from frames"""        try:
             histograms = []
             
             for frame in frames:
@@ -662,8 +635,7 @@ class VideoFingerprinter:
             return []
     
     async def _extract_edge_densities(self, frames: List[np.ndarray]) -> List[float]:
-        """Extract edge density features from frames"""
-        try:
+        """Extract edge density features from frames"""        try:
             edge_densities = []
             
             for frame in frames:
@@ -683,8 +655,7 @@ class VideoFingerprinter:
             return []
     
     async def _extract_feature_descriptors(self, frames: List[np.ndarray]) -> List[np.ndarray]:
-        """Extract deep learning feature descriptors"""
-        try:
+        """Extract deep learning feature descriptors"""        try:
             if not self.feature_extractor:
                 raise ValueError("Feature extractor not available")
             
@@ -713,8 +684,7 @@ class VideoFingerprinter:
     
     async def _extract_temporal_signature(self, frames: List[np.ndarray], 
                                         frame_indices: List[int]) -> Dict[str, Any]:
-        """Extract temporal signature from frame sequence"""
-        try:
+        """Extract temporal signature from frame sequence"""        try:
             # Calculate frame-to-frame differences
             differences = []
             for i in range(1, len(frames)):
@@ -744,8 +714,7 @@ class VideoFingerprinter:
     async def _compare_perceptual_hashes(self, 
                                        fingerprint1: VideoFingerprint,
                                        fingerprint2: VideoFingerprint) -> Tuple[float, List[Tuple[int, int]]]:
-        """Compare perceptual hashes between two videos"""
-        try:
+        """Compare perceptual hashes between two videos"""        try:
             hashes1 = fingerprint1.fingerprint_data
             hashes2 = fingerprint2.fingerprint_data
             
@@ -797,8 +766,7 @@ class VideoFingerprinter:
     async def _compare_color_histograms(self, 
                                       fingerprint1: VideoFingerprint,
                                       fingerprint2: VideoFingerprint) -> Tuple[float, List[Tuple[int, int]]]:
-        """Compare color histograms between two videos"""
-        try:
+        """Compare color histograms between two videos"""        try:
             histograms1 = fingerprint1.fingerprint_data
             histograms2 = fingerprint2.fingerprint_data
             
@@ -832,8 +800,7 @@ class VideoFingerprinter:
     async def _compare_edge_densities(self, 
                                     fingerprint1: VideoFingerprint,
                                     fingerprint2: VideoFingerprint) -> Tuple[float, List[Tuple[int, int]]]:
-        """Compare edge densities between two videos"""
-        try:
+        """Compare edge densities between two videos"""        try:
             densities1 = fingerprint1.fingerprint_data
             densities2 = fingerprint2.fingerprint_data
             
@@ -868,8 +835,7 @@ class VideoFingerprinter:
     async def _compare_feature_descriptors(self, 
                                          fingerprint1: VideoFingerprint,
                                          fingerprint2: VideoFingerprint) -> Tuple[float, List[Tuple[int, int]]]:
-        """Compare deep learning feature descriptors"""
-        try:
+        """Compare deep learning feature descriptors"""        try:
             descriptors1 = fingerprint1.fingerprint_data
             descriptors2 = fingerprint2.fingerprint_data
             
@@ -904,8 +870,7 @@ class VideoFingerprinter:
                                     matched_frames: List[Tuple[int, int]],
                                     duration1: float, 
                                     duration2: float) -> Dict[str, Any]:
-        """Calculate temporal alignment between matched frames"""
-        try:
+        """Calculate temporal alignment between matched frames"""        try:
             if not matched_frames:
                 return {}
             
@@ -937,8 +902,7 @@ class VideoFingerprinter:
                                     matched_frames: List[Tuple[int, int]],
                                     fingerprint1: VideoFingerprint,
                                     fingerprint2: VideoFingerprint) -> Dict[str, float]:
-        """Calculate confidence metrics for the match"""
-        try:
+        """Calculate confidence metrics for the match"""        try:
             total_frames_1 = fingerprint1.sampled_frame_count
             total_frames_2 = fingerprint2.sampled_frame_count
             matched_count = len(matched_frames)
@@ -959,8 +923,7 @@ class VideoFingerprinter:
             return {}
     
     def _calculate_resolution_compatibility(self, res1: Tuple[int, int], res2: Tuple[int, int]) -> float:
-        """Calculate resolution compatibility score"""
-        try:
+        """Calculate resolution compatibility score"""        try:
             w1, h1 = res1
             w2, h2 = res2
             
@@ -994,8 +957,7 @@ class VideoFingerprinter:
     def _identify_match_regions(self, 
                               matched_frames: List[Tuple[int, int]], 
                               similarity_score: float) -> List[Dict[str, Any]]:
-        """Identify continuous regions of matches"""
-        try:
+        """Identify continuous regions of matches"""        try:
             if not matched_frames:
                 return []
             
@@ -1050,8 +1012,7 @@ class VideoFingerprinter:
             return []
     
     def _cache_frames(self, video_id: str, frames: List[np.ndarray]):
-        """Cache frames for reuse"""
-        try:
+        """Cache frames for reuse"""        try:
             if len(self.frame_cache) >= self.cache_max_size:
                 # Remove oldest entry
                 oldest_key = next(iter(self.frame_cache))
@@ -1063,8 +1024,7 @@ class VideoFingerprinter:
             self.logger.warning(f"Error caching frames for {video_id}: {str(e)}")
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get fingerprinter statistics"""
-        avg_processing_time = (self.total_processing_time / self.processing_count 
+        """Get fingerprinter statistics"""        avg_processing_time = (self.total_processing_time / self.processing_count 
                              if self.processing_count > 0 else 0.0)
         
         return {
@@ -1078,8 +1038,7 @@ class VideoFingerprinter:
         }
     
     async def close(self):
-        """Cleanup resources"""
-        try:
+        """Cleanup resources"""        try:
             if self.thread_pool:
                 self.thread_pool.shutdown(wait=True)
             

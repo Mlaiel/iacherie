@@ -1,30 +1,24 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-External APIs Integration Tests
+"""External APIs Integration Tests
 
 Tests for external service integrations including payment processors,
 platform APIs, AI services, and notification systems.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -44,28 +38,24 @@ MOCK_OPENAI_API_KEY = "mock_openai_api_key"
 
 
 class MockExternalService:
-    """Base mock class for external services."""
-    
+    """Base mock class for external services."""    
     def __init__(self, service_name: str):
         self.service_name = service_name
         self.call_count = 0
         self.last_request = None
     
     def reset_mock(self):
-        """Reset mock state."""
-        self.call_count = 0
+        """Reset mock state."""        self.call_count = 0
         self.last_request = None
 
 
 class MockStripeAPI(MockExternalService):
-    """Mock Stripe API for payment processing tests."""
-    
+    """Mock Stripe API for payment processing tests."""    
     def __init__(self):
         super().__init__("stripe")
     
     async def create_payment_intent(self, amount: float, currency: str = "USD", **kwargs):
-        """Mock payment intent creation."""
-        self.call_count += 1
+        """Mock payment intent creation."""        self.call_count += 1
         self.last_request = {"amount": amount, "currency": currency, **kwargs}
         
         return {
@@ -77,8 +67,7 @@ class MockStripeAPI(MockExternalService):
         }
     
     async def create_customer(self, email: str, name: str = None, **kwargs):
-        """Mock customer creation."""
-        self.call_count += 1
+        """Mock customer creation."""        self.call_count += 1
         self.last_request = {"email": email, "name": name, **kwargs}
         
         return {
@@ -89,8 +78,7 @@ class MockStripeAPI(MockExternalService):
         }
     
     async def create_subscription(self, customer_id: str, price_id: str, **kwargs):
-        """Mock subscription creation."""
-        self.call_count += 1
+        """Mock subscription creation."""        self.call_count += 1
         self.last_request = {"customer": customer_id, "price": price_id, **kwargs}
         
         return {
@@ -103,15 +91,13 @@ class MockStripeAPI(MockExternalService):
 
 
 class MockSpotifyAPI(MockExternalService):
-    """Mock Spotify API for platform integration tests."""
-    
+    """Mock Spotify API for platform integration tests."""    
     def __init__(self):
         super().__init__("spotify")
         self.access_token = "mock_spotify_access_token"
     
     async def authenticate(self):
-        """Mock authentication."""
-        self.call_count += 1
+        """Mock authentication."""        self.call_count += 1
         return {
             "access_token": self.access_token,
             "token_type": "Bearer",
@@ -119,8 +105,7 @@ class MockSpotifyAPI(MockExternalService):
         }
     
     async def search_tracks(self, query: str, limit: int = 20):
-        """Mock track search."""
-        self.call_count += 1
+        """Mock track search."""        self.call_count += 1
         self.last_request = {"query": query, "limit": limit}
         
         return {
@@ -139,8 +124,7 @@ class MockSpotifyAPI(MockExternalService):
         }
     
     async def get_track_features(self, track_id: str):
-        """Mock track audio features."""
-        self.call_count += 1
+        """Mock track audio features."""        self.call_count += 1
         self.last_request = {"track_id": track_id}
         
         return {
@@ -155,14 +139,12 @@ class MockSpotifyAPI(MockExternalService):
 
 
 class MockYouTubeAPI(MockExternalService):
-    """Mock YouTube API for platform integration tests."""
-    
+    """Mock YouTube API for platform integration tests."""    
     def __init__(self):
         super().__init__("youtube")
     
     async def search_videos(self, query: str, max_results: int = 25):
-        """Mock video search."""
-        self.call_count += 1
+        """Mock video search."""        self.call_count += 1
         self.last_request = {"query": query, "max_results": max_results}
         
         return {
@@ -181,8 +163,7 @@ class MockYouTubeAPI(MockExternalService):
         }
     
     async def get_video_details(self, video_id: str):
-        """Mock video details."""
-        self.call_count += 1
+        """Mock video details."""        self.call_count += 1
         self.last_request = {"video_id": video_id}
         
         return {
@@ -203,14 +184,12 @@ class MockYouTubeAPI(MockExternalService):
 
 
 class MockOpenAIAPI(MockExternalService):
-    """Mock OpenAI API for AI service integration tests."""
-    
+    """Mock OpenAI API for AI service integration tests."""    
     def __init__(self):
         super().__init__("openai")
     
     async def create_embedding(self, text: str, model: str = "text-embedding-ada-002"):
-        """Mock text embedding creation."""
-        self.call_count += 1
+        """Mock text embedding creation."""        self.call_count += 1
         self.last_request = {"text": text, "model": model}
         
         # Return a mock embedding vector
@@ -228,8 +207,7 @@ class MockOpenAIAPI(MockExternalService):
         }
     
     async def analyze_content(self, content: str, task: str = "similarity"):
-        """Mock content analysis."""
-        self.call_count += 1
+        """Mock content analysis."""        self.call_count += 1
         self.last_request = {"content": content, "task": task}
         
         return {
@@ -253,21 +231,18 @@ mock_openai = MockOpenAIAPI()
 
 @pytest.fixture(autouse=True)
 def reset_mocks():
-    """Reset all mocks before each test."""
-    mock_stripe.reset_mock()
+    """Reset all mocks before each test."""    mock_stripe.reset_mock()
     mock_spotify.reset_mock()
     mock_youtube.reset_mock()
     mock_openai.reset_mock()
 
 
 class TestPaymentProcessorIntegration:
-    """Test payment processor integrations (Stripe, PayPal)."""
-    
+    """Test payment processor integrations (Stripe, PayPal)."""    
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_stripe_payment_intent_creation(self):
-        """Test Stripe payment intent creation."""
-        # Mock payment data
+        """Test Stripe payment intent creation."""        # Mock payment data
         payment_data = {
             "amount": 99.99,
             "currency": "USD",
@@ -288,8 +263,7 @@ class TestPaymentProcessorIntegration:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_stripe_customer_creation(self):
-        """Test Stripe customer creation."""
-        customer_data = {
+        """Test Stripe customer creation."""        customer_data = {
             "email": "test@example.com",
             "name": "Test User",
             "phone": "+1234567890"
@@ -306,8 +280,7 @@ class TestPaymentProcessorIntegration:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_stripe_subscription_creation(self):
-        """Test Stripe subscription creation."""
-        subscription_data = {
+        """Test Stripe subscription creation."""        subscription_data = {
             "customer_id": "cus_mock_123",
             "price_id": "price_premium_monthly",
             "trial_period_days": 7
@@ -325,8 +298,7 @@ class TestPaymentProcessorIntegration:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_payment_processor_error_handling(self):
-        """Test error handling for payment processor failures."""
-        # Test with invalid amount
+        """Test error handling for payment processor failures."""        # Test with invalid amount
         with pytest.raises(Exception):
             await mock_stripe.create_payment_intent(amount=-10.0)
         
@@ -336,13 +308,11 @@ class TestPaymentProcessorIntegration:
 
 
 class TestPlatformAPIIntegration:
-    """Test platform API integrations (Spotify, YouTube, Instagram)."""
-    
+    """Test platform API integrations (Spotify, YouTube, Instagram)."""    
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_spotify_authentication(self):
-        """Test Spotify API authentication."""
-        auth_result = await mock_spotify.authenticate()
+        """Test Spotify API authentication."""        auth_result = await mock_spotify.authenticate()
         
         assert "access_token" in auth_result
         assert auth_result["token_type"] == "Bearer"
@@ -352,8 +322,7 @@ class TestPlatformAPIIntegration:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_spotify_track_search(self):
-        """Test Spotify track search functionality."""
-        search_query = "test artist track"
+        """Test Spotify track search functionality."""        search_query = "test artist track"
         search_result = await mock_spotify.search_tracks(search_query, limit=10)
         
         assert "tracks" in search_result
@@ -373,8 +342,7 @@ class TestPlatformAPIIntegration:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_spotify_track_features(self):
-        """Test Spotify track audio features retrieval."""
-        track_id = "test_track_123"
+        """Test Spotify track audio features retrieval."""        track_id = "test_track_123"
         features = await mock_spotify.get_track_features(track_id)
         
         assert "id" in features
@@ -395,8 +363,7 @@ class TestPlatformAPIIntegration:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_youtube_video_search(self):
-        """Test YouTube video search functionality."""
-        search_query = "test music video"
+        """Test YouTube video search functionality."""        search_query = "test music video"
         search_result = await mock_youtube.search_videos(search_query, max_results=20)
         
         assert "items" in search_result
@@ -416,8 +383,7 @@ class TestPlatformAPIIntegration:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_youtube_video_details(self):
-        """Test YouTube video details retrieval."""
-        video_id = "mock_video_123"
+        """Test YouTube video details retrieval."""        video_id = "mock_video_123"
         details = await mock_youtube.get_video_details(video_id)
         
         assert "items" in details
@@ -440,8 +406,7 @@ class TestPlatformAPIIntegration:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_platform_api_rate_limiting(self):
-        """Test platform API rate limiting handling."""
-        # Simulate multiple rapid requests
+        """Test platform API rate limiting handling."""        # Simulate multiple rapid requests
         tasks = []
         for i in range(10):
             task = mock_spotify.search_tracks(f"query_{i}")
@@ -457,13 +422,11 @@ class TestPlatformAPIIntegration:
 
 
 class TestAIServiceIntegration:
-    """Test AI and ML service integrations."""
-    
+    """Test AI and ML service integrations."""    
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_openai_text_embedding(self):
-        """Test OpenAI text embedding generation."""
-        test_text = "This is a test song with beautiful melody and rhythm"
+        """Test OpenAI text embedding generation."""        test_text = "This is a test song with beautiful melody and rhythm"
         
         embedding_result = await mock_openai.create_embedding(test_text)
         
@@ -482,8 +445,7 @@ class TestAIServiceIntegration:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_ai_content_analysis(self):
-        """Test AI-powered content analysis."""
-        test_content = "A beautiful musical composition with emotional depth"
+        """Test AI-powered content analysis."""        test_content = "A beautiful musical composition with emotional depth"
         
         analysis_result = await mock_openai.analyze_content(test_content, task="similarity")
         
@@ -507,8 +469,7 @@ class TestAIServiceIntegration:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_batch_ai_processing(self):
-        """Test batch processing of AI requests."""
-        content_items = [
+        """Test batch processing of AI requests."""        content_items = [
             "First test content for analysis",
             "Second test content for analysis",
             "Third test content for analysis"
@@ -532,13 +493,11 @@ class TestAIServiceIntegration:
 
 
 class TestNotificationServiceIntegration:
-    """Test notification and communication service integrations."""
-    
+    """Test notification and communication service integrations."""    
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_email_notification_service(self):
-        """Test email notification service integration."""
-        # Mock email service
+        """Test email notification service integration."""        # Mock email service
         class MockEmailService:
             def __init__(self):
                 self.sent_emails = []
@@ -576,8 +535,7 @@ class TestNotificationServiceIntegration:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_sms_notification_service(self):
-        """Test SMS notification service integration."""
-        # Mock SMS service
+        """Test SMS notification service integration."""        # Mock SMS service
         class MockSMSService:
             def __init__(self):
                 self.sent_messages = []
@@ -611,13 +569,11 @@ class TestNotificationServiceIntegration:
 
 
 class TestCrossServiceIntegration:
-    """Test integration between multiple external services."""
-    
+    """Test integration between multiple external services."""    
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_content_detection_workflow(self):
-        """Test complete content detection workflow across services."""
-        # 1. Search for content on multiple platforms
+        """Test complete content detection workflow across services."""        # 1. Search for content on multiple platforms
         search_query = "test artist original song"
         
         spotify_results = await mock_spotify.search_tracks(search_query, limit=5)
@@ -655,8 +611,7 @@ class TestCrossServiceIntegration:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_monetization_workflow(self):
-        """Test complete monetization workflow."""
-        # 1. Create customer in payment processor
+        """Test complete monetization workflow."""        # 1. Create customer in payment processor
         customer = await mock_stripe.create_customer(
             email="creator@example.com",
             name="Content Creator"
@@ -686,13 +641,11 @@ class TestCrossServiceIntegration:
 
 
 class TestServiceErrorHandling:
-    """Test error handling across external service integrations."""
-    
+    """Test error handling across external service integrations."""    
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_service_timeout_handling(self):
-        """Test handling of service timeouts."""
-        # Mock timeout scenario
+        """Test handling of service timeouts."""        # Mock timeout scenario
         async def timeout_operation():
             await asyncio.sleep(0.1)  # Simulate delay
             raise asyncio.TimeoutError("Service timeout")
@@ -703,8 +656,7 @@ class TestServiceErrorHandling:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_service_unavailable_handling(self):
-        """Test handling of service unavailability."""
-        # Mock service unavailable scenario
+        """Test handling of service unavailability."""        # Mock service unavailable scenario
         class MockUnavailableService:
             async def call_service(self):
                 raise aiohttp.ClientError("Service unavailable")
@@ -717,8 +669,7 @@ class TestServiceErrorHandling:
     @pytest.mark.asyncio
     @pytest.mark.integration
     async def test_retry_mechanism(self):
-        """Test retry mechanism for failed external calls."""
-        class MockRetryService:
+        """Test retry mechanism for failed external calls."""        class MockRetryService:
             def __init__(self):
                 self.attempt_count = 0
             

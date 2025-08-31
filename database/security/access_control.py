@@ -1,5 +1,4 @@
-"""
-Database Access Control Manager
+"""Database Access Control Manager
 
 Enterprise-grade database access control system with role-based permissions,
 fine-grained access policies, and advanced security monitoring.
@@ -23,9 +22,7 @@ Contact: mlaiel@live.de
 ⚠️ LEGAL WARNING: Any unauthorized use, copying, distribution, or commercialization 
 of this code without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will result in immediate legal action.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import json
@@ -44,8 +41,7 @@ logger = logging.getLogger(__name__)
 
 
 class AccessLevel(Enum):
-    """Database access levels"""
-    NONE = 0
+    """Database access levels"""    NONE = 0
     READ = 1
     WRITE = 2
     UPDATE = 3
@@ -55,8 +51,7 @@ class AccessLevel(Enum):
 
 
 class PermissionType(Enum):
-    """Permission types"""
-    SELECT = "SELECT"
+    """Permission types"""    SELECT = "SELECT"
     INSERT = "INSERT"
     UPDATE = "UPDATE"
     DELETE = "DELETE"
@@ -70,8 +65,7 @@ class PermissionType(Enum):
 
 
 class ResourceType(Enum):
-    """Database resource types"""
-    DATABASE = "database"
+    """Database resource types"""    DATABASE = "database"
     SCHEMA = "schema"
     TABLE = "table"
     COLUMN = "column"
@@ -83,15 +77,13 @@ class ResourceType(Enum):
 
 
 class PolicyEffect(Enum):
-    """Access policy effects"""
-    ALLOW = "allow"
+    """Access policy effects"""    ALLOW = "allow"
     DENY = "deny"
     CONDITIONAL = "conditional"
 
 
 class AuthenticationMethod(Enum):
-    """Authentication methods"""
-    PASSWORD = "password"
+    """Authentication methods"""    PASSWORD = "password"
     API_KEY = "api_key"
     JWT_TOKEN = "jwt_token"
     OAUTH2 = "oauth2"
@@ -101,8 +93,7 @@ class AuthenticationMethod(Enum):
 
 @dataclass
 class Principal:
-    """Access control principal (user, role, service)"""
-    principal_id: str
+    """Access control principal (user, role, service)"""    principal_id: str
     principal_type: str  # user, role, service, group
     name: str
     authentication_method: AuthenticationMethod
@@ -115,8 +106,7 @@ class Principal:
 
 @dataclass
 class Permission:
-    """Database permission definition"""
-    permission_id: str
+    """Database permission definition"""    permission_id: str
     permission_type: PermissionType
     resource_type: ResourceType
     resource_name: str
@@ -129,8 +119,7 @@ class Permission:
 
 @dataclass
 class AccessPolicy:
-    """Access control policy"""
-    policy_id: str
+    """Access control policy"""    policy_id: str
     name: str
     description: str
     effect: PolicyEffect
@@ -146,8 +135,7 @@ class AccessPolicy:
 
 @dataclass
 class AccessRequest:
-    """Access request context"""
-    request_id: str
+    """Access request context"""    request_id: str
     principal_id: str
     resource_type: ResourceType
     resource_name: str
@@ -161,8 +149,7 @@ class AccessRequest:
 
 @dataclass
 class AccessDecision:
-    """Access control decision"""
-    request_id: str
+    """Access control decision"""    request_id: str
     decision: PolicyEffect
     reason: str
     applicable_policies: List[str]
@@ -172,8 +159,7 @@ class AccessDecision:
 
 
 class AccessMetrics:
-    """Access control metrics and monitoring"""
-    
+    """Access control metrics and monitoring"""    
     def __init__(self):
         self.total_requests: int = 0
         self.allowed_requests: int = 0
@@ -185,8 +171,7 @@ class AccessMetrics:
         self.principal_activity: Dict[str, int] = {}
         
     def record_access_decision(self, decision: AccessDecision):
-        """Record access control decision"""
-        self.total_requests += 1
+        """Record access control decision"""        self.total_requests += 1
         
         if decision.decision == PolicyEffect.ALLOW:
             self.allowed_requests += 1
@@ -203,8 +188,7 @@ class AccessMetrics:
 
 
 class DatabaseAccessControl:
-    """
-    Enterprise-grade database access control manager
+    """    Enterprise-grade database access control manager
     
     Provides comprehensive access control capabilities including:
     - Role-based access control (RBAC)
@@ -212,11 +196,9 @@ class DatabaseAccessControl:
     - Policy-based access control
     - Dynamic permission evaluation
     - Access monitoring and auditing
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize access control manager"""
-        self.config = config or {}
+        """Initialize access control manager"""        self.config = config or {}
         self.principals: Dict[str, Principal] = {}
         self.permissions: Dict[str, Permission] = {}
         self.policies: Dict[str, AccessPolicy] = {}
@@ -235,8 +217,7 @@ class DatabaseAccessControl:
         logger.info("Database access control manager initialized successfully")
     
     def _initialize_default_setup(self):
-        """Initialize default roles, permissions, and policies"""
-        try:
+        """Initialize default roles, permissions, and policies"""        try:
             # Create default roles
             default_roles = [
                 ("guest", "Guest user with read-only access"),
@@ -278,8 +259,7 @@ class DatabaseAccessControl:
             raise
     
     def _create_default_policies(self):
-        """Create default access control policies"""
-        # Guest policy - read-only access to public data
+        """Create default access control policies"""        # Guest policy - read-only access to public data
         guest_policy = AccessPolicy(
             policy_id="policy_guest_read",
             name="Guest Read Access",
@@ -353,8 +333,7 @@ class DatabaseAccessControl:
         credentials: Dict[str, Any],
         authentication_method: AuthenticationMethod
     ) -> bool:
-        """
-        Authenticate principal with provided credentials
+        """        Authenticate principal with provided credentials
         
         Args:
             principal_id: Principal identifier
@@ -363,8 +342,7 @@ class DatabaseAccessControl:
             
         Returns:
             True if authentication successful, False otherwise
-        """
-        try:
+        """        try:
             # Check if principal exists
             if principal_id not in self.principals:
                 logger.warning(f"Authentication attempt for unknown principal: {principal_id}")
@@ -401,8 +379,7 @@ class DatabaseAccessControl:
             return False
     
     async def _authenticate_password(self, principal: Principal, credentials: Dict[str, Any]) -> bool:
-        """Authenticate using password"""
-        password = credentials.get("password")
+        """Authenticate using password"""        password = credentials.get("password")
         stored_hash = principal.attributes.get("password_hash")
         
         if not password or not stored_hash:
@@ -413,8 +390,7 @@ class DatabaseAccessControl:
         return hmac.compare_digest(password_hash, stored_hash)
     
     async def _authenticate_api_key(self, principal: Principal, credentials: Dict[str, Any]) -> bool:
-        """Authenticate using API key"""
-        api_key = credentials.get("api_key")
+        """Authenticate using API key"""        api_key = credentials.get("api_key")
         stored_key = principal.attributes.get("api_key")
         
         if not api_key or not stored_key:
@@ -423,36 +399,31 @@ class DatabaseAccessControl:
         return hmac.compare_digest(api_key, stored_key)
     
     async def _authenticate_jwt(self, principal: Principal, credentials: Dict[str, Any]) -> bool:
-        """Authenticate using JWT token"""
-        # JWT validation would be implemented here
+        """Authenticate using JWT token"""        # JWT validation would be implemented here
         # For now, just check if token is present
         token = credentials.get("jwt_token")
         return token is not None
     
     async def _authenticate_oauth2(self, principal: Principal, credentials: Dict[str, Any]) -> bool:
-        """Authenticate using OAuth2"""
-        # OAuth2 validation would be implemented here
+        """Authenticate using OAuth2"""        # OAuth2 validation would be implemented here
         access_token = credentials.get("access_token")
         return access_token is not None
     
     async def _authenticate_mfa(self, principal: Principal, credentials: Dict[str, Any]) -> bool:
-        """Authenticate using MFA"""
-        # MFA validation would be implemented here
+        """Authenticate using MFA"""        # MFA validation would be implemented here
         mfa_token = credentials.get("mfa_token")
         base_auth = credentials.get("base_authenticated", False)
         return mfa_token is not None and base_auth
     
     async def check_access(self, request: AccessRequest) -> AccessDecision:
-        """
-        Check access permissions for a request
+        """        Check access permissions for a request
         
         Args:
             request: Access request to evaluate
             
         Returns:
             AccessDecision with allow/deny result and reasoning
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Check if principal exists and is active
@@ -526,8 +497,7 @@ class DatabaseAccessControl:
         request: AccessRequest, 
         principal: Principal
     ) -> List[AccessPolicy]:
-        """Get policies applicable to the access request"""
-        applicable_policies = []
+        """Get policies applicable to the access request"""        applicable_policies = []
         
         # Get principal roles (including inherited roles)
         principal_roles = await self._get_principal_roles(principal.principal_id)
@@ -553,8 +523,7 @@ class DatabaseAccessControl:
         return applicable_policies
     
     async def _get_principal_roles(self, principal_id: str) -> Set[str]:
-        """Get all roles for a principal including inherited roles"""
-        roles = set()
+        """Get all roles for a principal including inherited roles"""        roles = set()
         
         principal = self.principals.get(principal_id)
         if not principal:
@@ -574,15 +543,13 @@ class DatabaseAccessControl:
         return roles
     
     async def _resource_matches_policy(self, resource_name: str, policy_resources: List[str]) -> bool:
-        """Check if resource matches any policy resource pattern"""
-        for pattern in policy_resources:
+        """Check if resource matches any policy resource pattern"""        for pattern in policy_resources:
             if await self._match_resource_pattern(resource_name, pattern):
                 return True
         return False
     
     async def _match_resource_pattern(self, resource_name: str, pattern: str) -> bool:
-        """Match resource name against pattern (supports wildcards)"""
-        if pattern == "*":
+        """Match resource name against pattern (supports wildcards)"""        if pattern == "*":
             return True
         
         if pattern.endswith("*"):
@@ -600,8 +567,7 @@ class DatabaseAccessControl:
         request: AccessRequest, 
         policies: List[AccessPolicy]
     ) -> Dict[str, Any]:
-        """Evaluate policies and return decision"""
-        
+        """Evaluate policies and return decision"""        
         # Default to deny
         final_decision = PolicyEffect.DENY
         final_reason = "No applicable allow policies"
@@ -635,8 +601,7 @@ class DatabaseAccessControl:
         request: AccessRequest, 
         policy: AccessPolicy
     ) -> bool:
-        """Evaluate policy conditions"""
-        if not policy.conditions:
+        """Evaluate policy conditions"""        if not policy.conditions:
             return True
         
         # Evaluate each condition
@@ -680,44 +645,36 @@ class DatabaseAccessControl:
         return True
     
     async def _check_resource_ownership(self, request: AccessRequest) -> bool:
-        """Check if principal owns the requested resource"""
-        # This would query the database to check ownership
+        """Check if principal owns the requested resource"""        # This would query the database to check ownership
         # For now, return True as placeholder
         return True
     
     async def _check_resource_visibility(self, request: AccessRequest, required_visibility: str) -> bool:
-        """Check resource visibility level"""
-        # This would check resource metadata for visibility
+        """Check resource visibility level"""        # This would check resource metadata for visibility
         return True
     
     async def _check_creator_ownership(self, request: AccessRequest) -> bool:
-        """Check if creator owns the content"""
-        # This would verify creator ownership in content tables
+        """Check if creator owns the content"""        # This would verify creator ownership in content tables
         return True
     
     async def _check_admin_scope(self, request: AccessRequest) -> bool:
-        """Check if operation is within admin scope"""
-        # This would verify admin permissions for the operation
+        """Check if operation is within admin scope"""        # This would verify admin permissions for the operation
         return True
     
     async def _check_mfa_verification(self, request: AccessRequest, required: bool) -> bool:
-        """Check MFA verification status"""
-        mfa_verified = request.attributes.get("mfa_verified", False)
+        """Check MFA verification status"""        mfa_verified = request.attributes.get("mfa_verified", False)
         return not required or mfa_verified
     
     async def _check_time_restriction(self, request: AccessRequest, restriction: Dict[str, Any]) -> bool:
-        """Check time-based access restrictions"""
-        # Implement time-based access control
+        """Check time-based access restrictions"""        # Implement time-based access control
         return True
     
     async def _check_ip_restriction(self, request: AccessRequest, restriction: Dict[str, Any]) -> bool:
-        """Check IP-based access restrictions"""
-        # Implement IP-based access control
+        """Check IP-based access restrictions"""        # Implement IP-based access control
         return True
     
     async def _log_access_decision(self, request: AccessRequest, decision: AccessDecision):
-        """Log access control decision for audit"""
-        log_entry = {
+        """Log access control decision for audit"""        log_entry = {
             "timestamp": datetime.now().isoformat(),
             "request_id": request.request_id,
             "principal_id": request.principal_id,
@@ -743,8 +700,7 @@ class DatabaseAccessControl:
         permission: Permission,
         granted_by: str
     ) -> bool:
-        """Grant permission to principal"""
-        try:
+        """Grant permission to principal"""        try:
             if principal_id not in self.principals:
                 raise ValueError(f"Unknown principal: {principal_id}")
             
@@ -768,8 +724,7 @@ class DatabaseAccessControl:
         permission_id: str,
         revoked_by: str
     ) -> bool:
-        """Revoke permission from principal"""
-        try:
+        """Revoke permission from principal"""        try:
             permission_key = f"{principal_id}:{permission_id}"
             
             if permission_key not in self.permissions:
@@ -790,8 +745,7 @@ class DatabaseAccessControl:
             return False
     
     async def add_principal_to_role(self, principal_id: str, role_id: str) -> bool:
-        """Add principal to role"""
-        try:
+        """Add principal to role"""        try:
             if principal_id not in self.principals:
                 raise ValueError(f"Unknown principal: {principal_id}")
             
@@ -814,8 +768,7 @@ class DatabaseAccessControl:
             return False
     
     async def remove_principal_from_role(self, principal_id: str, role_id: str) -> bool:
-        """Remove principal from role"""
-        try:
+        """Remove principal from role"""        try:
             if principal_id not in self.principals:
                 raise ValueError(f"Unknown principal: {principal_id}")
             
@@ -835,8 +788,7 @@ class DatabaseAccessControl:
             return False
     
     def get_principal_permissions(self, principal_id: str) -> List[Permission]:
-        """Get all permissions for a principal"""
-        permissions = []
+        """Get all permissions for a principal"""        permissions = []
         
         for key, permission in self.permissions.items():
             if key.startswith(f"{principal_id}:"):
@@ -845,8 +797,7 @@ class DatabaseAccessControl:
         return permissions
     
     def get_access_metrics(self) -> Dict[str, Any]:
-        """Get access control metrics"""
-        return {
+        """Get access control metrics"""        return {
             "total_requests": self.metrics.total_requests,
             "allowed_requests": self.metrics.allowed_requests,
             "denied_requests": self.metrics.denied_requests,

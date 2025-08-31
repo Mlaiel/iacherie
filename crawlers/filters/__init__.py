@@ -23,8 +23,7 @@ Technical Team Expertise:
 - IA Prompt Engineer: Prompt optimization and AI interaction
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
-"""
-# Core engine and configuration
+"""# Core engine and configuration
 from .filter_engine import (
     ContentFilterEngine, 
     FilterResponse, 

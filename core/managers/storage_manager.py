@@ -1,5 +1,4 @@
-"""
-Advanced Cloud Storage Manager - IA-Influencer-Agent
+"""Advanced Cloud Storage Manager - IA-Influencer-Agent
 ================================================================================
 Module: backend/core/managers/storage_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,9 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Upload créateur → Validation sécurité → Storage multi-cloud → 
 CDN distribution → Compression optimale → Accès ultra-rapide → Analytics storage
-"""
-
-from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set, Protocol
+"""from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set, Protocol
 import logging
 import asyncio
 from contextlib import asynccontextmanager
@@ -43,8 +40,7 @@ logger = logging.getLogger(__name__)
 
 
 class StorageProvider(Enum):
-    """Cloud storage providers supported"""
-    AWS_S3 = "aws_s3"
+    """Cloud storage providers supported"""    AWS_S3 = "aws_s3"
     GOOGLE_CLOUD = "google_cloud"
     AZURE_BLOB = "azure_blob"
     MINIO = "minio"
@@ -53,8 +49,7 @@ class StorageProvider(Enum):
 
 
 class StorageClass(Enum):
-    """Storage classes for optimization"""
-    STANDARD = "standard"
+    """Storage classes for optimization"""    STANDARD = "standard"
     INFREQUENT_ACCESS = "infrequent_access"
     GLACIER = "glacier"
     DEEP_ARCHIVE = "deep_archive"
@@ -62,8 +57,7 @@ class StorageClass(Enum):
 
 
 class CompressionType(Enum):
-    """Compression algorithms supported"""
-    NONE = "none"
+    """Compression algorithms supported"""    NONE = "none"
     GZIP = "gzip"
     BROTLI = "brotli"
     ZSTD = "zstd"
@@ -74,8 +68,7 @@ class CompressionType(Enum):
 
 @dataclass
 class StorageConfig:
-    """Advanced configuration for cloud storage management"""
-    # Primary storage settings
+    """Advanced configuration for cloud storage management"""    # Primary storage settings
     primary_provider: StorageProvider = StorageProvider.AWS_S3
     backup_providers: List[StorageProvider] = field(default_factory=lambda: [
         StorageProvider.GOOGLE_CLOUD, StorageProvider.AZURE_BLOB
@@ -125,8 +118,7 @@ class StorageConfig:
 
 @dataclass
 class StorageMetrics:
-    """Storage performance and usage metrics"""
-    total_objects: int = 0
+    """Storage performance and usage metrics"""    total_objects: int = 0
     total_size_bytes: int = 0
     upload_count_24h: int = 0
     download_count_24h: int = 0
@@ -140,8 +132,7 @@ class StorageMetrics:
 
 class CloudStorageManager(ABC):
 class CloudStorageManager(ABC):
-    """
-    🎯 Advanced Cloud Storage Manager - IA-Influencer-Agent
+    """    🎯 Advanced Cloud Storage Manager - IA-Influencer-Agent
     
     Enterprise-grade multi-cloud storage management with intelligent distribution,
     CDN integration, automatic optimization, and comprehensive monitoring.
@@ -155,8 +146,7 @@ class CloudStorageManager(ABC):
     - Automated lifecycle management and archiving
     - Global edge distribution for ultra-low latency
     - Advanced analytics and usage tracking
-    """
-    
+    """    
     def __init__(self, config: StorageConfig = None):
         self.config = config or StorageConfig()
         self._storage_clients: Dict[StorageProvider, Any] = {}
@@ -170,13 +160,11 @@ class CloudStorageManager(ABC):
     
     @abstractmethod
     async def initialize_storage_pools(self) -> bool:
-        """
-        Initialize all cloud storage provider connections and CDN integrations
+        """        Initialize all cloud storage provider connections and CDN integrations
         
         Returns:
             bool: True if all providers initialized successfully
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def upload_file(
@@ -188,8 +176,7 @@ class CloudStorageManager(ABC):
         storage_class: Optional[StorageClass] = None,
         enable_cdn: bool = True,
     ) -> Dict[str, Any]:
-        """
-        Upload file to multi-cloud storage with optimization
+        """        Upload file to multi-cloud storage with optimization
         
         Args:
             file_path: Local file path or file-like object
@@ -201,8 +188,7 @@ class CloudStorageManager(ABC):
             
         Returns:
             Dict with upload results, URLs, and metadata
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def download_file(
@@ -211,8 +197,7 @@ class CloudStorageManager(ABC):
         local_path: Optional[Union[str, Path]] = None,
         prefer_cdn: bool = True,
     ) -> Union[bytes, str]:
-        """
-        Download file from storage with CDN optimization
+        """        Download file from storage with CDN optimization
         
         Args:
             storage_key: Key of the file in storage
@@ -221,34 +206,29 @@ class CloudStorageManager(ABC):
             
         Returns:
             File content as bytes or path to downloaded file
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def delete_file(self, storage_key: str) -> bool:
-        """
-        Delete file from all storage providers and CDN
+        """        Delete file from all storage providers and CDN
         
         Args:
             storage_key: Key of the file to delete
             
         Returns:
             bool: True if deletion successful
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def get_file_metadata(self, storage_key: str) -> Dict[str, Any]:
-        """
-        Get comprehensive file metadata including CDN status
+        """        Get comprehensive file metadata including CDN status
         
         Args:
             storage_key: Key of the file
             
         Returns:
             Dict with file metadata, access URLs, and statistics
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def list_files(
@@ -257,8 +237,7 @@ class CloudStorageManager(ABC):
         limit: int = 1000,
         include_metadata: bool = False,
     ) -> List[Dict[str, Any]]:
-        """
-        List files with optional metadata
+        """        List files with optional metadata
         
         Args:
             prefix: Prefix filter for files
@@ -267,8 +246,7 @@ class CloudStorageManager(ABC):
             
         Returns:
             List of file information dictionaries
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def generate_presigned_url(
@@ -277,8 +255,7 @@ class CloudStorageManager(ABC):
         expiry_seconds: int = 3600,
         operation: str = "get",
     ) -> str:
-        """
-        Generate presigned URL for direct access
+        """        Generate presigned URL for direct access
         
         Args:
             storage_key: Key of the file
@@ -287,17 +264,14 @@ class CloudStorageManager(ABC):
             
         Returns:
             Presigned URL string
-        """
-        pass
+        """        pass
     
     async def optimize_storage_costs(self) -> Dict[str, Any]:
-        """
-        Analyze and optimize storage costs across providers
+        """        Analyze and optimize storage costs across providers
         
         Returns:
             Dict with optimization recommendations and actions taken
-        """
-        try:
+        """        try:
             analysis = {
                 "current_monthly_cost": 0.0,
                 "potential_savings": 0.0,
@@ -331,13 +305,11 @@ class CloudStorageManager(ABC):
             return {"error": str(e)}
     
     async def get_global_performance_metrics(self) -> Dict[str, Any]:
-        """
-        Get comprehensive performance metrics across all providers and regions
+        """        Get comprehensive performance metrics across all providers and regions
         
         Returns:
             Dict with detailed performance analytics
-        """
-        try:
+        """        try:
             metrics = {
                 "global_metrics": dict(self._metrics.__dict__),
                 "provider_metrics": {},
@@ -366,16 +338,14 @@ class CloudStorageManager(ABC):
             return {"error": str(e)}
     
     async def sync_across_providers(self, storage_key: str) -> bool:
-        """
-        Sync file across all configured backup providers
+        """        Sync file across all configured backup providers
         
         Args:
             storage_key: Key of the file to sync
             
         Returns:
             bool: True if sync successful across all providers
-        """
-        try:
+        """        try:
             primary_file = await self._download_from_primary(storage_key)
             if not primary_file:
                 logger.error(f"❌ Failed to download {storage_key} from primary provider")
@@ -400,16 +370,14 @@ class CloudStorageManager(ABC):
             return False
     
     async def cleanup_old_versions(self, days_threshold: int = 30) -> int:
-        """
-        Clean up old file versions to optimize storage costs
+        """        Clean up old file versions to optimize storage costs
         
         Args:
             days_threshold: Delete versions older than this many days
             
         Returns:
             int: Number of versions cleaned up
-        """
-        try:
+        """        try:
             cleanup_count = 0
             cutoff_date = datetime.now() - timedelta(days=days_threshold)
             
@@ -427,62 +395,51 @@ class CloudStorageManager(ABC):
             return 0
     
     async def _analyze_provider_costs(self, provider: StorageProvider) -> Dict[str, Any]:
-        """Analyze costs for a specific provider"""
-        # Implementation for cost analysis
+        """Analyze costs for a specific provider"""        # Implementation for cost analysis
         return {
             "monthly_cost": 0.0,
             "recommendations": []
         }
     
     async def _apply_cost_optimizations(self, recommendations: List[Dict]) -> List[Dict]:
-        """Apply cost optimization recommendations"""
-        # Implementation for applying optimizations
+        """Apply cost optimization recommendations"""        # Implementation for applying optimizations
         return []
     
     async def _get_provider_metrics(self, provider: StorageProvider) -> Dict[str, Any]:
-        """Get metrics for a specific provider"""
-        # Implementation for provider metrics
+        """Get metrics for a specific provider"""        # Implementation for provider metrics
         return {}
     
     async def _get_cdn_metrics(self, cdn_provider: str) -> Dict[str, Any]:
-        """Get metrics for a specific CDN provider"""
-        # Implementation for CDN metrics
+        """Get metrics for a specific CDN provider"""        # Implementation for CDN metrics
         return {}
     
     def _calculate_performance_score(self, metrics: Dict[str, Any]) -> float:
-        """Calculate overall performance score"""
-        # Implementation for performance scoring
+        """Calculate overall performance score"""        # Implementation for performance scoring
         return 85.0
     
     async def _download_from_primary(self, storage_key: str) -> Optional[bytes]:
-        """Download file from primary provider"""
-        # Implementation for primary download
+        """Download file from primary provider"""        # Implementation for primary download
         return None
     
     async def _upload_to_provider(
         self, provider: StorageProvider, storage_key: str, content: bytes
     ) -> bool:
-        """Upload file to specific provider"""
-        # Implementation for provider-specific upload
+        """Upload file to specific provider"""        # Implementation for provider-specific upload
         return True
     
     async def _cleanup_provider_versions(
         self, provider: StorageProvider, cutoff_date: datetime
     ) -> int:
-        """Cleanup old versions for specific provider"""
-        # Implementation for version cleanup
+        """Cleanup old versions for specific provider"""        # Implementation for version cleanup
         return 0
 
 
 # Concrete implementation of the storage manager
 class EnterpriseStorageManager(CloudStorageManager):
-    """
-    Production implementation of the CloudStorageManager
-    """
-    
+    """    Production implementation of the CloudStorageManager
+    """    
     async def initialize_storage_pools(self) -> bool:
-        """Initialize all storage provider connections"""
-        try:
+        """Initialize all storage provider connections"""        try:
             # Initialize primary provider
             primary_client = await self._initialize_provider(self.config.primary_provider)
             if not primary_client:
@@ -518,8 +475,7 @@ class EnterpriseStorageManager(CloudStorageManager):
         storage_class: Optional[StorageClass] = None,
         enable_cdn: bool = True,
     ) -> Dict[str, Any]:
-        """Upload file with multi-cloud redundancy"""
-        async with self._upload_pool:
+        """Upload file with multi-cloud redundancy"""        async with self._upload_pool:
             try:
                 # Prepare file for upload
                 file_info = await self._prepare_file_upload(
@@ -576,8 +532,7 @@ class EnterpriseStorageManager(CloudStorageManager):
         local_path: Optional[Union[str, Path]] = None,
         prefer_cdn: bool = True,
     ) -> Union[bytes, str]:
-        """Download file with CDN optimization"""
-        try:
+        """Download file with CDN optimization"""        try:
             # Try CDN first if available and preferred
             if prefer_cdn and self._cdn_clients:
                 cdn_result = await self._download_from_cdn(storage_key)
@@ -613,8 +568,7 @@ class EnterpriseStorageManager(CloudStorageManager):
             raise
     
     async def delete_file(self, storage_key: str) -> bool:
-        """Delete file from all providers"""
-        try:
+        """Delete file from all providers"""        try:
             deletion_tasks = []
             
             # Delete from all storage providers
@@ -643,8 +597,7 @@ class EnterpriseStorageManager(CloudStorageManager):
             return False
     
     async def get_file_metadata(self, storage_key: str) -> Dict[str, Any]:
-        """Get comprehensive file metadata"""
-        try:
+        """Get comprehensive file metadata"""        try:
             # Get metadata from primary provider
             primary_metadata = await self._get_provider_metadata(
                 self.config.primary_provider, storage_key
@@ -676,8 +629,7 @@ class EnterpriseStorageManager(CloudStorageManager):
         limit: int = 1000,
         include_metadata: bool = False,
     ) -> List[Dict[str, Any]]:
-        """List files from primary provider"""
-        try:
+        """List files from primary provider"""        try:
             files = await self._list_from_primary(prefix, limit)
             
             if include_metadata:
@@ -700,8 +652,7 @@ class EnterpriseStorageManager(CloudStorageManager):
         expiry_seconds: int = 3600,
         operation: str = "get",
     ) -> str:
-        """Generate presigned URL"""
-        try:
+        """Generate presigned URL"""        try:
             # Use primary provider for presigned URLs
             primary_client = self._storage_clients[self.config.primary_provider]
             url = await self._generate_provider_presigned_url(
@@ -717,94 +668,77 @@ class EnterpriseStorageManager(CloudStorageManager):
     
     # Helper methods for implementation
     async def _initialize_provider(self, provider: StorageProvider) -> Optional[Any]:
-        """Initialize specific storage provider client"""
-        # Implementation would depend on the provider
+        """Initialize specific storage provider client"""        # Implementation would depend on the provider
         return None
     
     async def _initialize_cdn_provider(self, cdn_provider: str) -> Optional[Any]:
-        """Initialize specific CDN provider client"""
-        # Implementation would depend on the CDN provider
+        """Initialize specific CDN provider client"""        # Implementation would depend on the CDN provider
         return None
     
     async def _prepare_file_upload(
         self, file_path: Union[str, Path], content_type: Optional[str], metadata: Optional[Dict]
     ) -> Dict[str, Any]:
-        """Prepare file for upload including compression and optimization"""
-        # Implementation for file preparation
+        """Prepare file for upload including compression and optimization"""        # Implementation for file preparation
         return {"content": b"", "size": 0, "content_type": "application/octet-stream"}
     
     async def _upload_to_primary(
         self, file_info: Dict, destination_key: str, storage_class: Optional[StorageClass]
     ) -> Dict[str, Any]:
-        """Upload to primary storage provider"""
-        # Implementation for primary upload
+        """Upload to primary storage provider"""        # Implementation for primary upload
         return {"url": f"https://example.com/{destination_key}"}
     
     async def _handle_backup_uploads(self, backup_tasks: List, destination_key: str):
-        """Handle backup uploads asynchronously"""
-        # Implementation for backup upload handling
+        """Handle backup uploads asynchronously"""        # Implementation for backup upload handling
         pass
     
     async def _enable_cdn_distribution(self, storage_key: str) -> Dict[str, str]:
-        """Enable CDN distribution for the file"""
-        # Implementation for CDN distribution
+        """Enable CDN distribution for the file"""        # Implementation for CDN distribution
         return {}
     
     async def _download_from_cdn(self, storage_key: str) -> Optional[bytes]:
-        """Download from CDN"""
-        # Implementation for CDN download
+        """Download from CDN"""        # Implementation for CDN download
         return None
     
     async def _download_from_provider(self, provider: StorageProvider, storage_key: str) -> Optional[bytes]:
-        """Download from specific provider"""
-        # Implementation for provider download
+        """Download from specific provider"""        # Implementation for provider download
         return None
     
     async def _save_to_local(self, content: bytes, local_path: Union[str, Path]):
-        """Save content to local file"""
-        # Implementation for local save
+        """Save content to local file"""        # Implementation for local save
         pass
     
     async def _delete_from_provider(self, provider: StorageProvider, storage_key: str) -> bool:
-        """Delete from specific provider"""
-        # Implementation for provider deletion
+        """Delete from specific provider"""        # Implementation for provider deletion
         return True
     
     async def _delete_from_cdn(self, cdn_provider: str, storage_key: str) -> bool:
-        """Delete from CDN"""
-        # Implementation for CDN deletion
+        """Delete from CDN"""        # Implementation for CDN deletion
         return True
     
     async def _get_provider_metadata(self, provider: StorageProvider, storage_key: str) -> Dict[str, Any]:
-        """Get metadata from specific provider"""
-        # Implementation for provider metadata
+        """Get metadata from specific provider"""        # Implementation for provider metadata
         return {}
     
     async def _get_cdn_status(self, storage_key: str) -> Dict[str, Any]:
-        """Get CDN distribution status"""
-        # Implementation for CDN status
+        """Get CDN distribution status"""        # Implementation for CDN status
         return {}
     
     async def _get_access_urls(self, storage_key: str) -> Dict[str, str]:
-        """Get all access URLs for the file"""
-        # Implementation for access URLs
+        """Get all access URLs for the file"""        # Implementation for access URLs
         return {}
     
     async def _check_backup_status(self, storage_key: str) -> Dict[str, bool]:
-        """Check backup status across providers"""
-        # Implementation for backup status check
+        """Check backup status across providers"""        # Implementation for backup status check
         return {}
     
     async def _list_from_primary(self, prefix: str, limit: int) -> List[Dict[str, Any]]:
-        """List files from primary provider"""
-        # Implementation for primary listing
+        """List files from primary provider"""        # Implementation for primary listing
         return []
     
     async def _generate_provider_presigned_url(
         self, provider: StorageProvider, storage_key: str, expiry_seconds: int, operation: str
     ) -> str:
-        """Generate presigned URL from specific provider"""
-        # Implementation for provider presigned URL
+        """Generate presigned URL from specific provider"""        # Implementation for provider presigned URL
         return f"https://example.com/{storage_key}"
 
 
@@ -813,13 +747,11 @@ _storage_manager: Optional[EnterpriseStorageManager] = None
 
 
 def get_storage_manager() -> EnterpriseStorageManager:
-    """
-    Get the global storage manager instance
+    """    Get the global storage manager instance
     
     Returns:
         EnterpriseStorageManager: Global storage manager instance
-    """
-    global _storage_manager
+    """    global _storage_manager
     if _storage_manager is None:
         _storage_manager = EnterpriseStorageManager()
     return _storage_manager
@@ -828,8 +760,7 @@ def get_storage_manager() -> EnterpriseStorageManager:
 # Alias for backward compatibility
 StorageManager = CloudStorageManager
             Any: Ressource gérée automatiquement
-        """
-        resource = None
+        """        resource = None
         try:
             resource = await self.acquire_resource()
             yield resource
@@ -838,26 +769,22 @@ StorageManager = CloudStorageManager
                 await self.release_resource(resource)
     
     async def cleanup(self) -> bool:
-        """
-        Nettoyage des ressources
+        """        Nettoyage des ressources
         
         Returns:
             bool: True si nettoyage réussi
-        """
-        with self._lock:
+        """        with self._lock:
             self._pool.clear()
             self._active_connections = 0
         logger.info(f"🧹 Nettoyage {self.__class__.__name__} terminé")
         return True
     
     def get_stats(self) -> Dict[str, Any]:
-        """
-        Statistiques du gestionnaire
+        """        Statistiques du gestionnaire
         
         Returns:
             Dict: Métriques actuelles
-        """
-        with self._lock:
+        """        with self._lock:
             return {
                 "pool_size": len(self._pool),
                 "active_connections": self._active_connections,
@@ -871,13 +798,11 @@ storage_manager = None
 
 
 def get_storage_manager() -> StorageManager:
-    """
-    Obtient l'instance du gestionnaire
+    """    Obtient l'instance du gestionnaire
     
     Returns:
         StorageManager: Instance du gestionnaire
-    """
-    global storage_manager
+    """    global storage_manager
     if storage_manager is None:
         storage_manager = StorageManager()
     return storage_manager

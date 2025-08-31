@@ -1,5 +1,4 @@
-"""
-Content Monitor - Advanced Content Protection & Surveillance
+"""Content Monitor - Advanced Content Protection & Surveillance
 ===========================================================
 
 Professional content monitoring system for IA-Influencer-Agent platform.
@@ -22,9 +21,7 @@ Expertise combinée:
 - Audio/Vidéo: Traitement multimédia et analyse de contenu
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Set, Union
 from dataclasses import dataclass, field
@@ -52,8 +49,7 @@ from .monitor_engine import MonitorEngine, MonitoringConfiguration, MonitoringMe
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Content type enumeration."""
-    AUDIO = "audio"
+    """Content type enumeration."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -61,24 +57,21 @@ class ContentType(Enum):
     MIXED = "mixed"
 
 class ProtectionLevel(Enum):
-    """Content protection level."""
-    BASIC = "basic"
+    """Content protection level."""    BASIC = "basic"
     ADVANCED = "advanced"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
     MILITARY = "military"
 
 class InfringementSeverity(Enum):
-    """Infringement severity levels."""
-    LOW = "low"
+    """Infringement severity levels."""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
 
 class DetectionMethod(Enum):
-    """Content detection methods."""
-    FINGERPRINT = "fingerprint"
+    """Content detection methods."""    FINGERPRINT = "fingerprint"
     HASH_MATCHING = "hash_matching"
     VISUAL_SIMILARITY = "visual_similarity"
     AUDIO_SIMILARITY = "audio_similarity"
@@ -88,8 +81,7 @@ class DetectionMethod(Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint data structure."""
-    content_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Content fingerprint data structure."""    content_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_type: ContentType = ContentType.MIXED
     filename: str = ""
     file_size: int = 0
@@ -120,8 +112,7 @@ class ContentFingerprint:
 
 @dataclass
 class InfringementDetection:
-    """Infringement detection result."""
-    detection_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Infringement detection result."""    detection_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     fingerprint_id: str = ""
     detected_url: str = ""
     platform: str = ""
@@ -142,11 +133,9 @@ class InfringementDetection:
     notes: str = ""
 
 class ContentMonitor(MonitorEngine):
-    """
-    Advanced content monitoring and protection system.
+    """    Advanced content monitoring and protection system.
     Implements multi-format content fingerprinting and infringement detection.
-    """
-    
+    """    
     def __init__(self, config: MonitoringConfiguration):
         super().__init__(config)
         self.fingerprints: Dict[str, ContentFingerprint] = {}
@@ -159,8 +148,7 @@ class ContentMonitor(MonitorEngine):
         self._initialize_ml_models()
     
     def _initialize_ml_models(self):
-        """Initialize machine learning models for content analysis."""
-        try:
+        """Initialize machine learning models for content analysis."""        try:
             # Text similarity model
             self.ml_models['text_encoder'] = SentenceTransformer('all-MiniLM-L6-v2')
             
@@ -175,8 +163,7 @@ class ContentMonitor(MonitorEngine):
             logger.error(f"Failed to initialize ML models: {e}")
     
     async def start_monitoring(self) -> bool:
-        """Start the content monitoring service."""
-        try:
+        """Start the content monitoring service."""        try:
             self.status = "running"
             
             # Start background tasks
@@ -192,8 +179,7 @@ class ContentMonitor(MonitorEngine):
             return False
     
     async def stop_monitoring(self) -> bool:
-        """Stop the content monitoring service."""
-        try:
+        """Stop the content monitoring service."""        try:
             self.status = "stopped"
             
             # Clear queues and active scans
@@ -213,8 +199,7 @@ class ContentMonitor(MonitorEngine):
     
     async def register_content(self, content_path: str, creator_id: str, 
                              protection_level: ProtectionLevel = ProtectionLevel.BASIC) -> str:
-        """Register new content for monitoring."""
-        try:
+        """Register new content for monitoring."""        try:
             # Generate fingerprint
             fingerprint = await self._generate_fingerprint(content_path, creator_id, protection_level)
             
@@ -232,8 +217,7 @@ class ContentMonitor(MonitorEngine):
     
     async def _generate_fingerprint(self, content_path: str, creator_id: str, 
                                   protection_level: ProtectionLevel) -> ContentFingerprint:
-        """Generate comprehensive fingerprint for content."""
-        try:
+        """Generate comprehensive fingerprint for content."""        try:
             path = Path(content_path)
             fingerprint = ContentFingerprint(
                 filename=path.name,
@@ -263,8 +247,7 @@ class ContentMonitor(MonitorEngine):
             raise
     
     async def _generate_audio_fingerprint(self, fingerprint: ContentFingerprint, content_path: str):
-        """Generate audio-specific fingerprint."""
-        try:
+        """Generate audio-specific fingerprint."""        try:
             # Load audio file
             y, sr = librosa.load(content_path, sr=22050)
             
@@ -294,8 +277,7 @@ class ContentMonitor(MonitorEngine):
             logger.error(f"Failed to generate audio fingerprint: {e}")
     
     async def _generate_image_fingerprint(self, fingerprint: ContentFingerprint, content_path: str):
-        """Generate image-specific fingerprint."""
-        try:
+        """Generate image-specific fingerprint."""        try:
             # Load image
             image = Image.open(content_path)
             
@@ -325,8 +307,7 @@ class ContentMonitor(MonitorEngine):
             logger.error(f"Failed to generate image fingerprint: {e}")
     
     async def _generate_video_fingerprint(self, fingerprint: ContentFingerprint, content_path: str):
-        """Generate video-specific fingerprint."""
-        try:
+        """Generate video-specific fingerprint."""        try:
             # Extract key frames and audio
             cap = cv2.VideoCapture(content_path)
             
@@ -357,8 +338,7 @@ class ContentMonitor(MonitorEngine):
             logger.error(f"Failed to generate video fingerprint: {e}")
     
     async def _generate_text_fingerprint(self, fingerprint: ContentFingerprint, content_path: str):
-        """Generate text-specific fingerprint."""
-        try:
+        """Generate text-specific fingerprint."""        try:
             # Read text content
             async with aiofiles.open(content_path, 'r', encoding='utf-8') as f:
                 text_content = await f.read()
@@ -376,8 +356,7 @@ class ContentMonitor(MonitorEngine):
             logger.error(f"Failed to generate text fingerprint: {e}")
     
     async def scan_for_infringements(self, fingerprint_id: str) -> List[InfringementDetection]:
-        """Scan web for potential infringements of registered content."""
-        try:
+        """Scan web for potential infringements of registered content."""        try:
             if fingerprint_id not in self.fingerprints:
                 raise ValueError(f"Fingerprint not found: {fingerprint_id}")
             
@@ -403,8 +382,7 @@ class ContentMonitor(MonitorEngine):
             return []
     
     def _generate_search_queries(self, fingerprint: ContentFingerprint) -> List[str]:
-        """Generate search queries based on content fingerprint."""
-        queries = []
+        """Generate search queries based on content fingerprint."""        queries = []
         
         # Basic filename search
         if fingerprint.filename:
@@ -427,8 +405,7 @@ class ContentMonitor(MonitorEngine):
         return queries[:5]  # Limit to 5 queries
     
     async def _perform_web_search(self, query: str) -> List[Dict[str, Any]]:
-        """Perform web search for potential matches."""
-        # Placeholder implementation - replace with actual search API
+        """Perform web search for potential matches."""        # Placeholder implementation - replace with actual search API
         return [
             {
                 "url": f"https://example.com/search?q={query}",
@@ -440,8 +417,7 @@ class ContentMonitor(MonitorEngine):
     
     async def _analyze_potential_match(self, fingerprint: ContentFingerprint, 
                                      search_result: Dict[str, Any]) -> Optional[InfringementDetection]:
-        """Analyze potential match for infringement."""
-        try:
+        """Analyze potential match for infringement."""        try:
             detection = InfringementDetection(
                 fingerprint_id=fingerprint.content_id,
                 detected_url=search_result["url"],
@@ -476,8 +452,7 @@ class ContentMonitor(MonitorEngine):
             return None
     
     async def _content_scanner_worker(self):
-        """Background worker for content scanning."""
-        while self.status == "running":
+        """Background worker for content scanning."""        while self.status == "running":
             try:
                 # Get fingerprint ID from queue with timeout
                 fingerprint_id = await asyncio.wait_for(
@@ -506,8 +481,7 @@ class ContentMonitor(MonitorEngine):
                 await asyncio.sleep(5)
     
     async def _infringement_detector_worker(self):
-        """Background worker for infringement detection analysis."""
-        while self.status == "running":
+        """Background worker for infringement detection analysis."""        while self.status == "running":
             try:
                 # Periodic check for pending detections
                 pending_detections = [
@@ -525,8 +499,7 @@ class ContentMonitor(MonitorEngine):
                 await asyncio.sleep(60)
     
     async def _protection_updater_worker(self):
-        """Background worker for updating protection status."""
-        while self.status == "running":
+        """Background worker for updating protection status."""        while self.status == "running":
             try:
                 current_time = datetime.utcnow()
                 
@@ -548,8 +521,7 @@ class ContentMonitor(MonitorEngine):
                 await asyncio.sleep(60)
     
     async def _process_infringement_detections(self, detections: List[InfringementDetection]):
-        """Process and handle infringement detections."""
-        for detection in detections:
+        """Process and handle infringement detections."""        for detection in detections:
             # Send alerts based on severity
             if detection.severity in [InfringementSeverity.HIGH, InfringementSeverity.CRITICAL]:
                 await self._send_alert(detection)
@@ -560,8 +532,7 @@ class ContentMonitor(MonitorEngine):
                 await self._take_protective_action(detection)
     
     async def _verify_infringement(self, detection: InfringementDetection):
-        """Verify if detected infringement is genuine."""
-        try:
+        """Verify if detected infringement is genuine."""        try:
             # Implement verification logic here
             # For now, mark as verified if confidence is high
             if detection.confidence_level >= 0.8:
@@ -575,24 +546,20 @@ class ContentMonitor(MonitorEngine):
             logger.error(f"Failed to verify infringement: {e}")
     
     async def _send_alert(self, detection: InfringementDetection):
-        """Send alert for infringement detection."""
-        # Implement alert sending logic (email, webhook, etc.)
+        """Send alert for infringement detection."""        # Implement alert sending logic (email, webhook, etc.)
         logger.warning(f"INFRINGEMENT ALERT: {detection.detection_id} - {detection.detected_url}")
     
     async def _take_protective_action(self, detection: InfringementDetection):
-        """Take automated protective action against infringement."""
-        # Implement automated actions (DMCA takedown, etc.)
+        """Take automated protective action against infringement."""        # Implement automated actions (DMCA takedown, etc.)
         logger.info(f"Taking protective action for detection: {detection.detection_id}")
     
     def _get_mime_type(self, path: Path) -> str:
-        """Get MIME type of file."""
-        import mimetypes
+        """Get MIME type of file."""        import mimetypes
         mime_type, _ = mimetypes.guess_type(str(path))
         return mime_type or "application/octet-stream"
     
     def _determine_content_type(self, mime_type: str) -> ContentType:
-        """Determine content type from MIME type."""
-        if mime_type.startswith("audio/"):
+        """Determine content type from MIME type."""        if mime_type.startswith("audio/"):
             return ContentType.AUDIO
         elif mime_type.startswith("video/"):
             return ContentType.VIDEO
@@ -604,8 +571,7 @@ class ContentMonitor(MonitorEngine):
             return ContentType.DOCUMENT
     
     async def get_monitoring_metrics(self) -> MonitoringMetrics:
-        """Get current monitoring metrics."""
-        metrics = MonitoringMetrics()
+        """Get current monitoring metrics."""        metrics = MonitoringMetrics()
         
         # Content metrics
         metrics.custom_metrics = {
@@ -620,11 +586,9 @@ class ContentMonitor(MonitorEngine):
         return metrics
 
 class ProtectionMonitor(ContentMonitor):
-    """
-    Enhanced protection monitor with advanced threat detection.
+    """    Enhanced protection monitor with advanced threat detection.
     Extends ContentMonitor with specialized protection features.
-    """
-    
+    """    
     def __init__(self, config: MonitoringConfiguration):
         super().__init__(config)
         self.protection_policies: Dict[str, Dict[str, Any]] = {}
@@ -633,29 +597,24 @@ class ProtectionMonitor(ContentMonitor):
         self.blacklist: Set[str] = set()
     
     async def add_protection_policy(self, policy_name: str, policy_config: Dict[str, Any]):
-        """Add custom protection policy."""
-        self.protection_policies[policy_name] = policy_config
+        """Add custom protection policy."""        self.protection_policies[policy_name] = policy_config
         logger.info(f"Added protection policy: {policy_name}")
     
     async def update_threat_signatures(self, signatures: Dict[str, Any]):
-        """Update threat detection signatures."""
-        self.threat_signatures.update(signatures)
+        """Update threat detection signatures."""        self.threat_signatures.update(signatures)
         logger.info(f"Updated {len(signatures)} threat signatures")
     
     async def add_to_whitelist(self, domains: List[str]):
-        """Add domains to whitelist."""
-        self.whitelist.update(domains)
+        """Add domains to whitelist."""        self.whitelist.update(domains)
         logger.info(f"Added {len(domains)} domains to whitelist")
     
     async def add_to_blacklist(self, domains: List[str]):
-        """Add domains to blacklist."""
-        self.blacklist.update(domains)
+        """Add domains to blacklist."""        self.blacklist.update(domains)
         logger.info(f"Added {len(domains)} domains to blacklist")
     
     async def _analyze_potential_match(self, fingerprint: ContentFingerprint, 
                                      search_result: Dict[str, Any]) -> Optional[InfringementDetection]:
-        """Enhanced match analysis with protection policies."""
-        detection = await super()._analyze_potential_match(fingerprint, search_result)
+        """Enhanced match analysis with protection policies."""        detection = await super()._analyze_potential_match(fingerprint, search_result)
         
         if detection:
             # Apply protection policies
@@ -677,8 +636,7 @@ class ProtectionMonitor(ContentMonitor):
         return detection
     
     async def _apply_threat_signatures(self, detection: InfringementDetection):
-        """Apply threat signatures to detection."""
-        for signature_name, signature_data in self.threat_signatures.items():
+        """Apply threat signatures to detection."""        for signature_name, signature_data in self.threat_signatures.items():
             # Implement signature matching logic
             if signature_data.get("url_pattern") in detection.detected_url:
                 detection.severity = InfringementSeverity.HIGH

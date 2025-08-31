@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Fee Calculator Engine - Advanced Commission and Fee Calculation System
+"""Fee Calculator Engine - Advanced Commission and Fee Calculation System
 ====================================================================
 
 Professional fee calculation engine with multiple strategies, dynamic pricing,
@@ -15,9 +14,7 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert 
 © 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from datetime import datetime, timedelta
@@ -47,8 +44,7 @@ from ...utils.metrics import performance_monitor
 logger = get_structured_logger(__name__)
 
 class CalculationStrategy(str, Enum):
-    """Fee calculation strategy enumeration"""
-    PERCENTAGE = "percentage"
+    """Fee calculation strategy enumeration"""    PERCENTAGE = "percentage"
     FIXED = "fixed"
     TIERED = "tiered"
     VOLUME_BASED = "volume_based"
@@ -58,8 +54,7 @@ class CalculationStrategy(str, Enum):
     AI_OPTIMIZED = "ai_optimized"
 
 class FeeType(str, Enum):
-    """Fee type enumeration"""
-    PLATFORM_FEE = "platform_fee"
+    """Fee type enumeration"""    PLATFORM_FEE = "platform_fee"
     PROCESSING_FEE = "processing_fee"
     TRANSACTION_FEE = "transaction_fee"
     SERVICE_FEE = "service_fee"
@@ -69,8 +64,7 @@ class FeeType(str, Enum):
     PERFORMANCE_BONUS = "performance_bonus"
 
 class FeeCalculationRequest(BaseModel):
-    """Fee calculation request model"""
-    
+    """Fee calculation request model"""    
     transaction_amount: Decimal = Field(..., ge=0)
     currency: Currency = Currency.EUR
     creator_id: str = Field(..., min_length=1)
@@ -99,8 +93,7 @@ class FeeCalculationRequest(BaseModel):
         }
 
 class FeeCalculationResult(BaseModel):
-    """Fee calculation result model"""
-    
+    """Fee calculation result model"""    
     calculation_id: str = Field(..., min_length=1)
     request: FeeCalculationRequest
     
@@ -134,16 +127,13 @@ class FeeCalculationResult(BaseModel):
         }
 
 class FeeCalculatorEngine:
-    """
-    Professional Fee Calculator Engine
+    """    Professional Fee Calculator Engine
     
     Provides multiple calculation strategies including AI-powered optimization
     for commission and fee calculations across all platforms.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Fee Calculator Engine"""
-        self.config = config or {}
+        """Initialize Fee Calculator Engine"""        self.config = config or {}
         
         # Calculator components
         self._platform_calculator: Optional[PlatformFeeCalculator] = None
@@ -165,8 +155,7 @@ class FeeCalculatorEngine:
         logger.info("FeeCalculatorEngine initialized")
     
     async def initialize(self) -> None:
-        """Initialize all calculator components"""
-        try:
+        """Initialize all calculator components"""        try:
             logger.info("Initializing Fee Calculator Engine...")
             
             # Initialize calculators
@@ -199,16 +188,14 @@ class FeeCalculatorEngine:
         self, 
         request: FeeCalculationRequest
     ) -> FeeCalculationResult:
-        """
-        Calculate fee using the specified strategy
+        """        Calculate fee using the specified strategy
         
         Args:
             request: Fee calculation request
             
         Returns:
             Fee calculation result
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         calculation_id = f"calc_{int(start_time.timestamp() * 1000)}"
         
         try:
@@ -259,8 +246,7 @@ class FeeCalculatorEngine:
             raise CommissionError(f"Fee calculation error: {e}")
     
     async def _calculate_percentage_fee(self, request: FeeCalculationRequest) -> FeeCalculationResult:
-        """Calculate percentage-based fee"""
-        try:
+        """Calculate percentage-based fee"""        try:
             # Get base rate for platform and tier
             base_rate = await self._get_base_rate(request.platform, request.tier, request.commission_type)
             
@@ -320,8 +306,7 @@ class FeeCalculatorEngine:
             raise CommissionError(f"Percentage calculation error: {e}")
     
     async def _calculate_tiered_fee(self, request: FeeCalculationRequest) -> FeeCalculationResult:
-        """Calculate tiered fee based on volume thresholds"""
-        try:
+        """Calculate tiered fee based on volume thresholds"""        try:
             if not self._tiered_calculator:
                 raise CommissionError("Tiered calculator not initialized")
             
@@ -332,8 +317,7 @@ class FeeCalculatorEngine:
             raise CommissionError(f"Tiered calculation error: {e}")
     
     async def _calculate_performance_based_fee(self, request: FeeCalculationRequest) -> FeeCalculationResult:
-        """Calculate performance-based fee"""
-        try:
+        """Calculate performance-based fee"""        try:
             if not self._performance_calculator:
                 raise CommissionError("Performance calculator not initialized")
             
@@ -344,8 +328,7 @@ class FeeCalculatorEngine:
             raise CommissionError(f"Performance calculation error: {e}")
     
     async def _calculate_ai_optimized_fee(self, request: FeeCalculationRequest) -> FeeCalculationResult:
-        """Calculate AI-optimized fee using machine learning"""
-        try:
+        """Calculate AI-optimized fee using machine learning"""        try:
             if not self._ml_model:
                 # Fallback to percentage calculation if ML not available
                 logger.warning("ML model not available, falling back to percentage calculation")
@@ -402,8 +385,7 @@ class FeeCalculatorEngine:
         tier: CommissionTier, 
         commission_type: CommissionType
     ) -> Decimal:
-        """Get base commission rate for platform, tier and type"""
-        try:
+        """Get base commission rate for platform, tier and type"""        try:
             # Platform-specific base rates
             platform_rates = {
                 "spotify": {
@@ -449,8 +431,7 @@ class FeeCalculatorEngine:
             return Decimal("0.05")  # Default 5%
     
     async def _get_tier_multiplier(self, tier: CommissionTier) -> Decimal:
-        """Get tier multiplier for fee calculations"""
-        multipliers = {
+        """Get tier multiplier for fee calculations"""        multipliers = {
             CommissionTier.STARTER: Decimal("1.0"),
             CommissionTier.STANDARD: Decimal("1.0"),
             CommissionTier.PREMIUM: Decimal("0.95"),
@@ -461,8 +442,7 @@ class FeeCalculatorEngine:
         return multipliers.get(tier, Decimal("1.0"))
     
     async def _calculate_bonuses(self, request: FeeCalculationRequest) -> Dict[str, Decimal]:
-        """Calculate applicable bonuses"""
-        bonuses = {}
+        """Calculate applicable bonuses"""        bonuses = {}
         
         try:
             # Performance bonus
@@ -487,8 +467,7 @@ class FeeCalculatorEngine:
         return bonuses
     
     async def _calculate_discounts(self, request: FeeCalculationRequest) -> Dict[str, Decimal]:
-        """Calculate applicable discounts"""
-        discounts = {}
+        """Calculate applicable discounts"""        discounts = {}
         
         try:
             # High volume discount
@@ -507,8 +486,7 @@ class FeeCalculatorEngine:
         return discounts
     
     async def _initialize_ml_components(self) -> None:
-        """Initialize machine learning components"""
-        try:
+        """Initialize machine learning components"""        try:
             self._ml_model = LinearRegression()
             self._scaler = StandardScaler()
             
@@ -528,8 +506,7 @@ class FeeCalculatorEngine:
             self._scaler = None
     
     async def _prepare_ml_features(self, request: FeeCalculationRequest) -> List[float]:
-        """Prepare features for ML model"""
-        try:
+        """Prepare features for ML model"""        try:
             features = [
                 float(request.transaction_amount),
                 float(request.creator_volume_30d),
@@ -551,8 +528,7 @@ class FeeCalculatorEngine:
         request: FeeCalculationRequest, 
         result: FeeCalculationResult
     ) -> None:
-        """Update ML training data with new calculation"""
-        try:
+        """Update ML training data with new calculation"""        try:
             features = await self._prepare_ml_features(request)
             target = float(result.effective_rate)
             
@@ -567,8 +543,7 @@ class FeeCalculatorEngine:
             logger.error(f"ML training data update failed: {e}")
     
     async def _retrain_ml_model(self) -> None:
-        """Retrain ML model with updated data"""
-        try:
+        """Retrain ML model with updated data"""        try:
             if len(self._feature_history) < 10:
                 return
             
@@ -591,8 +566,7 @@ class FeeCalculatorEngine:
     
     # Additional calculation methods
     async def _calculate_fixed_fee(self, request: FeeCalculationRequest) -> FeeCalculationResult:
-        """Calculate fixed fee"""
-        fixed_amount = Decimal("2.50")  # Standard fixed fee
+        """Calculate fixed fee"""        fixed_amount = Decimal("2.50")  # Standard fixed fee
         return FeeCalculationResult(
             request_id=request.request_id,
             total_fee=fixed_amount,
@@ -602,8 +576,7 @@ class FeeCalculatorEngine:
         )
     
     async def _calculate_volume_based_fee(self, request: FeeCalculationRequest) -> FeeCalculationResult:
-        """Calculate volume-based fee"""
-        base_rate = Decimal("0.025")  # 2.5% base rate
+        """Calculate volume-based fee"""        base_rate = Decimal("0.025")  # 2.5% base rate
         volume_multiplier = Decimal("1.0")
         
         # Adjust based on transaction volume
@@ -622,8 +595,7 @@ class FeeCalculatorEngine:
         )
     
     async def _calculate_hybrid_fee(self, request: FeeCalculationRequest) -> FeeCalculationResult:
-        """Calculate hybrid fee (combination of strategies)"""
-        # Combine percentage and fixed fees
+        """Calculate hybrid fee (combination of strategies)"""        # Combine percentage and fixed fees
         percentage_fee = request.amount * Decimal("0.029")  # 2.9%
         fixed_fee = Decimal("0.30")
         total_fee = percentage_fee + fixed_fee
@@ -637,8 +609,7 @@ class FeeCalculatorEngine:
         )
     
     async def _calculate_dynamic_fee(self, request: FeeCalculationRequest) -> FeeCalculationResult:
-        """Calculate dynamic fee based on market conditions"""
-        # Dynamic fee based on time and load
+        """Calculate dynamic fee based on market conditions"""        # Dynamic fee based on time and load
         base_rate = Decimal("0.025")
         current_hour = datetime.utcnow().hour
         
@@ -659,8 +630,7 @@ class FeeCalculatorEngine:
     
     # Cache methods
     async def _get_cached_result(self, request: FeeCalculationRequest) -> Optional[FeeCalculationResult]:
-        """Get cached calculation result"""
-        try:
+        """Get cached calculation result"""        try:
             if not self._redis_client:
                 return None
             
@@ -676,8 +646,7 @@ class FeeCalculatorEngine:
         return None
     
     async def _cache_result(self, request: FeeCalculationRequest, result: FeeCalculationResult) -> None:
-        """Cache calculation result"""
-        try:
+        """Cache calculation result"""        try:
             if not self._redis_client:
                 return
             
@@ -692,8 +661,7 @@ class FeeCalculatorEngine:
             logger.warning(f"Cache storage failed: {e}")
     
     def _generate_cache_key(self, request: FeeCalculationRequest) -> str:
-        """Generate cache key for request"""
-        key_data = {
+        """Generate cache key for request"""        key_data = {
             "amount": str(request.transaction_amount),
             "platform": request.platform,
             "type": request.commission_type.value,
@@ -703,8 +671,7 @@ class FeeCalculatorEngine:
         return f"fee_calc:{hash(str(key_data))}"
     
     async def shutdown(self) -> None:
-        """Shutdown Fee Calculator Engine"""
-        try:
+        """Shutdown Fee Calculator Engine"""        try:
             logger.info("Shutting down Fee Calculator Engine...")
             # Cleanup resources
             logger.info("Fee Calculator Engine shutdown complete")
@@ -713,11 +680,9 @@ class FeeCalculatorEngine:
             logger.error(f"Fee Calculator shutdown error: {e}")
 
 class PlatformFeeCalculator:
-    """Platform-specific fee calculator"""
-    
+    """Platform-specific fee calculator"""    
     async def initialize(self) -> None:
-        """Initialize platform calculator"""
-        self.platform_rates = {
+        """Initialize platform calculator"""        self.platform_rates = {
             "youtube": Decimal("0.05"),
             "instagram": Decimal("0.04"), 
             "tiktok": Decimal("0.06"),
@@ -731,16 +696,13 @@ class PlatformFeeCalculator:
         amount: Decimal, 
         tier: CommissionTier
     ) -> Decimal:
-        """Calculate platform-specific fee"""
-        # Implementation
+        """Calculate platform-specific fee"""        # Implementation
         return Decimal("0.05") * amount
 
 class ProcessingFeeCalculator:
-    """Processing fee calculator"""
-    
+    """Processing fee calculator"""    
     async def initialize(self) -> None:
-        """Initialize processing calculator"""
-        self.processing_rates = {
+        """Initialize processing calculator"""        self.processing_rates = {
             "EUR": {"rate": Decimal("0.029"), "fixed": Decimal("0.30")},
             "USD": {"rate": Decimal("0.029"), "fixed": Decimal("0.30")},
             "GBP": {"rate": Decimal("0.025"), "fixed": Decimal("0.25")}
@@ -748,8 +710,7 @@ class ProcessingFeeCalculator:
         logger.info("Processing fee calculator initialized")
     
     async def calculate(self, amount: Decimal, currency: Currency) -> Decimal:
-        """Calculate processing fee"""
-        # Base processing fee rates by currency
+        """Calculate processing fee"""        # Base processing fee rates by currency
         rates = {
             Currency.EUR: Decimal("0.025"),
             Currency.USD: Decimal("0.029"),
@@ -762,11 +723,9 @@ class ProcessingFeeCalculator:
         return amount * rate
 
 class PerformanceFeeCalculator:
-    """Performance-based fee calculator"""
-    
+    """Performance-based fee calculator"""    
     async def initialize(self) -> None:
-        """Initialize performance calculator"""
-        self.performance_thresholds = {
+        """Initialize performance calculator"""        self.performance_thresholds = {
             "bronze": {"min_revenue": Decimal("0"), "bonus_rate": Decimal("0.0")},
             "silver": {"min_revenue": Decimal("1000"), "bonus_rate": Decimal("0.05")},
             "gold": {"min_revenue": Decimal("5000"), "bonus_rate": Decimal("0.10")},
@@ -775,8 +734,7 @@ class PerformanceFeeCalculator:
         logger.info("Performance fee calculator initialized")
     
     async def calculate_performance_fee(self, request: FeeCalculationRequest) -> FeeCalculationResult:
-        """Calculate performance-based fee"""
-        base_fee = request.amount * Decimal("0.025")
+        """Calculate performance-based fee"""        base_fee = request.amount * Decimal("0.025")
         performance_tier = request.metadata.get("performance_tier", "bronze")
         
         bonus_rate = self.performance_thresholds.get(performance_tier, {}).get("bonus_rate", Decimal("0.0"))
@@ -792,11 +750,9 @@ class PerformanceFeeCalculator:
         )
 
 class TieredFeeCalculator:
-    """Tiered fee calculator with volume thresholds"""
-    
+    """Tiered fee calculator with volume thresholds"""    
     async def initialize(self) -> None:
-        """Initialize tiered calculator"""
-        self.tier_thresholds = [
+        """Initialize tiered calculator"""        self.tier_thresholds = [
             {"min_amount": Decimal("0"), "rate": Decimal("0.030")},
             {"min_amount": Decimal("1000"), "rate": Decimal("0.025")},
             {"min_amount": Decimal("5000"), "rate": Decimal("0.020")},
@@ -805,8 +761,7 @@ class TieredFeeCalculator:
         logger.info("Tiered fee calculator initialized")
     
     async def calculate_tiered_fee(self, request: FeeCalculationRequest) -> FeeCalculationResult:
-        """Calculate tiered fee"""
-        # Find applicable tier based on amount
+        """Calculate tiered fee"""        # Find applicable tier based on amount
         applicable_rate = Decimal("0.030")  # default
         for tier in reversed(self.tier_thresholds):
             if request.amount >= tier["min_amount"]:
@@ -823,11 +778,9 @@ class TieredFeeCalculator:
         )
 
 class DynamicFeeCalculator:
-    """Dynamic fee calculator based on market conditions"""
-    
+    """Dynamic fee calculator based on market conditions"""    
     async def initialize(self) -> None:
-        """Initialize dynamic calculator"""
-        self.market_conditions = {
+        """Initialize dynamic calculator"""        self.market_conditions = {
             "peak_hours_multiplier": Decimal("1.2"),
             "off_peak_multiplier": Decimal("0.8"),
             "weekend_multiplier": Decimal("0.9")
@@ -835,8 +788,7 @@ class DynamicFeeCalculator:
         logger.info("Dynamic fee calculator initialized")
     
     async def calculate_dynamic_fee(self, request: FeeCalculationRequest) -> FeeCalculationResult:
-        """Calculate dynamic fee"""
-        base_fee = request.amount * Decimal("0.025")
+        """Calculate dynamic fee"""        base_fee = request.amount * Decimal("0.025")
         now = datetime.utcnow()
         
         # Apply time-based multipliers
@@ -857,8 +809,7 @@ class DynamicFeeCalculator:
             currency=request.currency
         )
 
-"""
-Professional Fee Calculator Engine
+"""Professional Fee Calculator Engine
 © 2025 Fahed Mlaiel - Enterprise-Grade Solution
 
 This engine provides advanced fee calculation capabilities with multiple strategies,

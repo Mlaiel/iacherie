@@ -1,5 +1,4 @@
-"""
-Platform Integration Schemas
+"""Platform Integration Schemas
 
 Comprehensive Pydantic schemas for platform integrations, API management,
 and multi-platform content distribution in the IA Influencer Agent platform.
@@ -7,9 +6,7 @@ and multi-platform content distribution in the IA Influencer Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-
-from datetime import datetime, date
+"""from datetime import datetime, date
 from decimal import Decimal
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any
@@ -20,8 +17,7 @@ from pydantic.types import PositiveInt, PositiveFloat
 
 
 class PlatformTypeEnum(str, Enum):
-    """Types of supported platforms"""
-    SOCIAL_MEDIA = "social_media"
+    """Types of supported platforms"""    SOCIAL_MEDIA = "social_media"
     STREAMING_MUSIC = "streaming_music"
     STREAMING_VIDEO = "streaming_video"
     PODCAST = "podcast"
@@ -38,8 +34,7 @@ class PlatformTypeEnum(str, Enum):
 
 
 class IntegrationStatusEnum(str, Enum):
-    """Platform integration status"""
-    DISCONNECTED = "disconnected"
+    """Platform integration status"""    DISCONNECTED = "disconnected"
     CONNECTING = "connecting"
     CONNECTED = "connected"
     AUTHENTICATED = "authenticated"
@@ -53,8 +48,7 @@ class IntegrationStatusEnum(str, Enum):
 
 
 class AuthMethodEnum(str, Enum):
-    """Authentication methods"""
-    OAUTH2 = "oauth2"
+    """Authentication methods"""    OAUTH2 = "oauth2"
     API_KEY = "api_key"
     JWT = "jwt"
     BASIC_AUTH = "basic_auth"
@@ -64,8 +58,7 @@ class AuthMethodEnum(str, Enum):
 
 
 class SyncFrequencyEnum(str, Enum):
-    """Data synchronization frequencies"""
-    REAL_TIME = "real_time"
+    """Data synchronization frequencies"""    REAL_TIME = "real_time"
     EVERY_5_MINUTES = "every_5_minutes"
     EVERY_15_MINUTES = "every_15_minutes"
     EVERY_30_MINUTES = "every_30_minutes"
@@ -77,8 +70,7 @@ class SyncFrequencyEnum(str, Enum):
 
 
 class ContentFormatEnum(str, Enum):
-    """Content formats supported by platforms"""
-    AUDIO_MP3 = "audio_mp3"
+    """Content formats supported by platforms"""    AUDIO_MP3 = "audio_mp3"
     AUDIO_WAV = "audio_wav"
     AUDIO_FLAC = "audio_flac"
     VIDEO_MP4 = "video_mp4"
@@ -95,8 +87,7 @@ class ContentFormatEnum(str, Enum):
 
 
 class APICapabilitySchema(BaseModel):
-    """Schema for platform API capabilities"""
-    capability_name: str = Field(..., description="Name of the capability")
+    """Schema for platform API capabilities"""    capability_name: str = Field(..., description="Name of the capability")
     enabled: bool = Field(..., description="Whether capability is enabled")
     rate_limit: Optional[int] = Field(None, description="Rate limit per hour")
     quota_remaining: Optional[int] = Field(None, description="Remaining quota")
@@ -118,8 +109,7 @@ class APICapabilitySchema(BaseModel):
 
 
 class PlatformMetricsSchema(BaseModel):
-    """Schema for platform-specific metrics"""
-    followers_count: Optional[int] = Field(None, description="Number of followers")
+    """Schema for platform-specific metrics"""    followers_count: Optional[int] = Field(None, description="Number of followers")
     following_count: Optional[int] = Field(None, description="Number of following")
     posts_count: Optional[int] = Field(None, description="Number of posts")
     engagement_rate: Optional[float] = Field(None, description="Engagement rate")
@@ -149,8 +139,7 @@ class PlatformMetricsSchema(BaseModel):
 
 
 class ContentDistributionSchema(BaseModel):
-    """Schema for content distribution settings"""
-    auto_publish: bool = Field(False, description="Enable automatic publishing")
+    """Schema for content distribution settings"""    auto_publish: bool = Field(False, description="Enable automatic publishing")
     publish_delay: Optional[int] = Field(None, description="Delay in minutes before publishing")
     custom_caption: Optional[str] = Field(None, description="Custom caption for platform")
     custom_hashtags: Optional[List[str]] = Field(None, description="Platform-specific hashtags")
@@ -174,8 +163,7 @@ class ContentDistributionSchema(BaseModel):
 
 
 class PlatformIntegrationBaseSchema(BaseModel):
-    """Base schema for platform integrations"""
-    platform_name: str = Field(..., description="Platform name")
+    """Base schema for platform integrations"""    platform_name: str = Field(..., description="Platform name")
     platform_type: PlatformTypeEnum = Field(..., description="Type of platform")
     platform_url: HttpUrl = Field(..., description="Platform base URL")
     platform_version: Optional[str] = Field(None, description="Platform API version")
@@ -205,15 +193,13 @@ class PlatformIntegrationBaseSchema(BaseModel):
     @field_validator('platform_name')
     @classmethod
     def validate_platform_name(cls, v):
-        """Validate platform name"""
-        if not v or len(v.strip()) < 2:
+        """Validate platform name"""        if not v or len(v.strip()) < 2:
             raise ValueError("Platform name must be at least 2 characters long")
         return v.lower().strip()
 
 
 class PlatformIntegrationCreateSchema(PlatformIntegrationBaseSchema):
-    """Schema for creating platform integrations"""
-    user_id: PositiveInt = Field(..., description="User ID")
+    """Schema for creating platform integrations"""    user_id: PositiveInt = Field(..., description="User ID")
     
     # Initial setup
     auto_configure: bool = Field(True, description="Enable automatic configuration")
@@ -240,8 +226,7 @@ class PlatformIntegrationCreateSchema(PlatformIntegrationBaseSchema):
 
 
 class PlatformIntegrationUpdateSchema(BaseModel):
-    """Schema for updating platform integrations"""
-    scopes: Optional[List[str]] = Field(None, description="Updated scopes")
+    """Schema for updating platform integrations"""    scopes: Optional[List[str]] = Field(None, description="Updated scopes")
     sync_frequency: Optional[SyncFrequencyEnum] = Field(None, description="Updated sync frequency")
     webhook_url: Optional[HttpUrl] = Field(None, description="Updated webhook URL")
     distribution_settings: Optional[ContentDistributionSchema] = Field(None, description="Updated distribution settings")
@@ -259,8 +244,7 @@ class PlatformIntegrationUpdateSchema(BaseModel):
 
 
 class PlatformIntegrationResponseSchema(PlatformIntegrationBaseSchema):
-    """Schema for platform integration responses"""
-    id: PositiveInt = Field(..., description="Unique integration ID")
+    """Schema for platform integration responses"""    id: PositiveInt = Field(..., description="Unique integration ID")
     user_id: PositiveInt = Field(..., description="Owner user ID")
     
     # Status information
@@ -316,8 +300,7 @@ class PlatformIntegrationResponseSchema(PlatformIntegrationBaseSchema):
 
 
 class PlatformSyncLogSchema(BaseModel):
-    """Schema for platform synchronization logs"""
-    sync_id: str = Field(..., description="Unique sync identifier")
+    """Schema for platform synchronization logs"""    sync_id: str = Field(..., description="Unique sync identifier")
     integration_id: PositiveInt = Field(..., description="Platform integration ID")
     sync_type: str = Field(..., description="Type of sync operation")
     
@@ -359,8 +342,7 @@ class PlatformSyncLogSchema(BaseModel):
 
 
 class PlatformAnalyticsSchema(BaseModel):
-    """Schema for platform analytics and insights"""
-    integration_id: PositiveInt = Field(..., description="Platform integration ID")
+    """Schema for platform analytics and insights"""    integration_id: PositiveInt = Field(..., description="Platform integration ID")
     analytics_period: str = Field(..., description="Analytics time period")
     
     # Performance metrics
@@ -404,8 +386,7 @@ class PlatformAnalyticsSchema(BaseModel):
 
 
 class CrossPlatformDistributionSchema(BaseModel):
-    """Schema for cross-platform content distribution"""
-    distribution_id: str = Field(..., description="Unique distribution identifier")
+    """Schema for cross-platform content distribution"""    distribution_id: str = Field(..., description="Unique distribution identifier")
     user_id: PositiveInt = Field(..., description="User ID")
     content_id: PositiveInt = Field(..., description="Content ID")
     
@@ -441,8 +422,7 @@ class CrossPlatformDistributionSchema(BaseModel):
 
 
 class PlatformComplianceSchema(BaseModel):
-    """Schema for platform compliance and content policies"""
-    platform_name: str = Field(..., description="Platform name")
+    """Schema for platform compliance and content policies"""    platform_name: str = Field(..., description="Platform name")
     content_policies: List[Dict] = Field(..., description="Platform content policies")
     monetization_policies: List[Dict] = Field(..., description="Monetization policies")
     copyright_policies: List[Dict] = Field(..., description="Copyright policies")

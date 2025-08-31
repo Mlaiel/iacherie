@@ -1,14 +1,11 @@
-"""
-Analytics Engine - Ultra-Advanced Processing Engine
+"""Analytics Engine - Ultra-Advanced Processing Engine
 
 Core processing engine for analytics operations with intelligent
 optimization and comprehensive functionality.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime
@@ -18,24 +15,21 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AnalyticsJob:
-    """Job configuration for analytics operations"""
-    job_id: str
+    """Job configuration for analytics operations"""    job_id: str
     data: Dict[str, Any]
     priority: int = 5
     created_at: datetime = None
 
 @dataclass 
 class AnalyticsResult:
-    """Result of analytics operations"""
-    job_id: str
+    """Result of analytics operations"""    job_id: str
     success: bool
     data: Optional[Dict[str, Any]] = None
     error: Optional[str] = None
     completed_at: datetime = None
 
 class AnalyticsEngine:
-    """
-    Ultra-Advanced Analytics Processing Engine
+    """    Ultra-Advanced Analytics Processing Engine
     
     Provides enterprise-grade analytics processing with:
     - High-performance operation handling
@@ -43,8 +37,7 @@ class AnalyticsEngine:
     - Comprehensive error handling
     - Real-time monitoring and metrics
     - Scalable architecture design
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.is_running = False
@@ -53,8 +46,7 @@ class AnalyticsEngine:
         logger.info("AnalyticsEngine initialized")
 
     async def start(self) -> None:
-        """Start the analytics processing engine"""
-        try:
+        """Start the analytics processing engine"""        try:
             self.is_running = True
             logger.info("AnalyticsEngine started successfully")
         except Exception as e:
@@ -62,8 +54,7 @@ class AnalyticsEngine:
             raise
 
     async def process(self, data: Dict[str, Any]) -> AnalyticsResult:
-        """Process analytics operation"""
-        try:
+        """Process analytics operation"""        try:
             job_id = data.get('job_id', 'auto-generated')
             
             # Implementation specific processing logic here
@@ -90,6 +81,5 @@ class AnalyticsEngine:
             )
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of the processing engine"""
-        self.is_running = False
+        """Graceful shutdown of the processing engine"""        self.is_running = False
         logger.info("AnalyticsEngine shutdown complete")

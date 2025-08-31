@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -79,17 +76,14 @@ except ImportError as e:
         pass
 
 class TestNoiseReducer(unittest.TestCase):
-    """Test suite for NoiseReducer class"""
-    
+    """Test suite for NoiseReducer class"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.reducer = NoiseReducer()
+        """Set up test fixtures"""        self.reducer = NoiseReducer()
         self.noisy_image = self._create_noisy_test_image()
         self.clean_image = self._create_clean_test_image()
     
     def _create_noisy_test_image(self) -> np.ndarray:
-        """Create a test image with noise"""
-        # Start with a clean image
+        """Create a test image with noise"""        # Start with a clean image
         image = np.zeros((200, 200, 3), dtype=np.uint8)
         cv2.rectangle(image, (50, 50), (150, 150), (100, 150, 200), -1)
         
@@ -105,19 +99,16 @@ class TestNoiseReducer(unittest.TestCase):
         return noisy_image
     
     def _create_clean_test_image(self) -> np.ndarray:
-        """Create a clean test image for comparison"""
-        image = np.zeros((200, 200, 3), dtype=np.uint8)
+        """Create a clean test image for comparison"""        image = np.zeros((200, 200, 3), dtype=np.uint8)
         cv2.rectangle(image, (50, 50), (150, 150), (100, 150, 200), -1)
         cv2.circle(image, (100, 100), 30, (255, 255, 255), -1)
         return image
     
     def test_reducer_initialization(self):
-        """Test NoiseReducer initialization"""
-        self.assertIsInstance(self.reducer, NoiseReducer)
+        """Test NoiseReducer initialization"""        self.assertIsInstance(self.reducer, NoiseReducer)
     
     def test_gaussian_noise_reduction(self):
-        """Test Gaussian noise reduction"""
-        try:
+        """Test Gaussian noise reduction"""        try:
             denoised = self.reducer.reduce_gaussian_noise(self.noisy_image)
             
             self.assertIsInstance(denoised, np.ndarray)
@@ -134,8 +125,7 @@ class TestNoiseReducer(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_bilateral_filtering(self):
-        """Test bilateral filtering for noise reduction"""
-        try:
+        """Test bilateral filtering for noise reduction"""        try:
             filtered = self.reducer.bilateral_filter(self.noisy_image)
             
             self.assertIsInstance(filtered, np.ndarray)
@@ -149,8 +139,7 @@ class TestNoiseReducer(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_median_filtering(self):
-        """Test median filtering for impulse noise"""
-        try:
+        """Test median filtering for impulse noise"""        try:
             filtered = self.reducer.median_filter(self.noisy_image, kernel_size=5)
             
             self.assertIsInstance(filtered, np.ndarray)
@@ -163,8 +152,7 @@ class TestNoiseReducer(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_adaptive_denoising(self):
-        """Test adaptive denoising algorithm"""
-        try:
+        """Test adaptive denoising algorithm"""        try:
             denoised = self.reducer.adaptive_denoise(self.noisy_image)
             
             self.assertIsInstance(denoised, np.ndarray)
@@ -177,8 +165,7 @@ class TestNoiseReducer(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_noise_estimation(self):
-        """Test noise level estimation"""
-        try:
+        """Test noise level estimation"""        try:
             noise_level = self.reducer.estimate_noise_level(self.noisy_image)
             
             self.assertIsInstance(noise_level, (int, float))
@@ -192,18 +179,15 @@ class TestNoiseReducer(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
 
 class TestColorCorrector(unittest.TestCase):
-    """Test suite for ColorCorrector class"""
-    
+    """Test suite for ColorCorrector class"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.corrector = ColorCorrector()
+        """Set up test fixtures"""        self.corrector = ColorCorrector()
         self.test_image = self._create_color_test_image()
         self.dark_image = self._create_dark_image()
         self.oversaturated_image = self._create_oversaturated_image()
     
     def _create_color_test_image(self) -> np.ndarray:
-        """Create a test image with various colors"""
-        image = np.zeros((200, 300, 3), dtype=np.uint8)
+        """Create a test image with various colors"""        image = np.zeros((200, 300, 3), dtype=np.uint8)
         
         # Red region
         image[0:67, 0:100] = [255, 0, 0]
@@ -225,24 +209,20 @@ class TestColorCorrector(unittest.TestCase):
         return image
     
     def _create_dark_image(self) -> np.ndarray:
-        """Create an underexposed test image"""
-        image = self.test_image.copy().astype(np.float32)
+        """Create an underexposed test image"""        image = self.test_image.copy().astype(np.float32)
         return (image * 0.3).astype(np.uint8)  # Make it 30% darker
     
     def _create_oversaturated_image(self) -> np.ndarray:
-        """Create an oversaturated test image"""
-        image = self.test_image.copy()
+        """Create an oversaturated test image"""        image = self.test_image.copy()
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV).astype(np.float32)
         hsv[:, :, 1] = np.clip(hsv[:, :, 1] * 1.5, 0, 255)  # Increase saturation
         return cv2.cvtColor(hsv.astype(np.uint8), cv2.COLOR_HSV2BGR)
     
     def test_corrector_initialization(self):
-        """Test ColorCorrector initialization"""
-        self.assertIsInstance(self.corrector, ColorCorrector)
+        """Test ColorCorrector initialization"""        self.assertIsInstance(self.corrector, ColorCorrector)
     
     def test_brightness_adjustment(self):
-        """Test brightness adjustment"""
-        try:
+        """Test brightness adjustment"""        try:
             # Brighten dark image
             brightened = self.corrector.adjust_brightness(self.dark_image, factor=1.5)
             
@@ -260,8 +240,7 @@ class TestColorCorrector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_contrast_adjustment(self):
-        """Test contrast adjustment"""
-        try:
+        """Test contrast adjustment"""        try:
             # Increase contrast
             high_contrast = self.corrector.adjust_contrast(self.test_image, factor=1.5)
             
@@ -279,8 +258,7 @@ class TestColorCorrector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_saturation_adjustment(self):
-        """Test saturation adjustment"""
-        try:
+        """Test saturation adjustment"""        try:
             # Increase saturation
             saturated = self.corrector.adjust_saturation(self.test_image, factor=1.3)
             
@@ -300,8 +278,7 @@ class TestColorCorrector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_white_balance_correction(self):
-        """Test white balance correction"""
-        try:
+        """Test white balance correction"""        try:
             corrected = self.corrector.correct_white_balance(self.test_image)
             
             self.assertIsInstance(corrected, np.ndarray)
@@ -314,8 +291,7 @@ class TestColorCorrector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_gamma_correction(self):
-        """Test gamma correction"""
-        try:
+        """Test gamma correction"""        try:
             # Test different gamma values
             gamma_high = self.corrector.gamma_correction(self.test_image, gamma=2.2)
             gamma_low = self.corrector.gamma_correction(self.test_image, gamma=0.5)
@@ -331,8 +307,7 @@ class TestColorCorrector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_histogram_equalization(self):
-        """Test histogram equalization"""
-        try:
+        """Test histogram equalization"""        try:
             equalized = self.corrector.histogram_equalization(self.dark_image)
             
             self.assertIsInstance(equalized, np.ndarray)
@@ -345,16 +320,13 @@ class TestColorCorrector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
 
 class TestResolutionUpscaler(unittest.TestCase):
-    """Test suite for ResolutionUpscaler class"""
-    
+    """Test suite for ResolutionUpscaler class"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.upscaler = ResolutionUpscaler()
+        """Set up test fixtures"""        self.upscaler = ResolutionUpscaler()
         self.low_res_image = self._create_low_resolution_image()
     
     def _create_low_resolution_image(self) -> np.ndarray:
-        """Create a low resolution test image"""
-        # Create a small image with clear features
+        """Create a low resolution test image"""        # Create a small image with clear features
         image = np.zeros((50, 50, 3), dtype=np.uint8)
         
         # Add some patterns
@@ -365,12 +337,10 @@ class TestResolutionUpscaler(unittest.TestCase):
         return image
     
     def test_upscaler_initialization(self):
-        """Test ResolutionUpscaler initialization"""
-        self.assertIsInstance(self.upscaler, ResolutionUpscaler)
+        """Test ResolutionUpscaler initialization"""        self.assertIsInstance(self.upscaler, ResolutionUpscaler)
     
     def test_bicubic_upscaling(self):
-        """Test bicubic interpolation upscaling"""
-        try:
+        """Test bicubic interpolation upscaling"""        try:
             upscaled = self.upscaler.bicubic_upscale(self.low_res_image, scale_factor=2.0)
             
             self.assertIsInstance(upscaled, np.ndarray)
@@ -385,8 +355,7 @@ class TestResolutionUpscaler(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_lanczos_upscaling(self):
-        """Test Lanczos upscaling"""
-        try:
+        """Test Lanczos upscaling"""        try:
             upscaled = self.upscaler.lanczos_upscale(self.low_res_image, scale_factor=3.0)
             
             self.assertIsInstance(upscaled, np.ndarray)
@@ -400,8 +369,7 @@ class TestResolutionUpscaler(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_super_resolution_upscaling(self):
-        """Test AI-based super resolution upscaling"""
-        try:
+        """Test AI-based super resolution upscaling"""        try:
             upscaled = self.upscaler.super_resolution_upscale(self.low_res_image, scale_factor=4.0)
             
             self.assertIsInstance(upscaled, np.ndarray)
@@ -415,8 +383,7 @@ class TestResolutionUpscaler(unittest.TestCase):
             self.skipTest(f"Skipping due to import or model error: {e}")
     
     def test_edge_preserving_upscaling(self):
-        """Test edge-preserving upscaling"""
-        try:
+        """Test edge-preserving upscaling"""        try:
             upscaled = self.upscaler.edge_preserving_upscale(self.low_res_image, scale_factor=2.0)
             
             self.assertIsInstance(upscaled, np.ndarray)
@@ -434,8 +401,7 @@ class TestResolutionUpscaler(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_upscaling_quality_metrics(self):
-        """Test upscaling quality assessment"""
-        try:
+        """Test upscaling quality assessment"""        try:
             # Create reference high-res image
             reference = cv2.resize(self.low_res_image, (200, 200), interpolation=cv2.INTER_CUBIC)
             
@@ -452,17 +418,14 @@ class TestResolutionUpscaler(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
 
 class TestImageEnhancer(unittest.TestCase):
-    """Test suite for ImageEnhancer class"""
-    
+    """Test suite for ImageEnhancer class"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.enhancer = ImageEnhancer()
+        """Set up test fixtures"""        self.enhancer = ImageEnhancer()
         self.test_image = self._create_enhancement_test_image()
         self.settings = self._create_enhancement_settings()
     
     def _create_enhancement_test_image(self) -> np.ndarray:
-        """Create a test image that needs enhancement"""
-        # Create a low quality image
+        """Create a test image that needs enhancement"""        # Create a low quality image
         image = np.zeros((150, 200, 3), dtype=np.uint8)
         
         # Add some content
@@ -479,8 +442,7 @@ class TestImageEnhancer(unittest.TestCase):
         return dark_image
     
     def _create_enhancement_settings(self):
-        """Create enhancement settings for testing"""
-        try:
+        """Create enhancement settings for testing"""        try:
             return EnhancementSettings(
                 noise_reduction=True,
                 color_correction=True,
@@ -501,12 +463,10 @@ class TestImageEnhancer(unittest.TestCase):
             }
     
     def test_enhancer_initialization(self):
-        """Test ImageEnhancer initialization"""
-        self.assertIsInstance(self.enhancer, ImageEnhancer)
+        """Test ImageEnhancer initialization"""        self.assertIsInstance(self.enhancer, ImageEnhancer)
     
     def test_comprehensive_enhancement(self):
-        """Test comprehensive image enhancement"""
-        try:
+        """Test comprehensive image enhancement"""        try:
             enhanced = self.enhancer.enhance(self.test_image, settings=self.settings)
             
             self.assertIsInstance(enhanced, np.ndarray)
@@ -529,8 +489,7 @@ class TestImageEnhancer(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_selective_enhancement(self):
-        """Test selective enhancement features"""
-        try:
+        """Test selective enhancement features"""        try:
             # Test noise reduction only
             noise_reduced = self.enhancer.enhance(self.test_image, 
                                                 settings={'noise_reduction': True, 'color_correction': False})
@@ -549,8 +508,7 @@ class TestImageEnhancer(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_sharpening_enhancement(self):
-        """Test image sharpening"""
-        try:
+        """Test image sharpening"""        try:
             # Create a slightly blurred image
             blurred = cv2.GaussianBlur(self.test_image, (5, 5), 1.0)
             
@@ -570,8 +528,7 @@ class TestImageEnhancer(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_enhancement_quality_assessment(self):
-        """Test enhancement quality assessment"""
-        try:
+        """Test enhancement quality assessment"""        try:
             enhanced = self.enhancer.enhance(self.test_image, settings=self.settings)
             
             quality_metrics = self.enhancer.assess_enhancement_quality(self.test_image, enhanced)
@@ -586,8 +543,7 @@ class TestImageEnhancer(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_batch_enhancement(self):
-        """Test batch image enhancement"""
-        try:
+        """Test batch image enhancement"""        try:
             # Create multiple test images
             images = [self.test_image for _ in range(3)]
             
@@ -603,21 +559,17 @@ class TestImageEnhancer(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
 
 class TestVideoEnhancer(unittest.TestCase):
-    """Test suite for VideoEnhancer class"""
-    
+    """Test suite for VideoEnhancer class"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.enhancer = VideoEnhancer()
+        """Set up test fixtures"""        self.enhancer = VideoEnhancer()
         self.test_video_path = self._create_test_video()
     
     def tearDown(self):
-        """Clean up test fixtures"""
-        if hasattr(self, 'test_video_path') and os.path.exists(self.test_video_path):
+        """Clean up test fixtures"""        if hasattr(self, 'test_video_path') and os.path.exists(self.test_video_path):
             os.remove(self.test_video_path)
     
     def _create_test_video(self) -> str:
-        """Create a test video file"""
-        temp_file = tempfile.NamedTemporaryFile(suffix='.mp4', delete=False)
+        """Create a test video file"""        temp_file = tempfile.NamedTemporaryFile(suffix='.mp4', delete=False)
         temp_path = temp_file.name
         temp_file.close()
         
@@ -645,12 +597,10 @@ class TestVideoEnhancer(unittest.TestCase):
         return temp_path
     
     def test_enhancer_initialization(self):
-        """Test VideoEnhancer initialization"""
-        self.assertIsInstance(self.enhancer, VideoEnhancer)
+        """Test VideoEnhancer initialization"""        self.assertIsInstance(self.enhancer, VideoEnhancer)
     
     def test_video_enhancement(self):
-        """Test video enhancement"""
-        try:
+        """Test video enhancement"""        try:
             # Create output path
             output_file = tempfile.NamedTemporaryFile(suffix='.mp4', delete=False)
             output_path = output_file.name
@@ -680,8 +630,7 @@ class TestVideoEnhancer(unittest.TestCase):
                 os.remove(output_path)
     
     def test_frame_by_frame_enhancement(self):
-        """Test frame-by-frame video enhancement"""
-        try:
+        """Test frame-by-frame video enhancement"""        try:
             enhanced_frames = self.enhancer.enhance_frames(self.test_video_path, max_frames=10)
             
             self.assertIsInstance(enhanced_frames, list)
@@ -695,8 +644,7 @@ class TestVideoEnhancer(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_video_stabilization(self):
-        """Test video stabilization"""
-        try:
+        """Test video stabilization"""        try:
             stabilized_path = self.enhancer.stabilize_video(self.test_video_path)
             
             if stabilized_path:
@@ -711,8 +659,7 @@ class TestVideoEnhancer(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_temporal_noise_reduction(self):
-        """Test temporal noise reduction"""
-        try:
+        """Test temporal noise reduction"""        try:
             denoised_path = self.enhancer.temporal_denoise(self.test_video_path)
             
             if denoised_path:
@@ -727,11 +674,9 @@ class TestVideoEnhancer(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
 
 class TestEnhancementIntegration(unittest.TestCase):
-    """Test suite for enhancement integration and workflows"""
-    
+    """Test suite for enhancement integration and workflows"""    
     def setUp(self):
-        """Set up integration test fixtures"""
-        self.noise_reducer = NoiseReducer()
+        """Set up integration test fixtures"""        self.noise_reducer = NoiseReducer()
         self.color_corrector = ColorCorrector()
         self.upscaler = ResolutionUpscaler()
         self.image_enhancer = ImageEnhancer()
@@ -739,8 +684,7 @@ class TestEnhancementIntegration(unittest.TestCase):
         self.test_image = self._create_comprehensive_test_image()
     
     def _create_comprehensive_test_image(self) -> np.ndarray:
-        """Create comprehensive test image with multiple issues"""
-        # Start with a small, low quality image
+        """Create comprehensive test image with multiple issues"""        # Start with a small, low quality image
         image = np.zeros((100, 150, 3), dtype=np.uint8)
         
         # Add content
@@ -763,8 +707,7 @@ class TestEnhancementIntegration(unittest.TestCase):
         return desaturated
     
     def test_complete_enhancement_pipeline(self):
-        """Test complete enhancement pipeline"""
-        try:
+        """Test complete enhancement pipeline"""        try:
             # Step 1: Noise reduction
             denoised = self.noise_reducer.reduce_gaussian_noise(self.test_image)
             
@@ -788,8 +731,7 @@ class TestEnhancementIntegration(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_enhancement_quality_comparison(self):
-        """Test enhancement quality comparison"""
-        try:
+        """Test enhancement quality comparison"""        try:
             # Enhance using different methods
             method1 = self.image_enhancer.enhance(self.test_image, 
                                                 settings={'noise_reduction': True, 'brightness_adjustment': 1.3})
@@ -809,14 +751,12 @@ class TestEnhancementIntegration(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def _calculate_image_quality(self, image: np.ndarray) -> float:
-        """Calculate simple image quality metric"""
-        # Use variance as a simple quality metric (higher variance = more detail)
+        """Calculate simple image quality metric"""        # Use variance as a simple quality metric (higher variance = more detail)
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         return np.var(gray)
     
     def test_performance_benchmarking(self):
-        """Test enhancement performance"""
-        try:
+        """Test enhancement performance"""        try:
             start_time = time.time()
             
             # Run comprehensive enhancement

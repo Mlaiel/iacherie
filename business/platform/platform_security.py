@@ -1,14 +1,11 @@
-"""
-Platform Security - Advanced Security Management System
+"""Platform Security - Advanced Security Management System
 
 Comprehensive security layer for platform operations including threat detection,
 access control, data protection, and compliance monitoring.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
@@ -33,8 +30,7 @@ from ...utils.ip_utils import get_client_ip, is_suspicious_ip
 logger = get_logger(__name__)
 
 class SecurityEventType(Enum):
-    """Security event types"""
-    SUSPICIOUS_LOGIN = "suspicious_login"
+    """Security event types"""    SUSPICIOUS_LOGIN = "suspicious_login"
     RATE_LIMIT_EXCEEDED = "rate_limit_exceeded"
     UNAUTHORIZED_ACCESS = "unauthorized_access"
     DATA_BREACH_ATTEMPT = "data_breach_attempt"
@@ -44,8 +40,7 @@ class SecurityEventType(Enum):
     BRUTE_FORCE = "brute_force"
 
 class SecurityAction(Enum):
-    """Security action types"""
-    BLOCK_IP = "block_ip"
+    """Security action types"""    BLOCK_IP = "block_ip"
     SUSPEND_USER = "suspend_user"
     REQUIRE_2FA = "require_2fa"
     LOG_ONLY = "log_only"
@@ -54,8 +49,7 @@ class SecurityAction(Enum):
 
 @dataclass
 class SecurityThreat:
-    """Security threat information"""
-    threat_id: str
+    """Security threat information"""    threat_id: str
     threat_type: SecurityEventType
     threat_level: ThreatLevel
     source_ip: str
@@ -67,8 +61,7 @@ class SecurityThreat:
     action_taken: Optional[SecurityAction] = None
 
 class PlatformSecurity:
-    """
-    Advanced platform security management system
+    """    Advanced platform security management system
     
     Features:
     - Real-time threat detection
@@ -78,8 +71,7 @@ class PlatformSecurity:
     - Access control and permissions
     - Security audit logging
     - Incident response automation
-    """
-    
+    """    
     def __init__(self):
         self.threat_detector = ThreatDetectorService()
         self.access_control = AccessControlService()
@@ -103,13 +95,11 @@ class PlatformSecurity:
         }
     
     async def initialize(self) -> bool:
-        """
-        Initialize security system
+        """        Initialize security system
         
         Returns:
             bool: Initialization success status
-        """
-        try:
+        """        try:
             logger.info("Initializing Platform Security...")
             
             # Initialize threat detector
@@ -139,8 +129,7 @@ class PlatformSecurity:
         resource_type: str = "api",
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """
-        Validate request security
+        """        Validate request security
         
         Args:
             request: FastAPI request object
@@ -150,8 +139,7 @@ class PlatformSecurity:
             
         Returns:
             Dict containing security validation results
-        """
-        try:
+        """        try:
             client_ip = get_client_ip(request)
             user_agent = request.headers.get("user-agent", "")
             
@@ -230,8 +218,7 @@ class PlatformSecurity:
         user_id: int,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """
-        Scan content for security threats
+        """        Scan content for security threats
         
         Args:
             content_path: Path to content file
@@ -241,8 +228,7 @@ class PlatformSecurity:
             
         Returns:
             Dict containing security scan results
-        """
-        try:
+        """        try:
             scan_result = {
                 'safe': True,
                 'threat_level': 'low',
@@ -314,8 +300,7 @@ class PlatformSecurity:
         request: Request,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """
-        Detect potential account takeover attempts
+        """        Detect potential account takeover attempts
         
         Args:
             user_id: User ID
@@ -324,8 +309,7 @@ class PlatformSecurity:
             
         Returns:
             Dict containing takeover detection results
-        """
-        try:
+        """        try:
             detection_result = {
                 'takeover_detected': False,
                 'confidence': 0.0,
@@ -402,8 +386,7 @@ class PlatformSecurity:
         time_period: timedelta = timedelta(days=30),
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive security report
+        """        Generate comprehensive security report
         
         Args:
             time_period: Time period for report
@@ -411,8 +394,7 @@ class PlatformSecurity:
             
         Returns:
             Dict containing security report data
-        """
-        try:
+        """        try:
             start_date = datetime.utcnow() - time_period
             
             # Get security events
@@ -467,8 +449,7 @@ class PlatformSecurity:
             return {'error': str(e)}
     
     async def _check_ip_reputation(self, ip: str) -> Dict[str, Any]:
-        """Check IP reputation"""
-        if ip in self.blocked_ips:
+        """Check IP reputation"""        if ip in self.blocked_ips:
             return {'allowed': False, 'reason': 'IP blocked'}
         
         if ip in self.suspicious_ips:
@@ -489,13 +470,11 @@ class PlatformSecurity:
         user_id: Optional[int], 
         resource_type: str
     ) -> Dict[str, Any]:
-        """Check rate limits"""
-        # Implementation for rate limiting logic
+        """Check rate limits"""        # Implementation for rate limiting logic
         return {'allowed': True, 'remaining': 1000}
     
     async def _analyze_user_agent(self, user_agent: str) -> Dict[str, Any]:
-        """Analyze user agent for suspicious patterns"""
-        suspicious_patterns = [
+        """Analyze user agent for suspicious patterns"""        suspicious_patterns = [
             'bot', 'crawler', 'spider', 'scraper', 'automated',
             'curl', 'wget', 'python-requests'
         ]
@@ -514,8 +493,7 @@ class PlatformSecurity:
         ip: str, 
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Analyze geographic anomalies"""
-        # Implementation for geographic analysis
+        """Analyze geographic anomalies"""        # Implementation for geographic analysis
         return {'anomalous': False, 'country': 'unknown'}
     
     async def _log_access_attempt(
@@ -525,8 +503,7 @@ class PlatformSecurity:
         security_result: Dict[str, Any], 
         session: AsyncSession
     ):
-        """Log access attempt"""
-        access_log = AccessLog(
+        """Log access attempt"""        access_log = AccessLog(
             user_id=user_id,
             ip_address=get_client_ip(request),
             user_agent=request.headers.get("user-agent", ""),
@@ -541,23 +518,19 @@ class PlatformSecurity:
         await session.commit()
     
     async def _scan_visual_content(self, content_path: str) -> Dict[str, Any]:
-        """Scan visual content for inappropriate material"""
-        # Implementation for visual content scanning
+        """Scan visual content for inappropriate material"""        # Implementation for visual content scanning
         return {'inappropriate': False, 'confidence': 0.0}
     
     async def _scan_audio_content(self, content_path: str) -> Dict[str, Any]:
-        """Scan audio content for copyright violations"""
-        # Implementation for audio content scanning
+        """Scan audio content for copyright violations"""        # Implementation for audio content scanning
         return {'copyright_violation': False, 'confidence': 0.0}
     
     async def _scan_text_content(self, content_path: str) -> Dict[str, Any]:
-        """Scan text content for malicious content"""
-        # Implementation for text content scanning
+        """Scan text content for malicious content"""        # Implementation for text content scanning
         return {'malicious': False, 'threats': []}
     
     async def _quarantine_content(self, content_path: str, user_id: int, reason: str):
-        """Quarantine malicious content"""
-        # Implementation for content quarantine
+        """Quarantine malicious content"""        # Implementation for content quarantine
         logger.warning(f"Content quarantined: {content_path} - Reason: {reason}")
     
     async def _log_security_scan(
@@ -567,8 +540,7 @@ class PlatformSecurity:
         user_id: int, 
         session: AsyncSession
     ):
-        """Log security scan results"""
-        # Implementation for logging security scans
+        """Log security scan results"""        # Implementation for logging security scans
         pass
     
     async def _log_security_event(
@@ -579,8 +551,7 @@ class PlatformSecurity:
         description: str, 
         session: AsyncSession
     ):
-        """Log security event"""
-        security_event = SecurityEvent(
+        """Log security event"""        security_event = SecurityEvent(
             event_type=event_type.value,
             user_id=user_id,
             source_ip=ip,
@@ -593,8 +564,7 @@ class PlatformSecurity:
         await session.commit()
     
     async def _monitor_security_events(self):
-        """Monitor security events in background"""
-        while True:
+        """Monitor security events in background"""        while True:
             try:
                 # Implementation for security event monitoring
                 await asyncio.sleep(300)  # Check every 5 minutes
@@ -604,8 +574,7 @@ class PlatformSecurity:
                 await asyncio.sleep(300)
     
     async def _update_ip_reputation(self):
-        """Update IP reputation data"""
-        while True:
+        """Update IP reputation data"""        while True:
             try:
                 # Implementation for IP reputation updates
                 await asyncio.sleep(1800)  # Update every 30 minutes
@@ -615,6 +584,5 @@ class PlatformSecurity:
                 await asyncio.sleep(1800)
     
     async def _load_blocked_ips(self):
-        """Load blocked IPs from database"""
-        # Implementation for loading blocked IPs
+        """Load blocked IPs from database"""        # Implementation for loading blocked IPs
         pass

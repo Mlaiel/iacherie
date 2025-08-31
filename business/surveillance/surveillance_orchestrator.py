@@ -1,5 +1,4 @@
-"""
-🎛️ Surveillance Orchestrator - IA Influencer Agent Surveillance Module
+"""🎛️ Surveillance Orchestrator - IA Influencer Agent Surveillance Module
 ======================================================================
 
 Ultra-advanced surveillance orchestration system coordinating all surveillance
@@ -29,9 +28,7 @@ Content Registration → Fingerprint Generation → Target Configuration →
 Monitoring Activation → Real-time Surveillance → Threat Detection → 
 Alert Processing → Automated Response → Evidence Collection → 
 Legal Action → Performance Analytics → System Optimization
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import time
@@ -70,8 +67,7 @@ logger = logging.getLogger(__name__)
 
 
 class OrchestrationMode(Enum):
-    """Orchestration operation modes"""
-    DEVELOPMENT = "development"
+    """Orchestration operation modes"""    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -80,8 +76,7 @@ class OrchestrationMode(Enum):
 
 
 class WorkflowStatus(Enum):
-    """Workflow execution status"""
-    PENDING = "pending"
+    """Workflow execution status"""    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -90,8 +85,7 @@ class WorkflowStatus(Enum):
 
 
 class ComponentStatus(Enum):
-    """Individual component status"""
-    INITIALIZED = "initialized"
+    """Individual component status"""    INITIALIZED = "initialized"
     STARTING = "starting"
     ACTIVE = "active"
     PAUSED = "paused"
@@ -103,8 +97,7 @@ class ComponentStatus(Enum):
 
 @dataclass
 class SurveillanceWorkflow:
-    """Surveillance workflow definition"""
-    workflow_id: str
+    """Surveillance workflow definition"""    workflow_id: str
     workflow_name: str
     user_id: str
     content_id: str
@@ -124,8 +117,7 @@ class SurveillanceWorkflow:
 
 @dataclass
 class ComponentHealth:
-    """Component health status"""
-    component_name: str
+    """Component health status"""    component_name: str
     status: ComponentStatus
     last_heartbeat: datetime
     error_count: int = 0
@@ -136,8 +128,7 @@ class ComponentHealth:
 
 @dataclass
 class OrchestrationMetrics:
-    """Orchestration system metrics"""
-    timestamp: datetime
+    """Orchestration system metrics"""    timestamp: datetime
     active_workflows: int
     completed_workflows: int
     failed_workflows: int
@@ -150,13 +141,11 @@ class OrchestrationMetrics:
 
 
 class SurveillanceOrchestrator:
-    """
-    Ultra-Advanced Surveillance Orchestrator
+    """    Ultra-Advanced Surveillance Orchestrator
     
     Coordinates all surveillance components, manages workflows,
     and provides centralized control for comprehensive content protection.
-    """
-    
+    """    
     def __init__(
         self,
         mode: OrchestrationMode = OrchestrationMode.PRODUCTION,
@@ -165,8 +154,7 @@ class SurveillanceOrchestrator:
         storage_path: Optional[Path] = None,
         config: Optional[Dict[str, Any]] = None
     ):
-        """Initialize surveillance orchestrator"""
-        self.mode = mode
+        """Initialize surveillance orchestrator"""        self.mode = mode
         self.redis_client = redis_client or redis.Redis(decode_responses=True)
         self.database_url = database_url
         self.storage_path = storage_path or Path("surveillance_orchestrator")
@@ -203,8 +191,7 @@ class SurveillanceOrchestrator:
         logger.info(f"SurveillanceOrchestrator initialized in {mode.value} mode")
     
     def _initialize_database(self):
-        """Initialize database connection and tables"""
-        try:
+        """Initialize database connection and tables"""        try:
             if self.database_url:
                 self.engine = create_engine(self.database_url)
                 self._create_orchestration_tables()
@@ -213,9 +200,7 @@ class SurveillanceOrchestrator:
             self.engine = None
     
     def _create_orchestration_tables(self):
-        """Create orchestration tables"""
-        tables_sql = """
-        CREATE TABLE IF NOT EXISTS surveillance_workflows (
+        """Create orchestration tables"""        tables_sql = """        CREATE TABLE IF NOT EXISTS surveillance_workflows (
             id SERIAL PRIMARY KEY,
             workflow_id VARCHAR(255) UNIQUE NOT NULL,
             workflow_name VARCHAR(255) NOT NULL,
@@ -265,15 +250,13 @@ class SurveillanceOrchestrator:
         CREATE INDEX IF NOT EXISTS idx_workflows_status ON surveillance_workflows(status);
         CREATE INDEX IF NOT EXISTS idx_workflows_created_at ON surveillance_workflows(created_at);
         CREATE INDEX IF NOT EXISTS idx_component_health_name ON component_health(component_name);
-        """
-        
+        """        
         if self.engine:
             with self.engine.begin() as conn:
                 conn.execute(text(tables_sql))
     
     def _initialize_components(self):
-        """Initialize surveillance components"""
-        try:
+        """Initialize surveillance components"""        try:
             # Fingerprinting Engine
             self.components['fingerprinting'] = FingerprintingEngine(
                 redis_client=self.redis_client,
@@ -362,8 +345,7 @@ class SurveillanceOrchestrator:
             raise
     
     async def start_orchestration(self):
-        """Start surveillance orchestration system"""
-        try:
+        """Start surveillance orchestration system"""        try:
             logger.info("Starting surveillance orchestration system...")
             
             # Start component health monitoring
@@ -405,8 +387,7 @@ class SurveillanceOrchestrator:
         content_metadata: Dict[str, Any],
         protection_options: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Register content for comprehensive protection"""
-        try:
+        """Register content for comprehensive protection"""        try:
             workflow_id = str(uuid.uuid4())
             
             # Create comprehensive protection workflow
@@ -467,8 +448,7 @@ class SurveillanceOrchestrator:
         threat_detection: ThreatDetection,
         response_options: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Execute automated threat response workflow"""
-        try:
+        """Execute automated threat response workflow"""        try:
             workflow_id = str(uuid.uuid4())
             
             # Create threat response workflow
@@ -524,8 +504,7 @@ class SurveillanceOrchestrator:
         time_period: str,
         report_options: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Generate comprehensive surveillance report"""
-        try:
+        """Generate comprehensive surveillance report"""        try:
             workflow_id = str(uuid.uuid4())
             
             # Create reporting workflow
@@ -570,8 +549,7 @@ class SurveillanceOrchestrator:
             raise
     
     async def process_workflows(self):
-        """Process workflow queue"""
-        try:
+        """Process workflow queue"""        try:
             while True:
                 try:
                     # Get workflow from queue with timeout
@@ -590,8 +568,7 @@ class SurveillanceOrchestrator:
             logger.error(f"Workflow processing error: {e}")
     
     async def execute_workflow(self, workflow: SurveillanceWorkflow):
-        """Execute a surveillance workflow"""
-        try:
+        """Execute a surveillance workflow"""        try:
             async with self.orchestration_lock:
                 # Update workflow status
                 workflow.status = WorkflowStatus.RUNNING
@@ -668,8 +645,7 @@ class SurveillanceOrchestrator:
         step: Dict[str, Any],
         previous_results: Dict[str, Any]
     ) -> Any:
-        """Execute a single workflow step"""
-        try:
+        """Execute a single workflow step"""        try:
             component_name = step['component']
             step_name = step['step']
             step_config = step.get('config', {})
@@ -741,8 +717,7 @@ class SurveillanceOrchestrator:
         config: Dict[str, Any],
         previous_results: Dict[str, Any]
     ) -> ScanResult:
-        """Execute content scanner step"""
-        try:
+        """Execute content scanner step"""        try:
             content_path = workflow.configuration['content_path']
             scan_types = config.get('scan_types', ['full'])
             
@@ -765,8 +740,7 @@ class SurveillanceOrchestrator:
         config: Dict[str, Any],
         previous_results: Dict[str, Any]
     ) -> FingerprintingResult:
-        """Execute fingerprinting step"""
-        try:
+        """Execute fingerprinting step"""        try:
             content_path = workflow.configuration['content_path']
             content_id = workflow.content_id
             
@@ -789,8 +763,7 @@ class SurveillanceOrchestrator:
         config: Dict[str, Any],
         previous_results: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute monitoring setup step"""
-        try:
+        """Execute monitoring setup step"""        try:
             # Get fingerprints from previous step
             fingerprints = []
             if 'fingerprint_generation' in previous_results:
@@ -831,8 +804,7 @@ class SurveillanceOrchestrator:
         config: Dict[str, Any],
         previous_results: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute alert configuration step"""
-        try:
+        """Execute alert configuration step"""        try:
             # Configure alerts based on workflow type
             if workflow.workflow_type == "threat_response":
                 # Send urgent alert for threat detection
@@ -867,8 +839,7 @@ class SurveillanceOrchestrator:
         config: Dict[str, Any],
         previous_results: Dict[str, Any]
     ) -> AnalyticsReport:
-        """Execute analytics step"""
-        try:
+        """Execute analytics step"""        try:
             time_period = config.get('time_period', 'daily')
             
             # Generate analytics report
@@ -891,8 +862,7 @@ class SurveillanceOrchestrator:
         config: Dict[str, Any],
         previous_results: Dict[str, Any]
     ) -> SurveillanceReport:
-        """Execute reporting step"""
-        try:
+        """Execute reporting step"""        try:
             report_type = config.get('report_type', 'comprehensive')
             
             # Compile report from analytics data
@@ -917,8 +887,7 @@ class SurveillanceOrchestrator:
         config: Dict[str, Any],
         previous_results: Dict[str, Any]
     ) -> TakedownRequest:
-        """Execute takedown step"""
-        try:
+        """Execute takedown step"""        try:
             threat_data = workflow.configuration.get('threat_detection', {})
             
             # Create takedown request
@@ -948,8 +917,7 @@ class SurveillanceOrchestrator:
         config: Dict[str, Any],
         previous_results: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute infringement detection step"""
-        try:
+        """Execute infringement detection step"""        try:
             threat_data = workflow.configuration.get('threat_detection', {})
             
             # Collect evidence
@@ -972,8 +940,7 @@ class SurveillanceOrchestrator:
         config: Dict[str, Any],
         previous_results: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute protection enforcement step"""
-        try:
+        """Execute protection enforcement step"""        try:
             threat_data = workflow.configuration.get('threat_detection', {})
             
             # Assess copyright strength
@@ -989,13 +956,11 @@ class SurveillanceOrchestrator:
             raise
     
     async def store_workflow(self, workflow: SurveillanceWorkflow):
-        """Store workflow in database"""
-        try:
+        """Store workflow in database"""        try:
             if not self.engine:
                 return
             
-            insert_sql = """
-            INSERT INTO surveillance_workflows (
+            insert_sql = """            INSERT INTO surveillance_workflows (
                 workflow_id, workflow_name, user_id, content_id,
                 workflow_type, steps, configuration, priority,
                 status, created_at, started_at, completed_at,
@@ -1006,8 +971,7 @@ class SurveillanceOrchestrator:
                 :status, :created_at, :started_at, :completed_at,
                 :progress, :results, :errors, :metadata
             )
-            """
-            
+            """            
             with self.engine.begin() as conn:
                 conn.execute(text(insert_sql), {
                     'workflow_id': workflow.workflow_id,
@@ -1032,13 +996,11 @@ class SurveillanceOrchestrator:
             logger.error(f"Workflow storage failed: {e}")
     
     async def update_workflow_status(self, workflow: SurveillanceWorkflow):
-        """Update workflow status in database"""
-        try:
+        """Update workflow status in database"""        try:
             if not self.engine:
                 return
             
-            update_sql = """
-            UPDATE surveillance_workflows SET
+            update_sql = """            UPDATE surveillance_workflows SET
                 status = :status,
                 started_at = :started_at,
                 completed_at = :completed_at,
@@ -1046,8 +1008,7 @@ class SurveillanceOrchestrator:
                 results = :results,
                 errors = :errors
             WHERE workflow_id = :workflow_id
-            """
-            
+            """            
             with self.engine.begin() as conn:
                 conn.execute(text(update_sql), {
                     'workflow_id': workflow.workflow_id,
@@ -1063,8 +1024,7 @@ class SurveillanceOrchestrator:
             logger.error(f"Workflow status update failed: {e}")
     
     async def monitor_component_health(self):
-        """Monitor health of all surveillance components"""
-        try:
+        """Monitor health of all surveillance components"""        try:
             while True:
                 for component_name, health in self.component_health.items():
                     try:
@@ -1097,21 +1057,18 @@ class SurveillanceOrchestrator:
             logger.error(f"Component health monitoring failed: {e}")
     
     async def store_component_health(self, health: ComponentHealth):
-        """Store component health in database"""
-        try:
+        """Store component health in database"""        try:
             if not self.engine:
                 return
             
-            insert_sql = """
-            INSERT INTO component_health (
+            insert_sql = """            INSERT INTO component_health (
                 component_name, status, last_heartbeat, error_count,
                 performance_metrics, resource_usage, configuration, timestamp
             ) VALUES (
                 :component_name, :status, :last_heartbeat, :error_count,
                 :performance_metrics, :resource_usage, :configuration, :timestamp
             )
-            """
-            
+            """            
             with self.engine.begin() as conn:
                 conn.execute(text(insert_sql), {
                     'component_name': health.component_name,
@@ -1128,8 +1085,7 @@ class SurveillanceOrchestrator:
             logger.error(f"Component health storage failed: {e}")
     
     async def collect_orchestration_metrics(self):
-        """Collect orchestration system metrics"""
-        try:
+        """Collect orchestration system metrics"""        try:
             while True:
                 # Calculate metrics
                 active_workflows = len(self.active_workflows)
@@ -1181,13 +1137,11 @@ class SurveillanceOrchestrator:
             logger.error(f"Orchestration metrics collection failed: {e}")
     
     async def store_orchestration_metrics(self, metrics: OrchestrationMetrics):
-        """Store orchestration metrics in database"""
-        try:
+        """Store orchestration metrics in database"""        try:
             if not self.engine:
                 return
             
-            insert_sql = """
-            INSERT INTO orchestration_metrics (
+            insert_sql = """            INSERT INTO orchestration_metrics (
                 timestamp, active_workflows, completed_workflows, failed_workflows,
                 component_health_score, overall_performance, resource_utilization,
                 error_rate, throughput, response_time
@@ -1196,8 +1150,7 @@ class SurveillanceOrchestrator:
                 :component_health_score, :overall_performance, :resource_utilization,
                 :error_rate, :throughput, :response_time
             )
-            """
-            
+            """            
             with self.engine.begin() as conn:
                 conn.execute(text(insert_sql), asdict(metrics))
             
@@ -1205,8 +1158,7 @@ class SurveillanceOrchestrator:
             logger.error(f"Orchestration metrics storage failed: {e}")
     
     async def periodic_maintenance(self):
-        """Perform periodic maintenance tasks"""
-        try:
+        """Perform periodic maintenance tasks"""        try:
             while True:
                 # Clean up completed workflows
                 await self.cleanup_completed_workflows()
@@ -1226,20 +1178,17 @@ class SurveillanceOrchestrator:
             logger.error(f"Periodic maintenance failed: {e}")
     
     async def cleanup_completed_workflows(self):
-        """Clean up old completed workflows"""
-        try:
+        """Clean up old completed workflows"""        try:
             if not self.engine:
                 return
             
             # Keep workflows for 7 days
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=7)
             
-            cleanup_sql = """
-            DELETE FROM surveillance_workflows
+            cleanup_sql = """            DELETE FROM surveillance_workflows
             WHERE completed_at < :cutoff_date
             AND status IN ('completed', 'failed', 'cancelled')
-            """
-            
+            """            
             with self.engine.begin() as conn:
                 result = conn.execute(text(cleanup_sql), {'cutoff_date': cutoff_date})
                 deleted_count = result.rowcount
@@ -1250,8 +1199,7 @@ class SurveillanceOrchestrator:
             logger.error(f"Workflow cleanup failed: {e}")
     
     async def cleanup_old_metrics(self):
-        """Clean up old metrics data"""
-        try:
+        """Clean up old metrics data"""        try:
             if not self.engine:
                 return
             
@@ -1259,18 +1207,14 @@ class SurveillanceOrchestrator:
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=30)
             
             # Clean up component health
-            cleanup_sql1 = """
-            DELETE FROM component_health
+            cleanup_sql1 = """            DELETE FROM component_health
             WHERE timestamp < :cutoff_date
-            """
-            
+            """            
             # Clean up orchestration metrics (keep longer, 90 days)
             metrics_cutoff = datetime.now(timezone.utc) - timedelta(days=90)
-            cleanup_sql2 = """
-            DELETE FROM orchestration_metrics
+            cleanup_sql2 = """            DELETE FROM orchestration_metrics
             WHERE timestamp < :cutoff_date
-            """
-            
+            """            
             with self.engine.begin() as conn:
                 result1 = conn.execute(text(cleanup_sql1), {'cutoff_date': cutoff_date})
                 result2 = conn.execute(text(cleanup_sql2), {'cutoff_date': metrics_cutoff})
@@ -1281,8 +1225,7 @@ class SurveillanceOrchestrator:
             logger.error(f"Metrics cleanup failed: {e}")
     
     async def restart_failed_components(self):
-        """Restart components that have failed"""
-        try:
+        """Restart components that have failed"""        try:
             for component_name, health in self.component_health.items():
                 if health.status == ComponentStatus.ERROR and health.error_count > 5:
                     logger.info(f"Attempting to restart failed component: {component_name}")
@@ -1312,8 +1255,7 @@ class SurveillanceOrchestrator:
             logger.error(f"Component restart failed: {e}")
     
     async def optimize_component_performance(self):
-        """Optimize component performance based on metrics"""
-        try:
+        """Optimize component performance based on metrics"""        try:
             # Analyze component performance and adjust configurations
             for component_name, health in self.component_health.items():
                 if health.performance_metrics:
@@ -1325,8 +1267,7 @@ class SurveillanceOrchestrator:
             logger.error(f"Performance optimization failed: {e}")
     
     async def get_orchestration_status(self) -> Dict[str, Any]:
-        """Get comprehensive orchestration status"""
-        try:
+        """Get comprehensive orchestration status"""        try:
             uptime = (datetime.now(timezone.utc) - self.start_time).total_seconds()
             
             status = {
@@ -1369,8 +1310,7 @@ class SurveillanceOrchestrator:
             return {}
     
     async def get_workflow_status(self, workflow_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of a specific workflow"""
-        try:
+        """Get status of a specific workflow"""        try:
             # Check active workflows first
             if workflow_id in self.active_workflows:
                 workflow = self.active_workflows[workflow_id]
@@ -1387,11 +1327,9 @@ class SurveillanceOrchestrator:
             
             # Check database for completed workflows
             if self.engine:
-                select_sql = """
-                SELECT * FROM surveillance_workflows
+                select_sql = """                SELECT * FROM surveillance_workflows
                 WHERE workflow_id = :workflow_id
-                """
-                
+                """                
                 with self.engine.begin() as conn:
                     result = conn.execute(text(select_sql), {'workflow_id': workflow_id})
                     row = result.fetchone()
@@ -1416,8 +1354,7 @@ class SurveillanceOrchestrator:
             return None
     
     async def shutdown(self):
-        """Gracefully shutdown orchestration system"""
-        try:
+        """Gracefully shutdown orchestration system"""        try:
             logger.info("Shutting down surveillance orchestration system...")
             
             # Cancel active workflows
@@ -1454,8 +1391,7 @@ def create_surveillance_orchestrator(
     database_url: Optional[str] = None,
     config: Optional[Dict[str, Any]] = None
 ) -> SurveillanceOrchestrator:
-    """Create and configure surveillance orchestrator"""
-    return SurveillanceOrchestrator(
+    """Create and configure surveillance orchestrator"""    return SurveillanceOrchestrator(
         mode=mode,
         database_url=database_url,
         config=config or {}

@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Script de Test Simplifié pour Vérifier l'Import
+"""Script de Test Simplifié pour Vérifier l'Import
 ==============================================
 
 Script pour tester les modules importés de manière simple
@@ -8,9 +7,7 @@ et identifier ceux qui fonctionnent déjà.
 
 Author: GitHub Copilot
 Date: 2025-08-31
-"""
-
-import os
+"""import os
 import sys
 from pathlib import Path
 import subprocess
@@ -19,8 +16,7 @@ PROJECT_ROOT = Path("/workspaces/Ainflue")
 TESTS_DIR = PROJECT_ROOT / "tests"
 
 def test_simple_execution():
-    """Test d'exécution simple des tests"""
-    
+    """Test d'exécution simple des tests"""    
     print("🧪 Test d'Exécution Simple des Tests Importés")
     print("=" * 50)
     
@@ -122,50 +118,40 @@ def test_simple_execution():
     print(f"4. Les tests importés sont une excellente base à adapter")
 
 def create_simple_test_example():
-    """Crée un test d'exemple simple qui fonctionne"""
-    
-    simple_test = '''"""
-Test d'exemple simple pour vérifier que pytest fonctionne
+    """Crée un test d'exemple simple qui fonctionne"""    
+    simple_test = '''"""Test d'exemple simple pour vérifier que pytest fonctionne
 ======================================================
 
 Ce test démontre que l'infrastructure de test est opérationnelle.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
 
 def test_basic_setup():
-    """Test que l'environnement de base fonctionne"""
-    assert True, "Test de base réussi"
+    """Test que l'environnement de base fonctionne"""    assert True, "Test de base réussi"
 
 def test_python_version():
-    """Test de la version Python"""
-    assert sys.version_info >= (3, 8), "Python 3.8+ requis"
+    """Test de la version Python"""    assert sys.version_info >= (3, 8), "Python 3.8+ requis"
 
 def test_project_structure():
-    """Test de la structure du projet"""
-    project_root = Path(__file__).parent.parent.parent
+    """Test de la structure du projet"""    project_root = Path(__file__).parent.parent.parent
     
     # Vérifier que les dossiers principaux existent
     assert (project_root / "ai").exists(), "Dossier ai/ manquant"
     assert (project_root / "tests").exists(), "Dossier tests/ manquant"
 
 def test_pytest_markers():
-    """Test des marqueurs pytest"""
-    # Ce test devrait passer avec les marqueurs configurés
+    """Test des marqueurs pytest"""    # Ce test devrait passer avec les marqueurs configurés
     pass
 
 @pytest.mark.unit
 def test_with_unit_marker():
-    """Test avec marqueur unit"""
-    assert True
+    """Test avec marqueur unit"""    assert True
 
 @pytest.mark.fast
 def test_fast_execution():
-    """Test marqué comme rapide"""
-    assert 1 + 1 == 2
+    """Test marqué comme rapide"""    assert 1 + 1 == 2
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
@@ -196,8 +182,7 @@ if __name__ == "__main__":
         print(f"❌ Exception lors de l'exécution : {e}")
 
 def main():
-    """Fonction principale"""
-    create_simple_test_example()
+    """Fonction principale"""    create_simple_test_example()
     test_simple_execution()
     
     print(f"\n🚀 Prochaines étapes recommandées :")

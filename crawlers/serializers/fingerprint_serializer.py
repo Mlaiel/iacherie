@@ -1,5 +1,4 @@
-"""
-Fingerprint Serializer Module
+"""Fingerprint Serializer Module
 =============================
 
 Specialized serialization for AI fingerprinting data and similarity vectors.
@@ -11,9 +10,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
-"""
-
-import logging
+"""import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime
 from dataclasses import dataclass, field
@@ -27,8 +24,7 @@ from pydantic import BaseModel, Field, validator
 logger = logging.getLogger(__name__)
 
 class FingerprintType(Enum):
-    """Types of content fingerprints."""
-    AUDIO = "audio"
+    """Types of content fingerprints."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -37,8 +33,7 @@ class FingerprintType(Enum):
     COMPOSITE = "composite"
 
 class FingerprintAlgorithm(Enum):
-    """Fingerprinting algorithms."""
-    CHROMAPRINT = "chromaprint"
+    """Fingerprinting algorithms."""    CHROMAPRINT = "chromaprint"
     PHASH = "phash"
     DHASH = "dhash"
     WHASH = "whash"
@@ -52,8 +47,7 @@ class FingerprintAlgorithm(Enum):
     MD5 = "md5"
 
 class SimilarityMetric(Enum):
-    """Similarity measurement metrics."""
-    COSINE = "cosine"
+    """Similarity measurement metrics."""    COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     MANHATTAN = "manhattan"
     HAMMING = "hamming"
@@ -63,8 +57,7 @@ class SimilarityMetric(Enum):
 
 @dataclass
 class FingerprintVector:
-    """Fingerprint vector data."""
-    vector_id: str
+    """Fingerprint vector data."""    vector_id: str
     vector_data: Union[List[float], np.ndarray]
     vector_dimension: int
     vector_type: str = "dense"
@@ -74,8 +67,7 @@ class FingerprintVector:
 
 @dataclass
 class SimilarityMatch:
-    """Similarity match result."""
-    match_id: str
+    """Similarity match result."""    match_id: str
     target_fingerprint_id: str
     reference_fingerprint_id: str
     similarity_score: float
@@ -86,8 +78,7 @@ class SimilarityMatch:
 
 @dataclass
 class FingerprintMetrics:
-    """Fingerprint performance metrics."""
-    generation_time: float = 0.0
+    """Fingerprint performance metrics."""    generation_time: float = 0.0
     vector_size_bytes: int = 0
     compression_ratio: float = 1.0
     extraction_confidence: float = 1.0
@@ -96,13 +87,11 @@ class FingerprintMetrics:
     uniqueness_score: float = 0.0
 
 class FingerprintData(BaseModel):
-    """
-    Comprehensive fingerprint data model.
+    """    Comprehensive fingerprint data model.
     
     Represents AI-generated fingerprints for content protection
     and similarity detection in the IA-Influencer-Agent platform.
-    """
-    
+    """    
     # Basic identification
     fingerprint_id: str = Field(..., description="Unique fingerprint identifier")
     content_id: str = Field(..., description="Associated content identifier")
@@ -166,16 +155,13 @@ class FingerprintData(BaseModel):
         return v
 
 class FingerprintSerializer:
-    """
-    Advanced fingerprint serialization system.
+    """    Advanced fingerprint serialization system.
     
     Handles efficient serialization and deserialization of AI fingerprints,
     similarity vectors, and matching results with optimization for storage and retrieval.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize fingerprint serializer."""
-        self.vector_compression_threshold = 1000  # Compress vectors larger than 1000 elements
+        """Initialize fingerprint serializer."""        self.vector_compression_threshold = 1000  # Compress vectors larger than 1000 elements
         self.max_vector_dimension = 10000  # Maximum vector dimension
         
         logger.info("Fingerprint serializer initialized")
@@ -186,8 +172,7 @@ class FingerprintSerializer:
         compress_vectors: bool = True,
         include_raw_features: bool = False
     ) -> Dict[str, Any]:
-        """
-        Serialize fingerprint data to dictionary format.
+        """        Serialize fingerprint data to dictionary format.
         
         Args:
             fingerprint: Fingerprint data to serialize
@@ -196,8 +181,7 @@ class FingerprintSerializer:
             
         Returns:
             Serialized fingerprint dictionary
-        """
-        try:
+        """        try:
             # Convert to dictionary
             data = fingerprint.dict()
             
@@ -253,16 +237,14 @@ class FingerprintSerializer:
         self,
         data: Dict[str, Any]
     ) -> FingerprintData:
-        """
-        Deserialize fingerprint data from dictionary format.
+        """        Deserialize fingerprint data from dictionary format.
         
         Args:
             data: Serialized fingerprint dictionary
             
         Returns:
             Deserialized FingerprintData object
-        """
-        try:
+        """        try:
             # Handle datetime conversions
             if isinstance(data.get('generated_at'), str):
                 data['generated_at'] = datetime.fromisoformat(data['generated_at'])
@@ -308,8 +290,7 @@ class FingerprintSerializer:
         self,
         match: SimilarityMatch
     ) -> Dict[str, Any]:
-        """Serialize similarity match result."""
-        try:
+        """Serialize similarity match result."""        try:
             data = {
                 'match_id': match.match_id,
                 'target_fingerprint_id': match.target_fingerprint_id,
@@ -331,8 +312,7 @@ class FingerprintSerializer:
         self,
         data: Dict[str, Any]
     ) -> SimilarityMatch:
-        """Deserialize similarity match result."""
-        try:
+        """Deserialize similarity match result."""        try:
             if isinstance(data.get('detected_at'), str):
                 data['detected_at'] = datetime.fromisoformat(data['detected_at'])
             
@@ -350,8 +330,7 @@ class FingerprintSerializer:
         fingerprints: List[FingerprintData],
         compact_mode: bool = True
     ) -> List[Dict[str, Any]]:
-        """Serialize multiple fingerprints efficiently."""
-        try:
+        """Serialize multiple fingerprints efficiently."""        try:
             serialized_list = []
             
             for fingerprint in fingerprints:
@@ -373,8 +352,7 @@ class FingerprintSerializer:
         self,
         data_list: List[Dict[str, Any]]
     ) -> List[FingerprintData]:
-        """Deserialize multiple fingerprints efficiently."""
-        try:
+        """Deserialize multiple fingerprints efficiently."""        try:
             fingerprints = []
             
             for data in data_list:
@@ -393,8 +371,7 @@ class FingerprintSerializer:
         vector: FingerprintVector,
         compress: bool = True
     ) -> Dict[str, Any]:
-        """Serialize fingerprint vector."""
-        try:
+        """Serialize fingerprint vector."""        try:
             data = {
                 'vector_id': vector.vector_id,
                 'vector_dimension': vector.vector_dimension,
@@ -428,8 +405,7 @@ class FingerprintSerializer:
         self,
         data: Dict[str, Any]
     ) -> FingerprintVector:
-        """Deserialize fingerprint vector."""
-        try:
+        """Deserialize fingerprint vector."""        try:
             # Handle compressed vectors
             if data.get('_compressed', False):
                 vector_data = self._decompress_vector(data['vector_data'])
@@ -447,8 +423,7 @@ class FingerprintSerializer:
             raise
     
     def _compress_vector(self, vector_data: List[float]) -> str:
-        """Compress vector data using base64 encoding."""
-        try:
+        """Compress vector data using base64 encoding."""        try:
             import gzip
             
             # Convert to bytes
@@ -468,8 +443,7 @@ class FingerprintSerializer:
             return str(vector_data)  # Return as string if compression fails
     
     def _decompress_vector(self, compressed_data: str) -> List[float]:
-        """Decompress vector data from base64 encoding."""
-        try:
+        """Decompress vector data from base64 encoding."""        try:
             import gzip
             
             if compressed_data.startswith('gzip_float32:'):
@@ -495,8 +469,7 @@ class FingerprintSerializer:
             return []
     
     def _serialize_features(self, features: Dict[str, Any]) -> Dict[str, Any]:
-        """Serialize feature data with numpy array handling."""
-        try:
+        """Serialize feature data with numpy array handling."""        try:
             serialized = {}
             
             for key, value in features.items():
@@ -521,8 +494,7 @@ class FingerprintSerializer:
             return features
     
     def _deserialize_features(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Deserialize feature data with numpy array reconstruction."""
-        try:
+        """Deserialize feature data with numpy array reconstruction."""        try:
             deserialized = {}
             
             for key, value in data.items():
@@ -543,8 +515,7 @@ class FingerprintSerializer:
             return data
     
     def _serialize_fingerprint_metrics(self, metrics: FingerprintMetrics) -> Dict[str, Any]:
-        """Serialize fingerprint metrics."""
-        return {
+        """Serialize fingerprint metrics."""        return {
             'generation_time': metrics.generation_time,
             'vector_size_bytes': metrics.vector_size_bytes,
             'compression_ratio': metrics.compression_ratio,
@@ -555,12 +526,10 @@ class FingerprintSerializer:
         }
     
     def _deserialize_fingerprint_metrics(self, data: Dict[str, Any]) -> FingerprintMetrics:
-        """Deserialize fingerprint metrics."""
-        return FingerprintMetrics(**data)
+        """Deserialize fingerprint metrics."""        return FingerprintMetrics(**data)
     
     def calculate_fingerprint_signature(self, fingerprint: FingerprintData) -> str:
-        """Calculate unique signature for fingerprint verification."""
-        try:
+        """Calculate unique signature for fingerprint verification."""        try:
             # Create signature from key fingerprint properties
             signature_data = {
                 'fingerprint_id': fingerprint.fingerprint_id,
@@ -596,8 +565,7 @@ class FingerprintSerializer:
         fingerprint: FingerprintData,
         expected_signature: Optional[str] = None
     ) -> bool:
-        """Validate fingerprint data integrity."""
-        try:
+        """Validate fingerprint data integrity."""        try:
             # Calculate current signature
             current_signature = self.calculate_fingerprint_signature(fingerprint)
             

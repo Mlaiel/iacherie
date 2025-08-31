@@ -1,30 +1,24 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Performance and Load Testing Suite
+"""Performance and Load Testing Suite
 
 Comprehensive performance tests for load, stress, and scalability testing
 of critical Ainflue platform components, including both simulated and real API testing.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -50,8 +44,7 @@ PERFORMANCE_THRESHOLDS = {
 
 
 class PerformanceMetrics:
-    """Performance metrics collection and analysis."""
-    
+    """Performance metrics collection and analysis."""    
     def __init__(self):
         self.response_times: List[float] = []
         self.error_count: int = 0
@@ -60,28 +53,22 @@ class PerformanceMetrics:
         self.end_time: float = 0
     
     def start_monitoring(self):
-        """Start performance monitoring."""
-        self.start_time = time.time()
+        """Start performance monitoring."""        self.start_time = time.time()
     
     def stop_monitoring(self):
-        """Stop performance monitoring."""
-        self.end_time = time.time()
+        """Stop performance monitoring."""        self.end_time = time.time()
     
     def add_response_time(self, response_time: float):
-        """Add response time measurement."""
-        self.response_times.append(response_time)
+        """Add response time measurement."""        self.response_times.append(response_time)
     
     def add_success(self):
-        """Record successful operation."""
-        self.success_count += 1
+        """Record successful operation."""        self.success_count += 1
     
     def add_error(self):
-        """Record failed operation."""
-        self.error_count += 1
+        """Record failed operation."""        self.error_count += 1
     
     def get_summary(self) -> Dict[str, Any]:
-        """Get performance summary."""
-        if not self.response_times:
+        """Get performance summary."""        if not self.response_times:
             return {"error": "No measurements recorded"}
         
         total_requests = self.success_count + self.error_count
@@ -106,13 +93,11 @@ class PerformanceMetrics:
 
 
 class TestSimulatedPerformance:
-    """Simulated performance tests (no actual server required)."""
-    
+    """Simulated performance tests (no actual server required)."""    
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_simulated_api_performance(self):
-        """Test simulated API endpoint performance."""
-        metrics = PerformanceMetrics()
+        """Test simulated API endpoint performance."""        metrics = PerformanceMetrics()
         metrics.start_monitoring()
         
         # Simulate 100 API requests
@@ -146,8 +131,7 @@ class TestSimulatedPerformance:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_simulated_fingerprinting_performance(self):
-        """Test simulated fingerprinting performance."""
-        metrics = PerformanceMetrics()
+        """Test simulated fingerprinting performance."""        metrics = PerformanceMetrics()
         metrics.start_monitoring()
         
         # Simulate fingerprinting of different content types
@@ -182,13 +166,11 @@ class TestSimulatedPerformance:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_simulated_concurrent_processing(self):
-        """Test simulated concurrent processing performance."""
-        metrics = PerformanceMetrics()
+        """Test simulated concurrent processing performance."""        metrics = PerformanceMetrics()
         metrics.start_monitoring()
         
         async def simulate_task(task_id: int):
-            """Simulate a processing task."""
-            start_time = time.time()
+            """Simulate a processing task."""            start_time = time.time()
             
             # Simulate variable processing time (10-100ms)
             processing_time = 0.01 + (task_id % 10) * 0.01
@@ -224,8 +206,7 @@ class TestSimulatedPerformance:
     
     @pytest.mark.performance
     def test_memory_efficiency(self):
-        """Test memory usage efficiency."""
-        # Simulate memory-intensive operations
+        """Test memory usage efficiency."""        # Simulate memory-intensive operations
         data_structures = []
         
         for i in range(50):
@@ -247,10 +228,8 @@ class TestSimulatedPerformance:
     
     @pytest.mark.performance
     def test_cpu_efficiency(self):
-        """Test CPU usage efficiency."""
-        def cpu_task():
-            """Simulate CPU-intensive task."""
-            result = 0
+        """Test CPU usage efficiency."""        def cpu_task():
+            """Simulate CPU-intensive task."""            result = 0
             for i in range(100000):  # Reduced for testing
                 result += i ** 2
             return result
@@ -273,13 +252,11 @@ class TestSimulatedPerformance:
 
 
 class TestStressSimulation:
-    """Stress testing simulations."""
-    
+    """Stress testing simulations."""    
     @pytest.mark.stress
     @pytest.mark.asyncio
     async def test_high_concurrency_simulation(self):
-        """Test high concurrency simulation."""
-        metrics = PerformanceMetrics()
+        """Test high concurrency simulation."""        metrics = PerformanceMetrics()
         metrics.start_monitoring()
         
         # Simulate 500 concurrent operations
@@ -325,8 +302,7 @@ class TestStressSimulation:
     @pytest.mark.stress
     @pytest.mark.asyncio
     async def test_sustained_load_simulation(self):
-        """Test sustained load simulation."""
-        metrics = PerformanceMetrics()
+        """Test sustained load simulation."""        metrics = PerformanceMetrics()
         metrics.start_monitoring()
         
         # Run sustained load for 10 seconds (reduced for testing)
@@ -358,13 +334,11 @@ class TestStressSimulation:
 
 
 class TestScalabilitySimulation:
-    """Scalability testing simulations."""
-    
+    """Scalability testing simulations."""    
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_linear_scaling_simulation(self):
-        """Test linear scaling simulation."""
-        results = {}
+        """Test linear scaling simulation."""        results = {}
         
         # Test different load levels
         load_levels = [10, 50, 100, 200]
@@ -417,13 +391,11 @@ class TestScalabilitySimulation:
 
 
 class TestAPILoadTesting:
-    """Real API load testing with mock responses."""
-    
+    """Real API load testing with mock responses."""    
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_api_endpoint_load_simulation(self):
-        """Test API endpoint load with simulated responses."""
-        metrics = PerformanceMetrics()
+        """Test API endpoint load with simulated responses."""        metrics = PerformanceMetrics()
         metrics.start_monitoring()
         
         # Mock API client for load testing
@@ -488,13 +460,11 @@ class TestAPILoadTesting:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_multi_user_concurrent_access(self):
-        """Test multiple users accessing the system concurrently."""
-        metrics = PerformanceMetrics()
+        """Test multiple users accessing the system concurrently."""        metrics = PerformanceMetrics()
         metrics.start_monitoring()
         
         async def simulate_user_session(user_id: int):
-            """Simulate a complete user session."""
-            session_metrics = {
+            """Simulate a complete user session."""            session_metrics = {
                 "user_id": user_id,
                 "requests": [],
                 "total_time": 0
@@ -569,14 +539,12 @@ class TestAPILoadTesting:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_peak_traffic_simulation(self):
-        """Test system behavior under peak traffic conditions."""
-        metrics = PerformanceMetrics()
+        """Test system behavior under peak traffic conditions."""        metrics = PerformanceMetrics()
         metrics.start_monitoring()
         
         # Simulate peak traffic scenarios
         async def peak_traffic_burst():
-            """Simulate a traffic burst scenario."""
-            burst_tasks = []
+            """Simulate a traffic burst scenario."""            burst_tasks = []
             
             # Create a burst of 200 requests in quick succession
             for i in range(200):
@@ -636,18 +604,15 @@ class TestAPILoadTesting:
 
 
 class TestStressTestingEnhanced:
-    """Enhanced stress testing with realistic scenarios."""
-    
+    """Enhanced stress testing with realistic scenarios."""    
     @pytest.mark.stress
     @pytest.mark.asyncio
     async def test_memory_stress_with_large_payloads(self):
-        """Test system behavior with large data payloads."""
-        metrics = PerformanceMetrics()
+        """Test system behavior with large data payloads."""        metrics = PerformanceMetrics()
         metrics.start_monitoring()
         
         async def process_large_payload(payload_size_mb: int):
-            """Simulate processing of large payloads."""
-            start_time = time.time()
+            """Simulate processing of large payloads."""            start_time = time.time()
             
             # Create large data structure to simulate memory usage
             large_data = {
@@ -697,8 +662,7 @@ class TestStressTestingEnhanced:
     @pytest.mark.stress
     @pytest.mark.asyncio
     async def test_resource_exhaustion_simulation(self):
-        """Test behavior under resource exhaustion conditions."""
-        metrics = PerformanceMetrics()
+        """Test behavior under resource exhaustion conditions."""        metrics = PerformanceMetrics()
         metrics.start_monitoring()
         
         # Simulate resource-intensive operations
@@ -711,8 +675,7 @@ class TestStressTestingEnhanced:
         active_operations = []
         
         async def resource_intensive_operation(op_id: int):
-            """Simulate a resource-intensive operation."""
-            start_time = time.time()
+            """Simulate a resource-intensive operation."""            start_time = time.time()
             
             # Simulate resource allocation
             cpu_needed = 1

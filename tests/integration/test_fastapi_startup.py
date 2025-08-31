@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Integration Test: Complete FastAPI Application Startup
+"""Integration Test: Complete FastAPI Application Startup
 =====================================================
 
 Tests the complete startup process of the Ainflue FastAPI application including:
@@ -25,9 +21,7 @@ Tests the complete startup process of the Ainflue FastAPI application including:
 - Core middleware functionality
 
 Author: Integration Test Suite
-"""
-
-import asyncio
+"""import asyncio
 import subprocess
 import time
 import sys
@@ -43,12 +37,10 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 
 class TestFastAPIApplicationStartup:
-    """Integration tests for FastAPI application startup"""
-    
+    """Integration tests for FastAPI application startup"""    
     @pytest.fixture(scope="class")
     def app_process(self):
-        """Start the FastAPI application for testing"""
-        print("🚀 Starting FastAPI application...")
+        """Start the FastAPI application for testing"""        print("🚀 Starting FastAPI application...")
         
         # Start server in background
         process = subprocess.Popen([
@@ -85,13 +77,11 @@ class TestFastAPIApplicationStartup:
         process.wait()
     
     def test_application_startup_successful(self, app_process):
-        """Test that the FastAPI application starts successfully"""
-        assert app_process.poll() is None, "Application process should be running"
+        """Test that the FastAPI application starts successfully"""        assert app_process.poll() is None, "Application process should be running"
         print("✅ Application startup successful")
     
     def test_root_endpoint_accessible(self, app_process):
-        """Test that the root endpoint is accessible and returns correct response"""
-        response = requests.get("http://127.0.0.1:8000/", timeout=10)
+        """Test that the root endpoint is accessible and returns correct response"""        response = requests.get("http://127.0.0.1:8000/", timeout=10)
         
         assert response.status_code == 200, f"Root endpoint failed with status {response.status_code}"
         
@@ -103,8 +93,7 @@ class TestFastAPIApplicationStartup:
         print("✅ Root endpoint accessible and returning correct response")
     
     def test_health_endpoint_functional(self, app_process):
-        """Test that the health endpoint is functional"""
-        response = requests.get("http://127.0.0.1:8000/health", timeout=10)
+        """Test that the health endpoint is functional"""        response = requests.get("http://127.0.0.1:8000/health", timeout=10)
         
         assert response.status_code == 200, f"Health endpoint failed with status {response.status_code}"
         
@@ -116,8 +105,7 @@ class TestFastAPIApplicationStartup:
         print("✅ Health endpoint functional")
     
     def test_api_documentation_accessible(self, app_process):
-        """Test that API documentation is accessible"""
-        response = requests.get("http://127.0.0.1:8000/docs", timeout=10)
+        """Test that API documentation is accessible"""        response = requests.get("http://127.0.0.1:8000/docs", timeout=10)
         
         assert response.status_code == 200, f"Documentation endpoint failed with status {response.status_code}"
         assert "swagger" in response.text.lower(), "Documentation should contain Swagger UI"
@@ -125,8 +113,7 @@ class TestFastAPIApplicationStartup:
         print("✅ API documentation accessible")
     
     def test_openapi_schema_generation(self, app_process):
-        """Test that OpenAPI schema is properly generated"""
-        response = requests.get("http://127.0.0.1:8000/openapi.json", timeout=10)
+        """Test that OpenAPI schema is properly generated"""        response = requests.get("http://127.0.0.1:8000/openapi.json", timeout=10)
         
         assert response.status_code == 200, f"OpenAPI schema endpoint failed with status {response.status_code}"
         
@@ -143,8 +130,7 @@ class TestFastAPIApplicationStartup:
         print("✅ OpenAPI schema properly generated")
     
     def test_cors_configuration(self, app_process):
-        """Test CORS configuration if enabled"""
-        headers = {
+        """Test CORS configuration if enabled"""        headers = {
             'Origin': 'http://localhost:3000',
             'Access-Control-Request-Method': 'GET'
         }
@@ -157,8 +143,7 @@ class TestFastAPIApplicationStartup:
         print("✅ CORS configuration stable")
     
     def test_application_metadata(self, app_process):
-        """Test that application metadata is correctly configured"""
-        response = requests.get("http://127.0.0.1:8000/", timeout=10)
+        """Test that application metadata is correctly configured"""        response = requests.get("http://127.0.0.1:8000/", timeout=10)
         data = response.json()
         
         # Test environment is correctly set

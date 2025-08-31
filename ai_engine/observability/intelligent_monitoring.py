@@ -1,5 +1,4 @@
-"""
-Intelligent Monitoring & Predictive Analytics Engine
+"""Intelligent Monitoring & Predictive Analytics Engine
 
 Advanced AI-powered monitoring system with predictive capabilities,
 anomaly detection, automated incident response, and proactive
@@ -13,9 +12,7 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 import numpy as np
@@ -54,8 +51,7 @@ except ImportError:
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
-    INFO = "info"
+    """Alert severity levels"""    INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -64,8 +60,7 @@ class AlertSeverity(Enum):
 
 
 class MonitoringScope(Enum):
-    """Monitoring scope types"""
-    SYSTEM_HEALTH = "system_health"
+    """Monitoring scope types"""    SYSTEM_HEALTH = "system_health"
     APPLICATION_PERFORMANCE = "application_performance"
     USER_BEHAVIOR = "user_behavior"
     BUSINESS_METRICS = "business_metrics"
@@ -76,8 +71,7 @@ class MonitoringScope(Enum):
 
 
 class PredictionType(Enum):
-    """Types of predictions"""
-    ANOMALY_DETECTION = "anomaly_detection"
+    """Types of predictions"""    ANOMALY_DETECTION = "anomaly_detection"
     CAPACITY_PLANNING = "capacity_planning"
     PERFORMANCE_FORECASTING = "performance_forecasting"
     USER_BEHAVIOR_PREDICTION = "user_behavior_prediction"
@@ -88,8 +82,7 @@ class PredictionType(Enum):
 
 
 class IncidentStatus(Enum):
-    """Incident status types"""
-    DETECTED = "detected"
+    """Incident status types"""    DETECTED = "detected"
     INVESTIGATING = "investigating"
     ACKNOWLEDGED = "acknowledged"
     MITIGATING = "mitigating"
@@ -99,8 +92,7 @@ class IncidentStatus(Enum):
 
 @dataclass
 class MonitoringMetric:
-    """Monitoring metric definition"""
-    metric_id: str = field(default_factory=lambda: str(uuid4()))
+    """Monitoring metric definition"""    metric_id: str = field(default_factory=lambda: str(uuid4()))
     name: str = ""
     description: str = ""
     scope: MonitoringScope = MonitoringScope.SYSTEM_HEALTH
@@ -113,16 +105,13 @@ class MonitoringMetric:
     source: str = ""
     
     def is_warning(self) -> bool:
-        """Check if metric value exceeds warning threshold"""
-        return self.value >= self.threshold_warning
+        """Check if metric value exceeds warning threshold"""        return self.value >= self.threshold_warning
     
     def is_critical(self) -> bool:
-        """Check if metric value exceeds critical threshold"""
-        return self.value >= self.threshold_critical
+        """Check if metric value exceeds critical threshold"""        return self.value >= self.threshold_critical
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             **asdict(self),
             'timestamp': self.timestamp.isoformat(),
             'status': 'critical' if self.is_critical() else 'warning' if self.is_warning() else 'normal'
@@ -131,8 +120,7 @@ class MonitoringMetric:
 
 @dataclass
 class PredictiveAlert:
-    """Predictive alert structure"""
-    alert_id: str = field(default_factory=lambda: str(uuid4()))
+    """Predictive alert structure"""    alert_id: str = field(default_factory=lambda: str(uuid4()))
     prediction_type: PredictionType = PredictionType.ANOMALY_DETECTION
     title: str = ""
     description: str = ""
@@ -146,8 +134,7 @@ class PredictiveAlert:
     expires_at: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             **asdict(self),
             'created_at': self.created_at.isoformat(),
             'predicted_time': self.predicted_time.isoformat() if self.predicted_time else None,
@@ -157,8 +144,7 @@ class PredictiveAlert:
 
 @dataclass
 class Incident:
-    """Incident tracking structure"""
-    incident_id: str = field(default_factory=lambda: str(uuid4()))
+    """Incident tracking structure"""    incident_id: str = field(default_factory=lambda: str(uuid4()))
     title: str = ""
     description: str = ""
     severity: AlertSeverity = AlertSeverity.MEDIUM
@@ -174,8 +160,7 @@ class Incident:
     timeline: List[Dict[str, Any]] = field(default_factory=list)
     
     def add_timeline_event(self, event: str, details: str = ""):
-        """Add event to incident timeline"""
-        self.timeline.append({
+        """Add event to incident timeline"""        self.timeline.append({
             'timestamp': datetime.utcnow().isoformat(),
             'event': event,
             'details': details
@@ -183,8 +168,7 @@ class Incident:
         self.updated_at = datetime.utcnow()
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             **asdict(self),
             'created_at': self.created_at.isoformat(),
             'updated_at': self.updated_at.isoformat(),
@@ -193,8 +177,7 @@ class Incident:
 
 
 class AnomalyDetector:
-    """Advanced anomaly detection using multiple algorithms"""
-    
+    """Advanced anomaly detection using multiple algorithms"""    
     def __init__(self, sensitivity: float = 0.1):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sensitivity = sensitivity
@@ -203,8 +186,7 @@ class AnomalyDetector:
         self.detection_history = defaultdict(list)
         
     async def detect_anomalies(self, metrics: List[MonitoringMetric]) -> List[PredictiveAlert]:
-        """Detect anomalies in metrics using multiple algorithms"""
-        try:
+        """Detect anomalies in metrics using multiple algorithms"""        try:
             anomalies = []
             
             if not HAS_SKLEARN:
@@ -243,8 +225,7 @@ class AnomalyDetector:
             return []
     
     async def _isolation_forest_detection(self, metric_name: str, values: List[float]) -> List[PredictiveAlert]:
-        """Anomaly detection using Isolation Forest"""
-        try:
+        """Anomaly detection using Isolation Forest"""        try:
             if len(values) < 20:
                 return []
             
@@ -284,8 +265,7 @@ class AnomalyDetector:
             return []
     
     async def _statistical_detection(self, metric_name: str, values: List[float]) -> List[PredictiveAlert]:
-        """Statistical anomaly detection using Z-score and IQR"""
-        try:
+        """Statistical anomaly detection using Z-score and IQR"""        try:
             if len(values) < 10:
                 return []
             
@@ -363,8 +343,7 @@ class AnomalyDetector:
             return []
     
     async def _pattern_based_detection(self, metric_name: str, metrics: List[MonitoringMetric]) -> List[PredictiveAlert]:
-        """Pattern-based anomaly detection"""
-        try:
+        """Pattern-based anomaly detection"""        try:
             if len(metrics) < 20:
                 return []
             
@@ -433,8 +412,7 @@ class AnomalyDetector:
             return []
     
     async def _statistical_anomaly_detection(self, metrics: List[MonitoringMetric]) -> List[PredictiveAlert]:
-        """Fallback statistical anomaly detection when ML libraries unavailable"""
-        try:
+        """Fallback statistical anomaly detection when ML libraries unavailable"""        try:
             anomalies = []
             
             # Group metrics by name
@@ -484,8 +462,7 @@ class AnomalyDetector:
             return []
     
     def _determine_severity(self, confidence: float) -> AlertSeverity:
-        """Determine alert severity based on confidence"""
-        if confidence >= 90:
+        """Determine alert severity based on confidence"""        if confidence >= 90:
             return AlertSeverity.CRITICAL
         elif confidence >= 70:
             return AlertSeverity.HIGH
@@ -495,8 +472,7 @@ class AnomalyDetector:
             return AlertSeverity.LOW
     
     def _deduplicate_anomalies(self, anomalies: List[PredictiveAlert]) -> List[PredictiveAlert]:
-        """Remove duplicate anomalies and keep highest confidence ones"""
-        if not anomalies:
+        """Remove duplicate anomalies and keep highest confidence ones"""        if not anomalies:
             return []
         
         # Group by affected metrics and time proximity
@@ -519,8 +495,7 @@ class AnomalyDetector:
 
 
 class PredictiveEngine:
-    """Advanced predictive analytics engine"""
-    
+    """Advanced predictive analytics engine"""    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.prediction_models = {}
@@ -529,8 +504,7 @@ class PredictiveEngine:
         
     async def predict_capacity_needs(self, resource_metrics: List[MonitoringMetric], 
                                    forecast_horizon: timedelta = timedelta(days=7)) -> List[PredictiveAlert]:
-        """Predict future capacity needs based on current trends"""
-        try:
+        """Predict future capacity needs based on current trends"""        try:
             predictions = []
             
             if not HAS_SKLEARN:
@@ -569,8 +543,7 @@ class PredictiveEngine:
     
     async def _forecast_resource_usage(self, resource_name: str, timestamps: List[float], 
                                      values: List[float], horizon: timedelta) -> Optional[PredictiveAlert]:
-        """Forecast resource usage using regression"""
-        try:
+        """Forecast resource usage using regression"""        try:
             X = np.array(timestamps).reshape(-1, 1)
             y = np.array(values)
             
@@ -630,8 +603,7 @@ class PredictiveEngine:
             return None
     
     async def predict_user_churn(self, user_metrics: List[Dict[str, Any]]) -> List[PredictiveAlert]:
-        """Predict users at risk of churning"""
-        try:
+        """Predict users at risk of churning"""        try:
             if not user_metrics or not HAS_SKLEARN:
                 return []
             
@@ -701,8 +673,7 @@ class PredictiveEngine:
             return []
     
     async def predict_content_virality(self, content_metrics: List[Dict[str, Any]]) -> List[PredictiveAlert]:
-        """Predict content with viral potential"""
-        try:
+        """Predict content with viral potential"""        try:
             if not content_metrics:
                 return []
             
@@ -766,8 +737,7 @@ class PredictiveEngine:
     
     async def _simple_capacity_prediction(self, metrics: List[MonitoringMetric], 
                                         horizon: timedelta) -> List[PredictiveAlert]:
-        """Simple capacity prediction without ML libraries"""
-        try:
+        """Simple capacity prediction without ML libraries"""        try:
             predictions = []
             
             # Group metrics by name
@@ -818,8 +788,7 @@ class PredictiveEngine:
             return []
     
     def _determine_capacity_severity(self, predicted: float, current: float) -> AlertSeverity:
-        """Determine severity based on predicted capacity increase"""
-        increase_ratio = predicted / current if current > 0 else 1
+        """Determine severity based on predicted capacity increase"""        increase_ratio = predicted / current if current > 0 else 1
         
         if increase_ratio >= 2.0:  # 100% increase
             return AlertSeverity.CRITICAL
@@ -832,8 +801,7 @@ class PredictiveEngine:
 
 
 class IncidentManager:
-    """Intelligent incident management and response"""
-    
+    """Intelligent incident management and response"""    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.active_incidents = {}
@@ -843,8 +811,7 @@ class IncidentManager:
         
     async def create_incident(self, alert: PredictiveAlert, 
                             additional_context: Optional[Dict[str, Any]] = None) -> Incident:
-        """Create incident from alert"""
-        try:
+        """Create incident from alert"""        try:
             incident = Incident(
                 title=alert.title,
                 description=alert.description,
@@ -876,8 +843,7 @@ class IncidentManager:
     async def update_incident_status(self, incident_id: str, 
                                    new_status: IncidentStatus,
                                    notes: str = "") -> bool:
-        """Update incident status"""
-        try:
+        """Update incident status"""        try:
             if incident_id not in self.active_incidents:
                 return False
             
@@ -904,8 +870,7 @@ class IncidentManager:
             return False
     
     async def _check_auto_response(self, incident: Incident):
-        """Check and execute auto-response rules"""
-        try:
+        """Check and execute auto-response rules"""        try:
             # Example auto-response rules
             if incident.severity == AlertSeverity.CRITICAL:
                 # Auto-escalate critical incidents
@@ -939,8 +904,7 @@ class IncidentManager:
             self.logger.error(f"Auto-response check failed: {str(e)}")
     
     async def _handle_incident_resolution(self, incident: Incident):
-        """Handle incident resolution actions"""
-        try:
+        """Handle incident resolution actions"""        try:
             # Post-resolution actions
             incident.add_timeline_event("Resolution actions", "Executing post-resolution procedures")
             
@@ -957,8 +921,7 @@ class IncidentManager:
             self.logger.error(f"Incident resolution handling failed: {str(e)}")
     
     def _archive_incident(self, incident: Incident):
-        """Archive closed incident"""
-        try:
+        """Archive closed incident"""        try:
             # Move to history
             self.incident_history.append(incident)
             
@@ -972,8 +935,7 @@ class IncidentManager:
             self.logger.error(f"Incident archiving failed: {str(e)}")
     
     def get_active_incidents(self, severity_filter: Optional[AlertSeverity] = None) -> List[Incident]:
-        """Get active incidents, optionally filtered by severity"""
-        try:
+        """Get active incidents, optionally filtered by severity"""        try:
             incidents = list(self.active_incidents.values())
             
             if severity_filter:
@@ -996,8 +958,7 @@ class IncidentManager:
             return []
     
     def get_incident_statistics(self) -> Dict[str, Any]:
-        """Get incident statistics and insights"""
-        try:
+        """Get incident statistics and insights"""        try:
             all_incidents = list(self.active_incidents.values()) + self.incident_history
             
             if not all_incidents:
@@ -1039,8 +1000,7 @@ class IncidentManager:
 
 
 class IntelligentMonitoringSystem:
-    """Main intelligent monitoring and predictive analytics system"""
-    
+    """Main intelligent monitoring and predictive analytics system"""    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.anomaly_detector = AnomalyDetector()
@@ -1066,8 +1026,7 @@ class IntelligentMonitoringSystem:
         self._start_monitoring_processes()
     
     def _start_monitoring_processes(self):
-        """Start background monitoring processes"""
-        try:
+        """Start background monitoring processes"""        try:
             # Metric collection thread
             metric_thread = threading.Thread(
                 target=self._metric_collection_loop,
@@ -1101,8 +1060,7 @@ class IntelligentMonitoringSystem:
             self.logger.error(f"Failed to start monitoring processes: {str(e)}")
     
     def _metric_collection_loop(self):
-        """Background metric collection loop"""
-        while self.active_monitoring:
+        """Background metric collection loop"""        while self.active_monitoring:
             try:
                 # Collect system metrics
                 current_time = datetime.utcnow()
@@ -1128,8 +1086,7 @@ class IntelligentMonitoringSystem:
                 time.sleep(60)
     
     def _anomaly_detection_loop(self):
-        """Background anomaly detection loop"""
-        while self.active_monitoring:
+        """Background anomaly detection loop"""        while self.active_monitoring:
             try:
                 # Get recent metrics for analysis
                 current_time = datetime.utcnow()
@@ -1159,8 +1116,7 @@ class IntelligentMonitoringSystem:
                 time.sleep(60)
     
     def _prediction_loop(self):
-        """Background prediction loop"""
-        while self.active_monitoring:
+        """Background prediction loop"""        while self.active_monitoring:
             try:
                 # Get metrics for prediction
                 recent_metrics = list(self.metric_buffer)
@@ -1185,8 +1141,7 @@ class IntelligentMonitoringSystem:
                 time.sleep(300)  # 5 minute retry delay
     
     async def _handle_alert(self, alert: PredictiveAlert):
-        """Handle generated alerts"""
-        try:
+        """Handle generated alerts"""        try:
             # Check for alert suppression (avoid spam)
             if self._is_alert_suppressed(alert):
                 return
@@ -1206,8 +1161,7 @@ class IntelligentMonitoringSystem:
             self.logger.error(f"Alert handling failed: {str(e)}")
     
     def _is_alert_suppressed(self, alert: PredictiveAlert) -> bool:
-        """Check if alert should be suppressed to avoid spam"""
-        try:
+        """Check if alert should be suppressed to avoid spam"""        try:
             suppression_window = timedelta(minutes=self.monitoring_config["alert_suppression_minutes"])
             cutoff_time = datetime.utcnow() - suppression_window
             
@@ -1226,8 +1180,7 @@ class IntelligentMonitoringSystem:
             return False
     
     def _generate_sample_metrics(self, timestamp: datetime) -> List[MonitoringMetric]:
-        """Generate sample metrics for demonstration"""
-        try:
+        """Generate sample metrics for demonstration"""        try:
             import random
             
             base_values = {
@@ -1271,8 +1224,7 @@ class IntelligentMonitoringSystem:
             return []
     
     def _get_metric_unit(self, metric_name: str) -> str:
-        """Get appropriate unit for metric"""
-        unit_map = {
+        """Get appropriate unit for metric"""        unit_map = {
             'cpu_usage': '%',
             'memory_usage': '%',
             'disk_usage': '%',
@@ -1285,8 +1237,7 @@ class IntelligentMonitoringSystem:
         return unit_map.get(metric_name, '')
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status"""
-        try:
+        """Get comprehensive system status"""        try:
             current_time = datetime.utcnow()
             
             # Recent metrics summary
@@ -1332,8 +1283,7 @@ class IntelligentMonitoringSystem:
     
     async def run_manual_analysis(self, analysis_type: str, 
                                 parameters: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Run manual analysis on demand"""
-        try:
+        """Run manual analysis on demand"""        try:
             results = {"analysis_type": analysis_type, "timestamp": datetime.utcnow().isoformat()}
             
             if analysis_type == "anomaly_detection":
@@ -1360,8 +1310,7 @@ class IntelligentMonitoringSystem:
             return {"error": str(e)}
     
     def stop_monitoring(self):
-        """Stop all monitoring processes"""
-        try:
+        """Stop all monitoring processes"""        try:
             self.active_monitoring = False
             
             # Wait for threads to finish

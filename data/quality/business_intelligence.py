@@ -1,5 +1,4 @@
-"""
-Quality Business Intelligence - Advanced Analytics & Intelligence Engine
+"""Quality Business Intelligence - Advanced Analytics & Intelligence Engine
 ========================================================================
 
 Enterprise-grade quality business intelligence system providing advanced analytics,
@@ -17,9 +16,7 @@ Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security +
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""
-
-from typing import Dict, Any, List, Optional, Union, Tuple, Callable
+"""from typing import Dict, Any, List, Optional, Union, Tuple, Callable
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -43,30 +40,26 @@ warnings.filterwarnings('ignore')
 logger = logging.getLogger(__name__)
 
 class AnalysisType(Enum):
-    """Types of quality analysis"""
-    DESCRIPTIVE = "descriptive"           # What happened
+    """Types of quality analysis"""    DESCRIPTIVE = "descriptive"           # What happened
     DIAGNOSTIC = "diagnostic"             # Why it happened  
     PREDICTIVE = "predictive"            # What will happen
     PRESCRIPTIVE = "prescriptive"        # What should be done
 
 class InsightLevel(Enum):
-    """Business insight severity levels"""
-    STRATEGIC = "strategic"              # Business strategy impact
+    """Business insight severity levels"""    STRATEGIC = "strategic"              # Business strategy impact
     TACTICAL = "tactical"                # Operational impact
     OPERATIONAL = "operational"          # Day-to-day operations
     INFORMATIONAL = "informational"      # FYI insights
 
 class PredictionConfidence(Enum):
-    """Prediction confidence levels"""
-    HIGH = "high"                        # >90% confidence
+    """Prediction confidence levels"""    HIGH = "high"                        # >90% confidence
     MEDIUM = "medium"                    # 70-90% confidence
     LOW = "low"                          # 50-70% confidence
     UNRELIABLE = "unreliable"           # <50% confidence
 
 @dataclass
 class QualityInsight:
-    """Quality business insight container"""
-    id: str
+    """Quality business insight container"""    id: str
     title: str
     description: str
     insight_type: AnalysisType
@@ -81,8 +74,7 @@ class QualityInsight:
 
 @dataclass
 class QualityPrediction:
-    """Quality prediction container"""
-    metric_name: str
+    """Quality prediction container"""    metric_name: str
     predicted_value: float
     confidence_interval: Tuple[float, float]
     confidence_level: PredictionConfidence
@@ -94,8 +86,7 @@ class QualityPrediction:
 
 @dataclass
 class QualityAnomaly:
-    """Quality anomaly detection result"""
-    timestamp: datetime
+    """Quality anomaly detection result"""    timestamp: datetime
     metric_name: str
     actual_value: float
     expected_value: float
@@ -106,21 +97,17 @@ class QualityAnomaly:
     recommended_actions: List[str]
 
 class QualityBusinessIntelligence:
-    """
-    Advanced quality business intelligence and analytics engine.
+    """    Advanced quality business intelligence and analytics engine.
     
     Provides sophisticated analytics, predictive insights, anomaly detection,
     and intelligent optimization recommendations for quality management.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize the quality business intelligence engine.
+        """        Initialize the quality business intelligence engine.
         
         Args:
             config: Configuration dictionary
-        """
-        self.config = config
+        """        self.config = config
         self.logger = logger
         
         # Analytics configuration
@@ -152,8 +139,7 @@ class QualityBusinessIntelligence:
         timeframe: Optional[timedelta] = None,
         analysis_type: AnalysisType = AnalysisType.DESCRIPTIVE
     ) -> Dict[str, Any]:
-        """
-        Analyze quality trends for a specific metric.
+        """        Analyze quality trends for a specific metric.
         
         Args:
             metric_name: Name of the quality metric
@@ -162,8 +148,7 @@ class QualityBusinessIntelligence:
             
         Returns:
             Comprehensive trend analysis results
-        """
-        try:
+        """        try:
             timeframe = timeframe or self.analysis_window
             cutoff_time = datetime.utcnow() - timeframe
             
@@ -216,8 +201,7 @@ class QualityBusinessIntelligence:
         values: List[float],
         timestamps: List[datetime]
     ) -> Dict[str, Any]:
-        """Perform descriptive statistical analysis"""
-        
+        """Perform descriptive statistical analysis"""        
         # Basic statistics
         mean_value = statistics.mean(values)
         median_value = statistics.median(values)
@@ -286,8 +270,7 @@ class QualityBusinessIntelligence:
         timestamps: List[datetime],
         full_data: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Perform diagnostic analysis to understand why trends occurred"""
-        
+        """Perform diagnostic analysis to understand why trends occurred"""        
         # Correlation analysis with other metrics
         correlations = await self._analyze_correlations(metric_name, full_data)
         
@@ -314,8 +297,7 @@ class QualityBusinessIntelligence:
         values: List[float],
         timestamps: List[datetime]
     ) -> Dict[str, Any]:
-        """Perform predictive analysis using machine learning"""
-        
+        """Perform predictive analysis using machine learning"""        
         # Prepare time series data
         df = pd.DataFrame({
             'timestamp': timestamps,
@@ -353,8 +335,7 @@ class QualityBusinessIntelligence:
         timestamps: List[datetime],
         full_data: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Perform prescriptive analysis to recommend actions"""
-        
+        """Perform prescriptive analysis to recommend actions"""        
         # Analyze current state
         current_state = self._analyze_current_state(values)
         
@@ -387,8 +368,7 @@ class QualityBusinessIntelligence:
         current_value: float,
         context: Optional[Dict[str, Any]] = None
     ) -> Optional[QualityAnomaly]:
-        """
-        Detect quality anomalies using advanced ML techniques.
+        """        Detect quality anomalies using advanced ML techniques.
         
         Args:
             metric_name: Name of the quality metric
@@ -397,8 +377,7 @@ class QualityBusinessIntelligence:
             
         Returns:
             Quality anomaly if detected, None otherwise
-        """
-        try:
+        """        try:
             # Get or create anomaly detector
             if metric_name not in self.anomaly_detectors:
                 await self._train_anomaly_detector(metric_name)
@@ -474,16 +453,14 @@ class QualityBusinessIntelligence:
         self,
         timeframe: Optional[timedelta] = None
     ) -> List[QualityInsight]:
-        """
-        Generate actionable quality insights using advanced analytics.
+        """        Generate actionable quality insights using advanced analytics.
         
         Args:
             timeframe: Analysis timeframe
             
         Returns:
             List of quality insights
-        """
-        try:
+        """        try:
             timeframe = timeframe or self.analysis_window
             insights = []
             
@@ -520,8 +497,7 @@ class QualityBusinessIntelligence:
             return []
     
     def _test_normality(self, values: List[float]) -> Dict[str, Any]:
-        """Test if data follows normal distribution"""
-        if len(values) < 8:
+        """Test if data follows normal distribution"""        if len(values) < 8:
             return {"test": "insufficient_data", "p_value": None, "is_normal": None}
         
         # Shapiro-Wilk test for normality
@@ -537,8 +513,7 @@ class QualityBusinessIntelligence:
         }
     
     def _calculate_data_quality_score(self, values: List[float]) -> float:
-        """Calculate overall data quality score"""
-        if not values:
+        """Calculate overall data quality score"""        if not values:
             return 0.0
         
         # Factors contributing to data quality score
@@ -562,8 +537,7 @@ class QualityBusinessIntelligence:
         metric_name: str,
         full_data: List[Dict[str, Any]]
     ) -> Dict[str, float]:
-        """Analyze correlations with other metrics"""
-        
+        """Analyze correlations with other metrics"""        
         correlations = {}
         
         # Group data by metric
@@ -588,8 +562,7 @@ class QualityBusinessIntelligence:
         values: List[float],
         timestamps: List[datetime]
     ) -> Dict[str, Any]:
-        """Detect seasonal patterns in the data"""
-        
+        """Detect seasonal patterns in the data"""        
         if len(values) < 14:  # Need at least 2 weeks of data
             return {"pattern_detected": False, "reason": "insufficient_data"}
         
@@ -629,8 +602,7 @@ class QualityBusinessIntelligence:
         }
     
     def _detect_change_points(self, values: List[float]) -> List[Dict[str, Any]]:
-        """Detect significant change points in the data"""
-        
+        """Detect significant change points in the data"""        
         if len(values) < 10:
             return []
         
@@ -667,8 +639,7 @@ class QualityBusinessIntelligence:
         full_data: List[Dict[str, Any]],
         change_points: List[Dict[str, Any]]
     ) -> List[str]:
-        """Identify potential root causes for quality changes"""
-        
+        """Identify potential root causes for quality changes"""        
         root_causes = []
         
         # Analyze context around change points
@@ -702,8 +673,7 @@ class QualityBusinessIntelligence:
         return list(set(root_causes))
     
     def _identify_contributing_factors(self, full_data: List[Dict[str, Any]]) -> List[str]:
-        """Identify factors contributing to quality variations"""
-        
+        """Identify factors contributing to quality variations"""        
         factors = []
         
         # Analyze metadata for common factors

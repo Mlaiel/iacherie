@@ -1,5 +1,4 @@
-"""
-Analytics Index - Module Entry Point and API Gateway
+"""Analytics Index - Module Entry Point and API Gateway
 
 Industrial-grade analytics module entry point providing unified access to all
 analytics capabilities with advanced routing and service orchestration.
@@ -23,9 +22,7 @@ Team Specialists:
 - Audio Processing Specialist: Advanced audio AI algorithms
 - DevOps Engineer: Production-ready infrastructure
 - IA Prompt Engineer: Optimized AI model interactions
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Union, Type
 from datetime import datetime, timedelta
@@ -49,13 +46,11 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsModule:
-    """
-    Main analytics module class providing unified access to all analytics services.
+    """    Main analytics module class providing unified access to all analytics services.
     
     This class serves as the primary entry point for all analytics operations,
     providing a clean, industrial-grade API for content creator analytics.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -91,8 +86,7 @@ class AnalyticsModule:
         }
     
     async def initialize(self) -> None:
-        """Initialize the analytics module and all services"""
-        try:
+        """Initialize the analytics module and all services"""        try:
             start_time = datetime.now()
             self.logger.info("Initializing Analytics Module...")
             
@@ -124,8 +118,7 @@ class AnalyticsModule:
             raise ConfigurationError(f"Module initialization failed: {str(e)}")
     
     async def shutdown(self) -> None:
-        """Shutdown the analytics module and all services"""
-        try:
+        """Shutdown the analytics module and all services"""        try:
             self.logger.info("Shutting down Analytics Module...")
             
             # Shutdown all services
@@ -151,8 +144,7 @@ class AnalyticsModule:
     
     @asynccontextmanager
     async def get_service(self, service_type: str, service_name: str = "default"):
-        """Context manager for getting analytics services"""
-        if not self._initialized:
+        """Context manager for getting analytics services"""        if not self._initialized:
             raise AnalyticsError("Analytics module not initialized")
         
         service = self._get_service_instance(service_type, service_name)
@@ -171,8 +163,7 @@ class AnalyticsModule:
         tags: Optional[Dict[str, str]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Collect a single metric point"""
-        try:
+        """Collect a single metric point"""        try:
             start_time = datetime.now()
             
             # Get metrics collector
@@ -202,8 +193,7 @@ class AnalyticsModule:
             raise MetricsError(f"Metric collection failed: {str(e)}")
     
     async def get_realtime_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive real-time metrics"""
-        try:
+        """Get comprehensive real-time metrics"""        try:
             start_time = datetime.now()
             
             # Get metrics from all services
@@ -232,8 +222,7 @@ class AnalyticsModule:
         format_type: str = "json",
         include_forecasts: bool = True
     ) -> Dict[str, Any]:
-        """Generate comprehensive analytics report"""
-        try:
+        """Generate comprehensive analytics report"""        try:
             start_time = datetime.now()
             
             # Get report generator
@@ -260,8 +249,7 @@ class AnalyticsModule:
         activity: Dict[str, Any],
         session_id: Optional[str] = None
     ) -> str:
-        """Track user activity"""
-        try:
+        """Track user activity"""        try:
             start_time = datetime.now()
             
             # Get user tracker
@@ -283,8 +271,7 @@ class AnalyticsModule:
         content_id: str,
         metrics: Dict[str, Any]
     ) -> None:
-        """Track content performance"""
-        try:
+        """Track content performance"""        try:
             start_time = datetime.now()
             
             # Get content tracker
@@ -306,8 +293,7 @@ class AnalyticsModule:
         amount: float,
         metadata: Dict[str, Any]
     ) -> str:
-        """Track revenue event"""
-        try:
+        """Track revenue event"""        try:
             start_time = datetime.now()
             
             # Get revenue tracker
@@ -329,8 +315,7 @@ class AnalyticsModule:
         dashboard_type: str = "analytics",
         user_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Get dashboard data"""
-        try:
+        """Get dashboard data"""        try:
             start_time = datetime.now()
             
             # Get dashboard
@@ -352,8 +337,7 @@ class AnalyticsModule:
         period: str = "daily",
         focus_areas: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """Generate business intelligence insights"""
-        try:
+        """Generate business intelligence insights"""        try:
             start_time = datetime.now()
             
             # Get business intelligence
@@ -375,8 +359,7 @@ class AnalyticsModule:
         period: str = "daily",
         forecast_horizon: int = 30
     ) -> Dict[str, Any]:
-        """Get predictive analytics forecasts"""
-        try:
+        """Get predictive analytics forecasts"""        try:
             start_time = datetime.now()
             
             # Get predictive analytics
@@ -394,8 +377,7 @@ class AnalyticsModule:
             raise AnalyticsError(f"Predictive forecasts failed: {str(e)}")
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive health check"""
-        try:
+        """Perform comprehensive health check"""        try:
             health_status = {
                 'timestamp': datetime.now().isoformat(),
                 'module_status': 'healthy' if self._initialized else 'not_initialized',
@@ -433,8 +415,7 @@ class AnalyticsModule:
     # Private Methods
     
     async def _initialize_collectors(self) -> None:
-        """Initialize metrics collectors"""
-        self._collectors = {
+        """Initialize metrics collectors"""        self._collectors = {
             'metrics': MetricsCollector(self.config.get('collectors', {}).get('metrics', {})),
             'business': BusinessMetricsCollector(self.config.get('collectors', {}).get('business', {}))
         }
@@ -443,8 +424,7 @@ class AnalyticsModule:
             await collector.initialize()
     
     async def _initialize_aggregators(self) -> None:
-        """Initialize data aggregators"""
-        self._aggregators = {
+        """Initialize data aggregators"""        self._aggregators = {
             'data': DataAggregator(self.config.get('aggregators', {}).get('data', {})),
             'timeseries': TimeSeriesAggregator(self.config.get('aggregators', {}).get('timeseries', {}))
         }
@@ -453,8 +433,7 @@ class AnalyticsModule:
             await aggregator.initialize()
     
     async def _initialize_dashboards(self) -> None:
-        """Initialize dashboards"""
-        self._dashboards = {
+        """Initialize dashboards"""        self._dashboards = {
             'analytics': AnalyticsDashboard(self.config.get('dashboards', {}).get('analytics', {})),
             'realtime': RealtimeDashboard(self.config.get('dashboards', {}).get('realtime', {}))
         }
@@ -463,8 +442,7 @@ class AnalyticsModule:
             await dashboard.initialize()
     
     async def _initialize_intelligence(self) -> None:
-        """Initialize intelligence services"""
-        self._intelligence = {
+        """Initialize intelligence services"""        self._intelligence = {
             'business': BusinessIntelligence(
                 self._collectors.get('business'),
                 self._aggregators.get('data')
@@ -476,8 +454,7 @@ class AnalyticsModule:
             await intelligence.initialize()
     
     async def _initialize_reporting(self) -> None:
-        """Initialize reporting services"""
-        self._reporting = {
+        """Initialize reporting services"""        self._reporting = {
             'generator': ReportGenerator(self.config.get('reporting', {}).get('generator', {})),
             'performance': PerformanceReporter(self.config.get('reporting', {}).get('performance', {}))
         }
@@ -486,8 +463,7 @@ class AnalyticsModule:
             await reporter.initialize()
     
     async def _initialize_tracking(self) -> None:
-        """Initialize tracking services"""
-        self._tracking = {
+        """Initialize tracking services"""        self._tracking = {
             'user': UserTracker(self.config.get('tracking', {}).get('user', {})),
             'content': ContentTracker(self.config.get('tracking', {}).get('content', {})),
             'revenue': RevenueTracker(self.config.get('tracking', {}).get('revenue', {}))
@@ -497,8 +473,7 @@ class AnalyticsModule:
             await tracker.initialize()
     
     async def _initialize_processors(self) -> None:
-        """Initialize processors"""
-        self._processors = {
+        """Initialize processors"""        self._processors = {
             'analytics': AnalyticsProcessor(self.config.get('processors', {}).get('analytics', {})),
             'metrics': MetricsProcessor(self.config.get('processors', {}).get('metrics', {}))
         }
@@ -507,8 +482,7 @@ class AnalyticsModule:
             await processor.initialize()
     
     def _register_services(self) -> None:
-        """Register all services in the service registry"""
-        self._services = {
+        """Register all services in the service registry"""        self._services = {
             'collector': self._collectors,
             'aggregator': self._aggregators,
             'dashboard': self._dashboards,
@@ -519,8 +493,7 @@ class AnalyticsModule:
         }
     
     def _get_service_instance(self, service_type: str, service_name: str):
-        """Get service instance by type and name"""
-        if service_type not in self._services:
+        """Get service instance by type and name"""        if service_type not in self._services:
             raise AnalyticsError(f"Unknown service type: {service_type}")
         
         if service_name not in self._services[service_type]:
@@ -529,8 +502,7 @@ class AnalyticsModule:
         return self._services[service_type][service_name]
     
     async def _get_module_info(self) -> Dict[str, Any]:
-        """Get module information"""
-        return {
+        """Get module information"""        return {
             'version': self.version,
             'author': self.author,
             'email': self.email,
@@ -543,8 +515,7 @@ class AnalyticsModule:
         }
     
     async def _get_system_metrics(self) -> Dict[str, Any]:
-        """Get system-level metrics"""
-        try:
+        """Get system-level metrics"""        try:
             import psutil
             
             return {
@@ -560,8 +531,7 @@ class AnalyticsModule:
             return {'error': f'System metrics error: {str(e)}'}
     
     async def _update_request_stats(self, start_time: datetime, success: bool) -> None:
-        """Update request statistics"""
-        try:
+        """Update request statistics"""        try:
             self.module_stats['total_requests'] += 1
             
             if success:
@@ -590,8 +560,7 @@ _analytics_module: Optional[AnalyticsModule] = None
 
 
 async def get_analytics_module(config: Optional[Dict[str, Any]] = None) -> AnalyticsModule:
-    """Get or create the global analytics module instance"""
-    global _analytics_module
+    """Get or create the global analytics module instance"""    global _analytics_module
     
     if _analytics_module is None:
         _analytics_module = AnalyticsModule(config)
@@ -601,8 +570,7 @@ async def get_analytics_module(config: Optional[Dict[str, Any]] = None) -> Analy
 
 
 async def shutdown_analytics_module() -> None:
-    """Shutdown the global analytics module instance"""
-    global _analytics_module
+    """Shutdown the global analytics module instance"""    global _analytics_module
     
     if _analytics_module is not None:
         await _analytics_module.shutdown()
@@ -618,14 +586,12 @@ async def collect_metric(
     tags: Optional[Dict[str, str]] = None,
     metadata: Optional[Dict[str, Any]] = None
 ) -> str:
-    """Convenience function for collecting metrics"""
-    module = await get_analytics_module()
+    """Convenience function for collecting metrics"""    module = await get_analytics_module()
     return await module.collect_metric(name, value, metric_type, scope, tags, metadata)
 
 
 async def get_realtime_metrics() -> Dict[str, Any]:
-    """Convenience function for getting real-time metrics"""
-    module = await get_analytics_module()
+    """Convenience function for getting real-time metrics"""    module = await get_analytics_module()
     return await module.get_realtime_metrics()
 
 
@@ -635,8 +601,7 @@ async def generate_report(
     format_type: str = "json",
     include_forecasts: bool = True
 ) -> Dict[str, Any]:
-    """Convenience function for generating reports"""
-    module = await get_analytics_module()
+    """Convenience function for generating reports"""    module = await get_analytics_module()
     return await module.generate_report(report_type, period_days, format_type, include_forecasts)
 
 
@@ -645,8 +610,7 @@ async def track_user_activity(
     activity: Dict[str, Any],
     session_id: Optional[str] = None
 ) -> str:
-    """Convenience function for tracking user activity"""
-    module = await get_analytics_module()
+    """Convenience function for tracking user activity"""    module = await get_analytics_module()
     return await module.track_user_activity(user_id, activity, session_id)
 
 
@@ -654,8 +618,7 @@ async def track_content_performance(
     content_id: str,
     metrics: Dict[str, Any]
 ) -> None:
-    """Convenience function for tracking content performance"""
-    module = await get_analytics_module()
+    """Convenience function for tracking content performance"""    module = await get_analytics_module()
     return await module.track_content_performance(content_id, metrics)
 
 
@@ -664,8 +627,7 @@ async def track_revenue_event(
     amount: float,
     metadata: Dict[str, Any]
 ) -> str:
-    """Convenience function for tracking revenue events"""
-    module = await get_analytics_module()
+    """Convenience function for tracking revenue events"""    module = await get_analytics_module()
     return await module.track_revenue_event(event_type, amount, metadata)
 
 
@@ -673,8 +635,7 @@ async def get_dashboard_data(
     dashboard_type: str = "analytics",
     user_id: Optional[str] = None
 ) -> Dict[str, Any]:
-    """Convenience function for getting dashboard data"""
-    module = await get_analytics_module()
+    """Convenience function for getting dashboard data"""    module = await get_analytics_module()
     return await module.get_dashboard_data(dashboard_type, user_id)
 
 
@@ -682,8 +643,7 @@ async def generate_business_insights(
     period: str = "daily",
     focus_areas: Optional[List[str]] = None
 ) -> Dict[str, Any]:
-    """Convenience function for generating business insights"""
-    module = await get_analytics_module()
+    """Convenience function for generating business insights"""    module = await get_analytics_module()
     return await module.generate_business_insights(period, focus_areas)
 
 
@@ -691,14 +651,12 @@ async def get_predictive_forecasts(
     period: str = "daily",
     forecast_horizon: int = 30
 ) -> Dict[str, Any]:
-    """Convenience function for getting predictive forecasts"""
-    module = await get_analytics_module()
+    """Convenience function for getting predictive forecasts"""    module = await get_analytics_module()
     return await module.get_predictive_forecasts(period, forecast_horizon)
 
 
 async def health_check() -> Dict[str, Any]:
-    """Convenience function for health check"""
-    try:
+    """Convenience function for health check"""    try:
         module = await get_analytics_module()
         return await module.health_check()
     except Exception as e:

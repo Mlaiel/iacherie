@@ -1,28 +1,22 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive API Integration Tests
+"""Comprehensive API Integration Tests
 Tests all API endpoints for functionality, error handling, and response formats.
 
 Author: AI Assistant
 Purpose: Complete integration test coverage for API endpoints
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -83,15 +77,13 @@ class MockRequest:
 
 # Mock API endpoints for testing
 class APIEndpoints:
-    """Mock API endpoints for testing"""
-    
+    """Mock API endpoints for testing"""    
     def __init__(self):
         self.app = MockFastAPI()
         self._setup_routes()
     
     def _setup_routes(self):
-        """Setup API routes"""
-        
+        """Setup API routes"""        
         @self.app.get("/api/v1/health")
         async def health_check():
             return {"status": "healthy", "timestamp": "2025-01-07T10:00:00Z"}
@@ -217,18 +209,15 @@ class APIEndpoints:
 
 
 class TestAPIHealthAndStatus:
-    """Test API health check and status endpoints"""
-    
+    """Test API health check and status endpoints"""    
     @pytest.fixture
     def api_client(self):
-        """Create API client for testing"""
-        return APIEndpoints()
+        """Create API client for testing"""        return APIEndpoints()
     
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_health_check_endpoint(self, api_client):
-        """Test health check endpoint"""
-        health_func = api_client.app.routes["GET:/api/v1/health"]
+        """Test health check endpoint"""        health_func = api_client.app.routes["GET:/api/v1/health"]
         response = await health_func()
         
         assert "status" in response
@@ -238,8 +227,7 @@ class TestAPIHealthAndStatus:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_health_check_response_format(self, api_client):
-        """Test health check response format"""
-        health_func = api_client.app.routes["GET:/api/v1/health"]
+        """Test health check response format"""        health_func = api_client.app.routes["GET:/api/v1/health"]
         response = await health_func()
         
         # Validate response structure
@@ -258,8 +246,7 @@ class TestAPIHealthAndStatus:
 
 
 class TestCreatorEndpoints:
-    """Test creator management endpoints"""
-    
+    """Test creator management endpoints"""    
     @pytest.fixture
     def api_client(self):
         return APIEndpoints()
@@ -267,8 +254,7 @@ class TestCreatorEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_list_creators_endpoint(self, api_client):
-        """Test listing creators endpoint"""
-        list_func = api_client.app.routes["GET:/api/v1/creators"]
+        """Test listing creators endpoint"""        list_func = api_client.app.routes["GET:/api/v1/creators"]
         response = await list_func()
         
         assert "creators" in response
@@ -283,8 +269,7 @@ class TestCreatorEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_get_creator_by_id(self, api_client):
-        """Test getting specific creator by ID"""
-        get_func = api_client.app.routes["GET:/api/v1/creators/{creator_id}"]
+        """Test getting specific creator by ID"""        get_func = api_client.app.routes["GET:/api/v1/creators/{creator_id}"]
         response = await get_func("test_creator_123")
         
         assert "id" in response
@@ -298,8 +283,7 @@ class TestCreatorEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_get_nonexistent_creator(self, api_client):
-        """Test getting non-existent creator"""
-        get_func = api_client.app.routes["GET:/api/v1/creators/{creator_id}"]
+        """Test getting non-existent creator"""        get_func = api_client.app.routes["GET:/api/v1/creators/{creator_id}"]
         response = await get_func("nonexistent")
         
         # Mock returns error response for nonexistent
@@ -312,8 +296,7 @@ class TestCreatorEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_create_creator_success(self, api_client):
-        """Test successful creator creation"""
-        create_func = api_client.app.routes["POST:/api/v1/creators"]
+        """Test successful creator creation"""        create_func = api_client.app.routes["POST:/api/v1/creators"]
         
         creator_data = {
             "name": "New Test Creator",
@@ -332,8 +315,7 @@ class TestCreatorEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_create_creator_missing_fields(self, api_client):
-        """Test creator creation with missing required fields"""
-        create_func = api_client.app.routes["POST:/api/v1/creators"]
+        """Test creator creation with missing required fields"""        create_func = api_client.app.routes["POST:/api/v1/creators"]
         
         incomplete_data = {
             "name": "Test Creator"
@@ -351,8 +333,7 @@ class TestCreatorEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_update_creator(self, api_client):
-        """Test updating creator information"""
-        update_func = api_client.app.routes["PUT:/api/v1/creators/{creator_id}"]
+        """Test updating creator information"""        update_func = api_client.app.routes["PUT:/api/v1/creators/{creator_id}"]
         
         update_data = {
             "name": "Updated Creator Name",
@@ -369,8 +350,7 @@ class TestCreatorEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_delete_creator(self, api_client):
-        """Test deleting a creator"""
-        delete_func = api_client.app.routes["DELETE:/api/v1/creators/{creator_id}"]
+        """Test deleting a creator"""        delete_func = api_client.app.routes["DELETE:/api/v1/creators/{creator_id}"]
         
         response = await delete_func("existing_creator")
         
@@ -379,8 +359,7 @@ class TestCreatorEndpoints:
 
 
 class TestContentEndpoints:
-    """Test content management endpoints"""
-    
+    """Test content management endpoints"""    
     @pytest.fixture
     def api_client(self):
         return APIEndpoints()
@@ -388,8 +367,7 @@ class TestContentEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_upload_content_success(self, api_client):
-        """Test successful content upload"""
-        upload_func = api_client.app.routes["POST:/api/v1/content/upload"]
+        """Test successful content upload"""        upload_func = api_client.app.routes["POST:/api/v1/content/upload"]
         
         upload_data = {
             "creator_id": "creator_123",
@@ -408,8 +386,7 @@ class TestContentEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_upload_content_missing_data(self, api_client):
-        """Test content upload with missing data"""
-        upload_func = api_client.app.routes["POST:/api/v1/content/upload"]
+        """Test content upload with missing data"""        upload_func = api_client.app.routes["POST:/api/v1/content/upload"]
         
         incomplete_data = {
             "creator_id": "creator_123"
@@ -426,8 +403,7 @@ class TestContentEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_get_content_details(self, api_client):
-        """Test getting content details"""
-        get_func = api_client.app.routes["GET:/api/v1/content/{content_id}"]
+        """Test getting content details"""        get_func = api_client.app.routes["GET:/api/v1/content/{content_id}"]
         
         response = await get_func("existing_content")
         
@@ -445,8 +421,7 @@ class TestContentEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_analyze_content(self, api_client):
-        """Test content analysis endpoint"""
-        analyze_func = api_client.app.routes["POST:/api/v1/content/{content_id}/analyze"]
+        """Test content analysis endpoint"""        analyze_func = api_client.app.routes["POST:/api/v1/content/{content_id}/analyze"]
         
         response = await analyze_func("existing_content")
         
@@ -466,8 +441,7 @@ class TestContentEndpoints:
 
 
 class TestAnalyticsEndpoints:
-    """Test analytics and dashboard endpoints"""
-    
+    """Test analytics and dashboard endpoints"""    
     @pytest.fixture
     def api_client(self):
         return APIEndpoints()
@@ -475,8 +449,7 @@ class TestAnalyticsEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_analytics_dashboard(self, api_client):
-        """Test analytics dashboard endpoint"""
-        dashboard_func = api_client.app.routes["GET:/api/v1/analytics/dashboard"]
+        """Test analytics dashboard endpoint"""        dashboard_func = api_client.app.routes["GET:/api/v1/analytics/dashboard"]
         
         response = await dashboard_func()
         
@@ -507,8 +480,7 @@ class TestAnalyticsEndpoints:
 
 
 class TestAPIErrorHandling:
-    """Test API error handling scenarios"""
-    
+    """Test API error handling scenarios"""    
     @pytest.fixture
     def api_client(self):
         return APIEndpoints()
@@ -516,8 +488,7 @@ class TestAPIErrorHandling:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_404_errors(self, api_client):
-        """Test 404 error handling for non-existent resources"""
-        # Test non-existent creator
+        """Test 404 error handling for non-existent resources"""        # Test non-existent creator
         get_creator_func = api_client.app.routes["GET:/api/v1/creators/{creator_id}"]
         creator_response = await get_creator_func("nonexistent")
         
@@ -534,8 +505,7 @@ class TestAPIErrorHandling:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_400_errors(self, api_client):
-        """Test 400 error handling for bad requests"""
-        # Test creator creation with missing data
+        """Test 400 error handling for bad requests"""        # Test creator creation with missing data
         create_func = api_client.app.routes["POST:/api/v1/creators"]
         response = await create_func({})  # Empty data
         
@@ -547,8 +517,7 @@ class TestAPIErrorHandling:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_error_response_format(self, api_client):
-        """Test that error responses have consistent format"""
-        create_func = api_client.app.routes["POST:/api/v1/creators"]
+        """Test that error responses have consistent format"""        create_func = api_client.app.routes["POST:/api/v1/creators"]
         response = await create_func({"name": "Test"})  # Missing required fields
         
         if isinstance(response, MockResponse):
@@ -561,8 +530,7 @@ class TestAPIErrorHandling:
 
 
 class TestAPIPerformance:
-    """Test API performance characteristics"""
-    
+    """Test API performance characteristics"""    
     @pytest.fixture
     def api_client(self):
         return APIEndpoints()
@@ -570,8 +538,7 @@ class TestAPIPerformance:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_concurrent_requests(self, api_client):
-        """Test handling concurrent API requests"""
-        import time
+        """Test handling concurrent API requests"""        import time
         
         health_func = api_client.app.routes["GET:/api/v1/health"]
         
@@ -593,8 +560,7 @@ class TestAPIPerformance:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_endpoint_response_time(self, api_client):
-        """Test individual endpoint response times"""
-        import time
+        """Test individual endpoint response times"""        import time
         
         endpoints_to_test = [
             ("GET:/api/v1/health", lambda: api_client.app.routes["GET:/api/v1/health"]()),
@@ -617,8 +583,7 @@ class TestAPIPerformance:
 
 
 class TestAPIDataValidation:
-    """Test API data validation and sanitization"""
-    
+    """Test API data validation and sanitization"""    
     @pytest.fixture
     def api_client(self):
         return APIEndpoints()
@@ -626,8 +591,7 @@ class TestAPIDataValidation:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_creator_data_validation(self, api_client):
-        """Test creator data validation"""
-        create_func = api_client.app.routes["POST:/api/v1/creators"]
+        """Test creator data validation"""        create_func = api_client.app.routes["POST:/api/v1/creators"]
         
         # Test with valid data
         valid_data = {
@@ -650,8 +614,7 @@ class TestAPIDataValidation:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_content_upload_validation(self, api_client):
-        """Test content upload data validation"""
-        upload_func = api_client.app.routes["POST:/api/v1/content/upload"]
+        """Test content upload data validation"""        upload_func = api_client.app.routes["POST:/api/v1/content/upload"]
         
         # Test with valid upload data
         valid_data = {
@@ -674,8 +637,7 @@ class TestAPIDataValidation:
 
 
 class TestAPIIntegrationScenarios:
-    """Test complete API integration scenarios"""
-    
+    """Test complete API integration scenarios"""    
     @pytest.fixture
     def api_client(self):
         return APIEndpoints()
@@ -683,8 +645,7 @@ class TestAPIIntegrationScenarios:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_complete_creator_workflow(self, api_client):
-        """Test complete creator workflow from creation to content upload"""
-        # 1. Create a creator
+        """Test complete creator workflow from creation to content upload"""        # 1. Create a creator
         create_func = api_client.app.routes["POST:/api/v1/creators"]
         creator_data = {
             "name": "Workflow Test Creator",
@@ -724,8 +685,7 @@ class TestAPIIntegrationScenarios:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_content_lifecycle(self, api_client):
-        """Test complete content lifecycle"""
-        # 1. Upload content
+        """Test complete content lifecycle"""        # 1. Upload content
         upload_func = api_client.app.routes["POST:/api/v1/content/upload"]
         upload_data = {
             "creator_id": "lifecycle_creator",

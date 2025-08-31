@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Ingress Network Manager
+"""IA Influencer Agent - Ingress Network Manager
 Enterprise ingress configuration and load balancing for multi-tenant platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -12,9 +11,7 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
@@ -39,8 +36,7 @@ logger = logging.getLogger(__name__)
 
 
 class IngressProtocol(Enum):
-    """Supported ingress protocols"""
-    HTTP = "http"
+    """Supported ingress protocols"""    HTTP = "http"
     HTTPS = "https" 
     GRPC = "grpc"
     WEBSOCKET = "ws"
@@ -49,8 +45,7 @@ class IngressProtocol(Enum):
 
 
 class LoadBalancingMethod(Enum):
-    """Load balancing algorithms"""
-    ROUND_ROBIN = "round_robin"
+    """Load balancing algorithms"""    ROUND_ROBIN = "round_robin"
     LEAST_CONNECTIONS = "least_conn"
     IP_HASH = "ip_hash"
     WEIGHTED_ROUND_ROBIN = "weighted_rr"
@@ -59,8 +54,7 @@ class LoadBalancingMethod(Enum):
 
 @dataclass
 class BackendService:
-    """Backend service configuration"""
-    name: str
+    """Backend service configuration"""    name: str
     host: str
     port: int
     weight: int = 100
@@ -72,8 +66,7 @@ class BackendService:
 
 @dataclass
 class IngressRule:
-    """Ingress routing rule"""
-    host: str
+    """Ingress routing rule"""    host: str
     path: str
     service_name: str
     port: int
@@ -87,8 +80,7 @@ class IngressRule:
 
 @dataclass
 class SSLCertificate:
-    """SSL certificate configuration"""
-    name: str
+    """SSL certificate configuration"""    name: str
     cert_file: str
     key_file: str
     ca_file: Optional[str] = None
@@ -99,11 +91,9 @@ class SSLCertificate:
 
 
 class IngressManager:
-    """
-    Enterprise ingress manager for IA Influencer Agent Platform
+    """    Enterprise ingress manager for IA Influencer Agent Platform
     Handles load balancing, SSL termination, routing, and security
-    """
-    
+    """    
     def __init__(
         self,
         config_path: str = "/etc/ingress/config.yaml",
@@ -136,8 +126,7 @@ class IngressManager:
         self._load_configuration()
         
     async def initialize(self) -> None:
-        """Initialize ingress manager"""
-        try:
+        """Initialize ingress manager"""        try:
             logger.info("Initializing Ingress Manager...")
             
             # Load existing configuration
@@ -162,8 +151,7 @@ class IngressManager:
             raise
     
     async def add_ingress_rule(self, rule: IngressRule) -> bool:
-        """Add new ingress rule"""
-        try:
+        """Add new ingress rule"""        try:
             logger.info(f"Adding ingress rule for {rule.host}{rule.path}")
             
             # Validate rule
@@ -192,8 +180,7 @@ class IngressManager:
             return False
     
     async def remove_ingress_rule(self, host: str, path: str) -> bool:
-        """Remove ingress rule"""
-        try:
+        """Remove ingress rule"""        try:
             rule_key = f"{host}{path}"
             
             if rule_key not in self.rules:
@@ -221,8 +208,7 @@ class IngressManager:
         service_name: str,
         services: List[BackendService]
     ) -> bool:
-        """Register backend services for load balancing"""
-        try:
+        """Register backend services for load balancing"""        try:
             logger.info(f"Registering backend services for {service_name}")
             
             # Validate services
@@ -248,8 +234,7 @@ class IngressManager:
             return False
     
     async def configure_ssl_certificate(self, certificate: SSLCertificate) -> bool:
-        """Configure SSL certificate"""
-        try:
+        """Configure SSL certificate"""        try:
             logger.info(f"Configuring SSL certificate: {certificate.name}")
             
             # Validate certificate
@@ -281,8 +266,7 @@ class IngressManager:
         service_name: str,
         method: LoadBalancingMethod
     ) -> bool:
-        """Update load balancing method for service"""
-        try:
+        """Update load balancing method for service"""        try:
             if service_name not in self.services:
                 logger.error(f"Service not found: {service_name}")
                 return False
@@ -304,8 +288,7 @@ class IngressManager:
             return False
     
     async def get_ingress_status(self) -> Dict[str, Any]:
-        """Get comprehensive ingress status"""
-        try:
+        """Get comprehensive ingress status"""        try:
             status = {
                 'total_rules': len(self.rules),
                 'total_services': len(self.services),
@@ -359,8 +342,7 @@ class IngressManager:
     # Private methods
     
     async def _load_ingress_configuration(self) -> None:
-        """Load ingress configuration from file"""
-        try:
+        """Load ingress configuration from file"""        try:
             with open(self.config_path, 'r') as f:
                 config_data = yaml.safe_load(f)
             
@@ -389,8 +371,7 @@ class IngressManager:
             logger.error(f"Failed to load configuration: {e}")
     
     async def _validate_rule(self, rule: IngressRule) -> bool:
-        """Validate ingress rule"""
-        if not rule.host or not rule.path:
+        """Validate ingress rule"""        if not rule.host or not rule.path:
             logger.error("Host and path are required")
             return False
         
@@ -405,8 +386,7 @@ class IngressManager:
         return True
     
     async def _validate_backend_service(self, service: BackendService) -> bool:
-        """Validate backend service"""
-        if not service.name or not service.host:
+        """Validate backend service"""        if not service.name or not service.host:
             logger.error("Service name and host are required")
             return False
         
@@ -421,8 +401,7 @@ class IngressManager:
         return True
     
     async def _validate_ssl_certificate(self, certificate: SSLCertificate) -> bool:
-        """Validate SSL certificate"""
-        if not certificate.name or not certificate.cert_file or not certificate.key_file:
+        """Validate SSL certificate"""        if not certificate.name or not certificate.cert_file or not certificate.key_file:
             logger.error("Certificate name, cert_file and key_file are required")
             return False
         
@@ -439,8 +418,7 @@ class IngressManager:
         return True
     
     async def _update_load_balancer_config(self) -> None:
-        """Update load balancer configuration"""
-        # Update NGINX configuration
+        """Update load balancer configuration"""        # Update NGINX configuration
         if self.nginx_config:
             await self._update_nginx_config()
         
@@ -449,8 +427,7 @@ class IngressManager:
             await self._update_haproxy_config()
     
     async def _apply_kubernetes_ingress(self, rule: IngressRule) -> None:
-        """Apply Kubernetes ingress configuration"""
-        try:
+        """Apply Kubernetes ingress configuration"""        try:
             ingress_name = f"ingress-{rule.service_name}"
             namespace = "default"
             
@@ -521,13 +498,11 @@ class IngressManager:
             raise
     
     async def _initialize_ssl_certificates(self) -> None:
-        """Initialize SSL certificates"""
-        for cert_name, certificate in self.certificates.items():
+        """Initialize SSL certificates"""        for cert_name, certificate in self.certificates.items():
             await self._create_kubernetes_ssl_secret(certificate)
     
     async def _setup_load_balancers(self) -> None:
-        """Setup load balancer configurations"""
-        # Initialize NGINX if available
+        """Setup load balancer configurations"""        # Initialize NGINX if available
         try:
             self.nginx_config = nginx.NginxConfig()
             await self._update_nginx_config()
@@ -542,16 +517,13 @@ class IngressManager:
             logger.warning("HAProxy not available")
     
     async def _start_health_checks(self) -> None:
-        """Start periodic health checks"""
-        asyncio.create_task(self._health_check_loop())
+        """Start periodic health checks"""        asyncio.create_task(self._health_check_loop())
     
     async def _start_metrics_collection(self) -> None:
-        """Start metrics collection"""
-        asyncio.create_task(self._metrics_collection_loop())
+        """Start metrics collection"""        asyncio.create_task(self._metrics_collection_loop())
     
     async def _health_check_loop(self) -> None:
-        """Periodic health check loop"""
-        while True:
+        """Periodic health check loop"""        while True:
             try:
                 for service_name in self.services:
                     await self._check_service_health(service_name)
@@ -561,8 +533,7 @@ class IngressManager:
                 await asyncio.sleep(60)
     
     async def _metrics_collection_loop(self) -> None:
-        """Metrics collection loop"""
-        while True:
+        """Metrics collection loop"""        while True:
             try:
                 # Update active connections metric
                 # This would be implemented based on actual load balancer stats
@@ -572,8 +543,7 @@ class IngressManager:
                 await asyncio.sleep(60)
     
     def _load_configuration(self) -> None:
-        """Load initial configuration"""
-        try:
+        """Load initial configuration"""        try:
             asyncio.create_task(self._load_ingress_configuration())
         except Exception as e:
             logger.error(f"Failed to load configuration: {e}")

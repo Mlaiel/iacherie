@@ -1,5 +1,4 @@
-"""
-🔐 Enterprise Authentication Manager
+"""🔐 Enterprise Authentication Manager
 ===================================
 
 Advanced authentication management system for multi-platform API access
@@ -24,9 +23,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 ⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import base64
@@ -47,8 +44,7 @@ import urllib.parse
 logger = logging.getLogger(__name__)
 
 class AuthenticationStatus(str, Enum):
-    """Authentication status enumeration."""
-    AUTHENTICATED = "authenticated"
+    """Authentication status enumeration."""    AUTHENTICATED = "authenticated"
     UNAUTHENTICATED = "unauthenticated"
     EXPIRED = "expired"
     INVALID = "invalid"
@@ -57,8 +53,7 @@ class AuthenticationStatus(str, Enum):
     PENDING = "pending"
 
 class TokenType(str, Enum):
-    """Token type enumeration."""
-    ACCESS_TOKEN = "access_token"
+    """Token type enumeration."""    ACCESS_TOKEN = "access_token"
     REFRESH_TOKEN = "refresh_token"
     API_KEY = "api_key"
     BEARER_TOKEN = "bearer_token"
@@ -67,8 +62,7 @@ class TokenType(str, Enum):
 
 @dataclass
 class AuthenticationConfig:
-    """Authentication configuration structure."""
-    platform: str
+    """Authentication configuration structure."""    platform: str
     auth_type: str
     client_id: Optional[str] = None
     client_secret: Optional[str] = None
@@ -84,8 +78,7 @@ class AuthenticationConfig:
 
 @dataclass
 class AuthenticationResult:
-    """Authentication result structure."""
-    status: AuthenticationStatus
+    """Authentication result structure."""    status: AuthenticationStatus
     access_token: Optional[str] = None
     refresh_token: Optional[str] = None
     token_type: str = "Bearer"
@@ -98,11 +91,9 @@ class AuthenticationResult:
     additional_data: Dict[str, Any] = field(default_factory=dict)
 
 class SecureCredentialStore:
-    """Secure credential storage with encryption."""
-    
+    """Secure credential storage with encryption."""    
     def __init__(self, storage_path: str, master_password: str):
-        """Initialize secure credential store."""
-        self.storage_path = Path(storage_path)
+        """Initialize secure credential store."""        self.storage_path = Path(storage_path)
         self.storage_path.mkdir(exist_ok=True)
         
         # Generate encryption key from password
@@ -119,8 +110,7 @@ class SecureCredentialStore:
         logger.info("Secure credential store initialized")
     
     async def store_credentials(self, platform: str, credentials: Dict[str, Any]):
-        """Store encrypted credentials for platform."""
-        try:
+        """Store encrypted credentials for platform."""        try:
             # Encrypt credentials
             credentials_json = json.dumps(credentials)
             encrypted_data = self.cipher_suite.encrypt(credentials_json.encode())
@@ -138,8 +128,7 @@ class SecureCredentialStore:
             return False
     
     async def load_credentials(self, platform: str) -> Optional[Dict[str, Any]]:
-        """Load and decrypt credentials for platform."""
-        try:
+        """Load and decrypt credentials for platform."""        try:
             file_path = self.storage_path / f"{platform}_credentials.enc"
             if not file_path.exists():
                 return None
@@ -160,8 +149,7 @@ class SecureCredentialStore:
             return None
     
     async def delete_credentials(self, platform: str) -> bool:
-        """Delete stored credentials for platform."""
-        try:
+        """Delete stored credentials for platform."""        try:
             file_path = self.storage_path / f"{platform}_credentials.enc"
             if file_path.exists():
                 file_path.unlink()
@@ -174,8 +162,7 @@ class SecureCredentialStore:
             return False
     
     async def list_stored_platforms(self) -> List[str]:
-        """List platforms with stored credentials."""
-        try:
+        """List platforms with stored credentials."""        try:
             platforms = []
             for file_path in self.storage_path.glob("*_credentials.enc"):
                 platform = file_path.stem.replace("_credentials", "")
@@ -187,35 +174,28 @@ class SecureCredentialStore:
             return []
 
 class PlatformAuthenticator:
-    """Platform-specific authenticator base class."""
-    
+    """Platform-specific authenticator base class."""    
     def __init__(self, config: AuthenticationConfig, session: aiohttp.ClientSession):
         self.config = config
         self.session = session
         self.current_result: Optional[AuthenticationResult] = None
         
     async def authenticate(self, **kwargs) -> AuthenticationResult:
-        """Perform authentication (to be implemented by subclasses)."""
-        pass
+        """Perform authentication (to be implemented by subclasses)."""        pass
     
     async def refresh_token(self, refresh_token: str) -> AuthenticationResult:
-        """Refresh access token (to be implemented by subclasses)."""
-        pass
+        """Refresh access token (to be implemented by subclasses)."""        pass
     
     async def validate_token(self, access_token: str) -> bool:
-        """Validate access token (to be implemented by subclasses)."""
-        pass
+        """Validate access token (to be implemented by subclasses)."""        pass
     
     async def revoke_token(self, token: str) -> bool:
-        """Revoke access token (to be implemented by subclasses)."""
-        pass
+        """Revoke access token (to be implemented by subclasses)."""        pass
 
 class YouTubeAuthenticator(PlatformAuthenticator):
-    """YouTube API authenticator."""
-    
+    """YouTube API authenticator."""    
     async def authenticate(self, api_key: str = None, **kwargs) -> AuthenticationResult:
-        """Authenticate with YouTube API."""
-        if api_key:
+        """Authenticate with YouTube API."""        if api_key:
             # API Key authentication
             if await self.validate_token(api_key):
                 return AuthenticationResult(
@@ -236,8 +216,7 @@ class YouTubeAuthenticator(PlatformAuthenticator):
         )
     
     async def validate_token(self, access_token: str) -> bool:
-        """Validate YouTube API key or token."""
-        try:
+        """Validate YouTube API key or token."""        try:
             url = "https://www.googleapis.com/youtube/v3/channels"
             headers = {"Authorization": f"Bearer {access_token}"}
             params = {"part": "id", "mine": "true"}
@@ -250,11 +229,9 @@ class YouTubeAuthenticator(PlatformAuthenticator):
             return False
 
 class InstagramAuthenticator(PlatformAuthenticator):
-    """Instagram Graph API authenticator."""
-    
+    """Instagram Graph API authenticator."""    
     async def authenticate(self, access_token: str = None, **kwargs) -> AuthenticationResult:
-        """Authenticate with Instagram API."""
-        if access_token:
+        """Authenticate with Instagram API."""        if access_token:
             if await self.validate_token(access_token):
                 # Get token info to determine expiry
                 token_info = await self._get_token_info(access_token)
@@ -278,8 +255,7 @@ class InstagramAuthenticator(PlatformAuthenticator):
         )
     
     async def validate_token(self, access_token: str) -> bool:
-        """Validate Instagram access token."""
-        try:
+        """Validate Instagram access token."""        try:
             url = "https://graph.instagram.com/me"
             params = {"fields": "id,username", "access_token": access_token}
             
@@ -291,8 +267,7 @@ class InstagramAuthenticator(PlatformAuthenticator):
             return False
     
     async def _get_token_info(self, access_token: str) -> Dict[str, Any]:
-        """Get token information."""
-        try:
+        """Get token information."""        try:
             url = "https://graph.instagram.com/access_token"
             params = {"grant_type": "ig_exchange_token", "access_token": access_token}
             
@@ -306,11 +281,9 @@ class InstagramAuthenticator(PlatformAuthenticator):
             return {}
 
 class TwitterAuthenticator(PlatformAuthenticator):
-    """Twitter API v2 authenticator."""
-    
+    """Twitter API v2 authenticator."""    
     async def authenticate(self, bearer_token: str = None, **kwargs) -> AuthenticationResult:
-        """Authenticate with Twitter API."""
-        if bearer_token:
+        """Authenticate with Twitter API."""        if bearer_token:
             if await self.validate_token(bearer_token):
                 return AuthenticationResult(
                     status=AuthenticationStatus.AUTHENTICATED,
@@ -329,8 +302,7 @@ class TwitterAuthenticator(PlatformAuthenticator):
         )
     
     async def validate_token(self, access_token: str) -> bool:
-        """Validate Twitter bearer token."""
-        try:
+        """Validate Twitter bearer token."""        try:
             url = "https://api.twitter.com/2/users/me"
             headers = {"Authorization": f"Bearer {access_token}"}
             
@@ -342,11 +314,9 @@ class TwitterAuthenticator(PlatformAuthenticator):
             return False
 
 class TikTokAuthenticator(PlatformAuthenticator):
-    """TikTok Open API authenticator."""
-    
+    """TikTok Open API authenticator."""    
     async def authenticate(self, access_token: str = None, **kwargs) -> AuthenticationResult:
-        """Authenticate with TikTok API."""
-        if access_token:
+        """Authenticate with TikTok API."""        if access_token:
             if await self.validate_token(access_token):
                 return AuthenticationResult(
                     status=AuthenticationStatus.AUTHENTICATED,
@@ -365,8 +335,7 @@ class TikTokAuthenticator(PlatformAuthenticator):
         )
     
     async def validate_token(self, access_token: str) -> bool:
-        """Validate TikTok access token."""
-        try:
+        """Validate TikTok access token."""        try:
             url = "https://open-api.tiktok.com/oauth/userinfo/"
             headers = {"Authorization": f"Bearer {access_token}"}
             
@@ -378,8 +347,7 @@ class TikTokAuthenticator(PlatformAuthenticator):
             return False
 
 class EnterpriseAuthenticationManager:
-    """
-    Enterprise authentication manager for multi-platform API access.
+    """    Enterprise authentication manager for multi-platform API access.
     
     Provides comprehensive authentication management with:
     - Multi-platform support
@@ -387,11 +355,9 @@ class EnterpriseAuthenticationManager:
     - Automatic token refresh
     - Authentication monitoring
     - Security audit logging
-    """
-    
+    """    
     def __init__(self, storage_path: str, master_password: str):
-        """Initialize authentication manager."""
-        self.credential_store = SecureCredentialStore(storage_path, master_password)
+        """Initialize authentication manager."""        self.credential_store = SecureCredentialStore(storage_path, master_password)
         self.session: Optional[aiohttp.ClientSession] = None
         self.authenticators: Dict[str, PlatformAuthenticator] = {}
         self.auth_cache: Dict[str, AuthenticationResult] = {}
@@ -404,8 +370,7 @@ class EnterpriseAuthenticationManager:
         logger.info("Enterprise Authentication Manager initialized")
     
     def _initialize_platform_configs(self) -> Dict[str, AuthenticationConfig]:
-        """Initialize platform authentication configurations."""
-        return {
+        """Initialize platform authentication configurations."""        return {
             "youtube": AuthenticationConfig(
                 platform="youtube",
                 auth_type="api_key",
@@ -429,8 +394,7 @@ class EnterpriseAuthenticationManager:
         }
     
     async def __aenter__(self):
-        """Async context manager entry."""
-        self.session = aiohttp.ClientSession()
+        """Async context manager entry."""        self.session = aiohttp.ClientSession()
         
         # Initialize platform authenticators
         for platform, config in self.platform_configs.items():
@@ -446,8 +410,7 @@ class EnterpriseAuthenticationManager:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
-        if self.session:
+        """Async context manager exit."""        if self.session:
             await self.session.close()
     
     async def authenticate_platform(
@@ -456,8 +419,7 @@ class EnterpriseAuthenticationManager:
         credentials: Dict[str, Any],
         store_credentials: bool = True
     ) -> AuthenticationResult:
-        """
-        Authenticate with specific platform.
+        """        Authenticate with specific platform.
         
         Args:
             platform: Platform identifier
@@ -466,8 +428,7 @@ class EnterpriseAuthenticationManager:
             
         Returns:
             Authentication result
-        """
-        if platform not in self.authenticators:
+        """        if platform not in self.authenticators:
             return AuthenticationResult(
                 status=AuthenticationStatus.ERROR,
                 error_message=f"Unsupported platform: {platform}"
@@ -501,16 +462,14 @@ class EnterpriseAuthenticationManager:
             )
     
     async def get_valid_token(self, platform: str) -> Optional[str]:
-        """
-        Get valid access token for platform.
+        """        Get valid access token for platform.
         
         Args:
             platform: Platform identifier
             
         Returns:
             Valid access token or None
-        """
-        # Check cache first
+        """        # Check cache first
         if platform in self.auth_cache:
             result = self.auth_cache[platform]
             
@@ -537,8 +496,7 @@ class EnterpriseAuthenticationManager:
         return None
     
     async def _refresh_platform_token(self, platform: str, refresh_token: str) -> AuthenticationResult:
-        """Refresh platform access token."""
-        if platform not in self.authenticators:
+        """Refresh platform access token."""        if platform not in self.authenticators:
             return AuthenticationResult(
                 status=AuthenticationStatus.ERROR,
                 error_message=f"Unsupported platform: {platform}"
@@ -567,8 +525,7 @@ class EnterpriseAuthenticationManager:
             )
     
     async def _schedule_token_refresh(self, platform: str, result: AuthenticationResult):
-        """Schedule automatic token refresh."""
-        if not result.expires_at or not result.refresh_token:
+        """Schedule automatic token refresh."""        if not result.expires_at or not result.refresh_token:
             return
         
         # Schedule refresh 5 minutes before expiry
@@ -579,13 +536,11 @@ class EnterpriseAuthenticationManager:
             asyncio.create_task(self._delayed_refresh(platform, result.refresh_token, delay))
     
     async def _delayed_refresh(self, platform: str, refresh_token: str, delay: float):
-        """Perform delayed token refresh."""
-        await asyncio.sleep(delay)
+        """Perform delayed token refresh."""        await asyncio.sleep(delay)
         await self._refresh_platform_token(platform, refresh_token)
     
     async def validate_all_tokens(self) -> Dict[str, bool]:
-        """Validate all cached tokens."""
-        results = {}
+        """Validate all cached tokens."""        results = {}
         
         for platform, result in self.auth_cache.items():
             if platform in self.authenticators:
@@ -601,8 +556,7 @@ class EnterpriseAuthenticationManager:
         return results
     
     async def revoke_platform_access(self, platform: str) -> bool:
-        """Revoke access for platform."""
-        try:
+        """Revoke access for platform."""        try:
             # Revoke token if authenticator supports it
             if platform in self.authenticators and platform in self.auth_cache:
                 authenticator = self.authenticators[platform]
@@ -624,12 +578,10 @@ class EnterpriseAuthenticationManager:
             return False
     
     def register_refresh_callback(self, callback: Callable):
-        """Register callback for token refresh events."""
-        self.refresh_callbacks.append(callback)
+        """Register callback for token refresh events."""        self.refresh_callbacks.append(callback)
     
     async def get_authentication_status(self) -> Dict[str, Dict[str, Any]]:
-        """Get comprehensive authentication status."""
-        status = {}
+        """Get comprehensive authentication status."""        status = {}
         
         for platform in self.platform_configs.keys():
             platform_status = {

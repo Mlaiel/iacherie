@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Creator-Specific Configurations
+"""IA Influencer Agent - Creator-Specific Configurations
 ====================================================
 
 Configuration settings and presets for different creator types,
@@ -13,9 +12,7 @@ This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de
-"""
-
-from typing import Dict, List, Any
+"""from typing import Dict, List, Any
 from dataclasses import dataclass
 from enum import Enum
 
@@ -24,8 +21,7 @@ from .specialized_services import CreatorType, ContentCategory
 
 @dataclass
 class CreatorConfigPreset:
-    """Configuration preset for specific creator types"""
-    creator_type: CreatorType
+    """Configuration preset for specific creator types"""    creator_type: CreatorType
     supported_formats: List[str]
     priority_algorithms: List[str]
     seo_optimization: Dict[str, Any]
@@ -38,8 +34,7 @@ class CreatorConfigPreset:
 
 
 class CreatorConfigurations:
-    """Predefined configurations for different creator types"""
-    
+    """Predefined configurations for different creator types"""    
     MUSICIAN_CONFIG = CreatorConfigPreset(
         creator_type=CreatorType.MUSICIAN,
         supported_formats=["mp3", "wav", "flac", "m4a", "aiff"],
@@ -330,8 +325,7 @@ class CreatorConfigurations:
     
     @classmethod
     def get_config(cls, creator_type: CreatorType) -> CreatorConfigPreset:
-        """Get configuration for specific creator type"""
-        configs = {
+        """Get configuration for specific creator type"""        configs = {
             CreatorType.MUSICIAN: cls.MUSICIAN_CONFIG,
             CreatorType.BLOGGER: cls.BLOGGER_CONFIG,
             CreatorType.PHOTOGRAPHER: cls.PHOTOGRAPHER_CONFIG,
@@ -346,8 +340,7 @@ class CreatorConfigurations:
     
     @classmethod
     def get_all_configs(cls) -> Dict[CreatorType, CreatorConfigPreset]:
-        """Get all creator configurations"""
-        return {
+        """Get all creator configurations"""        return {
             CreatorType.MUSICIAN: cls.MUSICIAN_CONFIG,
             CreatorType.BLOGGER: cls.BLOGGER_CONFIG,
             CreatorType.PHOTOGRAPHER: cls.PHOTOGRAPHER_CONFIG,
@@ -360,32 +353,27 @@ class CreatorConfigurations:
     
     @classmethod
     def get_supported_formats_by_type(cls, creator_type: CreatorType) -> List[str]:
-        """Get supported file formats for creator type"""
-        config = cls.get_config(creator_type)
+        """Get supported file formats for creator type"""        config = cls.get_config(creator_type)
         return config.supported_formats
     
     @classmethod
     def get_platform_preferences_by_type(cls, creator_type: CreatorType) -> List[str]:
-        """Get platform preferences for creator type"""
-        config = cls.get_config(creator_type)
+        """Get platform preferences for creator type"""        config = cls.get_config(creator_type)
         return config.platform_preferences
     
     @classmethod
     def get_monetization_features_by_type(cls, creator_type: CreatorType) -> Dict[str, bool]:
-        """Get monetization features for creator type"""
-        config = cls.get_config(creator_type)
+        """Get monetization features for creator type"""        config = cls.get_config(creator_type)
         return config.monetization_features
     
     @classmethod
     def get_collaboration_features_by_type(cls, creator_type: CreatorType) -> Dict[str, bool]:
-        """Get collaboration features for creator type"""
-        config = cls.get_config(creator_type)
+        """Get collaboration features for creator type"""        config = cls.get_config(creator_type)
         return config.collaboration_features
 
 
 class PlatformOptimizations:
-    """Platform-specific optimization settings"""
-    
+    """Platform-specific optimization settings"""    
     PLATFORM_SPECS = {
         "spotify": {
             "audio_formats": ["mp3", "wav", "flac"],
@@ -426,13 +414,11 @@ class PlatformOptimizations:
     
     @classmethod
     def get_platform_specs(cls, platform: str) -> Dict[str, Any]:
-        """Get specifications for specific platform"""
-        return cls.PLATFORM_SPECS.get(platform, {})
+        """Get specifications for specific platform"""        return cls.PLATFORM_SPECS.get(platform, {})
     
     @classmethod
     def get_optimal_formats_for_platform(cls, platform: str) -> List[str]:
-        """Get optimal file formats for platform"""
-        specs = cls.get_platform_specs(platform)
+        """Get optimal file formats for platform"""        specs = cls.get_platform_specs(platform)
         formats = []
         
         if "audio_formats" in specs:

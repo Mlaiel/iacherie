@@ -28,8 +28,7 @@ Copyright: Fahed Mlaiel - All Rights Reserved
     
     Contact: mlaiel@live.de for licensing inquiries ONLY.
     Violators will be prosecuted to the full extent of German and EU law.
-"""
-# Core analyzers
+"""# Core analyzers
 from .text_analyzer import TextAnalyzer, SentimentAnalyzer, SentimentResult, TextAnalysisResult, SentimentLevel, EmotionalTone
 from .language_detector import LanguageDetector, SupportedLanguage, LanguageFamily, Script, LanguageResult
 from .semantic_processor import SemanticProcessor, ConceptExtractor, Concept, SemanticResult, ConceptType, SemanticRelation, IntentCategory

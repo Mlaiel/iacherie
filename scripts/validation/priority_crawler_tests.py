@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Priority Crawler Functionality Tests
+"""Priority Crawler Functionality Tests
 ====================================
 
 Comprehensive tests for Spotify, YouTube, and Instagram crawlers to verify:
@@ -10,9 +9,7 @@ Comprehensive tests for Spotify, YouTube, and Instagram crawlers to verify:
 - Error handling
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-
-import asyncio
+"""import asyncio
 import pytest
 import logging
 import os
@@ -28,15 +25,13 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class PriorityCrawlerTester:
-    """Test suite for priority crawlers."""
-    
+    """Test suite for priority crawlers."""    
     def __init__(self, project_root: str = "."):
         self.project_root = Path(project_root)
         self.test_results = {}
         
     async def test_spotify_crawler(self) -> Dict[str, Any]:
-        """Test Spotify crawler functionality."""
-        logger.info("🎵 Testing Spotify Crawler...")
+        """Test Spotify crawler functionality."""        logger.info("🎵 Testing Spotify Crawler...")
         
         try:
             # Import crawler
@@ -83,8 +78,7 @@ class PriorityCrawlerTester:
             }
     
     async def test_youtube_crawler(self) -> Dict[str, Any]:
-        """Test YouTube crawler functionality."""
-        logger.info("📺 Testing YouTube Crawler...")
+        """Test YouTube crawler functionality."""        logger.info("📺 Testing YouTube Crawler...")
         
         try:
             # Import crawler
@@ -131,8 +125,7 @@ class PriorityCrawlerTester:
             }
     
     async def test_instagram_crawler(self) -> Dict[str, Any]:
-        """Test Instagram crawler functionality."""
-        logger.info("📸 Testing Instagram Crawler...")
+        """Test Instagram crawler functionality."""        logger.info("📸 Testing Instagram Crawler...")
         
         try:
             # Import crawler
@@ -179,8 +172,7 @@ class PriorityCrawlerTester:
             }
     
     async def _test_crawler_initialization(self, crawler, platform_name: str) -> Dict[str, Any]:
-        """Test crawler initialization."""
-        try:
+        """Test crawler initialization."""        try:
             # Check if crawler has required attributes
             required_attrs = ['config', 'session', 'rate_limiter']
             missing_attrs = []
@@ -213,8 +205,7 @@ class PriorityCrawlerTester:
             }
     
     def _test_required_methods(self, crawler, required_methods: List[str]) -> Dict[str, Any]:
-        """Test if crawler has required methods."""
-        try:
+        """Test if crawler has required methods."""        try:
             missing_methods = []
             implemented_methods = []
             stub_methods = []
@@ -256,8 +247,7 @@ class PriorityCrawlerTester:
             }
     
     def _test_api_configuration(self, crawler, platform_name: str) -> Dict[str, Any]:
-        """Test API configuration."""
-        try:
+        """Test API configuration."""        try:
             config_score = 0.0
             config_items = []
             
@@ -297,8 +287,7 @@ class PriorityCrawlerTester:
             }
     
     async def _test_mock_functionality(self, crawler, platform: str) -> Dict[str, Any]:
-        """Test crawler functionality with mocked responses."""
-        try:
+        """Test crawler functionality with mocked responses."""        try:
             # Mock successful API response
             mock_response_data = {
                 "spotify": {
@@ -374,16 +363,14 @@ class PriorityCrawlerTester:
             }
     
     def _calculate_score(self, test_results: List[Dict[str, Any]]) -> float:
-        """Calculate overall score from test results."""
-        if not test_results:
+        """Calculate overall score from test results."""        if not test_results:
             return 0.0
         
         scores = [result.get('score', 0.0) for result in test_results]
         return sum(scores) / len(scores)
     
     async def test_api_connectivity(self) -> Dict[str, Any]:
-        """Test external API connectivity for priority platforms."""
-        logger.info("🌐 Testing API Connectivity...")
+        """Test external API connectivity for priority platforms."""        logger.info("🌐 Testing API Connectivity...")
         
         connectivity_tests = {}
         
@@ -438,8 +425,7 @@ class PriorityCrawlerTester:
         return connectivity_tests
     
     async def run_all_tests(self) -> Dict[str, Any]:
-        """Run all priority crawler tests."""
-        logger.info("🚀 Starting Priority Crawler Functionality Tests")
+        """Run all priority crawler tests."""        logger.info("🚀 Starting Priority Crawler Functionality Tests")
         logger.info("=" * 60)
         
         start_time = datetime.now()
@@ -474,8 +460,7 @@ class PriorityCrawlerTester:
     
     def _generate_overall_assessment(self, spotify_results: Dict, youtube_results: Dict, 
                                    instagram_results: Dict, connectivity_results: Dict) -> Dict[str, Any]:
-        """Generate overall assessment and recommendations."""
-        
+        """Generate overall assessment and recommendations."""        
         # Calculate overall scores
         crawler_scores = []
         if spotify_results.get('overall_score') is not None:
@@ -526,8 +511,7 @@ class PriorityCrawlerTester:
         }
 
 async def main():
-    """Main test execution."""
-    tester = PriorityCrawlerTester()
+    """Main test execution."""    tester = PriorityCrawlerTester()
     
     # Run all tests
     results = await tester.run_all_tests()

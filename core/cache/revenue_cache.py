@@ -1,12 +1,9 @@
-"""
-Revenue Cache for IA Influencer Agent Platform
+"""Revenue Cache for IA Influencer Agent Platform
 Specialized caching for monetization, revenue tracking, and financial analytics
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 from typing import Any, Dict, List, Optional, Union, Tuple
@@ -22,8 +19,7 @@ from .memory_cache import MemoryCache
 logger = logging.getLogger(__name__)
 
 class RevenueSource(Enum):
-    """Revenue sources"""
-    SPOTIFY = "spotify"
+    """Revenue sources"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -37,8 +33,7 @@ class RevenueSource(Enum):
     SYNC_LICENSING = "sync_licensing"
 
 class RevenueType(Enum):
-    """Types of revenue"""
-    STREAMING = "streaming"
+    """Types of revenue"""    STREAMING = "streaming"
     DOWNLOADS = "downloads"
     LICENSING_FEES = "licensing_fees"
     ROYALTIES = "royalties"
@@ -49,8 +44,7 @@ class RevenueType(Enum):
     SALE = "sale"
 
 class PaymentStatus(Enum):
-    """Payment processing status"""
-    PENDING = "pending"
+    """Payment processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -59,8 +53,7 @@ class PaymentStatus(Enum):
 
 @dataclass
 class RevenueEntry:
-    """Revenue entry data structure"""
-    entry_id: str
+    """Revenue entry data structure"""    entry_id: str
     user_id: str
     content_id: Optional[str]
     tenant_id: Optional[str]
@@ -96,8 +89,7 @@ class RevenueEntry:
             self.net_amount = self.amount - self.processing_fee
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        data = asdict(self)
+        """Convert to dictionary"""        data = asdict(self)
         # Convert Decimal and datetime objects for JSON serialization
         data['amount'] = str(self.amount)
         data['processing_fee'] = str(self.processing_fee)
@@ -114,8 +106,7 @@ class RevenueEntry:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'RevenueEntry':
-        """Create from dictionary"""
-        # Convert string values back to appropriate types
+        """Create from dictionary"""        # Convert string values back to appropriate types
         data['amount'] = Decimal(data['amount'])
         data['processing_fee'] = Decimal(data['processing_fee'])
         data['net_amount'] = Decimal(data['net_amount'])
@@ -131,8 +122,7 @@ class RevenueEntry:
 
 @dataclass
 class RevenueAnalytics:
-    """Revenue analytics summary"""
-    user_id: str
+    """Revenue analytics summary"""    user_id: str
     period_start: datetime
     period_end: datetime
     
@@ -159,11 +149,9 @@ class RevenueAnalytics:
     generated_at: datetime
 
 class RevenueCache:
-    """
-    Advanced revenue cache for monetization tracking and financial analytics
+    """    Advanced revenue cache for monetization tracking and financial analytics
     Handles revenue data aggregation and performance optimization
-    """
-    
+    """    
     def __init__(self,
                  redis_config: RedisConfig,
                  default_currency: str = "EUR",
@@ -205,12 +193,10 @@ class RevenueCache:
         logger.info("RevenueCache initialized")
     
     async def initialize(self):
-        """Initialize cache connections"""
-        await self.redis_cache.connect()
+        """Initialize cache connections"""        await self.redis_cache.connect()
     
     def _generate_entry_id(self, user_id: str, timestamp: datetime) -> str:
-        """Generate unique revenue entry ID"""
-        timestamp_str = timestamp.strftime("%Y%m%d_%H%M%S")
+        """Generate unique revenue entry ID"""        timestamp_str = timestamp.strftime("%Y%m%d_%H%M%S")
         return f"{user_id}_{timestamp_str}_{hash(str(timestamp.microsecond)) % 10000:04d}"
     
     async def record_revenue(self,
@@ -228,8 +214,7 @@ class RevenueCache:
                            content_type: Optional[str] = None,
                            geographic_region: Optional[str] = None,
                            processing_fee: Union[Decimal, float, str] = "0.00") -> str:
-        """Record revenue entry"""
-        
+        """Record revenue entry"""        
         try:
             # Convert amount to Decimal
             if not isinstance(amount, Decimal):
@@ -296,8 +281,7 @@ class RevenueCache:
             return ""
     
     async def get_revenue_entry(self, entry_id: str) -> Optional[RevenueEntry]:
-        """Get revenue entry by ID"""
-        
+        """Get revenue entry by ID"""        
         # Try memory cache first
         cache_key = f"revenue_entry:{entry_id}"
         cached_entry = self.memory_cache.get(cache_key)
@@ -332,8 +316,7 @@ class RevenueCache:
                              end_date: Optional[datetime] = None,
                              revenue_source: Optional[RevenueSource] = None,
                              limit: int = 1000) -> List[RevenueEntry]:
-        """Get revenue entries for user"""
-        
+        """Get revenue entries for user"""        
         try:
             # Get user revenue index
             user_key = f"{self.USER_REVENUE_PREFIX}:{user_id}"
@@ -384,8 +367,7 @@ class RevenueCache:
                                 content_id: str,
                                 start_date: Optional[datetime] = None,
                                 end_date: Optional[datetime] = None) -> Dict[str, Any]:
-        """Get revenue summary for specific content"""
-        
+        """Get revenue summary for specific content"""        
         try:
             content_key = f"{self.CONTENT_REVENUE_PREFIX}:{content_id}"
             revenue_data = await self.redis_cache.get(content_key)
@@ -422,8 +404,7 @@ class RevenueCache:
                                user_id: str,
                                period_start: datetime,
                                period_end: datetime) -> RevenueAnalytics:
-        """Generate comprehensive revenue analytics"""
-        
+        """Generate comprehensive revenue analytics"""        
         try:
             # Check cache first
             analytics_key = f"{self.ANALYTICS_PREFIX}:{user_id}:{period_start.date()}:{period_end.date()}"
@@ -553,8 +534,7 @@ class RevenueCache:
                                   entry_id: str,
                                   payment_status: PaymentStatus,
                                   processed_at: Optional[datetime] = None) -> bool:
-        """Update payment status for revenue entry"""
-        
+        """Update payment status for revenue entry"""        
         try:
             revenue_entry = await self.get_revenue_entry(entry_id)
             if not revenue_entry:
@@ -595,8 +575,7 @@ class RevenueCache:
                           currency: str,
                           payment_method: str,
                           entry_ids: List[str]) -> str:
-        """Queue payment for processing"""
-        
+        """Queue payment for processing"""        
         try:
             import uuid
             payment_id = str(uuid.uuid4())
@@ -626,8 +605,7 @@ class RevenueCache:
             return ""
     
     async def _update_user_revenue_index(self, user_id: str, entry_id: str, period_start: datetime):
-        """Update user revenue index"""
-        
+        """Update user revenue index"""        
         user_key = f"{self.USER_REVENUE_PREFIX}:{user_id}"
         index_data = await self.redis_cache.get(user_key)
         
@@ -652,8 +630,7 @@ class RevenueCache:
         )
     
     async def _update_content_revenue_index(self, content_id: str, entry_id: str, amount: Decimal, currency: str):
-        """Update content revenue index"""
-        
+        """Update content revenue index"""        
         content_key = f"{self.CONTENT_REVENUE_PREFIX}:{content_id}"
         revenue_data = await self.redis_cache.get(content_key)
         
@@ -681,8 +658,7 @@ class RevenueCache:
         )
     
     async def _update_daily_totals(self, user_id: str, date: datetime, amount: Decimal, currency: str, source: RevenueSource):
-        """Update daily revenue totals"""
-        
+        """Update daily revenue totals"""        
         date_key = date.strftime('%Y-%m-%d')
         daily_key = f"{self.DAILY_TOTALS_PREFIX}:{user_id}:{date_key}"
         
@@ -708,8 +684,7 @@ class RevenueCache:
         await self.redis_cache.set(daily_key, json.dumps(totals), ttl=86400 * 90)  # 90 days
     
     async def _update_monthly_totals(self, user_id: str, date: datetime, amount: Decimal, currency: str, source: RevenueSource):
-        """Update monthly revenue totals"""
-        
+        """Update monthly revenue totals"""        
         month_key = date.strftime('%Y-%m')
         monthly_key = f"{self.MONTHLY_TOTALS_PREFIX}:{user_id}:{month_key}"
         
@@ -735,8 +710,7 @@ class RevenueCache:
         await self.redis_cache.set(monthly_key, json.dumps(totals), ttl=86400 * 730)  # 2 years
     
     async def _update_platform_totals(self, source: RevenueSource, amount: Decimal, currency: str, date: datetime):
-        """Update platform-wide totals"""
-        
+        """Update platform-wide totals"""        
         date_key = date.strftime('%Y-%m-%d')
         platform_key = f"{self.PLATFORM_TOTALS_PREFIX}:{source.value}:{date_key}"
         
@@ -758,8 +732,7 @@ class RevenueCache:
         await self.redis_cache.set(platform_key, json.dumps(totals), ttl=86400 * 365)  # 1 year
     
     async def get_stats(self) -> Dict[str, Any]:
-        """Get cache statistics"""
-        redis_stats = await self.redis_cache.get_stats()
+        """Get cache statistics"""        redis_stats = await self.redis_cache.get_stats()
         memory_stats = self.memory_cache.get_stats()
         
         # Convert Decimal to string for JSON serialization
@@ -781,15 +754,12 @@ class RevenueCache:
         }
     
     async def close(self):
-        """Close cache connections"""
-        await self.redis_cache.close()
+        """Close cache connections"""        await self.redis_cache.close()
         self.memory_cache.close()
 
 class MonetizationCache(RevenueCache):
-    """
-    Specialized cache for monetization strategies and optimization
-    """
-    
+    """    Specialized cache for monetization strategies and optimization
+    """    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         
@@ -803,8 +773,7 @@ class MonetizationCache(RevenueCache):
                                       strategy: str,
                                       improvement: float,
                                       recommendations: List[str]) -> bool:
-        """Store monetization optimization results"""
-        
+        """Store monetization optimization results"""        
         try:
             optimization_key = f"{self.OPTIMIZATION_PREFIX}:{user_id}"
             
@@ -829,8 +798,7 @@ class MonetizationCache(RevenueCache):
             return False
     
     async def get_optimization_recommendations(self, user_id: str) -> Dict[str, Any]:
-        """Get monetization optimization recommendations"""
-        
+        """Get monetization optimization recommendations"""        
         optimization_key = f"{self.OPTIMIZATION_PREFIX}:{user_id}"
         optimization_data = await self.redis_cache.get(optimization_key)
         
@@ -843,8 +811,7 @@ class MonetizationCache(RevenueCache):
                                    user_id: str,
                                    forecast_data: Dict[str, Any],
                                    confidence_level: float) -> bool:
-        """Store revenue forecast"""
-        
+        """Store revenue forecast"""        
         try:
             forecast_key = f"{self.FORECAST_PREFIX}:{user_id}"
             
@@ -868,8 +835,7 @@ class MonetizationCache(RevenueCache):
             return False
     
     async def get_revenue_forecast(self, user_id: str) -> Dict[str, Any]:
-        """Get revenue forecast"""
-        
+        """Get revenue forecast"""        
         forecast_key = f"{self.FORECAST_PREFIX}:{user_id}"
         forecast_data = await self.redis_cache.get(forecast_key)
         

@@ -1,5 +1,4 @@
-"""
-Audio Analysis Configuration for IA-Influencer Agent Platform
+"""Audio Analysis Configuration for IA-Influencer Agent Platform
 ============================================================
 
 Professional Audio Processing and Music Intelligence configuration.
@@ -15,9 +14,7 @@ without explicit written permission is STRICTLY PROHIBITED and will be
 prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-from typing import Dict, List, Optional, Union, Any, Tuple
+"""from typing import Dict, List, Optional, Union, Any, Tuple
 from pydantic import BaseSettings, validator
 from enum import Enum
 from dataclasses import dataclass
@@ -25,8 +22,7 @@ import os
 
 
 class AudioTask(str, Enum):
-    """Supported audio processing tasks."""
-    
+    """Supported audio processing tasks."""    
     AUDIO_FINGERPRINTING = "audio_fingerprinting"
     MUSIC_CLASSIFICATION = "music_classification"
     GENRE_DETECTION = "genre_detection"
@@ -50,8 +46,7 @@ class AudioTask(str, Enum):
 
 
 class AudioFormat(str, Enum):
-    """Supported audio formats."""
-    
+    """Supported audio formats."""    
     MP3 = "mp3"
     WAV = "wav"
     FLAC = "flac"
@@ -63,8 +58,7 @@ class AudioFormat(str, Enum):
 
 
 class MusicGenre(str, Enum):
-    """Supported music genres for classification."""
-    
+    """Supported music genres for classification."""    
     ROCK = "rock"
     POP = "pop"
     JAZZ = "jazz"
@@ -86,8 +80,7 @@ class MusicGenre(str, Enum):
 
 @dataclass
 class AudioModelSpec:
-    """Specification for audio processing model configuration."""
-    
+    """Specification for audio processing model configuration."""    
     task: AudioTask
     model_name: str
     model_path: str
@@ -105,13 +98,11 @@ class AudioModelSpec:
 
 
 class AudioAnalysisConfig(BaseSettings):
-    """
-    Professional Audio Analysis Configuration for IA-Influencer Agent Platform.
+    """    Professional Audio Analysis Configuration for IA-Influencer Agent Platform.
     
     Manages all audio processing models and configurations for music analysis,
     fingerprinting, copyright detection, and audio intelligence.
-    """
-    
+    """    
     # Core Audio Configuration
     DEFAULT_SAMPLE_RATE: int = 22050
     HIGH_QUALITY_SAMPLE_RATE: int = 44100
@@ -197,8 +188,7 @@ class AudioAnalysisConfig(BaseSettings):
     
     @validator("AUDIO_MODEL_CACHE_DIR")
     def create_cache_dir(cls, v):
-        """Ensure audio model cache directory exists."""
-        os.makedirs(v, exist_ok=True)
+        """Ensure audio model cache directory exists."""        os.makedirs(v, exist_ok=True)
         os.makedirs(f"{v}/fingerprinting", exist_ok=True)
         os.makedirs(f"{v}/classification", exist_ok=True)
         os.makedirs(f"{v}/analysis", exist_ok=True)
@@ -206,8 +196,7 @@ class AudioAnalysisConfig(BaseSettings):
         return v
     
     def get_audio_model_spec(self, task: AudioTask) -> AudioModelSpec:
-        """Get audio model specification by task."""
-        specs = {
+        """Get audio model specification by task."""        specs = {
             AudioTask.AUDIO_FINGERPRINTING: AudioModelSpec(
                 task=AudioTask.AUDIO_FINGERPRINTING,
                 model_name="chromaprint_fingerprinter",
@@ -415,8 +404,7 @@ class AudioAnalysisConfig(BaseSettings):
         return specs.get(task, self._get_default_audio_spec(task))
     
     def _get_default_audio_spec(self, task: AudioTask) -> AudioModelSpec:
-        """Get default audio model specification."""
-        return AudioModelSpec(
+        """Get default audio model specification."""        return AudioModelSpec(
             task=task,
             model_name="default_audio",
             model_path=self.AUDIO_EMBEDDING_MODEL,
@@ -427,8 +415,7 @@ class AudioAnalysisConfig(BaseSettings):
         )
     
     def get_audio_processing_config(self) -> Dict[str, Any]:
-        """Get audio processing configuration."""
-        return {
+        """Get audio processing configuration."""        return {
             "supported_formats": self.SUPPORTED_AUDIO_FORMATS,
             "max_size_mb": self.MAX_AUDIO_SIZE_MB,
             "max_duration": self.MAX_AUDIO_DURATION,
@@ -446,8 +433,7 @@ class AudioAnalysisConfig(BaseSettings):
         }
     
     def get_fingerprinting_config(self) -> Dict[str, Any]:
-        """Get audio fingerprinting configuration."""
-        return {
+        """Get audio fingerprinting configuration."""        return {
             "algorithms": {
                 "chromaprint": {
                     "model": self.CHROMAPRINT_MODEL,
@@ -472,8 +458,7 @@ class AudioAnalysisConfig(BaseSettings):
         }
     
     def get_music_analysis_config(self) -> Dict[str, Any]:
-        """Get music analysis configuration."""
-        return {
+        """Get music analysis configuration."""        return {
             "genre_detection": {
                 "model": self.GENRE_CLASSIFIER_MODEL,
                 "supported_genres": self.SUPPORTED_GENRES,
@@ -502,8 +487,7 @@ class AudioAnalysisConfig(BaseSettings):
         }
     
     def get_speech_analysis_config(self) -> Dict[str, Any]:
-        """Get speech analysis configuration."""
-        return {
+        """Get speech analysis configuration."""        return {
             "voice_detection": {
                 "model": self.VOICE_DETECTOR,
                 "min_duration": 0.1,
@@ -523,8 +507,7 @@ class AudioAnalysisConfig(BaseSettings):
         }
     
     def get_performance_config(self) -> Dict[str, Any]:
-        """Get audio processing performance configuration."""
-        return {
+        """Get audio processing performance configuration."""        return {
             "gpu_acceleration": self.GPU_ACCELERATION,
             "batch_processing": self.BATCH_PROCESSING,
             "batch_size": self.AUDIO_BATCH_SIZE,
@@ -536,17 +519,14 @@ class AudioAnalysisConfig(BaseSettings):
         }
     
     def get_supported_tasks(self) -> List[AudioTask]:
-        """Get list of all supported audio tasks."""
-        return [task for task in AudioTask]
+        """Get list of all supported audio tasks."""        return [task for task in AudioTask]
     
     def estimate_processing_time(self, task: AudioTask, audio_duration_seconds: float) -> float:
-        """Estimate processing time for audio task."""
-        spec = self.get_audio_model_spec(task)
+        """Estimate processing time for audio task."""        spec = self.get_audio_model_spec(task)
         return audio_duration_seconds * spec.processing_time_factor
     
     def get_optimal_sample_rate(self, task: AudioTask) -> int:
-        """Get optimal sample rate for specific audio task."""
-        # Speech tasks typically work better with 16kHz
+        """Get optimal sample rate for specific audio task."""        # Speech tasks typically work better with 16kHz
         if task in [AudioTask.SPEECH_RECOGNITION, AudioTask.VOICE_DETECTION]:
             return 16000
         

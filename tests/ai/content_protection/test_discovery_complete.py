@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-🧪 COMPLETE DISCOVERY MODULE TESTS - Industrial Grade Validation
+"""🧪 COMPLETE DISCOVERY MODULE TESTS - Industrial Grade Validation
 ==============================================================
 
 Team Specialties:
@@ -37,9 +33,7 @@ and will result in immediate legal action under German and International copyrig
 
 Comprehensive test suite for the complete discovery module, validating all components
 and their interactions with industrial-grade rigor.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -76,12 +70,10 @@ from core.discovery.performance_tracker import (
 )
 
 class TestDiscoveryModuleComplete:
-    """Comprehensive test suite for the complete discovery module"""
-    
+    """Comprehensive test suite for the complete discovery module"""    
     @pytest.fixture
     async def discovery_manager(self):
-        """Create discovery manager instance for testing"""
-        config = {
+        """Create discovery manager instance for testing"""        config = {
             'database_url': 'sqlite:///:memory:',
             'elasticsearch_url': 'http://localhost:9200',
             'redis_url': 'redis://localhost:6379',
@@ -97,8 +89,7 @@ class TestDiscoveryModuleComplete:
 
     @pytest.fixture
     async def mock_content_data(self):
-        """Mock content data for testing"""
-        return {
+        """Mock content data for testing"""        return {
             'content_id': str(uuid.uuid4()),
             'title': 'Test AI Music Track',
             'description': 'An innovative AI-generated music track with emotional depth',
@@ -119,8 +110,7 @@ class TestDiscoveryModuleComplete:
 
     @pytest.mark.asyncio
     async def test_discovery_manager_initialization(self, discovery_manager):
-        """Test discovery manager initialization"""
-        assert discovery_manager is not None
+        """Test discovery manager initialization"""        assert discovery_manager is not None
         assert discovery_manager.content_explorer is not None
         assert discovery_manager.creator_finder is not None
         assert discovery_manager.opportunity_scanner is not None
@@ -131,8 +121,7 @@ class TestDiscoveryModuleComplete:
 
     @pytest.mark.asyncio
     async def test_content_exploration_complete(self, discovery_manager, mock_content_data):
-        """Test complete content exploration functionality"""
-        # Test content indexing
+        """Test complete content exploration functionality"""        # Test content indexing
         indexing_success = await discovery_manager.content_explorer.index_content(mock_content_data)
         assert indexing_success is True
         
@@ -155,8 +144,7 @@ class TestDiscoveryModuleComplete:
 
     @pytest.mark.asyncio
     async def test_creator_matching_algorithms(self, discovery_manager):
-        """Test creator matching and collaboration algorithms"""
-        # Mock creator profiles
+        """Test creator matching and collaboration algorithms"""        # Mock creator profiles
         creator_profile_1 = {
             'creator_id': 'creator_1',
             'name': 'AI Music Producer',
@@ -199,8 +187,7 @@ class TestDiscoveryModuleComplete:
 
     @pytest.mark.asyncio
     async def test_opportunity_detection_engine(self, discovery_manager):
-        """Test business opportunity detection"""
-        opportunity_filter = OpportunityFilter(
+        """Test business opportunity detection"""        opportunity_filter = OpportunityFilter(
             market_segments=[MarketSegment.AI_CREATORS, MarketSegment.MUSIC_PRODUCERS],
             min_revenue_potential=1000,
             max_investment_required=5000,
@@ -222,8 +209,7 @@ class TestDiscoveryModuleComplete:
 
     @pytest.mark.asyncio
     async def test_trend_analysis_prediction(self, discovery_manager):
-        """Test trend analysis and prediction capabilities"""
-        # Test trend detection
+        """Test trend analysis and prediction capabilities"""        # Test trend detection
         trends = await discovery_manager.analyze_trends(
             category=TrendCategory.AI_MUSIC,
             time_window=timedelta(days=7)
@@ -245,8 +231,7 @@ class TestDiscoveryModuleComplete:
 
     @pytest.mark.asyncio
     async def test_recommendation_engine_personalization(self, discovery_manager):
-        """Test personalized recommendation generation"""
-        # Mock user preferences
+        """Test personalized recommendation generation"""        # Mock user preferences
         user_context = {
             'user_id': 'user_123',
             'preferences': {
@@ -281,8 +266,7 @@ class TestDiscoveryModuleComplete:
 
     @pytest.mark.asyncio
     async def test_semantic_search_multimodal(self, discovery_manager):
-        """Test multi-modal semantic search capabilities"""
-        # Test text-based semantic search
+        """Test multi-modal semantic search capabilities"""        # Test text-based semantic search
         text_query = SemanticQuery(
             query_text="innovative AI music with emotional depth",
             target_modalities=[SearchModalityType.TEXT, SearchModalityType.AUDIO],
@@ -310,8 +294,7 @@ class TestDiscoveryModuleComplete:
 
     @pytest.mark.asyncio
     async def test_performance_tracking_comprehensive(self, discovery_manager):
-        """Test comprehensive performance tracking"""
-        # Mock search performance data
+        """Test comprehensive performance tracking"""        # Mock search performance data
         search_performance = SearchPerformance(
             query_id=str(uuid.uuid4()),
             user_id='user_123',
@@ -348,8 +331,7 @@ class TestDiscoveryModuleComplete:
 
     @pytest.mark.asyncio
     async def test_discovery_session_management(self, discovery_manager):
-        """Test discovery session lifecycle management"""
-        # Create discovery session
+        """Test discovery session lifecycle management"""        # Create discovery session
         session_id = await discovery_manager.create_session(
             user_id='user_123',
             session_config={'strategy': SearchStrategy.HYBRID}
@@ -380,8 +362,7 @@ class TestDiscoveryModuleComplete:
 
     @pytest.mark.asyncio
     async def test_discovery_optimization(self, discovery_manager):
-        """Test discovery performance optimization"""
-        # Create session for optimization testing
+        """Test discovery performance optimization"""        # Create session for optimization testing
         session_id = await discovery_manager.create_session(
             user_id='user_123',
             session_config={'strategy': SearchStrategy.PERFORMANCE_OPTIMIZED}
@@ -397,8 +378,7 @@ class TestDiscoveryModuleComplete:
 
     @pytest.mark.asyncio
     async def test_integration_end_to_end(self, discovery_manager, mock_content_data):
-        """Test complete end-to-end discovery integration"""
-        # Step 1: Index content
+        """Test complete end-to-end discovery integration"""        # Step 1: Index content
         await discovery_manager.content_explorer.index_content(mock_content_data)
         
         # Step 2: Create discovery session
@@ -437,8 +417,7 @@ class TestDiscoveryModuleComplete:
 
     @pytest.mark.asyncio
     async def test_error_handling_resilience(self, discovery_manager):
-        """Test error handling and system resilience"""
-        # Test invalid session ID
+        """Test error handling and system resilience"""        # Test invalid session ID
         invalid_analytics = await discovery_manager.get_session_analytics('invalid_session')
         assert invalid_analytics == {}
         
@@ -465,8 +444,7 @@ class TestDiscoveryModuleComplete:
 
     @pytest.mark.asyncio
     async def test_concurrent_discovery_sessions(self, discovery_manager):
-        """Test handling of concurrent discovery sessions"""
-        # Create multiple sessions concurrently
+        """Test handling of concurrent discovery sessions"""        # Create multiple sessions concurrently
         session_tasks = []
         for i in range(5):
             task = discovery_manager.create_session(
@@ -506,8 +484,7 @@ class TestDiscoveryModuleComplete:
 
     @pytest.mark.asyncio
     async def test_discovery_metrics_accuracy(self, discovery_manager):
-        """Test accuracy of discovery metrics tracking"""
-        initial_metrics = await discovery_manager.get_discovery_metrics()
+        """Test accuracy of discovery metrics tracking"""        initial_metrics = await discovery_manager.get_discovery_metrics()
         initial_session_count = initial_metrics.get('active_sessions', 0)
         
         # Create session and track metrics change
@@ -539,12 +516,10 @@ class TestDiscoveryModuleComplete:
 # Performance and load testing
 
 class TestDiscoveryPerformance:
-    """Performance testing for discovery module"""
-    
+    """Performance testing for discovery module"""    
     @pytest.mark.asyncio
     async def test_discovery_response_time(self, discovery_manager):
-        """Test discovery response time under normal load"""
-        start_time = datetime.now()
+        """Test discovery response time under normal load"""        start_time = datetime.now()
         
         session_id = await discovery_manager.create_session(
             user_id='perf_test_user',
@@ -568,8 +543,7 @@ class TestDiscoveryPerformance:
 
     @pytest.mark.asyncio
     async def test_memory_usage_stability(self, discovery_manager):
-        """Test memory usage stability under repeated operations"""
-        import psutil
+        """Test memory usage stability under repeated operations"""        import psutil
         import os
         
         process = psutil.Process(os.getpid())

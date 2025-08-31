@@ -14,8 +14,7 @@ Communication WebSocket et REST API pour coordination des microservices
 - REST API pour communication synchrone
 - Message queue pour communication asynchrone
 - Load balancing et failover automatique
-"""
-from .websocket_manager import WebSocketManager, ConnectionManager
+"""from .websocket_manager import WebSocketManager, ConnectionManager
 from .rest_client import RestClient, ServiceRegistry
 from .message_queue import MessageQueue, QueueManager
 from .load_balancer import LoadBalancer, HealthChecker

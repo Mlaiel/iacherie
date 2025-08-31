@@ -1,5 +1,4 @@
-"""
-Generation Configuration - Advanced configuration management system
+"""Generation Configuration - Advanced configuration management system
 
 Professional configuration system for content generation parameters,
 platform settings, and optimization preferences.
@@ -9,9 +8,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
-"""
-
-import os
+"""import os
 import json
 import yaml
 import logging
@@ -26,13 +23,11 @@ from .content_models import Platform, ContentType, QualityLevel, BrandVoice, Con
 
 
 class ConfigurationError(Exception):
-    """Configuration-related errors"""
-    pass
+    """Configuration-related errors"""    pass
 
 
 class ConfigSource(str, Enum):
-    """Configuration source types"""
-    ENVIRONMENT = "environment"
+    """Configuration source types"""    ENVIRONMENT = "environment"
     FILE = "file"
     DATABASE = "database"
     API = "api"
@@ -41,8 +36,7 @@ class ConfigSource(str, Enum):
 
 @dataclass
 class AIModelConfig:
-    """AI model configuration"""
-    provider: str = "openai"
+    """AI model configuration"""    provider: str = "openai"
     model_name: str = "gpt-4"
     api_key: Optional[str] = None
     api_endpoint: Optional[str] = None
@@ -64,8 +58,7 @@ class AIModelConfig:
 
 @dataclass
 class ContentGenerationConfig:
-    """Content generation configuration"""
-    default_quality_level: QualityLevel = QualityLevel.STANDARD
+    """Content generation configuration"""    default_quality_level: QualityLevel = QualityLevel.STANDARD
     default_brand_voice: BrandVoice = BrandVoice.PROFESSIONAL
     default_language: str = "en"
     default_format: ContentFormat = ContentFormat.TEXT
@@ -104,8 +97,7 @@ class ContentGenerationConfig:
 
 @dataclass
 class PlatformConfig:
-    """Platform-specific configuration"""
-    platform: Platform
+    """Platform-specific configuration"""    platform: Platform
     enabled: bool = True
     
     # API configuration
@@ -142,8 +134,7 @@ class PlatformConfig:
 
 @dataclass
 class SEOConfig:
-    """SEO optimization configuration"""
-    enable_keyword_optimization: bool = True
+    """SEO optimization configuration"""    enable_keyword_optimization: bool = True
     enable_meta_generation: bool = True
     enable_schema_markup: bool = True
     enable_readability_optimization: bool = True
@@ -171,8 +162,7 @@ class SEOConfig:
 
 @dataclass
 class QualityConfig:
-    """Quality control configuration"""
-    enable_grammar_check: bool = True
+    """Quality control configuration"""    enable_grammar_check: bool = True
     enable_spell_check: bool = True
     enable_readability_check: bool = True
     enable_plagiarism_check: bool = False
@@ -198,8 +188,7 @@ class QualityConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security and compliance configuration"""
-    enable_content_filtering: bool = True
+    """Security and compliance configuration"""    enable_content_filtering: bool = True
     enable_pii_detection: bool = True
     enable_compliance_check: bool = True
     
@@ -226,8 +215,7 @@ class SecurityConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance and monitoring configuration"""
-    enable_performance_tracking: bool = True
+    """Performance and monitoring configuration"""    enable_performance_tracking: bool = True
     enable_real_time_monitoring: bool = True
     enable_alerting: bool = True
     
@@ -252,8 +240,7 @@ class PerformanceConfig:
 
 
 class GenerationConfigManager:
-    """
-    Professional configuration management system for content generation
+    """    Professional configuration management system for content generation
     
     Features:
     - Multi-source configuration loading (env, files, database)
@@ -263,8 +250,7 @@ class GenerationConfigManager:
     - Configuration caching and optimization
     - Secure credential management
     - Configuration versioning and rollback
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None, environment: str = "production"):
         self.logger = logging.getLogger(__name__)
         self.environment = environment
@@ -282,12 +268,10 @@ class GenerationConfigManager:
         self.logger.info(f"GenerationConfigManager initialized for environment: {environment}")
     
     def _get_default_config_path(self) -> str:
-        """Get default configuration path"""
-        return os.path.join(os.path.dirname(__file__), "config")
+        """Get default configuration path"""        return os.path.join(os.path.dirname(__file__), "config")
     
     def _load_all_configurations(self) -> None:
-        """Load all configuration from various sources"""
-        try:
+        """Load all configuration from various sources"""        try:
             # Load from environment variables
             self._load_from_environment()
             
@@ -307,8 +291,7 @@ class GenerationConfigManager:
             raise ConfigurationError(f"Failed to load configurations: {str(e)}")
     
     def _load_from_environment(self) -> None:
-        """Load configuration from environment variables"""
-        # AI Model configuration
+        """Load configuration from environment variables"""        # AI Model configuration
         ai_config = {}
         if os.getenv("AI_PROVIDER"):
             ai_config["provider"] = os.getenv("AI_PROVIDER")
@@ -359,8 +342,7 @@ class GenerationConfigManager:
             self._config_sources["performance"] = ConfigSource.ENVIRONMENT
     
     def _load_from_files(self) -> None:
-        """Load configuration from files"""
-        config_dir = Path(self.config_path)
+        """Load configuration from files"""        config_dir = Path(self.config_path)
         
         if not config_dir.exists():
             self.logger.warning(f"Configuration directory not found: {config_dir}")
@@ -405,8 +387,7 @@ class GenerationConfigManager:
                 self.logger.error(f"Error loading {json_file}: {str(e)}")
     
     def _load_defaults(self) -> None:
-        """Load default configurations"""
-        defaults = {
+        """Load default configurations"""        defaults = {
             "ai_model": asdict(AIModelConfig()),
             "content_generation": asdict(ContentGenerationConfig()),
             "seo": asdict(SEOConfig()),
@@ -421,8 +402,7 @@ class GenerationConfigManager:
                 self._config_sources[config_name] = ConfigSource.DEFAULT
     
     def _validate_configurations(self) -> None:
-        """Validate loaded configurations"""
-        errors = []
+        """Validate loaded configurations"""        errors = []
         
         # Validate AI model configuration
         ai_config = self._configs.get("ai_model", {})
@@ -447,18 +427,15 @@ class GenerationConfigManager:
             raise ConfigurationError(f"Configuration validation failed: {', '.join(errors)}")
     
     def get_ai_model_config(self) -> AIModelConfig:
-        """Get AI model configuration"""
-        config_data = self._configs.get("ai_model", {})
+        """Get AI model configuration"""        config_data = self._configs.get("ai_model", {})
         return AIModelConfig(**config_data)
     
     def get_content_generation_config(self) -> ContentGenerationConfig:
-        """Get content generation configuration"""
-        config_data = self._configs.get("content_generation", {})
+        """Get content generation configuration"""        config_data = self._configs.get("content_generation", {})
         return ContentGenerationConfig(**config_data)
     
     def get_platform_config(self, platform: Platform) -> PlatformConfig:
-        """Get platform-specific configuration"""
-        platforms_config = self._configs.get("platforms", {})
+        """Get platform-specific configuration"""        platforms_config = self._configs.get("platforms", {})
         platform_data = platforms_config.get(platform.value, {})
         
         return PlatformConfig(
@@ -467,32 +444,26 @@ class GenerationConfigManager:
         )
     
     def get_seo_config(self) -> SEOConfig:
-        """Get SEO configuration"""
-        config_data = self._configs.get("seo", {})
+        """Get SEO configuration"""        config_data = self._configs.get("seo", {})
         return SEOConfig(**config_data)
     
     def get_quality_config(self) -> QualityConfig:
-        """Get quality configuration"""
-        config_data = self._configs.get("quality", {})
+        """Get quality configuration"""        config_data = self._configs.get("quality", {})
         return QualityConfig(**config_data)
     
     def get_security_config(self) -> SecurityConfig:
-        """Get security configuration"""
-        config_data = self._configs.get("security", {})
+        """Get security configuration"""        config_data = self._configs.get("security", {})
         return SecurityConfig(**config_data)
     
     def get_performance_config(self) -> PerformanceConfig:
-        """Get performance configuration"""
-        config_data = self._configs.get("performance", {})
+        """Get performance configuration"""        config_data = self._configs.get("performance", {})
         return PerformanceConfig(**config_data)
     
     def get_config(self, config_name: str, default: Any = None) -> Any:
-        """Get arbitrary configuration by name"""
-        return self._configs.get(config_name, default)
+        """Get arbitrary configuration by name"""        return self._configs.get(config_name, default)
     
     def update_config(self, config_name: str, config_data: Dict[str, Any]) -> None:
-        """Update configuration dynamically"""
-        if config_name in self._configs:
+        """Update configuration dynamically"""        if config_name in self._configs:
             self._configs[config_name].update(config_data)
         else:
             self._configs[config_name] = config_data
@@ -506,8 +477,7 @@ class GenerationConfigManager:
         self.logger.info(f"Updated configuration: {config_name}")
     
     def reload_config(self, config_name: Optional[str] = None) -> None:
-        """Reload configuration from sources"""
-        if config_name:
+        """Reload configuration from sources"""        if config_name:
             # Reload specific configuration
             if self._config_sources.get(config_name) == ConfigSource.FILE:
                 self._load_from_files()
@@ -520,15 +490,13 @@ class GenerationConfigManager:
         self.logger.info(f"Reloaded configuration: {config_name or 'all'}")
     
     def get_content_length_target(self, content_type: str) -> Dict[str, int]:
-        """Get content length targets for specific content type"""
-        content_config = self.get_content_generation_config()
+        """Get content length targets for specific content type"""        content_config = self.get_content_generation_config()
         return content_config.content_length_targets.get(content_type, {
             "min": 100, "max": 1000, "optimal": 500
         })
     
     def is_feature_enabled(self, feature_name: str) -> bool:
-        """Check if a feature is enabled"""
-        # Check in various configuration sections
+        """Check if a feature is enabled"""        # Check in various configuration sections
         for config_section in self._configs.values():
             if isinstance(config_section, dict):
                 if feature_name in config_section:
@@ -537,8 +505,7 @@ class GenerationConfigManager:
         return False
     
     def get_all_configurations(self) -> Dict[str, Any]:
-        """Get all loaded configurations"""
-        return {
+        """Get all loaded configurations"""        return {
             "configurations": self._configs.copy(),
             "sources": self._config_sources.copy(),
             "last_loaded": {k: v.isoformat() for k, v in self._last_loaded.items()},
@@ -546,8 +513,7 @@ class GenerationConfigManager:
         }
     
     def export_configuration(self, output_path: str, format: str = "yaml") -> None:
-        """Export current configuration to file"""
-        try:
+        """Export current configuration to file"""        try:
             output_file = Path(output_path)
             
             if format.lower() == "yaml":
@@ -574,8 +540,7 @@ def get_config_manager(
     config_path: Optional[str] = None,
     environment: Optional[str] = None
 ) -> GenerationConfigManager:
-    """Get global configuration manager instance"""
-    global _config_manager
+    """Get global configuration manager instance"""    global _config_manager
     
     if _config_manager is None:
         env = environment or os.getenv("ENVIRONMENT", "production")
@@ -585,8 +550,7 @@ def get_config_manager(
 
 
 def init_config(config_path: Optional[str] = None, environment: str = "production") -> None:
-    """Initialize global configuration manager"""
-    global _config_manager
+    """Initialize global configuration manager"""    global _config_manager
     _config_manager = GenerationConfigManager(config_path, environment)
 
 
@@ -595,16 +559,14 @@ GenerationConfig = AIModelConfig
 
 
 class ModelProvider:
-    """Model provider enumeration"""
-    OPENAI = "openai"
+    """Model provider enumeration"""    OPENAI = "openai"
     ANTHROPIC = "anthropic"
     COHERE = "cohere"
     HUGGINGFACE = "huggingface"
     
     @classmethod
     def from_model_name(cls, model_name: str) -> str:
-        """Get provider from model name"""
-        if "gpt" in model_name.lower():
+        """Get provider from model name"""        if "gpt" in model_name.lower():
             return cls.OPENAI
         elif "claude" in model_name.lower():
             return cls.ANTHROPIC
@@ -615,8 +577,7 @@ class ModelProvider:
 
 
 class EnvironmentConfig:
-    """Environment configuration settings"""
-    
+    """Environment configuration settings"""    
     def __init__(self, env: str = "production"):
         self.environment = env
         self.debug = env == "development"
@@ -625,58 +586,45 @@ class EnvironmentConfig:
 
 
 class ConfigValidator:
-    """Configuration validation utilities"""
-    
+    """Configuration validation utilities"""    
     @staticmethod
     def validate_temperature(temperature: float) -> bool:
-        """Validate temperature parameter"""
-        return 0.0 <= temperature <= 2.0
+        """Validate temperature parameter"""        return 0.0 <= temperature <= 2.0
     
     @staticmethod
     def validate_token_limits(max_tokens: int) -> bool:
-        """Validate token limits"""
-        return 1 <= max_tokens <= 8192
+        """Validate token limits"""        return 1 <= max_tokens <= 8192
     
     @staticmethod
     def validate_model_compatibility(model: str, provider: str) -> bool:
-        """Validate model compatibility"""
-        return True  # Simplified validation
+        """Validate model compatibility"""        return True  # Simplified validation
 
 
 class ConfigLoader:
-    """Configuration loader utilities"""
-    
+    """Configuration loader utilities"""    
     @staticmethod
     def load_from_file(file_path: str) -> Dict[str, Any]:
-        """Load configuration from file"""
-        return {}
+        """Load configuration from file"""        return {}
     
     @staticmethod
     def load_from_yaml(yaml_path: str) -> Dict[str, Any]:
-        """Load configuration from YAML"""
-        return {}
+        """Load configuration from YAML"""        return {}
     
     @staticmethod
     def load_with_environment_override(config: Dict[str, Any]) -> Dict[str, Any]:
-        """Load with environment overrides"""
-        return config
+        """Load with environment overrides"""        return config
 
 
 class ConfigManager:
-    """Configuration manager utilities"""
-    
+    """Configuration manager utilities"""    
     def register_config(self, name: str, config: Any) -> None:
-        """Register a configuration"""
-        pass
+        """Register a configuration"""        pass
     
     def get_config_version(self, name: str) -> str:
-        """Get configuration version"""
-        return "1.0.0"
+        """Get configuration version"""        return "1.0.0"
     
     def get_config_templates(self) -> List[str]:
-        """Get available configuration templates"""
-        return []
+        """Get available configuration templates"""        return []
     
     def cache_config(self, name: str, config: Any) -> None:
-        """Cache configuration"""
-        pass
+        """Cache configuration"""        pass

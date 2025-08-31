@@ -1,5 +1,4 @@
-"""
-Notification Module Index - Central Entry Point for Business Notifications
+"""Notification Module Index - Central Entry Point for Business Notifications
 
 Main entry point for the IA Influencer Agent business notification system.
 Provides centralized access to all notification components, services, and utilities
@@ -28,9 +27,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written
 permission from the author is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing and usage rights.
-"""
-
-from typing import Dict, List, Optional, Any, Union, Type
+"""from typing import Dict, List, Optional, Any, Union, Type
 import logging
 import asyncio
 from datetime import datetime, timezone
@@ -59,13 +56,11 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationModuleError(Exception):
-    """Exception for notification module errors."""
-    pass
+    """Exception for notification module errors."""    pass
 
 
 class ServiceRegistry:
-    """Service registry for component discovery and lifecycle management."""
-    
+    """Service registry for component discovery and lifecycle management."""    
     def __init__(self):
         self._services: Dict[str, Any] = {}
         self._service_configs: Dict[str, Dict[str, Any]] = {}
@@ -73,8 +68,7 @@ class ServiceRegistry:
         self._initialized_services: List[str] = []
     
     def register_service(self, name: str, service: Any, config: Optional[Dict[str, Any]] = None):
-        """Register a service component."""
-        self._services[name] = service
+        """Register a service component."""        self._services[name] = service
         self._service_configs[name] = config or {}
         self._service_health[name] = {
             "status": "registered",
@@ -85,20 +79,16 @@ class ServiceRegistry:
         logger.info(f"Registered service: {name}")
     
     def get_service(self, name: str) -> Optional[Any]:
-        """Get a registered service."""
-        return self._services.get(name)
+        """Get a registered service."""        return self._services.get(name)
     
     def list_services(self) -> List[str]:
-        """List all registered services."""
-        return list(self._services.keys())
+        """List all registered services."""        return list(self._services.keys())
     
     def get_service_health(self, name: str) -> Optional[Dict[str, Any]]:
-        """Get service health information."""
-        return self._service_health.get(name)
+        """Get service health information."""        return self._service_health.get(name)
     
     def update_service_health(self, name: str, status: str, error: Optional[str] = None):
-        """Update service health status."""
-        if name in self._service_health:
+        """Update service health status."""        if name in self._service_health:
             self._service_health[name].update({
                 "status": status,
                 "last_health_check": datetime.now(timezone.utc),
@@ -108,8 +98,7 @@ class ServiceRegistry:
 
 
 class ConfigurationManager:
-    """Configuration management for notification module."""
-    
+    """Configuration management for notification module."""    
     def __init__(self, config_path: Optional[Path] = None):
         self.config_path = config_path or Path(__file__).parent / "config"
         self._config_cache: Dict[str, Any] = {}
@@ -117,8 +106,7 @@ class ConfigurationManager:
         self._load_configurations()
     
     def _load_configurations(self):
-        """Load configuration files."""
-        try:
+        """Load configuration files."""        try:
             # Load base configuration
             base_config_file = self.config_path / "base.json"
             if base_config_file.exists():
@@ -143,8 +131,7 @@ class ConfigurationManager:
             logger.error(f"Failed to load configurations: {e}")
     
     def get_config(self, key: str, default: Any = None) -> Any:
-        """Get configuration value with fallback hierarchy."""
-        # Check environment config first
+        """Get configuration value with fallback hierarchy."""        # Check environment config first
         if "environment" in self._config_cache:
             env_value = self._config_cache["environment"].get(key)
             if env_value is not None:
@@ -171,8 +158,7 @@ class ConfigurationManager:
         return default
     
     def get_notification_config(self) -> NotificationConfig:
-        """Get notification configuration object."""
-        try:
+        """Get notification configuration object."""        try:
             config_data = {
                 "redis_url": self.get_config("redis.url", "redis://localhost:6379/0"),
                 "database_url": self.get_config("database.url", "postgresql://localhost/notification"),
@@ -201,8 +187,7 @@ class ConfigurationManager:
 
 
 class HealthMonitor:
-    """Health monitoring for notification system."""
-    
+    """Health monitoring for notification system."""    
     def __init__(self, service_registry: ServiceRegistry):
         self.service_registry = service_registry
         self._health_checks: Dict[str, callable] = {}
@@ -211,13 +196,11 @@ class HealthMonitor:
         self._background_task: Optional[asyncio.Task] = None
     
     def register_health_check(self, service_name: str, health_check_func: callable):
-        """Register health check function for a service."""
-        self._health_checks[service_name] = health_check_func
+        """Register health check function for a service."""        self._health_checks[service_name] = health_check_func
         logger.info(f"Registered health check for service: {service_name}")
     
     async def check_service_health(self, service_name: str) -> Dict[str, Any]:
-        """Check health of a specific service."""
-        try:
+        """Check health of a specific service."""        try:
             if service_name not in self._health_checks:
                 return {
                     "service": service_name,
@@ -252,8 +235,7 @@ class HealthMonitor:
             }
     
     async def check_all_services_health(self) -> Dict[str, Any]:
-        """Check health of all registered services."""
-        try:
+        """Check health of all registered services."""        try:
             health_results = {}
             
             for service_name in self.service_registry.list_services():
@@ -281,8 +263,7 @@ class HealthMonitor:
             }
     
     async def start_monitoring(self):
-        """Start background health monitoring."""
-        if self._monitoring_active:
+        """Start background health monitoring."""        if self._monitoring_active:
             return
         
         self._monitoring_active = True
@@ -290,8 +271,7 @@ class HealthMonitor:
         logger.info("Started health monitoring")
     
     async def stop_monitoring(self):
-        """Stop background health monitoring."""
-        self._monitoring_active = False
+        """Stop background health monitoring."""        self._monitoring_active = False
         
         if self._background_task:
             self._background_task.cancel()
@@ -303,8 +283,7 @@ class HealthMonitor:
         logger.info("Stopped health monitoring")
     
     async def _monitoring_loop(self):
-        """Background monitoring loop."""
-        while self._monitoring_active:
+        """Background monitoring loop."""        while self._monitoring_active:
             try:
                 health_status = await self.check_all_services_health()
                 
@@ -323,8 +302,7 @@ class HealthMonitor:
 
 
 class MetricsCollector:
-    """Performance metrics collection and reporting."""
-    
+    """Performance metrics collection and reporting."""    
     def __init__(self):
         self._metrics: Dict[str, Any] = {}
         self._counters: Dict[str, int] = {}
@@ -332,33 +310,28 @@ class MetricsCollector:
         self._histograms: Dict[str, List[float]] = {}
     
     def increment_counter(self, name: str, value: int = 1, labels: Optional[Dict[str, str]] = None):
-        """Increment a counter metric."""
-        key = self._create_metric_key(name, labels)
+        """Increment a counter metric."""        key = self._create_metric_key(name, labels)
         self._counters[key] = self._counters.get(key, 0) + value
     
     def set_gauge(self, name: str, value: float, labels: Optional[Dict[str, str]] = None):
-        """Set a gauge metric."""
-        key = self._create_metric_key(name, labels)
+        """Set a gauge metric."""        key = self._create_metric_key(name, labels)
         self._gauges[key] = value
     
     def record_histogram(self, name: str, value: float, labels: Optional[Dict[str, str]] = None):
-        """Record a histogram value."""
-        key = self._create_metric_key(name, labels)
+        """Record a histogram value."""        key = self._create_metric_key(name, labels)
         if key not in self._histograms:
             self._histograms[key] = []
         self._histograms[key].append(value)
     
     def _create_metric_key(self, name: str, labels: Optional[Dict[str, str]]) -> str:
-        """Create metric key with labels."""
-        if not labels:
+        """Create metric key with labels."""        if not labels:
             return name
         
         label_str = ",".join(f"{k}={v}" for k, v in sorted(labels.items()))
         return f"{name}{{{label_str}}}"
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Get all collected metrics."""
-        return {
+        """Get all collected metrics."""        return {
             "counters": self._counters.copy(),
             "gauges": self._gauges.copy(),
             "histograms": {
@@ -375,23 +348,19 @@ class MetricsCollector:
         }
     
     def reset_metrics(self):
-        """Reset all metrics."""
-        self._counters.clear()
+        """Reset all metrics."""        self._counters.clear()
         self._gauges.clear()
         self._histograms.clear()
 
 
 class NotificationModule:
-    """
-    Main notification module class providing centralized access and management.
+    """    Main notification module class providing centralized access and management.
     
     Handles initialization, configuration, service discovery, health monitoring,
     and graceful shutdown of all notification system components.
-    """
-    
+    """    
     def __init__(self, config_path: Optional[Path] = None):
-        """Initialize notification module."""
-        self.config_path = config_path
+        """Initialize notification module."""        self.config_path = config_path
         self._initialized = False
         self._shutdown = False
         
@@ -409,8 +378,7 @@ class NotificationModule:
         logger.info("Notification module created")
     
     async def initialize(self) -> bool:
-        """Initialize the notification module and all components."""
-        if self._initialized:
+        """Initialize the notification module and all components."""        if self._initialized:
             return True
         
         try:
@@ -450,8 +418,7 @@ class NotificationModule:
             return False
     
     async def _initialize_core_services(self, config: NotificationConfig):
-        """Initialize core notification services."""
-        try:
+        """Initialize core notification services."""        try:
             # Initialize channel manager
             channel_manager = ChannelManager(config)
             await channel_manager.initialize()
@@ -488,8 +455,7 @@ class NotificationModule:
             raise
     
     async def _initialize_processors(self, config: NotificationConfig):
-        """Initialize business notification processors."""
-        try:
+        """Initialize business notification processors."""        try:
             # Import and initialize processors
             from .processors import (
                 ContentProtectionProcessor,
@@ -518,8 +484,7 @@ class NotificationModule:
             raise
     
     async def _initialize_advanced_features(self, config: NotificationConfig):
-        """Initialize advanced notification features."""
-        try:
+        """Initialize advanced notification features."""        try:
             # Initialize notification service
             processors = {
                 name.replace("processor_", ""): service 
@@ -558,8 +523,7 @@ class NotificationModule:
             raise
     
     async def _register_health_checks(self):
-        """Register health checks for all services."""
-        try:
+        """Register health checks for all services."""        try:
             # Register health checks for each service
             for service_name in self.service_registry.list_services():
                 service = self.service_registry.get_service(service_name)
@@ -580,8 +544,7 @@ class NotificationModule:
             logger.error(f"Failed to register health checks: {e}")
     
     def _initialize_metrics(self):
-        """Initialize metrics collection."""
-        try:
+        """Initialize metrics collection."""        try:
             # Set initial metrics
             self.metrics_collector.set_gauge("module.services.total", len(self.service_registry.list_services()))
             self.metrics_collector.set_gauge("module.initialized", 1.0)
@@ -595,26 +558,22 @@ class NotificationModule:
     # Public API methods
     
     def get_notification_manager(self) -> Optional[NotificationManager]:
-        """Get the notification manager instance."""
-        if not self._initialized:
+        """Get the notification manager instance."""        if not self._initialized:
             raise NotificationModuleError("Module not initialized. Call initialize() first.")
         return self.notification_manager
     
     def get_notification_service(self) -> Optional[NotificationService]:
-        """Get the notification service instance."""
-        if not self._initialized:
+        """Get the notification service instance."""        if not self._initialized:
             raise NotificationModuleError("Module not initialized. Call initialize() first.")
         return self.notification_service
     
     def get_service(self, service_name: str) -> Optional[Any]:
-        """Get a specific service by name."""
-        if not self._initialized:
+        """Get a specific service by name."""        if not self._initialized:
             raise NotificationModuleError("Module not initialized. Call initialize() first.")
         return self.service_registry.get_service(service_name)
     
     async def get_health_status(self) -> Dict[str, Any]:
-        """Get system health status."""
-        if not self._initialized:
+        """Get system health status."""        if not self._initialized:
             return {
                 "overall_status": "not_initialized",
                 "error": "Module not initialized"
@@ -623,24 +582,20 @@ class NotificationModule:
         return await self.health_monitor.check_all_services_health()
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Get performance metrics."""
-        return self.metrics_collector.get_metrics()
+        """Get performance metrics."""        return self.metrics_collector.get_metrics()
     
     def is_initialized(self) -> bool:
-        """Check if module is initialized."""
-        return self._initialized
+        """Check if module is initialized."""        return self._initialized
     
     def is_healthy(self) -> bool:
-        """Check if module is healthy."""
-        if not self._initialized:
+        """Check if module is healthy."""        if not self._initialized:
             return False
         
         # Basic health check - could be enhanced
         return len(self.service_registry.list_services()) > 0
     
     async def shutdown(self):
-        """Gracefully shutdown the notification module."""
-        if self._shutdown:
+        """Gracefully shutdown the notification module."""        if self._shutdown:
             return
         
         try:
@@ -692,8 +647,7 @@ _notification_module: Optional[NotificationModule] = None
 
 # Module-level convenience functions
 async def initialize_notification_module(config_path: Optional[Path] = None) -> NotificationModule:
-    """Initialize global notification module instance."""
-    global _notification_module
+    """Initialize global notification module instance."""    global _notification_module
     
     if _notification_module is None:
         _notification_module = NotificationModule(config_path)
@@ -707,27 +661,23 @@ async def initialize_notification_module(config_path: Optional[Path] = None) -> 
 
 
 def get_notification_module() -> Optional[NotificationModule]:
-    """Get global notification module instance."""
-    return _notification_module
+    """Get global notification module instance."""    return _notification_module
 
 
 async def get_notification_manager() -> Optional[NotificationManager]:
-    """Get notification manager from global module."""
-    if _notification_module and _notification_module.is_initialized():
+    """Get notification manager from global module."""    if _notification_module and _notification_module.is_initialized():
         return _notification_module.get_notification_manager()
     return None
 
 
 async def get_notification_service() -> Optional[NotificationService]:
-    """Get notification service from global module."""
-    if _notification_module and _notification_module.is_initialized():
+    """Get notification service from global module."""    if _notification_module and _notification_module.is_initialized():
         return _notification_module.get_notification_service()
     return None
 
 
 async def shutdown_notification_module():
-    """Shutdown global notification module."""
-    global _notification_module
+    """Shutdown global notification module."""    global _notification_module
     
     if _notification_module:
         await _notification_module.shutdown()
@@ -737,8 +687,7 @@ async def shutdown_notification_module():
 # Context manager for notification module lifecycle
 @asynccontextmanager
 async def notification_module_context(config_path: Optional[Path] = None):
-    """Context manager for notification module lifecycle."""
-    module = None
+    """Context manager for notification module lifecycle."""    module = None
     try:
         module = await initialize_notification_module(config_path)
         yield module

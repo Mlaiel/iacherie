@@ -1,5 +1,4 @@
-"""
-Engagement Tracking System - Real-time engagement monitoring and analysis
+"""Engagement Tracking System - Real-time engagement monitoring and analysis
 ========================================================================
 
 Advanced engagement tracking system with real-time monitoring, behavioral analysis,
@@ -7,9 +6,7 @@ and engagement optimization for content creators.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
@@ -24,8 +21,7 @@ from fastapi import HTTPException
 logger = logging.getLogger(__name__)
 
 class EngagementType(Enum):
-    """Types of engagement interactions"""
-    LIKE = "like"
+    """Types of engagement interactions"""    LIKE = "like"
     COMMENT = "comment"
     SHARE = "share"
     SAVE = "save"
@@ -36,8 +32,7 @@ class EngagementType(Enum):
 
 @dataclass
 class EngagementEvent:
-    """Individual engagement event"""
-    event_id: str
+    """Individual engagement event"""    event_id: str
     creator_id: str
     content_id: str
     user_id: str
@@ -47,18 +42,15 @@ class EngagementEvent:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class EngagementTrackingSystem:
-    """
-    Real-time engagement tracking system with comprehensive analytics
+    """    Real-time engagement tracking system with comprehensive analytics
     and behavioral pattern analysis for content creators.
-    """
-    
+    """    
     def __init__(self, redis_client: redis.Redis, db_pool: asyncpg.Pool):
         self.redis = redis_client
         self.db_pool = db_pool
         
     async def initialize(self) -> None:
-        """Initialize engagement tracking system"""
-        try:
+        """Initialize engagement tracking system"""        try:
             await self._setup_database_tables()
             logger.info("Engagement Tracking System initialized successfully")
         except Exception as e:
@@ -66,10 +58,8 @@ class EngagementTrackingSystem:
             raise
 
     async def _setup_database_tables(self) -> None:
-        """Setup database tables for engagement tracking"""
-        async with self.db_pool.acquire() as conn:
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS engagement_events (
+        """Setup database tables for engagement tracking"""        async with self.db_pool.acquire() as conn:
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS engagement_events (
                     id SERIAL PRIMARY KEY,
                     event_id VARCHAR(255) UNIQUE NOT NULL,
                     creator_id VARCHAR(255) NOT NULL,
@@ -87,8 +77,7 @@ class EngagementTrackingSystem:
             """)
 
     async def track_engagement(self, event: EngagementEvent) -> None:
-        """Track a real-time engagement event"""
-        try:
+        """Track a real-time engagement event"""        try:
             # Store in database
             await self._store_engagement_event(event)
             
@@ -102,11 +91,9 @@ class EngagementTrackingSystem:
             logger.error(f"Failed to track engagement: {e}")
 
     async def _store_engagement_event(self, event: EngagementEvent) -> None:
-        """Store engagement event in database"""
-        try:
+        """Store engagement event in database"""        try:
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""
-                    INSERT INTO engagement_events 
+                await conn.execute("""                    INSERT INTO engagement_events 
                     (event_id, creator_id, content_id, user_id, engagement_type, platform, timestamp, metadata)
                     VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
                     ON CONFLICT (event_id) DO NOTHING
@@ -124,8 +111,7 @@ class EngagementTrackingSystem:
             logger.error(f"Failed to store engagement event: {e}")
 
     async def _update_engagement_cache(self, event: EngagementEvent) -> None:
-        """Update Redis cache with engagement data"""
-        try:
+        """Update Redis cache with engagement data"""        try:
             # Update content engagement count
             content_key = f"engagement:{event.content_id}:{event.engagement_type.value}"
             await self.redis.incr(content_key)
@@ -140,8 +126,7 @@ class EngagementTrackingSystem:
             logger.error(f"Failed to update engagement cache: {e}")
 
     async def _update_real_time_metrics(self, event: EngagementEvent) -> None:
-        """Update real-time engagement metrics"""
-        try:
+        """Update real-time engagement metrics"""        try:
             # This would trigger real-time dashboard updates
             # Implementation depends on specific real-time system (WebSocket, etc.)
             pass
@@ -149,8 +134,7 @@ class EngagementTrackingSystem:
             logger.error(f"Failed to update real-time metrics: {e}")
 
     async def get_engagement_analytics(self, creator_id: str, timeframe: str = "7d") -> Dict[str, Any]:
-        """Get comprehensive engagement analytics"""
-        try:
+        """Get comprehensive engagement analytics"""        try:
             timeframe_mapping = {
                 '1d': timedelta(days=1),
                 '7d': timedelta(days=7),
@@ -162,16 +146,14 @@ class EngagementTrackingSystem:
             
             async with self.db_pool.acquire() as conn:
                 # Get engagement counts by type
-                engagement_counts = await conn.fetch("""
-                    SELECT engagement_type, COUNT(*) as count
+                engagement_counts = await conn.fetch("""                    SELECT engagement_type, COUNT(*) as count
                     FROM engagement_events 
                     WHERE creator_id = $1 AND timestamp >= $2
                     GROUP BY engagement_type
                 """, creator_id, start_date)
                 
                 # Get top performing content
-                top_content = await conn.fetch("""
-                    SELECT content_id, COUNT(*) as total_engagement
+                top_content = await conn.fetch("""                    SELECT content_id, COUNT(*) as total_engagement
                     FROM engagement_events 
                     WHERE creator_id = $1 AND timestamp >= $2
                     GROUP BY content_id
@@ -180,8 +162,7 @@ class EngagementTrackingSystem:
                 """, creator_id, start_date)
                 
                 # Get engagement timeline
-                timeline = await conn.fetch("""
-                    SELECT DATE(timestamp) as date, engagement_type, COUNT(*) as count
+                timeline = await conn.fetch("""                    SELECT DATE(timestamp) as date, engagement_type, COUNT(*) as count
                     FROM engagement_events 
                     WHERE creator_id = $1 AND timestamp >= $2
                     GROUP BY DATE(timestamp), engagement_type

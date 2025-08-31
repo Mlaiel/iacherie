@@ -16,8 +16,7 @@ Contact: mlaiel@live.de for authorized licensing only.
 Business Logic Integration:
 User (musician/blogger/photographer/influencer/comedian) → Multi-format Upload → 
 AI Rights Protection → Professional SEO → Collaboration Matching → Multi-platform Distribution
-"""
-import logging
+"""import logging
 import warnings
 from typing import Dict, List, Optional, Union, Any
 from pathlib import Path

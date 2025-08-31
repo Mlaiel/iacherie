@@ -1,5 +1,4 @@
-"""
-Analytics business service for IA Influencer Agent platform.
+"""Analytics business service for IA Influencer Agent platform.
 
 This service handles comprehensive analytics for content performance, user engagement,
 protection effectiveness, and revenue tracking across all platforms.
@@ -12,9 +11,7 @@ WARNING: This code is proprietary intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, modification, or distribution is strictly
 prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import logging
+"""import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass
@@ -38,8 +35,7 @@ from ..integrations.platform_apis import PlatformAPIManager
 logger = logging.getLogger(__name__)
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframe options."""
-    HOUR = "hour"
+    """Analytics timeframe options."""    HOUR = "hour"
     DAY = "day"
     WEEK = "week"
     MONTH = "month"
@@ -47,8 +43,7 @@ class AnalyticsTimeframe(Enum):
     YEAR = "year"
 
 class AnalyticsMetricType(Enum):
-    """Types of analytics metrics."""
-    ENGAGEMENT = "engagement"
+    """Types of analytics metrics."""    ENGAGEMENT = "engagement"
     PERFORMANCE = "performance"
     REVENUE = "revenue"
     PROTECTION = "protection"
@@ -57,8 +52,7 @@ class AnalyticsMetricType(Enum):
 
 @dataclass
 class AnalyticsInsight:
-    """Analytics insight data structure."""
-    metric: str
+    """Analytics insight data structure."""    metric: str
     value: float
     trend: str  # "up", "down", "stable"
     change_percentage: float
@@ -67,8 +61,7 @@ class AnalyticsInsight:
 
 @dataclass
 class ContentPerformanceMetrics:
-    """Content performance analytics data."""
-    content_id: str
+    """Content performance analytics data."""    content_id: str
     views: int
     likes: int
     shares: int
@@ -81,13 +74,11 @@ class ContentPerformanceMetrics:
     revenue_generated: float
 
 class AnalyticsService:
-    """
-    Comprehensive analytics service for content creators and platform monitoring.
+    """    Comprehensive analytics service for content creators and platform monitoring.
     
     Provides deep insights into content performance, user behavior, revenue tracking,
     and protection effectiveness across all supported platforms.
-    """
-    
+    """    
     def __init__(self):
         self.chart_generator = ChartGenerator()
         self.platform_apis = PlatformAPIManager()
@@ -101,8 +92,7 @@ class AnalyticsService:
         timeframe: AnalyticsTimeframe = AnalyticsTimeframe.MONTH,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive content analytics for user's content.
+        """        Get comprehensive content analytics for user's content.
         
         Args:
             user_id: User identifier
@@ -112,8 +102,7 @@ class AnalyticsService:
             
         Returns:
             Comprehensive content analytics data
-        """
-        if db is None:
+        """        if db is None:
             db = next(get_db())
         
         try:
@@ -148,8 +137,7 @@ class AnalyticsService:
         timeframe: AnalyticsTimeframe = AnalyticsTimeframe.MONTH,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Get platform-specific analytics and cross-platform comparison.
+        """        Get platform-specific analytics and cross-platform comparison.
         
         Args:
             user_id: User identifier
@@ -159,8 +147,7 @@ class AnalyticsService:
             
         Returns:
             Platform analytics data
-        """
-        if db is None:
+        """        if db is None:
             db = next(get_db())
         
         try:
@@ -214,8 +201,7 @@ class AnalyticsService:
         currency: str = "EUR",
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive revenue analytics and financial insights.
+        """        Get comprehensive revenue analytics and financial insights.
         
         Args:
             user_id: User identifier
@@ -225,8 +211,7 @@ class AnalyticsService:
             
         Returns:
             Revenue analytics data
-        """
-        if db is None:
+        """        if db is None:
             db = next(get_db())
         
         try:
@@ -256,8 +241,7 @@ class AnalyticsService:
         timeframe: AnalyticsTimeframe = AnalyticsTimeframe.MONTH,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive audience analytics and demographic insights.
+        """        Get comprehensive audience analytics and demographic insights.
         
         Args:
             user_id: User identifier
@@ -266,8 +250,7 @@ class AnalyticsService:
             
         Returns:
             Audience analytics data
-        """
-        if db is None:
+        """        if db is None:
             db = next(get_db())
         
         try:
@@ -293,8 +276,7 @@ class AnalyticsService:
         timeframe: AnalyticsTimeframe = AnalyticsTimeframe.MONTH,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive content protection analytics.
+        """        Get comprehensive content protection analytics.
         
         Args:
             user_id: User identifier
@@ -303,8 +285,7 @@ class AnalyticsService:
             
         Returns:
             Protection analytics data
-        """
-        if db is None:
+        """        if db is None:
             db = next(get_db())
         
         try:
@@ -338,8 +319,7 @@ class AnalyticsService:
         format_type: str = "pdf",
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive analytics report.
+        """        Generate comprehensive analytics report.
         
         Args:
             user_id: User identifier
@@ -350,8 +330,7 @@ class AnalyticsService:
             
         Returns:
             Generated report data and metadata
-        """
-        if db is None:
+        """        if db is None:
             db = next(get_db())
         
         try:
@@ -412,8 +391,7 @@ class AnalyticsService:
     
     # Private helper methods
     async def _generate_content_overview(self, contents: List[Content], timeframe: AnalyticsTimeframe, db: Session) -> Dict[str, Any]:
-        """Generate content overview statistics."""
-        total_contents = len(contents)
+        """Generate content overview statistics."""        total_contents = len(contents)
         
         # Calculate content type distribution
         type_distribution = {}
@@ -441,8 +419,7 @@ class AnalyticsService:
         }
     
     async def _analyze_content_performance(self, contents: List[Content], timeframe: AnalyticsTimeframe, db: Session) -> List[ContentPerformanceMetrics]:
-        """Analyze individual content performance."""
-        performance_data = []
+        """Analyze individual content performance."""        performance_data = []
         
         for content in contents:
             metrics = ContentPerformanceMetrics(
@@ -469,8 +446,7 @@ class AnalyticsService:
         return performance_data
     
     async def _analyze_engagement_metrics(self, contents: List[Content], timeframe: AnalyticsTimeframe, db: Session) -> Dict[str, Any]:
-        """Analyze engagement patterns and metrics."""
-        if not contents:
+        """Analyze engagement patterns and metrics."""        if not contents:
             return {"error": "No content available for analysis"}
         
         engagement_data = {
@@ -498,8 +474,7 @@ class AnalyticsService:
         return engagement_data
     
     async def _calculate_engagement_trends(self, contents: List[Content], timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
-        """Calculate engagement trends over time."""
-        # Group content by time periods
+        """Calculate engagement trends over time."""        # Group content by time periods
         time_periods = get_time_periods(timeframe)
         trends = {}
         
@@ -516,8 +491,7 @@ class AnalyticsService:
         return trends
     
     async def _generate_content_insights(self, contents: List[Content], timeframe: AnalyticsTimeframe, db: Session) -> List[AnalyticsInsight]:
-        """Generate actionable insights from content data."""
-        insights = []
+        """Generate actionable insights from content data."""        insights = []
         
         if not contents:
             return insights
@@ -557,8 +531,7 @@ class AnalyticsService:
         return insights
     
     async def _generate_content_recommendations(self, contents: List[Content], timeframe: AnalyticsTimeframe, db: Session) -> List[str]:
-        """Generate content optimization recommendations."""
-        recommendations = []
+        """Generate content optimization recommendations."""        recommendations = []
         
         if not contents:
             return ["Start creating content to get personalized recommendations"]

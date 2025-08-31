@@ -1,5 +1,4 @@
-"""
-Alert Management System for Content Protection
+"""Alert Management System for Content Protection
 
 This module provides comprehensive alerting capabilities for the protection system:
 - Real-time violation alerts via multiple channels
@@ -10,9 +9,7 @@ This module provides comprehensive alerting capabilities for the protection syst
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import smtplib
 from email.mime.text import MIMEText
@@ -43,8 +40,7 @@ settings = get_settings()
 
 
 class AlertChannel(Enum):
-    """Available alert channels"""
-    EMAIL = "email"
+    """Available alert channels"""    EMAIL = "email"
     WEBHOOK = "webhook"
     SMS = "sms"
     PUSH_NOTIFICATION = "push_notification"
@@ -55,8 +51,7 @@ class AlertChannel(Enum):
 
 
 class AlertPriority(Enum):
-    """Alert priority levels"""
-    CRITICAL = "critical"
+    """Alert priority levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -64,8 +59,7 @@ class AlertPriority(Enum):
 
 
 class AlertStatus(Enum):
-    """Alert status"""
-    PENDING = "pending"
+    """Alert status"""    PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
     FAILED = "failed"
@@ -75,8 +69,7 @@ class AlertStatus(Enum):
 
 @dataclass
 class AlertConfiguration:
-    """Configuration for alert rules"""
-    name: str
+    """Configuration for alert rules"""    name: str
     enabled: bool = True
     channels: List[AlertChannel] = field(default_factory=list)
     
@@ -101,8 +94,7 @@ class AlertConfiguration:
 
 @dataclass
 class Alert:
-    """Represents an alert to be sent"""
-    alert_id: str
+    """Represents an alert to be sent"""    alert_id: str
     violation_evidence: ViolationEvidence
     alert_type: str
     priority: AlertPriority
@@ -129,8 +121,7 @@ class Alert:
 
 @dataclass
 class NotificationTemplate:
-    """Template for notifications"""
-    name: str
+    """Template for notifications"""    name: str
     channel: AlertChannel
     subject_template: str
     body_template: str
@@ -139,8 +130,7 @@ class NotificationTemplate:
 
 
 class EmailNotifier:
-    """Email notification handler"""
-    
+    """Email notification handler"""    
     def __init__(self):
         self.smtp_server = settings.SMTP_SERVER
         self.smtp_port = settings.SMTP_PORT
@@ -153,8 +143,7 @@ class EmailNotifier:
         self.template_env = Environment(loader=FileSystemLoader(template_dir))
     
     async def send_email_alert(self, alert: Alert, recipients: List[str]) -> bool:
-        """Send email alert"""
-        try:
+        """Send email alert"""        try:
             # Load template
             template = self.template_env.get_template("violation_alert_email.html")
             
@@ -214,11 +203,9 @@ class EmailNotifier:
 
 
 class WebhookNotifier:
-    """Webhook notification handler"""
-    
+    """Webhook notification handler"""    
     async def send_webhook_alert(self, alert: Alert, webhook_urls: List[str]) -> bool:
-        """Send webhook alert"""
-        try:
+        """Send webhook alert"""        try:
             # Prepare payload
             payload = {
                 'alert_id': alert.alert_id,
@@ -272,14 +259,12 @@ class WebhookNotifier:
 
 
 class SlackNotifier:
-    """Slack notification handler"""
-    
+    """Slack notification handler"""    
     def __init__(self):
         self.webhook_url = getattr(settings, 'SLACK_WEBHOOK_URL', None)
     
     async def send_slack_alert(self, alert: Alert) -> bool:
-        """Send Slack alert"""
-        try:
+        """Send Slack alert"""        try:
             if not self.webhook_url:
                 logger.warning("Slack webhook URL not configured")
                 return False
@@ -384,15 +369,13 @@ class SlackNotifier:
 
 
 class SMSNotifier:
-    """SMS notification handler"""
-    
+    """SMS notification handler"""    
     def __init__(self):
         self.api_key = getattr(settings, 'SMS_API_KEY', None)
         self.api_url = getattr(settings, 'SMS_API_URL', None)
     
     async def send_sms_alert(self, alert: Alert, phone_numbers: List[str]) -> bool:
-        """Send SMS alert"""
-        try:
+        """Send SMS alert"""        try:
             if not self.api_key or not self.api_url:
                 logger.warning("SMS API not configured")
                 return False
@@ -431,8 +414,7 @@ class SMSNotifier:
 
 
 class AlertManager:
-    """Main alert management system"""
-    
+    """Main alert management system"""    
     def __init__(self):
         # Notification handlers
         self.email_notifier = EmailNotifier()
@@ -452,8 +434,7 @@ class AlertManager:
         self._initialize_default_configs()
     
     def _initialize_default_configs(self):
-        """Initialize default alert configurations"""
-        # Critical violations config
+        """Initialize default alert configurations"""        # Critical violations config
         self.alert_configurations['critical_violations'] = AlertConfiguration(
             name="Critical Violations",
             channels=[AlertChannel.EMAIL, AlertChannel.SLACK, AlertChannel.SMS],
@@ -488,8 +469,7 @@ class AlertManager:
         )
     
     async def start_alert_service(self):
-        """Start alert service background tasks"""
-        # Start alert processor
+        """Start alert service background tasks"""        # Start alert processor
         processor_task = asyncio.create_task(self._process_alert_queue())
         self.background_tasks.add(processor_task)
         
@@ -504,8 +484,7 @@ class AlertManager:
         logger.info("Alert service started")
     
     async def stop_alert_service(self):
-        """Stop alert service"""
-        for task in self.background_tasks:
+        """Stop alert service"""        for task in self.background_tasks:
             task.cancel()
         
         if self.background_tasks:
@@ -514,8 +493,7 @@ class AlertManager:
         logger.info("Alert service stopped")
     
     async def send_violation_alert(self, violation_evidence: ViolationEvidence, evidence_data: Dict[str, Any] = None):
-        """Send alert for violation detection"""
-        try:
+        """Send alert for violation detection"""        try:
             # Determine alert configuration
             config = self._get_alert_config_for_violation(violation_evidence)
             
@@ -540,8 +518,7 @@ class AlertManager:
             logger.error(f"Error sending violation alert: {e}")
     
     async def send_realtime_alert(self, content_id: str, detected_url: str, similarity_score: float):
-        """Send real-time alert for high-confidence violations"""
-        try:
+        """Send real-time alert for high-confidence violations"""        try:
             alert_id = f"realtime_{content_id}_{int(datetime.utcnow().timestamp())}"
             
             alert = Alert(
@@ -567,8 +544,7 @@ class AlertManager:
             logger.error(f"Error sending realtime alert: {e}")
     
     def _get_alert_config_for_violation(self, violation: ViolationEvidence) -> Optional[AlertConfiguration]:
-        """Get appropriate alert configuration for violation"""
-        # Check critical first
+        """Get appropriate alert configuration for violation"""        # Check critical first
         if violation.severity == ViolationSeverity.CRITICAL:
             return self.alert_configurations.get('critical_violations')
         elif violation.severity == ViolationSeverity.HIGH:
@@ -577,8 +553,7 @@ class AlertManager:
             return self.alert_configurations.get('standard')
     
     def _check_rate_limits(self, config: AlertConfiguration) -> bool:
-        """Check if rate limits allow sending alert"""
-        now = datetime.utcnow()
+        """Check if rate limits allow sending alert"""        now = datetime.utcnow()
         config_key = config.name
         
         # Initialize rate limit tracking
@@ -609,8 +584,7 @@ class AlertManager:
                               violation: ViolationEvidence, 
                               config: AlertConfiguration,
                               evidence_data: Dict[str, Any] = None) -> Alert:
-        """Create alert object from violation evidence"""
-        alert_id = f"alert_{violation.violation_id}_{int(datetime.utcnow().timestamp())}"
+        """Create alert object from violation evidence"""        alert_id = f"alert_{violation.violation_id}_{int(datetime.utcnow().timestamp())}"
         
         # Determine priority
         priority_mapping = {
@@ -627,8 +601,7 @@ class AlertManager:
         
         max_similarity = max(s.similarity_score for s in violation.similarity_scores) if violation.similarity_scores else 0
         
-        message = f"""
-Content violation detected with {max_similarity:.1%} similarity.
+        message = f"""Content violation detected with {max_similarity:.1%} similarity.
 
 Violation Details:
 - Type: {violation.violation_type.value.replace('_', ' ').title()}
@@ -660,8 +633,7 @@ Similarity Scores:
         return alert
     
     async def _send_alert(self, alert: Alert):
-        """Send alert through configured channels"""
-        try:
+        """Send alert through configured channels"""        try:
             alert.status = AlertStatus.PENDING
             alert.delivery_attempts += 1
             
@@ -712,8 +684,7 @@ Similarity Scores:
             alert.error_messages.append(str(e))
     
     async def _process_alert_queue(self):
-        """Background task to process alert queue"""
-        while True:
+        """Background task to process alert queue"""        while True:
             try:
                 await asyncio.sleep(10)  # Check every 10 seconds
                 
@@ -735,8 +706,7 @@ Similarity Scores:
                 logger.error(f"Error in alert queue processor: {e}")
     
     async def _handle_escalations(self):
-        """Handle alert escalations"""
-        while True:
+        """Handle alert escalations"""        while True:
             try:
                 await asyncio.sleep(300)  # Check every 5 minutes
                 
@@ -759,8 +729,7 @@ Similarity Scores:
                 logger.error(f"Error in escalation handler: {e}")
     
     async def _escalate_alert(self, alert: Alert):
-        """Escalate unacknowledged alert"""
-        try:
+        """Escalate unacknowledged alert"""        try:
             # Create escalation alert
             escalation_alert = Alert(
                 alert_id=f"escalation_{alert.alert_id}",
@@ -782,8 +751,7 @@ Similarity Scores:
             logger.error(f"Error escalating alert: {e}")
     
     async def _cleanup_rate_limits(self):
-        """Clean up old rate limit entries"""
-        while True:
+        """Clean up old rate limit entries"""        while True:
             try:
                 await asyncio.sleep(3600)  # Clean every hour
                 
@@ -802,8 +770,7 @@ Similarity Scores:
     # Public API methods
     
     async def acknowledge_alert(self, alert_id: str, user_id: str) -> bool:
-        """Acknowledge an alert"""
-        try:
+        """Acknowledge an alert"""        try:
             if alert_id not in self.alerts:
                 return False
             
@@ -819,8 +786,7 @@ Similarity Scores:
             return False
     
     async def resolve_alert(self, alert_id: str, user_id: str, resolution_notes: str = "") -> bool:
-        """Resolve an alert"""
-        try:
+        """Resolve an alert"""        try:
             if alert_id not in self.alerts:
                 return False
             
@@ -837,8 +803,7 @@ Similarity Scores:
             return False
     
     def get_alert_statistics(self) -> Dict[str, Any]:
-        """Get alert system statistics"""
-        total_alerts = len(self.alerts)
+        """Get alert system statistics"""        total_alerts = len(self.alerts)
         
         if total_alerts == 0:
             return {'total_alerts': 0}

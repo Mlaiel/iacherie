@@ -1,30 +1,24 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Mock-based Unit Tests for Crawler Engines
+"""Mock-based Unit Tests for Crawler Engines
 =========================================
 
 Mock-based tests for crawler engines that work without aiohttp dependencies.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Complete crawler test coverage without external dependencies
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -35,8 +29,7 @@ from datetime import datetime, timedelta
 import hashlib
 
 class MockCrawlerResponse:
-    """Mock HTTP response for crawler"""
-    
+    """Mock HTTP response for crawler"""    
     def __init__(self, status: int, data: Dict, url: str):
         self.status = status
         self.data = data
@@ -50,8 +43,7 @@ class MockCrawlerResponse:
 
 
 class MockPlatformCrawler:
-    """Mock platform crawler base class"""
-    
+    """Mock platform crawler base class"""    
     def __init__(self, platform_name: str):
         self.platform_name = platform_name
         self.rate_limit_delay = 1.0
@@ -60,17 +52,14 @@ class MockPlatformCrawler:
         self.crawl_history = []
     
     async def initialize(self):
-        """Initialize crawler session"""
-        self.session = MockHTTPSession()
+        """Initialize crawler session"""        self.session = MockHTTPSession()
     
     async def cleanup(self):
-        """Cleanup crawler resources"""
-        if self.session:
+        """Cleanup crawler resources"""        if self.session:
             await self.session.close()
     
     async def crawl_content(self, query: str, limit: int = 10) -> List[Dict]:
-        """Mock content crawling"""
-        self.crawl_history.append({
+        """Mock content crawling"""        self.crawl_history.append({
             'query': query,
             'limit': limit,
             'timestamp': datetime.now().isoformat()
@@ -95,8 +84,7 @@ class MockPlatformCrawler:
         return results
     
     async def search_by_fingerprint(self, fingerprint: str) -> List[Dict]:
-        """Mock fingerprint-based search"""
-        return [{
+        """Mock fingerprint-based search"""        return [{
             'platform': self.platform_name,
             'content_id': f"fp_match_{fingerprint[:8]}",
             'title': f"Fingerprint match on {self.platform_name}",
@@ -106,16 +94,14 @@ class MockPlatformCrawler:
 
 
 class MockHTTPSession:
-    """Mock HTTP session for crawlers"""
-    
+    """Mock HTTP session for crawlers"""    
     def __init__(self):
         self.headers = {}
         self.cookies = {}
         self.closed = False
     
     async def get(self, url: str, headers: Dict = None) -> MockCrawlerResponse:
-        """Mock GET request"""
-        if self.closed:
+        """Mock GET request"""        if self.closed:
             raise Exception("Session is closed")
         
         # Mock different platform responses
@@ -168,8 +154,7 @@ class MockHTTPSession:
         return MockCrawlerResponse(404, {'error': 'Not found'}, url)
     
     async def post(self, url: str, data: Dict = None, headers: Dict = None) -> MockCrawlerResponse:
-        """Mock POST request"""
-        if self.closed:
+        """Mock POST request"""        if self.closed:
             raise Exception("Session is closed")
         
         return MockCrawlerResponse(200, {
@@ -178,24 +163,20 @@ class MockHTTPSession:
         }, url)
     
     async def close(self):
-        """Close session"""
-        self.closed = True
+        """Close session"""        self.closed = True
 
 
 class MockYouTubeCrawler(MockPlatformCrawler):
-    """Mock YouTube crawler"""
-    
+    """Mock YouTube crawler"""    
     def __init__(self):
         super().__init__("youtube")
         self.api_key = "mock_youtube_api_key"
     
     async def search_videos(self, query: str, max_results: int = 10) -> List[Dict]:
-        """Search YouTube videos"""
-        return await self.crawl_content(query, max_results)
+        """Search YouTube videos"""        return await self.crawl_content(query, max_results)
     
     async def get_video_details(self, video_id: str) -> Dict:
-        """Get detailed video information"""
-        return {
+        """Get detailed video information"""        return {
             'video_id': video_id,
             'title': f"Mock video {video_id}",
             'description': "Mock video description",
@@ -207,19 +188,16 @@ class MockYouTubeCrawler(MockPlatformCrawler):
 
 
 class MockSpotifyCrawler(MockPlatformCrawler):
-    """Mock Spotify crawler"""
-    
+    """Mock Spotify crawler"""    
     def __init__(self):
         super().__init__("spotify")
         self.access_token = "mock_spotify_token"
     
     async def search_tracks(self, query: str, limit: int = 10) -> List[Dict]:
-        """Search Spotify tracks"""
-        return await self.crawl_content(query, limit)
+        """Search Spotify tracks"""        return await self.crawl_content(query, limit)
     
     async def get_track_features(self, track_id: str) -> Dict:
-        """Get audio features for track"""
-        return {
+        """Get audio features for track"""        return {
             'track_id': track_id,
             'tempo': 120.0,
             'energy': 0.8,
@@ -230,24 +208,20 @@ class MockSpotifyCrawler(MockPlatformCrawler):
 
 
 class MockTikTokCrawler(MockPlatformCrawler):
-    """Mock TikTok crawler"""
-    
+    """Mock TikTok crawler"""    
     def __init__(self):
         super().__init__("tiktok")
     
     async def search_videos(self, hashtag: str, count: int = 10) -> List[Dict]:
-        """Search TikTok videos by hashtag"""
-        return await self.crawl_content(f"#{hashtag}", count)
+        """Search TikTok videos by hashtag"""        return await self.crawl_content(f"#{hashtag}", count)
     
     async def get_user_videos(self, username: str, count: int = 10) -> List[Dict]:
-        """Get videos from specific user"""
-        return await self.crawl_content(f"@{username}", count)
+        """Get videos from specific user"""        return await self.crawl_content(f"@{username}", count)
 
 
 @pytest.mark.asyncio
 class TestCrawlerEngines:
-    """Test crawler engine functionality"""
-    
+    """Test crawler engine functionality"""    
     @pytest.fixture
     def youtube_crawler(self):
         return MockYouTubeCrawler()
@@ -261,8 +235,7 @@ class TestCrawlerEngines:
         return MockTikTokCrawler()
     
     async def test_youtube_video_search(self, youtube_crawler):
-        """Test YouTube video search"""
-        await youtube_crawler.initialize()
+        """Test YouTube video search"""        await youtube_crawler.initialize()
         results = await youtube_crawler.search_videos("test music", max_results=5)
         await youtube_crawler.cleanup()
         
@@ -273,8 +246,7 @@ class TestCrawlerEngines:
         assert all('title' in result for result in results)
     
     async def test_youtube_video_details(self, youtube_crawler):
-        """Test YouTube video details retrieval"""
-        await youtube_crawler.initialize()
+        """Test YouTube video details retrieval"""        await youtube_crawler.initialize()
         video_id = "test_video_123"
         details = await youtube_crawler.get_video_details(video_id)
         await youtube_crawler.cleanup()
@@ -286,8 +258,7 @@ class TestCrawlerEngines:
         assert 'view_count' in details
     
     async def test_spotify_track_search(self, spotify_crawler):
-        """Test Spotify track search"""
-        await spotify_crawler.initialize()
+        """Test Spotify track search"""        await spotify_crawler.initialize()
         results = await spotify_crawler.search_tracks("test song", limit=3)
         await spotify_crawler.cleanup()
         
@@ -297,8 +268,7 @@ class TestCrawlerEngines:
         assert all('content_id' in result for result in results)
     
     async def test_spotify_track_features(self, spotify_crawler):
-        """Test Spotify audio features"""
-        await spotify_crawler.initialize()
+        """Test Spotify audio features"""        await spotify_crawler.initialize()
         track_id = "test_track_456"
         features = await spotify_crawler.get_track_features(track_id)
         await spotify_crawler.cleanup()
@@ -309,8 +279,7 @@ class TestCrawlerEngines:
         assert 'danceability' in features
     
     async def test_tiktok_hashtag_search(self, tiktok_crawler):
-        """Test TikTok hashtag search"""
-        await tiktok_crawler.initialize()
+        """Test TikTok hashtag search"""        await tiktok_crawler.initialize()
         results = await tiktok_crawler.search_videos("music", count=3)
         await tiktok_crawler.cleanup()
         
@@ -319,8 +288,7 @@ class TestCrawlerEngines:
         assert all(result['platform'] == 'tiktok' for result in results)
     
     async def test_tiktok_user_videos(self, tiktok_crawler):
-        """Test TikTok user video retrieval"""
-        await tiktok_crawler.initialize()
+        """Test TikTok user video retrieval"""        await tiktok_crawler.initialize()
         results = await tiktok_crawler.get_user_videos("testuser", count=2)
         await tiktok_crawler.cleanup()
         
@@ -330,11 +298,9 @@ class TestCrawlerEngines:
 
 @pytest.mark.asyncio
 class TestCrawlerErrorHandling:
-    """Test crawler error handling"""
-    
+    """Test crawler error handling"""    
     async def test_session_initialization(self):
-        """Test crawler session initialization"""
-        crawler = MockPlatformCrawler("test")
+        """Test crawler session initialization"""        crawler = MockPlatformCrawler("test")
         assert crawler.session is None
         
         await crawler.initialize()
@@ -343,8 +309,7 @@ class TestCrawlerErrorHandling:
         await crawler.cleanup()
     
     async def test_rate_limiting(self):
-        """Test rate limiting behavior"""
-        crawler = MockPlatformCrawler("test")
+        """Test rate limiting behavior"""        crawler = MockPlatformCrawler("test")
         await crawler.initialize()
         
         # Test rate limit configuration
@@ -354,8 +319,7 @@ class TestCrawlerErrorHandling:
         await crawler.cleanup()
     
     async def test_invalid_response_handling(self):
-        """Test handling of invalid responses"""
-        crawler = MockPlatformCrawler("test")
+        """Test handling of invalid responses"""        crawler = MockPlatformCrawler("test")
         await crawler.initialize()
         
         # This would test error handling in real implementation
@@ -372,11 +336,9 @@ class TestCrawlerErrorHandling:
 
 @pytest.mark.asyncio 
 class TestCrawlerIntegration:
-    """Test integrated crawler functionality"""
-    
+    """Test integrated crawler functionality"""    
     async def test_multi_platform_search(self):
-        """Test searching across multiple platforms"""
-        platforms = [
+        """Test searching across multiple platforms"""        platforms = [
             MockYouTubeCrawler(),
             MockSpotifyCrawler(),
             MockTikTokCrawler()
@@ -399,8 +361,7 @@ class TestCrawlerIntegration:
         assert 'tiktok' in platform_names
     
     async def test_fingerprint_search_integration(self):
-        """Test fingerprint-based search across platforms"""
-        crawler = MockYouTubeCrawler()
+        """Test fingerprint-based search across platforms"""        crawler = MockYouTubeCrawler()
         await crawler.initialize()
         
         fingerprint = "test_fingerprint_123"
@@ -414,12 +375,10 @@ class TestCrawlerIntegration:
 
 
 class TestCrawlerPerformance:
-    """Test crawler performance characteristics"""
-    
+    """Test crawler performance characteristics"""    
     @pytest.mark.asyncio
     async def test_concurrent_crawling(self):
-        """Test concurrent crawling performance"""
-        import asyncio
+        """Test concurrent crawling performance"""        import asyncio
         
         crawler = MockYouTubeCrawler()
         await crawler.initialize()
@@ -447,8 +406,7 @@ class TestCrawlerPerformance:
     
     @pytest.mark.asyncio
     async def test_crawl_history_tracking(self):
-        """Test crawl history and logging"""
-        crawler = MockPlatformCrawler("test")
+        """Test crawl history and logging"""        crawler = MockPlatformCrawler("test")
         await crawler.initialize()
         
         # Perform multiple crawls
@@ -466,8 +424,7 @@ class TestCrawlerPerformance:
 
 
 def test_crawler_coverage():
-    """Test that all essential crawler functionality is covered"""
-    
+    """Test that all essential crawler functionality is covered"""    
     # Test base crawler
     crawler = MockPlatformCrawler("test")
     

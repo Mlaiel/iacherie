@@ -1,5 +1,4 @@
-"""
-Entity Linker - Advanced Entity Linking and Resolution
+"""Entity Linker - Advanced Entity Linking and Resolution
 
 Sophisticated entity linking system for creative content with knowledge graph
 integration, disambiguation, and canonical entity resolution. Specialized for
@@ -13,9 +12,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import json
 from typing import Dict, List, Set, Tuple, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -42,8 +39,7 @@ from .entity_extractor import ExtractedEntity, EntityCategory
 
 
 class LinkingStrategy(Enum):
-    """Entity linking strategies"""
-    EXACT_MATCH = "exact_match"
+    """Entity linking strategies"""    EXACT_MATCH = "exact_match"
     FUZZY_MATCH = "fuzzy_match"
     SEMANTIC_SIMILARITY = "semantic_similarity"
     KNOWLEDGE_GRAPH = "knowledge_graph"
@@ -51,8 +47,7 @@ class LinkingStrategy(Enum):
 
 
 class ConfidenceLevel(Enum):
-    """Confidence levels for entity linking"""
-    VERY_HIGH = 0.95
+    """Confidence levels for entity linking"""    VERY_HIGH = 0.95
     HIGH = 0.85
     MEDIUM = 0.70
     LOW = 0.50
@@ -61,8 +56,7 @@ class ConfidenceLevel(Enum):
 
 @dataclass
 class EntityCandidate:
-    """Candidate entity for linking"""
-    entity_id: str
+    """Candidate entity for linking"""    entity_id: str
     canonical_name: str
     entity_type: EntityCategory
     confidence_score: float
@@ -73,8 +67,7 @@ class EntityCandidate:
     external_ids: Dict[str, str] = field(default_factory=dict)
     
     def __post_init__(self):
-        """Post-initialization validation"""
-        if self.confidence_score > 1.0:
+        """Post-initialization validation"""        if self.confidence_score > 1.0:
             self.confidence_score = 1.0
         elif self.confidence_score < 0.0:
             self.confidence_score = 0.0
@@ -82,8 +75,7 @@ class EntityCandidate:
 
 @dataclass
 class LinkingResult:
-    """Result of entity linking process"""
-    original_entity: ExtractedEntity
+    """Result of entity linking process"""    original_entity: ExtractedEntity
     linked_entity: Optional[EntityCandidate]
     confidence: float
     linking_strategy: LinkingStrategy
@@ -93,13 +85,11 @@ class LinkingResult:
     
     @property
     def is_linked(self) -> bool:
-        """Check if entity was successfully linked"""
-        return self.linked_entity is not None and self.confidence > ConfidenceLevel.LOW.value
+        """Check if entity was successfully linked"""        return self.linked_entity is not None and self.confidence > ConfidenceLevel.LOW.value
 
 
 class EntityLinker(BaseService):
-    """
-    Advanced Entity Linking system with creative industry specialization.
+    """    Advanced Entity Linking system with creative industry specialization.
     
     Features:
     - Multi-strategy entity linking (exact, fuzzy, semantic, knowledge graph)
@@ -110,8 +100,7 @@ class EntityLinker(BaseService):
     - Dynamic knowledge graph construction
     - Confidence scoring with uncertainty quantification
     - Performance monitoring and optimization
-    """
-    
+    """    
     def __init__(self):
         super().__init__()
         self.logger = logging.getLogger(__name__)
@@ -149,8 +138,7 @@ class EntityLinker(BaseService):
         }
         
     async def initialize(self):
-        """Initialize comprehensive entity linking system with advanced capabilities"""
-        try:
+        """Initialize comprehensive entity linking system with advanced capabilities"""        try:
             self.logger.info("Initializing advanced EntityLinker system...")
             
             # Load advanced sentence transformers for semantic similarity
@@ -193,8 +181,7 @@ class EntityLinker(BaseService):
             raise
     
     async def _load_advanced_transformers(self):
-        """Load multiple sentence transformer models for different use cases"""
-        try:
+        """Load multiple sentence transformer models for different use cases"""        try:
             # Primary model for general semantic similarity
             self.primary_transformer = SentenceTransformer('all-MiniLM-L6-v2')
             
@@ -224,8 +211,7 @@ class EntityLinker(BaseService):
             self.primary_transformer = SentenceTransformer('all-MiniLM-L6-v2')
     
     async def _initialize_comprehensive_knowledge_bases(self):
-        """Initialize comprehensive knowledge bases for creative industry"""
-        self.knowledge_bases = {
+        """Initialize comprehensive knowledge bases for creative industry"""        self.knowledge_bases = {
             'music_artists': {
                 'path': '/data/knowledge_bases/music_artists.json',
                 'entity_type': EntityCategory.PERSON,
@@ -348,8 +334,7 @@ class EntityLinker(BaseService):
         self.logger.info(f"Initialized {len(self.knowledge_bases)} knowledge bases")
     
     async def _load_knowledge_base(self, kb_name: str, kb_config: Dict[str, Any]):
-        """Load individual knowledge base from file or API"""
-        try:
+        """Load individual knowledge base from file or API"""        try:
             # Try to load from local file first
             if os.path.exists(kb_config['path']):
                 with open(kb_config['path'], 'r', encoding='utf-8') as f:
@@ -379,8 +364,7 @@ class EntityLinker(BaseService):
             kb_config['size'] = 0
     
     def _build_kb_indexes(self, kb_name: str, kb_config: Dict[str, Any]):
-        """Build search indexes for knowledge base"""
-        name_index = {}
+        """Build search indexes for knowledge base"""        name_index = {}
         alias_index = {}
         
         for entity_id, entity_data in kb_config['entities'].items():
@@ -403,8 +387,7 @@ class EntityLinker(BaseService):
         kb_config['alias_index'] = alias_index
     
     async def _load_optimized_vector_indexes(self):
-        """Load high-performance FAISS vector indexes for entity embeddings"""
-        try:
+        """Load high-performance FAISS vector indexes for entity embeddings"""        try:
             self.vector_indexes = {}
             
             for kb_name, kb_config in self.knowledge_bases.items():
@@ -433,8 +416,7 @@ class EntityLinker(BaseService):
             self.logger.error(f"Failed to load vector indexes: {e}")
     
     async def _create_vector_index(self, kb_name: str, kb_config: Dict[str, Any]):
-        """Create FAISS vector index for knowledge base"""
-        try:
+        """Create FAISS vector index for knowledge base"""        try:
             entities = kb_config['entities']
             if not entities:
                 return
@@ -483,8 +465,7 @@ class EntityLinker(BaseService):
             self.logger.error(f"Failed to create vector index for {kb_name}: {e}")
     
     async def _initialize_external_api_clients(self):
-        """Initialize clients for external knowledge bases and APIs"""
-        self.external_apis = {
+        """Initialize clients for external knowledge bases and APIs"""        self.external_apis = {
             'spotify': {
                 'client_id': self.config.get('spotify_client_id'),
                 'client_secret': self.config.get('spotify_client_secret'),
@@ -526,8 +507,7 @@ class EntityLinker(BaseService):
         self.logger.info(f"Initialized {sum(1 for api in self.external_apis.values() if api['enabled'])} external API clients")
     
     async def _setup_api_authentication(self):
-        """Setup authentication for external APIs"""
-        try:
+        """Setup authentication for external APIs"""        try:
             # Spotify authentication
             if self.external_apis['spotify']['enabled']:
                 await self._authenticate_spotify()
@@ -538,8 +518,7 @@ class EntityLinker(BaseService):
             self.logger.warning(f"Some API authentications failed: {e}")
     
     async def _authenticate_spotify(self):
-        """Authenticate with Spotify API"""
-        try:
+        """Authenticate with Spotify API"""        try:
             import base64
             
             client_id = self.external_apis['spotify']['client_id']
@@ -607,8 +586,7 @@ class EntityLinker(BaseService):
                 }
     
     async def _load_knowledge_base(self, name: str, config: Dict[str, Any]):
-        """Load a specific knowledge base"""
-        try:
+        """Load a specific knowledge base"""        try:
             # Try to load from file
             import os
             if os.path.exists(config['path']):
@@ -636,8 +614,7 @@ class EntityLinker(BaseService):
             raise
     
     async def _initialize_basic_knowledge_base(self, name: str, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Initialize basic knowledge base with essential creative industry entities"""
-        basic_data = {'entities': {}}
+        """Initialize basic knowledge base with essential creative industry entities"""        basic_data = {'entities': {}}
         
         if name == 'music_artists':
             # Add some well-known artists as examples
@@ -685,8 +662,7 @@ class EntityLinker(BaseService):
         return basic_data
     
     def _process_knowledge_base_entity(self, entity_id: str, entity_data: Dict[str, Any], config: Dict[str, Any]) -> EntityCandidate:
-        """Process and normalize knowledge base entity"""
-        return EntityCandidate(
+        """Process and normalize knowledge base entity"""        return EntityCandidate(
             entity_id=entity_id,
             canonical_name=entity_data.get('name', entity_id),
             entity_type=config['entity_type'],
@@ -699,8 +675,7 @@ class EntityLinker(BaseService):
         )
     
     async def _load_vector_indexes(self):
-        """Load FAISS vector indexes for fast similarity search"""
-        try:
+        """Load FAISS vector indexes for fast similarity search"""        try:
             # Initialize vector indexes for each knowledge base
             for kb_name, kb_data in self.knowledge_bases.items():
                 await self._build_vector_index(kb_name, kb_data)
@@ -709,8 +684,7 @@ class EntityLinker(BaseService):
             self.logger.warning(f"Failed to load vector indexes: {str(e)}")
     
     async def _build_vector_index(self, kb_name: str, kb_data: Dict[str, Any]):
-        """Build FAISS vector index for a knowledge base"""
-        try:
+        """Build FAISS vector index for a knowledge base"""        try:
             if not self.sentence_transformer:
                 return
                 
@@ -754,8 +728,7 @@ class EntityLinker(BaseService):
             self.logger.error(f"Failed to build vector index for {kb_name}: {str(e)}")
     
     async def _initialize_external_apis(self):
-        """Initialize external API clients for entity linking"""
-        self.api_configs = {
+        """Initialize external API clients for entity linking"""        self.api_configs = {
             'musicbrainz': {
                 'base_url': 'https://musicbrainz.org/ws/2',
                 'rate_limit': 1.0,  # 1 request per second
@@ -784,8 +757,7 @@ class EntityLinker(BaseService):
             }
     
     async def _load_knowledge_graph(self):
-        """Load knowledge graph for relationship-based linking"""
-        try:
+        """Load knowledge graph for relationship-based linking"""        try:
             # Build knowledge graph from all knowledge bases
             for kb_name, kb_data in self.knowledge_bases.items():
                 for entity_id, entity in kb_data['entities'].items():
@@ -808,8 +780,7 @@ class EntityLinker(BaseService):
             self.logger.warning(f"Failed to load knowledge graph: {str(e)}")
     
     async def _load_linking_cache(self):
-        """Load cached linking results"""
-        try:
+        """Load cached linking results"""        try:
             cache_path = '/cache/entity_linking.json'
             import os
             if os.path.exists(cache_path):
@@ -829,8 +800,7 @@ class EntityLinker(BaseService):
         strategy: Optional[LinkingStrategy] = None,
         confidence_threshold: float = 0.5
     ) -> LinkingResult:
-        """
-        Link an extracted entity to a canonical knowledge base entity.
+        """        Link an extracted entity to a canonical knowledge base entity.
         
         Args:
             entity: Extracted entity to link
@@ -840,8 +810,7 @@ class EntityLinker(BaseService):
             
         Returns:
             LinkingResult with linked entity and metadata
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             self.logger.debug(f"Linking entity: {entity.text} ({entity.entity_type.value})")
@@ -893,8 +862,7 @@ class EntityLinker(BaseService):
             raise
     
     async def _get_linking_candidates(self, entity: ExtractedEntity, context: Optional[str]) -> List[EntityCandidate]:
-        """Get all possible linking candidates for an entity"""
-        all_candidates = []
+        """Get all possible linking candidates for an entity"""        all_candidates = []
         
         # Get candidates from knowledge bases
         kb_candidates = await self._get_knowledge_base_candidates(entity)
@@ -916,8 +884,7 @@ class EntityLinker(BaseService):
         return sorted_candidates[:20]  # Return top 20 candidates
     
     async def _get_knowledge_base_candidates(self, entity: ExtractedEntity) -> List[EntityCandidate]:
-        """Get candidates from local knowledge bases"""
-        candidates = []
+        """Get candidates from local knowledge bases"""        candidates = []
         
         for kb_name, kb_data in self.knowledge_bases.items():
             # Filter by entity type if possible
@@ -949,8 +916,7 @@ class EntityLinker(BaseService):
         return candidates
     
     async def _get_api_candidates(self, entity: ExtractedEntity) -> List[EntityCandidate]:
-        """Get candidates from external APIs"""
-        candidates = []
+        """Get candidates from external APIs"""        candidates = []
         
         # Select appropriate APIs based on entity type
         relevant_apis = self._select_relevant_apis(entity.entity_type)
@@ -966,8 +932,7 @@ class EntityLinker(BaseService):
         return candidates
     
     def _select_relevant_apis(self, entity_type: EntityCategory) -> List[str]:
-        """Select relevant APIs based on entity type"""
-        api_mapping = {
+        """Select relevant APIs based on entity type"""        api_mapping = {
             EntityCategory.PERSON: ['musicbrainz', 'discogs'],
             EntityCategory.CREATIVE_WORK: ['musicbrainz', 'discogs', 'spotify'],
             EntityCategory.PLATFORM: [],  # Usually handled by KB
@@ -978,8 +943,7 @@ class EntityLinker(BaseService):
         return api_mapping.get(entity_type, [])
     
     async def _query_external_api(self, api_name: str, entity: ExtractedEntity) -> List[EntityCandidate]:
-        """Query external API for entity candidates"""
-        candidates = []
+        """Query external API for entity candidates"""        candidates = []
         
         try:
             # Rate limiting
@@ -998,8 +962,7 @@ class EntityLinker(BaseService):
         return candidates
     
     async def _apply_rate_limit(self, api_name: str):
-        """Apply rate limiting for API requests"""
-        config = self.api_configs.get(api_name, {})
+        """Apply rate limiting for API requests"""        config = self.api_configs.get(api_name, {})
         rate_limit = config.get('rate_limit', 1.0)
         
         current_time = datetime.now().timestamp()
@@ -1016,8 +979,7 @@ class EntityLinker(BaseService):
         self.api_rate_limits[api_name]['request_count'] += 1
     
     async def _query_musicbrainz(self, entity: ExtractedEntity) -> List[EntityCandidate]:
-        """Query MusicBrainz API for music-related entities"""
-        candidates = []
+        """Query MusicBrainz API for music-related entities"""        candidates = []
         
         try:
             config = self.api_configs['musicbrainz']
@@ -1060,8 +1022,7 @@ class EntityLinker(BaseService):
         return candidates
     
     async def _query_discogs(self, entity: ExtractedEntity) -> List[EntityCandidate]:
-        """Query Discogs API for music industry entities"""
-        candidates = []
+        """Query Discogs API for music industry entities"""        candidates = []
         
         try:
             config = self.api_configs['discogs']
@@ -1104,8 +1065,7 @@ class EntityLinker(BaseService):
         return candidates
     
     async def _query_spotify(self, entity: ExtractedEntity) -> List[EntityCandidate]:
-        """Query Spotify API for music entities"""
-        candidates = []
+        """Query Spotify API for music entities"""        candidates = []
         
         try:
             # Note: This would require Spotify API authentication
@@ -1119,8 +1079,7 @@ class EntityLinker(BaseService):
         return candidates
     
     async def _get_vector_similarity_candidates(self, entity: ExtractedEntity) -> List[EntityCandidate]:
-        """Get candidates using vector similarity search"""
-        candidates = []
+        """Get candidates using vector similarity search"""        candidates = []
         
         if not self.sentence_transformer:
             return candidates
@@ -1161,8 +1120,7 @@ class EntityLinker(BaseService):
         return candidates
     
     def _deduplicate_candidates(self, candidates: List[EntityCandidate]) -> List[EntityCandidate]:
-        """Remove duplicate candidates based on canonical name and source"""
-        seen = set()
+        """Remove duplicate candidates based on canonical name and source"""        seen = set()
         unique_candidates = []
         
         for candidate in candidates:
@@ -1180,8 +1138,7 @@ class EntityLinker(BaseService):
         strategy: LinkingStrategy,
         context: Optional[str]
     ) -> Optional[EntityCandidate]:
-        """Apply a single linking strategy"""
-        if not candidates:
+        """Apply a single linking strategy"""        if not candidates:
             return None
         
         if strategy == LinkingStrategy.EXACT_MATCH:
@@ -1202,8 +1159,7 @@ class EntityLinker(BaseService):
         candidates: List[EntityCandidate],
         context: Optional[str]
     ) -> Optional[EntityCandidate]:
-        """Apply hybrid ensemble strategy combining multiple approaches"""
-        if not candidates:
+        """Apply hybrid ensemble strategy combining multiple approaches"""        if not candidates:
             return None
         
         # Score candidates using multiple strategies
@@ -1238,8 +1194,7 @@ class EntityLinker(BaseService):
         return best_candidate
     
     def _find_exact_match(self, entity: ExtractedEntity, candidates: List[EntityCandidate]) -> Optional[EntityCandidate]:
-        """Find exact match candidate"""
-        entity_text_lower = entity.text.lower()
+        """Find exact match candidate"""        entity_text_lower = entity.text.lower()
         
         for candidate in candidates:
             if candidate.canonical_name.lower() == entity_text_lower:
@@ -1253,8 +1208,7 @@ class EntityLinker(BaseService):
         return None
     
     def _find_fuzzy_match(self, entity: ExtractedEntity, candidates: List[EntityCandidate]) -> Optional[EntityCandidate]:
-        """Find best fuzzy match candidate"""
-        best_candidate = None
+        """Find best fuzzy match candidate"""        best_candidate = None
         best_score = 0
         
         for candidate in candidates:
@@ -1281,8 +1235,7 @@ class EntityLinker(BaseService):
         candidates: List[EntityCandidate],
         context: Optional[str]
     ) -> Optional[EntityCandidate]:
-        """Find best semantic similarity match"""
-        if not self.sentence_transformer:
+        """Find best semantic similarity match"""        if not self.sentence_transformer:
             return None
         
         # Create context-aware entity representation
@@ -1320,8 +1273,7 @@ class EntityLinker(BaseService):
         candidates: List[EntityCandidate],
         context: Optional[str]
     ) -> Optional[EntityCandidate]:
-        """Find match using knowledge graph relationships"""
-        # Simple implementation - could be enhanced with graph algorithms
+        """Find match using knowledge graph relationships"""        # Simple implementation - could be enhanced with graph algorithms
         # For now, boost confidence of candidates that have connections in the graph
         
         for candidate in candidates:
@@ -1333,16 +1285,13 @@ class EntityLinker(BaseService):
         return max(candidates, key=lambda c: c.confidence_score) if candidates else None
     
     def _score_exact_match(self, text1: str, text2: str) -> float:
-        """Score exact match between two texts"""
-        return 1.0 if text1.lower() == text2.lower() else 0.0
+        """Score exact match between two texts"""        return 1.0 if text1.lower() == text2.lower() else 0.0
     
     def _score_fuzzy_match(self, text1: str, text2: str) -> float:
-        """Score fuzzy match between two texts"""
-        return fuzz.ratio(text1.lower(), text2.lower()) / 100.0
+        """Score fuzzy match between two texts"""        return fuzz.ratio(text1.lower(), text2.lower()) / 100.0
     
     async def _score_semantic_match(self, text1: str, text2: str) -> float:
-        """Score semantic similarity between two texts"""
-        if not self.sentence_transformer:
+        """Score semantic similarity between two texts"""        if not self.sentence_transformer:
             return 0.0
         
         try:
@@ -1356,8 +1305,7 @@ class EntityLinker(BaseService):
             return 0.0
     
     def _score_source_reliability(self, source: str) -> float:
-        """Score reliability of the data source"""
-        source_scores = {
+        """Score reliability of the data source"""        source_scores = {
             'musicbrainz': 0.9,
             'discogs': 0.8,
             'spotify': 0.85,
@@ -1378,8 +1326,7 @@ class EntityLinker(BaseService):
         candidate: EntityCandidate,
         context: Optional[str]
     ) -> float:
-        """Score how well candidate matches the context"""
-        if not context:
+        """Score how well candidate matches the context"""        if not context:
             return 0.5  # Neutral score if no context
         
         context_lower = context.lower()
@@ -1397,8 +1344,7 @@ class EntityLinker(BaseService):
         return min(metadata_match, 1.0)
     
     def _calculate_api_confidence(self, query_text: str, result_name: str) -> float:
-        """Calculate confidence score for API results"""
-        # Simple confidence based on string similarity
+        """Calculate confidence score for API results"""        # Simple confidence based on string similarity
         similarity = fuzz.ratio(query_text.lower(), result_name.lower()) / 100.0
         return similarity * 0.8  # Discount for API uncertainty
     
@@ -1408,8 +1354,7 @@ class EntityLinker(BaseService):
         candidate: Optional[EntityCandidate],
         context: Optional[str]
     ) -> float:
-        """Calculate final confidence for entity linking"""
-        if not candidate:
+        """Calculate final confidence for entity linking"""        if not candidate:
             return 0.0
         
         base_confidence = candidate.confidence_score
@@ -1425,8 +1370,7 @@ class EntityLinker(BaseService):
         return final_confidence
     
     def _map_to_musicbrainz_type(self, entity_type: EntityCategory) -> Optional[str]:
-        """Map entity category to MusicBrainz entity type"""
-        mapping = {
+        """Map entity category to MusicBrainz entity type"""        mapping = {
             EntityCategory.PERSON: 'artist',
             EntityCategory.CREATIVE_WORK: 'recording',
             EntityCategory.ORGANIZATION: 'label',
@@ -1441,8 +1385,7 @@ class EntityLinker(BaseService):
         context: Optional[str],
         strategy: Optional[LinkingStrategy]
     ) -> str:
-        """Generate cache key for linking result"""
-        key_parts = [
+        """Generate cache key for linking result"""        key_parts = [
             entity.text,
             entity.entity_type.value,
             str(entity.confidence),
@@ -1453,8 +1396,7 @@ class EntityLinker(BaseService):
         return hashlib.md5(key_string.encode()).hexdigest()
     
     def _serialize_linking_result(self, result: LinkingResult) -> Dict[str, Any]:
-        """Serialize linking result for caching"""
-        return {
+        """Serialize linking result for caching"""        return {
             'linked_entity': result.linked_entity.__dict__ if result.linked_entity else None,
             'confidence': result.confidence,
             'linking_strategy': result.linking_strategy.value,
@@ -1462,8 +1404,7 @@ class EntityLinker(BaseService):
         }
     
     def _deserialize_linking_result(self, data: Dict[str, Any]) -> LinkingResult:
-        """Deserialize linking result from cache"""
-        # This is a simplified version - full implementation would reconstruct all objects
+        """Deserialize linking result from cache"""        # This is a simplified version - full implementation would reconstruct all objects
         return LinkingResult(
             original_entity=None,  # Would need to be reconstructed
             linked_entity=EntityCandidate(**data['linked_entity']) if data['linked_entity'] else None,
@@ -1473,8 +1414,7 @@ class EntityLinker(BaseService):
         )
     
     def _update_linking_stats(self, result: LinkingResult):
-        """Update linking statistics"""
-        self.linking_stats['total_linkings'] += 1
+        """Update linking statistics"""        self.linking_stats['total_linkings'] += 1
         
         if result.is_linked:
             self.linking_stats['successful_linkings'] += 1
@@ -1501,8 +1441,7 @@ class EntityLinker(BaseService):
         context: Optional[str] = None,
         confidence_threshold: float = 0.5
     ) -> List[LinkingResult]:
-        """Link multiple entities in batch for efficiency"""
-        tasks = []
+        """Link multiple entities in batch for efficiency"""        tasks = []
         
         for entity in entities:
             task = self.link_entity(entity, context, None, confidence_threshold)
@@ -1516,8 +1455,7 @@ class EntityLinker(BaseService):
         return valid_results
     
     async def save_linking_cache(self):
-        """Save linking cache to disk"""
-        try:
+        """Save linking cache to disk"""        try:
             cache_path = '/cache/entity_linking.json'
             with open(cache_path, 'w') as f:
                 json.dump(self.linking_cache, f, indent=2)
@@ -1527,8 +1465,7 @@ class EntityLinker(BaseService):
             self.logger.error(f"Failed to save linking cache: {str(e)}")
     
     async def get_linking_statistics(self) -> Dict[str, Any]:
-        """Get entity linking statistics"""
-        return {
+        """Get entity linking statistics"""        return {
             **self.linking_stats,
             'knowledge_bases': {
                 kb_name: kb_data['total_entities']
@@ -1546,8 +1483,7 @@ class EntityLinker(BaseService):
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for entity linking service"""
-        return {
+        """Health check for entity linking service"""        return {
             'status': 'healthy',
             'knowledge_bases_loaded': len(self.knowledge_bases),
             'vector_indexes_available': len(self.vector_indexes),

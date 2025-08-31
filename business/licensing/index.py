@@ -1,5 +1,4 @@
-"""
-Licensing Module Index - Main entry point for IA Influencer Agent Licensing System
+"""Licensing Module Index - Main entry point for IA Influencer Agent Licensing System
 
 Provides centralized access to all licensing services, APIs, and business logic.
 This module serves as the primary interface for the comprehensive licensing
@@ -12,9 +11,7 @@ WARNING - COPYRIGHT PROTECTION:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 authorization from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
-"""
-
-from typing import Dict, List, Optional, Any
+"""from typing import Dict, List, Optional, Any
 from fastapi import FastAPI, HTTPException, Depends, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer
@@ -110,8 +107,7 @@ security = HTTPBearer()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Application lifespan management"""
-    logger.info("Initializing IA Influencer Agent Licensing System...")
+    """Application lifespan management"""    logger.info("Initializing IA Influencer Agent Licensing System...")
     
     # Initialize all licensing services
     try:
@@ -147,8 +143,7 @@ async def lifespan(app: FastAPI):
 # Create FastAPI application
 app = FastAPI(
     title="IA Influencer Agent - Professional Licensing System",
-    description="""
-    ## 🏢 Industrial-Grade Licensing & Rights Management Platform
+    description="""    ## 🏢 Industrial-Grade Licensing & Rights Management Platform
     
     **Created by: Fahed Mlaiel** <mlaiel@live.de>
     
@@ -195,8 +190,7 @@ licensing_services: Dict[str, Any] = {}
 
 
 def get_licensing_service(service_name: str):
-    """Get licensing service by name"""
-    if service_name not in licensing_services:
+    """Get licensing service by name"""    if service_name not in licensing_services:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Licensing service '{service_name}' not found"
@@ -207,8 +201,7 @@ def get_licensing_service(service_name: str):
 # Root endpoint
 @app.get("/")
 async def root():
-    """Root endpoint with system information"""
-    return {
+    """Root endpoint with system information"""    return {
         "system": "IA Influencer Agent - Professional Licensing System",
         "version": "1.0.0",
         "status": "operational",
@@ -222,8 +215,7 @@ async def root():
 # Health check endpoint
 @app.get("/health")
 async def health_check():
-    """System health check"""
-    try:
+    """System health check"""    try:
         service_health = {}
         for service_name, service in licensing_services.items():
             # Check service health if method exists
@@ -256,8 +248,7 @@ async def create_automated_license(
     license_request: LicenseRequest,
     current_user: dict = Depends(get_current_user)
 ):
-    """Create automated license with AI-powered optimization"""
-    try:
+    """Create automated license with AI-powered optimization"""    try:
         service = get_licensing_service("automated_licensing")
         result = await service.create_automated_license(license_request)
         return result
@@ -275,8 +266,7 @@ async def optimize_licensing_strategy(
     target_revenue: Optional[float] = None,
     current_user: dict = Depends(get_current_user)
 ):
-    """Optimize licensing strategy using AI analysis"""
-    try:
+    """Optimize licensing strategy using AI analysis"""    try:
         service = get_licensing_service("automated_licensing")
         result = await service.optimize_licensing_strategy(content_id, target_revenue)
         return result
@@ -295,8 +285,7 @@ async def report_copyright_violation(
     violation_report: ViolationReport,
     current_user: dict = Depends(get_current_user)
 ):
-    """Report copyright violation with automated enforcement"""
-    try:
+    """Report copyright violation with automated enforcement"""    try:
         service = get_licensing_service("copyright_enforcement")
         result = await service.process_violation_report(violation_report)
         return result
@@ -313,8 +302,7 @@ async def monitor_copyright_protection(
     content_id: str,
     current_user: dict = Depends(get_current_user)
 ):
-    """Monitor copyright protection status"""
-    try:
+    """Monitor copyright protection status"""    try:
         service = get_licensing_service("copyright_enforcement")
         result = await service.monitor_content_protection(content_id)
         return result
@@ -333,8 +321,7 @@ async def create_contract(
     contract_request: ContractRequest,
     current_user: dict = Depends(get_current_user)
 ):
-    """Create intelligent contract with AI-assisted terms"""
-    try:
+    """Create intelligent contract with AI-assisted terms"""    try:
         service = get_licensing_service("contract_management")
         result = await service.create_intelligent_contract(contract_request)
         return result
@@ -351,8 +338,7 @@ async def get_contract_status(
     contract_id: str,
     current_user: dict = Depends(get_current_user)
 ):
-    """Get contract status and performance metrics"""
-    try:
+    """Get contract status and performance metrics"""    try:
         service = get_licensing_service("contract_management")
         result = await service.get_contract_performance_metrics(contract_id)
         return result
@@ -371,8 +357,7 @@ async def optimize_distribution_strategy(
     distribution_request: DistributionRequest,
     current_user: dict = Depends(get_current_user)
 ):
-    """Optimize distribution strategy with AI-driven analysis"""
-    try:
+    """Optimize distribution strategy with AI-driven analysis"""    try:
         service = get_licensing_service("distribution_rights")
         result = await service.optimize_distribution_strategy(distribution_request)
         return result
@@ -391,8 +376,7 @@ async def calculate_revenue_distribution(
     sharing_request: RevenueSharingRequest,
     current_user: dict = Depends(get_current_user)
 ):
-    """Calculate intelligent revenue distribution"""
-    try:
+    """Calculate intelligent revenue distribution"""    try:
         service = get_licensing_service("revenue_sharing")
         result = await service.calculate_intelligent_revenue_distribution(sharing_request)
         return result
@@ -412,8 +396,7 @@ async def get_usage_analytics(
     scope: AnalyticsScope = AnalyticsScope.COMPREHENSIVE,
     current_user: dict = Depends(get_current_user)
 ):
-    """Get comprehensive usage analytics"""
-    try:
+    """Get comprehensive usage analytics"""    try:
         service = get_licensing_service("usage_analytics")
         result = await service.generate_comprehensive_usage_analytics(content_id, scope)
         return result
@@ -432,8 +415,7 @@ async def setup_integration(
     integration_request: IntegrationRequest,
     current_user: dict = Depends(get_current_user)
 ):
-    """Setup external system integration"""
-    try:
+    """Setup external system integration"""    try:
         service = get_licensing_service("integration_hub")
         result = await service.setup_integration(integration_request)
         return result
@@ -450,8 +432,7 @@ async def synchronize_data(
     integration_id: Optional[str] = None,
     current_user: dict = Depends(get_current_user)
 ):
-    """Synchronize licensing data across integrations"""
-    try:
+    """Synchronize licensing data across integrations"""    try:
         service = get_licensing_service("integration_hub")
         result = await service.synchronize_licensing_data(integration_id)
         return result
@@ -470,8 +451,7 @@ async def get_system_analytics(
     scope: str = "comprehensive",
     current_user: dict = Depends(get_current_user)
 ):
-    """Get comprehensive system analytics"""
-    try:
+    """Get comprehensive system analytics"""    try:
         analytics_data = {}
         
         # Collect analytics from all services
@@ -504,8 +484,7 @@ async def get_system_analytics(
 async def get_services_status(
     current_user: dict = Depends(get_current_user)
 ):
-    """Get status of all licensing services"""
-    return {
+    """Get status of all licensing services"""    return {
         "services": list(licensing_services.keys()),
         "total_services": len(licensing_services),
         "system_status": "operational",
@@ -517,8 +496,7 @@ async def get_services_status(
 # Error handlers
 @app.exception_handler(LicensingError)
 async def licensing_error_handler(request, exc: LicensingError):
-    """Handle licensing-specific errors"""
-    logger.error(f"Licensing error: {str(exc)}")
+    """Handle licensing-specific errors"""    logger.error(f"Licensing error: {str(exc)}")
     return HTTPException(
         status_code=status.HTTP_400_BAD_REQUEST,
         detail=f"Licensing error: {str(exc)}"
@@ -527,8 +505,7 @@ async def licensing_error_handler(request, exc: LicensingError):
 
 @app.exception_handler(Exception)
 async def general_error_handler(request, exc: Exception):
-    """Handle general errors"""
-    logger.error(f"Unexpected error: {str(exc)}")
+    """Handle general errors"""    logger.error(f"Unexpected error: {str(exc)}")
     return HTTPException(
         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         detail="An unexpected error occurred in the licensing system"

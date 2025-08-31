@@ -1,5 +1,4 @@
-"""
-Critical Query Optimizer for Ainflue Platform
+"""Critical Query Optimizer for Ainflue Platform
 ============================================
 
 Enhanced database query optimization focusing on critical business operations:
@@ -10,9 +9,7 @@ Enhanced database query optimization focusing on critical business operations:
 - Real-time monitoring and alerting queries
 
 Author: Database Optimization Team
-"""
-
-import asyncio
+"""import asyncio
 import time
 import logging
 from typing import Dict, List, Any, Optional, Tuple, Set
@@ -28,8 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 class CriticalQueryType(Enum):
-    """Critical business query categories"""
-    USER_AUTH = "user_authentication"
+    """Critical business query categories"""    USER_AUTH = "user_authentication"
     CONTENT_UPLOAD = "content_upload"
     FINGERPRINT_PROCESSING = "fingerprint_processing"
     REVENUE_ANALYTICS = "revenue_analytics"
@@ -40,8 +36,7 @@ class CriticalQueryType(Enum):
 
 @dataclass
 class QueryPerformanceTarget:
-    """Performance targets for critical queries"""
-    query_type: CriticalQueryType
+    """Performance targets for critical queries"""    query_type: CriticalQueryType
     max_execution_time_ms: int
     max_cpu_usage_percent: float
     max_memory_usage_mb: int
@@ -52,8 +47,7 @@ class QueryPerformanceTarget:
 
 @dataclass  
 class QueryOptimizationResult:
-    """Result of query optimization analysis"""
-    original_query: str
+    """Result of query optimization analysis"""    original_query: str
     optimized_query: str
     optimization_type: str
     estimated_improvement_percent: float
@@ -64,8 +58,7 @@ class QueryOptimizationResult:
 
 
 class CriticalQueryOptimizer:
-    """Enhanced query optimizer for critical business operations"""
-    
+    """Enhanced query optimizer for critical business operations"""    
     def __init__(self):
         self.performance_targets = self._define_performance_targets()
         self.query_patterns = self._define_critical_query_patterns()
@@ -73,8 +66,7 @@ class CriticalQueryOptimizer:
         self.cache_strategies = self._define_cache_strategies()
         
     def _define_performance_targets(self) -> Dict[CriticalQueryType, QueryPerformanceTarget]:
-        """Define performance targets for critical query types"""
-        return {
+        """Define performance targets for critical query types"""        return {
             CriticalQueryType.USER_AUTH: QueryPerformanceTarget(
                 query_type=CriticalQueryType.USER_AUTH,
                 max_execution_time_ms=50,
@@ -141,8 +133,7 @@ class CriticalQueryOptimizer:
         }
     
     def _define_critical_query_patterns(self) -> Dict[CriticalQueryType, List[str]]:
-        """Define SQL patterns for critical business operations"""
-        return {
+        """Define SQL patterns for critical business operations"""        return {
             CriticalQueryType.USER_AUTH: [
                 r"SELECT.*FROM users WHERE email.*AND password",
                 r"SELECT.*FROM user_sessions WHERE session_token",
@@ -188,8 +179,7 @@ class CriticalQueryOptimizer:
         }
     
     def _define_optimization_rules(self) -> Dict[str, Dict[str, Any]]:
-        """Define optimization rules for different query types"""
-        return {
+        """Define optimization rules for different query types"""        return {
             "user_auth_optimization": {
                 "patterns": [
                     r"SELECT \* FROM users",
@@ -254,8 +244,7 @@ class CriticalQueryOptimizer:
         }
     
     def _define_cache_strategies(self) -> Dict[CriticalQueryType, Dict[str, Any]]:
-        """Define caching strategies for critical queries"""
-        return {
+        """Define caching strategies for critical queries"""        return {
             CriticalQueryType.USER_AUTH: {
                 "cache_duration_seconds": 300,  # 5 minutes
                 "cache_size_mb": 50,
@@ -301,8 +290,7 @@ class CriticalQueryOptimizer:
         }
     
     def classify_query(self, query: str) -> Optional[CriticalQueryType]:
-        """Classify a query into critical business operation type"""
-        query_lower = query.lower()
+        """Classify a query into critical business operation type"""        query_lower = query.lower()
         
         for query_type, patterns in self.query_patterns.items():
             for pattern in patterns:
@@ -313,8 +301,7 @@ class CriticalQueryOptimizer:
     
     def analyze_query_performance(self, query: str, execution_time_ms: float, 
                                 cpu_usage: float, memory_usage_mb: float) -> Dict[str, Any]:
-        """Analyze query performance against targets"""
-        query_type = self.classify_query(query)
+        """Analyze query performance against targets"""        query_type = self.classify_query(query)
         
         if not query_type:
             return {
@@ -376,8 +363,7 @@ class CriticalQueryOptimizer:
         }
     
     def optimize_critical_query(self, query: str) -> QueryOptimizationResult:
-        """Optimize a critical business query"""
-        query_type = self.classify_query(query)
+        """Optimize a critical business query"""        query_type = self.classify_query(query)
         
         if not query_type:
             return QueryOptimizationResult(
@@ -445,8 +431,7 @@ class CriticalQueryOptimizer:
         )
     
     def generate_optimization_report(self, queries_analyzed: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Generate comprehensive optimization report"""
-        if not queries_analyzed:
+        """Generate comprehensive optimization report"""        if not queries_analyzed:
             return {"error": "No queries provided for analysis"}
         
         # Categorize queries by type

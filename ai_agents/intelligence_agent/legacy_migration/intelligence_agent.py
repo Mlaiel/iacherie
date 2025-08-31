@@ -1,5 +1,4 @@
-"""
-IA-Influencer Agent - Central Intelligence Agent
+"""IA-Influencer Agent - Central Intelligence Agent
 
 Master AI coordination system providing intelligent orchestration of all agents,
 decision-making, learning, and system optimization for content creators.
@@ -19,9 +18,7 @@ Copyright: 2025 - All Rights Reserved
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple, Callable
@@ -39,8 +36,7 @@ from ..base import BaseAgent
 
 
 class DecisionType(Enum):
-    """Types of intelligent decisions."""
-    CONTENT_OPTIMIZATION = "content_optimization"
+    """Types of intelligent decisions."""    CONTENT_OPTIMIZATION = "content_optimization"
     WORKFLOW_ROUTING = "workflow_routing"
     RESOURCE_ALLOCATION = "resource_allocation"
     QUALITY_CONTROL = "quality_control"
@@ -50,8 +46,7 @@ class DecisionType(Enum):
 
 
 class AgentStatus(Enum):
-    """Status of individual agents in the system."""
-    ACTIVE = "active"
+    """Status of individual agents in the system."""    ACTIVE = "active"
     BUSY = "busy"
     IDLE = "idle"
     ERROR = "error"
@@ -60,8 +55,7 @@ class AgentStatus(Enum):
 
 
 class SystemHealth(Enum):
-    """Overall system health status."""
-    EXCELLENT = "excellent"
+    """Overall system health status."""    EXCELLENT = "excellent"
     GOOD = "good"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -70,8 +64,7 @@ class SystemHealth(Enum):
 
 @dataclass
 class AgentMetrics:
-    """Performance metrics for individual agents."""
-    agent_id: str
+    """Performance metrics for individual agents."""    agent_id: str
     agent_type: str
     status: AgentStatus = AgentStatus.IDLE
     cpu_usage: float = 0.0
@@ -86,8 +79,7 @@ class AgentMetrics:
 
 @dataclass
 class Decision:
-    """Intelligent decision record."""
-    id: str
+    """Intelligent decision record."""    id: str
     decision_type: DecisionType
     context: Dict[str, Any]
     options_evaluated: List[Dict[str, Any]]
@@ -100,8 +92,7 @@ class Decision:
 
 @dataclass
 class LearningRecord:
-    """Machine learning training record."""
-    id: str
+    """Machine learning training record."""    id: str
     model_type: str
     training_data_size: int
     validation_accuracy: float
@@ -114,8 +105,7 @@ class LearningRecord:
 
 
 class IntelligenceAgent(BaseAgent):
-    """
-    Central Intelligence Agent for AI-powered system orchestration.
+    """    Central Intelligence Agent for AI-powered system orchestration.
     
     Provides comprehensive intelligent coordination including:
     - Multi-agent orchestration and load balancing
@@ -124,11 +114,9 @@ class IntelligenceAgent(BaseAgent):
     - Predictive analytics and trend forecasting
     - Automated system tuning and optimization
     - Real-time performance monitoring and alerts
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize the Intelligence Agent with advanced AI capabilities."""
-        super().__init__(config)
+        """Initialize the Intelligence Agent with advanced AI capabilities."""        super().__init__(config)
         
         # Core intelligence configuration
         self.max_concurrent_decisions = config.get('max_concurrent_decisions', 100)
@@ -176,8 +164,7 @@ class IntelligenceAgent(BaseAgent):
         self.logger.info("Intelligence Agent initialized with advanced AI capabilities")
     
     def _initialize_decision_models(self):
-        """Initialize machine learning models for decision-making."""
-        # In a real implementation, these would be trained ML models
+        """Initialize machine learning models for decision-making."""        # In a real implementation, these would be trained ML models
         self.decision_models = {
             DecisionType.CONTENT_OPTIMIZATION: self._create_content_optimization_model(),
             DecisionType.WORKFLOW_ROUTING: self._create_workflow_routing_model(),
@@ -187,8 +174,7 @@ class IntelligenceAgent(BaseAgent):
         }
     
     def _initialize_optimization_rules(self):
-        """Initialize system optimization rules."""
-        self.optimization_rules = [
+        """Initialize system optimization rules."""        self.optimization_rules = [
             {
                 'name': 'load_balancing',
                 'condition': lambda metrics: max(m.cpu_usage for m in metrics.values()) > 80,
@@ -210,8 +196,7 @@ class IntelligenceAgent(BaseAgent):
         ]
     
     async def register_agent(self, agent_id: str, agent_type: str, capabilities: List[str]) -> bool:
-        """
-        Register an agent with the intelligence system.
+        """        Register an agent with the intelligence system.
         
         Args:
             agent_id: Unique agent identifier
@@ -220,8 +205,7 @@ class IntelligenceAgent(BaseAgent):
             
         Returns:
             bool: Registration success status
-        """
-        try:
+        """        try:
             if agent_id in self.registered_agents:
                 self.logger.warning(f"Agent {agent_id} already registered, updating...")
             
@@ -257,8 +241,7 @@ class IntelligenceAgent(BaseAgent):
         context: Dict[str, Any],
         options: List[Dict[str, Any]]
     ) -> Decision:
-        """
-        Make an intelligent decision using AI models and historical data.
+        """        Make an intelligent decision using AI models and historical data.
         
         Args:
             decision_type: Type of decision to make
@@ -267,8 +250,7 @@ class IntelligenceAgent(BaseAgent):
             
         Returns:
             Decision: The intelligent decision with confidence score
-        """
-        try:
+        """        try:
             decision_id = str(uuid.uuid4())
             
             # Get the appropriate decision model
@@ -319,16 +301,14 @@ class IntelligenceAgent(BaseAgent):
             raise
     
     async def optimize_agent_performance(self, agent_id: str) -> Dict[str, Any]:
-        """
-        Optimize individual agent performance based on historical data.
+        """        Optimize individual agent performance based on historical data.
         
         Args:
             agent_id: Target agent to optimize
             
         Returns:
             Dict[str, Any]: Optimization results and recommendations
-        """
-        try:
+        """        try:
             if agent_id not in self.registered_agents:
                 raise ValueError(f"Agent not registered: {agent_id}")
             
@@ -368,8 +348,7 @@ class IntelligenceAgent(BaseAgent):
         metrics: List[str],
         prediction_horizon_hours: int = 24
     ) -> Dict[str, Any]:
-        """
-        Predict system trends and performance metrics using ML models.
+        """        Predict system trends and performance metrics using ML models.
         
         Args:
             metrics: List of metrics to predict
@@ -377,8 +356,7 @@ class IntelligenceAgent(BaseAgent):
             
         Returns:
             Dict[str, Any]: Trend predictions with confidence intervals
-        """
-        try:
+        """        try:
             predictions = {}
             
             for metric in metrics:
@@ -441,8 +419,7 @@ class IntelligenceAgent(BaseAgent):
         required_capabilities: List[str],
         priority: int = 5
     ) -> Dict[str, Any]:
-        """
-        Intelligently coordinate agents for complex workflow execution.
+        """        Intelligently coordinate agents for complex workflow execution.
         
         Args:
             workflow_id: Unique workflow identifier
@@ -451,8 +428,7 @@ class IntelligenceAgent(BaseAgent):
             
         Returns:
             Dict[str, Any]: Workflow coordination plan and assignments
-        """
-        try:
+        """        try:
             # Find suitable agents for each capability
             capability_assignments = {}
             for capability in required_capabilities:
@@ -492,8 +468,7 @@ class IntelligenceAgent(BaseAgent):
             raise
     
     async def _continuous_monitoring(self):
-        """Continuous monitoring of all registered agents."""
-        while True:
+        """Continuous monitoring of all registered agents."""        while True:
             try:
                 for agent_id, metrics in self.registered_agents.items():
                     # Simulate metrics collection (in real implementation, would query agents)
@@ -526,8 +501,7 @@ class IntelligenceAgent(BaseAgent):
                 await asyncio.sleep(60)  # Back off on error
     
     async def _continuous_optimization(self):
-        """Continuous system optimization based on performance data."""
-        while True:
+        """Continuous system optimization based on performance data."""        while True:
             try:
                 # Check optimization rules
                 for rule in sorted(self.optimization_rules, key=lambda r: r['priority']):
@@ -547,8 +521,7 @@ class IntelligenceAgent(BaseAgent):
     
     # Helper methods for the intelligence engine
     def _create_content_optimization_model(self):
-        """Create ML model for content optimization decisions."""
-        # Placeholder for ML model - in real implementation would be trained model
+        """Create ML model for content optimization decisions."""        # Placeholder for ML model - in real implementation would be trained model
         return {
             'model_type': 'content_optimization',
             'features': ['content_type', 'audience_size', 'engagement_rate', 'time_of_day'],
@@ -556,40 +529,35 @@ class IntelligenceAgent(BaseAgent):
         }
     
     def _create_workflow_routing_model(self):
-        """Create ML model for workflow routing decisions."""
-        return {
+        """Create ML model for workflow routing decisions."""        return {
             'model_type': 'workflow_routing',
             'features': ['agent_load', 'capability_match', 'response_time', 'success_rate'],
             'weights': {'load': 0.25, 'capability': 0.35, 'speed': 0.2, 'reliability': 0.2}
         }
     
     def _create_resource_allocation_model(self):
-        """Create ML model for resource allocation decisions."""
-        return {
+        """Create ML model for resource allocation decisions."""        return {
             'model_type': 'resource_allocation',
             'features': ['current_usage', 'predicted_demand', 'cost', 'performance_impact'],
             'weights': {'usage': 0.3, 'demand': 0.3, 'cost': 0.2, 'performance': 0.2}
         }
     
     def _create_quality_control_model(self):
-        """Create ML model for quality control decisions."""
-        return {
+        """Create ML model for quality control decisions."""        return {
             'model_type': 'quality_control',
             'features': ['accuracy_score', 'processing_time', 'resource_usage', 'error_rate'],
             'weights': {'accuracy': 0.4, 'speed': 0.2, 'efficiency': 0.2, 'reliability': 0.2}
         }
     
     def _create_performance_tuning_model(self):
-        """Create ML model for performance tuning decisions."""
-        return {
+        """Create ML model for performance tuning decisions."""        return {
             'model_type': 'performance_tuning',
             'features': ['latency', 'throughput', 'resource_utilization', 'error_rate'],
             'weights': {'latency': 0.3, 'throughput': 0.3, 'utilization': 0.2, 'errors': 0.2}
         }
     
     async def _evaluate_option(self, model: Dict, context: Dict, option: Dict) -> float:
-        """Evaluate an option using the AI model."""
-        # Simplified scoring based on weighted features
+        """Evaluate an option using the AI model."""        # Simplified scoring based on weighted features
         score = 0.0
         weights = model.get('weights', {})
         
@@ -601,8 +569,7 @@ class IntelligenceAgent(BaseAgent):
         return min(100.0, max(0.0, score))
     
     def _calculate_confidence(self, context: Dict, option: Dict) -> float:
-        """Calculate confidence score for a decision option."""
-        # Simplified confidence calculation
+        """Calculate confidence score for a decision option."""        # Simplified confidence calculation
         base_confidence = 0.8
         
         # Adjust based on data quality
@@ -619,8 +586,7 @@ class IntelligenceAgent(BaseAgent):
         chosen_option: Dict,
         score: float
     ) -> str:
-        """Generate human-readable reasoning for the decision."""
-        reasons = [
+        """Generate human-readable reasoning for the decision."""        reasons = [
             f"Decision type: {decision_type.value}",
             f"Option scored {score:.2f} out of 100",
             f"Context included {len(context)} factors"
@@ -635,8 +601,7 @@ class IntelligenceAgent(BaseAgent):
         return ". ".join(reasons) + "."
     
     async def _collect_agent_metrics(self, agent_id: str) -> AgentMetrics:
-        """Collect current metrics for an agent."""
-        if agent_id not in self.registered_agents:
+        """Collect current metrics for an agent."""        if agent_id not in self.registered_agents:
             raise ValueError(f"Agent not registered: {agent_id}")
         
         # In a real implementation, this would query the actual agent
@@ -660,8 +625,7 @@ class IntelligenceAgent(BaseAgent):
         return current_metrics
     
     async def _check_agent_alerts(self, agent_id: str, metrics: AgentMetrics):
-        """Check if agent metrics trigger any alerts."""
-        alerts = []
+        """Check if agent metrics trigger any alerts."""        alerts = []
         
         if metrics.cpu_usage > self.alert_thresholds['cpu_usage']:
             alerts.append(f"High CPU usage: {metrics.cpu_usage:.1f}%")
@@ -679,8 +643,7 @@ class IntelligenceAgent(BaseAgent):
             self.logger.warning(f"Agent {agent_id} alerts: {', '.join(alerts)}")
     
     async def _calculate_system_health(self) -> float:
-        """Calculate overall system health score."""
-        if not self.registered_agents:
+        """Calculate overall system health score."""        if not self.registered_agents:
             return 100.0
         
         health_scores = []
@@ -697,8 +660,7 @@ class IntelligenceAgent(BaseAgent):
         return statistics.mean(health_scores)
     
     async def _execute_optimization_rule(self, rule: Dict[str, Any]):
-        """Execute an optimization rule."""
-        try:
+        """Execute an optimization rule."""        try:
             action = rule['action']
             self.logger.info(f"Executing optimization rule: {rule['name']}")
             
@@ -713,8 +675,7 @@ class IntelligenceAgent(BaseAgent):
             self.logger.error(f"Failed to execute optimization rule {rule['name']}: {str(e)}")
     
     async def _redistribute_agent_load(self):
-        """Redistribute load among agents."""
-        # Find overloaded and underloaded agents
+        """Redistribute load among agents."""        # Find overloaded and underloaded agents
         overloaded = [aid for aid, metrics in self.registered_agents.items() if metrics.cpu_usage > 80]
         underloaded = [aid for aid, metrics in self.registered_agents.items() if metrics.cpu_usage < 30]
         
@@ -723,13 +684,11 @@ class IntelligenceAgent(BaseAgent):
             # In a real implementation, this would reassign tasks
     
     async def _scale_up_resources(self):
-        """Scale up system resources."""
-        self.logger.info("Scaling up system resources")
+        """Scale up system resources."""        self.logger.info("Scaling up system resources")
         # In a real implementation, this would trigger infrastructure scaling
     
     async def _perform_error_recovery(self):
-        """Perform error recovery procedures."""
-        error_agents = [aid for aid, metrics in self.registered_agents.items() if metrics.error_count > 10]
+        """Perform error recovery procedures."""        error_agents = [aid for aid, metrics in self.registered_agents.items() if metrics.error_count > 10]
         
         for agent_id in error_agents:
             self.logger.info(f"Performing error recovery for agent: {agent_id}")
@@ -737,8 +696,7 @@ class IntelligenceAgent(BaseAgent):
             self.registered_agents[agent_id].error_count = 0
     
     async def _update_decision_models(self):
-        """Update decision models based on historical performance."""
-        if len(self.decision_history) < 100:
+        """Update decision models based on historical performance."""        if len(self.decision_history) < 100:
             return
         
         self.logger.info("Updating decision models based on recent performance")
@@ -761,8 +719,7 @@ class IntelligenceAgent(BaseAgent):
                         model['weights'] = {k: v * 1.01 for k, v in model['weights'].items()}
     
     async def _analyze_agent_performance(self, agent_id: str, health_history: List[Dict]) -> Dict[str, Any]:
-        """Analyze agent performance patterns."""
-        if len(health_history) < 5:
+        """Analyze agent performance patterns."""        if len(health_history) < 5:
             return {'status': 'insufficient_data'}
         
         # Extract metrics over time
@@ -785,8 +742,7 @@ class IntelligenceAgent(BaseAgent):
         agent_metrics: AgentMetrics, 
         performance_analysis: Dict[str, Any]
     ) -> List[str]:
-        """Generate optimization recommendations for an agent."""
-        recommendations = []
+        """Generate optimization recommendations for an agent."""        recommendations = []
         
         if performance_analysis.get('cpu_trend') == 'increasing':
             recommendations.append("Monitor CPU usage - consider load balancing")
@@ -806,8 +762,7 @@ class IntelligenceAgent(BaseAgent):
         return recommendations
     
     async def _apply_optimizations(self, agent_id: str, recommendations: List[str]) -> List[str]:
-        """Apply automatic optimizations based on recommendations."""
-        applied = []
+        """Apply automatic optimizations based on recommendations."""        applied = []
         
         for recommendation in recommendations:
             if "load balancing" in recommendation.lower():
@@ -823,8 +778,7 @@ class IntelligenceAgent(BaseAgent):
         return applied
     
     def _calculate_expected_improvement(self, recommendations: List[str]) -> float:
-        """Calculate expected performance improvement from recommendations."""
-        improvement_weights = {
+        """Calculate expected performance improvement from recommendations."""        improvement_weights = {
             'load balancing': 0.2,
             'memory optimization': 0.15,
             'response time optimization': 0.25,
@@ -840,8 +794,7 @@ class IntelligenceAgent(BaseAgent):
         return min(0.5, total_improvement)  # Cap at 50% improvement
     
     async def _find_agents_with_capability(self, capability: str) -> List[str]:
-        """Find agents that have a specific capability."""
-        # In a real implementation, this would check agent capabilities
+        """Find agents that have a specific capability."""        # In a real implementation, this would check agent capabilities
         # For now, return agents that are available
         available_agents = [
             agent_id for agent_id, metrics in self.registered_agents.items()
@@ -852,8 +805,7 @@ class IntelligenceAgent(BaseAgent):
         return available_agents[:3] if available_agents else []
     
     async def _select_optimal_agent(self, suitable_agents: List[str], priority: int) -> str:
-        """Select the optimal agent based on current performance."""
-        if not suitable_agents:
+        """Select the optimal agent based on current performance."""        if not suitable_agents:
             raise RuntimeError("No suitable agents available")
         
         # Score agents based on performance metrics
@@ -880,8 +832,7 @@ class IntelligenceAgent(BaseAgent):
         capability_assignments: Dict[str, str], 
         priority: int
     ) -> Dict[str, Any]:
-        """Create detailed execution plan for workflow."""
-        return {
+        """Create detailed execution plan for workflow."""        return {
             'workflow_id': workflow_id,
             'total_steps': len(capability_assignments),
             'estimated_duration_minutes': len(capability_assignments) * 2,
@@ -899,8 +850,7 @@ class IntelligenceAgent(BaseAgent):
         capability_assignments: Dict[str, str], 
         workflow_id: str
     ) -> Dict[str, Any]:
-        """Reserve resources on assigned agents."""
-        reservations = {}
+        """Reserve resources on assigned agents."""        reservations = {}
         
         for capability, agent_id in capability_assignments.items():
             # Simulate resource reservation
@@ -917,13 +867,11 @@ class IntelligenceAgent(BaseAgent):
         return reservations
     
     def _estimate_workflow_completion(self, execution_plan: Dict[str, Any]) -> datetime:
-        """Estimate workflow completion time."""
-        estimated_minutes = execution_plan.get('estimated_duration_minutes', 10)
+        """Estimate workflow completion time."""        estimated_minutes = execution_plan.get('estimated_duration_minutes', 10)
         return datetime.now() + timedelta(minutes=estimated_minutes)
     
     def _calculate_prediction_accuracy(self, metric: str) -> float:
-        """Calculate prediction accuracy for a metric."""
-        # In a real implementation, this would compare predictions with actual outcomes
+        """Calculate prediction accuracy for a metric."""        # In a real implementation, this would compare predictions with actual outcomes
         # For now, return a simulated accuracy based on metric type
         accuracy_map = {
             'cpu_usage': 0.85,
@@ -936,8 +884,7 @@ class IntelligenceAgent(BaseAgent):
         return accuracy_map.get(metric, 0.75)
     
     def _get_trend_recommendation(self, metric: str, slope: float, predicted_value: float) -> str:
-        """Get recommendation based on trend analysis."""
-        if slope > 0.1:
+        """Get recommendation based on trend analysis."""        if slope > 0.1:
             return f"{metric} trending up significantly - monitor for capacity issues"
         elif slope < -0.1:
             return f"{metric} declining - investigate potential improvements"
@@ -947,8 +894,7 @@ class IntelligenceAgent(BaseAgent):
             return f"{metric} stable - maintain current configuration"
     
     async def get_intelligence_analytics(self) -> Dict[str, Any]:
-        """Get comprehensive intelligence system analytics."""
-        total_decisions = len(self.decision_history)
+        """Get comprehensive intelligence system analytics."""        total_decisions = len(self.decision_history)
         avg_confidence = statistics.mean(
             [d.confidence_score for d in self.decision_history.values()]
         ) if self.decision_history else 0.0
@@ -991,8 +937,7 @@ class IntelligenceAgent(BaseAgent):
         }
     
     def _get_recent_decision_trends(self) -> Dict[str, str]:
-        """Get trends in recent decisions."""
-        recent_decisions = list(self.decision_history.values())[-10:]
+        """Get trends in recent decisions."""        recent_decisions = list(self.decision_history.values())[-10:]
         if len(recent_decisions) < 2:
             return {'trend': 'insufficient_data'}
         
@@ -1017,13 +962,11 @@ class IntelligenceAgent(BaseAgent):
         }
     
     def _count_recent_optimizations(self) -> int:
-        """Count optimizations applied in the last 24 hours."""
-        # In a real implementation, this would track actual optimizations
+        """Count optimizations applied in the last 24 hours."""        # In a real implementation, this would track actual optimizations
         return len([rule for rule in self.optimization_rules if rule.get('last_applied')])
     
     def _calculate_performance_improvement_rate(self) -> float:
-        """Calculate rate of performance improvement over time."""
-        # Simulate improvement rate based on system health trend
+        """Calculate rate of performance improvement over time."""        # Simulate improvement rate based on system health trend
         if self.system_health_score > 90:
             return 0.02  # 2% improvement
         elif self.system_health_score > 80:
@@ -1032,15 +975,12 @@ class IntelligenceAgent(BaseAgent):
             return -0.01  # -1% (degradation)
     
     def _calculate_average_model_accuracy(self) -> float:
-        """Calculate average accuracy across all models."""
-        # In a real implementation, this would be based on actual model validation
+        """Calculate average accuracy across all models."""        # In a real implementation, this would be based on actual model validation
         return 0.82  # 82% average accuracy
     
     def _calculate_system_uptime(self) -> float:
-        """Calculate system uptime in hours."""
-        # This would track actual system start time
+        """Calculate system uptime in hours."""        # This would track actual system start time
         return 24.5  # Simulate 24.5 hours uptime
     
     def _get_last_optimization_time(self) -> str:
-        """Get timestamp of last optimization."""
-        return (datetime.now() - timedelta(minutes=45)).isoformat()
+        """Get timestamp of last optimization."""        return (datetime.now() - timedelta(minutes=45)).isoformat()

@@ -1,5 +1,4 @@
-"""
-Business Creator Module - Professional Content Creator Management System
+"""Business Creator Module - Professional Content Creator Management System
 
 Ultra-sophisticated creator management platform designed for multi-format content creators 
 including musicians, bloggers, photographers, influencers, and comedians. This module 
@@ -17,9 +16,7 @@ without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICT
 and will result in immediate legal action under German and International copyright laws.
 
 Contact mlaiel@live.de for licensing inquiries only.
-"""
-
-# Core creator management components
+"""# Core creator management components
 from .profile_manager import (
     CreatorProfileManager,
     CreatorProfile,

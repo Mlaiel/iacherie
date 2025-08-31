@@ -1,29 +1,24 @@
-"""
-Payment APIs Configuration - Financial Services & Payment Processor Integration
+"""Payment APIs Configuration - Financial Services & Payment Processor Integration
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module configures payment processing APIs for automated monetization,
 revenue tracking, and financial transactions across multiple providers.
-"""
-
-import os
+"""import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Any, Optional
 from enum import Enum
 from decimal import Decimal
 
 class PaymentProviderType(Enum):
-    """Payment provider types"""
-    CREDIT_CARD = "credit_card"
+    """Payment provider types"""    CREDIT_CARD = "credit_card"
     DIGITAL_WALLET = "digital_wallet"
     BANK_TRANSFER = "bank_transfer"
     CRYPTOCURRENCY = "cryptocurrency"
     MONEY_TRANSFER = "money_transfer"
 
 class PaymentMethod(Enum):
-    """Supported payment methods"""
-    CARD = "card"
+    """Supported payment methods"""    CARD = "card"
     PAYPAL = "paypal"
     APPLE_PAY = "apple_pay"
     GOOGLE_PAY = "google_pay"
@@ -34,8 +29,7 @@ class PaymentMethod(Enum):
 
 @dataclass
 class PaymentAPIConfig:
-    """Configuration class for payment APIs"""
-    provider_name: str
+    """Configuration class for payment APIs"""    provider_name: str
     provider_type: PaymentProviderType
     base_url: str
     api_version: str
@@ -82,8 +76,7 @@ class PaymentAPIConfig:
     environments: Dict[str, Dict[str, Any]] = field(default_factory=dict)
     
     def get_environment_config(self, environment: str = "production") -> Dict[str, Any]:
-        """Get configuration for specific environment"""
-        base_config = self.__dict__.copy()
+        """Get configuration for specific environment"""        base_config = self.__dict__.copy()
         env_config = self.environments.get(environment, {})
         base_config.update(env_config)
         return base_config
@@ -390,20 +383,16 @@ PAYMENT_CONFIGS: Dict[str, PaymentAPIConfig] = {
 }
 
 def get_payment_config(provider: str) -> Optional[PaymentAPIConfig]:
-    """Get payment configuration by provider name"""
-    return PAYMENT_CONFIGS.get(provider.lower())
+    """Get payment configuration by provider name"""    return PAYMENT_CONFIGS.get(provider.lower())
 
 def get_providers_by_type(provider_type: PaymentProviderType) -> List[PaymentAPIConfig]:
-    """Get all payment providers of specific type"""
-    return [config for config in PAYMENT_CONFIGS.values() 
+    """Get all payment providers of specific type"""    return [config for config in PAYMENT_CONFIGS.values() 
             if config.provider_type == provider_type]
 
 def get_providers_by_currency(currency: str) -> List[PaymentAPIConfig]:
-    """Get payment providers supporting specific currency"""
-    return [config for config in PAYMENT_CONFIGS.values() 
+    """Get payment providers supporting specific currency"""    return [config for config in PAYMENT_CONFIGS.values() 
             if currency.upper() in config.supported_currencies]
 
 def get_providers_by_country(country: str) -> List[PaymentAPIConfig]:
-    """Get payment providers supporting specific country"""
-    return [config for config in PAYMENT_CONFIGS.values() 
+    """Get payment providers supporting specific country"""    return [config for config in PAYMENT_CONFIGS.values() 
             if country.upper() in config.supported_countries]

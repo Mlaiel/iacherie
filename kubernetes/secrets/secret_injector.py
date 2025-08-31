@@ -1,12 +1,9 @@
-"""
-IA Influencer Agent - Secret Injector
+"""IA Influencer Agent - Secret Injector
 Runtime secret injection for containers and applications
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""
-
-import os
+"""import os
 import logging
 import json
 import tempfile
@@ -31,8 +28,7 @@ logger = logging.getLogger(__name__)
 
 
 class InjectionMethod(Enum):
-    """Secret injection methods."""
-    ENVIRONMENT_VARIABLES = "environment_variables"
+    """Secret injection methods."""    ENVIRONMENT_VARIABLES = "environment_variables"
     FILES = "files"
     VOLUME_MOUNTS = "volume_mounts"
     INIT_CONTAINER = "init_container"
@@ -41,8 +37,7 @@ class InjectionMethod(Enum):
 
 
 class InjectionStatus(Enum):
-    """Injection status."""
-    PENDING = "pending"
+    """Injection status."""    PENDING = "pending"
     INJECTING = "injecting"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -51,8 +46,7 @@ class InjectionStatus(Enum):
 
 @dataclass
 class SecretMapping:
-    """Secret mapping configuration."""
-    vault_path: str
+    """Secret mapping configuration."""    vault_path: str
     target_key: str
     target_path: Optional[str] = None
     environment_variable: Optional[str] = None
@@ -64,8 +58,7 @@ class SecretMapping:
 
 @dataclass
 class InjectionConfig:
-    """Secret injection configuration."""
-    application_name: str
+    """Secret injection configuration."""    application_name: str
     namespace: str = "default"
     method: InjectionMethod = InjectionMethod.ENVIRONMENT_VARIABLES
     secret_mappings: List[SecretMapping] = field(default_factory=list)
@@ -77,8 +70,7 @@ class InjectionConfig:
 
 @dataclass
 class InjectionResult:
-    """Secret injection result."""
-    success: bool
+    """Secret injection result."""    success: bool
     injected_secrets: List[str] = field(default_factory=list)
     failed_secrets: List[str] = field(default_factory=list)
     error: Optional[str] = None
@@ -87,24 +79,20 @@ class InjectionResult:
 
 
 class SecretInjector:
-    """
-    Enterprise secret injector for runtime secret provisioning with support for
+    """    Enterprise secret injector for runtime secret provisioning with support for
     multiple injection methods, automatic refresh, and Kubernetes integration.
-    """
-    
+    """    
     def __init__(
         self,
         vault_manager: VaultManager,
         config: SecretsConfig = None
     ):
-        """
-        Initialize secret injector.
+        """        Initialize secret injector.
         
         Args:
             vault_manager: Configured VaultManager instance
             config: Optional secrets configuration
-        """
-        self.vault = vault_manager
+        """        self.vault = vault_manager
         self.config = config or SecretsConfig()
         self.security = SecurityUtils()
         self.k8s_utils = KubernetesUtils()
@@ -124,16 +112,14 @@ class SecretInjector:
         self,
         config: InjectionConfig
     ) -> str:
-        """
-        Register secret injection configuration.
+        """        Register secret injection configuration.
         
         Args:
             config: Injection configuration
             
         Returns:
             str: Injection ID
-        """
-        try:
+        """        try:
             injection_id = f"{config.application_name}_{config.namespace}"
             self.injection_configs[injection_id] = config
             
@@ -153,8 +139,7 @@ class SecretInjector:
         injection_id: str,
         force_refresh: bool = False
     ) -> InjectionResult:
-        """
-        Inject secrets for registered configuration.
+        """        Inject secrets for registered configuration.
         
         Args:
             injection_id: Injection configuration ID
@@ -162,8 +147,7 @@ class SecretInjector:
             
         Returns:
             InjectionResult: Result of injection operation
-        """
-        try:
+        """        try:
             config = self.injection_configs.get(injection_id)
             if not config:
                 raise ValueError(f"Injection config not found: {injection_id}")
@@ -241,8 +225,7 @@ class SecretInjector:
         injection_id: str,
         cleanup: bool = True
     ) -> bool:
-        """
-        Remove secret injection configuration.
+        """        Remove secret injection configuration.
         
         Args:
             injection_id: Injection configuration ID
@@ -250,8 +233,7 @@ class SecretInjector:
             
         Returns:
             bool: True if successful
-        """
-        try:
+        """        try:
             config = self.injection_configs.get(injection_id)
             if not config:
                 logger.warning(f"Injection config not found: {injection_id}")
@@ -280,16 +262,14 @@ class SecretInjector:
             return False
     
     def get_injection_status(self, injection_id: str) -> Optional[Dict[str, Any]]:
-        """
-        Get injection status.
+        """        Get injection status.
         
         Args:
             injection_id: Injection configuration ID
             
         Returns:
             dict: Injection status information
-        """
-        config = self.injection_configs.get(injection_id)
+        """        config = self.injection_configs.get(injection_id)
         result = self.active_injections.get(injection_id)
         
         if not config:
@@ -310,13 +290,11 @@ class SecretInjector:
         }
     
     def list_injections(self) -> List[Dict[str, Any]]:
-        """
-        List all registered injections.
+        """        List all registered injections.
         
         Returns:
             list: List of injection status information
-        """
-        return [
+        """        return [
             self.get_injection_status(injection_id)
             for injection_id in self.injection_configs.keys()
         ]
@@ -326,8 +304,7 @@ class SecretInjector:
         config: InjectionConfig,
         secrets_data: Dict[str, Any]
     ) -> InjectionResult:
-        """Inject secrets as environment variables."""
-        try:
+        """Inject secrets as environment variables."""        try:
             injected_secrets = []
             
             for target_key, secret_info in secrets_data.items():
@@ -373,8 +350,7 @@ class SecretInjector:
         config: InjectionConfig,
         secrets_data: Dict[str, Any]
     ) -> InjectionResult:
-        """Inject secrets as files."""
-        try:
+        """Inject secrets as files."""        try:
             injected_secrets = []
             
             for target_key, secret_info in secrets_data.items():
@@ -426,8 +402,7 @@ class SecretInjector:
         config: InjectionConfig,
         secrets_data: Dict[str, Any]
     ) -> InjectionResult:
-        """Inject secrets as volume mounts."""
-        try:
+        """Inject secrets as volume mounts."""        try:
             # Create temporary directory for secrets
             secrets_dir = Path(f"/tmp/secrets/{config.application_name}")
             secrets_dir.mkdir(parents=True, exist_ok=True)
@@ -474,8 +449,7 @@ class SecretInjector:
         config: InjectionConfig,
         secrets_data: Dict[str, Any]
     ) -> InjectionResult:
-        """Inject secrets using init container."""
-        try:
+        """Inject secrets using init container."""        try:
             # Create init container script
             script_content = self._generate_init_script(config, secrets_data)
             
@@ -508,8 +482,7 @@ class SecretInjector:
         config: InjectionConfig,
         secrets_data: Dict[str, Any]
     ) -> InjectionResult:
-        """Inject secrets using sidecar container."""
-        try:
+        """Inject secrets using sidecar container."""        try:
             # Create sidecar configuration
             sidecar_config = self._generate_sidecar_config(config, secrets_data)
             
@@ -534,8 +507,7 @@ class SecretInjector:
         config: InjectionConfig,
         secrets_data: Dict[str, Any]
     ) -> InjectionResult:
-        """Inject secrets as Kubernetes secrets."""
-        try:
+        """Inject secrets as Kubernetes secrets."""        try:
             injected_secrets = []
             
             # Create Kubernetes secret for each mapping
@@ -574,8 +546,7 @@ class SecretInjector:
             return InjectionResult(success=False, error=str(e))
     
     def _apply_template(self, template: str, secret_data: Dict[str, Any]) -> str:
-        """Apply template to secret data."""
-        try:
+        """Apply template to secret data."""        try:
             # Simple template replacement
             content = template
             for key, value in secret_data.items():
@@ -593,8 +564,7 @@ class SecretInjector:
         config: InjectionConfig,
         secrets_data: Dict[str, Any]
     ) -> str:
-        """Generate init container script."""
-        script_lines = [
+        """Generate init container script."""        script_lines = [
             "#!/bin/bash",
             "set -e",
             "echo 'Initializing secrets...'",
@@ -636,8 +606,7 @@ class SecretInjector:
         config: InjectionConfig,
         secrets_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate sidecar container configuration."""
-        return {
+        """Generate sidecar container configuration."""        return {
             'name': f"{config.application_name}-sidecar",
             'image': 'alpine:latest',
             'command': ['/bin/sh'],
@@ -662,8 +631,7 @@ class SecretInjector:
         namespace: str,
         data: Dict[str, str]
     ) -> None:
-        """Create Kubernetes ConfigMap."""
-        try:
+        """Create Kubernetes ConfigMap."""        try:
             v1 = client.CoreV1Api()
             
             configmap = client.V1ConfigMap(
@@ -689,8 +657,7 @@ class SecretInjector:
         namespace: str,
         data: Dict[str, str]
     ) -> None:
-        """Create Kubernetes Secret."""
-        try:
+        """Create Kubernetes Secret."""        try:
             v1 = client.CoreV1Api()
             
             # Encode data to base64
@@ -721,8 +688,7 @@ class SecretInjector:
         config: InjectionConfig,
         configmap_name: str
     ) -> None:
-        """Add init container to deployment."""
-        try:
+        """Add init container to deployment."""        try:
             apps_v1 = client.AppsV1Api()
             
             # Get current deployment
@@ -784,8 +750,7 @@ class SecretInjector:
         config: InjectionConfig,
         sidecar_config: Dict[str, Any]
     ) -> None:
-        """Add sidecar container to deployment."""
-        try:
+        """Add sidecar container to deployment."""        try:
             apps_v1 = client.AppsV1Api()
             
             # Get current deployment
@@ -814,8 +779,7 @@ class SecretInjector:
             raise
     
     def _cleanup_injection(self, config: InjectionConfig) -> None:
-        """Clean up injected secrets."""
-        try:
+        """Clean up injected secrets."""        try:
             if config.method == InjectionMethod.ENVIRONMENT_VARIABLES:
                 # Remove environment variables
                 for mapping in config.secret_mappings:
@@ -842,8 +806,7 @@ class SecretInjector:
             logger.error(f"Cleanup failed: {e}")
     
     def _start_auto_refresh(self, injection_id: str) -> None:
-        """Start auto-refresh thread for injection."""
-        def refresh_loop():
+        """Start auto-refresh thread for injection."""        def refresh_loop():
             config = self.injection_configs[injection_id]
             while injection_id in self.injection_configs:
                 try:
@@ -863,8 +826,7 @@ class SecretInjector:
         result: InjectionResult,
         status: str
     ) -> None:
-        """Send injection notification."""
-        try:
+        """Send injection notification."""        try:
             config = self.injection_configs[injection_id]
             
             notification_data = {
@@ -888,8 +850,7 @@ class SecretInjector:
             logger.error(f"Failed to send injection notification: {e}")
     
     def _initialize_kubernetes(self) -> None:
-        """Initialize Kubernetes client."""
-        try:
+        """Initialize Kubernetes client."""        try:
             if os.path.exists('/var/run/secrets/kubernetes.io/serviceaccount'):
                 # Running inside cluster
                 config.load_incluster_config()
@@ -904,12 +865,10 @@ class SecretInjector:
 
 
 class SecretTemplate:
-    """Template processor for secret injection."""
-    
+    """Template processor for secret injection."""    
     @staticmethod
     def render_config_file(template_path: str, secrets: Dict[str, Any]) -> str:
-        """Render configuration file template with secrets."""
-        try:
+        """Render configuration file template with secrets."""        try:
             with open(template_path, 'r') as f:
                 template_content = f.read()
             
@@ -926,8 +885,7 @@ class SecretTemplate:
     
     @staticmethod
     def render_environment_file(secrets: Dict[str, Any], prefix: str = "") -> str:
-        """Render environment file with secrets."""
-        lines = []
+        """Render environment file with secrets."""        lines = []
         for key, value in secrets.items():
             env_key = f"{prefix}{key.upper()}" if prefix else key.upper()
             # Escape value if contains special characters
@@ -941,8 +899,7 @@ class SecretTemplate:
     
     @staticmethod
     def render_json_config(secrets: Dict[str, Any], template: Dict[str, Any] = None) -> str:
-        """Render JSON configuration with secrets."""
-        if template:
+        """Render JSON configuration with secrets."""        if template:
             config = template.copy()
             # Replace placeholders in template
             config_str = json.dumps(config)
@@ -954,8 +911,7 @@ class SecretTemplate:
 
 
 class InfluencerSecretInjector(SecretInjector):
-    """
-    Specialized secret injector for IA Influencer Agent platform.
+    """    Specialized secret injector for IA Influencer Agent platform.
     
     Handles injection of:
     - Platform API credentials
@@ -963,8 +919,7 @@ class InfluencerSecretInjector(SecretInjector):
     - Content protection encryption keys
     - Payment processor secrets
     - Fingerprinting algorithm configurations
-    """
-    
+    """    
     def __init__(self, vault_manager: VaultManager, config: SecretsConfig = None):
         super().__init__(vault_manager, config)
         self.platform_injection_configs = {}
@@ -979,8 +934,7 @@ class InfluencerSecretInjector(SecretInjector):
         namespace: str = "ia-influencer",
         injection_method: InjectionMethod = InjectionMethod.ENVIRONMENT_VARIABLES
     ) -> str:
-        """
-        Inject platform API credentials for specific application.
+        """        Inject platform API credentials for specific application.
         
         Args:
             application_name: Target application name
@@ -990,8 +944,7 @@ class InfluencerSecretInjector(SecretInjector):
             
         Returns:
             str: Injection configuration ID
-        """
-        try:
+        """        try:
             # Define platform-specific secret mappings
             secret_mappings = self._get_platform_secret_mappings(platform)
             
@@ -1031,8 +984,7 @@ class InfluencerSecretInjector(SecretInjector):
         namespace: str = "ia-influencer",
         injection_method: InjectionMethod = InjectionMethod.FILES
     ) -> str:
-        """
-        Inject AI model API keys and configurations.
+        """        Inject AI model API keys and configurations.
         
         Args:
             application_name: Target application name
@@ -1042,8 +994,7 @@ class InfluencerSecretInjector(SecretInjector):
             
         Returns:
             str: Injection configuration ID
-        """
-        try:
+        """        try:
             # Create secret mappings for all AI models
             secret_mappings = []
             
@@ -1108,8 +1059,7 @@ class InfluencerSecretInjector(SecretInjector):
         namespace: str = "ia-influencer",
         user_specific: bool = False
     ) -> str:
-        """
-        Inject content protection encryption keys.
+        """        Inject content protection encryption keys.
         
         Args:
             application_name: Target application name
@@ -1119,8 +1069,7 @@ class InfluencerSecretInjector(SecretInjector):
             
         Returns:
             str: Injection configuration ID
-        """
-        try:
+        """        try:
             secret_mappings = []
             
             for content_type in content_types:
@@ -1190,8 +1139,7 @@ class InfluencerSecretInjector(SecretInjector):
         namespace: str = "ia-influencer",
         pci_compliant: bool = True
     ) -> str:
-        """
-        Inject payment processor secrets with PCI compliance.
+        """        Inject payment processor secrets with PCI compliance.
         
         Args:
             application_name: Target application name
@@ -1201,8 +1149,7 @@ class InfluencerSecretInjector(SecretInjector):
             
         Returns:
             str: Injection configuration ID
-        """
-        try:
+        """        try:
             secret_mappings = []
             
             for processor in processors:
@@ -1268,8 +1215,7 @@ class InfluencerSecretInjector(SecretInjector):
             raise
     
     def _get_platform_secret_mappings(self, platform: str) -> List[SecretMapping]:
-        """Get platform-specific secret mappings."""
-        vault_path = f"ia-influencer/apis/{platform}"
+        """Get platform-specific secret mappings."""        vault_path = f"ia-influencer/apis/{platform}"
         
         # Common mappings for all platforms
         mappings = [
@@ -1387,8 +1333,7 @@ class InfluencerSecretInjector(SecretInjector):
         platforms: List[str],
         namespace: str = "ia-influencer"
     ) -> Dict[str, str]:
-        """
-        Bulk inject credentials for multiple platforms.
+        """        Bulk inject credentials for multiple platforms.
         
         Args:
             application_name: Target application name
@@ -1397,8 +1342,7 @@ class InfluencerSecretInjector(SecretInjector):
             
         Returns:
             dict: Mapping of platform to injection ID
-        """
-        injection_ids = {}
+        """        injection_ids = {}
         
         for platform in platforms:
             try:
@@ -1417,13 +1361,11 @@ class InfluencerSecretInjector(SecretInjector):
         return injection_ids
     
     def refresh_all_platform_credentials(self) -> Dict[str, bool]:
-        """
-        Refresh all platform credentials.
+        """        Refresh all platform credentials.
         
         Returns:
             dict: Refresh results by platform
-        """
-        results = {}
+        """        results = {}
         
         for platform_app, injection_id in self.platform_injection_configs.items():
             try:
@@ -1437,13 +1379,11 @@ class InfluencerSecretInjector(SecretInjector):
         return results
     
     def get_platform_injection_status(self) -> Dict[str, Any]:
-        """
-        Get status of all platform credential injections.
+        """        Get status of all platform credential injections.
         
         Returns:
             dict: Status information
-        """
-        status = {
+        """        status = {
             'timestamp': datetime.utcnow().isoformat(),
             'total_platforms': len(self.platform_injection_configs),
             'platforms': {},
@@ -1486,8 +1426,7 @@ class InfluencerSecretInjector(SecretInjector):
     
     @staticmethod
     def render_yaml_config(secrets: Dict[str, Any], template: Dict[str, Any] = None) -> str:
-        """Render YAML configuration with secrets."""
-        if template:
+        """Render YAML configuration with secrets."""        if template:
             config = template.copy()
             # Replace placeholders in template
             config_str = yaml.dump(config)
@@ -1499,8 +1438,7 @@ class InfluencerSecretInjector(SecretInjector):
 
 
 class InfluencerSecretInjector(SecretInjector):
-    """
-    Specialized secret injector for IA Influencer Agent platform.
+    """    Specialized secret injector for IA Influencer Agent platform.
     
     Handles injection of:
     - Platform API credentials for social media integration
@@ -1508,8 +1446,7 @@ class InfluencerSecretInjector(SecretInjector):
     - Payment processor secrets for monetization
     - Content protection keys for fingerprinting
     - User-specific encryption keys
-    """
-    
+    """    
     def __init__(self, vault_manager: VaultManager, config: SecretsConfig = None):
         super().__init__(vault_manager, config)
         self.platform_injections = {}
@@ -1538,8 +1475,7 @@ class InfluencerSecretInjector(SecretInjector):
         method: InjectionMethod = InjectionMethod.ENVIRONMENT_VARIABLES,
         user_id: Optional[str] = None
     ) -> str:
-        """
-        Inject platform API credentials for social media integration.
+        """        Inject platform API credentials for social media integration.
         
         Args:
             platform: Platform name (youtube, instagram, etc.)
@@ -1550,8 +1486,7 @@ class InfluencerSecretInjector(SecretInjector):
             
         Returns:
             str: Injection ID
-        """
-        try:
+        """        try:
             # Generate injection ID
             injection_id = f"platform_{platform}_{application_name}"
             if user_id:
@@ -1599,8 +1534,7 @@ class InfluencerSecretInjector(SecretInjector):
         method: InjectionMethod = InjectionMethod.ENVIRONMENT_VARIABLES,
         usage_limits: Dict[str, int] = None
     ) -> str:
-        """
-        Inject AI model API credentials for content processing.
+        """        Inject AI model API credentials for content processing.
         
         Args:
             model_name: AI model name (openai, anthropic, etc.)
@@ -1611,8 +1545,7 @@ class InfluencerSecretInjector(SecretInjector):
             
         Returns:
             str: Injection ID
-        """
-        try:
+        """        try:
             injection_id = f"ai_model_{model_name}_{application_name}"
             
             # Create AI model injection configuration
@@ -1652,8 +1585,7 @@ class InfluencerSecretInjector(SecretInjector):
         method: InjectionMethod = InjectionMethod.FILES,
         user_id: Optional[str] = None
     ) -> str:
-        """
-        Inject content protection encryption keys.
+        """        Inject content protection encryption keys.
         
         Args:
             content_type: Type of content (audio, video, image, text)
@@ -1664,8 +1596,7 @@ class InfluencerSecretInjector(SecretInjector):
             
         Returns:
             str: Injection ID
-        """
-        try:
+        """        try:
             injection_id = f"protection_{content_type}_{application_name}"
             if user_id:
                 injection_id += f"_{user_id}"
@@ -1699,8 +1630,7 @@ class InfluencerSecretInjector(SecretInjector):
         namespace: str = "ia-influencer",
         method: InjectionMethod = InjectionMethod.ENVIRONMENT_VARIABLES
     ) -> str:
-        """
-        Inject payment processor secrets with PCI compliance.
+        """        Inject payment processor secrets with PCI compliance.
         
         Args:
             processor: Payment processor name
@@ -1710,8 +1640,7 @@ class InfluencerSecretInjector(SecretInjector):
             
         Returns:
             str: Injection ID
-        """
-        try:
+        """        try:
             injection_id = f"payment_{processor}_{application_name}"
             
             # Create payment injection configuration
@@ -1744,8 +1673,7 @@ class InfluencerSecretInjector(SecretInjector):
         namespace: str = "ia-influencer",
         method: InjectionMethod = InjectionMethod.FILES
     ) -> str:
-        """
-        Inject user-specific secrets for personalized content protection.
+        """        Inject user-specific secrets for personalized content protection.
         
         Args:
             user_id: User identifier
@@ -1756,8 +1684,7 @@ class InfluencerSecretInjector(SecretInjector):
             
         Returns:
             str: Injection ID
-        """
-        try:
+        """        try:
             injection_id = f"user_{user_id}_{application_name}"
             
             # Create user-specific injection configuration
@@ -1796,8 +1723,7 @@ class InfluencerSecretInjector(SecretInjector):
         namespace: str = "ia-influencer",
         method: InjectionMethod = InjectionMethod.ENVIRONMENT_VARIABLES
     ) -> Dict[str, str]:
-        """
-        Bulk inject credentials for multiple platforms.
+        """        Bulk inject credentials for multiple platforms.
         
         Args:
             platforms: List of platform names
@@ -1807,8 +1733,7 @@ class InfluencerSecretInjector(SecretInjector):
             
         Returns:
             dict: Mapping of platform to injection ID
-        """
-        results = {}
+        """        results = {}
         
         try:
             for platform in platforms:
@@ -1837,8 +1762,7 @@ class InfluencerSecretInjector(SecretInjector):
         method: InjectionMethod,
         user_id: Optional[str]
     ) -> InjectionConfig:
-        """Create YouTube injection configuration."""
-        vault_path = f"ia-influencer/apis/youtube"
+        """Create YouTube injection configuration."""        vault_path = f"ia-influencer/apis/youtube"
         if user_id:
             vault_path += f"/{user_id}"
         
@@ -1884,8 +1808,7 @@ class InfluencerSecretInjector(SecretInjector):
         method: InjectionMethod,
         user_id: Optional[str]
     ) -> InjectionConfig:
-        """Create Instagram injection configuration."""
-        vault_path = f"ia-influencer/apis/instagram"
+        """Create Instagram injection configuration."""        vault_path = f"ia-influencer/apis/instagram"
         if user_id:
             vault_path += f"/{user_id}"
         
@@ -1926,8 +1849,7 @@ class InfluencerSecretInjector(SecretInjector):
         method: InjectionMethod,
         user_id: Optional[str]
     ) -> InjectionConfig:
-        """Create TikTok injection configuration."""
-        vault_path = f"ia-influencer/apis/tiktok"
+        """Create TikTok injection configuration."""        vault_path = f"ia-influencer/apis/tiktok"
         if user_id:
             vault_path += f"/{user_id}"
         
@@ -1968,8 +1890,7 @@ class InfluencerSecretInjector(SecretInjector):
         method: InjectionMethod,
         user_id: Optional[str]
     ) -> InjectionConfig:
-        """Create Spotify injection configuration."""
-        vault_path = f"ia-influencer/apis/spotify"
+        """Create Spotify injection configuration."""        vault_path = f"ia-influencer/apis/spotify"
         if user_id:
             vault_path += f"/{user_id}"
         
@@ -2015,8 +1936,7 @@ class InfluencerSecretInjector(SecretInjector):
         method: InjectionMethod,
         user_id: Optional[str]
     ) -> InjectionConfig:
-        """Create Twitter injection configuration."""
-        vault_path = f"ia-influencer/apis/twitter"
+        """Create Twitter injection configuration."""        vault_path = f"ia-influencer/apis/twitter"
         if user_id:
             vault_path += f"/{user_id}"
         
@@ -2062,8 +1982,7 @@ class InfluencerSecretInjector(SecretInjector):
         method: InjectionMethod,
         user_id: Optional[str]
     ) -> InjectionConfig:
-        """Create Facebook injection configuration."""
-        vault_path = f"ia-influencer/apis/facebook"
+        """Create Facebook injection configuration."""        vault_path = f"ia-influencer/apis/facebook"
         if user_id:
             vault_path += f"/{user_id}"
         
@@ -2104,8 +2023,7 @@ class InfluencerSecretInjector(SecretInjector):
         method: InjectionMethod,
         user_id: Optional[str]
     ) -> InjectionConfig:
-        """Create LinkedIn injection configuration."""
-        vault_path = f"ia-influencer/apis/linkedin"
+        """Create LinkedIn injection configuration."""        vault_path = f"ia-influencer/apis/linkedin"
         if user_id:
             vault_path += f"/{user_id}"
         
@@ -2146,8 +2064,7 @@ class InfluencerSecretInjector(SecretInjector):
         method: InjectionMethod,
         user_id: Optional[str]
     ) -> InjectionConfig:
-        """Create Twitch injection configuration."""
-        vault_path = f"ia-influencer/apis/twitch"
+        """Create Twitch injection configuration."""        vault_path = f"ia-influencer/apis/twitch"
         if user_id:
             vault_path += f"/{user_id}"
         
@@ -2189,8 +2106,7 @@ class InfluencerSecretInjector(SecretInjector):
         method: InjectionMethod,
         user_id: Optional[str]
     ) -> InjectionConfig:
-        """Create generic platform injection configuration."""
-        vault_path = f"ia-influencer/apis/{platform}"
+        """Create generic platform injection configuration."""        vault_path = f"ia-influencer/apis/{platform}"
         if user_id:
             vault_path += f"/{user_id}"
         
@@ -2227,8 +2143,7 @@ class InfluencerSecretInjector(SecretInjector):
         method: InjectionMethod,
         usage_limits: Optional[Dict[str, int]]
     ) -> InjectionConfig:
-        """Create AI model injection configuration."""
-        vault_path = f"ia-influencer/ai-models/{model_name}"
+        """Create AI model injection configuration."""        vault_path = f"ia-influencer/ai-models/{model_name}"
         
         secret_mappings = [
             SecretMapping(
@@ -2280,8 +2195,7 @@ class InfluencerSecretInjector(SecretInjector):
         method: InjectionMethod,
         user_id: Optional[str]
     ) -> InjectionConfig:
-        """Create content protection injection configuration."""
-        vault_path = f"ia-influencer/protection/{content_type}"
+        """Create content protection injection configuration."""        vault_path = f"ia-influencer/protection/{content_type}"
         
         secret_mappings = [
             SecretMapping(
@@ -2327,8 +2241,7 @@ class InfluencerSecretInjector(SecretInjector):
         namespace: str,
         method: InjectionMethod
     ) -> InjectionConfig:
-        """Create payment processor injection configuration."""
-        vault_path = f"ia-influencer/payments/{processor}"
+        """Create payment processor injection configuration."""        vault_path = f"ia-influencer/payments/{processor}"
         
         secret_mappings = [
             SecretMapping(
@@ -2368,8 +2281,7 @@ class InfluencerSecretInjector(SecretInjector):
         namespace: str,
         method: InjectionMethod
     ) -> InjectionConfig:
-        """Create user-specific injection configuration."""
-        secret_mappings = []
+        """Create user-specific injection configuration."""        secret_mappings = []
         
         for secret_type in secret_types:
             vault_path = f"ia-influencer/users/{user_id}/{secret_type}"
@@ -2396,8 +2308,7 @@ class InfluencerSecretInjector(SecretInjector):
         )
     
     def get_platform_injection_status(self) -> Dict[str, Any]:
-        """Get status of all platform injections."""
-        status = {
+        """Get status of all platform injections."""        status = {
             'timestamp': datetime.utcnow().isoformat(),
             'total_injections': len(self.platform_injections),
             'active_injections': 0,
@@ -2419,8 +2330,7 @@ class InfluencerSecretInjector(SecretInjector):
         return status
     
     def refresh_all_platform_credentials(self) -> Dict[str, bool]:
-        """Refresh all platform credential injections."""
-        results = {}
+        """Refresh all platform credential injections."""        results = {}
         
         for injection_id, injection_info in self.platform_injections.items():
             try:

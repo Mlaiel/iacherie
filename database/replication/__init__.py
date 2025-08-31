@@ -1,5 +1,4 @@
-"""
-Database Replication Module for IA Influencer Agent
+"""Database Replication Module for IA Influencer Agent
 Ultra-industrial content protection replication system worldwide
 Specialized for content creators and intellectual property protection
 
@@ -25,9 +24,7 @@ sophisticated analytics to protect content creators' intellectual property
 across multiple platforms and regions simultaneously.
 
 LEGAL WARNING: Severe consequences await unauthorized access or misuse.
-"""
-
-from .basic_replication import (
+"""from .basic_replication import (
     DatabaseReplicationHandler,
     ReplicationConfig,
     ReplicationMetrics,

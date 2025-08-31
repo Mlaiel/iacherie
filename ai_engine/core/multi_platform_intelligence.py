@@ -1,5 +1,4 @@
-"""
-Multi-Platform Content Intelligence Module
+"""Multi-Platform Content Intelligence Module
 
 Advanced AI system for cross-platform content optimization, distribution intelligence,
 and platform-specific content adaptation for maximum reach and engagement.
@@ -12,9 +11,7 @@ This revolutionary multi-platform AI system is proprietary intellectual property
 Any unauthorized access, copying, or distribution will result in severe legal consequences.
 
 Business Logic: Content Creation → Platform Analysis → Format Adaptation → Distribution Optimization → Performance Tracking → Cross-Platform Synergy
-"""
-
-import asyncio
+"""import asyncio
 import json
 import uuid
 import hashlib
@@ -63,8 +60,7 @@ logger = logging.getLogger(__name__)
 
 
 class Platform(Enum):
-    """Supported social media platforms"""
-    YOUTUBE = "youtube"
+    """Supported social media platforms"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     FACEBOOK = "facebook"
@@ -81,8 +77,7 @@ class Platform(Enum):
 
 
 class ContentFormat(Enum):
-    """Content format types"""
-    VIDEO_SHORT = "video_short"  # <60s
+    """Content format types"""    VIDEO_SHORT = "video_short"  # <60s
     VIDEO_LONG = "video_long"    # >60s
     IMAGE_SINGLE = "image_single"
     IMAGE_CAROUSEL = "image_carousel"
@@ -98,8 +93,7 @@ class ContentFormat(Enum):
 
 
 class OptimizationStrategy(Enum):
-    """Content optimization strategies"""
-    VIRAL_MAXIMIZATION = "viral_maximization"
+    """Content optimization strategies"""    VIRAL_MAXIMIZATION = "viral_maximization"
     ENGAGEMENT_FOCUSED = "engagement_focused"
     REACH_EXPANSION = "reach_expansion"
     CONVERSION_OPTIMIZED = "conversion_optimized"
@@ -110,8 +104,7 @@ class OptimizationStrategy(Enum):
 
 
 class ContentAdaptationType(Enum):
-    """Types of content adaptation"""
-    ASPECT_RATIO = "aspect_ratio"
+    """Types of content adaptation"""    ASPECT_RATIO = "aspect_ratio"
     DURATION = "duration"
     TEXT_LENGTH = "text_length"
     HASHTAGS = "hashtags"
@@ -125,8 +118,7 @@ class ContentAdaptationType(Enum):
 
 @dataclass
 class PlatformSpecs:
-    """Platform-specific content specifications"""
-    platform: Platform
+    """Platform-specific content specifications"""    platform: Platform
     
     # Video specifications
     max_video_duration: Optional[int] = None  # seconds
@@ -218,8 +210,7 @@ class PlatformSpecs:
 
 @dataclass
 class ContentPiece:
-    """Represents a piece of content"""
-    content_id: str
+    """Represents a piece of content"""    content_id: str
     title: str
     description: str
     content_type: ContentType
@@ -279,8 +270,7 @@ class ContentPiece:
 
 @dataclass
 class AdaptedContent:
-    """Content adapted for a specific platform"""
-    adaptation_id: str
+    """Content adapted for a specific platform"""    adaptation_id: str
     original_content_id: str
     target_platform: Platform
     adapted_format: ContentFormat
@@ -345,8 +335,7 @@ class AdaptedContent:
 
 @dataclass
 class DistributionPlan:
-    """Multi-platform content distribution plan"""
-    plan_id: str
+    """Multi-platform content distribution plan"""    plan_id: str
     content_id: str
     target_platforms: List[Platform]
     
@@ -408,14 +397,12 @@ class DistributionPlan:
 
 
 class PlatformSpecsManager:
-    """Manages platform-specific content specifications"""
-    
+    """Manages platform-specific content specifications"""    
     def __init__(self):
         self.platform_specs = self._initialize_platform_specs()
     
     def _initialize_platform_specs(self) -> Dict[Platform, PlatformSpecs]:
-        """Initialize platform specifications"""
-        specs = {}
+        """Initialize platform specifications"""        specs = {}
         
         # YouTube specifications
         specs[Platform.YOUTUBE] = PlatformSpecs(
@@ -532,14 +519,12 @@ class PlatformSpecsManager:
         return specs
     
     def get_platform_specs(self, platform: Platform) -> Optional[PlatformSpecs]:
-        """Get specifications for a platform"""
-        return self.platform_specs.get(platform)
+        """Get specifications for a platform"""        return self.platform_specs.get(platform)
     
     def is_content_compliant(self, 
                            content: ContentPiece,
                            platform: Platform) -> Tuple[bool, List[str]]:
-        """Check if content complies with platform specifications"""
-        specs = self.get_platform_specs(platform)
+        """Check if content complies with platform specifications"""        specs = self.get_platform_specs(platform)
         if not specs:
             return False, ["Platform specifications not available"]
         
@@ -574,8 +559,7 @@ class PlatformSpecsManager:
 
 
 class ContentAdaptationEngine:
-    """Engine for adapting content to different platforms"""
-    
+    """Engine for adapting content to different platforms"""    
     def __init__(self):
         self.specs_manager = PlatformSpecsManager()
         self.adaptation_cache = {}
@@ -584,8 +568,7 @@ class ContentAdaptationEngine:
                                        content: ContentPiece,
                                        target_platform: Platform,
                                        optimization_strategy: OptimizationStrategy = OptimizationStrategy.ENGAGEMENT_FOCUSED) -> AdaptedContent:
-        """Adapt content for a specific platform"""
-        try:
+        """Adapt content for a specific platform"""        try:
             # Get platform specifications
             specs = self.specs_manager.get_platform_specs(target_platform)
             if not specs:
@@ -680,8 +663,7 @@ class ContentAdaptationEngine:
     def _determine_optimal_format(self, 
                                 content: ContentPiece,
                                 specs: PlatformSpecs) -> ContentFormat:
-        """Determine optimal format for platform"""
-        # If video content
+        """Determine optimal format for platform"""        # If video content
         if content.video_file and content.duration:
             if specs.platform == Platform.TIKTOK:
                 return ContentFormat.SHORT_FORM
@@ -719,8 +701,7 @@ class ContentAdaptationEngine:
                          video_path: str,
                          duration: Optional[int],
                          specs: PlatformSpecs) -> Tuple[Optional[str], List[ContentAdaptationType]]:
-        """Adapt video for platform specifications"""
-        adaptations = []
+        """Adapt video for platform specifications"""        adaptations = []
         adapted_path = video_path
         
         try:
@@ -751,8 +732,7 @@ class ContentAdaptationEngine:
     async def _adapt_images(self, 
                           image_paths: List[str],
                           specs: PlatformSpecs) -> Tuple[List[str], List[ContentAdaptationType]]:
-        """Adapt images for platform specifications"""
-        adaptations = []
+        """Adapt images for platform specifications"""        adaptations = []
         adapted_paths = image_paths.copy()
         
         try:
@@ -782,8 +762,7 @@ class ContentAdaptationEngine:
     async def _adapt_audio(self, 
                          audio_path: str,
                          specs: PlatformSpecs) -> Tuple[Optional[str], List[ContentAdaptationType]]:
-        """Adapt audio for platform specifications"""
-        adaptations = []
+        """Adapt audio for platform specifications"""        adaptations = []
         adapted_path = audio_path
         
         try:
@@ -809,8 +788,7 @@ class ContentAdaptationEngine:
                                 specs: PlatformSpecs,
                                 platform: Platform,
                                 strategy: OptimizationStrategy) -> Dict[str, Any]:
-        """Adapt text content for platform"""
-        adaptations = []
+        """Adapt text content for platform"""        adaptations = []
         result = {}
         
         try:
@@ -853,8 +831,7 @@ class ContentAdaptationEngine:
                    specs: PlatformSpecs,
                    platform: Platform,
                    strategy: OptimizationStrategy) -> str:
-        """Adapt title for platform"""
-        try:
+        """Adapt title for platform"""        try:
             # Platform-specific title optimization
             if platform == Platform.YOUTUBE:
                 # YouTube prefers descriptive, keyword-rich titles
@@ -892,8 +869,7 @@ class ContentAdaptationEngine:
                          specs: PlatformSpecs,
                          platform: Platform,
                          strategy: OptimizationStrategy) -> str:
-        """Adapt description for platform"""
-        try:
+        """Adapt description for platform"""        try:
             max_length = specs.max_text_length or len(description)
             
             # Truncate if necessary
@@ -935,8 +911,7 @@ class ContentAdaptationEngine:
                       captions: str,
                       specs: PlatformSpecs,
                       platform: Platform) -> str:
-        """Adapt captions for platform"""
-        try:
+        """Adapt captions for platform"""        try:
             # Platform-specific caption formatting
             if platform == Platform.INSTAGRAM:
                 # Instagram captions can be longer and more personal
@@ -967,8 +942,7 @@ class ContentAdaptationEngine:
                       specs: PlatformSpecs,
                       platform: Platform,
                       strategy: OptimizationStrategy) -> List[str]:
-        """Adapt hashtags for platform"""
-        try:
+        """Adapt hashtags for platform"""        try:
             if not specs.supports_hashtags:
                 return []
             
@@ -1025,8 +999,7 @@ class ContentAdaptationEngine:
                                 content: ContentPiece,
                                 specs: PlatformSpecs,
                                 platform: Platform) -> Optional[str]:
-        """Generate platform-optimized thumbnail"""
-        try:
+        """Generate platform-optimized thumbnail"""        try:
             if not MEDIA_PROCESSING_AVAILABLE:
                 return None
             
@@ -1046,8 +1019,7 @@ class ContentAdaptationEngine:
     def _generate_call_to_action(self, 
                                platform: Platform,
                                strategy: OptimizationStrategy) -> str:
-        """Generate platform and strategy-specific call-to-action"""
-        cta_templates = {
+        """Generate platform and strategy-specific call-to-action"""        cta_templates = {
             Platform.YOUTUBE: {
                 OptimizationStrategy.ENGAGEMENT_FOCUSED: "Like and subscribe for more content!",
                 OptimizationStrategy.CONVERSION_OPTIMIZED: "Check the description for links and resources!",
@@ -1089,8 +1061,7 @@ class ContentAdaptationEngine:
                                original: ContentPiece,
                                adapted: AdaptedContent,
                                adaptations: List[ContentAdaptationType]) -> float:
-        """Calculate quality score for adapted content"""
-        try:
+        """Calculate quality score for adapted content"""        try:
             base_score = 0.8
             
             # Bonus for minimal adaptations (less data loss)
@@ -1116,8 +1087,7 @@ class ContentAdaptationEngine:
     def _calculate_compliance_score(self, 
                                   adapted: AdaptedContent,
                                   specs: PlatformSpecs) -> float:
-        """Calculate compliance score with platform specifications"""
-        try:
+        """Calculate compliance score with platform specifications"""        try:
             # Check if adapted content would be compliant
             # This is a simplified check - real implementation would be more thorough
             
@@ -1145,8 +1115,7 @@ class ContentAdaptationEngine:
                                     adapted: AdaptedContent,
                                     platform: Platform,
                                     strategy: OptimizationStrategy) -> float:
-        """Calculate optimization score based on strategy and platform"""
-        try:
+        """Calculate optimization score based on strategy and platform"""        try:
             base_score = 0.7
             
             # Strategy-specific optimizations
@@ -1178,8 +1147,7 @@ class ContentAdaptationEngine:
             return 0.7
     
     def _text_similarity(self, text1: str, text2: str) -> float:
-        """Calculate simple text similarity"""
-        try:
+        """Calculate simple text similarity"""        try:
             # Simple word-based similarity
             words1 = set(text1.lower().split())
             words2 = set(text2.lower().split())
@@ -1198,8 +1166,7 @@ class ContentAdaptationEngine:
 
 
 class MultiPlatformDistributionEngine:
-    """Engine for multi-platform content distribution"""
-    
+    """Engine for multi-platform content distribution"""    
     def __init__(self):
         self.adaptation_engine = ContentAdaptationEngine()
         self.specs_manager = PlatformSpecsManager()
@@ -1209,8 +1176,7 @@ class MultiPlatformDistributionEngine:
                                      target_platforms: List[Platform],
                                      strategy: OptimizationStrategy = OptimizationStrategy.ENGAGEMENT_FOCUSED,
                                      staggered_release: bool = False) -> DistributionPlan:
-        """Create comprehensive distribution plan"""
-        try:
+        """Create comprehensive distribution plan"""        try:
             # Create base distribution plan
             plan = DistributionPlan(
                 plan_id=str(uuid.uuid4()),
@@ -1259,8 +1225,7 @@ class MultiPlatformDistributionEngine:
                      content: ContentPiece,
                      platform: Platform,
                      adapted: AdaptedContent) -> int:
-        """Predict potential reach for platform"""
-        try:
+        """Predict potential reach for platform"""        try:
             # Base reach estimation based on platform
             base_reach = {
                 Platform.YOUTUBE: 1000,
@@ -1297,8 +1262,7 @@ class MultiPlatformDistributionEngine:
                           content: ContentPiece,
                           platform: Platform,
                           adapted: AdaptedContent) -> float:
-        """Predict engagement rate for platform"""
-        try:
+        """Predict engagement rate for platform"""        try:
             # Base engagement rates by platform
             base_engagement = {
                 Platform.YOUTUBE: 0.04,
@@ -1328,8 +1292,7 @@ class MultiPlatformDistributionEngine:
                                content: ContentPiece,
                                platform: Platform,
                                adapted: AdaptedContent) -> float:
-        """Predict viral potential for platform"""
-        try:
+        """Predict viral potential for platform"""        try:
             # Base viral probability by platform
             base_viral = {
                 Platform.TIKTOK: 0.15,
@@ -1369,8 +1332,7 @@ class MultiPlatformDistributionEngine:
     def _optimize_posting_schedule(self, 
                                  platforms: List[Platform],
                                  staggered: bool) -> Dict[Platform, datetime]:
-        """Optimize posting schedule across platforms"""
-        schedule = {}
+        """Optimize posting schedule across platforms"""        schedule = {}
         base_time = datetime.utcnow()
         
         try:
@@ -1432,8 +1394,7 @@ class MultiPlatformDistributionEngine:
     def _define_success_criteria(self, 
                                strategy: OptimizationStrategy,
                                platforms: List[Platform]) -> Dict[str, float]:
-        """Define success criteria based on strategy"""
-        criteria = {}
+        """Define success criteria based on strategy"""        criteria = {}
         
         try:
             if strategy == OptimizationStrategy.ENGAGEMENT_FOCUSED:

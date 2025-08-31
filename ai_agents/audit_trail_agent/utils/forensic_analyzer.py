@@ -1,5 +1,4 @@
-"""
-Forensic Analyzer - Advanced Digital Forensics & Incident Investigation
+"""Forensic Analyzer - Advanced Digital Forensics & Incident Investigation
 
 Industrial-grade forensic analysis system for security incident investigation,
 evidence collection, timeline reconstruction, and threat attribution.
@@ -10,9 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, distribution, or commercialization is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import hmac
@@ -63,8 +60,7 @@ from ...utils.pattern_matching import PatternMatcher
 logger = logging.getLogger(__name__)
 
 class InvestigationType(Enum):
-    """Forensic investigation type classification"""
-    SECURITY_BREACH = "security_breach"
+    """Forensic investigation type classification"""    SECURITY_BREACH = "security_breach"
     DATA_EXFILTRATION = "data_exfiltration"
     INSIDER_THREAT = "insider_threat"
     MALWARE_ANALYSIS = "malware_analysis"
@@ -74,8 +70,7 @@ class InvestigationType(Enum):
     INTELLECTUAL_PROPERTY_THEFT = "ip_theft"
 
 class EvidenceType(Enum):
-    """Digital evidence type classification"""
-    LOG_FILES = "log_files"
+    """Digital evidence type classification"""    LOG_FILES = "log_files"
     DATABASE_RECORDS = "database_records"
     NETWORK_TRAFFIC = "network_traffic"
     FILE_SYSTEM = "file_system"
@@ -86,8 +81,7 @@ class EvidenceType(Enum):
     AUTHENTICATION_LOGS = "authentication_logs"
 
 class AnalysisStatus(Enum):
-    """Forensic analysis status"""
-    INITIATED = "initiated"
+    """Forensic analysis status"""    INITIATED = "initiated"
     COLLECTING_EVIDENCE = "collecting_evidence"
     ANALYZING = "analyzing"
     CORRELATING = "correlating"
@@ -97,8 +91,7 @@ class AnalysisStatus(Enum):
 
 @dataclass
 class ForensicConfiguration:
-    """Advanced forensic analysis configuration"""
-    evidence_retention_days: int = 2555  # 7 years
+    """Advanced forensic analysis configuration"""    evidence_retention_days: int = 2555  # 7 years
     chain_of_custody_enabled: bool = True
     hash_verification_enabled: bool = True
     timeline_correlation_enabled: bool = True
@@ -110,8 +103,7 @@ class ForensicConfiguration:
 
 @dataclass
 class ForensicMetrics:
-    """Comprehensive forensic analysis metrics"""
-    active_cases: int = 0
+    """Comprehensive forensic analysis metrics"""    active_cases: int = 0
     evidence_items_collected: int = 0
     timeline_events_analyzed: int = 0
     threat_indicators_identified: int = 0
@@ -120,8 +112,7 @@ class ForensicMetrics:
     evidence_integrity_violations: int = 0
 
 class ForensicAnalyzer:
-    """
-    Enterprise Digital Forensic Analysis System
+    """    Enterprise Digital Forensic Analysis System
     
     Advanced forensic investigation platform providing:
     - Multi-source evidence collection and preservation
@@ -131,9 +122,7 @@ class ForensicAnalyzer:
     - Automated forensic reporting
     - Network forensics and malware analysis
     - Compliance and legal evidence handling
-    """
-
-    def __init__(self, config: Optional[ForensicConfiguration] = None):
+    """    def __init__(self, config: Optional[ForensicConfiguration] = None):
         self.config = config or ForensicConfiguration()
         self.metrics = ForensicMetrics()
         
@@ -167,8 +156,7 @@ class ForensicAnalyzer:
         investigator_id: Optional[str] = None,
         scope: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Initiate comprehensive forensic investigation
+        """        Initiate comprehensive forensic investigation
         
         Args:
             investigation_type: Type of investigation
@@ -180,8 +168,7 @@ class ForensicAnalyzer:
             
         Returns:
             Unique case ID
-        """
-        try:
+        """        try:
             case_id = str(uuid.uuid4())
             initiated_at = datetime.now(timezone.utc)
             
@@ -236,8 +223,7 @@ class ForensicAnalyzer:
         collection_parameters: Dict[str, Any],
         collector_id: Optional[str] = None
     ) -> str:
-        """
-        Collect and preserve digital evidence with chain of custody
+        """        Collect and preserve digital evidence with chain of custody
         
         Args:
             case_id: Forensic case ID
@@ -248,8 +234,7 @@ class ForensicAnalyzer:
             
         Returns:
             Evidence ID
-        """
-        try:
+        """        try:
             evidence_id = str(uuid.uuid4())
             collected_at = datetime.now(timezone.utc)
             
@@ -316,8 +301,7 @@ class ForensicAnalyzer:
         time_range: Optional[Tuple[datetime, datetime]] = None,
         correlation_depth: int = 3
     ) -> Dict[str, Any]:
-        """
-        Reconstruct comprehensive timeline of events for investigation
+        """        Reconstruct comprehensive timeline of events for investigation
         
         Args:
             case_id: Forensic case ID
@@ -326,8 +310,7 @@ class ForensicAnalyzer:
             
         Returns:
             Comprehensive timeline analysis
-        """
-        try:
+        """        try:
             # Validate case
             if case_id not in self.active_cases:
                 raise ForensicError(f"Case {case_id} not found")
@@ -388,8 +371,7 @@ class ForensicAnalyzer:
         case_id: str,
         attribution_parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Perform advanced threat attribution analysis
+        """        Perform advanced threat attribution analysis
         
         Args:
             case_id: Forensic case ID
@@ -397,8 +379,7 @@ class ForensicAnalyzer:
             
         Returns:
             Threat attribution analysis results
-        """
-        try:
+        """        try:
             # Validate case
             if case_id not in self.active_cases:
                 raise ForensicError(f"Case {case_id} not found")
@@ -457,8 +438,7 @@ class ForensicAnalyzer:
         include_technical_details: bool = True,
         legal_format: bool = False
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive forensic investigation report
+        """        Generate comprehensive forensic investigation report
         
         Args:
             case_id: Forensic case ID
@@ -468,8 +448,7 @@ class ForensicAnalyzer:
             
         Returns:
             Comprehensive forensic report
-        """
-        try:
+        """        try:
             # Validate case
             if case_id not in self.active_cases:
                 raise ForensicError(f"Case {case_id} not found")
@@ -553,8 +532,7 @@ class ForensicAnalyzer:
         final_conclusions: List[str],
         investigator_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Close forensic investigation with final documentation
+        """        Close forensic investigation with final documentation
         
         Args:
             case_id: Forensic case ID
@@ -564,8 +542,7 @@ class ForensicAnalyzer:
             
         Returns:
             Case closure results
-        """
-        try:
+        """        try:
             # Validate case
             if case_id not in self.active_cases:
                 raise ForensicError(f"Case {case_id} not found")
@@ -637,8 +614,7 @@ class ForensicAnalyzer:
         source_identifier: str,
         parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Collect evidence based on type-specific procedures"""
-        collection_methods = {
+        """Collect evidence based on type-specific procedures"""        collection_methods = {
             EvidenceType.LOG_FILES: self._collect_log_evidence,
             EvidenceType.DATABASE_RECORDS: self._collect_database_evidence,
             EvidenceType.NETWORK_TRAFFIC: self._collect_network_evidence,
@@ -654,8 +630,7 @@ class ForensicAnalyzer:
             raise ForensicError(f"Unsupported evidence type: {evidence_type}")
 
     async def _calculate_evidence_hash(self, evidence_data: Dict[str, Any]) -> str:
-        """Calculate cryptographic hash for evidence integrity"""
-        evidence_string = json.dumps(evidence_data, sort_keys=True, default=str)
+        """Calculate cryptographic hash for evidence integrity"""        evidence_string = json.dumps(evidence_data, sort_keys=True, default=str)
         return hashlib.sha256(evidence_string.encode()).hexdigest()
 
     async def _correlate_timeline_events(
@@ -663,8 +638,7 @@ class ForensicAnalyzer:
         events: List[Dict[str, Any]],
         correlation_depth: int
     ) -> List[Dict[str, Any]]:
-        """Perform advanced event correlation analysis"""
-        correlated_events = []
+        """Perform advanced event correlation analysis"""        correlated_events = []
         
         # Group events by time windows
         time_windows = self._group_events_by_time_windows(events, window_size=300)  # 5-minute windows
@@ -681,8 +655,7 @@ class ForensicAnalyzer:
         events: List[Dict[str, Any]],
         window_size: int
     ) -> List[List[Dict[str, Any]]]:
-        """Group events into time windows for correlation analysis"""
-        if not events:
+        """Group events into time windows for correlation analysis"""        if not events:
             return []
         
         windows = []
@@ -712,8 +685,7 @@ class ForensicAnalyzer:
         events: List[Dict[str, Any]],
         depth: int
     ) -> List[Dict[str, Any]]:
-        """Find correlations between events within a time window"""
-        correlations = []
+        """Find correlations between events within a time window"""        correlations = []
         
         # Create correlation matrix
         correlation_matrix = np.zeros((len(events), len(events)))
@@ -742,8 +714,7 @@ class ForensicAnalyzer:
         event1: Dict[str, Any],
         event2: Dict[str, Any]
     ) -> float:
-        """Calculate correlation score between two events"""
-        correlation_score = 0.0
+        """Calculate correlation score between two events"""        correlation_score = 0.0
         
         # Time proximity correlation
         time1 = datetime.fromisoformat(event1['timestamp'])

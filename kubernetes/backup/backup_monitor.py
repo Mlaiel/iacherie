@@ -1,5 +1,4 @@
-"""
-Backup Monitor for IA Influencer Agent Platform.
+"""Backup Monitor for IA Influencer Agent Platform.
 
 Provides real-time monitoring and alerting for backup operations
 with comprehensive metrics and health checking.
@@ -7,9 +6,7 @@ with comprehensive metrics and health checking.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 from datetime import datetime, timedelta
@@ -25,15 +22,13 @@ from ...core.exceptions import MonitoringError
 
 
 class MonitoringLevel(Enum):
-    """Monitoring level enumeration."""
-    BASIC = "basic"
+    """Monitoring level enumeration."""    BASIC = "basic"
     DETAILED = "detailed"
     COMPREHENSIVE = "comprehensive"
 
 
 class AlertSeverity(Enum):
-    """Alert severity enumeration."""
-    INFO = "info"
+    """Alert severity enumeration."""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
@@ -41,8 +36,7 @@ class AlertSeverity(Enum):
 
 @dataclass
 class BackupMetrics:
-    """Backup operation metrics."""
-    backup_id: str
+    """Backup operation metrics."""    backup_id: str
     operation_type: str
     start_time: datetime
     end_time: Optional[datetime]
@@ -61,8 +55,7 @@ class BackupMetrics:
 
 @dataclass
 class SystemMetrics:
-    """System-wide backup metrics."""
-    timestamp: datetime
+    """System-wide backup metrics."""    timestamp: datetime
     active_backups: int
     total_backup_size: int
     daily_backup_count: int
@@ -76,8 +69,7 @@ class SystemMetrics:
 
 @dataclass
 class HealthStatus:
-    """Backup system health status."""
-    overall_status: str
+    """Backup system health status."""    overall_status: str
     backup_service_status: str
     storage_status: str
     database_status: str
@@ -91,26 +83,21 @@ class HealthStatus:
 
 
 class BackupMonitor:
-    """
-    Enterprise backup monitoring system with real-time metrics and alerting.
+    """    Enterprise backup monitoring system with real-time metrics and alerting.
     
     Monitors backup operations, system resources, and provides comprehensive
     health checking and alerting capabilities.
-    """
-
-    def __init__(
+    """    def __init__(
         self,
         monitoring_level: MonitoringLevel = MonitoringLevel.DETAILED,
         alert_thresholds: Optional[Dict[str, Any]] = None
     ):
-        """
-        Initialize backup monitor.
+        """        Initialize backup monitor.
         
         Args:
             monitoring_level: Level of monitoring detail
             alert_thresholds: Custom alert thresholds
-        """
-        self.logger = logging.getLogger(__name__)
+        """        self.logger = logging.getLogger(__name__)
         self.monitoring_level = monitoring_level
         self.alert_thresholds = alert_thresholds or self._get_default_thresholds()
         
@@ -128,8 +115,7 @@ class BackupMonitor:
         self._is_monitoring = False
 
     async def start_monitoring(self) -> None:
-        """Start backup monitoring services."""
-        if self._is_monitoring:
+        """Start backup monitoring services."""        if self._is_monitoring:
             self.logger.warning("Monitoring is already running")
             return
         
@@ -147,8 +133,7 @@ class BackupMonitor:
         self.logger.info("Backup monitoring started")
 
     async def stop_monitoring(self) -> None:
-        """Stop backup monitoring services."""
-        if not self._is_monitoring:
+        """Stop backup monitoring services."""        if not self._is_monitoring:
             self.logger.warning("Monitoring is not running")
             return
         
@@ -170,14 +155,12 @@ class BackupMonitor:
         backup_id: str,
         operation_type: str = "backup"
     ) -> None:
-        """
-        Start monitoring specific backup operation.
+        """        Start monitoring specific backup operation.
         
         Args:
             backup_id: Backup operation identifier
             operation_type: Type of backup operation
-        """
-        self.logger.info(f"Starting monitoring for backup: {backup_id}")
+        """        self.logger.info(f"Starting monitoring for backup: {backup_id}")
         
         metrics = BackupMetrics(
             backup_id=backup_id,
@@ -214,16 +197,14 @@ class BackupMonitor:
         files_processed: int,
         progress_percent: float = 0.0
     ) -> None:
-        """
-        Update backup operation progress.
+        """        Update backup operation progress.
         
         Args:
             backup_id: Backup operation identifier
             bytes_processed: Number of bytes processed
             files_processed: Number of files processed
             progress_percent: Progress percentage
-        """
-        if backup_id not in self.backup_metrics:
+        """        if backup_id not in self.backup_metrics:
             self.logger.warning(f"Backup metrics not found: {backup_id}")
             return
         
@@ -258,8 +239,7 @@ class BackupMonitor:
         success: bool = True,
         error_message: Optional[str] = None
     ) -> BackupMetrics:
-        """
-        Finish monitoring backup operation.
+        """        Finish monitoring backup operation.
         
         Args:
             backup_id: Backup operation identifier
@@ -268,8 +248,7 @@ class BackupMonitor:
             
         Returns:
             Final backup metrics
-        """
-        if backup_id not in self.backup_metrics:
+        """        if backup_id not in self.backup_metrics:
             raise MonitoringError(f"Backup metrics not found: {backup_id}")
         
         metrics = self.backup_metrics[backup_id]
@@ -302,16 +281,14 @@ class BackupMonitor:
         return metrics
 
     async def get_backup_progress(self, backup_id: str) -> Dict[str, Any]:
-        """
-        Get current backup progress.
+        """        Get current backup progress.
         
         Args:
             backup_id: Backup operation identifier
             
         Returns:
             Progress information
-        """
-        if backup_id not in self.backup_metrics:
+        """        if backup_id not in self.backup_metrics:
             return {
                 "status": "not_found",
                 "message": f"Backup not found: {backup_id}"
@@ -352,13 +329,11 @@ class BackupMonitor:
         }
 
     async def get_system_health(self) -> HealthStatus:
-        """
-        Get comprehensive system health status.
+        """        Get comprehensive system health status.
         
         Returns:
             System health information
-        """
-        current_time = datetime.now()
+        """        current_time = datetime.now()
         
         # Get active backup count
         active_backups = len(self.active_monitors)
@@ -432,13 +407,11 @@ class BackupMonitor:
         )
 
     async def get_monitoring_statistics(self) -> Dict[str, Any]:
-        """
-        Get comprehensive monitoring statistics.
+        """        Get comprehensive monitoring statistics.
         
         Returns:
             Monitoring statistics
-        """
-        current_time = datetime.now()
+        """        current_time = datetime.now()
         
         # Calculate statistics from recent metrics
         recent_metrics = [
@@ -475,22 +448,19 @@ class BackupMonitor:
         severity: AlertSeverity,
         message: str
     ) -> None:
-        """
-        Add custom alert condition.
+        """        Add custom alert condition.
         
         Args:
             name: Alert name
             condition: Function to evaluate alert condition
             severity: Alert severity
             message: Alert message
-        """
-        await self.alert_manager.add_custom_alert(
+        """        await self.alert_manager.add_custom_alert(
             name, condition, severity.value, message
         )
 
     async def _system_metrics_loop(self) -> None:
-        """Collect system metrics periodically."""
-        while self._is_monitoring:
+        """Collect system metrics periodically."""        while self._is_monitoring:
             try:
                 # Collect current system metrics
                 metrics = await self._collect_current_system_metrics()
@@ -527,8 +497,7 @@ class BackupMonitor:
                 await asyncio.sleep(300)
 
     async def _health_check_loop(self) -> None:
-        """Perform health checks periodically."""
-        while self._is_monitoring:
+        """Perform health checks periodically."""        while self._is_monitoring:
             try:
                 health_status = await self.get_system_health()
                 
@@ -546,8 +515,7 @@ class BackupMonitor:
                 await asyncio.sleep(600)
 
     async def _alert_evaluation_loop(self) -> None:
-        """Evaluate alert conditions periodically."""
-        while self._is_monitoring:
+        """Evaluate alert conditions periodically."""        while self._is_monitoring:
             try:
                 # Evaluate system-level alerts
                 await self._evaluate_system_alerts()
@@ -564,8 +532,7 @@ class BackupMonitor:
                 await asyncio.sleep(60)
 
     async def _cleanup_loop(self) -> None:
-        """Clean up old monitoring data periodically."""
-        while self._is_monitoring:
+        """Clean up old monitoring data periodically."""        while self._is_monitoring:
             try:
                 current_time = datetime.now()
                 cutoff_time = current_time - timedelta(days=30)
@@ -588,8 +555,7 @@ class BackupMonitor:
                 await asyncio.sleep(86400)
 
     async def _update_resource_metrics(self, backup_id: str) -> None:
-        """Update resource usage metrics for backup operation."""
-        if backup_id not in self.backup_metrics:
+        """Update resource usage metrics for backup operation."""        if backup_id not in self.backup_metrics:
             return
         
         metrics = self.backup_metrics[backup_id]
@@ -614,8 +580,7 @@ class BackupMonitor:
                     metrics.compression_ratio = compressed / original
 
     async def _collect_current_system_metrics(self) -> Dict[str, Any]:
-        """Collect current system metrics."""
-        cpu_percent = psutil.cpu_percent(interval=1)
+        """Collect current system metrics."""        cpu_percent = psutil.cpu_percent(interval=1)
         memory_info = psutil.virtual_memory()
         disk_info = psutil.disk_usage('/')
         
@@ -628,8 +593,7 @@ class BackupMonitor:
         }
 
     async def _get_process_info(self) -> Dict[str, Any]:
-        """Get current process information."""
-        process = psutil.Process()
+        """Get current process information."""        process = psutil.Process()
         return {
             "pid": process.pid,
             "memory_mb": process.memory_info().rss / (1024 * 1024),
@@ -638,23 +602,19 @@ class BackupMonitor:
         }
 
     async def _get_disk_usage(self) -> float:
-        """Get current disk usage in MB."""
-        disk_info = psutil.disk_usage('/')
+        """Get current disk usage in MB."""        disk_info = psutil.disk_usage('/')
         return disk_info.used / (1024 * 1024)
 
     async def _get_storage_utilization(self) -> float:
-        """Get backup storage utilization percentage."""
-        disk_info = psutil.disk_usage('/')
+        """Get backup storage utilization percentage."""        disk_info = psutil.disk_usage('/')
         return disk_info.percent
 
     async def _calculate_total_backup_size(self) -> int:
-        """Calculate total size of all backups."""
-        # This would be implemented based on actual storage backend
+        """Calculate total size of all backups."""        # This would be implemented based on actual storage backend
         return 0
 
     async def _get_daily_backup_count(self) -> int:
-        """Get number of backups completed today."""
-        today = datetime.now().date()
+        """Get number of backups completed today."""        today = datetime.now().date()
         count = 0
         
         for metrics in self.backup_metrics.values():
@@ -664,8 +624,7 @@ class BackupMonitor:
         return count
 
     async def _calculate_success_rate(self) -> float:
-        """Calculate backup success rate."""
-        if not self.backup_metrics:
+        """Calculate backup success rate."""        if not self.backup_metrics:
             return 100.0
         
         completed_backups = [
@@ -684,8 +643,7 @@ class BackupMonitor:
         return (len(successful_backups) / len(completed_backups)) * 100
 
     async def _calculate_average_duration(self) -> float:
-        """Calculate average backup duration."""
-        completed_backups = [
+        """Calculate average backup duration."""        completed_backups = [
             m for m in self.backup_metrics.values() 
             if m.duration_seconds is not None
         ]
@@ -697,17 +655,14 @@ class BackupMonitor:
         return sum(durations) / len(durations)
 
     async def _get_backup_queue_size(self) -> int:
-        """Get number of backups in queue."""
-        # This would be implemented based on actual queue system
+        """Get number of backups in queue."""        # This would be implemented based on actual queue system
         return 0
 
     async def _get_alerts_count_24h(self) -> int:
-        """Get number of alerts sent in last 24 hours."""
-        return await self.alert_manager.get_alerts_count_24h()
+        """Get number of alerts sent in last 24 hours."""        return await self.alert_manager.get_alerts_count_24h()
 
     async def _evaluate_system_alerts(self) -> None:
-        """Evaluate system-level alert conditions."""
-        current_metrics = await self._collect_current_system_metrics()
+        """Evaluate system-level alert conditions."""        current_metrics = await self._collect_current_system_metrics()
         
         # High CPU usage alert
         if current_metrics["cpu_usage"] > self.alert_thresholds["cpu_critical"]:
@@ -757,8 +712,7 @@ class BackupMonitor:
         metrics: BackupMetrics, 
         success: bool
     ) -> None:
-        """Evaluate alerts for completed backup."""
-        if not success:
+        """Evaluate alerts for completed backup."""        if not success:
             await self.alert_manager.send_alert(
                 "backup_failed",
                 AlertSeverity.ERROR.value,
@@ -786,8 +740,7 @@ class BackupMonitor:
             )
 
     async def _evaluate_backup_runtime_alerts(self, backup_id: str) -> None:
-        """Evaluate alerts for running backup."""
-        if backup_id not in self.backup_metrics:
+        """Evaluate alerts for running backup."""        if backup_id not in self.backup_metrics:
             return
         
         metrics = self.backup_metrics[backup_id]
@@ -803,8 +756,7 @@ class BackupMonitor:
             )
 
     def _get_default_thresholds(self) -> Dict[str, Any]:
-        """Get default alert thresholds."""
-        return {
+        """Get default alert thresholds."""        return {
             "cpu_warning": 80.0,
             "cpu_critical": 95.0,
             "memory_warning": 85.0,

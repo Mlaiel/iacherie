@@ -1,5 +1,4 @@
-"""
-Context Adapter
+"""Context Adapter
 ===============
 
 Industrial-grade context adaptation engine for IA Influencer Agent.
@@ -14,9 +13,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 WARNING: Any attempt to steal, copy, or use the concept, idea, or code without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -38,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContextType(str, Enum):
-    """Types of context factors"""
-    TEMPORAL = "temporal"
+    """Types of context factors"""    TEMPORAL = "temporal"
     SPATIAL = "spatial"
     DEVICE = "device"
     PLATFORM = "platform"
@@ -50,8 +46,7 @@ class ContextType(str, Enum):
 
 
 class DeviceType(str, Enum):
-    """Device types for context adaptation"""
-    MOBILE_PHONE = "mobile_phone"
+    """Device types for context adaptation"""    MOBILE_PHONE = "mobile_phone"
     TABLET = "tablet"
     DESKTOP = "desktop"
     LAPTOP = "laptop"
@@ -62,8 +57,7 @@ class DeviceType(str, Enum):
 
 
 class PlatformContext(str, Enum):
-    """Platform contexts"""
-    WEB_BROWSER = "web_browser"
+    """Platform contexts"""    WEB_BROWSER = "web_browser"
     MOBILE_APP = "mobile_app"
     DESKTOP_APP = "desktop_app"
     API_INTEGRATION = "api_integration"
@@ -72,8 +66,7 @@ class PlatformContext(str, Enum):
 
 
 class TimeOfDay(str, Enum):
-    """Time periods for temporal context"""
-    EARLY_MORNING = "early_morning"  # 5-8 AM
+    """Time periods for temporal context"""    EARLY_MORNING = "early_morning"  # 5-8 AM
     MORNING = "morning"  # 8-12 PM
     AFTERNOON = "afternoon"  # 12-5 PM
     EVENING = "evening"  # 5-8 PM
@@ -82,8 +75,7 @@ class TimeOfDay(str, Enum):
 
 
 class MoodState(str, Enum):
-    """User mood states for emotional context"""
-    CREATIVE_INSPIRED = "creative_inspired"
+    """User mood states for emotional context"""    CREATIVE_INSPIRED = "creative_inspired"
     FOCUSED_PRODUCTIVE = "focused_productive"
     RELAXED_BROWSING = "relaxed_browsing"
     SOCIAL_ENGAGED = "social_engaged"
@@ -95,8 +87,7 @@ class MoodState(str, Enum):
 
 @dataclass
 class ContextualFactor:
-    """Individual contextual factor"""
-    factor_type: ContextType
+    """Individual contextual factor"""    factor_type: ContextType
     factor_name: str
     factor_value: Any
     confidence: float
@@ -107,8 +98,7 @@ class ContextualFactor:
 
 @dataclass
 class UserContext:
-    """Complete user context information"""
-    user_id: str
+    """Complete user context information"""    user_id: str
     session_id: str
     timestamp: datetime
     
@@ -157,8 +147,7 @@ class UserContext:
 
 @dataclass
 class AdaptationRule:
-    """Context adaptation rule"""
-    rule_id: str
+    """Context adaptation rule"""    rule_id: str
     rule_name: str
     conditions: Dict[str, Any]
     adaptations: Dict[str, Any]
@@ -169,8 +158,7 @@ class AdaptationRule:
 
 @dataclass
 class AdaptationResult:
-    """Result of context adaptation"""
-    user_id: str
+    """Result of context adaptation"""    user_id: str
     original_context: UserContext
     applied_rules: List[str]
     adaptations: Dict[str, Any]
@@ -180,10 +168,8 @@ class AdaptationResult:
 
 
 class ContextAdapter(BaseService):
-    """
-    Advanced context adaptation engine for personalization
-    """
-    
+    """    Advanced context adaptation engine for personalization
+    """    
     def __init__(
         self,
         redis_cache: RedisCache,
@@ -213,8 +199,7 @@ class ContextAdapter(BaseService):
         logger.info("ContextAdapter initialized successfully")
 
     async def initialize(self) -> None:
-        """Initialize context adapter"""
-        try:
+        """Initialize context adapter"""        try:
             # Initialize ML models
             await self.contextual_model.initialize()
             await self.environment_analyzer.initialize()
@@ -237,8 +222,7 @@ class ContextAdapter(BaseService):
         base_experience: Dict[str, Any],
         adaptation_scope: Optional[List[str]] = None
     ) -> AdaptationResult:
-        """
-        Adapt user experience based on context
+        """        Adapt user experience based on context
         
         Args:
             user_context: Current user context
@@ -247,8 +231,7 @@ class ContextAdapter(BaseService):
             
         Returns:
             Adaptation result with modified experience
-        """
-        try:
+        """        try:
             start_time = datetime.now()
             
             # Validate context
@@ -318,8 +301,7 @@ class ContextAdapter(BaseService):
         session_id: str,
         raw_context_data: Dict[str, Any]
     ) -> UserContext:
-        """
-        Infer comprehensive user context from raw data
+        """        Infer comprehensive user context from raw data
         
         Args:
             user_id: User identifier
@@ -328,8 +310,7 @@ class ContextAdapter(BaseService):
             
         Returns:
             Inferred user context
-        """
-        try:
+        """        try:
             # Extract basic context information
             timestamp = datetime.now()
             
@@ -421,8 +402,7 @@ class ContextAdapter(BaseService):
         user_context: UserContext,
         recommendation_type: str = "experience_optimization"
     ) -> Dict[str, Any]:
-        """
-        Get context-based recommendations for user experience optimization
+        """        Get context-based recommendations for user experience optimization
         
         Args:
             user_context: Current user context
@@ -430,8 +410,7 @@ class ContextAdapter(BaseService):
             
         Returns:
             Context-based recommendations
-        """
-        try:
+        """        try:
             # Analyze context patterns
             context_patterns = await self._analyze_context_patterns(user_context)
             
@@ -484,8 +463,7 @@ class ContextAdapter(BaseService):
     # Private helper methods
     
     async def _validate_user_context(self, user_context: UserContext) -> None:
-        """Validate user context data"""
-        if not user_context.user_id:
+        """Validate user context data"""        if not user_context.user_id:
             raise ValidationError("User ID is required")
         
         if not user_context.session_id:
@@ -495,8 +473,7 @@ class ContextAdapter(BaseService):
             raise ValidationError("Timestamp must be a datetime object")
 
     async def _analyze_context(self, user_context: UserContext) -> Dict[str, Any]:
-        """Analyze user context for adaptation"""
-        try:
+        """Analyze user context for adaptation"""        try:
             analysis = {
                 "temporal_analysis": await self._analyze_temporal_context(user_context),
                 "spatial_analysis": await self._analyze_spatial_context(user_context),
@@ -524,8 +501,7 @@ class ContextAdapter(BaseService):
         user_context: UserContext,
         context_analysis: Dict[str, Any]
     ) -> List[AdaptationRule]:
-        """Find adaptation rules applicable to current context"""
-        try:
+        """Find adaptation rules applicable to current context"""        try:
             applicable_rules = []
             
             for rule_id, rule in self._adaptation_rules.items():
@@ -550,8 +526,7 @@ class ContextAdapter(BaseService):
         experience: Dict[str, Any],
         user_context: UserContext
     ) -> Dict[str, Any]:
-        """Apply adaptation rule to experience"""
-        try:
+        """Apply adaptation rule to experience"""        try:
             adapted_experience = experience.copy()
             
             for adaptation_key, adaptation_value in rule.adaptations.items():
@@ -590,8 +565,7 @@ class ContextAdapter(BaseService):
         timestamp: datetime,
         raw_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Infer temporal context factors"""
-        try:
+        """Infer temporal context factors"""        try:
             # Determine timezone
             timezone_str = raw_data.get("timezone", "UTC")
             tz = pytz.timezone(timezone_str)
@@ -651,8 +625,7 @@ class ContextAdapter(BaseService):
         self,
         raw_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Infer device context factors"""
-        try:
+        """Infer device context factors"""        try:
             # Extract device information
             user_agent = raw_data.get("user_agent", "")
             screen_width = raw_data.get("screen_width")
@@ -728,8 +701,7 @@ def create_context_adapter(
     contextual_model: ContextualMLModel,
     environment_analyzer: EnvironmentAnalyzer
 ) -> ContextAdapter:
-    """Create context adapter instance"""
-    return ContextAdapter(
+    """Create context adapter instance"""    return ContextAdapter(
         redis_cache=redis_cache,
         mongodb_handler=mongodb_handler,
         contextual_model=contextual_model,
@@ -738,8 +710,7 @@ def create_context_adapter(
 
 
 def validate_user_context(user_context: UserContext) -> bool:
-    """Validate user context data"""
-    if not user_context.user_id or not isinstance(user_context.user_id, str):
+    """Validate user context data"""    if not user_context.user_id or not isinstance(user_context.user_id, str):
         return False
     
     if not user_context.session_id or not isinstance(user_context.session_id, str):

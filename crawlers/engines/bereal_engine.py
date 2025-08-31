@@ -1,5 +1,4 @@
-"""
-BeReal Content Crawling Engine
+"""BeReal Content Crawling Engine
 
 Advanced industry-grade engine for BeReal authentic content crawling and social analysis.
 Implements real-time authenticity verification with AI-powered content protection.
@@ -10,9 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is proprietary and confidential. 
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator
 from datetime import datetime, timedelta
@@ -29,8 +26,7 @@ from ...monitoring.metrics import MetricsCollector
 
 
 class BeRealMoment(Enum):
-    """BeReal moment types"""
-    DAILY_MOMENT = "daily_moment"
+    """BeReal moment types"""    DAILY_MOMENT = "daily_moment"
     LATE_POST = "late_post"
     RETAKE = "retake"
     MEMORY = "memory"
@@ -38,8 +34,7 @@ class BeRealMoment(Enum):
 
 
 class AuthenticityLevel(Enum):
-    """Content authenticity levels"""
-    AUTHENTIC = "authentic"
+    """Content authenticity levels"""    AUTHENTIC = "authentic"
     POTENTIALLY_STAGED = "potentially_staged"
     SUSPICIOUS = "suspicious"
     FILTERED = "filtered"
@@ -48,8 +43,7 @@ class AuthenticityLevel(Enum):
 
 @dataclass
 class BeRealPost:
-    """BeReal post data structure"""
-    post_id: str
+    """BeReal post data structure"""    post_id: str
     user_id: str
     username: str
     moment_type: BeRealMoment
@@ -73,11 +67,9 @@ class BeRealPost:
 
 
 class BeRealEngine(BaseCrawlerEngine):
-    """
-    Professional BeReal crawling engine with advanced authenticity verification
+    """    Professional BeReal crawling engine with advanced authenticity verification
     and real-time social behavior analysis for genuine content creators.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.platform = BeRealPlatform(config.get('bereal', {}))
@@ -100,8 +92,7 @@ class BeRealEngine(BaseCrawlerEngine):
         date_range: Optional[tuple] = None,
         include_late_posts: bool = True
     ) -> AsyncGenerator[BeRealPost, None]:
-        """
-        Crawl BeReal moments from a specific user with authenticity analysis
+        """        Crawl BeReal moments from a specific user with authenticity analysis
         
         Args:
             user_id: User identifier
@@ -111,8 +102,7 @@ class BeRealEngine(BaseCrawlerEngine):
             
         Yields:
             BeRealPost: Processed BeReal post objects
-        """
-        self.logger.info(f"Starting BeReal moments crawl for user: {user_id}")
+        """        self.logger.info(f"Starting BeReal moments crawl for user: {user_id}")
         
         try:
             async with self._create_session() as session:
@@ -140,8 +130,7 @@ class BeRealEngine(BaseCrawlerEngine):
         date_range: Optional[tuple],
         include_late_posts: bool
     ) -> AsyncGenerator[Dict[str, Any], None]:
-        """Internal method to crawl user BeReal posts"""
-        
+        """Internal method to crawl user BeReal posts"""        
         page_token = None
         max_pages = 50
         page_count = 0
@@ -185,8 +174,7 @@ class BeRealEngine(BaseCrawlerEngine):
         date_range: Optional[tuple],
         include_late_posts: bool
     ) -> Dict[str, Any]:
-        """Fetch a single page of BeReal posts"""
-        
+        """Fetch a single page of BeReal posts"""        
         url = f"https://mobile.bereal.com/api/feeds/memories/{user_id}"
         
         params = {
@@ -225,14 +213,12 @@ class BeRealEngine(BaseCrawlerEngine):
             return {}
             
     def _matches_moment_filter(self, post: Dict[str, Any], moment_types: List[BeRealMoment]) -> bool:
-        """Check if post matches the moment type filter"""
-        
+        """Check if post matches the moment type filter"""        
         moment_type = self._determine_moment_type(post)
         return moment_type in moment_types
         
     def _determine_moment_type(self, post: Dict[str, Any]) -> BeRealMoment:
-        """Determine moment type from post data"""
-        
+        """Determine moment type from post data"""        
         is_late = post.get('isLate', False)
         retakes_count = post.get('retakeCounter', 0)
         is_memory = post.get('isMemory', False)
@@ -247,8 +233,7 @@ class BeRealEngine(BaseCrawlerEngine):
             return BeRealMoment.DAILY_MOMENT
             
     async def _process_bereal_post(self, raw_post: Dict[str, Any]) -> Optional[BeRealPost]:
-        """Process and analyze BeReal post with authenticity verification"""
-        
+        """Process and analyze BeReal post with authenticity verification"""        
         try:
             post_id = raw_post.get('id')
             if not post_id:
@@ -347,8 +332,7 @@ class BeRealEngine(BaseCrawlerEngine):
             return None
             
     async def _analyze_authenticity(self, post: Dict[str, Any]) -> float:
-        """Analyze post authenticity using dual camera and timing analysis"""
-        
+        """Analyze post authenticity using dual camera and timing analysis"""        
         if not self.enable_authenticity_analysis:
             return 0.8  # Default high authenticity for BeReal
             
@@ -376,8 +360,7 @@ class BeRealEngine(BaseCrawlerEngine):
         return min(authenticity_score, 1.0)
         
     async def _analyze_dual_camera_consistency(self, post: Dict[str, Any]) -> float:
-        """Analyze consistency between front and back camera photos"""
-        
+        """Analyze consistency between front and back camera photos"""        
         primary_photo = post.get('primaryPhoto', {})
         secondary_photo = post.get('secondaryPhoto', {})
         
@@ -408,8 +391,7 @@ class BeRealEngine(BaseCrawlerEngine):
         return max(consistency_score, 0.0)
         
     def _analyze_timing_authenticity(self, post: Dict[str, Any]) -> float:
-        """Analyze timing authenticity factors"""
-        
+        """Analyze timing authenticity factors"""        
         timing_score = 1.0
         
         # Late posting penalty
@@ -435,8 +417,7 @@ class BeRealEngine(BaseCrawlerEngine):
         return max(timing_score, 0.0)
         
     def _analyze_location_authenticity(self, post: Dict[str, Any]) -> float:
-        """Analyze location data for authenticity"""
-        
+        """Analyze location data for authenticity"""        
         location = post.get('location')
         if not location:
             return 0.7  # Neutral score for no location
@@ -445,8 +426,7 @@ class BeRealEngine(BaseCrawlerEngine):
         return 0.9
         
     async def _analyze_content_naturalness(self, post: Dict[str, Any]) -> float:
-        """Analyze content for natural vs staged appearance"""
-        
+        """Analyze content for natural vs staged appearance"""        
         # This would use advanced image analysis
         # For now, return a baseline score
         return 0.8
@@ -456,8 +436,7 @@ class BeRealEngine(BaseCrawlerEngine):
         authenticity_score: float, 
         post: Dict[str, Any]
     ) -> AuthenticityLevel:
-        """Determine authenticity level based on score and factors"""
-        
+        """Determine authenticity level based on score and factors"""        
         if authenticity_score >= 0.9:
             return AuthenticityLevel.AUTHENTIC
         elif authenticity_score >= 0.7:
@@ -475,8 +454,7 @@ class BeRealEngine(BaseCrawlerEngine):
             return AuthenticityLevel.FAKE
             
     def _calculate_engagement_rate(self, post: Dict[str, Any]) -> float:
-        """Calculate engagement rate for BeReal post"""
-        
+        """Calculate engagement rate for BeReal post"""        
         reactions = len(post.get('realmojis', []))
         comments = post.get('comment', {}).get('count', 0)
         
@@ -494,8 +472,7 @@ class BeRealEngine(BaseCrawlerEngine):
         post: Dict[str, Any],
         authenticity_score: float
     ) -> float:
-        """Calculate viral potential for BeReal post"""
-        
+        """Calculate viral potential for BeReal post"""        
         # Factors: authenticity, timing, engagement, uniqueness
         engagement_rate = self._calculate_engagement_rate(post)
         
@@ -518,8 +495,7 @@ class BeRealEngine(BaseCrawlerEngine):
         return min(viral_potential, 1.0)
         
     async def _analyze_social_impact(self, post: Dict[str, Any]) -> float:
-        """Analyze social impact and influence of the post"""
-        
+        """Analyze social impact and influence of the post"""        
         # Factors: engagement quality, authenticity, reach
         reactions = len(post.get('realmojis', []))
         comments = post.get('comment', {}).get('count', 0)
@@ -541,8 +517,7 @@ class BeRealEngine(BaseCrawlerEngine):
         limit: int = 100,
         region: Optional[str] = None
     ) -> List[BeRealPost]:
-        """Crawl trending BeReal moments"""
-        
+        """Crawl trending BeReal moments"""        
         self.logger.info(f"Crawling trending BeReal moments, limit: {limit}")
         
         trending_moments = []
@@ -567,8 +542,7 @@ class BeRealEngine(BaseCrawlerEngine):
         limit: int,
         region: Optional[str]
     ) -> List[Dict[str, Any]]:
-        """Fetch trending moments data"""
-        
+        """Fetch trending moments data"""        
         url = "https://mobile.bereal.com/api/feeds/discovery"
         
         params = {
@@ -596,8 +570,7 @@ class BeRealEngine(BaseCrawlerEngine):
         self, 
         monitoring_period: timedelta = timedelta(hours=24)
     ) -> Dict[str, Any]:
-        """Monitor authenticity trends across the platform"""
-        
+        """Monitor authenticity trends across the platform"""        
         self.logger.info("Monitoring BeReal authenticity trends")
         
         try:
@@ -624,8 +597,7 @@ class BeRealEngine(BaseCrawlerEngine):
             return {}
             
     def _analyze_authenticity_distribution(self, posts: List[BeRealPost]) -> Dict[str, float]:
-        """Analyze distribution of authenticity levels"""
-        
+        """Analyze distribution of authenticity levels"""        
         if not posts:
             return {}
             
@@ -639,8 +611,7 @@ class BeRealEngine(BaseCrawlerEngine):
         return distribution
         
     def _analyze_timing_patterns(self, posts: List[BeRealPost]) -> Dict[str, Any]:
-        """Analyze posting timing patterns"""
-        
+        """Analyze posting timing patterns"""        
         if not posts:
             return {}
             
@@ -655,8 +626,7 @@ class BeRealEngine(BaseCrawlerEngine):
         }
         
     def _analyze_engagement_authenticity_correlation(self, posts: List[BeRealPost]) -> Dict[str, float]:
-        """Analyze correlation between engagement and authenticity"""
-        
+        """Analyze correlation between engagement and authenticity"""        
         if not posts:
             return {}
             
@@ -672,8 +642,7 @@ class BeRealEngine(BaseCrawlerEngine):
         return engagement_by_authenticity
         
     def _analyze_location_impact(self, posts: List[BeRealPost]) -> Dict[str, Any]:
-        """Analyze impact of location sharing on authenticity and engagement"""
-        
+        """Analyze impact of location sharing on authenticity and engagement"""        
         posts_with_location = [p for p in posts if p.location_data]
         posts_without_location = [p for p in posts if not p.location_data]
         
@@ -686,8 +655,7 @@ class BeRealEngine(BaseCrawlerEngine):
         }
         
     def _analyze_retake_patterns(self, posts: List[BeRealPost]) -> Dict[str, Any]:
-        """Analyze retake patterns and their impact"""
-        
+        """Analyze retake patterns and their impact"""        
         if not posts:
             return {}
             
@@ -703,8 +671,7 @@ class BeRealEngine(BaseCrawlerEngine):
         }
         
     async def _get_authenticated_headers(self) -> Dict[str, str]:
-        """Get authenticated headers for API requests"""
-        
+        """Get authenticated headers for API requests"""        
         return {
             'User-Agent': 'BeReal/1.0',
             'Accept': 'application/json',
@@ -714,8 +681,7 @@ class BeRealEngine(BaseCrawlerEngine):
         }
         
     async def _create_session(self) -> aiohttp.ClientSession:
-        """Create configured HTTP session"""
-        
+        """Create configured HTTP session"""        
         connector = aiohttp.TCPConnector(
             limit=self.max_concurrent_requests,
             limit_per_host=self.max_concurrent_requests
@@ -729,12 +695,10 @@ class BeRealEngine(BaseCrawlerEngine):
         )
         
     async def _apply_rate_limiting(self):
-        """Apply rate limiting to prevent API abuse"""
-        
+        """Apply rate limiting to prevent API abuse"""        
         await asyncio.sleep(60 / self.rate_limit_per_minute)
 class BeRealPost:
-    """BeReal post data structure"""
-    id: str
+    """BeReal post data structure"""    id: str
     user_id: str
     username: str
     caption: Optional[str]
@@ -756,8 +720,7 @@ class BeRealPost:
 
 @dataclass
 class BeRealUser:
-    """BeReal user data structure"""
-    id: str
+    """BeReal user data structure"""    id: str
     username: str
     display_name: str
     profile_picture_url: Optional[str]
@@ -776,8 +739,7 @@ class BeRealUser:
 
 @dataclass
 class BeRealMemory:
-    """BeReal memory data structure"""
-    id: str
+    """BeReal memory data structure"""    id: str
     user_id: str
     date: datetime
     front_image_url: str
@@ -790,8 +752,7 @@ class BeRealMemory:
 
 
 class BeRealCrawlerEngine(BaseCrawlerEngine):
-    """
-    Professional BeReal crawler engine for authentic social content analysis.
+    """    Professional BeReal crawler engine for authentic social content analysis.
     
     Features:
     - Real-time post monitoring
@@ -800,11 +761,9 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
     - Geographic trend analysis
     - Engagement pattern detection
     - Content protection monitoring
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize BeReal crawler engine"""
-        super().__init__(platform="bereal", config=config)
+        """Initialize BeReal crawler engine"""        super().__init__(platform="bereal", config=config)
         
         # Rate limiting (very conservative due to API limitations)
         self.rate_limiter = RateLimiter(
@@ -832,8 +791,7 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
         logger.info("BeReal crawler engine initialized")
     
     async def initialize(self) -> None:
-        """Initialize the crawler engine"""
-        try:
+        """Initialize the crawler engine"""        try:
             await self._create_session()
             self._setup_selenium()
             logger.info("BeReal engine initialized successfully")
@@ -842,8 +800,7 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Initialization failed: {e}")
     
     async def _create_session(self) -> None:
-        """Create HTTP session with proper headers"""
-        headers = {
+        """Create HTTP session with proper headers"""        headers = {
             'User-Agent': 'BeReal/1.0.0 (iPhone; iOS 15.0; Scale/3.00)',
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -861,8 +818,7 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
         )
     
     def _setup_selenium(self) -> None:
-        """Setup Selenium WebDriver for web content"""
-        try:
+        """Setup Selenium WebDriver for web content"""        try:
             options = webdriver.ChromeOptions()
             options.add_argument('--headless')
             options.add_argument('--no-sandbox')
@@ -876,16 +832,14 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
             logger.warning(f"Failed to initialize Selenium: {e}")
     
     async def get_user_profile(self, username: str) -> Optional[BeRealUser]:
-        """
-        Get user profile information
+        """        Get user profile information
         
         Args:
             username: BeReal username
             
         Returns:
             User profile data or None if not found
-        """
-        try:
+        """        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -926,8 +880,7 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
         username: str,
         limit: int = 20
     ) -> List[BeRealPost]:
-        """
-        Get user's recent posts
+        """        Get user's recent posts
         
         Args:
             username: BeReal username
@@ -935,8 +888,7 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of user posts
-        """
-        try:
+        """        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -981,13 +933,11 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"User posts retrieval failed: {e}")
     
     async def monitor_daily_bereal(self) -> Dict[str, Any]:
-        """
-        Monitor the daily BeReal notification and user responses
+        """        Monitor the daily BeReal notification and user responses
         
         Returns:
             Daily BeReal monitoring data
-        """
-        try:
+        """        try:
             monitoring_data = {
                 'date': datetime.utcnow().date().isoformat(),
                 'notification_time': None,
@@ -1019,16 +969,14 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
         self,
         username: str
     ) -> Dict[str, Any]:
-        """
-        Analyze user's posting patterns for authenticity verification
+        """        Analyze user's posting patterns for authenticity verification
         
         Args:
             username: Username to analyze
             
         Returns:
             Authenticity analysis results
-        """
-        try:
+        """        try:
             # Get user posts
             posts = await self.get_user_posts(username, limit=50)
             
@@ -1079,8 +1027,7 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Authenticity analysis failed: {e}")
     
     def _parse_user_profile(self) -> BeRealUser:
-        """Parse user profile from current page"""
-        try:
+        """Parse user profile from current page"""        try:
             username_elem = self.driver.find_element(By.CLASS_NAME, "username")
             username = username_elem.text if username_elem else ""
             
@@ -1125,8 +1072,7 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"User profile parsing failed: {e}")
     
     def _parse_post_element(self, post_element, username: str) -> Optional[BeRealPost]:
-        """Parse a post element from the page"""
-        try:
+        """Parse a post element from the page"""        try:
             # Extract post ID (would need to find unique identifier)
             post_id = hashlib.md5(f"{username}_{datetime.utcnow()}".encode()).hexdigest()
             
@@ -1181,8 +1127,7 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
             return None
     
     def _calculate_authenticity_score(self, patterns: Dict[str, Any]) -> float:
-        """Calculate authenticity score based on posting patterns"""
-        score = 1.0
+        """Calculate authenticity score based on posting patterns"""        score = 1.0
         
         # Penalize excessive retakes
         if patterns['retake_frequency'] > 0.5:
@@ -1205,8 +1150,7 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
         longitude: float,
         radius_km: float = 5.0
     ) -> List[BeRealPost]:
-        """
-        Search for BeReal posts in a specific geographic area
+        """        Search for BeReal posts in a specific geographic area
         
         Args:
             latitude: Latitude coordinate
@@ -1215,8 +1159,7 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of posts in the area
-        """
-        try:
+        """        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -1240,13 +1183,11 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Location-based search failed: {e}")
     
     async def track_viral_moments(self) -> List[Dict[str, Any]]:
-        """
-        Track viral moments and trending content on BeReal
+        """        Track viral moments and trending content on BeReal
         
         Returns:
             List of viral moments and trends
-        """
-        try:
+        """        try:
             viral_moments = []
             
             # This would require access to BeReal's trending/discovery features
@@ -1260,8 +1201,7 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Viral moment tracking failed: {e}")
     
     async def cleanup(self) -> None:
-        """Clean up resources"""
-        try:
+        """Clean up resources"""        try:
             if self.session:
                 await self.session.close()
             if self.driver:

@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-IA Influencer Agent - Auto Scaling Agent Index
+"""IA Influencer Agent - Auto Scaling Agent Index
 ============================================
 
 © 2025 Fahed Mlaiel - Tous Droits Réservés
@@ -20,9 +19,7 @@ Spécialisations Équipe Expert:
 - Ingénieur ML: Analyse prédictive et reconnaissance de motifs
 - Administrateur BD: Gestion données haute performance
 - Ingénieur Sécurité: Cryptographie et protection
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import signal
 import sys
@@ -52,21 +49,17 @@ logger = logging.getLogger(__name__)
 
 
 class AutoScalingAgentOrchestrator:
-    """
-    Orchestrateur principal pour l'Auto Scaling Agent
+    """    Orchestrateur principal pour l'Auto Scaling Agent
     
     Coordonne tous les composants du système de scaling automatique
     avec surveillance intelligente et optimisation ML.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialise l'orchestrateur avec configuration
+        """        Initialise l'orchestrateur avec configuration
         
         Args:
             config: Configuration système (optionnelle)
-        """
-        self.config = config or self._get_default_config()
+        """        self.config = config or self._get_default_config()
         self.components = {}
         self.running = False
         self.start_time = None
@@ -76,13 +69,11 @@ class AutoScalingAgentOrchestrator:
         logger.info(f"🔒 Copyright: © 2025 - Tous Droits Réservés")
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """
-        Configuration par défaut du système
+        """        Configuration par défaut du système
         
         Returns:
             Dict: Configuration système par défaut
-        """
-        return {
+        """        return {
             'auto_scaling_manager': {
                 'check_interval': 30,
                 'max_instances': 100,
@@ -125,10 +116,8 @@ class AutoScalingAgentOrchestrator:
         }
     
     async def initialize_components(self):
-        """
-        Initialise tous les composants du système
-        """
-        try:
+        """        Initialise tous les composants du système
+        """        try:
             logger.info("🔧 Initialisation des composants système...")
             
             # Initialisation Auto Scaling Manager
@@ -168,10 +157,8 @@ class AutoScalingAgentOrchestrator:
             raise
     
     async def start_all_components(self):
-        """
-        Démarre tous les composants système
-        """
-        try:
+        """        Démarre tous les composants système
+        """        try:
             logger.info("🚀 Démarrage de tous les composants...")
             
             # Démarrage des tâches de surveillance
@@ -218,10 +205,8 @@ class AutoScalingAgentOrchestrator:
             raise
     
     async def start(self):
-        """
-        Démarre l'orchestrateur complet
-        """
-        try:
+        """        Démarre l'orchestrateur complet
+        """        try:
             self.start_time = datetime.now()
             self.running = True
             
@@ -243,10 +228,8 @@ class AutoScalingAgentOrchestrator:
             raise
     
     async def stop(self):
-        """
-        Arrêt gracieux de l'orchestrateur
-        """
-        try:
+        """        Arrêt gracieux de l'orchestrateur
+        """        try:
             logger.info("🛑 Arrêt Auto Scaling Agent...")
             self.running = False
             
@@ -270,13 +253,11 @@ class AutoScalingAgentOrchestrator:
             logger.error(f"❌ Erreur lors de l'arrêt: {e}")
     
     def get_system_status(self) -> Dict[str, Any]:
-        """
-        Obtient le statut système complet
+        """        Obtient le statut système complet
         
         Returns:
             Dict: Statut détaillé du système
-        """
-        status = {
+        """        status = {
             'running': self.running,
             'start_time': self.start_time.isoformat() if self.start_time else None,
             'uptime': (datetime.now() - self.start_time).total_seconds() if self.start_time else 0,
@@ -301,20 +282,16 @@ orchestrator = None
 
 
 def signal_handler(signum, frame):
-    """
-    Gestionnaire de signaux pour arrêt gracieux
-    """
-    logger.info(f"📡 Signal reçu: {signum}")
+    """    Gestionnaire de signaux pour arrêt gracieux
+    """    logger.info(f"📡 Signal reçu: {signum}")
     if orchestrator:
         asyncio.create_task(orchestrator.stop())
     sys.exit(0)
 
 
 async def main():
-    """
-    Fonction principale d'exécution
-    """
-    global orchestrator
+    """    Fonction principale d'exécution
+    """    global orchestrator
     
     # Configuration des gestionnaires de signaux
     signal.signal(signal.SIGINT, signal_handler)
@@ -365,10 +342,8 @@ __all__ = [
 
 
 if __name__ == "__main__":
-    """
-    Point d'entrée principal
-    """
-    try:
+    """    Point d'entrée principal
+    """    try:
         asyncio.run(main())
     except Exception as e:
         logger.error(f"💥 Erreur fatale: {e}")

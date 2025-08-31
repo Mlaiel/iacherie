@@ -1,5 +1,4 @@
-"""
-🐳 Docker Configuration Manager - IA-Influencer-Agent Infrastructure
+"""🐳 Docker Configuration Manager - IA-Influencer-Agent Infrastructure
 ====================================================================
 Expert: DevOps Engineer + Cloud Architect + Container Security
 Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -12,9 +11,7 @@ l'autorisation écrite explicite de Fahed Mlaiel est strictement
 interdite et constituera une violation des lois sur le droit d'auteur.
 
 Professional Docker configuration and management for IA-Influencer-Agent platform.
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple, Set
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Set
 import asyncio
 import logging
 import json
@@ -35,8 +32,7 @@ from contextlib import asynccontextmanager
 logger = logging.getLogger(__name__)
 
 class DockerImageType(Enum):
-    """Docker image types for IA-Influencer-Agent platform"""
-    WEB_API = "web-api"
+    """Docker image types for IA-Influencer-Agent platform"""    WEB_API = "web-api"
     AI_ENGINE = "ai-engine"
     ML_WORKER = "ml-worker"
     AUDIO_PROCESSOR = "audio-processor"
@@ -59,15 +55,13 @@ class DockerImageType(Enum):
     API_GATEWAY = "api-gateway"
 
 class DockerBuildTarget(Enum):
-    """Docker build targets for multi-stage builds"""
-    DEVELOPMENT = "development"
+    """Docker build targets for multi-stage builds"""    DEVELOPMENT = "development"
     TESTING = "testing"
     PRODUCTION = "production"
     SECURITY_SCAN = "security-scan"
 
 class DockerRegistry(Enum):
-    """Supported Docker registries"""
-    DOCKER_HUB = "docker.io"
+    """Supported Docker registries"""    DOCKER_HUB = "docker.io"
     AWS_ECR = "ecr"
     GOOGLE_GCR = "gcr.io"
     AZURE_ACR = "acr"
@@ -76,8 +70,7 @@ class DockerRegistry(Enum):
 
 @dataclass
 class DockerConfig:
-    """Advanced Docker configuration for IA-Influencer services"""
-    name: str
+    """Advanced Docker configuration for IA-Influencer services"""    name: str
     image: str
     tag: str
     image_type: DockerImageType
@@ -101,13 +94,10 @@ class DockerConfig:
     created_at: datetime = field(default_factory=datetime.now)
     updated_at: datetime = field(default_factory=datetime.now)
     def to_dict(self) -> Dict[str, Any]:
-        """Convert config to dictionary."""
-        return asdict(self)
+        """Convert config to dictionary."""        return asdict(self)
     
     def generate_dockerfile(self) -> str:
-        """Generate Dockerfile content for this configuration."""
-        dockerfile_content = f"""
-# IA-Influencer-Agent {self.image_type.value} Service
+        """Generate Dockerfile content for this configuration."""        dockerfile_content = f"""# IA-Influencer-Agent {self.image_type.value} Service
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 # Professional-grade multi-stage Docker build
 
@@ -180,14 +170,12 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \\
 
 # Run application
 CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "{self.exposed_ports[0] if self.exposed_ports else 8000}"]
-"""
-        return dockerfile_content.strip()
+"""        return dockerfile_content.strip()
 
 
 @dataclass
 class DockerBuildResult:
-    """Docker build operation result"""
-    success: bool
+    """Docker build operation result"""    success: bool
     image_id: str
     image_size: int
     build_time: float
@@ -199,8 +187,7 @@ class DockerBuildResult:
 
 @dataclass 
 class DockerRegistryCredentials:
-    """Docker registry authentication credentials"""
-    registry_url: str
+    """Docker registry authentication credentials"""    registry_url: str
     username: str
     password: str
     email: Optional[str] = None
@@ -208,8 +195,7 @@ class DockerRegistryCredentials:
 
 
 class DockerConfigManager:
-    """Enterprise-grade Docker configuration manager for IA-Influencer-Agent"""
-    
+    """Enterprise-grade Docker configuration manager for IA-Influencer-Agent"""    
     def __init__(self, config_path: str = "/app/config/docker"):
         self.config_path = Path(config_path)
         self.client = None
@@ -220,8 +206,7 @@ class DockerConfigManager:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
     async def initialize(self) -> bool:
-        """Initialize Docker configuration manager with enterprise features"""
-        try:
+        """Initialize Docker configuration manager with enterprise features"""        try:
             # Initialize Docker client with enhanced error handling
             try:
                 self.client = docker.from_env()
@@ -258,8 +243,7 @@ class DockerConfigManager:
             return False
     
     async def _load_configurations(self) -> None:
-        """Load existing Docker configurations from filesystem"""
-        try:
+        """Load existing Docker configurations from filesystem"""        try:
             config_dir = self.config_path / "services"
             if not config_dir.exists():
                 return
@@ -283,8 +267,7 @@ class DockerConfigManager:
             self.logger.warning(f"⚠️ Error loading configurations: {e}")
     
     async def _load_registry_credentials(self) -> None:
-        """Load Docker registry credentials securely"""
-        try:
+        """Load Docker registry credentials securely"""        try:
             credentials_file = self.config_path / "secrets" / "registry_credentials.yml"
             if credentials_file.exists():
                 async with aiofiles.open(credentials_file, 'r') as f:
@@ -298,8 +281,7 @@ class DockerConfigManager:
             self.logger.warning(f"⚠️ Error loading registry credentials: {e}")
     
     async def _generate_ia_influencer_configs(self) -> None:
-        """Generate Docker configurations for all IA-Influencer-Agent services"""
-        try:
+        """Generate Docker configurations for all IA-Influencer-Agent services"""        try:
             # Define service configurations based on cahier des charges
             service_definitions = {
                 "web-api": {
@@ -417,8 +399,7 @@ class DockerConfigManager:
             raise
     
     async def _validate_docker_environment(self) -> None:
-        """Validate Docker environment for IA-Influencer-Agent requirements"""
-        try:
+        """Validate Docker environment for IA-Influencer-Agent requirements"""        try:
             # Check Docker version
             docker_version = self.client.version()
             self.logger.info(f"🐳 Docker version: {docker_version['Version']}")
@@ -447,8 +428,7 @@ class DockerConfigManager:
             self.logger.warning(f"⚠️ Error validating Docker environment: {e}")
     
     async def _save_config(self, service_name: str, config: DockerConfig) -> None:
-        """Save Docker configuration to filesystem"""
-        try:
+        """Save Docker configuration to filesystem"""        try:
             config_file = self.config_path / "services" / f"{service_name}.yml"
             config_data = config.to_dict()
             
@@ -459,12 +439,10 @@ class DockerConfigManager:
             self.logger.error(f"❌ Error saving config for {service_name}: {e}")
     
     async def get_config(self, service_name: str) -> Optional[DockerConfig]:
-        """Get Docker configuration for a service"""
-        return self.configs.get(service_name)
+        """Get Docker configuration for a service"""        return self.configs.get(service_name)
     
     async def create_config(self, service_name: str, config: DockerConfig) -> bool:
-        """Create new Docker configuration"""
-        try:
+        """Create new Docker configuration"""        try:
             self.configs[service_name] = config
             await self._save_config(service_name, config)
             self.logger.info(f"✅ Created config for {service_name}")
@@ -474,8 +452,7 @@ class DockerConfigManager:
             return False
     
     async def update_config(self, service_name: str, config: DockerConfig) -> bool:
-        """Update existing Docker configuration"""
-        try:
+        """Update existing Docker configuration"""        try:
             if service_name not in self.configs:
                 return False
             
@@ -489,8 +466,7 @@ class DockerConfigManager:
             return False
     
     async def delete_config(self, service_name: str) -> bool:
-        """Delete Docker configuration"""
-        try:
+        """Delete Docker configuration"""        try:
             if service_name in self.configs:
                 del self.configs[service_name]
                 
@@ -506,8 +482,7 @@ class DockerConfigManager:
             return False
     
     async def generate_dockerfile(self, service_name: str) -> Optional[str]:
-        """Generate Dockerfile for a service"""
-        try:
+        """Generate Dockerfile for a service"""        try:
             config = self.configs.get(service_name)
             if not config:
                 return None
@@ -525,8 +500,7 @@ class DockerConfigManager:
             return None
     
     async def generate_docker_compose(self, services: List[str] = None) -> Optional[str]:
-        """Generate docker-compose.yml for specified services"""
-        try:
+        """Generate docker-compose.yml for specified services"""        try:
             if services is None:
                 services = list(self.configs.keys())
             
@@ -598,13 +572,11 @@ class DockerConfigManager:
             return None
     
     async def list_configs(self) -> Dict[str, DockerConfig]:
-        """List all Docker configurations"""
-        return self.configs.copy()
+        """List all Docker configurations"""        return self.configs.copy()
 
 
 class DockerImageBuilder:
-    """Professional Docker image builder with advanced features"""
-    
+    """Professional Docker image builder with advanced features"""    
     def __init__(self, docker_client, registry_manager=None):
         self.client = docker_client
         self.registry_manager = registry_manager
@@ -619,8 +591,7 @@ class DockerImageBuilder:
         pull: bool = True,
         build_args: Dict[str, str] = None
     ) -> DockerBuildResult:
-        """Build Docker image with advanced options"""
-        start_time = datetime.now()
+        """Build Docker image with advanced options"""        start_time = datetime.now()
         build_logs = []
         warnings = []
         errors = []
@@ -740,8 +711,7 @@ class DockerImageBuilder:
         targets: List[DockerBuildTarget],
         context_path: str = "."
     ) -> Dict[DockerBuildTarget, DockerBuildResult]:
-        """Build multiple stages of a multi-stage Dockerfile"""
-        results = {}
+        """Build multiple stages of a multi-stage Dockerfile"""        results = {}
         
         for target in targets:
             target_config = config
@@ -754,8 +724,7 @@ class DockerImageBuilder:
         return results
     
     async def optimize_image_size(self, config: DockerConfig) -> DockerConfig:
-        """Optimize Docker image for smaller size"""
-        optimized_config = config
+        """Optimize Docker image for smaller size"""        optimized_config = config
         
         # Add optimization build args
         optimized_config.build_args.update({
@@ -772,8 +741,7 @@ class DockerImageBuilder:
         return optimized_config
     
     async def get_build_history(self, image_name: str) -> List[DockerBuildResult]:
-        """Get build history for an image"""
-        history = []
+        """Get build history for an image"""        history = []
         for cache_key, result in self.build_cache.items():
             if image_name in cache_key:
                 history.append(result)
@@ -782,8 +750,7 @@ class DockerImageBuilder:
 
 
 class DockerRegistryManager:
-    """Professional Docker registry management"""
-    
+    """Professional Docker registry management"""    
     def __init__(self, default_registry: str = "registry.ia-influencer-agent.com"):
         self.default_registry = default_registry
         self.credentials: Dict[str, DockerRegistryCredentials] = {}
@@ -791,8 +758,7 @@ class DockerRegistryManager:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def initialize(self, docker_client) -> bool:
-        """Initialize registry manager"""
-        try:
+        """Initialize registry manager"""        try:
             self.client = docker_client
             await self._load_credentials()
             self.logger.info("✅ DockerRegistryManager initialized")
@@ -802,8 +768,7 @@ class DockerRegistryManager:
             return False
     
     async def _load_credentials(self) -> None:
-        """Load registry credentials"""
-        try:
+        """Load registry credentials"""        try:
             # Load from environment or config file
             # Implementation depends on security requirements
             pass
@@ -811,8 +776,7 @@ class DockerRegistryManager:
             self.logger.warning(f"⚠️ Error loading credentials: {e}")
     
     async def login(self, registry_url: str, credentials: DockerRegistryCredentials) -> bool:
-        """Login to Docker registry"""
-        try:
+        """Login to Docker registry"""        try:
             self.client.login(
                 username=credentials.username,
                 password=credentials.password,
@@ -829,8 +793,7 @@ class DockerRegistryManager:
             return False
     
     async def push_image(self, image_name: str, tag: str, registry: str = None) -> bool:
-        """Push image to registry"""
-        try:
+        """Push image to registry"""        try:
             target_registry = registry or self.default_registry
             full_image_name = f"{target_registry}/{image_name}:{tag}"
             
@@ -855,8 +818,7 @@ class DockerRegistryManager:
             return False
     
     async def pull_image(self, image_name: str, tag: str, registry: str = None) -> bool:
-        """Pull image from registry"""
-        try:
+        """Pull image from registry"""        try:
             target_registry = registry or self.default_registry
             full_image_name = f"{target_registry}/{image_name}:{tag}"
             
@@ -871,8 +833,7 @@ class DockerRegistryManager:
             return False
     
     async def list_tags(self, image_name: str, registry: str = None) -> List[str]:
-        """List available tags for an image"""
-        try:
+        """List available tags for an image"""        try:
             # Implementation depends on registry API
             # This is a placeholder for the actual implementation
             return []
@@ -881,8 +842,7 @@ class DockerRegistryManager:
             return []
     
     async def delete_image(self, image_name: str, tag: str, registry: str = None) -> bool:
-        """Delete image from registry"""
-        try:
+        """Delete image from registry"""        try:
             # Implementation depends on registry API
             # This is a placeholder for the actual implementation
             self.logger.info(f"✅ Image deleted: {image_name}:{tag}")
@@ -892,8 +852,7 @@ class DockerRegistryManager:
             return False
     
     async def _generate_default_configs(self) -> None:
-        """Generate default Docker configurations for IA-Influencer services"""
-        
+        """Generate default Docker configurations for IA-Influencer services"""        
         # Web API Service
         web_api_config = DockerConfig(
             name="ia-influencer-web-api",
@@ -1065,8 +1024,7 @@ class DockerRegistryManager:
             await self._save_config(name, config)
     
     async def _save_config(self, name: str, config: DockerConfig) -> None:
-        """Save Docker configuration to file"""
-        try:
+        """Save Docker configuration to file"""        try:
             config_file = self.config_path / f"{name}.yml"
             with open(config_file, 'w') as f:
                 yaml.dump(asdict(config), f, default_flow_style=False)
@@ -1075,8 +1033,7 @@ class DockerRegistryManager:
             self.logger.error(f"❌ Error saving config {name}: {e}")
     
     async def generate_docker_compose(self, services: List[str] = None) -> str:
-        """Generate docker-compose.yml file"""
-        try:
+        """Generate docker-compose.yml file"""        try:
             if services is None:
                 services = list(self.configs.keys())
             
@@ -1152,12 +1109,10 @@ class DockerRegistryManager:
             return ""
     
     async def get_service_config(self, service_name: str) -> Optional[DockerConfig]:
-        """Get configuration for specific service"""
-        return self.configs.get(service_name)
+        """Get configuration for specific service"""        return self.configs.get(service_name)
     
     async def update_service_config(self, service_name: str, config: DockerConfig) -> bool:
-        """Update configuration for specific service"""
-        try:
+        """Update configuration for specific service"""        try:
             self.configs[service_name] = config
             await self._save_config(service_name, config)
             self.logger.info(f"✅ Updated config for service: {service_name}")
@@ -1168,8 +1123,7 @@ class DockerRegistryManager:
             return False
 
 class DockerImageBuilder:
-    """Professional Docker image builder"""
-    
+    """Professional Docker image builder"""    
     def __init__(self, registry_url: str = None):
         self.registry_url = registry_url
         self.client = None
@@ -1177,8 +1131,7 @@ class DockerImageBuilder:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def initialize(self) -> bool:
-        """Initialize Docker image builder"""
-        try:
+        """Initialize Docker image builder"""        try:
             self.client = docker.from_env()
             self.logger.info("✅ DockerImageBuilder initialized")
             return True
@@ -1195,8 +1148,7 @@ class DockerImageBuilder:
         build_args: Dict[str, str] = None,
         platform: str = "linux/amd64"
     ) -> bool:
-        """Build Docker image"""
-        try:
+        """Build Docker image"""        try:
             build_args = build_args or {}
             full_image_name = f"{image_name}:{tag}"
             
@@ -1233,8 +1185,7 @@ class DockerImageBuilder:
             return False
     
     async def push_image(self, image_name: str, tag: str = "latest") -> bool:
-        """Push image to registry"""
-        try:
+        """Push image to registry"""        try:
             if not self.registry_url:
                 self.logger.warning("⚠️ No registry URL configured")
                 return False
@@ -1262,8 +1213,7 @@ class DockerImageBuilder:
             return False
 
 class DockerRegistryManager:
-    """Professional Docker registry management"""
-    
+    """Professional Docker registry management"""    
     def __init__(self, registry_config: Dict[str, Any]):
         self.registry_config = registry_config
         self.client = None
@@ -1271,8 +1221,7 @@ class DockerRegistryManager:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def initialize(self) -> bool:
-        """Initialize Docker registry manager"""
-        try:
+        """Initialize Docker registry manager"""        try:
             self.client = docker.from_env()
             
             # Authenticate with registry
@@ -1287,8 +1236,7 @@ class DockerRegistryManager:
             return False
     
     async def _authenticate(self) -> bool:
-        """Authenticate with Docker registry"""
-        try:
+        """Authenticate with Docker registry"""        try:
             self.client.login(
                 username=self.registry_config['username'],
                 password=self.registry_config['password'],
@@ -1304,8 +1252,7 @@ class DockerRegistryManager:
             return False
     
     async def list_images(self, repository: str = None) -> List[Dict[str, Any]]:
-        """List images in registry"""
-        try:
+        """List images in registry"""        try:
             images = []
             
             if repository:
@@ -1336,8 +1283,7 @@ class DockerRegistryManager:
             return []
     
     async def pull_image(self, image_name: str, tag: str = "latest") -> bool:
-        """Pull image from registry"""
-        try:
+        """Pull image from registry"""        try:
             full_image_name = f"{image_name}:{tag}"
             self.logger.info(f"📥 Pulling image: {full_image_name}")
             
@@ -1351,8 +1297,7 @@ class DockerRegistryManager:
             return False
     
     async def delete_image(self, image_name: str, tag: str = "latest") -> bool:
-        """Delete image from local registry"""
-        try:
+        """Delete image from local registry"""        try:
             full_image_name = f"{image_name}:{tag}"
             self.client.images.remove(full_image_name, force=True)
             
@@ -1367,8 +1312,7 @@ class DockerRegistryManager:
 # Utility functions for IA-Influencer-Agent Docker management
 
 async def create_ia_influencer_network() -> bool:
-    """Create Docker network for IA-Influencer services"""
-    try:
+    """Create Docker network for IA-Influencer services"""    try:
         client = docker.from_env()
         
         # Check if network already exists
@@ -1403,8 +1347,7 @@ async def create_ia_influencer_network() -> bool:
 
 
 async def cleanup_unused_resources() -> Dict[str, int]:
-    """Clean up unused Docker resources"""
-    try:
+    """Clean up unused Docker resources"""    try:
         client = docker.from_env()
         cleanup_stats = {
             "containers_removed": 0,
@@ -1451,8 +1394,7 @@ async def cleanup_unused_resources() -> Dict[str, int]:
 
 
 async def validate_ia_influencer_requirements() -> Dict[str, bool]:
-    """Validate system requirements for IA-Influencer-Agent"""
-    try:
+    """Validate system requirements for IA-Influencer-Agent"""    try:
         client = docker.from_env()
         requirements = {
             "docker_running": False,
@@ -1508,8 +1450,7 @@ async def validate_ia_influencer_requirements() -> Dict[str, bool]:
 
 
 async def get_ia_influencer_status() -> Dict[str, Any]:
-    """Get status of all IA-Influencer-Agent containers"""
-    try:
+    """Get status of all IA-Influencer-Agent containers"""    try:
         client = docker.from_env()
         status = {
             "total_containers": 0,
@@ -1575,8 +1516,7 @@ async def get_ia_influencer_status() -> Dict[str, Any]:
 
 
 def calculate_cpu_percentage(stats: Dict[str, Any]) -> float:
-    """Calculate CPU usage percentage from Docker stats"""
-    try:
+    """Calculate CPU usage percentage from Docker stats"""    try:
         cpu_delta = stats["cpu_stats"]["cpu_usage"]["total_usage"] - \
                    stats["precpu_stats"]["cpu_usage"]["total_usage"]
         system_delta = stats["cpu_stats"]["system_cpu_usage"] - \

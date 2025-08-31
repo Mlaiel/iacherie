@@ -1,5 +1,4 @@
-"""
-Opportunity Detector - Advanced Growth Opportunity Identification System
+"""Opportunity Detector - Advanced Growth Opportunity Identification System
 
 Enterprise-grade opportunity detection system providing comprehensive analysis
 of growth opportunities, collaboration matching, monetization optimization,
@@ -12,9 +11,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This opportunity detection system and its algorithms are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import pandas as pd
@@ -37,8 +34,7 @@ from ...utils.cache_manager import CacheManager
 logger = logging.getLogger(__name__)
 
 class OpportunityType(Enum):
-    """Types of opportunities"""
-    COLLABORATION = "collaboration"
+    """Types of opportunities"""    COLLABORATION = "collaboration"
     MONETIZATION = "monetization"
     GROWTH_STRATEGY = "growth_strategy"
     CONTENT_FORMAT = "content_format"
@@ -50,16 +46,14 @@ class OpportunityType(Enum):
     MARKET_GAP = "market_gap"
 
 class OpportunityPriority(Enum):
-    """Priority levels for opportunities"""
-    CRITICAL = "critical"      # Must act immediately
+    """Priority levels for opportunities"""    CRITICAL = "critical"      # Must act immediately
     HIGH = "high"             # Act within 1 week
     MEDIUM = "medium"         # Act within 1 month
     LOW = "low"               # Act within 3 months
     INFORMATIONAL = "informational"  # Monitor for future
 
 class OpportunityStage(Enum):
-    """Stages of opportunity development"""
-    EMERGING = "emerging"      # Just identified
+    """Stages of opportunity development"""    EMERGING = "emerging"      # Just identified
     VALIDATED = "validated"    # Research confirms viability
     READY = "ready"           # Ready for implementation
     IN_PROGRESS = "in_progress" # Being implemented
@@ -67,8 +61,7 @@ class OpportunityStage(Enum):
 
 @dataclass
 class GrowthOpportunity:
-    """Growth opportunity structure"""
-    opportunity_id: str = field(default_factory=lambda: f"opp_{int(datetime.now().timestamp())}")
+    """Growth opportunity structure"""    opportunity_id: str = field(default_factory=lambda: f"opp_{int(datetime.now().timestamp())}")
     title: str = ""
     description: str = ""
     opportunity_type: OpportunityType = OpportunityType.GROWTH_STRATEGY
@@ -93,8 +86,7 @@ class GrowthOpportunity:
 
 @dataclass
 class CollaborationOpportunity:
-    """Collaboration opportunity structure"""
-    collaboration_id: str = field(default_factory=lambda: f"collab_{int(datetime.now().timestamp())}")
+    """Collaboration opportunity structure"""    collaboration_id: str = field(default_factory=lambda: f"collab_{int(datetime.now().timestamp())}")
     partner_id: str = ""
     partner_name: str = ""
     collaboration_type: str = ""  # joint_content, cross_promotion, event, etc.
@@ -117,8 +109,7 @@ class CollaborationOpportunity:
 
 @dataclass
 class MonetizationOpportunity:
-    """Monetization opportunity structure"""
-    monetization_id: str = field(default_factory=lambda: f"money_{int(datetime.now().timestamp())}")
+    """Monetization opportunity structure"""    monetization_id: str = field(default_factory=lambda: f"money_{int(datetime.now().timestamp())}")
     opportunity_name: str = ""
     revenue_stream_type: str = ""  # ads, sponsorship, products, services, etc.
     revenue_potential: Dict[str, float] = field(default_factory=dict)  # monthly, yearly projections
@@ -139,8 +130,7 @@ class MonetizationOpportunity:
 
 @dataclass
 class TrendOpportunity:
-    """Trend-based opportunity structure"""
-    trend_id: str = field(default_factory=lambda: f"trend_opp_{int(datetime.now().timestamp())}")
+    """Trend-based opportunity structure"""    trend_id: str = field(default_factory=lambda: f"trend_opp_{int(datetime.now().timestamp())}")
     trend_name: str = ""
     trend_stage: str = "emerging"  # emerging, growing, mature, declining
     opportunity_window: Dict[str, datetime] = field(default_factory=dict)  # start, peak, end
@@ -158,8 +148,7 @@ class TrendOpportunity:
     action_plan: List[str] = field(default_factory=list)
 
 class OpportunityDetector:
-    """
-    Advanced Opportunity Detection Engine for IA Influencer Platform
+    """    Advanced Opportunity Detection Engine for IA Influencer Platform
     
     Provides comprehensive opportunity identification and analysis capabilities:
     
@@ -186,11 +175,9 @@ class OpportunityDetector:
     - Resource allocation optimization for maximum impact
     - Implementation roadmap generation with milestone tracking
     - Success metrics definition and monitoring framework
-    """
-    
+    """    
     def __init__(self, cache_manager: CacheManager = None):
-        """Initialize the opportunity detector"""
-        self.cache_manager = cache_manager or CacheManager("opportunity_detector")
+        """Initialize the opportunity detector"""        self.cache_manager = cache_manager or CacheManager("opportunity_detector")
         
         # Opportunity detection configuration
         self.detection_config = {
@@ -246,8 +233,7 @@ class OpportunityDetector:
                                        creator_data: Dict[str, Any],
                                        market_data: Dict[str, Any] = None,
                                        trend_data: Dict[str, Any] = None) -> List[GrowthOpportunity]:
-        """
-        Identify all available opportunities for a creator
+        """        Identify all available opportunities for a creator
         
         Args:
             creator_data: Creator profile and performance data
@@ -256,8 +242,7 @@ class OpportunityDetector:
             
         Returns:
             List[GrowthOpportunity]: All identified opportunities ranked by priority
-        """
-        try:
+        """        try:
             all_opportunities = []
             
             # Content and format opportunities
@@ -313,8 +298,7 @@ class OpportunityDetector:
     async def find_collaboration_opportunities(self, 
                                              creator_data: Dict[str, Any],
                                              potential_partners: List[Dict[str, Any]] = None) -> List[CollaborationOpportunity]:
-        """
-        Find and analyze collaboration opportunities
+        """        Find and analyze collaboration opportunities
         
         Args:
             creator_data: Creator profile and metrics
@@ -322,8 +306,7 @@ class OpportunityDetector:
             
         Returns:
             List[CollaborationOpportunity]: Ranked collaboration opportunities
-        """
-        try:
+        """        try:
             collaboration_opportunities = []
             
             if potential_partners:
@@ -362,8 +345,7 @@ class OpportunityDetector:
     async def optimize_monetization_strategy(self, 
                                            creator_data: Dict[str, Any],
                                            current_revenue_streams: List[str] = None) -> List[MonetizationOpportunity]:
-        """
-        Identify and optimize monetization opportunities
+        """        Identify and optimize monetization opportunities
         
         Args:
             creator_data: Creator profile and financial data
@@ -371,8 +353,7 @@ class OpportunityDetector:
             
         Returns:
             List[MonetizationOpportunity]: Optimized monetization opportunities
-        """
-        try:
+        """        try:
             monetization_opportunities = []
             current_streams = current_revenue_streams or []
             
@@ -424,8 +405,7 @@ class OpportunityDetector:
     async def analyze_trend_opportunities(self, 
                                         creator_data: Dict[str, Any],
                                         trending_topics: List[Dict[str, Any]]) -> List[TrendOpportunity]:
-        """
-        Analyze opportunities based on current trends
+        """        Analyze opportunities based on current trends
         
         Args:
             creator_data: Creator profile and content history
@@ -433,8 +413,7 @@ class OpportunityDetector:
             
         Returns:
             List[TrendOpportunity]: Trend-based opportunities
-        """
-        try:
+        """        try:
             trend_opportunities = []
             
             for trend in trending_topics:
@@ -459,8 +438,7 @@ class OpportunityDetector:
     # Helper methods for opportunity detection
 
     async def _identify_content_opportunities(self, creator_data: Dict[str, Any]) -> List[GrowthOpportunity]:
-        """Identify content format and strategy opportunities"""
-        opportunities = []
+        """Identify content format and strategy opportunities"""        opportunities = []
         
         # Analyze current content performance
         content_performance = creator_data.get('content_performance', {})
@@ -544,8 +522,7 @@ class OpportunityDetector:
         return opportunities
 
     async def _identify_platform_opportunities(self, creator_data: Dict[str, Any]) -> List[GrowthOpportunity]:
-        """Identify platform expansion opportunities"""
-        opportunities = []
+        """Identify platform expansion opportunities"""        opportunities = []
         current_platforms = creator_data.get('active_platforms', [])
         
         for platform, metrics in self.platform_opportunities.items():
@@ -584,8 +561,7 @@ class OpportunityDetector:
     async def _analyze_collaboration_match(self, 
                                          creator_data: Dict[str, Any], 
                                          partner_data: Dict[str, Any]) -> Optional[CollaborationOpportunity]:
-        """Analyze collaboration compatibility between two creators"""
-        
+        """Analyze collaboration compatibility between two creators"""        
         # Calculate audience overlap
         audience_overlap = await self._calculate_audience_overlap(creator_data, partner_data)
         
@@ -655,8 +631,7 @@ class OpportunityDetector:
     async def _calculate_audience_overlap(self, 
                                         creator_data: Dict[str, Any], 
                                         partner_data: Dict[str, Any]) -> float:
-        """Calculate audience overlap between two creators"""
-        # Simplified calculation based on demographics and interests
+        """Calculate audience overlap between two creators"""        # Simplified calculation based on demographics and interests
         creator_demographics = creator_data.get('audience_demographics', {})
         partner_demographics = partner_data.get('audience_demographics', {})
         
@@ -696,8 +671,7 @@ class OpportunityDetector:
     async def _rank_opportunities(self, 
                                 opportunities: List[GrowthOpportunity], 
                                 creator_data: Dict[str, Any]) -> List[GrowthOpportunity]:
-        """Rank opportunities by overall score"""
-        
+        """Rank opportunities by overall score"""        
         for opp in opportunities:
             # Calculate comprehensive opportunity score
             impact_score = np.mean(list(opp.potential_impact.values())) if opp.potential_impact else 0.5
@@ -741,14 +715,12 @@ class OpportunityDetector:
 
 
 class CollaborationOpportunityFinder:
-    """Specialized collaboration opportunity finder"""
-    
+    """Specialized collaboration opportunity finder"""    
     def __init__(self, opportunity_detector: OpportunityDetector):
         self.detector = opportunity_detector
     
     async def find_brand_collaboration_opportunities(self, creator_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Find brand collaboration opportunities"""
-        return [
+        """Find brand collaboration opportunities"""        return [
             {
                 'brand': 'Tech Company A',
                 'collaboration_type': 'product_review',
@@ -758,14 +730,12 @@ class CollaborationOpportunityFinder:
         ]
 
 class MonetizationOptimizer:
-    """Specialized monetization optimization component"""
-    
+    """Specialized monetization optimization component"""    
     def __init__(self, opportunity_detector: OpportunityDetector):
         self.detector = opportunity_detector
     
     async def optimize_pricing_strategy(self, creator_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize pricing for creator services and products"""
-        return {
+        """Optimize pricing for creator services and products"""        return {
             'recommended_sponsorship_rate': 2500,
             'product_pricing_optimization': {
                 'course_price': 297,
@@ -780,14 +750,12 @@ class MonetizationOptimizer:
         }
 
 class GrowthOpportunityAnalyzer:
-    """Specialized growth opportunity analyzer"""
-    
+    """Specialized growth opportunity analyzer"""    
     def __init__(self, opportunity_detector: OpportunityDetector):
         self.detector = opportunity_detector
     
     async def analyze_viral_growth_opportunities(self, creator_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Analyze opportunities for viral growth"""
-        return [
+        """Analyze opportunities for viral growth"""        return [
             {
                 'opportunity': 'Trend participation',
                 'viral_potential': 0.8,
@@ -797,14 +765,12 @@ class GrowthOpportunityAnalyzer:
         ]
 
 class TrendOpportunityIdentifier:
-    """Specialized trend opportunity identifier"""
-    
+    """Specialized trend opportunity identifier"""    
     def __init__(self, opportunity_detector: OpportunityDetector):
         self.detector = opportunity_detector
     
     async def identify_emerging_trend_opportunities(self, trend_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Identify opportunities in emerging trends"""
-        return [
+        """Identify opportunities in emerging trends"""        return [
             {
                 'trend': 'AI content creation',
                 'stage': 'early_growth',

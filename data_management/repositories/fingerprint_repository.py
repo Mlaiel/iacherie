@@ -1,5 +1,4 @@
-"""
-🔍 Fingerprint Repository - IA Influencer Agent Platform Enterprise
+"""🔍 Fingerprint Repository - IA Influencer Agent Platform Enterprise
 ================================================================
 Module: backend/data_management/repositories/fingerprint_repository.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -21,9 +20,7 @@ Copyright Protection → Content Tracking
 FINGERPRINT REPOSITORY ARCHITECTURE:
 Fingerprint Generation → Hash Storage → Similarity Search → 
 Match Detection → Content Tracking → Protection Monitoring
-"""
-
-from typing import Dict, List, Optional, Any, Tuple, Union
+"""from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
 import hashlib
@@ -42,8 +39,7 @@ except ImportError:
         pass
 
 class FingerprintType(Enum):
-    """Types of content fingerprints"""
-    VISUAL = "visual"
+    """Types of content fingerprints"""    VISUAL = "visual"
     AUDIO = "audio"
     TEXT = "text"
     VIDEO = "video"
@@ -51,16 +47,14 @@ class FingerprintType(Enum):
     COMBINED = "combined"
 
 class MatchType(Enum):
-    """Types of fingerprint matches"""
-    EXACT = "exact"
+    """Types of fingerprint matches"""    EXACT = "exact"
     NEAR_DUPLICATE = "near_duplicate"
     PARTIAL = "partial"
     TRANSFORMED = "transformed"
     SIMILAR = "similar"
 
 class FingerprintAlgorithm(Enum):
-    """Fingerprinting algorithms"""
-    PERCEPTUAL_HASH = "perceptual_hash"
+    """Fingerprinting algorithms"""    PERCEPTUAL_HASH = "perceptual_hash"
     WAVELET_HASH = "wavelet_hash"
     CHROMAPRINT = "chromaprint"
     SIFT_FEATURES = "sift_features"
@@ -69,8 +63,7 @@ class FingerprintAlgorithm(Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint data structure"""
-    fingerprint_id: str
+    """Content fingerprint data structure"""    fingerprint_id: str
     content_id: str
     creator_id: str
     fingerprint_type: FingerprintType
@@ -85,8 +78,7 @@ class ContentFingerprint:
 
 @dataclass
 class FingerprintMatch:
-    """Fingerprint match result"""
-    match_id: str
+    """Fingerprint match result"""    match_id: str
     original_fingerprint_id: str
     matched_fingerprint_id: str
     similarity_score: float
@@ -98,8 +90,7 @@ class FingerprintMatch:
 
 @dataclass
 class DuplicateDetection:
-    """Duplicate content detection result"""
-    detection_id: str
+    """Duplicate content detection result"""    detection_id: str
     content_id: str
     duplicate_content_ids: List[str]
     similarity_scores: List[float]
@@ -111,8 +102,7 @@ class DuplicateDetection:
 
 @dataclass
 class FingerprintAnalytics:
-    """Fingerprint analytics data"""
-    total_fingerprints: int
+    """Fingerprint analytics data"""    total_fingerprints: int
     fingerprints_by_type: Dict[str, int]
     duplicate_detections: int
     false_positives: int
@@ -122,8 +112,7 @@ class FingerprintAnalytics:
     algorithm_performance: Dict[str, float]
 
 class FingerprintRepository(BaseRepository):
-    """
-    Advanced fingerprint repository for AI-powered content identification
+    """    Advanced fingerprint repository for AI-powered content identification
     
     Features:
     - Multi-modal fingerprint generation (visual, audio, text)
@@ -133,8 +122,7 @@ class FingerprintRepository(BaseRepository):
     - Performance analytics and algorithm optimization
     - Scalable hash storage and fast retrieval
     - Content integrity verification and validation
-    """
-    
+    """    
     def __init__(self, db_connection=None, cache_manager=None,
                  fingerprint_engine=None, similarity_matcher=None,
                  vector_store=None, analytics_service=None):
@@ -182,8 +170,7 @@ class FingerprintRepository(BaseRepository):
     def generate_fingerprint(self, content_id: str, creator_id: str,
                            content_data: bytes, content_type: str,
                            algorithms: List[FingerprintAlgorithm] = None) -> List[ContentFingerprint]:
-        """Generate comprehensive fingerprints for content"""
-        try:
+        """Generate comprehensive fingerprints for content"""        try:
             if not self.fingerprint_engine:
                 raise ValueError("Fingerprint engine not available")
             
@@ -274,8 +261,7 @@ class FingerprintRepository(BaseRepository):
     def find_similar_content(self, fingerprint: ContentFingerprint,
                            similarity_threshold: float = None,
                            limit: int = 10) -> List[FingerprintMatch]:
-        """Find similar content using fingerprint matching"""
-        try:
+        """Find similar content using fingerprint matching"""        try:
             if not self.similarity_matcher:
                 return []
             
@@ -326,8 +312,7 @@ class FingerprintRepository(BaseRepository):
     def detect_duplicates(self, content_id: str,
                          creator_id: str = None,
                          cross_creator: bool = True) -> DuplicateDetection:
-        """Detect duplicate content across the platform"""
-        try:
+        """Detect duplicate content across the platform"""        try:
             # Get all fingerprints for the content
             content_fingerprints = self._get_fingerprints_by_content(content_id)
             
@@ -403,8 +388,7 @@ class FingerprintRepository(BaseRepository):
     
     # Helper methods
     def _determine_fingerprint_type(self, content_type: str) -> FingerprintType:
-        """Determine fingerprint type based on content type"""
-        if content_type.startswith('image/'):
+        """Determine fingerprint type based on content type"""        if content_type.startswith('image/'):
             return FingerprintType.VISUAL
         elif content_type.startswith('audio/'):
             return FingerprintType.AUDIO
@@ -416,8 +400,7 @@ class FingerprintRepository(BaseRepository):
             return FingerprintType.METADATA
     
     def _classify_match_type(self, similarity_score: float) -> MatchType:
-        """Classify match type based on similarity score"""
-        if similarity_score >= self._similarity_thresholds[MatchType.EXACT]:
+        """Classify match type based on similarity score"""        if similarity_score >= self._similarity_thresholds[MatchType.EXACT]:
             return MatchType.EXACT
         elif similarity_score >= self._similarity_thresholds[MatchType.NEAR_DUPLICATE]:
             return MatchType.NEAR_DUPLICATE
@@ -430,21 +413,17 @@ class FingerprintRepository(BaseRepository):
     
     # Data fetching methods (placeholders - would connect to actual data sources)
     def _get_fingerprints_by_content(self, content_id: str) -> List[ContentFingerprint]:
-        """Get all fingerprints for a content"""
-        return []
+        """Get all fingerprints for a content"""        return []
     
     def _get_fingerprint_creator(self, fingerprint_id: str) -> Optional[str]:
-        """Get creator ID for a fingerprint"""
-        return None
+        """Get creator ID for a fingerprint"""        return None
     
     def _get_content_id_by_fingerprint(self, fingerprint_id: str) -> Optional[str]:
-        """Get content ID for a fingerprint"""
-        return None
+        """Get content ID for a fingerprint"""        return None
 
 
 class AsyncFingerprintRepository(AsyncBaseRepository):
-    """Asynchronous fingerprint repository for high-performance operations"""
-    
+    """Asynchronous fingerprint repository for high-performance operations"""    
     def __init__(self, db_connection=None, cache_manager=None,
                  fingerprint_engine=None, similarity_matcher=None):
         super().__init__(db_connection, cache_manager)
@@ -455,26 +434,22 @@ class AsyncFingerprintRepository(AsyncBaseRepository):
     
     async def generate_fingerprint_async(self, content_id: str, creator_id: str,
                                        content_data: bytes, content_type: str) -> List[ContentFingerprint]:
-        """Generate fingerprints asynchronously"""
-        # Async implementation would go here
+        """Generate fingerprints asynchronously"""        # Async implementation would go here
         pass
     
     async def batch_duplicate_detection_async(self, content_ids: List[str]) -> List[DuplicateDetection]:
-        """Perform batch duplicate detection asynchronously"""
-        # Async implementation would go here
+        """Perform batch duplicate detection asynchronously"""        # Async implementation would go here
         pass
         return fingerprints[0] if fingerprints else None
     
     def search_similar(self, embedding: List[float], threshold: float = 0.8, limit: int = 10) -> List[FingerPrintModel]:
-        """Recherche d'empreintes similaires"""
-        if not self.vector_db:
+        """Recherche d'empreintes similaires"""        if not self.vector_db:
             return []
         # Vector similarity search implementation
         return []
     
     def _index_fingerprint(self, fingerprint: FingerPrintModel):
-        """Index fingerprint in vector database"""
-        if self.vector_db and fingerprint.primary_embedding:
+        """Index fingerprint in vector database"""        if self.vector_db and fingerprint.primary_embedding:
             # Add to FAISS index
             pass
 

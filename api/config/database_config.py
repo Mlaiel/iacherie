@@ -1,13 +1,10 @@
-"""
-Database Configuration - IA Influencer Agent Platform
+"""Database Configuration - IA Influencer Agent Platform
 Advanced database configuration for PostgreSQL, Redis, MongoDB, Elasticsearch
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""
-
-import os
+"""import os
 from typing import Dict, Optional, List, Any
 from dataclasses import dataclass, field
 from sqlalchemy import create_engine
@@ -19,8 +16,7 @@ from elasticsearch import Elasticsearch
 
 @dataclass
 class DatabaseConfig:
-    """PostgreSQL database configuration"""
-    
+    """PostgreSQL database configuration"""    
     # Connection Parameters
     host: str = field(default_factory=lambda: os.getenv("DB_HOST", "localhost"))
     port: int = field(default_factory=lambda: int(os.getenv("DB_PORT", "5432")))
@@ -65,19 +61,16 @@ class DatabaseConfig:
     
     @property
     def connection_url(self) -> str:
-        """Generate SQLAlchemy connection URL"""
-        return (f"postgresql://{self.username}:{self.password}"
+        """Generate SQLAlchemy connection URL"""        return (f"postgresql://{self.username}:{self.password}"
                 f"@{self.host}:{self.port}/{self.database}")
     
     @property
     def async_connection_url(self) -> str:
-        """Generate async SQLAlchemy connection URL"""
-        return (f"postgresql+asyncpg://{self.username}:{self.password}"
+        """Generate async SQLAlchemy connection URL"""        return (f"postgresql+asyncpg://{self.username}:{self.password}"
                 f"@{self.host}:{self.port}/{self.database}")
     
     def create_engine(self):
-        """Create SQLAlchemy engine with optimized configuration"""
-        connection_args = {
+        """Create SQLAlchemy engine with optimized configuration"""        connection_args = {
             "sslmode": self.ssl_mode,
             "application_name": "ia_influencer_agent",
             "statement_timeout": self.statement_timeout,
@@ -106,8 +99,7 @@ class DatabaseConfig:
 
 @dataclass
 class RedisConfig:
-    """Redis configuration for caching and session management"""
-    
+    """Redis configuration for caching and session management"""    
     # Connection Parameters
     host: str = field(default_factory=lambda: os.getenv("REDIS_HOST", "localhost"))
     port: int = field(default_factory=lambda: int(os.getenv("REDIS_PORT", "6379")))
@@ -147,8 +139,7 @@ class RedisConfig:
     
     @property
     def connection_url(self) -> str:
-        """Generate Redis connection URL"""
-        auth = ""
+        """Generate Redis connection URL"""        auth = ""
         if self.username and self.password:
             auth = f"{self.username}:{self.password}@"
         elif self.password:
@@ -158,8 +149,7 @@ class RedisConfig:
         return f"{protocol}://{auth}{self.host}:{self.port}/{self.db}"
     
     def create_connection_pool(self):
-        """Create Redis connection pool"""
-        connection_kwargs = {
+        """Create Redis connection pool"""        connection_kwargs = {
             "host": self.host,
             "port": self.port,
             "db": self.db,
@@ -187,14 +177,12 @@ class RedisConfig:
         )
     
     def create_client(self) -> redis.Redis:
-        """Create Redis client"""
-        return redis.Redis(connection_pool=self.create_connection_pool())
+        """Create Redis client"""        return redis.Redis(connection_pool=self.create_connection_pool())
 
 
 @dataclass
 class MongoDBConfig:
-    """MongoDB configuration for document storage"""
-    
+    """MongoDB configuration for document storage"""    
     # Connection Parameters
     host: str = field(default_factory=lambda: os.getenv("MONGODB_HOST", "localhost"))
     port: int = field(default_factory=lambda: int(os.getenv("MONGODB_PORT", "27017")))
@@ -233,8 +221,7 @@ class MongoDBConfig:
     
     @property
     def connection_url(self) -> str:
-        """Generate MongoDB connection URL"""
-        auth = ""
+        """Generate MongoDB connection URL"""        auth = ""
         if self.username and self.password:
             auth = f"{self.username}:{self.password}@"
         
@@ -254,8 +241,7 @@ class MongoDBConfig:
         return f"mongodb://{auth}{self.host}:{self.port}/{self.database}{options_str}"
     
     def create_client(self) -> MongoClient:
-        """Create MongoDB client"""
-        client_kwargs = {
+        """Create MongoDB client"""        client_kwargs = {
             "host": self.connection_url,
             "maxPoolSize": self.max_pool_size,
             "minPoolSize": self.min_pool_size,
@@ -278,8 +264,7 @@ class MongoDBConfig:
 
 @dataclass
 class ElasticsearchConfig:
-    """Elasticsearch configuration for search and analytics"""
-    
+    """Elasticsearch configuration for search and analytics"""    
     # Connection Parameters
     hosts: List[str] = field(default_factory=lambda: 
         os.getenv("ELASTICSEARCH_HOSTS", "localhost:9200").split(","))
@@ -319,8 +304,7 @@ class ElasticsearchConfig:
         int(os.getenv("ELASTICSEARCH_DEFAULT_PAGE_SIZE", "50")))
     
     def create_client(self) -> Elasticsearch:
-        """Create Elasticsearch client"""
-        client_kwargs = {
+        """Create Elasticsearch client"""        client_kwargs = {
             "hosts": self.hosts,
             "timeout": self.timeout,
             "max_retries": self.max_retries,
@@ -344,12 +328,10 @@ class ElasticsearchConfig:
         return Elasticsearch(**client_kwargs)
     
     def get_index_name(self, suffix: str) -> str:
-        """Generate index name with prefix"""
-        return f"{self.index_prefix}_{suffix}"
+        """Generate index name with prefix"""        return f"{self.index_prefix}_{suffix}"
     
     def get_index_settings(self) -> Dict[str, Any]:
-        """Get default index settings"""
-        return {
+        """Get default index settings"""        return {
             "settings": {
                 "number_of_shards": self.number_of_shards,
                 "number_of_replicas": self.number_of_replicas,
@@ -370,8 +352,7 @@ class ElasticsearchConfig:
 
 @dataclass
 class VectorDatabaseConfig:
-    """FAISS Vector Database configuration for similarity search"""
-    
+    """FAISS Vector Database configuration for similarity search"""    
     # Storage Configuration
     index_path: str = field(default_factory=lambda: 
         os.getenv("VECTOR_DB_INDEX_PATH", "/data/vector_db/indexes"))
@@ -401,21 +382,17 @@ class VectorDatabaseConfig:
     text_dimension: int = field(default_factory=lambda: int(os.getenv("TEXT_VECTOR_DIMENSION", "768")))
     
     def __post_init__(self):
-        """Create necessary directories"""
-        os.makedirs(self.index_path, exist_ok=True)
+        """Create necessary directories"""        os.makedirs(self.index_path, exist_ok=True)
         os.makedirs(self.metadata_path, exist_ok=True)
     
     def get_index_path(self, content_type: str) -> str:
-        """Get index file path for specific content type"""
-        return os.path.join(self.index_path, f"{content_type}_index.faiss")
+        """Get index file path for specific content type"""        return os.path.join(self.index_path, f"{content_type}_index.faiss")
     
     def get_metadata_path(self, content_type: str) -> str:
-        """Get metadata file path for specific content type"""
-        return os.path.join(self.metadata_path, f"{content_type}_metadata.json")
+        """Get metadata file path for specific content type"""        return os.path.join(self.metadata_path, f"{content_type}_metadata.json")
     
     def get_dimension_for_content_type(self, content_type: str) -> int:
-        """Get vector dimension for specific content type"""
-        dimension_map = {
+        """Get vector dimension for specific content type"""        dimension_map = {
             "audio": self.audio_dimension,
             "video": self.video_dimension,
             "image": self.image_dimension,

@@ -29,8 +29,7 @@ AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 - Audio Engineer: Music platform commission integration and royalty management
 - DevOps Engineer: High-availability deployment and payment processing infrastructure
 - IA Prompt Engineer: Intelligent commission optimization and pricing strategy automation
-"""
-# Core Module Exports
+"""# Core Module Exports
 from .manager import (
     CommissionManager,
     CommissionManagerConfig

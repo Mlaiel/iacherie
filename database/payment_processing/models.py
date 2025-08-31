@@ -1,5 +1,4 @@
-"""
-Payment Processing Database Models - Enterprise Grade
+"""Payment Processing Database Models - Enterprise Grade
 
 Advanced database models for payment processing, billing management,
 financial transactions, revenue tracking, and automated payouts
@@ -27,9 +26,7 @@ ENTERPRISE FEATURES:
 - Comprehensive audit logging and compliance tracking
 - International tax calculation and reporting
 - Advanced dispute management and resolution
-"""
-
-from sqlalchemy import (
+"""from sqlalchemy import (
     Column, Integer, String, DateTime, Decimal, Boolean, Text, 
     ForeignKey, Index, CheckConstraint, UniqueConstraint, JSON,
     BigInteger, Float, TIMESTAMP, Interval, ARRAY as SQLArray
@@ -50,8 +47,7 @@ Base = declarative_base()
 
 
 class PaymentStatus(Enum):
-    """Payment transaction status enumeration with comprehensive states"""
-    CREATED = "created"
+    """Payment transaction status enumeration with comprehensive states"""    CREATED = "created"
     PENDING = "pending"
     AUTHORIZED = "authorized"
     CAPTURED = "captured"
@@ -69,8 +65,7 @@ class PaymentStatus(Enum):
 
 
 class PaymentMethodType(Enum):
-    """Comprehensive payment method types for global coverage"""
-    # Card payments
+    """Comprehensive payment method types for global coverage"""    # Card payments
     CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     PREPAID_CARD = "prepaid_card"
@@ -130,8 +125,7 @@ class PaymentMethodType(Enum):
 
 
 class PaymentProvider(Enum):
-    """Enterprise payment providers with global coverage"""
-    # Major gateways
+    """Enterprise payment providers with global coverage"""    # Major gateways
     STRIPE = "stripe"
     PAYPAL = "paypal"
     SQUARE = "square"
@@ -167,8 +161,7 @@ class PaymentProvider(Enum):
 
 
 class TransactionType(Enum):
-    """Comprehensive transaction types for financial operations"""
-    # Revenue transactions
+    """Comprehensive transaction types for financial operations"""    # Revenue transactions
     PAYMENT = "payment"
     SUBSCRIPTION = "subscription"
     ONE_TIME_PAYMENT = "one_time_payment"
@@ -213,8 +206,7 @@ class TransactionType(Enum):
 
 
 class PayoutStatus(Enum):
-    """Comprehensive payout status tracking"""
-    CREATED = "created"
+    """Comprehensive payout status tracking"""    CREATED = "created"
     PENDING = "pending"
     SCHEDULED = "scheduled"
     QUEUED = "queued"
@@ -232,8 +224,7 @@ class PayoutStatus(Enum):
 
 
 class BillingFrequency(Enum):
-    """Flexible billing frequency options"""
-    ONE_TIME = "one_time"
+    """Flexible billing frequency options"""    ONE_TIME = "one_time"
     DAILY = "daily"
     WEEKLY = "weekly"
     BIWEEKLY = "biweekly"
@@ -245,8 +236,7 @@ class BillingFrequency(Enum):
 
 
 class CurrencyCode(Enum):
-    """Comprehensive global currency support"""
-    # Major Fiat Currencies
+    """Comprehensive global currency support"""    # Major Fiat Currencies
     USD = "USD"  # US Dollar
     EUR = "EUR"  # Euro
     GBP = "GBP"  # British Pound
@@ -321,8 +311,7 @@ class CurrencyCode(Enum):
 
 
 class FraudRisk(Enum):
-    """Fraud risk assessment levels"""
-    VERY_LOW = "very_low"
+    """Fraud risk assessment levels"""    VERY_LOW = "very_low"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -331,8 +320,7 @@ class FraudRisk(Enum):
 
 
 class SecurityLevel(Enum):
-    """Security level classifications"""
-    BASIC = "basic"
+    """Security level classifications"""    BASIC = "basic"
     STANDARD = "standard"
     ENHANCED = "enhanced"
     PREMIUM = "premium"
@@ -340,8 +328,7 @@ class SecurityLevel(Enum):
 
 
 class ComplianceStatus(Enum):
-    """Compliance status for regulatory requirements"""
-    COMPLIANT = "compliant"
+    """Compliance status for regulatory requirements"""    COMPLIANT = "compliant"
     PENDING_REVIEW = "pending_review"
     NON_COMPLIANT = "non_compliant"
     UNDER_INVESTIGATION = "under_investigation"
@@ -349,8 +336,7 @@ class ComplianceStatus(Enum):
 
 
 class RevenueSource(Enum):
-    """Revenue source classification for analytics"""
-    YOUTUBE_ADS = "youtube_ads"
+    """Revenue source classification for analytics"""    YOUTUBE_ADS = "youtube_ads"
     YOUTUBE_PREMIUM = "youtube_premium"
     YOUTUBE_MEMBERSHIPS = "youtube_memberships"
     YOUTUBE_SUPER_CHAT = "youtube_super_chat"
@@ -385,8 +371,7 @@ class RevenueSource(Enum):
 
 
 class TaxCategory(Enum):
-    """Tax categories for international compliance"""
-    PERSONAL_INCOME = "personal_income"
+    """Tax categories for international compliance"""    PERSONAL_INCOME = "personal_income"
     BUSINESS_INCOME = "business_income"
     CAPITAL_GAINS = "capital_gains"
     ROYALTIES = "royalties"
@@ -410,8 +395,7 @@ class TaxCategory(Enum):
 
 
 class PaymentMethodType(Enum):
-    """Payment method type enumeration"""
-    CREDIT_CARD = "credit_card"
+    """Payment method type enumeration"""    CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     BANK_TRANSFER = "bank_transfer"
     SEPA_TRANSFER = "sepa_transfer"
@@ -433,8 +417,7 @@ class PaymentMethodType(Enum):
 
 
 class PaymentProvider(Enum):
-    """Payment provider enumeration"""
-    STRIPE = "stripe"
+    """Payment provider enumeration"""    STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
     COINBASE = "coinbase"
@@ -447,8 +430,7 @@ class PaymentProvider(Enum):
 
 
 class TransactionType(Enum):
-    """Transaction type enumeration"""
-    PAYMENT = "payment"
+    """Transaction type enumeration"""    PAYMENT = "payment"
     PAYOUT = "payout"
     REFUND = "refund"
     CHARGEBACK = "chargeback"
@@ -461,8 +443,7 @@ class TransactionType(Enum):
 
 
 class PayoutStatus(Enum):
-    """Payout status enumeration"""
-    PENDING = "pending"
+    """Payout status enumeration"""    PENDING = "pending"
     SCHEDULED = "scheduled"
     PROCESSING = "processing"
     SENT = "sent"
@@ -473,8 +454,7 @@ class PayoutStatus(Enum):
 
 
 class BillingFrequency(Enum):
-    """Billing frequency enumeration"""
-    ONE_TIME = "one_time"
+    """Billing frequency enumeration"""    ONE_TIME = "one_time"
     DAILY = "daily"
     WEEKLY = "weekly"
     BIWEEKLY = "biweekly"
@@ -486,8 +466,7 @@ class BillingFrequency(Enum):
 
 
 class CurrencyCode(Enum):
-    """Supported currency codes"""
-    # Major Fiat Currencies
+    """Supported currency codes"""    # Major Fiat Currencies
     USD = "USD"  # US Dollar
     EUR = "EUR"  # Euro
     GBP = "GBP"  # British Pound
@@ -514,26 +493,22 @@ class CurrencyCode(Enum):
 
 
 class FraudRisk(Enum):
-    """Fraud risk level enumeration"""
-    LOW = "low"
+    """Fraud risk level enumeration"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class SecurityLevel(Enum):
-    """Security level enumeration"""
-    BASIC = "basic"
+    """Security level enumeration"""    BASIC = "basic"
     ENHANCED = "enhanced"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
 
 
 class PaymentTransaction(Base):
-    """
-    Payment transactions model for tracking all financial transactions
-    """
-    __tablename__ = "payment_transactions"
+    """    Payment transactions model for tracking all financial transactions
+    """    __tablename__ = "payment_transactions"
     
     # Primary identifiers
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -662,8 +637,7 @@ class PaymentTransaction(Base):
         return currency
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert transaction to dictionary"""
-        return {
+        """Convert transaction to dictionary"""        return {
             "id": str(self.id),
             "user_id": self.user_id,
             "transaction_type": self.transaction_type,
@@ -677,10 +651,8 @@ class PaymentTransaction(Base):
 
 
 class PaymentMethod(Base):
-    """
-    Payment methods model for storing user payment information
-    """
-    __tablename__ = "payment_methods"
+    """    Payment methods model for storing user payment information
+    """    __tablename__ = "payment_methods"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
@@ -740,10 +712,8 @@ class PaymentMethod(Base):
 
 
 class BillingRecord(Base):
-    """
-    Billing records model for subscription and recurring payments
-    """
-    __tablename__ = "billing_records"
+    """    Billing records model for subscription and recurring payments
+    """    __tablename__ = "billing_records"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
@@ -794,10 +764,8 @@ class BillingRecord(Base):
 
 
 class FinancialRecord(Base):
-    """
-    Financial records model for comprehensive financial tracking
-    """
-    __tablename__ = "financial_records"
+    """    Financial records model for comprehensive financial tracking
+    """    __tablename__ = "financial_records"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
@@ -852,10 +820,8 @@ class FinancialRecord(Base):
 
 
 class AutomatedPayout(Base):
-    """
-    Automated payout model for managing creator payments
-    """
-    __tablename__ = "automated_payouts"
+    """    Automated payout model for managing creator payments
+    """    __tablename__ = "automated_payouts"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
@@ -919,10 +885,8 @@ class AutomatedPayout(Base):
 
 
 class FinancialRecord(Base):
-    """
-    Financial records model for comprehensive financial tracking and reporting
-    """
-    __tablename__ = "financial_records"
+    """    Financial records model for comprehensive financial tracking and reporting
+    """    __tablename__ = "financial_records"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     transaction_id = Column(UUID(as_uuid=True), ForeignKey("payment_transactions.id"), nullable=False)
@@ -971,10 +935,8 @@ class FinancialRecord(Base):
 
 
 class PaymentAnalytics(Base):
-    """
-    Payment analytics model for tracking performance metrics and insights
-    """
-    __tablename__ = "payment_analytics"
+    """    Payment analytics model for tracking performance metrics and insights
+    """    __tablename__ = "payment_analytics"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=True, index=True)
@@ -1021,10 +983,8 @@ class PaymentAnalytics(Base):
 
 
 class RevenueTracking(Base):
-    """
-    Revenue tracking model for detailed income monitoring per content and platform
-    """
-    __tablename__ = "revenue_tracking"
+    """    Revenue tracking model for detailed income monitoring per content and platform
+    """    __tablename__ = "revenue_tracking"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False, index=True)
@@ -1072,10 +1032,8 @@ class RevenueTracking(Base):
 
 
 class PaymentWebhook(Base):
-    """
-    Payment webhook model for tracking external payment provider notifications
-    """
-    __tablename__ = "payment_webhooks"
+    """    Payment webhook model for tracking external payment provider notifications
+    """    __tablename__ = "payment_webhooks"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     
@@ -1120,10 +1078,8 @@ class PaymentWebhook(Base):
 
 
 class PaymentConfiguration(Base):
-    """
-    Payment configuration model for storing payment gateway settings and preferences
-    """
-    __tablename__ = "payment_configurations"
+    """    Payment configuration model for storing payment gateway settings and preferences
+    """    __tablename__ = "payment_configurations"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=True, index=True)
@@ -1163,19 +1119,16 @@ class PaymentConfiguration(Base):
 
 # Utility functions for model operations
 def create_all_tables(engine):
-    """Create all payment processing tables"""
-    Base.metadata.create_all(bind=engine)
+    """Create all payment processing tables"""    Base.metadata.create_all(bind=engine)
     logger.info("Payment processing database tables created successfully")
 
 
 def get_table_names() -> List[str]:
-    """Get list of all table names in this module"""
-    return [table.name for table in Base.metadata.tables.values()]
+    """Get list of all table names in this module"""    return [table.name for table in Base.metadata.tables.values()]
 
 
 def validate_financial_data(amount: PyDecimal, currency: str) -> bool:
-    """Validate financial data consistency"""
-    if amount <= 0:
+    """Validate financial data consistency"""    if amount <= 0:
         return False
     if currency not in [c.value for c in CurrencyCode]:
         return False

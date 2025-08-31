@@ -1,5 +1,4 @@
-"""
-Distribution Optimizer - Intelligent Distribution Optimization Engine
+"""Distribution Optimizer - Intelligent Distribution Optimization Engine
 ====================================================================
 
 Advanced optimization system for content distribution providing AI-powered
@@ -7,9 +6,7 @@ recommendations, performance optimization, and strategic distribution planning.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple, Set
@@ -28,8 +25,7 @@ from ..scheduling.optimizer import SchedulingOptimizer
 
 
 class OptimizationStrategy(Enum):
-    """Optimization strategy enumeration."""
-    PERFORMANCE_FOCUSED = "performance_focused"
+    """Optimization strategy enumeration."""    PERFORMANCE_FOCUSED = "performance_focused"
     REACH_MAXIMIZATION = "reach_maximization"
     ENGAGEMENT_OPTIMIZATION = "engagement_optimization"
     REVENUE_OPTIMIZATION = "revenue_optimization"
@@ -42,8 +38,7 @@ class OptimizationStrategy(Enum):
 
 
 class OptimizationScope(Enum):
-    """Optimization scope enumeration."""
-    SINGLE_CONTENT = "single_content"
+    """Optimization scope enumeration."""    SINGLE_CONTENT = "single_content"
     CONTENT_SERIES = "content_series"
     CAMPAIGN = "campaign"
     PLATFORM = "platform"
@@ -52,8 +47,7 @@ class OptimizationScope(Enum):
 
 
 class OptimizationMetric(Enum):
-    """Optimization metric enumeration."""
-    VIEWS = "views"
+    """Optimization metric enumeration."""    VIEWS = "views"
     ENGAGEMENT_RATE = "engagement_rate"
     REACH = "reach"
     CLICK_THROUGH_RATE = "click_through_rate"
@@ -67,8 +61,7 @@ class OptimizationMetric(Enum):
 
 @dataclass
 class OptimizationObjective:
-    """Optimization objective data structure."""
-    objective_id: UUID = field(default_factory=uuid4)
+    """Optimization objective data structure."""    objective_id: UUID = field(default_factory=uuid4)
     name: str = ""
     description: str = ""
     
@@ -98,8 +91,7 @@ class OptimizationObjective:
 
 @dataclass
 class OptimizationRecommendation:
-    """Optimization recommendation data structure."""
-    recommendation_id: UUID = field(default_factory=uuid4)
+    """Optimization recommendation data structure."""    recommendation_id: UUID = field(default_factory=uuid4)
     optimization_id: UUID = field(default_factory=uuid4)
     
     # Recommendation details
@@ -138,8 +130,7 @@ class OptimizationRecommendation:
 
 @dataclass
 class OptimizationResult:
-    """Optimization result data structure."""
-    result_id: UUID = field(default_factory=uuid4)
+    """Optimization result data structure."""    result_id: UUID = field(default_factory=uuid4)
     optimization_id: UUID = field(default_factory=uuid4)
     
     # Optimization context
@@ -170,16 +161,13 @@ class OptimizationResult:
 
 
 class DistributionOptimizer:
-    """
-    Distribution Optimizer Engine
+    """    Distribution Optimizer Engine
     
     Advanced optimization system for content distribution providing AI-powered
     recommendations, performance optimization, and strategic distribution planning.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize distribution optimizer."""
-        self.config = config or {}
+        """Initialize distribution optimizer."""        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
         # Core components
@@ -229,13 +217,11 @@ class DistributionOptimizer:
         }
     
     async def initialize(self) -> bool:
-        """
-        Initialize the distribution optimizer.
+        """        Initialize the distribution optimizer.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             self.logger.info("Initializing Distribution Optimizer")
             
             # Initialize core components
@@ -270,8 +256,7 @@ class DistributionOptimizer:
             return False
     
     async def shutdown(self) -> None:
-        """Shutdown the distribution optimizer."""
-        try:
+        """Shutdown the distribution optimizer."""        try:
             self.logger.info("Shutting down Distribution Optimizer")
             
             # Save optimization data
@@ -296,8 +281,7 @@ class DistributionOptimizer:
         objectives: Optional[List[OptimizationObjective]] = None,
         scope: OptimizationScope = OptimizationScope.SINGLE_CONTENT
     ) -> OptimizationResult:
-        """
-        Optimize distribution plan for maximum performance.
+        """        Optimize distribution plan for maximum performance.
         
         Args:
             content_data: Content information
@@ -308,8 +292,7 @@ class DistributionOptimizer:
             
         Returns:
             OptimizationResult: Comprehensive optimization results
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             raise RuntimeError("Distribution Optimizer not initialized")
         
         start_time = asyncio.get_event_loop().time()
@@ -430,8 +413,7 @@ class DistributionOptimizer:
         target_platforms: List[str],
         time_constraints: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Optimize scheduling for maximum engagement and reach.
+        """        Optimize scheduling for maximum engagement and reach.
         
         Args:
             content_data: Content information
@@ -440,8 +422,7 @@ class DistributionOptimizer:
             
         Returns:
             Dict containing optimized scheduling plan
-        """
-        try:
+        """        try:
             self.logger.info("Optimizing distribution scheduling")
             
             # Analyze audience data for each platform
@@ -483,8 +464,7 @@ class DistributionOptimizer:
         content_data: Dict[str, Any],
         target_platforms: List[str]
     ) -> Dict[str, Any]:
-        """
-        Optimize content format for platform-specific performance.
+        """        Optimize content format for platform-specific performance.
         
         Args:
             content_data: Content information
@@ -492,8 +472,7 @@ class DistributionOptimizer:
             
         Returns:
             Dict containing format optimization recommendations
-        """
-        try:
+        """        try:
             self.logger.info("Optimizing content format for platforms")
             
             format_recommendations = {}
@@ -534,8 +513,7 @@ class DistributionOptimizer:
         current_targeting: Dict[str, Any],
         platforms: List[str]
     ) -> Dict[str, Any]:
-        """
-        Optimize audience targeting for better performance.
+        """        Optimize audience targeting for better performance.
         
         Args:
             content_data: Content information
@@ -544,8 +522,7 @@ class DistributionOptimizer:
             
         Returns:
             Dict containing targeting optimization recommendations
-        """
-        try:
+        """        try:
             self.logger.info("Optimizing audience targeting")
             
             # Analyze content for audience insights
@@ -588,8 +565,7 @@ class DistributionOptimizer:
         distribution_plan: Dict[str, Any],
         test_objectives: List[str]
     ) -> Dict[str, Any]:
-        """
-        Generate A/B test plan for optimization validation.
+        """        Generate A/B test plan for optimization validation.
         
         Args:
             content_data: Content information
@@ -598,8 +574,7 @@ class DistributionOptimizer:
             
         Returns:
             Dict containing A/B test plan
-        """
-        try:
+        """        try:
             self.logger.info("Generating A/B test plan")
             
             # Create test variants
@@ -634,8 +609,7 @@ class DistributionOptimizer:
     
     # Implementation methods for optimization logic
     async def _analyze_current_performance(self, content_data: Dict[str, Any], distribution_plan: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze current distribution performance."""
-        # Use performance analyzer to get comprehensive metrics
+        """Analyze current distribution performance."""        # Use performance analyzer to get comprehensive metrics
         performance_data = await self.performance_analyzer.analyze_distribution_performance({
             'content_data': content_data,
             'distribution_plan': distribution_plan
@@ -659,8 +633,7 @@ class DistributionOptimizer:
         current_performance: Dict[str, Any],
         objectives: List[OptimizationObjective]
     ) -> List[Dict[str, Any]]:
-        """Identify optimization opportunities."""
-        opportunities = []
+        """Identify optimization opportunities."""        opportunities = []
         
         # Analyze performance gaps
         for objective in objectives:
@@ -723,8 +696,7 @@ class DistributionOptimizer:
         opportunities: List[Dict[str, Any]],
         objectives: List[OptimizationObjective]
     ) -> List[OptimizationRecommendation]:
-        """Generate optimization recommendations."""
-        recommendations = []
+        """Generate optimization recommendations."""        recommendations = []
         
         for opportunity in opportunities:
             if opportunity['type'] == 'performance_gap':
@@ -758,8 +730,7 @@ class DistributionOptimizer:
         original_plan: Dict[str, Any],
         recommendations: List[OptimizationRecommendation]
     ) -> Dict[str, Any]:
-        """Create optimized distribution plan based on recommendations."""
-        optimized_plan = original_plan.copy()
+        """Create optimized distribution plan based on recommendations."""        optimized_plan = original_plan.copy()
         
         for recommendation in recommendations:
             if recommendation.confidence_score > 0.7:  # Only apply high-confidence recommendations
@@ -804,8 +775,7 @@ class DistributionOptimizer:
         optimized_plan: Dict[str, Any],
         objectives: List[OptimizationObjective]
     ) -> Dict[str, float]:
-        """Predict impact of optimization changes."""
-        predicted_improvements = {}
+        """Predict impact of optimization changes."""        predicted_improvements = {}
         
         # Use ML models to predict impact if available
         if self.enable_ml_optimization and self.prediction_models:
@@ -845,8 +815,7 @@ class DistributionOptimizer:
         optimized_plan: Dict[str, Any],
         recommendations: List[OptimizationRecommendation]
     ) -> Dict[str, Any]:
-        """Assess risks associated with optimization changes."""
-        risk_assessment = {
+        """Assess risks associated with optimization changes."""        risk_assessment = {
             'overall_risk_level': 'medium',
             'risk_factors': [],
             'mitigation_strategies': [],
@@ -888,8 +857,7 @@ class DistributionOptimizer:
     
     # Additional helper methods for optimization logic
     async def _load_optimization_models(self) -> None:
-        """Load ML optimization models."""
-        try:
+        """Load ML optimization models."""        try:
             # Load prediction models
             self.prediction_models = await self.ml_model_manager.load_models([
                 'engagement_predictor',
@@ -913,8 +881,7 @@ class DistributionOptimizer:
             self.enable_ml_optimization = False
     
     async def _load_default_objectives(self) -> None:
-        """Load default optimization objectives."""
-        default_objectives = [
+        """Load default optimization objectives."""        default_objectives = [
             OptimizationObjective(
                 name="Maximize Engagement",
                 description="Optimize for maximum engagement rate across all platforms",
@@ -945,8 +912,7 @@ class DistributionOptimizer:
             self.optimization_objectives[objective.objective_id] = objective
     
     async def _load_recommendation_templates(self) -> None:
-        """Load recommendation templates."""
-        self.recommendation_templates = {
+        """Load recommendation templates."""        self.recommendation_templates = {
             'scheduling': {
                 'optimal_timing': {
                     'title': 'Optimize Posting Times',
@@ -992,8 +958,7 @@ class DistributionOptimizer:
         }
     
     async def _load_historical_data(self) -> None:
-        """Load historical performance data."""
-        # Mock historical data loading
+        """Load historical performance data."""        # Mock historical data loading
         self.performance_history = {
             'engagement_trends': [],
             'platform_performance': [],
@@ -1001,13 +966,11 @@ class DistributionOptimizer:
         }
     
     async def _start_optimization_tasks(self) -> None:
-        """Start background optimization tasks."""
-        asyncio.create_task(self._continuous_optimization_monitor())
+        """Start background optimization tasks."""        asyncio.create_task(self._continuous_optimization_monitor())
         asyncio.create_task(self._update_optimization_models())
     
     async def _continuous_optimization_monitor(self) -> None:
-        """Continuously monitor and optimize active distributions."""
-        while self.is_initialized:
+        """Continuously monitor and optimize active distributions."""        while self.is_initialized:
             try:
                 # Monitor active distributions and suggest optimizations
                 await asyncio.sleep(self.optimization_interval)
@@ -1016,8 +979,7 @@ class DistributionOptimizer:
                 await asyncio.sleep(self.optimization_interval)
     
     async def _update_optimization_models(self) -> None:
-        """Update optimization models with new data."""
-        while self.is_initialized:
+        """Update optimization models with new data."""        while self.is_initialized:
             try:
                 # Update ML models with recent performance data
                 await asyncio.sleep(86400)  # Update daily
@@ -1027,8 +989,7 @@ class DistributionOptimizer:
     
     # Utility methods for calculations and analysis
     def _calculate_plan_complexity(self, plan: Dict[str, Any]) -> float:
-        """Calculate plan complexity score."""
-        complexity_factors = [
+        """Calculate plan complexity score."""        complexity_factors = [
             len(plan.get('platforms', [])) / 10,  # Number of platforms
             len(plan.get('schedule', {}).get('time_slots', [])) / 20,  # Number of time slots
             len(plan.get('audience_config', {}).get('segments', [])) / 15,  # Audience segments
@@ -1038,8 +999,7 @@ class DistributionOptimizer:
         return min(statistics.mean(complexity_factors), 1.0)
     
     async def _calculate_change_magnitude(self, optimized_plan: Dict[str, Any], recommendations: List[OptimizationRecommendation]) -> float:
-        """Calculate magnitude of changes from baseline."""
-        change_scores = []
+        """Calculate magnitude of changes from baseline."""        change_scores = []
         
         for recommendation in recommendations:
             if recommendation.implementation_complexity == 'high':
@@ -1052,8 +1012,7 @@ class DistributionOptimizer:
         return statistics.mean(change_scores) if change_scores else 0.0
     
     def get_system_status(self) -> Dict[str, Any]:
-        """Get current system status."""
-        return {
+        """Get current system status."""        return {
             'initialized': self.is_initialized,
             'ml_optimization_enabled': self.enable_ml_optimization,
             'real_time_optimization_enabled': self.enable_real_time_optimization,
@@ -1068,20 +1027,16 @@ class DistributionOptimizer:
     
     # Placeholder methods for complex optimization logic
     async def _get_default_objectives_for_strategy(self, strategy: OptimizationStrategy) -> List[OptimizationObjective]:
-        """Get default objectives for optimization strategy."""
-        return list(self.optimization_objectives.values())[:3]
+        """Get default objectives for optimization strategy."""        return list(self.optimization_objectives.values())[:3]
     
     def _identify_platform_focus_areas(self, performance: Dict[str, Any]) -> List[str]:
-        """Identify focus areas for platform improvement."""
-        return ['engagement', 'timing', 'content_format']
+        """Identify focus areas for platform improvement."""        return ['engagement', 'timing', 'content_format']
     
     async def _analyze_format_opportunities(self, content_data: Dict[str, Any], distribution_plan: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze content format optimization opportunities."""
-        return {'optimization_potential': 0.3}
+        """Analyze content format optimization opportunities."""        return {'optimization_potential': 0.3}
     
     async def _create_performance_gap_recommendation(self, opportunity: Dict[str, Any], objectives: List[OptimizationObjective]) -> OptimizationRecommendation:
-        """Create recommendation for performance gap."""
-        return OptimizationRecommendation(
+        """Create recommendation for performance gap."""        return OptimizationRecommendation(
             category="performance",
             title=f"Improve {opportunity['metric']}",
             description=f"Current {opportunity['metric']} is {opportunity['current_value']:.3f}, target is {opportunity['target_value']:.3f}",
@@ -1092,40 +1047,32 @@ class DistributionOptimizer:
     
     # Additional placeholder methods for various optimization functionalities
     async def _create_platform_optimization_recommendation(self, opportunity, distribution_plan):
-        """Create platform optimization recommendation."""
-        return OptimizationRecommendation(category="platform", title="Platform Optimization", confidence_score=0.7)
+        """Create platform optimization recommendation."""        return OptimizationRecommendation(category="platform", title="Platform Optimization", confidence_score=0.7)
     
     async def _create_timing_optimization_recommendation(self, opportunity, distribution_plan):
         """Create timing optimization recommendation.""" 
         return OptimizationRecommendation(category="scheduling", title="Timing Optimization", confidence_score=0.8)
     
     async def _create_format_optimization_recommendation(self, opportunity, content_data):
-        """Create format optimization recommendation."""
-        return OptimizationRecommendation(category="content", title="Format Optimization", confidence_score=0.75)
+        """Create format optimization recommendation."""        return OptimizationRecommendation(category="content", title="Format Optimization", confidence_score=0.75)
     
     async def _generate_ml_recommendations(self, content_data, distribution_plan, opportunities, objectives):
-        """Generate ML-based recommendations."""
-        return []
+        """Generate ML-based recommendations."""        return []
     
     async def _prioritize_recommendations(self, recommendations, objectives):
-        """Prioritize recommendations based on objectives."""
-        return sorted(recommendations, key=lambda x: x.confidence_score, reverse=True)
+        """Prioritize recommendations based on objectives."""        return sorted(recommendations, key=lambda x: x.confidence_score, reverse=True)
     
     async def _predict_metric_performance(self, content_data, plan, metric):
-        """Predict metric performance using ML models."""
-        return np.random.uniform(0.05, 0.15)
+        """Predict metric performance using ML models."""        return np.random.uniform(0.05, 0.15)
     
     async def _estimate_heuristic_improvement(self, original_plan, optimized_plan, metric):
-        """Estimate improvement using heuristics."""
-        return np.random.uniform(0.1, 0.3)
+        """Estimate improvement using heuristics."""        return np.random.uniform(0.1, 0.3)
     
     async def _generate_risk_mitigation_strategies(self, risk_factors):
-        """Generate risk mitigation strategies."""
-        return ["Implement gradual rollout", "Monitor performance closely", "Prepare rollback plan"]
+        """Generate risk mitigation strategies."""        return ["Implement gradual rollout", "Monitor performance closely", "Prepare rollback plan"]
     
     async def _calculate_feasibility_score(self, recommendations):
-        """Calculate feasibility score for recommendations."""
-        if not recommendations:
+        """Calculate feasibility score for recommendations."""        if not recommendations:
             return 0.0
         
         complexity_scores = {
@@ -1138,16 +1085,14 @@ class DistributionOptimizer:
         return statistics.mean(scores)
     
     async def _calculate_expected_roi(self, predicted_improvements, recommendations):
-        """Calculate expected ROI from optimizations."""
-        if not predicted_improvements:
+        """Calculate expected ROI from optimizations."""        if not predicted_improvements:
             return 0.0
         
         improvement_values = list(predicted_improvements.values())
         return statistics.mean(improvement_values) * 100  # Convert to percentage
     
     def _determine_implementation_complexity(self, recommendations):
-        """Determine overall implementation complexity."""
-        if not recommendations:
+        """Determine overall implementation complexity."""        if not recommendations:
             return "low"
         
         complexity_counts = {'low': 0, 'medium': 0, 'high': 0}
@@ -1162,122 +1107,93 @@ class DistributionOptimizer:
             return "low"
     
     async def _calculate_confidence_intervals(self, predicted_improvements):
-        """Calculate confidence intervals for predictions."""
-        intervals = {}
+        """Calculate confidence intervals for predictions."""        intervals = {}
         for metric, improvement in predicted_improvements.items():
             margin = improvement * 0.2  # 20% margin
             intervals[metric] = (improvement - margin, improvement + margin)
         return intervals
     
     async def _save_optimization_data(self):
-        """Save optimization data to persistent storage."""
-        pass
+        """Save optimization data to persistent storage."""        pass
     
     # Additional placeholder methods for complex optimization features
     async def _analyze_platform_audiences(self, platforms):
-        """Analyze platform audiences."""
-        return {}
+        """Analyze platform audiences."""        return {}
     
     async def _calculate_optimal_posting_times(self, content_data, platforms, audience_analysis):
-        """Calculate optimal posting times."""
-        return {}
+        """Calculate optimal posting times."""        return {}
     
     async def _analyze_platform_factors(self, platforms, content_data):
-        """Analyze platform-specific factors."""
-        return {}
+        """Analyze platform-specific factors."""        return {}
     
     async def _apply_time_constraints(self, optimal_times, constraints):
-        """Apply time constraints to optimal times."""
-        return optimal_times
+        """Apply time constraints to optimal times."""        return optimal_times
     
     async def _predict_scheduling_performance(self, optimal_times, content_data):
-        """Predict scheduling performance."""
-        return {}
+        """Predict scheduling performance."""        return {}
     
     async def _generate_scheduling_recommendations(self, optimal_times, platform_factors):
-        """Generate scheduling recommendations."""
-        return []
+        """Generate scheduling recommendations."""        return []
     
     async def _calculate_scheduling_confidence(self, optimal_times, audience_analysis):
-        """Calculate scheduling confidence score."""
-        return 0.8
+        """Calculate scheduling confidence score."""        return 0.8
     
     async def _get_fallback_schedule(self, platforms):
-        """Get fallback schedule for platforms."""
-        return {}
+        """Get fallback schedule for platforms."""        return {}
     
     async def _get_platform_format_requirements(self, platform):
-        """Get platform format requirements."""
-        return {}
+        """Get platform format requirements."""        return {}
     
     async def _analyze_content_characteristics(self, content_data):
-        """Analyze content characteristics."""
-        return {}
+        """Analyze content characteristics."""        return {}
     
     async def _generate_format_recommendations(self, platform, content_analysis, requirements):
-        """Generate format recommendations."""
-        return {}
+        """Generate format recommendations."""        return {}
     
     async def _optimize_cross_platform_format(self, content_data, platforms, format_recommendations):
-        """Optimize format across platforms."""
-        return {}
+        """Optimize format across platforms."""        return {}
     
     async def _prioritize_format_changes(self, format_recommendations):
-        """Prioritize format changes."""
-        return []
+        """Prioritize format changes."""        return []
     
     async def _predict_format_optimization_impact(self, format_recommendations):
-        """Predict format optimization impact."""
-        return {}
+        """Predict format optimization impact."""        return {}
     
     async def _analyze_content_for_audiences(self, content_data):
-        """Analyze content for audience insights."""
-        return {}
+        """Analyze content for audience insights."""        return {}
     
     async def _analyze_targeting_performance(self, targeting, platforms):
-        """Analyze targeting performance."""
-        return {}
+        """Analyze targeting performance."""        return {}
     
     async def _identify_audience_expansion_opportunities(self, content_analysis, targeting_performance):
-        """Identify audience expansion opportunities."""
-        return []
+        """Identify audience expansion opportunities."""        return []
     
     async def _generate_targeting_recommendations(self, content_data, targeting, opportunities, platforms):
-        """Generate targeting recommendations."""
-        return []
+        """Generate targeting recommendations."""        return []
     
     async def _calculate_targeting_optimization_score(self, recommendations, performance):
-        """Calculate targeting optimization score."""
-        return 0.8
+        """Calculate targeting optimization score."""        return 0.8
     
     async def _create_targeting_implementation_guide(self, recommendations):
-        """Create targeting implementation guide."""
-        return {}
+        """Create targeting implementation guide."""        return {}
     
     async def _create_test_variants(self, content_data, distribution_plan, objectives):
-        """Create A/B test variants."""
-        return []
+        """Create A/B test variants."""        return []
     
     async def _design_test_methodology(self, variants, objectives):
-        """Design test methodology."""
-        return {}
+        """Design test methodology."""        return {}
     
     async def _calculate_required_sample_size(self, objectives):
-        """Calculate required sample size."""
-        return {}
+        """Calculate required sample size."""        return {}
     
     async def _define_success_metrics(self, objectives):
-        """Define success metrics."""
-        return []
+        """Define success metrics."""        return []
     
     async def _create_test_timeline(self, methodology, sample_size):
-        """Create test timeline."""
-        return {}
+        """Create test timeline."""        return {}
     
     async def _assess_test_risks(self, variants):
-        """Assess test risks."""
-        return {}
+        """Assess test risks."""        return {}
     
     async def _create_test_implementation_steps(self, variants, methodology):
-        """Create test implementation steps."""
-        return []
+        """Create test implementation steps."""        return []

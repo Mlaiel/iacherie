@@ -1,5 +1,4 @@
-"""
-🤖 AI Fingerprinting Configuration Manager - IA-Influencer-Agent
+"""🤖 AI Fingerprinting Configuration Manager - IA-Influencer-Agent
 ================================================================
 Project Creator & Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
@@ -15,9 +14,7 @@ Contact: mlaiel@live.de
 
 Enterprise-grade AI fingerprinting configuration management system.
 ================================================================
-"""
-
-from typing import Dict, Any, Optional, List, Union, Tuple
+"""from typing import Dict, Any, Optional, List, Union, Tuple
 from enum import Enum
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -32,8 +29,7 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class FingerprintAlgorithm(Enum):
-    """AI fingerprinting algorithms enumeration"""
-    CHROMAPRINT = "chromaprint"
+    """AI fingerprinting algorithms enumeration"""    CHROMAPRINT = "chromaprint"
     ESSENTIA = "essentia"
     LIBROSA = "librosa"
     OPENCV_PERCEPTUAL = "opencv_perceptual"
@@ -47,8 +43,7 @@ class FingerprintAlgorithm(Enum):
     UNIVERSAL_SENTENCE_ENCODER = "universal_sentence_encoder"
 
 class ContentType(Enum):
-    """Content types for fingerprinting"""
-    AUDIO = "audio"
+    """Content types for fingerprinting"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -56,8 +51,7 @@ class ContentType(Enum):
     MIXED_MEDIA = "mixed_media"
 
 class SimilarityMetric(Enum):
-    """Similarity measurement metrics"""
-    COSINE_SIMILARITY = "cosine_similarity"
+    """Similarity measurement metrics"""    COSINE_SIMILARITY = "cosine_similarity"
     EUCLIDEAN_DISTANCE = "euclidean_distance"
     HAMMING_DISTANCE = "hamming_distance"
     JACCARD_SIMILARITY = "jaccard_similarity"
@@ -65,8 +59,7 @@ class SimilarityMetric(Enum):
     PEARSON_CORRELATION = "pearson_correlation"
 
 class VectorDatabase(Enum):
-    """Vector database backends"""
-    FAISS = "faiss"
+    """Vector database backends"""    FAISS = "faiss"
     PINECONE = "pinecone"
     WEAVIATE = "weaviate"
     MILVUS = "milvus"
@@ -74,16 +67,14 @@ class VectorDatabase(Enum):
     CHROMA = "chroma"
 
 class ProcessingMode(Enum):
-    """Fingerprinting processing modes"""
-    REAL_TIME = "real_time"
+    """Fingerprinting processing modes"""    REAL_TIME = "real_time"
     BATCH = "batch"
     STREAMING = "streaming"
     HYBRID = "hybrid"
 
 @dataclass
 class AudioFingerprintingConfig:
-    """Audio fingerprinting configuration"""
-    algorithms: List[FingerprintAlgorithm] = field(default_factory=lambda: [
+    """Audio fingerprinting configuration"""    algorithms: List[FingerprintAlgorithm] = field(default_factory=lambda: [
         FingerprintAlgorithm.CHROMAPRINT,
         FingerprintAlgorithm.ESSENTIA,
         FingerprintAlgorithm.LIBROSA
@@ -119,8 +110,7 @@ class AudioFingerprintingConfig:
 
 @dataclass
 class VideoFingerprintingConfig:
-    """Video fingerprinting configuration"""
-    algorithms: List[FingerprintAlgorithm] = field(default_factory=lambda: [
+    """Video fingerprinting configuration"""    algorithms: List[FingerprintAlgorithm] = field(default_factory=lambda: [
         FingerprintAlgorithm.OPENCV_PERCEPTUAL,
         FingerprintAlgorithm.OPENCV_ORBS,
         FingerprintAlgorithm.YOLO_FEATURES
@@ -150,8 +140,7 @@ class VideoFingerprintingConfig:
 
 @dataclass
 class ImageFingerprintingConfig:
-    """Image fingerprinting configuration"""
-    algorithms: List[FingerprintAlgorithm] = field(default_factory=lambda: [
+    """Image fingerprinting configuration"""    algorithms: List[FingerprintAlgorithm] = field(default_factory=lambda: [
         FingerprintAlgorithm.CLIP_EMBEDDINGS,
         FingerprintAlgorithm.IMAGEHASH,
         FingerprintAlgorithm.OPENCV_PERCEPTUAL
@@ -191,8 +180,7 @@ class ImageFingerprintingConfig:
 
 @dataclass
 class TextFingerprintingConfig:
-    """Text fingerprinting configuration"""
-    algorithms: List[FingerprintAlgorithm] = field(default_factory=lambda: [
+    """Text fingerprinting configuration"""    algorithms: List[FingerprintAlgorithm] = field(default_factory=lambda: [
         FingerprintAlgorithm.BERT_EMBEDDINGS,
         FingerprintAlgorithm.ROBERTA_FEATURES,
         FingerprintAlgorithm.SENTENCE_TRANSFORMERS
@@ -236,8 +224,7 @@ class TextFingerprintingConfig:
 
 @dataclass
 class VectorMatchingConfig:
-    """Vector matching configuration"""
-    primary_database: VectorDatabase = VectorDatabase.FAISS
+    """Vector matching configuration"""    primary_database: VectorDatabase = VectorDatabase.FAISS
     backup_database: Optional[VectorDatabase] = VectorDatabase.PINECONE
     similarity_metric: SimilarityMetric = SimilarityMetric.COSINE_SIMILARITY
     similarity_threshold: float = 0.85
@@ -275,8 +262,7 @@ class VectorMatchingConfig:
 
 @dataclass
 class ProcessingConfig:
-    """Processing configuration"""
-    mode: ProcessingMode = ProcessingMode.HYBRID
+    """Processing configuration"""    mode: ProcessingMode = ProcessingMode.HYBRID
     batch_size: int = 100
     max_concurrent_jobs: int = 50
     processing_timeout_seconds: int = 300
@@ -306,8 +292,7 @@ class ProcessingConfig:
 
 @dataclass
 class QualityAssuranceConfig:
-    """Quality assurance configuration"""
-    enabled: bool = True
+    """Quality assurance configuration"""    enabled: bool = True
     validation_enabled: bool = True
     accuracy_testing: bool = True
     performance_testing: bool = True
@@ -339,8 +324,7 @@ class QualityAssuranceConfig:
 
 @dataclass
 class AIFingerprintingConfiguration:
-    """Master AI fingerprinting configuration"""
-    # Content type configurations
+    """Master AI fingerprinting configuration"""    # Content type configurations
     audio_config: AudioFingerprintingConfig = field(default_factory=AudioFingerprintingConfig)
     video_config: VideoFingerprintingConfig = field(default_factory=VideoFingerprintingConfig)
     image_config: ImageFingerprintingConfig = field(default_factory=ImageFingerprintingConfig)
@@ -420,16 +404,13 @@ class AIFingerprintingConfiguration:
     contact_email: str = "mlaiel@live.de"
 
 class AIFingerprintingConfigManager:
-    """
-    Enterprise-grade AI fingerprinting configuration manager.
+    """    Enterprise-grade AI fingerprinting configuration manager.
     
     Manages comprehensive configuration for multi-modal content fingerprinting,
     vector matching, processing optimization, and quality assurance.
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize AI fingerprinting configuration manager"""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize AI fingerprinting configuration manager"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration path
         self.config_path = config_path or os.getenv(
@@ -451,8 +432,7 @@ class AIFingerprintingConfigManager:
         self.logger.info("AI fingerprinting configuration manager initialized")
     
     def _load_configuration(self) -> bool:
-        """Load configuration from file"""
-        try:
+        """Load configuration from file"""        try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r', encoding='utf-8') as f:
                     if self.config_path.endswith('.yaml') or self.config_path.endswith('.yml'):
@@ -472,8 +452,7 @@ class AIFingerprintingConfigManager:
             return False
     
     def _update_config_from_dict(self, config_data: Dict[str, Any]) -> None:
-        """Update configuration from dictionary"""
-        for key, value in config_data.items():
+        """Update configuration from dictionary"""        for key, value in config_data.items():
             if hasattr(self._config, key):
                 setattr(self._config, key, value)
         
@@ -481,8 +460,7 @@ class AIFingerprintingConfigManager:
         self.last_updated = datetime.now()
     
     def save_configuration(self, config_path: Optional[str] = None) -> bool:
-        """Save configuration to file"""
-        try:
+        """Save configuration to file"""        try:
             save_path = config_path or self.config_path
             
             # Create directory if it doesn't exist
@@ -505,8 +483,7 @@ class AIFingerprintingConfigManager:
             return False
     
     def _config_to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""
-        result = {}
+        """Convert configuration to dictionary"""        result = {}
         
         for field_name, field_value in self._config.__dict__.items():
             if hasattr(field_value, '__dict__'):
@@ -517,8 +494,7 @@ class AIFingerprintingConfigManager:
         return result
     
     def validate_configuration(self) -> List[str]:
-        """Validate configuration and return list of errors"""
-        errors = []
+        """Validate configuration and return list of errors"""        errors = []
         
         try:
             # Validate audio configuration
@@ -578,40 +554,31 @@ class AIFingerprintingConfigManager:
             return [error_msg]
     
     def get_audio_config(self) -> AudioFingerprintingConfig:
-        """Get audio fingerprinting configuration"""
-        return self._config.audio_config
+        """Get audio fingerprinting configuration"""        return self._config.audio_config
     
     def get_video_config(self) -> VideoFingerprintingConfig:
-        """Get video fingerprinting configuration"""
-        return self._config.video_config
+        """Get video fingerprinting configuration"""        return self._config.video_config
     
     def get_image_config(self) -> ImageFingerprintingConfig:
-        """Get image fingerprinting configuration"""
-        return self._config.image_config
+        """Get image fingerprinting configuration"""        return self._config.image_config
     
     def get_text_config(self) -> TextFingerprintingConfig:
-        """Get text fingerprinting configuration"""
-        return self._config.text_config
+        """Get text fingerprinting configuration"""        return self._config.text_config
     
     def get_vector_matching_config(self) -> VectorMatchingConfig:
-        """Get vector matching configuration"""
-        return self._config.vector_matching_config
+        """Get vector matching configuration"""        return self._config.vector_matching_config
     
     def get_processing_config(self) -> ProcessingConfig:
-        """Get processing configuration"""
-        return self._config.processing_config
+        """Get processing configuration"""        return self._config.processing_config
     
     def get_quality_assurance_config(self) -> QualityAssuranceConfig:
-        """Get quality assurance configuration"""
-        return self._config.quality_assurance_config
+        """Get quality assurance configuration"""        return self._config.quality_assurance_config
     
     def get_complete_config(self) -> AIFingerprintingConfiguration:
-        """Get complete configuration"""
-        return self._config
+        """Get complete configuration"""        return self._config
     
     def update_audio_config(self, **kwargs) -> bool:
-        """Update audio configuration"""
-        try:
+        """Update audio configuration"""        try:
             for key, value in kwargs.items():
                 if hasattr(self._config.audio_config, key):
                     setattr(self._config.audio_config, key, value)
@@ -625,8 +592,7 @@ class AIFingerprintingConfigManager:
             return False
     
     def update_video_config(self, **kwargs) -> bool:
-        """Update video configuration"""
-        try:
+        """Update video configuration"""        try:
             for key, value in kwargs.items():
                 if hasattr(self._config.video_config, key):
                     setattr(self._config.video_config, key, value)
@@ -640,8 +606,7 @@ class AIFingerprintingConfigManager:
             return False
     
     def update_image_config(self, **kwargs) -> bool:
-        """Update image configuration"""
-        try:
+        """Update image configuration"""        try:
             for key, value in kwargs.items():
                 if hasattr(self._config.image_config, key):
                     setattr(self._config.image_config, key, value)
@@ -655,8 +620,7 @@ class AIFingerprintingConfigManager:
             return False
     
     def update_text_config(self, **kwargs) -> bool:
-        """Update text configuration"""
-        try:
+        """Update text configuration"""        try:
             for key, value in kwargs.items():
                 if hasattr(self._config.text_config, key):
                     setattr(self._config.text_config, key, value)
@@ -670,8 +634,7 @@ class AIFingerprintingConfigManager:
             return False
     
     def update_vector_matching_config(self, **kwargs) -> bool:
-        """Update vector matching configuration"""
-        try:
+        """Update vector matching configuration"""        try:
             for key, value in kwargs.items():
                 if hasattr(self._config.vector_matching_config, key):
                     setattr(self._config.vector_matching_config, key, value)
@@ -685,8 +648,7 @@ class AIFingerprintingConfigManager:
             return False
     
     def get_configuration_status(self) -> Dict[str, Any]:
-        """Get configuration status and metadata"""
-        return {
+        """Get configuration status and metadata"""        return {
             "initialized": self.initialized,
             "last_updated": self.last_updated,
             "config_path": self.config_path,
@@ -709,8 +671,7 @@ class AIFingerprintingConfigManager:
         }
     
     def reset_to_defaults(self) -> bool:
-        """Reset configuration to defaults"""
-        try:
+        """Reset configuration to defaults"""        try:
             self._config = AIFingerprintingConfiguration()
             self.last_updated = datetime.now()
             self.validation_errors = []
@@ -721,8 +682,7 @@ class AIFingerprintingConfigManager:
             return False
     
     def export_configuration(self, format: str = "yaml") -> str:
-        """Export configuration to string format"""
-        try:
+        """Export configuration to string format"""        try:
             config_dict = self._config_to_dict()
             
             if format.lower() == "yaml":
@@ -737,8 +697,7 @@ class AIFingerprintingConfigManager:
             return ""
     
     def import_configuration(self, config_str: str, format: str = "yaml") -> bool:
-        """Import configuration from string"""
-        try:
+        """Import configuration from string"""        try:
             if format.lower() == "yaml":
                 config_dict = yaml.safe_load(config_str)
             elif format.lower() == "json":

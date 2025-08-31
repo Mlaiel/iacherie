@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Revenue & Monetization Metrics Collector
+"""IA Influencer Agent - Revenue & Monetization Metrics Collector
 Advanced revenue tracking and monetization analytics for multi-platform creators
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -31,9 +30,7 @@ Features:
 - Payment processing performance
 - Revenue forecasting and trends
 - Commission and fee tracking
-"""
-
-import asyncio
+"""import asyncio
 import json
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta, timezone
@@ -53,8 +50,7 @@ metrics_config = get_metrics_config()
 
 
 class RevenueSource(Enum):
-    """Revenue source types"""
-    PLATFORM_REVENUE = "platform_revenue"          # Direct platform earnings
+    """Revenue source types"""    PLATFORM_REVENUE = "platform_revenue"          # Direct platform earnings
     LICENSING_DEAL = "licensing_deal"              # Content licensing
     PROTECTION_RECOVERY = "protection_recovery"    # Recovered from violations
     COLLABORATION = "collaboration"                # Creator collaborations
@@ -65,8 +61,7 @@ class RevenueSource(Enum):
 
 
 class Platform(Enum):
-    """Supported platforms"""
-    YOUTUBE = "youtube"
+    """Supported platforms"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     SPOTIFY = "spotify"
@@ -81,8 +76,7 @@ class Platform(Enum):
 
 
 class Currency(Enum):
-    """Supported currencies"""
-    USD = "USD"
+    """Supported currencies"""    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     CAD = "CAD"
@@ -95,8 +89,7 @@ class Currency(Enum):
 
 
 class PaymentStatus(Enum):
-    """Payment processing status"""
-    PENDING = "pending"
+    """Payment processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -106,8 +99,7 @@ class PaymentStatus(Enum):
 
 @dataclass
 class RevenueTransaction:
-    """Revenue transaction record"""
-    transaction_id: str
+    """Revenue transaction record"""    transaction_id: str
     tenant_id: str
     user_id: str
     platform: Platform
@@ -128,8 +120,7 @@ class RevenueTransaction:
 
 @dataclass
 class LicensingDeal:
-    """Licensing deal record"""
-    deal_id: str
+    """Licensing deal record"""    deal_id: str
     tenant_id: str
     licensor_id: str
     licensee_id: str
@@ -149,13 +140,11 @@ class LicensingDeal:
 
 
 class RevenueMetricsCollector:
-    """
-    Advanced revenue and monetization metrics collector
+    """    Advanced revenue and monetization metrics collector
     
     Tracks revenue across all platforms, licensing deals, and monetization
     strategies for content creators in the IA Influencer ecosystem
-    """
-    
+    """    
     def __init__(self):
         self.redis_manager = RedisManager()
         self.logger = logger
@@ -184,8 +173,7 @@ class RevenueMetricsCollector:
         license_id: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Track a revenue transaction"""
-        
+        """Track a revenue transaction"""        
         transaction_id = f"txn_{int(datetime.now().timestamp())}_{user_id}"
         
         # Calculate commission and net amount
@@ -242,8 +230,7 @@ class RevenueMetricsCollector:
         revenue_share: float = 0.7,  # 70% to creator
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Track a licensing deal"""
-        
+        """Track a licensing deal"""        
         deal_id = f"deal_{int(datetime.now().timestamp())}_{licensor_id}"
         
         start_date = datetime.now(timezone.utc)
@@ -294,13 +281,11 @@ class RevenueMetricsCollector:
         status: PaymentStatus,
         payout_date: Optional[datetime] = None
     ) -> None:
-        """Update payment status for a transaction"""
-        
+        """Update payment status for a transaction"""        
         try:
             async with get_database_session() as session:
                 await session.execute(
-                    """
-                    UPDATE revenue_transactions 
+                    """                    UPDATE revenue_transactions 
                     SET payment_status = $1, payout_date = $2, updated_at = NOW()
                     WHERE transaction_id = $3
                     """,
@@ -327,8 +312,7 @@ class RevenueMetricsCollector:
         time_range: str = "30d",
         currency: Currency = Currency.USD
     ) -> Dict[str, Any]:
-        """Get comprehensive revenue analytics"""
-        
+        """Get comprehensive revenue analytics"""        
         try:
             # Parse time range
             if time_range == "24h":
@@ -360,8 +344,7 @@ class RevenueMetricsCollector:
                 where_clause = " AND ".join(filters)
                 
                 # Get revenue summary
-                revenue_summary = await session.fetchrow(f"""
-                    SELECT 
+                revenue_summary = await session.fetchrow(f"""                    SELECT 
                         COUNT(*) as transaction_count,
                         SUM(gross_amount * COALESCE(exchange_rate, 1)) as total_gross_usd,
                         SUM(net_amount * COALESCE(exchange_rate, 1)) as total_net_usd,
@@ -374,8 +357,7 @@ class RevenueMetricsCollector:
                 """, *params)
                 
                 # Get revenue by source
-                revenue_by_source = await session.fetch(f"""
-                    SELECT 
+                revenue_by_source = await session.fetch(f"""                    SELECT 
                         revenue_source,
                         COUNT(*) as transaction_count,
                         SUM(gross_amount * COALESCE(exchange_rate, 1)) as total_gross_usd,
@@ -387,8 +369,7 @@ class RevenueMetricsCollector:
                 """, *params)
                 
                 # Get revenue by platform
-                revenue_by_platform = await session.fetch(f"""
-                    SELECT 
+                revenue_by_platform = await session.fetch(f"""                    SELECT 
                         platform,
                         COUNT(*) as transaction_count,
                         SUM(gross_amount * COALESCE(exchange_rate, 1)) as total_gross_usd,
@@ -401,8 +382,7 @@ class RevenueMetricsCollector:
                 """, *params)
                 
                 # Get daily revenue trend
-                daily_revenue = await session.fetch(f"""
-                    SELECT 
+                daily_revenue = await session.fetch(f"""                    SELECT 
                         DATE(timestamp) as date,
                         SUM(gross_amount * COALESCE(exchange_rate, 1)) as daily_gross_usd,
                         SUM(net_amount * COALESCE(exchange_rate, 1)) as daily_net_usd,
@@ -416,8 +396,7 @@ class RevenueMetricsCollector:
                 
                 # Calculate growth metrics
                 previous_period_start = start_time - (datetime.now(timezone.utc) - start_time)
-                previous_revenue = await session.fetchrow(f"""
-                    SELECT SUM(gross_amount * COALESCE(exchange_rate, 1)) as previous_gross_usd
+                previous_revenue = await session.fetchrow(f"""                    SELECT SUM(gross_amount * COALESCE(exchange_rate, 1)) as previous_gross_usd
                     FROM revenue_transactions 
                     WHERE tenant_id = $1 AND timestamp >= $2 AND timestamp < $3
                 """, tenant_id, previous_period_start, start_time)
@@ -489,8 +468,7 @@ class RevenueMetricsCollector:
         user_id: Optional[str] = None,
         time_range: str = "30d"
     ) -> Dict[str, Any]:
-        """Get licensing deal analytics"""
-        
+        """Get licensing deal analytics"""        
         try:
             # Parse time range
             if time_range == "30d":
@@ -514,8 +492,7 @@ class RevenueMetricsCollector:
                 where_clause = " AND ".join(filters)
                 
                 # Get licensing summary
-                licensing_summary = await session.fetchrow(f"""
-                    SELECT 
+                licensing_summary = await session.fetchrow(f"""                    SELECT 
                         COUNT(*) as total_deals,
                         SUM(total_value) as total_value_usd,
                         AVG(total_value) as avg_deal_value,
@@ -528,8 +505,7 @@ class RevenueMetricsCollector:
                 """, *params)
                 
                 # Get deals by type
-                deals_by_type = await session.fetch(f"""
-                    SELECT 
+                deals_by_type = await session.fetch(f"""                    SELECT 
                         deal_type,
                         COUNT(*) as deal_count,
                         SUM(total_value) as total_value,
@@ -541,8 +517,7 @@ class RevenueMetricsCollector:
                 """, *params)
                 
                 # Get top performing content
-                top_content = await session.fetch(f"""
-                    SELECT 
+                top_content = await session.fetch(f"""                    SELECT 
                         content_id,
                         COUNT(*) as licensing_count,
                         SUM(total_value) as total_licensing_value,
@@ -600,8 +575,7 @@ class RevenueMetricsCollector:
         user_id: str,
         time_range: str = "90d"
     ) -> Dict[str, Any]:
-        """Calculate comprehensive creator performance score"""
-        
+        """Calculate comprehensive creator performance score"""        
         try:
             # Get revenue analytics
             revenue_data = await self.get_revenue_analytics(
@@ -666,8 +640,7 @@ class RevenueMetricsCollector:
             return {"error": str(e)}
     
     async def _get_exchange_rate(self, currency: Currency) -> Decimal:
-        """Get exchange rate to USD"""
-        if currency == Currency.USD:
+        """Get exchange rate to USD"""        if currency == Currency.USD:
             return Decimal("1.0")
         
         # Check cache
@@ -694,12 +667,10 @@ class RevenueMetricsCollector:
         return mock_rates.get(currency.value, Decimal("1.0"))
     
     async def _store_revenue_transaction(self, transaction: RevenueTransaction) -> None:
-        """Store revenue transaction in database"""
-        try:
+        """Store revenue transaction in database"""        try:
             async with get_database_session() as session:
                 await session.execute(
-                    """
-                    INSERT INTO revenue_transactions 
+                    """                    INSERT INTO revenue_transactions 
                     (transaction_id, tenant_id, user_id, platform, revenue_source, 
                      gross_amount, net_amount, currency, exchange_rate, commission_rate, 
                      commission_amount, payment_status, content_id, license_id, 
@@ -730,12 +701,10 @@ class RevenueMetricsCollector:
             self.logger.error(f"Error storing revenue transaction: {e}")
     
     async def _store_licensing_deal(self, deal: LicensingDeal) -> None:
-        """Store licensing deal in database"""
-        try:
+        """Store licensing deal in database"""        try:
             async with get_database_session() as session:
                 await session.execute(
-                    """
-                    INSERT INTO licensing_deals 
+                    """                    INSERT INTO licensing_deals 
                     (deal_id, tenant_id, licensor_id, licensee_id, content_id, deal_type, 
                      total_value, currency, duration_months, start_date, end_date, 
                      exclusivity, territory, usage_rights, revenue_share, status, metadata)
@@ -765,8 +734,7 @@ class RevenueMetricsCollector:
             self.logger.error(f"Error storing licensing deal: {e}")
     
     async def _update_realtime_revenue_metrics(self, transaction: RevenueTransaction) -> None:
-        """Update real-time revenue metrics in Redis"""
-        try:
+        """Update real-time revenue metrics in Redis"""        try:
             # Update daily totals
             today = datetime.now(timezone.utc).date().isoformat()
             
@@ -794,8 +762,7 @@ class RevenueMetricsCollector:
             self.logger.error(f"Error updating real-time revenue metrics: {e}")
     
     async def _start_background_processing(self) -> None:
-        """Start background processing tasks"""
-        while True:
+        """Start background processing tasks"""        while True:
             try:
                 await asyncio.sleep(300)  # Run every 5 minutes
                 
@@ -811,8 +778,7 @@ class RevenueMetricsCollector:
                 await asyncio.sleep(60)
     
     async def _process_revenue_analytics(self) -> None:
-        """Process revenue analytics for performance optimization"""
-        try:
+        """Process revenue analytics for performance optimization"""        try:
             # Process recent transactions for insights
             # This could include ML predictions, trend analysis, etc.
             pass
@@ -820,8 +786,7 @@ class RevenueMetricsCollector:
             self.logger.error(f"Error processing revenue analytics: {e}")
     
     async def _update_exchange_rates(self) -> None:
-        """Update currency exchange rates"""
-        try:
+        """Update currency exchange rates"""        try:
             # In production, integrate with real exchange rate API
             # For now, using mock rates
             pass

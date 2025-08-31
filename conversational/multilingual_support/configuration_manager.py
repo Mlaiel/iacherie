@@ -1,5 +1,4 @@
-"""
-Advanced Configuration System for Multilingual Content Creators
+"""Advanced Configuration System for Multilingual Content Creators
 
 Enterprise-grade configuration management for personalized multilingual
 communication experiences tailored to content creator needs.
@@ -14,9 +13,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field, asdict
@@ -39,8 +36,7 @@ logger = logging.getLogger(__name__)
 
 
 class ConfigurationLevel(Enum):
-    """Configuration hierarchy levels"""
-    GLOBAL = "global"
+    """Configuration hierarchy levels"""    GLOBAL = "global"
     TENANT = "tenant"
     CREATOR_TYPE = "creator_type"
     INDIVIDUAL = "individual"
@@ -48,16 +44,14 @@ class ConfigurationLevel(Enum):
 
 
 class PersonalizationLevel(Enum):
-    """Levels of personalization"""
-    MINIMAL = "minimal"
+    """Levels of personalization"""    MINIMAL = "minimal"
     STANDARD = "standard"
     ADVANCED = "advanced"
     ULTRA_PERSONALIZED = "ultra_personalized"
 
 
 class QualityProfile(Enum):
-    """Quality profiles for different use cases"""
-    ECONOMY = "economy"
+    """Quality profiles for different use cases"""    ECONOMY = "economy"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
@@ -65,8 +59,7 @@ class QualityProfile(Enum):
 
 @dataclass
 class LanguagePreferences:
-    """Language preferences configuration"""
-    primary_language: SupportedLanguage
+    """Language preferences configuration"""    primary_language: SupportedLanguage
     secondary_languages: List[SupportedLanguage] = field(default_factory=list)
     target_markets: List[SupportedLanguage] = field(default_factory=list)
     avoid_languages: List[SupportedLanguage] = field(default_factory=list)
@@ -83,8 +76,7 @@ class LanguagePreferences:
 
 @dataclass
 class TranslationPreferences:
-    """Translation preferences configuration"""
-    preferred_providers: List[TranslationProvider] = field(default_factory=list)
+    """Translation preferences configuration"""    preferred_providers: List[TranslationProvider] = field(default_factory=list)
     provider_fallback_chain: List[TranslationProvider] = field(default_factory=list)
     
     # Quality settings
@@ -108,8 +100,7 @@ class TranslationPreferences:
 
 @dataclass
 class ContentAdaptationPreferences:
-    """Content adaptation preferences"""
-    preserve_brand_voice: bool = True
+    """Content adaptation preferences"""    preserve_brand_voice: bool = True
     brand_voice_style: str = "professional"  # professional, casual, creative, authentic
     
     # Terminology preferences
@@ -134,8 +125,7 @@ class ContentAdaptationPreferences:
 
 @dataclass
 class MonetizationPreferences:
-    """Monetization-related preferences"""
-    enable_monetization_optimization: bool = True
+    """Monetization-related preferences"""    enable_monetization_optimization: bool = True
     
     # Revenue tracking
     track_content_performance: bool = True
@@ -157,8 +147,7 @@ class MonetizationPreferences:
 
 @dataclass
 class NotificationPreferences:
-    """Notification preferences"""
-    enable_quality_alerts: bool = True
+    """Notification preferences"""    enable_quality_alerts: bool = True
     enable_cost_alerts: bool = True
     enable_performance_alerts: bool = True
     
@@ -185,13 +174,11 @@ class NotificationPreferences:
 
 
 class MultilingualCreatorConfiguration(BaseModel):
-    """
-    Comprehensive configuration model for multilingual content creators.
+    """    Comprehensive configuration model for multilingual content creators.
     
     Provides enterprise-grade configuration management with hierarchical
     inheritance, validation, and personalization capabilities.
-    """
-    
+    """    
     # Basic identification
     configuration_id: str = Field(..., description="Unique configuration identifier")
     creator_id: Optional[str] = Field(None, description="Associated creator ID")
@@ -229,8 +216,7 @@ class MultilingualCreatorConfiguration(BaseModel):
     
     @validator('language_preferences')
     def validate_language_preferences(cls, v):
-        """Validate language preferences"""
-        if not v.primary_language:
+        """Validate language preferences"""        if not v.primary_language:
             raise ValueError("Primary language must be specified")
         
         # Ensure primary language is not in avoid_languages
@@ -241,8 +227,7 @@ class MultilingualCreatorConfiguration(BaseModel):
     
     @validator('translation_preferences')
     def validate_translation_preferences(cls, v):
-        """Validate translation preferences"""
-        if v.minimum_confidence_score < 0 or v.minimum_confidence_score > 1:
+        """Validate translation preferences"""        if v.minimum_confidence_score < 0 or v.minimum_confidence_score > 1:
             raise ValueError("Minimum confidence score must be between 0 and 1")
         
         if v.max_cost_per_translation_usd < 0:
@@ -252,13 +237,11 @@ class MultilingualCreatorConfiguration(BaseModel):
 
 
 class ConfigurationManager:
-    """
-    Enterprise configuration manager for multilingual content creator systems.
+    """    Enterprise configuration manager for multilingual content creator systems.
     
     Provides hierarchical configuration management, inheritance, validation,
     and dynamic updates for personalized multilingual experiences.
-    """
-    
+    """    
     def __init__(self, storage_backend: str = "database"):
         self.storage_backend = storage_backend
         self.configurations: Dict[str, MultilingualCreatorConfiguration] = {}
@@ -280,8 +263,7 @@ class ConfigurationManager:
         base_preferences: Optional[Dict[str, Any]] = None,
         parent_config_id: Optional[str] = None
     ) -> MultilingualCreatorConfiguration:
-        """Create a new configuration for a content creator"""
-        
+        """Create a new configuration for a content creator"""        
         configuration_id = f"config_{creator_id}_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}"
         
         # Start with default configuration for creator type
@@ -331,8 +313,7 @@ class ConfigurationManager:
         configuration_id: str,
         resolve_inheritance: bool = True
     ) -> Optional[MultilingualCreatorConfiguration]:
-        """Retrieve configuration with optional inheritance resolution"""
-        
+        """Retrieve configuration with optional inheritance resolution"""        
         # Check cache first
         if configuration_id in self.configurations:
             config = self.configurations[configuration_id]
@@ -362,8 +343,7 @@ class ConfigurationManager:
         updates: Dict[str, Any],
         validate: bool = True
     ) -> MultilingualCreatorConfiguration:
-        """Update existing configuration"""
-        
+        """Update existing configuration"""        
         config = await self.get_configuration(configuration_id)
         if not config:
             raise ValueError(f"Configuration {configuration_id} not found")
@@ -396,8 +376,7 @@ class ConfigurationManager:
         creator_id: str,
         creator_type: Optional[CreatorType] = None
     ) -> Optional[MultilingualCreatorConfiguration]:
-        """Get the active configuration for a specific creator"""
-        
+        """Get the active configuration for a specific creator"""        
         # Find most recent configuration for creator
         creator_configs = [
             config for config in self.configurations.values()
@@ -422,8 +401,7 @@ class ConfigurationManager:
         configuration_id: str,
         performance_data: Dict[str, Any]
     ) -> MultilingualCreatorConfiguration:
-        """Optimize configuration based on performance data"""
-        
+        """Optimize configuration based on performance data"""        
         config = await self.get_configuration(configuration_id)
         if not config:
             raise ValueError(f"Configuration {configuration_id} not found")
@@ -459,8 +437,7 @@ class ConfigurationManager:
         return config
     
     def _load_default_configurations(self) -> Dict[CreatorType, Dict[str, Any]]:
-        """Load default configurations for different creator types"""
-        
+        """Load default configurations for different creator types"""        
         return {
             CreatorType.MUSICIAN: {
                 'language_preferences': LanguagePreferences(
@@ -528,8 +505,7 @@ class ConfigurationManager:
         }
     
     def _load_configuration_templates(self) -> Dict[str, Dict[str, Any]]:
-        """Load configuration templates"""
-        return {
+        """Load configuration templates"""        return {
             "global_creator": {
                 "description": "Configuration for creators with global audience",
                 "target_markets": [
@@ -553,8 +529,7 @@ class ConfigurationManager:
         }
     
     def _load_validation_rules(self) -> Dict[str, Any]:
-        """Load configuration validation rules"""
-        return {
+        """Load configuration validation rules"""        return {
             "quality_profile_cost_limits": {
                 QualityProfile.ECONOMY: 0.10,
                 QualityProfile.STANDARD: 0.25,
@@ -573,8 +548,7 @@ class ConfigurationManager:
         parent_config: Dict[str, Any],
         child_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Merge parent and child configurations with proper inheritance"""
-        
+        """Merge parent and child configurations with proper inheritance"""        
         merged = parent_config.copy()
         
         # Deep merge nested dictionaries
@@ -591,16 +565,14 @@ class ConfigurationManager:
         base_config: Dict[str, Any],
         custom_preferences: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply custom preferences to base configuration"""
-        
+        """Apply custom preferences to base configuration"""        
         return self._merge_configurations(base_config, custom_preferences)
     
     async def _validate_configuration(
         self,
         config: MultilingualCreatorConfiguration
     ) -> 'ValidationResult':
-        """Validate configuration against business rules"""
-        
+        """Validate configuration against business rules"""        
         errors = []
         warnings = []
         
@@ -635,8 +607,7 @@ class ConfigurationManager:
         )
     
     async def _store_configuration(self, config: MultilingualCreatorConfiguration):
-        """Store configuration to persistent storage"""
-        
+        """Store configuration to persistent storage"""        
         if self.storage_backend == "database":
             # Store to database (implementation depends on your database schema)
             pass
@@ -652,8 +623,7 @@ class ConfigurationManager:
         self.configurations[config.configuration_id] = config
     
     async def _load_configuration(self, configuration_id: str) -> Optional[MultilingualCreatorConfiguration]:
-        """Load configuration from persistent storage"""
-        
+        """Load configuration from persistent storage"""        
         if self.storage_backend == "file":
             config_path = Path(f"configurations/{configuration_id}.json")
             if config_path.exists():
@@ -664,8 +634,7 @@ class ConfigurationManager:
         return None
     
     async def _load_creator_configurations(self, creator_id: str) -> List[MultilingualCreatorConfiguration]:
-        """Load all configurations for a specific creator"""
-        
+        """Load all configurations for a specific creator"""        
         configurations = []
         
         if self.storage_backend == "file":
@@ -681,8 +650,7 @@ class ConfigurationManager:
         return configurations
     
     def _get_fastest_providers(self, performance_data: Dict[str, Any]) -> List[TranslationProvider]:
-        """Get fastest translation providers based on performance data"""
-        
+        """Get fastest translation providers based on performance data"""        
         provider_latencies = performance_data.get('provider_latencies', {})
         
         # Sort providers by average latency
@@ -699,7 +667,6 @@ class ConfigurationManager:
 
 @dataclass
 class ValidationResult:
-    """Configuration validation result"""
-    is_valid: bool
+    """Configuration validation result"""    is_valid: bool
     errors: List[str] = field(default_factory=list)
     warnings: List[str] = field(default_factory=list)

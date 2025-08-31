@@ -1,5 +1,4 @@
-"""
-Ultra-Advanced Audit Logs Module Index
+"""Ultra-Advanced Audit Logs Module Index
 
 Revolutionary centralized hub for all audit logging components in IA Influencer Agent platform.
 Provides unified access to system audits, user activities, security events, compliance tracking,
@@ -18,9 +17,7 @@ This revolutionary audit logging ecosystem is the EXCLUSIVE property of Fahed Ml
 Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
-"""
-
-from typing import Dict, Any, List, Optional
+"""from typing import Dict, Any, List, Optional
 import logging
 from datetime import datetime, timezone, timedelta
 
@@ -82,8 +79,7 @@ logger = logging.getLogger(__name__)
 
 
 class AuditLogsManager:
-    """
-    Unified audit logs manager for enterprise-grade logging and compliance.
+    """    Unified audit logs manager for enterprise-grade logging and compliance.
     
     This manager provides centralized access to all audit logging capabilities:
     - System audit logs (infrastructure, configuration, performance)
@@ -91,18 +87,15 @@ class AuditLogsManager:
     - Security events (threats, incidents, violations)
     - Compliance tracking (GDPR, CCPA, PCI, etc.)
     - Forensic analysis (investigations, evidence, reports)
-    """
-    
+    """    
     def __init__(self, db_session, service_name: str = "ia_influencer_agent", environment: str = "production"):
-        """
-        Initialize the unified audit logs manager.
+        """        Initialize the unified audit logs manager.
         
         Args:
             db_session: Database session for all logging operations
             service_name: Name of the service for logging context
             environment: Environment (production, staging, development)
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.service_name = service_name
         self.environment = environment
         self.logger = logging.getLogger(f"{__name__}.{service_name}")
@@ -117,16 +110,14 @@ class AuditLogsManager:
         self.logger.info(f"Audit Logs Manager initialized for service: {service_name}")
     
     def get_comprehensive_audit_summary(self, hours: int = 24) -> Dict[str, Any]:
-        """
-        Get comprehensive audit summary across all logging systems.
+        """        Get comprehensive audit summary across all logging systems.
         
         Args:
             hours: Number of hours to analyze
             
         Returns:
             Dict[str, Any]: Comprehensive audit summary
-        """
-        try:
+        """        try:
             start_time = datetime.now(timezone.utc) - timedelta(hours=hours)
             
             # Get summaries from all systems
@@ -205,8 +196,7 @@ class AuditLogsManager:
         compliance_dashboard: Dict[str, Any],
         active_investigations: List[Dict[str, Any]]
     ) -> List[str]:
-        """Generate actionable recommendations based on audit data."""
-        recommendations = []
+        """Generate actionable recommendations based on audit data."""        recommendations = []
         
         # System health recommendations
         if system_health.get('health_score', 0) < 70:
@@ -251,8 +241,7 @@ class AuditLogsManager:
         event_data: Optional[Dict[str, Any]] = None,
         severity: str = "info"
     ) -> Dict[str, str]:
-        """
-        Log a platform-wide event across multiple audit systems.
+        """        Log a platform-wide event across multiple audit systems.
         
         Args:
             event_name: Name of the event
@@ -265,8 +254,7 @@ class AuditLogsManager:
             
         Returns:
             Dict[str, str]: IDs of created audit records
-        """
-        audit_ids = {}
+        """        audit_ids = {}
         
         try:
             # Log to system audit if system context provided
@@ -329,8 +317,7 @@ class AuditLogsManager:
         end_time: Optional[datetime] = None,
         limit: int = 100
     ) -> Dict[str, List[Dict[str, Any]]]:
-        """
-        Search across all audit log types.
+        """        Search across all audit log types.
         
         Args:
             query: Search query
@@ -341,8 +328,7 @@ class AuditLogsManager:
             
         Returns:
             Dict[str, List[Dict[str, Any]]]: Search results by log type
-        """
-        results = {}
+        """        results = {}
         
         if not log_types:
             log_types = ['system', 'user', 'security', 'compliance', 'forensic']
@@ -437,8 +423,7 @@ class AuditLogsManager:
         format_type: str = "json",
         include_sensitive: bool = False
     ) -> Dict[str, Any]:
-        """
-        Export audit data for compliance or investigation purposes.
+        """        Export audit data for compliance or investigation purposes.
         
         Args:
             log_types: Types of logs to export
@@ -449,8 +434,7 @@ class AuditLogsManager:
             
         Returns:
             Dict[str, Any]: Exported audit data
-        """
-        try:
+        """        try:
             export_id = f"export_{uuid.uuid4().hex[:12]}"
             exported_data = {
                 "export_id": export_id,
@@ -511,8 +495,7 @@ def create_audit_logs_manager(
     service_name: str = "ia_influencer_agent",
     environment: str = "production"
 ) -> AuditLogsManager:
-    """
-    Factory function to create audit logs manager.
+    """    Factory function to create audit logs manager.
     
     Args:
         db_session: Database session
@@ -521,8 +504,7 @@ def create_audit_logs_manager(
         
     Returns:
         AuditLogsManager: Configured audit logs manager
-    """
-    return AuditLogsManager(db_session, service_name, environment)
+    """    return AuditLogsManager(db_session, service_name, environment)
 
 
 # Export all components

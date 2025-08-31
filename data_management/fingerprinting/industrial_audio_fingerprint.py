@@ -1,5 +1,4 @@
-"""
-🎵 Industrial Audio Processing Fingerprinting System - Ultra-Précis
+"""🎵 Industrial Audio Processing Fingerprinting System - Ultra-Précis
 ================================================================
 Module: backend/data_management/fingerprinting/industrial_audio_fingerprint.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -26,9 +25,7 @@ BUSINESS LOGIC INDUSTRIAL AUDIO FINGERPRINTING:
 Professional Audio Upload → Format Validation → Ultra-Precise Processing → 
 Robust Feature Extraction → Chromaprint + ML Features → FAISS Vector Indexing → 
 Real-time Matching (<50ms) → Precision Validation (>99.5%) → Industrial Protection
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple, AsyncGenerator
+"""from typing import Dict, List, Optional, Any, Union, Tuple, AsyncGenerator
 from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
 from pathlib import Path
@@ -73,8 +70,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class IndustrialAudioConfig:
-    """Configuration ultra-avancée pour le fingerprinting audio industriel"""
-    
+    """Configuration ultra-avancée pour le fingerprinting audio industriel"""    
     # Industrial Performance Requirements
     max_processing_time_ms: float = 50.0  # <50ms real-time matching
     target_precision: float = 0.995  # >99.5% precision
@@ -138,8 +134,7 @@ class IndustrialAudioConfig:
 
 @dataclass
 class AudioFingerprint:
-    """Ultra-precise audio fingerprint result"""
-    fingerprint_id: str
+    """Ultra-precise audio fingerprint result"""    fingerprint_id: str
     content_id: str
     chromaprint_hash: str
     ml_feature_vector: np.ndarray
@@ -163,8 +158,7 @@ class AudioFingerprint:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class IndustrialChromaprintProcessor:
-    """Ultra-precise Chromaprint processor for industrial audio fingerprinting"""
-    
+    """Ultra-precise Chromaprint processor for industrial audio fingerprinting"""    
     def __init__(self, config: IndustrialAudioConfig):
         self.config = config
         if not CHROMAPRINT_AVAILABLE:
@@ -173,8 +167,7 @@ class IndustrialChromaprintProcessor:
         logger.info("Industrial Chromaprint processor initialized")
     
     async def process(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Process audio with ultra-precise Chromaprint analysis"""
-        try:
+        """Process audio with ultra-precise Chromaprint analysis"""        try:
             start_time = time.time()
             
             # Prepare audio for Chromaprint (16-bit PCM)
@@ -223,8 +216,7 @@ class IndustrialChromaprintProcessor:
             }
     
     def _calculate_confidence(self, fingerprint_data: str) -> float:
-        """Calculate confidence score based on fingerprint quality"""
-        if not fingerprint_data:
+        """Calculate confidence score based on fingerprint quality"""        if not fingerprint_data:
             return 0.0
         
         # Analyze fingerprint entropy and uniqueness
@@ -240,8 +232,7 @@ class IndustrialChromaprintProcessor:
         return confidence
     
     async def _calculate_resistance_metrics(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """Calculate resistance metrics to audio modifications"""
-        metrics = {
+        """Calculate resistance metrics to audio modifications"""        metrics = {
             'pitch_resistance': 0.95,  # Chromaprint is pitch-resistant
             'tempo_resistance': 0.75,  # Moderately tempo-resistant
             'eq_resistance': 0.85,     # Good EQ resistance
@@ -267,8 +258,7 @@ class IndustrialChromaprintProcessor:
         return metrics
 
 class IndustrialMLFeatureExtractor:
-    """Custom ML feature extractor for industrial audio fingerprinting"""
-    
+    """Custom ML feature extractor for industrial audio fingerprinting"""    
     def __init__(self, config: IndustrialAudioConfig):
         self.config = config
         self.scaler = StandardScaler()
@@ -278,8 +268,7 @@ class IndustrialMLFeatureExtractor:
         logger.info("Industrial ML feature extractor initialized")
     
     async def extract_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Extract comprehensive ML features for ultra-precise fingerprinting"""
-        try:
+        """Extract comprehensive ML features for ultra-precise fingerprinting"""        try:
             start_time = time.time()
             
             # Convert to float32 for librosa
@@ -330,8 +319,7 @@ class IndustrialMLFeatureExtractor:
             }
     
     async def _extract_spectral_features(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract enhanced spectral features"""
-        features = {}
+        """Extract enhanced spectral features"""        features = {}
         
         # Enhanced MFCC with delta and delta-delta
         mfcc = librosa.feature.mfcc(y=audio, sr=sr, n_mfcc=self.config.n_mfcc)
@@ -368,8 +356,7 @@ class IndustrialMLFeatureExtractor:
         return features
     
     async def _extract_temporal_features(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract robust temporal features"""
-        features = {}
+        """Extract robust temporal features"""        features = {}
         
         # Zero crossing rate
         zcr = librosa.feature.zero_crossing_rate(audio)[0]
@@ -397,8 +384,7 @@ class IndustrialMLFeatureExtractor:
         return features
     
     async def _extract_perceptual_features(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract perceptual audio features"""
-        features = {}
+        """Extract perceptual audio features"""        features = {}
         
         # Mel spectrogram
         mel_spec = librosa.feature.melspectrogram(
@@ -423,8 +409,7 @@ class IndustrialMLFeatureExtractor:
         return features
     
     async def _extract_resistance_features(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract features designed for resistance to modifications"""
-        features = {}
+        """Extract features designed for resistance to modifications"""        features = {}
         
         # Pitch-invariant features
         chroma_cens = librosa.feature.chroma_cens(y=audio, sr=sr)
@@ -441,8 +426,7 @@ class IndustrialMLFeatureExtractor:
         return features
     
     async def _extract_deep_features(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract deep learning based features"""
-        features = {}
+        """Extract deep learning based features"""        features = {}
         
         try:
             # Simulate deep features with advanced spectral analysis
@@ -476,8 +460,7 @@ class IndustrialMLFeatureExtractor:
         return features
     
     def _create_unified_vector(self, features: Dict[str, Any]) -> np.ndarray:
-        """Create unified feature vector from all extracted features"""
-        try:
+        """Create unified feature vector from all extracted features"""        try:
             vector_parts = []
             
             # Add scalar features
@@ -519,8 +502,7 @@ class IndustrialMLFeatureExtractor:
             return np.zeros(512, dtype=np.float32)
     
     def _calculate_feature_quality(self, features: Dict[str, Any]) -> float:
-        """Calculate quality score of extracted features"""
-        try:
+        """Calculate quality score of extracted features"""        try:
             quality_factors = []
             
             # Check feature completeness
@@ -546,8 +528,7 @@ class IndustrialMLFeatureExtractor:
             return 0.5
 
 class IndustrialFAISSManager:
-    """Ultra-scale FAISS manager for 100M+ audio fingerprints"""
-    
+    """Ultra-scale FAISS manager for 100M+ audio fingerprints"""    
     def __init__(self, config: IndustrialAudioConfig):
         self.config = config
         self.indexes = {}
@@ -563,8 +544,7 @@ class IndustrialFAISSManager:
         logger.info("Industrial FAISS manager initialized for 100M+ scale")
     
     async def initialize_index(self, dimension: int = 512) -> bool:
-        """Initialize FAISS index optimized for 100M+ fingerprints"""
-        try:
+        """Initialize FAISS index optimized for 100M+ fingerprints"""        try:
             with self.lock:
                 # Create HNSW index for ultra-scale performance
                 if self.config.faiss_index_type == "HNSW":
@@ -597,8 +577,7 @@ class IndustrialFAISSManager:
             return False
     
     async def add_fingerprint(self, fingerprint: AudioFingerprint) -> bool:
-        """Add fingerprint to ultra-scale FAISS index"""
-        try:
+        """Add fingerprint to ultra-scale FAISS index"""        try:
             with self.lock:
                 if 'audio' not in self.indexes:
                     await self.initialize_index()
@@ -640,8 +619,7 @@ class IndustrialFAISSManager:
     
     async def search_similar(self, query_vector: np.ndarray, max_results: int = 10, 
                            similarity_threshold: float = 0.75) -> List[Dict[str, Any]]:
-        """Ultra-fast similarity search (<50ms target)"""
-        try:
+        """Ultra-fast similarity search (<50ms target)"""        try:
             start_time = time.time()
             
             with self.lock:
@@ -701,8 +679,7 @@ class IndustrialFAISSManager:
             return []
     
     async def get_statistics(self) -> Dict[str, Any]:
-        """Get FAISS index statistics"""
-        try:
+        """Get FAISS index statistics"""        try:
             with self.lock:
                 stats = {}
                 
@@ -729,8 +706,7 @@ class IndustrialFAISSManager:
             return {}
 
 class IndustrialAudioFingerprintEngine:
-    """
-    Ultra-Precise Industrial Audio Fingerprinting Engine
+    """    Ultra-Precise Industrial Audio Fingerprinting Engine
     
     Specifications:
     - Chromaprint + ML custom models
@@ -738,8 +714,7 @@ class IndustrialAudioFingerprintEngine:
     - FAISS vector database 100M+ fingerprints
     - Real-time matching <50ms
     - Precision >99.5% on industrial datasets
-    """
-    
+    """    
     def __init__(self, config: Optional[IndustrialAudioConfig] = None):
         self.config = config or IndustrialAudioConfig()
         
@@ -763,8 +738,7 @@ class IndustrialAudioFingerprintEngine:
         logger.info("Industrial Audio Fingerprinting Engine initialized")
     
     async def initialize(self) -> bool:
-        """Initialize the industrial fingerprinting engine"""
-        try:
+        """Initialize the industrial fingerprinting engine"""        try:
             # Initialize Chromaprint processor
             if self.config.chromaprint_enabled:
                 try:
@@ -786,8 +760,7 @@ class IndustrialAudioFingerprintEngine:
     
     async def create_fingerprint(self, audio_path: str, content_id: str, 
                                metadata: Optional[Dict[str, Any]] = None) -> Optional[AudioFingerprint]:
-        """Create ultra-precise audio fingerprint"""
-        try:
+        """Create ultra-precise audio fingerprint"""        try:
             start_time = time.time()
             
             # Load audio
@@ -840,8 +813,7 @@ class IndustrialAudioFingerprintEngine:
     
     async def find_matches(self, audio_path: str, similarity_threshold: float = 0.75,
                          max_results: int = 10) -> List[Dict[str, Any]]:
-        """Find similar fingerprints with ultra-fast matching (<50ms target)"""
-        try:
+        """Find similar fingerprints with ultra-fast matching (<50ms target)"""        try:
             start_time = time.time()
             
             # Create query fingerprint
@@ -875,8 +847,7 @@ class IndustrialAudioFingerprintEngine:
             return []
     
     async def _load_audio(self, audio_path: str) -> Tuple[Optional[np.ndarray], int]:
-        """Load audio with industrial quality validation"""
-        try:
+        """Load audio with industrial quality validation"""        try:
             # Load audio using librosa
             audio_data, sample_rate = librosa.load(
                 audio_path,
@@ -897,8 +868,7 @@ class IndustrialAudioFingerprintEngine:
             return None, 0
     
     def _validate_audio_quality(self, audio_data: np.ndarray, sample_rate: int) -> bool:
-        """Validate audio quality for industrial fingerprinting"""
-        try:
+        """Validate audio quality for industrial fingerprinting"""        try:
             # Check for silent audio
             rms = np.sqrt(np.mean(audio_data ** 2))
             if rms < 0.001:  # Too quiet
@@ -921,8 +891,7 @@ class IndustrialAudioFingerprintEngine:
     
     def _create_audio_fingerprint(self, content_id: str, fingerprint_data: Dict[str, Any],
                                 processing_start_time: float, metadata: Dict[str, Any]) -> AudioFingerprint:
-        """Create comprehensive audio fingerprint object"""
-        
+        """Create comprehensive audio fingerprint object"""        
         processing_time_ms = (time.time() - processing_start_time) * 1000
         
         # Extract components
@@ -971,8 +940,7 @@ class IndustrialAudioFingerprintEngine:
     
     def _calculate_precision_score(self, chromaprint_data: Dict[str, Any], 
                                  ml_data: Dict[str, Any]) -> float:
-        """Calculate precision score for industrial requirements (>99.5% target)"""
-        try:
+        """Calculate precision score for industrial requirements (>99.5% target)"""        try:
             factors = []
             
             # Chromaprint quality
@@ -1008,8 +976,7 @@ class IndustrialAudioFingerprintEngine:
     
     def _validate_precision(self, matches: List[Dict[str, Any]], 
                           query_vector: np.ndarray) -> List[Dict[str, Any]]:
-        """Validate matches meet precision requirements (>99.5%)"""
-        if not matches:
+        """Validate matches meet precision requirements (>99.5%)"""        if not matches:
             return matches
         
         validated_matches = []
@@ -1030,8 +997,7 @@ class IndustrialAudioFingerprintEngine:
         return validated_matches
     
     def _update_metrics(self, fingerprint: AudioFingerprint):
-        """Update performance metrics"""
-        self.metrics['fingerprints_processed'] += 1
+        """Update performance metrics"""        self.metrics['fingerprints_processed'] += 1
         self.metrics['total_processing_time'] += fingerprint.processing_time_ms
         
         # Update averages
@@ -1048,8 +1014,7 @@ class IndustrialAudioFingerprintEngine:
             )
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive performance metrics"""
-        faiss_stats = await self.faiss_manager.get_statistics()
+        """Get comprehensive performance metrics"""        faiss_stats = await self.faiss_manager.get_statistics()
         
         return {
             'processing_metrics': self.metrics,
@@ -1073,8 +1038,7 @@ class IndustrialAudioFingerprintEngine:
         }
     
     async def shutdown(self):
-        """Graceful shutdown of the engine"""
-        try:
+        """Graceful shutdown of the engine"""        try:
             self.thread_pool.shutdown(wait=True)
             logger.info("Industrial Audio Fingerprinting Engine shut down successfully")
         except Exception as e:

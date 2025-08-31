@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Advanced Protection Prompts Tests
+"""Advanced Protection Prompts Tests
 Ultra-professional test suite for AI Protection Prompts system
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
@@ -25,9 +21,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -48,20 +42,17 @@ from ai.prompts.protection_prompts import (
 
 
 class TestProtectionPrompts:
-    """Ultra-comprehensive test suite for Protection Prompts"""
-    
+    """Ultra-comprehensive test suite for Protection Prompts"""    
     @pytest.fixture
     async def protection_prompts(self):
-        """Create a fresh AIProtectionPrompts instance for each test"""
-        prompts = AIProtectionPrompts()
+        """Create a fresh AIProtectionPrompts instance for each test"""        prompts = AIProtectionPrompts()
         await prompts.initialize()
         yield prompts
         await prompts.cleanup()
     
     @pytest.fixture
     def sample_audio_protection_context(self):
-        """Create sample audio protection context for testing"""
-        return ProtectionContext(
+        """Create sample audio protection context for testing"""        return ProtectionContext(
             content_type=ContentType.AUDIO,
             protection_level=ProtectionLevel.ENTERPRISE,
             fingerprinting_methods=[
@@ -94,8 +85,7 @@ class TestProtectionPrompts:
     
     @pytest.fixture
     def sample_video_protection_context(self):
-        """Create sample video protection context for testing"""
-        return ProtectionContext(
+        """Create sample video protection context for testing"""        return ProtectionContext(
             content_type=ContentType.VIDEO,
             protection_level=ProtectionLevel.BLOCKCHAIN,
             fingerprinting_methods=[
@@ -127,8 +117,7 @@ class TestProtectionPrompts:
     
     @pytest.fixture
     def sample_image_protection_context(self):
-        """Create sample image protection context for testing"""
-        return ProtectionContext(
+        """Create sample image protection context for testing"""        return ProtectionContext(
             content_type=ContentType.IMAGE,
             protection_level=ProtectionLevel.ADVANCED,
             fingerprinting_methods=[
@@ -157,8 +146,7 @@ class TestProtectionPrompts:
     
     @pytest.mark.asyncio
     async def test_protection_prompts_initialization(self, protection_prompts):
-        """Test AIProtectionPrompts initialization"""
-        assert protection_prompts is not None
+        """Test AIProtectionPrompts initialization"""        assert protection_prompts is not None
         assert hasattr(protection_prompts, 'protection_templates')
         assert hasattr(protection_prompts, 'fingerprinting_algorithms')
         assert hasattr(protection_prompts, 'legal_templates')
@@ -169,8 +157,7 @@ class TestProtectionPrompts:
     
     @pytest.mark.asyncio
     async def test_protection_registry_loading(self, protection_prompts):
-        """Test that protection registry is properly loaded"""
-        registry = PROTECTION_PROMPTS_REGISTRY
+        """Test that protection registry is properly loaded"""        registry = PROTECTION_PROMPTS_REGISTRY
         assert registry is not None
         assert isinstance(registry, dict)
         
@@ -188,8 +175,7 @@ class TestProtectionPrompts:
     
     @pytest.mark.asyncio
     async def test_audio_basic_protection_prompts(self, protection_prompts):
-        """Test basic audio protection prompts generation"""
-        basic_context = ProtectionContext(
+        """Test basic audio protection prompts generation"""        basic_context = ProtectionContext(
             content_type=ContentType.AUDIO,
             protection_level=ProtectionLevel.BASIC,
             fingerprinting_methods=[FingerprintingMethod.SPECTRAL],
@@ -226,8 +212,7 @@ class TestProtectionPrompts:
     
     @pytest.mark.asyncio
     async def test_audio_enterprise_protection_prompts(self, protection_prompts, sample_audio_protection_context):
-        """Test enterprise audio protection prompts generation"""
-        result = await protection_prompts.generate_protection_prompt(sample_audio_protection_context)
+        """Test enterprise audio protection prompts generation"""        result = await protection_prompts.generate_protection_prompt(sample_audio_protection_context)
         
         assert result["success"] is True
         prompt = result["prompt"]
@@ -254,8 +239,7 @@ class TestProtectionPrompts:
     
     @pytest.mark.asyncio
     async def test_audio_blockchain_protection_prompts(self, protection_prompts):
-        """Test blockchain audio protection prompts"""
-        blockchain_context = ProtectionContext(
+        """Test blockchain audio protection prompts"""        blockchain_context = ProtectionContext(
             content_type=ContentType.AUDIO,
             protection_level=ProtectionLevel.BLOCKCHAIN,
             fingerprinting_methods=[FingerprintingMethod.BLOCKCHAIN, FingerprintingMethod.AI_SIGNATURE],
@@ -290,8 +274,7 @@ class TestProtectionPrompts:
     
     @pytest.mark.asyncio
     async def test_video_protection_prompts(self, protection_prompts, sample_video_protection_context):
-        """Test video protection prompts generation"""
-        result = await protection_prompts.generate_protection_prompt(sample_video_protection_context)
+        """Test video protection prompts generation"""        result = await protection_prompts.generate_protection_prompt(sample_video_protection_context)
         
         assert result["success"] is True
         prompt = result["prompt"]
@@ -309,8 +292,7 @@ class TestProtectionPrompts:
     
     @pytest.mark.asyncio
     async def test_video_content_id_registration(self, protection_prompts):
-        """Test video Content ID registration prompts"""
-        content_id_context = ProtectionContext(
+        """Test video Content ID registration prompts"""        content_id_context = ProtectionContext(
             content_type=ContentType.VIDEO,
             protection_level=ProtectionLevel.ADVANCED,
             fingerprinting_methods=[FingerprintingMethod.PERCEPTUAL],
@@ -347,8 +329,7 @@ class TestProtectionPrompts:
     
     @pytest.mark.asyncio
     async def test_image_protection_prompts(self, protection_prompts, sample_image_protection_context):
-        """Test image protection prompts generation"""
-        result = await protection_prompts.generate_protection_prompt(sample_image_protection_context)
+        """Test image protection prompts generation"""        result = await protection_prompts.generate_protection_prompt(sample_image_protection_context)
         
         assert result["success"] is True
         prompt = result["prompt"]
@@ -366,8 +347,7 @@ class TestProtectionPrompts:
     
     @pytest.mark.asyncio
     async def test_image_reverse_search_monitoring(self, protection_prompts):
-        """Test image reverse search monitoring prompts"""
-        reverse_search_context = ProtectionContext(
+        """Test image reverse search monitoring prompts"""        reverse_search_context = ProtectionContext(
             content_type=ContentType.IMAGE,
             protection_level=ProtectionLevel.ADVANCED,
             fingerprinting_methods=[FingerprintingMethod.PERCEPTUAL],
@@ -404,8 +384,7 @@ class TestProtectionPrompts:
     
     @pytest.mark.asyncio
     async def test_text_protection_prompts(self, protection_prompts):
-        """Test text content protection prompts"""
-        text_context = ProtectionContext(
+        """Test text content protection prompts"""        text_context = ProtectionContext(
             content_type=ContentType.TEXT,
             protection_level=ProtectionLevel.ADVANCED,
             fingerprinting_methods=[FingerprintingMethod.AI_SIGNATURE],
@@ -443,8 +422,7 @@ class TestProtectionPrompts:
     
     @pytest.mark.asyncio
     async def test_mixed_media_protection_prompts(self, protection_prompts):
-        """Test mixed media content protection prompts"""
-        mixed_media_context = ProtectionContext(
+        """Test mixed media content protection prompts"""        mixed_media_context = ProtectionContext(
             content_type=ContentType.MIXED_MEDIA,
             protection_level=ProtectionLevel.ENTERPRISE,
             fingerprinting_methods=[
@@ -495,8 +473,7 @@ class TestProtectionPrompts:
     
     @pytest.mark.asyncio
     async def test_spectral_fingerprinting_prompts(self, protection_prompts):
-        """Test spectral fingerprinting algorithm prompts"""
-        spectral_context = ProtectionContext(
+        """Test spectral fingerprinting algorithm prompts"""        spectral_context = ProtectionContext(
             content_type=ContentType.AUDIO,
             protection_level=ProtectionLevel.ADVANCED,
             fingerprinting_methods=[FingerprintingMethod.SPECTRAL],
@@ -528,8 +505,7 @@ class TestProtectionPrompts:
     
     @pytest.mark.asyncio
     async def test_perceptual_fingerprinting_prompts(self, protection_prompts):
-        """Test perceptual fingerprinting algorithm prompts"""
-        perceptual_context = ProtectionContext(
+        """Test perceptual fingerprinting algorithm prompts"""        perceptual_context = ProtectionContext(
             content_type=ContentType.VIDEO,
             protection_level=ProtectionLevel.ADVANCED,
             fingerprinting_methods=[FingerprintingMethod.PERCEPTUAL],
@@ -561,8 +537,7 @@ class TestProtectionPrompts:
     
     @pytest.mark.asyncio
     async def test_youtube_monitoring_prompts(self, protection_prompts):
-        """Test YouTube-specific monitoring prompts"""
-        youtube_context = ProtectionContext(
+        """Test YouTube-specific monitoring prompts"""        youtube_context = ProtectionContext(
             content_type=ContentType.VIDEO,
             protection_level=ProtectionLevel.ADVANCED,
             fingerprinting_methods=[FingerprintingMethod.PERCEPTUAL],
@@ -596,8 +571,7 @@ class TestProtectionPrompts:
     
     @pytest.mark.asyncio
     async def test_spotify_monitoring_prompts(self, protection_prompts):
-        """Test Spotify-specific monitoring prompts"""
-        spotify_context = ProtectionContext(
+        """Test Spotify-specific monitoring prompts"""        spotify_context = ProtectionContext(
             content_type=ContentType.AUDIO,
             protection_level=ProtectionLevel.ADVANCED,
             fingerprinting_methods=[FingerprintingMethod.CHROMAPRINT],
@@ -633,8 +607,7 @@ class TestProtectionPrompts:
     
     @pytest.mark.asyncio
     async def test_dmca_compliance_prompts(self, protection_prompts):
-        """Test DMCA compliance prompts"""
-        dmca_context = ProtectionContext(
+        """Test DMCA compliance prompts"""        dmca_context = ProtectionContext(
             content_type=ContentType.MIXED_MEDIA,
             protection_level=ProtectionLevel.ADVANCED,
             fingerprinting_methods=[FingerprintingMethod.AI_SIGNATURE],
@@ -670,8 +643,7 @@ class TestProtectionPrompts:
     
     @pytest.mark.asyncio
     async def test_gdpr_compliance_prompts(self, protection_prompts):
-        """Test GDPR compliance prompts"""
-        gdpr_context = ProtectionContext(
+        """Test GDPR compliance prompts"""        gdpr_context = ProtectionContext(
             content_type=ContentType.MIXED_MEDIA,
             protection_level=ProtectionLevel.ENTERPRISE,
             fingerprinting_methods=[FingerprintingMethod.AI_SIGNATURE],
@@ -709,8 +681,7 @@ class TestProtectionPrompts:
     
     @pytest.mark.asyncio
     async def test_blockchain_integration_prompts(self, protection_prompts):
-        """Test blockchain integration prompts"""
-        blockchain_context = ProtectionContext(
+        """Test blockchain integration prompts"""        blockchain_context = ProtectionContext(
             content_type=ContentType.AUDIO,
             protection_level=ProtectionLevel.BLOCKCHAIN,
             fingerprinting_methods=[FingerprintingMethod.BLOCKCHAIN],
@@ -753,8 +724,7 @@ class TestProtectionPrompts:
     
     @pytest.mark.asyncio
     async def test_invalid_content_type_error(self, protection_prompts):
-        """Test error handling for invalid content type"""
-        with pytest.raises(ValueError) or pytest.raises(TypeError):
+        """Test error handling for invalid content type"""        with pytest.raises(ValueError) or pytest.raises(TypeError):
             invalid_context = ProtectionContext(
                 content_type="invalid_type",
                 protection_level=ProtectionLevel.BASIC,
@@ -767,8 +737,7 @@ class TestProtectionPrompts:
     
     @pytest.mark.asyncio
     async def test_incompatible_fingerprinting_method_error(self, protection_prompts):
-        """Test error handling for incompatible fingerprinting methods"""
-        # Try to use audio-specific method on video content
+        """Test error handling for incompatible fingerprinting methods"""        # Try to use audio-specific method on video content
         incompatible_context = ProtectionContext(
             content_type=ContentType.VIDEO,
             protection_level=ProtectionLevel.BASIC,
@@ -788,8 +757,7 @@ class TestProtectionPrompts:
     
     @pytest.mark.asyncio
     async def test_missing_technical_specs_handling(self, protection_prompts):
-        """Test handling of missing technical specifications"""
-        minimal_context = ProtectionContext(
+        """Test handling of missing technical specifications"""        minimal_context = ProtectionContext(
             content_type=ContentType.AUDIO,
             protection_level=ProtectionLevel.BASIC,
             fingerprinting_methods=[FingerprintingMethod.SPECTRAL],
@@ -809,8 +777,7 @@ class TestProtectionPrompts:
     
     @pytest.mark.asyncio
     async def test_protection_prompt_generation_performance(self, protection_prompts, sample_audio_protection_context):
-        """Test protection prompt generation performance"""
-        # Test single generation performance
+        """Test protection prompt generation performance"""        # Test single generation performance
         start_time = datetime.now()
         result = await protection_prompts.generate_protection_prompt(sample_audio_protection_context)
         single_duration = (datetime.now() - start_time).total_seconds()
@@ -831,8 +798,7 @@ class TestProtectionPrompts:
     
     @pytest.mark.asyncio
     async def test_fingerprinting_algorithm_performance(self, protection_prompts):
-        """Test fingerprinting algorithm recommendation performance"""
-        test_contexts = []
+        """Test fingerprinting algorithm recommendation performance"""        test_contexts = []
         
         # Create contexts for different content types
         for content_type in ContentType:
@@ -859,8 +825,7 @@ class TestProtectionPrompts:
     
     @pytest.mark.asyncio
     async def test_comprehensive_protection_workflow(self, protection_prompts):
-        """Test comprehensive protection workflow integration"""
-        # Step 1: Content analysis and protection level recommendation
+        """Test comprehensive protection workflow integration"""        # Step 1: Content analysis and protection level recommendation
         content_analysis_result = await protection_prompts.analyze_content_protection_needs({
             "content_type": "audio",
             "commercial_use": True,
@@ -933,8 +898,7 @@ class TestProtectionPrompts:
     
     @pytest.mark.asyncio
     async def test_multi_content_type_protection_strategy(self, protection_prompts):
-        """Test protection strategy for multiple content types"""
-        content_portfolio = {
+        """Test protection strategy for multiple content types"""        content_portfolio = {
             "audio_tracks": 50,
             "video_content": 20,
             "images": 200,

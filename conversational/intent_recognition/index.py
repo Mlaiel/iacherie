@@ -1,5 +1,4 @@
-"""
-Intent Recognition System - Main Index
+"""Intent Recognition System - Main Index
 
 Entry point for the Intent Recognition System providing easy access
 to all core components and functionality.
@@ -12,9 +11,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
-"""
-
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 import logging
 from datetime import datetime
 
@@ -103,29 +100,24 @@ logger = logging.getLogger(__name__)
 
 
 class IntentRecognitionSystem:
-    """
-    Unified Intent Recognition System
+    """    Unified Intent Recognition System
     
     Provides a single interface to access all intent recognition capabilities
     including confidence scoring, context processing, business analysis,
     platform-specific processing, semantic analysis, monetization handling,
     and collaboration management.
-    """
-    
+    """    
     def __init__(self, config: Optional[IntentRecognitionConfig] = None):
-        """
-        Initialize the complete intent recognition system
+        """        Initialize the complete intent recognition system
         
         Args:
             config: Configuration object, creates default if None
-        """
-        self.config = config or IntentRecognitionConfig()
+        """        self.config = config or IntentRecognitionConfig()
         self._initialize_components()
         logger.info("Intent Recognition System initialized successfully")
     
     def _initialize_components(self) -> None:
-        """Initialize all system components"""
-        try:
+        """Initialize all system components"""        try:
             # Core processors
             self.confidence_scorer = IntentConfidenceScorer(self.config)
             self.contextual_processor = ContextualIntentProcessor(self.config)
@@ -149,8 +141,7 @@ class IntentRecognitionSystem:
         business_context: Optional[Dict[str, Any]] = None,
         platform_context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Comprehensive intent analysis using all system components
+        """        Comprehensive intent analysis using all system components
         
         Args:
             message_text: User's message to analyze
@@ -161,8 +152,7 @@ class IntentRecognitionSystem:
             
         Returns:
             Dict containing all analysis results
-        """
-        try:
+        """        try:
             # Initialize contexts
             user_profile = user_profile or {}
             conversation_context = conversation_context or {}
@@ -242,16 +232,14 @@ class IntentRecognitionSystem:
             raise IntentRecognitionError(f"Analysis failed: {e}")
     
     def _determine_primary_intent(self, analysis_results: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Determine the primary intent from all analysis results
+        """        Determine the primary intent from all analysis results
         
         Args:
             analysis_results: Results from all analyzers
             
         Returns:
             Primary intent classification
-        """
-        # Extract confidence scores from different analyses
+        """        # Extract confidence scores from different analyses
         semantic_confidence = analysis_results.get("semantic_analysis", {}).get("confidence", 0.0)
         business_confidence = analysis_results.get("business_analysis", {}).get("confidence", 0.0)
         monetization_confidence = analysis_results.get("monetization_analysis", {}).get("confidence", 0.0)
@@ -279,16 +267,14 @@ class IntentRecognitionSystem:
         self,
         analysis_results: Dict[str, Any]
     ) -> List[str]:
-        """
-        Generate actionable recommendations based on analysis results
+        """        Generate actionable recommendations based on analysis results
         
         Args:
             analysis_results: Complete analysis results
             
         Returns:
             List of actionable recommendations
-        """
-        recommendations = []
+        """        recommendations = []
         
         # Semantic recommendations
         semantic_analysis = analysis_results.get("semantic_analysis", {})
@@ -321,13 +307,11 @@ class IntentRecognitionSystem:
         return unique_recommendations[:10]  # Return top 10 recommendations
     
     def get_system_status(self) -> Dict[str, Any]:
-        """
-        Get system status and health information
+        """        Get system status and health information
         
         Returns:
             System status information
-        """
-        return {
+        """        return {
             "system_version": __version__,
             "author": __author__,
             "components": {
@@ -346,16 +330,14 @@ class IntentRecognitionSystem:
 
 # Convenience functions for quick access
 def create_intent_system(config: Optional[IntentRecognitionConfig] = None) -> IntentRecognitionSystem:
-    """
-    Create and initialize a complete intent recognition system
+    """    Create and initialize a complete intent recognition system
     
     Args:
         config: Optional configuration object
         
     Returns:
         Initialized IntentRecognitionSystem
-    """
-    return IntentRecognitionSystem(config)
+    """    return IntentRecognitionSystem(config)
 
 
 def quick_intent_analysis(
@@ -363,8 +345,7 @@ def quick_intent_analysis(
     user_type: str = "creator",
     **kwargs
 ) -> Dict[str, Any]:
-    """
-    Quick intent analysis with minimal setup
+    """    Quick intent analysis with minimal setup
     
     Args:
         message_text: Message to analyze
@@ -373,8 +354,7 @@ def quick_intent_analysis(
         
     Returns:
         Analysis results
-    """
-    system = create_intent_system()
+    """    system = create_intent_system()
     user_profile = {"type": user_type, **kwargs}
     
     return system.analyze_intent(

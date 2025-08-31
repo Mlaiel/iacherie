@@ -1,5 +1,4 @@
-"""
-📡 Distribution Repository - IA Influencer Agent Platform Enterprise
+"""📡 Distribution Repository - IA Influencer Agent Platform Enterprise
 ====================================================================
 Module: backend/data_management/repositories/distribution_repository.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -21,9 +20,7 @@ DISTRIBUTION REPOSITORY ARCHITECTURE:
 Content Preparation → Platform Adaptation → Scheduling Optimization → 
 Cross-Platform Sync → Publishing Management → Performance Tracking → 
 Auto-Republishing → Version Control
-"""
-
-from typing import Dict, List, Optional, Any, Tuple, Union
+"""from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
 import hashlib
@@ -34,8 +31,7 @@ from enum import Enum
 from .base_repository import BaseRepository, AsyncBaseRepository, OperationType
 
 class DistributionPlatform(Enum):
-    """Distribution platforms"""
-    YOUTUBE = "youtube"
+    """Distribution platforms"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     FACEBOOK = "facebook"
@@ -52,8 +48,7 @@ class DistributionPlatform(Enum):
     TELEGRAM = "telegram"
 
 class ContentFormat(Enum):
-    """Content format types"""
-    VIDEO = "video"
+    """Content format types"""    VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
     TEXT = "text"
@@ -65,8 +60,7 @@ class ContentFormat(Enum):
     CAROUSEL = "carousel"
 
 class DistributionStatus(Enum):
-    """Distribution status types"""
-    PENDING = "pending"
+    """Distribution status types"""    PENDING = "pending"
     SCHEDULED = "scheduled"
     PUBLISHING = "publishing"
     PUBLISHED = "published"
@@ -76,8 +70,7 @@ class DistributionStatus(Enum):
     QUEUED = "queued"
 
 class ScheduleType(Enum):
-    """Schedule types"""
-    IMMEDIATE = "immediate"
+    """Schedule types"""    IMMEDIATE = "immediate"
     SCHEDULED = "scheduled"
     OPTIMAL_TIME = "optimal_time"
     RECURRING = "recurring"
@@ -85,8 +78,7 @@ class ScheduleType(Enum):
 
 @dataclass
 class PlatformCapabilities:
-    """Platform-specific capabilities and limitations"""
-    platform: DistributionPlatform
+    """Platform-specific capabilities and limitations"""    platform: DistributionPlatform
     supported_formats: List[ContentFormat]
     max_file_size: int  # in MB
     max_duration: int  # in seconds
@@ -99,8 +91,7 @@ class PlatformCapabilities:
 
 @dataclass
 class ContentVariant:
-    """Platform-specific content variant"""
-    platform: DistributionPlatform
+    """Platform-specific content variant"""    platform: DistributionPlatform
     format: ContentFormat
     file_path: str
     metadata: Dict[str, Any]
@@ -113,8 +104,7 @@ class ContentVariant:
 
 @dataclass
 class DistributionSchedule:
-    """Distribution schedule configuration"""
-    schedule_id: str
+    """Distribution schedule configuration"""    schedule_id: str
     content_id: str
     platform: DistributionPlatform
     schedule_type: ScheduleType
@@ -128,8 +118,7 @@ class DistributionSchedule:
 
 @dataclass
 class DistributionJob:
-    """Distribution job details"""
-    job_id: str
+    """Distribution job details"""    job_id: str
     content_id: str
     creator_id: str
     platform: DistributionPlatform
@@ -147,8 +136,7 @@ class DistributionJob:
 
 @dataclass
 class CrossPlatformSync:
-    """Cross-platform synchronization settings"""
-    sync_id: str
+    """Cross-platform synchronization settings"""    sync_id: str
     master_platform: DistributionPlatform
     slave_platforms: List[DistributionPlatform]
     sync_delay: int  # seconds
@@ -160,8 +148,7 @@ class CrossPlatformSync:
 
 @dataclass
 class DistributionCampaign:
-    """Distribution campaign management"""
-    campaign_id: str
+    """Distribution campaign management"""    campaign_id: str
     name: str
     description: str
     creator_id: str
@@ -176,8 +163,7 @@ class DistributionCampaign:
     analytics: Dict[str, Any]
 
 class DistributionRepository(BaseRepository):
-    """
-    Advanced distribution repository for multi-platform content publishing
+    """    Advanced distribution repository for multi-platform content publishing
     
     Features:
     - Multi-platform content adaptation
@@ -188,8 +174,7 @@ class DistributionRepository(BaseRepository):
     - Auto-retry mechanisms
     - Content version control
     - Real-time analytics
-    """
-    
+    """    
     def __init__(self, db_connection=None, cache_manager=None, logger=None,
                  audit_service=None, metrics_collector=None, platform_apis=None,
                  content_adapter=None, scheduler_service=None, analytics_service=None):
@@ -209,8 +194,7 @@ class DistributionRepository(BaseRepository):
         self.optimal_time_buffer = 300  # 5 minutes
 
     def _initialize_platform_capabilities(self) -> Dict[DistributionPlatform, PlatformCapabilities]:
-        """Initialize platform-specific capabilities"""
-        return {
+        """Initialize platform-specific capabilities"""        return {
             DistributionPlatform.YOUTUBE: PlatformCapabilities(
                 platform=DistributionPlatform.YOUTUBE,
                 supported_formats=[ContentFormat.VIDEO, ContentFormat.LIVE_STREAM],
@@ -262,8 +246,7 @@ class DistributionRepository(BaseRepository):
         }
 
     def create(self, entity, **kwargs):
-        """Create distribution job"""
-        self._validate_entity(entity)
+        """Create distribution job"""        self._validate_entity(entity)
         
         # Validate platform capabilities
         if hasattr(entity, 'platform'):
@@ -295,8 +278,7 @@ class DistributionRepository(BaseRepository):
         return created_entity
 
     def get_by_id(self, entity_id: str, use_cache: bool = True):
-        """Get distribution job by ID"""
-        if use_cache and self._cache_enabled and self.cache:
+        """Get distribution job by ID"""        if use_cache and self._cache_enabled and self.cache:
             cache_key = self._generate_cache_key("get_distribution_by_id", entity_id=entity_id)
             cached_result = self.cache.get(cache_key)
             if cached_result:
@@ -312,8 +294,7 @@ class DistributionRepository(BaseRepository):
         return distribution_job
 
     def update(self, entity, **kwargs):
-        """Update distribution job"""
-        self._validate_entity(entity)
+        """Update distribution job"""        self._validate_entity(entity)
         
         # Get current entity for audit
         current_entity = self.get_by_id(getattr(entity, 'job_id', None), use_cache=False)
@@ -342,8 +323,7 @@ class DistributionRepository(BaseRepository):
         return updated_entity
 
     def delete(self, entity_id: str, soft_delete: bool = False):
-        """Delete distribution job"""
-        # Get entity for audit
+        """Delete distribution job"""        # Get entity for audit
         entity = self.get_by_id(entity_id, use_cache=False)
         if not entity:
             return False
@@ -373,8 +353,7 @@ class DistributionRepository(BaseRepository):
 
     def list(self, filters: Dict[str, Any] = None, limit: int = 100, 
              offset: int = 0, order_by: str = None):
-        """List distribution jobs with filters"""
-        filters = filters or {}
+        """List distribution jobs with filters"""        filters = filters or {}
         
         # Check cache for list results
         if self._cache_enabled and self.cache:
@@ -395,8 +374,7 @@ class DistributionRepository(BaseRepository):
     def distribute_content(self, content_id: str, creator_id: str, 
                           platforms: List[DistributionPlatform],
                           schedule_config: Dict[str, Any] = None) -> List[DistributionJob]:
-        """Distribute content to multiple platforms"""
-        try:
+        """Distribute content to multiple platforms"""        try:
             distribution_jobs = []
             
             for platform in platforms:
@@ -442,8 +420,7 @@ class DistributionRepository(BaseRepository):
     def schedule_optimal_distribution(self, content_id: str, creator_id: str,
                                     platforms: List[DistributionPlatform],
                                     optimization_strategy: str = "engagement") -> List[DistributionJob]:
-        """Schedule distribution at optimal times for each platform"""
-        try:
+        """Schedule distribution at optimal times for each platform"""        try:
             distribution_jobs = []
             
             for platform in platforms:
@@ -472,8 +449,7 @@ class DistributionRepository(BaseRepository):
             raise
 
     def create_distribution_campaign(self, campaign_data: Dict[str, Any]) -> DistributionCampaign:
-        """Create and manage distribution campaign"""
-        try:
+        """Create and manage distribution campaign"""        try:
             campaign = DistributionCampaign(
                 campaign_id=self._generate_campaign_id(),
                 name=campaign_data['name'],
@@ -505,8 +481,7 @@ class DistributionRepository(BaseRepository):
             raise
 
     def setup_cross_platform_sync(self, sync_config: Dict[str, Any]) -> CrossPlatformSync:
-        """Set up cross-platform content synchronization"""
-        try:
+        """Set up cross-platform content synchronization"""        try:
             sync = CrossPlatformSync(
                 sync_id=self._generate_sync_id(),
                 master_platform=sync_config['master_platform'],
@@ -534,8 +509,7 @@ class DistributionRepository(BaseRepository):
             raise
 
     def publish_job(self, job_id: str) -> bool:
-        """Execute distribution job publishing"""
-        try:
+        """Execute distribution job publishing"""        try:
             # Get job details
             job = self.get_by_id(job_id)
             if not job:
@@ -592,8 +566,7 @@ class DistributionRepository(BaseRepository):
             raise
 
     def get_distribution_analytics(self, filters: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Get comprehensive distribution analytics"""
-        try:
+        """Get comprehensive distribution analytics"""        try:
             filters = filters or {}
             
             # Get distribution jobs
@@ -622,8 +595,7 @@ class DistributionRepository(BaseRepository):
     # Private helper methods
 
     def _validate_platform_compatibility(self, entity):
-        """Validate content compatibility with platform"""
-        platform = entity.platform
+        """Validate content compatibility with platform"""        platform = entity.platform
         capabilities = self.platform_capabilities.get(platform)
         
         if not capabilities:
@@ -636,66 +608,54 @@ class DistributionRepository(BaseRepository):
                 raise ValueError(f"Format {content_format} not supported by {platform}")
 
     def _generate_job_id(self) -> str:
-        """Generate unique job ID"""
-        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        """Generate unique job ID"""        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         random_hash = hashlib.md5(str(datetime.now()).encode()).hexdigest()[:8]
         return f"dist_job_{timestamp}_{random_hash}"
 
     def _generate_campaign_id(self) -> str:
-        """Generate unique campaign ID"""
-        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        """Generate unique campaign ID"""        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         random_hash = hashlib.md5(str(datetime.now()).encode()).hexdigest()[:8]
         return f"campaign_{timestamp}_{random_hash}"
 
     def _generate_sync_id(self) -> str:
-        """Generate unique sync ID"""
-        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        """Generate unique sync ID"""        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         random_hash = hashlib.md5(str(datetime.now()).encode()).hexdigest()[:8]
         return f"sync_{timestamp}_{random_hash}"
 
     def _store_distribution_job(self, entity):
-        """Store distribution job in database"""
-        # Implementation would store in database
+        """Store distribution job in database"""        # Implementation would store in database
         return entity
 
     def _schedule_distribution_job(self, job):
-        """Schedule distribution job"""
-        # Implementation would schedule job
+        """Schedule distribution job"""        # Implementation would schedule job
         pass
 
     def _fetch_distribution_by_id(self, entity_id: str):
-        """Fetch distribution job by ID"""
-        # Implementation would fetch from database
+        """Fetch distribution job by ID"""        # Implementation would fetch from database
         return None
 
     def _track_status_change(self, current_entity, new_entity):
-        """Track status changes"""
-        # Implementation would track status changes
+        """Track status changes"""        # Implementation would track status changes
         pass
 
     def _update_distribution_job(self, entity):
-        """Update distribution job in database"""
-        # Implementation would update database
+        """Update distribution job in database"""        # Implementation would update database
         return entity
 
     def _cancel_distribution_job(self, job_id: str):
-        """Cancel distribution job"""
-        # Implementation would cancel job
+        """Cancel distribution job"""        # Implementation would cancel job
         pass
 
     def _delete_distribution_job(self, job_id: str, soft_delete: bool) -> bool:
-        """Delete distribution job"""
-        # Implementation would delete from database
+        """Delete distribution job"""        # Implementation would delete from database
         return True
 
     def _fetch_distribution_list(self, filters, limit, offset, order_by):
-        """Fetch distribution jobs list"""
-        # Implementation would fetch from database
+        """Fetch distribution jobs list"""        # Implementation would fetch from database
         return []
 
     def _prepare_content_for_platform(self, content_id: str, platform: DistributionPlatform) -> ContentVariant:
-        """Prepare content variant for specific platform"""
-        # Implementation would adapt content for platform
+        """Prepare content variant for specific platform"""        # Implementation would adapt content for platform
         return ContentVariant(
             platform=platform,
             format=ContentFormat.VIDEO,
@@ -711,8 +671,7 @@ class DistributionRepository(BaseRepository):
 
     def _create_distribution_schedule(self, content_id: str, platform: DistributionPlatform, 
                                     config: Dict[str, Any]) -> DistributionSchedule:
-        """Create distribution schedule"""
-        # Implementation would create schedule
+        """Create distribution schedule"""        # Implementation would create schedule
         return DistributionSchedule(
             schedule_id=self._generate_job_id(),
             content_id=content_id,
@@ -729,46 +688,38 @@ class DistributionRepository(BaseRepository):
 
     def _calculate_optimal_posting_time(self, creator_id: str, platform: DistributionPlatform, 
                                       strategy: str) -> datetime:
-        """Calculate optimal posting time"""
-        # Implementation would calculate optimal time
+        """Calculate optimal posting time"""        # Implementation would calculate optimal time
         return datetime.now(timezone.utc) + timedelta(hours=1)
 
     def _store_distribution_campaign(self, campaign: DistributionCampaign) -> DistributionCampaign:
-        """Store distribution campaign"""
-        # Implementation would store campaign
+        """Store distribution campaign"""        # Implementation would store campaign
         return campaign
 
     def _schedule_campaign_content(self, campaign: DistributionCampaign):
-        """Schedule campaign content"""
-        # Implementation would schedule campaign content
+        """Schedule campaign content"""        # Implementation would schedule campaign content
         pass
 
     def _store_cross_platform_sync(self, sync: CrossPlatformSync) -> CrossPlatformSync:
-        """Store cross-platform sync configuration"""
-        # Implementation would store sync config
+        """Store cross-platform sync configuration"""        # Implementation would store sync config
         return sync
 
     def _initialize_sync_monitoring(self, sync: CrossPlatformSync):
-        """Initialize sync monitoring"""
-        # Implementation would initialize monitoring
+        """Initialize sync monitoring"""        # Implementation would initialize monitoring
         pass
 
     def _schedule_retry(self, job: DistributionJob):
-        """Schedule job retry"""
-        # Implementation would schedule retry
+        """Schedule job retry"""        # Implementation would schedule retry
         pass
 
     def _calculate_platform_breakdown(self, jobs: List[DistributionJob]) -> Dict[str, int]:
-        """Calculate platform breakdown"""
-        breakdown = {}
+        """Calculate platform breakdown"""        breakdown = {}
         for job in jobs:
             platform = job.platform.value
             breakdown[platform] = breakdown.get(platform, 0) + 1
         return breakdown
 
     def _calculate_success_rate_by_platform(self, jobs: List[DistributionJob]) -> Dict[str, float]:
-        """Calculate success rate by platform"""
-        platform_stats = {}
+        """Calculate success rate by platform"""        platform_stats = {}
         for job in jobs:
             platform = job.platform.value
             if platform not in platform_stats:
@@ -785,8 +736,7 @@ class DistributionRepository(BaseRepository):
         return success_rates
 
     def _calculate_average_processing_time(self, jobs: List[DistributionJob]) -> float:
-        """Calculate average processing time"""
-        processing_times = []
+        """Calculate average processing time"""        processing_times = []
         for job in jobs:
             if job.published_at:
                 processing_time = (job.published_at - job.created_at).total_seconds()
@@ -795,8 +745,7 @@ class DistributionRepository(BaseRepository):
         return sum(processing_times) / len(processing_times) if processing_times else 0
 
     def _analyze_distribution_errors(self, jobs: List[DistributionJob]) -> Dict[str, Any]:
-        """Analyze distribution errors"""
-        error_analysis = {'error_types': {}, 'platform_errors': {}}
+        """Analyze distribution errors"""        error_analysis = {'error_types': {}, 'platform_errors': {}}
         
         for job in jobs:
             if job.status == DistributionStatus.FAILED and job.error_log:
@@ -813,8 +762,7 @@ class DistributionRepository(BaseRepository):
         return error_analysis
 
     def _categorize_error(self, error: str) -> str:
-        """Categorize error type"""
-        error_lower = error.lower()
+        """Categorize error type"""        error_lower = error.lower()
         if 'api' in error_lower or 'rate limit' in error_lower:
             return 'api_error'
         elif 'format' in error_lower or 'size' in error_lower:
@@ -827,19 +775,16 @@ class DistributionRepository(BaseRepository):
             return 'unknown_error'
 
     def _calculate_performance_trends(self, jobs: List[DistributionJob]) -> Dict[str, Any]:
-        """Calculate performance trends"""
-        # Implementation would calculate trends
+        """Calculate performance trends"""        # Implementation would calculate trends
         return {}
 
     def _analyze_optimal_posting_times(self, jobs: List[DistributionJob]) -> Dict[str, Any]:
-        """Analyze optimal posting times"""
-        # Implementation would analyze posting times
+        """Analyze optimal posting times"""        # Implementation would analyze posting times
         return {}
 
 
 class AsyncDistributionRepository(AsyncBaseRepository):
-    """
-    Advanced asynchronous distribution repository for high-performance publishing
+    """    Advanced asynchronous distribution repository for high-performance publishing
     
     Features:
     - Concurrent multi-platform distribution
@@ -847,8 +792,7 @@ class AsyncDistributionRepository(AsyncBaseRepository):
     - Parallel job processing
     - Real-time status tracking
     - Batch operations for campaigns
-    """
-    
+    """    
     def __init__(self, db_connection=None, cache_manager=None, logger=None,
                  audit_service=None, metrics_collector=None, platform_apis=None,
                  content_adapter=None, scheduler_service=None, analytics_service=None):
@@ -865,8 +809,7 @@ class AsyncDistributionRepository(AsyncBaseRepository):
         )
 
     async def create(self, entity, **kwargs):
-        """Create distribution job asynchronously"""
-        await self._validate_entity(entity)
+        """Create distribution job asynchronously"""        await self._validate_entity(entity)
         
         # Validate platform capabilities
         if hasattr(entity, 'platform'):
@@ -898,8 +841,7 @@ class AsyncDistributionRepository(AsyncBaseRepository):
         return created_entity
 
     async def get_by_id(self, entity_id: str, use_cache: bool = True):
-        """Get distribution job by ID asynchronously"""
-        if use_cache and self._cache_enabled and self.cache:
+        """Get distribution job by ID asynchronously"""        if use_cache and self._cache_enabled and self.cache:
             cache_key = self._generate_cache_key("get_distribution_by_id", entity_id=entity_id)
             cached_result = await self.cache.get_async(cache_key)
             if cached_result:
@@ -915,8 +857,7 @@ class AsyncDistributionRepository(AsyncBaseRepository):
         return distribution_job
 
     async def update(self, entity, **kwargs):
-        """Update distribution job asynchronously"""
-        await self._validate_entity(entity)
+        """Update distribution job asynchronously"""        await self._validate_entity(entity)
         
         # Get current entity for audit
         current_entity = await self.get_by_id(getattr(entity, 'job_id', None), use_cache=False)
@@ -945,8 +886,7 @@ class AsyncDistributionRepository(AsyncBaseRepository):
         return updated_entity
 
     async def delete(self, entity_id: str, soft_delete: bool = False):
-        """Delete distribution job asynchronously"""
-        # Get entity for audit
+        """Delete distribution job asynchronously"""        # Get entity for audit
         entity = await self.get_by_id(entity_id, use_cache=False)
         if not entity:
             return False
@@ -976,8 +916,7 @@ class AsyncDistributionRepository(AsyncBaseRepository):
 
     async def list(self, filters: Dict[str, Any] = None, limit: int = 100, 
                   offset: int = 0, order_by: str = None):
-        """List distribution jobs with filters asynchronously"""
-        filters = filters or {}
+        """List distribution jobs with filters asynchronously"""        filters = filters or {}
         
         # Check cache for list results
         if self._cache_enabled and self.cache:
@@ -998,8 +937,7 @@ class AsyncDistributionRepository(AsyncBaseRepository):
     async def distribute_content_async(self, content_id: str, creator_id: str, 
                                      platforms: List[DistributionPlatform],
                                      schedule_config: Dict[str, Any] = None) -> List[DistributionJob]:
-        """Distribute content to multiple platforms asynchronously"""
-        try:
+        """Distribute content to multiple platforms asynchronously"""        try:
             # Prepare content for all platforms concurrently
             semaphore = asyncio.Semaphore(self._max_concurrent_operations)
             
@@ -1047,8 +985,7 @@ class AsyncDistributionRepository(AsyncBaseRepository):
             raise
 
     async def batch_publish_jobs(self, job_ids: List[str]) -> Dict[str, bool]:
-        """Publish multiple distribution jobs concurrently"""
-        try:
+        """Publish multiple distribution jobs concurrently"""        try:
             semaphore = asyncio.Semaphore(self._max_concurrent_operations)
             
             async def publish_job_with_semaphore(job_id):
@@ -1076,8 +1013,7 @@ class AsyncDistributionRepository(AsyncBaseRepository):
             raise
 
     async def publish_job_async(self, job_id: str) -> bool:
-        """Execute distribution job publishing asynchronously"""
-        try:
+        """Execute distribution job publishing asynchronously"""        try:
             # Get job details
             job = await self.get_by_id(job_id)
             if not job:
@@ -1136,48 +1072,39 @@ class AsyncDistributionRepository(AsyncBaseRepository):
     # Async versions of private methods
 
     async def _store_distribution_job_async(self, entity):
-        """Store distribution job in database asynchronously"""
-        # Implementation would store in database
+        """Store distribution job in database asynchronously"""        # Implementation would store in database
         return entity
 
     async def _schedule_distribution_job_async(self, job):
-        """Schedule distribution job asynchronously"""
-        # Implementation would schedule job
+        """Schedule distribution job asynchronously"""        # Implementation would schedule job
         pass
 
     async def _fetch_distribution_by_id_async(self, entity_id: str):
-        """Fetch distribution job by ID asynchronously"""
-        # Implementation would fetch from database
+        """Fetch distribution job by ID asynchronously"""        # Implementation would fetch from database
         return None
 
     async def _track_status_change_async(self, current_entity, new_entity):
-        """Track status changes asynchronously"""
-        # Implementation would track status changes
+        """Track status changes asynchronously"""        # Implementation would track status changes
         pass
 
     async def _update_distribution_job_async(self, entity):
-        """Update distribution job in database asynchronously"""
-        # Implementation would update database
+        """Update distribution job in database asynchronously"""        # Implementation would update database
         return entity
 
     async def _cancel_distribution_job_async(self, job_id: str):
-        """Cancel distribution job asynchronously"""
-        # Implementation would cancel job
+        """Cancel distribution job asynchronously"""        # Implementation would cancel job
         pass
 
     async def _delete_distribution_job_async(self, job_id: str, soft_delete: bool) -> bool:
-        """Delete distribution job asynchronously"""
-        # Implementation would delete from database
+        """Delete distribution job asynchronously"""        # Implementation would delete from database
         return True
 
     async def _fetch_distribution_list_async(self, filters, limit, offset, order_by):
-        """Fetch distribution jobs list asynchronously"""
-        # Implementation would fetch from database
+        """Fetch distribution jobs list asynchronously"""        # Implementation would fetch from database
         return []
 
     async def _prepare_content_for_platform_async(self, content_id: str, platform: DistributionPlatform) -> ContentVariant:
-        """Prepare content variant for specific platform asynchronously"""
-        # Implementation would adapt content for platform
+        """Prepare content variant for specific platform asynchronously"""        # Implementation would adapt content for platform
         return ContentVariant(
             platform=platform,
             format=ContentFormat.VIDEO,
@@ -1193,8 +1120,7 @@ class AsyncDistributionRepository(AsyncBaseRepository):
 
     async def _create_distribution_schedule_async(self, content_id: str, platform: DistributionPlatform, 
                                                 config: Dict[str, Any]) -> DistributionSchedule:
-        """Create distribution schedule asynchronously"""
-        # Implementation would create schedule
+        """Create distribution schedule asynchronously"""        # Implementation would create schedule
         return DistributionSchedule(
             schedule_id=self.sync_repo._generate_job_id(),
             content_id=content_id,
@@ -1210,6 +1136,5 @@ class AsyncDistributionRepository(AsyncBaseRepository):
         )
 
     async def _schedule_retry_async(self, job: DistributionJob):
-        """Schedule job retry asynchronously"""
-        # Implementation would schedule retry
+        """Schedule job retry asynchronously"""        # Implementation would schedule retry
         pass

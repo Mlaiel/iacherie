@@ -1,30 +1,24 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Mock-based Unit Tests for AI Engine Core
+"""Mock-based Unit Tests for AI Engine Core
 ========================================
 
 Mock-based tests for AI engine core that work without psutil dependencies.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Complete AI engine test coverage without external dependencies
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -34,8 +28,7 @@ import json
 from datetime import datetime, timedelta
 
 class MockAIModel:
-    """Mock AI model for testing"""
-    
+    """Mock AI model for testing"""    
     def __init__(self, model_name: str, model_type: str = "classification"):
         self.model_name = model_name
         self.model_type = model_type
@@ -44,17 +37,14 @@ class MockAIModel:
         self.training_history = []
     
     async def load(self):
-        """Load model"""
-        self.is_loaded = True
+        """Load model"""        self.is_loaded = True
         return True
     
     async def unload(self):
-        """Unload model"""
-        self.is_loaded = False
+        """Unload model"""        self.is_loaded = False
     
     async def predict(self, input_data: Any) -> Dict:
-        """Make prediction"""
-        if not self.is_loaded:
+        """Make prediction"""        if not self.is_loaded:
             raise Exception("Model not loaded")
         
         self.inference_count += 1
@@ -84,8 +74,7 @@ class MockAIModel:
         return {"prediction": "unknown"}
     
     async def train(self, training_data: List, epochs: int = 1):
-        """Train model"""
-        training_session = {
+        """Train model"""        training_session = {
             "started_at": datetime.now(),
             "data_size": len(training_data),
             "epochs": epochs,
@@ -97,8 +86,7 @@ class MockAIModel:
 
 
 class MockAIOrchestrator:
-    """Mock AI orchestrator for managing multiple models"""
-    
+    """Mock AI orchestrator for managing multiple models"""    
     def __init__(self):
         self.models = {}
         self.inference_queue = []
@@ -109,19 +97,16 @@ class MockAIOrchestrator:
         }
     
     async def register_model(self, model_id: str, model: MockAIModel):
-        """Register AI model"""
-        self.models[model_id] = model
+        """Register AI model"""        self.models[model_id] = model
         await model.load()
     
     async def unregister_model(self, model_id: str):
-        """Unregister AI model"""
-        if model_id in self.models:
+        """Unregister AI model"""        if model_id in self.models:
             await self.models[model_id].unload()
             del self.models[model_id]
     
     async def inference(self, model_id: str, input_data: Any) -> Dict:
-        """Perform inference using specified model"""
-        if model_id not in self.models:
+        """Perform inference using specified model"""        if model_id not in self.models:
             raise ValueError(f"Model {model_id} not found")
         
         start_time = datetime.now()
@@ -142,16 +127,14 @@ class MockAIOrchestrator:
         return result
     
     async def batch_inference(self, model_id: str, batch_data: List) -> List[Dict]:
-        """Perform batch inference"""
-        results = []
+        """Perform batch inference"""        results = []
         for data in batch_data:
             result = await self.inference(model_id, data)
             results.append(result)
         return results
     
     def get_model_status(self, model_id: str) -> Dict:
-        """Get model status"""
-        if model_id not in self.models:
+        """Get model status"""        if model_id not in self.models:
             return {"status": "not_found"}
         
         model = self.models[model_id]
@@ -165,20 +148,17 @@ class MockAIOrchestrator:
         }
     
     def get_performance_metrics(self) -> Dict:
-        """Get orchestrator performance metrics"""
-        return self.performance_metrics.copy()
+        """Get orchestrator performance metrics"""        return self.performance_metrics.copy()
 
 
 class MockPersonalizationEngine:
-    """Mock personalization engine"""
-    
+    """Mock personalization engine"""    
     def __init__(self):
         self.user_profiles = {}
         self.recommendation_cache = {}
     
     async def create_user_profile(self, user_id: str, preferences: Dict) -> Dict:
-        """Create user profile"""
-        profile = {
+        """Create user profile"""        profile = {
             "user_id": user_id,
             "preferences": preferences,
             "created_at": datetime.now().isoformat(),
@@ -190,14 +170,12 @@ class MockPersonalizationEngine:
         return profile
     
     async def update_user_preferences(self, user_id: str, new_preferences: Dict):
-        """Update user preferences"""
-        if user_id in self.user_profiles:
+        """Update user preferences"""        if user_id in self.user_profiles:
             self.user_profiles[user_id]["preferences"].update(new_preferences)
             self.user_profiles[user_id]["interaction_count"] += 1
     
     async def generate_recommendations(self, user_id: str, content_type: str = "general") -> List[Dict]:
-        """Generate personalized recommendations"""
-        if user_id not in self.user_profiles:
+        """Generate personalized recommendations"""        if user_id not in self.user_profiles:
             # Default recommendations for unknown users
             return [
                 {"content_id": "default_1", "score": 0.5, "type": content_type},
@@ -229,8 +207,7 @@ class MockPersonalizationEngine:
 
 @pytest.mark.asyncio
 class TestAIModels:
-    """Test AI model functionality"""
-    
+    """Test AI model functionality"""    
     @pytest.fixture
     def classification_model(self):
         return MockAIModel("content_classifier", "classification")
@@ -244,8 +221,7 @@ class TestAIModels:
         return MockAIModel("content_embedder", "embedding")
     
     async def test_model_loading(self, classification_model):
-        """Test model loading and unloading"""
-        assert not classification_model.is_loaded
+        """Test model loading and unloading"""        assert not classification_model.is_loaded
         
         success = await classification_model.load()
         assert success
@@ -255,8 +231,7 @@ class TestAIModels:
         assert not classification_model.is_loaded
     
     async def test_classification_prediction(self, classification_model):
-        """Test classification model prediction"""
-        await classification_model.load()
+        """Test classification model prediction"""        await classification_model.load()
         
         result = await classification_model.predict("test input")
         
@@ -267,8 +242,7 @@ class TestAIModels:
         assert result["confidence"] > 0 and result["confidence"] <= 1
     
     async def test_regression_prediction(self, regression_model):
-        """Test regression model prediction"""
-        await regression_model.load()
+        """Test regression model prediction"""        await regression_model.load()
         
         result = await regression_model.predict([1, 2, 3, 4, 5])
         
@@ -277,8 +251,7 @@ class TestAIModels:
         assert isinstance(result["prediction"], (int, float))
     
     async def test_embedding_generation(self, embedding_model):
-        """Test embedding model"""
-        await embedding_model.load()
+        """Test embedding model"""        await embedding_model.load()
         
         result = await embedding_model.predict("text to embed")
         
@@ -288,8 +261,7 @@ class TestAIModels:
         assert len(result["embedding"]) == result["dimension"]
     
     async def test_model_training(self, classification_model):
-        """Test model training"""
-        training_data = [
+        """Test model training"""        training_data = [
             {"input": "text1", "label": "category_a"},
             {"input": "text2", "label": "category_b"},
             {"input": "text3", "label": "category_a"}
@@ -304,8 +276,7 @@ class TestAIModels:
         assert len(classification_model.training_history) == 1
     
     async def test_inference_counting(self, classification_model):
-        """Test inference counting"""
-        await classification_model.load()
+        """Test inference counting"""        await classification_model.load()
         
         initial_count = classification_model.inference_count
         
@@ -317,8 +288,7 @@ class TestAIModels:
 
 @pytest.mark.asyncio
 class TestAIOrchestrator:
-    """Test AI orchestrator functionality"""
-    
+    """Test AI orchestrator functionality"""    
     @pytest.fixture
     def orchestrator(self):
         return MockAIOrchestrator()
@@ -332,8 +302,7 @@ class TestAIOrchestrator:
         }
     
     async def test_model_registration(self, orchestrator, sample_models):
-        """Test model registration and management"""
-        # Register models
+        """Test model registration and management"""        # Register models
         for model_id, model in sample_models.items():
             await orchestrator.register_model(model_id, model)
         
@@ -344,8 +313,7 @@ class TestAIOrchestrator:
             assert orchestrator.models[model_id].is_loaded
     
     async def test_model_unregistration(self, orchestrator, sample_models):
-        """Test model unregistration"""
-        # Register and then unregister
+        """Test model unregistration"""        # Register and then unregister
         await orchestrator.register_model("test_model", sample_models["classifier"])
         assert "test_model" in orchestrator.models
         
@@ -353,8 +321,7 @@ class TestAIOrchestrator:
         assert "test_model" not in orchestrator.models
     
     async def test_inference_execution(self, orchestrator, sample_models):
-        """Test inference execution through orchestrator"""
-        await orchestrator.register_model("classifier", sample_models["classifier"])
+        """Test inference execution through orchestrator"""        await orchestrator.register_model("classifier", sample_models["classifier"])
         
         result = await orchestrator.inference("classifier", "test input")
         
@@ -363,8 +330,7 @@ class TestAIOrchestrator:
         assert len(orchestrator.inference_queue) == 1
     
     async def test_batch_inference(self, orchestrator, sample_models):
-        """Test batch inference"""
-        await orchestrator.register_model("classifier", sample_models["classifier"])
+        """Test batch inference"""        await orchestrator.register_model("classifier", sample_models["classifier"])
         
         batch_data = ["input1", "input2", "input3"]
         results = await orchestrator.batch_inference("classifier", batch_data)
@@ -374,8 +340,7 @@ class TestAIOrchestrator:
         assert orchestrator.performance_metrics["total_inferences"] == 3
     
     async def test_model_status_retrieval(self, orchestrator, sample_models):
-        """Test model status retrieval"""
-        await orchestrator.register_model("test_model", sample_models["classifier"])
+        """Test model status retrieval"""        await orchestrator.register_model("test_model", sample_models["classifier"])
         
         status = orchestrator.get_model_status("test_model")
         
@@ -385,8 +350,7 @@ class TestAIOrchestrator:
         assert "inference_count" in status
     
     async def test_performance_metrics(self, orchestrator, sample_models):
-        """Test performance metrics tracking"""
-        await orchestrator.register_model("classifier", sample_models["classifier"])
+        """Test performance metrics tracking"""        await orchestrator.register_model("classifier", sample_models["classifier"])
         
         # Perform some inferences
         await orchestrator.inference("classifier", "test1")
@@ -401,15 +365,13 @@ class TestAIOrchestrator:
 
 @pytest.mark.asyncio
 class TestPersonalizationEngine:
-    """Test personalization engine functionality"""
-    
+    """Test personalization engine functionality"""    
     @pytest.fixture
     def personalization_engine(self):
         return MockPersonalizationEngine()
     
     async def test_user_profile_creation(self, personalization_engine):
-        """Test user profile creation"""
-        user_id = "user_123"
+        """Test user profile creation"""        user_id = "user_123"
         preferences = {
             "genre": "rock",
             "language": "english",
@@ -425,8 +387,7 @@ class TestPersonalizationEngine:
         assert user_id in personalization_engine.user_profiles
     
     async def test_preference_updates(self, personalization_engine):
-        """Test user preference updates"""
-        user_id = "user_123"
+        """Test user preference updates"""        user_id = "user_123"
         initial_prefs = {"genre": "rock"}
         
         await personalization_engine.create_user_profile(user_id, initial_prefs)
@@ -440,8 +401,7 @@ class TestPersonalizationEngine:
         assert profile["interaction_count"] == 1
     
     async def test_personalized_recommendations(self, personalization_engine):
-        """Test personalized recommendation generation"""
-        user_id = "user_123"
+        """Test personalized recommendation generation"""        user_id = "user_123"
         preferences = {"genre": "jazz", "mood": "relaxed"}
         
         await personalization_engine.create_user_profile(user_id, preferences)
@@ -459,16 +419,14 @@ class TestPersonalizationEngine:
         assert scores == sorted(scores, reverse=True)
     
     async def test_default_recommendations(self, personalization_engine):
-        """Test default recommendations for unknown users"""
-        recommendations = await personalization_engine.generate_recommendations("unknown_user", "video")
+        """Test default recommendations for unknown users"""        recommendations = await personalization_engine.generate_recommendations("unknown_user", "video")
         
         assert len(recommendations) == 2  # Default count
         assert all(rec["type"] == "video" for rec in recommendations)
         assert all("content_id" in rec for rec in recommendations)
     
     async def test_recommendation_caching(self, personalization_engine):
-        """Test recommendation caching"""
-        user_id = "user_123"
+        """Test recommendation caching"""        user_id = "user_123"
         await personalization_engine.create_user_profile(user_id, {"genre": "pop"})
         
         await personalization_engine.generate_recommendations(user_id, "music")
@@ -481,12 +439,10 @@ class TestPersonalizationEngine:
 
 
 class TestAIEngineIntegration:
-    """Test AI engine integration scenarios"""
-    
+    """Test AI engine integration scenarios"""    
     @pytest.mark.asyncio
     async def test_complete_ai_workflow(self):
-        """Test complete AI workflow from orchestration to personalization"""
-        # Setup components
+        """Test complete AI workflow from orchestration to personalization"""        # Setup components
         orchestrator = MockAIOrchestrator()
         personalization = MockPersonalizationEngine()
         
@@ -520,8 +476,7 @@ class TestAIEngineIntegration:
 
 
 def test_ai_engine_coverage():
-    """Test that all essential AI engine functionality is covered"""
-    
+    """Test that all essential AI engine functionality is covered"""    
     # Test model coverage
     model = MockAIModel("test_model", "classification")
     required_model_methods = ['load', 'unload', 'predict', 'train']

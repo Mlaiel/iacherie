@@ -1,12 +1,9 @@
-"""
-Cache Monitoring for IA Influencer Agent Platform
+"""Cache Monitoring for IA Influencer Agent Platform
 Advanced monitoring, alerting, and observability for cache systems
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import time
@@ -23,23 +20,20 @@ import traceback
 logger = logging.getLogger(__name__)
 
 class AlertLevel(Enum):
-    """Alert severity levels"""
-    INFO = "info"
+    """Alert severity levels"""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
 
 class MetricType(Enum):
-    """Types of metrics"""
-    COUNTER = "counter"
+    """Types of metrics"""    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     TIMER = "timer"
     RATE = "rate"
 
 class MonitoringEvent(Enum):
-    """Cache monitoring events"""
-    CACHE_HIT = "cache_hit"
+    """Cache monitoring events"""    CACHE_HIT = "cache_hit"
     CACHE_MISS = "cache_miss"
     CACHE_EVICTION = "cache_eviction"
     CACHE_ERROR = "cache_error"
@@ -50,8 +44,7 @@ class MonitoringEvent(Enum):
 
 @dataclass
 class MetricValue:
-    """Single metric value with timestamp"""
-    value: float
+    """Single metric value with timestamp"""    value: float
     timestamp: datetime
     labels: Dict[str, str] = None
     
@@ -61,8 +54,7 @@ class MetricValue:
 
 @dataclass
 class Alert:
-    """Cache alert information"""
-    id: str
+    """Cache alert information"""    id: str
     level: AlertLevel
     title: str
     message: str
@@ -75,8 +67,7 @@ class Alert:
     resolved_at: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization"""
-        data = asdict(self)
+        """Convert to dictionary for serialization"""        data = asdict(self)
         data['timestamp'] = self.timestamp.isoformat()
         if self.resolved_at:
             data['resolved_at'] = self.resolved_at.isoformat()
@@ -85,8 +76,7 @@ class Alert:
 
 @dataclass
 class CacheHealthStatus:
-    """Overall cache health status"""
-    cache_name: str
+    """Overall cache health status"""    cache_name: str
     status: str  # healthy, warning, error, critical
     hit_rate: float
     memory_utilization: float
@@ -98,8 +88,7 @@ class CacheHealthStatus:
     recommendations: List[str]
 
 class MetricCollector:
-    """Collect and store cache metrics"""
-    
+    """Collect and store cache metrics"""    
     def __init__(self, retention_hours: int = 24):
         self.retention_hours = retention_hours
         self.metrics = defaultdict(lambda: deque(maxlen=10000))  # Store up to 10k data points per metric
@@ -114,8 +103,7 @@ class MetricCollector:
                      metric_type: MetricType = MetricType.GAUGE,
                      labels: Optional[Dict[str, str]] = None,
                      timestamp: Optional[datetime] = None):
-        """Record a metric value"""
-        
+        """Record a metric value"""        
         if timestamp is None:
             timestamp = datetime.utcnow()
         
@@ -137,16 +125,14 @@ class MetricCollector:
             self._cleanup_old_metrics()
     
     def _generate_metric_key(self, name: str, labels: Optional[Dict[str, str]]) -> str:
-        """Generate unique key for metric with labels"""
-        if not labels:
+        """Generate unique key for metric with labels"""        if not labels:
             return name
         
         label_parts = [f"{k}={v}" for k, v in sorted(labels.items())]
         return f"{name}:{':'.join(label_parts)}"
     
     def _cleanup_old_metrics(self):
-        """Remove old metric values"""
-        cutoff_time = datetime.utcnow() - timedelta(hours=self.retention_hours)
+        """Remove old metric values"""        cutoff_time = datetime.utcnow() - timedelta(hours=self.retention_hours)
         
         for metric_key in list(self.metrics.keys()):
             metric_values = self.metrics[metric_key]
@@ -166,8 +152,7 @@ class MetricCollector:
                          labels: Optional[Dict[str, str]] = None,
                          start_time: Optional[datetime] = None,
                          end_time: Optional[datetime] = None) -> List[MetricValue]:
-        """Get metric values for time range"""
-        
+        """Get metric values for time range"""        
         metric_key = self._generate_metric_key(name, labels)
         
         with self.lock:
@@ -190,8 +175,7 @@ class MetricCollector:
             return values
     
     def get_latest_value(self, name: str, labels: Optional[Dict[str, str]] = None) -> Optional[MetricValue]:
-        """Get latest value for metric"""
-        metric_key = self._generate_metric_key(name, labels)
+        """Get latest value for metric"""        metric_key = self._generate_metric_key(name, labels)
         
         with self.lock:
             if metric_key not in self.metrics or not self.metrics[metric_key]:
@@ -203,8 +187,7 @@ class MetricCollector:
                             name: str,
                             labels: Optional[Dict[str, str]] = None,
                             window_minutes: int = 60) -> Dict[str, float]:
-        """Get statistical summary for metric"""
-        
+        """Get statistical summary for metric"""        
         end_time = datetime.utcnow()
         start_time = end_time - timedelta(minutes=window_minutes)
         
@@ -227,8 +210,7 @@ class MetricCollector:
         }
     
     def _percentile(self, values: List[float], percentile: float) -> float:
-        """Calculate percentile"""
-        if not values:
+        """Calculate percentile"""        if not values:
             return 0.0
         
         sorted_values = sorted(values)
@@ -242,8 +224,7 @@ class MetricCollector:
             return lower + (upper - lower) * (index - int(index))
 
 class AlertManager:
-    """Manage cache alerts and notifications"""
-    
+    """Manage cache alerts and notifications"""    
     def __init__(self):
         self.alerts = {}  # alert_id -> Alert
         self.alert_rules = {}  # rule_name -> rule_config
@@ -254,8 +235,7 @@ class AlertManager:
         self._setup_default_rules()
     
     def _setup_default_rules(self):
-        """Setup default alerting rules"""
-        
+        """Setup default alerting rules"""        
         self.add_alert_rule(
             name="low_hit_rate",
             metric_name="cache_hit_rate",
@@ -310,8 +290,7 @@ class AlertManager:
                       title: str = "",
                       message_template: str = "",
                       labels: Optional[Dict[str, str]] = None):
-        """Add alert rule"""
-        
+        """Add alert rule"""        
         rule = {
             'name': name,
             'metric_name': metric_name,
@@ -329,18 +308,15 @@ class AlertManager:
             self.alert_rules[name] = rule
     
     def remove_alert_rule(self, name: str):
-        """Remove alert rule"""
-        with self.lock:
+        """Remove alert rule"""        with self.lock:
             if name in self.alert_rules:
                 del self.alert_rules[name]
     
     def add_alert_handler(self, handler: Callable[[Alert], None]):
-        """Add alert handler function"""
-        self.alert_handlers.append(handler)
+        """Add alert handler function"""        self.alert_handlers.append(handler)
     
     def check_alerts(self, metric_collector: MetricCollector, cache_name: str):
-        """Check all alert rules against current metrics"""
-        
+        """Check all alert rules against current metrics"""        
         with self.lock:
             for rule_name, rule in self.alert_rules.items():
                 if not rule.get('enabled', True):
@@ -352,8 +328,7 @@ class AlertManager:
                     logger.error(f"Error checking alert rule {rule_name}: {e}")
     
     def _check_rule(self, rule: Dict[str, Any], metric_collector: MetricCollector, cache_name: str):
-        """Check single alert rule"""
-        
+        """Check single alert rule"""        
         # Get metric statistics for window
         stats = metric_collector.get_metric_statistics(
             rule['metric_name'],
@@ -420,8 +395,7 @@ class AlertManager:
                 self.alerts[alert_id].resolved_at = datetime.utcnow()
     
     def get_active_alerts(self, cache_name: Optional[str] = None) -> List[Alert]:
-        """Get active alerts"""
-        with self.lock:
+        """Get active alerts"""        with self.lock:
             alerts = [alert for alert in self.alerts.values() if not alert.resolved]
             
             if cache_name:
@@ -432,8 +406,7 @@ class AlertManager:
     def get_alert_history(self,
                          cache_name: Optional[str] = None,
                          hours: int = 24) -> List[Alert]:
-        """Get alert history"""
-        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
+        """Get alert history"""        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
         
         with self.lock:
             alerts = [
@@ -447,8 +420,7 @@ class AlertManager:
             return sorted(alerts, key=lambda a: a.timestamp, reverse=True)
 
 class CacheMonitor:
-    """Main cache monitoring class"""
-    
+    """Main cache monitoring class"""    
     def __init__(self, monitoring_interval: int = 30):
         self.monitoring_interval = monitoring_interval
         self.metric_collector = MetricCollector()
@@ -465,13 +437,11 @@ class CacheMonitor:
         logger.info("CacheMonitor initialized")
     
     def register_cache(self, name: str, cache_instance):
-        """Register cache for monitoring"""
-        self.cache_instances[name] = cache_instance
+        """Register cache for monitoring"""        self.cache_instances[name] = cache_instance
         logger.info(f"Registered cache '{name}' for monitoring")
     
     def start_monitoring(self, cache_name: str):
-        """Start monitoring for specific cache"""
-        if cache_name not in self.cache_instances:
+        """Start monitoring for specific cache"""        if cache_name not in self.cache_instances:
             logger.error(f"Cache '{cache_name}' not registered")
             return
         
@@ -481,15 +451,13 @@ class CacheMonitor:
         logger.info(f"Started monitoring for cache '{cache_name}'")
     
     def stop_monitoring(self, cache_name: str):
-        """Stop monitoring for specific cache"""
-        if cache_name in self.monitoring_tasks:
+        """Stop monitoring for specific cache"""        if cache_name in self.monitoring_tasks:
             self.monitoring_tasks[cache_name].cancel()
             del self.monitoring_tasks[cache_name]
             logger.info(f"Stopped monitoring for cache '{cache_name}'")
     
     async def _monitoring_loop(self, cache_name: str):
-        """Main monitoring loop for cache"""
-        try:
+        """Main monitoring loop for cache"""        try:
             while True:
                 await self._collect_cache_metrics(cache_name)
                 await self._collect_system_metrics()
@@ -501,8 +469,7 @@ class CacheMonitor:
             logger.error(f"Monitoring error for cache '{cache_name}': {e}")
     
     async def _collect_cache_metrics(self, cache_name: str):
-        """Collect metrics from cache instance"""
-        cache = self.cache_instances[cache_name]
+        """Collect metrics from cache instance"""        cache = self.cache_instances[cache_name]
         
         try:
             # Get cache statistics
@@ -551,8 +518,7 @@ class CacheMonitor:
             self.metric_collector.record_metric('monitoring_errors', 1, MetricType.COUNTER, labels)
     
     async def _collect_system_metrics(self):
-        """Collect system-level metrics"""
-        if not self.system_metrics_enabled:
+        """Collect system-level metrics"""        if not self.system_metrics_enabled:
             return
         
         try:
@@ -578,8 +544,7 @@ class CacheMonitor:
             logger.error(f"Failed to collect system metrics: {e}")
     
     def _log_alert(self, alert: Alert):
-        """Default alert handler - log to logger"""
-        log_level = {
+        """Default alert handler - log to logger"""        log_level = {
             AlertLevel.INFO: logging.INFO,
             AlertLevel.WARNING: logging.WARNING,
             AlertLevel.ERROR: logging.ERROR,
@@ -589,8 +554,7 @@ class CacheMonitor:
         logger.log(log_level, f"ALERT [{alert.level.value.upper()}] {alert.title}: {alert.message}")
     
     def get_cache_health(self, cache_name: str) -> CacheHealthStatus:
-        """Get overall health status for cache"""
-        
+        """Get overall health status for cache"""        
         # Get recent metrics
         hit_rate_stats = self.metric_collector.get_metric_statistics(
             'cache_hit_rate', {'cache': cache_name}, 15
@@ -676,8 +640,7 @@ class CacheMonitor:
         )
     
     def get_monitoring_dashboard_data(self, cache_name: str) -> Dict[str, Any]:
-        """Get data for monitoring dashboard"""
-        
+        """Get data for monitoring dashboard"""        
         health = self.get_cache_health(cache_name)
         active_alerts = self.alert_manager.get_active_alerts(cache_name)
         recent_alerts = self.alert_manager.get_alert_history(cache_name, hours=6)
@@ -715,8 +678,7 @@ class CacheMonitor:
         }
     
     def export_metrics_prometheus(self) -> str:
-        """Export metrics in Prometheus format"""
-        lines = []
+        """Export metrics in Prometheus format"""        lines = []
         
         # Export all metrics
         for metric_key, values in self.metric_collector.metrics.items():
@@ -739,8 +701,7 @@ class CacheMonitor:
         return '\n'.join(lines)
     
     async def cleanup(self):
-        """Cleanup monitoring resources"""
-        # Cancel all monitoring tasks
+        """Cleanup monitoring resources"""        # Cancel all monitoring tasks
         for task in self.monitoring_tasks.values():
             task.cancel()
         

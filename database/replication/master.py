@@ -1,5 +1,4 @@
-"""
-Replication Master Orchestrator - IA Influencer Agent Platform
+"""Replication Master Orchestrator - IA Influencer Agent Platform
 
 Central orchestrator for all database replication activities across the content creator ecosystem.
 Manages PostgreSQL, Redis, MongoDB, Elasticsearch, and Vector store replication with automated
@@ -14,9 +13,7 @@ This module coordinates:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Set
 from dataclasses import dataclass, field
@@ -35,16 +32,14 @@ from .utils import ReplicationUtils
 
 
 class ReplicationMode(Enum):
-    """Replication operational modes"""
-    MASTER_SLAVE = "master_slave"
+    """Replication operational modes"""    MASTER_SLAVE = "master_slave"
     MASTER_MASTER = "master_master"
     CLUSTER = "cluster"
     HYBRID = "hybrid"
 
 
 class ReplicationStatus(Enum):
-    """Replication system status"""
-    INITIALIZING = "initializing"
+    """Replication system status"""    INITIALIZING = "initializing"
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     FAILING = "failing"
@@ -54,8 +49,7 @@ class ReplicationStatus(Enum):
 
 @dataclass
 class ReplicationTopology:
-    """Replication topology configuration"""
-    primary_region: str
+    """Replication topology configuration"""    primary_region: str
     secondary_regions: List[str]
     database_configs: Dict[str, Any]
     failover_policies: Dict[str, Any]
@@ -64,17 +58,14 @@ class ReplicationTopology:
 
 
 class ReplicationMaster:
-    """
-    Master orchestrator for enterprise database replication.
+    """    Master orchestrator for enterprise database replication.
     
     Coordinates all replication activities across multiple database systems,
     providing high availability, disaster recovery, and performance optimization
     for the IA Influencer Agent platform serving content creators globally.
-    """
-    
+    """    
     def __init__(self, config: ReplicationConfig):
-        """Initialize replication master with comprehensive configuration"""
-        self.config = config
+        """Initialize replication master with comprehensive configuration"""        self.config = config
         self.logger = logging.getLogger(f"{__name__}.ReplicationMaster")
         
         # Core components
@@ -101,13 +92,11 @@ class ReplicationMaster:
         self.logger.info("ReplicationMaster initialized successfully")
     
     async def initialize(self) -> bool:
-        """
-        Initialize the complete replication infrastructure.
+        """        Initialize the complete replication infrastructure.
         
         Returns:
             bool: True if initialization successful, False otherwise
-        """
-        try:
+        """        try:
             self.logger.info("Initializing replication master infrastructure...")
             self.start_time = datetime.utcnow()
             
@@ -136,8 +125,7 @@ class ReplicationMaster:
             return False
     
     async def _initialize_components(self) -> None:
-        """Initialize all replication components"""
-        components = [
+        """Initialize all replication components"""        components = [
             ("Manager", self.manager.initialize()),
             ("Coordinator", self.coordinator.initialize()),
             ("Topology Manager", self.topology_manager.initialize()),
@@ -155,8 +143,7 @@ class ReplicationMaster:
                 raise
     
     async def _setup_topology(self) -> None:
-        """Setup replication topology based on configuration"""
-        self.logger.info("Setting up replication topology...")
+        """Setup replication topology based on configuration"""        self.logger.info("Setting up replication topology...")
         
         # Extract topology configuration
         topology_config = self.config.get_topology_config()
@@ -176,8 +163,7 @@ class ReplicationMaster:
                         f"Secondaries={self.topology.secondary_regions}")
     
     async def _start_monitoring(self) -> None:
-        """Start comprehensive health monitoring"""
-        self.logger.info("Starting replication health monitoring...")
+        """Start comprehensive health monitoring"""        self.logger.info("Starting replication health monitoring...")
         
         # Start health monitoring for all components
         monitoring_tasks = [
@@ -193,8 +179,7 @@ class ReplicationMaster:
         self.logger.info("Health monitoring started successfully")
     
     async def _validate_initial_state(self) -> bool:
-        """Validate initial replication state"""
-        self.logger.info("Validating initial replication state...")
+        """Validate initial replication state"""        self.logger.info("Validating initial replication state...")
         
         try:
             # Check all database connections
@@ -218,8 +203,7 @@ class ReplicationMaster:
             return False
     
     async def start_replication(self, database_type: str, mode: ReplicationMode = None) -> bool:
-        """
-        Start replication for specified database type.
+        """        Start replication for specified database type.
         
         Args:
             database_type: Type of database (postgresql, redis, mongodb, etc.)
@@ -227,8 +211,7 @@ class ReplicationMaster:
             
         Returns:
             bool: True if replication started successfully
-        """
-        try:
+        """        try:
             self.logger.info(f"Starting replication for {database_type}")
             
             # Get database-specific configuration
@@ -256,8 +239,7 @@ class ReplicationMaster:
             return False
     
     async def stop_replication(self, database_type: str, graceful: bool = True) -> bool:
-        """
-        Stop replication for specified database type.
+        """        Stop replication for specified database type.
         
         Args:
             database_type: Type of database to stop replication
@@ -265,8 +247,7 @@ class ReplicationMaster:
             
         Returns:
             bool: True if replication stopped successfully
-        """
-        try:
+        """        try:
             self.logger.info(f"Stopping replication for {database_type} (graceful={graceful})")
             
             # Stop replication through manager
@@ -285,8 +266,7 @@ class ReplicationMaster:
             return False
     
     async def failover_database(self, database_type: str, target_region: str = None) -> bool:
-        """
-        Perform database failover to secondary region.
+        """        Perform database failover to secondary region.
         
         Args:
             database_type: Database to failover
@@ -294,8 +274,7 @@ class ReplicationMaster:
             
         Returns:
             bool: True if failover successful
-        """
-        try:
+        """        try:
             self.logger.warning(f"Initiating failover for {database_type} to {target_region}")
             self.status = ReplicationStatus.DISASTER_RECOVERY
             
@@ -321,8 +300,7 @@ class ReplicationMaster:
             return False
     
     async def _update_topology_after_failover(self, database_type: str, new_primary_region: str) -> None:
-        """Update topology configuration after successful failover"""
-        if self.topology and new_primary_region:
+        """Update topology configuration after successful failover"""        if self.topology and new_primary_region:
             # Update topology to reflect new primary
             await self.topology_manager.update_primary_region(database_type, new_primary_region)
             
@@ -332,8 +310,7 @@ class ReplicationMaster:
             self.logger.info(f"Topology updated after failover: {database_type} -> {new_primary_region}")
     
     async def _periodic_health_check(self) -> None:
-        """Periodic health check routine"""
-        while True:
+        """Periodic health check routine"""        while True:
             try:
                 await asyncio.sleep(self.config.health_check_interval)
                 
@@ -356,20 +333,17 @@ class ReplicationMaster:
                 self.logger.error(f"Error in periodic health check: {e}")
     
     async def _check_failover_conditions(self, health_status: Dict[str, Any]) -> None:
-        """Check if automatic failover conditions are met"""
-        for db_type, status in health_status.items():
+        """Check if automatic failover conditions are met"""        for db_type, status in health_status.items():
             if status.get("requires_failover", False):
                 self.logger.warning(f"Automatic failover triggered for {db_type}")
                 await self.failover_database(db_type)
     
     async def get_replication_status(self) -> Dict[str, Any]:
-        """
-        Get comprehensive replication status.
+        """        Get comprehensive replication status.
         
         Returns:
             Dict containing detailed status information
-        """
-        return {
+        """        return {
             "master_status": self.status.value,
             "uptime": (datetime.utcnow() - self.start_time).total_seconds() if self.start_time else 0,
             "active_replications": list(self.active_replications),
@@ -384,8 +358,7 @@ class ReplicationMaster:
         }
     
     async def enter_maintenance_mode(self, database_type: str, duration: timedelta) -> bool:
-        """
-        Enter maintenance mode for specified database.
+        """        Enter maintenance mode for specified database.
         
         Args:
             database_type: Database to put in maintenance mode
@@ -393,8 +366,7 @@ class ReplicationMaster:
             
         Returns:
             bool: True if maintenance mode entered successfully
-        """
-        try:
+        """        try:
             self.logger.info(f"Entering maintenance mode for {database_type} (duration: {duration})")
             self.status = ReplicationStatus.MAINTENANCE
             
@@ -424,16 +396,14 @@ class ReplicationMaster:
             return False
     
     async def exit_maintenance_mode(self, database_type: str) -> bool:
-        """
-        Exit maintenance mode for specified database.
+        """        Exit maintenance mode for specified database.
         
         Args:
             database_type: Database to exit maintenance mode
             
         Returns:
             bool: True if maintenance mode exited successfully
-        """
-        try:
+        """        try:
             self.logger.info(f"Exiting maintenance mode for {database_type}")
             
             # Exit maintenance through manager
@@ -462,27 +432,23 @@ class ReplicationMaster:
     
     @asynccontextmanager
     async def maintenance_context(self, database_type: str, duration: timedelta):
-        """
-        Context manager for maintenance operations.
+        """        Context manager for maintenance operations.
         
         Args:
             database_type: Database to maintain
             duration: Expected maintenance duration
-        """
-        try:
+        """        try:
             await self.enter_maintenance_mode(database_type, duration)
             yield
         finally:
             await self.exit_maintenance_mode(database_type)
     
     async def shutdown(self, graceful: bool = True) -> None:
-        """
-        Shutdown replication master and all components.
+        """        Shutdown replication master and all components.
         
         Args:
             graceful: Whether to perform graceful shutdown
-        """
-        try:
+        """        try:
             self.logger.info(f"Shutting down replication master (graceful={graceful})")
             
             # Stop all active replications

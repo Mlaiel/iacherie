@@ -1,5 +1,4 @@
-"""
-Advanced Real-Time Alerts System
+"""Advanced Real-Time Alerts System
 
 Enterprise-grade intelligent alerting system for IA Influencer Agent platform.
 Provides real-time monitoring, anomaly detection, and automated response capabilities.
@@ -8,9 +7,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
-"""
-
-import asyncio
+"""import asyncio
 import time
 import json
 from typing import Dict, Any, List, Optional, Callable, Union, Set
@@ -37,8 +34,7 @@ logger = logging.getLogger(__name__)
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
-    INFO = "info"
+    """Alert severity levels"""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
@@ -46,8 +42,7 @@ class AlertSeverity(Enum):
 
 
 class AlertCategory(Enum):
-    """Alert category classifications"""
-    PERFORMANCE = "performance"
+    """Alert category classifications"""    PERFORMANCE = "performance"
     SECURITY = "security"
     BUSINESS = "business"
     SYSTEM = "system"
@@ -58,8 +53,7 @@ class AlertCategory(Enum):
 
 
 class AlertChannel(Enum):
-    """Alert delivery channels"""
-    EMAIL = "email"
+    """Alert delivery channels"""    EMAIL = "email"
     SLACK = "slack"
     WEBHOOK = "webhook"
     SMS = "sms"
@@ -69,8 +63,7 @@ class AlertChannel(Enum):
 
 
 class AlertStatus(Enum):
-    """Alert status states"""
-    TRIGGERED = "triggered"
+    """Alert status states"""    TRIGGERED = "triggered"
     ACKNOWLEDGED = "acknowledged"
     INVESTIGATING = "investigating"
     RESOLVED = "resolved"
@@ -80,8 +73,7 @@ class AlertStatus(Enum):
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration"""
-    rule_id: str
+    """Alert rule configuration"""    rule_id: str
     name: str
     description: str
     category: AlertCategory
@@ -102,8 +94,7 @@ class AlertRule:
 
 @dataclass
 class Alert:
-    """Alert instance"""
-    alert_id: str
+    """Alert instance"""    alert_id: str
     rule_id: str
     name: str
     description: str
@@ -126,8 +117,7 @@ class Alert:
 
 @dataclass
 class AlertMetrics:
-    """Alert system metrics"""
-    total_alerts: int = 0
+    """Alert system metrics"""    total_alerts: int = 0
     active_alerts: int = 0
     resolved_alerts: int = 0
     false_positives: int = 0
@@ -139,14 +129,12 @@ class AlertMetrics:
 
 
 class RealTimeAlerts:
-    """
-    Advanced Real-Time Alerts System
+    """    Advanced Real-Time Alerts System
     
     Provides intelligent monitoring, anomaly detection, and automated alerting
     for the IA Influencer Agent platform with multi-channel delivery and
     sophisticated alert management capabilities.
-    """
-    
+    """    
     def __init__(
         self,
         metrics_collector: Optional[MetricsCollector] = None,
@@ -187,8 +175,7 @@ class RealTimeAlerts:
         self._load_default_alert_rules()
         
     async def start_alerting(self) -> None:
-        """Start the real-time alerting system"""
-        if self.is_monitoring:
+        """Start the real-time alerting system"""        if self.is_monitoring:
             logger.warning("Real-time alerting is already running")
             return
             
@@ -199,8 +186,7 @@ class RealTimeAlerts:
         logger.info("Real-time alerting system started successfully")
         
     async def stop_alerting(self) -> None:
-        """Stop the real-time alerting system"""
-        if not self.is_monitoring:
+        """Stop the real-time alerting system"""        if not self.is_monitoring:
             return
             
         self.is_monitoring = False
@@ -216,28 +202,24 @@ class RealTimeAlerts:
         logger.info("Real-time alerting system stopped")
         
     def add_alert_rule(self, rule: AlertRule) -> None:
-        """Add a new alert rule"""
-        self.alert_rules[rule.rule_id] = rule
+        """Add a new alert rule"""        self.alert_rules[rule.rule_id] = rule
         logger.info(f"Added alert rule: {rule.name} ({rule.rule_id})")
         
     def remove_alert_rule(self, rule_id: str) -> bool:
-        """Remove an alert rule"""
-        if rule_id in self.alert_rules:
+        """Remove an alert rule"""        if rule_id in self.alert_rules:
             del self.alert_rules[rule_id]
             logger.info(f"Removed alert rule: {rule_id}")
             return True
         return False
         
     def enable_rule(self, rule_id: str) -> bool:
-        """Enable an alert rule"""
-        if rule_id in self.alert_rules:
+        """Enable an alert rule"""        if rule_id in self.alert_rules:
             self.alert_rules[rule_id].enabled = True
             return True
         return False
         
     def disable_rule(self, rule_id: str) -> bool:
-        """Disable an alert rule"""
-        if rule_id in self.alert_rules:
+        """Disable an alert rule"""        if rule_id in self.alert_rules:
             self.alert_rules[rule_id].enabled = False
             return True
         return False
@@ -249,8 +231,7 @@ class RealTimeAlerts:
         context: Optional[Dict[str, Any]] = None,
         affected_entities: Optional[List[str]] = None
     ) -> Optional[Alert]:
-        """Manually trigger an alert"""
-        if rule_id not in self.alert_rules:
+        """Manually trigger an alert"""        if rule_id not in self.alert_rules:
             raise AlertingError(f"Alert rule {rule_id} not found")
             
         rule = self.alert_rules[rule_id]
@@ -300,8 +281,7 @@ class RealTimeAlerts:
         acknowledged_by: str,
         notes: Optional[str] = None
     ) -> bool:
-        """Acknowledge an active alert"""
-        if alert_id not in self.active_alerts:
+        """Acknowledge an active alert"""        if alert_id not in self.active_alerts:
             return False
             
         alert = self.active_alerts[alert_id]
@@ -325,8 +305,7 @@ class RealTimeAlerts:
         resolved_by: Optional[str] = None,
         resolution_notes: Optional[str] = None
     ) -> bool:
-        """Resolve an active alert"""
-        if alert_id not in self.active_alerts:
+        """Resolve an active alert"""        if alert_id not in self.active_alerts:
             return False
             
         alert = self.active_alerts[alert_id]
@@ -356,8 +335,7 @@ class RealTimeAlerts:
         suppressed_by: str,
         reason: Optional[str] = None
     ) -> bool:
-        """Suppress an alert for a specified duration"""
-        if alert_id not in self.active_alerts:
+        """Suppress an alert for a specified duration"""        if alert_id not in self.active_alerts:
             return False
             
         alert = self.active_alerts[alert_id]
@@ -378,8 +356,7 @@ class RealTimeAlerts:
         escalated_by: str,
         escalation_reason: Optional[str] = None
     ) -> bool:
-        """Escalate an alert to higher severity level"""
-        if alert_id not in self.active_alerts:
+        """Escalate an alert to higher severity level"""        if alert_id not in self.active_alerts:
             return False
             
         alert = self.active_alerts[alert_id]
@@ -404,8 +381,7 @@ class RealTimeAlerts:
         return True
         
     async def get_alert_dashboard(self) -> Dict[str, Any]:
-        """Get comprehensive alert dashboard data"""
-        current_time = datetime.utcnow()
+        """Get comprehensive alert dashboard data"""        current_time = datetime.utcnow()
         
         # Active alerts summary
         active_by_severity = defaultdict(int)
@@ -470,8 +446,7 @@ class RealTimeAlerts:
         self,
         time_window: timedelta = timedelta(days=7)
     ) -> Dict[str, Any]:
-        """Get detailed alert analytics"""
-        cutoff_time = datetime.utcnow() - time_window
+        """Get detailed alert analytics"""        cutoff_time = datetime.utcnow() - time_window
         
         # Filter alerts within time window
         window_alerts = [
@@ -524,8 +499,7 @@ class RealTimeAlerts:
         }
         
     def _load_default_alert_rules(self) -> None:
-        """Load default alert rules for the platform"""
-        default_rules = [
+        """Load default alert rules for the platform"""        default_rules = [
             # AI Performance Alerts
             AlertRule(
                 rule_id="ai_high_inference_time",
@@ -629,26 +603,22 @@ class RealTimeAlerts:
         logger.info(f"Loaded {len(default_rules)} default alert rules")
         
     def _generate_alert_id(self, rule_id: str) -> str:
-        """Generate unique alert ID"""
-        timestamp = str(int(time.time() * 1000))
+        """Generate unique alert ID"""        timestamp = str(int(time.time() * 1000))
         return f"alert_{rule_id}_{timestamp}"
         
     def _find_active_alert(self, rule_id: str) -> Optional[Alert]:
-        """Find active alert for a given rule"""
-        for alert in self.active_alerts.values():
+        """Find active alert for a given rule"""        for alert in self.active_alerts.values():
             if alert.rule_id == rule_id and alert.status != AlertStatus.RESOLVED:
                 return alert
         return None
         
     def _should_retrigger(self, existing_alert: Alert, current_value: float) -> bool:
-        """Determine if an alert should be retriggered"""
-        # Retrigger if value has increased significantly
+        """Determine if an alert should be retriggered"""        # Retrigger if value has increased significantly
         value_increase = (current_value - existing_alert.current_value) / existing_alert.current_value
         return value_increase > 0.5  # 50% increase
         
     async def _send_alert_notifications(self, alert: Alert, rule: AlertRule) -> None:
-        """Send alert notifications through configured channels"""
-        for channel in rule.channels:
+        """Send alert notifications through configured channels"""        for channel in rule.channels:
             try:
                 handler = self.channel_handlers.get(channel)
                 if handler:
@@ -659,8 +629,7 @@ class RealTimeAlerts:
                 logger.error(f"Failed to send alert via {channel}: {e}")
                 
     async def _send_email_alert(self, alert: Alert, rule: AlertRule) -> None:
-        """Send alert via email"""
-        if not self.smtp_config:
+        """Send alert via email"""        if not self.smtp_config:
             logger.warning("SMTP configuration not provided, skipping email alert")
             return
             
@@ -668,8 +637,7 @@ class RealTimeAlerts:
             # Create email content
             subject = f"[{alert.severity.value.upper()}] {alert.name}"
             
-            email_template = Template("""
-            <h2>Alert: {{ alert.name }}</h2>
+            email_template = Template("""            <h2>Alert: {{ alert.name }}</h2>
             <p><strong>Severity:</strong> {{ alert.severity.value.title() }}</p>
             <p><strong>Category:</strong> {{ alert.category.value.title() }}</p>
             <p><strong>Description:</strong> {{ alert.description }}</p>
@@ -717,8 +685,7 @@ class RealTimeAlerts:
             logger.error(f"Failed to send email alert: {e}")
             
     async def _send_slack_alert(self, alert: Alert, rule: AlertRule) -> None:
-        """Send alert via Slack"""
-        if not self.slack_config.get('webhook_url'):
+        """Send alert via Slack"""        if not self.slack_config.get('webhook_url'):
             logger.warning("Slack webhook URL not configured, skipping Slack alert")
             return
             
@@ -779,8 +746,7 @@ class RealTimeAlerts:
             logger.error(f"Failed to send Slack alert: {e}")
             
     async def _send_webhook_alert(self, alert: Alert, rule: AlertRule) -> None:
-        """Send alert via webhook"""
-        webhook_url = rule.metadata.get('webhook_url')
+        """Send alert via webhook"""        webhook_url = rule.metadata.get('webhook_url')
         if not webhook_url:
             return
             
@@ -809,8 +775,7 @@ class RealTimeAlerts:
             logger.error(f"Failed to send webhook alert: {e}")
             
     async def _send_dashboard_alert(self, alert: Alert, rule: AlertRule) -> None:
-        """Send alert to dashboard (store in Redis for real-time display)"""
-        if not self.redis_client:
+        """Send alert to dashboard (store in Redis for real-time display)"""        if not self.redis_client:
             return
             
         try:
@@ -839,8 +804,7 @@ class RealTimeAlerts:
             logger.error(f"Failed to send dashboard alert: {e}")
             
     async def _send_escalation_notifications(self, alert: Alert, rule: AlertRule) -> None:
-        """Send escalation notifications"""
-        # Send to all channels with escalation priority
+        """Send escalation notifications"""        # Send to all channels with escalation priority
         for channel in rule.channels:
             try:
                 handler = self.channel_handlers.get(channel)
@@ -867,8 +831,7 @@ class RealTimeAlerts:
                 logger.error(f"Failed to send escalation notification via {channel}: {e}")
                 
     async def _execute_automated_actions(self, alert: Alert, rule: AlertRule) -> None:
-        """Execute automated actions for alerts"""
-        automated_actions = rule.metadata.get('automated_actions', [])
+        """Execute automated actions for alerts"""        automated_actions = rule.metadata.get('automated_actions', [])
         
         for action in automated_actions:
             try:
@@ -889,28 +852,23 @@ class RealTimeAlerts:
                 logger.error(f"Failed to execute automated action {action.get('type')}: {e}")
                 
     async def _scale_resources(self, alert: Alert, params: Dict[str, Any]) -> None:
-        """Scale resources automatically"""
-        # This would integrate with container orchestration
+        """Scale resources automatically"""        # This would integrate with container orchestration
         logger.info(f"Auto-scaling triggered for alert {alert.alert_id}")
         
     async def _restart_service(self, alert: Alert, params: Dict[str, Any]) -> None:
-        """Restart service automatically"""
-        # This would integrate with service management
+        """Restart service automatically"""        # This would integrate with service management
         logger.info(f"Service restart triggered for alert {alert.alert_id}")
         
     async def _quarantine_content(self, alert: Alert, params: Dict[str, Any]) -> None:
-        """Quarantine content automatically"""
-        # This would integrate with content management
+        """Quarantine content automatically"""        # This would integrate with content management
         logger.info(f"Content quarantine triggered for alert {alert.alert_id}")
         
     async def _block_user(self, alert: Alert, params: Dict[str, Any]) -> None:
-        """Block user automatically"""
-        # This would integrate with user management
+        """Block user automatically"""        # This would integrate with user management
         logger.info(f"User block triggered for alert {alert.alert_id}")
         
     def _update_acknowledgment_metrics(self, ack_time: float) -> None:
-        """Update acknowledgment time metrics"""
-        current_mean = self.alert_metrics.mean_time_to_acknowledge
+        """Update acknowledgment time metrics"""        current_mean = self.alert_metrics.mean_time_to_acknowledge
         total_acks = self.alert_metrics.total_alerts  # Simplified
         
         self.alert_metrics.mean_time_to_acknowledge = (
@@ -918,8 +876,7 @@ class RealTimeAlerts:
         )
         
     def _update_resolution_metrics(self, resolve_time: float) -> None:
-        """Update resolution time metrics"""
-        current_mean = self.alert_metrics.mean_time_to_resolve
+        """Update resolution time metrics"""        current_mean = self.alert_metrics.mean_time_to_resolve
         total_resolved = self.alert_metrics.resolved_alerts
         
         self.alert_metrics.mean_time_to_resolve = (
@@ -927,8 +884,7 @@ class RealTimeAlerts:
         )
         
     async def _monitoring_loop(self) -> None:
-        """Main monitoring loop"""
-        while self.is_monitoring:
+        """Main monitoring loop"""        while self.is_monitoring:
             try:
                 # Check for suppressed alerts that should be unsuppressed
                 await self._check_suppressed_alerts()
@@ -946,8 +902,7 @@ class RealTimeAlerts:
                 await asyncio.sleep(60)
                 
     async def _evaluation_loop(self) -> None:
-        """Alert rule evaluation loop"""
-        while self.is_monitoring:
+        """Alert rule evaluation loop"""        while self.is_monitoring:
             try:
                 # Evaluate all active alert rules
                 for rule in self.alert_rules.values():
@@ -961,8 +916,7 @@ class RealTimeAlerts:
                 await asyncio.sleep(30)
                 
     async def _evaluate_rule(self, rule: AlertRule) -> None:
-        """Evaluate a specific alert rule"""
-        try:
+        """Evaluate a specific alert rule"""        try:
             # This would integrate with the metrics system to get current values
             # For now, we'll simulate rule evaluation
             
@@ -991,8 +945,7 @@ class RealTimeAlerts:
             logger.error(f"Failed to evaluate rule {rule.rule_id}: {e}")
             
     async def _get_metric_value(self, condition: str) -> float:
-        """Get current metric value for evaluation"""
-        # This would integrate with the metrics collection system
+        """Get current metric value for evaluation"""        # This would integrate with the metrics collection system
         # For now, return a simulated value
         return 0.5
         
@@ -1002,8 +955,7 @@ class RealTimeAlerts:
         threshold: float,
         operator: str
     ) -> bool:
-        """Check if threshold is breached"""
-        if operator == "gt":
+        """Check if threshold is breached"""        if operator == "gt":
             return current_value > threshold
         elif operator == "lt":
             return current_value < threshold
@@ -1016,8 +968,7 @@ class RealTimeAlerts:
         return False
         
     async def _auto_resolve_alerts(self, rule_id: str) -> None:
-        """Auto-resolve alerts for a rule when conditions return to normal"""
-        alerts_to_resolve = [
+        """Auto-resolve alerts for a rule when conditions return to normal"""        alerts_to_resolve = [
             alert_id for alert_id, alert in self.active_alerts.items()
             if alert.rule_id == rule_id
         ]
@@ -1026,8 +977,7 @@ class RealTimeAlerts:
             await self.resolve_alert(alert_id, "System", "Auto-resolved: conditions returned to normal")
             
     async def _check_suppressed_alerts(self) -> None:
-        """Check if suppressed alerts should be unsuppressed"""
-        current_time = datetime.utcnow()
+        """Check if suppressed alerts should be unsuppressed"""        current_time = datetime.utcnow()
         
         alerts_to_unsuppress = []
         for alert_id in self.suppressed_alerts:
@@ -1044,8 +994,7 @@ class RealTimeAlerts:
             logger.info(f"Alert unsuppressed: {alert_id}")
             
     async def _update_alert_metrics(self) -> None:
-        """Update alert system metrics"""
-        # Calculate alert rate (alerts per hour)
+        """Update alert system metrics"""        # Calculate alert rate (alerts per hour)
         recent_cutoff = datetime.utcnow() - timedelta(hours=1)
         recent_alerts = [
             alert for alert in self.alert_history
@@ -1063,8 +1012,7 @@ class RealTimeAlerts:
         )
         
     async def _cleanup_old_alerts(self) -> None:
-        """Clean up old alert data"""
-        cutoff_time = datetime.utcnow() - timedelta(days=7)
+        """Clean up old alert data"""        cutoff_time = datetime.utcnow() - timedelta(days=7)
         
         # Clean alert history
         while (self.alert_history and 

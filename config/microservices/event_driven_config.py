@@ -1,5 +1,4 @@
-"""
-Event-Driven Architecture Configuration for IA-Influencer Agent Platform
+"""Event-Driven Architecture Configuration for IA-Influencer Agent Platform
 =======================================================================
 
 Professional event streaming and message processing configuration for
@@ -15,9 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-from dataclasses import dataclass, field
+"""from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union, Callable
 from enum import Enum
 import asyncio
@@ -29,8 +26,7 @@ logger = logging.getLogger(__name__)
 
 
 class EventPriority(Enum):
-    """Event processing priority levels"""
-    LOW = "low"
+    """Event processing priority levels"""    LOW = "low"
     NORMAL = "normal"  
     HIGH = "high"
     CRITICAL = "critical"
@@ -38,8 +34,7 @@ class EventPriority(Enum):
 
 
 class EventType(Enum):
-    """Core event types in the system"""
-    # Content events
+    """Core event types in the system"""    # Content events
     CONTENT_UPLOADED = "content.uploaded"
     CONTENT_PROCESSED = "content.processed"
     CONTENT_PUBLISHED = "content.published"
@@ -73,16 +68,14 @@ class EventType(Enum):
 
 
 class DeliveryGuarantee(Enum):
-    """Message delivery guarantees"""
-    AT_MOST_ONCE = "at_most_once"
+    """Message delivery guarantees"""    AT_MOST_ONCE = "at_most_once"
     AT_LEAST_ONCE = "at_least_once"
     EXACTLY_ONCE = "exactly_once"
 
 
 @dataclass
 class EventSchema:
-    """Event schema definition"""
-    
+    """Event schema definition"""    
     event_type: EventType
     version: str
     schema_fields: Dict[str, str]  # field_name: field_type
@@ -105,8 +98,7 @@ class EventSchema:
 
 @dataclass
 class EventStreamConfig:
-    """Event stream configuration"""
-    
+    """Event stream configuration"""    
     stream_name: str
     description: str
     
@@ -132,8 +124,7 @@ class EventStreamConfig:
 
 @dataclass
 class EventDrivenConfig:
-    """Event-driven architecture configuration"""
-    
+    """Event-driven architecture configuration"""    
     # Service identification
     service_name: str = "event-driven-orchestrator"
     service_version: str = "1.4.0"
@@ -405,17 +396,14 @@ EVENT_STREAMS = {
 
 
 class EventPublisher:
-    """Event publisher for publishing events to streams"""
-    
+    """Event publisher for publishing events to streams"""    
     def __init__(self, config: EventDrivenConfig):
-        """Initialize event publisher"""
-        self.config = config
+        """Initialize event publisher"""        self.config = config
         self.logger = logging.getLogger(__name__)
         self._client = None
     
     async def initialize(self) -> bool:
-        """Initialize publisher connection"""
-        try:
+        """Initialize publisher connection"""        try:
             if self.config.broker_type == "kafka":
                 await self._initialize_kafka()
             elif self.config.broker_type == "redis":
@@ -427,13 +415,11 @@ class EventPublisher:
             return False
     
     async def _initialize_kafka(self) -> None:
-        """Initialize Kafka producer"""
-        # Kafka client initialization would go here
+        """Initialize Kafka producer"""        # Kafka client initialization would go here
         self.logger.info("Kafka producer initialized")
     
     async def _initialize_redis(self) -> None:
-        """Initialize Redis streams client"""
-        # Redis streams client initialization would go here
+        """Initialize Redis streams client"""        # Redis streams client initialization would go here
         self.logger.info("Redis streams client initialized")
     
     async def publish_event(
@@ -443,8 +429,7 @@ class EventPublisher:
         stream_name: Optional[str] = None,
         headers: Optional[Dict[str, str]] = None
     ) -> bool:
-        """Publish event to appropriate stream"""
-        try:
+        """Publish event to appropriate stream"""        try:
             # Get event schema
             if event_type not in ALL_EVENT_SCHEMAS:
                 self.logger.error(f"Unknown event type: {event_type}")
@@ -486,8 +471,7 @@ class EventPublisher:
             return False
     
     def _validate_payload(self, payload: Dict[str, Any], schema: EventSchema) -> bool:
-        """Validate event payload against schema"""
-        # Check required fields
+        """Validate event payload against schema"""        # Check required fields
         for field in schema.required_fields:
             if field not in payload:
                 self.logger.error(f"Missing required field: {field}")
@@ -497,19 +481,16 @@ class EventPublisher:
         return True
     
     def _generate_event_id(self) -> str:
-        """Generate unique event ID"""
-        import uuid
+        """Generate unique event ID"""        import uuid
         return str(uuid.uuid4())
     
     async def _encrypt_payload(self, payload: Dict[str, Any]) -> str:
-        """Encrypt sensitive payload data"""
-        # Encryption implementation would go here
+        """Encrypt sensitive payload data"""        # Encryption implementation would go here
         # For now, return JSON string (in production, this would be encrypted)
         return json.dumps(payload)
     
     def _get_default_stream(self, event_type: EventType) -> str:
-        """Get default stream for event type"""
-        stream_mapping = {
+        """Get default stream for event type"""        stream_mapping = {
             EventType.CONTENT_UPLOADED: "content-processing",
             EventType.CONTENT_PROCESSED: "content-processing",
             EventType.CONTENT_PUBLISHED: "content-processing",
@@ -525,26 +506,22 @@ class EventPublisher:
         return stream_mapping.get(event_type, "system-health")
     
     async def _send_to_stream(self, stream_name: str, message: Dict[str, Any]) -> bool:
-        """Send message to specific stream"""
-        # Stream-specific sending logic would go here
+        """Send message to specific stream"""        # Stream-specific sending logic would go here
         self.logger.info(f"Sending message to stream: {stream_name}")
         return True
 
 
 class EventConsumer:
-    """Event consumer for processing events from streams"""
-    
+    """Event consumer for processing events from streams"""    
     def __init__(self, config: EventDrivenConfig, consumer_group: str):
-        """Initialize event consumer"""
-        self.config = config
+        """Initialize event consumer"""        self.config = config
         self.consumer_group = consumer_group
         self.event_handlers: Dict[EventType, Callable] = {}
         self.logger = logging.getLogger(__name__)
         self._client = None
     
     async def initialize(self) -> bool:
-        """Initialize consumer connection"""
-        try:
+        """Initialize consumer connection"""        try:
             if self.config.broker_type == "kafka":
                 await self._initialize_kafka_consumer()
             elif self.config.broker_type == "redis":
@@ -556,23 +533,19 @@ class EventConsumer:
             return False
     
     async def _initialize_kafka_consumer(self) -> None:
-        """Initialize Kafka consumer"""
-        # Kafka consumer initialization would go here
+        """Initialize Kafka consumer"""        # Kafka consumer initialization would go here
         self.logger.info(f"Kafka consumer initialized for group: {self.consumer_group}")
     
     async def _initialize_redis_consumer(self) -> None:
-        """Initialize Redis streams consumer"""
-        # Redis consumer initialization would go here
+        """Initialize Redis streams consumer"""        # Redis consumer initialization would go here
         self.logger.info(f"Redis consumer initialized for group: {self.consumer_group}")
     
     def register_handler(self, event_type: EventType, handler: Callable) -> None:
-        """Register event handler for specific event type"""
-        self.event_handlers[event_type] = handler
+        """Register event handler for specific event type"""        self.event_handlers[event_type] = handler
         self.logger.info(f"Registered handler for {event_type.value}")
     
     async def start_consuming(self, streams: List[str]) -> None:
-        """Start consuming events from specified streams"""
-        self.logger.info(f"Starting consumer for streams: {streams}")
+        """Start consuming events from specified streams"""        self.logger.info(f"Starting consumer for streams: {streams}")
         
         # Consumer loop would go here
         # This would continuously poll for new messages and process them
@@ -586,18 +559,15 @@ class EventConsumer:
 
 
 class EventDrivenOrchestrator:
-    """Event-driven architecture orchestrator"""
-    
+    """Event-driven architecture orchestrator"""    
     def __init__(self, config: EventDrivenConfig = None):
-        """Initialize orchestrator"""
-        self.config = config or EventDrivenConfig()
+        """Initialize orchestrator"""        self.config = config or EventDrivenConfig()
         self.publisher = EventPublisher(self.config)
         self.consumers: Dict[str, EventConsumer] = {}
         self.logger = logging.getLogger(__name__)
     
     async def initialize_event_system(self) -> bool:
-        """Initialize event-driven system"""
-        try:
+        """Initialize event-driven system"""        try:
             self.logger.info("Initializing event-driven architecture...")
             
             # Initialize publisher
@@ -618,14 +588,12 @@ class EventDrivenOrchestrator:
             return False
     
     async def _create_streams(self) -> None:
-        """Create event streams"""
-        for stream_name, stream_config in EVENT_STREAMS.items():
+        """Create event streams"""        for stream_name, stream_config in EVENT_STREAMS.items():
             self.logger.info(f"Creating stream: {stream_name}")
             # Stream creation logic would go here
     
     async def _initialize_consumers(self) -> None:
-        """Initialize event consumers"""
-        # Create consumers for each service
+        """Initialize event consumers"""        # Create consumers for each service
         services = [
             "fingerprinting-service",
             "content-protection",
@@ -639,12 +607,10 @@ class EventDrivenOrchestrator:
             self.consumers[service] = consumer
     
     async def publish_event(self, event_type: EventType, payload: Dict[str, Any]) -> bool:
-        """Publish event through orchestrator"""
-        return await self.publisher.publish_event(event_type, payload)
+        """Publish event through orchestrator"""        return await self.publisher.publish_event(event_type, payload)
     
     async def get_event_system_health(self) -> Dict[str, Any]:
-        """Get event system health status"""
-        return {
+        """Get event system health status"""        return {
             "publisher_status": "active",
             "streams": {
                 name: {
@@ -662,8 +628,7 @@ class EventDrivenOrchestrator:
         }
     
     def get_configuration_summary(self) -> Dict[str, Any]:
-        """Get event system configuration summary"""
-        return {
+        """Get event system configuration summary"""        return {
             "service_info": {
                 "name": self.config.service_name,
                 "version": self.config.service_version,
@@ -700,23 +665,19 @@ event_orchestrator = EventDrivenOrchestrator()
 
 # Convenience functions
 async def initialize_event_system() -> bool:
-    """Initialize event-driven system"""
-    return await event_orchestrator.initialize_event_system()
+    """Initialize event-driven system"""    return await event_orchestrator.initialize_event_system()
 
 
 async def publish_event(event_type: EventType, payload: Dict[str, Any]) -> bool:
-    """Publish event to system"""
-    return await event_orchestrator.publish_event(event_type, payload)
+    """Publish event to system"""    return await event_orchestrator.publish_event(event_type, payload)
 
 
 async def get_event_system_health() -> Dict[str, Any]:
-    """Get event system health"""
-    return await event_orchestrator.get_event_system_health()
+    """Get event system health"""    return await event_orchestrator.get_event_system_health()
 
 
 def get_event_system_summary() -> Dict[str, Any]:
-    """Get event system configuration summary"""
-    return event_orchestrator.get_configuration_summary()
+    """Get event system configuration summary"""    return event_orchestrator.get_configuration_summary()
 
 
 # Export main configuration instance

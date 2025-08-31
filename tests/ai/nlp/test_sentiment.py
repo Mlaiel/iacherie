@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive Tests for NLP Sentiment Analysis Module
+"""Comprehensive Tests for NLP Sentiment Analysis Module
 
 Industrial-grade tests for AdvancedSentimentAnalyzer covering emotion detection,
 mood analysis, and sentiment optimization with real implementations.
@@ -25,9 +21,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -50,12 +44,10 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class TestAdvancedSentimentAnalyzer:
-    """Comprehensive tests for AdvancedSentimentAnalyzer"""
-    
+    """Comprehensive tests for AdvancedSentimentAnalyzer"""    
     @pytest.mark.asyncio
     async def test_analyzer_initialization(self, sentiment_analyzer):
-        """Test sentiment analyzer initialization"""
-        assert sentiment_analyzer is not None
+        """Test sentiment analyzer initialization"""        assert sentiment_analyzer is not None
         assert hasattr(sentiment_analyzer, 'config')
         assert hasattr(sentiment_analyzer, 'emotion_detector')
         assert hasattr(sentiment_analyzer, 'mood_analyzer')
@@ -69,8 +61,7 @@ class TestAdvancedSentimentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_basic_sentiment_analysis(self, sentiment_analyzer):
-        """Test basic sentiment analysis"""
-        test_cases = [
+        """Test basic sentiment analysis"""        test_cases = [
             {
                 'text': "I absolutely love this amazing product! It's fantastic!",
                 'expected_sentiment': 'positive',
@@ -138,8 +129,7 @@ class TestAdvancedSentimentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_emotion_detection(self, sentiment_analyzer):
-        """Test advanced emotion detection"""
-        emotion_test_cases = [
+        """Test advanced emotion detection"""        emotion_test_cases = [
             {
                 'text': "I'm absolutely thrilled and can't contain my excitement!",
                 'expected_emotions': ['joy', 'excitement'],
@@ -220,8 +210,7 @@ class TestAdvancedSentimentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_multilingual_sentiment_analysis(self, sentiment_analyzer, sample_texts):
-        """Test multilingual sentiment analysis"""
-        multilingual_test_cases = [
+        """Test multilingual sentiment analysis"""        multilingual_test_cases = [
             {
                 'language': 'english',
                 'positive_text': "I love this amazing product!",
@@ -273,8 +262,7 @@ class TestAdvancedSentimentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_social_media_sentiment_analysis(self, sentiment_analyzer, sample_social_content):
-        """Test social media content sentiment analysis"""
-        platforms = [Platform.INSTAGRAM, Platform.TWITTER, Platform.LINKEDIN]
+        """Test social media content sentiment analysis"""        platforms = [Platform.INSTAGRAM, Platform.TWITTER, Platform.LINKEDIN]
         
         for platform in platforms:
             content = sample_social_content[platform.value.lower()]['post']
@@ -305,8 +293,7 @@ class TestAdvancedSentimentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_sentiment_trends_analysis(self, sentiment_analyzer):
-        """Test sentiment trends over time"""
-        # Simulate content evolution over time
+        """Test sentiment trends over time"""        # Simulate content evolution over time
         content_timeline = [
             {
                 'text': "Excited to start this new project!",
@@ -363,8 +350,7 @@ class TestAdvancedSentimentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_contextual_sentiment_analysis(self, sentiment_analyzer):
-        """Test contextual sentiment analysis"""
-        contextual_test_cases = [
+        """Test contextual sentiment analysis"""        contextual_test_cases = [
             {
                 'text': "This is sick!",
                 'contexts': [
@@ -421,8 +407,7 @@ class TestAdvancedSentimentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_sentiment_optimization(self, sentiment_analyzer):
-        """Test sentiment optimization for content"""
-        content_to_optimize = [
+        """Test sentiment optimization for content"""        content_to_optimize = [
             {
                 'original': "This product is okay, nothing special.",
                 'target_sentiment': 'positive',
@@ -481,8 +466,7 @@ class TestAdvancedSentimentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_emotion_intensity_analysis(self, sentiment_analyzer):
-        """Test emotion intensity analysis"""
-        intensity_test_cases = [
+        """Test emotion intensity analysis"""        intensity_test_cases = [
             {
                 'text': "I'm slightly happy about this.",
                 'expected_intensity': 'low'
@@ -533,8 +517,7 @@ class TestAdvancedSentimentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_sentiment_confidence_calibration(self, sentiment_analyzer):
-        """Test sentiment confidence calibration"""
-        confidence_test_cases = [
+        """Test sentiment confidence calibration"""        confidence_test_cases = [
             {
                 'text': "This is absolutely amazing and perfect!",
                 'expected_confidence': 'high'  # Clear positive sentiment
@@ -573,8 +556,7 @@ class TestAdvancedSentimentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_batch_sentiment_analysis(self, sentiment_analyzer, performance_test_data):
-        """Test batch sentiment analysis"""
-        texts = performance_test_data['small_batch']
+        """Test batch sentiment analysis"""        texts = performance_test_data['small_batch']
         
         start_time = time.time()
         batch_results = await sentiment_analyzer.analyze_batch_sentiment(
@@ -607,8 +589,7 @@ class TestAdvancedSentimentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_cross_platform_sentiment_analysis(self, sentiment_analyzer):
-        """Test cross-platform sentiment analysis"""
-        base_content = "Just tried this new AI tool and it's incredible!"
+        """Test cross-platform sentiment analysis"""        base_content = "Just tried this new AI tool and it's incredible!"
         platforms = [Platform.INSTAGRAM, Platform.TWITTER, Platform.LINKEDIN, Platform.TIKTOK]
         
         platform_results = {}
@@ -637,8 +618,7 @@ class TestAdvancedSentimentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_performance_benchmarks(self, sentiment_analyzer, benchmark_config):
-        """Test sentiment analysis performance benchmarks"""
-        test_text = "This is a performance test for sentiment analysis benchmarking."
+        """Test sentiment analysis performance benchmarks"""        test_text = "This is a performance test for sentiment analysis benchmarking."
         
         # Single analysis performance
         start_time = time.time()
@@ -668,8 +648,7 @@ class TestAdvancedSentimentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_error_handling(self, sentiment_analyzer):
-        """Test sentiment analyzer error handling"""
-        # Test empty content
+        """Test sentiment analyzer error handling"""        # Test empty content
         result = await sentiment_analyzer.analyze_sentiment(
             text="",
             options={'handle_empty': True}
@@ -693,41 +672,33 @@ class TestAdvancedSentimentAnalyzer:
         assert result is not None
 
 class TestEmotionDetector:
-    """Test emotion detector component"""
-    
+    """Test emotion detector component"""    
     @pytest.mark.asyncio
     async def test_emotion_detector_initialization(self):
-        """Test emotion detector initialization"""
-        detector = EmotionDetector()
+        """Test emotion detector initialization"""        detector = EmotionDetector()
         assert detector is not None
         assert hasattr(detector, 'detect_emotions')
 
 class TestMoodAnalyzer:
-    """Test mood analyzer component"""
-    
+    """Test mood analyzer component"""    
     @pytest.mark.asyncio
     async def test_mood_analyzer_initialization(self):
-        """Test mood analyzer initialization"""
-        analyzer = MoodAnalyzer()
+        """Test mood analyzer initialization"""        analyzer = MoodAnalyzer()
         assert analyzer is not None
         assert hasattr(analyzer, 'analyze_mood')
 
 class TestSentimentOptimizer:
-    """Test sentiment optimizer component"""
-    
+    """Test sentiment optimizer component"""    
     @pytest.mark.asyncio
     async def test_sentiment_optimizer_initialization(self):
-        """Test sentiment optimizer initialization"""
-        optimizer = SentimentOptimizer()
+        """Test sentiment optimizer initialization"""        optimizer = SentimentOptimizer()
         assert optimizer is not None
         assert hasattr(optimizer, 'optimize_sentiment')
 
 class TestSentimentConfig:
-    """Test sentiment configuration"""
-    
+    """Test sentiment configuration"""    
     def test_config_creation(self):
-        """Test sentiment configuration creation"""
-        config = SentimentConfig(
+        """Test sentiment configuration creation"""        config = SentimentConfig(
             emotion_models=['basic', 'advanced'],
             sentiment_scale=[-1.0, 1.0],
             supported_languages=['en', 'de', 'fr']

@@ -1,5 +1,4 @@
-"""
-📊 Performance Metrics - Advanced Performance Monitoring System
+"""📊 Performance Metrics - Advanced Performance Monitoring System
 ===============================================================
 
 Enterprise-grade performance monitoring for the Ainflue platform with
@@ -7,9 +6,7 @@ real-time metrics, APM integration, and comprehensive performance analysis.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import threading
@@ -123,8 +120,7 @@ logger = logging.getLogger(__name__)
 
 
 class PerformanceLevel(Enum):
-    """Performance levels for classification"""
-    EXCELLENT = "excellent"
+    """Performance levels for classification"""    EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair"
     POOR = "poor"
@@ -133,8 +129,7 @@ class PerformanceLevel(Enum):
 
 @dataclass
 class PerformanceMetric:
-    """Individual performance metric"""
-    name: str
+    """Individual performance metric"""    name: str
     value: float
     unit: str
     timestamp: datetime
@@ -145,8 +140,7 @@ class PerformanceMetric:
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert definition"""
-    metric_name: str
+    """Performance alert definition"""    metric_name: str
     threshold: float
     condition: str  # 'greater_than', 'less_than', 'equals'
     severity: str
@@ -155,17 +149,14 @@ class PerformanceAlert:
 
 
 class PerformanceProfiler:
-    """
-    Performance profiler for function and method execution tracking
-    """
-    
+    """    Performance profiler for function and method execution tracking
+    """    
     def __init__(self):
         self.profiles = defaultdict(list)
         self.active_profiles = {}
         
     def start_profile(self, operation_name: str) -> str:
-        """Start profiling an operation"""
-        profile_id = f"{operation_name}_{time.time()}"
+        """Start profiling an operation"""        profile_id = f"{operation_name}_{time.time()}"
         self.active_profiles[profile_id] = {
             "name": operation_name,
             "start_time": time.time(),
@@ -175,8 +166,7 @@ class PerformanceProfiler:
         return profile_id
     
     def end_profile(self, profile_id: str) -> Optional[Dict[str, Any]]:
-        """End profiling and return results"""
-        if profile_id not in self.active_profiles:
+        """End profiling and return results"""        if profile_id not in self.active_profiles:
             return None
         
         profile = self.active_profiles.pop(profile_id)
@@ -197,8 +187,7 @@ class PerformanceProfiler:
 
 
 def performance_monitor(operation_name: str = None):
-    """Decorator for automatic performance monitoring"""
-    def decorator(func):
+    """Decorator for automatic performance monitoring"""    def decorator(func):
         @wraps(func)
         async def async_wrapper(*args, **kwargs):
             name = operation_name or f"{func.__module__}.{func.__name__}"
@@ -242,8 +231,7 @@ def performance_monitor(operation_name: str = None):
 
 
 class PerformanceMetricsCollector:
-    """
-    Advanced performance metrics collection and analysis system
+    """    Advanced performance metrics collection and analysis system
     
     Features:
     - Real-time performance monitoring
@@ -254,11 +242,9 @@ class PerformanceMetricsCollector:
     - Alert management
     - Historical analysis
     - Performance benchmarking
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize performance metrics collector"""
-        self.config = config or {}
+        """Initialize performance metrics collector"""        self.config = config or {}
         
         # Metrics storage
         self.metrics: Dict[str, List[PerformanceMetric]] = defaultdict(list)
@@ -293,8 +279,7 @@ class PerformanceMetricsCollector:
         logger.info("PerformanceMetricsCollector initialized successfully")
     
     async def start_monitoring(self) -> bool:
-        """Start performance monitoring"""
-        try:
+        """Start performance monitoring"""        try:
             if self.system_monitor_enabled:
                 self.monitoring_task = asyncio.create_task(self._monitoring_loop())
             
@@ -306,8 +291,7 @@ class PerformanceMetricsCollector:
             return False
     
     async def stop_monitoring(self) -> bool:
-        """Stop performance monitoring"""
-        try:
+        """Stop performance monitoring"""        try:
             if self.monitoring_task:
                 self.monitoring_task.cancel()
                 try:
@@ -331,8 +315,7 @@ class PerformanceMetricsCollector:
         labels: Optional[Dict[str, str]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Record a performance metric"""
-        try:
+        """Record a performance metric"""        try:
             metric = PerformanceMetric(
                 name=name,
                 value=value,
@@ -360,8 +343,7 @@ class PerformanceMetricsCollector:
         status_code: int,
         user_id: Optional[int] = None
     ) -> None:
-        """Record request performance metrics"""
-        try:
+        """Record request performance metrics"""        try:
             request_data = {
                 "endpoint": endpoint,
                 "method": method,
@@ -403,8 +385,7 @@ class PerformanceMetricsCollector:
         table: str = "",
         success: bool = True
     ) -> None:
-        """Record database performance metrics"""
-        try:
+        """Record database performance metrics"""        try:
             labels = {
                 "query_type": query_type,
                 "table": table,
@@ -429,8 +410,7 @@ class PerformanceMetricsCollector:
             logger.error(f"Error recording database metrics: {e}")
     
     async def get_system_performance(self) -> Dict[str, Any]:
-        """Get current system performance metrics"""
-        try:
+        """Get current system performance metrics"""        try:
             # CPU metrics
             cpu_percent = psutil.cpu_percent(interval=1)
             cpu_count = psutil.cpu_count()
@@ -507,8 +487,7 @@ class PerformanceMetricsCollector:
             return {"error": str(e)}
     
     async def get_application_performance(self) -> Dict[str, Any]:
-        """Get application performance metrics"""
-        try:
+        """Get application performance metrics"""        try:
             current_time = datetime.utcnow()
             last_hour = current_time - timedelta(hours=1)
             
@@ -570,8 +549,7 @@ class PerformanceMetricsCollector:
             return {"error": str(e)}
     
     async def get_performance_summary(self, period_hours: int = 24) -> Dict[str, Any]:
-        """Get performance summary for a time period"""
-        try:
+        """Get performance summary for a time period"""        try:
             current_time = datetime.utcnow()
             start_time = current_time - timedelta(hours=period_hours)
             
@@ -617,8 +595,7 @@ class PerformanceMetricsCollector:
             return {"error": str(e)}
     
     def _classify_performance(self, value: float, metric_type: str) -> str:
-        """Classify performance level based on value and type"""
-        try:
+        """Classify performance level based on value and type"""        try:
             if metric_type == "cpu":
                 if value <= 50:
                     return PerformanceLevel.EXCELLENT.value
@@ -662,8 +639,7 @@ class PerformanceMetricsCollector:
             return PerformanceLevel.GOOD.value
     
     def _initialize_alerts(self):
-        """Initialize default performance alerts"""
-        try:
+        """Initialize default performance alerts"""        try:
             default_alerts = [
                 PerformanceAlert(
                     "api_response_time",
@@ -708,8 +684,7 @@ class PerformanceMetricsCollector:
             logger.error(f"Error initializing alerts: {e}")
     
     async def _check_alerts(self, metric: PerformanceMetric):
-        """Check if metric triggers any alerts"""
-        try:
+        """Check if metric triggers any alerts"""        try:
             for alert in self.alerts:
                 if not alert.enabled or alert.metric_name != metric.name:
                     continue
@@ -730,8 +705,7 @@ class PerformanceMetricsCollector:
             logger.error(f"Error checking alerts: {e}")
     
     async def _trigger_alert(self, alert: PerformanceAlert, metric: PerformanceMetric):
-        """Trigger performance alert"""
-        try:
+        """Trigger performance alert"""        try:
             alert_data = {
                 "alert_name": f"{alert.metric_name}_{alert.condition}_{alert.threshold}",
                 "metric_name": alert.metric_name,
@@ -757,8 +731,7 @@ class PerformanceMetricsCollector:
             logger.error(f"Error triggering alert: {e}")
     
     async def _monitoring_loop(self):
-        """Continuous system monitoring loop"""
-        while True:
+        """Continuous system monitoring loop"""        while True:
             try:
                 # Get system performance
                 system_perf = await self.get_system_performance()
@@ -783,8 +756,7 @@ class PerformanceMetricsCollector:
                 await asyncio.sleep(5)
     
     def get_collector_stats(self) -> Dict[str, Any]:
-        """Get performance collector statistics"""
-        return {
+        """Get performance collector statistics"""        return {
             "version": "1.0.0",
             "total_metrics": sum(len(metrics) for metrics in self.metrics.values()),
             "unique_metric_types": len(self.metrics),

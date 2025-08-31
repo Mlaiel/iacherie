@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-ML Demo Tests - Enterprise Grade Demo & Showcase Test Suite
+"""ML Demo Tests - Enterprise Grade Demo & Showcase Test Suite
 
 Comprehensive tests for ML demo functionality, showcase features, 
 interactive demonstrations, and proof-of-concept systems.
@@ -25,9 +21,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT LEGAL WARNING ⚠️
 Contact: mlaiel@live.de - Unauthorized use STRICTLY PROHIBITED
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -62,11 +56,9 @@ from ai.ml.ml_demo import (
 
 
 class TestMLDemoOrchestrator:
-    """Tests for ML demo orchestration and management"""
-    
+    """Tests for ML demo orchestration and management"""    
     def test_init_demo_orchestrator(self):
-        """Test demo orchestrator initialization"""
-        orchestrator = MLDemoOrchestrator(
+        """Test demo orchestrator initialization"""        orchestrator = MLDemoOrchestrator(
             demo_types=["interactive", "showcase", "benchmark", "comparison"],
             supported_models=["classification", "regression", "clustering", "nlp"],
             ui_frameworks=["streamlit", "gradio", "flask", "react"],
@@ -81,8 +73,7 @@ class TestMLDemoOrchestrator:
         assert orchestrator.demo_caching
 
     def test_demo_configuration_management(self, demo_config_data):
-        """Test demo configuration management and validation"""
-        orchestrator = MLDemoOrchestrator()
+        """Test demo configuration management and validation"""        orchestrator = MLDemoOrchestrator()
         
         if not demo_config_data:
             demo_config_data = {
@@ -157,8 +148,7 @@ class TestMLDemoOrchestrator:
             assert config_result["compatibility_check"]["model_compatibility"] == "COMPATIBLE"
 
     def test_demo_lifecycle_management(self, demo_session_data):
-        """Test demo lifecycle management from start to cleanup"""
-        orchestrator = MLDemoOrchestrator()
+        """Test demo lifecycle management from start to cleanup"""        orchestrator = MLDemoOrchestrator()
         
         if not demo_session_data:
             demo_session_data = {
@@ -237,8 +227,7 @@ class TestMLDemoOrchestrator:
             assert lifecycle_result["cleanup_summary"]["auto_cleanup_enabled"]
 
     def test_multi_framework_demo_support(self, multi_framework_configs):
-        """Test support for multiple UI frameworks"""
-        orchestrator = MLDemoOrchestrator(ui_frameworks=["streamlit", "gradio", "flask"])
+        """Test support for multiple UI frameworks"""        orchestrator = MLDemoOrchestrator(ui_frameworks=["streamlit", "gradio", "flask"])
         
         if not multi_framework_configs:
             multi_framework_configs = [
@@ -315,11 +304,9 @@ class TestMLDemoOrchestrator:
 
 
 class TestInteractiveDemo:
-    """Tests for interactive demo functionality"""
-    
+    """Tests for interactive demo functionality"""    
     def test_init_interactive_demo(self):
-        """Test interactive demo initialization"""
-        demo = InteractiveDemo(
+        """Test interactive demo initialization"""        demo = InteractiveDemo(
             demo_type="real_time_prediction",
             interaction_modes=["form_input", "file_upload", "api_call"],
             real_time_updates=True,
@@ -334,8 +321,7 @@ class TestInteractiveDemo:
         assert demo.user_guidance
 
     def test_real_time_prediction_interface(self, prediction_demo_config):
-        """Test real-time prediction interface functionality"""
-        demo = InteractiveDemo(demo_type="real_time_prediction")
+        """Test real-time prediction interface functionality"""        demo = InteractiveDemo(demo_type="real_time_prediction")
         
         if not prediction_demo_config:
             prediction_demo_config = {
@@ -418,8 +404,7 @@ class TestInteractiveDemo:
             assert prediction_result["ui_performance"]["responsiveness_score"] > 0.9
 
     def test_batch_upload_demo(self, batch_demo_config, sample_batch_data):
-        """Test batch file upload and processing demo"""
-        demo = InteractiveDemo(interaction_modes=["file_upload"])
+        """Test batch file upload and processing demo"""        demo = InteractiveDemo(interaction_modes=["file_upload"])
         
         if not batch_demo_config:
             batch_demo_config = {
@@ -499,8 +484,7 @@ class TestInteractiveDemo:
             assert batch_result["processing_status"]["rows_successful"] > batch_result["processing_status"]["rows_failed"]
 
     def test_what_if_analysis_demo(self, what_if_config):
-        """Test what-if analysis and scenario exploration"""
-        demo = InteractiveDemo(explanation_features=True)
+        """Test what-if analysis and scenario exploration"""        demo = InteractiveDemo(explanation_features=True)
         
         if not what_if_config:
             what_if_config = {
@@ -571,11 +555,9 @@ class TestInteractiveDemo:
 
 
 class TestVisualizationEngine:
-    """Tests for visualization and charting functionality"""
-    
+    """Tests for visualization and charting functionality"""    
     def test_init_visualization_engine(self):
-        """Test visualization engine initialization"""
-        viz_engine = VisualizationEngine(
+        """Test visualization engine initialization"""        viz_engine = VisualizationEngine(
             chart_libraries=["matplotlib", "plotly", "seaborn", "bokeh"],
             interactive_charts=True,
             real_time_updates=True,
@@ -590,8 +572,7 @@ class TestVisualizationEngine:
         assert viz_engine.accessibility_features
 
     def test_model_performance_visualization(self, model_metrics_data):
-        """Test model performance visualization generation"""
-        viz_engine = VisualizationEngine()
+        """Test model performance visualization generation"""        viz_engine = VisualizationEngine()
         
         if not model_metrics_data:
             model_metrics_data = {
@@ -677,8 +658,7 @@ class TestVisualizationEngine:
             assert charts_result["generated_charts"]["roc_curve_plot"]["auc_score"] > 0.8
 
     def test_data_exploration_visualization(self, dataset_analysis):
-        """Test data exploration and EDA visualization"""
-        viz_engine = VisualizationEngine()
+        """Test data exploration and EDA visualization"""        viz_engine = VisualizationEngine()
         
         if not dataset_analysis:
             dataset_analysis = {
@@ -786,8 +766,7 @@ class TestVisualizationEngine:
             assert eda_result["summary_dashboard"]["total_visualizations"] > 0
 
     def test_real_time_visualization_updates(self, streaming_data_config):
-        """Test real-time visualization updates"""
-        viz_engine = VisualizationEngine(real_time_updates=True)
+        """Test real-time visualization updates"""        viz_engine = VisualizationEngine(real_time_updates=True)
         
         if not streaming_data_config:
             streaming_data_config = {
@@ -860,11 +839,9 @@ class TestVisualizationEngine:
 
 
 class TestDemoAnalytics:
-    """Tests for demo analytics and user behavior tracking"""
-    
+    """Tests for demo analytics and user behavior tracking"""    
     def test_init_demo_analytics(self):
-        """Test demo analytics initialization"""
-        analytics = DemoAnalytics(
+        """Test demo analytics initialization"""        analytics = DemoAnalytics(
             track_user_behavior=True,
             performance_monitoring=True,
             feedback_collection=True,
@@ -879,8 +856,7 @@ class TestDemoAnalytics:
         assert analytics.real_time_analytics
 
     def test_user_engagement_tracking(self, demo_session_events):
-        """Test user engagement and interaction tracking"""
-        analytics = DemoAnalytics(track_user_behavior=True)
+        """Test user engagement and interaction tracking"""        analytics = DemoAnalytics(track_user_behavior=True)
         
         if not demo_session_events:
             demo_session_events = [
@@ -949,8 +925,7 @@ class TestDemoAnalytics:
             assert engagement_result["user_behavior_patterns"]["goal_completion"]
 
     def test_demo_performance_analytics(self, performance_metrics_data):
-        """Test demo performance analytics and optimization insights"""
-        analytics = DemoAnalytics(performance_monitoring=True)
+        """Test demo performance analytics and optimization insights"""        analytics = DemoAnalytics(performance_monitoring=True)
         
         if not performance_metrics_data:
             performance_metrics_data = {
@@ -1019,8 +994,7 @@ class TestDemoAnalytics:
             assert len(performance_result["optimization_opportunities"]) > 0
 
     def test_a11y_compliance_analytics(self, accessibility_audit_data):
-        """Test accessibility compliance analytics"""
-        analytics = DemoAnalytics()
+        """Test accessibility compliance analytics"""        analytics = DemoAnalytics()
         
         if not accessibility_audit_data:
             accessibility_audit_data = {
@@ -1109,12 +1083,10 @@ class TestDemoAnalytics:
 
 @pytest.mark.integration
 class TestMLDemoIntegration:
-    """Integration tests for ML demo systems"""
-    
+    """Integration tests for ML demo systems"""    
     @pytest.mark.slow
     def test_end_to_end_demo_deployment(self, temp_dir):
-        """Test complete demo deployment pipeline"""
-        # Initialize components
+        """Test complete demo deployment pipeline"""        # Initialize components
         orchestrator = MLDemoOrchestrator(output_directory=str(temp_dir))
         interactive_demo = InteractiveDemo()
         viz_engine = VisualizationEngine()
@@ -1194,8 +1166,7 @@ class TestMLDemoIntegration:
         assert all(integration_status.values())
 
     def test_multi_user_demo_session(self):
-        """Test demo handling multiple concurrent users"""
-        orchestrator = MLDemoOrchestrator()
+        """Test demo handling multiple concurrent users"""        orchestrator = MLDemoOrchestrator()
         
         # Simulate multiple users
         concurrent_users = [

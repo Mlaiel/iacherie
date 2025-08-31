@@ -1,5 +1,4 @@
-"""
-Collaboration Request Repository Module
+"""Collaboration Request Repository Module
 
 Enterprise-grade repository for collaboration request management with intelligent
 matching, automated workflow processing, and comprehensive analytics.
@@ -23,9 +22,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-
-from typing import List, Optional, Dict, Any, Tuple
+"""from typing import List, Optional, Dict, Any, Tuple
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, func, desc, asc, text
 from datetime import datetime, timedelta
@@ -46,14 +43,11 @@ import logging
 logger = logging.getLogger(__name__)
 
 class CollaborationRequestRepository(BaseRepository[CollaborationRequest]):
-    """
-    Repository for collaboration request operations with intelligent matching,
+    """    Repository for collaboration request operations with intelligent matching,
     automated processing, skill analysis, and comprehensive workflow management.
-    """
-    
+    """    
     def __init__(self, db_session: Session):
-        """Initialize collaboration request repository"""
-        super().__init__(db_session, CollaborationRequest)
+        """Initialize collaboration request repository"""        super().__init__(db_session, CollaborationRequest)
         
     def create_request(self,
                       requester_id: int,
@@ -69,8 +63,7 @@ class CollaborationRequestRepository(BaseRepository[CollaborationRequest]):
                       location_requirements: Optional[Dict[str, Any]] = None,
                       collaboration_details: Optional[Dict[str, Any]] = None,
                       metadata: Optional[Dict[str, Any]] = None) -> CollaborationRequest:
-        """
-        Create collaboration request with validation and matching analysis
+        """        Create collaboration request with validation and matching analysis
         
         Args:
             requester_id: Request creator user ID
@@ -89,8 +82,7 @@ class CollaborationRequestRepository(BaseRepository[CollaborationRequest]):
             
         Returns:
             Created CollaborationRequest instance
-        """
-        try:
+        """        try:
             # Validate required skills
             if not required_skills:
                 raise RepositoryException("At least one required skill must be specified")
@@ -160,8 +152,7 @@ class CollaborationRequestRepository(BaseRepository[CollaborationRequest]):
     def _generate_request_reference(self,
                                   category: CollaborationCategory,
                                   created_at: datetime) -> str:
-        """
-        Generate unique request reference
+        """        Generate unique request reference
         
         Args:
             category: Collaboration category
@@ -169,8 +160,7 @@ class CollaborationRequestRepository(BaseRepository[CollaborationRequest]):
             
         Returns:
             Request reference string
-        """
-        category_code = category.value[:3].upper()
+        """        category_code = category.value[:3].upper()
         date_code = created_at.strftime("%Y%m")
         sequence = self.db_session.query(func.count(CollaborationRequest.id)).filter(
             func.extract('year', CollaborationRequest.created_at) == created_at.year,
@@ -183,8 +173,7 @@ class CollaborationRequestRepository(BaseRepository[CollaborationRequest]):
                                 urgency: UrgencyLevel,
                                 budget: BudgetRange,
                                 deadline: Optional[datetime]) -> int:
-        """
-        Calculate priority score based on multiple factors
+        """        Calculate priority score based on multiple factors
         
         Args:
             urgency: Urgency level
@@ -193,8 +182,7 @@ class CollaborationRequestRepository(BaseRepository[CollaborationRequest]):
             
         Returns:
             Priority score (1-100)
-        """
-        # Base score from urgency
+        """        # Base score from urgency
         urgency_scores = {
             UrgencyLevel.LOW: 20,
             UrgencyLevel.MEDIUM: 50,
@@ -232,8 +220,7 @@ class CollaborationRequestRepository(BaseRepository[CollaborationRequest]):
                                 category: CollaborationCategory,
                                 skill_level: SkillLevel,
                                 location_requirements: Optional[Dict[str, Any]]) -> float:
-        """
-        Estimate match potential based on skill demand and availability
+        """        Estimate match potential based on skill demand and availability
         
         Args:
             required_skills: Required skills list
@@ -243,8 +230,7 @@ class CollaborationRequestRepository(BaseRepository[CollaborationRequest]):
             
         Returns:
             Match potential score (0.0-100.0)
-        """
-        try:
+        """        try:
             # Base score from skill commonality
             common_skills = ['content creation', 'social media', 'marketing', 'photography']
             skill_commonality = len(set(required_skills) & set(common_skills)) / len(required_skills)
@@ -285,13 +271,11 @@ class CollaborationRequestRepository(BaseRepository[CollaborationRequest]):
             return 50.0
             
     def _trigger_automatic_matching(self, request_id: int) -> None:
-        """
-        Trigger automatic matching analysis for a request
+        """        Trigger automatic matching analysis for a request
         
         Args:
             request_id: Request ID to analyze
-        """
-        try:
+        """        try:
             # In production, this would trigger a background job
             # For now, we'll update metadata to indicate matching should be performed
             request = self.get_by_id(request_id)
@@ -314,8 +298,7 @@ class CollaborationRequestRepository(BaseRepository[CollaborationRequest]):
                              max_results: int = 20,
                              budget_preference: Optional[BudgetRange] = None,
                              location_preferences: Optional[Dict[str, Any]] = None) -> List[Tuple[CollaborationRequest, float]]:
-        """
-        Find collaboration requests matching user profile
+        """        Find collaboration requests matching user profile
         
         Args:
             user_skills: User's skills
@@ -327,8 +310,7 @@ class CollaborationRequestRepository(BaseRepository[CollaborationRequest]):
             
         Returns:
             List of tuples (CollaborationRequest, match_score)
-        """
-        try:
+        """        try:
             # Get open requests in user's categories
             query = self.db_session.query(CollaborationRequest).filter(
                 and_(
@@ -391,8 +373,7 @@ class CollaborationRequestRepository(BaseRepository[CollaborationRequest]):
                              user_skills: List[str],
                              user_skill_level: SkillLevel,
                              location_preferences: Optional[Dict[str, Any]]) -> float:
-        """
-        Calculate match score between request and user profile
+        """        Calculate match score between request and user profile
         
         Args:
             request: CollaborationRequest to score
@@ -402,8 +383,7 @@ class CollaborationRequestRepository(BaseRepository[CollaborationRequest]):
             
         Returns:
             Match score (0.0-100.0)
-        """
-        try:
+        """        try:
             total_score = 0.0
             
             # Skill matching (40% weight)
@@ -497,8 +477,7 @@ class CollaborationRequestRepository(BaseRepository[CollaborationRequest]):
                         proposed_timeline: Optional[Dict[str, Any]] = None,
                         portfolio_links: Optional[List[str]] = None,
                         additional_info: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """
-        Submit application to collaboration request
+        """        Submit application to collaboration request
         
         Args:
             request_id: Request ID to apply to
@@ -511,8 +490,7 @@ class CollaborationRequestRepository(BaseRepository[CollaborationRequest]):
             
         Returns:
             Application result dictionary
-        """
-        try:
+        """        try:
             request = self.get_by_id(request_id)
             if not request:
                 return {'success': False, 'error': 'Request not found'}
@@ -577,14 +555,12 @@ class CollaborationRequestRepository(BaseRepository[CollaborationRequest]):
     def _notify_requester_of_application(self,
                                        request: CollaborationRequest,
                                        application: Dict[str, Any]) -> None:
-        """
-        Notify requester of new application
+        """        Notify requester of new application
         
         Args:
             request: CollaborationRequest instance
             application: Application details
-        """
-        try:
+        """        try:
             # In production, this would send actual notifications
             notification_data = {
                 'type': 'new_application',
@@ -602,16 +578,14 @@ class CollaborationRequestRepository(BaseRepository[CollaborationRequest]):
             self.logger.error(f"Failed to send application notification: {str(e)}")
             
     def get_request_analytics(self, request_id: int) -> Dict[str, Any]:
-        """
-        Get comprehensive analytics for a collaboration request
+        """        Get comprehensive analytics for a collaboration request
         
         Args:
             request_id: Request ID to analyze
             
         Returns:
             Analytics dictionary
-        """
-        try:
+        """        try:
             request = self.get_by_id(request_id)
             if not request:
                 return {'error': 'Request not found'}

@@ -1,5 +1,4 @@
-"""
-Competitive Intelligence Engine - Enterprise Competitor Analysis & Benchmarking
+"""Competitive Intelligence Engine - Enterprise Competitor Analysis & Benchmarking
 
 Ultra-advanced competitive intelligence system providing comprehensive competitor analysis,
 benchmarking, market positioning, and strategic competitive insights.
@@ -11,9 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import uuid
 from datetime import datetime, timezone, timedelta
@@ -39,16 +36,14 @@ from ...utils.data_analysis import CompetitiveAnalysisEngine
 logger = logging.getLogger(__name__)
 
 class CompetitorTier(Enum):
-    """Competitor tier classifications"""
-    DIRECT_COMPETITOR = "direct_competitor"
+    """Competitor tier classifications"""    DIRECT_COMPETITOR = "direct_competitor"
     INDIRECT_COMPETITOR = "indirect_competitor"
     SUBSTITUTE_COMPETITOR = "substitute_competitor"
     POTENTIAL_COMPETITOR = "potential_competitor"
     COMPLEMENTARY_PLAYER = "complementary_player"
 
 class CompetitiveMetric(Enum):
-    """Competitive analysis metrics"""
-    MARKET_SHARE = "market_share"
+    """Competitive analysis metrics"""    MARKET_SHARE = "market_share"
     AUDIENCE_SIZE = "audience_size"
     ENGAGEMENT_RATE = "engagement_rate"
     CONTENT_FREQUENCY = "content_frequency"
@@ -60,8 +55,7 @@ class CompetitiveMetric(Enum):
     DISTRIBUTION_REACH = "distribution_reach"
 
 class CompetitiveAdvantage(Enum):
-    """Types of competitive advantages"""
-    TECHNOLOGY_LEADERSHIP = "technology_leadership"
+    """Types of competitive advantages"""    TECHNOLOGY_LEADERSHIP = "technology_leadership"
     CONTENT_QUALITY = "content_quality"
     AUDIENCE_SIZE = "audience_size"
     ENGAGEMENT_RATE = "engagement_rate"
@@ -74,8 +68,7 @@ class CompetitiveAdvantage(Enum):
 
 @dataclass
 class CompetitorProfile:
-    """Comprehensive competitor profile data"""
-    competitor_id: str
+    """Comprehensive competitor profile data"""    competitor_id: str
     competitor_name: str
     competitor_tier: CompetitorTier
     market_segment: str
@@ -130,8 +123,7 @@ class CompetitorProfile:
 
 @dataclass
 class CompetitorMetrics:
-    """Detailed competitor performance metrics"""
-    competitor_id: str
+    """Detailed competitor performance metrics"""    competitor_id: str
     measurement_period: str
     
     # Audience Metrics
@@ -170,8 +162,7 @@ class CompetitorMetrics:
 
 @dataclass
 class BenchmarkAnalysis:
-    """Competitive benchmarking analysis results"""
-    analysis_id: str
+    """Competitive benchmarking analysis results"""    analysis_id: str
     benchmark_category: str
     measurement_period: str
     
@@ -199,13 +190,11 @@ class BenchmarkAnalysis:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class CompetitiveIntelligenceEngine:
-    """
-    Enterprise Competitive Intelligence Engine
+    """    Enterprise Competitive Intelligence Engine
     
     Provides comprehensive competitor analysis, benchmarking, and strategic intelligence
     for market positioning and competitive advantage development.
-    """
-    
+    """    
     def __init__(self):
         self.scraping_engine = WebScrapingEngine()
         self.social_api_manager = SocialMediaAPIManager()
@@ -241,8 +230,7 @@ class CompetitiveIntelligenceEngine:
         geographic_scope: str = "global",
         max_competitors: int = 20
     ) -> List[Dict[str, Any]]:
-        """
-        Identify competitors in the target market segment
+        """        Identify competitors in the target market segment
         
         Args:
             market_segment: Target market segment
@@ -252,8 +240,7 @@ class CompetitiveIntelligenceEngine:
             
         Returns:
             List of identified competitors with basic info
-        """
-        try:
+        """        try:
             # Get creator profile for comparison
             creator_profile = await self._get_creator_profile(creator_id)
             
@@ -295,8 +282,7 @@ class CompetitiveIntelligenceEngine:
         competitor_id: str,
         analysis_depth: str = "standard"  # basic, standard, comprehensive
     ) -> CompetitorProfile:
-        """
-        Conduct comprehensive competitor analysis
+        """        Conduct comprehensive competitor analysis
         
         Args:
             competitor_id: Competitor identifier
@@ -304,8 +290,7 @@ class CompetitiveIntelligenceEngine:
             
         Returns:
             CompetitorProfile: Comprehensive competitor analysis
-        """
-        try:
+        """        try:
             # Check cache first
             if competitor_id in self.competitor_cache:
                 cached_profile = self.competitor_cache[competitor_id]
@@ -352,8 +337,7 @@ class CompetitiveIntelligenceEngine:
         competitor_ids: List[str],
         benchmark_categories: List[str]
     ) -> BenchmarkAnalysis:
-        """
-        Conduct competitive benchmarking analysis
+        """        Conduct competitive benchmarking analysis
         
         Args:
             user_metrics: User's performance metrics
@@ -362,8 +346,7 @@ class CompetitiveIntelligenceEngine:
             
         Returns:
             BenchmarkAnalysis: Comprehensive benchmarking results
-        """
-        try:
+        """        try:
             analysis_id = str(uuid.uuid4())
             
             # Gather competitor metrics
@@ -432,8 +415,7 @@ class CompetitiveIntelligenceEngine:
         competitor_ids: List[str],
         tracking_period: str = "weekly"
     ) -> Dict[str, List[Dict[str, Any]]]:
-        """
-        Track changes in competitor strategies and performance
+        """        Track changes in competitor strategies and performance
         
         Args:
             competitor_ids: List of competitors to track
@@ -441,8 +423,7 @@ class CompetitiveIntelligenceEngine:
             
         Returns:
             Dict mapping competitor IDs to lists of detected changes
-        """
-        try:
+        """        try:
             competitor_changes = {}
             
             for competitor_id in competitor_ids:
@@ -468,8 +449,7 @@ class CompetitiveIntelligenceEngine:
         market_segment: str,
         geographic_scope: str
     ) -> List[Dict[str, Any]]:
-        """Identify competitors on social media platforms"""
-        competitors = []
+        """Identify competitors on social media platforms"""        competitors = []
         
         # Implementation would involve:
         # - Analyzing hashtags, keywords, and content themes
@@ -499,8 +479,7 @@ class CompetitiveIntelligenceEngine:
         market_segment: str,
         geographic_scope: str
     ) -> List[Dict[str, Any]]:
-        """Identify competitors on streaming platforms"""
-        competitors = []
+        """Identify competitors on streaming platforms"""        competitors = []
         
         # Mock competitors for streaming platforms
         mock_competitors = [
@@ -524,8 +503,7 @@ class CompetitiveIntelligenceEngine:
         market_segment: str,
         geographic_scope: str
     ) -> List[Dict[str, Any]]:
-        """Identify competitors on content platforms"""
-        competitors = []
+        """Identify competitors on content platforms"""        competitors = []
         
         # Mock competitors for content platforms
         mock_competitors = [
@@ -544,8 +522,7 @@ class CompetitiveIntelligenceEngine:
         return competitors
     
     async def _get_creator_profile(self, creator_id: str) -> Dict[str, Any]:
-        """Get creator profile for comparison"""
-        return {
+        """Get creator profile for comparison"""        return {
             'id': creator_id,
             'name': 'User Creator',
             'market_segments': ['music_streaming', 'social_media'],
@@ -557,8 +534,7 @@ class CompetitiveIntelligenceEngine:
         }
     
     def _deduplicate_competitors(self, competitors: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Remove duplicate competitors"""
-        seen_names = set()
+        """Remove duplicate competitors"""        seen_names = set()
         unique_competitors = []
         
         for competitor in competitors:
@@ -574,8 +550,7 @@ class CompetitiveIntelligenceEngine:
         competitors: List[Dict[str, Any]],
         creator_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Rank competitors by relevance"""
-        # Sort by relevance score (descending)
+        """Rank competitors by relevance"""        # Sort by relevance score (descending)
         return sorted(competitors, key=lambda x: x.get('relevance_score', 0), reverse=True)
     
     async def _gather_competitor_data(
@@ -583,8 +558,7 @@ class CompetitiveIntelligenceEngine:
         competitor_id: str,
         analysis_depth: str
     ) -> Dict[str, Any]:
-        """Gather comprehensive competitor data"""
-        return {
+        """Gather comprehensive competitor data"""        return {
             'basic_info': {
                 'id': competitor_id,
                 'name': f'Competitor {competitor_id}',
@@ -614,8 +588,7 @@ class CompetitiveIntelligenceEngine:
         competitor_data: Dict[str, Any],
         analysis_depth: str
     ) -> CompetitorProfile:
-        """Build comprehensive competitor profile"""
-        basic_info = competitor_data.get('basic_info', {})
+        """Build comprehensive competitor profile"""        basic_info = competitor_data.get('basic_info', {})
         metrics = competitor_data.get('metrics', {})
         content_strategy = competitor_data.get('content_strategy', {})
         business_model = competitor_data.get('business_model', {})
@@ -660,8 +633,7 @@ class CompetitiveIntelligenceEngine:
         return profile
     
     async def _conduct_swot_analysis(self, profile: CompetitorProfile) -> Dict[str, List[str]]:
-        """Conduct SWOT analysis for competitor"""
-        return {
+        """Conduct SWOT analysis for competitor"""        return {
             'strengths': [
                 'Large audience base',
                 'High engagement rate',
@@ -691,8 +663,7 @@ class CompetitiveIntelligenceEngine:
         self,
         profile: CompetitorProfile
     ) -> List[CompetitiveAdvantage]:
-        """Assess competitor's competitive advantages"""
-        advantages = []
+        """Assess competitor's competitive advantages"""        advantages = []
         
         if profile.audience_size > 100000:
             advantages.append(CompetitiveAdvantage.AUDIENCE_SIZE)
@@ -709,8 +680,7 @@ class CompetitiveIntelligenceEngine:
         return advantages
     
     async def _calculate_threat_level(self, profile: CompetitorProfile) -> str:
-        """Calculate competitor threat level"""
-        threat_score = 0
+        """Calculate competitor threat level"""        threat_score = 0
         
         # Market share influence
         if profile.market_share > 0.2:
@@ -748,8 +718,7 @@ class CompetitiveIntelligenceEngine:
             return 'low'
     
     def _is_cache_valid(self, cached_profile: CompetitorProfile) -> bool:
-        """Check if cached competitor profile is still valid"""
-        cache_expiry = timedelta(hours=24)
+        """Check if cached competitor profile is still valid"""        cache_expiry = timedelta(hours=24)
         return datetime.now(timezone.utc) - cached_profile.last_updated < cache_expiry
     
     async def _gather_competitor_metrics(
@@ -757,8 +726,7 @@ class CompetitiveIntelligenceEngine:
         competitor_id: str,
         categories: List[str]
     ) -> Dict[str, float]:
-        """Gather competitor metrics for benchmarking"""
-        return {
+        """Gather competitor metrics for benchmarking"""        return {
             'engagement_rate': 0.045,
             'follower_growth_rate': 0.15,
             'content_frequency': 5.2,
@@ -771,8 +739,7 @@ class CompetitiveIntelligenceEngine:
         competitor_benchmarks: Dict[str, Dict[str, float]],
         categories: List[str]
     ) -> Dict[str, float]:
-        """Calculate industry benchmark averages"""
-        benchmarks = {}
+        """Calculate industry benchmark averages"""        benchmarks = {}
         
         for category in categories:
             values = [
@@ -788,8 +755,7 @@ class CompetitiveIntelligenceEngine:
         user_metrics: Dict[str, float],
         competitor_benchmarks: Dict[str, Dict[str, float]]
     ) -> Dict[str, int]:
-        """Calculate user's performance ranking against competitors"""
-        rankings = {}
+        """Calculate user's performance ranking against competitors"""        rankings = {}
         
         for metric_name, user_value in user_metrics.items():
             # Get all competitor values for this metric
@@ -813,8 +779,7 @@ class CompetitiveIntelligenceEngine:
         user_metrics: Dict[str, float],
         industry_benchmarks: Dict[str, float]
     ) -> Dict[str, float]:
-        """Calculate performance gaps against industry benchmarks"""
-        gaps = {}
+        """Calculate performance gaps against industry benchmarks"""        gaps = {}
         
         for metric_name, user_value in user_metrics.items():
             benchmark_value = industry_benchmarks.get(metric_name, 0.0)
@@ -830,8 +795,7 @@ class CompetitiveIntelligenceEngine:
         competitor_benchmarks: Dict[str, Dict[str, float]],
         industry_benchmarks: Dict[str, float]
     ) -> List[str]:
-        """Generate insights from benchmarking analysis"""
-        insights = []
+        """Generate insights from benchmarking analysis"""        insights = []
         
         # Performance vs industry
         for metric, user_value in user_metrics.items():
@@ -855,8 +819,7 @@ class CompetitiveIntelligenceEngine:
         performance_gaps: Dict[str, float],
         competitor_benchmarks: Dict[str, Dict[str, float]]
     ) -> List[str]:
-        """Identify improvement opportunities"""
-        opportunities = []
+        """Identify improvement opportunities"""        opportunities = []
         
         # Largest gaps represent biggest opportunities
         sorted_gaps = sorted(performance_gaps.items(), key=lambda x: x[1], reverse=True)
@@ -872,8 +835,7 @@ class CompetitiveIntelligenceEngine:
         performance_gaps: Dict[str, float],
         insights: List[str]
     ) -> List[str]:
-        """Generate strategic recommendations"""
-        recommendations = [
+        """Generate strategic recommendations"""        recommendations = [
             "Implement AI-powered content optimization",
             "Develop strategic partnerships with top performers",
             "Invest in audience growth and engagement strategies",
@@ -884,8 +846,7 @@ class CompetitiveIntelligenceEngine:
         return recommendations
     
     def _determine_competitive_position(self, rankings: Dict[str, int]) -> str:
-        """Determine overall competitive position"""
-        avg_rank = np.mean(list(rankings.values()))
+        """Determine overall competitive position"""        avg_rank = np.mean(list(rankings.values()))
         
         if avg_rank <= 2:
             return "market_leader"
@@ -897,19 +858,16 @@ class CompetitiveIntelligenceEngine:
             return "underperformer"
     
     def _calculate_competitive_strength(self, rankings: Dict[str, int]) -> float:
-        """Calculate competitive strength score"""
-        total_competitors = 20  # Assumed total
+        """Calculate competitive strength score"""        total_competitors = 20  # Assumed total
         avg_rank = np.mean(list(rankings.values()))
         return max(0.0, (total_competitors - avg_rank) / total_competitors)
     
     def _calculate_market_position_score(self, gaps: Dict[str, float]) -> float:
-        """Calculate market position score"""
-        avg_gap = np.mean(list(gaps.values()))
+        """Calculate market position score"""        avg_gap = np.mean(list(gaps.values()))
         return max(0.0, 1.0 - avg_gap)
     
     async def _get_competitor_history(self, competitor_id: str) -> List[Dict[str, Any]]:
-        """Get historical competitor data"""
-        return []  # Placeholder
+        """Get historical competitor data"""        return []  # Placeholder
     
     async def _detect_competitor_changes(
         self,
@@ -917,5 +875,4 @@ class CompetitiveIntelligenceEngine:
         historical_data: List[Dict[str, Any]],
         tracking_period: str
     ) -> List[Dict[str, Any]]:
-        """Detect changes in competitor behavior"""
-        return []  # Placeholder
+        """Detect changes in competitor behavior"""        return []  # Placeholder

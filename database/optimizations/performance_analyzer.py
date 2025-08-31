@@ -1,14 +1,11 @@
-"""
-Performance Analyzer Module
+"""Performance Analyzer Module
 
 Comprehensive database performance monitoring and analysis system for query optimization,
 bottleneck detection, and performance trend analysis.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import time
 import statistics
 from datetime import datetime, timedelta
@@ -29,8 +26,7 @@ logger = get_logger(__name__)
 
 
 class PerformanceLevel(Enum):
-    """Performance level indicators"""
-    EXCELLENT = "excellent"
+    """Performance level indicators"""    EXCELLENT = "excellent"
     GOOD = "good"
     AVERAGE = "average"
     POOR = "poor"
@@ -38,8 +34,7 @@ class PerformanceLevel(Enum):
 
 
 class BottleneckType(Enum):
-    """Types of performance bottlenecks"""
-    CPU = "cpu"
+    """Types of performance bottlenecks"""    CPU = "cpu"
     MEMORY = "memory"
     DISK_IO = "disk_io"
     NETWORK = "network"
@@ -51,8 +46,7 @@ class BottleneckType(Enum):
 
 @dataclass
 class QueryMetrics:
-    """Individual query performance metrics"""
-    query_id: str
+    """Individual query performance metrics"""    query_id: str
     query_text: str
     execution_count: int = 0
     total_time: float = 0.0
@@ -76,8 +70,7 @@ class QueryMetrics:
     _execution_times: deque = field(default_factory=lambda: deque(maxlen=1000))
     
     def add_execution(self, execution_time: float, rows_examined: int = 0, rows_returned: int = 0, error: bool = False) -> None:
-        """Add execution metrics"""
-        self.execution_count += 1
+        """Add execution metrics"""        self.execution_count += 1
         self.total_time += execution_time
         self.min_time = min(self.min_time, execution_time)
         self.max_time = max(self.max_time, execution_time)
@@ -98,15 +91,13 @@ class QueryMetrics:
     
     @property
     def efficiency_ratio(self) -> float:
-        """Calculate query efficiency (rows returned / rows examined)"""
-        if self.rows_examined == 0:
+        """Calculate query efficiency (rows returned / rows examined)"""        if self.rows_examined == 0:
             return 1.0
         return self.rows_returned / self.rows_examined
     
     @property
     def performance_score(self) -> float:
-        """Calculate overall performance score (0-100)"""
-        score = 100.0
+        """Calculate overall performance score (0-100)"""        score = 100.0
         
         # Penalize slow queries
         if self.avg_time > 5.0:
@@ -135,8 +126,7 @@ class QueryMetrics:
     
     @property
     def performance_level(self) -> PerformanceLevel:
-        """Get performance level based on score"""
-        score = self.performance_score
+        """Get performance level based on score"""        score = self.performance_score
         if score >= 90:
             return PerformanceLevel.EXCELLENT
         elif score >= 75:
@@ -151,8 +141,7 @@ class QueryMetrics:
 
 @dataclass
 class SystemMetrics:
-    """System-level performance metrics"""
-    cpu_usage: float = 0.0
+    """System-level performance metrics"""    cpu_usage: float = 0.0
     memory_usage: float = 0.0
     disk_io_read: float = 0.0
     disk_io_write: float = 0.0
@@ -166,16 +155,14 @@ class SystemMetrics:
     
     @property
     def connection_utilization(self) -> float:
-        """Calculate connection pool utilization"""
-        if self.total_connections == 0:
+        """Calculate connection pool utilization"""        if self.total_connections == 0:
             return 0.0
         return self.active_connections / self.total_connections
 
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert/anomaly"""
-    alert_type: str
+    """Performance alert/anomaly"""    alert_type: str
     severity: str
     message: str
     query_id: Optional[str] = None
@@ -187,8 +174,7 @@ class PerformanceAlert:
 
 @dataclass
 class PerformanceReport:
-    """Comprehensive performance analysis report"""
-    start_time: datetime
+    """Comprehensive performance analysis report"""    start_time: datetime
     end_time: datetime
     total_queries: int
     slow_queries: int
@@ -216,8 +202,7 @@ class PerformanceReport:
     
     @property
     def overall_health_score(self) -> float:
-        """Calculate overall database health score"""
-        score = 100.0
+        """Calculate overall database health score"""        score = 100.0
         
         # Error rate impact
         if self.error_rate > 0.1:
@@ -256,8 +241,7 @@ class PerformanceReport:
 
 
 class PerformanceAnalyzer:
-    """Advanced database performance analyzer"""
-    
+    """Advanced database performance analyzer"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.metrics_collector = MetricsCollector()
@@ -285,8 +269,7 @@ class PerformanceAnalyzer:
         self._baseline_metrics: Dict[str, float] = {}
     
     async def start_monitoring(self, engine: AsyncEngine) -> None:
-        """Start continuous performance monitoring"""
-        try:
+        """Start continuous performance monitoring"""        try:
             logger.info("Starting performance monitoring")
             
             # Start system metrics collection
@@ -302,19 +285,16 @@ class PerformanceAnalyzer:
             raise
     
     def _setup_query_listeners(self, engine: AsyncEngine) -> None:
-        """Setup SQLAlchemy event listeners for query monitoring"""
-        from sqlalchemy import event
+        """Setup SQLAlchemy event listeners for query monitoring"""        from sqlalchemy import event
         
         @event.listens_for(engine.sync_engine, "before_cursor_execute")
         def before_cursor_execute(conn, cursor, statement, parameters, context, executemany):
-            """Track query start time"""
-            context._query_start_time = time.time()
+            """Track query start time"""            context._query_start_time = time.time()
             context._statement = statement
         
         @event.listens_for(engine.sync_engine, "after_cursor_execute")
         def after_cursor_execute(conn, cursor, statement, parameters, context, executemany):
-            """Track query completion and metrics"""
-            if hasattr(context, '_query_start_time'):
+            """Track query completion and metrics"""            if hasattr(context, '_query_start_time'):
                 execution_time = time.time() - context._query_start_time
                 
                 # Extract rows info if available
@@ -325,8 +305,7 @@ class PerformanceAnalyzer:
         
         @event.listens_for(engine.sync_engine, "handle_error")
         def handle_error(exception_context):
-            """Track query errors"""
-            if hasattr(exception_context, 'statement'):
+            """Track query errors"""            if hasattr(exception_context, 'statement'):
                 self.track_query(
                     exception_context.statement,
                     0.0,  # Unknown execution time
@@ -341,8 +320,7 @@ class PerformanceAnalyzer:
         rows_returned: int = 0,
         error: bool = False
     ) -> None:
-        """Track query execution metrics"""
-        try:
+        """Track query execution metrics"""        try:
             # Generate query ID (normalized)
             query_id = self._generate_query_id(query)
             
@@ -386,14 +364,12 @@ class PerformanceAnalyzer:
             logger.warning(f"Failed to track query metrics: {e}")
     
     def _generate_query_id(self, query: str) -> str:
-        """Generate normalized query ID"""
-        import hashlib
+        """Generate normalized query ID"""        import hashlib
         normalized = self._normalize_query(query)
         return hashlib.md5(normalized.encode()).hexdigest()
     
     def _normalize_query(self, query: str) -> str:
-        """Normalize query for pattern matching"""
-        import re
+        """Normalize query for pattern matching"""        import re
         
         # Convert to lowercase and remove extra whitespace
         normalized = re.sub(r'\s+', ' ', query.lower().strip())
@@ -410,8 +386,7 @@ class PerformanceAnalyzer:
         return normalized.strip()
     
     async def _collect_system_metrics(self) -> None:
-        """Collect system-level performance metrics"""
-        while True:
+        """Collect system-level performance metrics"""        while True:
             try:
                 await asyncio.sleep(60)  # Collect every minute
                 
@@ -457,8 +432,7 @@ class PerformanceAnalyzer:
                 logger.error(f"System metrics collection error: {e}")
     
     async def _check_system_alerts(self, metrics: SystemMetrics) -> None:
-        """Check system metrics against alert thresholds"""
-        # CPU usage alert
+        """Check system metrics against alert thresholds"""        # CPU usage alert
         if metrics.cpu_usage > self.alert_thresholds.get('cpu_usage', 80):
             self._create_alert(
                 "high_cpu_usage",
@@ -497,8 +471,7 @@ class PerformanceAnalyzer:
         metric_value: Optional[float] = None,
         threshold: Optional[float] = None
     ) -> None:
-        """Create a performance alert"""
-        alert = PerformanceAlert(
+        """Create a performance alert"""        alert = PerformanceAlert(
             alert_type=alert_type,
             severity=severity,
             message=message,
@@ -523,8 +496,7 @@ class PerformanceAnalyzer:
         )
     
     async def generate_report(self, start_time: datetime, end_time: datetime) -> PerformanceReport:
-        """Generate comprehensive performance report"""
-        try:
+        """Generate comprehensive performance report"""        try:
             logger.info(f"Generating performance report from {start_time} to {end_time}")
             
             # Filter queries by time window
@@ -631,8 +603,7 @@ class PerformanceAnalyzer:
             raise
     
     def _create_empty_report(self, start_time: datetime, end_time: datetime) -> PerformanceReport:
-        """Create empty report when no data is available"""
-        return PerformanceReport(
+        """Create empty report when no data is available"""        return PerformanceReport(
             start_time=start_time,
             end_time=end_time,
             total_queries=0,
@@ -655,8 +626,7 @@ class PerformanceAnalyzer:
         )
     
     def _percentile(self, data: List[float], percentile: float) -> float:
-        """Calculate percentile value"""
-        if not data:
+        """Calculate percentile value"""        if not data:
             return 0.0
         
         sorted_data = sorted(data)
@@ -668,8 +638,7 @@ class PerformanceAnalyzer:
         queries: List[QueryMetrics],
         system_metrics: List[SystemMetrics]
     ) -> List[Dict[str, Any]]:
-        """Identify performance bottlenecks"""
-        bottlenecks = []
+        """Identify performance bottlenecks"""        bottlenecks = []
         
         # Query-based bottlenecks
         slow_query_count = sum(1 for q in queries if q.avg_time > self.slow_query_threshold)
@@ -720,8 +689,7 @@ class PerformanceAnalyzer:
         system_metrics: List[SystemMetrics],
         bottlenecks: List[Dict[str, Any]]
     ) -> List[str]:
-        """Generate performance optimization recommendations"""
-        recommendations = []
+        """Generate performance optimization recommendations"""        recommendations = []
         
         # Query optimization recommendations
         slow_queries = [q for q in queries if q.avg_time > self.slow_query_threshold]
@@ -776,8 +744,7 @@ class PerformanceAnalyzer:
         return recommendations
     
     async def get_real_time_stats(self) -> Dict[str, Any]:
-        """Get real-time performance statistics"""
-        current_time = datetime.now()
+        """Get real-time performance statistics"""        current_time = datetime.now()
         last_hour = current_time - timedelta(hours=1)
         
         # Recent queries
@@ -813,8 +780,7 @@ class PerformanceAnalyzer:
         }
     
     async def stop_monitoring(self) -> None:
-        """Stop performance monitoring"""
-        if self._monitoring_task:
+        """Stop performance monitoring"""        if self._monitoring_task:
             self._monitoring_task.cancel()
             try:
                 await self._monitoring_task
@@ -824,8 +790,7 @@ class PerformanceAnalyzer:
         logger.info("Performance monitoring stopped")
     
     def clear_metrics(self, older_than_hours: int = 24) -> None:
-        """Clear old metrics to prevent memory bloat"""
-        cutoff_time = datetime.now() - timedelta(hours=older_than_hours)
+        """Clear old metrics to prevent memory bloat"""        cutoff_time = datetime.now() - timedelta(hours=older_than_hours)
         
         # Remove old query metrics
         old_queries = [
@@ -847,8 +812,7 @@ _performance_analyzer: Optional[PerformanceAnalyzer] = None
 
 
 def get_performance_analyzer(config: Optional[Dict[str, Any]] = None) -> PerformanceAnalyzer:
-    """Get global performance analyzer instance"""
-    global _performance_analyzer
+    """Get global performance analyzer instance"""    global _performance_analyzer
     
     if _performance_analyzer is None:
         _performance_analyzer = PerformanceAnalyzer(config)
@@ -857,14 +821,12 @@ def get_performance_analyzer(config: Optional[Dict[str, Any]] = None) -> Perform
 
 
 async def start_performance_monitoring(engine: AsyncEngine, config: Optional[Dict[str, Any]] = None) -> None:
-    """Start global performance monitoring"""
-    analyzer = get_performance_analyzer(config)
+    """Start global performance monitoring"""    analyzer = get_performance_analyzer(config)
     await analyzer.start_monitoring(engine)
 
 
 async def stop_performance_monitoring() -> None:
-    """Stop global performance monitoring"""
-    global _performance_analyzer
+    """Stop global performance monitoring"""    global _performance_analyzer
     
     if _performance_analyzer:
         await _performance_analyzer.stop_monitoring()

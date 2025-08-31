@@ -1,5 +1,4 @@
-"""
-Enterprise Match Validator for Creator Collaboration Quality Assurance
+"""Enterprise Match Validator for Creator Collaboration Quality Assurance
 
 This module implements advanced AI-driven validation systems for ensuring match quality,
 safety, compliance, and business viability through comprehensive multi-dimensional
@@ -38,9 +37,7 @@ Copyright: 2025 Fahed Mlaiel. All rights reserved.
 This validation system contains proprietary AI algorithms and business logic
 developed by Fahed Mlaiel. Unauthorized use, reverse engineering, or distribution
 is strictly prohibited and subject to legal prosecution.
-"""
-
-import logging
+"""import logging
 import asyncio
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -65,8 +62,7 @@ from .criteria import MatchingCriteriaManager, CriteriaSetEvaluation
 
 
 class ValidationRule(Enum):
-    """Enterprise validation rule types"""
-    # Safety & Compliance
+    """Enterprise validation rule types"""    # Safety & Compliance
     CONTENT_SAFETY = "content_safety"
     BRAND_SAFETY = "brand_safety"
     LEGAL_COMPLIANCE = "legal_compliance"
@@ -100,8 +96,7 @@ class ValidationRule(Enum):
 
 
 class ValidationSeverity(Enum):
-    """Enhanced validation severity levels"""
-    CRITICAL = "critical"      # Immediate blocking, no exceptions
+    """Enhanced validation severity levels"""    CRITICAL = "critical"      # Immediate blocking, no exceptions
     HIGH = "high"             # Requires manual review and approval
     MEDIUM = "medium"         # Warning with automatic escalation options
     LOW = "low"              # Information only, logged for analysis
@@ -109,8 +104,7 @@ class ValidationSeverity(Enum):
 
 
 class QualityCheck(Enum):
-    """Quality check categories for comprehensive validation"""
-    PROFILE_COMPLETENESS = "profile_completeness"
+    """Quality check categories for comprehensive validation"""    PROFILE_COMPLETENESS = "profile_completeness"
     CONTENT_AUTHENTICITY = "content_authenticity"
     ENGAGEMENT_AUTHENTICITY = "engagement_authenticity"
     BRAND_CONSISTENCY = "brand_consistency"
@@ -122,8 +116,7 @@ class QualityCheck(Enum):
 
 @dataclass
 class ValidationResult:
-    """Comprehensive validation result with AI insights"""
-    is_valid: bool
+    """Comprehensive validation result with AI insights"""    is_valid: bool
     overall_score: float
     confidence_level: float
     
@@ -155,8 +148,7 @@ class ValidationResult:
 
 @dataclass
 class ValidationConfig:
-    """Enterprise validation configuration"""
-    validation_level: ValidationSeverity = ValidationSeverity.STANDARD
+    """Enterprise validation configuration"""    validation_level: ValidationSeverity = ValidationSeverity.STANDARD
     enabled_rules: Set[ValidationRule] = field(default_factory=set)
     rule_weights: Dict[ValidationRule, float] = field(default_factory=dict)
     quality_thresholds: Dict[QualityCheck, float] = field(default_factory=dict)
@@ -185,8 +177,7 @@ class ValidationConfig:
 
 @dataclass
 class ValidationIssue:
-    """Individual validation issue"""
-    issue_id: str
+    """Individual validation issue"""    issue_id: str
     category: ValidationCategory
     severity: ValidationSeverity
     title: str
@@ -199,8 +190,7 @@ class ValidationIssue:
 
 @dataclass
 class ValidationResult:
-    """Complete validation result"""
-    match_id: str
+    """Complete validation result"""    match_id: str
     overall_valid: bool
     validation_level: ValidationLevel
     overall_score: float
@@ -217,13 +207,11 @@ class ValidationResult:
 
 
 class MatchValidator:
-    """
-    Comprehensive match validation system
+    """    Comprehensive match validation system
     
     This class implements advanced validation algorithms to ensure match quality,
     safety, compliance, and business viability before presenting matches to users.
-    """
-    
+    """    
     def __init__(
         self,
         criteria_manager: MatchingCriteriaManager,
@@ -253,8 +241,7 @@ class MatchValidator:
         }
     
     def _initialize_validation_rules(self) -> None:
-        """Initialize validation rules for different levels"""
-        self.validation_rules = {
+        """Initialize validation rules for different levels"""        self.validation_rules = {
             ValidationLevel.BASIC: {
                 'required_categories': [
                     ValidationCategory.SAFETY_COMPLIANCE,
@@ -304,8 +291,7 @@ class MatchValidator:
         validation_level: ValidationLevel = ValidationLevel.STANDARD,
         context: Optional[Dict[str, Any]] = None
     ) -> ValidationResult:
-        """
-        Perform comprehensive match validation
+        """        Perform comprehensive match validation
         
         Args:
             match_result: Match result to validate
@@ -316,8 +302,7 @@ class MatchValidator:
             
         Returns:
             Complete validation result
-        """
-        try:
+        """        try:
             match_id = f"{creator_a.user_id}_{creator_b.user_id}_{int(datetime.utcnow().timestamp())}"
             
             # Get validation rules for the specified level
@@ -413,8 +398,7 @@ class MatchValidator:
         creator_b: CreatorProfile,
         context: Optional[Dict[str, Any]]
     ) -> Tuple[List[ValidationIssue], bool]:
-        """Validate specific category"""
-        try:
+        """Validate specific category"""        try:
             if category == ValidationCategory.SAFETY_COMPLIANCE:
                 return await self._validate_safety_compliance(match_result, creator_a, creator_b, context)
             
@@ -454,8 +438,7 @@ class MatchValidator:
         creator_b: CreatorProfile,
         context: Optional[Dict[str, Any]]
     ) -> Tuple[List[ValidationIssue], bool]:
-        """Validate safety and compliance requirements"""
-        issues = []
+        """Validate safety and compliance requirements"""        issues = []
         
         # Check content safety ratings
         if not self._check_content_safety(creator_a) or not self._check_content_safety(creator_b):
@@ -508,8 +491,7 @@ class MatchValidator:
         creator_b: CreatorProfile,
         context: Optional[Dict[str, Any]]
     ) -> Tuple[List[ValidationIssue], bool]:
-        """Validate quality standards"""
-        issues = []
+        """Validate quality standards"""        issues = []
         
         # Check minimum quality scores
         min_quality_threshold = self.config.get('min_quality_threshold', 0.7)
@@ -553,8 +535,7 @@ class MatchValidator:
         creator_b: CreatorProfile,
         context: Optional[Dict[str, Any]]
     ) -> Tuple[List[ValidationIssue], bool]:
-        """Validate platform policy compliance"""
-        issues = []
+        """Validate platform policy compliance"""        issues = []
         
         # Check platform violations
         for creator, creator_name in [(creator_a, "Creator A"), (creator_b, "Creator B")]:
@@ -594,8 +575,7 @@ class MatchValidator:
         creator_b: CreatorProfile,
         context: Optional[Dict[str, Any]]
     ) -> Tuple[List[ValidationIssue], bool]:
-        """Validate brand alignment"""
-        issues = []
+        """Validate brand alignment"""        issues = []
         
         # Check brand values compatibility
         if not self._check_brand_values_alignment(creator_a, creator_b):
@@ -634,8 +614,7 @@ class MatchValidator:
         creator_b: CreatorProfile,
         context: Optional[Dict[str, Any]]
     ) -> Tuple[List[ValidationIssue], bool]:
-        """Validate legal compliance requirements"""
-        issues = []
+        """Validate legal compliance requirements"""        issues = []
         
         # Check copyright compliance
         if not self._check_copyright_compliance(creator_a, creator_b):
@@ -674,8 +653,7 @@ class MatchValidator:
         creator_b: CreatorProfile,
         context: Optional[Dict[str, Any]]
     ) -> Tuple[List[ValidationIssue], bool]:
-        """Validate business viability"""
-        issues = []
+        """Validate business viability"""        issues = []
         
         # Check revenue potential
         if match_result.potential_revenue and match_result.potential_revenue < 100:
@@ -714,8 +692,7 @@ class MatchValidator:
         creator_b: CreatorProfile,
         context: Optional[Dict[str, Any]]
     ) -> Tuple[List[ValidationIssue], bool]:
-        """Validate technical compatibility"""
-        issues = []
+        """Validate technical compatibility"""        issues = []
         
         # Check content format compatibility
         if not self._check_content_format_compatibility(creator_a, creator_b):
@@ -754,8 +731,7 @@ class MatchValidator:
         creator_b: CreatorProfile,
         context: Optional[Dict[str, Any]]
     ) -> Tuple[List[ValidationIssue], bool]:
-        """Validate risk factors"""
-        issues = []
+        """Validate risk factors"""        issues = []
         
         # Check collaboration risk factors
         risk_factors = match_result.risk_assessment
@@ -779,75 +755,61 @@ class MatchValidator:
     # Helper methods for specific checks
     
     def _check_content_safety(self, creator: CreatorProfile) -> bool:
-        """Check content safety rating"""
-        # Implementation would check content safety scores/ratings
+        """Check content safety rating"""        # Implementation would check content safety scores/ratings
         return True  # Placeholder
     
     def _check_brand_safety_compatibility(self, creator_a: CreatorProfile, creator_b: CreatorProfile) -> bool:
-        """Check brand safety compatibility"""
-        # Implementation would analyze brand safety compatibility
+        """Check brand safety compatibility"""        # Implementation would analyze brand safety compatibility
         return True  # Placeholder
     
     def _check_age_appropriate_content(self, creator_a: CreatorProfile, creator_b: CreatorProfile) -> bool:
-        """Check age appropriateness"""
-        # Implementation would verify age-appropriate content
+        """Check age appropriateness"""        # Implementation would verify age-appropriate content
         return True  # Placeholder
     
     def _check_quality_compatibility(self, creator_a: CreatorProfile, creator_b: CreatorProfile) -> bool:
-        """Check quality level compatibility"""
-        # Implementation would compare quality levels
+        """Check quality level compatibility"""        # Implementation would compare quality levels
         return True  # Placeholder
     
     def _has_platform_violations(self, creator: CreatorProfile) -> bool:
-        """Check for platform violations"""
-        # Implementation would check violation history
+        """Check for platform violations"""        # Implementation would check violation history
         return False  # Placeholder
     
     def _check_cross_platform_policies(self, creator_a: CreatorProfile, creator_b: CreatorProfile) -> bool:
-        """Check cross-platform policy compliance"""
-        # Implementation would verify cross-platform policies
+        """Check cross-platform policy compliance"""        # Implementation would verify cross-platform policies
         return True  # Placeholder
     
     def _check_brand_values_alignment(self, creator_a: CreatorProfile, creator_b: CreatorProfile) -> bool:
-        """Check brand values alignment"""
-        # Implementation would analyze brand values compatibility
+        """Check brand values alignment"""        # Implementation would analyze brand values compatibility
         return True  # Placeholder
     
     def _check_aesthetic_compatibility(self, creator_a: CreatorProfile, creator_b: CreatorProfile) -> bool:
-        """Check aesthetic compatibility"""
-        # Implementation would analyze aesthetic styles
+        """Check aesthetic compatibility"""        # Implementation would analyze aesthetic styles
         return True  # Placeholder
     
     def _check_copyright_compliance(self, creator_a: CreatorProfile, creator_b: CreatorProfile) -> bool:
-        """Check copyright compliance"""
-        # Implementation would verify copyright compliance
+        """Check copyright compliance"""        # Implementation would verify copyright compliance
         return True  # Placeholder
     
     def _check_geographic_legal_compliance(self, creator_a: CreatorProfile, creator_b: CreatorProfile) -> bool:
-        """Check geographic legal compliance"""
-        # Implementation would check geographic legal restrictions
+        """Check geographic legal compliance"""        # Implementation would check geographic legal restrictions
         return True  # Placeholder
     
     def _check_market_timing(self, creator_a: CreatorProfile, creator_b: CreatorProfile) -> bool:
-        """Check market timing"""
-        # Implementation would analyze market conditions
+        """Check market timing"""        # Implementation would analyze market conditions
         return True  # Placeholder
     
     def _check_content_format_compatibility(self, creator_a: CreatorProfile, creator_b: CreatorProfile) -> bool:
-        """Check content format compatibility"""
-        # Implementation would verify format compatibility
+        """Check content format compatibility"""        # Implementation would verify format compatibility
         return True  # Placeholder
     
     def _check_platform_technical_requirements(self, creator_a: CreatorProfile, creator_b: CreatorProfile) -> bool:
-        """Check platform technical requirements"""
-        # Implementation would verify technical requirements
+        """Check platform technical requirements"""        # Implementation would verify technical requirements
         return True  # Placeholder
     
     # Scoring and decision methods
     
     def _calculate_validation_score(self, issues: List[ValidationIssue], rules: Dict[str, Any]) -> float:
-        """Calculate overall validation score"""
-        if not issues:
+        """Calculate overall validation score"""        if not issues:
             return 1.0
         
         # Weight issues by severity
@@ -875,8 +837,7 @@ class MatchValidator:
         critical_issues: List[ValidationIssue],
         high_issues: List[ValidationIssue]
     ) -> bool:
-        """Determine overall validity based on rules"""
-        # Critical issues always block
+        """Determine overall validity based on rules"""        # Critical issues always block
         if len(critical_issues) > rules['max_critical_issues']:
             return False
         
@@ -891,8 +852,7 @@ class MatchValidator:
         return True
     
     def _calculate_risk_score(self, issues: List[ValidationIssue], match_result: MatchResult) -> float:
-        """Calculate overall risk score"""
-        if not issues:
+        """Calculate overall risk score"""        if not issues:
             return 0.0
         
         risk_factors = []
@@ -919,8 +879,7 @@ class MatchValidator:
         issues: List[ValidationIssue],
         match_result: MatchResult
     ) -> List[str]:
-        """Generate validation recommendations"""
-        recommendations = []
+        """Generate validation recommendations"""        recommendations = []
         
         # Add recommendations from issues
         for issue in issues:
@@ -943,8 +902,7 @@ class MatchValidator:
         critical_issues: List[ValidationIssue],
         warnings: List[ValidationIssue]
     ) -> str:
-        """Generate validation summary"""
-        if overall_valid:
+        """Generate validation summary"""        if overall_valid:
             summary = f"VALIDATION PASSED (Score: {score:.2f})"
             if warnings:
                 summary += f" with {len(warnings)} warning(s)"
@@ -956,8 +914,7 @@ class MatchValidator:
         return summary
     
     def _create_validation_error(self, category: ValidationCategory, error_msg: str) -> ValidationIssue:
-        """Create validation error issue"""
-        return ValidationIssue(
+        """Create validation error issue"""        return ValidationIssue(
             issue_id=f"validation_error_{category.value}",
             category=category,
             severity=ValidationSeverity.CRITICAL,

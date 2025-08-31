@@ -1,5 +1,4 @@
-"""
-Enterprise Recommendation Agent for IA Influencer Platform
+"""Enterprise Recommendation Agent for IA Influencer Platform
 
 Ultra-advanced recommendation system providing personalized content discovery,
 collaboration matching, and revenue optimization for multi-modal creators.
@@ -10,9 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime
@@ -32,11 +29,9 @@ from .models import (
 
 
 class RecommendationAgent:
-    """
-    Enterprise Recommendation Agent providing comprehensive AI-powered
+    """    Enterprise Recommendation Agent providing comprehensive AI-powered
     content discovery, personalization, and collaboration services.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -85,8 +80,7 @@ class RecommendationAgent:
         count: int = 10,
         strategy: str = "hybrid"
     ) -> Dict[str, Any]:
-        """Get personalized content recommendations for user"""
-        try:
+        """Get personalized content recommendations for user"""        try:
             # Create recommendation context
             rec_context = RecommendationContext(
                 session_id=context.get('session_id', ''),
@@ -132,8 +126,7 @@ class RecommendationAgent:
         self,
         collaboration_request: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Find matching creators for collaboration request"""
-        try:
+        """Find matching creators for collaboration request"""        try:
             # Create collaboration request object
             request = CollaborationRequest(
                 initiator_id=collaboration_request['initiator_id'],
@@ -173,8 +166,7 @@ class RecommendationAgent:
         content_id: str,
         target_metrics: Dict[str, float]
     ) -> Dict[str, Any]:
-        """Optimize monetization strategy for content"""
-        try:
+        """Optimize monetization strategy for content"""        try:
             result = await self.revenue_optimizer.optimize_content_monetization(
                 content_id, target_metrics
             )
@@ -188,8 +180,7 @@ class RecommendationAgent:
         self,
         content_id: str
     ) -> Dict[str, Any]:
-        """Analyze comprehensive content performance"""
-        try:
+        """Analyze comprehensive content performance"""        try:
             # Get content features
             features = await self.content_analyzer.analyze_content_features(content_id)
             
@@ -218,8 +209,7 @@ class RecommendationAgent:
         user_id: str,
         interactions: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Update user preferences based on new interactions"""
-        try:
+        """Update user preferences based on new interactions"""        try:
             # Convert interaction dictionaries to InteractionEvent objects
             interaction_events = []
             for interaction_data in interactions:
@@ -257,8 +247,7 @@ class RecommendationAgent:
         self,
         filters: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Get currently trending content"""
-        try:
+        """Get currently trending content"""        try:
             trends = await self.recommendation_engine.get_trending_content(
                 content_type=filters.get('content_type') if filters else None,
                 geographic_filter=filters.get('geographic_filter') if filters else None,
@@ -288,8 +277,7 @@ class RecommendationAgent:
         category: Optional[str] = None,
         creator_tier: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Get market opportunities for creators"""
-        try:
+        """Get market opportunities for creators"""        try:
             opportunities = await self.analytics_processor.detect_market_opportunities(
                 category, creator_tier
             )
@@ -306,8 +294,7 @@ class RecommendationAgent:
 logger = logging.getLogger(__name__)
 
 class RecommendationType(Enum):
-    """Types of recommendations"""
-    CONTENT_DISCOVERY = "content_discovery"
+    """Types of recommendations"""    CONTENT_DISCOVERY = "content_discovery"
     CREATOR_MATCHING = "creator_matching" 
     COLLABORATION_SUGGESTIONS = "collaboration_suggestions"
     TREND_OPPORTUNITIES = "trend_opportunities"
@@ -317,8 +304,7 @@ class RecommendationType(Enum):
     TOOL_RECOMMENDATIONS = "tool_recommendations"
 
 class RecommendationStrategy(Enum):
-    """Recommendation generation strategies"""
-    COLLABORATIVE_FILTERING = "collaborative_filtering"
+    """Recommendation generation strategies"""    COLLABORATIVE_FILTERING = "collaborative_filtering"
     CONTENT_BASED = "content_based"
     HYBRID = "hybrid"
     DEEP_LEARNING = "deep_learning"
@@ -326,16 +312,14 @@ class RecommendationStrategy(Enum):
     REINFORCEMENT_LEARNING = "reinforcement_learning"
 
 class PersonalizationLevel(Enum):
-    """Level of personalization"""
-    BASIC = "basic"
+    """Level of personalization"""    BASIC = "basic"
     STANDARD = "standard" 
     ADVANCED = "advanced"
     HYPER_PERSONALIZED = "hyper_personalized"
 
 @dataclass
 class RecommendationItem:
-    """Individual recommendation item"""
-    item_id: str
+    """Individual recommendation item"""    item_id: str
     item_type: str  # content, creator, tool, opportunity
     title: str
     description: str
@@ -350,8 +334,7 @@ class RecommendationItem:
 
 @dataclass
 class RecommendationSet:
-    """Set of recommendations with context"""
-    recommendations: List[RecommendationItem]
+    """Set of recommendations with context"""    recommendations: List[RecommendationItem]
     recommendation_type: RecommendationType
     strategy_used: RecommendationStrategy
     personalization_level: PersonalizationLevel
@@ -360,8 +343,7 @@ class RecommendationSet:
     performance_metrics: Dict[str, float] = field(default_factory=dict)
 
 class RecommendationAgent(BaseAgent):
-    """
-    Ultra-advanced recommendation system with comprehensive personalization capabilities:
+    """    Ultra-advanced recommendation system with comprehensive personalization capabilities:
     
     Core Features:
     - Multi-strategy recommendation generation (CF, content-based, hybrid, deep learning)
@@ -375,8 +357,7 @@ class RecommendationAgent(BaseAgent):
     - Tool and resource recommendations
     - A/B testing framework for recommendation optimization
     - Explainable AI for recommendation transparency
-    """
-    
+    """    
     def __init__(self, agent_id: str, config: Dict[str, Any] = None):
         super().__init__(
             agent_id=agent_id,
@@ -431,8 +412,7 @@ class RecommendationAgent(BaseAgent):
         ]
     
     async def _load_models_and_resources(self):
-        """Load recommendation models and resources"""
-        try:
+        """Load recommendation models and resources"""        try:
             # Load pre-trained embedding models
             await self._load_embedding_models()
             
@@ -452,8 +432,7 @@ class RecommendationAgent(BaseAgent):
             raise
     
     async def _load_embedding_models(self):
-        """Load embedding models for content and user representation"""
-        try:
+        """Load embedding models for content and user representation"""        try:
             # Load sentence transformer for text embeddings
             self.sentence_transformer = sentence_transformers.SentenceTransformer(
                 'all-MiniLM-L6-v2'
@@ -469,8 +448,7 @@ class RecommendationAgent(BaseAgent):
             raise
     
     async def _initialize_recommendation_models(self):
-        """Initialize different recommendation models"""
-        try:
+        """Initialize different recommendation models"""        try:
             # Collaborative filtering model
             self.collaborative_model = CollaborativeFilteringModel()
             
@@ -490,8 +468,7 @@ class RecommendationAgent(BaseAgent):
             raise
     
     async def process(self, request: AgentRequest) -> AgentResponse:
-        """Main recommendation processing pipeline"""
-        action = request.action
+        """Main recommendation processing pipeline"""        action = request.action
         data = request.data
         
         try:
@@ -535,8 +512,7 @@ class RecommendationAgent(BaseAgent):
             )
     
     async def _generate_recommendations(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate personalized recommendations"""
-        user_id = data.get('user_id')
+        """Generate personalized recommendations"""        user_id = data.get('user_id')
         recommendation_type = RecommendationType(data.get('type', 'content_discovery'))
         num_recommendations = data.get('count', 10)
         strategy = RecommendationStrategy(data.get('strategy', 'hybrid'))
@@ -603,8 +579,7 @@ class RecommendationAgent(BaseAgent):
         count: int,
         context: Dict[str, Any]
     ) -> List[RecommendationItem]:
-        """Generate recommendations using collaborative filtering"""
-        
+        """Generate recommendations using collaborative filtering"""        
         # Get user-item interaction matrix
         interaction_matrix = await self._build_interaction_matrix()
         
@@ -649,8 +624,7 @@ class RecommendationAgent(BaseAgent):
         count: int,
         context: Dict[str, Any]
     ) -> List[RecommendationItem]:
-        """Generate recommendations using content-based filtering"""
-        
+        """Generate recommendations using content-based filtering"""        
         # Get user's historical interactions and preferences
         user_history = await self._get_user_interaction_history(user_id)
         user_profile = await self._get_user_profile(user_id)
@@ -700,8 +674,7 @@ class RecommendationAgent(BaseAgent):
         count: int, 
         context: Dict[str, Any]
     ) -> List[RecommendationItem]:
-        """Generate recommendations using hybrid approach"""
-        
+        """Generate recommendations using hybrid approach"""        
         # Generate recommendations from different strategies
         cf_recommendations = await self._collaborative_filtering_recommendations(
             user_id, recommendation_type, count * 2, context
@@ -762,8 +735,7 @@ class RecommendationAgent(BaseAgent):
         return diverse_recommendations[:count]
     
     async def _suggest_collaborations(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Suggest collaboration opportunities"""
-        user_id = data.get('user_id')
+        """Suggest collaboration opportunities"""        user_id = data.get('user_id')
         collaboration_types = data.get('types', ['music', 'content', 'cross_promotion'])
         
         # Get user profile and capabilities
@@ -805,8 +777,7 @@ class RecommendationAgent(BaseAgent):
         count: int,
         context: Dict[str, Any]
     ) -> List[RecommendationItem]:
-        """Generate recommendations using deep learning models"""
-        
+        """Generate recommendations using deep learning models"""        
         try:
             # Get user embedding
             user_embedding = await self._get_user_embedding(user_id)
@@ -864,8 +835,7 @@ class RecommendationAgent(BaseAgent):
             return []
     
     async def _suggest_music_collaborations(self, user_id: str, user_profile: Dict[str, Any]) -> Dict[str, Any]:
-        """Suggest music collaboration opportunities"""
-        
+        """Suggest music collaboration opportunities"""        
         user_genres = user_profile.get('music_genres', [])
         user_instruments = user_profile.get('instruments', [])
         user_skills = user_profile.get('music_skills', [])
@@ -906,8 +876,7 @@ class RecommendationAgent(BaseAgent):
         }
     
     async def _suggest_content_collaborations(self, user_id: str, user_profile: Dict[str, Any]) -> Dict[str, Any]:
-        """Suggest content collaboration opportunities"""
-        
+        """Suggest content collaboration opportunities"""        
         user_content_types = user_profile.get('content_types', [])
         user_audience_size = user_profile.get('audience_size', 0)
         user_engagement_rate = user_profile.get('engagement_rate', 0.0)
@@ -945,8 +914,7 @@ class RecommendationAgent(BaseAgent):
         }
     
     async def _suggest_cross_promotion_opportunities(self, user_id: str, user_profile: Dict[str, Any]) -> Dict[str, Any]:
-        """Suggest cross-promotion opportunities"""
-        
+        """Suggest cross-promotion opportunities"""        
         user_platforms = user_profile.get('active_platforms', [])
         user_audience = user_profile.get('audience_demographics', {})
         user_content_performance = user_profile.get('content_performance', {})
@@ -981,8 +949,7 @@ class RecommendationAgent(BaseAgent):
         }
     
     async def _recommend_monetization_opportunities(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Recommend monetization opportunities"""
-        
+        """Recommend monetization opportunities"""        
         user_id = data.get('user_id')
         user_profile = await self._get_user_profile(user_id)
         content_performance = data.get('content_performance', {})
@@ -1023,8 +990,7 @@ class RecommendationAgent(BaseAgent):
         }
     
     async def _suggest_skill_development(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Suggest skill development opportunities"""
-        
+        """Suggest skill development opportunities"""        
         user_id = data.get('user_id')
         user_profile = await self._get_user_profile(user_id)
         career_goals = data.get('career_goals', [])
@@ -1059,8 +1025,7 @@ class RecommendationAgent(BaseAgent):
         }
     
     async def _identify_trending_opportunities(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Identify trending opportunities for content creators"""
-        
+        """Identify trending opportunities for content creators"""        
         user_id = data.get('user_id')
         user_profile = await self._get_user_profile(user_id)
         timeframe = data.get('timeframe', '7d')  # 1d, 7d, 30d
@@ -1101,8 +1066,7 @@ class RecommendationAgent(BaseAgent):
     # Helper methods for recommendation processing
     
     async def _get_user_profile(self, user_id: str) -> Dict[str, Any]:
-        """Get comprehensive user profile"""
-        if user_id in self.user_profiles:
+        """Get comprehensive user profile"""        if user_id in self.user_profiles:
             return self.user_profiles[user_id]
         
         # Load from database
@@ -1111,8 +1075,7 @@ class RecommendationAgent(BaseAgent):
         return user_profile
     
     async def _get_user_interaction_history(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get user interaction history"""
-        if user_id in self.interaction_history:
+        """Get user interaction history"""        if user_id in self.interaction_history:
             return self.interaction_history[user_id]
         
         # Load from database
@@ -1121,54 +1084,44 @@ class RecommendationAgent(BaseAgent):
         return history
     
     async def _build_interaction_matrix(self) -> np.ndarray:
-        """Build user-item interaction matrix"""
-        # Implementation for building sparse interaction matrix
+        """Build user-item interaction matrix"""        # Implementation for building sparse interaction matrix
         # This would typically involve database queries and matrix construction
         pass
     
     async def _get_user_vector(self, user_id: str) -> np.ndarray:
-        """Get user preference vector"""
-        # Implementation for user vector extraction
+        """Get user preference vector"""        # Implementation for user vector extraction
         pass
     
     async def _get_item_info(self, item_idx: int) -> Dict[str, Any]:
-        """Get item information by index"""
-        # Implementation for item info retrieval
+        """Get item information by index"""        # Implementation for item info retrieval
         pass
     
     async def _build_user_content_profile(self, user_history: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Build user content preference profile"""
-        # Implementation for content profile building
+        """Build user content preference profile"""        # Implementation for content profile building
         pass
     
     async def _get_candidate_items(self, recommendation_type: RecommendationType, context: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Get candidate items for recommendation"""
-        # Implementation for candidate item retrieval
+        """Get candidate items for recommendation"""        # Implementation for candidate item retrieval
         pass
     
     async def _extract_item_features(self, item: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract features from item"""
-        # Implementation for feature extraction
+        """Extract features from item"""        # Implementation for feature extraction
         pass
     
     def _calculate_relevance_score(self, item: Dict[str, Any], user_id: str) -> float:
-        """Calculate item relevance score for user"""
-        # Implementation for relevance calculation
+        """Calculate item relevance score for user"""        # Implementation for relevance calculation
         return 0.5
     
     def _calculate_novelty_score(self, item: Dict[str, Any], user_id: str) -> float:
-        """Calculate novelty score"""
-        # Implementation for novelty calculation
+        """Calculate novelty score"""        # Implementation for novelty calculation
         return 0.5
     
     def _get_top_interests(self, user_content_profile: Dict[str, Any]) -> str:
-        """Get top user interests as string"""
-        interests = user_content_profile.get('top_interests', [])
+        """Get top user interests as string"""        interests = user_content_profile.get('top_interests', [])
         return ', '.join(interests[:3])
     
     def _determine_personalization_level(self, user_profile: Dict[str, Any]) -> PersonalizationLevel:
-        """Determine personalization level based on user data"""
-        interaction_count = len(user_profile.get('interactions', []))
+        """Determine personalization level based on user data"""        interaction_count = len(user_profile.get('interactions', []))
         
         if interaction_count < 10:
             return PersonalizationLevel.BASIC
@@ -1185,8 +1138,7 @@ class RecommendationAgent(BaseAgent):
         user_preferences: Dict[str, Any],
         context: Dict[str, Any]
     ) -> List[RecommendationItem]:
-        """Post-process recommendations"""
-        
+        """Post-process recommendations"""        
         # Apply user preference filters
         filtered_recommendations = []
         blocked_categories = user_preferences.get('blocked_categories', [])
@@ -1210,8 +1162,7 @@ class RecommendationAgent(BaseAgent):
         return filtered_recommendations
     
     def _calculate_diversity_score(self, rec: RecommendationItem, all_recs: List[RecommendationItem], index: int) -> float:
-        """Calculate diversity score for recommendation"""
-        if index == 0:
+        """Calculate diversity score for recommendation"""        if index == 0:
             return 1.0
         
         similarities = []
@@ -1223,8 +1174,7 @@ class RecommendationAgent(BaseAgent):
         return 1.0 - avg_similarity
     
     async def _calculate_recommendation_metrics(self, recommendations: List[RecommendationItem]) -> Dict[str, float]:
-        """Calculate metrics for recommendation set"""
-        if not recommendations:
+        """Calculate metrics for recommendation set"""        if not recommendations:
             return {}
         
         # Calculate average scores
@@ -1247,8 +1197,7 @@ class RecommendationAgent(BaseAgent):
         }
     
     def _get_cached_recommendations(self, cache_key: str) -> Optional[RecommendationSet]:
-        """Get cached recommendations if not expired"""
-        if cache_key in self.recommendation_cache:
+        """Get cached recommendations if not expired"""        if cache_key in self.recommendation_cache:
             cached_set = self.recommendation_cache[cache_key]
             if (datetime.now(timezone.utc) - cached_set.generated_at).seconds < self.cache_expiry:
                 return cached_set
@@ -1257,12 +1206,10 @@ class RecommendationAgent(BaseAgent):
         return None
     
     def _cache_recommendations(self, cache_key: str, recommendation_set: RecommendationSet):
-        """Cache recommendation set"""
-        self.recommendation_cache[cache_key] = recommendation_set
+        """Cache recommendation set"""        self.recommendation_cache[cache_key] = recommendation_set
     
     def _add_diversity(self, recommendations: List[RecommendationItem], target_count: int) -> List[RecommendationItem]:
-        """Add diversity to recommendation list using maximum marginal relevance"""
-        if len(recommendations) <= target_count:
+        """Add diversity to recommendation list using maximum marginal relevance"""        if len(recommendations) <= target_count:
             return recommendations
         
         diverse_recommendations = [recommendations[0]]  # Start with highest scored item
@@ -1296,8 +1243,7 @@ class RecommendationAgent(BaseAgent):
         return diverse_recommendations
     
     def _calculate_item_similarity(self, item1: RecommendationItem, item2: RecommendationItem) -> float:
-        """Calculate similarity between two recommendation items"""
-        # Simple similarity based on metadata and type
+        """Calculate similarity between two recommendation items"""        # Simple similarity based on metadata and type
         if item1.item_type != item2.item_type:
             return 0.0
         
@@ -1312,8 +1258,7 @@ class RecommendationAgent(BaseAgent):
         return 0.5 if item1.item_type == item2.item_type else 0.0
     
     def _format_recommendation_response(self, recommendation_set: RecommendationSet) -> Dict[str, Any]:
-        """Format recommendation set for API response"""
-        return {
+        """Format recommendation set for API response"""        return {
             'recommendations': [
                 {
                     'item_id': rec.item_id,
@@ -1343,8 +1288,7 @@ class RecommendationAgent(BaseAgent):
     # Additional helper methods and utilities
     
     async def _setup_real_time_learning(self):
-        """Setup real-time learning from user interactions"""
-        # Initialize real-time learning components
+        """Setup real-time learning from user interactions"""        # Initialize real-time learning components
         self.learning_rate = 0.001
         self.batch_size = 32
         self.update_frequency = 3600  # 1 hour
@@ -1355,8 +1299,7 @@ class RecommendationAgent(BaseAgent):
         logger.info("Real-time learning system initialized")
     
     async def _periodic_model_update(self):
-        """Periodically update models based on new interactions"""
-        while True:
+        """Periodically update models based on new interactions"""        while True:
             try:
                 await asyncio.sleep(self.update_frequency)
                 
@@ -1372,8 +1315,7 @@ class RecommendationAgent(BaseAgent):
                 logger.error(f"Error in periodic model update: {e}")
     
     async def _update_user_profile(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Update user profile with new information"""
-        user_id = data.get('user_id')
+        """Update user profile with new information"""        user_id = data.get('user_id')
         updates = data.get('updates', {})
         
         if user_id not in self.user_profiles:
@@ -1397,8 +1339,7 @@ class RecommendationAgent(BaseAgent):
         }
     
     async def _record_user_interaction(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Record user interaction for learning"""
-        user_id = data.get('user_id')
+        """Record user interaction for learning"""        user_id = data.get('user_id')
         item_id = data.get('item_id')
         interaction_type = data.get('interaction_type')
         rating = data.get('rating')
@@ -1433,8 +1374,7 @@ class RecommendationAgent(BaseAgent):
         }
     
     async def _get_similar_content(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Find similar content based on content features"""
-        content_id = data.get('content_id')
+        """Find similar content based on content features"""        content_id = data.get('content_id')
         similarity_threshold = data.get('threshold', 0.7)
         max_results = data.get('max_results', 20)
         
@@ -1456,8 +1396,7 @@ class RecommendationAgent(BaseAgent):
         }
     
     async def _evaluate_recommendation_performance(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Evaluate recommendation system performance"""
-        evaluation_period = data.get('period', '7d')  # 1d, 7d, 30d
+        """Evaluate recommendation system performance"""        evaluation_period = data.get('period', '7d')  # 1d, 7d, 30d
         user_id = data.get('user_id')
         
         # Get evaluation metrics
@@ -1472,8 +1411,7 @@ class RecommendationAgent(BaseAgent):
         }
     
     async def _run_ab_test(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Run A/B test for recommendation strategies"""
-        test_name = data.get('test_name')
+        """Run A/B test for recommendation strategies"""        test_name = data.get('test_name')
         strategy_a = data.get('strategy_a')
         strategy_b = data.get('strategy_b')
         user_sample_size = data.get('sample_size', 1000)
@@ -1506,8 +1444,7 @@ class RecommendationAgent(BaseAgent):
     # Implementation methods for all the helper functions
     
     async def _load_user_data(self):
-        """Load user profiles and interaction data"""
-        try:
+        """Load user profiles and interaction data"""        try:
             # Load user profiles from database
             # This would typically connect to your user database
             logger.info("Loading user profiles and interaction data")
@@ -1523,8 +1460,7 @@ class RecommendationAgent(BaseAgent):
             raise
     
     async def _get_user_embedding(self, user_id: str) -> np.ndarray:
-        """Get user embedding vector"""
-        if user_id in self.user_embeddings:
+        """Get user embedding vector"""        if user_id in self.user_embeddings:
             return self.user_embeddings[user_id]
         
         # Generate user embedding based on interaction history
@@ -1549,8 +1485,7 @@ class RecommendationAgent(BaseAgent):
         return np.random.normal(0, 0.1, 64)
     
     async def _get_item_embedding(self, item: Dict[str, Any]) -> np.ndarray:
-        """Get item embedding vector"""
-        item_id = item.get('id')
+        """Get item embedding vector"""        item_id = item.get('id')
         
         if item_id in self.content_embeddings:
             return self.content_embeddings[item_id]
@@ -1569,8 +1504,7 @@ class RecommendationAgent(BaseAgent):
         return embedding
     
     async def _predict_engagement(self, user_id: str, item_id: str, context: Dict[str, Any]) -> float:
-        """Predict user engagement with item"""
-        # Simple engagement prediction based on user history and item features
+        """Predict user engagement with item"""        # Simple engagement prediction based on user history and item features
         user_profile = await self._get_user_profile(user_id)
         user_avg_engagement = user_profile.get('avg_engagement_rate', 0.1)
         
@@ -1584,8 +1518,7 @@ class RecommendationAgent(BaseAgent):
         return min(max(predicted_engagement, 0.0), 1.0)
     
     async def _predict_satisfaction(self, user_id: str, item_id: str, context: Dict[str, Any]) -> float:
-        """Predict user satisfaction with item"""
-        # Simple satisfaction prediction
+        """Predict user satisfaction with item"""        # Simple satisfaction prediction
         user_profile = await self._get_user_profile(user_id)
         user_avg_satisfaction = user_profile.get('avg_satisfaction', 0.7)
         
@@ -1595,8 +1528,7 @@ class RecommendationAgent(BaseAgent):
         return min(max(satisfaction, 0.0), 1.0)
     
     def _get_interaction_weight(self, interaction_type: str) -> float:
-        """Get weight for different interaction types"""
-        weights = {
+        """Get weight for different interaction types"""        weights = {
             'view': 1.0,
             'like': 2.0,
             'share': 3.0,
@@ -1615,8 +1547,7 @@ class RecommendationAgent(BaseAgent):
         user_skills: List[str], 
         user_location: str
     ) -> List[Dict[str, Any]]:
-        """Find potential music collaborators"""
-        # Mock implementation - in production, this would query the database
+        """Find potential music collaborators"""        # Mock implementation - in production, this would query the database
         mock_collaborators = [
             {
                 'user_id': 'musician_001',
@@ -1649,8 +1580,7 @@ class RecommendationAgent(BaseAgent):
         return compatible_collaborators[:20]
     
     def _calculate_music_compatibility(self, user_profile: Dict[str, Any], collaborator: Dict[str, Any]) -> float:
-        """Calculate music collaboration compatibility score"""
-        score = 0.0
+        """Calculate music collaboration compatibility score"""        score = 0.0
         
         # Genre compatibility
         user_genres = set(user_profile.get('music_genres', []))
@@ -1686,8 +1616,7 @@ class RecommendationAgent(BaseAgent):
         return min(score, 1.0)
     
     def _suggest_collaboration_types(self, user_profile: Dict[str, Any], collaborator: Dict[str, Any]) -> List[str]:
-        """Suggest types of collaboration"""
-        suggestions = []
+        """Suggest types of collaboration"""        suggestions = []
         
         user_skills = user_profile.get('music_skills', [])
         collab_skills = collaborator.get('skills', [])
@@ -1705,8 +1634,7 @@ class RecommendationAgent(BaseAgent):
         return suggestions[:3]
     
     def _estimate_collaboration_success(self, user_profile: Dict[str, Any], collaborator: Dict[str, Any]) -> float:
-        """Estimate collaboration success rate"""
-        compatibility_score = self._calculate_music_compatibility(user_profile, collaborator)
+        """Estimate collaboration success rate"""        compatibility_score = self._calculate_music_compatibility(user_profile, collaborator)
         
         # Factor in experience and track record
         user_exp = user_profile.get('collaboration_success_rate', 0.5)
@@ -1720,8 +1648,7 @@ class RecommendationAgent(BaseAgent):
         return min(success_rate, 0.95)  # Cap at 95%
     
     def _identify_mutual_benefits(self, user_profile: Dict[str, Any], collaborator: Dict[str, Any]) -> List[str]:
-        """Identify mutual benefits of collaboration"""
-        benefits = []
+        """Identify mutual benefits of collaboration"""        benefits = []
         
         user_audience = user_profile.get('audience_size', 0)
         collab_audience = collaborator.get('audience_size', 0)
@@ -1747,8 +1674,7 @@ class RecommendationAgent(BaseAgent):
         return benefits[:4]
     
     async def _identify_trending_music_opportunities(self) -> List[Dict[str, Any]]:
-        """Identify trending music collaboration opportunities"""
-        # Mock trending opportunities
+        """Identify trending music collaboration opportunities"""        # Mock trending opportunities
         return [
             {
                 'trend': 'Lo-fi Hip Hop Collaborations',
@@ -1765,8 +1691,7 @@ class RecommendationAgent(BaseAgent):
         ]
     
     async def _suggest_music_skill_development(self, user_profile: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Suggest music skill development paths"""
-        current_skills = user_profile.get('music_skills', [])
+        """Suggest music skill development paths"""        current_skills = user_profile.get('music_skills', [])
         
         skill_suggestions = []
         
@@ -1789,8 +1714,7 @@ class RecommendationAgent(BaseAgent):
         return skill_suggestions[:3]
     
     async def _load_user_profile_from_db(self, user_id: str) -> Dict[str, Any]:
-        """Load user profile from database"""
-        # Mock implementation
+        """Load user profile from database"""        # Mock implementation
         return {
             'user_id': user_id,
             'preferences': {},
@@ -1809,8 +1733,7 @@ class RecommendationAgent(BaseAgent):
         }
     
     async def _load_interaction_history_from_db(self, user_id: str) -> List[Dict[str, Any]]:
-        """Load interaction history from database"""
-        # Mock implementation
+        """Load interaction history from database"""        # Mock implementation
         return [
             {
                 'item_id': 'track_001',
@@ -1827,23 +1750,19 @@ class RecommendationAgent(BaseAgent):
         ]
     
     async def _save_user_profile_to_db(self, user_id: str, profile: Dict[str, Any]):
-        """Save user profile to database"""
-        # Mock implementation - in production, this would save to database
+        """Save user profile to database"""        # Mock implementation - in production, this would save to database
         logger.info(f"Saving profile for user {user_id}")
     
     async def _save_interaction_to_db(self, interaction: Dict[str, Any]):
-        """Save interaction to database"""
-        # Mock implementation
+        """Save interaction to database"""        # Mock implementation
         logger.info(f"Saving interaction: {interaction['interaction_type']} for user {interaction['user_id']}")
     
     async def _trigger_real_time_learning(self, interaction: Dict[str, Any]):
-        """Trigger real-time model learning from interaction"""
-        # Mock implementation - would update models in production
+        """Trigger real-time model learning from interaction"""        # Mock implementation - would update models in production
         logger.debug(f"Triggering real-time learning from interaction: {interaction['interaction_type']}")
     
     async def _get_content_features(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Get content features by ID"""
-        # Mock implementation
+        """Get content features by ID"""        # Mock implementation
         return {
             'content_id': content_id,
             'genre': 'electronic',
@@ -1859,8 +1778,7 @@ class RecommendationAgent(BaseAgent):
         similarity_threshold: float, 
         max_results: int
     ) -> List[Dict[str, Any]]:
-        """Find similar content based on features"""
-        # Mock implementation
+        """Find similar content based on features"""        # Mock implementation
         return [
             {
                 'content_id': 'similar_001',
@@ -1877,8 +1795,7 @@ class RecommendationAgent(BaseAgent):
         ][:max_results]
     
     async def _calculate_evaluation_metrics(self, evaluation_period: str, user_id: Optional[str]) -> Dict[str, float]:
-        """Calculate recommendation system evaluation metrics"""
-        # Mock metrics - in production would calculate from real data
+        """Calculate recommendation system evaluation metrics"""        # Mock metrics - in production would calculate from real data
         return {
             'precision_at_10': 0.75,
             'recall_at_10': 0.65,
@@ -1893,8 +1810,7 @@ class RecommendationAgent(BaseAgent):
         }
     
     async def _check_system_health(self) -> Dict[str, Any]:
-        """Check recommendation system health"""
-        return {
+        """Check recommendation system health"""        return {
             'status': 'healthy',
             'models_loaded': all([
                 self.collaborative_model is not None,
@@ -1907,8 +1823,7 @@ class RecommendationAgent(BaseAgent):
         }
     
     async def _generate_improvement_suggestions(self, metrics: Dict[str, float]) -> List[str]:
-        """Generate system improvement suggestions based on metrics"""
-        suggestions = []
+        """Generate system improvement suggestions based on metrics"""        suggestions = []
         
         if metrics.get('precision_at_10', 0) < 0.7:
             suggestions.append("Consider tuning recommendation algorithms for better precision")
@@ -1925,25 +1840,21 @@ class RecommendationAgent(BaseAgent):
         return suggestions[:5]
     
     async def _initialize_ab_test_tracking(self, test_config: Dict[str, Any]):
-        """Initialize A/B test tracking"""
-        logger.info(f"Initializing A/B test: {test_config['test_name']}")
+        """Initialize A/B test tracking"""        logger.info(f"Initializing A/B test: {test_config['test_name']}")
         # In production, would setup test tracking infrastructure
     
     async def _get_new_interactions(self) -> List[Dict[str, Any]]:
-        """Get new user interactions for model updates"""
-        # Mock implementation - would query database for new interactions
+        """Get new user interactions for model updates"""        # Mock implementation - would query database for new interactions
         return []
     
     async def _update_models_with_interactions(self, interactions: List[Dict[str, Any]]):
-        """Update models with new interaction data"""
-        logger.info(f"Updating models with {len(interactions)} new interactions")
+        """Update models with new interaction data"""        logger.info(f"Updating models with {len(interactions)} new interactions")
         # Mock implementation - would retrain/update models
         
     # Advanced Enterprise Features
     
     async def get_cross_platform_recommendations(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate cross-platform optimization recommendations"""
-        user_id = data.get('user_id')
+        """Generate cross-platform optimization recommendations"""        user_id = data.get('user_id')
         target_platforms = data.get('platforms', ['spotify', 'youtube', 'instagram', 'tiktok'])
         
         user_profile = await self._get_user_profile(user_id)
@@ -1980,8 +1891,7 @@ class RecommendationAgent(BaseAgent):
         }
     
     async def get_monetization_recommendations(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Advanced monetization strategy recommendations"""
-        user_id = data.get('user_id')
+        """Advanced monetization strategy recommendations"""        user_id = data.get('user_id')
         user_profile = await self._get_user_profile(user_id)
         financial_goals = data.get('financial_goals', {})
         
@@ -2029,8 +1939,7 @@ class RecommendationAgent(BaseAgent):
         }
     
     async def get_audience_expansion_recommendations(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Ultra-advanced audience expansion strategies"""
-        user_id = data.get('user_id')
+        """Ultra-advanced audience expansion strategies"""        user_id = data.get('user_id')
         user_profile = await self._get_user_profile(user_id)
         expansion_goals = data.get('expansion_goals', {})
         
@@ -2086,8 +1995,7 @@ class RecommendationAgent(BaseAgent):
         }
     
     async def get_creative_inspiration_recommendations(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """AI-powered creative inspiration and ideation system"""
-        user_id = data.get('user_id')
+        """AI-powered creative inspiration and ideation system"""        user_id = data.get('user_id')
         user_profile = await self._get_user_profile(user_id)
         creative_preferences = data.get('creative_preferences', {})
         inspiration_type = data.get('inspiration_type', 'general')
@@ -2142,8 +2050,7 @@ class RecommendationAgent(BaseAgent):
         }
     
     async def get_competitive_intelligence_recommendations(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Advanced competitive intelligence and market positioning"""
-        user_id = data.get('user_id')
+        """Advanced competitive intelligence and market positioning"""        user_id = data.get('user_id')
         user_profile = await self._get_user_profile(user_id)
         competitors = data.get('competitors', [])
         market_segment = data.get('market_segment', 'general')
@@ -2201,8 +2108,7 @@ class RecommendationAgent(BaseAgent):
         platform: str, 
         performance_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate platform-specific optimization strategy"""
-        
+        """Generate platform-specific optimization strategy"""        
         platform_strategies = {
             'spotify': await self._generate_spotify_strategy(user_profile, performance_data),
             'youtube': await self._generate_youtube_strategy(user_profile, performance_data),
@@ -2221,8 +2127,7 @@ class RecommendationAgent(BaseAgent):
         user_profile: Dict[str, Any], 
         performance_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Advanced Spotify optimization strategy"""
-        
+        """Advanced Spotify optimization strategy"""        
         current_monthly_listeners = performance_data.get('spotify', {}).get('monthly_listeners', 0)
         current_saves = performance_data.get('spotify', {}).get('saves', 0)
         current_playlist_adds = performance_data.get('spotify', {}).get('playlist_adds', 0)
@@ -2272,8 +2177,7 @@ class RecommendationAgent(BaseAgent):
         user_profile: Dict[str, Any], 
         financial_goals: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze advanced revenue generation opportunities"""
-        
+        """Analyze advanced revenue generation opportunities"""        
         current_revenue = user_profile.get('monthly_revenue', 0)
         target_revenue = financial_goals.get('target_monthly_revenue', current_revenue * 2)
         audience_size = user_profile.get('audience_size', 0)
@@ -2421,8 +2325,7 @@ class RecommendationAgent(BaseAgent):
         }
     
     def _calculate_total_revenue_potential(self, *revenue_streams) -> Dict[str, float]:
-        """Calculate total revenue potential from all streams"""
-        total_potential = 0
+        """Calculate total revenue potential from all streams"""        total_potential = 0
         breakdown = {}
         
         for stream in revenue_streams:
@@ -2446,8 +2349,7 @@ class RecommendationAgent(BaseAgent):
         }
 
 class RecommendationAgentManager:
-    """Manager for recommendation agent instances and enterprise orchestration"""
-    
+    """Manager for recommendation agent instances and enterprise orchestration"""    
     def __init__(self):
         self.agents: Dict[str, RecommendationAgent] = {}
         self.global_metrics = {
@@ -2460,8 +2362,7 @@ class RecommendationAgentManager:
         self.performance_monitor = RecommendationPerformanceMonitor()
     
     async def create_agent(self, agent_id: str, config: Dict[str, Any] = None) -> RecommendationAgent:
-        """Create new recommendation agent with enterprise configuration"""
-        try:
+        """Create new recommendation agent with enterprise configuration"""        try:
             agent_config = {
                 'recommendation_models': {
                     'collaborative_filtering': {
@@ -2526,8 +2427,7 @@ class RecommendationAgentManager:
             raise
     
     async def get_agent(self, agent_id: str) -> Optional[RecommendationAgent]:
-        """Get agent by ID with load balancing"""
-        if agent_id in self.agents:
+        """Get agent by ID with load balancing"""        if agent_id in self.agents:
             return self.agents[agent_id]
         
         # Try load balancing
@@ -2538,8 +2438,7 @@ class RecommendationAgentManager:
         request: AgentRequest,
         agent_id: Optional[str] = None
     ) -> AgentResponse:
-        """Process recommendation request with intelligent agent selection"""
-        
+        """Process recommendation request with intelligent agent selection"""        
         # Select best agent for request
         if agent_id:
             agent = await self.get_agent(agent_id)
@@ -2562,8 +2461,7 @@ class RecommendationAgentManager:
         return response
     
     async def _select_optimal_agent(self, request: AgentRequest) -> Optional[RecommendationAgent]:
-        """Select optimal agent based on request characteristics and agent load"""
-        if not self.agents:
+        """Select optimal agent based on request characteristics and agent load"""        if not self.agents:
             return None
         
         # Simple round-robin for now, can be enhanced with ML-based selection
@@ -2573,8 +2471,7 @@ class RecommendationAgentManager:
         return optimal_agent
     
     def _update_global_metrics(self, response: AgentResponse):
-        """Update global recommendation metrics"""
-        if response.success:
+        """Update global recommendation metrics"""        if response.success:
             self.global_metrics['total_recommendations_served'] += 1
             
             # Calculate rolling average satisfaction
@@ -2588,8 +2485,7 @@ class RecommendationAgentManager:
                 )
     
     async def get_system_health(self) -> Dict[str, Any]:
-        """Get comprehensive system health report"""
-        agent_health = {}
+        """Get comprehensive system health report"""        agent_health = {}
         
         for agent_id, agent in self.agents.items():
             agent_health[agent_id] = {
@@ -2609,15 +2505,13 @@ class RecommendationAgentManager:
 
 
 class RecommendationLoadBalancer:
-    """Load balancer for recommendation agents"""
-    
+    """Load balancer for recommendation agents"""    
     def __init__(self):
         self.request_counts = defaultdict(int)
         self.response_times = defaultdict(list)
         
     async def get_best_agent(self, agents: List[RecommendationAgent]) -> Optional[RecommendationAgent]:
-        """Select best agent based on load and performance"""
-        if not agents:
+        """Select best agent based on load and performance"""        if not agents:
             return None
         
         # Calculate load scores for each agent
@@ -2637,8 +2531,7 @@ class RecommendationLoadBalancer:
 
 
 class RecommendationPerformanceMonitor:
-    """Performance monitoring for recommendation system"""
-    
+    """Performance monitoring for recommendation system"""    
     def __init__(self):
         self.registered_agents: Dict[str, RecommendationAgent] = {}
         self.performance_data = defaultdict(list)
@@ -2649,13 +2542,11 @@ class RecommendationPerformanceMonitor:
         }
     
     async def register_agent(self, agent: RecommendationAgent):
-        """Register agent for monitoring"""
-        self.registered_agents[agent.agent_id] = agent
+        """Register agent for monitoring"""        self.registered_agents[agent.agent_id] = agent
         logger.info(f"Agent {agent.agent_id} registered for performance monitoring")
     
     async def collect_metrics(self):
-        """Collect performance metrics from all agents"""
-        for agent_id, agent in self.registered_agents.items():
+        """Collect performance metrics from all agents"""        for agent_id, agent in self.registered_agents.items():
             metrics = {
                 'timestamp': datetime.now(timezone.utc),
                 'recommendations_generated': agent.recommendation_stats['total_generated'],
@@ -2666,8 +2557,7 @@ class RecommendationPerformanceMonitor:
             self.performance_data[agent_id].append(metrics)
     
     async def get_performance_summary(self) -> Dict[str, Any]:
-        """Get performance summary for all agents"""
-        summary = {}
+        """Get performance summary for all agents"""        summary = {}
         
         for agent_id, metrics_list in self.performance_data.items():
             if metrics_list:
@@ -2681,8 +2571,7 @@ class RecommendationPerformanceMonitor:
         return summary
     
     def _calculate_trends(self, metrics_list: List[Dict[str, Any]]) -> Dict[str, str]:
-        """Calculate performance trends"""
-        if len(metrics_list) < 2:
+        """Calculate performance trends"""        if len(metrics_list) < 2:
             return {'trend': 'insufficient_data'}
         
         recent_metrics = metrics_list[-5:]  # Last 5 measurements
@@ -2698,8 +2587,7 @@ class RecommendationPerformanceMonitor:
         }
     
     def _check_alerts(self, agent_id: str, metrics: Dict[str, Any]) -> List[str]:
-        """Check for performance alerts"""
-        alerts = []
+        """Check for performance alerts"""        alerts = []
         
         # Check cache size
         cache_size = metrics.get('cache_size', 0)
@@ -2717,8 +2605,7 @@ class RecommendationPerformanceMonitor:
 # Additional utility classes and functions
 
 class RecommendationExplainer:
-    """Provides explanations for recommendations to improve transparency"""
-    
+    """Provides explanations for recommendations to improve transparency"""    
     def __init__(self):
         self.explanation_templates = {
             'collaborative_filtering': "Users with similar tastes also liked this",
@@ -2734,8 +2621,7 @@ class RecommendationExplainer:
         user_profile: Dict[str, Any],
         strategy: RecommendationStrategy
     ) -> str:
-        """Generate human-readable explanation for recommendation"""
-        
+        """Generate human-readable explanation for recommendation"""        
         base_template = self.explanation_templates.get(
             strategy.value, 
             "This item was recommended for you"
@@ -2749,8 +2635,7 @@ class RecommendationExplainer:
 
 
 class RecommendationPrivacyManager:
-    """Manages privacy aspects of recommendation system"""
-    
+    """Manages privacy aspects of recommendation system"""    
     def __init__(self):
         self.privacy_levels = {
             'public': 0,
@@ -2763,8 +2648,7 @@ class RecommendationPrivacyManager:
         recommendations: List[RecommendationItem],
         user_privacy_settings: Dict[str, Any]
     ) -> List[RecommendationItem]:
-        """Filter recommendations based on user privacy preferences"""
-        
+        """Filter recommendations based on user privacy preferences"""        
         user_privacy_level = user_privacy_settings.get('recommendation_privacy', 'public')
         max_privacy_level = self.privacy_levels[user_privacy_level]
         
@@ -2778,8 +2662,7 @@ class RecommendationPrivacyManager:
         return filtered_recommendations
     
     def anonymize_recommendation_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Anonymize sensitive data in recommendations"""
-        anonymized_data = data.copy()
+        """Anonymize sensitive data in recommendations"""        anonymized_data = data.copy()
         
         # Remove or hash sensitive fields
         sensitive_fields = ['user_id', 'email', 'phone', 'location']

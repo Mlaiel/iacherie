@@ -21,8 +21,7 @@ Contact: mlaiel@live.de
 
 License: Proprietary - All rights reserved
 Warning: Unauthorized copying, distribution, or use is prohibited by law.
-"""
-# Core cache manager
+"""# Core cache manager
 from .manager import CachingManager, CacheConfig, CachePriority
 
 # Cache strategies

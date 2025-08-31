@@ -1,5 +1,4 @@
-"""
-Content Creator Agent - IA Influencer Agent Platform
+"""Content Creator Agent - IA Influencer Agent Platform
 ==================================================
 Module: ai_engine/ai_agents/content_creator_agent.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -15,9 +14,7 @@ Agent spécialisé dans la création automatisée de contenu multimédia
 - Optimisation pour plateformes sociales
 - Personnalisation basée sur l'audience
 - Intégration avec outils de création
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timezone
@@ -38,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Types de contenu supportés"""
-    TEXT = "text"
+    """Types de contenu supportés"""    TEXT = "text"
     IMAGE = "image"
     AUDIO = "audio"
     VIDEO = "video"
@@ -51,8 +47,7 @@ class ContentType(Enum):
 
 
 class ContentStyle(Enum):
-    """Styles de contenu"""
-    PROFESSIONAL = "professional"
+    """Styles de contenu"""    PROFESSIONAL = "professional"
     CASUAL = "casual"
     HUMOROUS = "humorous"
     EDUCATIONAL = "educational"
@@ -63,16 +58,14 @@ class ContentStyle(Enum):
 
 
 class ContentCreatorAgent(BaseAIAgent):
-    """
-    Agent spécialisé dans la création de contenu intelligent
+    """    Agent spécialisé dans la création de contenu intelligent
     
     Capacités:
     - Génération de contenu multimédia
     - Optimisation pour différentes plateformes
     - Personnalisation basée sur l'audience
     - Analyse de performance du contenu
-    """
-    
+    """    
     def __init__(self, config: AgentConfiguration):
         # Valider que l'agent a les bonnes capacités
         required_capabilities = {
@@ -99,8 +92,7 @@ class ContentCreatorAgent(BaseAIAgent):
         }
         
     async def _custom_initialize(self) -> None:
-        """Initialisation spécifique du créateur de contenu"""
-        await super()._custom_initialize()
+        """Initialisation spécifique du créateur de contenu"""        await super()._custom_initialize()
         
         # Charger les templates de contenu
         await self._load_content_templates()
@@ -114,8 +106,7 @@ class ContentCreatorAgent(BaseAIAgent):
         self.logger.info(f"ContentCreatorAgent initialized with {len(self.content_templates)} templates")
     
     async def _execute_task_impl(self, task: AgentTask) -> Dict[str, Any]:
-        """Implémentation de l'exécution des tâches de création de contenu"""
-        
+        """Implémentation de l'exécution des tâches de création de contenu"""        
         task_type = task.task_type
         context = task.context
         
@@ -146,8 +137,7 @@ class ContentCreatorAgent(BaseAIAgent):
             raise
     
     async def _generate_text_content(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Générer du contenu textuel"""
-        
+        """Générer du contenu textuel"""        
         prompt = context.get("prompt", "")
         content_type = context.get("content_type", ContentType.TEXT.value)
         style = context.get("style", ContentStyle.PROFESSIONAL.value)
@@ -189,8 +179,7 @@ class ContentCreatorAgent(BaseAIAgent):
         return result
     
     async def _generate_social_post_text(self, prompt: str, style: str, audience: str) -> str:
-        """Générer du texte pour post social"""
-        
+        """Générer du texte pour post social"""        
         # Templates basiques pour différents styles
         if style == ContentStyle.HUMOROUS.value:
             base_text = f"🎉 {prompt} - but make it fun! Who else agrees? #ContentCreation #AI"
@@ -204,13 +193,11 @@ class ContentCreatorAgent(BaseAIAgent):
         return base_text
     
     async def _generate_article_text(self, prompt: str, style: str, max_length: int) -> str:
-        """Générer du texte d'article"""
-        
+        """Générer du texte d'article"""        
         # Structure d'article basique
         introduction = f"# {prompt}\n\nIn today's digital landscape, understanding {prompt.lower()} has become crucial."
         
-        body = f"""
-## Key Points
+        body = f"""## Key Points
 
 Understanding {prompt.lower()} involves several important considerations:
 
@@ -230,8 +217,7 @@ When implementing strategies around {prompt.lower()}, consider:
 ## Conclusion
 
 {prompt} represents an important opportunity for growth and innovation. By following best practices and staying informed about trends, organizations can achieve sustainable success.
-"""
-        
+"""        
         full_text = introduction + body
         
         # Tronquer si nécessaire
@@ -241,8 +227,7 @@ When implementing strategies around {prompt.lower()}, consider:
         return full_text
     
     async def _generate_generic_text(self, prompt: str, style: str, max_length: int) -> str:
-        """Générer du texte générique"""
-        
+        """Générer du texte générique"""        
         base_text = f"Regarding {prompt}, it's important to consider multiple perspectives and approaches. "
         base_text += f"This topic encompasses various aspects that merit careful examination. "
         base_text += f"Through thoughtful analysis and strategic implementation, meaningful results can be achieved."
@@ -257,8 +242,7 @@ When implementing strategies around {prompt.lower()}, consider:
         return base_text
     
     async def _calculate_text_quality(self, text: str) -> float:
-        """Calculer un score de qualité pour le texte"""
-        
+        """Calculer un score de qualité pour le texte"""        
         # Métriques de qualité basiques
         word_count = len(text.split())
         sentence_count = text.count('.') + text.count('!') + text.count('?')
@@ -276,8 +260,7 @@ When implementing strategies around {prompt.lower()}, consider:
         return min(1.0, max(0.0, total_score))
     
     async def _generate_image_content(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Générer du contenu image (placeholder)"""
-        
+        """Générer du contenu image (placeholder)"""        
         description = context.get("description", "")
         style = context.get("style", "realistic")
         dimensions = context.get("dimensions", "1024x1024")
@@ -300,8 +283,7 @@ When implementing strategies around {prompt.lower()}, consider:
         return result
     
     async def _generate_audio_content(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Générer du contenu audio (placeholder)"""
-        
+        """Générer du contenu audio (placeholder)"""        
         script = context.get("script", "")
         voice = context.get("voice", "default")
         duration = context.get("duration", 30)
@@ -324,8 +306,7 @@ When implementing strategies around {prompt.lower()}, consider:
         return result
     
     async def _generate_video_content(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Générer du contenu vidéo (placeholder)"""
-        
+        """Générer du contenu vidéo (placeholder)"""        
         script = context.get("script", "")
         style = context.get("style", "presentation")
         duration = context.get("duration", 60)
@@ -348,8 +329,7 @@ When implementing strategies around {prompt.lower()}, consider:
         return result
     
     async def _optimize_content(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimiser le contenu existant"""
-        
+        """Optimiser le contenu existant"""        
         content = context.get("content", "")
         platform = context.get("platform", "general")
         target_metrics = context.get("target_metrics", ["engagement"])
@@ -380,8 +360,7 @@ When implementing strategies around {prompt.lower()}, consider:
         return result
     
     async def _analyze_content_performance(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyser les performances du contenu"""
-        
+        """Analyser les performances du contenu"""        
         content_id = context.get("content_id", "")
         metrics = context.get("metrics", {})
         
@@ -412,8 +391,7 @@ When implementing strategies around {prompt.lower()}, consider:
         return result
     
     async def _create_social_post(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Créer un post pour les réseaux sociaux"""
-        
+        """Créer un post pour les réseaux sociaux"""        
         topic = context.get("topic", "")
         platform = context.get("platform", "instagram")
         style = context.get("style", ContentStyle.CASUAL.value)
@@ -442,8 +420,7 @@ When implementing strategies around {prompt.lower()}, consider:
         return text_result
     
     async def _write_article(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Écrire un article complet"""
-        
+        """Écrire un article complet"""        
         topic = context.get("topic", "")
         target_length = context.get("target_length", 800)
         tone = context.get("tone", ContentStyle.PROFESSIONAL.value)
@@ -469,8 +446,7 @@ When implementing strategies around {prompt.lower()}, consider:
         return article_result
     
     async def _load_content_templates(self) -> None:
-        """Charger les templates de contenu"""
-        
+        """Charger les templates de contenu"""        
         # Templates basiques (dans un vrai système, ceux-ci seraient chargés depuis une base de données)
         self.content_templates = {
             "social_post": {
@@ -487,8 +463,7 @@ When implementing strategies around {prompt.lower()}, consider:
         self.logger.debug(f"Loaded {len(self.content_templates)} content template categories")
     
     async def _load_audience_profiles(self) -> None:
-        """Charger les profils d'audience"""
-        
+        """Charger les profils d'audience"""        
         # Profils d'audience basiques
         self.audience_profiles = {
             "general": {
@@ -511,8 +486,7 @@ When implementing strategies around {prompt.lower()}, consider:
         self.logger.debug(f"Loaded {len(self.audience_profiles)} audience profiles")
     
     async def _initialize_creation_tools(self) -> None:
-        """Initialiser les outils de création"""
-        
+        """Initialiser les outils de création"""        
         # Dans un vrai système, ceci initialiserait les connexions aux APIs d'IA
         self.creation_tools = {
             "text_generator": "GPT-4 API",
@@ -524,8 +498,7 @@ When implementing strategies around {prompt.lower()}, consider:
         self.logger.debug("Creation tools initialized")
     
     async def can_handle_task(self, task_type: str, context: Dict[str, Any]) -> bool:
-        """Vérifier si l'agent peut gérer une tâche spécifique"""
-        
+        """Vérifier si l'agent peut gérer une tâche spécifique"""        
         supported_tasks = {
             "generate_text", "generate_image", "generate_audio", "generate_video",
             "optimize_content", "analyze_performance", "create_social_post", "write_article"
@@ -540,8 +513,7 @@ async def create_content_creator_agent(
     agent_name: str = "Content Creator Agent",
     custom_settings: Dict[str, Any] = None
 ) -> ContentCreatorAgent:
-    """Factory pour créer un agent créateur de contenu"""
-    
+    """Factory pour créer un agent créateur de contenu"""    
     if not agent_id:
         agent_id = f"content-creator-{uuid.uuid4().hex[:8]}"
     

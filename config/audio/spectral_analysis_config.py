@@ -1,5 +1,4 @@
-"""
-Spectral Analysis Configuration Module for IA-Influencer Agent Platform
+"""Spectral Analysis Configuration Module for IA-Influencer Agent Platform
 ======================================================================
 
 Professional spectral analysis configuration for advanced audio processing.
@@ -18,9 +17,7 @@ explicit written permission from Fahed Mlaiel is strictly prohibited and will be
 to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import logging
+"""import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple, NamedTuple
 from dataclasses import dataclass, field
@@ -31,8 +28,7 @@ logger = logging.getLogger(__name__)
 
 
 class WindowFunction(Enum):
-    """Window functions for spectral analysis"""
-    HANN = "hann"
+    """Window functions for spectral analysis"""    HANN = "hann"
     HAMMING = "hamming"
     BLACKMAN = "blackman"
     BARTLETT = "bartlett"
@@ -43,8 +39,7 @@ class WindowFunction(Enum):
 
 
 class SpectralFeatureType(Enum):
-    """Types of spectral features"""
-    CENTROID = "spectral_centroid"
+    """Types of spectral features"""    CENTROID = "spectral_centroid"
     BANDWIDTH = "spectral_bandwidth"
     ROLLOFF = "spectral_rolloff"
     CONTRAST = "spectral_contrast"
@@ -59,8 +54,7 @@ class SpectralFeatureType(Enum):
 
 
 class FrequencyScale(Enum):
-    """Frequency scaling methods"""
-    LINEAR = "linear"
+    """Frequency scaling methods"""    LINEAR = "linear"
     MEL = "mel"
     BARK = "bark"
     ERB = "erb"
@@ -69,8 +63,7 @@ class FrequencyScale(Enum):
 
 
 class AnalysisMode(Enum):
-    """Spectral analysis modes"""
-    MAGNITUDE = "magnitude"
+    """Spectral analysis modes"""    MAGNITUDE = "magnitude"
     POWER = "power"
     PHASE = "phase"
     COMPLEX = "complex"
@@ -79,8 +72,7 @@ class AnalysisMode(Enum):
 
 
 class FrequencyBandType(Enum):
-    """Frequency band types"""
-    OCTAVE = "octave"
+    """Frequency band types"""    OCTAVE = "octave"
     THIRD_OCTAVE = "third_octave"
     BARK = "bark"
     MEL = "mel"
@@ -89,8 +81,7 @@ class FrequencyBandType(Enum):
 
 @dataclass
 class SpectralParameters:
-    """Core spectral analysis parameters"""
-    n_fft: int = 2048
+    """Core spectral analysis parameters"""    n_fft: int = 2048
     hop_length: int = 512
     window_function: WindowFunction = WindowFunction.HANN
     window_length: Optional[int] = None
@@ -103,8 +94,7 @@ class SpectralParameters:
 
 @dataclass
 class FrequencyAnalysisConfig:
-    """Frequency domain analysis configuration"""
-    min_frequency: float = 20.0
+    """Frequency domain analysis configuration"""    min_frequency: float = 20.0
     max_frequency: float = 20000.0
     frequency_resolution: float = 10.0
     frequency_scale: FrequencyScale = FrequencyScale.LINEAR
@@ -116,8 +106,7 @@ class FrequencyAnalysisConfig:
 
 @dataclass
 class MelSpectrogramConfig:
-    """Mel-spectrogram specific configuration"""
-    n_mels: int = 128
+    """Mel-spectrogram specific configuration"""    n_mels: int = 128
     fmin: float = 0.0
     fmax: Optional[float] = None
     htk: bool = False
@@ -127,8 +116,7 @@ class MelSpectrogramConfig:
 
 @dataclass
 class ChromaConfig:
-    """Chromagram analysis configuration"""
-    n_chroma: int = 12
+    """Chromagram analysis configuration"""    n_chroma: int = 12
     tuning: float = 0.0
     norm: Optional[str] = "L2"
     base_c: bool = True
@@ -137,8 +125,7 @@ class ChromaConfig:
 
 @dataclass
 class CQTConfig:
-    """Constant-Q Transform configuration"""
-    hop_length: int = 512
+    """Constant-Q Transform configuration"""    hop_length: int = 512
     fmin: float = 32.7  # C1
     n_bins: int = 84    # 7 octaves
     bins_per_octave: int = 12
@@ -150,8 +137,7 @@ class CQTConfig:
 
 @dataclass
 class SpectralFeatureConfig:
-    """Spectral feature extraction configuration"""
-    enabled_features: List[SpectralFeatureType] = field(default_factory=lambda: [
+    """Spectral feature extraction configuration"""    enabled_features: List[SpectralFeatureType] = field(default_factory=lambda: [
         SpectralFeatureType.CENTROID,
         SpectralFeatureType.BANDWIDTH,
         SpectralFeatureType.ROLLOFF,
@@ -165,16 +151,13 @@ class SpectralFeatureConfig:
 
 
 class SpectralAnalysisConfig:
-    """
-    Comprehensive spectral analysis configuration manager
+    """    Comprehensive spectral analysis configuration manager
     
     Manages all aspects of frequency domain audio analysis including
     STFT, mel-spectrograms, chromagrams, and spectral features.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize spectral analysis configuration"""
-        self.logger = logging.getLogger(self.__class__.__name__)
+        """Initialize spectral analysis configuration"""        self.logger = logging.getLogger(self.__class__.__name__)
         
         # Core parameters
         self.spectral_params = SpectralParameters()
@@ -202,8 +185,7 @@ class SpectralAnalysisConfig:
         self.logger.info("SpectralAnalysisConfig initialized successfully")
     
     def _initialize_frequency_bands(self) -> Dict[FrequencyBandType, List[Tuple[float, float]]]:
-        """Initialize standard frequency bands"""
-        bands = {}
+        """Initialize standard frequency bands"""        bands = {}
         
         # Octave bands (ISO 266)
         octave_centers = [31.5, 63, 125, 250, 500, 1000, 2000, 4000, 8000, 16000]
@@ -253,8 +235,7 @@ class SpectralAnalysisConfig:
         return bands
     
     def _initialize_analysis_profiles(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize analysis profiles for different use cases"""
-        return {
+        """Initialize analysis profiles for different use cases"""        return {
             "music_analysis": {
                 "description": "Optimized for music analysis",
                 "spectral_params": {
@@ -371,8 +352,7 @@ class SpectralAnalysisConfig:
                            window_type: WindowFunction,
                            window_length: int,
                            **kwargs) -> np.ndarray:
-        """
-        Get window function coefficients with caching
+        """        Get window function coefficients with caching
         
         Args:
             window_type: Type of window function
@@ -381,8 +361,7 @@ class SpectralAnalysisConfig:
             
         Returns:
             Window function coefficients
-        """
-        cache_key = f"{window_type.value}_{window_length}_{str(sorted(kwargs.items()))}"
+        """        cache_key = f"{window_type.value}_{window_length}_{str(sorted(kwargs.items()))}"
         
         if cache_key in self._window_cache:
             return self._window_cache[cache_key]
@@ -420,8 +399,7 @@ class SpectralAnalysisConfig:
             return np.hanning(window_length)
     
     def _tukey_window(self, window_length: int, alpha: float) -> np.ndarray:
-        """Generate Tukey (tapered cosine) window"""
-        if alpha >= 1.0:
+        """Generate Tukey (tapered cosine) window"""        if alpha >= 1.0:
             return np.hanning(window_length)
         elif alpha <= 0.0:
             return np.ones(window_length)
@@ -442,29 +420,25 @@ class SpectralAnalysisConfig:
         return window
     
     def _gaussian_window(self, window_length: int, std: float) -> np.ndarray:
-        """Generate Gaussian window"""
-        n = np.arange(window_length) - (window_length - 1) / 2
+        """Generate Gaussian window"""        n = np.arange(window_length) - (window_length - 1) / 2
         return np.exp(-0.5 * (n / std) ** 2)
     
     def get_frequency_bands(self, band_type: FrequencyBandType) -> List[Tuple[float, float]]:
-        """
-        Get frequency bands for specified type
+        """        Get frequency bands for specified type
         
         Args:
             band_type: Type of frequency bands
             
         Returns:
             List of (lower_freq, upper_freq) tuples
-        """
-        return self._frequency_bands.get(band_type, [])
+        """        return self._frequency_bands.get(band_type, [])
     
     def create_custom_frequency_bands(self, 
                                     min_freq: float,
                                     max_freq: float,
                                     num_bands: int,
                                     scale: FrequencyScale = FrequencyScale.LINEAR) -> List[Tuple[float, float]]:
-        """
-        Create custom frequency bands
+        """        Create custom frequency bands
         
         Args:
             min_freq: Minimum frequency
@@ -474,8 +448,7 @@ class SpectralAnalysisConfig:
             
         Returns:
             List of frequency bands
-        """
-        try:
+        """        try:
             if scale == FrequencyScale.LINEAR:
                 frequencies = np.linspace(min_freq, max_freq, num_bands + 1)
             elif scale == FrequencyScale.LOG:
@@ -506,44 +479,36 @@ class SpectralAnalysisConfig:
             return [(min_freq, max_freq)]
     
     def _hz_to_mel(self, hz: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
-        """Convert frequency in Hz to mel scale"""
-        return 2595.0 * np.log10(1.0 + hz / 700.0)
+        """Convert frequency in Hz to mel scale"""        return 2595.0 * np.log10(1.0 + hz / 700.0)
     
     def _mel_to_hz(self, mel: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
-        """Convert mel scale to frequency in Hz"""
-        return 700.0 * (10.0 ** (mel / 2595.0) - 1.0)
+        """Convert mel scale to frequency in Hz"""        return 700.0 * (10.0 ** (mel / 2595.0) - 1.0)
     
     def _hz_to_bark(self, hz: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
-        """Convert frequency in Hz to Bark scale"""
-        return 13.0 * np.arctan(0.00076 * hz) + 3.5 * np.arctan((hz / 7500.0) ** 2)
+        """Convert frequency in Hz to Bark scale"""        return 13.0 * np.arctan(0.00076 * hz) + 3.5 * np.arctan((hz / 7500.0) ** 2)
     
     def _bark_to_hz(self, bark: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
-        """Convert Bark scale to frequency in Hz (approximation)"""
-        return 600.0 * np.sinh(bark / 4.0)
+        """Convert Bark scale to frequency in Hz (approximation)"""        return 600.0 * np.sinh(bark / 4.0)
     
     def get_analysis_profile(self, profile_name: str) -> Dict[str, Any]:
-        """
-        Get predefined analysis profile
+        """        Get predefined analysis profile
         
         Args:
             profile_name: Name of the analysis profile
             
         Returns:
             Analysis profile configuration
-        """
-        return self._analysis_profiles.get(profile_name, {})
+        """        return self._analysis_profiles.get(profile_name, {})
     
     def apply_analysis_profile(self, profile_name: str) -> bool:
-        """
-        Apply predefined analysis profile
+        """        Apply predefined analysis profile
         
         Args:
             profile_name: Name of the analysis profile
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             profile = self.get_analysis_profile(profile_name)
             if not profile:
                 self.logger.error(f"Unknown analysis profile: {profile_name}")
@@ -603,8 +568,7 @@ class SpectralAnalysisConfig:
                                    target_time_resolution: Optional[float] = None,
                                    min_frequency: float = 20.0,
                                    max_frequency: Optional[float] = None) -> Dict[str, Any]:
-        """
-        Calculate optimal analysis parameters based on requirements
+        """        Calculate optimal analysis parameters based on requirements
         
         Args:
             sample_rate: Audio sample rate
@@ -615,8 +579,7 @@ class SpectralAnalysisConfig:
             
         Returns:
             Optimal parameters
-        """
-        try:
+        """        try:
             if max_frequency is None:
                 max_frequency = sample_rate / 2
             
@@ -669,8 +632,7 @@ class SpectralAnalysisConfig:
             return {"error": str(e)}
     
     def _optimize_hop_length(self, hop_length: int) -> int:
-        """Optimize hop length for efficient processing"""
-        # Prefer powers of 2 or products of small primes
+        """Optimize hop length for efficient processing"""        # Prefer powers of 2 or products of small primes
         candidates = []
         
         # Powers of 2
@@ -692,8 +654,7 @@ class SpectralAnalysisConfig:
         return closest
     
     def _estimate_memory_usage(self, n_fft: int, hop_length: int, sample_rate: int) -> float:
-        """Estimate memory usage for spectral analysis"""
-        # Complex FFT output: n_fft/2 + 1 complex values
+        """Estimate memory usage for spectral analysis"""        # Complex FFT output: n_fft/2 + 1 complex values
         fft_memory = (n_fft // 2 + 1) * 8 * 2  # 8 bytes per float, complex
         
         # Window function
@@ -711,13 +672,11 @@ class SpectralAnalysisConfig:
         return round(total_memory_mb, 2)
     
     def validate_parameters(self) -> Tuple[bool, List[str]]:
-        """
-        Validate current spectral analysis parameters
+        """        Validate current spectral analysis parameters
         
         Returns:
             Tuple of (is_valid, error_messages)
-        """
-        errors = []
+        """        errors = []
         is_valid = True
         
         try:
@@ -781,13 +740,11 @@ class SpectralAnalysisConfig:
         return is_valid, errors
     
     def get_feature_extraction_config(self) -> Dict[str, Any]:
-        """
-        Get configuration for spectral feature extraction
+        """        Get configuration for spectral feature extraction
         
         Returns:
             Feature extraction configuration
-        """
-        return {
+        """        return {
             "enabled_features": [feature.value for feature in self.feature_config.enabled_features],
             "centroid_percentile": self.feature_config.centroid_percentile,
             "rolloff_percentile": self.feature_config.rolloff_percentile,
@@ -806,8 +763,7 @@ class SpectralAnalysisConfig:
                              use_case: str,
                              sample_rate: int,
                              performance_priority: bool = False) -> Dict[str, Any]:
-        """
-        Create complete spectral analysis configuration
+        """        Create complete spectral analysis configuration
         
         Args:
             use_case: Analysis use case
@@ -816,8 +772,7 @@ class SpectralAnalysisConfig:
             
         Returns:
             Complete analysis configuration
-        """
-        try:
+        """        try:
             # Apply appropriate profile
             if use_case in self._analysis_profiles:
                 self.apply_analysis_profile(use_case)
@@ -890,8 +845,7 @@ class SpectralAnalysisConfig:
             return {"error": str(e)}
     
     def export_config(self) -> Dict[str, Any]:
-        """Export complete spectral analysis configuration"""
-        try:
+        """Export complete spectral analysis configuration"""        try:
             return {
                 "spectral_params": {
                     "n_fft": self.spectral_params.n_fft,

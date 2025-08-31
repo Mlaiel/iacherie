@@ -1,5 +1,4 @@
-"""
-Compliance Configuration Module
+"""Compliance Configuration Module
 ===============================
 
 Enterprise compliance management for legal, regulatory, and industry standards.
@@ -13,17 +12,14 @@ Any unauthorized use, copying, or distribution without explicit written permissi
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in legal action.
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
-"""
-
-from enum import Enum
+"""from enum import Enum
 from typing import Dict, List, Optional, Set, Union, Any
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 
 
 class ComplianceStandard(str, Enum):
-    """Supported compliance standards and regulations."""
-    GDPR = "gdpr"  # General Data Protection Regulation (EU)
+    """Supported compliance standards and regulations."""    GDPR = "gdpr"  # General Data Protection Regulation (EU)
     CCPA = "ccpa"  # California Consumer Privacy Act (US)
     PIPEDA = "pipeda"  # Personal Information Protection and Electronic Documents Act (Canada)
     LGPD = "lgpd"  # Lei Geral de Proteção de Dados (Brazil)
@@ -38,8 +34,7 @@ class ComplianceStandard(str, Enum):
 
 
 class DataCategory(str, Enum):
-    """Categories of data for compliance classification."""
-    PERSONAL_IDENTIFIABLE = "personal_identifiable"
+    """Categories of data for compliance classification."""    PERSONAL_IDENTIFIABLE = "personal_identifiable"
     SENSITIVE_PERSONAL = "sensitive_personal"
     FINANCIAL = "financial"
     HEALTH = "health"
@@ -52,8 +47,7 @@ class DataCategory(str, Enum):
 
 
 class ProcessingPurpose(str, Enum):
-    """Legitimate purposes for data processing."""
-    SERVICE_PROVISION = "service_provision"
+    """Legitimate purposes for data processing."""    SERVICE_PROVISION = "service_provision"
     CONTRACT_PERFORMANCE = "contract_performance"
     LEGAL_OBLIGATION = "legal_obligation"
     LEGITIMATE_INTEREST = "legitimate_interest"
@@ -67,8 +61,7 @@ class ProcessingPurpose(str, Enum):
 
 
 class RetentionPeriod(str, Enum):
-    """Data retention periods."""
-    SESSION = "session"
+    """Data retention periods."""    SESSION = "session"
     DAYS_30 = "30_days"
     DAYS_90 = "90_days"
     MONTHS_6 = "6_months"
@@ -82,8 +75,7 @@ class RetentionPeriod(str, Enum):
 
 @dataclass
 class DataProcessingRecord:
-    """Record of data processing activities."""
-    data_category: DataCategory
+    """Record of data processing activities."""    data_category: DataCategory
     processing_purpose: ProcessingPurpose
     legal_basis: str
     retention_period: RetentionPeriod
@@ -97,8 +89,7 @@ class DataProcessingRecord:
 
 @dataclass
 class ConsentRecord:
-    """User consent tracking record."""
-    user_id: str
+    """User consent tracking record."""    user_id: str
     consent_type: str
     granted: bool
     timestamp: datetime
@@ -110,8 +101,7 @@ class ConsentRecord:
 
 @dataclass
 class CompliancePolicy:
-    """Compliance policy definition."""
-    policy_id: str
+    """Compliance policy definition."""    policy_id: str
     standard: ComplianceStandard
     title: str
     description: str
@@ -124,9 +114,7 @@ class CompliancePolicy:
 
 
 class ComplianceConfig:
-    """Enterprise compliance management configuration."""
-
-    # Regional compliance requirements
+    """Enterprise compliance management configuration."""    # Regional compliance requirements
     REGIONAL_COMPLIANCE = {
         "european_union": {
             "primary_standards": [ComplianceStandard.GDPR, ComplianceStandard.ISO27001],
@@ -511,19 +499,16 @@ class ComplianceConfig:
 
     @classmethod
     def get_regional_requirements(cls, region: str) -> Dict[str, Any]:
-        """Get compliance requirements for a specific region."""
-        return cls.REGIONAL_COMPLIANCE.get(region, {})
+        """Get compliance requirements for a specific region."""        return cls.REGIONAL_COMPLIANCE.get(region, {})
 
     @classmethod
     def get_data_category_requirements(cls, category: DataCategory) -> Dict[str, Any]:
-        """Get compliance requirements for a specific data category."""
-        return cls.DATA_PROCESSING_COMPLIANCE.get(category, {})
+        """Get compliance requirements for a specific data category."""        return cls.DATA_PROCESSING_COMPLIANCE.get(category, {})
 
     @classmethod
     def validate_processing_lawfulness(cls, category: DataCategory, purpose: ProcessingPurpose, 
                                      region: str) -> Dict[str, bool]:
-        """Validate if data processing is lawful under applicable regulations."""
-        validation_results = {}
+        """Validate if data processing is lawful under applicable regulations."""        validation_results = {}
         
         regional_reqs = cls.get_regional_requirements(region)
         category_reqs = cls.get_data_category_requirements(category)
@@ -542,8 +527,7 @@ class ComplianceConfig:
 
     @classmethod
     def _validate_gdpr_processing(cls, purpose: ProcessingPurpose, requirements: Dict[str, Any]) -> bool:
-        """Validate GDPR compliance for data processing."""
-        # Simplified validation logic
+        """Validate GDPR compliance for data processing."""        # Simplified validation logic
         lawful_basis_required = requirements.get("lawful_basis") == "required"
         
         # Check if purpose aligns with lawful bases
@@ -558,8 +542,7 @@ class ComplianceConfig:
 
     @classmethod
     def _validate_ccpa_processing(cls, purpose: ProcessingPurpose, requirements: Dict[str, Any]) -> bool:
-        """Validate CCPA compliance for data processing."""
-        # Simplified validation logic
+        """Validate CCPA compliance for data processing."""        # Simplified validation logic
         notice_required = requirements.get("notice_at_collection", False)
         
         # CCPA allows most business purposes with proper notice
@@ -574,8 +557,7 @@ class ComplianceConfig:
 
     @classmethod
     def get_retention_period_days(cls, retention_period: RetentionPeriod) -> int:
-        """Convert retention period enum to days."""
-        period_mapping = {
+        """Convert retention period enum to days."""        period_mapping = {
             RetentionPeriod.SESSION: 1,
             RetentionPeriod.DAYS_30: 30,
             RetentionPeriod.DAYS_90: 90,
@@ -591,8 +573,7 @@ class ComplianceConfig:
 
     @classmethod
     def calculate_compliance_score(cls, assessment_results: Dict[str, Any]) -> float:
-        """Calculate overall compliance score based on policy assessments."""
-        total_weight = sum(policy.compliance_score_weight for policy in cls.COMPLIANCE_POLICIES.values())
+        """Calculate overall compliance score based on policy assessments."""        total_weight = sum(policy.compliance_score_weight for policy in cls.COMPLIANCE_POLICIES.values())
         weighted_score = 0.0
         
         for policy_id, policy in cls.COMPLIANCE_POLICIES.items():
@@ -603,14 +584,12 @@ class ComplianceConfig:
 
     @classmethod
     def get_subject_rights_procedures(cls, right_type: str) -> Dict[str, Any]:
-        """Get procedures for handling specific subject rights requests."""
-        return cls.SUBJECT_RIGHTS.get(right_type, {})
+        """Get procedures for handling specific subject rights requests."""        return cls.SUBJECT_RIGHTS.get(right_type, {})
 
     @classmethod
     def is_consent_required(cls, data_category: DataCategory, processing_purpose: ProcessingPurpose, 
                           region: str) -> bool:
-        """Determine if explicit consent is required for data processing."""
-        regional_reqs = cls.get_regional_requirements(region)
+        """Determine if explicit consent is required for data processing."""        regional_reqs = cls.get_regional_requirements(region)
         category_reqs = cls.get_data_category_requirements(data_category)
         
         # Check for explicit consent requirements

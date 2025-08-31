@@ -1,5 +1,4 @@
-"""
-Quality Metrics - Quality Scoring and Analytics System
+"""Quality Metrics - Quality Scoring and Analytics System
 ======================================================
 
 Enterprise-grade quality metrics calculation and analytics for data quality management.
@@ -7,9 +6,7 @@ Provides comprehensive scoring algorithms, trend analysis, and quality reporting
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""
-
-from typing import Dict, Any, List, Optional, Union, Tuple
+"""from typing import Dict, Any, List, Optional, Union, Tuple
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -21,8 +18,7 @@ import json
 logger = logging.getLogger(__name__)
 
 class QualityDimension(Enum):
-    """Quality dimensions for comprehensive assessment"""
-    ACCURACY = "accuracy"
+    """Quality dimensions for comprehensive assessment"""    ACCURACY = "accuracy"
     COMPLETENESS = "completeness"
     CONSISTENCY = "consistency"
     TIMELINESS = "timeliness"
@@ -33,8 +29,7 @@ class QualityDimension(Enum):
 
 @dataclass
 class QualityScore:
-    """Quality score container with detailed breakdown"""
-    overall_score: float
+    """Quality score container with detailed breakdown"""    overall_score: float
     dimension_scores: Dict[str, float]
     confidence_level: float
     sample_size: int
@@ -43,13 +38,11 @@ class QualityScore:
     metadata: Dict[str, Any]
 
 class QualityTrend:
-    """Quality trend analysis container"""
-    
+    """Quality trend analysis container"""    
     def __init__(self):
         self.trend_direction: str = "stable"  # improving, declining, stable
         self.trend_strength: float = 0.0  # 0-100
-"""
-Quality Metrics - Quality Scoring and Analytics System
+"""Quality Metrics - Quality Scoring and Analytics System
 ======================================================
 
 Enterprise-grade quality metrics calculation and analytics for data quality management.
@@ -66,9 +59,7 @@ Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security +
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""
-
-from typing import Dict, Any, List, Optional, Union, Tuple, Callable
+"""from typing import Dict, Any, List, Optional, Union, Tuple, Callable
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -85,8 +76,7 @@ import pandas as pd
 logger = logging.getLogger(__name__)
 
 class QualityDimension(Enum):
-    """Quality dimensions for comprehensive assessment"""
-    ACCURACY = "accuracy"                    # Correctness of data
+    """Quality dimensions for comprehensive assessment"""    ACCURACY = "accuracy"                    # Correctness of data
     COMPLETENESS = "completeness"            # Data presence and fullness
     CONSISTENCY = "consistency"              # Internal coherence
     TIMELINESS = "timeliness"               # Freshness and currency
@@ -98,16 +88,14 @@ class QualityDimension(Enum):
     RELEVANCE = "relevance"                 # Business value alignment
 
 class MetricType(Enum):
-    """Types of quality metrics"""
-    PERCENTAGE = "percentage"               # 0-100 scale
+    """Types of quality metrics"""    PERCENTAGE = "percentage"               # 0-100 scale
     RATIO = "ratio"                        # 0-1 scale  
     COUNT = "count"                        # Absolute numbers
     DURATION = "duration"                  # Time measurements
     SCORE = "score"                        # Custom scoring
 
 class TrendDirection(Enum):
-    """Quality trend directions"""
-    IMPROVING = "improving"
+    """Quality trend directions"""    IMPROVING = "improving"
     DECLINING = "declining"
     STABLE = "stable"
     VOLATILE = "volatile"
@@ -115,8 +103,7 @@ class TrendDirection(Enum):
 
 @dataclass
 class QualityMeasurement:
-    """Individual quality measurement"""
-    metric_name: str
+    """Individual quality measurement"""    metric_name: str
     value: float
     dimension: QualityDimension
     metric_type: MetricType
@@ -127,8 +114,7 @@ class QualityMeasurement:
 
 @dataclass
 class QualityScore:
-    """Comprehensive quality score with detailed breakdown"""
-    overall_score: float
+    """Comprehensive quality score with detailed breakdown"""    overall_score: float
     dimension_scores: Dict[str, float]
     confidence_level: float
     sample_size: int
@@ -139,8 +125,7 @@ class QualityScore:
     weights: Dict[str, float] = field(default_factory=dict)
     
     def __post_init__(self):
-        """Validate score after initialization"""
-        if not 0 <= self.overall_score <= 100:
+        """Validate score after initialization"""        if not 0 <= self.overall_score <= 100:
             raise ValueError(f"Overall score must be between 0-100, got {self.overall_score}")
         
         for dim, score in self.dimension_scores.items():
@@ -149,8 +134,7 @@ class QualityScore:
 
 @dataclass 
 class QualityTrend:
-    """Quality trend analysis results"""
-    direction: TrendDirection
+    """Quality trend analysis results"""    direction: TrendDirection
     strength: float                         # 0-100, strength of trend
     change_rate: float                      # Percentage change per period
     slope: float                           # Linear regression slope
@@ -161,8 +145,7 @@ class QualityTrend:
     confidence_interval: Optional[Tuple[float, float]] = None
     
 class QualityBaseline:
-    """Quality baseline for comparison"""
-    
+    """Quality baseline for comparison"""    
     def __init__(self, name: str, target_scores: Dict[str, float]):
         self.name = name
         self.target_scores = target_scores
@@ -170,13 +153,11 @@ class QualityBaseline:
         self.last_updated = datetime.utcnow()
     
     def update_targets(self, new_targets: Dict[str, float]):
-        """Update baseline targets"""
-        self.target_scores.update(new_targets)
+        """Update baseline targets"""        self.target_scores.update(new_targets)
         self.last_updated = datetime.utcnow()
     
     def compare_score(self, actual_score: float, dimension: str) -> Dict[str, Any]:
-        """Compare actual score against baseline"""
-        target = self.target_scores.get(dimension, 80.0)  # Default target
+        """Compare actual score against baseline"""        target = self.target_scores.get(dimension, 80.0)  # Default target
         variance = actual_score - target
         variance_percentage = (variance / target) * 100 if target > 0 else 0
         
@@ -193,21 +174,17 @@ class QualityBaseline:
         }
 
 class QualityMetrics:
-    """
-    Enterprise-grade quality metrics calculation and analytics engine.
+    """    Enterprise-grade quality metrics calculation and analytics engine.
     
     Provides comprehensive quality scoring, trend analysis, benchmarking,
     and predictive quality analytics for multi-format content.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize quality metrics engine.
+        """        Initialize quality metrics engine.
         
         Args:
             config: Configuration settings
-        """
-        self.config = config
+        """        self.config = config
         self.logger = logger
         
         # Metrics storage
@@ -240,8 +217,7 @@ class QualityMetrics:
         self.logger.info("QualityMetrics engine initialized")
     
     def _initialize_baselines(self):
-        """Initialize default quality baselines"""
-        
+        """Initialize default quality baselines"""        
         # Enterprise baseline (high standards)
         enterprise_targets = {
             QualityDimension.ACCURACY.value: 95.0,
@@ -274,8 +250,7 @@ class QualityMetrics:
         self.baselines['standard'] = QualityBaseline('standard', standard_targets)
     
     def record_measurement(self, measurement: QualityMeasurement):
-        """Record a quality measurement"""
-        self.measurements.append(measurement)
+        """Record a quality measurement"""        self.measurements.append(measurement)
         self.dimension_history[measurement.dimension.value].append({
             'value': measurement.value,
             'timestamp': measurement.timestamp,
@@ -291,8 +266,7 @@ class QualityMetrics:
         weights: Optional[Dict[str, float]] = None,
         method: str = "weighted_average"
     ) -> float:
-        """
-        Calculate overall quality score from dimension scores.
+        """        Calculate overall quality score from dimension scores.
         
         Args:
             dimension_scores: Scores for each quality dimension
@@ -301,8 +275,7 @@ class QualityMetrics:
             
         Returns:
             Overall quality score (0-100)
-        """
-        if not dimension_scores:
+        """        if not dimension_scores:
             return 0.0
         
         weights = weights or self.default_weights
@@ -353,8 +326,7 @@ class QualityMetrics:
         weights: Optional[Dict[str, float]] = None,
         baseline: Optional[str] = None
     ) -> QualityScore:
-        """
-        Calculate comprehensive quality score from measurements.
+        """        Calculate comprehensive quality score from measurements.
         
         Args:
             measurements: List of quality measurements
@@ -363,8 +335,7 @@ class QualityMetrics:
             
         Returns:
             Comprehensive quality score
-        """
-        if not measurements:
+        """        if not measurements:
             return QualityScore(
                 overall_score=0.0,
                 dimension_scores={},
@@ -452,8 +423,7 @@ class QualityMetrics:
         timeframe: Optional[timedelta] = None,
         method: str = "linear_regression"
     ) -> QualityTrend:
-        """
-        Analyze quality trend for a specific dimension.
+        """        Analyze quality trend for a specific dimension.
         
         Args:
             dimension: Quality dimension to analyze
@@ -462,8 +432,7 @@ class QualityMetrics:
             
         Returns:
             Quality trend analysis
-        """
-        if dimension not in self.dimension_history:
+        """        if dimension not in self.dimension_history:
             return QualityTrend(
                 direction=TrendDirection.UNKNOWN,
                 strength=0.0,
@@ -590,8 +559,7 @@ class QualityMetrics:
         timeframe: Optional[timedelta] = None,
         content_type: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive quality metrics for specified timeframe.
+        """        Get comprehensive quality metrics for specified timeframe.
         
         Args:
             timeframe: Time period for metrics
@@ -599,8 +567,7 @@ class QualityMetrics:
             
         Returns:
             Comprehensive metrics dictionary
-        """
-        if timeframe is None:
+        """        if timeframe is None:
             timeframe = timedelta(hours=24)
         
         cutoff_time = datetime.utcnow() - timeframe
@@ -691,13 +658,11 @@ class QualityMetrics:
         }
     
     def create_baseline(self, name: str, target_scores: Dict[str, float]):
-        """Create a new quality baseline"""
-        self.baselines[name] = QualityBaseline(name, target_scores)
+        """Create a new quality baseline"""        self.baselines[name] = QualityBaseline(name, target_scores)
         self.logger.info(f"Created quality baseline: {name}")
     
     def update_baseline(self, name: str, target_scores: Dict[str, float]):
-        """Update existing quality baseline"""
-        if name in self.baselines:
+        """Update existing quality baseline"""        if name in self.baselines:
             self.baselines[name].update_targets(target_scores)
             self.logger.info(f"Updated quality baseline: {name}")
         else:
@@ -708,8 +673,7 @@ class QualityMetrics:
         current_scores: Dict[str, float],
         baseline_name: str = "enterprise"
     ) -> Dict[str, Any]:
-        """Compare current scores to baseline"""
-        if baseline_name not in self.baselines:
+        """Compare current scores to baseline"""        if baseline_name not in self.baselines:
             return {'error': f'Baseline "{baseline_name}" not found'}
         
         baseline = self.baselines[baseline_name]
@@ -737,8 +701,7 @@ class QualityMetrics:
         }
     
     def get_quality_insights(self, timeframe: timedelta = timedelta(days=7)) -> Dict[str, Any]:
-        """Generate quality insights and recommendations"""
-        metrics = self.get_metrics(timeframe)
+        """Generate quality insights and recommendations"""        metrics = self.get_metrics(timeframe)
         
         insights = {
             'summary': {},
@@ -791,8 +754,7 @@ class QualityMetrics:
         timeframe: Optional[timedelta] = None,
         include_raw_data: bool = False
     ) -> Union[str, Dict[str, Any]]:
-        """Export quality metrics in specified format"""
-        
+        """Export quality metrics in specified format"""        
         metrics = self.get_metrics(timeframe)
         
         if include_raw_data:
@@ -827,8 +789,7 @@ class QualityMetrics:
             raise ValueError(f"Unsupported export format: {format_type}")
     
     def clear_history(self, older_than: Optional[timedelta] = None):
-        """Clear measurement history"""
-        if older_than:
+        """Clear measurement history"""        if older_than:
             cutoff_time = datetime.utcnow() - older_than
             # Filter measurements
             self.measurements = deque(
@@ -851,12 +812,10 @@ class QualityMetrics:
         self.logger.info(f"Cleared quality metrics history {'older than ' + str(older_than) if older_than else 'completely'}")
     
     def get_dimension_weights(self) -> Dict[str, float]:
-        """Get current dimension weights"""
-        return self.default_weights.copy()
+        """Get current dimension weights"""        return self.default_weights.copy()
     
     def update_dimension_weights(self, new_weights: Dict[str, float]):
-        """Update dimension weights"""
-        # Validate weights sum to 1.0
+        """Update dimension weights"""        # Validate weights sum to 1.0
         total_weight = sum(new_weights.values())
         if abs(total_weight - 1.0) > 0.01:  # Allow small floating point errors
             raise ValueError(f"Dimension weights must sum to 1.0, got {total_weight}")
@@ -865,8 +824,7 @@ class QualityMetrics:
         self.logger.info("Updated dimension weights")
     
     def list_baselines(self) -> List[Dict[str, Any]]:
-        """List all available baselines"""
-        return [
+        """List all available baselines"""        return [
             {
                 'name': baseline.name,
                 'targets': baseline.target_scores,
@@ -879,21 +837,17 @@ class QualityMetrics:
         self.time_series: List[Tuple[datetime, float]] = []
 
 class QualityMetrics:
-    """
-    Comprehensive quality metrics calculation and analytics system.
+    """    Comprehensive quality metrics calculation and analytics system.
     
     Provides advanced scoring algorithms, trend analysis, benchmarking,
     and predictive quality analytics for data quality management.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize the quality metrics system.
+        """        Initialize the quality metrics system.
         
         Args:
             config: Quality metrics configuration
-        """
-        self.config = config
+        """        self.config = config
         self.logger = logger
         
         # Metric weights for different dimensions
@@ -935,8 +889,7 @@ class QualityMetrics:
         content_type: Optional[str] = None,
         custom_weights: Optional[Dict[str, float]] = None
     ) -> float:
-        """
-        Calculate overall quality score from dimension scores.
+        """        Calculate overall quality score from dimension scores.
         
         Args:
             dimension_scores: Scores for each quality dimension
@@ -945,8 +898,7 @@ class QualityMetrics:
             
         Returns:
             Overall quality score (0-100)
-        """
-        try:
+        """        try:
             # Use custom weights if provided, otherwise use default
             weights = custom_weights or self.dimension_weights
             
@@ -990,8 +942,7 @@ class QualityMetrics:
         base_weights: Dict[QualityDimension, float],
         content_type: str
     ) -> Dict[QualityDimension, float]:
-        """Adjust dimension weights based on content type"""
-        
+        """Adjust dimension weights based on content type"""        
         adjusted_weights = base_weights.copy()
         
         # Content-specific weight adjustments
@@ -1033,8 +984,7 @@ class QualityMetrics:
         metrics: Dict[str, Any],
         content_type: Optional[str] = None
     ) -> float:
-        """
-        Calculate score for a specific quality dimension.
+        """        Calculate score for a specific quality dimension.
         
         Args:
             dimension: Quality dimension to calculate
@@ -1043,8 +993,7 @@ class QualityMetrics:
             
         Returns:
             Dimension score (0-100)
-        """
-        try:
+        """        try:
             if dimension == QualityDimension.ACCURACY:
                 return self._calculate_accuracy_score(metrics, content_type)
             elif dimension == QualityDimension.COMPLETENESS:
@@ -1069,8 +1018,7 @@ class QualityMetrics:
             return 0.0
     
     def _calculate_accuracy_score(self, metrics: Dict[str, Any], content_type: Optional[str]) -> float:
-        """Calculate accuracy dimension score"""
-        
+        """Calculate accuracy dimension score"""        
         # Example calculation based on validation results
         validation_score = metrics.get('validation_score', 0)
         error_rate = metrics.get('error_rate', 0)
@@ -1081,8 +1029,7 @@ class QualityMetrics:
         return min(100, accuracy)
     
     def _calculate_completeness_score(self, metrics: Dict[str, Any], content_type: Optional[str]) -> float:
-        """Calculate completeness dimension score"""
-        
+        """Calculate completeness dimension score"""        
         required_fields = metrics.get('required_fields', 0)
         present_fields = metrics.get('present_fields', 0)
         
@@ -1093,8 +1040,7 @@ class QualityMetrics:
         return min(100, completeness)
     
     def _calculate_consistency_score(self, metrics: Dict[str, Any], content_type: Optional[str]) -> float:
-        """Calculate consistency dimension score"""
-        
+        """Calculate consistency dimension score"""        
         format_consistency = metrics.get('format_consistency', 100)
         structure_consistency = metrics.get('structure_consistency', 100)
         
@@ -1104,8 +1050,7 @@ class QualityMetrics:
         return min(100, consistency)
     
     def _calculate_timeliness_score(self, metrics: Dict[str, Any], content_type: Optional[str]) -> float:
-        """Calculate timeliness dimension score"""
-        
+        """Calculate timeliness dimension score"""        
         processing_time = metrics.get('processing_time', 0)
         expected_time = metrics.get('expected_processing_time', 1)
         
@@ -1125,8 +1070,7 @@ class QualityMetrics:
             return 40.0
     
     def _calculate_validity_score(self, metrics: Dict[str, Any], content_type: Optional[str]) -> float:
-        """Calculate validity dimension score"""
-        
+        """Calculate validity dimension score"""        
         valid_records = metrics.get('valid_records', 0)
         total_records = metrics.get('total_records', 1)
         
@@ -1137,8 +1081,7 @@ class QualityMetrics:
         return min(100, validity)
     
     def _calculate_uniqueness_score(self, metrics: Dict[str, Any], content_type: Optional[str]) -> float:
-        """Calculate uniqueness dimension score"""
-        
+        """Calculate uniqueness dimension score"""        
         unique_records = metrics.get('unique_records', 0)
         total_records = metrics.get('total_records', 1)
         
@@ -1149,8 +1092,7 @@ class QualityMetrics:
         return min(100, uniqueness)
     
     def _calculate_integrity_score(self, metrics: Dict[str, Any], content_type: Optional[str]) -> float:
-        """Calculate integrity dimension score"""
-        
+        """Calculate integrity dimension score"""        
         checksum_valid = metrics.get('checksum_valid', True)
         structure_valid = metrics.get('structure_valid', True)
         reference_valid = metrics.get('reference_valid', True)
@@ -1167,8 +1109,7 @@ class QualityMetrics:
         return min(100, score)
     
     def _calculate_compliance_score(self, metrics: Dict[str, Any], content_type: Optional[str]) -> float:
-        """Calculate compliance dimension score"""
-        
+        """Calculate compliance dimension score"""        
         compliance_checks = metrics.get('compliance_checks', {})
         
         if not compliance_checks:
@@ -1188,8 +1129,7 @@ class QualityMetrics:
         calculation_method: str = "weighted_average",
         metadata: Optional[Dict[str, Any]] = None
     ) -> QualityScore:
-        """
-        Create a comprehensive quality score object.
+        """        Create a comprehensive quality score object.
         
         Args:
             dimension_scores: Scores for each dimension
@@ -1200,8 +1140,7 @@ class QualityMetrics:
             
         Returns:
             QualityScore object
-        """
-        
+        """        
         # Calculate overall score
         overall_score = self.calculate_overall_score(dimension_scores, content_type)
         
@@ -1228,8 +1167,7 @@ class QualityMetrics:
         dimension_scores: Dict[str, float],
         sample_size: int
     ) -> float:
-        """Calculate confidence level for the quality score"""
-        
+        """Calculate confidence level for the quality score"""        
         # Base confidence on sample size
         if sample_size >= 1000:
             base_confidence = 95.0
@@ -1253,16 +1191,14 @@ class QualityMetrics:
         self,
         timeframe: timedelta = timedelta(days=7)
     ) -> QualityTrend:
-        """
-        Analyze quality trends over specified timeframe.
+        """        Analyze quality trends over specified timeframe.
         
         Args:
             timeframe: Time period for trend analysis
             
         Returns:
             QualityTrend object with analysis results
-        """
-        
+        """        
         cutoff_time = datetime.utcnow() - timeframe
         
         # Filter historical scores within timeframe
@@ -1321,8 +1257,7 @@ class QualityMetrics:
         timeframe: Optional[timedelta] = None,
         content_type: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive quality metrics.
+        """        Get comprehensive quality metrics.
         
         Args:
             timeframe: Time period for metrics
@@ -1330,8 +1265,7 @@ class QualityMetrics:
             
         Returns:
             Comprehensive metrics dictionary
-        """
-        
+        """        
         if timeframe is None:
             timeframe = timedelta(hours=24)
         
@@ -1390,8 +1324,7 @@ class QualityMetrics:
         return metrics
     
     def _calculate_score_distribution(self, scores: List[float]) -> Dict[str, int]:
-        """Calculate score distribution by quality levels"""
-        
+        """Calculate score distribution by quality levels"""        
         distribution = {
             'excellent': 0,  # 95-100
             'good': 0,       # 85-94

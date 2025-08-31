@@ -1,14 +1,11 @@
-"""
-JSON Processing Utilities for IA Influencer Agent Platform
+"""JSON Processing Utilities for IA Influencer Agent Platform
 Advanced JSON handling, schema validation, and data serialization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent Platform with Multi-Content Protection
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""
-
-import json
+"""import json
 import jsonschema
 from typing import Dict, Any, List, Optional, Union, Type, Callable
 from dataclasses import dataclass, field, asdict, is_dataclass
@@ -30,8 +27,7 @@ logger = logging.getLogger(__name__)
 
 
 class SerializationFormat(Enum):
-    """Serialization format enumeration"""
-    JSON = "json"
+    """Serialization format enumeration"""    JSON = "json"
     YAML = "yaml"
     XML = "xml"
     CSV = "csv"
@@ -40,22 +36,19 @@ class SerializationFormat(Enum):
 
 @dataclass
 class ValidationResult:
-    """JSON validation result"""
-    valid: bool
+    """JSON validation result"""    valid: bool
     errors: List[str] = field(default_factory=list)
     warnings: List[str] = field(default_factory=list)
     schema_version: Optional[str] = None
     validation_time: float = 0.0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return asdict(self)
+        """Convert to dictionary"""        return asdict(self)
 
 
 @dataclass
 class ProcessingStats:
-    """JSON processing statistics"""
-    files_processed: int = 0
+    """JSON processing statistics"""    files_processed: int = 0
     records_processed: int = 0
     processing_time: float = 0.0
     compression_ratio: Optional[float] = None
@@ -64,11 +57,9 @@ class ProcessingStats:
 
 
 class CustomJSONEncoder(json.JSONEncoder):
-    """Custom JSON encoder for complex data types"""
-    
+    """Custom JSON encoder for complex data types"""    
     def default(self, obj):
-        """Handle custom object serialization"""
-        if isinstance(obj, datetime):
+        """Handle custom object serialization"""        if isinstance(obj, datetime):
             return obj.isoformat()
         elif isinstance(obj, date):
             return obj.isoformat()
@@ -87,8 +78,7 @@ class CustomJSONEncoder(json.JSONEncoder):
 
 
 class JSONProcessor:
-    """Advanced JSON processing with validation and transformation"""
-    
+    """Advanced JSON processing with validation and transformation"""    
     def __init__(self, use_compression: bool = False):
         self.use_compression = use_compression
         self.custom_encoders = {}
@@ -97,17 +87,14 @@ class JSONProcessor:
         self.processing_stats = ProcessingStats()
         
     def register_custom_encoder(self, obj_type: Type, encoder_func: Callable):
-        """Register custom encoder for specific type"""
-        self.custom_encoders[obj_type] = encoder_func
+        """Register custom encoder for specific type"""        self.custom_encoders[obj_type] = encoder_func
     
     def register_custom_decoder(self, type_name: str, decoder_func: Callable):
-        """Register custom decoder for specific type"""
-        self.custom_decoders[type_name] = decoder_func
+        """Register custom decoder for specific type"""        self.custom_decoders[type_name] = decoder_func
     
     async def process_json_data(self, data: Any, 
                               validate_schema: Optional[str] = None) -> Dict[str, Any]:
-        """Process JSON data with optional validation"""
-        try:
+        """Process JSON data with optional validation"""        try:
             start_time = datetime.utcnow()
             
             # Convert to JSON string
@@ -153,8 +140,7 @@ class JSONProcessor:
             }
     
     def serialize_to_json(self, data: Any, indent: Optional[int] = None) -> str:
-        """Serialize data to JSON string with custom encoders"""
-        class ExtendedJSONEncoder(CustomJSONEncoder):
+        """Serialize data to JSON string with custom encoders"""        class ExtendedJSONEncoder(CustomJSONEncoder):
             def default(self, obj):
                 # Check custom encoders first
                 obj_type = type(obj)
@@ -168,8 +154,7 @@ class JSONProcessor:
         return json.dumps(data, cls=ExtendedJSONEncoder, indent=indent, ensure_ascii=False)
     
     def deserialize_from_json(self, json_string: str) -> Any:
-        """Deserialize JSON string with custom decoders"""
-        def custom_decoder(dct):
+        """Deserialize JSON string with custom decoders"""        def custom_decoder(dct):
             # Apply custom decoders
             for key, value in dct.items():
                 if key in self.custom_decoders:
@@ -180,8 +165,7 @@ class JSONProcessor:
     
     async def validate_against_schema(self, data: Dict[str, Any], 
                                     schema_name: str) -> ValidationResult:
-        """Validate JSON data against registered schema"""
-        try:
+        """Validate JSON data against registered schema"""        try:
             start_time = datetime.utcnow()
             
             if schema_name not in self.schemas:
@@ -225,8 +209,7 @@ class JSONProcessor:
     
     async def batch_process_files(self, file_paths: List[str],
                                 output_dir: Optional[str] = None) -> List[Dict[str, Any]]:
-        """Process multiple JSON files in batch"""
-        results = []
+        """Process multiple JSON files in batch"""        results = []
         
         async def process_file(file_path: str) -> Dict[str, Any]:
             try:
@@ -262,8 +245,7 @@ class JSONProcessor:
     
     async def save_json_file(self, data: Any, file_path: str, 
                            indent: int = 2, create_backup: bool = True) -> bool:
-        """Save data to JSON file with backup option"""
-        try:
+        """Save data to JSON file with backup option"""        try:
             file_path_obj = Path(file_path)
             
             # Create backup if file exists
@@ -294,8 +276,7 @@ class JSONProcessor:
             return False
     
     def load_json_file(self, file_path: str) -> Optional[Any]:
-        """Load data from JSON file"""
-        try:
+        """Load data from JSON file"""        try:
             file_path_obj = Path(file_path)
             
             if file_path.endswith('.gz') or file_path_obj.with_suffix(f'{file_path_obj.suffix}.gz').exists():
@@ -316,15 +297,13 @@ class JSONProcessor:
 
 
 class SchemaValidator:
-    """JSON Schema validation and management"""
-    
+    """JSON Schema validation and management"""    
     def __init__(self):
         self.schemas = {}
         self.validator_cache = {}
         
     def register_schema(self, name: str, schema: Dict[str, Any]):
-        """Register JSON schema"""
-        try:
+        """Register JSON schema"""        try:
             # Validate schema itself
             jsonschema.Draft7Validator.check_schema(schema)
             self.schemas[name] = schema
@@ -339,8 +318,7 @@ class SchemaValidator:
             raise
     
     def load_schema_from_file(self, name: str, file_path: str):
-        """Load schema from JSON file"""
-        try:
+        """Load schema from JSON file"""        try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 schema = json.load(f)
             
@@ -351,8 +329,7 @@ class SchemaValidator:
             raise
     
     def validate(self, data: Any, schema_name: str) -> ValidationResult:
-        """Validate data against schema"""
-        try:
+        """Validate data against schema"""        try:
             if schema_name not in self.validator_cache:
                 return ValidationResult(
                     valid=False,
@@ -388,8 +365,7 @@ class SchemaValidator:
             )
     
     def create_influencer_schema(self) -> Dict[str, Any]:
-        """Create schema for influencer data"""
-        return {
+        """Create schema for influencer data"""        return {
             "$schema": "http://json-schema.org/draft-07/schema#",
             "type": "object",
             "title": "Influencer Profile Schema",
@@ -468,8 +444,7 @@ class SchemaValidator:
         }
     
     def create_content_schema(self) -> Dict[str, Any]:
-        """Create schema for content data"""
-        return {
+        """Create schema for content data"""        return {
             "$schema": "http://json-schema.org/draft-07/schema#",
             "type": "object",
             "title": "Content Schema",
@@ -525,8 +500,7 @@ class SchemaValidator:
 
 
 class DataSerializer:
-    """Multi-format data serialization"""
-    
+    """Multi-format data serialization"""    
     def __init__(self):
         self.serializers = {
             SerializationFormat.JSON: self._serialize_json,
@@ -545,8 +519,7 @@ class DataSerializer:
         }
     
     def serialize(self, data: Any, format_type: SerializationFormat) -> str:
-        """Serialize data to specified format"""
-        try:
+        """Serialize data to specified format"""        try:
             serializer = self.serializers.get(format_type)
             if not serializer:
                 raise ValueError(f"Unsupported serialization format: {format_type}")
@@ -558,8 +531,7 @@ class DataSerializer:
             raise
     
     def deserialize(self, data_string: str, format_type: SerializationFormat) -> Any:
-        """Deserialize data from specified format"""
-        try:
+        """Deserialize data from specified format"""        try:
             deserializer = self.deserializers.get(format_type)
             if not deserializer:
                 raise ValueError(f"Unsupported deserialization format: {format_type}")
@@ -571,24 +543,19 @@ class DataSerializer:
             raise
     
     def _serialize_json(self, data: Any) -> str:
-        """Serialize to JSON"""
-        return json.dumps(data, cls=CustomJSONEncoder, indent=2, ensure_ascii=False)
+        """Serialize to JSON"""        return json.dumps(data, cls=CustomJSONEncoder, indent=2, ensure_ascii=False)
     
     def _deserialize_json(self, data_string: str) -> Any:
-        """Deserialize from JSON"""
-        return json.loads(data_string)
+        """Deserialize from JSON"""        return json.loads(data_string)
     
     def _serialize_yaml(self, data: Any) -> str:
-        """Serialize to YAML"""
-        return yaml.dump(data, default_flow_style=False, allow_unicode=True)
+        """Serialize to YAML"""        return yaml.dump(data, default_flow_style=False, allow_unicode=True)
     
     def _deserialize_yaml(self, data_string: str) -> Any:
-        """Deserialize from YAML"""
-        return yaml.safe_load(data_string)
+        """Deserialize from YAML"""        return yaml.safe_load(data_string)
     
     def _serialize_xml(self, data: Any, root_name: str = "root") -> str:
-        """Serialize to XML"""
-        def dict_to_xml(element, data_dict):
+        """Serialize to XML"""        def dict_to_xml(element, data_dict):
             for key, value in data_dict.items():
                 child = ET.SubElement(element, str(key))
                 if isinstance(value, dict):
@@ -613,8 +580,7 @@ class DataSerializer:
         return ET.tostring(root, encoding='unicode')
     
     def _deserialize_xml(self, data_string: str) -> Dict[str, Any]:
-        """Deserialize from XML"""
-        def xml_to_dict(element):
+        """Deserialize from XML"""        def xml_to_dict(element):
             result = {}
             
             for child in element:
@@ -642,8 +608,7 @@ class DataSerializer:
         return xml_to_dict(root)
     
     def _serialize_csv(self, data: List[Dict[str, Any]]) -> str:
-        """Serialize list of dictionaries to CSV"""
-        if not data or not isinstance(data, list):
+        """Serialize list of dictionaries to CSV"""        if not data or not isinstance(data, list):
             raise ValueError("CSV serialization requires list of dictionaries")
         
         output = io.StringIO()
@@ -669,8 +634,7 @@ class DataSerializer:
         return output.getvalue()
     
     def _deserialize_csv(self, data_string: str) -> List[Dict[str, Any]]:
-        """Deserialize CSV to list of dictionaries"""
-        input_stream = io.StringIO(data_string)
+        """Deserialize CSV to list of dictionaries"""        input_stream = io.StringIO(data_string)
         reader = csv.DictReader(input_stream)
         
         result = []
@@ -691,29 +655,25 @@ class DataSerializer:
         return result
     
     def _serialize_pickle(self, data: Any) -> str:
-        """Serialize to pickle (base64 encoded)"""
-        pickled_data = pickle.dumps(data)
+        """Serialize to pickle (base64 encoded)"""        pickled_data = pickle.dumps(data)
         import base64
         return base64.b64encode(pickled_data).decode('ascii')
     
     def _deserialize_pickle(self, data_string: str) -> Any:
-        """Deserialize from pickle (base64 encoded)"""
-        import base64
+        """Deserialize from pickle (base64 encoded)"""        import base64
         pickled_data = base64.b64decode(data_string.encode('ascii'))
         return pickle.loads(pickled_data)
 
 
 class ConfigParser:
-    """Configuration file parser supporting multiple formats"""
-    
+    """Configuration file parser supporting multiple formats"""    
     def __init__(self):
         self.serializer = DataSerializer()
         self.config_cache = {}
         
     def load_config(self, file_path: str, 
                    format_type: Optional[SerializationFormat] = None) -> Dict[str, Any]:
-        """Load configuration from file"""
-        try:
+        """Load configuration from file"""        try:
             file_path_obj = Path(file_path)
             
             if not file_path_obj.exists():
@@ -743,8 +703,7 @@ class ConfigParser:
     
     def save_config(self, config_data: Dict[str, Any], file_path: str,
                    format_type: SerializationFormat = SerializationFormat.JSON) -> bool:
-        """Save configuration to file"""
-        try:
+        """Save configuration to file"""        try:
             serialized_data = self.serializer.serialize(config_data, format_type)
             
             file_path_obj = Path(file_path)
@@ -767,8 +726,7 @@ class ConfigParser:
             return False
     
     def _detect_format(self, file_path: Path) -> SerializationFormat:
-        """Auto-detect configuration file format"""
-        suffix = file_path.suffix.lower()
+        """Auto-detect configuration file format"""        suffix = file_path.suffix.lower()
         
         format_map = {
             '.json': SerializationFormat.JSON,
@@ -781,8 +739,7 @@ class ConfigParser:
         return format_map.get(suffix, SerializationFormat.JSON)
     
     def reload_if_changed(self, file_path: str) -> Optional[Dict[str, Any]]:
-        """Reload configuration if file has been modified"""
-        try:
+        """Reload configuration if file has been modified"""        try:
             file_path_obj = Path(file_path)
             
             if file_path not in self.config_cache:
@@ -803,8 +760,7 @@ class ConfigParser:
 
 
 class MetadataExtractor:
-    """Extract and manage metadata from various data sources"""
-    
+    """Extract and manage metadata from various data sources"""    
     def __init__(self):
         self.extractors = {
             'file': self._extract_file_metadata,
@@ -813,8 +769,7 @@ class MetadataExtractor:
         }
     
     def extract_metadata(self, data: Any, source_type: str) -> Dict[str, Any]:
-        """Extract metadata based on source type"""
-        try:
+        """Extract metadata based on source type"""        try:
             extractor = self.extractors.get(source_type)
             if not extractor:
                 return {'error': f'Unsupported source type: {source_type}'}
@@ -826,8 +781,7 @@ class MetadataExtractor:
             return {'error': str(e)}
     
     def _extract_file_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract file system metadata"""
-        file_path_obj = Path(file_path)
+        """Extract file system metadata"""        file_path_obj = Path(file_path)
         
         if not file_path_obj.exists():
             return {'error': 'File not found'}
@@ -848,8 +802,7 @@ class MetadataExtractor:
         }
     
     def _extract_json_metadata(self, json_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract metadata from JSON structure"""
-        metadata = {
+        """Extract metadata from JSON structure"""        metadata = {
             'total_keys': len(json_data) if isinstance(json_data, dict) else 0,
             'data_types': {},
             'nested_levels': 0,
@@ -882,8 +835,7 @@ class MetadataExtractor:
         return metadata
     
     def _extract_content_metadata(self, content: str) -> Dict[str, Any]:
-        """Extract metadata from content string"""
-        lines = content.split('\n')
+        """Extract metadata from content string"""        lines = content.split('\n')
         words = content.split()
         
         return {
@@ -902,5 +854,4 @@ class MetadataExtractor:
 
 
 class JSONProcessingError(Exception):
-    """Custom exception for JSON processing errors"""
-    pass
+    """Custom exception for JSON processing errors"""    pass

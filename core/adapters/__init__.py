@@ -29,8 +29,7 @@ Architecture:
 - Strategy pattern for platform-specific implementations
 - Configuration management with encryption
 - Auto-discovery and initialization system
-"""
-from .base_adapter import (
+"""from .base_adapter import (
     BasePlatformAdapter, 
     AdapterStatus, 
     PlatformType,

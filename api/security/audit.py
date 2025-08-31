@@ -1,12 +1,9 @@
-"""
-Advanced Security Audit and Monitoring System
+"""Advanced Security Audit and Monitoring System
 Enterprise-grade audit logging and security monitoring
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Security Expert + Monitoring Specialist + DevOps Engineer
-"""
-
-import json
+"""import json
 import asyncio
 import aioredis
 from datetime import datetime, timezone, timedelta
@@ -28,8 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 class AuditEventType(Enum):
-    """Audit event types"""
-    AUTHENTICATION = "authentication"
+    """Audit event types"""    AUTHENTICATION = "authentication"
     AUTHORIZATION = "authorization"
     DATA_ACCESS = "data_access"
     DATA_MODIFICATION = "data_modification"
@@ -46,8 +42,7 @@ class AuditEventType(Enum):
 
 
 class AuditSeverity(Enum):
-    """Audit event severity levels"""
-    INFO = "info"
+    """Audit event severity levels"""    INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -55,16 +50,14 @@ class AuditSeverity(Enum):
 
 
 class ThreatLevel(Enum):
-    """System threat levels"""
-    GREEN = "green"      # Normal operations
+    """System threat levels"""    GREEN = "green"      # Normal operations
     YELLOW = "yellow"    # Elevated monitoring
     ORANGE = "orange"    # High alert
     RED = "red"         # Critical threat
 
 
 class IncidentStatus(Enum):
-    """Security incident status"""
-    OPEN = "open"
+    """Security incident status"""    OPEN = "open"
     INVESTIGATING = "investigating"
     CONTAINED = "contained"
     RESOLVED = "resolved"
@@ -73,8 +66,7 @@ class IncidentStatus(Enum):
 
 @dataclass
 class AuditEvent:
-    """Audit event data structure"""
-    event_id: str
+    """Audit event data structure"""    event_id: str
     event_type: AuditEventType
     severity: AuditSeverity
     timestamp: datetime
@@ -91,8 +83,7 @@ class AuditEvent:
     compliance_tags: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert audit event to dictionary"""
-        data = asdict(self)
+        """Convert audit event to dictionary"""        data = asdict(self)
         data['timestamp'] = self.timestamp.isoformat()
         data['event_type'] = self.event_type.value
         data['severity'] = self.severity.value
@@ -101,8 +92,7 @@ class AuditEvent:
 
 @dataclass
 class SecurityIncident:
-    """Security incident data structure"""
-    incident_id: str
+    """Security incident data structure"""    incident_id: str
     title: str
     description: str
     severity: AuditSeverity
@@ -119,8 +109,7 @@ class SecurityIncident:
 
 @dataclass
 class ThreatIndicator:
-    """Threat indicator data structure"""
-    indicator_id: str
+    """Threat indicator data structure"""    indicator_id: str
     indicator_type: str  # ip, domain, hash, email, etc.
     value: str
     threat_type: str
@@ -133,8 +122,7 @@ class ThreatIndicator:
 
 
 class AuditLogger:
-    """Comprehensive audit logging system"""
-    
+    """Comprehensive audit logging system"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.redis_url = self.config.get('redis_url', 'redis://localhost:6379')
@@ -148,8 +136,7 @@ class AuditLogger:
             self.file_logger = self._setup_file_logger()
     
     def _setup_file_logger(self) -> logging.Logger:
-        """Setup file-based audit logger"""
-        audit_logger = logging.getLogger('security_audit')
+        """Setup file-based audit logger"""        audit_logger = logging.getLogger('security_audit')
         audit_logger.setLevel(logging.INFO)
         
         # Create file handler with rotation
@@ -169,8 +156,7 @@ class AuditLogger:
         return audit_logger
     
     async def log_event(self, event: AuditEvent) -> bool:
-        """Log audit event"""
-        try:
+        """Log audit event"""        try:
             # Store in Redis for real-time analysis
             redis_client = await aioredis.from_url(self.redis_url)
             
@@ -231,8 +217,7 @@ class AuditLogger:
     async def get_events(self, filters: Dict[str, Any] = None,
                         start_time: datetime = None, end_time: datetime = None,
                         limit: int = 100) -> List[AuditEvent]:
-        """Retrieve audit events with filters"""
-        
+        """Retrieve audit events with filters"""        
         try:
             redis_client = await aioredis.from_url(self.redis_url)
             
@@ -308,8 +293,7 @@ class AuditLogger:
     
     async def log_transaction_audit(self, transaction_data: Dict[str, Any],
                                    security_result: Dict[str, Any]) -> Dict[str, Any]:
-        """Log blockchain transaction audit"""
-        
+        """Log blockchain transaction audit"""        
         event = AuditEvent(
             event_id=f"tx_audit_{transaction_data.get('tx_id', 'unknown')}_{int(time.time())}",
             event_type=AuditEventType.PAYMENT_TRANSACTION,
@@ -339,8 +323,7 @@ class AuditLogger:
         }
     
     async def get_compliance_status(self) -> Dict[str, Any]:
-        """Get compliance status summary"""
-        
+        """Get compliance status summary"""        
         try:
             redis_client = await aioredis.from_url(self.redis_url)
             
@@ -388,8 +371,7 @@ class AuditLogger:
             return {'error': str(e)}
     
     async def get_recent_audits(self, limit: int = 10) -> List[Dict[str, Any]]:
-        """Get recent audit events"""
-        
+        """Get recent audit events"""        
         end_time = datetime.now(timezone.utc)
         start_time = end_time - timedelta(hours=24)
         
@@ -397,15 +379,13 @@ class AuditLogger:
         return [event.to_dict() for event in events]
     
     async def _send_to_siem(self, event_data: Dict[str, Any]):
-        """Send event to SIEM system (placeholder for integration)"""
-        # Implementation would depend on specific SIEM system
+        """Send event to SIEM system (placeholder for integration)"""        # Implementation would depend on specific SIEM system
         # Examples: Splunk, ELK Stack, IBM QRadar, etc.
         pass
 
 
 class SecurityMonitor:
-    """Real-time security monitoring and threat detection"""
-    
+    """Real-time security monitoring and threat detection"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.redis_url = self.config.get('redis_url', 'redis://localhost:6379')
@@ -435,19 +415,16 @@ class SecurityMonitor:
         self._stop_monitoring = False
     
     def start_monitoring(self):
-        """Start background security monitoring"""
-        if not self.monitoring_task:
+        """Start background security monitoring"""        if not self.monitoring_task:
             self.monitoring_task = asyncio.create_task(self._monitoring_loop())
     
     def stop_monitoring(self):
-        """Stop background security monitoring"""
-        self._stop_monitoring = True
+        """Stop background security monitoring"""        self._stop_monitoring = True
         if self.monitoring_task:
             self.monitoring_task.cancel()
     
     async def _monitoring_loop(self):
-        """Main monitoring loop"""
-        while not self._stop_monitoring:
+        """Main monitoring loop"""        while not self._stop_monitoring:
             try:
                 await self._collect_metrics()
                 await self._analyze_threats()
@@ -461,8 +438,7 @@ class SecurityMonitor:
                 await asyncio.sleep(10)
     
     async def _collect_metrics(self):
-        """Collect security metrics"""
-        try:
+        """Collect security metrics"""        try:
             redis_client = await aioredis.from_url(self.redis_url)
             
             # Count active sessions
@@ -494,8 +470,7 @@ class SecurityMonitor:
             logger.error(f"Failed to collect metrics: {e}")
     
     async def _analyze_threats(self):
-        """Analyze current threats and patterns"""
-        
+        """Analyze current threats and patterns"""        
         # Failed authentication analysis
         if self.metrics['failed_auth_attempts'] > self.alert_thresholds['failed_auth_rate'] * 60:
             await self._create_incident(
@@ -515,8 +490,7 @@ class SecurityMonitor:
         # Implementation would analyze login patterns by location
     
     async def _update_threat_level(self):
-        """Update system threat level based on current conditions"""
-        
+        """Update system threat level based on current conditions"""        
         risk_factors = []
         
         # High failed auth attempts
@@ -552,8 +526,7 @@ class SecurityMonitor:
     
     async def _create_incident(self, title: str, description: str, 
                              severity: AuditSeverity, indicators: List[str]):
-        """Create new security incident"""
-        
+        """Create new security incident"""        
         incident_id = f"inc_{int(time.time())}_{hashlib.md5(title.encode()).hexdigest()[:8]}"
         
         incident = SecurityIncident(
@@ -588,27 +561,22 @@ class SecurityMonitor:
     
     async def _send_threat_level_alert(self, old_level: ThreatLevel, 
                                      new_level: ThreatLevel, risk_factors: List[str]):
-        """Send threat level change alert"""
-        # Implementation would send alerts via email, SMS, Slack, etc.
+        """Send threat level change alert"""        # Implementation would send alerts via email, SMS, Slack, etc.
         pass
     
     def get_current_threat_level(self) -> str:
-        """Get current system threat level"""
-        return self.current_threat_level.value
+        """Get current system threat level"""        return self.current_threat_level.value
     
     def get_active_sessions_count(self) -> int:
-        """Get number of active sessions"""
-        return self.metrics['active_sessions']
+        """Get number of active sessions"""        return self.metrics['active_sessions']
     
     def get_recent_incidents(self, limit: int = 5) -> List[Dict[str, Any]]:
-        """Get recent security incidents"""
-        incidents = list(self.active_incidents.values())
+        """Get recent security incidents"""        incidents = list(self.active_incidents.values())
         incidents.sort(key=lambda x: x.created_at, reverse=True)
         return [asdict(incident, default=str) for incident in incidents[:limit]]
     
     def calculate_security_score(self) -> int:
-        """Calculate overall security score (0-100)"""
-        base_score = 100
+        """Calculate overall security score (0-100)"""        base_score = 100
         
         # Deduct points for active issues
         if self.metrics['failed_auth_attempts'] > 50:
@@ -627,17 +595,14 @@ class SecurityMonitor:
         return max(0, base_score)
     
     def get_failed_auth_attempts(self, hours: int = 24) -> int:
-        """Get failed authentication attempts in specified time period"""
-        return self.metrics['failed_auth_attempts']
+        """Get failed authentication attempts in specified time period"""        return self.metrics['failed_auth_attempts']
     
     def get_blocked_attacks_count(self, hours: int = 24) -> int:
-        """Get blocked attacks count in specified time period"""
-        return self.metrics['blocked_attacks']
+        """Get blocked attacks count in specified time period"""        return self.metrics['blocked_attacks']
 
 
 class ThreatDetection:
-    """Advanced threat detection using machine learning and pattern analysis"""
-    
+    """Advanced threat detection using machine learning and pattern analysis"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.anomaly_threshold = self.config.get('anomaly_threshold', 0.8)
@@ -656,8 +621,7 @@ class ThreatDetection:
         self.user_baselines: Dict[str, Dict[str, Any]] = {}
     
     async def analyze_event(self, event: AuditEvent) -> Dict[str, Any]:
-        """Analyze event for threats"""
-        
+        """Analyze event for threats"""        
         analysis_result = {
             'is_suspicious': False,
             'threat_indicators': [],
@@ -703,8 +667,7 @@ class ThreatDetection:
         return analysis_result
     
     def _detect_patterns(self, event: AuditEvent) -> List[str]:
-        """Detect known threat patterns"""
-        threats = []
+        """Detect known threat patterns"""        threats = []
         
         # Check event details for patterns
         event_text = f"{event.action} {json.dumps(event.details)}"
@@ -721,8 +684,7 @@ class ThreatDetection:
         return threats
     
     async def _detect_behavioral_anomalies(self, event: AuditEvent) -> List[str]:
-        """Detect behavioral anomalies"""
-        anomalies = []
+        """Detect behavioral anomalies"""        anomalies = []
         
         if not event.user_id:
             return anomalies
@@ -754,8 +716,7 @@ class ThreatDetection:
         return anomalies
     
     def _detect_geographic_anomalies(self, event: AuditEvent) -> List[str]:
-        """Detect geographic anomalies"""
-        anomalies = []
+        """Detect geographic anomalies"""        anomalies = []
         
         if not event.source_ip:
             return anomalies
@@ -775,8 +736,7 @@ class ThreatDetection:
         return anomalies
     
     def _detect_time_anomalies(self, event: AuditEvent) -> List[str]:
-        """Detect time-based anomalies"""
-        anomalies = []
+        """Detect time-based anomalies"""        anomalies = []
         
         # Weekend access for business systems
         if event.timestamp.weekday() >= 5:  # Saturday or Sunday
@@ -790,8 +750,7 @@ class ThreatDetection:
         return anomalies
     
     async def _build_user_baseline(self, user_id: str):
-        """Build behavioral baseline for user"""
-        # This would analyze historical events for the user
+        """Build behavioral baseline for user"""        # This would analyze historical events for the user
         # For now, just create empty baseline
         self.user_baselines[user_id] = {
             'avg_requests_per_hour': 10,
@@ -802,8 +761,7 @@ class ThreatDetection:
         }
     
     def _generate_recommendations(self, threat_indicators: List[str]) -> List[str]:
-        """Generate security recommendations based on threats"""
-        recommendations = []
+        """Generate security recommendations based on threats"""        recommendations = []
         
         if any('brute_force' in indicator for indicator in threat_indicators):
             recommendations.extend([
@@ -830,8 +788,7 @@ class ThreatDetection:
 
 
 class IncidentResponse:
-    """Security incident response management"""
-    
+    """Security incident response management"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.response_teams = self.config.get('response_teams', [])
@@ -839,8 +796,7 @@ class IncidentResponse:
         self.automated_responses = self.config.get('automated_responses', True)
     
     async def handle_incident(self, incident: SecurityIncident) -> Dict[str, Any]:
-        """Handle security incident"""
-        
+        """Handle security incident"""        
         response_actions = []
         
         # Automated containment
@@ -863,8 +819,7 @@ class IncidentResponse:
         }
     
     async def _automated_containment(self, incident: SecurityIncident) -> List[str]:
-        """Perform automated containment actions"""
-        actions = []
+        """Perform automated containment actions"""        actions = []
         
         # IP blocking for network-based threats
         if 'network_attack' in incident.threat_indicators:
@@ -881,8 +836,7 @@ class IncidentResponse:
         return actions
     
     async def _escalate_incident(self, incident: SecurityIncident) -> str:
-        """Escalate incident based on severity"""
-        
+        """Escalate incident based on severity"""        
         if incident.severity == AuditSeverity.CRITICAL:
             # Immediate escalation to security team
             return "Escalated to security team immediately"
@@ -894,8 +848,7 @@ class IncidentResponse:
             return "Added to security queue for review"
     
     async def _document_response(self, incident: SecurityIncident, actions: List[str]):
-        """Document incident response"""
-        
+        """Document incident response"""        
         incident.timeline.append({
             'timestamp': datetime.now(timezone.utc).isoformat(),
             'action': 'incident_response',
@@ -909,16 +862,14 @@ class IncidentResponse:
 
 
 class ComplianceTracker:
-    """Compliance tracking and reporting"""
-    
+    """Compliance tracking and reporting"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.compliance_frameworks = self.config.get('frameworks', ['GDPR', 'SOX', 'PCI-DSS'])
         self.reporting_schedule = self.config.get('reporting_schedule', 'monthly')
     
     async def track_compliance_event(self, event: AuditEvent) -> Dict[str, Any]:
-        """Track compliance aspects of audit event"""
-        
+        """Track compliance aspects of audit event"""        
         compliance_data = {
             'event_id': event.event_id,
             'compliance_relevant': False,
@@ -948,8 +899,7 @@ class ComplianceTracker:
         return compliance_data
     
     def _is_gdpr_relevant(self, event: AuditEvent) -> bool:
-        """Check if event is relevant to GDPR"""
-        gdpr_event_types = [
+        """Check if event is relevant to GDPR"""        gdpr_event_types = [
             AuditEventType.DATA_ACCESS,
             AuditEventType.DATA_MODIFICATION,
             AuditEventType.EXPORT_OPERATION,
@@ -959,8 +909,7 @@ class ComplianceTracker:
         return event.event_type in gdpr_event_types
     
     def _is_sox_relevant(self, event: AuditEvent) -> bool:
-        """Check if event is relevant to SOX"""
-        sox_event_types = [
+        """Check if event is relevant to SOX"""        sox_event_types = [
             AuditEventType.PAYMENT_TRANSACTION,
             AuditEventType.CONFIGURATION_CHANGE,
             AuditEventType.SYSTEM_ACCESS
@@ -969,12 +918,10 @@ class ComplianceTracker:
         return event.event_type in sox_event_types
     
     def _is_pci_relevant(self, event: AuditEvent) -> bool:
-        """Check if event is relevant to PCI-DSS"""
-        return event.event_type == AuditEventType.PAYMENT_TRANSACTION
+        """Check if event is relevant to PCI-DSS"""        return event.event_type == AuditEventType.PAYMENT_TRANSACTION
     
     def _get_gdpr_requirements(self, event: AuditEvent) -> List[str]:
-        """Get relevant GDPR requirements"""
-        requirements = []
+        """Get relevant GDPR requirements"""        requirements = []
         
         if event.event_type == AuditEventType.DATA_ACCESS:
             requirements.append("Article 30 - Records of processing activities")
@@ -985,8 +932,7 @@ class ComplianceTracker:
         return requirements
     
     def _get_sox_requirements(self, event: AuditEvent) -> List[str]:
-        """Get relevant SOX requirements"""
-        requirements = []
+        """Get relevant SOX requirements"""        requirements = []
         
         if event.event_type == AuditEventType.PAYMENT_TRANSACTION:
             requirements.append("Section 404 - Management assessment of internal controls")
@@ -994,8 +940,7 @@ class ComplianceTracker:
         return requirements
     
     def _get_pci_requirements(self, event: AuditEvent) -> List[str]:
-        """Get relevant PCI-DSS requirements"""
-        requirements = []
+        """Get relevant PCI-DSS requirements"""        requirements = []
         
         if event.event_type == AuditEventType.PAYMENT_TRANSACTION:
             requirements.extend([

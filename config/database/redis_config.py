@@ -1,5 +1,4 @@
-"""
-Redis Configuration Module for IA-Influencer Agent Platform
+"""Redis Configuration Module for IA-Influencer Agent Platform
 ==========================================================
 
 Professional Redis configuration for caching, session management, real-time
@@ -15,9 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import os
+"""import os
 import json
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -34,23 +31,20 @@ logger = logging.getLogger(__name__)
 
 
 class RedisEnvironment(Enum):
-    """Redis environment configurations"""
-    DEVELOPMENT = "development"
+    """Redis environment configurations"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
 
 
 class RedisDeploymentType(Enum):
-    """Redis deployment types"""
-    STANDALONE = "standalone"
+    """Redis deployment types"""    STANDALONE = "standalone"
     CLUSTER = "cluster"
     SENTINEL = "sentinel"
 
 
 class RedisWorkloadType(Enum):
-    """Redis workload optimization types"""
-    CACHE = "cache"
+    """Redis workload optimization types"""    CACHE = "cache"
     SESSION = "session"
     PUBSUB = "pubsub"
     QUEUE = "queue"
@@ -60,8 +54,7 @@ class RedisWorkloadType(Enum):
 
 @dataclass
 class RedisCredentials:
-    """Redis authentication and connection credentials"""
-    host: str = "localhost"
+    """Redis authentication and connection credentials"""    host: str = "localhost"
     port: int = 6379
     password: Optional[str] = None
     username: Optional[str] = None
@@ -76,8 +69,7 @@ class RedisCredentials:
 
 @dataclass
 class RedisPoolConfig:
-    """Redis connection pool configuration"""
-    max_connections: int = 50
+    """Redis connection pool configuration"""    max_connections: int = 50
     retry_on_timeout: bool = True
     retry_on_error: List[Exception] = field(default_factory=lambda: [ConnectionError, TimeoutError])
     health_check_interval: int = 30
@@ -89,8 +81,7 @@ class RedisPoolConfig:
 
 @dataclass
 class RedisCacheConfig:
-    """Redis caching configuration"""
-    default_ttl: int = 3600  # 1 hour
+    """Redis caching configuration"""    default_ttl: int = 3600  # 1 hour
     key_prefix: str = "ia_influencer:"
     serializer: str = "json"  # json, pickle, msgpack
     compression: bool = False
@@ -101,8 +92,7 @@ class RedisCacheConfig:
 
 @dataclass
 class RedisClusterConfig:
-    """Redis cluster configuration"""
-    startup_nodes: List[Dict[str, Union[str, int]]] = field(default_factory=list)
+    """Redis cluster configuration"""    startup_nodes: List[Dict[str, Union[str, int]]] = field(default_factory=list)
     decode_responses: bool = True
     skip_full_coverage_check: bool = False
     max_connections_per_node: int = 50
@@ -111,14 +101,11 @@ class RedisClusterConfig:
 
 
 class RedisConfig:
-    """
-    Professional Redis configuration manager for IA-Influencer Agent Platform
+    """    Professional Redis configuration manager for IA-Influencer Agent Platform
     
     Handles caching, session management, pub/sub messaging, task queues,
     and real-time analytics across multi-tenant content protection platform.
-    """
-
-    def __init__(self, 
+    """    def __init__(self, 
                  environment: RedisEnvironment = RedisEnvironment.DEVELOPMENT,
                  workload_type: RedisWorkloadType = RedisWorkloadType.CACHE,
                  deployment_type: RedisDeploymentType = RedisDeploymentType.STANDALONE):
@@ -135,8 +122,7 @@ class RedisConfig:
         self._setup_logging()
 
     def _setup_logging(self) -> None:
-        """Setup Redis-specific logging"""
-        self.logger = logging.getLogger(f"redis.{self.environment.value}.{self.workload_type.value}")
+        """Setup Redis-specific logging"""        self.logger = logging.getLogger(f"redis.{self.environment.value}.{self.workload_type.value}")
         if not self.logger.handlers:
             handler = logging.StreamHandler()
             formatter = logging.Formatter(
@@ -147,8 +133,7 @@ class RedisConfig:
             self.logger.setLevel(logging.INFO)
 
     def _load_credentials(self) -> RedisCredentials:
-        """Load Redis credentials from environment"""
-        env_prefix = f"REDIS_{self.environment.value.upper()}"
+        """Load Redis credentials from environment"""        env_prefix = f"REDIS_{self.environment.value.upper()}"
         
         # Parse sentinel hosts if provided
         sentinel_hosts = []
@@ -178,8 +163,7 @@ class RedisConfig:
         )
 
     def _get_pool_config(self) -> RedisPoolConfig:
-        """Get connection pool configuration based on environment and workload"""
-        base_configs = {
+        """Get connection pool configuration based on environment and workload"""        base_configs = {
             RedisEnvironment.DEVELOPMENT: RedisPoolConfig(max_connections=10),
             RedisEnvironment.STAGING: RedisPoolConfig(max_connections=25),
             RedisEnvironment.PRODUCTION: RedisPoolConfig(max_connections=50),
@@ -209,8 +193,7 @@ class RedisConfig:
         return config
 
     def _get_cache_config(self) -> RedisCacheConfig:
-        """Get cache configuration based on workload type"""
-        workload_configs = {
+        """Get cache configuration based on workload type"""        workload_configs = {
             RedisWorkloadType.CACHE: RedisCacheConfig(
                 default_ttl=3600,
                 key_prefix="cache:",
@@ -247,8 +230,7 @@ class RedisConfig:
         return workload_configs.get(self.workload_type, RedisCacheConfig())
 
     def _get_cluster_config(self) -> RedisClusterConfig:
-        """Get cluster configuration from environment"""
-        env_prefix = f"REDIS_{self.environment.value.upper()}_CLUSTER"
+        """Get cluster configuration from environment"""        env_prefix = f"REDIS_{self.environment.value.upper()}_CLUSTER"
         
         # Parse startup nodes
         startup_nodes = []
@@ -271,8 +253,7 @@ class RedisConfig:
         )
 
     def _get_ssl_context(self) -> Optional[ssl.SSLContext]:
-        """Create SSL context if SSL is enabled"""
-        if not self.credentials.ssl_enabled:
+        """Create SSL context if SSL is enabled"""        if not self.credentials.ssl_enabled:
             return None
         
         try:
@@ -293,8 +274,7 @@ class RedisConfig:
             raise
 
     def create_connection_pool(self, database: int = 0, pool_name: str = "default") -> ConnectionPool:
-        """
-        Create Redis connection pool
+        """        Create Redis connection pool
         
         Args:
             database: Redis database number
@@ -302,8 +282,7 @@ class RedisConfig:
             
         Returns:
             Configured Redis connection pool
-        """
-        if pool_name in self._pools:
+        """        if pool_name in self._pools:
             return self._pools[pool_name]
         
         try:
@@ -341,8 +320,7 @@ class RedisConfig:
             raise
 
     def create_client(self, database: int = 0, client_name: str = "default") -> Redis:
-        """
-        Create Redis client
+        """        Create Redis client
         
         Args:
             database: Redis database number
@@ -350,8 +328,7 @@ class RedisConfig:
             
         Returns:
             Configured Redis client
-        """
-        if client_name in self._clients:
+        """        if client_name in self._clients:
             return self._clients[client_name]
         
         try:
@@ -376,8 +353,7 @@ class RedisConfig:
             raise
 
     def _create_sentinel_client(self, database: int = 0) -> Redis:
-        """Create Redis client using Sentinel"""
-        try:
+        """Create Redis client using Sentinel"""        try:
             sentinel = Sentinel(self.credentials.sentinel_hosts)
             return sentinel.master_for(
                 self.credentials.sentinel_service_name,
@@ -390,8 +366,7 @@ class RedisConfig:
             raise
 
     def _create_cluster_client(self) -> Redis:
-        """Create Redis cluster client"""
-        try:
+        """Create Redis cluster client"""        try:
             from rediscluster import RedisCluster
             
             return RedisCluster(
@@ -411,8 +386,7 @@ class RedisConfig:
             raise
 
     def create_async_client(self, database: int = 0, client_name: str = "async_default") -> aioredis.Redis:
-        """
-        Create async Redis client for real-time operations
+        """        Create async Redis client for real-time operations
         
         Args:
             database: Redis database number
@@ -420,8 +394,7 @@ class RedisConfig:
             
         Returns:
             Configured async Redis client
-        """
-        if client_name in self._async_clients:
+        """        if client_name in self._async_clients:
             return self._async_clients[client_name]
         
         try:
@@ -457,51 +430,41 @@ class RedisConfig:
             raise
 
     def get_cache_client(self) -> Redis:
-        """Get Redis client optimized for caching operations"""
-        return self.create_client(database=0, client_name="cache")
+        """Get Redis client optimized for caching operations"""        return self.create_client(database=0, client_name="cache")
 
     def get_session_client(self) -> Redis:
-        """Get Redis client for session management"""
-        return self.create_client(database=1, client_name="session")
+        """Get Redis client for session management"""        return self.create_client(database=1, client_name="session")
 
     def get_queue_client(self) -> Redis:
-        """Get Redis client for task queue operations (Celery)"""
-        return self.create_client(database=2, client_name="queue")
+        """Get Redis client for task queue operations (Celery)"""        return self.create_client(database=2, client_name="queue")
 
     def get_pubsub_client(self) -> Redis:
-        """Get Redis client for pub/sub messaging"""
-        return self.create_client(database=3, client_name="pubsub")
+        """Get Redis client for pub/sub messaging"""        return self.create_client(database=3, client_name="pubsub")
 
     def get_analytics_client(self) -> Redis:
-        """Get Redis client for analytics data"""
-        return self.create_client(database=4, client_name="analytics")
+        """Get Redis client for analytics data"""        return self.create_client(database=4, client_name="analytics")
 
     def get_real_time_client(self) -> aioredis.Redis:
-        """Get async Redis client for real-time operations"""
-        return self.create_async_client(database=5, client_name="realtime")
+        """Get async Redis client for real-time operations"""        return self.create_async_client(database=5, client_name="realtime")
 
     def get_tenant_client(self, tenant_id: str) -> Redis:
-        """
-        Get tenant-specific Redis client
+        """        Get tenant-specific Redis client
         
         Args:
             tenant_id: Unique tenant identifier
             
         Returns:
             Tenant-specific Redis client
-        """
-        # Use database 10+ for tenants
+        """        # Use database 10+ for tenants
         tenant_db = 10 + hash(tenant_id) % 5  # Distribute across 5 DBs
         return self.create_client(database=tenant_db, client_name=f"tenant_{tenant_id}")
 
     def health_check(self) -> Dict[str, Any]:
-        """
-        Perform comprehensive health check on Redis connections
+        """        Perform comprehensive health check on Redis connections
         
         Returns:
             Health check results dictionary
-        """
-        health_status = {
+        """        health_status = {
             "status": "healthy",
             "environment": self.environment.value,
             "workload_type": self.workload_type.value,
@@ -561,16 +524,14 @@ class RedisConfig:
         return health_status
 
     def optimize_cluster_performance(self) -> None:
-        """
-        Advanced Redis cluster performance optimization
+        """        Advanced Redis cluster performance optimization
         
         Features:
         - Connection pool optimization
         - Memory management tuning
         - Cluster slot optimization
         - Performance monitoring setup
-        """
-        if self.deployment_type != RedisDeploymentType.CLUSTER:
+        """        if self.deployment_type != RedisDeploymentType.CLUSTER:
             self.logger.warning("Cluster optimization called on non-cluster deployment")
             return
         
@@ -590,8 +551,7 @@ class RedisConfig:
             raise
     
     def _optimize_cluster_memory_settings(self, cluster_client) -> None:
-        """Optimize memory-related cluster settings"""
-        try:
+        """Optimize memory-related cluster settings"""        try:
             # Enable lazy freeing for better performance
             cluster_client.config_set('lazyfree-lazy-eviction', 'yes')
             cluster_client.config_set('lazyfree-lazy-expire', 'yes')
@@ -609,8 +569,7 @@ class RedisConfig:
             self.logger.warning(f"Failed to optimize cluster memory settings: {e}")
     
     def _optimize_cluster_network_settings(self, cluster_client) -> None:
-        """Optimize network-related cluster settings"""
-        try:
+        """Optimize network-related cluster settings"""        try:
             # TCP keepalive settings
             cluster_client.config_set('tcp-keepalive', '60')
             
@@ -627,8 +586,7 @@ class RedisConfig:
             self.logger.warning(f"Failed to optimize cluster network settings: {e}")
     
     def _setup_cluster_monitoring(self, cluster_client) -> None:
-        """Setup cluster monitoring and health checks"""
-        try:
+        """Setup cluster monitoring and health checks"""        try:
             # Enable slow log monitoring
             cluster_client.config_set('slowlog-log-slower-than', '10000')  # 10ms
             cluster_client.config_set('slowlog-max-len', '1000')
@@ -644,21 +602,18 @@ class RedisConfig:
             self.logger.warning(f"Failed to setup cluster monitoring: {e}")
     
     def _schedule_cluster_health_checks(self) -> None:
-        """Schedule periodic cluster health checks"""
-        # This would typically integrate with a monitoring system
+        """Schedule periodic cluster health checks"""        # This would typically integrate with a monitoring system
         # For now, just log that monitoring is enabled
         self.logger.info("Cluster health check monitoring enabled")
     
     def _get_or_create_cluster_client(self):
-        """Get existing cluster client or create new one"""
-        cluster_client_name = "cluster_optimization"
+        """Get existing cluster client or create new one"""        cluster_client_name = "cluster_optimization"
         if cluster_client_name not in self._clients:
             return self.create_client(0, cluster_client_name)
         return self._clients[cluster_client_name]
 
     def close_all_connections(self) -> None:
-        """Close all Redis connections and cleanup resources"""
-        # Close sync clients
+        """Close all Redis connections and cleanup resources"""        # Close sync clients
         for client_name, client in self._clients.items():
             try:
                 client.close()
@@ -687,5 +642,4 @@ class RedisConfig:
         self._pools.clear()
 
     def __del__(self):
-        """Cleanup on object destruction"""
-        self.close_all_connections()
+        """Cleanup on object destruction"""        self.close_all_connections()

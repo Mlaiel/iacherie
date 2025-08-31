@@ -1,5 +1,4 @@
-"""
-Observability Usage Examples - Complete Implementation Guide
+"""Observability Usage Examples - Complete Implementation Guide
 
 Comprehensive examples demonstrating all features of the observability suite
 including monitoring, analytics, reporting, and predictive capabilities
@@ -13,9 +12,7 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -40,8 +37,7 @@ logger = logging.getLogger(__name__)
 
 
 async def demonstrate_complete_observability_suite():
-    """Demonstrate complete observability suite capabilities"""
-    
+    """Demonstrate complete observability suite capabilities"""    
     print("🚀 IA Influencer Agent - Enterprise Observability Suite Demo")
     print("=" * 70)
     
@@ -90,8 +86,7 @@ async def demonstrate_complete_observability_suite():
 
 
 async def demonstrate_content_analysis(obs_index):
-    """Demonstrate content performance analysis"""
-    print("\n📋 Step 3: Content Performance Analysis")
+    """Demonstrate content performance analysis"""    print("\n📋 Step 3: Content Performance Analysis")
     print("-" * 50)
     
     # Sample content data (simulating real creator uploads)
@@ -168,8 +163,7 @@ async def demonstrate_content_analysis(obs_index):
 
 
 async def demonstrate_user_analytics(obs_index):
-    """Demonstrate user behavior analytics"""
-    print("\n📋 Step 4: User Behavior Analytics")
+    """Demonstrate user behavior analytics"""    print("\n📋 Step 4: User Behavior Analytics")
     print("-" * 50)
     
     # Sample user behavior data
@@ -246,8 +240,7 @@ async def demonstrate_user_analytics(obs_index):
 
 
 async def demonstrate_roi_analysis(obs_index):
-    """Demonstrate ROI optimization"""
-    print("\n📋 Step 5: ROI Analysis & Optimization")
+    """Demonstrate ROI optimization"""    print("\n📋 Step 5: ROI Analysis & Optimization")
     print("-" * 50)
     
     # Sample financial data
@@ -325,8 +318,7 @@ async def demonstrate_roi_analysis(obs_index):
 
 
 async def demonstrate_intelligent_monitoring(obs_index):
-    """Demonstrate intelligent monitoring capabilities"""
-    print("\n📋 Step 6: Intelligent Monitoring & Predictions")
+    """Demonstrate intelligent monitoring capabilities"""    print("\n📋 Step 6: Intelligent Monitoring & Predictions")
     print("-" * 50)
     
     # Get monitoring system
@@ -374,8 +366,7 @@ async def demonstrate_intelligent_monitoring(obs_index):
 
 
 async def demonstrate_automated_reporting(obs_index):
-    """Demonstrate automated reporting capabilities"""
-    print("\n📋 Step 7: Automated Reporting System")
+    """Demonstrate automated reporting capabilities"""    print("\n📋 Step 7: Automated Reporting System")
     print("-" * 50)
     
     # Schedule an automated report
@@ -433,8 +424,7 @@ async def demonstrate_automated_reporting(obs_index):
 
 
 async def demonstrate_executive_dashboard(obs_index):
-    """Demonstrate executive dashboard generation"""
-    print("\n📋 Step 8: Executive Dashboard Generation")
+    """Demonstrate executive dashboard generation"""    print("\n📋 Step 8: Executive Dashboard Generation")
     print("-" * 50)
     
     # Comprehensive sample data
@@ -546,8 +536,7 @@ async def demonstrate_executive_dashboard(obs_index):
 
 
 async def demonstrate_configuration_management():
-    """Demonstrate configuration management"""
-    print("\n📋 Bonus: Configuration Management")
+    """Demonstrate configuration management"""    print("\n📋 Bonus: Configuration Management")
     print("-" * 50)
     
     # Get current configuration

@@ -1,14 +1,11 @@
-"""
-Optimization Networks for IA-Influencer-Agent
+"""Optimization Networks for IA-Influencer-Agent
 
 Advanced neural networks for optimizing content performance, SEO,
 monetization strategies, and overall creator success.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import torch
+"""import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from typing import Dict, List, Optional, Tuple, Union, Any
@@ -20,8 +17,7 @@ from .base_networks import BaseNeuralNetwork, NetworkConfig
 
 
 class OptimizationType(Enum):
-    """Types of optimization"""
-    SEO = "seo"
+    """Types of optimization"""    SEO = "seo"
     MONETIZATION = "monetization"
     ENGAGEMENT = "engagement"
     PERFORMANCE = "performance"
@@ -30,8 +26,7 @@ class OptimizationType(Enum):
 
 
 class Platform(Enum):
-    """Content platforms"""
-    YOUTUBE = "youtube"
+    """Content platforms"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -43,8 +38,7 @@ class Platform(Enum):
 
 @dataclass
 class OptimizationResult:
-    """Result of optimization analysis"""
-    
+    """Result of optimization analysis"""    
     optimization_type: OptimizationType
     current_score: float
     optimized_score: float
@@ -78,13 +72,11 @@ class OptimizationResult:
 
 
 class SEOOptimizationNetwork(BaseNeuralNetwork):
-    """
-    Network for Search Engine Optimization of content
+    """    Network for Search Engine Optimization of content
     
     Optimizes titles, descriptions, tags, and content structure
     for maximum discoverability across platforms.
-    """
-    
+    """    
     def __init__(self, config: NetworkConfig):
         super().__init__(config)
         
@@ -196,8 +188,7 @@ class SEOOptimizationNetwork(BaseNeuralNetwork):
         platform: Platform = Platform.YOUTUBE,
         current_metadata: Optional[Dict[str, str]] = None
     ) -> OptimizationResult:
-        """Perform comprehensive SEO optimization"""
-        
+        """Perform comprehensive SEO optimization"""        
         self.eval()
         
         with torch.no_grad():
@@ -256,13 +247,11 @@ class SEOOptimizationNetwork(BaseNeuralNetwork):
 
 
 class MonetizationOptimizationNetwork(BaseNeuralNetwork):
-    """
-    Network for optimizing monetization strategies
+    """    Network for optimizing monetization strategies
     
     Analyzes content and audience to recommend optimal pricing,
     revenue channels, and monetization approaches.
-    """
-    
+    """    
     def __init__(self, config: NetworkConfig):
         super().__init__(config)
         
@@ -381,8 +370,7 @@ class MonetizationOptimizationNetwork(BaseNeuralNetwork):
         audience_features: Optional[torch.Tensor] = None,
         current_revenue: float = 0.0
     ) -> OptimizationResult:
-        """Optimize monetization strategy"""
-        
+        """Optimize monetization strategy"""        
         self.eval()
         
         with torch.no_grad():
@@ -439,13 +427,11 @@ class MonetizationOptimizationNetwork(BaseNeuralNetwork):
 
 
 class EngagementOptimizationNetwork(BaseNeuralNetwork):
-    """
-    Network for optimizing content engagement
+    """    Network for optimizing content engagement
     
     Analyzes and optimizes content for maximum audience engagement
     across different platforms and demographics.
-    """
-    
+    """    
     def __init__(self, config: NetworkConfig):
         super().__init__(config)
         
@@ -563,8 +549,7 @@ class EngagementOptimizationNetwork(BaseNeuralNetwork):
         platform: Platform = Platform.YOUTUBE,
         current_engagement: Dict[str, float] = None
     ) -> OptimizationResult:
-        """Optimize content for maximum engagement"""
-        
+        """Optimize content for maximum engagement"""        
         self.eval()
         
         with torch.no_grad():
@@ -636,13 +621,11 @@ class EngagementOptimizationNetwork(BaseNeuralNetwork):
 
 
 class PerformancePredictionNetwork(BaseNeuralNetwork):
-    """
-    Network for predicting content performance
+    """    Network for predicting content performance
     
     Forecasts various performance metrics including views, engagement,
     revenue, and growth potential.
-    """
-    
+    """    
     def __init__(self, config: NetworkConfig):
         super().__init__(config)
         
@@ -746,8 +729,7 @@ class PerformancePredictionNetwork(BaseNeuralNetwork):
         content_features: Optional[torch.Tensor] = None,
         time_horizon: int = 30
     ) -> OptimizationResult:
-        """Predict content performance over specified time horizon"""
-        
+        """Predict content performance over specified time horizon"""        
         self.eval()
         
         with torch.no_grad():
@@ -801,8 +783,7 @@ class PerformancePredictionNetwork(BaseNeuralNetwork):
             return result
     
     def _generate_optimization_suggestions(self, bottlenecks: List[str]) -> List[str]:
-        """Generate optimization suggestions based on identified bottlenecks"""
-        
+        """Generate optimization suggestions based on identified bottlenecks"""        
         suggestions = []
         
         for bottleneck in bottlenecks:

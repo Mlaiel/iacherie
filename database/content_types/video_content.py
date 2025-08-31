@@ -1,5 +1,4 @@
-"""
-Video Content Management Module - Professional Video Content Processing System
+"""Video Content Management Module - Professional Video Content Processing System
 
 Module spécialisé pour la gestion, l'analyse et la protection du contenu vidéo
 dans la plateforme IA Influencer Agent.
@@ -13,9 +12,7 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""
-
-from typing import Dict, List, Any, Optional, Union, Tuple
+"""from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
@@ -33,8 +30,7 @@ import imageio
 logger = logging.getLogger(__name__)
 
 class VideoFormat(Enum):
-    """Supported video formats with technical specifications"""
-    MP4 = {"ext": ".mp4", "container": "MP4", "codecs": ["H.264", "H.265"], "quality": "excellent"}
+    """Supported video formats with technical specifications"""    MP4 = {"ext": ".mp4", "container": "MP4", "codecs": ["H.264", "H.265"], "quality": "excellent"}
     AVI = {"ext": ".avi", "container": "AVI", "codecs": ["XVID", "DivX"], "quality": "good"}
     MOV = {"ext": ".mov", "container": "QuickTime", "codecs": ["H.264", "ProRes"], "quality": "excellent"}
     WEBM = {"ext": ".webm", "container": "WebM", "codecs": ["VP8", "VP9"], "quality": "good"}
@@ -44,8 +40,7 @@ class VideoFormat(Enum):
     THREEGP = {"ext": ".3gp", "container": "3GPP", "codecs": ["H.263", "H.264"], "quality": "fair"}
 
 class VideoContentType(Enum):
-    """Video content classification types"""
-    MOVIE = "movie"
+    """Video content classification types"""    MOVIE = "movie"
     MUSIC_VIDEO = "music_video"
     DOCUMENTARY = "documentary"
     TUTORIAL = "tutorial"
@@ -61,8 +56,7 @@ class VideoContentType(Enum):
     EDUCATIONAL = "educational"
 
 class VideoQuality(Enum):
-    """Video quality classifications"""
-    SD = {"resolution": "480p", "min_width": 640, "min_height": 480}
+    """Video quality classifications"""    SD = {"resolution": "480p", "min_width": 640, "min_height": 480}
     HD = {"resolution": "720p", "min_width": 1280, "min_height": 720}
     FULL_HD = {"resolution": "1080p", "min_width": 1920, "min_height": 1080}
     QHD = {"resolution": "1440p", "min_width": 2560, "min_height": 1440}
@@ -71,8 +65,7 @@ class VideoQuality(Enum):
 
 @dataclass
 class VideoMetadata:
-    """Comprehensive video metadata structure"""
-    # Technical metadata
+    """Comprehensive video metadata structure"""    # Technical metadata
     duration: float
     width: int
     height: int
@@ -143,8 +136,7 @@ class VideoMetadata:
 
 @dataclass
 class VideoFingerprint:
-    """Video fingerprint for content identification and protection"""
-    content_id: str
+    """Video fingerprint for content identification and protection"""    content_id: str
     primary_hash: str
     perceptual_hash: str
     frame_hash_sequence: List[str]
@@ -161,8 +153,7 @@ class VideoFingerprint:
 
 @dataclass
 class VideoScene:
-    """Video scene detection and analysis"""
-    scene_id: str
+    """Video scene detection and analysis"""    scene_id: str
     start_frame: int
     end_frame: int
     start_time: float
@@ -176,18 +167,14 @@ class VideoScene:
     confidence_score: float = 0.0
 
 class VideoContentManager:
-    """
-    Professional video content management system with advanced processing capabilities
-    """
-    
+    """    Professional video content management system with advanced processing capabilities
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize the Video Content Manager
+        """        Initialize the Video Content Manager
         
         Args:
             config: Configuration dictionary for video processing
-        """
-        self.config = config or self._get_default_config()
+        """        self.config = config or self._get_default_config()
         self.logger = logging.getLogger(f"{__name__}.VideoContentManager")
         self.supported_formats = [fmt.value["ext"] for fmt in VideoFormat]
         
@@ -195,8 +182,7 @@ class VideoContentManager:
         self._init_components()
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration for video processing"""
-        return {
+        """Get default configuration for video processing"""        return {
             "max_file_size_mb": 1000,
             "max_processing_duration": 600,  # 10 minutes
             "frame_sampling_rate": 1.0,  # Process every frame
@@ -214,8 +200,7 @@ class VideoContentManager:
         }
     
     def _init_components(self):
-        """Initialize video processing components"""
-        self.logger.info("Initializing Video Content Manager components...")
+        """Initialize video processing components"""        self.logger.info("Initializing Video Content Manager components...")
         
         # OpenCV configuration
         self.face_cascade = None
@@ -244,8 +229,7 @@ class VideoContentManager:
         quality_analysis: bool = True,
         generate_thumbnails: bool = True
     ) -> Dict[str, Any]:
-        """
-        Process video file with comprehensive analysis
+        """        Process video file with comprehensive analysis
         
         Args:
             file_path: Path to video file
@@ -257,8 +241,7 @@ class VideoContentManager:
             
         Returns:
             Dict containing processed video information
-        """
-        try:
+        """        try:
             file_path = Path(file_path)
             self.logger.info(f"Processing video file: {file_path}")
             
@@ -336,8 +319,7 @@ class VideoContentManager:
             raise
     
     async def _validate_video_file(self, file_path: Path) -> bool:
-        """Validate video file format and accessibility"""
-        try:
+        """Validate video file format and accessibility"""        try:
             # Check file existence and size
             if not file_path.exists():
                 return False
@@ -365,8 +347,7 @@ class VideoContentManager:
             return False
     
     async def _extract_frames_for_analysis(self, cap: cv2.VideoCapture, total_frames: int) -> List[np.ndarray]:
-        """Extract frames for analysis with smart sampling"""
-        try:
+        """Extract frames for analysis with smart sampling"""        try:
             frames = []
             max_frames = self.config["max_frames_for_analysis"]
             
@@ -404,8 +385,7 @@ class VideoContentManager:
         cap: cv2.VideoCapture,
         frames: List[np.ndarray]
     ) -> VideoMetadata:
-        """Extract comprehensive video metadata"""
-        try:
+        """Extract comprehensive video metadata"""        try:
             # Basic properties
             fps = cap.get(cv2.CAP_PROP_FPS)
             total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -483,8 +463,7 @@ class VideoContentManager:
             raise
     
     def _analyze_color_properties(self, frames: List[np.ndarray]) -> Dict[str, float]:
-        """Analyze color properties across frames"""
-        try:
+        """Analyze color properties across frames"""        try:
             brightness_values = []
             contrast_values = []
             saturation_values = []
@@ -523,8 +502,7 @@ class VideoContentManager:
             return {"brightness": 0.0, "contrast": 0.0, "saturation": 0.0, "variance": 0.0}
     
     def _analyze_motion_intensity(self, frames: List[np.ndarray]) -> float:
-        """Analyze motion intensity between frames"""
-        try:
+        """Analyze motion intensity between frames"""        try:
             if len(frames) < 2:
                 return 0.0
             
@@ -554,8 +532,7 @@ class VideoContentManager:
             return 0.0
     
     def _detect_text_in_frames(self, frames: List[np.ndarray]) -> bool:
-        """Detect text presence in video frames using edge detection"""
-        try:
+        """Detect text presence in video frames using edge detection"""        try:
             for frame in frames:
                 gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
                 
@@ -588,8 +565,7 @@ class VideoContentManager:
         frames: List[np.ndarray], 
         content_id: str
     ) -> VideoFingerprint:
-        """Generate comprehensive video fingerprint for content protection"""
-        try:
+        """Generate comprehensive video fingerprint for content protection"""        try:
             # Primary hash (concatenated frame hashes)
             frame_hashes = []
             for frame in frames[:50]:  # Use first 50 frames
@@ -658,8 +634,7 @@ class VideoContentManager:
             raise
     
     async def _generate_motion_signature(self, frames: List[np.ndarray]) -> str:
-        """Generate motion signature from optical flow analysis"""
-        try:
+        """Generate motion signature from optical flow analysis"""        try:
             if len(frames) < 2:
                 return hashlib.sha256(b"no_motion").hexdigest()[:32]
             
@@ -693,8 +668,7 @@ class VideoContentManager:
             return hashlib.sha256(str(np.random.random()).encode()).hexdigest()[:32]
     
     async def _generate_color_histogram_hash(self, frames: List[np.ndarray]) -> str:
-        """Generate color histogram-based hash"""
-        try:
+        """Generate color histogram-based hash"""        try:
             combined_histogram = np.zeros((256, 3))
             
             for frame in frames[:10]:  # Use first 10 frames
@@ -712,8 +686,7 @@ class VideoContentManager:
             return hashlib.sha256(str(np.random.random()).encode()).hexdigest()[:32]
     
     async def _generate_edge_density_hash(self, frames: List[np.ndarray]) -> str:
-        """Generate edge density-based hash"""
-        try:
+        """Generate edge density-based hash"""        try:
             edge_densities = []
             
             for frame in frames[:15]:  # Use first 15 frames
@@ -730,8 +703,7 @@ class VideoContentManager:
             return hashlib.sha256(str(np.random.random()).encode()).hexdigest()[:32]
     
     async def _generate_scene_signatures(self, frames: List[np.ndarray]) -> List[str]:
-        """Generate signatures for detected scenes"""
-        try:
+        """Generate signatures for detected scenes"""        try:
             # Simple scene detection based on histogram differences
             scene_signatures = []
             scene_start = 0
@@ -767,8 +739,7 @@ class VideoContentManager:
             return []
     
     def _extract_temporal_features(self, frames: List[np.ndarray]) -> Optional[np.ndarray]:
-        """Extract temporal features from frame sequence"""
-        try:
+        """Extract temporal features from frame sequence"""        try:
             if len(frames) < 2:
                 return None
             
@@ -793,8 +764,7 @@ class VideoContentManager:
             return None
     
     def _extract_spatial_features(self, frames: List[np.ndarray]) -> Optional[np.ndarray]:
-        """Extract spatial features from frames"""
-        try:
+        """Extract spatial features from frames"""        try:
             spatial_features = []
             
             for frame in frames[:20]:  # Use first 20 frames
@@ -815,8 +785,7 @@ class VideoContentManager:
             return None
     
     def _calculate_frame_consistency(self, frames: List[np.ndarray]) -> float:
-        """Calculate consistency between frames"""
-        try:
+        """Calculate consistency between frames"""        try:
             if len(frames) < 2:
                 return 1.0
             
@@ -838,8 +807,7 @@ class VideoContentManager:
             return 0.0
     
     async def _detect_video_scenes(self, frames: List[np.ndarray], fps: float) -> List[VideoScene]:
-        """Detect scenes in video using histogram analysis"""
-        try:
+        """Detect scenes in video using histogram analysis"""        try:
             scenes = []
             scene_start = 0
             scene_id_counter = 0
@@ -902,8 +870,7 @@ class VideoContentManager:
             return []
     
     def _extract_dominant_colors(self, frame: np.ndarray, k: int = 5) -> List[Tuple[int, int, int]]:
-        """Extract dominant colors from frame using K-means clustering"""
-        try:
+        """Extract dominant colors from frame using K-means clustering"""        try:
             # Reshape frame to list of pixels
             data = frame.reshape((-1, 3))
             data = np.float32(data)
@@ -926,8 +893,7 @@ class VideoContentManager:
             return []
     
     async def _analyze_video_quality(self, frames: List[np.ndarray]) -> Dict[str, float]:
-        """Analyze video quality metrics"""
-        try:
+        """Analyze video quality metrics"""        try:
             quality_metrics = {}
             
             if not frames:
@@ -1008,8 +974,7 @@ class VideoContentManager:
             return {"overall_quality": 0.5, "error": str(e)}
     
     async def _generate_thumbnails(self, frames: List[np.ndarray]) -> List[str]:
-        """Generate representative thumbnails from video"""
-        try:
+        """Generate representative thumbnails from video"""        try:
             thumbnails = []
             thumbnail_count = min(self.config["thumbnail_count"], len(frames))
             
@@ -1046,8 +1011,7 @@ class VideoContentManager:
         frames: List[np.ndarray], 
         metadata: Optional[VideoMetadata] = None
     ) -> VideoContentType:
-        """Classify video content type using visual and metadata features"""
-        try:
+        """Classify video content type using visual and metadata features"""        try:
             # Simple heuristic classification (in production, use ML model)
             
             # Check video duration and aspect ratio
@@ -1095,8 +1059,7 @@ class VideoContentManager:
             return VideoContentType.MOVIE  # Default fallback
     
     async def store_content(self, video_content: Dict[str, Any]) -> str:
-        """Store processed video content in database"""
-        try:
+        """Store processed video content in database"""        try:
             # Generate unique content ID
             content_id = hashlib.sha256(
                 f"{video_content['file_path']}{datetime.now().isoformat()}".encode()
@@ -1113,12 +1076,10 @@ class VideoContentManager:
             raise
     
     def get_supported_formats(self) -> List[str]:
-        """Get list of supported video formats"""
-        return [fmt.value["ext"] for fmt in VideoFormat]
+        """Get list of supported video formats"""        return [fmt.value["ext"] for fmt in VideoFormat]
     
     def get_format_info(self, format_name: str) -> Optional[Dict[str, Any]]:
-        """Get information about a specific video format"""
-        for fmt in VideoFormat:
+        """Get information about a specific video format"""        for fmt in VideoFormat:
             if fmt.value["ext"] == f".{format_name.lower()}" or fmt.name.lower() == format_name.lower():
                 return fmt.value
         return None

@@ -1,5 +1,4 @@
-"""
-Violation Detection System for Content Protection
+"""Violation Detection System for Content Protection
 
 This module provides advanced violation detection capabilities:
 - Automated similarity analysis between protected and detected content
@@ -10,9 +9,7 @@ This module provides advanced violation detection capabilities:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Any, Set
 from dataclasses import dataclass, field
@@ -45,8 +42,7 @@ settings = get_settings()
 
 
 class ViolationType(Enum):
-    """Types of content violations"""
-    EXACT_DUPLICATE = "exact_duplicate"
+    """Types of content violations"""    EXACT_DUPLICATE = "exact_duplicate"
     MODIFIED_CONTENT = "modified_content"
     PARTIAL_USAGE = "partial_usage"
     DERIVATIVE_WORK = "derivative_work"
@@ -56,8 +52,7 @@ class ViolationType(Enum):
 
 
 class ViolationSeverity(Enum):
-    """Severity levels for violations"""
-    CRITICAL = "critical"      # >95% similarity
+    """Severity levels for violations"""    CRITICAL = "critical"      # >95% similarity
     HIGH = "high"             # 85-95% similarity
     MEDIUM = "medium"         # 70-85% similarity
     LOW = "low"              # 50-70% similarity
@@ -66,8 +61,7 @@ class ViolationSeverity(Enum):
 
 @dataclass
 class SimilarityScore:
-    """Similarity score between content pieces"""
-    fingerprint_type: FingerprintType
+    """Similarity score between content pieces"""    fingerprint_type: FingerprintType
     similarity_score: float
     hash_match: bool = False
     vector_similarity: Optional[float] = None
@@ -77,8 +71,7 @@ class SimilarityScore:
 
 @dataclass
 class ViolationEvidence:
-    """Evidence for a content violation"""
-    violation_id: str
+    """Evidence for a content violation"""    violation_id: str
     original_content_id: str
     detected_url: str
     violation_type: ViolationType
@@ -93,8 +86,7 @@ class ViolationEvidence:
 
 @dataclass
 class DetectionConfig:
-    """Configuration for violation detection"""
-    similarity_threshold: float = 0.75
+    """Configuration for violation detection"""    similarity_threshold: float = 0.75
     exact_match_threshold: float = 0.95
     partial_match_threshold: float = 0.60
     false_positive_threshold: float = 0.30
@@ -106,8 +98,7 @@ class DetectionConfig:
 
 
 class SimilarityAnalyzer:
-    """Advanced similarity analysis for content comparison"""
-    
+    """Advanced similarity analysis for content comparison"""    
     def __init__(self):
         self.hash_similarity_cache = {}
         self.vector_similarity_cache = {}
@@ -116,8 +107,7 @@ class SimilarityAnalyzer:
                                original_fingerprints: List[FingerprintResult],
                                detected_content_url: str,
                                config: DetectionConfig) -> List[SimilarityScore]:
-        """Analyze similarity between original and detected content"""
-        similarity_scores = []
+        """Analyze similarity between original and detected content"""        similarity_scores = []
         
         try:
             # Download and analyze detected content
@@ -140,8 +130,7 @@ class SimilarityAnalyzer:
         return similarity_scores
     
     async def _analyze_detected_content(self, url: str) -> List[FingerprintResult]:
-        """Download and analyze detected content to generate fingerprints"""
-        fingerprints = []
+        """Download and analyze detected content to generate fingerprints"""        fingerprints = []
         
         try:
             # Determine content type from URL
@@ -162,8 +151,7 @@ class SimilarityAnalyzer:
         return fingerprints
     
     def _detect_content_type(self, url: str) -> ContentType:
-        """Detect content type from URL"""
-        url_lower = url.lower()
+        """Detect content type from URL"""        url_lower = url.lower()
         
         if any(ext in url_lower for ext in ['.jpg', '.jpeg', '.png', '.gif', '.webp']):
             return ContentType.IMAGE
@@ -183,8 +171,7 @@ class SimilarityAnalyzer:
             return ContentType.TEXT
     
     async def _analyze_image_from_url(self, url: str) -> List[FingerprintResult]:
-        """Analyze image content from URL"""
-        try:
+        """Analyze image content from URL"""        try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
                     if response.status == 200:
@@ -217,22 +204,19 @@ class SimilarityAnalyzer:
         return []
     
     async def _analyze_video_from_url(self, url: str) -> List[FingerprintResult]:
-        """Analyze video content from URL (placeholder implementation)"""
-        # In production, this would download video thumbnails or extract frames
+        """Analyze video content from URL (placeholder implementation)"""        # In production, this would download video thumbnails or extract frames
         # For now, return empty list
         logger.info(f"Video analysis for {url} - placeholder implementation")
         return []
     
     async def _analyze_audio_from_url(self, url: str) -> List[FingerprintResult]:
-        """Analyze audio content from URL (placeholder implementation)"""
-        # In production, this would download audio samples or use platform APIs
+        """Analyze audio content from URL (placeholder implementation)"""        # In production, this would download audio samples or use platform APIs
         # For now, return empty list
         logger.info(f"Audio analysis for {url} - placeholder implementation")
         return []
     
     async def _analyze_text_from_url(self, url: str) -> List[FingerprintResult]:
-        """Analyze text content from URL"""
-        try:
+        """Analyze text content from URL"""        try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
                     if response.status == 200:
@@ -261,8 +245,7 @@ class SimilarityAnalyzer:
                                   original: FingerprintResult,
                                   detected: FingerprintResult,
                                   config: DetectionConfig) -> Optional[SimilarityScore]:
-        """Compare two fingerprints and calculate similarity"""
-        try:
+        """Compare two fingerprints and calculate similarity"""        try:
             similarity_score = 0.0
             hash_match = False
             vector_similarity = None
@@ -306,8 +289,7 @@ class SimilarityAnalyzer:
             return None
     
     def _calculate_confidence(self, fingerprint_type: FingerprintType, similarity: float) -> float:
-        """Calculate confidence score based on fingerprint type and similarity"""
-        # Different fingerprint types have different reliability
+        """Calculate confidence score based on fingerprint type and similarity"""        # Different fingerprint types have different reliability
         type_confidence = {
             FingerprintType.AUDIO_CHROMAPRINT: 0.95,
             FingerprintType.AUDIO_SPECTRAL: 0.90,
@@ -324,16 +306,14 @@ class SimilarityAnalyzer:
 
 
 class FalsePositiveFilter:
-    """Advanced false positive detection and filtering"""
-    
+    """Advanced false positive detection and filtering"""    
     def __init__(self):
         self.whitelist_domains = set()
         self.common_patterns = set()
         self.user_confirmations = {}
     
     async def assess_false_positive_risk(self, evidence: ViolationEvidence) -> float:
-        """Assess the risk that a violation is a false positive"""
-        risk_factors = []
+        """Assess the risk that a violation is a false positive"""        risk_factors = []
         
         # Domain-based assessment
         domain_risk = self._assess_domain_risk(evidence.detected_url)
@@ -357,8 +337,7 @@ class FalsePositiveFilter:
         return min(1.0, max(0.0, total_risk))
     
     def _assess_domain_risk(self, url: str) -> float:
-        """Assess false positive risk based on domain"""
-        try:
+        """Assess false positive risk based on domain"""        try:
             domain = urlparse(url).netloc.lower()
             
             # Whitelist of known safe domains
@@ -380,8 +359,7 @@ class FalsePositiveFilter:
             return 0.2
     
     def _assess_similarity_patterns(self, scores: List[SimilarityScore]) -> float:
-        """Assess false positive risk based on similarity patterns"""
-        if not scores:
+        """Assess false positive risk based on similarity patterns"""        if not scores:
             return 0.5
         
         # Check for suspiciously perfect matches across all types
@@ -399,8 +377,7 @@ class FalsePositiveFilter:
         return 0.2
     
     def _assess_metadata_risk(self, metadata: Dict[str, Any]) -> float:
-        """Assess false positive risk based on metadata"""
-        risk = 0.0
+        """Assess false positive risk based on metadata"""        risk = 0.0
         
         # Check for attribution indicators
         if any(keyword in str(metadata).lower() for keyword in 
@@ -415,8 +392,7 @@ class FalsePositiveFilter:
         return min(1.0, risk)
     
     def _assess_temporal_risk(self, timestamp: datetime) -> float:
-        """Assess false positive risk based on timing"""
-        # Recent detections might be more legitimate violations
+        """Assess false positive risk based on timing"""        # Recent detections might be more legitimate violations
         age_hours = (datetime.utcnow() - timestamp).total_seconds() / 3600
         
         if age_hours < 1:
@@ -430,8 +406,7 @@ class FalsePositiveFilter:
 
 
 class ViolationDetector:
-    """Main violation detection engine"""
-    
+    """Main violation detection engine"""    
     def __init__(self):
         self.similarity_analyzer = SimilarityAnalyzer()
         self.false_positive_filter = FalsePositiveFilter()
@@ -449,8 +424,7 @@ class ViolationDetector:
                               protected_content_id: str,
                               monitoring_results: List[MonitoringResult],
                               config: DetectionConfig) -> List[ViolationEvidence]:
-        """Detect violations from monitoring results"""
-        violations = []
+        """Detect violations from monitoring results"""        violations = []
         
         try:
             # Get original fingerprints for protected content
@@ -483,8 +457,7 @@ class ViolationDetector:
                                          detected_url: str,
                                          original_fingerprints: List[FingerprintResult],
                                          config: DetectionConfig) -> Optional[ViolationEvidence]:
-        """Analyze a single potential violation"""
-        try:
+        """Analyze a single potential violation"""        try:
             # Analyze similarity
             similarity_scores = await self.similarity_analyzer.analyze_similarity(
                 original_fingerprints, detected_url, config
@@ -533,8 +506,7 @@ class ViolationDetector:
             return None
     
     def _determine_violation_type(self, scores: List[SimilarityScore], max_similarity: float) -> ViolationType:
-        """Determine the type of violation based on similarity scores"""
-        if max_similarity > 0.95:
+        """Determine the type of violation based on similarity scores"""        if max_similarity > 0.95:
             # Check if exact match
             has_hash_match = any(s.hash_match for s in scores)
             if has_hash_match:
@@ -552,8 +524,7 @@ class ViolationDetector:
             return ViolationType.UNAUTHORIZED_REMIX
     
     def _determine_severity(self, similarity: float) -> ViolationSeverity:
-        """Determine violation severity based on similarity score"""
-        if similarity > 0.95:
+        """Determine violation severity based on similarity score"""        if similarity > 0.95:
             return ViolationSeverity.CRITICAL
         elif similarity > 0.85:
             return ViolationSeverity.HIGH
@@ -565,15 +536,13 @@ class ViolationDetector:
             return ViolationSeverity.SUSPICIOUS
     
     async def _get_content_fingerprints(self, content_id: str) -> List[FingerprintResult]:
-        """Get fingerprints for protected content"""
-        # This would typically query the database
+        """Get fingerprints for protected content"""        # This would typically query the database
         # For now, return empty list as placeholder
         logger.info(f"Getting fingerprints for content {content_id}")
         return []
     
     async def verify_violation(self, violation_id: str, user_confirmation: bool) -> bool:
-        """Verify a violation based on user feedback"""
-        try:
+        """Verify a violation based on user feedback"""        try:
             # Store user confirmation for learning
             self.false_positive_filter.user_confirmations[violation_id] = {
                 'confirmed': user_confirmation,
@@ -591,8 +560,7 @@ class ViolationDetector:
             return False
     
     def get_detection_statistics(self) -> Dict[str, Any]:
-        """Get violation detection statistics"""
-        return {
+        """Get violation detection statistics"""        return {
             'detection_thresholds': self.detection_thresholds,
             'user_confirmations': len(self.false_positive_filter.user_confirmations),
             'confirmed_violations': sum(1 for conf in self.false_positive_filter.user_confirmations.values() 

@@ -1,5 +1,4 @@
-"""
-🔧 Deployment Orchestrator - IA-Influencer-Agent CI/CD Enterprise
+"""🔧 Deployment Orchestrator - IA-Influencer-Agent CI/CD Enterprise
 ================================================================
 Team Expertise: DevOps Engineer + Kubernetes Specialist + Cloud Architect + ML Engineer
 Created: 2025-08-24
@@ -23,9 +22,7 @@ Business Logic Features:
 - SEO optimization service deployment
 - Real-time analytics service orchestration
 ================================================================
-"""
-
-from typing import Dict, List, Optional, Any, Callable
+"""from typing import Dict, List, Optional, Any, Callable
 import asyncio
 import logging
 import kubernetes
@@ -41,8 +38,7 @@ from kubernetes.client.rest import ApiException
 logger = logging.getLogger(__name__)
 
 class DeploymentStatus(Enum):
-    """Deployment status enumeration"""
-    PENDING = "pending"
+    """Deployment status enumeration"""    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     SUCCESS = "success"
     FAILED = "failed"
@@ -50,16 +46,14 @@ class DeploymentStatus(Enum):
     ROLLED_BACK = "rolled_back"
 
 class DeploymentStrategy(Enum):
-    """Deployment strategy enumeration"""
-    BLUE_GREEN = "blue_green"
+    """Deployment strategy enumeration"""    BLUE_GREEN = "blue_green"
     CANARY = "canary"
     ROLLING = "rolling"
     RECREATE = "recreate"
 
 @dataclass
 class DeploymentTarget:
-    """Deployment target configuration"""
-    environment: str
+    """Deployment target configuration"""    environment: str
     namespace: str
     cluster_name: str
     region: str
@@ -71,8 +65,7 @@ class DeploymentTarget:
 
 @dataclass
 class DeploymentConfiguration:
-    """Deployment configuration structure"""
-    deployment_id: str
+    """Deployment configuration structure"""    deployment_id: str
     strategy: DeploymentStrategy
     target: DeploymentTarget
     image_tag: str
@@ -86,8 +79,7 @@ class DeploymentConfiguration:
 
 @dataclass
 class DeploymentResult:
-    """Deployment result structure"""
-    deployment_id: str
+    """Deployment result structure"""    deployment_id: str
     status: DeploymentStatus
     strategy: DeploymentStrategy
     start_time: datetime
@@ -100,11 +92,9 @@ class DeploymentResult:
     health_status: Dict[str, Any] = None
 
 class DeploymentOrchestrator:
-    """Enterprise deployment orchestration engine"""
-    
+    """Enterprise deployment orchestration engine"""    
     def __init__(self):
-        """Initialize deployment orchestrator"""
-        self.initialized = False
+        """Initialize deployment orchestrator"""        self.initialized = False
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.k8s_client = None
         self.apps_v1 = None
@@ -114,8 +104,7 @@ class DeploymentOrchestrator:
         self.rollback_stack: List[DeploymentConfiguration] = []
         
     async def initialize(self) -> bool:
-        """Initialize orchestrator with Kubernetes client"""
-        try:
+        """Initialize orchestrator with Kubernetes client"""        try:
             # Load Kubernetes configuration
             try:
                 config.load_incluster_config()  # For in-cluster deployment
@@ -138,8 +127,7 @@ class DeploymentOrchestrator:
             return False
     
     async def _verify_cluster_connection(self) -> None:
-        """Verify Kubernetes cluster connection"""
-        try:
+        """Verify Kubernetes cluster connection"""        try:
             version = self.core_v1.get_code()
             self.logger.info(f"Connected to Kubernetes cluster version: {version.git_version}")
         except Exception as e:
@@ -150,8 +138,7 @@ class DeploymentOrchestrator:
         config: DeploymentConfiguration,
         progress_callback: Optional[Callable] = None
     ) -> DeploymentResult:
-        """Execute deployment with specified strategy"""
-        deployment_id = config.deployment_id
+        """Execute deployment with specified strategy"""        deployment_id = config.deployment_id
         start_time = datetime.now()
         
         try:
@@ -226,8 +213,7 @@ class DeploymentOrchestrator:
         result: DeploymentResult,
         progress_callback: Optional[Callable] = None
     ) -> None:
-        """Execute blue-green deployment strategy"""
-        try:
+        """Execute blue-green deployment strategy"""        try:
             # Step 1: Deploy to green environment
             await self._deploy_green_environment(config)
             
@@ -256,8 +242,7 @@ class DeploymentOrchestrator:
         result: DeploymentResult,
         progress_callback: Optional[Callable] = None
     ) -> None:
-        """Execute canary deployment strategy"""
-        try:
+        """Execute canary deployment strategy"""        try:
             traffic_split = config.traffic_split or {"canary": 10, "stable": 90}
             
             # Step 1: Deploy canary version
@@ -290,8 +275,7 @@ class DeploymentOrchestrator:
         result: DeploymentResult,
         progress_callback: Optional[Callable] = None
     ) -> None:
-        """Execute rolling deployment strategy"""
-        try:
+        """Execute rolling deployment strategy"""        try:
             # Update deployment with rolling update strategy
             deployment_manifest = await self._create_deployment_manifest(config)
             deployment_manifest["spec"]["strategy"] = {
@@ -321,8 +305,7 @@ class DeploymentOrchestrator:
         result: DeploymentResult,
         progress_callback: Optional[Callable] = None
     ) -> None:
-        """Execute recreate deployment strategy"""
-        try:
+        """Execute recreate deployment strategy"""        try:
             # Step 1: Scale down existing deployment
             await self._scale_deployment(config, replicas=0)
             
@@ -350,8 +333,7 @@ class DeploymentOrchestrator:
             raise e
     
     async def _deploy_green_environment(self, config: DeploymentConfiguration) -> None:
-        """Deploy to green environment"""
-        green_config = config
+        """Deploy to green environment"""        green_config = config
         green_config.target.namespace = f"{config.target.namespace}-green"
         
         # Create namespace if it doesn't exist
@@ -367,8 +349,7 @@ class DeploymentOrchestrator:
         await self._wait_for_deployment_ready(green_config)
     
     async def _validate_green_environment(self, config: DeploymentConfiguration) -> None:
-        """Validate green environment health"""
-        green_namespace = f"{config.target.namespace}-green"
+        """Validate green environment health"""        green_namespace = f"{config.target.namespace}-green"
         
         # Run health checks
         health_check_url = f"http://{config.target.cluster_name}.{green_namespace}{config.target.health_check_path}"
@@ -385,8 +366,7 @@ class DeploymentOrchestrator:
                 await asyncio.sleep(30)
     
     async def _switch_traffic_to_green(self, config: DeploymentConfiguration) -> None:
-        """Switch traffic from blue to green environment"""
-        # Update service selector to point to green deployment
+        """Switch traffic from blue to green environment"""        # Update service selector to point to green deployment
         service_manifest = {
             "apiVersion": "v1",
             "kind": "Service",
@@ -412,8 +392,7 @@ class DeploymentOrchestrator:
         await self._apply_kubernetes_manifest(service_manifest, config.target.namespace)
     
     async def _create_deployment_manifest(self, config: DeploymentConfiguration) -> Dict[str, Any]:
-        """Create Kubernetes deployment manifest"""
-        resource_limits = config.target.resource_limits or {
+        """Create Kubernetes deployment manifest"""        resource_limits = config.target.resource_limits or {
             "cpu": "500m",
             "memory": "512Mi"
         }
@@ -495,8 +474,7 @@ class DeploymentOrchestrator:
         return manifest
     
     async def _apply_kubernetes_manifest(self, manifest: Dict[str, Any], namespace: str) -> None:
-        """Apply Kubernetes manifest"""
-        try:
+        """Apply Kubernetes manifest"""        try:
             kind = manifest["kind"]
             name = manifest["metadata"]["name"]
             
@@ -539,8 +517,7 @@ class DeploymentOrchestrator:
             raise RuntimeError(f"Failed to apply Kubernetes manifest: {e}")
     
     async def _wait_for_deployment_ready(self, config: DeploymentConfiguration) -> None:
-        """Wait for deployment to be ready"""
-        timeout = config.deployment_timeout
+        """Wait for deployment to be ready"""        timeout = config.deployment_timeout
         start_time = time.time()
         
         while time.time() - start_time < timeout:
@@ -565,8 +542,7 @@ class DeploymentOrchestrator:
         raise RuntimeError(f"Deployment {config.deployment_id} failed to become ready within {timeout} seconds")
     
     async def _verify_deployment_health(self, config: DeploymentConfiguration, result: DeploymentResult) -> None:
-        """Verify deployment health status"""
-        try:
+        """Verify deployment health status"""        try:
             # Get pod status
             pods = self.core_v1.list_namespaced_pod(
                 namespace=config.target.namespace,
@@ -600,8 +576,7 @@ class DeploymentOrchestrator:
             result.health_status = {"error": str(e)}
     
     async def _get_service_endpoints(self, config: DeploymentConfiguration) -> List[str]:
-        """Get service endpoint URLs"""
-        try:
+        """Get service endpoint URLs"""        try:
             services = self.core_v1.list_namespaced_service(
                 namespace=config.target.namespace,
                 label_selector=f"app={config.deployment_id}"
@@ -623,8 +598,7 @@ class DeploymentOrchestrator:
             return []
     
     async def _ensure_namespace_exists(self, namespace: str) -> None:
-        """Ensure Kubernetes namespace exists"""
-        try:
+        """Ensure Kubernetes namespace exists"""        try:
             self.core_v1.read_namespace(name=namespace)
         except ApiException as e:
             if e.status == 404:
@@ -639,8 +613,7 @@ class DeploymentOrchestrator:
                 raise
     
     async def rollback_deployment(self, deployment_id: str) -> DeploymentResult:
-        """Rollback to previous deployment"""
-        try:
+        """Rollback to previous deployment"""        try:
             # Find previous configuration from rollback stack
             previous_config = None
             for config in reversed(self.rollback_stack):
@@ -683,8 +656,7 @@ class DeploymentOrchestrator:
             )
     
     async def _attempt_auto_rollback(self, config: DeploymentConfiguration, result: DeploymentResult) -> None:
-        """Attempt automatic rollback on deployment failure"""
-        try:
+        """Attempt automatic rollback on deployment failure"""        try:
             self.logger.info(f"Attempting auto-rollback for deployment {config.deployment_id}")
             result.status = DeploymentStatus.ROLLING_BACK
             
@@ -701,12 +673,10 @@ class DeploymentOrchestrator:
             self.logger.error(f"Auto-rollback error for deployment {config.deployment_id}: {e}")
     
     def get_deployment_history(self, limit: int = 10) -> List[DeploymentResult]:
-        """Get deployment history"""
-        return self.deployment_history[-limit:]
+        """Get deployment history"""        return self.deployment_history[-limit:]
     
     def get_deployment_statistics(self) -> Dict[str, Any]:
-        """Get deployment statistics"""
-        if not self.deployment_history:
+        """Get deployment statistics"""        if not self.deployment_history:
             return {}
         
         successful_deployments = [d for d in self.deployment_history if d.status == DeploymentStatus.SUCCESS]

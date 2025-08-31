@@ -1,5 +1,4 @@
-"""
-Content Creator Agent
+"""Content Creator Agent
 
 Specialized AI agent for multi-format content creation including text, audio, video, 
 and image generation. Handles creative workflows and content optimization.
@@ -10,9 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import uuid
 from datetime import datetime, timedelta
@@ -32,8 +29,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ContentCreationRequest:
-    """Request for content creation"""
-    content_type: ContentType
+    """Request for content creation"""    content_type: ContentType
     format: ContentFormat
     quality: ContentQuality
     style_preferences: Dict[str, Any] = field(default_factory=dict)
@@ -52,8 +48,7 @@ class ContentCreationRequest:
 
 @dataclass
 class ContentCreationResult:
-    """Result of content creation"""
-    content_id: str
+    """Result of content creation"""    content_id: str
     content_type: ContentType
     format: ContentFormat
     file_path: str
@@ -71,8 +66,7 @@ class ContentCreationResult:
 
 
 class ContentCreatorAgent(BaseAIAgent):
-    """
-    Advanced content creation agent supporting multiple formats
+    """    Advanced content creation agent supporting multiple formats
     
     Capabilities:
     - Multi-format content generation (text, audio, video, image)
@@ -81,8 +75,7 @@ class ContentCreatorAgent(BaseAIAgent):
     - Platform-specific optimization
     - Copyright protection integration
     - Quality assessment and enhancement
-    """
-    
+    """    
     def __init__(self, config: AgentConfiguration):
         # Ensure required capabilities
         required_capabilities = {
@@ -113,8 +106,7 @@ class ContentCreatorAgent(BaseAIAgent):
         self.style_cache: Dict[str, Any] = {}
     
     async def _custom_initialize(self) -> None:
-        """Initialize content creation engines"""
-        try:
+        """Initialize content creation engines"""        try:
             # Initialize content generation engines
             self.content_generator = ContentGenerator()
             await self.content_generator.initialize()
@@ -135,8 +127,7 @@ class ContentCreatorAgent(BaseAIAgent):
             raise
     
     async def _execute_task_impl(self, task: AgentTask) -> Dict[str, Any]:
-        """Execute content creation task"""
-        task_type = task.task_type
+        """Execute content creation task"""        task_type = task.task_type
         context = task.context
         
         if task_type == "create_content":
@@ -153,8 +144,7 @@ class ContentCreatorAgent(BaseAIAgent):
             raise ValueError(f"Unknown task type: {task_type}")
     
     async def _create_content(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Create content based on request"""
-        request = ContentCreationRequest(**context.get("request", {}))
+        """Create content based on request"""        request = ContentCreationRequest(**context.get("request", {}))
         
         self.logger.info(f"Creating {request.content_type.value} content in {request.format.value} format")
         
@@ -221,8 +211,7 @@ class ContentCreatorAgent(BaseAIAgent):
             }
     
     async def _create_text_content(self, request: ContentCreationRequest, content_id: str) -> ContentCreationResult:
-        """Create text content"""
-        # Generate text using language model
+        """Create text content"""        # Generate text using language model
         text_params = {
             "prompt": request.style_preferences.get("prompt", ""),
             "max_length": request.style_preferences.get("max_length", 1000),
@@ -270,8 +259,7 @@ class ContentCreatorAgent(BaseAIAgent):
         )
     
     async def _create_audio_content(self, request: ContentCreationRequest, content_id: str) -> ContentCreationResult:
-        """Create audio content"""
-        audio_params = {
+        """Create audio content"""        audio_params = {
             "duration": request.duration_seconds or 30,
             "genre": request.genre,
             "mood": request.mood,
@@ -322,8 +310,7 @@ class ContentCreatorAgent(BaseAIAgent):
         )
     
     async def _create_music_content(self, request: ContentCreationRequest, content_id: str) -> ContentCreationResult:
-        """Create music content using advanced music generation"""
-        music_params = {
+        """Create music content using advanced music generation"""        music_params = {
             "style": request.genre,
             "mood": request.mood,
             "duration": request.duration_seconds or 180,
@@ -378,8 +365,7 @@ class ContentCreatorAgent(BaseAIAgent):
         )
     
     async def _create_image_content(self, request: ContentCreationRequest, content_id: str) -> ContentCreationResult:
-        """Create image content"""
-        image_params = {
+        """Create image content"""        image_params = {
             "prompt": request.style_preferences.get("prompt", ""),
             "style": request.style_preferences.get("art_style", "realistic"),
             "resolution": request.resolution or "1024x1024",
@@ -429,8 +415,7 @@ class ContentCreatorAgent(BaseAIAgent):
         )
     
     async def _create_video_content(self, request: ContentCreationRequest, content_id: str) -> ContentCreationResult:
-        """Create video content"""
-        video_params = {
+        """Create video content"""        video_params = {
             "duration": request.duration_seconds or 60,
             "resolution": request.resolution or "1920x1080",
             "fps": request.style_preferences.get("fps", 30),
@@ -482,8 +467,7 @@ class ContentCreatorAgent(BaseAIAgent):
         )
     
     async def _assess_content_quality(self, result: ContentCreationResult, request: ContentCreationRequest) -> float:
-        """Assess the quality of generated content"""
-        if result.content_type == ContentType.TEXT:
+        """Assess the quality of generated content"""        if result.content_type == ContentType.TEXT:
             return await self._assess_text_quality(result.file_path, request)
         elif result.content_type == ContentType.AUDIO:
             return await self._assess_audio_quality(result.file_path, request)
@@ -497,8 +481,7 @@ class ContentCreatorAgent(BaseAIAgent):
             return 0.5  # Default neutral score
     
     async def _assess_text_quality(self, file_path: str, request: ContentCreationRequest) -> float:
-        """Assess text content quality"""
-        with open(file_path, 'r', encoding='utf-8') as f:
+        """Assess text content quality"""        with open(file_path, 'r', encoding='utf-8') as f:
             text = f.read()
         
         # Multiple quality metrics
@@ -523,8 +506,7 @@ class ContentCreatorAgent(BaseAIAgent):
         return sum(scores) / len(scores)
     
     async def _generate_seo_metadata(self, result: ContentCreationResult, request: ContentCreationRequest) -> Dict[str, Any]:
-        """Generate SEO metadata for content"""
-        return {
+        """Generate SEO metadata for content"""        return {
             "title": await self._generate_seo_title(result, request),
             "description": await self._generate_seo_description(result, request),
             "keywords": await self._extract_seo_keywords(result, request),
@@ -538,8 +520,7 @@ class ContentCreatorAgent(BaseAIAgent):
         }
     
     async def _check_platform_compatibility(self, result: ContentCreationResult, request: ContentCreationRequest) -> Dict[str, bool]:
-        """Check compatibility with various platforms"""
-        platforms = ["spotify", "youtube", "tiktok", "instagram", "twitter", "facebook"]
+        """Check compatibility with various platforms"""        platforms = ["spotify", "youtube", "tiktok", "instagram", "twitter", "facebook"]
         compatibility = {}
         
         for platform in platforms:
@@ -548,8 +529,7 @@ class ContentCreatorAgent(BaseAIAgent):
         return compatibility
     
     async def can_handle_task(self, task_type: str, context: Dict[str, Any]) -> bool:
-        """Check if agent can handle specific content creation task"""
-        supported_tasks = [
+        """Check if agent can handle specific content creation task"""        supported_tasks = [
             "create_content",
             "optimize_content", 
             "style_transfer",

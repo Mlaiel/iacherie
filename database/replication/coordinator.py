@@ -1,5 +1,4 @@
-"""
-Replication Coordinator - IA Influencer Agent Platform
+"""Replication Coordinator - IA Influencer Agent Platform
 
 Cross-database replication coordination and synchronization manager.
 Orchestrates replication across PostgreSQL, Redis, MongoDB, Elasticsearch,
@@ -7,9 +6,7 @@ and Vector stores with conflict resolution and data consistency.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Set, Tuple
 from dataclasses import dataclass, field
@@ -20,8 +17,7 @@ import hashlib
 
 
 class SyncOperation(Enum):
-    """Synchronization operation types"""
-    INSERT = "insert"
+    """Synchronization operation types"""    INSERT = "insert"
     UPDATE = "update"
     DELETE = "delete"
     BULK_SYNC = "bulk_sync"
@@ -29,8 +25,7 @@ class SyncOperation(Enum):
 
 
 class ConflictResolutionStrategy(Enum):
-    """Conflict resolution strategies"""
-    LAST_WRITE_WINS = "last_write_wins"
+    """Conflict resolution strategies"""    LAST_WRITE_WINS = "last_write_wins"
     FIRST_WRITE_WINS = "first_write_wins"
     MANUAL_REVIEW = "manual_review"
     MERGE_FIELDS = "merge_fields"
@@ -39,8 +34,7 @@ class ConflictResolutionStrategy(Enum):
 
 @dataclass
 class SyncRecord:
-    """Synchronization record"""
-    id: str
+    """Synchronization record"""    id: str
     database_type: str
     table_name: str
     operation: SyncOperation
@@ -56,8 +50,7 @@ class SyncRecord:
 
 @dataclass
 class ConflictRecord:
-    """Data conflict record"""
-    id: str
+    """Data conflict record"""    id: str
     table_name: str
     record_id: str
     conflict_type: str
@@ -70,16 +63,13 @@ class ConflictRecord:
 
 
 class ReplicationCoordinator:
-    """
-    Central coordinator for cross-database replication synchronization.
+    """    Central coordinator for cross-database replication synchronization.
     
     Manages data consistency, conflict resolution, and synchronization
     across multiple database systems for the content creator platform.
-    """
-    
+    """    
     def __init__(self, config):
-        """Initialize replication coordinator"""
-        self.config = config
+        """Initialize replication coordinator"""        self.config = config
         self.logger = logging.getLogger(f"{__name__}.ReplicationCoordinator")
         
         # Database handlers registry
@@ -111,13 +101,11 @@ class ReplicationCoordinator:
         self.logger.info("ReplicationCoordinator initialized")
     
     async def initialize(self) -> bool:
-        """
-        Initialize replication coordinator.
+        """        Initialize replication coordinator.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             self.logger.info("Initializing replication coordinator...")
             
             # Start coordination loop
@@ -131,19 +119,16 @@ class ReplicationCoordinator:
             return False
     
     def register_handler(self, database_type: str, handler: Any) -> None:
-        """
-        Register database replication handler.
+        """        Register database replication handler.
         
         Args:
             database_type: Type of database
             handler: Replication handler instance
-        """
-        self.handlers[database_type] = handler
+        """        self.handlers[database_type] = handler
         self.logger.debug(f"Registered handler for {database_type}")
     
     async def _start_coordination(self) -> None:
-        """Start coordination processes"""
-        self.is_coordinating = True
+        """Start coordination processes"""        self.is_coordinating = True
         
         # Start coordination tasks
         coordination_tasks = [
@@ -158,8 +143,7 @@ class ReplicationCoordinator:
         self.logger.info("Coordination processes started")
     
     async def _sync_processing_loop(self) -> None:
-        """Main synchronization processing loop"""
-        while self.is_coordinating:
+        """Main synchronization processing loop"""        while self.is_coordinating:
             try:
                 if self.sync_queue:
                     # Process batch of sync records
@@ -175,8 +159,7 @@ class ReplicationCoordinator:
                 await asyncio.sleep(5)
     
     async def _conflict_resolution_loop(self) -> None:
-        """Conflict resolution processing loop"""
-        while self.is_coordinating:
+        """Conflict resolution processing loop"""        while self.is_coordinating:
             try:
                 if self.conflict_queue:
                     # Process conflicts
@@ -193,8 +176,7 @@ class ReplicationCoordinator:
                 await asyncio.sleep(10)
     
     async def _periodic_sync_check(self) -> None:
-        """Periodic synchronization health check"""
-        while self.is_coordinating:
+        """Periodic synchronization health check"""        while self.is_coordinating:
             try:
                 await asyncio.sleep(self.sync_interval)
                 await self._validate_sync_consistency()
@@ -203,8 +185,7 @@ class ReplicationCoordinator:
                 self.logger.error(f"Error in periodic sync check: {e}")
     
     async def _process_sync_batch(self, batch: List[SyncRecord]) -> None:
-        """Process a batch of synchronization records"""
-        for sync_record in batch:
+        """Process a batch of synchronization records"""        for sync_record in batch:
             try:
                 await self._process_sync_record(sync_record)
                 self.sync_statistics["successful_syncs"] += 1
@@ -228,8 +209,7 @@ class ReplicationCoordinator:
                 self.sync_statistics["total_syncs"] += 1
     
     async def _process_sync_record(self, sync_record: SyncRecord) -> None:
-        """Process individual synchronization record"""
-        handler = self.handlers.get(sync_record.database_type)
+        """Process individual synchronization record"""        handler = self.handlers.get(sync_record.database_type)
         if not handler:
             raise ValueError(f"No handler for database type: {sync_record.database_type}")
         
@@ -259,8 +239,7 @@ class ReplicationCoordinator:
         self.last_sync_time = datetime.utcnow()
     
     def _validate_record_checksum(self, sync_record: SyncRecord) -> bool:
-        """Validate record data integrity using checksum"""
-        try:
+        """Validate record data integrity using checksum"""        try:
             # Create checksum from data
             data_str = json.dumps(sync_record.data, sort_keys=True, separators=(',', ':'))
             calculated_checksum = hashlib.sha256(data_str.encode()).hexdigest()
@@ -272,8 +251,7 @@ class ReplicationCoordinator:
             return False
     
     async def _detect_conflicts(self, sync_record: SyncRecord) -> List[ConflictRecord]:
-        """Detect potential data conflicts"""
-        conflicts = []
+        """Detect potential data conflicts"""        conflicts = []
         
         try:
             # Get current data from target
@@ -318,8 +296,7 @@ class ReplicationCoordinator:
         table_name: str, 
         record_id: str
     ) -> Optional[Dict[str, Any]]:
-        """Get current record data from database"""
-        try:
+        """Get current record data from database"""        try:
             # This would be implemented based on the specific handler
             # For now, we'll return None to simulate no existing data
             return None
@@ -329,8 +306,7 @@ class ReplicationCoordinator:
             return None
     
     async def _resolve_conflict(self, conflict: ConflictRecord) -> None:
-        """Resolve data conflict based on strategy"""
-        try:
+        """Resolve data conflict based on strategy"""        try:
             self.logger.info(f"Resolving conflict {conflict.id} using {conflict.resolution_strategy.value}")
             
             if conflict.resolution_strategy == ConflictResolutionStrategy.LAST_WRITE_WINS:
@@ -370,8 +346,7 @@ class ReplicationCoordinator:
             self.logger.error(f"Error resolving conflict {conflict.id}: {e}")
     
     async def _apply_conflict_resolution(self, conflict: ConflictRecord) -> None:
-        """Apply conflict resolution to the database"""
-        try:
+        """Apply conflict resolution to the database"""        try:
             # Create a sync record for the resolution
             resolution_sync = SyncRecord(
                 id=f"resolution_{conflict.id}",
@@ -395,33 +370,27 @@ class ReplicationCoordinator:
             raise
     
     def _calculate_checksum(self, data: Dict[str, Any]) -> str:
-        """Calculate checksum for data"""
-        data_str = json.dumps(data, sort_keys=True, separators=(',', ':'))
+        """Calculate checksum for data"""        data_str = json.dumps(data, sort_keys=True, separators=(',', ':'))
         return hashlib.sha256(data_str.encode()).hexdigest()
     
     async def _apply_insert(self, handler: Any, sync_record: SyncRecord) -> None:
-        """Apply insert operation"""
-        # Implementation would depend on the specific handler
+        """Apply insert operation"""        # Implementation would depend on the specific handler
         self.logger.debug(f"Applying insert for {sync_record.table_name}")
     
     async def _apply_update(self, handler: Any, sync_record: SyncRecord) -> None:
-        """Apply update operation"""
-        # Implementation would depend on the specific handler
+        """Apply update operation"""        # Implementation would depend on the specific handler
         self.logger.debug(f"Applying update for {sync_record.table_name}")
     
     async def _apply_delete(self, handler: Any, sync_record: SyncRecord) -> None:
-        """Apply delete operation"""
-        # Implementation would depend on the specific handler
+        """Apply delete operation"""        # Implementation would depend on the specific handler
         self.logger.debug(f"Applying delete for {sync_record.table_name}")
     
     async def _apply_bulk_sync(self, handler: Any, sync_record: SyncRecord) -> None:
-        """Apply bulk synchronization"""
-        # Implementation would depend on the specific handler
+        """Apply bulk synchronization"""        # Implementation would depend on the specific handler
         self.logger.debug(f"Applying bulk sync for {sync_record.table_name}")
     
     async def _validate_sync_consistency(self) -> None:
-        """Validate synchronization consistency across databases"""
-        try:
+        """Validate synchronization consistency across databases"""        try:
             self.logger.debug("Validating sync consistency...")
             
             # Check for stale sync records
@@ -455,8 +424,7 @@ class ReplicationCoordinator:
         data: Dict[str, Any],
         target_regions: List[str] = None
     ) -> str:
-        """
-        Queue a synchronization operation.
+        """        Queue a synchronization operation.
         
         Args:
             database_type: Type of database
@@ -467,8 +435,7 @@ class ReplicationCoordinator:
             
         Returns:
             str: Sync record ID
-        """
-        try:
+        """        try:
             sync_record = SyncRecord(
                 id=f"sync_{int(datetime.utcnow().timestamp())}_{len(self.sync_queue)}",
                 database_type=database_type,
@@ -491,13 +458,11 @@ class ReplicationCoordinator:
             raise
     
     async def validate_all_replications(self) -> bool:
-        """
-        Validate all replication channels.
+        """        Validate all replication channels.
         
         Returns:
             bool: True if all replications are healthy
-        """
-        try:
+        """        try:
             all_healthy = True
             
             for database_type, handler in self.handlers.items():
@@ -518,14 +483,12 @@ class ReplicationCoordinator:
             return False
     
     async def reconfigure_after_failover(self, database_type: str, new_primary_region: str) -> None:
-        """
-        Reconfigure coordination after database failover.
+        """        Reconfigure coordination after database failover.
         
         Args:
             database_type: Database that failed over
             new_primary_region: New primary region
-        """
-        try:
+        """        try:
             self.logger.info(f"Reconfiguring coordination after {database_type} failover to {new_primary_region}")
             
             # Update configuration
@@ -547,13 +510,11 @@ class ReplicationCoordinator:
             self.logger.error(f"Error reconfiguring coordination: {e}")
     
     async def get_sync_status(self) -> Dict[str, Any]:
-        """
-        Get comprehensive synchronization status.
+        """        Get comprehensive synchronization status.
         
         Returns:
             Dict containing sync status information
-        """
-        return {
+        """        return {
             "is_coordinating": self.is_coordinating,
             "queue_size": len(self.sync_queue),
             "conflict_queue_size": len(self.conflict_queue),
@@ -574,8 +535,7 @@ class ReplicationCoordinator:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown replication coordinator"""
-        try:
+        """Shutdown replication coordinator"""        try:
             self.logger.info("Shutting down replication coordinator...")
             
             self.is_coordinating = False

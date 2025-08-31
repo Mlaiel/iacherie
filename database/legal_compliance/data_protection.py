@@ -1,14 +1,11 @@
-"""
-Data Protection - Advanced Privacy and Data Protection Utilities
+"""Data Protection - Advanced Privacy and Data Protection Utilities
 
 Comprehensive data protection system providing encryption, anonymization,
 pseudonymization, and privacy-preserving data processing for the IA Influencer Agent platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-
-from typing import Dict, List, Any, Optional, Union, Tuple, Set
+"""from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timedelta
 from enum import Enum
 import asyncio
@@ -27,8 +24,7 @@ logger = logging.getLogger(__name__)
 
 
 class DataClassification(Enum):
-    """Data classification levels for protection."""
-    PUBLIC = "public"
+    """Data classification levels for protection."""    PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
     RESTRICTED = "restricted"
@@ -36,8 +32,7 @@ class DataClassification(Enum):
 
 
 class ProtectionMethod(Enum):
-    """Data protection methods available."""
-    ENCRYPTION = "encryption"
+    """Data protection methods available."""    ENCRYPTION = "encryption"
     PSEUDONYMIZATION = "pseudonymization"
     ANONYMIZATION = "anonymization"
     TOKENIZATION = "tokenization"
@@ -47,8 +42,7 @@ class ProtectionMethod(Enum):
 
 
 class ProcessingPurpose(Enum):
-    """Lawful purposes for data processing."""
-    CONSENT = "consent"
+    """Lawful purposes for data processing."""    CONSENT = "consent"
     CONTRACT = "contract"
     LEGAL_OBLIGATION = "legal_obligation"
     VITAL_INTERESTS = "vital_interests"
@@ -57,8 +51,7 @@ class ProcessingPurpose(Enum):
 
 
 class DataSubjectRight(Enum):
-    """Data subject rights under GDPR."""
-    ACCESS = "access"  # Article 15
+    """Data subject rights under GDPR."""    ACCESS = "access"  # Article 15
     RECTIFICATION = "rectification"  # Article 16
     ERASURE = "erasure"  # Article 17
     RESTRICT_PROCESSING = "restrict_processing"  # Article 18
@@ -69,8 +62,7 @@ class DataSubjectRight(Enum):
 
 @dataclass
 class DataProcessingRecord:
-    """Record of data processing activity."""
-    record_id: str
+    """Record of data processing activity."""    record_id: str
     controller: str
     processor: Optional[str]
     data_subject_category: str
@@ -88,8 +80,7 @@ class DataProcessingRecord:
 
 @dataclass
 class ProtectionConfiguration:
-    """Configuration for data protection methods."""
-    classification: DataClassification
+    """Configuration for data protection methods."""    classification: DataClassification
     methods: List[ProtectionMethod]
     encryption_algorithm: str
     key_rotation_days: int
@@ -101,8 +92,7 @@ class ProtectionConfiguration:
 
 @dataclass
 class DataInventoryItem:
-    """Item in data inventory for DPIA."""
-    item_id: str
+    """Item in data inventory for DPIA."""    item_id: str
     data_type: str
     source: str
     collection_method: str
@@ -117,21 +107,17 @@ class DataInventoryItem:
 
 
 class DataProtectionManager:
-    """
-    Comprehensive data protection and privacy utilities.
+    """    Comprehensive data protection and privacy utilities.
     
     Provides encryption, anonymization, pseudonymization, data subject rights handling,
     and privacy impact assessments for GDPR and privacy compliance.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize the Data Protection Manager.
+        """        Initialize the Data Protection Manager.
         
         Args:
             config: Configuration dictionary with protection settings
-        """
-        self.config = config
+        """        self.config = config
         self.protection_config = config.get("data_protection", {})
         
         # Protection data storage
@@ -154,8 +140,7 @@ class DataProtectionManager:
         logger.info("Data Protection Manager initialized successfully")
     
     def _initialize_master_key(self) -> bytes:
-        """Initialize or load master encryption key."""
-        master_key_path = self.protection_config.get("master_key_path")
+        """Initialize or load master encryption key."""        master_key_path = self.protection_config.get("master_key_path")
         
         if master_key_path:
             try:
@@ -172,8 +157,7 @@ class DataProtectionManager:
             return Fernet.generate_key()
     
     def _initialize_classification_policies(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize data classification policies."""
-        return {
+        """Initialize data classification policies."""        return {
             "public": {
                 "encryption_required": False,
                 "access_logging": False,
@@ -208,8 +192,7 @@ class DataProtectionManager:
         }
     
     def _initialize_retention_policies(self) -> Dict[str, int]:
-        """Initialize data retention policies by data type."""
-        return {
+        """Initialize data retention policies by data type."""        return {
             "user_profiles": 2555,  # 7 years
             "financial_records": 2555,  # 7 years (legal requirement)
             "communication_logs": 1095,  # 3 years
@@ -222,8 +205,7 @@ class DataProtectionManager:
         }
     
     def _initialize_protection_configurations(self) -> None:
-        """Initialize default protection configurations."""
-        configs = [
+        """Initialize default protection configurations."""        configs = [
             ProtectionConfiguration(
                 classification=DataClassification.PUBLIC,
                 methods=[ProtectionMethod.HASHING],
@@ -275,8 +257,7 @@ class DataProtectionManager:
         classification: DataClassification,
         context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Encrypt sensitive data based on classification level.
+        """        Encrypt sensitive data based on classification level.
         
         Args:
             data: Data to encrypt
@@ -285,8 +266,7 @@ class DataProtectionManager:
             
         Returns:
             Encryption results with metadata
-        """
-        try:
+        """        try:
             # Convert data to bytes if necessary
             if isinstance(data, dict):
                 data_bytes = json.dumps(data, default=str).encode()
@@ -343,8 +323,7 @@ class DataProtectionManager:
         encryption_id: str,
         context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Decrypt previously encrypted data.
+        """        Decrypt previously encrypted data.
         
         Args:
             encrypted_data: Base64 encoded encrypted data
@@ -353,8 +332,7 @@ class DataProtectionManager:
             
         Returns:
             Decryption results
-        """
-        try:
+        """        try:
             if encryption_id not in self.encryption_keys:
                 raise ValueError(f"Encryption key for {encryption_id} not found")
             
@@ -391,8 +369,7 @@ class DataProtectionManager:
         identifier_fields: List[str],
         reversible: bool = True
     ) -> Dict[str, Any]:
-        """
-        Apply pseudonymization to personally identifiable data.
+        """        Apply pseudonymization to personally identifiable data.
         
         Args:
             data: Data to pseudonymize
@@ -401,8 +378,7 @@ class DataProtectionManager:
             
         Returns:
             Pseudonymized data with mapping
-        """
-        try:
+        """        try:
             pseudonymized_data = data.copy()
             pseudonym_mappings = {}
             
@@ -452,8 +428,7 @@ class DataProtectionManager:
         sensitive_attributes: List[str],
         k_anonymity: int = 5
     ) -> Dict[str, Any]:
-        """
-        Apply k-anonymity to a dataset for privacy protection.
+        """        Apply k-anonymity to a dataset for privacy protection.
         
         Args:
             dataset: Dataset to anonymize
@@ -463,8 +438,7 @@ class DataProtectionManager:
             
         Returns:
             Anonymized dataset with privacy metrics
-        """
-        try:
+        """        try:
             if len(dataset) < k_anonymity:
                 raise ValueError(f"Dataset too small for k-anonymity {k_anonymity}")
             
@@ -525,8 +499,7 @@ class DataProtectionManager:
         third_country_transfers: Optional[List[str]] = None,
         retention_period: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Create a record of processing activities (GDPR Article 30).
+        """        Create a record of processing activities (GDPR Article 30).
         
         Args:
             controller: Data controller name
@@ -541,8 +514,7 @@ class DataProtectionManager:
             
         Returns:
             Processing record creation results
-        """
-        try:
+        """        try:
             record_id = f"proc_record_{uuid.uuid4().hex[:16]}"
             
             # Determine technical and organizational measures based on data categories
@@ -599,8 +571,7 @@ class DataProtectionManager:
         data_subjects: List[str],
         technologies: List[str]
     ) -> Dict[str, Any]:
-        """
-        Conduct a Data Protection Impact Assessment (DPIA).
+        """        Conduct a Data Protection Impact Assessment (DPIA).
         
         Args:
             processing_description: Description of the processing activity
@@ -611,8 +582,7 @@ class DataProtectionManager:
             
         Returns:
             Comprehensive DPIA results
-        """
-        try:
+        """        try:
             dpia_id = f"dpia_{uuid.uuid4().hex[:16]}"
             
             # Risk assessment
@@ -675,8 +645,7 @@ class DataProtectionManager:
         specific_data: Optional[List[str]] = None,
         verification_evidence: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Handle data subject rights requests under GDPR.
+        """        Handle data subject rights requests under GDPR.
         
         Args:
             request_type: Type of data subject right being exercised
@@ -686,8 +655,7 @@ class DataProtectionManager:
             
         Returns:
             Request processing results
-        """
-        try:
+        """        try:
             request_id = f"dsr_{uuid.uuid4().hex[:16]}"
             
             # Verify the request
@@ -745,8 +713,7 @@ class DataProtectionManager:
         classification: DataClassification, 
         context: Optional[Dict[str, Any]]
     ) -> bytes:
-        """Derive encryption key based on classification and context."""
-        # Use PBKDF2 to derive key from master key
+        """Derive encryption key based on classification and context."""        # Use PBKDF2 to derive key from master key
         salt = hashlib.sha256(f"{classification.value}_{context}".encode()).digest()[:16]
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
@@ -757,8 +724,7 @@ class DataProtectionManager:
         return base64.urlsafe_b64encode(kdf.derive(self.master_key))
     
     def _generate_reversible_pseudonym(self, original_value: str) -> str:
-        """Generate deterministic pseudonym for reversible pseudonymization."""
-        # Use HMAC for deterministic but secure pseudonym
+        """Generate deterministic pseudonym for reversible pseudonymization."""        # Use HMAC for deterministic but secure pseudonym
         key = hashlib.sha256(self.master_key).digest()
         pseudonym_hash = hashlib.pbkdf2_hmac(
             'sha256', original_value.encode(), key, 10000
@@ -770,8 +736,7 @@ class DataProtectionManager:
         dataset: List[Dict[str, Any]], 
         quasi_identifiers: List[str]
     ) -> Dict[str, List[Dict[str, Any]]]:
-        """Group dataset records by quasi-identifier combinations."""
-        groups = {}
+        """Group dataset records by quasi-identifier combinations."""        groups = {}
         
         for record in dataset:
             # Create group key from quasi-identifiers
@@ -792,8 +757,7 @@ class DataProtectionManager:
         quasi_identifiers: List[str],
         sensitive_attributes: List[str]
     ) -> List[Dict[str, Any]]:
-        """Apply generalization to a group of records."""
-        generalized_records = []
+        """Apply generalization to a group of records."""        generalized_records = []
         
         for record in group_records:
             generalized_record = record.copy()
@@ -810,8 +774,7 @@ class DataProtectionManager:
         return generalized_records
     
     def _generalize_value(self, value: Any, field_name: str) -> str:
-        """Apply generalization to a specific value."""
-        # Simple generalization rules - would be more sophisticated in practice
+        """Apply generalization to a specific value."""        # Simple generalization rules - would be more sophisticated in practice
         if isinstance(value, int):
             # Generalize numbers to ranges
             return f"{(value // 10) * 10}-{(value // 10) * 10 + 9}"
@@ -827,8 +790,7 @@ class DataProtectionManager:
         anonymized: List[Dict[str, Any]], 
         k_value: int
     ) -> Dict[str, Any]:
-        """Calculate privacy preservation metrics."""
-        return {
+        """Calculate privacy preservation metrics."""        return {
             "k_anonymity_achieved": k_value,
             "data_utility_preserved": len(anonymized) / len(original),
             "information_loss": 1 - (len(anonymized) / len(original)),
@@ -836,8 +798,7 @@ class DataProtectionManager:
         }
     
     def _determine_technical_measures(self, data_categories: List[str]) -> List[str]:
-        """Determine required technical measures based on data categories."""
-        measures = ["access_controls", "audit_logging"]
+        """Determine required technical measures based on data categories."""        measures = ["access_controls", "audit_logging"]
         
         sensitive_categories = ["financial_data", "health_data", "biometric_data"]
         if any(cat in sensitive_categories for cat in data_categories):
@@ -846,8 +807,7 @@ class DataProtectionManager:
         return measures
     
     def _determine_organizational_measures(self, data_categories: List[str]) -> List[str]:
-        """Determine required organizational measures."""
-        return [
+        """Determine required organizational measures."""        return [
             "staff_training",
             "data_protection_policies",
             "incident_response_procedures",
@@ -855,8 +815,7 @@ class DataProtectionManager:
         ]
     
     def _determine_retention_period(self, data_categories: List[str]) -> str:
-        """Determine appropriate retention period for data categories."""
-        max_retention = 0
+        """Determine appropriate retention period for data categories."""        max_retention = 0
         
         for category in data_categories:
             if category in self.retention_policies:
@@ -871,8 +830,7 @@ class DataProtectionManager:
         data_subjects: List[str],
         technologies: List[str]
     ) -> Dict[str, Any]:
-        """Assess privacy risks for DPIA."""
-        risk_factors = []
+        """Assess privacy risks for DPIA."""        risk_factors = []
         risk_score = 0
         
         # Data sensitivity risks
@@ -903,8 +861,7 @@ class DataProtectionManager:
         }
     
     def _analyze_legal_basis(self, processing_purposes: List[ProcessingPurpose]) -> Dict[str, Any]:
-        """Analyze legal basis for processing purposes."""
-        legal_analysis = {}
+        """Analyze legal basis for processing purposes."""        legal_analysis = {}
         
         for purpose in processing_purposes:
             if purpose == ProcessingPurpose.CONSENT:
@@ -930,8 +887,7 @@ class DataProtectionManager:
         processing_purposes: List[ProcessingPurpose], 
         data_categories: List[str]
     ) -> Dict[str, Any]:
-        """Assess necessity and proportionality of processing."""
-        return {
+        """Assess necessity and proportionality of processing."""        return {
             "necessity_justified": True,  # Would implement actual assessment logic
             "proportionality_analysis": "Processing is proportionate to the purposes",
             "data_minimization_applied": len(data_categories) <= 5,  # Simple heuristic
@@ -939,8 +895,7 @@ class DataProtectionManager:
         }
     
     def _identify_required_safeguards(self, risk_assessment: Dict[str, Any]) -> List[str]:
-        """Identify required safeguards based on risk assessment."""
-        safeguards = ["data_minimization", "purpose_limitation", "storage_limitation"]
+        """Identify required safeguards based on risk assessment."""        safeguards = ["data_minimization", "purpose_limitation", "storage_limitation"]
         
         if risk_assessment["risk_level"] == "high":
             safeguards.extend([
@@ -960,8 +915,7 @@ class DataProtectionManager:
         return safeguards
     
     def _determine_consultation_requirements(self, risk_assessment: Dict[str, Any]) -> Dict[str, Any]:
-        """Determine if consultation with authorities is required."""
-        consultation_required = risk_assessment["risk_level"] == "high"
+        """Determine if consultation with authorities is required."""        consultation_required = risk_assessment["risk_level"] == "high"
         
         return {
             "dpa_consultation_required": consultation_required,
@@ -970,16 +924,14 @@ class DataProtectionManager:
         }
     
     def _calculate_overall_risk(self, risk_assessment: Dict[str, Any]) -> str:
-        """Calculate overall risk level for DPIA."""
-        return risk_assessment["risk_level"]
+        """Calculate overall risk level for DPIA."""        return risk_assessment["risk_level"]
     
     def _generate_dpia_recommendations(
         self, 
         risk_assessment: Dict[str, Any], 
         overall_risk: str
     ) -> List[str]:
-        """Generate recommendations based on DPIA results."""
-        recommendations = []
+        """Generate recommendations based on DPIA results."""        recommendations = []
         
         if overall_risk == "high":
             recommendations.extend([
@@ -998,8 +950,7 @@ class DataProtectionManager:
         return recommendations
     
     def _generate_detailed_risk_analysis(self, risk_factors: List[str]) -> Dict[str, str]:
-        """Generate detailed analysis of identified risk factors."""
-        analysis = {}
+        """Generate detailed analysis of identified risk factors."""        analysis = {}
         
         for factor in risk_factors:
             if factor == "sensitive_data_processing":
@@ -1017,8 +968,7 @@ class DataProtectionManager:
         user_id: str, 
         verification_evidence: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Verify the identity of the data subject making the request."""
-        # Simplified verification - would implement proper identity verification
+        """Verify the identity of the data subject making the request."""        # Simplified verification - would implement proper identity verification
         return {
             "verified": True,
             "verification_method": "system_authentication",
@@ -1030,8 +980,7 @@ class DataProtectionManager:
         user_id: str, 
         specific_data: Optional[List[str]]
     ) -> Dict[str, Any]:
-        """Process data access request (Article 15)."""
-        # Would gather all personal data for the user
+        """Process data access request (Article 15)."""        # Would gather all personal data for the user
         return {
             "data_provided": True,
             "format": "structured_data",
@@ -1043,8 +992,7 @@ class DataProtectionManager:
         user_id: str, 
         specific_data: Optional[List[str]]
     ) -> Dict[str, Any]:
-        """Process data rectification request (Article 16)."""
-        return {
+        """Process data rectification request (Article 16)."""        return {
             "data_updated": True,
             "fields_corrected": specific_data or [],
             "notification_required": True
@@ -1055,8 +1003,7 @@ class DataProtectionManager:
         user_id: str, 
         specific_data: Optional[List[str]]
     ) -> Dict[str, Any]:
-        """Process data erasure request (Article 17)."""
-        return {
+        """Process data erasure request (Article 17)."""        return {
             "data_erased": True,
             "erasure_scope": "complete" if not specific_data else "partial",
             "third_parties_notified": True
@@ -1067,8 +1014,7 @@ class DataProtectionManager:
         user_id: str, 
         specific_data: Optional[List[str]]
     ) -> Dict[str, Any]:
-        """Process processing restriction request (Article 18)."""
-        return {
+        """Process processing restriction request (Article 18)."""        return {
             "processing_restricted": True,
             "restriction_scope": specific_data or ["all"],
             "storage_only": True
@@ -1079,8 +1025,7 @@ class DataProtectionManager:
         user_id: str, 
         specific_data: Optional[List[str]]
     ) -> Dict[str, Any]:
-        """Process data portability request (Article 20)."""
-        return {
+        """Process data portability request (Article 20)."""        return {
             "data_exported": True,
             "format": "machine_readable",
             "transmission_method": "secure_api"
@@ -1091,8 +1036,7 @@ class DataProtectionManager:
         user_id: str, 
         specific_data: Optional[List[str]]
     ) -> Dict[str, Any]:
-        """Process objection to processing request (Article 21)."""
-        return {
+        """Process objection to processing request (Article 21)."""        return {
             "objection_processed": True,
             "processing_stopped": True,
             "legitimate_interests_override": False

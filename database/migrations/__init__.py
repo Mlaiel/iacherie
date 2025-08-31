@@ -25,8 +25,7 @@ Validation Testing → Performance Optimization → Rollback Preparation → Mon
 
 Core Technologies: Alembic + SQLAlchemy + PostgreSQL + Vector Databases + Redis
 Migration Features: Auto-discovery, Dependency resolution, Rollback safety, Performance optimization
-"""
-# Core Migration Engine Components
+"""# Core Migration Engine Components
 from .migration_manager import EnterpriseMigrationManager
 from .migration_runner import ProductionMigrationRunner
 from .migration_validator import IndustrialMigrationValidator

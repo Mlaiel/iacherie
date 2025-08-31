@@ -1,5 +1,4 @@
-"""
-Utility Functions for Intent Recognition
+"""Utility Functions for Intent Recognition
 
 Comprehensive utility functions for text preprocessing, confidence calibration,
 performance monitoring, and general helper operations.
@@ -12,9 +11,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
-"""
-
-import re
+"""import re
 import time
 import hashlib
 import unicodedata
@@ -45,8 +42,7 @@ def intent_preprocessing(
     remove_special_chars: bool = False,
     max_length: Optional[int] = None
 ) -> str:
-    """
-    Comprehensive text preprocessing for intent recognition
+    """    Comprehensive text preprocessing for intent recognition
     
     Args:
         text: Input text to preprocess
@@ -59,8 +55,7 @@ def intent_preprocessing(
         
     Returns:
         Preprocessed text ready for classification
-    """
-    if not text or not isinstance(text, str):
+    """    if not text or not isinstance(text, str):
         return ""
     
     try:
@@ -97,8 +92,7 @@ def intent_preprocessing(
 
 
 def clean_html_content(text: str) -> str:
-    """Remove HTML tags and decode HTML entities"""
-    # Remove HTML tags
+    """Remove HTML tags and decode HTML entities"""    # Remove HTML tags
     text = re.sub(r'<[^>]+>', '', text)
     
     # Decode common HTML entities
@@ -125,8 +119,7 @@ def extract_keywords(
     min_length: int = 3,
     exclude_stopwords: bool = True
 ) -> List[str]:
-    """
-    Extract important keywords from text for intent analysis
+    """    Extract important keywords from text for intent analysis
     
     Args:
         text: Input text
@@ -136,8 +129,7 @@ def extract_keywords(
         
     Returns:
         List of extracted keywords
-    """
-    try:
+    """    try:
         # Tokenize and clean
         words = re.findall(r'\b\w+\b', text.lower())
         
@@ -163,16 +155,14 @@ def extract_keywords(
 
 
 def detect_intent_patterns(text: str) -> Dict[str, bool]:
-    """
-    Detect common intent patterns in text
+    """    Detect common intent patterns in text
     
     Args:
         text: Input text to analyze
         
     Returns:
         Dictionary of detected patterns
-    """
-    patterns = {
+    """    patterns = {
         'question': bool(re.search(r'\?|^(what|how|when|where|why|who|which|can|could|would|should|do|does|is|are)', text.lower())),
         'request': bool(re.search(r'^(please|could you|can you|would you|i need|i want|help me)', text.lower())),
         'command': bool(re.search(r'^(upload|download|create|delete|share|protect|analyze|show|get|set)', text.lower())),
@@ -187,16 +177,14 @@ def detect_intent_patterns(text: str) -> Dict[str, bool]:
 
 
 def calculate_text_complexity(text: str) -> Dict[str, float]:
-    """
-    Calculate various text complexity metrics
+    """    Calculate various text complexity metrics
     
     Args:
         text: Input text to analyze
         
     Returns:
         Dictionary of complexity metrics
-    """
-    try:
+    """    try:
         words = text.split()
         sentences = re.split(r'[.!?]+', text)
         
@@ -254,13 +242,11 @@ def calculate_text_complexity(text: str) -> Dict[str, float]:
 # Confidence calibration utilities
 
 class ConfidenceCalibrator:
-    """
-    Calibrate confidence scores using historical data
+    """    Calibrate confidence scores using historical data
     
     Provides methods for isotonic regression calibration and
     temperature scaling for improved confidence estimates.
-    """
-    
+    """    
     def __init__(self):
         self.calibrators = {}  # Per-intent calibrators
         self.global_calibrator = None
@@ -273,12 +259,10 @@ class ConfidenceCalibrator:
         confidence: float,
         correct: bool
     ) -> None:
-        """Add calibration data point"""
-        self.calibration_data[intent].append((confidence, correct))
+        """Add calibration data point"""        self.calibration_data[intent].append((confidence, correct))
     
     def fit_calibrators(self) -> None:
-        """Fit calibration models using collected data"""
-        try:
+        """Fit calibration models using collected data"""        try:
             # Fit per-intent calibrators
             for intent, data in self.calibration_data.items():
                 if len(data) >= 10:  # Minimum data points
@@ -310,8 +294,7 @@ class ConfidenceCalibrator:
         intent: IntentCategory,
         confidence: float
     ) -> float:
-        """Calibrate confidence score for specific intent"""
-        if not self.is_fitted:
+        """Calibrate confidence score for specific intent"""        if not self.is_fitted:
             return confidence
         
         try:
@@ -337,8 +320,7 @@ def confidence_calibration(
     true_labels: List[bool],
     method: str = "isotonic"
 ) -> Callable[[float], float]:
-    """
-    Create confidence calibration function
+    """    Create confidence calibration function
     
     Args:
         confidences: List of confidence scores
@@ -347,8 +329,7 @@ def confidence_calibration(
         
     Returns:
         Calibration function
-    """
-    try:
+    """    try:
         if method == "isotonic":
             from sklearn.isotonic import IsotonicRegression
             calibrator = IsotonicRegression(out_of_bounds='clip')
@@ -380,13 +361,11 @@ def confidence_calibration(
 # Performance monitoring utilities
 
 class PerformanceMonitor:
-    """
-    Monitor and track performance metrics for intent recognition
+    """    Monitor and track performance metrics for intent recognition
     
     Provides real-time metrics collection, statistical analysis,
     and performance alerting capabilities.
-    """
-    
+    """    
     def __init__(self, window_size: int = 1000):
         self.window_size = window_size
         
@@ -420,8 +399,7 @@ class PerformanceMonitor:
         success: bool = True,
         error_type: Optional[str] = None
     ) -> None:
-        """Record performance metrics for a request"""
-        
+        """Record performance metrics for a request"""        
         self.stats['total_requests'] += 1
         
         if success:
@@ -437,8 +415,7 @@ class PerformanceMonitor:
         self._update_statistics()
     
     def _update_statistics(self) -> None:
-        """Update running statistics"""
-        total = self.stats['total_requests']
+        """Update running statistics"""        total = self.stats['total_requests']
         
         if total > 0:
             self.stats['error_rate'] = 1.0 - (self.stats['successful_requests'] / total)
@@ -450,8 +427,7 @@ class PerformanceMonitor:
             self.stats['avg_confidence'] = sum(self.confidence_scores) / len(self.confidence_scores)
     
     def get_current_metrics(self) -> Dict[str, Any]:
-        """Get current performance metrics"""
-        return {
+        """Get current performance metrics"""        return {
             'statistics': self.stats.copy(),
             'recent_response_times': {
                 'min': min(self.response_times) if self.response_times else 0,
@@ -470,8 +446,7 @@ class PerformanceMonitor:
         }
     
     def check_alerts(self) -> List[str]:
-        """Check for performance alerts"""
-        alerts = []
+        """Check for performance alerts"""        alerts = []
         
         # Response time alert
         if (self.response_times and 
@@ -494,8 +469,7 @@ def performance_monitoring(
     func: Callable,
     monitor: Optional[PerformanceMonitor] = None
 ) -> Callable:
-    """
-    Decorator for monitoring function performance
+    """    Decorator for monitoring function performance
     
     Args:
         func: Function to monitor
@@ -503,8 +477,7 @@ def performance_monitoring(
         
     Returns:
         Decorated function with performance monitoring
-    """
-    def wrapper(*args, **kwargs):
+    """    def wrapper(*args, **kwargs):
         start_time = time.time()
         
         try:
@@ -542,14 +515,12 @@ def performance_monitoring(
 # General utility functions
 
 def generate_request_id(prefix: str = "intent") -> str:
-    """Generate unique request ID"""
-    timestamp = str(int(time.time() * 1000))
+    """Generate unique request ID"""    timestamp = str(int(time.time() * 1000))
     return f"{prefix}_{timestamp}_{hash(timestamp) % 10000}"
 
 
 def hash_text(text: str, algorithm: str = "md5") -> str:
-    """Generate hash for text content"""
-    text_bytes = text.encode('utf-8')
+    """Generate hash for text content"""    text_bytes = text.encode('utf-8')
     
     if algorithm == "md5":
         return hashlib.md5(text_bytes).hexdigest()
@@ -566,8 +537,7 @@ def validate_text_input(
     allowed_languages: Optional[List[str]] = None,
     blocked_patterns: Optional[List[str]] = None
 ) -> Tuple[bool, Optional[str]]:
-    """
-    Validate text input for intent recognition
+    """    Validate text input for intent recognition
     
     Args:
         text: Input text to validate
@@ -578,8 +548,7 @@ def validate_text_input(
         
     Returns:
         Tuple of (is_valid, error_message)
-    """
-    try:
+    """    try:
         # Check basic requirements
         if not text or not isinstance(text, str):
             return False, "Text input is required"
@@ -613,14 +582,12 @@ def validate_text_input(
 
 
 def format_confidence_score(confidence: float, precision: int = 2) -> str:
-    """Format confidence score for display"""
-    percentage = confidence * 100
+    """Format confidence score for display"""    percentage = confidence * 100
     return f"{percentage:.{precision}f}%"
 
 
 def calculate_entropy(probabilities: List[float]) -> float:
-    """Calculate entropy of probability distribution"""
-    try:
+    """Calculate entropy of probability distribution"""    try:
         probabilities = np.array(probabilities)
         # Add small epsilon to avoid log(0)
         probabilities = probabilities + 1e-10
@@ -639,8 +606,7 @@ def exponential_backoff(
     max_delay: float = 60.0,
     jitter: bool = True
 ) -> float:
-    """
-    Calculate exponential backoff delay
+    """    Calculate exponential backoff delay
     
     Args:
         attempt: Attempt number (0-based)
@@ -650,8 +616,7 @@ def exponential_backoff(
         
     Returns:
         Delay in seconds
-    """
-    delay = min(base_delay * (2 ** attempt), max_delay)
+    """    delay = min(base_delay * (2 ** attempt), max_delay)
     
     if jitter:
         import random
@@ -661,14 +626,12 @@ def exponential_backoff(
 
 
 def batch_iterator(items: List[Any], batch_size: int):
-    """Iterate over items in batches"""
-    for i in range(0, len(items), batch_size):
+    """Iterate over items in batches"""    for i in range(0, len(items), batch_size):
         yield items[i:i + batch_size]
 
 
 def safe_json_serialize(obj: Any) -> str:
-    """Safely serialize object to JSON"""
-    try:
+    """Safely serialize object to JSON"""    try:
         return json.dumps(obj, default=str, ensure_ascii=False)
     except Exception as e:
         logging.warning(f"JSON serialization failed: {str(e)}")
@@ -676,8 +639,7 @@ def safe_json_serialize(obj: Any) -> str:
 
 
 def timestamp_to_iso(timestamp: Optional[datetime] = None) -> str:
-    """Convert timestamp to ISO format string"""
-    if timestamp is None:
+    """Convert timestamp to ISO format string"""    if timestamp is None:
         timestamp = datetime.now()
     return timestamp.isoformat()
 
@@ -685,8 +647,7 @@ def timestamp_to_iso(timestamp: Optional[datetime] = None) -> str:
 # Creative industry specific utilities
 
 def extract_creative_entities(text: str) -> Dict[str, List[str]]:
-    """Extract creative industry specific entities"""
-    entities = {
+    """Extract creative industry specific entities"""    entities = {
         'platforms': [],
         'content_types': [],
         'actions': [],
@@ -718,8 +679,7 @@ def extract_creative_entities(text: str) -> Dict[str, List[str]]:
 
 
 def detect_collaboration_intent(text: str) -> Dict[str, Any]:
-    """Detect collaboration-related intent indicators"""
-    collaboration_indicators = {
+    """Detect collaboration-related intent indicators"""    collaboration_indicators = {
         'sharing': bool(re.search(r'\b(share|sharing|shared)\b', text.lower())),
         'inviting': bool(re.search(r'\b(invite|invitation|join|collaborate)\b', text.lower())),
         'team_work': bool(re.search(r'\b(team|together|group|collaboration|partner)\b', text.lower())),

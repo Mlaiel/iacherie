@@ -1,5 +1,4 @@
-"""
-Content Protection Surveillance Parsers Module
+"""Content Protection Surveillance Parsers Module
 ==============================================
 
 Ultra-advanced parsers for content protection, copyright monitoring,
@@ -22,9 +21,7 @@ Development Team Specialties:
 - Database Administrator: Performance optimization
 - Security Expert: Content protection and compliance
 - Microservices Architect: Scalable system design
-"""
-
-import asyncio
+"""import asyncio
 import hashlib
 import json
 import logging
@@ -52,8 +49,7 @@ from .parser_config import ParserConfig
 
 
 class ViolationType(Enum):
-    """Types of content violations"""
-    EXACT_COPY = "exact_copy"
+    """Types of content violations"""    EXACT_COPY = "exact_copy"
     PARTIAL_COPY = "partial_copy"
     REMIX_UNAUTHORIZED = "remix_unauthorized"
     THUMBNAIL_COPY = "thumbnail_copy"
@@ -66,8 +62,7 @@ class ViolationType(Enum):
 
 
 class ThreatLevel(Enum):
-    """Threat level classification"""
-    CRITICAL = "critical"  # Exact match, commercial use
+    """Threat level classification"""    CRITICAL = "critical"  # Exact match, commercial use
     HIGH = "high"         # Close match, potential revenue impact
     MEDIUM = "medium"     # Partial match, limited impact
     LOW = "low"          # Minor similarity, unlikely violation
@@ -76,8 +71,7 @@ class ThreatLevel(Enum):
 
 @dataclass
 class ContentMatch:
-    """Detected content match"""
-    original_content_id: str
+    """Detected content match"""    original_content_id: str
     matched_url: str
     platform: str
     violation_type: ViolationType
@@ -93,8 +87,7 @@ class ContentMatch:
 
 @dataclass
 class SurveillanceResult:
-    """Complete surveillance analysis result"""
-    content_matches: List[ContentMatch] = field(default_factory=list)
+    """Complete surveillance analysis result"""    content_matches: List[ContentMatch] = field(default_factory=list)
     total_violations: int = 0
     critical_threats: int = 0
     high_threats: int = 0
@@ -104,15 +97,13 @@ class SurveillanceResult:
 
 
 class ContentFingerprintGenerator:
-    """Advanced content fingerprinting for surveillance"""
-    
+    """Advanced content fingerprinting for surveillance"""    
     def __init__(self, config: ParserConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
     
     async def generate_audio_fingerprint(self, audio_path: str) -> Dict[str, Any]:
-        """Generate audio fingerprint using multiple algorithms"""
-        try:
+        """Generate audio fingerprint using multiple algorithms"""        try:
             # This would integrate with audio fingerprinting libraries
             # like Chromaprint, pyAudioAnalysis, or custom implementations
             
@@ -144,8 +135,7 @@ class ContentFingerprintGenerator:
             raise ProtectionParsingError(f"Failed to generate audio fingerprint: {e}")
     
     async def generate_video_fingerprint(self, video_path: str) -> Dict[str, Any]:
-        """Generate video fingerprint using computer vision"""
-        try:
+        """Generate video fingerprint using computer vision"""        try:
             # Open video file
             cap = cv2.VideoCapture(video_path)
             
@@ -200,8 +190,7 @@ class ContentFingerprintGenerator:
             raise ProtectionParsingError(f"Failed to generate video fingerprint: {e}")
     
     async def generate_image_fingerprint(self, image_path: str) -> Dict[str, Any]:
-        """Generate image fingerprint using multiple hashing algorithms"""
-        try:
+        """Generate image fingerprint using multiple hashing algorithms"""        try:
             # Load image
             image = Image.open(image_path)
             
@@ -236,8 +225,7 @@ class ContentFingerprintGenerator:
 
 
 class YouTubeSurveillanceParser:
-    """Advanced YouTube content surveillance parser"""
-    
+    """Advanced YouTube content surveillance parser"""    
     def __init__(self, config: ParserConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -245,8 +233,7 @@ class YouTubeSurveillanceParser:
         self.selenium_driver = None
     
     async def initialize_selenium(self) -> None:
-        """Initialize Selenium WebDriver for deep crawling"""
-        chrome_options = Options()
+        """Initialize Selenium WebDriver for deep crawling"""        chrome_options = Options()
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--disable-dev-shm-usage')
@@ -259,8 +246,7 @@ class YouTubeSurveillanceParser:
         search_terms: List[str], 
         original_fingerprint: Dict[str, Any]
     ) -> List[ContentMatch]:
-        """Search YouTube for potential content matches"""
-        matches = []
+        """Search YouTube for potential content matches"""        matches = []
         
         try:
             for term in search_terms:
@@ -278,8 +264,7 @@ class YouTubeSurveillanceParser:
             raise SurveillanceError(f"Failed to search YouTube: {e}")
     
     async def _perform_youtube_search(self, search_term: str) -> List[Dict[str, Any]]:
-        """Perform YouTube API search"""
-        try:
+        """Perform YouTube API search"""        try:
             # In real implementation, this would use YouTube Data API v3
             # Placeholder data structure
             return [
@@ -305,8 +290,7 @@ class YouTubeSurveillanceParser:
         video_result: Dict[str, Any], 
         original_fingerprint: Dict[str, Any]
     ) -> Optional[ContentMatch]:
-        """Analyze if a video result is a potential match"""
-        try:
+        """Analyze if a video result is a potential match"""        try:
             # Download and analyze thumbnail
             thumbnail_similarity = await self._compare_thumbnails(
                 video_result['thumbnail_url'], 
@@ -358,8 +342,7 @@ class YouTubeSurveillanceParser:
             return None
     
     async def _compare_thumbnails(self, thumbnail_url: str, original_hash: str) -> float:
-        """Compare thumbnail images for similarity"""
-        try:
+        """Compare thumbnail images for similarity"""        try:
             # Download thumbnail
             async with aiohttp.ClientSession() as session:
                 async with session.get(thumbnail_url) as response:
@@ -388,8 +371,7 @@ class YouTubeSurveillanceParser:
         video_result: Dict[str, Any], 
         original_metadata: Dict[str, Any]
     ) -> float:
-        """Compare text content for similarity"""
-        try:
+        """Compare text content for similarity"""        try:
             # Compare titles
             original_title = original_metadata.get('title', '').lower()
             result_title = video_result.get('title', '').lower()
@@ -428,8 +410,7 @@ class YouTubeSurveillanceParser:
             return 0.0
     
     def _determine_violation_type(self, overall_similarity: float, thumbnail_similarity: float) -> ViolationType:
-        """Determine the type of violation based on similarity scores"""
-        if overall_similarity > 0.9:
+        """Determine the type of violation based on similarity scores"""        if overall_similarity > 0.9:
             return ViolationType.EXACT_COPY
         elif overall_similarity > 0.8:
             return ViolationType.PARTIAL_COPY
@@ -441,8 +422,7 @@ class YouTubeSurveillanceParser:
             return ViolationType.PARTIAL_COPY
     
     def _assess_threat_level(self, similarity_score: float, video_result: Dict[str, Any]) -> ThreatLevel:
-        """Assess threat level based on similarity and engagement"""
-        view_count = video_result.get('view_count', 0)
+        """Assess threat level based on similarity and engagement"""        view_count = video_result.get('view_count', 0)
         
         if similarity_score > 0.9 and view_count > 100000:
             return ThreatLevel.CRITICAL
@@ -456,8 +436,7 @@ class YouTubeSurveillanceParser:
             return ThreatLevel.INFORMATIONAL
     
     async def _get_channel_info(self, channel_id: str) -> Dict[str, Any]:
-        """Get channel information"""
-        # Placeholder - would use YouTube API
+        """Get channel information"""        # Placeholder - would use YouTube API
         return {
             'channel_id': channel_id,
             'channel_title': 'Example Channel',
@@ -468,8 +447,7 @@ class YouTubeSurveillanceParser:
         }
     
     async def _get_engagement_metrics(self, video_id: str) -> Dict[str, Any]:
-        """Get video engagement metrics"""
-        # Placeholder - would use YouTube API
+        """Get video engagement metrics"""        # Placeholder - would use YouTube API
         return {
             'view_count': 10000,
             'like_count': 500,
@@ -480,8 +458,7 @@ class YouTubeSurveillanceParser:
         }
     
     def _estimate_revenue_impact(self, engagement_metrics: Dict[str, Any], threat_level: ThreatLevel) -> float:
-        """Estimate potential revenue impact"""
-        base_impact = engagement_metrics.get('view_count', 0) * 0.001  # $1 per 1000 views estimate
+        """Estimate potential revenue impact"""        base_impact = engagement_metrics.get('view_count', 0) * 0.001  # $1 per 1000 views estimate
         
         threat_multipliers = {
             ThreatLevel.CRITICAL: 1.0,
@@ -495,8 +472,7 @@ class YouTubeSurveillanceParser:
 
 
 class ContentProtectionSurveillanceEngine:
-    """Ultra-advanced content protection surveillance engine"""
-    
+    """Ultra-advanced content protection surveillance engine"""    
     def __init__(self, config: ParserConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -505,16 +481,14 @@ class ContentProtectionSurveillanceEngine:
         # Would include parsers for other platforms: Instagram, TikTok, etc.
     
     async def initialize(self) -> None:
-        """Initialize surveillance engine"""
-        await self.youtube_parser.initialize_selenium()
+        """Initialize surveillance engine"""        await self.youtube_parser.initialize_selenium()
     
     async def perform_comprehensive_surveillance(
         self, 
         original_content: Dict[str, Any],
         platforms: List[str] = None
     ) -> SurveillanceResult:
-        """Perform comprehensive content surveillance across platforms"""
-        try:
+        """Perform comprehensive content surveillance across platforms"""        try:
             if platforms is None:
                 platforms = ['youtube', 'instagram', 'tiktok', 'twitter']
             
@@ -542,8 +516,7 @@ class ContentProtectionSurveillanceEngine:
             raise SurveillanceError(f"Failed to perform surveillance: {e}")
     
     def _generate_search_terms(self, original_content: Dict[str, Any]) -> List[str]:
-        """Generate search terms for content surveillance"""
-        terms = []
+        """Generate search terms for content surveillance"""        terms = []
         
         # Extract from title
         title = original_content.get('title', '')
@@ -594,8 +567,7 @@ class ContentProtectionSurveillanceEngine:
         search_terms: List[str], 
         original_content: Dict[str, Any]
     ) -> List[ContentMatch]:
-        """Search specific platform for matches"""
-        try:
+        """Search specific platform for matches"""        try:
             if platform == 'youtube':
                 return await self.youtube_parser.search_for_matches(search_terms, original_content)
             elif platform == 'instagram':
@@ -616,8 +588,7 @@ class ContentProtectionSurveillanceEngine:
             return []
     
     def _analyze_surveillance_results(self, matches: List[ContentMatch]) -> SurveillanceResult:
-        """Analyze surveillance results and generate recommendations"""
-        result = SurveillanceResult()
+        """Analyze surveillance results and generate recommendations"""        result = SurveillanceResult()
         result.content_matches = matches
         result.total_violations = len(matches)
         
@@ -640,8 +611,7 @@ class ContentProtectionSurveillanceEngine:
         return result
     
     def _generate_action_recommendations(self, matches: List[ContentMatch]) -> List[str]:
-        """Generate action recommendations based on matches"""
-        recommendations = []
+        """Generate action recommendations based on matches"""        recommendations = []
         
         critical_matches = [m for m in matches if m.threat_level == ThreatLevel.CRITICAL]
         high_matches = [m for m in matches if m.threat_level == ThreatLevel.HIGH]

@@ -1,5 +1,4 @@
-"""
-Enterprise Royalty Calculation Engine
+"""Enterprise Royalty Calculation Engine
 ====================================
 
 Advanced royalty and revenue calculation system with multi-platform integration,
@@ -11,9 +10,7 @@ Enterprise Content Protection Platform - Royalty Calculation Core
 ⚠️  COPYRIGHT NOTICE ⚠️
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -39,8 +36,7 @@ settings = get_settings()
 
 
 class RevenueSource(str, Enum):
-    """Revenue generation sources."""
-    STREAMING = "streaming"
+    """Revenue generation sources."""    STREAMING = "streaming"
     DOWNLOADS = "downloads"
     LICENSING = "licensing"
     ADVERTISING = "advertising"
@@ -54,8 +50,7 @@ class RevenueSource(str, Enum):
 
 
 class DistributionModel(str, Enum):
-    """Revenue distribution models."""
-    EXCLUSIVE_OWNER = "exclusive_owner"
+    """Revenue distribution models."""    EXCLUSIVE_OWNER = "exclusive_owner"
     PROPORTIONAL_SPLIT = "proportional_split"
     FIXED_PERCENTAGE = "fixed_percentage"
     TIERED_STRUCTURE = "tiered_structure"
@@ -64,8 +59,7 @@ class DistributionModel(str, Enum):
 
 
 class Platform(str, Enum):
-    """Supported platforms for royalty calculation."""
-    SPOTIFY = "spotify"
+    """Supported platforms for royalty calculation."""    SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE = "youtube"
     YOUTUBE_MUSIC = "youtube_music"
@@ -81,8 +75,7 @@ class Platform(str, Enum):
 
 @dataclass
 class RoyaltyConfiguration:
-    """Comprehensive royalty configuration structure."""
-    config_id: str
+    """Comprehensive royalty configuration structure."""    config_id: str
     content_id: str
     owner_id: str
     distribution_model: DistributionModel
@@ -98,8 +91,7 @@ class RoyaltyConfiguration:
 
 
 class RevenueData(BaseModel):
-    """Revenue data input model."""
-    platform: Platform = Field(..., description="Platform generating revenue")
+    """Revenue data input model."""    platform: Platform = Field(..., description="Platform generating revenue")
     revenue_source: RevenueSource = Field(..., description="Source of revenue")
     gross_amount: Decimal = Field(..., ge=0, description="Gross revenue amount")
     currency: str = Field(default="EUR", min_length=3, max_length=3)
@@ -116,8 +108,7 @@ class RevenueData(BaseModel):
 
 
 class RoyaltyCalculationRequest(BaseModel):
-    """Royalty calculation request model."""
-    content_id: str = Field(..., description="Content identifier")
+    """Royalty calculation request model."""    content_id: str = Field(..., description="Content identifier")
     revenue_data: List[RevenueData] = Field(..., min_items=1)
     calculation_period: Dict[str, datetime] = Field(..., description="Calculation period")
     include_projections: bool = Field(default=False)
@@ -127,8 +118,7 @@ class RoyaltyCalculationRequest(BaseModel):
 
 
 class RoyaltyCalculationResult(BaseModel):
-    """Royalty calculation result model."""
-    calculation_id: str
+    """Royalty calculation result model."""    calculation_id: str
     content_id: str
     calculation_period: Dict[str, datetime]
     total_gross_revenue: Decimal
@@ -144,8 +134,7 @@ class RoyaltyCalculationResult(BaseModel):
 
 
 class CollaboratorShare(BaseModel):
-    """Collaborator revenue share model."""
-    collaborator_id: str = Field(..., description="Collaborator user ID")
+    """Collaborator revenue share model."""    collaborator_id: str = Field(..., description="Collaborator user ID")
     role: str = Field(..., description="Role in content creation")
     share_percentage: Decimal = Field(..., ge=0, le=100)
     minimum_guarantee: Optional[Decimal] = Field(None, ge=0)
@@ -154,14 +143,11 @@ class CollaboratorShare(BaseModel):
 
 
 class RoyaltyCalculationEngine:
-    """
-    Enterprise royalty calculation engine with advanced analytics,
+    """    Enterprise royalty calculation engine with advanced analytics,
     multi-platform integration, and automated distribution capabilities.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession):
-        """Initialize royalty calculation engine."""
-        self.db = db_session
+        """Initialize royalty calculation engine."""        self.db = db_session
         self.encryption = AdvancedEncryption()
         
         # Platform rate mappings (per play/view/impression)
@@ -210,8 +196,7 @@ class RoyaltyCalculationEngine:
         calculation_request: RoyaltyCalculationRequest,
         user_id: str
     ) -> RoyaltyCalculationResult:
-        """
-        Calculate comprehensive royalties for content with advanced analytics.
+        """        Calculate comprehensive royalties for content with advanced analytics.
         
         Args:
             calculation_request: Royalty calculation request
@@ -219,8 +204,7 @@ class RoyaltyCalculationEngine:
             
         Returns:
             Detailed royalty calculation result
-        """
-        try:
+        """        try:
             # Validate content ownership/access
             content_record = await self._get_content_record(
                 calculation_request.content_id
@@ -342,8 +326,7 @@ class RoyaltyCalculationEngine:
         period_days: int = 90,
         user_id: str = None
     ) -> Dict[str, Any]:
-        """
-        Analyze revenue trends and patterns for content.
+        """        Analyze revenue trends and patterns for content.
         
         Args:
             content_id: Content identifier
@@ -352,8 +335,7 @@ class RoyaltyCalculationEngine:
             
         Returns:
             Comprehensive revenue trend analysis
-        """
-        try:
+        """        try:
             # Validate access
             if user_id and not await self._validate_analytics_access(content_id, user_id):
                 raise HTTPException(
@@ -428,8 +410,7 @@ class RoyaltyCalculationEngine:
         collaborators: List[CollaboratorShare] = None,
         custom_rates: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """
-        Setup comprehensive royalty configuration for content.
+        """        Setup comprehensive royalty configuration for content.
         
         Args:
             content_id: Content identifier
@@ -440,8 +421,7 @@ class RoyaltyCalculationEngine:
             
         Returns:
             Configuration setup result
-        """
-        try:
+        """        try:
             # Validate content ownership
             content_record = await self._get_content_record(content_id)
             if not content_record or content_record.owner_id != owner_id:
@@ -501,8 +481,7 @@ class RoyaltyCalculationEngine:
         calculation_result: RoyaltyCalculationResult,
         payment_method: str = "bank_transfer"
     ) -> Dict[str, Any]:
-        """
-        Process automated royalty payments to collaborators.
+        """        Process automated royalty payments to collaborators.
         
         Args:
             calculation_result: Calculation result with distributions
@@ -510,8 +489,7 @@ class RoyaltyCalculationEngine:
             
         Returns:
             Payment processing result
-        """
-        try:
+        """        try:
             payment_batch_id = str(uuid4())
             
             # Process payments for each collaborator
@@ -559,17 +537,14 @@ class RoyaltyCalculationEngine:
     # Helper methods
     
     async def _get_content_record(self, content_id: str) -> Optional[Any]:
-        """Get content record from database."""
-        # Database query implementation
+        """Get content record from database."""        # Database query implementation
         pass
     
     async def _validate_calculation_access(self, content: Any, user_id: str) -> bool:
-        """Validate user access for royalty calculation."""
-        return content.owner_id == user_id or user_id in [c["collaborator_id"] for c in content.collaborators or []]
+        """Validate user access for royalty calculation."""        return content.owner_id == user_id or user_id in [c["collaborator_id"] for c in content.collaborators or []]
     
     async def _get_royalty_configuration(self, content_id: str) -> RoyaltyConfiguration:
-        """Get royalty configuration for content."""
-        # Would retrieve from database or create default
+        """Get royalty configuration for content."""        # Would retrieve from database or create default
         return RoyaltyConfiguration(
             config_id=str(uuid4()),
             content_id=content_id,
@@ -581,8 +556,7 @@ class RoyaltyCalculationEngine:
     async def _process_revenue_data(
         self, revenue_data: List[RevenueData], config: RoyaltyConfiguration
     ) -> List[Dict[str, Any]]:
-        """Process and normalize revenue data."""
-        processed = []
+        """Process and normalize revenue data."""        processed = []
         
         for data in revenue_data:
             # Convert currency if needed
@@ -613,8 +587,7 @@ class RoyaltyCalculationEngine:
     async def _calculate_platform_royalties(
         self, revenue_data: List[Dict[str, Any]], config: RoyaltyConfiguration
     ) -> Dict[str, Decimal]:
-        """Calculate platform-specific royalty breakdown."""
-        platform_totals = {}
+        """Calculate platform-specific royalty breakdown."""        platform_totals = {}
         
         for data in revenue_data:
             platform = data["platform"]
@@ -630,8 +603,7 @@ class RoyaltyCalculationEngine:
     async def _calculate_territory_adjustments(
         self, revenue_data: List[Dict[str, Any]], config: RoyaltyConfiguration
     ) -> Dict[str, Decimal]:
-        """Calculate territory-based revenue adjustments."""
-        territory_totals = {}
+        """Calculate territory-based revenue adjustments."""        territory_totals = {}
         
         for data in revenue_data:
             territory = data["territory"]
@@ -649,15 +621,13 @@ class RoyaltyCalculationEngine:
         self, revenue_data: List[Dict[str, Any]], config: RoyaltyConfiguration,
         period: Dict[str, datetime]
     ) -> List[Dict[str, Any]]:
-        """Apply time-based revenue adjustments."""
-        # Implementation would apply seasonal adjustments, promotional bonuses, etc.
+        """Apply time-based revenue adjustments."""        # Implementation would apply seasonal adjustments, promotional bonuses, etc.
         return revenue_data
     
     async def _calculate_fees_and_deductions(
         self, revenue_data: List[Dict[str, Any]], config: RoyaltyConfiguration
     ) -> Dict[str, Decimal]:
-        """Calculate platform fees and other deductions."""
-        fees = {
+        """Calculate platform fees and other deductions."""        fees = {
             "platform_fees": Decimal("0"),
             "service_fees": Decimal("0"),
             "processing_fees": Decimal("0")
@@ -680,8 +650,7 @@ class RoyaltyCalculationEngine:
         self, revenue_data: List[Dict[str, Any]], 
         fees: Dict[str, Decimal], jurisdiction: str
     ) -> Dict[str, Decimal]:
-        """Calculate tax obligations."""
-        total_revenue = sum(data["gross_amount"] for data in revenue_data)
+        """Calculate tax obligations."""        total_revenue = sum(data["gross_amount"] for data in revenue_data)
         total_fees = sum(fees.values())
         taxable_income = total_revenue - total_fees
         
@@ -704,8 +673,7 @@ class RoyaltyCalculationEngine:
         self, revenue_data: List[Dict[str, Any]], config: RoyaltyConfiguration,
         fees: Dict[str, Decimal], taxes: Dict[str, Decimal]
     ) -> List[Dict[str, Any]]:
-        """Calculate revenue distribution to collaborators."""
-        total_revenue = sum(data["gross_amount"] for data in revenue_data)
+        """Calculate revenue distribution to collaborators."""        total_revenue = sum(data["gross_amount"] for data in revenue_data)
         total_deductions = sum(fees.values()) + sum(taxes.values())
         net_revenue = total_revenue - total_deductions
         
@@ -739,8 +707,7 @@ class RoyaltyCalculationEngine:
     async def _generate_revenue_projections(
         self, historical_data: List[Dict[str, Any]], config: RoyaltyConfiguration
     ) -> Dict[str, Decimal]:
-        """Generate revenue projections based on historical data."""
-        if len(historical_data) < 3:
+        """Generate revenue projections based on historical data."""        if len(historical_data) < 3:
             return {"insufficient_data": True}
         
         # Simple linear trend projection
@@ -756,8 +723,7 @@ class RoyaltyCalculationEngine:
     async def _create_payment_schedule(
         self, distributions: List[Dict[str, Any]], config: RoyaltyConfiguration
     ) -> List[Dict[str, Any]]:
-        """Create automated payment schedule."""
-        schedule = []
+        """Create automated payment schedule."""        schedule = []
         
         for dist in distributions:
             if dist["net_amount"] >= config.minimum_payout:
@@ -774,8 +740,7 @@ class RoyaltyCalculationEngine:
     async def _convert_currency(
         self, amount: Decimal, from_currency: str, to_currency: str
     ) -> Decimal:
-        """Convert currency amounts."""
-        if from_currency == to_currency:
+        """Convert currency amounts."""        if from_currency == to_currency:
             return amount
         
         # Simple conversion using stored rates
@@ -785,8 +750,7 @@ class RoyaltyCalculationEngine:
         return amount * (to_rate / from_rate)
     
     async def _merge_custom_rates(self, custom_rates: Optional[Dict[str, Any]]) -> Dict[Platform, Decimal]:
-        """Merge custom rates with default platform rates."""
-        merged = self.platform_base_rates.copy()
+        """Merge custom rates with default platform rates."""        merged = self.platform_base_rates.copy()
         
         if custom_rates:
             for platform_str, rate in custom_rates.items():
@@ -801,8 +765,7 @@ class RoyaltyCalculationEngine:
     # Additional helper methods for analytics and reporting
     
     async def _analyze_platform_performance(self, data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze performance by platform."""
-        platform_stats = {}
+        """Analyze performance by platform."""        platform_stats = {}
         
         for record in data:
             platform = record["platform"]
@@ -824,8 +787,7 @@ class RoyaltyCalculationEngine:
         return platform_stats
     
     async def _analyze_temporal_trends(self, data: List[Dict[str, Any]], period_days: int) -> Dict[str, Any]:
-        """Analyze temporal revenue trends."""
-        # Group by time periods and calculate trends
+        """Analyze temporal revenue trends."""        # Group by time periods and calculate trends
         daily_revenue = {}
         
         for record in data:

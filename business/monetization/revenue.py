@@ -1,5 +1,4 @@
-"""
-revenue.py - MÉGA-MOTEUR INDUSTRIEL CONSOLIDÉ
+"""revenue.py - MÉGA-MOTEUR INDUSTRIEL CONSOLIDÉ
 ================================================================================
 
 🏭 CONSOLIDATION INDUSTRIELLE COMPLÈTE
@@ -11,25 +10,20 @@ revenue.py - MÉGA-MOTEUR INDUSTRIEL CONSOLIDÉ
 #     1. __init__.py (1 lignes) - /app/business/creators/creator_workflow/handlers/monetization/__init__.py\n#     2. monetization_alerts.py (1 lignes) - /app/business/creators/creator_workflow/handlers/monetization/monetization_alert\n#     3. revenue_manager.py (1 lignes) - /app/business/creators/creator_workflow/handlers/collaboration/managers/revenue_\n#     4. revenue_optimization_engine.py (1 lignes) - /app/business/creators/creator_workflow/handlers/collaboration/algorithms/recomm\n#     5. monetization_service.py (1 lignes) - /app/business/creators/creator_workflow/services/monetization_service.py\n#     6. __init__.py (1 lignes) - /app/analytics/blockchain/consensus/monitoring/alerts/business/handlers/creator_\n#     7. monetization_alerts.py (1 lignes) - /app/analytics/blockchain/consensus/monitoring/alerts/business/handlers/creator_\n#     8. revenue_manager.py (1 lignes) - /app/analytics/blockchain/consensus/monitoring/alerts/business/handlers/creator_\n#     9. revenue_optimization_engine.py (1 lignes) - /app/analytics/blockchain/consensus/monitoring/alerts/business/handlers/creator_\n#    10. monetization_service.py (1 lignes) - /app/analytics/blockchain/consensus/monitoring/alerts/business/handlers/creator_\n#    11. revenue_alerts.py (1 lignes) - /app/analytics/blockchain/consensus/monitoring/alerts/business/handlers/financia\n#    12. payment_alerts.py (1 lignes) - /app/analytics/blockchain/consensus/monitoring/alerts/business/handlers/financia\n#    13. __init__.py (1 lignes) - /app/analytics/blockchain/consensus/monitoring/alerts/business/handlers/financia\n#    14. __init__.py (1 lignes) - /app/analytics/blockchain/consensus_backup_20250730_082819/monitoring/alerts/bus\n#    15. monetization_alerts.py (1 lignes) - /app/analytics/blockchain/consensus_backup_20250730_082819/monitoring/alerts/bus\n#    16. revenue_manager.py (1 lignes) - /app/analytics/blockchain/consensus_backup_20250730_082819/monitoring/alerts/bus\n#    17. revenue_optimization_engine.py (1 lignes) - /app/analytics/blockchain/consensus_backup_20250730_082819/monitoring/alerts/bus\n#    18. monetization_service.py (1 lignes) - /app/analytics/blockchain/consensus_backup_20250730_082819/monitoring/alerts/bus\n#    19. revenue_alerts.py (1 lignes) - /app/analytics/blockchain/consensus_backup_20250730_082819/monitoring/alerts/bus\n#    20. payment_alerts.py (1 lignes) - /app/analytics/blockchain/consensus_backup_20250730_082819/monitoring/alerts/bus\n#    21. __init__.py (1 lignes) - /app/analytics/blockchain/consensus_backup_20250730_082819/monitoring/alerts/bus\n#    22. api.py (1 lignes) - /app/billing/api.py\n#    23. core.py (1 lignes) - /app/billing/core.py\n#    24. tasks.py (1 lignes) - /app/billing/tasks.py\n#    25. webhooks.py (1 lignes) - /app/billing/webhooks.py\n#    26. models.py (1 lignes) - /app/billing/models.py\n#    27. invoices.py (1 lignes) - /app/billing/invoices.py\n#    28. __init__.py (1 lignes) - /app/billing/__init__.py\n#    29. tenant_billing_manager.py (1 lignes) - /app/tenancy/billing/tenant_billing_manager.py\n#    30. tenant_billing.py (1 lignes) - /app/tenancy/billing/tenant_billing.py\n#    31. revenue_analytics.py (1 lignes) - /app/models/orm/analytics/revenue_analytics.py\n#    32. user_subscription.py (1 lignes) - /app/models/orm/users/user_subscription.py\n#    33. test_revenue_predictor.py (1 lignes) - /tests_backend/app/api/v1/analytics/test_revenue_predictor.py\n#    34. test_core.py (1 lignes) - /tests_backend/app/billing/test_core.py\n#    35. test_api.py (1 lignes) - /tests_backend/app/billing/test_api.py\n#    36. test_invoices.py (3 lignes) - /tests_backend/app/billing/test_invoices.py\n#    37. conftest.py (1 lignes) - /tests_backend/app/billing/conftest.py\n#    38. test_tasks.py (1 lignes) - /tests_backend/app/billing/test_tasks.py\n#    39. test_analytics.py (1 lignes) - /tests_backend/app/billing/test_analytics.py\n#    40. __init__.py (1 lignes) - /tests_backend/app/billing/__init__.py\n
 ================================================================================
 """
-
-
 # ==========================================================================================
 # MODULE 1/40: __init__.py
 # SOURCE: /app/business/creators/creator_workflow/handlers/monetization/__init__.py
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Monetization handlers module for creator workflow alerts.
+"""Monetization handlers module for creator workflow alerts.
 
 This module provides comprehensive monetization functionality including:
 - Multi-platform revenue tracking and analytics
 - Payment processing and payout management
 - Revenue optimization and milestone monitoring
 - Platform integration management (Spotify, YouTube, Instagram, TikTok, etc.)
-"""
-
-from .monetization_alerts import (
+"""from .monetization_alerts import (
     MonetizationAlertHandler,
     Platform,
     RevenueType,
@@ -62,8 +56,7 @@ __all__ = [
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Monetization Alert Handler Module
+"""Monetization Alert Handler Module
 
 This module provides comprehensive monitoring for creator monetization and revenue
 tracking in the Influencer AI Agent Platform. It handles platform integrations,
@@ -78,9 +71,7 @@ Business Context:
 - Monitors earnings from Spotify, YouTube, Instagram, TikTok, and other platforms
 - Integrates with payment processors and automated payout systems
 - Essential for creator financial success and platform sustainability
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import json
@@ -97,8 +88,7 @@ from ...alert_manager import AlertManager
 
 
 class Platform(Enum):
-    """Supported monetization platforms."""
-    SPOTIFY = "spotify"
+    """Supported monetization platforms."""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -113,8 +103,7 @@ class Platform(Enum):
 
 
 class RevenueType(Enum):
-    """Types of revenue streams."""
-    STREAMING = "streaming"
+    """Types of revenue streams."""    STREAMING = "streaming"
     ADVERTISING = "advertising"
     SUBSCRIPTIONS = "subscriptions"
     DONATIONS = "donations"
@@ -129,8 +118,7 @@ class RevenueType(Enum):
 
 
 class PaymentStatus(Enum):
-    """Payment processing statuses."""
-    PENDING = "pending"
+    """Payment processing statuses."""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -140,8 +128,7 @@ class PaymentStatus(Enum):
 
 
 class AlertType(Enum):
-    """Types of monetization alerts."""
-    REVENUE_MILESTONE = "revenue_milestone"
+    """Types of monetization alerts."""    REVENUE_MILESTONE = "revenue_milestone"
     PAYMENT_PROCESSED = "payment_processed"
     PAYMENT_FAILED = "payment_failed"
     PLATFORM_EARNINGS = "platform_earnings"
@@ -155,8 +142,7 @@ class AlertType(Enum):
 
 @dataclass
 class PlatformCredentials:
-    """Platform API credentials for revenue tracking."""
-    platform: Platform
+    """Platform API credentials for revenue tracking."""    platform: Platform
     api_key: str
     api_secret: Optional[str] = None
     access_token: Optional[str] = None
@@ -172,8 +158,7 @@ class PlatformCredentials:
 
 @dataclass
 class RevenueMetrics:
-    """Revenue metrics for a specific platform or overall."""
-    user_id: str
+    """Revenue metrics for a specific platform or overall."""    user_id: str
     platform: Platform
     revenue_type: RevenueType
     amount: Decimal
@@ -194,8 +179,7 @@ class RevenueMetrics:
 
 @dataclass
 class PayoutRecord:
-    """Record of payments made to creators."""
-    payout_id: str
+    """Record of payments made to creators."""    payout_id: str
     user_id: str
     amount: Decimal
     currency: str
@@ -217,8 +201,7 @@ class PayoutRecord:
 
 @dataclass
 class RevenueGoal:
-    """Revenue goals and targets for creators."""
-    goal_id: str
+    """Revenue goals and targets for creators."""    goal_id: str
     user_id: str
     target_amount: Decimal
     currency: str
@@ -235,8 +218,7 @@ class RevenueGoal:
 
 @dataclass
 class MonetizationAlert:
-    """Alert for monetization events."""
-    alert_id: str
+    """Alert for monetization events."""    alert_id: str
     user_id: str
     alert_type: AlertType
     platform: Optional[Platform]
@@ -254,13 +236,11 @@ class MonetizationAlert:
 
 
 class MonetizationAlertHandler:
-    """
-    Alert handler for creator monetization and revenue tracking.
+    """    Alert handler for creator monetization and revenue tracking.
     
     Manages platform integrations, revenue analytics, payout processing,
     and monetization optimization notifications.
-    """
-    
+    """    
     def __init__(self, alert_manager: AlertManager):
         self.alert_manager = alert_manager
         self.logger = logging.getLogger(__name__)
@@ -283,8 +263,7 @@ class MonetizationAlertHandler:
         }
     
     def _initialize_platform_configs(self) -> Dict[Platform, Dict[str, Any]]:
-        """Initialize platform-specific configurations."""
-        return {
+        """Initialize platform-specific configurations."""        return {
             Platform.SPOTIFY: {
                 "base_url": "https://api.spotify.com/v1",
                 "auth_url": "https://accounts.spotify.com/api/token",
@@ -329,8 +308,7 @@ class MonetizationAlertHandler:
         user_id: str,
         credentials: PlatformCredentials
     ) -> bool:
-        """Register platform credentials for revenue tracking."""
-        if user_id not in self.platform_credentials:
+        """Register platform credentials for revenue tracking."""        if user_id not in self.platform_credentials:
             self.platform_credentials[user_id] = {}
         
         # Validate credentials
@@ -379,8 +357,7 @@ class MonetizationAlertHandler:
         return True
     
     async def _validate_platform_credentials(self, credentials: PlatformCredentials) -> bool:
-        """Validate platform credentials by testing API access."""
-        try:
+        """Validate platform credentials by testing API access."""        try:
             config = self.platform_configs.get(credentials.platform)
             if not config:
                 return False
@@ -403,8 +380,7 @@ class MonetizationAlertHandler:
             return False
     
     async def _validate_spotify_credentials(self, credentials: PlatformCredentials) -> bool:
-        """Validate Spotify API credentials."""
-        try:
+        """Validate Spotify API credentials."""        try:
             headers = {"Authorization": f"Bearer {credentials.access_token}"}
             response = requests.get("https://api.spotify.com/v1/me", headers=headers, timeout=10)
             return response.status_code == 200
@@ -412,8 +388,7 @@ class MonetizationAlertHandler:
             return False
     
     async def _validate_youtube_credentials(self, credentials: PlatformCredentials) -> bool:
-        """Validate YouTube API credentials."""
-        try:
+        """Validate YouTube API credentials."""        try:
             response = requests.get(
                 f"https://www.googleapis.com/youtube/v3/channels?part=snippet&mine=true&key={credentials.api_key}",
                 headers={"Authorization": f"Bearer {credentials.access_token}"},
@@ -424,8 +399,7 @@ class MonetizationAlertHandler:
             return False
     
     async def _validate_instagram_credentials(self, credentials: PlatformCredentials) -> bool:
-        """Validate Instagram API credentials."""
-        try:
+        """Validate Instagram API credentials."""        try:
             response = requests.get(
                 f"https://graph.instagram.com/me?fields=id,username&access_token={credentials.access_token}",
                 timeout=10
@@ -435,8 +409,7 @@ class MonetizationAlertHandler:
             return False
     
     async def _validate_tiktok_credentials(self, credentials: PlatformCredentials) -> bool:
-        """Validate TikTok API credentials."""
-        try:
+        """Validate TikTok API credentials."""        try:
             headers = {"Authorization": f"Bearer {credentials.access_token}"}
             response = requests.post(
                 "https://open-api.tiktok.com/oauth/access_token/",
@@ -449,12 +422,10 @@ class MonetizationAlertHandler:
             return False
     
     async def _validate_generic_credentials(self, credentials: PlatformCredentials) -> bool:
-        """Generic credential validation for custom platforms."""
-        return bool(credentials.api_key or credentials.access_token)
+        """Generic credential validation for custom platforms."""        return bool(credentials.api_key or credentials.access_token)
     
     async def _start_platform_revenue_tracking(self, user_id: str, platform: Platform) -> None:
-        """Start continuous revenue tracking for a platform."""
-        while True:
+        """Start continuous revenue tracking for a platform."""        while True:
             try:
                 # Fetch latest revenue data
                 revenue_data = await self._fetch_platform_revenue(user_id, platform)
@@ -474,8 +445,7 @@ class MonetizationAlertHandler:
                 await asyncio.sleep(300)  # Wait 5 minutes on error
     
     def _get_platform_update_interval(self, platform: Platform) -> int:
-        """Get update interval in seconds for each platform."""
-        intervals = {
+        """Get update interval in seconds for each platform."""        intervals = {
             Platform.SPOTIFY: 3600,     # 1 hour
             Platform.YOUTUBE: 1800,     # 30 minutes
             Platform.INSTAGRAM: 3600,   # 1 hour
@@ -490,8 +460,7 @@ class MonetizationAlertHandler:
         user_id: str,
         platform: Platform
     ) -> Optional[Dict[str, Any]]:
-        """Fetch revenue data from platform APIs."""
-        credentials = self.platform_credentials.get(user_id, {}).get(platform)
+        """Fetch revenue data from platform APIs."""        credentials = self.platform_credentials.get(user_id, {}).get(platform)
         if not credentials or not credentials.is_active:
             return None
         
@@ -512,8 +481,7 @@ class MonetizationAlertHandler:
             return None
     
     async def _fetch_spotify_revenue(self, credentials: PlatformCredentials) -> Dict[str, Any]:
-        """Fetch revenue data from Spotify API."""
-        headers = {"Authorization": f"Bearer {credentials.access_token}"}
+        """Fetch revenue data from Spotify API."""        headers = {"Authorization": f"Bearer {credentials.access_token}"}
         
         try:
             response = requests.get("https://api.spotify.com/v1/me", headers=headers, timeout=10)
@@ -539,8 +507,7 @@ class MonetizationAlertHandler:
         platform: Platform,
         revenue_data: Dict[str, Any]
     ) -> None:
-        """Process and store revenue data."""
-        try:
+        """Process and store revenue data."""        try:
             # Create revenue metrics record
             metrics = RevenueMetrics(
                 user_id=user_id,
@@ -574,8 +541,7 @@ class MonetizationAlertHandler:
         platform: Platform,
         revenue_data: Dict[str, Any]
     ) -> None:
-        """Check for revenue-related alerts."""
-        try:
+        """Check for revenue-related alerts."""        try:
             current_revenue = Decimal(str(revenue_data.get("estimated_revenue", 0.0)))
             
             # Check milestone achievements
@@ -596,8 +562,7 @@ class MonetizationAlertHandler:
         platform: Platform,
         current_revenue: Decimal
     ) -> None:
-        """Check for revenue milestone achievements."""
-        try:
+        """Check for revenue milestone achievements."""        try:
             user_metrics = self.revenue_metrics.get(user_id, [])
             if not user_metrics:
                 return
@@ -638,8 +603,7 @@ class MonetizationAlertHandler:
         platform: Platform,
         revenue_data: Dict[str, Any]
     ) -> None:
-        """Check for performance change alerts."""
-        try:
+        """Check for performance change alerts."""        try:
             user_metrics = self.revenue_metrics.get(user_id, [])
             platform_metrics = [m for m in user_metrics if m.platform == platform]
             
@@ -709,8 +673,7 @@ class MonetizationAlertHandler:
         platform: Platform,
         revenue_data: Dict[str, Any]
     ) -> None:
-        """Check for monetization optimization opportunities."""
-        try:
+        """Check for monetization optimization opportunities."""        try:
             # Example optimization checks
             engagement_rate = revenue_data.get("engagement_rate", 0)
             views = revenue_data.get("views", 0)
@@ -772,8 +735,7 @@ class MonetizationAlertHandler:
             self.logger.error(f"Failed to check optimization alerts: {e}")
     
     async def shutdown(self) -> None:
-        """Shutdown monetization alert handler."""
-        self.logger.info("Shutting down monetization alert handler...")
+        """Shutdown monetization alert handler."""        self.logger.info("Shutting down monetization alert handler...")
         self.platform_credentials.clear()
         self.revenue_metrics.clear()
         self.payout_records.clear()
@@ -787,8 +749,7 @@ class MonetizationAlertHandler:
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Revenue Manager Module
+"""Revenue Manager Module
 
 Advanced revenue management system for creator collaborations.
 Handles revenue sharing, monetization optimization, payment processing,
@@ -796,9 +757,7 @@ and earnings analytics.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
@@ -818,8 +777,7 @@ from ..services.blockchain_service import BlockchainContractService
 
 
 class RevenueStreamType(Enum):
-    """Types of revenue streams."""
-    DIRECT_SALES = "direct_sales"
+    """Types of revenue streams."""    DIRECT_SALES = "direct_sales"
     STREAMING_ROYALTIES = "streaming_royalties"
     BRAND_PARTNERSHIPS = "brand_partnerships"
     MERCHANDISE = "merchandise"
@@ -834,8 +792,7 @@ class RevenueStreamType(Enum):
 
 
 class PaymentStatus(Enum):
-    """Payment processing status."""
-    PENDING = "pending"
+    """Payment processing status."""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -845,8 +802,7 @@ class PaymentStatus(Enum):
 
 
 class MonetizationModel(Enum):
-    """Monetization model types."""
-    EQUAL_SPLIT = "equal_split"
+    """Monetization model types."""    EQUAL_SPLIT = "equal_split"
     CONTRIBUTION_BASED = "contribution_based"
     AUDIENCE_BASED = "audience_based"
     SKILL_BASED = "skill_based"
@@ -856,8 +812,7 @@ class MonetizationModel(Enum):
 
 @dataclass
 class RevenueConfiguration:
-    """Configuration for revenue management."""
-    auto_payment_enabled: bool = True
+    """Configuration for revenue management."""    auto_payment_enabled: bool = True
     payment_frequency: str = "monthly"  # weekly, monthly, quarterly
     minimum_payout_threshold: Decimal = Decimal("10.00")
     tax_calculation_enabled: bool = True
@@ -868,8 +823,7 @@ class RevenueConfiguration:
 
 
 class RevenueShareCalculator:
-    """Calculates revenue sharing between collaboration partners."""
-    
+    """Calculates revenue sharing between collaboration partners."""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.financial_calculator = FinancialCalculator()
@@ -881,8 +835,7 @@ class RevenueShareCalculator:
         sharing_agreement: Dict[str, Any],
         contribution_data: Dict[str, Dict[str, float]]
     ) -> Dict[str, RevenueShare]:
-        """Calculate revenue shares for all partners."""
-        
+        """Calculate revenue shares for all partners."""        
         try:
             shares = {}
             model_type = MonetizationModel(sharing_agreement.get('model', 'equal_split'))
@@ -933,8 +886,7 @@ class RevenueShareCalculator:
         total_revenue: Decimal,
         sharing_agreement: Dict[str, Any]
     ) -> Dict[str, RevenueShare]:
-        """Calculate equal revenue split among partners."""
-        
+        """Calculate equal revenue split among partners."""        
         participants = sharing_agreement.get('participants', [])
         if not participants:
             raise ValueError("No participants specified for revenue sharing")
@@ -966,8 +918,7 @@ class RevenueShareCalculator:
         sharing_agreement: Dict[str, Any],
         contribution_data: Dict[str, Dict[str, float]]
     ) -> Dict[str, RevenueShare]:
-        """Calculate revenue split based on individual contributions."""
-        
+        """Calculate revenue split based on individual contributions."""        
         shares = {}
         total_contribution_score = 0.0
         
@@ -1010,8 +961,7 @@ class RevenueShareCalculator:
         sharing_agreement: Dict[str, Any],
         contribution_data: Dict[str, Dict[str, float]]
     ) -> Dict[str, RevenueShare]:
-        """Calculate revenue split based on audience contribution."""
-        
+        """Calculate revenue split based on audience contribution."""        
         shares = {}
         total_audience_value = 0.0
         
@@ -1064,8 +1014,7 @@ class RevenueShareCalculator:
         sharing_agreement: Dict[str, Any],
         contribution_data: Dict[str, Dict[str, float]]
     ) -> Dict[str, RevenueShare]:
-        """Calculate revenue split based on skill levels and importance."""
-        
+        """Calculate revenue split based on skill levels and importance."""        
         shares = {}
         skill_weights = sharing_agreement.get('skill_weights', {})
         total_weighted_skill_score = 0.0
@@ -1116,8 +1065,7 @@ class RevenueShareCalculator:
         sharing_agreement: Dict[str, Any],
         contribution_data: Dict[str, Dict[str, float]]
     ) -> Dict[str, RevenueShare]:
-        """Calculate revenue split using hybrid approach combining multiple factors."""
-        
+        """Calculate revenue split using hybrid approach combining multiple factors."""        
         shares = {}
         hybrid_weights = sharing_agreement.get('hybrid_weights', {
             'contribution': 0.4,
@@ -1193,8 +1141,7 @@ class RevenueShareCalculator:
         total_revenue: Decimal,
         sharing_agreement: Dict[str, Any]
     ) -> Dict[str, RevenueShare]:
-        """Calculate revenue split using custom percentages."""
-        
+        """Calculate revenue split using custom percentages."""        
         custom_percentages = sharing_agreement.get('custom_percentages', {})
         if not custom_percentages:
             raise ValueError("Custom percentages not specified")
@@ -1225,8 +1172,7 @@ class RevenueShareCalculator:
         return shares
     
     def _calculate_contribution_score(self, contributions: Dict[str, float]) -> float:
-        """Calculate overall contribution score from individual metrics."""
-        
+        """Calculate overall contribution score from individual metrics."""        
         weights = {
             'content_creation': 0.3,
             'editing': 0.2,
@@ -1248,8 +1194,7 @@ class RevenueShareCalculator:
         shares: Dict[str, RevenueShare],
         total_revenue: Decimal
     ):
-        """Validate that revenue shares sum correctly."""
-        
+        """Validate that revenue shares sum correctly."""        
         total_shared = sum(share.share_amount for share in shares.values())
         total_percentage = sum(share.share_percentage for share in shares.values())
         
@@ -1265,8 +1210,7 @@ class RevenueShareCalculator:
 
 
 class MonetizationOptimizer:
-    """Optimizes monetization strategies for collaborations."""
-    
+    """Optimizes monetization strategies for collaborations."""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -1277,8 +1221,7 @@ class MonetizationOptimizer:
         audience_data: Dict[str, Any],
         market_data: Dict[str, Any]
     ) -> MonetizationStrategy:
-        """Optimize monetization strategy for collaboration."""
-        
+        """Optimize monetization strategy for collaboration."""        
         try:
             # Analyze content monetization potential
             content_analysis = await self._analyze_content_monetization_potential(content_data)
@@ -1320,8 +1263,7 @@ class MonetizationOptimizer:
         self,
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze content for monetization potential."""
-        
+        """Analyze content for monetization potential."""        
         analysis = {
             'content_type': content_data.get('type', 'unknown'),
             'quality_score': content_data.get('quality_score', 0.5),
@@ -1371,8 +1313,7 @@ class MonetizationOptimizer:
         self,
         audience_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze audience monetization preferences and spending behavior."""
-        
+        """Analyze audience monetization preferences and spending behavior."""        
         analysis = {
             'total_audience': audience_data.get('total_size', 0),
             'demographic_breakdown': audience_data.get('demographics', {}),
@@ -1418,8 +1359,7 @@ class MonetizationOptimizer:
 
 
 class PaymentProcessor:
-    """Handles payment processing and transactions."""
-    
+    """Handles payment processing and transactions."""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.payment_service = PaymentService()
@@ -1431,8 +1371,7 @@ class PaymentProcessor:
         revenue_shares: Dict[str, RevenueShare],
         payment_configuration: Dict[str, Any]
     ) -> Dict[str, PaymentTransaction]:
-        """Process payments for revenue shares."""
-        
+        """Process payments for revenue shares."""        
         transactions = {}
         
         try:
@@ -1473,8 +1412,7 @@ class PaymentProcessor:
         revenue_share: RevenueShare,
         configuration: Dict[str, Any]
     ) -> PaymentTransaction:
-        """Create payment transaction record."""
-        
+        """Create payment transaction record."""        
         return PaymentTransaction(
             transaction_id=str(uuid.uuid4()),
             partnership_id=partnership_id,
@@ -1496,8 +1434,7 @@ class PaymentProcessor:
         transaction: PaymentTransaction,
         configuration: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process individual payment."""
-        
+        """Process individual payment."""        
         try:
             # Use appropriate payment method
             if configuration.get('blockchain_enabled', False):
@@ -1516,8 +1453,7 @@ class PaymentProcessor:
         transaction: PaymentTransaction,
         configuration: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process payment through traditional payment service."""
-        
+        """Process payment through traditional payment service."""        
         payment_data = {
             'recipient_id': transaction.recipient_id,
             'amount': float(transaction.amount),
@@ -1534,8 +1470,7 @@ class PaymentProcessor:
         transaction: PaymentTransaction,
         configuration: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process payment through blockchain smart contract."""
-        
+        """Process payment through blockchain smart contract."""        
         contract_data = {
             'recipient_address': await self._get_participant_wallet_address(transaction.recipient_id),
             'amount': transaction.amount,
@@ -1547,8 +1482,7 @@ class PaymentProcessor:
 
 
 class EarningsTracker:
-    """Tracks earnings and generates financial reports."""
-    
+    """Tracks earnings and generates financial reports."""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.earnings_history = {}
@@ -1559,8 +1493,7 @@ class EarningsTracker:
         revenue_data: Dict[str, Any],
         timeframe: str = "monthly"
     ) -> EarningsReport:
-        """Track earnings for partnership."""
-        
+        """Track earnings for partnership."""        
         try:
             # Calculate earnings metrics
             total_revenue = Decimal(str(revenue_data.get('total_revenue', 0)))
@@ -1608,8 +1541,7 @@ class EarningsTracker:
         current_revenue: Decimal,
         timeframe: str
     ) -> Dict[str, Any]:
-        """Calculate growth metrics compared to previous periods."""
-        
+        """Calculate growth metrics compared to previous periods."""        
         history = self.earnings_history.get(partnership_id, [])
         if not history:
             return {
@@ -1654,8 +1586,7 @@ class EarningsTracker:
 
 
 class RevenueManager:
-    """Main revenue management coordinator."""
-    
+    """Main revenue management coordinator."""    
     def __init__(self, configuration: Optional[RevenueConfiguration] = None):
         self.logger = logging.getLogger(__name__)
         self.config = configuration or RevenueConfiguration()
@@ -1675,8 +1606,7 @@ class RevenueManager:
         partnership_id: str,
         revenue_event: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Manage revenue for collaboration partnership."""
-        
+        """Manage revenue for collaboration partnership."""        
         try:
             event_type = revenue_event.get('type')
             
@@ -1702,8 +1632,7 @@ class RevenueManager:
         partnership_id: str,
         revenue_event: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Handle revenue generation event."""
-        
+        """Handle revenue generation event."""        
         total_revenue = Decimal(str(revenue_event.get('amount', 0)))
         sharing_agreement = revenue_event.get('sharing_agreement', {})
         contribution_data = revenue_event.get('contribution_data', {})
@@ -1735,8 +1664,7 @@ class RevenueManager:
         partnership_id: str,
         revenue_shares: Dict[str, RevenueShare]
     ) -> PaymentSchedule:
-        """Schedule payments for revenue shares."""
-        
+        """Schedule payments for revenue shares."""        
         # Determine payment date based on frequency
         if self.config.payment_frequency == 'weekly':
             payment_date = datetime.now(timezone.utc) + timedelta(weeks=1)
@@ -1774,8 +1702,7 @@ class RevenueManager:
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-AI-Powered Revenue Optimization and Monetization Engine
+"""AI-Powered Revenue Optimization and Monetization Engine
 
 Advanced revenue optimization system for multi-format creators that analyzes
 monetization opportunities across platforms, optimizes pricing strategies,
@@ -1791,9 +1718,7 @@ without explicit written permission from Fahed Mlaiel is strictly prohibited.
 Legal action will be taken against any violations.
 
 ALL RIGHTS RESERVED - Fahed Mlaiel 2025
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Set, Union
 from dataclasses import dataclass, asdict, field
@@ -1844,8 +1769,7 @@ settings = get_settings()
 
 
 class RevenueStreamType(Enum):
-    """Types of revenue streams."""
-    PLATFORM_AD_REVENUE = "platform_ad_revenue"
+    """Types of revenue streams."""    PLATFORM_AD_REVENUE = "platform_ad_revenue"
     SUBSCRIPTION_REVENUE = "subscription_revenue"
     MERCHANDISE_SALES = "merchandise_sales"
     BRAND_PARTNERSHIPS = "brand_partnerships"
@@ -1863,8 +1787,7 @@ class RevenueStreamType(Enum):
 
 
 class MonetizationGoal(Enum):
-    """Monetization optimization goals."""
-    MAXIMIZE_TOTAL_REVENUE = "maximize_total_revenue"
+    """Monetization optimization goals."""    MAXIMIZE_TOTAL_REVENUE = "maximize_total_revenue"
     DIVERSIFY_INCOME_STREAMS = "diversify_income_streams"
     INCREASE_RECURRING_REVENUE = "increase_recurring_revenue"
     OPTIMIZE_PROFIT_MARGINS = "optimize_profit_margins"
@@ -1876,8 +1799,7 @@ class MonetizationGoal(Enum):
 
 @dataclass
 class RevenueOptimizationContext:
-    """Context for revenue optimization analysis."""
-    creator_id: str
+    """Context for revenue optimization analysis."""    creator_id: str
     current_revenue_streams: List[RevenueStream]
     target_revenue_goals: Dict[str, float]
     audience_size: Dict[str, int]
@@ -1892,8 +1814,7 @@ class RevenueOptimizationContext:
 
 @dataclass
 class RevenueOpportunity:
-    """Individual revenue optimization opportunity."""
-    opportunity_id: str
+    """Individual revenue optimization opportunity."""    opportunity_id: str
     opportunity_type: RevenueStreamType
     title: str
     description: str
@@ -1913,8 +1834,7 @@ class RevenueOpportunity:
 
 @dataclass
 class MonetizationPlan:
-    """Comprehensive monetization plan."""
-    plan_id: str
+    """Comprehensive monetization plan."""    plan_id: str
     creator_id: str
     optimization_goals: List[MonetizationGoal]
     current_revenue_analysis: Dict[str, Any]
@@ -1931,8 +1851,7 @@ class MonetizationPlan:
 
 
 class RevenueOptimizationEngine:
-    """
-    Advanced AI-powered revenue optimization and monetization engine.
+    """    Advanced AI-powered revenue optimization and monetization engine.
     
     Features:
     - Multi-stream revenue analysis and optimization
@@ -1943,8 +1862,7 @@ class RevenueOptimizationEngine:
     - Subscription and product strategy optimization
     - Revenue forecasting and predictive analytics
     - ROI analysis and performance tracking
-    """
-    
+    """    
     def __init__(self):
         self.settings = get_settings()
         self.cache_manager = get_cache_manager()
@@ -1979,8 +1897,7 @@ class RevenueOptimizationEngine:
         logger.info("RevenueOptimizationEngine initialized successfully")
 
     async def initialize_models(self) -> None:
-        """Initialize ML models for revenue optimization."""
-        try:
+        """Initialize ML models for revenue optimization."""        try:
             with self._lock:
                 if self._models_initialized:
                     return
@@ -2006,16 +1923,14 @@ class RevenueOptimizationEngine:
         self,
         context: RevenueOptimizationContext
     ) -> MonetizationPlan:
-        """
-        Generate comprehensive monetization optimization plan for a creator.
+        """        Generate comprehensive monetization optimization plan for a creator.
         
         Args:
             context: Revenue optimization context
             
         Returns:
             Complete monetization plan with strategies and opportunities
-        """
-        try:
+        """        try:
             self.metrics_collector.increment("optimize_monetization_calls")
             start_time = datetime.utcnow()
             
@@ -2122,8 +2037,7 @@ class RevenueOptimizationEngine:
         market_data: Dict[str, Any],
         goals: List[str]
     ) -> Dict[str, Any]:
-        """
-        Optimize pricing strategy for creator products/services.
+        """        Optimize pricing strategy for creator products/services.
         
         Args:
             creator_id: Creator identifier
@@ -2134,8 +2048,7 @@ class RevenueOptimizationEngine:
             
         Returns:
             Optimized pricing strategy
-        """
-        try:
+        """        try:
             self.metrics_collector.increment("optimize_pricing_calls")
             
             # Analyze current pricing performance
@@ -2200,8 +2113,7 @@ class RevenueOptimizationEngine:
         content_formats: List[ContentFormat],
         target_revenue: float
     ) -> List[RevenueOpportunity]:
-        """
-        Analyze and identify revenue opportunities for a creator.
+        """        Analyze and identify revenue opportunities for a creator.
         
         Args:
             creator_id: Creator identifier
@@ -2211,8 +2123,7 @@ class RevenueOptimizationEngine:
             
         Returns:
             List of identified revenue opportunities
-        """
-        try:
+        """        try:
             self.metrics_collector.increment("analyze_opportunities_calls")
             
             # Collect creator performance data
@@ -2284,8 +2195,7 @@ class RevenueOptimizationEngine:
         optimization_strategies: List[MonetizationStrategy],
         forecast_horizon: int = 12
     ) -> Dict[str, Any]:
-        """
-        Forecast revenue growth based on current streams and optimization strategies.
+        """        Forecast revenue growth based on current streams and optimization strategies.
         
         Args:
             creator_id: Creator identifier
@@ -2295,8 +2205,7 @@ class RevenueOptimizationEngine:
             
         Returns:
             Revenue growth forecast
-        """
-        try:
+        """        try:
             self.metrics_collector.increment("forecast_revenue_calls")
             
             # Collect historical revenue data
@@ -2373,8 +2282,7 @@ class RevenueOptimizationEngine:
         plan_id: str,
         timeframe: str = "monthly"
     ) -> Dict[str, Any]:
-        """
-        Track performance of monetization strategies and plans.
+        """        Track performance of monetization strategies and plans.
         
         Args:
             creator_id: Creator identifier
@@ -2383,8 +2291,7 @@ class RevenueOptimizationEngine:
             
         Returns:
             Performance tracking report
-        """
-        try:
+        """        try:
             self.metrics_collector.increment("track_performance_calls")
             
             # Get original monetization plan
@@ -2465,8 +2372,7 @@ class RevenueOptimizationEngine:
         self,
         context: RevenueOptimizationContext
     ) -> Dict[str, Any]:
-        """Analyze current revenue streams and performance."""
-        try:
+        """Analyze current revenue streams and performance."""        try:
             revenue_analysis = {}
             
             # Analyze each revenue stream
@@ -2519,8 +2425,7 @@ class RevenueOptimizationEngine:
         self,
         context: RevenueOptimizationContext
     ) -> List[RevenueOpportunity]:
-        """Identify potential monetization opportunities."""
-        try:
+        """Identify potential monetization opportunities."""        try:
             opportunities = []
             
             # Platform-specific opportunities
@@ -2561,8 +2466,7 @@ class RevenueOptimizationEngine:
         self,
         context: RevenueOptimizationContext
     ) -> str:
-        """Generate cache key for monetization analysis."""
-        key_data = f"{context.creator_id}-{len(context.current_revenue_streams)}-{'-'.join([g.value for g in context.optimization_goals])}"
+        """Generate cache key for monetization analysis."""        key_data = f"{context.creator_id}-{len(context.current_revenue_streams)}-{'-'.join([g.value for g in context.optimization_goals])}"
         return f"monetization:{hash(key_data) % 10000000}"
 
     # Additional helper methods would be implemented here for:
@@ -2575,8 +2479,7 @@ class RevenueOptimizationEngine:
     # - All other analysis and calculation methods
 
     async def get_health_status(self) -> Dict[str, Any]:
-        """Get health status of the revenue optimization engine."""
-        return {
+        """Get health status of the revenue optimization engine."""        return {
             "status": "healthy",
             "models_initialized": self._models_initialized,
             "cache_status": await self.cache_manager.health_check(),
@@ -2596,8 +2499,7 @@ class RevenueOptimizationEngine:
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Monetization Service - Advanced Revenue Management & Analytics
+"""Monetization Service - Advanced Revenue Management & Analytics
 
 This service manages creator monetization, revenue tracking, and financial analytics.
 Implements AI-driven revenue optimization and multi-platform monetization strategies.
@@ -2615,9 +2517,7 @@ Team Specialists:
 - Financial Tech: Payment processing
 - Analytics Expert: Revenue intelligence
 - DevOps: Scalable financial systems
-"""
-
-import asyncio
+"""import asyncio
 import uuid
 from datetime import datetime, timedelta
 from typing import Dict, Any, List, Optional, Tuple, Union
@@ -2663,8 +2563,7 @@ settings = get_settings()
 
 
 class RevenueSource(str, Enum):
-    """Revenue source types"""
-    STREAMING = "streaming"
+    """Revenue source types"""    STREAMING = "streaming"
     DOWNLOADS = "downloads"
     MERCHANDISE = "merchandise"
     LIVE_PERFORMANCES = "live_performances"
@@ -2679,8 +2578,7 @@ class RevenueSource(str, Enum):
 
 
 class PayoutStatus(str, Enum):
-    """Payout processing status"""
-    PENDING = "pending"
+    """Payout processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -2689,8 +2587,7 @@ class PayoutStatus(str, Enum):
 
 
 class GoalType(str, Enum):
-    """Monetization goal types"""
-    MONTHLY_REVENUE = "monthly_revenue"
+    """Monetization goal types"""    MONTHLY_REVENUE = "monthly_revenue"
     YEARLY_REVENUE = "yearly_revenue"
     SUBSCRIBER_COUNT = "subscriber_count"
     STREAM_COUNT = "stream_count"
@@ -2700,8 +2597,7 @@ class GoalType(str, Enum):
 
 @dataclass
 class RevenueMetrics:
-    """Revenue performance metrics"""
-    total_revenue: Decimal
+    """Revenue performance metrics"""    total_revenue: Decimal
     revenue_growth: float
     average_per_stream: Decimal
     diversification_score: float
@@ -2712,8 +2608,7 @@ class RevenueMetrics:
 
 @dataclass
 class PlatformPerformance:
-    """Platform-specific performance data"""
-    platform_name: str
+    """Platform-specific performance data"""    platform_name: str
     revenue: Decimal
     growth_rate: float
     market_share: float
@@ -2722,8 +2617,7 @@ class PlatformPerformance:
 
 
 class FinancialForecast(BaseModel):
-    """Financial forecast model"""
-    projected_revenue: Decimal
+    """Financial forecast model"""    projected_revenue: Decimal
     confidence_interval: Tuple[Decimal, Decimal]
     growth_factors: Dict[str, float]
     risk_assessment: str
@@ -2732,8 +2626,7 @@ class FinancialForecast(BaseModel):
 
 
 class TaxSummary(BaseModel):
-    """Tax calculation summary"""
-    gross_revenue: Decimal
+    """Tax calculation summary"""    gross_revenue: Decimal
     deductible_expenses: Decimal
     taxable_income: Decimal
     estimated_tax: Decimal
@@ -2743,13 +2636,11 @@ class TaxSummary(BaseModel):
 
 
 class MonetizationService:
-    """
-    Advanced Monetization Service for Creator Workflow
+    """    Advanced Monetization Service for Creator Workflow
     
     Manages comprehensive revenue tracking, financial analytics, and
     optimization strategies for creator monetization across platforms.
-    """
-    
+    """    
     def __init__(self):
         self.redis_client = None
         self.security = SecurityManager()
@@ -2776,8 +2667,7 @@ class MonetizationService:
         }
     
     async def initialize(self):
-        """Initialize service dependencies"""
-        try:
+        """Initialize service dependencies"""        try:
             self.redis_client = await aioredis.from_url(
                 settings.REDIS_URL,
                 encoding="utf-8",
@@ -2801,8 +2691,7 @@ class MonetizationService:
         user_id: str,
         revenue_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Track new revenue entry with detailed analytics
+        """        Track new revenue entry with detailed analytics
         
         Args:
             user_id: Creator's unique identifier
@@ -2810,8 +2699,7 @@ class MonetizationService:
             
         Returns:
             Revenue tracking confirmation with analytics
-        """
-        try:
+        """        try:
             # Validate revenue data
             await self._validate_revenue_data(revenue_data)
             
@@ -2883,8 +2771,7 @@ class MonetizationService:
         user_id: str,
         payout_request: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Process creator payout with compliance checks
+        """        Process creator payout with compliance checks
         
         Args:
             user_id: Creator identifier
@@ -2892,8 +2779,7 @@ class MonetizationService:
             
         Returns:
             Payout processing confirmation
-        """
-        try:
+        """        try:
             # Get available balance
             available_balance = await self._get_available_balance(user_id)
             
@@ -2999,8 +2885,7 @@ class MonetizationService:
         period: str = "30d",
         include_forecast: bool = True
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive revenue analytics and insights
+        """        Get comprehensive revenue analytics and insights
         
         Args:
             user_id: Creator identifier
@@ -3009,8 +2894,7 @@ class MonetizationService:
             
         Returns:
             Complete revenue analytics dashboard
-        """
-        try:
+        """        try:
             # Calculate date range
             end_date = datetime.utcnow()
             if period == "7d":
@@ -3080,8 +2964,7 @@ class MonetizationService:
         goal_data: Dict[str, Any] = None,
         goal_id: str = None
     ) -> Dict[str, Any]:
-        """
-        Manage creator monetization goals and tracking
+        """        Manage creator monetization goals and tracking
         
         Args:
             user_id: Creator identifier
@@ -3091,8 +2974,7 @@ class MonetizationService:
             
         Returns:
             Goal management result
-        """
-        try:
+        """        try:
             if action == "create":
                 return await self._create_monetization_goal(user_id, goal_data)
             elif action == "update":
@@ -3113,8 +2995,7 @@ class MonetizationService:
         user_id: str,
         tax_year: int = None
     ) -> Dict[str, Any]:
-        """
-        Get tax information and documentation for creator
+        """        Get tax information and documentation for creator
         
         Args:
             user_id: Creator identifier
@@ -3122,8 +3003,7 @@ class MonetizationService:
             
         Returns:
             Tax information and documents
-        """
-        try:
+        """        try:
             if tax_year is None:
                 tax_year = datetime.utcnow().year
             
@@ -3165,8 +3045,7 @@ class MonetizationService:
         user_id: str,
         optimization_goals: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """
-        AI-powered revenue stream optimization
+        """        AI-powered revenue stream optimization
         
         Args:
             user_id: Creator identifier
@@ -3174,8 +3053,7 @@ class MonetizationService:
             
         Returns:
             Revenue optimization recommendations
-        """
-        try:
+        """        try:
             # Get current revenue profile
             current_profile = await self._get_revenue_profile(user_id)
             
@@ -3218,8 +3096,7 @@ class MonetizationService:
     # Private helper methods
     
     async def _validate_revenue_data(self, revenue_data: Dict[str, Any]):
-        """Validate revenue entry data"""
-        required_fields = ['platform', 'source', 'gross_amount', 'date']
+        """Validate revenue entry data"""        required_fields = ['platform', 'source', 'gross_amount', 'date']
         
         for field in required_fields:
             if field not in revenue_data:
@@ -3245,8 +3122,7 @@ class MonetizationService:
         user_id: str,
         revenue_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process and normalize revenue entry"""
-        return {
+        """Process and normalize revenue entry"""        return {
             'platform': revenue_data['platform'].lower(),
             'source': RevenueSource(revenue_data['source']),
             'gross_amount': Decimal(str(revenue_data['gross_amount'])),
@@ -3261,13 +3137,11 @@ class MonetizationService:
         platform: str,
         gross_amount: Decimal
     ) -> Decimal:
-        """Calculate platform commission fee"""
-        platform_rate = self.platform_rates.get(platform, 0.30)  # Default 30%
+        """Calculate platform commission fee"""        platform_rate = self.platform_rates.get(platform, 0.30)  # Default 30%
         return gross_amount * Decimal(str(platform_rate))
     
     async def _get_available_balance(self, user_id: str) -> Decimal:
-        """Get user's available balance for payout"""
-        async with get_async_session() as session:
+        """Get user's available balance for payout"""        async with get_async_session() as session:
             # Sum all revenue
             revenue_result = await session.execute(
                 select(func.sum(Revenue.net_amount))
@@ -3297,8 +3171,7 @@ class MonetizationService:
         user_id: str,
         amount: Decimal
     ) -> Dict[str, Any]:
-        """Perform compliance and fraud checks"""
-        try:
+        """Perform compliance and fraud checks"""        try:
             # Check for suspicious activity patterns
             recent_payouts = await self._get_recent_payouts(user_id, days=30)
             
@@ -3349,8 +3222,7 @@ class MonetizationService:
             }
     
     async def _calculate_processing_fee(self, amount: Decimal) -> Decimal:
-        """Calculate payment processing fee"""
-        # Tiered fee structure
+        """Calculate payment processing fee"""        # Tiered fee structure
         if amount <= Decimal('100'):
             return amount * Decimal('0.029') + Decimal('0.30')  # 2.9% + $0.30
         elif amount <= Decimal('1000'):
@@ -3363,8 +3235,7 @@ class MonetizationService:
         user_id: str,
         amount: Decimal
     ) -> Decimal:
-        """Calculate tax withholding amount"""
-        # Get user's tax profile
+        """Calculate tax withholding amount"""        # Get user's tax profile
         tax_profile = await self._get_user_tax_profile(user_id)
         
         if tax_profile and tax_profile.get('withholding_required'):
@@ -3379,8 +3250,7 @@ class MonetizationService:
         start_date: datetime,
         end_date: datetime
     ) -> List[Dict[str, Any]]:
-        """Get revenue data for specified period"""
-        async with get_async_session() as session:
+        """Get revenue data for specified period"""        async with get_async_session() as session:
             result = await session.execute(
                 select(Revenue)
                 .where(
@@ -3415,8 +3285,7 @@ class MonetizationService:
         self,
         revenue_data: List[Dict[str, Any]]
     ) -> RevenueMetrics:
-        """Calculate comprehensive revenue metrics"""
-        if not revenue_data:
+        """Calculate comprehensive revenue metrics"""        if not revenue_data:
             return RevenueMetrics(
                 total_revenue=Decimal('0'),
                 revenue_growth=0.0,
@@ -3483,8 +3352,7 @@ class MonetizationService:
         user_id: str,
         historical_data: List[Dict[str, Any]]
     ) -> FinancialForecast:
-        """Generate AI-powered revenue forecast"""
-        try:
+        """Generate AI-powered revenue forecast"""        try:
             if len(historical_data) < 7:  # Need minimum data for prediction
                 return FinancialForecast(
                     projected_revenue=Decimal('0'),
@@ -3564,8 +3432,7 @@ class MonetizationService:
 
 
 class RevenueTracker:
-    """Real-time revenue tracking and monitoring"""
-    
+    """Real-time revenue tracking and monitoring"""    
     def __init__(self):
         self.tracking_intervals = {
             'real_time': 60,  # seconds
@@ -3574,8 +3441,7 @@ class RevenueTracker:
         }
     
     async def start_real_time_tracking(self, user_id: str):
-        """Start real-time revenue tracking for user"""
-        try:
+        """Start real-time revenue tracking for user"""        try:
             # Set up Redis streams for real-time data
             stream_key = f"revenue_stream:{user_id}"
             
@@ -3601,14 +3467,12 @@ class RevenueTracker:
 
 
 class PayoutProcessor:
-    """Advanced payout processing system"""
-    
+    """Advanced payout processing system"""    
     async def process_batch_payouts(
         self,
         payout_requests: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Process multiple payouts in batch"""
-        results = {
+        """Process multiple payouts in batch"""        results = {
             'total_requests': len(payout_requests),
             'successful': 0,
             'failed': 0,
@@ -3637,8 +3501,7 @@ class PayoutProcessor:
         return results
     
     async def _process_single_payout(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Process individual payout request"""
-        # This would integrate with actual payment processors
+        """Process individual payout request"""        # This would integrate with actual payment processors
         return {
             'user_id': request['user_id'],
             'amount': request['amount'],
@@ -3669,11 +3532,9 @@ __all__ = [
 # Additional service classes for completeness
 
 class PlatformIntegrator:
-    """Multi-platform revenue integration"""
-    
+    """Multi-platform revenue integration"""    
     async def sync_platform_data(self, user_id: str, platforms: List[str]) -> Dict[str, Any]:
-        """Synchronize revenue data from multiple platforms"""
-        sync_results = {}
+        """Synchronize revenue data from multiple platforms"""        sync_results = {}
         
         for platform in platforms:
             try:
@@ -3693,13 +3554,11 @@ class PlatformIntegrator:
 
 
 class TaxCalculator:
-    """Tax calculation and compliance"""
-    
+    """Tax calculation and compliance"""    
     async def calculate_quarterly_taxes(
         self, user_id: str, quarter: int, year: int
     ) -> TaxSummary:
-        """Calculate quarterly tax obligations"""
-        # This would integrate with tax calculation services
+        """Calculate quarterly tax obligations"""        # This would integrate with tax calculation services
         return TaxSummary(
             gross_revenue=Decimal('10000'),
             deductible_expenses=Decimal('2000'),
@@ -3712,13 +3571,11 @@ class TaxCalculator:
 
 
 class GoalManager:
-    """Monetization goal management"""
-    
+    """Monetization goal management"""    
     async def track_goal_progress(
         self, user_id: str, goal_id: str
     ) -> Dict[str, Any]:
-        """Track progress towards monetization goal"""
-        return {
+        """Track progress towards monetization goal"""        return {
             'goal_id': goal_id,
             'current_progress': 65.5,
             'target_value': 10000,
@@ -3729,13 +3586,11 @@ class GoalManager:
 
 
 class AnalyticsReporter:
-    """Advanced analytics and reporting"""
-    
+    """Advanced analytics and reporting"""    
     async def generate_monthly_report(
         self, user_id: str, month: int, year: int
     ) -> Dict[str, Any]:
-        """Generate comprehensive monthly revenue report"""
-        return {
+        """Generate comprehensive monthly revenue report"""        return {
             'report_period': f"{year}-{month:02d}",
             'total_revenue': 5500.00,
             'revenue_growth': 12.5,
@@ -3745,11 +3600,9 @@ class AnalyticsReporter:
 
 
 class ComplianceMonitor:
-    """Compliance monitoring and alerts"""
-    
+    """Compliance monitoring and alerts"""    
     async def monitor_compliance_status(self, user_id: str) -> Dict[str, Any]:
-        """Monitor ongoing compliance requirements"""
-        return {
+        """Monitor ongoing compliance requirements"""        return {
             'compliance_score': 95.0,
             'active_alerts': 0,
             'required_actions': [],
@@ -3768,17 +3621,14 @@ class ComplianceMonitor:
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Monetization handlers module for creator workflow alerts.
+"""Monetization handlers module for creator workflow alerts.
 
 This module provides comprehensive monetization functionality including:
 - Multi-platform revenue tracking and analytics
 - Payment processing and payout management
 - Revenue optimization and milestone monitoring
 - Platform integration management (Spotify, YouTube, Instagram, TikTok, etc.)
-"""
-
-from .monetization_alerts import (
+"""from .monetization_alerts import (
     MonetizationAlertHandler,
     Platform,
     RevenueType,
@@ -3811,8 +3661,7 @@ __all__ = [
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Monetization Alert Handler Module
+"""Monetization Alert Handler Module
 
 This module provides comprehensive monitoring for creator monetization and revenue
 tracking in the Influencer AI Agent Platform. It handles platform integrations,
@@ -3827,9 +3676,7 @@ Business Context:
 - Monitors earnings from Spotify, YouTube, Instagram, TikTok, and other platforms
 - Integrates with payment processors and automated payout systems
 - Essential for creator financial success and platform sustainability
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import json
@@ -3846,8 +3693,7 @@ from ...alert_manager import AlertManager
 
 
 class Platform(Enum):
-    """Supported monetization platforms."""
-    SPOTIFY = "spotify"
+    """Supported monetization platforms."""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -3862,8 +3708,7 @@ class Platform(Enum):
 
 
 class RevenueType(Enum):
-    """Types of revenue streams."""
-    STREAMING = "streaming"
+    """Types of revenue streams."""    STREAMING = "streaming"
     ADVERTISING = "advertising"
     SUBSCRIPTIONS = "subscriptions"
     DONATIONS = "donations"
@@ -3878,8 +3723,7 @@ class RevenueType(Enum):
 
 
 class PaymentStatus(Enum):
-    """Payment processing statuses."""
-    PENDING = "pending"
+    """Payment processing statuses."""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -3889,8 +3733,7 @@ class PaymentStatus(Enum):
 
 
 class AlertType(Enum):
-    """Types of monetization alerts."""
-    REVENUE_MILESTONE = "revenue_milestone"
+    """Types of monetization alerts."""    REVENUE_MILESTONE = "revenue_milestone"
     PAYMENT_PROCESSED = "payment_processed"
     PAYMENT_FAILED = "payment_failed"
     PLATFORM_EARNINGS = "platform_earnings"
@@ -3904,8 +3747,7 @@ class AlertType(Enum):
 
 @dataclass
 class PlatformCredentials:
-    """Platform API credentials for revenue tracking."""
-    platform: Platform
+    """Platform API credentials for revenue tracking."""    platform: Platform
     api_key: str
     api_secret: Optional[str] = None
     access_token: Optional[str] = None
@@ -3921,8 +3763,7 @@ class PlatformCredentials:
 
 @dataclass
 class RevenueMetrics:
-    """Revenue metrics for a specific platform or overall."""
-    user_id: str
+    """Revenue metrics for a specific platform or overall."""    user_id: str
     platform: Platform
     revenue_type: RevenueType
     amount: Decimal
@@ -3943,8 +3784,7 @@ class RevenueMetrics:
 
 @dataclass
 class PayoutRecord:
-    """Record of payments made to creators."""
-    payout_id: str
+    """Record of payments made to creators."""    payout_id: str
     user_id: str
     amount: Decimal
     currency: str
@@ -3966,8 +3806,7 @@ class PayoutRecord:
 
 @dataclass
 class RevenueGoal:
-    """Revenue goals and targets for creators."""
-    goal_id: str
+    """Revenue goals and targets for creators."""    goal_id: str
     user_id: str
     target_amount: Decimal
     currency: str
@@ -3984,8 +3823,7 @@ class RevenueGoal:
 
 @dataclass
 class MonetizationAlert:
-    """Alert for monetization events."""
-    alert_id: str
+    """Alert for monetization events."""    alert_id: str
     user_id: str
     alert_type: AlertType
     platform: Optional[Platform]
@@ -4003,13 +3841,11 @@ class MonetizationAlert:
 
 
 class MonetizationAlertHandler:
-    """
-    Alert handler for creator monetization and revenue tracking.
+    """    Alert handler for creator monetization and revenue tracking.
     
     Manages platform integrations, revenue analytics, payout processing,
     and monetization optimization notifications.
-    """
-    
+    """    
     def __init__(self, alert_manager: AlertManager):
         self.alert_manager = alert_manager
         self.logger = logging.getLogger(__name__)
@@ -4032,8 +3868,7 @@ class MonetizationAlertHandler:
         }
     
     def _initialize_platform_configs(self) -> Dict[Platform, Dict[str, Any]]:
-        """Initialize platform-specific configurations."""
-        return {
+        """Initialize platform-specific configurations."""        return {
             Platform.SPOTIFY: {
                 "base_url": "https://api.spotify.com/v1",
                 "auth_url": "https://accounts.spotify.com/api/token",
@@ -4078,8 +3913,7 @@ class MonetizationAlertHandler:
         user_id: str,
         credentials: PlatformCredentials
     ) -> bool:
-        """Register platform credentials for revenue tracking."""
-        if user_id not in self.platform_credentials:
+        """Register platform credentials for revenue tracking."""        if user_id not in self.platform_credentials:
             self.platform_credentials[user_id] = {}
         
         # Validate credentials
@@ -4128,8 +3962,7 @@ class MonetizationAlertHandler:
         return True
     
     async def _validate_platform_credentials(self, credentials: PlatformCredentials) -> bool:
-        """Validate platform credentials by testing API access."""
-        try:
+        """Validate platform credentials by testing API access."""        try:
             config = self.platform_configs.get(credentials.platform)
             if not config:
                 return False
@@ -4152,8 +3985,7 @@ class MonetizationAlertHandler:
             return False
     
     async def _validate_spotify_credentials(self, credentials: PlatformCredentials) -> bool:
-        """Validate Spotify API credentials."""
-        try:
+        """Validate Spotify API credentials."""        try:
             headers = {"Authorization": f"Bearer {credentials.access_token}"}
             response = requests.get("https://api.spotify.com/v1/me", headers=headers, timeout=10)
             return response.status_code == 200
@@ -4161,8 +3993,7 @@ class MonetizationAlertHandler:
             return False
     
     async def _validate_youtube_credentials(self, credentials: PlatformCredentials) -> bool:
-        """Validate YouTube API credentials."""
-        try:
+        """Validate YouTube API credentials."""        try:
             response = requests.get(
                 f"https://www.googleapis.com/youtube/v3/channels?part=snippet&mine=true&key={credentials.api_key}",
                 headers={"Authorization": f"Bearer {credentials.access_token}"},
@@ -4173,8 +4004,7 @@ class MonetizationAlertHandler:
             return False
     
     async def _validate_instagram_credentials(self, credentials: PlatformCredentials) -> bool:
-        """Validate Instagram API credentials."""
-        try:
+        """Validate Instagram API credentials."""        try:
             response = requests.get(
                 f"https://graph.instagram.com/me?fields=id,username&access_token={credentials.access_token}",
                 timeout=10
@@ -4184,8 +4014,7 @@ class MonetizationAlertHandler:
             return False
     
     async def _validate_tiktok_credentials(self, credentials: PlatformCredentials) -> bool:
-        """Validate TikTok API credentials."""
-        try:
+        """Validate TikTok API credentials."""        try:
             headers = {"Authorization": f"Bearer {credentials.access_token}"}
             response = requests.post(
                 "https://open-api.tiktok.com/oauth/access_token/",
@@ -4198,12 +4027,10 @@ class MonetizationAlertHandler:
             return False
     
     async def _validate_generic_credentials(self, credentials: PlatformCredentials) -> bool:
-        """Generic credential validation for custom platforms."""
-        return bool(credentials.api_key or credentials.access_token)
+        """Generic credential validation for custom platforms."""        return bool(credentials.api_key or credentials.access_token)
     
     async def _start_platform_revenue_tracking(self, user_id: str, platform: Platform) -> None:
-        """Start continuous revenue tracking for a platform."""
-        while True:
+        """Start continuous revenue tracking for a platform."""        while True:
             try:
                 # Fetch latest revenue data
                 revenue_data = await self._fetch_platform_revenue(user_id, platform)
@@ -4223,8 +4050,7 @@ class MonetizationAlertHandler:
                 await asyncio.sleep(300)  # Wait 5 minutes on error
     
     def _get_platform_update_interval(self, platform: Platform) -> int:
-        """Get update interval in seconds for each platform."""
-        intervals = {
+        """Get update interval in seconds for each platform."""        intervals = {
             Platform.SPOTIFY: 3600,     # 1 hour
             Platform.YOUTUBE: 1800,     # 30 minutes
             Platform.INSTAGRAM: 3600,   # 1 hour
@@ -4239,8 +4065,7 @@ class MonetizationAlertHandler:
         user_id: str,
         platform: Platform
     ) -> Optional[Dict[str, Any]]:
-        """Fetch revenue data from platform APIs."""
-        credentials = self.platform_credentials.get(user_id, {}).get(platform)
+        """Fetch revenue data from platform APIs."""        credentials = self.platform_credentials.get(user_id, {}).get(platform)
         if not credentials or not credentials.is_active:
             return None
         
@@ -4261,8 +4086,7 @@ class MonetizationAlertHandler:
             return None
     
     async def _fetch_spotify_revenue(self, credentials: PlatformCredentials) -> Dict[str, Any]:
-        """Fetch revenue data from Spotify API."""
-        headers = {"Authorization": f"Bearer {credentials.access_token}"}
+        """Fetch revenue data from Spotify API."""        headers = {"Authorization": f"Bearer {credentials.access_token}"}
         
         try:
             response = requests.get("https://api.spotify.com/v1/me", headers=headers, timeout=10)
@@ -4288,8 +4112,7 @@ class MonetizationAlertHandler:
         platform: Platform,
         revenue_data: Dict[str, Any]
     ) -> None:
-        """Process and store revenue data."""
-        try:
+        """Process and store revenue data."""        try:
             # Create revenue metrics record
             metrics = RevenueMetrics(
                 user_id=user_id,
@@ -4323,8 +4146,7 @@ class MonetizationAlertHandler:
         platform: Platform,
         revenue_data: Dict[str, Any]
     ) -> None:
-        """Check for revenue-related alerts."""
-        try:
+        """Check for revenue-related alerts."""        try:
             current_revenue = Decimal(str(revenue_data.get("estimated_revenue", 0.0)))
             
             # Check milestone achievements
@@ -4345,8 +4167,7 @@ class MonetizationAlertHandler:
         platform: Platform,
         current_revenue: Decimal
     ) -> None:
-        """Check for revenue milestone achievements."""
-        try:
+        """Check for revenue milestone achievements."""        try:
             user_metrics = self.revenue_metrics.get(user_id, [])
             if not user_metrics:
                 return
@@ -4387,8 +4208,7 @@ class MonetizationAlertHandler:
         platform: Platform,
         revenue_data: Dict[str, Any]
     ) -> None:
-        """Check for performance change alerts."""
-        try:
+        """Check for performance change alerts."""        try:
             user_metrics = self.revenue_metrics.get(user_id, [])
             platform_metrics = [m for m in user_metrics if m.platform == platform]
             
@@ -4458,8 +4278,7 @@ class MonetizationAlertHandler:
         platform: Platform,
         revenue_data: Dict[str, Any]
     ) -> None:
-        """Check for monetization optimization opportunities."""
-        try:
+        """Check for monetization optimization opportunities."""        try:
             # Example optimization checks
             engagement_rate = revenue_data.get("engagement_rate", 0)
             views = revenue_data.get("views", 0)
@@ -4521,8 +4340,7 @@ class MonetizationAlertHandler:
             self.logger.error(f"Failed to check optimization alerts: {e}")
     
     async def shutdown(self) -> None:
-        """Shutdown monetization alert handler."""
-        self.logger.info("Shutting down monetization alert handler...")
+        """Shutdown monetization alert handler."""        self.logger.info("Shutting down monetization alert handler...")
         self.platform_credentials.clear()
         self.revenue_metrics.clear()
         self.payout_records.clear()
@@ -4536,8 +4354,7 @@ class MonetizationAlertHandler:
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Revenue Manager Module
+"""Revenue Manager Module
 
 Advanced revenue management system for creator collaborations.
 Handles revenue sharing, monetization optimization, payment processing,
@@ -4545,9 +4362,7 @@ and earnings analytics.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
@@ -4567,8 +4382,7 @@ from ..services.blockchain_service import BlockchainContractService
 
 
 class RevenueStreamType(Enum):
-    """Types of revenue streams."""
-    DIRECT_SALES = "direct_sales"
+    """Types of revenue streams."""    DIRECT_SALES = "direct_sales"
     STREAMING_ROYALTIES = "streaming_royalties"
     BRAND_PARTNERSHIPS = "brand_partnerships"
     MERCHANDISE = "merchandise"
@@ -4583,8 +4397,7 @@ class RevenueStreamType(Enum):
 
 
 class PaymentStatus(Enum):
-    """Payment processing status."""
-    PENDING = "pending"
+    """Payment processing status."""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -4594,8 +4407,7 @@ class PaymentStatus(Enum):
 
 
 class MonetizationModel(Enum):
-    """Monetization model types."""
-    EQUAL_SPLIT = "equal_split"
+    """Monetization model types."""    EQUAL_SPLIT = "equal_split"
     CONTRIBUTION_BASED = "contribution_based"
     AUDIENCE_BASED = "audience_based"
     SKILL_BASED = "skill_based"
@@ -4605,8 +4417,7 @@ class MonetizationModel(Enum):
 
 @dataclass
 class RevenueConfiguration:
-    """Configuration for revenue management."""
-    auto_payment_enabled: bool = True
+    """Configuration for revenue management."""    auto_payment_enabled: bool = True
     payment_frequency: str = "monthly"  # weekly, monthly, quarterly
     minimum_payout_threshold: Decimal = Decimal("10.00")
     tax_calculation_enabled: bool = True
@@ -4617,8 +4428,7 @@ class RevenueConfiguration:
 
 
 class RevenueShareCalculator:
-    """Calculates revenue sharing between collaboration partners."""
-    
+    """Calculates revenue sharing between collaboration partners."""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.financial_calculator = FinancialCalculator()
@@ -4630,8 +4440,7 @@ class RevenueShareCalculator:
         sharing_agreement: Dict[str, Any],
         contribution_data: Dict[str, Dict[str, float]]
     ) -> Dict[str, RevenueShare]:
-        """Calculate revenue shares for all partners."""
-        
+        """Calculate revenue shares for all partners."""        
         try:
             shares = {}
             model_type = MonetizationModel(sharing_agreement.get('model', 'equal_split'))
@@ -4682,8 +4491,7 @@ class RevenueShareCalculator:
         total_revenue: Decimal,
         sharing_agreement: Dict[str, Any]
     ) -> Dict[str, RevenueShare]:
-        """Calculate equal revenue split among partners."""
-        
+        """Calculate equal revenue split among partners."""        
         participants = sharing_agreement.get('participants', [])
         if not participants:
             raise ValueError("No participants specified for revenue sharing")
@@ -4715,8 +4523,7 @@ class RevenueShareCalculator:
         sharing_agreement: Dict[str, Any],
         contribution_data: Dict[str, Dict[str, float]]
     ) -> Dict[str, RevenueShare]:
-        """Calculate revenue split based on individual contributions."""
-        
+        """Calculate revenue split based on individual contributions."""        
         shares = {}
         total_contribution_score = 0.0
         
@@ -4759,8 +4566,7 @@ class RevenueShareCalculator:
         sharing_agreement: Dict[str, Any],
         contribution_data: Dict[str, Dict[str, float]]
     ) -> Dict[str, RevenueShare]:
-        """Calculate revenue split based on audience contribution."""
-        
+        """Calculate revenue split based on audience contribution."""        
         shares = {}
         total_audience_value = 0.0
         
@@ -4813,8 +4619,7 @@ class RevenueShareCalculator:
         sharing_agreement: Dict[str, Any],
         contribution_data: Dict[str, Dict[str, float]]
     ) -> Dict[str, RevenueShare]:
-        """Calculate revenue split based on skill levels and importance."""
-        
+        """Calculate revenue split based on skill levels and importance."""        
         shares = {}
         skill_weights = sharing_agreement.get('skill_weights', {})
         total_weighted_skill_score = 0.0
@@ -4865,8 +4670,7 @@ class RevenueShareCalculator:
         sharing_agreement: Dict[str, Any],
         contribution_data: Dict[str, Dict[str, float]]
     ) -> Dict[str, RevenueShare]:
-        """Calculate revenue split using hybrid approach combining multiple factors."""
-        
+        """Calculate revenue split using hybrid approach combining multiple factors."""        
         shares = {}
         hybrid_weights = sharing_agreement.get('hybrid_weights', {
             'contribution': 0.4,
@@ -4942,8 +4746,7 @@ class RevenueShareCalculator:
         total_revenue: Decimal,
         sharing_agreement: Dict[str, Any]
     ) -> Dict[str, RevenueShare]:
-        """Calculate revenue split using custom percentages."""
-        
+        """Calculate revenue split using custom percentages."""        
         custom_percentages = sharing_agreement.get('custom_percentages', {})
         if not custom_percentages:
             raise ValueError("Custom percentages not specified")
@@ -4974,8 +4777,7 @@ class RevenueShareCalculator:
         return shares
     
     def _calculate_contribution_score(self, contributions: Dict[str, float]) -> float:
-        """Calculate overall contribution score from individual metrics."""
-        
+        """Calculate overall contribution score from individual metrics."""        
         weights = {
             'content_creation': 0.3,
             'editing': 0.2,
@@ -4997,8 +4799,7 @@ class RevenueShareCalculator:
         shares: Dict[str, RevenueShare],
         total_revenue: Decimal
     ):
-        """Validate that revenue shares sum correctly."""
-        
+        """Validate that revenue shares sum correctly."""        
         total_shared = sum(share.share_amount for share in shares.values())
         total_percentage = sum(share.share_percentage for share in shares.values())
         
@@ -5014,8 +4815,7 @@ class RevenueShareCalculator:
 
 
 class MonetizationOptimizer:
-    """Optimizes monetization strategies for collaborations."""
-    
+    """Optimizes monetization strategies for collaborations."""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -5026,8 +4826,7 @@ class MonetizationOptimizer:
         audience_data: Dict[str, Any],
         market_data: Dict[str, Any]
     ) -> MonetizationStrategy:
-        """Optimize monetization strategy for collaboration."""
-        
+        """Optimize monetization strategy for collaboration."""        
         try:
             # Analyze content monetization potential
             content_analysis = await self._analyze_content_monetization_potential(content_data)
@@ -5069,8 +4868,7 @@ class MonetizationOptimizer:
         self,
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze content for monetization potential."""
-        
+        """Analyze content for monetization potential."""        
         analysis = {
             'content_type': content_data.get('type', 'unknown'),
             'quality_score': content_data.get('quality_score', 0.5),
@@ -5120,8 +4918,7 @@ class MonetizationOptimizer:
         self,
         audience_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze audience monetization preferences and spending behavior."""
-        
+        """Analyze audience monetization preferences and spending behavior."""        
         analysis = {
             'total_audience': audience_data.get('total_size', 0),
             'demographic_breakdown': audience_data.get('demographics', {}),
@@ -5167,8 +4964,7 @@ class MonetizationOptimizer:
 
 
 class PaymentProcessor:
-    """Handles payment processing and transactions."""
-    
+    """Handles payment processing and transactions."""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.payment_service = PaymentService()
@@ -5180,8 +4976,7 @@ class PaymentProcessor:
         revenue_shares: Dict[str, RevenueShare],
         payment_configuration: Dict[str, Any]
     ) -> Dict[str, PaymentTransaction]:
-        """Process payments for revenue shares."""
-        
+        """Process payments for revenue shares."""        
         transactions = {}
         
         try:
@@ -5222,8 +5017,7 @@ class PaymentProcessor:
         revenue_share: RevenueShare,
         configuration: Dict[str, Any]
     ) -> PaymentTransaction:
-        """Create payment transaction record."""
-        
+        """Create payment transaction record."""        
         return PaymentTransaction(
             transaction_id=str(uuid.uuid4()),
             partnership_id=partnership_id,
@@ -5245,8 +5039,7 @@ class PaymentProcessor:
         transaction: PaymentTransaction,
         configuration: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process individual payment."""
-        
+        """Process individual payment."""        
         try:
             # Use appropriate payment method
             if configuration.get('blockchain_enabled', False):
@@ -5265,8 +5058,7 @@ class PaymentProcessor:
         transaction: PaymentTransaction,
         configuration: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process payment through traditional payment service."""
-        
+        """Process payment through traditional payment service."""        
         payment_data = {
             'recipient_id': transaction.recipient_id,
             'amount': float(transaction.amount),
@@ -5283,8 +5075,7 @@ class PaymentProcessor:
         transaction: PaymentTransaction,
         configuration: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process payment through blockchain smart contract."""
-        
+        """Process payment through blockchain smart contract."""        
         contract_data = {
             'recipient_address': await self._get_participant_wallet_address(transaction.recipient_id),
             'amount': transaction.amount,
@@ -5296,8 +5087,7 @@ class PaymentProcessor:
 
 
 class EarningsTracker:
-    """Tracks earnings and generates financial reports."""
-    
+    """Tracks earnings and generates financial reports."""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.earnings_history = {}
@@ -5308,8 +5098,7 @@ class EarningsTracker:
         revenue_data: Dict[str, Any],
         timeframe: str = "monthly"
     ) -> EarningsReport:
-        """Track earnings for partnership."""
-        
+        """Track earnings for partnership."""        
         try:
             # Calculate earnings metrics
             total_revenue = Decimal(str(revenue_data.get('total_revenue', 0)))
@@ -5357,8 +5146,7 @@ class EarningsTracker:
         current_revenue: Decimal,
         timeframe: str
     ) -> Dict[str, Any]:
-        """Calculate growth metrics compared to previous periods."""
-        
+        """Calculate growth metrics compared to previous periods."""        
         history = self.earnings_history.get(partnership_id, [])
         if not history:
             return {
@@ -5403,8 +5191,7 @@ class EarningsTracker:
 
 
 class RevenueManager:
-    """Main revenue management coordinator."""
-    
+    """Main revenue management coordinator."""    
     def __init__(self, configuration: Optional[RevenueConfiguration] = None):
         self.logger = logging.getLogger(__name__)
         self.config = configuration or RevenueConfiguration()
@@ -5424,8 +5211,7 @@ class RevenueManager:
         partnership_id: str,
         revenue_event: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Manage revenue for collaboration partnership."""
-        
+        """Manage revenue for collaboration partnership."""        
         try:
             event_type = revenue_event.get('type')
             
@@ -5451,8 +5237,7 @@ class RevenueManager:
         partnership_id: str,
         revenue_event: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Handle revenue generation event."""
-        
+        """Handle revenue generation event."""        
         total_revenue = Decimal(str(revenue_event.get('amount', 0)))
         sharing_agreement = revenue_event.get('sharing_agreement', {})
         contribution_data = revenue_event.get('contribution_data', {})
@@ -5484,8 +5269,7 @@ class RevenueManager:
         partnership_id: str,
         revenue_shares: Dict[str, RevenueShare]
     ) -> PaymentSchedule:
-        """Schedule payments for revenue shares."""
-        
+        """Schedule payments for revenue shares."""        
         # Determine payment date based on frequency
         if self.config.payment_frequency == 'weekly':
             payment_date = datetime.now(timezone.utc) + timedelta(weeks=1)
@@ -5523,8 +5307,7 @@ class RevenueManager:
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-AI-Powered Revenue Optimization and Monetization Engine
+"""AI-Powered Revenue Optimization and Monetization Engine
 
 Advanced revenue optimization system for multi-format creators that analyzes
 monetization opportunities across platforms, optimizes pricing strategies,
@@ -5540,9 +5323,7 @@ without explicit written permission from Fahed Mlaiel is strictly prohibited.
 Legal action will be taken against any violations.
 
 ALL RIGHTS RESERVED - Fahed Mlaiel 2025
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Set, Union
 from dataclasses import dataclass, asdict, field
@@ -5593,8 +5374,7 @@ settings = get_settings()
 
 
 class RevenueStreamType(Enum):
-    """Types of revenue streams."""
-    PLATFORM_AD_REVENUE = "platform_ad_revenue"
+    """Types of revenue streams."""    PLATFORM_AD_REVENUE = "platform_ad_revenue"
     SUBSCRIPTION_REVENUE = "subscription_revenue"
     MERCHANDISE_SALES = "merchandise_sales"
     BRAND_PARTNERSHIPS = "brand_partnerships"
@@ -5612,8 +5392,7 @@ class RevenueStreamType(Enum):
 
 
 class MonetizationGoal(Enum):
-    """Monetization optimization goals."""
-    MAXIMIZE_TOTAL_REVENUE = "maximize_total_revenue"
+    """Monetization optimization goals."""    MAXIMIZE_TOTAL_REVENUE = "maximize_total_revenue"
     DIVERSIFY_INCOME_STREAMS = "diversify_income_streams"
     INCREASE_RECURRING_REVENUE = "increase_recurring_revenue"
     OPTIMIZE_PROFIT_MARGINS = "optimize_profit_margins"
@@ -5625,8 +5404,7 @@ class MonetizationGoal(Enum):
 
 @dataclass
 class RevenueOptimizationContext:
-    """Context for revenue optimization analysis."""
-    creator_id: str
+    """Context for revenue optimization analysis."""    creator_id: str
     current_revenue_streams: List[RevenueStream]
     target_revenue_goals: Dict[str, float]
     audience_size: Dict[str, int]
@@ -5641,8 +5419,7 @@ class RevenueOptimizationContext:
 
 @dataclass
 class RevenueOpportunity:
-    """Individual revenue optimization opportunity."""
-    opportunity_id: str
+    """Individual revenue optimization opportunity."""    opportunity_id: str
     opportunity_type: RevenueStreamType
     title: str
     description: str
@@ -5662,8 +5439,7 @@ class RevenueOpportunity:
 
 @dataclass
 class MonetizationPlan:
-    """Comprehensive monetization plan."""
-    plan_id: str
+    """Comprehensive monetization plan."""    plan_id: str
     creator_id: str
     optimization_goals: List[MonetizationGoal]
     current_revenue_analysis: Dict[str, Any]
@@ -5680,8 +5456,7 @@ class MonetizationPlan:
 
 
 class RevenueOptimizationEngine:
-    """
-    Advanced AI-powered revenue optimization and monetization engine.
+    """    Advanced AI-powered revenue optimization and monetization engine.
     
     Features:
     - Multi-stream revenue analysis and optimization
@@ -5692,8 +5467,7 @@ class RevenueOptimizationEngine:
     - Subscription and product strategy optimization
     - Revenue forecasting and predictive analytics
     - ROI analysis and performance tracking
-    """
-    
+    """    
     def __init__(self):
         self.settings = get_settings()
         self.cache_manager = get_cache_manager()
@@ -5728,8 +5502,7 @@ class RevenueOptimizationEngine:
         logger.info("RevenueOptimizationEngine initialized successfully")
 
     async def initialize_models(self) -> None:
-        """Initialize ML models for revenue optimization."""
-        try:
+        """Initialize ML models for revenue optimization."""        try:
             with self._lock:
                 if self._models_initialized:
                     return
@@ -5755,16 +5528,14 @@ class RevenueOptimizationEngine:
         self,
         context: RevenueOptimizationContext
     ) -> MonetizationPlan:
-        """
-        Generate comprehensive monetization optimization plan for a creator.
+        """        Generate comprehensive monetization optimization plan for a creator.
         
         Args:
             context: Revenue optimization context
             
         Returns:
             Complete monetization plan with strategies and opportunities
-        """
-        try:
+        """        try:
             self.metrics_collector.increment("optimize_monetization_calls")
             start_time = datetime.utcnow()
             
@@ -5871,8 +5642,7 @@ class RevenueOptimizationEngine:
         market_data: Dict[str, Any],
         goals: List[str]
     ) -> Dict[str, Any]:
-        """
-        Optimize pricing strategy for creator products/services.
+        """        Optimize pricing strategy for creator products/services.
         
         Args:
             creator_id: Creator identifier
@@ -5883,8 +5653,7 @@ class RevenueOptimizationEngine:
             
         Returns:
             Optimized pricing strategy
-        """
-        try:
+        """        try:
             self.metrics_collector.increment("optimize_pricing_calls")
             
             # Analyze current pricing performance
@@ -5949,8 +5718,7 @@ class RevenueOptimizationEngine:
         content_formats: List[ContentFormat],
         target_revenue: float
     ) -> List[RevenueOpportunity]:
-        """
-        Analyze and identify revenue opportunities for a creator.
+        """        Analyze and identify revenue opportunities for a creator.
         
         Args:
             creator_id: Creator identifier
@@ -5960,8 +5728,7 @@ class RevenueOptimizationEngine:
             
         Returns:
             List of identified revenue opportunities
-        """
-        try:
+        """        try:
             self.metrics_collector.increment("analyze_opportunities_calls")
             
             # Collect creator performance data
@@ -6033,8 +5800,7 @@ class RevenueOptimizationEngine:
         optimization_strategies: List[MonetizationStrategy],
         forecast_horizon: int = 12
     ) -> Dict[str, Any]:
-        """
-        Forecast revenue growth based on current streams and optimization strategies.
+        """        Forecast revenue growth based on current streams and optimization strategies.
         
         Args:
             creator_id: Creator identifier
@@ -6044,8 +5810,7 @@ class RevenueOptimizationEngine:
             
         Returns:
             Revenue growth forecast
-        """
-        try:
+        """        try:
             self.metrics_collector.increment("forecast_revenue_calls")
             
             # Collect historical revenue data
@@ -6122,8 +5887,7 @@ class RevenueOptimizationEngine:
         plan_id: str,
         timeframe: str = "monthly"
     ) -> Dict[str, Any]:
-        """
-        Track performance of monetization strategies and plans.
+        """        Track performance of monetization strategies and plans.
         
         Args:
             creator_id: Creator identifier
@@ -6132,8 +5896,7 @@ class RevenueOptimizationEngine:
             
         Returns:
             Performance tracking report
-        """
-        try:
+        """        try:
             self.metrics_collector.increment("track_performance_calls")
             
             # Get original monetization plan
@@ -6214,8 +5977,7 @@ class RevenueOptimizationEngine:
         self,
         context: RevenueOptimizationContext
     ) -> Dict[str, Any]:
-        """Analyze current revenue streams and performance."""
-        try:
+        """Analyze current revenue streams and performance."""        try:
             revenue_analysis = {}
             
             # Analyze each revenue stream
@@ -6268,8 +6030,7 @@ class RevenueOptimizationEngine:
         self,
         context: RevenueOptimizationContext
     ) -> List[RevenueOpportunity]:
-        """Identify potential monetization opportunities."""
-        try:
+        """Identify potential monetization opportunities."""        try:
             opportunities = []
             
             # Platform-specific opportunities
@@ -6310,8 +6071,7 @@ class RevenueOptimizationEngine:
         self,
         context: RevenueOptimizationContext
     ) -> str:
-        """Generate cache key for monetization analysis."""
-        key_data = f"{context.creator_id}-{len(context.current_revenue_streams)}-{'-'.join([g.value for g in context.optimization_goals])}"
+        """Generate cache key for monetization analysis."""        key_data = f"{context.creator_id}-{len(context.current_revenue_streams)}-{'-'.join([g.value for g in context.optimization_goals])}"
         return f"monetization:{hash(key_data) % 10000000}"
 
     # Additional helper methods would be implemented here for:
@@ -6324,8 +6084,7 @@ class RevenueOptimizationEngine:
     # - All other analysis and calculation methods
 
     async def get_health_status(self) -> Dict[str, Any]:
-        """Get health status of the revenue optimization engine."""
-        return {
+        """Get health status of the revenue optimization engine."""        return {
             "status": "healthy",
             "models_initialized": self._models_initialized,
             "cache_status": await self.cache_manager.health_check(),
@@ -6345,8 +6104,7 @@ class RevenueOptimizationEngine:
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Monetization Service - Advanced Revenue Management & Analytics
+"""Monetization Service - Advanced Revenue Management & Analytics
 
 This service manages creator monetization, revenue tracking, and financial analytics.
 Implements AI-driven revenue optimization and multi-platform monetization strategies.
@@ -6364,9 +6122,7 @@ Team Specialists:
 - Financial Tech: Payment processing
 - Analytics Expert: Revenue intelligence
 - DevOps: Scalable financial systems
-"""
-
-import asyncio
+"""import asyncio
 import uuid
 from datetime import datetime, timedelta
 from typing import Dict, Any, List, Optional, Tuple, Union
@@ -6412,8 +6168,7 @@ settings = get_settings()
 
 
 class RevenueSource(str, Enum):
-    """Revenue source types"""
-    STREAMING = "streaming"
+    """Revenue source types"""    STREAMING = "streaming"
     DOWNLOADS = "downloads"
     MERCHANDISE = "merchandise"
     LIVE_PERFORMANCES = "live_performances"
@@ -6428,8 +6183,7 @@ class RevenueSource(str, Enum):
 
 
 class PayoutStatus(str, Enum):
-    """Payout processing status"""
-    PENDING = "pending"
+    """Payout processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -6438,8 +6192,7 @@ class PayoutStatus(str, Enum):
 
 
 class GoalType(str, Enum):
-    """Monetization goal types"""
-    MONTHLY_REVENUE = "monthly_revenue"
+    """Monetization goal types"""    MONTHLY_REVENUE = "monthly_revenue"
     YEARLY_REVENUE = "yearly_revenue"
     SUBSCRIBER_COUNT = "subscriber_count"
     STREAM_COUNT = "stream_count"
@@ -6449,8 +6202,7 @@ class GoalType(str, Enum):
 
 @dataclass
 class RevenueMetrics:
-    """Revenue performance metrics"""
-    total_revenue: Decimal
+    """Revenue performance metrics"""    total_revenue: Decimal
     revenue_growth: float
     average_per_stream: Decimal
     diversification_score: float
@@ -6461,8 +6213,7 @@ class RevenueMetrics:
 
 @dataclass
 class PlatformPerformance:
-    """Platform-specific performance data"""
-    platform_name: str
+    """Platform-specific performance data"""    platform_name: str
     revenue: Decimal
     growth_rate: float
     market_share: float
@@ -6471,8 +6222,7 @@ class PlatformPerformance:
 
 
 class FinancialForecast(BaseModel):
-    """Financial forecast model"""
-    projected_revenue: Decimal
+    """Financial forecast model"""    projected_revenue: Decimal
     confidence_interval: Tuple[Decimal, Decimal]
     growth_factors: Dict[str, float]
     risk_assessment: str
@@ -6481,8 +6231,7 @@ class FinancialForecast(BaseModel):
 
 
 class TaxSummary(BaseModel):
-    """Tax calculation summary"""
-    gross_revenue: Decimal
+    """Tax calculation summary"""    gross_revenue: Decimal
     deductible_expenses: Decimal
     taxable_income: Decimal
     estimated_tax: Decimal
@@ -6492,13 +6241,11 @@ class TaxSummary(BaseModel):
 
 
 class MonetizationService:
-    """
-    Advanced Monetization Service for Creator Workflow
+    """    Advanced Monetization Service for Creator Workflow
     
     Manages comprehensive revenue tracking, financial analytics, and
     optimization strategies for creator monetization across platforms.
-    """
-    
+    """    
     def __init__(self):
         self.redis_client = None
         self.security = SecurityManager()
@@ -6525,8 +6272,7 @@ class MonetizationService:
         }
     
     async def initialize(self):
-        """Initialize service dependencies"""
-        try:
+        """Initialize service dependencies"""        try:
             self.redis_client = await aioredis.from_url(
                 settings.REDIS_URL,
                 encoding="utf-8",
@@ -6550,8 +6296,7 @@ class MonetizationService:
         user_id: str,
         revenue_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Track new revenue entry with detailed analytics
+        """        Track new revenue entry with detailed analytics
         
         Args:
             user_id: Creator's unique identifier
@@ -6559,8 +6304,7 @@ class MonetizationService:
             
         Returns:
             Revenue tracking confirmation with analytics
-        """
-        try:
+        """        try:
             # Validate revenue data
             await self._validate_revenue_data(revenue_data)
             
@@ -6632,8 +6376,7 @@ class MonetizationService:
         user_id: str,
         payout_request: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Process creator payout with compliance checks
+        """        Process creator payout with compliance checks
         
         Args:
             user_id: Creator identifier
@@ -6641,8 +6384,7 @@ class MonetizationService:
             
         Returns:
             Payout processing confirmation
-        """
-        try:
+        """        try:
             # Get available balance
             available_balance = await self._get_available_balance(user_id)
             
@@ -6748,8 +6490,7 @@ class MonetizationService:
         period: str = "30d",
         include_forecast: bool = True
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive revenue analytics and insights
+        """        Get comprehensive revenue analytics and insights
         
         Args:
             user_id: Creator identifier
@@ -6758,8 +6499,7 @@ class MonetizationService:
             
         Returns:
             Complete revenue analytics dashboard
-        """
-        try:
+        """        try:
             # Calculate date range
             end_date = datetime.utcnow()
             if period == "7d":
@@ -6829,8 +6569,7 @@ class MonetizationService:
         goal_data: Dict[str, Any] = None,
         goal_id: str = None
     ) -> Dict[str, Any]:
-        """
-        Manage creator monetization goals and tracking
+        """        Manage creator monetization goals and tracking
         
         Args:
             user_id: Creator identifier
@@ -6840,8 +6579,7 @@ class MonetizationService:
             
         Returns:
             Goal management result
-        """
-        try:
+        """        try:
             if action == "create":
                 return await self._create_monetization_goal(user_id, goal_data)
             elif action == "update":
@@ -6862,8 +6600,7 @@ class MonetizationService:
         user_id: str,
         tax_year: int = None
     ) -> Dict[str, Any]:
-        """
-        Get tax information and documentation for creator
+        """        Get tax information and documentation for creator
         
         Args:
             user_id: Creator identifier
@@ -6871,8 +6608,7 @@ class MonetizationService:
             
         Returns:
             Tax information and documents
-        """
-        try:
+        """        try:
             if tax_year is None:
                 tax_year = datetime.utcnow().year
             
@@ -6914,8 +6650,7 @@ class MonetizationService:
         user_id: str,
         optimization_goals: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """
-        AI-powered revenue stream optimization
+        """        AI-powered revenue stream optimization
         
         Args:
             user_id: Creator identifier
@@ -6923,8 +6658,7 @@ class MonetizationService:
             
         Returns:
             Revenue optimization recommendations
-        """
-        try:
+        """        try:
             # Get current revenue profile
             current_profile = await self._get_revenue_profile(user_id)
             
@@ -6967,8 +6701,7 @@ class MonetizationService:
     # Private helper methods
     
     async def _validate_revenue_data(self, revenue_data: Dict[str, Any]):
-        """Validate revenue entry data"""
-        required_fields = ['platform', 'source', 'gross_amount', 'date']
+        """Validate revenue entry data"""        required_fields = ['platform', 'source', 'gross_amount', 'date']
         
         for field in required_fields:
             if field not in revenue_data:
@@ -6994,8 +6727,7 @@ class MonetizationService:
         user_id: str,
         revenue_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process and normalize revenue entry"""
-        return {
+        """Process and normalize revenue entry"""        return {
             'platform': revenue_data['platform'].lower(),
             'source': RevenueSource(revenue_data['source']),
             'gross_amount': Decimal(str(revenue_data['gross_amount'])),
@@ -7010,13 +6742,11 @@ class MonetizationService:
         platform: str,
         gross_amount: Decimal
     ) -> Decimal:
-        """Calculate platform commission fee"""
-        platform_rate = self.platform_rates.get(platform, 0.30)  # Default 30%
+        """Calculate platform commission fee"""        platform_rate = self.platform_rates.get(platform, 0.30)  # Default 30%
         return gross_amount * Decimal(str(platform_rate))
     
     async def _get_available_balance(self, user_id: str) -> Decimal:
-        """Get user's available balance for payout"""
-        async with get_async_session() as session:
+        """Get user's available balance for payout"""        async with get_async_session() as session:
             # Sum all revenue
             revenue_result = await session.execute(
                 select(func.sum(Revenue.net_amount))
@@ -7046,8 +6776,7 @@ class MonetizationService:
         user_id: str,
         amount: Decimal
     ) -> Dict[str, Any]:
-        """Perform compliance and fraud checks"""
-        try:
+        """Perform compliance and fraud checks"""        try:
             # Check for suspicious activity patterns
             recent_payouts = await self._get_recent_payouts(user_id, days=30)
             
@@ -7098,8 +6827,7 @@ class MonetizationService:
             }
     
     async def _calculate_processing_fee(self, amount: Decimal) -> Decimal:
-        """Calculate payment processing fee"""
-        # Tiered fee structure
+        """Calculate payment processing fee"""        # Tiered fee structure
         if amount <= Decimal('100'):
             return amount * Decimal('0.029') + Decimal('0.30')  # 2.9% + $0.30
         elif amount <= Decimal('1000'):
@@ -7112,8 +6840,7 @@ class MonetizationService:
         user_id: str,
         amount: Decimal
     ) -> Decimal:
-        """Calculate tax withholding amount"""
-        # Get user's tax profile
+        """Calculate tax withholding amount"""        # Get user's tax profile
         tax_profile = await self._get_user_tax_profile(user_id)
         
         if tax_profile and tax_profile.get('withholding_required'):
@@ -7128,8 +6855,7 @@ class MonetizationService:
         start_date: datetime,
         end_date: datetime
     ) -> List[Dict[str, Any]]:
-        """Get revenue data for specified period"""
-        async with get_async_session() as session:
+        """Get revenue data for specified period"""        async with get_async_session() as session:
             result = await session.execute(
                 select(Revenue)
                 .where(
@@ -7164,8 +6890,7 @@ class MonetizationService:
         self,
         revenue_data: List[Dict[str, Any]]
     ) -> RevenueMetrics:
-        """Calculate comprehensive revenue metrics"""
-        if not revenue_data:
+        """Calculate comprehensive revenue metrics"""        if not revenue_data:
             return RevenueMetrics(
                 total_revenue=Decimal('0'),
                 revenue_growth=0.0,
@@ -7232,8 +6957,7 @@ class MonetizationService:
         user_id: str,
         historical_data: List[Dict[str, Any]]
     ) -> FinancialForecast:
-        """Generate AI-powered revenue forecast"""
-        try:
+        """Generate AI-powered revenue forecast"""        try:
             if len(historical_data) < 7:  # Need minimum data for prediction
                 return FinancialForecast(
                     projected_revenue=Decimal('0'),
@@ -7313,8 +7037,7 @@ class MonetizationService:
 
 
 class RevenueTracker:
-    """Real-time revenue tracking and monitoring"""
-    
+    """Real-time revenue tracking and monitoring"""    
     def __init__(self):
         self.tracking_intervals = {
             'real_time': 60,  # seconds
@@ -7323,8 +7046,7 @@ class RevenueTracker:
         }
     
     async def start_real_time_tracking(self, user_id: str):
-        """Start real-time revenue tracking for user"""
-        try:
+        """Start real-time revenue tracking for user"""        try:
             # Set up Redis streams for real-time data
             stream_key = f"revenue_stream:{user_id}"
             
@@ -7350,14 +7072,12 @@ class RevenueTracker:
 
 
 class PayoutProcessor:
-    """Advanced payout processing system"""
-    
+    """Advanced payout processing system"""    
     async def process_batch_payouts(
         self,
         payout_requests: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Process multiple payouts in batch"""
-        results = {
+        """Process multiple payouts in batch"""        results = {
             'total_requests': len(payout_requests),
             'successful': 0,
             'failed': 0,
@@ -7386,8 +7106,7 @@ class PayoutProcessor:
         return results
     
     async def _process_single_payout(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Process individual payout request"""
-        # This would integrate with actual payment processors
+        """Process individual payout request"""        # This would integrate with actual payment processors
         return {
             'user_id': request['user_id'],
             'amount': request['amount'],
@@ -7418,11 +7137,9 @@ __all__ = [
 # Additional service classes for completeness
 
 class PlatformIntegrator:
-    """Multi-platform revenue integration"""
-    
+    """Multi-platform revenue integration"""    
     async def sync_platform_data(self, user_id: str, platforms: List[str]) -> Dict[str, Any]:
-        """Synchronize revenue data from multiple platforms"""
-        sync_results = {}
+        """Synchronize revenue data from multiple platforms"""        sync_results = {}
         
         for platform in platforms:
             try:
@@ -7442,13 +7159,11 @@ class PlatformIntegrator:
 
 
 class TaxCalculator:
-    """Tax calculation and compliance"""
-    
+    """Tax calculation and compliance"""    
     async def calculate_quarterly_taxes(
         self, user_id: str, quarter: int, year: int
     ) -> TaxSummary:
-        """Calculate quarterly tax obligations"""
-        # This would integrate with tax calculation services
+        """Calculate quarterly tax obligations"""        # This would integrate with tax calculation services
         return TaxSummary(
             gross_revenue=Decimal('10000'),
             deductible_expenses=Decimal('2000'),
@@ -7461,13 +7176,11 @@ class TaxCalculator:
 
 
 class GoalManager:
-    """Monetization goal management"""
-    
+    """Monetization goal management"""    
     async def track_goal_progress(
         self, user_id: str, goal_id: str
     ) -> Dict[str, Any]:
-        """Track progress towards monetization goal"""
-        return {
+        """Track progress towards monetization goal"""        return {
             'goal_id': goal_id,
             'current_progress': 65.5,
             'target_value': 10000,
@@ -7478,13 +7191,11 @@ class GoalManager:
 
 
 class AnalyticsReporter:
-    """Advanced analytics and reporting"""
-    
+    """Advanced analytics and reporting"""    
     async def generate_monthly_report(
         self, user_id: str, month: int, year: int
     ) -> Dict[str, Any]:
-        """Generate comprehensive monthly revenue report"""
-        return {
+        """Generate comprehensive monthly revenue report"""        return {
             'report_period': f"{year}-{month:02d}",
             'total_revenue': 5500.00,
             'revenue_growth': 12.5,
@@ -7494,11 +7205,9 @@ class AnalyticsReporter:
 
 
 class ComplianceMonitor:
-    """Compliance monitoring and alerts"""
-    
+    """Compliance monitoring and alerts"""    
     async def monitor_compliance_status(self, user_id: str) -> Dict[str, Any]:
-        """Monitor ongoing compliance requirements"""
-        return {
+        """Monitor ongoing compliance requirements"""        return {
             'compliance_score': 95.0,
             'active_alerts': 0,
             'required_actions': [],
@@ -7518,8 +7227,7 @@ class ComplianceMonitor:
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Revenue Alert Handler Module
+"""Revenue Alert Handler Module
 
 This module provides comprehensive revenue monitoring and analytics for the
 Influencer AI Agent Platform. It tracks creator earnings, identifies revenue
@@ -7534,9 +7242,7 @@ Business Context:
 - Detects revenue drops and optimization opportunities
 - Provides predictive revenue analytics
 - Supports multi-platform revenue aggregation
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -7553,8 +7259,7 @@ from ..alert_manager import AlertManager
 
 
 class RevenueSource(Enum):
-    """Revenue source types."""
-    YOUTUBE_ADS = "youtube_ads"
+    """Revenue source types."""    YOUTUBE_ADS = "youtube_ads"
     YOUTUBE_MEMBERSHIPS = "youtube_memberships"
     YOUTUBE_SUPERCHAT = "youtube_superchat"
     TIKTOK_CREATOR_FUND = "tiktok_creator_fund"
@@ -7571,8 +7276,7 @@ class RevenueSource(Enum):
 
 
 class RevenueMetric(Enum):
-    """Revenue tracking metrics."""
-    DAILY_REVENUE = "daily_revenue"
+    """Revenue tracking metrics."""    DAILY_REVENUE = "daily_revenue"
     WEEKLY_REVENUE = "weekly_revenue"
     MONTHLY_REVENUE = "monthly_revenue"
     REVENUE_PER_VIEW = "revenue_per_view"
@@ -7584,8 +7288,7 @@ class RevenueMetric(Enum):
 
 @dataclass
 class RevenueData:
-    """Revenue tracking data structure."""
-    creator_id: str
+    """Revenue tracking data structure."""    creator_id: str
     source: RevenueSource
     amount: Decimal
     currency: str
@@ -7604,8 +7307,7 @@ class RevenueData:
 
 @dataclass
 class RevenueAnalysis:
-    """Revenue analysis results."""
-    creator_id: str
+    """Revenue analysis results."""    creator_id: str
     analysis_period: timedelta
     total_revenue: Decimal
     revenue_sources: Dict[RevenueSource, Decimal]
@@ -7617,13 +7319,11 @@ class RevenueAnalysis:
 
 
 class RevenueAlertHandler:
-    """
-    Comprehensive revenue monitoring and analytics system.
+    """    Comprehensive revenue monitoring and analytics system.
     
     This handler tracks creator revenue across all platforms, detects
     revenue anomalies, and provides insights for revenue optimization.
-    """
-    
+    """    
     def __init__(
         self,
         alert_manager: AlertManager,
@@ -7631,8 +7331,7 @@ class RevenueAlertHandler:
         revenue_drop_threshold: float = 0.20,  # 20% drop threshold
         min_revenue_threshold: Decimal = Decimal('100.00')
     ):
-        """Initialize revenue alert handler."""
-        self.alert_manager = alert_manager
+        """Initialize revenue alert handler."""        self.alert_manager = alert_manager
         self.db_pool = db_pool
         self.revenue_drop_threshold = revenue_drop_threshold
         self.min_revenue_threshold = min_revenue_threshold
@@ -7648,8 +7347,7 @@ class RevenueAlertHandler:
         self.monitoring_task: Optional[asyncio.Task] = None
     
     async def initialize(self) -> None:
-        """Initialize the revenue alert handler."""
-        try:
+        """Initialize the revenue alert handler."""        try:
             self.logger.info("Initializing revenue alert handler...")
             
             # Test database connection
@@ -7668,23 +7366,20 @@ class RevenueAlertHandler:
             raise
     
     async def analyze_creator_revenue(self, creator_id: str) -> RevenueAnalysis:
-        """
-        Perform comprehensive revenue analysis for a creator.
+        """        Perform comprehensive revenue analysis for a creator.
         
         Args:
             creator_id: Creator identifier
             
         Returns:
             Detailed revenue analysis
-        """
-        try:
+        """        try:
             analysis_start = datetime.now(timezone.utc) - timedelta(days=self.analysis_window_days)
             comparison_start = analysis_start - timedelta(days=self.comparison_window_days)
             
             async with self.db_pool.acquire() as conn:
                 # Get current period revenue
-                current_revenue = await conn.fetch("""
-                    SELECT source, SUM(amount) as total_amount, currency,
+                current_revenue = await conn.fetch("""                    SELECT source, SUM(amount) as total_amount, currency,
                            COUNT(*) as transaction_count,
                            AVG(amount) as avg_amount
                     FROM revenue_data 
@@ -7693,8 +7388,7 @@ class RevenueAlertHandler:
                 """, creator_id, analysis_start)
                 
                 # Get comparison period revenue
-                comparison_revenue = await conn.fetch("""
-                    SELECT source, SUM(amount) as total_amount, currency
+                comparison_revenue = await conn.fetch("""                    SELECT source, SUM(amount) as total_amount, currency
                     FROM revenue_data 
                     WHERE creator_id = $1 
                     AND timestamp >= $2 AND timestamp < $3
@@ -7748,12 +7442,10 @@ class RevenueAlertHandler:
             raise
     
     async def monitor_revenue_drops(self) -> None:
-        """Monitor for significant revenue drops."""
-        try:
+        """Monitor for significant revenue drops."""        try:
             # Get active creators
             async with self.db_pool.acquire() as conn:
-                creators = await conn.fetch("""
-                    SELECT DISTINCT creator_id 
+                creators = await conn.fetch("""                    SELECT DISTINCT creator_id 
                     FROM revenue_data 
                     WHERE timestamp >= $1
                 """, datetime.now(timezone.utc) - timedelta(days=7))
@@ -7762,15 +7454,13 @@ class RevenueAlertHandler:
                     creator_id = creator_row['creator_id']
                     
                     # Compare recent revenue to historical average
-                    recent_revenue = await conn.fetchval("""
-                        SELECT COALESCE(SUM(amount), 0)
+                    recent_revenue = await conn.fetchval("""                        SELECT COALESCE(SUM(amount), 0)
                         FROM revenue_data 
                         WHERE creator_id = $1 
                         AND timestamp >= $2
                     """, creator_id, datetime.now(timezone.utc) - timedelta(days=7))
                     
-                    historical_avg = await conn.fetchval("""
-                        SELECT COALESCE(AVG(weekly_revenue), 0)
+                    historical_avg = await conn.fetchval("""                        SELECT COALESCE(AVG(weekly_revenue), 0)
                         FROM (
                             SELECT DATE_TRUNC('week', timestamp) as week,
                                    SUM(amount) as weekly_revenue
@@ -7813,8 +7503,7 @@ class RevenueAlertHandler:
         creator_id: str, 
         revenue_data: List[Dict]
     ) -> List[str]:
-        """Detect revenue anomalies using statistical analysis."""
-        anomalies = []
+        """Detect revenue anomalies using statistical analysis."""        anomalies = []
         
         try:
             if len(revenue_data) < 3:
@@ -7822,8 +7511,7 @@ class RevenueAlertHandler:
             
             # Get historical revenue patterns
             async with self.db_pool.acquire() as conn:
-                historical_data = await conn.fetch("""
-                    SELECT DATE_TRUNC('day', timestamp) as day,
+                historical_data = await conn.fetch("""                    SELECT DATE_TRUNC('day', timestamp) as day,
                            SUM(amount) as daily_revenue
                     FROM revenue_data 
                     WHERE creator_id = $1
@@ -7860,8 +7548,7 @@ class RevenueAlertHandler:
         revenue_sources: Dict[RevenueSource, Decimal],
         growth_rate: float
     ) -> List[str]:
-        """Generate revenue optimization recommendations."""
-        recommendations = []
+        """Generate revenue optimization recommendations."""        recommendations = []
         
         try:
             # Analyze revenue diversification
@@ -7890,8 +7577,7 @@ class RevenueAlertHandler:
             
             # Platform-specific recommendations
             async with self.db_pool.acquire() as conn:
-                platform_performance = await conn.fetch("""
-                    SELECT platform, SUM(amount) as total_revenue,
+                platform_performance = await conn.fetch("""                    SELECT platform, SUM(amount) as total_revenue,
                            COUNT(*) as transaction_count
                     FROM revenue_data 
                     WHERE creator_id = $1
@@ -7922,8 +7608,7 @@ class RevenueAlertHandler:
         growth_rate: float,
         revenue_stream_count: int
     ) -> float:
-        """Calculate overall revenue performance score (0-100)."""
-        try:
+        """Calculate overall revenue performance score (0-100)."""        try:
             score = 0.0
             
             # Revenue amount score (0-40 points)
@@ -7953,15 +7638,13 @@ class RevenueAlertHandler:
         current_revenue: Decimal,
         growth_rate: float
     ) -> Decimal:
-        """Predict next period revenue using trend analysis."""
-        try:
+        """Predict next period revenue using trend analysis."""        try:
             # Simple linear prediction based on growth rate
             base_prediction = current_revenue * Decimal(str(1 + growth_rate))
             
             # Apply seasonality adjustments if available
             async with self.db_pool.acquire() as conn:
-                seasonal_data = await conn.fetch("""
-                    SELECT EXTRACT(MONTH FROM timestamp) as month,
+                seasonal_data = await conn.fetch("""                    SELECT EXTRACT(MONTH FROM timestamp) as month,
                            AVG(amount) as avg_amount
                     FROM revenue_data 
                     WHERE creator_id = $1
@@ -7988,8 +7671,7 @@ class RevenueAlertHandler:
             return current_revenue
     
     async def _monitor_revenue_continuously(self) -> None:
-        """Continuously monitor revenue metrics."""
-        while True:
+        """Continuously monitor revenue metrics."""        while True:
             try:
                 # Monitor revenue drops
                 await self.monitor_revenue_drops()
@@ -8008,14 +7690,12 @@ class RevenueAlertHandler:
                 await asyncio.sleep(3600)  # Wait 1 hour on error
     
     async def _monitor_revenue_goals(self) -> None:
-        """Monitor creator revenue goals and milestones."""
-        try:
+        """Monitor creator revenue goals and milestones."""        try:
             async with self.db_pool.acquire() as conn:
                 # Check monthly revenue goals
                 current_month_start = datetime.now(timezone.utc).replace(day=1, hour=0, minute=0, second=0, microsecond=0)
                 
-                goals = await conn.fetch("""
-                    SELECT creator_id, monthly_revenue_goal
+                goals = await conn.fetch("""                    SELECT creator_id, monthly_revenue_goal
                     FROM creator_goals 
                     WHERE monthly_revenue_goal > 0
                 """)
@@ -8024,8 +7704,7 @@ class RevenueAlertHandler:
                     creator_id = goal_row['creator_id']
                     goal_amount = goal_row['monthly_revenue_goal']
                     
-                    current_revenue = await conn.fetchval("""
-                        SELECT COALESCE(SUM(amount), 0)
+                    current_revenue = await conn.fetchval("""                        SELECT COALESCE(SUM(amount), 0)
                         FROM revenue_data 
                         WHERE creator_id = $1 AND timestamp >= $2
                     """, creator_id, current_month_start)
@@ -8059,8 +7738,7 @@ class RevenueAlertHandler:
             self.logger.error(f"Failed to monitor revenue goals: {e}")
     
     async def shutdown(self) -> None:
-        """Shutdown revenue alert handler."""
-        self.logger.info("Shutting down revenue alert handler...")
+        """Shutdown revenue alert handler."""        self.logger.info("Shutting down revenue alert handler...")
         
         if self.monitoring_task:
             self.monitoring_task.cancel()
@@ -8078,8 +7756,7 @@ class RevenueAlertHandler:
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Payment Alert Handler Module
+"""Payment Alert Handler Module
 
 This module provides comprehensive payment processing monitoring for the
 Influencer AI Agent Platform. It handles payment failures, transaction
@@ -8094,9 +7771,7 @@ Business Context:
 - Monitors revenue streams and payment security
 - Supports multi-currency and multi-platform payments
 - Essential for creator financial success tracking
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -8111,8 +7786,7 @@ from ..alert_manager import AlertManager
 
 
 class PaymentStatus(Enum):
-    """Payment processing status."""
-    PENDING = "pending"
+    """Payment processing status."""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -8123,8 +7797,7 @@ class PaymentStatus(Enum):
 
 
 class PaymentMethod(Enum):
-    """Supported payment methods."""
-    CREDIT_CARD = "credit_card"
+    """Supported payment methods."""    CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     PAYPAL = "paypal"
     STRIPE = "stripe"
@@ -8136,8 +7809,7 @@ class PaymentMethod(Enum):
 
 @dataclass
 class PaymentTransaction:
-    """Payment transaction data."""
-    transaction_id: str
+    """Payment transaction data."""    transaction_id: str
     creator_id: str
     payer_id: str
     amount: Decimal
@@ -8153,18 +7825,15 @@ class PaymentTransaction:
     
     @property
     def is_high_value(self) -> bool:
-        """Check if transaction is high value."""
-        return self.amount >= Decimal('1000.00')
+        """Check if transaction is high value."""        return self.amount >= Decimal('1000.00')
 
 
 class PaymentAlertHandler:
-    """
-    Comprehensive payment processing and financial alert management system.
+    """    Comprehensive payment processing and financial alert management system.
     
     This handler monitors payment transactions, detects anomalies, and
     generates alerts for payment-related issues affecting creator revenue.
-    """
-    
+    """    
     def __init__(
         self,
         alert_manager: AlertManager,
@@ -8172,8 +7841,7 @@ class PaymentAlertHandler:
         high_value_threshold: Decimal = Decimal('1000.00'),
         fraud_detection_enabled: bool = True
     ):
-        """Initialize payment alert handler."""
-        self.alert_manager = alert_manager
+        """Initialize payment alert handler."""        self.alert_manager = alert_manager
         self.db_pool = db_pool
         self.high_value_threshold = high_value_threshold
         self.fraud_detection_enabled = fraud_detection_enabled
@@ -8191,8 +7859,7 @@ class PaymentAlertHandler:
         self.monitoring_task: Optional[asyncio.Task] = None
     
     async def initialize(self) -> None:
-        """Initialize the payment alert handler."""
-        try:
+        """Initialize the payment alert handler."""        try:
             self.logger.info("Initializing payment alert handler...")
             
             # Test database connection
@@ -8216,15 +7883,13 @@ class PaymentAlertHandler:
         alert_type: str,
         severity: AlertSeverity = AlertSeverity.MEDIUM
     ) -> None:
-        """
-        Process payment-related alert.
+        """        Process payment-related alert.
         
         Args:
             transaction: Payment transaction data
             alert_type: Type of payment alert
             severity: Alert severity level
-        """
-        try:
+        """        try:
             await self.alert_manager.create_alert(
                 Alert(
                     id=f"payment_{alert_type}_{transaction.transaction_id}",
@@ -8249,14 +7914,12 @@ class PaymentAlertHandler:
             self.logger.error(f"Failed to process payment alert: {e}")
     
     async def monitor_payment_failures(self, time_window_hours: int = 1) -> None:
-        """Monitor for payment failure rate alerts."""
-        try:
+        """Monitor for payment failure rate alerts."""        try:
             since_time = datetime.now(timezone.utc) - timedelta(hours=time_window_hours)
             
             async with self.db_pool.acquire() as conn:
                 # Get payment statistics
-                stats = await conn.fetchrow("""
-                    SELECT 
+                stats = await conn.fetchrow("""                    SELECT 
                         COUNT(*) as total_payments,
                         COUNT(CASE WHEN status = 'failed' THEN 1 END) as failed_payments,
                         COUNT(CASE WHEN status = 'completed' THEN 1 END) as successful_payments
@@ -8289,8 +7952,7 @@ class PaymentAlertHandler:
             self.logger.error(f"Failed to monitor payment failures: {e}")
     
     async def _monitor_payments_continuously(self) -> None:
-        """Continuously monitor payment transactions."""
-        while True:
+        """Continuously monitor payment transactions."""        while True:
             try:
                 # Monitor payment failures
                 await self.monitor_payment_failures()
@@ -8313,15 +7975,13 @@ class PaymentAlertHandler:
                 await asyncio.sleep(60)
     
     async def _detect_fraud_patterns(self) -> None:
-        """Detect potential fraud patterns in payments."""
-        try:
+        """Detect potential fraud patterns in payments."""        try:
             # Check for suspicious transaction patterns
             since_time = datetime.now(timezone.utc) - timedelta(hours=1)
             
             async with self.db_pool.acquire() as conn:
                 # Check for multiple failed attempts from same source
-                suspicious_attempts = await conn.fetch("""
-                    SELECT payer_id, COUNT(*) as attempt_count, 
+                suspicious_attempts = await conn.fetch("""                    SELECT payer_id, COUNT(*) as attempt_count, 
                            SUM(amount) as total_amount
                     FROM payment_transactions 
                     WHERE timestamp >= $1 AND status = 'failed'
@@ -8351,13 +8011,11 @@ class PaymentAlertHandler:
             self.logger.error(f"Failed to detect fraud patterns: {e}")
     
     async def _monitor_high_value_transactions(self) -> None:
-        """Monitor high-value transactions for additional security."""
-        try:
+        """Monitor high-value transactions for additional security."""        try:
             since_time = datetime.now(timezone.utc) - timedelta(minutes=self.monitoring_interval_minutes)
             
             async with self.db_pool.acquire() as conn:
-                high_value_transactions = await conn.fetch("""
-                    SELECT * FROM payment_transactions 
+                high_value_transactions = await conn.fetch("""                    SELECT * FROM payment_transactions 
                     WHERE timestamp >= $1 AND amount >= $2
                     AND status IN ('pending', 'processing')
                 """, since_time, self.high_value_threshold)
@@ -8389,8 +8047,7 @@ class PaymentAlertHandler:
             self.logger.error(f"Failed to monitor high value transactions: {e}")
     
     async def shutdown(self) -> None:
-        """Shutdown payment alert handler."""
-        self.logger.info("Shutting down payment alert handler...")
+        """Shutdown payment alert handler."""        self.logger.info("Shutting down payment alert handler...")
         
         if self.monitoring_task:
             self.monitoring_task.cancel()
@@ -8408,8 +8065,7 @@ class PaymentAlertHandler:
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Financial Alert Handlers Module
+"""Financial Alert Handlers Module
 
 This module provides specialized alert handlers for financial operations,
 including payment processing, revenue tracking, royalty distribution,
@@ -8424,9 +8080,7 @@ Business Context:
 - Monitors royalty distribution and billing
 - Supports financial analytics and reporting
 - Part of Influencer AI Agent Platform ecosystem
-"""
-
-from .payment_alerts import PaymentAlertHandler
+"""from .payment_alerts import PaymentAlertHandler
 from .revenue_alerts import RevenueAlertHandler
 from .royalty_alerts import RoyaltyAlertHandler
 from .billing_alerts import BillingAlertHandler
@@ -8449,17 +8103,14 @@ __copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Monetization handlers module for creator workflow alerts.
+"""Monetization handlers module for creator workflow alerts.
 
 This module provides comprehensive monetization functionality including:
 - Multi-platform revenue tracking and analytics
 - Payment processing and payout management
 - Revenue optimization and milestone monitoring
 - Platform integration management (Spotify, YouTube, Instagram, TikTok, etc.)
-"""
-
-from .monetization_alerts import (
+"""from .monetization_alerts import (
     MonetizationAlertHandler,
     Platform,
     RevenueType,
@@ -8492,8 +8143,7 @@ __all__ = [
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Monetization Alert Handler Module
+"""Monetization Alert Handler Module
 
 This module provides comprehensive monitoring for creator monetization and revenue
 tracking in the Influencer AI Agent Platform. It handles platform integrations,
@@ -8508,9 +8158,7 @@ Business Context:
 - Monitors earnings from Spotify, YouTube, Instagram, TikTok, and other platforms
 - Integrates with payment processors and automated payout systems
 - Essential for creator financial success and platform sustainability
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import json
@@ -8527,8 +8175,7 @@ from ...alert_manager import AlertManager
 
 
 class Platform(Enum):
-    """Supported monetization platforms."""
-    SPOTIFY = "spotify"
+    """Supported monetization platforms."""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -8543,8 +8190,7 @@ class Platform(Enum):
 
 
 class RevenueType(Enum):
-    """Types of revenue streams."""
-    STREAMING = "streaming"
+    """Types of revenue streams."""    STREAMING = "streaming"
     ADVERTISING = "advertising"
     SUBSCRIPTIONS = "subscriptions"
     DONATIONS = "donations"
@@ -8559,8 +8205,7 @@ class RevenueType(Enum):
 
 
 class PaymentStatus(Enum):
-    """Payment processing statuses."""
-    PENDING = "pending"
+    """Payment processing statuses."""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -8570,8 +8215,7 @@ class PaymentStatus(Enum):
 
 
 class AlertType(Enum):
-    """Types of monetization alerts."""
-    REVENUE_MILESTONE = "revenue_milestone"
+    """Types of monetization alerts."""    REVENUE_MILESTONE = "revenue_milestone"
     PAYMENT_PROCESSED = "payment_processed"
     PAYMENT_FAILED = "payment_failed"
     PLATFORM_EARNINGS = "platform_earnings"
@@ -8585,8 +8229,7 @@ class AlertType(Enum):
 
 @dataclass
 class PlatformCredentials:
-    """Platform API credentials for revenue tracking."""
-    platform: Platform
+    """Platform API credentials for revenue tracking."""    platform: Platform
     api_key: str
     api_secret: Optional[str] = None
     access_token: Optional[str] = None
@@ -8602,8 +8245,7 @@ class PlatformCredentials:
 
 @dataclass
 class RevenueMetrics:
-    """Revenue metrics for a specific platform or overall."""
-    user_id: str
+    """Revenue metrics for a specific platform or overall."""    user_id: str
     platform: Platform
     revenue_type: RevenueType
     amount: Decimal
@@ -8624,8 +8266,7 @@ class RevenueMetrics:
 
 @dataclass
 class PayoutRecord:
-    """Record of payments made to creators."""
-    payout_id: str
+    """Record of payments made to creators."""    payout_id: str
     user_id: str
     amount: Decimal
     currency: str
@@ -8647,8 +8288,7 @@ class PayoutRecord:
 
 @dataclass
 class RevenueGoal:
-    """Revenue goals and targets for creators."""
-    goal_id: str
+    """Revenue goals and targets for creators."""    goal_id: str
     user_id: str
     target_amount: Decimal
     currency: str
@@ -8665,8 +8305,7 @@ class RevenueGoal:
 
 @dataclass
 class MonetizationAlert:
-    """Alert for monetization events."""
-    alert_id: str
+    """Alert for monetization events."""    alert_id: str
     user_id: str
     alert_type: AlertType
     platform: Optional[Platform]
@@ -8684,13 +8323,11 @@ class MonetizationAlert:
 
 
 class MonetizationAlertHandler:
-    """
-    Alert handler for creator monetization and revenue tracking.
+    """    Alert handler for creator monetization and revenue tracking.
     
     Manages platform integrations, revenue analytics, payout processing,
     and monetization optimization notifications.
-    """
-    
+    """    
     def __init__(self, alert_manager: AlertManager):
         self.alert_manager = alert_manager
         self.logger = logging.getLogger(__name__)
@@ -8713,8 +8350,7 @@ class MonetizationAlertHandler:
         }
     
     def _initialize_platform_configs(self) -> Dict[Platform, Dict[str, Any]]:
-        """Initialize platform-specific configurations."""
-        return {
+        """Initialize platform-specific configurations."""        return {
             Platform.SPOTIFY: {
                 "base_url": "https://api.spotify.com/v1",
                 "auth_url": "https://accounts.spotify.com/api/token",
@@ -8759,8 +8395,7 @@ class MonetizationAlertHandler:
         user_id: str,
         credentials: PlatformCredentials
     ) -> bool:
-        """Register platform credentials for revenue tracking."""
-        if user_id not in self.platform_credentials:
+        """Register platform credentials for revenue tracking."""        if user_id not in self.platform_credentials:
             self.platform_credentials[user_id] = {}
         
         # Validate credentials
@@ -8809,8 +8444,7 @@ class MonetizationAlertHandler:
         return True
     
     async def _validate_platform_credentials(self, credentials: PlatformCredentials) -> bool:
-        """Validate platform credentials by testing API access."""
-        try:
+        """Validate platform credentials by testing API access."""        try:
             config = self.platform_configs.get(credentials.platform)
             if not config:
                 return False
@@ -8833,8 +8467,7 @@ class MonetizationAlertHandler:
             return False
     
     async def _validate_spotify_credentials(self, credentials: PlatformCredentials) -> bool:
-        """Validate Spotify API credentials."""
-        try:
+        """Validate Spotify API credentials."""        try:
             headers = {"Authorization": f"Bearer {credentials.access_token}"}
             response = requests.get("https://api.spotify.com/v1/me", headers=headers, timeout=10)
             return response.status_code == 200
@@ -8842,8 +8475,7 @@ class MonetizationAlertHandler:
             return False
     
     async def _validate_youtube_credentials(self, credentials: PlatformCredentials) -> bool:
-        """Validate YouTube API credentials."""
-        try:
+        """Validate YouTube API credentials."""        try:
             response = requests.get(
                 f"https://www.googleapis.com/youtube/v3/channels?part=snippet&mine=true&key={credentials.api_key}",
                 headers={"Authorization": f"Bearer {credentials.access_token}"},
@@ -8854,8 +8486,7 @@ class MonetizationAlertHandler:
             return False
     
     async def _validate_instagram_credentials(self, credentials: PlatformCredentials) -> bool:
-        """Validate Instagram API credentials."""
-        try:
+        """Validate Instagram API credentials."""        try:
             response = requests.get(
                 f"https://graph.instagram.com/me?fields=id,username&access_token={credentials.access_token}",
                 timeout=10
@@ -8865,8 +8496,7 @@ class MonetizationAlertHandler:
             return False
     
     async def _validate_tiktok_credentials(self, credentials: PlatformCredentials) -> bool:
-        """Validate TikTok API credentials."""
-        try:
+        """Validate TikTok API credentials."""        try:
             headers = {"Authorization": f"Bearer {credentials.access_token}"}
             response = requests.post(
                 "https://open-api.tiktok.com/oauth/access_token/",
@@ -8879,12 +8509,10 @@ class MonetizationAlertHandler:
             return False
     
     async def _validate_generic_credentials(self, credentials: PlatformCredentials) -> bool:
-        """Generic credential validation for custom platforms."""
-        return bool(credentials.api_key or credentials.access_token)
+        """Generic credential validation for custom platforms."""        return bool(credentials.api_key or credentials.access_token)
     
     async def _start_platform_revenue_tracking(self, user_id: str, platform: Platform) -> None:
-        """Start continuous revenue tracking for a platform."""
-        while True:
+        """Start continuous revenue tracking for a platform."""        while True:
             try:
                 # Fetch latest revenue data
                 revenue_data = await self._fetch_platform_revenue(user_id, platform)
@@ -8904,8 +8532,7 @@ class MonetizationAlertHandler:
                 await asyncio.sleep(300)  # Wait 5 minutes on error
     
     def _get_platform_update_interval(self, platform: Platform) -> int:
-        """Get update interval in seconds for each platform."""
-        intervals = {
+        """Get update interval in seconds for each platform."""        intervals = {
             Platform.SPOTIFY: 3600,     # 1 hour
             Platform.YOUTUBE: 1800,     # 30 minutes
             Platform.INSTAGRAM: 3600,   # 1 hour
@@ -8920,8 +8547,7 @@ class MonetizationAlertHandler:
         user_id: str,
         platform: Platform
     ) -> Optional[Dict[str, Any]]:
-        """Fetch revenue data from platform APIs."""
-        credentials = self.platform_credentials.get(user_id, {}).get(platform)
+        """Fetch revenue data from platform APIs."""        credentials = self.platform_credentials.get(user_id, {}).get(platform)
         if not credentials or not credentials.is_active:
             return None
         
@@ -8942,8 +8568,7 @@ class MonetizationAlertHandler:
             return None
     
     async def _fetch_spotify_revenue(self, credentials: PlatformCredentials) -> Dict[str, Any]:
-        """Fetch revenue data from Spotify API."""
-        headers = {"Authorization": f"Bearer {credentials.access_token}"}
+        """Fetch revenue data from Spotify API."""        headers = {"Authorization": f"Bearer {credentials.access_token}"}
         
         try:
             response = requests.get("https://api.spotify.com/v1/me", headers=headers, timeout=10)
@@ -8969,8 +8594,7 @@ class MonetizationAlertHandler:
         platform: Platform,
         revenue_data: Dict[str, Any]
     ) -> None:
-        """Process and store revenue data."""
-        try:
+        """Process and store revenue data."""        try:
             # Create revenue metrics record
             metrics = RevenueMetrics(
                 user_id=user_id,
@@ -9004,8 +8628,7 @@ class MonetizationAlertHandler:
         platform: Platform,
         revenue_data: Dict[str, Any]
     ) -> None:
-        """Check for revenue-related alerts."""
-        try:
+        """Check for revenue-related alerts."""        try:
             current_revenue = Decimal(str(revenue_data.get("estimated_revenue", 0.0)))
             
             # Check milestone achievements
@@ -9026,8 +8649,7 @@ class MonetizationAlertHandler:
         platform: Platform,
         current_revenue: Decimal
     ) -> None:
-        """Check for revenue milestone achievements."""
-        try:
+        """Check for revenue milestone achievements."""        try:
             user_metrics = self.revenue_metrics.get(user_id, [])
             if not user_metrics:
                 return
@@ -9068,8 +8690,7 @@ class MonetizationAlertHandler:
         platform: Platform,
         revenue_data: Dict[str, Any]
     ) -> None:
-        """Check for performance change alerts."""
-        try:
+        """Check for performance change alerts."""        try:
             user_metrics = self.revenue_metrics.get(user_id, [])
             platform_metrics = [m for m in user_metrics if m.platform == platform]
             
@@ -9139,8 +8760,7 @@ class MonetizationAlertHandler:
         platform: Platform,
         revenue_data: Dict[str, Any]
     ) -> None:
-        """Check for monetization optimization opportunities."""
-        try:
+        """Check for monetization optimization opportunities."""        try:
             # Example optimization checks
             engagement_rate = revenue_data.get("engagement_rate", 0)
             views = revenue_data.get("views", 0)
@@ -9202,8 +8822,7 @@ class MonetizationAlertHandler:
             self.logger.error(f"Failed to check optimization alerts: {e}")
     
     async def shutdown(self) -> None:
-        """Shutdown monetization alert handler."""
-        self.logger.info("Shutting down monetization alert handler...")
+        """Shutdown monetization alert handler."""        self.logger.info("Shutting down monetization alert handler...")
         self.platform_credentials.clear()
         self.revenue_metrics.clear()
         self.payout_records.clear()
@@ -9217,8 +8836,7 @@ class MonetizationAlertHandler:
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Revenue Manager Module
+"""Revenue Manager Module
 
 Advanced revenue management system for creator collaborations.
 Handles revenue sharing, monetization optimization, payment processing,
@@ -9226,9 +8844,7 @@ and earnings analytics.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
@@ -9248,8 +8864,7 @@ from ..services.blockchain_service import BlockchainContractService
 
 
 class RevenueStreamType(Enum):
-    """Types of revenue streams."""
-    DIRECT_SALES = "direct_sales"
+    """Types of revenue streams."""    DIRECT_SALES = "direct_sales"
     STREAMING_ROYALTIES = "streaming_royalties"
     BRAND_PARTNERSHIPS = "brand_partnerships"
     MERCHANDISE = "merchandise"
@@ -9264,8 +8879,7 @@ class RevenueStreamType(Enum):
 
 
 class PaymentStatus(Enum):
-    """Payment processing status."""
-    PENDING = "pending"
+    """Payment processing status."""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -9275,8 +8889,7 @@ class PaymentStatus(Enum):
 
 
 class MonetizationModel(Enum):
-    """Monetization model types."""
-    EQUAL_SPLIT = "equal_split"
+    """Monetization model types."""    EQUAL_SPLIT = "equal_split"
     CONTRIBUTION_BASED = "contribution_based"
     AUDIENCE_BASED = "audience_based"
     SKILL_BASED = "skill_based"
@@ -9286,8 +8899,7 @@ class MonetizationModel(Enum):
 
 @dataclass
 class RevenueConfiguration:
-    """Configuration for revenue management."""
-    auto_payment_enabled: bool = True
+    """Configuration for revenue management."""    auto_payment_enabled: bool = True
     payment_frequency: str = "monthly"  # weekly, monthly, quarterly
     minimum_payout_threshold: Decimal = Decimal("10.00")
     tax_calculation_enabled: bool = True
@@ -9298,8 +8910,7 @@ class RevenueConfiguration:
 
 
 class RevenueShareCalculator:
-    """Calculates revenue sharing between collaboration partners."""
-    
+    """Calculates revenue sharing between collaboration partners."""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.financial_calculator = FinancialCalculator()
@@ -9311,8 +8922,7 @@ class RevenueShareCalculator:
         sharing_agreement: Dict[str, Any],
         contribution_data: Dict[str, Dict[str, float]]
     ) -> Dict[str, RevenueShare]:
-        """Calculate revenue shares for all partners."""
-        
+        """Calculate revenue shares for all partners."""        
         try:
             shares = {}
             model_type = MonetizationModel(sharing_agreement.get('model', 'equal_split'))
@@ -9363,8 +8973,7 @@ class RevenueShareCalculator:
         total_revenue: Decimal,
         sharing_agreement: Dict[str, Any]
     ) -> Dict[str, RevenueShare]:
-        """Calculate equal revenue split among partners."""
-        
+        """Calculate equal revenue split among partners."""        
         participants = sharing_agreement.get('participants', [])
         if not participants:
             raise ValueError("No participants specified for revenue sharing")
@@ -9396,8 +9005,7 @@ class RevenueShareCalculator:
         sharing_agreement: Dict[str, Any],
         contribution_data: Dict[str, Dict[str, float]]
     ) -> Dict[str, RevenueShare]:
-        """Calculate revenue split based on individual contributions."""
-        
+        """Calculate revenue split based on individual contributions."""        
         shares = {}
         total_contribution_score = 0.0
         
@@ -9440,8 +9048,7 @@ class RevenueShareCalculator:
         sharing_agreement: Dict[str, Any],
         contribution_data: Dict[str, Dict[str, float]]
     ) -> Dict[str, RevenueShare]:
-        """Calculate revenue split based on audience contribution."""
-        
+        """Calculate revenue split based on audience contribution."""        
         shares = {}
         total_audience_value = 0.0
         
@@ -9494,8 +9101,7 @@ class RevenueShareCalculator:
         sharing_agreement: Dict[str, Any],
         contribution_data: Dict[str, Dict[str, float]]
     ) -> Dict[str, RevenueShare]:
-        """Calculate revenue split based on skill levels and importance."""
-        
+        """Calculate revenue split based on skill levels and importance."""        
         shares = {}
         skill_weights = sharing_agreement.get('skill_weights', {})
         total_weighted_skill_score = 0.0
@@ -9546,8 +9152,7 @@ class RevenueShareCalculator:
         sharing_agreement: Dict[str, Any],
         contribution_data: Dict[str, Dict[str, float]]
     ) -> Dict[str, RevenueShare]:
-        """Calculate revenue split using hybrid approach combining multiple factors."""
-        
+        """Calculate revenue split using hybrid approach combining multiple factors."""        
         shares = {}
         hybrid_weights = sharing_agreement.get('hybrid_weights', {
             'contribution': 0.4,
@@ -9623,8 +9228,7 @@ class RevenueShareCalculator:
         total_revenue: Decimal,
         sharing_agreement: Dict[str, Any]
     ) -> Dict[str, RevenueShare]:
-        """Calculate revenue split using custom percentages."""
-        
+        """Calculate revenue split using custom percentages."""        
         custom_percentages = sharing_agreement.get('custom_percentages', {})
         if not custom_percentages:
             raise ValueError("Custom percentages not specified")
@@ -9655,8 +9259,7 @@ class RevenueShareCalculator:
         return shares
     
     def _calculate_contribution_score(self, contributions: Dict[str, float]) -> float:
-        """Calculate overall contribution score from individual metrics."""
-        
+        """Calculate overall contribution score from individual metrics."""        
         weights = {
             'content_creation': 0.3,
             'editing': 0.2,
@@ -9678,8 +9281,7 @@ class RevenueShareCalculator:
         shares: Dict[str, RevenueShare],
         total_revenue: Decimal
     ):
-        """Validate that revenue shares sum correctly."""
-        
+        """Validate that revenue shares sum correctly."""        
         total_shared = sum(share.share_amount for share in shares.values())
         total_percentage = sum(share.share_percentage for share in shares.values())
         
@@ -9695,8 +9297,7 @@ class RevenueShareCalculator:
 
 
 class MonetizationOptimizer:
-    """Optimizes monetization strategies for collaborations."""
-    
+    """Optimizes monetization strategies for collaborations."""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -9707,8 +9308,7 @@ class MonetizationOptimizer:
         audience_data: Dict[str, Any],
         market_data: Dict[str, Any]
     ) -> MonetizationStrategy:
-        """Optimize monetization strategy for collaboration."""
-        
+        """Optimize monetization strategy for collaboration."""        
         try:
             # Analyze content monetization potential
             content_analysis = await self._analyze_content_monetization_potential(content_data)
@@ -9750,8 +9350,7 @@ class MonetizationOptimizer:
         self,
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze content for monetization potential."""
-        
+        """Analyze content for monetization potential."""        
         analysis = {
             'content_type': content_data.get('type', 'unknown'),
             'quality_score': content_data.get('quality_score', 0.5),
@@ -9801,8 +9400,7 @@ class MonetizationOptimizer:
         self,
         audience_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze audience monetization preferences and spending behavior."""
-        
+        """Analyze audience monetization preferences and spending behavior."""        
         analysis = {
             'total_audience': audience_data.get('total_size', 0),
             'demographic_breakdown': audience_data.get('demographics', {}),
@@ -9848,8 +9446,7 @@ class MonetizationOptimizer:
 
 
 class PaymentProcessor:
-    """Handles payment processing and transactions."""
-    
+    """Handles payment processing and transactions."""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.payment_service = PaymentService()
@@ -9861,8 +9458,7 @@ class PaymentProcessor:
         revenue_shares: Dict[str, RevenueShare],
         payment_configuration: Dict[str, Any]
     ) -> Dict[str, PaymentTransaction]:
-        """Process payments for revenue shares."""
-        
+        """Process payments for revenue shares."""        
         transactions = {}
         
         try:
@@ -9903,8 +9499,7 @@ class PaymentProcessor:
         revenue_share: RevenueShare,
         configuration: Dict[str, Any]
     ) -> PaymentTransaction:
-        """Create payment transaction record."""
-        
+        """Create payment transaction record."""        
         return PaymentTransaction(
             transaction_id=str(uuid.uuid4()),
             partnership_id=partnership_id,
@@ -9926,8 +9521,7 @@ class PaymentProcessor:
         transaction: PaymentTransaction,
         configuration: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process individual payment."""
-        
+        """Process individual payment."""        
         try:
             # Use appropriate payment method
             if configuration.get('blockchain_enabled', False):
@@ -9946,8 +9540,7 @@ class PaymentProcessor:
         transaction: PaymentTransaction,
         configuration: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process payment through traditional payment service."""
-        
+        """Process payment through traditional payment service."""        
         payment_data = {
             'recipient_id': transaction.recipient_id,
             'amount': float(transaction.amount),
@@ -9964,8 +9557,7 @@ class PaymentProcessor:
         transaction: PaymentTransaction,
         configuration: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process payment through blockchain smart contract."""
-        
+        """Process payment through blockchain smart contract."""        
         contract_data = {
             'recipient_address': await self._get_participant_wallet_address(transaction.recipient_id),
             'amount': transaction.amount,
@@ -9977,8 +9569,7 @@ class PaymentProcessor:
 
 
 class EarningsTracker:
-    """Tracks earnings and generates financial reports."""
-    
+    """Tracks earnings and generates financial reports."""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.earnings_history = {}
@@ -9989,8 +9580,7 @@ class EarningsTracker:
         revenue_data: Dict[str, Any],
         timeframe: str = "monthly"
     ) -> EarningsReport:
-        """Track earnings for partnership."""
-        
+        """Track earnings for partnership."""        
         try:
             # Calculate earnings metrics
             total_revenue = Decimal(str(revenue_data.get('total_revenue', 0)))
@@ -10038,8 +9628,7 @@ class EarningsTracker:
         current_revenue: Decimal,
         timeframe: str
     ) -> Dict[str, Any]:
-        """Calculate growth metrics compared to previous periods."""
-        
+        """Calculate growth metrics compared to previous periods."""        
         history = self.earnings_history.get(partnership_id, [])
         if not history:
             return {
@@ -10084,8 +9673,7 @@ class EarningsTracker:
 
 
 class RevenueManager:
-    """Main revenue management coordinator."""
-    
+    """Main revenue management coordinator."""    
     def __init__(self, configuration: Optional[RevenueConfiguration] = None):
         self.logger = logging.getLogger(__name__)
         self.config = configuration or RevenueConfiguration()
@@ -10105,8 +9693,7 @@ class RevenueManager:
         partnership_id: str,
         revenue_event: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Manage revenue for collaboration partnership."""
-        
+        """Manage revenue for collaboration partnership."""        
         try:
             event_type = revenue_event.get('type')
             
@@ -10132,8 +9719,7 @@ class RevenueManager:
         partnership_id: str,
         revenue_event: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Handle revenue generation event."""
-        
+        """Handle revenue generation event."""        
         total_revenue = Decimal(str(revenue_event.get('amount', 0)))
         sharing_agreement = revenue_event.get('sharing_agreement', {})
         contribution_data = revenue_event.get('contribution_data', {})
@@ -10165,8 +9751,7 @@ class RevenueManager:
         partnership_id: str,
         revenue_shares: Dict[str, RevenueShare]
     ) -> PaymentSchedule:
-        """Schedule payments for revenue shares."""
-        
+        """Schedule payments for revenue shares."""        
         # Determine payment date based on frequency
         if self.config.payment_frequency == 'weekly':
             payment_date = datetime.now(timezone.utc) + timedelta(weeks=1)
@@ -10204,8 +9789,7 @@ class RevenueManager:
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-AI-Powered Revenue Optimization and Monetization Engine
+"""AI-Powered Revenue Optimization and Monetization Engine
 
 Advanced revenue optimization system for multi-format creators that analyzes
 monetization opportunities across platforms, optimizes pricing strategies,
@@ -10221,9 +9805,7 @@ without explicit written permission from Fahed Mlaiel is strictly prohibited.
 Legal action will be taken against any violations.
 
 ALL RIGHTS RESERVED - Fahed Mlaiel 2025
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Set, Union
 from dataclasses import dataclass, asdict, field
@@ -10274,8 +9856,7 @@ settings = get_settings()
 
 
 class RevenueStreamType(Enum):
-    """Types of revenue streams."""
-    PLATFORM_AD_REVENUE = "platform_ad_revenue"
+    """Types of revenue streams."""    PLATFORM_AD_REVENUE = "platform_ad_revenue"
     SUBSCRIPTION_REVENUE = "subscription_revenue"
     MERCHANDISE_SALES = "merchandise_sales"
     BRAND_PARTNERSHIPS = "brand_partnerships"
@@ -10293,8 +9874,7 @@ class RevenueStreamType(Enum):
 
 
 class MonetizationGoal(Enum):
-    """Monetization optimization goals."""
-    MAXIMIZE_TOTAL_REVENUE = "maximize_total_revenue"
+    """Monetization optimization goals."""    MAXIMIZE_TOTAL_REVENUE = "maximize_total_revenue"
     DIVERSIFY_INCOME_STREAMS = "diversify_income_streams"
     INCREASE_RECURRING_REVENUE = "increase_recurring_revenue"
     OPTIMIZE_PROFIT_MARGINS = "optimize_profit_margins"
@@ -10306,8 +9886,7 @@ class MonetizationGoal(Enum):
 
 @dataclass
 class RevenueOptimizationContext:
-    """Context for revenue optimization analysis."""
-    creator_id: str
+    """Context for revenue optimization analysis."""    creator_id: str
     current_revenue_streams: List[RevenueStream]
     target_revenue_goals: Dict[str, float]
     audience_size: Dict[str, int]
@@ -10322,8 +9901,7 @@ class RevenueOptimizationContext:
 
 @dataclass
 class RevenueOpportunity:
-    """Individual revenue optimization opportunity."""
-    opportunity_id: str
+    """Individual revenue optimization opportunity."""    opportunity_id: str
     opportunity_type: RevenueStreamType
     title: str
     description: str
@@ -10343,8 +9921,7 @@ class RevenueOpportunity:
 
 @dataclass
 class MonetizationPlan:
-    """Comprehensive monetization plan."""
-    plan_id: str
+    """Comprehensive monetization plan."""    plan_id: str
     creator_id: str
     optimization_goals: List[MonetizationGoal]
     current_revenue_analysis: Dict[str, Any]
@@ -10361,8 +9938,7 @@ class MonetizationPlan:
 
 
 class RevenueOptimizationEngine:
-    """
-    Advanced AI-powered revenue optimization and monetization engine.
+    """    Advanced AI-powered revenue optimization and monetization engine.
     
     Features:
     - Multi-stream revenue analysis and optimization
@@ -10373,8 +9949,7 @@ class RevenueOptimizationEngine:
     - Subscription and product strategy optimization
     - Revenue forecasting and predictive analytics
     - ROI analysis and performance tracking
-    """
-    
+    """    
     def __init__(self):
         self.settings = get_settings()
         self.cache_manager = get_cache_manager()
@@ -10409,8 +9984,7 @@ class RevenueOptimizationEngine:
         logger.info("RevenueOptimizationEngine initialized successfully")
 
     async def initialize_models(self) -> None:
-        """Initialize ML models for revenue optimization."""
-        try:
+        """Initialize ML models for revenue optimization."""        try:
             with self._lock:
                 if self._models_initialized:
                     return
@@ -10436,16 +10010,14 @@ class RevenueOptimizationEngine:
         self,
         context: RevenueOptimizationContext
     ) -> MonetizationPlan:
-        """
-        Generate comprehensive monetization optimization plan for a creator.
+        """        Generate comprehensive monetization optimization plan for a creator.
         
         Args:
             context: Revenue optimization context
             
         Returns:
             Complete monetization plan with strategies and opportunities
-        """
-        try:
+        """        try:
             self.metrics_collector.increment("optimize_monetization_calls")
             start_time = datetime.utcnow()
             
@@ -10552,8 +10124,7 @@ class RevenueOptimizationEngine:
         market_data: Dict[str, Any],
         goals: List[str]
     ) -> Dict[str, Any]:
-        """
-        Optimize pricing strategy for creator products/services.
+        """        Optimize pricing strategy for creator products/services.
         
         Args:
             creator_id: Creator identifier
@@ -10564,8 +10135,7 @@ class RevenueOptimizationEngine:
             
         Returns:
             Optimized pricing strategy
-        """
-        try:
+        """        try:
             self.metrics_collector.increment("optimize_pricing_calls")
             
             # Analyze current pricing performance
@@ -10630,8 +10200,7 @@ class RevenueOptimizationEngine:
         content_formats: List[ContentFormat],
         target_revenue: float
     ) -> List[RevenueOpportunity]:
-        """
-        Analyze and identify revenue opportunities for a creator.
+        """        Analyze and identify revenue opportunities for a creator.
         
         Args:
             creator_id: Creator identifier
@@ -10641,8 +10210,7 @@ class RevenueOptimizationEngine:
             
         Returns:
             List of identified revenue opportunities
-        """
-        try:
+        """        try:
             self.metrics_collector.increment("analyze_opportunities_calls")
             
             # Collect creator performance data
@@ -10714,8 +10282,7 @@ class RevenueOptimizationEngine:
         optimization_strategies: List[MonetizationStrategy],
         forecast_horizon: int = 12
     ) -> Dict[str, Any]:
-        """
-        Forecast revenue growth based on current streams and optimization strategies.
+        """        Forecast revenue growth based on current streams and optimization strategies.
         
         Args:
             creator_id: Creator identifier
@@ -10725,8 +10292,7 @@ class RevenueOptimizationEngine:
             
         Returns:
             Revenue growth forecast
-        """
-        try:
+        """        try:
             self.metrics_collector.increment("forecast_revenue_calls")
             
             # Collect historical revenue data
@@ -10803,8 +10369,7 @@ class RevenueOptimizationEngine:
         plan_id: str,
         timeframe: str = "monthly"
     ) -> Dict[str, Any]:
-        """
-        Track performance of monetization strategies and plans.
+        """        Track performance of monetization strategies and plans.
         
         Args:
             creator_id: Creator identifier
@@ -10813,8 +10378,7 @@ class RevenueOptimizationEngine:
             
         Returns:
             Performance tracking report
-        """
-        try:
+        """        try:
             self.metrics_collector.increment("track_performance_calls")
             
             # Get original monetization plan
@@ -10895,8 +10459,7 @@ class RevenueOptimizationEngine:
         self,
         context: RevenueOptimizationContext
     ) -> Dict[str, Any]:
-        """Analyze current revenue streams and performance."""
-        try:
+        """Analyze current revenue streams and performance."""        try:
             revenue_analysis = {}
             
             # Analyze each revenue stream
@@ -10949,8 +10512,7 @@ class RevenueOptimizationEngine:
         self,
         context: RevenueOptimizationContext
     ) -> List[RevenueOpportunity]:
-        """Identify potential monetization opportunities."""
-        try:
+        """Identify potential monetization opportunities."""        try:
             opportunities = []
             
             # Platform-specific opportunities
@@ -10991,8 +10553,7 @@ class RevenueOptimizationEngine:
         self,
         context: RevenueOptimizationContext
     ) -> str:
-        """Generate cache key for monetization analysis."""
-        key_data = f"{context.creator_id}-{len(context.current_revenue_streams)}-{'-'.join([g.value for g in context.optimization_goals])}"
+        """Generate cache key for monetization analysis."""        key_data = f"{context.creator_id}-{len(context.current_revenue_streams)}-{'-'.join([g.value for g in context.optimization_goals])}"
         return f"monetization:{hash(key_data) % 10000000}"
 
     # Additional helper methods would be implemented here for:
@@ -11005,8 +10566,7 @@ class RevenueOptimizationEngine:
     # - All other analysis and calculation methods
 
     async def get_health_status(self) -> Dict[str, Any]:
-        """Get health status of the revenue optimization engine."""
-        return {
+        """Get health status of the revenue optimization engine."""        return {
             "status": "healthy",
             "models_initialized": self._models_initialized,
             "cache_status": await self.cache_manager.health_check(),
@@ -11026,8 +10586,7 @@ class RevenueOptimizationEngine:
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Monetization Service - Advanced Revenue Management & Analytics
+"""Monetization Service - Advanced Revenue Management & Analytics
 
 This service manages creator monetization, revenue tracking, and financial analytics.
 Implements AI-driven revenue optimization and multi-platform monetization strategies.
@@ -11045,9 +10604,7 @@ Team Specialists:
 - Financial Tech: Payment processing
 - Analytics Expert: Revenue intelligence
 - DevOps: Scalable financial systems
-"""
-
-import asyncio
+"""import asyncio
 import uuid
 from datetime import datetime, timedelta
 from typing import Dict, Any, List, Optional, Tuple, Union
@@ -11093,8 +10650,7 @@ settings = get_settings()
 
 
 class RevenueSource(str, Enum):
-    """Revenue source types"""
-    STREAMING = "streaming"
+    """Revenue source types"""    STREAMING = "streaming"
     DOWNLOADS = "downloads"
     MERCHANDISE = "merchandise"
     LIVE_PERFORMANCES = "live_performances"
@@ -11109,8 +10665,7 @@ class RevenueSource(str, Enum):
 
 
 class PayoutStatus(str, Enum):
-    """Payout processing status"""
-    PENDING = "pending"
+    """Payout processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -11119,8 +10674,7 @@ class PayoutStatus(str, Enum):
 
 
 class GoalType(str, Enum):
-    """Monetization goal types"""
-    MONTHLY_REVENUE = "monthly_revenue"
+    """Monetization goal types"""    MONTHLY_REVENUE = "monthly_revenue"
     YEARLY_REVENUE = "yearly_revenue"
     SUBSCRIBER_COUNT = "subscriber_count"
     STREAM_COUNT = "stream_count"
@@ -11130,8 +10684,7 @@ class GoalType(str, Enum):
 
 @dataclass
 class RevenueMetrics:
-    """Revenue performance metrics"""
-    total_revenue: Decimal
+    """Revenue performance metrics"""    total_revenue: Decimal
     revenue_growth: float
     average_per_stream: Decimal
     diversification_score: float
@@ -11142,8 +10695,7 @@ class RevenueMetrics:
 
 @dataclass
 class PlatformPerformance:
-    """Platform-specific performance data"""
-    platform_name: str
+    """Platform-specific performance data"""    platform_name: str
     revenue: Decimal
     growth_rate: float
     market_share: float
@@ -11152,8 +10704,7 @@ class PlatformPerformance:
 
 
 class FinancialForecast(BaseModel):
-    """Financial forecast model"""
-    projected_revenue: Decimal
+    """Financial forecast model"""    projected_revenue: Decimal
     confidence_interval: Tuple[Decimal, Decimal]
     growth_factors: Dict[str, float]
     risk_assessment: str
@@ -11162,8 +10713,7 @@ class FinancialForecast(BaseModel):
 
 
 class TaxSummary(BaseModel):
-    """Tax calculation summary"""
-    gross_revenue: Decimal
+    """Tax calculation summary"""    gross_revenue: Decimal
     deductible_expenses: Decimal
     taxable_income: Decimal
     estimated_tax: Decimal
@@ -11173,13 +10723,11 @@ class TaxSummary(BaseModel):
 
 
 class MonetizationService:
-    """
-    Advanced Monetization Service for Creator Workflow
+    """    Advanced Monetization Service for Creator Workflow
     
     Manages comprehensive revenue tracking, financial analytics, and
     optimization strategies for creator monetization across platforms.
-    """
-    
+    """    
     def __init__(self):
         self.redis_client = None
         self.security = SecurityManager()
@@ -11206,8 +10754,7 @@ class MonetizationService:
         }
     
     async def initialize(self):
-        """Initialize service dependencies"""
-        try:
+        """Initialize service dependencies"""        try:
             self.redis_client = await aioredis.from_url(
                 settings.REDIS_URL,
                 encoding="utf-8",
@@ -11231,8 +10778,7 @@ class MonetizationService:
         user_id: str,
         revenue_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Track new revenue entry with detailed analytics
+        """        Track new revenue entry with detailed analytics
         
         Args:
             user_id: Creator's unique identifier
@@ -11240,8 +10786,7 @@ class MonetizationService:
             
         Returns:
             Revenue tracking confirmation with analytics
-        """
-        try:
+        """        try:
             # Validate revenue data
             await self._validate_revenue_data(revenue_data)
             
@@ -11313,8 +10858,7 @@ class MonetizationService:
         user_id: str,
         payout_request: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Process creator payout with compliance checks
+        """        Process creator payout with compliance checks
         
         Args:
             user_id: Creator identifier
@@ -11322,8 +10866,7 @@ class MonetizationService:
             
         Returns:
             Payout processing confirmation
-        """
-        try:
+        """        try:
             # Get available balance
             available_balance = await self._get_available_balance(user_id)
             
@@ -11429,8 +10972,7 @@ class MonetizationService:
         period: str = "30d",
         include_forecast: bool = True
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive revenue analytics and insights
+        """        Get comprehensive revenue analytics and insights
         
         Args:
             user_id: Creator identifier
@@ -11439,8 +10981,7 @@ class MonetizationService:
             
         Returns:
             Complete revenue analytics dashboard
-        """
-        try:
+        """        try:
             # Calculate date range
             end_date = datetime.utcnow()
             if period == "7d":
@@ -11510,8 +11051,7 @@ class MonetizationService:
         goal_data: Dict[str, Any] = None,
         goal_id: str = None
     ) -> Dict[str, Any]:
-        """
-        Manage creator monetization goals and tracking
+        """        Manage creator monetization goals and tracking
         
         Args:
             user_id: Creator identifier
@@ -11521,8 +11061,7 @@ class MonetizationService:
             
         Returns:
             Goal management result
-        """
-        try:
+        """        try:
             if action == "create":
                 return await self._create_monetization_goal(user_id, goal_data)
             elif action == "update":
@@ -11543,8 +11082,7 @@ class MonetizationService:
         user_id: str,
         tax_year: int = None
     ) -> Dict[str, Any]:
-        """
-        Get tax information and documentation for creator
+        """        Get tax information and documentation for creator
         
         Args:
             user_id: Creator identifier
@@ -11552,8 +11090,7 @@ class MonetizationService:
             
         Returns:
             Tax information and documents
-        """
-        try:
+        """        try:
             if tax_year is None:
                 tax_year = datetime.utcnow().year
             
@@ -11595,8 +11132,7 @@ class MonetizationService:
         user_id: str,
         optimization_goals: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """
-        AI-powered revenue stream optimization
+        """        AI-powered revenue stream optimization
         
         Args:
             user_id: Creator identifier
@@ -11604,8 +11140,7 @@ class MonetizationService:
             
         Returns:
             Revenue optimization recommendations
-        """
-        try:
+        """        try:
             # Get current revenue profile
             current_profile = await self._get_revenue_profile(user_id)
             
@@ -11648,8 +11183,7 @@ class MonetizationService:
     # Private helper methods
     
     async def _validate_revenue_data(self, revenue_data: Dict[str, Any]):
-        """Validate revenue entry data"""
-        required_fields = ['platform', 'source', 'gross_amount', 'date']
+        """Validate revenue entry data"""        required_fields = ['platform', 'source', 'gross_amount', 'date']
         
         for field in required_fields:
             if field not in revenue_data:
@@ -11675,8 +11209,7 @@ class MonetizationService:
         user_id: str,
         revenue_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process and normalize revenue entry"""
-        return {
+        """Process and normalize revenue entry"""        return {
             'platform': revenue_data['platform'].lower(),
             'source': RevenueSource(revenue_data['source']),
             'gross_amount': Decimal(str(revenue_data['gross_amount'])),
@@ -11691,13 +11224,11 @@ class MonetizationService:
         platform: str,
         gross_amount: Decimal
     ) -> Decimal:
-        """Calculate platform commission fee"""
-        platform_rate = self.platform_rates.get(platform, 0.30)  # Default 30%
+        """Calculate platform commission fee"""        platform_rate = self.platform_rates.get(platform, 0.30)  # Default 30%
         return gross_amount * Decimal(str(platform_rate))
     
     async def _get_available_balance(self, user_id: str) -> Decimal:
-        """Get user's available balance for payout"""
-        async with get_async_session() as session:
+        """Get user's available balance for payout"""        async with get_async_session() as session:
             # Sum all revenue
             revenue_result = await session.execute(
                 select(func.sum(Revenue.net_amount))
@@ -11727,8 +11258,7 @@ class MonetizationService:
         user_id: str,
         amount: Decimal
     ) -> Dict[str, Any]:
-        """Perform compliance and fraud checks"""
-        try:
+        """Perform compliance and fraud checks"""        try:
             # Check for suspicious activity patterns
             recent_payouts = await self._get_recent_payouts(user_id, days=30)
             
@@ -11779,8 +11309,7 @@ class MonetizationService:
             }
     
     async def _calculate_processing_fee(self, amount: Decimal) -> Decimal:
-        """Calculate payment processing fee"""
-        # Tiered fee structure
+        """Calculate payment processing fee"""        # Tiered fee structure
         if amount <= Decimal('100'):
             return amount * Decimal('0.029') + Decimal('0.30')  # 2.9% + $0.30
         elif amount <= Decimal('1000'):
@@ -11793,8 +11322,7 @@ class MonetizationService:
         user_id: str,
         amount: Decimal
     ) -> Decimal:
-        """Calculate tax withholding amount"""
-        # Get user's tax profile
+        """Calculate tax withholding amount"""        # Get user's tax profile
         tax_profile = await self._get_user_tax_profile(user_id)
         
         if tax_profile and tax_profile.get('withholding_required'):
@@ -11809,8 +11337,7 @@ class MonetizationService:
         start_date: datetime,
         end_date: datetime
     ) -> List[Dict[str, Any]]:
-        """Get revenue data for specified period"""
-        async with get_async_session() as session:
+        """Get revenue data for specified period"""        async with get_async_session() as session:
             result = await session.execute(
                 select(Revenue)
                 .where(
@@ -11845,8 +11372,7 @@ class MonetizationService:
         self,
         revenue_data: List[Dict[str, Any]]
     ) -> RevenueMetrics:
-        """Calculate comprehensive revenue metrics"""
-        if not revenue_data:
+        """Calculate comprehensive revenue metrics"""        if not revenue_data:
             return RevenueMetrics(
                 total_revenue=Decimal('0'),
                 revenue_growth=0.0,
@@ -11913,8 +11439,7 @@ class MonetizationService:
         user_id: str,
         historical_data: List[Dict[str, Any]]
     ) -> FinancialForecast:
-        """Generate AI-powered revenue forecast"""
-        try:
+        """Generate AI-powered revenue forecast"""        try:
             if len(historical_data) < 7:  # Need minimum data for prediction
                 return FinancialForecast(
                     projected_revenue=Decimal('0'),
@@ -11994,8 +11519,7 @@ class MonetizationService:
 
 
 class RevenueTracker:
-    """Real-time revenue tracking and monitoring"""
-    
+    """Real-time revenue tracking and monitoring"""    
     def __init__(self):
         self.tracking_intervals = {
             'real_time': 60,  # seconds
@@ -12004,8 +11528,7 @@ class RevenueTracker:
         }
     
     async def start_real_time_tracking(self, user_id: str):
-        """Start real-time revenue tracking for user"""
-        try:
+        """Start real-time revenue tracking for user"""        try:
             # Set up Redis streams for real-time data
             stream_key = f"revenue_stream:{user_id}"
             
@@ -12031,14 +11554,12 @@ class RevenueTracker:
 
 
 class PayoutProcessor:
-    """Advanced payout processing system"""
-    
+    """Advanced payout processing system"""    
     async def process_batch_payouts(
         self,
         payout_requests: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Process multiple payouts in batch"""
-        results = {
+        """Process multiple payouts in batch"""        results = {
             'total_requests': len(payout_requests),
             'successful': 0,
             'failed': 0,
@@ -12067,8 +11588,7 @@ class PayoutProcessor:
         return results
     
     async def _process_single_payout(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Process individual payout request"""
-        # This would integrate with actual payment processors
+        """Process individual payout request"""        # This would integrate with actual payment processors
         return {
             'user_id': request['user_id'],
             'amount': request['amount'],
@@ -12099,11 +11619,9 @@ __all__ = [
 # Additional service classes for completeness
 
 class PlatformIntegrator:
-    """Multi-platform revenue integration"""
-    
+    """Multi-platform revenue integration"""    
     async def sync_platform_data(self, user_id: str, platforms: List[str]) -> Dict[str, Any]:
-        """Synchronize revenue data from multiple platforms"""
-        sync_results = {}
+        """Synchronize revenue data from multiple platforms"""        sync_results = {}
         
         for platform in platforms:
             try:
@@ -12123,13 +11641,11 @@ class PlatformIntegrator:
 
 
 class TaxCalculator:
-    """Tax calculation and compliance"""
-    
+    """Tax calculation and compliance"""    
     async def calculate_quarterly_taxes(
         self, user_id: str, quarter: int, year: int
     ) -> TaxSummary:
-        """Calculate quarterly tax obligations"""
-        # This would integrate with tax calculation services
+        """Calculate quarterly tax obligations"""        # This would integrate with tax calculation services
         return TaxSummary(
             gross_revenue=Decimal('10000'),
             deductible_expenses=Decimal('2000'),
@@ -12142,13 +11658,11 @@ class TaxCalculator:
 
 
 class GoalManager:
-    """Monetization goal management"""
-    
+    """Monetization goal management"""    
     async def track_goal_progress(
         self, user_id: str, goal_id: str
     ) -> Dict[str, Any]:
-        """Track progress towards monetization goal"""
-        return {
+        """Track progress towards monetization goal"""        return {
             'goal_id': goal_id,
             'current_progress': 65.5,
             'target_value': 10000,
@@ -12159,13 +11673,11 @@ class GoalManager:
 
 
 class AnalyticsReporter:
-    """Advanced analytics and reporting"""
-    
+    """Advanced analytics and reporting"""    
     async def generate_monthly_report(
         self, user_id: str, month: int, year: int
     ) -> Dict[str, Any]:
-        """Generate comprehensive monthly revenue report"""
-        return {
+        """Generate comprehensive monthly revenue report"""        return {
             'report_period': f"{year}-{month:02d}",
             'total_revenue': 5500.00,
             'revenue_growth': 12.5,
@@ -12175,11 +11687,9 @@ class AnalyticsReporter:
 
 
 class ComplianceMonitor:
-    """Compliance monitoring and alerts"""
-    
+    """Compliance monitoring and alerts"""    
     async def monitor_compliance_status(self, user_id: str) -> Dict[str, Any]:
-        """Monitor ongoing compliance requirements"""
-        return {
+        """Monitor ongoing compliance requirements"""        return {
             'compliance_score': 95.0,
             'active_alerts': 0,
             'required_actions': [],
@@ -12199,8 +11709,7 @@ class ComplianceMonitor:
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Revenue Alert Handler Module
+"""Revenue Alert Handler Module
 
 This module provides comprehensive revenue monitoring and analytics for the
 Influencer AI Agent Platform. It tracks creator earnings, identifies revenue
@@ -12215,9 +11724,7 @@ Business Context:
 - Detects revenue drops and optimization opportunities
 - Provides predictive revenue analytics
 - Supports multi-platform revenue aggregation
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -12234,8 +11741,7 @@ from ..alert_manager import AlertManager
 
 
 class RevenueSource(Enum):
-    """Revenue source types."""
-    YOUTUBE_ADS = "youtube_ads"
+    """Revenue source types."""    YOUTUBE_ADS = "youtube_ads"
     YOUTUBE_MEMBERSHIPS = "youtube_memberships"
     YOUTUBE_SUPERCHAT = "youtube_superchat"
     TIKTOK_CREATOR_FUND = "tiktok_creator_fund"
@@ -12252,8 +11758,7 @@ class RevenueSource(Enum):
 
 
 class RevenueMetric(Enum):
-    """Revenue tracking metrics."""
-    DAILY_REVENUE = "daily_revenue"
+    """Revenue tracking metrics."""    DAILY_REVENUE = "daily_revenue"
     WEEKLY_REVENUE = "weekly_revenue"
     MONTHLY_REVENUE = "monthly_revenue"
     REVENUE_PER_VIEW = "revenue_per_view"
@@ -12265,8 +11770,7 @@ class RevenueMetric(Enum):
 
 @dataclass
 class RevenueData:
-    """Revenue tracking data structure."""
-    creator_id: str
+    """Revenue tracking data structure."""    creator_id: str
     source: RevenueSource
     amount: Decimal
     currency: str
@@ -12285,8 +11789,7 @@ class RevenueData:
 
 @dataclass
 class RevenueAnalysis:
-    """Revenue analysis results."""
-    creator_id: str
+    """Revenue analysis results."""    creator_id: str
     analysis_period: timedelta
     total_revenue: Decimal
     revenue_sources: Dict[RevenueSource, Decimal]
@@ -12298,13 +11801,11 @@ class RevenueAnalysis:
 
 
 class RevenueAlertHandler:
-    """
-    Comprehensive revenue monitoring and analytics system.
+    """    Comprehensive revenue monitoring and analytics system.
     
     This handler tracks creator revenue across all platforms, detects
     revenue anomalies, and provides insights for revenue optimization.
-    """
-    
+    """    
     def __init__(
         self,
         alert_manager: AlertManager,
@@ -12312,8 +11813,7 @@ class RevenueAlertHandler:
         revenue_drop_threshold: float = 0.20,  # 20% drop threshold
         min_revenue_threshold: Decimal = Decimal('100.00')
     ):
-        """Initialize revenue alert handler."""
-        self.alert_manager = alert_manager
+        """Initialize revenue alert handler."""        self.alert_manager = alert_manager
         self.db_pool = db_pool
         self.revenue_drop_threshold = revenue_drop_threshold
         self.min_revenue_threshold = min_revenue_threshold
@@ -12329,8 +11829,7 @@ class RevenueAlertHandler:
         self.monitoring_task: Optional[asyncio.Task] = None
     
     async def initialize(self) -> None:
-        """Initialize the revenue alert handler."""
-        try:
+        """Initialize the revenue alert handler."""        try:
             self.logger.info("Initializing revenue alert handler...")
             
             # Test database connection
@@ -12349,23 +11848,20 @@ class RevenueAlertHandler:
             raise
     
     async def analyze_creator_revenue(self, creator_id: str) -> RevenueAnalysis:
-        """
-        Perform comprehensive revenue analysis for a creator.
+        """        Perform comprehensive revenue analysis for a creator.
         
         Args:
             creator_id: Creator identifier
             
         Returns:
             Detailed revenue analysis
-        """
-        try:
+        """        try:
             analysis_start = datetime.now(timezone.utc) - timedelta(days=self.analysis_window_days)
             comparison_start = analysis_start - timedelta(days=self.comparison_window_days)
             
             async with self.db_pool.acquire() as conn:
                 # Get current period revenue
-                current_revenue = await conn.fetch("""
-                    SELECT source, SUM(amount) as total_amount, currency,
+                current_revenue = await conn.fetch("""                    SELECT source, SUM(amount) as total_amount, currency,
                            COUNT(*) as transaction_count,
                            AVG(amount) as avg_amount
                     FROM revenue_data 
@@ -12374,8 +11870,7 @@ class RevenueAlertHandler:
                 """, creator_id, analysis_start)
                 
                 # Get comparison period revenue
-                comparison_revenue = await conn.fetch("""
-                    SELECT source, SUM(amount) as total_amount, currency
+                comparison_revenue = await conn.fetch("""                    SELECT source, SUM(amount) as total_amount, currency
                     FROM revenue_data 
                     WHERE creator_id = $1 
                     AND timestamp >= $2 AND timestamp < $3
@@ -12429,12 +11924,10 @@ class RevenueAlertHandler:
             raise
     
     async def monitor_revenue_drops(self) -> None:
-        """Monitor for significant revenue drops."""
-        try:
+        """Monitor for significant revenue drops."""        try:
             # Get active creators
             async with self.db_pool.acquire() as conn:
-                creators = await conn.fetch("""
-                    SELECT DISTINCT creator_id 
+                creators = await conn.fetch("""                    SELECT DISTINCT creator_id 
                     FROM revenue_data 
                     WHERE timestamp >= $1
                 """, datetime.now(timezone.utc) - timedelta(days=7))
@@ -12443,15 +11936,13 @@ class RevenueAlertHandler:
                     creator_id = creator_row['creator_id']
                     
                     # Compare recent revenue to historical average
-                    recent_revenue = await conn.fetchval("""
-                        SELECT COALESCE(SUM(amount), 0)
+                    recent_revenue = await conn.fetchval("""                        SELECT COALESCE(SUM(amount), 0)
                         FROM revenue_data 
                         WHERE creator_id = $1 
                         AND timestamp >= $2
                     """, creator_id, datetime.now(timezone.utc) - timedelta(days=7))
                     
-                    historical_avg = await conn.fetchval("""
-                        SELECT COALESCE(AVG(weekly_revenue), 0)
+                    historical_avg = await conn.fetchval("""                        SELECT COALESCE(AVG(weekly_revenue), 0)
                         FROM (
                             SELECT DATE_TRUNC('week', timestamp) as week,
                                    SUM(amount) as weekly_revenue
@@ -12494,8 +11985,7 @@ class RevenueAlertHandler:
         creator_id: str, 
         revenue_data: List[Dict]
     ) -> List[str]:
-        """Detect revenue anomalies using statistical analysis."""
-        anomalies = []
+        """Detect revenue anomalies using statistical analysis."""        anomalies = []
         
         try:
             if len(revenue_data) < 3:
@@ -12503,8 +11993,7 @@ class RevenueAlertHandler:
             
             # Get historical revenue patterns
             async with self.db_pool.acquire() as conn:
-                historical_data = await conn.fetch("""
-                    SELECT DATE_TRUNC('day', timestamp) as day,
+                historical_data = await conn.fetch("""                    SELECT DATE_TRUNC('day', timestamp) as day,
                            SUM(amount) as daily_revenue
                     FROM revenue_data 
                     WHERE creator_id = $1
@@ -12541,8 +12030,7 @@ class RevenueAlertHandler:
         revenue_sources: Dict[RevenueSource, Decimal],
         growth_rate: float
     ) -> List[str]:
-        """Generate revenue optimization recommendations."""
-        recommendations = []
+        """Generate revenue optimization recommendations."""        recommendations = []
         
         try:
             # Analyze revenue diversification
@@ -12571,8 +12059,7 @@ class RevenueAlertHandler:
             
             # Platform-specific recommendations
             async with self.db_pool.acquire() as conn:
-                platform_performance = await conn.fetch("""
-                    SELECT platform, SUM(amount) as total_revenue,
+                platform_performance = await conn.fetch("""                    SELECT platform, SUM(amount) as total_revenue,
                            COUNT(*) as transaction_count
                     FROM revenue_data 
                     WHERE creator_id = $1
@@ -12603,8 +12090,7 @@ class RevenueAlertHandler:
         growth_rate: float,
         revenue_stream_count: int
     ) -> float:
-        """Calculate overall revenue performance score (0-100)."""
-        try:
+        """Calculate overall revenue performance score (0-100)."""        try:
             score = 0.0
             
             # Revenue amount score (0-40 points)
@@ -12634,15 +12120,13 @@ class RevenueAlertHandler:
         current_revenue: Decimal,
         growth_rate: float
     ) -> Decimal:
-        """Predict next period revenue using trend analysis."""
-        try:
+        """Predict next period revenue using trend analysis."""        try:
             # Simple linear prediction based on growth rate
             base_prediction = current_revenue * Decimal(str(1 + growth_rate))
             
             # Apply seasonality adjustments if available
             async with self.db_pool.acquire() as conn:
-                seasonal_data = await conn.fetch("""
-                    SELECT EXTRACT(MONTH FROM timestamp) as month,
+                seasonal_data = await conn.fetch("""                    SELECT EXTRACT(MONTH FROM timestamp) as month,
                            AVG(amount) as avg_amount
                     FROM revenue_data 
                     WHERE creator_id = $1
@@ -12669,8 +12153,7 @@ class RevenueAlertHandler:
             return current_revenue
     
     async def _monitor_revenue_continuously(self) -> None:
-        """Continuously monitor revenue metrics."""
-        while True:
+        """Continuously monitor revenue metrics."""        while True:
             try:
                 # Monitor revenue drops
                 await self.monitor_revenue_drops()
@@ -12689,14 +12172,12 @@ class RevenueAlertHandler:
                 await asyncio.sleep(3600)  # Wait 1 hour on error
     
     async def _monitor_revenue_goals(self) -> None:
-        """Monitor creator revenue goals and milestones."""
-        try:
+        """Monitor creator revenue goals and milestones."""        try:
             async with self.db_pool.acquire() as conn:
                 # Check monthly revenue goals
                 current_month_start = datetime.now(timezone.utc).replace(day=1, hour=0, minute=0, second=0, microsecond=0)
                 
-                goals = await conn.fetch("""
-                    SELECT creator_id, monthly_revenue_goal
+                goals = await conn.fetch("""                    SELECT creator_id, monthly_revenue_goal
                     FROM creator_goals 
                     WHERE monthly_revenue_goal > 0
                 """)
@@ -12705,8 +12186,7 @@ class RevenueAlertHandler:
                     creator_id = goal_row['creator_id']
                     goal_amount = goal_row['monthly_revenue_goal']
                     
-                    current_revenue = await conn.fetchval("""
-                        SELECT COALESCE(SUM(amount), 0)
+                    current_revenue = await conn.fetchval("""                        SELECT COALESCE(SUM(amount), 0)
                         FROM revenue_data 
                         WHERE creator_id = $1 AND timestamp >= $2
                     """, creator_id, current_month_start)
@@ -12740,8 +12220,7 @@ class RevenueAlertHandler:
             self.logger.error(f"Failed to monitor revenue goals: {e}")
     
     async def shutdown(self) -> None:
-        """Shutdown revenue alert handler."""
-        self.logger.info("Shutting down revenue alert handler...")
+        """Shutdown revenue alert handler."""        self.logger.info("Shutting down revenue alert handler...")
         
         if self.monitoring_task:
             self.monitoring_task.cancel()
@@ -12759,8 +12238,7 @@ class RevenueAlertHandler:
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Payment Alert Handler Module
+"""Payment Alert Handler Module
 
 This module provides comprehensive payment processing monitoring for the
 Influencer AI Agent Platform. It handles payment failures, transaction
@@ -12775,9 +12253,7 @@ Business Context:
 - Monitors revenue streams and payment security
 - Supports multi-currency and multi-platform payments
 - Essential for creator financial success tracking
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -12792,8 +12268,7 @@ from ..alert_manager import AlertManager
 
 
 class PaymentStatus(Enum):
-    """Payment processing status."""
-    PENDING = "pending"
+    """Payment processing status."""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -12804,8 +12279,7 @@ class PaymentStatus(Enum):
 
 
 class PaymentMethod(Enum):
-    """Supported payment methods."""
-    CREDIT_CARD = "credit_card"
+    """Supported payment methods."""    CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     PAYPAL = "paypal"
     STRIPE = "stripe"
@@ -12817,8 +12291,7 @@ class PaymentMethod(Enum):
 
 @dataclass
 class PaymentTransaction:
-    """Payment transaction data."""
-    transaction_id: str
+    """Payment transaction data."""    transaction_id: str
     creator_id: str
     payer_id: str
     amount: Decimal
@@ -12834,18 +12307,15 @@ class PaymentTransaction:
     
     @property
     def is_high_value(self) -> bool:
-        """Check if transaction is high value."""
-        return self.amount >= Decimal('1000.00')
+        """Check if transaction is high value."""        return self.amount >= Decimal('1000.00')
 
 
 class PaymentAlertHandler:
-    """
-    Comprehensive payment processing and financial alert management system.
+    """    Comprehensive payment processing and financial alert management system.
     
     This handler monitors payment transactions, detects anomalies, and
     generates alerts for payment-related issues affecting creator revenue.
-    """
-    
+    """    
     def __init__(
         self,
         alert_manager: AlertManager,
@@ -12853,8 +12323,7 @@ class PaymentAlertHandler:
         high_value_threshold: Decimal = Decimal('1000.00'),
         fraud_detection_enabled: bool = True
     ):
-        """Initialize payment alert handler."""
-        self.alert_manager = alert_manager
+        """Initialize payment alert handler."""        self.alert_manager = alert_manager
         self.db_pool = db_pool
         self.high_value_threshold = high_value_threshold
         self.fraud_detection_enabled = fraud_detection_enabled
@@ -12872,8 +12341,7 @@ class PaymentAlertHandler:
         self.monitoring_task: Optional[asyncio.Task] = None
     
     async def initialize(self) -> None:
-        """Initialize the payment alert handler."""
-        try:
+        """Initialize the payment alert handler."""        try:
             self.logger.info("Initializing payment alert handler...")
             
             # Test database connection
@@ -12897,15 +12365,13 @@ class PaymentAlertHandler:
         alert_type: str,
         severity: AlertSeverity = AlertSeverity.MEDIUM
     ) -> None:
-        """
-        Process payment-related alert.
+        """        Process payment-related alert.
         
         Args:
             transaction: Payment transaction data
             alert_type: Type of payment alert
             severity: Alert severity level
-        """
-        try:
+        """        try:
             await self.alert_manager.create_alert(
                 Alert(
                     id=f"payment_{alert_type}_{transaction.transaction_id}",
@@ -12930,14 +12396,12 @@ class PaymentAlertHandler:
             self.logger.error(f"Failed to process payment alert: {e}")
     
     async def monitor_payment_failures(self, time_window_hours: int = 1) -> None:
-        """Monitor for payment failure rate alerts."""
-        try:
+        """Monitor for payment failure rate alerts."""        try:
             since_time = datetime.now(timezone.utc) - timedelta(hours=time_window_hours)
             
             async with self.db_pool.acquire() as conn:
                 # Get payment statistics
-                stats = await conn.fetchrow("""
-                    SELECT 
+                stats = await conn.fetchrow("""                    SELECT 
                         COUNT(*) as total_payments,
                         COUNT(CASE WHEN status = 'failed' THEN 1 END) as failed_payments,
                         COUNT(CASE WHEN status = 'completed' THEN 1 END) as successful_payments
@@ -12970,8 +12434,7 @@ class PaymentAlertHandler:
             self.logger.error(f"Failed to monitor payment failures: {e}")
     
     async def _monitor_payments_continuously(self) -> None:
-        """Continuously monitor payment transactions."""
-        while True:
+        """Continuously monitor payment transactions."""        while True:
             try:
                 # Monitor payment failures
                 await self.monitor_payment_failures()
@@ -12994,15 +12457,13 @@ class PaymentAlertHandler:
                 await asyncio.sleep(60)
     
     async def _detect_fraud_patterns(self) -> None:
-        """Detect potential fraud patterns in payments."""
-        try:
+        """Detect potential fraud patterns in payments."""        try:
             # Check for suspicious transaction patterns
             since_time = datetime.now(timezone.utc) - timedelta(hours=1)
             
             async with self.db_pool.acquire() as conn:
                 # Check for multiple failed attempts from same source
-                suspicious_attempts = await conn.fetch("""
-                    SELECT payer_id, COUNT(*) as attempt_count, 
+                suspicious_attempts = await conn.fetch("""                    SELECT payer_id, COUNT(*) as attempt_count, 
                            SUM(amount) as total_amount
                     FROM payment_transactions 
                     WHERE timestamp >= $1 AND status = 'failed'
@@ -13032,13 +12493,11 @@ class PaymentAlertHandler:
             self.logger.error(f"Failed to detect fraud patterns: {e}")
     
     async def _monitor_high_value_transactions(self) -> None:
-        """Monitor high-value transactions for additional security."""
-        try:
+        """Monitor high-value transactions for additional security."""        try:
             since_time = datetime.now(timezone.utc) - timedelta(minutes=self.monitoring_interval_minutes)
             
             async with self.db_pool.acquire() as conn:
-                high_value_transactions = await conn.fetch("""
-                    SELECT * FROM payment_transactions 
+                high_value_transactions = await conn.fetch("""                    SELECT * FROM payment_transactions 
                     WHERE timestamp >= $1 AND amount >= $2
                     AND status IN ('pending', 'processing')
                 """, since_time, self.high_value_threshold)
@@ -13070,8 +12529,7 @@ class PaymentAlertHandler:
             self.logger.error(f"Failed to monitor high value transactions: {e}")
     
     async def shutdown(self) -> None:
-        """Shutdown payment alert handler."""
-        self.logger.info("Shutting down payment alert handler...")
+        """Shutdown payment alert handler."""        self.logger.info("Shutting down payment alert handler...")
         
         if self.monitoring_task:
             self.monitoring_task.cancel()
@@ -13089,8 +12547,7 @@ class PaymentAlertHandler:
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Financial Alert Handlers Module
+"""Financial Alert Handlers Module
 
 This module provides specialized alert handlers for financial operations,
 including payment processing, revenue tracking, royalty distribution,
@@ -13105,9 +12562,7 @@ Business Context:
 - Monitors royalty distribution and billing
 - Supports financial analytics and reporting
 - Part of Influencer AI Agent Platform ecosystem
-"""
-
-from .payment_alerts import PaymentAlertHandler
+"""from .payment_alerts import PaymentAlertHandler
 from .revenue_alerts import RevenueAlertHandler
 from .royalty_alerts import RoyaltyAlertHandler
 from .billing_alerts import BillingAlertHandler
@@ -13130,8 +12585,7 @@ __copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Spotify AI Agent - FastAPI Billing Routes
+"""Spotify AI Agent - FastAPI Billing Routes
 ========================================
 
 Comprehensive REST API endpoints for billing system with:
@@ -13140,9 +12594,7 @@ Comprehensive REST API endpoints for billing system with:
 - Invoice generation and management
 - Analytics and reporting
 - Multi-provider integration
-"""
-
-from datetime import datetime, timedelta
+"""from datetime import datetime, timedelta
 from decimal import Decimal
 from typing import List, Optional, Dict, Any
 import uuid
@@ -13390,8 +12842,7 @@ async def create_customer(
     db: Session = Depends(get_db),
     current_user = Depends(get_current_user)
 ):
-    """Create a new customer"""
-    try:
+    """Create a new customer"""    try:
         # Check if customer already exists
         existing = db.query(Customer).filter(Customer.email == customer_data.email).first()
         if existing:
@@ -13424,8 +12875,7 @@ async def get_customer(
     db: Session = Depends(get_db),
     current_user = Depends(get_current_user)
 ):
-    """Get customer by ID"""
-    customer = db.query(Customer).filter(Customer.id == customer_id).first()
+    """Get customer by ID"""    customer = db.query(Customer).filter(Customer.id == customer_id).first()
     if not customer:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -13442,8 +12892,7 @@ async def update_customer(
     db: Session = Depends(get_db),
     current_user = Depends(get_current_user)
 ):
-    """Update customer information"""
-    customer = db.query(Customer).filter(Customer.id == customer_id).first()
+    """Update customer information"""    customer = db.query(Customer).filter(Customer.id == customer_id).first()
     if not customer:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -13470,8 +12919,7 @@ async def list_customers(
     db: Session = Depends(get_db),
     current_user = Depends(get_current_user)
 ):
-    """List customers with pagination and filtering"""
-    query = db.query(Customer)
+    """List customers with pagination and filtering"""    query = db.query(Customer)
     
     if status_filter:
         query = query.filter(Customer.status == status_filter)
@@ -13487,8 +12935,7 @@ async def create_plan(
     db: Session = Depends(get_db),
     current_user = Depends(require_permissions(["billing:write"]))
 ):
-    """Create a new subscription plan"""
-    try:
+    """Create a new subscription plan"""    try:
         plan = Plan(**plan_data.dict())
         db.add(plan)
         db.commit()
@@ -13512,8 +12959,7 @@ async def list_plans(
     db: Session = Depends(get_db),
     current_user = Depends(get_current_user)
 ):
-    """List available subscription plans"""
-    query = db.query(Plan)
+    """List available subscription plans"""    query = db.query(Plan)
     
     if active_only:
         query = query.filter(Plan.is_active == True)
@@ -13528,8 +12974,7 @@ async def get_plan(
     db: Session = Depends(get_db),
     current_user = Depends(get_current_user)
 ):
-    """Get plan by ID"""
-    plan = db.query(Plan).filter(Plan.id == plan_id).first()
+    """Get plan by ID"""    plan = db.query(Plan).filter(Plan.id == plan_id).first()
     if not plan:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -13547,8 +12992,7 @@ async def create_subscription(
     db: Session = Depends(get_db),
     current_user = Depends(get_current_user)
 ):
-    """Create a new subscription"""
-    try:
+    """Create a new subscription"""    try:
         # Validate customer and plan exist
         customer = db.query(Customer).filter(Customer.id == subscription_data.customer_id).first()
         if not customer:
@@ -13599,8 +13043,7 @@ async def get_subscription(
     db: Session = Depends(get_db),
     current_user = Depends(get_current_user)
 ):
-    """Get subscription by ID"""
-    subscription = db.query(Subscription).filter(Subscription.id == subscription_id).first()
+    """Get subscription by ID"""    subscription = db.query(Subscription).filter(Subscription.id == subscription_id).first()
     if not subscription:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -13618,8 +13061,7 @@ async def cancel_subscription(
     db: Session = Depends(get_db),
     current_user = Depends(get_current_user)
 ):
-    """Cancel a subscription"""
-    try:
+    """Cancel a subscription"""    try:
         subscription = db.query(Subscription).filter(Subscription.id == subscription_id).first()
         if not subscription:
             raise HTTPException(
@@ -13657,8 +13099,7 @@ async def create_payment_method(
     db: Session = Depends(get_db),
     current_user = Depends(get_current_user)
 ):
-    """Add a payment method for a customer"""
-    try:
+    """Add a payment method for a customer"""    try:
         # Validate customer exists
         customer = db.query(Customer).filter(Customer.id == payment_method_data.customer_id).first()
         if not customer:
@@ -13695,8 +13136,7 @@ async def list_customer_payment_methods(
     db: Session = Depends(get_db),
     current_user = Depends(get_current_user)
 ):
-    """List payment methods for a customer"""
-    payment_methods = db.query(PaymentMethod).filter(
+    """List payment methods for a customer"""    payment_methods = db.query(PaymentMethod).filter(
         PaymentMethod.customer_id == customer_id,
         PaymentMethod.is_active == True
     ).all()
@@ -13712,8 +13152,7 @@ async def create_payment(
     db: Session = Depends(get_db),
     current_user = Depends(get_current_user)
 ):
-    """Process a payment"""
-    try:
+    """Process a payment"""    try:
         # Process payment using billing engine
         payment = await billing_engine.process_payment(
             customer_id=payment_data.customer_id,
@@ -13748,8 +13187,7 @@ async def get_payment(
     db: Session = Depends(get_db),
     current_user = Depends(get_current_user)
 ):
-    """Get payment by ID"""
-    payment = db.query(Payment).filter(Payment.id == payment_id).first()
+    """Get payment by ID"""    payment = db.query(Payment).filter(Payment.id == payment_id).first()
     if not payment:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -13768,8 +13206,7 @@ async def refund_payment(
     db: Session = Depends(get_db),
     current_user = Depends(require_permissions(["billing:refund"]))
 ):
-    """Refund a payment"""
-    try:
+    """Refund a payment"""    try:
         payment = db.query(Payment).filter(Payment.id == payment_id).first()
         if not payment:
             raise HTTPException(
@@ -13809,8 +13246,7 @@ async def create_invoice(
     db: Session = Depends(get_db),
     current_user = Depends(get_current_user)
 ):
-    """Create a new invoice"""
-    try:
+    """Create a new invoice"""    try:
         # Validate customer exists
         customer = db.query(Customer).filter(Customer.id == invoice_data.customer_id).first()
         if not customer:
@@ -13909,8 +13345,7 @@ async def get_invoice(
     db: Session = Depends(get_db),
     current_user = Depends(get_current_user)
 ):
-    """Get invoice by ID"""
-    invoice = db.query(Invoice).filter(Invoice.id == invoice_id).first()
+    """Get invoice by ID"""    invoice = db.query(Invoice).filter(Invoice.id == invoice_id).first()
     if not invoice:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -13926,8 +13361,7 @@ async def download_invoice_pdf(
     db: Session = Depends(get_db),
     current_user = Depends(get_current_user)
 ):
-    """Download invoice PDF"""
-    try:
+    """Download invoice PDF"""    try:
         invoice = db.query(Invoice).filter(Invoice.id == invoice_id).first()
         if not invoice:
             raise HTTPException(
@@ -13966,8 +13400,7 @@ async def send_invoice(
     db: Session = Depends(get_db),
     current_user = Depends(get_current_user)
 ):
-    """Send invoice to customer"""
-    try:
+    """Send invoice to customer"""    try:
         invoice = db.query(Invoice).filter(Invoice.id == invoice_id).first()
         if not invoice:
             raise HTTPException(
@@ -14009,8 +13442,7 @@ async def handle_webhook(
     background_tasks: BackgroundTasks,
     db: Session = Depends(get_db)
 ):
-    """Handle payment provider webhooks"""
-    try:
+    """Handle payment provider webhooks"""    try:
         # Get raw body for signature verification
         body = await request.body()
         headers = dict(request.headers)
@@ -14043,8 +13475,7 @@ async def get_analytics_overview(
     db: Session = Depends(get_db),
     current_user = Depends(require_permissions(["billing:analytics"]))
 ):
-    """Get billing analytics overview"""
-    try:
+    """Get billing analytics overview"""    try:
         # Calculate MRR
         from .models import calculate_mrr
         mrr = calculate_mrr(db)
@@ -14100,8 +13531,7 @@ async def get_revenue_analytics(
     db: Session = Depends(get_db),
     current_user = Depends(require_permissions(["billing:analytics"]))
 ):
-    """Get revenue analytics for date range"""
-    try:
+    """Get revenue analytics for date range"""    try:
         # Total revenue
         total_revenue = db.query(func.sum(Payment.amount)).filter(
             Payment.status == PaymentStatus.SUCCEEDED,
@@ -14152,8 +13582,7 @@ async def get_revenue_analytics(
 # Health check
 @router.get("/health")
 async def health_check():
-    """Billing system health check"""
-    try:
+    """Billing system health check"""    try:
         # Check billing engine
         engine_status = await billing_engine.health_check()
         
@@ -14186,8 +13615,7 @@ __all__ = ['router']
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Spotify AI Agent - Enterprise Billing Core Module
+"""Spotify AI Agent - Enterprise Billing Core Module
 =================================================
 
 Core billing functionality and business logic orchestration.
@@ -14199,9 +13627,7 @@ Architecture:
 - Revenue Recognition & Accounting
 - Fraud Detection & Risk Management
 - Multi-Provider Payment Gateway Integration
-"""
-
-import os
+"""import os
 import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
@@ -14229,8 +13655,7 @@ import asyncpg
 
 
 class PaymentProvider(Enum):
-    """Supported payment providers"""
-    STRIPE = "stripe"
+    """Supported payment providers"""    STRIPE = "stripe"
     PAYPAL = "paypal"
     APPLE_PAY = "apple_pay"
     GOOGLE_PAY = "google_pay"
@@ -14239,8 +13664,7 @@ class PaymentProvider(Enum):
 
 
 class PaymentStatus(Enum):
-    """Payment transaction status"""
-    PENDING = "pending"
+    """Payment transaction status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -14250,8 +13674,7 @@ class PaymentStatus(Enum):
 
 
 class SubscriptionStatus(Enum):
-    """Subscription lifecycle status"""
-    TRIAL = "trial"
+    """Subscription lifecycle status"""    TRIAL = "trial"
     ACTIVE = "active"
     PAST_DUE = "past_due"
     CANCELLED = "cancelled"
@@ -14260,8 +13683,7 @@ class SubscriptionStatus(Enum):
 
 
 class PlanType(Enum):
-    """Subscription plan types"""
-    FREE = "free"
+    """Subscription plan types"""    FREE = "free"
     BASIC = "basic"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
@@ -14269,8 +13691,7 @@ class PlanType(Enum):
 
 
 class CurrencyCode(Enum):
-    """Supported currencies ISO 4217"""
-    USD = "USD"
+    """Supported currencies ISO 4217"""    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     JPY = "JPY"
@@ -14281,8 +13702,7 @@ class CurrencyCode(Enum):
 
 
 class FraudRiskLevel(IntEnum):
-    """Fraud risk assessment levels"""
-    VERY_LOW = 1
+    """Fraud risk assessment levels"""    VERY_LOW = 1
     LOW = 2
     MEDIUM = 3
     HIGH = 4
@@ -14291,8 +13711,7 @@ class FraudRiskLevel(IntEnum):
 
 @dataclass
 class PaymentMethodInfo:
-    """Payment method details"""
-    id: str
+    """Payment method details"""    id: str
     type: str
     last4: Optional[str] = None
     brand: Optional[str] = None
@@ -14305,8 +13724,7 @@ class PaymentMethodInfo:
 
 @dataclass
 class BillingAddress:
-    """Customer billing address"""
-    line1: str
+    """Customer billing address"""    line1: str
     city: str
     country: str
     postal_code: str
@@ -14316,8 +13734,7 @@ class BillingAddress:
 
 @dataclass
 class TaxCalculation:
-    """Tax calculation result"""
-    amount: Decimal
+    """Tax calculation result"""    amount: Decimal
     rate: Decimal
     jurisdiction: str
     tax_type: str
@@ -14326,8 +13743,7 @@ class TaxCalculation:
 
 @dataclass
 class PricingRule:
-    """Dynamic pricing rule"""
-    rule_id: str
+    """Dynamic pricing rule"""    rule_id: str
     condition: Dict[str, Any]
     adjustment_type: str  # percentage, fixed_amount
     adjustment_value: Decimal
@@ -14336,8 +13752,7 @@ class PricingRule:
 
 
 class BillingConfig:
-    """Central billing configuration"""
-    
+    """Central billing configuration"""    
     def __init__(self):
         # Payment providers configuration
         self.stripe_config = {
@@ -14376,8 +13791,7 @@ class BillingConfig:
 
 
 class PaymentProcessor:
-    """Core payment processing engine"""
-    
+    """Core payment processing engine"""    
     def __init__(self, config: BillingConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -14390,19 +13804,16 @@ class PaymentProcessor:
         self._setup_paypal()
         
     async def initialize(self):
-        """Initialize async components"""
-        self.redis_client = await aioredis.from_url(self.config.redis_url)
+        """Initialize async components"""        self.redis_client = await aioredis.from_url(self.config.redis_url)
         await self.fraud_detector.initialize()
         
     def _setup_stripe(self):
-        """Initialize Stripe SDK"""
-        if self.config.stripe_config['secret_key']:
+        """Initialize Stripe SDK"""        if self.config.stripe_config['secret_key']:
             stripe.api_key = self.config.stripe_config['secret_key']
             stripe.api_version = self.config.stripe_config['api_version']
             
     def _setup_paypal(self):
-        """Initialize PayPal SDK"""
-        if all([self.config.paypal_config['client_id'], self.config.paypal_config['client_secret']]):
+        """Initialize PayPal SDK"""        if all([self.config.paypal_config['client_id'], self.config.paypal_config['client_secret']]):
             paypalrestsdk.configure({
                 'mode': self.config.paypal_config['mode'],
                 'client_id': self.config.paypal_config['client_id'],
@@ -14416,8 +13827,7 @@ class PaymentProcessor:
                             payment_method_id: str,
                             description: str = "",
                             metadata: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Process a payment transaction"""
-        try:
+        """Process a payment transaction"""        try:
             # Validate input parameters
             if amount <= 0:
                 raise ValueError("Amount must be greater than 0")
@@ -14514,8 +13924,7 @@ class PaymentProcessor:
             raise
     
     async def _process_stripe_payment(self, **kwargs) -> Dict[str, Any]:
-        """Process payment through Stripe"""
-        try:
+        """Process payment through Stripe"""        try:
             intent = stripe.PaymentIntent.create(
                 amount=int(kwargs['amount'] * 100),  # Convert to cents
                 currency=kwargs['currency'].lower(),
@@ -14551,8 +13960,7 @@ class PaymentProcessor:
             )
     
     async def _process_paypal_payment(self, **kwargs) -> Dict[str, Any]:
-        """Process payment through PayPal"""
-        try:
+        """Process payment through PayPal"""        try:
             payment = paypalrestsdk.Payment({
                 'intent': 'sale',
                 'payer': {
@@ -14588,8 +13996,7 @@ class PaymentProcessor:
             )
     
     async def _get_payment_method(self, payment_method_id: str) -> PaymentMethodInfo:
-        """Retrieve payment method details"""
-        # Try cache first
+        """Retrieve payment method details"""        # Try cache first
         cached = await self.redis_client.get(f"payment_method:{payment_method_id}")
         if cached:
             return PaymentMethodInfo(**json.loads(cached))
@@ -14623,8 +14030,7 @@ class PaymentProcessor:
         raise ValueError(f"Payment method not found: {payment_method_id}")
     
     def _determine_provider(self, payment_method: PaymentMethodInfo) -> PaymentProvider:
-        """Determine which payment provider to use"""
-        if payment_method.type in ['card', 'sepa_debit']:
+        """Determine which payment provider to use"""        if payment_method.type in ['card', 'sepa_debit']:
             return PaymentProvider.STRIPE
         elif payment_method.type == 'paypal':
             return PaymentProvider.PAYPAL
@@ -14632,8 +14038,7 @@ class PaymentProcessor:
             return PaymentProvider.STRIPE  # Default fallback
     
     async def _store_transaction(self, **kwargs) -> str:
-        """Store transaction record in database"""
-        transaction_id = str(uuid.uuid4())
+        """Store transaction record in database"""        transaction_id = str(uuid.uuid4())
         
         # Database storage logic would go here
         # For now, store in Redis as well
@@ -14652,8 +14057,7 @@ class PaymentProcessor:
         return transaction_id
     
     async def _update_payment_cache(self, customer_id: str, transaction_id: str, result: Dict):
-        """Update payment-related cache entries"""
-        # Update customer's recent payments
+        """Update payment-related cache entries"""        # Update customer's recent payments
         await self.redis_client.lpush(
             f"customer_payments:{customer_id}",
             transaction_id
@@ -14666,8 +14070,7 @@ class PaymentProcessor:
         await self.redis_client.expire(stats_key, 86400 * 7)  # Keep for 7 days
     
     async def _store_failed_transaction(self, **kwargs):
-        """Store failed transaction for analysis"""
-        failed_transaction = {
+        """Store failed transaction for analysis"""        failed_transaction = {
             'id': str(uuid.uuid4()),
             'timestamp': datetime.utcnow().isoformat(),
             'type': 'payment_failure',
@@ -14681,8 +14084,7 @@ class PaymentProcessor:
 
 
 class SubscriptionManager:
-    """Subscription lifecycle management"""
-    
+    """Subscription lifecycle management"""    
     def __init__(self, config: BillingConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -14690,8 +14092,7 @@ class SubscriptionManager:
         self.payment_processor = PaymentProcessor(config)
         
     async def initialize(self):
-        """Initialize async components"""
-        self.redis_client = await aioredis.from_url(self.config.redis_url)
+        """Initialize async components"""        self.redis_client = await aioredis.from_url(self.config.redis_url)
         await self.payment_processor.initialize()
     
     async def create_subscription(self,
@@ -14700,8 +14101,7 @@ class SubscriptionManager:
                                 payment_method_id: str,
                                 trial_days: Optional[int] = None,
                                 coupon_code: Optional[str] = None) -> Dict[str, Any]:
-        """Create a new subscription"""
-        try:
+        """Create a new subscription"""        try:
             # Validate plan exists
             plan = await self._get_plan(plan_id)
             if not plan:
@@ -14770,8 +14170,7 @@ class SubscriptionManager:
     async def cancel_subscription(self, subscription_id: str, 
                                 immediate: bool = False,
                                 reason: str = "") -> Dict[str, Any]:
-        """Cancel a subscription"""
-        try:
+        """Cancel a subscription"""        try:
             subscription = await self._get_subscription(subscription_id)
             if not subscription:
                 raise ValueError(f"Subscription not found: {subscription_id}")
@@ -14817,8 +14216,7 @@ class SubscriptionManager:
             raise
     
     async def upgrade_subscription(self, subscription_id: str, new_plan_id: str) -> Dict[str, Any]:
-        """Upgrade subscription to a different plan"""
-        try:
+        """Upgrade subscription to a different plan"""        try:
             subscription = await self._get_subscription(subscription_id)
             old_plan = await self._get_plan(subscription['plan_id'])
             new_plan = await self._get_plan(new_plan_id)
@@ -14861,8 +14259,7 @@ class SubscriptionManager:
             raise
     
     async def _get_plan(self, plan_id: str) -> Optional[Dict[str, Any]]:
-        """Retrieve subscription plan details"""
-        # Try cache first
+        """Retrieve subscription plan details"""        # Try cache first
         cached = await self.redis_client.get(f"plan:{plan_id}")
         if cached:
             return json.loads(cached)
@@ -14903,8 +14300,7 @@ class SubscriptionManager:
         return plan
     
     def _calculate_period_end(self, interval: str) -> datetime:
-        """Calculate subscription period end date"""
-        now = datetime.utcnow()
+        """Calculate subscription period end date"""        now = datetime.utcnow()
         if interval == 'month':
             return now + timedelta(days=30)
         elif interval == 'year':
@@ -14913,8 +14309,7 @@ class SubscriptionManager:
             return now + timedelta(days=30)  # Default to monthly
     
     async def _store_subscription(self, subscription_data: Dict[str, Any]):
-        """Store subscription in database/cache"""
-        subscription_id = subscription_data['id']
+        """Store subscription in database/cache"""        subscription_id = subscription_data['id']
         
         # Store in Redis
         await self.redis_client.setex(
@@ -14926,45 +14321,38 @@ class SubscriptionManager:
         # Database storage would go here
     
     async def _get_subscription(self, subscription_id: str) -> Optional[Dict[str, Any]]:
-        """Retrieve subscription details"""
-        cached = await self.redis_client.get(f"subscription:{subscription_id}")
+        """Retrieve subscription details"""        cached = await self.redis_client.get(f"subscription:{subscription_id}")
         if cached:
             return json.loads(cached)
         return None
     
     async def _schedule_subscription_payment(self, subscription_id: str):
-        """Schedule recurring payment for subscription"""
-        # Implementation would use Celery or similar for scheduling
+        """Schedule recurring payment for subscription"""        # Implementation would use Celery or similar for scheduling
         pass
     
     async def _schedule_trial_end_notification(self, subscription_id: str, trial_end: datetime):
-        """Schedule trial end notification"""
-        # Implementation would schedule email/notification
+        """Schedule trial end notification"""        # Implementation would schedule email/notification
         pass
     
     async def _update_customer_subscription_cache(self, customer_id: str, subscription_id: str):
-        """Update customer's subscription cache"""
-        await self.redis_client.set(f"customer_subscription:{customer_id}", subscription_id)
+        """Update customer's subscription cache"""        await self.redis_client.set(f"customer_subscription:{customer_id}", subscription_id)
 
 
 class FraudDetector:
-    """Advanced fraud detection system"""
-    
+    """Advanced fraud detection system"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.redis_client = None
         
     async def initialize(self):
-        """Initialize fraud detection components"""
-        self.redis_client = await aioredis.from_url(os.getenv('REDIS_URL', 'redis://localhost:6379'))
+        """Initialize fraud detection components"""        self.redis_client = await aioredis.from_url(os.getenv('REDIS_URL', 'redis://localhost:6379'))
     
     async def assess_transaction(self, 
                                customer_id: str,
                                amount: Decimal,
                                currency: str,
                                payment_method_id: str) -> Dict[str, Any]:
-        """Assess fraud risk for a transaction"""
-        try:
+        """Assess fraud risk for a transaction"""        try:
             risk_factors = []
             risk_score = 0.0
             
@@ -15018,8 +14406,7 @@ class FraudDetector:
             }
     
     async def _check_velocity(self, customer_id: str, amount: Decimal) -> Dict[str, Any]:
-        """Check transaction velocity patterns"""
-        # Get recent transactions
+        """Check transaction velocity patterns"""        # Get recent transactions
         recent_key = f"recent_transactions:{customer_id}"
         recent_count = await self.redis_client.llen(recent_key)
         
@@ -15032,8 +14419,7 @@ class FraudDetector:
         return {'score': 0.0, 'flagged': False}
     
     async def _analyze_amount(self, customer_id: str, amount: Decimal) -> Dict[str, Any]:
-        """Analyze transaction amount patterns"""
-        # Get customer's typical transaction amounts
+        """Analyze transaction amount patterns"""        # Get customer's typical transaction amounts
         avg_amount_key = f"avg_amount:{customer_id}"
         avg_amount_str = await self.redis_client.get(avg_amount_key)
         
@@ -15055,8 +14441,7 @@ class FraudDetector:
         return {'score': 0.0, 'flagged': False}
     
     async def _analyze_payment_method(self, payment_method_id: str) -> Dict[str, Any]:
-        """Analyze payment method risk"""
-        # Check if payment method is blacklisted
+        """Analyze payment method risk"""        # Check if payment method is blacklisted
         blacklist_key = f"blacklisted_pm:{payment_method_id}"
         is_blacklisted = await self.redis_client.exists(blacklist_key)
         
@@ -15073,14 +14458,12 @@ class FraudDetector:
         return {'score': 0.0, 'flagged': False}
     
     async def _check_geolocation(self, customer_id: str) -> Dict[str, Any]:
-        """Check for unusual geolocation patterns"""
-        # Implementation would check customer's typical location vs current
+        """Check for unusual geolocation patterns"""        # Implementation would check customer's typical location vs current
         # For now, return low risk
         return {'score': 0.0, 'flagged': False}
     
     def _calculate_risk_level(self, score: float) -> FraudRiskLevel:
-        """Convert risk score to risk level"""
-        if score >= 0.8:
+        """Convert risk score to risk level"""        if score >= 0.8:
             return FraudRiskLevel.CRITICAL
         elif score >= 0.6:
             return FraudRiskLevel.HIGH
@@ -15092,8 +14475,7 @@ class FraudDetector:
             return FraudRiskLevel.VERY_LOW
     
     def _get_recommendation(self, risk_level: FraudRiskLevel) -> str:
-        """Get recommendation based on risk level"""
-        recommendations = {
+        """Get recommendation based on risk level"""        recommendations = {
             FraudRiskLevel.VERY_LOW: 'proceed',
             FraudRiskLevel.LOW: 'proceed',
             FraudRiskLevel.MEDIUM: 'review',
@@ -15104,8 +14486,7 @@ class FraudDetector:
     
     async def _store_fraud_assessment(self, customer_id: str, amount: Decimal, 
                                     currency: str, score: float, factors: List[str]):
-        """Store fraud assessment for analysis"""
-        assessment = {
+        """Store fraud assessment for analysis"""        assessment = {
             'customer_id': customer_id,
             'amount': str(amount),
             'currency': currency,
@@ -15122,14 +14503,12 @@ class FraudDetector:
 
 
 class TaxCalculator:
-    """Tax calculation engine"""
-    
+    """Tax calculation engine"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
     async def calculate_tax(self, amount: Decimal, currency: str, customer_id: str) -> TaxCalculation:
-        """Calculate applicable taxes"""
-        try:
+        """Calculate applicable taxes"""        try:
             # Get customer's tax jurisdiction
             jurisdiction = await self._get_customer_jurisdiction(customer_id)
             
@@ -15158,14 +14537,12 @@ class TaxCalculator:
             )
     
     async def _get_customer_jurisdiction(self, customer_id: str) -> str:
-        """Determine customer's tax jurisdiction"""
-        # Implementation would look up customer's billing address
+        """Determine customer's tax jurisdiction"""        # Implementation would look up customer's billing address
         # For now, return EU default
         return 'EU_FR'  # France
     
     async def _get_tax_rate(self, jurisdiction: str, amount: Decimal, currency: str) -> Decimal:
-        """Get tax rate for jurisdiction"""
-        # Tax rates by jurisdiction
+        """Get tax rate for jurisdiction"""        # Tax rates by jurisdiction
         tax_rates = {
             'EU_FR': Decimal('20.0'),  # 20% VAT in France
             'EU_DE': Decimal('19.0'),  # 19% VAT in Germany
@@ -15187,8 +14564,7 @@ subscription_manager = SubscriptionManager(billing_config)
 
 # Async initialization function
 async def initialize_billing_system():
-    """Initialize all billing system components"""
-    await payment_processor.initialize()
+    """Initialize all billing system components"""    await payment_processor.initialize()
     await subscription_manager.initialize()
 
 
@@ -15221,8 +14597,7 @@ __all__ = [
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Spotify AI Agent - Billing System Tasks & Background Jobs
+"""Spotify AI Agent - Billing System Tasks & Background Jobs
 =========================================================
 
 Celery tasks for asynchronous billing operations:
@@ -15232,9 +14607,7 @@ Celery tasks for asynchronous billing operations:
 - Dunning management for overdue accounts
 - Analytics data aggregation
 - Fraud detection and monitoring
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -15287,8 +14660,7 @@ logger = logging.getLogger(__name__)
 
 
 class DatabaseTask(Task):
-    """Base task with database session management"""
-    
+    """Base task with database session management"""    
     def __call__(self, *args, **kwargs):
         db_session = SessionLocal()
         try:
@@ -15300,8 +14672,7 @@ class DatabaseTask(Task):
 # Subscription billing tasks
 @celery_app.task(base=DatabaseTask, bind=True, max_retries=3)
 def process_subscription_billing(self, db_session: Session, subscription_id: str):
-    """Process billing for a subscription"""
-    try:
+    """Process billing for a subscription"""    try:
         subscription = db_session.query(Subscription).filter(
             Subscription.id == subscription_id
         ).first()
@@ -15337,8 +14708,7 @@ def process_subscription_billing(self, db_session: Session, subscription_id: str
 
 @celery_app.task(base=DatabaseTask, bind=True)
 def schedule_subscription_billings(self, db_session: Session):
-    """Schedule billing for all due subscriptions"""
-    try:
+    """Schedule billing for all due subscriptions"""    try:
         # Find subscriptions due for billing
         now = datetime.utcnow()
         due_subscriptions = db_session.query(Subscription).filter(
@@ -15363,8 +14733,7 @@ def schedule_subscription_billings(self, db_session: Session):
 # Payment retry tasks
 @celery_app.task(base=DatabaseTask, bind=True, max_retries=5)
 def retry_failed_payment(self, db_session: Session, payment_id: str, retry_count: int = 0):
-    """Retry a failed payment"""
-    try:
+    """Retry a failed payment"""    try:
         payment = db_session.query(Payment).filter(
             Payment.id == payment_id
         ).first()
@@ -15417,8 +14786,7 @@ def retry_failed_payment(self, db_session: Session, payment_id: str, retry_count
 
 @celery_app.task(base=DatabaseTask, bind=True)
 def process_failed_payments(self, db_session: Session):
-    """Process all failed payments for retry"""
-    try:
+    """Process all failed payments for retry"""    try:
         # Find failed payments within retry window
         cutoff_date = datetime.utcnow() - timedelta(days=7)  # 7 day retry window
         failed_payments = db_session.query(Payment).filter(
@@ -15449,8 +14817,7 @@ def process_failed_payments(self, db_session: Session):
 # Invoice tasks
 @celery_app.task(base=DatabaseTask, bind=True)
 def generate_subscription_invoices(self, db_session: Session):
-    """Generate invoices for subscription billing"""
-    try:
+    """Generate invoices for subscription billing"""    try:
         # Find subscriptions that need invoicing
         now = datetime.utcnow()
         invoice_date = now + timedelta(days=3)  # 3 days before billing
@@ -15484,8 +14851,7 @@ def generate_subscription_invoices(self, db_session: Session):
 
 @celery_app.task(base=DatabaseTask, bind=True, max_retries=3)
 def generate_subscription_invoice(self, db_session: Session, subscription_id: str):
-    """Generate invoice for a specific subscription"""
-    try:
+    """Generate invoice for a specific subscription"""    try:
         subscription = db_session.query(Subscription).filter(
             Subscription.id == subscription_id
         ).first()
@@ -15574,8 +14940,7 @@ def generate_subscription_invoice(self, db_session: Session, subscription_id: st
 
 @celery_app.task(base=DatabaseTask, bind=True, max_retries=3)
 def generate_invoice_pdf(self, db_session: Session, invoice_id: str):
-    """Generate PDF for an invoice"""
-    try:
+    """Generate PDF for an invoice"""    try:
         invoice = db_session.query(Invoice).filter(
             Invoice.id == invoice_id
         ).first()
@@ -15605,8 +14970,7 @@ def generate_invoice_pdf(self, db_session: Session, invoice_id: str):
 
 @celery_app.task(base=DatabaseTask, bind=True, max_retries=3)
 def send_invoice_email(self, db_session: Session, invoice_id: str):
-    """Send invoice via email"""
-    try:
+    """Send invoice via email"""    try:
         invoice = db_session.query(Invoice).filter(
             Invoice.id == invoice_id
         ).first()
@@ -15641,8 +15005,7 @@ def send_invoice_email(self, db_session: Session, invoice_id: str):
 # Dunning management tasks
 @celery_app.task(base=DatabaseTask, bind=True)
 def process_overdue_invoices(self, db_session: Session):
-    """Process overdue invoices for dunning"""
-    try:
+    """Process overdue invoices for dunning"""    try:
         # Find overdue invoices
         now = datetime.utcnow()
         overdue_invoices = db_session.query(Invoice).filter(
@@ -15673,8 +15036,7 @@ def process_overdue_invoices(self, db_session: Session):
 
 @celery_app.task(base=DatabaseTask, bind=True, max_retries=3)
 def send_dunning_notice(self, db_session: Session, invoice_id: str, days_overdue: int):
-    """Send dunning notice for overdue invoice"""
-    try:
+    """Send dunning notice for overdue invoice"""    try:
         invoice = db_session.query(Invoice).filter(
             Invoice.id == invoice_id
         ).first()
@@ -15723,8 +15085,7 @@ def send_dunning_notice(self, db_session: Session, invoice_id: str, days_overdue
 
 @celery_app.task(base=DatabaseTask, bind=True)
 def mark_invoice_uncollectible(self, db_session: Session, invoice_id: str):
-    """Mark invoice as uncollectible"""
-    try:
+    """Mark invoice as uncollectible"""    try:
         invoice = db_session.query(Invoice).filter(
             Invoice.id == invoice_id
         ).first()
@@ -15760,8 +15121,7 @@ def mark_invoice_uncollectible(self, db_session: Session, invoice_id: str):
 # Analytics tasks
 @celery_app.task(base=DatabaseTask, bind=True)
 def update_analytics_cache(self, db_session: Session):
-    """Update analytics cache with latest data"""
-    try:
+    """Update analytics cache with latest data"""    try:
         from .analytics import BillingAnalytics
         import json
         import redis
@@ -15802,8 +15162,7 @@ def update_analytics_cache(self, db_session: Session):
 # Fraud detection tasks
 @celery_app.task(base=DatabaseTask, bind=True)
 def detect_fraud_patterns(self, db_session: Session):
-    """Detect potential fraud patterns in payments"""
-    try:
+    """Detect potential fraud patterns in payments"""    try:
         # Find recent high-risk payments
         cutoff_date = datetime.utcnow() - timedelta(hours=24)
         high_risk_payments = db_session.query(Payment).filter(
@@ -15834,8 +15193,7 @@ def detect_fraud_patterns(self, db_session: Session):
 # Utility functions
 async def send_dunning_email(email: str, subject: str, invoice: Invoice, 
                            urgency: str, days_overdue: int) -> bool:
-    """Send dunning email to customer"""
-    try:
+    """Send dunning email to customer"""    try:
         # Implement email sending logic here
         # This is a placeholder implementation
         logger.info(f"Sending dunning email to {email}: {subject}")
@@ -15846,8 +15204,7 @@ async def send_dunning_email(email: str, subject: str, invoice: Invoice,
 
 
 async def is_fraud_pattern(payment: Payment, db_session: Session) -> bool:
-    """Check if payment matches fraud patterns"""
-    try:
+    """Check if payment matches fraud patterns"""    try:
         # Implement fraud pattern detection logic
         # Examples:
         # - Multiple failed attempts from same IP
@@ -15911,8 +15268,7 @@ __all__ = [
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Spotify AI Agent - Webhook Handlers for Payment Providers
+"""Spotify AI Agent - Webhook Handlers for Payment Providers
 =========================================================
 
 Secure webhook processing for payment providers with:
@@ -15920,9 +15276,7 @@ Secure webhook processing for payment providers with:
 - PayPal webhook validation
 - Event processing and database updates
 - Retry mechanisms and error handling
-"""
-
-import json
+"""import json
 import hmac
 import hashlib
 import logging
@@ -15947,8 +15301,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class WebhookEvent:
-    """Webhook event data structure"""
-    provider: str
+    """Webhook event data structure"""    provider: str
     event_type: str
     event_id: str
     data: Dict[str, Any]
@@ -15957,15 +15310,13 @@ class WebhookEvent:
 
 
 class WebhookProcessor:
-    """Base webhook processor"""
-    
+    """Base webhook processor"""    
     def __init__(self, db_session: Session):
         self.db = db_session
         self.logger = logging.getLogger(self.__class__.__name__)
     
     async def process_event(self, event: WebhookEvent) -> bool:
-        """Process webhook event"""
-        try:
+        """Process webhook event"""        try:
             handler_method = getattr(self, f"handle_{event.event_type}", None)
             if handler_method:
                 await handler_method(event)
@@ -15980,15 +15331,13 @@ class WebhookProcessor:
 
 
 class StripeWebhookProcessor(WebhookProcessor):
-    """Stripe webhook processor"""
-    
+    """Stripe webhook processor"""    
     def __init__(self, db_session: Session, webhook_secret: str):
         super().__init__(db_session)
         self.webhook_secret = webhook_secret
     
     def verify_signature(self, payload: bytes, signature: str, timestamp: str) -> bool:
-        """Verify Stripe webhook signature"""
-        try:
+        """Verify Stripe webhook signature"""        try:
             # Extract signature components
             sig_parts = signature.split(',')
             timestamp_part = None
@@ -16025,8 +15374,7 @@ class StripeWebhookProcessor(WebhookProcessor):
             return False
     
     async def handle_payment_intent_succeeded(self, event: WebhookEvent):
-        """Handle successful payment intent"""
-        try:
+        """Handle successful payment intent"""        try:
             payment_intent = event.data.get('object', {})
             stripe_payment_id = payment_intent.get('id')
             amount = Decimal(str(payment_intent.get('amount', 0))) / 100  # Convert from cents
@@ -16064,8 +15412,7 @@ class StripeWebhookProcessor(WebhookProcessor):
             self.db.rollback()
     
     async def handle_payment_intent_payment_failed(self, event: WebhookEvent):
-        """Handle failed payment intent"""
-        try:
+        """Handle failed payment intent"""        try:
             payment_intent = event.data.get('object', {})
             stripe_payment_id = payment_intent.get('id')
             failure_reason = payment_intent.get('last_payment_error', {}).get('message', 'Unknown error')
@@ -16092,8 +15439,7 @@ class StripeWebhookProcessor(WebhookProcessor):
             self.db.rollback()
     
     async def handle_invoice_payment_succeeded(self, event: WebhookEvent):
-        """Handle successful invoice payment"""
-        try:
+        """Handle successful invoice payment"""        try:
             stripe_invoice = event.data.get('object', {})
             stripe_invoice_id = stripe_invoice.get('id')
             amount_paid = Decimal(str(stripe_invoice.get('amount_paid', 0))) / 100
@@ -16126,8 +15472,7 @@ class StripeWebhookProcessor(WebhookProcessor):
             self.db.rollback()
     
     async def handle_customer_subscription_updated(self, event: WebhookEvent):
-        """Handle subscription updates"""
-        try:
+        """Handle subscription updates"""        try:
             stripe_subscription = event.data.get('object', {})
             stripe_subscription_id = stripe_subscription.get('id')
             status = stripe_subscription.get('status')
@@ -16174,8 +15519,7 @@ class StripeWebhookProcessor(WebhookProcessor):
             self.db.rollback()
     
     async def handle_customer_subscription_deleted(self, event: WebhookEvent):
-        """Handle subscription deletion"""
-        try:
+        """Handle subscription deletion"""        try:
             stripe_subscription = event.data.get('object', {})
             stripe_subscription_id = stripe_subscription.get('id')
             
@@ -16197,8 +15541,7 @@ class StripeWebhookProcessor(WebhookProcessor):
             self.db.rollback()
     
     async def _handle_subscription_payment_failure(self, subscription_id: str):
-        """Handle subscription payment failure"""
-        try:
+        """Handle subscription payment failure"""        try:
             subscription = self.db.query(Subscription).filter(
                 Subscription.id == subscription_id
             ).first()
@@ -16216,8 +15559,7 @@ class StripeWebhookProcessor(WebhookProcessor):
 
 
 class PayPalWebhookProcessor(WebhookProcessor):
-    """PayPal webhook processor"""
-    
+    """PayPal webhook processor"""    
     def __init__(self, db_session: Session, webhook_id: str, client_id: str, client_secret: str):
         super().__init__(db_session)
         self.webhook_id = webhook_id
@@ -16225,8 +15567,7 @@ class PayPalWebhookProcessor(WebhookProcessor):
         self.client_secret = client_secret
     
     def verify_signature(self, headers: Dict[str, str], body: bytes) -> bool:
-        """Verify PayPal webhook signature"""
-        try:
+        """Verify PayPal webhook signature"""        try:
             # PayPal signature verification would require:
             # 1. Get certificate from PayPal
             # 2. Verify certificate chain
@@ -16251,8 +15592,7 @@ class PayPalWebhookProcessor(WebhookProcessor):
             return False
     
     async def handle_PAYMENT_CAPTURE_COMPLETED(self, event: WebhookEvent):
-        """Handle completed payment capture"""
-        try:
+        """Handle completed payment capture"""        try:
             payment_data = event.data.get('resource', {})
             paypal_payment_id = payment_data.get('id')
             amount_value = payment_data.get('amount', {}).get('value', '0')
@@ -16291,8 +15631,7 @@ class PayPalWebhookProcessor(WebhookProcessor):
             self.db.rollback()
     
     async def handle_PAYMENT_CAPTURE_DENIED(self, event: WebhookEvent):
-        """Handle denied payment capture"""
-        try:
+        """Handle denied payment capture"""        try:
             payment_data = event.data.get('resource', {})
             paypal_payment_id = payment_data.get('id')
             status_details = payment_data.get('status_details', {})
@@ -16320,8 +15659,7 @@ class PayPalWebhookProcessor(WebhookProcessor):
             self.db.rollback()
     
     async def handle_BILLING_SUBSCRIPTION_ACTIVATED(self, event: WebhookEvent):
-        """Handle subscription activation"""
-        try:
+        """Handle subscription activation"""        try:
             subscription_data = event.data.get('resource', {})
             paypal_subscription_id = subscription_data.get('id')
             status = subscription_data.get('status')
@@ -16342,8 +15680,7 @@ class PayPalWebhookProcessor(WebhookProcessor):
             self.db.rollback()
     
     async def handle_BILLING_SUBSCRIPTION_CANCELLED(self, event: WebhookEvent):
-        """Handle subscription cancellation"""
-        try:
+        """Handle subscription cancellation"""        try:
             subscription_data = event.data.get('resource', {})
             paypal_subscription_id = subscription_data.get('id')
             
@@ -16365,8 +15702,7 @@ class PayPalWebhookProcessor(WebhookProcessor):
             self.db.rollback()
     
     async def _handle_subscription_payment_failure(self, subscription_id: str):
-        """Handle subscription payment failure"""
-        try:
+        """Handle subscription payment failure"""        try:
             subscription = self.db.query(Subscription).filter(
                 Subscription.id == subscription_id
             ).first()
@@ -16384,26 +15720,22 @@ class PayPalWebhookProcessor(WebhookProcessor):
 
 
 class WebhookEventStore:
-    """Store and track webhook events to prevent duplicate processing"""
-    
+    """Store and track webhook events to prevent duplicate processing"""    
     def __init__(self, db_session: Session):
         self.db = db_session
     
     async def is_event_processed(self, event_id: str, provider: str) -> bool:
-        """Check if event has already been processed"""
-        # In production, this would query a webhook_events table
+        """Check if event has already been processed"""        # In production, this would query a webhook_events table
         # For now, return False to process all events
         return False
     
     async def mark_event_processed(self, event_id: str, provider: str):
-        """Mark event as processed"""
-        # In production, this would insert into webhook_events table
+        """Mark event as processed"""        # In production, this would insert into webhook_events table
         pass
 
 
 class WebhookManager:
-    """Main webhook management orchestrator"""
-    
+    """Main webhook management orchestrator"""    
     def __init__(self, db_session: Session):
         self.db = db_session
         self.event_store = WebhookEventStore(db_session)
@@ -16413,19 +15745,16 @@ class WebhookManager:
         self.processors = {}
     
     def register_stripe_processor(self, webhook_secret: str):
-        """Register Stripe webhook processor"""
-        self.processors['stripe'] = StripeWebhookProcessor(self.db, webhook_secret)
+        """Register Stripe webhook processor"""        self.processors['stripe'] = StripeWebhookProcessor(self.db, webhook_secret)
     
     def register_paypal_processor(self, webhook_id: str, client_id: str, client_secret: str):
-        """Register PayPal webhook processor"""
-        self.processors['paypal'] = PayPalWebhookProcessor(
+        """Register PayPal webhook processor"""        self.processors['paypal'] = PayPalWebhookProcessor(
             self.db, webhook_id, client_id, client_secret
         )
     
     async def process_webhook(self, provider: str, headers: Dict[str, str], 
                             body: bytes) -> bool:
-        """Process incoming webhook"""
-        try:
+        """Process incoming webhook"""        try:
             processor = self.processors.get(provider)
             if not processor:
                 self.logger.error(f"No processor for provider: {provider}")
@@ -16504,8 +15833,7 @@ webhook_manager = None
 
 
 def get_webhook_manager(db_session: Session) -> WebhookManager:
-    """Get webhook manager instance"""
-    global webhook_manager
+    """Get webhook manager instance"""    global webhook_manager
     if webhook_manager is None:
         webhook_manager = WebhookManager(db_session)
         
@@ -16542,8 +15870,7 @@ __all__ = [
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Spotify AI Agent - Database Models for Billing System
+"""Spotify AI Agent - Database Models for Billing System
 ====================================================
 
 SQLAlchemy models for comprehensive billing system with relationships,
@@ -16556,9 +15883,7 @@ Features:
 - Invoice generation and tracking
 - Audit logging and compliance
 - Multi-currency and tax support
-"""
-
-from datetime import datetime, timedelta
+"""from datetime import datetime, timedelta
 from decimal import Decimal
 from typing import Optional, List, Dict, Any
 from enum import Enum as PyEnum
@@ -16581,16 +15906,14 @@ Base = declarative_base()
 
 
 class CustomerStatus(PyEnum):
-    """Customer account status"""
-    ACTIVE = "active"
+    """Customer account status"""    ACTIVE = "active"
     SUSPENDED = "suspended"
     CANCELLED = "cancelled"
     PENDING = "pending"
 
 
 class SubscriptionStatus(PyEnum):
-    """Subscription status enumeration"""
-    TRIAL = "trial"
+    """Subscription status enumeration"""    TRIAL = "trial"
     ACTIVE = "active"
     PAST_DUE = "past_due"
     CANCELLED = "cancelled"
@@ -16601,8 +15924,7 @@ class SubscriptionStatus(PyEnum):
 
 
 class PaymentStatus(PyEnum):
-    """Payment status enumeration"""
-    PENDING = "pending"
+    """Payment status enumeration"""    PENDING = "pending"
     PROCESSING = "processing"
     SUCCEEDED = "succeeded"
     FAILED = "failed"
@@ -16612,8 +15934,7 @@ class PaymentStatus(PyEnum):
 
 
 class InvoiceStatus(PyEnum):
-    """Invoice status enumeration"""
-    DRAFT = "draft"
+    """Invoice status enumeration"""    DRAFT = "draft"
     OPEN = "open"
     PAID = "paid"
     VOID = "void"
@@ -16621,8 +15942,7 @@ class InvoiceStatus(PyEnum):
 
 
 class PaymentProvider(PyEnum):
-    """Payment provider enumeration"""
-    STRIPE = "stripe"
+    """Payment provider enumeration"""    STRIPE = "stripe"
     PAYPAL = "paypal"
     APPLE_PAY = "apple_pay"
     GOOGLE_PAY = "google_pay"
@@ -16631,16 +15951,14 @@ class PaymentProvider(PyEnum):
 
 
 class PlanInterval(PyEnum):
-    """Billing interval enumeration"""
-    DAY = "day"
+    """Billing interval enumeration"""    DAY = "day"
     WEEK = "week"
     MONTH = "month"
     YEAR = "year"
 
 
 class TaxType(PyEnum):
-    """Tax type enumeration"""
-    VAT = "vat"
+    """Tax type enumeration"""    VAT = "vat"
     SALES_TAX = "sales_tax"
     GST = "gst"
     HST = "hst"
@@ -16648,8 +15966,7 @@ class TaxType(PyEnum):
 
 
 class AuditAction(PyEnum):
-    """Audit action types"""
-    CREATE = "create"
+    """Audit action types"""    CREATE = "create"
     UPDATE = "update"
     DELETE = "delete"
     PAYMENT = "payment"
@@ -16658,8 +15975,7 @@ class AuditAction(PyEnum):
 
 
 class Customer(Base):
-    """Customer entity with billing information"""
-    __tablename__ = "customers"
+    """Customer entity with billing information"""    __tablename__ = "customers"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     external_id = Column(String(100), unique=True, nullable=True, index=True)
@@ -16710,28 +16026,24 @@ class Customer(Base):
     
     @validates('email')
     def validate_email(self, key, email):
-        """Validate email format"""
-        import re
+        """Validate email format"""        import re
         if not re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email):
             raise ValueError("Invalid email format")
         return email.lower()
     
     @validates('country')
     def validate_country(self, key, country):
-        """Validate ISO country code"""
-        if country and len(country) != 2:
+        """Validate ISO country code"""        if country and len(country) != 2:
             raise ValueError("Country must be a 2-letter ISO code")
         return country.upper() if country else None
     
     @hybrid_property
     def is_active(self):
-        """Check if customer is active"""
-        return self.status == CustomerStatus.ACTIVE
+        """Check if customer is active"""        return self.status == CustomerStatus.ACTIVE
     
     @hybrid_property
     def full_address(self):
-        """Get formatted full address"""
-        parts = [
+        """Get formatted full address"""        parts = [
             self.address_line1,
             self.address_line2,
             self.city,
@@ -16746,8 +16058,7 @@ class Customer(Base):
 
 
 class Plan(Base):
-    """Subscription plan definition"""
-    __tablename__ = "plans"
+    """Subscription plan definition"""    __tablename__ = "plans"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name = Column(String(255), nullable=False)
@@ -16787,8 +16098,7 @@ class Plan(Base):
     
     @hybrid_property
     def monthly_amount(self):
-        """Convert amount to monthly equivalent"""
-        multipliers = {
+        """Convert amount to monthly equivalent"""        multipliers = {
             PlanInterval.DAY: Decimal('30'),
             PlanInterval.WEEK: Decimal('4.33'),
             PlanInterval.MONTH: Decimal('1'),
@@ -16801,8 +16111,7 @@ class Plan(Base):
 
 
 class Subscription(Base):
-    """Customer subscription to a plan"""
-    __tablename__ = "subscriptions"
+    """Customer subscription to a plan"""    __tablename__ = "subscriptions"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     customer_id = Column(UUID(as_uuid=True), ForeignKey("customers.id"), nullable=False)
@@ -16855,27 +16164,23 @@ class Subscription(Base):
     
     @hybrid_property
     def is_active(self):
-        """Check if subscription is active"""
-        return self.status in [SubscriptionStatus.ACTIVE, SubscriptionStatus.TRIAL]
+        """Check if subscription is active"""        return self.status in [SubscriptionStatus.ACTIVE, SubscriptionStatus.TRIAL]
     
     @hybrid_property
     def is_in_trial(self):
-        """Check if subscription is in trial period"""
-        now = datetime.utcnow()
+        """Check if subscription is in trial period"""        now = datetime.utcnow()
         return (self.status == SubscriptionStatus.TRIAL and 
                 self.trial_end and self.trial_end > now)
     
     @hybrid_property
     def effective_amount(self):
-        """Get effective subscription amount considering overrides and discounts"""
-        base_amount = self.custom_amount or self.plan.amount
+        """Get effective subscription amount considering overrides and discounts"""        base_amount = self.custom_amount or self.plan.amount
         discount_amount = base_amount * (self.discount_percent / 100)
         return base_amount - discount_amount
     
     @hybrid_property
     def days_until_renewal(self):
-        """Days until next renewal"""
-        if not self.current_period_end:
+        """Days until next renewal"""        if not self.current_period_end:
             return None
         delta = self.current_period_end - datetime.utcnow()
         return max(0, delta.days)
@@ -16885,8 +16190,7 @@ class Subscription(Base):
 
 
 class PaymentMethod(Base):
-    """Customer payment methods"""
-    __tablename__ = "payment_methods"
+    """Customer payment methods"""    __tablename__ = "payment_methods"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     customer_id = Column(UUID(as_uuid=True), ForeignKey("customers.id"), nullable=False)
@@ -16928,8 +16232,7 @@ class PaymentMethod(Base):
     
     @hybrid_property
     def is_expired(self):
-        """Check if payment method is expired"""
-        if not self.exp_month or not self.exp_year:
+        """Check if payment method is expired"""        if not self.exp_month or not self.exp_year:
             return False
         
         now = datetime.utcnow()
@@ -16941,8 +16244,7 @@ class PaymentMethod(Base):
 
 
 class Payment(Base):
-    """Payment transactions"""
-    __tablename__ = "payments"
+    """Payment transactions"""    __tablename__ = "payments"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     customer_id = Column(UUID(as_uuid=True), ForeignKey("customers.id"), nullable=False)
@@ -16994,31 +16296,26 @@ class Payment(Base):
     
     @hybrid_property
     def is_successful(self):
-        """Check if payment was successful"""
-        return self.status == PaymentStatus.SUCCEEDED
+        """Check if payment was successful"""        return self.status == PaymentStatus.SUCCEEDED
     
     @hybrid_property
     def net_amount(self):
-        """Net amount after provider fees"""
-        return self.amount - self.provider_fee
+        """Net amount after provider fees"""        return self.amount - self.provider_fee
     
     @hybrid_property
     def available_for_refund(self):
-        """Amount available for refund"""
-        return self.amount - self.refunded_amount
+        """Amount available for refund"""        return self.amount - self.refunded_amount
     
     @hybrid_property
     def is_high_risk(self):
-        """Check if payment is high risk"""
-        return self.risk_score and self.risk_score > 0.7
+        """Check if payment is high risk"""        return self.risk_score and self.risk_score > 0.7
     
     def __repr__(self):
         return f"<Payment(id={self.id}, amount={self.amount}, status={self.status})>"
 
 
 class Invoice(Base):
-    """Customer invoices"""
-    __tablename__ = "invoices"
+    """Customer invoices"""    __tablename__ = "invoices"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     number = Column(String(50), unique=True, nullable=False)
@@ -17085,19 +16382,16 @@ class Invoice(Base):
     
     @hybrid_property
     def is_paid(self):
-        """Check if invoice is fully paid"""
-        return self.status == InvoiceStatus.PAID
+        """Check if invoice is fully paid"""        return self.status == InvoiceStatus.PAID
     
     @hybrid_property
     def is_overdue(self):
-        """Check if invoice is overdue"""
-        return (self.status == InvoiceStatus.OPEN and 
+        """Check if invoice is overdue"""        return (self.status == InvoiceStatus.OPEN and 
                 self.due_date < datetime.utcnow())
     
     @hybrid_property
     def days_overdue(self):
-        """Number of days overdue"""
-        if not self.is_overdue:
+        """Number of days overdue"""        if not self.is_overdue:
             return 0
         return (datetime.utcnow() - self.due_date).days
     
@@ -17106,8 +16400,7 @@ class Invoice(Base):
 
 
 class TaxRate(Base):
-    """Tax rates by jurisdiction"""
-    __tablename__ = "tax_rates"
+    """Tax rates by jurisdiction"""    __tablename__ = "tax_rates"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name = Column(String(100), nullable=False)
@@ -17145,8 +16438,7 @@ class TaxRate(Base):
 
 
 class UsageRecord(Base):
-    """Usage tracking for metered billing"""
-    __tablename__ = "usage_records"
+    """Usage tracking for metered billing"""    __tablename__ = "usage_records"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     subscription_id = Column(UUID(as_uuid=True), ForeignKey("subscriptions.id"), nullable=False)
@@ -17184,8 +16476,7 @@ class UsageRecord(Base):
 
 
 class AuditLog(Base):
-    """Audit trail for billing operations"""
-    __tablename__ = "audit_logs"
+    """Audit trail for billing operations"""    __tablename__ = "audit_logs"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     
@@ -17228,49 +16519,42 @@ class AuditLog(Base):
 @event.listens_for(Customer, 'after_update')
 @event.listens_for(Customer, 'after_delete')
 def log_customer_changes(mapper, connection, target):
-    """Log customer changes"""
-    # Implementation would be added based on specific audit requirements
+    """Log customer changes"""    # Implementation would be added based on specific audit requirements
     pass
 
 
 @event.listens_for(Payment, 'after_insert')
 @event.listens_for(Payment, 'after_update')
 def log_payment_changes(mapper, connection, target):
-    """Log payment changes"""
-    # Implementation would be added based on specific audit requirements
+    """Log payment changes"""    # Implementation would be added based on specific audit requirements
     pass
 
 
 # Database utility functions
 def create_all_tables(engine):
-    """Create all tables"""
-    Base.metadata.create_all(engine)
+    """Create all tables"""    Base.metadata.create_all(engine)
 
 
 def get_customer_by_email(session: Session, email: str) -> Optional[Customer]:
-    """Get customer by email"""
-    return session.query(Customer).filter(Customer.email == email.lower()).first()
+    """Get customer by email"""    return session.query(Customer).filter(Customer.email == email.lower()).first()
 
 
 def get_active_subscriptions(session: Session, customer_id: uuid.UUID) -> List[Subscription]:
-    """Get active subscriptions for customer"""
-    return session.query(Subscription).filter(
+    """Get active subscriptions for customer"""    return session.query(Subscription).filter(
         Subscription.customer_id == customer_id,
         Subscription.status.in_([SubscriptionStatus.ACTIVE, SubscriptionStatus.TRIAL])
     ).all()
 
 
 def get_overdue_invoices(session: Session, limit: int = 100) -> List[Invoice]:
-    """Get overdue invoices"""
-    return session.query(Invoice).filter(
+    """Get overdue invoices"""    return session.query(Invoice).filter(
         Invoice.status == InvoiceStatus.OPEN,
         Invoice.due_date < datetime.utcnow()
     ).limit(limit).all()
 
 
 def calculate_mrr(session: Session) -> Decimal:
-    """Calculate Monthly Recurring Revenue"""
-    # Complex query to calculate MRR from active subscriptions
+    """Calculate Monthly Recurring Revenue"""    # Complex query to calculate MRR from active subscriptions
     result = session.query(
         func.sum(
             case(
@@ -17310,8 +16594,7 @@ __all__ = [
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Spotify AI Agent - Invoice Management System
+"""Spotify AI Agent - Invoice Management System
 ===========================================
 
 Professional invoice generation, management, and delivery system.
@@ -17324,9 +16607,7 @@ Features:
 - Email delivery with tracking
 - Invoice archival and retrieval
 - Dunning management for overdue invoices
-"""
-
-import os
+"""import os
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -17352,8 +16633,7 @@ from botocore.exceptions import ClientError
 
 
 class InvoiceStatus(Enum):
-    """Invoice status enumeration"""
-    DRAFT = "draft"
+    """Invoice status enumeration"""    DRAFT = "draft"
     SENT = "sent"
     PAID = "paid"
     OVERDUE = "overdue"
@@ -17362,8 +16642,7 @@ class InvoiceStatus(Enum):
 
 
 class InvoiceType(Enum):
-    """Invoice type enumeration"""
-    SUBSCRIPTION = "subscription"
+    """Invoice type enumeration"""    SUBSCRIPTION = "subscription"
     ONE_TIME = "one_time"
     USAGE_BASED = "usage_based"
     CREDIT_NOTE = "credit_note"
@@ -17371,8 +16650,7 @@ class InvoiceType(Enum):
 
 
 class DeliveryMethod(Enum):
-    """Invoice delivery methods"""
-    EMAIL = "email"
+    """Invoice delivery methods"""    EMAIL = "email"
     POSTAL = "postal"
     PORTAL = "portal"
     API = "api"
@@ -17380,8 +16658,7 @@ class DeliveryMethod(Enum):
 
 @dataclass
 class InvoiceLineItem:
-    """Individual line item on an invoice"""
-    description: str
+    """Individual line item on an invoice"""    description: str
     quantity: Decimal
     unit_price: Decimal
     tax_rate: Decimal
@@ -17392,26 +16669,22 @@ class InvoiceLineItem:
     
     @property
     def subtotal(self) -> Decimal:
-        """Calculate line item subtotal before tax"""
-        gross = self.quantity * self.unit_price
+        """Calculate line item subtotal before tax"""        gross = self.quantity * self.unit_price
         discount = gross * (self.discount_rate / 100)
         return gross - discount
     
     @property
     def tax_amount(self) -> Decimal:
-        """Calculate tax amount for line item"""
-        return self.subtotal * (self.tax_rate / 100)
+        """Calculate tax amount for line item"""        return self.subtotal * (self.tax_rate / 100)
     
     @property
     def total(self) -> Decimal:
-        """Calculate total including tax"""
-        return self.subtotal + self.tax_amount
+        """Calculate total including tax"""        return self.subtotal + self.tax_amount
 
 
 @dataclass
 class InvoiceRecipient:
-    """Invoice recipient information"""
-    name: str
+    """Invoice recipient information"""    name: str
     email: str
     company: Optional[str] = None
     address_line1: Optional[str] = None
@@ -17426,8 +16699,7 @@ class InvoiceRecipient:
 
 @dataclass
 class InvoiceData:
-    """Complete invoice data structure"""
-    id: str
+    """Complete invoice data structure"""    id: str
     number: str
     status: InvoiceStatus
     type: InvoiceType
@@ -17445,30 +16717,25 @@ class InvoiceData:
     
     @property
     def subtotal(self) -> Decimal:
-        """Calculate invoice subtotal"""
-        return sum(item.subtotal for item in self.line_items)
+        """Calculate invoice subtotal"""        return sum(item.subtotal for item in self.line_items)
     
     @property
     def tax_total(self) -> Decimal:
-        """Calculate total tax amount"""
-        return sum(item.tax_amount for item in self.line_items)
+        """Calculate total tax amount"""        return sum(item.tax_amount for item in self.line_items)
     
     @property
     def total(self) -> Decimal:
-        """Calculate invoice total"""
-        return self.subtotal + self.tax_total
+        """Calculate invoice total"""        return self.subtotal + self.tax_total
 
 
 class InvoiceNumberGenerator:
-    """Generates sequential invoice numbers"""
-    
+    """Generates sequential invoice numbers"""    
     def __init__(self, redis_client):
         self.redis_client = redis_client
         self.prefix = "INV"
         
     async def generate_number(self, year: Optional[int] = None) -> str:
-        """Generate next invoice number"""
-        if year is None:
+        """Generate next invoice number"""        if year is None:
             year = datetime.utcnow().year
         
         counter_key = f"invoice_counter:{year}"
@@ -17483,8 +16750,7 @@ class InvoiceNumberGenerator:
 
 
 class InvoiceTemplateEngine:
-    """Template engine for invoice generation"""
-    
+    """Template engine for invoice generation"""    
     def __init__(self, template_dir: str = None):
         self.template_dir = template_dir or os.path.join(
             os.path.dirname(__file__), "templates"
@@ -17496,8 +16762,7 @@ class InvoiceTemplateEngine:
         self.logger = logging.getLogger(__name__)
         
     def render_html(self, invoice_data: InvoiceData, template_name: str = None) -> str:
-        """Render invoice as HTML"""
-        try:
+        """Render invoice as HTML"""        try:
             # Select template based on language and type
             if template_name is None:
                 template_name = self._select_template(invoice_data)
@@ -17519,8 +16784,7 @@ class InvoiceTemplateEngine:
             raise
     
     def _select_template(self, invoice_data: InvoiceData) -> str:
-        """Select appropriate template"""
-        lang = invoice_data.recipient.language
+        """Select appropriate template"""        lang = invoice_data.recipient.language
         invoice_type = invoice_data.type.value
         
         # Try specific template first
@@ -17537,8 +16801,7 @@ class InvoiceTemplateEngine:
         return "invoice_en.html"
     
     def _get_company_info(self) -> Dict[str, str]:
-        """Get company information for invoice"""
-        return {
+        """Get company information for invoice"""        return {
             'name': 'Spotify AI Agent',
             'address_line1': '123 Music Street',
             'address_line2': 'Suite 456',
@@ -17553,8 +16816,7 @@ class InvoiceTemplateEngine:
         }
     
     def _get_formatting_helpers(self, currency: str) -> Dict[str, Any]:
-        """Get formatting helpers for templates"""
-        return {
+        """Get formatting helpers for templates"""        return {
             'currency': currency,
             'currency_symbol': self._get_currency_symbol(currency),
             'date_format': '%d/%m/%Y',
@@ -17562,8 +16824,7 @@ class InvoiceTemplateEngine:
         }
     
     def _get_currency_symbol(self, currency: str) -> str:
-        """Get currency symbol"""
-        symbols = {
+        """Get currency symbol"""        symbols = {
             'EUR': '€',
             'USD': '$',
             'GBP': '£',
@@ -17572,8 +16833,7 @@ class InvoiceTemplateEngine:
         return symbols.get(currency, currency)
     
     def _get_translations(self, language: str) -> Dict[str, str]:
-        """Get translations for template"""
-        translations = {
+        """Get translations for template"""        translations = {
             'en': {
                 'invoice': 'Invoice',
                 'invoice_number': 'Invoice Number',
@@ -17628,15 +16888,13 @@ class InvoiceTemplateEngine:
 
 
 class InvoicePDFGenerator:
-    """PDF generation from HTML invoices"""
-    
+    """PDF generation from HTML invoices"""    
     def __init__(self, template_engine: InvoiceTemplateEngine):
         self.template_engine = template_engine
         self.logger = logging.getLogger(__name__)
         
     async def generate_pdf(self, invoice_data: InvoiceData) -> bytes:
-        """Generate PDF from invoice data"""
-        try:
+        """Generate PDF from invoice data"""        try:
             # Render HTML
             html_content = self.template_engine.render_html(invoice_data)
             
@@ -17650,11 +16908,9 @@ class InvoicePDFGenerator:
             raise
     
     async def _html_to_pdf(self, html_content: str) -> bytes:
-        """Convert HTML to PDF using WeasyPrint"""
-        try:
+        """Convert HTML to PDF using WeasyPrint"""        try:
             # CSS for PDF styling
-            css_content = """
-            @page {
+            css_content = """            @page {
                 size: A4;
                 margin: 2cm;
             }
@@ -17680,8 +16936,7 @@ class InvoicePDFGenerator:
                 font-weight: bold;
                 background-color: #f9f9f9;
             }
-            """
-            
+            """            
             # Create HTML and CSS objects
             html_obj = HTML(string=html_content)
             css_obj = CSS(string=css_content)
@@ -17697,8 +16952,7 @@ class InvoicePDFGenerator:
 
 
 class InvoiceStorageManager:
-    """Manages invoice storage and retrieval"""
-    
+    """Manages invoice storage and retrieval"""    
     def __init__(self, storage_backend: str = "s3"):
         self.storage_backend = storage_backend
         self.logger = logging.getLogger(__name__)
@@ -17713,8 +16967,7 @@ class InvoiceStorageManager:
             self.bucket_name = os.getenv('INVOICE_BUCKET', 'spotify-ai-invoices')
     
     async def store_invoice_pdf(self, invoice_id: str, pdf_data: bytes) -> str:
-        """Store invoice PDF and return storage key"""
-        try:
+        """Store invoice PDF and return storage key"""        try:
             if self.storage_backend == "s3":
                 return await self._store_s3(invoice_id, pdf_data)
             else:
@@ -17725,8 +16978,7 @@ class InvoiceStorageManager:
             raise
     
     async def retrieve_invoice_pdf(self, storage_key: str) -> bytes:
-        """Retrieve invoice PDF from storage"""
-        try:
+        """Retrieve invoice PDF from storage"""        try:
             if self.storage_backend == "s3":
                 return await self._retrieve_s3(storage_key)
             else:
@@ -17737,8 +16989,7 @@ class InvoiceStorageManager:
             raise
     
     async def _store_s3(self, invoice_id: str, pdf_data: bytes) -> str:
-        """Store PDF in S3"""
-        try:
+        """Store PDF in S3"""        try:
             # Generate storage key with date partitioning
             now = datetime.utcnow()
             storage_key = f"invoices/{now.year}/{now.month:02d}/{invoice_id}.pdf"
@@ -17762,8 +17013,7 @@ class InvoiceStorageManager:
             raise
     
     async def _retrieve_s3(self, storage_key: str) -> bytes:
-        """Retrieve PDF from S3"""
-        try:
+        """Retrieve PDF from S3"""        try:
             response = self.s3_client.get_object(
                 Bucket=self.bucket_name,
                 Key=storage_key
@@ -17776,8 +17026,7 @@ class InvoiceStorageManager:
             raise
     
     async def _store_local(self, invoice_id: str, pdf_data: bytes) -> str:
-        """Store PDF locally"""
-        try:
+        """Store PDF locally"""        try:
             # Create directory structure
             base_dir = Path(os.getenv('INVOICE_STORAGE_DIR', './invoices'))
             now = datetime.utcnow()
@@ -17796,8 +17045,7 @@ class InvoiceStorageManager:
             raise
     
     async def _retrieve_local(self, storage_key: str) -> bytes:
-        """Retrieve PDF from local storage"""
-        try:
+        """Retrieve PDF from local storage"""        try:
             base_dir = Path(os.getenv('INVOICE_STORAGE_DIR', './invoices'))
             file_path = base_dir / storage_key
             
@@ -17810,8 +17058,7 @@ class InvoiceStorageManager:
 
 
 class InvoiceEmailDelivery:
-    """Email delivery system for invoices"""
-    
+    """Email delivery system for invoices"""    
     def __init__(self):
         self.smtp_host = os.getenv('SMTP_HOST', 'smtp.gmail.com')
         self.smtp_port = int(os.getenv('SMTP_PORT', 587))
@@ -17822,8 +17069,7 @@ class InvoiceEmailDelivery:
         self.logger = logging.getLogger(__name__)
     
     async def send_invoice(self, invoice_data: InvoiceData, pdf_data: bytes) -> bool:
-        """Send invoice via email"""
-        try:
+        """Send invoice via email"""        try:
             # Create email message
             msg = MIMEMultipart()
             msg['From'] = formataddr((self.from_name, self.from_email))
@@ -17853,8 +17099,7 @@ class InvoiceEmailDelivery:
             return False
     
     def _get_subject(self, invoice_data: InvoiceData) -> str:
-        """Generate email subject"""
-        lang = invoice_data.recipient.language
+        """Generate email subject"""        lang = invoice_data.recipient.language
         
         subjects = {
             'en': f"Invoice {invoice_data.number} from Spotify AI Agent",
@@ -17865,12 +17110,10 @@ class InvoiceEmailDelivery:
         return subjects.get(lang, subjects['en'])
     
     def _get_email_body(self, invoice_data: InvoiceData) -> str:
-        """Generate email body"""
-        lang = invoice_data.recipient.language
+        """Generate email body"""        lang = invoice_data.recipient.language
         
         bodies = {
-            'en': f"""
-            <html>
+            'en': f"""            <html>
             <body>
                 <p>Dear {invoice_data.recipient.name},</p>
                 
@@ -17896,8 +17139,7 @@ class InvoiceEmailDelivery:
             </body>
             </html>
             """,
-            'fr': f"""
-            <html>
+            'fr': f"""            <html>
             <body>
                 <p>Cher/Chère {invoice_data.recipient.name},</p>
                 
@@ -17922,14 +17164,12 @@ class InvoiceEmailDelivery:
                 L'équipe Spotify AI Agent</p>
             </body>
             </html>
-            """
-        }
+            """        }
         
         return bodies.get(lang, bodies['en'])
     
     async def _send_email(self, msg: MIMEMultipart):
-        """Send email via SMTP"""
-        try:
+        """Send email via SMTP"""        try:
             # Use asyncio to run SMTP in thread pool
             loop = asyncio.get_event_loop()
             await loop.run_in_executor(None, self._smtp_send, msg)
@@ -17939,16 +17179,14 @@ class InvoiceEmailDelivery:
             raise
     
     def _smtp_send(self, msg: MIMEMultipart):
-        """Send email synchronously"""
-        with smtplib.SMTP(self.smtp_host, self.smtp_port) as server:
+        """Send email synchronously"""        with smtplib.SMTP(self.smtp_host, self.smtp_port) as server:
             server.starttls()
             server.login(self.smtp_username, self.smtp_password)
             server.send_message(msg)
 
 
 class InvoiceManager:
-    """Main invoice management orchestrator"""
-    
+    """Main invoice management orchestrator"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.redis_client = None
@@ -17961,8 +17199,7 @@ class InvoiceManager:
         self.email_delivery = InvoiceEmailDelivery()
     
     async def initialize(self):
-        """Initialize async components"""
-        self.redis_client = await aioredis.from_url(
+        """Initialize async components"""        self.redis_client = await aioredis.from_url(
             os.getenv('REDIS_URL', 'redis://localhost:6379')
         )
         self.number_generator = InvoiceNumberGenerator(self.redis_client)
@@ -17975,8 +17212,7 @@ class InvoiceManager:
                            payment_terms: str = "Net 30",
                            notes: str = None,
                            metadata: Dict[str, Any] = None) -> InvoiceData:
-        """Create a new invoice"""
-        try:
+        """Create a new invoice"""        try:
             # Generate invoice ID and number
             invoice_id = str(uuid.uuid4())
             invoice_number = await self.number_generator.generate_number()
@@ -18013,8 +17249,7 @@ class InvoiceManager:
             raise
     
     async def generate_pdf(self, invoice_id: str) -> bytes:
-        """Generate PDF for an invoice"""
-        try:
+        """Generate PDF for an invoice"""        try:
             # Get invoice data
             invoice_data = await self._get_invoice_data(invoice_id)
             if not invoice_data:
@@ -18038,8 +17273,7 @@ class InvoiceManager:
     
     async def send_invoice(self, invoice_id: str, 
                           delivery_method: DeliveryMethod = DeliveryMethod.EMAIL) -> bool:
-        """Send invoice to recipient"""
-        try:
+        """Send invoice to recipient"""        try:
             # Get invoice data
             invoice_data = await self._get_invoice_data(invoice_id)
             if not invoice_data:
@@ -18077,8 +17311,7 @@ class InvoiceManager:
     
     async def mark_paid(self, invoice_id: str, payment_id: str, 
                        payment_date: datetime = None) -> bool:
-        """Mark invoice as paid"""
-        try:
+        """Mark invoice as paid"""        try:
             invoice_data = await self._get_invoice_data(invoice_id)
             if not invoice_data:
                 raise ValueError(f"Invoice not found: {invoice_id}")
@@ -18098,14 +17331,12 @@ class InvoiceManager:
             return False
     
     async def get_invoice(self, invoice_id: str) -> Optional[InvoiceData]:
-        """Retrieve invoice data"""
-        return await self._get_invoice_data(invoice_id)
+        """Retrieve invoice data"""        return await self._get_invoice_data(invoice_id)
     
     async def list_invoices(self, customer_id: str = None, 
                            status: InvoiceStatus = None,
                            limit: int = 50) -> List[InvoiceData]:
-        """List invoices with optional filtering"""
-        try:
+        """List invoices with optional filtering"""        try:
             # Get invoice IDs from Redis
             if customer_id:
                 invoice_ids = await self.redis_client.lrange(
@@ -18131,8 +17362,7 @@ class InvoiceManager:
             return []
     
     async def _store_invoice_data(self, invoice_data: InvoiceData):
-        """Store invoice data in Redis"""
-        try:
+        """Store invoice data in Redis"""        try:
             # Convert to dict for JSON serialization
             data_dict = {
                 'id': invoice_data.id,
@@ -18196,8 +17426,7 @@ class InvoiceManager:
             raise
     
     async def _get_invoice_data(self, invoice_id: str) -> Optional[InvoiceData]:
-        """Retrieve invoice data from Redis"""
-        try:
+        """Retrieve invoice data from Redis"""        try:
             data = await self.redis_client.get(f"invoice:{invoice_id}")
             if not data:
                 return None
@@ -18280,8 +17509,7 @@ __all__ = [
 #
 # 🎖️ Développé par l'équipe d'experts enterprise
 
-"""
-Enterprise Payment & Billing System
+"""Enterprise Payment & Billing System
 ===================================
 
 Complete payment processing and billing management:
@@ -18297,9 +17525,7 @@ Authors & Roles:
 - Senior Backend Developer (Python/FastAPI/Django)
 - Security Specialist
 - DBA & Data Engineer
-"""
-
-import os
+"""import os
 import stripe
 import paypal
 from datetime import datetime, timedelta
@@ -18317,16 +17543,14 @@ from fastapi import HTTPException
 
 
 class PaymentProvider(Enum):
-    """Fournisseurs de paiement supportés"""
-    STRIPE = "stripe"
+    """Fournisseurs de paiement supportés"""    STRIPE = "stripe"
     PAYPAL = "paypal"
     APPLE_PAY = "apple_pay"
     GOOGLE_PAY = "google_pay"
 
 
 class SubscriptionStatus(Enum):
-    """Statuts d'abonnement"""
-    ACTIVE = "active"
+    """Statuts d'abonnement"""    ACTIVE = "active"
     TRIALING = "trialing"
     PAST_DUE = "past_due"
     CANCELED = "canceled"
@@ -18335,8 +17559,7 @@ class SubscriptionStatus(Enum):
 
 
 class PaymentStatus(Enum):
-    """Statuts de paiement"""
-    PENDING = "pending"
+    """Statuts de paiement"""    PENDING = "pending"
     PROCESSING = "processing"
     SUCCEEDED = "succeeded"
     FAILED = "failed"
@@ -18346,8 +17569,7 @@ class PaymentStatus(Enum):
 
 @dataclass
 class PaymentConfig:
-    """Configuration de paiement"""
-    provider: PaymentProvider
+    """Configuration de paiement"""    provider: PaymentProvider
     currency: str = "EUR"
     webhook_secret: str = ""
     api_key: str = ""
@@ -18355,8 +17577,7 @@ class PaymentConfig:
 
 
 class PaymentManager:
-    """Gestionnaire principal des paiements"""
-    
+    """Gestionnaire principal des paiements"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.stripe_manager = StripeManager()
@@ -18365,8 +17586,7 @@ class PaymentManager:
         self.fraud_detector = FraudDetector()
         
     async def process_payment(self, payment_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traite un paiement selon le fournisseur"""
-        try:
+        """Traite un paiement selon le fournisseur"""        try:
             provider = PaymentProvider(payment_data.get('provider'))
             
             # Vérification anti-fraude
@@ -18394,16 +17614,14 @@ class PaymentManager:
 
 
 class StripeManager:
-    """Gestionnaire Stripe"""
-    
+    """Gestionnaire Stripe"""    
     def __init__(self):
         stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
         self.webhook_secret = os.getenv('STRIPE_WEBHOOK_SECRET')
         self.logger = logging.getLogger(__name__)
         
     async def process_payment(self, payment_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traite un paiement Stripe"""
-        try:
+        """Traite un paiement Stripe"""        try:
             # Créer PaymentIntent
             intent = stripe.PaymentIntent.create(
                 amount=int(payment_data['amount'] * 100),  # Stripe utilise les centimes
@@ -18441,8 +17659,7 @@ class StripeManager:
             raise
     
     async def create_subscription(self, subscription_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Crée un abonnement Stripe"""
-        try:
+        """Crée un abonnement Stripe"""        try:
             # Créer ou récupérer le client
             customer = stripe.Customer.create(
                 email=subscription_data['customer_email'],
@@ -18476,8 +17693,7 @@ class StripeManager:
             raise
     
     async def handle_webhook(self, payload: str, signature: str) -> Dict[str, Any]:
-        """Gère les webhooks Stripe"""
-        try:
+        """Gère les webhooks Stripe"""        try:
             event = stripe.Webhook.construct_event(
                 payload, signature, self.webhook_secret
             )
@@ -18500,24 +17716,20 @@ class StripeManager:
             raise HTTPException(status_code=400, detail="Signature invalide")
     
     async def _handle_payment_succeeded(self, payment_intent):
-        """Gère le succès d'un paiement"""
-        # Logique de mise à jour de la base de données
+        """Gère le succès d'un paiement"""        # Logique de mise à jour de la base de données
         return {'status': 'payment_processed', 'payment_id': payment_intent['id']}
     
     async def _handle_invoice_paid(self, invoice):
-        """Gère le paiement d'une facture"""
-        # Logique de mise à jour de l'abonnement
+        """Gère le paiement d'une facture"""        # Logique de mise à jour de l'abonnement
         return {'status': 'invoice_paid', 'invoice_id': invoice['id']}
     
     async def _handle_subscription_canceled(self, subscription):
-        """Gère l'annulation d'un abonnement"""
-        # Logique de désactivation de l'abonnement
+        """Gère l'annulation d'un abonnement"""        # Logique de désactivation de l'abonnement
         return {'status': 'subscription_canceled', 'subscription_id': subscription['id']}
 
 
 class PayPalManager:
-    """Gestionnaire PayPal"""
-    
+    """Gestionnaire PayPal"""    
     def __init__(self):
         self.client_id = os.getenv('PAYPAL_CLIENT_ID')
         self.client_secret = os.getenv('PAYPAL_CLIENT_SECRET')
@@ -18525,8 +17737,7 @@ class PayPalManager:
         self.logger = logging.getLogger(__name__)
         
     async def process_payment(self, payment_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traite un paiement PayPal"""
-        try:
+        """Traite un paiement PayPal"""        try:
             # Configuration PayPal SDK
             paypal.configure({
                 "mode": self.environment,
@@ -18580,8 +17791,7 @@ class PayPalManager:
             raise
     
     async def execute_payment(self, payment_id: str, payer_id: str) -> Dict[str, Any]:
-        """Exécute un paiement PayPal approuvé"""
-        try:
+        """Exécute un paiement PayPal approuvé"""        try:
             payment = paypal.Payment.find(payment_id)
             
             if payment.execute({"payer_id": payer_id}):
@@ -18604,15 +17814,13 @@ class PayPalManager:
 
 
 class SubscriptionManager:
-    """Gestionnaire d'abonnements"""
-    
+    """Gestionnaire d'abonnements"""    
     def __init__(self):
         self.stripe_manager = StripeManager()
         self.logger = logging.getLogger(__name__)
         
     async def create_subscription(self, user_id: str, plan_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Crée un nouvel abonnement"""
-        try:
+        """Crée un nouvel abonnement"""        try:
             # Validation du plan
             if not self._validate_plan(plan_data):
                 raise HTTPException(status_code=400, detail="Plan invalide")
@@ -18638,13 +17846,11 @@ class SubscriptionManager:
             raise
     
     def _validate_plan(self, plan_data: Dict[str, Any]) -> bool:
-        """Valide les données du plan"""
-        required_fields = ['plan_type', 'price_id', 'provider', 'customer_email']
+        """Valide les données du plan"""        required_fields = ['plan_type', 'price_id', 'provider', 'customer_email']
         return all(field in plan_data for field in required_fields)
     
     async def _save_subscription(self, user_id: str, subscription_result: Dict, plan_data: Dict):
-        """Sauvegarde l'abonnement en base de données"""
-        from backend.app.models.orm.users.user_subscription import UserSubscription
+        """Sauvegarde l'abonnement en base de données"""        from backend.app.models.orm.users.user_subscription import UserSubscription
         
         subscription = UserSubscription.create(
             user_id=user_id,
@@ -18659,14 +17865,12 @@ class SubscriptionManager:
 
 
 class InvoiceGenerator:
-    """Générateur de factures"""
-    
+    """Générateur de factures"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
     async def create_invoice(self, payment_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Crée une facture pour un paiement"""
-        try:
+        """Crée une facture pour un paiement"""        try:
             invoice_data = {
                 'invoice_number': self._generate_invoice_number(),
                 'payment_id': payment_data['payment_id'],
@@ -18697,23 +17901,19 @@ class InvoiceGenerator:
             raise
     
     def _generate_invoice_number(self) -> str:
-        """Génère un numéro de facture unique"""
-        timestamp = datetime.utcnow().strftime('%Y%m%d%H%M%S')
+        """Génère un numéro de facture unique"""        timestamp = datetime.utcnow().strftime('%Y%m%d%H%M%S')
         return f"INV-{timestamp}"
     
     async def _save_invoice(self, invoice_data: Dict) -> Dict:
-        """Sauvegarde la facture en base"""
-        # Logique de sauvegarde en base de données
+        """Sauvegarde la facture en base"""        # Logique de sauvegarde en base de données
         return invoice_data
     
     async def _generate_pdf(self, invoice_data: Dict) -> str:
-        """Génère le PDF de la facture"""
-        # Logique de génération PDF
+        """Génère le PDF de la facture"""        # Logique de génération PDF
         return f"/invoices/{invoice_data['invoice_number']}.pdf"
     
     async def _send_invoice_email(self, invoice_data: Dict, pdf_path: str):
-        """Envoie la facture par email"""
-        from backend.app.tasks.celery_manager import send_email_notification
+        """Envoie la facture par email"""        from backend.app.tasks.celery_manager import send_email_notification
         
         send_email_notification.delay(
             to_email=invoice_data.get('customer_email'),
@@ -18727,14 +17927,12 @@ class InvoiceGenerator:
 
 
 class FraudDetector:
-    """Détecteur de fraude"""
-    
+    """Détecteur de fraude"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
     async def analyze_payment(self, payment_data: Dict[str, Any]) -> float:
-        """Analyse un paiement pour détecter la fraude"""
-        try:
+        """Analyse un paiement pour détecter la fraude"""        try:
             score = 0.0
             
             # Vérification du montant
@@ -18764,24 +17962,20 @@ class FraudDetector:
             return 0.0
     
     async def _get_recent_payments(self, user_id: str) -> List[Dict]:
-        """Récupère les paiements récents d'un utilisateur"""
-        # Logique de récupération des paiements récents
+        """Récupère les paiements récents d'un utilisateur"""        # Logique de récupération des paiements récents
         return []
     
     def _is_suspicious_email(self, email: str) -> bool:
-        """Vérifie si l'email est suspect"""
-        suspicious_domains = ['tempmail.com', '10minutemail.com', 'guerrillamail.com']
+        """Vérifie si l'email est suspect"""        suspicious_domains = ['tempmail.com', '10minutemail.com', 'guerrillamail.com']
         domain = email.split('@')[-1] if '@' in email else ''
         return domain in suspicious_domains
 
 
 class WebhookValidator:
-    """Validateur de webhooks"""
-    
+    """Validateur de webhooks"""    
     @staticmethod
     def validate_stripe_webhook(payload: str, signature: str, secret: str) -> bool:
-        """Valide un webhook Stripe"""
-        try:
+        """Valide un webhook Stripe"""        try:
             stripe.Webhook.construct_event(payload, signature, secret)
             return True
         except:
@@ -18789,8 +17983,7 @@ class WebhookValidator:
     
     @staticmethod
     def validate_paypal_webhook(payload: str, headers: Dict, webhook_id: str) -> bool:
-        """Valide un webhook PayPal"""
-        # Logique de validation PayPal
+        """Valide un webhook PayPal"""        # Logique de validation PayPal
         return True
 
 
@@ -18822,8 +18015,7 @@ __all__ = [
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-💰 Tenant Billing Manager - Gestionnaire Facturation Multi-Tenant
+"""💰 Tenant Billing Manager - Gestionnaire Facturation Multi-Tenant
 ===============================================================
 
 Gestionnaire avancé de facturation et quotas pour l'architecture multi-tenant.
@@ -18843,9 +18035,7 @@ Features:
 
 Author: Architecte Microservices + DBA & Data Engineer
 Version: 1.0.0
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -18870,8 +18060,7 @@ logger = logging.getLogger(__name__)
 
 
 class BillingCycle(str, Enum):
-    """Cycles de facturation"""
-    DAILY = "daily"
+    """Cycles de facturation"""    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -18879,8 +18068,7 @@ class BillingCycle(str, Enum):
 
 
 class UsageMetric(str, Enum):
-    """Métriques d'usage facturables"""
-    API_CALLS = "api_calls"
+    """Métriques d'usage facturables"""    API_CALLS = "api_calls"
     STORAGE_GB = "storage_gb"
     COMPUTE_HOURS = "compute_hours"
     AI_PROCESSING = "ai_processing"
@@ -18893,8 +18081,7 @@ class UsageMetric(str, Enum):
 
 
 class BillingStatus(str, Enum):
-    """Statuts de facturation"""
-    ACTIVE = "active"
+    """Statuts de facturation"""    ACTIVE = "active"
     PAST_DUE = "past_due"
     SUSPENDED = "suspended"
     CANCELLED = "cancelled"
@@ -18902,8 +18089,7 @@ class BillingStatus(str, Enum):
 
 
 class PaymentStatus(str, Enum):
-    """Statuts de paiement"""
-    PENDING = "pending"
+    """Statuts de paiement"""    PENDING = "pending"
     PAID = "paid"
     FAILED = "failed"
     REFUNDED = "refunded"
@@ -18912,8 +18098,7 @@ class PaymentStatus(str, Enum):
 
 @dataclass
 class PricingTier:
-    """Niveau de tarification"""
-    name: str
+    """Niveau de tarification"""    name: str
     min_quantity: int
     max_quantity: Optional[int]
     price_per_unit: Decimal
@@ -18922,8 +18107,7 @@ class PricingTier:
 
 @dataclass
 class UsageLimit:
-    """Limite d'usage"""
-    metric: UsageMetric
+    """Limite d'usage"""    metric: UsageMetric
     soft_limit: int  # Limite souple (alerte)
     hard_limit: int  # Limite dure (blocage)
     overage_price: Optional[Decimal] = None  # Prix de dépassement
@@ -18931,8 +18115,7 @@ class UsageLimit:
 
 @dataclass
 class BillingPlan:
-    """Plan de facturation"""
-    id: str
+    """Plan de facturation"""    id: str
     name: str
     description: str
     base_price: Decimal
@@ -18947,8 +18130,7 @@ class BillingPlan:
 
 
 class UsageRecord(BaseModel):
-    """Enregistrement d'usage"""
-    tenant_id: str
+    """Enregistrement d'usage"""    tenant_id: str
     metric: UsageMetric
     quantity: int
     timestamp: datetime
@@ -18956,8 +18138,7 @@ class UsageRecord(BaseModel):
 
 
 class BillingEvent(BaseModel):
-    """Événement de facturation"""
-    event_id: str
+    """Événement de facturation"""    event_id: str
     tenant_id: str
     event_type: str
     amount: Decimal
@@ -18968,8 +18149,7 @@ class BillingEvent(BaseModel):
 
 
 class Invoice(BaseModel):
-    """Facture"""
-    invoice_id: str
+    """Facture"""    invoice_id: str
     tenant_id: str
     billing_period_start: datetime
     billing_period_end: datetime
@@ -18984,8 +18164,7 @@ class Invoice(BaseModel):
 
 
 class TenantBillingManager:
-    """
-    Gestionnaire de facturation multi-tenant avancé.
+    """    Gestionnaire de facturation multi-tenant avancé.
     
     Responsabilités:
     - Suivi de l'usage en temps réel
@@ -18994,22 +18173,18 @@ class TenantBillingManager:
     - Gestion des paiements
     - Alertes et notifications
     - Reporting financier
-    """
-
-    def __init__(self):
+    """    def __init__(self):
         self._redis_client: Optional[redis.Redis] = None
         self.billing_plans: Dict[str, BillingPlan] = {}
         self._load_default_plans()
 
     async def get_redis_client(self) -> redis.Redis:
-        """Obtenir le client Redis"""
-        if not self._redis_client:
+        """Obtenir le client Redis"""        if not self._redis_client:
             self._redis_client = await get_redis_client()
         return self._redis_client
 
     def _load_default_plans(self):
-        """Charger les plans de facturation par défaut"""
-        # Plan Free
+        """Charger les plans de facturation par défaut"""        # Plan Free
         free_plan = BillingPlan(
             id="free",
             name="Free Plan",
@@ -19119,8 +18294,7 @@ class TenantBillingManager:
         quantity: int,
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """
-        Enregistrer l'usage d'une métrique pour un tenant.
+        """        Enregistrer l'usage d'une métrique pour un tenant.
         
         Args:
             tenant_id: Identifiant du tenant
@@ -19130,8 +18304,7 @@ class TenantBillingManager:
             
         Returns:
             True si l'usage a été enregistré, False si limite dépassée
-        """
-        try:
+        """        try:
             # Vérification des limites avant enregistrement
             can_use = await self.check_usage_limit(tenant_id, metric, quantity)
             if not can_use:
@@ -19168,8 +18341,7 @@ class TenantBillingManager:
         metric: UsageMetric,
         additional_quantity: int = 0
     ) -> bool:
-        """
-        Vérifier si un tenant peut utiliser une métrique.
+        """        Vérifier si un tenant peut utiliser une métrique.
         
         Args:
             tenant_id: Identifiant du tenant
@@ -19178,8 +18350,7 @@ class TenantBillingManager:
             
         Returns:
             True si dans les limites, False sinon
-        """
-        try:
+        """        try:
             # Récupération du plan de facturation
             billing_plan = await self._get_tenant_billing_plan(tenant_id)
             if not billing_plan:
@@ -19217,8 +18388,7 @@ class TenantBillingManager:
         metric: UsageMetric,
         period_start: Optional[datetime] = None
     ) -> int:
-        """
-        Obtenir l'usage actuel d'un tenant pour une métrique.
+        """        Obtenir l'usage actuel d'un tenant pour une métrique.
         
         Args:
             tenant_id: Identifiant du tenant
@@ -19227,8 +18397,7 @@ class TenantBillingManager:
             
         Returns:
             Quantité utilisée
-        """
-        try:
+        """        try:
             # Calcul de la période si non fournie
             if period_start is None:
                 period_start = await self._get_billing_period_start(tenant_id)
@@ -19268,8 +18437,7 @@ class TenantBillingManager:
         billing_period_start: datetime,
         billing_period_end: datetime
     ) -> Invoice:
-        """
-        Générer une facture pour un tenant.
+        """        Générer une facture pour un tenant.
         
         Args:
             tenant_id: Identifiant du tenant
@@ -19278,8 +18446,7 @@ class TenantBillingManager:
             
         Returns:
             Facture générée
-        """
-        try:
+        """        try:
             # Récupération du plan de facturation
             billing_plan = await self._get_tenant_billing_plan(tenant_id)
             if not billing_plan:
@@ -19356,8 +18523,7 @@ class TenantBillingManager:
         tenant_id: str,
         include_current_period: bool = True
     ) -> Dict[str, Any]:
-        """
-        Obtenir un résumé de facturation pour un tenant.
+        """        Obtenir un résumé de facturation pour un tenant.
         
         Args:
             tenant_id: Identifiant du tenant
@@ -19365,8 +18531,7 @@ class TenantBillingManager:
             
         Returns:
             Résumé de facturation
-        """
-        try:
+        """        try:
             billing_plan = await self._get_tenant_billing_plan(tenant_id)
             current_period_start = await self._get_billing_period_start(tenant_id)
             
@@ -19415,8 +18580,7 @@ class TenantBillingManager:
         new_plan_id: str,
         prorate: bool = True
     ) -> bool:
-        """
-        Mettre à niveau le plan d'un tenant.
+        """        Mettre à niveau le plan d'un tenant.
         
         Args:
             tenant_id: Identifiant du tenant
@@ -19425,8 +18589,7 @@ class TenantBillingManager:
             
         Returns:
             Succès de l'opération
-        """
-        try:
+        """        try:
             if new_plan_id not in self.billing_plans:
                 raise ValueError(f"Plan {new_plan_id} non trouvé")
 
@@ -19476,8 +18639,7 @@ class TenantBillingManager:
     # Méthodes privées
 
     async def _store_usage_record(self, usage_record: UsageRecord):
-        """Stocker un enregistrement d'usage en base"""
-        async with get_async_session() as db:
+        """Stocker un enregistrement d'usage en base"""        async with get_async_session() as db:
             db_usage = TenantUsage(
                 tenant_id=usage_record.tenant_id,
                 metric=usage_record.metric,
@@ -19494,8 +18656,7 @@ class TenantBillingManager:
         metric: UsageMetric,
         quantity: int
     ):
-        """Mettre à jour les compteurs d'usage en cache"""
-        redis_client = await self.get_redis_client()
+        """Mettre à jour les compteurs d'usage en cache"""        redis_client = await self.get_redis_client()
         today = datetime.utcnow().strftime('%Y%m%d')
         cache_key = f"usage:{tenant_id}:{metric}:{today}"
         
@@ -19503,8 +18664,7 @@ class TenantBillingManager:
         await redis_client.expire(cache_key, 86400 * 7)  # 7 jours
 
     async def _check_usage_alerts(self, tenant_id: str, metric: UsageMetric):
-        """Vérifier et envoyer les alertes d'usage"""
-        billing_plan = await self._get_tenant_billing_plan(tenant_id)
+        """Vérifier et envoyer les alertes d'usage"""        billing_plan = await self._get_tenant_billing_plan(tenant_id)
         if not billing_plan:
             return
 
@@ -19540,13 +18700,11 @@ class TenantBillingManager:
         limit: int,
         alert_type: str
     ):
-        """Envoyer une alerte d'usage"""
-        # Implémentation de l'envoi d'alerte (email, webhook, etc.)
+        """Envoyer une alerte d'usage"""        # Implémentation de l'envoi d'alerte (email, webhook, etc.)
         logger.warning(f"Alerte usage {alert_type}: {tenant_id} - {metric} - {current_usage}/{limit}")
 
     async def _get_tenant_billing_plan(self, tenant_id: str) -> Optional[BillingPlan]:
-        """Récupérer le plan de facturation d'un tenant"""
-        try:
+        """Récupérer le plan de facturation d'un tenant"""        try:
             async with get_async_session() as db:
                 result = await db.execute(
                     select(TenantSubscription.plan_id)
@@ -19565,8 +18723,7 @@ class TenantBillingManager:
             return None
 
     async def _get_billing_period_start(self, tenant_id: str) -> datetime:
-        """Obtenir le début de la période de facturation courante"""
-        # Simplification: début du mois courant
+        """Obtenir le début de la période de facturation courante"""        # Simplification: début du mois courant
         now = datetime.utcnow()
         return datetime(now.year, now.month, 1)
 
@@ -19576,8 +18733,7 @@ class TenantBillingManager:
         start: datetime,
         end: datetime
     ) -> Dict[str, int]:
-        """Récupérer l'usage pour une période"""
-        async with get_async_session() as db:
+        """Récupérer l'usage pour une période"""        async with get_async_session() as db:
             result = await db.execute(
                 select(TenantUsage.metric, func.sum(TenantUsage.quantity))
                 .where(
@@ -19596,8 +18752,7 @@ class TenantBillingManager:
         metric: UsageMetric,
         usage: int
     ) -> Decimal:
-        """Calculer le montant de dépassement"""
-        # Recherche de la limite
+        """Calculer le montant de dépassement"""        # Recherche de la limite
         usage_limit = None
         for limit in billing_plan.usage_limits:
             if limit.metric == metric:
@@ -19611,13 +18766,11 @@ class TenantBillingManager:
         return Decimal(str(overage_quantity)) * usage_limit.overage_price
 
     async def _get_tax_rate(self, tenant_id: str) -> Decimal:
-        """Obtenir le taux de taxe pour un tenant"""
-        # À implémenter selon la juridiction
+        """Obtenir le taux de taxe pour un tenant"""        # À implémenter selon la juridiction
         return Decimal('0.20')  # 20% par défaut
 
     async def _store_invoice(self, invoice: Invoice):
-        """Stocker une facture en base"""
-        async with get_async_session() as db:
+        """Stocker une facture en base"""        async with get_async_session() as db:
             db_invoice = TenantBilling(
                 invoice_id=invoice.invoice_id,
                 tenant_id=invoice.tenant_id,
@@ -19636,8 +18789,7 @@ class TenantBillingManager:
             await db.commit()
 
     async def _get_payment_status(self, tenant_id: str) -> str:
-        """Obtenir le statut de paiement d'un tenant"""
-        # À implémenter
+        """Obtenir le statut de paiement d'un tenant"""        # À implémenter
         return "current"
 
     async def _calculate_proration(
@@ -19646,8 +18798,7 @@ class TenantBillingManager:
         old_plan: BillingPlan,
         new_plan: BillingPlan
     ) -> Decimal:
-        """Calculer la proration lors d'un changement de plan"""
-        # Simplification: calcul basique
+        """Calculer la proration lors d'un changement de plan"""        # Simplification: calcul basique
         return Decimal('0')
 
     async def _apply_credit(
@@ -19656,8 +18807,7 @@ class TenantBillingManager:
         amount: Decimal,
         description: str
     ):
-        """Appliquer un crédit au compte d'un tenant"""
-        await self._create_billing_event(
+        """Appliquer un crédit au compte d'un tenant"""        await self._create_billing_event(
             tenant_id, "credit", amount, "USD", description, {}
         )
 
@@ -19670,8 +18820,7 @@ class TenantBillingManager:
         description: str,
         metadata: Dict[str, Any]
     ):
-        """Créer un événement de facturation"""
-        event = BillingEvent(
+        """Créer un événement de facturation"""        event = BillingEvent(
             event_id=str(uuid.uuid4()),
             tenant_id=tenant_id,
             event_type=event_type,
@@ -19696,8 +18845,7 @@ tenant_billing_manager = TenantBillingManager()
 # ==========================================================================================
 
 #!/usr/bin/env python3
-"""
-Enterprise Tenant Billing Management - Spotify AI Agent
+"""Enterprise Tenant Billing Management - Spotify AI Agent
 Advanced Multi-Tier Billing and Revenue Optimization System
 
 This module provides comprehensive tenant billing capabilities including:
@@ -19719,9 +18867,7 @@ Enterprise Features:
 - Revenue recognition automation
 - Churn prediction and prevention
 - Customer lifetime value optimization
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import uuid
 import json
@@ -19765,16 +18911,14 @@ import matplotlib.pyplot as plt
 logger = logging.getLogger(__name__)
 
 class BillingCycle(Enum):
-    """Billing cycle options."""
-    MONTHLY = "monthly"
+    """Billing cycle options."""    MONTHLY = "monthly"
     QUARTERLY = "quarterly"
     ANNUALLY = "annually"
     USAGE_BASED = "usage_based"
     ONE_TIME = "one_time"
 
 class PaymentStatus(Enum):
-    """Payment status types."""
-    PENDING = "pending"
+    """Payment status types."""    PENDING = "pending"
     PROCESSING = "processing"
     PAID = "paid"
     FAILED = "failed"
@@ -19783,8 +18927,7 @@ class PaymentStatus(Enum):
     DISPUTED = "disputed"
 
 class SubscriptionStatus(Enum):
-    """Subscription status types."""
-    ACTIVE = "active"
+    """Subscription status types."""    ACTIVE = "active"
     INACTIVE = "inactive"
     TRIAL = "trial"
     CANCELLED = "cancelled"
@@ -19793,8 +18936,7 @@ class SubscriptionStatus(Enum):
     PENDING_ACTIVATION = "pending_activation"
 
 class PricingStrategy(Enum):
-    """Pricing strategy types."""
-    FIXED = "fixed"
+    """Pricing strategy types."""    FIXED = "fixed"
     TIERED = "tiered"
     VOLUME = "volume"
     USAGE_BASED = "usage_based"
@@ -19804,8 +18946,7 @@ class PricingStrategy(Enum):
     AI_OPTIMIZED = "ai_optimized"
 
 class InvoiceStatus(Enum):
-    """Invoice status types."""
-    DRAFT = "draft"
+    """Invoice status types."""    DRAFT = "draft"
     PENDING = "pending"
     SENT = "sent"
     PAID = "paid"
@@ -19814,8 +18955,7 @@ class InvoiceStatus(Enum):
     REFUNDED = "refunded"
 
 class CurrencyCode(Enum):
-    """Supported currency codes."""
-    USD = "USD"
+    """Supported currency codes."""    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     JPY = "JPY"
@@ -19826,8 +18966,7 @@ class CurrencyCode(Enum):
 
 @dataclass
 class PricingTier:
-    """Pricing tier definition."""
-    tier_id: str
+    """Pricing tier definition."""    tier_id: str
     tier_name: str
     base_price: Decimal
     currency: CurrencyCode
@@ -19843,8 +18982,7 @@ class PricingTier:
 
 @dataclass
 class UsageMetric:
-    """Usage metric for billing."""
-    metric_id: str
+    """Usage metric for billing."""    metric_id: str
     metric_name: str
     unit: str
     unit_price: Decimal
@@ -19857,8 +18995,7 @@ class UsageMetric:
 
 @dataclass
 class Subscription:
-    """Tenant subscription data."""
-    subscription_id: str
+    """Tenant subscription data."""    subscription_id: str
     tenant_id: str
     pricing_tier: PricingTier
     status: SubscriptionStatus
@@ -19878,8 +19015,7 @@ class Subscription:
 
 @dataclass
 class Invoice:
-    """Billing invoice."""
-    invoice_id: str
+    """Billing invoice."""    invoice_id: str
     tenant_id: str
     subscription_id: str
     invoice_number: str
@@ -19903,8 +19039,7 @@ class Invoice:
 
 @dataclass
 class InvoiceLineItem:
-    """Individual line item on invoice."""
-    item_id: str
+    """Individual line item on invoice."""    item_id: str
     description: str
     quantity: Decimal
     unit_price: Decimal
@@ -19916,8 +19051,7 @@ class InvoiceLineItem:
 
 @dataclass
 class Payment:
-    """Payment transaction."""
-    payment_id: str
+    """Payment transaction."""    payment_id: str
     tenant_id: str
     invoice_id: Optional[str] = None
     amount: Decimal
@@ -19935,8 +19069,7 @@ class Payment:
 
 @dataclass
 class Discount:
-    """Discount or coupon."""
-    discount_id: str
+    """Discount or coupon."""    discount_id: str
     discount_code: str
     discount_type: str  # percentage, fixed_amount, usage_credit
     discount_value: Decimal
@@ -19951,8 +19084,7 @@ class Discount:
 
 @dataclass
 class AddOn:
-    """Subscription add-on."""
-    addon_id: str
+    """Subscription add-on."""    addon_id: str
     addon_name: str
     price: Decimal
     currency: CurrencyCode
@@ -19964,8 +19096,7 @@ class AddOn:
 
 @dataclass
 class RevenueAnalytics:
-    """Revenue analytics data."""
-    analytics_id: str
+    """Revenue analytics data."""    analytics_id: str
     tenant_id: Optional[str] = None
     period_start: date = field(default_factory=date.today)
     period_end: date = field(default_factory=date.today)
@@ -19984,17 +19115,14 @@ class RevenueAnalytics:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class TenantBillingOrchestrator:
-    """
-    Ultra-advanced tenant billing orchestrator with AI-powered optimization.
+    """    Ultra-advanced tenant billing orchestrator with AI-powered optimization.
     
     Provides comprehensive billing capabilities including multi-tier subscriptions,
     usage-based billing, revenue analytics, automated operations, and AI-powered
     pricing optimization with real-time financial intelligence.
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize the billing orchestrator."""
-        self.config_path = config_path or "/config/tenant_billing.yaml"
+        """Initialize the billing orchestrator."""        self.config_path = config_path or "/config/tenant_billing.yaml"
         self.pricing_tiers: Dict[str, PricingTier] = {}
         self.subscriptions: Dict[str, Subscription] = {}
         self.invoices: Dict[str, Invoice] = {}
@@ -20033,8 +19161,7 @@ class TenantBillingOrchestrator:
         asyncio.create_task(self._initialize_billing_system())
     
     async def _initialize_billing_system(self):
-        """Initialize the billing system."""
-        try:
+        """Initialize the billing system."""        try:
             await self._load_configuration()
             await self._initialize_components()
             await self._setup_payment_processors()
@@ -20048,8 +19175,7 @@ class TenantBillingOrchestrator:
             raise
     
     async def _load_configuration(self):
-        """Load billing system configuration."""
-        try:
+        """Load billing system configuration."""        try:
             if Path(self.config_path).exists():
                 async with aiofiles.open(self.config_path, 'r') as f:
                     import yaml
@@ -20062,8 +19188,7 @@ class TenantBillingOrchestrator:
             self.config = self._get_default_billing_config()
     
     def _get_default_billing_config(self) -> Dict[str, Any]:
-        """Get default billing configuration."""
-        return {
+        """Get default billing configuration."""        return {
             'billing': {
                 'enabled': True,
                 'default_currency': 'USD',
@@ -20148,8 +19273,7 @@ class TenantBillingOrchestrator:
         }
     
     async def _save_configuration(self):
-        """Save billing configuration to file."""
-        try:
+        """Save billing configuration to file."""        try:
             config_dir = Path(self.config_path).parent
             config_dir.mkdir(parents=True, exist_ok=True)
             
@@ -20160,8 +19284,7 @@ class TenantBillingOrchestrator:
             logger.error(f"Failed to save billing configuration: {e}")
     
     async def _initialize_components(self):
-        """Initialize billing components."""
-        await self.subscription_manager.initialize(self.config)
+        """Initialize billing components."""        await self.subscription_manager.initialize(self.config)
         await self.invoice_generator.initialize(self.config)
         await self.payment_processor.initialize(self.config)
         await self.usage_tracker.initialize(self.config)
@@ -20170,8 +19293,7 @@ class TenantBillingOrchestrator:
         await self.dunning_manager.initialize(self.config)
     
     async def _setup_payment_processors(self):
-        """Setup payment processor integrations."""
-        try:
+        """Setup payment processor integrations."""        try:
             # Setup Stripe
             if self.config['payment_processors']['stripe']['enabled']:
                 stripe.api_key = self.config['payment_processors']['stripe']['secret_key']
@@ -20192,8 +19314,7 @@ class TenantBillingOrchestrator:
             logger.error(f"Failed to setup payment processors: {e}")
     
     async def _load_pricing_tiers(self):
-        """Load pricing tier definitions."""
-        try:
+        """Load pricing tier definitions."""        try:
             # Load default pricing tiers
             default_tiers = [
                 PricingTier(
@@ -20247,8 +19368,7 @@ class TenantBillingOrchestrator:
             logger.error(f"Failed to load pricing tiers: {e}")
     
     async def _load_existing_subscriptions(self):
-        """Load existing subscriptions from storage."""
-        try:
+        """Load existing subscriptions from storage."""        try:
             subscriptions_dir = Path("/data/subscriptions")
             if subscriptions_dir.exists():
                 for sub_file in subscriptions_dir.glob("*.json"):
@@ -20264,8 +19384,7 @@ class TenantBillingOrchestrator:
             logger.error(f"Failed to load existing subscriptions: {e}")
     
     async def _load_ml_models(self):
-        """Load machine learning models for optimization."""
-        try:
+        """Load machine learning models for optimization."""        try:
             models_dir = Path("/models/billing")
             
             # Load churn prediction model
@@ -20290,8 +19409,7 @@ class TenantBillingOrchestrator:
             logger.error(f"Failed to load ML models: {e}")
     
     async def _start_billing_loops(self):
-        """Start billing background processes."""
-        asyncio.create_task(self._subscription_management_loop())
+        """Start billing background processes."""        asyncio.create_task(self._subscription_management_loop())
         asyncio.create_task(self._invoice_generation_loop())
         asyncio.create_task(self._payment_processing_loop())
         asyncio.create_task(self._usage_aggregation_loop())
@@ -20310,8 +19428,7 @@ class TenantBillingOrchestrator:
         add_ons: Optional[List[AddOn]] = None,
         discounts: Optional[List[str]] = None
     ) -> Subscription:
-        """
-        Create new tenant subscription.
+        """        Create new tenant subscription.
         
         Args:
             tenant_id: Tenant identifier
@@ -20324,8 +19441,7 @@ class TenantBillingOrchestrator:
             
         Returns:
             Subscription: Created subscription
-        """
-        logger.info(f"Creating subscription for tenant {tenant_id}: tier {tier_id}")
+        """        logger.info(f"Creating subscription for tenant {tenant_id}: tier {tier_id}")
         
         try:
             # Validate pricing tier
@@ -20407,8 +19523,7 @@ class TenantBillingOrchestrator:
         usage_data: Dict[str, float],
         billing_period: Optional[Tuple[datetime, datetime]] = None
     ) -> Decimal:
-        """
-        Process usage-based billing for tenant.
+        """        Process usage-based billing for tenant.
         
         Args:
             tenant_id: Tenant identifier
@@ -20417,8 +19532,7 @@ class TenantBillingOrchestrator:
             
         Returns:
             Decimal: Total usage charges
-        """
-        logger.info(f"Processing usage billing for tenant: {tenant_id}")
+        """        logger.info(f"Processing usage billing for tenant: {tenant_id}")
         
         try:
             # Get tenant subscription
@@ -20483,8 +19597,7 @@ class TenantBillingOrchestrator:
         invoice_date: Optional[date] = None,
         due_date: Optional[date] = None
     ) -> Invoice:
-        """
-        Generate invoice for subscription.
+        """        Generate invoice for subscription.
         
         Args:
             subscription_id: Subscription identifier
@@ -20493,8 +19606,7 @@ class TenantBillingOrchestrator:
             
         Returns:
             Invoice: Generated invoice
-        """
-        logger.info(f"Generating invoice for subscription: {subscription_id}")
+        """        logger.info(f"Generating invoice for subscription: {subscription_id}")
         
         try:
             # Get subscription
@@ -20619,8 +19731,7 @@ class TenantBillingOrchestrator:
         payment_method_id: str,
         invoice_id: Optional[str] = None
     ) -> Payment:
-        """
-        Process payment for tenant.
+        """        Process payment for tenant.
         
         Args:
             tenant_id: Tenant identifier
@@ -20631,8 +19742,7 @@ class TenantBillingOrchestrator:
             
         Returns:
             Payment: Processed payment
-        """
-        logger.info(f"Processing payment for tenant {tenant_id}: {amount} {currency.value}")
+        """        logger.info(f"Processing payment for tenant {tenant_id}: {amount} {currency.value}")
         
         try:
             # Generate payment ID
@@ -20698,8 +19808,7 @@ class TenantBillingOrchestrator:
         start_date: Optional[date] = None,
         end_date: Optional[date] = None
     ) -> RevenueAnalytics:
-        """
-        Analyze revenue metrics with AI-powered insights.
+        """        Analyze revenue metrics with AI-powered insights.
         
         Args:
             tenant_id: Specific tenant (None for all tenants)
@@ -20708,8 +19817,7 @@ class TenantBillingOrchestrator:
             
         Returns:
             RevenueAnalytics: Comprehensive revenue analysis
-        """
-        logger.info(f"Analyzing revenue: tenant={tenant_id}, period={start_date} to {end_date}")
+        """        logger.info(f"Analyzing revenue: tenant={tenant_id}, period={start_date} to {end_date}")
         
         try:
             # Set default date range
@@ -20775,8 +19883,7 @@ class TenantBillingOrchestrator:
     
     # Background processing loops
     async def _subscription_management_loop(self):
-        """Manage subscription lifecycle."""
-        while True:
+        """Manage subscription lifecycle."""        while True:
             try:
                 # Check for trial expirations
                 await self._process_trial_expirations()
@@ -20794,8 +19901,7 @@ class TenantBillingOrchestrator:
                 await asyncio.sleep(300)
     
     async def _invoice_generation_loop(self):
-        """Generate invoices automatically."""
-        while True:
+        """Generate invoices automatically."""        while True:
             try:
                 # Generate monthly invoices
                 await self._generate_scheduled_invoices()
@@ -20807,8 +19913,7 @@ class TenantBillingOrchestrator:
                 await asyncio.sleep(3600)
     
     async def _payment_processing_loop(self):
-        """Process pending payments."""
-        while True:
+        """Process pending payments."""        while True:
             try:
                 # Process automated payments
                 await self._process_automated_payments()
@@ -20823,8 +19928,7 @@ class TenantBillingOrchestrator:
                 await asyncio.sleep(60)
     
     async def _usage_aggregation_loop(self):
-        """Aggregate usage data for billing."""
-        while True:
+        """Aggregate usage data for billing."""        while True:
             try:
                 # Aggregate usage data
                 await self.usage_tracker.aggregate_usage_data()
@@ -20839,8 +19943,7 @@ class TenantBillingOrchestrator:
                 await asyncio.sleep(60)
     
     async def _revenue_analytics_loop(self):
-        """Process revenue analytics."""
-        while True:
+        """Process revenue analytics."""        while True:
             try:
                 # Update real-time analytics
                 await self.revenue_analytics.update_real_time_metrics()
@@ -20855,8 +19958,7 @@ class TenantBillingOrchestrator:
                 await asyncio.sleep(300)
     
     async def _pricing_optimization_loop(self):
-        """Optimize pricing strategies."""
-        while True:
+        """Optimize pricing strategies."""        while True:
             try:
                 # Run pricing optimization
                 await self.pricing_optimizer.optimize_pricing()
@@ -20871,8 +19973,7 @@ class TenantBillingOrchestrator:
                 await asyncio.sleep(3600)
     
     async def _dunning_management_loop(self):
-        """Manage overdue payments."""
-        while True:
+        """Manage overdue payments."""        while True:
             try:
                 # Process dunning workflow
                 await self.dunning_manager.process_overdue_payments()
@@ -20885,8 +19986,7 @@ class TenantBillingOrchestrator:
     
     # Helper methods and utilities
     def _calculate_period_end(self, start_date: datetime, billing_cycle: BillingCycle) -> datetime:
-        """Calculate billing period end date."""
-        if billing_cycle == BillingCycle.MONTHLY:
+        """Calculate billing period end date."""        if billing_cycle == BillingCycle.MONTHLY:
             # Add one month
             if start_date.month == 12:
                 return start_date.replace(year=start_date.year + 1, month=1)
@@ -20904,31 +20004,24 @@ class TenantBillingOrchestrator:
 
 
 class SubscriptionManager:
-    """Advanced subscription lifecycle management."""
-    
+    """Advanced subscription lifecycle management."""    
     async def initialize(self, config: Dict[str, Any]):
-        """Initialize subscription manager."""
-        self.config = config
+        """Initialize subscription manager."""        self.config = config
 
 
 class InvoiceGenerator:
-    """Automated invoice generation."""
-    
+    """Automated invoice generation."""    
     async def initialize(self, config: Dict[str, Any]):
-        """Initialize invoice generator."""
-        self.config = config
+        """Initialize invoice generator."""        self.config = config
 
 
 class PaymentProcessor:
-    """Multi-provider payment processing."""
-    
+    """Multi-provider payment processing."""    
     async def initialize(self, config: Dict[str, Any]):
-        """Initialize payment processor."""
-        self.config = config
+        """Initialize payment processor."""        self.config = config
     
     async def process_payment(self, payment: Payment, payment_method_id: str) -> Dict[str, Any]:
-        """Process payment through appropriate provider."""
-        # Mock implementation - would integrate with actual payment processors
+        """Process payment through appropriate provider."""        # Mock implementation - would integrate with actual payment processors
         return {
             'success': True,
             'transaction_id': f"txn_{uuid.uuid4().hex[:16]}",
@@ -20937,63 +20030,48 @@ class PaymentProcessor:
 
 
 class UsageTracker:
-    """Real-time usage tracking and metering."""
-    
+    """Real-time usage tracking and metering."""    
     async def initialize(self, config: Dict[str, Any]):
-        """Initialize usage tracker."""
-        self.config = config
+        """Initialize usage tracker."""        self.config = config
     
     async def initialize_tenant_tracking(self, tenant_id: str, pricing_tier: PricingTier):
-        """Initialize usage tracking for tenant."""
-        pass
+        """Initialize usage tracking for tenant."""        pass
     
     async def aggregate_usage_data(self):
-        """Aggregate usage data for billing."""
-        pass
+        """Aggregate usage data for billing."""        pass
 
 
 class RevenueAnalyticsEngine:
-    """AI-powered revenue analytics."""
-    
+    """AI-powered revenue analytics."""    
     async def initialize(self, config: Dict[str, Any]):
-        """Initialize analytics engine."""
-        self.config = config
+        """Initialize analytics engine."""        self.config = config
     
     async def update_real_time_metrics(self):
-        """Update real-time revenue metrics."""
-        pass
+        """Update real-time revenue metrics."""        pass
     
     async def generate_predictions(self):
-        """Generate revenue predictions."""
-        pass
+        """Generate revenue predictions."""        pass
 
 
 class PricingOptimizer:
-    """AI-powered pricing optimization."""
-    
+    """AI-powered pricing optimization."""    
     async def initialize(self, config: Dict[str, Any]):
-        """Initialize pricing optimizer."""
-        self.config = config
+        """Initialize pricing optimizer."""        self.config = config
     
     async def optimize_pricing(self):
-        """Optimize pricing strategies."""
-        pass
+        """Optimize pricing strategies."""        pass
     
     async def generate_recommendations(self):
-        """Generate pricing recommendations."""
-        pass
+        """Generate pricing recommendations."""        pass
 
 
 class DunningManager:
-    """Automated dunning management."""
-    
+    """Automated dunning management."""    
     async def initialize(self, config: Dict[str, Any]):
-        """Initialize dunning manager."""
-        self.config = config
+        """Initialize dunning manager."""        self.config = config
     
     async def process_overdue_payments(self):
-        """Process overdue payment workflow."""
-        pass
+        """Process overdue payment workflow."""        pass
 \n\n
 # ==========================================================================================
 # MODULE 31/40: revenue_analytics.py
@@ -21001,12 +20079,10 @@ class DunningManager:
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-RevenueAnalytics ORM Model
+"""RevenueAnalytics ORM Model
 - Tracks all revenue, monetization, subscriptions, forecasting, compliance, audit, traceability.
 - Supports advanced analytics, soft-delete, GDPR/DSGVO, security, logging, multi-tenancy.
-"""
-from datetime import datetime
+"""from datetime import datetime
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, JSON, Float
 from sqlalchemy.orm import declarative_base
 
@@ -21074,12 +20150,10 @@ class RevenueAnalytics(Base):
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-UserSubscription ORM Model
+"""UserSubscription ORM Model
 - Tracks all user subscriptions, plans, payments, audit, compliance, traceability, multi-tenancy.
 - Supports advanced analytics, soft-delete, GDPR/DSGVO, security, logging, renewal, cancellation, consent, privacy.
-"""
-from datetime import datetime
+"""from datetime import datetime
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, JSON, Float
 from sqlalchemy.orm import declarative_base
 
@@ -21198,14 +20272,11 @@ def test_revenuepredictor_class():
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Tests for Core Billing Engine
+"""Tests for Core Billing Engine
 ============================
 
 Comprehensive tests for the core billing functionality.
-"""
-
-import pytest
+"""import pytest
 from datetime import datetime, timedelta
 from decimal import Decimal
 from unittest.mock import AsyncMock, Mock, patch, MagicMock
@@ -21220,12 +20291,10 @@ from billing.models import (
 
 
 class TestBillingEngine:
-    """Test core billing engine functionality"""
-    
+    """Test core billing engine functionality"""    
     @pytest.mark.asyncio
     async def test_create_customer(self, billing_engine, db_session):
-        """Test customer creation"""
-        customer_data = {
+        """Test customer creation"""        customer_data = {
             "email": "test@billingengine.com",
             "name": "Test Customer",
             "company": "Test Company",
@@ -21244,8 +20313,7 @@ class TestBillingEngine:
     
     @pytest.mark.asyncio
     async def test_create_subscription(self, billing_engine, test_customer, test_plan_monthly):
-        """Test subscription creation"""
-        subscription_data = {
+        """Test subscription creation"""        subscription_data = {
             "customer_id": test_customer.id,
             "plan_id": test_plan_monthly.id,
             "trial_period_days": 14,
@@ -21262,8 +20330,7 @@ class TestBillingEngine:
     
     @pytest.mark.asyncio
     async def test_subscription_upgrade(self, billing_engine, test_subscription_active, test_plan_yearly):
-        """Test subscription plan upgrade"""
-        original_amount = test_subscription_active.effective_amount
+        """Test subscription plan upgrade"""        original_amount = test_subscription_active.effective_amount
         
         updated_subscription = await billing_engine.upgrade_subscription(
             test_subscription_active.id,
@@ -21276,8 +20343,7 @@ class TestBillingEngine:
     
     @pytest.mark.asyncio
     async def test_subscription_cancellation(self, billing_engine, test_subscription_active):
-        """Test subscription cancellation"""
-        reason = "Customer requested cancellation"
+        """Test subscription cancellation"""        reason = "Customer requested cancellation"
         
         cancelled_subscription = await billing_engine.cancel_subscription(
             test_subscription_active.id,
@@ -21291,8 +20357,7 @@ class TestBillingEngine:
     
     @pytest.mark.asyncio
     async def test_subscription_reactivation(self, billing_engine, db_session):
-        """Test subscription reactivation"""
-        # First cancel a subscription
+        """Test subscription reactivation"""        # First cancel a subscription
         cancelled_subscription = await billing_engine.cancel_subscription(
             test_subscription_active.id,
             cancel_at_period_end=False
@@ -21309,8 +20374,7 @@ class TestBillingEngine:
     
     @pytest.mark.asyncio
     async def test_invoice_generation(self, billing_engine, test_subscription_active):
-        """Test automatic invoice generation"""
-        invoice = await billing_engine.generate_invoice(
+        """Test automatic invoice generation"""        invoice = await billing_engine.generate_invoice(
             subscription_id=test_subscription_active.id,
             period_start=datetime.utcnow(),
             period_end=datetime.utcnow() + timedelta(days=30)
@@ -21324,8 +20388,7 @@ class TestBillingEngine:
     
     @pytest.mark.asyncio
     async def test_invoice_payment_processing(self, billing_engine, test_invoice_draft, test_payment_method_stripe):
-        """Test invoice payment processing"""
-        # Finalize invoice first
+        """Test invoice payment processing"""        # Finalize invoice first
         invoice = await billing_engine.finalize_invoice(test_invoice_draft.id)
         
         # Process payment
@@ -21340,8 +20403,7 @@ class TestBillingEngine:
     
     @pytest.mark.asyncio
     async def test_usage_based_billing(self, billing_engine, test_subscription_active):
-        """Test usage-based billing calculations"""
-        usage_data = [
+        """Test usage-based billing calculations"""        usage_data = [
             {
                 "metric_name": "api_calls",
                 "quantity": 1500,
@@ -21372,8 +20434,7 @@ class TestBillingEngine:
     
     @pytest.mark.asyncio
     async def test_proration_calculations(self, billing_engine, test_subscription_active, test_plan_yearly):
-        """Test proration calculations for plan changes"""
-        # Change plan mid-cycle
+        """Test proration calculations for plan changes"""        # Change plan mid-cycle
         days_into_cycle = 15
         test_subscription_active.current_period_start = datetime.utcnow() - timedelta(days=days_into_cycle)
         test_subscription_active.current_period_end = datetime.utcnow() + timedelta(days=15)
@@ -21390,8 +20451,7 @@ class TestBillingEngine:
     
     @pytest.mark.asyncio
     async def test_dunning_management(self, billing_engine, test_customer):
-        """Test dunning management for failed payments"""
-        # Create failed payment
+        """Test dunning management for failed payments"""        # Create failed payment
         failed_payment = Payment(
             customer_id=test_customer.id,
             provider=PaymentProvider.STRIPE,
@@ -21411,12 +20471,10 @@ class TestBillingEngine:
 
 
 class TestPaymentProcessor:
-    """Test payment processing functionality"""
-    
+    """Test payment processing functionality"""    
     @pytest.mark.asyncio
     async def test_stripe_payment_processing(self, payment_processor, test_customer, test_payment_method_stripe):
-        """Test Stripe payment processing"""
-        payment_data = {
+        """Test Stripe payment processing"""        payment_data = {
             "amount": Decimal('50.00'),
             "currency": "EUR",
             "customer_id": test_customer.id,
@@ -21443,8 +20501,7 @@ class TestPaymentProcessor:
     
     @pytest.mark.asyncio
     async def test_paypal_payment_processing(self, payment_processor, test_customer, test_payment_method_paypal):
-        """Test PayPal payment processing"""
-        payment_data = {
+        """Test PayPal payment processing"""        payment_data = {
             "amount": Decimal('75.00'),
             "currency": "EUR",
             "customer_id": test_customer.id,
@@ -21466,8 +20523,7 @@ class TestPaymentProcessor:
     
     @pytest.mark.asyncio
     async def test_payment_retry_logic(self, payment_processor, test_customer):
-        """Test payment retry logic for failed payments"""
-        payment_data = {
+        """Test payment retry logic for failed payments"""        payment_data = {
             "amount": Decimal('25.00'),
             "currency": "EUR",
             "customer_id": test_customer.id,
@@ -21492,8 +20548,7 @@ class TestPaymentProcessor:
     
     @pytest.mark.asyncio
     async def test_refund_processing(self, payment_processor, test_payment_successful):
-        """Test payment refund processing"""
-        refund_amount = Decimal('10.00')
+        """Test payment refund processing"""        refund_amount = Decimal('10.00')
         reason = "Customer request"
         
         with patch('stripe.Refund.create') as mock_refund:
@@ -21515,8 +20570,7 @@ class TestPaymentProcessor:
     
     @pytest.mark.asyncio
     async def test_payment_method_validation(self, payment_processor, test_customer):
-        """Test payment method validation"""
-        # Valid card
+        """Test payment method validation"""        # Valid card
         valid_card_data = {
             "customer_id": test_customer.id,
             "provider": PaymentProvider.STRIPE,
@@ -21547,12 +20601,10 @@ class TestPaymentProcessor:
 
 
 class TestTaxCalculator:
-    """Test tax calculation functionality"""
-    
+    """Test tax calculation functionality"""    
     @pytest.mark.asyncio
     async def test_eu_vat_calculation(self, tax_calculator):
-        """Test EU VAT calculation"""
-        tax_data = {
+        """Test EU VAT calculation"""        tax_data = {
             "amount": Decimal('100.00'),
             "customer_country": "FR",
             "business_country": "FR",
@@ -21569,8 +20621,7 @@ class TestTaxCalculator:
     
     @pytest.mark.asyncio
     async def test_us_sales_tax_calculation(self, tax_calculator):
-        """Test US sales tax calculation"""
-        tax_data = {
+        """Test US sales tax calculation"""        tax_data = {
             "amount": Decimal('50.00'),
             "customer_country": "US",
             "customer_state": "CA",
@@ -21587,8 +20638,7 @@ class TestTaxCalculator:
     
     @pytest.mark.asyncio
     async def test_reverse_charge_calculation(self, tax_calculator):
-        """Test reverse charge for EU B2B transactions"""
-        tax_data = {
+        """Test reverse charge for EU B2B transactions"""        tax_data = {
             "amount": Decimal('200.00'),
             "customer_country": "DE",
             "business_country": "FR",
@@ -21606,8 +20656,7 @@ class TestTaxCalculator:
     
     @pytest.mark.asyncio
     async def test_tax_exemption(self, tax_calculator):
-        """Test tax exemption handling"""
-        tax_data = {
+        """Test tax exemption handling"""        tax_data = {
             "amount": Decimal('100.00'),
             "customer_country": "US",
             "customer_state": "DE",  # Delaware has no sales tax
@@ -21623,12 +20672,10 @@ class TestTaxCalculator:
 
 
 class TestFraudDetection:
-    """Test fraud detection system"""
-    
+    """Test fraud detection system"""    
     @pytest.mark.asyncio
     async def test_low_risk_transaction(self, fraud_detector, test_customer):
-        """Test low-risk transaction scoring"""
-        transaction_data = {
+        """Test low-risk transaction scoring"""        transaction_data = {
             "customer_id": test_customer.id,
             "amount": Decimal('29.99'),
             "currency": "EUR",
@@ -21645,8 +20692,7 @@ class TestFraudDetection:
     
     @pytest.mark.asyncio
     async def test_high_risk_transaction(self, fraud_detector, test_customer):
-        """Test high-risk transaction scoring"""
-        transaction_data = {
+        """Test high-risk transaction scoring"""        transaction_data = {
             "customer_id": test_customer.id,
             "amount": Decimal('5000.00'),  # Large amount
             "currency": "EUR",
@@ -21667,8 +20713,7 @@ class TestFraudDetection:
     
     @pytest.mark.asyncio
     async def test_velocity_checks(self, fraud_detector, test_customer):
-        """Test transaction velocity fraud checks"""
-        # Simulate rapid transactions
+        """Test transaction velocity fraud checks"""        # Simulate rapid transactions
         for i in range(5):
             transaction_data = {
                 "customer_id": test_customer.id,
@@ -21684,8 +20729,7 @@ class TestFraudDetection:
     
     @pytest.mark.asyncio
     async def test_ml_fraud_prediction(self, fraud_detector):
-        """Test ML-based fraud prediction"""
-        features = {
+        """Test ML-based fraud prediction"""        features = {
             "amount": 250.0,
             "hour_of_day": 3,  # Unusual hour
             "country_risk_score": 0.8,
@@ -21704,8 +20748,7 @@ class TestFraudDetection:
     
     @pytest.mark.asyncio
     async def test_device_fingerprinting(self, fraud_detector):
-        """Test device fingerprinting for fraud detection"""
-        device_data = {
+        """Test device fingerprinting for fraud detection"""        device_data = {
             "user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X)",
             "screen_resolution": "375x812",
             "timezone": "Europe/Paris",
@@ -21724,12 +20767,10 @@ class TestFraudDetection:
 
 
 class TestBillingEngineIntegration:
-    """Integration tests for billing engine components"""
-    
+    """Integration tests for billing engine components"""    
     @pytest.mark.asyncio
     async def test_end_to_end_subscription_billing(self, billing_engine, test_customer, test_plan_monthly, test_payment_method_stripe):
-        """Test complete subscription billing flow"""
-        # 1. Create subscription
+        """Test complete subscription billing flow"""        # 1. Create subscription
         subscription_data = {
             "customer_id": test_customer.id,
             "plan_id": test_plan_monthly.id,
@@ -21767,8 +20808,7 @@ class TestBillingEngineIntegration:
     
     @pytest.mark.asyncio
     async def test_subscription_lifecycle_management(self, billing_engine, test_customer, test_plan_monthly, test_plan_yearly):
-        """Test complete subscription lifecycle"""
-        # 1. Create trial subscription
+        """Test complete subscription lifecycle"""        # 1. Create trial subscription
         subscription = await billing_engine.create_subscription({
             "customer_id": test_customer.id,
             "plan_id": test_plan_monthly.id,
@@ -21804,14 +20844,11 @@ class TestBillingEngineIntegration:
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Tests for Billing API Endpoints
+"""Tests for Billing API Endpoints
 ==============================
 
 Comprehensive tests for FastAPI billing endpoints.
-"""
-
-import pytest
+"""import pytest
 from datetime import datetime, timedelta
 from decimal import Decimal
 from unittest.mock import AsyncMock, Mock, patch
@@ -21828,11 +20865,9 @@ from billing.models import (
 
 
 class TestCustomerEndpoints:
-    """Test customer management endpoints"""
-    
+    """Test customer management endpoints"""    
     def test_create_customer(self, client, mock_billing_engine):
-        """Test POST /api/v1/billing/customers"""
-        customer_data = {
+        """Test POST /api/v1/billing/customers"""        customer_data = {
             "email": "api@example.com",
             "name": "API Test Customer",
             "company": "API Test Company",
@@ -21864,8 +20899,7 @@ class TestCustomerEndpoints:
         mock_billing_engine.create_customer.assert_called_once()
     
     def test_get_customer(self, client, test_customer):
-        """Test GET /api/v1/billing/customers/{customer_id}"""
-        response = client.get(f"/api/v1/billing/customers/{test_customer.id}")
+        """Test GET /api/v1/billing/customers/{customer_id}"""        response = client.get(f"/api/v1/billing/customers/{test_customer.id}")
         
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -21874,15 +20908,13 @@ class TestCustomerEndpoints:
         assert data["name"] == test_customer.name
     
     def test_get_customer_not_found(self, client):
-        """Test GET /api/v1/billing/customers/{customer_id} - not found"""
-        response = client.get("/api/v1/billing/customers/nonexistent")
+        """Test GET /api/v1/billing/customers/{customer_id} - not found"""        response = client.get("/api/v1/billing/customers/nonexistent")
         
         assert response.status_code == status.HTTP_404_NOT_FOUND
         assert "Customer not found" in response.json()["detail"]
     
     def test_update_customer(self, client, test_customer):
-        """Test PUT /api/v1/billing/customers/{customer_id}"""
-        update_data = {
+        """Test PUT /api/v1/billing/customers/{customer_id}"""        update_data = {
             "name": "Updated Customer Name",
             "company": "Updated Company",
             "preferred_currency": "USD"
@@ -21900,8 +20932,7 @@ class TestCustomerEndpoints:
         assert data["preferred_currency"] == update_data["preferred_currency"]
     
     def test_list_customers(self, client, test_customer):
-        """Test GET /api/v1/billing/customers"""
-        response = client.get("/api/v1/billing/customers")
+        """Test GET /api/v1/billing/customers"""        response = client.get("/api/v1/billing/customers")
         
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -21912,8 +20943,7 @@ class TestCustomerEndpoints:
         assert len(data["items"]) >= 1
     
     def test_list_customers_with_filters(self, client, test_customer):
-        """Test GET /api/v1/billing/customers with filters"""
-        response = client.get(
+        """Test GET /api/v1/billing/customers with filters"""        response = client.get(
             "/api/v1/billing/customers",
             params={
                 "status": "ACTIVE",
@@ -21928,8 +20958,7 @@ class TestCustomerEndpoints:
         assert all(customer["status"] == "ACTIVE" for customer in data["items"])
     
     def test_delete_customer(self, client, test_customer, mock_billing_engine):
-        """Test DELETE /api/v1/billing/customers/{customer_id}"""
-        mock_billing_engine.delete_customer.return_value = True
+        """Test DELETE /api/v1/billing/customers/{customer_id}"""        mock_billing_engine.delete_customer.return_value = True
         
         response = client.delete(f"/api/v1/billing/customers/{test_customer.id}")
         
@@ -21938,11 +20967,9 @@ class TestCustomerEndpoints:
 
 
 class TestPlanEndpoints:
-    """Test plan management endpoints"""
-    
+    """Test plan management endpoints"""    
     def test_create_plan(self, client, mock_billing_engine):
-        """Test POST /api/v1/billing/plans"""
-        plan_data = {
+        """Test POST /api/v1/billing/plans"""        plan_data = {
             "name": "Premium Plan",
             "description": "Premium subscription plan",
             "amount": "99.99",
@@ -21973,8 +21000,7 @@ class TestPlanEndpoints:
         mock_billing_engine.create_plan.assert_called_once()
     
     def test_get_plan(self, client, test_plan_monthly):
-        """Test GET /api/v1/billing/plans/{plan_id}"""
-        response = client.get(f"/api/v1/billing/plans/{test_plan_monthly.id}")
+        """Test GET /api/v1/billing/plans/{plan_id}"""        response = client.get(f"/api/v1/billing/plans/{test_plan_monthly.id}")
         
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -21982,8 +21008,7 @@ class TestPlanEndpoints:
         assert data["name"] == test_plan_monthly.name
     
     def test_list_plans(self, client, test_plan_monthly, test_plan_yearly):
-        """Test GET /api/v1/billing/plans"""
-        response = client.get("/api/v1/billing/plans")
+        """Test GET /api/v1/billing/plans"""        response = client.get("/api/v1/billing/plans")
         
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -21991,8 +21016,7 @@ class TestPlanEndpoints:
         assert len(data["items"]) >= 2
     
     def test_update_plan(self, client, test_plan_monthly):
-        """Test PUT /api/v1/billing/plans/{plan_id}"""
-        update_data = {
+        """Test PUT /api/v1/billing/plans/{plan_id}"""        update_data = {
             "name": "Updated Premium Plan",
             "description": "Updated description",
             "amount": "39.99"
@@ -22009,8 +21033,7 @@ class TestPlanEndpoints:
         assert data["amount"] == update_data["amount"]
     
     def test_deactivate_plan(self, client, test_plan_monthly, mock_billing_engine):
-        """Test DELETE /api/v1/billing/plans/{plan_id}"""
-        mock_billing_engine.deactivate_plan.return_value = True
+        """Test DELETE /api/v1/billing/plans/{plan_id}"""        mock_billing_engine.deactivate_plan.return_value = True
         
         response = client.delete(f"/api/v1/billing/plans/{test_plan_monthly.id}")
         
@@ -22019,11 +21042,9 @@ class TestPlanEndpoints:
 
 
 class TestSubscriptionEndpoints:
-    """Test subscription management endpoints"""
-    
+    """Test subscription management endpoints"""    
     def test_create_subscription(self, client, test_customer, test_plan_monthly, mock_billing_engine):
-        """Test POST /api/v1/billing/subscriptions"""
-        subscription_data = {
+        """Test POST /api/v1/billing/subscriptions"""        subscription_data = {
             "customer_id": test_customer.id,
             "plan_id": test_plan_monthly.id,
             "trial_period_days": 14,
@@ -22046,8 +21067,7 @@ class TestSubscriptionEndpoints:
         assert data["status"] == "TRIAL"
     
     def test_get_subscription(self, client, test_subscription_active):
-        """Test GET /api/v1/billing/subscriptions/{subscription_id}"""
-        response = client.get(f"/api/v1/billing/subscriptions/{test_subscription_active.id}")
+        """Test GET /api/v1/billing/subscriptions/{subscription_id}"""        response = client.get(f"/api/v1/billing/subscriptions/{test_subscription_active.id}")
         
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -22055,8 +21075,7 @@ class TestSubscriptionEndpoints:
         assert data["status"] == "ACTIVE"
     
     def test_list_subscriptions(self, client, test_subscription_active):
-        """Test GET /api/v1/billing/subscriptions"""
-        response = client.get("/api/v1/billing/subscriptions")
+        """Test GET /api/v1/billing/subscriptions"""        response = client.get("/api/v1/billing/subscriptions")
         
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -22064,8 +21083,7 @@ class TestSubscriptionEndpoints:
         assert len(data["items"]) >= 1
     
     def test_list_customer_subscriptions(self, client, test_customer, test_subscription_active):
-        """Test GET /api/v1/billing/customers/{customer_id}/subscriptions"""
-        response = client.get(f"/api/v1/billing/customers/{test_customer.id}/subscriptions")
+        """Test GET /api/v1/billing/customers/{customer_id}/subscriptions"""        response = client.get(f"/api/v1/billing/customers/{test_customer.id}/subscriptions")
         
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -22073,8 +21091,7 @@ class TestSubscriptionEndpoints:
         assert all(sub["customer_id"] == test_customer.id for sub in data["items"])
     
     def test_upgrade_subscription(self, client, test_subscription_active, test_plan_yearly, mock_billing_engine):
-        """Test PUT /api/v1/billing/subscriptions/{subscription_id}/upgrade"""
-        upgrade_data = {
+        """Test PUT /api/v1/billing/subscriptions/{subscription_id}/upgrade"""        upgrade_data = {
             "new_plan_id": test_plan_yearly.id,
             "proration_behavior": "immediate"
         }
@@ -22096,8 +21113,7 @@ class TestSubscriptionEndpoints:
         mock_billing_engine.upgrade_subscription.assert_called_once()
     
     def test_cancel_subscription(self, client, test_subscription_active, mock_billing_engine):
-        """Test POST /api/v1/billing/subscriptions/{subscription_id}/cancel"""
-        cancel_data = {
+        """Test POST /api/v1/billing/subscriptions/{subscription_id}/cancel"""        cancel_data = {
             "cancel_at_period_end": True,
             "reason": "Customer request"
         }
@@ -22119,8 +21135,7 @@ class TestSubscriptionEndpoints:
         mock_billing_engine.cancel_subscription.assert_called_once()
     
     def test_reactivate_subscription(self, client, test_subscription_active, mock_billing_engine):
-        """Test POST /api/v1/billing/subscriptions/{subscription_id}/reactivate"""
-        mock_reactivated_subscription = Mock()
+        """Test POST /api/v1/billing/subscriptions/{subscription_id}/reactivate"""        mock_reactivated_subscription = Mock()
         mock_reactivated_subscription.id = test_subscription_active.id
         mock_reactivated_subscription.status = SubscriptionStatus.ACTIVE
         mock_billing_engine.reactivate_subscription.return_value = mock_reactivated_subscription
@@ -22134,11 +21149,9 @@ class TestSubscriptionEndpoints:
 
 
 class TestPaymentMethodEndpoints:
-    """Test payment method management endpoints"""
-    
+    """Test payment method management endpoints"""    
     def test_add_payment_method(self, client, test_customer, mock_payment_processor):
-        """Test POST /api/v1/billing/customers/{customer_id}/payment-methods"""
-        payment_method_data = {
+        """Test POST /api/v1/billing/customers/{customer_id}/payment-methods"""        payment_method_data = {
             "provider": "STRIPE",
             "type": "card",
             "card_number": "4242424242424242",
@@ -22168,8 +21181,7 @@ class TestPaymentMethodEndpoints:
         assert data["brand"] == "visa"
     
     def test_list_payment_methods(self, client, test_customer, test_payment_method_stripe):
-        """Test GET /api/v1/billing/customers/{customer_id}/payment-methods"""
-        response = client.get(f"/api/v1/billing/customers/{test_customer.id}/payment-methods")
+        """Test GET /api/v1/billing/customers/{customer_id}/payment-methods"""        response = client.get(f"/api/v1/billing/customers/{test_customer.id}/payment-methods")
         
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -22178,8 +21190,7 @@ class TestPaymentMethodEndpoints:
         assert all(pm["customer_id"] == test_customer.id for pm in data["items"])
     
     def test_get_payment_method(self, client, test_payment_method_stripe):
-        """Test GET /api/v1/billing/payment-methods/{payment_method_id}"""
-        response = client.get(f"/api/v1/billing/payment-methods/{test_payment_method_stripe.id}")
+        """Test GET /api/v1/billing/payment-methods/{payment_method_id}"""        response = client.get(f"/api/v1/billing/payment-methods/{test_payment_method_stripe.id}")
         
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -22187,8 +21198,7 @@ class TestPaymentMethodEndpoints:
         assert data["type"] == "card"
     
     def test_set_default_payment_method(self, client, test_payment_method_stripe, mock_payment_processor):
-        """Test PUT /api/v1/billing/payment-methods/{payment_method_id}/default"""
-        mock_payment_processor.set_default_payment_method.return_value = test_payment_method_stripe
+        """Test PUT /api/v1/billing/payment-methods/{payment_method_id}/default"""        mock_payment_processor.set_default_payment_method.return_value = test_payment_method_stripe
         
         response = client.put(f"/api/v1/billing/payment-methods/{test_payment_method_stripe.id}/default")
         
@@ -22197,8 +21207,7 @@ class TestPaymentMethodEndpoints:
         assert data["is_default"] is True
     
     def test_delete_payment_method(self, client, test_payment_method_stripe, mock_payment_processor):
-        """Test DELETE /api/v1/billing/payment-methods/{payment_method_id}"""
-        mock_payment_processor.delete_payment_method.return_value = True
+        """Test DELETE /api/v1/billing/payment-methods/{payment_method_id}"""        mock_payment_processor.delete_payment_method.return_value = True
         
         response = client.delete(f"/api/v1/billing/payment-methods/{test_payment_method_stripe.id}")
         
@@ -22207,11 +21216,9 @@ class TestPaymentMethodEndpoints:
 
 
 class TestInvoiceEndpoints:
-    """Test invoice management endpoints"""
-    
+    """Test invoice management endpoints"""    
     def test_get_invoice(self, client, test_invoice_draft):
-        """Test GET /api/v1/billing/invoices/{invoice_id}"""
-        response = client.get(f"/api/v1/billing/invoices/{test_invoice_draft.id}")
+        """Test GET /api/v1/billing/invoices/{invoice_id}"""        response = client.get(f"/api/v1/billing/invoices/{test_invoice_draft.id}")
         
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -22219,8 +21226,7 @@ class TestInvoiceEndpoints:
         assert data["number"] == test_invoice_draft.number
     
     def test_list_invoices(self, client, test_invoice_draft):
-        """Test GET /api/v1/billing/invoices"""
-        response = client.get("/api/v1/billing/invoices")
+        """Test GET /api/v1/billing/invoices"""        response = client.get("/api/v1/billing/invoices")
         
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -22228,8 +21234,7 @@ class TestInvoiceEndpoints:
         assert len(data["items"]) >= 1
     
     def test_list_customer_invoices(self, client, test_customer, test_invoice_draft):
-        """Test GET /api/v1/billing/customers/{customer_id}/invoices"""
-        response = client.get(f"/api/v1/billing/customers/{test_customer.id}/invoices")
+        """Test GET /api/v1/billing/customers/{customer_id}/invoices"""        response = client.get(f"/api/v1/billing/customers/{test_customer.id}/invoices")
         
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -22237,8 +21242,7 @@ class TestInvoiceEndpoints:
         assert all(inv["customer_id"] == test_customer.id for inv in data["items"])
     
     def test_pay_invoice(self, client, test_invoice_draft, test_payment_method_stripe, mock_billing_engine):
-        """Test POST /api/v1/billing/invoices/{invoice_id}/pay"""
-        payment_data = {
+        """Test POST /api/v1/billing/invoices/{invoice_id}/pay"""        payment_data = {
             "payment_method_id": test_payment_method_stripe.id
         }
         
@@ -22259,8 +21263,7 @@ class TestInvoiceEndpoints:
         mock_billing_engine.pay_invoice.assert_called_once()
     
     def test_download_invoice_pdf(self, client, test_invoice_paid, mock_invoice_service):
-        """Test GET /api/v1/billing/invoices/{invoice_id}/pdf"""
-        mock_pdf_data = b"PDF content"
+        """Test GET /api/v1/billing/invoices/{invoice_id}/pdf"""        mock_pdf_data = b"PDF content"
         mock_invoice_service.generate_pdf.return_value = mock_pdf_data
         
         response = client.get(f"/api/v1/billing/invoices/{test_invoice_paid.id}/pdf")
@@ -22270,8 +21273,7 @@ class TestInvoiceEndpoints:
         assert response.content == mock_pdf_data
     
     def test_send_invoice_email(self, client, test_invoice_paid, mock_email_service):
-        """Test POST /api/v1/billing/invoices/{invoice_id}/send"""
-        send_data = {
+        """Test POST /api/v1/billing/invoices/{invoice_id}/send"""        send_data = {
             "recipient_email": "custom@example.com",
             "message": "Here is your invoice"
         }
@@ -22290,11 +21292,9 @@ class TestInvoiceEndpoints:
 
 
 class TestPaymentEndpoints:
-    """Test payment processing endpoints"""
-    
+    """Test payment processing endpoints"""    
     def test_create_payment(self, client, test_customer, test_payment_method_stripe, mock_payment_processor):
-        """Test POST /api/v1/billing/payments"""
-        payment_data = {
+        """Test POST /api/v1/billing/payments"""        payment_data = {
             "amount": "50.00",
             "currency": "EUR",
             "customer_id": test_customer.id,
@@ -22316,8 +21316,7 @@ class TestPaymentEndpoints:
         assert data["amount"] == "50.00"
     
     def test_get_payment(self, client, test_payment_successful):
-        """Test GET /api/v1/billing/payments/{payment_id}"""
-        response = client.get(f"/api/v1/billing/payments/{test_payment_successful.id}")
+        """Test GET /api/v1/billing/payments/{payment_id}"""        response = client.get(f"/api/v1/billing/payments/{test_payment_successful.id}")
         
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -22325,8 +21324,7 @@ class TestPaymentEndpoints:
         assert data["status"] == "SUCCEEDED"
     
     def test_list_payments(self, client, test_payment_successful):
-        """Test GET /api/v1/billing/payments"""
-        response = client.get("/api/v1/billing/payments")
+        """Test GET /api/v1/billing/payments"""        response = client.get("/api/v1/billing/payments")
         
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -22334,8 +21332,7 @@ class TestPaymentEndpoints:
         assert len(data["items"]) >= 1
     
     def test_refund_payment(self, client, test_payment_successful, mock_payment_processor):
-        """Test POST /api/v1/billing/payments/{payment_id}/refund"""
-        refund_data = {
+        """Test POST /api/v1/billing/payments/{payment_id}/refund"""        refund_data = {
             "amount": "10.00",
             "reason": "Customer request"
         }
@@ -22359,11 +21356,9 @@ class TestPaymentEndpoints:
 
 
 class TestWebhookEndpoints:
-    """Test webhook handling endpoints"""
-    
+    """Test webhook handling endpoints"""    
     def test_stripe_webhook(self, client, mock_webhook_processor):
-        """Test POST /api/v1/billing/webhooks/stripe"""
-        webhook_payload = {
+        """Test POST /api/v1/billing/webhooks/stripe"""        webhook_payload = {
             "id": "evt_123",
             "type": "payment_intent.succeeded",
             "data": {
@@ -22393,8 +21388,7 @@ class TestWebhookEndpoints:
         assert data["processed"] is True
     
     def test_paypal_webhook(self, client, mock_webhook_processor):
-        """Test POST /api/v1/billing/webhooks/paypal"""
-        webhook_payload = {
+        """Test POST /api/v1/billing/webhooks/paypal"""        webhook_payload = {
             "id": "WH-123",
             "event_type": "PAYMENT.CAPTURE.COMPLETED",
             "resource": {
@@ -22417,11 +21411,9 @@ class TestWebhookEndpoints:
 
 
 class TestAnalyticsEndpoints:
-    """Test analytics and reporting endpoints"""
-    
+    """Test analytics and reporting endpoints"""    
     def test_revenue_analytics(self, client, mock_analytics_service):
-        """Test GET /api/v1/billing/analytics/revenue"""
-        mock_analytics_service.get_revenue_analytics.return_value = {
+        """Test GET /api/v1/billing/analytics/revenue"""        mock_analytics_service.get_revenue_analytics.return_value = {
             "total_revenue": "10000.00",
             "monthly_recurring_revenue": "2500.00",
             "annual_recurring_revenue": "30000.00",
@@ -22446,8 +21438,7 @@ class TestAnalyticsEndpoints:
         assert "revenue_by_month" in data
     
     def test_subscription_analytics(self, client, mock_analytics_service):
-        """Test GET /api/v1/billing/analytics/subscriptions"""
-        mock_analytics_service.get_subscription_analytics.return_value = {
+        """Test GET /api/v1/billing/analytics/subscriptions"""        mock_analytics_service.get_subscription_analytics.return_value = {
             "total_subscriptions": 150,
             "active_subscriptions": 120,
             "churned_subscriptions": 10,
@@ -22466,11 +21457,9 @@ class TestAnalyticsEndpoints:
 
 
 class TestErrorHandling:
-    """Test API error handling"""
-    
+    """Test API error handling"""    
     def test_validation_error(self, client):
-        """Test validation error response"""
-        invalid_customer_data = {
+        """Test validation error response"""        invalid_customer_data = {
             "email": "invalid-email",  # Invalid email format
             "name": "",  # Empty name
             "preferred_currency": "INVALID"  # Invalid currency
@@ -22484,16 +21473,14 @@ class TestErrorHandling:
         assert len(data["detail"]) > 0  # Should have validation errors
     
     def test_unauthorized_access(self, client_no_auth):
-        """Test unauthorized access response"""
-        response = client_no_auth.get("/api/v1/billing/customers")
+        """Test unauthorized access response"""        response = client_no_auth.get("/api/v1/billing/customers")
         
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
         data = response.json()
         assert "detail" in data
     
     def test_rate_limiting(self, client):
-        """Test rate limiting response"""
-        # Simulate rate limit exceeded
+        """Test rate limiting response"""        # Simulate rate limit exceeded
         with patch('app.middleware.rate_limiter.is_allowed', return_value=False):
             response = client.get("/api/v1/billing/customers")
             
@@ -22502,8 +21489,7 @@ class TestErrorHandling:
             assert "rate limit" in data["detail"].lower()
     
     def test_internal_server_error(self, client, mock_billing_engine):
-        """Test internal server error handling"""
-        mock_billing_engine.create_customer.side_effect = Exception("Database connection failed")
+        """Test internal server error handling"""        mock_billing_engine.create_customer.side_effect = Exception("Database connection failed")
         
         customer_data = {
             "email": "error@example.com",
@@ -22524,14 +21510,11 @@ class TestErrorHandling:
 # LIGNES: 3
 # ==========================================================================================
 
-"""
-Tests for Invoice Management System
+"""Tests for Invoice Management System
 ==================================
 
 Comprehensive tests for invoice generation, management, and PDF processing.
-"""
-
-import pytest
+"""import pytest
 from datetime import datetime, timedelta
 from decimal import Decimal
 from unittest.mock import AsyncMock, Mock, patch, MagicMock
@@ -22547,12 +21530,10 @@ from billing.models import (
 
 
 class TestInvoiceService:
-    """Test invoice service functionality"""
-    
+    """Test invoice service functionality"""    
     @pytest.mark.asyncio
     async def test_generate_subscription_invoice(self, invoice_service, test_subscription_active, db_session):
-        """Test subscription invoice generation"""
-        period_start = datetime.utcnow()
+        """Test subscription invoice generation"""        period_start = datetime.utcnow()
         period_end = period_start + timedelta(days=30)
         
         invoice = await invoice_service.generate_subscription_invoice(
@@ -22576,8 +21557,7 @@ class TestInvoiceService:
     
     @pytest.mark.asyncio
     async def test_generate_usage_invoice(self, invoice_service, test_subscription_active, db_session):
-        """Test usage-based invoice generation"""
-        usage_records = [
+        """Test usage-based invoice generation"""        usage_records = [
             {
                 "metric_name": "api_calls",
                 "quantity": Decimal('1500'),
@@ -22613,8 +21593,7 @@ class TestInvoiceService:
     
     @pytest.mark.asyncio
     async def test_proration_invoice(self, invoice_service, test_subscription_active, test_plan_yearly):
-        """Test prorated invoice generation"""
-        # Simulate mid-cycle plan change
+        """Test prorated invoice generation"""        # Simulate mid-cycle plan change
         change_date = datetime.utcnow()
         days_remaining = 15
         period_end = change_date + timedelta(days=days_remaining)
@@ -22655,8 +21634,7 @@ class TestInvoiceService:
     
     @pytest.mark.asyncio
     async def test_finalize_invoice(self, invoice_service, test_invoice_draft, mock_tax_calculator):
-        """Test invoice finalization with tax calculation"""
-        # Mock tax calculation
+        """Test invoice finalization with tax calculation"""        # Mock tax calculation
         mock_tax_calculator.calculate_tax.return_value = {
             "tax_rate": Decimal('0.20'),
             "tax_amount": Decimal('20.00'),
@@ -22675,8 +21653,7 @@ class TestInvoiceService:
     
     @pytest.mark.asyncio
     async def test_generate_invoice_number(self, invoice_service, test_customer):
-        """Test invoice number generation"""
-        # Test sequential numbering
+        """Test invoice number generation"""        # Test sequential numbering
         invoice1 = await invoice_service.create_draft_invoice(
             customer_id=test_customer.id,
             currency="EUR",
@@ -22714,8 +21691,7 @@ class TestInvoiceService:
     
     @pytest.mark.asyncio
     async def test_mark_invoice_paid(self, invoice_service, test_invoice_paid, test_payment_successful):
-        """Test marking invoice as paid"""
-        # Create open invoice
+        """Test marking invoice as paid"""        # Create open invoice
         test_invoice_paid.status = InvoiceStatus.OPEN
         test_invoice_paid.amount_paid = Decimal('0')
         test_invoice_paid.paid_at = None
@@ -22733,8 +21709,7 @@ class TestInvoiceService:
     
     @pytest.mark.asyncio
     async def test_partial_payment(self, invoice_service, test_invoice_draft, test_payment_successful):
-        """Test partial invoice payment"""
-        # Finalize invoice first
+        """Test partial invoice payment"""        # Finalize invoice first
         invoice = await invoice_service.finalize_invoice(test_invoice_draft.id)
         partial_amount = invoice.total / 2
         
@@ -22750,8 +21725,7 @@ class TestInvoiceService:
     
     @pytest.mark.asyncio
     async def test_void_invoice(self, invoice_service, test_invoice_draft):
-        """Test voiding an invoice"""
-        voided_invoice = await invoice_service.void_invoice(
+        """Test voiding an invoice"""        voided_invoice = await invoice_service.void_invoice(
             invoice_id=test_invoice_draft.id,
             reason="Customer cancelled order"
         )
@@ -22763,8 +21737,7 @@ class TestInvoiceService:
     
     @pytest.mark.asyncio
     async def test_recurring_invoice_generation(self, invoice_service, test_subscription_active):
-        """Test automatic recurring invoice generation"""
-        # Simulate subscription period ending
+        """Test automatic recurring invoice generation"""        # Simulate subscription period ending
         test_subscription_active.current_period_end = datetime.utcnow() + timedelta(days=1)
         
         invoice = await invoice_service.generate_recurring_invoice(test_subscription_active.id)
@@ -22779,12 +21752,10 @@ class TestInvoiceService:
 
 
 class TestPDFGenerator:
-    """Test PDF generation functionality"""
-    
+    """Test PDF generation functionality"""    
     @pytest.mark.asyncio
     async def test_generate_invoice_pdf(self, pdf_generator, test_invoice_paid):
-        """Test basic PDF generation"""
-        pdf_data = await pdf_generator.generate_invoice_pdf(test_invoice_paid)
+        """Test basic PDF generation"""        pdf_data = await pdf_generator.generate_invoice_pdf(test_invoice_paid)
         
         assert pdf_data is not None
         assert len(pdf_data) > 0
@@ -22792,20 +21763,17 @@ class TestPDFGenerator:
     
     @pytest.mark.asyncio
     async def test_pdf_content_verification(self, pdf_generator, test_invoice_paid):
-        """Test PDF content includes required information"""
-        pdf_data = await pdf_generator.generate_invoice_pdf(test_invoice_paid)
+        """Test PDF content includes required information"""        pdf_data = await pdf_generator.generate_invoice_pdf(test_invoice_paid)
         
         # Convert PDF to text for verification (mock implementation)
         with patch('pdfplumber.open') as mock_pdf:
             mock_page = Mock()
-            mock_page.extract_text.return_value = f"""
-            INVOICE
+            mock_page.extract_text.return_value = f"""            INVOICE
             Invoice Number: {test_invoice_paid.number}
             Customer: {test_invoice_paid.customer.name}
             Total: €{test_invoice_paid.total}
             Due Date: {test_invoice_paid.due_date.strftime('%Y-%m-%d')}
-            """
-            mock_pdf.return_value.__enter__.return_value.pages = [mock_page]
+            """            mock_pdf.return_value.__enter__.return_value.pages = [mock_page]
             
             # Verify PDF contains required information
             import pdfplumber
@@ -22818,8 +21786,7 @@ class TestPDFGenerator:
     
     @pytest.mark.asyncio
     async def test_pdf_with_logo(self, pdf_generator, test_invoice_paid):
-        """Test PDF generation with company logo"""
-        # Mock logo file
+        """Test PDF generation with company logo"""        # Mock logo file
         logo_path = "/tmp/test_logo.png"
         with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as logo_file:
             logo_file.write(b'PNG_CONTENT')
@@ -22840,8 +21807,7 @@ class TestPDFGenerator:
     
     @pytest.mark.asyncio
     async def test_pdf_custom_template(self, pdf_generator, test_invoice_paid):
-        """Test PDF generation with custom template"""
-        custom_template = {
+        """Test PDF generation with custom template"""        custom_template = {
             "header_color": "#2E7D32",
             "font_family": "Helvetica",
             "include_payment_instructions": True,
@@ -22858,8 +21824,7 @@ class TestPDFGenerator:
     
     @pytest.mark.asyncio
     async def test_pdf_multilingual(self, pdf_generator, test_invoice_paid, test_customer):
-        """Test PDF generation in different languages"""
-        # Set customer language to French
+        """Test PDF generation in different languages"""        # Set customer language to French
         test_customer.preferred_language = "fr"
         
         pdf_data = await pdf_generator.generate_invoice_pdf(
@@ -22882,8 +21847,7 @@ class TestPDFGenerator:
     
     @pytest.mark.asyncio
     async def test_pdf_with_attachments(self, pdf_generator, test_invoice_paid):
-        """Test PDF generation with additional attachments"""
-        attachments = [
+        """Test PDF generation with additional attachments"""        attachments = [
             {
                 "name": "Terms and Conditions.pdf",
                 "data": b"PDF_TERMS_CONTENT",
@@ -22906,12 +21870,10 @@ class TestPDFGenerator:
 
 
 class TestEmailService:
-    """Test email service functionality"""
-    
+    """Test email service functionality"""    
     @pytest.mark.asyncio
     async def test_send_invoice_email(self, email_service, test_invoice_paid, mock_smtp):
-        """Test sending invoice via email"""
-        recipient = "customer@example.com"
+        """Test sending invoice via email"""        recipient = "customer@example.com"
         subject = "Your Invoice"
         message = "Please find your invoice attached."
         
@@ -22932,8 +21894,7 @@ class TestEmailService:
     
     @pytest.mark.asyncio
     async def test_send_payment_reminder(self, email_service, test_invoice_draft, mock_smtp):
-        """Test sending payment reminder email"""
-        # Set invoice as overdue
+        """Test sending payment reminder email"""        # Set invoice as overdue
         test_invoice_draft.due_date = datetime.utcnow() - timedelta(days=5)
         test_invoice_draft.status = InvoiceStatus.OPEN
         
@@ -22952,8 +21913,7 @@ class TestEmailService:
     
     @pytest.mark.asyncio
     async def test_send_payment_confirmation(self, email_service, test_invoice_paid, test_payment_successful, mock_smtp):
-        """Test sending payment confirmation email"""
-        result = await email_service.send_payment_confirmation(
+        """Test sending payment confirmation email"""        result = await email_service.send_payment_confirmation(
             invoice=test_invoice_paid,
             payment=test_payment_successful
         )
@@ -22968,8 +21928,7 @@ class TestEmailService:
     
     @pytest.mark.asyncio
     async def test_email_template_rendering(self, email_service, test_invoice_paid):
-        """Test email template rendering"""
-        template_data = {
+        """Test email template rendering"""        template_data = {
             "customer_name": test_invoice_paid.customer.name,
             "invoice_number": test_invoice_paid.number,
             "amount": str(test_invoice_paid.total),
@@ -22988,8 +21947,7 @@ class TestEmailService:
     
     @pytest.mark.asyncio
     async def test_email_with_custom_attachments(self, email_service, test_invoice_paid, mock_smtp):
-        """Test email with custom attachments"""
-        attachments = [
+        """Test email with custom attachments"""        attachments = [
             {
                 "filename": "terms.pdf",
                 "content": b"PDF_TERMS_CONTENT",
@@ -23013,8 +21971,7 @@ class TestEmailService:
     
     @pytest.mark.asyncio
     async def test_email_delivery_failure_handling(self, email_service, test_invoice_paid, mock_smtp):
-        """Test email delivery failure handling"""
-        # Mock SMTP failure
+        """Test email delivery failure handling"""        # Mock SMTP failure
         mock_smtp.send_message.side_effect = Exception("SMTP server unavailable")
         
         result = await email_service.send_invoice_email(
@@ -23029,8 +21986,7 @@ class TestEmailService:
     
     @pytest.mark.asyncio
     async def test_bulk_email_sending(self, email_service, mock_smtp):
-        """Test bulk email sending for multiple invoices"""
-        recipients = [
+        """Test bulk email sending for multiple invoices"""        recipients = [
             {"invoice_id": "inv_1", "email": "customer1@example.com"},
             {"invoice_id": "inv_2", "email": "customer2@example.com"},
             {"invoice_id": "inv_3", "email": "customer3@example.com"}
@@ -23047,12 +22003,10 @@ class TestEmailService:
 
 
 class TestInvoiceIntegration:
-    """Integration tests for invoice system"""
-    
+    """Integration tests for invoice system"""    
     @pytest.mark.asyncio
     async def test_complete_invoice_workflow(self, invoice_service, pdf_generator, email_service, test_subscription_active, mock_smtp):
-        """Test complete invoice workflow from generation to delivery"""
-        # 1. Generate subscription invoice
+        """Test complete invoice workflow from generation to delivery"""        # 1. Generate subscription invoice
         period_start = datetime.utcnow()
         period_end = period_start + timedelta(days=30)
         
@@ -23087,8 +22041,7 @@ class TestInvoiceIntegration:
     
     @pytest.mark.asyncio
     async def test_dunning_process_integration(self, invoice_service, email_service, test_invoice_draft, mock_smtp):
-        """Test automated dunning process"""
-        # 1. Create overdue invoice
+        """Test automated dunning process"""        # 1. Create overdue invoice
         overdue_invoice = await invoice_service.finalize_invoice(test_invoice_draft.id)
         overdue_invoice.due_date = datetime.utcnow() - timedelta(days=5)
         overdue_invoice.status = InvoiceStatus.OPEN
@@ -23112,14 +22065,11 @@ class TestInvoiceIntegration:
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Test Configuration and Fixtures for Billing System
+"""Test Configuration and Fixtures for Billing System
 ==================================================
 
 Shared test configuration, fixtures, and utilities for billing tests.
-"""
-
-import pytest
+"""import pytest
 import asyncio
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -23140,14 +22090,12 @@ from billing.models import (
 
 # Test database configuration
 def get_test_database_url():
-    """Get test database URL"""
-    return "sqlite:///./test_billing.db"
+    """Get test database URL"""    return "sqlite:///./test_billing.db"
 
 
 @pytest.fixture(scope="session")
 def test_engine():
-    """Create test database engine"""
-    engine = create_engine(
+    """Create test database engine"""    engine = create_engine(
         get_test_database_url(),
         connect_args={"check_same_thread": False}
     )
@@ -23158,14 +22106,12 @@ def test_engine():
 
 @pytest.fixture(scope="session")
 def TestSessionLocal(test_engine):
-    """Create test session factory"""
-    return sessionmaker(autocommit=False, autoflush=False, bind=test_engine)
+    """Create test session factory"""    return sessionmaker(autocommit=False, autoflush=False, bind=test_engine)
 
 
 @pytest.fixture
 def db_session(TestSessionLocal):
-    """Create test database session"""
-    session = TestSessionLocal()
+    """Create test database session"""    session = TestSessionLocal()
     try:
         yield session
     finally:
@@ -23175,8 +22121,7 @@ def db_session(TestSessionLocal):
 
 @pytest.fixture
 def test_customer(db_session):
-    """Create test customer"""
-    customer = Customer(
+    """Create test customer"""    customer = Customer(
         email="test@example.com",
         name="Test Customer",
         company="Test Company",
@@ -23203,8 +22148,7 @@ def test_customer(db_session):
 
 @pytest.fixture
 def test_plan_monthly(db_session):
-    """Create test monthly plan"""
-    plan = Plan(
+    """Create test monthly plan"""    plan = Plan(
         name="Plan Mensuel Test",
         description="Plan de test mensuel",
         amount=Decimal('29.99'),
@@ -23225,8 +22169,7 @@ def test_plan_monthly(db_session):
 
 @pytest.fixture
 def test_plan_yearly(db_session):
-    """Create test yearly plan"""
-    plan = Plan(
+    """Create test yearly plan"""    plan = Plan(
         name="Plan Annuel Test",
         description="Plan de test annuel",
         amount=Decimal('299.99'),
@@ -23247,8 +22190,7 @@ def test_plan_yearly(db_session):
 
 @pytest.fixture
 def test_subscription_active(db_session, test_customer, test_plan_monthly):
-    """Create active test subscription"""
-    subscription = Subscription(
+    """Create active test subscription"""    subscription = Subscription(
         customer_id=test_customer.id,
         plan_id=test_plan_monthly.id,
         status=SubscriptionStatus.ACTIVE,
@@ -23271,8 +22213,7 @@ def test_subscription_active(db_session, test_customer, test_plan_monthly):
 
 @pytest.fixture
 def test_subscription_trial(db_session, test_customer, test_plan_monthly):
-    """Create trial test subscription"""
-    now = datetime.utcnow()
+    """Create trial test subscription"""    now = datetime.utcnow()
     subscription = Subscription(
         customer_id=test_customer.id,
         plan_id=test_plan_monthly.id,
@@ -23293,8 +22234,7 @@ def test_subscription_trial(db_session, test_customer, test_plan_monthly):
 
 @pytest.fixture
 def test_payment_method_stripe(db_session, test_customer):
-    """Create Stripe test payment method"""
-    payment_method = PaymentMethod(
+    """Create Stripe test payment method"""    payment_method = PaymentMethod(
         customer_id=test_customer.id,
         provider=PaymentProvider.STRIPE,
         provider_payment_method_id="pm_test_visa",
@@ -23321,8 +22261,7 @@ def test_payment_method_stripe(db_session, test_customer):
 
 @pytest.fixture
 def test_payment_method_paypal(db_session, test_customer):
-    """Create PayPal test payment method"""
-    payment_method = PaymentMethod(
+    """Create PayPal test payment method"""    payment_method = PaymentMethod(
         customer_id=test_customer.id,
         provider=PaymentProvider.PAYPAL,
         provider_payment_method_id="paypal_test_account",
@@ -23339,8 +22278,7 @@ def test_payment_method_paypal(db_session, test_customer):
 
 @pytest.fixture
 def test_payment_successful(db_session, test_customer, test_payment_method_stripe, test_subscription_active):
-    """Create successful test payment"""
-    payment = Payment(
+    """Create successful test payment"""    payment = Payment(
         customer_id=test_customer.id,
         payment_method_id=test_payment_method_stripe.id,
         subscription_id=test_subscription_active.id,
@@ -23362,8 +22300,7 @@ def test_payment_successful(db_session, test_customer, test_payment_method_strip
 
 @pytest.fixture
 def test_payment_failed(db_session, test_customer, test_payment_method_stripe):
-    """Create failed test payment"""
-    payment = Payment(
+    """Create failed test payment"""    payment = Payment(
         customer_id=test_customer.id,
         payment_method_id=test_payment_method_stripe.id,
         provider=PaymentProvider.STRIPE,
@@ -23383,8 +22320,7 @@ def test_payment_failed(db_session, test_customer, test_payment_method_stripe):
 
 @pytest.fixture
 def test_invoice_draft(db_session, test_customer, test_subscription_active):
-    """Create draft test invoice"""
-    invoice = Invoice(
+    """Create draft test invoice"""    invoice = Invoice(
         number="INV-TEST-001",
         customer_id=test_customer.id,
         subscription_id=test_subscription_active.id,
@@ -23421,8 +22357,7 @@ def test_invoice_draft(db_session, test_customer, test_subscription_active):
 
 @pytest.fixture
 def test_invoice_paid(db_session, test_customer, test_subscription_active, test_payment_successful):
-    """Create paid test invoice"""
-    invoice = Invoice(
+    """Create paid test invoice"""    invoice = Invoice(
         number="INV-TEST-002",
         customer_id=test_customer.id,
         subscription_id=test_subscription_active.id,
@@ -23464,8 +22399,7 @@ def test_invoice_paid(db_session, test_customer, test_subscription_active, test_
 # Mock fixtures
 @pytest.fixture
 def mock_redis():
-    """Mock Redis client"""
-    mock_client = AsyncMock()
+    """Mock Redis client"""    mock_client = AsyncMock()
     mock_client.get.return_value = None
     mock_client.set.return_value = True
     mock_client.setex.return_value = True
@@ -23477,8 +22411,7 @@ def mock_redis():
 
 @pytest.fixture
 def mock_stripe():
-    """Mock Stripe API"""
-    with patch('stripe.PaymentIntent') as mock_payment_intent, \
+    """Mock Stripe API"""    with patch('stripe.PaymentIntent') as mock_payment_intent, \
          patch('stripe.Customer') as mock_customer, \
          patch('stripe.Subscription') as mock_subscription, \
          patch('stripe.PaymentMethod') as mock_payment_method:
@@ -23514,8 +22447,7 @@ def mock_stripe():
 
 @pytest.fixture
 def mock_paypal():
-    """Mock PayPal API"""
-    with patch('paypalrestsdk.Payment') as mock_payment, \
+    """Mock PayPal API"""    with patch('paypalrestsdk.Payment') as mock_payment, \
          patch('paypalrestsdk.BillingPlan') as mock_plan, \
          patch('paypalrestsdk.BillingAgreement') as mock_agreement:
         
@@ -23533,8 +22465,7 @@ def mock_paypal():
 
 @pytest.fixture
 def mock_email():
-    """Mock email sending"""
-    with patch('smtplib.SMTP') as mock_smtp:
+    """Mock email sending"""    with patch('smtplib.SMTP') as mock_smtp:
         mock_server = Mock()
         mock_smtp.return_value.__enter__.return_value = mock_server
         mock_server.send_message.return_value = {}
@@ -23543,15 +22474,13 @@ def mock_email():
 
 @pytest.fixture
 def temp_invoice_storage():
-    """Create temporary directory for invoice storage"""
-    with tempfile.TemporaryDirectory() as temp_dir:
+    """Create temporary directory for invoice storage"""    with tempfile.TemporaryDirectory() as temp_dir:
         yield temp_dir
 
 
 @pytest.fixture
 def mock_s3():
-    """Mock AWS S3 client"""
-    with patch('boto3.client') as mock_boto3:
+    """Mock AWS S3 client"""    with patch('boto3.client') as mock_boto3:
         mock_client = Mock()
         mock_boto3.return_value = mock_client
         
@@ -23565,8 +22494,7 @@ def mock_s3():
 
 # Utility functions
 def create_test_customers(db_session, count=5):
-    """Create multiple test customers"""
-    customers = []
+    """Create multiple test customers"""    customers = []
     for i in range(count):
         customer = Customer(
             email=f"test{i}@example.com",
@@ -23583,8 +22511,7 @@ def create_test_customers(db_session, count=5):
 
 
 def create_test_subscriptions(db_session, customers, plan, status=SubscriptionStatus.ACTIVE):
-    """Create test subscriptions for customers"""
-    subscriptions = []
+    """Create test subscriptions for customers"""    subscriptions = []
     now = datetime.utcnow()
     
     for customer in customers:
@@ -23603,8 +22530,7 @@ def create_test_subscriptions(db_session, customers, plan, status=SubscriptionSt
 
 
 async def assert_payment_processed(payment, expected_status=PaymentStatus.SUCCEEDED):
-    """Assert that payment was processed correctly"""
-    assert payment is not None
+    """Assert that payment was processed correctly"""    assert payment is not None
     assert payment.status == expected_status
     if expected_status == PaymentStatus.SUCCEEDED:
         assert payment.payment_date is not None
@@ -23612,14 +22538,12 @@ async def assert_payment_processed(payment, expected_status=PaymentStatus.SUCCEE
 
 
 async def assert_subscription_active(subscription):
-    """Assert that subscription is in active state"""
-    assert subscription.status in [SubscriptionStatus.ACTIVE, SubscriptionStatus.TRIAL]
+    """Assert that subscription is in active state"""    assert subscription.status in [SubscriptionStatus.ACTIVE, SubscriptionStatus.TRIAL]
     assert subscription.current_period_end > datetime.utcnow()
 
 
 def generate_test_webhook_payload(provider, event_type, data):
-    """Generate test webhook payload"""
-    if provider == "stripe":
+    """Generate test webhook payload"""    if provider == "stripe":
         return {
             "id": f"evt_test_{uuid.uuid4().hex[:8]}",
             "type": event_type,
@@ -23651,14 +22575,11 @@ pytest_plugins = ['pytest_asyncio']
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Tests for Background Tasks System
+"""Tests for Background Tasks System
 ================================
 
 Comprehensive tests for Celery background tasks and job processing.
-"""
-
-import pytest
+"""import pytest
 from datetime import datetime, timedelta
 from decimal import Decimal
 from unittest.mock import AsyncMock, Mock, patch, MagicMock
@@ -23678,12 +22599,10 @@ from billing.models import (
 
 
 class TestBillingTaskManager:
-    """Test billing task manager functionality"""
-    
+    """Test billing task manager functionality"""    
     @pytest.mark.asyncio
     async def test_schedule_subscription_renewal(self, task_manager, test_subscription_active):
-        """Test scheduling subscription renewal task"""
-        renewal_date = datetime.utcnow() + timedelta(days=1)
+        """Test scheduling subscription renewal task"""        renewal_date = datetime.utcnow() + timedelta(days=1)
         
         task_id = await task_manager.schedule_subscription_renewal(
             subscription_id=test_subscription_active.id,
@@ -23700,8 +22619,7 @@ class TestBillingTaskManager:
     
     @pytest.mark.asyncio
     async def test_schedule_payment_retry(self, task_manager, test_payment_failed):
-        """Test scheduling payment retry task"""
-        retry_date = datetime.utcnow() + timedelta(hours=2)
+        """Test scheduling payment retry task"""        retry_date = datetime.utcnow() + timedelta(hours=2)
         
         task_id = await task_manager.schedule_payment_retry(
             payment_id=test_payment_failed.id,
@@ -23718,8 +22636,7 @@ class TestBillingTaskManager:
     
     @pytest.mark.asyncio
     async def test_schedule_recurring_invoices(self, task_manager):
-        """Test scheduling recurring invoice generation"""
-        schedule_date = datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0)
+        """Test scheduling recurring invoice generation"""        schedule_date = datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0)
         
         task_id = await task_manager.schedule_recurring_invoices(
             schedule_date=schedule_date,
@@ -23735,8 +22652,7 @@ class TestBillingTaskManager:
     
     @pytest.mark.asyncio
     async def test_bulk_task_scheduling(self, task_manager, test_subscriptions_data):
-        """Test bulk task scheduling for multiple subscriptions"""
-        subscription_ids = [sub.id for sub in test_subscriptions_data[:5]]
+        """Test bulk task scheduling for multiple subscriptions"""        subscription_ids = [sub.id for sub in test_subscriptions_data[:5]]
         renewal_date = datetime.utcnow() + timedelta(days=1)
         
         task_ids = await task_manager.bulk_schedule_renewals(
@@ -23754,8 +22670,7 @@ class TestBillingTaskManager:
     
     @pytest.mark.asyncio
     async def test_task_cancellation(self, task_manager, test_subscription_active):
-        """Test cancelling scheduled tasks"""
-        # Schedule a task
+        """Test cancelling scheduled tasks"""        # Schedule a task
         task_id = await task_manager.schedule_subscription_renewal(
             subscription_id=test_subscription_active.id,
             renewal_date=datetime.utcnow() + timedelta(days=1)
@@ -23771,8 +22686,7 @@ class TestBillingTaskManager:
     
     @pytest.mark.asyncio
     async def test_task_retry_logic(self, task_manager):
-        """Test task retry logic and failure handling"""
-        # Mock a task that fails multiple times
+        """Test task retry logic and failure handling"""        # Mock a task that fails multiple times
         with patch('billing.tasks.process_payment_retry') as mock_task:
             mock_task.side_effect = [
                 Exception("Temporary failure"),
@@ -23792,8 +22706,7 @@ class TestBillingTaskManager:
     
     @pytest.mark.asyncio
     async def test_task_monitoring(self, task_manager):
-        """Test task monitoring and health checks"""
-        # Get active tasks
+        """Test task monitoring and health checks"""        # Get active tasks
         active_tasks = await task_manager.get_active_tasks()
         assert isinstance(active_tasks, list)
         
@@ -23809,12 +22722,10 @@ class TestBillingTaskManager:
 
 
 class TestSubscriptionRenewalTasks:
-    """Test subscription renewal task processing"""
-    
+    """Test subscription renewal task processing"""    
     @pytest.mark.asyncio
     async def test_process_subscription_renewal_success(self, mock_billing_engine, test_subscription_active, test_payment_method_stripe):
-        """Test successful subscription renewal processing"""
-        # Mock successful payment processing
+        """Test successful subscription renewal processing"""        # Mock successful payment processing
         mock_payment = Mock()
         mock_payment.status = PaymentStatus.SUCCEEDED
         mock_payment.amount = test_subscription_active.effective_amount
@@ -23840,8 +22751,7 @@ class TestSubscriptionRenewalTasks:
     
     @pytest.mark.asyncio
     async def test_process_subscription_renewal_payment_failure(self, mock_billing_engine, test_subscription_active):
-        """Test subscription renewal with payment failure"""
-        # Mock failed payment
+        """Test subscription renewal with payment failure"""        # Mock failed payment
         mock_billing_engine.process_subscription_payment.side_effect = Exception("Payment failed")
         
         result = await process_subscription_renewal(
@@ -23858,8 +22768,7 @@ class TestSubscriptionRenewalTasks:
     
     @pytest.mark.asyncio
     async def test_process_subscription_renewal_dunning(self, mock_billing_engine, test_subscription_active):
-        """Test subscription renewal with dunning management"""
-        # Mock multiple payment failures to trigger dunning
+        """Test subscription renewal with dunning management"""        # Mock multiple payment failures to trigger dunning
         test_subscription_active.failed_payment_count = 2
         
         mock_billing_engine.process_subscription_payment.side_effect = Exception("Card declined")
@@ -23882,8 +22791,7 @@ class TestSubscriptionRenewalTasks:
     
     @pytest.mark.asyncio
     async def test_batch_subscription_renewals(self, mock_billing_engine, test_subscriptions_data):
-        """Test batch processing of subscription renewals"""
-        subscription_ids = [sub.id for sub in test_subscriptions_data[:3]]
+        """Test batch processing of subscription renewals"""        subscription_ids = [sub.id for sub in test_subscriptions_data[:3]]
         
         # Mock successful renewals
         mock_billing_engine.process_subscription_payment.return_value = Mock(status=PaymentStatus.SUCCEEDED)
@@ -23903,12 +22811,10 @@ class TestSubscriptionRenewalTasks:
 
 
 class TestPaymentRetryTasks:
-    """Test payment retry task processing"""
-    
+    """Test payment retry task processing"""    
     @pytest.mark.asyncio
     async def test_process_payment_retry_success(self, mock_payment_processor, test_payment_failed):
-        """Test successful payment retry"""
-        # Mock successful retry
+        """Test successful payment retry"""        # Mock successful retry
         mock_payment_processor.retry_payment.return_value = Mock(
             status=PaymentStatus.SUCCEEDED,
             amount=test_payment_failed.amount
@@ -23928,8 +22834,7 @@ class TestPaymentRetryTasks:
     
     @pytest.mark.asyncio
     async def test_process_payment_retry_failure(self, mock_payment_processor, test_payment_failed):
-        """Test payment retry failure with escalation"""
-        # Mock continued failure
+        """Test payment retry failure with escalation"""        # Mock continued failure
         mock_payment_processor.retry_payment.side_effect = Exception("Card still declined")
         
         result = await process_payment_retry(
@@ -23948,8 +22853,7 @@ class TestPaymentRetryTasks:
     
     @pytest.mark.asyncio
     async def test_intelligent_retry_scheduling(self, mock_payment_processor, test_payment_failed):
-        """Test intelligent retry scheduling based on failure reason"""
-        # Mock specific failure reasons
+        """Test intelligent retry scheduling based on failure reason"""        # Mock specific failure reasons
         failure_scenarios = [
             ("insufficient_funds", timedelta(hours=24)),
             ("card_declined", timedelta(hours=2)),
@@ -23977,12 +22881,10 @@ class TestPaymentRetryTasks:
 
 
 class TestInvoiceGenerationTasks:
-    """Test invoice generation task processing"""
-    
+    """Test invoice generation task processing"""    
     @pytest.mark.asyncio
     async def test_generate_monthly_invoices(self, mock_invoice_service, test_subscriptions_data):
-        """Test monthly invoice generation task"""
-        # Filter active subscriptions
+        """Test monthly invoice generation task"""        # Filter active subscriptions
         active_subs = [sub for sub in test_subscriptions_data if sub.status == SubscriptionStatus.ACTIVE]
         
         # Mock invoice generation
@@ -24007,8 +22909,7 @@ class TestInvoiceGenerationTasks:
     
     @pytest.mark.asyncio
     async def test_generate_usage_invoices(self, mock_invoice_service, test_subscriptions_data):
-        """Test usage-based invoice generation"""
-        # Mock usage data
+        """Test usage-based invoice generation"""        # Mock usage data
         usage_records = [
             {"subscription_id": "sub_1", "metric": "api_calls", "quantity": 1500, "unit_price": 0.01},
             {"subscription_id": "sub_2", "metric": "storage", "quantity": 100, "unit_price": 0.50}
@@ -24032,8 +22933,7 @@ class TestInvoiceGenerationTasks:
     
     @pytest.mark.asyncio
     async def test_invoice_generation_error_handling(self, mock_invoice_service, test_subscription_active):
-        """Test invoice generation with error handling"""
-        # Mock partial failures
+        """Test invoice generation with error handling"""        # Mock partial failures
         mock_invoice_service.generate_subscription_invoice.side_effect = [
             Mock(id="inv_1", status=InvoiceStatus.OPEN),  # Success
             Exception("Database error"),  # Failure
@@ -24054,12 +22954,10 @@ class TestInvoiceGenerationTasks:
 
 
 class TestReminderTasks:
-    """Test payment reminder task processing"""
-    
+    """Test payment reminder task processing"""    
     @pytest.mark.asyncio
     async def test_send_payment_reminders(self, mock_email_service, mock_invoice_service):
-        """Test sending payment reminders for overdue invoices"""
-        # Mock overdue invoices
+        """Test sending payment reminders for overdue invoices"""        # Mock overdue invoices
         overdue_invoices = [
             Mock(id="inv_1", customer=Mock(email="customer1@example.com"), 
                  days_overdue=5, amount_due=Decimal("99.99")),
@@ -24087,8 +22985,7 @@ class TestReminderTasks:
     
     @pytest.mark.asyncio
     async def test_escalated_reminders(self, mock_email_service, mock_invoice_service):
-        """Test escalated reminders for severely overdue invoices"""
-        # Mock severely overdue invoice
+        """Test escalated reminders for severely overdue invoices"""        # Mock severely overdue invoice
         overdue_invoice = Mock(
             id="inv_overdue",
             customer=Mock(email="overdue@example.com", name="Overdue Customer"),
@@ -24110,8 +23007,7 @@ class TestReminderTasks:
     
     @pytest.mark.asyncio
     async def test_reminder_frequency_control(self, mock_email_service, mock_invoice_service):
-        """Test reminder frequency control to avoid spam"""
-        # Mock invoice with recent reminder
+        """Test reminder frequency control to avoid spam"""        # Mock invoice with recent reminder
         recent_reminder_invoice = Mock(
             id="inv_recent",
             customer=Mock(email="recent@example.com"),
@@ -24132,12 +23028,10 @@ class TestReminderTasks:
 
 
 class TestMetricsCalculationTasks:
-    """Test metrics calculation task processing"""
-    
+    """Test metrics calculation task processing"""    
     @pytest.mark.asyncio
     async def test_calculate_revenue_metrics(self, mock_analytics_service):
-        """Test revenue metrics calculation task"""
-        # Mock analytics data
+        """Test revenue metrics calculation task"""        # Mock analytics data
         mock_analytics_service.get_revenue_analytics.return_value = {
             "total_revenue": Decimal("50000.00"),
             "mrr": Decimal("12500.00"),
@@ -24168,8 +23062,7 @@ class TestMetricsCalculationTasks:
     
     @pytest.mark.asyncio
     async def test_metrics_caching(self, mock_analytics_service, mock_redis):
-        """Test metrics caching for performance"""
-        cache_key = "revenue_metrics_monthly"
+        """Test metrics caching for performance"""        cache_key = "revenue_metrics_monthly"
         
         # First calculation - should cache result
         mock_redis.get.return_value = None  # Cache miss
@@ -24198,12 +23091,10 @@ class TestMetricsCalculationTasks:
 
 
 class TestMaintenanceTasks:
-    """Test maintenance and cleanup task processing"""
-    
+    """Test maintenance and cleanup task processing"""    
     @pytest.mark.asyncio
     async def test_cleanup_expired_data(self, db_session):
-        """Test cleanup of expired data"""
-        # Mock expired data
+        """Test cleanup of expired data"""        # Mock expired data
         cutoff_date = datetime.utcnow() - timedelta(days=365)
         
         result = await cleanup_expired_data(
@@ -24221,8 +23112,7 @@ class TestMaintenanceTasks:
     
     @pytest.mark.asyncio
     async def test_sync_external_payments(self, mock_payment_processor):
-        """Test syncing payments with external providers"""
-        # Mock external payment data
+        """Test syncing payments with external providers"""        # Mock external payment data
         external_payments = [
             {"provider_id": "pi_stripe_1", "status": "succeeded", "amount": "99.99"},
             {"provider_id": "PAYID_paypal_1", "status": "completed", "amount": "149.99"}
@@ -24243,8 +23133,7 @@ class TestMaintenanceTasks:
     
     @pytest.mark.asyncio
     async def test_process_webhook_queue(self, mock_webhook_processor):
-        """Test processing queued webhook events"""
-        # Mock queued webhooks
+        """Test processing queued webhook events"""        # Mock queued webhooks
         queued_webhooks = [
             {"id": "wh_1", "provider": "stripe", "event_type": "payment_intent.succeeded"},
             {"id": "wh_2", "provider": "paypal", "event_type": "PAYMENT.CAPTURE.COMPLETED"},
@@ -24266,12 +23155,10 @@ class TestMaintenanceTasks:
 
 
 class TestTaskIntegration:
-    """Integration tests for task system"""
-    
+    """Integration tests for task system"""    
     @pytest.mark.asyncio
     async def test_end_to_end_billing_cycle(self, task_manager, mock_billing_engine, test_subscription_active):
-        """Test complete billing cycle task orchestration"""
-        # 1. Schedule invoice generation
+        """Test complete billing cycle task orchestration"""        # 1. Schedule invoice generation
         invoice_task_id = await task_manager.schedule_invoice_generation(
             subscription_id=test_subscription_active.id,
             due_date=datetime.utcnow() + timedelta(days=1)
@@ -24316,14 +23203,11 @@ class TestTaskIntegration:
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Tests for Analytics and Reporting System
+"""Tests for Analytics and Reporting System
 =======================================
 
 Comprehensive tests for billing analytics, reporting, and forecasting.
-"""
-
-import pytest
+"""import pytest
 from datetime import datetime, timedelta
 from decimal import Decimal
 from unittest.mock import AsyncMock, Mock, patch, MagicMock
@@ -24339,12 +23223,10 @@ from billing.models import (
 
 
 class TestAnalyticsService:
-    """Test analytics service functionality"""
-    
+    """Test analytics service functionality"""    
     @pytest.mark.asyncio
     async def test_revenue_analytics(self, analytics_service, db_session, test_payments_data):
-        """Test revenue analytics calculation"""
-        start_date = datetime.utcnow() - timedelta(days=90)
+        """Test revenue analytics calculation"""        start_date = datetime.utcnow() - timedelta(days=90)
         end_date = datetime.utcnow()
         
         revenue_data = await analytics_service.get_revenue_analytics(
@@ -24365,8 +23247,7 @@ class TestAnalyticsService:
     
     @pytest.mark.asyncio
     async def test_subscription_analytics(self, analytics_service, db_session, test_subscriptions_data):
-        """Test subscription analytics calculation"""
-        analytics_data = await analytics_service.get_subscription_analytics()
+        """Test subscription analytics calculation"""        analytics_data = await analytics_service.get_subscription_analytics()
         
         expected_keys = [
             "total_subscriptions",
@@ -24391,8 +23272,7 @@ class TestAnalyticsService:
     
     @pytest.mark.asyncio
     async def test_customer_analytics(self, analytics_service, db_session, test_customers_data):
-        """Test customer analytics calculation"""
-        customer_data = await analytics_service.get_customer_analytics()
+        """Test customer analytics calculation"""        customer_data = await analytics_service.get_customer_analytics()
         
         expected_keys = [
             "total_customers",
@@ -24416,8 +23296,7 @@ class TestAnalyticsService:
     
     @pytest.mark.asyncio
     async def test_payment_analytics(self, analytics_service, db_session, test_payments_data):
-        """Test payment analytics calculation"""
-        payment_data = await analytics_service.get_payment_analytics(
+        """Test payment analytics calculation"""        payment_data = await analytics_service.get_payment_analytics(
             start_date=datetime.utcnow() - timedelta(days=30),
             end_date=datetime.utcnow()
         )
@@ -24446,8 +23325,7 @@ class TestAnalyticsService:
     
     @pytest.mark.asyncio
     async def test_cohort_analysis(self, analytics_service, db_session):
-        """Test customer cohort analysis"""
-        cohort_data = await analytics_service.get_cohort_analysis(
+        """Test customer cohort analysis"""        cohort_data = await analytics_service.get_cohort_analysis(
             cohort_type="monthly",
             start_date=datetime.utcnow() - timedelta(days=365),
             end_date=datetime.utcnow()
@@ -24468,8 +23346,7 @@ class TestAnalyticsService:
     
     @pytest.mark.asyncio
     async def test_mrr_movement_analysis(self, analytics_service, db_session):
-        """Test Monthly Recurring Revenue movement analysis"""
-        mrr_data = await analytics_service.get_mrr_movement(
+        """Test Monthly Recurring Revenue movement analysis"""        mrr_data = await analytics_service.get_mrr_movement(
             start_date=datetime.utcnow() - timedelta(days=90),
             end_date=datetime.utcnow()
         )
@@ -24502,8 +23379,7 @@ class TestAnalyticsService:
     
     @pytest.mark.asyncio
     async def test_funnel_analysis(self, analytics_service, db_session):
-        """Test conversion funnel analysis"""
-        funnel_data = await analytics_service.get_conversion_funnel(
+        """Test conversion funnel analysis"""        funnel_data = await analytics_service.get_conversion_funnel(
             start_date=datetime.utcnow() - timedelta(days=30),
             end_date=datetime.utcnow()
         )
@@ -24530,8 +23406,7 @@ class TestAnalyticsService:
     
     @pytest.mark.asyncio
     async def test_geographic_analytics(self, analytics_service, db_session):
-        """Test geographic revenue and customer distribution"""
-        geo_data = await analytics_service.get_geographic_analytics()
+        """Test geographic revenue and customer distribution"""        geo_data = await analytics_service.get_geographic_analytics()
         
         assert "revenue_by_country" in geo_data
         assert "customers_by_country" in geo_data
@@ -24549,12 +23424,10 @@ class TestAnalyticsService:
 
 
 class TestReportGenerator:
-    """Test report generation functionality"""
-    
+    """Test report generation functionality"""    
     @pytest.mark.asyncio
     async def test_monthly_revenue_report(self, report_generator, db_session):
-        """Test monthly revenue report generation"""
-        report_date = datetime.utcnow().replace(day=1)  # First day of current month
+        """Test monthly revenue report generation"""        report_date = datetime.utcnow().replace(day=1)  # First day of current month
         
         report = await report_generator.generate_monthly_revenue_report(report_date)
         
@@ -24574,8 +23447,7 @@ class TestReportGenerator:
     
     @pytest.mark.asyncio
     async def test_subscription_health_report(self, report_generator, db_session):
-        """Test subscription health report generation"""
-        report = await report_generator.generate_subscription_health_report()
+        """Test subscription health report generation"""        report = await report_generator.generate_subscription_health_report()
         
         assert "subscription_metrics" in report
         assert "churn_analysis" in report
@@ -24590,8 +23462,7 @@ class TestReportGenerator:
     
     @pytest.mark.asyncio
     async def test_financial_summary_report(self, report_generator, db_session):
-        """Test financial summary report generation"""
-        start_date = datetime.utcnow() - timedelta(days=90)
+        """Test financial summary report generation"""        start_date = datetime.utcnow() - timedelta(days=90)
         end_date = datetime.utcnow()
         
         report = await report_generator.generate_financial_summary(
@@ -24619,8 +23490,7 @@ class TestReportGenerator:
     
     @pytest.mark.asyncio
     async def test_customer_segmentation_report(self, report_generator, db_session):
-        """Test customer segmentation report generation"""
-        report = await report_generator.generate_customer_segmentation_report()
+        """Test customer segmentation report generation"""        report = await report_generator.generate_customer_segmentation_report()
         
         assert "segments" in report
         assert "segment_analysis" in report
@@ -24638,8 +23508,7 @@ class TestReportGenerator:
     
     @pytest.mark.asyncio
     async def test_export_report_csv(self, report_generator, db_session):
-        """Test exporting report data to CSV"""
-        # Generate sample revenue data
+        """Test exporting report data to CSV"""        # Generate sample revenue data
         revenue_data = [
             {"month": "2025-01", "revenue": Decimal("10000.00"), "customers": 100},
             {"month": "2025-02", "revenue": Decimal("12000.00"), "customers": 120},
@@ -24658,8 +23527,7 @@ class TestReportGenerator:
     
     @pytest.mark.asyncio
     async def test_export_report_pdf(self, report_generator, db_session):
-        """Test exporting report to PDF"""
-        report_data = {
+        """Test exporting report to PDF"""        report_data = {
             "title": "Monthly Revenue Report",
             "period": "January 2025",
             "summary": {
@@ -24680,8 +23548,7 @@ class TestReportGenerator:
     
     @pytest.mark.asyncio
     async def test_scheduled_report_generation(self, report_generator, mock_scheduler):
-        """Test scheduled report generation"""
-        report_config = {
+        """Test scheduled report generation"""        report_config = {
             "report_type": "monthly_revenue",
             "schedule": "monthly",
             "recipients": ["finance@company.com", "ceo@company.com"],
@@ -24699,12 +23566,10 @@ class TestReportGenerator:
 
 
 class TestForecastingEngine:
-    """Test forecasting and predictive analytics"""
-    
+    """Test forecasting and predictive analytics"""    
     @pytest.mark.asyncio
     async def test_revenue_forecasting(self, forecasting_engine, db_session):
-        """Test revenue forecasting"""
-        # Historical revenue data
+        """Test revenue forecasting"""        # Historical revenue data
         historical_data = [
             {"month": "2024-01", "revenue": 8000.00},
             {"month": "2024-02", "revenue": 8500.00},
@@ -24737,8 +23602,7 @@ class TestForecastingEngine:
     
     @pytest.mark.asyncio
     async def test_churn_prediction(self, forecasting_engine, db_session):
-        """Test customer churn prediction"""
-        # Customer feature data
+        """Test customer churn prediction"""        # Customer feature data
         customer_features = [
             {
                 "customer_id": "cust_1",
@@ -24783,8 +23647,7 @@ class TestForecastingEngine:
     
     @pytest.mark.asyncio
     async def test_ltv_prediction(self, forecasting_engine, db_session):
-        """Test customer lifetime value prediction"""
-        customer_data = [
+        """Test customer lifetime value prediction"""        customer_data = [
             {
                 "customer_id": "cust_1",
                 "monthly_revenue": 99.99,
@@ -24822,8 +23685,7 @@ class TestForecastingEngine:
     
     @pytest.mark.asyncio
     async def test_demand_forecasting(self, forecasting_engine, db_session):
-        """Test demand forecasting for subscription plans"""
-        plan_demand_data = [
+        """Test demand forecasting for subscription plans"""        plan_demand_data = [
             {"month": "2024-01", "plan_id": "plan_basic", "new_subscriptions": 50},
             {"month": "2024-02", "plan_id": "plan_basic", "new_subscriptions": 55},
             {"month": "2024-03", "plan_id": "plan_basic", "new_subscriptions": 62},
@@ -24855,8 +23717,7 @@ class TestForecastingEngine:
     
     @pytest.mark.asyncio
     async def test_anomaly_detection(self, forecasting_engine, db_session):
-        """Test anomaly detection in revenue patterns"""
-        revenue_data = [
+        """Test anomaly detection in revenue patterns"""        revenue_data = [
             {"date": "2024-01-01", "revenue": 1000.00},
             {"date": "2024-01-02", "revenue": 1050.00},
             {"date": "2024-01-03", "revenue": 980.00},
@@ -24886,12 +23747,10 @@ class TestForecastingEngine:
 
 
 class TestAnalyticsIntegration:
-    """Integration tests for analytics system"""
-    
+    """Integration tests for analytics system"""    
     @pytest.mark.asyncio
     async def test_real_time_dashboard_data(self, analytics_service, report_generator, db_session):
-        """Test real-time dashboard data aggregation"""
-        dashboard_data = await analytics_service.get_dashboard_data()
+        """Test real-time dashboard data aggregation"""        dashboard_data = await analytics_service.get_dashboard_data()
         
         expected_widgets = [
             "revenue_today",
@@ -24915,8 +23774,7 @@ class TestAnalyticsIntegration:
     
     @pytest.mark.asyncio
     async def test_analytics_caching(self, analytics_service, mock_redis):
-        """Test analytics data caching"""
-        cache_key = "revenue_analytics_30d"
+        """Test analytics data caching"""        cache_key = "revenue_analytics_30d"
         
         # First call should hit database
         with patch.object(analytics_service, '_calculate_revenue_from_db') as mock_db_call:
@@ -24939,8 +23797,7 @@ class TestAnalyticsIntegration:
     
     @pytest.mark.asyncio
     async def test_analytics_performance(self, analytics_service, db_session):
-        """Test analytics query performance"""
-        import time
+        """Test analytics query performance"""        import time
         
         start_time = time.time()
         
@@ -24968,14 +23825,11 @@ class TestAnalyticsIntegration:
 # LIGNES: 1
 # ==========================================================================================
 
-"""
-Spotify AI Agent - Billing Tests Package
+"""Spotify AI Agent - Billing Tests Package
 =======================================
 
 Test package initialization for billing system tests.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 

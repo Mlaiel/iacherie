@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Cache Synchronization - Multi-Node Cache Coordination
+"""Cache Synchronization - Multi-Node Cache Coordination
 =====================================================
 
 Advanced synchronization system for distributed cache coordination
@@ -9,9 +8,7 @@ with conflict resolution and consistency guarantees.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import time
@@ -28,29 +25,25 @@ from ...core.utils import generate_uuid, get_timestamp
 logger = logging.getLogger(__name__)
 
 class SyncOperation(Enum):
-    """Synchronization operations."""
-    SET = "set"
+    """Synchronization operations."""    SET = "set"
     DELETE = "delete"
     INVALIDATE = "invalidate"
     CLEAR = "clear"
 
 class ConflictResolution(Enum):
-    """Conflict resolution strategies."""
-    LAST_WRITE_WINS = "last_write_wins"
+    """Conflict resolution strategies."""    LAST_WRITE_WINS = "last_write_wins"
     FIRST_WRITE_WINS = "first_write_wins"
     MERGE = "merge"
     CUSTOM = "custom"
 
 class ConsistencyLevel(Enum):
-    """Consistency levels."""
-    EVENTUAL = "eventual"
+    """Consistency levels."""    EVENTUAL = "eventual"
     STRONG = "strong"
     WEAK = "weak"
 
 @dataclass
 class SyncEvent:
-    """Synchronization event."""
-    event_id: str
+    """Synchronization event."""    event_id: str
     node_id: str
     operation: SyncOperation
     key: str
@@ -60,8 +53,7 @@ class SyncEvent:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
-        return {
+        """Convert to dictionary."""        return {
             'event_id': self.event_id,
             'node_id': self.node_id,
             'operation': self.operation.value,
@@ -74,8 +66,7 @@ class SyncEvent:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'SyncEvent':
-        """Create from dictionary."""
-        return cls(
+        """Create from dictionary."""        return cls(
             event_id=data['event_id'],
             node_id=data['node_id'],
             operation=SyncOperation(data['operation']),
@@ -88,8 +79,7 @@ class SyncEvent:
 
 @dataclass
 class ConflictInfo:
-    """Conflict information."""
-    key: str
+    """Conflict information."""    key: str
     local_event: SyncEvent
     remote_event: SyncEvent
     resolution_strategy: ConflictResolution
@@ -98,8 +88,7 @@ class ConflictInfo:
     resolved_at: Optional[datetime] = None
 
 class CacheSynchronizer:
-    """
-    Advanced cache synchronization system.
+    """    Advanced cache synchronization system.
     
     Features:
     - Multi-node coordination
@@ -107,20 +96,17 @@ class CacheSynchronizer:
     - Version tracking
     - Eventual consistency
     - Custom merge functions
-    """
-    
+    """    
     def __init__(self, node_id: str,
                  consistency_level: ConsistencyLevel = ConsistencyLevel.EVENTUAL,
                  conflict_resolution: ConflictResolution = ConflictResolution.LAST_WRITE_WINS):
-        """
-        Initialize cache synchronizer.
+        """        Initialize cache synchronizer.
         
         Args:
             node_id: Unique node identifier
             consistency_level: Consistency level
             conflict_resolution: Default conflict resolution strategy
-        """
-        self.node_id = node_id
+        """        self.node_id = node_id
         self.consistency_level = consistency_level
         self.conflict_resolution = conflict_resolution
         self.logger = logging.getLogger(f"{__name__}.CacheSynchronizer")
@@ -150,31 +136,26 @@ class CacheSynchronizer:
         self.logger.info(f"Cache synchronizer initialized for node {node_id}")
     
     async def add_sync_callback(self, callback: Callable) -> None:
-        """Add synchronization callback."""
-        self.sync_callbacks.append(callback)
+        """Add synchronization callback."""        self.sync_callbacks.append(callback)
     
     async def remove_sync_callback(self, callback: Callable) -> None:
-        """Remove synchronization callback."""
-        if callback in self.sync_callbacks:
+        """Remove synchronization callback."""        if callback in self.sync_callbacks:
             self.sync_callbacks.remove(callback)
     
     async def register_conflict_resolver(self, key_pattern: str, 
                                        resolver: Callable) -> None:
-        """
-        Register custom conflict resolver.
+        """        Register custom conflict resolver.
         
         Args:
             key_pattern: Key pattern for resolver
             resolver: Conflict resolution function
-        """
-        self.conflict_resolvers[key_pattern] = resolver
+        """        self.conflict_resolvers[key_pattern] = resolver
         self.logger.debug(f"Registered conflict resolver for pattern {key_pattern}")
     
     async def create_sync_event(self, operation: SyncOperation, 
                               key: str, value: Any = None,
                               metadata: Optional[Dict[str, Any]] = None) -> SyncEvent:
-        """Create synchronization event."""
-        # Get current version for key
+        """Create synchronization event."""        # Get current version for key
         current_version = self.version_vectors.get(self.node_id, {}).get(key, 0)
         new_version = current_version + 1
         
@@ -204,13 +185,11 @@ class CacheSynchronizer:
         return event
     
     async def broadcast_event(self, event: SyncEvent) -> None:
-        """
-        Broadcast synchronization event to all nodes.
+        """        Broadcast synchronization event to all nodes.
         
         Args:
             event: Event to broadcast
-        """
-        try:
+        """        try:
             # Notify all sync callbacks
             for callback in self.sync_callbacks:
                 try:
@@ -230,16 +209,14 @@ class CacheSynchronizer:
             self.logger.error(f"Error broadcasting event: {e}")
     
     async def receive_event(self, event: SyncEvent) -> bool:
-        """
-        Receive and process synchronization event.
+        """        Receive and process synchronization event.
         
         Args:
             event: Received event
             
         Returns:
             True if processed successfully
-        """
-        try:
+        """        try:
             self.sync_stats['events_received'] += 1
             
             # Check if we already processed this event
@@ -277,8 +254,7 @@ class CacheSynchronizer:
             return False
     
     async def _detect_conflict(self, incoming_event: SyncEvent) -> Optional[ConflictInfo]:
-        """Detect conflicts with incoming event."""
-        try:
+        """Detect conflicts with incoming event."""        try:
             # Look for concurrent operations on the same key
             for event in reversed(self.event_history[-10:]):  # Check recent events
                 if (event.key == incoming_event.key and 
@@ -300,8 +276,7 @@ class CacheSynchronizer:
             return None
     
     async def _resolve_conflict(self, conflict: ConflictInfo) -> Optional[SyncEvent]:
-        """Resolve conflict between events."""
-        try:
+        """Resolve conflict between events."""        try:
             self.sync_stats['conflicts_resolved'] += 1
             
             # Check for custom resolver
@@ -392,8 +367,7 @@ class CacheSynchronizer:
             return None
     
     async def _apply_event(self, event: SyncEvent) -> None:
-        """Apply synchronization event locally."""
-        try:
+        """Apply synchronization event locally."""        try:
             # This would integrate with the actual cache implementation
             # For now, we just log the event
             self.logger.debug(f"Applied event {event.event_id}: {event.operation.value} {event.key}")
@@ -403,8 +377,7 @@ class CacheSynchronizer:
     
     async def sync_with_node(self, target_node_id: str, 
                            since_timestamp: Optional[datetime] = None) -> bool:
-        """
-        Synchronize with specific node.
+        """        Synchronize with specific node.
         
         Args:
             target_node_id: Target node ID
@@ -412,8 +385,7 @@ class CacheSynchronizer:
             
         Returns:
             True if successful
-        """
-        try:
+        """        try:
             # Get events to sync
             if since_timestamp:
                 events_to_sync = [
@@ -440,8 +412,7 @@ class CacheSynchronizer:
             return False
     
     async def get_node_status(self) -> Dict[str, Any]:
-        """Get synchronization node status."""
-        try:
+        """Get synchronization node status."""        try:
             now = datetime.now()
             active_nodes = []
             
@@ -470,8 +441,7 @@ class CacheSynchronizer:
             return {}
     
     async def cleanup_old_events(self, max_age_hours: int = 24) -> int:
-        """Clean up old synchronization events."""
-        try:
+        """Clean up old synchronization events."""        try:
             cutoff_time = datetime.now() - timedelta(hours=max_age_hours)
             
             # Clean event history
@@ -503,15 +473,12 @@ class CacheSynchronizer:
             return 0
 
 class SyncCoordinator:
-    """
-    Coordination system for multiple cache synchronizers.
+    """    Coordination system for multiple cache synchronizers.
     
     Manages cluster-wide synchronization and consistency.
-    """
-    
+    """    
     def __init__(self, cluster_id: str):
-        """Initialize sync coordinator."""
-        self.cluster_id = cluster_id
+        """Initialize sync coordinator."""        self.cluster_id = cluster_id
         self.logger = logging.getLogger(f"{__name__}.SyncCoordinator")
         
         # Node management
@@ -522,8 +489,7 @@ class SyncCoordinator:
         self.coordination_tasks: List[asyncio.Task] = []
         
     async def register_synchronizer(self, synchronizer: CacheSynchronizer) -> None:
-        """Register cache synchronizer."""
-        self.synchronizers[synchronizer.node_id] = synchronizer
+        """Register cache synchronizer."""        self.synchronizers[synchronizer.node_id] = synchronizer
         
         # Add coordination callback
         await synchronizer.add_sync_callback(self._coordinate_event)
@@ -531,14 +497,12 @@ class SyncCoordinator:
         self.logger.info(f"Registered synchronizer for node {synchronizer.node_id}")
     
     async def unregister_synchronizer(self, node_id: str) -> None:
-        """Unregister cache synchronizer."""
-        if node_id in self.synchronizers:
+        """Unregister cache synchronizer."""        if node_id in self.synchronizers:
             del self.synchronizers[node_id]
             self.logger.info(f"Unregistered synchronizer for node {node_id}")
     
     async def _coordinate_event(self, event: SyncEvent) -> None:
-        """Coordinate event across all nodes."""
-        try:
+        """Coordinate event across all nodes."""        try:
             # Broadcast to all other synchronizers
             for node_id, synchronizer in self.synchronizers.items():
                 if node_id != event.node_id:
@@ -548,8 +512,7 @@ class SyncCoordinator:
             self.logger.error(f"Error coordinating event: {e}")
     
     async def get_cluster_status(self) -> Dict[str, Any]:
-        """Get cluster synchronization status."""
-        try:
+        """Get cluster synchronization status."""        try:
             node_statuses = {}
             
             for node_id, synchronizer in self.synchronizers.items():
@@ -579,8 +542,7 @@ class SyncCoordinator:
             return {}
     
     async def force_cluster_sync(self) -> bool:
-        """Force cluster-wide synchronization."""
-        try:
+        """Force cluster-wide synchronization."""        try:
             # Get the most recent timestamp from all nodes
             max_timestamp = None
             

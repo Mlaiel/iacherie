@@ -18,8 +18,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 WARNING: This code is proprietary to Fahed Mlaiel. Any unauthorized copying, modification, 
 or distribution without explicit written permission is strictly prohibited and will result 
 in legal action under German and international copyright law.
-"""
-# Core vector store implementations
+"""# Core vector store implementations
 from .faiss_vector_store import FAISSVectorStore
 from .elasticsearch_vector_store import ElasticsearchVectorStore
 from .pinecone_vector_store import PineconeVectorStore

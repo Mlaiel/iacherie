@@ -1,5 +1,4 @@
-"""
-🎬 Video Fingerprinting Engine - IA Influencer Agent Platform Enterprise
+"""🎬 Video Fingerprinting Engine - IA Influencer Agent Platform Enterprise
 ========================================================================
 Module: backend/data_management/fingerprinting/enhanced_video_fingerprint.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -29,9 +28,7 @@ VIDEO FINGERPRINTING TECHNOLOGIES:
 ├── 🎵 Audio-Visual Fusion (Multi-modal)
 ├── ⚡ GPU Acceleration (CUDA + OpenCL)
 └── 🛡️ Protection Pipeline (Automated)
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple, Generator
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Generator
 from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
 from enum import Enum
@@ -86,24 +83,21 @@ __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 logger = logging.getLogger(__name__)
 
 class VideoQuality(Enum):
-    """Qualités vidéo supportées"""
-    LOW = "240p"
+    """Qualités vidéo supportées"""    LOW = "240p"
     MEDIUM = "480p"
     HIGH = "720p"
     FULL_HD = "1080p"
     ULTRA_HD = "4K"
 
 class FrameExtractionMode(Enum):
-    """Modes d'extraction de frames"""
-    UNIFORM = "uniform"          # Extraction uniforme
+    """Modes d'extraction de frames"""    UNIFORM = "uniform"          # Extraction uniforme
     KEYFRAMES = "keyframes"      # Frames clés uniquement
     SCENE_CHANGES = "scene_changes"  # Changements de scène
     MOTION_BASED = "motion_based"    # Basé sur le mouvement
     ADAPTIVE = "adaptive"        # Adaptatif intelligent
 
 class VideoCodec(Enum):
-    """Codecs vidéo supportés"""
-    H264 = "h264"
+    """Codecs vidéo supportés"""    H264 = "h264"
     H265 = "h265"
     VP9 = "vp9"
     AV1 = "av1"
@@ -111,8 +105,7 @@ class VideoCodec(Enum):
 
 @dataclass
 class VideoFingerprintConfig:
-    """Configuration avancée pour le fingerprinting vidéo"""
-    
+    """Configuration avancée pour le fingerprinting vidéo"""    
     # Video processing parameters
     max_duration: int = 3600  # 1 hour max
     min_duration: float = 5.0  # 5 seconds min
@@ -170,8 +163,7 @@ class VideoFingerprintConfig:
 
 @dataclass
 class VideoFrame:
-    """Représentation d'une frame vidéo"""
-    frame_number: int
+    """Représentation d'une frame vidéo"""    frame_number: int
     timestamp: float
     image_data: np.ndarray
     is_keyframe: bool = False
@@ -196,8 +188,7 @@ class VideoFrame:
 
 @dataclass
 class VideoFingerprint:
-    """Empreinte vidéo complète"""
-    video_id: str
+    """Empreinte vidéo complète"""    video_id: str
     duration: float
     fps: float
     resolution: Tuple[int, int]
@@ -226,8 +217,7 @@ class VideoFingerprint:
     quality_metrics: Dict[str, float] = field(default_factory=dict)
 
 class VideoFingerprintEngine:
-    """
-    Engine principal de fingerprinting vidéo ultra-avancé
+    """    Engine principal de fingerprinting vidéo ultra-avancé
     
     Features:
     - Multi-modal video analysis
@@ -238,8 +228,7 @@ class VideoFingerprintEngine:
     - Object detection integration
     - Deep learning features
     - Temporal consistency analysis
-    """
-    
+    """    
     def __init__(self, config: VideoFingerprintConfig):
         self.config = config
         
@@ -261,8 +250,7 @@ class VideoFingerprintEngine:
         logger.info("VideoFingerprintEngine initialized")
     
     def _setup_device(self) -> str:
-        """Configure le device de traitement"""
-        if self.config.use_gpu:
+        """Configure le device de traitement"""        if self.config.use_gpu:
             if TORCH_AVAILABLE and torch.cuda.is_available():
                 return "cuda"
             elif TENSORFLOW_AVAILABLE and tf.config.list_physical_devices('GPU'):
@@ -270,8 +258,7 @@ class VideoFingerprintEngine:
         return "cpu"
     
     async def generate_fingerprint(self, video_path: str) -> VideoFingerprint:
-        """Génère l'empreinte complète d'une vidéo"""
-        start_time = time.time()
+        """Génère l'empreinte complète d'une vidéo"""        start_time = time.time()
         
         try:
             # Validate video file
@@ -324,8 +311,7 @@ class VideoFingerprintEngine:
     async def compare_fingerprints(self,
                                  fingerprint1: VideoFingerprint,
                                  fingerprint2: VideoFingerprint) -> Dict[str, float]:
-        """Compare deux empreintes vidéo"""
-        try:
+        """Compare deux empreintes vidéo"""        try:
             similarity_scores = {}
             
             # Temporal signature similarity
@@ -380,8 +366,7 @@ class VideoFingerprintEngine:
             raise
     
     async def _validate_video_file(self, video_path: str) -> Dict[str, Any]:
-        """Valide un fichier vidéo"""
-        path = Path(video_path)
+        """Valide un fichier vidéo"""        path = Path(video_path)
         
         if not path.exists():
             raise FileNotFoundError(f"Video file not found: {video_path}")
@@ -423,14 +408,12 @@ class VideoFingerprintEngine:
         }
     
     def _generate_video_id(self, video_path: str) -> str:
-        """Génère un ID unique pour la vidéo"""
-        path = Path(video_path)
+        """Génère un ID unique pour la vidéo"""        path = Path(video_path)
         content = f"{path.name}_{path.stat().st_size}_{path.stat().st_mtime}"
         return hashlib.sha256(content.encode()).hexdigest()[:16]
     
     async def _extract_frames(self, video_path: str) -> Generator[Tuple[int, float, np.ndarray], None, None]:
-        """Extrait les frames selon la stratégie configurée"""
-        cap = cv2.VideoCapture(video_path)
+        """Extrait les frames selon la stratégie configurée"""        cap = cv2.VideoCapture(video_path)
         fps = cap.get(cv2.CAP_PROP_FPS)
         frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
         
@@ -471,8 +454,7 @@ class VideoFingerprintEngine:
         cap.release()
     
     async def _extract_keyframes(self, cap: cv2.VideoCapture, fps: float):
-        """Extrait les frames clés"""
-        prev_frame = None
+        """Extrait les frames clés"""        prev_frame = None
         frame_number = 0
         
         while True:
@@ -502,15 +484,13 @@ class VideoFingerprintEngine:
             frame_number += 1
     
     async def _extract_scene_change_frames(self, cap: cv2.VideoCapture, fps: float):
-        """Extrait les frames sur les changements de scène"""
-        # Implementation would use scene detection algorithm
+        """Extrait les frames sur les changements de scène"""        # Implementation would use scene detection algorithm
         # For now, use simplified version
         async for frame_data in self._extract_keyframes(cap, fps):
             yield frame_data
     
     async def _extract_adaptive_frames(self, cap: cv2.VideoCapture, fps: float):
-        """Extraction adaptative intelligente"""
-        # Combine multiple strategies for optimal frame selection
+        """Extraction adaptative intelligente"""        # Combine multiple strategies for optimal frame selection
         frames_yielded = 0
         frame_number = 0
         prev_frame = None
@@ -544,8 +524,7 @@ class VideoFingerprintEngine:
             frame_number += 1
     
     def _calculate_motion_score(self, frame1: np.ndarray, frame2: np.ndarray) -> float:
-        """Calcule le score de mouvement entre deux frames"""
-        gray1 = cv2.cvtColor(frame1, cv2.COLOR_BGR2GRAY)
+        """Calcule le score de mouvement entre deux frames"""        gray1 = cv2.cvtColor(frame1, cv2.COLOR_BGR2GRAY)
         gray2 = cv2.cvtColor(frame2, cv2.COLOR_BGR2GRAY)
         
         # Optical flow
@@ -555,8 +534,7 @@ class VideoFingerprintEngine:
         return np.mean(magnitude)
     
     async def _process_frame_batch(self, frame_batch: List[Tuple[int, float, np.ndarray]]) -> List[VideoFrame]:
-        """Traite un batch de frames"""
-        processed_frames = []
+        """Traite un batch de frames"""        processed_frames = []
         
         # Process frames in parallel
         tasks = []
@@ -568,8 +546,7 @@ class VideoFingerprintEngine:
         return processed_frames
     
     async def _process_single_frame(self, frame_number: int, timestamp: float, image_data: np.ndarray) -> VideoFrame:
-        """Traite une frame individuelle"""
-        # Create VideoFrame object
+        """Traite une frame individuelle"""        # Create VideoFrame object
         video_frame = VideoFrame(
             frame_number=frame_number,
             timestamp=timestamp,
@@ -602,8 +579,7 @@ class VideoFingerprintEngine:
         return video_frame
     
     async def _assess_frame_quality(self, image_data: np.ndarray) -> float:
-        """Évalue la qualité d'une frame"""
-        # Convert to grayscale for analysis
+        """Évalue la qualité d'une frame"""        # Convert to grayscale for analysis
         gray = cv2.cvtColor(image_data, cv2.COLOR_BGR2GRAY)
         
         # Blur detection (Laplacian variance)
@@ -626,8 +602,7 @@ class VideoFingerprintEngine:
         return quality_score
     
     async def _compute_global_features(self, fingerprint: VideoFingerprint):
-        """Calcule les caractéristiques globales de la vidéo"""
-        if not fingerprint.frames:
+        """Calcule les caractéristiques globales de la vidéo"""        if not fingerprint.frames:
             return
         
         # Global color histogram
@@ -654,8 +629,7 @@ class VideoFingerprintEngine:
         fingerprint.temporal_signature = await self._generate_temporal_signature(fingerprint.frames)
     
     async def _estimate_scene_count(self, frames: List[VideoFrame]) -> int:
-        """Estime le nombre de scènes"""
-        if len(frames) < 2:
+        """Estime le nombre de scènes"""        if len(frames) < 2:
             return 1
         
         scene_changes = 0
@@ -666,8 +640,7 @@ class VideoFingerprintEngine:
         return scene_changes + 1
     
     async def _extract_dominant_colors(self, frames: List[VideoFrame]) -> List[Tuple[int, int, int]]:
-        """Extrait les couleurs dominantes"""
-        all_colors = []
+        """Extrait les couleurs dominantes"""        all_colors = []
         
         for frame in frames[:10]:  # Use first 10 frames for efficiency
             if frame.quality_score >= self.config.min_quality_score:
@@ -690,8 +663,7 @@ class VideoFingerprintEngine:
         return [color for color, _ in color_counts.most_common(5)]
     
     async def _generate_temporal_signature(self, frames: List[VideoFrame]) -> np.ndarray:
-        """Génère une signature temporelle"""
-        if not frames:
+        """Génère une signature temporelle"""        if not frames:
             return np.array([])
         
         # Extract temporal features from frame hashes
@@ -710,8 +682,7 @@ class VideoFingerprintEngine:
         return np.array([])
     
     async def _compute_temporal_similarity(self, sig1: np.ndarray, sig2: np.ndarray) -> float:
-        """Calcule la similarité temporelle"""
-        if sig1.size == 0 or sig2.size == 0:
+        """Calcule la similarité temporelle"""        if sig1.size == 0 or sig2.size == 0:
             return 0.0
         
         # Dynamic Time Warping or simple correlation
@@ -733,8 +704,7 @@ class VideoFingerprintEngine:
         return dot_product / (norm1 * norm2)
     
     async def _compute_hash_similarity(self, frames1: List[VideoFrame], frames2: List[VideoFrame]) -> float:
-        """Calcule la similarité des hashes"""
-        if not frames1 or not frames2:
+        """Calcule la similarité des hashes"""        if not frames1 or not frames2:
             return 0.0
         
         similarities = []
@@ -762,8 +732,7 @@ class VideoFingerprintEngine:
         return np.mean(similarities) if similarities else 0.0
     
     async def _compute_motion_similarity(self, fp1: VideoFingerprint, fp2: VideoFingerprint) -> float:
-        """Calcule la similarité de mouvement"""
-        if fp1.motion_energy == 0 and fp2.motion_energy == 0:
+        """Calcule la similarité de mouvement"""        if fp1.motion_energy == 0 and fp2.motion_energy == 0:
             return 1.0
         
         if fp1.motion_energy == 0 or fp2.motion_energy == 0:
@@ -774,14 +743,12 @@ class VideoFingerprintEngine:
         return ratio
     
     async def _compute_scene_similarity(self, frames1: List[VideoFrame], frames2: List[VideoFrame]) -> float:
-        """Calcule la similarité de structure de scène"""
-        # Compare scene transition patterns
+        """Calcule la similarité de structure de scène"""        # Compare scene transition patterns
         # This is a simplified implementation
         return 0.5  # Placeholder
     
     async def _compute_object_similarity(self, frames1: List[VideoFrame], frames2: List[VideoFrame]) -> float:
-        """Calcule la similarité d'objets détectés"""
-        if not self.yolo_processor:
+        """Calcule la similarité d'objets détectés"""        if not self.yolo_processor:
             return 0.0
         
         # Extract object classes from both videos
@@ -803,8 +770,7 @@ class VideoFingerprintEngine:
         return intersection / union if union > 0 else 0.0
     
     async def _compute_deep_feature_similarity(self, frames1: List[VideoFrame], frames2: List[VideoFrame]) -> float:
-        """Calcule la similarité des caractéristiques profondes"""
-        features1 = [f.cnn_features for f in frames1 if f.cnn_features is not None]
+        """Calcule la similarité des caractéristiques profondes"""        features1 = [f.cnn_features for f in frames1 if f.cnn_features is not None]
         features2 = [f.cnn_features for f in frames2 if f.cnn_features is not None]
         
         if not features1 or not features2:
@@ -825,8 +791,7 @@ class VideoFingerprintEngine:
         return dot_product / (norm1 * norm2)
     
     async def _compute_weighted_similarity(self, similarity_scores: Dict[str, float]) -> float:
-        """Calcule la similarité pondérée globale"""
-        weights = {
+        """Calcule la similarité pondérée globale"""        weights = {
             'temporal': 0.3,
             'hash': 0.25,
             'motion': 0.15,
@@ -846,8 +811,7 @@ class VideoFingerprintEngine:
         return weighted_sum / total_weight if total_weight > 0 else 0.0
     
     async def _compute_quality_metrics(self, fingerprint: VideoFingerprint) -> Dict[str, float]:
-        """Calcule les métriques de qualité"""
-        if not fingerprint.frames:
+        """Calcule les métriques de qualité"""        if not fingerprint.frames:
             return {}
         
         quality_scores = [f.quality_score for f in fingerprint.frames]
@@ -861,15 +825,13 @@ class VideoFingerprintEngine:
         }
 
 class OpenCVProcessor:
-    """Processeur OpenCV pour analyse vidéo"""
-    
+    """Processeur OpenCV pour analyse vidéo"""    
     def __init__(self, config: VideoFingerprintConfig):
         self.config = config
         logger.info("OpenCVProcessor initialized")
     
     async def extract_features(self, frame: np.ndarray) -> Dict[str, Any]:
-        """Extrait les caractéristiques OpenCV"""
-        features = {}
+        """Extrait les caractéristiques OpenCV"""        features = {}
         
         # Color histogram
         hist = cv2.calcHist([frame], [0, 1, 2], None, [8, 8, 8], [0, 256, 0, 256, 0, 256])
@@ -886,15 +848,13 @@ class OpenCVProcessor:
         return features
 
 class PerceptualHashProcessor:
-    """Processeur de hash perceptuel"""
-    
+    """Processeur de hash perceptuel"""    
     def __init__(self, config: VideoFingerprintConfig):
         self.config = config
         logger.info("PerceptualHashProcessor initialized")
     
     async def generate_hashes(self, image_data: np.ndarray) -> Dict[str, str]:
-        """Génère les hashes perceptuels"""
-        if not IMAGEHASH_AVAILABLE:
+        """Génère les hashes perceptuels"""        if not IMAGEHASH_AVAILABLE:
             return {}
         
         # Convert OpenCV image to PIL
@@ -918,8 +878,7 @@ class PerceptualHashProcessor:
         return hashes
 
 class YOLOFrameProcessor:
-    """Processeur YOLO pour détection d'objets"""
-    
+    """Processeur YOLO pour détection d'objets"""    
     def __init__(self, config: VideoFingerprintConfig):
         self.config = config
         
@@ -931,8 +890,7 @@ class YOLOFrameProcessor:
         logger.info("YOLOFrameProcessor initialized")
     
     async def detect_objects(self, frame: np.ndarray) -> List[Dict[str, Any]]:
-        """Détecte les objets dans une frame"""
-        if not self.model:
+        """Détecte les objets dans une frame"""        if not self.model:
             return []
         
         try:
@@ -961,15 +919,13 @@ class YOLOFrameProcessor:
             return []
 
 class MotionVectorProcessor:
-    """Processeur d'analyse de mouvement"""
-    
+    """Processeur d'analyse de mouvement"""    
     def __init__(self, config: VideoFingerprintConfig):
         self.config = config
         logger.info("MotionVectorProcessor initialized")
     
     async def analyze_motion(self, frame1: np.ndarray, frame2: np.ndarray) -> Dict[str, Any]:
-        """Analyse le mouvement entre deux frames"""
-        gray1 = cv2.cvtColor(frame1, cv2.COLOR_BGR2GRAY)
+        """Analyse le mouvement entre deux frames"""        gray1 = cv2.cvtColor(frame1, cv2.COLOR_BGR2GRAY)
         gray2 = cv2.cvtColor(frame2, cv2.COLOR_BGR2GRAY)
         
         # Optical flow
@@ -984,15 +940,13 @@ class MotionVectorProcessor:
         return motion_info
 
 class SceneDetector:
-    """Détecteur de changements de scène"""
-    
+    """Détecteur de changements de scène"""    
     def __init__(self, config: VideoFingerprintConfig):
         self.config = config
         logger.info("SceneDetector initialized")
     
     async def detect_scene_changes(self, frames: List[np.ndarray]) -> List[int]:
-        """Détecte les changements de scène"""
-        scene_boundaries = [0]  # First frame is always a scene boundary
+        """Détecte les changements de scène"""        scene_boundaries = [0]  # First frame is always a scene boundary
         
         for i in range(1, len(frames)):
             # Compare consecutive frames
@@ -1004,8 +958,7 @@ class SceneDetector:
         return scene_boundaries
     
     def _compute_frame_similarity(self, frame1: np.ndarray, frame2: np.ndarray) -> float:
-        """Calcule la similarité entre deux frames"""
-        # Convert to grayscale
+        """Calcule la similarité entre deux frames"""        # Convert to grayscale
         gray1 = cv2.cvtColor(frame1, cv2.COLOR_BGR2GRAY)
         gray2 = cv2.cvtColor(frame2, cv2.COLOR_BGR2GRAY)
         
@@ -1017,8 +970,7 @@ class SceneDetector:
         return correlation
 
 class DeepFeaturesProcessor:
-    """Processeur de caractéristiques profondes"""
-    
+    """Processeur de caractéristiques profondes"""    
     def __init__(self, config: VideoFingerprintConfig):
         self.config = config
         self.model = None
@@ -1030,8 +982,7 @@ class DeepFeaturesProcessor:
         logger.info("DeepFeaturesProcessor initialized")
     
     def _load_model(self):
-        """Charge le modèle CNN pré-entraîné"""
-        try:
+        """Charge le modèle CNN pré-entraîné"""        try:
             import torchvision.models as models
             
             if self.config.cnn_model == "resnet50":
@@ -1047,8 +998,7 @@ class DeepFeaturesProcessor:
             self.model = None
     
     async def extract_features(self, frame: np.ndarray) -> Optional[np.ndarray]:
-        """Extrait les caractéristiques profondes"""
-        if not self.model or not TORCH_AVAILABLE:
+        """Extrait les caractéristiques profondes"""        if not self.model or not TORCH_AVAILABLE:
             return None
         
         try:

@@ -1,5 +1,4 @@
-"""
-Music Streaming Platform Adapters - Professional Audio Distribution
+"""Music Streaming Platform Adapters - Professional Audio Distribution
 
 This module provides comprehensive adapters for major music streaming platforms
 including Spotify, Apple Music, SoundCloud, Deezer, and others. Each adapter
@@ -20,9 +19,7 @@ Supported Platforms:
 - Amazon Music: Developer API
 - Tidal: Artist tools integration
 - Bandcamp: Fan funding, Direct sales
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -40,8 +37,7 @@ from .base_adapter import (
 logger = logging.getLogger(__name__)
 
 class MusicPlatform(Enum):
-    """Supported music streaming platforms."""
-    SPOTIFY = "spotify"
+    """Supported music streaming platforms."""    SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     SOUNDCLOUD = "soundcloud"
     DEEZER = "deezer"
@@ -53,8 +49,7 @@ class MusicPlatform(Enum):
     AUDIOMACK = "audiomack"
 
 class AudioFormat(Enum):
-    """Supported audio formats."""
-    MP3 = "mp3"
+    """Supported audio formats."""    MP3 = "mp3"
     FLAC = "flac"
     WAV = "wav"
     AAC = "aac"
@@ -63,8 +58,7 @@ class AudioFormat(Enum):
     M4A = "m4a"
 
 class ReleaseType(Enum):
-    """Music release types."""
-    SINGLE = "single"
+    """Music release types."""    SINGLE = "single"
     EP = "ep"
     ALBUM = "album"
     COMPILATION = "compilation"
@@ -75,8 +69,7 @@ class ReleaseType(Enum):
 
 @dataclass
 class AudioTrack:
-    """Audio track metadata structure."""
-    title: str
+    """Audio track metadata structure."""    title: str
     artist: str
     album: Optional[str] = None
     duration_ms: Optional[int] = None
@@ -97,8 +90,7 @@ class AudioTrack:
 
 @dataclass
 class MusicAnalytics:
-    """Music streaming analytics and royalty data."""
-    streams: int = 0
+    """Music streaming analytics and royalty data."""    streams: int = 0
     listeners: int = 0
     saves: int = 0
     playlist_adds: int = 0
@@ -112,8 +104,7 @@ class MusicAnalytics:
     platform_specific_metrics: Dict[str, Any] = field(default_factory=dict)
 
 class SpotifyAdapter(BasePlatformAdapter):
-    """
-    Enterprise Spotify Web API adapter with comprehensive artist features.
+    """    Enterprise Spotify Web API adapter with comprehensive artist features.
     
     Supports:
     - Spotify Web API
@@ -122,8 +113,7 @@ class SpotifyAdapter(BasePlatformAdapter):
     - Podcast publishing
     - Fan engagement tracking
     - Royalty and streaming data
-    """
-    
+    """    
     def __init__(self, credentials: AdapterCredentials, redis_client=None):
         rate_config = RateLimitConfig(
             requests_per_second=10.0,
@@ -144,8 +134,7 @@ class SpotifyAdapter(BasePlatformAdapter):
         )
     
     async def authenticate(self) -> bool:
-        """Authenticate with Spotify API using OAuth2."""
-        try:
+        """Authenticate with Spotify API using OAuth2."""        try:
             # If we have a refresh token, try to refresh the access token
             if self.credentials.refresh_token and self.credentials.is_token_expired():
                 if await self.refresh_token():
@@ -169,8 +158,7 @@ class SpotifyAdapter(BasePlatformAdapter):
             return False
     
     async def refresh_token(self) -> bool:
-        """Refresh Spotify access token."""
-        try:
+        """Refresh Spotify access token."""        try:
             if not self.credentials.refresh_token:
                 return False
             
@@ -215,11 +203,9 @@ class SpotifyAdapter(BasePlatformAdapter):
             return False
     
     async def upload_track(self, track: AudioTrack) -> Dict[str, Any]:
-        """
-        Upload track to Spotify (Note: Direct upload requires Spotify for Artists).
+        """        Upload track to Spotify (Note: Direct upload requires Spotify for Artists).
         This method prepares metadata for distribution partners.
-        """
-        try:
+        """        try:
             # Spotify doesn't allow direct uploads via API
             # This method prepares the track data for distribution services
             
@@ -259,8 +245,7 @@ class SpotifyAdapter(BasePlatformAdapter):
     async def get_artist_analytics(self, artist_id: Optional[str] = None,
                                   start_date: Optional[datetime] = None,
                                   end_date: Optional[datetime] = None) -> MusicAnalytics:
-        """Get Spotify artist analytics and streaming data."""
-        try:
+        """Get Spotify artist analytics and streaming data."""        try:
             # Note: This requires Spotify for Artists API access
             # Regular Web API has limited analytics capabilities
             
@@ -313,8 +298,7 @@ class SpotifyAdapter(BasePlatformAdapter):
             return MusicAnalytics()
     
     async def search_tracks(self, query: str, limit: int = 20) -> List[Dict[str, Any]]:
-        """Search for tracks on Spotify."""
-        try:
+        """Search for tracks on Spotify."""        try:
             response = await self.make_request(
                 method="GET",
                 endpoint="search",
@@ -348,8 +332,7 @@ class SpotifyAdapter(BasePlatformAdapter):
             return []
     
     async def create_playlist(self, name: str, description: str = "", public: bool = True) -> Dict[str, Any]:
-        """Create a new Spotify playlist."""
-        try:
+        """Create a new Spotify playlist."""        try:
             # Get current user ID
             user_response = await self.make_request(
                 method="GET",
@@ -387,8 +370,7 @@ class SpotifyAdapter(BasePlatformAdapter):
             raise AdapterError(f"Failed to create Spotify playlist: {e}")
     
     async def health_check(self) -> bool:
-        """Perform Spotify API health check."""
-        try:
+        """Perform Spotify API health check."""        try:
             response = await self.make_request(
                 method="GET",
                 endpoint="me",
@@ -399,8 +381,7 @@ class SpotifyAdapter(BasePlatformAdapter):
             return False
 
 class SoundCloudAdapter(BasePlatformAdapter):
-    """
-    Enterprise SoundCloud API adapter for audio creators.
+    """    Enterprise SoundCloud API adapter for audio creators.
     
     Supports:
     - Track uploading and management
@@ -408,8 +389,7 @@ class SoundCloudAdapter(BasePlatformAdapter):
     - Monetization tracking
     - Fan engagement data
     - Playlist management
-    """
-    
+    """    
     def __init__(self, credentials: AdapterCredentials, redis_client=None):
         rate_config = RateLimitConfig(
             requests_per_second=5.0,
@@ -430,8 +410,7 @@ class SoundCloudAdapter(BasePlatformAdapter):
         )
     
     async def authenticate(self) -> bool:
-        """Authenticate with SoundCloud API."""
-        try:
+        """Authenticate with SoundCloud API."""        try:
             response = await self.make_request(
                 method="GET",
                 endpoint="me",
@@ -449,8 +428,7 @@ class SoundCloudAdapter(BasePlatformAdapter):
             return False
     
     async def upload_track(self, track: AudioTrack) -> Dict[str, Any]:
-        """Upload track to SoundCloud."""
-        try:
+        """Upload track to SoundCloud."""        try:
             # Prepare track data for upload
             track_data = {
                 "track[title]": track.title,
@@ -485,8 +463,7 @@ class SoundCloudAdapter(BasePlatformAdapter):
             raise AdapterError(f"Failed to upload track to SoundCloud: {e}")
     
     async def get_track_analytics(self, track_id: str) -> MusicAnalytics:
-        """Get SoundCloud track analytics."""
-        try:
+        """Get SoundCloud track analytics."""        try:
             # Get track details
             track_response = await self.make_request(
                 method="GET",
@@ -514,8 +491,7 @@ class SoundCloudAdapter(BasePlatformAdapter):
             return MusicAnalytics()
     
     async def health_check(self) -> bool:
-        """Perform SoundCloud API health check."""
-        try:
+        """Perform SoundCloud API health check."""        try:
             response = await self.make_request(
                 method="GET",
                 endpoint="me",
@@ -526,8 +502,7 @@ class SoundCloudAdapter(BasePlatformAdapter):
             return False
 
 class AppleMusicAdapter(BasePlatformAdapter):
-    """
-    Enterprise Apple Music API adapter using MusicKit.
+    """    Enterprise Apple Music API adapter using MusicKit.
     
     Supports:
     - MusicKit integration
@@ -535,8 +510,7 @@ class AppleMusicAdapter(BasePlatformAdapter):
     - Playlist management
     - Search and discovery
     - Subscription tracking
-    """
-    
+    """    
     def __init__(self, credentials: AdapterCredentials, redis_client=None):
         rate_config = RateLimitConfig(
             requests_per_second=20.0,
@@ -557,8 +531,7 @@ class AppleMusicAdapter(BasePlatformAdapter):
         )
     
     async def authenticate(self) -> bool:
-        """Authenticate with Apple Music API using JWT token."""
-        try:
+        """Authenticate with Apple Music API using JWT token."""        try:
             # Apple Music uses JWT tokens for authentication
             response = await self.make_request(
                 method="GET",
@@ -578,8 +551,7 @@ class AppleMusicAdapter(BasePlatformAdapter):
             return False
     
     async def search_tracks(self, query: str, limit: int = 20) -> List[Dict[str, Any]]:
-        """Search for tracks on Apple Music."""
-        try:
+        """Search for tracks on Apple Music."""        try:
             response = await self.make_request(
                 method="GET",
                 endpoint="catalog/us/search",
@@ -614,8 +586,7 @@ class AppleMusicAdapter(BasePlatformAdapter):
             return []
     
     async def health_check(self) -> bool:
-        """Perform Apple Music API health check."""
-        try:
+        """Perform Apple Music API health check."""        try:
             response = await self.make_request(
                 method="GET",
                 endpoint="catalog/us/charts",
@@ -627,8 +598,7 @@ class AppleMusicAdapter(BasePlatformAdapter):
             return False
 
 class MusicAdapterFactory:
-    """Factory for creating music streaming platform adapters."""
-    
+    """Factory for creating music streaming platform adapters."""    
     _adapters = {
         MusicPlatform.SPOTIFY: SpotifyAdapter,
         MusicPlatform.SOUNDCLOUD: SoundCloudAdapter,
@@ -638,8 +608,7 @@ class MusicAdapterFactory:
     
     @classmethod
     def create_adapter(cls, platform: MusicPlatform, credentials: AdapterCredentials, redis_client=None) -> BasePlatformAdapter:
-        """Create adapter for specified music platform."""
-        if platform not in cls._adapters:
+        """Create adapter for specified music platform."""        if platform not in cls._adapters:
             raise AdapterError(f"Unsupported music platform: {platform}")
         
         adapter_class = cls._adapters[platform]
@@ -647,8 +616,7 @@ class MusicAdapterFactory:
     
     @classmethod
     def get_supported_platforms(cls) -> List[MusicPlatform]:
-        """Get list of supported music platforms."""
-        return list(cls._adapters.keys())
+        """Get list of supported music platforms."""        return list(cls._adapters.keys())
 
 # Export all classes
 __all__ = [

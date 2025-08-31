@@ -40,8 +40,7 @@ Localisation: Allemagne
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-from .youtube_engine import (
+"""from .youtube_engine import (
     YouTubeCrawlerEngine, 
     YouTubeVideoData, 
     YouTubeChannelData,

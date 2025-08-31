@@ -14,8 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-from .prometheus_config import PrometheusConfig, MetricType, PrometheusMetric, PrometheusJobConfig
+"""from .prometheus_config import PrometheusConfig, MetricType, PrometheusMetric, PrometheusJobConfig
 from .grafana_config import (
     GrafanaConfig, DashboardType, VisualizationType, 
     GrafanaPanel, GrafanaDashboard

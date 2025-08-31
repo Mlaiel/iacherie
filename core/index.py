@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-IA-Influencer-Agent Core Index
+"""IA-Influencer-Agent Core Index
 ================================================================================
 Module: backend/core/index.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -18,9 +17,7 @@ Contact: mlaiel@live.de
 MISSION: Index central du système core IA-Influencer-Agent
 LOGIQUE MÉTIER: User (créateur) → Upload multi-format → IA protection → SEO pro → 
 Matching collaboration → Distribution multi-plateformes → Monétisation avancée
-"""
-
-__version__ = "3.0.0"
+"""__version__ = "3.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 
@@ -36,24 +33,21 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class SystemStatus(str, Enum):
-    """Status du système core"""
-    INITIALIZING = "initializing"
+    """Status du système core"""    INITIALIZING = "initializing"
     RUNNING = "running"
     DEGRADED = "degraded"
     FAILED = "failed"
     MAINTENANCE = "maintenance"
 
 class ModuleHealth(str, Enum):
-    """État de santé des modules"""
-    HEALTHY = "healthy"
+    """État de santé des modules"""    HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
     UNKNOWN = "unknown"
 
 @dataclass
 class CoreModuleInfo:
-    """Information sur un module core"""
-    name: str
+    """Information sur un module core"""    name: str
     version: str
     status: ModuleHealth
     description: str
@@ -62,13 +56,11 @@ class CoreModuleInfo:
     metrics: Dict[str, Any]
 
 class CoreSystemManager:
-    """
-    Gestionnaire central du système core IA-Influencer-Agent
+    """    Gestionnaire central du système core IA-Influencer-Agent
     
     Coordonne l'ensemble des 32 modules core pour le traitement multi-format,
     la protection de contenu, et la monétisation avancée.
-    """
-    
+    """    
     def __init__(self):
         self.status = SystemStatus.INITIALIZING
         self.modules: Dict[str, CoreModuleInfo] = {}
@@ -86,8 +78,7 @@ class CoreSystemManager:
         self._initialize_modules()
         
     def _initialize_modules(self):
-        """Initialize all core modules with their metadata"""
-        core_modules_config = {
+        """Initialize all core modules with their metadata"""        core_modules_config = {
             "adaptation": {
                 "description": "Système d'adaptation intelligent pour multi-plateformes",
                 "dependencies": ["algorithms", "intelligence"]
@@ -234,13 +225,11 @@ class CoreSystemManager:
         logger.info(f"🏭 Initialized {len(self.modules)} core modules")
     
     async def perform_health_check(self) -> Dict[str, Any]:
-        """
-        Effectue un contrôle de santé complet du système
+        """        Effectue un contrôle de santé complet du système
         
         Returns:
             Dict contenant l'état de santé détaillé
-        """
-        try:
+        """        try:
             health_results = {
                 "timestamp": datetime.now().isoformat(),
                 "system_status": self.status.value,
@@ -301,8 +290,7 @@ class CoreSystemManager:
             }
     
     async def _check_module_health(self, module_name: str) -> ModuleHealth:
-        """Check health of individual module"""
-        try:
+        """Check health of individual module"""        try:
             # Simulated health check - in production this would check actual module status
             if module_name in ["managers", "security", "algorithms"]:
                 return ModuleHealth.HEALTHY
@@ -316,8 +304,7 @@ class CoreSystemManager:
             return ModuleHealth.CRITICAL
     
     def get_system_status(self) -> Dict[str, Any]:
-        """Get current system status"""
-        return {
+        """Get current system status"""        return {
             "status": self.status.value,
             "uptime_seconds": (datetime.now() - self.start_time).total_seconds(),
             "start_time": self.start_time.isoformat(),
@@ -326,8 +313,7 @@ class CoreSystemManager:
         }
     
     def get_module_info(self, module_name: Optional[str] = None) -> Union[Dict[str, Any], CoreModuleInfo]:
-        """Get information about modules"""
-        if module_name:
+        """Get information about modules"""        if module_name:
             if module_name not in self.modules:
                 raise ValueError(f"Module '{module_name}' not found")
             return self.modules[module_name]
@@ -341,8 +327,7 @@ class CoreSystemManager:
         } for name, info in self.modules.items()}
     
     async def initialize_system(self) -> bool:
-        """Initialize complete core system"""
-        try:
+        """Initialize complete core system"""        try:
             logger.info("🚀 Initializing IA-Influencer-Agent Core System...")
             
             # Perform initial health check
@@ -363,8 +348,7 @@ class CoreSystemManager:
             return False
     
     def shutdown_system(self) -> bool:
-        """Graceful system shutdown"""
-        try:
+        """Graceful system shutdown"""        try:
             logger.info("🔄 Shutting down IA-Influencer-Agent Core System...")
             self.status = SystemStatus.MAINTENANCE
             # Here we would clean up resources, close connections, etc.
@@ -378,34 +362,27 @@ class CoreSystemManager:
 core_system_manager = CoreSystemManager()
 
 async def initialize_core_system() -> bool:
-    """
-    Initialize the complete IA-Influencer-Agent core system
+    """    Initialize the complete IA-Influencer-Agent core system
     
     Returns:
         bool: True if initialization successful
-    """
-    return await core_system_manager.initialize_system()
+    """    return await core_system_manager.initialize_system()
 
 def get_core_status() -> Dict[str, Any]:
-    """Get current core system status"""
-    return core_system_manager.get_system_status()
+    """Get current core system status"""    return core_system_manager.get_system_status()
 
 async def get_system_health() -> Dict[str, Any]:
-    """Get detailed system health report"""
-    return await core_system_manager.perform_health_check()
+    """Get detailed system health report"""    return await core_system_manager.perform_health_check()
 
 def get_module_info(module_name: Optional[str] = None) -> Union[Dict[str, Any], CoreModuleInfo]:
-    """Get information about core modules"""
-    return core_system_manager.get_module_info(module_name)
+    """Get information about core modules"""    return core_system_manager.get_module_info(module_name)
 
 def validate_core_installation() -> Dict[str, Any]:
-    """
-    Validate core system installation and module availability
+    """    Validate core system installation and module availability
     
     Returns:
         Dict with validation results
-    """
-    try:
+    """    try:
         validation_results = {
             "status": "success",
             "timestamp": datetime.now().isoformat(),
@@ -481,8 +458,7 @@ CORE_CAPABILITIES = {
 }
 
 def get_core_capabilities() -> Dict[str, Any]:
-    """Get complete core system capabilities"""
-    return CORE_CAPABILITIES.copy()
+    """Get complete core system capabilities"""    return CORE_CAPABILITIES.copy()
 
 # Export principal
 __all__ = [

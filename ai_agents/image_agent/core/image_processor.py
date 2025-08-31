@@ -1,5 +1,4 @@
-"""
-Image Processor - Advanced Image Processing Engine
+"""Image Processor - Advanced Image Processing Engine
 
 Industrial-grade image processing and analysis system providing comprehensive
 image manipulation, format conversion, and quality optimization capabilities.
@@ -11,9 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 from pathlib import Path
@@ -52,8 +49,7 @@ logger = logging.getLogger(__name__)
 
 
 class ProcessingProfile(Enum):
-    """Image processing quality profiles"""
-    FAST = "fast"
+    """Image processing quality profiles"""    FAST = "fast"
     BALANCED = "balanced" 
     QUALITY = "quality"
     PROFESSIONAL = "professional"
@@ -61,8 +57,7 @@ class ProcessingProfile(Enum):
 
 
 class FilterType(Enum):
-    """Available image filters"""
-    BLUR = "blur"
+    """Available image filters"""    BLUR = "blur"
     GAUSSIAN_BLUR = "gaussian_blur"
     MOTION_BLUR = "motion_blur"
     SHARPEN = "sharpen"
@@ -77,8 +72,7 @@ class FilterType(Enum):
 
 
 class ColorSpace(Enum):
-    """Supported color spaces"""
-    RGB = "rgb"
+    """Supported color spaces"""    RGB = "rgb"
     RGBA = "rgba" 
     GRAYSCALE = "grayscale"
     HSV = "hsv"
@@ -89,8 +83,7 @@ class ColorSpace(Enum):
 
 @dataclass
 class ProcessingParams:
-    """Image processing parameters"""
-    profile: ProcessingProfile = ProcessingProfile.BALANCED
+    """Image processing parameters"""    profile: ProcessingProfile = ProcessingProfile.BALANCED
     preserve_exif: bool = True
     auto_orient: bool = True
     color_correct: bool = True
@@ -106,8 +99,7 @@ class ProcessingParams:
 
 @dataclass
 class ProcessingResult:
-    """Processing operation result"""
-    success: bool
+    """Processing operation result"""    success: bool
     processing_time: float
     input_size: Tuple[int, int]
     output_size: Tuple[int, int]
@@ -118,8 +110,7 @@ class ProcessingResult:
 
 
 class ImageProcessor:
-    """
-    Advanced Image Processing Engine
+    """    Advanced Image Processing Engine
     
     Provides comprehensive image processing capabilities including:
     - Format conversion and optimization
@@ -127,8 +118,7 @@ class ImageProcessor:
     - Advanced filtering and effects
     - Color space manipulation
     - Batch processing operations
-    """
-    
+    """    
     def __init__(
         self,
         enable_gpu: bool = True,
@@ -136,16 +126,14 @@ class ImageProcessor:
         cache_size: int = 100,
         max_image_size: int = 8192
     ):
-        """
-        Initialize Image Processor
+        """        Initialize Image Processor
         
         Args:
             enable_gpu: Enable GPU acceleration when available
             default_profile: Default processing quality profile
             cache_size: Maximum number of cached results
             max_image_size: Maximum supported image dimension
-        """
-        self.enable_gpu = enable_gpu and torch.cuda.is_available()
+        """        self.enable_gpu = enable_gpu and torch.cuda.is_available()
         self.default_profile = default_profile
         self.cache_size = cache_size
         self.max_image_size = max_image_size
@@ -171,8 +159,7 @@ class ImageProcessor:
         params: Optional[ProcessingParams] = None,
         output_path: Optional[Union[str, Path]] = None
     ) -> ProcessingResult:
-        """
-        Process image with specified operations
+        """        Process image with specified operations
         
         Args:
             image_input: Input image (path, PIL Image, or numpy array)
@@ -182,8 +169,7 @@ class ImageProcessor:
             
         Returns:
             ProcessingResult with operation details and metrics
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         params = params or ProcessingParams()
         
         try:
@@ -248,8 +234,7 @@ class ImageProcessor:
             )
 
     async def _load_image(self, image_input: Union[str, Path, Image.Image, np.ndarray]) -> Image.Image:
-        """Load image from various input types"""
-        try:
+        """Load image from various input types"""        try:
             if isinstance(image_input, Image.Image):
                 image = image_input.copy()
                 
@@ -298,8 +283,7 @@ class ImageProcessor:
             raise ValidationError(f"Failed to load image: {str(e)}")
 
     async def _load_raw_image(self, raw_path: Path) -> Image.Image:
-        """Load and process RAW image files"""
-        try:
+        """Load and process RAW image files"""        try:
             with rawpy.imread(str(raw_path)) as raw:
                 # Apply basic RAW processing
                 rgb = raw.postprocess(
@@ -326,8 +310,7 @@ class ImageProcessor:
         operation: Dict[str, Any], 
         params: ProcessingParams
     ) -> Image.Image:
-        """Apply single processing operation to image"""
-        operation_type = operation.get('type', '').lower()
+        """Apply single processing operation to image"""        operation_type = operation.get('type', '').lower()
         operation_params = operation.get('params', {})
         
         operation_handlers = {
@@ -365,8 +348,7 @@ class ImageProcessor:
         operation_params: Dict[str, Any], 
         params: ProcessingParams
     ) -> Image.Image:
-        """Resize image with advanced resampling"""
-        try:
+        """Resize image with advanced resampling"""        try:
             width = operation_params.get('width')
             height = operation_params.get('height')
             method = operation_params.get('method', 'lanczos')
@@ -419,8 +401,7 @@ class ImageProcessor:
         operation_params: Dict[str, Any], 
         params: ProcessingParams
     ) -> Image.Image:
-        """Crop image with various crop modes"""
-        try:
+        """Crop image with various crop modes"""        try:
             crop_mode = operation_params.get('mode', 'box')
             
             if crop_mode == 'box':
@@ -456,8 +437,7 @@ class ImageProcessor:
             raise ProcessingError(f"Crop operation failed: {str(e)}")
 
     async def _smart_crop(self, image: Image.Image, params: Dict[str, Any]) -> Image.Image:
-        """Smart crop using edge detection and interest points"""
-        try:
+        """Smart crop using edge detection and interest points"""        try:
             target_width = params['width']
             target_height = params['height']
             
@@ -507,8 +487,7 @@ class ImageProcessor:
         operation_params: Dict[str, Any], 
         params: ProcessingParams
     ) -> Image.Image:
-        """Apply various image filters"""
-        try:
+        """Apply various image filters"""        try:
             filter_type = operation_params.get('type', 'blur')
             intensity = operation_params.get('intensity', 1.0)
             
@@ -570,8 +549,7 @@ class ImageProcessor:
             raise ProcessingError(f"Filter application failed: {str(e)}")
 
     async def _apply_motion_blur(self, image: Image.Image, params: Dict[str, Any]) -> Image.Image:
-        """Apply motion blur effect"""
-        try:
+        """Apply motion blur effect"""        try:
             angle = params.get('angle', 0)
             distance = params.get('distance', 10)
             
@@ -607,8 +585,7 @@ class ImageProcessor:
             raise ProcessingError(f"Motion blur failed: {str(e)}")
 
     async def _advanced_noise_reduction(self, image: Image.Image, params: Dict[str, Any]) -> Image.Image:
-        """Advanced noise reduction using multiple techniques"""
-        try:
+        """Advanced noise reduction using multiple techniques"""        try:
             strength = params.get('strength', 10)
             preserve_edges = params.get('preserve_edges', True)
             
@@ -633,8 +610,7 @@ class ImageProcessor:
             raise ProcessingError(f"Noise reduction failed: {str(e)}")
 
     async def _bilateral_filter(self, image: Image.Image, params: Dict[str, Any]) -> Image.Image:
-        """Apply bilateral filter for edge-preserving smoothing"""
-        try:
+        """Apply bilateral filter for edge-preserving smoothing"""        try:
             d = params.get('d', 9)
             sigma_color = params.get('sigma_color', 75)
             sigma_space = params.get('sigma_space', 75)
@@ -653,8 +629,7 @@ class ImageProcessor:
         operation_params: Dict[str, Any], 
         params: ProcessingParams
     ) -> Image.Image:
-        """Adjust image brightness"""
-        try:
+        """Adjust image brightness"""        try:
             factor = operation_params.get('factor', 1.0)
             enhancer = ImageEnhance.Brightness(image)
             return enhancer.enhance(factor)
@@ -668,8 +643,7 @@ class ImageProcessor:
         operation_params: Dict[str, Any], 
         params: ProcessingParams
     ) -> Image.Image:
-        """Adjust image contrast"""
-        try:
+        """Adjust image contrast"""        try:
             factor = operation_params.get('factor', 1.0)
             enhancer = ImageEnhance.Contrast(image)
             return enhancer.enhance(factor)
@@ -683,8 +657,7 @@ class ImageProcessor:
         operation_params: Dict[str, Any], 
         params: ProcessingParams
     ) -> Image.Image:
-        """Adjust color saturation"""
-        try:
+        """Adjust color saturation"""        try:
             factor = operation_params.get('factor', 1.0)
             enhancer = ImageEnhance.Color(image)
             return enhancer.enhance(factor)
@@ -697,8 +670,7 @@ class ImageProcessor:
         original: Image.Image, 
         processed: Image.Image
     ) -> Dict[str, float]:
-        """Calculate quality metrics comparing original and processed images"""
-        try:
+        """Calculate quality metrics comparing original and processed images"""        try:
             # Convert to numpy arrays
             orig_array = np.array(original)
             proc_array = np.array(processed)
@@ -746,8 +718,7 @@ class ImageProcessor:
             return {}
 
     def _calculate_ssim(self, img1: np.ndarray, img2: np.ndarray) -> float:
-        """Calculate Structural Similarity Index"""
-        try:
+        """Calculate Structural Similarity Index"""        try:
             from skimage.metrics import structural_similarity as ssim
             
             if len(img1.shape) == 3:
@@ -765,8 +736,7 @@ class ImageProcessor:
             return np.corrcoef(img1.flatten(), img2.flatten())[0, 1]
 
     def _calculate_sharpness(self, image: np.ndarray) -> float:
-        """Calculate image sharpness using Laplacian variance"""
-        try:
+        """Calculate image sharpness using Laplacian variance"""        try:
             if len(image.shape) == 3:
                 gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
             else:
@@ -783,8 +753,7 @@ class ImageProcessor:
         output_path: Union[str, Path], 
         params: ProcessingParams
     ) -> None:
-        """Save processed image with optimized settings"""
-        try:
+        """Save processed image with optimized settings"""        try:
             output_path = Path(output_path)
             output_path.parent.mkdir(parents=True, exist_ok=True)
             
@@ -827,15 +796,13 @@ class ImageProcessor:
 
     # Additional placeholder methods for complex operations
     async def _rotate_image(self, image: Image.Image, operation_params: Dict[str, Any], params: ProcessingParams) -> Image.Image:
-        """Rotate image by specified angle"""
-        angle = operation_params.get('angle', 0)
+        """Rotate image by specified angle"""        angle = operation_params.get('angle', 0)
         expand = operation_params.get('expand', False)
         fillcolor = operation_params.get('fillcolor', (255, 255, 255))
         return image.rotate(angle, expand=expand, fillcolor=fillcolor)
 
     async def _flip_image(self, image: Image.Image, operation_params: Dict[str, Any], params: ProcessingParams) -> Image.Image:
-        """Flip image horizontally or vertically"""
-        direction = operation_params.get('direction', 'horizontal')
+        """Flip image horizontally or vertically"""        direction = operation_params.get('direction', 'horizontal')
         if direction == 'horizontal':
             return image.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
         elif direction == 'vertical':
@@ -844,8 +811,7 @@ class ImageProcessor:
             raise ValidationError(f"Invalid flip direction: {direction}")
 
     async def _adjust_hue(self, image: Image.Image, operation_params: Dict[str, Any], params: ProcessingParams) -> Image.Image:
-        """Adjust image hue"""
-        # Convert to HSV, adjust hue, convert back
+        """Adjust image hue"""        # Convert to HSV, adjust hue, convert back
         hsv = image.convert('HSV')
         h, s, v = hsv.split()
         
@@ -858,8 +824,7 @@ class ImageProcessor:
         return Image.merge('HSV', (h, s, v)).convert('RGB')
 
     async def _adjust_gamma(self, image: Image.Image, operation_params: Dict[str, Any], params: ProcessingParams) -> Image.Image:
-        """Apply gamma correction"""
-        gamma = operation_params.get('gamma', 1.0)
+        """Apply gamma correction"""        gamma = operation_params.get('gamma', 1.0)
         
         # Create gamma correction lookup table
         inv_gamma = 1.0 / gamma
@@ -868,8 +833,7 @@ class ImageProcessor:
         return image.point(table * 3)  # Apply to RGB
 
     async def _adjust_color_balance(self, image: Image.Image, operation_params: Dict[str, Any], params: ProcessingParams) -> Image.Image:
-        """Adjust color balance"""
-        shadows = operation_params.get('shadows', (1.0, 1.0, 1.0))
+        """Adjust color balance"""        shadows = operation_params.get('shadows', (1.0, 1.0, 1.0))
         midtones = operation_params.get('midtones', (1.0, 1.0, 1.0))
         highlights = operation_params.get('highlights', (1.0, 1.0, 1.0))
         
@@ -890,8 +854,7 @@ class ImageProcessor:
         return Image.merge('RGB', (r, g, b))
 
     async def _sharpen_image(self, image: Image.Image, operation_params: Dict[str, Any], params: ProcessingParams) -> Image.Image:
-        """Apply sharpening filter"""
-        strength = operation_params.get('strength', 1.0)
+        """Apply sharpening filter"""        strength = operation_params.get('strength', 1.0)
         radius = operation_params.get('radius', 2.0)
         
         return image.filter(ImageFilter.UnsharpMask(
@@ -901,17 +864,14 @@ class ImageProcessor:
         ))
 
     async def _blur_image(self, image: Image.Image, operation_params: Dict[str, Any], params: ProcessingParams) -> Image.Image:
-        """Apply blur filter"""
-        radius = operation_params.get('radius', 2.0)
+        """Apply blur filter"""        radius = operation_params.get('radius', 2.0)
         return image.filter(ImageFilter.GaussianBlur(radius=radius))
 
     async def _reduce_noise(self, image: Image.Image, operation_params: Dict[str, Any], params: ProcessingParams) -> Image.Image:
-        """Reduce image noise"""
-        return await self._advanced_noise_reduction(image, operation_params)
+        """Reduce image noise"""        return await self._advanced_noise_reduction(image, operation_params)
 
     async def _enhance_image(self, image: Image.Image, operation_params: Dict[str, Any], params: ProcessingParams) -> Image.Image:
-        """General image enhancement"""
-        # Apply multiple enhancements based on analysis
+        """General image enhancement"""        # Apply multiple enhancements based on analysis
         enhanced = image.copy()
         
         # Auto-enhance contrast
@@ -929,8 +889,7 @@ class ImageProcessor:
         return enhanced
 
     async def _color_correct(self, image: Image.Image, operation_params: Dict[str, Any], params: ProcessingParams) -> Image.Image:
-        """Apply color correction"""
-        # Auto white balance and color correction
+        """Apply color correction"""        # Auto white balance and color correction
         img_array = np.array(image).astype(np.float32)
         
         # Simple gray world assumption
@@ -956,8 +915,7 @@ class ImageProcessor:
         return Image.fromarray(img_array.astype(np.uint8))
 
     async def _histogram_equalization(self, image: Image.Image, operation_params: Dict[str, Any], params: ProcessingParams) -> Image.Image:
-        """Apply histogram equalization"""
-        img_array = np.array(image)
+        """Apply histogram equalization"""        img_array = np.array(image)
         
         if len(img_array.shape) == 3:
             # Convert to LAB color space for better results
@@ -978,14 +936,12 @@ class ImageProcessor:
         return Image.fromarray(result)
 
     async def _local_adjustment(self, image: Image.Image, operation_params: Dict[str, Any], params: ProcessingParams) -> Image.Image:
-        """Apply local adjustments to specific regions"""
-        # Placeholder for advanced local adjustment algorithms
+        """Apply local adjustments to specific regions"""        # Placeholder for advanced local adjustment algorithms
         # This would involve mask creation and selective processing
         return image
 
     async def _apply_artistic_effect(self, image: Image.Image, operation_params: Dict[str, Any], params: ProcessingParams) -> Image.Image:
-        """Apply artistic effects"""
-        effect_type = operation_params.get('type', 'oil_painting')
+        """Apply artistic effects"""        effect_type = operation_params.get('type', 'oil_painting')
         
         if effect_type == 'oil_painting':
             # Simple oil painting effect using bilateral filter
@@ -998,8 +954,7 @@ class ImageProcessor:
         return image
 
     async def _add_watermark(self, image: Image.Image, operation_params: Dict[str, Any], params: ProcessingParams) -> Image.Image:
-        """Add watermark to image"""
-        watermark_text = operation_params.get('text', '© 2025')
+        """Add watermark to image"""        watermark_text = operation_params.get('text', '© 2025')
         position = operation_params.get('position', 'bottom_right')
         opacity = operation_params.get('opacity', 0.5)
         
@@ -1051,30 +1006,25 @@ class ImageProcessor:
 
 
 class ImageAnalyzer:
-    """
-    Advanced Image Analysis Engine
+    """    Advanced Image Analysis Engine
     
     Provides comprehensive image analysis capabilities including:
     - Quality assessment and scoring
     - Content analysis and object detection
     - Technical parameter analysis
     - Composition and aesthetic evaluation
-    """
-    
+    """    
     def __init__(self, enable_ai: bool = True):
-        """
-        Initialize Image Analyzer
+        """        Initialize Image Analyzer
         
         Args:
             enable_ai: Enable AI-powered analysis features
-        """
-        self.enable_ai = enable_ai
+        """        self.enable_ai = enable_ai
         
         logger.info(f"ImageAnalyzer initialized - AI enabled: {enable_ai}")
 
     async def analyze_comprehensive(self, image: Image.Image) -> Dict[str, Any]:
-        """Perform comprehensive image analysis"""
-        try:
+        """Perform comprehensive image analysis"""        try:
             results = {}
             
             # Basic technical analysis
@@ -1100,8 +1050,7 @@ class ImageAnalyzer:
             return {"error": str(e)}
 
     async def _analyze_technical(self, image: Image.Image) -> Dict[str, Any]:
-        """Analyze technical image parameters"""
-        img_array = np.array(image)
+        """Analyze technical image parameters"""        img_array = np.array(image)
         
         # Basic metrics
         width, height = image.size
@@ -1147,8 +1096,7 @@ class ImageAnalyzer:
         }
 
     async def _assess_quality(self, image: Image.Image) -> Dict[str, Any]:
-        """Assess overall image quality"""
-        img_array = np.array(image)
+        """Assess overall image quality"""        img_array = np.array(image)
         
         if len(img_array.shape) == 3:
             gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
@@ -1196,8 +1144,7 @@ class ImageAnalyzer:
         }
 
     async def _analyze_composition(self, image: Image.Image) -> Dict[str, Any]:
-        """Analyze image composition"""
-        img_array = np.array(image)
+        """Analyze image composition"""        img_array = np.array(image)
         gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY) if len(img_array.shape) == 3 else img_array
         
         height, width = gray.shape
@@ -1246,8 +1193,7 @@ class ImageAnalyzer:
         }
 
     async def _analyze_color(self, image: Image.Image) -> Dict[str, Any]:
-        """Analyze color characteristics"""
-        img_array = np.array(image)
+        """Analyze color characteristics"""        img_array = np.array(image)
         
         if len(img_array.shape) != 3:
             return {"error": "Color analysis requires RGB image"}
@@ -1295,8 +1241,7 @@ class ImageAnalyzer:
         }
 
     async def _analyze_content_ai(self, image: Image.Image) -> Dict[str, Any]:
-        """AI-powered content analysis (placeholder)"""
-        # This would integrate with actual AI models for:
+        """AI-powered content analysis (placeholder)"""        # This would integrate with actual AI models for:
         # - Object detection
         # - Scene classification
         # - Face detection

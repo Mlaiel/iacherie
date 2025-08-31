@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Performance Tracker Tests
+"""Performance Tracker Tests
 
 Comprehensive tests for performance tracking system that monitors
 content performance, engagement metrics, and optimization insights.
@@ -25,9 +21,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -49,17 +43,14 @@ from ai.content_generation.content_models import Platform, ContentType
 
 
 class TestPerformanceTracker:
-    """Test suite for PerformanceTracker"""
-    
+    """Test suite for PerformanceTracker"""    
     @pytest.fixture
     def performance_tracker(self):
-        """Create a performance tracker instance"""
-        return PerformanceTracker()
+        """Create a performance tracker instance"""        return PerformanceTracker()
     
     @pytest.fixture
     def sample_content_data(self):
-        """Create sample content performance data"""
-        return {
+        """Create sample content performance data"""        return {
             "content_id": "content_12345",
             "title": "10 AI Tools Every Content Creator Should Know",
             "platform": Platform.LINKEDIN,
@@ -105,8 +96,7 @@ class TestPerformanceTracker:
     
     @pytest.fixture
     def campaign_data(self):
-        """Create sample campaign performance data"""
-        return {
+        """Create sample campaign performance data"""        return {
             "campaign_id": "campaign_67890",
             "campaign_name": "AI Content Course Launch",
             "start_date": "2025-01-15T00:00:00Z",
@@ -128,8 +118,7 @@ class TestPerformanceTracker:
         }
     
     def test_performance_tracker_initialization(self, performance_tracker):
-        """Test performance tracker initialization"""
-        assert performance_tracker is not None
+        """Test performance tracker initialization"""        assert performance_tracker is not None
         assert hasattr(performance_tracker, 'metrics_data')
         assert hasattr(performance_tracker, 'performance_history')
         assert hasattr(performance_tracker, 'platform_benchmarks')
@@ -140,8 +129,7 @@ class TestPerformanceTracker:
     
     @pytest.mark.asyncio
     async def test_track_content_performance(self, performance_tracker, sample_content_data):
-        """Test content performance tracking"""
-        with patch.object(performance_tracker, '_collect_metrics') as mock_collect:
+        """Test content performance tracking"""        with patch.object(performance_tracker, '_collect_metrics') as mock_collect:
             mock_collect.return_value = {
                 "success": True,
                 "metrics_collected": {
@@ -208,8 +196,7 @@ class TestPerformanceTracker:
     
     @pytest.mark.asyncio
     async def test_real_time_monitoring(self, performance_tracker, sample_content_data):
-        """Test real-time performance monitoring"""
-        with patch.object(performance_tracker, '_monitor_real_time') as mock_monitor:
+        """Test real-time performance monitoring"""        with patch.object(performance_tracker, '_monitor_real_time') as mock_monitor:
             mock_monitor.return_value = {
                 "success": True,
                 "monitoring_session": {
@@ -267,8 +254,7 @@ class TestPerformanceTracker:
     
     @pytest.mark.asyncio
     async def test_campaign_analytics(self, performance_tracker, campaign_data):
-        """Test campaign performance analytics"""
-        with patch.object(performance_tracker, '_analyze_campaign') as mock_analyze:
+        """Test campaign performance analytics"""        with patch.object(performance_tracker, '_analyze_campaign') as mock_analyze:
             mock_analyze.return_value = {
                 "success": True,
                 "campaign_analysis": {
@@ -361,8 +347,7 @@ class TestPerformanceTracker:
     
     @pytest.mark.asyncio
     async def test_competitor_analysis(self, performance_tracker):
-        """Test competitor performance analysis"""
-        competitor_data = {
+        """Test competitor performance analysis"""        competitor_data = {
             "competitors": ["ai_content_pro", "content_ai_master", "smart_content_hub"],
             "analysis_period": "30_days",
             "metrics_to_compare": ["engagement_rate", "posting_frequency", "content_quality"]
@@ -441,8 +426,7 @@ class TestPerformanceTracker:
     
     @pytest.mark.asyncio
     async def test_performance_alerts(self, performance_tracker):
-        """Test performance alert system"""
-        with patch.object(performance_tracker, '_check_alerts') as mock_alerts:
+        """Test performance alert system"""        with patch.object(performance_tracker, '_check_alerts') as mock_alerts:
             mock_alerts.return_value = {
                 "success": True,
                 "active_alerts": [
@@ -513,8 +497,7 @@ class TestPerformanceTracker:
     
     @pytest.mark.asyncio
     async def test_generate_performance_report(self, performance_tracker, campaign_data):
-        """Test performance report generation"""
-        with patch.object(performance_tracker, '_generate_report') as mock_report:
+        """Test performance report generation"""        with patch.object(performance_tracker, '_generate_report') as mock_report:
             mock_report.return_value = {
                 "success": True,
                 "performance_report": {
@@ -606,24 +589,20 @@ class TestPerformanceTracker:
 
 
 class TestMetricsCollector:
-    """Test suite for MetricsCollector"""
-    
+    """Test suite for MetricsCollector"""    
     @pytest.fixture
     def metrics_collector(self):
-        """Create a metrics collector instance"""
-        return MetricsCollector()
+        """Create a metrics collector instance"""        return MetricsCollector()
     
     def test_metrics_collector_initialization(self, metrics_collector):
-        """Test metrics collector initialization"""
-        assert metrics_collector is not None
+        """Test metrics collector initialization"""        assert metrics_collector is not None
         assert hasattr(metrics_collector, 'platform_connectors')
         assert hasattr(metrics_collector, 'data_processors')
         assert hasattr(metrics_collector, 'metric_validators')
     
     @pytest.mark.asyncio
     async def test_collect_platform_metrics(self, metrics_collector):
-        """Test collecting metrics from different platforms"""
-        platforms = [Platform.LINKEDIN, Platform.FACEBOOK, Platform.INSTAGRAM]
+        """Test collecting metrics from different platforms"""        platforms = [Platform.LINKEDIN, Platform.FACEBOOK, Platform.INSTAGRAM]
         
         with patch.object(metrics_collector, '_collect_from_platforms') as mock_collect:
             mock_collect.return_value = {

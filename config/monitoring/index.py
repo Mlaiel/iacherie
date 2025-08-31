@@ -1,5 +1,4 @@
-"""
-Monitoring Module Index for IA-Influencer Agent Platform
+"""Monitoring Module Index for IA-Influencer Agent Platform
 =======================================================
 
 Central index file providing quick access to all monitoring configuration
@@ -15,9 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-from typing import Dict, List, Any, Optional
+"""from typing import Dict, List, Any, Optional
 import logging
 from datetime import datetime
 
@@ -42,23 +39,19 @@ from . import (
 
 
 class MonitoringModuleIndex:
-    """
-    Monitoring module index providing centralized access to all monitoring components
+    """    Monitoring module index providing centralized access to all monitoring components
     
     This class serves as a navigation hub for the comprehensive monitoring system
     of the IA-Influencer Agent Platform, providing easy access to all monitoring
     configurations and their capabilities.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize monitoring module index"""
-        self.modules = self._build_module_index()
+        """Initialize monitoring module index"""        self.modules = self._build_module_index()
         self.capabilities = self._build_capability_map()
         self.integration_points = self._build_integration_map()
     
     def _build_module_index(self) -> Dict[str, Dict[str, Any]]:
-        """Build comprehensive module index"""
-        return {
+        """Build comprehensive module index"""        return {
             "core_monitoring": {
                 "prometheus": {
                     "class": PrometheusConfig,
@@ -175,8 +168,7 @@ class MonitoringModuleIndex:
         }
     
     def _build_capability_map(self) -> Dict[str, List[str]]:
-        """Build capability mapping across modules"""
-        return {
+        """Build capability mapping across modules"""        return {
             "metrics_collection": ["prometheus", "metrics", "infrastructure_monitoring"],
             "alerting": ["prometheus", "grafana", "alerting"],
             "visualization": ["grafana", "realtime_analytics", "business_intelligence"],
@@ -190,8 +182,7 @@ class MonitoringModuleIndex:
         }
     
     def _build_integration_map(self) -> Dict[str, Dict[str, List[str]]]:
-        """Build integration mapping between modules"""
-        return {
+        """Build integration mapping between modules"""        return {
             "data_flow": {
                 "prometheus": ["grafana", "alerting", "observability_orchestration"],
                 "tracing": ["observability_orchestration", "performance_monitoring"],
@@ -215,8 +206,7 @@ class MonitoringModuleIndex:
         }
     
     def get_module_info(self, module_name: str) -> Optional[Dict[str, Any]]:
-        """Get detailed information about a specific module"""
-        for category, modules in self.modules.items():
+        """Get detailed information about a specific module"""        for category, modules in self.modules.items():
             if module_name in modules:
                 info = modules[module_name].copy()
                 info["category"] = category
@@ -224,27 +214,22 @@ class MonitoringModuleIndex:
         return None
     
     def get_modules_by_capability(self, capability: str) -> List[str]:
-        """Get modules that provide a specific capability"""
-        return self.capabilities.get(capability, [])
+        """Get modules that provide a specific capability"""        return self.capabilities.get(capability, [])
     
     def get_integration_dependencies(self, module_name: str) -> List[str]:
-        """Get integration dependencies for a module"""
-        return self.integration_points.get("dependency_graph", {}).get(module_name, [])
+        """Get integration dependencies for a module"""        return self.integration_points.get("dependency_graph", {}).get(module_name, [])
     
     def get_data_flow_targets(self, module_name: str) -> List[str]:
-        """Get data flow targets for a module"""
-        return self.integration_points.get("data_flow", {}).get(module_name, [])
+        """Get data flow targets for a module"""        return self.integration_points.get("data_flow", {}).get(module_name, [])
     
     def list_all_modules(self) -> Dict[str, List[str]]:
-        """List all modules organized by category"""
-        return {
+        """List all modules organized by category"""        return {
             category: list(modules.keys())
             for category, modules in self.modules.items()
         }
     
     def get_monitoring_stack_overview(self) -> Dict[str, Any]:
-        """Get comprehensive overview of the monitoring stack"""
-        total_modules = sum(len(modules) for modules in self.modules.values())
+        """Get comprehensive overview of the monitoring stack"""        total_modules = sum(len(modules) for modules in self.modules.values())
         total_capabilities = len(self.capabilities)
         
         return {
@@ -260,8 +245,7 @@ class MonitoringModuleIndex:
         }
     
     def generate_module_documentation(self) -> Dict[str, str]:
-        """Generate documentation for all modules"""
-        docs = {}
+        """Generate documentation for all modules"""        docs = {}
         
         for category, modules in self.modules.items():
             category_docs = []
@@ -281,8 +265,7 @@ class MonitoringModuleIndex:
         return docs
     
     def get_quick_setup_guide(self) -> Dict[str, List[str]]:
-        """Get quick setup guide for different monitoring scenarios"""
-        return {
+        """Get quick setup guide for different monitoring scenarios"""        return {
             "basic_monitoring": [
                 "prometheus", "grafana", "metrics", "alerting"
             ],

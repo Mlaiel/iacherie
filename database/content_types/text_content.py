@@ -1,5 +1,4 @@
-"""
-Text Content Management Module - Professional Text Content Processing System
+"""Text Content Management Module - Professional Text Content Processing System
 
 Module spécialisé pour la gestion, l'analyse et la protection du contenu textuel
 dans la plateforme IA Influencer Agent.
@@ -13,9 +12,7 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""
-
-from typing import Dict, List, Any, Optional, Union, Tuple
+"""from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
@@ -45,8 +42,7 @@ DetectorFactory.seed = 0
 logger = logging.getLogger(__name__)
 
 class TextFormat(Enum):
-    """Supported text formats with processing capabilities"""
-    TXT = {"ext": ".txt", "structured": False, "encoding": "utf-8", "metadata": False}
+    """Supported text formats with processing capabilities"""    TXT = {"ext": ".txt", "structured": False, "encoding": "utf-8", "metadata": False}
     MD = {"ext": ".md", "structured": True, "encoding": "utf-8", "metadata": True}
     PDF = {"ext": ".pdf", "structured": True, "encoding": "utf-8", "metadata": True}
     DOCX = {"ext": ".docx", "structured": True, "encoding": "utf-8", "metadata": True}
@@ -56,8 +52,7 @@ class TextFormat(Enum):
     ODT = {"ext": ".odt", "structured": True, "encoding": "utf-8", "metadata": True}
 
 class TextContentType(Enum):
-    """Text content classification types"""
-    ARTICLE = "article"
+    """Text content classification types"""    ARTICLE = "article"
     BLOG_POST = "blog_post"
     NEWS = "news"
     ACADEMIC_PAPER = "academic_paper"
@@ -77,8 +72,7 @@ class TextContentType(Enum):
     PRIVACY_POLICY = "privacy_policy"
 
 class TextGenre(Enum):
-    """Text genre classifications"""
-    INFORMATIVE = "informative"
+    """Text genre classifications"""    INFORMATIVE = "informative"
     PERSUASIVE = "persuasive"
     NARRATIVE = "narrative"
     DESCRIPTIVE = "descriptive"
@@ -89,8 +83,7 @@ class TextGenre(Enum):
 
 @dataclass
 class TextMetadata:
-    """Comprehensive text metadata structure"""
-    # Basic properties
+    """Comprehensive text metadata structure"""    # Basic properties
     character_count: int
     word_count: int
     sentence_count: int
@@ -163,8 +156,7 @@ class TextMetadata:
 
 @dataclass
 class TextFingerprint:
-    """Text fingerprint for content identification and protection"""
-    content_id: str
+    """Text fingerprint for content identification and protection"""    content_id: str
     primary_hash: str
     semantic_hash: str
     structural_hash: str
@@ -180,18 +172,14 @@ class TextFingerprint:
     quality_indicators: Dict[str, float] = field(default_factory=dict)
 
 class TextContentManager:
-    """
-    Professional text content management system with advanced NLP capabilities
-    """
-    
+    """    Professional text content management system with advanced NLP capabilities
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize the Text Content Manager
+        """        Initialize the Text Content Manager
         
         Args:
             config: Configuration dictionary for text processing
-        """
-        self.config = config or self._get_default_config()
+        """        self.config = config or self._get_default_config()
         self.logger = logging.getLogger(f"{__name__}.TextContentManager")
         self.supported_formats = [fmt.value["ext"] for fmt in TextFormat]
         
@@ -199,8 +187,7 @@ class TextContentManager:
         self._init_components()
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration for text processing"""
-        return {
+        """Get default configuration for text processing"""        return {
             "max_file_size_mb": 10,
             "max_text_length": 1000000,  # 1M characters
             "enable_fingerprinting": True,
@@ -217,8 +204,7 @@ class TextContentManager:
         }
     
     def _init_components(self):
-        """Initialize text processing components"""
-        self.logger.info("Initializing Text Content Manager components...")
+        """Initialize text processing components"""        self.logger.info("Initializing Text Content Manager components...")
         
         # Download required NLTK data
         try:
@@ -260,8 +246,7 @@ class TextContentManager:
         nlp_analysis: bool = True,
         quality_analysis: bool = True
     ) -> Dict[str, Any]:
-        """
-        Process text file with comprehensive analysis
+        """        Process text file with comprehensive analysis
         
         Args:
             file_path: Path to text file
@@ -272,8 +257,7 @@ class TextContentManager:
             
         Returns:
             Dict containing processed text information
-        """
-        try:
+        """        try:
             file_path = Path(file_path)
             self.logger.info(f"Processing text file: {file_path}")
             
@@ -327,8 +311,7 @@ class TextContentManager:
             raise
     
     async def _validate_text_file(self, file_path: Path) -> bool:
-        """Validate text file format and accessibility"""
-        try:
+        """Validate text file format and accessibility"""        try:
             # Check file existence and size
             if not file_path.exists():
                 return False
@@ -372,8 +355,7 @@ class TextContentManager:
             return False
     
     async def _extract_text_content(self, file_path: Path) -> str:
-        """Extract text content from various file formats"""
-        try:
+        """Extract text content from various file formats"""        try:
             file_ext = file_path.suffix.lower()
             
             if file_ext == '.pdf':
@@ -392,8 +374,7 @@ class TextContentManager:
             raise
     
     async def _extract_pdf_text(self, file_path: Path) -> str:
-        """Extract text from PDF file"""
-        try:
+        """Extract text from PDF file"""        try:
             text_content = ""
             with open(file_path, 'rb') as file:
                 pdf_reader = PyPDF2.PdfReader(file)
@@ -405,8 +386,7 @@ class TextContentManager:
             raise
     
     async def _extract_docx_text(self, file_path: Path) -> str:
-        """Extract text from DOCX file"""
-        try:
+        """Extract text from DOCX file"""        try:
             doc = docx.Document(file_path)
             text_content = ""
             for paragraph in doc.paragraphs:
@@ -417,8 +397,7 @@ class TextContentManager:
             raise
     
     async def _extract_html_text(self, file_path: Path) -> str:
-        """Extract text from HTML file"""
-        try:
+        """Extract text from HTML file"""        try:
             with open(file_path, 'r', encoding='utf-8') as file:
                 html_content = file.read()
             
@@ -442,8 +421,7 @@ class TextContentManager:
             raise
     
     async def _extract_markdown_text(self, file_path: Path) -> str:
-        """Extract text from Markdown file"""
-        try:
+        """Extract text from Markdown file"""        try:
             with open(file_path, 'r', encoding='utf-8') as file:
                 md_content = file.read()
             
@@ -458,8 +436,7 @@ class TextContentManager:
             raise
     
     async def _extract_plain_text(self, file_path: Path) -> str:
-        """Extract text from plain text file"""
-        try:
+        """Extract text from plain text file"""        try:
             # Try different encodings
             encodings = ['utf-8', 'utf-16', 'latin-1', 'cp1252']
             
@@ -479,8 +456,7 @@ class TextContentManager:
             raise
     
     async def _extract_text_metadata(self, file_path: Path, text_content: str) -> TextMetadata:
-        """Extract comprehensive text metadata"""
-        try:
+        """Extract comprehensive text metadata"""        try:
             # Basic text statistics
             char_count = len(text_content)
             words = word_tokenize(text_content.lower()) if self.lemmatizer else text_content.split()
@@ -561,8 +537,7 @@ class TextContentManager:
             raise
     
     async def _calculate_readability(self, text: str) -> float:
-        """Calculate readability score using various metrics"""
-        try:
+        """Calculate readability score using various metrics"""        try:
             # Use textstat library for readability metrics
             scores = []
             
@@ -589,8 +564,7 @@ class TextContentManager:
             return 0.5
     
     async def _extract_keywords(self, text: str) -> List[str]:
-        """Extract keywords from text using frequency analysis"""
-        try:
+        """Extract keywords from text using frequency analysis"""        try:
             if not self.lemmatizer:
                 # Simple word frequency if NLTK not available
                 words = text.lower().split()
@@ -618,8 +592,7 @@ class TextContentManager:
             return []
     
     async def _analyze_text_structure(self, text: str) -> Dict[str, Any]:
-        """Analyze text structure (headings, links, etc.)"""
-        try:
+        """Analyze text structure (headings, links, etc.)"""        try:
             structure = {
                 "headings": [],
                 "has_links": False,
@@ -655,8 +628,7 @@ class TextContentManager:
             return {"headings": [], "has_links": False, "sections": []}
     
     async def _extract_entities(self, text: str) -> List[Dict[str, Any]]:
-        """Extract named entities from text (simplified)"""
-        try:
+        """Extract named entities from text (simplified)"""        try:
             entities = []
             
             # Extract emails
@@ -711,8 +683,7 @@ class TextContentManager:
             return []
     
     async def _generate_text_fingerprint(self, text_content: str, content_id: str) -> TextFingerprint:
-        """Generate comprehensive text fingerprint for content protection"""
-        try:
+        """Generate comprehensive text fingerprint for content protection"""        try:
             # Primary hash (raw text)
             primary_hash = hashlib.sha256(text_content.encode('utf-8')).hexdigest()
             
@@ -777,8 +748,7 @@ class TextContentManager:
             raise
     
     def _normalize_text(self, text: str) -> str:
-        """Normalize text for semantic comparison"""
-        try:
+        """Normalize text for semantic comparison"""        try:
             # Convert to lowercase
             text = text.lower()
             
@@ -799,8 +769,7 @@ class TextContentManager:
             return text
     
     async def _generate_structural_hash(self, text: str) -> str:
-        """Generate hash based on text structure"""
-        try:
+        """Generate hash based on text structure"""        try:
             sentences = sent_tokenize(text) if self.lemmatizer else text.split('.')
             
             # Extract structural features
@@ -830,8 +799,7 @@ class TextContentManager:
             return hashlib.sha256(str(np.random.random()).encode()).hexdigest()[:32]
     
     async def _generate_stylistic_hash(self, text: str) -> str:
-        """Generate hash based on writing style"""
-        try:
+        """Generate hash based on writing style"""        try:
             words = text.split()
             
             # Stylistic features
@@ -857,8 +825,7 @@ class TextContentManager:
             return hashlib.sha256(str(np.random.random()).encode()).hexdigest()[:32]
     
     async def _generate_ngram_hash(self, text: str) -> str:
-        """Generate hash based on n-grams"""
-        try:
+        """Generate hash based on n-grams"""        try:
             words = text.lower().split()
             ngram_features = []
             
@@ -878,8 +845,7 @@ class TextContentManager:
             return hashlib.sha256(str(np.random.random()).encode()).hexdigest()[:32]
     
     async def _generate_sentence_hash(self, text: str) -> str:
-        """Generate hash based on sentence patterns"""
-        try:
+        """Generate hash based on sentence patterns"""        try:
             sentences = sent_tokenize(text) if self.lemmatizer else text.split('.')
             
             # Extract sentence features
@@ -908,8 +874,7 @@ class TextContentManager:
             return hashlib.sha256(str(np.random.random()).encode()).hexdigest()[:32]
     
     async def _generate_word_frequency_hash(self, text: str) -> str:
-        """Generate hash based on word frequency distribution"""
-        try:
+        """Generate hash based on word frequency distribution"""        try:
             words = text.lower().split()
             
             # Remove common stopwords
@@ -932,8 +897,7 @@ class TextContentManager:
             return hashlib.sha256(str(np.random.random()).encode()).hexdigest()[:32]
     
     async def _extract_linguistic_features(self, text: str) -> Optional[np.ndarray]:
-        """Extract linguistic features for advanced analysis"""
-        try:
+        """Extract linguistic features for advanced analysis"""        try:
             words = text.split()
             sentences = sent_tokenize(text) if self.lemmatizer else text.split('.')
             
@@ -982,8 +946,7 @@ class TextContentManager:
             return None
     
     async def _perform_nlp_analysis(self, text: str) -> Dict[str, Any]:
-        """Perform comprehensive NLP analysis"""
-        try:
+        """Perform comprehensive NLP analysis"""        try:
             nlp_results = {}
             
             # Topic modeling (simplified keyword-based)
@@ -1025,8 +988,7 @@ class TextContentManager:
             return {}
     
     def _calculate_complexity(self, text: str) -> float:
-        """Calculate text complexity score"""
-        try:
+        """Calculate text complexity score"""        try:
             words = text.split()
             sentences = text.split('.')
             
@@ -1052,8 +1014,7 @@ class TextContentManager:
             return 0.5
     
     def _calculate_formality(self, text: str) -> float:
-        """Calculate text formality score"""
-        try:
+        """Calculate text formality score"""        try:
             # Simple heuristic based on word choice and structure
             formal_indicators = [
                 len(re.findall(r'\b(however|therefore|furthermore|moreover|consequently)\b', text.lower())),
@@ -1083,8 +1044,7 @@ class TextContentManager:
             return 0.5
     
     async def _analyze_text_quality(self, text: str) -> Dict[str, float]:
-        """Analyze text quality metrics"""
-        try:
+        """Analyze text quality metrics"""        try:
             quality_metrics = {}
             
             words = text.split()
@@ -1147,8 +1107,7 @@ class TextContentManager:
         text: str, 
         metadata: Optional[TextMetadata] = None
     ) -> TextContentType:
-        """Classify text content type using linguistic and structural features"""
-        try:
+        """Classify text content type using linguistic and structural features"""        try:
             text_lower = text.lower()
             
             # Academic paper indicators
@@ -1205,8 +1164,7 @@ class TextContentManager:
             return TextContentType.ARTICLE  # Default fallback
     
     async def store_content(self, text_content: Dict[str, Any]) -> str:
-        """Store processed text content in database"""
-        try:
+        """Store processed text content in database"""        try:
             # Generate unique content ID
             content_id = hashlib.sha256(
                 f"{text_content['file_path']}{datetime.now().isoformat()}".encode()
@@ -1223,12 +1181,10 @@ class TextContentManager:
             raise
     
     def get_supported_formats(self) -> List[str]:
-        """Get list of supported text formats"""
-        return [fmt.value["ext"] for fmt in TextFormat]
+        """Get list of supported text formats"""        return [fmt.value["ext"] for fmt in TextFormat]
     
     def get_format_info(self, format_name: str) -> Optional[Dict[str, Any]]:
-        """Get information about a specific text format"""
-        for fmt in TextFormat:
+        """Get information about a specific text format"""        for fmt in TextFormat:
             if fmt.value["ext"] == f".{format_name.lower()}" or fmt.name.lower() == format_name.lower():
                 return fmt.value
         return None

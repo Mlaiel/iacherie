@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Test for Content Guidance Index Module - Enterprise Level Testing
+"""Test for Content Guidance Index Module - Enterprise Level Testing
 ================================================================
 
 Comprehensive testing suite for the content guidance orchestrator ensuring
@@ -25,9 +21,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use prohibited and legally prosecuted.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -48,14 +42,12 @@ from conversational.content_guidance.index import (
 
 @pytest.fixture
 def orchestrator():
-    """Create a content guidance orchestrator for testing."""
-    return ContentGuidanceOrchestrator()
+    """Create a content guidance orchestrator for testing."""    return ContentGuidanceOrchestrator()
 
 
 @pytest.fixture
 def sample_request():
-    """Create a sample content guidance request."""
-    return ContentGuidanceRequest(
+    """Create a sample content guidance request."""    return ContentGuidanceRequest(
         creator_id="creator_123",
         content_type="video",
         content_text="Sample content for testing",
@@ -67,8 +59,7 @@ def sample_request():
 
 @pytest.fixture
 def mock_optimization_result():
-    """Mock optimization result."""
-    mock_result = Mock()
+    """Mock optimization result."""    mock_result = Mock()
     mock_result.recommendations = ["Optimize title for SEO", "Add trending hashtags"]
     mock_result.quality_analysis = {"score": 0.85, "areas": ["grammar", "engagement"]}
     mock_result.seo_suggestions = ["Add keywords", "Improve meta description"]
@@ -83,12 +74,10 @@ def mock_optimization_result():
 
 
 class TestContentGuidanceOrchestrator:
-    """Test suite for Content Guidance Orchestrator."""
-    
+    """Test suite for Content Guidance Orchestrator."""    
     @pytest.mark.asyncio
     async def test_orchestrator_initialization(self, orchestrator):
-        """Test that orchestrator initializes all service engines correctly."""
-        assert orchestrator.content_optimizer is not None
+        """Test that orchestrator initializes all service engines correctly."""        assert orchestrator.content_optimizer is not None
         assert orchestrator.platform_engine is not None
         assert orchestrator.monetization_engine is not None
         assert orchestrator.trend_analyzer is not None
@@ -106,8 +95,7 @@ class TestContentGuidanceOrchestrator:
     
     @pytest.mark.asyncio
     async def test_comprehensive_guidance_workflow(self, orchestrator, sample_request):
-        """Test the complete comprehensive guidance workflow."""
-        
+        """Test the complete comprehensive guidance workflow."""        
         # Mock all service engines
         with patch.multiple(
             orchestrator,
@@ -165,8 +153,7 @@ class TestContentGuidanceOrchestrator:
     
     @pytest.mark.asyncio
     async def test_single_service_guidance(self, orchestrator, sample_request):
-        """Test single service guidance processing."""
-        
+        """Test single service guidance processing."""        
         with patch.object(orchestrator, 'content_optimizer', AsyncMock()) as mock_optimizer:
             # Mock safety check
             with patch.object(orchestrator, 'brand_safety_engine', AsyncMock()) as mock_safety:
@@ -206,8 +193,7 @@ class TestContentGuidanceOrchestrator:
     
     @pytest.mark.asyncio
     async def test_safety_check_failure(self, orchestrator, sample_request):
-        """Test workflow when content fails safety analysis."""
-        
+        """Test workflow when content fails safety analysis."""        
         with patch.object(orchestrator, 'brand_safety_engine', AsyncMock()) as mock_safety:
             # Mock safety failure
             mock_safety.analyze_text_content.return_value = Mock(
@@ -228,8 +214,7 @@ class TestContentGuidanceOrchestrator:
     
     @pytest.mark.asyncio
     async def test_service_error_handling(self, orchestrator, sample_request):
-        """Test error handling when individual services fail."""
-        
+        """Test error handling when individual services fail."""        
         with patch.object(orchestrator, 'content_optimizer', AsyncMock()) as mock_optimizer:
             with patch.object(orchestrator, 'brand_safety_engine', AsyncMock()) as mock_safety:
                 # Mock safety check to pass
@@ -254,8 +239,7 @@ class TestContentGuidanceOrchestrator:
     
     @pytest.mark.asyncio
     async def test_cross_service_optimization(self, orchestrator, sample_request):
-        """Test cross-service recommendation optimization."""
-        
+        """Test cross-service recommendation optimization."""        
         # Create mock results with potential conflicts
         mock_results = {
             ContentGuidanceServiceType.SCHEDULING: ContentGuidanceResponse(
@@ -299,8 +283,7 @@ class TestContentGuidanceOrchestrator:
     
     @pytest.mark.asyncio
     async def test_unified_action_plan_generation(self, orchestrator, sample_request):
-        """Test unified action plan generation across services."""
-        
+        """Test unified action plan generation across services."""        
         # Create mock results with various next steps
         mock_results = {
             ContentGuidanceServiceType.OPTIMIZATION: ContentGuidanceResponse(
@@ -339,8 +322,7 @@ class TestContentGuidanceOrchestrator:
         assert any("safety" in step.lower() for step in action_plan)
     
     def test_action_step_prioritization(self, orchestrator):
-        """Test action step prioritization logic."""
-        
+        """Test action step prioritization logic."""        
         steps = [
             "Low priority step",
             "High priority step", 
@@ -380,8 +362,7 @@ class TestContentGuidanceOrchestrator:
     
     @pytest.mark.asyncio
     async def test_content_optimization_processing(self, orchestrator, sample_request, mock_optimization_result):
-        """Test content optimization service processing."""
-        
+        """Test content optimization service processing."""        
         with patch.object(orchestrator, 'content_optimizer', AsyncMock()) as mock_optimizer:
             mock_optimizer.optimize_text_content.return_value = mock_optimization_result
             
@@ -405,12 +386,10 @@ class TestContentGuidanceOrchestrator:
 
 
 class TestConvenienceFunctions:
-    """Test suite for convenience functions."""
-    
+    """Test suite for convenience functions."""    
     @pytest.mark.asyncio
     async def test_get_comprehensive_content_guidance(self):
-        """Test comprehensive content guidance convenience function."""
-        
+        """Test comprehensive content guidance convenience function."""        
         with patch('backend.conversational.content_guidance.index.content_guidance_orchestrator') as mock_orchestrator:
             mock_orchestrator.process_comprehensive_guidance.return_value = {}
             
@@ -429,8 +408,7 @@ class TestConvenienceFunctions:
     
     @pytest.mark.asyncio 
     async def test_get_specific_content_guidance(self):
-        """Test specific content guidance convenience function."""
-        
+        """Test specific content guidance convenience function."""        
         with patch('backend.conversational.content_guidance.index.content_guidance_orchestrator') as mock_orchestrator:
             mock_response = ContentGuidanceResponse(
                 request_id="test",
@@ -460,11 +438,9 @@ class TestConvenienceFunctions:
 
 
 class TestDataStructures:
-    """Test suite for data structures."""
-    
+    """Test suite for data structures."""    
     def test_content_guidance_request_creation(self):
-        """Test ContentGuidanceRequest creation and validation."""
-        
+        """Test ContentGuidanceRequest creation and validation."""        
         request = ContentGuidanceRequest(
             creator_id="creator_123",
             content_type="video",
@@ -479,8 +455,7 @@ class TestDataStructures:
         assert request.content_id is None  # Optional field
     
     def test_content_guidance_response_creation(self):
-        """Test ContentGuidanceResponse creation and validation."""
-        
+        """Test ContentGuidanceResponse creation and validation."""        
         response = ContentGuidanceResponse(
             request_id="req_123",
             creator_id="creator_123",
@@ -504,8 +479,7 @@ class TestDataStructures:
         assert len(response.next_steps) == 2
     
     def test_service_type_enum(self):
-        """Test ContentGuidanceServiceType enum."""
-        
+        """Test ContentGuidanceServiceType enum."""        
         # Verify all expected service types exist
         expected_types = [
             "optimization", "platform_strategy", "monetization",
@@ -524,12 +498,10 @@ class TestDataStructures:
 
 
 class TestPerformanceAndReliability:
-    """Test suite for performance and reliability requirements."""
-    
+    """Test suite for performance and reliability requirements."""    
     @pytest.mark.asyncio
     async def test_concurrent_service_processing(self, orchestrator, sample_request):
-        """Test that services can be processed concurrently without conflicts."""
-        
+        """Test that services can be processed concurrently without conflicts."""        
         # Mock all services with realistic delays
         with patch.multiple(
             orchestrator,
@@ -580,8 +552,7 @@ class TestPerformanceAndReliability:
     
     @pytest.mark.asyncio
     async def test_memory_efficiency(self, orchestrator):
-        """Test memory efficiency with large numbers of requests."""
-        
+        """Test memory efficiency with large numbers of requests."""        
         # Create multiple requests
         requests = [
             ContentGuidanceRequest(
@@ -620,8 +591,7 @@ class TestPerformanceAndReliability:
                     assert isinstance(result, ContentGuidanceResponse)
     
     def test_error_recovery(self, orchestrator):
-        """Test error recovery and graceful degradation."""
-        
+        """Test error recovery and graceful degradation."""        
         # Test with invalid service type
         with pytest.raises(ValueError):
             # This should raise an error for unknown service type

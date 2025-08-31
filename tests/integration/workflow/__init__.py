@@ -1,5 +1,4 @@
-"""
-Workflow Integration Tests
+"""Workflow Integration Tests
 
 Tests for end-to-end workflows including:
 - Content upload to protection workflow

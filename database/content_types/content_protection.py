@@ -1,5 +1,4 @@
-"""
-Content Protection Module - Advanced Content Security & Anti-Piracy System
+"""Content Protection Module - Advanced Content Security & Anti-Piracy System
 
 Module spécialisé pour la protection complète du contenu multimédia selon la logique métier :
 User → Upload multi-format → IA protection → SEO → Matching → Distribution → Monétisation
@@ -20,9 +19,7 @@ Contact: mlaiel@live.de
 - Surveillance web temps réel
 - DMCA automatisé
 - Monétisation des violations détectées
-"""
-
-from typing import Dict, List, Any, Optional, Union, Tuple, Set
+"""from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from enum import Enum
@@ -48,16 +45,14 @@ from .multimedia_content import MultimediaContentManager, MultimediaFingerprint
 logger = logging.getLogger(__name__)
 
 class ThreatLevel(Enum):
-    """Security threat classification levels"""
-    NONE = "none"
+    """Security threat classification levels"""    NONE = "none"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 class ProtectionRule(Enum):
-    """Content protection rule types"""
-    COPYRIGHT_DETECTION = "copyright_detection"
+    """Content protection rule types"""    COPYRIGHT_DETECTION = "copyright_detection"
     WATERMARK_VERIFICATION = "watermark_verification"
     DUPLICATE_DETECTION = "duplicate_detection"
     UNAUTHORIZED_ACCESS = "unauthorized_access"
@@ -71,8 +66,7 @@ class ProtectionRule(Enum):
     MALWARE_SCANNING = "malware_scanning"
 
 class ViolationType(Enum):
-    """Types of content protection violations"""
-    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
+    """Types of content protection violations"""    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     UNAUTHORIZED_COPY = "unauthorized_copy"
     CONTENT_PIRACY = "content_piracy"
     WATERMARK_REMOVAL = "watermark_removal"
@@ -84,16 +78,14 @@ class ViolationType(Enum):
     PRIVACY_VIOLATION = "privacy_violation"
 
 class MonitoringStatus(Enum):
-    """Content monitoring status"""
-    ACTIVE = "active"
+    """Content monitoring status"""    ACTIVE = "active"
     PAUSED = "paused"
     SUSPENDED = "suspended"
     TERMINATED = "terminated"
 
 @dataclass
 class ProtectionPolicy:
-    """Content protection policy configuration"""
-    policy_id: str
+    """Content protection policy configuration"""    policy_id: str
     name: str
     description: str
     enabled_rules: List[ProtectionRule]
@@ -110,8 +102,7 @@ class ProtectionPolicy:
 
 @dataclass
 class ContentViolation:
-    """Content protection violation record"""
-    violation_id: str
+    """Content protection violation record"""    violation_id: str
     content_id: str
     violation_type: ViolationType
     threat_level: ThreatLevel
@@ -132,8 +123,7 @@ class ContentViolation:
 
 @dataclass
 class ProtectionMetrics:
-    """Protection system metrics and statistics"""
-    total_scans: int = 0
+    """Protection system metrics and statistics"""    total_scans: int = 0
     violations_detected: int = 0
     false_positives: int = 0
     resolved_violations: int = 0
@@ -148,8 +138,7 @@ class ProtectionMetrics:
 
 @dataclass
 class MonitoringTarget:
-    """Content monitoring target configuration"""
-    target_id: str
+    """Content monitoring target configuration"""    target_id: str
     content_id: str
     fingerprint_hash: str
     monitoring_platforms: List[str]
@@ -164,16 +153,14 @@ class MonitoringTarget:
     custom_parameters: Dict[str, Any] = field(default_factory=dict)
 
 class ContentScanner(ABC):
-    """Abstract base class for content scanners"""
-    
+    """Abstract base class for content scanners"""    
     @abstractmethod
     async def scan_content(
         self, 
         content_data: Dict[str, Any], 
         policy: ProtectionPolicy
     ) -> List[ContentViolation]:
-        """Scan content for violations"""
-        pass
+        """Scan content for violations"""        pass
     
     @abstractmethod
     async def scan_url(
@@ -182,12 +169,10 @@ class ContentScanner(ABC):
         reference_fingerprint: Dict[str, Any],
         policy: ProtectionPolicy
     ) -> List[ContentViolation]:
-        """Scan remote URL for violations"""
-        pass
+        """Scan remote URL for violations"""        pass
 
 class DuplicateContentScanner(ContentScanner):
-    """Scanner for detecting duplicate and unauthorized copies"""
-    
+    """Scanner for detecting duplicate and unauthorized copies"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.DuplicateContentScanner")
         self.similarity_threshold = 0.85
@@ -197,8 +182,7 @@ class DuplicateContentScanner(ContentScanner):
         content_data: Dict[str, Any], 
         policy: ProtectionPolicy
     ) -> List[ContentViolation]:
-        """Scan for duplicate content"""
-        violations = []
+        """Scan for duplicate content"""        violations = []
         
         try:
             content_type = content_data.get('content_type')
@@ -242,8 +226,7 @@ class DuplicateContentScanner(ContentScanner):
         reference_fingerprint: Dict[str, Any],
         policy: ProtectionPolicy
     ) -> List[ContentViolation]:
-        """Scan specific URL for duplicate content"""
-        violations = []
+        """Scan specific URL for duplicate content"""        violations = []
         
         try:
             # Download and analyze content from URL
@@ -283,8 +266,7 @@ class DuplicateContentScanner(ContentScanner):
         fingerprint: Dict[str, Any], 
         content_type: str
     ) -> List[Dict[str, Any]]:
-        """Search for similar content across platforms"""
-        # This would integrate with various platforms' APIs
+        """Search for similar content across platforms"""        # This would integrate with various platforms' APIs
         # For demonstration, returning mock results
         return [
             {
@@ -296,8 +278,7 @@ class DuplicateContentScanner(ContentScanner):
         ]
     
     async def _extract_url_fingerprint(self, url: str) -> Optional[Dict[str, Any]]:
-        """Extract fingerprint from content at URL"""
-        try:
+        """Extract fingerprint from content at URL"""        try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url, timeout=30) as response:
                     if response.status == 200:
@@ -321,8 +302,7 @@ class DuplicateContentScanner(ContentScanner):
         fp1: Dict[str, Any], 
         fp2: Dict[str, Any]
     ) -> float:
-        """Compare two fingerprints and return similarity score"""
-        try:
+        """Compare two fingerprints and return similarity score"""        try:
             # Simple hash comparison (would be more sophisticated in reality)
             if fp1.get('content_hash') == fp2.get('content_hash'):
                 return 1.0
@@ -341,8 +321,7 @@ class DuplicateContentScanner(ContentScanner):
             return 0.0
     
     def _assess_threat_level(self, similarity_score: float) -> ThreatLevel:
-        """Assess threat level based on similarity score"""
-        if similarity_score >= 0.95:
+        """Assess threat level based on similarity score"""        if similarity_score >= 0.95:
             return ThreatLevel.CRITICAL
         elif similarity_score >= 0.90:
             return ThreatLevel.HIGH
@@ -352,8 +331,7 @@ class DuplicateContentScanner(ContentScanner):
             return ThreatLevel.LOW
 
 class WatermarkScanner(ContentScanner):
-    """Scanner for detecting watermark tampering"""
-    
+    """Scanner for detecting watermark tampering"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.WatermarkScanner")
         
@@ -362,8 +340,7 @@ class WatermarkScanner(ContentScanner):
         content_data: Dict[str, Any], 
         policy: ProtectionPolicy
     ) -> List[ContentViolation]:
-        """Scan for watermark violations"""
-        violations = []
+        """Scan for watermark violations"""        violations = []
         
         try:
             # Check if content should have watermark
@@ -400,27 +377,22 @@ class WatermarkScanner(ContentScanner):
         reference_fingerprint: Dict[str, Any],
         policy: ProtectionPolicy
     ) -> List[ContentViolation]:
-        """Scan URL for watermark violations"""
-        # Similar implementation to scan_content but for remote URL
+        """Scan URL for watermark violations"""        # Similar implementation to scan_content but for remote URL
         return []
     
     async def _detect_watermark(self, content_data: Dict[str, Any]) -> bool:
-        """Detect presence of watermark in content"""
-        # This would use actual watermark detection algorithms
+        """Detect presence of watermark in content"""        # This would use actual watermark detection algorithms
         # For demonstration, returning mock result
         return content_data.get('has_watermark', False)
 
 class ContentProtectionEngine:
-    """Main content protection engine"""
-    
+    """Main content protection engine"""    
     def __init__(self, config: Dict[str, Any] = None):
-        """
-        Initialize content protection engine
+        """        Initialize content protection engine
         
         Args:
             config: Configuration for protection engine
-        """
-        self.config = config or self._get_default_config()
+        """        self.config = config or self._get_default_config()
         self.logger = logging.getLogger(f"{__name__}.ContentProtectionEngine")
         
         # Initialize scanners
@@ -445,8 +417,7 @@ class ContentProtectionEngine:
         self._init_components()
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration for protection engine"""
-        return {
+        """Get default configuration for protection engine"""        return {
             "monitoring_enabled": True,
             "real_time_scanning": True,
             "automated_responses": True,
@@ -470,8 +441,7 @@ class ContentProtectionEngine:
         }
     
     def _init_components(self):
-        """Initialize protection engine components"""
-        self.logger.info("Initializing Content Protection Engine...")
+        """Initialize protection engine components"""        self.logger.info("Initializing Content Protection Engine...")
         
         # Create default protection policy
         default_policy = ProtectionPolicy(
@@ -514,8 +484,7 @@ class ContentProtectionEngine:
         content_data: Dict[str, Any],
         policy_id: str = "default"
     ) -> Dict[str, Any]:
-        """
-        Protect content by scanning for violations and setting up monitoring
+        """        Protect content by scanning for violations and setting up monitoring
         
         Args:
             content_data: Content information and metadata
@@ -523,8 +492,7 @@ class ContentProtectionEngine:
             
         Returns:
             Protection results and recommendations
-        """
-        try:
+        """        try:
             self.logger.info(f"Starting content protection for: {content_data.get('content_id')}")
             
             # Get protection policy
@@ -580,8 +548,7 @@ class ContentProtectionEngine:
         content_data: Dict[str, Any],
         policy: ProtectionPolicy
     ) -> List[ContentViolation]:
-        """Perform comprehensive content scanning"""
-        all_violations = []
+        """Perform comprehensive content scanning"""        all_violations = []
         
         # Run enabled scanners based on policy
         for rule in policy.enabled_rules:
@@ -606,8 +573,7 @@ class ContentProtectionEngine:
         content_data: Dict[str, Any],
         policy: ProtectionPolicy
     ) -> Optional[MonitoringTarget]:
-        """Set up continuous monitoring for content"""
-        try:
+        """Set up continuous monitoring for content"""        try:
             fingerprint = content_data.get('fingerprint')
             if not fingerprint:
                 return None
@@ -637,8 +603,7 @@ class ContentProtectionEngine:
             return None
     
     def _generate_search_keywords(self, content_data: Dict[str, Any]) -> List[str]:
-        """Generate search keywords for content monitoring"""
-        keywords = []
+        """Generate search keywords for content monitoring"""        keywords = []
         
         # Add title and description keywords
         metadata = content_data.get('metadata', {})
@@ -670,8 +635,7 @@ class ContentProtectionEngine:
         violations: List[ContentViolation],
         policy: ProtectionPolicy
     ) -> List[Dict[str, str]]:
-        """Generate protection recommendations"""
-        recommendations = []
+        """Generate protection recommendations"""        recommendations = []
         
         # Analyze violations and suggest actions
         if violations:
@@ -715,8 +679,7 @@ class ContentProtectionEngine:
         return recommendations
     
     def _update_metrics(self, violations: List[ContentViolation]):
-        """Update protection metrics"""
-        self.metrics.total_scans += 1
+        """Update protection metrics"""        self.metrics.total_scans += 1
         self.metrics.violations_detected += len(violations)
         
         for violation in violations:
@@ -728,8 +691,7 @@ class ContentProtectionEngine:
         self.metrics.last_updated = datetime.now(timezone.utc)
     
     async def scan_monitoring_targets(self) -> Dict[str, Any]:
-        """Scan all active monitoring targets"""
-        scan_results = {
+        """Scan all active monitoring targets"""        scan_results = {
             "targets_scanned": 0,
             "violations_found": 0,
             "errors": 0,
@@ -764,8 +726,7 @@ class ContentProtectionEngine:
         return scan_results
     
     async def _scan_monitoring_target(self, target: MonitoringTarget) -> List[ContentViolation]:
-        """Scan a specific monitoring target"""
-        violations = []
+        """Scan a specific monitoring target"""        violations = []
         
         # Get reference fingerprint (would be loaded from database)
         reference_fingerprint = {
@@ -796,8 +757,7 @@ class ContentProtectionEngine:
         reference_fingerprint: Dict[str, Any],
         policy: ProtectionPolicy
     ) -> List[ContentViolation]:
-        """Scan a specific platform for violations"""
-        violations = []
+        """Scan a specific platform for violations"""        violations = []
         
         try:
             # Search platform for content matching keywords
@@ -830,8 +790,7 @@ class ContentProtectionEngine:
         platform: str, 
         keywords: List[str]
     ) -> List[Dict[str, Any]]:
-        """Search platform for content matching keywords"""
-        # This would integrate with platform APIs
+        """Search platform for content matching keywords"""        # This would integrate with platform APIs
         # For demonstration, returning mock results
         search_query = " ".join(keywords[:3])
         
@@ -845,8 +804,7 @@ class ContentProtectionEngine:
         ]
     
     def _violation_to_dict(self, violation: ContentViolation) -> Dict[str, Any]:
-        """Convert violation object to dictionary"""
-        return {
+        """Convert violation object to dictionary"""        return {
             'violation_id': violation.violation_id,
             'content_id': violation.content_id,
             'violation_type': violation.violation_type.value,
@@ -868,8 +826,7 @@ class ContentProtectionEngine:
         resolution_action: str,
         reviewer_notes: Optional[str] = None
     ) -> bool:
-        """Resolve a content violation"""
-        try:
+        """Resolve a content violation"""        try:
             if violation_id not in self.violations:
                 raise ValueError(f"Violation not found: {violation_id}")
             
@@ -890,8 +847,7 @@ class ContentProtectionEngine:
             return False
     
     async def mark_false_positive(self, violation_id: str, reviewer_notes: Optional[str] = None) -> bool:
-        """Mark a violation as false positive"""
-        try:
+        """Mark a violation as false positive"""        try:
             if violation_id not in self.violations:
                 raise ValueError(f"Violation not found: {violation_id}")
             
@@ -912,8 +868,7 @@ class ContentProtectionEngine:
             return False
     
     def get_protection_status(self, content_id: str) -> Dict[str, Any]:
-        """Get protection status for specific content"""
-        # Find monitoring target
+        """Get protection status for specific content"""        # Find monitoring target
         monitoring_target = None
         for target in self.monitoring_targets.values():
             if target.content_id == content_id:
@@ -944,8 +899,7 @@ class ContentProtectionEngine:
         }
     
     def get_comprehensive_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive protection metrics"""
-        # Update pending violations count
+        """Get comprehensive protection metrics"""        # Update pending violations count
         self.metrics.pending_violations = len([
             v for v in self.violations.values() 
             if v.review_status == "pending"
@@ -964,8 +918,7 @@ class ContentProtectionEngine:
         }
     
     async def create_protection_policy(self, policy_data: Dict[str, Any]) -> str:
-        """Create a new protection policy"""
-        try:
+        """Create a new protection policy"""        try:
             policy = ProtectionPolicy(
                 policy_id=policy_data.get('policy_id', str(uuid.uuid4())),
                 name=policy_data['name'],
@@ -988,8 +941,7 @@ class ContentProtectionEngine:
             raise
     
     def get_protection_policies(self) -> Dict[str, Dict[str, Any]]:
-        """Get all protection policies"""
-        return {
+        """Get all protection policies"""        return {
             policy_id: {
                 'name': policy.name,
                 'description': policy.description,

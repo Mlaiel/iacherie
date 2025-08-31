@@ -1,5 +1,4 @@
-"""
-Database Schema Definitions
+"""Database Schema Definitions
 Enterprise database schema for IA Influencer Agent platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,9 +9,7 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""
-
-from sqlalchemy import (
+"""from sqlalchemy import (
     Column, Integer, String, Text, Boolean, DateTime, Float, 
     BigInteger, JSON, LargeBinary, ForeignKey, Index, 
     UniqueConstraint, CheckConstraint, Enum as SQLEnum
@@ -60,8 +57,7 @@ class RevenueStatus(Enum):
 
 # Core platform tables
 class User(Base):
-    """User accounts and profiles"""
-    __tablename__ = 'users'
+    """User accounts and profiles"""    __tablename__ = 'users'
     
     id = Column(Integer, primary_key=True)
     uuid = Column(UUID(as_uuid=True), default=uuid.uuid4, unique=True, nullable=False)
@@ -103,8 +99,7 @@ class User(Base):
 
 
 class ContentFingerprint(Base):
-    """Content fingerprinting and protection records"""
-    __tablename__ = 'content_fingerprints'
+    """Content fingerprinting and protection records"""    __tablename__ = 'content_fingerprints'
     
     id = Column(Integer, primary_key=True)
     uuid = Column(UUID(as_uuid=True), default=uuid.uuid4, unique=True, nullable=False)
@@ -167,8 +162,7 @@ class ContentFingerprint(Base):
 
 
 class ProtectionAlert(Base):
-    """Content protection violation alerts"""
-    __tablename__ = 'protection_alerts'
+    """Content protection violation alerts"""    __tablename__ = 'protection_alerts'
     
     id = Column(Integer, primary_key=True)
     uuid = Column(UUID(as_uuid=True), default=uuid.uuid4, unique=True, nullable=False)
@@ -225,8 +219,7 @@ class ProtectionAlert(Base):
 
 
 class CrawlerJob(Base):
-    """Web crawler job tracking"""
-    __tablename__ = 'crawler_jobs'
+    """Web crawler job tracking"""    __tablename__ = 'crawler_jobs'
     
     id = Column(Integer, primary_key=True)
     uuid = Column(UUID(as_uuid=True), default=uuid.uuid4, unique=True, nullable=False)
@@ -274,8 +267,7 @@ class CrawlerJob(Base):
 
 
 class RevenueRecord(Base):
-    """Content monetization and revenue tracking"""
-    __tablename__ = 'revenue_records'
+    """Content monetization and revenue tracking"""    __tablename__ = 'revenue_records'
     
     id = Column(Integer, primary_key=True)
     uuid = Column(UUID(as_uuid=True), default=uuid.uuid4, unique=True, nullable=False)
@@ -338,8 +330,7 @@ class RevenueRecord(Base):
 
 
 class PlatformIntegration(Base):
-    """Platform API integrations and credentials"""
-    __tablename__ = 'platform_integrations'
+    """Platform API integrations and credentials"""    __tablename__ = 'platform_integrations'
     
     id = Column(Integer, primary_key=True)
     uuid = Column(UUID(as_uuid=True), default=uuid.uuid4, unique=True, nullable=False)
@@ -395,8 +386,7 @@ class PlatformIntegration(Base):
 
 
 class AuditLog(Base):
-    """System audit and activity logging"""
-    __tablename__ = 'audit_logs'
+    """System audit and activity logging"""    __tablename__ = 'audit_logs'
     
     id = Column(Integer, primary_key=True)
     uuid = Column(UUID(as_uuid=True), default=uuid.uuid4, unique=True, nullable=False)
@@ -447,8 +437,7 @@ class AuditLog(Base):
 
 
 class SystemConfiguration(Base):
-    """System-wide configuration settings"""
-    __tablename__ = 'system_configuration'
+    """System-wide configuration settings"""    __tablename__ = 'system_configuration'
     
     id = Column(Integer, primary_key=True)
     
@@ -484,8 +473,7 @@ class SystemConfiguration(Base):
 
 # Migration tracking table (handled by MigrationRunner)
 class SchemaMigration(Base):
-    """Database schema migration tracking"""
-    __tablename__ = 'schema_migrations'
+    """Database schema migration tracking"""    __tablename__ = 'schema_migrations'
     
     id = Column(Integer, primary_key=True)
     version = Column(String(50), unique=True, nullable=False)
@@ -507,13 +495,11 @@ class SchemaMigration(Base):
 
 # Function to create all tables
 def create_all_tables(engine):
-    """Create all database tables"""
-    Base.metadata.create_all(engine)
+    """Create all database tables"""    Base.metadata.create_all(engine)
 
 
 class ContentLicensing(Base):
-    """Content licensing and rights management"""
-    __tablename__ = 'content_licensing'
+    """Content licensing and rights management"""    __tablename__ = 'content_licensing'
     
     id = Column(Integer, primary_key=True)
     uuid = Column(UUID(as_uuid=True), default=uuid.uuid4, unique=True, nullable=False)
@@ -584,8 +570,7 @@ class ContentLicensing(Base):
 
 
 class CollaborationRequest(Base):
-    """Collaboration requests between creators"""
-    __tablename__ = 'collaboration_requests'
+    """Collaboration requests between creators"""    __tablename__ = 'collaboration_requests'
     
     id = Column(Integer, primary_key=True)
     uuid = Column(UUID(as_uuid=True), default=uuid.uuid4, unique=True, nullable=False)
@@ -659,8 +644,7 @@ class CollaborationRequest(Base):
 
 
 class AIRecommendation(Base):
-    """AI-generated recommendations for users"""
-    __tablename__ = 'ai_recommendations'
+    """AI-generated recommendations for users"""    __tablename__ = 'ai_recommendations'
     
     id = Column(Integer, primary_key=True)
     uuid = Column(UUID(as_uuid=True), default=uuid.uuid4, unique=True, nullable=False)
@@ -730,8 +714,7 @@ class AIRecommendation(Base):
 
 
 class VectorSimilarity(Base):
-    """Vector similarity search results for content matching"""
-    __tablename__ = 'vector_similarities'
+    """Vector similarity search results for content matching"""    __tablename__ = 'vector_similarities'
     
     id = Column(Integer, primary_key=True)
     
@@ -785,8 +768,7 @@ class VectorSimilarity(Base):
 
 
 class ContentAnalytics(Base):
-    """Advanced analytics and insights for content performance"""
-    __tablename__ = 'content_analytics'
+    """Advanced analytics and insights for content performance"""    __tablename__ = 'content_analytics'
     
     id = Column(Integer, primary_key=True)
     uuid = Column(UUID(as_uuid=True), default=uuid.uuid4, unique=True, nullable=False)
@@ -863,8 +845,7 @@ class ContentAnalytics(Base):
 
 
 class TakedownRequest(Base):
-    """DMCA and copyright takedown requests"""
-    __tablename__ = 'takedown_requests'
+    """DMCA and copyright takedown requests"""    __tablename__ = 'takedown_requests'
     
     id = Column(Integer, primary_key=True)
     uuid = Column(UUID(as_uuid=True), default=uuid.uuid4, unique=True, nullable=False)
@@ -946,8 +927,7 @@ class TakedownRequest(Base):
 
 
 class DataRetentionPolicy(Base):
-    """Data retention and deletion policies"""
-    __tablename__ = 'data_retention_policies'
+    """Data retention and deletion policies"""    __tablename__ = 'data_retention_policies'
     
     id = Column(Integer, primary_key=True)
     uuid = Column(UUID(as_uuid=True), default=uuid.uuid4, unique=True, nullable=False)
@@ -998,8 +978,7 @@ class DataRetentionPolicy(Base):
 
 
 class ConsentRecord(Base):
-    """User consent records for GDPR compliance"""
-    __tablename__ = 'consent_records'
+    """User consent records for GDPR compliance"""    __tablename__ = 'consent_records'
     
     id = Column(Integer, primary_key=True)
     uuid = Column(UUID(as_uuid=True), default=uuid.uuid4, unique=True, nullable=False)
@@ -1065,11 +1044,9 @@ class ConsentRecord(Base):
 
 # Function to create all tables
 def create_all_tables(engine):
-    """Create all database tables"""
-    Base.metadata.create_all(engine)
+    """Create all database tables"""    Base.metadata.create_all(engine)
 
 
 # Function to drop all tables (use with caution!)
 def drop_all_tables(engine):
-    """Drop all database tables - USE WITH EXTREME CAUTION!"""
-    Base.metadata.drop_all(engine)
+    """Drop all database tables - USE WITH EXTREME CAUTION!"""    Base.metadata.drop_all(engine)

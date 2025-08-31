@@ -1,5 +1,4 @@
-"""
-Quality Documentation Generator - Dynamic Documentation System
+"""Quality Documentation Generator - Dynamic Documentation System
 =============================================================
 
 Enterprise-grade quality documentation generator providing comprehensive
@@ -17,9 +16,7 @@ Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security +
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""
-
-from typing import Dict, Any, List, Optional, Union, Type, Callable
+"""from typing import Dict, Any, List, Optional, Union, Type, Callable
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -38,8 +35,7 @@ import yaml
 logger = logging.getLogger(__name__)
 
 class DocumentationType(Enum):
-    """Types of documentation to generate"""
-    API_REFERENCE = "api_reference"
+    """Types of documentation to generate"""    API_REFERENCE = "api_reference"
     USER_GUIDE = "user_guide"
     TECHNICAL_SPECS = "technical_specs"
     EXAMPLES = "examples"
@@ -47,8 +43,7 @@ class DocumentationType(Enum):
     CONFIGURATION = "configuration"
 
 class DocumentationFormat(Enum):
-    """Documentation output formats"""
-    MARKDOWN = "markdown"
+    """Documentation output formats"""    MARKDOWN = "markdown"
     HTML = "html"
     PDF = "pdf"
     JSON = "json"
@@ -56,8 +51,7 @@ class DocumentationFormat(Enum):
 
 @dataclass
 class ComponentDocumentation:
-    """Documentation for a quality component"""
-    component_name: str
+    """Documentation for a quality component"""    component_name: str
     description: str
     class_type: Type
     methods: List[Dict[str, Any]]
@@ -68,8 +62,7 @@ class ComponentDocumentation:
 
 @dataclass
 class APIEndpoint:
-    """API endpoint documentation"""
-    path: str
+    """API endpoint documentation"""    path: str
     method: str
     description: str
     parameters: List[Dict[str, Any]]
@@ -78,21 +71,17 @@ class APIEndpoint:
     error_codes: List[Dict[str, Any]]
 
 class QualityDocumentationGenerator:
-    """
-    Advanced documentation generator for quality management system.
+    """    Advanced documentation generator for quality management system.
     
     Automatically generates comprehensive documentation from code,
     including API references, user guides, and technical specifications.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize the documentation generator.
+        """        Initialize the documentation generator.
         
         Args:
             config: Documentation configuration
-        """
-        self.config = config
+        """        self.config = config
         self.logger = logger
         
         # Documentation configuration
@@ -121,8 +110,7 @@ class QualityDocumentationGenerator:
         quality_system: Any,
         output_formats: Optional[List[DocumentationFormat]] = None
     ) -> Dict[str, str]:
-        """
-        Generate complete documentation suite.
+        """        Generate complete documentation suite.
         
         Args:
             quality_system: Quality management system to document
@@ -130,8 +118,7 @@ class QualityDocumentationGenerator:
             
         Returns:
             Dictionary mapping format to output file path
-        """
-        try:
+        """        try:
             output_formats = output_formats or [DocumentationFormat.MARKDOWN, DocumentationFormat.HTML]
             
             # Analyze system components
@@ -165,8 +152,7 @@ class QualityDocumentationGenerator:
             raise
     
     async def _analyze_quality_system(self, quality_system: Any):
-        """Analyze quality system components for documentation"""
-        
+        """Analyze quality system components for documentation"""        
         # Get all components from the quality system
         components = {
             'data_quality_manager': quality_system.data_quality_manager,
@@ -190,8 +176,7 @@ class QualityDocumentationGenerator:
                 self.component_docs[name] = component_doc
     
     async def _analyze_component(self, name: str, component: Any) -> ComponentDocumentation:
-        """Analyze a single component for documentation"""
-        
+        """Analyze a single component for documentation"""        
         component_class = type(component)
         
         # Get component description
@@ -238,8 +223,7 @@ class QualityDocumentationGenerator:
         )
     
     def _extract_description(self, cls: Type) -> str:
-        """Extract class description from docstring"""
-        
+        """Extract class description from docstring"""        
         docstring = inspect.getdoc(cls) or ""
         
         # Extract first paragraph as description
@@ -256,8 +240,7 @@ class QualityDocumentationGenerator:
         return ' '.join(description_lines)
     
     def _analyze_method(self, name: str, method: Callable) -> Dict[str, Any]:
-        """Analyze a method for documentation"""
-        
+        """Analyze a method for documentation"""        
         # Get method signature
         try:
             signature = inspect.signature(method)
@@ -284,8 +267,7 @@ class QualityDocumentationGenerator:
         }
     
     def _analyze_property(self, name: str, prop: Any) -> Dict[str, Any]:
-        """Analyze a property for documentation"""
-        
+        """Analyze a property for documentation"""        
         return {
             "name": name,
             "type": type(prop).__name__,
@@ -294,8 +276,7 @@ class QualityDocumentationGenerator:
         }
     
     def _extract_method_description(self, docstring: str) -> str:
-        """Extract method description from docstring"""
-        
+        """Extract method description from docstring"""        
         lines = docstring.split('\n')
         description_lines = []
         
@@ -309,8 +290,7 @@ class QualityDocumentationGenerator:
         return ' '.join(description_lines)
     
     def _parse_parameters_from_docstring(self, docstring: str) -> List[Dict[str, Any]]:
-        """Parse parameters from method docstring"""
-        
+        """Parse parameters from method docstring"""        
         parameters = []
         lines = docstring.split('\n')
         in_args_section = False
@@ -349,8 +329,7 @@ class QualityDocumentationGenerator:
         return parameters
     
     def _parse_return_from_docstring(self, docstring: str) -> Dict[str, Any]:
-        """Parse return information from docstring"""
-        
+        """Parse return information from docstring"""        
         lines = docstring.split('\n')
         in_returns_section = False
         return_lines = []
@@ -374,16 +353,14 @@ class QualityDocumentationGenerator:
         }
     
     async def _generate_component_examples(self, name: str, component: Any) -> List[Dict[str, Any]]:
-        """Generate usage examples for a component"""
-        
+        """Generate usage examples for a component"""        
         examples = []
         
         # Basic initialization example
         init_example = {
             "title": f"Initialize {name.replace('_', ' ').title()}",
             "description": f"Basic initialization of the {name} component",
-            "code": f"""
-from backend.data.quality import {type(component).__name__}
+            "code": f"""from backend.data.quality import {type(component).__name__}
 
 # Initialize {name}
 {name} = {type(component).__name__}(config)
@@ -398,8 +375,7 @@ from backend.data.quality import {type(component).__name__}
             method_example = {
                 "title": f"Using {method_name}",
                 "description": f"Example usage of the {method_name} method",
-                "code": f"""
-# Call {method_name} method
+                "code": f"""# Call {method_name} method
 result = await {name}.{method_name}()
 print(f"Result: {{result}}")
 """.strip()
@@ -409,8 +385,7 @@ print(f"Result: {{result}}")
         return examples
     
     def _extract_component_configuration(self, component: Any) -> Dict[str, Any]:
-        """Extract configuration information from component"""
-        
+        """Extract configuration information from component"""        
         config_info = {
             "description": "Configuration options for this component",
             "parameters": {}
@@ -425,8 +400,7 @@ print(f"Result: {{result}}")
         return config_info
     
     def _extract_dependencies(self, cls: Type) -> List[str]:
-        """Extract dependencies from class"""
-        
+        """Extract dependencies from class"""        
         dependencies = []
         
         # Get module dependencies from imports
@@ -440,8 +414,7 @@ print(f"Result: {{result}}")
         return dependencies
     
     async def _generate_api_reference(self) -> str:
-        """Generate API reference documentation"""
-        
+        """Generate API reference documentation"""        
         api_docs = []
         
         for name, component_doc in self.component_docs.items():
@@ -480,8 +453,7 @@ print(f"Result: {{result}}")
         return '\n'.join(api_docs)
     
     async def _generate_user_guide(self) -> str:
-        """Generate user guide documentation"""
-        
+        """Generate user guide documentation"""        
         guide_sections = [
             "# Quality Management System User Guide",
             "",
@@ -555,8 +527,7 @@ print(f"Result: {{result}}")
         return '\n'.join(guide_sections)
     
     async def _generate_technical_specs(self) -> str:
-        """Generate technical specifications"""
-        
+        """Generate technical specifications"""        
         specs = [
             "# Technical Specifications",
             "",
@@ -596,8 +567,7 @@ print(f"Result: {{result}}")
         return '\n'.join(specs)
     
     async def _generate_examples(self) -> str:
-        """Generate examples documentation"""
-        
+        """Generate examples documentation"""        
         examples_doc = [
             "# Examples and Use Cases",
             "",
@@ -656,8 +626,7 @@ print(f"Result: {{result}}")
         return '\n'.join(examples_doc)
     
     async def _generate_troubleshooting(self) -> str:
-        """Generate troubleshooting guide"""
-        
+        """Generate troubleshooting guide"""        
         return """# Troubleshooting Guide
 
 ## Common Issues
@@ -722,11 +691,9 @@ print(f"Performance: {benchmark_result['performance_summary']}")
 For additional support, contact:
 - **Developer:** Fahed Mlaiel
 - **Email:** mlaiel@live.de
-"""
-    
+"""    
     async def _generate_configuration_guide(self) -> str:
-        """Generate configuration guide"""
-        
+        """Generate configuration guide"""        
         config_guide = [
             "# Configuration Guide",
             "",
@@ -774,8 +741,7 @@ For additional support, contact:
         sections: Dict[DocumentationType, str],
         format_type: DocumentationFormat
     ) -> Dict[str, str]:
-        """Generate output files for specific format"""
-        
+        """Generate output files for specific format"""        
         output_files = {}
         
         for doc_type, content in sections.items():
@@ -805,10 +771,8 @@ For additional support, contact:
         return output_files
     
     def _get_html_template(self) -> jinja2.Template:
-        """Get HTML template for documentation"""
-        
-        template_content = """
-<!DOCTYPE html>
+        """Get HTML template for documentation"""        
+        template_content = """<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -832,13 +796,11 @@ For additional support, contact:
     </footer>
 </body>
 </html>
-        """
-        
+        """        
         return jinja2.Template(template_content)
     
     async def _generate_index_file(self, output_files: Dict[str, str]):
-        """Generate index file linking all documentation"""
-        
+        """Generate index file linking all documentation"""        
         index_content = [
             "# IA Influencer Quality Management Documentation",
             "",

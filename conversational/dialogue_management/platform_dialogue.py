@@ -1,5 +1,4 @@
-"""
-Enterprise Platform Dialogue Manager - Multi-Platform Integration and Optimization
+"""Enterprise Platform Dialogue Manager - Multi-Platform Integration and Optimization
 
 Enterprise-grade platform dialogue management system for content creators with comprehensive
 multi-platform integration, cross-platform synchronization, analytics aggregation, and
@@ -62,9 +61,7 @@ Fahed Mlaiel will face:
 For licensing inquiries or authorized usage: mlaiel@live.de
 Legal compliance verification required before any usage, modification, or integration.
 All code usage is monitored and tracked for compliance enforcement.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timezone, timedelta
@@ -87,8 +84,7 @@ from .content_creator_flows import CreatorProfile, Platform, ContentFormat
 logger = logging.getLogger(__name__)
 
 class IntegrationStatus(Enum):
-    """Platform integration status"""
-    NOT_CONNECTED = "not_connected"
+    """Platform integration status"""    NOT_CONNECTED = "not_connected"
     CONNECTING = "connecting"
     CONNECTED = "connected"
     AUTHENTICATED = "authenticated"
@@ -98,8 +94,7 @@ class IntegrationStatus(Enum):
     SUSPENDED = "suspended"
 
 class IntegrationType(Enum):
-    """Types of platform integration"""
-    READ_ONLY = "read_only"
+    """Types of platform integration"""    READ_ONLY = "read_only"
     ANALYTICS_ONLY = "analytics_only"
     CONTENT_MANAGEMENT = "content_management"
     FULL_INTEGRATION = "full_integration"
@@ -108,8 +103,7 @@ class IntegrationType(Enum):
     AUDIENCE_ANALYTICS = "audience_analytics"
 
 class PlatformFeature(Enum):
-    """Platform features for integration"""
-    CONTENT_UPLOAD = "content_upload"
+    """Platform features for integration"""    CONTENT_UPLOAD = "content_upload"
     ANALYTICS_ACCESS = "analytics_access"
     AUDIENCE_INSIGHTS = "audience_insights"
     REVENUE_DATA = "revenue_data"
@@ -121,8 +115,7 @@ class PlatformFeature(Enum):
     PLAYLIST_MANAGEMENT = "playlist_management"
 
 class OptimizationGoal(Enum):
-    """Platform optimization goals"""
-    INCREASE_REACH = "increase_reach"
+    """Platform optimization goals"""    INCREASE_REACH = "increase_reach"
     IMPROVE_ENGAGEMENT = "improve_engagement"
     MAXIMIZE_REVENUE = "maximize_revenue"
     GROW_FOLLOWERS = "grow_followers"
@@ -133,8 +126,7 @@ class OptimizationGoal(Enum):
 
 @dataclass
 class PlatformConnection:
-    """Platform connection configuration"""
-    platform: Platform
+    """Platform connection configuration"""    platform: Platform
     integration_type: IntegrationType
     status: IntegrationStatus
     enabled_features: List[PlatformFeature] = field(default_factory=list)
@@ -156,8 +148,7 @@ class PlatformConnection:
 
 @dataclass
 class PlatformOptimizationStrategy:
-    """Platform optimization strategy"""
-    strategy_id: str
+    """Platform optimization strategy"""    strategy_id: str
     creator_id: str
     target_platforms: List[Platform]
     optimization_goals: List[OptimizationGoal]
@@ -176,8 +167,7 @@ class PlatformOptimizationStrategy:
     automation_level: str = "medium"  # low, medium, high, full
 
 class PlatformDialogueHandler:
-    """Specialized dialogue handler for platform integration conversations"""
-    
+    """Specialized dialogue handler for platform integration conversations"""    
     def __init__(
         self,
         db_manager: DatabaseManager,
@@ -202,8 +192,7 @@ class PlatformDialogueHandler:
         self.platform_flows = self._initialize_platform_flows()
         
     def _initialize_platform_flows(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize platform integration conversation flows"""
-        return {
+        """Initialize platform integration conversation flows"""        return {
             "platform_assessment_flow": {
                 "name": "Platform Presence Assessment",
                 "description": "Assess current platform presence and identify integration opportunities",
@@ -498,8 +487,7 @@ class PlatformDialogueHandler:
         user_message: str,
         flow_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Handle platform integration-focused conversation"""
-        try:
+        """Handle platform integration-focused conversation"""        try:
             # Determine conversation flow if not specified
             if not flow_id:
                 flow_id = await self._determine_platform_flow(
@@ -554,8 +542,7 @@ class PlatformDialogueHandler:
         creator_profile: CreatorProfile,
         context: Dict[str, Any]
     ) -> str:
-        """Determine appropriate platform flow based on message and context"""
-        # AI analysis of user intent
+        """Determine appropriate platform flow based on message and context"""        # AI analysis of user intent
         intent_analysis = await self.ai_service.analyze_platform_intent(
             user_message, creator_profile, context
         )
@@ -582,8 +569,7 @@ class PlatformDialogueHandler:
         conversation_state: Dict[str, Any],
         flow_id: str
     ) -> Dict[str, Any]:
-        """Process user message within platform flow context"""
-        flow_definition = self.platform_flows[flow_id]
+        """Process user message within platform flow context"""        flow_definition = self.platform_flows[flow_id]
         current_step_index = conversation_state.get("current_step", 0)
         
         if current_step_index >= len(flow_definition["conversation_steps"]):
@@ -624,8 +610,7 @@ class PlatformDialogueHandler:
         step_definition: Dict[str, Any],
         creator_profile: CreatorProfile
     ) -> Dict[str, Any]:
-        """Extract platform-relevant data from user message"""
-        # Use AI to extract structured data
+        """Extract platform-relevant data from user message"""        # Use AI to extract structured data
         extraction_result = await self.ai_service.extract_platform_data(
             user_message,
             step_definition.get("data_collection", []),
@@ -640,8 +625,7 @@ class PlatformDialogueHandler:
         conversation_state: Dict[str, Any],
         creator_profile: CreatorProfile
     ) -> Dict[str, Any]:
-        """Generate response for current conversation step"""
-        step_type = step_definition.get("step")
+        """Generate response for current conversation step"""        step_type = step_definition.get("step")
         collected_data = conversation_state.get("collected_data", {})
         
         # Generate AI-powered personalized response
@@ -673,8 +657,7 @@ class PlatformDialogueHandler:
         collected_data: Dict[str, Any],
         creator_profile: CreatorProfile
     ) -> Dict[str, Any]:
-        """Perform AI action for platform analysis"""
-        if action_type == "generate_integration_strategy":
+        """Perform AI action for platform analysis"""        if action_type == "generate_integration_strategy":
             return await self.ai_service.generate_integration_strategy(
                 creator_profile, collected_data
             )
@@ -699,8 +682,7 @@ class PlatformDialogueHandler:
         collected_data: Dict[str, Any],
         creator_profile: CreatorProfile
     ) -> List[Dict[str, Any]]:
-        """Generate platform recommendations for current step"""
-        recommendations = []
+        """Generate platform recommendations for current step"""        recommendations = []
         
         # Use AI to generate personalized recommendations
         ai_recommendations = await self.ai_service.generate_platform_recommendations(
@@ -726,8 +708,7 @@ class PlatformDialogueHandler:
         creator_profile: CreatorProfile,
         conversation_state: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate final comprehensive platform recommendations"""
-        collected_data = conversation_state.get("collected_data", {})
+        """Generate final comprehensive platform recommendations"""        collected_data = conversation_state.get("collected_data", {})
         
         # Generate comprehensive platform strategy
         strategy = await self.ai_service.generate_comprehensive_platform_strategy(
@@ -749,8 +730,7 @@ class PlatformDialogueHandler:
         response: Dict[str, Any],
         creator_profile: CreatorProfile
     ) -> Dict[str, Any]:
-        """Update conversation state after processing"""
-        # Advance to next step if not final response
+        """Update conversation state after processing"""        # Advance to next step if not final response
         if response.get("type") != "final_recommendations":
             current_state["current_step"] = current_state.get("current_step", 0) + 1
         
@@ -769,8 +749,7 @@ class PlatformDialogueHandler:
         platform: Platform,
         integration_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute platform connection with specified configuration"""
-        try:
+        """Execute platform connection with specified configuration"""        try:
             # Get platform service
             platform_service = self.platform_services.get(platform)
             if not platform_service:
@@ -809,8 +788,7 @@ class PlatformDialogueHandler:
         self,
         creator_profile: CreatorProfile
     ) -> Dict[str, Any]:
-        """Get comprehensive platform status summary"""
-        # Get all platform connections
+        """Get comprehensive platform status summary"""        # Get all platform connections
         connections = await self.orchestrator.get_creator_platform_connections(
             creator_profile.creator_id
         )
@@ -836,5 +814,4 @@ class PlatformDialogueHandler:
         self,
         creator_profile: CreatorProfile
     ) -> List[Dict[str, Any]]:
-        """Get platform improvement recommendations"""
-        return await self.ai_service.generate_platform_improvements(creator_profile)
+        """Get platform improvement recommendations"""        return await self.ai_service.generate_platform_improvements(creator_profile)

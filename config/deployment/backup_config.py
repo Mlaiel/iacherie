@@ -1,5 +1,4 @@
-"""
-Backup Configuration Module for IA-Influencer Agent Platform
+"""Backup Configuration Module for IA-Influencer Agent Platform
 ===========================================================
 
 Professional backup and disaster recovery configuration
@@ -15,9 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import os
+"""import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -27,8 +24,7 @@ import yaml
 
 
 class BackupType(Enum):
-    """Backup types"""
-    FULL = "full"
+    """Backup types"""    FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
     SNAPSHOT = "snapshot"
@@ -36,8 +32,7 @@ class BackupType(Enum):
 
 
 class BackupStorage(Enum):
-    """Backup storage providers"""
-    AWS_S3 = "aws_s3"
+    """Backup storage providers"""    AWS_S3 = "aws_s3"
     AZURE_BLOB = "azure_blob"
     GOOGLE_STORAGE = "google_storage"
     LOCAL_NFS = "local_nfs"
@@ -46,8 +41,7 @@ class BackupStorage(Enum):
 
 
 class RetentionPolicy(Enum):
-    """Backup retention policies"""
-    DAILY_30 = "daily_30"      # 30 daily backups
+    """Backup retention policies"""    DAILY_30 = "daily_30"      # 30 daily backups
     WEEKLY_12 = "weekly_12"    # 12 weekly backups
     MONTHLY_12 = "monthly_12"  # 12 monthly backups
     YEARLY_7 = "yearly_7"      # 7 yearly backups
@@ -56,8 +50,7 @@ class RetentionPolicy(Enum):
 
 @dataclass
 class BackupSchedule:
-    """Backup schedule configuration"""
-    name: str
+    """Backup schedule configuration"""    name: str
     cron_expression: str
     backup_type: BackupType
     retention_policy: RetentionPolicy
@@ -71,8 +64,7 @@ class BackupSchedule:
 
 @dataclass
 class DatabaseBackupConfig:
-    """Database backup configuration"""
-    name: str
+    """Database backup configuration"""    name: str
     engine: str  # postgresql, mysql, mongodb, redis
     host: str
     port: int
@@ -88,8 +80,7 @@ class DatabaseBackupConfig:
 
 @dataclass
 class FileSystemBackupConfig:
-    """File system backup configuration"""
-    name: str
+    """File system backup configuration"""    name: str
     source_path: str
     exclude_patterns: List[str] = field(default_factory=list)
     include_patterns: List[str] = field(default_factory=lambda: ["*"])
@@ -101,8 +92,7 @@ class FileSystemBackupConfig:
 
 @dataclass
 class StorageConfig:
-    """Backup storage configuration"""
-    provider: BackupStorage
+    """Backup storage configuration"""    provider: BackupStorage
     bucket_name: str
     region: str = "eu-central-1"
     access_key_env_var: str = ""
@@ -114,8 +104,7 @@ class StorageConfig:
 
 
 class BackupConfig:
-    """
-    Professional backup configuration manager for IA-Influencer Agent Platform.
+    """    Professional backup configuration manager for IA-Influencer Agent Platform.
     
     Manages comprehensive backup strategies for:
     - PostgreSQL databases (user data, analytics, revenue)
@@ -126,8 +115,7 @@ class BackupConfig:
     - AI model weights and configurations
     - Application configurations and secrets
     - Log files and audit trails
-    """
-    
+    """    
     def __init__(self, environment: str = "development"):
         self.environment = environment
         self.project_name = "ia-influencer-agent"
@@ -135,8 +123,7 @@ class BackupConfig:
         self.retention_strategy = self._get_retention_strategy()
         
     def _get_backup_storage(self) -> BackupStorage:
-        """Get backup storage provider based on environment"""
-        providers = {
+        """Get backup storage provider based on environment"""        providers = {
             "development": BackupStorage.LOCAL_NFS,
             "staging": BackupStorage.AWS_S3,
             "production": BackupStorage.AWS_S3
@@ -144,8 +131,7 @@ class BackupConfig:
         return providers.get(self.environment, BackupStorage.LOCAL_NFS)
     
     def _get_retention_strategy(self) -> RetentionPolicy:
-        """Get retention policy based on environment"""
-        policies = {
+        """Get retention policy based on environment"""        policies = {
             "development": RetentionPolicy.DAILY_30,
             "staging": RetentionPolicy.WEEKLY_12,
             "production": RetentionPolicy.YEARLY_7
@@ -153,8 +139,7 @@ class BackupConfig:
         return policies.get(self.environment, RetentionPolicy.DAILY_30)
     
     def get_database_backup_configs(self) -> List[DatabaseBackupConfig]:
-        """Get database backup configurations"""
-        return [
+        """Get database backup configurations"""        return [
             # PostgreSQL main database
             DatabaseBackupConfig(
                 name="postgresql_main",
@@ -214,8 +199,7 @@ class BackupConfig:
         ]
     
     def get_filesystem_backup_configs(self) -> List[FileSystemBackupConfig]:
-        """Get file system backup configurations"""
-        return [
+        """Get file system backup configurations"""        return [
             # User uploads and media files
             FileSystemBackupConfig(
                 name="user_uploads",
@@ -316,8 +300,7 @@ class BackupConfig:
         ]
     
     def get_backup_schedules(self) -> List[BackupSchedule]:
-        """Get backup schedule configurations"""
-        schedules = []
+        """Get backup schedule configurations"""        schedules = []
         
         if self.environment == "production":
             schedules = [
@@ -417,8 +400,7 @@ class BackupConfig:
         return schedules
     
     def get_storage_configs(self) -> Dict[str, StorageConfig]:
-        """Get storage configurations for different backup destinations"""
-        configs = {}
+        """Get storage configurations for different backup destinations"""        configs = {}
         
         if self.backup_storage == BackupStorage.AWS_S3:
             configs["primary"] = StorageConfig(
@@ -495,8 +477,7 @@ class BackupConfig:
         return configs
     
     def generate_backup_script(self, schedule: BackupSchedule) -> str:
-        """Generate backup script for a specific schedule"""
-        db_configs = self.get_database_backup_configs()
+        """Generate backup script for a specific schedule"""        db_configs = self.get_database_backup_configs()
         fs_configs = self.get_filesystem_backup_configs()
         storage_configs = self.get_storage_configs()
         
@@ -558,13 +539,11 @@ trap handle_error ERR
 log "Starting backup: $BACKUP_NAME ($BACKUP_TYPE)"
 
 # Database backups
-"""
-        
+"""        
         # Add database backup commands
         for db_config in db_configs:
             if db_config.engine == "postgresql":
-                script += f"""
-log "Backing up PostgreSQL database: {db_config.name}"
+                script += f"""log "Backing up PostgreSQL database: {db_config.name}"
 pg_dump -h {db_config.host} -p {db_config.port} -U {db_config.username} \\
         -d {db_config.database} -F {db_config.backup_format} \\
         {"--compress=9" if db_config.compression else ""} \\
@@ -577,10 +556,8 @@ else
     log "ERROR: PostgreSQL backup failed: {db_config.name}"
     exit 1
 fi
-"""
-            elif db_config.engine == "redis":
-                script += f"""
-log "Backing up Redis database: {db_config.name}"
+"""            elif db_config.engine == "redis":
+                script += f"""log "Backing up Redis database: {db_config.name}"
 redis-cli -h {db_config.host} -p {db_config.port} --rdb "$BACKUP_DIR/{db_config.name}_${{TIMESTAMP}}.rdb"
 
 if [[ $? -eq 0 ]]; then
@@ -589,10 +566,8 @@ else
     log "ERROR: Redis backup failed: {db_config.name}"
     exit 1
 fi
-"""
-            elif db_config.engine == "mongodb":
-                script += f"""
-log "Backing up MongoDB database: {db_config.name}"
+"""            elif db_config.engine == "mongodb":
+                script += f"""log "Backing up MongoDB database: {db_config.name}"
 mongodump --host {db_config.host}:{db_config.port} \\
           --db {db_config.database} \\
           --username {db_config.username} \\
@@ -606,16 +581,12 @@ else
     log "ERROR: MongoDB backup failed: {db_config.name}"
     exit 1
 fi
-"""
-        
+"""        
         # Add file system backup commands
-        script += """
-# File system backups
-"""
-        for fs_config in fs_configs:
+        script += """# File system backups
+"""        for fs_config in fs_configs:
             exclude_args = " ".join([f"--exclude='{pattern}'" for pattern in fs_config.exclude_patterns])
-            script += f"""
-log "Backing up file system: {fs_config.name}"
+            script += f"""log "Backing up file system: {fs_config.name}"
 tar --create \\
     --{fs_config.compression} \\
     {"--preserve-permissions" if fs_config.preserve_permissions else ""} \\
@@ -630,13 +601,11 @@ else
     log "ERROR: File system backup failed: {fs_config.name}"
     exit 1
 fi
-"""
-        
+"""        
         # Add upload to storage
         primary_storage = storage_configs.get("primary")
         if primary_storage and primary_storage.provider == BackupStorage.AWS_S3:
-            script += f"""
-# Upload to AWS S3
+            script += f"""# Upload to AWS S3
 log "Uploading backups to S3..."
 aws s3 sync "$BACKUP_DIR" s3://{primary_storage.bucket_name}/$(date '+%Y/%m/%d')/{schedule.name}/ \\
     --storage-class STANDARD \\
@@ -649,11 +618,9 @@ else
     log "ERROR: S3 upload failed"
     exit 1
 fi
-"""
-        
+"""        
         # Add cleanup and notification
-        script += f"""
-# Calculate backup size
+        script += f"""# Calculate backup size
 BACKUP_SIZE=$(du -sh "$BACKUP_DIR" | cut -f1)
 log "Backup completed successfully. Size: $BACKUP_SIZE"
 
@@ -679,21 +646,18 @@ rm -rf "$BACKUP_DIR"
 {self._generate_cleanup_commands(schedule)}
 
 log "Backup process completed successfully"
-"""
-        
+"""        
         return script
     
     def _generate_cleanup_commands(self, schedule: BackupSchedule) -> str:
-        """Generate cleanup commands based on retention policy"""
-        storage_configs = self.get_storage_configs()
+        """Generate cleanup commands based on retention policy"""        storage_configs = self.get_storage_configs()
         primary_storage = storage_configs.get("primary")
         
         if not primary_storage:
             return ""
         
         if primary_storage.provider == BackupStorage.AWS_S3:
-            return f"""
-log "Cleaning up old backups (retention: {schedule.retention_days} days)..."
+            return f"""log "Cleaning up old backups (retention: {schedule.retention_days} days)..."
 aws s3 ls s3://{primary_storage.bucket_name}/{schedule.name}/ --recursive | \\
     while read -r line; do
         createDate=$(echo $line | awk '{{print $1" "$2}}')
@@ -708,16 +672,12 @@ aws s3 ls s3://{primary_storage.bucket_name}/{schedule.name}/ --recursive | \\
             fi
         fi
     done
-"""
-        else:
-            return f"""
-log "Cleaning up old local backups (retention: {schedule.retention_days} days)..."
+"""        else:
+            return f"""log "Cleaning up old local backups (retention: {schedule.retention_days} days)..."
 find "{primary_storage.bucket_name}/{schedule.name}" -type f -mtime +{schedule.retention_days} -delete
-"""
-    
+"""    
     def generate_restore_script(self, backup_date: str = "latest") -> str:
-        """Generate restore script"""
-        storage_configs = self.get_storage_configs()
+        """Generate restore script"""        storage_configs = self.get_storage_configs()
         primary_storage = storage_configs.get("primary")
         
         script = f"""#!/bin/bash
@@ -755,11 +715,9 @@ trap handle_error ERR
 log "Starting restore process for {self.environment} environment"
 
 # Download backups from storage
-"""
-        
+"""        
         if primary_storage and primary_storage.provider == BackupStorage.AWS_S3:
-            script += f"""
-log "Downloading backups from S3..."
+            script += f"""log "Downloading backups from S3..."
 if [[ "$BACKUP_DATE" == "latest" ]]; then
     BACKUP_PATH=$(aws s3 ls s3://{primary_storage.bucket_name}/ --recursive | sort | tail -n 1 | awk '{{print $4}}')
     BACKUP_PATH=$(dirname "$BACKUP_PATH")
@@ -768,10 +726,8 @@ else
 fi
 
 aws s3 sync s3://{primary_storage.bucket_name}/$BACKUP_PATH/ "$RESTORE_DIR/" --only-show-errors
-"""
-        
-        script += """
-# Stop services before restore
+"""        
+        script += """# Stop services before restore
 log "Stopping services..."
 systemctl stop nginx || true
 systemctl stop uwsgi || true
@@ -833,39 +789,29 @@ restore_mongodb() {
 }
 
 # Restore databases
-"""
-        
+"""        
         db_configs = self.get_database_backup_configs()
         for db_config in db_configs:
             if db_config.engine == "postgresql":
-                script += f"""
-if [[ -f "$RESTORE_DIR/{db_config.name}_"*.backup ]]; then
+                script += f"""if [[ -f "$RESTORE_DIR/{db_config.name}_"*.backup ]]; then
     BACKUP_FILE=$(ls "$RESTORE_DIR/{db_config.name}_"*.backup | head -n 1)
     restore_postgresql "$BACKUP_FILE" "{db_config.database}" "{db_config.username}"
 fi
-"""
-            elif db_config.engine == "redis":
-                script += f"""
-if [[ -f "$RESTORE_DIR/{db_config.name}_"*.rdb ]]; then
+"""            elif db_config.engine == "redis":
+                script += f"""if [[ -f "$RESTORE_DIR/{db_config.name}_"*.rdb ]]; then
     BACKUP_FILE=$(ls "$RESTORE_DIR/{db_config.name}_"*.rdb | head -n 1)
     restore_redis "$BACKUP_FILE"
 fi
-"""
-            elif db_config.engine == "mongodb":
-                script += f"""
-if [[ -d "$RESTORE_DIR/{db_config.name}_"* ]]; then
+"""            elif db_config.engine == "mongodb":
+                script += f"""if [[ -d "$RESTORE_DIR/{db_config.name}_"* ]]; then
     BACKUP_DIR=$(ls -d "$RESTORE_DIR/{db_config.name}_"*/ | head -n 1)
     restore_mongodb "$BACKUP_DIR/{db_config.database}" "{db_config.database}" "{db_config.username}"
 fi
-"""
-        
-        script += """
-# Restore file systems
-"""
-        fs_configs = self.get_filesystem_backup_configs()
+"""        
+        script += """# Restore file systems
+"""        fs_configs = self.get_filesystem_backup_configs()
         for fs_config in fs_configs:
-            script += f"""
-if [[ -f "$RESTORE_DIR/{fs_config.name}_"*.tar.* ]]; then
+            script += f"""if [[ -f "$RESTORE_DIR/{fs_config.name}_"*.tar.* ]]; then
     BACKUP_FILE=$(ls "$RESTORE_DIR/{fs_config.name}_"*.tar.* | head -n 1)
     log "Restoring file system: {fs_config.name}"
     
@@ -883,10 +829,8 @@ if [[ -f "$RESTORE_DIR/{fs_config.name}_"*.tar.* ]]; then
     
     log "File system restore completed: {fs_config.name}"
 fi
-"""
-        
-        script += f"""
-# Start services
+"""        
+        script += f"""# Start services
 log "Starting services..."
 systemctl start redis-server || true
 systemctl start postgresql || true
@@ -930,13 +874,11 @@ Please verify that all services are working correctly:
 
 If any issues are found, restore from the backup files created during this process.
 "
-"""
-        
+"""        
         return script
     
     def generate_monitoring_script(self) -> str:
-        """Generate backup monitoring and alerting script"""
-        return f"""#!/bin/bash
+        """Generate backup monitoring and alerting script"""        return f"""#!/bin/bash
 # Backup Monitoring Script for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
 
@@ -1017,14 +959,12 @@ else
 fi
 
 # Check backup storage space
-"""
-        
+"""        
         storage_configs = self.get_storage_configs()
         primary_storage = storage_configs.get("primary")
         
         if primary_storage and primary_storage.provider == BackupStorage.AWS_S3:
-            script += f"""
-# Check S3 bucket size and costs
+            script += f"""# Check S3 bucket size and costs
 BUCKET_SIZE=$(aws s3 ls s3://{primary_storage.bucket_name} --recursive --summarize | grep "Total Size:" | awk '{{print $3}}')
 if [[ -n "$BUCKET_SIZE" ]]; then
     BUCKET_SIZE_GB=$((BUCKET_SIZE / 1024 / 1024 / 1024))
@@ -1047,10 +987,8 @@ FAILED_UPLOADS=$(aws logs filter-log-events \\
 if [[ $FAILED_UPLOADS -gt 0 ]]; then
     send_alert "Found $FAILED_UPLOADS failed S3 uploads in the last 24 hours" "WARNING"
 fi
-"""
-        
-        script += f"""
-# Check database connectivity
+"""        
+        script += f"""# Check database connectivity
 DB_ISSUES=0
 
 # PostgreSQL
@@ -1128,13 +1066,11 @@ else
 fi
 
 log "Backup monitoring check completed"
-"""
-        
+"""        
         return script
     
     def export_configurations(self, output_dir: str = "./backup-configs") -> Dict[str, str]:
-        """Export all backup configurations to files"""
-        import os
+        """Export all backup configurations to files"""        import os
         os.makedirs(output_dir, exist_ok=True)
         
         configs = {}

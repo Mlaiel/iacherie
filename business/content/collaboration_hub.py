@@ -1,5 +1,4 @@
-"""
-Content Collaboration Hub - IA Influencer Agent Platform
+"""Content Collaboration Hub - IA Influencer Agent Platform
 =======================================================
 
 Advanced real-time collaboration system for content creators, enabling seamless teamwork,
@@ -7,9 +6,7 @@ review workflows, and creative partnerships across multi-format content projects
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -30,8 +27,7 @@ settings = get_settings()
 
 
 class ContentCollaborationHub:
-    """Advanced real-time collaboration system for content creators."""
-    
+    """Advanced real-time collaboration system for content creators."""    
     def __init__(self):
         self.db = get_database()
         self.websocket_manager = WebSocketManager()
@@ -118,8 +114,7 @@ class ContentCollaborationHub:
         collaboration_type: str,
         session_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Create new collaboration session.
+        """        Create new collaboration session.
         
         Args:
             owner_id: Session owner's user ID
@@ -129,8 +124,7 @@ class ContentCollaborationHub:
             
         Returns:
             Session information and access details
-        """
-        try:
+        """        try:
             # Validate collaboration type
             if collaboration_type not in self.collaboration_types:
                 raise CollaborationError(f"Invalid collaboration type: {collaboration_type}")
@@ -195,8 +189,7 @@ class ContentCollaborationHub:
         user_id: UUID,
         join_token: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Join existing collaboration session.
+        """        Join existing collaboration session.
         
         Args:
             session_id: Session to join
@@ -205,8 +198,7 @@ class ContentCollaborationHub:
             
         Returns:
             Session access information and user permissions
-        """
-        try:
+        """        try:
             # Validate session exists and is active
             session = await self._get_active_session(session_id)
             if not session:
@@ -273,8 +265,7 @@ class ContentCollaborationHub:
         update_type: str,
         update_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Send real-time collaboration update.
+        """        Send real-time collaboration update.
         
         Args:
             session_id: Session to update
@@ -284,8 +275,7 @@ class ContentCollaborationHub:
             
         Returns:
             Update acknowledgment and broadcast status
-        """
-        try:
+        """        try:
             # Validate session and user permissions
             session = await self._get_active_session(session_id)
             if not session:
@@ -342,8 +332,7 @@ class ContentCollaborationHub:
         role: UserRole = UserRole.COLLABORATOR,
         invitation_message: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Invite user to collaboration session.
+        """        Invite user to collaboration session.
         
         Args:
             session_id: Session to invite to
@@ -354,8 +343,7 @@ class ContentCollaborationHub:
             
         Returns:
             Invitation details and status
-        """
-        try:
+        """        try:
             # Validate session and permissions
             session = await self._get_active_session(session_id)
             if not session:
@@ -426,8 +414,7 @@ class ContentCollaborationHub:
         action: str,
         new_role: Optional[UserRole] = None
     ) -> Dict[str, Any]:
-        """
-        Manage user permissions in collaboration session.
+        """        Manage user permissions in collaboration session.
         
         Args:
             session_id: Session to manage
@@ -438,8 +425,7 @@ class ContentCollaborationHub:
             
         Returns:
             Permission management result
-        """
-        try:
+        """        try:
             # Validate session and permissions
             session = await self._get_active_session(session_id)
             if not session:
@@ -528,8 +514,7 @@ class ContentCollaborationHub:
         session_id: UUID,
         user_id: UUID
     ) -> Dict[str, Any]:
-        """
-        Get analytics for collaboration session.
+        """        Get analytics for collaboration session.
         
         Args:
             session_id: Session to analyze
@@ -537,8 +522,7 @@ class ContentCollaborationHub:
             
         Returns:
             Session analytics and insights
-        """
-        try:
+        """        try:
             # Validate session and permissions
             session = await self._get_active_session(session_id)
             if not session:
@@ -590,8 +574,7 @@ class ContentCollaborationHub:
         user_id: UUID,
         export_format: str = 'json'
     ) -> Dict[str, Any]:
-        """
-        Export collaboration session data.
+        """        Export collaboration session data.
         
         Args:
             session_id: Session to export
@@ -600,8 +583,7 @@ class ContentCollaborationHub:
             
         Returns:
             Export file information and download link
-        """
-        try:
+        """        try:
             # Validate session and permissions
             session = await self._get_active_session(session_id)
             if not session:
@@ -654,8 +636,7 @@ class ContentCollaborationHub:
     # Private helper methods
     
     async def _get_active_session(self, session_id: UUID) -> Optional[Dict[str, Any]]:
-        """Get active session from memory or database."""
-        if session_id in self.active_sessions:
+        """Get active session from memory or database."""        if session_id in self.active_sessions:
             return self.active_sessions[session_id]
         
         # Load from database if not in memory
@@ -675,8 +656,7 @@ class ContentCollaborationHub:
         return None
     
     def _calculate_session_expiry(self, session_config: Dict[str, Any]) -> Optional[datetime]:
-        """Calculate session expiry time."""
-        expiry_hours = session_config.get('expiry_hours', 24)
+        """Calculate session expiry time."""        expiry_hours = session_config.get('expiry_hours', 24)
         if expiry_hours > 0:
             return datetime.utcnow() + timedelta(hours=expiry_hours)
         return None
@@ -687,8 +667,7 @@ class ContentCollaborationHub:
         user_id: UUID,
         role: UserRole
     ) -> None:
-        """Add participant to session."""
-        participant_data = {
+        """Add participant to session."""        participant_data = {
             'session_id': session_id,
             'user_id': user_id,
             'role': role,
@@ -703,8 +682,7 @@ class ContentCollaborationHub:
         content_id: UUID,
         collaboration_type: str
     ) -> None:
-        """Initialize session state based on collaboration type."""
-        initial_state = {
+        """Initialize session state based on collaboration type."""        initial_state = {
             'content_id': str(content_id),
             'version': 1,
             'last_saved': datetime.utcnow().isoformat(),
@@ -724,8 +702,7 @@ class ContentCollaborationHub:
         })
     
     async def _get_session_state(self, session_id: UUID) -> Dict[str, Any]:
-        """Get current session state."""
-        state = await self.db.collaboration_states.get_latest(session_id)
+        """Get current session state."""        state = await self.db.collaboration_states.get_latest(session_id)
         return state.state_data if state else {}
     
     async def _verify_session_invitation(
@@ -734,8 +711,7 @@ class ContentCollaborationHub:
         user_id: UUID,
         join_token: Optional[str]
     ) -> Optional[Dict[str, Any]]:
-        """Verify session invitation."""
-        if join_token:
+        """Verify session invitation."""        if join_token:
             invitation = await self.db.collaboration_invitations.get_by_token(
                 session_id, join_token
             )
@@ -755,8 +731,7 @@ class ContentCollaborationHub:
         update_type: str,
         user_role: UserRole
     ) -> bool:
-        """Validate if user can perform update type."""
-        permissions = self.role_permissions[user_role]
+        """Validate if user can perform update type."""        permissions = self.role_permissions[user_role]
         
         edit_updates = ['content_edit', 'text_change', 'media_upload', 'live_edit']
         approval_updates = ['approve_change', 'reject_change']
@@ -776,8 +751,7 @@ class ContentCollaborationHub:
         update_type: str,
         update_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process and validate collaboration update."""
-        processed_update = {
+        """Process and validate collaboration update."""        processed_update = {
             'user_id': str(user_id),
             'timestamp': datetime.utcnow().isoformat(),
             'type': update_type,
@@ -801,8 +775,7 @@ class ContentCollaborationHub:
         update_type: str,
         update_data: Dict[str, Any]
     ) -> None:
-        """Update session state based on update."""
-        current_state = await self._get_session_state(session_id)
+        """Update session state based on update."""        current_state = await self._get_session_state(session_id)
         
         # Update state based on update type
         if update_type == 'content_edit':
@@ -835,8 +808,7 @@ class ContentCollaborationHub:
         message_data: Dict[str, Any],
         exclude_user: Optional[UUID] = None
     ) -> None:
-        """Broadcast message to all session participants."""
-        await self.websocket_manager.broadcast_to_session(
+        """Broadcast message to all session participants."""        await self.websocket_manager.broadcast_to_session(
             session_id, message_data, exclude_user
         )
     
@@ -846,8 +818,7 @@ class ContentCollaborationHub:
         user_id: UUID,
         role: UserRole
     ) -> None:
-        """Broadcast user joined notification."""
-        message = {
+        """Broadcast user joined notification."""        message = {
             'type': 'user_joined',
             'user_id': str(user_id),
             'role': role.value,
@@ -861,8 +832,7 @@ class ContentCollaborationHub:
         session_id: UUID,
         change_data: Dict[str, Any]
     ) -> None:
-        """Broadcast permission change to session."""
-        message = {
+        """Broadcast permission change to session."""        message = {
             'type': 'permission_change',
             'change_data': change_data,
             'timestamp': datetime.utcnow().isoformat()
@@ -871,18 +841,15 @@ class ContentCollaborationHub:
         await self._broadcast_to_session(session_id, message)
     
     def _generate_invitation_token(self) -> str:
-        """Generate secure invitation token."""
-        import secrets
+        """Generate secure invitation token."""        import secrets
         return secrets.token_urlsafe(32)
     
     async def _get_user_name(self, user_id: UUID) -> str:
-        """Get user display name."""
-        user = await self.db.users.get_by_id(user_id)
+        """Get user display name."""        user = await self.db.users.get_by_id(user_id)
         return user.display_name if user else "Unknown User"
     
     async def _get_session_participants(self, session_id: UUID) -> List[Dict[str, Any]]:
-        """Get detailed session participants."""
-        participants = await self.db.collaboration_participants.get_by_session(session_id)
+        """Get detailed session participants."""        participants = await self.db.collaboration_participants.get_by_session(session_id)
         
         participant_list = []
         for participant in participants:
@@ -898,8 +865,7 @@ class ContentCollaborationHub:
         return participant_list
     
     async def _is_user_active(self, session_id: UUID, user_id: UUID) -> bool:
-        """Check if user is currently active in session."""
-        return await self.websocket_manager.is_user_connected(session_id, user_id)
+        """Check if user is currently active in session."""        return await self.websocket_manager.is_user_connected(session_id, user_id)
     
     async def _notify_role_change(
         self,
@@ -908,8 +874,7 @@ class ContentCollaborationHub:
         old_role: UserRole,
         new_role: UserRole
     ) -> None:
-        """Notify user of role change."""
-        await self.notification_service.send_role_change_notification(
+        """Notify user of role change."""        await self.notification_service.send_role_change_notification(
             user_id=user_id,
             session_id=session_id,
             old_role=old_role.value,
@@ -917,8 +882,7 @@ class ContentCollaborationHub:
         )
     
     async def _notify_user_removed(self, session_id: UUID, user_id: UUID) -> None:
-        """Notify user of removal from session."""
-        await self.notification_service.send_session_removal_notification(
+        """Notify user of removal from session."""        await self.notification_service.send_session_removal_notification(
             user_id=user_id,
             session_id=session_id
         )
@@ -926,8 +890,7 @@ class ContentCollaborationHub:
     # Analytics helper methods
     
     async def _count_active_participants(self, session_id: UUID) -> int:
-        """Count currently active participants."""
-        session = self.active_sessions.get(session_id)
+        """Count currently active participants."""        session = self.active_sessions.get(session_id)
         if not session:
             return 0
         
@@ -939,16 +902,14 @@ class ContentCollaborationHub:
         return active_count
     
     def _analyze_participant_roles(self, participants: Dict[UUID, UserRole]) -> Dict[str, int]:
-        """Analyze distribution of participant roles."""
-        role_counts = {}
+        """Analyze distribution of participant roles."""        role_counts = {}
         for role in participants.values():
             role_counts[role.value] = role_counts.get(role.value, 0) + 1
         
         return role_counts
     
     def _analyze_updates_by_type(self, history: List[Any]) -> Dict[str, int]:
-        """Analyze updates by type."""
-        update_counts = {}
+        """Analyze updates by type."""        update_counts = {}
         for update in history:
             update_type = update.update_type
             update_counts[update_type] = update_counts.get(update_type, 0) + 1
@@ -956,8 +917,7 @@ class ContentCollaborationHub:
         return update_counts
     
     def _analyze_updates_by_user(self, history: List[Any]) -> Dict[str, int]:
-        """Analyze updates by user."""
-        user_counts = {}
+        """Analyze updates by user."""        user_counts = {}
         for update in history:
             user_id = str(update.user_id)
             user_counts[user_id] = user_counts.get(user_id, 0) + 1
@@ -965,8 +925,7 @@ class ContentCollaborationHub:
         return user_counts
     
     def _generate_activity_timeline(self, history: List[Any]) -> List[Dict[str, Any]]:
-        """Generate activity timeline."""
-        timeline = []
+        """Generate activity timeline."""        timeline = []
         for update in history[-50:]:  # Last 50 updates
             timeline.append({
                 'timestamp': update.created_at.isoformat(),
@@ -978,8 +937,7 @@ class ContentCollaborationHub:
         return timeline
     
     def _generate_update_summary(self, update: Any) -> str:
-        """Generate human-readable update summary."""
-        summaries = {
+        """Generate human-readable update summary."""        summaries = {
             'content_edit': 'Made content changes',
             'comment': 'Added a comment',
             'approval': 'Approved changes',
@@ -990,8 +948,7 @@ class ContentCollaborationHub:
         return summaries.get(update.update_type, 'Performed an action')
     
     def _calculate_average_response_time(self, history: List[Any]) -> float:
-        """Calculate average response time between updates."""
-        if len(history) < 2:
+        """Calculate average response time between updates."""        if len(history) < 2:
             return 0.0
         
         response_times = []
@@ -1002,8 +959,7 @@ class ContentCollaborationHub:
         return sum(response_times) / len(response_times) if response_times else 0.0
     
     def _calculate_collaboration_score(self, history: List[Any]) -> float:
-        """Calculate collaboration quality score."""
-        if not history:
+        """Calculate collaboration quality score."""        if not history:
             return 0.0
         
         # Factors: variety of update types, user participation, activity frequency
@@ -1017,8 +973,7 @@ class ContentCollaborationHub:
         return (variety_score + participation_score + activity_score) / 3.0
     
     def _calculate_engagement_level(self, history: List[Any]) -> str:
-        """Calculate engagement level."""
-        score = self._calculate_collaboration_score(history)
+        """Calculate engagement level."""        score = self._calculate_collaboration_score(history)
         
         if score >= 0.8:
             return 'High'
@@ -1032,8 +987,7 @@ class ContentCollaborationHub:
     # Export helper methods
     
     async def _get_detailed_participants(self, session_id: UUID) -> List[Dict[str, Any]]:
-        """Get detailed participant information for export."""
-        participants = await self.db.collaboration_participants.get_by_session(session_id)
+        """Get detailed participant information for export."""        participants = await self.db.collaboration_participants.get_by_session(session_id)
         
         detailed_participants = []
         for participant in participants:
@@ -1052,8 +1006,7 @@ class ContentCollaborationHub:
         return detailed_participants
     
     async def _count_user_contributions(self, session_id: UUID, user_id: UUID) -> int:
-        """Count user contributions to session."""
-        contributions = await self.db.collaboration_history.count_by_user(
+        """Count user contributions to session."""        contributions = await self.db.collaboration_history.count_by_user(
             session_id, user_id
         )
         return contributions
@@ -1064,8 +1017,7 @@ class ContentCollaborationHub:
         format_type: str,
         session_id: UUID
     ) -> str:
-        """Generate export file in specified format."""
-        import json
+        """Generate export file in specified format."""        import json
         from pathlib import Path
         
         export_dir = Path(settings.EXPORT_DIR) / "collaborations"
@@ -1088,8 +1040,7 @@ class ContentCollaborationHub:
         return str(file_path)
     
     async def _export_to_csv(self, export_data: Dict[str, Any], file_path: Path) -> None:
-        """Export data to CSV format."""
-        import csv
+        """Export data to CSV format."""        import csv
         
         with open(file_path, 'w', newline='') as csvfile:
             writer = csv.writer(csvfile)
@@ -1113,8 +1064,7 @@ class ContentCollaborationHub:
                 ])
     
     async def _export_to_pdf(self, export_data: Dict[str, Any], file_path: Path) -> None:
-        """Export data to PDF format."""
-        # This would use a PDF generation library like reportlab
+        """Export data to PDF format."""        # This would use a PDF generation library like reportlab
         # For now, create a simple text file
         with open(file_path.with_suffix('.txt'), 'w') as f:
             f.write("Collaboration Session Export\n")
@@ -1129,5 +1079,4 @@ class ContentCollaborationHub:
                 f.write(f"- {participant['name']} ({participant['role']})\n")
     
     async def _get_file_size(self, file_path: str) -> int:
-        """Get file size in bytes."""
-        return Path(file_path).stat().st_size
+        """Get file size in bytes."""        return Path(file_path).stat().st_size

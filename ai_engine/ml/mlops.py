@@ -1,13 +1,10 @@
-"""
-MLOps Module - MLOps infrastructure, pipelines, and automation
+"""MLOps Module - MLOps infrastructure, pipelines, and automation
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive MLOps capabilities including data pipelines,
 model pipelines, deployment pipelines, and ML workflow automation.
-"""
-
-import logging
+"""import logging
 import json
 import os
 import time
@@ -24,8 +21,7 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class PipelineStatus(Enum):
-    """Pipeline execution status"""
-    CREATED = "created"
+    """Pipeline execution status"""    CREATED = "created"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -33,16 +29,14 @@ class PipelineStatus(Enum):
     CANCELLED = "cancelled"
 
 class StepStatus(Enum):
-    """Individual step status"""
-    PENDING = "pending"
+    """Individual step status"""    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
     SKIPPED = "skipped"
 
 class TriggerType(Enum):
-    """Pipeline trigger types"""
-    MANUAL = "manual"
+    """Pipeline trigger types"""    MANUAL = "manual"
     SCHEDULED = "scheduled"
     DATA_CHANGE = "data_change"
     MODEL_DRIFT = "model_drift"
@@ -50,8 +44,7 @@ class TriggerType(Enum):
 
 @dataclass
 class PipelineStep:
-    """Definition of a pipeline step"""
-    step_id: str
+    """Definition of a pipeline step"""    step_id: str
     name: str
     function: Callable
     inputs: List[str]
@@ -63,8 +56,7 @@ class PipelineStep:
 
 @dataclass
 class StepExecution:
-    """Execution record for a pipeline step"""
-    step_id: str
+    """Execution record for a pipeline step"""    step_id: str
     status: StepStatus
     started_at: Optional[datetime]
     completed_at: Optional[datetime]
@@ -75,8 +67,7 @@ class StepExecution:
 
 @dataclass
 class PipelineExecution:
-    """Execution record for a complete pipeline"""
-    execution_id: str
+    """Execution record for a complete pipeline"""    execution_id: str
     pipeline_id: str
     status: PipelineStatus
     trigger_type: TriggerType
@@ -87,8 +78,7 @@ class PipelineExecution:
     metadata: Dict[str, Any]
 
 class MLOpsManager:
-    """Main MLOps orchestration manager"""
-    
+    """Main MLOps orchestration manager"""    
     def __init__(self, workspace_path: str = "./mlops_workspace"):
         self.workspace_path = Path(workspace_path)
         self.workspace_path.mkdir(parents=True, exist_ok=True)
@@ -105,8 +95,7 @@ class MLOpsManager:
         self.logger.info("MLOpsManager initialized successfully")
     
     def _initialize_workspace(self):
-        """Initialize MLOps workspace structure"""
-        try:
+        """Initialize MLOps workspace structure"""        try:
             # Create workspace directories
             directories = [
                 "pipelines", "data", "models", "artifacts", 
@@ -131,8 +120,7 @@ class MLOpsManager:
             self.logger.error(f"Workspace initialization failed: {e}")
     
     def create_data_pipeline(self, pipeline_id: str, name: str = None) -> 'DataPipeline':
-        """Create a new data pipeline"""
-        try:
+        """Create a new data pipeline"""        try:
             if name is None:
                 name = f"Data Pipeline {pipeline_id}"
             
@@ -147,8 +135,7 @@ class MLOpsManager:
             raise
     
     def create_model_pipeline(self, pipeline_id: str, name: str = None) -> 'ModelPipeline':
-        """Create a new model pipeline"""
-        try:
+        """Create a new model pipeline"""        try:
             if name is None:
                 name = f"Model Pipeline {pipeline_id}"
             
@@ -163,8 +150,7 @@ class MLOpsManager:
             raise
     
     def create_deployment_pipeline(self, pipeline_id: str, name: str = None) -> 'DeploymentPipeline':
-        """Create a new deployment pipeline"""
-        try:
+        """Create a new deployment pipeline"""        try:
             if name is None:
                 name = f"Deployment Pipeline {pipeline_id}"
             
@@ -181,8 +167,7 @@ class MLOpsManager:
     def execute_pipeline(self, pipeline_id: str, 
                         trigger_type: TriggerType = TriggerType.MANUAL,
                         parameters: Dict[str, Any] = None) -> str:
-        """Execute a pipeline"""
-        try:
+        """Execute a pipeline"""        try:
             if pipeline_id not in self.pipelines:
                 raise ValueError(f"Pipeline not found: {pipeline_id}")
             
@@ -219,8 +204,7 @@ class MLOpsManager:
             raise
     
     def _execute_pipeline_async(self, pipeline: 'Pipeline', execution: PipelineExecution):
-        """Execute pipeline asynchronously"""
-        try:
+        """Execute pipeline asynchronously"""        try:
             start_time = time.time()
             
             # Execute pipeline steps
@@ -241,12 +225,10 @@ class MLOpsManager:
             self.logger.error(f"Pipeline execution failed: {e}")
     
     def get_execution_status(self, execution_id: str) -> Optional[PipelineExecution]:
-        """Get execution status"""
-        return self.executions.get(execution_id)
+        """Get execution status"""        return self.executions.get(execution_id)
     
     def list_pipelines(self) -> List[Dict[str, Any]]:
-        """List all registered pipelines"""
-        return [
+        """List all registered pipelines"""        return [
             {
                 "pipeline_id": pipeline_id,
                 "name": pipeline.name,
@@ -258,8 +240,7 @@ class MLOpsManager:
         ]
     
     def get_workspace_info(self) -> Dict[str, Any]:
-        """Get workspace information"""
-        return {
+        """Get workspace information"""        return {
             "workspace_path": str(self.workspace_path),
             "pipelines_count": len(self.pipelines),
             "executions_count": len(self.executions),
@@ -270,8 +251,7 @@ class MLOpsManager:
         }
 
 class Pipeline(ABC):
-    """Base class for all pipelines"""
-    
+    """Base class for all pipelines"""    
     def __init__(self, pipeline_id: str, name: str, workspace_path: Path):
         self.pipeline_id = pipeline_id
         self.name = name
@@ -281,13 +261,11 @@ class Pipeline(ABC):
         self.created_at = datetime.utcnow()
     
     def add_step(self, step: PipelineStep):
-        """Add a step to the pipeline"""
-        self.steps.append(step)
+        """Add a step to the pipeline"""        self.steps.append(step)
         self.logger.info(f"Added step to pipeline: {step.step_id}")
     
     def execute(self, execution: PipelineExecution) -> bool:
-        """Execute the pipeline"""
-        try:
+        """Execute the pipeline"""        try:
             self.logger.info(f"Executing pipeline: {self.pipeline_id}")
             
             # Execute steps in dependency order
@@ -327,8 +305,7 @@ class Pipeline(ABC):
             return False
     
     def _execute_step(self, step: PipelineStep, execution: PipelineExecution) -> bool:
-        """Execute a single pipeline step"""
-        try:
+        """Execute a single pipeline step"""        try:
             self.logger.info(f"Executing step: {step.step_id}")
             start_time = time.time()
             
@@ -383,12 +360,10 @@ class Pipeline(ABC):
     
     @abstractmethod
     def _get_default_steps(self) -> List[PipelineStep]:
-        """Get default steps for the pipeline type"""
-        pass
+        """Get default steps for the pipeline type"""        pass
 
 class DataPipeline(Pipeline):
-    """Data processing pipeline"""
-    
+    """Data processing pipeline"""    
     def __init__(self, pipeline_id: str, name: str, workspace_path: Path):
         super().__init__(pipeline_id, name, workspace_path)
         self.data_sources = {}
@@ -397,21 +372,18 @@ class DataPipeline(Pipeline):
         self.logger.info("DataPipeline initialized successfully")
     
     def add_data_source(self, source_id: str, source_config: Dict[str, Any]):
-        """Add a data source to the pipeline"""
-        self.data_sources[source_id] = source_config
+        """Add a data source to the pipeline"""        self.data_sources[source_id] = source_config
         self.logger.info(f"Added data source: {source_id}")
     
     def add_transformation(self, transformation: Callable, name: str = None):
-        """Add a data transformation"""
-        self.transformations.append({
+        """Add a data transformation"""        self.transformations.append({
             "name": name or f"transform_{len(self.transformations)}",
             "function": transformation
         })
         self.logger.info(f"Added transformation: {name}")
     
     def _get_default_steps(self) -> List[PipelineStep]:
-        """Get default data pipeline steps"""
-        return [
+        """Get default data pipeline steps"""        return [
             PipelineStep(
                 step_id="data_ingestion",
                 name="Data Ingestion",
@@ -451,36 +423,31 @@ class DataPipeline(Pipeline):
         ]
     
     def _data_ingestion_step(self, **kwargs) -> Dict[str, Any]:
-        """Data ingestion step"""
-        self.logger.info("Executing data ingestion")
+        """Data ingestion step"""        self.logger.info("Executing data ingestion")
         # Simulate data ingestion
         time.sleep(1)
         return {"status": "completed", "records_ingested": 1000}
     
     def _data_validation_step(self, **kwargs) -> Dict[str, Any]:
-        """Data validation step"""
-        self.logger.info("Executing data validation")
+        """Data validation step"""        self.logger.info("Executing data validation")
         # Simulate data validation
         time.sleep(0.5)
         return {"status": "completed", "validation_errors": 0}
     
     def _data_transformation_step(self, **kwargs) -> Dict[str, Any]:
-        """Data transformation step"""
-        self.logger.info("Executing data transformation")
+        """Data transformation step"""        self.logger.info("Executing data transformation")
         # Simulate data transformation
         time.sleep(1.5)
         return {"status": "completed", "records_transformed": 1000}
     
     def _data_quality_step(self, **kwargs) -> Dict[str, Any]:
-        """Data quality check step"""
-        self.logger.info("Executing data quality check")
+        """Data quality check step"""        self.logger.info("Executing data quality check")
         # Simulate data quality check
         time.sleep(0.8)
         return {"status": "completed", "quality_score": 0.95}
 
 class ModelPipeline(Pipeline):
-    """Model training and evaluation pipeline"""
-    
+    """Model training and evaluation pipeline"""    
     def __init__(self, pipeline_id: str, name: str, workspace_path: Path):
         super().__init__(pipeline_id, name, workspace_path)
         self.model_config = {}
@@ -489,18 +456,15 @@ class ModelPipeline(Pipeline):
         self.logger.info("ModelPipeline initialized successfully")
     
     def set_model_config(self, config: Dict[str, Any]):
-        """Set model configuration"""
-        self.model_config = config
+        """Set model configuration"""        self.model_config = config
         self.logger.info("Model configuration set")
     
     def set_training_config(self, config: Dict[str, Any]):
-        """Set training configuration"""
-        self.training_config = config
+        """Set training configuration"""        self.training_config = config
         self.logger.info("Training configuration set")
     
     def _get_default_steps(self) -> List[PipelineStep]:
-        """Get default model pipeline steps"""
-        return [
+        """Get default model pipeline steps"""        return [
             PipelineStep(
                 step_id="data_preparation",
                 name="Data Preparation",
@@ -540,32 +504,27 @@ class ModelPipeline(Pipeline):
         ]
     
     def _data_preparation_step(self, **kwargs) -> Dict[str, Any]:
-        """Data preparation step"""
-        self.logger.info("Executing data preparation")
+        """Data preparation step"""        self.logger.info("Executing data preparation")
         time.sleep(2)
         return {"status": "completed", "train_samples": 8000, "test_samples": 2000}
     
     def _model_training_step(self, **kwargs) -> Dict[str, Any]:
-        """Model training step"""
-        self.logger.info("Executing model training")
+        """Model training step"""        self.logger.info("Executing model training")
         time.sleep(5)  # Simulate longer training time
         return {"status": "completed", "epochs": 100, "final_loss": 0.023}
     
     def _model_evaluation_step(self, **kwargs) -> Dict[str, Any]:
-        """Model evaluation step"""
-        self.logger.info("Executing model evaluation")
+        """Model evaluation step"""        self.logger.info("Executing model evaluation")
         time.sleep(1)
         return {"status": "completed", "accuracy": 0.95, "precision": 0.93, "recall": 0.94}
     
     def _model_validation_step(self, **kwargs) -> Dict[str, Any]:
-        """Model validation step"""
-        self.logger.info("Executing model validation")
+        """Model validation step"""        self.logger.info("Executing model validation")
         time.sleep(0.5)
         return {"status": "completed", "validation_passed": True}
 
 class DeploymentPipeline(Pipeline):
-    """Model deployment pipeline"""
-    
+    """Model deployment pipeline"""    
     def __init__(self, pipeline_id: str, name: str, workspace_path: Path):
         super().__init__(pipeline_id, name, workspace_path)
         self.deployment_config = {}
@@ -573,18 +532,15 @@ class DeploymentPipeline(Pipeline):
         self.logger.info("DeploymentPipeline initialized successfully")
     
     def set_deployment_config(self, config: Dict[str, Any]):
-        """Set deployment configuration"""
-        self.deployment_config = config
+        """Set deployment configuration"""        self.deployment_config = config
         self.logger.info("Deployment configuration set")
     
     def add_target_environment(self, environment: str):
-        """Add target deployment environment"""
-        self.target_environments.append(environment)
+        """Add target deployment environment"""        self.target_environments.append(environment)
         self.logger.info(f"Added target environment: {environment}")
     
     def _get_default_steps(self) -> List[PipelineStep]:
-        """Get default deployment pipeline steps"""
-        return [
+        """Get default deployment pipeline steps"""        return [
             PipelineStep(
                 step_id="model_packaging",
                 name="Model Packaging",
@@ -633,32 +589,27 @@ class DeploymentPipeline(Pipeline):
         ]
     
     def _model_packaging_step(self, **kwargs) -> Dict[str, Any]:
-        """Model packaging step"""
-        self.logger.info("Executing model packaging")
+        """Model packaging step"""        self.logger.info("Executing model packaging")
         time.sleep(1)
         return {"status": "completed", "package_size": "125MB"}
     
     def _infrastructure_setup_step(self, **kwargs) -> Dict[str, Any]:
-        """Infrastructure setup step"""
-        self.logger.info("Executing infrastructure setup")
+        """Infrastructure setup step"""        self.logger.info("Executing infrastructure setup")
         time.sleep(2)
         return {"status": "completed", "instances_created": 2}
     
     def _model_deployment_step(self, **kwargs) -> Dict[str, Any]:
-        """Model deployment step"""
-        self.logger.info("Executing model deployment")
+        """Model deployment step"""        self.logger.info("Executing model deployment")
         time.sleep(3)
         return {"status": "completed", "endpoint_url": "https://api.example.com/model"}
     
     def _health_check_step(self, **kwargs) -> Dict[str, Any]:
-        """Health check step"""
-        self.logger.info("Executing health check")
+        """Health check step"""        self.logger.info("Executing health check")
         time.sleep(0.5)
         return {"status": "completed", "health": "healthy"}
     
     def _smoke_tests_step(self, **kwargs) -> Dict[str, Any]:
-        """Smoke tests step"""
-        self.logger.info("Executing smoke tests")
+        """Smoke tests step"""        self.logger.info("Executing smoke tests")
         time.sleep(1)
         return {"status": "completed", "tests_passed": 5, "tests_failed": 0}
 

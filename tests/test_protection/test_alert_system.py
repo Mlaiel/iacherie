@@ -1,27 +1,21 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Test suite for Alert System module.
+"""Test suite for Alert System module.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import unittest
+"""import unittest
 from unittest.mock import Mock, AsyncMock, patch
 import asyncio
 from datetime import datetime, timedelta
@@ -30,11 +24,8 @@ import json
 
 
 class TestAlertSystem(unittest.TestCase):
-    """Test suite for AlertSystem class"""
-
-    def setUp(self):
-        """Set up test fixtures"""
-        self.alert_system = None  # Will be mocked
+    """Test suite for AlertSystem class"""    def setUp(self):
+        """Set up test fixtures"""        self.alert_system = None  # Will be mocked
         self.sample_violation_data = {
             "original_content_id": "content_123",
             "user_id": "user_456",
@@ -50,8 +41,7 @@ class TestAlertSystem(unittest.TestCase):
         }
 
     def test_alert_data_structure(self):
-        """Test alert data structure"""
-        alert = {
+        """Test alert data structure"""        alert = {
             "id": "alert_123",
             "type": "violation_detected",
             "severity": "high",
@@ -76,8 +66,7 @@ class TestAlertSystem(unittest.TestCase):
         self.assertIsInstance(alert["created_at"], datetime)
 
     def test_alert_severity_classification(self):
-        """Test alert severity classification"""
-        similarity_scores = [0.95, 0.88, 0.75, 0.60, 0.45]
+        """Test alert severity classification"""        similarity_scores = [0.95, 0.88, 0.75, 0.60, 0.45]
         expected_severities = []
         
         for score in similarity_scores:
@@ -101,8 +90,7 @@ class TestAlertSystem(unittest.TestCase):
         self.assertEqual(expected_severities[4], "info")      # 0.45
 
     def test_notification_channel_selection(self):
-        """Test notification channel selection based on severity"""
-        severity_channel_mapping = {
+        """Test notification channel selection based on severity"""        severity_channel_mapping = {
             "critical": ["email", "sms", "push", "slack"],
             "high": ["email", "push", "slack"],
             "medium": ["email", "push"],
@@ -124,8 +112,7 @@ class TestAlertSystem(unittest.TestCase):
         self.assertIn("push", severity_channel_mapping["info"])
 
     def test_alert_message_generation(self):
-        """Test alert message generation"""
-        violation_data = {
+        """Test alert message generation"""        violation_data = {
             "platform": "youtube",
             "similarity_score": 0.92,
             "violation_url": "https://youtube.com/watch?v=test123",
@@ -151,8 +138,7 @@ class TestAlertSystem(unittest.TestCase):
             self.assertIn("youtube", message.lower())
 
     def test_alert_throttling_logic(self):
-        """Test alert throttling to prevent spam"""
-        user_id = "user_123"
+        """Test alert throttling to prevent spam"""        user_id = "user_123"
         content_id = "content_456"
         current_time = datetime.now()
         
@@ -190,8 +176,7 @@ class TestAlertSystem(unittest.TestCase):
         self.assertFalse(should_throttle_count)  # Under max count
 
     def test_user_notification_preferences(self):
-        """Test user notification preferences handling"""
-        user_preferences = {
+        """Test user notification preferences handling"""        user_preferences = {
             "user_123": {
                 "email_enabled": True,
                 "email_address": "user@example.com",
@@ -229,8 +214,7 @@ class TestAlertSystem(unittest.TestCase):
         self.assertFalse(should_send)  # "low" < "medium"
 
     def test_quiet_hours_check(self):
-        """Test quiet hours functionality"""
-        quiet_hours = {"start": "22:00", "end": "08:00"}
+        """Test quiet hours functionality"""        quiet_hours = {"start": "22:00", "end": "08:00"}
         
         test_times = [
             ("06:00", True),   # During quiet hours
@@ -262,8 +246,7 @@ class TestAlertSystem(unittest.TestCase):
             self.assertEqual(is_quiet, expected_quiet, f"Failed for time {time_str}")
 
     def test_alert_escalation_logic(self):
-        """Test alert escalation logic"""
-        alert = {
+        """Test alert escalation logic"""        alert = {
             "id": "alert_123",
             "severity": "high",
             "created_at": datetime.now() - timedelta(hours=2),
@@ -295,8 +278,7 @@ class TestAlertSystem(unittest.TestCase):
         self.assertTrue(should_escalate)  # 2 hours > 1 hour limit, not acknowledged
 
     def test_bulk_alert_processing(self):
-        """Test bulk alert processing for multiple violations"""
-        violations = [
+        """Test bulk alert processing for multiple violations"""        violations = [
             {"content_id": "content_1", "similarity_score": 0.95, "platform": "youtube"},
             {"content_id": "content_1", "similarity_score": 0.88, "platform": "instagram"},
             {"content_id": "content_2", "similarity_score": 0.92, "platform": "tiktok"},
@@ -338,8 +320,7 @@ class TestAlertSystem(unittest.TestCase):
         self.assertIn("instagram", summary["platforms"])
 
     def test_alert_delivery_status_tracking(self):
-        """Test alert delivery status tracking"""
-        alert_delivery_log = {
+        """Test alert delivery status tracking"""        alert_delivery_log = {
             "alert_id": "alert_123",
             "channels": {
                 "email": {"status": "sent", "timestamp": datetime.now(), "error": None},

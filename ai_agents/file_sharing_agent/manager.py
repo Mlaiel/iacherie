@@ -1,5 +1,4 @@
-"""
-File Sharing Manager - Ultra-Advanced Enterprise Management System
+"""File Sharing Manager - Ultra-Advanced Enterprise Management System
 
 Unified interface for the entire file sharing system providing comprehensive
 control, monitoring, and optimization capabilities.
@@ -11,9 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime
@@ -36,15 +33,13 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class FileSharingSystemStatus:
-    """Overall file sharing system status"""
-    is_healthy: bool = True
+    """Overall file sharing system status"""    is_healthy: bool = True
     active_operations: int = 0
     system_load: float = 0.0
     last_updated: datetime = None
 
 class FileSharingManager(BaseAgent):
-    """
-    Master File Sharing Manager
+    """    Master File Sharing Manager
     
     Unified interface for the entire file sharing system providing:
     - Single point of control for all file sharing operations
@@ -53,8 +48,7 @@ class FileSharingManager(BaseAgent):
     - Performance analytics and reporting
     - Resource management and scaling
     - Error handling and recovery
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
         
@@ -67,8 +61,7 @@ class FileSharingManager(BaseAgent):
         logger.info("FileSharingManager initialized")
 
     async def start(self) -> None:
-        """Start the complete file sharing system"""
-        if self.is_running:
+        """Start the complete file sharing system"""        if self.is_running:
             logger.warning("File Sharing system is already running")
             return
         
@@ -83,8 +76,7 @@ class FileSharingManager(BaseAgent):
             raise
 
     async def get_system_status(self) -> FileSharingSystemStatus:
-        """Get comprehensive system status"""
-        try:
+        """Get comprehensive system status"""        try:
             return FileSharingSystemStatus(
                 is_healthy=self.is_running,
                 active_operations=0,  # Implementation specific
@@ -96,8 +88,7 @@ class FileSharingManager(BaseAgent):
             return FileSharingSystemStatus(is_healthy=False)
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of the entire file sharing system"""
-        if not self.is_running:
+        """Graceful shutdown of the entire file sharing system"""        if not self.is_running:
             logger.warning("File Sharing system is not running")
             return
         
@@ -111,8 +102,7 @@ class FileSharingManager(BaseAgent):
             logger.error(f"Failed to shutdown file sharing system: {e}")
 
     async def process(self, data: Dict[str, Any]) -> AgentResponse:
-        """Base agent interface implementation"""
-        try:
+        """Base agent interface implementation"""        try:
             # Implementation specific to file sharing operations
             result = await self.engine.process(data)
             return AgentResponse(success=True, data=result)

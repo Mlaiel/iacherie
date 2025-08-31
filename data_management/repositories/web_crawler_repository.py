@@ -1,5 +1,4 @@
-"""
-🕷️ Web Crawler Repository - IA Influencer Agent Platform Enterprise
+"""🕷️ Web Crawler Repository - IA Influencer Agent Platform Enterprise
 ===================================================================
 Module: backend/data_management/repositories/web_crawler_repository.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -20,9 +19,7 @@ IA protection rights → Web Surveillance → Violation Detection → Automated 
 WEB CRAWLER REPOSITORY ARCHITECTURE:
 Crawl Scheduling → Multi-Platform Monitoring → Content Fingerprinting → 
 Violation Detection → Evidence Collection → Alert Generation → Takedown Processing
-"""
-
-from typing import Dict, List, Optional, Any, Tuple, Union, Set
+"""from typing import Dict, List, Optional, Any, Tuple, Union, Set
 import logging
 import asyncio
 import hashlib
@@ -39,8 +36,7 @@ from bs4 import BeautifulSoup
 from .base_repository import BaseRepository, AsyncBaseRepository, OperationType
 
 class CrawlStatus(Enum):
-    """Crawl job status"""
-    PENDING = "pending"
+    """Crawl job status"""    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -48,8 +44,7 @@ class CrawlStatus(Enum):
     CANCELLED = "cancelled"
 
 class PlatformType(Enum):
-    """Supported platforms for crawling"""
-    YOUTUBE = "youtube"
+    """Supported platforms for crawling"""    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     TWITTER = "twitter"
@@ -63,8 +58,7 @@ class PlatformType(Enum):
     GENERIC_WEB = "generic_web"
 
 class ViolationType(Enum):
-    """Types of content violations"""
-    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
+    """Types of content violations"""    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     UNAUTHORIZED_USE = "unauthorized_use"
     TRADEMARK_VIOLATION = "trademark_violation"
     PLAGIARISM = "plagiarism"
@@ -72,8 +66,7 @@ class ViolationType(Enum):
     REVENUE_THEFT = "revenue_theft"
 
 class EvidenceType(Enum):
-    """Types of evidence collected"""
-    SCREENSHOT = "screenshot"
+    """Types of evidence collected"""    SCREENSHOT = "screenshot"
     VIDEO_RECORDING = "video_recording"
     AUDIO_SAMPLE = "audio_sample"
     HTML_SOURCE = "html_source"
@@ -82,8 +75,7 @@ class EvidenceType(Enum):
 
 @dataclass
 class CrawlJob:
-    """Web crawl job configuration"""
-    job_id: str
+    """Web crawl job configuration"""    job_id: str
     creator_id: str
     platform: PlatformType
     search_terms: List[str]
@@ -107,8 +99,7 @@ class CrawlJob:
 
 @dataclass
 class DetectedContent:
-    """Content detected during crawling"""
-    detection_id: str
+    """Content detected during crawling"""    detection_id: str
     job_id: str
     creator_id: str
     original_content_id: str
@@ -133,8 +124,7 @@ class DetectedContent:
 
 @dataclass
 class Evidence:
-    """Evidence collected for violations"""
-    evidence_id: str
+    """Evidence collected for violations"""    evidence_id: str
     detection_id: str
     evidence_type: EvidenceType
     file_path: str
@@ -147,8 +137,7 @@ class Evidence:
 
 @dataclass
 class CrawlMetrics:
-    """Crawl performance metrics"""
-    job_id: str
+    """Crawl performance metrics"""    job_id: str
     pages_crawled: int
     pages_failed: int
     content_detected: int
@@ -160,8 +149,7 @@ class CrawlMetrics:
     errors_encountered: List[str]
 
 class WebCrawlerRepository(BaseRepository[CrawlJob]):
-    """
-    Advanced web crawler repository for content protection monitoring
+    """    Advanced web crawler repository for content protection monitoring
     
     Features:
     - Multi-platform content monitoring
@@ -171,8 +159,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     - Automated takedown processing
     - Performance optimization
     - Compliance with robots.txt and rate limits
-    """
-    
+    """    
     def __init__(self, db_connection=None, cache_manager=None, 
                  fingerprint_service=None, evidence_service=None,
                  takedown_service=None, notification_service=None):
@@ -236,24 +223,20 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
         }
     
     def _generate_job_id(self) -> str:
-        """Generate unique crawl job ID"""
-        timestamp = datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S%f")
+        """Generate unique crawl job ID"""        timestamp = datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S%f")
         return f"crawl_{timestamp}_{hashlib.md5(timestamp.encode()).hexdigest()[:8]}"
     
     def _generate_detection_id(self) -> str:
-        """Generate unique detection ID"""
-        timestamp = datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S%f")
+        """Generate unique detection ID"""        timestamp = datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S%f")
         return f"detect_{timestamp}_{hashlib.md5(timestamp.encode()).hexdigest()[:8]}"
     
     def _generate_evidence_id(self) -> str:
-        """Generate unique evidence ID"""
-        timestamp = datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S%f")
+        """Generate unique evidence ID"""        timestamp = datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S%f")
         return f"evidence_{timestamp}_{hashlib.md5(timestamp.encode()).hexdigest()[:8]}"
     
     def _build_search_urls(self, platform: PlatformType, 
                           search_terms: List[str]) -> List[str]:
-        """Build search URLs for the platform"""
-        try:
+        """Build search URLs for the platform"""        try:
             config = self.platform_configs.get(platform)
             if not config:
                 raise ValueError(f"Unsupported platform: {platform}")
@@ -276,8 +259,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     
     def _extract_content_metadata(self, html: str, url: str, 
                                 platform: PlatformType) -> Dict[str, Any]:
-        """Extract content metadata from HTML"""
-        try:
+        """Extract content metadata from HTML"""        try:
             soup = BeautifulSoup(html, 'html.parser')
             metadata = {}
             
@@ -306,8 +288,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
             return {}
     
     def _extract_title(self, soup: BeautifulSoup) -> Optional[str]:
-        """Extract page title"""
-        title_tag = soup.find('title')
+        """Extract page title"""        title_tag = soup.find('title')
         if title_tag:
             return title_tag.get_text().strip()
         
@@ -319,8 +300,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
         return None
     
     def _extract_description(self, soup: BeautifulSoup) -> Optional[str]:
-        """Extract page description"""
-        desc_tag = soup.find('meta', attrs={'name': 'description'})
+        """Extract page description"""        desc_tag = soup.find('meta', attrs={'name': 'description'})
         if desc_tag:
             return desc_tag.get('content', '').strip()
         
@@ -332,8 +312,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
         return None
     
     def _extract_canonical_url(self, soup: BeautifulSoup, fallback_url: str) -> str:
-        """Extract canonical URL"""
-        canonical = soup.find('link', rel='canonical')
+        """Extract canonical URL"""        canonical = soup.find('link', rel='canonical')
         if canonical:
             return canonical.get('href', fallback_url)
         
@@ -345,8 +324,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
         return fallback_url
     
     def _extract_opengraph_data(self, soup: BeautifulSoup) -> Dict[str, str]:
-        """Extract Open Graph metadata"""
-        og_data = {}
+        """Extract Open Graph metadata"""        og_data = {}
         og_tags = soup.find_all('meta', property=lambda x: x and x.startswith('og:'))
         
         for tag in og_tags:
@@ -358,8 +336,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
         return og_data
     
     def _extract_twitter_data(self, soup: BeautifulSoup) -> Dict[str, str]:
-        """Extract Twitter Card metadata"""
-        twitter_data = {}
+        """Extract Twitter Card metadata"""        twitter_data = {}
         twitter_tags = soup.find_all('meta', attrs={'name': lambda x: x and x.startswith('twitter:')})
         
         for tag in twitter_tags:
@@ -371,8 +348,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
         return twitter_data
     
     def _extract_schema_data(self, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Extract structured data (JSON-LD, microdata)"""
-        schema_data = {}
+        """Extract structured data (JSON-LD, microdata)"""        schema_data = {}
         
         # Extract JSON-LD
         json_ld_scripts = soup.find_all('script', type='application/ld+json')
@@ -391,8 +367,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
         return schema_data
     
     def _extract_youtube_metadata(self, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Extract YouTube-specific metadata"""
-        youtube_data = {}
+        """Extract YouTube-specific metadata"""        youtube_data = {}
         
         # Video ID extraction
         video_id_pattern = r'watch\?v=([a-zA-Z0-9_-]{11})'
@@ -411,8 +386,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
         return youtube_data
     
     def _extract_tiktok_metadata(self, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Extract TikTok-specific metadata"""
-        tiktok_data = {}
+        """Extract TikTok-specific metadata"""        tiktok_data = {}
         
         # TikTok video ID
         video_id_pattern = r'/video/(\d+)'
@@ -428,8 +402,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
         return tiktok_data
     
     def _extract_instagram_metadata(self, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Extract Instagram-specific metadata"""
-        instagram_data = {}
+        """Extract Instagram-specific metadata"""        instagram_data = {}
         
         # Instagram media ID
         media_id_pattern = r'/p/([a-zA-Z0-9_-]+)/'
@@ -440,8 +413,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
         return instagram_data
     
     def _extract_soundcloud_metadata(self, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Extract SoundCloud-specific metadata"""
-        soundcloud_data = {}
+        """Extract SoundCloud-specific metadata"""        soundcloud_data = {}
         
         # Track URL pattern
         track_pattern = r'soundcloud\.com/([^/]+)/([^/?]+)'
@@ -454,8 +426,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     
     def _check_content_similarity(self, content_metadata: Dict[str, Any],
                                 fingerprints: List[str]) -> Tuple[float, List[str]]:
-        """Check content similarity against known fingerprints"""
-        try:
+        """Check content similarity against known fingerprints"""        try:
             if not self.fingerprint_service:
                 return 0.0, []
             
@@ -486,8 +457,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     
     def _capture_evidence(self, url: str, content_metadata: Dict[str, Any],
                         detection_id: str) -> List[Evidence]:
-        """Capture evidence for detected violation"""
-        try:
+        """Capture evidence for detected violation"""        try:
             evidence_list = []
             
             # Capture screenshot
@@ -548,8 +518,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
             return []
     
     def _capture_screenshot(self, url: str, detection_id: str) -> Optional[str]:
-        """Capture screenshot of the page"""
-        try:
+        """Capture screenshot of the page"""        try:
             from selenium import webdriver
             from selenium.webdriver.chrome.options import Options
             
@@ -589,8 +558,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     
     def _save_html_source(self, url: str, content_metadata: Dict[str, Any], 
                          detection_id: str) -> Optional[str]:
-        """Save HTML source of the page"""
-        try:
+        """Save HTML source of the page"""        try:
             # Get HTML content
             response = requests.get(url, timeout=30)
             response.raise_for_status()
@@ -613,8 +581,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     
     def _save_metadata(self, content_metadata: Dict[str, Any], 
                       detection_id: str) -> Optional[str]:
-        """Save extracted metadata as JSON"""
-        try:
+        """Save extracted metadata as JSON"""        try:
             # Create evidence directory
             evidence_dir = f"{self.global_config['evidence_storage_path']}/{detection_id}"
             import os
@@ -632,16 +599,14 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
             return None
     
     def _get_file_size(self, file_path: str) -> int:
-        """Get file size in bytes"""
-        try:
+        """Get file size in bytes"""        try:
             import os
             return os.path.getsize(file_path)
         except:
             return 0
     
     def _calculate_file_hash(self, file_path: str) -> str:
-        """Calculate SHA-256 hash of file"""
-        try:
+        """Calculate SHA-256 hash of file"""        try:
             import hashlib
             hash_sha256 = hashlib.sha256()
             with open(file_path, "rb") as f:
@@ -653,8 +618,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     
     def _process_detected_content(self, job: CrawlJob, url: str, 
                                 content_metadata: Dict[str, Any]) -> Optional[DetectedContent]:
-        """Process and analyze detected content"""
-        try:
+        """Process and analyze detected content"""        try:
             # Check similarity against fingerprints
             similarity_score, matching_fingerprints = self._check_content_similarity(
                 content_metadata, job.fingerprints
@@ -715,8 +679,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     
     def _determine_violation_type(self, content_metadata: Dict[str, Any], 
                                 similarity_score: float) -> ViolationType:
-        """Determine the type of violation based on content analysis"""
-        # This would be more sophisticated in practice
+        """Determine the type of violation based on content analysis"""        # This would be more sophisticated in practice
         if similarity_score > 0.95:
             return ViolationType.COPYRIGHT_INFRINGEMENT
         elif similarity_score > 0.9:
@@ -727,8 +690,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     def _calculate_confidence_level(self, similarity_score: float,
                                   matching_fingerprints: List[str],
                                   content_metadata: Dict[str, Any]) -> float:
-        """Calculate confidence level for the detection"""
-        # Base confidence from similarity score
+        """Calculate confidence level for the detection"""        # Base confidence from similarity score
         confidence = similarity_score
         
         # Boost confidence for multiple fingerprint matches
@@ -743,13 +705,11 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
         return confidence
     
     def _parse_upload_date(self, content_metadata: Dict[str, Any]) -> Optional[datetime]:
-        """Parse upload date from metadata"""
-        # This would implement date parsing logic
+        """Parse upload date from metadata"""        # This would implement date parsing logic
         return None
     
     def _parse_int_metadata(self, content_metadata: Dict[str, Any], key: str) -> Optional[int]:
-        """Parse integer metadata fields"""
-        try:
+        """Parse integer metadata fields"""        try:
             value = content_metadata.get(key)
             if value:
                 return int(str(value).replace(',', '').replace(' ', ''))
@@ -758,8 +718,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
         return None
     
     def _estimate_revenue_loss(self, content_metadata: Dict[str, Any]) -> Optional[float]:
-        """Estimate potential revenue loss from violation"""
-        try:
+        """Estimate potential revenue loss from violation"""        try:
             # This would implement revenue estimation logic based on views, platform, etc.
             view_count = self._parse_int_metadata(content_metadata, 'view_count')
             if view_count:
@@ -771,8 +730,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     
     # Base Repository Implementation
     def create(self, entity: CrawlJob, **kwargs) -> CrawlJob:
-        """Create new crawl job"""
-        try:
+        """Create new crawl job"""        try:
             self._validate_entity(entity)
             
             # Save to database
@@ -801,8 +759,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
             raise
     
     def get_by_id(self, entity_id: str, use_cache: bool = True) -> Optional[CrawlJob]:
-        """Get crawl job by ID"""
-        try:
+        """Get crawl job by ID"""        try:
             # Check cache first
             if use_cache and self._cache_enabled and self.cache:
                 cache_key = self._generate_cache_key("get_by_id", entity_id=entity_id)
@@ -828,8 +785,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
             raise
     
     def update(self, entity: CrawlJob, **kwargs) -> CrawlJob:
-        """Update crawl job"""
-        try:
+        """Update crawl job"""        try:
             self._validate_entity(entity)
             
             # Update database
@@ -856,8 +812,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
             raise
     
     def delete(self, entity_id: str, soft_delete: bool = True) -> bool:
-        """Delete crawl job"""
-        try:
+        """Delete crawl job"""        try:
             if soft_delete:
                 job = self.get_by_id(entity_id)
                 if job:
@@ -880,8 +835,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     
     def list(self, filters: Dict[str, Any] = None, limit: int = 100, 
              offset: int = 0, order_by: str = None) -> List[CrawlJob]:
-        """List crawl jobs with filtering"""
-        try:
+        """List crawl jobs with filtering"""        try:
             query_filters = filters or {}
             
             # Database query would be built here
@@ -906,8 +860,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
                           search_terms: List[str], fingerprints: List[str],
                           scheduled_at: datetime = None, priority: int = 5,
                           **kwargs) -> CrawlJob:
-        """Schedule a new crawl job"""
-        try:
+        """Schedule a new crawl job"""        try:
             job_id = self._generate_job_id()
             
             # Build target URLs
@@ -947,8 +900,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
             raise
     
     def get_pending_jobs(self, limit: int = 10) -> List[CrawlJob]:
-        """Get pending crawl jobs ordered by priority and schedule time"""
-        filters = {'status': CrawlStatus.PENDING.value}
+        """Get pending crawl jobs ordered by priority and schedule time"""        filters = {'status': CrawlStatus.PENDING.value}
         return self.list(
             filters=filters, 
             limit=limit, 
@@ -957,8 +909,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     
     def get_jobs_by_creator(self, creator_id: str, 
                            status: CrawlStatus = None) -> List[CrawlJob]:
-        """Get crawl jobs for a specific creator"""
-        filters = {'creator_id': creator_id}
+        """Get crawl jobs for a specific creator"""        filters = {'creator_id': creator_id}
         if status:
             filters['status'] = status.value
         
@@ -966,8 +917,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     
     def get_jobs_by_platform(self, platform: PlatformType,
                            status: CrawlStatus = None) -> List[CrawlJob]:
-        """Get crawl jobs for a specific platform"""
-        filters = {'platform': platform.value}
+        """Get crawl jobs for a specific platform"""        filters = {'platform': platform.value}
         if status:
             filters['status'] = status.value
         
@@ -975,8 +925,7 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
 
 
 class AsyncWebCrawlerRepository(AsyncBaseRepository[CrawlJob]):
-    """Asynchronous web crawler repository for high-performance operations"""
-    
+    """Asynchronous web crawler repository for high-performance operations"""    
     def __init__(self, db_connection=None, cache_manager=None, 
                  fingerprint_service=None, evidence_service=None,
                  takedown_service=None, notification_service=None):
@@ -989,8 +938,7 @@ class AsyncWebCrawlerRepository(AsyncBaseRepository[CrawlJob]):
         self.logger = logging.getLogger(__name__)
     
     async def create(self, entity: CrawlJob, **kwargs) -> CrawlJob:
-        """Create crawl job asynchronously"""
-        try:
+        """Create crawl job asynchronously"""        try:
             await self._validate_entity(entity)
             
             # Save to database asynchronously
@@ -1019,8 +967,7 @@ class AsyncWebCrawlerRepository(AsyncBaseRepository[CrawlJob]):
             raise
     
     async def get_by_id(self, entity_id: str, use_cache: bool = True) -> Optional[CrawlJob]:
-        """Get crawl job by ID asynchronously"""
-        try:
+        """Get crawl job by ID asynchronously"""        try:
             # Check cache first
             if use_cache and self._cache_enabled and self.cache:
                 cache_key = self._generate_cache_key("get_by_id", entity_id=entity_id)
@@ -1046,8 +993,7 @@ class AsyncWebCrawlerRepository(AsyncBaseRepository[CrawlJob]):
             raise
     
     async def update(self, entity: CrawlJob, **kwargs) -> CrawlJob:
-        """Update crawl job asynchronously"""
-        try:
+        """Update crawl job asynchronously"""        try:
             await self._validate_entity(entity)
             
             # Update database asynchronously
@@ -1074,8 +1020,7 @@ class AsyncWebCrawlerRepository(AsyncBaseRepository[CrawlJob]):
             raise
     
     async def delete(self, entity_id: str, soft_delete: bool = True) -> bool:
-        """Delete crawl job asynchronously"""
-        try:
+        """Delete crawl job asynchronously"""        try:
             if soft_delete:
                 job = await self.get_by_id(entity_id)
                 if job:
@@ -1098,8 +1043,7 @@ class AsyncWebCrawlerRepository(AsyncBaseRepository[CrawlJob]):
     
     async def list(self, filters: Dict[str, Any] = None, limit: int = 100, 
                   offset: int = 0, order_by: str = None) -> List[CrawlJob]:
-        """List crawl jobs asynchronously"""
-        try:
+        """List crawl jobs asynchronously"""        try:
             query_filters = filters or {}
             
             # Async database query would be built here
@@ -1119,8 +1063,7 @@ class AsyncWebCrawlerRepository(AsyncBaseRepository[CrawlJob]):
             raise
     
     async def execute_crawl_job_async(self, job: CrawlJob) -> CrawlMetrics:
-        """Execute a crawl job asynchronously with full monitoring"""
-        start_time = datetime.now()
+        """Execute a crawl job asynchronously with full monitoring"""        start_time = datetime.now()
         
         try:
             self.logger.info(f"Starting async crawl job execution: {job.job_id}")
@@ -1200,8 +1143,7 @@ class AsyncWebCrawlerRepository(AsyncBaseRepository[CrawlJob]):
             raise
     
     async def _extract_content_from_url(self, url: str, content_types: List[str]) -> List[Dict[str, Any]]:
-        """Extract content from a URL based on specified content types"""
-        content_items = []
+        """Extract content from a URL based on specified content types"""        content_items = []
         
         try:
             # Simulate content extraction
@@ -1236,8 +1178,7 @@ class AsyncWebCrawlerRepository(AsyncBaseRepository[CrawlJob]):
         return content_items
     
     async def _store_crawled_content(self, content: Dict[str, Any], job_id: str) -> None:
-        """Store crawled content with job association"""
-        try:
+        """Store crawled content with job association"""        try:
             # Add job metadata
             content["job_id"] = job_id
             content["stored_at"] = datetime.now().isoformat()

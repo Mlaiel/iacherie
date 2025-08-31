@@ -1,5 +1,4 @@
-"""
-Content Processors Module - Industrial Multi-Format Processing Engine
+"""Content Processors Module - Industrial Multi-Format Processing Engine
 
 Advanced processing capabilities for audio, video, image, and text content.
 Handles format conversion, quality enhancement, and metadata extraction.
@@ -11,9 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from abc import ABC, abstractmethod
 from typing import Dict, Any, List, Optional, Union, BinaryIO
@@ -65,8 +62,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ProcessingResult:
-    """Result of content processing operation"""
-    success: bool
+    """Result of content processing operation"""    success: bool
     processed_content: Optional[Union[bytes, str, Dict[str, Any]]]
     metadata: Dict[str, Any]
     format_info: Dict[str, Any]
@@ -77,8 +73,7 @@ class ProcessingResult:
 
 @dataclass  
 class ContentMetadata:
-    """Comprehensive content metadata structure"""
-    file_type: str
+    """Comprehensive content metadata structure"""    file_type: str
     format: str
     size: int
     duration: Optional[float]
@@ -95,8 +90,7 @@ class ContentMetadata:
 
 
 class BaseProcessor(ABC):
-    """Abstract base class for all content processors"""
-    
+    """Abstract base class for all content processors"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -104,27 +98,22 @@ class BaseProcessor(ABC):
     @abstractmethod
     async def process(self, content: Union[bytes, str, BinaryIO], 
                      options: Optional[Dict[str, Any]] = None) -> ProcessingResult:
-        """Process content and return result"""
-        pass
+        """Process content and return result"""        pass
         
     @abstractmethod
     def get_supported_formats(self) -> List[str]:
-        """Get list of supported formats for this processor"""
-        pass
+        """Get list of supported formats for this processor"""        pass
         
     def _calculate_checksum(self, data: bytes) -> str:
-        """Calculate SHA-256 checksum of content"""
-        return hashlib.sha256(data).hexdigest()
+        """Calculate SHA-256 checksum of content"""        return hashlib.sha256(data).hexdigest()
         
     def _get_mime_type(self, file_path: str) -> str:
-        """Get MIME type from file path"""
-        mime_type, _ = mimetypes.guess_type(file_path)
+        """Get MIME type from file path"""        mime_type, _ = mimetypes.guess_type(file_path)
         return mime_type or 'application/octet-stream'
 
 
 class AudioProcessor(BaseProcessor):
-    """Industrial-grade audio content processor"""
-    
+    """Industrial-grade audio content processor"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
         if not AUDIO_AVAILABLE:
@@ -138,8 +127,7 @@ class AudioProcessor(BaseProcessor):
         
     async def process(self, content: Union[bytes, str, BinaryIO], 
                      options: Optional[Dict[str, Any]] = None) -> ProcessingResult:
-        """Process audio content with advanced analysis"""
-        start_time = asyncio.get_event_loop().time()
+        """Process audio content with advanced analysis"""        start_time = asyncio.get_event_loop().time()
         options = options or {}
         
         try:
@@ -201,8 +189,7 @@ class AudioProcessor(BaseProcessor):
     
     async def _extract_audio_metadata(self, y: np.ndarray, sr: int, 
                                     audio_data: bytes) -> ContentMetadata:
-        """Extract comprehensive audio metadata"""
-        duration = len(y) / sr
+        """Extract comprehensive audio metadata"""        duration = len(y) / sr
         
         return ContentMetadata(
             file_type='audio',
@@ -222,8 +209,7 @@ class AudioProcessor(BaseProcessor):
         )
     
     async def _analyze_audio_quality(self, y: np.ndarray, sr: int) -> Dict[str, float]:
-        """Analyze audio quality metrics"""
-        try:
+        """Analyze audio quality metrics"""        try:
             # RMS Energy
             rms_energy = float(np.sqrt(np.mean(y**2)))
             
@@ -261,8 +247,7 @@ class AudioProcessor(BaseProcessor):
     
     async def _apply_audio_processing(self, y: np.ndarray, sr: int, 
                                     options: Dict[str, Any]) -> bytes:
-        """Apply audio processing effects and optimizations"""
-        processed_y = y.copy()
+        """Apply audio processing effects and optimizations"""        processed_y = y.copy()
         
         # Noise reduction
         if options.get('noise_reduction', False):
@@ -284,8 +269,7 @@ class AudioProcessor(BaseProcessor):
         return self._array_to_audio_bytes(processed_y, sr, options.get('output_format', 'wav'))
     
     def _reduce_noise(self, y: np.ndarray, sr: int) -> np.ndarray:
-        """Simple noise reduction using spectral gating"""
-        # This is a simplified noise reduction - in production use more sophisticated algorithms
+        """Simple noise reduction using spectral gating"""        # This is a simplified noise reduction - in production use more sophisticated algorithms
         stft = librosa.stft(y)
         magnitude = np.abs(stft)
         phase = np.angle(stft)
@@ -300,8 +284,7 @@ class AudioProcessor(BaseProcessor):
     
     def _compress_dynamic_range(self, y: np.ndarray, ratio: float = 4.0, 
                                threshold: float = -20.0) -> np.ndarray:
-        """Apply dynamic range compression"""
-        # Convert to dB
+        """Apply dynamic range compression"""        # Convert to dB
         y_db = librosa.amplitude_to_db(np.abs(y))
         
         # Apply compression above threshold
@@ -316,8 +299,7 @@ class AudioProcessor(BaseProcessor):
         return compressed_linear * np.sign(y)
     
     def _apply_eq(self, y: np.ndarray, sr: int, eq_settings: Dict[str, float]) -> np.ndarray:
-        """Apply EQ adjustments"""
-        # This is a simplified EQ - in production use more sophisticated filtering
+        """Apply EQ adjustments"""        # This is a simplified EQ - in production use more sophisticated filtering
         processed = y.copy()
         
         for freq, gain in eq_settings.items():
@@ -333,8 +315,7 @@ class AudioProcessor(BaseProcessor):
         return processed
     
     def _array_to_audio_bytes(self, y: np.ndarray, sr: int, format: str) -> bytes:
-        """Convert numpy array to audio bytes in specified format"""
-        import io
+        """Convert numpy array to audio bytes in specified format"""        import io
         import tempfile
         
         with tempfile.NamedTemporaryFile(suffix=f'.{format}', delete=False) as temp_file:
@@ -343,13 +324,11 @@ class AudioProcessor(BaseProcessor):
             return temp_file.read()
     
     def get_supported_formats(self) -> List[str]:
-        """Get supported audio formats"""
-        return self.supported_formats
+        """Get supported audio formats"""        return self.supported_formats
 
 
 class VideoProcessor(BaseProcessor):
-    """Industrial-grade video content processor"""
-    
+    """Industrial-grade video content processor"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
         if not VIDEO_AVAILABLE:
@@ -363,8 +342,7 @@ class VideoProcessor(BaseProcessor):
         
     async def process(self, content: Union[bytes, str, BinaryIO], 
                      options: Optional[Dict[str, Any]] = None) -> ProcessingResult:
-        """Process video content with advanced analysis"""
-        start_time = asyncio.get_event_loop().time()
+        """Process video content with advanced analysis"""        start_time = asyncio.get_event_loop().time()
         options = options or {}
         
         try:
@@ -427,8 +405,7 @@ class VideoProcessor(BaseProcessor):
     
     async def _extract_video_metadata(self, cap: cv2.VideoCapture, 
                                     video_data: bytes) -> ContentMetadata:
-        """Extract comprehensive video metadata"""
-        fps = cap.get(cv2.CAP_PROP_FPS)
+        """Extract comprehensive video metadata"""        fps = cap.get(cv2.CAP_PROP_FPS)
         frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
         width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
         height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
@@ -452,8 +429,7 @@ class VideoProcessor(BaseProcessor):
         )
     
     async def _analyze_video_quality(self, cap: cv2.VideoCapture) -> Dict[str, float]:
-        """Analyze video quality metrics"""
-        try:
+        """Analyze video quality metrics"""        try:
             # Sample frames for quality analysis
             frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
             sample_size = min(30, frame_count)  # Sample up to 30 frames
@@ -508,8 +484,7 @@ class VideoProcessor(BaseProcessor):
     
     async def _apply_video_processing(self, video_path: str, 
                                     options: Dict[str, Any]) -> bytes:
-        """Apply video processing and optimization"""
-        try:
+        """Apply video processing and optimization"""        try:
             # Load video with moviepy for processing
             clip = mp.VideoFileClip(video_path)
             processed_clip = clip
@@ -557,8 +532,7 @@ class VideoProcessor(BaseProcessor):
             return Path(video_path).read_bytes()  # Return original on failure
     
     def _apply_color_correction(self, clip):
-        """Apply basic color correction to video clip"""
-        def color_correct(image):
+        """Apply basic color correction to video clip"""        def color_correct(image):
             # Simple auto-contrast enhancement
             image_pil = Image.fromarray(image)
             enhancer = ImageEnhance.Contrast(image_pil)
@@ -568,13 +542,11 @@ class VideoProcessor(BaseProcessor):
         return clip.fl_image(color_correct)
     
     def get_supported_formats(self) -> List[str]:
-        """Get supported video formats"""
-        return self.supported_formats
+        """Get supported video formats"""        return self.supported_formats
 
 
 class ImageProcessor(BaseProcessor):
-    """Industrial-grade image content processor"""
-    
+    """Industrial-grade image content processor"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
         if not IMAGE_AVAILABLE:
@@ -588,8 +560,7 @@ class ImageProcessor(BaseProcessor):
         
     async def process(self, content: Union[bytes, str, BinaryIO], 
                      options: Optional[Dict[str, Any]] = None) -> ProcessingResult:
-        """Process image content with advanced analysis"""
-        start_time = asyncio.get_event_loop().time()
+        """Process image content with advanced analysis"""        start_time = asyncio.get_event_loop().time()
         options = options or {}
         
         try:
@@ -656,8 +627,7 @@ class ImageProcessor(BaseProcessor):
     
     async def _extract_image_metadata(self, image: Image.Image, 
                                     image_data: bytes) -> ContentMetadata:
-        """Extract comprehensive image metadata"""
-        # Get EXIF data if available
+        """Extract comprehensive image metadata"""        # Get EXIF data if available
         exif_data = {}
         if hasattr(image, '_getexif') and image._getexif() is not None:
             exif_data = dict(image._getexif().items())
@@ -680,8 +650,7 @@ class ImageProcessor(BaseProcessor):
         )
     
     async def _analyze_image_quality(self, image: Image.Image) -> Dict[str, float]:
-        """Analyze image quality metrics"""
-        try:
+        """Analyze image quality metrics"""        try:
             # Convert to numpy array for analysis
             img_array = np.array(image)
             
@@ -740,8 +709,7 @@ class ImageProcessor(BaseProcessor):
     
     async def _apply_image_processing(self, image: Image.Image, 
                                     options: Dict[str, Any]) -> Image.Image:
-        """Apply image processing and optimization"""
-        processed = image.copy()
+        """Apply image processing and optimization"""        processed = image.copy()
         
         # Resize if requested
         if 'resize' in options:
@@ -774,8 +742,7 @@ class ImageProcessor(BaseProcessor):
         return processed
     
     def _auto_enhance_image(self, image: Image.Image) -> Image.Image:
-        """Apply automatic image enhancements"""
-        enhanced = image
+        """Apply automatic image enhancements"""        enhanced = image
         
         # Auto-contrast
         enhancer = ImageEnhance.Contrast(enhanced)
@@ -797,8 +764,7 @@ class ImageProcessor(BaseProcessor):
         return enhanced
     
     def _apply_image_filter(self, image: Image.Image, filter_type: str) -> Image.Image:
-        """Apply specific image filter"""
-        filter_map = {
+        """Apply specific image filter"""        filter_map = {
             'blur': ImageFilter.BLUR,
             'detail': ImageFilter.DETAIL,
             'edge_enhance': ImageFilter.EDGE_ENHANCE,
@@ -817,13 +783,11 @@ class ImageProcessor(BaseProcessor):
         return image
     
     def get_supported_formats(self) -> List[str]:
-        """Get supported image formats"""
-        return self.supported_formats
+        """Get supported image formats"""        return self.supported_formats
 
 
 class TextProcessor(BaseProcessor):
-    """Industrial-grade text content processor"""
-    
+    """Industrial-grade text content processor"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
         if not TEXT_AVAILABLE:
@@ -842,8 +806,7 @@ class TextProcessor(BaseProcessor):
     
     async def process(self, content: Union[bytes, str, BinaryIO], 
                      options: Optional[Dict[str, Any]] = None) -> ProcessingResult:
-        """Process text content with advanced analysis"""
-        start_time = asyncio.get_event_loop().time()
+        """Process text content with advanced analysis"""        start_time = asyncio.get_event_loop().time()
         options = options or {}
         
         try:
@@ -904,8 +867,7 @@ class TextProcessor(BaseProcessor):
     
     async def _extract_text_metadata(self, text_data: str, 
                                    raw_bytes: bytes) -> ContentMetadata:
-        """Extract comprehensive text metadata"""
-        # Basic statistics
+        """Extract comprehensive text metadata"""        # Basic statistics
         word_count = len(text_data.split())
         char_count = len(text_data)
         line_count = len(text_data.splitlines())
@@ -956,8 +918,7 @@ class TextProcessor(BaseProcessor):
         )
     
     async def _analyze_text_quality(self, text_data: str) -> Dict[str, float]:
-        """Analyze text quality and characteristics"""
-        try:
+        """Analyze text quality and characteristics"""        try:
             # Basic metrics
             word_count = len(text_data.split())
             char_count = len(text_data)
@@ -1021,8 +982,7 @@ class TextProcessor(BaseProcessor):
     
     async def _apply_text_processing(self, text_data: str, 
                                    options: Dict[str, Any]) -> str:
-        """Apply text processing and optimization"""
-        processed_text = text_data
+        """Apply text processing and optimization"""        processed_text = text_data
         
         # Clean and normalize
         if options.get('clean', False):
@@ -1046,8 +1006,7 @@ class TextProcessor(BaseProcessor):
         return processed_text
     
     def _clean_text(self, text: str) -> str:
-        """Clean and normalize text"""
-        import re
+        """Clean and normalize text"""        import re
         
         # Remove extra whitespace
         cleaned = re.sub(r'\s+', ' ', text)
@@ -1061,8 +1020,7 @@ class TextProcessor(BaseProcessor):
         return cleaned.strip()
     
     def _extract_keywords(self, text: str, max_keywords: int = 20) -> List[str]:
-        """Extract key terms from text"""
-        try:
+        """Extract key terms from text"""        try:
             if not TEXT_AVAILABLE:
                 # Simple fallback: most frequent words
                 words = text.lower().split()
@@ -1097,8 +1055,7 @@ class TextProcessor(BaseProcessor):
             return []
     
     def _generate_summary(self, text: str, num_sentences: int = 3) -> str:
-        """Generate text summary (extractive)"""
-        try:
+        """Generate text summary (extractive)"""        try:
             sentences = [s.strip() for s in text.split('.') if s.strip()]
             if len(sentences) <= num_sentences:
                 return text
@@ -1128,8 +1085,7 @@ class TextProcessor(BaseProcessor):
             return text[:500] + "..." if len(text) > 500 else text
     
     def _convert_text_format(self, text: str, output_format: str) -> str:
-        """Convert text to different formats"""
-        if output_format == 'json':
+        """Convert text to different formats"""        if output_format == 'json':
             return json.dumps({
                 'content': text,
                 'metadata': {
@@ -1161,20 +1117,17 @@ class TextProcessor(BaseProcessor):
         return text
     
     def get_supported_formats(self) -> List[str]:
-        """Get supported text formats"""
-        return self.supported_formats
+        """Get supported text formats"""        return self.supported_formats
 
 
 class MetadataExtractor:
-    """Comprehensive metadata extraction utility"""
-    
+    """Comprehensive metadata extraction utility"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.MetadataExtractor")
     
     async def extract_universal_metadata(self, content: Union[bytes, str, BinaryIO], 
                                        content_type: str) -> Dict[str, Any]:
-        """Extract metadata for any content type"""
-        try:
+        """Extract metadata for any content type"""        try:
             # Determine appropriate processor
             processor = self._get_processor_for_type(content_type)
             if not processor:
@@ -1189,8 +1142,7 @@ class MetadataExtractor:
             return {}
     
     def _get_processor_for_type(self, content_type: str) -> Optional[BaseProcessor]:
-        """Get appropriate processor for content type"""
-        if content_type.startswith('audio/'):
+        """Get appropriate processor for content type"""        if content_type.startswith('audio/'):
             try:
                 return AudioProcessor()
             except ImportError:
@@ -1211,8 +1163,7 @@ class MetadataExtractor:
         return None
     
     async def _extract_generic_metadata(self, content: Union[bytes, str, BinaryIO]) -> Dict[str, Any]:
-        """Extract generic metadata for unknown content types"""
-        try:
+        """Extract generic metadata for unknown content types"""        try:
             if isinstance(content, str):
                 if Path(content).exists():
                     data = Path(content).read_bytes()

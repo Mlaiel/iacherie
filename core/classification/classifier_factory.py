@@ -1,5 +1,4 @@
-"""
-Enterprise Classifier Factory
+"""Enterprise Classifier Factory
 
 Advanced factory pattern implementation for creating appropriate content classifiers
 based on content type, format, and analysis requirements. Provides intelligent
@@ -17,9 +16,7 @@ Contact: mlaiel@live.de for licensing and collaboration.
 Any unauthorized use, copying, or distribution without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted
 to the full extent of German and international copyright law.
-"""
-
-import mimetypes
+"""import mimetypes
 from typing import Dict, List, Optional, Union, Any, Type
 import logging
 from pathlib import Path
@@ -47,8 +44,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Enumeration of supported content types."""
-    AUDIO = "audio"
+    """Enumeration of supported content types."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -56,8 +52,7 @@ class ContentType(Enum):
 
 
 class ClassifierFactory:
-    """
-    Factory for creating and managing content classifiers.
+    """    Factory for creating and managing content classifiers.
     
     Features:
     - Automatic classifier selection based on content type
@@ -65,11 +60,9 @@ class ClassifierFactory:
     - Optimized classifier instantiation and caching
     - Format validation and compatibility checking
     - Extensible architecture for new classifier types
-    """
-    
+    """    
     def __init__(self, model_path: Optional[str] = None):
-        """Initialize classifier factory."""
-        self.settings = get_settings()
+        """Initialize classifier factory."""        self.settings = get_settings()
         self.model_path = model_path
         
         # Classifier cache to avoid re-instantiation
@@ -90,8 +83,7 @@ class ClassifierFactory:
         }
 
     def _init_format_mappings(self):
-        """Initialize file format to content type mappings."""
-        self.format_mappings = {
+        """Initialize file format to content type mappings."""        self.format_mappings = {
             # Audio formats
             '.mp3': ContentType.AUDIO,
             '.wav': ContentType.AUDIO,
@@ -177,8 +169,7 @@ class ClassifierFactory:
         content_type: Union[ContentType, str, List[str]], 
         options: Optional[Dict] = None
     ) -> Any:
-        """
-        Create appropriate classifier based on content type.
+        """        Create appropriate classifier based on content type.
         
         Args:
             content_type: Type of content or list of file paths for auto-detection
@@ -186,8 +177,7 @@ class ClassifierFactory:
             
         Returns:
             Appropriate classifier instance
-        """
-        try:
+        """        try:
             # Handle different input types
             if isinstance(content_type, list):
                 # Auto-detect from file paths
@@ -224,8 +214,7 @@ class ClassifierFactory:
             raise ClassificationError(f"Failed to create classifier: {e}")
 
     def _detect_content_types(self, file_paths: List[str]) -> set:
-        """Detect content types from a list of file paths."""
-        detected_types = set()
+        """Detect content types from a list of file paths."""        detected_types = set()
         
         for file_path in file_paths:
             try:
@@ -238,8 +227,7 @@ class ClassifierFactory:
         return detected_types
 
     def _detect_content_type(self, file_path: str) -> ContentType:
-        """Detect content type from file path."""
-        file_path = Path(file_path)
+        """Detect content type from file path."""        file_path = Path(file_path)
         extension = file_path.suffix.lower()
         
         # Try extension mapping first
@@ -263,8 +251,7 @@ class ClassifierFactory:
         raise UnsupportedFormatError(f"Unsupported format: {extension} for file {file_path}")
 
     def _analyze_file_content(self, file_path: Path) -> ContentType:
-        """Analyze file content to determine type (fallback method)."""
-        try:
+        """Analyze file content to determine type (fallback method)."""        try:
             # Read first few bytes to detect format
             with open(file_path, 'rb') as f:
                 header = f.read(16)
@@ -295,8 +282,7 @@ class ClassifierFactory:
         raise UnsupportedFormatError(f"Could not determine content type for {file_path}")
 
     def _get_classifier_key(self, content_type: ContentType, options: Optional[Dict]) -> str:
-        """Generate cache key for classifier."""
-        options_key = ""
+        """Generate cache key for classifier."""        options_key = ""
         if options:
             # Create a stable key from options
             sorted_items = sorted(options.items())
@@ -305,8 +291,7 @@ class ClassifierFactory:
         return f"{content_type.value}_{options_key}"
 
     def _instantiate_classifier(self, content_type: ContentType, options: Optional[Dict]) -> Any:
-        """Instantiate the appropriate classifier."""
-        # Merge with default options
+        """Instantiate the appropriate classifier."""        # Merge with default options
         merged_options = {**self.classifier_config['default_options']}
         if options:
             merged_options.update(options)
@@ -331,8 +316,7 @@ class ClassifierFactory:
         content_input: Union[str, List[str], Dict[str, Union[str, List[str]]]], 
         options: Optional[Dict] = None
     ) -> Dict[str, Any]:
-        """
-        Classify content using appropriate classifier.
+        """        Classify content using appropriate classifier.
         
         Args:
             content_input: File path, list of paths, or multimodal content dict
@@ -340,8 +324,7 @@ class ClassifierFactory:
             
         Returns:
             Classification results
-        """
-        try:
+        """        try:
             # Determine input type and create appropriate classifier
             if isinstance(content_input, str):
                 # Single file
@@ -398,8 +381,7 @@ class ClassifierFactory:
         file_path: str, 
         options: Optional[Dict]
     ) -> Dict[str, Any]:
-        """Classify a single content file."""
-        try:
+        """Classify a single content file."""        try:
             if content_type == ContentType.AUDIO:
                 return classifier.classify_audio(file_path, options)
             elif content_type == ContentType.VIDEO:
@@ -419,8 +401,7 @@ class ClassifierFactory:
             raise
 
     def _organize_multimodal_content(self, file_paths: List[str]) -> Dict[str, List[str]]:
-        """Organize file paths by content type for multimodal classification."""
-        organized = {}
+        """Organize file paths by content type for multimodal classification."""        organized = {}
         
         for file_path in file_paths:
             try:
@@ -439,8 +420,7 @@ class ClassifierFactory:
         return organized
 
     def _generate_batch_summary(self, results: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate summary for batch classification results."""
-        try:
+        """Generate summary for batch classification results."""        try:
             total_files = len(results)
             successful_classifications = sum(1 for result in results.values() 
                                            if not result.get('error'))
@@ -488,8 +468,7 @@ class ClassifierFactory:
             return {'total_files': len(results), 'error': 'Summary generation failed'}
 
     def _get_quality_distribution(self, quality_scores: List[float]) -> Dict[str, int]:
-        """Get distribution of quality grades."""
-        distribution = {'A+': 0, 'A': 0, 'B+': 0, 'B': 0, 'C+': 0, 'C': 0, 'D': 0}
+        """Get distribution of quality grades."""        distribution = {'A+': 0, 'A': 0, 'B+': 0, 'B': 0, 'C+': 0, 'C': 0, 'D': 0}
         
         for score in quality_scores:
             if score >= 0.9:
@@ -515,8 +494,7 @@ class ClassifierFactory:
         content2: Union[str, List[str], Dict[str, Union[str, List[str]]]], 
         options: Optional[Dict] = None
     ) -> Dict[str, Any]:
-        """
-        Compare two sets of content for similarity.
+        """        Compare two sets of content for similarity.
         
         Args:
             content1: First content to compare
@@ -525,8 +503,7 @@ class ClassifierFactory:
             
         Returns:
             Similarity analysis results
-        """
-        try:
+        """        try:
             # Determine content types
             type1 = self._determine_comparison_type(content1)
             type2 = self._determine_comparison_type(content2)
@@ -554,8 +531,7 @@ class ClassifierFactory:
             raise ClassificationError(f"Content comparison failed: {e}")
 
     def _determine_comparison_type(self, content: Union[str, List[str], Dict]) -> ContentType:
-        """Determine content type for comparison."""
-        if isinstance(content, str):
+        """Determine content type for comparison."""        if isinstance(content, str):
             return self._detect_content_type(content)
         elif isinstance(content, list):
             detected_types = self._detect_content_types(content)
@@ -566,8 +542,7 @@ class ClassifierFactory:
             raise ClassificationError(f"Unsupported content type for comparison: {type(content)}")
 
     def _to_multimodal_format(self, content: Union[str, List[str], Dict]) -> Dict[str, Union[str, List[str]]]:
-        """Convert content to multimodal format."""
-        if isinstance(content, dict):
+        """Convert content to multimodal format."""        if isinstance(content, dict):
             return content
         elif isinstance(content, str):
             content_type = self._detect_content_type(content)
@@ -585,8 +560,7 @@ class ClassifierFactory:
         content2: Union[str, List[str]], 
         options: Optional[Dict]
     ) -> Dict[str, Any]:
-        """Compare content within a single modality."""
-        try:
+        """Compare content within a single modality."""        try:
             # For now, handle simple string comparison
             if isinstance(content1, str) and isinstance(content2, str):
                 if content_type == ContentType.TEXT:
@@ -619,8 +593,7 @@ class ClassifierFactory:
             raise
 
     def get_supported_formats(self) -> Dict[str, List[str]]:
-        """Get list of supported file formats by content type."""
-        formats = {}
+        """Get list of supported file formats by content type."""        formats = {}
         
         for content_type in ContentType:
             if content_type == ContentType.MULTIMODAL:
@@ -636,16 +609,14 @@ class ClassifierFactory:
         return formats
 
     def validate_content(self, content_input: Union[str, List[str], Dict]) -> Dict[str, Any]:
-        """
-        Validate content before classification.
+        """        Validate content before classification.
         
         Args:
             content_input: Content to validate
             
         Returns:
             Validation results
-        """
-        try:
+        """        try:
             validation = {
                 'is_valid': True,
                 'supported_files': [],
@@ -719,26 +690,22 @@ class ClassifierFactory:
             }
 
     def clear_cache(self):
-        """Clear the classifier cache."""
-        self._classifier_cache.clear()
+        """Clear the classifier cache."""        self._classifier_cache.clear()
         logger.info("Classifier cache cleared")
 
     def get_cache_info(self) -> Dict[str, Any]:
-        """Get information about cached classifiers."""
-        return {
+        """Get information about cached classifiers."""        return {
             'cached_classifiers': len(self._classifier_cache),
             'cache_keys': list(self._classifier_cache.keys()),
             'cache_enabled': self.classifier_config['cache_classifiers']
         }
 
     def set_config(self, config: Dict[str, Any]):
-        """Update factory configuration."""
-        self.classifier_config.update(config)
+        """Update factory configuration."""        self.classifier_config.update(config)
         logger.info(f"Factory configuration updated: {config}")
 
     def get_classifier_info(self, content_type: Union[ContentType, str]) -> Dict[str, Any]:
-        """Get information about a specific classifier type."""
-        try:
+        """Get information about a specific classifier type."""        try:
             if isinstance(content_type, str):
                 content_type = ContentType(content_type.lower())
             
@@ -773,8 +740,7 @@ class ClassifierFactory:
             return {'error': str(e)}
 
     def _get_classifier_features(self, content_type: ContentType) -> List[str]:
-        """Get list of features supported by a classifier type."""
-        feature_map = {
+        """Get list of features supported by a classifier type."""        feature_map = {
             ContentType.AUDIO: [
                 'genre_classification', 'mood_analysis', 'quality_assessment',
                 'similarity_matching', 'spectral_analysis', 'tempo_detection'

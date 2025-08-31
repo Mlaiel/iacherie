@@ -1,5 +1,4 @@
-"""
-Quality Enhancer - Advanced Content Quality Enhancement Engine
+"""Quality Enhancer - Advanced Content Quality Enhancement Engine
 
 Automated content enhancement system with AI-driven improvements and optimization.
 Provides intelligent enhancement suggestions and automated quality boosting capabilities.
@@ -18,9 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import uuid
@@ -60,8 +57,7 @@ from ..quality_agent import QualityScore, QualityLevel, ContentType
 logger = logging.getLogger(__name__)
 
 class EnhancementType(Enum):
-    """Types of content enhancement"""
-    AUDIO_QUALITY = "audio_quality"
+    """Types of content enhancement"""    AUDIO_QUALITY = "audio_quality"
     VIDEO_QUALITY = "video_quality"
     IMAGE_QUALITY = "image_quality"
     TEXT_QUALITY = "text_quality"
@@ -73,16 +69,14 @@ class EnhancementType(Enum):
     METADATA_ENHANCEMENT = "metadata_enhancement"
 
 class EnhancementPriority(Enum):
-    """Enhancement priority levels"""
-    LOW = "low"
+    """Enhancement priority levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 @dataclass
 class EnhancementOptions:
-    """Enhancement configuration options"""
-    enhancement_type: EnhancementType
+    """Enhancement configuration options"""    enhancement_type: EnhancementType
     priority: EnhancementPriority
     target_quality: QualityLevel
     preserve_original: bool = True
@@ -94,8 +88,7 @@ class EnhancementOptions:
 
 @dataclass
 class EnhancementOperation:
-    """Individual enhancement operation"""
-    operation_id: str
+    """Individual enhancement operation"""    operation_id: str
     operation_type: str
     description: str
     parameters: Dict[str, Any]
@@ -106,8 +99,7 @@ class EnhancementOperation:
 
 @dataclass
 class EnhancementPlan:
-    """Comprehensive enhancement execution plan"""
-    plan_id: str
+    """Comprehensive enhancement execution plan"""    plan_id: str
     content_id: str
     content_type: ContentType
     current_quality_score: float
@@ -120,8 +112,7 @@ class EnhancementPlan:
 
 @dataclass
 class EnhancementExecutionResult:
-    """Results of enhancement execution"""
-    plan_id: str
+    """Results of enhancement execution"""    plan_id: str
     content_id: str
     success: bool
     operations_completed: List[str]
@@ -134,8 +125,7 @@ class EnhancementExecutionResult:
     timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
 class QualityEnhancer:
-    """
-    Advanced Quality Enhancer for automated content improvement.
+    """    Advanced Quality Enhancer for automated content improvement.
     
     Features:
     - AI-driven quality enhancement
@@ -146,8 +136,7 @@ class QualityEnhancer:
     - Format-specific optimization techniques
     - Preservation of original content integrity
     - Performance-optimized enhancement pipelines
-    """
-    
+    """    
     def __init__(
         self,
         config: Optional[Dict[str, Any]] = None
@@ -176,8 +165,7 @@ class QualityEnhancer:
         target_quality: QualityLevel,
         enhancement_options: List[EnhancementOptions]
     ) -> EnhancementPlan:
-        """
-        Create comprehensive enhancement plan based on quality analysis.
+        """        Create comprehensive enhancement plan based on quality analysis.
         
         Args:
             content_id: Unique identifier for the content
@@ -189,8 +177,7 @@ class QualityEnhancer:
             
         Returns:
             EnhancementPlan: Detailed enhancement execution plan
-        """
-        
+        """        
         try:
             self.logger.info(f"Creating enhancement plan for {content_id}")
             
@@ -267,8 +254,7 @@ class QualityEnhancer:
         plan_id: str,
         progress_callback: Optional[callable] = None
     ) -> EnhancementExecutionResult:
-        """
-        Execute enhancement plan with real-time progress monitoring.
+        """        Execute enhancement plan with real-time progress monitoring.
         
         Args:
             plan_id: Enhancement plan identifier
@@ -276,8 +262,7 @@ class QualityEnhancer:
             
         Returns:
             EnhancementExecutionResult: Execution results and metrics
-        """
-        
+        """        
         start_time = time.time()
         
         try:
@@ -394,8 +379,7 @@ class QualityEnhancer:
         enhancement_options: EnhancementOptions,
         output_path: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Enhanced audio quality with advanced processing"""
-        
+        """Enhanced audio quality with advanced processing"""        
         try:
             self.logger.info(f"Enhancing audio quality: {content_path}")
             
@@ -470,8 +454,7 @@ class QualityEnhancer:
         enhancement_options: EnhancementOptions,
         output_path: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Enhanced image quality with AI-driven improvements"""
-        
+        """Enhanced image quality with AI-driven improvements"""        
         try:
             self.logger.info(f"Enhancing image quality: {content_path}")
             
@@ -548,8 +531,7 @@ class QualityEnhancer:
         enhancement_options: EnhancementOptions,
         output_path: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Enhanced text quality with AI-driven improvements"""
-        
+        """Enhanced text quality with AI-driven improvements"""        
         try:
             self.logger.info(f"Enhancing text quality: {content_path}")
             
@@ -628,8 +610,7 @@ class QualityEnhancer:
         current_score: float,
         target_score: float
     ) -> Dict[str, Any]:
-        """Analyze content for enhancement opportunities"""
-        
+        """Analyze content for enhancement opportunities"""        
         opportunities = {
             "technical_improvements": [],
             "creative_improvements": [],
@@ -663,8 +644,7 @@ class QualityEnhancer:
         options: EnhancementOptions,
         opportunities: Dict[str, Any]
     ) -> List[EnhancementOperation]:
-        """Generate specific enhancement operations"""
-        
+        """Generate specific enhancement operations"""        
         operations = []
         
         if options.enhancement_type == EnhancementType.AUDIO_QUALITY:
@@ -695,8 +675,7 @@ class QualityEnhancer:
         operation: EnhancementOperation,
         content_type: ContentType
     ) -> Dict[str, Any]:
-        """Execute individual enhancement operation"""
-        
+        """Execute individual enhancement operation"""        
         try:
             if operation.operation_type == "audio_enhancement":
                 return await self._execute_audio_operation(content_id, operation)
@@ -719,8 +698,7 @@ class QualityEnhancer:
         sr: int, 
         strength: float
     ) -> np.ndarray:
-        """Apply intelligent noise reduction"""
-        
+        """Apply intelligent noise reduction"""        
         try:
             # Spectral gating for noise reduction
             stft = librosa.stft(audio)
@@ -750,8 +728,7 @@ class QualityEnhancer:
         audio: np.ndarray, 
         strength: float
     ) -> np.ndarray:
-        """Enhance dynamic range with intelligent compression"""
-        
+        """Enhance dynamic range with intelligent compression"""        
         try:
             # Calculate RMS for dynamic processing
             rms = np.sqrt(np.mean(audio**2))
@@ -782,8 +759,7 @@ class QualityEnhancer:
 
     # Text enhancement methods
     async def _correct_grammar_and_spelling(self, text: str) -> str:
-        """Correct grammar and spelling errors"""
-        
+        """Correct grammar and spelling errors"""        
         try:
             # Implement grammar correction logic
             # This would typically use a grammar checking API or model
@@ -810,8 +786,7 @@ class QualityEnhancer:
             return text
 
     async def _improve_readability(self, text: str, strength: float) -> str:
-        """Improve text readability"""
-        
+        """Improve text readability"""        
         try:
             # Split into sentences
             sentences = text.split('.')
@@ -852,8 +827,7 @@ class QualityEnhancer:
         enhanced: np.ndarray, 
         sr: int
     ) -> Dict[str, float]:
-        """Calculate audio improvement metrics"""
-        
+        """Calculate audio improvement metrics"""        
         try:
             # Dynamic range comparison
             orig_dr = np.max(original) / (np.mean(np.abs(original)) + 1e-8)
@@ -888,8 +862,7 @@ class QualityEnhancer:
         original: str, 
         enhanced: str
     ) -> Dict[str, float]:
-        """Calculate text improvement metrics"""
-        
+        """Calculate text improvement metrics"""        
         try:
             # Readability improvement
             try:
@@ -933,8 +906,7 @@ class QualityEnhancer:
         self, 
         operations: List[EnhancementOperation]
     ) -> List[EnhancementOperation]:
-        """Optimize the sequence of enhancement operations"""
-        
+        """Optimize the sequence of enhancement operations"""        
         try:
             # Sort by priority (dependencies first, then by expected improvement)
             def operation_priority(op):
@@ -980,10 +952,8 @@ class QualityEnhancer:
             return operations
 
 class ImprovementEngine:
-    """
-    Intelligent improvement engine for automated content enhancement suggestions.
-    """
-    
+    """    Intelligent improvement engine for automated content enhancement suggestions.
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -994,8 +964,7 @@ class ImprovementEngine:
         quality_score: QualityScore,
         target_quality: QualityLevel = QualityLevel.EXCELLENT
     ) -> List[Dict[str, Any]]:
-        """Generate intelligent improvement suggestions"""
-        
+        """Generate intelligent improvement suggestions"""        
         try:
             suggestions = []
             
@@ -1041,8 +1010,7 @@ class ImprovementEngine:
         content_type: ContentType,
         quality_score: QualityScore
     ) -> List[Dict[str, Any]]:
-        """Generate technical improvement suggestions"""
-        
+        """Generate technical improvement suggestions"""        
         suggestions = []
         
         if content_type in [ContentType.AUDIO, ContentType.MUSIC]:
@@ -1080,8 +1048,7 @@ class ImprovementEngine:
         content_type: ContentType,
         quality_score: QualityScore
     ) -> List[Dict[str, Any]]:
-        """Generate SEO improvement suggestions"""
-        
+        """Generate SEO improvement suggestions"""        
         suggestions = []
         
         if content_type in [ContentType.TEXT, ContentType.BLOG]:
@@ -1105,8 +1072,7 @@ class ImprovementEngine:
         content_type: ContentType,
         quality_score: QualityScore
     ) -> List[Dict[str, Any]]:
-        """Generate engagement improvement suggestions"""
-        
+        """Generate engagement improvement suggestions"""        
         suggestions = [
             {
                 "category": "Engagement",
@@ -1127,8 +1093,7 @@ class ImprovementEngine:
         content_type: ContentType,
         quality_score: QualityScore
     ) -> List[Dict[str, Any]]:
-        """Generate accessibility improvement suggestions"""
-        
+        """Generate accessibility improvement suggestions"""        
         suggestions = [
             {
                 "category": "Accessibility",

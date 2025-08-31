@@ -1,5 +1,4 @@
-"""
-LinkedIn Crawling Engine
+"""LinkedIn Crawling Engine
 =======================
 
 Advanced LinkedIn crawler for professional content discovery and business intelligence.
@@ -21,9 +20,7 @@ Les contrevenants seront poursuivis selon la loi allemande et internationale.
 • Security Expert : Cybersécurité & protection contenu
 • DevOps Engineer : Infrastructure cloud & déploiement
 • Audio/Video Specialist : Traitement multimédia avancé
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Union
 from dataclasses import dataclass, asdict
@@ -64,8 +61,7 @@ settings = get_settings()
 
 @dataclass
 class LinkedInPostData:
-    """LinkedIn post data structure"""
-    post_id: str
+    """LinkedIn post data structure"""    post_id: str
     author_id: str
     author_name: str
     author_title: str
@@ -93,8 +89,7 @@ class LinkedInPostData:
 
 @dataclass
 class LinkedInProfileData:
-    """LinkedIn profile data structure"""
-    profile_id: str
+    """LinkedIn profile data structure"""    profile_id: str
     public_id: str
     first_name: str
     last_name: str
@@ -130,8 +125,7 @@ class LinkedInProfileData:
 
 @dataclass
 class LinkedInCompanyData:
-    """LinkedIn company data structure"""
-    company_id: str
+    """LinkedIn company data structure"""    company_id: str
     universal_name: str
     name: str
     description: str
@@ -157,8 +151,7 @@ class LinkedInCompanyData:
 
 @dataclass
 class LinkedInBusinessData:
-    """LinkedIn business analytics data structure"""
-    page_id: str
+    """LinkedIn business analytics data structure"""    page_id: str
     page_name: str
     follower_count: int
     follower_demographics: Dict[str, Any]
@@ -176,8 +169,7 @@ class LinkedInBusinessData:
 
 
 class LinkedInCrawlerEngine(BaseCrawlerEngine):
-    """
-    Advanced LinkedIn crawler engine with professional networking focus.
+    """    Advanced LinkedIn crawler engine with professional networking focus.
     
     Features:
     - Official LinkedIn API integration
@@ -188,9 +180,7 @@ class LinkedInCrawlerEngine(BaseCrawlerEngine):
     - Industry trend analysis
     - Lead generation capabilities
     - Privacy-compliant data collection
-    """
-
-    def __init__(self, 
+    """    def __init__(self, 
                  username: Optional[str] = None,
                  password: Optional[str] = None,
                  access_token: Optional[str] = None,
@@ -198,8 +188,7 @@ class LinkedInCrawlerEngine(BaseCrawlerEngine):
                  headless: bool = True,
                  proxy_config: Optional[Dict] = None,
                  rate_limit_config: Optional[Dict] = None):
-        """
-        Initialize LinkedIn crawler engine.
+        """        Initialize LinkedIn crawler engine.
         
         Args:
             username: LinkedIn username/email
@@ -209,8 +198,7 @@ class LinkedInCrawlerEngine(BaseCrawlerEngine):
             headless: Run browser in headless mode
             proxy_config: Proxy configuration
             rate_limit_config: Rate limiting configuration
-        """
-        super().__init__()
+        """        super().__init__()
         
         # Authentication
         self.username = username or settings.LINKEDIN_USERNAME
@@ -253,8 +241,7 @@ class LinkedInCrawlerEngine(BaseCrawlerEngine):
             self.proxy_manager = None
 
     async def authenticate(self) -> bool:
-        """Authenticate with LinkedIn"""
-        try:
+        """Authenticate with LinkedIn"""        try:
             if self.api_client:
                 # Test API access
                 profile = self.api_client.get_profile('me')
@@ -278,8 +265,7 @@ class LinkedInCrawlerEngine(BaseCrawlerEngine):
                             query: str,
                             filters: Optional[Dict] = None,
                             limit: int = 100) -> List[LinkedInProfileData]:
-        """
-        Search for LinkedIn profiles.
+        """        Search for LinkedIn profiles.
         
         Args:
             query: Search query (keywords, company, title)
@@ -288,8 +274,7 @@ class LinkedInCrawlerEngine(BaseCrawlerEngine):
         
         Returns:
             List of LinkedInProfileData objects
-        """
-        cache_key = f"search_profiles_{hashlib.md5(query.encode()).hexdigest()}_{limit}"
+        """        cache_key = f"search_profiles_{hashlib.md5(query.encode()).hexdigest()}_{limit}"
         cached_result = await self.cache_manager.get(cache_key)
         if cached_result:
             return [LinkedInProfileData(**profile) for profile in cached_result]
@@ -329,16 +314,14 @@ class LinkedInCrawlerEngine(BaseCrawlerEngine):
         return profiles
 
     async def get_profile_details(self, profile_id: str) -> LinkedInProfileData:
-        """
-        Get detailed LinkedIn profile information.
+        """        Get detailed LinkedIn profile information.
         
         Args:
             profile_id: LinkedIn profile ID or public identifier
         
         Returns:
             LinkedInProfileData object
-        """
-        cache_key = f"profile_details_{profile_id}"
+        """        cache_key = f"profile_details_{profile_id}"
         cached_result = await self.cache_manager.get(cache_key)
         if cached_result:
             return LinkedInProfileData(**cached_result)
@@ -402,16 +385,14 @@ class LinkedInCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"LinkedIn profile details retrieval failed: {e}")
 
     async def get_company_info(self, company_id: str) -> LinkedInCompanyData:
-        """
-        Get LinkedIn company information.
+        """        Get LinkedIn company information.
         
         Args:
             company_id: LinkedIn company ID or universal name
         
         Returns:
             LinkedInCompanyData object
-        """
-        cache_key = f"company_info_{company_id}"
+        """        cache_key = f"company_info_{company_id}"
         cached_result = await self.cache_manager.get(cache_key)
         if cached_result:
             return LinkedInCompanyData(**cached_result)
@@ -458,8 +439,7 @@ class LinkedInCrawlerEngine(BaseCrawlerEngine):
     async def get_company_posts(self, 
                               company_id: str, 
                               limit: int = 50) -> List[LinkedInPostData]:
-        """
-        Get posts from a LinkedIn company page.
+        """        Get posts from a LinkedIn company page.
         
         Args:
             company_id: LinkedIn company ID
@@ -467,8 +447,7 @@ class LinkedInCrawlerEngine(BaseCrawlerEngine):
         
         Returns:
             List of LinkedInPostData objects
-        """
-        cache_key = f"company_posts_{company_id}_{limit}"
+        """        cache_key = f"company_posts_{company_id}_{limit}"
         cached_result = await self.cache_manager.get(cache_key)
         if cached_result:
             return [LinkedInPostData(**post) for post in cached_result]
@@ -511,8 +490,7 @@ class LinkedInCrawlerEngine(BaseCrawlerEngine):
                          experience_level: Optional[str] = None,
                          job_type: Optional[str] = None,
                          limit: int = 100) -> List[Dict[str, Any]]:
-        """
-        Search for LinkedIn job postings.
+        """        Search for LinkedIn job postings.
         
         Args:
             keywords: Job search keywords
@@ -524,8 +502,7 @@ class LinkedInCrawlerEngine(BaseCrawlerEngine):
         
         Returns:
             List of job posting dictionaries
-        """
-        cache_key = f"search_jobs_{hashlib.md5(keywords.encode()).hexdigest()}_{location}_{limit}"
+        """        cache_key = f"search_jobs_{hashlib.md5(keywords.encode()).hexdigest()}_{location}_{limit}"
         cached_result = await self.cache_manager.get(cache_key)
         if cached_result:
             return cached_result
@@ -583,8 +560,7 @@ class LinkedInCrawlerEngine(BaseCrawlerEngine):
                                          targets: List[str],
                                          keywords: List[str],
                                          check_interval: int = 600) -> AsyncGenerator[Dict[str, Any], None]:
-        """
-        Monitor LinkedIn content for professional insights.
+        """        Monitor LinkedIn content for professional insights.
         
         Args:
             targets: List of profile IDs or company IDs to monitor
@@ -593,8 +569,7 @@ class LinkedInCrawlerEngine(BaseCrawlerEngine):
         
         Yields:
             Dictionary containing monitoring results
-        """
-        logger.info(f"Starting LinkedIn professional content monitoring for {len(targets)} targets")
+        """        logger.info(f"Starting LinkedIn professional content monitoring for {len(targets)} targets")
         
         while True:
             for target in targets:
@@ -641,8 +616,7 @@ class LinkedInCrawlerEngine(BaseCrawlerEngine):
             await asyncio.sleep(check_interval)
 
     async def _setup_selenium_driver(self):
-        """Setup Selenium WebDriver for LinkedIn"""
-        options = webdriver.ChromeOptions()
+        """Setup Selenium WebDriver for LinkedIn"""        options = webdriver.ChromeOptions()
         if self.headless:
             options.add_argument('--headless')
         options.add_argument('--no-sandbox')
@@ -658,8 +632,7 @@ class LinkedInCrawlerEngine(BaseCrawlerEngine):
         self.driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
 
     async def _selenium_login(self) -> bool:
-        """Login to LinkedIn using Selenium"""
-        try:
+        """Login to LinkedIn using Selenium"""        try:
             self.driver.get('https://www.linkedin.com/login')
             await asyncio.sleep(2)
             
@@ -693,15 +666,13 @@ class LinkedInCrawlerEngine(BaseCrawlerEngine):
                                       query: str, 
                                       filters: Optional[Dict],
                                       limit: int) -> List[LinkedInProfileData]:
-        """Search profiles using Selenium"""
-        # This would implement Selenium-based profile searching
+        """Search profiles using Selenium"""        # This would implement Selenium-based profile searching
         # Note: This requires careful implementation to avoid detection
         logger.warning("Selenium profile search requires careful anti-detection measures")
         return []
 
     async def _process_profile_data(self, profile_data: Dict[str, Any]) -> Optional[LinkedInProfileData]:
-        """Process raw LinkedIn profile data"""
-        try:
+        """Process raw LinkedIn profile data"""        try:
             return LinkedInProfileData(
                 profile_id=profile_data.get('public_id', ''),
                 public_id=profile_data.get('public_id', ''),
@@ -737,8 +708,7 @@ class LinkedInCrawlerEngine(BaseCrawlerEngine):
             return None
 
     async def _process_post_data(self, post_data: Dict[str, Any]) -> Optional[LinkedInPostData]:
-        """Process raw LinkedIn post data"""
-        try:
+        """Process raw LinkedIn post data"""        try:
             content = post_data.get('commentary', {}).get('text', '')
             hashtags = re.findall(r'#(\w+)', content)
             mentions = re.findall(r'@(\w+)', content)
@@ -772,8 +742,7 @@ class LinkedInCrawlerEngine(BaseCrawlerEngine):
             return None
 
     def __del__(self):
-        """Cleanup resources"""
-        if self.driver:
+        """Cleanup resources"""        if self.driver:
             try:
                 self.driver.quit()
             except:

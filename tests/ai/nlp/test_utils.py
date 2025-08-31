@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive Tests for NLP Utils Module
+"""Comprehensive Tests for NLP Utils Module
 
 Industrial-grade tests for NLP utility functions, helpers, and shared components
 with real implementations.
@@ -25,9 +21,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -45,11 +39,9 @@ from ai.nlp.utils import (
 logger = logging.getLogger(__name__)
 
 class TestPlatform:
-    """Test Platform enumeration and utilities"""
-    
+    """Test Platform enumeration and utilities"""    
     def test_platform_enum_values(self):
-        """Test platform enum values"""
-        assert Platform.INSTAGRAM.value == 'instagram'
+        """Test platform enum values"""        assert Platform.INSTAGRAM.value == 'instagram'
         assert Platform.TWITTER.value == 'twitter'
         assert Platform.LINKEDIN.value == 'linkedin'
         assert Platform.YOUTUBE.value == 'youtube'
@@ -57,16 +49,14 @@ class TestPlatform:
         assert Platform.FACEBOOK.value == 'facebook'
     
     def test_platform_from_string(self):
-        """Test creating platform from string"""
-        platforms = ['instagram', 'twitter', 'linkedin', 'youtube', 'tiktok']
+        """Test creating platform from string"""        platforms = ['instagram', 'twitter', 'linkedin', 'youtube', 'tiktok']
         
         for platform_str in platforms:
             platform = Platform(platform_str)
             assert platform.value == platform_str
     
     def test_platform_properties(self):
-        """Test platform-specific properties"""
-        # Instagram properties
+        """Test platform-specific properties"""        # Instagram properties
         instagram_props = Platform.INSTAGRAM.get_properties()
         assert 'character_limit' in instagram_props
         assert 'supports_hashtags' in instagram_props
@@ -84,27 +74,23 @@ class TestPlatform:
         assert linkedin_props['supports_articles'] is True
 
 class TestLanguage:
-    """Test Language enumeration and utilities"""
-    
+    """Test Language enumeration and utilities"""    
     def test_language_enum_values(self):
-        """Test language enum values"""
-        assert Language.ENGLISH.value == 'english'
+        """Test language enum values"""        assert Language.ENGLISH.value == 'english'
         assert Language.GERMAN.value == 'german'
         assert Language.FRENCH.value == 'french'
         assert Language.SPANISH.value == 'spanish'
         assert Language.ITALIAN.value == 'italian'
     
     def test_language_iso_codes(self):
-        """Test language ISO codes"""
-        assert Language.ENGLISH.iso_code() == 'en'
+        """Test language ISO codes"""        assert Language.ENGLISH.iso_code() == 'en'
         assert Language.GERMAN.iso_code() == 'de'
         assert Language.FRENCH.iso_code() == 'fr'
         assert Language.SPANISH.iso_code() == 'es'
         assert Language.ITALIAN.iso_code() == 'it'
     
     def test_language_from_iso_code(self):
-        """Test creating language from ISO code"""
-        test_cases = [
+        """Test creating language from ISO code"""        test_cases = [
             ('en', Language.ENGLISH),
             ('de', Language.GERMAN),
             ('fr', Language.FRENCH),
@@ -117,8 +103,7 @@ class TestLanguage:
             assert language == expected_language
     
     def test_language_properties(self):
-        """Test language-specific properties"""
-        # English properties
+        """Test language-specific properties"""        # English properties
         en_props = Language.ENGLISH.get_properties()
         assert 'writing_direction' in en_props
         assert 'character_encoding' in en_props
@@ -130,11 +115,9 @@ class TestLanguage:
         assert de_props['case_sensitive'] is True
 
 class TestContentType:
-    """Test ContentType enumeration and utilities"""
-    
+    """Test ContentType enumeration and utilities"""    
     def test_content_type_enum_values(self):
-        """Test content type enum values"""
-        assert ContentType.POST.value == 'post'
+        """Test content type enum values"""        assert ContentType.POST.value == 'post'
         assert ContentType.STORY.value == 'story'
         assert ContentType.REEL.value == 'reel'
         assert ContentType.THREAD.value == 'thread'
@@ -142,8 +125,7 @@ class TestContentType:
         assert ContentType.CAPTION.value == 'caption'
     
     def test_content_type_properties(self):
-        """Test content type properties"""
-        # Post properties
+        """Test content type properties"""        # Post properties
         post_props = ContentType.POST.get_properties()
         assert 'is_ephemeral' in post_props
         assert 'supports_comments' in post_props
@@ -159,12 +141,10 @@ class TestContentType:
         assert thread_props['supports_continuation'] is True
 
 class TestTextProcessor:
-    """Test text processing utilities"""
-    
+    """Test text processing utilities"""    
     @pytest.mark.asyncio
     async def test_text_cleaning(self):
-        """Test text cleaning functionality"""
-        processor = TextProcessor()
+        """Test text cleaning functionality"""        processor = TextProcessor()
         
         test_cases = [
             {
@@ -194,8 +174,7 @@ class TestTextProcessor:
     
     @pytest.mark.asyncio
     async def test_text_tokenization(self):
-        """Test text tokenization"""
-        processor = TextProcessor()
+        """Test text tokenization"""        processor = TextProcessor()
         
         test_text = "This is a sample text for tokenization testing."
         
@@ -214,8 +193,7 @@ class TestTextProcessor:
     
     @pytest.mark.asyncio
     async def test_text_normalization(self):
-        """Test text normalization"""
-        processor = TextProcessor()
+        """Test text normalization"""        processor = TextProcessor()
         
         test_cases = [
             {
@@ -245,8 +223,7 @@ class TestTextProcessor:
     
     @pytest.mark.asyncio
     async def test_social_media_processing(self):
-        """Test social media specific text processing"""
-        processor = TextProcessor()
+        """Test social media specific text processing"""        processor = TextProcessor()
         
         social_text = "Check out @username's amazing post! #AI #MachineLearning https://example.com 🚀"
         
@@ -281,11 +258,9 @@ class TestTextProcessor:
         assert '🚀' in cleaned_social
 
 class TestDataValidator:
-    """Test data validation utilities"""
-    
+    """Test data validation utilities"""    
     def test_text_validation(self):
-        """Test text validation"""
-        validator = DataValidator()
+        """Test text validation"""        validator = DataValidator()
         
         # Valid text
         valid_result = validator.validate_text(
@@ -323,8 +298,7 @@ class TestDataValidator:
         assert 'max_length' in str(long_result['violations'])
     
     def test_platform_content_validation(self):
-        """Test platform-specific content validation"""
-        validator = DataValidator()
+        """Test platform-specific content validation"""        validator = DataValidator()
         
         # Twitter content validation
         twitter_text = "This is a tweet that should be under 280 characters for Twitter platform validation."
@@ -350,8 +324,7 @@ class TestDataValidator:
         assert 'character_limit' in str(long_validation['violations'])
     
     def test_language_validation(self):
-        """Test language validation"""
-        validator = DataValidator()
+        """Test language validation"""        validator = DataValidator()
         
         test_cases = [
             {
@@ -383,11 +356,9 @@ class TestDataValidator:
             assert language_validation['confidence'] >= case['confidence_threshold']
 
 class TestConfigManager:
-    """Test configuration management utilities"""
-    
+    """Test configuration management utilities"""    
     def test_config_loading(self):
-        """Test configuration loading"""
-        config_manager = ConfigManager()
+        """Test configuration loading"""        config_manager = ConfigManager()
         
         # Test default configuration
         default_config = config_manager.get_default_config()
@@ -404,8 +375,7 @@ class TestConfigManager:
         assert dev_config['nlp_settings']['debug_mode'] is True
     
     def test_config_validation(self):
-        """Test configuration validation"""
-        config_manager = ConfigManager()
+        """Test configuration validation"""        config_manager = ConfigManager()
         
         # Valid configuration
         valid_config = {
@@ -433,8 +403,7 @@ class TestConfigManager:
         assert invalid_result['is_valid'] is False
     
     def test_config_merging(self):
-        """Test configuration merging"""
-        config_manager = ConfigManager()
+        """Test configuration merging"""        config_manager = ConfigManager()
         
         base_config = {
             'setting1': 'value1',
@@ -454,12 +423,10 @@ class TestConfigManager:
         assert merged_config['setting3'] == 'value3'
 
 class TestCacheManager:
-    """Test caching utilities"""
-    
+    """Test caching utilities"""    
     @pytest.mark.asyncio
     async def test_cache_operations(self):
-        """Test basic cache operations"""
-        cache_manager = CacheManager()
+        """Test basic cache operations"""        cache_manager = CacheManager()
         
         # Test cache set and get
         await cache_manager.set('test_key', 'test_value', ttl=60)
@@ -483,8 +450,7 @@ class TestCacheManager:
     
     @pytest.mark.asyncio
     async def test_cache_patterns(self):
-        """Test cache patterns and strategies"""
-        cache_manager = CacheManager()
+        """Test cache patterns and strategies"""        cache_manager = CacheManager()
         
         # Test cache-aside pattern
         def expensive_operation(key):
@@ -523,12 +489,10 @@ class TestCacheManager:
         assert batch_results['key3'] == 'value3'
 
 class TestPerformanceProfiler:
-    """Test performance profiling utilities"""
-    
+    """Test performance profiling utilities"""    
     @pytest.mark.asyncio
     async def test_execution_timing(self):
-        """Test execution timing"""
-        profiler = PerformanceProfiler()
+        """Test execution timing"""        profiler = PerformanceProfiler()
         
         # Test function timing
         @profiler.time_execution
@@ -549,8 +513,7 @@ class TestPerformanceProfiler:
     
     @pytest.mark.asyncio
     async def test_memory_profiling(self):
-        """Test memory profiling"""
-        profiler = PerformanceProfiler()
+        """Test memory profiling"""        profiler = PerformanceProfiler()
         
         # Start memory profiling
         profiler.start_memory_profiling()
@@ -568,8 +531,7 @@ class TestPerformanceProfiler:
         profiler.stop_memory_profiling()
     
     def test_performance_metrics(self):
-        """Test performance metrics collection"""
-        profiler = PerformanceProfiler()
+        """Test performance metrics collection"""        profiler = PerformanceProfiler()
         
         # Record custom metrics
         profiler.record_metric('api_calls', 1)
@@ -595,11 +557,9 @@ class TestPerformanceProfiler:
         assert response_time_metrics['average'] == 0.5
 
 class TestLogger:
-    """Test logging utilities"""
-    
+    """Test logging utilities"""    
     def test_logger_configuration(self):
-        """Test logger configuration"""
-        logger_util = Logger('test_nlp_logger')
+        """Test logger configuration"""        logger_util = Logger('test_nlp_logger')
         
         # Test different log levels
         logger_util.debug("Debug message")
@@ -624,8 +584,7 @@ class TestLogger:
         })
     
     def test_logger_context(self):
-        """Test logger context management"""
-        logger_util = Logger('test_context_logger')
+        """Test logger context management"""        logger_util = Logger('test_context_logger')
         
         # Set logging context
         with logger_util.context(user_id='user123', session_id='session456'):
@@ -636,12 +595,10 @@ class TestLogger:
         logger_util.info("Processing outside context")
 
 class TestErrorHandler:
-    """Test error handling utilities"""
-    
+    """Test error handling utilities"""    
     @pytest.mark.asyncio
     async def test_error_handling_decorator(self):
-        """Test error handling decorator"""
-        error_handler = ErrorHandler()
+        """Test error handling decorator"""        error_handler = ErrorHandler()
         
         @error_handler.handle_errors
         async def function_that_might_fail(should_fail=False):
@@ -663,8 +620,7 @@ class TestErrorHandler:
         assert 'ValueError' in str(error_logs[-1])
     
     def test_error_categorization(self):
-        """Test error categorization"""
-        error_handler = ErrorHandler()
+        """Test error categorization"""        error_handler = ErrorHandler()
         
         # Test different error types
         errors = [
@@ -687,8 +643,7 @@ class TestErrorHandler:
                 assert category['category'] == 'network_error'
     
     def test_error_recovery(self):
-        """Test error recovery strategies"""
-        error_handler = ErrorHandler()
+        """Test error recovery strategies"""        error_handler = ErrorHandler()
         
         # Test retry mechanism
         attempt_count = 0
@@ -710,8 +665,7 @@ class TestErrorHandler:
         assert attempt_count == 3
     
     def test_error_reporting(self):
-        """Test error reporting"""
-        error_handler = ErrorHandler()
+        """Test error reporting"""        error_handler = ErrorHandler()
         
         # Simulate various errors
         try:
@@ -733,12 +687,10 @@ class TestErrorHandler:
         assert error_report['total_errors'] == 2
 
 class TestUtilsIntegration:
-    """Test integration between different utility components"""
-    
+    """Test integration between different utility components"""    
     @pytest.mark.asyncio
     async def test_complete_text_processing_pipeline(self):
-        """Test complete text processing pipeline"""
-        # Initialize components
+        """Test complete text processing pipeline"""        # Initialize components
         processor = TextProcessor()
         validator = DataValidator()
         cache_manager = CacheManager()
@@ -803,8 +755,7 @@ class TestUtilsIntegration:
         assert stats['execution_count'] == 2  # Original + cached call
     
     def test_error_handling_with_logging(self):
-        """Test error handling integration with logging"""
-        error_handler = ErrorHandler()
+        """Test error handling integration with logging"""        error_handler = ErrorHandler()
         logger_util = Logger('integration_test')
         
         def failing_function():
@@ -827,12 +778,10 @@ class TestUtilsIntegration:
 
 # Performance and stress tests
 class TestUtilsPerformance:
-    """Test utilities performance under load"""
-    
+    """Test utilities performance under load"""    
     @pytest.mark.asyncio
     async def test_cache_performance(self):
-        """Test cache performance under load"""
-        cache_manager = CacheManager()
+        """Test cache performance under load"""        cache_manager = CacheManager()
         
         # Test cache performance with many operations
         num_operations = 1000
@@ -859,8 +808,7 @@ class TestUtilsPerformance:
     
     @pytest.mark.asyncio
     async def test_text_processing_performance(self):
-        """Test text processing performance"""
-        processor = TextProcessor()
+        """Test text processing performance"""        processor = TextProcessor()
         
         # Generate test data
         test_texts = [f"Sample text {i} for performance testing." for i in range(100)]

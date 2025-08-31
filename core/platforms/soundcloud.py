@@ -1,14 +1,11 @@
-"""
-SoundCloud Platform Integration
+"""SoundCloud Platform Integration
 
 SoundCloud API integration for audio content sharing and analytics.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import aiohttp
 import aiofiles
 from typing import Dict, List, Optional, Any
@@ -26,25 +23,21 @@ logger = logging.getLogger(__name__)
 
 
 class SoundCloudPlatform(PlatformBase):
-    """SoundCloud platform integration"""
-    
+    """SoundCloud platform integration"""    
     def __init__(self, config: PlatformConfig):
-        """Initialize SoundCloud platform"""
-        super().__init__(config)
+        """Initialize SoundCloud platform"""        super().__init__(config)
         self.api_base = "https://api.soundcloud.com"
         self.session: Optional[aiohttp.ClientSession] = None
         
     async def _get_session(self) -> aiohttp.ClientSession:
-        """Get or create HTTP session"""
-        if not self.session or self.session.closed:
+        """Get or create HTTP session"""        if not self.session or self.session.closed:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=self.config.timeout)
             )
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with SoundCloud using OAuth2"""
-        try:
+        """Authenticate with SoundCloud using OAuth2"""        try:
             if self.config.credentials.access_token:
                 if await self._validate_token():
                     self.status = PlatformStatus.ACTIVE
@@ -60,8 +53,7 @@ class SoundCloudPlatform(PlatformBase):
             return False
     
     async def refresh_token(self) -> bool:
-        """Refresh SoundCloud access token"""
-        if not self.config.credentials.refresh_token:
+        """Refresh SoundCloud access token"""        if not self.config.credentials.refresh_token:
             logger.error("No refresh token available for SoundCloud")
             return False
         
@@ -99,8 +91,7 @@ class SoundCloudPlatform(PlatformBase):
             return False
     
     async def _validate_token(self) -> bool:
-        """Validate SoundCloud access token"""
-        try:
+        """Validate SoundCloud access token"""        try:
             result = await self._make_request('GET', '/me')
             return result is not None
             
@@ -109,8 +100,7 @@ class SoundCloudPlatform(PlatformBase):
             return False
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to SoundCloud API"""
-        if not self.is_authenticated:
+        """Make authenticated request to SoundCloud API"""        if not self.is_authenticated:
             if not await self.authenticate():
                 return None
         
@@ -152,8 +142,7 @@ class SoundCloudPlatform(PlatformBase):
             return None
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Upload audio content to SoundCloud"""
-        try:
+        """Upload audio content to SoundCloud"""        try:
             if not os.path.exists(content_path):
                 return UploadResult(
                     success=False,
@@ -218,8 +207,7 @@ class SoundCloudPlatform(PlatformBase):
             )
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
-        """Get SoundCloud analytics for a track"""
-        try:
+        """Get SoundCloud analytics for a track"""        try:
             # Get track data
             track_result = await self._make_request('GET', f'/tracks/{content_id}')
             
@@ -255,8 +243,7 @@ class SoundCloudPlatform(PlatformBase):
             raise
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search content on SoundCloud"""
-        try:
+        """Search content on SoundCloud"""        try:
             search_type = 'tracks'  # Default to tracks
             if content_type == ContentType.PLAYLIST:
                 search_type = 'playlists'
@@ -299,8 +286,7 @@ class SoundCloudPlatform(PlatformBase):
             return []
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
-        """Get user's tracks from SoundCloud"""
-        try:
+        """Get user's tracks from SoundCloud"""        try:
             if not user_id:
                 # Get current user ID
                 user_result = await self._make_request('GET', '/me')
@@ -343,8 +329,7 @@ class SoundCloudPlatform(PlatformBase):
             return []
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete track from SoundCloud"""
-        try:
+        """Delete track from SoundCloud"""        try:
             result = await self._make_request('DELETE', f'/tracks/{content_id}')
             return result is not None
         except Exception as e:
@@ -352,8 +337,7 @@ class SoundCloudPlatform(PlatformBase):
             return False
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
-        """Update track metadata on SoundCloud"""
-        try:
+        """Update track metadata on SoundCloud"""        try:
             data = {
                 'track[title]': metadata.title,
                 'track[description]': metadata.description,
@@ -369,8 +353,7 @@ class SoundCloudPlatform(PlatformBase):
             return False
     
     async def get_track_comments(self, track_id: str) -> List[Dict[str, Any]]:
-        """Get comments for a track"""
-        try:
+        """Get comments for a track"""        try:
             params = {'limit': 100}
             result = await self._make_request('GET', f'/tracks/{track_id}/comments', params=params)
             
@@ -395,8 +378,7 @@ class SoundCloudPlatform(PlatformBase):
             return []
     
     async def create_playlist(self, title: str, description: str = "", tracks: List[str] = None) -> Optional[str]:
-        """Create a new playlist"""
-        try:
+        """Create a new playlist"""        try:
             playlist_data = {
                 'playlist[title]': title,
                 'playlist[description]': description,
@@ -421,8 +403,7 @@ class SoundCloudPlatform(PlatformBase):
             return None
     
     async def add_track_to_playlist(self, playlist_id: str, track_id: str) -> bool:
-        """Add track to playlist"""
-        try:
+        """Add track to playlist"""        try:
             # Get current playlist
             playlist = await self._make_request('GET', f'/playlists/{playlist_id}')
             if not playlist:
@@ -444,8 +425,7 @@ class SoundCloudPlatform(PlatformBase):
             return False
     
     async def get_user_info(self, user_id: str = None) -> Optional[Dict[str, Any]]:
-        """Get user information"""
-        try:
+        """Get user information"""        try:
             endpoint = f'/users/{user_id}' if user_id else '/me'
             return await self._make_request('GET', endpoint)
             
@@ -454,8 +434,7 @@ class SoundCloudPlatform(PlatformBase):
             return None
     
     async def follow_user(self, user_id: str) -> bool:
-        """Follow a user"""
-        try:
+        """Follow a user"""        try:
             result = await self._make_request('PUT', f'/me/followings/{user_id}')
             return result is not None
         except Exception as e:
@@ -463,6 +442,5 @@ class SoundCloudPlatform(PlatformBase):
             return False
     
     async def close(self):
-        """Close HTTP session"""
-        if self.session and not self.session.closed:
+        """Close HTTP session"""        if self.session and not self.session.closed:
             await self.session.close()

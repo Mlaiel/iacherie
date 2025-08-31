@@ -1,5 +1,4 @@
-"""
-Content Insights Analyzer - Advanced content performance and optimization analytics
+"""Content Insights Analyzer - Advanced content performance and optimization analytics
 =================================================================================
 
 Comprehensive content analytics system with AI-powered insights, performance tracking,
@@ -7,9 +6,7 @@ and optimization recommendations for multi-format content creators.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple, Set
@@ -29,8 +26,7 @@ from collections import Counter, defaultdict
 logger = logging.getLogger(__name__)
 
 class ContentFormat(Enum):
-    """Supported content formats for analysis"""
-    VIDEO = "video"
+    """Supported content formats for analysis"""    VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
     TEXT = "text"
@@ -42,8 +38,7 @@ class ContentFormat(Enum):
     BLOG_POST = "blog_post"
 
 class ContentTheme(Enum):
-    """Content theme categories"""
-    EDUCATIONAL = "educational"
+    """Content theme categories"""    EDUCATIONAL = "educational"
     ENTERTAINMENT = "entertainment"
     INSPIRATIONAL = "inspirational"
     BEHIND_SCENES = "behind_scenes"
@@ -53,8 +48,7 @@ class ContentTheme(Enum):
     COLLABORATIVE = "collaborative"
 
 class PerformanceMetric(Enum):
-    """Content performance metrics"""
-    VIEWS = "views"
+    """Content performance metrics"""    VIEWS = "views"
     LIKES = "likes"
     SHARES = "shares"
     COMMENTS = "comments"
@@ -67,8 +61,7 @@ class PerformanceMetric(Enum):
 
 @dataclass
 class ContentMetrics:
-    """Comprehensive content performance metrics"""
-    content_id: str
+    """Comprehensive content performance metrics"""    content_id: str
     creator_id: str
     platform: str
     content_format: ContentFormat
@@ -86,8 +79,7 @@ class ContentMetrics:
 
 @dataclass
 class ContentInsight:
-    """AI-generated content insight with actionable recommendations"""
-    insight_id: str
+    """AI-generated content insight with actionable recommendations"""    insight_id: str
     creator_id: str
     content_id: Optional[str]
     insight_category: str
@@ -102,8 +94,7 @@ class ContentInsight:
 
 @dataclass
 class ContentOptimization:
-    """Content optimization recommendation"""
-    optimization_id: str
+    """Content optimization recommendation"""    optimization_id: str
     creator_id: str
     content_type: ContentFormat
     current_performance: Dict[str, float]
@@ -115,11 +106,9 @@ class ContentOptimization:
     success_probability: float
 
 class ContentInsightsAnalyzer:
-    """
-    Enterprise-grade content insights analyzer with AI-powered performance analysis,
+    """    Enterprise-grade content insights analyzer with AI-powered performance analysis,
     optimization recommendations, and predictive content strategy guidance.
-    """
-    
+    """    
     def __init__(self, redis_client: redis.Redis, db_pool: asyncpg.Pool):
         self.redis = redis_client
         self.db_pool = db_pool
@@ -129,8 +118,7 @@ class ContentInsightsAnalyzer:
         self.insights_cache = {}
         
     async def initialize(self) -> None:
-        """Initialize content insights analyzer"""
-        try:
+        """Initialize content insights analyzer"""        try:
             await self._setup_database_tables()
             await self._load_content_models()
             await self._initialize_analysis_algorithms()
@@ -140,10 +128,8 @@ class ContentInsightsAnalyzer:
             raise
 
     async def _setup_database_tables(self) -> None:
-        """Setup required database tables for content analysis"""
-        async with self.db_pool.acquire() as conn:
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS content_metrics (
+        """Setup required database tables for content analysis"""        async with self.db_pool.acquire() as conn:
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS content_metrics (
                     id SERIAL PRIMARY KEY,
                     content_id VARCHAR(255) NOT NULL,
                     creator_id VARCHAR(255) NOT NULL,
@@ -201,11 +187,9 @@ class ContentInsightsAnalyzer:
             """)
 
     async def _load_content_models(self) -> None:
-        """Load content analysis models and historical data"""
-        async with self.db_pool.acquire() as conn:
+        """Load content analysis models and historical data"""        async with self.db_pool.acquire() as conn:
             # Load historical content data for model training
-            content_data = await conn.fetch("""
-                SELECT title, description, metrics, virality_score, quality_score
+            content_data = await conn.fetch("""                SELECT title, description, metrics, virality_score, quality_score
                 FROM content_metrics 
                 WHERE created_at >= NOW() - INTERVAL '6 months'
                 AND title IS NOT NULL AND description IS NOT NULL
@@ -216,8 +200,7 @@ class ContentInsightsAnalyzer:
                 await self._train_content_models(content_data)
 
     async def _train_content_models(self, content_data: List[Dict]) -> None:
-        """Train content analysis models with historical data"""
-        try:
+        """Train content analysis models with historical data"""        try:
             # Prepare text data for clustering
             texts = []
             for record in content_data:
@@ -235,13 +218,11 @@ class ContentInsightsAnalyzer:
             logger.error(f"Failed to train content models: {e}")
 
     async def _initialize_analysis_algorithms(self) -> None:
-        """Initialize content analysis algorithms"""
-        # Additional algorithm initialization would go here
+        """Initialize content analysis algorithms"""        # Additional algorithm initialization would go here
         pass
 
     async def analyze_content_comprehensive(self, content_id: str, platform: str) -> ContentMetrics:
-        """Perform comprehensive content analysis with AI insights"""
-        try:
+        """Perform comprehensive content analysis with AI insights"""        try:
             # Fetch content data
             content_data = await self._fetch_content_data(content_id, platform)
             if not content_data:
@@ -294,11 +275,9 @@ class ContentInsightsAnalyzer:
             raise HTTPException(status_code=500, detail="Content analysis failed")
 
     async def _fetch_content_data(self, content_id: str, platform: str) -> Optional[Dict[str, Any]]:
-        """Fetch content data from database or platform API"""
-        try:
+        """Fetch content data from database or platform API"""        try:
             async with self.db_pool.acquire() as conn:
-                record = await conn.fetchrow("""
-                    SELECT creator_id, content_format, content_theme, title, description, 
+                record = await conn.fetchrow("""                    SELECT creator_id, content_format, content_theme, title, description, 
                            hashtags, publish_date
                     FROM content_metrics 
                     WHERE content_id = $1 AND platform = $2
@@ -325,8 +304,7 @@ class ContentInsightsAnalyzer:
             return None
 
     async def _analyze_performance_metrics(self, content_id: str, platform: str) -> Dict[PerformanceMetric, float]:
-        """Analyze comprehensive performance metrics"""
-        try:
+        """Analyze comprehensive performance metrics"""        try:
             # This would integrate with actual platform APIs
             # For now, return realistic simulated data
             base_views = np.random.randint(1000, 100000)
@@ -352,8 +330,7 @@ class ContentInsightsAnalyzer:
             return {}
 
     async def _calculate_virality_score(self, content_data: Dict, metrics: Dict[PerformanceMetric, float]) -> float:
-        """Calculate content virality score (0-100)"""
-        try:
+        """Calculate content virality score (0-100)"""        try:
             # Factors that contribute to virality
             views = metrics.get(PerformanceMetric.VIEWS, 0)
             shares = metrics.get(PerformanceMetric.SHARES, 0)
@@ -382,8 +359,7 @@ class ContentInsightsAnalyzer:
             return 0.0
 
     def _calculate_hashtag_trending_score(self, hashtags: List[str]) -> float:
-        """Calculate trending score based on hashtags"""
-        # Simulate trending hashtag analysis
+        """Calculate trending score based on hashtags"""        # Simulate trending hashtag analysis
         trending_hashtags = ['#viral', '#trending', '#fyp', '#music', '#art', '#comedy']
         trending_score = 0
         
@@ -394,8 +370,7 @@ class ContentInsightsAnalyzer:
         return min(trending_score, 1.0)
 
     async def _calculate_quality_score(self, content_data: Dict, metrics: Dict[PerformanceMetric, float]) -> float:
-        """Calculate content quality score (0-100)"""
-        try:
+        """Calculate content quality score (0-100)"""        try:
             # Quality factors
             title = content_data.get('title', '')
             description = content_data.get('description', '')
@@ -418,8 +393,7 @@ class ContentInsightsAnalyzer:
             return 50.0
 
     def _analyze_title_quality(self, title: str) -> float:
-        """Analyze title quality (0-1)"""
-        if not title:
+        """Analyze title quality (0-1)"""        if not title:
             return 0.0
         
         quality_factors = 0
@@ -450,8 +424,7 @@ class ContentInsightsAnalyzer:
         return quality_factors / total_factors
 
     def _analyze_description_quality(self, description: str) -> float:
-        """Analyze description quality (0-1)"""
-        if not description:
+        """Analyze description quality (0-1)"""        if not description:
             return 0.3  # Basic score for having a description
         
         quality_factors = 0
@@ -477,8 +450,7 @@ class ContentInsightsAnalyzer:
         return quality_factors / total_factors
 
     def _analyze_content_length_quality(self, content_data: Dict) -> float:
-        """Analyze content length quality based on format"""
-        content_format = content_data.get('content_format', 'video')
+        """Analyze content length quality based on format"""        content_format = content_data.get('content_format', 'video')
         
         # This would integrate with actual duration/length data
         # Return optimal score for now
@@ -493,8 +465,7 @@ class ContentInsightsAnalyzer:
         return optimal_lengths.get(content_format, 0.75)
 
     async def _calculate_optimization_potential(self, content_data: Dict, metrics: Dict[PerformanceMetric, float]) -> float:
-        """Calculate optimization potential score (0-100)"""
-        try:
+        """Calculate optimization potential score (0-100)"""        try:
             current_performance = metrics.get(PerformanceMetric.ENGAGEMENT_RATE, 0)
             views = metrics.get(PerformanceMetric.VIEWS, 0)
             completion_rate = metrics.get(PerformanceMetric.COMPLETION_RATE, 0.5)
@@ -528,8 +499,7 @@ class ContentInsightsAnalyzer:
             return 30.0
 
     async def _analyze_audience_demographics(self, content_id: str, platform: str) -> Dict[str, Any]:
-        """Analyze audience demographics for the content"""
-        try:
+        """Analyze audience demographics for the content"""        try:
             # This would integrate with actual audience data
             # Return simulated demographics for now
             return {
@@ -558,8 +528,7 @@ class ContentInsightsAnalyzer:
             return {}
 
     async def _get_engagement_timeline(self, content_id: str, platform: str) -> Dict[str, float]:
-        """Get engagement timeline over hours since publish"""
-        try:
+        """Get engagement timeline over hours since publish"""        try:
             # Simulate engagement timeline
             timeline = {}
             base_engagement = np.random.uniform(0.02, 0.12)
@@ -582,11 +551,9 @@ class ContentInsightsAnalyzer:
             return {}
 
     async def _store_content_metrics(self, metrics: ContentMetrics) -> None:
-        """Store content metrics in database"""
-        try:
+        """Store content metrics in database"""        try:
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""
-                    INSERT INTO content_metrics 
+                await conn.execute("""                    INSERT INTO content_metrics 
                     (content_id, creator_id, platform, content_format, content_theme,
                      title, description, hashtags, publish_date, metrics, 
                      audience_demographics, engagement_timeline, virality_score, 
@@ -621,8 +588,7 @@ class ContentInsightsAnalyzer:
             logger.error(f"Failed to store content metrics: {e}")
 
     async def generate_content_insights(self, creator_id: str, timeframe: str = "30d") -> List[ContentInsight]:
-        """Generate comprehensive AI-powered content insights"""
-        try:
+        """Generate comprehensive AI-powered content insights"""        try:
             # Get content performance data
             content_data = await self._get_creator_content_data(creator_id, timeframe)
             
@@ -667,8 +633,7 @@ class ContentInsightsAnalyzer:
             return []
 
     async def _get_creator_content_data(self, creator_id: str, timeframe: str) -> List[Dict]:
-        """Get creator's content data for analysis"""
-        try:
+        """Get creator's content data for analysis"""        try:
             timeframe_mapping = {
                 '7d': timedelta(days=7),
                 '30d': timedelta(days=30),
@@ -679,8 +644,7 @@ class ContentInsightsAnalyzer:
             start_date = datetime.now() - delta
             
             async with self.db_pool.acquire() as conn:
-                records = await conn.fetch("""
-                    SELECT * FROM content_metrics 
+                records = await conn.fetch("""                    SELECT * FROM content_metrics 
                     WHERE creator_id = $1 AND publish_date >= $2
                     ORDER BY publish_date DESC
                 """, creator_id, start_date)
@@ -692,8 +656,7 @@ class ContentInsightsAnalyzer:
             return []
 
     async def _analyze_top_performing_content(self, creator_id: str, content_data: List[Dict]) -> Optional[ContentInsight]:
-        """Analyze top performing content patterns"""
-        try:
+        """Analyze top performing content patterns"""        try:
             if len(content_data) < 3:
                 return None
             
@@ -736,8 +699,7 @@ class ContentInsightsAnalyzer:
             return None
 
     async def _analyze_content_themes(self, creator_id: str, content_data: List[Dict]) -> Optional[ContentInsight]:
-        """Analyze content theme performance"""
-        try:
+        """Analyze content theme performance"""        try:
             theme_performance = defaultdict(list)
             
             for content in content_data:
@@ -788,8 +750,7 @@ class ContentInsightsAnalyzer:
             return None
 
     async def _analyze_posting_patterns(self, creator_id: str, content_data: List[Dict]) -> Optional[ContentInsight]:
-        """Analyze posting timing patterns"""
-        try:
+        """Analyze posting timing patterns"""        try:
             posting_performance = defaultdict(list)
             
             for content in content_data:
@@ -853,8 +814,7 @@ class ContentInsightsAnalyzer:
             return None
 
     async def _analyze_format_performance(self, creator_id: str, content_data: List[Dict]) -> Optional[ContentInsight]:
-        """Analyze content format performance"""
-        try:
+        """Analyze content format performance"""        try:
             format_performance = defaultdict(list)
             
             for content in content_data:
@@ -904,8 +864,7 @@ class ContentInsightsAnalyzer:
             return None
 
     async def _analyze_audience_preferences(self, creator_id: str, content_data: List[Dict]) -> Optional[ContentInsight]:
-        """Analyze audience preferences and behavior"""
-        try:
+        """Analyze audience preferences and behavior"""        try:
             # Analyze completion rates and engagement patterns
             completion_rates = []
             engagement_rates = []
@@ -950,11 +909,9 @@ class ContentInsightsAnalyzer:
             return None
 
     async def _store_content_insight(self, insight: ContentInsight) -> None:
-        """Store content insight in database"""
-        try:
+        """Store content insight in database"""        try:
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""
-                    INSERT INTO content_insights 
+                await conn.execute("""                    INSERT INTO content_insights 
                     (insight_id, creator_id, content_id, insight_category, key_finding,
                      recommendation, supporting_data, confidence_score, impact_potential,
                      implementation_effort, expected_improvement)
@@ -977,8 +934,7 @@ class ContentInsightsAnalyzer:
             logger.error(f"Failed to store content insight: {e}")
 
     async def get_content_dashboard_data(self, creator_id: str, timeframe: str = "30d") -> Dict[str, Any]:
-        """Get comprehensive content analytics data for dashboard"""
-        try:
+        """Get comprehensive content analytics data for dashboard"""        try:
             content_data = await self._get_creator_content_data(creator_id, timeframe)
             insights = await self.generate_content_insights(creator_id, timeframe)
             
@@ -1040,8 +996,7 @@ class ContentInsightsAnalyzer:
             raise HTTPException(status_code=500, detail="Content dashboard data retrieval failed")
 
     async def _get_optimization_recommendations(self, creator_id: str, content_data: List[Dict]) -> List[Dict[str, Any]]:
-        """Get content optimization recommendations"""
-        try:
+        """Get content optimization recommendations"""        try:
             recommendations = []
             
             if content_data:

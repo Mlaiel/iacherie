@@ -1,5 +1,4 @@
-"""
-Extractors Configuration - Industrial IA Configuration System
+"""Extractors Configuration - Industrial IA Configuration System
 =============================================================
 
 Ultra-advanced professional configuration system for all extraction modules.
@@ -28,9 +27,7 @@ Technical Team Expertise:
 - IA Prompt Engineer: Prompt optimization and AI interaction
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
-"""
-
-import os
+"""import os
 import json
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, field
@@ -39,23 +36,20 @@ from enum import Enum
 from pathlib import Path
 
 class Environment(Enum):
-    """Deployment environments"""
-    DEVELOPMENT = "development"
+    """Deployment environments"""    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
 
 class PerformanceTier(Enum):
-    """Performance tier configurations"""
-    BASIC = "basic"
+    """Performance tier configurations"""    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
 
 @dataclass
 class ExtractionConfig:
-    """Main extraction configuration"""
-    
+    """Main extraction configuration"""    
     # Environment settings
     environment: Environment = Environment.DEVELOPMENT
     performance_tier: PerformanceTier = PerformanceTier.STANDARD
@@ -299,8 +293,7 @@ SECURITY_CONFIGS = {
 }
 
 def get_config(environment: str = None) -> ExtractionConfig:
-    """Get configuration for specified environment"""
-    env = environment or os.getenv("ENVIRONMENT", "development").lower()
+    """Get configuration for specified environment"""    env = environment or os.getenv("ENVIRONMENT", "development").lower()
     
     config_map = {
         "development": DEVELOPMENT_CONFIG,
@@ -315,8 +308,7 @@ def get_config(environment: str = None) -> ExtractionConfig:
     return _override_with_env_vars(base_config)
 
 def _override_with_env_vars(config: ExtractionConfig) -> ExtractionConfig:
-    """Override configuration with environment variables"""
-    
+    """Override configuration with environment variables"""    
     # Core settings
     config.max_workers = int(os.getenv("MAX_WORKERS", config.max_workers))
     config.max_concurrent_extractions = int(os.getenv("MAX_CONCURRENT_EXTRACTIONS", config.max_concurrent_extractions))
@@ -352,8 +344,7 @@ def _override_with_env_vars(config: ExtractionConfig) -> ExtractionConfig:
     return config
 
 def load_config_from_file(config_path: str) -> ExtractionConfig:
-    """Load configuration from JSON file"""
-    try:
+    """Load configuration from JSON file"""    try:
         with open(config_path, 'r') as f:
             config_data = json.load(f)
         
@@ -365,8 +356,7 @@ def load_config_from_file(config_path: str) -> ExtractionConfig:
         raise ValueError(f"Failed to load config from {config_path}: {e}")
 
 def save_config_to_file(config: ExtractionConfig, config_path: str):
-    """Save configuration to JSON file"""
-    try:
+    """Save configuration to JSON file"""    try:
         config_dict = {
             field.name: getattr(config, field.name)
             for field in config.__dataclass_fields__.values()
@@ -384,8 +374,7 @@ def save_config_to_file(config: ExtractionConfig, config_path: str):
         raise ValueError(f"Failed to save config to {config_path}: {e}")
 
 def validate_config(config: ExtractionConfig) -> List[str]:
-    """Validate configuration and return list of issues"""
-    issues = []
+    """Validate configuration and return list of issues"""    issues = []
     
     # Check required fields
     if config.max_workers <= 0:

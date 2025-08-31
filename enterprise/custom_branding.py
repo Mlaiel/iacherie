@@ -1,5 +1,4 @@
-"""
-Custom Branding Engine
+"""Custom Branding Engine
 =====================
 
 Advanced branding customization engine with AI-powered asset optimization,
@@ -13,9 +12,7 @@ LEGAL WARNING: This software and all associated intellectual property
 belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import uuid
@@ -43,24 +40,21 @@ logger = logging.getLogger(__name__)
 
 
 class AssetOptimizationLevel(Enum):
-    """Asset optimization level"""
-    BASIC = "basic"
+    """Asset optimization level"""    BASIC = "basic"
     STANDARD = "standard"
     AGGRESSIVE = "aggressive"
     LOSSLESS = "lossless"
 
 
 class ResponsiveBreakpoint(Enum):
-    """Responsive design breakpoints"""
-    MOBILE = "mobile"  # < 768px
+    """Responsive design breakpoints"""    MOBILE = "mobile"  # < 768px
     TABLET = "tablet"  # 768px - 1024px
     DESKTOP = "desktop"  # 1024px - 1440px
     LARGE = "large"  # > 1440px
 
 
 class BrandElementType(Enum):
-    """Brand element types"""
-    LOGO = "logo"
+    """Brand element types"""    LOGO = "logo"
     ICON = "icon"
     WATERMARK = "watermark"
     SIGNATURE = "signature"
@@ -71,8 +65,7 @@ class BrandElementType(Enum):
 
 @dataclass
 class ColorAnalysis:
-    """Color analysis results"""
-    dominant_colors: List[str]
+    """Color analysis results"""    dominant_colors: List[str]
     color_harmony: str
     accessibility_score: float
     contrast_ratios: Dict[str, float]
@@ -84,8 +77,7 @@ class ColorAnalysis:
 
 @dataclass
 class LogoVariant:
-    """Logo variant configuration"""
-    variant_id: str
+    """Logo variant configuration"""    variant_id: str
     name: str
     use_case: str
     dimensions: Dict[str, int]
@@ -100,8 +92,7 @@ class LogoVariant:
 
 @dataclass
 class ResponsiveAsset:
-    """Responsive asset configuration"""
-    asset_id: str
+    """Responsive asset configuration"""    asset_id: str
     base_asset: str
     breakpoints: Dict[ResponsiveBreakpoint, Dict[str, Any]]
     adaptive_sizing: bool = True
@@ -112,8 +103,7 @@ class ResponsiveAsset:
 
 @dataclass
 class BrandGuidelines:
-    """Brand guidelines configuration"""
-    brand_name: str
+    """Brand guidelines configuration"""    brand_name: str
     primary_colors: List[str]
     secondary_colors: List[str]
     typography_primary: str
@@ -127,8 +117,7 @@ class BrandGuidelines:
 
 
 class ColorIntelligence:
-    """AI-powered color analysis and optimization"""
-    
+    """AI-powered color analysis and optimization"""    
     def __init__(self):
         self._color_emotions = {
             'red': ['passionate', 'energetic', 'urgent', 'bold'],
@@ -145,8 +134,7 @@ class ColorIntelligence:
         }
     
     async def analyze_brand_colors(self, colors: List[str]) -> ColorAnalysis:
-        """Analyze brand colors for harmony, accessibility, and emotional impact"""
-        try:
+        """Analyze brand colors for harmony, accessibility, and emotional impact"""        try:
             # Extract dominant colors
             dominant_colors = self._extract_dominant_colors(colors)
             
@@ -178,13 +166,11 @@ class ColorIntelligence:
             raise
     
     def _extract_dominant_colors(self, colors: List[str]) -> List[str]:
-        """Extract dominant colors from palette"""
-        # Sort colors by usage frequency/importance
+        """Extract dominant colors from palette"""        # Sort colors by usage frequency/importance
         return colors[:5]  # Return top 5 dominant colors
     
     def _analyze_color_harmony(self, colors: List[str]) -> str:
-        """Analyze color harmony type"""
-        if len(colors) < 2:
+        """Analyze color harmony type"""        if len(colors) < 2:
             return "monochromatic"
         
         # Convert to HSV for analysis
@@ -216,8 +202,7 @@ class ColorIntelligence:
             return "triadic"
     
     def _calculate_accessibility(self, colors: List[str]) -> Tuple[float, Dict[str, float]]:
-        """Calculate WCAG accessibility compliance"""
-        contrast_ratios = {}
+        """Calculate WCAG accessibility compliance"""        contrast_ratios = {}
         total_score = 0
         comparisons = 0
         
@@ -241,8 +226,7 @@ class ColorIntelligence:
         return accessibility_score, contrast_ratios
     
     def _calculate_contrast_ratio(self, color1: str, color2: str) -> float:
-        """Calculate contrast ratio between two colors"""
-        try:
+        """Calculate contrast ratio between two colors"""        try:
             rgb1 = webcolors.hex_to_rgb(color1)
             rgb2 = webcolors.hex_to_rgb(color2)
             
@@ -267,8 +251,7 @@ class ColorIntelligence:
             return 1.0
     
     def _classify_mood(self, colors: List[str]) -> str:
-        """Classify emotional mood of color palette"""
-        mood_scores = {}
+        """Classify emotional mood of color palette"""        mood_scores = {}
         
         for color_hex in colors:
             try:
@@ -288,8 +271,7 @@ class ColorIntelligence:
         return max(mood_scores, key=mood_scores.get)
     
     def _get_closest_color_name(self, rgb) -> str:
-        """Get closest named color"""
-        color_names = {
+        """Get closest named color"""        color_names = {
             'red': (255, 0, 0),
             'blue': (0, 0, 255),
             'green': (0, 255, 0),
@@ -315,8 +297,7 @@ class ColorIntelligence:
         return closest_color
     
     def _analyze_temperature(self, colors: List[str]) -> str:
-        """Analyze color temperature"""
-        warm_count = 0
+        """Analyze color temperature"""        warm_count = 0
         cool_count = 0
         
         for color_hex in colors:
@@ -338,8 +319,7 @@ class ColorIntelligence:
             return "neutral"
     
     def _analyze_saturation(self, colors: List[str]) -> str:
-        """Analyze saturation level"""
-        saturations = []
+        """Analyze saturation level"""        saturations = []
         
         for color_hex in colors:
             try:
@@ -362,8 +342,7 @@ class ColorIntelligence:
             return "medium"
     
     def _analyze_brightness(self, colors: List[str]) -> str:
-        """Analyze brightness level"""
-        brightnesses = []
+        """Analyze brightness level"""        brightnesses = []
         
         for color_hex in colors:
             try:
@@ -387,8 +366,7 @@ class ColorIntelligence:
 
 
 class LogoProcessor:
-    """Advanced logo processing and optimization"""
-    
+    """Advanced logo processing and optimization"""    
     def __init__(self):
         self._standard_sizes = {
             'favicon': [(16, 16), (32, 32), (48, 48)],
@@ -403,8 +381,7 @@ class LogoProcessor:
         brand_colors: List[str],
         use_cases: List[str]
     ) -> List[LogoVariant]:
-        """Process logo into multiple variants for different use cases"""
-        try:
+        """Process logo into multiple variants for different use cases"""        try:
             variants = []
             
             with Image.open(io.BytesIO(logo_data)) as img:
@@ -429,8 +406,7 @@ class LogoProcessor:
         use_case: str,
         brand_colors: List[str]
     ) -> List[LogoVariant]:
-        """Generate logo variants for specific use case"""
-        variants = []
+        """Generate logo variants for specific use case"""        variants = []
         
         if use_case == "web_header":
             # Horizontal layouts, various sizes
@@ -479,8 +455,7 @@ class LogoProcessor:
         use_case: str,
         brand_colors: List[str]
     ) -> Optional[LogoVariant]:
-        """Create individual logo variant"""
-        try:
+        """Create individual logo variant"""        try:
             # Resize with high quality
             resized = img.resize(size, Image.Resampling.LANCZOS)
             
@@ -550,8 +525,7 @@ class LogoProcessor:
             return None
     
     def _calculate_logo_quality(self, img: Image.Image, size: Tuple[int, int]) -> float:
-        """Calculate logo quality score"""
-        try:
+        """Calculate logo quality score"""        try:
             # Convert to numpy array for analysis
             img_array = np.array(img)
             
@@ -577,8 +551,7 @@ class LogoProcessor:
             return 0.5  # Default medium quality
     
     def _check_logo_accessibility(self, img: Image.Image, brand_colors: List[str]) -> bool:
-        """Check logo accessibility compliance"""
-        try:
+        """Check logo accessibility compliance"""        try:
             # Basic accessibility checks
             # In real implementation, this would include:
             # - Contrast ratio analysis
@@ -590,8 +563,7 @@ class LogoProcessor:
 
 
 class ThemeCustomizer:
-    """Advanced theme customization and CSS generation"""
-    
+    """Advanced theme customization and CSS generation"""    
     def __init__(self):
         self._css_template = jinja2.Environment(
             loader=jinja2.DictLoader({
@@ -605,8 +577,7 @@ class ThemeCustomizer:
         typography: Dict[str, Any],
         customizations: Dict[str, Any]
     ) -> Dict[str, str]:
-        """Generate custom theme CSS and JavaScript"""
-        try:
+        """Generate custom theme CSS and JavaScript"""        try:
             # Analyze colors
             color_intelligence = ColorIntelligence()
             color_analysis = await color_intelligence.analyze_brand_colors(brand_colors)
@@ -643,8 +614,7 @@ class ThemeCustomizer:
         typography: Dict[str, Any],
         color_analysis: ColorAnalysis
     ) -> str:
-        """Generate CSS custom properties"""
-        variables = []
+        """Generate CSS custom properties"""        variables = []
         
         # Color variables
         for i, color in enumerate(brand_colors):
@@ -673,14 +643,12 @@ class ThemeCustomizer:
         return ":root {\n" + "\n".join(variables) + "\n}"
     
     def _generate_component_styles(self, customizations: Dict[str, Any]) -> str:
-        """Generate component-specific styles"""
-        styles = []
+        """Generate component-specific styles"""        styles = []
         
         # Header styles
         if 'header' in customizations:
             header_config = customizations['header']
-            styles.append(f"""
-.header {{
+            styles.append(f""".header {{
     background: {header_config.get('background', 'var(--color-primary)')};
     height: {header_config.get('height', '64px')};
     box-shadow: {header_config.get('shadow', '0 2px 4px rgba(0,0,0,0.1)')};
@@ -689,8 +657,7 @@ class ThemeCustomizer:
         # Button styles
         if 'buttons' in customizations:
             button_config = customizations['buttons']
-            styles.append(f"""
-.btn-primary {{
+            styles.append(f""".btn-primary {{
     background: {button_config.get('primary_bg', 'var(--color-primary)')};
     border-radius: {button_config.get('border_radius', '4px')};
     padding: {button_config.get('padding', '8px 16px')};
@@ -705,8 +672,7 @@ class ThemeCustomizer:
         return "\n".join(styles)
     
     def _generate_responsive_styles(self, customizations: Dict[str, Any]) -> str:
-        """Generate responsive styles for different breakpoints"""
-        responsive_css = []
+        """Generate responsive styles for different breakpoints"""        responsive_css = []
         
         breakpoints = {
             'mobile': '(max-width: 767px)',
@@ -731,13 +697,10 @@ class ThemeCustomizer:
         return "\n\n".join(responsive_css)
     
     def _combine_css_styles(self, *style_sections) -> str:
-        """Combine all CSS style sections"""
-        return "\n\n".join(filter(None, style_sections))
+        """Combine all CSS style sections"""        return "\n\n".join(filter(None, style_sections))
     
     def _generate_theme_javascript(self, customizations: Dict[str, Any]) -> str:
-        """Generate JavaScript for theme functionality"""
-        js_code = """
-// Theme Management JavaScript
+        """Generate JavaScript for theme functionality"""        js_code = """// Theme Management JavaScript
 class ThemeManager {
     constructor() {
         this.currentTheme = 'light';
@@ -784,8 +747,7 @@ class ThemeManager {
 document.addEventListener('DOMContentLoaded', () => {
     window.themeManager = new ThemeManager();
 });
-"""
-        
+"""        
         # Add custom JavaScript if provided
         if 'custom_js' in customizations:
             js_code += f"\n\n// Custom JavaScript\n{customizations['custom_js']}"
@@ -793,9 +755,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return js_code
     
     def _get_base_css_template(self) -> str:
-        """Get base CSS template"""
-        return """
-/* Base Theme CSS Template */
+        """Get base CSS template"""        return """/* Base Theme CSS Template */
 :root {
     /* Colors will be injected here */
     
@@ -858,11 +818,8 @@ document.addEventListener('DOMContentLoaded', () => {
     box-shadow: var(--shadow-lg);
 }
 """
-
-
 class BrandAssetManager:
-    """Comprehensive brand asset management system"""
-    
+    """Comprehensive brand asset management system"""    
     def __init__(self):
         self._asset_storage: Dict[str, Any] = {}
         self._asset_metadata: Dict[str, Dict[str, Any]] = {}
@@ -873,8 +830,7 @@ class BrandAssetManager:
         asset_data: bytes,
         metadata: Dict[str, Any]
     ) -> bool:
-        """Store brand asset with metadata"""
-        try:
+        """Store brand asset with metadata"""        try:
             # Store asset data
             self._asset_storage[asset_id] = asset_data
             
@@ -894,8 +850,7 @@ class BrandAssetManager:
             return False
     
     async def retrieve_asset(self, asset_id: str) -> Optional[Tuple[bytes, Dict[str, Any]]]:
-        """Retrieve brand asset with metadata"""
-        try:
+        """Retrieve brand asset with metadata"""        try:
             if asset_id in self._asset_storage:
                 asset_data = self._asset_storage[asset_id]
                 metadata = self._asset_metadata.get(asset_id, {})
@@ -906,8 +861,7 @@ class BrandAssetManager:
             return None
     
     async def optimize_asset_delivery(self, asset_id: str, format_hint: str) -> Optional[bytes]:
-        """Optimize asset for delivery based on format hint"""
-        try:
+        """Optimize asset for delivery based on format hint"""        try:
             asset_data, metadata = await self.retrieve_asset(asset_id) or (None, None)
             if not asset_data:
                 return None
@@ -928,8 +882,7 @@ class BrandAssetManager:
 
 
 class BrandingEngine:
-    """Main branding engine orchestrator"""
-    
+    """Main branding engine orchestrator"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.color_intelligence = ColorIntelligence()
@@ -944,8 +897,7 @@ class BrandingEngine:
         logo_data: bytes,
         customizations: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create comprehensive brand package with all assets and themes"""
-        try:
+        """Create comprehensive brand package with all assets and themes"""        try:
             # Analyze brand colors
             color_analysis = await self.color_intelligence.analyze_brand_colors(primary_colors)
             
@@ -1023,8 +975,7 @@ class BrandingEngine:
             raise
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for branding engine"""
-        try:
+        """Health check for branding engine"""        try:
             return {
                 'status': 'healthy',
                 'components': {

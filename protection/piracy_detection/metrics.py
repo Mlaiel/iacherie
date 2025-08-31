@@ -1,5 +1,4 @@
-"""
-📈 Detection Metrics and Analytics
+"""📈 Detection Metrics and Analytics
 ==================================
 
 Advanced metrics collection and analytics for piracy detection system.
@@ -13,9 +12,7 @@ This module provides:
 - Advanced analytics and insights
 - Performance optimization recommendations
 - Comprehensive dashboards and KPIs
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -27,8 +24,7 @@ import json
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Types of metrics collected."""
-    DETECTION_PERFORMANCE = "detection_performance"
+    """Types of metrics collected."""    DETECTION_PERFORMANCE = "detection_performance"
     SYSTEM_PERFORMANCE = "system_performance"
     ENFORCEMENT_METRICS = "enforcement_metrics"
     REVENUE_METRICS = "revenue_metrics"
@@ -36,8 +32,7 @@ class MetricType(Enum):
     PLATFORM_METRICS = "platform_metrics"
 
 class MetricAggregation(Enum):
-    """Metric aggregation methods."""
-    SUM = "sum"
+    """Metric aggregation methods."""    SUM = "sum"
     AVERAGE = "average"
     MIN = "min"
     MAX = "max"
@@ -47,8 +42,7 @@ class MetricAggregation(Enum):
 
 @dataclass
 class MetricPoint:
-    """Individual metric data point."""
-    metric_name: str
+    """Individual metric data point."""    metric_name: str
     metric_type: MetricType
     value: float
     timestamp: datetime
@@ -57,8 +51,7 @@ class MetricPoint:
 
 @dataclass
 class AggregatedMetric:
-    """Aggregated metric result."""
-    metric_name: str
+    """Aggregated metric result."""    metric_name: str
     aggregation: MetricAggregation
     value: float
     time_range_start: datetime
@@ -67,21 +60,17 @@ class AggregatedMetric:
     confidence_interval: Tuple[float, float]
 
 class DetectionMetrics:
-    """
-    Advanced metrics collection and analytics system.
+    """    Advanced metrics collection and analytics system.
     
     Provides comprehensive metrics collection, real-time analytics,
     and performance monitoring for the piracy detection system.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize the Detection Metrics system.
+        """        Initialize the Detection Metrics system.
         
         Args:
             config: Metrics configuration parameters
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self._initialized = False
         
         # Metrics configuration
@@ -112,13 +101,11 @@ class DetectionMetrics:
         logger.info("Detection Metrics system initialized")
     
     async def initialize(self) -> bool:
-        """
-        Initialize metrics system components.
+        """        Initialize metrics system components.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             logger.info("Initializing Detection Metrics system...")
             
             # Initialize metric definitions
@@ -151,8 +138,7 @@ class DetectionMetrics:
             return False
     
     async def _initialize_metric_definitions(self) -> None:
-        """Initialize metric definitions and metadata."""
-        self.metric_definitions = {
+        """Initialize metric definitions and metadata."""        self.metric_definitions = {
             # Detection Performance Metrics
             'detection_accuracy': {
                 'type': MetricType.DETECTION_PERFORMANCE,
@@ -249,8 +235,7 @@ class DetectionMetrics:
         logger.info(f"Initialized {len(self.metric_definitions)} metric definitions")
     
     async def _initialize_performance_baselines(self) -> None:
-        """Initialize performance baselines for comparison."""
-        self.performance_baselines = {
+        """Initialize performance baselines for comparison."""        self.performance_baselines = {
             'detection_accuracy': 0.92,
             'false_positive_rate': 0.08,
             'detection_latency': 2500,
@@ -262,8 +247,7 @@ class DetectionMetrics:
         logger.info("Performance baselines initialized")
     
     async def _initialize_anomaly_detector(self) -> None:
-        """Initialize anomaly detection system."""
-        self.anomaly_detector = {
+        """Initialize anomaly detection system."""        self.anomaly_detector = {
             'algorithms': ['statistical', 'isolation_forest', 'lstm'],
             'sensitivity': 0.95,
             'min_samples': 100,
@@ -273,8 +257,7 @@ class DetectionMetrics:
         logger.info("Anomaly detector initialized")
     
     async def _initialize_trend_analyzer(self) -> None:
-        """Initialize trend analysis system."""
-        self.trend_analyzer = {
+        """Initialize trend analysis system."""        self.trend_analyzer = {
             'algorithms': ['linear_regression', 'seasonal_decomposition', 'arima'],
             'forecast_horizon_days': 30,
             'confidence_level': 0.95,
@@ -286,16 +269,14 @@ class DetectionMetrics:
     async def record_metric(self, metric_name: str, value: float, 
                           tags: Optional[Dict[str, str]] = None,
                           context: Optional[Dict[str, Any]] = None) -> None:
-        """
-        Record a single metric point.
+        """        Record a single metric point.
         
         Args:
             metric_name: Name of the metric
             value: Metric value
             tags: Optional tags for metric categorization
             context: Optional additional context data
-        """
-        if not self._initialized:
+        """        if not self._initialized:
             logger.warning("Metrics system not initialized, skipping metric recording")
             return
         
@@ -332,8 +313,7 @@ class DetectionMetrics:
     async def record_detection_scan(self, content_id: str, platform: str, 
                                   violations_found: int, scan_duration_ms: float,
                                   confidence_scores: List[float]) -> None:
-        """
-        Record metrics for a detection scan.
+        """        Record metrics for a detection scan.
         
         Args:
             content_id: Content being scanned
@@ -341,8 +321,7 @@ class DetectionMetrics:
             violations_found: Number of violations found
             scan_duration_ms: Scan duration in milliseconds
             confidence_scores: List of confidence scores for violations
-        """
-        tags = {'platform': platform, 'content_id': content_id}
+        """        tags = {'platform': platform, 'content_id': content_id}
         
         # Record scan duration
         await self.record_metric('detection_latency', scan_duration_ms, tags)
@@ -362,16 +341,14 @@ class DetectionMetrics:
     
     async def record_monitoring_scan(self, session_id: str, content_id: str,
                                    violations_found: int, platforms_scanned: int) -> None:
-        """
-        Record metrics for a monitoring scan.
+        """        Record metrics for a monitoring scan.
         
         Args:
             session_id: Monitoring session ID
             content_id: Content being monitored
             violations_found: Number of violations found
             platforms_scanned: Number of platforms scanned
-        """
-        tags = {'session_id': session_id, 'content_id': content_id}
+        """        tags = {'session_id': session_id, 'content_id': content_id}
         
         await self.record_metric('monitoring_violations_found', violations_found, tags)
         await self.record_metric('monitoring_platforms_scanned', platforms_scanned, tags)
@@ -379,8 +356,7 @@ class DetectionMetrics:
     async def record_enforcement_action(self, enforcement_id: str, platform: str,
                                       action_type: str, success: bool,
                                       response_time_hours: float) -> None:
-        """
-        Record metrics for enforcement actions.
+        """        Record metrics for enforcement actions.
         
         Args:
             enforcement_id: Enforcement request ID
@@ -388,8 +364,7 @@ class DetectionMetrics:
             action_type: Type of enforcement action
             success: Whether enforcement was successful
             response_time_hours: Time from submission to response
-        """
-        tags = {
+        """        tags = {
             'platform': platform,
             'action_type': action_type,
             'enforcement_id': enforcement_id
@@ -404,24 +379,21 @@ class DetectionMetrics:
     
     async def record_system_performance(self, cpu_percent: float, memory_percent: float,
                                       disk_usage_percent: float, network_io_mbps: float) -> None:
-        """
-        Record system performance metrics.
+        """        Record system performance metrics.
         
         Args:
             cpu_percent: CPU utilization percentage
             memory_percent: Memory utilization percentage
             disk_usage_percent: Disk usage percentage
             network_io_mbps: Network I/O in Mbps
-        """
-        await self.record_metric('cpu_usage', cpu_percent)
+        """        await self.record_metric('cpu_usage', cpu_percent)
         await self.record_metric('memory_usage', memory_percent)
         await self.record_metric('disk_usage', disk_usage_percent)
         await self.record_metric('network_io', network_io_mbps)
     
     async def get_metric_summary(self, metric_name: str, 
                                time_range_hours: int = 24) -> Dict[str, Any]:
-        """
-        Get summary statistics for a metric.
+        """        Get summary statistics for a metric.
         
         Args:
             metric_name: Name of metric to summarize
@@ -429,8 +401,7 @@ class DetectionMetrics:
             
         Returns:
             Metric summary statistics
-        """
-        if metric_name not in self.metric_definitions:
+        """        if metric_name not in self.metric_definitions:
             raise ValueError(f"Unknown metric: {metric_name}")
         
         # Calculate time range
@@ -473,13 +444,11 @@ class DetectionMetrics:
         return summary
     
     async def get_performance_dashboard(self) -> Dict[str, Any]:
-        """
-        Get comprehensive performance dashboard data.
+        """        Get comprehensive performance dashboard data.
         
         Returns:
             Dashboard data with key metrics and insights
-        """
-        cache_key = 'performance_dashboard'
+        """        cache_key = 'performance_dashboard'
         
         # Check cache
         if cache_key in self.analytics_cache:
@@ -508,8 +477,7 @@ class DetectionMetrics:
         return dashboard
     
     async def _get_system_health_status(self) -> Dict[str, Any]:
-        """Get overall system health status."""
-        health_metrics = ['system_uptime', 'api_response_time', 'memory_usage', 'cpu_usage']
+        """Get overall system health status."""        health_metrics = ['system_uptime', 'api_response_time', 'memory_usage', 'cpu_usage']
         health_scores = []
         
         for metric_name in health_metrics:
@@ -538,8 +506,7 @@ class DetectionMetrics:
         }
     
     async def _get_detection_performance_summary(self) -> Dict[str, Any]:
-        """Get detection performance summary."""
-        detection_metrics = ['detection_accuracy', 'false_positive_rate', 'confidence_score_avg', 'detection_latency']
+        """Get detection performance summary."""        detection_metrics = ['detection_accuracy', 'false_positive_rate', 'confidence_score_avg', 'detection_latency']
         
         summary = {}
         for metric_name in detection_metrics:
@@ -553,8 +520,7 @@ class DetectionMetrics:
         return summary
     
     async def _get_enforcement_metrics_summary(self) -> Dict[str, Any]:
-        """Get enforcement metrics summary."""
-        enforcement_metrics = ['enforcement_success_rate', 'enforcement_response_time']
+        """Get enforcement metrics summary."""        enforcement_metrics = ['enforcement_success_rate', 'enforcement_response_time']
         
         summary = {}
         for metric_name in enforcement_metrics:
@@ -568,8 +534,7 @@ class DetectionMetrics:
         return summary
     
     async def _get_platform_performance_breakdown(self) -> Dict[str, Any]:
-        """Get performance breakdown by platform."""
-        platforms = ['youtube', 'instagram', 'tiktok', 'twitter', 'facebook']
+        """Get performance breakdown by platform."""        platforms = ['youtube', 'instagram', 'tiktok', 'twitter', 'facebook']
         platform_data = {}
         
         for platform in platforms:
@@ -592,8 +557,7 @@ class DetectionMetrics:
         return platform_data
     
     async def _get_active_alerts_summary(self) -> Dict[str, Any]:
-        """Get summary of active alerts."""
-        # Check current metrics against thresholds
+        """Get summary of active alerts."""        # Check current metrics against thresholds
         active_alerts = []
         
         for metric_name, current_metric in self.current_metrics.items():
@@ -626,8 +590,7 @@ class DetectionMetrics:
         }
     
     async def _get_key_trends(self) -> Dict[str, Any]:
-        """Get key performance trends."""
-        key_metrics = ['detection_accuracy', 'enforcement_success_rate', 'api_response_time']
+        """Get key performance trends."""        key_metrics = ['detection_accuracy', 'enforcement_success_rate', 'api_response_time']
         trends = {}
         
         for metric_name in key_metrics:
@@ -645,8 +608,7 @@ class DetectionMetrics:
         return trends
     
     async def _get_performance_recommendations(self) -> List[str]:
-        """Get performance optimization recommendations."""
-        recommendations = []
+        """Get performance optimization recommendations."""        recommendations = []
         
         # Check detection accuracy
         if 'detection_accuracy' in self.current_metrics:
@@ -675,8 +637,7 @@ class DetectionMetrics:
         return recommendations
     
     def _calculate_percentile(self, values: List[float], percentile: int) -> float:
-        """Calculate percentile value."""
-        if not values:
+        """Calculate percentile value."""        if not values:
             return 0.0
         
         sorted_values = sorted(values)
@@ -691,8 +652,7 @@ class DetectionMetrics:
             return sorted_values[lower_index] * (1 - weight) + sorted_values[upper_index] * weight
     
     async def _calculate_trend(self, metrics: List[MetricPoint]) -> str:
-        """Calculate trend direction for metrics."""
-        if len(metrics) < 2:
+        """Calculate trend direction for metrics."""        if len(metrics) < 2:
             return 'stable'
         
         # Sort by timestamp
@@ -720,8 +680,7 @@ class DetectionMetrics:
             return 'decreasing'
     
     async def _compare_to_baseline(self, metric_name: str, current_value: float) -> Dict[str, Any]:
-        """Compare current value to baseline."""
-        baseline = self.performance_baselines.get(metric_name)
+        """Compare current value to baseline."""        baseline = self.performance_baselines.get(metric_name)
         if baseline is None:
             return {'status': 'no_baseline', 'difference': 0}
         
@@ -748,8 +707,7 @@ class DetectionMetrics:
         }
     
     async def _check_metric_alerts(self, metric_point: MetricPoint) -> None:
-        """Check if metric triggers any alerts."""
-        metric_def = self.metric_definitions.get(metric_point.metric_name, {})
+        """Check if metric triggers any alerts."""        metric_def = self.metric_definitions.get(metric_point.metric_name, {})
         alert_threshold = metric_def.get('alert_threshold')
         
         if alert_threshold is not None:
@@ -767,8 +725,7 @@ class DetectionMetrics:
                 await self._send_metric_alert(metric_point, alert_threshold)
     
     async def _send_metric_alert(self, metric_point: MetricPoint, threshold: float) -> None:
-        """Send alert for metric threshold violation."""
-        alert_data = {
+        """Send alert for metric threshold violation."""        alert_data = {
             'metric_name': metric_point.metric_name,
             'current_value': metric_point.value,
             'threshold': threshold,
@@ -781,8 +738,7 @@ class DetectionMetrics:
         logger.warning(f"Metric alert: {metric_point.metric_name} = {metric_point.value} (threshold: {threshold})")
     
     async def _metrics_aggregation_task(self) -> None:
-        """Background task for metrics aggregation."""
-        while True:
+        """Background task for metrics aggregation."""        while True:
             try:
                 # Aggregate metrics every 5 minutes
                 await self._aggregate_metrics()
@@ -793,8 +749,7 @@ class DetectionMetrics:
                 await asyncio.sleep(60)
     
     async def _aggregate_metrics(self) -> None:
-        """Aggregate raw metrics into time-based summaries."""
-        # Group metrics by name and time interval
+        """Aggregate raw metrics into time-based summaries."""        # Group metrics by name and time interval
         time_intervals = [
             ('1h', timedelta(hours=1)),
             ('6h', timedelta(hours=6)),
@@ -852,8 +807,7 @@ class DetectionMetrics:
                             self.aggregated_metrics[agg_key] = self.aggregated_metrics[agg_key][-100:]
     
     async def _anomaly_detection_task(self) -> None:
-        """Background task for anomaly detection."""
-        while True:
+        """Background task for anomaly detection."""        while True:
             try:
                 await self._detect_anomalies()
                 await asyncio.sleep(600)  # Check every 10 minutes
@@ -863,8 +817,7 @@ class DetectionMetrics:
                 await asyncio.sleep(300)
     
     async def _detect_anomalies(self) -> None:
-        """Detect anomalies in metrics."""
-        if not self.anomaly_detector['enabled']:
+        """Detect anomalies in metrics."""        if not self.anomaly_detector['enabled']:
             return
         
         # Simple statistical anomaly detection
@@ -892,8 +845,7 @@ class DetectionMetrics:
     
     async def _handle_anomaly(self, metric_name: str, anomalous_value: float, 
                             expected_value: float, threshold: float) -> None:
-        """Handle detected anomaly."""
-        anomaly_data = {
+        """Handle detected anomaly."""        anomaly_data = {
             'metric_name': metric_name,
             'anomalous_value': anomalous_value,
             'expected_value': expected_value,
@@ -907,8 +859,7 @@ class DetectionMetrics:
         # In production, this would trigger alerting systems
     
     async def _cleanup_old_metrics(self) -> None:
-        """Clean up old metrics based on retention policy."""
-        cutoff_date = datetime.utcnow() - timedelta(days=self.retention_days)
+        """Clean up old metrics based on retention policy."""        cutoff_date = datetime.utcnow() - timedelta(days=self.retention_days)
         
         # Remove old raw metrics
         self.raw_metrics = [
@@ -928,8 +879,7 @@ class DetectionMetrics:
                 del self.aggregated_metrics[key]
     
     async def _metrics_cleanup_task(self) -> None:
-        """Background task for periodic metrics cleanup."""
-        while True:
+        """Background task for periodic metrics cleanup."""        while True:
             try:
                 await self._cleanup_old_metrics()
                 
@@ -946,8 +896,7 @@ class DetectionMetrics:
                 await asyncio.sleep(3600)  # Retry after 1 hour
     
     async def get_metrics_stats(self) -> Dict[str, Any]:
-        """Get metrics system statistics."""
-        return {
+        """Get metrics system statistics."""        return {
             'total_raw_metrics': len(self.raw_metrics),
             'total_aggregated_metrics': sum(len(metrics) for metrics in self.aggregated_metrics.values()),
             'active_metric_types': len(set(m.metric_name for m in self.raw_metrics[-1000:])),
@@ -958,8 +907,7 @@ class DetectionMetrics:
         }
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown the metrics system."""
-        logger.info("Shutting down Detection Metrics system...")
+        """Gracefully shutdown the metrics system."""        logger.info("Shutting down Detection Metrics system...")
         
         # Final metrics aggregation
         await self._aggregate_metrics()

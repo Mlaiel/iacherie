@@ -1,5 +1,4 @@
-"""
-Content Performance Analytics Module - IA Influencer Agent + Content Protection Platform
+"""Content Performance Analytics Module - IA Influencer Agent + Content Protection Platform
 
 Advanced content performance analytics and optimization system for multi-format content creators
 (musicians, bloggers, photographers, influencers, comedians) with AI-powered insights.
@@ -12,9 +11,7 @@ Architecture: Enterprise-grade, microservices-ready, production-optimized
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 Violations will be prosecuted under international copyright law.
-"""
-
-from typing import Dict, List, Optional, Any, Tuple, Union
+"""from typing import Dict, List, Optional, Any, Tuple, Union
 from decimal import Decimal
 from datetime import datetime, timedelta
 from dataclasses import dataclass
@@ -34,8 +31,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class ContentType(str, Enum):
-    """Content type categories"""
-    AUDIO = "audio"
+    """Content type categories"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -47,8 +43,7 @@ class ContentType(str, Enum):
     LONG_FORM = "long_form"
 
 class Platform(str, Enum):
-    """Supported platforms"""
-    SPOTIFY = "spotify"
+    """Supported platforms"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -65,8 +60,7 @@ class Platform(str, Enum):
     MEDIUM = "medium"
 
 class EngagementMetric(str, Enum):
-    """Engagement metric types"""
-    VIEWS = "views"
+    """Engagement metric types"""    VIEWS = "views"
     LIKES = "likes"
     SHARES = "shares"
     COMMENTS = "comments"
@@ -79,8 +73,7 @@ class EngagementMetric(str, Enum):
     ENGAGEMENT_RATE = "engagement_rate"
 
 class OptimizationCategory(str, Enum):
-    """Content optimization categories"""
-    TIMING = "timing"
+    """Content optimization categories"""    TIMING = "timing"
     HASHTAGS = "hashtags"
     THUMBNAIL = "thumbnail"
     TITLE = "title"
@@ -93,8 +86,7 @@ class OptimizationCategory(str, Enum):
 
 @dataclass
 class ContentInsight:
-    """Content performance insight"""
-    insight_type: str
+    """Content performance insight"""    insight_type: str
     confidence_score: float
     performance_impact: str
     recommended_action: str
@@ -102,13 +94,11 @@ class ContentInsight:
     implementation_effort: str
 
 class ContentPerformanceAnalytics(Base):
-    """
-    Enterprise-grade content performance analytics model
+    """    Enterprise-grade content performance analytics model
     
     Provides comprehensive content analysis, performance tracking, and optimization
     recommendations for multi-format content creators.
-    """
-    __tablename__ = "content_performance_analytics"
+    """    __tablename__ = "content_performance_analytics"
     
     # Primary Keys and Identity
     id = Column(Integer, primary_key=True, index=True)
@@ -215,10 +205,8 @@ class ContentPerformanceAnalytics(Base):
     )
 
 class ContentOptimizationRecommendation(Base):
-    """
-    AI-powered content optimization recommendations
-    """
-    __tablename__ = "content_optimization_recommendations"
+    """    AI-powered content optimization recommendations
+    """    __tablename__ = "content_optimization_recommendations"
     
     # Primary Keys
     id = Column(Integer, primary_key=True, index=True)
@@ -274,13 +262,11 @@ ContentPerformanceAnalytics.optimization_recommendations = relationship(
 )
 
 class ContentPerformanceManager:
-    """
-    Enterprise-grade content performance analytics manager
+    """    Enterprise-grade content performance analytics manager
     
     Provides comprehensive content analysis, performance tracking, and optimization
     services for multi-format content creators.
-    """
-    
+    """    
     def __init__(self, db_session):
         self.db_session = db_session
         self.logger = logging.getLogger(__name__)
@@ -294,8 +280,7 @@ class ContentPerformanceManager:
         published_at: datetime,
         engagement_data: Dict[str, Any]
     ) -> ContentPerformanceAnalytics:
-        """
-        Analyze content performance and generate insights
+        """        Analyze content performance and generate insights
         
         Args:
             user_id: User identifier
@@ -307,8 +292,7 @@ class ContentPerformanceManager:
             
         Returns:
             ContentPerformanceAnalytics: Complete analytics object
-        """
-        try:
+        """        try:
             self.logger.info(f"Analyzing content performance for content {content_id}")
             
             # Calculate time since publication
@@ -363,8 +347,7 @@ class ContentPerformanceManager:
             raise
     
     def _extract_core_metrics(self, engagement_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract core engagement metrics from platform data"""
-        
+        """Extract core engagement metrics from platform data"""        
         return {
             "total_views": engagement_data.get("views", 0),
             "total_likes": engagement_data.get("likes", 0),
@@ -379,8 +362,7 @@ class ContentPerformanceManager:
         core_metrics: Dict[str, Any], 
         hours_since_publication: int
     ) -> Dict[str, Any]:
-        """Calculate advanced engagement metrics"""
-        
+        """Calculate advanced engagement metrics"""        
         views = core_metrics.get("total_views", 0)
         likes = core_metrics.get("total_likes", 0)
         shares = core_metrics.get("total_shares", 0)
@@ -412,8 +394,7 @@ class ContentPerformanceManager:
         content_type: ContentType,
         core_metrics: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate performance benchmarks"""
-        
+        """Calculate performance benchmarks"""        
         # This would query historical data for actual benchmarking
         # For now, returning simulated benchmarks
         
@@ -437,8 +418,7 @@ class ContentPerformanceManager:
         advanced_metrics: Dict[str, Any],
         benchmarks: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate AI-powered content insights"""
-        
+        """Generate AI-powered content insights"""        
         insights = []
         
         # Engagement rate insight
@@ -495,8 +475,7 @@ class ContentPerformanceManager:
         core_metrics: Dict[str, Any],
         hours_since_publication: int
     ) -> Dict[str, Any]:
-        """Predict final performance metrics using AI models"""
-        
+        """Predict final performance metrics using AI models"""        
         # This would use actual ML models trained on historical data
         # For now, returning simulated predictions
         
@@ -519,8 +498,7 @@ class ContentPerformanceManager:
         self,
         analytics: ContentPerformanceAnalytics
     ) -> List[ContentOptimizationRecommendation]:
-        """Generate specific optimization recommendations"""
-        
+        """Generate specific optimization recommendations"""        
         recommendations = []
         
         # Timing optimization
@@ -582,10 +560,8 @@ class ContentPerformanceManager:
         days_back: int = 30,
         limit: int = 50
     ) -> List[ContentPerformanceAnalytics]:
-        """
-        Get content analytics for a user with optional filtering
-        """
-        try:
+        """        Get content analytics for a user with optional filtering
+        """        try:
             cutoff_date = datetime.utcnow() - timedelta(days=days_back)
             
             query = self.db_session.query(ContentPerformanceAnalytics).filter(
@@ -617,10 +593,8 @@ class ContentPerformanceManager:
         days_back: int = 30,
         limit: int = 10
     ) -> List[ContentPerformanceAnalytics]:
-        """
-        Get top performing content for a user
-        """
-        try:
+        """        Get top performing content for a user
+        """        try:
             cutoff_date = datetime.utcnow() - timedelta(days=days_back)
             
             # Map metric to database column

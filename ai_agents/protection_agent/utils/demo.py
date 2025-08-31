@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Protection Agent Demo - Usage Examples
+"""Protection Agent Demo - Usage Examples
 Demonstrates the capabilities of the Advanced Protection Agent
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -15,9 +14,7 @@ This demonstration shows how to:
 
 IMPORTANT: This is demonstration code for the proprietary Protection Agent
 developed by Fahed Mlaiel. All usage requires explicit licensing.
-"""
-
-import asyncio
+"""import asyncio
 import json
 from datetime import datetime
 from typing import Dict, List
@@ -29,8 +26,7 @@ DEMO_IMAGE_BYTES = b"DEMO_IMAGE_CONTENT_BYTES_HERE"
 
 
 async def demo_single_content_protection():
-    """Demonstrate protecting a single piece of content"""
-    print("🎵 Demo: Single Content Protection")
+    """Demonstrate protecting a single piece of content"""    print("🎵 Demo: Single Content Protection")
     print("-" * 40)
     
     try:
@@ -84,8 +80,7 @@ async def demo_single_content_protection():
 
 
 async def demo_multi_format_protection():
-    """Demonstrate protecting multiple content formats"""
-    print("\n🎨 Demo: Multi-Format Content Protection")
+    """Demonstrate protecting multiple content formats"""    print("\n🎨 Demo: Multi-Format Content Protection")
     print("-" * 40)
     
     try:
@@ -137,8 +132,7 @@ async def demo_multi_format_protection():
 
 
 async def demo_bulk_processing():
-    """Demonstrate bulk content processing for enterprise"""
-    print("\n🏢 Demo: Enterprise Bulk Processing")
+    """Demonstrate bulk content processing for enterprise"""    print("\n🏢 Demo: Enterprise Bulk Processing")
     print("-" * 40)
     
     try:
@@ -207,8 +201,7 @@ async def demo_bulk_processing():
 
 
 def demo_performance_metrics():
-    """Demonstrate getting performance metrics"""
-    print("\n📈 Demo: Performance Metrics")
+    """Demonstrate getting performance metrics"""    print("\n📈 Demo: Performance Metrics")
     print("-" * 40)
     
     try:
@@ -242,8 +235,7 @@ def demo_performance_metrics():
 
 
 async def demo_protection_status_monitoring():
-    """Demonstrate protection status monitoring"""
-    print("\n🔍 Demo: Protection Status Monitoring")
+    """Demonstrate protection status monitoring"""    print("\n🔍 Demo: Protection Status Monitoring")
     print("-" * 40)
     
     try:
@@ -282,8 +274,7 @@ async def demo_protection_status_monitoring():
 
 
 async def main():
-    """Run all demonstrations"""
-    print("🚀 Advanced Protection Agent - Comprehensive Demo")
+    """Run all demonstrations"""    print("🚀 Advanced Protection Agent - Comprehensive Demo")
     print("=" * 60)
     print("Author: Fahed Mlaiel (mlaiel@live.de)")
     print("Project: IA Influencer Agent Protection System")

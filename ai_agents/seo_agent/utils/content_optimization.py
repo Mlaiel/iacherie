@@ -1,5 +1,4 @@
-"""
-Content Optimization Module - Advanced SEO Content Enhancement
+"""Content Optimization Module - Advanced SEO Content Enhancement
 
 Comprehensive content optimization system with AI-powered analysis, metadata enhancement,
 structure optimization, and schema markup generation for maximum SEO performance.
@@ -11,9 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Set
 from datetime import datetime, timedelta
@@ -48,23 +45,20 @@ from ...integrations.schema_apis import SchemaAPIManager
 logger = logging.getLogger(__name__)
 
 class OptimizationLevel(Enum):
-    """Content optimization levels"""
-    BASIC = "basic"
+    """Content optimization levels"""    BASIC = "basic"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
     EXPERT = "expert"
 
 class ContentFormat(Enum):
-    """Content format types"""
-    HTML = "html"
+    """Content format types"""    HTML = "html"
     MARKDOWN = "markdown"
     PLAIN_TEXT = "plain_text"
     JSON = "json"
     XML = "xml"
 
 class SchemaType(Enum):
-    """Schema.org markup types"""
-    ARTICLE = "Article"
+    """Schema.org markup types"""    ARTICLE = "Article"
     BLOG_POST = "BlogPosting"
     MUSIC_RECORDING = "MusicRecording"
     MUSIC_ALBUM = "MusicAlbum"
@@ -79,8 +73,7 @@ class SchemaType(Enum):
 
 @dataclass
 class OptimizationSuggestion:
-    """Content optimization suggestion"""
-    type: str
+    """Content optimization suggestion"""    type: str
     priority: int  # 1-10, 10 being highest
     description: str
     current_value: str
@@ -92,8 +85,7 @@ class OptimizationSuggestion:
 
 @dataclass
 class ContentAnalysis:
-    """Comprehensive content analysis results"""
-    content_id: str
+    """Comprehensive content analysis results"""    content_id: str
     content_type: str
     word_count: int
     character_count: int
@@ -110,8 +102,7 @@ class ContentAnalysis:
 
 @dataclass
 class MetadataOptimization:
-    """Optimized metadata results"""
-    title: str
+    """Optimized metadata results"""    title: str
     description: str
     keywords: List[str]
     og_tags: Dict[str, str]
@@ -122,8 +113,7 @@ class MetadataOptimization:
     optimization_score: float
 
 class MetadataOptimizer:
-    """
-    Advanced metadata optimization engine.
+    """    Advanced metadata optimization engine.
     
     Features:
     - AI-powered title and description generation
@@ -133,8 +123,7 @@ class MetadataOptimizer:
     - Robot directives optimization
     - Schema markup generation
     - Multi-language metadata support
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -181,8 +170,7 @@ class MetadataOptimizer:
         }
         
     async def initialize(self):
-        """Initialize metadata optimizer"""
-        try:
+        """Initialize metadata optimizer"""        try:
             # Initialize text analyzer
             await self.text_analyzer.initialize()
             
@@ -207,8 +195,7 @@ class MetadataOptimizer:
         brand_name: str = "",
         optimization_level: OptimizationLevel = OptimizationLevel.ADVANCED
     ) -> MetadataOptimization:
-        """
-        Optimize metadata for maximum SEO performance.
+        """        Optimize metadata for maximum SEO performance.
         
         Args:
             content_data: Content information including title, content, etc.
@@ -219,8 +206,7 @@ class MetadataOptimizer:
         
         Returns:
             Optimized metadata package
-        """
-        try:
+        """        try:
             current_title = content_data.get('title', '')
             current_description = content_data.get('description', '')
             content_text = content_data.get('content', '')
@@ -291,8 +277,7 @@ class MetadataOptimizer:
         content_type: str,
         brand_name: str
     ) -> str:
-        """Generate SEO-optimized title"""
-        try:
+        """Generate SEO-optimized title"""        try:
             if not keywords:
                 return current_title[:self.title_max_length]
             
@@ -333,8 +318,7 @@ class MetadataOptimizer:
         keywords: List[str],
         content_type: str
     ) -> str:
-        """Generate SEO-optimized meta description"""
-        try:
+        """Generate SEO-optimized meta description"""        try:
             if not keywords:
                 return current_description[:self.description_max_length]
             
@@ -382,8 +366,7 @@ class MetadataOptimizer:
         content: str,
         content_type: str
     ) -> List[str]:
-        """Optimize keyword list for meta keywords tag"""
-        try:
+        """Optimize keyword list for meta keywords tag"""        try:
             # Analyze keyword relevance to content
             keyword_scores = {}
             
@@ -417,8 +400,7 @@ class MetadataOptimizer:
         description: str,
         content_data: Dict[str, Any]
     ) -> Dict[str, str]:
-        """Generate Open Graph tags"""
-        try:
+        """Generate Open Graph tags"""        try:
             og_tags = {
                 'og:title': title,
                 'og:description': description,
@@ -465,8 +447,7 @@ class MetadataOptimizer:
         description: str,
         content_data: Dict[str, Any]
     ) -> Dict[str, str]:
-        """Generate Twitter Card tags"""
-        try:
+        """Generate Twitter Card tags"""        try:
             # Determine card type
             if 'video' in content_data:
                 card_type = 'player'
@@ -505,8 +486,7 @@ class MetadataOptimizer:
             return {'twitter:card': 'summary', 'twitter:title': title}
     
     def _map_content_type_to_og_type(self, content_type: str) -> str:
-        """Map content type to Open Graph type"""
-        mapping = {
+        """Map content type to Open Graph type"""        mapping = {
             'article': 'article',
             'blog_post': 'article',
             'music_track': 'music.song',
@@ -521,8 +501,7 @@ class MetadataOptimizer:
 
 
 class ContentStructureOptimizer:
-    """
-    Advanced content structure optimization engine.
+    """    Advanced content structure optimization engine.
     
     Features:
     - Heading hierarchy optimization
@@ -532,8 +511,7 @@ class ContentStructureOptimizer:
     - Content flow improvement
     - Readability enhancement
     - Schema markup integration
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -548,8 +526,7 @@ class ContentStructureOptimizer:
         self.heading_keyword_density = 0.8  # 80% of headings should contain keywords
         
     async def initialize(self):
-        """Initialize content structure optimizer"""
-        try:
+        """Initialize content structure optimizer"""        try:
             await self.text_analyzer.initialize()
             await self.html_parser.initialize()
             
@@ -568,8 +545,7 @@ class ContentStructureOptimizer:
         content_data: Dict[str, Any],
         target_keywords: List[str]
     ) -> Dict[str, Any]:
-        """Optimize content title for SEO"""
-        try:
+        """Optimize content title for SEO"""        try:
             current_title = content_data.get('title', '')
             content_text = content_data.get('content', '')
             
@@ -622,8 +598,7 @@ class ContentStructureOptimizer:
         content_data: Dict[str, Any],
         target_keywords: List[str]
     ) -> Dict[str, Any]:
-        """Optimize overall content structure"""
-        try:
+        """Optimize overall content structure"""        try:
             content_text = content_data.get('content', '')
             content_format = content_data.get('format', 'html')
             
@@ -684,8 +659,7 @@ class ContentStructureOptimizer:
         html_content: str,
         keywords: List[str]
     ) -> Dict[str, Any]:
-        """Analyze HTML content structure"""
-        try:
+        """Analyze HTML content structure"""        try:
             soup = BeautifulSoup(html_content, 'html.parser')
             
             # Extract headings
@@ -750,8 +724,7 @@ class ContentStructureOptimizer:
             return {'error': str(e)}
     
     def _validate_heading_hierarchy(self, heading_levels: List[int]) -> bool:
-        """Validate heading hierarchy (no skipped levels)"""
-        if not heading_levels:
+        """Validate heading hierarchy (no skipped levels)"""        if not heading_levels:
             return False
         
         # Should start with H1
@@ -768,8 +741,7 @@ class ContentStructureOptimizer:
 
 
 class LinkBuilder:
-    """
-    Advanced link building and internal linking optimization.
+    """    Advanced link building and internal linking optimization.
     
     Features:
     - Internal linking opportunities
@@ -778,8 +750,7 @@ class LinkBuilder:
     - Related content discovery
     - Link structure analysis
     - Contextual linking suggestions
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -791,8 +762,7 @@ class LinkBuilder:
         self.ideal_anchor_text_length = 4  # words
         
     async def initialize(self):
-        """Initialize link builder"""
-        try:
+        """Initialize link builder"""        try:
             await self.text_analyzer.initialize()
             
             logger.info("Link Builder initialized successfully")
@@ -807,8 +777,7 @@ class LinkBuilder:
         related_content: List[Dict[str, Any]],
         target_keywords: List[str]
     ) -> Dict[str, Any]:
-        """Build optimized internal links for content"""
-        try:
+        """Build optimized internal links for content"""        try:
             content_text = content_data.get('content', '')
             
             # Find linking opportunities

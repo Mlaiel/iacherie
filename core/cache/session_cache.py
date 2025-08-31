@@ -1,12 +1,9 @@
-"""
-Session and Authentication Cache for IA Influencer Agent Platform
+"""Session and Authentication Cache for IA Influencer Agent Platform
 High-performance user session management with Redis and JWT token caching
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import hashlib
@@ -24,8 +21,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class UserSession:
-    """User session data structure"""
-    user_id: str
+    """User session data structure"""    user_id: str
     session_id: str
     tenant_id: Optional[str]
     email: str
@@ -55,8 +51,7 @@ class UserSession:
     suspicious_activity: bool = False
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert session to dictionary"""
-        data = asdict(self)
+        """Convert session to dictionary"""        data = asdict(self)
         # Convert datetime objects to ISO strings
         for key, value in data.items():
             if isinstance(value, datetime):
@@ -65,8 +60,7 @@ class UserSession:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'UserSession':
-        """Create session from dictionary"""
-        # Convert ISO strings back to datetime objects
+        """Create session from dictionary"""        # Convert ISO strings back to datetime objects
         datetime_fields = ['created_at', 'last_accessed', 'token_expires_at']
         for field in datetime_fields:
             if data.get(field) and isinstance(data[field], str):
@@ -76,8 +70,7 @@ class UserSession:
 
 @dataclass
 class AuthToken:
-    """Authentication token data"""
-    token: str
+    """Authentication token data"""    token: str
     token_type: str  # access, refresh, api_key
     user_id: str
     session_id: str
@@ -87,11 +80,9 @@ class AuthToken:
     is_revoked: bool = False
 
 class SessionCache:
-    """
-    Advanced session cache with Redis backend and security features
+    """    Advanced session cache with Redis backend and security features
     Handles user sessions, authentication tokens, and security tracking
-    """
-    
+    """    
     def __init__(self, 
                  redis_config: RedisConfig,
                  session_timeout: int = 3600,  # 1 hour
@@ -138,24 +129,19 @@ class SessionCache:
         logger.info("SessionCache initialized")
     
     async def initialize(self):
-        """Initialize cache connections"""
-        await self.redis_cache.connect()
+        """Initialize cache connections"""        await self.redis_cache.connect()
     
     def _encrypt_data(self, data: str) -> str:
-        """Encrypt sensitive data"""
-        return self.cipher.encrypt(data.encode()).decode()
+        """Encrypt sensitive data"""        return self.cipher.encrypt(data.encode()).decode()
     
     def _decrypt_data(self, encrypted_data: str) -> str:
-        """Decrypt sensitive data"""
-        return self.cipher.decrypt(encrypted_data.encode()).decode()
+        """Decrypt sensitive data"""        return self.cipher.decrypt(encrypted_data.encode()).decode()
     
     def _generate_session_id(self) -> str:
-        """Generate secure session ID"""
-        return secrets.token_urlsafe(32)
+        """Generate secure session ID"""        return secrets.token_urlsafe(32)
     
     def _generate_token(self, user_id: str, session_id: str, token_type: str = "access") -> str:
-        """Generate JWT token"""
-        payload = {
+        """Generate JWT token"""        payload = {
             'user_id': user_id,
             'session_id': session_id,
             'token_type': token_type,
@@ -174,8 +160,7 @@ class SessionCache:
                            user_agent: str,
                            tenant_id: Optional[str] = None,
                            profile_data: Optional[Dict[str, Any]] = None) -> UserSession:
-        """Create new user session"""
-        
+        """Create new user session"""        
         # Check for existing sessions and enforce limits
         await self._enforce_session_limits(user_id)
         
@@ -233,8 +218,7 @@ class SessionCache:
         return session
     
     async def get_session(self, session_id: str) -> Optional[UserSession]:
-        """Get session by ID"""
-        session_key = f"{self.SESSION_PREFIX}:{session_id}"
+        """Get session by ID"""        session_key = f"{self.SESSION_PREFIX}:{session_id}"
         
         # Try memory cache first
         cached_session = self.memory_cache.get(session_key)
@@ -265,8 +249,7 @@ class SessionCache:
         return None
     
     async def update_session(self, session_id: str, updates: Dict[str, Any]) -> bool:
-        """Update session data"""
-        session = await self.get_session(session_id)
+        """Update session data"""        session = await self.get_session(session_id)
         if not session:
             return False
         
@@ -288,8 +271,7 @@ class SessionCache:
         return True
     
     async def destroy_session(self, session_id: str) -> bool:
-        """Destroy user session"""
-        session = await self.get_session(session_id)
+        """Destroy user session"""        session = await self.get_session(session_id)
         if not session:
             return False
         
@@ -317,8 +299,7 @@ class SessionCache:
         return True
     
     async def get_user_sessions(self, user_id: str) -> List[UserSession]:
-        """Get all sessions for a user"""
-        user_sessions_key = f"{self.USER_SESSIONS_PREFIX}:{user_id}"
+        """Get all sessions for a user"""        user_sessions_key = f"{self.USER_SESSIONS_PREFIX}:{user_id}"
         session_ids_data = await self.redis_cache.get(user_sessions_key)
         
         if not session_ids_data:
@@ -335,8 +316,7 @@ class SessionCache:
         return sessions
     
     async def destroy_user_sessions(self, user_id: str, except_session: Optional[str] = None) -> int:
-        """Destroy all sessions for a user"""
-        sessions = await self.get_user_sessions(user_id)
+        """Destroy all sessions for a user"""        sessions = await self.get_user_sessions(user_id)
         destroyed_count = 0
         
         for session in sessions:
@@ -349,8 +329,7 @@ class SessionCache:
         return destroyed_count
     
     async def validate_token(self, token: str) -> Optional[Dict[str, Any]]:
-        """Validate JWT token"""
-        try:
+        """Validate JWT token"""        try:
             # Check if token is revoked
             token_key = f"{self.TOKEN_PREFIX}:{hashlib.sha256(token.encode()).hexdigest()}"
             token_data = await self.redis_cache.get(token_key)
@@ -380,8 +359,7 @@ class SessionCache:
             return None
     
     async def refresh_token(self, refresh_token: str) -> Optional[Dict[str, str]]:
-        """Refresh access token using refresh token"""
-        payload = await self.validate_token(refresh_token)
+        """Refresh access token using refresh token"""        payload = await self.validate_token(refresh_token)
         if not payload or payload.get('token_type') != 'refresh':
             return None
         
@@ -409,8 +387,7 @@ class SessionCache:
         }
     
     async def _store_token(self, token: str, user_id: str, session_id: str, token_type: str):
-        """Store token in cache"""
-        token_hash = hashlib.sha256(token.encode()).hexdigest()
+        """Store token in cache"""        token_hash = hashlib.sha256(token.encode()).hexdigest()
         token_key = f"{self.TOKEN_PREFIX}:{token_hash}"
         
         token_data = {
@@ -426,8 +403,7 @@ class SessionCache:
         await self.redis_cache.set(token_key, json.dumps(token_data), ttl=self.token_timeout)
     
     async def _revoke_token(self, token: str):
-        """Revoke token"""
-        token_hash = hashlib.sha256(token.encode()).hexdigest()
+        """Revoke token"""        token_hash = hashlib.sha256(token.encode()).hexdigest()
         token_key = f"{self.TOKEN_PREFIX}:{token_hash}"
         
         token_data = await self.redis_cache.get(token_key)
@@ -438,8 +414,7 @@ class SessionCache:
             self._stats['tokens_revoked'] += 1
     
     async def _add_user_session(self, user_id: str, session_id: str):
-        """Add session to user's session list"""
-        user_sessions_key = f"{self.USER_SESSIONS_PREFIX}:{user_id}"
+        """Add session to user's session list"""        user_sessions_key = f"{self.USER_SESSIONS_PREFIX}:{user_id}"
         session_ids_data = await self.redis_cache.get(user_sessions_key)
         
         session_ids = json.loads(session_ids_data) if session_ids_data else []
@@ -449,8 +424,7 @@ class SessionCache:
         await self.redis_cache.set(user_sessions_key, json.dumps(session_ids), ttl=self.session_timeout * 2)
     
     async def _remove_user_session(self, user_id: str, session_id: str):
-        """Remove session from user's session list"""
-        user_sessions_key = f"{self.USER_SESSIONS_PREFIX}:{user_id}"
+        """Remove session from user's session list"""        user_sessions_key = f"{self.USER_SESSIONS_PREFIX}:{user_id}"
         session_ids_data = await self.redis_cache.get(user_sessions_key)
         
         if session_ids_data:
@@ -460,8 +434,7 @@ class SessionCache:
                 await self.redis_cache.set(user_sessions_key, json.dumps(session_ids), ttl=self.session_timeout * 2)
     
     async def _enforce_session_limits(self, user_id: str):
-        """Enforce maximum sessions per user"""
-        sessions = await self.get_user_sessions(user_id)
+        """Enforce maximum sessions per user"""        sessions = await self.get_user_sessions(user_id)
         
         if len(sessions) >= self.max_sessions_per_user:
             # Sort by last accessed time and remove oldest
@@ -471,14 +444,12 @@ class SessionCache:
             logger.info(f"Removed oldest session for user {user_id} to enforce limits")
     
     async def _update_session_access(self, session_id: str, session: UserSession):
-        """Update session last accessed time"""
-        session_key = f"{self.SESSION_PREFIX}:{session_id}"
+        """Update session last accessed time"""        session_key = f"{self.SESSION_PREFIX}:{session_id}"
         session_data = json.dumps(session.to_dict())
         await self.redis_cache.set(session_key, session_data, ttl=self.session_timeout)
     
     async def _track_login(self, user_id: str, ip_address: str, user_agent: str, success: bool):
-        """Track login attempt for security"""
-        if not self.enable_security_tracking:
+        """Track login attempt for security"""        if not self.enable_security_tracking:
             return
         
         security_key = f"{self.SECURITY_PREFIX}:login:{user_id}"
@@ -501,8 +472,7 @@ class SessionCache:
         await self.redis_cache.set(security_key, json.dumps(attempts), ttl=86400)  # 24 hours
     
     async def _track_logout(self, user_id: str, ip_address: str):
-        """Track logout for security"""
-        if not self.enable_security_tracking:
+        """Track logout for security"""        if not self.enable_security_tracking:
             return
         
         security_key = f"{self.SECURITY_PREFIX}:logout:{user_id}"
@@ -515,8 +485,7 @@ class SessionCache:
         await self.redis_cache.set(security_key, json.dumps(logout_data), ttl=86400)
     
     async def get_stats(self) -> Dict[str, Any]:
-        """Get cache statistics"""
-        redis_stats = await self.redis_cache.get_stats()
+        """Get cache statistics"""        redis_stats = await self.redis_cache.get_stats()
         memory_stats = self.memory_cache.get_stats()
         
         return {
@@ -529,15 +498,12 @@ class SessionCache:
         }
     
     async def close(self):
-        """Close cache connections"""
-        await self.redis_cache.close()
+        """Close cache connections"""        await self.redis_cache.close()
         self.memory_cache.close()
 
 class AuthCache:
-    """
-    Simplified authentication cache for API tokens and permissions
-    """
-    
+    """    Simplified authentication cache for API tokens and permissions
+    """    
     def __init__(self, redis_config: RedisConfig):
         self.redis_cache = RedisCache(redis_config)
         self.API_KEY_PREFIX = "api_key"
@@ -545,12 +511,10 @@ class AuthCache:
         self.RATE_LIMIT_PREFIX = "rate_limit"
     
     async def initialize(self):
-        """Initialize cache connection"""
-        await self.redis_cache.connect()
+        """Initialize cache connection"""        await self.redis_cache.connect()
     
     async def store_api_key(self, api_key: str, user_id: str, permissions: List[str], ttl: int = 86400):
-        """Store API key with permissions"""
-        api_key_data = {
+        """Store API key with permissions"""        api_key_data = {
             'user_id': user_id,
             'permissions': permissions,
             'created_at': datetime.utcnow().isoformat(),
@@ -561,8 +525,7 @@ class AuthCache:
         await self.redis_cache.set(key, json.dumps(api_key_data), ttl=ttl)
     
     async def validate_api_key(self, api_key: str) -> Optional[Dict[str, Any]]:
-        """Validate API key and return user data"""
-        key = f"{self.API_KEY_PREFIX}:{hashlib.sha256(api_key.encode()).hexdigest()}"
+        """Validate API key and return user data"""        key = f"{self.API_KEY_PREFIX}:{hashlib.sha256(api_key.encode()).hexdigest()}"
         data = await self.redis_cache.get(key)
         
         if data:
@@ -570,13 +533,11 @@ class AuthCache:
         return None
     
     async def revoke_api_key(self, api_key: str) -> bool:
-        """Revoke API key"""
-        key = f"{self.API_KEY_PREFIX}:{hashlib.sha256(api_key.encode()).hexdigest()}"
+        """Revoke API key"""        key = f"{self.API_KEY_PREFIX}:{hashlib.sha256(api_key.encode()).hexdigest()}"
         return await self.redis_cache.delete(key)
     
     async def check_rate_limit(self, identifier: str, limit: int, window: int) -> bool:
-        """Check rate limit for identifier"""
-        key = f"{self.RATE_LIMIT_PREFIX}:{identifier}"
+        """Check rate limit for identifier"""        key = f"{self.RATE_LIMIT_PREFIX}:{identifier}"
         current_count = await self.redis_cache.get(key)
         
         if current_count is None:
@@ -592,5 +553,4 @@ class AuthCache:
         return True
     
     async def close(self):
-        """Close cache connection"""
-        await self.redis_cache.close()
+        """Close cache connection"""        await self.redis_cache.close()

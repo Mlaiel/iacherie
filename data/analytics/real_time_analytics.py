@@ -1,5 +1,4 @@
-"""
-Real-Time Analytics Engine
+"""Real-Time Analytics Engine
 =========================
 
 Real-time analytics processing and streaming for live content performance monitoring.
@@ -11,9 +10,7 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 WARNING: This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized copying, distribution, or modification without explicit written
 permission is strictly prohibited and will result in legal action.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Callable
@@ -35,8 +32,7 @@ from aiokafka import AIOKafkaProducer, AIOKafkaConsumer
 
 
 class MetricType(Enum):
-    """Real-time metric types"""
-    VIEWS = "views"
+    """Real-time metric types"""    VIEWS = "views"
     LIKES = "likes"
     COMMENTS = "comments"
     SHARES = "shares"
@@ -49,8 +45,7 @@ class MetricType(Enum):
 
 
 class AlertType(Enum):
-    """Alert types for real-time monitoring"""
-    VIRAL_CONTENT = "viral_content"
+    """Alert types for real-time monitoring"""    VIRAL_CONTENT = "viral_content"
     ENGAGEMENT_SPIKE = "engagement_spike"
     REVENUE_MILESTONE = "revenue_milestone"
     NEGATIVE_SENTIMENT = "negative_sentiment"
@@ -61,8 +56,7 @@ class AlertType(Enum):
 
 
 class StreamingPlatform(Enum):
-    """Streaming platforms for real-time data"""
-    YOUTUBE = "youtube"
+    """Streaming platforms for real-time data"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     SPOTIFY = "spotify"
@@ -73,8 +67,7 @@ class StreamingPlatform(Enum):
 
 @dataclass
 class RealTimeMetric:
-    """Real-time metric data point"""
-    metric_id: str
+    """Real-time metric data point"""    metric_id: str
     user_id: str
     content_id: str
     platform: StreamingPlatform
@@ -88,8 +81,7 @@ class RealTimeMetric:
 
 @dataclass
 class RealTimeAlert:
-    """Real-time alert notification"""
-    alert_id: str
+    """Real-time alert notification"""    alert_id: str
     user_id: str
     alert_type: AlertType
     severity: str  # "low", "medium", "high", "critical"
@@ -103,8 +95,7 @@ class RealTimeAlert:
 
 @dataclass
 class LiveDashboardData:
-    """Live dashboard data structure"""
-    user_id: str
+    """Live dashboard data structure"""    user_id: str
     current_metrics: Dict[str, RealTimeMetric]
     trends: Dict[str, List[float]]
     alerts: List[RealTimeAlert]
@@ -116,8 +107,7 @@ class LiveDashboardData:
 
 @dataclass
 class StreamingEvent:
-    """Real-time streaming event"""
-    event_id: str
+    """Real-time streaming event"""    event_id: str
     user_id: str
     event_type: str
     platform: StreamingPlatform
@@ -127,24 +117,20 @@ class StreamingEvent:
 
 
 class RealTimeAnalytics:
-    """
-    Professional real-time analytics engine for live content monitoring.
+    """    Professional real-time analytics engine for live content monitoring.
     
     Provides instant analytics, streaming dashboards, real-time alerts,
     and live performance optimization for content creators and influencers.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, redis_client: Redis,
                  kafka_producer: Optional[AIOKafkaProducer] = None):
-        """
-        Initialize RealTimeAnalytics engine.
+        """        Initialize RealTimeAnalytics engine.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching and pub/sub
             kafka_producer: Kafka producer for event streaming (optional)
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.redis_client = redis_client
         self.kafka_producer = kafka_producer
         self.logger = logging.getLogger(__name__)
@@ -160,13 +146,11 @@ class RealTimeAnalytics:
         self.event_counts = defaultdict(int)
         
     async def start_real_time_monitoring(self, user_id: str) -> None:
-        """
-        Start real-time monitoring for a user.
+        """        Start real-time monitoring for a user.
         
         Args:
             user_id: User identifier to monitor
-        """
-        try:
+        """        try:
             self.logger.info(f"Starting real-time monitoring for user {user_id}")
             
             # Initialize monitoring components
@@ -185,13 +169,11 @@ class RealTimeAnalytics:
             self.logger.error(f"Error starting real-time monitoring: {str(e)}")
     
     async def process_streaming_event(self, event: StreamingEvent) -> None:
-        """
-        Process incoming streaming event in real-time.
+        """        Process incoming streaming event in real-time.
         
         Args:
             event: Streaming event to process
-        """
-        try:
+        """        try:
             start_time = time.time()
             
             # Store event in buffer
@@ -225,16 +207,14 @@ class RealTimeAnalytics:
             self.logger.error(f"Error processing streaming event: {str(e)}")
     
     async def get_live_dashboard_data(self, user_id: str) -> LiveDashboardData:
-        """
-        Get current live dashboard data for user.
+        """        Get current live dashboard data for user.
         
         Args:
             user_id: User identifier
             
         Returns:
             Live dashboard data
-        """
-        try:
+        """        try:
             cache_key = f"live_dashboard:{user_id}"
             
             # Try to get from cache first
@@ -290,14 +270,12 @@ class RealTimeAnalytics:
             )
     
     async def setup_websocket_connection(self, websocket: WebSocket, user_id: str) -> None:
-        """
-        Setup WebSocket connection for real-time updates.
+        """        Setup WebSocket connection for real-time updates.
         
         Args:
             websocket: WebSocket connection
             user_id: User identifier
-        """
-        try:
+        """        try:
             await websocket.accept()
             
             # Store connection
@@ -337,8 +315,7 @@ class RealTimeAnalytics:
             self.logger.error(f"Error setting up WebSocket connection: {str(e)}")
     
     async def create_custom_alert(self, user_id: str, alert_config: Dict[str, Any]) -> str:
-        """
-        Create custom alert rule for user.
+        """        Create custom alert rule for user.
         
         Args:
             user_id: User identifier
@@ -346,8 +323,7 @@ class RealTimeAnalytics:
             
         Returns:
             Alert rule ID
-        """
-        try:
+        """        try:
             alert_id = f"custom_{user_id}_{int(time.time())}"
             
             # Validate alert configuration
@@ -392,8 +368,7 @@ class RealTimeAnalytics:
     async def get_performance_analytics(self, user_id: str,
                                       time_window: timedelta = timedelta(hours=1)
                                       ) -> Dict[str, Any]:
-        """
-        Get real-time performance analytics for specified time window.
+        """        Get real-time performance analytics for specified time window.
         
         Args:
             user_id: User identifier
@@ -401,8 +376,7 @@ class RealTimeAnalytics:
             
         Returns:
             Performance analytics data
-        """
-        try:
+        """        try:
             end_time = datetime.utcnow()
             start_time = end_time - time_window
             
@@ -438,8 +412,7 @@ class RealTimeAnalytics:
             return {"error": str(e)}
     
     async def _setup_metric_collectors(self, user_id: str) -> None:
-        """Setup metric collectors for different platforms."""
-        try:
+        """Setup metric collectors for different platforms."""        try:
             # Initialize collectors for each platform
             platforms = [StreamingPlatform.YOUTUBE, StreamingPlatform.INSTAGRAM, 
                         StreamingPlatform.TIKTOK, StreamingPlatform.SPOTIFY]
@@ -452,8 +425,7 @@ class RealTimeAnalytics:
             self.logger.error(f"Error setting up metric collectors: {str(e)}")
     
     async def _setup_alert_rules(self, user_id: str) -> None:
-        """Setup default alert rules for user."""
-        try:
+        """Setup default alert rules for user."""        try:
             default_alerts = [
                 {
                     'metric_type': 'engagement_rate',
@@ -485,8 +457,7 @@ class RealTimeAnalytics:
             self.logger.error(f"Error setting up alert rules: {str(e)}")
     
     async def _start_streaming_processors(self, user_id: str) -> None:
-        """Start streaming data processors."""
-        try:
+        """Start streaming data processors."""        try:
             if self.kafka_producer:
                 # Start Kafka streaming
                 topic = f"user_analytics_{user_id}"
@@ -499,8 +470,7 @@ class RealTimeAnalytics:
             self.logger.error(f"Error starting streaming processors: {str(e)}")
     
     async def _process_real_time_metrics(self, user_id: str) -> None:
-        """Background task to process real-time metrics."""
-        try:
+        """Background task to process real-time metrics."""        try:
             while True:
                 # Process buffered events
                 if user_id in self.metric_buffer and self.metric_buffer[user_id]:
@@ -522,8 +492,7 @@ class RealTimeAnalytics:
             self.logger.error(f"Error in real-time metrics processing: {str(e)}")
     
     async def _monitor_performance_anomalies(self, user_id: str) -> None:
-        """Monitor for performance anomalies."""
-        try:
+        """Monitor for performance anomalies."""        try:
             while True:
                 # Get recent metrics
                 recent_metrics = await self._get_recent_metrics(user_id, timedelta(minutes=15))
@@ -543,8 +512,7 @@ class RealTimeAnalytics:
             self.logger.error(f"Error monitoring performance anomalies: {str(e)}")
     
     async def _update_live_dashboard(self, user_id: str) -> None:
-        """Update live dashboard data."""
-        try:
+        """Update live dashboard data."""        try:
             while True:
                 # Update dashboard data
                 dashboard_data = await self.get_live_dashboard_data(user_id)
@@ -559,8 +527,7 @@ class RealTimeAnalytics:
             self.logger.error(f"Error updating live dashboard: {str(e)}")
     
     async def _process_view_event(self, event: StreamingEvent) -> None:
-        """Process content view event."""
-        try:
+        """Process content view event."""        try:
             # Update view metrics in real-time
             metric_key = f"views:{event.user_id}:{event.content_id}"
             current_views = await self.redis_client.incr(metric_key)
@@ -589,8 +556,7 @@ class RealTimeAnalytics:
             self.logger.error(f"Error processing view event: {str(e)}")
     
     async def _process_engagement_event(self, event: StreamingEvent) -> None:
-        """Process engagement event."""
-        try:
+        """Process engagement event."""        try:
             engagement_type = event.data.get('engagement_type', 'like')
             
             # Update engagement metrics
@@ -626,8 +592,7 @@ class RealTimeAnalytics:
             self.logger.error(f"Error processing engagement event: {str(e)}")
     
     async def _process_revenue_event(self, event: StreamingEvent) -> None:
-        """Process revenue event."""
-        try:
+        """Process revenue event."""        try:
             revenue_amount = event.data.get('amount', 0)
             
             # Update revenue metrics
@@ -656,8 +621,7 @@ class RealTimeAnalytics:
             self.logger.error(f"Error processing revenue event: {str(e)}")
     
     async def _process_protection_alert(self, event: StreamingEvent) -> None:
-        """Process content protection alert."""
-        try:
+        """Process content protection alert."""        try:
             alert = RealTimeAlert(
                 alert_id=f"protection_{event.event_id}",
                 user_id=event.user_id,
@@ -682,8 +646,7 @@ class RealTimeAnalytics:
             self.logger.error(f"Error processing protection alert: {str(e)}")
     
     async def _calculate_current_metrics(self, user_id: str) -> Dict[str, RealTimeMetric]:
-        """Calculate current real-time metrics."""
-        try:
+        """Calculate current real-time metrics."""        try:
             metrics = {}
             
             # Get all metric keys for user
@@ -723,8 +686,7 @@ class RealTimeAnalytics:
             return {}
     
     def _get_buffer_metrics(self, user_id: str, start_time: datetime, end_time: datetime) -> List[Dict]:
-        """Get metrics from memory buffer."""
-        try:
+        """Get metrics from memory buffer."""        try:
             if user_id not in self.metric_buffer:
                 return []
             
@@ -745,10 +707,8 @@ class RealTimeAnalytics:
             return []
     
     async def _get_db_metrics(self, user_id: str, start_time: datetime, end_time: datetime) -> List[Dict]:
-        """Get metrics from database."""
-        try:
-            query = text("""
-                SELECT 
+        """Get metrics from database."""        try:
+            query = text("""                SELECT 
                     metric_type,
                     platform,
                     value,
@@ -784,8 +744,7 @@ class RealTimeAnalytics:
             return []
     
     async def _get_cached_result(self, cache_key: str) -> Optional[Dict]:
-        """Get cached result from Redis."""
-        try:
+        """Get cached result from Redis."""        try:
             cached_data = await self.redis_client.get(cache_key)
             if cached_data:
                 return json.loads(cached_data)
@@ -795,8 +754,7 @@ class RealTimeAnalytics:
             return None
     
     async def _cache_result(self, cache_key: str, data: Dict, ttl: int) -> None:
-        """Cache result in Redis."""
-        try:
+        """Cache result in Redis."""        try:
             await self.redis_client.setex(
                 cache_key,
                 ttl,

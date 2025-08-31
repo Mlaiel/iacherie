@@ -1,5 +1,4 @@
-"""
-🗄️ Advanced Revenue Tracking Engine - IA Influencer Agent Platform Enterprise
+"""🗄️ Advanced Revenue Tracking Engine - IA Influencer Agent Platform Enterprise
 ============================================================================
 Module: backend/data_management/analytics/platform_revenue_tracker.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -23,9 +22,7 @@ PLATFORMS SUPPORTÉES:
 🎬 YouTube, TikTok, Instagram, Twitch (Influenceurs/Comédiens)
 📸 Instagram, Pinterest, Getty Images (Photographes)
 📝 Medium, Substack, WordPress (Blogueurs)
-"""
-
-from typing import Dict, List, Any, Optional, Union, Tuple
+"""from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 from datetime import datetime, timedelta
@@ -48,8 +45,7 @@ __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 logger = logging.getLogger(__name__)
 
 class PlatformType(Enum):
-    """Types de plateformes supportées"""
-    MUSIC_STREAMING = "music_streaming"
+    """Types de plateformes supportées"""    MUSIC_STREAMING = "music_streaming"
     VIDEO_PLATFORM = "video_platform"
     SOCIAL_MEDIA = "social_media"
     PHOTO_PLATFORM = "photo_platform"
@@ -57,8 +53,7 @@ class PlatformType(Enum):
     ECOMMERCE = "ecommerce"
 
 class RevenueMetricType(Enum):
-    """Types de métriques de revenus"""
-    STREAMING_ROYALTIES = "streaming_royalties"
+    """Types de métriques de revenus"""    STREAMING_ROYALTIES = "streaming_royalties"
     AD_REVENUE = "ad_revenue"
     SUBSCRIPTION_REVENUE = "subscription_revenue"
     MERCHANDISE_SALES = "merchandise_sales"
@@ -69,8 +64,7 @@ class RevenueMetricType(Enum):
 
 @dataclass
 class PlatformRevenueData:
-    """Données de revenus d'une plateforme"""
-    platform_id: str
+    """Données de revenus d'une plateforme"""    platform_id: str
     platform_name: str
     platform_type: PlatformType
     total_revenue: Decimal
@@ -84,8 +78,7 @@ class PlatformRevenueData:
 
 @dataclass
 class RevenuePrediction:
-    """Prédiction de revenus IA"""
-    predicted_amount: Decimal
+    """Prédiction de revenus IA"""    predicted_amount: Decimal
     confidence_score: float
     prediction_period: timedelta
     factors_analyzed: List[str]
@@ -93,8 +86,7 @@ class RevenuePrediction:
     generated_at: datetime = field(default_factory=datetime.now)
 
 class PlatformRevenueTracker:
-    """
-    Moteur avancé de suivi des revenus multi-plateformes
+    """    Moteur avancé de suivi des revenus multi-plateformes
     
     Capacités:
     - Intégration API temps réel avec 15+ plateformes
@@ -102,8 +94,7 @@ class PlatformRevenueTracker:
     - Optimisation fiscale et compliance
     - Analytics avancées et reporting
     - Détection anomalies et fraude
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.revenue_repository = RevenueRepository()
@@ -112,8 +103,7 @@ class PlatformRevenueTracker:
         self._platform_configs = self._load_platform_configs()
         
     def _initialize_api_clients(self) -> Dict[str, PlatformAPIClient]:
-        """Initialise les clients API pour chaque plateforme"""
-        clients = {}
+        """Initialise les clients API pour chaque plateforme"""        clients = {}
         
         # Music Streaming Platforms
         clients["spotify"] = PlatformAPIClient(
@@ -156,8 +146,7 @@ class PlatformRevenueTracker:
         return clients
         
     def _load_prediction_models(self) -> Dict[str, Any]:
-        """Charge les modèles IA de prédiction de revenus"""
-        return {
+        """Charge les modèles IA de prédiction de revenus"""        return {
             "revenue_forecasting": "models/revenue_forecast_v2.pkl",
             "trend_analysis": "models/trend_analyzer_v1.pkl", 
             "anomaly_detection": "models/anomaly_detector_v1.pkl",
@@ -165,8 +154,7 @@ class PlatformRevenueTracker:
         }
         
     def _load_platform_configs(self) -> Dict[str, Dict[str, Any]]:
-        """Configuration spécifique par plateforme"""
-        return {
+        """Configuration spécifique par plateforme"""        return {
             "spotify": {
                 "revenue_endpoints": ["/artists/{id}/revenue", "/analytics/revenue"],
                 "metrics": ["streams", "royalties", "playlist_adds"],
@@ -192,8 +180,7 @@ class PlatformRevenueTracker:
     
     async def collect_platform_revenue(self, creator_id: str, platform: str, 
                                      period_days: int = 30) -> PlatformRevenueData:
-        """
-        Collecte les données de revenus d'une plateforme spécifique
+        """        Collecte les données de revenus d'une plateforme spécifique
         
         Args:
             creator_id: ID du créateur
@@ -202,8 +189,7 @@ class PlatformRevenueTracker:
             
         Returns:
             PlatformRevenueData: Données de revenus structurées
-        """
-        try:
+        """        try:
             # Récupération du client API
             api_client = self.api_clients.get(platform)
             if not api_client:
@@ -246,8 +232,7 @@ class PlatformRevenueTracker:
     
     def _calculate_revenue_breakdown(self, platform: str, 
                                    raw_data: Dict[str, Any]) -> Dict[RevenueMetricType, Decimal]:
-        """Calcule la répartition des revenus par type"""
-        breakdown = {}
+        """Calcule la répartition des revenus par type"""        breakdown = {}
         
         if platform == "spotify":
             breakdown[RevenueMetricType.STREAMING_ROYALTIES] = Decimal(
@@ -273,8 +258,7 @@ class PlatformRevenueTracker:
         return breakdown
     
     def _get_platform_type(self, platform: str) -> PlatformType:
-        """Détermine le type de plateforme"""
-        mapping = {
+        """Détermine le type de plateforme"""        mapping = {
             "spotify": PlatformType.MUSIC_STREAMING,
             "apple_music": PlatformType.MUSIC_STREAMING,
             "youtube": PlatformType.VIDEO_PLATFORM,
@@ -287,8 +271,7 @@ class PlatformRevenueTracker:
     
     async def generate_revenue_prediction(self, creator_id: str, 
                                         prediction_days: int = 30) -> RevenuePrediction:
-        """
-        Génère une prédiction de revenus basée sur l'IA
+        """        Génère une prédiction de revenus basée sur l'IA
         
         Args:
             creator_id: ID du créateur
@@ -296,8 +279,7 @@ class PlatformRevenueTracker:
             
         Returns:
             RevenuePrediction: Prédiction avec score de confiance
-        """
-        try:
+        """        try:
             # Récupération de l'historique de revenus
             historical_data = await self.revenue_repository.get_historical_revenue(
                 creator_id=creator_id,
@@ -333,8 +315,7 @@ class PlatformRevenueTracker:
             raise
     
     def _analyze_revenue_trends(self, historical_data: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Analyse les tendances de revenus"""
-        if not historical_data:
+        """Analyse les tendances de revenus"""        if not historical_data:
             return {"growth_rate": 0.0, "volatility": 0.0}
             
         # Calcul du taux de croissance
@@ -356,8 +337,7 @@ class PlatformRevenueTracker:
         }
     
     async def _analyze_influence_factors(self, creator_id: str) -> Dict[str, float]:
-        """Analyse les facteurs d'influence sur les revenus"""
-        factors = {}
+        """Analyse les facteurs d'influence sur les revenus"""        factors = {}
         
         # Facteurs de contenu
         content_metrics = await self._get_content_performance_metrics(creator_id)
@@ -380,8 +360,7 @@ class PlatformRevenueTracker:
         return factors
     
     async def _get_content_performance_metrics(self, creator_id: str) -> Dict[str, float]:
-        """Récupère les métriques de performance du contenu"""
-        # Implémentation des métriques de contenu
+        """Récupère les métriques de performance du contenu"""        # Implémentation des métriques de contenu
         return {
             "engagement_rate": 0.085,  # 8.5%
             "posting_frequency": 4.2,  # posts per week
@@ -389,16 +368,14 @@ class PlatformRevenueTracker:
         }
     
     async def _get_audience_metrics(self, creator_id: str) -> Dict[str, float]:
-        """Récupère les métriques d'audience"""
-        return {
+        """Récupère les métriques d'audience"""        return {
             "growth_rate": 0.05,  # 5% monthly growth
             "avg_engagement": 0.04,  # 4% engagement rate
             "audience_retention": 0.75  # 75% retention
         }
     
     def _calculate_seasonal_factor(self) -> float:
-        """Calcule le facteur saisonnier"""
-        current_month = datetime.now().month
+        """Calcule le facteur saisonnier"""        current_month = datetime.now().month
         
         # Facteurs saisonniers par mois (basé sur données historiques)
         seasonal_factors = {
@@ -419,8 +396,7 @@ class PlatformRevenueTracker:
         return seasonal_factors.get(current_month, 1.0)
     
     async def _get_market_indicators(self) -> Dict[str, float]:
-        """Récupère les indicateurs de marché"""
-        return {
+        """Récupère les indicateurs de marché"""        return {
             "industry_growth": 0.08,  # 8% annual growth
             "competition_level": 0.75,  # High competition
             "market_saturation": 0.60   # 60% saturated
@@ -430,8 +406,7 @@ class PlatformRevenueTracker:
                                trends: Dict[str, float], 
                                factors: Dict[str, float],
                                prediction_days: int) -> Decimal:
-        """Prédit les revenus futurs avec IA"""
-        if not historical_data:
+        """Prédit les revenus futurs avec IA"""        if not historical_data:
             return Decimal("0.00")
             
         # Revenus moyens récents
@@ -456,8 +431,7 @@ class PlatformRevenueTracker:
     
     def _calculate_confidence_score(self, historical_data: List[Dict[str, Any]], 
                                   trends: Dict[str, float]) -> float:
-        """Calcule le score de confiance de la prédiction"""
-        base_confidence = 0.7  # 70% base confidence
+        """Calcule le score de confiance de la prédiction"""        base_confidence = 0.7  # 70% base confidence
         
         # Ajustements basés sur la qualité des données
         data_quality_factor = min(len(historical_data) / 30, 1.0)  # More data = higher confidence
@@ -467,13 +441,11 @@ class PlatformRevenueTracker:
         return max(0.1, min(0.95, final_confidence))  # Entre 10% et 95%
 
     async def optimize_revenue_strategy(self, creator_id: str) -> Dict[str, Any]:
-        """
-        Optimise la stratégie de revenus avec recommandations IA
+        """        Optimise la stratégie de revenus avec recommandations IA
         
         Returns:
             Dict contenant les recommandations d'optimisation
-        """
-        try:
+        """        try:
             # Analyse de la performance actuelle
             current_performance = await self._analyze_current_performance(creator_id)
             
@@ -498,8 +470,7 @@ class PlatformRevenueTracker:
             raise
     
     async def _analyze_current_performance(self, creator_id: str) -> Dict[str, Any]:
-        """Analyse la performance actuelle du créateur"""
-        return {
+        """Analyse la performance actuelle du créateur"""        return {
             "total_monthly_revenue": 2500.00,
             "platform_distribution": {
                 "youtube": 0.45,
@@ -515,8 +486,7 @@ class PlatformRevenueTracker:
         }
     
     async def _identify_revenue_opportunities(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Identifie les opportunités de revenus"""
-        return [
+        """Identifie les opportunités de revenus"""        return [
             {
                 "type": "platform_expansion",
                 "platform": "tiktok",
@@ -542,8 +512,7 @@ class PlatformRevenueTracker:
     
     def _generate_optimization_recommendations(self, performance: Dict[str, Any], 
                                              opportunities: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Génère des recommandations d'optimisation personnalisées"""
-        return [
+        """Génère des recommandations d'optimisation personnalisées"""        return [
             {
                 "recommendation": "Expand to TikTok platform",
                 "reasoning": "High engagement potential for your content type",
@@ -570,8 +539,7 @@ class PlatformRevenueTracker:
         ]
     
     def _calculate_potential_increase(self, recommendations: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Calcule l'augmentation potentielle des revenus"""
-        total_potential = sum(rec.get("estimated_roi", 1.0) for rec in recommendations)
+        """Calcule l'augmentation potentielle des revenus"""        total_potential = sum(rec.get("estimated_roi", 1.0) for rec in recommendations)
         
         return {
             "percentage_increase": (total_potential - 1) * 100,
@@ -580,8 +548,7 @@ class PlatformRevenueTracker:
         }
     
     def _prioritize_recommendations(self, recommendations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Priorise les recommandations par impact/effort"""
-        def priority_score(rec):
+        """Priorise les recommandations par impact/effort"""        def priority_score(rec):
             impact_weight = {"high": 3, "medium": 2, "low": 1}
             effort_weight = {"low": 3, "medium": 2, "high": 1}
             

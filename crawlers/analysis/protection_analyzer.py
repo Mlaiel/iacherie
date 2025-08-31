@@ -1,5 +1,4 @@
-"""
-Protection Analyzer
+"""Protection Analyzer
 ==================
 
 Advanced content protection and copyright analysis system.
@@ -22,9 +21,7 @@ Expertise combinée:
 - Audio/Vidéo: Traitement multimédia et analyse de contenu
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import numpy as np
@@ -43,16 +40,14 @@ from sentence_transformers import SentenceTransformer
 logger = logging.getLogger(__name__)
 
 class ProtectionLevel(Enum):
-    """Content protection levels."""
-    MINIMAL = "minimal"          # Basic monitoring
+    """Content protection levels."""    MINIMAL = "minimal"          # Basic monitoring
     STANDARD = "standard"        # Regular scanning
     ENHANCED = "enhanced"        # Advanced protection
     MAXIMUM = "maximum"          # Real-time monitoring
     ENTERPRISE = "enterprise"    # Full legal protection
 
 class ThreatType(Enum):
-    """Content protection threat types."""
-    DIRECT_COPY = "direct_copy"              # Exact duplication
+    """Content protection threat types."""    DIRECT_COPY = "direct_copy"              # Exact duplication
     MODIFIED_COPY = "modified_copy"          # Altered content
     PARTIAL_USE = "partial_use"              # Portion used
     DERIVATIVE_WORK = "derivative_work"      # Based on original
@@ -64,16 +59,14 @@ class ThreatType(Enum):
     BRAND_MISUSE = "brand_misuse"           # Unauthorized branding
 
 class ViolationSeverity(Enum):
-    """Violation severity levels."""
-    CRITICAL = "critical"        # Immediate action required
+    """Violation severity levels."""    CRITICAL = "critical"        # Immediate action required
     HIGH = "high"               # Urgent attention needed
     MEDIUM = "medium"           # Monitoring required
     LOW = "low"                 # Notification only
     INFORMATIONAL = "informational"  # FYI
 
 class ActionType(Enum):
-    """Recommended actions for violations."""
-    DMCA_TAKEDOWN = "dmca_takedown"
+    """Recommended actions for violations."""    DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     LEGAL_ACTION = "legal_action"
     PLATFORM_REPORT = "platform_report"
@@ -84,8 +77,7 @@ class ActionType(Enum):
 
 @dataclass
 class ProtectionViolation:
-    """Detected protection violation."""
-    violation_id: str
+    """Detected protection violation."""    violation_id: str
     threat_type: ThreatType
     severity: ViolationSeverity
     
@@ -122,8 +114,7 @@ class ProtectionViolation:
 
 @dataclass
 class ProtectionRecommendation:
-    """Protection action recommendation."""
-    action_type: ActionType
+    """Protection action recommendation."""    action_type: ActionType
     priority: int  # 1-5 priority level
     estimated_success_rate: float
     
@@ -148,8 +139,7 @@ class ProtectionRecommendation:
 
 @dataclass
 class ContentFingerprint:
-    """Unique content fingerprint for protection."""
-    content_id: str
+    """Unique content fingerprint for protection."""    content_id: str
     fingerprint_type: str  # visual, audio, text, combined
     
     # Hash signatures
@@ -175,8 +165,7 @@ class ContentFingerprint:
 
 @dataclass
 class ProtectionAnalysisResult:
-    """Complete protection analysis result."""
-    content_id: str
+    """Complete protection analysis result."""    content_id: str
     analysis_timestamp: datetime
     protection_level: ProtectionLevel
     
@@ -211,8 +200,7 @@ class ProtectionAnalysisResult:
     data_sources: List[str] = field(default_factory=list)
 
 class ProtectionAnalyzer:
-    """
-    Advanced content protection and copyright analysis system.
+    """    Advanced content protection and copyright analysis system.
     
     Features:
     - Multi-modal content fingerprinting
@@ -224,8 +212,7 @@ class ProtectionAnalyzer:
     - Deepfake detection
     - Identity theft prevention
     - Comprehensive evidence collection
-    """
-    
+    """    
     def __init__(
         self,
         protection_level: ProtectionLevel = ProtectionLevel.STANDARD,
@@ -233,16 +220,14 @@ class ProtectionAnalyzer:
         enable_legal_analysis: bool = True,
         monitoring_frequency: int = 24  # Hours
     ):
-        """
-        Initialize protection analyzer.
+        """        Initialize protection analyzer.
         
         Args:
             protection_level: Level of protection to apply
             enable_realtime_monitoring: Enable real-time monitoring
             enable_legal_analysis: Enable legal analysis features
             monitoring_frequency: Monitoring frequency in hours
-        """
-        self.protection_level = protection_level
+        """        self.protection_level = protection_level
         self.enable_realtime_monitoring = enable_realtime_monitoring
         self.enable_legal_analysis = enable_legal_analysis
         self.monitoring_frequency = monitoring_frequency
@@ -275,8 +260,7 @@ class ProtectionAnalyzer:
         logger.info(f"ProtectionAnalyzer initialized with {protection_level.value} protection level")
     
     def _initialize_detection_models(self) -> None:
-        """Initialize AI models for content detection."""
-        try:
+        """Initialize AI models for content detection."""        try:
             # Text similarity model
             self.text_embedder = SentenceTransformer('all-MiniLM-L6-v2')
             
@@ -303,8 +287,7 @@ class ProtectionAnalyzer:
             self.text_embedder = None
     
     def _load_legal_database(self) -> None:
-        """Load legal precedents and templates."""
-        # DMCA takedown templates
+        """Load legal precedents and templates."""        # DMCA takedown templates
         self.dmca_templates = {
             "standard": {
                 "subject": "DMCA Takedown Notice - Copyright Infringement",
@@ -351,8 +334,7 @@ class ProtectionAnalyzer:
         creator_profile: Dict[str, Any],
         existing_fingerprint: Optional[ContentFingerprint] = None
     ) -> ProtectionAnalysisResult:
-        """
-        Analyze content protection status and detect violations.
+        """        Analyze content protection status and detect violations.
         
         Args:
             content_id: Unique content identifier
@@ -362,8 +344,7 @@ class ProtectionAnalyzer:
             
         Returns:
             ProtectionAnalysisResult: Complete protection analysis
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             # Generate or update content fingerprint
@@ -496,8 +477,7 @@ class ProtectionAnalyzer:
         content_id: str,
         content_data: Dict[str, Any]
     ) -> ContentFingerprint:
-        """Generate comprehensive content fingerprint."""
-        try:
+        """Generate comprehensive content fingerprint."""        try:
             content_type = content_data.get('content_type', 'unknown')
             
             # Generate different types of hashes
@@ -549,8 +529,7 @@ class ProtectionAnalyzer:
             )
     
     async def _generate_perceptual_hash(self, content_data: Dict[str, Any]) -> str:
-        """Generate perceptual hash for content."""
-        try:
+        """Generate perceptual hash for content."""        try:
             content_type = content_data.get('content_type', 'unknown')
             
             if content_type == 'image':
@@ -590,8 +569,7 @@ class ProtectionAnalyzer:
             return "error_hash"
     
     def _generate_structural_hash(self, content_data: Dict[str, Any]) -> str:
-        """Generate structural hash based on content structure."""
-        try:
+        """Generate structural hash based on content structure."""        try:
             # Extract structural elements
             structure_elements = {
                 'content_type': content_data.get('content_type'),
@@ -609,8 +587,7 @@ class ProtectionAnalyzer:
             return "error_structural"
     
     async def _generate_semantic_hash(self, content_data: Dict[str, Any]) -> str:
-        """Generate semantic hash based on content meaning."""
-        try:
+        """Generate semantic hash based on content meaning."""        try:
             semantic_elements = []
             
             # Text semantics
@@ -648,8 +625,7 @@ class ProtectionAnalyzer:
             return "error_semantic"
     
     async def _extract_visual_features(self, content_data: Dict[str, Any]) -> Optional[np.ndarray]:
-        """Extract visual features from image/video content."""
-        try:
+        """Extract visual features from image/video content."""        try:
             if 'image_data' in content_data:
                 image = content_data['image_data']
                 if isinstance(image, np.ndarray):
@@ -683,8 +659,7 @@ class ProtectionAnalyzer:
             return None
     
     async def _extract_audio_features(self, content_data: Dict[str, Any]) -> Optional[np.ndarray]:
-        """Extract audio features from audio content."""
-        try:
+        """Extract audio features from audio content."""        try:
             if 'audio_data' in content_data:
                 y = content_data['audio_data']
                 sr = content_data.get('sample_rate', 22050)
@@ -719,8 +694,7 @@ class ProtectionAnalyzer:
             return None
     
     async def _extract_text_embeddings(self, content_data: Dict[str, Any]) -> Optional[np.ndarray]:
-        """Extract text embeddings from text content."""
-        try:
+        """Extract text embeddings from text content."""        try:
             text = content_data.get('text', content_data.get('caption', ''))
             
             if text and self.text_embedder:
@@ -738,8 +712,7 @@ class ProtectionAnalyzer:
         content_fingerprint: ContentFingerprint,
         content_data: Dict[str, Any]
     ) -> List[ProtectionViolation]:
-        """Scan for potential content violations."""
-        violations = []
+        """Scan for potential content violations."""        violations = []
         
         try:
             # Simulate violation detection (in real implementation, this would scan external sources)
@@ -804,8 +777,7 @@ class ProtectionAnalyzer:
         active_violations: List[ProtectionViolation],
         resolved_violations: List[ProtectionViolation]
     ) -> float:
-        """Calculate overall protection effectiveness score."""
-        try:
+        """Calculate overall protection effectiveness score."""        try:
             base_score = 0.8  # Base protection score
             
             # Penalties for active violations
@@ -848,8 +820,7 @@ class ProtectionAnalyzer:
         violations: List[ProtectionViolation],
         creator_profile: Dict[str, Any]
     ) -> List[ProtectionRecommendation]:
-        """Generate protection action recommendations."""
-        recommendations = []
+        """Generate protection action recommendations."""        recommendations = []
         
         try:
             # Recommendations for active violations
@@ -949,8 +920,7 @@ class ProtectionAnalyzer:
         fingerprint: ContentFingerprint,
         protection_score: float
     ) -> List[str]:
-        """Identify security improvements needed."""
-        improvements = []
+        """Identify security improvements needed."""        improvements = []
         
         if protection_score < 0.7:
             improvements.append("Upgrade to higher protection level")
@@ -979,8 +949,7 @@ class ProtectionAnalyzer:
         creator_profile: Dict[str, Any],
         violations: List[ProtectionViolation]
     ) -> float:
-        """Assess infringement risk score."""
-        try:
+        """Assess infringement risk score."""        try:
             risk_factors = []
             
             # Content popularity factor
@@ -1034,8 +1003,7 @@ class ProtectionAnalyzer:
         fingerprint: ContentFingerprint,
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Assess content vulnerabilities."""
-        vulnerabilities = {
+        """Assess content vulnerabilities."""        vulnerabilities = {
             "technical_vulnerabilities": [],
             "legal_vulnerabilities": [],
             "platform_vulnerabilities": [],
@@ -1079,8 +1047,7 @@ class ProtectionAnalyzer:
         content_data: Dict[str, Any],
         creator_profile: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze copyright status and strength."""
-        copyright_status = {
+        """Analyze copyright status and strength."""        copyright_status = {
             "registration_status": "unregistered",
             "ownership_strength": 0.7,  # Default for original creation
             "fair_use_risk": 0.2,
@@ -1109,8 +1076,7 @@ class ProtectionAnalyzer:
         content_data: Dict[str, Any],
         creator_profile: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze trademark status and protection."""
-        trademark_status = {
+        """Analyze trademark status and protection."""        trademark_status = {
             "brand_protection": "basic",
             "trademark_registered": False,
             "brand_strength": 0.5,
@@ -1134,8 +1100,7 @@ class ProtectionAnalyzer:
         resolved_violations: List[ProtectionViolation],
         protection_score: float
     ) -> float:
-        """Calculate protection effectiveness."""
-        try:
+        """Calculate protection effectiveness."""        try:
             if not resolved_violations and not active_violations:
                 return protection_score
             
@@ -1152,8 +1117,7 @@ class ProtectionAnalyzer:
             return 0.5
     
     def _analyze_violation_trends(self, content_id: str) -> Dict[str, Any]:
-        """Analyze violation trends for content."""
-        trends = {
+        """Analyze violation trends for content."""        trends = {
             "violation_frequency": "low",
             "severity_trend": "stable",
             "platform_distribution": {},
@@ -1188,8 +1152,7 @@ class ProtectionAnalyzer:
         return trends
     
     def _get_scan_coverage(self) -> Dict[str, Any]:
-        """Get current scan coverage information."""
-        return {
+        """Get current scan coverage information."""        return {
             "platforms_monitored": ["youtube", "instagram", "tiktok", "twitter", "facebook"],
             "scan_types": ["perceptual_hash", "visual_similarity", "text_similarity"],
             "geographic_coverage": "global",
@@ -1203,8 +1166,7 @@ class ProtectionAnalyzer:
         violation_count: int,
         protection_score: float
     ) -> float:
-        """Calculate analysis confidence score."""
-        confidence_factors = []
+        """Calculate analysis confidence score."""        confidence_factors = []
         
         # Fingerprint quality factor
         fingerprint_quality = 0.5
@@ -1242,8 +1204,7 @@ class ProtectionAnalyzer:
         return np.mean(confidence_factors)
     
     def get_analytics(self) -> Dict[str, Any]:
-        """Get protection analysis analytics and performance metrics."""
-        avg_processing_time = np.mean(self.processing_times) if self.processing_times else 0
+        """Get protection analysis analytics and performance metrics."""        avg_processing_time = np.mean(self.processing_times) if self.processing_times else 0
         
         return {
             "total_analyses": self.analysis_count,
@@ -1263,8 +1224,7 @@ class ProtectionAnalyzer:
         }
     
     async def cleanup(self) -> None:
-        """Cleanup resources and clear caches."""
-        self.fingerprint_database.clear()
+        """Cleanup resources and clear caches."""        self.fingerprint_database.clear()
         self.violation_history.clear()
         self.monitoring_tasks.clear()
         self.processing_times.clear()

@@ -1,14 +1,11 @@
-"""
-😊 Mood Analyzer - AI-Powered Musical Mood Detection
+"""😊 Mood Analyzer - AI-Powered Musical Mood Detection
 
 Advanced mood and emotion analysis engine for identifying emotional
 characteristics and affective content in audio signals.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import numpy as np
+"""import numpy as np
 import logging
 from typing import Dict, List
 from enum import Enum
@@ -16,8 +13,7 @@ import librosa
 
 
 class MoodCategory(Enum):
-    """Musical mood categories"""
-    HAPPY = "happy"
+    """Musical mood categories"""    HAPPY = "happy"
     SAD = "sad"
     ENERGETIC = "energetic"
     CALM = "calm"
@@ -28,8 +24,7 @@ class MoodCategory(Enum):
 
 
 class MoodAnalyzer:
-    """Professional musical mood analysis engine"""
-    
+    """Professional musical mood analysis engine"""    
     def __init__(self, sample_rate: int = 44100):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -46,8 +41,7 @@ class MoodAnalyzer:
         self.logger.info("MoodAnalyzer initialized")
     
     async def analyze_mood(self, audio_data: np.ndarray) -> Dict[str, Any]:
-        """Analyze musical mood and emotion"""
-        try:
+        """Analyze musical mood and emotion"""        try:
             # Extract mood-relevant features
             features = await self._extract_mood_features(audio_data)
             
@@ -86,8 +80,7 @@ class MoodAnalyzer:
             return {'primary_mood': 'neutral', 'mood_confidence': 0.0}
     
     async def _extract_mood_features(self, audio_data: np.ndarray) -> Dict[str, float]:
-        """Extract features relevant for mood analysis"""
-        features = {}
+        """Extract features relevant for mood analysis"""        features = {}
         
         # Tempo
         tempo, _ = librosa.beat.beat_track(y=audio_data, sr=self.sample_rate)
@@ -118,8 +111,7 @@ class MoodAnalyzer:
         return features
     
     def _compute_mood_score(self, features: Dict[str, float], characteristics: Dict) -> float:
-        """Compute mood score based on characteristics"""
-        score = 0.0
+        """Compute mood score based on characteristics"""        score = 0.0
         
         # Tempo score
         tempo = features.get('tempo', 120)
@@ -150,8 +142,7 @@ class MoodAnalyzer:
         return min(1.0, score)
     
     def _compute_valence(self, features: Dict[str, float]) -> float:
-        """Compute valence (positive/negative emotion)"""
-        # Higher tempo, energy, and brightness = more positive
+        """Compute valence (positive/negative emotion)"""        # Higher tempo, energy, and brightness = more positive
         tempo_valence = min(1.0, features.get('tempo', 120) / 150.0)
         energy_valence = features.get('energy', 0.5)
         brightness_valence = min(1.0, features.get('brightness', 1000) / 3000.0)
@@ -160,8 +151,7 @@ class MoodAnalyzer:
         return valence
     
     def _compute_arousal(self, features: Dict[str, float]) -> float:
-        """Compute arousal (energy/activation level)"""
-        # Energy and tempo contribute to arousal
+        """Compute arousal (energy/activation level)"""        # Energy and tempo contribute to arousal
         energy_arousal = features.get('energy', 0.5)
         tempo_arousal = min(1.0, features.get('tempo', 120) / 180.0)
         roughness_arousal = features.get('roughness', 0.1) * 10
@@ -170,8 +160,7 @@ class MoodAnalyzer:
         return min(1.0, arousal)
     
     def _compute_dominance(self, features: Dict[str, float]) -> float:
-        """Compute dominance (control/power)"""
-        # Energy and low-frequency content contribute to dominance
+        """Compute dominance (control/power)"""        # Energy and low-frequency content contribute to dominance
         energy_dominance = features.get('energy', 0.5)
         bass_dominance = 1.0 - min(1.0, features.get('brightness', 1000) / 2000.0)
         

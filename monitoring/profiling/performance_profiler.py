@@ -1,14 +1,11 @@
-"""
-⚡ Performance Profiling System
+"""⚡ Performance Profiling System
 ==============================
 
 Advanced performance monitoring and optimization system for the Ainflue platform.
 Provides real-time profiling, bottleneck detection, and optimization recommendations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import psutil
@@ -32,8 +29,7 @@ logger = logging.getLogger(__name__)
 
 
 class ProfilerType(Enum):
-    """Types of profilers"""
-    CPU = "cpu"
+    """Types of profilers"""    CPU = "cpu"
     MEMORY = "memory"
     ASYNC = "async"
     DATABASE = "database"
@@ -41,8 +37,7 @@ class ProfilerType(Enum):
 
 
 class OptimizationLevel(Enum):
-    """Optimization recommendation levels"""
-    LOW = "low"
+    """Optimization recommendation levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -50,8 +45,7 @@ class OptimizationLevel(Enum):
 
 @dataclass
 class PerformanceMetric:
-    """Individual performance metric"""
-    name: str
+    """Individual performance metric"""    name: str
     value: float
     unit: str
     timestamp: datetime
@@ -61,8 +55,7 @@ class PerformanceMetric:
 
 @dataclass
 class BottleneckReport:
-    """Performance bottleneck report"""
-    function_name: str
+    """Performance bottleneck report"""    function_name: str
     execution_time: float
     call_count: int
     memory_usage: float
@@ -72,8 +65,7 @@ class BottleneckReport:
 
 
 class PerformanceProfiler:
-    """
-    Advanced performance profiling system
+    """    Advanced performance profiling system
     
     Features:
     - Real-time CPU profiling
@@ -83,11 +75,9 @@ class PerformanceProfiler:
     - Network call monitoring
     - Automatic bottleneck detection
     - Optimization recommendations
-    """
-    
+    """    
     def __init__(self):
-        """Initialize performance profiler"""
-        
+        """Initialize performance profiler"""        
         # Prometheus metrics
         self.cpu_usage = Gauge(
             'ainflue_cpu_usage_percentage',
@@ -149,8 +139,7 @@ class PerformanceProfiler:
         profiler_types: List[ProfilerType] = None,
         duration_seconds: Optional[int] = None
     ) -> str:
-        """
-        Start performance profiling session
+        """        Start performance profiling session
         
         Args:
             profiler_types: Types of profilers to enable
@@ -158,8 +147,7 @@ class PerformanceProfiler:
             
         Returns:
             Session ID
-        """
-        try:
+        """        try:
             session_id = f"profile_{int(time.time())}"
             profiler_types = profiler_types or [ProfilerType.CPU, ProfilerType.MEMORY]
             
@@ -202,16 +190,14 @@ class PerformanceProfiler:
             return ""
     
     async def stop_profiling(self, session_id: str) -> Dict[str, Any]:
-        """
-        Stop profiling session and generate report
+        """        Stop profiling session and generate report
         
         Args:
             session_id: Session to stop
             
         Returns:
             Profiling report
-        """
-        try:
+        """        try:
             if session_id not in self.profiling_sessions:
                 logger.warning(f"Session {session_id} not found")
                 return {"error": "Session not found"}
@@ -270,8 +256,7 @@ class PerformanceProfiler:
             return {"error": str(e)}
     
     async def profile_function(self, func: Callable, *args, **kwargs) -> Dict[str, Any]:
-        """
-        Profile a specific function execution
+        """        Profile a specific function execution
         
         Args:
             func: Function to profile
@@ -280,8 +265,7 @@ class PerformanceProfiler:
             
         Returns:
             Profiling data
-        """
-        try:
+        """        try:
             function_name = f"{func.__module__}.{func.__name__}"
             
             # Start timing
@@ -357,8 +341,7 @@ class PerformanceProfiler:
             return {"error": str(e)}
     
     async def get_real_time_metrics(self) -> Dict[str, Any]:
-        """Get current real-time performance metrics"""
-        try:
+        """Get current real-time performance metrics"""        try:
             # System metrics
             cpu_percent = psutil.cpu_percent(interval=1)
             memory = psutil.virtual_memory()
@@ -425,16 +408,14 @@ class PerformanceProfiler:
             return {"error": str(e)}
     
     async def get_performance_report(self, period_hours: int = 24) -> Dict[str, Any]:
-        """
-        Generate comprehensive performance report
+        """        Generate comprehensive performance report
         
         Args:
             period_hours: Report period in hours
             
         Returns:
             Performance report
-        """
-        try:
+        """        try:
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(hours=period_hours)
             
@@ -465,8 +446,7 @@ class PerformanceProfiler:
             return {"error": str(e)}
     
     async def _start_monitoring(self) -> None:
-        """Start real-time performance monitoring"""
-        try:
+        """Start real-time performance monitoring"""        try:
             self.monitoring_active = True
             
             def monitoring_loop():
@@ -488,13 +468,11 @@ class PerformanceProfiler:
             logger.error(f"Error starting monitoring: {e}")
     
     async def _auto_stop_profiling(self, session_id: str, duration_seconds: int) -> None:
-        """Auto-stop profiling after specified duration"""
-        await asyncio.sleep(duration_seconds)
+        """Auto-stop profiling after specified duration"""        await asyncio.sleep(duration_seconds)
         await self.stop_profiling(session_id)
     
     async def _generate_cpu_report(self) -> Dict[str, Any]:
-        """Generate CPU profiling report"""
-        try:
+        """Generate CPU profiling report"""        try:
             if not self.cpu_profiler:
                 return {"error": "No CPU profiler active"}
             
@@ -532,8 +510,7 @@ class PerformanceProfiler:
             return {"error": str(e)}
     
     async def _generate_memory_report(self) -> Dict[str, Any]:
-        """Generate memory profiling report"""
-        try:
+        """Generate memory profiling report"""        try:
             if not tracemalloc.is_tracing():
                 return {"error": "Memory tracking not active"}
             
@@ -564,8 +541,7 @@ class PerformanceProfiler:
             return {"error": str(e)}
     
     async def _detect_bottlenecks(self, session: Dict[str, Any]) -> List[BottleneckReport]:
-        """Detect performance bottlenecks"""
-        bottlenecks = []
+        """Detect performance bottlenecks"""        bottlenecks = []
         
         try:
             # Analyze function statistics for bottlenecks
@@ -621,8 +597,7 @@ class PerformanceProfiler:
             return []
     
     async def _generate_optimization_recommendations(self, report: Dict[str, Any]) -> List[str]:
-        """Generate optimization recommendations based on profiling data"""
-        recommendations = []
+        """Generate optimization recommendations based on profiling data"""        recommendations = []
         
         try:
             # CPU-based recommendations
@@ -658,16 +633,14 @@ class PerformanceProfiler:
             return ["Error generating recommendations"]
     
     def _get_memory_usage(self) -> float:
-        """Get current memory usage in bytes"""
-        try:
+        """Get current memory usage in bytes"""        try:
             process = psutil.Process()
             return process.memory_info().rss
         except Exception:
             return 0
     
     async def _calculate_performance_summary(self, metrics: List[PerformanceMetric]) -> Dict[str, Any]:
-        """Calculate performance summary from metrics"""
-        if not metrics:
+        """Calculate performance summary from metrics"""        if not metrics:
             return {}
         
         cpu_metrics = [m for m in metrics if m.profiler_type == ProfilerType.CPU]
@@ -690,8 +663,7 @@ class PerformanceProfiler:
         return summary
     
     async def _get_top_functions_by_time(self, limit: int = 10) -> List[Dict[str, Any]]:
-        """Get top functions by execution time"""
-        sorted_functions = sorted(
+        """Get top functions by execution time"""        sorted_functions = sorted(
             self.function_stats.items(),
             key=lambda x: x[1].get("total_time", 0),
             reverse=True
@@ -708,16 +680,14 @@ class PerformanceProfiler:
         ]
     
     async def _analyze_memory_usage(self, metrics: List[PerformanceMetric]) -> Dict[str, Any]:
-        """Analyze memory usage patterns"""
-        # Simplified memory analysis
+        """Analyze memory usage patterns"""        # Simplified memory analysis
         return {
             "analysis_available": False,
             "reason": "Detailed memory analysis requires additional instrumentation"
         }
     
     async def _get_recent_bottlenecks(self, limit: int = 5) -> List[Dict[str, Any]]:
-        """Get recent bottleneck reports"""
-        recent_bottlenecks = sorted(
+        """Get recent bottleneck reports"""        recent_bottlenecks = sorted(
             self.bottleneck_reports,
             key=lambda x: x.optimization_level.value,
             reverse=True
@@ -734,16 +704,14 @@ class PerformanceProfiler:
         ]
     
     async def _calculate_performance_trends(self, metrics: List[PerformanceMetric]) -> Dict[str, Any]:
-        """Calculate performance trends"""
-        # Simplified trend calculation
+        """Calculate performance trends"""        # Simplified trend calculation
         return {
             "trends_available": False,
             "reason": "Trend analysis requires longer data collection period"
         }
     
     async def _get_performance_recommendations(self) -> List[str]:
-        """Get general performance recommendations"""
-        recommendations = []
+        """Get general performance recommendations"""        recommendations = []
         
         # Analyze current state
         if len(self.function_stats) > 100:
@@ -760,15 +728,13 @@ class PerformanceProfiler:
         return recommendations
     
     def stop_monitoring(self) -> None:
-        """Stop real-time monitoring"""
-        self.monitoring_active = False
+        """Stop real-time monitoring"""        self.monitoring_active = False
         if self.monitoring_thread:
             self.monitoring_thread.join(timeout=5)
         logger.info("Performance monitoring stopped")
     
     def get_profiler_stats(self) -> Dict[str, Any]:
-        """Get profiler statistics"""
-        return {
+        """Get profiler statistics"""        return {
             "total_metrics": len(self.performance_metrics),
             "active_sessions": len([s for s in self.profiling_sessions.values() if s.get("active", False)]),
             "total_sessions": len(self.profiling_sessions),

@@ -1,5 +1,4 @@
-"""
-🚀 Platform Revenue Manager - Multi-Platform Revenue Integration System
+"""🚀 Platform Revenue Manager - Multi-Platform Revenue Integration System
 ======================================================================
 
 Industrial-grade platform revenue management system handling integrations
@@ -17,9 +16,7 @@ Contact mlaiel@live.de for licensing inquiries.
 
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Platform Revenue Management
 ====================================================================================================
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 from dataclasses import dataclass, field
@@ -44,8 +41,7 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Supported platform types"""
-    MUSIC_STREAMING = "music_streaming"
+    """Supported platform types"""    MUSIC_STREAMING = "music_streaming"
     VIDEO_PLATFORM = "video_platform"
     SOCIAL_MEDIA = "social_media"
     LIVE_STREAMING = "live_streaming"
@@ -55,8 +51,7 @@ class PlatformType(Enum):
 
 
 class IntegrationStatus(Enum):
-    """Platform integration status"""
-    ACTIVE = "active"
+    """Platform integration status"""    ACTIVE = "active"
     INACTIVE = "inactive"
     ERROR = "error"
     RATE_LIMITED = "rate_limited"
@@ -66,8 +61,7 @@ class IntegrationStatus(Enum):
 
 @dataclass
 class PlatformConfig:
-    """Platform configuration"""
-    platform_id: str
+    """Platform configuration"""    platform_id: str
     platform_name: str
     platform_type: PlatformType
     api_endpoints: Dict[str, str]
@@ -81,8 +75,7 @@ class PlatformConfig:
 
 @dataclass
 class RevenueSync:
-    """Revenue synchronization record"""
-    sync_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Revenue synchronization record"""    sync_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
     platform: str = ""
     sync_start: datetime = field(default_factory=datetime.utcnow)
@@ -97,8 +90,7 @@ class RevenueSync:
 
 
 class PlatformRevenueManager:
-    """
-    Ultra-advanced platform revenue management system
+    """    Ultra-advanced platform revenue management system
     
     Features:
     - Multi-platform revenue data synchronization
@@ -109,8 +101,7 @@ class PlatformRevenueManager:
     - Historical data reconciliation
     - Performance monitoring and alerts
     - Platform-specific optimization insights
-    """
-    
+    """    
     def __init__(self,
                  db_manager: DatabaseManager,
                  security_manager: SecurityManager,
@@ -139,8 +130,7 @@ class PlatformRevenueManager:
         self._sync_history = {}
         
     async def initialize(self):
-        """Initialize platform revenue manager"""
-        try:
+        """Initialize platform revenue manager"""        try:
             # Initialize all platform integrations
             for platform_name, integration in self.platforms.items():
                 await integration.initialize()
@@ -166,8 +156,7 @@ class PlatformRevenueManager:
                                  platforms: Optional[List[str]] = None,
                                  date_range: Optional[Tuple[datetime, datetime]] = None,
                                  force_refresh: bool = False) -> Dict[str, RevenueSync]:
-        """
-        Synchronize revenue data for a creator across platforms
+        """        Synchronize revenue data for a creator across platforms
         
         Args:
             creator_id: Creator ID
@@ -177,8 +166,7 @@ class PlatformRevenueManager:
             
         Returns:
             Dictionary of sync results by platform
-        """
-        try:
+        """        try:
             # Validate creator exists and has platform connections
             creator_platforms = await self._get_creator_platform_connections(creator_id)
             
@@ -239,8 +227,7 @@ class PlatformRevenueManager:
                                    connection_data: Dict[str, Any],
                                    date_range: Tuple[datetime, datetime],
                                    force_refresh: bool) -> RevenueSync:
-        """Synchronize revenue data for a specific platform"""
-        sync_record = RevenueSync(
+        """Synchronize revenue data for a specific platform"""        sync_record = RevenueSync(
             creator_id=creator_id,
             platform=platform
         )
@@ -336,8 +323,7 @@ class PlatformRevenueManager:
                                          creator_id: str,
                                          date_range: Tuple[datetime, datetime],
                                          include_projections: bool = False) -> Dict[str, Any]:
-        """
-        Get comprehensive revenue summary across all platforms
+        """        Get comprehensive revenue summary across all platforms
         
         Args:
             creator_id: Creator ID
@@ -346,11 +332,9 @@ class PlatformRevenueManager:
             
         Returns:
             Comprehensive platform revenue summary
-        """
-        try:
+        """        try:
             # Get revenue data by platform
-            platform_query = """
-                SELECT 
+            platform_query = """                SELECT 
                     platform,
                     COUNT(*) as transaction_count,
                     SUM(gross_amount) as total_gross,
@@ -364,8 +348,7 @@ class PlatformRevenueManager:
                 AND calculation_date BETWEEN %s AND %s
                 GROUP BY platform
                 ORDER BY total_net DESC
-            """
-            
+            """            
             platform_data = await self.db.fetch_all(platform_query, (
                 creator_id, date_range[0], date_range[1]
             ))
@@ -455,8 +438,7 @@ class PlatformRevenueManager:
     async def _normalize_platform_revenue_data(self,
                                              platform: str,
                                              raw_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Normalize platform-specific revenue data to standard format"""
-        try:
+        """Normalize platform-specific revenue data to standard format"""        try:
             # Get platform configuration
             config = self._platform_configs.get(platform, {})
             
@@ -506,8 +488,7 @@ class PlatformRevenueManager:
             raise
 
     async def _normalize_spotify_data(self, raw_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-        """Normalize Spotify revenue data"""
-        return {
+        """Normalize Spotify revenue data"""        return {
             'external_id': raw_data.get('track_uri', ''),
             'revenue_type': 'streaming',
             'gross_amount': Decimal(str(raw_data.get('earnings_usd', 0))),
@@ -524,8 +505,7 @@ class PlatformRevenueManager:
         }
 
     async def _normalize_youtube_data(self, raw_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-        """Normalize YouTube revenue data"""
-        gross_revenue = Decimal(str(raw_data.get('estimated_revenue', 0)))
+        """Normalize YouTube revenue data"""        gross_revenue = Decimal(str(raw_data.get('estimated_revenue', 0)))
         youtube_share = Decimal('0.45')  # YouTube takes 45% for most content
         
         return {
@@ -546,8 +526,7 @@ class PlatformRevenueManager:
         }
 
     async def _validate_revenue_record(self, record: Dict[str, Any]) -> bool:
-        """Validate normalized revenue record"""
-        required_fields = ['platform', 'external_id', 'gross_amount', 'net_amount', 'transaction_date']
+        """Validate normalized revenue record"""        required_fields = ['platform', 'external_id', 'gross_amount', 'net_amount', 'transaction_date']
         
         # Check required fields
         for field in required_fields:
@@ -572,8 +551,7 @@ class PlatformRevenueManager:
                              creator_id: str,
                              platform: Optional[str] = None,
                              limit: int = 50) -> List[Dict[str, Any]]:
-        """Get synchronization history for a creator"""
-        try:
+        """Get synchronization history for a creator"""        try:
             conditions = ["creator_id = %s"]
             params = [creator_id]
             
@@ -581,8 +559,7 @@ class PlatformRevenueManager:
                 conditions.append("platform = %s")
                 params.append(platform)
             
-            query = f"""
-                SELECT 
+            query = f"""                SELECT 
                     sync_id, platform, sync_start, sync_end, status,
                     records_processed, records_updated, records_failed,
                     total_revenue_synced, error_messages
@@ -590,8 +567,7 @@ class PlatformRevenueManager:
                 WHERE {' AND '.join(conditions)}
                 ORDER BY sync_start DESC 
                 LIMIT %s
-            """
-            params.append(limit)
+            """            params.append(limit)
             
             sync_records = await self.db.fetch_all(query, params)
             
@@ -620,8 +596,7 @@ class PlatformRevenueManager:
             return []
 
     async def cleanup(self):
-        """Cleanup platform revenue manager resources"""
-        try:
+        """Cleanup platform revenue manager resources"""        try:
             # Stop background sync tasks
             await self._stop_background_sync_tasks()
             

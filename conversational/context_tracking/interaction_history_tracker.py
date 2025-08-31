@@ -1,5 +1,4 @@
-"""
-Interaction History Tracker - IA Influencer Agent
+"""Interaction History Tracker - IA Influencer Agent
 
 Comprehensive interaction history tracking system providing detailed analytics
 and insights for multi-format content creator conversations.
@@ -10,9 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited. Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -31,8 +28,7 @@ from ...security.encryption import DataEncryption
 
 
 class InteractionType(Enum):
-    """Types of user interactions"""
-    MESSAGE = "message"
+    """Types of user interactions"""    MESSAGE = "message"
     FILE_UPLOAD = "file_upload"
     BUTTON_CLICK = "button_click"
     MENU_NAVIGATION = "menu_navigation"
@@ -50,8 +46,7 @@ class InteractionType(Enum):
 
 
 class InteractionChannel(Enum):
-    """Interaction channels"""
-    CHAT = "chat"
+    """Interaction channels"""    CHAT = "chat"
     WEB_UI = "web_ui"
     MOBILE_APP = "mobile_app"
     API = "api"
@@ -62,8 +57,7 @@ class InteractionChannel(Enum):
 
 
 class SessionPhase(Enum):
-    """Session phases for tracking interaction patterns"""
-    INITIATION = "initiation"
+    """Session phases for tracking interaction patterns"""    INITIATION = "initiation"
     EXPLORATION = "exploration"
     ENGAGEMENT = "engagement"
     TASK_EXECUTION = "task_execution"
@@ -74,8 +68,7 @@ class SessionPhase(Enum):
 
 @dataclass
 class InteractionEvent:
-    """Individual interaction event"""
-    event_id: str
+    """Individual interaction event"""    event_id: str
     user_id: str
     session_id: str
     conversation_id: Optional[str]
@@ -137,8 +130,7 @@ class InteractionEvent:
 
 @dataclass
 class InteractionSession:
-    """User interaction session"""
-    session_id: str
+    """User interaction session"""    session_id: str
     user_id: str
     start_time: datetime
     end_time: Optional[datetime] = None
@@ -174,8 +166,7 @@ class InteractionSession:
     help_requests: int = 0
     
     def add_event(self, event: InteractionEvent):
-        """Add interaction event to session"""
-        self.events.append(event)
+        """Add interaction event to session"""        self.events.append(event)
         self.total_interactions += 1
         
         if event.success:
@@ -194,8 +185,7 @@ class InteractionSession:
             self.current_phase = new_phase
     
     def _determine_phase(self, event: InteractionEvent) -> SessionPhase:
-        """Determine session phase based on event"""
-        if event.interaction_type in [InteractionType.FEATURE_ACCESS, InteractionType.TASK_EXECUTION]:
+        """Determine session phase based on event"""        if event.interaction_type in [InteractionType.FEATURE_ACCESS, InteractionType.TASK_EXECUTION]:
             return SessionPhase.TASK_EXECUTION
         elif event.interaction_type in [InteractionType.MENU_NAVIGATION, InteractionType.CONTENT_VIEW]:
             return SessionPhase.EXPLORATION
@@ -205,8 +195,7 @@ class InteractionSession:
             return self.current_phase
     
     def calculate_engagement_score(self) -> float:
-        """Calculate session engagement score"""
-        if not self.events:
+        """Calculate session engagement score"""        if not self.events:
             return 0.0
         
         # Factors: interaction variety, success rate, duration, business value
@@ -253,8 +242,7 @@ class InteractionSession:
 
 @dataclass
 class UserInteractionProfile:
-    """User's interaction behavior profile"""
-    user_id: str
+    """User's interaction behavior profile"""    user_id: str
     created_at: datetime
     last_updated: datetime
     
@@ -309,8 +297,7 @@ class UserInteractionProfile:
 
 
 class InteractionHistoryTracker:
-    """
-    Enterprise interaction history tracker providing comprehensive analytics
+    """    Enterprise interaction history tracker providing comprehensive analytics
     and insights for multi-format content creator conversations.
     
     Features:
@@ -320,8 +307,7 @@ class InteractionHistoryTracker:
     - Engagement optimization
     - Business intelligence
     - Privacy-compliant data handling
-    """
-    
+    """    
     def __init__(
         self,
         cache_manager: CacheManager,
@@ -353,8 +339,7 @@ class InteractionHistoryTracker:
         self.logger.info("InteractionHistoryTracker initialized")
     
     async def start(self):
-        """Start the interaction history tracker"""
-        try:
+        """Start the interaction history tracker"""        try:
             # Load existing data
             await self._load_historical_data()
             
@@ -369,8 +354,7 @@ class InteractionHistoryTracker:
             raise HistoryTrackingError(f"Startup failed: {e}")
     
     async def stop(self):
-        """Stop the interaction history tracker"""
-        try:
+        """Stop the interaction history tracker"""        try:
             # Cancel background tasks
             if self.analytics_task:
                 self.analytics_task.cancel()
@@ -403,8 +387,7 @@ class InteractionHistoryTracker:
         location: Optional[Dict[str, str]] = None,
         business_value: float = 0.0
     ) -> str:
-        """
-        Track user interaction
+        """        Track user interaction
         
         Args:
             user_id: User identifier
@@ -425,8 +408,7 @@ class InteractionHistoryTracker:
             
         Returns:
             str: Event ID
-        """
-        try:
+        """        try:
             # Generate event ID
             event_id = str(uuid.uuid4())
             
@@ -498,8 +480,7 @@ class InteractionHistoryTracker:
         session_id: str,
         include_events: bool = True
     ) -> Optional[Dict[str, Any]]:
-        """
-        Get session history
+        """        Get session history
         
         Args:
             session_id: Session identifier
@@ -507,8 +488,7 @@ class InteractionHistoryTracker:
             
         Returns:
             Session history or None if not found
-        """
-        try:
+        """        try:
             session = self.active_sessions.get(session_id)
             if not session:
                 # Try to load from cache
@@ -536,8 +516,7 @@ class InteractionHistoryTracker:
         channels: Optional[List[InteractionChannel]] = None,
         limit: int = 1000
     ) -> List[Dict[str, Any]]:
-        """
-        Get user interaction history
+        """        Get user interaction history
         
         Args:
             user_id: User identifier
@@ -548,8 +527,7 @@ class InteractionHistoryTracker:
             
         Returns:
             List of interaction events
-        """
-        try:
+        """        try:
             # Get interactions from all user sessions
             user_interactions = []
             
@@ -598,8 +576,7 @@ class InteractionHistoryTracker:
         user_id: str,
         regenerate: bool = False
     ) -> Optional[Dict[str, Any]]:
-        """
-        Get user behavior profile
+        """        Get user behavior profile
         
         Args:
             user_id: User identifier
@@ -607,8 +584,7 @@ class InteractionHistoryTracker:
             
         Returns:
             User behavior profile or None if not found
-        """
-        try:
+        """        try:
             if not regenerate and user_id in self.user_profiles:
                 return self.user_profiles[user_id].to_dict()
             
@@ -630,8 +606,7 @@ class InteractionHistoryTracker:
         group_by: str = "hour",  # hour, day, channel, type
         filters: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Get interaction analytics
+        """        Get interaction analytics
         
         Args:
             time_window: Time window for analysis
@@ -640,8 +615,7 @@ class InteractionHistoryTracker:
             
         Returns:
             Analytics data
-        """
-        try:
+        """        try:
             # Get all interactions in time window
             all_interactions = []
             
@@ -672,8 +646,7 @@ class InteractionHistoryTracker:
         user_id: Optional[str] = None,
         pattern_types: Optional[List[str]] = None
     ) -> List[Dict[str, Any]]:
-        """
-        Detect behavior patterns
+        """        Detect behavior patterns
         
         Args:
             user_id: Specific user to analyze (None for all users)
@@ -681,8 +654,7 @@ class InteractionHistoryTracker:
             
         Returns:
             List of detected patterns
-        """
-        try:
+        """        try:
             patterns = []
             
             if user_id:
@@ -706,8 +678,7 @@ class InteractionHistoryTracker:
         user_id: str,
         prediction_horizon: timedelta = timedelta(hours=24)
     ) -> Dict[str, Any]:
-        """
-        Predict user behavior
+        """        Predict user behavior
         
         Args:
             user_id: User identifier
@@ -715,8 +686,7 @@ class InteractionHistoryTracker:
             
         Returns:
             Behavior predictions
-        """
-        try:
+        """        try:
             profile = self.user_profiles.get(user_id)
             if not profile:
                 profile = await self._generate_user_profile(user_id)
@@ -759,8 +729,7 @@ class InteractionHistoryTracker:
         device_info: Optional[Dict[str, str]],
         location: Optional[Dict[str, str]]
     ) -> str:
-        """Get existing session or create new one"""
-        # Look for active session for user in the same channel
+        """Get existing session or create new one"""        # Look for active session for user in the same channel
         for session_id, session in self.active_sessions.items():
             if (session.user_id == user_id and 
                 session.channel == channel and
@@ -791,8 +760,7 @@ class InteractionHistoryTracker:
         return session_id
     
     async def _update_realtime_stats(self, event: InteractionEvent):
-        """Update real-time statistics"""
-        hour_key = event.timestamp.strftime("%Y-%m-%d-%H")
+        """Update real-time statistics"""        hour_key = event.timestamp.strftime("%Y-%m-%d-%H")
         day_key = event.timestamp.strftime("%Y-%m-%d")
         
         # Update hourly stats
@@ -816,8 +784,7 @@ class InteractionHistoryTracker:
             self.daily_stats[day_key]["failed_interactions"] += 1
     
     async def _update_user_profile(self, user_id: str, event: InteractionEvent):
-        """Update user interaction profile"""
-        if user_id not in self.user_profiles:
+        """Update user interaction profile"""        if user_id not in self.user_profiles:
             self.user_profiles[user_id] = UserInteractionProfile(
                 user_id=user_id,
                 created_at=datetime.utcnow(),
@@ -852,8 +819,7 @@ class InteractionHistoryTracker:
             profile.engagement_trend = "stable"
     
     async def _generate_user_profile(self, user_id: str) -> Optional[UserInteractionProfile]:
-        """Generate comprehensive user profile from interaction history"""
-        try:
+        """Generate comprehensive user profile from interaction history"""        try:
             # Get user interactions
             interactions = await self.get_user_interaction_history(
                 user_id,
@@ -953,8 +919,7 @@ class InteractionHistoryTracker:
         user_id: str,
         pattern_types: Optional[List[str]]
     ) -> List[Dict[str, Any]]:
-        """Detect patterns for specific user"""
-        patterns = []
+        """Detect patterns for specific user"""        patterns = []
         
         try:
             interactions = await self.get_user_interaction_history(
@@ -987,8 +952,7 @@ class InteractionHistoryTracker:
         return patterns
     
     async def _detect_temporal_patterns(self, interactions: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Detect temporal patterns in interactions"""
-        patterns = []
+        """Detect temporal patterns in interactions"""        patterns = []
         
         # Group by hour of day
         hour_counts = Counter(
@@ -1027,8 +991,7 @@ class InteractionHistoryTracker:
         return patterns
     
     async def _detect_sequence_patterns(self, interactions: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Detect interaction sequence patterns"""
-        patterns = []
+        """Detect interaction sequence patterns"""        patterns = []
         
         # Sort interactions by timestamp
         sorted_interactions = sorted(interactions, key=lambda x: x["timestamp"])
@@ -1055,8 +1018,7 @@ class InteractionHistoryTracker:
         return patterns
     
     async def _detect_abandonment_patterns(self, interactions: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Detect abandonment patterns"""
-        patterns = []
+        """Detect abandonment patterns"""        patterns = []
         
         # Find interactions followed by long gaps (potential abandonment points)
         sorted_interactions = sorted(interactions, key=lambda x: x["timestamp"])
@@ -1093,8 +1055,7 @@ class InteractionHistoryTracker:
         user_id: str,
         recent_interactions: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Predict next likely interactions"""
-        if len(recent_interactions) < 10:
+        """Predict next likely interactions"""        if len(recent_interactions) < 10:
             return []
         
         # Analyze recent patterns
@@ -1130,8 +1091,7 @@ class InteractionHistoryTracker:
         user_id: str,
         recent_interactions: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Predict likely session duration"""
-        profile = self.user_profiles.get(user_id)
+        """Predict likely session duration"""        profile = self.user_profiles.get(user_id)
         
         if profile and profile.average_session_duration > 0:
             predicted_duration = profile.average_session_duration
@@ -1152,8 +1112,7 @@ class InteractionHistoryTracker:
         user_id: str,
         recent_interactions: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Predict preferred interaction channel"""
-        profile = self.user_profiles.get(user_id)
+        """Predict preferred interaction channel"""        profile = self.user_profiles.get(user_id)
         
         if profile and profile.preferred_channels:
             top_channel = max(profile.preferred_channels, key=profile.preferred_channels.get)
@@ -1179,8 +1138,7 @@ class InteractionHistoryTracker:
         user_id: str,
         recent_interactions: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Predict likelihood of continued engagement"""
-        # Factors: recent activity, success rate, session patterns
+        """Predict likelihood of continued engagement"""        # Factors: recent activity, success rate, session patterns
         
         # Recent activity (last 7 days)
         recent_cutoff = datetime.utcnow() - timedelta(days=7)
@@ -1220,8 +1178,7 @@ class InteractionHistoryTracker:
         interactions: List[InteractionEvent],
         group_by: str
     ) -> Dict[str, Any]:
-        """Analyze interactions and group by specified dimension"""
-        if not interactions:
+        """Analyze interactions and group by specified dimension"""        if not interactions:
             return {"total_interactions": 0}
         
         analytics = {
@@ -1283,8 +1240,7 @@ class InteractionHistoryTracker:
         interactions: List[InteractionEvent],
         filters: Dict[str, Any]
     ) -> List[InteractionEvent]:
-        """Apply filters to interaction list"""
-        filtered = interactions
+        """Apply filters to interaction list"""        filtered = interactions
         
         if "user_id" in filters:
             filtered = [i for i in filtered if i.user_id == filters["user_id"]]
@@ -1301,8 +1257,7 @@ class InteractionHistoryTracker:
         return filtered
     
     async def _load_historical_data(self):
-        """Load historical interaction data"""
-        try:
+        """Load historical interaction data"""        try:
             # Load from cache or persistent storage
             # Implementation would restore sessions and profiles
             pass
@@ -1310,8 +1265,7 @@ class InteractionHistoryTracker:
             self.logger.error(f"Error loading historical data: {e}")
     
     async def _save_data(self):
-        """Save current data to persistent storage"""
-        try:
+        """Save current data to persistent storage"""        try:
             # Save sessions
             sessions_data = {}
             for session_id, session in self.active_sessions.items():
@@ -1338,8 +1292,7 @@ class InteractionHistoryTracker:
             self.logger.error(f"Error saving data: {e}")
     
     async def _load_session(self, session_id: str) -> Optional[InteractionSession]:
-        """Load session from storage"""
-        try:
+        """Load session from storage"""        try:
             sessions_data = await self.cache_manager.get("interaction_sessions") or {}
             session_data = sessions_data.get(session_id)
             
@@ -1367,14 +1320,12 @@ class InteractionHistoryTracker:
         user_id: str,
         time_window: Optional[timedelta]
     ) -> List[InteractionEvent]:
-        """Load user interactions from historical data"""
-        # Implementation would load from persistent storage
+        """Load user interactions from historical data"""        # Implementation would load from persistent storage
         # For now, return empty list
         return []
     
     async def _background_analytics(self):
-        """Background task for analytics processing"""
-        while True:
+        """Background task for analytics processing"""        while True:
             try:
                 await asyncio.sleep(300)  # Run every 5 minutes
                 
@@ -1395,8 +1346,7 @@ class InteractionHistoryTracker:
                 await asyncio.sleep(60)
     
     async def _background_cleanup(self):
-        """Background task for data cleanup"""
-        while True:
+        """Background task for data cleanup"""        while True:
             try:
                 await asyncio.sleep(3600)  # Run every hour
                 
@@ -1421,18 +1371,15 @@ class InteractionHistoryTracker:
                 await asyncio.sleep(300)
     
     async def _process_interaction_buffer(self):
-        """Process interactions in buffer"""
-        # Batch process interactions for analytics
+        """Process interactions in buffer"""        # Batch process interactions for analytics
         pass
     
     async def _update_all_user_profiles(self):
-        """Update all user profiles"""
-        # Regenerate profiles for active users
+        """Update all user profiles"""        # Regenerate profiles for active users
         pass
     
     async def _cleanup_old_stats(self):
-        """Clean up old statistical data"""
-        cutoff_date = datetime.utcnow() - timedelta(days=30)
+        """Clean up old statistical data"""        cutoff_date = datetime.utcnow() - timedelta(days=30)
         cutoff_str = cutoff_date.strftime("%Y-%m-%d")
         
         # Clean hourly stats

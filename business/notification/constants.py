@@ -1,5 +1,4 @@
-"""
-Notification Constants - System Constants and Business Rules
+"""Notification Constants - System Constants and Business Rules
 
 Comprehensive constants definitions for the IA Influencer Agent notification system.
 Includes notification types, channel types, priority levels, delivery statuses,
@@ -24,9 +23,7 @@ Constants Categories:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-from typing import Dict, List, Any, Set
+"""from typing import Dict, List, Any, Set
 from enum import Enum
 
 

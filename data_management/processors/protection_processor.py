@@ -1,5 +1,4 @@
-"""
-🛡️ Protection Processor - IA Influencer Agent Platform Enterprise
+"""🛡️ Protection Processor - IA Influencer Agent Platform Enterprise
 =================================================================
 Module: backend/data_management/processors/protection_processor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,9 +16,7 @@ Contact obligatoire: mlaiel@live.de
 LOGIQUE MÉTIER PROTECTION:
 Content Detection → Similarity Analysis → Violation Assessment → Evidence Collection → 
 Legal Notice Generation → Platform Notification → DMCA Processing → Revenue Recovery
-"""
-
-import json
+"""import json
 import logging
 import hashlib
 import asyncio
@@ -39,8 +36,7 @@ from .content_fingerprint_processor import ContentFingerprintProcessor
 
 
 class ProtectionProcessor(BaseProcessor):
-    """Processeur de protection contenu avancé - Production Enterprise"""
-    
+    """Processeur de protection contenu avancé - Production Enterprise"""    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.logger = logging.getLogger(__name__)
@@ -98,10 +94,8 @@ class ProtectionProcessor(BaseProcessor):
         Path(self.evidence_storage).mkdir(parents=True, exist_ok=True)
     
     def _load_legal_templates(self) -> Dict[str, str]:
-        """Charge les modèles juridiques pour les notices"""
-        return {
-            'dmca_takedown': """
-DMCA TAKEDOWN NOTICE
+        """Charge les modèles juridiques pour les notices"""        return {
+            'dmca_takedown': """DMCA TAKEDOWN NOTICE
 
 To: {platform_name}
 From: {copyright_owner}
@@ -130,8 +124,7 @@ Contact Information:
 Signature: {signature}
             """,
             
-            'cease_desist': """
-CEASE AND DESIST NOTICE
+            'cease_desist': """CEASE AND DESIST NOTICE
 
 To: {infringer_contact}
 From: {copyright_owner}
@@ -155,8 +148,7 @@ Failure to comply within 7 days will result in legal proceedings.
 {contact_information}
             """,
             
-            'platform_report': """
-COPYRIGHT INFRINGEMENT REPORT
+            'platform_report': """COPYRIGHT INFRINGEMENT REPORT
 
 Platform: {platform_name}
 Report Date: {report_date}
@@ -182,12 +174,10 @@ ACTION REQUESTED:
 - Revenue sharing for monetized content
 
 Contact: {contact_information}
-            """
-        }
+            """        }
     
     def process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traite une violation potentielle de contenu"""
-        detection_data = input_data.get('detection_data', {})
+        """Traite une violation potentielle de contenu"""        detection_data = input_data.get('detection_data', {})
         original_content = input_data.get('original_content', {})
         suspected_content = input_data.get('suspected_content', {})
         
@@ -238,14 +228,12 @@ Contact: {contact_information}
         return protection_result
     
     def _generate_detection_id(self) -> str:
-        """Génère un ID unique pour la détection"""
-        timestamp = datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')
+        """Génère un ID unique pour la détection"""        timestamp = datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')
         random_part = hashlib.md5(str(datetime.now().timestamp()).encode()).hexdigest()[:8]
         return f"DETECT_{timestamp}_{random_part}"
     
     def _assess_violation(self, detection_data: Dict, original: Dict, suspected: Dict) -> Dict[str, Any]:
-        """Évalue si il y a violation basée sur la similarité"""
-        assessment = {
+        """Évalue si il y a violation basée sur la similarité"""        assessment = {
             'is_violation': False,
             'violation_level': 'none',
             'similarity_score': 0.0,
@@ -301,8 +289,7 @@ Contact: {contact_information}
         return assessment
     
     def _analyze_audio_violation(self, original: Dict, suspected: Dict, similarity: float) -> Dict[str, Any]:
-        """Analyse spécialisée pour violation audio"""
-        return {
+        """Analyse spécialisée pour violation audio"""        return {
             'chromaprint_match': similarity > 0.90,
             'mfcc_similarity': similarity,
             'duration_match': abs(
@@ -316,8 +303,7 @@ Contact: {contact_information}
         }
     
     def _analyze_video_violation(self, original: Dict, suspected: Dict, similarity: float) -> Dict[str, Any]:
-        """Analyse spécialisée pour violation vidéo"""
-        return {
+        """Analyse spécialisée pour violation vidéo"""        return {
             'frame_similarity': similarity,
             'duration_match': abs(
                 original.get('duration', 0) - suspected.get('duration', 0)
@@ -331,8 +317,7 @@ Contact: {contact_information}
         }
     
     def _analyze_image_violation(self, original: Dict, suspected: Dict, similarity: float) -> Dict[str, Any]:
-        """Analyse spécialisée pour violation image"""
-        return {
+        """Analyse spécialisée pour violation image"""        return {
             'perceptual_hash_match': similarity > 0.90,
             'clip_semantic_similarity': similarity,
             'resolution_analysis': {
@@ -348,8 +333,7 @@ Contact: {contact_information}
         }
     
     def _analyze_text_violation(self, original: Dict, suspected: Dict, similarity: float) -> Dict[str, Any]:
-        """Analyse spécialisée pour violation texte"""
-        return {
+        """Analyse spécialisée pour violation texte"""        return {
             'semantic_similarity': similarity,
             'length_comparison': {
                 'original_length': original.get('length', 0),
@@ -364,8 +348,7 @@ Contact: {contact_information}
         }
     
     def _detect_audio_modifications(self, original: Dict, suspected: Dict) -> List[str]:
-        """Détecte les modifications potentielles de l'audio"""
-        modifications = []
+        """Détecte les modifications potentielles de l'audio"""        modifications = []
         
         orig_duration = original.get('duration', 0)
         susp_duration = suspected.get('duration', 0)
@@ -385,8 +368,7 @@ Contact: {contact_information}
         return modifications
     
     def _detect_video_modifications(self, original: Dict, suspected: Dict) -> List[str]:
-        """Détecte les modifications potentielles de la vidéo"""
-        modifications = []
+        """Détecte les modifications potentielles de la vidéo"""        modifications = []
         
         # Duration analysis
         orig_duration = original.get('duration', 0)
@@ -405,8 +387,7 @@ Contact: {contact_information}
         return modifications
     
     def _detect_image_modifications(self, original: Dict, suspected: Dict) -> List[str]:
-        """Détecte les modifications potentielles de l'image"""
-        modifications = []
+        """Détecte les modifications potentielles de l'image"""        modifications = []
         
         # Resolution analysis
         orig_pixels = original.get('width', 0) * original.get('height', 0)
@@ -424,8 +405,7 @@ Contact: {contact_information}
         return modifications
     
     def _detect_text_modifications(self, original: Dict, suspected: Dict) -> List[str]:
-        """Détecte les modifications potentielles du texte"""
-        modifications = []
+        """Détecte les modifications potentielles du texte"""        modifications = []
         
         orig_length = original.get('length', 0)
         susp_length = suspected.get('length', 0)
@@ -445,8 +425,7 @@ Contact: {contact_information}
         return modifications
     
     def _check_aspect_ratio(self, original: Dict, suspected: Dict) -> bool:
-        """Vérifie si le ratio d'aspect est préservé"""
-        orig_width = original.get('width', 0)
+        """Vérifie si le ratio d'aspect est préservé"""        orig_width = original.get('width', 0)
         orig_height = original.get('height', 0)
         susp_width = suspected.get('width', 0)
         susp_height = suspected.get('height', 0)
@@ -460,8 +439,7 @@ Contact: {contact_information}
         return abs(orig_ratio - susp_ratio) < 0.1
     
     def _calculate_confidence(self, assessment: Dict[str, Any]) -> float:
-        """Calcule le niveau de confiance de l'évaluation"""
-        base_confidence = assessment.get('similarity_score', 0.0)
+        """Calcule le niveau de confiance de l'évaluation"""        base_confidence = assessment.get('similarity_score', 0.0)
         
         # Bonus for high similarity
         if base_confidence > 0.95:
@@ -477,8 +455,7 @@ Contact: {contact_information}
         return min(1.0, base_confidence)
     
     def _determine_actions(self, violation_assessment: Dict[str, Any]) -> List[str]:
-        """Détermine les actions recommandées basées sur l'évaluation"""
-        violation_level = violation_assessment.get('violation_level', 'none')
+        """Détermine les actions recommandées basées sur l'évaluation"""        violation_level = violation_assessment.get('violation_level', 'none')
         
         if violation_level == 'none':
             return ['monitor']
@@ -486,8 +463,7 @@ Contact: {contact_information}
         return self.protection_config['response_actions'].get(violation_level, ['alert'])
     
     def _collect_evidence(self, suspected_content: Dict, original_content: Dict) -> Dict[str, Any]:
-        """Collecte les preuves de violation"""
-        evidence = {
+        """Collecte les preuves de violation"""        evidence = {
             'collected_at': datetime.now(timezone.utc).isoformat(),
             'evidence_id': self._generate_evidence_id(),
             'screenshots': [],
@@ -530,14 +506,12 @@ Contact: {contact_information}
         return evidence
     
     def _generate_evidence_id(self) -> str:
-        """Génère un ID unique pour les preuves"""
-        timestamp = datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')
+        """Génère un ID unique pour les preuves"""        timestamp = datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')
         random_part = hashlib.md5(str(datetime.now().timestamp()).encode()).hexdigest()[:8]
         return f"EVIDENCE_{timestamp}_{random_part}"
     
     def _capture_screenshot(self, url: str) -> Optional[str]:
-        """Capture une capture d'écran de l'URL"""
-        try:
+        """Capture une capture d'écran de l'URL"""        try:
             # This would typically use Selenium or similar tool
             # For now, return a placeholder path
             screenshot_filename = f"screenshot_{hashlib.md5(url.encode()).hexdigest()[:8]}.png"
@@ -553,8 +527,7 @@ Contact: {contact_information}
             return None
     
     def _create_content_comparison(self, original: Dict, suspected: Dict) -> Dict[str, Any]:
-        """Crée une comparaison visuelle du contenu"""
-        return {
+        """Crée une comparaison visuelle du contenu"""        return {
             'comparison_type': 'side_by_side',
             'original_info': {
                 'title': original.get('title', 'Unknown'),
@@ -573,8 +546,7 @@ Contact: {contact_information}
         }
     
     def _identify_differences(self, original: Dict, suspected: Dict) -> List[str]:
-        """Identifie les différences entre contenu original et suspecté"""
-        differences = []
+        """Identifie les différences entre contenu original et suspecté"""        differences = []
         
         if original.get('title') != suspected.get('title'):
             differences.append('title_different')
@@ -588,8 +560,7 @@ Contact: {contact_information}
         return differences
     
     def _extract_content_metadata(self, content: Dict) -> Dict[str, Any]:
-        """Extrait les métadonnées du contenu"""
-        return {
+        """Extrait les métadonnées du contenu"""        return {
             'title': content.get('title'),
             'description': content.get('description'),
             'duration': content.get('duration'),
@@ -601,8 +572,7 @@ Contact: {contact_information}
         }
     
     def _perform_technical_analysis(self, original: Dict, suspected: Dict) -> Dict[str, Any]:
-        """Effectue une analyse technique approfondie"""
-        return {
+        """Effectue une analyse technique approfondie"""        return {
             'similarity_analysis': {
                 'fingerprint_match': True,  # Would implement actual comparison
                 'feature_correlation': 0.95,
@@ -621,8 +591,7 @@ Contact: {contact_information}
         }
     
     def _generate_legal_notices(self, violation_assessment: Dict, evidence: Dict, suspected_content: Dict) -> Dict[str, str]:
-        """Génère les notices légales appropriées"""
-        notices = {}
+        """Génère les notices légales appropriées"""        notices = {}
         
         try:
             platform = suspected_content.get('platform', 'unknown')
@@ -651,8 +620,7 @@ Contact: {contact_information}
         return notices
     
     def _generate_dmca_notice(self, assessment: Dict, evidence: Dict, suspected: Dict) -> str:
-        """Génère une notice DMCA"""
-        template = self.legal_templates['dmca_takedown']
+        """Génère une notice DMCA"""        template = self.legal_templates['dmca_takedown']
         
         return template.format(
             platform_name=suspected.get('platform', 'Unknown Platform'),
@@ -670,8 +638,7 @@ Contact: {contact_information}
         )
     
     def _generate_cease_desist_notice(self, assessment: Dict, evidence: Dict, suspected: Dict) -> str:
-        """Génère une notice de cessation"""
-        template = self.legal_templates['cease_desist']
+        """Génère une notice de cessation"""        template = self.legal_templates['cease_desist']
         
         return template.format(
             infringer_contact=suspected.get('uploader_contact', 'Content Uploader'),
@@ -685,8 +652,7 @@ Contact: {contact_information}
         )
     
     def _generate_platform_report(self, platform: str, assessment: Dict, evidence: Dict, suspected: Dict) -> str:
-        """Génère un rapport spécifique à la plateforme"""
-        template = self.legal_templates['platform_report']
+        """Génère un rapport spécifique à la plateforme"""        template = self.legal_templates['platform_report']
         
         return template.format(
             platform_name=platform.title(),
@@ -703,8 +669,7 @@ Contact: {contact_information}
         )
     
     def _format_evidence_list(self, evidence: Dict) -> str:
-        """Formate la liste des preuves"""
-        evidence_items = []
+        """Formate la liste des preuves"""        evidence_items = []
         
         for screenshot in evidence.get('screenshots', []):
             evidence_items.append(f"- Screenshot: {screenshot['path']}")
@@ -718,8 +683,7 @@ Contact: {contact_information}
         return '\n'.join(evidence_items)
     
     def _format_evidence_summary(self, evidence: Dict) -> str:
-        """Formate un résumé des preuves"""
-        summary_parts = []
+        """Formate un résumé des preuves"""        summary_parts = []
         
         if evidence.get('screenshots'):
             summary_parts.append(f"Screenshots captured: {len(evidence['screenshots'])}")
@@ -733,8 +697,7 @@ Contact: {contact_information}
         return '; '.join(summary_parts)
     
     def _submit_platform_reports(self, suspected_content: Dict, assessment: Dict, evidence: Dict) -> Dict[str, Any]:
-        """Soumet les rapports aux plateformes"""
-        responses = {}
+        """Soumet les rapports aux plateformes"""        responses = {}
         platform = suspected_content.get('platform', 'unknown')
         
         if platform not in self.protection_config['platforms']:
@@ -764,8 +727,7 @@ Contact: {contact_information}
         return responses
     
     def validate_input(self, input_data: Any) -> bool:
-        """Valide les données d'entrée pour le traitement de protection"""
-        if not isinstance(input_data, dict):
+        """Valide les données d'entrée pour le traitement de protection"""        if not isinstance(input_data, dict):
             return False
         
         required_fields = ['detection_data', 'original_content', 'suspected_content']
@@ -782,16 +744,14 @@ Contact: {contact_information}
 
 
 class AsyncProtectionProcessor(AsyncBaseProcessor):
-    """Version asynchrone du processeur de protection"""
-    
+    """Version asynchrone du processeur de protection"""    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.sync_processor = ProtectionProcessor(config)
         self.executor = ThreadPoolExecutor(max_workers=4)
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Traitement asynchrone de la protection"""
-        loop = asyncio.get_event_loop()
+        """Traitement asynchrone de la protection"""        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
             self.sync_processor.process_with_stats, 
@@ -799,12 +759,10 @@ class AsyncProtectionProcessor(AsyncBaseProcessor):
         )
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Validation asynchrone"""
-        return self.sync_processor.validate_input(input_data)
+        """Validation asynchrone"""        return self.sync_processor.validate_input(input_data)
     
     async def generate_legal_notices(self, violation_assessment: Dict, evidence: Dict, suspected_content: Dict) -> Dict[str, str]:
-        """Génération asynchrone des notices légales"""
-        loop = asyncio.get_event_loop()
+        """Génération asynchrone des notices légales"""        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor,
             self.sync_processor._generate_legal_notices,

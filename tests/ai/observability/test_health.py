@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Ultra-Industrial Test Suite for System Health Module
+"""Ultra-Industrial Test Suite for System Health Module
 
 Comprehensive testing for system health monitoring, diagnostics,
 component health checks, and health status assessment.
@@ -38,9 +34,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  STRICT LEGAL WARNING & COPYRIGHT PROTECTION ⚠️
 This entire test suite is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import pytest
 import sys
@@ -69,12 +63,9 @@ from ai.observability.health import (
 
 
 class TestSystemHealthComprehensive:
-    """Ultra-comprehensive test suite for System Health"""
-
-    @pytest.fixture
+    """Ultra-comprehensive test suite for System Health"""    @pytest.fixture
     def health_config(self):
-        """Sample health monitoring configuration"""
-        return {
+        """Sample health monitoring configuration"""        return {
             'check_interval_seconds': 30,
             'timeout_seconds': 10,
             'retry_attempts': 3,
@@ -115,15 +106,13 @@ class TestSystemHealthComprehensive:
 
     @pytest.fixture
     async def health_monitor(self, health_config):
-        """Create health monitor instance"""
-        monitor = HealthMonitor(health_config)
+        """Create health monitor instance"""        monitor = HealthMonitor(health_config)
         await monitor.initialize()
         yield monitor
         await monitor.shutdown()
 
     def test_health_status_enum_comprehensive(self):
-        """Test HealthStatus enum completeness and ordering"""
-        expected_statuses = {'HEALTHY', 'WARNING', 'CRITICAL', 'UNKNOWN', 'MAINTENANCE'}
+        """Test HealthStatus enum completeness and ordering"""        expected_statuses = {'HEALTHY', 'WARNING', 'CRITICAL', 'UNKNOWN', 'MAINTENANCE'}
         actual_statuses = {member.name for member in HealthStatus}
         assert actual_statuses == expected_statuses
         
@@ -133,8 +122,7 @@ class TestSystemHealthComprehensive:
         assert HealthStatus.CRITICAL.value == "critical"
 
     def test_component_type_enum_comprehensive(self):
-        """Test ComponentType enum completeness"""
-        expected_types = {
+        """Test ComponentType enum completeness"""        expected_types = {
             'DATABASE', 'CACHE', 'MESSAGE_QUEUE', 'STORAGE', 'API_GATEWAY',
             'LOAD_BALANCER', 'SEARCH_ENGINE', 'AI_MODEL_SERVICE', 'AUTHENTICATION',
             'CONTENT_PROTECTION', 'EXTERNAL_API'
@@ -143,8 +131,7 @@ class TestSystemHealthComprehensive:
         assert actual_types == expected_types
 
     def test_health_check_creation_and_validation(self):
-        """Test HealthCheck dataclass creation and validation"""
-        timestamp = datetime.now(timezone.utc)
+        """Test HealthCheck dataclass creation and validation"""        timestamp = datetime.now(timezone.utc)
         
         health_check = HealthCheck(
             component_name="content_protection_api",
@@ -181,8 +168,7 @@ class TestSystemHealthComprehensive:
         assert health_check.dependencies_status['redis'] == HealthStatus.WARNING
 
     def test_component_health_creation_and_validation(self):
-        """Test ComponentHealth dataclass creation and validation"""
-        timestamp = datetime.now(timezone.utc)
+        """Test ComponentHealth dataclass creation and validation"""        timestamp = datetime.now(timezone.utc)
         
         component_health = ComponentHealth(
             component_name="ai_inference_service",
@@ -223,8 +209,7 @@ class TestSystemHealthComprehensive:
 
     @pytest.mark.asyncio
     async def test_health_monitor_initialization(self, health_config):
-        """Test health monitor initialization"""
-        monitor = HealthMonitor(health_config)
+        """Test health monitor initialization"""        monitor = HealthMonitor(health_config)
         
         # Test initialization
         result = await monitor.initialize()
@@ -246,8 +231,7 @@ class TestSystemHealthComprehensive:
 
     @pytest.mark.asyncio
     async def test_system_health_check_comprehensive(self, health_monitor):
-        """Test comprehensive system health check"""
-        monitor = health_monitor
+        """Test comprehensive system health check"""        monitor = health_monitor
         
         # Perform system health check
         system_health = await monitor.check_system_health()
@@ -279,8 +263,7 @@ class TestSystemHealthComprehensive:
 
     @pytest.mark.asyncio
     async def test_database_health_check_detailed(self, health_monitor):
-        """Test detailed database health check"""
-        monitor = health_monitor
+        """Test detailed database health check"""        monitor = health_monitor
         
         # Test with mock database connection
         with patch('psycopg2.connect') as mock_connect:
@@ -305,8 +288,7 @@ class TestSystemHealthComprehensive:
 
     @pytest.mark.asyncio
     async def test_cache_health_check_detailed(self, health_monitor):
-        """Test detailed cache (Redis) health check"""
-        monitor = health_monitor
+        """Test detailed cache (Redis) health check"""        monitor = health_monitor
         
         # Test with mock Redis connection
         with patch('redis.Redis') as mock_redis_class:
@@ -332,8 +314,7 @@ class TestSystemHealthComprehensive:
 
     @pytest.mark.asyncio
     async def test_health_check_failure_scenarios(self, health_monitor):
-        """Test health check failure scenarios"""
-        monitor = health_monitor
+        """Test health check failure scenarios"""        monitor = health_monitor
         
         # Test database connection failure
         with patch('psycopg2.connect', side_effect=Exception("Connection refused")):
@@ -357,8 +338,7 @@ class TestSystemHealthComprehensive:
 
     @pytest.mark.asyncio
     async def test_health_thresholds_and_alerting(self, health_monitor):
-        """Test health thresholds and alerting logic"""
-        monitor = health_monitor
+        """Test health thresholds and alerting logic"""        monitor = health_monitor
         
         # Mock system metrics to trigger different thresholds
         critical_metrics = {
@@ -409,8 +389,7 @@ class TestSystemHealthComprehensive:
 
     @pytest.mark.asyncio
     async def test_health_history_tracking(self, health_monitor):
-        """Test health history tracking and trends"""
-        monitor = health_monitor
+        """Test health history tracking and trends"""        monitor = health_monitor
         
         # Enable health history tracking
         await monitor.enable_health_history(
@@ -483,8 +462,7 @@ class TestSystemHealthComprehensive:
 
     @pytest.mark.asyncio
     async def test_dependency_health_checking(self, health_monitor):
-        """Test dependency health checking and cascade failures"""
-        monitor = health_monitor
+        """Test dependency health checking and cascade failures"""        monitor = health_monitor
         
         # Define service dependencies
         service_dependencies = {
@@ -542,8 +520,7 @@ class TestSystemHealthComprehensive:
 
     @pytest.mark.asyncio
     async def test_diagnostics_engine_comprehensive(self, health_monitor):
-        """Test comprehensive diagnostics engine"""
-        monitor = health_monitor
+        """Test comprehensive diagnostics engine"""        monitor = health_monitor
         
         # Initialize diagnostics engine
         diagnostics_config = {
@@ -601,8 +578,7 @@ class TestSystemHealthComprehensive:
 
     @pytest.mark.asyncio
     async def test_health_reporting_comprehensive(self, health_monitor):
-        """Test comprehensive health reporting"""
-        monitor = health_monitor
+        """Test comprehensive health reporting"""        monitor = health_monitor
         
         # Initialize health reporter
         reporter_config = {
@@ -664,13 +640,11 @@ class TestSystemHealthComprehensive:
 
     @pytest.mark.asyncio
     async def test_custom_health_checks(self, health_monitor):
-        """Test custom health check implementations"""
-        monitor = health_monitor
+        """Test custom health check implementations"""        monitor = health_monitor
         
         # Define custom health check for AI model service
         async def ai_model_health_check(component_config):
-            """Custom health check for AI model service"""
-            try:
+            """Custom health check for AI model service"""            try:
                 # Simulate AI model health check
                 model_status = {
                     'model_loaded': True,
@@ -745,8 +719,7 @@ class TestSystemHealthComprehensive:
 
     @pytest.mark.asyncio
     async def test_health_check_parallelization(self, health_monitor):
-        """Test parallel execution of health checks"""
-        monitor = health_monitor
+        """Test parallel execution of health checks"""        monitor = health_monitor
         
         # Register multiple components for parallel checking
         components_to_check = [
@@ -792,8 +765,7 @@ class TestSystemHealthComprehensive:
         assert efficiency_ratio < 2.0, f"Parallel execution not efficient: {efficiency_ratio:.2f}x slower"
 
     def test_thread_safety_health_monitoring(self, health_config):
-        """Test thread safety of health monitoring operations"""
-        import concurrent.futures
+        """Test thread safety of health monitoring operations"""        import concurrent.futures
         import threading
         
         monitor = HealthMonitor(health_config)
@@ -854,8 +826,7 @@ class TestSystemHealthComprehensive:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_health_monitoring_performance_at_scale(self, health_monitor):
-        """Test health monitoring performance at scale"""
-        monitor = health_monitor
+        """Test health monitoring performance at scale"""        monitor = health_monitor
         
         # Configure for high performance
         await monitor.configure_high_performance(
@@ -921,8 +892,7 @@ class TestSystemHealthComprehensive:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_end_to_end_health_monitoring_scenario(self, health_monitor):
-        """Test end-to-end health monitoring scenario"""
-        monitor = health_monitor
+        """Test end-to-end health monitoring scenario"""        monitor = health_monitor
         
         # Step 1: Setup comprehensive health monitoring for IA Influencer platform
         platform_components = {
@@ -1140,11 +1110,9 @@ class TestSystemHealthComprehensive:
 # Performance benchmarks
 @pytest.mark.benchmark
 class TestHealthMonitoringBenchmarks:
-    """Performance benchmarks for system health monitoring"""
-    
+    """Performance benchmarks for system health monitoring"""    
     def test_health_check_creation_benchmark(self, benchmark):
-        """Benchmark health check creation performance"""
-        def create_health_check():
+        """Benchmark health check creation performance"""        def create_health_check():
             return HealthCheck(
                 component_name="benchmark_component",
                 component_type=ComponentType.API_GATEWAY,
@@ -1162,8 +1130,7 @@ class TestHealthMonitoringBenchmarks:
         assert health_check.response_time_ms == 150.0
     
     def test_system_metrics_collection_benchmark(self, benchmark):
-        """Benchmark system metrics collection performance"""
-        def collect_system_metrics():
+        """Benchmark system metrics collection performance"""        def collect_system_metrics():
             return {
                 'cpu_percent': psutil.cpu_percent(),
                 'memory_percent': psutil.virtual_memory().percent,
@@ -1182,8 +1149,7 @@ class TestHealthMonitoringBenchmarks:
         assert isinstance(metrics['memory_percent'], (int, float))
     
     def test_health_status_evaluation_benchmark(self, benchmark):
-        """Benchmark health status evaluation performance"""
-        # Sample health checks for evaluation
+        """Benchmark health status evaluation performance"""        # Sample health checks for evaluation
         health_checks = [
             HealthCheck(
                 component_name=f"component_{i}",

@@ -1,5 +1,4 @@
-"""
-Compliance Logging Configuration for IA-Influencer Agent Platform
+"""Compliance Logging Configuration for IA-Influencer Agent Platform
 =================================================================
 
 Industrial-grade logging configuration for legal compliance, regulatory requirements,
@@ -17,9 +16,7 @@ without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICT
 and will result in immediate legal action under German and International copyright laws.
 
 Contact: mlaiel@live.de for licensing inquiries only.
-"""
-
-import logging
+"""import logging
 import json
 from datetime import datetime
 from typing import Dict, Any, Optional, List
@@ -31,8 +28,7 @@ from pythonjsonlogger import jsonlogger
 
 
 class ComplianceRegulation(str, Enum):
-    """Compliance regulations and standards"""
-    GDPR = "gdpr"                          # General Data Protection Regulation (EU)
+    """Compliance regulations and standards"""    GDPR = "gdpr"                          # General Data Protection Regulation (EU)
     CCPA = "ccpa"                          # California Consumer Privacy Act
     PIPEDA = "pipeda"                      # Personal Information Protection (Canada)
     LGPD = "lgpd"                          # Lei Geral de Proteção de Dados (Brazil)
@@ -53,8 +49,7 @@ class ComplianceRegulation(str, Enum):
 
 
 class DataCategory(str, Enum):
-    """Categories of data for compliance tracking"""
-    PERSONAL_DATA = "personal_data"
+    """Categories of data for compliance tracking"""    PERSONAL_DATA = "personal_data"
     SENSITIVE_PERSONAL_DATA = "sensitive_personal_data"
     BIOMETRIC_DATA = "biometric_data"
     HEALTH_DATA = "health_data"
@@ -69,8 +64,7 @@ class DataCategory(str, Enum):
 
 
 class ComplianceEvent(str, Enum):
-    """Types of compliance events"""
-    DATA_COLLECTION = "data_collection"
+    """Types of compliance events"""    DATA_COLLECTION = "data_collection"
     DATA_PROCESSING = "data_processing"
     DATA_SHARING = "data_sharing"
     DATA_TRANSFER = "data_transfer"
@@ -89,8 +83,7 @@ class ComplianceEvent(str, Enum):
 
 @dataclass
 class ComplianceLogConfig:
-    """Configuration for compliance logging"""
-    enable_gdpr_logging: bool = True
+    """Configuration for compliance logging"""    enable_gdpr_logging: bool = True
     enable_ccpa_logging: bool = True
     enable_children_protection_logging: bool = True
     enable_financial_compliance_logging: bool = True
@@ -131,15 +124,13 @@ class ComplianceLogConfig:
 
 
 class ComplianceLogger:
-    """Specialized logger for compliance operations"""
-    
+    """Specialized logger for compliance operations"""    
     def __init__(self, config: ComplianceLogConfig):
         self.config = config
         self.logger = self._setup_logger()
         
     def _setup_logger(self) -> structlog.BoundLogger:
-        """Setup structured logger for compliance"""
-        processors = [
+        """Setup structured logger for compliance"""        processors = [
             structlog.threadlocal.merge_threadlocal_context,
             structlog.processors.TimeStamper(fmt="iso"),
             structlog.processors.add_log_level,
@@ -160,8 +151,7 @@ class ComplianceLogger:
         return structlog.get_logger("ia_influencer_compliance")
     
     def _add_compliance_markers(self, logger, method_name, event_dict):
-        """Add compliance-specific markers to log entries"""
-        event_dict['compliance_logging'] = True
+        """Add compliance-specific markers to log entries"""        event_dict['compliance_logging'] = True
         event_dict['regulatory_record'] = True
         event_dict['audit_trail_entry'] = True
         return event_dict
@@ -179,8 +169,7 @@ class ComplianceLogger:
         cross_border_transfer: bool = False,
         automated_decision_making: bool = False
     ) -> None:
-        """Log GDPR compliance events"""
-        if not self.config.enable_gdpr_logging:
+        """Log GDPR compliance events"""        if not self.config.enable_gdpr_logging:
             return
             
         log_data = {
@@ -224,8 +213,7 @@ class ComplianceLogger:
         expiry_date: Optional[datetime] = None,
         withdrawal_mechanism: Optional[str] = None
     ) -> None:
-        """Log consent management events"""
-        if not self.config.enable_consent_management_compliance:
+        """Log consent management events"""        if not self.config.enable_consent_management_compliance:
             return
             
         log_data = {
@@ -266,8 +254,7 @@ class ComplianceLogger:
         notification_deadline: Optional[datetime] = None,
         dpa_notification_date: Optional[datetime] = None
     ) -> None:
-        """Log data breach events for compliance"""
-        if not self.config.enable_breach_notification_logging:
+        """Log data breach events for compliance"""        if not self.config.enable_breach_notification_logging:
             return
             
         log_data = {
@@ -311,8 +298,7 @@ class ComplianceLogger:
         processing_notes: Optional[str] = None,
         response_date: Optional[datetime] = None
     ) -> None:
-        """Log data subject rights requests"""
-        log_data = {
+        """Log data subject rights requests"""        log_data = {
             "event_type": "data_subject_request",
             "request_id": request_id,
             "data_subject_id": data_subject_id,
@@ -354,8 +340,7 @@ class ComplianceLogger:
         safeguards_implemented: List[str],
         transfer_date: datetime
     ) -> None:
-        """Log cross-border data transfers"""
-        log_data = {
+        """Log cross-border data transfers"""        log_data = {
             "event_type": "cross_border_transfer",
             "transfer_id": transfer_id,
             "data_exporter": data_exporter,
@@ -392,8 +377,7 @@ class ComplianceLogger:
         licensing_status: Optional[str] = None,
         dmca_safe_harbor: bool = False
     ) -> None:
-        """Log copyright compliance events"""
-        if not self.config.enable_copyright_compliance_logging:
+        """Log copyright compliance events"""        if not self.config.enable_copyright_compliance_logging:
             return
             
         log_data = {
@@ -428,8 +412,7 @@ class ComplianceLogger:
         tax_reporting_required: bool,
         jurisdiction: str
     ) -> None:
-        """Log financial compliance events"""
-        if not self.config.enable_financial_compliance_logging:
+        """Log financial compliance events"""        if not self.config.enable_financial_compliance_logging:
             return
             
         log_data = {
@@ -465,8 +448,7 @@ class ComplianceLogger:
         compliance_gaps: List[str],
         remediation_plan: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Log audit preparation activities"""
-        log_data = {
+        """Log audit preparation activities"""        log_data = {
             "event_type": "audit_preparation",
             "audit_id": audit_id,
             "audit_type": audit_type,
@@ -491,8 +473,7 @@ class ComplianceLogger:
         self.logger.info("Audit preparation logged", **log_data)
     
     def _get_gdpr_article_basis(self, legal_basis: str) -> str:
-        """Map legal basis to GDPR article"""
-        basis_mapping = {
+        """Map legal basis to GDPR article"""        basis_mapping = {
             "consent": "Article 6(1)(a)",
             "contract": "Article 6(1)(b)",
             "legal_obligation": "Article 6(1)(c)",
@@ -503,8 +484,7 @@ class ComplianceLogger:
         return basis_mapping.get(legal_basis, "Article 6")
     
     def get_compliance_metrics(self) -> Dict[str, Any]:
-        """Get compliance system metrics"""
-        return {
+        """Get compliance system metrics"""        return {
             "gdpr_logging_enabled": self.config.enable_gdpr_logging,
             "ccpa_logging_enabled": self.config.enable_ccpa_logging,
             "copyright_compliance_enabled": self.config.enable_copyright_compliance_logging,
@@ -521,17 +501,14 @@ class ComplianceLogger:
 
 
 class ComplianceLoggingConfig:
-    """Main configuration class for compliance logging"""
-    
+    """Main configuration class for compliance logging"""    
     @staticmethod
     def create_default_config() -> ComplianceLogConfig:
-        """Create default compliance logging configuration"""
-        return ComplianceLogConfig()
+        """Create default compliance logging configuration"""        return ComplianceLogConfig()
     
     @staticmethod
     def create_full_compliance_config() -> ComplianceLogConfig:
-        """Create full compliance logging configuration for all regulations"""
-        return ComplianceLogConfig(
+        """Create full compliance logging configuration for all regulations"""        return ComplianceLogConfig(
             enable_gdpr_logging=True,
             enable_ccpa_logging=True,
             enable_children_protection_logging=True,

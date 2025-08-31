@@ -1,13 +1,10 @@
-"""
-Main Configuration Module - IA Influencer Agent Platform
+"""Main Configuration Module - IA Influencer Agent Platform
 Comprehensive configuration system with all components
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""
-
-# Core Configuration Classes
+"""# Core Configuration Classes
 from .app_config import AppConfig
 from .database_config import (
     DatabaseConfig,
@@ -159,8 +156,7 @@ _config_manager: Optional[ConfigManager] = None
 
 
 def get_config() -> AppConfig:
-    """Get global configuration instance"""
-    global _global_config
+    """Get global configuration instance"""    global _global_config
     
     if _global_config is None:
         _global_config = initialize_configuration()
@@ -169,14 +165,12 @@ def get_config() -> AppConfig:
 
 
 def set_config(config: AppConfig):
-    """Set global configuration instance"""
-    global _global_config
+    """Set global configuration instance"""    global _global_config
     _global_config = config
 
 
 def get_config_manager() -> ConfigManager:
-    """Get global configuration manager instance"""
-    global _config_manager
+    """Get global configuration manager instance"""    global _config_manager
     
     if _config_manager is None:
         _config_manager = ConfigManager()
@@ -189,8 +183,7 @@ def initialize_configuration(
     environment: Optional[str] = None,
     validate: bool = True
 ) -> AppConfig:
-    """
-    Initialize application configuration
+    """    Initialize application configuration
     
     Args:
         config_sources: List of configuration sources to load from
@@ -199,8 +192,7 @@ def initialize_configuration(
     
     Returns:
         Configured AppConfig instance
-    """
-    try:
+    """    try:
         # Print copyright notice
         print_copyright_notice()
         
@@ -242,8 +234,7 @@ def initialize_configuration(
 
 
 def _get_default_config_sources() -> List[str]:
-    """Get default configuration sources"""
-    sources = []
+    """Get default configuration sources"""    sources = []
     
     # Check for existing config files
     for config_path in DEFAULT_CONFIG_PATHS:
@@ -272,8 +263,7 @@ def _get_default_config_sources() -> List[str]:
 
 
 def validate_configuration(config: AppConfig) -> 'ValidationResult':
-    """Validate application configuration"""
-    try:
+    """Validate application configuration"""    try:
         validator = ConfigValidator()
         return validator.validate(config)
     except Exception as e:
@@ -286,15 +276,13 @@ def validate_configuration(config: AppConfig) -> 'ValidationResult':
 
 
 def reload_configuration(validate: bool = True) -> AppConfig:
-    """Reload global configuration"""
-    global _global_config
+    """Reload global configuration"""    global _global_config
     _global_config = None
     return initialize_configuration(validate=validate)
 
 
 def export_configuration_schema(output_path: str, format: str = "json"):
-    """Export configuration schema to file"""
-    try:
+    """Export configuration schema to file"""    try:
         schema = export_config_schema(format)
         
         output_file = Path(output_path)
@@ -311,8 +299,7 @@ def export_configuration_schema(output_path: str, format: str = "json"):
 
 
 def create_configuration_template(output_path: str, environment: str = "development"):
-    """Create a configuration template file"""
-    try:
+    """Create a configuration template file"""    try:
         config_class = ENVIRONMENT_CONFIG_MAP.get(environment, DevelopmentConfig)
         config = config_class()
         
@@ -339,8 +326,7 @@ def create_configuration_template(output_path: str, environment: str = "developm
 
 
 def get_configuration_info() -> Dict[str, Any]:
-    """Get information about current configuration"""
-    config = get_config()
+    """Get information about current configuration"""    config = get_config()
     
     return {
         "version": __version__,
@@ -372,8 +358,7 @@ def get_configuration_info() -> Dict[str, Any]:
 
 # Configuration decorators
 def require_config(config_key: str):
-    """Decorator to ensure configuration value is set"""
-    def decorator(func):
+    """Decorator to ensure configuration value is set"""    def decorator(func):
         def wrapper(*args, **kwargs):
             config = get_config()
             if not hasattr(config, config_key) or getattr(config, config_key) is None:
@@ -384,8 +369,7 @@ def require_config(config_key: str):
 
 
 def with_config(func):
-    """Decorator to inject configuration as first argument"""
-    def wrapper(*args, **kwargs):
+    """Decorator to inject configuration as first argument"""    def wrapper(*args, **kwargs):
         config = get_config()
         return func(config, *args, **kwargs)
     return wrapper

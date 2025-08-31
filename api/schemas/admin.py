@@ -1,5 +1,4 @@
-"""
-Admin & System Management Schemas for IA Influencer Agent Platform
+"""Admin & System Management Schemas for IA Influencer Agent Platform
 Comprehensive system administration, user management, and platform governance schemas
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -7,9 +6,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
-"""
-
-from datetime import datetime, date
+"""from datetime import datetime, date
 from decimal import Decimal
 from typing import Any, Dict, List, Optional, Union
 from uuid import UUID
@@ -20,8 +17,7 @@ from .base import BaseSchema, TimestampSchema, UUIDSchema, AuditSchema
 
 
 class AdminUser(UUIDSchema, TimestampSchema, AuditSchema):
-    """Administrative user management schema."""
-    
+    """Administrative user management schema."""    
     username: str = Field(description="Admin username")
     email: EmailStr = Field(description="Admin email address")
     full_name: str = Field(description="Full name")
@@ -66,8 +62,7 @@ class AdminUser(UUIDSchema, TimestampSchema, AuditSchema):
     
     @validator('admin_role')
     def validate_admin_role(cls, v):
-        """Validate admin role."""
-        allowed_roles = {
+        """Validate admin role."""        allowed_roles = {
             "super_admin", "system_admin", "user_admin", "content_moderator",
             "security_admin", "billing_admin", "analytics_admin", "support_admin",
             "compliance_officer", "technical_lead", "operations_manager"
@@ -78,8 +73,7 @@ class AdminUser(UUIDSchema, TimestampSchema, AuditSchema):
 
 
 class SystemConfiguration(UUIDSchema, TimestampSchema, AuditSchema):
-    """System-wide configuration management schema."""
-    
+    """System-wide configuration management schema."""    
     config_category: str = Field(description="Configuration category")
     config_name: str = Field(description="Configuration parameter name")
     config_key: str = Field(description="Unique configuration key")
@@ -128,8 +122,7 @@ class SystemConfiguration(UUIDSchema, TimestampSchema, AuditSchema):
     
     @validator('config_category')
     def validate_config_category(cls, v):
-        """Validate configuration category."""
-        allowed_categories = {
+        """Validate configuration category."""        allowed_categories = {
             "authentication", "security", "database", "storage", "api_limits",
             "email_settings", "notification", "monitoring", "backup", "logging",
             "performance", "feature_flags", "integration", "compliance"
@@ -140,8 +133,7 @@ class SystemConfiguration(UUIDSchema, TimestampSchema, AuditSchema):
 
 
 class AuditLog(UUIDSchema, TimestampSchema):
-    """Comprehensive audit logging schema."""
-    
+    """Comprehensive audit logging schema."""    
     event_type: str = Field(description="Type of audited event")
     event_category: str = Field(description="Category of the event")
     severity_level: str = Field(description="Event severity level")
@@ -189,8 +181,7 @@ class AuditLog(UUIDSchema, TimestampSchema):
     
     @validator('event_type')
     def validate_event_type(cls, v):
-        """Validate event type."""
-        allowed_types = {
+        """Validate event type."""        allowed_types = {
             "authentication", "authorization", "data_access", "data_modification",
             "system_configuration", "user_management", "security_incident",
             "compliance_event", "performance_issue", "error", "backup_restore"
@@ -201,8 +192,7 @@ class AuditLog(UUIDSchema, TimestampSchema):
 
 
 class UserManagement(UUIDSchema, TimestampSchema, AuditSchema):
-    """Comprehensive user management schema."""
-    
+    """Comprehensive user management schema."""    
     target_user_id: UUID = Field(description="User being managed")
     action_type: str = Field(description="Type of management action")
     admin_user_id: UUID = Field(description="Admin performing the action")
@@ -251,8 +241,7 @@ class UserManagement(UUIDSchema, TimestampSchema, AuditSchema):
     
     @validator('action_type')
     def validate_action_type(cls, v):
-        """Validate action type."""
-        allowed_types = {
+        """Validate action type."""        allowed_types = {
             "account_creation", "account_modification", "account_suspension",
             "account_termination", "permission_grant", "permission_revoke",
             "role_assignment", "role_removal", "password_reset", "security_update",
@@ -264,8 +253,7 @@ class UserManagement(UUIDSchema, TimestampSchema, AuditSchema):
 
 
 class SystemHealth(UUIDSchema, TimestampSchema):
-    """System health monitoring schema."""
-    
+    """System health monitoring schema."""    
     component_name: str = Field(description="System component name")
     health_status: str = Field(description="Overall health status")
     health_score: float = Field(ge=0.0, le=100.0, description="Health score percentage")
@@ -308,16 +296,14 @@ class SystemHealth(UUIDSchema, TimestampSchema):
     
     @validator('health_status')
     def validate_health_status(cls, v):
-        """Validate health status."""
-        allowed_statuses = {"healthy", "warning", "critical", "maintenance", "degraded", "outage"}
+        """Validate health status."""        allowed_statuses = {"healthy", "warning", "critical", "maintenance", "degraded", "outage"}
         if v not in allowed_statuses:
             raise ValueError(f'Health status must be one of: {", ".join(allowed_statuses)}')
         return v
 
 
 class BackupConfiguration(UUIDSchema, TimestampSchema, AuditSchema):
-    """System backup configuration and management schema."""
-    
+    """System backup configuration and management schema."""    
     backup_name: str = Field(description="Backup configuration name")
     backup_type: str = Field(description="Type of backup")
     backup_scope: str = Field(description="Scope of backup")
@@ -371,8 +357,7 @@ class BackupConfiguration(UUIDSchema, TimestampSchema, AuditSchema):
     
     @validator('backup_type')
     def validate_backup_type(cls, v):
-        """Validate backup type."""
-        allowed_types = {
+        """Validate backup type."""        allowed_types = {
             "full_backup", "incremental_backup", "differential_backup",
             "transaction_log_backup", "file_backup", "database_backup",
             "system_state_backup", "application_backup"
@@ -383,8 +368,7 @@ class BackupConfiguration(UUIDSchema, TimestampSchema, AuditSchema):
 
 
 class ComplianceReport(UUIDSchema, TimestampSchema, AuditSchema):
-    """Compliance monitoring and reporting schema."""
-    
+    """Compliance monitoring and reporting schema."""    
     report_name: str = Field(description="Compliance report name")
     compliance_framework: str = Field(description="Compliance framework/regulation")
     reporting_period_start: date
@@ -438,8 +422,7 @@ class ComplianceReport(UUIDSchema, TimestampSchema, AuditSchema):
     
     @validator('compliance_framework')
     def validate_compliance_framework(cls, v):
-        """Validate compliance framework."""
-        allowed_frameworks = {
+        """Validate compliance framework."""        allowed_frameworks = {
             "GDPR", "CCPA", "HIPAA", "SOX", "PCI_DSS", "ISO_27001",
             "SOC2", "COPPA", "FERPA", "PIPEDA", "LGPD", "custom"
         }
@@ -449,8 +432,7 @@ class ComplianceReport(UUIDSchema, TimestampSchema, AuditSchema):
 
 
 class PlatformSettings(UUIDSchema, TimestampSchema, AuditSchema):
-    """Platform-wide settings and configuration schema."""
-    
+    """Platform-wide settings and configuration schema."""    
     setting_category: str = Field(description="Settings category")
     setting_name: str = Field(description="Setting name")
     setting_description: str = Field(description="Setting description")
@@ -497,8 +479,7 @@ class PlatformSettings(UUIDSchema, TimestampSchema, AuditSchema):
     
     @validator('setting_category')
     def validate_setting_category(cls, v):
-        """Validate setting category."""
-        allowed_categories = {
+        """Validate setting category."""        allowed_categories = {
             "user_experience", "security", "performance", "monetization",
             "content_policy", "api_limits", "feature_flags", "integration",
             "notification", "analytics", "compliance", "experimental"

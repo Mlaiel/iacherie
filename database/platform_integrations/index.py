@@ -1,5 +1,4 @@
-"""
-Platform Integrations Index Module
+"""Platform Integrations Index Module
 
 Gestionnaire principal et point d'entrée pour toutes les intégrations plateformes
 dans la plateforme IA Influencer Agent.
@@ -22,9 +21,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 judiciaires selon le droit allemand et international.
 
 Contact pour autorisation: mlaiel@live.de
-"""
-
-from typing import Dict, List, Any, Optional, Union, Tuple
+"""from typing import Dict, List, Any, Optional, Union, Tuple
 import logging
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
@@ -84,18 +81,15 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformIntegrationError(Exception):
-    """Exception personnalisée pour les erreurs d'intégration."""
-    pass
+    """Exception personnalisée pour les erreurs d'intégration."""    pass
 
 
 class ValidationError(Exception):
-    """Exception pour les erreurs de validation."""
-    pass
+    """Exception pour les erreurs de validation."""    pass
 
 
 class IntegrationOperationResult(Enum):
-    """Résultats des opérations d'intégration."""
-    SUCCESS = "success"
+    """Résultats des opérations d'intégration."""    SUCCESS = "success"
     PARTIAL_SUCCESS = "partial_success"
     FAILURE = "failure"
     VALIDATION_ERROR = "validation_error"
@@ -105,21 +99,17 @@ class IntegrationOperationResult(Enum):
 
 
 class PlatformIntegrationManager:
-    """
-    Gestionnaire principal pour toutes les intégrations plateformes.
+    """    Gestionnaire principal pour toutes les intégrations plateformes.
     
     Centralise la gestion des connexions, credentials, synchronisations
     et services externes avec une API unifiée.
-    """
-    
+    """    
     def __init__(self, db_session: Session):
-        """
-        Initialise le gestionnaire d'intégrations.
+        """        Initialise le gestionnaire d'intégrations.
         
         Args:
             db_session: Session de base de données SQLAlchemy
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     # === GESTION DES CONNEXIONS PLATEFORMES ===
@@ -132,8 +122,7 @@ class PlatformIntegrationManager:
         access_token: str,
         **kwargs
     ) -> Tuple[PlatformConnection, IntegrationOperationResult]:
-        """
-        Crée une nouvelle connexion à une plateforme.
+        """        Crée une nouvelle connexion à une plateforme.
         
         Args:
             user_id: ID de l'utilisateur
@@ -144,8 +133,7 @@ class PlatformIntegrationManager:
             
         Returns:
             Tuple contenant la connexion créée et le résultat
-        """
-        try:
+        """        try:
             # Validation de la plateforme
             if platform_name not in SUPPORTED_PLATFORMS:
                 return None, IntegrationOperationResult.VALIDATION_ERROR
@@ -198,8 +186,7 @@ class PlatformIntegrationManager:
         platform_name: Optional[str] = None,
         active_only: bool = True
     ) -> List[PlatformConnection]:
-        """
-        Récupère les connexions plateformes d'un utilisateur.
+        """        Récupère les connexions plateformes d'un utilisateur.
         
         Args:
             user_id: ID de l'utilisateur
@@ -208,8 +195,7 @@ class PlatformIntegrationManager:
             
         Returns:
             Liste des connexions
-        """
-        query = self.db_session.query(PlatformConnection).filter(
+        """        query = self.db_session.query(PlatformConnection).filter(
             PlatformConnection.user_id == user_id
         )
         
@@ -227,8 +213,7 @@ class PlatformIntegrationManager:
         success: bool,
         error_message: str = None
     ) -> bool:
-        """
-        Met à jour l'état de santé d'une connexion.
+        """        Met à jour l'état de santé d'une connexion.
         
         Args:
             connection_id: ID de la connexion
@@ -237,8 +222,7 @@ class PlatformIntegrationManager:
             
         Returns:
             True si mise à jour réussie
-        """
-        try:
+        """        try:
             connection = self.db_session.query(PlatformConnection).filter(
                 PlatformConnection.id == connection_id
             ).first()
@@ -265,8 +249,7 @@ class PlatformIntegrationManager:
         credentials: Dict[str, str],
         **kwargs
     ) -> Tuple[APICredential, IntegrationOperationResult]:
-        """
-        Stocke des credentials pour une plateforme.
+        """        Stocke des credentials pour une plateforme.
         
         Args:
             platform_name: Nom de la plateforme
@@ -276,8 +259,7 @@ class PlatformIntegrationManager:
             
         Returns:
             Tuple contenant le credential créé et le résultat
-        """
-        try:
+        """        try:
             credential = create_platform_credential(
                 platform_name=platform_name,
                 credential_type=credential_type,
@@ -308,8 +290,7 @@ class PlatformIntegrationManager:
         new_credentials: Dict[str, str],
         rotation_reason: str = "scheduled"
     ) -> Tuple[bool, IntegrationOperationResult]:
-        """
-        Effectue la rotation des credentials d'une plateforme.
+        """        Effectue la rotation des credentials d'une plateforme.
         
         Args:
             credential_id: ID du credential à faire tourner
@@ -318,8 +299,7 @@ class PlatformIntegrationManager:
             
         Returns:
             Tuple contenant le succès et le résultat
-        """
-        try:
+        """        try:
             credential = self.db_session.query(APICredential).filter(
                 APICredential.id == credential_id
             ).first()
@@ -384,8 +364,7 @@ class PlatformIntegrationManager:
         platform_name: str,
         sync_config: Dict[str, Any]
     ) -> Tuple[SyncConfiguration, IntegrationOperationResult]:
-        """
-        Crée une configuration de synchronisation.
+        """        Crée une configuration de synchronisation.
         
         Args:
             user_id: ID de l'utilisateur
@@ -395,8 +374,7 @@ class PlatformIntegrationManager:
             
         Returns:
             Tuple contenant la configuration créée et le résultat
-        """
-        try:
+        """        try:
             sync_configuration = SyncConfiguration(
                 user_id=user_id,
                 platform_connection_id=platform_connection_id,
@@ -431,8 +409,7 @@ class PlatformIntegrationManager:
         sync_config_id: str,
         triggered_by: str = "system"
     ) -> Tuple[SyncExecution, IntegrationOperationResult]:
-        """
-        Lance l'exécution d'une synchronisation.
+        """        Lance l'exécution d'une synchronisation.
         
         Args:
             sync_config_id: ID de la configuration de sync
@@ -440,8 +417,7 @@ class PlatformIntegrationManager:
             
         Returns:
             Tuple contenant l'exécution créée et le résultat
-        """
-        try:
+        """        try:
             sync_config = self.db_session.query(SyncConfiguration).filter(
                 SyncConfiguration.id == sync_config_id
             ).first()
@@ -480,8 +456,7 @@ class PlatformIntegrationManager:
         platform_name: str,
         user_id: Optional[str] = None
     ) -> Tuple[IntegrationHealthCheck, IntegrationOperationResult]:
-        """
-        Effectue un health check d'une plateforme.
+        """        Effectue un health check d'une plateforme.
         
         Args:
             platform_name: Nom de la plateforme
@@ -489,8 +464,7 @@ class PlatformIntegrationManager:
             
         Returns:
             Tuple contenant le health check et le résultat
-        """
-        try:
+        """        try:
             health_check = IntegrationHealthCheck(
                 platform_name=platform_name,
                 user_id=user_id,
@@ -516,16 +490,14 @@ class PlatformIntegrationManager:
             return None, IntegrationOperationResult.FAILURE
     
     def get_platform_health_summary(self, user_id: str) -> Dict[str, Any]:
-        """
-        Retourne un résumé de santé de toutes les plateformes d'un utilisateur.
+        """        Retourne un résumé de santé de toutes les plateformes d'un utilisateur.
         
         Args:
             user_id: ID de l'utilisateur
             
         Returns:
             Dictionnaire avec le résumé de santé
-        """
-        try:
+        """        try:
             connections = self.get_user_platform_connections(user_id)
             
             summary = {
@@ -563,8 +535,7 @@ class PlatformIntegrationManager:
     # === MÉTHODES PRIVÉES ===
     
     def _create_default_platform_settings(self, user_id: str, platform_name: str):
-        """Crée les paramètres par défaut pour une plateforme."""
-        try:
+        """Crée les paramètres par défaut pour une plateforme."""        try:
             settings = create_default_settings_for_platform(user_id, platform_name)
             for setting in settings:
                 self.db_session.add(setting)
@@ -577,8 +548,7 @@ class PlatformIntegrationManager:
         platform_connection_id: str,
         platform_name: str
     ):
-        """Crée les configurations de sync par défaut pour une plateforme."""
-        try:
+        """Crée les configurations de sync par défaut pour une plateforme."""        try:
             configs = create_default_sync_configurations(
                 user_id, platform_connection_id, platform_name
             )
@@ -589,16 +559,14 @@ class PlatformIntegrationManager:
 
 
 def initialize_platform_integrations_schema(db_session: Session) -> bool:
-    """
-    Initialise le schéma de base de données pour les intégrations plateformes.
+    """    Initialise le schéma de base de données pour les intégrations plateformes.
     
     Args:
         db_session: Session de base de données
         
     Returns:
         True si l'initialisation a réussi
-    """
-    try:
+    """    try:
         # Cette fonction créerait les tables si elles n'existent pas
         # Dans un environnement réel, ceci serait géré par Alembic
         logger.info("Platform integrations schema initialized")
@@ -609,21 +577,18 @@ def initialize_platform_integrations_schema(db_session: Session) -> bool:
 
 
 def get_supported_platforms() -> List[str]:
-    """
-    Retourne la liste des plateformes supportées.
+    """    Retourne la liste des plateformes supportées.
     
     Returns:
         Liste des noms de plateformes
-    """
-    return list(SUPPORTED_PLATFORMS.keys())
+    """    return list(SUPPORTED_PLATFORMS.keys())
 
 
 def validate_platform_configuration(
     platform_name: str,
     configuration: Dict[str, Any]
 ) -> Tuple[bool, List[str]]:
-    """
-    Valide une configuration de plateforme.
+    """    Valide une configuration de plateforme.
     
     Args:
         platform_name: Nom de la plateforme
@@ -631,8 +596,7 @@ def validate_platform_configuration(
         
     Returns:
         Tuple contenant la validité et la liste des erreurs
-    """
-    errors = []
+    """    errors = []
     
     if platform_name not in SUPPORTED_PLATFORMS:
         errors.append(f"Platform '{platform_name}' is not supported")
@@ -714,27 +678,22 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformIntegrationManager:
-    """
-    Gestionnaire principal pour les intégrations de plateformes.
+    """    Gestionnaire principal pour les intégrations de plateformes.
     
     Fournit une interface unifiée pour gérer toutes les intégrations
     avec les plateformes externes.
-    """
-    
+    """    
     def __init__(self, db_session):
-        """
-        Initialise le gestionnaire d'intégrations.
+        """        Initialise le gestionnaire d'intégrations.
         
         Args:
             db_session: Session de base de données SQLAlchemy
-        """
-        self.db = db_session
+        """        self.db = db_session
         self.logger = logger
     
     def setup_platform_integration(self, user_id: str, platform_name: str, 
                                  credentials: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Configure une nouvelle intégration de plateforme pour un utilisateur.
+        """        Configure une nouvelle intégration de plateforme pour un utilisateur.
         
         Args:
             user_id: ID de l'utilisateur
@@ -743,8 +702,7 @@ class PlatformIntegrationManager:
         
         Returns:
             Dict[str, Any]: Résultat de la configuration
-        """
-        try:
+        """        try:
             # 1. Créer les credentials
             credential = create_platform_credential(platform_name, **credentials)
             self.db.add(credential)
@@ -805,8 +763,7 @@ class PlatformIntegrationManager:
             }
     
     def get_platform_status(self, user_id: str, platform_name: str) -> Dict[str, Any]:
-        """
-        Récupère le statut complet d'une intégration de plateforme.
+        """        Récupère le statut complet d'une intégration de plateforme.
         
         Args:
             user_id: ID de l'utilisateur
@@ -814,8 +771,7 @@ class PlatformIntegrationManager:
         
         Returns:
             Dict[str, Any]: Statut de l'intégration
-        """
-        # Récupérer la connexion
+        """        # Récupérer la connexion
         connection = self.db.query(PlatformConnection).filter_by(
             user_id=user_id,
             platform_name=platform_name
@@ -864,8 +820,7 @@ class PlatformIntegrationManager:
     
     def trigger_sync(self, user_id: str, platform_name: str, 
                     sync_type: str = "full") -> Dict[str, Any]:
-        """
-        Déclenche une synchronisation manuelle avec une plateforme.
+        """        Déclenche une synchronisation manuelle avec une plateforme.
         
         Args:
             user_id: ID de l'utilisateur
@@ -874,8 +829,7 @@ class PlatformIntegrationManager:
         
         Returns:
             Dict[str, Any]: Résultat du déclenchement
-        """
-        # Récupérer les configurations de synchronisation actives
+        """        # Récupérer les configurations de synchronisation actives
         sync_configs = self.db.query(SyncConfiguration).filter_by(
             user_id=user_id,
             platform_name=platform_name,
@@ -914,8 +868,7 @@ class PlatformIntegrationManager:
     def get_integration_analytics(self, user_id: str, 
                                 platform_name: str = None, 
                                 days: int = 30) -> Dict[str, Any]:
-        """
-        Récupère les analytics d'intégration pour un utilisateur.
+        """        Récupère les analytics d'intégration pour un utilisateur.
         
         Args:
             user_id: ID de l'utilisateur
@@ -924,8 +877,7 @@ class PlatformIntegrationManager:
         
         Returns:
             Dict[str, Any]: Analytics d'intégration
-        """
-        from datetime import timedelta
+        """        from datetime import timedelta
         
         start_date = datetime.utcnow() - timedelta(days=days)
         
@@ -966,8 +918,7 @@ class PlatformIntegrationManager:
         }
     
     def _get_platform_type(self, platform_name: str) -> str:
-        """Détermine le type de plateforme basé sur son nom."""
-        platform_types = {
+        """Détermine le type de plateforme basé sur son nom."""        platform_types = {
             "spotify": "music",
             "youtube": "video", 
             "instagram": "social",
@@ -980,13 +931,11 @@ class PlatformIntegrationManager:
 
 # Utilitaires pour l'initialisation du module
 def initialize_platform_integrations_schema(db_session):
-    """
-    Initialise le schéma des intégrations de plateformes.
+    """    Initialise le schéma des intégrations de plateformes.
     
     Args:
         db_session: Session de base de données SQLAlchemy
-    """
-    # Créer les services externes par défaut
+    """    # Créer les services externes par défaut
     for service_key in EXTERNAL_SERVICES_CATALOG.keys():
         existing_service = db_session.query(ExternalService).filter_by(service_name=service_key).first()
         
@@ -999,13 +948,11 @@ def initialize_platform_integrations_schema(db_session):
 
 
 def get_supported_platforms() -> List[Dict[str, Any]]:
-    """
-    Récupère la liste des plateformes supportées.
+    """    Récupère la liste des plateformes supportées.
     
     Returns:
         List[Dict[str, Any]]: Liste des plateformes avec leurs informations
-    """
-    platforms = []
+    """    platforms = []
     
     for platform_name, config in SUPPORTED_PLATFORMS.items():
         platforms.append({
@@ -1021,8 +968,7 @@ def get_supported_platforms() -> List[Dict[str, Any]]:
 
 
 def validate_platform_configuration(platform_name: str, config: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Valide une configuration de plateforme.
+    """    Valide une configuration de plateforme.
     
     Args:
         platform_name: Nom de la plateforme
@@ -1030,8 +976,7 @@ def validate_platform_configuration(platform_name: str, config: Dict[str, Any]) 
     
     Returns:
         Dict[str, Any]: Résultat de la validation
-    """
-    if platform_name not in SUPPORTED_PLATFORMS:
+    """    if platform_name not in SUPPORTED_PLATFORMS:
         return {
             "valid": False,
             "errors": [f"Plateforme non supportée: {platform_name}"]

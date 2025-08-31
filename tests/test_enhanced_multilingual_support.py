@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Enhanced Multilingual Support Test Suite
+"""Enhanced Multilingual Support Test Suite
 
 Tests for the improved multilingual support features including:
 - Enhanced dialect detection with 15+ regional variants
@@ -25,9 +21,7 @@ Tests for the improved multilingual support features including:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -38,11 +32,9 @@ from typing import Dict, Any
 
 # Test data for enhanced dialect detection
 class TestEnhancedDialectDetection:
-    """Test suite for enhanced dialect detection capabilities."""
-    
+    """Test suite for enhanced dialect detection capabilities."""    
     def test_english_dialect_patterns(self):
-        """Test that English dialect detection includes comprehensive variants."""
-        # Simulate the enhanced dialect patterns that we added
+        """Test that English dialect detection includes comprehensive variants."""        # Simulate the enhanced dialect patterns that we added
         dialect_patterns = {
             'en': {
                 'american': ['color', 'center', 'realize', 'aluminum', 'mom', 'elevator', 'apartment', 'gas', 'truck', 'candy'],
@@ -78,8 +70,7 @@ class TestEnhancedDialectDetection:
         assert australian_score >= 4  # Should detect multiple Australian words
 
     def test_expanded_language_dialect_coverage(self):
-        """Test that dialect detection covers major world languages."""
-        # Simulate the enhanced dialect patterns structure
+        """Test that dialect detection covers major world languages."""        # Simulate the enhanced dialect patterns structure
         expected_languages = ['en', 'de', 'es', 'fr', 'pt', 'ar', 'it', 'zh', 'hi', 'ru']
         
         # Each language should have multiple regional variants
@@ -106,11 +97,9 @@ class TestEnhancedDialectDetection:
 
 
 class TestEnhancedUITranslations:
-    """Test suite for enhanced UI translation coverage."""
-    
+    """Test suite for enhanced UI translation coverage."""    
     def test_ui_translation_files_exist(self):
-        """Test that all expected UI translation files exist."""
-        locale_dir = "/home/runner/work/Ainflue/Ainflue/frontend/src/locales"
+        """Test that all expected UI translation files exist."""        locale_dir = "/home/runner/work/Ainflue/Ainflue/frontend/src/locales"
         expected_files = ['en.json', 'fr.json', 'de.json', 'ar.json', 'ber.json']
         
         for file in expected_files:
@@ -118,8 +107,7 @@ class TestEnhancedUITranslations:
             assert os.path.exists(file_path), f"Translation file {file} should exist"
 
     def test_enhanced_translation_keys(self):
-        """Test that translation files include new multilingual-specific keys."""
-        locale_dir = "/home/runner/work/Ainflue/Ainflue/frontend/src/locales"
+        """Test that translation files include new multilingual-specific keys."""        locale_dir = "/home/runner/work/Ainflue/Ainflue/frontend/src/locales"
         
         # New keys that should be in all translation files
         new_keys = [
@@ -145,8 +133,7 @@ class TestEnhancedUITranslations:
                 assert len(translations) >= 85, f"{lang_file} should have 85+ translation keys"
 
     def test_berber_translation_authenticity(self):
-        """Test that Berber translations use authentic Tifinagh/Latin script."""
-        locale_dir = "/home/runner/work/Ainflue/Ainflue/frontend/src/locales"
+        """Test that Berber translations use authentic Tifinagh/Latin script."""        locale_dir = "/home/runner/work/Ainflue/Ainflue/frontend/src/locales"
         ber_file = os.path.join(locale_dir, 'ber.json')
         
         if os.path.exists(ber_file):
@@ -166,11 +153,9 @@ class TestEnhancedUITranslations:
 
 
 class TestEnhancedCulturalAdaptation:
-    """Test suite for enhanced cultural adaptation features."""
-    
+    """Test suite for enhanced cultural adaptation features."""    
     def test_cultural_context_coverage(self):
-        """Test that cultural contexts cover major world regions."""
-        # Simulate the enhanced cultural contexts we added
+        """Test that cultural contexts cover major world regions."""        # Simulate the enhanced cultural contexts we added
         expected_contexts = [
             ('german', 'DE'), ('french', 'FR'), ('english', 'US'),
             ('japanese', 'JP'), ('spanish', 'ES'), ('chinese_simplified', 'CN'),
@@ -186,8 +171,7 @@ class TestEnhancedCulturalAdaptation:
         assert len(arabic_regions) >= 2, "Should have multiple Arabic regional contexts"
 
     def test_hofstede_dimensions_implementation(self):
-        """Test that Hofstede cultural dimensions are properly implemented."""
-        # Test that all 6 Hofstede dimensions are covered
+        """Test that Hofstede cultural dimensions are properly implemented."""        # Test that all 6 Hofstede dimensions are covered
         hofstede_dimensions = [
             'power_distance', 'individualism', 'masculinity',
             'uncertainty_avoidance', 'long_term_orientation', 'indulgence'
@@ -203,8 +187,7 @@ class TestEnhancedCulturalAdaptation:
             assert 0.0 <= value <= 1.0, "Hofstede values should be between 0 and 1"
 
     def test_communication_style_adaptation(self):
-        """Test communication style adaptation rules."""
-        # Test directness adaptation patterns
+        """Test communication style adaptation rules."""        # Test directness adaptation patterns
         directness_patterns = [
             ("You must", "It would be advisable to"),
             ("This is wrong", "This might need adjustment"),
@@ -226,11 +209,9 @@ class TestEnhancedCulturalAdaptation:
 
 
 class TestMultilingualSystemIntegration:
-    """Test suite for overall multilingual system integration."""
-    
+    """Test suite for overall multilingual system integration."""    
     def test_conformity_improvement_calculation(self):
-        """Test that the enhancements improve conformity significantly."""
-        # Original conformity was 40%
+        """Test that the enhancements improve conformity significantly."""        # Original conformity was 40%
         original_conformity = 0.40
         
         # Calculate improvement from enhancements:
@@ -258,8 +239,7 @@ class TestMultilingualSystemIntegration:
         assert improvement_percentage >= 75, f"Should improve by 75%+, got {improvement_percentage:.1f}%"
 
     def test_global_language_coverage(self):
-        """Test that the system covers major global languages appropriately."""
-        # Languages by speaker count and economic importance
+        """Test that the system covers major global languages appropriately."""        # Languages by speaker count and economic importance
         tier_1_languages = ['en', 'zh', 'hi', 'es', 'fr', 'ar', 'pt', 'ru', 'ja', 'de']
         tier_2_languages = ['ko', 'it', 'tr', 'vi', 'th', 'pl', 'nl', 'sw', 'ro', 'uk']
         

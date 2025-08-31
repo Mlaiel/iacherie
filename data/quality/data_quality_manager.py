@@ -1,5 +1,4 @@
-"""
-Data Quality Manager - Central Quality Orchestrator
+"""Data Quality Manager - Central Quality Orchestrator
 ===================================================
 
 Enterprise-grade central data quality management orchestrator for the IA Influencer platform.
@@ -7,9 +6,7 @@ Coordinates all quality operations, manages quality workflows, and ensures data 
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""
-
-from typing import Dict, Any, List, Optional, Union, Callable
+"""from typing import Dict, Any, List, Optional, Union, Callable
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -21,8 +18,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class QualityPolicy:
-    """Data quality policy configuration"""
-    name: str
+    """Data quality policy configuration"""    name: str
     description: str
     rules: List[Dict[str, Any]]
     threshold: float
@@ -32,8 +28,7 @@ class QualityPolicy:
 
 @dataclass
 class QualityWorkflow:
-    """Quality assessment workflow definition"""
-    name: str
+    """Quality assessment workflow definition"""    name: str
     steps: List[str]
     parallel_execution: bool
     timeout: int
@@ -41,21 +36,17 @@ class QualityWorkflow:
     dependencies: List[str]
 
 class DataQualityManager:
-    """
-    Central orchestrator for data quality management operations.
+    """    Central orchestrator for data quality management operations.
     
     Manages quality policies, workflows, scheduling, and coordination
     of all quality assurance activities across the platform.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize the data quality manager.
+        """        Initialize the data quality manager.
         
         Args:
             config: Quality management configuration
-        """
-        self.config = config
+        """        self.config = config
         self.logger = logger
         
         # Quality policies and workflows
@@ -76,8 +67,7 @@ class DataQualityManager:
         self.logger.info("DataQualityManager initialized")
     
     def _initialize_default_policies(self):
-        """Initialize default quality policies"""
-        
+        """Initialize default quality policies"""        
         # Content validation policy
         content_policy = QualityPolicy(
             name="content_validation",
@@ -149,8 +139,7 @@ class DataQualityManager:
         self.logger.info(f"Initialized {len(self.policies)} default quality policies")
     
     def _initialize_default_workflows(self):
-        """Initialize default quality workflows"""
-        
+        """Initialize default quality workflows"""        
         # Comprehensive quality workflow
         comprehensive_workflow = QualityWorkflow(
             name="comprehensive_assessment",
@@ -206,8 +195,7 @@ class DataQualityManager:
         workflow_name: str = "comprehensive",
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Execute a quality assessment workflow.
+        """        Execute a quality assessment workflow.
         
         Args:
             content_data: Content to assess
@@ -217,8 +205,7 @@ class DataQualityManager:
             
         Returns:
             Assessment results
-        """
-        try:
+        """        try:
             # Get workflow definition
             workflow = self.workflows.get(workflow_name)
             if not workflow:
@@ -260,8 +247,7 @@ class DataQualityManager:
         metadata: Optional[Dict[str, Any]],
         session_id: str
     ) -> Dict[str, Any]:
-        """Execute workflow steps in parallel"""
-        
+        """Execute workflow steps in parallel"""        
         tasks = []
         for step in workflow.steps:
             policy = self.policies.get(step)
@@ -294,8 +280,7 @@ class DataQualityManager:
         metadata: Optional[Dict[str, Any]],
         session_id: str
     ) -> Dict[str, Any]:
-        """Execute workflow steps sequentially"""
-        
+        """Execute workflow steps sequentially"""        
         results = {}
         for step in workflow.steps:
             policy = self.policies.get(step)
@@ -327,8 +312,7 @@ class DataQualityManager:
         metadata: Optional[Dict[str, Any]],
         session_id: str
     ) -> Dict[str, Any]:
-        """Execute a single quality assessment step"""
-        
+        """Execute a single quality assessment step"""        
         # Placeholder for actual quality step execution
         # In real implementation, this would call the appropriate
         # validation engine, integrity checker, etc.
@@ -358,8 +342,7 @@ class DataQualityManager:
         results: Dict[str, Any],
         workflow: QualityWorkflow
     ) -> Dict[str, Any]:
-        """Calculate overall quality assessment from step results"""
-        
+        """Calculate overall quality assessment from step results"""        
         total_score = 0
         total_weight = 0
         failed_critical = False
@@ -414,8 +397,7 @@ class DataQualityManager:
         workflow_name: str,
         metadata: Optional[Dict[str, Any]]
     ) -> str:
-        """Create a new quality assessment session"""
-        
+        """Create a new quality assessment session"""        
         session_id = hashlib.md5(
             f"{content_type}_{workflow_name}_{datetime.utcnow().isoformat()}".encode()
         ).hexdigest()[:16]
@@ -431,8 +413,7 @@ class DataQualityManager:
         return session_id
     
     def _update_session(self, session_id: str, assessment: Dict[str, Any]):
-        """Update quality assessment session"""
-        
+        """Update quality assessment session"""        
         if session_id in self.active_sessions:
             self.active_sessions[session_id].update({
                 "status": "completed",
@@ -442,8 +423,7 @@ class DataQualityManager:
             })
     
     def _store_quality_history(self, session_id: str, assessment: Dict[str, Any]):
-        """Store quality assessment in history"""
-        
+        """Store quality assessment in history"""        
         history_entry = {
             "session_id": session_id,
             "assessment": assessment,
@@ -462,8 +442,7 @@ class DataQualityManager:
         result: Dict[str, Any],
         session_id: str
     ):
-        """Trigger quality alert for failed policy"""
-        
+        """Trigger quality alert for failed policy"""        
         alert = {
             "type": "quality_alert",
             "policy": policy.name,
@@ -480,8 +459,7 @@ class DataQualityManager:
         # update monitoring systems, etc.
     
     def get_quality_metrics(self, timeframe: timedelta) -> Dict[str, Any]:
-        """Get quality metrics for specified timeframe"""
-        
+        """Get quality metrics for specified timeframe"""        
         cutoff_time = datetime.utcnow() - timeframe
         
         recent_assessments = [
@@ -512,19 +490,15 @@ class DataQualityManager:
         }
     
     def add_custom_policy(self, policy: QualityPolicy):
-        """Add a custom quality policy"""
-        self.policies[policy.name] = policy
+        """Add a custom quality policy"""        self.policies[policy.name] = policy
         self.logger.info(f"Added custom quality policy: {policy.name}")
     
     def add_custom_workflow(self, workflow: QualityWorkflow):
-        """Add a custom quality workflow"""
-        self.workflows[workflow.name] = workflow
+        """Add a custom quality workflow"""        self.workflows[workflow.name] = workflow
         self.logger.info(f"Added custom quality workflow: {workflow.name}")
     
     def list_policies(self) -> List[str]:
-        """List all available quality policies"""
-        return list(self.policies.keys())
+        """List all available quality policies"""        return list(self.policies.keys())
     
     def list_workflows(self) -> List[str]:
-        """List all available quality workflows"""
-        return list(self.workflows.keys())
+        """List all available quality workflows"""        return list(self.workflows.keys())

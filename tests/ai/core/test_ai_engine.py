@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive AI Engine Management Tests
+"""Comprehensive AI Engine Management Tests
 
 Ultra-advanced enterprise-grade test suite for AI engine orchestration and lifecycle management.
 Tests model loading, inference caching, memory optimization, and multi-format AI processing.
@@ -36,9 +32,7 @@ Team Expertise:
 - Quality Assurance Lead: Comprehensive AI testing, edge case validation
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -82,11 +76,9 @@ from ai.core.exceptions import ModelConnectionError, ConfigurationError, Optimiz
 
 
 class TestAIModelType:
-    """Test suite for AIModelType enumeration"""
-    
+    """Test suite for AIModelType enumeration"""    
     def test_ai_model_type_values(self):
-        """Test AI model type enum values"""
-        assert AIModelType.TRANSFORMER.value == "transformer"
+        """Test AI model type enum values"""        assert AIModelType.TRANSFORMER.value == "transformer"
         assert AIModelType.CNN.value == "cnn"
         assert AIModelType.RNN.value == "rnn"
         assert AIModelType.DIFFUSION.value == "diffusion"
@@ -101,8 +93,7 @@ class TestAIModelType:
         assert AIModelType.COLLABORATION_MATCHER.value == "collaboration_matcher"
     
     def test_creator_specific_model_types(self):
-        """Test model types cover all creator needs"""
-        # Musicians
+        """Test model types cover all creator needs"""        # Musicians
         musician_models = [
             AIModelType.AUDIO_CLASSIFIER,
             AIModelType.CONTENT_GENERATOR,
@@ -128,11 +119,9 @@ class TestAIModelType:
 
 
 class TestModelStatus:
-    """Test suite for ModelStatus enumeration"""
-    
+    """Test suite for ModelStatus enumeration"""    
     def test_model_status_values(self):
-        """Test model status enum values"""
-        assert ModelStatus.UNLOADED.value == "unloaded"
+        """Test model status enum values"""        assert ModelStatus.UNLOADED.value == "unloaded"
         assert ModelStatus.LOADING.value == "loading"
         assert ModelStatus.LOADED.value == "loaded"
         assert ModelStatus.READY.value == "ready"
@@ -141,8 +130,7 @@ class TestModelStatus:
         assert ModelStatus.UNLOADING.value == "unloading"
     
     def test_model_status_lifecycle(self):
-        """Test model status lifecycle progression"""
-        lifecycle_sequence = [
+        """Test model status lifecycle progression"""        lifecycle_sequence = [
             ModelStatus.UNLOADED,
             ModelStatus.LOADING,
             ModelStatus.LOADED,
@@ -160,18 +148,15 @@ class TestModelStatus:
 
 
 class TestDeviceType:
-    """Test suite for DeviceType enumeration"""
-    
+    """Test suite for DeviceType enumeration"""    
     def test_device_type_values(self):
-        """Test device type enum values"""
-        assert DeviceType.CPU.value == "cpu"
+        """Test device type enum values"""        assert DeviceType.CPU.value == "cpu"
         assert DeviceType.CUDA.value == "cuda"
         assert DeviceType.MPS.value == "mps"
         assert DeviceType.AUTO.value == "auto"
     
     def test_device_type_coverage(self):
-        """Test device type coverage for different platforms"""
-        # Should support major compute platforms
+        """Test device type coverage for different platforms"""        # Should support major compute platforms
         supported_devices = [device.value for device in DeviceType]
         assert "cpu" in supported_devices  # Universal support
         assert "cuda" in supported_devices  # NVIDIA GPU support
@@ -180,11 +165,9 @@ class TestDeviceType:
 
 
 class TestModelConfig:
-    """Test suite for ModelConfig data class"""
-    
+    """Test suite for ModelConfig data class"""    
     def test_model_config_creation(self):
-        """Test model configuration creation"""
-        config = ModelConfig(
+        """Test model configuration creation"""        config = ModelConfig(
             name="test-model",
             model_type=AIModelType.TEXT_CLASSIFIER,
             model_path="/path/to/model",
@@ -211,8 +194,7 @@ class TestModelConfig:
         assert config.auto_unload_after_seconds == 600
     
     def test_model_config_defaults(self):
-        """Test model configuration default values"""
-        config = ModelConfig(
+        """Test model configuration default values"""        config = ModelConfig(
             name="minimal-model",
             model_type=AIModelType.TRANSFORMER,
             model_path="/path/to/model"
@@ -231,8 +213,7 @@ class TestModelConfig:
         assert config.custom_config == {}
     
     def test_model_config_to_dict(self):
-        """Test model configuration dictionary conversion"""
-        config = ModelConfig(
+        """Test model configuration dictionary conversion"""        config = ModelConfig(
             name="dict-test-model",
             model_type=AIModelType.CNN,
             model_path="/test/path",
@@ -253,8 +234,7 @@ class TestModelConfig:
         assert len(config_dict) >= 10  # All major fields present
     
     def test_model_config_creator_specific(self):
-        """Test model configurations for specific creator types"""
-        # Musician audio processing model
+        """Test model configurations for specific creator types"""        # Musician audio processing model
         audio_config = ModelConfig(
             name="audio-classifier",
             model_type=AIModelType.AUDIO_CLASSIFIER,
@@ -286,11 +266,9 @@ class TestModelConfig:
 
 
 class TestModelMetrics:
-    """Test suite for ModelMetrics data class"""
-    
+    """Test suite for ModelMetrics data class"""    
     def test_model_metrics_creation(self):
-        """Test model metrics creation"""
-        metrics = ModelMetrics(model_name="test-model")
+        """Test model metrics creation"""        metrics = ModelMetrics(model_name="test-model")
         
         assert metrics.model_name == "test-model"
         assert metrics.load_time == 0.0
@@ -304,8 +282,7 @@ class TestModelMetrics:
         assert metrics.cache_misses == 0
     
     def test_inference_stats_update(self):
-        """Test inference statistics updates"""
-        metrics = ModelMetrics(model_name="inference-test")
+        """Test inference statistics updates"""        metrics = ModelMetrics(model_name="inference-test")
         
         # First inference
         metrics.update_inference_stats(0.5)
@@ -326,8 +303,7 @@ class TestModelMetrics:
         assert abs(metrics.average_inference_time - (1.0/3)) < 0.001
     
     def test_cache_stats_update(self):
-        """Test cache statistics updates"""
-        metrics = ModelMetrics(model_name="cache-test")
+        """Test cache statistics updates"""        metrics = ModelMetrics(model_name="cache-test")
         
         # Cache hits
         metrics.update_cache_stats(True)
@@ -350,8 +326,7 @@ class TestModelMetrics:
         assert metrics.cache_hit_rate == 0.6
     
     def test_cache_hit_rate_edge_cases(self):
-        """Test cache hit rate calculation edge cases"""
-        metrics = ModelMetrics(model_name="edge-test")
+        """Test cache hit rate calculation edge cases"""        metrics = ModelMetrics(model_name="edge-test")
         
         # No cache activity
         assert metrics.cache_hit_rate == 0.0
@@ -369,22 +344,18 @@ class TestModelMetrics:
 
 
 class TestModelCache:
-    """Test suite for ModelCache class"""
-    
+    """Test suite for ModelCache class"""    
     def setup_method(self):
-        """Setup model cache for testing"""
-        self.cache = ModelCache(max_size=5, ttl_seconds=2)
+        """Setup model cache for testing"""        self.cache = ModelCache(max_size=5, ttl_seconds=2)
     
     def test_cache_initialization(self):
-        """Test cache initialization"""
-        assert self.cache.max_size == 5
+        """Test cache initialization"""        assert self.cache.max_size == 5
         assert self.cache.ttl_seconds == 2
         assert isinstance(self.cache.cache, dict)
         assert len(self.cache.cache) == 0
     
     def test_cache_key_generation(self):
-        """Test cache key generation"""
-        input_data = "test input"
+        """Test cache key generation"""        input_data = "test input"
         config = {"model": "test", "param": "value"}
         
         key1 = self.cache._generate_key(input_data, config)
@@ -406,8 +377,7 @@ class TestModelCache:
         assert len(key1) > 0
     
     def test_cache_put_and_get(self):
-        """Test cache put and get operations"""
-        input_data = "test input"
+        """Test cache put and get operations"""        input_data = "test input"
         config = {"model": "test"}
         result = {"output": "test result"}
         
@@ -422,8 +392,7 @@ class TestModelCache:
         assert cached_result is result  # Should be same object
     
     def test_cache_ttl_expiration(self):
-        """Test cache TTL expiration"""
-        input_data = "ttl test"
+        """Test cache TTL expiration"""        input_data = "ttl test"
         config = {"model": "ttl"}
         result = {"output": "ttl result"}
         
@@ -441,8 +410,7 @@ class TestModelCache:
         assert cache.get(input_data, config) is None
     
     def test_cache_size_limit(self):
-        """Test cache size limit enforcement"""
-        # Fill cache to limit
+        """Test cache size limit enforcement"""        # Fill cache to limit
         for i in range(self.cache.max_size):
             self.cache.put(f"input_{i}", {"model": f"model_{i}"}, f"result_{i}")
         
@@ -455,8 +423,7 @@ class TestModelCache:
         assert len(self.cache.cache) == self.cache.max_size
     
     def test_cache_eviction_strategy(self):
-        """Test LRU cache eviction strategy"""
-        # Fill cache
+        """Test LRU cache eviction strategy"""        # Fill cache
         for i in range(self.cache.max_size):
             self.cache.put(f"input_{i}", {"model": f"model_{i}"}, f"result_{i}")
         
@@ -473,8 +440,7 @@ class TestModelCache:
         assert self.cache.get("new_input", {"model": "new"}) == "new_result"
     
     def test_cache_clear(self):
-        """Test cache clearing"""
-        # Add some items
+        """Test cache clearing"""        # Add some items
         for i in range(3):
             self.cache.put(f"input_{i}", {"model": f"model_{i}"}, f"result_{i}")
         
@@ -487,8 +453,7 @@ class TestModelCache:
         assert self.cache.get("input_0", {"model": "model_0"}) is None
     
     def test_cache_thread_safety(self):
-        """Test cache thread safety"""
-        results = []
+        """Test cache thread safety"""        results = []
         errors = []
         
         def cache_operations(thread_id):
@@ -529,11 +494,9 @@ class TestModelCache:
 
 
 class TestAIModel:
-    """Test suite for AIModel class"""
-    
+    """Test suite for AIModel class"""    
     def setup_method(self):
-        """Setup AI model for testing"""
-        self.config = ModelConfig(
+        """Setup AI model for testing"""        self.config = ModelConfig(
             name="test-model",
             model_type=AIModelType.TEXT_CLASSIFIER,
             model_path="/fake/path/model",
@@ -544,8 +507,7 @@ class TestAIModel:
         self.model = AIModel(self.config)
     
     def test_ai_model_initialization(self):
-        """Test AI model initialization"""
-        assert self.model.config == self.config
+        """Test AI model initialization"""        assert self.model.config == self.config
         assert self.model.status == ModelStatus.UNLOADED
         assert isinstance(self.model.metrics, ModelMetrics)
         assert self.model.metrics.model_name == "test-model"
@@ -555,8 +517,7 @@ class TestAIModel:
         assert self.model.pipeline is None
     
     def test_model_device_selection(self):
-        """Test model device selection logic"""
-        # CPU device
+        """Test model device selection logic"""        # CPU device
         cpu_config = ModelConfig("cpu-model", AIModelType.TRANSFORMER, "/path", DeviceType.CPU)
         cpu_model = AIModel(cpu_config)
         device = cpu_model._get_device()
@@ -571,8 +532,7 @@ class TestAIModel:
     @patch('backend.ai.core.ai_engine.PYTORCH_AVAILABLE', True)
     @patch('backend.ai.core.ai_engine.pipeline')
     def test_model_loading_success(self, mock_pipeline):
-        """Test successful model loading"""
-        # Mock pipeline creation
+        """Test successful model loading"""        # Mock pipeline creation
         mock_pipeline_instance = Mock()
         mock_pipeline.return_value = mock_pipeline_instance
         
@@ -587,8 +547,7 @@ class TestAIModel:
     @patch('backend.ai.core.ai_engine.PYTORCH_AVAILABLE', True)
     @patch('backend.ai.core.ai_engine.pipeline')
     def test_model_loading_failure(self, mock_pipeline):
-        """Test model loading failure"""
-        # Mock pipeline creation failure
+        """Test model loading failure"""        # Mock pipeline creation failure
         mock_pipeline.side_effect = Exception("Model loading failed")
         
         # Test loading
@@ -600,15 +559,13 @@ class TestAIModel:
     
     @patch('backend.ai.core.ai_engine.PYTORCH_AVAILABLE', False)
     def test_model_loading_no_pytorch(self):
-        """Test model loading when PyTorch is not available"""
-        success = self.model.load()
+        """Test model loading when PyTorch is not available"""        success = self.model.load()
         
         assert success is False
         assert self.model.status == ModelStatus.ERROR
     
     def test_model_unloading(self):
-        """Test model unloading"""
-        # Set up loaded state
+        """Test model unloading"""        # Set up loaded state
         self.model.pipeline = Mock()
         self.model.model = Mock()
         self.model.tokenizer = Mock()
@@ -625,8 +582,7 @@ class TestAIModel:
     @patch('backend.ai.core.ai_engine.PYTORCH_AVAILABLE', True)
     @patch('backend.ai.core.ai_engine.pipeline')
     def test_model_prediction_success(self, mock_pipeline):
-        """Test successful model prediction"""
-        # Setup mock pipeline
+        """Test successful model prediction"""        # Setup mock pipeline
         mock_pipeline_instance = Mock()
         mock_pipeline_instance.return_value = {"label": "positive", "score": 0.95}
         mock_pipeline.return_value = mock_pipeline_instance
@@ -645,8 +601,7 @@ class TestAIModel:
     @patch('backend.ai.core.ai_engine.PYTORCH_AVAILABLE', True)
     @patch('backend.ai.core.ai_engine.pipeline')
     def test_model_prediction_with_cache(self, mock_pipeline):
-        """Test model prediction with caching"""
-        # Setup mock pipeline
+        """Test model prediction with caching"""        # Setup mock pipeline
         mock_pipeline_instance = Mock()
         mock_pipeline_instance.return_value = {"result": "cached_test"}
         mock_pipeline.return_value = mock_pipeline_instance
@@ -671,16 +626,14 @@ class TestAIModel:
         assert mock_pipeline_instance.call_count == 1
     
     def test_model_prediction_not_ready(self):
-        """Test prediction when model is not ready"""
-        # Model is unloaded
+        """Test prediction when model is not ready"""        # Model is unloaded
         assert self.model.status == ModelStatus.UNLOADED
         
         with pytest.raises(ModelConnectionError):
             self.model.predict("test input")
     
     def test_model_idle_detection(self):
-        """Test model idle detection"""
-        # Initially not idle (just created)
+        """Test model idle detection"""        # Initially not idle (just created)
         assert not self.model.is_idle
         
         # Simulate old activity
@@ -691,8 +644,7 @@ class TestAIModel:
         assert self.model.is_idle
     
     def test_model_metrics_collection(self):
-        """Test model metrics collection"""
-        # Update some metrics
+        """Test model metrics collection"""        # Update some metrics
         self.model.metrics.update_inference_stats(0.1)
         self.model.metrics.update_inference_stats(0.2)
         self.model.metrics.update_cache_stats(True)
@@ -710,28 +662,23 @@ class TestAIModel:
 
 
 class TestAIEngineManager:
-    """Test suite for AIEngineManager class"""
-    
+    """Test suite for AIEngineManager class"""    
     def setup_method(self):
-        """Setup AI engine manager for testing"""
-        self.engine = AIEngineManager(max_concurrent_models=3)
+        """Setup AI engine manager for testing"""        self.engine = AIEngineManager(max_concurrent_models=3)
     
     def teardown_method(self):
-        """Cleanup after tests"""
-        # Clear all models
+        """Cleanup after tests"""        # Clear all models
         self.engine.models.clear()
     
     def test_engine_initialization(self):
-        """Test AI engine manager initialization"""
-        assert self.engine.max_concurrent_models == 3
+        """Test AI engine manager initialization"""        assert self.engine.max_concurrent_models == 3
         assert isinstance(self.engine.models, dict)
         assert len(self.engine.models) == 0
         assert hasattr(self.engine, 'model_pool')
         assert hasattr(self.engine, '_cleanup_thread')
     
     def test_register_model(self):
-        """Test model registration"""
-        config = ModelConfig(
+        """Test model registration"""        config = ModelConfig(
             name="registered-model",
             model_type=AIModelType.TEXT_CLASSIFIER,
             model_path="/test/path"
@@ -744,8 +691,7 @@ class TestAIEngineManager:
         assert self.engine.models["registered-model"].config == config
     
     def test_register_duplicate_model(self):
-        """Test registering duplicate model"""
-        config = ModelConfig(
+        """Test registering duplicate model"""        config = ModelConfig(
             name="duplicate-model",
             model_type=AIModelType.TEXT_CLASSIFIER,
             model_path="/test/path"
@@ -766,8 +712,7 @@ class TestAIEngineManager:
         assert self.engine.models["duplicate-model"].config.model_type == AIModelType.CNN
     
     def test_unregister_model(self):
-        """Test model unregistration"""
-        config = ModelConfig(
+        """Test model unregistration"""        config = ModelConfig(
             name="unregister-test",
             model_type=AIModelType.TRANSFORMER,
             model_path="/test/path"
@@ -788,8 +733,7 @@ class TestAIEngineManager:
     @patch('backend.ai.core.ai_engine.PYTORCH_AVAILABLE', True)
     @patch('backend.ai.core.ai_engine.pipeline')
     def test_load_model(self, mock_pipeline):
-        """Test model loading through engine"""
-        # Setup mock
+        """Test model loading through engine"""        # Setup mock
         mock_pipeline.return_value = Mock()
         
         # Register model
@@ -807,15 +751,13 @@ class TestAIEngineManager:
         assert self.engine.models["load-test"].status == ModelStatus.READY
     
     def test_load_unregistered_model(self):
-        """Test loading unregistered model"""
-        success = self.engine.load_model("unregistered-model")
+        """Test loading unregistered model"""        success = self.engine.load_model("unregistered-model")
         assert success is False
     
     @patch('backend.ai.core.ai_engine.PYTORCH_AVAILABLE', True)
     @patch('backend.ai.core.ai_engine.pipeline')
     def test_unload_model(self, mock_pipeline):
-        """Test model unloading through engine"""
-        # Setup and load model
+        """Test model unloading through engine"""        # Setup and load model
         mock_pipeline.return_value = Mock()
         config = ModelConfig(
             name="unload-test",
@@ -834,8 +776,7 @@ class TestAIEngineManager:
     @patch('backend.ai.core.ai_engine.PYTORCH_AVAILABLE', True)
     @patch('backend.ai.core.ai_engine.pipeline')
     def test_predict_through_engine(self, mock_pipeline):
-        """Test prediction through engine"""
-        # Setup mock
+        """Test prediction through engine"""        # Setup mock
         mock_pipeline_instance = Mock()
         mock_pipeline_instance.return_value = {"prediction": "success"}
         mock_pipeline.return_value = mock_pipeline_instance
@@ -855,16 +796,14 @@ class TestAIEngineManager:
         assert result == {"prediction": "success"}
     
     def test_predict_unregistered_model(self):
-        """Test prediction with unregistered model"""
-        with pytest.raises(ModelConnectionError):
+        """Test prediction with unregistered model"""        with pytest.raises(ModelConnectionError):
             self.engine.predict("unregistered", "test input")
     
     @pytest.mark.asyncio
     @patch('backend.ai.core.ai_engine.PYTORCH_AVAILABLE', True)
     @patch('backend.ai.core.ai_engine.pipeline')
     async def test_async_predict(self, mock_pipeline):
-        """Test async prediction"""
-        # Setup mock
+        """Test async prediction"""        # Setup mock
         mock_pipeline_instance = Mock()
         mock_pipeline_instance.return_value = {"async": "result"}
         mock_pipeline.return_value = mock_pipeline_instance
@@ -884,8 +823,7 @@ class TestAIEngineManager:
         assert result == {"async": "result"}
     
     def test_list_models(self):
-        """Test listing all models"""
-        # Register multiple models
+        """Test listing all models"""        # Register multiple models
         configs = [
             ModelConfig(f"model-{i}", AIModelType.TEXT_CLASSIFIER, f"/path/{i}")
             for i in range(3)
@@ -903,8 +841,7 @@ class TestAIEngineManager:
     @patch('backend.ai.core.ai_engine.PYTORCH_AVAILABLE', True)
     @patch('backend.ai.core.ai_engine.pipeline')
     def test_get_model_metrics(self, mock_pipeline):
-        """Test getting model metrics"""
-        # Setup mock
+        """Test getting model metrics"""        # Setup mock
         mock_pipeline.return_value = Mock()
         
         # Register and use model
@@ -925,15 +862,13 @@ class TestAIEngineManager:
         assert "load_time" in metrics
     
     def test_get_metrics_unregistered_model(self):
-        """Test getting metrics for unregistered model"""
-        with pytest.raises(ModelConnectionError):
+        """Test getting metrics for unregistered model"""        with pytest.raises(ModelConnectionError):
             self.engine.get_model_metrics("unregistered")
     
     @patch('backend.ai.core.ai_engine.PYTORCH_AVAILABLE', True)
     @patch('backend.ai.core.ai_engine.pipeline')
     def test_engine_status(self, mock_pipeline):
-        """Test getting engine status"""
-        # Setup mock
+        """Test getting engine status"""        # Setup mock
         mock_pipeline.return_value = Mock()
         
         # Register models
@@ -961,8 +896,7 @@ class TestAIEngineManager:
     @patch('backend.ai.core.ai_engine.PYTORCH_AVAILABLE', True)
     @patch('backend.ai.core.ai_engine.pipeline')
     def test_memory_optimization(self, mock_pipeline):
-        """Test memory optimization"""
-        # Setup mock
+        """Test memory optimization"""        # Setup mock
         mock_pipeline.return_value = Mock()
         
         # Register and load multiple models
@@ -988,8 +922,7 @@ class TestAIEngineManager:
         assert result["optimization_time"] >= 0
     
     def test_health_check_healthy(self):
-        """Test health check with healthy engine"""
-        # Register a model
+        """Test health check with healthy engine"""        # Register a model
         config = ModelConfig(
             "healthy-model",
             AIModelType.TEXT_CLASSIFIER,
@@ -1005,8 +938,7 @@ class TestAIEngineManager:
         assert "timestamp" in health
     
     def test_health_check_unhealthy(self):
-        """Test health check with unhealthy engine"""
-        # Create model with error status
+        """Test health check with unhealthy engine"""        # Create model with error status
         config = ModelConfig(
             "error-model",
             AIModelType.TEXT_CLASSIFIER,
@@ -1021,8 +953,7 @@ class TestAIEngineManager:
         assert len(health["issues"]) > 0
     
     def test_concurrent_model_operations(self):
-        """Test concurrent model operations"""
-        results = []
+        """Test concurrent model operations"""        results = []
         errors = []
         
         def register_and_operate(thread_id):
@@ -1068,11 +999,9 @@ class TestAIEngineManager:
 
 
 class TestModelContext:
-    """Test suite for AI model context manager"""
-    
+    """Test suite for AI model context manager"""    
     def setup_method(self):
-        """Setup for context manager tests"""
-        self.config = ModelConfig(
+        """Setup for context manager tests"""        self.config = ModelConfig(
             "context-test",
             AIModelType.TEXT_CLASSIFIER,
             "/test/path"
@@ -1080,8 +1009,7 @@ class TestModelContext:
         ai_engine.register_model(self.config)
     
     def teardown_method(self):
-        """Cleanup after context tests"""
-        try:
+        """Cleanup after context tests"""        try:
             ai_engine.unregister_model("context-test")
         except:
             pass
@@ -1089,8 +1017,7 @@ class TestModelContext:
     @patch('backend.ai.core.ai_engine.PYTORCH_AVAILABLE', True)
     @patch('backend.ai.core.ai_engine.pipeline')
     def test_model_context_manager(self, mock_pipeline):
-        """Test AI model context manager"""
-        mock_pipeline.return_value = Mock()
+        """Test AI model context manager"""        mock_pipeline.return_value = Mock()
         
         with ai_model_context("context-test") as model:
             assert isinstance(model, AIModel)
@@ -1100,8 +1027,7 @@ class TestModelContext:
     @patch('backend.ai.core.ai_engine.PYTORCH_AVAILABLE', True)
     @patch('backend.ai.core.ai_engine.pipeline')
     def test_model_context_auto_unload(self, mock_pipeline):
-        """Test model context with auto unload"""
-        mock_pipeline.return_value = Mock()
+        """Test model context with auto unload"""        mock_pipeline.return_value = Mock()
         
         with ai_model_context("context-test", auto_unload=True) as model:
             assert model.status == ModelStatus.READY
@@ -1110,8 +1036,7 @@ class TestModelContext:
         assert ai_engine.models["context-test"].status == ModelStatus.UNLOADED
     
     def test_model_context_error_handling(self):
-        """Test model context error handling"""
-        # Model loading will fail (no mocking)
+        """Test model context error handling"""        # Model loading will fail (no mocking)
         try:
             with ai_model_context("context-test") as model:
                 # Should not reach here due to loading failure
@@ -1122,11 +1047,9 @@ class TestModelContext:
 
 
 class TestInferenceDecorator:
-    """Test suite for AI inference decorator"""
-    
+    """Test suite for AI inference decorator"""    
     def setup_method(self):
-        """Setup for decorator tests"""
-        self.config = ModelConfig(
+        """Setup for decorator tests"""        self.config = ModelConfig(
             "decorator-test",
             AIModelType.TEXT_CLASSIFIER,
             "/test/path"
@@ -1134,8 +1057,7 @@ class TestInferenceDecorator:
         ai_engine.register_model(self.config)
     
     def teardown_method(self):
-        """Cleanup after decorator tests"""
-        try:
+        """Cleanup after decorator tests"""        try:
             ai_engine.unregister_model("decorator-test")
         except:
             pass
@@ -1143,8 +1065,7 @@ class TestInferenceDecorator:
     @patch('backend.ai.core.ai_engine.PYTORCH_AVAILABLE', True)
     @patch('backend.ai.core.ai_engine.pipeline')
     def test_inference_decorator_sync(self, mock_pipeline):
-        """Test inference decorator for sync functions"""
-        mock_pipeline_instance = Mock()
+        """Test inference decorator for sync functions"""        mock_pipeline_instance = Mock()
         mock_pipeline_instance.return_value = {"decorated": "result"}
         mock_pipeline.return_value = mock_pipeline_instance
         
@@ -1162,8 +1083,7 @@ class TestInferenceDecorator:
     @patch('backend.ai.core.ai_engine.pipeline')
     @pytest.mark.asyncio
     async def test_inference_decorator_async(self, mock_pipeline):
-        """Test inference decorator for async functions"""
-        mock_pipeline_instance = Mock()
+        """Test inference decorator for async functions"""        mock_pipeline_instance = Mock()
         mock_pipeline_instance.return_value = {"async_decorated": "result"}
         mock_pipeline.return_value = mock_pipeline_instance
         
@@ -1178,8 +1098,7 @@ class TestInferenceDecorator:
         assert result["ai_result"] == {"async_decorated": "result"}
     
     def test_inference_decorator_missing_input(self):
-        """Test inference decorator with missing input key"""
-        @ai_inference_decorator("decorator-test", input_key="missing_key")
+        """Test inference decorator with missing input key"""        @ai_inference_decorator("decorator-test", input_key="missing_key")
         def failing_function(**kwargs):
             return "should not reach here"
         
@@ -1188,18 +1107,15 @@ class TestInferenceDecorator:
 
 
 class TestAIEngineIntegration:
-    """Integration tests for AI engine with real-world scenarios"""
-    
+    """Integration tests for AI engine with real-world scenarios"""    
     def setup_method(self):
-        """Setup integration testing"""
-        self.engine = AIEngineManager()
+        """Setup integration testing"""        self.engine = AIEngineManager()
         
         # Register models for different creator types
         self.register_creator_models()
     
     def register_creator_models(self):
-        """Register models for different creator types"""
-        # Musician models
+        """Register models for different creator types"""        # Musician models
         self.engine.register_model(ModelConfig(
             "audio-content-classifier",
             AIModelType.AUDIO_CLASSIFIER,
@@ -1252,8 +1168,7 @@ class TestAIEngineIntegration:
         ))
     
     def test_creator_workflow_models_registered(self):
-        """Test that all creator workflow models are properly registered"""
-        models = self.engine.list_models()
+        """Test that all creator workflow models are properly registered"""        models = self.engine.list_models()
         
         # Musician models
         assert "audio-content-classifier" in models
@@ -1273,8 +1188,7 @@ class TestAIEngineIntegration:
             assert info["status"] == "unloaded"
     
     def test_content_processing_pipeline_simulation(self):
-        """Test simulation of complete content processing pipeline"""
-        # Simulate business logic: User Upload → AI Protection → SEO → Collaboration → Distribution
+        """Test simulation of complete content processing pipeline"""        # Simulate business logic: User Upload → AI Protection → SEO → Collaboration → Distribution
         
         pipeline_steps = [
             "text-content-classifier",  # Content safety classification
@@ -1296,8 +1210,7 @@ class TestAIEngineIntegration:
     @patch('backend.ai.core.ai_engine.PYTORCH_AVAILABLE', True)
     @patch('backend.ai.core.ai_engine.pipeline')
     def test_multi_model_concurrent_loading(self, mock_pipeline):
-        """Test concurrent loading of multiple models"""
-        mock_pipeline.return_value = Mock()
+        """Test concurrent loading of multiple models"""        mock_pipeline.return_value = Mock()
         
         model_names = [
             "text-content-classifier",
@@ -1322,8 +1235,7 @@ class TestAIEngineIntegration:
             assert self.engine.models[name].status == ModelStatus.READY
     
     def test_resource_management_under_load(self):
-        """Test resource management under high load"""
-        # Register more models than the concurrent limit
+        """Test resource management under high load"""        # Register more models than the concurrent limit
         extra_models = []
         for i in range(5):
             model_name = f"extra-model-{i}"
@@ -1345,8 +1257,7 @@ class TestAIEngineIntegration:
         assert optimization_result["optimization_time"] >= 0
     
     def test_engine_health_monitoring(self):
-        """Test comprehensive engine health monitoring"""
-        health = self.engine.health_check()
+        """Test comprehensive engine health monitoring"""        health = self.engine.health_check()
         
         # Should have basic health structure
         assert "status" in health
@@ -1364,8 +1275,7 @@ class TestAIEngineIntegration:
         assert "system_info" in status
     
     def test_model_configuration_validation(self):
-        """Test model configuration validation for different creator needs"""
-        # Test audio model configuration
+        """Test model configuration validation for different creator needs"""        # Test audio model configuration
         audio_model = self.engine.models["audio-content-classifier"]
         assert audio_model.config.model_type == AIModelType.AUDIO_CLASSIFIER
         assert audio_model.config.preprocessing_config["sample_rate"] == 44100
@@ -1387,16 +1297,13 @@ class TestAIEngineIntegration:
 
 
 class TestGlobalAIEngine:
-    """Test suite for global AI engine instance"""
-    
+    """Test suite for global AI engine instance"""    
     def test_global_engine_instance(self):
-        """Test global AI engine instance"""
-        assert ai_engine is not None
+        """Test global AI engine instance"""        assert ai_engine is not None
         assert isinstance(ai_engine, AIEngineManager)
     
     def test_global_engine_functionality(self):
-        """Test global engine functionality"""
-        # Register a test model
+        """Test global engine functionality"""        # Register a test model
         config = ModelConfig(
             "global-test",
             AIModelType.TEXT_CLASSIFIER,
@@ -1412,8 +1319,7 @@ class TestGlobalAIEngine:
         ai_engine.unregister_model("global-test")
     
     def test_global_engine_persistence(self):
-        """Test global engine state persistence"""
-        # Register model
+        """Test global engine state persistence"""        # Register model
         config = ModelConfig(
             "persistence-test",
             AIModelType.TRANSFORMER,

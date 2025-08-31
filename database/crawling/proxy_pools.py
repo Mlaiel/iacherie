@@ -1,5 +1,4 @@
-"""
-Enterprise Proxy Pool Manager
+"""Enterprise Proxy Pool Manager
 
 Advanced proxy management and rotation system for distributed
 crawling operations with health monitoring and failover.
@@ -11,9 +10,7 @@ Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security Expert
 Copyright: All rights reserved
-"""
-
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, desc, asc, func, text
@@ -37,8 +34,7 @@ from ..core.exceptions import (
 
 
 class ProxyHealthStatus(Enum):
-    """Proxy health status levels."""
-    EXCELLENT = 'excellent'     # < 1s response, 99%+ success
+    """Proxy health status levels."""    EXCELLENT = 'excellent'     # < 1s response, 99%+ success
     GOOD = 'good'              # < 2s response, 95%+ success
     FAIR = 'fair'              # < 5s response, 85%+ success
     POOR = 'poor'              # < 10s response, 70%+ success
@@ -46,8 +42,7 @@ class ProxyHealthStatus(Enum):
 
 
 class ProxyPoolManager(DatabaseManager):
-    """
-    Enterprise-grade proxy pool manager for distributed crawling.
+    """    Enterprise-grade proxy pool manager for distributed crawling.
     
     Handles:
     - Proxy pool health monitoring
@@ -55,16 +50,13 @@ class ProxyPoolManager(DatabaseManager):
     - Geographic distribution
     - Performance optimization
     - Automatic failover and recovery
-    """
-    
+    """    
     def __init__(self, db_session: Session):
-        """
-        Initialize proxy pool manager.
+        """        Initialize proxy pool manager.
         
         Args:
             db_session: SQLAlchemy database session
-        """
-        super().__init__(db_session)
+        """        super().__init__(db_session)
         self.table = ProxyPool
     
     async def assign_proxy(
@@ -74,8 +66,7 @@ class ProxyPoolManager(DatabaseManager):
         preferred_country: Optional[str] = None,
         proxy_type: str = ProxyType.HTTP.value
     ) -> Dict[str, Any]:
-        """
-        Assign optimal proxy for crawling session.
+        """        Assign optimal proxy for crawling session.
         
         Args:
             platform: Target platform for crawling
@@ -88,8 +79,7 @@ class ProxyPoolManager(DatabaseManager):
             
         Raises:
             ProxyPoolExhaustedError: If no suitable proxies available
-        """
-        try:
+        """        try:
             # Find best available proxy
             proxy = await self._find_optimal_proxy(
                 platform, preferred_country, proxy_type
@@ -130,8 +120,7 @@ class ProxyPoolManager(DatabaseManager):
         preferred_country: Optional[str],
         proxy_type: str
     ) -> Optional[Dict[str, Any]]:
-        """
-        Find the optimal proxy based on performance and availability.
+        """        Find the optimal proxy based on performance and availability.
         
         Args:
             platform: Target platform
@@ -140,8 +129,7 @@ class ProxyPoolManager(DatabaseManager):
             
         Returns:
             Dict containing proxy details or None if not found
-        """
-        try:
+        """        try:
             # Build query for available proxies
             query_conditions = [
                 "status = :active_status",
@@ -169,8 +157,7 @@ class ProxyPoolManager(DatabaseManager):
                 # Prefer mobile proxies for TikTok
                 query_conditions.append("(proxy_type = 'mobile' OR country IN ('US', 'UK', 'CA'))")
             
-            query = f"""
-            SELECT 
+            query = f"""            SELECT 
                 proxy_id, host, port, proxy_type, country,
                 performance_score, current_connections, max_connections,
                 success_rate, avg_response_time
@@ -181,8 +168,7 @@ class ProxyPoolManager(DatabaseManager):
                 current_connections ASC,
                 avg_response_time ASC
             LIMIT 1
-            """
-            
+            """            
             result = await self.db.execute(text(query), query_params)
             proxy_data = result.first()
             
@@ -211,8 +197,7 @@ class ProxyPoolManager(DatabaseManager):
         user_id: str,
         platform: str
     ) -> str:
-        """
-        Create proxy assignment record.
+        """        Create proxy assignment record.
         
         Args:
             proxy_id: Proxy identifier
@@ -221,8 +206,7 @@ class ProxyPoolManager(DatabaseManager):
             
         Returns:
             Assignment identifier
-        """
-        try:
+        """        try:
             assignment_id = str(uuid4())
             
             assignment_data = {
@@ -236,8 +220,7 @@ class ProxyPoolManager(DatabaseManager):
             
             # Insert assignment record (assuming we have a proxy_assignments table)
             await self.db.execute(
-                text("""
-                INSERT INTO proxy_assignments 
+                text("""                INSERT INTO proxy_assignments 
                 (assignment_id, proxy_id, user_id, platform, assigned_at, status)
                 VALUES (:assignment_id, :proxy_id, :user_id, :platform, :assigned_at, :status)
                 """),
@@ -252,16 +235,13 @@ class ProxyPoolManager(DatabaseManager):
             raise DatabaseError(f"Failed to create proxy assignment: {str(e)}")
     
     async def _update_proxy_usage(self, proxy_id: str) -> None:
-        """
-        Update proxy usage statistics.
+        """        Update proxy usage statistics.
         
         Args:
             proxy_id: Proxy identifier
-        """
-        try:
+        """        try:
             await self.db.execute(
-                text("""
-                UPDATE proxy_pools 
+                text("""                UPDATE proxy_pools 
                 SET current_connections = current_connections + 1,
                     total_requests = total_requests + 1,
                     last_used_at = :now,
@@ -281,20 +261,17 @@ class ProxyPoolManager(DatabaseManager):
             raise DatabaseError(f"Failed to update proxy usage: {str(e)}")
     
     async def release_proxy(self, proxy_id: str) -> bool:
-        """
-        Release proxy from current assignment.
+        """        Release proxy from current assignment.
         
         Args:
             proxy_id: Proxy identifier
             
         Returns:
             bool indicating success
-        """
-        try:
+        """        try:
             # Decrement current connections
             result = await self.db.execute(
-                text("""
-                UPDATE proxy_pools 
+                text("""                UPDATE proxy_pools 
                 SET current_connections = GREATEST(0, current_connections - 1),
                     updated_at = :now
                 WHERE proxy_id = :proxy_id
@@ -307,8 +284,7 @@ class ProxyPoolManager(DatabaseManager):
             
             # Update assignment status
             await self.db.execute(
-                text("""
-                UPDATE proxy_assignments 
+                text("""                UPDATE proxy_assignments 
                 SET status = 'released',
                     released_at = :now
                 WHERE proxy_id = :proxy_id 
@@ -338,8 +314,7 @@ class ProxyPoolManager(DatabaseManager):
         max_connections: int = 10,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Add new proxy to the pool.
+        """        Add new proxy to the pool.
         
         Args:
             host: Proxy host address
@@ -353,8 +328,7 @@ class ProxyPoolManager(DatabaseManager):
             
         Returns:
             Proxy identifier
-        """
-        try:
+        """        try:
             proxy_id = str(uuid4())
             
             proxy_data = {
@@ -395,16 +369,14 @@ class ProxyPoolManager(DatabaseManager):
             raise DatabaseError(f"Failed to add proxy to pool: {str(e)}")
     
     async def perform_proxy_health_check(self, proxy_id: str) -> Dict[str, Any]:
-        """
-        Perform comprehensive health check on proxy.
+        """        Perform comprehensive health check on proxy.
         
         Args:
             proxy_id: Proxy identifier
             
         Returns:
             Dict containing health check results
-        """
-        try:
+        """        try:
             # Get proxy details
             proxy_data = await self.get_proxy_details(proxy_id)
             if not proxy_data:
@@ -437,16 +409,14 @@ class ProxyPoolManager(DatabaseManager):
         self,
         proxy_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Execute actual proxy health check tests.
+        """        Execute actual proxy health check tests.
         
         Args:
             proxy_data: Proxy configuration data
             
         Returns:
             Dict containing health check results
-        """
-        # This is a simplified implementation
+        """        # This is a simplified implementation
         # In production, you would actually test the proxy
         import random
         
@@ -477,16 +447,14 @@ class ProxyPoolManager(DatabaseManager):
         self,
         health_result: Dict[str, Any]
     ) -> float:
-        """
-        Calculate overall performance score for proxy.
+        """        Calculate overall performance score for proxy.
         
         Args:
             health_result: Health check results
             
         Returns:
             Performance score (0-100)
-        """
-        response_time = health_result['response_time']
+        """        response_time = health_result['response_time']
         success_rate = health_result['success_rate']
         
         # Weight factors
@@ -504,15 +472,13 @@ class ProxyPoolManager(DatabaseManager):
         health_result: Dict[str, Any],
         performance_score: float
     ) -> None:
-        """
-        Update proxy with health check results.
+        """        Update proxy with health check results.
         
         Args:
             proxy_id: Proxy identifier
             health_result: Health check results
             performance_score: Calculated performance score
-        """
-        try:
+        """        try:
             # Determine new status based on health
             if health_result['status'] in [ProxyHealthStatus.EXCELLENT.value, ProxyHealthStatus.GOOD.value]:
                 new_status = ProxyStatus.ACTIVE.value
@@ -522,8 +488,7 @@ class ProxyPoolManager(DatabaseManager):
                 new_status = ProxyStatus.DEGRADED.value
             
             await self.db.execute(
-                text("""
-                UPDATE proxy_pools 
+                text("""                UPDATE proxy_pools 
                 SET status = :status,
                     performance_score = :performance_score,
                     success_rate = :success_rate,
@@ -549,17 +514,14 @@ class ProxyPoolManager(DatabaseManager):
             raise DatabaseError(f"Failed to update proxy health: {str(e)}")
     
     async def _mark_proxy_failed(self, proxy_id: str, error_message: str) -> None:
-        """
-        Mark proxy as failed with error message.
+        """        Mark proxy as failed with error message.
         
         Args:
             proxy_id: Proxy identifier
             error_message: Error description
-        """
-        try:
+        """        try:
             await self.db.execute(
-                text("""
-                UPDATE proxy_pools 
+                text("""                UPDATE proxy_pools 
                 SET status = :failed_status,
                     failed_requests = failed_requests + 1,
                     last_error = :error_message,
@@ -583,19 +545,16 @@ class ProxyPoolManager(DatabaseManager):
             print(f"Failed to mark proxy as failed: {str(e)}")
     
     async def get_proxy_details(self, proxy_id: str) -> Optional[Dict[str, Any]]:
-        """
-        Get detailed proxy information.
+        """        Get detailed proxy information.
         
         Args:
             proxy_id: Proxy identifier
             
         Returns:
             Dict containing proxy details or None if not found
-        """
-        try:
+        """        try:
             result = await self.db.execute(
-                text("""
-                SELECT * FROM proxy_pools WHERE proxy_id = :proxy_id
+                text("""                SELECT * FROM proxy_pools WHERE proxy_id = :proxy_id
                 """),
                 {'proxy_id': proxy_id}
             )
@@ -629,17 +588,14 @@ class ProxyPoolManager(DatabaseManager):
             raise DatabaseError(f"Failed to get proxy details: {str(e)}")
     
     async def get_pool_statistics(self) -> Dict[str, Any]:
-        """
-        Get comprehensive proxy pool statistics.
+        """        Get comprehensive proxy pool statistics.
         
         Returns:
             Dict containing pool statistics
-        """
-        try:
+        """        try:
             # Get status breakdown
             status_stats = await self.db.execute(
-                text("""
-                SELECT status, COUNT(*) as count
+                text("""                SELECT status, COUNT(*) as count
                 FROM proxy_pools
                 GROUP BY status
                 """)
@@ -647,8 +603,7 @@ class ProxyPoolManager(DatabaseManager):
             
             # Get country breakdown
             country_stats = await self.db.execute(
-                text("""
-                SELECT country, COUNT(*) as count,
+                text("""                SELECT country, COUNT(*) as count,
                        AVG(performance_score) as avg_performance
                 FROM proxy_pools
                 WHERE status = :active_status
@@ -660,8 +615,7 @@ class ProxyPoolManager(DatabaseManager):
             
             # Get performance metrics
             performance_stats = await self.db.execute(
-                text("""
-                SELECT 
+                text("""                SELECT 
                     COUNT(*) as total_proxies,
                     COUNT(CASE WHEN status = :active_status THEN 1 END) as active_proxies,
                     AVG(performance_score) as avg_performance_score,
@@ -703,13 +657,11 @@ class ProxyPoolManager(DatabaseManager):
             raise DatabaseError(f"Failed to get pool statistics: {str(e)}")
     
     async def run_maintenance_cycle(self) -> Dict[str, Any]:
-        """
-        Run comprehensive maintenance cycle for proxy pool.
+        """        Run comprehensive maintenance cycle for proxy pool.
         
         Returns:
             Dict containing maintenance results
-        """
-        try:
+        """        try:
             maintenance_results = {
                 'health_checks_performed': 0,
                 'proxies_activated': 0,
@@ -720,8 +672,7 @@ class ProxyPoolManager(DatabaseManager):
             
             # Get all proxies for health checking
             all_proxies = await self.db.execute(
-                text("""
-                SELECT proxy_id FROM proxy_pools
+                text("""                SELECT proxy_id FROM proxy_pools
                 WHERE status != :removed_status
                 ORDER BY last_health_check ASC NULLS FIRST
                 """),
@@ -754,13 +705,11 @@ class ProxyPoolManager(DatabaseManager):
             raise DatabaseError(f"Maintenance cycle failed: {str(e)}")
     
     async def _cleanup_old_assignments(self) -> None:
-        """Clean up old proxy assignments."""
-        try:
+        """Clean up old proxy assignments."""        try:
             cutoff_time = datetime.utcnow() - timedelta(hours=24)
             
             await self.db.execute(
-                text("""
-                DELETE FROM proxy_assignments 
+                text("""                DELETE FROM proxy_assignments 
                 WHERE status = 'released' 
                   AND released_at < :cutoff_time
                 """),
@@ -774,13 +723,11 @@ class ProxyPoolManager(DatabaseManager):
             raise DatabaseError(f"Failed to cleanup old assignments: {str(e)}")
     
     async def health_check(self) -> Dict[str, Any]:
-        """
-        Perform health check of proxy pool system.
+        """        Perform health check of proxy pool system.
         
         Returns:
             Dict containing health status
-        """
-        try:
+        """        try:
             # Get active proxy count
             active_proxies = await self.db.query(func.count(ProxyPool.proxy_id)).filter(
                 ProxyPool.status == ProxyStatus.ACTIVE.value

@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Comprehensive Infrastructure Security Audit
+"""Comprehensive Infrastructure Security Audit
 ==========================================
 
 Complete infrastructure security audit addressing:
@@ -10,9 +9,7 @@ This script performs a comprehensive security audit of the entire
 infrastructure including configuration, dependencies, and runtime security.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-
-import os
+"""import os
 import sys
 import json
 import hashlib
@@ -25,8 +22,7 @@ from typing import Dict, List, Any, Tuple
 
 
 class InfrastructureSecurityAuditor:
-    """Comprehensive infrastructure security auditor"""
-    
+    """Comprehensive infrastructure security auditor"""    
     def __init__(self):
         self.project_root = Path(__file__).parent
         self.audit_results = {}
@@ -38,8 +34,7 @@ class InfrastructureSecurityAuditor:
         self.critical_issues = []
         
     def run_complete_audit(self) -> Dict[str, Any]:
-        """Run complete infrastructure security audit"""
-        print("🛡️  STARTING COMPREHENSIVE INFRASTRUCTURE SECURITY AUDIT")
+        """Run complete infrastructure security audit"""        print("🛡️  STARTING COMPREHENSIVE INFRASTRUCTURE SECURITY AUDIT")
         print("=" * 80)
         print("Addressing requirement: 'Security audit complet infrastructure'")
         print("=" * 80)
@@ -63,8 +58,7 @@ class InfrastructureSecurityAuditor:
         return self._generate_audit_report(audit_duration)
     
     def _audit_file_permissions(self):
-        """Audit file system permissions"""
-        print("\\n🔒 Auditing File System Permissions...")
+        """Audit file system permissions"""        print("\\n🔒 Auditing File System Permissions...")
         
         audit_results = {
             "category": "File Permissions",
@@ -93,8 +87,7 @@ class InfrastructureSecurityAuditor:
         print(f"   ✅ File permissions audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
     
     def _check_file_permissions(self, path: Path, audit_results: Dict):
-        """Check permissions for a specific file/directory"""
-        try:
+        """Check permissions for a specific file/directory"""        try:
             stat = path.stat()
             mode = oct(stat.st_mode)[-3:]
             
@@ -135,8 +128,7 @@ class InfrastructureSecurityAuditor:
             self.failed_checks += 1
     
     def _audit_configuration_security(self):
-        """Audit configuration security"""
-        print("\\n⚙️  Auditing Configuration Security...")
+        """Audit configuration security"""        print("\\n⚙️  Auditing Configuration Security...")
         
         audit_results = {
             "category": "Configuration Security",
@@ -158,8 +150,7 @@ class InfrastructureSecurityAuditor:
         print(f"   ✅ Configuration security audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
     
     def _check_environment_config(self, audit_results: Dict):
-        """Check environment configuration security"""
-        # Check for debug mode in environment
+        """Check environment configuration security"""        # Check for debug mode in environment
         debug_vars = ["DEBUG", "FLASK_DEBUG", "DJANGO_DEBUG"]
         
         for var in debug_vars:
@@ -186,8 +177,7 @@ class InfrastructureSecurityAuditor:
             audit_results["checks"].append(check_result)
     
     def _check_docker_config(self, audit_results: Dict):
-        """Check Docker configuration security"""
-        docker_files = ["Dockerfile", "Dockerfile.production", "docker-compose.yml"]
+        """Check Docker configuration security"""        docker_files = ["Dockerfile", "Dockerfile.production", "docker-compose.yml"]
         
         for docker_file in docker_files:
             docker_path = self.project_root / docker_file
@@ -231,8 +221,7 @@ class InfrastructureSecurityAuditor:
                 audit_results["checks"].append(check_result)
     
     def _check_python_config(self, audit_results: Dict):
-        """Check Python configuration security"""
-        requirements_files = ["requirements.txt", "requirements-production.txt"]
+        """Check Python configuration security"""        requirements_files = ["requirements.txt", "requirements-production.txt"]
         
         for req_file in requirements_files:
             req_path = self.project_root / req_file
@@ -270,8 +259,7 @@ class InfrastructureSecurityAuditor:
                 audit_results["checks"].append(check_result)
     
     def _audit_dependency_security(self):
-        """Audit dependency security"""
-        print("\\n📦 Auditing Dependency Security...")
+        """Audit dependency security"""        print("\\n📦 Auditing Dependency Security...")
         
         audit_results = {
             "category": "Dependency Security",
@@ -290,8 +278,7 @@ class InfrastructureSecurityAuditor:
         print(f"   ✅ Dependency security audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
     
     def _check_vulnerable_dependencies(self, audit_results: Dict):
-        """Check for known vulnerable dependencies"""
-        # Known vulnerable packages (example)
+        """Check for known vulnerable dependencies"""        # Known vulnerable packages (example)
         known_vulnerable = {
             "django": ["<2.2.28", "<3.2.16", "<4.0.8"],
             "flask": ["<2.0.3"],
@@ -339,8 +326,7 @@ class InfrastructureSecurityAuditor:
                     audit_results["checks"].append(check_result)
     
     def _check_dependency_integrity(self, audit_results: Dict):
-        """Check dependency integrity"""
-        audit_results["total"] += 1
+        """Check dependency integrity"""        audit_results["total"] += 1
         self.total_checks += 1
         
         # Check if requirements.txt exists and is readable
@@ -360,8 +346,7 @@ class InfrastructureSecurityAuditor:
         audit_results["checks"].append(check_result)
     
     def _audit_code_security(self):
-        """Audit code security"""
-        print("\\n💻 Auditing Code Security...")
+        """Audit code security"""        print("\\n💻 Auditing Code Security...")
         
         audit_results = {
             "category": "Code Security",
@@ -383,8 +368,7 @@ class InfrastructureSecurityAuditor:
         print(f"   ✅ Code security audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
     
     def _check_hardcoded_secrets(self, audit_results: Dict):
-        """Check for hardcoded secrets in code"""
-        secret_patterns = [
+        """Check for hardcoded secrets in code"""        secret_patterns = [
             r'password\s*=\s*["\'][^"\']+["\']',
             r'api_key\s*=\s*["\'][^"\']+["\']',
             r'secret\s*=\s*["\'][^"\']+["\']',
@@ -438,8 +422,7 @@ class InfrastructureSecurityAuditor:
                 audit_results["score"] += 1
     
     def _check_sql_injection_patterns(self, audit_results: Dict):
-        """Check for SQL injection vulnerabilities"""
-        sql_patterns = [
+        """Check for SQL injection vulnerabilities"""        sql_patterns = [
             r'SELECT\s+.*\s+FROM\s+.*\s*\+\s*',
             r'INSERT\s+.*\s+VALUES\s*\(\s*["\'].*["\'].*\+',
             r'UPDATE\s+.*\s+SET\s+.*=.*\+',
@@ -490,8 +473,7 @@ class InfrastructureSecurityAuditor:
         audit_results["checks"].append(check_result)
     
     def _check_xss_patterns(self, audit_results: Dict):
-        """Check for XSS vulnerabilities"""
-        # Simplified XSS pattern check
+        """Check for XSS vulnerabilities"""        # Simplified XSS pattern check
         audit_results["total"] += 1
         self.total_checks += 1
         
@@ -507,8 +489,7 @@ class InfrastructureSecurityAuditor:
         audit_results["checks"].append(check_result)
     
     def _audit_runtime_security(self):
-        """Audit runtime security"""
-        print("\\n🏃 Auditing Runtime Security...")
+        """Audit runtime security"""        print("\\n🏃 Auditing Runtime Security...")
         
         audit_results = {
             "category": "Runtime Security",
@@ -527,8 +508,7 @@ class InfrastructureSecurityAuditor:
         print(f"   ✅ Runtime security audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
     
     def _check_process_security(self, audit_results: Dict):
-        """Check process security"""
-        audit_results["total"] += 1
+        """Check process security"""        audit_results["total"] += 1
         self.total_checks += 1
         
         check_result = {
@@ -553,8 +533,7 @@ class InfrastructureSecurityAuditor:
         audit_results["checks"].append(check_result)
     
     def _check_memory_security(self, audit_results: Dict):
-        """Check memory security"""
-        audit_results["total"] += 1
+        """Check memory security"""        audit_results["total"] += 1
         self.total_checks += 1
         
         check_result = {
@@ -568,8 +547,7 @@ class InfrastructureSecurityAuditor:
         audit_results["checks"].append(check_result)
     
     def _audit_network_security(self):
-        """Audit network security"""
-        print("\\n🌐 Auditing Network Security...")
+        """Audit network security"""        print("\\n🌐 Auditing Network Security...")
         
         audit_results = {
             "category": "Network Security",
@@ -594,8 +572,7 @@ class InfrastructureSecurityAuditor:
         print(f"   ✅ Network security audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
     
     def _audit_data_protection(self):
-        """Audit data protection"""
-        print("\\n🔐 Auditing Data Protection...")
+        """Audit data protection"""        print("\\n🔐 Auditing Data Protection...")
         
         audit_results = {
             "category": "Data Protection",
@@ -628,8 +605,7 @@ class InfrastructureSecurityAuditor:
         print(f"   ✅ Data protection audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
     
     def _audit_access_controls(self):
-        """Audit access controls"""
-        print("\\n🔑 Auditing Access Controls...")
+        """Audit access controls"""        print("\\n🔑 Auditing Access Controls...")
         
         audit_results = {
             "category": "Access Controls",
@@ -662,8 +638,7 @@ class InfrastructureSecurityAuditor:
         print(f"   ✅ Access controls audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
     
     def _audit_logging_security(self):
-        """Audit logging and monitoring security"""
-        print("\\n📋 Auditing Logging Security...")
+        """Audit logging and monitoring security"""        print("\\n📋 Auditing Logging Security...")
         
         audit_results = {
             "category": "Logging Security",
@@ -696,8 +671,7 @@ class InfrastructureSecurityAuditor:
         print(f"   ✅ Logging security audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
     
     def _audit_compliance_requirements(self):
-        """Audit compliance requirements"""
-        print("\\n📜 Auditing Compliance Requirements...")
+        """Audit compliance requirements"""        print("\\n📜 Auditing Compliance Requirements...")
         
         audit_results = {
             "category": "Compliance",
@@ -737,8 +711,7 @@ class InfrastructureSecurityAuditor:
         print(f"   ✅ Compliance audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
     
     def _generate_audit_report(self, duration: float) -> Dict[str, Any]:
-        """Generate comprehensive audit report"""
-        success_rate = (self.passed_checks / self.total_checks) * 100 if self.total_checks > 0 else 0
+        """Generate comprehensive audit report"""        success_rate = (self.passed_checks / self.total_checks) * 100 if self.total_checks > 0 else 0
         
         print("\\n" + "=" * 80)
         print("🛡️  COMPREHENSIVE INFRASTRUCTURE SECURITY AUDIT REPORT")
@@ -856,8 +829,7 @@ class InfrastructureSecurityAuditor:
 
 
 def main():
-    """Main execution function"""
-    try:
+    """Main execution function"""    try:
         auditor = InfrastructureSecurityAuditor()
         report = auditor.run_complete_audit()
         

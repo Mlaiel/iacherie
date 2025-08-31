@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Configuration de la Pipeline Créateur
+"""IA Influencer Agent - Configuration de la Pipeline Créateur
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -10,32 +9,27 @@ explicite de l'auteur est strictement interdite et constitue une violation du
 droit d'auteur. Contact: mlaiel@live.de
 
 Configuration centralisée pour tous les composants de la pipeline créateur
-"""
-
-import os
+"""import os
 from typing import Dict, List, Any
 from dataclasses import dataclass, field
 from enum import Enum
 
 class CreatorType(Enum):
-    """Types de créateurs supportés"""
-    MUSICIAN = "musician"
+    """Types de créateurs supportés"""    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
     COMEDIAN = "comedian"
 
 class ContentType(Enum):
-    """Types de contenu supportés"""
-    AUDIO = "audio"
+    """Types de contenu supportés"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
     MIXED = "mixed"
 
 class Platform(Enum):
-    """Plateformes supportées"""
-    # Musique
+    """Plateformes supportées"""    # Musique
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE_MUSIC = "youtube_music"
@@ -60,8 +54,7 @@ class Platform(Enum):
     UNSPLASH = "unsplash"
 
 class RevenueStream(Enum):
-    """Sources de revenus disponibles"""
-    STREAMING = "streaming"
+    """Sources de revenus disponibles"""    STREAMING = "streaming"
     ADVERTISING = "advertising"
     SPONSORSHIPS = "sponsorships"
     AFFILIATE = "affiliate"
@@ -76,8 +69,7 @@ class RevenueStream(Enum):
 
 @dataclass
 class PipelineConfig:
-    """Configuration principale de la pipeline"""
-    
+    """Configuration principale de la pipeline"""    
     # Paramètres généraux
     max_concurrent_tasks: int = 10
     timeout_seconds: int = 300
@@ -103,8 +95,7 @@ class PipelineConfig:
 
 @dataclass
 class CreatorConfig:
-    """Configuration spécifique par type de créateur"""
-    
+    """Configuration spécifique par type de créateur"""    
     # Configuration musicien
     musician: Dict[str, Any] = field(default_factory=lambda: {
         'audio_formats': ['wav', 'mp3', 'flac', 'aac'],
@@ -165,8 +156,7 @@ class CreatorConfig:
 
 @dataclass
 class PlatformConfig:
-    """Configuration des plateformes"""
-    
+    """Configuration des plateformes"""    
     # Configuration Spotify
     spotify: Dict[str, Any] = field(default_factory=lambda: {
         'api_base_url': 'https://api.spotify.com/v1',
@@ -198,8 +188,7 @@ class PlatformConfig:
 
 @dataclass
 class MonetizationConfig:
-    """Configuration de la monétisation"""
-    
+    """Configuration de la monétisation"""    
     # Seuils de revenus par créateur
     revenue_thresholds: Dict[str, int] = field(default_factory=lambda: {
         'musician': 1000,      # streams/mois pour débuter
@@ -231,8 +220,7 @@ class MonetizationConfig:
 
 @dataclass
 class AIConfig:
-    """Configuration des modèles IA"""
-    
+    """Configuration des modèles IA"""    
     # Modèles pour le traitement de contenu
     content_models: Dict[str, str] = field(default_factory=lambda: {
         'text_analysis': 'sentence-transformers/all-MiniLM-L6-v2',
@@ -266,8 +254,7 @@ DEFAULT_AI_CONFIG = AIConfig()
 
 # Variables d'environnement
 class EnvironmentConfig:
-    """Configuration basée sur les variables d'environnement"""
-    
+    """Configuration basée sur les variables d'environnement"""    
     # Base de données
     DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql://localhost/ia_influencer')
     REDIS_URL = os.getenv('REDIS_URL', 'redis://localhost:6379')

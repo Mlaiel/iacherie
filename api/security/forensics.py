@@ -1,5 +1,4 @@
-"""
-Digital Forensics Module
+"""Digital Forensics Module
 Advanced digital forensics and evidence collection for IA Influencer Agent
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -28,9 +27,7 @@ Violators will face:
 - Immediate cease and desist enforcement
 
 Contact: mlaiel@live.de for any authorization requests.
-"""
-
-import hashlib
+"""import hashlib
 import json
 import secrets
 import time
@@ -56,8 +53,7 @@ settings = get_settings()
 
 
 class EvidenceType(Enum):
-    """Types of digital evidence"""
-    DIGITAL_FINGERPRINT = "digital_fingerprint"
+    """Types of digital evidence"""    DIGITAL_FINGERPRINT = "digital_fingerprint"
     CONTENT_COPY = "content_copy"
     METADATA_RECORD = "metadata_record"
     NETWORK_TRACE = "network_trace"
@@ -70,8 +66,7 @@ class EvidenceType(Enum):
 
 
 class ForensicsStatus(Enum):
-    """Forensics investigation status"""
-    INITIATED = "initiated"
+    """Forensics investigation status"""    INITIATED = "initiated"
     COLLECTING = "collecting_evidence"
     ANALYZING = "analyzing"
     COMPLETED = "completed"
@@ -80,8 +75,7 @@ class ForensicsStatus(Enum):
 
 
 class EvidenceIntegrity(Enum):
-    """Evidence integrity status"""
-    INTACT = "intact"
+    """Evidence integrity status"""    INTACT = "intact"
     VERIFIED = "cryptographically_verified"
     TAMPERED = "tampered"
     CORRUPTED = "corrupted"
@@ -89,8 +83,7 @@ class EvidenceIntegrity(Enum):
 
 
 class LegalWeight(Enum):
-    """Legal admissibility weight"""
-    HIGH = "high_admissible"
+    """Legal admissibility weight"""    HIGH = "high_admissible"
     MEDIUM = "medium_admissible"
     LOW = "low_admissible"
     INADMISSIBLE = "inadmissible"
@@ -99,8 +92,7 @@ class LegalWeight(Enum):
 
 @dataclass
 class DigitalEvidence:
-    """Digital evidence record with chain of custody"""
-    evidence_id: str = field(default_factory=lambda: secrets.token_hex(16))
+    """Digital evidence record with chain of custody"""    evidence_id: str = field(default_factory=lambda: secrets.token_hex(16))
     evidence_type: EvidenceType = EvidenceType.DIGITAL_FINGERPRINT
     
     # Content details
@@ -128,8 +120,7 @@ class DigitalEvidence:
     custody_chain: List[Dict[str, Any]] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage/transport"""
-        return {
+        """Convert to dictionary for storage/transport"""        return {
             "evidence_id": self.evidence_id,
             "evidence_type": self.evidence_type.value,
             "original_content_id": self.original_content_id,
@@ -150,8 +141,7 @@ class DigitalEvidence:
 
 @dataclass
 class ForensicsInvestigation:
-    """Digital forensics investigation case"""
-    investigation_id: str = field(default_factory=lambda: secrets.token_hex(16))
+    """Digital forensics investigation case"""    investigation_id: str = field(default_factory=lambda: secrets.token_hex(16))
     case_name: str = ""
     description: str = ""
     
@@ -186,8 +176,7 @@ class ForensicsInvestigation:
     expert_witness_summary: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             "investigation_id": self.investigation_id,
             "case_name": self.case_name,
             "description": self.description,
@@ -214,8 +203,7 @@ class ForensicsInvestigation:
 
 @dataclass
 class ChainOfCustodyEntry:
-    """Chain of custody entry for evidence tracking"""
-    entry_id: str = field(default_factory=lambda: secrets.token_hex(8))
+    """Chain of custody entry for evidence tracking"""    entry_id: str = field(default_factory=lambda: secrets.token_hex(8))
     timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     action: str = ""  # collected, transferred, analyzed, sealed, etc.
     handler: str = ""
@@ -225,8 +213,7 @@ class ChainOfCustodyEntry:
     notes: str = ""
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             "entry_id": self.entry_id,
             "timestamp": self.timestamp.isoformat(),
             "action": self.action,
@@ -239,8 +226,7 @@ class ChainOfCustodyEntry:
 
 
 class DigitalForensicsEngine:
-    """Advanced digital forensics and evidence collection system"""
-    
+    """Advanced digital forensics and evidence collection system"""    
     def __init__(self):
         self.cache = CacheManager()
         self.evidence_vault: Dict[str, DigitalEvidence] = {}
@@ -248,8 +234,7 @@ class DigitalForensicsEngine:
         self._setup_forensics_environment()
     
     def _setup_forensics_environment(self):
-        """Initialize forensics environment and tools"""
-        self.evidence_storage_path = Path("/tmp/forensics_evidence")
+        """Initialize forensics environment and tools"""        self.evidence_storage_path = Path("/tmp/forensics_evidence")
         self.evidence_storage_path.mkdir(exist_ok=True)
         
         self.hash_algorithms = {
@@ -275,8 +260,7 @@ class DigitalForensicsEngine:
         initiated_by: str = "system",
         priority: str = "medium"
     ) -> ForensicsInvestigation:
-        """Initiate digital forensics investigation"""
-        try:
+        """Initiate digital forensics investigation"""        try:
             investigation = ForensicsInvestigation(
                 case_name=case_name,
                 description=description,
@@ -318,8 +302,7 @@ class DigitalForensicsEngine:
         metadata: Optional[Dict[str, Any]] = None,
         investigation_id: Optional[str] = None
     ) -> DigitalEvidence:
-        """Collect and preserve digital evidence"""
-        try:
+        """Collect and preserve digital evidence"""        try:
             metadata = metadata or {}
             
             # Convert content to bytes if needed
@@ -392,8 +375,7 @@ class DigitalForensicsEngine:
             raise
     
     async def _store_evidence_securely(self, evidence: DigitalEvidence):
-        """Store evidence securely with encryption"""
-        try:
+        """Store evidence securely with encryption"""        try:
             if evidence.evidence_data:
                 # Store to secure location
                 evidence_file = self.evidence_storage_path / f"{evidence.evidence_id}.evidence"
@@ -412,8 +394,7 @@ class DigitalForensicsEngine:
             logger.error(f"Error storing evidence: {str(e)}")
     
     async def _verify_evidence_integrity(self, evidence: DigitalEvidence) -> EvidenceIntegrity:
-        """Verify evidence integrity using cryptographic hashes"""
-        try:
+        """Verify evidence integrity using cryptographic hashes"""        try:
             if not evidence.evidence_data:
                 return EvidenceIntegrity.UNKNOWN
             
@@ -431,8 +412,7 @@ class DigitalForensicsEngine:
             return EvidenceIntegrity.UNKNOWN
     
     async def _assess_legal_admissibility(self, evidence: DigitalEvidence) -> LegalWeight:
-        """Assess legal admissibility of evidence"""
-        try:
+        """Assess legal admissibility of evidence"""        try:
             admissibility_score = 0
             notes = []
             
@@ -485,15 +465,13 @@ class DigitalForensicsEngine:
             return LegalWeight.PENDING_VALIDATION
     
     def _calculate_multiple_hashes(self, data: bytes) -> Dict[str, str]:
-        """Calculate multiple cryptographic hashes for enhanced integrity"""
-        hashes = {}
+        """Calculate multiple cryptographic hashes for enhanced integrity"""        hashes = {}
         for algo_name, algo_func in self.hash_algorithms.items():
             hashes[algo_name] = algo_func(data).hexdigest()
         return hashes
     
     async def _extract_comprehensive_metadata(self, evidence: DigitalEvidence) -> Dict[str, Any]:
-        """Extract comprehensive metadata from evidence"""
-        try:
+        """Extract comprehensive metadata from evidence"""        try:
             metadata = {
                 "collection_timestamp": evidence.collected_at.isoformat(),
                 "evidence_type": evidence.evidence_type.value,
@@ -533,8 +511,7 @@ class DigitalForensicsEngine:
             return {}
     
     def _validate_timestamps(self, evidence: DigitalEvidence) -> Dict[str, Any]:
-        """Validate timestamps for evidence"""
-        validation = {
+        """Validate timestamps for evidence"""        validation = {
             "collection_time_valid": True,
             "custody_timestamps_sequential": True,
             "issues": []
@@ -568,8 +545,7 @@ class DigitalForensicsEngine:
             return validation
     
     async def _automated_evidence_collection(self, investigation: ForensicsInvestigation):
-        """Perform automated evidence collection for investigation"""
-        try:
+        """Perform automated evidence collection for investigation"""        try:
             logger.info(f"Starting automated evidence collection for {investigation.investigation_id}")
             
             for content_id in investigation.content_ids:
@@ -617,8 +593,7 @@ class DigitalForensicsEngine:
             })
     
     async def _analyze_collected_evidence(self, investigation: ForensicsInvestigation):
-        """Analyze collected evidence and generate findings"""
-        try:
+        """Analyze collected evidence and generate findings"""        try:
             logger.info(f"Analyzing evidence for investigation {investigation.investigation_id}")
             
             # Get all evidence for this investigation
@@ -701,8 +676,7 @@ class DigitalForensicsEngine:
             })
     
     async def generate_legal_report(self, investigation_id: str) -> Dict[str, Any]:
-        """Generate comprehensive legal report for investigation"""
-        try:
+        """Generate comprehensive legal report for investigation"""        try:
             investigation = self.investigations.get(investigation_id)
             if not investigation:
                 raise ValueError(f"Investigation not found: {investigation_id}")
@@ -771,8 +745,7 @@ class DigitalForensicsEngine:
         investigation: ForensicsInvestigation,
         evidence_items: List[DigitalEvidence]
     ) -> Dict[str, Any]:
-        """Generate expert witness opinion summary"""
-        try:
+        """Generate expert witness opinion summary"""        try:
             high_admissibility = len([e for e in evidence_items if e.legal_weight == LegalWeight.HIGH])
             total_evidence = len(evidence_items)
             
@@ -810,8 +783,7 @@ class DigitalForensicsEngine:
             return {}
     
     def _generate_custody_summary(self, evidence_items: List[DigitalEvidence]) -> List[Dict[str, Any]]:
-        """Generate chain of custody summary"""
-        try:
+        """Generate chain of custody summary"""        try:
             custody_summary = []
             
             for evidence in evidence_items:
@@ -833,8 +805,7 @@ class DigitalForensicsEngine:
             return []
     
     async def seal_evidence(self, evidence_id: str, reason: str = "legal_proceedings") -> Dict[str, Any]:
-        """Seal evidence for legal proceedings"""
-        try:
+        """Seal evidence for legal proceedings"""        try:
             evidence = self.evidence_vault.get(evidence_id)
             if not evidence:
                 raise ValueError(f"Evidence not found: {evidence_id}")
@@ -881,8 +852,7 @@ class DigitalForensicsEngine:
         investigation_id: str,
         include_raw_data: bool = False
     ) -> bytes:
-        """Export complete evidence package for legal proceedings"""
-        try:
+        """Export complete evidence package for legal proceedings"""        try:
             investigation = self.investigations.get(investigation_id)
             if not investigation:
                 raise ValueError(f"Investigation not found: {investigation_id}")
@@ -951,8 +921,7 @@ async def start_investigation(
     content_ids: List[str],
     violation_type: str = "copyright_infringement"
 ) -> ForensicsInvestigation:
-    """Start digital forensics investigation"""
-    return await forensics_engine.initiate_investigation(
+    """Start digital forensics investigation"""    return await forensics_engine.initiate_investigation(
         case_name, description, content_ids, violation_type
     )
 
@@ -963,18 +932,15 @@ async def collect_digital_evidence(
     metadata: Optional[Dict[str, Any]] = None,
     investigation_id: Optional[str] = None
 ) -> DigitalEvidence:
-    """Collect digital evidence"""
-    return await forensics_engine.collect_evidence(
+    """Collect digital evidence"""    return await forensics_engine.collect_evidence(
         evidence_type, source_location, content_data, metadata, investigation_id
     )
 
 async def generate_court_report(investigation_id: str) -> Dict[str, Any]:
-    """Generate court-ready legal report"""
-    return await forensics_engine.generate_legal_report(investigation_id)
+    """Generate court-ready legal report"""    return await forensics_engine.generate_legal_report(investigation_id)
 
 async def export_legal_package(
     investigation_id: str,
     include_raw_data: bool = False
 ) -> bytes:
-    """Export legal evidence package"""
-    return await forensics_engine.export_evidence_package(investigation_id, include_raw_data)
+    """Export legal evidence package"""    return await forensics_engine.export_evidence_package(investigation_id, include_raw_data)

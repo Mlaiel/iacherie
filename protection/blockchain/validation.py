@@ -1,5 +1,4 @@
-"""
-Blockchain Validation and Verification System
+"""Blockchain Validation and Verification System
 Professional validation service for blockchain operations and content integrity
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -19,9 +18,7 @@ without explicit written authorization from Fahed Mlaiel is strictly
 prohibited and will result in legal action.
 
 Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union, Set
 from dataclasses import dataclass, field
@@ -52,16 +49,14 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationLevel(Enum):
-    """Validation strictness levels"""
-    BASIC = "basic"
+    """Validation strictness levels"""    BASIC = "basic"
     STANDARD = "standard"
     STRICT = "strict"
     FORENSIC = "forensic"
 
 
 class ValidationResult(Enum):
-    """Validation result status"""
-    VALID = "valid"
+    """Validation result status"""    VALID = "valid"
     INVALID = "invalid"
     SUSPICIOUS = "suspicious"
     UNKNOWN = "unknown"
@@ -70,8 +65,7 @@ class ValidationResult(Enum):
 
 @dataclass
 class ValidationReport:
-    """Comprehensive validation report"""
-    validation_id: str
+    """Comprehensive validation report"""    validation_id: str
     timestamp: datetime
     level: ValidationLevel
     overall_result: ValidationResult
@@ -84,8 +78,7 @@ class ValidationReport:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage/transmission"""
-        return {
+        """Convert to dictionary for storage/transmission"""        return {
             "validation_id": self.validation_id,
             "timestamp": self.timestamp.isoformat(),
             "level": self.level.value,
@@ -102,8 +95,7 @@ class ValidationReport:
 
 @dataclass
 class ContentIntegrityCheck:
-    """Content integrity verification result"""
-    content_id: str
+    """Content integrity verification result"""    content_id: str
     original_hash: str
     current_hash: str
     is_intact: bool
@@ -114,8 +106,7 @@ class ContentIntegrityCheck:
 
 @dataclass
 class BlockchainTransactionValidation:
-    """Blockchain transaction validation result"""
-    transaction_hash: str
+    """Blockchain transaction validation result"""    transaction_hash: str
     network: str
     is_valid: bool
     confirmations: int
@@ -129,11 +120,9 @@ class BlockchainTransactionValidation:
 
 
 class BlockchainValidator:
-    """
-    Professional blockchain validation and verification system
+    """    Professional blockchain validation and verification system
     Provides comprehensive validation for content, transactions, and proofs
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.web3_connections = {}
@@ -142,20 +131,17 @@ class BlockchainValidator:
         self._init_connections()
     
     async def __aenter__(self):
-        """Async context manager entry"""
-        self.session = aiohttp.ClientSession()
+        """Async context manager entry"""        self.session = aiohttp.ClientSession()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
-        if self.session:
+        """Async context manager exit"""        if self.session:
             await self.session.close()
         if self.ipfs_client:
             self.ipfs_client.close()
     
     def _init_connections(self):
-        """Initialize blockchain and storage connections"""
-        try:
+        """Initialize blockchain and storage connections"""        try:
             # Initialize Web3 connections for different networks
             networks = self.config.get("networks", {})
             
@@ -185,8 +171,7 @@ class BlockchainValidator:
         original_hash: str,
         validation_level: ValidationLevel = ValidationLevel.STANDARD
     ) -> ContentIntegrityCheck:
-        """
-        Validate content integrity against original hash
+        """        Validate content integrity against original hash
         
         Args:
             content_path: Path to content file
@@ -195,8 +180,7 @@ class BlockchainValidator:
             
         Returns:
             ContentIntegrityCheck object
-        """
-        try:
+        """        try:
             file_path = Path(content_path)
             
             if not file_path.exists():
@@ -237,8 +221,7 @@ class BlockchainValidator:
             raise BlockchainError(f"Content integrity validation failed: {e}")
     
     async def _calculate_file_hash(self, file_path: Path) -> str:
-        """Calculate SHA-256 hash of file"""
-        hash_sha256 = hashlib.sha256()
+        """Calculate SHA-256 hash of file"""        hash_sha256 = hashlib.sha256()
         
         with open(file_path, "rb") as f:
             while chunk := f.read(8192):
@@ -253,8 +236,7 @@ class BlockchainValidator:
         current_hash: str,
         level: ValidationLevel
     ) -> List[str]:
-        """Analyze detected modifications in content"""
-        modifications = []
+        """Analyze detected modifications in content"""        modifications = []
         
         # Basic modification detection
         modifications.append("content_hash_mismatch")
@@ -283,8 +265,7 @@ class BlockchainValidator:
         return modifications
     
     async def _forensic_analysis(self, file_path: Path) -> List[str]:
-        """Perform forensic analysis on modified file"""
-        forensic_findings = []
+        """Perform forensic analysis on modified file"""        forensic_findings = []
         
         try:
             # File header analysis
@@ -310,8 +291,7 @@ class BlockchainValidator:
         return forensic_findings
     
     def _calculate_integrity_confidence(self, modifications: List[str]) -> float:
-        """Calculate confidence score based on detected modifications"""
-        if not modifications:
+        """Calculate confidence score based on detected modifications"""        if not modifications:
             return 1.0
         
         # Weight different types of modifications
@@ -336,8 +316,7 @@ class BlockchainValidator:
         transaction_hash: str,
         network: str = "ethereum"
     ) -> BlockchainTransactionValidation:
-        """
-        Validate blockchain transaction
+        """        Validate blockchain transaction
         
         Args:
             transaction_hash: Transaction hash to validate
@@ -345,8 +324,7 @@ class BlockchainValidator:
             
         Returns:
             BlockchainTransactionValidation object
-        """
-        try:
+        """        try:
             w3 = self.web3_connections.get(network)
             if not w3:
                 raise NetworkError(f"No connection for network: {network}", network)
@@ -400,8 +378,7 @@ class BlockchainValidator:
         network: str = "ethereum",
         validation_level: ValidationLevel = ValidationLevel.STANDARD
     ) -> ValidationReport:
-        """
-        Validate smart contract
+        """        Validate smart contract
         
         Args:
             contract_address: Contract address to validate
@@ -410,8 +387,7 @@ class BlockchainValidator:
             
         Returns:
             ValidationReport object
-        """
-        try:
+        """        try:
             w3 = self.web3_connections.get(network)
             if not w3:
                 raise NetworkError(f"No connection for network: {network}", network)
@@ -505,8 +481,7 @@ class BlockchainValidator:
         w3: Web3,
         contract_address: ChecksumAddress
     ) -> bool:
-        """Check if contract follows proxy pattern"""
-        try:
+        """Check if contract follows proxy pattern"""        try:
             code = w3.eth.get_code(contract_address)
             code_hex = code.hex()
             
@@ -527,8 +502,7 @@ class BlockchainValidator:
         w3: Web3,
         contract_address: ChecksumAddress
     ) -> float:
-        """Check contract activity level"""
-        try:
+        """Check contract activity level"""        try:
             current_block = w3.eth.block_number
             blocks_to_check = min(1000, current_block)
             
@@ -559,8 +533,7 @@ class BlockchainValidator:
         proof: TimestampProof,
         validation_level: ValidationLevel = ValidationLevel.STANDARD
     ) -> ValidationReport:
-        """
-        Validate timestamp proof
+        """        Validate timestamp proof
         
         Args:
             proof: TimestampProof to validate
@@ -568,8 +541,7 @@ class BlockchainValidator:
             
         Returns:
             ValidationReport object
-        """
-        try:
+        """        try:
             checks_performed = []
             passed_checks = []
             failed_checks = []
@@ -663,8 +635,7 @@ class BlockchainValidator:
             raise BlockchainError(f"Proof validation failed: {e}")
     
     def _validate_proof_structure(self, proof: TimestampProof) -> bool:
-        """Validate basic proof structure"""
-        required_fields = ["content_hash", "timestamp", "service", "proof_data"]
+        """Validate basic proof structure"""        required_fields = ["content_hash", "timestamp", "service", "proof_data"]
         
         try:
             for field in required_fields:
@@ -681,8 +652,7 @@ class BlockchainValidator:
             return False
     
     def _validate_timestamp(self, timestamp: datetime) -> bool:
-        """Validate timestamp reasonableness"""
-        try:
+        """Validate timestamp reasonableness"""        try:
             now = datetime.utcnow()
             
             # Check if timestamp is not in the future
@@ -699,8 +669,7 @@ class BlockchainValidator:
             return False
     
     def _validate_content_hash(self, content_hash: str) -> bool:
-        """Validate content hash format"""
-        try:
+        """Validate content hash format"""        try:
             # Check if it's a valid SHA-256 hash
             if len(content_hash) != 64:
                 return False
@@ -713,8 +682,7 @@ class BlockchainValidator:
             return False
     
     async def _validate_blockchain_proof_data(self, proof: TimestampProof) -> bool:
-        """Validate blockchain-specific proof data"""
-        try:
+        """Validate blockchain-specific proof data"""        try:
             if not proof.transaction_hash:
                 return False
             
@@ -728,8 +696,7 @@ class BlockchainValidator:
             return False
     
     def _validate_proof_signature(self, proof: TimestampProof) -> bool:
-        """Validate proof signature"""
-        try:
+        """Validate proof signature"""        try:
             # Basic signature format validation
             if not proof.signature:
                 return False
@@ -743,8 +710,7 @@ class BlockchainValidator:
             return False
     
     async def _cross_reference_proof(self, proof: TimestampProof) -> bool:
-        """Cross-reference proof with external sources"""
-        try:
+        """Cross-reference proof with external sources"""        try:
             # This would implement cross-referencing with:
             # - Blockchain explorers
             # - Timestamping services
@@ -761,8 +727,7 @@ class BlockchainValidator:
         ipfs_hash: str,
         expected_content_hash: Optional[str] = None
     ) -> ValidationReport:
-        """
-        Validate IPFS content integrity
+        """        Validate IPFS content integrity
         
         Args:
             ipfs_hash: IPFS content hash
@@ -770,8 +735,7 @@ class BlockchainValidator:
             
         Returns:
             ValidationReport object
-        """
-        try:
+        """        try:
             if not self.ipfs_client:
                 raise BlockchainError("IPFS client not available")
             
@@ -845,8 +809,7 @@ class BlockchainValidator:
             raise BlockchainError(f"IPFS validation failed: {e}")
     
     def _validate_ipfs_hash_format(self, ipfs_hash: str) -> bool:
-        """Validate IPFS hash format"""
-        try:
+        """Validate IPFS hash format"""        try:
             # Basic IPFS hash format validation
             # CIDv0: starts with Qm and is 46 characters
             # CIDv1: starts with b and is variable length

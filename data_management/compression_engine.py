@@ -1,5 +1,4 @@
-"""
-Advanced Compression Engine
+"""Advanced Compression Engine
 Enterprise-grade compression system with multiple algorithms and optimization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -9,9 +8,7 @@ License: Proprietary - All Rights Reserved
 WARNING: This code is proprietary and confidential. Any unauthorized copying,
 distribution, or use without explicit written permission from Fahed Mlaiel
 is strictly prohibited and may result in legal action.
-"""
-
-import asyncio
+"""import asyncio
 import gzip
 import bz2
 import lzma
@@ -34,8 +31,7 @@ from ..core.metrics import MetricsCollector
 
 
 class CompressionAlgorithm(Enum):
-    """Supported compression algorithms"""
-    GZIP = "gzip"
+    """Supported compression algorithms"""    GZIP = "gzip"
     BZIP2 = "bzip2"
     LZMA = "lzma"
     ZLIB = "zlib"
@@ -46,8 +42,7 @@ class CompressionAlgorithm(Enum):
 
 
 class CompressionLevel(Enum):
-    """Compression level presets"""
-    FASTEST = 1
+    """Compression level presets"""    FASTEST = 1
     FAST = 3
     BALANCED = 6
     BEST = 9
@@ -55,8 +50,7 @@ class CompressionLevel(Enum):
 
 
 class ContentType(Enum):
-    """Content type for optimization"""
-    TEXT = "text"
+    """Content type for optimization"""    TEXT = "text"
     BINARY = "binary"
     AUDIO = "audio"
     VIDEO = "video"
@@ -69,8 +63,7 @@ class ContentType(Enum):
 
 @dataclass
 class CompressionResult:
-    """Results of compression operation"""
-    algorithm: CompressionAlgorithm
+    """Results of compression operation"""    algorithm: CompressionAlgorithm
     original_size: int
     compressed_size: int
     compression_ratio: float
@@ -80,21 +73,18 @@ class CompressionResult:
     
     @property
     def space_saved(self) -> int:
-        """Calculate space saved in bytes"""
-        return self.original_size - self.compressed_size
+        """Calculate space saved in bytes"""        return self.original_size - self.compressed_size
     
     @property
     def space_saved_percentage(self) -> float:
-        """Calculate space saved percentage"""
-        if self.original_size == 0:
+        """Calculate space saved percentage"""        if self.original_size == 0:
             return 0.0
         return (self.space_saved / self.original_size) * 100
 
 
 @dataclass
 class CompressionProfile:
-    """Compression profile for specific use cases"""
-    name: str
+    """Compression profile for specific use cases"""    name: str
     algorithm: CompressionAlgorithm
     level: CompressionLevel
     content_types: List[ContentType]
@@ -106,11 +96,9 @@ class CompressionProfile:
 
 
 class CompressionEngine:
-    """
-    Advanced compression engine with intelligent algorithm selection,
+    """    Advanced compression engine with intelligent algorithm selection,
     multi-threading support, and performance optimization
-    """
-    
+    """    
     def __init__(
         self,
         config: Optional[Dict[str, Any]] = None,
@@ -141,8 +129,7 @@ class CompressionEngine:
         self.logger.info("Advanced compression engine initialized")
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default compression configuration"""
-        return {
+        """Get default compression configuration"""        return {
             "default_algorithm": CompressionAlgorithm.ZSTD,
             "default_level": CompressionLevel.BALANCED,
             "auto_select_threshold": 0.1,  # Minimum compression ratio improvement
@@ -155,8 +142,7 @@ class CompressionEngine:
         }
     
     def _check_algorithm_availability(self) -> Dict[CompressionAlgorithm, bool]:
-        """Check which compression algorithms are available"""
-        availability = {}
+        """Check which compression algorithms are available"""        availability = {}
         
         try:
             import gzip
@@ -203,8 +189,7 @@ class CompressionEngine:
         return availability
     
     def _create_default_profiles(self) -> Dict[str, CompressionProfile]:
-        """Create default compression profiles"""
-        return {
+        """Create default compression profiles"""        return {
             "fast_text": CompressionProfile(
                 name="fast_text",
                 algorithm=CompressionAlgorithm.LZ4,
@@ -250,10 +235,8 @@ class CompressionEngine:
         content_type: Optional[ContentType] = None,
         profile: Optional[str] = None
     ) -> CompressionResult:
-        """
-        Compress data using specified algorithm or auto-selection
-        """
-        start_time = time.time()
+        """        Compress data using specified algorithm or auto-selection
+        """        start_time = time.time()
         
         try:
             # Validate input
@@ -347,10 +330,8 @@ class CompressionEngine:
         algorithm: CompressionAlgorithm,
         original_size: Optional[int] = None
     ) -> bytes:
-        """
-        Decompress data using specified algorithm
-        """
-        try:
+        """        Decompress data using specified algorithm
+        """        try:
             if not isinstance(data, bytes):
                 raise CompressionException("Input data must be bytes")
             
@@ -383,8 +364,7 @@ class CompressionEngine:
         algorithm: CompressionAlgorithm,
         level: CompressionLevel
     ) -> bytes:
-        """Compress data with specific algorithm"""
-        if not self.available_algorithms.get(algorithm, False):
+        """Compress data with specific algorithm"""        if not self.available_algorithms.get(algorithm, False):
             raise CompressionException(f"Algorithm {algorithm.value} is not available")
         
         # Run compression in thread pool for CPU-intensive operations
@@ -440,8 +420,7 @@ class CompressionEngine:
         data: bytes,
         algorithm: CompressionAlgorithm
     ) -> bytes:
-        """Decompress data with specific algorithm"""
-        if not self.available_algorithms.get(algorithm, False):
+        """Decompress data with specific algorithm"""        if not self.available_algorithms.get(algorithm, False):
             raise CompressionException(f"Algorithm {algorithm.value} is not available")
         
         # Run decompression in thread pool for CPU-intensive operations
@@ -497,10 +476,8 @@ class CompressionEngine:
         data: bytes,
         content_type: Optional[ContentType] = None
     ) -> CompressionAlgorithm:
-        """
-        Automatically select the optimal compression algorithm
-        """
-        try:
+        """        Automatically select the optimal compression algorithm
+        """        try:
             # Use content type hints if available
             if content_type:
                 if content_type in [ContentType.TEXT, ContentType.JSON, ContentType.XML, ContentType.LOG]:
@@ -569,10 +546,8 @@ class CompressionEngine:
         data: bytes,
         algorithms: Optional[List[CompressionAlgorithm]] = None
     ) -> Dict[CompressionAlgorithm, Dict[str, float]]:
-        """
-        Benchmark compression algorithms on given data
-        """
-        try:
+        """        Benchmark compression algorithms on given data
+        """        try:
             algorithms = algorithms or list(self.available_algorithms.keys())
             results = {}
             
@@ -624,10 +599,8 @@ class CompressionEngine:
         level: Optional[CompressionLevel] = None,
         chunk_size: Optional[int] = None
     ) -> CompressionResult:
-        """
-        Compress a file with chunked processing for large files
-        """
-        try:
+        """        Compress a file with chunked processing for large files
+        """        try:
             input_path = Path(input_path)
             if not input_path.exists():
                 raise CompressionException(f"Input file does not exist: {input_path}")
@@ -673,8 +646,7 @@ class CompressionEngine:
         level: Optional[CompressionLevel],
         chunk_size: int
     ) -> CompressionResult:
-        """Compress large file in chunks"""
-        start_time = time.time()
+        """Compress large file in chunks"""        start_time = time.time()
         original_size = 0
         compressed_size = 0
         
@@ -739,10 +711,8 @@ class CompressionEngine:
         algorithm: CompressionAlgorithm = CompressionAlgorithm.AUTO,
         chunked: bool = False
     ) -> int:
-        """
-        Decompress a file
-        """
-        try:
+        """        Decompress a file
+        """        try:
             input_path = Path(input_path)
             if not input_path.exists():
                 raise CompressionException(f"Input file does not exist: {input_path}")
@@ -773,8 +743,7 @@ class CompressionEngine:
         output_path: Path,
         algorithm: CompressionAlgorithm
     ) -> int:
-        """Decompress chunked file"""
-        total_size = 0
+        """Decompress chunked file"""        total_size = 0
         
         try:
             async with aiofiles.open(input_path, 'rb') as input_file:
@@ -816,8 +785,7 @@ class CompressionEngine:
         compressed_size: int,
         compression_time: float
     ):
-        """Update compression statistics"""
-        self.compression_stats["total_operations"] += 1
+        """Update compression statistics"""        self.compression_stats["total_operations"] += 1
         self.compression_stats["total_original_size"] += original_size
         self.compression_stats["total_compressed_size"] += compressed_size
         self.compression_stats["total_time"] += compression_time
@@ -834,13 +802,11 @@ class CompressionEngine:
             )
     
     def add_profile(self, profile: CompressionProfile):
-        """Add a custom compression profile"""
-        self.profiles[profile.name] = profile
+        """Add a custom compression profile"""        self.profiles[profile.name] = profile
         self.logger.info(f"Added compression profile: {profile.name}")
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get compression engine statistics"""
-        return {
+        """Get compression engine statistics"""        return {
             "statistics": self.compression_stats.copy(),
             "available_algorithms": {
                 alg.value: available for alg, available in self.available_algorithms.items()
@@ -857,8 +823,7 @@ class CompressionEngine:
         }
     
     async def close(self):
-        """Close compression engine and cleanup resources"""
-        self.executor.shutdown(wait=True)
+        """Close compression engine and cleanup resources"""        self.executor.shutdown(wait=True)
         self.logger.info("Compression engine closed")
 
 
@@ -871,8 +836,7 @@ async def get_compression_engine(
     metrics_collector: Optional[MetricsCollector] = None,
     max_workers: int = 4
 ) -> CompressionEngine:
-    """Get or create compression engine instance"""
-    global _compression_engine
+    """Get or create compression engine instance"""    global _compression_engine
     
     if _compression_engine is None:
         _compression_engine = CompressionEngine(
@@ -889,8 +853,7 @@ async def compress_text(
     text: str,
     algorithm: CompressionAlgorithm = CompressionAlgorithm.ZSTD
 ) -> CompressionResult:
-    """Compress text data"""
-    engine = await get_compression_engine()
+    """Compress text data"""    engine = await get_compression_engine()
     return await engine.compress(
         text.encode('utf-8'),
         algorithm=algorithm,
@@ -902,8 +865,7 @@ async def compress_json(
     data: Dict[str, Any],
     algorithm: CompressionAlgorithm = CompressionAlgorithm.ZSTD
 ) -> CompressionResult:
-    """Compress JSON data"""
-    import json
+    """Compress JSON data"""    import json
     engine = await get_compression_engine()
     json_bytes = json.dumps(data, separators=(',', ':')).encode('utf-8')
     return await engine.compress(
@@ -917,8 +879,7 @@ async def compress_binary(
     data: bytes,
     algorithm: CompressionAlgorithm = CompressionAlgorithm.ZSTD
 ) -> CompressionResult:
-    """Compress binary data"""
-    engine = await get_compression_engine()
+    """Compress binary data"""    engine = await get_compression_engine()
     return await engine.compress(
         data,
         algorithm=algorithm,

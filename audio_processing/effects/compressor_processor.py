@@ -1,5 +1,4 @@
-"""
-🗜️ Compressor Processor - Professional Dynamic Range Control
+"""🗜️ Compressor Processor - Professional Dynamic Range Control
 
 Industrial-grade audio compression with multiple compression algorithms, side-chain
 processing, multiband compression, and professional dynamics control for music production.
@@ -35,9 +34,7 @@ WARNING: This software contains proprietary algorithms and trade secrets.
 Unauthorized reproduction, distribution, or reverse engineering is strictly
 prohibited under international copyright law.
 =============================================================================
-"""
-
-import numpy as np
+"""import numpy as np
 import logging
 from typing import Optional, Dict, List, Tuple, Any, Union
 from enum import Enum
@@ -49,8 +46,7 @@ from .envelope_follower import EnvelopeFollower
 
 
 class CompressorType(Enum):
-    """Professional compressor types with authentic modeling"""
-    VCA = "vca"                    # Clean, precise control
+    """Professional compressor types with authentic modeling"""    VCA = "vca"                    # Clean, precise control
     OPTICAL = "optical"            # Smooth, musical compression
     FET = "fet"                   # Fast, punchy character
     TUBE = "tube"                 # Warm, harmonic saturation
@@ -62,23 +58,20 @@ class CompressorType(Enum):
 
 
 class DetectionMode(Enum):
-    """Peak/RMS detection modes"""
-    PEAK = "peak"
+    """Peak/RMS detection modes"""    PEAK = "peak"
     RMS = "rms"
     HYBRID = "hybrid"
     PROGRAM_DEPENDENT = "program_dependent"
 
 
 class KneeType(Enum):
-    """Compression knee types"""
-    HARD = "hard"
+    """Compression knee types"""    HARD = "hard"
     SOFT = "soft"
     ADAPTIVE = "adaptive"
 
 
 class CompressorPreset(Enum):
-    """Professional compressor presets"""
-    VOCAL_LEVELING = "vocal_leveling"
+    """Professional compressor presets"""    VOCAL_LEVELING = "vocal_leveling"
     DRUM_PUNCH = "drum_punch"
     BASS_CONTROL = "bass_control"
     MIX_BUS_GLUE = "mix_bus_glue"
@@ -92,8 +85,7 @@ class CompressorPreset(Enum):
 
 @dataclass
 class CompressorBand:
-    """Multiband compressor band configuration"""
-    frequency_low: float
+    """Multiband compressor band configuration"""    frequency_low: float
     frequency_high: float
     threshold: float
     ratio: float
@@ -107,8 +99,7 @@ class CompressorBand:
 
 @dataclass
 class CompressorState:
-    """Compressor internal state"""
-    envelope: float = 0.0
+    """Compressor internal state"""    envelope: float = 0.0
     gain_reduction: float = 0.0
     peak_level: float = 0.0
     rms_level: float = 0.0
@@ -118,8 +109,7 @@ class CompressorState:
 
 @dataclass
 class CompressionAnalysis:
-    """AI-powered compression analysis"""
-    recommended_threshold: float
+    """AI-powered compression analysis"""    recommended_threshold: float
     recommended_ratio: float
     recommended_attack: float
     recommended_release: float
@@ -130,8 +120,7 @@ class CompressionAnalysis:
 
 
 class SideChainProcessor:
-    """External side-chain processing"""
-    
+    """External side-chain processing"""    
     def __init__(self, sample_rate: int):
         self.sample_rate = sample_rate
         self.highpass_freq = 100.0  # Hz
@@ -144,8 +133,7 @@ class SideChainProcessor:
         self.b, self.a = scipy.signal.butter(2, normalized_freq, btype='high')
     
     def process(self, audio_data: np.ndarray, sidechain_input: Optional[np.ndarray] = None) -> np.ndarray:
-        """Process side-chain signal"""
-        if not self.enabled or sidechain_input is None:
+        """Process side-chain signal"""        if not self.enabled or sidechain_input is None:
             return audio_data
         
         # Apply high-pass filter to side-chain
@@ -154,16 +142,14 @@ class SideChainProcessor:
 
 
 class MultibandCrossover:
-    """Multiband crossover filter network"""
-    
+    """Multiband crossover filter network"""    
     def __init__(self, sample_rate: int, crossover_frequencies: List[float]):
         self.sample_rate = sample_rate
         self.crossover_frequencies = crossover_frequencies
         self.filters = self._design_crossover_filters()
     
     def _design_crossover_filters(self) -> List[Tuple]:
-        """Design Linkwitz-Riley crossover filters"""
-        filters = []
+        """Design Linkwitz-Riley crossover filters"""        filters = []
         nyquist = self.sample_rate / 2
         
         for freq in self.crossover_frequencies:
@@ -176,8 +162,7 @@ class MultibandCrossover:
         return filters
     
     def split_bands(self, audio_data: np.ndarray) -> List[np.ndarray]:
-        """Split audio into frequency bands"""
-        bands = []
+        """Split audio into frequency bands"""        bands = []
         current_signal = audio_data.copy()
         
         for i, (b_low, a_low, b_high, a_high) in enumerate(self.filters):
@@ -193,16 +178,14 @@ class MultibandCrossover:
         return bands
     
     def recombine_bands(self, bands: List[np.ndarray]) -> np.ndarray:
-        """Recombine processed frequency bands"""
-        output = np.zeros_like(bands[0])
+        """Recombine processed frequency bands"""        output = np.zeros_like(bands[0])
         for band in bands:
             output += band
         return output
 
 
 class CompressorProcessor:
-    """Professional multiband compressor with advanced features"""
-    
+    """Professional multiband compressor with advanced features"""    
     def __init__(self, sample_rate: int = 44100, compressor_type: CompressorType = CompressorType.VCA):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -253,16 +236,14 @@ class CompressorProcessor:
         self.logger.info(f"CompressorProcessor initialized - Type: {compressor_type.value}, Sample Rate: {sample_rate}Hz")
     
     def _initialize_multiband(self) -> List[CompressorBand]:
-        """Initialize multiband compressor bands"""
-        return [
+        """Initialize multiband compressor bands"""        return [
             CompressorBand(20.0, 200.0, -15.0, 3.0, 0.01, 0.1, 0.0),   # Low band
             CompressorBand(200.0, 2000.0, -12.0, 4.0, 0.003, 0.05, 0.0), # Mid band  
             CompressorBand(2000.0, 20000.0, -10.0, 2.5, 0.001, 0.03, 0.0) # High band
         ]
     
     def _load_professional_presets(self) -> Dict[CompressorPreset, Dict[str, Any]]:
-        """Load professional compressor presets"""
-        return {
+        """Load professional compressor presets"""        return {
             CompressorPreset.VOCAL_LEVELING: {
                 'threshold': -18.0, 'ratio': 3.0, 'attack_time': 0.005,
                 'release_time': 0.05, 'knee_width': 2.0, 'makeup_gain': 3.0,
@@ -286,8 +267,7 @@ class CompressorProcessor:
         }
     
     def process(self, audio_data: np.ndarray, sidechain_input: Optional[np.ndarray] = None) -> np.ndarray:
-        """Process audio through compressor with advanced features"""
-        try:
+        """Process audio through compressor with advanced features"""        try:
             if audio_data.size == 0:
                 return audio_data
             
@@ -305,8 +285,7 @@ class CompressorProcessor:
             return audio_data
     
     def _process_single_band(self, audio_data: np.ndarray, sidechain_input: Optional[np.ndarray] = None) -> np.ndarray:
-        """Process single-band compression"""
-        processed_audio = audio_data.astype(np.float64)
+        """Process single-band compression"""        processed_audio = audio_data.astype(np.float64)
         
         # Apply lookahead delay if enabled
         if self.lookahead_ms > 0:
@@ -361,8 +340,7 @@ class CompressorProcessor:
         return processed_audio.astype(audio_data.dtype)
     
     def _process_multiband(self, audio_data: np.ndarray, sidechain_input: Optional[np.ndarray] = None) -> np.ndarray:
-        """Process multiband compression"""
-        # Split into frequency bands
+        """Process multiband compression"""        # Split into frequency bands
         bands_audio = self.crossover.split_bands(audio_data)
         processed_bands = []
         
@@ -386,8 +364,7 @@ class CompressorProcessor:
         return self.crossover.recombine_bands(processed_bands)
     
     def _calculate_gain_reduction(self, envelope_db: np.ndarray) -> np.ndarray:
-        """Calculate gain reduction based on threshold and ratio"""
-        gain_reduction = np.zeros_like(envelope_db)
+        """Calculate gain reduction based on threshold and ratio"""        gain_reduction = np.zeros_like(envelope_db)
         
         for i, level_db in enumerate(envelope_db):
             if level_db > self.threshold:
@@ -407,8 +384,7 @@ class CompressorProcessor:
         return gain_reduction
     
     def _apply_compressor_character(self, gain_reduction: np.ndarray) -> np.ndarray:
-        """Apply compressor type characteristics"""
-        if not self.analog_modeling:
+        """Apply compressor type characteristics"""        if not self.analog_modeling:
             return gain_reduction
         
         if self.compressor_type == CompressorType.OPTICAL:
@@ -427,8 +403,7 @@ class CompressorProcessor:
             return gain_reduction
     
     def _generate_tube_harmonics(self, gain_reduction: np.ndarray) -> np.ndarray:
-        """Generate tube-style harmonic content"""
-        harmonics = np.zeros_like(gain_reduction)
+        """Generate tube-style harmonic content"""        harmonics = np.zeros_like(gain_reduction)
         
         # Add even harmonics (2nd, 4th)
         for i in range(len(gain_reduction)):
@@ -439,8 +414,7 @@ class CompressorProcessor:
         return harmonics
     
     def _apply_lookahead(self, audio_data: np.ndarray, sidechain_input: Optional[np.ndarray]) -> Tuple[np.ndarray, np.ndarray]:
-        """Apply lookahead processing"""
-        lookahead_samples = int(self.lookahead_ms * self.sample_rate / 1000)
+        """Apply lookahead processing"""        lookahead_samples = int(self.lookahead_ms * self.sample_rate / 1000)
         
         # Delay main audio
         delayed_audio = np.concatenate([self.delay_buffer, audio_data])
@@ -453,8 +427,7 @@ class CompressorProcessor:
         return delayed_audio, control_signal
     
     def _save_parameters(self) -> Dict[str, Any]:
-        """Save current parameters"""
-        return {
+        """Save current parameters"""        return {
             'threshold': self.threshold,
             'ratio': self.ratio,
             'attack_time': self.attack_time,
@@ -463,24 +436,21 @@ class CompressorProcessor:
         }
     
     def _restore_parameters(self, params: Dict[str, Any]) -> None:
-        """Restore parameters"""
-        self.threshold = params['threshold']
+        """Restore parameters"""        self.threshold = params['threshold']
         self.ratio = params['ratio']
         self.attack_time = params['attack_time']
         self.release_time = params['release_time']
         self.makeup_gain = params['makeup_gain']
     
     def _set_band_parameters(self, band: CompressorBand) -> None:
-        """Set parameters from multiband configuration"""
-        self.threshold = band.threshold
+        """Set parameters from multiband configuration"""        self.threshold = band.threshold
         self.ratio = band.ratio
         self.attack_time = band.attack_time
         self.release_time = band.release_time
         self.makeup_gain = band.makeup_gain
     
     def apply_preset(self, preset: CompressorPreset) -> None:
-        """Apply professional compressor preset"""
-        if preset in self.presets:
+        """Apply professional compressor preset"""        if preset in self.presets:
             params = self.presets[preset]
             for param, value in params.items():
                 if hasattr(self, param):
@@ -490,8 +460,7 @@ class CompressorProcessor:
             self.logger.warning(f"Preset not found: {preset.value}")
     
     def analyze_dynamics(self, audio_data: np.ndarray) -> CompressionAnalysis:
-        """AI-powered dynamics analysis for optimal compression settings"""
-        try:
+        """AI-powered dynamics analysis for optimal compression settings"""        try:
             # Calculate dynamic range
             peak_level = np.max(np.abs(audio_data))
             rms_level = np.sqrt(np.mean(audio_data ** 2))
@@ -557,8 +526,7 @@ class CompressorProcessor:
             )
     
     def get_metering_data(self) -> Dict[str, float]:
-        """Get real-time metering data"""
-        return {
+        """Get real-time metering data"""        return {
             'input_level_db': 20 * np.log10(self.input_level + 1e-10),
             'output_level_db': 20 * np.log10(self.output_level + 1e-10),
             'gain_reduction_db': self.gain_reduction_meter,
@@ -568,8 +536,7 @@ class CompressorProcessor:
         }
     
     def reset(self) -> None:
-        """Reset compressor state"""
-        self.state = CompressorState()
+        """Reset compressor state"""        self.state = CompressorState()
         self.envelope_follower = EnvelopeFollower(self.sample_rate)
         self.lookahead_buffer.fill(0.0)
         self.delay_buffer.fill(0.0)
@@ -579,8 +546,7 @@ class CompressorProcessor:
         self.logger.info("Compressor state reset")
     
     def get_processing_metrics(self) -> Dict[str, Any]:
-        """Get processing performance metrics"""
-        return {
+        """Get processing performance metrics"""        return {
             'compressor_type': self.compressor_type.value,
             'multiband_enabled': self.multiband_enabled,
             'bands_count': len(self.bands),
@@ -619,8 +585,7 @@ class CompressorProcessor:
             return audio_data
     
     def _compute_gain_reduction(self, input_level: float) -> float:
-        """Compute gain reduction for input level"""
-        if input_level < self.threshold - self.knee_width / 2:
+        """Compute gain reduction for input level"""        if input_level < self.threshold - self.knee_width / 2:
             # Below threshold
             return 0.0
         elif input_level > self.threshold + self.knee_width / 2:
@@ -638,8 +603,7 @@ class CompressorProcessor:
     
     def set_parameters(self, threshold: float = None, ratio: float = None,
                       attack: float = None, release: float = None):
-        """Set compressor parameters"""
-        if threshold is not None:
+        """Set compressor parameters"""        if threshold is not None:
             self.threshold = threshold
         if ratio is not None:
             self.ratio = max(1.0, ratio)

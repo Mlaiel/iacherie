@@ -1,5 +1,4 @@
-"""
-🎵 Music Generation Engine - AI-Powered Music Composition and Generation
+"""🎵 Music Generation Engine - AI-Powered Music Composition and Generation
 
 This module implements advanced AI-driven music generation capabilities including
 melody, harmony, rhythm, and full composition generation.
@@ -8,9 +7,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ LEGAL WARNING: Unauthorized use prohibited. Contact mlaiel@live.de for licensing.
-"""
-
-import torch
+"""import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
@@ -33,8 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 class MusicalKey(Enum):
-    """Musical key definitions."""
-    C_MAJOR = "C_major"
+    """Musical key definitions."""    C_MAJOR = "C_major"
     G_MAJOR = "G_major"
     D_MAJOR = "D_major"
     A_MAJOR = "A_major"
@@ -51,8 +47,7 @@ class MusicalKey(Enum):
 
 
 class MusicGenre(Enum):
-    """Music genre definitions."""
-    CLASSICAL = "classical"
+    """Music genre definitions."""    CLASSICAL = "classical"
     JAZZ = "jazz"
     ROCK = "rock"
     POP = "pop"
@@ -66,8 +61,7 @@ class MusicGenre(Enum):
 
 @dataclass
 class MusicGenerationConfig:
-    """Configuration for music generation."""
-    # Basic settings
+    """Configuration for music generation."""    # Basic settings
     sample_rate: int = 22050
     tempo: int = 120
     time_signature: Tuple[int, int] = (4, 4)
@@ -103,8 +97,7 @@ class MusicGenerationConfig:
 
 
 class MusicToken:
-    """Music token representation for transformer models."""
-    
+    """Music token representation for transformer models."""    
     # Special tokens
     PAD_TOKEN = 0
     START_TOKEN = 1
@@ -116,23 +109,19 @@ class MusicToken:
     
     @staticmethod
     def note_to_token(midi_note: int) -> int:
-        """Convert MIDI note to token."""
-        return midi_note + MusicToken.NOTE_OFFSET
+        """Convert MIDI note to token."""        return midi_note + MusicToken.NOTE_OFFSET
         
     @staticmethod
     def token_to_note(token: int) -> int:
-        """Convert token to MIDI note."""
-        return token - MusicToken.NOTE_OFFSET
+        """Convert token to MIDI note."""        return token - MusicToken.NOTE_OFFSET
         
     @staticmethod
     def is_note_token(token: int) -> bool:
-        """Check if token represents a note."""
-        return MusicToken.NOTE_OFFSET <= token < 388
+        """Check if token represents a note."""        return MusicToken.NOTE_OFFSET <= token < 388
 
 
 class MusicTransformerGenerator(nn.Module):
-    """Transformer-based music generation model."""
-    
+    """Transformer-based music generation model."""    
     def __init__(self, config: MusicGenerationConfig):
         super().__init__()
         self.config = config
@@ -162,8 +151,7 @@ class MusicTransformerGenerator(nn.Module):
         self.key_constraints = self._build_key_constraints()
         
     def _build_key_constraints(self) -> Dict[MusicalKey, List[int]]:
-        """Build key constraints for note generation."""
-        constraints = {}
+        """Build key constraints for note generation."""        constraints = {}
         
         # Major scale intervals
         major_intervals = [0, 2, 4, 5, 7, 9, 11]
@@ -185,8 +173,7 @@ class MusicTransformerGenerator(nn.Module):
         return constraints
         
     def _get_root_note(self, key: MusicalKey) -> int:
-        """Get root note for musical key."""
-        root_notes = {
+        """Get root note for musical key."""        root_notes = {
             MusicalKey.C_MAJOR: 0,
             MusicalKey.G_MAJOR: 7,
             MusicalKey.D_MAJOR: 2,
@@ -206,8 +193,7 @@ class MusicTransformerGenerator(nn.Module):
         
     def forward(self, input_ids: torch.Tensor, 
                 attention_mask: Optional[torch.Tensor] = None) -> torch.Tensor:
-        """Forward pass through music transformer."""
-        outputs = self.transformer(input_ids, attention_mask=attention_mask)
+        """Forward pass through music transformer."""        outputs = self.transformer(input_ids, attention_mask=attention_mask)
         hidden_states = outputs.last_hidden_state
         
         # Apply dropout and projection
@@ -218,8 +204,7 @@ class MusicTransformerGenerator(nn.Module):
         
     def generate(self, prompt: Optional[List[int]] = None, 
                 max_length: int = None) -> List[int]:
-        """Generate music sequence."""
-        if max_length is None:
+        """Generate music sequence."""        if max_length is None:
             max_length = self.config.max_length
             
         if prompt is None:
@@ -254,8 +239,7 @@ class MusicTransformerGenerator(nn.Module):
         
     def _apply_generation_constraints(self, logits: torch.Tensor, 
                                     context: List[int]) -> torch.Tensor:
-        """Apply musical constraints to generation logits."""
-        constrained_logits = logits.clone()
+        """Apply musical constraints to generation logits."""        constrained_logits = logits.clone()
         
         # Key constraints
         if self.config.enforce_key:
@@ -279,8 +263,7 @@ class MusicTransformerGenerator(nn.Module):
         return constrained_logits
         
     def _sample_token(self, logits: torch.Tensor) -> int:
-        """Sample token from logits using top-k and top-p."""
-        # Top-k sampling
+        """Sample token from logits using top-k and top-p."""        # Top-k sampling
         if self.config.top_k > 0:
             indices_to_remove = logits < torch.topk(logits, self.config.top_k)[0][..., -1, None]
             logits[indices_to_remove] = -float('inf')
@@ -305,16 +288,14 @@ class MusicTransformerGenerator(nn.Module):
 
 
 class ChordProgressionGenerator:
-    """Generator for chord progressions based on music theory."""
-    
+    """Generator for chord progressions based on music theory."""    
     def __init__(self, config: MusicGenerationConfig):
         self.config = config
         self.chord_templates = self._build_chord_templates()
         self.progressions = self._build_common_progressions()
         
     def _build_chord_templates(self) -> Dict[str, List[int]]:
-        """Build chord templates (intervals from root)."""
-        return {
+        """Build chord templates (intervals from root)."""        return {
             'major': [0, 4, 7],
             'minor': [0, 3, 7],
             'diminished': [0, 3, 6],
@@ -329,8 +310,7 @@ class ChordProgressionGenerator:
         }
         
     def _build_common_progressions(self) -> Dict[str, List[Tuple[int, str]]]:
-        """Build common chord progressions (degree, quality)."""
-        return {
+        """Build common chord progressions (degree, quality)."""        return {
             'pop': [(1, 'major'), (5, 'major'), (6, 'minor'), (4, 'major')],
             'jazz': [(1, 'major7'), (6, 'minor7'), (2, 'minor7'), (5, 'dominant7')],
             'blues': [(1, 'dominant7'), (1, 'dominant7'), (1, 'dominant7'), (1, 'dominant7'),
@@ -342,8 +322,7 @@ class ChordProgressionGenerator:
         
     def generate_progression(self, length: int = None, 
                            style: str = None) -> List[List[int]]:
-        """Generate chord progression."""
-        if length is None:
+        """Generate chord progression."""        if length is None:
             length = self.config.chord_progression_length
         if style is None:
             style = self.config.genre.value
@@ -368,8 +347,7 @@ class ChordProgressionGenerator:
         return progression
         
     def _get_root_note_for_key(self, key: MusicalKey) -> int:
-        """Get root note for key (in octave 4)."""
-        root_notes = {
+        """Get root note for key (in octave 4)."""        root_notes = {
             MusicalKey.C_MAJOR: 60,  # C4
             MusicalKey.G_MAJOR: 67,  # G4
             MusicalKey.D_MAJOR: 62,  # D4
@@ -388,13 +366,11 @@ class ChordProgressionGenerator:
         return root_notes[key]
         
     def _get_scale_degrees(self, key: MusicalKey) -> List[int]:
-        """Get scale degree intervals for key."""
-        # Major scale intervals
+        """Get scale degree intervals for key."""        # Major scale intervals
         return [0, 2, 4, 5, 7, 9, 11]
         
     def _build_chord(self, root: int, chord_type: str) -> List[int]:
-        """Build chord from root note and type."""
-        if chord_type not in self.chord_templates:
+        """Build chord from root note and type."""        if chord_type not in self.chord_templates:
             chord_type = 'major'
             
         intervals = self.chord_templates[chord_type]
@@ -402,16 +378,14 @@ class ChordProgressionGenerator:
 
 
 class MelodyGenerator:
-    """Melodic sequence generator with musical constraints."""
-    
+    """Melodic sequence generator with musical constraints."""    
     def __init__(self, config: MusicGenerationConfig):
         self.config = config
         self.scale_patterns = self._build_scale_patterns()
         self.melodic_intervals = self._build_melodic_intervals()
         
     def _build_scale_patterns(self) -> Dict[MusicalKey, List[int]]:
-        """Build scale patterns for each key."""
-        patterns = {}
+        """Build scale patterns for each key."""        patterns = {}
         major_intervals = [0, 2, 4, 5, 7, 9, 11]
         
         for key in MusicalKey:
@@ -422,8 +396,7 @@ class MelodyGenerator:
         return patterns
         
     def _get_key_root(self, key: MusicalKey) -> int:
-        """Get root note for key (0-11)."""
-        roots = {
+        """Get root note for key (0-11)."""        roots = {
             MusicalKey.C_MAJOR: 0, MusicalKey.G_MAJOR: 7, MusicalKey.D_MAJOR: 2,
             MusicalKey.A_MAJOR: 9, MusicalKey.E_MAJOR: 4, MusicalKey.B_MAJOR: 11,
             MusicalKey.F_SHARP_MAJOR: 6, MusicalKey.C_SHARP_MAJOR: 1,
@@ -434,8 +407,7 @@ class MelodyGenerator:
         return roots[key]
         
     def _build_melodic_intervals(self) -> Dict[str, List[int]]:
-        """Build melodic interval patterns by style."""
-        return {
+        """Build melodic interval patterns by style."""        return {
             'stepwise': [-2, -1, 1, 2],  # Stepwise motion
             'skipwise': [-4, -3, 3, 4],  # Skip motion
             'leaping': [-7, -5, 5, 7],   # Leap motion
@@ -444,8 +416,7 @@ class MelodyGenerator:
         
     def generate_melody(self, length: int, start_note: Optional[int] = None,
                        chord_progression: Optional[List[List[int]]] = None) -> List[int]:
-        """Generate melodic sequence."""
-        if start_note is None:
+        """Generate melodic sequence."""        if start_note is None:
             start_note = 60  # Middle C
             
         melody = [start_note]
@@ -472,8 +443,7 @@ class MelodyGenerator:
         return melody
         
     def _choose_motion_style(self, position: int, total_length: int) -> str:
-        """Choose melodic motion style based on position."""
-        ratio = position / total_length
+        """Choose melodic motion style based on position."""        ratio = position / total_length
         
         if ratio < 0.25:  # Opening - more stepwise
             return random.choices(['stepwise', 'skipwise', 'mixed'], 
@@ -488,8 +458,7 @@ class MelodyGenerator:
     def _apply_melodic_constraints(self, candidate: int, current: int,
                                  scale_pattern: List[int], position: int,
                                  chord_progression: Optional[List[List[int]]]) -> int:
-        """Apply constraints to melodic note choice."""
-        # Range constraints
+        """Apply constraints to melodic note choice."""        # Range constraints
         min_note, max_note = self.config.melody_range
         candidate = max(min_note, min(max_note, candidate))
         
@@ -521,15 +490,13 @@ class MelodyGenerator:
 
 
 class RhythmGenerator:
-    """Rhythm pattern generator with style-aware patterns."""
-    
+    """Rhythm pattern generator with style-aware patterns."""    
     def __init__(self, config: MusicGenerationConfig):
         self.config = config
         self.rhythm_patterns = self._build_rhythm_patterns()
         
     def _build_rhythm_patterns(self) -> Dict[str, List[float]]:
-        """Build rhythm patterns by style."""
-        return {
+        """Build rhythm patterns by style."""        return {
             'pop': [1.0, 0.5, 0.5, 1.0, 0.5, 0.5, 1.0, 0.5],
             'jazz': [1.0, 0.0, 0.5, 0.0, 1.0, 0.5, 0.0, 0.5],
             'rock': [1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0],
@@ -541,8 +508,7 @@ class RhythmGenerator:
         }
         
     def generate_rhythm(self, length: int, style: str = None) -> List[float]:
-        """Generate rhythm pattern."""
-        if style is None:
+        """Generate rhythm pattern."""        if style is None:
             style = self.config.genre.value
             
         if style not in self.rhythm_patterns:
@@ -558,8 +524,7 @@ class RhythmGenerator:
         return rhythm
         
     def apply_swing(self, rhythm: List[float], swing_ratio: float = 0.6) -> List[float]:
-        """Apply swing feel to rhythm pattern."""
-        swung_rhythm = []
+        """Apply swing feel to rhythm pattern."""        swung_rhythm = []
         
         for i, duration in enumerate(rhythm):
             if i % 2 == 0:  # On beats
@@ -571,15 +536,13 @@ class RhythmGenerator:
 
 
 class InstrumentSynthesizer:
-    """Virtual instrument synthesizer for different timbres."""
-    
+    """Virtual instrument synthesizer for different timbres."""    
     def __init__(self, config: MusicGenerationConfig):
         self.config = config
         self.instruments = self._build_instrument_configs()
         
     def _build_instrument_configs(self) -> Dict[str, Dict]:
-        """Build instrument synthesis configurations."""
-        return {
+        """Build instrument synthesis configurations."""        return {
             'piano': {
                 'attack': 0.01,
                 'decay': 0.3,
@@ -616,8 +579,7 @@ class InstrumentSynthesizer:
         
     def synthesize_note(self, note: int, duration: float, 
                        instrument: str = 'piano') -> np.ndarray:
-        """Synthesize individual note with instrument timbre."""
-        if instrument not in self.instruments:
+        """Synthesize individual note with instrument timbre."""        if instrument not in self.instruments:
             instrument = 'piano'
             
         config = self.instruments[instrument]
@@ -651,8 +613,7 @@ class InstrumentSynthesizer:
     def _generate_envelope(self, samples: int, sample_rate: int,
                           attack: float, decay: float, 
                           sustain: float, release: float) -> np.ndarray:
-        """Generate ADSR envelope."""
-        attack_samples = int(attack * sample_rate)
+        """Generate ADSR envelope."""        attack_samples = int(attack * sample_rate)
         decay_samples = int(decay * sample_rate)
         release_samples = int(release * sample_rate)
         sustain_samples = samples - attack_samples - decay_samples - release_samples
@@ -689,8 +650,7 @@ class InstrumentSynthesizer:
         
     def _apply_lowpass_filter(self, signal: np.ndarray, 
                              cutoff: float) -> np.ndarray:
-        """Apply simple lowpass filter."""
-        # Simple one-pole lowpass filter
+        """Apply simple lowpass filter."""        # Simple one-pole lowpass filter
         sample_rate = self.config.sample_rate
         rc = 1.0 / (2 * np.pi * cutoff)
         dt = 1.0 / sample_rate
@@ -706,8 +666,7 @@ class InstrumentSynthesizer:
 
 
 class CompositionEngine:
-    """High-level composition engine orchestrating all generators."""
-    
+    """High-level composition engine orchestrating all generators."""    
     def __init__(self, config: MusicGenerationConfig):
         self.config = config
         self.chord_generator = ChordProgressionGenerator(config)
@@ -717,8 +676,7 @@ class CompositionEngine:
         
     def compose_piece(self, title: str = "Generated Composition",
                      style_prompts: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Generate complete musical composition."""
-        logger.info(f"Starting composition: {title}")
+        """Generate complete musical composition."""        logger.info(f"Starting composition: {title}")
         
         # Generate structure
         structure = self._generate_structure()
@@ -760,8 +718,7 @@ class CompositionEngine:
         return composition
         
     def _generate_structure(self) -> Dict[str, Any]:
-        """Generate musical structure."""
-        bars = self.config.num_bars
+        """Generate musical structure."""        bars = self.config.num_bars
         beats_per_bar = self.config.time_signature[0]
         
         return {
@@ -778,8 +735,7 @@ class CompositionEngine:
         }
         
     def synthesize_composition(self, composition: Dict[str, Any]) -> np.ndarray:
-        """Synthesize composition to audio."""
-        logger.info("Synthesizing composition to audio")
+        """Synthesize composition to audio."""        logger.info("Synthesizing composition to audio")
         
         melody = composition['melody']
         rhythm = composition['rhythm']
@@ -814,15 +770,13 @@ class CompositionEngine:
 
 
 class StyleTransferEngine:
-    """Style transfer for musical content."""
-    
+    """Style transfer for musical content."""    
     def __init__(self, config: MusicGenerationConfig):
         self.config = config
         self.style_profiles = self._build_style_profiles()
         
     def _build_style_profiles(self) -> Dict[str, Dict]:
-        """Build style characteristic profiles."""
-        return {
+        """Build style characteristic profiles."""        return {
             'classical': {
                 'tempo_range': (60, 120),
                 'harmony_complexity': 0.8,
@@ -851,8 +805,7 @@ class StyleTransferEngine:
         
     def transfer_style(self, composition: Dict[str, Any], 
                       target_style: str) -> Dict[str, Any]:
-        """Transfer composition to target style."""
-        if target_style not in self.style_profiles:
+        """Transfer composition to target style."""        if target_style not in self.style_profiles:
             logger.warning(f"Unknown style: {target_style}")
             return composition
             
@@ -881,44 +834,37 @@ class StyleTransferEngine:
         return transferred
         
     def _add_complex_harmonies(self, composition: Dict[str, Any]) -> Dict[str, Any]:
-        """Add complex harmonies for jazz style."""
-        # Implementation would add extended chords
+        """Add complex harmonies for jazz style."""        # Implementation would add extended chords
         return composition
         
     def _simplify_harmonies(self, composition: Dict[str, Any]) -> Dict[str, Any]:
-        """Simplify harmonies for pop style."""
-        # Implementation would use basic triads
+        """Simplify harmonies for pop style."""        # Implementation would use basic triads
         return composition
         
     def _adjust_melodic_content(self, composition: Dict[str, Any], 
                                profile: Dict) -> Dict[str, Any]:
-        """Adjust melody for style characteristics."""
-        # Implementation would modify melodic intervals
+        """Adjust melody for style characteristics."""        # Implementation would modify melodic intervals
         return composition
         
     def _adjust_rhythmic_content(self, composition: Dict[str, Any],
                                 profile: Dict) -> Dict[str, Any]:
-        """Adjust rhythm for style characteristics."""
-        # Implementation would modify rhythmic patterns
+        """Adjust rhythm for style characteristics."""        # Implementation would modify rhythmic patterns
         return composition
 
 
 class GenreBasedGenerator:
-    """Genre-specific music generation with style-aware models."""
-    
+    """Genre-specific music generation with style-aware models."""    
     def __init__(self, config: MusicGenerationConfig):
         self.config = config
         self.genre_models = {}
         self.composition_engine = CompositionEngine(config)
         
     def load_genre_model(self, genre: str, model_path: str) -> None:
-        """Load pre-trained genre-specific model."""
-        # Implementation would load genre-specific models
+        """Load pre-trained genre-specific model."""        # Implementation would load genre-specific models
         logger.info(f"Loading {genre} genre model from {model_path}")
         
     def generate_by_genre(self, genre: str, **kwargs) -> Dict[str, Any]:
-        """Generate music in specific genre."""
-        # Adjust config for genre
+        """Generate music in specific genre."""        # Adjust config for genre
         genre_config = self._adjust_config_for_genre(genre)
         
         # Generate composition
@@ -930,8 +876,7 @@ class GenreBasedGenerator:
         return composition
         
     def _adjust_config_for_genre(self, genre: str) -> MusicGenerationConfig:
-        """Adjust configuration for specific genre."""
-        config = self.config
+        """Adjust configuration for specific genre."""        config = self.config
         
         # Genre-specific adjustments
         if genre == 'classical':

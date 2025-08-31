@@ -1,5 +1,4 @@
-"""
-Content Protection System - Main Index
+"""Content Protection System - Main Index
 
 This file provides a centralized access point to all protection system components
 and serves as the main entry point for the content protection module.
@@ -10,9 +9,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 from typing import Dict, List, Optional, Any
 from datetime import datetime
 import logging
@@ -41,16 +38,13 @@ settings = get_settings()
 
 
 class ContentProtectionSystem:
-    """
-    Unified Content Protection System
+    """    Unified Content Protection System
     
     This is the main orchestrator that coordinates all protection components
     and provides a simplified interface for content protection operations.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the complete protection system"""
-        # Core components
+        """Initialize the complete protection system"""        # Core components
         self.fingerprint_engine = FingerprintEngine()
         self.protection_manager = ProtectionManager()
         self.content_monitor = ContentMonitor()
@@ -73,8 +67,7 @@ class ContentProtectionSystem:
     
     async def protect_content(self, user_id: str, content_path: str, 
                             protection_config: Optional[ProtectionConfiguration] = None) -> Dict[str, Any]:
-        """
-        Complete content protection workflow
+        """        Complete content protection workflow
         
         Args:
             user_id: User identifier
@@ -83,8 +76,7 @@ class ContentProtectionSystem:
             
         Returns:
             Protection result with fingerprint and monitoring setup
-        """
-        try:
+        """        try:
             logger.info(f"Starting content protection for user {user_id}: {content_path}")
             
             # Step 1: Create fingerprint
@@ -126,8 +118,7 @@ class ContentProtectionSystem:
             return {"error": str(e)}
     
     async def detect_violations(self, user_id: str, content_id: str) -> List[Dict[str, Any]]:
-        """
-        Detect violations for protected content
+        """        Detect violations for protected content
         
         Args:
             user_id: User identifier
@@ -135,8 +126,7 @@ class ContentProtectionSystem:
             
         Returns:
             List of detected violations
-        """
-        try:
+        """        try:
             logger.info(f"Detecting violations for content {content_id}")
             
             # Get content fingerprint
@@ -160,8 +150,7 @@ class ContentProtectionSystem:
             return []
     
     async def process_takedown_request(self, user_id: str, violation_id: str) -> Dict[str, Any]:
-        """
-        Process DMCA takedown request for a violation
+        """        Process DMCA takedown request for a violation
         
         Args:
             user_id: User identifier
@@ -169,8 +158,7 @@ class ContentProtectionSystem:
             
         Returns:
             Takedown processing result
-        """
-        try:
+        """        try:
             logger.info(f"Processing takedown request for violation {violation_id}")
             
             # Get violation details
@@ -215,8 +203,7 @@ class ContentProtectionSystem:
             return {"error": str(e)}
     
     async def generate_protection_report(self, user_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """
-        Generate comprehensive protection analytics report
+        """        Generate comprehensive protection analytics report
         
         Args:
             user_id: User identifier
@@ -225,8 +212,7 @@ class ContentProtectionSystem:
             
         Returns:
             Comprehensive protection report
-        """
-        try:
+        """        try:
             logger.info(f"Generating protection report for user {user_id}")
             
             # Generate comprehensive report
@@ -254,16 +240,14 @@ class ContentProtectionSystem:
             return {"error": str(e)}
     
     async def get_real_time_dashboard(self, user_id: str) -> Dict[str, Any]:
-        """
-        Get real-time dashboard data
+        """        Get real-time dashboard data
         
         Args:
             user_id: User identifier
             
         Returns:
             Real-time dashboard data
-        """
-        try:
+        """        try:
             # Get real-time analytics
             dashboard_data = await self.analytics_engine.generate_real_time_dashboard_data(user_id)
             
@@ -288,8 +272,7 @@ class ContentProtectionSystem:
     
     async def setup_user_protection(self, user_id: str, 
                                   protection_level: ProtectionLevel = ProtectionLevel.STANDARD) -> Dict[str, Any]:
-        """
-        Set up complete protection system for a user
+        """        Set up complete protection system for a user
         
         Args:
             user_id: User identifier
@@ -297,8 +280,7 @@ class ContentProtectionSystem:
             
         Returns:
             Setup result
-        """
-        try:
+        """        try:
             logger.info(f"Setting up protection for user {user_id} at level {protection_level.value}")
             
             # Create protection configuration
@@ -333,16 +315,14 @@ class ContentProtectionSystem:
             return {"error": str(e)}
     
     async def cleanup_user_data(self, user_id: str) -> bool:
-        """
-        Clean up all user protection data (GDPR compliance)
+        """        Clean up all user protection data (GDPR compliance)
         
         Args:
             user_id: User identifier
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             logger.info(f"Cleaning up protection data for user {user_id}")
             
             # Stop all monitoring
@@ -369,28 +349,23 @@ class ContentProtectionSystem:
     
     # Helper methods
     async def _get_user_copyright_info(self, user_id: str):
-        """Get user copyright information for legal documents"""
-        # This would fetch from user profile/database
+        """Get user copyright information for legal documents"""        # This would fetch from user profile/database
         pass
     
     async def _convert_violation_to_legal_format(self, violation: Dict[str, Any]):
-        """Convert violation data to legal document format"""
-        # This would convert the violation data structure
+        """Convert violation data to legal document format"""        # This would convert the violation data structure
         pass
     
     async def _create_protection_config(self, user_id: str, protection_level: ProtectionLevel) -> ProtectionConfiguration:
-        """Create protection configuration based on user and level"""
-        # This would create appropriate configuration
+        """Create protection configuration based on user and level"""        # This would create appropriate configuration
         pass
     
     async def _setup_crawlers_for_user(self, user_id: str, config: ProtectionConfiguration):
-        """Set up crawlers for user based on configuration"""
-        # This would configure and start crawlers
+        """Set up crawlers for user based on configuration"""        # This would configure and start crawlers
         pass
     
     async def _get_enabled_features(self, protection_level: ProtectionLevel) -> List[str]:
-        """Get list of enabled features for protection level"""
-        features_map = {
+        """Get list of enabled features for protection level"""        features_map = {
             ProtectionLevel.BASIC: ["fingerprinting", "basic_monitoring"],
             ProtectionLevel.STANDARD: ["fingerprinting", "monitoring", "alerts"],
             ProtectionLevel.PREMIUM: ["fingerprinting", "monitoring", "alerts", "crawlers", "analytics"],
@@ -402,21 +377,18 @@ class ContentProtectionSystem:
 # Module-level functions for convenience
 async def protect_content(user_id: str, content_path: str, 
                          protection_level: ProtectionLevel = ProtectionLevel.STANDARD) -> Dict[str, Any]:
-    """Convenience function to protect content"""
-    system = ContentProtectionSystem()
+    """Convenience function to protect content"""    system = ContentProtectionSystem()
     config = ProtectionConfiguration(protection_level=protection_level)
     return await system.protect_content(user_id, content_path, config)
 
 
 async def detect_violations(user_id: str, content_id: str) -> List[Dict[str, Any]]:
-    """Convenience function to detect violations"""
-    system = ContentProtectionSystem()
+    """Convenience function to detect violations"""    system = ContentProtectionSystem()
     return await system.detect_violations(user_id, content_id)
 
 
 async def generate_report(user_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-    """Convenience function to generate protection report"""
-    system = ContentProtectionSystem()
+    """Convenience function to generate protection report"""    system = ContentProtectionSystem()
     return await system.generate_protection_report(user_id, start_date, end_date)
 
 

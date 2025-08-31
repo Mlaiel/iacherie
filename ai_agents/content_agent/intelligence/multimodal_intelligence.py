@@ -1,5 +1,4 @@
-"""
-Multimodal Intelligence Module - Advanced AI Processing for Content
+"""Multimodal Intelligence Module - Advanced AI Processing for Content
 
 Enterprise-grade multimodal AI processing system for comprehensive content understanding
 across audio, video, image, and text formats with state-of-the-art deep learning models.
@@ -16,9 +15,7 @@ without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICT
 and will result in immediate legal action under German and International copyright laws.
 
 Contact mlaiel@live.de for licensing inquiries only.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
@@ -82,8 +79,7 @@ logger = logging.getLogger(__name__)
 
 
 class ModalityType(Enum):
-    """Content modality types"""
-    AUDIO = "audio"
+    """Content modality types"""    AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
     TEXT = "text"
@@ -91,8 +87,7 @@ class ModalityType(Enum):
 
 
 class ProcessingMode(Enum):
-    """AI processing modes"""
-    FEATURE_EXTRACTION = "feature_extraction"
+    """AI processing modes"""    FEATURE_EXTRACTION = "feature_extraction"
     CONTENT_UNDERSTANDING = "content_understanding"
     CROSS_MODAL_ALIGNMENT = "cross_modal_alignment"
     SEMANTIC_SEARCH = "semantic_search"
@@ -103,8 +98,7 @@ class ProcessingMode(Enum):
 
 @dataclass
 class MultimodalConfig:
-    """Configuration for multimodal processing"""
-    processing_modes: List[ProcessingMode] = field(default_factory=lambda: [ProcessingMode.CONTENT_UNDERSTANDING])
+    """Configuration for multimodal processing"""    processing_modes: List[ProcessingMode] = field(default_factory=lambda: [ProcessingMode.CONTENT_UNDERSTANDING])
     enable_gpu: bool = True
     model_precision: str = "fp16"  # fp16, fp32, int8
     batch_size: int = 8
@@ -118,8 +112,7 @@ class MultimodalConfig:
 
 @dataclass
 class ContentFeatures:
-    """Comprehensive content features"""
-    modality: ModalityType
+    """Comprehensive content features"""    modality: ModalityType
     timestamp: datetime
     
     # Raw features
@@ -141,8 +134,7 @@ class ContentFeatures:
 
 
 class MultimodalIntelligenceEngine:
-    """
-    Advanced multimodal AI engine for comprehensive content understanding.
+    """    Advanced multimodal AI engine for comprehensive content understanding.
     
     Provides state-of-the-art AI processing capabilities:
     - Cross-modal feature extraction and alignment
@@ -150,8 +142,7 @@ class MultimodalIntelligenceEngine:
     - Style and quality analysis
     - Temporal and spatial modeling
     - Advanced embeddings generation
-    """
-    
+    """    
     def __init__(self, config: MultimodalConfig = None):
         self.config = config or MultimodalConfig()
         
@@ -183,8 +174,7 @@ class MultimodalIntelligenceEngine:
         self.device = torch.device("cuda" if torch.cuda.is_available() and self.config.enable_gpu else "cpu")
         
     async def initialize(self):
-        """Initialize all AI models and components"""
-        try:
+        """Initialize all AI models and components"""        try:
             logger.info("Initializing Multimodal Intelligence Engine...")
             
             # Initialize CLIP for vision-language understanding
@@ -224,8 +214,7 @@ class MultimodalIntelligenceEngine:
     
     async def process_content(self, content_path: str, modality: ModalityType, 
                             config: MultimodalConfig = None) -> ContentFeatures:
-        """
-        Process content with advanced multimodal AI analysis.
+        """        Process content with advanced multimodal AI analysis.
         
         Args:
             content_path: Path to content file
@@ -234,8 +223,7 @@ class MultimodalIntelligenceEngine:
             
         Returns:
             ContentFeatures: Comprehensive content analysis results
-        """
-        try:
+        """        try:
             processing_config = config or self.config
             
             # Initialize feature container
@@ -275,8 +263,7 @@ class MultimodalIntelligenceEngine:
     
     async def _process_audio_content(self, audio_path: str, features: ContentFeatures, 
                                    config: MultimodalConfig) -> ContentFeatures:
-        """Process audio content with advanced AI analysis"""
-        try:
+        """Process audio content with advanced AI analysis"""        try:
             # Load audio
             waveform, sample_rate = torchaudio.load(audio_path)
             waveform = waveform.squeeze(0).numpy()
@@ -322,8 +309,7 @@ class MultimodalIntelligenceEngine:
     
     async def _process_video_content(self, video_path: str, features: ContentFeatures,
                                    config: MultimodalConfig) -> ContentFeatures:
-        """Process video content with multimodal AI analysis"""
-        try:
+        """Process video content with multimodal AI analysis"""        try:
             # Extract video frames and audio
             frames, audio_data = await self._extract_video_components(video_path)
             
@@ -362,8 +348,7 @@ class MultimodalIntelligenceEngine:
     
     async def _process_image_content(self, image_path: str, features: ContentFeatures,
                                    config: MultimodalConfig) -> ContentFeatures:
-        """Process image content with advanced computer vision"""
-        try:
+        """Process image content with advanced computer vision"""        try:
             # Load and preprocess image
             image = Image.open(image_path).convert("RGB")
             
@@ -414,8 +399,7 @@ class MultimodalIntelligenceEngine:
     
     async def _process_text_content(self, text_path: str, features: ContentFeatures,
                                   config: MultimodalConfig) -> ContentFeatures:
-        """Process text content with advanced NLP"""
-        try:
+        """Process text content with advanced NLP"""        try:
             # Read text content
             with open(text_path, 'r', encoding='utf-8') as f:
                 text_content = f.read()
@@ -463,15 +447,13 @@ class MultimodalIntelligenceEngine:
     
     async def _process_multimodal_content(self, content_path: str, features: ContentFeatures,
                                         config: MultimodalConfig) -> ContentFeatures:
-        """Process multimodal content with cross-modal understanding"""
-        # This would handle content that contains multiple modalities
+        """Process multimodal content with cross-modal understanding"""        # This would handle content that contains multiple modalities
         # Implementation would depend on the specific format
         pass
     
     async def _apply_cross_modal_fusion(self, features: ContentFeatures, 
                                       config: MultimodalConfig) -> ContentFeatures:
-        """Apply cross-modal fusion and alignment"""
-        if not self.fusion_model:
+        """Apply cross-modal fusion and alignment"""        if not self.fusion_model:
             return features
         
         try:
@@ -497,8 +479,7 @@ class MultimodalIntelligenceEngine:
     
     async def _generate_semantic_understanding(self, features: ContentFeatures,
                                              config: MultimodalConfig) -> ContentFeatures:
-        """Generate high-level semantic understanding"""
-        try:
+        """Generate high-level semantic understanding"""        try:
             # Combine all available features for semantic analysis
             combined_features = {}
             
@@ -522,8 +503,7 @@ class MultimodalIntelligenceEngine:
     
     async def find_similar_content(self, query_features: ContentFeatures, 
                                  top_k: int = 10) -> List[Tuple[str, float]]:
-        """Find similar content using AI embeddings"""
-        try:
+        """Find similar content using AI embeddings"""        try:
             if query_features.raw_embeddings is None:
                 return []
             
@@ -547,8 +527,7 @@ class MultimodalIntelligenceEngine:
             return []
     
     async def _initialize_custom_models(self):
-        """Initialize custom multimodal models"""
-        try:
+        """Initialize custom multimodal models"""        try:
             # Initialize fusion model
             self.fusion_model = MultimodalFusionModel(
                 visual_dim=512,
@@ -584,8 +563,7 @@ class MultimodalIntelligenceEngine:
             logger.error(f"Custom model initialization failed: {e}")
     
     def _set_eval_mode(self):
-        """Set all models to evaluation mode"""
-        models = [
+        """Set all models to evaluation mode"""        models = [
             self.clip_model, self.blip_model, self.wav2vec_model, self.bert_model,
             self.fusion_model, self.attention_model, self.temporal_model, self.spatial_extractor
         ]

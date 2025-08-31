@@ -1,5 +1,4 @@
-"""
-Metadata Extractor - Enterprise Metadata Extraction & Analysis System
+"""Metadata Extractor - Enterprise Metadata Extraction & Analysis System
 ======================================================================
 
 Advanced metadata extraction system for images and videos with comprehensive
@@ -12,9 +11,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import os
 from typing import Dict, List, Optional, Any, Union
@@ -43,11 +40,9 @@ from ...security.data_sanitizer import DataSanitizer
 logger = logging.getLogger(__name__)
 
 class MetadataExtractor(BaseAgent):
-    """
-    Enterprise-grade metadata extraction system providing comprehensive
+    """    Enterprise-grade metadata extraction system providing comprehensive
     metadata analysis, content forensics, and data sanitization.
-    """
-    
+    """    
     def __init__(self):
         super().__init__(
             agent_id="metadata_extractor",
@@ -83,8 +78,7 @@ class MetadataExtractor(BaseAgent):
         }
 
     async def initialize(self) -> bool:
-        """Initialize metadata extraction components"""
-        try:
+        """Initialize metadata extraction components"""        try:
             logger.info("Initializing Metadata Extractor...")
             
             # Initialize EXIF tag mapping
@@ -113,8 +107,7 @@ class MetadataExtractor(BaseAgent):
         include_sensitive: bool = False,
         sanitize_data: bool = True
     ) -> Dict[str, Any]:
-        """
-        Extract metadata from file
+        """        Extract metadata from file
         
         Args:
             file_path: Path to the file
@@ -123,8 +116,7 @@ class MetadataExtractor(BaseAgent):
             
         Returns:
             Extracted metadata with privacy protection
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             logger.info(f"Extracting metadata from {file_path}")
@@ -194,8 +186,7 @@ class MetadataExtractor(BaseAgent):
         file_format: str = None,
         include_sensitive: bool = False
     ) -> Dict[str, Any]:
-        """
-        Extract metadata from binary data
+        """        Extract metadata from binary data
         
         Args:
             file_data: Binary file data
@@ -204,8 +195,7 @@ class MetadataExtractor(BaseAgent):
             
         Returns:
             Extracted metadata
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             logger.info("Extracting metadata from binary data")
@@ -238,8 +228,7 @@ class MetadataExtractor(BaseAgent):
             }
 
     async def _get_basic_file_info(self, file_path: str) -> Dict[str, Any]:
-        """Extract basic file system information"""
-        try:
+        """Extract basic file system information"""        try:
             file_stat = os.stat(file_path)
             file_path_obj = Path(file_path)
             
@@ -263,8 +252,7 @@ class MetadataExtractor(BaseAgent):
             return {'error': str(e)}
 
     async def _calculate_file_hash(self, file_path: str) -> str:
-        """Calculate SHA256 hash of file"""
-        try:
+        """Calculate SHA256 hash of file"""        try:
             sha256_hash = hashlib.sha256()
             with open(file_path, "rb") as f:
                 # Read file in chunks to handle large files
@@ -278,8 +266,7 @@ class MetadataExtractor(BaseAgent):
             return "unknown"
 
     async def _extract_image_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract comprehensive image metadata"""
-        try:
+        """Extract comprehensive image metadata"""        try:
             metadata = {
                 'format_info': {},
                 'exif_data': {},
@@ -326,8 +313,7 @@ class MetadataExtractor(BaseAgent):
             return {'error': str(e)}
 
     async def _process_exif_data(self, exif_data: Dict[int, Any]) -> Dict[str, Any]:
-        """Process raw EXIF data into readable format"""
-        try:
+        """Process raw EXIF data into readable format"""        try:
             processed_exif = {}
             
             for tag_id, value in exif_data.items():
@@ -358,8 +344,7 @@ class MetadataExtractor(BaseAgent):
             return {}
 
     async def _extract_camera_settings(self, exif_data: Dict[int, Any]) -> Dict[str, Any]:
-        """Extract camera-specific settings from EXIF"""
-        try:
+        """Extract camera-specific settings from EXIF"""        try:
             camera_settings = {}
             
             # Camera identification
@@ -393,8 +378,7 @@ class MetadataExtractor(BaseAgent):
             return {}
 
     async def _extract_gps_data(self, exif_data: Dict[int, Any]) -> Dict[str, Any]:
-        """Extract GPS data from EXIF with privacy consideration"""
-        try:
+        """Extract GPS data from EXIF with privacy consideration"""        try:
             gps_data = {}
             
             # GPS info is usually in tag 34853
@@ -432,8 +416,7 @@ class MetadataExtractor(BaseAgent):
             return {}
 
     def _convert_gps_coordinate(self, coordinate_tuple, direction):
-        """Convert GPS coordinate from EXIF format to decimal"""
-        try:
+        """Convert GPS coordinate from EXIF format to decimal"""        try:
             if not coordinate_tuple or len(coordinate_tuple) != 3:
                 return None
             
@@ -454,8 +437,7 @@ class MetadataExtractor(BaseAgent):
             return None
 
     async def _extract_processing_info(self, exif_data: Dict[int, Any]) -> Dict[str, Any]:
-        """Extract image processing information"""
-        try:
+        """Extract image processing information"""        try:
             processing_info = {}
             
             # Software used
@@ -481,8 +463,7 @@ class MetadataExtractor(BaseAgent):
             return {}
 
     async def _process_exifread_data(self, exif_tags: Dict) -> Dict[str, Any]:
-        """Process exifread library data"""
-        try:
+        """Process exifread library data"""        try:
             additional_data = {}
             
             for tag_name, tag_value in exif_tags.items():
@@ -499,8 +480,7 @@ class MetadataExtractor(BaseAgent):
             return {}
 
     async def _extract_video_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract video metadata (placeholder implementation)"""
-        try:
+        """Extract video metadata (placeholder implementation)"""        try:
             # This would use ffprobe or similar tool in production
             metadata = {
                 'format_info': {'note': 'Video metadata extraction requires ffmpeg/ffprobe'},
@@ -518,8 +498,7 @@ class MetadataExtractor(BaseAgent):
             return {'error': str(e)}
 
     async def _extract_audio_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract audio metadata (placeholder implementation)"""
-        try:
+        """Extract audio metadata (placeholder implementation)"""        try:
             # This would use mutagen or similar library in production
             metadata = {
                 'format_info': {'note': 'Audio metadata extraction requires mutagen library'},
@@ -535,8 +514,7 @@ class MetadataExtractor(BaseAgent):
             return {'error': str(e)}
 
     async def _remove_sensitive_metadata(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Remove privacy-sensitive metadata fields"""
-        try:
+        """Remove privacy-sensitive metadata fields"""        try:
             cleaned_metadata = {}
             
             for category, data in metadata.items():
@@ -571,16 +549,14 @@ class MetadataExtractor(BaseAgent):
             return metadata
 
     async def _sanitize_metadata(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply data sanitization to metadata"""
-        try:
+        """Apply data sanitization to metadata"""        try:
             return await self.data_sanitizer.sanitize_metadata(metadata)
         except Exception as e:
             logger.error(f"Metadata sanitization failed: {e}")
             return metadata
 
     async def _analyze_forensics(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze metadata for forensic indicators"""
-        try:
+        """Analyze metadata for forensic indicators"""        try:
             forensics_analysis = {
                 'authenticity_indicators': [],
                 'manipulation_signs': [],
@@ -643,23 +619,20 @@ class MetadataExtractor(BaseAgent):
             return {'assessment': 'analysis_failed'}
 
     async def _validate_datetime(self, datetime_str: str) -> bool:
-        """Validate datetime format"""
-        try:
+        """Validate datetime format"""        try:
             datetime.fromisoformat(datetime_str.replace('Z', '+00:00'))
             return True
         except:
             return False
 
     async def _validate_gps_coordinates(self, lat: float, lon: float) -> bool:
-        """Validate GPS coordinates"""
-        try:
+        """Validate GPS coordinates"""        try:
             return -90 <= lat <= 90 and -180 <= lon <= 180
         except:
             return False
 
     async def _validate_camera_info(self, camera_info: Dict) -> bool:
-        """Validate camera information"""
-        try:
+        """Validate camera information"""        try:
             required_fields = ['camera_make', 'camera_model']
             return all(field in camera_info for field in required_fields)
         except:
@@ -670,8 +643,7 @@ class MetadataExtractor(BaseAgent):
         file_paths: List[str],
         max_concurrent: int = 3
     ) -> List[Dict[str, Any]]:
-        """Extract metadata from multiple files concurrently"""
-        semaphore = asyncio.Semaphore(max_concurrent)
+        """Extract metadata from multiple files concurrently"""        semaphore = asyncio.Semaphore(max_concurrent)
         
         async def extract_single(file_path):
             async with semaphore:
@@ -685,16 +657,13 @@ class MetadataExtractor(BaseAgent):
                 for i, result in enumerate(results)]
 
     def get_supported_formats(self) -> Dict[str, List[str]]:
-        """Get supported file formats"""
-        return self.supported_formats.copy()
+        """Get supported file formats"""        return self.supported_formats.copy()
 
     def get_metadata_categories(self) -> Dict[str, List[str]]:
-        """Get metadata categories"""
-        return self.metadata_categories.copy()
+        """Get metadata categories"""        return self.metadata_categories.copy()
 
     async def cleanup(self) -> None:
-        """Cleanup resources"""
-        try:
+        """Cleanup resources"""        try:
             await self.performance_monitor.close()
             await self.data_sanitizer.cleanup()
             logger.info("Metadata Extractor cleanup completed")
@@ -702,8 +671,7 @@ class MetadataExtractor(BaseAgent):
             logger.error(f"Metadata Extractor cleanup failed: {e}")
 
     def get_extraction_capabilities(self) -> Dict[str, Any]:
-        """Get metadata extraction capabilities"""
-        return {
+        """Get metadata extraction capabilities"""        return {
             'supported_formats': self.supported_formats,
             'metadata_categories': list(self.metadata_categories.keys()),
             'privacy_protection': True,

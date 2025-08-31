@@ -1,5 +1,4 @@
-"""
-Database Connections Module - IA Influencer Agent + Content Protection Platform
+"""Database Connections Module - IA Influencer Agent + Content Protection Platform
 
 This module provides comprehensive database connection management for the multi-database
 architecture supporting content creators, AI processing, protection, and monetization.
@@ -33,9 +32,7 @@ or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-from .manager import DatabaseConnectionManager, get_connection_manager
+"""from .manager import DatabaseConnectionManager, get_connection_manager
 from .postgresql import PostgreSQLConnectionHandler
 from .redis import RedisConnectionHandler  
 from .mongodb import MongoDBConnectionHandler

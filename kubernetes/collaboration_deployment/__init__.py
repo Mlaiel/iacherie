@@ -26,8 +26,7 @@ User (musician/blogger/photographer/influencer/comedian)
 → Multi-platform distribution
 
 Industry-grade, production-ready collaboration deployment system.
-"""
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
 from enum import Enum
 import asyncio

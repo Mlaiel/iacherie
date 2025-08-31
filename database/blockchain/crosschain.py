@@ -1,5 +1,4 @@
-"""
-Cross-Chain Bridge Integration Module
+"""Cross-Chain Bridge Integration Module
 
 Advanced cross-chain interoperability system for the IA Influencer Agent platform
 enabling seamless asset transfers, multi-chain NFT deployment, and unified
@@ -25,9 +24,7 @@ Copyright: All rights reserved. Unauthorized use prohibited.
 WARNING: This code is proprietary and confidential. Any unauthorized use, modification,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-from typing import Dict, List, Any, Optional, Union, Tuple
+"""from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 import json
@@ -44,8 +41,7 @@ from eth_account import Account
 logger = logging.getLogger(__name__)
 
 class ChainType(Enum):
-    """Supported blockchain networks."""
-    ETHEREUM = "ethereum"
+    """Supported blockchain networks."""    ETHEREUM = "ethereum"
     POLYGON = "polygon"
     BSC = "bsc"
     ARBITRUM = "arbitrum"
@@ -55,8 +51,7 @@ class ChainType(Enum):
     SOLANA = "solana"
 
 class BridgeType(Enum):
-    """Types of cross-chain bridges."""
-    NATIVE_BRIDGE = "native_bridge"
+    """Types of cross-chain bridges."""    NATIVE_BRIDGE = "native_bridge"
     THIRD_PARTY_BRIDGE = "third_party_bridge"
     ATOMIC_SWAP = "atomic_swap"
     LAYER_ZERO = "layer_zero"
@@ -64,8 +59,7 @@ class BridgeType(Enum):
     ARBITRUM_BRIDGE = "arbitrum_bridge"
 
 class TransferStatus(Enum):
-    """Status of cross-chain transfers."""
-    INITIATED = "initiated"
+    """Status of cross-chain transfers."""    INITIATED = "initiated"
     PENDING_SOURCE = "pending_source"
     CONFIRMED_SOURCE = "confirmed_source"
     PENDING_DESTINATION = "pending_destination"
@@ -74,8 +68,7 @@ class TransferStatus(Enum):
     REVERTED = "reverted"
 
 class AssetType(Enum):
-    """Types of assets that can be bridged."""
-    NATIVE_TOKEN = "native_token"
+    """Types of assets that can be bridged."""    NATIVE_TOKEN = "native_token"
     ERC20_TOKEN = "erc20_token"
     NFT_721 = "nft_721"
     NFT_1155 = "nft_1155"
@@ -83,8 +76,7 @@ class AssetType(Enum):
 
 @dataclass
 class ChainConfig:
-    """Configuration for a blockchain network."""
-    chain_type: ChainType
+    """Configuration for a blockchain network."""    chain_type: ChainType
     chain_id: int
     name: str
     rpc_urls: List[str]
@@ -96,8 +88,7 @@ class ChainConfig:
 
 @dataclass
 class BridgeRoute:
-    """Route information for cross-chain transfers."""
-    route_id: str
+    """Route information for cross-chain transfers."""    route_id: str
     source_chain: ChainType
     destination_chain: ChainType
     bridge_type: BridgeType
@@ -110,8 +101,7 @@ class BridgeRoute:
 
 @dataclass
 class CrossChainTransfer:
-    """Cross-chain transfer record."""
-    transfer_id: str
+    """Cross-chain transfer record."""    transfer_id: str
     user_address: str
     source_chain: ChainType
     destination_chain: ChainType
@@ -130,8 +120,7 @@ class CrossChainTransfer:
 
 @dataclass
 class LiquidityPool:
-    """Cross-chain liquidity pool information."""
-    pool_id: str
+    """Cross-chain liquidity pool information."""    pool_id: str
     chain: ChainType
     asset_address: str
     available_liquidity: Decimal
@@ -141,19 +130,15 @@ class LiquidityPool:
     last_updated: datetime
 
 class CrossChainBridge:
-    """
-    Advanced cross-chain bridge system providing seamless interoperability
+    """    Advanced cross-chain bridge system providing seamless interoperability
     between multiple blockchain networks with optimal routing and security.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize cross-chain bridge system.
+        """        Initialize cross-chain bridge system.
         
         Args:
             config: Bridge configuration including chain settings, routes
-        """
-        self.config = config
+        """        self.config = config
         self.chain_configs: Dict[ChainType, ChainConfig] = {}
         self.bridge_routes: List[BridgeRoute] = []
         self.active_transfers: Dict[str, CrossChainTransfer] = {}
@@ -163,8 +148,7 @@ class CrossChainBridge:
         self._initialize_bridge_routes()
     
     def _initialize_chains(self) -> None:
-        """Initialize supported blockchain networks."""
-        chain_configs = self.config.get("chains", {})
+        """Initialize supported blockchain networks."""        chain_configs = self.config.get("chains", {})
         
         for chain_name, chain_config in chain_configs.items():
             try:
@@ -187,8 +171,7 @@ class CrossChainBridge:
                 logger.error(f"Failed to initialize {chain_name}: {e}")
     
     def _initialize_bridge_routes(self) -> None:
-        """Initialize available bridge routes between chains."""
-        # Define common bridge routes
+        """Initialize available bridge routes between chains."""        # Define common bridge routes
         common_routes = [
             # Ethereum <-> Polygon
             BridgeRoute(
@@ -242,8 +225,7 @@ class CrossChainBridge:
         amount: Decimal,
         priority: str = "balanced"  # "speed", "cost", "security", "balanced"
     ) -> Optional[BridgeRoute]:
-        """
-        Find the optimal bridge route for a cross-chain transfer.
+        """        Find the optimal bridge route for a cross-chain transfer.
         
         Args:
             source_chain: Source blockchain network
@@ -254,8 +236,7 @@ class CrossChainBridge:
             
         Returns:
             Optimal bridge route or None if not available
-        """
-        try:
+        """        try:
             # Filter routes by source, destination, and asset type
             candidate_routes = [
                 route for route in self.bridge_routes
@@ -295,14 +276,12 @@ class CrossChainBridge:
         asset_type: AssetType,
         amount: Decimal
     ) -> List[BridgeRoute]:
-        """Find indirect routes through intermediate chains."""
-        # For simplicity, this implementation only considers direct routes
+        """Find indirect routes through intermediate chains."""        # For simplicity, this implementation only considers direct routes
         # In production, would implement multi-hop routing
         return []
     
     def _calculate_route_score(self, route: BridgeRoute, priority: str) -> float:
-        """Calculate a score for a route based on priority."""
-        if priority == "speed":
+        """Calculate a score for a route based on priority."""        if priority == "speed":
             # Prioritize faster routes
             time_score = 100 / max(route.estimated_time_minutes, 1)
             return time_score * 0.6 + route.success_rate_percentage * 0.4
@@ -336,8 +315,7 @@ class CrossChainBridge:
         amount: Decimal,
         destination_address: Optional[str] = None
     ) -> CrossChainTransfer:
-        """
-        Initiate a cross-chain transfer.
+        """        Initiate a cross-chain transfer.
         
         Args:
             user_address: User's wallet address
@@ -350,8 +328,7 @@ class CrossChainBridge:
             
         Returns:
             Cross-chain transfer record
-        """
-        try:
+        """        try:
             # Find optimal route
             route = await self.find_optimal_route(
                 source_chain, destination_chain, asset_type, amount
@@ -406,8 +383,7 @@ class CrossChainBridge:
         transfer: CrossChainTransfer,
         destination_address: str
     ) -> str:
-        """Execute the transaction on the source chain."""
-        try:
+        """Execute the transaction on the source chain."""        try:
             source_w3 = self.web3_instances[transfer.source_chain]
             
             # Get bridge contract
@@ -432,8 +408,7 @@ class CrossChainBridge:
             raise
     
     async def monitor_transfers(self) -> None:
-        """Monitor active transfers and update their status."""
-        while True:
+        """Monitor active transfers and update their status."""        while True:
             try:
                 for transfer_id, transfer in list(self.active_transfers.items()):
                     await self._update_transfer_status(transfer)
@@ -445,8 +420,7 @@ class CrossChainBridge:
                 await asyncio.sleep(60)
     
     async def _update_transfer_status(self, transfer: CrossChainTransfer) -> None:
-        """Update the status of a specific transfer."""
-        try:
+        """Update the status of a specific transfer."""        try:
             if transfer.status == TransferStatus.PENDING_SOURCE:
                 # Check if source transaction is confirmed
                 if await self._is_transaction_confirmed(
@@ -480,8 +454,7 @@ class CrossChainBridge:
         chain: ChainType,
         tx_hash: str
     ) -> bool:
-        """Check if a transaction is confirmed on the blockchain."""
-        try:
+        """Check if a transaction is confirmed on the blockchain."""        try:
             w3 = self.web3_instances[chain]
             receipt = w3.eth.get_transaction_receipt(tx_hash)
             
@@ -500,8 +473,7 @@ class CrossChainBridge:
             return False
     
     async def _initiate_destination_transaction(self, transfer: CrossChainTransfer) -> None:
-        """Initiate the transaction on the destination chain."""
-        try:
+        """Initiate the transaction on the destination chain."""        try:
             # Mock destination transaction
             # In production, would trigger the bridge contract on destination chain
             mock_tx_hash = "0x" + hashlib.sha256(
@@ -526,8 +498,7 @@ class CrossChainBridge:
         token_id: str,
         metadata_uri: str
     ) -> CrossChainTransfer:
-        """
-        Bridge an NFT across chains with metadata preservation.
+        """        Bridge an NFT across chains with metadata preservation.
         
         Args:
             user_address: Owner's wallet address
@@ -539,8 +510,7 @@ class CrossChainBridge:
             
         Returns:
             Cross-chain transfer record
-        """
-        try:
+        """        try:
             # Determine NFT standard
             nft_standard = await self._detect_nft_standard(source_chain, nft_address)
             
@@ -573,8 +543,7 @@ class CrossChainBridge:
         chain: ChainType,
         nft_address: str
     ) -> AssetType:
-        """Detect the NFT standard (ERC-721 or ERC-1155)."""
-        # Mock implementation - in production, would check contract interfaces
+        """Detect the NFT standard (ERC-721 or ERC-1155)."""        # Mock implementation - in production, would check contract interfaces
         return AssetType.NFT_721
     
     async def get_bridge_liquidity(
@@ -583,8 +552,7 @@ class CrossChainBridge:
         destination_chain: ChainType,
         asset_address: str
     ) -> Dict[str, Any]:
-        """
-        Get liquidity information for a specific bridge route.
+        """        Get liquidity information for a specific bridge route.
         
         Args:
             source_chain: Source blockchain network
@@ -593,8 +561,7 @@ class CrossChainBridge:
             
         Returns:
             Liquidity information
-        """
-        try:
+        """        try:
             # Find relevant routes
             routes = [
                 route for route in self.bridge_routes
@@ -644,8 +611,7 @@ class CrossChainBridge:
         asset_type: AssetType,
         amount: Decimal
     ) -> Dict[str, Any]:
-        """
-        Estimate the total cost of a cross-chain transfer.
+        """        Estimate the total cost of a cross-chain transfer.
         
         Args:
             source_chain: Source blockchain network
@@ -655,8 +621,7 @@ class CrossChainBridge:
             
         Returns:
             Cost estimation breakdown
-        """
-        try:
+        """        try:
             route = await self.find_optimal_route(
                 source_chain, destination_chain, asset_type, amount
             )
@@ -688,8 +653,7 @@ class CrossChainBridge:
             return {"error": str(e)}
     
     async def _estimate_gas_cost(self, chain: ChainType) -> Decimal:
-        """Estimate gas cost for a transaction on a specific chain."""
-        # Mock gas cost estimation
+        """Estimate gas cost for a transaction on a specific chain."""        # Mock gas cost estimation
         gas_costs = {
             ChainType.ETHEREUM: Decimal("20"),
             ChainType.POLYGON: Decimal("0.5"),
@@ -701,8 +665,7 @@ class CrossChainBridge:
         return gas_costs.get(chain, Decimal("5"))
     
     def get_transfer_status(self, transfer_id: str) -> Optional[Dict[str, Any]]:
-        """Get detailed status of a specific transfer."""
-        transfer = self.active_transfers.get(transfer_id)
+        """Get detailed status of a specific transfer."""        transfer = self.active_transfers.get(transfer_id)
         if not transfer:
             return None
         
@@ -732,8 +695,7 @@ class CrossChainBridge:
         }
     
     def get_bridge_analytics(self) -> Dict[str, Any]:
-        """Get comprehensive bridge analytics and statistics."""
-        completed_transfers = [
+        """Get comprehensive bridge analytics and statistics."""        completed_transfers = [
             t for t in self.active_transfers.values()
             if t.status == TransferStatus.COMPLETED
         ]
@@ -782,8 +744,7 @@ class CrossChainBridge:
         }
     
     def _calculate_average_completion_time(self) -> float:
-        """Calculate average completion time for completed transfers."""
-        completed_transfers = [
+        """Calculate average completion time for completed transfers."""        completed_transfers = [
             t for t in self.active_transfers.values()
             if t.status == TransferStatus.COMPLETED and t.completed_at
         ]

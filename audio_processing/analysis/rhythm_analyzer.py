@@ -1,14 +1,11 @@
-"""
-🥁 Rhythm Analyzer - Advanced Beat Detection & Rhythmic Analysis
+"""🥁 Rhythm Analyzer - Advanced Beat Detection & Rhythmic Analysis
 
 Professional rhythm analysis engine providing comprehensive beat tracking,
 tempo estimation, rhythm pattern recognition, and metrical analysis.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import numpy as np
+"""import numpy as np
 import logging
 from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass
@@ -21,24 +18,21 @@ from scipy import ndimage
 
 
 class BeatTrackingMethod(Enum):
-    """Beat tracking methods"""
-    ELLIS = "ellis"
+    """Beat tracking methods"""    ELLIS = "ellis"
     DEGARA = "degara"
     CRF = "crf"
     HYBRID = "hybrid"
 
 
 class TempoConfidence(Enum):
-    """Tempo confidence levels"""
-    HIGH = 0.8
+    """Tempo confidence levels"""    HIGH = 0.8
     MEDIUM = 0.6
     LOW = 0.4
 
 
 @dataclass
 class BeatEvent:
-    """Individual beat event"""
-    time: float
+    """Individual beat event"""    time: float
     strength: float
     confidence: float
     is_downbeat: bool
@@ -47,8 +41,7 @@ class BeatEvent:
 
 @dataclass
 class RhythmPattern:
-    """Rhythm pattern analysis"""
-    pattern_id: str
+    """Rhythm pattern analysis"""    pattern_id: str
     pattern_sequence: List[float]
     duration: float
     repetitions: int
@@ -59,8 +52,7 @@ class RhythmPattern:
 
 @dataclass
 class RhythmAnalysisResult:
-    """Complete rhythm analysis results"""
-    tempo_bpm: float
+    """Complete rhythm analysis results"""    tempo_bpm: float
     tempo_confidence: float
     beat_times: np.ndarray
     beat_strengths: np.ndarray
@@ -80,13 +72,11 @@ class RhythmAnalysisResult:
 
 
 class RhythmAnalyzer:
-    """
-    🥁 Professional Rhythm Analysis Engine
+    """    🥁 Professional Rhythm Analysis Engine
     
     Advanced beat tracking with multiple detection algorithms, tempo estimation,
     rhythm pattern recognition, and comprehensive rhythmic characterization.
-    """
-    
+    """    
     def __init__(self,
                  sample_rate: int = 44100,
                  hop_length: int = 512,
@@ -94,8 +84,7 @@ class RhythmAnalyzer:
                  tempo_min: float = 30.0,
                  tempo_max: float = 300.0,
                  beat_method: BeatTrackingMethod = BeatTrackingMethod.ELLIS):
-        """
-        Initialize rhythm analyzer with advanced configuration
+        """        Initialize rhythm analyzer with advanced configuration
         
         Args:
             sample_rate: Audio sample rate
@@ -104,8 +93,7 @@ class RhythmAnalyzer:
             tempo_min: Minimum tempo for detection
             tempo_max: Maximum tempo for detection
             beat_method: Beat tracking method
-        """
-        self.logger = logging.getLogger(self.__class__.__name__)
+        """        self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
         self.hop_length = hop_length
         self.frame_length = frame_length
@@ -131,16 +119,14 @@ class RhythmAnalyzer:
         self.logger.info(f"RhythmAnalyzer initialized: {beat_method.value} method")
     
     async def analyze_rhythm(self, audio_data: np.ndarray) -> RhythmAnalysisResult:
-        """
-        Perform comprehensive rhythm analysis
+        """        Perform comprehensive rhythm analysis
         
         Args:
             audio_data: Input audio signal
             
         Returns:
             Complete rhythm analysis results
-        """
-        try:
+        """        try:
             self.logger.info("Starting rhythm analysis...")
             
             # Extract onset detection function and beats
@@ -208,8 +194,7 @@ class RhythmAnalyzer:
             raise
     
     async def _estimate_tempo(self, onset_envelope: np.ndarray) -> Tuple[float, float]:
-        """Estimate tempo using multiple methods"""
-        def estimate():
+        """Estimate tempo using multiple methods"""        def estimate():
             try:
                 # Primary tempo estimation
                 tempo, beats = librosa.beat.beat_track(
@@ -240,8 +225,7 @@ class RhythmAnalyzer:
         return await asyncio.get_event_loop().run_in_executor(self.executor, estimate)
     
     async def _track_beats(self, onset_envelope: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
-        """Track beats using selected method"""
-        def track_beats():
+        """Track beats using selected method"""        def track_beats():
             try:
                 if self.beat_method == BeatTrackingMethod.ELLIS:
                     return self._ellis_beat_tracking(onset_envelope)
@@ -258,8 +242,7 @@ class RhythmAnalyzer:
         return await asyncio.get_event_loop().run_in_executor(self.executor, track_beats)
     
     def _ellis_beat_tracking(self, onset_envelope: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
-        """Ellis beat tracking algorithm"""
-        tempo, beats = librosa.beat.beat_track(
+        """Ellis beat tracking algorithm"""        tempo, beats = librosa.beat.beat_track(
             onset_envelope=onset_envelope,
             sr=self.sample_rate,
             hop_length=self.hop_length,
@@ -277,8 +260,7 @@ class RhythmAnalyzer:
         return beat_times, beat_strengths
     
     def _degara_beat_tracking(self, onset_envelope: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
-        """Degara beat tracking algorithm (simplified implementation)"""
-        # Use Ellis as fallback with different parameters
+        """Degara beat tracking algorithm (simplified implementation)"""        # Use Ellis as fallback with different parameters
         tempo, beats = librosa.beat.beat_track(
             onset_envelope=onset_envelope,
             sr=self.sample_rate,
@@ -294,8 +276,7 @@ class RhythmAnalyzer:
         return beat_times, beat_strengths
     
     def _hybrid_beat_tracking(self, onset_envelope: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
-        """Hybrid beat tracking combining multiple methods"""
-        # Get results from multiple methods
+        """Hybrid beat tracking combining multiple methods"""        # Get results from multiple methods
         ellis_times, ellis_strengths = self._ellis_beat_tracking(onset_envelope)
         degara_times, degara_strengths = self._degara_beat_tracking(onset_envelope)
         
@@ -306,8 +287,7 @@ class RhythmAnalyzer:
         return combined_times, combined_strengths
     
     async def _detect_onsets(self, audio_data: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
-        """Detect onset times and strengths"""
-        def detect():
+        """Detect onset times and strengths"""        def detect():
             try:
                 # Onset detection
                 onset_frames = librosa.onset.onset_detect(
@@ -343,8 +323,7 @@ class RhythmAnalyzer:
         return await asyncio.get_event_loop().run_in_executor(self.executor, detect)
     
     async def _analyze_downbeats(self, onset_envelope: np.ndarray) -> np.ndarray:
-        """Analyze downbeat locations"""
-        def analyze():
+        """Analyze downbeat locations"""        def analyze():
             try:
                 # Simple downbeat detection (every 4 beats for 4/4)
                 tempo, beats = librosa.beat.beat_track(
@@ -371,8 +350,7 @@ class RhythmAnalyzer:
     async def _determine_time_signature(self, 
                                       beat_times: np.ndarray, 
                                       onset_times: np.ndarray) -> Tuple[str, float]:
-        """Determine time signature and confidence"""
-        def determine():
+        """Determine time signature and confidence"""        def determine():
             if len(beat_times) < 8:  # Need sufficient beats
                 return '4/4', 0.0
             
@@ -404,8 +382,7 @@ class RhythmAnalyzer:
         return await asyncio.get_event_loop().run_in_executor(self.executor, determine)
     
     def _compute_periodicity_score(self, beat_times: np.ndarray, expected_period: float) -> float:
-        """Compute periodicity score for given period"""
-        if len(beat_times) < 2:
+        """Compute periodicity score for given period"""        if len(beat_times) < 2:
             return 0.0
         
         # Create binary beat signal
@@ -438,8 +415,7 @@ class RhythmAnalyzer:
                                      beat_times: np.ndarray, 
                                      onset_times: np.ndarray, 
                                      tempo_bpm: float) -> List[RhythmPattern]:
-        """Analyze rhythm patterns"""
-        def analyze():
+        """Analyze rhythm patterns"""        def analyze():
             patterns = []
             
             if len(beat_times) < 4 or len(onset_times) < 4:
@@ -483,8 +459,7 @@ class RhythmAnalyzer:
         return await asyncio.get_event_loop().run_in_executor(self.executor, analyze)
     
     def _compute_syncopation_level(self, onsets: np.ndarray, beats: np.ndarray) -> float:
-        """Compute syncopation level for onset pattern"""
-        if len(onsets) == 0 or len(beats) == 0:
+        """Compute syncopation level for onset pattern"""        if len(onsets) == 0 or len(beats) == 0:
             return 0.0
         
         # Simple syncopation measure: onsets not on beats
@@ -499,8 +474,7 @@ class RhythmAnalyzer:
         return float(syncopated_onsets / len(onsets))
     
     async def _compute_tempo_stability(self, beat_times: np.ndarray) -> float:
-        """Compute tempo stability"""
-        def compute():
+        """Compute tempo stability"""        def compute():
             if len(beat_times) < 3:
                 return 0.0
             
@@ -520,8 +494,7 @@ class RhythmAnalyzer:
     async def _analyze_syncopation(self, 
                                  beat_times: np.ndarray, 
                                  onset_times: np.ndarray) -> float:
-        """Analyze overall syncopation score"""
-        def analyze():
+        """Analyze overall syncopation score"""        def analyze():
             if len(beat_times) == 0 or len(onset_times) == 0:
                 return 0.0
             
@@ -532,8 +505,7 @@ class RhythmAnalyzer:
     async def _compute_rhythmic_complexity(self, 
                                          beat_times: np.ndarray, 
                                          onset_times: np.ndarray) -> float:
-        """Compute rhythmic complexity score"""
-        def compute():
+        """Compute rhythmic complexity score"""        def compute():
             if len(beat_times) == 0 or len(onset_times) == 0:
                 return 0.0
             
@@ -564,8 +536,7 @@ class RhythmAnalyzer:
         return await asyncio.get_event_loop().run_in_executor(self.executor, compute)
     
     async def _analyze_groove_consistency(self, beat_times: np.ndarray) -> float:
-        """Analyze groove consistency"""
-        def analyze():
+        """Analyze groove consistency"""        def analyze():
             if len(beat_times) < 4:
                 return 0.0
             
@@ -586,8 +557,7 @@ class RhythmAnalyzer:
                                        beat_times: np.ndarray, 
                                        downbeat_times: np.ndarray, 
                                        time_signature: str) -> Dict[str, List[float]]:
-        """Build metrical hierarchy"""
-        def build():
+        """Build metrical hierarchy"""        def build():
             hierarchy = {
                 'beats': beat_times.tolist(),
                 'downbeats': downbeat_times.tolist(),
@@ -618,8 +588,7 @@ class RhythmAnalyzer:
         return await asyncio.get_event_loop().run_in_executor(self.executor, build)
     
     async def _detect_tempo_changes(self, onset_envelope: np.ndarray) -> List[Tuple[float, float]]:
-        """Detect tempo changes over time"""
-        def detect():
+        """Detect tempo changes over time"""        def detect():
             tempo_changes = []
             
             # Analyze tempo in windows
@@ -647,11 +616,9 @@ class RhythmAnalyzer:
         return await asyncio.get_event_loop().run_in_executor(self.executor, detect)
     
     def analyze_real_time_beat(self, frame: np.ndarray) -> Dict[str, Any]:
-        """
-        Real-time beat analysis for single frame
+        """        Real-time beat analysis for single frame
         Optimized for low-latency processing
-        """
-        try:
+        """        try:
             # Simple onset strength computation
             onset_strength = librosa.onset.onset_strength(
                 y=frame,
@@ -685,6 +652,5 @@ class RhythmAnalyzer:
             }
     
     def __del__(self):
-        """Cleanup thread pool"""
-        if hasattr(self, 'executor'):
+        """Cleanup thread pool"""        if hasattr(self, 'executor'):
             self.executor.shutdown(wait=False)

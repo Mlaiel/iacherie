@@ -1,5 +1,4 @@
-"""
-AI Processing Pipeline
+"""AI Processing Pipeline
 =====================
 
 Enterprise-grade processing pipeline for multi-format content analysis
@@ -12,9 +11,7 @@ Features:
 - Enterprise monitoring and logging
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import uuid
@@ -48,8 +45,7 @@ logger = logging.getLogger(__name__)
 
 
 class PipelineStage(Enum):
-    """Pipeline processing stages."""
-    PREPROCESSING = "preprocessing"
+    """Pipeline processing stages."""    PREPROCESSING = "preprocessing"
     FEATURE_EXTRACTION = "feature_extraction"
     FINGERPRINT_GENERATION = "fingerprint_generation"
     VECTOR_EMBEDDING = "vector_embedding"
@@ -59,8 +55,7 @@ class PipelineStage(Enum):
 
 
 class ContentFormat(Enum):
-    """Supported content formats."""
-    AUDIO_MP3 = "audio/mp3"
+    """Supported content formats."""    AUDIO_MP3 = "audio/mp3"
     AUDIO_WAV = "audio/wav"
     AUDIO_FLAC = "audio/flac"
     VIDEO_MP4 = "video/mp4"
@@ -76,8 +71,7 @@ class ContentFormat(Enum):
 
 @dataclass
 class PipelineConfig:
-    """Pipeline configuration parameters."""
-    enable_parallel_processing: bool = True
+    """Pipeline configuration parameters."""    enable_parallel_processing: bool = True
     max_parallel_stages: int = 4
     enable_gpu_acceleration: bool = True
     quality_threshold: float = 0.85
@@ -89,8 +83,7 @@ class PipelineConfig:
 
 @dataclass
 class StageResult:
-    """Result from a pipeline stage."""
-    stage: PipelineStage
+    """Result from a pipeline stage."""    stage: PipelineStage
     success: bool
     data: Any
     metadata: Dict[str, Any]
@@ -100,8 +93,7 @@ class StageResult:
 
 @dataclass
 class PipelineResult:
-    """Complete pipeline execution result."""
-    task_id: str
+    """Complete pipeline execution result."""    task_id: str
     success: bool
     fingerprint: Optional[str]
     vector_embedding: Optional[np.ndarray]
@@ -113,16 +105,13 @@ class PipelineResult:
 
 
 class ProcessingPipeline:
-    """
-    Enterprise AI Processing Pipeline
+    """    Enterprise AI Processing Pipeline
     
     Orchestrates multi-stage content processing with AI fingerprinting,
     vector embeddings, and similarity analysis for content protection.
-    """
-    
+    """    
     def __init__(self, config: PipelineConfig):
-        """Initialize processing pipeline."""
-        self.config = config
+        """Initialize processing pipeline."""        self.config = config
         self.stage_processors = {}
         self.active_executions: Dict[str, asyncio.Task] = {}
         
@@ -133,8 +122,7 @@ class ProcessingPipeline:
         self._initialize_stage_processors()
     
     def _initialize_models(self):
-        """Initialize AI models for different content types."""
-        try:
+        """Initialize AI models for different content types."""        try:
             # Text embedding model
             self.text_model = SentenceTransformer('all-MiniLM-L6-v2')
             
@@ -158,8 +146,7 @@ class ProcessingPipeline:
             raise
     
     def _initialize_stage_processors(self):
-        """Initialize stage-specific processors."""
-        self.stage_processors = {
+        """Initialize stage-specific processors."""        self.stage_processors = {
             PipelineStage.PREPROCESSING: self._preprocess_content,
             PipelineStage.FEATURE_EXTRACTION: self._extract_features,
             PipelineStage.FINGERPRINT_GENERATION: self._generate_fingerprint,
@@ -170,16 +157,14 @@ class ProcessingPipeline:
         }
     
     async def execute_pipeline(self, task: ProcessingTask) -> PipelineResult:
-        """
-        Execute complete processing pipeline for task.
+        """        Execute complete processing pipeline for task.
         
         Args:
             task: Processing task to execute
             
         Returns:
             PipelineResult: Complete execution result
-        """
-        execution_id = str(uuid.uuid4())
+        """        execution_id = str(uuid.uuid4())
         start_time = time.time()
         stage_results = []
         
@@ -356,8 +341,7 @@ class ProcessingPipeline:
         task: ProcessingTask, 
         input_data: Any
     ) -> StageResult:
-        """Execute a single pipeline stage."""
-        start_time = time.time()
+        """Execute a single pipeline stage."""        start_time = time.time()
         
         try:
             processor = self.stage_processors.get(stage)
@@ -392,8 +376,7 @@ class ProcessingPipeline:
             )
     
     async def _preprocess_content(self, task: ProcessingTask, input_data: Any) -> Dict[str, Any]:
-        """Preprocess content based on type."""
-        content_data = task.input_data.get('content_data')
+        """Preprocess content based on type."""        content_data = task.input_data.get('content_data')
         content_type = task.content_type
         
         if content_type == 'audio':
@@ -408,8 +391,7 @@ class ProcessingPipeline:
             raise ValueError(f"Unsupported content type: {content_type}")
     
     async def _preprocess_audio(self, content_data: Any, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Preprocess audio content."""
-        try:
+        """Preprocess audio content."""        try:
             # Load audio using librosa
             if isinstance(content_data, str):  # File path
                 audio, sr = librosa.load(content_data, sr=params.get('sample_rate', 22050))
@@ -444,8 +426,7 @@ class ProcessingPipeline:
             raise RuntimeError(f"Audio preprocessing failed: {e}")
     
     async def _preprocess_video(self, content_data: Any, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Preprocess video content."""
-        temp_path = None
+        """Preprocess video content."""        temp_path = None
         try:
             import cv2
             
@@ -505,8 +486,7 @@ class ProcessingPipeline:
                     pass  # Ignore cleanup errors
     
     async def _preprocess_image(self, content_data: Any, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Preprocess image content."""
-        try:
+        """Preprocess image content."""        try:
             from PIL import Image
             
             if isinstance(content_data, str):  # File path
@@ -540,8 +520,7 @@ class ProcessingPipeline:
             raise RuntimeError(f"Image preprocessing failed: {e}")
     
     async def _preprocess_text(self, content_data: Any, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Preprocess text content."""
-        try:
+        """Preprocess text content."""        try:
             if isinstance(content_data, bytes):
                 text = content_data.decode('utf-8')
             else:
@@ -573,8 +552,7 @@ class ProcessingPipeline:
             raise RuntimeError(f"Text preprocessing failed: {e}")
     
     async def _extract_features(self, task: ProcessingTask, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract features from preprocessed content."""
-        content_type = task.content_type
+        """Extract features from preprocessed content."""        content_type = task.content_type
         
         if content_type == 'audio':
             return await self._extract_audio_features(input_data)
@@ -588,8 +566,7 @@ class ProcessingPipeline:
             raise ValueError(f"Unsupported content type: {content_type}")
     
     async def _extract_audio_features(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract audio features using Essentia and librosa."""
-        try:
+        """Extract audio features using Essentia and librosa."""        try:
             audio_data = input_data['audio_data']
             sr = input_data['sample_rate']
             
@@ -636,8 +613,7 @@ class ProcessingPipeline:
             raise RuntimeError(f"Audio feature extraction failed: {e}")
     
     async def _extract_video_features(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract video features using OpenCV."""
-        try:
+        """Extract video features using OpenCV."""        try:
             frames = input_data['frames']
             
             features = []
@@ -678,8 +654,7 @@ class ProcessingPipeline:
             raise RuntimeError(f"Video feature extraction failed: {e}")
     
     async def _extract_image_features(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract image features using various techniques."""
-        try:
+        """Extract image features using various techniques."""        try:
             image_data = input_data['image_data']
             
             # Color histogram
@@ -726,8 +701,7 @@ class ProcessingPipeline:
             raise RuntimeError(f"Image feature extraction failed: {e}")
     
     async def _extract_text_features(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract text features using NLP techniques."""
-        try:
+        """Extract text features using NLP techniques."""        try:
             text_data = input_data['text_data']
             
             # Basic text statistics
@@ -778,8 +752,7 @@ class ProcessingPipeline:
             raise RuntimeError(f"Text feature extraction failed: {e}")
     
     async def _generate_fingerprint(self, task: ProcessingTask, input_data: Dict[str, Any]) -> str:
-        """Generate content fingerprint."""
-        content_type = task.content_type
+        """Generate content fingerprint."""        content_type = task.content_type
         
         if content_type == 'audio':
             return await self._generate_audio_fingerprint(input_data)
@@ -793,8 +766,7 @@ class ProcessingPipeline:
             raise ValueError(f"Unsupported content type: {content_type}")
     
     async def _generate_audio_fingerprint(self, input_data: Dict[str, Any]) -> str:
-        """Generate audio fingerprint using perceptual hashing."""
-        try:
+        """Generate audio fingerprint using perceptual hashing."""        try:
             feature_vector = input_data['feature_vector']
             
             # Quantize features to create binary hash
@@ -815,8 +787,7 @@ class ProcessingPipeline:
             raise RuntimeError(f"Audio fingerprint generation failed: {e}")
     
     async def _generate_video_fingerprint(self, input_data: Dict[str, Any]) -> str:
-        """Generate video fingerprint using frame analysis."""
-        try:
+        """Generate video fingerprint using frame analysis."""        try:
             feature_vector = input_data['feature_vector']
             
             # Create hash from aggregated features
@@ -830,8 +801,7 @@ class ProcessingPipeline:
             raise RuntimeError(f"Video fingerprint generation failed: {e}")
     
     async def _generate_image_fingerprint(self, input_data: Dict[str, Any]) -> str:
-        """Generate image fingerprint using perceptual hashing."""
-        try:
+        """Generate image fingerprint using perceptual hashing."""        try:
             # Use PIL Image from input_data if available
             if 'image_data' in input_data:
                 image_array = input_data['image_data']
@@ -851,8 +821,7 @@ class ProcessingPipeline:
             raise RuntimeError(f"Image fingerprint generation failed: {e}")
     
     async def _generate_text_fingerprint(self, input_data: Dict[str, Any]) -> str:
-        """Generate text fingerprint using content hashing."""
-        try:
+        """Generate text fingerprint using content hashing."""        try:
             feature_vector = input_data['feature_vector']
             
             # Create stable hash from features
@@ -866,8 +835,7 @@ class ProcessingPipeline:
             raise RuntimeError(f"Text fingerprint generation failed: {e}")
     
     async def _generate_vector_embedding(self, task: ProcessingTask, input_data: Dict[str, Any]) -> np.ndarray:
-        """Generate vector embedding for similarity search."""
-        try:
+        """Generate vector embedding for similarity search."""        try:
             if task.content_type == 'text':
                 # Use sentence transformer for text
                 text_data = input_data.get('text_data', '')
@@ -901,8 +869,7 @@ class ProcessingPipeline:
             raise RuntimeError(f"Vector embedding generation failed: {e}")
     
     async def _analyze_similarity(self, task: ProcessingTask, input_data: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze similarity with existing content."""
-        try:
+        """Analyze similarity with existing content."""        try:
             # This would integrate with vector database for similarity search
             # For now, return placeholder similarity scores
             
@@ -921,8 +888,7 @@ class ProcessingPipeline:
             raise RuntimeError(f"Similarity analysis failed: {e}")
     
     async def _postprocess_results(self, task: ProcessingTask, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Postprocess and format final results."""
-        try:
+        """Postprocess and format final results."""        try:
             processed_results = {
                 'fingerprint': input_data.get('fingerprint'),
                 'vector_embedding': input_data.get('embedding'),
@@ -942,8 +908,7 @@ class ProcessingPipeline:
             raise RuntimeError(f"Postprocessing failed: {e}")
     
     def _calculate_quality_score(self, input_data: Dict[str, Any]) -> float:
-        """Calculate quality score for processed content."""
-        try:
+        """Calculate quality score for processed content."""        try:
             # Basic quality scoring based on available data
             quality_factors = []
             
@@ -965,8 +930,7 @@ class ProcessingPipeline:
             return 0.5  # Default quality score
     
     async def _validate_results(self, task: ProcessingTask, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate processing results."""
-        try:
+        """Validate processing results."""        try:
             validation_results = {
                 'fingerprint_valid': bool(input_data.get('fingerprint')),
                 'embedding_valid': input_data.get('vector_embedding') is not None,
@@ -986,8 +950,7 @@ class ProcessingPipeline:
             raise RuntimeError(f"Validation failed: {e}")
     
     def _compile_metadata(self, stage_results: List[StageResult]) -> Dict[str, Any]:
-        """Compile metadata from all stage results."""
-        metadata = {
+        """Compile metadata from all stage results."""        metadata = {
             'stages_executed': len(stage_results),
             'successful_stages': sum(1 for result in stage_results if result.success),
             'total_stage_time': sum(result.execution_time for result in stage_results),
@@ -1004,8 +967,7 @@ class ProcessingPipeline:
         return metadata
     
     async def get_pipeline_status(self) -> Dict[str, Any]:
-        """Get current pipeline status."""
-        return {
+        """Get current pipeline status."""        return {
             'active_executions': len(self.active_executions),
             'config': {
                 'parallel_processing': self.config.enable_parallel_processing,
@@ -1020,7 +982,6 @@ class ProcessingPipeline:
 
 # Factory function
 def create_pipeline(config: Optional[PipelineConfig] = None) -> ProcessingPipeline:
-    """Create processing pipeline with configuration."""
-    if config is None:
+    """Create processing pipeline with configuration."""    if config is None:
         config = PipelineConfig()
     return ProcessingPipeline(config)

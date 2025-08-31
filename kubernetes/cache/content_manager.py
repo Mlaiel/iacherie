@@ -1,5 +1,4 @@
-"""
-Enterprise Content Cache Manager
+"""Enterprise Content Cache Manager
 
 Comprehensive cache management for multi-format content including audio, video,
 image, and text content with AI-powered optimization and intelligent invalidation
@@ -32,9 +31,7 @@ Key Features:
 - Real-time content fingerprinting cache for instant duplicate detection
 - Revenue analytics cache for immediate monetization insights
 - Collaborative content discovery cache for partnership opportunities
-"""
-
-import asyncio
+"""import asyncio
 import hashlib
 import json
 import logging
@@ -60,8 +57,7 @@ import psutil
 
 
 class ContentType(Enum):
-    """Supported content types for IA Influencer Agent platform"""
-    AUDIO = "audio"
+    """Supported content types for IA Influencer Agent platform"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -75,8 +71,7 @@ class ContentType(Enum):
 
 
 class CreatorType(Enum):
-    """Types of content creators supported"""
-    MUSICIAN = "musician"
+    """Types of content creators supported"""    MUSICIAN = "musician"
     PHOTOGRAPHER = "photographer"
     VIDEOGRAPHER = "videographer"
     WRITER = "writer"
@@ -87,8 +82,7 @@ class CreatorType(Enum):
 
 
 class PlatformTarget(Enum):
-    """Target platforms for content optimization"""
-    SPOTIFY = "spotify"
+    """Target platforms for content optimization"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -101,8 +95,7 @@ class PlatformTarget(Enum):
 
 
 class CacheStrategy(Enum):
-    """Cache storage and retrieval strategies optimized for content types"""
-    LRU = "lru"
+    """Cache storage and retrieval strategies optimized for content types"""    LRU = "lru"
     LFU = "lfu"
     FIFO = "fifo"
     TTL = "ttl"
@@ -111,8 +104,7 @@ class CacheStrategy(Enum):
 
 @dataclass
 class ContentCacheEntry:
-    """Represents a cached content entry with metadata"""
-    content_id: str
+    """Represents a cached content entry with metadata"""    content_id: str
     content_type: ContentType
     data: bytes
     metadata: Dict[str, Any]
@@ -127,26 +119,22 @@ class ContentCacheEntry:
 
 
 class ContentCacheManager:
-    """
-    Enterprise-grade content cache manager with multi-format support,
+    """    Enterprise-grade content cache manager with multi-format support,
     AI optimization, and intelligent content lifecycle management.
-    """
-    
+    """    
     def __init__(
         self,
         config: CacheConfiguration,
         metrics_collector: CacheMetricsCollector,
         redis_client: Optional[redis.Redis] = None
     ):
-        """
-        Initialize content cache manager with enterprise configuration.
+        """        Initialize content cache manager with enterprise configuration.
         
         Args:
             config: Cache configuration instance
             metrics_collector: Metrics collection service
             redis_client: Optional Redis client for distributed caching
-        """
-        self.config = config
+        """        self.config = config
         self.metrics = metrics_collector
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -202,8 +190,7 @@ class ContentCacheManager:
         tags: Optional[Set[str]] = None,
         force_refresh: bool = False
     ) -> bool:
-        """
-        Store content in cache with intelligent optimization.
+        """        Store content in cache with intelligent optimization.
         
         Args:
             content_id: Unique identifier for content
@@ -215,8 +202,7 @@ class ContentCacheManager:
             
         Returns:
             bool: True if successfully stored, False otherwise
-        """
-        try:
+        """        try:
             start_time = time.time()
             
             # Check if content already exists and force_refresh is False
@@ -289,8 +275,7 @@ class ContentCacheManager:
         content_id: str,
         update_access_stats: bool = True
     ) -> Optional[ContentCacheEntry]:
-        """
-        Retrieve content from cache with intelligent access tracking.
+        """        Retrieve content from cache with intelligent access tracking.
         
         Args:
             content_id: Unique identifier for content
@@ -298,8 +283,7 @@ class ContentCacheManager:
             
         Returns:
             ContentCacheEntry if found, None otherwise
-        """
-        try:
+        """        try:
             start_time = time.time()
             
             # Try memory cache first
@@ -354,16 +338,14 @@ class ContentCacheManager:
             return None
 
     async def exists(self, content_id: str) -> bool:
-        """
-        Check if content exists in cache.
+        """        Check if content exists in cache.
         
         Args:
             content_id: Unique identifier for content
             
         Returns:
             bool: True if content exists, False otherwise
-        """
-        try:
+        """        try:
             # Check memory cache
             if content_id in self._memory_cache:
                 entry = self._memory_cache[content_id]
@@ -382,16 +364,14 @@ class ContentCacheManager:
             return False
 
     async def invalidate_content(self, content_id: str) -> bool:
-        """
-        Invalidate and remove content from cache.
+        """        Invalidate and remove content from cache.
         
         Args:
             content_id: Unique identifier for content
             
         Returns:
             bool: True if successfully invalidated, False otherwise
-        """
-        try:
+        """        try:
             success = True
             
             # Remove from memory cache
@@ -417,8 +397,7 @@ class ContentCacheManager:
         content_ids: List[str],
         priority_weights: Optional[Dict[str, float]] = None
     ) -> Dict[str, bool]:
-        """
-        Warm up cache with specified content using AI-driven prioritization.
+        """        Warm up cache with specified content using AI-driven prioritization.
         
         Args:
             content_ids: List of content IDs to warm up
@@ -426,8 +405,7 @@ class ContentCacheManager:
             
         Returns:
             Dict mapping content_id to success status
-        """
-        results = {}
+        """        results = {}
         
         try:
             # Sort content by AI-driven priority
@@ -455,13 +433,11 @@ class ContentCacheManager:
             return {content_id: False for content_id in content_ids}
 
     async def get_cache_statistics(self) -> Dict[str, Any]:
-        """
-        Get comprehensive cache statistics and performance metrics.
+        """        Get comprehensive cache statistics and performance metrics.
         
         Returns:
             Dict containing cache statistics
-        """
-        try:
+        """        try:
             hit_rate = (
                 self._cache_stats["hits"] / 
                 (self._cache_stats["hits"] + self._cache_stats["misses"])
@@ -499,8 +475,7 @@ class ContentCacheManager:
             return {}
 
     async def _compress_data(self, data: bytes, content_type: ContentType) -> bytes:
-        """Compress data based on content type and configuration"""
-        import gzip
+        """Compress data based on content type and configuration"""        import gzip
         import lzma
         
         try:
@@ -522,8 +497,7 @@ class ContentCacheManager:
             return data
 
     async def _decompress_data(self, data: bytes, content_type: ContentType) -> bytes:
-        """Decompress data based on content type"""
-        import gzip
+        """Decompress data based on content type"""        import gzip
         import lzma
         
         try:
@@ -547,8 +521,7 @@ class ContentCacheManager:
         content_type: ContentType,
         metadata: Dict[str, Any]
     ) -> float:
-        """Calculate AI optimization score for content"""
-        try:
+        """Calculate AI optimization score for content"""        try:
             score = 0.0
             
             # Base score from content type
@@ -585,8 +558,7 @@ class ContentCacheManager:
             return 0.5
 
     async def _store_in_memory(self, cache_entry: ContentCacheEntry) -> None:
-        """Store cache entry in memory with size management"""
-        # Check memory limits and evict if necessary
+        """Store cache entry in memory with size management"""        # Check memory limits and evict if necessary
         await self._enforce_memory_limits()
         
         # Store the entry
@@ -594,8 +566,7 @@ class ContentCacheManager:
         self._cache_stats["total_size"] += cache_entry.size_bytes
 
     async def _store_in_redis(self, cache_entry: ContentCacheEntry) -> None:
-        """Store cache entry in Redis with proper serialization"""
-        try:
+        """Store cache entry in Redis with proper serialization"""        try:
             # Serialize the cache entry
             serialized_data = pickle.dumps(cache_entry)
             
@@ -610,12 +581,10 @@ class ContentCacheManager:
             self.logger.error(f"Error storing in Redis: {str(e)}")
 
     async def _retrieve_from_memory(self, content_id: str) -> Optional[ContentCacheEntry]:
-        """Retrieve cache entry from memory"""
-        return self._memory_cache.get(content_id)
+        """Retrieve cache entry from memory"""        return self._memory_cache.get(content_id)
 
     async def _retrieve_from_redis(self, content_id: str) -> Optional[ContentCacheEntry]:
-        """Retrieve cache entry from Redis"""
-        try:
+        """Retrieve cache entry from Redis"""        try:
             serialized_data = await self.redis_client.get(f"content:{content_id}")
             if serialized_data:
                 return pickle.loads(serialized_data)
@@ -626,16 +595,14 @@ class ContentCacheManager:
             return None
 
     async def _is_expired(self, cache_entry: ContentCacheEntry) -> bool:
-        """Check if cache entry has expired"""
-        if not cache_entry.ttl_seconds:
+        """Check if cache entry has expired"""        if not cache_entry.ttl_seconds:
             return False
         
         expiry_time = cache_entry.created_at + timedelta(seconds=cache_entry.ttl_seconds)
         return datetime.now() > expiry_time
 
     async def _enforce_memory_limits(self) -> None:
-        """Enforce memory cache size limits with intelligent eviction"""
-        max_memory_mb = self.config.max_memory_cache_size_mb
+        """Enforce memory cache size limits with intelligent eviction"""        max_memory_mb = self.config.max_memory_cache_size_mb
         current_size_mb = self._cache_stats["total_size"] / (1024 * 1024)
         
         if current_size_mb > max_memory_mb:
@@ -662,14 +629,12 @@ class ContentCacheManager:
             self._cache_stats["total_size"] -= size_evicted
 
     def _get_ttl_for_content_type(self, content_type: ContentType) -> int:
-        """Get TTL in seconds for content type"""
-        config = self._content_configs.get(content_type, {})
+        """Get TTL in seconds for content type"""        config = self._content_configs.get(content_type, {})
         hours = config.get("ttl_hours", 24)
         return hours * 3600
 
     async def _update_ai_score(self, cache_entry: ContentCacheEntry) -> None:
-        """Update AI score based on access patterns"""
-        # Increase score based on access frequency
+        """Update AI score based on access patterns"""        # Increase score based on access frequency
         frequency_boost = min(cache_entry.access_count * 0.01, 0.2)
         cache_entry.ai_score = min(cache_entry.ai_score + frequency_boost, 1.0)
 
@@ -678,8 +643,7 @@ class ContentCacheManager:
         content_ids: List[str],
         priority_weights: Dict[str, float]
     ) -> List[Tuple[str, float]]:
-        """Prioritize content for cache warm-up using AI scoring"""
-        prioritized = []
+        """Prioritize content for cache warm-up using AI scoring"""        prioritized = []
         
         for content_id in content_ids:
             base_priority = priority_weights.get(content_id, 0.5)
@@ -692,23 +656,20 @@ class ContentCacheManager:
         return prioritized
 
     async def _simulate_content_warmup(self, content_id: str) -> bool:
-        """Simulate content warm-up process"""
-        # This would typically load content from persistent storage
+        """Simulate content warm-up process"""        # This would typically load content from persistent storage
         # For simulation, we'll just return True
         await asyncio.sleep(0.01)  # Simulate some processing time
         return True
 
     async def _calculate_average_compression_ratio(self) -> float:
-        """Calculate average compression ratio across all cached content"""
-        if not self._memory_cache:
+        """Calculate average compression ratio across all cached content"""        if not self._memory_cache:
             return 1.0
         
         total_ratio = sum(entry.compression_ratio for entry in self._memory_cache.values())
         return total_ratio / len(self._memory_cache)
 
     async def _calculate_cache_efficiency_score(self) -> float:
-        """Calculate overall cache efficiency score"""
-        hit_rate = (
+        """Calculate overall cache efficiency score"""        hit_rate = (
             self._cache_stats["hits"] / 
             (self._cache_stats["hits"] + self._cache_stats["misses"])
             if (self._cache_stats["hits"] + self._cache_stats["misses"]) > 0

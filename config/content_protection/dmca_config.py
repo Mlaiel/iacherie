@@ -1,5 +1,4 @@
-"""
-DMCA Configuration Module
+"""DMCA Configuration Module
 ========================
 
 Professional DMCA configuration for automated Digital Millennium Copyright Act compliance.
@@ -14,9 +13,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, modification, or distribution of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
-"""
-
-from typing import Dict, Any, List, Optional, Set, Tuple
+"""from typing import Dict, Any, List, Optional, Set, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 import os
@@ -24,8 +21,7 @@ from datetime import datetime, timedelta
 
 
 class DMCANoticeType(str, Enum):
-    """Types of DMCA notices."""
-    TAKEDOWN = "takedown"
+    """Types of DMCA notices."""    TAKEDOWN = "takedown"
     COUNTER_NOTIFICATION = "counter_notification"
     REPEAT_INFRINGER = "repeat_infringer"
     SAFE_HARBOR = "safe_harbor"
@@ -33,8 +29,7 @@ class DMCANoticeType(str, Enum):
 
 
 class DMCAStatus(str, Enum):
-    """Status of DMCA processes."""
-    DRAFT = "draft"
+    """Status of DMCA processes."""    DRAFT = "draft"
     SUBMITTED = "submitted"
     ACKNOWLEDGED = "acknowledged"
     PROCESSED = "processed"
@@ -46,8 +41,7 @@ class DMCAStatus(str, Enum):
 
 
 class InfringementType(str, Enum):
-    """Types of copyright infringement."""
-    EXACT_COPY = "exact_copy"
+    """Types of copyright infringement."""    EXACT_COPY = "exact_copy"
     SUBSTANTIAL_SIMILARITY = "substantial_similarity"
     UNAUTHORIZED_DISTRIBUTION = "unauthorized_distribution"
     UNAUTHORIZED_PUBLIC_PERFORMANCE = "unauthorized_public_performance"
@@ -57,8 +51,7 @@ class InfringementType(str, Enum):
 
 @dataclass
 class CopyrightHolderInfo:
-    """Copyright holder information."""
-    name: str
+    """Copyright holder information."""    name: str
     address: str
     city: str
     state_province: str
@@ -75,8 +68,7 @@ class CopyrightHolderInfo:
 
 @dataclass
 class InfringementEvidence:
-    """Evidence of copyright infringement."""
-    original_work_url: str
+    """Evidence of copyright infringement."""    original_work_url: str
     infringing_work_url: str
     similarity_score: float
     evidence_screenshots: List[str] = field(default_factory=list)
@@ -91,8 +83,7 @@ class InfringementEvidence:
 
 @dataclass
 class DMCANoticeTemplate:
-    """Template for DMCA notices."""
-    template_id: str
+    """Template for DMCA notices."""    template_id: str
     notice_type: DMCANoticeType
     subject_template: str
     body_template: str
@@ -107,8 +98,7 @@ class DMCANoticeTemplate:
 
 @dataclass
 class SafeHarborConfig:
-    """Safe Harbor compliance configuration."""
-    enable_safe_harbor: bool = True
+    """Safe Harbor compliance configuration."""    enable_safe_harbor: bool = True
     designated_agent_name: str = ""
     designated_agent_address: str = ""
     designated_agent_email: str = ""
@@ -126,8 +116,7 @@ class SafeHarborConfig:
 
 @dataclass
 class CounterNotificationConfig:
-    """Counter-notification handling configuration."""
-    enable_counter_notifications: bool = True
+    """Counter-notification handling configuration."""    enable_counter_notifications: bool = True
     auto_process_counter_notifications: bool = False
     legal_review_required: bool = True
     good_faith_review_enabled: bool = True
@@ -142,8 +131,7 @@ class CounterNotificationConfig:
 
 @dataclass
 class AutomationConfig:
-    """Automation configuration for DMCA processes."""
-    enable_automated_detection: bool = True
+    """Automation configuration for DMCA processes."""    enable_automated_detection: bool = True
     enable_automated_notice_generation: bool = True
     enable_automated_submission: bool = False
     manual_review_threshold: float = 0.95
@@ -160,8 +148,7 @@ class AutomationConfig:
 
 @dataclass
 class TrackingConfig:
-    """Tracking and reporting configuration."""
-    enable_tracking: bool = True
+    """Tracking and reporting configuration."""    enable_tracking: bool = True
     track_submission_status: bool = True
     track_response_times: bool = True
     track_success_rates: bool = True
@@ -176,11 +163,9 @@ class TrackingConfig:
 
 
 class DMCAConfig:
-    """
-    Professional DMCA configuration manager.
+    """    Professional DMCA configuration manager.
     Provides industrial-grade configuration for DMCA compliance and automation.
-    """
-    
+    """    
     def __init__(self):
         # General DMCA settings
         self.enable_dmca_system: bool = True
@@ -223,14 +208,12 @@ class DMCAConfig:
         self._load_from_environment()
     
     def _initialize_notice_templates(self) -> None:
-        """Initialize default DMCA notice templates."""
-        # Standard takedown notice template
+        """Initialize default DMCA notice templates."""        # Standard takedown notice template
         takedown_template = DMCANoticeTemplate(
             template_id="standard_takedown",
             notice_type=DMCANoticeType.TAKEDOWN,
             subject_template="DMCA Takedown Notice - Copyright Infringement",
-            body_template="""
-To Whom It May Concern:
+            body_template="""To Whom It May Concern:
 
 This is a notification of copyright infringement pursuant to the Digital Millennium Copyright Act (17 U.S.C. § 512).
 
@@ -278,8 +261,7 @@ Date: {notice_date}
             template_id="counter_notification",
             notice_type=DMCANoticeType.COUNTER_NOTIFICATION,
             subject_template="DMCA Counter-Notification",
-            body_template="""
-To Whom It May Concern:
+            body_template="""To Whom It May Concern:
 
 This is a counter-notification pursuant to the Digital Millennium Copyright Act (17 U.S.C. § 512(g)(3)).
 
@@ -318,8 +300,7 @@ Date: {counter_notification_date}
         self.notice_templates["counter_notification"] = counter_template
     
     def _initialize_platform_configs(self) -> None:
-        """Initialize platform-specific DMCA configurations."""
-        self.platform_configs = {
+        """Initialize platform-specific DMCA configurations."""        self.platform_configs = {
             "youtube": {
                 "submission_url": "https://www.youtube.com/copyright_complaint_form",
                 "api_endpoint": None,
@@ -355,8 +336,7 @@ Date: {counter_notification_date}
         }
     
     def _load_from_environment(self) -> None:
-        """Load configuration from environment variables."""
-        # General settings
+        """Load configuration from environment variables."""        # General settings
         self.enable_dmca_system = os.getenv("DMCA_ENABLED", "true").lower() == "true"
         self.jurisdiction = os.getenv("DMCA_JURISDICTION", "US")
         self.service_provider_name = os.getenv("DMCA_SERVICE_PROVIDER_NAME", "")
@@ -383,28 +363,23 @@ Date: {counter_notification_date}
         self.require_legal_review = os.getenv("DMCA_LEGAL_REVIEW_REQUIRED", "true").lower() == "true"
     
     def set_copyright_holder(self, holder_info: CopyrightHolderInfo) -> None:
-        """Set copyright holder information."""
-        self.copyright_holder = holder_info
+        """Set copyright holder information."""        self.copyright_holder = holder_info
     
     def get_notice_template(self, template_id: str) -> DMCANoticeTemplate:
-        """Get DMCA notice template by ID."""
-        if template_id not in self.notice_templates:
+        """Get DMCA notice template by ID."""        if template_id not in self.notice_templates:
             raise ValueError(f"Notice template not found: {template_id}")
         return self.notice_templates[template_id]
     
     def add_notice_template(self, template: DMCANoticeTemplate) -> None:
-        """Add custom DMCA notice template."""
-        self.notice_templates[template.template_id] = template
+        """Add custom DMCA notice template."""        self.notice_templates[template.template_id] = template
     
     def get_platform_config(self, platform: str) -> Dict[str, Any]:
-        """Get platform-specific DMCA configuration."""
-        if platform not in self.platform_configs:
+        """Get platform-specific DMCA configuration."""        if platform not in self.platform_configs:
             raise ValueError(f"Platform configuration not found: {platform}")
         return self.platform_configs[platform]
     
     def should_auto_submit(self, confidence_score: float, infringement_value: float = 0.0) -> bool:
-        """Determine if DMCA notice should be automatically submitted."""
-        if not self.automation.enable_automated_submission:
+        """Determine if DMCA notice should be automatically submitted."""        if not self.automation.enable_automated_submission:
             return False
         
         if confidence_score < self.automation.confidence_threshold:
@@ -420,8 +395,7 @@ Date: {counter_notification_date}
         return True
     
     def is_repeat_infringer(self, user_id: str, infringement_history: List[datetime]) -> bool:
-        """Check if user is a repeat infringer based on history."""
-        if not self.safe_harbor.repeat_infringer_policy:
+        """Check if user is a repeat infringer based on history."""        if not self.safe_harbor.repeat_infringer_policy:
             return False
         
         threshold_date = datetime.now() - timedelta(
@@ -435,15 +409,13 @@ Date: {counter_notification_date}
         return len(recent_infringements) >= self.safe_harbor.repeat_infringer_threshold
     
     def should_terminate_user(self, user_id: str, infringement_history: List[datetime]) -> bool:
-        """Determine if repeat infringer should be terminated."""
-        if not self.safe_harbor.terminate_repeat_infringers:
+        """Determine if repeat infringer should be terminated."""        if not self.safe_harbor.terminate_repeat_infringers:
             return False
         
         return self.is_repeat_infringer(user_id, infringement_history)
     
     def generate_notice_content(self, template_id: str, **variables) -> str:
-        """Generate DMCA notice content from template."""
-        template = self.get_notice_template(template_id)
+        """Generate DMCA notice content from template."""        template = self.get_notice_template(template_id)
         
         # Check required fields
         missing_fields = []
@@ -460,8 +432,7 @@ Date: {counter_notification_date}
     
     def validate_notice_requirements(self, notice_type: DMCANoticeType,
                                    evidence: InfringementEvidence) -> List[str]:
-        """Validate DMCA notice requirements."""
-        issues = []
+        """Validate DMCA notice requirements."""        issues = []
         
         # General requirements
         if not evidence.original_work_url:
@@ -500,8 +471,7 @@ Date: {counter_notification_date}
     def calculate_processing_priority(self, infringement_type: InfringementType,
                                     similarity_score: float,
                                     commercial_impact: float) -> int:
-        """Calculate processing priority (1-5, 5 being highest priority)."""
-        priority = 1
+        """Calculate processing priority (1-5, 5 being highest priority)."""        priority = 1
         
         # Infringement type priority
         type_priorities = {
@@ -529,8 +499,7 @@ Date: {counter_notification_date}
         return priority
     
     def validate_configuration(self) -> List[str]:
-        """Validate current configuration and return any issues."""
-        issues = []
+        """Validate current configuration and return any issues."""        issues = []
         
         # General validation
         if self.enable_dmca_system and not self.service_provider_name:
@@ -571,8 +540,7 @@ Date: {counter_notification_date}
         return issues
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary."""
-        return {
+        """Convert configuration to dictionary."""        return {
             "enable_dmca_system": self.enable_dmca_system,
             "jurisdiction": self.jurisdiction,
             "service_provider_name": self.service_provider_name,
@@ -596,8 +564,7 @@ Date: {counter_notification_date}
     
     @classmethod
     def from_dict(cls, config_dict: Dict[str, Any]) -> 'DMCAConfig':
-        """Create configuration from dictionary."""
-        config = cls()
+        """Create configuration from dictionary."""        config = cls()
         
         # Load basic settings
         basic_fields = [

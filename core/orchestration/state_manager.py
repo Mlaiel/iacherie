@@ -1,5 +1,4 @@
-"""
-State Manager - Enterprise State Management & Persistence System
+"""State Manager - Enterprise State Management & Persistence System
 
 Advanced state management system for maintaining workflow states, checkpoints,
 and recovery capabilities across distributed orchestration processes.
@@ -11,9 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set
@@ -29,8 +26,7 @@ from backend.core.utils.event_dispatcher import EventDispatcher
 
 
 class StateType(Enum):
-    """State management types."""
-    WORKFLOW_STATE = "workflow_state"
+    """State management types."""    WORKFLOW_STATE = "workflow_state"
     TASK_STATE = "task_state"
     PIPELINE_STATE = "pipeline_state"
     RESOURCE_STATE = "resource_state"
@@ -39,8 +35,7 @@ class StateType(Enum):
 
 
 class StateStatus(Enum):
-    """State status enumeration."""
-    ACTIVE = "active"
+    """State status enumeration."""    ACTIVE = "active"
     CHECKPOINT = "checkpoint"
     SUSPENDED = "suspended"
     RECOVERED = "recovered"
@@ -49,8 +44,7 @@ class StateStatus(Enum):
 
 
 class PersistenceMode(Enum):
-    """State persistence modes."""
-    MEMORY = "memory"
+    """State persistence modes."""    MEMORY = "memory"
     DISK = "disk"
     DATABASE = "database"
     DISTRIBUTED = "distributed"
@@ -59,8 +53,7 @@ class PersistenceMode(Enum):
 
 @dataclass
 class StateSnapshot:
-    """State snapshot with metadata."""
-    snapshot_id: str
+    """State snapshot with metadata."""    snapshot_id: str
     state_id: str
     state_type: StateType
     timestamp: datetime
@@ -73,8 +66,7 @@ class StateSnapshot:
 
 @dataclass
 class StateDefinition:
-    """State definition with configuration."""
-    state_id: str
+    """State definition with configuration."""    state_id: str
     name: str
     state_type: StateType
     persistence_mode: PersistenceMode = PersistenceMode.HYBRID
@@ -89,8 +81,7 @@ class StateDefinition:
 
 @dataclass
 class StateTransaction:
-    """State transaction for atomic operations."""
-    transaction_id: str
+    """State transaction for atomic operations."""    transaction_id: str
     state_id: str
     operation: str  # "create", "update", "delete", "checkpoint"
     timestamp: datetime
@@ -103,8 +94,7 @@ class StateTransaction:
 
 @dataclass
 class RecoveryPoint:
-    """Recovery point for state restoration."""
-    recovery_id: str
+    """Recovery point for state restoration."""    recovery_id: str
     state_id: str
     snapshot_id: str
     timestamp: datetime
@@ -115,8 +105,7 @@ class RecoveryPoint:
 
 
 class StateManager:
-    """
-    Enterprise-grade state management system with distributed persistence.
+    """    Enterprise-grade state management system with distributed persistence.
     
     Provides comprehensive state management capabilities including:
     - Multi-mode state persistence (memory, disk, database, distributed)
@@ -124,8 +113,7 @@ class StateManager:
     - State recovery and rollback mechanisms
     - Distributed state synchronization
     - Performance optimization and caching
-    """
-    
+    """    
     def __init__(self, default_persistence_mode: PersistenceMode = PersistenceMode.HYBRID):
         self.logger = logging.getLogger(__name__)
         self.metrics_collector = MetricsCollector()
@@ -167,16 +155,14 @@ class StateManager:
         self.logger.info(f"StateManager initialized with mode: {default_persistence_mode.value}")
     
     async def register_state(self, state_def: StateDefinition) -> bool:
-        """
-        Register a new state definition.
+        """        Register a new state definition.
         
         Args:
             state_def: State definition configuration
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             # Validate state definition
             if not await self._validate_state_definition(state_def):
                 return False
@@ -205,8 +191,7 @@ class StateManager:
             return False
     
     async def create_state(self, state_id: str, initial_data: Dict[str, Any]) -> bool:
-        """
-        Create a new state instance.
+        """        Create a new state instance.
         
         Args:
             state_id: State identifier
@@ -214,8 +199,7 @@ class StateManager:
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             if state_id not in self.state_definitions:
                 raise ValueError(f"State definition not found: {state_id}")
             
@@ -255,8 +239,7 @@ class StateManager:
         updates: Dict[str, Any],
         create_checkpoint: bool = False
     ) -> bool:
-        """
-        Update existing state data.
+        """        Update existing state data.
         
         Args:
             state_id: State identifier
@@ -265,8 +248,7 @@ class StateManager:
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             if state_id not in self.active_states:
                 raise ValueError(f"State not found: {state_id}")
             
@@ -320,8 +302,7 @@ class StateManager:
             return False
     
     async def get_state(self, state_id: str, use_cache: bool = True) -> Optional[Dict[str, Any]]:
-        """
-        Get current state data.
+        """        Get current state data.
         
         Args:
             state_id: State identifier
@@ -329,8 +310,7 @@ class StateManager:
             
         Returns:
             Optional[Dict[str, Any]]: State data or None
-        """
-        try:
+        """        try:
             # Check cache first
             if use_cache and state_id in self.memory_cache:
                 self.cache_hit_ratio = min(1.0, self.cache_hit_ratio + 0.01)
@@ -363,8 +343,7 @@ class StateManager:
             return None
     
     async def delete_state(self, state_id: str, create_backup: bool = True) -> bool:
-        """
-        Delete state and its data.
+        """        Delete state and its data.
         
         Args:
             state_id: State identifier
@@ -372,8 +351,7 @@ class StateManager:
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             if state_id not in self.active_states:
                 return False
             
@@ -408,8 +386,7 @@ class StateManager:
             return False
     
     async def create_checkpoint(self, state_id: str, tags: Optional[Set[str]] = None) -> Optional[str]:
-        """
-        Create a checkpoint for state.
+        """        Create a checkpoint for state.
         
         Args:
             state_id: State identifier
@@ -417,8 +394,7 @@ class StateManager:
             
         Returns:
             Optional[str]: Checkpoint snapshot ID
-        """
-        try:
+        """        try:
             if state_id not in self.active_states:
                 return None
             
@@ -466,8 +442,7 @@ class StateManager:
             return None
     
     async def restore_state(self, state_id: str, snapshot_id: str) -> bool:
-        """
-        Restore state from snapshot.
+        """        Restore state from snapshot.
         
         Args:
             state_id: State identifier
@@ -475,8 +450,7 @@ class StateManager:
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             start_time = datetime.now()
             
             # Find snapshot
@@ -534,8 +508,7 @@ class StateManager:
         data: Dict[str, Any],
         tags: Optional[Set[str]] = None
     ) -> Optional[StateSnapshot]:
-        """Create state snapshot."""
-        try:
+        """Create state snapshot."""        try:
             snapshot_id = str(uuid.uuid4())
             timestamp = datetime.now()
             
@@ -565,8 +538,7 @@ class StateManager:
             return None
     
     async def _create_recovery_point(self, state_id: str, data: Dict[str, Any]) -> bool:
-        """Create recovery point for state."""
-        try:
+        """Create recovery point for state."""        try:
             recovery_id = str(uuid.uuid4())
             
             # Create snapshot for recovery
@@ -604,16 +576,14 @@ class StateManager:
             return False
     
     async def _find_snapshot(self, state_id: str, snapshot_id: str) -> Optional[StateSnapshot]:
-        """Find snapshot by ID."""
-        snapshots = self.state_snapshots.get(state_id, [])
+        """Find snapshot by ID."""        snapshots = self.state_snapshots.get(state_id, [])
         for snapshot in snapshots:
             if snapshot.snapshot_id == snapshot_id:
                 return snapshot
         return None
     
     async def _verify_snapshot_integrity(self, snapshot: StateSnapshot) -> bool:
-        """Verify snapshot data integrity."""
-        try:
+        """Verify snapshot data integrity."""        try:
             # Recalculate checksum
             data_json = json.dumps(snapshot.data, sort_keys=True)
             calculated_checksum = hashlib.sha256(data_json.encode()).hexdigest()
@@ -624,14 +594,12 @@ class StateManager:
             return False
     
     async def _initialize_state_storage(self, state_def: StateDefinition) -> None:
-        """Initialize storage for state definition."""
-        # This would initialize the appropriate storage backend
+        """Initialize storage for state definition."""        # This would initialize the appropriate storage backend
         # Based on the persistence mode
         pass
     
     async def _persist_state(self, state_id: str, data: Dict[str, Any]) -> bool:
-        """Persist state data."""
-        try:
+        """Persist state data."""        try:
             state_def = self.state_definitions[state_id]
             
             # Persist based on mode
@@ -658,8 +626,7 @@ class StateManager:
             return False
     
     async def _load_state(self, state_id: str) -> Optional[Dict[str, Any]]:
-        """Load state from persistence."""
-        try:
+        """Load state from persistence."""        try:
             # This would load from the appropriate storage backend
             return None
             
@@ -668,8 +635,7 @@ class StateManager:
             return None
     
     async def _delete_persisted_state(self, state_id: str) -> bool:
-        """Delete state from persistence."""
-        try:
+        """Delete state from persistence."""        try:
             # This would delete from all configured storage backends
             return True
             
@@ -678,8 +644,7 @@ class StateManager:
             return False
     
     async def _persist_snapshot(self, snapshot: StateSnapshot) -> bool:
-        """Persist snapshot to storage."""
-        try:
+        """Persist snapshot to storage."""        try:
             # This would persist snapshot based on configuration
             return True
             
@@ -688,8 +653,7 @@ class StateManager:
             return False
     
     def _update_cache(self, state_id: str, data: Dict[str, Any]) -> None:
-        """Update memory cache."""
-        if len(self.memory_cache) >= self.max_cache_size:
+        """Update memory cache."""        if len(self.memory_cache) >= self.max_cache_size:
             # Simple LRU eviction (remove oldest)
             oldest_key = next(iter(self.memory_cache))
             del self.memory_cache[oldest_key]
@@ -697,8 +661,7 @@ class StateManager:
         self.memory_cache[state_id] = data.copy()
     
     async def _checkpoint_loop(self) -> None:
-        """Background checkpoint creation loop."""
-        while self._manager_running:
+        """Background checkpoint creation loop."""        while self._manager_running:
             try:
                 current_time = datetime.now()
                 
@@ -726,8 +689,7 @@ class StateManager:
                 await asyncio.sleep(300)
     
     async def _cleanup_loop(self) -> None:
-        """Background cleanup loop."""
-        while self._manager_running:
+        """Background cleanup loop."""        while self._manager_running:
             try:
                 await self._cleanup_expired_snapshots()
                 await self._cleanup_old_transactions()
@@ -740,8 +702,7 @@ class StateManager:
                 await asyncio.sleep(3600)
     
     async def _cleanup_expired_snapshots(self) -> None:
-        """Clean up expired snapshots."""
-        current_time = datetime.now()
+        """Clean up expired snapshots."""        current_time = datetime.now()
         
         for state_id, state_def in self.state_definitions.items():
             if state_def.retention_period:
@@ -754,8 +715,7 @@ class StateManager:
                     ]
     
     async def _cleanup_old_transactions(self) -> None:
-        """Clean up old completed transactions."""
-        cutoff_time = datetime.now() - timedelta(hours=24)
+        """Clean up old completed transactions."""        cutoff_time = datetime.now() - timedelta(hours=24)
         
         old_transactions = [
             tid for tid, trans in self.state_transactions.items()
@@ -766,13 +726,11 @@ class StateManager:
             del self.state_transactions[tid]
     
     async def _optimize_storage(self) -> None:
-        """Optimize storage usage."""
-        # This would implement storage optimization strategies
+        """Optimize storage usage."""        # This would implement storage optimization strategies
         pass
     
     async def _validate_state_definition(self, state_def: StateDefinition) -> bool:
-        """Validate state definition."""
-        try:
+        """Validate state definition."""        try:
             if not state_def.state_id or not state_def.name:
                 return False
             
@@ -785,8 +743,7 @@ class StateManager:
             return False
     
     async def get_state_info(self, state_id: str) -> Optional[Dict[str, Any]]:
-        """Get comprehensive state information."""
-        if state_id not in self.state_definitions:
+        """Get comprehensive state information."""        if state_id not in self.state_definitions:
             return None
         
         state_def = self.state_definitions[state_id]
@@ -804,8 +761,7 @@ class StateManager:
         }
     
     async def list_snapshots(self, state_id: str) -> List[Dict[str, Any]]:
-        """List all snapshots for a state."""
-        if state_id not in self.state_snapshots:
+        """List all snapshots for a state."""        if state_id not in self.state_snapshots:
             return []
         
         snapshots = self.state_snapshots[state_id]
@@ -822,8 +778,7 @@ class StateManager:
         ]
     
     async def get_state_stats(self) -> Dict[str, Any]:
-        """Get state management statistics."""
-        return {
+        """Get state management statistics."""        return {
             **self.state_stats,
             'registered_states': len(self.state_definitions),
             'active_states': len(self.active_states),
@@ -836,8 +791,7 @@ class StateManager:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown state manager gracefully."""
-        self._manager_running = False
+        """Shutdown state manager gracefully."""        self._manager_running = False
         
         # Create final checkpoints
         for state_id in self.active_states:

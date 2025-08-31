@@ -1,5 +1,4 @@
-"""
-Image Fingerprinter - Advanced AI-Powered Image Content Identification
+"""Image Fingerprinter - Advanced AI-Powered Image Content Identification
 
 Ultra-sophisticated image fingerprinting system using computer vision, perceptual hashing,
 and deep learning for precise image content identification and similarity matching.
@@ -10,9 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import hashlib
@@ -54,8 +51,7 @@ except ImportError:
 from ...utils.image_utils import ImageProcessor
 from ...ml.image_models import ImageEmbeddingModel
 
-"""
-Image Fingerprinter - Advanced AI-Powered Image Content Identification
+"""Image Fingerprinter - Advanced AI-Powered Image Content Identification
 
 Ultra-sophisticated image fingerprinting system using computer vision, perceptual hashing,
 and deep learning for precise image content identification and similarity matching.
@@ -66,9 +62,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import hashlib
@@ -114,15 +108,13 @@ from ...ml.image_models import ImageEmbeddingModel
 logger = logging.getLogger(__name__)
 
 class ImageFingerprintQuality(Enum):
-    """Image fingerprint quality levels"""
-    BASIC = "basic"          # Perceptual hashes only
+    """Image fingerprint quality levels"""    BASIC = "basic"          # Perceptual hashes only
     STANDARD = "standard"    # + Color histograms, basic features
     ADVANCED = "advanced"    # + SIFT/ORB, texture analysis
     ULTRA = "ultra"          # + Deep learning embeddings
 
 class ImageFeatureType(Enum):
-    """Types of image features extracted"""
-    PERCEPTUAL_HASH = "perceptual_hash"
+    """Types of image features extracted"""    PERCEPTUAL_HASH = "perceptual_hash"
     COLOR_HISTOGRAM = "color_histogram"
     TEXTURE_FEATURES = "texture_features"
     EDGE_FEATURES = "edge_features"
@@ -133,8 +125,7 @@ class ImageFeatureType(Enum):
     METADATA_FEATURES = "metadata_features"
 
 class HashType(Enum):
-    """Types of perceptual hashes"""
-    AVERAGE_HASH = "ahash"
+    """Types of perceptual hashes"""    AVERAGE_HASH = "ahash"
     PERCEPTUAL_HASH = "phash"
     DIFFERENCE_HASH = "dhash"
     WAVELET_HASH = "whash"
@@ -142,8 +133,7 @@ class HashType(Enum):
 
 @dataclass
 class ImageFeatureVector:
-    """Image feature vector structure"""
-    feature_type: ImageFeatureType
+    """Image feature vector structure"""    feature_type: ImageFeatureType
     vector_data: np.ndarray
     confidence_score: float
     extraction_params: Dict[str, Any]
@@ -152,8 +142,7 @@ class ImageFeatureVector:
 
 @dataclass
 class ImageFingerprint:
-    """Complete image fingerprint structure"""
-    fingerprint_id: str
+    """Complete image fingerprint structure"""    fingerprint_id: str
     image_hash: str
     perceptual_hashes: Dict[str, str]
     feature_vectors: List[ImageFeatureVector]
@@ -164,8 +153,7 @@ class ImageFingerprint:
     created_at: datetime = field(default_factory=lambda: datetime.now())
 
 class ImageFingerprinter:
-    """
-    Ultra-advanced image fingerprinting system with computer vision and deep learning.
+    """    Ultra-advanced image fingerprinting system with computer vision and deep learning.
     
     Features:
     - Multiple perceptual hashing algorithms
@@ -177,8 +165,7 @@ class ImageFingerprinter:
     - Metadata extraction
     - Quality assessment
     - Robustness testing
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -215,8 +202,7 @@ class ImageFingerprinter:
         logger.info("ImageFingerprinter initialized with advanced configuration")
     
     async def initialize(self):
-        """Initialize all image processing models and detectors"""
-        try:
+        """Initialize all image processing models and detectors"""        try:
             start_time = time.time()
             
             # Initialize deep learning models
@@ -244,10 +230,8 @@ class ImageFingerprinter:
         image_data: Union[str, np.ndarray, bytes, Image.Image], 
         quality_level: ImageFingerprintQuality = ImageFingerprintQuality.ADVANCED
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive image fingerprint with configurable quality levels
-        """
-        start_time = time.time()
+        """        Generate comprehensive image fingerprint with configurable quality levels
+        """        start_time = time.time()
         
         try:
             # Load and preprocess image
@@ -357,8 +341,7 @@ class ImageFingerprinter:
             raise ImageProcessingError(f"Fingerprint generation failed: {e}")
     
     async def _load_and_preprocess_image(self, image_data: Union[str, np.ndarray, bytes, Image.Image]) -> Tuple[np.ndarray, Image.Image]:
-        """Load and preprocess image data"""
-        try:
+        """Load and preprocess image data"""        try:
             # Load image
             if isinstance(image_data, str):
                 # Load from file path
@@ -402,8 +385,7 @@ class ImageFingerprinter:
             raise ImageProcessingError(f"Preprocessing failed: {e}")
     
     def _create_image_hash(self, image_array: np.ndarray) -> str:
-        """Create fast hash of image data for quick lookups"""
-        # Create hash from image statistics and sample data
+        """Create fast hash of image data for quick lookups"""        # Create hash from image statistics and sample data
         image_stats = [
             np.mean(image_array),
             np.std(image_array),
@@ -438,8 +420,7 @@ class ImageFingerprinter:
         return hashlib.sha256(hash_bytes).hexdigest()
     
     async def _extract_perceptual_hashes(self, image: Image.Image) -> Dict[str, str]:
-        """Extract multiple types of perceptual hashes"""
-        try:
+        """Extract multiple types of perceptual hashes"""        try:
             hashes = {}
             
             # Average hash
@@ -464,8 +445,7 @@ class ImageFingerprinter:
             return {}
     
     async def _extract_color_features(self, image_array: np.ndarray, original_image: Image.Image) -> List[ImageFeatureVector]:
-        """Extract color-based features"""
-        features = []
+        """Extract color-based features"""        features = []
         
         try:
             # Color histogram for each channel
@@ -522,8 +502,7 @@ class ImageFingerprinter:
         return features
     
     async def _extract_edge_features(self, image_array: np.ndarray) -> List[ImageFeatureVector]:
-        """Extract edge-based features"""
-        features = []
+        """Extract edge-based features"""        features = []
         
         try:
             # Convert to grayscale if needed
@@ -571,8 +550,7 @@ class ImageFingerprinter:
         return features
     
     async def _extract_texture_features(self, image_array: np.ndarray) -> List[ImageFeatureVector]:
-        """Extract texture-based features using LBP and GLCM"""
-        features = []
+        """Extract texture-based features using LBP and GLCM"""        features = []
         
         try:
             # Convert to grayscale if needed
@@ -639,8 +617,7 @@ class ImageFingerprinter:
         return features
     
     async def _extract_keypoint_features(self, image_array: np.ndarray) -> List[ImageFeatureVector]:
-        """Extract keypoint-based features using SIFT, ORB"""
-        features = []
+        """Extract keypoint-based features using SIFT, ORB"""        features = []
         
         try:
             # Convert to grayscale if needed
@@ -719,8 +696,7 @@ class ImageFingerprinter:
         return features
     
     async def _extract_shape_features(self, image_array: np.ndarray) -> List[ImageFeatureVector]:
-        """Extract shape-based features"""
-        features = []
+        """Extract shape-based features"""        features = []
         
         try:
             # Convert to grayscale and binary
@@ -792,8 +768,7 @@ class ImageFingerprinter:
         return features
     
     async def _extract_resnet_embedding(self, image: Image.Image) -> np.ndarray:
-        """Extract ResNet deep learning embedding"""
-        try:
+        """Extract ResNet deep learning embedding"""        try:
             if self.resnet_model is None:
                 return np.array([])
             
@@ -818,8 +793,7 @@ class ImageFingerprinter:
             return np.array([])
     
     async def _extract_clip_embedding(self, image: Image.Image) -> np.ndarray:
-        """Extract CLIP embedding for semantic understanding"""
-        try:
+        """Extract CLIP embedding for semantic understanding"""        try:
             if self.clip_model is None:
                 return np.array([])
             
@@ -840,8 +814,7 @@ class ImageFingerprinter:
             return np.array([])
     
     async def _extract_image_metadata(self, image: Image.Image, image_array: np.ndarray) -> Dict[str, Any]:
-        """Extract comprehensive image metadata"""
-        try:
+        """Extract comprehensive image metadata"""        try:
             # Basic image properties
             width, height = image.size
             
@@ -914,8 +887,7 @@ class ImageFingerprinter:
     # ... (continue with remaining methods similar to audio_fingerprinter.py)
     
     async def _calculate_quality_metrics(self, image_array: np.ndarray, feature_vectors: List, deep_embeddings: Dict) -> Dict[str, float]:
-        """Calculate fingerprint quality metrics"""
-        try:
+        """Calculate fingerprint quality metrics"""        try:
             quality_metrics = {}
             
             # Image quality assessment
@@ -942,8 +914,7 @@ class ImageFingerprinter:
             return {'overall_quality': 0.5}
     
     def _assess_image_quality(self, image_array: np.ndarray) -> Dict[str, float]:
-        """Assess image quality"""
-        try:
+        """Assess image quality"""        try:
             # Convert to grayscale if needed
             if len(image_array.shape) == 3:
                 gray = cv2.cvtColor(image_array, cv2.COLOR_RGB2GRAY)
@@ -982,8 +953,7 @@ class ImageFingerprinter:
     # (Similar structure to audio_fingerprinter.py with image-specific implementations)
     
     async def cleanup(self):
-        """Clean up resources"""
-        try:
+        """Clean up resources"""        try:
             # Clean up models
             if hasattr(self, 'resnet_model') and self.resnet_model is not None:
                 del self.resnet_model
@@ -1006,8 +976,7 @@ class ImageFingerprinter:
             logger.error(f"ImageFingerprinter cleanup failed: {e}")
     
     async def _initialize_resnet(self):
-        """Initialize ResNet model"""
-        try:
+        """Initialize ResNet model"""        try:
             self.resnet_model = resnet50(pretrained=True)
             self.resnet_model = nn.Sequential(*list(self.resnet_model.children())[:-1])  # Remove final FC layer
             self.resnet_model.eval()
@@ -1019,8 +988,7 @@ class ImageFingerprinter:
             self.resnet_model = None
     
     async def _initialize_clip(self):
-        """Initialize CLIP model"""
-        try:
+        """Initialize CLIP model"""        try:
             self.clip_model, self.clip_processor = clip.load("ViT-B/32")
             self.clip_model.eval()
             
@@ -1032,8 +1000,7 @@ class ImageFingerprinter:
             self.clip_processor = None
     
     async def _initialize_cv_detectors(self):
-        """Initialize computer vision detectors"""
-        try:
+        """Initialize computer vision detectors"""        try:
             # SIFT detector
             try:
                 self.sift_detector = cv2.SIFT_create()
@@ -1057,8 +1024,7 @@ class ImageFingerprinter:
             logger.error(f"CV detector initialization failed: {e}")
     
     async def _precompile_extractors(self):
-        """Pre-compile feature extraction functions"""
-        try:
+        """Pre-compile feature extraction functions"""        try:
             # Pre-compilation placeholder
             logger.info("Feature extractors pre-compiled")
             
@@ -1068,22 +1034,19 @@ class ImageFingerprinter:
     # Additional helper methods would continue here following the same pattern...
     
     def get_supported_formats(self) -> List[str]:
-        """Get list of supported image formats"""
-        return [
+        """Get list of supported image formats"""        return [
             '.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.tif',
             '.webp', '.ico', '.ppm', '.pgm', '.pbm'
         ]
 
 class ImageFingerprintQuality(Enum):
-    """Image fingerprint quality levels"""
-    BASIC = "basic"          # Perceptual hashing only
+    """Image fingerprint quality levels"""    BASIC = "basic"          # Perceptual hashing only
     STANDARD = "standard"    # + Visual features
     ADVANCED = "advanced"    # + Deep learning features
     ULTRA = "ultra"          # + Multi-model ensemble
 
 class ImageFingerprinter:
-    """
-    Ultra-advanced image fingerprinting system with computer vision and deep learning.
+    """    Ultra-advanced image fingerprinting system with computer vision and deep learning.
     
     Features:
     - Multi-algorithm perceptual hashing (pHash, dHash, aHash, wHash)
@@ -1094,8 +1057,7 @@ class ImageFingerprinter:
     - Face detection and recognition
     - Metadata extraction and analysis
     - Robustness testing (rotation, scaling, compression)
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -1133,8 +1095,7 @@ class ImageFingerprinter:
         }
         
     async def initialize(self):
-        """Initialize image fingerprinting system"""
-        try:
+        """Initialize image fingerprinting system"""        try:
             # Initialize deep learning models
             await self._initialize_deep_models()
             
@@ -1152,10 +1113,8 @@ class ImageFingerprinter:
     
     async def generate_fingerprint(self, image_data: Union[str, bytes, np.ndarray, Image.Image], 
                                  quality_level: ImageFingerprintQuality) -> Dict[str, Any]:
-        """
-        Generate comprehensive image fingerprint with specified quality level
-        """
-        start_time = time.time()
+        """        Generate comprehensive image fingerprint with specified quality level
+        """        start_time = time.time()
         
         try:
             # Load and preprocess image
@@ -1247,8 +1206,7 @@ class ImageFingerprinter:
             raise ImageProcessingError(f"Fingerprint generation failed: {e}")
     
     async def _load_image(self, image_data: Union[str, bytes, np.ndarray, Image.Image]) -> Tuple[Image.Image, Dict[str, Any]]:
-        """Load image from various input formats"""
-        metadata = {}
+        """Load image from various input formats"""        metadata = {}
         
         try:
             if isinstance(image_data, str):
@@ -1301,8 +1259,7 @@ class ImageFingerprinter:
             raise ImageProcessingError(f"Image loading failed: {e}")
     
     async def _generate_perceptual_hashes(self, image: Image.Image) -> Dict[str, str]:
-        """Generate multiple perceptual hashes for robustness"""
-        try:
+        """Generate multiple perceptual hashes for robustness"""        try:
             # Generate different hash types
             phash = str(imagehash.phash(image, hash_size=self.hash_size))
             dhash = str(imagehash.dhash(image, hash_size=self.hash_size))
@@ -1330,8 +1287,7 @@ class ImageFingerprinter:
             raise ImageProcessingError(f"Perceptual hashing failed: {e}")
     
     async def _extract_visual_features(self, image: Image.Image) -> np.ndarray:
-        """Extract basic visual features"""
-        try:
+        """Extract basic visual features"""        try:
             # Convert to array for processing
             img_array = np.array(image)
             
@@ -1367,8 +1323,7 @@ class ImageFingerprinter:
             return np.zeros(50)  # Return fallback features
     
     async def _extract_color_features(self, image: Image.Image) -> np.ndarray:
-        """Extract color-based features"""
-        try:
+        """Extract color-based features"""        try:
             img_array = np.array(image)
             features = []
             
@@ -1402,8 +1357,7 @@ class ImageFingerprinter:
             return np.zeros(256)  # Return fallback features
     
     async def _extract_cv_features(self, image: Image.Image) -> np.ndarray:
-        """Extract computer vision features using SIFT, ORB, etc."""
-        try:
+        """Extract computer vision features using SIFT, ORB, etc."""        try:
             # Convert to OpenCV format
             img_array = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
             gray = cv2.cvtColor(img_array, cv2.COLOR_BGR2GRAY)
@@ -1466,8 +1420,7 @@ class ImageFingerprinter:
             return np.zeros(50)  # Return fallback features
     
     async def _extract_texture_features(self, image: Image.Image) -> np.ndarray:
-        """Extract texture features using various methods"""
-        try:
+        """Extract texture features using various methods"""        try:
             # Convert to grayscale for texture analysis
             gray_image = image.convert('L')
             img_array = np.array(gray_image)
@@ -1511,8 +1464,7 @@ class ImageFingerprinter:
             return np.zeros(30)  # Return fallback features
     
     async def _generate_deep_embedding(self, image: Image.Image) -> np.ndarray:
-        """Generate deep learning embedding"""
-        try:
+        """Generate deep learning embedding"""        try:
             embeddings = []
             
             # ResNet embedding
@@ -1538,8 +1490,7 @@ class ImageFingerprinter:
             return np.random.rand(512)  # Fallback
     
     async def _get_resnet_embedding(self, image: Image.Image) -> np.ndarray:
-        """Get ResNet embedding for image"""
-        try:
+        """Get ResNet embedding for image"""        try:
             transform = transforms.Compose([
                 transforms.Resize(256),
                 transforms.CenterCrop(224),
@@ -1561,8 +1512,7 @@ class ImageFingerprinter:
             return np.random.rand(1000)
     
     async def _get_clip_embedding(self, image: Image.Image) -> np.ndarray:
-        """Get CLIP embedding for image"""
-        try:
+        """Get CLIP embedding for image"""        try:
             image_input = self.clip_preprocess(image).unsqueeze(0)
             
             with torch.no_grad():
@@ -1576,8 +1526,7 @@ class ImageFingerprinter:
             return np.random.rand(512)
     
     async def _assess_image_quality(self, image: Image.Image) -> Dict[str, float]:
-        """Assess image quality for fingerprinting reliability"""
-        quality_metrics = {}
+        """Assess image quality for fingerprinting reliability"""        quality_metrics = {}
         
         try:
             img_array = np.array(image.convert('L'))  # Convert to grayscale
@@ -1633,8 +1582,7 @@ class ImageFingerprinter:
         return quality_metrics
     
     async def _initialize_deep_models(self):
-        """Initialize deep learning models"""
-        try:
+        """Initialize deep learning models"""        try:
             # Load ResNet
             self.resnet_model = resnet50(pretrained=True)
             self.resnet_model.eval()
@@ -1649,8 +1597,7 @@ class ImageFingerprinter:
             logger.warning(f"Failed to load deep learning models: {e}")
     
     async def _initialize_cv_components(self):
-        """Initialize computer vision components"""
-        try:
+        """Initialize computer vision components"""        try:
             # Initialize feature detectors
             self.sift_detector = cv2.SIFT_create(nfeatures=self.max_keypoints)
             self.orb_detector = cv2.ORB_create(nfeatures=self.max_keypoints)
@@ -1661,8 +1608,7 @@ class ImageFingerprinter:
             logger.warning(f"Failed to initialize CV components: {e}")
     
     async def _initialize_face_detection(self):
-        """Initialize face detection"""
-        try:
+        """Initialize face detection"""        try:
             # Load Haar cascade for face detection
             cascade_path = cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
             self.face_cascade = cv2.CascadeClassifier(cascade_path)
@@ -1673,8 +1619,7 @@ class ImageFingerprinter:
             logger.warning(f"Failed to initialize face detection: {e}")
     
     async def cleanup(self):
-        """Cleanup resources"""
-        # Clear models to free memory
+        """Cleanup resources"""        # Clear models to free memory
         self.resnet_model = None
         self.vgg_model = None
         self.clip_model = None

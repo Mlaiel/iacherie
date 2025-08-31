@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Ultra-Industrial Test Suite for Dashboards Module
+"""Ultra-Industrial Test Suite for Dashboards Module
 
 This module provides comprehensive testing for dashboard management,
 visualization, and business intelligence capabilities.
@@ -50,9 +46,7 @@ from Fahed Mlaiel will result in immediate legal action under German and interna
 copyright law, financial damages claims, and criminal prosecution where applicable.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import numpy as np
 import pandas as pd
@@ -86,12 +80,10 @@ from ai.observability.dashboards import (
 
 
 class TestDashboardManager:
-    """Ultra-industrial tests for DashboardManager class"""
-    
+    """Ultra-industrial tests for DashboardManager class"""    
     @pytest.fixture
     def dashboard_manager(self):
-        """Create DashboardManager instance for testing"""
-        config = {
+        """Create DashboardManager instance for testing"""        config = {
             "supported_dashboards": ["executive", "technical", "creator", "security", "business_intelligence"],
             "default_theme": "professional",
             "auto_refresh_enabled": True,
@@ -102,8 +94,7 @@ class TestDashboardManager:
     
     @pytest.fixture
     def sample_dashboard_data(self):
-        """Generate comprehensive sample dashboard data"""
-        return {
+        """Generate comprehensive sample dashboard data"""        return {
             "kpis": {
                 "total_revenue": {"value": 248750.50, "change": 12.5, "trend": "up"},
                 "active_users": {"value": 12350, "change": 8.3, "trend": "up"},
@@ -139,16 +130,14 @@ class TestDashboardManager:
         }
     
     def test_initialization(self, dashboard_manager):
-        """Test DashboardManager initialization"""
-        assert dashboard_manager is not None
+        """Test DashboardManager initialization"""        assert dashboard_manager is not None
         assert dashboard_manager.config["supported_dashboards"] is not None
         assert hasattr(dashboard_manager, 'dashboard_registry')
         assert hasattr(dashboard_manager, 'widget_cache')
         assert hasattr(dashboard_manager, 'user_preferences')
     
     def test_dashboard_creation(self, dashboard_manager, sample_dashboard_data):
-        """Test dashboard creation and configuration"""
-        # Create executive dashboard
+        """Test dashboard creation and configuration"""        # Create executive dashboard
         executive_dashboard = dashboard_manager.create_dashboard(
             dashboard_type=DashboardType.EXECUTIVE,
             name="CEO Overview",
@@ -171,8 +160,7 @@ class TestDashboardManager:
         assert technical_dashboard.dashboard_type == DashboardType.TECHNICAL
     
     def test_widget_management(self, dashboard_manager, sample_dashboard_data):
-        """Test widget creation and management"""
-        dashboard = dashboard_manager.create_dashboard(
+        """Test widget creation and management"""        dashboard = dashboard_manager.create_dashboard(
             dashboard_type=DashboardType.EXECUTIVE,
             name="Test Dashboard",
             user_id="test_user"
@@ -216,8 +204,7 @@ class TestDashboardManager:
         assert removal_result["success"] is True
     
     def test_dashboard_layout_management(self, dashboard_manager):
-        """Test dashboard layout and positioning"""
-        dashboard = dashboard_manager.create_dashboard(
+        """Test dashboard layout and positioning"""        dashboard = dashboard_manager.create_dashboard(
             dashboard_type=DashboardType.TECHNICAL,
             name="Layout Test",
             user_id="layout_user"
@@ -250,8 +237,7 @@ class TestDashboardManager:
         assert position_result["success"] is True
     
     def test_real_time_updates(self, dashboard_manager, sample_dashboard_data):
-        """Test real-time dashboard updates"""
-        dashboard = dashboard_manager.create_dashboard(
+        """Test real-time dashboard updates"""        dashboard = dashboard_manager.create_dashboard(
             dashboard_type=DashboardType.TECHNICAL,
             name="Real-time Test",
             user_id="realtime_user"
@@ -276,8 +262,7 @@ class TestDashboardManager:
         assert "updated_widgets" in push_result
     
     def test_dashboard_sharing(self, dashboard_manager):
-        """Test dashboard sharing and collaboration"""
-        dashboard = dashboard_manager.create_dashboard(
+        """Test dashboard sharing and collaboration"""        dashboard = dashboard_manager.create_dashboard(
             dashboard_type=DashboardType.CREATOR,
             name="Shared Dashboard",
             user_id="owner_user"
@@ -303,8 +288,7 @@ class TestDashboardManager:
         assert "public_url" in public_share_result
     
     def test_dashboard_export(self, dashboard_manager, sample_dashboard_data):
-        """Test dashboard export functionality"""
-        dashboard = dashboard_manager.create_dashboard(
+        """Test dashboard export functionality"""        dashboard = dashboard_manager.create_dashboard(
             dashboard_type=DashboardType.BUSINESS_INTELLIGENCE,
             name="Export Test",
             user_id="export_user"
@@ -334,8 +318,7 @@ class TestDashboardManager:
         assert "configuration" in json_export
     
     def test_dashboard_performance(self, dashboard_manager, sample_dashboard_data):
-        """Test dashboard performance and optimization"""
-        # Create dashboard with many widgets
+        """Test dashboard performance and optimization"""        # Create dashboard with many widgets
         dashboard = dashboard_manager.create_dashboard(
             dashboard_type=DashboardType.TECHNICAL,
             name="Performance Test",
@@ -364,12 +347,10 @@ class TestDashboardManager:
 
 
 class TestExecutiveDashboard:
-    """Ultra-industrial tests for ExecutiveDashboard class"""
-    
+    """Ultra-industrial tests for ExecutiveDashboard class"""    
     @pytest.fixture
     def executive_dashboard(self):
-        """Create ExecutiveDashboard instance for testing"""
-        config = {
+        """Create ExecutiveDashboard instance for testing"""        config = {
             "kpi_focus": ["revenue", "growth", "user_acquisition", "profitability"],
             "time_periods": ["daily", "weekly", "monthly", "quarterly"],
             "comparison_enabled": True,
@@ -379,8 +360,7 @@ class TestExecutiveDashboard:
     
     @pytest.fixture
     def executive_data(self):
-        """Generate executive-level sample data"""
-        return {
+        """Generate executive-level sample data"""        return {
             "financial_metrics": {
                 "total_revenue": 2487500.50,
                 "monthly_recurring_revenue": 684500.20,
@@ -406,15 +386,13 @@ class TestExecutiveDashboard:
         }
     
     def test_initialization(self, executive_dashboard):
-        """Test ExecutiveDashboard initialization"""
-        assert executive_dashboard is not None
+        """Test ExecutiveDashboard initialization"""        assert executive_dashboard is not None
         assert executive_dashboard.dashboard_type == DashboardType.EXECUTIVE
         assert hasattr(executive_dashboard, 'kpi_widgets')
         assert hasattr(executive_dashboard, 'strategic_widgets')
     
     def test_kpi_visualization(self, executive_dashboard, executive_data):
-        """Test executive KPI visualization"""
-        # Configure KPI widgets
+        """Test executive KPI visualization"""        # Configure KPI widgets
         kpi_config = executive_dashboard.configure_kpi_widgets(executive_data)
         
         assert "revenue_kpis" in kpi_config
@@ -431,8 +409,7 @@ class TestExecutiveDashboard:
         assert threshold_config["configured_thresholds"] > 0
     
     def test_strategic_overview(self, executive_dashboard, executive_data):
-        """Test strategic overview generation"""
-        strategic_overview = executive_dashboard.generate_strategic_overview(executive_data)
+        """Test strategic overview generation"""        strategic_overview = executive_dashboard.generate_strategic_overview(executive_data)
         
         assert "executive_summary" in strategic_overview
         assert "key_achievements" in strategic_overview
@@ -441,8 +418,7 @@ class TestExecutiveDashboard:
         assert "competitive_position" in strategic_overview
     
     def test_financial_dashboard(self, executive_dashboard, executive_data):
-        """Test financial dashboard components"""
-        # Generate financial overview
+        """Test financial dashboard components"""        # Generate financial overview
         financial_overview = executive_dashboard.create_financial_overview(executive_data)
         
         assert "revenue_breakdown" in financial_overview
@@ -461,8 +437,7 @@ class TestExecutiveDashboard:
         assert "scenario_analysis" in forecast
     
     def test_growth_analytics(self, executive_dashboard, executive_data):
-        """Test growth analytics dashboard"""
-        growth_analytics = executive_dashboard.create_growth_analytics(executive_data)
+        """Test growth analytics dashboard"""        growth_analytics = executive_dashboard.create_growth_analytics(executive_data)
         
         assert "user_acquisition_funnel" in growth_analytics
         assert "retention_cohorts" in growth_analytics
@@ -475,8 +450,7 @@ class TestExecutiveDashboard:
         assert "required_resources" in growth_prediction
     
     def test_competitive_analysis(self, executive_dashboard, executive_data):
-        """Test competitive analysis dashboard"""
-        competitive_data = {
+        """Test competitive analysis dashboard"""        competitive_data = {
             "market_position": {"rank": 3, "market_share": 0.034},
             "competitor_metrics": [
                 {"name": "Competitor A", "market_share": 0.089, "growth_rate": 0.067},
@@ -494,12 +468,10 @@ class TestExecutiveDashboard:
 
 
 class TestTechnicalDashboard:
-    """Ultra-industrial tests for TechnicalDashboard class"""
-    
+    """Ultra-industrial tests for TechnicalDashboard class"""    
     @pytest.fixture
     def technical_dashboard(self):
-        """Create TechnicalDashboard instance for testing"""
-        config = {
+        """Create TechnicalDashboard instance for testing"""        config = {
             "monitoring_categories": ["infrastructure", "applications", "security", "performance"],
             "alert_integration": True,
             "real_time_enabled": True,
@@ -509,8 +481,7 @@ class TestTechnicalDashboard:
     
     @pytest.fixture
     def technical_data(self):
-        """Generate technical monitoring sample data"""
-        return {
+        """Generate technical monitoring sample data"""        return {
             "infrastructure_metrics": {
                 "cpu_usage": {"value": 45.2, "threshold": 80, "status": "healthy"},
                 "memory_usage": {"value": 67.8, "threshold": 85, "status": "healthy"},
@@ -537,15 +508,13 @@ class TestTechnicalDashboard:
         }
     
     def test_initialization(self, technical_dashboard):
-        """Test TechnicalDashboard initialization"""
-        assert technical_dashboard is not None
+        """Test TechnicalDashboard initialization"""        assert technical_dashboard is not None
         assert technical_dashboard.dashboard_type == DashboardType.TECHNICAL
         assert hasattr(technical_dashboard, 'monitoring_widgets')
         assert hasattr(technical_dashboard, 'alert_widgets')
     
     def test_infrastructure_monitoring(self, technical_dashboard, technical_data):
-        """Test infrastructure monitoring dashboard"""
-        infra_dashboard = technical_dashboard.create_infrastructure_monitoring(technical_data)
+        """Test infrastructure monitoring dashboard"""        infra_dashboard = technical_dashboard.create_infrastructure_monitoring(technical_data)
         
         assert "system_overview" in infra_dashboard
         assert "resource_utilization" in infra_dashboard
@@ -564,8 +533,7 @@ class TestTechnicalDashboard:
         assert alert_config["alerts_configured"] > 0
     
     def test_application_performance_monitoring(self, technical_dashboard, technical_data):
-        """Test application performance monitoring"""
-        apm_dashboard = technical_dashboard.create_apm_dashboard(technical_data)
+        """Test application performance monitoring"""        apm_dashboard = technical_dashboard.create_apm_dashboard(technical_data)
         
         assert "response_time_distribution" in apm_dashboard
         assert "error_tracking" in apm_dashboard
@@ -578,8 +546,7 @@ class TestTechnicalDashboard:
         assert "optimization_recommendations" in performance_analysis
     
     def test_database_monitoring(self, technical_dashboard, technical_data):
-        """Test database monitoring dashboard"""
-        db_dashboard = technical_dashboard.create_database_monitoring(technical_data)
+        """Test database monitoring dashboard"""        db_dashboard = technical_dashboard.create_database_monitoring(technical_data)
         
         assert "query_performance" in db_dashboard
         assert "connection_monitoring" in db_dashboard
@@ -592,8 +559,7 @@ class TestTechnicalDashboard:
         assert "performance_issues" in db_health
     
     def test_security_monitoring(self, technical_dashboard, technical_data):
-        """Test security monitoring dashboard"""
-        security_dashboard = technical_dashboard.create_security_monitoring(technical_data)
+        """Test security monitoring dashboard"""        security_dashboard = technical_dashboard.create_security_monitoring(technical_data)
         
         assert "threat_detection" in security_dashboard
         assert "access_monitoring" in security_dashboard
@@ -606,8 +572,7 @@ class TestTechnicalDashboard:
         assert "security_recommendations" in security_alerts
     
     def test_log_analysis(self, technical_dashboard):
-        """Test log analysis dashboard"""
-        log_data = {
+        """Test log analysis dashboard"""        log_data = {
             "error_logs": [
                 {"timestamp": "2024-01-01T10:00:00Z", "level": "ERROR", "message": "Database connection failed"},
                 {"timestamp": "2024-01-01T10:05:00Z", "level": "WARN", "message": "High memory usage detected"}
@@ -626,8 +591,7 @@ class TestTechnicalDashboard:
         assert "log_insights" in log_analysis
     
     def test_real_time_monitoring(self, technical_dashboard, technical_data):
-        """Test real-time monitoring capabilities"""
-        # Enable real-time monitoring
+        """Test real-time monitoring capabilities"""        # Enable real-time monitoring
         realtime_config = technical_dashboard.enable_real_time_monitoring()
         assert realtime_config["enabled"] is True
         
@@ -647,12 +611,10 @@ class TestTechnicalDashboard:
 
 
 class TestCreatorDashboard:
-    """Ultra-industrial tests for CreatorDashboard class"""
-    
+    """Ultra-industrial tests for CreatorDashboard class"""    
     @pytest.fixture
     def creator_dashboard(self):
-        """Create CreatorDashboard instance for testing"""
-        config = {
+        """Create CreatorDashboard instance for testing"""        config = {
             "creator_metrics": ["content_performance", "engagement", "revenue", "growth"],
             "content_types": ["image", "video", "audio", "text"],
             "analytics_depth": "comprehensive",
@@ -662,8 +624,7 @@ class TestCreatorDashboard:
     
     @pytest.fixture
     def creator_data(self):
-        """Generate creator-focused sample data"""
-        return {
+        """Generate creator-focused sample data"""        return {
             "content_metrics": {
                 "total_content": 1247,
                 "content_this_month": 89,
@@ -696,15 +657,13 @@ class TestCreatorDashboard:
         }
     
     def test_initialization(self, creator_dashboard):
-        """Test CreatorDashboard initialization"""
-        assert creator_dashboard is not None
+        """Test CreatorDashboard initialization"""        assert creator_dashboard is not None
         assert creator_dashboard.dashboard_type == DashboardType.CREATOR
         assert hasattr(creator_dashboard, 'content_widgets')
         assert hasattr(creator_dashboard, 'engagement_widgets')
     
     def test_content_analytics(self, creator_dashboard, creator_data):
-        """Test content analytics dashboard"""
-        content_analytics = creator_dashboard.create_content_analytics(creator_data)
+        """Test content analytics dashboard"""        content_analytics = creator_dashboard.create_content_analytics(creator_data)
         
         assert "content_performance" in content_analytics
         assert "top_performing_content" in content_analytics
@@ -718,8 +677,7 @@ class TestCreatorDashboard:
         assert "content_gaps" in recommendations
     
     def test_engagement_tracking(self, creator_dashboard, creator_data):
-        """Test engagement tracking and analysis"""
-        engagement_dashboard = creator_dashboard.create_engagement_dashboard(creator_data)
+        """Test engagement tracking and analysis"""        engagement_dashboard = creator_dashboard.create_engagement_dashboard(creator_data)
         
         assert "engagement_overview" in engagement_dashboard
         assert "audience_interaction_patterns" in engagement_dashboard
@@ -732,8 +690,7 @@ class TestCreatorDashboard:
         assert "growth_opportunities" in engagement_forecast
     
     def test_revenue_analytics(self, creator_dashboard, creator_data):
-        """Test creator revenue analytics"""
-        revenue_analytics = creator_dashboard.create_revenue_analytics(creator_data)
+        """Test creator revenue analytics"""        revenue_analytics = creator_dashboard.create_revenue_analytics(creator_data)
         
         assert "revenue_breakdown" in revenue_analytics
         assert "monetization_performance" in revenue_analytics
@@ -746,8 +703,7 @@ class TestCreatorDashboard:
         assert "monetization_strategies" in revenue_forecast
     
     def test_audience_insights(self, creator_dashboard, creator_data):
-        """Test audience insights and demographics"""
-        audience_insights = creator_dashboard.create_audience_insights(creator_data)
+        """Test audience insights and demographics"""        audience_insights = creator_dashboard.create_audience_insights(creator_data)
         
         assert "demographic_analysis" in audience_insights
         assert "audience_behavior_patterns" in audience_insights
@@ -761,8 +717,7 @@ class TestCreatorDashboard:
         assert "growth_potential_audience" in audience_segments
     
     def test_content_protection_monitoring(self, creator_dashboard, creator_data):
-        """Test content protection monitoring"""
-        protection_dashboard = creator_dashboard.create_protection_monitoring(creator_data)
+        """Test content protection monitoring"""        protection_dashboard = creator_dashboard.create_protection_monitoring(creator_data)
         
         assert "copyright_protection_status" in protection_dashboard
         assert "watermark_effectiveness" in protection_dashboard
@@ -775,8 +730,7 @@ class TestCreatorDashboard:
         assert "protection_actions_taken" in infringement_monitoring
     
     def test_collaboration_insights(self, creator_dashboard, creator_data):
-        """Test collaboration and networking insights"""
-        collaboration_data = {
+        """Test collaboration and networking insights"""        collaboration_data = {
             "collaboration_history": [
                 {"partner": "Creator A", "type": "co_creation", "performance": "high"},
                 {"partner": "Brand B", "type": "sponsorship", "performance": "medium"}
@@ -795,16 +749,13 @@ class TestCreatorDashboard:
 
 
 class TestWidgetFactory:
-    """Ultra-industrial tests for WidgetFactory class"""
-    
+    """Ultra-industrial tests for WidgetFactory class"""    
     @pytest.fixture
     def widget_factory(self):
-        """Create WidgetFactory instance for testing"""
-        return WidgetFactory()
+        """Create WidgetFactory instance for testing"""        return WidgetFactory()
     
     def test_kpi_widget_creation(self, widget_factory):
-        """Test KPI widget creation"""
-        kpi_widget = widget_factory.create_kpi_widget(
+        """Test KPI widget creation"""        kpi_widget = widget_factory.create_kpi_widget(
             title="Total Revenue",
             value=248750.50,
             format="currency",
@@ -818,8 +769,7 @@ class TestWidgetFactory:
         assert kpi_widget.config["format"] == "currency"
     
     def test_chart_widget_creation(self, widget_factory):
-        """Test chart widget creation"""
-        # Line chart
+        """Test chart widget creation"""        # Line chart
         line_chart = widget_factory.create_line_chart(
             title="Revenue Trend",
             data=[
@@ -862,8 +812,7 @@ class TestWidgetFactory:
         assert pie_chart.widget_type == WidgetType.PIE_CHART
     
     def test_custom_widget_creation(self, widget_factory):
-        """Test custom widget creation"""
-        custom_widget = widget_factory.create_custom_widget(
+        """Test custom widget creation"""        custom_widget = widget_factory.create_custom_widget(
             widget_type="heatmap",
             title="User Activity Heatmap",
             config={
@@ -878,8 +827,7 @@ class TestWidgetFactory:
         assert custom_widget.config["interactive"] is True
     
     def test_widget_validation(self, widget_factory):
-        """Test widget configuration validation"""
-        # Valid configuration
+        """Test widget configuration validation"""        # Valid configuration
         valid_config = {
             "title": "Test Widget",
             "data_source": "metrics.revenue",
@@ -902,16 +850,13 @@ class TestWidgetFactory:
 
 
 class TestDashboardBuilder:
-    """Ultra-industrial tests for DashboardBuilder class"""
-    
+    """Ultra-industrial tests for DashboardBuilder class"""    
     @pytest.fixture
     def dashboard_builder(self):
-        """Create DashboardBuilder instance for testing"""
-        return DashboardBuilder()
+        """Create DashboardBuilder instance for testing"""        return DashboardBuilder()
     
     def test_template_based_building(self, dashboard_builder):
-        """Test template-based dashboard building"""
-        # Executive template
+        """Test template-based dashboard building"""        # Executive template
         executive_template = dashboard_builder.build_from_template(
             template_name="executive_overview",
             customizations={
@@ -937,8 +882,7 @@ class TestDashboardBuilder:
         assert technical_template.dashboard_type == DashboardType.TECHNICAL
     
     def test_custom_dashboard_building(self, dashboard_builder):
-        """Test custom dashboard building"""
-        custom_dashboard = dashboard_builder.build_custom_dashboard(
+        """Test custom dashboard building"""        custom_dashboard = dashboard_builder.build_custom_dashboard(
             name="Custom Analytics Dashboard",
             layout="grid",
             widgets=[
@@ -960,8 +904,7 @@ class TestDashboardBuilder:
         assert custom_dashboard.layout_type == "grid"
     
     def test_responsive_layout(self, dashboard_builder):
-        """Test responsive dashboard layout"""
-        responsive_dashboard = dashboard_builder.build_responsive_dashboard(
+        """Test responsive dashboard layout"""        responsive_dashboard = dashboard_builder.build_responsive_dashboard(
             base_template="executive_overview",
             breakpoints={
                 "mobile": {"columns": 1, "widget_size": "large"},
@@ -975,8 +918,7 @@ class TestDashboardBuilder:
         assert len(responsive_dashboard.config["responsive_config"]["breakpoints"]) == 3
     
     def test_dashboard_cloning(self, dashboard_builder):
-        """Test dashboard cloning and templating"""
-        # Create source dashboard
+        """Test dashboard cloning and templating"""        # Create source dashboard
         source_dashboard = dashboard_builder.build_from_template("technical_monitoring")
         
         # Clone dashboard
@@ -995,8 +937,7 @@ class TestDashboardBuilder:
         assert cloned_dashboard.config["theme"] == "dark"
     
     def test_dashboard_validation(self, dashboard_builder):
-        """Test dashboard configuration validation"""
-        # Valid dashboard configuration
+        """Test dashboard configuration validation"""        # Valid dashboard configuration
         valid_config = {
             "name": "Test Dashboard",
             "type": "executive",

@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive Tests for Orchestrator
+"""Comprehensive Tests for Orchestrator
 
 Industrial-grade testing for AI agent orchestration, coordination,
 system management, and multi-agent workflow execution.
@@ -26,9 +22,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -55,12 +49,10 @@ logger = logging.getLogger(__name__)
 
 
 class TestAgentRegistry:
-    """Test agent registry functionality"""
-    
+    """Test agent registry functionality"""    
     @pytest.fixture
     def agent_registry(self) -> AgentRegistry:
-        """Create agent registry for testing"""
-        config = OrchestratorConfig(
+        """Create agent registry for testing"""        config = OrchestratorConfig(
             max_agents=100,
             registration_timeout=30,
             health_check_interval=60
@@ -68,8 +60,7 @@ class TestAgentRegistry:
         return AgentRegistry(config)
     
     def test_registry_initialization(self):
-        """Test agent registry initialization"""
-        config = OrchestratorConfig()
+        """Test agent registry initialization"""        config = OrchestratorConfig()
         registry = AgentRegistry(config)
         
         assert registry.agent_count == 0
@@ -77,8 +68,7 @@ class TestAgentRegistry:
         assert registry.max_agents > 0
     
     def test_agent_registration(self, agent_registry):
-        """Test agent registration process"""
-        agent_info = {
+        """Test agent registration process"""        agent_info = {
             "agent_id": "test_content_creator",
             "agent_type": "ContentCreatorAgent",
             "capabilities": [
@@ -107,8 +97,7 @@ class TestAgentRegistry:
         assert "content_generation" in registered_agent["capabilities"]
     
     def test_duplicate_registration(self, agent_registry):
-        """Test handling of duplicate agent registration"""
-        agent_info = {
+        """Test handling of duplicate agent registration"""        agent_info = {
             "agent_id": "duplicate_agent",
             "agent_type": "TestAgent",
             "capabilities": ["test_capability"]
@@ -124,8 +113,7 @@ class TestAgentRegistry:
         assert "already registered" in result2["error"].lower()
     
     def test_agent_deregistration(self, agent_registry):
-        """Test agent deregistration"""
-        # Register agent first
+        """Test agent deregistration"""        # Register agent first
         agent_info = {
             "agent_id": "temp_agent",
             "agent_type": "TemporaryAgent",
@@ -141,8 +129,7 @@ class TestAgentRegistry:
         assert agent_registry.get_agent("temp_agent") is None
     
     def test_agent_capability_queries(self, agent_registry):
-        """Test querying agents by capabilities"""
-        # Register multiple agents with different capabilities
+        """Test querying agents by capabilities"""        # Register multiple agents with different capabilities
         agents = [
             {
                 "agent_id": "content_creator_1",
@@ -176,8 +163,7 @@ class TestAgentRegistry:
         assert len(content_creator_agents) == 2
     
     def test_agent_health_status(self, agent_registry):
-        """Test agent health status tracking"""
-        agent_info = {
+        """Test agent health status tracking"""        agent_info = {
             "agent_id": "health_test_agent",
             "agent_type": "TestAgent",
             "capabilities": ["test"]
@@ -202,8 +188,7 @@ class TestAgentRegistry:
         assert "memory_usage" in health_status
     
     def test_registry_capacity_limits(self, agent_registry):
-        """Test registry capacity management"""
-        # Set low limit for testing
+        """Test registry capacity management"""        # Set low limit for testing
         agent_registry.max_agents = 2
         
         # Register up to capacity
@@ -228,12 +213,10 @@ class TestAgentRegistry:
 
 
 class TestResourceManager:
-    """Test resource management functionality"""
-    
+    """Test resource management functionality"""    
     @pytest.fixture
     def resource_manager(self) -> ResourceManager:
-        """Create resource manager for testing"""
-        config = OrchestratorConfig(
+        """Create resource manager for testing"""        config = OrchestratorConfig(
             total_cpu_cores=16,
             total_memory_gb=64,
             total_gpu_count=4,
@@ -242,8 +225,7 @@ class TestResourceManager:
         return ResourceManager(config)
     
     def test_resource_manager_initialization(self):
-        """Test resource manager initialization"""
-        config = OrchestratorConfig(
+        """Test resource manager initialization"""        config = OrchestratorConfig(
             total_cpu_cores=8,
             total_memory_gb=32,
             total_gpu_count=2
@@ -258,8 +240,7 @@ class TestResourceManager:
         assert manager.available_resources["gpu"] == 2
     
     def test_resource_allocation(self, resource_manager):
-        """Test resource allocation for agents"""
-        # Allocate resources for agent
+        """Test resource allocation for agents"""        # Allocate resources for agent
         allocation_request = {
             "agent_id": "resource_agent_1",
             "cpu": 4,
@@ -279,8 +260,7 @@ class TestResourceManager:
         assert available["gpu"] == 3  # 4 - 1
     
     def test_resource_deallocation(self, resource_manager):
-        """Test resource deallocation"""
-        # Allocate resources first
+        """Test resource deallocation"""        # Allocate resources first
         allocation_request = {
             "agent_id": "dealloc_agent",
             "cpu": 2,
@@ -302,8 +282,7 @@ class TestResourceManager:
         assert available["gpu"] == 4
     
     def test_resource_over_allocation(self, resource_manager):
-        """Test handling of resource over-allocation"""
-        # Try to allocate more resources than available
+        """Test handling of resource over-allocation"""        # Try to allocate more resources than available
         excessive_request = {
             "agent_id": "excessive_agent",
             "cpu": 32,  # More than total 16
@@ -317,8 +296,7 @@ class TestResourceManager:
         assert "insufficient" in allocation_result["error"].lower()
     
     def test_resource_utilization_monitoring(self, resource_manager):
-        """Test resource utilization monitoring"""
-        # Allocate some resources
+        """Test resource utilization monitoring"""        # Allocate some resources
         allocations = [
             {"agent_id": "monitor_agent_1", "cpu": 4, "memory": 16, "gpu": 1},
             {"agent_id": "monitor_agent_2", "cpu": 2, "memory": 8, "gpu": 0}
@@ -340,8 +318,7 @@ class TestResourceManager:
         assert utilization["gpu_utilization"] == 0.25  # 1/4
     
     def test_dynamic_resource_scaling(self, resource_manager):
-        """Test dynamic resource scaling"""
-        # Simulate high load requiring scaling
+        """Test dynamic resource scaling"""        # Simulate high load requiring scaling
         scaling_request = {
             "trigger": "high_cpu_utilization",
             "current_utilization": 0.85,
@@ -356,12 +333,10 @@ class TestResourceManager:
 
 
 class TestLoadBalancer:
-    """Test load balancing functionality"""
-    
+    """Test load balancing functionality"""    
     @pytest.fixture
     def load_balancer(self) -> LoadBalancer:
-        """Create load balancer for testing"""
-        config = OrchestratorConfig(
+        """Create load balancer for testing"""        config = OrchestratorConfig(
             load_balancing_algorithm="weighted_round_robin",
             health_check_interval=30,
             failover_enabled=True
@@ -369,8 +344,7 @@ class TestLoadBalancer:
         return LoadBalancer(config)
     
     def test_load_balancer_initialization(self):
-        """Test load balancer initialization"""
-        config = OrchestratorConfig()
+        """Test load balancer initialization"""        config = OrchestratorConfig()
         balancer = LoadBalancer(config)
         
         assert balancer.algorithm is not None
@@ -378,8 +352,7 @@ class TestLoadBalancer:
         assert len(balancer.get_agent_loads()) == 0
     
     def test_agent_load_tracking(self, load_balancer):
-        """Test agent load tracking"""
-        # Add agents to load balancer
+        """Test agent load tracking"""        # Add agents to load balancer
         agents = [
             {"agent_id": "load_agent_1", "capacity": 100, "current_load": 25},
             {"agent_id": "load_agent_2", "capacity": 100, "current_load": 50},
@@ -398,8 +371,7 @@ class TestLoadBalancer:
         assert loads["load_agent_3"]["load_percentage"] == 0.75
     
     def test_task_distribution(self, load_balancer):
-        """Test task distribution across agents"""
-        # Setup agents with different loads
+        """Test task distribution across agents"""        # Setup agents with different loads
         agents = [
             {"agent_id": "dist_agent_1", "capacity": 100, "current_load": 20},
             {"agent_id": "dist_agent_2", "capacity": 100, "current_load": 60},
@@ -428,8 +400,7 @@ class TestLoadBalancer:
             assert "selected_agent" in dist
     
     def test_load_balancing_algorithms(self, load_balancer):
-        """Test different load balancing algorithms"""
-        algorithms = ["round_robin", "least_connections", "weighted_round_robin", "resource_aware"]
+        """Test different load balancing algorithms"""        algorithms = ["round_robin", "least_connections", "weighted_round_robin", "resource_aware"]
         
         # Setup test agents
         agents = [
@@ -454,8 +425,7 @@ class TestLoadBalancer:
             assert selection["algorithm_used"] == algorithm
     
     def test_failover_mechanism(self, load_balancer):
-        """Test agent failover handling"""
-        # Add agents
+        """Test agent failover handling"""        # Add agents
         agents = [
             {"agent_id": "failover_agent_1", "capacity": 100, "current_load": 40, "status": "healthy"},
             {"agent_id": "failover_agent_2", "capacity": 100, "current_load": 30, "status": "healthy"}
@@ -475,8 +445,7 @@ class TestLoadBalancer:
         assert selection["selected_agent"] == "failover_agent_2"  # Only healthy agent
     
     def test_load_redistribution(self, load_balancer):
-        """Test load redistribution when agents become unavailable"""
-        # Setup agents with tasks
+        """Test load redistribution when agents become unavailable"""        # Setup agents with tasks
         agents = [
             {"agent_id": "redist_agent_1", "capacity": 100, "current_load": 80},
             {"agent_id": "redist_agent_2", "capacity": 100, "current_load": 60},
@@ -499,12 +468,10 @@ class TestLoadBalancer:
 
 
 class TestOrchestrator:
-    """Test complete orchestrator functionality"""
-    
+    """Test complete orchestrator functionality"""    
     @pytest.fixture
     async def orchestrator(self) -> Orchestrator:
-        """Create orchestrator for testing"""
-        config = OrchestratorConfig(
+        """Create orchestrator for testing"""        config = OrchestratorConfig(
             max_agents=50,
             max_concurrent_workflows=20,
             enable_monitoring=True,
@@ -520,8 +487,7 @@ class TestOrchestrator:
         await orch.shutdown()
     
     async def test_orchestrator_initialization(self):
-        """Test orchestrator initialization"""
-        config = OrchestratorConfig()
+        """Test orchestrator initialization"""        config = OrchestratorConfig()
         orch = Orchestrator(config)
         
         assert not orch.initialized
@@ -536,8 +502,7 @@ class TestOrchestrator:
         assert orch.status == OrchestratorStatus.STOPPED
     
     async def test_agent_lifecycle_management(self, orchestrator):
-        """Test complete agent lifecycle management"""
-        # Register multiple agents
+        """Test complete agent lifecycle management"""        # Register multiple agents
         agents = [
             {
                 "agent_id": "lifecycle_content_creator",
@@ -587,8 +552,7 @@ class TestOrchestrator:
             assert deregister_result["success"] is True
     
     async def test_workflow_orchestration(self, orchestrator):
-        """Test multi-agent workflow orchestration"""
-        # Register agents for workflow
+        """Test multi-agent workflow orchestration"""        # Register agents for workflow
         content_agent = {
             "agent_id": "workflow_content_creator",
             "agent_type": "ContentCreatorAgent",
@@ -667,8 +631,7 @@ class TestOrchestrator:
             assert len(final_status["completed_steps"]) == 3
     
     async def test_dynamic_scaling(self, orchestrator):
-        """Test dynamic scaling of agents"""
-        # Register base agent configuration
+        """Test dynamic scaling of agents"""        # Register base agent configuration
         agent_template = {
             "agent_type": "ContentCreatorAgent",
             "capabilities": ["content_generation"],
@@ -704,8 +667,7 @@ class TestOrchestrator:
         assert scale_down_result["success"] is True
     
     async def test_fault_tolerance(self, orchestrator):
-        """Test fault tolerance and recovery"""
-        # Register agents
+        """Test fault tolerance and recovery"""        # Register agents
         agent_info = {
             "agent_id": "fault_test_agent",
             "agent_type": "TestAgent",
@@ -734,8 +696,7 @@ class TestOrchestrator:
         assert agent_status["status"] in ["running", "recovering"]
     
     async def test_performance_monitoring(self, orchestrator):
-        """Test system performance monitoring"""
-        # Generate some activity
+        """Test system performance monitoring"""        # Generate some activity
         agent_info = {
             "agent_id": "monitoring_test_agent",
             "agent_type": "TestAgent",
@@ -772,8 +733,7 @@ class TestOrchestrator:
         assert "tasks_processed" in system_metrics
     
     async def test_concurrent_workflow_execution(self, orchestrator):
-        """Test concurrent workflow execution"""
-        # Register agents for multiple workflows
+        """Test concurrent workflow execution"""        # Register agents for multiple workflows
         agents = [
             {"agent_id": "concurrent_content_1", "agent_type": "ContentCreatorAgent", "capabilities": ["content_generation"]},
             {"agent_id": "concurrent_content_2", "agent_type": "ContentCreatorAgent", "capabilities": ["content_generation"]},
@@ -836,8 +796,7 @@ class TestOrchestrator:
     
     @pytest.mark.performance
     async def test_orchestrator_performance(self, orchestrator, assert_performance):
-        """Test orchestrator performance under load"""
-        # Test agent registration performance
+        """Test orchestrator performance under load"""        # Test agent registration performance
         start_time = datetime.now(timezone.utc)
         
         registration_tasks = []
@@ -857,8 +816,7 @@ class TestOrchestrator:
         assert_performance("agent_registration", max_time=10.0)
     
     async def test_system_health_checks(self, orchestrator):
-        """Test system health monitoring"""
-        # Get overall system health
+        """Test system health monitoring"""        # Get overall system health
         health_status = await orchestrator.get_system_health()
         
         assert "overall_status" in health_status
@@ -882,8 +840,7 @@ class TestOrchestrator:
         assert "available_agents" in resource_status
     
     async def test_configuration_updates(self, orchestrator):
-        """Test dynamic configuration updates"""
-        # Get current configuration
+        """Test dynamic configuration updates"""        # Get current configuration
         current_config = await orchestrator.get_configuration()
         assert current_config is not None
         
@@ -904,8 +861,7 @@ class TestOrchestrator:
         assert updated_config["health_check_interval"] == 45
     
     async def test_emergency_shutdown(self, orchestrator):
-        """Test emergency shutdown procedures"""
-        # Register some agents
+        """Test emergency shutdown procedures"""        # Register some agents
         agents = [
             {"agent_id": "emergency_agent_1", "agent_type": "TestAgent", "capabilities": ["test"]},
             {"agent_id": "emergency_agent_2", "agent_type": "TestAgent", "capabilities": ["test"]}

@@ -1,5 +1,4 @@
-"""
-Configuration Manager - Deployment Automation
+"""Configuration Manager - Deployment Automation
 
 Advanced configuration management system for the IA Influencer Agent platform,
 handling environment-specific configurations, secrets management, and
@@ -7,9 +6,7 @@ dynamic configuration updates across deployment environments.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -31,8 +28,7 @@ from ..vault.vault_manager import VaultManager
 
 
 class ConfigType(Enum):
-    """Configuration types"""
-    APPLICATION = "application"
+    """Configuration types"""    APPLICATION = "application"
     DATABASE = "database"
     CACHE = "cache"
     MESSAGE_QUEUE = "message_queue"
@@ -45,8 +41,7 @@ class ConfigType(Enum):
 
 
 class SecretType(Enum):
-    """Secret types"""
-    DATABASE_PASSWORD = "database_password"
+    """Secret types"""    DATABASE_PASSWORD = "database_password"
     API_KEY = "api_key"
     JWT_SECRET = "jwt_secret"
     ENCRYPTION_KEY = "encryption_key"
@@ -57,8 +52,7 @@ class SecretType(Enum):
 
 @dataclass
 class ConfigurationTemplate:
-    """Configuration template definition"""
-    name: str
+    """Configuration template definition"""    name: str
     config_type: ConfigType
     template_path: str
     variables: Dict[str, Any] = field(default_factory=dict)
@@ -70,8 +64,7 @@ class ConfigurationTemplate:
 
 @dataclass
 class SecretDefinition:
-    """Secret definition"""
-    name: str
+    """Secret definition"""    name: str
     secret_type: SecretType
     description: str
     required: bool = True
@@ -81,15 +74,12 @@ class SecretDefinition:
 
 
 class ConfigurationManager(BaseComponent):
-    """
-    Enterprise-grade configuration management system.
+    """    Enterprise-grade configuration management system.
     
     Manages application configurations, secrets, and environment-specific
     settings across multiple deployment environments with encryption,
     templating, and dynamic updates.
-    """
-
-    def __init__(self, config: Dict[str, Any]):
+    """    def __init__(self, config: Dict[str, Any]):
         super().__init__()
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -116,8 +106,7 @@ class ConfigurationManager(BaseComponent):
         self.secret_definitions = self._load_secret_definitions()
 
     def _load_configuration_templates(self) -> Dict[str, ConfigurationTemplate]:
-        """Load configuration templates"""
-        templates = {}
+        """Load configuration templates"""        templates = {}
         
         # Content Protection Configuration Template
         templates['content_protection'] = ConfigurationTemplate(
@@ -639,8 +628,7 @@ class ConfigurationManager(BaseComponent):
         return templates
 
     def _load_secret_definitions(self) -> Dict[str, SecretDefinition]:
-        """Load secret definitions"""
-        secrets = {}
+        """Load secret definitions"""        secrets = {}
         
         # Database secrets
         secrets['database_url'] = SecretDefinition(
@@ -732,8 +720,7 @@ class ConfigurationManager(BaseComponent):
         services: List[str],
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Prepare configurations for all services in the environment.
+        """        Prepare configurations for all services in the environment.
         
         Args:
             environment: Target environment
@@ -742,8 +729,7 @@ class ConfigurationManager(BaseComponent):
             
         Returns:
             Configuration preparation results
-        """
-        self.logger.info(f"Preparing configurations for {len(services)} services in {environment}")
+        """        self.logger.info(f"Preparing configurations for {len(services)} services in {environment}")
         
         preparation_results = {
             'environment': environment,
@@ -789,8 +775,7 @@ class ConfigurationManager(BaseComponent):
         services: List[str],
         context: Dict[str, Any]
     ) -> None:
-        """Ensure all required secrets exist for the services"""
-        
+        """Ensure all required secrets exist for the services"""        
         required_secrets = set()
         
         # Collect all required secrets
@@ -827,8 +812,7 @@ class ConfigurationManager(BaseComponent):
         namespace: str,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate configuration for a specific service"""
-        
+        """Generate configuration for a specific service"""        
         template = self.configuration_templates[service_name]
         
         # Start with base template variables
@@ -893,8 +877,7 @@ class ConfigurationManager(BaseComponent):
         service_configs: Dict[str, Any],
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create Kubernetes ConfigMaps and Secrets"""
-        
+        """Create Kubernetes ConfigMaps and Secrets"""        
         results = {
             'configmaps': {},
             'secrets': {},
@@ -967,8 +950,7 @@ class ConfigurationManager(BaseComponent):
         return results
 
     async def _check_secret_exists(self, secret_name: str, environment: str) -> bool:
-        """Check if a secret exists in the environment"""
-        
+        """Check if a secret exists in the environment"""        
         # Check in Vault first
         vault_exists = await self.vault_manager.secret_exists(
             f"ia-influencer/{environment}/{secret_name}"
@@ -985,8 +967,7 @@ class ConfigurationManager(BaseComponent):
         return param_exists
 
     async def _generate_secret_value(self, secret_def: SecretDefinition) -> str:
-        """Generate a secret value based on secret type"""
-        
+        """Generate a secret value based on secret type"""        
         if secret_def.secret_type == SecretType.DATABASE_PASSWORD:
             return self._generate_secure_password(32)
         elif secret_def.secret_type == SecretType.JWT_SECRET:
@@ -1007,8 +988,7 @@ class ConfigurationManager(BaseComponent):
         environment: str,
         secret_def: SecretDefinition
     ) -> None:
-        """Store secret in secure storage"""
-        
+        """Store secret in secure storage"""        
         # Encrypt secret value
         encrypted_value = await self.encryption_manager.encrypt(secret_value)
         
@@ -1039,8 +1019,7 @@ class ConfigurationManager(BaseComponent):
         )
 
     async def _retrieve_secret(self, secret_name: str, environment: str) -> Optional[str]:
-        """Retrieve and decrypt secret value"""
-        
+        """Retrieve and decrypt secret value"""        
         # Check cache first
         cache_key = f"{environment}:{secret_name}"
         if cache_key in self.secret_cache:
@@ -1094,8 +1073,7 @@ class ConfigurationManager(BaseComponent):
         return None
 
     def _deep_merge_dicts(self, base: Dict[str, Any], overrides: Dict[str, Any]) -> Dict[str, Any]:
-        """Deep merge two dictionaries"""
-        result = base.copy()
+        """Deep merge two dictionaries"""        result = base.copy()
         
         for key, value in overrides.items():
             if key in result and isinstance(result[key], dict) and isinstance(value, dict):
@@ -1110,45 +1088,38 @@ class ConfigurationManager(BaseComponent):
         config_data: Dict[str, Any],
         schema: Dict[str, Any]
     ) -> None:
-        """Validate configuration against schema"""
-        
+        """Validate configuration against schema"""        
         # Implement schema validation logic
         # This could use jsonschema library for validation
         pass
 
     async def _encrypt_sensitive_data(self, config_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Encrypt sensitive configuration data"""
-        
+        """Encrypt sensitive configuration data"""        
         # Identify and encrypt sensitive fields
         # This would implement field-level encryption for sensitive data
         return config_data
 
     def _generate_secure_password(self, length: int = 32) -> str:
-        """Generate a secure random password"""
-        import secrets
+        """Generate a secure random password"""        import secrets
         import string
         
         alphabet = string.ascii_letters + string.digits + "!@#$%^&*"
         return ''.join(secrets.choice(alphabet) for _ in range(length))
 
     def _generate_jwt_secret(self) -> str:
-        """Generate JWT secret"""
-        import secrets
+        """Generate JWT secret"""        import secrets
         return secrets.token_urlsafe(64)
 
     def _generate_encryption_key(self) -> str:
-        """Generate encryption key"""
-        import secrets
+        """Generate encryption key"""        import secrets
         return secrets.token_hex(32)
 
     def _generate_api_key(self) -> str:
-        """Generate API key"""
-        import secrets
+        """Generate API key"""        import secrets
         return f"ia_influencer_{secrets.token_urlsafe(48)}"
 
     def _generate_webhook_secret(self) -> str:
-        """Generate webhook secret"""
-        import secrets
+        """Generate webhook secret"""        import secrets
         return secrets.token_hex(32)
 
     async def update_configuration(
@@ -1158,8 +1129,7 @@ class ConfigurationManager(BaseComponent):
         updates: Dict[str, Any],
         namespace: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Update service configuration"""
-        
+        """Update service configuration"""        
         target_namespace = namespace or f"ia-influencer-{environment}"
         
         # Get current configuration
@@ -1196,8 +1166,7 @@ class ConfigurationManager(BaseComponent):
         return update_result
 
     async def rotate_secrets(self, environment: str, secret_names: Optional[List[str]] = None) -> Dict[str, Any]:
-        """Rotate secrets for the environment"""
-        
+        """Rotate secrets for the environment"""        
         if secret_names is None:
             # Rotate all auto-rotatable secrets
             secret_names = [
@@ -1240,8 +1209,7 @@ class ConfigurationManager(BaseComponent):
         return rotation_results
 
     async def cleanup_cache(self) -> int:
-        """Cleanup expired cache entries"""
-        current_time = datetime.utcnow()
+        """Cleanup expired cache entries"""        current_time = datetime.utcnow()
         expired_keys = []
         
         for key, cached_data in self.secret_cache.items():

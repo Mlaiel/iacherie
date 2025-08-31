@@ -1,5 +1,4 @@
-"""
-🔐 User Credentials Management - Enterprise Password & Security System
+"""🔐 User Credentials Management - Enterprise Password & Security System
 ======================================================================
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -12,9 +11,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Business Logic: User Registration → Credential Encryption → Security Policy Enforcement → 
 Password History → Account Protection → Audit Logging
-"""
-
-import asyncio
+"""import asyncio
 import hashlib
 import secrets
 import string
@@ -41,8 +38,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class CredentialType(Enum):
-    """Credential type classifications"""
-    PASSWORD = "password"
+    """Credential type classifications"""    PASSWORD = "password"
     PIN = "pin"
     BIOMETRIC = "biometric"
     API_KEY = "api_key"
@@ -50,15 +46,13 @@ class CredentialType(Enum):
     BACKUP_CODE = "backup_code"
 
 class SecurityLevel(Enum):
-    """Security level classifications"""
-    LOW = "low"
+    """Security level classifications"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     ULTRA = "ultra"
 
 class AccountStatus(Enum):
-    """Account status states"""
-    ACTIVE = "active"
+    """Account status states"""    ACTIVE = "active"
     LOCKED = "locked"
     SUSPENDED = "suspended"
     PENDING_VERIFICATION = "pending_verification"
@@ -67,8 +61,7 @@ class AccountStatus(Enum):
 
 @dataclass
 class PasswordPolicy:
-    """Password policy configuration"""
-    min_length: int = 12
+    """Password policy configuration"""    min_length: int = 12
     max_length: int = 128
     require_uppercase: bool = True
     require_lowercase: bool = True
@@ -84,8 +77,7 @@ class PasswordPolicy:
 
 @dataclass
 class SecurityQuestion:
-    """Security question structure"""
-    question_id: str
+    """Security question structure"""    question_id: str
     question_text: str
     answer_hash: str
     salt: str
@@ -94,8 +86,7 @@ class SecurityQuestion:
 
 @dataclass
 class CredentialMetadata:
-    """Credential metadata"""
-    created_by: str = ""
+    """Credential metadata"""    created_by: str = ""
     created_from_ip: str = ""
     created_from_device: str = ""
     strength_score: int = 0
@@ -105,8 +96,7 @@ class CredentialMetadata:
     source: str = "manual"
 
 class UserCredentials(Base):
-    """Database model for user credentials"""
-    __tablename__ = 'user_credentials'
+    """Database model for user credentials"""    __tablename__ = 'user_credentials'
     
     credential_id = Column(String, primary_key=True)
     user_id = Column(String, nullable=False, index=True)
@@ -133,8 +123,7 @@ class UserCredentials(Base):
     )
 
 class PasswordHistory(Base):
-    """Database model for password history"""
-    __tablename__ = 'password_history'
+    """Database model for password history"""    __tablename__ = 'password_history'
     
     history_id = Column(String, primary_key=True)
     user_id = Column(String, nullable=False, index=True)
@@ -150,8 +139,7 @@ class PasswordHistory(Base):
     )
 
 class SecurityQuestions(Base):
-    """Database model for security questions"""
-    __tablename__ = 'security_questions'
+    """Database model for security questions"""    __tablename__ = 'security_questions'
     
     question_id = Column(String, primary_key=True)
     user_id = Column(String, nullable=False, index=True)
@@ -169,8 +157,7 @@ class SecurityQuestions(Base):
     )
 
 class AccountSecurity(Base):
-    """Database model for account security settings"""
-    __tablename__ = 'account_security'
+    """Database model for account security settings"""    __tablename__ = 'account_security'
     
     security_id = Column(String, primary_key=True)
     user_id = Column(String, nullable=False, unique=True, index=True)
@@ -190,8 +177,7 @@ class AccountSecurity(Base):
     metadata = Column(JSON, nullable=True)
 
 class UserCredentialsRepository:
-    """
-    Enterprise-grade user credentials management repository.
+    """    Enterprise-grade user credentials management repository.
     
     Features:
     - Secure password storage with multiple hashing algorithms
@@ -200,8 +186,7 @@ class UserCredentialsRepository:
     - Account lockout and security policies
     - Security questions and recovery mechanisms
     - Comprehensive audit logging
-    """
-    
+    """    
     def __init__(
         self,
         session: AsyncSession,
@@ -242,8 +227,7 @@ class UserCredentialsRepository:
         credential_type: CredentialType = CredentialType.PASSWORD,
         metadata: Optional[CredentialMetadata] = None
     ) -> str:
-        """Create new user credentials with policy validation"""
-        try:
+        """Create new user credentials with policy validation"""        try:
             # Validate password against policy
             if credential_type == CredentialType.PASSWORD:
                 validation_result = await self.validate_password_policy(password, user_id)
@@ -312,8 +296,7 @@ class UserCredentialsRepository:
         password: str,
         credential_type: CredentialType = CredentialType.PASSWORD
     ) -> Dict[str, Any]:
-        """Verify user credentials with security checks"""
-        try:
+        """Verify user credentials with security checks"""        try:
             # Check account status and lockout
             account_status = await self._check_account_status(user_id)
             if not account_status['can_authenticate']:
@@ -374,8 +357,7 @@ class UserCredentialsRepository:
         new_password: str,
         metadata: Optional[CredentialMetadata] = None
     ) -> bool:
-        """Change user password with validation"""
-        try:
+        """Change user password with validation"""        try:
             # Verify old password
             verification = await self.verify_credentials(user_id, old_password)
             if not verification['verified']:
@@ -417,8 +399,7 @@ class UserCredentialsRepository:
             raise
     
     async def validate_password_policy(self, password: str, user_id: str) -> Dict[str, Any]:
-        """Validate password against security policy"""
-        errors = []
+        """Validate password against security policy"""        errors = []
         
         # Length checks
         if len(password) < self.policy.min_length:
@@ -468,8 +449,7 @@ class UserCredentialsRepository:
         user_id: str,
         questions_and_answers: List[Tuple[str, str]]
     ) -> bool:
-        """Setup security questions for account recovery"""
-        try:
+        """Setup security questions for account recovery"""        try:
             if len(questions_and_answers) < 3:
                 raise ValueError("At least 3 security questions are required")
             
@@ -514,8 +494,7 @@ class UserCredentialsRepository:
             raise
     
     async def generate_recovery_codes(self, user_id: str, count: int = 10) -> List[str]:
-        """Generate backup recovery codes"""
-        try:
+        """Generate backup recovery codes"""        try:
             recovery_codes = []
             
             for _ in range(count):
@@ -559,8 +538,7 @@ class UserCredentialsRepository:
     # Private helper methods
     
     async def _is_password_reused(self, user_id: str, password: str) -> bool:
-        """Check if password was recently used"""
-        try:
+        """Check if password was recently used"""        try:
             stmt = select(PasswordHistory).where(
                 PasswordHistory.user_id == user_id
             ).order_by(PasswordHistory.created_at.desc()).limit(self.policy.password_history_count)
@@ -586,8 +564,7 @@ class UserCredentialsRepository:
         changed_from_ip: Optional[str] = None,
         changed_reason: str = ""
     ):
-        """Add password to history"""
-        history_entry = PasswordHistory(
+        """Add password to history"""        history_entry = PasswordHistory(
             history_id=str(uuid4()),
             user_id=user_id,
             password_hash=password_hash,
@@ -600,8 +577,7 @@ class UserCredentialsRepository:
         self.session.add(history_entry)
     
     def _determine_security_level(self, strength_score: int) -> SecurityLevel:
-        """Determine security level based on password strength"""
-        if strength_score >= 4:
+        """Determine security level based on password strength"""        if strength_score >= 4:
             return SecurityLevel.ULTRA
         elif strength_score >= 3:
             return SecurityLevel.HIGH
@@ -611,8 +587,7 @@ class UserCredentialsRepository:
             return SecurityLevel.LOW
     
     async def _check_account_status(self, user_id: str) -> Dict[str, Any]:
-        """Check if account can authenticate"""
-        try:
+        """Check if account can authenticate"""        try:
             stmt = select(AccountSecurity).where(AccountSecurity.user_id == user_id)
             result = await self.session.execute(stmt)
             account = result.scalar_one_or_none()
@@ -642,8 +617,7 @@ class UserCredentialsRepository:
             return {'can_authenticate': False, 'reason': 'System error'}
     
     async def _record_failed_attempt(self, user_id: str, reason: str):
-        """Record failed authentication attempt"""
-        try:
+        """Record failed authentication attempt"""        try:
             stmt = select(AccountSecurity).where(AccountSecurity.user_id == user_id)
             result = await self.session.execute(stmt)
             account = result.scalar_one_or_none()
@@ -671,8 +645,7 @@ class UserCredentialsRepository:
             logger.error(f"Failed to record failed attempt: {e}")
     
     async def _record_successful_authentication(self, user_id: str, credential_id: str):
-        """Record successful authentication"""
-        try:
+        """Record successful authentication"""        try:
             # Reset failed attempts
             stmt = select(AccountSecurity).where(AccountSecurity.user_id == user_id)
             result = await self.session.execute(stmt)
@@ -705,8 +678,7 @@ class UserCredentialsRepository:
         last_password_change: bool = False,
         security_questions_set: bool = False
     ):
-        """Update account security settings"""
-        try:
+        """Update account security settings"""        try:
             stmt = select(AccountSecurity).where(AccountSecurity.user_id == user_id)
             result = await self.session.execute(stmt)
             account = result.scalar_one_or_none()

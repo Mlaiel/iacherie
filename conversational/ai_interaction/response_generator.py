@@ -1,5 +1,4 @@
-"""
-Enterprise Response Generator Module - IA Influencer Agent
+"""Enterprise Response Generator Module - IA Influencer Agent
 =========================================================
 
 Advanced intelligent response generation system for conversational AI.
@@ -8,9 +7,7 @@ Creates personalized, contextual, and engaging responses for content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import uuid
@@ -38,8 +35,7 @@ RESPONSE_GENERATION_TIME = Histogram('response_generation_duration_seconds', 'Re
 
 
 class ResponseType(Enum):
-    """Response types for different contexts"""
-    INFORMATIONAL = "informational"
+    """Response types for different contexts"""    INFORMATIONAL = "informational"
     ADVISORY = "advisory"
     MOTIVATIONAL = "motivational"
     INSTRUCTIONAL = "instructional"
@@ -52,8 +48,7 @@ class ResponseType(Enum):
 
 
 class ResponsePersonality(Enum):
-    """Response personality styles"""
-    PROFESSIONAL_EXPERT = "professional_expert"
+    """Response personality styles"""    PROFESSIONAL_EXPERT = "professional_expert"
     FRIENDLY_MENTOR = "friendly_mentor"
     CREATIVE_INSPIRATION = "creative_inspiration"
     ANALYTICAL_ADVISOR = "analytical_advisor"
@@ -63,8 +58,7 @@ class ResponsePersonality(Enum):
 
 @dataclass
 class ResponseContext:
-    """Context for response generation"""
-    user_id: str
+    """Context for response generation"""    user_id: str
     conversation_history: List[Dict]
     user_personality: Dict[str, Any]
     current_mood: str
@@ -79,8 +73,7 @@ class ResponseContext:
 
 @dataclass
 class GeneratedResponse:
-    """Generated response with metadata"""
-    response_id: str
+    """Generated response with metadata"""    response_id: str
     text: str
     response_type: ResponseType
     personality_style: ResponsePersonality
@@ -94,8 +87,7 @@ class GeneratedResponse:
 
 @dataclass
 class ResponseMetrics:
-    """Response quality metrics"""
-    clarity_score: float
+    """Response quality metrics"""    clarity_score: float
     relevance_score: float
     engagement_score: float
     helpfulness_score: float
@@ -105,13 +97,11 @@ class ResponseMetrics:
 
 
 class ResponseGenerator:
-    """
-    Enterprise Response Generator
+    """    Enterprise Response Generator
     
     Advanced AI-powered response generation system that creates highly
     personalized, contextual, and engaging responses for content creators.
-    """
-    
+    """    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.ai_models = AIModelManager()
@@ -125,8 +115,7 @@ class ResponseGenerator:
         self._personality_configs = {}
         
     async def initialize(self) -> None:
-        """Initialize the response generator"""
-        try:
+        """Initialize the response generator"""        try:
             await self.ai_models.load_conversational_models()
             await self.nlp_processor.initialize()
             await self.personalization_engine.initialize()
@@ -151,8 +140,7 @@ class ResponseGenerator:
         personality: ResponsePersonality = ResponsePersonality.PROFESSIONAL_EXPERT,
         customization_params: Optional[Dict] = None
     ) -> GeneratedResponse:
-        """Generate intelligent, personalized response"""
-        start_time = datetime.now()
+        """Generate intelligent, personalized response"""        start_time = datetime.now()
         
         try:
             RESPONSE_GENERATION_COUNTER.labels(response_type=response_type.value).inc()
@@ -218,8 +206,7 @@ class ResponseGenerator:
             raise ResponseGenerationError(f"Response generation failed: {e}")
     
     async def _analyze_input(self, input_text: str, context: ResponseContext) -> Dict[str, Any]:
-        """Analyze input text for context and sentiment"""
-        try:
+        """Analyze input text for context and sentiment"""        try:
             analysis_tasks = [
                 self.sentiment_analyzer.analyze(input_text),
                 self.nlp_processor.extract_intent(input_text),
@@ -247,8 +234,7 @@ class ResponseGenerator:
         context: ResponseContext,
         strategy: Dict[str, Any]
     ) -> str:
-        """Generate base response using AI models"""
-        try:
+        """Generate base response using AI models"""        try:
             # Prepare AI context
             ai_context = {
                 'user_input': input_text,
@@ -276,8 +262,7 @@ class ResponseGenerator:
         personality: ResponsePersonality,
         input_analysis: Dict[str, Any]
     ) -> str:
-        """Apply personalization and style adaptation"""
-        try:
+        """Apply personalization and style adaptation"""        try:
             # Apply personality style
             styled_response = await self.style_adapter.adapt_style(
                 base_response, personality, context.preferred_communication_style
@@ -300,8 +285,7 @@ class ResponseGenerator:
         input_text: str,
         context: ResponseContext
     ) -> ResponseMetrics:
-        """Calculate response quality metrics"""
-        try:
+        """Calculate response quality metrics"""        try:
             # Calculate various quality metrics
             clarity_score = await self._calculate_clarity_score(response_text)
             relevance_score = await self._calculate_relevance_score(response_text, input_text)
@@ -326,13 +310,11 @@ class ResponseGenerator:
             return ResponseMetrics(0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7)
     
     async def _load_response_templates(self) -> None:
-        """Load response templates"""
-        # Implementation would load from configuration or database
+        """Load response templates"""        # Implementation would load from configuration or database
         pass
     
     async def _load_personality_configurations(self) -> None:
-        """Load personality configurations"""
-        # Implementation would load personality configs
+        """Load personality configurations"""        # Implementation would load personality configs
         pass
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
@@ -351,8 +333,7 @@ logger = logging.getLogger(__name__)
 
 
 class ResponseType(Enum):
-    """Types of AI responses"""
-    INFORMATIONAL = "informational"
+    """Types of AI responses"""    INFORMATIONAL = "informational"
     INSTRUCTIONAL = "instructional"
     CREATIVE = "creative"
     ANALYTICAL = "analytical"
@@ -363,8 +344,7 @@ class ResponseType(Enum):
 
 
 class ResponseTone(Enum):
-    """Response tone options"""
-    PROFESSIONAL = "professional"
+    """Response tone options"""    PROFESSIONAL = "professional"
     FRIENDLY = "friendly"
     ENTHUSIASTIC = "enthusiastic"
     SUPPORTIVE = "supportive"
@@ -374,8 +354,7 @@ class ResponseTone(Enum):
 
 
 class ResponseComplexity(Enum):
-    """Response complexity levels"""
-    SIMPLE = "simple"
+    """Response complexity levels"""    SIMPLE = "simple"
     MODERATE = "moderate"
     DETAILED = "detailed"
     EXPERT = "expert"
@@ -383,8 +362,7 @@ class ResponseComplexity(Enum):
 
 @dataclass
 class ResponseContext:
-    """Context for response generation"""
-    user_id: str
+    """Context for response generation"""    user_id: str
     session_id: str
     conversation_history: List[Dict]
     user_intent: str
@@ -399,8 +377,7 @@ class ResponseContext:
 
 @dataclass
 class ResponseMetadata:
-    """Metadata for generated responses"""
-    response_id: str
+    """Metadata for generated responses"""    response_id: str
     response_type: ResponseType
     confidence_score: float
     generation_time: float
@@ -412,8 +389,7 @@ class ResponseMetadata:
 
 @dataclass
 class GeneratedResponse:
-    """Complete generated response structure"""
-    text: str
+    """Complete generated response structure"""    text: str
     response_type: ResponseType
     tone: ResponseTone
     metadata: ResponseMetadata
@@ -424,13 +400,11 @@ class GeneratedResponse:
 
 
 class ResponseGenerator:
-    """
-    Advanced AI Response Generation System
+    """    Advanced AI Response Generation System
     
     Generates intelligent, context-aware responses for multi-format content creators.
     Handles personalization, tone adjustment, and complex conversation flows.
-    """
-    
+    """    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.ai_models = AIModelManager()
@@ -440,8 +414,7 @@ class ResponseGenerator:
         self._personalization_rules = {}
         
     async def initialize(self) -> None:
-        """Initialize the response generator"""
-        try:
+        """Initialize the response generator"""        try:
             await self.ai_models.load_language_models()
             await self.nlp_processor.initialize()
             await self.context_tracker.initialize()
@@ -459,8 +432,7 @@ class ResponseGenerator:
         response_type: Optional[str] = None,
         custom_instructions: Optional[Dict] = None
     ) -> GeneratedResponse:
-        """
-        Generate intelligent AI response
+        """        Generate intelligent AI response
         
         Args:
             user_message: User's input message
@@ -470,8 +442,7 @@ class ResponseGenerator:
             
         Returns:
             Complete generated response with metadata
-        """
-        try:
+        """        try:
             start_time = datetime.now()
             
             # Validate input
@@ -557,8 +528,7 @@ class ResponseGenerator:
         context: ResponseContext,
         response_requirements: Optional[Dict] = None
     ) -> GeneratedResponse:
-        """
-        Generate response considering multi-turn conversation context
+        """        Generate response considering multi-turn conversation context
         
         Args:
             conversation_history: Complete conversation history
@@ -567,8 +537,7 @@ class ResponseGenerator:
             
         Returns:
             Context-aware generated response
-        """
-        try:
+        """        try:
             # Analyze conversation flow
             conversation_analysis = await self._analyze_conversation_flow(
                 conversation_history, context
@@ -609,8 +578,7 @@ class ResponseGenerator:
         context: ResponseContext,
         analysis_results: Optional[Dict] = None
     ) -> GeneratedResponse:
-        """
-        Generate response specific to content analysis
+        """        Generate response specific to content analysis
         
         Args:
             user_message: User's message about content
@@ -620,8 +588,7 @@ class ResponseGenerator:
             
         Returns:
             Content-specific response
-        """
-        try:
+        """        try:
             # Analyze content context
             content_context = await self._analyze_content_context(
                 content_data, analysis_results
@@ -651,8 +618,7 @@ class ResponseGenerator:
         creativity_level: float = 0.8,
         creative_constraints: Optional[Dict] = None
     ) -> GeneratedResponse:
-        """
-        Generate creative response with enhanced creativity
+        """        Generate creative response with enhanced creativity
         
         Args:
             user_message: User's creative request
@@ -662,8 +628,7 @@ class ResponseGenerator:
             
         Returns:
             Creative response with innovative suggestions
-        """
-        try:
+        """        try:
             # Set creative generation parameters
             creative_context = await self._prepare_creative_context(
                 context, creativity_level, creative_constraints
@@ -692,8 +657,7 @@ class ResponseGenerator:
         strategic_focus: str,
         data_context: Optional[Dict] = None
     ) -> GeneratedResponse:
-        """
-        Generate strategic response with business insights
+        """        Generate strategic response with business insights
         
         Args:
             user_message: User's strategic question
@@ -703,8 +667,7 @@ class ResponseGenerator:
             
         Returns:
             Strategic response with actionable insights
-        """
-        try:
+        """        try:
             # Analyze strategic context
             strategic_context = await self._analyze_strategic_context(
                 strategic_focus, data_context, context
@@ -731,8 +694,7 @@ class ResponseGenerator:
         base_response: GeneratedResponse,
         style_preferences: Dict[str, Any]
     ) -> GeneratedResponse:
-        """
-        Customize response style based on preferences
+        """        Customize response style based on preferences
         
         Args:
             base_response: Base response to customize
@@ -740,8 +702,7 @@ class ResponseGenerator:
             
         Returns:
             Customized response
-        """
-        try:
+        """        try:
             # Apply style customizations
             customized_text = await self._apply_style_customizations(
                 base_response.text, style_preferences
@@ -766,8 +727,7 @@ class ResponseGenerator:
     
     # Private helper methods
     async def _validate_input(self, user_message: str, context: ResponseContext) -> None:
-        """Validate input parameters"""
-        if not user_message or len(user_message.strip()) == 0:
+        """Validate input parameters"""        if not user_message or len(user_message.strip()) == 0:
             raise ValidationError("User message cannot be empty")
         
         if len(user_message) > 10000:
@@ -784,8 +744,7 @@ class ResponseGenerator:
         user_message: str, 
         context: ResponseContext
     ) -> Dict[str, Any]:
-        """Analyze user message for intent and context"""
-        try:
+        """Analyze user message for intent and context"""        try:
             analysis = await self.nlp_processor.analyze_message(
                 user_message,
                 context.language,
@@ -822,8 +781,7 @@ class ResponseGenerator:
         context: ResponseContext,
         override_type: Optional[str]
     ) -> ResponseType:
-        """Determine appropriate response type"""
-        if override_type:
+        """Determine appropriate response type"""        if override_type:
             return ResponseType(override_type)
         
         intent = message_analysis.get("intent", "general")
@@ -850,8 +808,7 @@ class ResponseGenerator:
         context: ResponseContext,
         response_type: ResponseType
     ) -> Dict[str, Any]:
-        """Generate base response using AI models"""
-        try:
+        """Generate base response using AI models"""        try:
             # Prepare generation context
             generation_context = {
                 "user_message": user_message,
@@ -891,8 +848,7 @@ class ResponseGenerator:
         context: ResponseContext,
         message_analysis: Dict
     ) -> Dict[str, Any]:
-        """Apply personalization to response"""
-        try:
+        """Apply personalization to response"""        try:
             personalization_data = context.personalization_data
             
             if not personalization_data:
@@ -920,8 +876,7 @@ class ResponseGenerator:
         response: Dict,
         context: ResponseContext
     ) -> Dict[str, Any]:
-        """Apply tone and style adjustments"""
-        try:
+        """Apply tone and style adjustments"""        try:
             # Apply tone adjustment
             styled_text = await self._adjust_response_tone(
                 response["text"], context.preferred_tone
@@ -945,8 +900,7 @@ class ResponseGenerator:
         context: ResponseContext,
         message_analysis: Dict
     ) -> List[Dict[str, Any]]:
-        """Generate contextual suggestions"""
-        try:
+        """Generate contextual suggestions"""        try:
             suggestions = []
             
             intent = message_analysis.get("intent")
@@ -989,8 +943,7 @@ class ResponseGenerator:
         context: ResponseContext,
         message_analysis: Dict
     ) -> List[str]:
-        """Generate follow-up questions"""
-        try:
+        """Generate follow-up questions"""        try:
             follow_ups = []
             
             intent = message_analysis.get("intent")
@@ -1029,8 +982,7 @@ class ResponseGenerator:
         context: ResponseContext,
         message_analysis: Dict
     ) -> List[Dict[str, Any]]:
-        """Generate actionable items"""
-        try:
+        """Generate actionable items"""        try:
             action_items = []
             
             intent = message_analysis.get("intent")
@@ -1073,8 +1025,7 @@ class ResponseGenerator:
         context: ResponseContext,
         response: GeneratedResponse
     ) -> None:
-        """Cache generated response"""
-        try:
+        """Cache generated response"""        try:
             cache_key = f"response:{context.session_id}:{response.metadata.response_id}"
             
             cache_data = {
@@ -1092,8 +1043,7 @@ class ResponseGenerator:
     
     # Additional helper methods for various response types and customizations
     async def _load_response_templates(self) -> None:
-        """Load response templates for different scenarios"""
-        self._response_templates = {
+        """Load response templates for different scenarios"""        self._response_templates = {
             "greeting": {
                 "professional": "Hello! I'm here to help you with your content creation goals.",
                 "friendly": "Hi there! Ready to create some amazing content together?",
@@ -1107,8 +1057,7 @@ class ResponseGenerator:
         }
     
     async def _load_personalization_rules(self) -> None:
-        """Load personalization rules for different creator types"""
-        self._personalization_rules = {
+        """Load personalization rules for different creator types"""        self._personalization_rules = {
             "musician": {
                 "terminology": ["tracks", "albums", "beats", "melodies", "harmonies"],
                 "focus_areas": ["audio quality", "streaming platforms", "music distribution"],
@@ -1132,8 +1081,7 @@ class ResponseGenerator:
         creator_type: str, 
         personalization_data: Dict
     ) -> str:
-        """Apply creator type specific personalization"""
-        rules = self._personalization_rules.get(creator_type, {})
+        """Apply creator type specific personalization"""        rules = self._personalization_rules.get(creator_type, {})
         
         # Replace generic terms with creator-specific terminology
         terminology = rules.get("terminology", [])
@@ -1149,8 +1097,7 @@ class ResponseGenerator:
         text: str, 
         personalization_data: Dict
     ) -> str:
-        """Apply user-specific preferences"""
-        # Apply user preferences like communication style, detail level, etc.
+        """Apply user-specific preferences"""        # Apply user preferences like communication style, detail level, etc.
         detail_level = personalization_data.get("detail_level", "moderate")
         
         if detail_level == "brief":
@@ -1161,8 +1108,7 @@ class ResponseGenerator:
         return text
     
     async def _adjust_response_tone(self, text: str, tone: ResponseTone) -> str:
-        """Adjust response tone"""
-        # Tone adjustment logic
+        """Adjust response tone"""        # Tone adjustment logic
         if tone == ResponseTone.ENTHUSIASTIC:
             # Add enthusiasm markers
             if not text.endswith("!"):
@@ -1177,8 +1123,7 @@ class ResponseGenerator:
         return text
     
     async def _adjust_response_complexity(self, text: str, complexity: ResponseComplexity) -> str:
-        """Adjust response complexity level"""
-        if complexity == ResponseComplexity.SIMPLE:
+        """Adjust response complexity level"""        if complexity == ResponseComplexity.SIMPLE:
             # Simplify language and structure
             # In production, use more sophisticated text simplification
             text = text.replace("utilize", "use").replace("implement", "do")

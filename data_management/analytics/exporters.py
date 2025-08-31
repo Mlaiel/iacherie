@@ -1,5 +1,4 @@
-"""
-Analytics Exporters - Advanced Data Export and Integration
+"""Analytics Exporters - Advanced Data Export and Integration
 =========================================================
 
 Comprehensive data export system for analytics with multiple formats,
@@ -15,9 +14,7 @@ Features:
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: Proprietary - All rights reserved
-"""
-
-import asyncio
+"""import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -38,8 +35,7 @@ from ...core.database import get_database_session
 
 
 class ExportFormat(Enum):
-    """Supported export formats."""
-    EXCEL = "excel"
+    """Supported export formats."""    EXCEL = "excel"
     PDF = "pdf"
     JSON = "json"
     CSV = "csv"
@@ -49,8 +45,7 @@ class ExportFormat(Enum):
 
 
 class ExportDestination(Enum):
-    """Export destination types."""
-    LOCAL_FILE = "local_file"
+    """Export destination types."""    LOCAL_FILE = "local_file"
     CLOUD_STORAGE = "cloud_storage"
     EMAIL = "email"
     API_ENDPOINT = "api_endpoint"
@@ -60,8 +55,7 @@ class ExportDestination(Enum):
 
 @dataclass
 class ExportConfiguration:
-    """Export configuration settings."""
-    format: ExportFormat
+    """Export configuration settings."""    format: ExportFormat
     destination: ExportDestination
     template_name: Optional[str] = None
     include_charts: bool = True
@@ -74,8 +68,7 @@ class ExportConfiguration:
 
 @dataclass
 class ExportJob:
-    """Export job tracking."""
-    job_id: str
+    """Export job tracking."""    job_id: str
     export_type: str
     configuration: ExportConfiguration
     status: str  # pending, running, completed, failed
@@ -87,11 +80,9 @@ class ExportJob:
 
 
 class ExcelExporter:
-    """
-    Advanced Excel export system with rich formatting,
+    """    Advanced Excel export system with rich formatting,
     charts, and multi-sheet capabilities.
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -102,8 +93,7 @@ class ExcelExporter:
         template_name: Optional[str] = None,
         include_charts: bool = True
     ) -> str:
-        """
-        Export analytics data to Excel with rich formatting.
+        """        Export analytics data to Excel with rich formatting.
         
         Args:
             data: Analytics data to export
@@ -113,8 +103,7 @@ class ExcelExporter:
             
         Returns:
             Path to exported file
-        """
-        try:
+        """        try:
             # Create workbook
             wb = Workbook()
             
@@ -156,8 +145,7 @@ class ExcelExporter:
             raise
             
     async def _create_summary_sheet(self, ws, data: Dict[str, Any]) -> None:
-        """Create executive summary sheet."""
-        
+        """Create executive summary sheet."""        
         # Header
         ws['A1'] = "IA INFLUENCER AGENT - ANALYTICS REPORT"
         ws['A1'].font = Font(size=16, bold=True, color="2C3E50")
@@ -205,8 +193,7 @@ class ExcelExporter:
             row += 1
             
     async def _create_kpi_sheet(self, ws, kpis: List[Dict[str, Any]]) -> None:
-        """Create KPI dashboard sheet."""
-        
+        """Create KPI dashboard sheet."""        
         # Header
         ws['A1'] = "KEY PERFORMANCE INDICATORS"
         ws['A1'].font = Font(size=16, bold=True, color="2C3E50")
@@ -269,8 +256,7 @@ class ExcelExporter:
         metrics: List[Dict[str, Any]],
         category: str
     ) -> None:
-        """Create detailed metrics sheet."""
-        
+        """Create detailed metrics sheet."""        
         # Header
         title = category.replace('_', ' ').title() + " Metrics"
         ws['A1'] = title
@@ -306,8 +292,7 @@ class ExcelExporter:
             ws[f'F{i}'] = metric.get('notes', '')
             
     async def _create_charts_sheet(self, ws, charts_data: List[Dict[str, Any]]) -> None:
-        """Create charts and visualizations sheet."""
-        
+        """Create charts and visualizations sheet."""        
         ws['A1'] = "CHARTS & VISUALIZATIONS"
         ws['A1'].font = Font(size=14, bold=True, color="2C3E50")
         
@@ -355,8 +340,7 @@ class ExcelExporter:
         ws.add_chart(bar_chart, "E18")
         
     async def _apply_branding(self, wb) -> None:
-        """Apply corporate branding to workbook."""
-        
+        """Apply corporate branding to workbook."""        
         # Set document properties
         wb.properties.title = "IA Influencer Agent Analytics Report"
         wb.properties.creator = "Fahed Mlaiel - IA Influencer Agent Platform"
@@ -373,11 +357,9 @@ class ExcelExporter:
 
 
 class PDFReporter:
-    """
-    Advanced PDF report generation with professional layouts,
+    """    Advanced PDF report generation with professional layouts,
     charts, and executive presentation formatting.
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -387,8 +369,7 @@ class PDFReporter:
         file_path: str,
         template_name: Optional[str] = None
     ) -> str:
-        """
-        Export analytics data to PDF report.
+        """        Export analytics data to PDF report.
         
         Args:
             data: Analytics data to export
@@ -397,8 +378,7 @@ class PDFReporter:
             
         Returns:
             Path to exported PDF file
-        """
-        try:
+        """        try:
             # This would typically use libraries like reportlab or weasyprint
             # For demonstration, creating an HTML version that can be converted to PDF
             
@@ -419,10 +399,8 @@ class PDFReporter:
             raise
             
     async def _generate_pdf_html(self, data: Dict[str, Any]) -> str:
-        """Generate HTML content for PDF conversion."""
-        
-        template = Template("""
-        <!DOCTYPE html>
+        """Generate HTML content for PDF conversion."""        
+        template = Template("""        <!DOCTYPE html>
         <html>
         <head>
             <meta charset="UTF-8">
@@ -612,11 +590,9 @@ class PDFReporter:
 
 
 class APIExporter:
-    """
-    API-based export system for real-time data integration
+    """    API-based export system for real-time data integration
     with external systems and platforms.
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -627,8 +603,7 @@ class APIExporter:
         api_key: Optional[str] = None,
         format: str = "json"
     ) -> bool:
-        """
-        Export analytics data to external API endpoint.
+        """        Export analytics data to external API endpoint.
         
         Args:
             data: Analytics data to export
@@ -638,8 +613,7 @@ class APIExporter:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             import aiohttp
             
             headers = {'Content-Type': 'application/json'}
@@ -678,11 +652,9 @@ class APIExporter:
 
 
 class DataLakeExporter:
-    """
-    Data lake integration for big data analytics and
+    """    Data lake integration for big data analytics and
     long-term data warehousing.
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -692,8 +664,7 @@ class DataLakeExporter:
         partition_key: str,
         format: str = "parquet"
     ) -> str:
-        """
-        Export analytics data to data lake with partitioning.
+        """        Export analytics data to data lake with partitioning.
         
         Args:
             data: Analytics data to export
@@ -702,8 +673,7 @@ class DataLakeExporter:
             
         Returns:
             Data lake path
-        """
-        try:
+        """        try:
             # Create data lake directory structure
             base_path = Path("data_lake")
             
@@ -739,11 +709,9 @@ class DataLakeExporter:
 
 
 class ScheduledExporter:
-    """
-    Automated export scheduling system for regular
+    """    Automated export scheduling system for regular
     report generation and distribution.
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self._scheduled_jobs = {}
@@ -755,8 +723,7 @@ class ScheduledExporter:
         schedule_frequency: str,
         data_source_config: Dict[str, Any]
     ) -> str:
-        """
-        Schedule automated export job.
+        """        Schedule automated export job.
         
         Args:
             job_name: Unique job identifier
@@ -766,8 +733,7 @@ class ScheduledExporter:
             
         Returns:
             Job ID
-        """
-        try:
+        """        try:
             job_id = f"export_{job_name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
             export_job = ExportJob(
@@ -793,8 +759,7 @@ class ScheduledExporter:
             raise
             
     def _calculate_next_run(self, frequency: str) -> datetime:
-        """Calculate next run time based on frequency."""
-        
+        """Calculate next run time based on frequency."""        
         now = datetime.now()
         
         if frequency == "daily":
@@ -807,8 +772,7 @@ class ScheduledExporter:
             return now + timedelta(hours=1)  # Default hourly
             
     async def run_scheduled_exports(self) -> List[str]:
-        """Run all due scheduled exports."""
-        
+        """Run all due scheduled exports."""        
         completed_jobs = []
         current_time = datetime.now()
         
@@ -833,8 +797,7 @@ class ScheduledExporter:
         return completed_jobs
         
     async def _execute_export_job(self, job: ExportJob) -> None:
-        """Execute individual export job."""
-        
+        """Execute individual export job."""        
         job.status = "running"
         
         # Mock data collection (would integrate with actual analytics collectors)
@@ -881,8 +844,7 @@ class ScheduledExporter:
 
 # Factory function for creating appropriate exporter
 def create_exporter(export_format: ExportFormat):
-    """Factory function to create appropriate exporter instance."""
-    
+    """Factory function to create appropriate exporter instance."""    
     if export_format == ExportFormat.EXCEL:
         return ExcelExporter()
     elif export_format == ExportFormat.PDF:

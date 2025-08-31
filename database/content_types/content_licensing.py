@@ -1,5 +1,4 @@
-"""
-Content Licensing Module - Professional Rights Management System
+"""Content Licensing Module - Professional Rights Management System
 
 Module avancé pour la gestion des licences, droits d'auteur et monétisation
 automatisée du contenu dans la plateforme IA Influencer Agent.
@@ -13,9 +12,7 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""
-
-from typing import Dict, List, Any, Optional, Union, Tuple
+"""from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from decimal import Decimal
@@ -34,8 +31,7 @@ from .content_models import Base, ContentType
 logger = logging.getLogger(__name__)
 
 class LicenseType(Enum):
-    """Types of content licenses"""
-    EXCLUSIVE = "exclusive"
+    """Types of content licenses"""    EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     ROYALTY_FREE = "royalty_free"
     RIGHTS_MANAGED = "rights_managed"
@@ -47,8 +43,7 @@ class LicenseType(Enum):
     EDUCATIONAL = "educational"
 
 class UsageScope(Enum):
-    """Scope of content usage rights"""
-    GLOBAL = "global"
+    """Scope of content usage rights"""    GLOBAL = "global"
     REGIONAL = "regional"
     NATIONAL = "national"
     LOCAL = "local"
@@ -60,8 +55,7 @@ class UsageScope(Enum):
     ADVERTISING = "advertising"
 
 class RevenueModel(Enum):
-    """Revenue sharing models"""
-    FIXED_FEE = "fixed_fee"
+    """Revenue sharing models"""    FIXED_FEE = "fixed_fee"
     PERCENTAGE = "percentage"
     TIERED = "tiered"
     PER_USE = "per_use"
@@ -71,8 +65,7 @@ class RevenueModel(Enum):
     NEGOTIABLE = "negotiable"
 
 class LicenseStatus(Enum):
-    """License agreement status"""
-    DRAFT = "draft"
+    """License agreement status"""    DRAFT = "draft"
     PENDING_APPROVAL = "pending_approval"
     ACTIVE = "active"
     EXPIRED = "expired"
@@ -82,8 +75,7 @@ class LicenseStatus(Enum):
     CANCELLED = "cancelled"
 
 class PaymentStatus(Enum):
-    """Payment status for licenses"""
-    PENDING = "pending"
+    """Payment status for licenses"""    PENDING = "pending"
     PROCESSING = "processing"
     PAID = "paid"
     FAILED = "failed"
@@ -92,8 +84,7 @@ class PaymentStatus(Enum):
     OVERDUE = "overdue"
 
 class ComplianceStatus(Enum):
-    """Compliance status for usage"""
-    COMPLIANT = "compliant"
+    """Compliance status for usage"""    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     UNDER_REVIEW = "under_review"
     VIOLATION = "violation"
@@ -101,8 +92,7 @@ class ComplianceStatus(Enum):
 
 @dataclass
 class LicenseTerms:
-    """Container for license terms and conditions"""
-    usage_scope: UsageScope
+    """Container for license terms and conditions"""    usage_scope: UsageScope
     duration: timedelta
     territory: str
     exclusivity: bool
@@ -127,8 +117,7 @@ class LicenseTerms:
     custom_clauses: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage"""
-        return {
+        """Convert to dictionary for storage"""        return {
             'usage_scope': self.usage_scope.value,
             'duration_days': self.duration.days,
             'territory': self.territory,
@@ -150,8 +139,7 @@ class LicenseTerms:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'LicenseTerms':
-        """Create from dictionary"""
-        return cls(
+        """Create from dictionary"""        return cls(
             usage_scope=UsageScope(data['usage_scope']),
             duration=timedelta(days=data['duration_days']),
             territory=data['territory'],
@@ -172,8 +160,7 @@ class LicenseTerms:
         )
 
 class ContentLicense(Base):
-    """Database model for content licenses"""
-    __tablename__ = "content_licenses"
+    """Database model for content licenses"""    __tablename__ = "content_licenses"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     content_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -237,16 +224,13 @@ class ContentLicense(Base):
         return f"<ContentLicense(id={self.id}, type={self.license_type}, status={self.status})>"
     
     def get_terms(self) -> LicenseTerms:
-        """Get license terms as typed object"""
-        return LicenseTerms.from_dict(self.license_terms)
+        """Get license terms as typed object"""        return LicenseTerms.from_dict(self.license_terms)
     
     def set_terms(self, terms: LicenseTerms):
-        """Set license terms from typed object"""
-        self.license_terms = terms.to_dict()
+        """Set license terms from typed object"""        self.license_terms = terms.to_dict()
     
     def is_active(self) -> bool:
-        """Check if license is currently active"""
-        now = datetime.utcnow().replace(tzinfo=timezone.utc)
+        """Check if license is currently active"""        now = datetime.utcnow().replace(tzinfo=timezone.utc)
         return (
             self.status == LicenseStatus.ACTIVE.value and
             self.valid_from <= now and
@@ -254,15 +238,13 @@ class ContentLicense(Base):
         )
     
     def is_expired(self) -> bool:
-        """Check if license has expired"""
-        if self.valid_until is None:
+        """Check if license has expired"""        if self.valid_until is None:
             return False
         now = datetime.utcnow().replace(tzinfo=timezone.utc)
         return self.valid_until < now
     
     def calculate_revenue(self, usage_count: int = 0, gross_revenue: Decimal = Decimal('0.00')) -> Decimal:
-        """Calculate revenue based on license terms"""
-        if self.revenue_model == RevenueModel.FIXED_FEE.value:
+        """Calculate revenue based on license terms"""        if self.revenue_model == RevenueModel.FIXED_FEE.value:
             return self.base_price
         
         elif self.revenue_model == RevenueModel.PERCENTAGE.value:
@@ -279,8 +261,7 @@ class ContentLicense(Base):
             return Decimal('0.00')
 
 class LicenseUsage(Base):
-    """Database model for license usage tracking"""
-    __tablename__ = "license_usage"
+    """Database model for license usage tracking"""    __tablename__ = "license_usage"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     license_id = Column(UUID(as_uuid=True), ForeignKey('content_licenses.id'), nullable=False)
@@ -331,8 +312,7 @@ class LicenseUsage(Base):
         return f"<LicenseUsage(id={self.id}, platform={self.platform}, type={self.usage_type})>"
 
 class RevenueTransaction(Base):
-    """Database model for revenue transactions"""
-    __tablename__ = "revenue_transactions"
+    """Database model for revenue transactions"""    __tablename__ = "revenue_transactions"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     license_id = Column(UUID(as_uuid=True), ForeignKey('content_licenses.id'), nullable=False)
@@ -381,8 +361,7 @@ class RevenueTransaction(Base):
         return f"<RevenueTransaction(id={self.id}, amount={self.net_amount}, status={self.payment_status})>"
 
 class LicenseManager:
-    """High-level license management system"""
-    
+    """High-level license management system"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -392,8 +371,7 @@ class LicenseManager:
     def create_standard_license(self, content_id: str, owner_id: str,
                               license_type: LicenseType,
                               terms: LicenseTerms) -> ContentLicense:
-        """Create a standard content license"""
-        try:
+        """Create a standard content license"""        try:
             license = ContentLicense(
                 content_id=content_id,
                 owner_id=owner_id,
@@ -419,8 +397,7 @@ class LicenseManager:
     
     def create_creative_commons_license(self, content_id: str, owner_id: str,
                                       cc_variant: str = "CC-BY") -> ContentLicense:
-        """Create Creative Commons license"""
-        cc_terms = {
+        """Create Creative Commons license"""        cc_terms = {
             "CC-BY": LicenseTerms(
                 usage_scope=UsageScope.GLOBAL,
                 duration=timedelta(days=365*100),  # Effectively perpetual
@@ -469,8 +446,7 @@ class LicenseManager:
     
     def create_royalty_free_license(self, content_id: str, owner_id: str,
                                   price: Decimal = Decimal('0.00')) -> ContentLicense:
-        """Create royalty-free license"""
-        terms = LicenseTerms(
+        """Create royalty-free license"""        terms = LicenseTerms(
             usage_scope=UsageScope.GLOBAL,
             duration=timedelta(days=365*100),  # Effectively perpetual
             territory="Worldwide",
@@ -494,8 +470,7 @@ class LicenseManager:
     
     def track_usage(self, license_id: str, platform: str, usage_type: str,
                    usage_data: Dict[str, Any]) -> LicenseUsage:
-        """Track license usage"""
-        try:
+        """Track license usage"""        try:
             usage = LicenseUsage(
                 license_id=license_id,
                 user_id=usage_data.get('user_id'),
@@ -525,8 +500,7 @@ class LicenseManager:
     
     def calculate_license_revenue(self, license: ContentLicense, 
                                 usage: LicenseUsage) -> RevenueTransaction:
-        """Calculate and create revenue transaction"""
-        try:
+        """Calculate and create revenue transaction"""        try:
             # Calculate license fee based on revenue model
             license_fee = license.calculate_revenue(
                 usage_count=usage.impression_count,
@@ -569,8 +543,7 @@ class LicenseManager:
             raise
     
     def check_compliance(self, license: ContentLicense, usage: LicenseUsage) -> bool:
-        """Check if usage complies with license terms"""
-        try:
+        """Check if usage complies with license terms"""        try:
             terms = license.get_terms()
             
             # Check platform restrictions
@@ -605,8 +578,7 @@ class LicenseManager:
     def generate_license_report(self, license_id: str, 
                               start_date: datetime = None,
                               end_date: datetime = None) -> Dict[str, Any]:
-        """Generate comprehensive license usage report"""
-        try:
+        """Generate comprehensive license usage report"""        try:
             # This would query the database for usage data
             # For now, return a template structure
             

@@ -1,5 +1,4 @@
-"""
-🌐 Platform Distribution - IA-Influencer-Agent Business Module
+"""🌐 Platform Distribution - IA-Influencer-Agent Business Module
 ================================================================
 Architecture: Enterprise 3-Tier Professional (Backend Level 2)
 Expert Team: INTEGRATION_EXPERT + API_ENGINEER + SOCIAL_MEDIA_SPECIALIST + AUTOMATION_DEV
@@ -24,9 +23,7 @@ Advanced Platform Distribution System for content creators implementing:
 - Advanced scheduling and campaign management
 - Real-time engagement monitoring and optimization
 ================================================================
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple, AsyncIterator
+"""from typing import Dict, List, Optional, Any, Union, Tuple, AsyncIterator
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from enum import Enum, auto
@@ -53,8 +50,7 @@ logger = logging.getLogger(__name__)
 # =============== CONFIGURATION & ENUMS ===============
 
 class PlatformType(Enum):
-    """Types de plateformes supportées"""
-    YOUTUBE = "youtube"
+    """Types de plateformes supportées"""    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
@@ -68,8 +64,7 @@ class PlatformType(Enum):
     TELEGRAM = "telegram"
 
 class ContentFormat(Enum):
-    """Formats de contenu supportés"""
-    AUDIO = "audio"
+    """Formats de contenu supportés"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -81,8 +76,7 @@ class ContentFormat(Enum):
     BLOG_POST = "blog_post"
 
 class PublishStatus(Enum):
-    """Statuts de publication"""
-    DRAFT = "draft"
+    """Statuts de publication"""    DRAFT = "draft"
     SCHEDULED = "scheduled"
     PUBLISHING = "publishing"
     PUBLISHED = "published"
@@ -91,8 +85,7 @@ class PublishStatus(Enum):
     MODERATION = "moderation"
 
 class EngagementMetric(Enum):
-    """Métriques d'engagement"""
-    VIEWS = "views"
+    """Métriques d'engagement"""    VIEWS = "views"
     LIKES = "likes"
     COMMENTS = "comments"
     SHARES = "shares"
@@ -102,8 +95,7 @@ class EngagementMetric(Enum):
     REACH = "reach"
 
 class OptimizationStrategy(Enum):
-    """Stratégies d'optimisation"""
-    TIME_OPTIMIZATION = "time_optimization"
+    """Stratégies d'optimisation"""    TIME_OPTIMIZATION = "time_optimization"
     CONTENT_ADAPTATION = "content_adaptation"
     HASHTAG_OPTIMIZATION = "hashtag_optimization"
     AUDIENCE_TARGETING = "audience_targeting"
@@ -111,8 +103,7 @@ class OptimizationStrategy(Enum):
 
 @dataclass
 class PlatformCredentials:
-    """Identifiants de plateforme"""
-    platform: PlatformType
+    """Identifiants de plateforme"""    platform: PlatformType
     access_token: str
     refresh_token: Optional[str] = None
     expires_at: Optional[datetime] = None
@@ -122,8 +113,7 @@ class PlatformCredentials:
 
 @dataclass
 class ContentAdaptation:
-    """Adaptation de contenu pour plateforme"""
-    platform: PlatformType
+    """Adaptation de contenu pour plateforme"""    platform: PlatformType
     format: ContentFormat
     title: str = ""
     description: str = ""
@@ -136,8 +126,7 @@ class ContentAdaptation:
 
 @dataclass
 class PublishingCampaign:
-    """Campagne de publication multi-plateforme"""
-    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Campagne de publication multi-plateforme"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
     title: str = ""
     description: str = ""
@@ -150,8 +139,7 @@ class PublishingCampaign:
 
 @dataclass
 class PlatformMetrics:
-    """Métriques de performance par plateforme"""
-    platform: PlatformType
+    """Métriques de performance par plateforme"""    platform: PlatformType
     content_id: str = ""
     metrics: Dict[EngagementMetric, int] = field(default_factory=dict)
     engagement_rate: float = 0.0
@@ -162,8 +150,7 @@ class PlatformMetrics:
 
 @dataclass
 class PlatformDistributionConfig:
-    """Configuration de distribution multi-plateforme"""
-    enabled: bool = True
+    """Configuration de distribution multi-plateforme"""    enabled: bool = True
     auto_publishing: bool = True
     content_adaptation: bool = True
     optimal_timing: bool = True
@@ -182,8 +169,7 @@ class PlatformDistributionConfig:
 # =============== SERVICE INTERFACES ===============
 
 class IPlatformDistributionService(ABC):
-    """Interface pour le service de distribution multi-plateforme"""
-    
+    """Interface pour le service de distribution multi-plateforme"""    
     @abstractmethod
     async def create_campaign(
         self, 
@@ -195,16 +181,14 @@ class IPlatformDistributionService(ABC):
         target_platforms: List[PlatformType],
         publish_time: Optional[datetime] = None
     ) -> PublishingCampaign:
-        """Créer une campagne de publication"""
-        pass
+        """Créer une campagne de publication"""        pass
     
     @abstractmethod
     async def publish_campaign(
         self, 
         campaign_id: str
     ) -> Dict[str, Any]:
-        """Publier une campagne"""
-        pass
+        """Publier une campagne"""        pass
     
     @abstractmethod
     async def get_platform_metrics(
@@ -214,8 +198,7 @@ class IPlatformDistributionService(ABC):
         start_date: datetime,
         end_date: datetime
     ) -> List[PlatformMetrics]:
-        """Obtenir les métriques de plateforme"""
-        pass
+        """Obtenir les métriques de plateforme"""        pass
     
     @abstractmethod
     async def optimize_content(
@@ -224,8 +207,7 @@ class IPlatformDistributionService(ABC):
         target_platforms: List[PlatformType],
         optimization_strategies: List[OptimizationStrategy]
     ) -> Dict[PlatformType, ContentAdaptation]:
-        """Optimiser le contenu pour les plateformes"""
-        pass
+        """Optimiser le contenu pour les plateformes"""        pass
     
     @abstractmethod
     async def schedule_optimal_publishing(
@@ -233,14 +215,12 @@ class IPlatformDistributionService(ABC):
         creator_id: str,
         campaign_id: str
     ) -> datetime:
-        """Programmer la publication au moment optimal"""
-        pass
+        """Programmer la publication au moment optimal"""        pass
 
 # =============== CORE MANAGER ===============
 
 class PlatformDistributionManager:
-    """Gestionnaire avancé de distribution multi-plateforme"""
-    
+    """Gestionnaire avancé de distribution multi-plateforme"""    
     def __init__(self, config: Optional[PlatformDistributionConfig] = None):
         self.config = config or PlatformDistributionConfig()
         self.campaigns: Dict[str, PublishingCampaign] = {}
@@ -250,8 +230,7 @@ class PlatformDistributionManager:
         self.logger = logging.getLogger(f"{__name__}.PlatformDistributionManager")
         
     async def initialize(self) -> bool:
-        """Initialisation du gestionnaire"""
-        try:
+        """Initialisation du gestionnaire"""        try:
             if not self.config.enabled:
                 self.logger.warning("Platform distribution is disabled")
                 return False
@@ -276,8 +255,7 @@ class PlatformDistributionManager:
             return False
     
     async def _initialize_platform_connectors(self):
-        """Initialiser les connecteurs de plateforme"""
-        try:
+        """Initialiser les connecteurs de plateforme"""        try:
             # Configuration des APIs par plateforme
             self.platform_configs = {
                 PlatformType.YOUTUBE: {
@@ -313,8 +291,7 @@ class PlatformDistributionManager:
             self.logger.error(f"Failed to initialize platform connectors: {str(e)}")
     
     async def _start_publishing_workers(self):
-        """Démarrer les workers de publication"""
-        try:
+        """Démarrer les workers de publication"""        try:
             async def publishing_worker():
                 while True:
                     try:
@@ -335,8 +312,7 @@ class PlatformDistributionManager:
             self.logger.error(f"Failed to start publishing workers: {str(e)}")
     
     async def _start_metrics_collection(self):
-        """Démarrer la collecte de métriques"""
-        try:
+        """Démarrer la collecte de métriques"""        try:
             async def metrics_collector():
                 while True:
                     await self._collect_platform_metrics()
@@ -358,8 +334,7 @@ class PlatformDistributionManager:
         target_platforms: List[PlatformType],
         publish_time: Optional[datetime] = None
     ) -> PublishingCampaign:
-        """Créer une campagne de publication"""
-        try:
+        """Créer une campagne de publication"""        try:
             # Validation du contenu
             await self._validate_content(content_data, content_format)
             
@@ -397,8 +372,7 @@ class PlatformDistributionManager:
             raise
     
     async def _validate_content(self, content_data: bytes, content_format: ContentFormat):
-        """Valider le contenu"""
-        if not content_data:
+        """Valider le contenu"""        if not content_data:
             raise ValueError("Content data is empty")
         
         if self.config.quality_checks:
@@ -411,20 +385,17 @@ class PlatformDistributionManager:
                 await self._validate_image_quality(content_data)
     
     async def _validate_video_quality(self, video_data: bytes):
-        """Valider la qualité vidéo"""
-        # Simulation de validation vidéo
+        """Valider la qualité vidéo"""        # Simulation de validation vidéo
         if len(video_data) < 1024:  # Taille minimale
             raise ValueError("Video file too small")
     
     async def _validate_audio_quality(self, audio_data: bytes):
-        """Valider la qualité audio"""
-        # Simulation de validation audio
+        """Valider la qualité audio"""        # Simulation de validation audio
         if len(audio_data) < 1024:  # Taille minimale
             raise ValueError("Audio file too small")
     
     async def _validate_image_quality(self, image_data: bytes):
-        """Valider la qualité image"""
-        try:
+        """Valider la qualité image"""        try:
             # Vérification avec PIL
             image = Image.open(BytesIO(image_data))
             
@@ -443,8 +414,7 @@ class PlatformDistributionManager:
         title: str,
         description: str
     ) -> ContentAdaptation:
-        """Créer une adaptation de contenu pour une plateforme"""
-        try:
+        """Créer une adaptation de contenu pour une plateforme"""        try:
             # Adaptation spécifique par plateforme
             adapted_title = await self._adapt_title_for_platform(title, platform)
             adapted_description = await self._adapt_description_for_platform(description, platform)
@@ -474,8 +444,7 @@ class PlatformDistributionManager:
             raise
     
     async def _adapt_title_for_platform(self, title: str, platform: PlatformType) -> str:
-        """Adapter le titre pour une plateforme"""
-        # Règles d'adaptation par plateforme
+        """Adapter le titre pour une plateforme"""        # Règles d'adaptation par plateforme
         adaptations = {
             PlatformType.YOUTUBE: lambda t: t[:100],  # Max 100 caractères
             PlatformType.TIKTOK: lambda t: t[:150],   # Max 150 caractères
@@ -488,8 +457,7 @@ class PlatformDistributionManager:
         return adapter(title)
     
     async def _adapt_description_for_platform(self, description: str, platform: PlatformType) -> str:
-        """Adapter la description pour une plateforme"""
-        # Règles d'adaptation par plateforme
+        """Adapter la description pour une plateforme"""        # Règles d'adaptation par plateforme
         max_lengths = {
             PlatformType.YOUTUBE: 5000,
             PlatformType.TIKTOK: 2200,
@@ -507,8 +475,7 @@ class PlatformDistributionManager:
         description: str, 
         platform: PlatformType
     ) -> List[str]:
-        """Générer des hashtags optimisés pour une plateforme"""
-        try:
+        """Générer des hashtags optimisés pour une plateforme"""        try:
             # Simulation de génération de hashtags intelligente
             # En production: utiliser NLP pour extraire des mots-clés pertinents
             
@@ -556,8 +523,7 @@ class PlatformDistributionManager:
         content_format: ContentFormat,
         platform: PlatformType
     ) -> Optional[str]:
-        """Adapter techniquement le contenu pour une plateforme"""
-        try:
+        """Adapter techniquement le contenu pour une plateforme"""        try:
             # Simulation d'adaptation technique
             # En production: conversion de formats, redimensionnement, etc.
             
@@ -572,8 +538,7 @@ class PlatformDistributionManager:
             return None
     
     async def publish_campaign(self, campaign_id: str) -> Dict[str, Any]:
-        """Publier une campagne"""
-        try:
+        """Publier une campagne"""        try:
             campaign = self.campaigns.get(campaign_id)
             if not campaign:
                 raise ValueError(f"Campaign not found: {campaign_id}")
@@ -603,8 +568,7 @@ class PlatformDistributionManager:
             raise
     
     async def _schedule_campaign_publishing(self, campaign: PublishingCampaign):
-        """Programmer la publication d'une campagne"""
-        try:
+        """Programmer la publication d'une campagne"""        try:
             campaign.status = PublishStatus.SCHEDULED
             
             async def delayed_publishing():
@@ -623,8 +587,7 @@ class PlatformDistributionManager:
             self.logger.error(f"Failed to schedule campaign: {str(e)}")
     
     async def _process_campaign_publishing(self, campaign_id: str):
-        """Traiter la publication d'une campagne"""
-        try:
+        """Traiter la publication d'une campagne"""        try:
             campaign = self.campaigns.get(campaign_id)
             if not campaign:
                 return
@@ -666,8 +629,7 @@ class PlatformDistributionManager:
         campaign: PublishingCampaign, 
         adaptation: ContentAdaptation
     ) -> Dict[str, Any]:
-        """Publier sur une plateforme spécifique"""
-        try:
+        """Publier sur une plateforme spécifique"""        try:
             platform = adaptation.platform
             
             # Obtenir les identifiants de la plateforme
@@ -702,8 +664,7 @@ class PlatformDistributionManager:
         creator_id: str, 
         platform: PlatformType
     ) -> Optional[PlatformCredentials]:
-        """Obtenir les identifiants d'une plateforme"""
-        creator_creds = self.platform_credentials.get(creator_id, {})
+        """Obtenir les identifiants d'une plateforme"""        creator_creds = self.platform_credentials.get(creator_id, {})
         return creator_creds.get(platform)
     
     async def _publish_to_youtube(
@@ -711,8 +672,7 @@ class PlatformDistributionManager:
         adaptation: ContentAdaptation, 
         credentials: PlatformCredentials
     ) -> Dict[str, Any]:
-        """Publier sur YouTube"""
-        # Simulation d'appel API YouTube
+        """Publier sur YouTube"""        # Simulation d'appel API YouTube
         success_rate = 0.85
         
         if np.random.random() < success_rate:
@@ -735,8 +695,7 @@ class PlatformDistributionManager:
         adaptation: ContentAdaptation, 
         credentials: PlatformCredentials
     ) -> Dict[str, Any]:
-        """Publier sur Instagram"""
-        # Simulation d'appel API Instagram
+        """Publier sur Instagram"""        # Simulation d'appel API Instagram
         success_rate = 0.90
         
         if np.random.random() < success_rate:
@@ -759,8 +718,7 @@ class PlatformDistributionManager:
         adaptation: ContentAdaptation, 
         credentials: PlatformCredentials
     ) -> Dict[str, Any]:
-        """Publier sur TikTok"""
-        # Simulation d'appel API TikTok
+        """Publier sur TikTok"""        # Simulation d'appel API TikTok
         success_rate = 0.75
         
         if np.random.random() < success_rate:
@@ -783,8 +741,7 @@ class PlatformDistributionManager:
         adaptation: ContentAdaptation, 
         credentials: PlatformCredentials
     ) -> Dict[str, Any]:
-        """Publier sur Facebook"""
-        # Simulation d'appel API Facebook
+        """Publier sur Facebook"""        # Simulation d'appel API Facebook
         success_rate = 0.88
         
         if np.random.random() < success_rate:
@@ -807,8 +764,7 @@ class PlatformDistributionManager:
         adaptation: ContentAdaptation, 
         credentials: PlatformCredentials
     ) -> Dict[str, Any]:
-        """Publier sur Twitter"""
-        # Simulation d'appel API Twitter
+        """Publier sur Twitter"""        # Simulation d'appel API Twitter
         success_rate = 0.92
         
         if np.random.random() < success_rate:
@@ -831,8 +787,7 @@ class PlatformDistributionManager:
         adaptation: ContentAdaptation, 
         credentials: PlatformCredentials
     ) -> Dict[str, Any]:
-        """Publication générique pour plateformes non spécifiquement implémentées"""
-        success_rate = 0.80
+        """Publication générique pour plateformes non spécifiquement implémentées"""        success_rate = 0.80
         
         if np.random.random() < success_rate:
             return {
@@ -849,8 +804,7 @@ class PlatformDistributionManager:
             }
     
     async def _collect_platform_metrics(self):
-        """Collecter les métriques de toutes les plateformes"""
-        try:
+        """Collecter les métriques de toutes les plateformes"""        try:
             for creator_id in self.platform_credentials.keys():
                 for platform in self.config.supported_platforms:
                     try:
@@ -879,8 +833,7 @@ class PlatformDistributionManager:
         creator_id: str, 
         platform: PlatformType
     ) -> List[PlatformMetrics]:
-        """Collecter les métriques d'un créateur sur une plateforme"""
-        try:
+        """Collecter les métriques d'un créateur sur une plateforme"""        try:
             # Simulation de collecte de métriques
             metrics = []
             
@@ -910,16 +863,14 @@ class PlatformDistributionManager:
 # =============== MAIN SERVICE IMPLEMENTATION ===============
 
 class PlatformDistributionService(IPlatformDistributionService):
-    """Service principal de distribution multi-plateforme"""
-    
+    """Service principal de distribution multi-plateforme"""    
     def __init__(self, config: Optional[PlatformDistributionConfig] = None):
         self.config = config or PlatformDistributionConfig()
         self.manager = PlatformDistributionManager(self.config)
         self.logger = logging.getLogger(f"{__name__}.PlatformDistributionService")
         
     async def initialize(self) -> bool:
-        """Initialiser le service"""
-        return await self.manager.initialize()
+        """Initialiser le service"""        return await self.manager.initialize()
     
     async def create_campaign(
         self, 
@@ -931,8 +882,7 @@ class PlatformDistributionService(IPlatformDistributionService):
         target_platforms: List[PlatformType],
         publish_time: Optional[datetime] = None
     ) -> PublishingCampaign:
-        """Créer une campagne de publication"""
-        return await self.manager.create_publishing_campaign(
+        """Créer une campagne de publication"""        return await self.manager.create_publishing_campaign(
             creator_id, title, description, content_data, 
             content_format, target_platforms, publish_time
         )
@@ -941,8 +891,7 @@ class PlatformDistributionService(IPlatformDistributionService):
         self, 
         campaign_id: str
     ) -> Dict[str, Any]:
-        """Publier une campagne"""
-        return await self.manager.publish_campaign(campaign_id)
+        """Publier une campagne"""        return await self.manager.publish_campaign(campaign_id)
     
     async def get_platform_metrics(
         self, 
@@ -951,8 +900,7 @@ class PlatformDistributionService(IPlatformDistributionService):
         start_date: datetime,
         end_date: datetime
     ) -> List[PlatformMetrics]:
-        """Obtenir les métriques de plateforme"""
-        cache_key = f"{creator_id}_{platform.value}"
+        """Obtenir les métriques de plateforme"""        cache_key = f"{creator_id}_{platform.value}"
         cached_metrics = self.manager.metrics_cache.get(cache_key, [])
         
         # Filtrer par date
@@ -969,8 +917,7 @@ class PlatformDistributionService(IPlatformDistributionService):
         target_platforms: List[PlatformType],
         optimization_strategies: List[OptimizationStrategy]
     ) -> Dict[PlatformType, ContentAdaptation]:
-        """Optimiser le contenu pour les plateformes"""
-        try:
+        """Optimiser le contenu pour les plateformes"""        try:
             optimized_content = {}
             
             for platform in target_platforms:
@@ -993,8 +940,7 @@ class PlatformDistributionService(IPlatformDistributionService):
         creator_id: str,
         campaign_id: str
     ) -> datetime:
-        """Programmer la publication au moment optimal"""
-        try:
+        """Programmer la publication au moment optimal"""        try:
             # Analyse des données historiques pour trouver le meilleur moment
             campaign = self.manager.campaigns.get(campaign_id)
             if not campaign:
@@ -1047,12 +993,10 @@ class PlatformDistributionService(IPlatformDistributionService):
 # =============== FACTORY FUNCTIONS ===============
 
 def create_platform_distribution_service(config: Optional[PlatformDistributionConfig] = None) -> PlatformDistributionService:
-    """Factory pour créer un service de distribution"""
-    return PlatformDistributionService(config)
+    """Factory pour créer un service de distribution"""    return PlatformDistributionService(config)
 
 def create_platform_distribution_manager(config: Optional[PlatformDistributionConfig] = None) -> PlatformDistributionManager:
-    """Factory pour créer un gestionnaire de distribution"""
-    return PlatformDistributionManager(config)
+    """Factory pour créer un gestionnaire de distribution"""    return PlatformDistributionManager(config)
 
 # =============== MODULE EXPORTS ===============
 

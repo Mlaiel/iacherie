@@ -1,5 +1,4 @@
-"""
-🎵 Audio Analysis Index - Central Registry & Factory System
+"""🎵 Audio Analysis Index - Central Registry & Factory System
 
 Ultra-sophisticated central registry and factory system for all audio analysis
 components, providing unified access, component discovery, and intelligent
@@ -34,9 +33,7 @@ by Fahed Mlaiel. Unauthorized use, copying, reverse engineering, or
 commercial exploitation is strictly prohibited under international copyright law.
 
 Contact: mlaiel@live.de
-"""
-
-import numpy as np
+"""import numpy as np
 import logging
 import asyncio
 from typing import Dict, List, Optional, Tuple, Any, Union, Type, Callable
@@ -78,8 +75,7 @@ from .audio_enhancer_analyzer import AudioEnhancerAnalyzer
 
 
 class ComponentType(Enum):
-    """Audio analysis component types"""
-    SPECTRAL_ANALYZER = "spectral_analyzer"
+    """Audio analysis component types"""    SPECTRAL_ANALYZER = "spectral_analyzer"
     MELODY_EXTRACTOR = "melody_extractor"
     RHYTHM_ANALYZER = "rhythm_analyzer"
     HARMONY_ANALYZER = "harmony_analyzer"
@@ -100,8 +96,7 @@ class ComponentType(Enum):
 
 
 class AnalysisComplexity(Enum):
-    """Analysis complexity levels"""
-    BASIC = "basic"           # Fast, essential analysis
+    """Analysis complexity levels"""    BASIC = "basic"           # Fast, essential analysis
     STANDARD = "standard"     # Balanced analysis
     ADVANCED = "advanced"     # Comprehensive analysis
     PROFESSIONAL = "professional"  # Full professional suite
@@ -109,16 +104,14 @@ class AnalysisComplexity(Enum):
 
 
 class AnalysisMode(Enum):
-    """Analysis execution modes"""
-    REAL_TIME = "real_time"       # Real-time processing
+    """Analysis execution modes"""    REAL_TIME = "real_time"       # Real-time processing
     BATCH = "batch"               # Batch processing
     STREAMING = "streaming"       # Streaming analysis
     OFFLINE = "offline"           # Offline deep analysis
 
 
 class ComponentStatus(Enum):
-    """Component status indicators"""
-    AVAILABLE = "available"       # Ready for use
+    """Component status indicators"""    AVAILABLE = "available"       # Ready for use
     BUSY = "busy"                # Currently processing
     ERROR = "error"              # Error state
     MAINTENANCE = "maintenance"   # Under maintenance
@@ -127,8 +120,7 @@ class ComponentStatus(Enum):
 
 @dataclass
 class ComponentInfo:
-    """Component information and metadata"""
-    component_type: ComponentType
+    """Component information and metadata"""    component_type: ComponentType
     class_name: str
     module_path: str
     instance: Optional[Any] = None
@@ -164,8 +156,7 @@ class ComponentInfo:
 
 @dataclass
 class AnalysisRequest:
-    """Analysis request specification"""
-    request_id: str
+    """Analysis request specification"""    request_id: str
     audio_data: np.ndarray
     sample_rate: int
     
@@ -196,8 +187,7 @@ class AnalysisRequest:
 
 @dataclass
 class AnalysisResult:
-    """Comprehensive analysis result"""
-    request_id: str
+    """Comprehensive analysis result"""    request_id: str
     success: bool
     
     # Results by component
@@ -225,8 +215,7 @@ class AnalysisResult:
 
 @dataclass
 class SystemHealth:
-    """System health and performance metrics"""
-    overall_health_score: float  # 0-100
+    """System health and performance metrics"""    overall_health_score: float  # 0-100
     
     # Component health
     component_health: Dict[ComponentType, float]
@@ -255,28 +244,24 @@ class SystemHealth:
 
 
 class AudioAnalysisRegistry:
-    """
-    🎵 Ultra-Advanced Audio Analysis Registry & Factory System
+    """    🎵 Ultra-Advanced Audio Analysis Registry & Factory System
     
     Centralized registry providing intelligent component management,
     dynamic loading, dependency injection, and orchestrated analysis
     workflows for professional audio analysis operations.
-    """
-    
+    """    
     _instance = None
     _lock = threading.Lock()
     
     def __new__(cls):
-        """Singleton implementation"""
-        if cls._instance is None:
+        """Singleton implementation"""        if cls._instance is None:
             with cls._lock:
                 if cls._instance is None:
                     cls._instance = super(AudioAnalysisRegistry, cls).__new__(cls)
         return cls._instance
     
     def __init__(self):
-        """Initialize the audio analysis registry"""
-        if hasattr(self, '_initialized'):
+        """Initialize the audio analysis registry"""        if hasattr(self, '_initialized'):
             return
         
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -319,8 +304,7 @@ class AudioAnalysisRegistry:
         self.logger.info("AudioAnalysisRegistry initialized with comprehensive component management")
     
     def _initialize_registry(self):
-        """Initialize component registry with auto-discovery"""
-        try:
+        """Initialize component registry with auto-discovery"""        try:
             self.logger.info("Initializing audio analysis component registry...")
             
             # Register core components
@@ -341,8 +325,7 @@ class AudioAnalysisRegistry:
             raise
     
     def _register_core_components(self):
-        """Register core audio analysis components"""
-        try:
+        """Register core audio analysis components"""        try:
             # Define core components with their metadata
             core_components = {
                 ComponentType.SPECTRAL_ANALYZER: ComponentInfo(
@@ -571,8 +554,7 @@ class AudioAnalysisRegistry:
             raise
     
     def _auto_discover_components(self):
-        """Auto-discover additional components"""
-        try:
+        """Auto-discover additional components"""        try:
             self.logger.info("Auto-discovering additional audio analysis components...")
             
             # This would be extended to discover plugins, extensions, etc.
@@ -585,8 +567,7 @@ class AudioAnalysisRegistry:
             self.logger.error(f"Component auto-discovery failed: {str(e)}")
     
     def _initialize_all_components(self):
-        """Initialize all registered components (non-lazy loading)"""
-        try:
+        """Initialize all registered components (non-lazy loading)"""        try:
             self.logger.info("Initializing all registered components...")
             
             for component_type in self._components.keys():
@@ -605,8 +586,7 @@ class AudioAnalysisRegistry:
             self.logger.error(f"Component initialization failed: {str(e)}")
     
     def _get_component_instance(self, component_type: ComponentType) -> Any:
-        """Get or create component instance"""
-        try:
+        """Get or create component instance"""        try:
             # Check if already initialized
             if component_type in self._component_instances:
                 return self._component_instances[component_type]
@@ -661,8 +641,7 @@ class AudioAnalysisRegistry:
                           complexity_level: AnalysisComplexity = AnalysisComplexity.STANDARD,
                           analysis_mode: AnalysisMode = AnalysisMode.BATCH,
                           **kwargs) -> AnalysisResult:
-        """
-        Perform comprehensive audio analysis
+        """        Perform comprehensive audio analysis
         
         Args:
             audio_data: Input audio signal
@@ -674,8 +653,7 @@ class AudioAnalysisRegistry:
             
         Returns:
             Comprehensive analysis results
-        """
-        try:
+        """        try:
             # Create analysis request
             request_id = f"req_{datetime.now().strftime('%Y%m%d_%H%M%S_%f')}"
             
@@ -719,8 +697,7 @@ class AudioAnalysisRegistry:
             raise
     
     async def _execute_analysis(self, request: AnalysisRequest) -> AnalysisResult:
-        """Execute analysis request"""
-        start_time = datetime.now()
+        """Execute analysis request"""        start_time = datetime.now()
         result = AnalysisResult(
             request_id=request.request_id,
             success=False
@@ -779,8 +756,7 @@ class AudioAnalysisRegistry:
                                     audio_data: np.ndarray,
                                     sample_rate: int,
                                     request: AnalysisRequest) -> Any:
-        """Analyze audio with specific component"""
-        component_start = datetime.now()
+        """Analyze audio with specific component"""        component_start = datetime.now()
         
         try:
             # Get component instance
@@ -825,8 +801,7 @@ class AudioAnalysisRegistry:
     def _filter_components_by_complexity(self, 
                                        requested_components: List[ComponentType],
                                        complexity_level: AnalysisComplexity) -> List[ComponentType]:
-        """Filter components based on complexity level"""
-        if complexity_level == AnalysisComplexity.BASIC:
+        """Filter components based on complexity level"""        if complexity_level == AnalysisComplexity.BASIC:
             # Basic: Only essential fast components
             basic_components = {
                 ComponentType.TEMPO_DETECTOR,
@@ -859,16 +834,14 @@ class AudioAnalysisRegistry:
         return requested_components
     
     def _is_component_available(self, component_type: ComponentType) -> bool:
-        """Check if component is available for use"""
-        if component_type not in self._components:
+        """Check if component is available for use"""        if component_type not in self._components:
             return False
         
         component_info = self._components[component_type]
         return component_info.status in [ComponentStatus.AVAILABLE, ComponentStatus.BUSY]
     
     def _calculate_overall_confidence(self, result: AnalysisResult) -> float:
-        """Calculate overall confidence score"""
-        try:
+        """Calculate overall confidence score"""        try:
             if not result.component_results:
                 return 0.0
             
@@ -880,8 +853,7 @@ class AudioAnalysisRegistry:
             return 0.5
     
     def _update_performance_metrics(self, request: AnalysisRequest, result: AnalysisResult):
-        """Update system performance metrics"""
-        try:
+        """Update system performance metrics"""        try:
             # Update basic metrics
             if 'total_requests' not in self._performance_metrics:
                 self._performance_metrics['total_requests'] = 0
@@ -900,21 +872,18 @@ class AudioAnalysisRegistry:
     
     # Component management methods
     def get_available_components(self) -> List[ComponentType]:
-        """Get list of available components"""
-        with self._registry_lock:
+        """Get list of available components"""        with self._registry_lock:
             return [
                 component_type for component_type, info in self._components.items()
                 if info.status in [ComponentStatus.AVAILABLE, ComponentStatus.BUSY]
             ]
     
     def get_component_info(self, component_type: ComponentType) -> Optional[ComponentInfo]:
-        """Get detailed component information"""
-        with self._registry_lock:
+        """Get detailed component information"""        with self._registry_lock:
             return self._components.get(component_type)
     
     def get_system_health(self) -> SystemHealth:
-        """Get comprehensive system health report"""
-        try:
+        """Get comprehensive system health report"""        try:
             with self._registry_lock:
                 # Component health
                 component_health = {}
@@ -970,8 +939,7 @@ class AudioAnalysisRegistry:
             raise
     
     def restart_component(self, component_type: ComponentType):
-        """Restart a specific component"""
-        try:
+        """Restart a specific component"""        try:
             with self._component_locks[component_type]:
                 # Remove existing instance
                 if component_type in self._component_instances:
@@ -994,8 +962,7 @@ class AudioAnalysisRegistry:
             raise
     
     def get_performance_stats(self) -> Dict[str, Any]:
-        """Get detailed performance statistics"""
-        try:
+        """Get detailed performance statistics"""        try:
             stats = dict(self._performance_metrics)
             
             # Add derived metrics
@@ -1026,8 +993,7 @@ class AudioAnalysisRegistry:
             return {}
     
     def clear_history(self):
-        """Clear request and result history"""
-        try:
+        """Clear request and result history"""        try:
             self._request_history.clear()
             self._result_history.clear()
             self._performance_metrics.clear()
@@ -1036,8 +1002,7 @@ class AudioAnalysisRegistry:
             self.logger.error(f"History clearing failed: {str(e)}")
     
     def export_configuration(self) -> Dict[str, Any]:
-        """Export current configuration"""
-        try:
+        """Export current configuration"""        try:
             config = {
                 'components': {},
                 'settings': dict(self._config),
@@ -1064,8 +1029,7 @@ class AudioAnalysisRegistry:
             raise
     
     def __del__(self):
-        """Cleanup resources"""
-        try:
+        """Cleanup resources"""        try:
             if hasattr(self, 'thread_executor'):
                 self.thread_executor.shutdown(wait=False)
             if hasattr(self, 'process_executor'):
@@ -1080,8 +1044,7 @@ _registry_lock = threading.Lock()
 
 
 def get_audio_analysis_registry() -> AudioAnalysisRegistry:
-    """Get the global audio analysis registry instance"""
-    global _audio_analysis_registry
+    """Get the global audio analysis registry instance"""    global _audio_analysis_registry
     
     if _audio_analysis_registry is None:
         with _registry_lock:
@@ -1095,8 +1058,7 @@ def get_audio_analysis_registry() -> AudioAnalysisRegistry:
 async def analyze_audio_quick(audio_data: np.ndarray, 
                             sample_rate: int,
                             components: Optional[List[str]] = None) -> AnalysisResult:
-    """Quick audio analysis with simplified interface"""
-    registry = get_audio_analysis_registry()
+    """Quick audio analysis with simplified interface"""    registry = get_audio_analysis_registry()
     
     # Convert string component names to enums if provided
     if components:
@@ -1118,15 +1080,13 @@ async def analyze_audio_quick(audio_data: np.ndarray,
 
 
 def get_available_analyzers() -> List[str]:
-    """Get list of available analyzer names"""
-    registry = get_audio_analysis_registry()
+    """Get list of available analyzer names"""    registry = get_audio_analysis_registry()
     available = registry.get_available_components()
     return [comp.value for comp in available]
 
 
 def get_system_status() -> Dict[str, Any]:
-    """Get simplified system status"""
-    registry = get_audio_analysis_registry()
+    """Get simplified system status"""    registry = get_audio_analysis_registry()
     health = registry.get_system_health()
     
     return {

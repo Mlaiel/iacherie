@@ -1,5 +1,4 @@
-"""
-Text Fingerprinter Implementation
+"""Text Fingerprinter Implementation
 =================================
 
 Professional text fingerprinting system for content protection and plagiarism detection.
@@ -22,9 +21,7 @@ will be prosecuted to the FULL EXTENT OF THE LAW under German and
 International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import hashlib
 import re
 import string
@@ -76,8 +73,7 @@ except ImportError:
 
 
 class TextFingerprintType(Enum):
-    """Types of text fingerprints"""
-    LEXICAL_HASH = "lexical_hash"
+    """Types of text fingerprints"""    LEXICAL_HASH = "lexical_hash"
     SEMANTIC_EMBEDDING = "semantic_embedding"
     SYNTACTIC_PATTERN = "syntactic_pattern"
     STYLOMETRIC_FEATURES = "stylometric_features"
@@ -88,8 +84,7 @@ class TextFingerprintType(Enum):
 
 @dataclass
 class TextFingerprint:
-    """Text fingerprint data structure"""
-    text_id: str
+    """Text fingerprint data structure"""    text_id: str
     fingerprint_type: TextFingerprintType
     fingerprint_data: Union[str, np.ndarray, List[float], Dict[str, Any]]
     text_length: int
@@ -100,8 +95,7 @@ class TextFingerprint:
 
 @dataclass
 class TextMatchResult:
-    """Text similarity match result"""
-    query_text_id: str
+    """Text similarity match result"""    query_text_id: str
     matched_text_id: str
     similarity_score: float
     fingerprint_type: TextFingerprintType
@@ -114,8 +108,7 @@ class TextMatchResult:
 
 
 class TextFingerprinter:
-    """
-    Professional text fingerprinting system for content protection.
+    """    Professional text fingerprinting system for content protection.
     
     Features:
     - Multiple fingerprinting algorithms
@@ -128,21 +121,18 @@ class TextFingerprinter:
     - Plagiarism detection capabilities
     - Paraphrase detection
     - Author identification features
-    """
-    
+    """    
     def __init__(self, 
                  max_workers: int = 4,
                  model_name: str = "sentence-transformers/all-MiniLM-L6-v2",
                  cache_embeddings: bool = True):
-        """
-        Initialize text fingerprinter.
+        """        Initialize text fingerprinter.
         
         Args:
             max_workers: Maximum worker threads
             model_name: Transformer model name for embeddings
             cache_embeddings: Cache computed embeddings
-        """
-        self.max_workers = max_workers
+        """        self.max_workers = max_workers
         self.model_name = model_name
         self.cache_embeddings = cache_embeddings
         self.logger = logging.getLogger(__name__)
@@ -172,8 +162,7 @@ class TextFingerprinter:
         self._initialize_nlp_models()
     
     def _initialize_nlp_models(self):
-        """Initialize NLP models and components"""
-        try:
+        """Initialize NLP models and components"""        try:
             # Initialize transformers model
             if TRANSFORMERS_AVAILABLE:
                 try:
@@ -232,8 +221,7 @@ class TextFingerprinter:
                                 text_id: str,
                                 fingerprint_types: List[TextFingerprintType] = None,
                                 language: str = "en") -> List[TextFingerprint]:
-        """
-        Extract text fingerprints using multiple algorithms.
+        """        Extract text fingerprints using multiple algorithms.
         
         Args:
             text: Input text
@@ -243,8 +231,7 @@ class TextFingerprinter:
             
         Returns:
             List of text fingerprints
-        """
-        try:
+        """        try:
             start_time = datetime.utcnow()
             
             if fingerprint_types is None:
@@ -288,8 +275,7 @@ class TextFingerprinter:
     async def compare_fingerprints(self, 
                                  fingerprint1: TextFingerprint,
                                  fingerprint2: TextFingerprint) -> TextMatchResult:
-        """
-        Compare two text fingerprints for similarity.
+        """        Compare two text fingerprints for similarity.
         
         Args:
             fingerprint1: First text fingerprint
@@ -297,8 +283,7 @@ class TextFingerprinter:
             
         Returns:
             Text match result with similarity metrics
-        """
-        try:
+        """        try:
             if fingerprint1.fingerprint_type != fingerprint2.fingerprint_type:
                 raise ValueError("Cannot compare different fingerprint types")
             
@@ -375,8 +360,7 @@ class TextFingerprinter:
                                query_fingerprint: TextFingerprint,
                                candidate_fingerprints: List[TextFingerprint],
                                similarity_threshold: float = 0.8) -> List[TextMatchResult]:
-        """
-        Find similar texts from a list of candidates.
+        """        Find similar texts from a list of candidates.
         
         Args:
             query_fingerprint: Query text fingerprint
@@ -385,8 +369,7 @@ class TextFingerprinter:
             
         Returns:
             List of matching text results sorted by similarity
-        """
-        try:
+        """        try:
             # Filter candidates by fingerprint type
             compatible_candidates = [
                 fp for fp in candidate_fingerprints 
@@ -423,8 +406,7 @@ class TextFingerprinter:
                               query_text: str,
                               reference_texts: List[Tuple[str, str]],
                               threshold: float = 0.7) -> List[Dict[str, Any]]:
-        """
-        Detect potential plagiarism in query text.
+        """        Detect potential plagiarism in query text.
         
         Args:
             query_text: Text to check for plagiarism
@@ -433,8 +415,7 @@ class TextFingerprinter:
             
         Returns:
             List of potential plagiarism matches
-        """
-        try:
+        """        try:
             # Extract fingerprints for query text
             query_id = f"query_{hashlib.md5(query_text.encode()).hexdigest()[:8]}"
             query_fingerprints = await self.extract_fingerprint(
@@ -489,8 +470,7 @@ class TextFingerprinter:
     # Private helper methods
     
     async def _preprocess_text(self, text: str) -> str:
-        """Preprocess text for fingerprinting"""
-        try:
+        """Preprocess text for fingerprinting"""        try:
             # Basic cleaning
             text = text.strip()
             text = re.sub(r'\s+', ' ', text)  # Normalize whitespace
@@ -510,8 +490,7 @@ class TextFingerprinter:
                                         text_id: str,
                                         fingerprint_type: TextFingerprintType,
                                         language: str) -> TextFingerprint:
-        """Extract single type of fingerprint"""
-        try:
+        """Extract single type of fingerprint"""        try:
             if fingerprint_type == TextFingerprintType.LEXICAL_HASH:
                 fingerprint_data = await self._extract_lexical_hash(preprocessed_text)
             elif fingerprint_type == TextFingerprintType.SEMANTIC_EMBEDDING:
@@ -542,8 +521,7 @@ class TextFingerprinter:
             raise
     
     async def _extract_lexical_hash(self, text: str) -> str:
-        """Extract lexical hash based on word patterns"""
-        try:
+        """Extract lexical hash based on word patterns"""        try:
             if NLTK_AVAILABLE:
                 # Tokenize and normalize
                 tokens = word_tokenize(text.lower())
@@ -573,8 +551,7 @@ class TextFingerprinter:
             return ""
     
     async def _extract_semantic_embedding(self, text: str) -> np.ndarray:
-        """Extract semantic embedding using transformers"""
-        try:
+        """Extract semantic embedding using transformers"""        try:
             if not self.model or not self.tokenizer:
                 raise ValueError("Transformer model not available")
             
@@ -615,8 +592,7 @@ class TextFingerprinter:
             return np.array([])
     
     async def _extract_ngram_signature(self, text: str) -> Dict[str, float]:
-        """Extract n-gram signature"""
-        try:
+        """Extract n-gram signature"""        try:
             # Generate various n-grams
             ngram_counts = {}
             
@@ -653,8 +629,7 @@ class TextFingerprinter:
             return {}
     
     async def _extract_stylometric_features(self, text: str) -> Dict[str, float]:
-        """Extract stylometric features for authorship analysis"""
-        try:
+        """Extract stylometric features for authorship analysis"""        try:
             features = {}
             
             # Basic text statistics
@@ -713,8 +688,7 @@ class TextFingerprinter:
             return {}
     
     async def _extract_syntactic_pattern(self, text: str) -> Dict[str, Any]:
-        """Extract syntactic patterns"""
-        try:
+        """Extract syntactic patterns"""        try:
             patterns = {}
             
             if NLTK_AVAILABLE:
@@ -759,8 +733,7 @@ class TextFingerprinter:
             return {}
     
     async def _extract_topic_vector(self, text: str) -> np.ndarray:
-        """Extract topic vector using TF-IDF"""
-        try:
+        """Extract topic vector using TF-IDF"""        try:
             if not SKLEARN_AVAILABLE or not self.tfidf_vectorizer:
                 return np.array([])
             
@@ -780,8 +753,7 @@ class TextFingerprinter:
             return np.array([])
     
     async def _extract_structure_hash(self, text: str) -> str:
-        """Extract structural hash based on document structure"""
-        try:
+        """Extract structural hash based on document structure"""        try:
             # Document structure features
             paragraphs = text.split('\n\n')
             sentences = re.split(r'[.!?]+', text)
@@ -807,16 +779,14 @@ class TextFingerprinter:
     # Comparison methods
     
     async def _compare_lexical_hashes(self, hash1: str, hash2: str) -> float:
-        """Compare lexical hashes"""
-        try:
+        """Compare lexical hashes"""        try:
             return 1.0 if hash1 == hash2 else 0.0
         except Exception as e:
             self.logger.error(f"Error comparing lexical hashes: {str(e)}")
             return 0.0
     
     async def _compare_semantic_embeddings(self, emb1: np.ndarray, emb2: np.ndarray) -> float:
-        """Compare semantic embeddings"""
-        try:
+        """Compare semantic embeddings"""        try:
             if len(emb1) == 0 or len(emb2) == 0:
                 return 0.0
             
@@ -829,8 +799,7 @@ class TextFingerprinter:
             return 0.0
     
     async def _compare_ngram_signatures(self, sig1: Dict[str, Any], sig2: Dict[str, Any]) -> float:
-        """Compare n-gram signatures"""
-        try:
+        """Compare n-gram signatures"""        try:
             if not sig1 or not sig2:
                 return 0.0
             
@@ -864,8 +833,7 @@ class TextFingerprinter:
             return 0.0
     
     async def _compare_stylometric_features(self, features1: Dict[str, float], features2: Dict[str, float]) -> float:
-        """Compare stylometric features"""
-        try:
+        """Compare stylometric features"""        try:
             if not features1 or not features2:
                 return 0.0
             
@@ -900,8 +868,7 @@ class TextFingerprinter:
             return 0.0
     
     async def _compare_syntactic_patterns(self, patterns1: Dict[str, Any], patterns2: Dict[str, Any]) -> float:
-        """Compare syntactic patterns"""
-        try:
+        """Compare syntactic patterns"""        try:
             if not patterns1 or not patterns2:
                 return 0.0
             
@@ -946,8 +913,7 @@ class TextFingerprinter:
                                     similarity_score: float,
                                     fingerprint1: TextFingerprint,
                                     fingerprint2: TextFingerprint) -> Dict[str, float]:
-        """Calculate confidence metrics for the match"""
-        try:
+        """Calculate confidence metrics for the match"""        try:
             # Text length compatibility
             len1 = fingerprint1.text_length
             len2 = fingerprint2.text_length
@@ -979,8 +945,7 @@ class TextFingerprinter:
     def _assess_fingerprint_quality(self, 
                                   fingerprint1: TextFingerprint,
                                   fingerprint2: TextFingerprint) -> float:
-        """Assess quality of fingerprints for comparison"""
-        try:
+        """Assess quality of fingerprints for comparison"""        try:
             quality_score = 1.0
             
             # Check text length (very short texts are lower quality)
@@ -1011,8 +976,7 @@ class TextFingerprinter:
                               fingerprint1: TextFingerprint,
                               fingerprint2: TextFingerprint,
                               similarity_score: float) -> Dict[str, Any]:
-        """Generate detailed match information"""
-        try:
+        """Generate detailed match information"""        try:
             details = {
                 'fingerprint_type': fingerprint1.fingerprint_type.value,
                 'similarity_score': similarity_score,
@@ -1039,8 +1003,7 @@ class TextFingerprinter:
             return {}
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get fingerprinter statistics"""
-        avg_processing_time = (self.total_processing_time / self.processing_count 
+        """Get fingerprinter statistics"""        avg_processing_time = (self.total_processing_time / self.processing_count 
                              if self.processing_count > 0 else 0.0)
         
         return {
@@ -1056,8 +1019,7 @@ class TextFingerprinter:
         }
     
     async def close(self):
-        """Cleanup resources"""
-        try:
+        """Cleanup resources"""        try:
             if self.thread_pool:
                 self.thread_pool.shutdown(wait=True)
             

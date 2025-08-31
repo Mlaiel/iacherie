@@ -1,13 +1,10 @@
-"""
-IA Influencer Agent - Fingerprinting Module Configuration
+"""IA Influencer Agent - Fingerprinting Module Configuration
 Configuration settings and constants for the fingerprinting system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved to Fahed Mlaiel
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited
-"""
-
-import os
+"""import os
 from typing import Dict, List, Any, Optional
 from pathlib import Path
 from dataclasses import dataclass
@@ -15,8 +12,7 @@ from dataclasses import dataclass
 
 @dataclass
 class FingerprintingConfig:
-    """Configuration class for fingerprinting operations"""
-    
+    """Configuration class for fingerprinting operations"""    
     # File processing settings
     max_file_size: int = 500 * 1024 * 1024  # 500MB
     supported_audio_formats: List[str] = None
@@ -69,8 +65,7 @@ class FingerprintingConfig:
     enable_debug: bool = False
     
     def __post_init__(self):
-        """Initialize default values and validate configuration"""
-        if self.supported_audio_formats is None:
+        """Initialize default values and validate configuration"""        if self.supported_audio_formats is None:
             self.supported_audio_formats = [
                 '.mp3', '.wav', '.flac', '.m4a', '.ogg', '.aac', '.wma'
             ]
@@ -103,8 +98,7 @@ class FingerprintingConfig:
         self._validate_config()
     
     def _validate_config(self):
-        """Validate configuration values"""
-        if self.max_file_size <= 0:
+        """Validate configuration values"""        if self.max_file_size <= 0:
             raise ValueError("max_file_size must be positive")
         
         if self.similarity_threshold < 0 or self.similarity_threshold > 1:
@@ -120,8 +114,7 @@ class FingerprintingConfig:
             raise ValueError("vector_dimension must be positive")
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""
-        return {
+        """Convert configuration to dictionary"""        return {
             'max_file_size': self.max_file_size,
             'supported_formats': {
                 'audio': self.supported_audio_formats,
@@ -177,8 +170,7 @@ class FingerprintingConfig:
     
     @classmethod
     def from_dict(cls, config_dict: Dict[str, Any]) -> 'FingerprintingConfig':
-        """Create configuration from dictionary"""
-        return cls(
+        """Create configuration from dictionary"""        return cls(
             max_file_size=config_dict.get('max_file_size', 500 * 1024 * 1024),
             supported_audio_formats=config_dict.get('supported_formats', {}).get('audio'),
             supported_video_formats=config_dict.get('supported_formats', {}).get('video'),
@@ -216,8 +208,7 @@ class FingerprintingConfig:
     
     @classmethod
     def from_file(cls, config_path: str) -> 'FingerprintingConfig':
-        """Load configuration from JSON file"""
-        import json
+        """Load configuration from JSON file"""        import json
         
         with open(config_path, 'r', encoding='utf-8') as f:
             config_dict = json.load(f)
@@ -225,8 +216,7 @@ class FingerprintingConfig:
         return cls.from_dict(config_dict)
     
     def save_to_file(self, config_path: str):
-        """Save configuration to JSON file"""
-        import json
+        """Save configuration to JSON file"""        import json
         
         with open(config_path, 'w', encoding='utf-8') as f:
             json.dump(self.to_dict(), f, indent=2, ensure_ascii=False)
@@ -237,8 +227,7 @@ DEFAULT_CONFIG = FingerprintingConfig()
 
 # Environment-based configuration
 def get_config_from_environment() -> FingerprintingConfig:
-    """Create configuration from environment variables"""
-    config = FingerprintingConfig()
+    """Create configuration from environment variables"""    config = FingerprintingConfig()
     
     # Override with environment variables if they exist
     if 'FINGERPRINTING_MAX_FILE_SIZE' in os.environ:
@@ -310,8 +299,7 @@ TESTING_CONFIG = FingerprintingConfig(
 
 # Configuration constants
 class FingerprintingConstants:
-    """Constants for fingerprinting operations"""
-    
+    """Constants for fingerprinting operations"""    
     # File format MIME types
     AUDIO_MIME_TYPES = {
         '.mp3': 'audio/mpeg',
@@ -372,8 +360,7 @@ class FingerprintingConstants:
 
 
 def get_current_config() -> FingerprintingConfig:
-    """Get configuration based on current environment"""
-    env = os.environ.get('FINGERPRINTING_ENV', 'development').lower()
+    """Get configuration based on current environment"""    env = os.environ.get('FINGERPRINTING_ENV', 'development').lower()
     
     if env == 'production':
         return PRODUCTION_CONFIG

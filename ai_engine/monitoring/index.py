@@ -1,5 +1,4 @@
-"""
-Advanced Monitoring Index and Service Discovery Module
+"""Advanced Monitoring Index and Service Discovery Module
 
 Enterprise-grade service discovery and monitoring navigation for IA Influencer Agent platform.
 Provides centralized access to all monitoring services and real-time status dashboard.
@@ -8,9 +7,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
-"""
-
-import asyncio
+"""import asyncio
 import json
 from typing import Dict, Any, List, Optional, Union, Callable
 from datetime import datetime, timedelta
@@ -36,8 +33,7 @@ logger = logging.getLogger(__name__)
 
 
 class ServiceStatus(Enum):
-    """Status of monitoring services"""
-    RUNNING = "running"
+    """Status of monitoring services"""    RUNNING = "running"
     STOPPED = "stopped" 
     ERROR = "error"
     STARTING = "starting"
@@ -45,8 +41,7 @@ class ServiceStatus(Enum):
 
 
 class MonitoringCategory(Enum):
-    """Categories of monitoring services"""
-    PERFORMANCE = "performance"
+    """Categories of monitoring services"""    PERFORMANCE = "performance"
     CONTENT = "content"
     BUSINESS = "business"
     ALERTS = "alerts"
@@ -58,8 +53,7 @@ class MonitoringCategory(Enum):
 
 @dataclass
 class ServiceInfo:
-    """Information about a monitoring service"""
-    service_id: str
+    """Information about a monitoring service"""    service_id: str
     name: str
     category: MonitoringCategory
     status: ServiceStatus
@@ -74,8 +68,7 @@ class ServiceInfo:
 
 @dataclass
 class MonitoringDashboard:
-    """Real-time monitoring dashboard data"""
-    timestamp: datetime
+    """Real-time monitoring dashboard data"""    timestamp: datetime
     overall_health: HealthStatus
     active_services: int
     total_services: int
@@ -92,29 +85,25 @@ class MonitoringDashboard:
 
 
 class MonitoringRequest(BaseModel):
-    """API request models"""
-    service_ids: Optional[List[str]] = None
+    """API request models"""    service_ids: Optional[List[str]] = None
     categories: Optional[List[MonitoringCategory]] = None
     time_range: Optional[Dict[str, str]] = None
     filters: Optional[Dict[str, Any]] = None
 
 
 class MonitoringResponse(BaseModel):
-    """API response models"""
-    success: bool
+    """API response models"""    success: bool
     data: Any
     message: Optional[str] = None
     timestamp: datetime
 
 
 class MonitoringIndex:
-    """
-    Advanced Monitoring Index and Service Discovery
+    """    Advanced Monitoring Index and Service Discovery
     
     Provides centralized service discovery, real-time dashboard, and unified
     access to all monitoring services in the IA Influencer Agent platform.
-    """
-    
+    """    
     def __init__(
         self,
         ai_monitor: Optional[AIPerformanceMonitor] = None,
@@ -163,8 +152,7 @@ class MonitoringIndex:
         self._setup_api_routes()
         
     async def start_index(self) -> None:
-        """Start the monitoring index service"""
-        if self.is_running:
+        """Start the monitoring index service"""        if self.is_running:
             logger.warning("Monitoring index is already running")
             return
             
@@ -181,8 +169,7 @@ class MonitoringIndex:
         logger.info("Monitoring index started successfully")
         
     async def stop_index(self) -> None:
-        """Stop the monitoring index service"""
-        if not self.is_running:
+        """Stop the monitoring index service"""        if not self.is_running:
             return
             
         self.is_running = False
@@ -199,8 +186,7 @@ class MonitoringIndex:
         logger.info("Monitoring index stopped")
         
     def _register_services(self) -> None:
-        """Register all monitoring services"""
-        services = [
+        """Register all monitoring services"""        services = [
             ServiceInfo(
                 service_id="ai_performance",
                 name="AI Performance Monitor",
@@ -271,36 +257,30 @@ class MonitoringIndex:
             self.service_categories[service.category].append(service.service_id)
             
     def _setup_api_routes(self) -> None:
-        """Setup API routes for the monitoring system"""
-        
+        """Setup API routes for the monitoring system"""        
         @self.app.get("/", response_class=HTMLResponse)
         async def dashboard():
-            """Main monitoring dashboard"""
-            await self._update_dashboard_data()
+            """Main monitoring dashboard"""            await self._update_dashboard_data()
             return self._generate_dashboard_html()
             
         @self.app.get("/api/services", response_model=List[ServiceInfo])
         async def get_services():
-            """Get all registered monitoring services"""
-            return list(self.services.values())
+            """Get all registered monitoring services"""            return list(self.services.values())
             
         @self.app.get("/api/services/{service_id}", response_model=ServiceInfo)
         async def get_service(service_id: str):
-            """Get specific service information"""
-            if service_id not in self.services:
+            """Get specific service information"""            if service_id not in self.services:
                 raise HTTPException(status_code=404, detail="Service not found")
             return self.services[service_id]
             
         @self.app.get("/api/dashboard", response_model=MonitoringDashboard)
         async def get_dashboard():
-            """Get real-time dashboard data"""
-            await self._update_dashboard_data()
+            """Get real-time dashboard data"""            await self._update_dashboard_data()
             return self.dashboard_data
             
         @self.app.get("/api/status", response_model=MonitoringResponse)
         async def get_system_status():
-            """Get overall system status"""
-            await self._update_dashboard_data()
+            """Get overall system status"""            await self._update_dashboard_data()
             
             return MonitoringResponse(
                 success=True,
@@ -315,8 +295,7 @@ class MonitoringIndex:
             
         @self.app.get("/api/metrics/summary")
         async def get_metrics_summary():
-            """Get aggregated metrics summary"""
-            summary = {}
+            """Get aggregated metrics summary"""            summary = {}
             
             if self.ai_monitor:
                 summary["ai_performance"] = await self._get_ai_metrics_summary()
@@ -334,8 +313,7 @@ class MonitoringIndex:
             )
     
     async def _dashboard_update_loop(self) -> None:
-        """Background task to update dashboard data"""
-        while self.is_running:
+        """Background task to update dashboard data"""        while self.is_running:
             try:
                 await self._update_dashboard_data()
                 await asyncio.sleep(self.dashboard_update_interval.total_seconds())
@@ -346,8 +324,7 @@ class MonitoringIndex:
                 await asyncio.sleep(30)
                 
     async def _service_health_loop(self) -> None:
-        """Background task to monitor service health"""
-        while self.is_running:
+        """Background task to monitor service health"""        while self.is_running:
             try:
                 await self._update_service_health()
                 await asyncio.sleep(30)
@@ -358,8 +335,7 @@ class MonitoringIndex:
                 await asyncio.sleep(60)
                 
     async def _update_dashboard_data(self) -> None:
-        """Update real-time dashboard data"""
-        try:
+        """Update real-time dashboard data"""        try:
             # Get system health
             overall_health = HealthStatus.HEALTHY
             if self.health_checks:
@@ -441,8 +417,7 @@ class MonitoringIndex:
             logger.error(f"Error updating dashboard data: {e}")
             
     async def _update_service_health(self) -> None:
-        """Update health status of all services"""
-        for service_id, service in self.services.items():
+        """Update health status of all services"""        for service_id, service in self.services.items():
             try:
                 # Check if service is actually running
                 is_running = await self._check_service_running(service_id)
@@ -462,8 +437,7 @@ class MonitoringIndex:
                 service.status = ServiceStatus.ERROR
                 
     async def _check_service_running(self, service_id: str) -> bool:
-        """Check if a service is actually running"""
-        try:
+        """Check if a service is actually running"""        try:
             if service_id == "ai_performance" and self.ai_monitor:
                 return hasattr(self.ai_monitor, 'is_monitoring') and self.ai_monitor.is_monitoring
             elif service_id == "content_processing" and self.content_monitor:
@@ -485,12 +459,10 @@ class MonitoringIndex:
             return False
             
     def _generate_dashboard_html(self) -> str:
-        """Generate HTML dashboard"""
-        if not self.dashboard_data:
+        """Generate HTML dashboard"""        if not self.dashboard_data:
             return "<html><body><h1>Dashboard data not available</h1></body></html>"
             
-        html_template = """
-        <!DOCTYPE html>
+        html_template = """        <!DOCTYPE html>
         <html>
         <head>
             <title>IA Influencer Agent - Monitoring Dashboard</title>
@@ -625,29 +597,25 @@ class MonitoringIndex:
             </div>
         </body>
         </html>
-        """
-        
+        """        
         return html_template
         
     async def _get_system_load(self) -> float:
-        """Get current system load"""
-        try:
+        """Get current system load"""        try:
             import psutil
             return psutil.cpu_percent(interval=1) / 100.0
         except Exception:
             return 0.0
             
     async def _get_memory_usage(self) -> float:
-        """Get current memory usage"""
-        try:
+        """Get current memory usage"""        try:
             import psutil
             return psutil.virtual_memory().percent / 100.0
         except Exception:
             return 0.0
             
     async def _get_ai_metrics_summary(self) -> Dict[str, Any]:
-        """Get AI performance metrics summary"""
-        if not self.ai_monitor:
+        """Get AI performance metrics summary"""        if not self.ai_monitor:
             return {}
             
         try:
@@ -657,8 +625,7 @@ class MonitoringIndex:
             return {}
             
     async def _get_content_metrics_summary(self) -> Dict[str, Any]:
-        """Get content processing metrics summary"""
-        if not self.content_monitor:
+        """Get content processing metrics summary"""        if not self.content_monitor:
             return {}
             
         try:
@@ -668,8 +635,7 @@ class MonitoringIndex:
             return {}
             
     async def _get_business_metrics_summary(self) -> Dict[str, Any]:
-        """Get business metrics summary"""
-        if not self.business_metrics:
+        """Get business metrics summary"""        if not self.business_metrics:
             return {}
             
         try:
@@ -687,13 +653,11 @@ monitoring_app = FastAPI()
 
 @monitoring_app.on_event("startup")
 async def startup_event():
-    """Initialize monitoring index on startup"""
-    await monitoring_index.start_index()
+    """Initialize monitoring index on startup"""    await monitoring_index.start_index()
 
 @monitoring_app.get("/")
 async def root():
-    """Root endpoint"""
-    return {
+    """Root endpoint"""    return {
         "service": "IA Influencer Agent - Monitoring Index",
         "version": "1.0.0",
         "status": "running",

@@ -1,5 +1,4 @@
-"""
-Analytics & Insights Schemas for IA Influencer Agent Platform
+"""Analytics & Insights Schemas for IA Influencer Agent Platform
 Comprehensive performance analytics, business intelligence, and reporting schemas
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -7,9 +6,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
-"""
-
-from datetime import datetime, date
+"""from datetime import datetime, date
 from decimal import Decimal
 from typing import Any, Dict, List, Optional, Union
 from uuid import UUID
@@ -20,8 +17,7 @@ from .base import BaseSchema, TimestampSchema, UUIDSchema, AuditSchema
 
 
 class AnalyticsReport(UUIDSchema, TimestampSchema, AuditSchema):
-    """Comprehensive analytics report schema."""
-    
+    """Comprehensive analytics report schema."""    
     report_name: str = Field(description="Analytics report name")
     report_type: str = Field(description="Type of analytics report")
     creator_id: Optional[UUID] = Field(None, description="Creator for scoped reports")
@@ -87,8 +83,7 @@ class AnalyticsReport(UUIDSchema, TimestampSchema, AuditSchema):
     
     @validator('report_type')
     def validate_report_type(cls, v):
-        """Validate report type."""
-        allowed_types = {
+        """Validate report type."""        allowed_types = {
             "performance_overview", "audience_analysis", "content_performance",
             "revenue_analysis", "engagement_report", "growth_analysis",
             "competitive_intelligence", "roi_analysis", "trend_report",
@@ -100,8 +95,7 @@ class AnalyticsReport(UUIDSchema, TimestampSchema, AuditSchema):
     
     @validator('granularity')
     def validate_granularity(cls, v):
-        """Validate data granularity."""
-        allowed_granularities = {
+        """Validate data granularity."""        allowed_granularities = {
             "hourly", "daily", "weekly", "monthly", "quarterly", "yearly"
         }
         if v not in allowed_granularities:
@@ -110,8 +104,7 @@ class AnalyticsReport(UUIDSchema, TimestampSchema, AuditSchema):
 
 
 class ContentAnalytics(UUIDSchema, TimestampSchema):
-    """Detailed content performance analytics schema."""
-    
+    """Detailed content performance analytics schema."""    
     content_id: UUID
     analysis_period_start: datetime
     analysis_period_end: datetime
@@ -182,8 +175,7 @@ class ContentAnalytics(UUIDSchema, TimestampSchema):
 
 
 class AudienceInsights(UUIDSchema, TimestampSchema):
-    """Comprehensive audience analytics and insights schema."""
-    
+    """Comprehensive audience analytics and insights schema."""    
     creator_id: UUID
     insight_period_start: datetime
     insight_period_end: datetime
@@ -253,8 +245,7 @@ class AudienceInsights(UUIDSchema, TimestampSchema):
 
 
 class RevenueAnalytics(UUIDSchema, TimestampSchema):
-    """Comprehensive revenue and monetization analytics schema."""
-    
+    """Comprehensive revenue and monetization analytics schema."""    
     creator_id: UUID
     analysis_period_start: datetime
     analysis_period_end: datetime
@@ -331,8 +322,7 @@ class RevenueAnalytics(UUIDSchema, TimestampSchema):
 
 
 class CompetitiveIntelligence(UUIDSchema, TimestampSchema):
-    """Competitive analysis and market intelligence schema."""
-    
+    """Competitive analysis and market intelligence schema."""    
     creator_id: UUID
     analysis_date: datetime
     market_segment: str = Field(description="Market segment for analysis")
@@ -398,8 +388,7 @@ class CompetitiveIntelligence(UUIDSchema, TimestampSchema):
 
 
 class PlatformPerformance(UUIDSchema, TimestampSchema):
-    """Multi-platform performance analytics schema."""
-    
+    """Multi-platform performance analytics schema."""    
     creator_id: UUID
     analysis_period_start: datetime
     analysis_period_end: datetime
@@ -459,8 +448,7 @@ class PlatformPerformance(UUIDSchema, TimestampSchema):
 
 
 class BusinessIntelligenceDashboard(UUIDSchema, TimestampSchema):
-    """Executive business intelligence dashboard schema."""
-    
+    """Executive business intelligence dashboard schema."""    
     creator_id: UUID
     dashboard_name: str = Field(description="Dashboard name")
     dashboard_type: str = Field(description="Type of BI dashboard")
@@ -515,8 +503,7 @@ class BusinessIntelligenceDashboard(UUIDSchema, TimestampSchema):
     
     @validator('dashboard_type')
     def validate_dashboard_type(cls, v):
-        """Validate dashboard type."""
-        allowed_types = {
+        """Validate dashboard type."""        allowed_types = {
             "executive_summary", "performance_overview", "financial_dashboard",
             "operational_metrics", "strategic_planning", "risk_management",
             "competitive_intelligence", "growth_tracking", "roi_analysis"

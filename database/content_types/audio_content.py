@@ -1,5 +1,4 @@
-"""
-Audio Content Management Module - Professional Audio Content Processing System
+"""Audio Content Management Module - Professional Audio Content Processing System
 
 Module spécialisé pour la gestion, l'analyse et la protection du contenu audio
 dans la plateforme IA Influencer Agent.
@@ -13,9 +12,7 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""
-
-from typing import Dict, List, Any, Optional, Union, Tuple
+"""from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
@@ -34,8 +31,7 @@ from mutagen.id3 import ID3NoHeaderError
 logger = logging.getLogger(__name__)
 
 class AudioFormat(Enum):
-    """Supported audio formats with quality indicators"""
-    MP3 = {"ext": ".mp3", "lossy": True, "quality": "good", "compression": "high"}
+    """Supported audio formats with quality indicators"""    MP3 = {"ext": ".mp3", "lossy": True, "quality": "good", "compression": "high"}
     WAV = {"ext": ".wav", "lossy": False, "quality": "excellent", "compression": "none"}
     FLAC = {"ext": ".flac", "lossy": False, "quality": "excellent", "compression": "lossless"}
     AAC = {"ext": ".aac", "lossy": True, "quality": "very_good", "compression": "high"}
@@ -45,8 +41,7 @@ class AudioFormat(Enum):
     AIFF = {"ext": ".aiff", "lossy": False, "quality": "excellent", "compression": "none"}
 
 class AudioContentType(Enum):
-    """Audio content classification types"""
-    MUSIC = "music"
+    """Audio content classification types"""    MUSIC = "music"
     SPEECH = "speech"
     PODCAST = "podcast"
     AUDIOBOOK = "audiobook"
@@ -59,8 +54,7 @@ class AudioContentType(Enum):
 
 @dataclass
 class AudioMetadata:
-    """Comprehensive audio metadata structure"""
-    # Technical metadata
+    """Comprehensive audio metadata structure"""    # Technical metadata
     duration: float
     sample_rate: int
     channels: int
@@ -119,8 +113,7 @@ class AudioMetadata:
 
 @dataclass
 class AudioFingerprint:
-    """Audio fingerprint for content identification and protection"""
-    content_id: str
+    """Audio fingerprint for content identification and protection"""    content_id: str
     primary_hash: str
     perceptual_hash: str
     chromaprint_hash: str
@@ -135,18 +128,14 @@ class AudioFingerprint:
     quality_indicators: Dict[str, float] = field(default_factory=dict)
 
 class AudioContentManager:
-    """
-    Professional audio content management system with advanced processing capabilities
-    """
-    
+    """    Professional audio content management system with advanced processing capabilities
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize the Audio Content Manager
+        """        Initialize the Audio Content Manager
         
         Args:
             config: Configuration dictionary for audio processing
-        """
-        self.config = config or self._get_default_config()
+        """        self.config = config or self._get_default_config()
         self.logger = logging.getLogger(f"{__name__}.AudioContentManager")
         self.supported_formats = [fmt.value["ext"] for fmt in AudioFormat]
         
@@ -154,8 +143,7 @@ class AudioContentManager:
         self._init_components()
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration for audio processing"""
-        return {
+        """Get default configuration for audio processing"""        return {
             "max_file_size_mb": 100,
             "default_sample_rate": 44100,
             "quality_threshold": 0.7,
@@ -170,8 +158,7 @@ class AudioContentManager:
         }
     
     def _init_components(self):
-        """Initialize audio processing components"""
-        self.logger.info("Initializing Audio Content Manager components...")
+        """Initialize audio processing components"""        self.logger.info("Initializing Audio Content Manager components...")
         
         # Audio analysis configuration
         self.analysis_config = {
@@ -191,8 +178,7 @@ class AudioContentManager:
         generate_fingerprint: bool = True,
         quality_analysis: bool = True
     ) -> Dict[str, Any]:
-        """
-        Process audio file with comprehensive analysis
+        """        Process audio file with comprehensive analysis
         
         Args:
             file_path: Path to audio file
@@ -202,8 +188,7 @@ class AudioContentManager:
             
         Returns:
             Dict containing processed audio information
-        """
-        try:
+        """        try:
             file_path = Path(file_path)
             self.logger.info(f"Processing audio file: {file_path}")
             
@@ -249,8 +234,7 @@ class AudioContentManager:
             raise
     
     async def _validate_audio_file(self, file_path: Path) -> bool:
-        """Validate audio file format and accessibility"""
-        try:
+        """Validate audio file format and accessibility"""        try:
             # Check file existence and size
             if not file_path.exists():
                 return False
@@ -281,8 +265,7 @@ class AudioContentManager:
         audio_data: np.ndarray, 
         sample_rate: int
     ) -> AudioMetadata:
-        """Extract comprehensive audio metadata"""
-        try:
+        """Extract comprehensive audio metadata"""        try:
             # Basic technical metadata
             duration = len(audio_data) / sample_rate
             channels = 1 if len(audio_data.shape) == 1 else audio_data.shape[0]
@@ -377,8 +360,7 @@ class AudioContentManager:
             raise
     
     def _get_tag_value(self, audio_file, tag_keys: List[str]) -> Optional[str]:
-        """Extract tag value from audio file using multiple possible keys"""
-        for key in tag_keys:
+        """Extract tag value from audio file using multiple possible keys"""        for key in tag_keys:
             try:
                 if key in audio_file:
                     value = audio_file[key]
@@ -396,8 +378,7 @@ class AudioContentManager:
         sample_rate: int,
         content_id: str
     ) -> AudioFingerprint:
-        """Generate comprehensive audio fingerprint for content protection"""
-        try:
+        """Generate comprehensive audio fingerprint for content protection"""        try:
             # Primary hash (raw audio data)
             primary_hash = hashlib.sha256(audio_data.tobytes()).hexdigest()
             
@@ -458,8 +439,7 @@ class AudioContentManager:
             raise
     
     def _generate_chromaprint_hash(self, audio_data: np.ndarray, sample_rate: int) -> str:
-        """Generate Chromaprint-style hash for audio identification"""
-        try:
+        """Generate Chromaprint-style hash for audio identification"""        try:
             # Extract chroma features with specific parameters
             chroma = librosa.feature.chroma_stft(
                 y=audio_data, 
@@ -488,8 +468,7 @@ class AudioContentManager:
             return hashlib.sha256(str(np.random.random()).encode()).hexdigest()[:32]
     
     async def _generate_spectral_hash(self, audio_data: np.ndarray, sample_rate: int) -> str:
-        """Generate spectral-based hash for content identification"""
-        try:
+        """Generate spectral-based hash for content identification"""        try:
             # Spectral centroid and rolloff
             spectral_centroids = librosa.feature.spectral_centroid(y=audio_data, sr=sample_rate)
             spectral_rolloff = librosa.feature.spectral_rolloff(y=audio_data, sr=sample_rate)
@@ -507,8 +486,7 @@ class AudioContentManager:
             return hashlib.sha256(str(np.random.random()).encode()).hexdigest()[:32]
     
     async def _generate_temporal_signature(self, audio_data: np.ndarray, sample_rate: int) -> str:
-        """Generate temporal signature for rhythm and timing patterns"""
-        try:
+        """Generate temporal signature for rhythm and timing patterns"""        try:
             # Onset detection
             onset_frames = librosa.onset.onset_detect(y=audio_data, sr=sample_rate)
             onset_times = librosa.frames_to_time(onset_frames, sr=sample_rate)
@@ -533,8 +511,7 @@ class AudioContentManager:
             return hashlib.sha256(str(np.random.random()).encode()).hexdigest()[:32]
     
     async def _analyze_audio_quality(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """Analyze audio quality metrics"""
-        try:
+        """Analyze audio quality metrics"""        try:
             quality_metrics = {}
             
             # Signal-to-noise ratio approximation
@@ -581,8 +558,7 @@ class AudioContentManager:
             return {"overall_quality": 0.5, "error": str(e)}
     
     async def _classify_audio_content(self, audio_data: np.ndarray, sample_rate: int) -> AudioContentType:
-        """Classify audio content type using audio features"""
-        try:
+        """Classify audio content type using audio features"""        try:
             # Extract features for classification
             mfcc = librosa.feature.mfcc(y=audio_data, sr=sample_rate, n_mfcc=13)
             chroma = librosa.feature.chroma_stft(y=audio_data, sr=sample_rate)
@@ -610,8 +586,7 @@ class AudioContentManager:
             return AudioContentType.MUSIC  # Default fallback
     
     async def store_content(self, audio_content: Dict[str, Any]) -> str:
-        """Store processed audio content in database"""
-        try:
+        """Store processed audio content in database"""        try:
             # Generate unique content ID
             content_id = hashlib.sha256(
                 f"{audio_content['file_path']}{datetime.now().isoformat()}".encode()
@@ -628,12 +603,10 @@ class AudioContentManager:
             raise
     
     def get_supported_formats(self) -> List[str]:
-        """Get list of supported audio formats"""
-        return [fmt.value["ext"] for fmt in AudioFormat]
+        """Get list of supported audio formats"""        return [fmt.value["ext"] for fmt in AudioFormat]
     
     def get_format_info(self, format_name: str) -> Optional[Dict[str, Any]]:
-        """Get information about a specific audio format"""
-        for fmt in AudioFormat:
+        """Get information about a specific audio format"""        for fmt in AudioFormat:
             if fmt.value["ext"] == f".{format_name.lower()}" or fmt.name.lower() == format_name.lower():
                 return fmt.value
         return None

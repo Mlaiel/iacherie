@@ -1,5 +1,4 @@
-"""
-Content Indexer - AI-Powered Content Indexing and Search Engine
+"""Content Indexer - AI-Powered Content Indexing and Search Engine
 ===============================================================
 
 The ContentIndexer creates and maintains searchable indexes of content
@@ -7,9 +6,7 @@ using advanced AI techniques for semantic search and content discovery.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime
@@ -27,8 +24,7 @@ from ..search.elasticsearch_client import ElasticsearchClient
 
 
 class ContentIndexer:
-    """
-    AI-Powered Content Indexing and Search Engine
+    """    AI-Powered Content Indexing and Search Engine
     
     Provides advanced content indexing capabilities including:
     - Semantic vector indexing for similarity search
@@ -36,8 +32,7 @@ class ContentIndexer:
     - Multi-modal content indexing
     - Real-time index updates
     - Content recommendation indexing
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession):
         self.db = db_session
         self.logger = logging.getLogger(__name__)
@@ -55,16 +50,14 @@ class ContentIndexer:
         }
 
     async def index_content(self, content_id: str) -> Dict[str, Any]:
-        """
-        Index content for search and discovery
+        """        Index content for search and discovery
         
         Args:
             content_id: Content identifier
             
         Returns:
             Indexing result
-        """
-        try:
+        """        try:
             self.logger.info(f"Indexing content {content_id}")
             
             # Get content data
@@ -128,8 +121,7 @@ class ContentIndexer:
         user_id: int = None,
         limit: int = 50
     ) -> Dict[str, Any]:
-        """
-        Search content using hybrid approach
+        """        Search content using hybrid approach
         
         Args:
             query: Search query
@@ -139,8 +131,7 @@ class ContentIndexer:
             
         Returns:
             Search results with relevance scores
-        """
-        try:
+        """        try:
             # Generate query embedding
             query_embedding = await self._generate_embeddings(query)
             
@@ -194,8 +185,7 @@ class ContentIndexer:
         content_id: str,
         limit: int = 10
     ) -> Dict[str, Any]:
-        """
-        Find content similar to given content
+        """        Find content similar to given content
         
         Args:
             content_id: Reference content ID
@@ -203,8 +193,7 @@ class ContentIndexer:
             
         Returns:
             Similar content results
-        """
-        try:
+        """        try:
             # Get content vector
             content_vector = await self.vector_store.get_vector(content_id)
             if not content_vector:
@@ -245,8 +234,7 @@ class ContentIndexer:
         content_types: List[str] = None,
         limit: int = 20
     ) -> Dict[str, Any]:
-        """
-        Get personalized content recommendations
+        """        Get personalized content recommendations
         
         Args:
             user_id: User identifier
@@ -255,8 +243,7 @@ class ContentIndexer:
             
         Returns:
             Personalized content recommendations
-        """
-        try:
+        """        try:
             # Get user's interaction history
             user_history = await self._get_user_interaction_history(user_id)
             
@@ -290,16 +277,14 @@ class ContentIndexer:
             }
 
     async def update_content_index(self, content_id: str) -> Dict[str, Any]:
-        """
-        Update existing content index
+        """        Update existing content index
         
         Args:
             content_id: Content identifier
             
         Returns:
             Update result
-        """
-        try:
+        """        try:
             # Remove existing index
             await self.remove_content_index(content_id)
             
@@ -319,16 +304,14 @@ class ContentIndexer:
             }
 
     async def remove_content_index(self, content_id: str) -> Dict[str, Any]:
-        """
-        Remove content from all indexes
+        """        Remove content from all indexes
         
         Args:
             content_id: Content identifier
             
         Returns:
             Removal result
-        """
-        try:
+        """        try:
             # Remove from vector store
             vector_result = await self.vector_store.remove_vector(content_id)
             
@@ -358,8 +341,7 @@ class ContentIndexer:
         content_types: List[str] = None,
         limit: int = 50
     ) -> Dict[str, Any]:
-        """
-        Get trending content based on engagement metrics
+        """        Get trending content based on engagement metrics
         
         Args:
             time_period: Time period for trending calculation
@@ -368,8 +350,7 @@ class ContentIndexer:
             
         Returns:
             Trending content results
-        """
-        try:
+        """        try:
             # Calculate time range
             time_filter = self._get_time_filter(time_period)
             
@@ -414,8 +395,7 @@ class ContentIndexer:
         content_type: str = None,
         num_clusters: int = 10
     ) -> Dict[str, Any]:
-        """
-        Build content clusters for discovery and organization
+        """        Build content clusters for discovery and organization
         
         Args:
             content_type: Filter by content type
@@ -423,8 +403,7 @@ class ContentIndexer:
             
         Returns:
             Content clustering results
-        """
-        try:
+        """        try:
             # Get all content vectors
             vectors_data = await self.vector_store.get_all_vectors(
                 content_type_filter=content_type
@@ -480,8 +459,7 @@ class ContentIndexer:
     # Helper methods
 
     async def _get_content(self, content_id: str):
-        """Get content from database"""
-        # Mock implementation - replace with actual database query
+        """Get content from database"""        # Mock implementation - replace with actual database query
         class MockContent:
             def __init__(self):
                 self.id = content_id
@@ -496,8 +474,7 @@ class ContentIndexer:
         return MockContent()
 
     async def _extract_searchable_text(self, content) -> str:
-        """Extract searchable text from content"""
-        searchable_parts = []
+        """Extract searchable text from content"""        searchable_parts = []
         
         # Add title
         if content.title:
@@ -518,8 +495,7 @@ class ContentIndexer:
         return " ".join(searchable_parts)
 
     async def _generate_embeddings(self, text: str) -> np.ndarray:
-        """Generate vector embeddings for text"""
-        try:
+        """Generate vector embeddings for text"""        try:
             embeddings = self.sentence_model.encode([text])
             return embeddings[0]
         except Exception as e:
@@ -531,8 +507,7 @@ class ContentIndexer:
         content_types: List[str] = None,
         user_id: int = None
     ) -> List[Dict]:
-        """Build Elasticsearch filters"""
-        filters = []
+        """Build Elasticsearch filters"""        filters = []
         
         if content_types:
             filters.append({
@@ -552,8 +527,7 @@ class ContentIndexer:
         text_results: Dict,
         limit: int
     ) -> List[Dict]:
-        """Combine and rank vector and text search results"""
-        combined_scores = {}
+        """Combine and rank vector and text search results"""        combined_scores = {}
         
         # Process vector results
         for result in vector_results:
@@ -599,13 +573,11 @@ class ContentIndexer:
         return sorted_results[:limit]
 
     async def _get_user_interaction_history(self, user_id: int) -> List[Dict]:
-        """Get user's content interaction history"""
-        # Mock implementation - replace with actual data
+        """Get user's content interaction history"""        # Mock implementation - replace with actual data
         return []
 
     async def _build_user_profile_vector(self, interaction_history: List[Dict]) -> np.ndarray:
-        """Build user profile vector from interaction history"""
-        if not interaction_history:
+        """Build user profile vector from interaction history"""        if not interaction_history:
             # Return zero vector for new users
             return np.zeros(self.index_config["vector_dimension"])
         
@@ -620,8 +592,7 @@ class ContentIndexer:
         content_types: List[str],
         limit: int
     ) -> List[Dict]:
-        """Filter and rank recommendations"""
-        filtered = []
+        """Filter and rank recommendations"""        filtered = []
         
         for rec in recommendations:
             # Filter by content type if specified
@@ -643,8 +614,7 @@ class ContentIndexer:
         return filtered
 
     def _get_time_filter(self, time_period: str) -> Dict[str, str]:
-        """Get time filter for trending calculation"""
-        now = datetime.utcnow()
+        """Get time filter for trending calculation"""        now = datetime.utcnow()
         
         if time_period == "day":
             start_time = now - timedelta(days=1)

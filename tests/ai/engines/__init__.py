@@ -26,8 +26,7 @@ Violators will face legal action under international copyright law.
 THEFT OF IDEAS, CONCEPTS, OR CODE WITHOUT EXPLICIT WRITTEN AUTHORIZATION 
 FROM FAHED MLAIEL (mlaiel@live.de) IS STRICTLY FORBIDDEN AND WILL RESULT 
 IN IMMEDIATE LEGAL PROSECUTION.
-"""
-import pytest
+"""import pytest
 import asyncio
 import sys
 import os

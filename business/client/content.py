@@ -1,14 +1,11 @@
-"""
-Content Manager - Multi-format content handling for creators.
+"""Content Manager - Multi-format content handling for creators.
 
 Manages upload, processing, and organization of various content types
 including audio, video, images, and text for IA Influencer platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Advanced Content Protection
-"""
-
-from datetime import datetime, timedelta
+"""from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, BinaryIO, Tuple
 from uuid import UUID, uuid4
 import logging
@@ -43,8 +40,7 @@ logger = logging.getLogger(__name__)
 
 
 class SupportedFormat(str, Enum):
-    """Supported content formats by type."""
-    # Audio formats
+    """Supported content formats by type."""    # Audio formats
     MP3 = "mp3"
     WAV = "wav" 
     FLAC = "flac"
@@ -74,8 +70,7 @@ class SupportedFormat(str, Enum):
 
 
 class ContentUploadData(BaseModel):
-    """Content upload metadata validation."""
-    title: str
+    """Content upload metadata validation."""    title: str
     description: Optional[str] = None
     tags: List[str] = []
     category: Optional[str] = None
@@ -99,8 +94,7 @@ class ContentUploadData(BaseModel):
 
 
 class ContentProcessingOptions(BaseModel):
-    """Content processing configuration."""
-    generate_thumbnails: bool = True
+    """Content processing configuration."""    generate_thumbnails: bool = True
     extract_metadata: bool = True
     create_fingerprint: bool = True
     analyze_content: bool = True
@@ -110,8 +104,7 @@ class ContentProcessingOptions(BaseModel):
 
 
 class ContentManager:
-    """
-    Multi-format content management system for creators.
+    """    Multi-format content management system for creators.
     
     Handles comprehensive content lifecycle including:
     - Upload processing and validation
@@ -120,8 +113,7 @@ class ContentManager:
     - Fingerprinting for protection
     - Storage and organization
     - Metadata extraction and management
-    """
-    
+    """    
     def __init__(
         self,
         db: Session,
@@ -152,8 +144,7 @@ class ContentManager:
         upload_data: ContentUploadData,
         processing_options: ContentProcessingOptions = ContentProcessingOptions()
     ) -> Dict[str, Any]:
-        """
-        Upload and process new content.
+        """        Upload and process new content.
         
         Args:
             client_id: Client uploading the content
@@ -168,8 +159,7 @@ class ContentManager:
         Raises:
             InvalidContentError: If file format not supported
             StorageError: If upload fails
-        """
-        try:
+        """        try:
             # Validate file and determine content type
             content_type, file_extension = self._determine_content_type(filename)
             if not content_type:
@@ -259,8 +249,7 @@ class ContentManager:
         content_id: UUID,
         client_id: Optional[UUID] = None
     ) -> Optional[Dict[str, Any]]:
-        """
-        Retrieve content information by ID.
+        """        Retrieve content information by ID.
         
         Args:
             content_id: Content identifier
@@ -268,8 +257,7 @@ class ContentManager:
             
         Returns:
             Content data or None if not found/accessible
-        """
-        try:
+        """        try:
             query = self.db.query(Content).filter(Content.id == content_id)
             
             if client_id:
@@ -293,8 +281,7 @@ class ContentManager:
         page: int = 1,
         limit: int = 50
     ) -> Dict[str, Any]:
-        """
-        List content for a specific client.
+        """        List content for a specific client.
         
         Args:
             client_id: Client identifier
@@ -305,8 +292,7 @@ class ContentManager:
             
         Returns:
             Paginated content list
-        """
-        try:
+        """        try:
             query = self.db.query(Content).filter(Content.client_id == client_id)
             
             if content_type:
@@ -342,8 +328,7 @@ class ContentManager:
         client_id: UUID,
         permanent: bool = False
     ) -> bool:
-        """
-        Delete or soft-delete content.
+        """        Delete or soft-delete content.
         
         Args:
             content_id: Content identifier
@@ -352,8 +337,7 @@ class ContentManager:
             
         Returns:
             True if successful
-        """
-        try:
+        """        try:
             content = self.db.query(Content).filter(
                 Content.id == content_id,
                 Content.client_id == client_id
@@ -387,8 +371,7 @@ class ContentManager:
         content_id: UUID,
         processing_options: ContentProcessingOptions
     ) -> None:
-        """
-        Async content processing pipeline.
+        """        Async content processing pipeline.
         
         Handles all content processing steps including:
         - File validation and analysis
@@ -396,8 +379,7 @@ class ContentManager:
         - Thumbnail generation
         - Fingerprinting for protection
         - SEO optimization
-        """
-        try:
+        """        try:
             content = self.db.query(Content).filter(Content.id == content_id).first()
             if not content:
                 logger.error(f"Content not found for processing: {content_id}")
@@ -478,8 +460,7 @@ class ContentManager:
             logger.error(f"Content processing failed for {content_id}: {e}")
             
     def _determine_content_type(self, filename: str) -> Tuple[Optional[ContentType], str]:
-        """Determine content type from filename."""
-        file_extension = Path(filename).suffix.lower().lstrip('.')
+        """Determine content type from filename."""        file_extension = Path(filename).suffix.lower().lstrip('.')
         
         if file_extension in ['mp3', 'wav', 'flac', 'm4a', 'ogg']:
             return ContentType.AUDIO, file_extension
@@ -493,8 +474,7 @@ class ContentManager:
             return None, file_extension
             
     def _get_file_size(self, file_stream: BinaryIO) -> int:
-        """Get file size from stream."""
-        current_pos = file_stream.tell()
+        """Get file size from stream."""        current_pos = file_stream.tell()
         file_stream.seek(0, 2)  # Seek to end
         size = file_stream.tell()
         file_stream.seek(current_pos)  # Reset position
@@ -506,18 +486,15 @@ class ContentManager:
         content_id: UUID,
         file_extension: str
     ) -> str:
-        """Generate storage path for content file."""
-        date_path = datetime.utcnow().strftime("%Y/%m/%d")
+        """Generate storage path for content file."""        date_path = datetime.utcnow().strftime("%Y/%m/%d")
         return f"content/{client_id}/{date_path}/{content_id}.{file_extension}"
         
     def _get_mime_type(self, filename: str) -> str:
-        """Get MIME type for filename."""
-        mime_type, _ = mimetypes.guess_type(filename)
+        """Get MIME type for filename."""        mime_type, _ = mimetypes.guess_type(filename)
         return mime_type or "application/octet-stream"
         
     def _estimate_processing_time(self, content_type: ContentType, file_size: int) -> int:
-        """Estimate processing time in seconds."""
-        base_times = {
+        """Estimate processing time in seconds."""        base_times = {
             ContentType.AUDIO: 30,
             ContentType.VIDEO: 120,
             ContentType.IMAGE: 10,
@@ -529,8 +506,7 @@ class ContentManager:
         return int(base_times[content_type] * (1 + size_factor))
         
     async def _format_content_data(self, content: Content) -> Dict[str, Any]:
-        """Format content data for API response."""
-        return {
+        """Format content data for API response."""        return {
             "id": str(content.id),
             "title": content.title,
             "description": content.description,
@@ -555,34 +531,28 @@ class ContentManager:
         }
         
     async def _validate_content_file(self, content: Content) -> Dict[str, Any]:
-        """Validate uploaded content file."""
-        try:
+        """Validate uploaded content file."""        try:
             # Implementation would validate file integrity, format, etc.
             return {"valid": True}
         except Exception as e:
             return {"valid": False, "error": str(e)}
             
     async def _extract_metadata(self, content: Content) -> Dict[str, Any]:
-        """Extract metadata from content file."""
-        # Implementation would extract metadata based on content type
+        """Extract metadata from content file."""        # Implementation would extract metadata based on content type
         return {}
         
     async def _generate_thumbnails(self, content: Content) -> List[str]:
-        """Generate thumbnails for content."""
-        # Implementation would generate thumbnails based on content type
+        """Generate thumbnails for content."""        # Implementation would generate thumbnails based on content type
         return []
         
     async def _optimize_for_seo(self, content: Content) -> Dict[str, Any]:
-        """Optimize content metadata for SEO."""
-        # Implementation would generate SEO-optimized metadata
+        """Optimize content metadata for SEO."""        # Implementation would generate SEO-optimized metadata
         return {}
         
     async def _get_thumbnail_url(self, content: Content) -> Optional[str]:
-        """Get thumbnail URL for content."""
-        # Implementation would return thumbnail URL
+        """Get thumbnail URL for content."""        # Implementation would return thumbnail URL
         return None
         
     async def _get_download_url(self, content: Content) -> Optional[str]:
-        """Get download URL for content."""
-        # Implementation would return secure download URL
+        """Get download URL for content."""        # Implementation would return secure download URL
         return None

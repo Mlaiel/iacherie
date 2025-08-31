@@ -1,5 +1,4 @@
-"""
-Data Integrity Manager
+"""Data Integrity Manager
 Advanced data validation and integrity management for IA Influencer Agent
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -95,9 +94,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Sensitive data protection
 - Encryption verification
 - Privacy compliance checks
-"""
-
-import asyncio
+"""import asyncio
 from typing import Dict, Any, Optional, List, Union, Tuple, Set
 from datetime import datetime, timedelta
 from enum import Enum
@@ -120,16 +117,14 @@ from backend.deployment.database.postgresql_manager import get_postgresql_manage
 
 
 class ValidationSeverity(Enum):
-    """Validation issue severity levels"""
-    INFO = "info"
+    """Validation issue severity levels"""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
 
 
 class ValidationCategory(Enum):
-    """Categories of validation"""
-    SCHEMA = "schema"
+    """Categories of validation"""    SCHEMA = "schema"
     CONSTRAINTS = "constraints"
     FOREIGN_KEYS = "foreign_keys"
     DATA_TYPES = "data_types"
@@ -139,8 +134,7 @@ class ValidationCategory(Enum):
 
 
 class IntegrityStatus(Enum):
-    """Data integrity status"""
-    HEALTHY = "healthy"
+    """Data integrity status"""    HEALTHY = "healthy"
     WARNING = "warning"
     DEGRADED = "degraded"
     CRITICAL = "critical"
@@ -149,8 +143,7 @@ class IntegrityStatus(Enum):
 
 @dataclass
 class ValidationIssue:
-    """Data validation issue"""
-    issue_id: str
+    """Data validation issue"""    issue_id: str
     category: ValidationCategory
     severity: ValidationSeverity
     table_name: str
@@ -164,8 +157,7 @@ class ValidationIssue:
 
 @dataclass
 class QualityMetrics:
-    """Data quality metrics"""
-    completeness_score: float  # 0-1
+    """Data quality metrics"""    completeness_score: float  # 0-1
     accuracy_score: float      # 0-1
     consistency_score: float   # 0-1
     timeliness_score: float    # 0-1
@@ -177,13 +169,11 @@ class QualityMetrics:
 
 
 class DataIntegrityManager:
-    """
-    Enterprise Data Integrity Manager
+    """    Enterprise Data Integrity Manager
     
     Provides comprehensive data validation, integrity monitoring,
     and quality assurance for the IA Influencer Agent database.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = get_logger(f"{__name__}.DataIntegrityManager")
@@ -212,8 +202,7 @@ class DataIntegrityManager:
         self.max_concurrent_validations = self.config.get('max_concurrent_validations', 5)
     
     async def initialize(self) -> bool:
-        """Initialize the data integrity manager"""
-        try:
+        """Initialize the data integrity manager"""        try:
             self.logger.info("🚀 Initializing Data Integrity Manager...")
             
             # Get database manager
@@ -236,11 +225,9 @@ class DataIntegrityManager:
             return False
     
     async def _create_integrity_schema(self):
-        """Create data integrity schema"""
-        self.logger.debug("Creating data integrity schema...")
+        """Create data integrity schema"""        self.logger.debug("Creating data integrity schema...")
         
-        schema_sql = """
-        -- Data Validation Rules
+        schema_sql = """        -- Data Validation Rules
         CREATE TABLE IF NOT EXISTS data_validation_rules (
             rule_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             rule_name VARCHAR(200) NOT NULL,
@@ -486,8 +473,7 @@ class DataIntegrityManager:
         CREATE TRIGGER update_validation_issues_updated_at
             BEFORE UPDATE ON validation_issues
             FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-        """
-        
+        """        
         async with self._db_manager.get_session() as session:
             await session.execute(text(schema_sql))
             await session.commit()
@@ -495,12 +481,10 @@ class DataIntegrityManager:
         self.logger.debug("✅ Data integrity schema created successfully")
     
     async def _load_validation_rules(self):
-        """Load validation rules from database"""
-        try:
+        """Load validation rules from database"""        try:
             async with self._db_manager.get_session() as session:
                 result = await session.execute(
-                    text("""
-                        SELECT rule_id, rule_name, table_name, column_name, rule_type,
+                    text("""                        SELECT rule_id, rule_name, table_name, column_name, rule_type,
                                rule_expression, severity, auto_fix, check_frequency
                         FROM data_validation_rules 
                         WHERE is_active = true
@@ -533,8 +517,7 @@ class DataIntegrityManager:
             self.logger.error(f"Failed to load validation rules: {e}")
     
     async def _run_comprehensive_validation(self):
-        """Run comprehensive data validation"""
-        try:
+        """Run comprehensive data validation"""        try:
             self.logger.info("🔍 Running comprehensive data validation...")
             
             validation_start = datetime.utcnow()
@@ -544,8 +527,7 @@ class DataIntegrityManager:
             # Get all tables to validate
             async with self._db_manager.get_session() as session:
                 result = await session.execute(
-                    text("""
-                        SELECT table_name 
+                    text("""                        SELECT table_name 
                         FROM information_schema.tables 
                         WHERE table_schema = 'public' 
                         AND table_type = 'BASE TABLE'
@@ -592,8 +574,7 @@ class DataIntegrityManager:
             self.logger.error(f"❌ Comprehensive validation failed: {e}")
     
     async def _validate_table(self, table_name: str) -> List[ValidationIssue]:
-        """Validate a specific table"""
-        issues = []
+        """Validate a specific table"""        issues = []
         
         try:
             # Get table rules
@@ -617,15 +598,13 @@ class DataIntegrityManager:
             return []
     
     async def _check_null_constraints(self, table_name: str) -> List[ValidationIssue]:
-        """Check null constraints"""
-        issues = []
+        """Check null constraints"""        issues = []
         
         try:
             async with self._db_manager.get_session() as session:
                 # Get columns that should not be null
                 result = await session.execute(
-                    text("""
-                        SELECT column_name, is_nullable
+                    text("""                        SELECT column_name, is_nullable
                         FROM information_schema.columns 
                         WHERE table_name = :table_name
                         AND table_schema = 'public'
@@ -639,8 +618,7 @@ class DataIntegrityManager:
                 # Check for null values in not-null columns
                 for column in not_null_columns:
                     count_result = await session.execute(
-                        text(f"""
-                            SELECT COUNT(*) 
+                        text(f"""                            SELECT COUNT(*) 
                             FROM {table_name} 
                             WHERE {column} IS NULL
                         """)
@@ -668,15 +646,13 @@ class DataIntegrityManager:
             return []
     
     async def _check_foreign_key_integrity(self, table_name: str) -> List[ValidationIssue]:
-        """Check foreign key integrity"""
-        issues = []
+        """Check foreign key integrity"""        issues = []
         
         try:
             async with self._db_manager.get_session() as session:
                 # Get foreign key constraints
                 result = await session.execute(
-                    text("""
-                        SELECT 
+                    text("""                        SELECT 
                             kcu.column_name,
                             ccu.table_name AS foreign_table_name,
                             ccu.column_name AS foreign_column_name
@@ -698,8 +674,7 @@ class DataIntegrityManager:
                 # Check each foreign key
                 for fk in foreign_keys:
                     orphan_result = await session.execute(
-                        text(f"""
-                            SELECT COUNT(*) 
+                        text(f"""                            SELECT COUNT(*) 
                             FROM {table_name} t1
                             LEFT JOIN {fk.foreign_table_name} t2 
                               ON t1.{fk.column_name} = t2.{fk.foreign_column_name}
@@ -730,15 +705,13 @@ class DataIntegrityManager:
             return []
     
     async def _check_duplicate_records(self, table_name: str) -> List[ValidationIssue]:
-        """Check for duplicate records"""
-        issues = []
+        """Check for duplicate records"""        issues = []
         
         try:
             async with self._db_manager.get_session() as session:
                 # Get unique constraints
                 result = await session.execute(
-                    text("""
-                        SELECT 
+                    text("""                        SELECT 
                             tc.constraint_name,
                             string_agg(kcu.column_name, ', ' ORDER BY kcu.ordinal_position) as columns
                         FROM information_schema.table_constraints tc
@@ -758,8 +731,7 @@ class DataIntegrityManager:
                     columns = constraint.columns
                     
                     duplicate_result = await session.execute(
-                        text(f"""
-                            SELECT COUNT(*) 
+                        text(f"""                            SELECT COUNT(*) 
                             FROM (
                                 SELECT {columns}, COUNT(*) 
                                 FROM {table_name}
@@ -791,8 +763,7 @@ class DataIntegrityManager:
             return []
     
     async def _check_data_types(self, table_name: str) -> List[ValidationIssue]:
-        """Check data type consistency"""
-        issues = []
+        """Check data type consistency"""        issues = []
         
         try:
             # This is a simplified check - in reality, you'd want more sophisticated validation
@@ -802,8 +773,7 @@ class DataIntegrityManager:
                 # Check email format
                 if 'email' in [col.lower() for col in await self._get_table_columns(table_name)]:
                     result = await session.execute(
-                        text(f"""
-                            SELECT COUNT(*) 
+                        text(f"""                            SELECT COUNT(*) 
                             FROM {table_name}
                             WHERE email IS NOT NULL 
                             AND email !~ '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{{2,}}$'
@@ -832,12 +802,10 @@ class DataIntegrityManager:
             return []
     
     async def _get_table_columns(self, table_name: str) -> List[str]:
-        """Get column names for a table"""
-        try:
+        """Get column names for a table"""        try:
             async with self._db_manager.get_session() as session:
                 result = await session.execute(
-                    text("""
-                        SELECT column_name 
+                    text("""                        SELECT column_name 
                         FROM information_schema.columns 
                         WHERE table_name = :table_name
                         AND table_schema = 'public'
@@ -853,8 +821,7 @@ class DataIntegrityManager:
             return []
     
     async def _execute_validation_rule(self, table_name: str, rule: Dict[str, Any]) -> List[ValidationIssue]:
-        """Execute a custom validation rule"""
-        issues = []
+        """Execute a custom validation rule"""        issues = []
         
         try:
             if rule['rule_type'] == 'custom' and rule['rule_expression']:
@@ -883,8 +850,7 @@ class DataIntegrityManager:
             return []
     
     async def _calculate_quality_metrics(self, table_name: str):
-        """Calculate data quality metrics for a table"""
-        try:
+        """Calculate data quality metrics for a table"""        try:
             async with self._db_manager.get_session() as session:
                 # Get total record count
                 result = await session.execute(text(f"SELECT COUNT(*) FROM {table_name}"))
@@ -924,8 +890,7 @@ class DataIntegrityManager:
                 current_hour = datetime.utcnow().hour
                 
                 await session.execute(
-                    text("""
-                        INSERT INTO data_quality_metrics 
+                    text("""                        INSERT INTO data_quality_metrics 
                         (table_name, completeness_score, accuracy_score, consistency_score,
                          timeliness_score, uniqueness_score, overall_score, total_records,
                          null_count, measurement_date, measurement_hour)
@@ -963,16 +928,14 @@ class DataIntegrityManager:
             self.logger.error(f"Failed to calculate quality metrics for {table_name}: {e}")
     
     async def _store_validation_issues(self, issues: List[ValidationIssue]):
-        """Store validation issues in database"""
-        try:
+        """Store validation issues in database"""        try:
             if not issues:
                 return
             
             async with self._db_manager.get_session() as session:
                 for issue in issues:
                     await session.execute(
-                        text("""
-                            INSERT INTO validation_issues 
+                        text("""                            INSERT INTO validation_issues 
                             (table_name, column_name, severity, category, issue_description,
                              suggestion, affected_rows, detected_at, detection_method)
                             VALUES (:table_name, :column_name, :severity, :category, :issue_description,
@@ -999,8 +962,7 @@ class DataIntegrityManager:
             self.logger.error(f"Failed to store validation issues: {e}")
     
     async def _generate_integrity_report(self, report_type: str, report_data: Dict[str, Any]):
-        """Generate data integrity report"""
-        try:
+        """Generate data integrity report"""        try:
             # Calculate overall integrity score
             total_issues = report_data.get('total_issues', 0)
             critical_issues = report_data.get('critical_issues', 0)
@@ -1010,8 +972,7 @@ class DataIntegrityManager:
             
             async with self._db_manager.get_session() as session:
                 await session.execute(
-                    text("""
-                        INSERT INTO data_integrity_reports 
+                    text("""                        INSERT INTO data_integrity_reports 
                         (report_type, report_name, overall_integrity_score, total_issues,
                          critical_issues, detailed_results, period_start, period_end)
                         VALUES (:report_type, :report_name, :overall_integrity_score, :total_issues,
@@ -1035,13 +996,11 @@ class DataIntegrityManager:
             self.logger.error(f"Failed to generate integrity report: {e}")
     
     async def get_data_quality_summary(self) -> Dict[str, Any]:
-        """Get data quality summary"""
-        try:
+        """Get data quality summary"""        try:
             async with self._db_manager.get_session() as session:
                 # Get latest quality metrics
                 result = await session.execute(
-                    text("""
-                        SELECT 
+                    text("""                        SELECT 
                             AVG(completeness_score) as avg_completeness,
                             AVG(accuracy_score) as avg_accuracy,
                             AVG(consistency_score) as avg_consistency,
@@ -1058,8 +1017,7 @@ class DataIntegrityManager:
                 
                 # Get current issues summary
                 result = await session.execute(
-                    text("""
-                        SELECT 
+                    text("""                        SELECT 
                             severity,
                             COUNT(*) as count
                         FROM validation_issues 
@@ -1083,8 +1041,7 @@ class DataIntegrityManager:
             return {'error': str(e)}
     
     def _assess_overall_health(self, quality_metrics: Dict[str, Any], issues: Dict[str, int]) -> str:
-        """Assess overall data health"""
-        avg_quality = quality_metrics.get('avg_overall', 0) or 0
+        """Assess overall data health"""        avg_quality = quality_metrics.get('avg_overall', 0) or 0
         critical_issues = issues.get('critical', 0)
         error_issues = issues.get('error', 0)
         
@@ -1098,8 +1055,7 @@ class DataIntegrityManager:
             return IntegrityStatus.HEALTHY.value
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check"""
-        try:
+        """Perform health check"""        try:
             health = {
                 'status': 'healthy',
                 'timestamp': datetime.utcnow().isoformat(),
@@ -1142,8 +1098,7 @@ class DataIntegrityManager:
             }
     
     async def shutdown(self):
-        """Shutdown the data integrity manager"""
-        try:
+        """Shutdown the data integrity manager"""        try:
             self.logger.info("🚨 Shutting down Data Integrity Manager...")
             
             # Clear validation rules and issues
@@ -1161,8 +1116,7 @@ _data_integrity_manager: Optional[DataIntegrityManager] = None
 
 
 def get_data_integrity_manager(config: Optional[Dict[str, Any]] = None) -> DataIntegrityManager:
-    """Get or create data integrity manager instance"""
-    global _data_integrity_manager
+    """Get or create data integrity manager instance"""    global _data_integrity_manager
     
     if _data_integrity_manager is None:
         _data_integrity_manager = DataIntegrityManager(config)

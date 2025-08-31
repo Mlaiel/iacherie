@@ -1,5 +1,4 @@
-"""
-Compliance Tracker
+"""Compliance Tracker
 
 Enterprise-grade compliance tracking system for DMCA notices with AI-powered
 real-time monitoring, automated status updates, intelligent escalation,
@@ -26,9 +25,7 @@ ADVANCED COMPLIANCE TRACKING FEATURES:
 - Legal Deadline Management & Alerts
 - Performance Analytics & Success Rate Optimization
 - Regulatory Compliance Reporting (GDPR, CCPA, DMCA)
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import uuid
 import json
@@ -51,8 +48,7 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceStatus(Enum):
-    """Comprehensive compliance status levels"""
-    UNKNOWN = "unknown"
+    """Comprehensive compliance status levels"""    UNKNOWN = "unknown"
     PENDING_REVIEW = "pending_review"
     UNDER_INVESTIGATION = "under_investigation"
     ACKNOWLEDGED = "acknowledged"
@@ -69,8 +65,7 @@ class ComplianceStatus(Enum):
 
 
 class EscalationLevel(Enum):
-    """Escalation levels for non-compliance"""
-    NONE = "none"
+    """Escalation levels for non-compliance"""    NONE = "none"
     FIRST_REMINDER = "first_reminder"
     SECOND_REMINDER = "second_reminder"
     FINAL_WARNING = "final_warning"
@@ -81,8 +76,7 @@ class EscalationLevel(Enum):
 
 
 class MonitoringFrequency(Enum):
-    """Monitoring check frequencies"""
-    REAL_TIME = "real_time"
+    """Monitoring check frequencies"""    REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -91,8 +85,7 @@ class MonitoringFrequency(Enum):
 
 
 class PlatformType(Enum):
-    """Supported platform types for tracking"""
-    YOUTUBE = "youtube"
+    """Supported platform types for tracking"""    YOUTUBE = "youtube"
     FACEBOOK = "facebook"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -111,8 +104,7 @@ class PlatformType(Enum):
 
 @dataclass
 class ComplianceTrackingConfig:
-    """Configuration for compliance tracking"""
-    tracking_id: str
+    """Configuration for compliance tracking"""    tracking_id: str
     notice_id: str
     platform_urls: List[str]
     monitoring_frequency: MonitoringFrequency
@@ -127,8 +119,7 @@ class ComplianceTrackingConfig:
 
 @dataclass
 class ComplianceMetrics:
-    """Compliance tracking metrics"""
-    tracking_id: str
+    """Compliance tracking metrics"""    tracking_id: str
     success_rate: float
     response_time_avg: float
     escalation_rate: float
@@ -143,8 +134,7 @@ class ComplianceMetrics:
 
 @dataclass
 class TrackingAlert:
-    """Tracking alert notification"""
-    alert_id: str
+    """Tracking alert notification"""    alert_id: str
     tracking_id: str
     alert_type: str
     severity: str
@@ -159,8 +149,7 @@ class TrackingAlert:
 
 
 class ComplianceTracker:
-    """
-    Enterprise-Grade DMCA Compliance Tracking System
+    """    Enterprise-Grade DMCA Compliance Tracking System
     
     Advanced Features:
     - Real-time AI-powered platform monitoring
@@ -172,11 +161,9 @@ class ComplianceTracker:
     - Performance analytics and optimization
     - Regulatory compliance reporting
     - Integration with legal management systems
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize enterprise compliance tracker"""
-        self.config = config or {}
+        """Initialize enterprise compliance tracker"""        self.config = config or {}
         self.db = get_database()
         self.platform_integrator = PlatformIntegrator(config)
         self.notification_manager = NotificationManager(config)
@@ -220,16 +207,14 @@ class ComplianceTracker:
         }
     
     async def start_tracking(self, notice_id: str) -> Dict[str, Any]:
-        """
-        Start compliance tracking for a DMCA notice
+        """        Start compliance tracking for a DMCA notice
         
         Args:
             notice_id: ID of the DMCA notice to track
             
         Returns:
             Tracking initialization result
-        """
-        try:
+        """        try:
             self.logger.info(f"Starting compliance tracking for notice: {notice_id}")
             
             # Retrieve notice details
@@ -283,16 +268,14 @@ class ComplianceTracker:
             raise ContentProtectionError(f"Tracking initialization failed: {str(e)}")
     
     async def check_compliance_status(self, tracking_id: str) -> Dict[str, Any]:
-        """
-        Check current compliance status for a tracked notice
+        """        Check current compliance status for a tracked notice
         
         Args:
             tracking_id: ID of the tracking record
             
         Returns:
             Current compliance status and details
-        """
-        try:
+        """        try:
             # Retrieve tracking record
             tracking = await self._get_tracking_record(tracking_id)
             if not tracking:
@@ -335,8 +318,7 @@ class ComplianceTracker:
     async def process_platform_response(self, 
                                       tracking_id: str,
                                       response_data: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Process response from platform regarding DMCA notice
+        """        Process response from platform regarding DMCA notice
         
         Args:
             tracking_id: ID of the tracking record
@@ -344,8 +326,7 @@ class ComplianceTracker:
             
         Returns:
             Processing result
-        """
-        try:
+        """        try:
             self.logger.info(f"Processing platform response for tracking: {tracking_id}")
             
             # Retrieve tracking record
@@ -410,8 +391,7 @@ class ComplianceTracker:
     async def escalate_non_compliance(self, 
                                     tracking_id: str,
                                     escalation_type: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Escalate non-compliant notice to next level
+        """        Escalate non-compliant notice to next level
         
         Args:
             tracking_id: ID of the tracking record
@@ -419,8 +399,7 @@ class ComplianceTracker:
             
         Returns:
             Escalation result
-        """
-        try:
+        """        try:
             self.logger.info(f"Escalating non-compliance for tracking: {tracking_id}")
             
             # Retrieve tracking record
@@ -484,16 +463,14 @@ class ComplianceTracker:
     
     async def generate_compliance_report(self, 
                                        filters: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """
-        Generate comprehensive compliance report
+        """        Generate comprehensive compliance report
         
         Args:
             filters: Optional filters for report data
             
         Returns:
             Detailed compliance report
-        """
-        try:
+        """        try:
             self.logger.info("Generating compliance report")
             
             # Set default filters
@@ -555,16 +532,14 @@ class ComplianceTracker:
             raise ContentProtectionError(f"Report generation failed: {str(e)}")
     
     async def bulk_compliance_check(self, tracking_ids: List[str]) -> List[Dict[str, Any]]:
-        """
-        Perform bulk compliance checking for multiple notices
+        """        Perform bulk compliance checking for multiple notices
         
         Args:
             tracking_ids: List of tracking IDs to check
             
         Returns:
             List of compliance status results
-        """
-        self.logger.info(f"Starting bulk compliance check for {len(tracking_ids)} notices")
+        """        self.logger.info(f"Starting bulk compliance check for {len(tracking_ids)} notices")
         
         # Process in parallel with controlled concurrency
         semaphore = asyncio.Semaphore(10)  # Limit concurrent checks
@@ -603,8 +578,7 @@ class ComplianceTracker:
     # Private helper methods
     
     async def _get_notice_details(self, notice_id: str) -> Optional[TakedownNotice]:
-        """Retrieve notice details from database"""
-        try:
+        """Retrieve notice details from database"""        try:
             query = "SELECT * FROM dmca_notices WHERE notice_id = %s"
             result = await self.db.fetch_one(query, [notice_id])
             
@@ -629,8 +603,7 @@ class ComplianceTracker:
             return None
     
     async def _extract_platform_from_url(self, url: str) -> str:
-        """Extract platform name from URL"""
-        try:
+        """Extract platform name from URL"""        try:
             from urllib.parse import urlparse
             parsed = urlparse(url)
             return parsed.netloc.lower()
@@ -638,15 +611,12 @@ class ComplianceTracker:
             return 'unknown'
     
     async def _store_tracking_record(self, tracking: ComplianceTracking) -> None:
-        """Store tracking record in database"""
-        try:
-            query = """
-                INSERT INTO dmca_compliance_tracking (
+        """Store tracking record in database"""        try:
+            query = """                INSERT INTO dmca_compliance_tracking (
                     tracking_id, notice_id, platform, status, created_at,
                     compliance_deadline, escalation_level, metadata
                 ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-            """
-            
+            """            
             await self.db.execute(query, [
                 tracking.tracking_id,
                 tracking.notice_id,
@@ -663,13 +633,11 @@ class ComplianceTracker:
             raise
     
     async def _schedule_monitoring_check(self, tracking_id: str, delay: timedelta) -> None:
-        """Schedule monitoring check for tracking record"""
-        # In a real implementation, this would use a task queue like Celery
+        """Schedule monitoring check for tracking record"""        # In a real implementation, this would use a task queue like Celery
         self.logger.info(f"Scheduled monitoring check for {tracking_id} in {delay}")
     
     async def _check_content_accessibility(self, tracking: ComplianceTracking) -> bool:
-        """Check if infringing content is still accessible"""
-        try:
+        """Check if infringing content is still accessible"""        try:
             # Simulate accessibility check (would use actual HTTP requests)
             # This would check if the content is still available at the infringing URL
             return False  # Assume content was removed for simulation
@@ -680,8 +648,7 @@ class ComplianceTracker:
     async def _determine_compliance_status(self, 
                                          tracking: ComplianceTracking,
                                          content_accessible: bool) -> ComplianceStatus:
-        """Determine current compliance status"""
-        if not content_accessible:
+        """Determine current compliance status"""        if not content_accessible:
             return ComplianceStatus.COMPLIED
         
         # Check if deadline has passed
@@ -692,8 +659,7 @@ class ComplianceTracker:
         return tracking.status
     
     async def _get_tracking_record(self, tracking_id: str) -> Optional[ComplianceTracking]:
-        """Retrieve tracking record from database"""
-        try:
+        """Retrieve tracking record from database"""        try:
             query = "SELECT * FROM dmca_compliance_tracking WHERE tracking_id = %s"
             result = await self.db.fetch_one(query, [tracking_id])
             
@@ -716,14 +682,11 @@ class ComplianceTracker:
             return None
     
     async def _update_tracking_status(self, tracking_id: str, status: ComplianceStatus) -> None:
-        """Update tracking status in database"""
-        try:
-            query = """
-                UPDATE dmca_compliance_tracking 
+        """Update tracking status in database"""        try:
+            query = """                UPDATE dmca_compliance_tracking 
                 SET status = %s, updated_at = %s 
                 WHERE tracking_id = %s
-            """
-            await self.db.execute(query, [status.value, datetime.now(timezone.utc), tracking_id])
+            """            await self.db.execute(query, [status.value, datetime.now(timezone.utc), tracking_id])
             
         except Exception as e:
             self.logger.error(f"Failed to update tracking status: {str(e)}")
@@ -733,8 +696,7 @@ class ComplianceTracker:
                                        tracking: ComplianceTracking,
                                        escalation_level: EscalationLevel,
                                        escalation_type: Optional[str]) -> Dict[str, Any]:
-        """Perform specific escalation action"""
-        if escalation_level == EscalationLevel.FIRST_REMINDER:
+        """Perform specific escalation action"""        if escalation_level == EscalationLevel.FIRST_REMINDER:
             return await self._send_reminder_notice(tracking)
         elif escalation_level == EscalationLevel.SECOND_REMINDER:
             return await self._send_final_warning(tracking)
@@ -748,8 +710,7 @@ class ComplianceTracker:
             return {'action': 'no_action', 'result': 'escalation_not_needed'}
     
     async def _send_reminder_notice(self, tracking: ComplianceTracking) -> Dict[str, Any]:
-        """Send reminder notice to platform"""
-        # Simulate sending reminder
+        """Send reminder notice to platform"""        # Simulate sending reminder
         return {
             'action': 'reminder_sent',
             'method': 'email',
@@ -758,8 +719,7 @@ class ComplianceTracker:
         }
     
     async def _send_final_warning(self, tracking: ComplianceTracking) -> Dict[str, Any]:
-        """Send final warning notice"""
-        # Simulate sending final warning
+        """Send final warning notice"""        # Simulate sending final warning
         return {
             'action': 'final_warning_sent',
             'method': 'email',
@@ -769,8 +729,7 @@ class ComplianceTracker:
         }
     
     async def _send_legal_warning(self, tracking: ComplianceTracking) -> Dict[str, Any]:
-        """Send legal warning notice"""
-        # Simulate sending legal warning
+        """Send legal warning notice"""        # Simulate sending legal warning
         return {
             'action': 'legal_warning_sent',
             'method': 'registered_mail',
@@ -780,8 +739,7 @@ class ComplianceTracker:
         }
     
     async def _initiate_legal_action(self, tracking: ComplianceTracking) -> Dict[str, Any]:
-        """Initiate legal action proceedings"""
-        # Simulate legal action initiation
+        """Initiate legal action proceedings"""        # Simulate legal action initiation
         return {
             'action': 'legal_action_initiated',
             'case_number': f"CASE_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
@@ -791,8 +749,7 @@ class ComplianceTracker:
         }
     
     async def _report_to_platform_abuse(self, tracking: ComplianceTracking) -> Dict[str, Any]:
-        """Report to platform abuse team"""
-        # Simulate platform abuse report
+        """Report to platform abuse team"""        # Simulate platform abuse report
         return {
             'action': 'platform_abuse_report',
             'report_id': str(uuid.uuid4()),
@@ -801,16 +758,13 @@ class ComplianceTracker:
         }
     
     async def _query_compliance_data(self, filters: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Query compliance data from database"""
-        try:
-            query = """
-                SELECT t.*, n.copyright_owner, n.platform as notice_platform
+        """Query compliance data from database"""        try:
+            query = """                SELECT t.*, n.copyright_owner, n.platform as notice_platform
                 FROM dmca_compliance_tracking t
                 JOIN dmca_notices n ON t.notice_id = n.notice_id
                 WHERE t.created_at >= %s AND t.created_at <= %s
                 ORDER BY t.created_at DESC
-            """
-            
+            """            
             results = await self.db.fetch_all(query, [filters['start_date'], filters['end_date']])
             return [dict(result) for result in results]
             
@@ -819,8 +773,7 @@ class ComplianceTracker:
             return []
     
     async def _calculate_compliance_metrics(self, data: List[Dict[str, Any]]) -> ComplianceMetrics:
-        """Calculate compliance metrics from data"""
-        if not data:
+        """Calculate compliance metrics from data"""        if not data:
             return ComplianceMetrics(
                 total_notices=0, complied_notices=0, pending_notices=0,
                 overdue_notices=0, disputed_notices=0, escalated_notices=0,

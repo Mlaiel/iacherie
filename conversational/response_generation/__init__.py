@@ -1,5 +1,4 @@
-"""
-Response Generation Module - IA Influencer Agent
+"""Response Generation Module - IA Influencer Agent
 
 Enterprise-grade response generation system for multi-format content creators
 with advanced AI-powered response synthesis, contextual intelligence, and 
@@ -23,9 +22,7 @@ Features:
 - Cross-platform strategy optimization
 - Global market intelligence and expansion
 - Real-time performance analytics
-"""
-
-# Core Response Generation
+"""# Core Response Generation
 from .response_engine import (
     ResponseEngine,
     ResponseOrchestrator,
@@ -234,11 +231,9 @@ from .config import (
 
 # Main orchestrator class
 class ResponseGenerationSystem:
-    """
-    Main orchestrator for the complete response generation system
+    """    Main orchestrator for the complete response generation system
     Coordinates all subsystems and provides unified interface
-    """
-    
+    """    
     def __init__(self, config: ResponseGenerationConfig):
         self.config = config
         self.response_engine = ResponseEngine(config.model_config)
@@ -262,10 +257,8 @@ class ResponseGenerationSystem:
         include_collaboration_suggestions: bool = True,
         include_revenue_optimization: bool = True
     ) -> GeneratedResponse:
-        """
-        Generate a comprehensive response using all available intelligence systems
-        """
-        # Core response generation
+        """        Generate a comprehensive response using all available intelligence systems
+        """        # Core response generation
         base_response = await self.response_engine.generate_response(request)
         
         # Enhance with business intelligence

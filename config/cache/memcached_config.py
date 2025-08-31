@@ -1,5 +1,4 @@
-"""
-Memcached Configuration for IA-Influencer Agent Platform
+"""Memcached Configuration for IA-Influencer Agent Platform
 ========================================================
 
 Enterprise-grade Memcached configuration and client management
@@ -15,9 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-from typing import List, Dict, Optional, Any, Tuple
+"""from typing import List, Dict, Optional, Any, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 import hashlib
@@ -26,8 +23,7 @@ from pydantic import BaseModel, validator
 
 
 class MemcachedHashingAlgorithm(str, Enum):
-    """Memcached hashing algorithms for consistent hashing"""
-    CRC32 = "crc32"
+    """Memcached hashing algorithms for consistent hashing"""    CRC32 = "crc32"
     FNV1_32 = "fnv1_32"
     FNV1A_32 = "fnv1a_32"
     FNV1_64 = "fnv1_64"
@@ -36,8 +32,7 @@ class MemcachedHashingAlgorithm(str, Enum):
 
 
 class MemcachedBehavior(str, Enum):
-    """Memcached client behaviors"""
-    BINARY_PROTOCOL = "binary_protocol"
+    """Memcached client behaviors"""    BINARY_PROTOCOL = "binary_protocol"
     TCP_NODELAY = "tcp_nodelay"
     KETAMA_WEIGHTED = "ketama_weighted"
     REMOVE_FAILED_SERVERS = "remove_failed_servers"
@@ -47,8 +42,7 @@ class MemcachedBehavior(str, Enum):
 
 @dataclass
 class MemcachedServerConfig:
-    """Memcached server configuration"""
-    host: str = "localhost"
+    """Memcached server configuration"""    host: str = "localhost"
     port: int = 11211
     weight: int = 1
     
@@ -58,8 +52,7 @@ class MemcachedServerConfig:
 
 @dataclass
 class MemcachedConnectionConfig:
-    """Memcached connection configuration"""
-    socket_timeout: float = 3.0
+    """Memcached connection configuration"""    socket_timeout: float = 3.0
     connect_timeout: float = 3.0
     receive_timeout: float = 3.0
     send_timeout: float = 3.0
@@ -72,8 +65,7 @@ class MemcachedConnectionConfig:
 
 @dataclass
 class MemcachedFailureHandling:
-    """Memcached failure handling configuration"""
-    retry_timeout: int = 30  # seconds
+    """Memcached failure handling configuration"""    retry_timeout: int = 30  # seconds
     dead_timeout: int = 30  # seconds
     failure_limit: int = 5
     remove_failed_servers: bool = True
@@ -82,10 +74,8 @@ class MemcachedFailureHandling:
 
 
 class MemcachedConfig(BaseModel):
-    """
-    Comprehensive Memcached configuration for enterprise deployment
-    """
-    
+    """    Comprehensive Memcached configuration for enterprise deployment
+    """    
     # Server configuration
     servers: List[MemcachedServerConfig] = field(
         default_factory=lambda: [MemcachedServerConfig()]
@@ -152,16 +142,13 @@ class MemcachedConfig(BaseModel):
         return v
     
     def get_server_list(self) -> List[str]:
-        """Get list of server addresses"""
-        return [str(server) for server in self.servers]
+        """Get list of server addresses"""        return [str(server) for server in self.servers]
     
     def get_weighted_servers(self) -> List[Tuple[str, int]]:
-        """Get servers with weights for consistent hashing"""
-        return [(str(server), server.weight) for server in self.servers]
+        """Get servers with weights for consistent hashing"""        return [(str(server), server.weight) for server in self.servers]
     
     def get_client_config(self) -> Dict[str, Any]:
-        """Get configuration for memcached client"""
-        config = {
+        """Get configuration for memcached client"""        config = {
             'servers': self.get_server_list(),
             'binary': self.connection.binary_protocol,
             'behaviors': self._get_client_behaviors(),
@@ -182,8 +169,7 @@ class MemcachedConfig(BaseModel):
         return config
     
     def _get_client_behaviors(self) -> Dict[str, Any]:
-        """Get memcached client behaviors"""
-        behaviors = {
+        """Get memcached client behaviors"""        behaviors = {
             'ketama_weighted': self.ketama_weighted,
             'remove_failed_servers': self.failure_handling.remove_failed_servers,
             'retry_timeout': self.failure_handling.retry_timeout,
@@ -200,14 +186,12 @@ class MemcachedConfig(BaseModel):
         return behaviors
     
     def generate_tenant_key(self, tenant_id: str, key: str) -> str:
-        """Generate tenant-isolated cache key"""
-        if self.tenant_isolation:
+        """Generate tenant-isolated cache key"""        if self.tenant_isolation:
             return f"{self.key_prefix}{tenant_id}:{key}"
         return f"{self.key_prefix}{key}"
     
     def hash_key(self, key: str) -> str:
-        """Hash key using specified algorithm"""
-        if self.hashing_algorithm == MemcachedHashingAlgorithm.MD5:
+        """Hash key using specified algorithm"""        if self.hashing_algorithm == MemcachedHashingAlgorithm.MD5:
             return hashlib.md5(key.encode()).hexdigest()
         elif self.hashing_algorithm == MemcachedHashingAlgorithm.CRC32:
             import zlib
@@ -217,8 +201,7 @@ class MemcachedConfig(BaseModel):
             return hashlib.md5(key.encode()).hexdigest()
     
     def get_server_stats_config(self) -> Dict[str, Any]:
-        """Get configuration for server statistics collection"""
-        return {
+        """Get configuration for server statistics collection"""        return {
             'collection_interval': self.stats_collection_interval,
             'track_keys': self.track_key_statistics,
             'enable_metrics': self.enable_metrics,
@@ -226,8 +209,7 @@ class MemcachedConfig(BaseModel):
         }
     
     def validate_connection(self) -> bool:
-        """Validate connection to all configured servers"""
-        try:
+        """Validate connection to all configured servers"""        try:
             import pymemcache
             from pymemcache.client.base import Client
             
@@ -249,8 +231,7 @@ class MemcachedConfig(BaseModel):
             return False
     
     def get_connection_info(self) -> Dict[str, Any]:
-        """Get connection information for monitoring"""
-        return {
+        """Get connection information for monitoring"""        return {
             "servers": [
                 {
                     "host": server.host,
@@ -270,10 +251,8 @@ class MemcachedConfig(BaseModel):
 
 
 class MemcachedPoolManager:
-    """
-    Connection pool manager for Memcached clients
-    """
-    
+    """    Connection pool manager for Memcached clients
+    """    
     def __init__(self, config: MemcachedConfig):
         self.config = config
         self._pool: List[Any] = []
@@ -281,8 +260,7 @@ class MemcachedPoolManager:
         self._init_pool()
     
     def _init_pool(self):
-        """Initialize connection pool"""
-        try:
+        """Initialize connection pool"""        try:
             import threading
             import pymemcache
             from pymemcache.client.hash import HashClient
@@ -314,8 +292,7 @@ class MemcachedPoolManager:
             self._pool = []
     
     def get_client(self):
-        """Get client from pool"""
-        if not self._pool:
+        """Get client from pool"""        if not self._pool:
             return None
         
         with self._pool_lock:
@@ -325,14 +302,12 @@ class MemcachedPoolManager:
         return None
     
     def return_client(self, client):
-        """Return client to pool"""
-        if client and len(self._pool) < self.config.pool_size:
+        """Return client to pool"""        if client and len(self._pool) < self.config.pool_size:
             with self._pool_lock:
                 self._pool.append(client)
     
     def close_all(self):
-        """Close all pooled connections"""
-        with self._pool_lock:
+        """Close all pooled connections"""        with self._pool_lock:
             for client in self._pool:
                 try:
                     client.close()

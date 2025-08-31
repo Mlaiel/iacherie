@@ -1,5 +1,4 @@
-"""
-HAProxy Load Balancer Manager
+"""HAProxy Load Balancer Manager
 
 Enterprise-grade HAProxy configuration and management for the IA Influencer
 Agent platform, providing high-performance Layer 4/7 load balancing,
@@ -12,9 +11,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
-"""
-
-import os
+"""import os
 import json
 import logging
 import subprocess
@@ -29,8 +26,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class HAProxyServer:
-    """HAProxy server configuration"""
-    name: str
+    """HAProxy server configuration"""    name: str
     address: str
     port: int
     weight: int = 1
@@ -45,8 +41,7 @@ class HAProxyServer:
 
 @dataclass
 class HAProxyBackend:
-    """HAProxy backend configuration"""
-    name: str
+    """HAProxy backend configuration"""    name: str
     balance_algorithm: str = "roundrobin"
     mode: str = "http"
     servers: List[HAProxyServer] = None
@@ -59,8 +54,7 @@ class HAProxyBackend:
 
 @dataclass
 class HAProxyFrontend:
-    """HAProxy frontend configuration"""
-    name: str
+    """HAProxy frontend configuration"""    name: str
     bind_address: str
     bind_port: int
     mode: str = "http"
@@ -72,8 +66,7 @@ class HAProxyFrontend:
 
 
 class HAProxyConfigGenerator:
-    """Generate HAProxy configurations"""
-    
+    """Generate HAProxy configurations"""    
     def __init__(self):
         self.global_config = {
             'daemon': True,
@@ -105,8 +98,7 @@ class HAProxyConfigGenerator:
         }
     
     def generate_global_section(self) -> str:
-        """Generate global configuration section"""
-        lines = ["global"]
+        """Generate global configuration section"""        lines = ["global"]
         
         for key, value in self.global_config.items():
             if isinstance(value, bool):
@@ -118,8 +110,7 @@ class HAProxyConfigGenerator:
         return "\n".join(lines)
     
     def generate_defaults_section(self) -> str:
-        """Generate defaults configuration section"""
-        lines = ["defaults"]
+        """Generate defaults configuration section"""        lines = ["defaults"]
         
         for key, value in self.defaults_config.items():
             if isinstance(value, bool):
@@ -131,8 +122,7 @@ class HAProxyConfigGenerator:
         return "\n".join(lines)
     
     def generate_frontend_section(self, frontend: HAProxyFrontend) -> str:
-        """Generate frontend configuration section"""
-        lines = [f"frontend {frontend.name}"]
+        """Generate frontend configuration section"""        lines = [f"frontend {frontend.name}"]
         
         # Bind configuration
         bind_line = f"    bind {frontend.bind_address}:{frontend.bind_port}"
@@ -174,8 +164,7 @@ class HAProxyConfigGenerator:
         return "\n".join(lines)
     
     def generate_backend_section(self, backend: HAProxyBackend) -> str:
-        """Generate backend configuration section"""
-        lines = [f"backend {backend.name}"]
+        """Generate backend configuration section"""        lines = [f"backend {backend.name}"]
         
         # Mode and balance
         lines.append(f"    mode {backend.mode}")
@@ -234,8 +223,7 @@ class HAProxyConfigGenerator:
                              bind_port: int = 8404,
                              username: str = "admin",
                              password: str = "admin") -> str:
-        """Generate statistics section"""
-        lines = [
+        """Generate statistics section"""        lines = [
             "listen stats",
             f"    bind {bind_address}:{bind_port}",
             "    mode http",
@@ -252,8 +240,7 @@ class HAProxyConfigGenerator:
 
 
 class HAProxyManager:
-    """Enterprise HAProxy Load Balancer Manager"""
-    
+    """Enterprise HAProxy Load Balancer Manager"""    
     def __init__(self, config_file: str = "/etc/haproxy/haproxy.cfg"):
         self.config_file = Path(config_file)
         self.config_dir = self.config_file.parent
@@ -265,8 +252,7 @@ class HAProxyManager:
         self.config_dir.mkdir(parents=True, exist_ok=True)
     
     def add_frontend(self, frontend: HAProxyFrontend) -> bool:
-        """Add frontend configuration"""
-        try:
+        """Add frontend configuration"""        try:
             # Check if frontend already exists
             existing = next((f for f in self.frontends if f.name == frontend.name), None)
             if existing:
@@ -281,8 +267,7 @@ class HAProxyManager:
             return False
     
     def add_backend(self, backend: HAProxyBackend) -> bool:
-        """Add backend configuration"""
-        try:
+        """Add backend configuration"""        try:
             # Check if backend already exists
             existing = next((b for b in self.backends if b.name == backend.name), None)
             if existing:
@@ -297,8 +282,7 @@ class HAProxyManager:
             return False
     
     def configure_platform_services(self) -> bool:
-        """Configure HAProxy for platform services"""
-        try:
+        """Configure HAProxy for platform services"""        try:
             # Configure backends for different services
             backends = [
                 HAProxyBackend(
@@ -411,8 +395,7 @@ class HAProxyManager:
             return False
     
     def generate_configuration(self) -> str:
-        """Generate complete HAProxy configuration"""
-        try:
+        """Generate complete HAProxy configuration"""        try:
             config_sections = []
             
             # Global section
@@ -444,8 +427,7 @@ class HAProxyManager:
             return ""
     
     def write_configuration(self) -> bool:
-        """Write configuration to file"""
-        try:
+        """Write configuration to file"""        try:
             config_content = self.generate_configuration()
             if not config_content:
                 logger.error("Failed to generate configuration content")
@@ -469,8 +451,7 @@ class HAProxyManager:
             return False
     
     def test_configuration(self) -> bool:
-        """Test HAProxy configuration validity"""
-        try:
+        """Test HAProxy configuration validity"""        try:
             result = subprocess.run(
                 ['haproxy', '-c', '-f', str(self.config_file)],
                 capture_output=True,
@@ -489,8 +470,7 @@ class HAProxyManager:
             return False
     
     def reload_configuration(self) -> bool:
-        """Reload HAProxy configuration"""
-        try:
+        """Reload HAProxy configuration"""        try:
             if not self.test_configuration():
                 logger.error("Configuration test failed, not reloading")
                 return False
@@ -518,8 +498,7 @@ class HAProxyManager:
             return False
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get HAProxy statistics via stats socket"""
-        try:
+        """Get HAProxy statistics via stats socket"""        try:
             # Connect to stats socket
             sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
             sock.connect('/run/haproxy/admin.sock')
@@ -576,8 +555,7 @@ class HAProxyManager:
             return {'error': str(e), 'timestamp': datetime.now().isoformat()}
     
     def get_status(self) -> Dict[str, Any]:
-        """Get HAProxy status and health"""
-        try:
+        """Get HAProxy status and health"""        try:
             # Check if HAProxy is running
             ps_result = subprocess.run(['pgrep', 'haproxy'], capture_output=True, text=True)
             is_running = ps_result.returncode == 0

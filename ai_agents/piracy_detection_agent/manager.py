@@ -1,6 +1,4 @@
-"""Piracy Detection Manager - Deep Web Content Piracy Detection"""
-
-import asyncio
+"""Piracy Detection Manager - Deep Web Content Piracy Detection"""import asyncio
 import logging
 from datetime import datetime, timezone
 from typing import Dict, List, Optional, Any, Set
@@ -35,8 +33,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class PiracyDetectionConfig:
-    """Configuration for piracy detection operations"""
-    enable_deep_web_scanning: bool = True
+    """Configuration for piracy detection operations"""    enable_deep_web_scanning: bool = True
     enable_torrent_monitoring: bool = True  
     enable_streaming_detection: bool = True
     enable_social_network_monitoring: bool = True
@@ -49,8 +46,7 @@ class PiracyDetectionConfig:
     })
 
 class PiracyDetectionManager(BaseAgent):
-    """
-    Enterprise Piracy Detection Manager
+    """    Enterprise Piracy Detection Manager
     
     Provides comprehensive piracy detection with:
     - Deep web and dark web monitoring
@@ -59,8 +55,7 @@ class PiracyDetectionManager(BaseAgent):
     - Social network intelligence
     - Digital forensic evidence collection
     - Revenue impact analysis
-    """
-    
+    """    
     def __init__(self, agent_id: str = "piracy_detection_manager"):
         super().__init__(
             agent_id=agent_id,
@@ -84,8 +79,7 @@ class PiracyDetectionManager(BaseAgent):
         self.threat_intelligence: Dict[str, Any] = {}
         
     async def _load_models_and_resources(self):
-        """Load AI models and initialize resources"""
-        try:
+        """Load AI models and initialize resources"""        try:
             await self.piracy_detector.initialize()
             await self.ai_classifier.initialize()
             await self.revenue_analyzer.initialize()
@@ -97,12 +91,10 @@ class PiracyDetectionManager(BaseAgent):
             raise
     
     def get_required_config_keys(self) -> List[str]:
-        """Required configuration keys"""
-        return ['monitored_networks', 'scan_interval']
+        """Required configuration keys"""        return ['monitored_networks', 'scan_interval']
     
     async def process(self, request: AgentRequest) -> AgentResponse:
-        """Main request processing logic"""
-        action = request.action.lower()
+        """Main request processing logic"""        action = request.action.lower()
         
         try:
             if action == "start_monitoring":
@@ -137,8 +129,7 @@ class PiracyDetectionManager(BaseAgent):
             )
     
     async def _start_monitoring(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Start comprehensive piracy monitoring for content"""
-        content_id = data.get('content_id')
+        """Start comprehensive piracy monitoring for content"""        content_id = data.get('content_id')
         content_metadata = data.get('content_metadata', {})
         networks = set(data.get('networks', self.config.monitored_networks))
         
@@ -178,8 +169,7 @@ class PiracyDetectionManager(BaseAgent):
         networks: Set[str],
         content_metadata: Dict[str, Any]
     ):
-        """Continuous monitoring across all networks"""
-        try:
+        """Continuous monitoring across all networks"""        try:
             while content_id in self.monitored_content:
                 # Perform comprehensive scan
                 scan_results = await self._perform_comprehensive_scan(
@@ -208,8 +198,7 @@ class PiracyDetectionManager(BaseAgent):
         networks: Set[str],
         content_metadata: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Perform comprehensive scan across all networks"""
-        scan_tasks = []
+        """Perform comprehensive scan across all networks"""        scan_tasks = []
         
         # Deep web scanning
         if 'tor' in networks or 'i2p' in networks or 'freenet' in networks:
@@ -243,13 +232,11 @@ class PiracyDetectionManager(BaseAgent):
         return all_results
     
     def _batch_tasks(self, tasks: List, batch_size: int):
-        """Split tasks into batches for controlled concurrency"""
-        for i in range(0, len(tasks), batch_size):
+        """Split tasks into batches for controlled concurrency"""        for i in range(0, len(tasks), batch_size):
             yield tasks[i:i + batch_size]
     
     async def _scan_deep_web_networks(self, content_id: str, metadata: Dict) -> List[Dict]:
-        """Scan deep web networks (Tor, I2P, Freenet)"""
-        try:
+        """Scan deep web networks (Tor, I2P, Freenet)"""        try:
             # Use existing piracy detector
             detection_results = await self.piracy_detector.detect_piracy(content_id)
             
@@ -273,8 +260,7 @@ class PiracyDetectionManager(BaseAgent):
             return []
     
     async def _scan_torrent_networks(self, content_id: str, metadata: Dict) -> List[Dict]:
-        """Scan torrent and P2P networks"""
-        try:
+        """Scan torrent and P2P networks"""        try:
             # Simulate torrent scanning
             await asyncio.sleep(0.5)  # Simulate network scan
             
@@ -301,8 +287,7 @@ class PiracyDetectionManager(BaseAgent):
             return []
     
     async def _scan_streaming_sites(self, content_id: str, metadata: Dict) -> List[Dict]:
-        """Scan illegal streaming sites"""
-        try:
+        """Scan illegal streaming sites"""        try:
             await asyncio.sleep(0.3)  # Simulate streaming site scan
             
             streaming_results = []
@@ -326,8 +311,7 @@ class PiracyDetectionManager(BaseAgent):
             return []
     
     async def _scan_social_networks(self, content_id: str, metadata: Dict) -> List[Dict]:
-        """Scan social networks for unauthorized sharing"""
-        try:
+        """Scan social networks for unauthorized sharing"""        try:
             # Use existing social network intelligence
             insights = await self.social_intelligence.analyze_social_networks(content_id)
             
@@ -351,8 +335,7 @@ class PiracyDetectionManager(BaseAgent):
             return []
     
     def _identify_network_type(self, url: str) -> str:
-        """Identify network type from URL"""
-        if '.onion' in url:
+        """Identify network type from URL"""        if '.onion' in url:
             return 'tor'
         elif '.i2p' in url:
             return 'i2p'
@@ -362,8 +345,7 @@ class PiracyDetectionManager(BaseAgent):
             return 'unknown'
     
     async def _process_piracy_results(self, content_id: str, results: List[Dict]):
-        """Process and analyze piracy detection results"""
-        if not results:
+        """Process and analyze piracy detection results"""        if not results:
             return
         
         # Classify violations using AI
@@ -408,8 +390,7 @@ class PiracyDetectionManager(BaseAgent):
         logger.info(f"Processed {len(results)} piracy incidents for content {content_id}")
     
     def _calculate_threat_level(self, results: List[Dict], revenue_impact: float) -> ThreatLevel:
-        """Calculate overall threat level"""
-        if not results:
+        """Calculate overall threat level"""        if not results:
             return ThreatLevel.LOW
         
         max_similarity = max(r.get('similarity_score', 0) for r in results)
@@ -428,8 +409,7 @@ class PiracyDetectionManager(BaseAgent):
             return ThreatLevel.LOW
     
     async def _scan_deep_web(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Manual deep web scan"""
-        content_id = data.get('content_id')
+        """Manual deep web scan"""        content_id = data.get('content_id')
         networks = set(data.get('networks', ['tor', 'i2p', 'freenet']))
         
         if content_id not in self.monitored_content:
@@ -449,8 +429,7 @@ class PiracyDetectionManager(BaseAgent):
         }
     
     async def _detect_torrents(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Manual torrent detection"""
-        content_id = data.get('content_id')
+        """Manual torrent detection"""        content_id = data.get('content_id')
         
         if content_id not in self.monitored_content:
             raise ValueError(f"Content {content_id} is not being monitored")
@@ -468,8 +447,7 @@ class PiracyDetectionManager(BaseAgent):
         }
     
     async def _analyze_streaming_sites(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Manual streaming site analysis"""
-        content_id = data.get('content_id')
+        """Manual streaming site analysis"""        content_id = data.get('content_id')
         
         if content_id not in self.monitored_content:
             raise ValueError(f"Content {content_id} is not being monitored")
@@ -487,8 +465,7 @@ class PiracyDetectionManager(BaseAgent):
         }
     
     async def _get_piracy_report(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Get comprehensive piracy report"""
-        content_id = data.get('content_id')
+        """Get comprehensive piracy report"""        content_id = data.get('content_id')
         limit = data.get('limit', 100)
         
         # Filter incidents by content_id if specified
@@ -521,8 +498,7 @@ class PiracyDetectionManager(BaseAgent):
         }
     
     async def _collect_evidence(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Collect forensic evidence for piracy incident"""
-        incident_id = data.get('incident_id')
+        """Collect forensic evidence for piracy incident"""        incident_id = data.get('incident_id')
         
         if not incident_id:
             raise ValueError("incident_id is required")
@@ -552,8 +528,7 @@ class PiracyDetectionManager(BaseAgent):
         }
     
     async def _stop_monitoring(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Stop piracy monitoring for content"""
-        content_id = data.get('content_id')
+        """Stop piracy monitoring for content"""        content_id = data.get('content_id')
         
         if content_id not in self.monitored_content:
             raise ValueError(f"Content {content_id} is not being monitored")

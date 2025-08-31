@@ -1,5 +1,4 @@
-"""
-Universal Web Crawler - Crawler Web Générique
+"""Universal Web Crawler - Crawler Web Générique
 =============================================
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
@@ -13,9 +12,7 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
 
 Universal web crawler for comprehensive website monitoring and content extraction.
 Provides advanced crawling capabilities for any website with intelligent content detection.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Union
 from datetime import datetime, timedelta
@@ -30,8 +27,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class WebPage:
-    """Web page data structure."""
-    url: str
+    """Web page data structure."""    url: str
     title: str
     content: str
     meta_description: str = ""
@@ -55,8 +51,7 @@ class WebPage:
 
 @dataclass
 class CrawlJob:
-    """Crawl job definition."""
-    job_id: str
+    """Crawl job definition."""    job_id: str
     start_urls: List[str]
     allowed_domains: List[str] = field(default_factory=list)
     blocked_domains: List[str] = field(default_factory=list)
@@ -79,8 +74,7 @@ class CrawlJob:
 
 @dataclass
 class CrawlResult:
-    """Crawl operation result."""
-    job_id: str
+    """Crawl operation result."""    job_id: str
     pages_crawled: int = 0
     pages_failed: int = 0
     total_size_bytes: int = 0
@@ -94,8 +88,7 @@ class CrawlResult:
 
 @dataclass
 class WebViolation:
-    """Web content violation detection result."""
-    violation_id: str
+    """Web content violation detection result."""    violation_id: str
     url: str
     violation_type: str
     confidence_score: float
@@ -109,8 +102,7 @@ class WebViolation:
 
 @dataclass
 class CrawlerMetrics:
-    """Universal crawler metrics."""
-    total_jobs: int = 0
+    """Universal crawler metrics."""    total_jobs: int = 0
     active_jobs: int = 0
     completed_jobs: int = 0
     failed_jobs: int = 0
@@ -122,8 +114,7 @@ class CrawlerMetrics:
 
 
 class UniversalWebCrawler:
-    """
-    Universal web crawler for comprehensive website monitoring.
+    """    Universal web crawler for comprehensive website monitoring.
     
     Features:
     - Multi-domain crawling with depth control
@@ -135,11 +126,9 @@ class UniversalWebCrawler:
     - Content violation detection
     - Real-time monitoring
     - Scalable architecture
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize universal web crawler."""
-        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize universal web crawler."""        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
         self.config = config or {}
@@ -210,8 +199,7 @@ class UniversalWebCrawler:
         self._logger.info("Universal Web Crawler initialized")
     
     async def initialize(self) -> None:
-        """Initialize the universal web crawler."""
-        try:
+        """Initialize the universal web crawler."""        try:
             self._logger.info("Initializing universal web crawler...")
             
             # Initialize HTTP session
@@ -231,8 +219,7 @@ class UniversalWebCrawler:
             raise
     
     async def _initialize_session(self) -> None:
-        """Initialize HTTP session."""
-        try:
+        """Initialize HTTP session."""        try:
             # This would initialize aiohttp session with proper configuration
             # For now, implement placeholder
             self._session = "placeholder_session"
@@ -243,8 +230,7 @@ class UniversalWebCrawler:
             raise
     
     async def _initialize_browser(self) -> None:
-        """Initialize browser for JavaScript rendering."""
-        try:
+        """Initialize browser for JavaScript rendering."""        try:
             # This would initialize Selenium or Playwright browser
             # For now, implement placeholder
             self._browser = "placeholder_browser"
@@ -255,8 +241,7 @@ class UniversalWebCrawler:
             raise
     
     async def _setup_violation_detection(self) -> None:
-        """Setup violation detection systems."""
-        try:
+        """Setup violation detection systems."""        try:
             # This would setup actual ML models for violation detection
             # For now, implement placeholder
             self._logger.debug("Violation detection setup complete")
@@ -266,8 +251,7 @@ class UniversalWebCrawler:
             raise
     
     async def start_crawling(self) -> None:
-        """Start universal web crawling operations."""
-        try:
+        """Start universal web crawling operations."""        try:
             if self._crawling_active:
                 self._logger.warning("Universal web crawling is already active")
                 return
@@ -287,8 +271,7 @@ class UniversalWebCrawler:
             raise
     
     async def stop_crawling(self) -> None:
-        """Stop universal web crawling operations."""
-        try:
+        """Stop universal web crawling operations."""        try:
             if not self._crawling_active:
                 self._logger.warning("Universal web crawling is not active")
                 return
@@ -312,8 +295,7 @@ class UniversalWebCrawler:
         start_urls: List[str],
         job_config: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Create a new crawl job."""
-        try:
+        """Create a new crawl job."""        try:
             job_id = f"job_{datetime.now().timestamp()}_{hash(str(start_urls)) % 10000}"
             
             config = job_config or {}
@@ -354,8 +336,7 @@ class UniversalWebCrawler:
             raise
     
     async def start_crawl_job(self, job_id: str) -> bool:
-        """Start a specific crawl job."""
-        try:
+        """Start a specific crawl job."""        try:
             if job_id not in self.crawl_jobs:
                 self._logger.error(f"Crawl job not found: {job_id}")
                 return False
@@ -384,8 +365,7 @@ class UniversalWebCrawler:
             return False
     
     async def stop_crawl_job(self, job_id: str) -> bool:
-        """Stop a specific crawl job."""
-        try:
+        """Stop a specific crawl job."""        try:
             if job_id not in self.active_jobs:
                 self._logger.warning(f"Crawl job not active: {job_id}")
                 return True
@@ -414,8 +394,7 @@ class UniversalWebCrawler:
         url: str,
         job_config: Optional[Dict[str, Any]] = None
     ) -> Optional[WebPage]:
-        """Crawl a single URL."""
-        try:
+        """Crawl a single URL."""        try:
             self._logger.debug(f"Crawling single URL: {url}")
             
             # Create temporary job for single URL
@@ -445,8 +424,7 @@ class UniversalWebCrawler:
             return None
     
     async def _process_crawl_jobs(self) -> None:
-        """Process crawl jobs from the queue."""
-        while self._crawling_active:
+        """Process crawl jobs from the queue."""        while self._crawling_active:
             try:
                 # Limit concurrent jobs
                 if len(self.active_jobs) >= self.max_concurrent_jobs:
@@ -467,8 +445,7 @@ class UniversalWebCrawler:
                 await asyncio.sleep(5)
     
     async def _execute_crawl_job(self, job_id: str) -> None:
-        """Execute a crawl job."""
-        try:
+        """Execute a crawl job."""        try:
             job = self.crawl_jobs[job_id]
             result = self.crawl_results[job_id]
             
@@ -553,13 +530,11 @@ class UniversalWebCrawler:
         depth: int,
         semaphore: asyncio.Semaphore
     ) -> None:
-        """Crawl URL with concurrency control."""
-        async with semaphore:
+        """Crawl URL with concurrency control."""        async with semaphore:
             await self._crawl_url(job_id, url, depth)
     
     async def _crawl_url(self, job_id: str, url: str, depth: int) -> None:
-        """Crawl a single URL."""
-        try:
+        """Crawl a single URL."""        try:
             job = self.crawl_jobs[job_id]
             result = self.crawl_results[job_id]
             
@@ -615,8 +590,7 @@ class UniversalWebCrawler:
             result.errors.append(f"Failed to crawl {url}: {str(e)}")
     
     async def _fetch_page_content(self, url: str, job: CrawlJob) -> Optional[Dict[str, Any]]:
-        """Fetch page content."""
-        try:
+        """Fetch page content."""        try:
             # Simulate HTTP request
             await asyncio.sleep(0.2)
             
@@ -658,8 +632,7 @@ class UniversalWebCrawler:
             return None
     
     def _is_url_allowed(self, url: str, job: CrawlJob) -> bool:
-        """Check if URL is allowed to be crawled."""
-        try:
+        """Check if URL is allowed to be crawled."""        try:
             parsed_url = urlparse(url)
             domain = parsed_url.netloc
             
@@ -685,8 +658,7 @@ class UniversalWebCrawler:
             return False
     
     async def _analyze_page_for_violations(self, page: WebPage) -> List[WebViolation]:
-        """Analyze page for violations."""
-        violations = []
+        """Analyze page for violations."""        violations = []
         
         try:
             # Analyze page content
@@ -727,8 +699,7 @@ class UniversalWebCrawler:
         return violations
     
     def _calculate_severity(self, violation_type: str, confidence: float) -> str:
-        """Calculate violation severity."""
-        high_risk_types = ['malware', 'phishing']
+        """Calculate violation severity."""        high_risk_types = ['malware', 'phishing']
         
         if violation_type in high_risk_types:
             if confidence >= 0.7:
@@ -746,8 +717,7 @@ class UniversalWebCrawler:
                 return "low"
     
     def get_crawler_status(self) -> Dict[str, Any]:
-        """Get current crawler status."""
-        return {
+        """Get current crawler status."""        return {
             'crawling_active': self._crawling_active,
             'active_jobs': len(self.active_jobs),
             'total_jobs': len(self.crawl_jobs),
@@ -767,8 +737,7 @@ class UniversalWebCrawler:
         }
     
     def get_job_status(self, job_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of a specific crawl job."""
-        if job_id not in self.crawl_jobs:
+        """Get status of a specific crawl job."""        if job_id not in self.crawl_jobs:
             return None
         
         job = self.crawl_jobs[job_id]
@@ -791,8 +760,7 @@ class UniversalWebCrawler:
         }
     
     def get_recent_violations(self, limit: int = 100) -> List[Dict[str, Any]]:
-        """Get recent violations."""
-        recent_violations = sorted(
+        """Get recent violations."""        recent_violations = sorted(
             self.violations,
             key=lambda v: v.detected_at,
             reverse=True
@@ -815,8 +783,7 @@ class UniversalWebCrawler:
         ]
     
     def get_crawled_pages(self, domain: Optional[str] = None, limit: int = 100) -> List[Dict[str, Any]]:
-        """Get crawled pages."""
-        pages = list(self.pages.values())
+        """Get crawled pages."""        pages = list(self.pages.values())
         
         # Filter by domain if specified
         if domain:
@@ -843,8 +810,7 @@ class UniversalWebCrawler:
         ]
     
     async def shutdown(self) -> None:
-        """Shutdown the universal web crawler."""
-        try:
+        """Shutdown the universal web crawler."""        try:
             self._logger.info("Shutting down universal web crawler...")
             
             await self.stop_crawling()

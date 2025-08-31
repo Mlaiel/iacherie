@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive Tests for BaseAIAgent Framework
+"""Comprehensive Tests for BaseAIAgent Framework
 
 Industrial-grade testing for the base AI agent framework, covering initialization,
 lifecycle management, task execution, performance monitoring, and error handling.
@@ -40,9 +36,7 @@ Project Team Specialties:
 ✅ Développeur Audio
 ✅ DevOps Engineer
 ✅ IA Prompt Engineer
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -86,8 +80,7 @@ logger = logging.getLogger(__name__)
 
 
 class TestableAIAgent(BaseAIAgent):
-    """Testable implementation of BaseAIAgent for testing purposes"""
-    
+    """Testable implementation of BaseAIAgent for testing purposes"""    
     def __init__(self, config: AgentConfiguration):
         super().__init__(config)
         self.test_tasks_executed = []
@@ -97,17 +90,14 @@ class TestableAIAgent(BaseAIAgent):
         self.task_execution_times = []
     
     async def _custom_initialize(self) -> None:
-        """Test implementation of custom initialization"""
-        await asyncio.sleep(0.1)  # Simulate initialization time
+        """Test implementation of custom initialization"""        await asyncio.sleep(0.1)  # Simulate initialization time
         self.initialized = True
 
     async def _custom_shutdown(self) -> None:
-        """Test implementation of custom shutdown"""
-        self.shutdown_called = True
+        """Test implementation of custom shutdown"""        self.shutdown_called = True
 
     async def _execute_task_impl(self, task: AgentTask) -> Dict[str, Any]:
-        """Test implementation of task execution"""
-        start_time = time.time()
+        """Test implementation of task execution"""        start_time = time.time()
         task_type = task.context.get("task_type", "unknown")
         
         # Simulate different task types
@@ -179,8 +169,7 @@ class TestableAIAgent(BaseAIAgent):
 
 
 class FailingAgent(BaseAIAgent):
-    """Agent that fails during initialization for testing error scenarios"""
-    
+    """Agent that fails during initialization for testing error scenarios"""    
     async def _custom_initialize(self) -> None:
         raise Exception("Initialization failure for testing")
     
@@ -189,12 +178,10 @@ class FailingAgent(BaseAIAgent):
 
 
 class TestBaseAIAgent:
-    """Comprehensive test suite for BaseAIAgent framework"""
-    
+    """Comprehensive test suite for BaseAIAgent framework"""    
     @pytest.fixture
     def basic_config(self) -> AgentConfiguration:
-        """Basic agent configuration for testing"""
-        return AgentConfiguration(
+        """Basic agent configuration for testing"""        return AgentConfiguration(
             agent_id="test_agent_001",
             agent_name="Test AI Agent",
             capabilities={
@@ -218,8 +205,7 @@ class TestBaseAIAgent:
     
     @pytest.fixture
     def high_performance_config(self) -> AgentConfiguration:
-        """High-performance agent configuration"""
-        return AgentConfiguration(
+        """High-performance agent configuration"""        return AgentConfiguration(
             agent_id="perf_agent_001",
             agent_name="Performance AI Agent",
             capabilities={
@@ -235,8 +221,7 @@ class TestBaseAIAgent:
     
     @pytest_asyncio.fixture
     async def test_agent(self, basic_config) -> TestableAIAgent:
-        """Initialized test agent"""
-        agent = TestableAIAgent(basic_config)
+        """Initialized test agent"""        agent = TestableAIAgent(basic_config)
         await agent.initialize()
         
         yield agent
@@ -244,8 +229,7 @@ class TestBaseAIAgent:
         await agent.shutdown()
     
     def test_agent_configuration_creation(self, basic_config):
-        """Test agent configuration creation and validation"""
-        # Test valid configuration
+        """Test agent configuration creation and validation"""        # Test valid configuration
         assert basic_config.agent_id == "test_agent_001"
         assert basic_config.agent_name == "Test AI Agent"
         assert len(basic_config.capabilities) == 3
@@ -256,8 +240,7 @@ class TestBaseAIAgent:
     
     @pytest.mark.asyncio  
     async def test_agent_initialization(self, basic_config):
-        """Test agent initialization process"""
-        agent = TestableAIAgent(basic_config)
+        """Test agent initialization process"""        agent = TestableAIAgent(basic_config)
         
         # Before initialization
         assert agent.status == AgentStatus.INITIALIZING
@@ -284,8 +267,7 @@ class TestBaseAIAgent:
 
     @pytest.mark.asyncio
     async def test_agent_lifecycle_management(self, test_agent):
-        """Test complete agent lifecycle"""
-        # Test status
+        """Test complete agent lifecycle"""        # Test status
         assert test_agent.status == AgentStatus.READY
         
         # Test shutdown
@@ -294,8 +276,7 @@ class TestBaseAIAgent:
     
     @pytest.mark.asyncio
     async def test_task_execution_success(self, test_agent):
-        """Test successful task execution"""
-        task = AgentTask(
+        """Test successful task execution"""        task = AgentTask(
             task_type="test_success",
             context={"task_type": "test_success", "test_data": "sample_value"},
             priority=AgentPriority.MEDIUM
@@ -320,8 +301,7 @@ class TestBaseAIAgent:
     
     @pytest.mark.asyncio
     async def test_task_execution_failure(self, test_agent):
-        """Test task execution failure handling"""
-        task = AgentTask(
+        """Test task execution failure handling"""        task = AgentTask(
             task_type="test_failure",
             context={"task_type": "test_failure"},
             priority=AgentPriority.HIGH
@@ -342,8 +322,7 @@ class TestBaseAIAgent:
     
     @pytest.mark.asyncio
     async def test_task_timeout_handling(self, test_agent):
-        """Test task timeout handling"""
-        task = AgentTask(
+        """Test task timeout handling"""        task = AgentTask(
             task_type="test_timeout",
             context={"task_type": "test_timeout"},
             priority=AgentPriority.URGENT,
@@ -365,8 +344,7 @@ class TestBaseAIAgent:
     
     @pytest.mark.asyncio
     async def test_concurrent_task_execution(self, test_agent):
-        """Test concurrent task execution"""
-        tasks = []
+        """Test concurrent task execution"""        tasks = []
         for i in range(3):  # Use max_concurrent_tasks
             task = AgentTask(
                 task_type="test_success",
@@ -398,8 +376,7 @@ class TestBaseAIAgent:
         assert test_agent.metrics.total_tasks >= 3
     
     def test_agent_registry(self):
-        """Test agent registry functionality"""
-        registry = AgentRegistry()
+        """Test agent registry functionality"""        registry = AgentRegistry()
         
         # Create test agents
         config1 = AgentConfiguration(
@@ -444,8 +421,7 @@ class TestBaseAIAgent:
     
     @pytest.mark.asyncio
     async def test_agent_lifecycle_context_manager(self, basic_config):
-        """Test agent lifecycle using context manager"""
-        agent_started = False
+        """Test agent lifecycle using context manager"""        agent_started = False
         agent_shutdown = False
         
         async with agent_lifecycle(TestableAIAgent(basic_config)) as agent:
@@ -461,8 +437,7 @@ class TestBaseAIAgent:
     
     @pytest.mark.asyncio
     async def test_graceful_shutdown(self, basic_config):
-        """Test graceful shutdown process"""
-        agent = TestableAIAgent(basic_config)
+        """Test graceful shutdown process"""        agent = TestableAIAgent(basic_config)
         await agent.initialize()
         
         # Start a task (but don't await it)
@@ -489,8 +464,7 @@ class TestBaseAIAgent:
         assert result["success"] is True
     
     def test_agent_metrics(self, basic_config):
-        """Test agent metrics collection"""
-        agent = TestableAIAgent(basic_config)
+        """Test agent metrics collection"""        agent = TestableAIAgent(basic_config)
         
         # Initial metrics
         assert agent.metrics.total_tasks == 0
@@ -507,8 +481,7 @@ class TestBaseAIAgent:
         assert agent.metrics.success_rate == 80.0
     
     def test_agent_task_creation(self):
-        """Test agent task creation and properties"""
-        task = AgentTask(
+        """Test agent task creation and properties"""        task = AgentTask(
             task_type="test_task",
             context={"key": "value"},
             priority=AgentPriority.HIGH,
@@ -526,8 +499,7 @@ class TestBaseAIAgent:
         assert task.completed_at is None
     
     def test_agent_capabilities(self, basic_config):
-        """Test agent capabilities management"""
-        agent = TestableAIAgent(basic_config)
+        """Test agent capabilities management"""        agent = TestableAIAgent(basic_config)
         
         # Test capability checking
         assert AgentCapability.TEXT_GENERATION in agent.capabilities
@@ -544,8 +516,7 @@ class TestBaseAIAgent:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_performance_benchmarks(self, basic_config):
-        """Test performance benchmarks"""
-        # Test initialization time
+        """Test performance benchmarks"""        # Test initialization time
         config = AgentConfiguration(
             agent_id="perf_test_agent",
             agent_name="Performance Test Agent",
@@ -577,8 +548,7 @@ class TestBaseAIAgent:
     
     @pytest.mark.asyncio
     async def test_memory_management(self, test_agent):
-        """Test memory usage and management"""
-        initial_memory = psutil.Process().memory_info().rss / 1024 / 1024  # MB
+        """Test memory usage and management"""        initial_memory = psutil.Process().memory_info().rss / 1024 / 1024  # MB
         
         # Execute many tasks to test memory usage
         tasks = []
@@ -616,8 +586,7 @@ class TestBaseAIAgent:
     @pytest.mark.stress
     @pytest.mark.asyncio
     async def test_stress_concurrent_execution(self, test_agent):
-        """Stress test with high concurrent load"""
-        num_tasks = 50
+        """Stress test with high concurrent load"""        num_tasks = 50
         tasks = []
         
         for i in range(num_tasks):
@@ -650,8 +619,7 @@ class TestBaseAIAgent:
 
     @pytest.mark.asyncio
     async def test_error_recovery_and_resilience(self, test_agent):
-        """Test error recovery and agent resilience"""
-        # Mix of successful and failing tasks
+        """Test error recovery and agent resilience"""        # Mix of successful and failing tasks
         tasks = []
         
         for i in range(10):
@@ -685,8 +653,7 @@ class TestBaseAIAgent:
 
     @pytest.mark.asyncio
     async def test_agent_shutdown_with_pending_tasks(self, basic_config):
-        """Test shutdown behavior with pending tasks"""
-        agent = TestableAIAgent(basic_config)
+        """Test shutdown behavior with pending tasks"""        agent = TestableAIAgent(basic_config)
         await agent.initialize()
         
         # Queue multiple tasks
@@ -720,8 +687,7 @@ class TestBaseAIAgent:
 
     @pytest.mark.asyncio
     async def test_task_timeout_and_cleanup(self, test_agent):
-        """Test task timeout handling and cleanup"""
-        task = AgentTask(
+        """Test task timeout handling and cleanup"""        task = AgentTask(
             task_type="test_timeout", 
             context={"task_type": "test_timeout"},
             timeout_seconds=0.5  # Very short timeout
@@ -742,8 +708,7 @@ class TestBaseAIAgent:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_full_agent_workflow(self, basic_config):
-        """Integration test for complete agent workflow"""
-        # Phase 1: Initialization
+        """Integration test for complete agent workflow"""        # Phase 1: Initialization
         agent = TestableAIAgent(basic_config)
         init_success = await agent.initialize()
         assert init_success
@@ -777,8 +742,7 @@ class TestBaseAIAgent:
         assert agent.status == AgentStatus.OFFLINE
 
     def test_agent_configuration_validation(self):
-        """Test agent configuration validation and edge cases"""
-        # Test with minimal configuration
+        """Test agent configuration validation and edge cases"""        # Test with minimal configuration
         minimal_config = AgentConfiguration(
             agent_id="minimal_agent",
             agent_name="Minimal Agent",
@@ -823,8 +787,7 @@ class TestBaseAIAgent:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_throughput_measurement(self, test_agent):
-        """Test agent throughput measurement"""
-        num_tasks = 25
+        """Test agent throughput measurement"""        num_tasks = 25
         start_time = time.time()
         
         # Execute tasks
@@ -854,8 +817,7 @@ class TestBaseAIAgent:
 
     @pytest.mark.asyncio
     async def test_agent_initialization_failure(self, basic_config):
-        """Test agent behavior when initialization fails"""
-        failing_agent = FailingAgent(basic_config)
+        """Test agent behavior when initialization fails"""        failing_agent = FailingAgent(basic_config)
         
         # Initialization should fail
         success = await failing_agent.initialize()
@@ -864,8 +826,7 @@ class TestBaseAIAgent:
 
     @pytest.mark.asyncio
     async def test_retry_logic_with_exponential_backoff(self, test_agent):
-        """Test retry logic with exponential backoff"""
-        task = AgentTask(
+        """Test retry logic with exponential backoff"""        task = AgentTask(
             task_type="test_failure",
             context={"task_type": "test_failure"},
             max_retries=3
@@ -888,8 +849,7 @@ class TestBaseAIAgent:
     @pytest.mark.edge_cases
     @pytest.mark.asyncio
     async def test_edge_cases_and_boundary_conditions(self, test_agent):
-        """Test edge cases and boundary conditions"""
-        # Test with very high priority task
+        """Test edge cases and boundary conditions"""        # Test with very high priority task
         high_priority_task = AgentTask(
             task_type="test_success",
             context={"task_type": "test_success"},
@@ -920,8 +880,7 @@ class TestBaseAIAgent:
 
     @pytest.mark.asyncio
     async def test_agent_registry_advanced_operations(self):
-        """Test advanced agent registry operations"""
-        registry = AgentRegistry()
+        """Test advanced agent registry operations"""        registry = AgentRegistry()
         
         # Create agents with overlapping capabilities
         configs = []
@@ -965,8 +924,7 @@ class TestBaseAIAgent:
     @pytest.mark.stress
     @pytest.mark.asyncio
     async def test_massive_task_queue_processing(self, high_performance_config):
-        """Stress test with massive task queue"""
-        agent = TestableAIAgent(high_performance_config)
+        """Stress test with massive task queue"""        agent = TestableAIAgent(high_performance_config)
         await agent.initialize()
         
         try:
@@ -1003,8 +961,7 @@ class TestBaseAIAgent:
             await agent.shutdown()
 
     def test_dataclass_serialization(self):
-        """Test serialization of agent data classes"""
-        # Test AgentMetrics serialization
+        """Test serialization of agent data classes"""        # Test AgentMetrics serialization
         metrics = AgentMetrics(
             total_tasks=100,
             successful_tasks=85,
@@ -1044,8 +1001,7 @@ class TestBaseAIAgent:
 
     @pytest.mark.asyncio
     async def test_concurrent_agent_operations(self):
-        """Test multiple agents working concurrently"""
-        # Create multiple agents
+        """Test multiple agents working concurrently"""        # Create multiple agents
         agents = []
         configs = []
         
@@ -1096,8 +1052,7 @@ class TestBaseAIAgent:
     @pytest.mark.security
     @pytest.mark.asyncio
     async def test_agent_isolation_and_security(self, test_agent):
-        """Test agent isolation and security features"""
-        # Test that agent doesn't expose internal state inappropriately
+        """Test agent isolation and security features"""        # Test that agent doesn't expose internal state inappropriately
         health = await test_agent.get_health_status()
         
         # Should not expose sensitive internal data
@@ -1134,8 +1089,7 @@ pytestmark = [
 
 # Test runner function for manual execution
 async def run_manual_tests():
-    """Run all tests manually without pytest"""
-    print("🧪 Running Base AI Agent Tests Manually...")
+    """Run all tests manually without pytest"""    print("🧪 Running Base AI Agent Tests Manually...")
     
     test_suite = TestBaseAIAgent()
     

@@ -1,5 +1,4 @@
-"""
-Multi-Platform Fingerprinting Engine - Advanced AI Content Recognition
+"""Multi-Platform Fingerprinting Engine - Advanced AI Content Recognition
 
 Revolutionary enterprise-grade content fingerprinting system implementing cutting-edge AI
 algorithms for ultra-precise content identification, protection, and tracking across all
@@ -35,9 +34,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 This revolutionary fingerprinting platform is the EXCLUSIVE intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution
 under German and International Law. Contact: mlaiel@live.de for legal authorization.
-"""
-
-import asyncio
+"""import asyncio
 import hashlib
 import base64
 import numpy as np
@@ -83,8 +80,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Supported content types for fingerprinting"""
-    AUDIO = "audio"
+    """Supported content types for fingerprinting"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -92,8 +88,7 @@ class ContentType(Enum):
 
 
 class FingerprintAlgorithm(Enum):
-    """Fingerprinting algorithms"""
-    # Audio Algorithms
+    """Fingerprinting algorithms"""    # Audio Algorithms
     CHROMAPRINT = "chromaprint"
     ESSENTIA_SPECTRAL = "essentia_spectral"
     MFCC_FINGERPRINT = "mfcc_fingerprint"
@@ -119,8 +114,7 @@ class FingerprintAlgorithm(Enum):
 
 
 class FingerprintQuality(Enum):
-    """Fingerprint quality levels"""
-    ULTRA_HIGH = "ultra_high"    # 99%+ accuracy, highest resource usage
+    """Fingerprint quality levels"""    ULTRA_HIGH = "ultra_high"    # 99%+ accuracy, highest resource usage
     HIGH = "high"                # 95-99% accuracy, high resource usage
     STANDARD = "standard"        # 90-95% accuracy, moderate resource usage
     FAST = "fast"               # 85-90% accuracy, low resource usage
@@ -129,8 +123,7 @@ class FingerprintQuality(Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint data structure"""
-    fingerprint_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Content fingerprint data structure"""    fingerprint_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: int = None
     content_id: str = None
     content_type: ContentType = None
@@ -166,8 +159,7 @@ class ContentFingerprint:
 
 @dataclass
 class FingerprintMatch:
-    """Fingerprint matching result"""
-    match_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Fingerprint matching result"""    match_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     query_fingerprint_id: str = None
     matched_fingerprint_id: str = None
     similarity_score: float = 0.0
@@ -187,8 +179,7 @@ class FingerprintMatch:
 
 @dataclass
 class FingerprintingTask:
-    """Fingerprinting task configuration"""
-    task_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Fingerprinting task configuration"""    task_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: int = None
     content_path: str = None
     content_type: ContentType = None
@@ -211,13 +202,11 @@ class FingerprintingTask:
 
 
 class MultiplePlatformFingerprintingEngine:
-    """
-    Ultra-Advanced Multi-Platform Fingerprinting Engine
+    """    Ultra-Advanced Multi-Platform Fingerprinting Engine
     
     Revolutionary AI-powered content fingerprinting system providing precise content
     identification, protection, and tracking across all content formats and platforms.
-    """
-    
+    """    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.event_emitter = EventEmitter()
@@ -248,8 +237,7 @@ class MultiplePlatformFingerprintingEngine:
         logger.info("MultiplePlatformFingerprintingEngine initialized successfully")
     
     async def _initialize_engines(self):
-        """Initialize all fingerprinting engines and AI models"""
-        try:
+        """Initialize all fingerprinting engines and AI models"""        try:
             # Initialize AI Models
             await self._initialize_ai_models()
             
@@ -265,8 +253,7 @@ class MultiplePlatformFingerprintingEngine:
             raise BusinessLogicError("Fingerprinting engine initialization failed")
     
     async def _initialize_ai_models(self):
-        """Initialize AI models for advanced fingerprinting"""
-        try:
+        """Initialize AI models for advanced fingerprinting"""        try:
             # CLIP Model for image/video analysis
             self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-large-patch14").to(self.device)
             self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-large-patch14")
@@ -284,8 +271,7 @@ class MultiplePlatformFingerprintingEngine:
             # Continue with fallback models
     
     async def _initialize_audio_engines(self):
-        """Initialize audio fingerprinting engines"""
-        try:
+        """Initialize audio fingerprinting engines"""        try:
             self.audio_engines = {
                 FingerprintAlgorithm.CHROMAPRINT: self._chromaprint_fingerprint,
                 FingerprintAlgorithm.ESSENTIA_SPECTRAL: self._essentia_spectral_fingerprint,
@@ -296,8 +282,7 @@ class MultiplePlatformFingerprintingEngine:
             logger.error(f"Audio engine initialization failed: {e}")
     
     async def _initialize_video_engines(self):
-        """Initialize video fingerprinting engines"""
-        try:
+        """Initialize video fingerprinting engines"""        try:
             self.video_engines = {
                 FingerprintAlgorithm.OPENCV_ORB: self._opencv_orb_fingerprint,
                 FingerprintAlgorithm.PERCEPTUAL_VIDEO_HASH: self._perceptual_video_hash,
@@ -308,8 +293,7 @@ class MultiplePlatformFingerprintingEngine:
             logger.error(f"Video engine initialization failed: {e}")
     
     async def _initialize_image_engines(self):
-        """Initialize image fingerprinting engines"""
-        try:
+        """Initialize image fingerprinting engines"""        try:
             self.image_engines = {
                 FingerprintAlgorithm.PERCEPTUAL_HASH: self._perceptual_hash_fingerprint,
                 FingerprintAlgorithm.DIFFERENCE_HASH: self._difference_hash_fingerprint,
@@ -320,8 +304,7 @@ class MultiplePlatformFingerprintingEngine:
             logger.error(f"Image engine initialization failed: {e}")
     
     async def _initialize_text_engines(self):
-        """Initialize text fingerprinting engines"""
-        try:
+        """Initialize text fingerprinting engines"""        try:
             self.text_engines = {
                 FingerprintAlgorithm.BERT_EMBEDDING: self._bert_embedding_fingerprint,
                 FingerprintAlgorithm.SENTENCE_TRANSFORMER: self._sentence_transformer_fingerprint,
@@ -332,16 +315,14 @@ class MultiplePlatformFingerprintingEngine:
             logger.error(f"Text engine initialization failed: {e}")
     
     async def create_fingerprint(self, task: FingerprintingTask) -> ContentFingerprint:
-        """
-        Create comprehensive content fingerprint
+        """        Create comprehensive content fingerprint
         
         Args:
             task: Fingerprinting task configuration
             
         Returns:
             ContentFingerprint: Generated fingerprint data
-        """
-        try:
+        """        try:
             # Update task status
             task.status = "processing"
             task.progress = 0.0
@@ -441,8 +422,7 @@ class MultiplePlatformFingerprintingEngine:
             raise BusinessLogicError(f"Fingerprint creation failed: {str(e)}")
     
     async def _validate_content(self, task: FingerprintingTask):
-        """Validate content file"""
-        if not os.path.exists(task.content_path):
+        """Validate content file"""        if not os.path.exists(task.content_path):
             raise ValidationError("Content file not found")
         
         file_size = os.path.getsize(task.content_path)
@@ -462,8 +442,7 @@ class MultiplePlatformFingerprintingEngine:
             raise ValidationError(f"Content file too large: {file_size} bytes")
     
     async def _detect_content_type(self, content_path: str) -> ContentType:
-        """Detect content type from file"""
-        try:
+        """Detect content type from file"""        try:
             file_ext = Path(content_path).suffix.lower()
             
             audio_exts = {'.mp3', '.wav', '.flac', '.aac', '.ogg', '.m4a', '.wma'}
@@ -500,8 +479,7 @@ class MultiplePlatformFingerprintingEngine:
             return ContentType.MIXED_MEDIA
     
     async def _extract_file_metadata(self, content_path: str, fingerprint: ContentFingerprint):
-        """Extract file metadata"""
-        try:
+        """Extract file metadata"""        try:
             stat = os.stat(content_path)
             fingerprint.file_size = stat.st_size
             
@@ -523,8 +501,7 @@ class MultiplePlatformFingerprintingEngine:
             logger.warning(f"Metadata extraction failed: {e}")
     
     async def _extract_audio_metadata(self, content_path: str, fingerprint: ContentFingerprint):
-        """Extract audio-specific metadata"""
-        try:
+        """Extract audio-specific metadata"""        try:
             # Load audio file
             y, sr = librosa.load(content_path, sr=None)
             fingerprint.duration = len(y) / sr
@@ -540,8 +517,7 @@ class MultiplePlatformFingerprintingEngine:
             logger.warning(f"Audio metadata extraction failed: {e}")
     
     async def _extract_video_metadata(self, content_path: str, fingerprint: ContentFingerprint):
-        """Extract video-specific metadata"""
-        try:
+        """Extract video-specific metadata"""        try:
             # Use OpenCV for basic video info
             cap = cv2.VideoCapture(content_path)
             
@@ -567,8 +543,7 @@ class MultiplePlatformFingerprintingEngine:
             logger.warning(f"Video metadata extraction failed: {e}")
     
     async def _extract_image_metadata(self, content_path: str, fingerprint: ContentFingerprint):
-        """Extract image-specific metadata"""
-        try:
+        """Extract image-specific metadata"""        try:
             with Image.open(content_path) as img:
                 fingerprint.dimensions = img.size
                 
@@ -582,8 +557,7 @@ class MultiplePlatformFingerprintingEngine:
             logger.warning(f"Image metadata extraction failed: {e}")
     
     async def _extract_text_metadata(self, content_path: str, fingerprint: ContentFingerprint):
-        """Extract text-specific metadata"""
-        try:
+        """Extract text-specific metadata"""        try:
             with open(content_path, 'r', encoding='utf-8') as f:
                 text = f.read()
                 
@@ -598,8 +572,7 @@ class MultiplePlatformFingerprintingEngine:
     
     async def _select_optimal_algorithms(self, content_type: ContentType, 
                                        quality_level: FingerprintQuality) -> List[FingerprintAlgorithm]:
-        """Select optimal algorithms based on content type and quality level"""
-        algorithm_sets = {
+        """Select optimal algorithms based on content type and quality level"""        algorithm_sets = {
             ContentType.AUDIO: {
                 FingerprintQuality.ULTRA_HIGH: [
                     FingerprintAlgorithm.CHROMAPRINT,
@@ -683,8 +656,7 @@ class MultiplePlatformFingerprintingEngine:
     async def _generate_algorithm_fingerprint(self, content_path: str, 
                                             algorithm: FingerprintAlgorithm,
                                             fingerprint: ContentFingerprint) -> Optional[Dict[str, Any]]:
-        """Generate fingerprint using specific algorithm"""
-        try:
+        """Generate fingerprint using specific algorithm"""        try:
             # Get appropriate engine based on content type
             if fingerprint.content_type == ContentType.AUDIO:
                 engine = self.audio_engines.get(algorithm)
@@ -716,8 +688,7 @@ class MultiplePlatformFingerprintingEngine:
     
     # Audio Fingerprinting Methods
     async def _chromaprint_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
-        """Generate Chromaprint fingerprint for audio"""
-        try:
+        """Generate Chromaprint fingerprint for audio"""        try:
             # Load audio
             y, sr = librosa.load(content_path, sr=22050, mono=True)
             
@@ -743,8 +714,7 @@ class MultiplePlatformFingerprintingEngine:
             return None
     
     async def _mfcc_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
-        """Generate MFCC-based fingerprint for audio"""
-        try:
+        """Generate MFCC-based fingerprint for audio"""        try:
             # Load audio
             y, sr = librosa.load(content_path, sr=22050, mono=True)
             
@@ -773,8 +743,7 @@ class MultiplePlatformFingerprintingEngine:
     
     # Image Fingerprinting Methods
     async def _perceptual_hash_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
-        """Generate perceptual hash for image"""
-        try:
+        """Generate perceptual hash for image"""        try:
             # Load image
             image = Image.open(content_path)
             
@@ -802,8 +771,7 @@ class MultiplePlatformFingerprintingEngine:
             return None
     
     async def _clip_embedding_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
-        """Generate CLIP embedding for image"""
-        try:
+        """Generate CLIP embedding for image"""        try:
             if not self.clip_model or not self.clip_processor:
                 return None
             
@@ -831,8 +799,7 @@ class MultiplePlatformFingerprintingEngine:
     
     # Text Fingerprinting Methods
     async def _bert_embedding_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
-        """Generate BERT embedding for text"""
-        try:
+        """Generate BERT embedding for text"""        try:
             if not self.bert_model or not self.bert_tokenizer:
                 return None
             
@@ -868,8 +835,7 @@ class MultiplePlatformFingerprintingEngine:
             return None
     
     async def _ngram_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
-        """Generate n-gram based fingerprint for text"""
-        try:
+        """Generate n-gram based fingerprint for text"""        try:
             # Read text
             with open(content_path, 'r', encoding='utf-8') as f:
                 text = f.read().lower()
@@ -911,48 +877,37 @@ class MultiplePlatformFingerprintingEngine:
     
     # Placeholder methods for other algorithms
     async def _essentia_spectral_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
-        """Placeholder for Essentia spectral fingerprinting"""
-        return await self._mfcc_fingerprint(content_path, fingerprint)
+        """Placeholder for Essentia spectral fingerprinting"""        return await self._mfcc_fingerprint(content_path, fingerprint)
     
     async def _audio_neural_hash(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
-        """Placeholder for audio neural hash"""
-        return await self._mfcc_fingerprint(content_path, fingerprint)
+        """Placeholder for audio neural hash"""        return await self._mfcc_fingerprint(content_path, fingerprint)
     
     async def _opencv_orb_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
-        """Placeholder for OpenCV ORB fingerprinting"""
-        return await self._perceptual_hash_fingerprint(content_path, fingerprint)
+        """Placeholder for OpenCV ORB fingerprinting"""        return await self._perceptual_hash_fingerprint(content_path, fingerprint)
     
     async def _perceptual_video_hash(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
-        """Placeholder for perceptual video hash"""
-        return await self._perceptual_hash_fingerprint(content_path, fingerprint)
+        """Placeholder for perceptual video hash"""        return await self._perceptual_hash_fingerprint(content_path, fingerprint)
     
     async def _temporal_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
-        """Placeholder for temporal fingerprinting"""
-        return await self._perceptual_hash_fingerprint(content_path, fingerprint)
+        """Placeholder for temporal fingerprinting"""        return await self._perceptual_hash_fingerprint(content_path, fingerprint)
     
     async def _video_neural_hash(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
-        """Placeholder for video neural hash"""
-        return await self._perceptual_hash_fingerprint(content_path, fingerprint)
+        """Placeholder for video neural hash"""        return await self._perceptual_hash_fingerprint(content_path, fingerprint)
     
     async def _difference_hash_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
-        """Placeholder for difference hash"""
-        return await self._perceptual_hash_fingerprint(content_path, fingerprint)
+        """Placeholder for difference hash"""        return await self._perceptual_hash_fingerprint(content_path, fingerprint)
     
     async def _wavelet_hash_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
-        """Placeholder for wavelet hash"""
-        return await self._perceptual_hash_fingerprint(content_path, fingerprint)
+        """Placeholder for wavelet hash"""        return await self._perceptual_hash_fingerprint(content_path, fingerprint)
     
     async def _sentence_transformer_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
-        """Placeholder for sentence transformer"""
-        return await self._bert_embedding_fingerprint(content_path, fingerprint)
+        """Placeholder for sentence transformer"""        return await self._bert_embedding_fingerprint(content_path, fingerprint)
     
     async def _semantic_hash_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
-        """Placeholder for semantic hash"""
-        return await self._bert_embedding_fingerprint(content_path, fingerprint)
+        """Placeholder for semantic hash"""        return await self._bert_embedding_fingerprint(content_path, fingerprint)
     
     async def _combine_fingerprint_results(self, fingerprint: ContentFingerprint, results: List[Dict[str, Any]]):
-        """Combine results from multiple algorithms"""
-        try:
+        """Combine results from multiple algorithms"""        try:
             if not results:
                 raise BusinessLogicError("No valid fingerprint results generated")
             
@@ -978,8 +933,7 @@ class MultiplePlatformFingerprintingEngine:
             raise BusinessLogicError("Failed to combine fingerprint results")
     
     async def _add_blockchain_verification(self, fingerprint: ContentFingerprint):
-        """Add blockchain verification to fingerprint"""
-        try:
+        """Add blockchain verification to fingerprint"""        try:
             # Create blockchain record (placeholder implementation)
             blockchain_data = {
                 'fingerprint_id': fingerprint.fingerprint_id,
@@ -999,8 +953,7 @@ class MultiplePlatformFingerprintingEngine:
             logger.warning(f"Blockchain verification failed: {e}")
     
     async def _encrypt_fingerprint_data(self, fingerprint: ContentFingerprint):
-        """Encrypt sensitive fingerprint data"""
-        try:
+        """Encrypt sensitive fingerprint data"""        try:
             # Encrypt vector embedding if present
             if fingerprint.vector_embedding is not None:
                 encrypted_embedding = await self.encryption_manager.encrypt_data(
@@ -1017,8 +970,7 @@ class MultiplePlatformFingerprintingEngine:
             logger.warning(f"Fingerprint encryption failed: {e}")
     
     async def _store_fingerprint(self, fingerprint: ContentFingerprint):
-        """Store fingerprint in database"""
-        try:
+        """Store fingerprint in database"""        try:
             async with get_db_session() as db:
                 # Store fingerprint data in database
                 # This would depend on your actual database schema

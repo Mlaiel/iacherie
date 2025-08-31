@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -83,22 +80,18 @@ except ImportError as e:
         pass
 
 class TestVisionProcessor(unittest.TestCase):
-    """Test suite for VisionProcessor class"""
-    
+    """Test suite for VisionProcessor class"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.processor = VisionProcessor()
+        """Set up test fixtures"""        self.processor = VisionProcessor()
         self.test_image = self._create_test_image()
         self.test_video_path = self._create_test_video()
         
     def tearDown(self):
-        """Clean up test fixtures"""
-        if hasattr(self, 'test_video_path') and os.path.exists(self.test_video_path):
+        """Clean up test fixtures"""        if hasattr(self, 'test_video_path') and os.path.exists(self.test_video_path):
             os.remove(self.test_video_path)
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for testing"""
-        # Create a simple RGB image with some patterns
+        """Create a test image for testing"""        # Create a simple RGB image with some patterns
         image = np.zeros((480, 640, 3), dtype=np.uint8)
         
         # Add some colored rectangles
@@ -112,8 +105,7 @@ class TestVisionProcessor(unittest.TestCase):
         return image
     
     def _create_test_video(self) -> str:
-        """Create a test video file"""
-        temp_file = tempfile.NamedTemporaryFile(suffix='.mp4', delete=False)
+        """Create a test video file"""        temp_file = tempfile.NamedTemporaryFile(suffix='.mp4', delete=False)
         temp_path = temp_file.name
         temp_file.close()
         
@@ -131,12 +123,10 @@ class TestVisionProcessor(unittest.TestCase):
         return temp_path
     
     def test_processor_initialization(self):
-        """Test VisionProcessor initialization"""
-        self.assertIsInstance(self.processor, VisionProcessor)
+        """Test VisionProcessor initialization"""        self.assertIsInstance(self.processor, VisionProcessor)
         
     def test_process_image_with_array(self):
-        """Test processing image from numpy array"""
-        try:
+        """Test processing image from numpy array"""        try:
             result = self.processor.process_image(self.test_image)
             self.assertIsNotNone(result)
             if hasattr(result, 'quality_score'):
@@ -147,8 +137,7 @@ class TestVisionProcessor(unittest.TestCase):
             self.skipTest(f"Skipping due to import error: {e}")
     
     def test_process_image_with_file_path(self):
-        """Test processing image from file path"""
-        # Save test image to temporary file
+        """Test processing image from file path"""        # Save test image to temporary file
         temp_file = tempfile.NamedTemporaryFile(suffix='.jpg', delete=False)
         temp_path = temp_file.name
         temp_file.close()
@@ -164,16 +153,14 @@ class TestVisionProcessor(unittest.TestCase):
                 os.remove(temp_path)
     
     def test_process_video(self):
-        """Test video processing"""
-        try:
+        """Test video processing"""        try:
             result = self.processor.process_video(self.test_video_path)
             self.assertIsNotNone(result)
         except Exception as e:
             self.skipTest(f"Skipping due to import error: {e}")
     
     def test_batch_processing(self):
-        """Test batch image processing"""
-        # Create multiple test images
+        """Test batch image processing"""        # Create multiple test images
         images = [self.test_image for _ in range(3)]
         
         try:
@@ -184,8 +171,7 @@ class TestVisionProcessor(unittest.TestCase):
             self.skipTest(f"Skipping due to import error: {e}")
     
     def test_invalid_input_handling(self):
-        """Test handling of invalid inputs"""
-        try:
+        """Test handling of invalid inputs"""        try:
             # Test with None
             with self.assertRaises((ValueError, TypeError)):
                 self.processor.process_image(None)
@@ -201,16 +187,13 @@ class TestVisionProcessor(unittest.TestCase):
             self.skipTest(f"Skipping due to import error: {e}")
 
 class TestImageAnalyzer(unittest.TestCase):
-    """Test suite for ImageAnalyzer class"""
-    
+    """Test suite for ImageAnalyzer class"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.analyzer = ImageAnalyzer()
+        """Set up test fixtures"""        self.analyzer = ImageAnalyzer()
         self.test_image = self._create_test_image()
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for analysis"""
-        image = np.zeros((480, 640, 3), dtype=np.uint8)
+        """Create a test image for analysis"""        image = np.zeros((480, 640, 3), dtype=np.uint8)
         
         # Create a more complex image for composition analysis
         # Add geometric shapes
@@ -221,12 +204,10 @@ class TestImageAnalyzer(unittest.TestCase):
         return image
     
     def test_analyzer_initialization(self):
-        """Test ImageAnalyzer initialization"""
-        self.assertIsInstance(self.analyzer, ImageAnalyzer)
+        """Test ImageAnalyzer initialization"""        self.assertIsInstance(self.analyzer, ImageAnalyzer)
     
     def test_analyze_composition(self):
-        """Test composition analysis"""
-        try:
+        """Test composition analysis"""        try:
             metrics = self.analyzer.analyze_composition(self.test_image)
             self.assertIsNotNone(metrics)
             if hasattr(metrics, 'rule_of_thirds_score'):
@@ -236,8 +217,7 @@ class TestImageAnalyzer(unittest.TestCase):
             self.skipTest(f"Skipping due to import error: {e}")
     
     def test_extract_metadata(self):
-        """Test metadata extraction"""
-        # Save test image to temporary file with metadata
+        """Test metadata extraction"""        # Save test image to temporary file with metadata
         temp_file = tempfile.NamedTemporaryFile(suffix='.jpg', delete=False)
         temp_path = temp_file.name
         temp_file.close()
@@ -253,8 +233,7 @@ class TestImageAnalyzer(unittest.TestCase):
                 os.remove(temp_path)
     
     def test_assess_quality(self):
-        """Test quality assessment"""
-        try:
+        """Test quality assessment"""        try:
             quality = self.analyzer.assess_quality(self.test_image)
             self.assertIsNotNone(quality)
             if hasattr(quality, 'overall_score'):
@@ -264,8 +243,7 @@ class TestImageAnalyzer(unittest.TestCase):
             self.skipTest(f"Skipping due to import error: {e}")
     
     def test_quality_metrics_components(self):
-        """Test individual quality metric components"""
-        try:
+        """Test individual quality metric components"""        try:
             quality = self.analyzer.assess_quality(self.test_image)
             if hasattr(quality, 'sharpness'):
                 self.assertIsInstance(quality.sharpness, (int, float))
@@ -277,21 +255,17 @@ class TestImageAnalyzer(unittest.TestCase):
             self.skipTest(f"Skipping due to import error: {e}")
 
 class TestVideoAnalyzer(unittest.TestCase):
-    """Test suite for VideoAnalyzer class"""
-    
+    """Test suite for VideoAnalyzer class"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.analyzer = VideoAnalyzer()
+        """Set up test fixtures"""        self.analyzer = VideoAnalyzer()
         self.test_video_path = self._create_test_video()
     
     def tearDown(self):
-        """Clean up test fixtures"""
-        if hasattr(self, 'test_video_path') and os.path.exists(self.test_video_path):
+        """Clean up test fixtures"""        if hasattr(self, 'test_video_path') and os.path.exists(self.test_video_path):
             os.remove(self.test_video_path)
     
     def _create_test_video(self) -> str:
-        """Create a test video file"""
-        temp_file = tempfile.NamedTemporaryFile(suffix='.mp4', delete=False)
+        """Create a test video file"""        temp_file = tempfile.NamedTemporaryFile(suffix='.mp4', delete=False)
         temp_path = temp_file.name
         temp_file.close()
         
@@ -316,12 +290,10 @@ class TestVideoAnalyzer(unittest.TestCase):
         return temp_path
     
     def test_analyzer_initialization(self):
-        """Test VideoAnalyzer initialization"""
-        self.assertIsInstance(self.analyzer, VideoAnalyzer)
+        """Test VideoAnalyzer initialization"""        self.assertIsInstance(self.analyzer, VideoAnalyzer)
     
     def test_analyze_video(self):
-        """Test video analysis"""
-        try:
+        """Test video analysis"""        try:
             result = self.analyzer.analyze_video(self.test_video_path)
             self.assertIsNotNone(result)
             if hasattr(result, 'duration'):
@@ -330,8 +302,7 @@ class TestVideoAnalyzer(unittest.TestCase):
             self.skipTest(f"Skipping due to import error: {e}")
     
     def test_extract_frames(self):
-        """Test frame extraction"""
-        try:
+        """Test frame extraction"""        try:
             frames = self.analyzer.extract_frames(self.test_video_path, max_frames=5)
             self.assertIsInstance(frames, list)
             if frames:
@@ -342,8 +313,7 @@ class TestVideoAnalyzer(unittest.TestCase):
             self.skipTest(f"Skipping due to import error: {e}")
     
     def test_video_quality_assessment(self):
-        """Test video quality assessment"""
-        try:
+        """Test video quality assessment"""        try:
             quality = self.analyzer.assess_video_quality(self.test_video_path)
             self.assertIsNotNone(quality)
             if hasattr(quality, 'overall_quality'):
@@ -353,21 +323,17 @@ class TestVideoAnalyzer(unittest.TestCase):
             self.skipTest(f"Skipping due to import error: {e}")
 
 class TestMetadataExtractor(unittest.TestCase):
-    """Test suite for MetadataExtractor class"""
-    
+    """Test suite for MetadataExtractor class"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.extractor = MetadataExtractor()
+        """Set up test fixtures"""        self.extractor = MetadataExtractor()
         self.test_image_path = self._create_test_image_with_metadata()
     
     def tearDown(self):
-        """Clean up test fixtures"""
-        if hasattr(self, 'test_image_path') and os.path.exists(self.test_image_path):
+        """Clean up test fixtures"""        if hasattr(self, 'test_image_path') and os.path.exists(self.test_image_path):
             os.remove(self.test_image_path)
     
     def _create_test_image_with_metadata(self) -> str:
-        """Create a test image with metadata"""
-        temp_file = tempfile.NamedTemporaryFile(suffix='.jpg', delete=False)
+        """Create a test image with metadata"""        temp_file = tempfile.NamedTemporaryFile(suffix='.jpg', delete=False)
         temp_path = temp_file.name
         temp_file.close()
         
@@ -378,12 +344,10 @@ class TestMetadataExtractor(unittest.TestCase):
         return temp_path
     
     def test_extractor_initialization(self):
-        """Test MetadataExtractor initialization"""
-        self.assertIsInstance(self.extractor, MetadataExtractor)
+        """Test MetadataExtractor initialization"""        self.assertIsInstance(self.extractor, MetadataExtractor)
     
     def test_extract_basic_metadata(self):
-        """Test basic metadata extraction"""
-        try:
+        """Test basic metadata extraction"""        try:
             metadata = self.extractor.extract_metadata(self.test_image_path)
             self.assertIsNotNone(metadata)
             if hasattr(metadata, 'width'):
@@ -394,36 +358,30 @@ class TestMetadataExtractor(unittest.TestCase):
             self.skipTest(f"Skipping due to import error: {e}")
     
     def test_extract_exif_data(self):
-        """Test EXIF data extraction"""
-        try:
+        """Test EXIF data extraction"""        try:
             exif_data = self.extractor.extract_exif(self.test_image_path)
             self.assertIsInstance(exif_data, dict)
         except Exception as e:
             self.skipTest(f"Skipping due to import error: {e}")
     
     def test_extract_color_profile(self):
-        """Test color profile extraction"""
-        try:
+        """Test color profile extraction"""        try:
             color_profile = self.extractor.extract_color_profile(self.test_image_path)
             self.assertIsNotNone(color_profile)
         except Exception as e:
             self.skipTest(f"Skipping due to import error: {e}")
 
 class TestPerformanceMetrics(unittest.TestCase):
-    """Test suite for performance metrics and benchmarking"""
-    
+    """Test suite for performance metrics and benchmarking"""    
     def setUp(self):
-        """Set up performance test fixtures"""
-        self.processor = VisionProcessor()
+        """Set up performance test fixtures"""        self.processor = VisionProcessor()
         self.test_images = [self._create_test_image() for _ in range(10)]
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image"""
-        return np.random.randint(0, 255, (480, 640, 3), dtype=np.uint8)
+        """Create a test image"""        return np.random.randint(0, 255, (480, 640, 3), dtype=np.uint8)
     
     def test_processing_speed_benchmark(self):
-        """Benchmark processing speed"""
-        try:
+        """Benchmark processing speed"""        try:
             start_time = time.time()
             
             for image in self.test_images:
@@ -441,8 +399,7 @@ class TestPerformanceMetrics(unittest.TestCase):
             self.skipTest(f"Skipping due to import error: {e}")
     
     def test_memory_usage(self):
-        """Test memory usage during processing"""
-        try:
+        """Test memory usage during processing"""        try:
             import psutil
             import os
             
@@ -466,15 +423,12 @@ class TestPerformanceMetrics(unittest.TestCase):
             self.skipTest(f"Skipping due to import error: {e}")
 
 class TestErrorHandling(unittest.TestCase):
-    """Test suite for error handling and edge cases"""
-    
+    """Test suite for error handling and edge cases"""    
     def setUp(self):
-        """Set up error handling test fixtures"""
-        self.processor = VisionProcessor()
+        """Set up error handling test fixtures"""        self.processor = VisionProcessor()
     
     def test_corrupted_image_handling(self):
-        """Test handling of corrupted images"""
-        try:
+        """Test handling of corrupted images"""        try:
             # Create a corrupted image file
             temp_file = tempfile.NamedTemporaryFile(suffix='.jpg', delete=False)
             temp_path = temp_file.name
@@ -491,8 +445,7 @@ class TestErrorHandling(unittest.TestCase):
                 os.remove(temp_path)
     
     def test_unsupported_format_handling(self):
-        """Test handling of unsupported image formats"""
-        try:
+        """Test handling of unsupported image formats"""        try:
             # Create a file with unsupported extension
             temp_file = tempfile.NamedTemporaryFile(suffix='.xyz', delete=False)
             temp_path = temp_file.name
@@ -508,8 +461,7 @@ class TestErrorHandling(unittest.TestCase):
                 os.remove(temp_path)
     
     def test_empty_image_handling(self):
-        """Test handling of empty images"""
-        try:
+        """Test handling of empty images"""        try:
             empty_image = np.array([])
             
             with self.assertRaises((ValueError, Exception)):
@@ -519,8 +471,7 @@ class TestErrorHandling(unittest.TestCase):
             self.skipTest(f"Skipping due to import error: {e}")
     
     def test_extremely_large_image_handling(self):
-        """Test handling of extremely large images"""
-        try:
+        """Test handling of extremely large images"""        try:
             # Create a very large image (this might be memory intensive)
             # Use a smaller size for testing to avoid memory issues
             large_image = np.random.randint(0, 255, (2000, 2000, 3), dtype=np.uint8)
@@ -537,17 +488,14 @@ class TestErrorHandling(unittest.TestCase):
             self.skipTest(f"Skipping due to import error: {e}")
 
 class TestIntegrationScenarios(unittest.TestCase):
-    """Test suite for integration scenarios and workflows"""
-    
+    """Test suite for integration scenarios and workflows"""    
     def setUp(self):
-        """Set up integration test fixtures"""
-        self.processor = VisionProcessor()
+        """Set up integration test fixtures"""        self.processor = VisionProcessor()
         self.analyzer = ImageAnalyzer()
         self.extractor = MetadataExtractor()
     
     def test_complete_image_processing_workflow(self):
-        """Test complete image processing workflow"""
-        try:
+        """Test complete image processing workflow"""        try:
             # Create test image
             test_image = np.random.randint(0, 255, (480, 640, 3), dtype=np.uint8)
             

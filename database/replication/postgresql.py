@@ -1,5 +1,4 @@
-"""
-PostgreSQL Replication Handler - IA Influencer Agent Platform
+"""PostgreSQL Replication Handler - IA Influencer Agent Platform
 
 Advanced PostgreSQL streaming and logical replication management for content creator data.
 Supports master-slave, master-master, and cluster replication modes with automated
@@ -13,9 +12,7 @@ Handles:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import psycopg2
 from psycopg2 import sql
@@ -30,16 +27,14 @@ import os
 
 
 class PostgreSQLReplicationMode(Enum):
-    """PostgreSQL replication modes"""
-    STREAMING = "streaming"
+    """PostgreSQL replication modes"""    STREAMING = "streaming"
     LOGICAL = "logical"
     SYNCHRONOUS = "synchronous"
     ASYNCHRONOUS = "asynchronous"
 
 
 class ReplicationSlotStatus(Enum):
-    """Replication slot status"""
-    ACTIVE = "active"
+    """Replication slot status"""    ACTIVE = "active"
     INACTIVE = "inactive"
     TEMPORARY = "temporary"
     DROPPED = "dropped"
@@ -47,8 +42,7 @@ class ReplicationSlotStatus(Enum):
 
 @dataclass
 class ReplicationSlot:
-    """PostgreSQL replication slot configuration"""
-    slot_name: str
+    """PostgreSQL replication slot configuration"""    slot_name: str
     plugin: str = "pgoutput"
     slot_type: str = "logical"
     database: str = "postgres"
@@ -59,8 +53,7 @@ class ReplicationSlot:
 
 @dataclass
 class PostgreSQLReplicationMetrics:
-    """PostgreSQL replication metrics"""
-    lag_bytes: int = 0
+    """PostgreSQL replication metrics"""    lag_bytes: int = 0
     lag_seconds: float = 0.0
     sent_lsn: Optional[str] = None
     write_lsn: Optional[str] = None
@@ -75,17 +68,14 @@ class PostgreSQLReplicationMetrics:
 
 
 class PostgreSQLReplicationHandler:
-    """
-    Advanced PostgreSQL replication handler for the IA Influencer Agent platform.
+    """    Advanced PostgreSQL replication handler for the IA Influencer Agent platform.
     
     Manages streaming and logical replication for content creator data,
     AI fingerprints, revenue tracking, and analytics with high availability
     and disaster recovery capabilities.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any], global_config: Any):
-        """Initialize PostgreSQL replication handler"""
-        self.config = config
+        """Initialize PostgreSQL replication handler"""        self.config = config
         self.global_config = global_config
         self.logger = logging.getLogger(f"{__name__}.PostgreSQLReplicationHandler")
         
@@ -111,13 +101,11 @@ class PostgreSQLReplicationHandler:
         self.logger.info("PostgreSQL replication handler initialized")
     
     async def initialize(self) -> bool:
-        """
-        Initialize PostgreSQL replication infrastructure.
+        """        Initialize PostgreSQL replication infrastructure.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             self.logger.info("Initializing PostgreSQL replication handler...")
             
             # Initialize connection pools
@@ -137,8 +125,7 @@ class PostgreSQLReplicationHandler:
             return False
     
     async def _initialize_connection_pools(self) -> None:
-        """Initialize connection pools for master and slaves"""
-        # Master connection pool
+        """Initialize connection pools for master and slaves"""        # Master connection pool
         if self.master_config:
             self.master_pool = await asyncpg.create_pool(
                 host=self.master_config["host"],
@@ -171,8 +158,7 @@ class PostgreSQLReplicationHandler:
             self.logger.debug(f"Slave connection pool initialized: {slave_name}")
     
     async def _setup_replication_infrastructure(self) -> None:
-        """Setup PostgreSQL replication infrastructure"""
-        replication_mode = self.replication_config.get("mode", "streaming")
+        """Setup PostgreSQL replication infrastructure"""        replication_mode = self.replication_config.get("mode", "streaming")
         
         if replication_mode == "streaming":
             await self._setup_streaming_replication()
@@ -182,8 +168,7 @@ class PostgreSQLReplicationHandler:
             raise ValueError(f"Unsupported replication mode: {replication_mode}")
     
     async def _setup_streaming_replication(self) -> None:
-        """Setup PostgreSQL streaming replication"""
-        self.logger.info("Setting up streaming replication...")
+        """Setup PostgreSQL streaming replication"""        self.logger.info("Setting up streaming replication...")
         
         if not self.master_pool:
             raise ValueError("Master connection pool not initialized")
@@ -203,8 +188,7 @@ class PostgreSQLReplicationHandler:
         self.logger.info("Streaming replication setup completed")
     
     async def _setup_logical_replication(self) -> None:
-        """Setup PostgreSQL logical replication"""
-        self.logger.info("Setting up logical replication...")
+        """Setup PostgreSQL logical replication"""        self.logger.info("Setting up logical replication...")
         
         if not self.master_pool:
             raise ValueError("Master connection pool not initialized")
@@ -227,14 +211,12 @@ class PostgreSQLReplicationHandler:
         self.logger.info("Logical replication setup completed")
     
     async def _create_replication_user(self, conn: asyncpg.Connection) -> None:
-        """Create replication user with appropriate privileges"""
-        replication_user = self.replication_config.get("user", "replication_user")
+        """Create replication user with appropriate privileges"""        replication_user = self.replication_config.get("user", "replication_user")
         replication_password = self.replication_config.get("password", "secure_password")
         
         try:
             # Create user if not exists
-            await conn.execute(f"""
-                DO $$
+            await conn.execute(f"""                DO $$
                 BEGIN
                    IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = '{replication_user}') THEN
                       CREATE ROLE {replication_user} WITH REPLICATION LOGIN PASSWORD '{replication_password}';
@@ -261,8 +243,7 @@ class PostgreSQLReplicationHandler:
         slot_type: str,
         plugin: str = None
     ) -> None:
-        """Create replication slot"""
-        try:
+        """Create replication slot"""        try:
             # Check if slot already exists
             result = await conn.fetchval(
                 "SELECT slot_name FROM pg_replication_slots WHERE slot_name = $1",
@@ -295,8 +276,7 @@ class PostgreSQLReplicationHandler:
             raise
     
     async def _configure_streaming_replication(self, conn: asyncpg.Connection) -> None:
-        """Configure streaming replication settings"""
-        settings = {
+        """Configure streaming replication settings"""        settings = {
             "wal_level": "replica",
             "max_wal_senders": max(10, len(self.slave_pools) + 2),
             "max_replication_slots": max(10, len(self.slave_pools) + 2),
@@ -315,8 +295,7 @@ class PostgreSQLReplicationHandler:
                 self.logger.debug(f"Could not check setting '{setting}': {e}")
     
     async def _create_publications(self, conn: asyncpg.Connection) -> None:
-        """Create publications for logical replication"""
-        # Define table groups for content creator platform
+        """Create publications for logical replication"""        # Define table groups for content creator platform
         table_groups = {
             "users_publication": [
                 "users", "user_profiles", "user_settings", "user_subscriptions"
@@ -357,8 +336,7 @@ class PostgreSQLReplicationHandler:
                 self.logger.error(f"Failed to create publication '{publication_name}': {e}")
     
     async def _create_subscriptions(self) -> None:
-        """Create subscriptions on slave databases"""
-        for slave_name, slave_pool in self.slave_pools.items():
+        """Create subscriptions on slave databases"""        for slave_name, slave_pool in self.slave_pools.items():
             async with slave_pool.acquire() as conn:
                 for publication in self.publications:
                     subscription_name = f"{publication}_{slave_name}"
@@ -381,8 +359,7 @@ class PostgreSQLReplicationHandler:
                             )
                             
                             # Create subscription
-                            await conn.execute(f"""
-                                CREATE SUBSCRIPTION {subscription_name} 
+                            await conn.execute(f"""                                CREATE SUBSCRIPTION {subscription_name} 
                                 CONNECTION '{master_conn_str}' 
                                 PUBLICATION {publication}
                             """)
@@ -406,14 +383,12 @@ class PostgreSQLReplicationHandler:
                         self.logger.error(f"Failed to create subscription '{subscription_name}': {e}")
     
     async def _start_monitoring(self) -> None:
-        """Start replication monitoring"""
-        self.is_monitoring = True
+        """Start replication monitoring"""        self.is_monitoring = True
         asyncio.create_task(self._monitoring_loop())
         self.logger.info("PostgreSQL replication monitoring started")
     
     async def _monitoring_loop(self) -> None:
-        """Main monitoring loop"""
-        while self.is_monitoring:
+        """Main monitoring loop"""        while self.is_monitoring:
             try:
                 await self._collect_replication_metrics()
                 await asyncio.sleep(self.global_config.monitoring_interval)
@@ -422,15 +397,13 @@ class PostgreSQLReplicationHandler:
                 await asyncio.sleep(30)  # Longer delay on error
     
     async def _collect_replication_metrics(self) -> None:
-        """Collect replication metrics from master and slaves"""
-        if not self.master_pool:
+        """Collect replication metrics from master and slaves"""        if not self.master_pool:
             return
         
         async with self.master_pool.acquire() as conn:
             # Get replication stats from master
             try:
-                replication_stats = await conn.fetch("""
-                    SELECT 
+                replication_stats = await conn.fetch("""                    SELECT 
                         pid,
                         usename,
                         application_name,
@@ -486,8 +459,7 @@ class PostgreSQLReplicationHandler:
         target_config: Dict[str, Any], 
         mode: str
     ) -> bool:
-        """
-        Start PostgreSQL replication.
+        """        Start PostgreSQL replication.
         
         Args:
             source_config: Source database configuration
@@ -496,8 +468,7 @@ class PostgreSQLReplicationHandler:
             
         Returns:
             bool: True if replication started successfully
-        """
-        try:
+        """        try:
             self.logger.info(f"Starting PostgreSQL replication in {mode} mode")
             
             # Update configurations
@@ -518,16 +489,14 @@ class PostgreSQLReplicationHandler:
             return False
     
     async def stop_replication(self, graceful: bool = True) -> bool:
-        """
-        Stop PostgreSQL replication.
+        """        Stop PostgreSQL replication.
         
         Args:
             graceful: Whether to perform graceful shutdown
             
         Returns:
             bool: True if replication stopped successfully
-        """
-        try:
+        """        try:
             self.logger.info(f"Stopping PostgreSQL replication (graceful={graceful})")
             
             # Stop monitoring
@@ -577,8 +546,7 @@ class PostgreSQLReplicationHandler:
             return False
     
     async def pause_replication(self) -> bool:
-        """Pause PostgreSQL replication"""
-        try:
+        """Pause PostgreSQL replication"""        try:
             self.logger.info("Pausing PostgreSQL replication")
             
             # Disable subscriptions
@@ -596,8 +564,7 @@ class PostgreSQLReplicationHandler:
             return False
     
     async def resume_replication(self) -> bool:
-        """Resume paused PostgreSQL replication"""
-        try:
+        """Resume paused PostgreSQL replication"""        try:
             self.logger.info("Resuming PostgreSQL replication")
             
             # Enable subscriptions
@@ -615,8 +582,7 @@ class PostgreSQLReplicationHandler:
             return False
     
     async def trigger_sync(self, force: bool = False) -> bool:
-        """Trigger manual synchronization"""
-        try:
+        """Trigger manual synchronization"""        try:
             self.logger.info(f"Triggering PostgreSQL sync (force={force})")
             
             if not self.master_pool:
@@ -641,8 +607,7 @@ class PostgreSQLReplicationHandler:
             return False
     
     async def prepare_maintenance(self, duration: timedelta) -> bool:
-        """Prepare for maintenance mode"""
-        try:
+        """Prepare for maintenance mode"""        try:
             self.logger.info(f"Preparing PostgreSQL for maintenance (duration: {duration})")
             
             # Pause replication to avoid conflicts during maintenance
@@ -661,8 +626,7 @@ class PostgreSQLReplicationHandler:
             return False
     
     async def exit_maintenance(self) -> bool:
-        """Exit maintenance mode"""
-        try:
+        """Exit maintenance mode"""        try:
             self.logger.info("Exiting PostgreSQL maintenance mode")
             
             # Stop backup if running
@@ -684,8 +648,7 @@ class PostgreSQLReplicationHandler:
             return False
     
     async def check_health(self) -> Dict[str, Any]:
-        """Check PostgreSQL replication health"""
-        health = {
+        """Check PostgreSQL replication health"""        health = {
             "healthy": True,
             "issues": [],
             "metrics": {},
@@ -734,8 +697,7 @@ class PostgreSQLReplicationHandler:
         return health
     
     async def get_replication_metrics(self) -> Dict[str, Any]:
-        """Get current replication metrics"""
-        metrics = {
+        """Get current replication metrics"""        metrics = {
             "total_slaves": len(self.slave_pools),
             "active_slots": len([s for s in self.replication_slots.values() if s.active]),
             "publications": len(self.publications),
@@ -755,8 +717,7 @@ class PostgreSQLReplicationHandler:
         return metrics
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get comprehensive status information"""
-        return {
+        """Get comprehensive status information"""        return {
             "handler_type": "postgresql",
             "initialized": self.master_pool is not None,
             "monitoring": self.is_monitoring,
@@ -770,8 +731,7 @@ class PostgreSQLReplicationHandler:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown PostgreSQL replication handler"""
-        try:
+        """Shutdown PostgreSQL replication handler"""        try:
             self.logger.info("Shutting down PostgreSQL replication handler")
             await self.stop_replication(graceful=True)
             self.logger.info("PostgreSQL replication handler shutdown completed")

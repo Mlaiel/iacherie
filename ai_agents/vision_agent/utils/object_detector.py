@@ -1,5 +1,4 @@
-"""
-Object Detector - Enterprise AI Object Detection System
+"""Object Detector - Enterprise AI Object Detection System
 ======================================================
 
 Advanced object detection system using state-of-the-art deep learning models
@@ -12,9 +11,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import cv2
 import numpy as np
@@ -45,19 +42,16 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class DetectionModel:
-    """Object detection model configurations"""
-    YOLO_V8 = "yolo_v8"
+    """Object detection model configurations"""    YOLO_V8 = "yolo_v8"
     YOLO_V5 = "yolo_v5"
     SSD_MOBILENET = "ssd_mobilenet"
     FASTER_RCNN = "faster_rcnn"
     DETECTRON2 = "detectron2"
 
 class ObjectDetector(BaseAgent):
-    """
-    Enterprise-grade object detection system providing comprehensive
+    """    Enterprise-grade object detection system providing comprehensive
     object recognition, classification, and localization capabilities.
-    """
-    
+    """    
     def __init__(self):
         super().__init__(
             agent_id="object_detector",
@@ -113,8 +107,7 @@ class ObjectDetector(BaseAgent):
         }
 
     async def initialize(self) -> bool:
-        """Initialize object detection models"""
-        try:
+        """Initialize object detection models"""        try:
             logger.info("Initializing Object Detector...")
             
             # Initialize primary detection model
@@ -145,8 +138,7 @@ class ObjectDetector(BaseAgent):
             return False
 
     async def _load_detection_model(self, model_type: str) -> bool:
-        """Load specific detection model"""
-        try:
+        """Load specific detection model"""        try:
             if model_type == DetectionModel.YOLO_V8:
                 # In production, load actual YOLOv8 model
                 # For now, use placeholder that simulates YOLO detection
@@ -169,8 +161,7 @@ class ObjectDetector(BaseAgent):
             return False
 
     def _create_yolo_placeholder(self) -> Dict[str, Any]:
-        """Create YOLO model placeholder"""
-        return {
+        """Create YOLO model placeholder"""        return {
             'type': 'yolo_v8',
             'input_size': (640, 640),
             'classes': self.object_classes['general'],
@@ -179,8 +170,7 @@ class ObjectDetector(BaseAgent):
         }
 
     def _create_ssd_placeholder(self) -> Dict[str, Any]:
-        """Create SSD model placeholder"""
-        return {
+        """Create SSD model placeholder"""        return {
             'type': 'ssd_mobilenet',
             'input_size': (300, 300),
             'classes': self.object_classes['general'],
@@ -193,8 +183,7 @@ class ObjectDetector(BaseAgent):
         detection_categories: List[str] = None,
         custom_confidence: float = None
     ) -> Dict[str, Any]:
-        """
-        Detect objects in image
+        """        Detect objects in image
         
         Args:
             image: Input image as numpy array
@@ -203,8 +192,7 @@ class ObjectDetector(BaseAgent):
             
         Returns:
             Detection results with bounding boxes and classifications
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             logger.info("Starting object detection...")
@@ -271,8 +259,7 @@ class ObjectDetector(BaseAgent):
             }
 
     async def _preprocess_image(self, image: np.ndarray) -> np.ndarray:
-        """Preprocess image for detection"""
-        try:
+        """Preprocess image for detection"""        try:
             # Ensure image is in BGR format
             if len(image.shape) == 3 and image.shape[2] == 3:
                 processed = image.copy()
@@ -305,8 +292,7 @@ class ObjectDetector(BaseAgent):
         confidence: float,
         detection_categories: List[str] = None
     ) -> List[Dict[str, Any]]:
-        """Perform detection with primary AI model"""
-        detections = []
+        """Perform detection with primary AI model"""        detections = []
         
         try:
             # This is a placeholder implementation
@@ -358,8 +344,7 @@ class ObjectDetector(BaseAgent):
             return []
 
     def _simulate_classification(self, roi: np.ndarray) -> str:
-        """Simulate object classification"""
-        # Simple heuristic-based classification for demonstration
+        """Simulate object classification"""        # Simple heuristic-based classification for demonstration
         height, width = roi.shape[:2]
         aspect_ratio = width / height if height > 0 else 1
         
@@ -388,8 +373,7 @@ class ObjectDetector(BaseAgent):
         image: np.ndarray, 
         existing_detections: List[Dict]
     ) -> List[Dict[str, Any]]:
-        """Enhance detections with cascade classifiers"""
-        enhanced = existing_detections.copy()
+        """Enhance detections with cascade classifiers"""        enhanced = existing_detections.copy()
         
         try:
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -429,8 +413,7 @@ class ObjectDetector(BaseAgent):
             return existing_detections
 
     def _calculate_bbox_overlap(self, bbox1: Dict, bbox2: Dict) -> float:
-        """Calculate overlap ratio between two bounding boxes"""
-        try:
+        """Calculate overlap ratio between two bounding boxes"""        try:
             # Calculate intersection
             x1 = max(bbox1['x'], bbox2['x'])
             y1 = max(bbox1['y'], bbox2['y'])
@@ -454,8 +437,7 @@ class ObjectDetector(BaseAgent):
         self, 
         detections: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Post-process detection results"""
-        try:
+        """Post-process detection results"""        try:
             # Remove duplicates and apply NMS
             filtered_detections = self._apply_non_maximum_suppression(detections)
             
@@ -508,8 +490,7 @@ class ObjectDetector(BaseAgent):
         self, 
         detections: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Apply Non-Maximum Suppression to remove duplicate detections"""
-        if not detections:
+        """Apply Non-Maximum Suppression to remove duplicate detections"""        if not detections:
             return []
         
         # Sort by confidence
@@ -538,8 +519,7 @@ class ObjectDetector(BaseAgent):
         images: List[np.ndarray],
         max_concurrent: int = 5
     ) -> List[Dict[str, Any]]:
-        """Detect objects in multiple images concurrently"""
-        semaphore = asyncio.Semaphore(max_concurrent)
+        """Detect objects in multiple images concurrently"""        semaphore = asyncio.Semaphore(max_concurrent)
         
         async def detect_single(image):
             async with semaphore:
@@ -557,8 +537,7 @@ class ObjectDetector(BaseAgent):
         image: np.ndarray,
         target_classes: List[str]
     ) -> Dict[str, Any]:
-        """Detect specific object classes in image"""
-        # Perform full detection
+        """Detect specific object classes in image"""        # Perform full detection
         full_results = await self.detect_objects(image)
         
         if full_results['status'] != 'success':
@@ -578,8 +557,7 @@ class ObjectDetector(BaseAgent):
         return full_results
 
     def get_detection_statistics(self) -> Dict[str, Any]:
-        """Get detection performance statistics"""
-        stats = self.detection_stats.copy()
+        """Get detection performance statistics"""        stats = self.detection_stats.copy()
         
         if stats['processing_times']:
             stats['average_processing_time'] = np.mean(stats['processing_times'])
@@ -594,12 +572,10 @@ class ObjectDetector(BaseAgent):
         return stats
 
     def get_supported_classes(self, category: str = 'general') -> List[str]:
-        """Get list of supported object classes"""
-        return self.object_classes.get(category, self.object_classes['general']).copy()
+        """Get list of supported object classes"""        return self.object_classes.get(category, self.object_classes['general']).copy()
 
     async def cleanup(self) -> None:
-        """Cleanup resources"""
-        try:
+        """Cleanup resources"""        try:
             await self.performance_monitor.close()
             
             # Clear loaded models
@@ -610,16 +586,14 @@ class ObjectDetector(BaseAgent):
             logger.error(f"Object Detector cleanup failed: {e}")
 
     def set_confidence_threshold(self, threshold: float) -> None:
-        """Set global confidence threshold"""
-        if 0.0 <= threshold <= 1.0:
+        """Set global confidence threshold"""        if 0.0 <= threshold <= 1.0:
             self.confidence_threshold = threshold
             logger.info(f"Confidence threshold set to {threshold}")
         else:
             logger.warning(f"Invalid confidence threshold: {threshold}")
 
     def set_model(self, model_type: str) -> bool:
-        """Switch detection model"""
-        if model_type in [DetectionModel.YOLO_V8, DetectionModel.SSD_MOBILENET]:
+        """Switch detection model"""        if model_type in [DetectionModel.YOLO_V8, DetectionModel.SSD_MOBILENET]:
             self.current_model = model_type
             logger.info(f"Detection model switched to {model_type}")
             return True

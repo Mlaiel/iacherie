@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Core Platform API Unit Tests
+"""Core Platform API Unit Tests
 ============================
 
 Real unit tests for the core platform APIs to validate essential endpoints
@@ -23,9 +19,7 @@ and authentication mechanisms.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Implement centralized unit tests for API quality validation
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -38,11 +32,9 @@ import json
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 class TestCoreAPIStructure:
-    """Test core API structure and configuration"""
-    
+    """Test core API structure and configuration"""    
     def test_api_config_exists(self):
-        """Test that API configuration exists and is accessible"""
-        try:
+        """Test that API configuration exists and is accessible"""        try:
             from config import API_CONFIG
             assert API_CONFIG is not None
         except ImportError:
@@ -57,8 +49,7 @@ class TestCoreAPIStructure:
             assert api_config["prefix"] == "/api/v1"
     
     def test_api_endpoints_structure(self):
-        """Test API endpoints are properly structured"""
-        # Define expected endpoint structure
+        """Test API endpoints are properly structured"""        # Define expected endpoint structure
         expected_endpoints = {
             "auth": ["/login", "/register", "/logout", "/refresh"],
             "content": ["/upload", "/download", "/metadata"],
@@ -74,11 +65,9 @@ class TestCoreAPIStructure:
                 assert endpoint.startswith("/")
 
 class TestAuthenticationAPI:
-    """Test authentication API functionality"""
-    
+    """Test authentication API functionality"""    
     def test_user_registration_data_structure(self):
-        """Test user registration data validation"""
-        registration_data = {
+        """Test user registration data validation"""        registration_data = {
             "email": "test@example.com",
             "password": "secure_password123",
             "username": "testuser",
@@ -93,8 +82,7 @@ class TestAuthenticationAPI:
             assert len(str(registration_data[field])) > 0
     
     def test_authentication_token_structure(self):
-        """Test authentication token structure"""
-        mock_token_data = {
+        """Test authentication token structure"""        mock_token_data = {
             "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9",
             "token_type": "bearer",
             "expires_in": 3600,
@@ -111,10 +99,8 @@ class TestAuthenticationAPI:
     
     @patch('builtins.print')
     def test_login_flow_validation(self, mock_print):
-        """Test login flow validation logic"""
-        def validate_login_credentials(email, password):
-            """Mock login validation function"""
-            if not email or not password:
+        """Test login flow validation logic"""        def validate_login_credentials(email, password):
+            """Mock login validation function"""            if not email or not password:
                 return {"success": False, "error": "Missing credentials"}
             if "@" not in email:
                 return {"success": False, "error": "Invalid email format"}
@@ -138,11 +124,9 @@ class TestAuthenticationAPI:
         assert "Password too short" in result["error"]
 
 class TestContentAPI:
-    """Test content management API functionality"""
-    
+    """Test content management API functionality"""    
     def test_content_upload_data_structure(self):
-        """Test content upload data validation"""
-        upload_data = {
+        """Test content upload data validation"""        upload_data = {
             "title": "Test Content",
             "description": "Test description",
             "content_type": "audio",
@@ -167,10 +151,8 @@ class TestContentAPI:
         assert "duration" in upload_data["metadata"]
     
     def test_content_validation_logic(self):
-        """Test content validation logic"""
-        def validate_content_upload(data):
-            """Mock content validation function"""
-            errors = []
+        """Test content validation logic"""        def validate_content_upload(data):
+            """Mock content validation function"""            errors = []
             
             if not data.get("title"):
                 errors.append("Title is required")
@@ -204,11 +186,9 @@ class TestContentAPI:
         assert len(result["errors"]) > 0
 
 class TestMonetizationAPI:
-    """Test monetization API functionality"""
-    
+    """Test monetization API functionality"""    
     def test_license_creation_data(self):
-        """Test license creation data structure"""
-        license_data = {
+        """Test license creation data structure"""        license_data = {
             "content_id": 123,
             "licensee_id": 456,
             "license_type": "standard",
@@ -235,10 +215,8 @@ class TestMonetizationAPI:
         assert isinstance(license_data["terms"], dict)
     
     def test_royalty_calculation_api(self):
-        """Test royalty calculation API logic"""
-        def calculate_royalties(usage_data, rates):
-            """Mock royalty calculation function"""
-            total = 0
+        """Test royalty calculation API logic"""        def calculate_royalties(usage_data, rates):
+            """Mock royalty calculation function"""            total = 0
             for usage_type, count in usage_data.items():
                 if usage_type in rates:
                     total += count * rates[usage_type]
@@ -254,11 +232,9 @@ class TestMonetizationAPI:
         assert "breakdown" in result
 
 class TestProtectionAPI:
-    """Test content protection API functionality"""
-    
+    """Test content protection API functionality"""    
     def test_fingerprint_data_structure(self):
-        """Test fingerprint data structure"""
-        fingerprint_data = {
+        """Test fingerprint data structure"""        fingerprint_data = {
             "content_id": 123,
             "fingerprint_type": "audio",
             "fingerprint_hash": "abc123def456",
@@ -280,8 +256,7 @@ class TestProtectionAPI:
         assert 0 <= fingerprint_data["confidence_score"] <= 1
     
     def test_scan_result_structure(self):
-        """Test content scan result structure"""
-        scan_result = {
+        """Test content scan result structure"""        scan_result = {
             "scan_id": "scan_12345",
             "status": "completed",
             "matches_found": 2,

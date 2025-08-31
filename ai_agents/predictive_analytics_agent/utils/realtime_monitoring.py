@@ -1,5 +1,4 @@
-"""
-Real-Time Monitoring System - Advanced Live Performance Tracking & Alert Engine
+"""Real-Time Monitoring System - Advanced Live Performance Tracking & Alert Engine
 
 Enterprise-grade real-time monitoring system providing comprehensive live tracking
 of content performance, audience engagement, and market conditions with 
@@ -12,9 +11,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This real-time monitoring system and its algorithms are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import pandas as pd
@@ -42,16 +39,14 @@ from ...utils.cache_manager import CacheManager
 logger = logging.getLogger(__name__)
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
-    CRITICAL = "critical"      # Immediate action required
+    """Alert severity levels"""    CRITICAL = "critical"      # Immediate action required
     HIGH = "high"             # Action required within 1 hour
     MEDIUM = "medium"         # Action required within 24 hours
     LOW = "low"               # Monitor and review
     INFO = "info"             # Informational only
 
 class MetricType(Enum):
-    """Types of metrics being monitored"""
-    ENGAGEMENT = "engagement"
+    """Types of metrics being monitored"""    ENGAGEMENT = "engagement"
     GROWTH = "growth"
     PERFORMANCE = "performance"
     MONETIZATION = "monetization"
@@ -63,16 +58,14 @@ class MetricType(Enum):
     SECURITY = "security"
 
 class MonitoringStatus(Enum):
-    """Monitoring system status"""
-    ACTIVE = "active"
+    """Monitoring system status"""    ACTIVE = "active"
     PAUSED = "paused"
     MAINTENANCE = "maintenance"
     ERROR = "error"
     DISABLED = "disabled"
 
 class AlertType(Enum):
-    """Types of alerts"""
-    THRESHOLD_BREACH = "threshold_breach"
+    """Types of alerts"""    THRESHOLD_BREACH = "threshold_breach"
     ANOMALY_DETECTION = "anomaly_detection"
     TREND_ALERT = "trend_alert"
     COMPETITIVE_ALERT = "competitive_alert"
@@ -82,8 +75,7 @@ class AlertType(Enum):
 
 @dataclass
 class MetricThreshold:
-    """Metric threshold configuration"""
-    metric_name: str = ""
+    """Metric threshold configuration"""    metric_name: str = ""
     metric_type: MetricType = MetricType.PERFORMANCE
     upper_threshold: Optional[float] = None
     lower_threshold: Optional[float] = None
@@ -97,8 +89,7 @@ class MetricThreshold:
     
 @dataclass
 class MonitoringAlert:
-    """Monitoring alert structure"""
-    alert_id: str = field(default_factory=lambda: f"alert_{int(datetime.now().timestamp())}")
+    """Monitoring alert structure"""    alert_id: str = field(default_factory=lambda: f"alert_{int(datetime.now().timestamp())}")
     title: str = ""
     description: str = ""
     severity: AlertSeverity = AlertSeverity.MEDIUM
@@ -123,8 +114,7 @@ class MonitoringAlert:
     
 @dataclass
 class RealTimeMetrics:
-    """Real-time metrics snapshot"""
-    timestamp: datetime = field(default_factory=datetime.utcnow)
+    """Real-time metrics snapshot"""    timestamp: datetime = field(default_factory=datetime.utcnow)
     creator_id: str = ""
     platform: str = ""
     
@@ -164,8 +154,7 @@ class RealTimeMetrics:
     conversion_rate: float = 0.0
     
 class RealTimeMonitoringSystem:
-    """
-    Advanced Real-Time Monitoring Engine for IA Influencer Platform
+    """    Advanced Real-Time Monitoring Engine for IA Influencer Platform
     
     Provides comprehensive real-time monitoring and alerting capabilities:
     
@@ -192,11 +181,9 @@ class RealTimeMonitoringSystem:
     - Automatic content optimization based on real-time performance
     - Smart notification filtering to reduce alert fatigue
     - Emergency response protocols for critical situations
-    """
-    
+    """    
     def __init__(self, cache_manager: CacheManager = None, redis_client: redis.Redis = None):
-        """Initialize the real-time monitoring system"""
-        self.cache_manager = cache_manager or CacheManager("realtime_monitoring")
+        """Initialize the real-time monitoring system"""        self.cache_manager = cache_manager or CacheManager("realtime_monitoring")
         self.redis_client = redis_client or redis.Redis(host='localhost', port=6379, db=0)
         
         # Monitoring configuration
@@ -264,8 +251,7 @@ class RealTimeMonitoringSystem:
         logger.info("Real-Time Monitoring System initialized")
 
     async def start_monitoring(self, creator_id: str, monitoring_config: Dict[str, Any] = None) -> bool:
-        """
-        Start real-time monitoring for a creator
+        """        Start real-time monitoring for a creator
         
         Args:
             creator_id: ID of the creator to monitor
@@ -273,8 +259,7 @@ class RealTimeMonitoringSystem:
             
         Returns:
             bool: True if monitoring started successfully
-        """
-        try:
+        """        try:
             if creator_id in self.active_monitors:
                 logger.warning(f"Monitoring already active for creator {creator_id}")
                 return True
@@ -312,8 +297,7 @@ class RealTimeMonitoringSystem:
             raise MonitoringError(f"Monitoring start failed: {str(e)}")
 
     async def collect_real_time_metrics(self, creator_id: str, platform_data: Dict[str, Any]) -> RealTimeMetrics:
-        """
-        Collect real-time metrics for a creator
+        """        Collect real-time metrics for a creator
         
         Args:
             creator_id: ID of the creator
@@ -321,8 +305,7 @@ class RealTimeMonitoringSystem:
             
         Returns:
             RealTimeMetrics: Current metrics snapshot
-        """
-        try:
+        """        try:
             metrics = RealTimeMetrics(creator_id=creator_id)
             
             # Extract platform information
@@ -390,8 +373,7 @@ class RealTimeMonitoringSystem:
             raise ProcessingError(f"Metrics collection error: {str(e)}")
 
     async def evaluate_alerts(self, creator_id: str, current_metrics: RealTimeMetrics) -> List[MonitoringAlert]:
-        """
-        Evaluate current metrics against thresholds and detect anomalies
+        """        Evaluate current metrics against thresholds and detect anomalies
         
         Args:
             creator_id: ID of the creator
@@ -399,8 +381,7 @@ class RealTimeMonitoringSystem:
             
         Returns:
             List[MonitoringAlert]: Any alerts generated
-        """
-        try:
+        """        try:
             alerts = []
             
             if creator_id not in self.active_monitors:
@@ -445,8 +426,7 @@ class RealTimeMonitoringSystem:
             return []
 
     async def detect_viral_content(self, creator_id: str, content_metrics: RealTimeMetrics) -> Dict[str, Any]:
-        """
-        Detect if content is going viral and provide real-time insights
+        """        Detect if content is going viral and provide real-time insights
         
         Args:
             creator_id: ID of the creator
@@ -454,8 +434,7 @@ class RealTimeMonitoringSystem:
             
         Returns:
             Dict[str, Any]: Viral content analysis results
-        """
-        try:
+        """        try:
             viral_analysis = {
                 'is_viral': False,
                 'viral_probability': 0.0,
@@ -560,16 +539,14 @@ class RealTimeMonitoringSystem:
             return {'is_viral': False, 'viral_probability': 0.0, 'error': str(e)}
 
     async def get_live_dashboard_data(self, creator_id: str) -> Dict[str, Any]:
-        """
-        Get comprehensive live dashboard data
+        """        Get comprehensive live dashboard data
         
         Args:
             creator_id: ID of the creator
             
         Returns:
             Dict[str, Any]: Live dashboard data
-        """
-        try:
+        """        try:
             if creator_id not in self.active_monitors:
                 return {'error': 'Monitoring not active for creator'}
             
@@ -632,8 +609,7 @@ class RealTimeMonitoringSystem:
                                        creator_id: str, 
                                        metrics: RealTimeMetrics, 
                                        thresholds: Dict[str, MetricThreshold]) -> List[MonitoringAlert]:
-        """Evaluate threshold-based alerts"""
-        alerts = []
+        """Evaluate threshold-based alerts"""        alerts = []
         
         metric_values = {
             'engagement_rate': metrics.engagement_rate,
@@ -710,8 +686,7 @@ class RealTimeMonitoringSystem:
         return alerts
 
     async def _calculate_content_performance_score(self, content_data: Dict[str, Any]) -> float:
-        """Calculate comprehensive content performance score"""
-        if not content_data:
+        """Calculate comprehensive content performance score"""        if not content_data:
             return 0.5
         
         # Normalize and weight different performance factors
@@ -731,8 +706,7 @@ class RealTimeMonitoringSystem:
         return min(max(performance_score, 0.0), 1.0)
 
     async def _calculate_viral_potential(self, content_data: Dict[str, Any], metrics: RealTimeMetrics) -> float:
-        """Calculate viral potential score"""
-        if not content_data:
+        """Calculate viral potential score"""        if not content_data:
             return 0.0
         
         # Factors that contribute to viral potential
@@ -751,14 +725,12 @@ class RealTimeMonitoringSystem:
         return min(max(viral_potential, 0.0), 1.0)
 
     async def _handle_alert(self, alert: MonitoringAlert):
-        """Handle alert based on severity"""
-        handler = self.alert_handlers.get(alert.severity)
+        """Handle alert based on severity"""        handler = self.alert_handlers.get(alert.severity)
         if handler:
             await handler(alert)
 
     async def _handle_critical_alert(self, alert: MonitoringAlert):
-        """Handle critical severity alerts"""
-        logger.critical(f"CRITICAL ALERT: {alert.title} - {alert.description}")
+        """Handle critical severity alerts"""        logger.critical(f"CRITICAL ALERT: {alert.title} - {alert.description}")
         
         # Immediate notifications
         await self._send_immediate_notification(alert)
@@ -769,23 +741,19 @@ class RealTimeMonitoringSystem:
             await self._trigger_emergency_response(alert)
 
     async def _handle_high_alert(self, alert: MonitoringAlert):
-        """Handle high severity alerts"""
-        logger.warning(f"HIGH ALERT: {alert.title}")
+        """Handle high severity alerts"""        logger.warning(f"HIGH ALERT: {alert.title}")
         await self._send_priority_notification(alert)
 
     async def _handle_medium_alert(self, alert: MonitoringAlert):
-        """Handle medium severity alerts"""
-        logger.info(f"MEDIUM ALERT: {alert.title}")
+        """Handle medium severity alerts"""        logger.info(f"MEDIUM ALERT: {alert.title}")
         await self._send_standard_notification(alert)
 
     async def _handle_low_alert(self, alert: MonitoringAlert):
-        """Handle low severity alerts"""
-        logger.debug(f"LOW ALERT: {alert.title}")
+        """Handle low severity alerts"""        logger.debug(f"LOW ALERT: {alert.title}")
         # Usually just logged, might be aggregated for daily summaries
 
     async def _handle_info_alert(self, alert: MonitoringAlert):
-        """Handle informational alerts"""
-        logger.debug(f"INFO: {alert.title}")
+        """Handle informational alerts"""        logger.debug(f"INFO: {alert.title}")
         # Purely informational
 
     # Additional helper methods would be implemented here for:
@@ -799,38 +767,32 @@ class RealTimeMonitoringSystem:
 
 
 class AlertManager:
-    """Specialized alert management system"""
-    
+    """Specialized alert management system"""    
     def __init__(self, monitoring_system: RealTimeMonitoringSystem):
         self.monitoring_system = monitoring_system
     
     async def create_custom_alert_rule(self, rule_config: Dict[str, Any]) -> str:
-        """Create custom alert rule"""
-        return "alert_rule_12345"
+        """Create custom alert rule"""        return "alert_rule_12345"
 
 class MetricCollector:
-    """Specialized metric collection engine"""
-    
+    """Specialized metric collection engine"""    
     def __init__(self, monitoring_system: RealTimeMonitoringSystem):
         self.monitoring_system = monitoring_system
     
     async def collect_platform_metrics(self, platform: str, creator_id: str) -> Dict[str, Any]:
-        """Collect metrics from specific platform"""
-        return {
+        """Collect metrics from specific platform"""        return {
             'engagement_data': {},
             'audience_data': {},
             'content_data': {}
         }
 
 class AnomalyDetector:
-    """Specialized anomaly detection system"""
-    
+    """Specialized anomaly detection system"""    
     def __init__(self, monitoring_system: RealTimeMonitoringSystem):
         self.monitoring_system = monitoring_system
     
     async def detect_performance_anomalies(self, metrics_history: List[RealTimeMetrics]) -> List[Dict[str, Any]]:
-        """Detect anomalies in performance metrics"""
-        return [
+        """Detect anomalies in performance metrics"""        return [
             {
                 'anomaly_type': 'engagement_spike',
                 'confidence': 0.85,

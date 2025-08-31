@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-🔄 Pipeline Tests - Industrial-Grade Audio Processing Pipeline Testing Suite
+"""🔄 Pipeline Tests - Industrial-Grade Audio Processing Pipeline Testing Suite
 
 Comprehensive testing for audio processing pipelines including:
 - AudioPipeline orchestration
@@ -26,9 +22,7 @@ Comprehensive testing for audio processing pipelines including:
 
 Created by Expert Team: Pipeline Architect + DevOps Engineer + Backend Senior
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -66,8 +60,7 @@ from . import TEST_CONFIG, setup_test_environment
 
 
 class TestPipelineStage:
-    """
-    Industrial-grade testing for PipelineStage class
+    """    Industrial-grade testing for PipelineStage class
     
     Test Coverage:
     - Stage initialization and configuration
@@ -75,17 +68,14 @@ class TestPipelineStage:
     - Stage execution
     - Error handling
     - Performance monitoring
-    """
-    
+    """    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""
-        setup_test_environment()
+        """Setup test environment before each test"""        setup_test_environment()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
     
     def test_stage_initialization(self):
-        """Test PipelineStage initialization"""
-        stage = PipelineStage(
+        """Test PipelineStage initialization"""        stage = PipelineStage(
             name="test_stage",
             processor_func=lambda x: x * 2,
             input_type=np.ndarray,
@@ -99,8 +89,7 @@ class TestPipelineStage:
         assert stage.is_enabled is True
     
     def test_stage_execution(self):
-        """Test stage execution"""
-        def processing_function(data):
+        """Test stage execution"""        def processing_function(data):
             return data + 10
         
         stage = PipelineStage(
@@ -126,8 +115,7 @@ class TestPipelineStage:
                 assert result.output == input_data + 10
     
     def test_stage_input_validation(self):
-        """Test stage input validation"""
-        stage = PipelineStage(
+        """Test stage input validation"""        stage = PipelineStage(
             name="strict_stage",
             processor_func=lambda x: x,
             input_type=str,
@@ -145,8 +133,7 @@ class TestPipelineStage:
         assert "validation" in invalid_result.error_message.lower()
     
     def test_stage_error_handling(self):
-        """Test stage error handling"""
-        def failing_function(data):
+        """Test stage error handling"""        def failing_function(data):
             if data == "fail":
                 raise ValueError("Intentional failure")
             return data
@@ -169,8 +156,7 @@ class TestPipelineStage:
         assert "intentional failure" in error_result.error_message.lower()
     
     def test_stage_performance_monitoring(self):
-        """Test stage performance monitoring"""
-        def slow_function(data):
+        """Test stage performance monitoring"""        def slow_function(data):
             time.sleep(0.1)  # Simulate processing time
             return data
         
@@ -190,8 +176,7 @@ class TestPipelineStage:
         assert result.execution_time_ms < 1000  # But not too slow
     
     def test_stage_async_execution(self):
-        """Test asynchronous stage execution"""
-        async def async_processor(data):
+        """Test asynchronous stage execution"""        async def async_processor(data):
             await asyncio.sleep(0.05)
             return data.upper()
         
@@ -213,8 +198,7 @@ class TestPipelineStage:
 
 
 class TestAudioPipeline:
-    """
-    Industrial-grade testing for AudioPipeline class
+    """    Industrial-grade testing for AudioPipeline class
     
     Test Coverage:
     - Pipeline construction and configuration
@@ -222,12 +206,10 @@ class TestAudioPipeline:
     - Data flow management
     - Error propagation
     - Performance optimization
-    """
-    
+    """    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
-        setup_test_environment()
+        """Setup test environment"""        setup_test_environment()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
         
         # Create sample stages
@@ -253,8 +235,7 @@ class TestAudioPipeline:
         )
     
     def test_pipeline_initialization(self):
-        """Test AudioPipeline initialization"""
-        config = PipelineConfig(
+        """Test AudioPipeline initialization"""        config = PipelineConfig(
             name="test_pipeline",
             parallel_execution=False,
             max_workers=4,
@@ -269,8 +250,7 @@ class TestAudioPipeline:
         assert len(pipeline.stages) == 0
     
     def test_add_stage(self):
-        """Test adding stages to pipeline"""
-        pipeline = AudioPipeline()
+        """Test adding stages to pipeline"""        pipeline = AudioPipeline()
         
         # Add stages
         pipeline.add_stage(self.load_stage)
@@ -283,8 +263,7 @@ class TestAudioPipeline:
         assert pipeline.stages[2].name == "extract_features"
     
     def test_remove_stage(self):
-        """Test removing stages from pipeline"""
-        pipeline = AudioPipeline()
+        """Test removing stages from pipeline"""        pipeline = AudioPipeline()
         pipeline.add_stage(self.load_stage)
         pipeline.add_stage(self.normalize_stage)
         
@@ -300,8 +279,7 @@ class TestAudioPipeline:
         assert fail_success is False
     
     def test_sequential_execution(self):
-        """Test sequential pipeline execution"""
-        pipeline = AudioPipeline()
+        """Test sequential pipeline execution"""        pipeline = AudioPipeline()
         pipeline.add_stage(self.load_stage)
         pipeline.add_stage(self.normalize_stage)
         pipeline.add_stage(self.feature_stage)
@@ -323,8 +301,7 @@ class TestAudioPipeline:
         assert "mfcc" in result.final_output
     
     def test_pipeline_error_propagation(self):
-        """Test error propagation in pipeline"""
-        # Create a failing stage
+        """Test error propagation in pipeline"""        # Create a failing stage
         failing_stage = PipelineStage(
             name="failing_stage",
             processor_func=lambda x: 1/0,  # Division by zero
@@ -345,8 +322,7 @@ class TestAudioPipeline:
         assert "division by zero" in result.stage_results[1].error_message.lower()
     
     def test_parallel_execution(self):
-        """Test parallel pipeline execution"""
-        # Create stages that can run in parallel
+        """Test parallel pipeline execution"""        # Create stages that can run in parallel
         stage1 = PipelineStage(
             name="parallel_1",
             processor_func=lambda audio: audio + 1,
@@ -380,8 +356,7 @@ class TestAudioPipeline:
         assert "parallel_2" in stage_names
     
     def test_pipeline_caching(self):
-        """Test pipeline result caching"""
-        config = PipelineConfig(enable_caching=True)
+        """Test pipeline result caching"""        config = PipelineConfig(enable_caching=True)
         pipeline = AudioPipeline(config=config)
         pipeline.add_stage(self.load_stage)
         pipeline.add_stage(self.normalize_stage)
@@ -403,8 +378,7 @@ class TestAudioPipeline:
         assert second_duration < first_duration  # Cache should be faster
     
     def test_pipeline_metrics(self):
-        """Test pipeline performance metrics"""
-        config = PipelineConfig(collect_metrics=True)
+        """Test pipeline performance metrics"""        config = PipelineConfig(collect_metrics=True)
         pipeline = AudioPipeline(config=config)
         pipeline.add_stage(self.load_stage)
         pipeline.add_stage(self.normalize_stage)
@@ -424,32 +398,27 @@ class TestAudioPipeline:
 
 
 class TestDataFlowManager:
-    """
-    Industrial-grade testing for DataFlowManager class
+    """    Industrial-grade testing for DataFlowManager class
     
     Test Coverage:
     - Data transformation between stages
     - Type checking and validation
     - Memory management
     - Data serialization/deserialization
-    """
-    
+    """    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
-        setup_test_environment()
+        """Setup test environment"""        setup_test_environment()
     
     def test_dataflow_initialization(self):
-        """Test DataFlowManager initialization"""
-        manager = DataFlowManager()
+        """Test DataFlowManager initialization"""        manager = DataFlowManager()
         
         assert manager is not None
         assert hasattr(manager, 'type_registry')
         assert hasattr(manager, 'transformation_rules')
     
     def test_register_transformation(self):
-        """Test registering data transformations"""
-        manager = DataFlowManager()
+        """Test registering data transformations"""        manager = DataFlowManager()
         
         # Register transformation from numpy array to list
         def array_to_list(data):
@@ -469,8 +438,7 @@ class TestDataFlowManager:
         assert result == [1, 2, 3, 4, 5]
     
     def test_automatic_type_conversion(self):
-        """Test automatic type conversion"""
-        manager = DataFlowManager()
+        """Test automatic type conversion"""        manager = DataFlowManager()
         
         # Test built-in conversions
         test_cases = [
@@ -490,8 +458,7 @@ class TestDataFlowManager:
             assert isinstance(result, target_type)
     
     def test_data_validation(self):
-        """Test data validation"""
-        manager = DataFlowManager()
+        """Test data validation"""        manager = DataFlowManager()
         
         # Add validation rules
         def validate_positive_array(data):
@@ -510,8 +477,7 @@ class TestDataFlowManager:
         assert manager.validate_data(invalid_array) is False
     
     def test_memory_efficient_transfer(self):
-        """Test memory-efficient data transfer"""
-        manager = DataFlowManager()
+        """Test memory-efficient data transfer"""        manager = DataFlowManager()
         
         # Create large data
         large_array = np.random.randn(1000000)  # 1M elements
@@ -531,32 +497,27 @@ class TestDataFlowManager:
 
 
 class TestPipelineOptimizer:
-    """
-    Industrial-grade testing for PipelineOptimizer class
+    """    Industrial-grade testing for PipelineOptimizer class
     
     Test Coverage:
     - Stage reordering optimization
     - Parallel execution optimization
     - Resource allocation optimization
     - Performance profiling
-    """
-    
+    """    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
-        setup_test_environment()
+        """Setup test environment"""        setup_test_environment()
     
     def test_optimizer_initialization(self):
-        """Test PipelineOptimizer initialization"""
-        optimizer = PipelineOptimizer()
+        """Test PipelineOptimizer initialization"""        optimizer = PipelineOptimizer()
         
         assert optimizer is not None
         assert hasattr(optimizer, 'optimization_strategies')
         assert hasattr(optimizer, 'performance_history')
     
     def test_stage_dependency_analysis(self):
-        """Test stage dependency analysis"""
-        optimizer = PipelineOptimizer()
+        """Test stage dependency analysis"""        optimizer = PipelineOptimizer()
         
         # Create stages with dependencies
         stage_a = PipelineStage("stage_a", lambda x: x, str, str)
@@ -579,8 +540,7 @@ class TestPipelineOptimizer:
         assert optimized_order[2].name == "stage_c"
     
     def test_parallel_execution_optimization(self):
-        """Test parallel execution optimization"""
-        optimizer = PipelineOptimizer()
+        """Test parallel execution optimization"""        optimizer = PipelineOptimizer()
         
         # Create independent stages that can run in parallel
         stage1 = PipelineStage("independent_1", lambda x: x, np.ndarray, np.ndarray)
@@ -603,8 +563,7 @@ class TestPipelineOptimizer:
         assert "independent_2" in parallel_stage_names
     
     def test_resource_allocation_optimization(self):
-        """Test resource allocation optimization"""
-        optimizer = PipelineOptimizer()
+        """Test resource allocation optimization"""        optimizer = PipelineOptimizer()
         
         # Create stages with different resource requirements
         cpu_intensive = PipelineStage(
@@ -642,8 +601,7 @@ class TestPipelineOptimizer:
         assert "execution_strategy" in allocation
     
     def test_performance_profiling(self):
-        """Test performance profiling and optimization"""
-        optimizer = PipelineOptimizer()
+        """Test performance profiling and optimization"""        optimizer = PipelineOptimizer()
         
         # Create pipeline with known performance characteristics
         fast_stage = PipelineStage(
@@ -678,24 +636,20 @@ class TestPipelineOptimizer:
 
 
 class TestErrorRecoveryManager:
-    """
-    Industrial-grade testing for ErrorRecoveryManager class
+    """    Industrial-grade testing for ErrorRecoveryManager class
     
     Test Coverage:
     - Error detection and classification
     - Recovery strategies
     - Fallback mechanisms
     - Circuit breaker patterns
-    """
-    
+    """    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
-        setup_test_environment()
+        """Setup test environment"""        setup_test_environment()
     
     def test_error_recovery_initialization(self):
-        """Test ErrorRecoveryManager initialization"""
-        manager = ErrorRecoveryManager()
+        """Test ErrorRecoveryManager initialization"""        manager = ErrorRecoveryManager()
         
         assert manager is not None
         assert hasattr(manager, 'recovery_strategies')
@@ -703,8 +657,7 @@ class TestErrorRecoveryManager:
         assert hasattr(manager, 'circuit_breakers')
     
     def test_retry_strategy(self):
-        """Test retry strategy for transient errors"""
-        manager = ErrorRecoveryManager()
+        """Test retry strategy for transient errors"""        manager = ErrorRecoveryManager()
         
         # Create a function that fails twice then succeeds
         call_count = 0
@@ -730,8 +683,7 @@ class TestErrorRecoveryManager:
         assert call_count == 3
     
     def test_fallback_strategy(self):
-        """Test fallback strategy for persistent errors"""
-        manager = ErrorRecoveryManager()
+        """Test fallback strategy for persistent errors"""        manager = ErrorRecoveryManager()
         
         def failing_primary(data):
             raise ValueError("Primary function always fails")
@@ -754,8 +706,7 @@ class TestErrorRecoveryManager:
         assert result.used_fallback is True
     
     def test_circuit_breaker_pattern(self):
-        """Test circuit breaker pattern for failing services"""
-        manager = ErrorRecoveryManager()
+        """Test circuit breaker pattern for failing services"""        manager = ErrorRecoveryManager()
         
         def unreliable_service(data):
             raise RuntimeError("Service is down")
@@ -788,8 +739,7 @@ class TestErrorRecoveryManager:
             assert "circuit breaker" in results[i].error_message.lower()
     
     def test_error_classification(self):
-        """Test error classification and appropriate recovery"""
-        manager = ErrorRecoveryManager()
+        """Test error classification and appropriate recovery"""        manager = ErrorRecoveryManager()
         
         # Test different error types
         error_cases = [
@@ -805,8 +755,7 @@ class TestErrorRecoveryManager:
             assert category == expected_category
     
     def test_recovery_strategy_selection(self):
-        """Test automatic recovery strategy selection"""
-        manager = ErrorRecoveryManager()
+        """Test automatic recovery strategy selection"""        manager = ErrorRecoveryManager()
         
         # Test strategy selection based on error type
         strategy_cases = [
@@ -822,11 +771,9 @@ class TestErrorRecoveryManager:
 
 
 class TestPipelineConfig:
-    """Test PipelineConfig data structure"""
-    
+    """Test PipelineConfig data structure"""    
     def test_config_creation(self):
-        """Test PipelineConfig creation"""
-        config = PipelineConfig(
+        """Test PipelineConfig creation"""        config = PipelineConfig(
             name="test_pipeline",
             parallel_execution=True,
             max_workers=8,
@@ -843,8 +790,7 @@ class TestPipelineConfig:
         assert config.collect_metrics is True
     
     def test_config_validation(self):
-        """Test config validation"""
-        # Valid config
+        """Test config validation"""        # Valid config
         valid_config = PipelineConfig(
             name="valid",
             max_workers=4,
@@ -862,22 +808,18 @@ class TestPipelineConfig:
 
 
 class TestPipelineIntegration:
-    """
-    Integration tests for complete pipeline workflows
-    """
-    
+    """    Integration tests for complete pipeline workflows
+    """    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
-        setup_test_environment()
+        """Setup test environment"""        setup_test_environment()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
         
         # Create audio processor
         self.processor = AudioProcessor()
     
     def test_complete_audio_processing_pipeline(self):
-        """Test complete audio processing pipeline"""
-        # Create realistic audio processing pipeline
+        """Test complete audio processing pipeline"""        # Create realistic audio processing pipeline
         load_stage = PipelineStage(
             name="load",
             processor_func=lambda path: self.processor.load_audio(str(path)),
@@ -924,8 +866,7 @@ class TestPipelineIntegration:
         assert result.metrics.total_execution_time_ms > 0
     
     def test_parallel_processing_pipeline(self):
-        """Test parallel processing pipeline"""
-        # Create stages that can run in parallel
+        """Test parallel processing pipeline"""        # Create stages that can run in parallel
         feature_extractors = []
         
         for feature_type in ["mfcc", "spectral_centroid", "zero_crossing_rate"]:
@@ -975,8 +916,7 @@ class TestPipelineIntegration:
         assert len(result.final_output) == 3  # Should have all 3 feature types
     
     def test_pipeline_with_ml_models(self):
-        """Test pipeline integration with ML models"""
-        # Create ML model stage
+        """Test pipeline integration with ML models"""        # Create ML model stage
         def mock_ml_prediction(features):
             # Simulate ML model prediction
             return {
@@ -1013,8 +953,7 @@ class TestPipelineIntegration:
         assert result.final_output["genre"] == "rock"
     
     def test_error_recovery_in_pipeline(self):
-        """Test error recovery mechanisms in pipeline"""
-        # Create pipeline with error recovery
+        """Test error recovery mechanisms in pipeline"""        # Create pipeline with error recovery
         recovery_manager = ErrorRecoveryManager()
         
         config = PipelineConfig(

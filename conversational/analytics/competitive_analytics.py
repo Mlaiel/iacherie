@@ -1,5 +1,4 @@
-"""
-Competitive Analytics Engine for IA Influencer Agent Platform
+"""Competitive Analytics Engine for IA Influencer Agent Platform
 Advanced competitor monitoring, market intelligence, and strategic analysis.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,9 +9,7 @@ copying, distribution, or reproduction is strictly prohibited and will be
 prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set
@@ -30,8 +27,7 @@ import hashlib
 
 
 class CompetitorCategory(Enum):
-    """Categories of competitors to analyze."""
-    DIRECT_COMPETITOR = "direct_competitor"
+    """Categories of competitors to analyze."""    DIRECT_COMPETITOR = "direct_competitor"
     INDIRECT_COMPETITOR = "indirect_competitor"
     MARKET_LEADER = "market_leader"
     EMERGING_THREAT = "emerging_threat"
@@ -40,8 +36,7 @@ class CompetitorCategory(Enum):
 
 
 class AnalysisScope(Enum):
-    """Scope of competitive analysis."""
-    CONTENT_STRATEGY = "content_strategy"
+    """Scope of competitive analysis."""    CONTENT_STRATEGY = "content_strategy"
     ENGAGEMENT_METRICS = "engagement_metrics"
     MONETIZATION_APPROACH = "monetization_approach"
     AUDIENCE_DEMOGRAPHICS = "audience_demographics"
@@ -53,8 +48,7 @@ class AnalysisScope(Enum):
 
 @dataclass
 class CompetitorProfile:
-    """Comprehensive competitor profile data structure."""
-    competitor_id: str
+    """Comprehensive competitor profile data structure."""    competitor_id: str
     name: str
     category: CompetitorCategory
     platforms: List[str]
@@ -73,8 +67,7 @@ class CompetitorProfile:
 
 @dataclass
 class MarketPosition:
-    """Market position analysis result."""
-    our_position: int
+    """Market position analysis result."""    our_position: int
     total_competitors: int
     market_share_estimate: float
     gap_to_leader: float
@@ -85,8 +78,7 @@ class MarketPosition:
 
 @dataclass
 class CompetitiveInsight:
-    """Individual competitive insight."""
-    insight_id: str
+    """Individual competitive insight."""    insight_id: str
     insight_type: str
     title: str
     description: str
@@ -98,11 +90,9 @@ class CompetitiveInsight:
 
 
 class CompetitiveAnalytics:
-    """
-    Enterprise-grade competitive analytics engine for comprehensive
+    """    Enterprise-grade competitive analytics engine for comprehensive
     market intelligence, competitor monitoring, and strategic insights.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, api_keys: Dict[str, str]):
         self.db_session = db_session
         self.api_keys = api_keys
@@ -152,8 +142,7 @@ class CompetitiveAnalytics:
         }
     
     async def initialize_competitive_monitoring(self):
-        """Initialize competitive monitoring system."""
-        try:
+        """Initialize competitive monitoring system."""        try:
             self.logger.info("Initializing competitive analytics monitoring")
             
             # Load existing competitors
@@ -172,8 +161,7 @@ class CompetitiveAnalytics:
             raise
     
     async def add_competitor(self, competitor_data: Dict[str, Any]) -> str:
-        """Add a new competitor to monitoring list."""
-        try:
+        """Add a new competitor to monitoring list."""        try:
             competitor_id = hashlib.md5(competitor_data['name'].encode()).hexdigest()[:12]
             
             # Gather initial competitive intelligence
@@ -191,8 +179,7 @@ class CompetitiveAnalytics:
             raise
     
     async def analyze_competitor_landscape(self, niche: str, region: str = "global") -> Dict[str, Any]:
-        """Perform comprehensive competitor landscape analysis."""
-        try:
+        """Perform comprehensive competitor landscape analysis."""        try:
             # Identify relevant competitors
             relevant_competitors = await self._identify_relevant_competitors(niche, region)
             
@@ -233,8 +220,7 @@ class CompetitiveAnalytics:
             return {}
     
     async def monitor_competitor_activities(self, competitor_id: str) -> Dict[str, Any]:
-        """Monitor specific competitor's recent activities and changes."""
-        try:
+        """Monitor specific competitor's recent activities and changes."""        try:
             if competitor_id not in self.competitors_db:
                 raise ValueError(f"Competitor {competitor_id} not found in database")
             
@@ -272,8 +258,7 @@ class CompetitiveAnalytics:
             return {}
     
     async def benchmark_performance(self, metrics: List[str], time_period: int = 30) -> Dict[str, Any]:
-        """Benchmark our performance against competitors."""
-        try:
+        """Benchmark our performance against competitors."""        try:
             # Get our performance data
             our_metrics = await self._get_our_performance_metrics(metrics, time_period)
             
@@ -327,8 +312,7 @@ class CompetitiveAnalytics:
             return {}
     
     async def analyze_content_strategies(self) -> Dict[str, Any]:
-        """Analyze content strategies across competitors."""
-        try:
+        """Analyze content strategies across competitors."""        try:
             strategy_analysis = {}
             
             for competitor_id, competitor in self.competitors_db.items():
@@ -372,8 +356,7 @@ class CompetitiveAnalytics:
             return {}
     
     async def generate_competitive_intelligence_report(self) -> Dict[str, Any]:
-        """Generate comprehensive competitive intelligence report."""
-        try:
+        """Generate comprehensive competitive intelligence report."""        try:
             report_date = datetime.utcnow()
             
             # Executive summary
@@ -418,8 +401,7 @@ class CompetitiveAnalytics:
     # Private helper methods
     
     async def _build_competitor_profile(self, competitor_data: Dict[str, Any]) -> CompetitorProfile:
-        """Build comprehensive competitor profile."""
-        try:
+        """Build comprehensive competitor profile."""        try:
             # Collect data from all platforms
             platform_data = {}
             for platform in competitor_data.get('platforms', []):
@@ -466,8 +448,7 @@ class CompetitiveAnalytics:
             raise
     
     async def _analyze_market_position(self, competitor_analyses: Dict[str, Any], niche: str) -> MarketPosition:
-        """Analyze our market position relative to competitors."""
-        try:
+        """Analyze our market position relative to competitors."""        try:
             # Calculate competitive scores for all players
             scores = {}
             our_score = await self._calculate_our_competitive_score()
@@ -509,8 +490,7 @@ class CompetitiveAnalytics:
             raise
     
     def _categorize_performance(self, percentile: float) -> str:
-        """Categorize performance based on percentile ranking."""
-        if percentile >= 90:
+        """Categorize performance based on percentile ranking."""        if percentile >= 90:
             return "excellent"
         elif percentile >= 75:
             return "good"
@@ -522,8 +502,7 @@ class CompetitiveAnalytics:
             return "poor"
     
     def _assess_threat_level(self, changes: Dict[str, Any]) -> str:
-        """Assess competitive threat level based on detected changes."""
-        threat_indicators = 0
+        """Assess competitive threat level based on detected changes."""        threat_indicators = 0
         
         # Check for significant growth
         if changes.get('follower_growth_rate', 0) > 20:

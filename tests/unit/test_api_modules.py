@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Unit Tests for API Modules
+"""Unit Tests for API Modules
 =========================
 
 Comprehensive unit tests for all API modules including:
@@ -28,9 +24,7 @@ Comprehensive unit tests for all API modules including:
 
 Author: Copilot Assistant for Fahed Mlaiel
 Purpose: Ensure API reliability and security
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -48,12 +42,10 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 
 class TestAuthenticationAPI:
-    """Unit tests for authentication and authorization APIs"""
-    
+    """Unit tests for authentication and authorization APIs"""    
     @pytest.fixture
     def mock_auth_service(self):
-        """Mock authentication service"""
-        return Mock(
+        """Mock authentication service"""        return Mock(
             authenticate_user=Mock(return_value={
                 'user_id': 'user_123',
                 'access_token': 'token_abc123',
@@ -67,8 +59,7 @@ class TestAuthenticationAPI:
         )
     
     def test_user_authentication(self, mock_auth_service):
-        """Test user authentication endpoint"""
-        credentials = {
+        """Test user authentication endpoint"""        credentials = {
             'email': 'user@test.com',
             'password': 'secure_password123'
         }
@@ -81,8 +72,7 @@ class TestAuthenticationAPI:
         assert result['expires_in'] == 3600
         
     def test_token_validation(self, mock_auth_service):
-        """Test token validation"""
-        token = 'token_abc123'
+        """Test token validation"""        token = 'token_abc123'
         
         is_valid = mock_auth_service.validate_token(token)
         
@@ -90,8 +80,7 @@ class TestAuthenticationAPI:
         mock_auth_service.validate_token.assert_called_once_with(token)
         
     def test_token_refresh(self, mock_auth_service):
-        """Test token refresh functionality"""
-        refresh_token = 'refresh_xyz789'
+        """Test token refresh functionality"""        refresh_token = 'refresh_xyz789'
         
         result = mock_auth_service.refresh_token(refresh_token)
         
@@ -99,8 +88,7 @@ class TestAuthenticationAPI:
         assert result['access_token'] == 'new_token_456'
         
     def test_permission_checking(self, mock_auth_service):
-        """Test user permission validation"""
-        permission_data = {
+        """Test user permission validation"""        permission_data = {
             'user_id': 'user_123',
             'resource': 'content_upload',
             'action': 'create'
@@ -112,12 +100,10 @@ class TestAuthenticationAPI:
 
 
 class TestContentAPI:
-    """Unit tests for content management APIs"""
-    
+    """Unit tests for content management APIs"""    
     @pytest.fixture
     def mock_content_service(self):
-        """Mock content management service"""
-        return Mock(
+        """Mock content management service"""        return Mock(
             upload_content=AsyncMock(return_value={
                 'content_id': 'ct_123',
                 'upload_url': 'https://storage.example.com/ct_123',
@@ -140,8 +126,7 @@ class TestContentAPI:
     
     @pytest.mark.asyncio
     async def test_content_upload(self, mock_content_service):
-        """Test content upload API endpoint"""
-        upload_data = {
+        """Test content upload API endpoint"""        upload_data = {
             'file_data': b'mock_file_content',
             'content_type': 'audio/mp3',
             'title': 'Test Song',
@@ -156,8 +141,7 @@ class TestContentAPI:
         assert result['file_size'] == 5000000
         
     def test_content_retrieval(self, mock_content_service):
-        """Test content retrieval API"""
-        content_id = 'ct_123'
+        """Test content retrieval API"""        content_id = 'ct_123'
         
         content = mock_content_service.get_content(content_id)
         
@@ -166,8 +150,7 @@ class TestContentAPI:
         assert content['creator_id'] == 'cr_123'
         
     def test_content_listing(self, mock_content_service):
-        """Test user content listing API"""
-        user_id = 'user_123'
+        """Test user content listing API"""        user_id = 'user_123'
         filters = {'status': 'active', 'limit': 10}
         
         content_list = mock_content_service.list_user_content(user_id, filters)
@@ -177,8 +160,7 @@ class TestContentAPI:
         assert content_list[1]['content_id'] == 'ct_456'
         
     def test_content_update(self, mock_content_service):
-        """Test content update API"""
-        content_id = 'ct_123'
+        """Test content update API"""        content_id = 'ct_123'
         update_data = {
             'title': 'Updated Title',
             'description': 'Updated description'
@@ -189,8 +171,7 @@ class TestContentAPI:
         assert result is True
         
     def test_content_deletion(self, mock_content_service):
-        """Test content deletion API"""
-        content_id = 'ct_123'
+        """Test content deletion API"""        content_id = 'ct_123'
         
         result = mock_content_service.delete_content(content_id)
         
@@ -198,12 +179,10 @@ class TestContentAPI:
 
 
 class TestMonetizationAPI:
-    """Unit tests for monetization and revenue APIs"""
-    
+    """Unit tests for monetization and revenue APIs"""    
     @pytest.fixture
     def mock_monetization_service(self):
-        """Mock monetization service"""
-        return Mock(
+        """Mock monetization service"""        return Mock(
             get_revenue_summary=Mock(return_value={
                 'total_revenue': Decimal('2500.75'),
                 'monthly_revenue': Decimal('850.25'),
@@ -229,8 +208,7 @@ class TestMonetizationAPI:
         )
     
     def test_revenue_summary_retrieval(self, mock_monetization_service):
-        """Test revenue summary API"""
-        creator_id = 'cr_123'
+        """Test revenue summary API"""        creator_id = 'cr_123'
         time_period = '30_days'
         
         summary = mock_monetization_service.get_revenue_summary(creator_id, time_period)
@@ -240,8 +218,7 @@ class TestMonetizationAPI:
         assert len(summary['revenue_streams']) == 3
         
     def test_monetization_plan_creation(self, mock_monetization_service):
-        """Test monetization plan creation API"""
-        plan_data = {
+        """Test monetization plan creation API"""        plan_data = {
             'creator_id': 'cr_123',
             'content_ids': ['ct_123', 'ct_456'],
             'platforms': ['spotify', 'youtube'],
@@ -256,8 +233,7 @@ class TestMonetizationAPI:
         
     @pytest.mark.asyncio
     async def test_payment_processing(self, mock_monetization_service):
-        """Test payment processing API"""
-        payment_data = {
+        """Test payment processing API"""        payment_data = {
             'amount': Decimal('100.00'),
             'currency': 'USD',
             'payment_method': 'stripe',
@@ -271,8 +247,7 @@ class TestMonetizationAPI:
         assert result['amount'] == Decimal('100.00')
         
     def test_monetization_analytics(self, mock_monetization_service):
-        """Test monetization analytics API"""
-        creator_id = 'cr_123'
+        """Test monetization analytics API"""        creator_id = 'cr_123'
         metrics = ['views', 'plays', 'engagement', 'conversion']
         
         analytics = mock_monetization_service.get_analytics(creator_id, metrics)
@@ -284,12 +259,10 @@ class TestMonetizationAPI:
 
 
 class TestCreatorAPI:
-    """Unit tests for creator management APIs"""
-    
+    """Unit tests for creator management APIs"""    
     @pytest.fixture
     def mock_creator_service(self):
-        """Mock creator management service"""
-        return Mock(
+        """Mock creator management service"""        return Mock(
             create_creator_profile=Mock(return_value={
                 'creator_id': 'cr_123',
                 'profile_complete': True,
@@ -313,8 +286,7 @@ class TestCreatorAPI:
         )
     
     def test_creator_profile_creation(self, mock_creator_service):
-        """Test creator profile creation API"""
-        profile_data = {
+        """Test creator profile creation API"""        profile_data = {
             'name': 'Test Creator',
             'email': 'creator@test.com',
             'type': 'musician',
@@ -329,8 +301,7 @@ class TestCreatorAPI:
         assert result['verification_status'] == 'pending'
         
     def test_creator_profile_retrieval(self, mock_creator_service):
-        """Test creator profile retrieval API"""
-        creator_id = 'cr_123'
+        """Test creator profile retrieval API"""        creator_id = 'cr_123'
         
         profile = mock_creator_service.get_creator_profile(creator_id)
         
@@ -340,8 +311,7 @@ class TestCreatorAPI:
         assert profile['follower_count'] == 5000
         
     def test_creator_verification(self, mock_creator_service):
-        """Test creator verification API"""
-        verification_data = {
+        """Test creator verification API"""        verification_data = {
             'creator_id': 'cr_123',
             'verification_documents': ['id_document', 'proof_of_work'],
             'social_verification': True
@@ -353,8 +323,7 @@ class TestCreatorAPI:
         assert result['badge_awarded'] is True
         
     def test_creator_statistics(self, mock_creator_service):
-        """Test creator statistics API"""
-        creator_id = 'cr_123'
+        """Test creator statistics API"""        creator_id = 'cr_123'
         time_period = '90_days'
         
         stats = mock_creator_service.get_creator_statistics(creator_id, time_period)
@@ -366,12 +335,10 @@ class TestCreatorAPI:
 
 
 class TestAnalyticsAPI:
-    """Unit tests for analytics and reporting APIs"""
-    
+    """Unit tests for analytics and reporting APIs"""    
     @pytest.fixture
     def mock_analytics_service(self):
-        """Mock analytics service"""
-        return Mock(
+        """Mock analytics service"""        return Mock(
             generate_report=AsyncMock(return_value={
                 'report_id': 'rep_123',
                 'report_type': 'performance',
@@ -398,8 +365,7 @@ class TestAnalyticsAPI:
     
     @pytest.mark.asyncio
     async def test_report_generation(self, mock_analytics_service):
-        """Test analytics report generation API"""
-        report_params = {
+        """Test analytics report generation API"""        report_params = {
             'creator_id': 'cr_123',
             'report_type': 'performance',
             'time_period': '30_days',
@@ -414,8 +380,7 @@ class TestAnalyticsAPI:
         assert result['data']['views'] == 25000
         
     def test_real_time_metrics(self, mock_analytics_service):
-        """Test real-time metrics API"""
-        creator_id = 'cr_123'
+        """Test real-time metrics API"""        creator_id = 'cr_123'
         
         metrics = mock_analytics_service.get_real_time_metrics(creator_id)
         
@@ -424,8 +389,7 @@ class TestAnalyticsAPI:
         assert metrics['real_time_revenue'] == Decimal('25.50')
         
     def test_content_performance_tracking(self, mock_analytics_service):
-        """Test individual content performance tracking API"""
-        content_id = 'ct_123'
+        """Test individual content performance tracking API"""        content_id = 'ct_123'
         
         performance = mock_analytics_service.track_content_performance(content_id)
         
@@ -435,8 +399,7 @@ class TestAnalyticsAPI:
         assert performance['trending_rank'] == 15
         
     def test_analytics_data_export(self, mock_analytics_service):
-        """Test analytics data export API"""
-        export_params = {
+        """Test analytics data export API"""        export_params = {
             'creator_id': 'cr_123',
             'data_type': 'all_metrics',
             'format': 'csv',
@@ -451,12 +414,10 @@ class TestAnalyticsAPI:
 
 
 class TestSecurityAPI:
-    """Unit tests for security and validation APIs"""
-    
+    """Unit tests for security and validation APIs"""    
     @pytest.fixture
     def mock_security_service(self):
-        """Mock security service"""
-        return Mock(
+        """Mock security service"""        return Mock(
             validate_upload=Mock(return_value={
                 'valid': True,
                 'security_score': 95,
@@ -483,8 +444,7 @@ class TestSecurityAPI:
         )
     
     def test_upload_validation(self, mock_security_service):
-        """Test content upload security validation API"""
-        upload_data = {
+        """Test content upload security validation API"""        upload_data = {
             'file_hash': 'abc123def456',
             'file_type': 'audio/mp3',
             'file_size': 5000000,
@@ -500,8 +460,7 @@ class TestSecurityAPI:
         
     @pytest.mark.asyncio
     async def test_content_scanning(self, mock_security_service):
-        """Test content security scanning API"""
-        scan_params = {
+        """Test content security scanning API"""        scan_params = {
             'content_id': 'ct_123',
             'scan_type': 'comprehensive',
             'priority': 'high'
@@ -515,8 +474,7 @@ class TestSecurityAPI:
         assert result['content_integrity'] is True
         
     def test_copyright_checking(self, mock_security_service):
-        """Test copyright validation API"""
-        content_data = {
+        """Test copyright validation API"""        content_data = {
             'content_id': 'ct_123',
             'fingerprint': 'fp_abc123',
             'metadata': {'title': 'Test Song', 'artist': 'Test Creator'}
@@ -529,8 +487,7 @@ class TestSecurityAPI:
         assert result['confidence_score'] == 98.5
         
     def test_user_activity_audit(self, mock_security_service):
-        """Test user activity auditing API"""
-        audit_params = {
+        """Test user activity auditing API"""        audit_params = {
             'user_id': 'user_123',
             'time_period': '7_days',
             'activity_types': ['login', 'upload', 'monetization']
@@ -545,12 +502,10 @@ class TestSecurityAPI:
 
 
 class TestAPIIntegration:
-    """Integration tests for API modules working together"""
-    
+    """Integration tests for API modules working together"""    
     @pytest.fixture
     def mock_api_system(self):
-        """Mock integrated API system"""
-        return Mock(
+        """Mock integrated API system"""        return Mock(
             handle_content_workflow=AsyncMock(return_value={
                 'workflow_id': 'wf_123',
                 'steps_completed': ['upload', 'validate', 'process', 'publish'],
@@ -573,8 +528,7 @@ class TestAPIIntegration:
     
     @pytest.mark.asyncio
     async def test_complete_content_workflow(self, mock_api_system):
-        """Test complete content workflow through APIs"""
-        workflow_data = {
+        """Test complete content workflow through APIs"""        workflow_data = {
             'creator_id': 'cr_123',
             'content_file': 'test_audio.mp3',
             'metadata': {'title': 'Test Song', 'genre': 'pop'},
@@ -590,8 +544,7 @@ class TestAPIIntegration:
         
     @pytest.mark.asyncio
     async def test_creator_onboarding_workflow(self, mock_api_system):
-        """Test complete creator onboarding through APIs"""
-        onboarding_data = {
+        """Test complete creator onboarding through APIs"""        onboarding_data = {
             'user_id': 'user_123',
             'creator_type': 'musician',
             'profile_data': {'name': 'Test Creator', 'bio': 'Test bio'},
@@ -607,8 +560,7 @@ class TestAPIIntegration:
         
     @pytest.mark.asyncio
     async def test_monetization_setup_workflow(self, mock_api_system):
-        """Test monetization setup through APIs"""
-        setup_data = {
+        """Test monetization setup through APIs"""        setup_data = {
             'creator_id': 'cr_123',
             'payment_methods': ['stripe', 'paypal'],
             'target_platforms': ['spotify', 'youtube', 'apple_music'],

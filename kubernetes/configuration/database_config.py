@@ -1,5 +1,4 @@
-"""
-🗄️ Database Configuration Manager - IA-Influencer-Agent
+"""🗄️ Database Configuration Manager - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Database Architect + DBA Senior + Backend + DevOps
@@ -14,9 +13,7 @@ Contact: mlaiel@live.de
 
 Enterprise-grade database cluster management and configuration.
 ==================================================================
-"""
-
-import logging
+"""import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union
 from dataclasses import dataclass, field
@@ -25,8 +22,7 @@ from datetime import datetime, timedelta
 import json
 
 class DatabaseType(Enum):
-    """Database types"""
-    POSTGRESQL = "postgresql"
+    """Database types"""    POSTGRESQL = "postgresql"
     REDIS = "redis"
     MONGODB = "mongodb"
     ELASTICSEARCH = "elasticsearch"
@@ -34,8 +30,7 @@ class DatabaseType(Enum):
     CLICKHOUSE = "clickhouse"
 
 class ClusterMode(Enum):
-    """Database cluster modes"""
-    STANDALONE = "standalone"
+    """Database cluster modes"""    STANDALONE = "standalone"
     MASTER_SLAVE = "master_slave"
     MASTER_REPLICA = "master_replica"
     CLUSTER = "cluster"
@@ -43,16 +38,14 @@ class ClusterMode(Enum):
     FEDERATED = "federated"
 
 class BackupStrategy(Enum):
-    """Backup strategies"""
-    FULL = "full"
+    """Backup strategies"""    FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
     CONTINUOUS = "continuous"
     SNAPSHOT = "snapshot"
 
 class ReplicationStrategy(Enum):
-    """Replication strategies"""
-    SYNCHRONOUS = "synchronous"
+    """Replication strategies"""    SYNCHRONOUS = "synchronous"
     ASYNCHRONOUS = "asynchronous"
     SEMI_SYNCHRONOUS = "semi_synchronous"
     STREAMING = "streaming"
@@ -60,8 +53,7 @@ class ReplicationStrategy(Enum):
 
 @dataclass
 class ConnectionPoolConfig:
-    """Database connection pool configuration"""
-    min_connections: int = 5
+    """Database connection pool configuration"""    min_connections: int = 5
     max_connections: int = 100
     connection_timeout: int = 30
     idle_timeout: int = 600
@@ -73,8 +65,7 @@ class ConnectionPoolConfig:
 
 @dataclass
 class PostgreSQLConfig:
-    """PostgreSQL configuration"""
-    host: str = "localhost"
+    """PostgreSQL configuration"""    host: str = "localhost"
     port: int = 5432
     database: str = "ia_influencer"
     username: str = "postgres"
@@ -107,8 +98,7 @@ class PostgreSQLConfig:
 
 @dataclass
 class RedisConfig:
-    """Redis configuration"""
-    host: str = "localhost"
+    """Redis configuration"""    host: str = "localhost"
     port: int = 6379
     password: str = ""
     db: int = 0
@@ -138,8 +128,7 @@ class RedisConfig:
 
 @dataclass
 class MongoDBConfig:
-    """MongoDB configuration"""
-    host: str = "localhost"
+    """MongoDB configuration"""    host: str = "localhost"
     port: int = 27017
     database: str = "ia_influencer"
     username: str = ""
@@ -166,8 +155,7 @@ class MongoDBConfig:
 
 @dataclass
 class ElasticsearchConfig:
-    """Elasticsearch configuration"""
-    hosts: List[str] = field(default_factory=lambda: ["localhost:9200"])
+    """Elasticsearch configuration"""    hosts: List[str] = field(default_factory=lambda: ["localhost:9200"])
     username: str = ""
     password: str = ""
     
@@ -193,8 +181,7 @@ class ElasticsearchConfig:
 
 @dataclass
 class BackupConfig:
-    """Backup configuration"""
-    enabled: bool = True
+    """Backup configuration"""    enabled: bool = True
     strategy: BackupStrategy = BackupStrategy.INCREMENTAL
     schedule: str = "0 2 * * *"  # Daily at 2 AM
     retention_days: int = 30
@@ -205,8 +192,7 @@ class BackupConfig:
 
 @dataclass
 class ReplicationConfig:
-    """Replication configuration"""
-    enabled: bool = False
+    """Replication configuration"""    enabled: bool = False
     strategy: ReplicationStrategy = ReplicationStrategy.ASYNCHRONOUS
     replicas: int = 2
     lag_threshold: int = 1000  # milliseconds
@@ -215,8 +201,7 @@ class ReplicationConfig:
 
 @dataclass
 class ShardingConfig:
-    """Sharding configuration"""
-    enabled: bool = False
+    """Sharding configuration"""    enabled: bool = False
     shard_count: int = 3
     shard_key: str = "id"
     balancer_enabled: bool = True
@@ -224,8 +209,7 @@ class ShardingConfig:
 
 @dataclass
 class DatabaseInstanceConfig:
-    """Database instance configuration"""
-    name: str
+    """Database instance configuration"""    name: str
     type: DatabaseType
     cluster_mode: ClusterMode
     config: Union[PostgreSQLConfig, RedisConfig, MongoDBConfig, ElasticsearchConfig]
@@ -236,8 +220,7 @@ class DatabaseInstanceConfig:
     custom_config: Dict[str, Any] = field(default_factory=dict)
 
 class DatabaseConfigManager:
-    """
-    Enterprise database cluster management and configuration.
+    """    Enterprise database cluster management and configuration.
     
     Provides comprehensive database management:
     - Multi-database support (PostgreSQL, Redis, MongoDB, Elasticsearch)
@@ -250,11 +233,9 @@ class DatabaseConfigManager:
     - Monitoring and alerting
     - Security and encryption
     - Disaster recovery
-    """
-    
+    """    
     def __init__(self):
-        """Initialize database configuration manager"""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize database configuration manager"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Database configurations
         self.database_configs = {}
@@ -272,13 +253,11 @@ class DatabaseConfigManager:
         self.logger.info("Database configuration manager initialized")
     
     async def initialize(self) -> bool:
-        """
-        Initialize database configuration manager.
+        """        Initialize database configuration manager.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             # Load default database configurations
             await self._load_default_configurations()
             
@@ -299,8 +278,7 @@ class DatabaseConfigManager:
             return False
     
     async def _load_default_configurations(self) -> None:
-        """Load default database configurations"""
-        
+        """Load default database configurations"""        
         # PostgreSQL main database
         postgresql_config = DatabaseInstanceConfig(
             name="main_postgres",
@@ -454,8 +432,7 @@ class DatabaseConfigManager:
         self.logger.info(f"Loaded {len(self.database_configs)} database configurations")
     
     async def _initialize_monitoring(self) -> None:
-        """Initialize database monitoring"""
-        for db_name, config in self.database_configs.items():
+        """Initialize database monitoring"""        for db_name, config in self.database_configs.items():
             if config.monitoring_enabled:
                 self.performance_metrics[db_name] = {
                     "connections_active": 0,
@@ -472,13 +449,11 @@ class DatabaseConfigManager:
         self.logger.info("Database monitoring initialized")
     
     async def _start_health_monitoring(self) -> None:
-        """Start health monitoring for all databases"""
-        asyncio.create_task(self._monitor_database_health())
+        """Start health monitoring for all databases"""        asyncio.create_task(self._monitor_database_health())
         self.logger.info("Database health monitoring started")
     
     async def _monitor_database_health(self) -> None:
-        """Monitor database health continuously"""
-        while True:
+        """Monitor database health continuously"""        while True:
             try:
                 for db_name, config in self.database_configs.items():
                     await self._check_database_health(db_name, config)
@@ -490,8 +465,7 @@ class DatabaseConfigManager:
                 await asyncio.sleep(60)
     
     async def _check_database_health(self, db_name: str, config: DatabaseInstanceConfig) -> None:
-        """Check health of a specific database"""
-        try:
+        """Check health of a specific database"""        try:
             # Simulate health check
             health_status = {
                 "status": "healthy",
@@ -513,16 +487,14 @@ class DatabaseConfigManager:
             }
     
     async def _initialize_backup_systems(self) -> None:
-        """Initialize backup systems for all databases"""
-        for db_name, config in self.database_configs.items():
+        """Initialize backup systems for all databases"""        for db_name, config in self.database_configs.items():
             if config.backup_config.enabled:
                 await self._setup_backup_schedule(db_name, config)
         
         self.logger.info("Backup systems initialized")
     
     async def _setup_backup_schedule(self, db_name: str, config: DatabaseInstanceConfig) -> None:
-        """Setup backup schedule for a database"""
-        backup_config = config.backup_config
+        """Setup backup schedule for a database"""        backup_config = config.backup_config
         
         self.backup_status[db_name] = {
             "last_backup": None,
@@ -536,8 +508,7 @@ class DatabaseConfigManager:
         asyncio.create_task(self._backup_scheduler(db_name, config))
     
     async def _backup_scheduler(self, db_name: str, config: DatabaseInstanceConfig) -> None:
-        """Schedule and execute backups"""
-        while True:
+        """Schedule and execute backups"""        while True:
             try:
                 backup_config = config.backup_config
                 
@@ -558,8 +529,7 @@ class DatabaseConfigManager:
                 await asyncio.sleep(3600)  # Retry in 1 hour
     
     async def _execute_backup(self, db_name: str, config: DatabaseInstanceConfig) -> bool:
-        """Execute database backup"""
-        try:
+        """Execute database backup"""        try:
             backup_config = config.backup_config
             
             # Simulate backup execution
@@ -597,8 +567,7 @@ class DatabaseConfigManager:
         cluster_mode: ClusterMode,
         config: Dict[str, Any]
     ) -> bool:
-        """
-        Add new database configuration.
+        """        Add new database configuration.
         
         Args:
             name: Database name
@@ -608,8 +577,7 @@ class DatabaseConfigManager:
             
         Returns:
             bool: True if successful
-        """
-        try:
+        """        try:
             # Create database configuration based on type
             if db_type == DatabaseType.POSTGRESQL:
                 db_config = PostgreSQLConfig(**config)
@@ -659,16 +627,14 @@ class DatabaseConfigManager:
             return False
     
     async def remove_database(self, name: str) -> bool:
-        """
-        Remove database configuration.
+        """        Remove database configuration.
         
         Args:
             name: Database name to remove
             
         Returns:
             bool: True if successful
-        """
-        try:
+        """        try:
             if name not in self.database_configs:
                 raise ValueError(f"Database not found: {name}")
             
@@ -697,8 +663,7 @@ class DatabaseConfigManager:
         replicas: int = 2,
         auto_failover: bool = True
     ) -> bool:
-        """
-        Configure replication for a database.
+        """        Configure replication for a database.
         
         Args:
             db_name: Database name
@@ -708,8 +673,7 @@ class DatabaseConfigManager:
             
         Returns:
             bool: True if successful
-        """
-        try:
+        """        try:
             if db_name not in self.database_configs:
                 raise ValueError(f"Database not found: {db_name}")
             
@@ -732,8 +696,7 @@ class DatabaseConfigManager:
             return False
     
     async def _apply_replication_config(self, db_name: str, config: DatabaseInstanceConfig) -> None:
-        """Apply replication configuration"""
-        # Implementation would configure database replication
+        """Apply replication configuration"""        # Implementation would configure database replication
         self.replication_status[db_name] = {
             "enabled": config.replication_config.enabled,
             "strategy": config.replication_config.strategy.value,
@@ -749,8 +712,7 @@ class DatabaseConfigManager:
         shard_key: str,
         balancer_enabled: bool = True
     ) -> bool:
-        """
-        Configure sharding for a database.
+        """        Configure sharding for a database.
         
         Args:
             db_name: Database name
@@ -760,8 +722,7 @@ class DatabaseConfigManager:
             
         Returns:
             bool: True if successful
-        """
-        try:
+        """        try:
             if db_name not in self.database_configs:
                 raise ValueError(f"Database not found: {db_name}")
             
@@ -784,21 +745,18 @@ class DatabaseConfigManager:
             return False
     
     async def _apply_sharding_config(self, db_name: str, config: DatabaseInstanceConfig) -> None:
-        """Apply sharding configuration"""
-        # Implementation would configure database sharding
+        """Apply sharding configuration"""        # Implementation would configure database sharding
         pass
     
     async def backup_database(self, db_name: str) -> bool:
-        """
-        Manually trigger database backup.
+        """        Manually trigger database backup.
         
         Args:
             db_name: Database name
             
         Returns:
             bool: True if successful
-        """
-        try:
+        """        try:
             if db_name not in self.database_configs:
                 raise ValueError(f"Database not found: {db_name}")
             
@@ -815,8 +773,7 @@ class DatabaseConfigManager:
         backup_path: str,
         target_time: Optional[datetime] = None
     ) -> bool:
-        """
-        Restore database from backup.
+        """        Restore database from backup.
         
         Args:
             db_name: Database name
@@ -825,8 +782,7 @@ class DatabaseConfigManager:
             
         Returns:
             bool: True if successful
-        """
-        try:
+        """        try:
             if db_name not in self.database_configs:
                 raise ValueError(f"Database not found: {db_name}")
             
@@ -844,8 +800,7 @@ class DatabaseConfigManager:
             return False
     
     async def get_cluster_status(self) -> Dict[str, Any]:
-        """Get comprehensive cluster status"""
-        return {
+        """Get comprehensive cluster status"""        return {
             "databases": {
                 name: {
                     "type": config.type.value,
@@ -875,8 +830,7 @@ class DatabaseConfigManager:
         }
     
     async def get_performance_report(self) -> Dict[str, Any]:
-        """Get database performance report"""
-        return {
+        """Get database performance report"""        return {
             "timestamp": datetime.now(),
             "databases": self.performance_metrics,
             "alerts": [
@@ -893,5 +847,4 @@ class DatabaseConfigManager:
         }
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get database manager status"""
-        return await self.get_cluster_status()
+        """Get database manager status"""        return await self.get_cluster_status()

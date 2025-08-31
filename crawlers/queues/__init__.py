@@ -22,8 +22,7 @@ SYSTÈME COMPLET DE GESTION DES QUEUES:
 LOGIQUE MÉTIER:
 Request → Queue routing → Priority analysis → Worker assignment → 
 Load balancing → Execution → Monitoring → Analytics → Optimization
-"""
-from .crawler_queue_manager import (
+"""from .crawler_queue_manager import (
     CrawlerQueueManager,
     CrawlerTask,
     CrawlerQueueConfig,

@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Text Agent Setup Script
+"""Text Agent Setup Script
 
 Setup and configuration script for the Text Agent module.
 Downloads required models and verifies installation.
@@ -12,9 +11,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import subprocess
+"""import subprocess
 import sys
 import logging
 import importlib
@@ -24,8 +21,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 def run_command(command, description=""):
-    """Run shell command and handle errors"""
-    try:
+    """Run shell command and handle errors"""    try:
         logger.info(f"Running: {description or command}")
         result = subprocess.run(command, shell=True, check=True, capture_output=True, text=True)
         if result.stdout:
@@ -38,8 +34,7 @@ def run_command(command, description=""):
         return False
 
 def check_package(package_name, import_name=None):
-    """Check if a Python package is installed"""
-    try:
+    """Check if a Python package is installed"""    try:
         importlib.import_module(import_name or package_name)
         logger.info(f"✓ {package_name} is installed")
         return True
@@ -48,8 +43,7 @@ def check_package(package_name, import_name=None):
         return False
 
 def setup_nltk_data():
-    """Download required NLTK data"""
-    logger.info("Setting up NLTK data...")
+    """Download required NLTK data"""    logger.info("Setting up NLTK data...")
     
     nltk_downloads = [
         'punkt',
@@ -88,8 +82,7 @@ def setup_nltk_data():
         return False
 
 def setup_spacy_models():
-    """Download required spaCy models"""
-    logger.info("Setting up spaCy models...")
+    """Download required spaCy models"""    logger.info("Setting up spaCy models...")
     
     models = [
         'en_core_web_sm',
@@ -111,8 +104,7 @@ def setup_spacy_models():
     return success
 
 def verify_installation():
-    """Verify that all required packages are installed"""
-    logger.info("Verifying installation...")
+    """Verify that all required packages are installed"""    logger.info("Verifying installation...")
     
     required_packages = [
         ('torch', 'torch'),
@@ -143,8 +135,7 @@ def verify_installation():
     return all_installed
 
 def test_basic_functionality():
-    """Test basic functionality of the text agent"""
-    logger.info("Testing basic functionality...")
+    """Test basic functionality of the text agent"""    logger.info("Testing basic functionality...")
     
     try:
         # Test imports
@@ -171,8 +162,7 @@ def test_basic_functionality():
         return False
 
 def main():
-    """Main setup function"""
-    logger.info("Starting Text Agent setup...")
+    """Main setup function"""    logger.info("Starting Text Agent setup...")
     
     steps = [
         ("Verifying package installation", verify_installation),

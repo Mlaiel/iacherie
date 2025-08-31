@@ -1,5 +1,4 @@
-"""
-Enterprise Request Management System
+"""Enterprise Request Management System
 ===================================
 
 Advanced HTTP request management with intelligent retries, rate limiting, and error handling.
@@ -19,9 +18,7 @@ Professional Development Team Specialties:
 🥇 Database Administrator & Security Expert - Data protection and performance
 🥇 Microservices Architect & DevOps Engineer - Scalable infrastructure
 🥇 AI Prompt Engineer & Content Protection Specialist - Content security
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Union, Any, Callable
@@ -38,8 +35,7 @@ from aiohttp.client_exceptions import ClientError, ClientTimeout as AioTimeoutEr
 
 
 class RequestMethod(Enum):
-    """HTTP request methods"""
-    GET = "GET"
+    """HTTP request methods"""    GET = "GET"
     POST = "POST"
     PUT = "PUT"
     DELETE = "DELETE"
@@ -49,16 +45,14 @@ class RequestMethod(Enum):
 
 
 class RetryStrategy(Enum):
-    """Request retry strategies"""
-    EXPONENTIAL_BACKOFF = "exponential_backoff"
+    """Request retry strategies"""    EXPONENTIAL_BACKOFF = "exponential_backoff"
     LINEAR_BACKOFF = "linear_backoff"
     FIXED_DELAY = "fixed_delay"
     IMMEDIATE = "immediate"
 
 
 class RequestPriority(Enum):
-    """Request priority levels"""
-    CRITICAL = 1
+    """Request priority levels"""    CRITICAL = 1
     HIGH = 2
     NORMAL = 3
     LOW = 4
@@ -67,8 +61,7 @@ class RequestPriority(Enum):
 
 @dataclass
 class RateLimitConfig:
-    """Rate limiting configuration"""
-    requests_per_second: float = 1.0
+    """Rate limiting configuration"""    requests_per_second: float = 1.0
     requests_per_minute: int = 60
     requests_per_hour: int = 3600
     requests_per_day: int = 86400
@@ -78,8 +71,7 @@ class RateLimitConfig:
 
 @dataclass
 class RetryConfig:
-    """Retry configuration"""
-    max_attempts: int = 3
+    """Retry configuration"""    max_attempts: int = 3
     strategy: RetryStrategy = RetryStrategy.EXPONENTIAL_BACKOFF
     base_delay: float = 1.0
     max_delay: float = 60.0
@@ -90,8 +82,7 @@ class RetryConfig:
 
 @dataclass
 class RequestConfig:
-    """Request configuration"""
-    timeout: int = 30
+    """Request configuration"""    timeout: int = 30
     max_redirects: int = 10
     verify_ssl: bool = True
     allow_cookies: bool = True
@@ -104,8 +95,7 @@ class RequestConfig:
 
 @dataclass
 class RequestMetrics:
-    """Request performance metrics"""
-    total_requests: int = 0
+    """Request performance metrics"""    total_requests: int = 0
     successful_requests: int = 0
     failed_requests: int = 0
     retried_requests: int = 0
@@ -120,8 +110,7 @@ class RequestMetrics:
 
 @dataclass
 class RequestRecord:
-    """Individual request record"""
-    request_id: str
+    """Individual request record"""    request_id: str
     method: RequestMethod
     url: str
     priority: RequestPriority = RequestPriority.NORMAL
@@ -141,8 +130,7 @@ class RequestRecord:
 
 
 class RequestManager:
-    """
-    Enterprise HTTP request management system.
+    """    Enterprise HTTP request management system.
     
     Features:
     - Intelligent retry mechanisms with multiple strategies
@@ -151,8 +139,7 @@ class RequestManager:
     - Performance monitoring and metrics
     - Connection pooling and reuse
     - SSL verification and proxy support
-    """
-    
+    """    
     def __init__(
         self,
         max_concurrent_requests: int = 50,
@@ -190,8 +177,7 @@ class RequestManager:
         self.logger = logging.getLogger(__name__)
     
     async def initialize(self) -> bool:
-        """Initialize request manager"""
-        try:
+        """Initialize request manager"""        try:
             self.logger.info("Initializing request manager...")
             
             # Create SSL context
@@ -239,8 +225,7 @@ class RequestManager:
         body: Optional[Union[str, bytes, Dict]] = None,
         request_id: Optional[str] = None
     ) -> str:
-        """Submit a request for execution"""
-        if not request_id:
+        """Submit a request for execution"""        if not request_id:
             request_id = self._generate_request_id(method, url)
         
         if not config:
@@ -267,8 +252,7 @@ class RequestManager:
         return request_id
     
     async def execute_request(self, request: RequestRecord) -> Dict[str, Any]:
-        """Execute a single request with retries and rate limiting"""
-        async with self.semaphore:
+        """Execute a single request with retries and rate limiting"""        async with self.semaphore:
             request.started_at = datetime.utcnow()
             self.active_requests[request.request_id] = request
             
@@ -308,8 +292,7 @@ class RequestManager:
                 self.metrics.last_request_time = datetime.utcnow()
     
     async def get_request_status(self, request_id: str) -> Optional[RequestRecord]:
-        """Get status of a specific request"""
-        # Check active requests
+        """Get status of a specific request"""        # Check active requests
         if request_id in self.active_requests:
             return self.active_requests[request_id]
         
@@ -326,8 +309,7 @@ class RequestManager:
         return None
     
     async def process_queue(self):
-        """Process the request queue"""
-        while self.request_queue:
+        """Process the request queue"""        while self.request_queue:
             request = self.request_queue.pop(0)
             try:
                 await self.execute_request(request)
@@ -338,8 +320,7 @@ class RequestManager:
             await asyncio.sleep(0.01)
     
     async def cancel_request(self, request_id: str) -> bool:
-        """Cancel a queued or active request"""
-        # Remove from queue
+        """Cancel a queued or active request"""        # Remove from queue
         for i, request in enumerate(self.request_queue):
             if request.request_id == request_id:
                 self.request_queue.pop(i)
@@ -354,8 +335,7 @@ class RequestManager:
         return False
     
     async def cleanup(self):
-        """Cleanup request manager resources"""
-        self.logger.info("Cleaning up request manager...")
+        """Cleanup request manager resources"""        self.logger.info("Cleaning up request manager...")
         
         if self.session:
             await self.session.close()
@@ -366,8 +346,7 @@ class RequestManager:
         self.logger.info("Request manager cleanup completed")
     
     async def health_check(self) -> bool:
-        """Perform health check on request manager"""
-        try:
+        """Perform health check on request manager"""        try:
             if not self.session or self.session.closed:
                 return False
             
@@ -381,8 +360,7 @@ class RequestManager:
             return False
     
     def get_metrics(self) -> RequestMetrics:
-        """Get current request metrics"""
-        if self.metrics.total_requests > 0:
+        """Get current request metrics"""        if self.metrics.total_requests > 0:
             self.metrics.success_rate = (
                 self.metrics.successful_requests / self.metrics.total_requests * 100
             )
@@ -390,8 +368,7 @@ class RequestManager:
         return self.metrics
     
     async def _execute_with_retries(self, request: RequestRecord) -> Dict[str, Any]:
-        """Execute request with retry logic"""
-        last_exception = None
+        """Execute request with retry logic"""        last_exception = None
         
         for attempt in range(request.retry_config.max_attempts):
             request.attempts = attempt + 1
@@ -429,8 +406,7 @@ class RequestManager:
             raise Exception(f"Request failed after {request.retry_config.max_attempts} attempts")
     
     async def _execute_single_request(self, request: RequestRecord) -> Dict[str, Any]:
-        """Execute a single HTTP request"""
-        # Prepare request parameters
+        """Execute a single HTTP request"""        # Prepare request parameters
         kwargs = {
             'headers': request.headers,
             'timeout': ClientTimeout(total=request.config.timeout),
@@ -487,8 +463,7 @@ class RequestManager:
             return result
     
     async def _apply_rate_limiting(self, url: str):
-        """Apply rate limiting for the given URL"""
-        domain = urlparse(url).netloc
+        """Apply rate limiting for the given URL"""        domain = urlparse(url).netloc
         
         if domain not in self.rate_limiters:
             self.rate_limiters[domain] = {
@@ -517,8 +492,7 @@ class RequestManager:
         limiter['requests'].append(current_time)
     
     def _calculate_retry_delay(self, retry_config: RetryConfig, attempt: int) -> float:
-        """Calculate delay for retry attempt"""
-        if retry_config.strategy == RetryStrategy.EXPONENTIAL_BACKOFF:
+        """Calculate delay for retry attempt"""        if retry_config.strategy == RetryStrategy.EXPONENTIAL_BACKOFF:
             delay = retry_config.base_delay * (retry_config.backoff_factor ** attempt)
         elif retry_config.strategy == RetryStrategy.LINEAR_BACKOFF:
             delay = retry_config.base_delay * (attempt + 1)
@@ -538,15 +512,13 @@ class RequestManager:
         return delay
     
     def _generate_request_id(self, method: RequestMethod, url: str) -> str:
-        """Generate unique request ID"""
-        timestamp = int(time.time() * 1000)
+        """Generate unique request ID"""        timestamp = int(time.time() * 1000)
         content = f"{method.value}:{url}:{timestamp}"
         hash_obj = hashlib.md5(content.encode())
         return f"req_{hash_obj.hexdigest()[:8]}_{timestamp}"
     
     def _insert_by_priority(self, request: RequestRecord):
-        """Insert request in queue based on priority"""
-        if not self.request_queue:
+        """Insert request in queue based on priority"""        if not self.request_queue:
             self.request_queue.append(request)
             return
         
@@ -560,8 +532,7 @@ class RequestManager:
         self.request_queue.append(request)
     
     def _update_response_time_metrics(self, response_time: float):
-        """Update response time metrics"""
-        if response_time < self.metrics.min_response_time:
+        """Update response time metrics"""        if response_time < self.metrics.min_response_time:
             self.metrics.min_response_time = response_time
         
         if response_time > self.metrics.max_response_time:
@@ -575,8 +546,7 @@ class RequestManager:
         self.metrics.average_response_time = total_time / (self.metrics.successful_requests + 1)
     
     async def _monitoring_loop(self):
-        """Monitoring loop for metrics and cleanup"""
-        while True:
+        """Monitoring loop for metrics and cleanup"""        while True:
             try:
                 # Clean up old completed requests
                 cutoff_time = datetime.utcnow() - timedelta(hours=24)
@@ -601,8 +571,7 @@ class RequestManager:
 
 # Convenience functions
 async def create_request_manager(**kwargs) -> RequestManager:
-    """Create and initialize a request manager"""
-    manager = RequestManager(**kwargs)
+    """Create and initialize a request manager"""    manager = RequestManager(**kwargs)
     await manager.initialize()
     return manager
 
@@ -611,8 +580,7 @@ def create_rate_limit_config(
     requests_per_minute: int = 60,
     burst_limit: int = 10
 ) -> RateLimitConfig:
-    """Create rate limiting configuration"""
-    return RateLimitConfig(
+    """Create rate limiting configuration"""    return RateLimitConfig(
         requests_per_minute=requests_per_minute,
         burst_limit=burst_limit
     )
@@ -622,8 +590,7 @@ def create_retry_config(
     max_attempts: int = 3,
     strategy: RetryStrategy = RetryStrategy.EXPONENTIAL_BACKOFF
 ) -> RetryConfig:
-    """Create retry configuration"""
-    return RetryConfig(
+    """Create retry configuration"""    return RetryConfig(
         max_attempts=max_attempts,
         strategy=strategy
     )

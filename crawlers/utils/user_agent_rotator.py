@@ -1,5 +1,4 @@
-"""
-User Agent Rotator Module
+"""User Agent Rotator Module
 =========================
 
 Professional user agent rotation for web crawling with realistic browser simulation.
@@ -11,9 +10,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
-"""
-
-import random
+"""import random
 import logging
 from typing import Dict, List, Optional, Tuple
 from dataclasses import dataclass
@@ -25,8 +22,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class UserAgentInfo:
-    """User agent information structure."""
-    string: str
+    """User agent information structure."""    string: str
     browser: str
     browser_version: str
     os: str
@@ -38,8 +34,7 @@ class UserAgentInfo:
 
 @dataclass
 class BrowserFingerprint:
-    """Browser fingerprint for realistic simulation."""
-    user_agent: str
+    """Browser fingerprint for realistic simulation."""    user_agent: str
     accept_language: str
     accept_encoding: str
     accept: str
@@ -53,8 +48,7 @@ class BrowserFingerprint:
     fonts: List[str]
 
 class UserAgentRotator:
-    """
-    Professional user agent rotation system.
+    """    Professional user agent rotation system.
     
     Features:
     - Realistic browser simulation
@@ -65,11 +59,9 @@ class UserAgentRotator:
     - Mobile/desktop optimization
     - Anti-detection measures
     - Performance monitoring
-    """
-    
+    """    
     def __init__(self):
-        """Initialize user agent rotator."""
-        self.user_agents: List[UserAgentInfo] = []
+        """Initialize user agent rotator."""        self.user_agents: List[UserAgentInfo] = []
         self.usage_history: Dict[str, int] = {}
         self.current_fingerprint: Optional[BrowserFingerprint] = None
         self.rotation_strategy = 'weighted_random'
@@ -106,8 +98,7 @@ class UserAgentRotator:
         }
     
     def _load_user_agents(self) -> None:
-        """Load comprehensive user agent database."""
-        # Chrome user agents (most popular)
+        """Load comprehensive user agent database."""        # Chrome user agents (most popular)
         chrome_agents = [
             # Windows Chrome
             UserAgentInfo(
@@ -190,8 +181,7 @@ class UserAgentRotator:
         browser: Optional[str] = None,
         mobile: Optional[bool] = None
     ) -> UserAgentInfo:
-        """
-        Get user agent based on specified criteria.
+        """        Get user agent based on specified criteria.
         
         Args:
             device_type: desktop, mobile, tablet
@@ -200,8 +190,7 @@ class UserAgentRotator:
             
         Returns:
             UserAgentInfo object
-        """
-        # Filter user agents based on criteria
+        """        # Filter user agents based on criteria
         candidates = self._filter_user_agents(device_type, browser, mobile)
         
         if not candidates:
@@ -224,8 +213,7 @@ class UserAgentRotator:
         browser: Optional[str],
         mobile: Optional[bool]
     ) -> List[UserAgentInfo]:
-        """Filter user agents based on criteria."""
-        candidates = self.user_agents.copy()
+        """Filter user agents based on criteria."""        candidates = self.user_agents.copy()
         
         if device_type:
             candidates = [ua for ua in candidates if ua.device_type == device_type]
@@ -239,8 +227,7 @@ class UserAgentRotator:
         return candidates
     
     def _select_weighted_random(self, candidates: List[UserAgentInfo]) -> UserAgentInfo:
-        """Select user agent using weighted random selection."""
-        total_weight = sum(ua.popularity_score for ua in candidates)
+        """Select user agent using weighted random selection."""        total_weight = sum(ua.popularity_score for ua in candidates)
         
         if total_weight == 0:
             return random.choice(candidates)
@@ -256,8 +243,7 @@ class UserAgentRotator:
         return candidates[-1]
     
     def _select_least_used(self, candidates: List[UserAgentInfo]) -> UserAgentInfo:
-        """Select least used user agent."""
-        min_usage = float('inf')
+        """Select least used user agent."""        min_usage = float('inf')
         selected_ua = candidates[0]
         
         for ua in candidates:
@@ -269,12 +255,10 @@ class UserAgentRotator:
         return selected_ua
     
     def record_usage(self, user_agent: str) -> None:
-        """Record user agent usage."""
-        self.usage_history[user_agent] = self.usage_history.get(user_agent, 0) + 1
+        """Record user agent usage."""        self.usage_history[user_agent] = self.usage_history.get(user_agent, 0) + 1
     
     def generate_browser_fingerprint(self, user_agent: UserAgentInfo) -> BrowserFingerprint:
-        """Generate realistic browser fingerprint."""
-        # Screen resolutions based on device type
+        """Generate realistic browser fingerprint."""        # Screen resolutions based on device type
         if user_agent.device_type == 'desktop':
             screen_resolutions = [
                 (1920, 1080), (1366, 768), (1536, 864), (1440, 900),
@@ -370,8 +354,7 @@ class UserAgentRotator:
         return fingerprint
     
     def get_headers(self, user_agent: UserAgentInfo, referer: Optional[str] = None) -> Dict[str, str]:
-        """Generate realistic HTTP headers."""
-        browser_lower = user_agent.browser.lower()
+        """Generate realistic HTTP headers."""        browser_lower = user_agent.browser.lower()
         config = self.browser_configs.get(browser_lower, self.browser_configs['chrome'])
         
         headers = {
@@ -405,23 +388,19 @@ class UserAgentRotator:
         return headers
     
     def get_mobile_user_agent(self) -> UserAgentInfo:
-        """Get a mobile user agent."""
-        return self.get_user_agent(mobile=True)
+        """Get a mobile user agent."""        return self.get_user_agent(mobile=True)
     
     def get_desktop_user_agent(self) -> UserAgentInfo:
-        """Get a desktop user agent."""
-        return self.get_user_agent(mobile=False)
+        """Get a desktop user agent."""        return self.get_user_agent(mobile=False)
     
     def get_random_user_agent(self) -> UserAgentInfo:
-        """Get a random user agent with realistic mobile/desktop distribution."""
-        if random.random() < self.mobile_ratio:
+        """Get a random user agent with realistic mobile/desktop distribution."""        if random.random() < self.mobile_ratio:
             return self.get_mobile_user_agent()
         else:
             return self.get_desktop_user_agent()
     
     def get_usage_statistics(self) -> Dict:
-        """Get user agent usage statistics."""
-        total_usage = sum(self.usage_history.values())
+        """Get user agent usage statistics."""        total_usage = sum(self.usage_history.values())
         
         stats = {
             'total_requests': total_usage,
@@ -459,13 +438,11 @@ class UserAgentRotator:
         return stats
     
     def reset_usage_history(self) -> None:
-        """Reset usage history."""
-        self.usage_history.clear()
+        """Reset usage history."""        self.usage_history.clear()
         logger.info("User agent usage history reset")
     
     def set_rotation_strategy(self, strategy: str) -> None:
-        """Set rotation strategy."""
-        valid_strategies = ['weighted_random', 'least_used', 'random']
+        """Set rotation strategy."""        valid_strategies = ['weighted_random', 'least_used', 'random']
         if strategy in valid_strategies:
             self.rotation_strategy = strategy
             logger.info(f"User agent rotation strategy set to: {strategy}")
@@ -473,8 +450,7 @@ class UserAgentRotator:
             logger.warning(f"Invalid rotation strategy: {strategy}")
     
     def set_mobile_ratio(self, ratio: float) -> None:
-        """Set mobile traffic ratio."""
-        if 0 <= ratio <= 1:
+        """Set mobile traffic ratio."""        if 0 <= ratio <= 1:
             self.mobile_ratio = ratio
             logger.info(f"Mobile ratio set to: {ratio:.1%}")
         else:
@@ -491,8 +467,7 @@ class UserAgentRotator:
         is_mobile: bool,
         popularity_score: float = 0.01
     ) -> None:
-        """Add custom user agent to the pool."""
-        user_agent = UserAgentInfo(
+        """Add custom user agent to the pool."""        user_agent = UserAgentInfo(
             string=user_agent_string,
             browser=browser,
             browser_version=browser_version,
@@ -508,8 +483,7 @@ class UserAgentRotator:
         logger.info(f"Added custom user agent: {browser} {browser_version} on {os}")
     
     def update_user_agent_popularity(self, user_agent_string: str, new_score: float) -> None:
-        """Update popularity score for a user agent."""
-        for ua in self.user_agents:
+        """Update popularity score for a user agent."""        for ua in self.user_agents:
             if ua.string == user_agent_string:
                 ua.popularity_score = new_score
                 logger.info(f"Updated popularity score for {ua.browser}: {new_score}")

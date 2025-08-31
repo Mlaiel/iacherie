@@ -1,5 +1,4 @@
-"""
-Comprehensive rights management system for content creators and intellectual property protection.
+"""Comprehensive rights management system for content creators and intellectual property protection.
 
 This module implements enterprise-grade digital rights management including:
 - Automated copyright registration and tracking
@@ -25,9 +24,7 @@ LEGAL WARNING: This software and all associated intellectual property
 belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
-"""
-
-import asyncio
+"""import asyncio
 import aiohttp
 import logging
 from datetime import datetime, timedelta
@@ -55,8 +52,7 @@ from ..core.exceptions import RightsException, ProtectionException
 
 
 class RightType(Enum):
-    """Types of intellectual property rights."""
-    COPYRIGHT = "copyright"
+    """Types of intellectual property rights."""    COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     PATENT = "patent"
     TRADE_SECRET = "trade_secret"
@@ -69,8 +65,7 @@ class RightType(Enum):
 
 
 class ProtectionLevel(Enum):
-    """Content protection levels."""
-    PUBLIC = "public"
+    """Content protection levels."""    PUBLIC = "public"
     PROTECTED = "protected"
     RESTRICTED = "restricted"
     PRIVATE = "private"
@@ -79,8 +74,7 @@ class ProtectionLevel(Enum):
 
 
 class UsageType(Enum):
-    """Types of content usage."""
-    STREAMING = "streaming"
+    """Types of content usage."""    STREAMING = "streaming"
     DOWNLOAD = "download"
     REPRODUCTION = "reproduction"
     DISTRIBUTION = "distribution"
@@ -93,8 +87,7 @@ class UsageType(Enum):
 
 
 class EnforcementAction(Enum):
-    """Types of enforcement actions."""
-    TAKEDOWN_NOTICE = "takedown_notice"
+    """Types of enforcement actions."""    TAKEDOWN_NOTICE = "takedown_notice"
     DMCA_CLAIM = "dmca_claim"
     CEASE_DESIST = "cease_desist"
     COPYRIGHT_STRIKE = "copyright_strike"
@@ -106,8 +99,7 @@ class EnforcementAction(Enum):
 
 @dataclass
 class IntellectualProperty:
-    """Intellectual property registration record."""
-    ip_id: str
+    """Intellectual property registration record."""    ip_id: str
     creator_id: str
     title: str
     description: str
@@ -127,8 +119,7 @@ class IntellectualProperty:
 
 @dataclass
 class UsagePermission:
-    """Content usage permission record."""
-    permission_id: str
+    """Content usage permission record."""    permission_id: str
     ip_id: str
     grantee_id: str
     usage_type: UsageType
@@ -146,8 +137,7 @@ class UsagePermission:
 
 @dataclass
 class InfringementCase:
-    """Copyright infringement case tracking."""
-    case_id: str
+    """Copyright infringement case tracking."""    case_id: str
     ip_id: str
     reported_by: str
     infringing_url: str
@@ -166,8 +156,7 @@ class InfringementCase:
 
 @dataclass
 class RightsRevenue:
-    """Revenue tracking for protected content."""
-    revenue_id: str
+    """Revenue tracking for protected content."""    revenue_id: str
     ip_id: str
     usage_permission_id: Optional[str] = None
     revenue_amount: Decimal = Decimal("0.00")
@@ -181,8 +170,7 @@ class RightsRevenue:
 
 
 class EnterpriseRightsManager:
-    """
-    Enterprise-grade digital rights management system.
+    """    Enterprise-grade digital rights management system.
     
     Provides comprehensive intellectual property protection including:
     - Automated copyright registration and tracking
@@ -190,8 +178,7 @@ class EnterpriseRightsManager:
     - Revenue protection and collection
     - Legal compliance automation
     - International rights management
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger("protection.rights_management")
@@ -227,8 +214,7 @@ class EnterpriseRightsManager:
         self.logger.info("EnterpriseRightsManager initialized successfully")
     
     async def _initialize_rights_manager(self):
-        """Initialize rights management system components."""
-        try:
+        """Initialize rights management system components."""        try:
             # Initialize HTTP session
             await self._initialize_session()
             
@@ -245,8 +231,7 @@ class EnterpriseRightsManager:
             raise RightsException(f"Initialization error: {e}")
     
     async def _initialize_session(self):
-        """Initialize aiohttp session for external API calls."""
-        try:
+        """Initialize aiohttp session for external API calls."""        try:
             connector = aiohttp.TCPConnector(
                 limit=100,
                 limit_per_host=20,
@@ -270,8 +255,7 @@ class EnterpriseRightsManager:
             raise RightsException(f"Session initialization error: {e}")
     
     def _initialize_encryption(self) -> Fernet:
-        """Initialize encryption for sensitive rights data."""
-        try:
+        """Initialize encryption for sensitive rights data."""        try:
             # Get or generate encryption key
             key = self.config.get("encryption_key")
             if not key:
@@ -303,8 +287,7 @@ class EnterpriseRightsManager:
         protection_level: ProtectionLevel = ProtectionLevel.PROTECTED,
         jurisdiction: str = "international"
     ) -> IntellectualProperty:
-        """
-        Register intellectual property with comprehensive protection.
+        """        Register intellectual property with comprehensive protection.
         
         Args:
             creator_id: Creator identifier
@@ -317,8 +300,7 @@ class EnterpriseRightsManager:
             
         Returns:
             Registered intellectual property record
-        """
-        try:
+        """        try:
             # Generate unique IP ID
             ip_id = f"ip_{uuid.uuid4().hex[:12]}"
             
@@ -381,15 +363,12 @@ class EnterpriseRightsManager:
             raise RightsException(f"Registration error: {e}")
     
     async def _check_existing_registration(self, content_hash: str) -> Optional[Dict[str, Any]]:
-        """Check if content is already registered."""
-        try:
-            query = """
-            SELECT ip_id, creator_id, title, registration_date
+        """Check if content is already registered."""        try:
+            query = """            SELECT ip_id, creator_id, title, registration_date
             FROM intellectual_property 
             WHERE content_hash = $1 AND is_active = true
             LIMIT 1
-            """
-            
+            """            
             result = await self.db.fetchrow(query, content_hash)
             return dict(result) if result else None
             
@@ -403,8 +382,7 @@ class EnterpriseRightsManager:
         title: str,
         content_data: bytes
     ) -> Dict[str, Any]:
-        """Generate cryptographic proof of creation."""
-        try:
+        """Generate cryptographic proof of creation."""        try:
             timestamp = datetime.utcnow()
             
             # Create proof data
@@ -445,8 +423,7 @@ class EnterpriseRightsManager:
         right_type: RightType,
         jurisdiction: str
     ) -> str:
-        """Generate unique registration number."""
-        try:
+        """Generate unique registration number."""        try:
             # Get current year
             year = datetime.utcnow().year
             
@@ -480,8 +457,7 @@ class EnterpriseRightsManager:
             return f"REG{uuid.uuid4().hex[:8].upper()}"
     
     def _calculate_expiry_date(self, right_type: RightType) -> Optional[datetime]:
-        """Calculate expiry date based on right type and jurisdiction."""
-        current_date = datetime.utcnow()
+        """Calculate expiry date based on right type and jurisdiction."""        current_date = datetime.utcnow()
         
         # Standard copyright terms (varies by jurisdiction)
         if right_type == RightType.COPYRIGHT:
@@ -507,8 +483,7 @@ class EnterpriseRightsManager:
         territory_restrictions: List[str] = None,
         usage_conditions: Dict[str, Any] = None
     ) -> UsagePermission:
-        """
-        Grant usage permission for protected content.
+        """        Grant usage permission for protected content.
         
         Args:
             ip_id: Intellectual property ID
@@ -523,8 +498,7 @@ class EnterpriseRightsManager:
             
         Returns:
             Usage permission record
-        """
-        try:
+        """        try:
             # Verify IP ownership
             ip_record = await self._get_ip_record(ip_id)
             if not ip_record:
@@ -581,8 +555,7 @@ class EnterpriseRightsManager:
         infringing_party: Optional[str] = None,
         evidence: Dict[str, Any] = None
     ) -> InfringementCase:
-        """
-        Report copyright infringement case.
+        """        Report copyright infringement case.
         
         Args:
             ip_id: Intellectual property being infringed
@@ -593,8 +566,7 @@ class EnterpriseRightsManager:
             
         Returns:
             Infringement case record
-        """
-        try:
+        """        try:
             # Generate case ID
             case_id = f"case_{uuid.uuid4().hex[:12]}"
             
@@ -647,8 +619,7 @@ class EnterpriseRightsManager:
         original_hash: str,
         suspected_content: bytes
     ) -> float:
-        """Analyze similarity between original and suspected infringing content."""
-        try:
+        """Analyze similarity between original and suspected infringing content."""        try:
             # Calculate hash of suspected content
             suspected_hash = hashlib.sha256(suspected_content).hexdigest()
             
@@ -683,8 +654,7 @@ class EnterpriseRightsManager:
         case: InfringementCase,
         ip_record: Dict[str, Any]
     ):
-        """Trigger automatic enforcement actions for high-confidence infringement."""
-        try:
+        """Trigger automatic enforcement actions for high-confidence infringement."""        try:
             if not self.auto_takedown_enabled:
                 return
             
@@ -721,8 +691,7 @@ class EnterpriseRightsManager:
         currency: str = "USD",
         territory: str = "global"
     ) -> RightsRevenue:
-        """
-        Track revenue generated from protected content.
+        """        Track revenue generated from protected content.
         
         Args:
             ip_id: Intellectual property ID
@@ -734,8 +703,7 @@ class EnterpriseRightsManager:
             
         Returns:
             Revenue record
-        """
-        try:
+        """        try:
             # Generate revenue ID
             revenue_id = f"rev_{uuid.uuid4().hex[:12]}"
             
@@ -784,8 +752,7 @@ class EnterpriseRightsManager:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive rights management analytics.
+        """        Get comprehensive rights management analytics.
         
         Args:
             creator_id: Creator identifier
@@ -794,8 +761,7 @@ class EnterpriseRightsManager:
             
         Returns:
             Comprehensive analytics data
-        """
-        try:
+        """        try:
             self.logger.info(f"Generating rights analytics for creator: {creator_id}")
             
             analytics = {
@@ -814,8 +780,7 @@ class EnterpriseRightsManager:
             }
             
             # Get IP portfolio summary
-            ip_query = """
-            SELECT 
+            ip_query = """            SELECT 
                 right_type,
                 protection_level,
                 COUNT(*) as count,
@@ -826,8 +791,7 @@ class EnterpriseRightsManager:
                 AND registration_date BETWEEN $2 AND $3
             GROUP BY right_type, protection_level
             ORDER BY count DESC
-            """
-            
+            """            
             ip_results = await self.db.fetch(ip_query, creator_id, start_date, end_date)
             
             for row in ip_results:
@@ -846,8 +810,7 @@ class EnterpriseRightsManager:
                 analytics["ip_portfolio"][right_type]["average_age_days"] = float(row["avg_age_days"])
             
             # Get revenue analytics
-            revenue_query = """
-            SELECT 
+            revenue_query = """            SELECT 
                 ip.right_type,
                 rr.currency,
                 SUM(rr.revenue_amount) as total_revenue,
@@ -859,8 +822,7 @@ class EnterpriseRightsManager:
                 AND rr.collection_date BETWEEN $2 AND $3
             GROUP BY ip.right_type, rr.currency
             ORDER BY total_revenue DESC
-            """
-            
+            """            
             revenue_results = await self.db.fetch(revenue_query, creator_id, start_date, end_date)
             
             for row in revenue_results:
@@ -881,8 +843,7 @@ class EnterpriseRightsManager:
                 analytics["revenue_analysis"][right_type]["average_revenue"] = row["avg_revenue"]
             
             # Get infringement analytics
-            infringement_query = """
-            SELECT 
+            infringement_query = """            SELECT 
                 ic.infringement_type,
                 ic.case_status,
                 COUNT(*) as case_count,
@@ -894,8 +855,7 @@ class EnterpriseRightsManager:
                 AND ic.created_at BETWEEN $2 AND $3
             GROUP BY ic.infringement_type, ic.case_status
             ORDER BY case_count DESC
-            """
-            
+            """            
             infringement_results = await self.db.fetch(infringement_query, creator_id, start_date, end_date)
             
             for row in infringement_results:
@@ -937,8 +897,7 @@ class EnterpriseRightsManager:
             raise RightsException(f"Analytics error: {e}")
     
     async def cleanup_resources(self):
-        """Clean up rights manager resources."""
-        try:
+        """Clean up rights manager resources."""        try:
             if self.session and not self.session.closed:
                 await self.session.close()
             
@@ -953,5 +912,4 @@ class EnterpriseRightsManager:
 
 # Factory function for easy instantiation
 def create_rights_manager(config: Optional[Dict[str, Any]] = None) -> EnterpriseRightsManager:
-    """Create and return configured rights manager instance."""
-    return EnterpriseRightsManager(config)
+    """Create and return configured rights manager instance."""    return EnterpriseRightsManager(config)

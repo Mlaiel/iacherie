@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Message Router
+"""IA Influencer Agent - Message Router
 Enterprise message routing and orchestration for multi-platform messaging
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -13,9 +12,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 import time
@@ -36,16 +33,14 @@ settings = get_settings()
 
 
 class MessagePriority(str, Enum):
-    """Message priority levels"""
-    LOW = "low"
+    """Message priority levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class MessageType(str, Enum):
-    """Message types for routing"""
-    CONTENT_UPLOAD = "content.upload"
+    """Message types for routing"""    CONTENT_UPLOAD = "content.upload"
     FINGERPRINT_GENERATION = "fingerprint.generation"
     AI_ANALYSIS = "ai.analysis"
     PROTECTION_ALERT = "protection.alert"
@@ -57,8 +52,7 @@ class MessageType(str, Enum):
 
 
 class RoutingStrategy(str, Enum):
-    """Message routing strategies"""
-    ROUND_ROBIN = "round_robin"
+    """Message routing strategies"""    ROUND_ROBIN = "round_robin"
     PRIORITY_BASED = "priority_based"
     LOAD_BALANCED = "load_balanced"
     TOPIC_BASED = "topic_based"
@@ -66,8 +60,7 @@ class RoutingStrategy(str, Enum):
 
 
 class MessageProtocol(str, Enum):
-    """Supported messaging protocols"""
-    KAFKA = "kafka"
+    """Supported messaging protocols"""    KAFKA = "kafka"
     RABBITMQ = "rabbitmq"
     CELERY = "celery"
     REDIS = "redis"
@@ -75,8 +68,7 @@ class MessageProtocol(str, Enum):
 
 
 class Message(BaseModel):
-    """Standard message format for routing"""
-    id: str = Field(..., description="Unique message identifier")
+    """Standard message format for routing"""    id: str = Field(..., description="Unique message identifier")
     type: MessageType = Field(..., description="Message type")
     priority: MessagePriority = Field(default=MessagePriority.MEDIUM, description="Message priority")
     source: str = Field(..., description="Message source service")
@@ -91,8 +83,7 @@ class Message(BaseModel):
 
 
 class RouteConfig(BaseModel):
-    """Configuration for message routing"""
-    message_type: MessageType = Field(..., description="Message type to route")
+    """Configuration for message routing"""    message_type: MessageType = Field(..., description="Message type to route")
     protocol: MessageProtocol = Field(..., description="Target protocol")
     destination: str = Field(..., description="Destination queue/topic")
     routing_strategy: RoutingStrategy = Field(default=RoutingStrategy.ROUND_ROBIN, description="Routing strategy")
@@ -103,43 +94,34 @@ class RouteConfig(BaseModel):
 
 
 class MessageHandler(ABC):
-    """Abstract base class for message handlers"""
-    
+    """Abstract base class for message handlers"""    
     @abstractmethod
     async def handle(self, message: Message) -> bool:
-        """Handle message processing"""
-        pass
+        """Handle message processing"""        pass
     
     @abstractmethod
     async def can_handle(self, message: Message) -> bool:
-        """Check if handler can process the message"""
-        pass
+        """Check if handler can process the message"""        pass
 
 
 class MessageTransformer(ABC):
-    """Abstract base class for message transformers"""
-    
+    """Abstract base class for message transformers"""    
     @abstractmethod
     async def transform(self, message: Message) -> Message:
-        """Transform message before routing"""
-        pass
+        """Transform message before routing"""        pass
 
 
 class MessageFilter(ABC):
-    """Abstract base class for message filters"""
-    
+    """Abstract base class for message filters"""    
     @abstractmethod
     async def filter(self, message: Message) -> bool:
-        """Filter messages based on criteria"""
-        pass
+        """Filter messages based on criteria"""        pass
 
 
 class ContentUploadTransformer(MessageTransformer):
-    """Transformer for content upload messages"""
-    
+    """Transformer for content upload messages"""    
     async def transform(self, message: Message) -> Message:
-        """Add content processing metadata"""
-        message.metadata.update({
+        """Add content processing metadata"""        message.metadata.update({
             "processing_stage": "upload",
             "content_type": message.payload.get("file_type", "unknown"),
             "estimated_processing_time": self._estimate_processing_time(message.payload),
@@ -148,8 +130,7 @@ class ContentUploadTransformer(MessageTransformer):
         return message
     
     def _estimate_processing_time(self, payload: Dict[str, Any]) -> int:
-        """Estimate processing time based on content size and type"""
-        file_size = payload.get("file_size", 0)
+        """Estimate processing time based on content size and type"""        file_size = payload.get("file_size", 0)
         file_type = payload.get("file_type", "unknown")
         
         base_time = {
@@ -166,14 +147,12 @@ class ContentUploadTransformer(MessageTransformer):
 
 
 class PriorityFilter(MessageFilter):
-    """Filter messages based on priority"""
-    
+    """Filter messages based on priority"""    
     def __init__(self, min_priority: MessagePriority):
         self.min_priority = min_priority
         
     async def filter(self, message: Message) -> bool:
-        """Filter based on minimum priority"""
-        priority_levels = {
+        """Filter based on minimum priority"""        priority_levels = {
             MessagePriority.LOW: 0,
             MessagePriority.MEDIUM: 1,
             MessagePriority.HIGH: 2,
@@ -184,12 +163,9 @@ class PriorityFilter(MessageFilter):
 
 
 class MessageRouter:
-    """
-    Enterprise message routing and orchestration system
+    """    Enterprise message routing and orchestration system
     Handles intelligent routing across multiple messaging protocols
-    """
-
-    def __init__(self):
+    """    def __init__(self):
         self.routes: Dict[MessageType, List[RouteConfig]] = {}
         self.handlers: Dict[str, MessageHandler] = {}
         self.transformers: Dict[str, MessageTransformer] = {}
@@ -202,8 +178,7 @@ class MessageRouter:
         self._setup_default_components()
 
     def _setup_default_components(self) -> None:
-        """Setup default transformers and filters"""
-        self.transformers["content_upload"] = ContentUploadTransformer()
+        """Setup default transformers and filters"""        self.transformers["content_upload"] = ContentUploadTransformer()
         self.filters["high_priority"] = PriorityFilter(MessagePriority.HIGH)
         self.filters["critical_only"] = PriorityFilter(MessagePriority.CRITICAL)
 
@@ -211,8 +186,7 @@ class MessageRouter:
                                  kafka_manager: Optional[KafkaManager] = None,
                                  rabbitmq_manager: Optional[RabbitMQManager] = None,
                                  celery_manager: Optional[CeleryManager] = None) -> None:
-        """Initialize messaging protocol managers"""
-        try:
+        """Initialize messaging protocol managers"""        try:
             if kafka_manager:
                 self.protocols[MessageProtocol.KAFKA] = kafka_manager
                 logger.info("Kafka protocol initialized")
@@ -235,8 +209,7 @@ class MessageRouter:
             raise
 
     async def _setup_default_routes(self) -> None:
-        """Setup default routing configuration for IA processing"""
-        default_routes = [
+        """Setup default routing configuration for IA processing"""        default_routes = [
             # Content processing routes
             RouteConfig(
                 message_type=MessageType.CONTENT_UPLOAD,
@@ -315,16 +288,14 @@ class MessageRouter:
             await self.add_route(route)
 
     async def add_route(self, route: RouteConfig) -> None:
-        """Add routing configuration"""
-        if route.message_type not in self.routes:
+        """Add routing configuration"""        if route.message_type not in self.routes:
             self.routes[route.message_type] = []
         
         self.routes[route.message_type].append(route)
         logger.info(f"Added route for {route.message_type} to {route.protocol}:{route.destination}")
 
     async def remove_route(self, message_type: MessageType, protocol: MessageProtocol, destination: str) -> bool:
-        """Remove routing configuration"""
-        try:
+        """Remove routing configuration"""        try:
             if message_type in self.routes:
                 self.routes[message_type] = [
                     route for route in self.routes[message_type]
@@ -339,8 +310,7 @@ class MessageRouter:
             return False
 
     async def route_message(self, message: Message) -> bool:
-        """Route message to appropriate destination(s)"""
-        try:
+        """Route message to appropriate destination(s)"""        try:
             # Get routes for message type
             routes = self.routes.get(message.type, [])
             
@@ -383,8 +353,7 @@ class MessageRouter:
             return False
 
     async def _apply_filters(self, message: Message, route: RouteConfig) -> bool:
-        """Apply filters to message"""
-        try:
+        """Apply filters to message"""        try:
             for filter_name in route.filters:
                 message_filter = self.filters.get(filter_name)
                 if message_filter and not await message_filter.filter(message):
@@ -397,8 +366,7 @@ class MessageRouter:
             return False
 
     async def _apply_transformations(self, message: Message, route: RouteConfig) -> Message:
-        """Apply transformations to message"""
-        try:
+        """Apply transformations to message"""        try:
             transformed_message = message.copy(deep=True)
             
             for transformer_name in route.transformations:
@@ -413,8 +381,7 @@ class MessageRouter:
             return message
 
     async def _route_to_destination(self, message: Message, route: RouteConfig) -> bool:
-        """Route message to specific destination"""
-        try:
+        """Route message to specific destination"""        try:
             protocol_manager = self.protocols.get(route.protocol)
             
             if not protocol_manager:
@@ -437,8 +404,7 @@ class MessageRouter:
             return False
 
     async def _route_to_kafka(self, message: Message, route: RouteConfig, kafka_manager: KafkaManager) -> bool:
-        """Route message to Kafka"""
-        try:
+        """Route message to Kafka"""        try:
             routing_key = message.routing_key or self._generate_routing_key(message, route)
             
             return await kafka_manager.publish_event(
@@ -452,8 +418,7 @@ class MessageRouter:
             return False
 
     async def _route_to_rabbitmq(self, message: Message, route: RouteConfig, rabbitmq_manager: RabbitMQManager) -> bool:
-        """Route message to RabbitMQ"""
-        try:
+        """Route message to RabbitMQ"""        try:
             routing_key = message.routing_key or self._generate_routing_key(message, route)
             priority = self._get_priority_value(message.priority)
             
@@ -469,8 +434,7 @@ class MessageRouter:
             return False
 
     async def _route_to_celery(self, message: Message, route: RouteConfig, celery_manager: CeleryManager) -> bool:
-        """Route message to Celery"""
-        try:
+        """Route message to Celery"""        try:
             # This would integrate with Celery task dispatch
             # For now, simulate successful routing
             logger.debug(f"Routed message to Celery queue: {route.destination}")
@@ -481,8 +445,7 @@ class MessageRouter:
             return False
 
     def _generate_routing_key(self, message: Message, route: RouteConfig) -> str:
-        """Generate routing key based on message and route"""
-        if route.routing_strategy == RoutingStrategy.TOPIC_BASED:
+        """Generate routing key based on message and route"""        if route.routing_strategy == RoutingStrategy.TOPIC_BASED:
             return f"{message.type}.{message.priority}.{message.source}"
         elif route.routing_strategy == RoutingStrategy.PRIORITY_BASED:
             return f"{message.type}.{message.priority}"
@@ -490,8 +453,7 @@ class MessageRouter:
             return f"{message.type}.default"
 
     def _get_priority_value(self, priority: MessagePriority) -> int:
-        """Convert priority enum to numeric value"""
-        priority_map = {
+        """Convert priority enum to numeric value"""        priority_map = {
             MessagePriority.LOW: 1,
             MessagePriority.MEDIUM: 3,
             MessagePriority.HIGH: 5,
@@ -500,8 +462,7 @@ class MessageRouter:
         return priority_map.get(priority, 3)
 
     async def _send_to_dead_letter(self, message: Message, reason: str) -> None:
-        """Send message to dead letter queue"""
-        try:
+        """Send message to dead letter queue"""        try:
             message.metadata["dead_letter_reason"] = reason
             message.metadata["dead_letter_timestamp"] = time.time()
             
@@ -515,26 +476,22 @@ class MessageRouter:
             logger.error(f"Failed to send to dead letter: {e}")
 
     def _update_message_stats(self, message_type: MessageType, success: bool) -> None:
-        """Update message routing statistics"""
-        stat_key = f"{message_type}_{'success' if success else 'failed'}"
+        """Update message routing statistics"""        stat_key = f"{message_type}_{'success' if success else 'failed'}"
         self.message_stats[stat_key] = self.message_stats.get(stat_key, 0) + 1
 
     async def add_handler(self, name: str, handler: MessageHandler) -> None:
-        """Add message handler"""
-        self.handlers[name] = handler
+        """Add message handler"""        self.handlers[name] = handler
         logger.info(f"Added message handler: {name}")
 
     async def remove_handler(self, name: str) -> bool:
-        """Remove message handler"""
-        if name in self.handlers:
+        """Remove message handler"""        if name in self.handlers:
             del self.handlers[name]
             logger.info(f"Removed message handler: {name}")
             return True
         return False
 
     async def process_message_with_handler(self, message: Message, handler_name: str) -> bool:
-        """Process message with specific handler"""
-        try:
+        """Process message with specific handler"""        try:
             handler = self.handlers.get(handler_name)
             
             if not handler:
@@ -552,8 +509,7 @@ class MessageRouter:
             return False
 
     async def broadcast_message(self, message: Message, protocols: List[MessageProtocol]) -> Dict[MessageProtocol, bool]:
-        """Broadcast message to multiple protocols"""
-        results = {}
+        """Broadcast message to multiple protocols"""        results = {}
         
         for protocol in protocols:
             try:
@@ -575,8 +531,7 @@ class MessageRouter:
         return results
 
     async def get_routing_stats(self) -> Dict[str, Union[int, List[Dict]]]:
-        """Get routing statistics"""
-        try:
+        """Get routing statistics"""        try:
             total_routed = sum(v for k, v in self.message_stats.items() if "success" in k)
             total_failed = sum(v for k, v in self.message_stats.items() if "failed" in k)
             
@@ -616,12 +571,10 @@ class MessageRouter:
             return {"error": str(e)}
 
     async def get_dead_letter_messages(self, limit: int = 100) -> List[Dict]:
-        """Get dead letter messages"""
-        return [msg.dict() for msg in self.dead_letter_messages[-limit:]]
+        """Get dead letter messages"""        return [msg.dict() for msg in self.dead_letter_messages[-limit:]]
 
     async def reprocess_dead_letter_messages(self, message_ids: Optional[List[str]] = None) -> Dict[str, int]:
-        """Reprocess dead letter messages"""
-        try:
+        """Reprocess dead letter messages"""        try:
             reprocessed = 0
             failed = 0
             
@@ -655,8 +608,7 @@ class MessageRouter:
             return {"error": str(e)}
 
     def export_routing_config(self) -> Dict:
-        """Export current routing configuration"""
-        return {
+        """Export current routing configuration"""        return {
             "routes": {
                 msg_type.value: [route.dict() for route in routes]
                 for msg_type, routes in self.routes.items()

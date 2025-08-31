@@ -1,5 +1,4 @@
-"""
-Preference Learning Engine
+"""Preference Learning Engine
 =========================
 
 Industrial-grade ML-powered preference learning for IA Influencer Agent.
@@ -13,9 +12,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 WARNING: Any attempt to steal, copy, or use the concept, idea, or code without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -43,8 +40,7 @@ logger = logging.getLogger(__name__)
 
 
 class LearningAlgorithm(str, Enum):
-    """Preference learning algorithm types"""
-    COLLABORATIVE_FILTERING = "collaborative_filtering"
+    """Preference learning algorithm types"""    COLLABORATIVE_FILTERING = "collaborative_filtering"
     CONTENT_BASED = "content_based"
     MATRIX_FACTORIZATION = "matrix_factorization"
     DEEP_LEARNING = "deep_learning"
@@ -54,8 +50,7 @@ class LearningAlgorithm(str, Enum):
 
 
 class PreferenceType(str, Enum):
-    """Types of user preferences to learn"""
-    CONTENT_TYPE = "content_type"
+    """Types of user preferences to learn"""    CONTENT_TYPE = "content_type"
     STYLE_PREFERENCE = "style_preference"
     TIMING_PREFERENCE = "timing_preference"
     ENGAGEMENT_TYPE = "engagement_type"
@@ -66,8 +61,7 @@ class PreferenceType(str, Enum):
 
 @dataclass
 class UserInteraction:
-    """User interaction data for preference learning"""
-    user_id: str
+    """User interaction data for preference learning"""    user_id: str
     item_id: str
     interaction_type: str  # view, like, share, comment, create, collaborate
     interaction_value: float  # normalized interaction strength
@@ -80,8 +74,7 @@ class UserInteraction:
 
 @dataclass
 class PreferenceModel:
-    """Trained preference model"""
-    model_id: str
+    """Trained preference model"""    model_id: str
     algorithm: LearningAlgorithm
     model_data: Any  # Actual model object
     feature_names: List[str]
@@ -93,8 +86,7 @@ class PreferenceModel:
 
 @dataclass
 class LearningContext:
-    """Context for preference learning"""
-    user_id: str
+    """Context for preference learning"""    user_id: str
     time_window: Tuple[datetime, datetime]
     content_domains: List[str]
     interaction_types: List[str]
@@ -105,8 +97,7 @@ class LearningContext:
 
 @dataclass
 class PreferenceUpdate:
-    """Preference update result"""
-    user_id: str
+    """Preference update result"""    user_id: str
     preference_type: PreferenceType
     old_preferences: Dict[str, float]
     new_preferences: Dict[str, float]
@@ -117,8 +108,7 @@ class PreferenceUpdate:
 
 @dataclass
 class PreferencePrediction:
-    """Preference prediction result"""
-    user_id: str
+    """Preference prediction result"""    user_id: str
     item_id: str
     predicted_rating: float
     confidence_score: float
@@ -128,8 +118,7 @@ class PreferencePrediction:
 
 
 class CollaborativeFilteringEngine:
-    """Advanced collaborative filtering implementation"""
-    
+    """Advanced collaborative filtering implementation"""    
     def __init__(self, n_factors: int = 100, learning_rate: float = 0.01):
         self.n_factors = n_factors
         self.learning_rate = learning_rate
@@ -142,8 +131,7 @@ class CollaborativeFilteringEngine:
         
     async def fit(self, interaction_matrix: np.ndarray, user_ids: List[str], 
                   item_ids: List[str], epochs: int = 100) -> None:
-        """Train collaborative filtering model"""
-        try:
+        """Train collaborative filtering model"""        try:
             n_users, n_items = interaction_matrix.shape
             
             # Initialize parameters
@@ -182,8 +170,7 @@ class CollaborativeFilteringEngine:
             raise ModelTrainingError(f"CF training failed: {e}")
     
     async def _predict_rating(self, user_idx: int, item_idx: int) -> float:
-        """Predict rating for user-item pair"""
-        if not self.is_trained:
+        """Predict rating for user-item pair"""        if not self.is_trained:
             return self.global_bias
         
         user_item_interaction = np.dot(
@@ -202,8 +189,7 @@ class CollaborativeFilteringEngine:
     
     async def predict_preferences(self, user_idx: int, 
                                   item_indices: List[int]) -> List[float]:
-        """Predict preferences for multiple items"""
-        predictions = []
+        """Predict preferences for multiple items"""        predictions = []
         for item_idx in item_indices:
             prediction = await self._predict_rating(user_idx, item_idx)
             predictions.append(prediction)
@@ -211,8 +197,7 @@ class CollaborativeFilteringEngine:
 
 
 class ContentBasedFilteringEngine:
-    """Advanced content-based filtering implementation"""
-    
+    """Advanced content-based filtering implementation"""    
     def __init__(self):
         self.tfidf_vectorizer = TfidfVectorizer(max_features=10000, stop_words='english')
         self.content_features = None
@@ -220,8 +205,7 @@ class ContentBasedFilteringEngine:
         self.is_trained = False
         
     async def fit(self, content_features: Dict[str, Dict[str, Any]]) -> None:
-        """Train content-based filtering model"""
-        try:
+        """Train content-based filtering model"""        try:
             # Extract text features
             item_ids = list(content_features.keys())
             text_content = []
@@ -252,8 +236,7 @@ class ContentBasedFilteringEngine:
     
     async def find_similar_items(self, item_id: str, 
                                  top_k: int = 10) -> List[Tuple[str, float]]:
-        """Find similar items based on content"""
-        if not self.is_trained:
+        """Find similar items based on content"""        if not self.is_trained:
             return []
         
         item_ids = list(self.content_features.keys())
@@ -274,8 +257,7 @@ class ContentBasedFilteringEngine:
 
 
 class HybridRecommendationEngine:
-    """Hybrid recommendation combining multiple algorithms"""
-    
+    """Hybrid recommendation combining multiple algorithms"""    
     def __init__(self):
         self.collaborative_engine = CollaborativeFilteringEngine()
         self.content_engine = ContentBasedFilteringEngine()
@@ -289,8 +271,7 @@ class HybridRecommendationEngine:
     
     async def fit(self, interactions: List[UserInteraction], 
                   content_features: Dict[str, Dict[str, Any]]) -> None:
-        """Train hybrid recommendation model"""
-        try:
+        """Train hybrid recommendation model"""        try:
             # Prepare interaction matrix
             interaction_matrix, user_ids, item_ids = await self._prepare_interaction_matrix(
                 interactions
@@ -314,8 +295,7 @@ class HybridRecommendationEngine:
     
     async def predict_preference(self, user_id: str, item_id: str, 
                                  user_context: Dict[str, Any]) -> PreferencePrediction:
-        """Predict user preference for item using hybrid approach"""
-        if not self.is_trained:
+        """Predict user preference for item using hybrid approach"""        if not self.is_trained:
             raise PreferenceLearningError("Model not trained")
         
         try:
@@ -368,10 +348,8 @@ class HybridRecommendationEngine:
 
 
 class PreferenceLearningEngine(BaseService):
-    """
-    Advanced preference learning engine with multiple ML algorithms
-    """
-    
+    """    Advanced preference learning engine with multiple ML algorithms
+    """    
     def __init__(self, vector_store: VectorStore, redis_cache: RedisCache):
         super().__init__()
         self.vector_store = vector_store
@@ -392,8 +370,7 @@ class PreferenceLearningEngine(BaseService):
         logger.info("PreferenceLearningEngine initialized")
     
     async def initialize(self) -> None:
-        """Initialize preference learning engine"""
-        try:
+        """Initialize preference learning engine"""        try:
             await self._load_existing_models()
             await self._initialize_embeddings()
             
@@ -409,8 +386,7 @@ class PreferenceLearningEngine(BaseService):
         interactions: List[UserInteraction],
         context: LearningContext
     ) -> PreferenceUpdate:
-        """
-        Learn and update user preferences from interactions
+        """        Learn and update user preferences from interactions
         
         Args:
             user_id: User identifier
@@ -419,8 +395,7 @@ class PreferenceLearningEngine(BaseService):
             
         Returns:
             Preference update result
-        """
-        try:
+        """        try:
             # Get current preferences
             current_preferences = await self._get_current_preferences(user_id)
             
@@ -472,8 +447,7 @@ class PreferenceLearningEngine(BaseService):
         item_id: str,
         context: Dict[str, Any]
     ) -> PreferencePrediction:
-        """
-        Predict user preference for specific item
+        """        Predict user preference for specific item
         
         Args:
             user_id: User identifier
@@ -482,8 +456,7 @@ class PreferenceLearningEngine(BaseService):
             
         Returns:
             Preference prediction with confidence
-        """
-        try:
+        """        try:
             # Use hybrid recommendation engine
             prediction = await self.hybrid_engine.predict_preference(
                 user_id, item_id, context
@@ -504,8 +477,7 @@ class PreferenceLearningEngine(BaseService):
         content_features: Dict[str, Dict[str, Any]],
         algorithm: LearningAlgorithm = LearningAlgorithm.HYBRID
     ) -> PreferenceModel:
-        """
-        Train preference learning models
+        """        Train preference learning models
         
         Args:
             interactions: Training interaction data
@@ -514,8 +486,7 @@ class PreferenceLearningEngine(BaseService):
             
         Returns:
             Trained preference model
-        """
-        try:
+        """        try:
             if len(interactions) < self.min_interactions_for_training:
                 raise PreferenceLearningError(
                     f"Insufficient training data: {len(interactions)} interactions"
@@ -568,8 +539,7 @@ def create_preference_engine(
     vector_store: VectorStore,
     redis_cache: RedisCache
 ) -> PreferenceLearningEngine:
-    """Create preference learning engine instance"""
-    return PreferenceLearningEngine(vector_store, redis_cache)
+    """Create preference learning engine instance"""    return PreferenceLearningEngine(vector_store, redis_cache)
 
 
 async def train_preference_model(
@@ -578,7 +548,6 @@ async def train_preference_model(
     content_features: Dict[str, Dict[str, Any]],
     algorithm: LearningAlgorithm = LearningAlgorithm.HYBRID
 ) -> PreferenceModel:
-    """Train preference model using engine"""
-    return await engine.train_preference_models(
+    """Train preference model using engine"""    return await engine.train_preference_models(
         interactions, content_features, algorithm
     )

@@ -1,14 +1,11 @@
-"""
-Fingerprinting Engine - Ultra-Advanced Processing Engine
+"""Fingerprinting Engine - Ultra-Advanced Processing Engine
 
 Core processing engine for fingerprinting operations with intelligent
 optimization and comprehensive functionality.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -74,24 +71,21 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class FingerprintType(Enum):
-    """Types of fingerprints that can be generated"""
-    AUDIO = "audio"
+    """Types of fingerprints that can be generated"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
     MULTIMODAL = "multimodal"
 
 class SimilarityAlgorithm(Enum):
-    """Similarity matching algorithms"""
-    HAMMING = "hamming"
+    """Similarity matching algorithms"""    HAMMING = "hamming"
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     PERCEPTUAL = "perceptual"
 
 @dataclass
 class ContentFingerprint:
-    """Advanced content fingerprint with multiple representations"""
-    content_id: str
+    """Advanced content fingerprint with multiple representations"""    content_id: str
     fingerprint_type: FingerprintType
     hash_fingerprint: str
     vector_fingerprint: Optional[Any] = None  # Changed from np.ndarray to Any
@@ -102,8 +96,7 @@ class ContentFingerprint:
 
 @dataclass
 class SimilarityMatch:
-    """Similarity match result between content items"""
-    source_content_id: str
+    """Similarity match result between content items"""    source_content_id: str
     target_content_id: str
     similarity_score: float
     algorithm_used: SimilarityAlgorithm
@@ -112,8 +105,7 @@ class SimilarityMatch:
     detected_at: datetime = None
 
 class FingerprintingEngine:
-    """
-    Ultra-Advanced Fingerprinting Processing Engine
+    """    Ultra-Advanced Fingerprinting Processing Engine
     
     Provides enterprise-grade fingerprinting processing with:
     - Multi-modal content fingerprinting (audio, video, image, text)
@@ -122,8 +114,7 @@ class FingerprintingEngine:
     - Real-time duplicate detection and content tracking
     - Intelligent optimization and comprehensive error handling
     - Scalable architecture for high-volume processing
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.is_running = False
@@ -151,8 +142,7 @@ class FingerprintingEngine:
         logger.info("FingerprintingEngine initialized with advanced capabilities")
 
     async def start(self) -> None:
-        """Start the fingerprinting processing engine"""
-        try:
+        """Start the fingerprinting processing engine"""        try:
             await self._initialize_processors()
             await self._initialize_vector_index()
             self.is_running = True
@@ -162,8 +152,7 @@ class FingerprintingEngine:
             raise
 
     async def _initialize_processors(self):
-        """Initialize content-specific processors"""
-        try:
+        """Initialize content-specific processors"""        try:
             # Initialize audio processor
             self.audio_processor = AudioFingerprintProcessor(self.config.get('audio', {}))
             
@@ -183,8 +172,7 @@ class FingerprintingEngine:
             # Continue with available processors
 
     async def _initialize_vector_index(self):
-        """Initialize FAISS vector index for similarity search"""
-        try:
+        """Initialize FAISS vector index for similarity search"""        try:
             # Try to import FAISS
             import faiss
             
@@ -205,8 +193,7 @@ class FingerprintingEngine:
         content_id: str,
         additional_metadata: Optional[Dict[str, Any]] = None
     ) -> ContentFingerprint:
-        """
-        Generate comprehensive fingerprint for content
+        """        Generate comprehensive fingerprint for content
         
         Args:
             content_data: Raw content data
@@ -216,8 +203,7 @@ class FingerprintingEngine:
         
         Returns:
             ContentFingerprint object with multiple representations
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             # Generate hash-based fingerprint
@@ -278,8 +264,7 @@ class FingerprintingEngine:
         max_results: int = 10,
         similarity_threshold: Optional[float] = None
     ) -> List[SimilarityMatch]:
-        """
-        Find similar content using advanced similarity algorithms
+        """        Find similar content using advanced similarity algorithms
         
         Args:
             query_fingerprint: Fingerprint to search for
@@ -288,8 +273,7 @@ class FingerprintingEngine:
         
         Returns:
             List of SimilarityMatch objects ordered by similarity
-        """
-        threshold = similarity_threshold or self.similarity_threshold
+        """        threshold = similarity_threshold or self.similarity_threshold
         start_time = datetime.now()
         
         try:
@@ -346,8 +330,7 @@ class FingerprintingEngine:
             return []
 
     def _generate_hash_fingerprint(self, content_data: Union[bytes, str, Any]) -> str:
-        """Generate hash-based fingerprint"""
-        try:
+        """Generate hash-based fingerprint"""        try:
             if isinstance(content_data, str):
                 data_bytes = content_data.encode('utf-8')
             elif isinstance(content_data, np.ndarray):
@@ -369,8 +352,7 @@ class FingerprintingEngine:
         max_results: int,
         threshold: float
     ) -> List[SimilarityMatch]:
-        """Search for similar vectors using FAISS"""
-        matches = []
+        """Search for similar vectors using FAISS"""        matches = []
         
         try:
             if self.vector_index is None or self.vector_index.ntotal == 0:
@@ -408,8 +390,7 @@ class FingerprintingEngine:
         query_hash: str,
         max_results: int
     ) -> List[SimilarityMatch]:
-        """Search for similar hash fingerprints"""
-        matches = []
+        """Search for similar hash fingerprints"""        matches = []
         
         try:
             # This would normally query a database of stored fingerprints
@@ -427,8 +408,7 @@ class FingerprintingEngine:
         content_type: FingerprintType,
         max_results: int
     ) -> List[SimilarityMatch]:
-        """Search using perceptual features"""
-        matches = []
+        """Search using perceptual features"""        matches = []
         
         try:
             # This would use specialized algorithms based on content type
@@ -440,8 +420,7 @@ class FingerprintingEngine:
         return matches
 
     def _deduplicate_matches(self, matches: List[SimilarityMatch]) -> List[SimilarityMatch]:
-        """Remove duplicate matches based on target content ID"""
-        seen_targets = set()
+        """Remove duplicate matches based on target content ID"""        seen_targets = set()
         unique_matches = []
         
         for match in matches:
@@ -457,8 +436,7 @@ class FingerprintingEngine:
         vector_fingerprint: Optional[Any],  # Changed from np.ndarray
         perceptual_features: Dict[str, Any]
     ) -> float:
-        """Calculate confidence score based on fingerprint quality"""
-        score = 0.0
+        """Calculate confidence score based on fingerprint quality"""        score = 0.0
         
         # Hash fingerprint always contributes
         if hash_fingerprint:
@@ -479,8 +457,7 @@ class FingerprintingEngine:
         return min(1.0, score)
 
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process fingerprinting operation (legacy interface)"""
-        try:
+        """Process fingerprinting operation (legacy interface)"""        try:
             content_type_str = data.get('content_type', 'text')
             content_type = FingerprintType(content_type_str)
             content_data = data.get('content_data', b'')
@@ -512,8 +489,7 @@ class FingerprintingEngine:
             }
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of the processing engine"""
-        self.is_running = False
+        """Graceful shutdown of the processing engine"""        self.is_running = False
         
         # Save vector index if needed
         if self.vector_index is not None:
@@ -524,16 +500,14 @@ class FingerprintingEngine:
 
 # Content-specific processor classes
 class AudioFingerprintProcessor:
-    """Advanced audio fingerprinting processor"""
-    
+    """Advanced audio fingerprinting processor"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.sample_rate = config.get('sample_rate', 44100)
         self.window_size = config.get('window_size', 2048)
         
     async def process(self, audio_data: Union[bytes, Any]) -> Tuple[Any, Dict[str, Any]]:
-        """Process audio content and extract fingerprint features"""
-        try:
+        """Process audio content and extract fingerprint features"""        try:
             # Simulate audio processing (would use librosa in production)
             if isinstance(audio_data, bytes):
                 # Convert bytes to audio array simulation
@@ -560,16 +534,14 @@ class AudioFingerprintProcessor:
 
 
 class VideoFingerprintProcessor:
-    """Advanced video fingerprinting processor"""
-    
+    """Advanced video fingerprinting processor"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.fps = config.get('fps', 30)
         self.keyframe_interval = config.get('keyframe_interval', 30)
         
     async def process(self, video_data: Union[bytes, Any]) -> Tuple[Any, Dict[str, Any]]:
-        """Process video content and extract fingerprint features"""
-        try:
+        """Process video content and extract fingerprint features"""        try:
             # Simulate video processing (would use OpenCV/FFmpeg in production)
             vector_features = np.random().rand(512)  # Placeholder for real video analysis
             
@@ -592,15 +564,13 @@ class VideoFingerprintProcessor:
 
 
 class ImageFingerprintProcessor:
-    """Advanced image fingerprinting processor"""
-    
+    """Advanced image fingerprinting processor"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.target_size = config.get('target_size', (224, 224))
         
     async def process(self, image_data: Union[bytes, Any]) -> Tuple[Any, Dict[str, Any]]:
-        """Process image content and extract fingerprint features"""
-        try:
+        """Process image content and extract fingerprint features"""        try:
             # Simulate image processing (would use PIL/OpenCV in production)
             vector_features = np.random().rand(512)  # Placeholder for real feature extraction
             
@@ -628,15 +598,13 @@ class ImageFingerprintProcessor:
 
 
 class TextFingerprintProcessor:
-    """Advanced text fingerprinting processor"""
-    
+    """Advanced text fingerprinting processor"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.max_length = config.get('max_length', 10000)
         
     async def process(self, text_data: Union[str, bytes]) -> Tuple[Any, Dict[str, Any]]:
-        """Process text content and extract fingerprint features"""
-        try:
+        """Process text content and extract fingerprint features"""        try:
             if isinstance(text_data, bytes):
                 text = text_data.decode('utf-8', errors='ignore')
             else:

@@ -1,5 +1,4 @@
-"""
-Enterprise System Monitoring
+"""Enterprise System Monitoring
 
 Comprehensive system monitoring infrastructure for real-time performance tracking,
 resource monitoring, and predictive alerting in the IA Influencer platform.
@@ -10,9 +9,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DevOps + Security
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, copying, or implementation without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import psutil
 import time
 import logging
@@ -27,8 +24,7 @@ from pathlib import Path
 
 @dataclass
 class SystemSnapshot:
-    """System performance snapshot."""
-    timestamp: datetime
+    """System performance snapshot."""    timestamp: datetime
     cpu_percent: float
     memory_percent: float
     memory_available_mb: int
@@ -41,8 +37,7 @@ class SystemSnapshot:
     uptime_seconds: int
     
     def to_dict(self) -> Dict:
-        """Convert to dictionary."""
-        return {
+        """Convert to dictionary."""        return {
             'timestamp': self.timestamp.isoformat(),
             'cpu_percent': self.cpu_percent,
             'memory_percent': self.memory_percent,
@@ -58,8 +53,7 @@ class SystemSnapshot:
 
 
 class SystemMonitor:
-    """Real-time system monitoring with predictive alerting."""
-    
+    """Real-time system monitoring with predictive alerting."""    
     def __init__(self, retention_hours: int = 24, collection_interval: int = 30):
         self.retention_hours = retention_hours
         self.collection_interval = collection_interval
@@ -81,23 +75,20 @@ class SystemMonitor:
         }
     
     def start_monitoring(self):
-        """Start continuous system monitoring."""
-        if not self.is_running:
+        """Start continuous system monitoring."""        if not self.is_running:
             self.is_running = True
             self.monitor_thread = threading.Thread(target=self._monitor_loop, daemon=True)
             self.monitor_thread.start()
             logging.info("System monitoring started")
     
     def stop_monitoring(self):
-        """Stop system monitoring."""
-        self.is_running = False
+        """Stop system monitoring."""        self.is_running = False
         if self.monitor_thread:
             self.monitor_thread.join()
         logging.info("System monitoring stopped")
     
     def _monitor_loop(self):
-        """Main monitoring loop."""
-        while self.is_running:
+        """Main monitoring loop."""        while self.is_running:
             try:
                 snapshot = self._collect_system_metrics()
                 with self._lock:
@@ -113,8 +104,7 @@ class SystemMonitor:
                 time.sleep(self.collection_interval)
     
     def _collect_system_metrics(self) -> SystemSnapshot:
-        """Collect comprehensive system metrics."""
-        # CPU metrics
+        """Collect comprehensive system metrics."""        # CPU metrics
         cpu_percent = psutil.cpu_percent(interval=1)
         
         # Memory metrics
@@ -154,8 +144,7 @@ class SystemMonitor:
         )
     
     def _check_performance_anomalies(self, snapshot: SystemSnapshot):
-        """Check for performance anomalies and potential issues."""
-        anomalies = []
+        """Check for performance anomalies and potential issues."""        anomalies = []
         
         # CPU anomalies
         if snapshot.cpu_percent >= self.thresholds['cpu_critical']:
@@ -222,13 +211,11 @@ class SystemMonitor:
                 logging.warning(f"System anomaly: {anomaly['message']}")
     
     def get_current_metrics(self) -> Optional[SystemSnapshot]:
-        """Get the most recent system metrics."""
-        with self._lock:
+        """Get the most recent system metrics."""        with self._lock:
             return self.snapshots[-1] if self.snapshots else None
     
     def get_metrics_history(self, hours: int = 1) -> List[SystemSnapshot]:
-        """Get system metrics history for specified hours."""
-        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
+        """Get system metrics history for specified hours."""        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
         
         with self._lock:
             return [
@@ -237,8 +224,7 @@ class SystemMonitor:
             ]
     
     def get_performance_summary(self) -> Dict:
-        """Get performance summary statistics."""
-        if not self.snapshots:
+        """Get performance summary statistics."""        if not self.snapshots:
             return {"error": "No metrics available"}
         
         with self._lock:
@@ -279,8 +265,7 @@ class SystemMonitor:
 
 
 class PerformanceMonitor:
-    """Application performance monitoring with business metrics tracking."""
-    
+    """Application performance monitoring with business metrics tracking."""    
     def __init__(self, retention_hours: int = 24):
         self.retention_hours = retention_hours
         self.metrics = defaultdict(lambda: deque(maxlen=10000))
@@ -294,8 +279,7 @@ class PerformanceMonitor:
         self.collaboration_match_times = deque(maxlen=1000)
     
     def record_content_processing_time(self, processing_type: str, duration_ms: float, success: bool = True):
-        """Record content processing performance."""
-        timestamp = datetime.utcnow()
+        """Record content processing performance."""        timestamp = datetime.utcnow()
         
         metric_data = {
             'timestamp': timestamp,
@@ -322,8 +306,7 @@ class PerformanceMonitor:
                 })
     
     def record_ai_inference_time(self, model_name: str, duration_ms: float, input_size: int = 0):
-        """Record AI model inference performance."""
-        timestamp = datetime.utcnow()
+        """Record AI model inference performance."""        timestamp = datetime.utcnow()
         
         metric_data = {
             'timestamp': timestamp,
@@ -337,8 +320,7 @@ class PerformanceMonitor:
             self.metrics[f"ai.inference.{model_name}"].append(metric_data)
     
     def record_protection_scan_time(self, scan_type: str, duration_ms: float, items_scanned: int):
-        """Record content protection scan performance."""
-        timestamp = datetime.utcnow()
+        """Record content protection scan performance."""        timestamp = datetime.utcnow()
         
         metric_data = {
             'timestamp': timestamp,
@@ -352,8 +334,7 @@ class PerformanceMonitor:
             self.metrics[f"protection.scan.{scan_type}"].append(metric_data)
     
     def record_collaboration_match_time(self, match_type: str, duration_ms: float, matches_found: int):
-        """Record collaboration matching performance."""
-        timestamp = datetime.utcnow()
+        """Record collaboration matching performance."""        timestamp = datetime.utcnow()
         
         metric_data = {
             'timestamp': timestamp,
@@ -367,8 +348,7 @@ class PerformanceMonitor:
             self.metrics[f"collaboration.matching.{match_type}"].append(metric_data)
     
     def get_content_performance_metrics(self) -> Dict:
-        """Get content processing performance metrics."""
-        with self._lock:
+        """Get content processing performance metrics."""        with self._lock:
             processing_times = list(self.content_processing_times)
         
         if not processing_times:
@@ -411,8 +391,7 @@ class PerformanceMonitor:
         }
     
     def get_ai_performance_metrics(self) -> Dict:
-        """Get AI model performance metrics."""
-        with self._lock:
+        """Get AI model performance metrics."""        with self._lock:
             inference_times = list(self.ai_inference_times)
         
         if not inference_times:
@@ -451,8 +430,7 @@ class PerformanceMonitor:
         }
     
     def _calculate_percentile(self, values: List[float], percentile: float) -> float:
-        """Calculate percentile value."""
-        if not values:
+        """Calculate percentile value."""        if not values:
             return 0.0
         
         sorted_values = sorted(values)
@@ -460,8 +438,7 @@ class PerformanceMonitor:
         return sorted_values[min(index, len(sorted_values) - 1)]
     
     def get_overall_performance_summary(self) -> Dict:
-        """Get overall application performance summary."""
-        return {
+        """Get overall application performance summary."""        return {
             "content_processing": self.get_content_performance_metrics(),
             "ai_inference": self.get_ai_performance_metrics(),
             "monitoring_active": True,
@@ -471,8 +448,7 @@ class PerformanceMonitor:
 
 
 class ResourceMonitor:
-    """Resource utilization and capacity monitoring."""
-    
+    """Resource utilization and capacity monitoring."""    
     def __init__(self):
         self.resource_usage = defaultdict(lambda: deque(maxlen=1000))
         self._lock = threading.Lock()
@@ -486,8 +462,7 @@ class ResourceMonitor:
         }
     
     def record_resource_usage(self, service_name: str, resource_type: str, usage_percent: float):
-        """Record resource usage for a specific service."""
-        timestamp = datetime.utcnow()
+        """Record resource usage for a specific service."""        timestamp = datetime.utcnow()
         
         usage_data = {
             'timestamp': timestamp,
@@ -501,8 +476,7 @@ class ResourceMonitor:
             self.resource_usage[key].append(usage_data)
     
     def check_resource_thresholds(self) -> Dict:
-        """Check if any resources are exceeding thresholds."""
-        alerts = []
+        """Check if any resources are exceeding thresholds."""        alerts = []
         
         with self._lock:
             for service_name, thresholds in self.service_thresholds.items():
@@ -530,8 +504,7 @@ class ResourceMonitor:
         }
     
     def get_resource_summary(self) -> Dict:
-        """Get summary of resource utilization."""
-        summary = {}
+        """Get summary of resource utilization."""        summary = {}
         
         with self._lock:
             for service_name in self.service_thresholds:

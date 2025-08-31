@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
-"""
-Database Migration Manager
+"""Database Migration Manager
 Handles database schema migrations, data migrations, and version control
-"""
-
-import os
+"""import os
 import sys
 import time
 import json
@@ -30,8 +27,7 @@ logger = logging.getLogger(__name__)
 
 
 class MigrationType(Enum):
-    """Migration type enumeration"""
-    SCHEMA = "schema"
+    """Migration type enumeration"""    SCHEMA = "schema"
     DATA = "data"
     INDEX = "index"
     PROCEDURE = "procedure"
@@ -39,8 +35,7 @@ class MigrationType(Enum):
 
 
 class MigrationStatus(Enum):
-    """Migration status enumeration"""
-    PENDING = "pending"
+    """Migration status enumeration"""    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -49,8 +44,7 @@ class MigrationStatus(Enum):
 
 @dataclass
 class Migration:
-    """Migration data class"""
-    id: str
+    """Migration data class"""    id: str
     version: str
     name: str
     description: str
@@ -65,14 +59,11 @@ class Migration:
 
 
 class DatabaseMigrationManager:
-    """
-    Enterprise-grade database migration manager
+    """    Enterprise-grade database migration manager
     Handles schema evolution, data migrations, and rollbacks
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize migration manager"""
-        self.config_path = config_path or "/etc/migration/config.json"
+        """Initialize migration manager"""        self.config_path = config_path or "/etc/migration/config.json"
         self.migrations_dir = "/opt/ia-influencer/migrations"
         self.connection = None
         self.applied_migrations = []
@@ -84,8 +75,7 @@ class DatabaseMigrationManager:
         self._discover_migrations()
     
     def _load_configuration(self) -> None:
-        """Load migration configuration"""
-        try:
+        """Load migration configuration"""        try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r') as f:
                     self.config = json.load(f)
@@ -98,8 +88,7 @@ class DatabaseMigrationManager:
             self.config = self._get_default_config()
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default migration configuration"""
-        return {
+        """Get default migration configuration"""        return {
             "database": {
                 "host": "localhost",
                 "port": 5432,
@@ -123,8 +112,7 @@ class DatabaseMigrationManager:
         }
     
     def _initialize_database_connection(self) -> None:
-        """Initialize database connection"""
-        try:
+        """Initialize database connection"""        try:
             db_config = self.config.get("database", {})
             
             connection_params = {
@@ -145,12 +133,10 @@ class DatabaseMigrationManager:
             raise
     
     def _initialize_migration_tracking(self) -> None:
-        """Initialize migration tracking table"""
-        try:
+        """Initialize migration tracking table"""        try:
             table_name = self.config.get("migration", {}).get("table", "schema_migrations")
             
-            create_table_sql = f"""
-            CREATE TABLE IF NOT EXISTS {table_name} (
+            create_table_sql = f"""            CREATE TABLE IF NOT EXISTS {table_name} (
                 id SERIAL PRIMARY KEY,
                 migration_id VARCHAR(255) UNIQUE NOT NULL,
                 version VARCHAR(50) NOT NULL,
@@ -169,8 +155,7 @@ class DatabaseMigrationManager:
             
             CREATE INDEX IF NOT EXISTS idx_schema_migrations_applied_at 
             ON {table_name} (applied_at);
-            """
-            
+            """            
             with self.connection.cursor() as cursor:
                 cursor.execute(create_table_sql)
             
@@ -181,8 +166,7 @@ class DatabaseMigrationManager:
             raise
     
     def _discover_migrations(self) -> None:
-        """Discover migration files from directory"""
-        try:
+        """Discover migration files from directory"""        try:
             os.makedirs(self.migrations_dir, exist_ok=True)
             
             migration_files = []
@@ -225,8 +209,7 @@ class DatabaseMigrationManager:
             logger.error(f"Failed to discover migrations: {e}")
     
     def _parse_migration_file(self, file_path: Path) -> Optional[Migration]:
-        """Parse migration file and extract metadata"""
-        try:
+        """Parse migration file and extract metadata"""        try:
             if file_path.suffix == ".sql":
                 return self._parse_sql_migration(file_path)
             elif file_path.suffix == ".py":
@@ -240,8 +223,7 @@ class DatabaseMigrationManager:
             return None
     
     def _parse_sql_migration(self, file_path: Path) -> Optional[Migration]:
-        """Parse SQL migration file"""
-        try:
+        """Parse SQL migration file"""        try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
             
@@ -279,8 +261,7 @@ class DatabaseMigrationManager:
             return None
     
     def _parse_python_migration(self, file_path: Path) -> Optional[Migration]:
-        """Parse Python migration file"""
-        try:
+        """Parse Python migration file"""        try:
             # This would load and execute Python migration files
             # For now, we'll create a placeholder
             migration_id = file_path.stem
@@ -305,8 +286,7 @@ class DatabaseMigrationManager:
             return None
     
     def _extract_migration_metadata(self, content: str) -> Dict[str, Any]:
-        """Extract metadata from migration file comments"""
-        metadata = {}
+        """Extract metadata from migration file comments"""        metadata = {}
         
         lines = content.split('\n')
         for line in lines:
@@ -325,8 +305,7 @@ class DatabaseMigrationManager:
         return metadata
     
     def _get_applied_migration_ids(self) -> List[str]:
-        """Get list of applied migration IDs from database"""
-        try:
+        """Get list of applied migration IDs from database"""        try:
             table_name = self.config.get("migration", {}).get("table", "schema_migrations")
             
             with self.connection.cursor() as cursor:
@@ -340,8 +319,7 @@ class DatabaseMigrationManager:
             return []
     
     def migrate(self, target_version: Optional[str] = None, dry_run: bool = False) -> bool:
-        """
-        Execute pending migrations
+        """        Execute pending migrations
         
         Args:
             target_version: Target version to migrate to (None for latest)
@@ -349,8 +327,7 @@ class DatabaseMigrationManager:
             
         Returns:
             bool: True if successful, False otherwise
-        """
-        try:
+        """        try:
             logger.info(f"Starting migration {'(dry run)' if dry_run else ''}")
             
             # Validate pending migrations
@@ -394,8 +371,7 @@ class DatabaseMigrationManager:
             return False
     
     def _validate_pending_migrations(self) -> bool:
-        """Validate pending migrations"""
-        try:
+        """Validate pending migrations"""        try:
             logger.info("Validating pending migrations")
             
             # Check for dependency cycles
@@ -419,8 +395,7 @@ class DatabaseMigrationManager:
             return False
     
     def _check_dependency_cycles(self) -> bool:
-        """Check for dependency cycles in migrations"""
-        try:
+        """Check for dependency cycles in migrations"""        try:
             # Build dependency graph
             dependency_graph = {}
             for migration in self.pending_migrations:
@@ -457,8 +432,7 @@ class DatabaseMigrationManager:
             return False
     
     def _verify_migration_checksums(self) -> bool:
-        """Verify migration checksums against database records"""
-        try:
+        """Verify migration checksums against database records"""        try:
             table_name = self.config.get("migration", {}).get("table", "schema_migrations")
             
             with self.connection.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
@@ -478,8 +452,7 @@ class DatabaseMigrationManager:
             return False
     
     def _validate_sql_syntax(self) -> bool:
-        """Validate SQL syntax in migrations"""
-        try:
+        """Validate SQL syntax in migrations"""        try:
             for migration in self.pending_migrations:
                 if migration.migration_type == MigrationType.SCHEMA:
                     # Basic SQL syntax validation
@@ -501,8 +474,7 @@ class DatabaseMigrationManager:
             return False
     
     def _filter_migrations_by_version(self, migrations: List[Migration], target_version: Optional[str]) -> List[Migration]:
-        """Filter migrations by target version"""
-        if not target_version:
+        """Filter migrations by target version"""        if not target_version:
             return migrations
         
         # Simple version filtering (would be more sophisticated in production)
@@ -514,8 +486,7 @@ class DatabaseMigrationManager:
         return filtered
     
     def _compare_versions(self, version1: str, version2: str) -> int:
-        """Compare two version strings"""
-        try:
+        """Compare two version strings"""        try:
             v1_parts = [int(x) for x in version1.split('.')]
             v2_parts = [int(x) for x in version2.split('.')]
             
@@ -537,8 +508,7 @@ class DatabaseMigrationManager:
             return -1 if version1 < version2 else (1 if version1 > version2 else 0)
     
     def _create_pre_migration_backup(self) -> bool:
-        """Create backup before migration"""
-        try:
+        """Create backup before migration"""        try:
             logger.info("Creating pre-migration backup")
             
             db_config = self.config.get("database", {})
@@ -570,8 +540,7 @@ class DatabaseMigrationManager:
             return False
     
     def _apply_migration(self, migration: Migration, dry_run: bool = False) -> bool:
-        """Apply single migration"""
-        try:
+        """Apply single migration"""        try:
             logger.info(f"Applying migration: {migration.id} {'(dry run)' if dry_run else ''}")
             
             start_time = time.time()
@@ -608,8 +577,7 @@ class DatabaseMigrationManager:
             return False
     
     def _check_migration_dependencies(self, migration: Migration) -> bool:
-        """Check if migration dependencies are satisfied"""
-        try:
+        """Check if migration dependencies are satisfied"""        try:
             applied_migration_ids = self._get_applied_migration_ids()
             
             for dependency in migration.dependencies:
@@ -624,8 +592,7 @@ class DatabaseMigrationManager:
             return False
     
     def _execute_migration_sql(self, migration: Migration) -> bool:
-        """Execute migration SQL"""
-        try:
+        """Execute migration SQL"""        try:
             with self.connection.cursor() as cursor:
                 # Execute migration SQL
                 if migration.sql_up:
@@ -639,8 +606,7 @@ class DatabaseMigrationManager:
             return False
     
     def _validate_migration_sql(self, migration: Migration) -> bool:
-        """Validate migration SQL (dry run)"""
-        try:
+        """Validate migration SQL (dry run)"""        try:
             with self.connection.cursor() as cursor:
                 # Use EXPLAIN to validate SQL without executing
                 if migration.sql_up:
@@ -658,13 +624,11 @@ class DatabaseMigrationManager:
             return False
     
     def _record_migration(self, migration: Migration, execution_time: int) -> None:
-        """Record migration in database"""
-        try:
+        """Record migration in database"""        try:
             table_name = self.config.get("migration", {}).get("table", "schema_migrations")
             
             with self.connection.cursor() as cursor:
-                cursor.execute(f"""
-                    INSERT INTO {table_name} 
+                cursor.execute(f"""                    INSERT INTO {table_name} 
                     (migration_id, version, name, description, migration_type, 
                      checksum, execution_time_ms, status)
                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
@@ -685,8 +649,7 @@ class DatabaseMigrationManager:
             logger.error(f"Migration recording error: {e}")
     
     def _rollback_failed_migration(self, migration: Migration) -> bool:
-        """Rollback failed migration"""
-        try:
+        """Rollback failed migration"""        try:
             logger.info(f"Rolling back migration: {migration.id}")
             
             if not migration.sql_down:
@@ -707,8 +670,7 @@ class DatabaseMigrationManager:
             return False
     
     def rollback(self, target_version: Optional[str] = None, steps: int = 1) -> bool:
-        """
-        Rollback migrations
+        """        Rollback migrations
         
         Args:
             target_version: Target version to rollback to
@@ -716,8 +678,7 @@ class DatabaseMigrationManager:
             
         Returns:
             bool: True if successful, False otherwise
-        """
-        try:
+        """        try:
             logger.info(f"Starting rollback to version {target_version or f'{steps} steps'}")
             
             # Get migrations to rollback
@@ -743,8 +704,7 @@ class DatabaseMigrationManager:
             return False
     
     def _get_rollback_migrations(self, target_version: Optional[str], steps: int) -> List[Migration]:
-        """Get migrations to rollback"""
-        try:
+        """Get migrations to rollback"""        try:
             # Get applied migrations in reverse order
             applied_migrations = sorted(
                 self.applied_migrations,
@@ -770,8 +730,7 @@ class DatabaseMigrationManager:
             return []
     
     def _rollback_migration(self, migration: Migration) -> bool:
-        """Rollback single migration"""
-        try:
+        """Rollback single migration"""        try:
             logger.info(f"Rolling back migration: {migration.id}")
             
             if not migration.sql_down:
@@ -799,8 +758,7 @@ class DatabaseMigrationManager:
             return False
     
     def get_migration_status(self) -> Dict[str, Any]:
-        """Get migration status summary"""
-        try:
+        """Get migration status summary"""        try:
             applied_migration_ids = self._get_applied_migration_ids()
             
             return {
@@ -817,8 +775,7 @@ class DatabaseMigrationManager:
             return {"database_status": "error", "error": str(e)}
     
     def _get_current_version(self) -> Optional[str]:
-        """Get current database version"""
-        try:
+        """Get current database version"""        try:
             if not self.applied_migrations:
                 return None
             
@@ -835,8 +792,7 @@ class DatabaseMigrationManager:
             return None
     
     def create_migration(self, name: str, migration_type: str = "schema", description: str = "") -> str:
-        """Create new migration file"""
-        try:
+        """Create new migration file"""        try:
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             migration_id = f"{timestamp}_{name}"
             filename = f"{migration_id}.sql"
@@ -856,8 +812,7 @@ class DatabaseMigrationManager:
 -- DOWN
 -- Add your rollback SQL here
 
-"""
-            
+"""            
             with open(filepath, 'w', encoding='utf-8') as f:
                 f.write(template)
             
@@ -869,8 +824,7 @@ class DatabaseMigrationManager:
             return ""
     
     def list_migrations(self, status: Optional[str] = None) -> List[Dict[str, Any]]:
-        """List migrations with optional status filter"""
-        try:
+        """List migrations with optional status filter"""        try:
             all_migrations = self.applied_migrations + self.pending_migrations
             
             if status:
@@ -903,8 +857,7 @@ class DatabaseMigrationManager:
 
 
 def main():
-    """Main function for standalone execution"""
-    import argparse
+    """Main function for standalone execution"""    import argparse
     
     parser = argparse.ArgumentParser(description="Database Migration Manager")
     parser.add_argument("--action", required=True, 

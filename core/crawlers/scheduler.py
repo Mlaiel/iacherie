@@ -1,5 +1,4 @@
-"""
-Crawling Scheduler System
+"""Crawling Scheduler System
 ========================
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -11,9 +10,7 @@ Unauthorized use, copying or distribution prohibited.
 Professional scheduling system for automated content monitoring.
 Manages periodic crawling tasks, priority scheduling, load balancing,
 and intelligent resource allocation across multiple platforms.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Set, Any, Callable
@@ -27,15 +24,13 @@ import redis
 logger = logging.getLogger(__name__)
 
 class ScheduleType(Enum):
-    """Types of scheduling supported."""
-    IMMEDIATE = "immediate"
+    """Types of scheduling supported."""    IMMEDIATE = "immediate"
     PERIODIC = "periodic"
     CRON = "cron"
     TRIGGERED = "triggered"
 
 class Priority(Enum):
-    """Task priority levels."""
-    CRITICAL = 1
+    """Task priority levels."""    CRITICAL = 1
     HIGH = 2
     MEDIUM = 3
     LOW = 4
@@ -43,8 +38,7 @@ class Priority(Enum):
 
 @dataclass
 class ScheduledTask:
-    """Represents a scheduled crawling task."""
-    
+    """Represents a scheduled crawling task."""    
     schedule_id: str
     name: str
     platform: str
@@ -74,8 +68,7 @@ class ScheduledTask:
     conditions: Dict[str, Any] = field(default_factory=dict)
     
     def is_due(self) -> bool:
-        """Check if task is due for execution."""
-        if not self.enabled:
+        """Check if task is due for execution."""        if not self.enabled:
             return False
         
         if not self.next_execution:
@@ -84,8 +77,7 @@ class ScheduledTask:
         return datetime.utcnow() >= self.next_execution
     
     def calculate_next_execution(self) -> Optional[datetime]:
-        """Calculate next execution time based on schedule type."""
-        
+        """Calculate next execution time based on schedule type."""        
         now = datetime.utcnow()
         
         if self.schedule_type == ScheduleType.IMMEDIATE:
@@ -105,8 +97,7 @@ class ScheduledTask:
         return None
     
     def mark_executed(self, success: bool = True):
-        """Mark task as executed and update counters."""
-        
+        """Mark task as executed and update counters."""        
         self.last_execution = datetime.utcnow()
         self.execution_count += 1
         
@@ -125,13 +116,11 @@ class ScheduledTask:
             logger.warning("Task %s disabled due to %d failures", self.schedule_id, self.failure_count)
 
 class CrawlingScheduler:
-    """
-    Advanced scheduling system for automated content monitoring.
+    """    Advanced scheduling system for automated content monitoring.
     
     Manages periodic crawling tasks, resource allocation, and intelligent
     scheduling based on priority, platform load, and historical performance.
-    """
-    
+    """    
     def __init__(self, coordinator):
         self.coordinator = coordinator
         self.redis_client = coordinator.redis_client
@@ -156,8 +145,7 @@ class CrawlingScheduler:
         logger.info("CrawlingScheduler initialized")
     
     async def start(self):
-        """Start the scheduling system."""
-        
+        """Start the scheduling system."""        
         if self.is_running:
             logger.warning("Scheduler is already running")
             return
@@ -173,8 +161,7 @@ class CrawlingScheduler:
         logger.info("CrawlingScheduler started with %d scheduled tasks", len(self.scheduled_tasks))
     
     async def stop(self):
-        """Stop the scheduling system."""
-        
+        """Stop the scheduling system."""        
         if not self.is_running:
             return
         
@@ -205,8 +192,7 @@ class CrawlingScheduler:
         interval_minutes: Optional[int] = None,
         conditions: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Add a new scheduled crawling task.
+        """        Add a new scheduled crawling task.
         
         Args:
             name: Human-readable task name
@@ -221,8 +207,7 @@ class CrawlingScheduler:
             
         Returns:
             Schedule ID for the created task
-        """
-        
+        """        
         # Validate parameters
         if schedule_type == ScheduleType.CRON and not cron_expression:
             raise ValueError("Cron expression required for CRON schedule type")
@@ -269,8 +254,7 @@ class CrawlingScheduler:
         return schedule_id
     
     async def remove_scheduled_task(self, schedule_id: str) -> bool:
-        """Remove a scheduled task."""
-        
+        """Remove a scheduled task."""        
         if schedule_id not in self.scheduled_tasks:
             return False
         
@@ -293,8 +277,7 @@ class CrawlingScheduler:
         schedule_id: str,
         updates: Dict[str, Any]
     ) -> bool:
-        """Update an existing scheduled task."""
-        
+        """Update an existing scheduled task."""        
         if schedule_id not in self.scheduled_tasks:
             return False
         
@@ -316,8 +299,7 @@ class CrawlingScheduler:
         return True
     
     async def trigger_task_execution(self, schedule_id: str) -> Optional[str]:
-        """Manually trigger execution of a scheduled task."""
-        
+        """Manually trigger execution of a scheduled task."""        
         if schedule_id not in self.scheduled_tasks:
             return None
         
@@ -331,8 +313,7 @@ class CrawlingScheduler:
         return crawler_task_id
     
     async def get_scheduled_tasks(self) -> List[Dict[str, Any]]:
-        """Get list of all scheduled tasks with their status."""
-        
+        """Get list of all scheduled tasks with their status."""        
         tasks = []
         
         for task in self.scheduled_tasks.values():
@@ -368,8 +349,7 @@ class CrawlingScheduler:
         return tasks
     
     async def get_scheduler_statistics(self) -> Dict[str, Any]:
-        """Get scheduler performance statistics."""
-        
+        """Get scheduler performance statistics."""        
         total_tasks = len(self.scheduled_tasks)
         enabled_tasks = sum(1 for task in self.scheduled_tasks.values() if task.enabled)
         failed_tasks = sum(1 for task in self.scheduled_tasks.values() if task.failure_count >= task.max_failures)
@@ -397,8 +377,7 @@ class CrawlingScheduler:
         }
     
     async def _scheduler_loop(self):
-        """Main scheduler loop that processes due tasks."""
-        
+        """Main scheduler loop that processes due tasks."""        
         while self.is_running:
             try:
                 # Find due tasks
@@ -437,8 +416,7 @@ class CrawlingScheduler:
                 await asyncio.sleep(60)  # Wait longer on error
     
     async def _execute_scheduled_task(self, task: ScheduledTask, manual_trigger: bool = False) -> Optional[str]:
-        """Execute a scheduled task."""
-        
+        """Execute a scheduled task."""        
         try:
             # Check platform load balancing
             if self.load_balancing_enabled and not manual_trigger:
@@ -498,8 +476,7 @@ class CrawlingScheduler:
             return None
     
     def _check_execution_conditions(self, task: ScheduledTask) -> bool:
-        """Check if task execution conditions are met."""
-        
+        """Check if task execution conditions are met."""        
         conditions = task.conditions
         
         # Check time-based conditions
@@ -530,8 +507,7 @@ class CrawlingScheduler:
         return True
     
     def _is_platform_overloaded(self, platform: str) -> bool:
-        """Check if platform is currently overloaded."""
-        
+        """Check if platform is currently overloaded."""        
         current_load = self.platform_load.get(platform, 0)
         
         # Define load thresholds per platform
@@ -547,8 +523,7 @@ class CrawlingScheduler:
         return current_load >= threshold
     
     async def _update_platform_load(self):
-        """Update platform load tracking based on running tasks."""
-        
+        """Update platform load tracking based on running tasks."""        
         # Reset load counters
         self.platform_load = {}
         
@@ -558,8 +533,7 @@ class CrawlingScheduler:
             self.platform_load[platform] = self.platform_load.get(platform, 0) + 1
     
     async def _cleanup_execution_history(self):
-        """Clean up old execution history records."""
-        
+        """Clean up old execution history records."""        
         cutoff_date = datetime.utcnow() - timedelta(days=30)
         
         for schedule_id, history in self.task_execution_history.items():
@@ -570,8 +544,7 @@ class CrawlingScheduler:
             ]
     
     async def _persist_task(self, task: ScheduledTask):
-        """Persist scheduled task to Redis."""
-        
+        """Persist scheduled task to Redis."""        
         try:
             task_data = {
                 'schedule_id': task.schedule_id,
@@ -605,14 +578,12 @@ class CrawlingScheduler:
             logger.error("Error persisting task to Redis: %s", str(e))
     
     async def _persist_schedules(self):
-        """Persist all scheduled tasks."""
-        
+        """Persist all scheduled tasks."""        
         for task in self.scheduled_tasks.values():
             await self._persist_task(task)
     
     async def _load_persisted_schedules(self):
-        """Load scheduled tasks from Redis."""
-        
+        """Load scheduled tasks from Redis."""        
         try:
             # Find all scheduled task keys
             keys = self.redis_client.keys("scheduled_task:*")

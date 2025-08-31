@@ -1,5 +1,4 @@
-"""
-🌍 Geospatial Intelligence & Surveillance Engine
+"""🌍 Geospatial Intelligence & Surveillance Engine
 ===============================================
 
 Ultra-advanced geospatial monitoring system with geopolitical analysis,
@@ -20,9 +19,7 @@ License: Proprietary - Unauthorized use strictly prohibited
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import geoip2.database
@@ -46,8 +43,7 @@ from folium.plugins import HeatMap, MarkerCluster
 logger = logging.getLogger(__name__)
 
 class JurisdictionType(str, Enum):
-    """Legal jurisdiction classifications."""
-    STRONG_COPYRIGHT = "strong_copyright"      # US, UK, Germany, etc.
+    """Legal jurisdiction classifications."""    STRONG_COPYRIGHT = "strong_copyright"      # US, UK, Germany, etc.
     MODERATE_COPYRIGHT = "moderate_copyright"  # Many EU countries
     WEAK_COPYRIGHT = "weak_copyright"          # Some developing nations
     COMPLEX_JURISDICTION = "complex_jurisdiction"  # China, Russia, etc.
@@ -55,8 +51,7 @@ class JurisdictionType(str, Enum):
     UNKNOWN = "unknown"
 
 class GeopoliticalRisk(str, Enum):
-    """Geopolitical risk levels."""
-    MINIMAL = "minimal"       # Strong rule of law, good enforcement
+    """Geopolitical risk levels."""    MINIMAL = "minimal"       # Strong rule of law, good enforcement
     LOW = "low"              # Generally reliable but some gaps
     MODERATE = "moderate"     # Mixed enforcement, political considerations
     HIGH = "high"            # Weak enforcement, corruption issues
@@ -64,8 +59,7 @@ class GeopoliticalRisk(str, Enum):
     EMBARGO = "embargo"      # Sanctioned countries
 
 class TerritorialPattern(str, Enum):
-    """Territorial activity patterns."""
-    DOMESTIC_ONLY = "domestic_only"
+    """Territorial activity patterns."""    DOMESTIC_ONLY = "domestic_only"
     REGIONAL_SPREAD = "regional_spread"
     INTERNATIONAL_NETWORK = "international_network"
     JURISDICTION_SHOPPING = "jurisdiction_shopping"
@@ -74,8 +68,7 @@ class TerritorialPattern(str, Enum):
 
 @dataclass
 class GeospatialThreat:
-    """Geospatial threat intelligence."""
-    threat_id: str
+    """Geospatial threat intelligence."""    threat_id: str
     detection_time: datetime
     coordinates: Tuple[float, float]  # lat, lon
     country_code: str
@@ -91,8 +84,7 @@ class GeospatialThreat:
 
 @dataclass
 class JurisdictionProfile:
-    """Legal jurisdiction profile."""
-    country_code: str
+    """Legal jurisdiction profile."""    country_code: str
     country_name: str
     jurisdiction_type: JurisdictionType
     copyright_strength: float  # 0.0 to 1.0
@@ -108,8 +100,7 @@ class JurisdictionProfile:
 
 @dataclass
 class GeospatialCluster:
-    """Cluster of geospatial activity."""
-    cluster_id: str
+    """Cluster of geospatial activity."""    cluster_id: str
     center_coordinates: Tuple[float, float]
     radius_km: float
     threat_count: int
@@ -120,11 +111,9 @@ class GeospatialCluster:
     growth_rate: float
 
 class GeospatialIntelligenceEngine:
-    """Ultra-advanced geospatial intelligence and surveillance system."""
-    
+    """Ultra-advanced geospatial intelligence and surveillance system."""    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the geospatial intelligence engine."""
-        self.config = config
+        """Initialize the geospatial intelligence engine."""        self.config = config
         self.redis_client = None
         self.db_session = None
         
@@ -147,8 +136,7 @@ class GeospatialIntelligenceEngine:
         logger.info("Geospatial Intelligence Engine initialized")
 
     async def initialize(self, redis_client: aioredis.Redis, db_session: AsyncSession):
-        """Initialize geospatial engine with dependencies."""
-        self.redis_client = redis_client
+        """Initialize geospatial engine with dependencies."""        self.redis_client = redis_client
         self.db_session = db_session
         
         # Initialize GeoIP database
@@ -163,8 +151,7 @@ class GeospatialIntelligenceEngine:
         logger.info("Geospatial Intelligence Engine fully initialized")
 
     async def _initialize_geoip_database(self):
-        """Initialize GeoIP database for location resolution."""
-        try:
+        """Initialize GeoIP database for location resolution."""        try:
             # In production, use actual GeoIP2 database file
             geoip_db_path = self.config.get("geoip_db_path", "/usr/share/GeoIP/GeoLite2-City.mmdb")
             
@@ -180,8 +167,7 @@ class GeospatialIntelligenceEngine:
             self._geoip_db = None
 
     async def _load_jurisdiction_profiles(self):
-        """Load comprehensive jurisdiction profiles."""
-        try:
+        """Load comprehensive jurisdiction profiles."""        try:
             # Load jurisdiction data (in production, this would come from a database)
             jurisdiction_data = {
                 "US": JurisdictionProfile(
@@ -272,8 +258,7 @@ class GeospatialIntelligenceEngine:
         detection_data: Dict[str, Any],
         source_ip: str
     ) -> GeospatialThreat:
-        """Analyze geospatial threat from detection data."""
-        try:
+        """Analyze geospatial threat from detection data."""        try:
             # Resolve IP to location
             location_data = await self._resolve_ip_location(source_ip)
             
@@ -366,8 +351,7 @@ class GeospatialIntelligenceEngine:
             return None
 
     async def _resolve_ip_location(self, ip_address: str) -> Dict[str, Any]:
-        """Resolve IP address to geographical location."""
-        try:
+        """Resolve IP address to geographical location."""        try:
             location_data = {}
             
             if self._geoip_db:
@@ -398,8 +382,7 @@ class GeospatialIntelligenceEngine:
             return {}
 
     async def _fallback_ip_geolocation(self, ip_address: str) -> Dict[str, Any]:
-        """Fallback IP geolocation using online service."""
-        try:
+        """Fallback IP geolocation using online service."""        try:
             # Use a free IP geolocation service as fallback
             async with aiohttp.ClientSession() as session:
                 async with session.get(f"http://ip-api.com/json/{ip_address}") as response:
@@ -430,8 +413,7 @@ class GeospatialIntelligenceEngine:
         location_data: Dict[str, Any],
         jurisdiction_profile: Optional[JurisdictionProfile]
     ) -> str:
-        """Assess threat severity based on geospatial factors."""
-        try:
+        """Assess threat severity based on geospatial factors."""        try:
             severity_score = 0.0
             
             # Base severity from detection data
@@ -481,8 +463,7 @@ class GeospatialIntelligenceEngine:
         location_data: Dict[str, Any],
         detection_data: Dict[str, Any]
     ) -> float:
-        """Calculate confidence in threat attribution."""
-        try:
+        """Calculate confidence in threat attribution."""        try:
             confidence = 0.5  # Base confidence
             
             # IP address type assessment
@@ -508,20 +489,17 @@ class GeospatialIntelligenceEngine:
             return 0.5
 
     def _is_residential_ip(self, ip_address: str, location_data: Dict[str, Any]) -> bool:
-        """Determine if IP address is likely residential."""
-        isp = location_data.get("isp", "").lower()
+        """Determine if IP address is likely residential."""        isp = location_data.get("isp", "").lower()
         residential_indicators = ["residential", "home", "broadband", "dsl", "cable", "fiber"]
         return any(indicator in isp for indicator in residential_indicators)
 
     def _is_datacenter_ip(self, location_data: Dict[str, Any]) -> bool:
-        """Determine if IP address is from a datacenter."""
-        isp = location_data.get("isp", "").lower()
+        """Determine if IP address is from a datacenter."""        isp = location_data.get("isp", "").lower()
         datacenter_indicators = ["hosting", "server", "datacenter", "cloud", "aws", "google", "azure"]
         return any(indicator in isp for indicator in datacenter_indicators)
 
     async def _analyze_infrastructure(self, ip_address: str) -> Dict[str, Any]:
-        """Analyze infrastructure details for IP address."""
-        try:
+        """Analyze infrastructure details for IP address."""        try:
             infrastructure = {
                 "ip_address": ip_address,
                 "reverse_dns": "",
@@ -555,8 +533,7 @@ class GeospatialIntelligenceEngine:
             return {"error": str(e)}
 
     async def _analyze_legal_context(self, country_code: str, detection_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze legal context for enforcement actions."""
-        try:
+        """Analyze legal context for enforcement actions."""        try:
             legal_context = {
                 "jurisdiction": country_code,
                 "applicable_laws": [],
@@ -610,8 +587,7 @@ class GeospatialIntelligenceEngine:
             return {"error": str(e)}
 
     def _severity_to_weight(self, severity: str) -> float:
-        """Convert severity level to heat map weight."""
-        severity_weights = {
+        """Convert severity level to heat map weight."""        severity_weights = {
             "critical": 1.0,
             "high": 0.7,
             "medium": 0.4,
@@ -620,8 +596,7 @@ class GeospatialIntelligenceEngine:
         return severity_weights.get(severity, 0.3)
 
     async def detect_territorial_clusters(self, timeframe_hours: int = 24) -> List[GeospatialCluster]:
-        """Detect clusters of territorial activity."""
-        try:
+        """Detect clusters of territorial activity."""        try:
             # Get recent threats within timeframe
             cutoff_time = datetime.utcnow() - timedelta(hours=timeframe_hours)
             recent_threats = []
@@ -665,8 +640,7 @@ class GeospatialIntelligenceEngine:
             return []
 
     async def _perform_geographic_clustering(self, threats: List[GeospatialThreat]) -> List[List[GeospatialThreat]]:
-        """Perform geographic clustering of threats."""
-        try:
+        """Perform geographic clustering of threats."""        try:
             from sklearn.cluster import DBSCAN
             from sklearn.preprocessing import StandardScaler
             
@@ -700,8 +674,7 @@ class GeospatialIntelligenceEngine:
         cluster_threats: List[GeospatialThreat],
         all_threats: List[GeospatialThreat]
     ) -> Optional[GeospatialCluster]:
-        """Analyze a territorial cluster for patterns."""
-        try:
+        """Analyze a territorial cluster for patterns."""        try:
             if len(cluster_threats) < 3:
                 return None
             
@@ -757,8 +730,7 @@ class GeospatialIntelligenceEngine:
         cluster_threats: List[GeospatialThreat],
         countries_involved: List[str]
     ) -> TerritorialPattern:
-        """Determine the territorial pattern type."""
-        try:
+        """Determine the territorial pattern type."""        try:
             # Single country
             if len(countries_involved) == 1:
                 return TerritorialPattern.DOMESTIC_ONLY
@@ -787,8 +759,7 @@ class GeospatialIntelligenceEngine:
             return TerritorialPattern.INTERNATIONAL_NETWORK
 
     def _are_countries_regional(self, countries: List[str]) -> bool:
-        """Check if countries are in the same geographic region."""
-        # Simplified regional groupings
+        """Check if countries are in the same geographic region."""        # Simplified regional groupings
         regions = {
             "EU": ["DE", "FR", "IT", "ES", "NL", "BE", "AT", "PL", "CZ", "HU"],
             "ASIA": ["CN", "JP", "KR", "IN", "TH", "VN", "SG", "MY", "ID"],
@@ -803,21 +774,18 @@ class GeospatialIntelligenceEngine:
         return False
 
     def _indicates_jurisdiction_shopping(self, threats: List[GeospatialThreat]) -> bool:
-        """Check if pattern indicates jurisdiction shopping."""
-        # Look for movement from strong to weak copyright jurisdictions
+        """Check if pattern indicates jurisdiction shopping."""        # Look for movement from strong to weak copyright jurisdictions
         strong_jurisdictions = [t for t in threats if t.jurisdiction_type == JurisdictionType.STRONG_COPYRIGHT]
         weak_jurisdictions = [t for t in threats if t.jurisdiction_type in [JurisdictionType.WEAK_COPYRIGHT, JurisdictionType.SAFE_HARBOR]]
         
         return len(strong_jurisdictions) > 0 and len(weak_jurisdictions) > len(strong_jurisdictions)
 
     def _indicates_safe_harbor_seeking(self, threats: List[GeospatialThreat]) -> bool:
-        """Check if pattern indicates safe harbor seeking."""
-        safe_harbor_count = sum(1 for t in threats if t.jurisdiction_type == JurisdictionType.SAFE_HARBOR)
+        """Check if pattern indicates safe harbor seeking."""        safe_harbor_count = sum(1 for t in threats if t.jurisdiction_type == JurisdictionType.SAFE_HARBOR)
         return safe_harbor_count > len(threats) * 0.5
 
     def _indicates_nomadic_operation(self, threats: List[GeospatialThreat]) -> bool:
-        """Check if pattern indicates nomadic operation."""
-        # Look for frequent country changes over time
+        """Check if pattern indicates nomadic operation."""        # Look for frequent country changes over time
         threats_sorted = sorted(threats, key=lambda x: x.detection_time)
         country_changes = 0
         
@@ -829,8 +797,7 @@ class GeospatialIntelligenceEngine:
         return country_changes > len(threats) * 0.3
 
     def _calculate_territorial_coordination(self, threats: List[GeospatialThreat]) -> float:
-        """Calculate coordination score for territorial cluster."""
-        try:
+        """Calculate coordination score for territorial cluster."""        try:
             if len(threats) < 2:
                 return 0.0
             
@@ -869,8 +836,7 @@ class GeospatialIntelligenceEngine:
             return 0.0
 
     def _calculate_cluster_growth_rate(self, threats: List[GeospatialThreat]) -> float:
-        """Calculate growth rate of cluster."""
-        try:
+        """Calculate growth rate of cluster."""        try:
             if len(threats) < 2:
                 return 0.0
             
@@ -896,8 +862,7 @@ class GeospatialIntelligenceEngine:
         self,
         timeframe_hours: int = 168  # 7 days
     ) -> Dict[str, Any]:
-        """Generate comprehensive geospatial intelligence report."""
-        try:
+        """Generate comprehensive geospatial intelligence report."""        try:
             cutoff_time = datetime.utcnow() - timedelta(hours=timeframe_hours)
             
             report = {
@@ -967,8 +932,7 @@ class GeospatialIntelligenceEngine:
             return {"error": str(e)}
 
     def _analyze_severity_distribution(self, threats: List[GeospatialThreat]) -> Dict[str, int]:
-        """Analyze distribution of threat severities."""
-        distribution = {"critical": 0, "high": 0, "medium": 0, "low": 0}
+        """Analyze distribution of threat severities."""        distribution = {"critical": 0, "high": 0, "medium": 0, "low": 0}
         
         for threat in threats:
             distribution[threat.threat_severity] = distribution.get(threat.threat_severity, 0) + 1
@@ -976,8 +940,7 @@ class GeospatialIntelligenceEngine:
         return distribution
 
     def _analyze_threat_trends(self, threats: List[GeospatialThreat]) -> Dict[str, Any]:
-        """Analyze trends in threat activity."""
-        if len(threats) < 2:
+        """Analyze trends in threat activity."""        if len(threats) < 2:
             return {"trend": "insufficient_data"}
         
         # Sort by time
@@ -1006,8 +969,7 @@ class GeospatialIntelligenceEngine:
         }
 
     def _analyze_geographic_distribution(self, threats: List[GeospatialThreat]) -> Dict[str, Any]:
-        """Analyze geographic distribution of threats."""
-        distribution = {
+        """Analyze geographic distribution of threats."""        distribution = {
             "by_country": defaultdict(int),
             "by_region": defaultdict(int),
             "by_jurisdiction_type": defaultdict(int),
@@ -1039,8 +1001,7 @@ class GeospatialIntelligenceEngine:
         return distribution
 
     def _analyze_jurisdiction_effectiveness(self, threats: List[GeospatialThreat]) -> Dict[str, Any]:
-        """Analyze effectiveness of different jurisdictions."""
-        jurisdiction_analysis = {
+        """Analyze effectiveness of different jurisdictions."""        jurisdiction_analysis = {
             "enforcement_success_rates": {},
             "response_times": {},
             "cost_effectiveness": {},
@@ -1076,8 +1037,7 @@ class GeospatialIntelligenceEngine:
         threats: List[GeospatialThreat],
         clusters: List[GeospatialCluster]
     ) -> Dict[str, Any]:
-        """Generate comprehensive risk assessment."""
-        risk_assessment = {
+        """Generate comprehensive risk assessment."""        risk_assessment = {
             "overall_risk_level": "medium",
             "risk_factors": [],
             "geographic_risks": {},
@@ -1123,8 +1083,7 @@ class GeospatialIntelligenceEngine:
         threats: List[GeospatialThreat],
         clusters: List[GeospatialCluster]
     ) -> List[Dict[str, Any]]:
-        """Generate enforcement recommendations based on geospatial analysis."""
-        recommendations = []
+        """Generate enforcement recommendations based on geospatial analysis."""        recommendations = []
         
         # Country-specific recommendations
         country_threat_counts = defaultdict(int)
@@ -1185,8 +1144,7 @@ class GeospatialIntelligenceEngine:
         return recommendations
 
     async def create_threat_heat_map(self, output_path: str = None) -> str:
-        """Create interactive heat map of geospatial threats."""
-        try:
+        """Create interactive heat map of geospatial threats."""        try:
             if not self._heat_map_data:
                 logger.warning("No heat map data available")
                 return ""
@@ -1213,15 +1171,13 @@ class GeospatialIntelligenceEngine:
                     if threat.threat_severity in ["high", "critical"]:
                         color = "red" if threat.threat_severity == "critical" else "orange"
                         
-                        popup_text = f"""
-                        <b>Threat ID:</b> {threat.threat_id}<br>
+                        popup_text = f"""                        <b>Threat ID:</b> {threat.threat_id}<br>
                         <b>Location:</b> {threat.city}, {threat.country_code}<br>
                         <b>Severity:</b> {threat.threat_severity}<br>
                         <b>Risk:</b> {threat.geopolitical_risk.value}<br>
                         <b>Confidence:</b> {threat.attribution_confidence:.2f}<br>
                         <b>Detection:</b> {threat.detection_time.strftime('%Y-%m-%d %H:%M')}
-                        """
-                        
+                        """                        
                         folium.Marker(
                             location=threat.coordinates,
                             popup=folium.Popup(popup_text, max_width=300),
@@ -1242,8 +1198,7 @@ class GeospatialIntelligenceEngine:
             return ""
 
     async def _start_geospatial_monitoring(self):
-        """Start continuous geospatial monitoring."""
-        try:
+        """Start continuous geospatial monitoring."""        try:
             self._geospatial_monitoring_active = True
             
             # Start monitoring task
@@ -1255,8 +1210,7 @@ class GeospatialIntelligenceEngine:
             logger.error(f"Failed to start geospatial monitoring: {e}")
 
     async def _geospatial_monitoring_loop(self):
-        """Main geospatial monitoring loop."""
-        try:
+        """Main geospatial monitoring loop."""        try:
             while self._geospatial_monitoring_active:
                 # Perform periodic analysis
                 await self._perform_periodic_analysis()
@@ -1276,8 +1230,7 @@ class GeospatialIntelligenceEngine:
             logger.error(f"Geospatial monitoring loop error: {e}")
 
     async def _perform_periodic_analysis(self):
-        """Perform periodic geospatial analysis."""
-        try:
+        """Perform periodic geospatial analysis."""        try:
             # Generate intelligence report
             report = await self.generate_geospatial_intelligence_report(timeframe_hours=24)
             
@@ -1289,8 +1242,7 @@ class GeospatialIntelligenceEngine:
             logger.error(f"Failed to perform periodic analysis: {e}")
 
     async def _handle_high_risk_situation(self, report: Dict[str, Any]):
-        """Handle high-risk geospatial situations."""
-        try:
+        """Handle high-risk geospatial situations."""        try:
             alert_data = {
                 "alert_type": "geospatial_high_risk",
                 "risk_level": report.get("risk_assessment", {}).get("overall_risk_level"),
@@ -1311,8 +1263,7 @@ class GeospatialIntelligenceEngine:
             logger.error(f"Failed to handle high-risk situation: {e}")
 
     async def _cleanup_old_data(self):
-        """Clean up old geospatial data."""
-        try:
+        """Clean up old geospatial data."""        try:
             cutoff_time = datetime.utcnow() - timedelta(days=30)
             
             # Clean up old threats from memory
@@ -1345,8 +1296,7 @@ class GeospatialIntelligenceEngine:
             logger.error(f"Failed to cleanup old data: {e}")
 
     async def get_geospatial_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive geospatial statistics."""
-        try:
+        """Get comprehensive geospatial statistics."""        try:
             stats = {
                 "total_threats": 0,
                 "countries_affected": 0,
@@ -1391,8 +1341,7 @@ class GeospatialIntelligenceEngine:
             return {"error": str(e)}
 
     def _get_trending_countries(self, recent_threats: List[GeospatialThreat]) -> List[Dict[str, Any]]:
-        """Get trending countries from recent threats."""
-        country_counts = defaultdict(int)
+        """Get trending countries from recent threats."""        country_counts = defaultdict(int)
         for threat in recent_threats:
             country_counts[threat.country_code] += 1
         
@@ -1402,8 +1351,7 @@ class GeospatialIntelligenceEngine:
         return [{"country": country, "threat_count": count} for country, count in trending]
 
     async def shutdown(self):
-        """Shutdown the geospatial intelligence engine."""
-        logger.info("Shutting down Geospatial Intelligence Engine...")
+        """Shutdown the geospatial intelligence engine."""        logger.info("Shutting down Geospatial Intelligence Engine...")
         
         self._geospatial_monitoring_active = False
         

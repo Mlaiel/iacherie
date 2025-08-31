@@ -17,8 +17,7 @@ and will result in immediate legal action under German and international copyrig
 
 All rights reserved. © 2025 Fahed Mlaiel
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-from .rights_manager import RightsManager
+"""from .rights_manager import RightsManager
 from .digital_fingerprint import DigitalFingerprintEngine
 from .copyright_detector import CopyrightDetectionService
 from .license_manager import LicenseManagementSystem

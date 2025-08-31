@@ -1,14 +1,11 @@
-"""
-Cache Manager Module
+"""Cache Manager Module
 
 Advanced multi-layer caching system for database optimization with Redis integration,
 intelligent cache strategies, and automatic cache invalidation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import hashlib
 import time
@@ -29,8 +26,7 @@ logger = get_logger(__name__)
 
 
 class CacheStrategy(Enum):
-    """Cache strategy types"""
-    LRU = "lru"  # Least Recently Used
+    """Cache strategy types"""    LRU = "lru"  # Least Recently Used
     LFU = "lfu"  # Least Frequently Used
     TTL = "ttl"  # Time To Live
     WRITE_THROUGH = "write_through"
@@ -39,16 +35,14 @@ class CacheStrategy(Enum):
 
 
 class CacheLevel(Enum):
-    """Cache levels for multi-tier caching"""
-    L1_MEMORY = "l1_memory"
+    """Cache levels for multi-tier caching"""    L1_MEMORY = "l1_memory"
     L2_REDIS = "l2_redis"
     L3_DATABASE = "l3_database"
 
 
 @dataclass
 class CacheConfig:
-    """Cache configuration settings"""
-    strategy: CacheStrategy = CacheStrategy.LRU
+    """Cache configuration settings"""    strategy: CacheStrategy = CacheStrategy.LRU
     ttl_seconds: int = 3600
     max_size: int = 10000
     eviction_policy: str = "lru"
@@ -72,8 +66,7 @@ class CacheConfig:
 
 @dataclass
 class CacheMetrics:
-    """Cache performance metrics"""
-    hit_count: int = 0
+    """Cache performance metrics"""    hit_count: int = 0
     miss_count: int = 0
     eviction_count: int = 0
     write_count: int = 0
@@ -85,19 +78,16 @@ class CacheMetrics:
     
     @property
     def hit_ratio(self) -> float:
-        """Calculate cache hit ratio"""
-        total_requests = self.hit_count + self.miss_count
+        """Calculate cache hit ratio"""        total_requests = self.hit_count + self.miss_count
         return self.hit_count / total_requests if total_requests > 0 else 0.0
     
     @property
     def miss_ratio(self) -> float:
-        """Calculate cache miss ratio"""
-        return 1.0 - self.hit_ratio
+        """Calculate cache miss ratio"""        return 1.0 - self.hit_ratio
 
 
 class CacheEntry:
-    """Cache entry with metadata"""
-    
+    """Cache entry with metadata"""    
     def __init__(self, key: str, value: Any, ttl: Optional[int] = None):
         self.key = key
         self.value = value
@@ -109,27 +99,23 @@ class CacheEntry:
         self.size = self._calculate_size()
     
     def _calculate_size(self) -> int:
-        """Calculate entry size in bytes"""
-        try:
+        """Calculate entry size in bytes"""        try:
             return len(json.dumps(self.value).encode('utf-8'))
         except (TypeError, ValueError):
             return len(str(self.value).encode('utf-8'))
     
     def is_expired(self) -> bool:
-        """Check if entry has expired"""
-        if self.expires_at is None:
+        """Check if entry has expired"""        if self.expires_at is None:
             return False
         return datetime.now() > self.expires_at
     
     def access(self) -> None:
-        """Mark entry as accessed"""
-        self.last_accessed = datetime.now()
+        """Mark entry as accessed"""        self.last_accessed = datetime.now()
         self.access_count += 1
 
 
 class MemoryCache:
-    """In-memory cache with LRU/LFU eviction"""
-    
+    """In-memory cache with LRU/LFU eviction"""    
     def __init__(self, config: CacheConfig):
         self.config = config
         self._cache: Dict[str, CacheEntry] = {}
@@ -137,8 +123,7 @@ class MemoryCache:
         self._lock = asyncio.Lock()
     
     async def get(self, key: str) -> Optional[Any]:
-        """Get value from memory cache"""
-        async with self._lock:
+        """Get value from memory cache"""        async with self._lock:
             if key not in self._cache:
                 return None
             
@@ -155,8 +140,7 @@ class MemoryCache:
             return entry.value
     
     async def set(self, key: str, value: Any, ttl: Optional[int] = None) -> None:
-        """Set value in memory cache"""
-        async with self._lock:
+        """Set value in memory cache"""        async with self._lock:
             entry = CacheEntry(key, value, ttl or self.config.ttl_seconds)
             
             # Check if eviction is needed
@@ -168,13 +152,11 @@ class MemoryCache:
                 self._access_order.append(key)
     
     async def delete(self, key: str) -> bool:
-        """Delete key from memory cache"""
-        async with self._lock:
+        """Delete key from memory cache"""        async with self._lock:
             return await self._remove(key)
     
     async def _remove(self, key: str) -> bool:
-        """Remove key from cache"""
-        if key in self._cache:
+        """Remove key from cache"""        if key in self._cache:
             del self._cache[key]
             if key in self._access_order:
                 self._access_order.remove(key)
@@ -182,8 +164,7 @@ class MemoryCache:
         return False
     
     async def _evict(self) -> None:
-        """Evict entries based on strategy"""
-        if not self._cache:
+        """Evict entries based on strategy"""        if not self._cache:
             return
         
         if self.config.strategy == CacheStrategy.LRU:
@@ -202,17 +183,14 @@ class MemoryCache:
             await self._remove(key_to_evict)
     
     def get_size(self) -> int:
-        """Get current cache size"""
-        return len(self._cache)
+        """Get current cache size"""        return len(self._cache)
     
     def get_memory_usage(self) -> int:
-        """Get memory usage in bytes"""
-        return sum(entry.size for entry in self._cache.values())
+        """Get memory usage in bytes"""        return sum(entry.size for entry in self._cache.values())
 
 
 class CacheManager:
-    """Advanced multi-layer cache manager"""
-    
+    """Advanced multi-layer cache manager"""    
     def __init__(self, config: CacheConfig):
         self.config = config
         self.memory_cache = MemoryCache(config)
@@ -226,8 +204,7 @@ class CacheManager:
         asyncio.create_task(self._initialize_redis())
     
     async def _initialize_redis(self) -> None:
-        """Initialize Redis connection"""
-        try:
+        """Initialize Redis connection"""        try:
             self.redis_client = redis.Redis(
                 host=self.config.redis_host,
                 port=self.config.redis_port,
@@ -243,8 +220,7 @@ class CacheManager:
             self.redis_client = None
     
     async def get(self, key: str, default: Any = None) -> Any:
-        """Get value from cache (multi-level)"""
-        start_time = time.time()
+        """Get value from cache (multi-level)"""        start_time = time.time()
         
         try:
             # Try L1 cache (memory)
@@ -275,8 +251,7 @@ class CacheManager:
             self._update_response_time(response_time)
     
     async def set(self, key: str, value: Any, ttl: Optional[int] = None) -> None:
-        """Set value in cache (multi-level)"""
-        try:
+        """Set value in cache (multi-level)"""        try:
             effective_ttl = ttl or self.config.ttl_seconds
             
             # Set in L1 cache (memory)
@@ -292,8 +267,7 @@ class CacheManager:
             logger.error(f"Cache set error for key {key}: {e}")
     
     async def delete(self, key: str) -> bool:
-        """Delete key from all cache levels"""
-        try:
+        """Delete key from all cache levels"""        try:
             deleted = False
             
             # Delete from L1 cache
@@ -312,8 +286,7 @@ class CacheManager:
             return False
     
     async def invalidate_pattern(self, pattern: str) -> int:
-        """Invalidate cache entries matching pattern"""
-        try:
+        """Invalidate cache entries matching pattern"""        try:
             deleted_count = 0
             
             if self.redis_client:
@@ -339,8 +312,7 @@ class CacheManager:
             return 0
     
     async def warm_up(self) -> None:
-        """Warm up cache with predefined data"""
-        if not self.config.warm_up_enabled or not self._warm_up_tasks:
+        """Warm up cache with predefined data"""        if not self.config.warm_up_enabled or not self._warm_up_tasks:
             return
         
         try:
@@ -359,12 +331,10 @@ class CacheManager:
             logger.error(f"Cache warm-up error: {e}")
     
     def add_warm_up_task(self, task: Callable) -> None:
-        """Add a warm-up task"""
-        self._warm_up_tasks.append(task)
+        """Add a warm-up task"""        self._warm_up_tasks.append(task)
     
     async def get_stats(self) -> Dict[str, Any]:
-        """Get comprehensive cache statistics"""
-        stats = {
+        """Get comprehensive cache statistics"""        stats = {
             "hit_ratio": self.metrics.hit_ratio,
             "miss_ratio": self.metrics.miss_ratio,
             "total_hits": self.metrics.hit_count,
@@ -389,8 +359,7 @@ class CacheManager:
         return stats
     
     async def _get_from_redis(self, key: str) -> Optional[Any]:
-        """Get value from Redis cache"""
-        try:
+        """Get value from Redis cache"""        try:
             value = await self.redis_client.get(key)
             if value is None:
                 return None
@@ -405,8 +374,7 @@ class CacheManager:
             return None
     
     async def _set_in_redis(self, key: str, value: Any, ttl: int) -> None:
-        """Set value in Redis cache"""
-        try:
+        """Set value in Redis cache"""        try:
             # Serialize value
             if self.config.serialization_format == "json":
                 serialized_value = json.dumps(value, default=str)
@@ -419,8 +387,7 @@ class CacheManager:
             logger.error(f"Redis set error for key {key}: {e}")
     
     def _update_metrics(self, hit: bool, level: Optional[CacheLevel] = None) -> None:
-        """Update cache metrics"""
-        if hit:
+        """Update cache metrics"""        if hit:
             self.metrics.hit_count += 1
         else:
             self.metrics.miss_count += 1
@@ -437,8 +404,7 @@ class CacheManager:
             )
     
     def _update_response_time(self, response_time: float) -> None:
-        """Update average response time"""
-        total_requests = self.metrics.hit_count + self.metrics.miss_count
+        """Update average response time"""        total_requests = self.metrics.hit_count + self.metrics.miss_count
         if total_requests == 1:
             self.metrics.avg_response_time = response_time
         else:
@@ -455,13 +421,11 @@ class CacheManager:
             )
     
     def _match_pattern(self, key: str, pattern: str) -> bool:
-        """Check if key matches pattern (simple wildcard support)"""
-        import fnmatch
+        """Check if key matches pattern (simple wildcard support)"""        import fnmatch
         return fnmatch.fnmatch(key, pattern)
     
     async def close(self) -> None:
-        """Close cache connections"""
-        if self.redis_client:
+        """Close cache connections"""        if self.redis_client:
             await self.redis_client.close()
             logger.info("Redis connection closed")
 
@@ -472,8 +436,7 @@ def cached(
     ttl: int = 3600,
     cache_manager: CacheManager = None
 ):
-    """Decorator for caching function results"""
-    def decorator(func):
+    """Decorator for caching function results"""    def decorator(func):
         async def wrapper(*args, **kwargs):
             if cache_manager is None:
                 return await func(*args, **kwargs)
@@ -502,8 +465,7 @@ def cache_invalidate(
     pattern: str,
     cache_manager: CacheManager = None
 ):
-    """Decorator for cache invalidation after function execution"""
-    def decorator(func):
+    """Decorator for cache invalidation after function execution"""    def decorator(func):
         async def wrapper(*args, **kwargs):
             result = await func(*args, **kwargs)
             

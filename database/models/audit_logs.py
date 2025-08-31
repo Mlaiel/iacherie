@@ -1,5 +1,4 @@
-"""
-Audit Logs Database Model
+"""Audit Logs Database Model
 
 Enterprise-grade SQLAlchemy model for comprehensive audit logging, compliance tracking,
 and security monitoring across the entire platform.
@@ -23,9 +22,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-
-from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum
+"""from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID, INET, ARRAY
@@ -38,8 +35,7 @@ Base = declarative_base()
 
 
 class ActionType(Enum):
-    """Audit action types"""
-    CREATE = "create"
+    """Audit action types"""    CREATE = "create"
     READ = "read"
     UPDATE = "update"
     DELETE = "delete"
@@ -87,8 +83,7 @@ class ActionType(Enum):
 
 
 class EntityType(Enum):
-    """Entity types being audited"""
-    USER = "user"
+    """Entity types being audited"""    USER = "user"
     CONTENT = "content"
     FINGERPRINT = "fingerprint"
     ALERT = "alert"
@@ -113,8 +108,7 @@ class EntityType(Enum):
 
 
 class Severity(Enum):
-    """Log severity levels"""
-    CRITICAL = "critical"
+    """Log severity levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -123,8 +117,7 @@ class Severity(Enum):
 
 
 class Status(Enum):
-    """Action status"""
-    SUCCESS = "success"
+    """Action status"""    SUCCESS = "success"
     FAILURE = "failure"
     PARTIAL = "partial"
     PENDING = "pending"
@@ -135,8 +128,7 @@ class Status(Enum):
 
 
 class Source(Enum):
-    """Audit log sources"""
-    WEB_APP = "web_app"
+    """Audit log sources"""    WEB_APP = "web_app"
     MOBILE_APP = "mobile_app"
     API = "api"
     SYSTEM = "system"
@@ -154,13 +146,11 @@ class Source(Enum):
 
 
 class AuditLog(Base):
-    """
-    Enterprise Audit Log Model
+    """    Enterprise Audit Log Model
     
     Comprehensive audit logging system for security, compliance, and operational
     monitoring with advanced analytics and forensic capabilities.
-    """
-    __tablename__ = "audit_logs"
+    """    __tablename__ = "audit_logs"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -349,8 +339,7 @@ class AuditLog(Base):
         return f"<AuditLog(id={self.id}, action={self.action_type.value}, entity={self.entity_type.value}, status={self.status.value}, timestamp={self.timestamp})>"
     
     def to_dict(self, include_sensitive: bool = False, include_performance: bool = False) -> Dict[str, Any]:
-        """Convert model to dictionary for API responses"""
-        base_dict = {
+        """Convert model to dictionary for API responses"""        base_dict = {
             "id": str(self.id),
             "user_id": str(self.user_id) if self.user_id else None,
             "content_fingerprint_id": str(self.content_fingerprint_id) if self.content_fingerprint_id else None,
@@ -459,8 +448,7 @@ class AuditLog(Base):
         return base_dict
     
     def is_security_relevant(self) -> bool:
-        """Check if this log entry is security-relevant"""
-        return (
+        """Check if this log entry is security-relevant"""        return (
             self.security_event or
             self.suspicious_activity or
             self.fraud_indicator > 0.5 or
@@ -469,8 +457,7 @@ class AuditLog(Base):
         )
     
     def is_compliance_relevant(self) -> bool:
-        """Check if this log entry is compliance-relevant"""
-        return (
+        """Check if this log entry is compliance-relevant"""        return (
             self.compliance_event or
             bool(self.compliance_relevance) or
             bool(self.regulatory_impact) or
@@ -479,8 +466,7 @@ class AuditLog(Base):
         )
     
     def get_risk_score(self) -> float:
-        """Calculate overall risk score for this event"""
-        score = 0.0
+        """Calculate overall risk score for this event"""        score = 0.0
         
         # Severity weight
         severity_weights = {
@@ -513,8 +499,7 @@ class AuditLog(Base):
         return min(score, 100.0)  # Cap at 100
     
     def should_alert(self) -> bool:
-        """Determine if this event should trigger an alert"""
-        return (
+        """Determine if this event should trigger an alert"""        return (
             self.get_risk_score() > 15.0 or
             self.severity in [Severity.CRITICAL, Severity.HIGH] or
             self.security_event or
@@ -526,8 +511,7 @@ class AuditLog(Base):
     
     @classmethod
     def create_log(cls, log_data: Dict[str, Any], user_id: str = None) -> 'AuditLog':
-        """Create AuditLog from event data"""
-        return cls(
+        """Create AuditLog from event data"""        return cls(
             user_id=user_id,
             action_type=ActionType(log_data.get('action_type', 'read')),
             entity_type=EntityType(log_data.get('entity_type', 'system')),

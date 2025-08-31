@@ -1,28 +1,22 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Unit tests for YouTube Crawler
+"""Unit tests for YouTube Crawler
 Tests for YouTube content surveillance and monitoring functionality.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -35,12 +29,10 @@ from crawlers.youtube_crawler import YouTubeVideoData, YouTubeMonitoringResult
 
 
 class TestYouTubeCrawler:
-    """Test suite for YouTube crawler functionality"""
-    
+    """Test suite for YouTube crawler functionality"""    
     @pytest.fixture
     def sample_video_data(self):
-        """Sample YouTube video data for testing"""
-        return YouTubeVideoData(
+        """Sample YouTube video data for testing"""        return YouTubeVideoData(
             video_id="dQw4w9WgXcQ",
             title="Test Video Title",
             description="Test video description",
@@ -60,8 +52,7 @@ class TestYouTubeCrawler:
     
     @pytest.fixture
     def sample_api_response(self):
-        """Sample YouTube API response for testing"""
-        return {
+        """Sample YouTube API response for testing"""        return {
             "items": [
                 {
                     "id": {"videoId": "dQw4w9WgXcQ"},
@@ -95,8 +86,7 @@ class TestYouTubeCrawler:
     @pytest.mark.unit
     @pytest.mark.crawlers
     def test_youtube_video_data_structure(self, sample_video_data):
-        """Test YouTubeVideoData dataclass structure"""
-        assert sample_video_data.video_id == "dQw4w9WgXcQ"
+        """Test YouTubeVideoData dataclass structure"""        assert sample_video_data.video_id == "dQw4w9WgXcQ"
         assert sample_video_data.title == "Test Video Title"
         assert sample_video_data.channel_id == "UC123456789"
         assert sample_video_data.view_count == 1000000
@@ -108,8 +98,7 @@ class TestYouTubeCrawler:
     @pytest.mark.unit
     @pytest.mark.crawlers
     def test_youtube_video_data_defaults(self):
-        """Test YouTubeVideoData default values"""
-        video_data = YouTubeVideoData(
+        """Test YouTubeVideoData default values"""        video_data = YouTubeVideoData(
             video_id="test_id",
             title="Test Title",
             description="Test Description",
@@ -132,8 +121,7 @@ class TestYouTubeCrawler:
     @pytest.mark.unit
     @pytest.mark.crawlers
     def test_youtube_monitoring_result_structure(self, sample_video_data):
-        """Test YouTubeMonitoringResult dataclass structure"""
-        result = YouTubeMonitoringResult(
+        """Test YouTubeMonitoringResult dataclass structure"""        result = YouTubeMonitoringResult(
             original_content_id="content_123",
             search_query="test query",
             total_results=5,
@@ -149,22 +137,19 @@ class TestYouTubeCrawler:
     @pytest.mark.unit
     @pytest.mark.crawlers
     def test_youtube_video_url_generation(self, sample_video_data):
-        """Test YouTube video URL generation"""
-        expected_url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+        """Test YouTube video URL generation"""        expected_url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
         assert sample_video_data.video_url == expected_url
     
     @pytest.mark.unit
     @pytest.mark.crawlers
     def test_youtube_thumbnail_url_generation(self, sample_video_data):
-        """Test YouTube thumbnail URL generation"""
-        expected_thumbnail = "https://img.youtube.com/vi/dQw4w9WgXcQ/default.jpg"
+        """Test YouTube thumbnail URL generation"""        expected_thumbnail = "https://img.youtube.com/vi/dQw4w9WgXcQ/default.jpg"
         assert sample_video_data.thumbnail_url == expected_thumbnail
     
     @pytest.mark.unit
     @pytest.mark.crawlers
     def test_duration_parsing(self):
-        """Test YouTube duration format parsing"""
-        # PT3M33S = 3 minutes 33 seconds
+        """Test YouTube duration format parsing"""        # PT3M33S = 3 minutes 33 seconds
         duration = "PT3M33S"
         
         # Test that duration is stored correctly
@@ -190,8 +175,7 @@ class TestYouTubeCrawler:
     @pytest.mark.unit
     @pytest.mark.crawlers
     def test_large_numbers_handling(self):
-        """Test handling of large view/like counts"""
-        video_data = YouTubeVideoData(
+        """Test handling of large view/like counts"""        video_data = YouTubeVideoData(
             video_id="test",
             title="Test",
             description="Test", 
@@ -214,8 +198,7 @@ class TestYouTubeCrawler:
     @pytest.mark.unit
     @pytest.mark.crawlers
     def test_video_data_serialization(self, sample_video_data):
-        """Test YouTubeVideoData serialization to dict"""
-        data_dict = sample_video_data.__dict__
+        """Test YouTubeVideoData serialization to dict"""        data_dict = sample_video_data.__dict__
         
         assert "video_id" in data_dict
         assert "title" in data_dict
@@ -226,8 +209,7 @@ class TestYouTubeCrawler:
     @pytest.mark.unit
     @pytest.mark.crawlers
     def test_similarity_score_range(self):
-        """Test similarity score is within valid range"""
-        video_data = YouTubeVideoData(
+        """Test similarity score is within valid range"""        video_data = YouTubeVideoData(
             video_id="test",
             title="Test",
             description="Test",
@@ -250,8 +232,7 @@ class TestYouTubeCrawler:
     @pytest.mark.unit
     @pytest.mark.crawlers
     def test_invalid_similarity_score(self):
-        """Test handling of invalid similarity scores"""
-        # Test that we can create video data with invalid scores
+        """Test handling of invalid similarity scores"""        # Test that we can create video data with invalid scores
         # (validation would happen in the crawler logic)
         video_data = YouTubeVideoData(
             video_id="test",
@@ -276,8 +257,7 @@ class TestYouTubeCrawler:
     @pytest.mark.unit
     @pytest.mark.crawlers
     def test_empty_tags_handling(self):
-        """Test handling of empty tags list"""
-        video_data = YouTubeVideoData(
+        """Test handling of empty tags list"""        video_data = YouTubeVideoData(
             video_id="test",
             title="Test",
             description="Test",
@@ -300,8 +280,7 @@ class TestYouTubeCrawler:
     @pytest.mark.unit
     @pytest.mark.crawlers
     def test_long_description_handling(self):
-        """Test handling of very long video descriptions"""
-        long_description = "A" * 10000  # 10,000 character description
+        """Test handling of very long video descriptions"""        long_description = "A" * 10000  # 10,000 character description
         
         video_data = YouTubeVideoData(
             video_id="test",
@@ -326,8 +305,7 @@ class TestYouTubeCrawler:
     @pytest.mark.unit
     @pytest.mark.crawlers
     def test_unicode_title_handling(self):
-        """Test handling of Unicode characters in titles"""
-        unicode_title = "测试视频 🎵 مقطع فيديو 🎬 Тест 🎥"
+        """Test handling of Unicode characters in titles"""        unicode_title = "测试视频 🎵 مقطع فيديو 🎬 Тест 🎥"
         
         video_data = YouTubeVideoData(
             video_id="test",
@@ -351,8 +329,7 @@ class TestYouTubeCrawler:
     @pytest.mark.unit
     @pytest.mark.crawlers
     def test_date_handling(self):
-        """Test datetime handling in video data"""
-        test_date = datetime(2025, 1, 15, 12, 30, 45)
+        """Test datetime handling in video data"""        test_date = datetime(2025, 1, 15, 12, 30, 45)
         
         video_data = YouTubeVideoData(
             video_id="test",
@@ -379,8 +356,7 @@ class TestYouTubeCrawler:
     @pytest.mark.unit
     @pytest.mark.crawlers
     def test_detected_segments_structure(self):
-        """Test detected segments data structure"""
-        segments = [
+        """Test detected segments data structure"""        segments = [
             {
                 "start_time": 10.5,
                 "end_time": 25.3,
@@ -420,8 +396,7 @@ class TestYouTubeCrawler:
     @pytest.mark.unit
     @pytest.mark.crawlers
     def test_multiple_violations_in_result(self, sample_video_data):
-        """Test monitoring result with multiple potential violations"""
-        # Create multiple video data instances
+        """Test monitoring result with multiple potential violations"""        # Create multiple video data instances
         violations = [sample_video_data]
         
         for i in range(4):  # Add 4 more violations
@@ -461,8 +436,7 @@ class TestYouTubeCrawler:
     @pytest.mark.unit
     @pytest.mark.crawlers
     def test_zero_engagement_handling(self):
-        """Test handling of videos with zero views/likes"""
-        video_data = YouTubeVideoData(
+        """Test handling of videos with zero views/likes"""        video_data = YouTubeVideoData(
             video_id="test",
             title="Test",
             description="Test",
@@ -485,8 +459,7 @@ class TestYouTubeCrawler:
     @pytest.mark.unit
     @pytest.mark.crawlers
     def test_category_id_validation(self):
-        """Test category ID handling"""
-        valid_categories = ["1", "2", "10", "15", "17", "19", "20", "22", "23", "24", "25", "26", "27", "28"]
+        """Test category ID handling"""        valid_categories = ["1", "2", "10", "15", "17", "19", "20", "22", "23", "24", "25", "26", "27", "28"]
         
         for category in valid_categories:
             video_data = YouTubeVideoData(
@@ -511,8 +484,7 @@ class TestYouTubeCrawler:
     @pytest.mark.unit
     @pytest.mark.crawlers
     def test_language_code_handling(self):
-        """Test language code handling"""
-        language_codes = ["en", "es", "fr", "de", "ja", "ko", "zh", "ar", "hi", "pt"]
+        """Test language code handling"""        language_codes = ["en", "es", "fr", "de", "ja", "ko", "zh", "ar", "hi", "pt"]
         
         for lang_code in language_codes:
             video_data = YouTubeVideoData(

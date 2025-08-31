@@ -1,5 +1,4 @@
-"""
-Enterprise Crawler Security Database Module
+"""Enterprise Crawler Security Database Module
 
 Advanced database layer for security monitoring, threat detection,
 and protection mechanisms in crawler operations.
@@ -13,9 +12,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team Specialties: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + 
                  Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: All rights reserved
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, desc, asc, func, text
@@ -38,8 +35,7 @@ from ..core.exceptions import (
 
 
 class ThreatLevel(Enum):
-    """Security threat levels."""
-    CRITICAL = "critical"        # Immediate response required
+    """Security threat levels."""    CRITICAL = "critical"        # Immediate response required
     HIGH = "high"               # Response within 1 hour
     MEDIUM = "medium"           # Response within 4 hours  
     LOW = "low"                 # Response within 24 hours
@@ -47,8 +43,7 @@ class ThreatLevel(Enum):
 
 
 class SecurityEventType(Enum):
-    """Types of security events."""
-    UNAUTHORIZED_ACCESS = "unauthorized_access"
+    """Types of security events."""    UNAUTHORIZED_ACCESS = "unauthorized_access"
     SUSPICIOUS_ACTIVITY = "suspicious_activity"
     RATE_LIMIT_VIOLATION = "rate_limit_violation"
     DATA_BREACH_ATTEMPT = "data_breach_attempt"
@@ -61,8 +56,7 @@ class SecurityEventType(Enum):
 
 
 class BlocklistType(Enum):
-    """Types of blocklist entries."""
-    IP_ADDRESS = "ip_address"
+    """Types of blocklist entries."""    IP_ADDRESS = "ip_address"
     DOMAIN = "domain"
     USER_AGENT = "user_agent"
     API_KEY = "api_key"
@@ -71,8 +65,7 @@ class BlocklistType(Enum):
 
 
 class SecurityAction(Enum):
-    """Security response actions."""
-    BLOCK_REQUEST = "block_request"
+    """Security response actions."""    BLOCK_REQUEST = "block_request"
     THROTTLE_REQUESTS = "throttle_requests"
     REQUIRE_AUTHENTICATION = "require_authentication"
     LOG_AND_MONITOR = "log_and_monitor"
@@ -83,8 +76,7 @@ class SecurityAction(Enum):
 
 
 class CrawlerSecurityManager(DatabaseManager):
-    """
-    Enterprise security management system for crawler operations.
+    """    Enterprise security management system for crawler operations.
     
     Manages:
     - Real-time threat detection and response
@@ -93,11 +85,9 @@ class CrawlerSecurityManager(DatabaseManager):
     - Vulnerability assessment and remediation
     - Access control and authentication
     - Security audit and compliance monitoring
-    """
-    
+    """    
     def __init__(self, db_session: Session):
-        """Initialize security manager."""
-        super().__init__(db_session)
+        """Initialize security manager."""        super().__init__(db_session)
         self.active_threats = {}
         self.security_rules = {}
         self.blocklists = {}
@@ -109,8 +99,7 @@ class CrawlerSecurityManager(DatabaseManager):
         session_context: Dict[str, Any],
         platform: str
     ) -> Dict[str, Any]:
-        """
-        Perform real-time security threat detection on crawler requests.
+        """        Perform real-time security threat detection on crawler requests.
         
         Args:
             request_data: Data about the crawling request
@@ -122,8 +111,7 @@ class CrawlerSecurityManager(DatabaseManager):
             
         Raises:
             ThreatDetectionError: If threat detection fails
-        """
-        try:
+        """        try:
             threat_analysis = {
                 "request_id": request_data.get("request_id", str(uuid4())),
                 "timestamp": datetime.utcnow().isoformat(),
@@ -179,8 +167,7 @@ class CrawlerSecurityManager(DatabaseManager):
         affected_systems: List[str],
         user_id: str
     ) -> str:
-        """
-        Create and track a security incident.
+        """        Create and track a security incident.
         
         Args:
             incident_type: Type of security incident
@@ -194,8 +181,7 @@ class CrawlerSecurityManager(DatabaseManager):
             
         Raises:
             SecurityError: If incident creation fails
-        """
-        try:
+        """        try:
             incident_id = str(uuid4())
             
             # Create security incident record
@@ -235,8 +221,7 @@ class CrawlerSecurityManager(DatabaseManager):
         expiry_time: Optional[datetime] = None,
         severity: ThreatLevel = ThreatLevel.MEDIUM
     ) -> str:
-        """
-        Add an entry to the security blocklist.
+        """        Add an entry to the security blocklist.
         
         Args:
             blocklist_type: Type of blocklist entry
@@ -247,8 +232,7 @@ class CrawlerSecurityManager(DatabaseManager):
             
         Returns:
             Blocklist entry ID
-        """
-        try:
+        """        try:
             entry_id = str(uuid4())
             
             # Validate blocklist entry
@@ -283,16 +267,14 @@ class CrawlerSecurityManager(DatabaseManager):
         self,
         request_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Check if request data matches any blocklist entries.
+        """        Check if request data matches any blocklist entries.
         
         Args:
             request_data: Request data to check
             
         Returns:
             Blocklist check results
-        """
-        try:
+        """        try:
             check_results = {
                 "is_blocked": False,
                 "blocked_items": [],
@@ -339,8 +321,7 @@ class CrawlerSecurityManager(DatabaseManager):
         target_systems: List[str],
         assessment_type: str = "comprehensive"
     ) -> str:
-        """
-        Perform security vulnerability assessment on crawler infrastructure.
+        """        Perform security vulnerability assessment on crawler infrastructure.
         
         Args:
             target_systems: List of systems to assess
@@ -348,8 +329,7 @@ class CrawlerSecurityManager(DatabaseManager):
             
         Returns:
             Assessment ID for tracking
-        """
-        try:
+        """        try:
             assessment_id = str(uuid4())
             
             # Create vulnerability assessment record
@@ -392,16 +372,14 @@ class CrawlerSecurityManager(DatabaseManager):
         self,
         time_range: timedelta = timedelta(hours=24)
     ) -> Dict[str, Any]:
-        """
-        Monitor and analyze security metrics over specified time range.
+        """        Monitor and analyze security metrics over specified time range.
         
         Args:
             time_range: Time range for metrics analysis
             
         Returns:
             Comprehensive security metrics report
-        """
-        try:
+        """        try:
             end_time = datetime.utcnow()
             start_time = end_time - time_range
             
@@ -431,8 +409,7 @@ class CrawlerSecurityManager(DatabaseManager):
         time_period: timedelta,
         include_details: bool = True
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive security report.
+        """        Generate comprehensive security report.
         
         Args:
             report_type: Type of security report
@@ -441,8 +418,7 @@ class CrawlerSecurityManager(DatabaseManager):
             
         Returns:
             Comprehensive security report
-        """
-        try:
+        """        try:
             report = {
                 "report_metadata": {
                     "report_type": report_type,
@@ -472,8 +448,7 @@ class CrawlerSecurityManager(DatabaseManager):
     # Private helper methods
     
     async def _analyze_ip_reputation(self, ip_address: str) -> Dict[str, Any]:
-        """Analyze IP address reputation and threat indicators."""
-        if not ip_address:
+        """Analyze IP address reputation and threat indicators."""        if not ip_address:
             return {"indicators": [], "risk_contribution": 0.0}
         
         indicators = []
@@ -503,8 +478,7 @@ class CrawlerSecurityManager(DatabaseManager):
         }
     
     async def _analyze_user_agent(self, user_agent: str) -> Dict[str, Any]:
-        """Analyze user agent string for threat indicators."""
-        if not user_agent:
+        """Analyze user agent string for threat indicators."""        if not user_agent:
             return {"indicators": [], "risk_contribution": 0.2}
         
         indicators = []
@@ -540,8 +514,7 @@ class CrawlerSecurityManager(DatabaseManager):
         request_data: Dict[str, Any],
         session_context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze request patterns for anomalous behavior."""
-        indicators = []
+        """Analyze request patterns for anomalous behavior."""        indicators = []
         risk_score = 0.0
         
         # Check request frequency
@@ -565,8 +538,7 @@ class CrawlerSecurityManager(DatabaseManager):
         }
     
     async def _analyze_content_threats(self, request_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze content for security threats."""
-        indicators = []
+        """Analyze content for security threats."""        indicators = []
         risk_score = 0.0
         
         # Check for injection attempts in parameters
@@ -583,8 +555,7 @@ class CrawlerSecurityManager(DatabaseManager):
         }
     
     def _initialize_security_system(self) -> None:
-        """Initialize security management system."""
-        self.active_threats = {}
+        """Initialize security management system."""        self.active_threats = {}
         self.security_rules = {}
         self.blocklists = {
             "ip_addresses": set(),

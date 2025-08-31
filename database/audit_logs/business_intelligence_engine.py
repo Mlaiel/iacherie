@@ -1,5 +1,4 @@
-"""
-Ultra-Advanced Business Intelligence Engine for Audit Logs
+"""Ultra-Advanced Business Intelligence Engine for Audit Logs
 
 Revolutionary business intelligence and analytics engine specifically designed for the
 IA Influencer Agent platform. Provides comprehensive business insights, revenue analytics,
@@ -19,9 +18,7 @@ This revolutionary business intelligence engine is the EXCLUSIVE property of Fah
 Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
-"""
-
-from typing import List, Dict, Any, Optional, Union, Tuple, Set
+"""from typing import List, Dict, Any, Optional, Union, Tuple, Set
 import logging
 from datetime import datetime, timezone, timedelta
 from enum import Enum
@@ -53,8 +50,7 @@ Base = declarative_base()
 
 
 class BusinessMetricType(Enum):
-    """Business metric types for IA Influencer platform analytics."""
-    
+    """Business metric types for IA Influencer platform analytics."""    
     # Creator Performance Metrics
     CREATOR_PRODUCTIVITY = "creator_productivity"
     CONTENT_UPLOAD_RATE = "content_upload_rate"
@@ -101,8 +97,7 @@ class BusinessMetricType(Enum):
 
 
 class CreatorCategory(Enum):
-    """Creator categories for business analysis."""
-    
+    """Creator categories for business analysis."""    
     MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -113,8 +108,7 @@ class CreatorCategory(Enum):
 
 @dataclass
 class BusinessInsight:
-    """Business insight data structure."""
-    
+    """Business insight data structure."""    
     insight_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     metric_type: BusinessMetricType = BusinessMetricType.CREATOR_PRODUCTIVITY
     creator_category: Optional[CreatorCategory] = None
@@ -129,15 +123,13 @@ class BusinessInsight:
     timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def calculate_change(self) -> float:
-        """Calculate percentage change from previous value."""
-        if self.previous_value == 0:
+        """Calculate percentage change from previous value."""        if self.previous_value == 0:
             return 0.0
         self.change_percentage = ((self.value - self.previous_value) / self.previous_value) * 100
         return self.change_percentage
     
     def determine_trend(self) -> str:
-        """Determine trend direction based on change percentage."""
-        if self.change_percentage > 5:
+        """Determine trend direction based on change percentage."""        if self.change_percentage > 5:
             self.trend_direction = "increasing"
         elif self.change_percentage < -5:
             self.trend_direction = "decreasing"
@@ -147,11 +139,9 @@ class BusinessInsight:
 
 
 class BusinessIntelligenceEngine:
-    """Ultra-advanced business intelligence engine for IA Influencer platform."""
-    
+    """Ultra-advanced business intelligence engine for IA Influencer platform."""    
     def __init__(self, db_session: Session):
-        """Initialize the business intelligence engine."""
-        self.db_session = db_session
+        """Initialize the business intelligence engine."""        self.db_session = db_session
         self.logger = logging.getLogger(__name__)
         self.cache = {}
         self.cache_ttl = 300  # 5 minutes
@@ -159,8 +149,7 @@ class BusinessIntelligenceEngine:
     async def generate_creator_performance_insights(self, 
                                                    creator_id: Optional[str] = None,
                                                    time_period: str = "monthly") -> Dict[str, Any]:
-        """Generate comprehensive creator performance insights."""
-        try:
+        """Generate comprehensive creator performance insights."""        try:
             insights = {
                 "creator_productivity": await self._analyze_creator_productivity(creator_id, time_period),
                 "content_performance": await self._analyze_content_performance(creator_id, time_period),
@@ -186,8 +175,7 @@ class BusinessIntelligenceEngine:
     
     async def generate_platform_business_intelligence(self, 
                                                      time_period: str = "monthly") -> Dict[str, Any]:
-        """Generate platform-wide business intelligence dashboard."""
-        try:
+        """Generate platform-wide business intelligence dashboard."""        try:
             intelligence = {
                 "platform_overview": await self._analyze_platform_overview(time_period),
                 "creator_ecosystem": await self._analyze_creator_ecosystem(time_period),
@@ -215,8 +203,7 @@ class BusinessIntelligenceEngine:
     
     async def _analyze_creator_productivity(self, creator_id: Optional[str], 
                                           time_period: str) -> Dict[str, Any]:
-        """Analyze creator productivity metrics."""
-        # This would query the user_activity_logs for content creation activities
+        """Analyze creator productivity metrics."""        # This would query the user_activity_logs for content creation activities
         return {
             "content_uploads_per_period": 0,
             "avg_content_quality_score": 0.0,
@@ -228,8 +215,7 @@ class BusinessIntelligenceEngine:
     
     async def _analyze_content_performance(self, creator_id: Optional[str], 
                                          time_period: str) -> Dict[str, Any]:
-        """Analyze content performance across platforms."""
-        return {
+        """Analyze content performance across platforms."""        return {
             "avg_engagement_rate": 0.0,
             "viral_content_percentage": 0.0,
             "content_reach_efficiency": 0.0,
@@ -240,8 +226,7 @@ class BusinessIntelligenceEngine:
     
     async def _analyze_revenue_metrics(self, creator_id: Optional[str], 
                                      time_period: str) -> Dict[str, Any]:
-        """Analyze revenue and monetization metrics."""
-        return {
+        """Analyze revenue and monetization metrics."""        return {
             "total_revenue": 0.0,
             "revenue_per_content": 0.0,
             "monetization_efficiency": 0.0,
@@ -253,8 +238,7 @@ class BusinessIntelligenceEngine:
     
     async def _analyze_collaboration_impact(self, creator_id: Optional[str], 
                                           time_period: str) -> Dict[str, Any]:
-        """Analyze collaboration effectiveness and impact."""
-        return {
+        """Analyze collaboration effectiveness and impact."""        return {
             "collaboration_frequency": 0,
             "collaboration_success_rate": 0.0,
             "avg_collaboration_duration": 0,
@@ -265,8 +249,7 @@ class BusinessIntelligenceEngine:
     
     async def _analyze_platform_distribution(self, creator_id: Optional[str], 
                                            time_period: str) -> Dict[str, Any]:
-        """Analyze cross-platform distribution effectiveness."""
-        return {
+        """Analyze cross-platform distribution effectiveness."""        return {
             "platform_reach_efficiency": 0.0,
             "cross_platform_consistency": 0.0,
             "distribution_success_rate": 0.0,
@@ -277,8 +260,7 @@ class BusinessIntelligenceEngine:
     
     async def _analyze_ai_assistance(self, creator_id: Optional[str], 
                                    time_period: str) -> Dict[str, Any]:
-        """Analyze AI assistance effectiveness for creators."""
-        return {
+        """Analyze AI assistance effectiveness for creators."""        return {
             "ai_recommendation_adoption_rate": 0.0,
             "ai_protection_effectiveness": 0.0,
             "ai_seo_optimization_impact": 0.0,
@@ -289,8 +271,7 @@ class BusinessIntelligenceEngine:
     
     async def _generate_creator_recommendations(self, creator_id: Optional[str], 
                                               time_period: str) -> List[str]:
-        """Generate personalized recommendations for creators."""
-        recommendations = [
+        """Generate personalized recommendations for creators."""        recommendations = [
             "Increase content upload frequency during peak engagement hours",
             "Explore collaboration opportunities with complementary creators",
             "Optimize content titles and descriptions using AI suggestions",
@@ -300,8 +281,7 @@ class BusinessIntelligenceEngine:
         return recommendations
     
     async def generate_real_time_dashboard_data(self) -> Dict[str, Any]:
-        """Generate real-time dashboard data for business intelligence."""
-        try:
+        """Generate real-time dashboard data for business intelligence."""        try:
             dashboard_data = {
                 "key_metrics": {
                     "active_creators": await self._get_active_creators_count(),
@@ -329,8 +309,7 @@ class BusinessIntelligenceEngine:
             return {"error": str(e)}
     
     def create_interactive_dashboard(self) -> Optional[dash.Dash]:
-        """Create interactive Dash dashboard for business intelligence."""
-        if not HAS_DASH:
+        """Create interactive Dash dashboard for business intelligence."""        if not HAS_DASH:
             self.logger.warning("Dash not available, cannot create interactive dashboard")
             return None
         
@@ -379,8 +358,7 @@ class BusinessIntelligenceEngine:
         return app
     
     def _create_overview_layout(self):
-        """Create overview dashboard layout."""
-        return html.Div([
+        """Create overview dashboard layout."""        return html.Div([
             html.H2("Platform Overview"),
             html.Div("Real-time platform metrics and KPIs would be displayed here")
         ])
@@ -388,8 +366,7 @@ class BusinessIntelligenceEngine:
     async def export_business_intelligence_report(self, 
                                                  format_type: str = "pdf",
                                                  time_period: str = "monthly") -> str:
-        """Export comprehensive business intelligence report."""
-        try:
+        """Export comprehensive business intelligence report."""        try:
             # Generate comprehensive report data
             report_data = await self.generate_platform_business_intelligence(time_period)
             
@@ -407,27 +384,23 @@ class BusinessIntelligenceEngine:
             return f"Export failed: {str(e)}"
     
     async def _export_pdf_report(self, report_data: Dict[str, Any]) -> str:
-        """Export report as PDF."""
-        # Implementation would use libraries like reportlab or weasyprint
+        """Export report as PDF."""        # Implementation would use libraries like reportlab or weasyprint
         filename = f"bi_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf"
         return f"PDF report exported: {filename}"
     
     async def _export_excel_report(self, report_data: Dict[str, Any]) -> str:
-        """Export report as Excel."""
-        # Implementation would use openpyxl or xlsxwriter
+        """Export report as Excel."""        # Implementation would use openpyxl or xlsxwriter
         filename = f"bi_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx"
         return f"Excel report exported: {filename}"
     
     async def _export_json_report(self, report_data: Dict[str, Any]) -> str:
-        """Export report as JSON."""
-        filename = f"bi_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+        """Export report as JSON."""        filename = f"bi_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
         with open(filename, 'w') as f:
             json.dump(report_data, f, indent=2, default=str)
         return f"JSON report exported: {filename}"
     
     def _calculate_overall_confidence(self, data: Dict[str, Any]) -> float:
-        """Calculate overall confidence score for insights."""
-        # Simple confidence calculation based on data completeness
+        """Calculate overall confidence score for insights."""        # Simple confidence calculation based on data completeness
         return 0.95  # Placeholder implementation
 
 

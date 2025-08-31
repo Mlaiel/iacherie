@@ -1,5 +1,4 @@
-"""
-Advanced Platform Agent - Universal Multi-Platform Content Management System
+"""Advanced Platform Agent - Universal Multi-Platform Content Management System
 
 Enterprise-grade platform connector providing seamless integration across all major content platforms.
 Handles content distribution, API management, real-time synchronization, and intelligent optimization.
@@ -18,9 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-
-import asyncio
+"""import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
@@ -54,8 +51,7 @@ from ...utils.retry_handler import RetryHandler
 
 
 class PlatformType(Enum):
-    """Supported platform types for content distribution"""
-    SPOTIFY = "spotify"
+    """Supported platform types for content distribution"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -73,8 +69,7 @@ class PlatformType(Enum):
 
 
 class ContentStatus(Enum):
-    """Content distribution status tracking"""
-    PENDING = "pending"
+    """Content distribution status tracking"""    PENDING = "pending"
     PROCESSING = "processing"
     UPLOADED = "uploaded"
     PUBLISHED = "published"
@@ -87,8 +82,7 @@ class ContentStatus(Enum):
 
 @dataclass
 class PlatformMetrics:
-    """Platform performance and engagement metrics"""
-    platform_id: str
+    """Platform performance and engagement metrics"""    platform_id: str
     total_content: int
     active_content: int
     total_views: int
@@ -104,8 +98,7 @@ class PlatformMetrics:
 
 @dataclass
 class ContentDistributionConfig:
-    """Configuration for content distribution across platforms"""
-    target_platforms: List[PlatformType]
+    """Configuration for content distribution across platforms"""    target_platforms: List[PlatformType]
     optimization_level: str = "high"
     auto_translate: bool = True
     seo_optimization: bool = True
@@ -118,8 +111,7 @@ class ContentDistributionConfig:
 
 
 class PlatformAgentConfig(AgentConfig):
-    """Advanced configuration for Platform Agent"""
-    max_concurrent_uploads: int = Field(default=10, ge=1, le=50)
+    """Advanced configuration for Platform Agent"""    max_concurrent_uploads: int = Field(default=10, ge=1, le=50)
     retry_attempts: int = Field(default=3, ge=1, le=10)
     cache_duration: int = Field(default=3600, ge=300, le=86400)
     rate_limit_requests: int = Field(default=1000, ge=100, le=10000)
@@ -141,13 +133,11 @@ class PlatformAgentConfig(AgentConfig):
 
 
 class PlatformAgent(BaseAgent):
-    """
-    Enterprise Platform Agent - Universal Multi-Platform Content Management
+    """    Enterprise Platform Agent - Universal Multi-Platform Content Management
     
     Provides comprehensive platform integration, content distribution, and management
     capabilities across all major social media and content platforms.
-    """
-    
+    """    
     def __init__(self, config: PlatformAgentConfig):
         super().__init__(config)
         self.config = config
@@ -179,8 +169,7 @@ class PlatformAgent(BaseAgent):
         self.logger.info("Platform Agent initialized with enterprise configuration")
 
     async def initialize(self) -> bool:
-        """Initialize platform agent with all required connections and services"""
-        try:
+        """Initialize platform agent with all required connections and services"""        try:
             # Initialize database connections
             await self.db_manager.initialize()
             
@@ -212,8 +201,7 @@ class PlatformAgent(BaseAgent):
             return False
 
     async def _initialize_platform_clients(self):
-        """Initialize API clients for all supported platforms"""
-        platform_configs = await self._get_platform_configurations()
+        """Initialize API clients for all supported platforms"""        platform_configs = await self._get_platform_configurations()
         
         for platform_type in PlatformType:
             try:
@@ -238,8 +226,7 @@ class PlatformAgent(BaseAgent):
                 self.logger.warning(f"Failed to initialize {platform_type.value} client: {e}")
 
     async def _create_platform_client(self, platform_type: PlatformType, config: Dict[str, Any]):
-        """Create platform-specific API client"""
-        match platform_type:
+        """Create platform-specific API client"""        match platform_type:
             case PlatformType.SPOTIFY:
                 return await self._create_spotify_client(config)
             case PlatformType.YOUTUBE:
@@ -259,8 +246,7 @@ class PlatformAgent(BaseAgent):
         distribution_config: ContentDistributionConfig,
         user_id: str
     ) -> Dict[str, Any]:
-        """
-        Distribute content across multiple platforms with intelligent optimization
+        """        Distribute content across multiple platforms with intelligent optimization
         
         Args:
             content: Content item to distribute
@@ -269,8 +255,7 @@ class PlatformAgent(BaseAgent):
             
         Returns:
             Dict with distribution results and metrics
-        """
-        distribution_id = hashlib.sha256(
+        """        distribution_id = hashlib.sha256(
             f"{content.id}_{user_id}_{datetime.utcnow().isoformat()}".encode()
         ).hexdigest()
         
@@ -327,8 +312,7 @@ class PlatformAgent(BaseAgent):
         content: ContentItem,
         target_platforms: List[PlatformType]
     ) -> Dict[PlatformType, ContentItem]:
-        """Optimize content for each target platform"""
-        optimized_content = {}
+        """Optimize content for each target platform"""        optimized_content = {}
         
         for platform in target_platforms:
             try:
@@ -354,8 +338,7 @@ class PlatformAgent(BaseAgent):
         config: ContentDistributionConfig,
         job: DistributionJob
     ) -> Dict[PlatformType, Dict[str, Any]]:
-        """Execute content distribution across platforms in parallel"""
-        distribution_tasks = []
+        """Execute content distribution across platforms in parallel"""        distribution_tasks = []
         
         for platform, content in optimized_content.items():
             task = asyncio.create_task(
@@ -385,8 +368,7 @@ class PlatformAgent(BaseAgent):
         config: ContentDistributionConfig,
         job: DistributionJob
     ) -> Dict[str, Any]:
-        """Distribute content to a specific platform"""
-        if platform not in self.platform_clients:
+        """Distribute content to a specific platform"""        if platform not in self.platform_clients:
             raise ValueError(f"Platform {platform.value} not configured")
         
         client = self.platform_clients[platform]
@@ -406,8 +388,7 @@ class PlatformAgent(BaseAgent):
         return result
 
     async def sync_platform_data(self, user_id: str, platforms: List[PlatformType] = None) -> Dict[str, Any]:
-        """Synchronize data from platforms for comprehensive analytics"""
-        if platforms is None:
+        """Synchronize data from platforms for comprehensive analytics"""        if platforms is None:
             platforms = list(self.platform_clients.keys())
         
         sync_id = hashlib.sha256(f"{user_id}_{datetime.utcnow().isoformat()}".encode()).hexdigest()
@@ -447,8 +428,7 @@ class PlatformAgent(BaseAgent):
         platform: PlatformType = None,
         date_range: Tuple[datetime, datetime] = None
     ) -> Dict[str, Any]:
-        """Get comprehensive analytics across platforms"""
-        try:
+        """Get comprehensive analytics across platforms"""        try:
             # Check cache first
             cache_key = f"analytics:{user_id}:{platform.value if platform else 'all'}"
             cached_analytics = await self.cache_manager.get(cache_key)
@@ -476,8 +456,7 @@ class PlatformAgent(BaseAgent):
             raise
 
     async def manage_collaborations(self, user_id: str, collaboration_request: Dict[str, Any]) -> Dict[str, Any]:
-        """Manage collaborations and content partnerships across platforms"""
-        try:
+        """Manage collaborations and content partnerships across platforms"""        try:
             # Validate collaboration request
             if not await self._validate_collaboration_request(collaboration_request):
                 raise ValueError("Invalid collaboration request")
@@ -512,8 +491,7 @@ class PlatformAgent(BaseAgent):
             raise
 
     async def optimize_posting_schedule(self, user_id: str, content_calendar: Dict[str, Any]) -> Dict[str, Any]:
-        """AI-powered posting schedule optimization across platforms"""
-        try:
+        """AI-powered posting schedule optimization across platforms"""        try:
             # Analyze historical performance
             historical_data = await self._get_historical_performance(user_id)
             
@@ -545,8 +523,7 @@ class PlatformAgent(BaseAgent):
             raise
 
     async def monitor_content_performance(self, user_id: str, content_ids: List[str] = None) -> Dict[str, Any]:
-        """Real-time content performance monitoring across all platforms"""
-        try:
+        """Real-time content performance monitoring across all platforms"""        try:
             # Get content performance data
             performance_data = await self._get_real_time_performance(user_id, content_ids)
             
@@ -580,8 +557,7 @@ class PlatformAgent(BaseAgent):
             raise
 
     async def shutdown(self):
-        """Graceful shutdown of platform agent"""
-        try:
+        """Graceful shutdown of platform agent"""        try:
             self.logger.info("Shutting down Platform Agent...")
             
             # Cancel all active sync tasks
@@ -621,44 +597,36 @@ class PlatformAgent(BaseAgent):
 
     # Helper methods for platform-specific operations
     async def _create_spotify_client(self, config: Dict[str, Any]):
-        """Create Spotify API client"""
-        # Implementation for Spotify client creation
+        """Create Spotify API client"""        # Implementation for Spotify client creation
         pass
 
     async def _create_youtube_client(self, config: Dict[str, Any]):
-        """Create YouTube API client"""
-        # Implementation for YouTube client creation
+        """Create YouTube API client"""        # Implementation for YouTube client creation
         pass
 
     async def _create_instagram_client(self, config: Dict[str, Any]):
-        """Create Instagram API client"""
-        # Implementation for Instagram client creation
+        """Create Instagram API client"""        # Implementation for Instagram client creation
         pass
 
     async def _create_tiktok_client(self, config: Dict[str, Any]):
-        """Create TikTok API client"""
-        # Implementation for TikTok client creation
+        """Create TikTok API client"""        # Implementation for TikTok client creation
         pass
 
     async def _create_twitter_client(self, config: Dict[str, Any]):
-        """Create Twitter API client"""
-        # Implementation for Twitter client creation
+        """Create Twitter API client"""        # Implementation for Twitter client creation
         pass
 
     async def _create_generic_client(self, platform_type: PlatformType, config: Dict[str, Any]):
-        """Create generic API client for other platforms"""
-        # Implementation for generic client creation
+        """Create generic API client for other platforms"""        # Implementation for generic client creation
         pass
 
 
 class PlatformAgentManager:
-    """
-    Enterprise Platform Agent Manager - Orchestrates multiple platform agents
+    """    Enterprise Platform Agent Manager - Orchestrates multiple platform agents
     
     Manages multiple platform agent instances for different users, handles load balancing,
     and provides centralized management for platform operations.
-    """
-    
+    """    
     def __init__(self, base_config: PlatformAgentConfig):
         self.base_config = base_config
         self.agents: Dict[str, PlatformAgent] = {}
@@ -669,8 +637,7 @@ class PlatformAgentManager:
         self.logger = logging.getLogger(f"{__name__}.PlatformAgentManager")
 
     async def get_agent(self, user_id: str) -> PlatformAgent:
-        """Get or create platform agent for user"""
-        if user_id not in self.agents:
+        """Get or create platform agent for user"""        if user_id not in self.agents:
             agent_config = self._create_user_specific_config(user_id)
             agent = PlatformAgent(agent_config)
             
@@ -688,13 +655,11 @@ class PlatformAgentManager:
         content: ContentItem,
         distribution_config: ContentDistributionConfig
     ) -> Dict[str, Any]:
-        """Distribute content for specific user"""
-        agent = await self.get_agent(user_id)
+        """Distribute content for specific user"""        agent = await self.get_agent(user_id)
         return await agent.distribute_content(content, distribution_config, user_id)
 
     async def get_aggregated_analytics(self, user_ids: List[str] = None) -> Dict[str, Any]:
-        """Get aggregated analytics across users and platforms"""
-        if user_ids is None:
+        """Get aggregated analytics across users and platforms"""        if user_ids is None:
             user_ids = list(self.agents.keys())
         
         aggregated_analytics = {}
@@ -716,8 +681,7 @@ class PlatformAgentManager:
         }
 
     async def _generate_cross_user_insights(self, analytics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate cross-user insights and patterns"""
-        try:
+        """Generate cross-user insights and patterns"""        try:
             total_content = sum(data.get('total_content', 0) for data in analytics_data.values())
             total_engagement = sum(data.get('total_engagement', 0) for data in analytics_data.values())
             avg_engagement_rate = total_engagement / max(total_content, 1)
@@ -755,8 +719,7 @@ class PlatformAgentManager:
             return {}
 
     def _analyze_content_types(self, analytics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze content type performance across users"""
-        content_types = {}
+        """Analyze content type performance across users"""        content_types = {}
         
         for user_data in analytics_data.values():
             for content_type, metrics in user_data.get('content_types', {}).items():
@@ -779,8 +742,7 @@ class PlatformAgentManager:
         return content_types
 
     async def _detect_content_trends(self, analytics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Detect trending content patterns"""
-        try:
+        """Detect trending content patterns"""        try:
             trends = {
                 'trending_hashtags': {},
                 'trending_topics': {},
@@ -808,8 +770,7 @@ class PlatformAgentManager:
             return {}
 
     def _generate_platform_recommendations(self, platform_performance: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate platform-specific recommendations"""
-        recommendations = []
+        """Generate platform-specific recommendations"""        recommendations = []
         
         # Sort platforms by engagement rate
         sorted_platforms = sorted(
@@ -830,8 +791,7 @@ class PlatformAgentManager:
         return recommendations
 
     async def get_platform_health_status(self) -> Dict[str, Any]:
-        """Get overall platform health status"""
-        try:
+        """Get overall platform health status"""        try:
             health_status = {
                 'overall_status': 'healthy',
                 'platform_statuses': {},
@@ -876,8 +836,7 @@ class PlatformAgentManager:
             }
 
     async def execute_bulk_operations(self, operations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Execute bulk operations across multiple platforms and users"""
-        results = []
+        """Execute bulk operations across multiple platforms and users"""        results = []
         
         # Group operations by user and platform for efficiency
         grouped_operations = {}
@@ -909,8 +868,7 @@ class PlatformAgentManager:
         return results
 
     async def _execute_group_operations(self, user_id: str, operations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Execute operations for a specific user group"""
-        results = []
+        """Execute operations for a specific user group"""        results = []
         agent = await self.get_agent(user_id)
         
         for op_data in operations:
@@ -932,8 +890,7 @@ class PlatformAgentManager:
         return results
 
     async def _execute_single_operation(self, agent: 'PlatformAgent', operation: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute a single platform operation"""
-        op_type = operation.get('type')
+        """Execute a single platform operation"""        op_type = operation.get('type')
         
         if op_type == 'upload_content':
             return await agent.upload_content(
@@ -961,8 +918,7 @@ class PlatformAgentManager:
             raise ValueError(f"Unknown operation type: {op_type}")
 
     async def shutdown_all_agents(self):
-        """Shutdown all platform agents"""
-        for user_id, agent in self.agents.items():
+        """Shutdown all platform agents"""        for user_id, agent in self.agents.items():
             try:
                 await agent.shutdown()
                 self.logger.info(f"Shutdown agent for user: {user_id}")

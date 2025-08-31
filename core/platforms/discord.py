@@ -1,14 +1,11 @@
-"""
-Discord Platform Integration
+"""Discord Platform Integration
 
 Discord API integration for community engagement and content sharing.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta
@@ -24,26 +21,22 @@ logger = logging.getLogger(__name__)
 
 
 class DiscordPlatform(PlatformBase):
-    """Discord platform integration"""
-    
+    """Discord platform integration"""    
     def __init__(self, config: PlatformConfig):
-        """Initialize Discord platform"""
-        super().__init__(config)
+        """Initialize Discord platform"""        super().__init__(config)
         self.api_base = "https://discord.com/api/v10"
         self.session: Optional[aiohttp.ClientSession] = None
         self.bot_token = self.config.credentials.get('bot_token')
         
     async def _get_session(self) -> aiohttp.ClientSession:
-        """Get or create HTTP session"""
-        if not self.session or self.session.closed:
+        """Get or create HTTP session"""        if not self.session or self.session.closed:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=self.config.timeout)
             )
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Discord Bot Token"""
-        try:
+        """Authenticate with Discord Bot Token"""        try:
             if not self.bot_token:
                 logger.error("Discord requires bot_token")
                 return False
@@ -75,12 +68,10 @@ class DiscordPlatform(PlatformBase):
             return False
     
     async def refresh_token(self) -> bool:
-        """Refresh Discord token (not applicable for bot tokens)"""
-        return await self.authenticate()
+        """Refresh Discord token (not applicable for bot tokens)"""        return await self.authenticate()
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to Discord API"""
-        try:
+        """Make authenticated request to Discord API"""        try:
             session = await self._get_session()
             
             # Add authentication headers
@@ -123,8 +114,7 @@ class DiscordPlatform(PlatformBase):
             return None
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Send message to Discord channel"""
-        try:
+        """Send message to Discord channel"""        try:
             channel_id = metadata.tags[0] if metadata.tags else None
             if not channel_id:
                 return UploadResult(
@@ -190,8 +180,7 @@ class DiscordPlatform(PlatformBase):
             )
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
-        """Get Discord message analytics"""
-        try:
+        """Get Discord message analytics"""        try:
             # Discord doesn't provide built-in analytics
             # We can get message reactions and basic info
             
@@ -220,8 +209,7 @@ class DiscordPlatform(PlatformBase):
             raise
     
     async def get_message_analytics(self, channel_id: str, message_id: str) -> Dict[str, Any]:
-        """Get specific message analytics"""
-        try:
+        """Get specific message analytics"""        try:
             # Get message details
             message = await self._make_request('GET', f'/channels/{channel_id}/messages/{message_id}')
             
@@ -258,8 +246,7 @@ class DiscordPlatform(PlatformBase):
             return {}
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search messages in Discord (requires guild access)"""
-        try:
+        """Search messages in Discord (requires guild access)"""        try:
             # Discord search requires specific guild/channel access
             # This is a placeholder implementation
             logger.warning("Discord search requires specific guild/channel access")
@@ -270,8 +257,7 @@ class DiscordPlatform(PlatformBase):
             return []
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
-        """Get user's messages from Discord (limited by API)"""
-        try:
+        """Get user's messages from Discord (limited by API)"""        try:
             # Discord doesn't provide an endpoint to get all user messages
             # You need to search within specific channels/guilds
             logger.warning("Discord user content requires channel-specific searches")
@@ -282,8 +268,7 @@ class DiscordPlatform(PlatformBase):
             return []
     
     async def delete_content(self, content_id: str, channel_id: str = None) -> bool:
-        """Delete Discord message"""
-        try:
+        """Delete Discord message"""        try:
             if not channel_id:
                 logger.error("Discord message deletion requires channel_id")
                 return False
@@ -302,8 +287,7 @@ class DiscordPlatform(PlatformBase):
             return False
     
     async def update_content(self, content_id: str, metadata: ContentMetadata, channel_id: str = None) -> bool:
-        """Update Discord message"""
-        try:
+        """Update Discord message"""        try:
             if not channel_id:
                 logger.error("Discord message update requires channel_id")
                 return False
@@ -339,8 +323,7 @@ class DiscordPlatform(PlatformBase):
             return False
     
     async def get_guild_info(self, guild_id: str) -> Optional[Dict[str, Any]]:
-        """Get Discord guild (server) information"""
-        try:
+        """Get Discord guild (server) information"""        try:
             result = await self._make_request('GET', f'/guilds/{guild_id}')
             
             if result:
@@ -366,8 +349,7 @@ class DiscordPlatform(PlatformBase):
             return None
     
     async def get_channel_info(self, channel_id: str) -> Optional[Dict[str, Any]]:
-        """Get Discord channel information"""
-        try:
+        """Get Discord channel information"""        try:
             result = await self._make_request('GET', f'/channels/{channel_id}')
             
             if result:
@@ -390,8 +372,7 @@ class DiscordPlatform(PlatformBase):
             return None
     
     async def get_guild_channels(self, guild_id: str) -> List[Dict[str, Any]]:
-        """Get channels in a Discord guild"""
-        try:
+        """Get channels in a Discord guild"""        try:
             result = await self._make_request('GET', f'/guilds/{guild_id}/channels')
             
             if result:
@@ -416,8 +397,7 @@ class DiscordPlatform(PlatformBase):
     
     async def create_channel(self, guild_id: str, name: str, channel_type: int = 0, 
                            topic: str = None) -> Optional[str]:
-        """Create a new Discord channel"""
-        try:
+        """Create a new Discord channel"""        try:
             channel_data = {
                 'name': name,
                 'type': channel_type
@@ -440,8 +420,7 @@ class DiscordPlatform(PlatformBase):
             return None
     
     async def add_reaction(self, channel_id: str, message_id: str, emoji: str) -> bool:
-        """Add reaction to Discord message"""
-        try:
+        """Add reaction to Discord message"""        try:
             # Encode emoji for URL
             import urllib.parse
             encoded_emoji = urllib.parse.quote(emoji)
@@ -459,8 +438,7 @@ class DiscordPlatform(PlatformBase):
             return False
     
     async def send_dm(self, user_id: str, message: str) -> Optional[str]:
-        """Send direct message to Discord user"""
-        try:
+        """Send direct message to Discord user"""        try:
             # Create DM channel first
             dm_data = {'recipient_id': user_id}
             dm_result = await self._make_request('POST', '/users/@me/channels', json=dm_data)
@@ -487,6 +465,5 @@ class DiscordPlatform(PlatformBase):
             return None
     
     async def close(self):
-        """Close HTTP session"""
-        if self.session and not self.session.closed:
+        """Close HTTP session"""        if self.session and not self.session.closed:
             await self.session.close()

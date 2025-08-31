@@ -1,5 +1,4 @@
-"""
-Response Processor
+"""Response Processor
 
 Advanced response processing and analysis system for DMCA takedown notices
 with intelligent response interpretation and automated follow-up coordination.
@@ -9,9 +8,7 @@ Email: mlaiel@live.de
 
 ⚠️ COPYRIGHT WARNING ⚠️
 Unauthorized copying or distribution prohibited. All rights reserved © 2025 Fahed Mlaiel
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import uuid
 import re
@@ -30,8 +27,7 @@ logger = logging.getLogger(__name__)
 
 
 class ResponseType(Enum):
-    """Types of platform responses"""
-    ACKNOWLEDGMENT = "acknowledgment"
+    """Types of platform responses"""    ACKNOWLEDGMENT = "acknowledgment"
     COMPLIANCE = "compliance"
     PARTIAL_COMPLIANCE = "partial_compliance"
     REJECTION = "rejection"
@@ -43,8 +39,7 @@ class ResponseType(Enum):
 
 
 class ResponseStatus(Enum):
-    """Response processing status"""
-    PENDING = "pending"
+    """Response processing status"""    PENDING = "pending"
     PROCESSED = "processed"
     REQUIRES_ACTION = "requires_action"
     ESCALATED = "escalated"
@@ -53,8 +48,7 @@ class ResponseStatus(Enum):
 
 
 class SentimentType(Enum):
-    """Response sentiment classification"""
-    COOPERATIVE = "cooperative"
+    """Response sentiment classification"""    COOPERATIVE = "cooperative"
     NEUTRAL = "neutral"
     DEFENSIVE = "defensive"
     HOSTILE = "hostile"
@@ -63,8 +57,7 @@ class SentimentType(Enum):
 
 @dataclass
 class ResponseClassification:
-    """Response classification result"""
-    response_type: ResponseType
+    """Response classification result"""    response_type: ResponseType
     confidence_score: float
     sentiment: SentimentType
     urgency_level: int
@@ -76,8 +69,7 @@ class ResponseClassification:
 
 @dataclass
 class ActionRecommendation:
-    """Recommended action based on response"""
-    action_type: str
+    """Recommended action based on response"""    action_type: str
     priority: int
     description: str
     timeline: timedelta
@@ -87,8 +79,7 @@ class ActionRecommendation:
 
 
 class ResponseProcessor:
-    """
-    Advanced response processing system for DMCA takedown responses
+    """    Advanced response processing system for DMCA takedown responses
     
     Features:
     - Intelligent response classification
@@ -97,11 +88,9 @@ class ResponseProcessor:
     - Automated action recommendations
     - Multi-language support
     - Pattern recognition
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize response processor"""
-        self.config = config or {}
+        """Initialize response processor"""        self.config = config or {}
         self.db = get_database()
         self.nlp_processor = NLPProcessor(config)
         self.sentiment_analyzer = SentimentAnalyzer(config)
@@ -168,8 +157,7 @@ class ResponseProcessor:
                                       response_data: Dict[str, Any],
                                       notice_id: str,
                                       platform_id: str) -> Dict[str, Any]:
-        """
-        Process and analyze platform response to DMCA notice
+        """        Process and analyze platform response to DMCA notice
         
         Args:
             response_data: Raw response data from platform
@@ -178,8 +166,7 @@ class ResponseProcessor:
             
         Returns:
             Comprehensive response analysis result
-        """
-        try:
+        """        try:
             self.logger.info(f"Processing platform response for notice: {notice_id}")
             
             # Extract response content
@@ -246,8 +233,7 @@ class ResponseProcessor:
     async def analyze_response_patterns(self, 
                                       platform_id: str,
                                       time_range: Optional[Dict[str, datetime]] = None) -> Dict[str, Any]:
-        """
-        Analyze response patterns from a specific platform
+        """        Analyze response patterns from a specific platform
         
         Args:
             platform_id: Platform to analyze
@@ -255,8 +241,7 @@ class ResponseProcessor:
             
         Returns:
             Platform response pattern analysis
-        """
-        try:
+        """        try:
             self.logger.info(f"Analyzing response patterns for platform: {platform_id}")
             
             # Set default time range
@@ -314,8 +299,7 @@ class ResponseProcessor:
     async def handle_counter_notice(self, 
                                   counter_notice_data: Dict[str, Any],
                                   original_notice_id: str) -> Dict[str, Any]:
-        """
-        Handle DMCA counter-notice response
+        """        Handle DMCA counter-notice response
         
         Args:
             counter_notice_data: Counter-notice information
@@ -323,8 +307,7 @@ class ResponseProcessor:
             
         Returns:
             Counter-notice handling result
-        """
-        try:
+        """        try:
             self.logger.info(f"Handling counter-notice for original notice: {original_notice_id}")
             
             # Validate counter-notice format
@@ -378,16 +361,14 @@ class ResponseProcessor:
     
     async def generate_response_summary(self, 
                                       notice_ids: List[str]) -> Dict[str, Any]:
-        """
-        Generate comprehensive response summary for multiple notices
+        """        Generate comprehensive response summary for multiple notices
         
         Args:
             notice_ids: List of notice IDs to summarize
             
         Returns:
             Comprehensive response summary
-        """
-        try:
+        """        try:
             self.logger.info(f"Generating response summary for {len(notice_ids)} notices")
             
             # Retrieve response analyses
@@ -431,8 +412,7 @@ class ResponseProcessor:
     # Private helper methods
     
     async def _extract_response_content(self, response_data: Dict[str, Any]) -> str:
-        """Extract textual content from response data"""
-        # Extract from various possible fields
+        """Extract textual content from response data"""        # Extract from various possible fields
         content_fields = ['message', 'body', 'content', 'text', 'response', 'reply']
         
         for field in content_fields:
@@ -453,8 +433,7 @@ class ResponseProcessor:
     async def _classify_response(self, 
                                content: str,
                                platform_id: str) -> ResponseClassification:
-        """Classify response using pattern matching and NLP"""
-        content_lower = content.lower()
+        """Classify response using pattern matching and NLP"""        content_lower = content.lower()
         
         # Pattern-based classification
         pattern_scores = {}
@@ -506,8 +485,7 @@ class ResponseProcessor:
         )
     
     async def _analyze_response_sentiment(self, content: str) -> SentimentType:
-        """Analyze sentiment of response"""
-        content_lower = content.lower()
+        """Analyze sentiment of response"""        content_lower = content.lower()
         
         # Check for specific sentiment indicators
         for sentiment, indicators in self.sentiment_indicators.items():
@@ -532,8 +510,7 @@ class ResponseProcessor:
     async def _analyze_legal_implications(self, 
                                         content: str,
                                         classification: ResponseClassification) -> Dict[str, Any]:
-        """Analyze legal implications of response"""
-        content_lower = content.lower()
+        """Analyze legal implications of response"""        content_lower = content.lower()
         implications = {}
         
         # Check for specific legal keywords
@@ -576,8 +553,7 @@ class ResponseProcessor:
                                              classification: ResponseClassification,
                                              legal_analysis: Dict[str, Any],
                                              notice_id: str) -> List[ActionRecommendation]:
-        """Generate action recommendations based on analysis"""
-        recommendations = []
+        """Generate action recommendations based on analysis"""        recommendations = []
         
         if classification.response_type == ResponseType.ACKNOWLEDGMENT:
             recommendations.append(ActionRecommendation(
@@ -660,8 +636,7 @@ class ResponseProcessor:
     async def _calculate_compliance_metrics(self, 
                                           classification: ResponseClassification,
                                           response_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate compliance-related metrics"""
-        # Determine compliance status
+        """Calculate compliance-related metrics"""        # Determine compliance status
         if classification.response_type == ResponseType.COMPLIANCE:
             compliance_status = 'compliant'
         elif classification.response_type == ResponseType.PARTIAL_COMPLIANCE:
@@ -689,8 +664,7 @@ class ResponseProcessor:
         }
     
     def _calculate_response_cooperation_score(self, classification: ResponseClassification) -> float:
-        """Calculate cooperation score based on response characteristics"""
-        base_score = 0.5
+        """Calculate cooperation score based on response characteristics"""        base_score = 0.5
         
         # Adjust based on response type
         type_adjustments = {
@@ -717,8 +691,7 @@ class ResponseProcessor:
         return max(0.0, min(1.0, base_score))
     
     def _assess_legal_risk_level(self, classification: ResponseClassification) -> str:
-        """Assess legal risk level based on response"""
-        if classification.response_type == ResponseType.COUNTER_NOTICE:
+        """Assess legal risk level based on response"""        if classification.response_type == ResponseType.COUNTER_NOTICE:
             return 'high'
         elif classification.response_type == ResponseType.REJECTION and classification.sentiment == SentimentType.HOSTILE:
             return 'medium'

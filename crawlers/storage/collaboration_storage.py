@@ -1,5 +1,4 @@
-"""
-Collaboration Storage Module
+"""Collaboration Storage Module
 ===========================
 
 Professional collaboration management storage for IA-Influencer-Agent platform.
@@ -22,9 +21,7 @@ Expertise combinée:
 - Audio/Vidéo: Traitement multimédia et analyse de contenu
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
-"""
-
-import logging
+"""import logging
 import asyncio
 import json
 import uuid
@@ -42,8 +39,7 @@ from .database import DatabaseStorageProvider
 logger = logging.getLogger(__name__)
 
 class CollaborationStatus(Enum):
-    """Collaboration status levels."""
-    PROPOSED = "proposed"
+    """Collaboration status levels."""    PROPOSED = "proposed"
     ACCEPTED = "accepted"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -52,8 +48,7 @@ class CollaborationStatus(Enum):
 
 @dataclass
 class CollaboratorProfile:
-    """Creator profile for collaboration matching."""
-    user_id: str
+    """Creator profile for collaboration matching."""    user_id: str
     username: str
     display_name: str
     content_types: List[ContentType] = field(default_factory=list)
@@ -75,8 +70,7 @@ class CollaboratorProfile:
 
 @dataclass
 class CollaborationRecommendation:
-    """AI-powered collaboration recommendation."""
-    collaborator_profile: CollaboratorProfile
+    """AI-powered collaboration recommendation."""    collaborator_profile: CollaboratorProfile
     compatibility_score: float
     reasons: List[str] = field(default_factory=list)
     project_suggestions: List[str] = field(default_factory=list)
@@ -86,8 +80,7 @@ class CollaborationRecommendation:
 
 @dataclass
 class ProjectMilestone:
-    """Project milestone tracking."""
-    id: str
+    """Project milestone tracking."""    id: str
     collaboration_id: str
     title: str
     description: str
@@ -99,28 +92,22 @@ class ProjectMilestone:
     deliverables: List[str] = field(default_factory=list)
 
 class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, CollaborationStorageProvider):
-    """
-    Database-based collaboration storage provider.
+    """    Database-based collaboration storage provider.
     
     Implements collaboration management, AI matching, and project tracking
     with advanced analytics and performance monitoring.
-    """
-    
+    """    
     def __init__(self, provider_id: str, config: Dict[str, Any]):
-        """Initialize database collaboration storage provider."""
-        super().__init__(provider_id, config)
+        """Initialize database collaboration storage provider."""        super().__init__(provider_id, config)
         self.ai_models = {}
         
     async def connect(self) -> None:
-        """Connect to database and initialize collaboration tables."""
-        await super().connect()
+        """Connect to database and initialize collaboration tables."""        await super().connect()
         await self._create_collaboration_tables()
         await self._initialize_ai_models()
         
     async def _create_collaboration_tables(self) -> None:
-        """Create collaboration-specific database tables."""
-        collaboration_table_sql = """
-        CREATE TABLE IF NOT EXISTS collaboration_records (
+        """Create collaboration-specific database tables."""        collaboration_table_sql = """        CREATE TABLE IF NOT EXISTS collaboration_records (
             id VARCHAR(36) PRIMARY KEY,
             initiator_user_id VARCHAR(36) NOT NULL,
             collaborator_user_id VARCHAR(36) NOT NULL,
@@ -145,10 +132,8 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
             INDEX idx_collab_type (project_type),
             INDEX idx_collab_dates (created_at, estimated_completion)
         );
-        """
-        
-        profile_table_sql = """
-        CREATE TABLE IF NOT EXISTS collaborator_profiles (
+        """        
+        profile_table_sql = """        CREATE TABLE IF NOT EXISTS collaborator_profiles (
             user_id VARCHAR(36) PRIMARY KEY,
             username VARCHAR(100) NOT NULL,
             display_name VARCHAR(200) NOT NULL,
@@ -182,10 +167,8 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
             INDEX idx_profile_location (location),
             FULLTEXT KEY ft_profile_skills (skills, bio)
         );
-        """
-        
-        milestone_table_sql = """
-        CREATE TABLE IF NOT EXISTS project_milestones (
+        """        
+        milestone_table_sql = """        CREATE TABLE IF NOT EXISTS project_milestones (
             id VARCHAR(36) PRIMARY KEY,
             collaboration_id VARCHAR(36) NOT NULL,
             title VARCHAR(255) NOT NULL,
@@ -207,10 +190,8 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
             INDEX idx_milestone_due_date (due_date),
             INDEX idx_milestone_completed (completed)
         );
-        """
-        
-        matching_table_sql = """
-        CREATE TABLE IF NOT EXISTS collaboration_matches (
+        """        
+        matching_table_sql = """        CREATE TABLE IF NOT EXISTS collaboration_matches (
             id VARCHAR(36) PRIMARY KEY,
             user_a_id VARCHAR(36) NOT NULL,
             user_b_id VARCHAR(36) NOT NULL,
@@ -227,8 +208,7 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
             INDEX idx_match_user_a (user_a_id),
             INDEX idx_match_user_b (user_b_id)
         );
-        """
-        
+        """        
         try:
             async with self.get_connection() as conn:
                 await conn.execute(collaboration_table_sql)
@@ -244,8 +224,7 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
             raise StorageException(f"Collaboration table creation failed: {e}")
     
     async def _initialize_ai_models(self) -> None:
-        """Initialize AI models for collaboration matching."""
-        try:
+        """Initialize AI models for collaboration matching."""        try:
             # In a real implementation, load trained ML models here
             self.ai_models = {
                 'compatibility_scorer': self._calculate_compatibility_score,
@@ -260,17 +239,14 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
             logger.error(f"Failed to initialize AI models: {e}")
     
     async def store_collaboration(self, collaboration_record: CollaborationRecord) -> bool:
-        """Store a collaboration record."""
-        try:
-            sql = """
-            INSERT INTO collaboration_records (
+        """Store a collaboration record."""        try:
+            sql = """            INSERT INTO collaboration_records (
                 id, initiator_user_id, collaborator_user_id, project_title,
                 project_description, project_type, status, revenue_split_percentage,
                 terms_agreed, contract_url, estimated_completion, actual_completion,
                 budget, currency, metadata
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """
-            
+            """            
             metadata = getattr(collaboration_record, 'metadata', {})
             
             values = (
@@ -312,23 +288,20 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
         content_type: ContentType,
         max_results: int = 10
     ) -> List[Dict[str, Any]]:
-        """Find potential collaborators using AI matching."""
-        try:
+        """Find potential collaborators using AI matching."""        try:
             # Get user profile
             user_profile = await self._get_collaborator_profile(user_id)
             if not user_profile:
                 return []
             
             # Find collaborators with compatible content types
-            sql = """
-            SELECT * FROM collaborator_profiles 
+            sql = """            SELECT * FROM collaborator_profiles 
             WHERE user_id != ? 
                 AND availability = 'available'
                 AND JSON_CONTAINS(content_types, ?)
             ORDER BY collaboration_score DESC, success_rate DESC
             LIMIT ?
-            """
-            
+            """            
             async with self.get_connection() as conn:
                 cursor = await conn.execute(sql, [
                     user_id, 
@@ -380,8 +353,7 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
         genre: Optional[str] = None,
         audience_overlap_threshold: float = 0.3
     ) -> List[Dict[str, Any]]:
-        """Get AI-powered collaboration recommendations."""
-        try:
+        """Get AI-powered collaboration recommendations."""        try:
             # Check cached recommendations first
             cached_recommendations = await self._get_cached_recommendations(user_id)
             if cached_recommendations:
@@ -400,15 +372,13 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
                 params.append(json.dumps(genre))
             
             # Find high-quality collaborators
-            sql = f"""
-            SELECT * FROM collaborator_profiles 
+            sql = f"""            SELECT * FROM collaborator_profiles 
             WHERE {' AND '.join(filters)}
                 AND collaboration_score >= 0.6
                 AND success_rate >= 0.7
             ORDER BY collaboration_score DESC, success_rate DESC
             LIMIT 50
-            """
-            
+            """            
             async with self.get_connection() as conn:
                 cursor = await conn.execute(sql, params)
                 rows = await cursor.fetchall()
@@ -482,8 +452,7 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
             raise StorageException(f"Recommendation generation failed: {e}")
     
     async def calculate_collaboration_score(self, user_a_id: str, user_b_id: str) -> float:
-        """Calculate collaboration compatibility score."""
-        try:
+        """Calculate collaboration compatibility score."""        try:
             # Check cached score first
             cached_score = await self._get_cached_compatibility_score(user_a_id, user_b_id)
             if cached_score is not None:
@@ -540,8 +509,7 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
             return 0.0
     
     async def _get_collaborator_profile(self, user_id: str) -> Optional[CollaboratorProfile]:
-        """Get collaborator profile by user ID."""
-        try:
+        """Get collaborator profile by user ID."""        try:
             sql = "SELECT * FROM collaborator_profiles WHERE user_id = ?"
             
             async with self.get_connection() as conn:
@@ -558,8 +526,7 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
             return None
     
     def _row_to_collaborator_profile(self, row) -> CollaboratorProfile:
-        """Convert database row to CollaboratorProfile."""
-        return CollaboratorProfile(
+        """Convert database row to CollaboratorProfile."""        return CollaboratorProfile(
             user_id=row[0],
             username=row[1],
             display_name=row[2],
@@ -582,8 +549,7 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
         )
     
     def _calculate_content_type_overlap(self, profile_a: CollaboratorProfile, profile_b: CollaboratorProfile) -> float:
-        """Calculate content type overlap score."""
-        if not profile_a.content_types or not profile_b.content_types:
+        """Calculate content type overlap score."""        if not profile_a.content_types or not profile_b.content_types:
             return 0.0
         
         overlap = set(profile_a.content_types) & set(profile_b.content_types)
@@ -592,16 +558,14 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
         return len(overlap) / len(total) if total else 0.0
     
     def _calculate_platform_overlap(self, profile_a: CollaboratorProfile, profile_b: CollaboratorProfile) -> float:
-        """Calculate platform overlap score."""
-        if not profile_a.platforms or not profile_b.platforms:
+        """Calculate platform overlap score."""        if not profile_a.platforms or not profile_b.platforms:
             return 0.0
         
         overlap = set(profile_a.platforms) & set(profile_b.platforms)
         return len(overlap) / max(len(profile_a.platforms), len(profile_b.platforms))
     
     def _calculate_audience_size_compatibility(self, profile_a: CollaboratorProfile, profile_b: CollaboratorProfile) -> float:
-        """Calculate audience size compatibility."""
-        # Get total followers for each profile
+        """Calculate audience size compatibility."""        # Get total followers for each profile
         total_a = sum(profile_a.follower_counts.values()) if profile_a.follower_counts else 0
         total_b = sum(profile_b.follower_counts.values()) if profile_b.follower_counts else 0
         
@@ -617,8 +581,7 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
         return ratio * 0.8 + size_bonus * 0.2
     
     def _calculate_engagement_compatibility(self, profile_a: CollaboratorProfile, profile_b: CollaboratorProfile) -> float:
-        """Calculate engagement rate compatibility."""
-        if not profile_a.engagement_rates or not profile_b.engagement_rates:
+        """Calculate engagement rate compatibility."""        if not profile_a.engagement_rates or not profile_b.engagement_rates:
             return 0.0
         
         # Get average engagement rates
@@ -632,8 +595,7 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
         return min(1.0, similarity * 0.7 + quality_bonus * 0.3)
     
     def _calculate_genre_overlap(self, profile_a: CollaboratorProfile, profile_b: CollaboratorProfile) -> float:
-        """Calculate genre overlap score."""
-        if not profile_a.genres or not profile_b.genres:
+        """Calculate genre overlap score."""        if not profile_a.genres or not profile_b.genres:
             return 0.0
         
         overlap = set(profile_a.genres) & set(profile_b.genres)
@@ -642,16 +604,14 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
         return len(overlap) / len(union) if union else 0.0
     
     def _calculate_language_overlap(self, profile_a: CollaboratorProfile, profile_b: CollaboratorProfile) -> float:
-        """Calculate language overlap score."""
-        if not profile_a.languages or not profile_b.languages:
+        """Calculate language overlap score."""        if not profile_a.languages or not profile_b.languages:
             return 0.0
         
         overlap = set(profile_a.languages) & set(profile_b.languages)
         return len(overlap) / max(len(profile_a.languages), len(profile_b.languages))
     
     def _calculate_location_proximity(self, profile_a: CollaboratorProfile, profile_b: CollaboratorProfile) -> float:
-        """Calculate location proximity score."""
-        if not profile_a.location or not profile_b.location:
+        """Calculate location proximity score."""        if not profile_a.location or not profile_b.location:
             return 0.5  # Neutral score for unknown locations
         
         # Simple location matching (in practice, use geolocation)
@@ -669,8 +629,7 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
         return 0.3  # Different locations
     
     def _calculate_skill_complementarity(self, profile_a: CollaboratorProfile, profile_b: CollaboratorProfile) -> float:
-        """Calculate skill complementarity score."""
-        if not profile_a.skills or not profile_b.skills:
+        """Calculate skill complementarity score."""        if not profile_a.skills or not profile_b.skills:
             return 0.0
         
         # Skills that complement each other
@@ -696,8 +655,7 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
         return complementarity_score / total_checks if total_checks > 0 else 0.0
     
     async def _analyze_audience_overlap(self, profile_a: CollaboratorProfile, profile_b: CollaboratorProfile) -> float:
-        """Analyze audience overlap between collaborators."""
-        # In a real implementation, this would analyze actual audience data
+        """Analyze audience overlap between collaborators."""        # In a real implementation, this would analyze actual audience data
         # For now, use platform and genre overlap as proxy
         
         platform_overlap = self._calculate_platform_overlap(profile_a, profile_b)
@@ -708,8 +666,7 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
         return platform_overlap * 0.5 + genre_overlap * 0.3 + language_overlap * 0.2
     
     async def _match_complementary_skills(self, profile_a: CollaboratorProfile, profile_b: CollaboratorProfile) -> List[str]:
-        """Find complementary skills between collaborators."""
-        if not profile_a.skills or not profile_b.skills:
+        """Find complementary skills between collaborators."""        if not profile_a.skills or not profile_b.skills:
             return []
         
         complementary = []
@@ -732,8 +689,7 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
         return complementary
     
     async def _predict_collaboration_success(self, profile_a: CollaboratorProfile, profile_b: CollaboratorProfile) -> float:
-        """Predict collaboration success probability."""
-        # Factors that contribute to success
+        """Predict collaboration success probability."""        # Factors that contribute to success
         factors = {
             'individual_success_rates': (profile_a.success_rate + profile_b.success_rate) / 2,
             'experience_level': min(profile_a.collaboration_score, profile_b.collaboration_score),
@@ -764,8 +720,7 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
         collaborator_profile: CollaboratorProfile,
         compatibility_score: float
     ) -> List[str]:
-        """Generate reasons for collaboration recommendation."""
-        reasons = []
+        """Generate reasons for collaboration recommendation."""        reasons = []
         
         if compatibility_score > 0.8:
             reasons.append("Excellent compatibility match")
@@ -802,8 +757,7 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
         user_profile: CollaboratorProfile,
         collaborator_profile: CollaboratorProfile
     ) -> List[str]:
-        """Generate project suggestions for collaboration."""
-        suggestions = []
+        """Generate project suggestions for collaboration."""        suggestions = []
         
         # Based on content types
         common_types = set(user_profile.content_types) & set(collaborator_profile.content_types)
@@ -841,17 +795,14 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
         return list(set(suggestions))  # Remove duplicates
     
     async def _update_collaboration_stats(self, user_id: str) -> None:
-        """Update collaboration statistics for user."""
-        try:
+        """Update collaboration statistics for user."""        try:
             # Count total and successful collaborations
-            stats_sql = """
-            SELECT 
+            stats_sql = """            SELECT 
                 COUNT(*) as total,
                 SUM(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) as successful
             FROM collaboration_records 
             WHERE initiator_user_id = ? OR collaborator_user_id = ?
-            """
-            
+            """            
             async with self.get_connection() as conn:
                 cursor = await conn.execute(stats_sql, [user_id, user_id])
                 row = await cursor.fetchone()
@@ -866,15 +817,13 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
                 collaboration_score = success_rate * 0.7 + volume_factor * 0.3
                 
                 # Update profile
-                update_sql = """
-                UPDATE collaborator_profiles 
+                update_sql = """                UPDATE collaborator_profiles 
                 SET total_collaborations = ?, 
                     successful_collaborations = ?,
                     success_rate = ?,
                     collaboration_score = ?
                 WHERE user_id = ?
-                """
-                
+                """                
                 async with self.get_connection() as conn:
                     await conn.execute(update_sql, [
                         total_collaborations,
@@ -889,14 +838,11 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
             logger.warning(f"Failed to update collaboration stats: {e}")
     
     async def _get_cached_compatibility_score(self, user_a_id: str, user_b_id: str) -> Optional[float]:
-        """Get cached compatibility score."""
-        try:
-            sql = """
-            SELECT compatibility_score FROM collaboration_matches 
+        """Get cached compatibility score."""        try:
+            sql = """            SELECT compatibility_score FROM collaboration_matches 
             WHERE (user_a_id = ? AND user_b_id = ?) OR (user_a_id = ? AND user_b_id = ?)
             AND calculated_at > ?
-            """
-            
+            """            
             # Cache valid for 24 hours
             cache_cutoff = datetime.utcnow() - timedelta(hours=24)
             
@@ -920,18 +866,15 @@ class DatabaseCollaborationStorageProvider(DatabaseStorageProvider, Collaboratio
         score: float,
         components: Dict[str, float]
     ) -> None:
-        """Cache compatibility score."""
-        try:
-            sql = """
-            INSERT INTO collaboration_matches (
+        """Cache compatibility score."""        try:
+            sql = """            INSERT INTO collaboration_matches (
                 id, user_a_id, user_b_id, compatibility_score, reasons
             ) VALUES (?, ?, ?, ?, ?)
             ON DUPLICATE KEY UPDATE
                 compatibility_score = VALUES(compatibility_score),
                 reasons = VALUES(reasons),
                 calculated_at = CURRENT_TIMESTAMP
-            """
-            
+            """            
             values = (
                 str(uuid.uuid4()),
                 user_a_id,

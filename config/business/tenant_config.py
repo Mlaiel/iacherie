@@ -1,5 +1,4 @@
-"""
-Multi-Tenant Configuration Module
+"""Multi-Tenant Configuration Module
 =================================
 
 Enterprise multi-tenant architecture configuration for scalable SaaS platform.
@@ -13,9 +12,7 @@ Any unauthorized use, copying, or distribution without explicit written permissi
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in legal action.
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
-"""
-
-from enum import Enum
+"""from enum import Enum
 from typing import Dict, List, Optional, Union, Any
 from dataclasses import dataclass
 from datetime import datetime, timedelta
@@ -23,16 +20,14 @@ import uuid
 
 
 class TenantTier(str, Enum):
-    """Subscription tier levels for multi-tenant platform."""
-    STARTER = "starter"
+    """Subscription tier levels for multi-tenant platform."""    STARTER = "starter"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
     CUSTOM = "custom"
 
 
 class TenantStatus(str, Enum):
-    """Tenant account status."""
-    ACTIVE = "active"
+    """Tenant account status."""    ACTIVE = "active"
     SUSPENDED = "suspended"
     TRIAL = "trial"
     EXPIRED = "expired"
@@ -41,8 +36,7 @@ class TenantStatus(str, Enum):
 
 
 class IsolationLevel(str, Enum):
-    """Data isolation levels."""
-    SHARED_DATABASE = "shared_database"
+    """Data isolation levels."""    SHARED_DATABASE = "shared_database"
     SHARED_SCHEMA = "shared_schema"
     DEDICATED_SCHEMA = "dedicated_schema"
     DEDICATED_DATABASE = "dedicated_database"
@@ -50,8 +44,7 @@ class IsolationLevel(str, Enum):
 
 
 class RegionCode(str, Enum):
-    """Supported geographic regions for data residency."""
-    US_EAST = "us-east-1"
+    """Supported geographic regions for data residency."""    US_EAST = "us-east-1"
     US_WEST = "us-west-2"
     EU_WEST = "eu-west-1"
     EU_CENTRAL = "eu-central-1"
@@ -62,8 +55,7 @@ class RegionCode(str, Enum):
 
 @dataclass
 class ResourceLimits:
-    """Resource usage limits per tenant."""
-    max_users: int
+    """Resource usage limits per tenant."""    max_users: int
     max_storage_gb: int
     max_api_requests_per_hour: int
     max_content_uploads_per_day: int
@@ -75,8 +67,7 @@ class ResourceLimits:
 
 @dataclass
 class FeatureAccess:
-    """Feature access configuration per tenant tier."""
-    ai_fingerprinting: bool
+    """Feature access configuration per tenant tier."""    ai_fingerprinting: bool
     content_protection: bool
     collaboration_matching: bool
     advanced_analytics: bool
@@ -92,9 +83,7 @@ class FeatureAccess:
 
 
 class TenantConfig:
-    """Enterprise multi-tenant configuration management."""
-
-    # Tier-based resource limits
+    """Enterprise multi-tenant configuration management."""    # Tier-based resource limits
     TIER_LIMITS = {
         TenantTier.STARTER: ResourceLimits(
             max_users=5,
@@ -378,33 +367,27 @@ class TenantConfig:
 
     @classmethod
     def generate_tenant_id(cls) -> str:
-        """Generate unique tenant identifier."""
-        return f"tenant_{uuid.uuid4().hex[:12]}"
+        """Generate unique tenant identifier."""        return f"tenant_{uuid.uuid4().hex[:12]}"
 
     @classmethod
     def get_resource_limits(cls, tier: TenantTier) -> ResourceLimits:
-        """Get resource limits for tenant tier."""
-        return cls.TIER_LIMITS.get(tier, cls.TIER_LIMITS[TenantTier.STARTER])
+        """Get resource limits for tenant tier."""        return cls.TIER_LIMITS.get(tier, cls.TIER_LIMITS[TenantTier.STARTER])
 
     @classmethod
     def get_feature_access(cls, tier: TenantTier) -> FeatureAccess:
-        """Get feature access configuration for tenant tier."""
-        return cls.TIER_FEATURES.get(tier, cls.TIER_FEATURES[TenantTier.STARTER])
+        """Get feature access configuration for tenant tier."""        return cls.TIER_FEATURES.get(tier, cls.TIER_FEATURES[TenantTier.STARTER])
 
     @classmethod
     def get_pricing_info(cls, tier: TenantTier) -> Dict[str, Any]:
-        """Get pricing information for tenant tier."""
-        return cls.TIER_PRICING.get(tier, cls.TIER_PRICING[TenantTier.STARTER])
+        """Get pricing information for tenant tier."""        return cls.TIER_PRICING.get(tier, cls.TIER_PRICING[TenantTier.STARTER])
 
     @classmethod
     def get_isolation_config(cls, tier: TenantTier) -> Dict[str, Any]:
-        """Get data isolation configuration for tenant tier."""
-        return cls.ISOLATION_CONFIGS.get(tier, cls.ISOLATION_CONFIGS[TenantTier.STARTER])
+        """Get data isolation configuration for tenant tier."""        return cls.ISOLATION_CONFIGS.get(tier, cls.ISOLATION_CONFIGS[TenantTier.STARTER])
 
     @classmethod
     def validate_tenant_limits(cls, tier: TenantTier, current_usage: Dict[str, int]) -> Dict[str, bool]:
-        """Validate current usage against tenant limits."""
-        limits = cls.get_resource_limits(tier)
+        """Validate current usage against tenant limits."""        limits = cls.get_resource_limits(tier)
         validation_results = {}
         
         for metric, current_value in current_usage.items():
@@ -418,8 +401,7 @@ class TenantConfig:
 
     @classmethod
     def calculate_overage_charges(cls, tier: TenantTier, usage: Dict[str, int]) -> Dict[str, float]:
-        """Calculate overage charges for usage exceeding limits."""
-        limits = cls.get_resource_limits(tier)
+        """Calculate overage charges for usage exceeding limits."""        limits = cls.get_resource_limits(tier)
         pricing = cls.get_pricing_info(tier)
         charges = {}
         
@@ -438,22 +420,18 @@ class TenantConfig:
 
     @classmethod
     def get_regional_config(cls, region: RegionCode) -> Dict[str, Any]:
-        """Get regional configuration for data residency."""
-        return cls.REGIONAL_CONFIGS.get(region, cls.REGIONAL_CONFIGS[RegionCode.US_EAST])
+        """Get regional configuration for data residency."""        return cls.REGIONAL_CONFIGS.get(region, cls.REGIONAL_CONFIGS[RegionCode.US_EAST])
 
     @classmethod
     def get_compliance_requirements(cls, region: RegionCode) -> List[str]:
-        """Get compliance requirements for specific region."""
-        regional_config = cls.get_regional_config(region)
+        """Get compliance requirements for specific region."""        regional_config = cls.get_regional_config(region)
         return regional_config.get("compliance", [])
 
     @classmethod
     def is_feature_available(cls, tier: TenantTier, feature_name: str) -> bool:
-        """Check if feature is available for tenant tier."""
-        features = cls.get_feature_access(tier)
+        """Check if feature is available for tenant tier."""        features = cls.get_feature_access(tier)
         return getattr(features, feature_name, False)
 
     @classmethod
     def get_sla_metrics(cls, tier: TenantTier) -> Dict[str, Any]:
-        """Get SLA metrics for tenant tier."""
-        return cls.SLA_METRICS.get(tier, cls.SLA_METRICS[TenantTier.STARTER])
+        """Get SLA metrics for tenant tier."""        return cls.SLA_METRICS.get(tier, cls.SLA_METRICS[TenantTier.STARTER])

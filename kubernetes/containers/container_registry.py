@@ -1,5 +1,4 @@
-"""
-🏗️ Container Registry Manager - IA-Influencer-Agent Infrastructure
+"""🏗️ Container Registry Manager - IA-Influencer-Agent Infrastructure
 =================================================================
 Expert Team: DevOps Engineer + Registry Specialist + Security Engineer + CI/CD Engineer
 Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -18,9 +17,7 @@ Enterprise-grade container registry management and advanced CI/CD pipeline integ
 for IA-Influencer-Agent platform. Includes intelligent image building, comprehensive 
 security scanning, automated versioning, multi-registry distribution, artifact 
 management, and optimized content delivery for AI processing workloads.
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple, Set
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Set
 import asyncio
 import logging
 import json
@@ -42,8 +39,7 @@ from azure.identity import DefaultAzureCredential
 logger = logging.getLogger(__name__)
 
 class RegistryType(Enum):
-    """Container registry types"""
-    DOCKER_HUB = "docker_hub"
+    """Container registry types"""    DOCKER_HUB = "docker_hub"
     AWS_ECR = "aws_ecr"
     AZURE_ACR = "azure_acr"
     GOOGLE_GCR = "google_gcr"
@@ -52,16 +48,14 @@ class RegistryType(Enum):
     PRIVATE = "private"
 
 class ImageBuildStatus(Enum):
-    """Image build status"""
-    PENDING = "pending"
+    """Image build status"""    PENDING = "pending"
     BUILDING = "building"
     SUCCESS = "success"
     FAILED = "failed"
     CANCELLED = "cancelled"
 
 class ImageScanStatus(Enum):
-    """Image security scan status"""
-    NOT_SCANNED = "not_scanned"
+    """Image security scan status"""    NOT_SCANNED = "not_scanned"
     SCANNING = "scanning"
     PASSED = "passed"
     FAILED = "failed"
@@ -69,8 +63,7 @@ class ImageScanStatus(Enum):
 
 @dataclass
 class RegistryConfig:
-    """Registry configuration"""
-    name: str
+    """Registry configuration"""    name: str
     type: RegistryType
     url: str
     username: Optional[str] = None
@@ -83,8 +76,7 @@ class RegistryConfig:
 
 @dataclass
 class ImageManifest:
-    """Container image manifest"""
-    name: str
+    """Container image manifest"""    name: str
     tag: str
     digest: str
     size: int
@@ -98,8 +90,7 @@ class ImageManifest:
 
 @dataclass
 class BuildConfiguration:
-    """Image build configuration"""
-    name: str
+    """Image build configuration"""    name: str
     dockerfile_path: str
     context_path: str
     target_registries: List[str]
@@ -113,8 +104,7 @@ class BuildConfiguration:
     
 @dataclass
 class PipelineStage:
-    """CI/CD pipeline stage"""
-    name: str
+    """CI/CD pipeline stage"""    name: str
     stage_type: str  # build, test, scan, deploy
     commands: List[str]
     environment: Dict[str, str] = field(default_factory=dict)
@@ -124,8 +114,7 @@ class PipelineStage:
     continue_on_error: bool = False
 
 class ContainerRegistryManager:
-    """Professional container registry manager"""
-    
+    """Professional container registry manager"""    
     def __init__(self, config_path: str = "/app/config/registry"):
         self.config_path = Path(config_path)
         self.registries = {}
@@ -139,8 +128,7 @@ class ContainerRegistryManager:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
     async def initialize(self) -> bool:
-        """Initialize container registry manager"""
-        try:
+        """Initialize container registry manager"""        try:
             # Initialize Docker client
             self.docker_client = docker.from_env()
             
@@ -165,8 +153,7 @@ class ContainerRegistryManager:
             return False
     
     async def _load_registry_configs(self) -> None:
-        """Load existing registry configurations"""
-        try:
+        """Load existing registry configurations"""        try:
             config_files = self.config_path.glob("registry_*.yml")
             for config_file in config_files:
                 with open(config_file, 'r') as f:
@@ -178,8 +165,7 @@ class ContainerRegistryManager:
             self.logger.warning(f"⚠️ Error loading registry configs: {e}")
     
     async def _setup_default_registries(self) -> None:
-        """Setup default registries for IA-Influencer platform"""
-        try:
+        """Setup default registries for IA-Influencer platform"""        try:
             # Private registry for IA-Influencer images
             private_registry = RegistryConfig(
                 name="ia-influencer-private",
@@ -237,8 +223,7 @@ class ContainerRegistryManager:
             self.logger.error(f"❌ Error setting up default registries: {e}")
     
     async def _save_registry_config(self, name: str, config: RegistryConfig) -> None:
-        """Save registry configuration to file"""
-        try:
+        """Save registry configuration to file"""        try:
             config_file = self.config_path / f"registry_{name}.yml"
             with open(config_file, 'w') as f:
                 yaml.dump(asdict(config), f, default_flow_style=False)
@@ -247,8 +232,7 @@ class ContainerRegistryManager:
             self.logger.error(f"❌ Error saving registry config {name}: {e}")
     
     async def authenticate_registry(self, registry_name: str) -> bool:
-        """Authenticate with container registry"""
-        try:
+        """Authenticate with container registry"""        try:
             if registry_name not in self.registries:
                 self.logger.error(f"❌ Registry {registry_name} not found")
                 return False
@@ -271,8 +255,7 @@ class ContainerRegistryManager:
             return False
     
     async def _authenticate_docker_hub(self, registry: RegistryConfig) -> bool:
-        """Authenticate with Docker Hub"""
-        try:
+        """Authenticate with Docker Hub"""        try:
             login_result = self.docker_client.login(
                 username=registry.username,
                 password=registry.password,
@@ -290,8 +273,7 @@ class ContainerRegistryManager:
             return False
     
     async def _authenticate_aws_ecr(self, registry: RegistryConfig) -> bool:
-        """Authenticate with AWS ECR"""
-        try:
+        """Authenticate with AWS ECR"""        try:
             # Get ECR login token
             ecr_client = boto3.client('ecr', region_name='eu-central-1')
             response = ecr_client.get_authorization_token()
@@ -316,8 +298,7 @@ class ContainerRegistryManager:
             return False
     
     async def _authenticate_azure_acr(self, registry: RegistryConfig) -> bool:
-        """Authenticate with Azure ACR"""
-        try:
+        """Authenticate with Azure ACR"""        try:
             login_result = self.docker_client.login(
                 username=registry.username,
                 password=registry.password,
@@ -335,8 +316,7 @@ class ContainerRegistryManager:
             return False
     
     async def _authenticate_harbor(self, registry: RegistryConfig) -> bool:
-        """Authenticate with Harbor registry"""
-        try:
+        """Authenticate with Harbor registry"""        try:
             login_result = self.docker_client.login(
                 username=registry.username,
                 password=registry.password,
@@ -354,8 +334,7 @@ class ContainerRegistryManager:
             return False
     
     async def _authenticate_generic(self, registry: RegistryConfig) -> bool:
-        """Authenticate with generic registry"""
-        try:
+        """Authenticate with generic registry"""        try:
             auth_config = {}
             if registry.username and registry.password:
                 auth_config = {
@@ -389,8 +368,7 @@ class ContainerRegistryManager:
         build_config: BuildConfiguration,
         registry_names: List[str] = None
     ) -> str:
-        """Queue image build"""
-        try:
+        """Queue image build"""        try:
             build_id = hashlib.md5(f"{build_config.name}_{datetime.now()}".encode()).hexdigest()
             
             build_request = {
@@ -412,8 +390,7 @@ class ContainerRegistryManager:
             return ""
     
     async def _build_worker(self) -> None:
-        """Background worker for processing build queue"""
-        while True:
+        """Background worker for processing build queue"""        while True:
             try:
                 # Get build request from queue
                 build_request = await self.build_queue.get()
@@ -454,8 +431,7 @@ class ContainerRegistryManager:
         config: BuildConfiguration, 
         registry_names: List[str]
     ) -> bool:
-        """Perform actual image build"""
-        try:
+        """Perform actual image build"""        try:
             # Build image
             image_tags = []
             
@@ -511,8 +487,7 @@ class ContainerRegistryManager:
             return False
     
     async def _generate_image_manifest(self, image, name: str) -> ImageManifest:
-        """Generate image manifest"""
-        try:
+        """Generate image manifest"""        try:
             attrs = image.attrs
             config = attrs.get("Config", {})
             
@@ -540,8 +515,7 @@ class ContainerRegistryManager:
             )
     
     async def _push_to_registries(self, image_tags: List[str], registry_names: List[str]) -> bool:
-        """Push image to registries"""
-        try:
+        """Push image to registries"""        try:
             push_success = True
             
             for i, tag in enumerate(image_tags):
@@ -582,8 +556,7 @@ class ContainerRegistryManager:
             return False
     
     async def scan_image(self, image_name: str, registry_name: str) -> Dict[str, Any]:
-        """Scan image for vulnerabilities"""
-        try:
+        """Scan image for vulnerabilities"""        try:
             scan_id = hashlib.md5(f"{image_name}_{datetime.now()}".encode()).hexdigest()
             
             self.logger.info(f"🔍 Starting security scan for image: {image_name}")
@@ -612,8 +585,7 @@ class ContainerRegistryManager:
             return {"status": ImageScanStatus.FAILED, "error": str(e)}
     
     async def _scan_with_trivy(self, image_name: str) -> Dict[str, Any]:
-        """Scan image with Trivy"""
-        try:
+        """Scan image with Trivy"""        try:
             result = subprocess.run([
                 "trivy", "image", 
                 "--format", "json",
@@ -656,8 +628,7 @@ class ContainerRegistryManager:
             return {"vulnerabilities": [], "critical_count": 0, "high_count": 0, "medium_count": 0, "low_count": 0}
     
     async def list_images(self, registry_name: str, repository: str = None) -> List[Dict[str, Any]]:
-        """List images in registry"""
-        try:
+        """List images in registry"""        try:
             if registry_name not in self.registries:
                 return []
             
@@ -677,8 +648,7 @@ class ContainerRegistryManager:
             return []
     
     async def _list_ecr_images(self, registry: RegistryConfig, repository: str = None) -> List[Dict[str, Any]]:
-        """List images in AWS ECR"""
-        try:
+        """List images in AWS ECR"""        try:
             ecr_client = boto3.client('ecr', region_name='eu-central-1')
             
             if repository:
@@ -718,8 +688,7 @@ class ContainerRegistryManager:
             return []
     
     async def _list_acr_images(self, registry: RegistryConfig, repository: str = None) -> List[Dict[str, Any]]:
-        """List images in Azure ACR"""
-        try:
+        """List images in Azure ACR"""        try:
             # Simplified ACR implementation
             return []
             
@@ -728,8 +697,7 @@ class ContainerRegistryManager:
             return []
     
     async def _list_harbor_images(self, registry: RegistryConfig, repository: str = None) -> List[Dict[str, Any]]:
-        """List images in Harbor registry"""
-        try:
+        """List images in Harbor registry"""        try:
             # Use Harbor API
             base_url = f"https://{registry.url}/api/v2.0"
             
@@ -779,8 +747,7 @@ class ContainerRegistryManager:
             return []
     
     async def _list_generic_images(self, registry: RegistryConfig, repository: str = None) -> List[Dict[str, Any]]:
-        """List images in generic registry"""
-        try:
+        """List images in generic registry"""        try:
             # Generic Docker Registry API v2
             base_url = f"https://{registry.url}/v2"
             
@@ -834,8 +801,7 @@ class ContainerRegistryManager:
             return []
     
     async def delete_image(self, registry_name: str, repository: str, tag: str) -> bool:
-        """Delete image from registry"""
-        try:
+        """Delete image from registry"""        try:
             if registry_name not in self.registries:
                 return False
             
@@ -853,8 +819,7 @@ class ContainerRegistryManager:
             return False
     
     async def _delete_ecr_image(self, registry: RegistryConfig, repository: str, tag: str) -> bool:
-        """Delete image from AWS ECR"""
-        try:
+        """Delete image from AWS ECR"""        try:
             ecr_client = boto3.client('ecr', region_name='eu-central-1')
             
             response = ecr_client.batch_delete_image(
@@ -874,8 +839,7 @@ class ContainerRegistryManager:
             return False
     
     async def _delete_harbor_image(self, registry: RegistryConfig, repository: str, tag: str) -> bool:
-        """Delete image from Harbor registry"""
-        try:
+        """Delete image from Harbor registry"""        try:
             base_url = f"https://{registry.url}/api/v2.0"
             project_name = repository.split('/')[0]
             repo_name = '/'.join(repository.split('/')[1:])
@@ -897,8 +861,7 @@ class ContainerRegistryManager:
             return False
     
     async def _delete_generic_image(self, registry: RegistryConfig, repository: str, tag: str) -> bool:
-        """Delete image from generic registry"""
-        try:
+        """Delete image from generic registry"""        try:
             # Generic Docker Registry API v2 delete
             base_url = f"https://{registry.url}/v2"
             
@@ -934,8 +897,7 @@ class ContainerRegistryManager:
             return False
     
     async def get_build_status(self, build_id: str) -> Dict[str, Any]:
-        """Get build status"""
-        try:
+        """Get build status"""        try:
             if build_id in self.active_builds:
                 return {
                     "build_id": build_id,
@@ -962,8 +924,7 @@ class ContainerRegistryManager:
             return {"build_id": build_id, "status": "error", "error": str(e)}
 
 class ImagePipelineManager:
-    """CI/CD pipeline manager for container images"""
-    
+    """CI/CD pipeline manager for container images"""    
     def __init__(self, registry_manager: ContainerRegistryManager):
         self.registry_manager = registry_manager
         self.pipelines = {}
@@ -971,8 +932,7 @@ class ImagePipelineManager:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def initialize(self) -> bool:
-        """Initialize pipeline manager"""
-        try:
+        """Initialize pipeline manager"""        try:
             # Setup default pipelines for IA-Influencer services
             await self._setup_default_pipelines()
             
@@ -984,8 +944,7 @@ class ImagePipelineManager:
             return False
     
     async def _setup_default_pipelines(self) -> None:
-        """Setup default CI/CD pipelines"""
-        try:
+        """Setup default CI/CD pipelines"""        try:
             # Web API Pipeline
             web_api_pipeline = [
                 PipelineStage(
@@ -1080,8 +1039,7 @@ class ImagePipelineManager:
             self.logger.error(f"❌ Error setting up default pipelines: {e}")
     
     async def run_pipeline(self, pipeline_name: str, environment: Dict[str, str] = None) -> str:
-        """Run CI/CD pipeline"""
-        try:
+        """Run CI/CD pipeline"""        try:
             if pipeline_name not in self.pipelines:
                 self.logger.error(f"❌ Pipeline {pipeline_name} not found")
                 return ""
@@ -1113,8 +1071,7 @@ class ImagePipelineManager:
             return ""
     
     async def _execute_pipeline(self, run_id: str) -> None:
-        """Execute pipeline stages"""
-        try:
+        """Execute pipeline stages"""        try:
             pipeline_run = self.pipeline_runs[run_id]
             stages = pipeline_run["stages"]
             environment = pipeline_run["environment"]
@@ -1172,8 +1129,7 @@ class ImagePipelineManager:
                 self.pipeline_runs[run_id]["completed_at"] = datetime.now()
     
     async def _execute_stage(self, stage: PipelineStage, environment: Dict[str, str]) -> bool:
-        """Execute individual pipeline stage"""
-        try:
+        """Execute individual pipeline stage"""        try:
             self.logger.info(f"🔄 Executing stage: {stage.name}")
             
             # Set up environment
@@ -1235,8 +1191,7 @@ class ImagePipelineManager:
             return False
     
     async def get_pipeline_status(self, run_id: str) -> Dict[str, Any]:
-        """Get pipeline run status"""
-        try:
+        """Get pipeline run status"""        try:
             if run_id not in self.pipeline_runs:
                 return {"run_id": run_id, "status": "not_found"}
             
@@ -1259,8 +1214,7 @@ class ImagePipelineManager:
             return {"run_id": run_id, "status": "error", "error": str(e)}
 
 class ArtifactManager:
-    """Artifact management for container images and build outputs"""
-    
+    """Artifact management for container images and build outputs"""    
     def __init__(self, registry_manager: ContainerRegistryManager):
         self.registry_manager = registry_manager
         self.artifacts = {}
@@ -1268,8 +1222,7 @@ class ArtifactManager:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def initialize(self) -> bool:
-        """Initialize artifact manager"""
-        try:
+        """Initialize artifact manager"""        try:
             # Setup retention policies
             await self._setup_retention_policies()
             
@@ -1284,8 +1237,7 @@ class ArtifactManager:
             return False
     
     async def _setup_retention_policies(self) -> None:
-        """Setup artifact retention policies"""
-        try:
+        """Setup artifact retention policies"""        try:
             self.retention_policies = {
                 "development": {
                     "max_age_days": 7,
@@ -1305,8 +1257,7 @@ class ArtifactManager:
             self.logger.error(f"❌ Error setting up retention policies: {e}")
     
     async def _cleanup_task(self) -> None:
-        """Background task for artifact cleanup"""
-        while True:
+        """Background task for artifact cleanup"""        while True:
             try:
                 self.logger.info("🧹 Starting artifact cleanup")
                 
@@ -1321,8 +1272,7 @@ class ArtifactManager:
                 await asyncio.sleep(3600)  # Retry in 1 hour
     
     async def _cleanup_registry_images(self, registry_name: str) -> None:
-        """Cleanup images in registry based on retention policy"""
-        try:
+        """Cleanup images in registry based on retention policy"""        try:
             images = await self.registry_manager.list_images(registry_name)
             
             # Group images by repository

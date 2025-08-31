@@ -14,8 +14,7 @@ Description:
     Système central de gestion d'événements pour la plateforme IA-Influencer-Agent.
     Gère les événements métier, notifications temps réel, et orchestration des workflows.
     Support événements : upload contenu, protection, monétisation, collaboration.
-"""
-__version__ = "1.0.0"
+"""__version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 

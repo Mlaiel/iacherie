@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -15,15 +12,12 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 #!/usr/bin/env python3
-"""
-Simple pytest-compatible test
+"""Simple pytest-compatible test
 Created by: Fahed Mlaiel (mlaiel@live.de)
-"""
-import numpy as np
+"""import numpy as np
 
 def test_basic_audio():
-    """Test basic audio generation"""
-    # Generate simple sine wave
+    """Test basic audio generation"""    # Generate simple sine wave
     sr = 44100
     t = np.linspace(0, 1, sr)
     audio = np.sin(2 * np.pi * 440 * t)
@@ -36,8 +30,7 @@ def test_basic_audio():
     print(f"✅ Generated {len(audio)} samples")
 
 def test_audio_rms():
-    """Test RMS calculation"""
-    sr = 44100
+    """Test RMS calculation"""    sr = 44100
     t = np.linspace(0, 1, sr)
     audio = np.sin(2 * np.pi * 440 * t)
     
@@ -49,8 +42,7 @@ def test_audio_rms():
     print(f"✅ RMS: {rms:.6f}")
 
 def test_fft_peak():
-    """Test FFT peak detection"""
-    sr = 44100
+    """Test FFT peak detection"""    sr = 44100
     freq = 440
     t = np.linspace(0, 1, sr)
     audio = np.sin(2 * np.pi * freq * t)

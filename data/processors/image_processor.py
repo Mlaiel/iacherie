@@ -1,5 +1,4 @@
-"""
-Image Processor Module
+"""Image Processor Module
 =====================
 
 Enterprise-grade image processing and enhancement engine for professional content creators.
@@ -29,9 +28,7 @@ Professional Features:
 - HDR processing and tone mapping capabilities
 - Artistic style transfer and creative filters
 - Automated workflow optimization
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import cv2
@@ -119,8 +116,7 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class ProcessingMode(Enum):
-    """Image processing modes"""
-    STANDARD = "standard"
+    """Image processing modes"""    STANDARD = "standard"
     PROFESSIONAL = "professional"
     CREATIVE = "creative"
     WEB_OPTIMIZED = "web_optimized"
@@ -128,8 +124,7 @@ class ProcessingMode(Enum):
     SOCIAL_MEDIA = "social_media"
 
 class ColorSpace(Enum):
-    """Color space options"""
-    RGB = "RGB"
+    """Color space options"""    RGB = "RGB"
     HSV = "HSV"
     LAB = "LAB"
     XYZ = "XYZ"
@@ -137,8 +132,7 @@ class ColorSpace(Enum):
     GRAYSCALE = "L"
 
 class PlatformProfile(Enum):
-    """Social media platform profiles"""
-    INSTAGRAM = "instagram"
+    """Social media platform profiles"""    INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
     FACEBOOK = "facebook"
@@ -149,8 +143,7 @@ class PlatformProfile(Enum):
 
 @dataclass
 class ImageMetadata:
-    """Comprehensive image metadata container"""
-    width: int
+    """Comprehensive image metadata container"""    width: int
     height: int
     channels: int
     format: str
@@ -170,8 +163,7 @@ class ImageMetadata:
 
 @dataclass
 class ImageFeatures:
-    """Professional image feature extraction results"""
-    histogram: np.ndarray
+    """Professional image feature extraction results"""    histogram: np.ndarray
     color_moments: np.ndarray
     texture_features: np.ndarray
     edge_density: float
@@ -197,8 +189,7 @@ class ImageFeatures:
 
 @dataclass
 class ImageFingerprint:
-    """Comprehensive image fingerprint data"""
-    perceptual_hash: Optional[str] = None
+    """Comprehensive image fingerprint data"""    perceptual_hash: Optional[str] = None
     average_hash: Optional[str] = None
     difference_hash: Optional[str] = None
     wavelet_hash: Optional[str] = None
@@ -211,8 +202,7 @@ class ImageFingerprint:
 
 @dataclass
 class EnhancementSettings:
-    """Professional enhancement settings"""
-    # Standard adjustments
+    """Professional enhancement settings"""    # Standard adjustments
     brightness: float = 0.0  # -1.0 to 1.0
     contrast: float = 0.0    # -1.0 to 1.0
     saturation: float = 0.0  # -1.0 to 1.0
@@ -252,8 +242,7 @@ class EnhancementSettings:
 
 @dataclass
 class QualityMetrics:
-    """Image quality assessment metrics"""
-    technical_score: float = 0.0     # Overall technical quality
+    """Image quality assessment metrics"""    technical_score: float = 0.0     # Overall technical quality
     aesthetic_score: float = 0.0     # Aesthetic appeal
     composition_score: float = 0.0   # Rule of thirds, etc.
     exposure_score: float = 0.0      # Exposure quality
@@ -271,8 +260,7 @@ class QualityMetrics:
 
 @dataclass
 class ProcessingResult:
-    """Complete image processing result"""
-    success: bool
+    """Complete image processing result"""    success: bool
     processing_time: float
     original_metadata: ImageMetadata
     enhanced_metadata: Optional[ImageMetadata] = None
@@ -286,8 +274,7 @@ class ProcessingResult:
     error_message: Optional[str] = None
 
 class ImageProcessor:
-    """Professional enterprise-grade image processing engine"""
-    
+    """Professional enterprise-grade image processing engine"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or self._get_default_config()
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -298,8 +285,7 @@ class ImageProcessor:
         self._setup_platform_profiles()
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get enterprise-grade default image processing configuration"""
-        return {
+        """Get enterprise-grade default image processing configuration"""        return {
             # Processing settings
             'processing_mode': ProcessingMode.PROFESSIONAL.value,
             'max_width': 4096,
@@ -365,8 +351,7 @@ class ImageProcessor:
         }
     
     def _initialize_engines(self):
-        """Initialize professional image processing engines"""
-        try:
+        """Initialize professional image processing engines"""        try:
             # Ensure temp directory exists
             os.makedirs(self.config['temp_dir'], exist_ok=True)
             
@@ -392,8 +377,7 @@ class ImageProcessor:
             raise
     
     def _initialize_opencv_engines(self):
-        """Initialize OpenCV-based processing engines"""
-        # Object detection cascades
+        """Initialize OpenCV-based processing engines"""        # Object detection cascades
         self.face_cascade = cv2.CascadeClassifier(
             cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
         )
@@ -415,8 +399,7 @@ class ImageProcessor:
         )
     
     def _initialize_feature_detectors(self):
-        """Initialize feature detection algorithms"""
-        # Corner and feature detectors
+        """Initialize feature detection algorithms"""        # Corner and feature detectors
         self.orb_detector = cv2.ORB_create(nfeatures=1000)
         self.sift_detector = cv2.SIFT_create() if hasattr(cv2, 'SIFT_create') else None
         self.surf_detector = None  # Proprietary, would need separate installation
@@ -429,8 +412,7 @@ class ImageProcessor:
         self.hough_circle_params = {'dp': 1, 'min_dist': 50, 'param1': 100, 'param2': 30}
     
     def _initialize_color_engines(self):
-        """Initialize color analysis and correction engines"""
-        # Color space conversion matrices
+        """Initialize color analysis and correction engines"""        # Color space conversion matrices
         self.color_spaces = {
             'RGB': cv2.COLOR_BGR2RGB,
             'HSV': cv2.COLOR_BGR2HSV,
@@ -453,8 +435,7 @@ class ImageProcessor:
         }
     
     def _initialize_enhancement_engines(self):
-        """Initialize image enhancement algorithms"""
-        # Denoising algorithms
+        """Initialize image enhancement algorithms"""        # Denoising algorithms
         self.denoise_methods = {
             'bilateral': cv2.bilateralFilter,
             'gaussian': cv2.GaussianBlur,
@@ -482,8 +463,7 @@ class ImageProcessor:
             ])
     
     def _initialize_quality_engines(self):
-        """Initialize quality assessment engines"""
-        # Quality metrics
+        """Initialize quality assessment engines"""        # Quality metrics
         self.quality_metrics = [
             'sharpness', 'contrast', 'brightness', 'saturation',
             'noise_level', 'dynamic_range', 'color_accuracy',
@@ -501,8 +481,7 @@ class ImageProcessor:
         }
     
     def _load_ai_models(self):
-        """Load AI models for professional processing"""
-        try:
+        """Load AI models for professional processing"""        try:
             # Initialize CLIP model if available
             if CLIP_AVAILABLE and TORCH_AVAILABLE:
                 try:
@@ -527,8 +506,7 @@ class ImageProcessor:
             self.logger.warning(f"AI model loading failed: {str(e)}")
     
     def _setup_platform_profiles(self):
-        """Setup social media platform optimization profiles"""
-        self.platform_profiles = {
+        """Setup social media platform optimization profiles"""        self.platform_profiles = {
             PlatformProfile.INSTAGRAM: {
                 'square': {'size': (1080, 1080), 'aspect': 1.0},
                 'portrait': {'size': (1080, 1350), 'aspect': 4/5},
@@ -584,8 +562,7 @@ class ImageProcessor:
         processing_mode: Optional[ProcessingMode] = None,
         config: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Professional image processing pipeline with enterprise-grade features
+        """        Professional image processing pipeline with enterprise-grade features
         
         Args:
             image_data: Image data as bytes, numpy array, or file path
@@ -596,8 +573,7 @@ class ImageProcessor:
         
         Returns:
             Dict containing comprehensive processing results
-        """
-        try:
+        """        try:
             start_time = datetime.now()
             
             # Merge configuration
@@ -694,8 +670,7 @@ class ImageProcessor:
         self,
         image_data: Union[bytes, np.ndarray, str]
     ) -> Tuple[Image.Image, np.ndarray]:
-        """Load image data from various sources with enterprise-grade handling"""
-        try:
+        """Load image data from various sources with enterprise-grade handling"""        try:
             if isinstance(image_data, str):
                 # Load from file path with comprehensive format support
                 if os.path.exists(image_data):
@@ -763,8 +738,7 @@ class ImageProcessor:
         image: Image.Image,
         image_array: np.ndarray
     ) -> ImageMetadata:
-        """Extract comprehensive image metadata with professional-grade analysis"""
-        try:
+        """Extract comprehensive image metadata with professional-grade analysis"""        try:
             width, height = image.size
             channels = 1 if len(image_array.shape) == 2 else image_array.shape[2]
             aspect_ratio = width / height
@@ -859,8 +833,7 @@ class ImageProcessor:
         metadata: ImageMetadata,
         config: Dict[str, Any]
     ) -> EnhancementSettings:
-        """Generate intelligent auto-enhancement settings based on image analysis"""
-        try:
+        """Generate intelligent auto-enhancement settings based on image analysis"""        try:
             settings = EnhancementSettings()
             
             # Analyze image characteristics
@@ -934,8 +907,7 @@ class ImageProcessor:
             return EnhancementSettings()
     
     async def _analyze_image_characteristics(self, image_array: np.ndarray) -> Dict[str, Any]:
-        """Professional image characteristic analysis for intelligent processing"""
-        try:
+        """Professional image characteristic analysis for intelligent processing"""        try:
             analysis = {}
             
             # Convert to grayscale for analysis
@@ -1004,8 +976,7 @@ class ImageProcessor:
             return {}
     
     def _estimate_noise_comprehensive(self, gray_image: np.ndarray) -> float:
-        """Comprehensive noise estimation using multiple methods"""
-        try:
+        """Comprehensive noise estimation using multiple methods"""        try:
             noise_estimates = []
             
             # Method 1: High-frequency content analysis
@@ -1037,8 +1008,7 @@ class ImageProcessor:
             return 0.0
     
     def _analyze_sharpness(self, gray_image: np.ndarray) -> Dict[str, Any]:
-        """Multi-metric sharpness analysis"""
-        try:
+        """Multi-metric sharpness analysis"""        try:
             sharpness_metrics = {}
             
             # Laplacian variance (most common)
@@ -1073,8 +1043,7 @@ class ImageProcessor:
             return {'overall_sharpness': 0.5, 'is_blurry': False, 'is_sharp': False}
     
     async def _analyze_color_characteristics(self, image_array: np.ndarray) -> Dict[str, Any]:
-        """Professional color characteristic analysis"""
-        try:
+        """Professional color characteristic analysis"""        try:
             color_analysis = {}
             
             # Convert to different color spaces
@@ -1118,8 +1087,7 @@ class ImageProcessor:
             return {}
     
     def _estimate_color_temperature(self, image_array: np.ndarray) -> float:
-        """Estimate color temperature of the image"""
-        try:
+        """Estimate color temperature of the image"""        try:
             # Optimized color temperature estimation based on RGB ratios
             mean_r = np.mean(image_array[:, :, 0])
             mean_g = np.mean(image_array[:, :, 1])
@@ -1147,8 +1115,7 @@ class ImageProcessor:
             return 5500  # Default daylight temperature
     
     def _analyze_white_balance(self, image_array: np.ndarray) -> Dict[str, Any]:
-        """Analyze white balance characteristics"""
-        try:
+        """Analyze white balance characteristics"""        try:
             wb_analysis = {}
             
             # Gray world assumption
@@ -1191,8 +1158,7 @@ class ImageProcessor:
             return {'color_cast_detected': False, 'temperature_correction': 0}
     
     async def _extract_dominant_colors(self, image_array: np.ndarray, k: int = 8) -> List[Tuple[int, int, int]]:
-        """Extract dominant colors using professional clustering"""
-        try:
+        """Extract dominant colors using professional clustering"""        try:
             if not SKLEARN_AVAILABLE:
                 return [(128, 128, 128)]  # Default gray
             
@@ -1229,8 +1195,7 @@ class ImageProcessor:
             return [(128, 128, 128)]
     
     def _analyze_color_harmony(self, colors: List[Tuple[int, int, int]]) -> float:
-        """Analyze color harmony using color theory principles"""
-        try:
+        """Analyze color harmony using color theory principles"""        try:
             if len(colors) < 2:
                 return 0.5
             
@@ -1269,8 +1234,7 @@ class ImageProcessor:
         self,
         image_array: np.ndarray
     ) -> Dict[str, Any]:
-        """Extract comprehensive image features"""
-        try:
+        """Extract comprehensive image features"""        try:
             # Convert to different color spaces for analysis
             if len(image_array.shape) == 3:
                 # RGB to other color spaces
@@ -1413,8 +1377,7 @@ class ImageProcessor:
         image: Image.Image,
         image_array: np.ndarray
     ) -> Dict[str, Any]:
-        """Generate comprehensive image fingerprint"""
-        try:
+        """Generate comprehensive image fingerprint"""        try:
             fingerprint = ImageFingerprint()
             
             # Generate different types of hashes
@@ -1484,8 +1447,7 @@ class ImageProcessor:
         self,
         image_array: np.ndarray
     ) -> Dict[str, Any]:
-        """Detect objects in image"""
-        try:
+        """Detect objects in image"""        try:
             detections = []
             
             # Face detection
@@ -1537,8 +1499,7 @@ class ImageProcessor:
         self,
         image: Image.Image
     ) -> Dict[str, Any]:
-        """Perform semantic analysis using CLIP"""
-        try:
+        """Perform semantic analysis using CLIP"""        try:
             if not self.clip_model or not self.clip_processor:
                 return {
                     'semantic_analysis': None,
@@ -1608,8 +1569,7 @@ class ImageProcessor:
         target_size: Tuple[int, int],
         preserve_aspect_ratio: bool = True
     ) -> Image.Image:
-        """Resize image with optional aspect ratio preservation"""
-        try:
+        """Resize image with optional aspect ratio preservation"""        try:
             if preserve_aspect_ratio:
                 # Calculate size maintaining aspect ratio
                 width_ratio = target_size[0] / image.size[0]
@@ -1637,8 +1597,7 @@ class ImageProcessor:
         quality: Optional[int] = None,
         output_path: Optional[str] = None
     ) -> Union[bytes, str]:
-        """Convert image to different format"""
-        try:
+        """Convert image to different format"""        try:
             # Ensure format compatibility
             if target_format.upper() == 'JPEG' and image.mode in ('RGBA', 'LA'):
                 # Convert to RGB for JPEG
@@ -1675,8 +1634,7 @@ class ImageProcessor:
         image_files: List[str],
         config: Optional[Dict[str, Any]] = None
     ) -> List[Dict[str, Any]]:
-        """Process multiple image files in batch"""
-        tasks = []
+        """Process multiple image files in batch"""        tasks = []
         for file_path in image_files:
             task = self.process(file_path, config=config)
             tasks.append(task)
@@ -1690,8 +1648,7 @@ class ImageProcessor:
         ]
     
     def cleanup(self):
-        """Cleanup temporary files and resources"""
-        try:
+        """Cleanup temporary files and resources"""        try:
             # Clean up temporary directory
             temp_dir = self.config['temp_dir']
             if os.path.exists(temp_dir):
@@ -1705,5 +1662,4 @@ class ImageProcessor:
             self.logger.warning(f"Cleanup failed: {str(e)}")
     
     def __del__(self):
-        """Destructor"""
-        self.cleanup()
+        """Destructor"""        self.cleanup()

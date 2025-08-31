@@ -1,5 +1,4 @@
-"""
-Advanced Crawling Orchestrator
+"""Advanced Crawling Orchestrator
 =============================
 
 Centralized orchestration system for managing multiple crawlers and
@@ -13,9 +12,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, modification, or distribution is strictly prohibited.
 Violators will face immediate legal action under German and international law.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Set
@@ -39,24 +36,21 @@ from ..security.encryption import SecurityManager
 logger = logging.getLogger(__name__)
 
 class CrawlerType(Enum):
-    """Supported crawler types."""
-    YOUTUBE = "youtube"
+    """Supported crawler types."""    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     TWITTER = "twitter"
     UNIVERSAL_WEB = "universal_web"
 
 class MonitoringMode(Enum):
-    """Monitoring operation modes."""
-    CONTINUOUS = "continuous"
+    """Monitoring operation modes."""    CONTINUOUS = "continuous"
     SCHEDULED = "scheduled"
     ON_DEMAND = "on_demand"
     TRIGGERED = "triggered"
 
 @dataclass
 class CrawlingTask:
-    """Definition of a crawling task."""
-    
+    """Definition of a crawling task."""    
     task_id: str
     crawler_type: CrawlerType
     mode: MonitoringMode
@@ -83,8 +77,7 @@ class CrawlingTask:
 
 @dataclass
 class CrawlingJobResult:
-    """Result of a crawling job execution."""
-    
+    """Result of a crawling job execution."""    
     job_id: str
     task_id: str
     crawler_type: CrawlerType
@@ -102,11 +95,9 @@ class CrawlingJobResult:
     alerts_sent: int = 0
 
 class CrawlerOrchestrator:
-    """Advanced orchestrator for managing multiple crawlers and monitoring tasks."""
-    
+    """Advanced orchestrator for managing multiple crawlers and monitoring tasks."""    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize crawler orchestrator."""
-        self.config = config
+        """Initialize crawler orchestrator."""        self.config = config
         self.crawlers: Dict[CrawlerType, BaseCrawler] = {}
         self.tasks: Dict[str, CrawlingTask] = {}
         self.job_results: List[CrawlingJobResult] = []
@@ -127,8 +118,7 @@ class CrawlerOrchestrator:
         self._initialize_crawlers()
     
     def _initialize_crawlers(self):
-        """Initialize all available crawlers."""
-        try:
+        """Initialize all available crawlers."""        try:
             # YouTube crawler
             if self.config.get('youtube_api_key'):
                 self.crawlers[CrawlerType.YOUTUBE] = YouTubeCrawler(self.config)
@@ -157,8 +147,7 @@ class CrawlerOrchestrator:
             logger.error(f"Crawler initialization error: {e}")
     
     def add_monitoring_task(self, task: CrawlingTask) -> str:
-        """Add a new monitoring task."""
-        try:
+        """Add a new monitoring task."""        try:
             task_id = task.task_id
             self.tasks[task_id] = task
             
@@ -170,8 +159,7 @@ class CrawlerOrchestrator:
             return ""
     
     def remove_monitoring_task(self, task_id: str) -> bool:
-        """Remove a monitoring task."""
-        try:
+        """Remove a monitoring task."""        try:
             if task_id in self.tasks:
                 del self.tasks[task_id]
                 logger.info(f"Removed monitoring task: {task_id}")
@@ -183,8 +171,7 @@ class CrawlerOrchestrator:
             return False
     
     def update_task_status(self, task_id: str, active: bool) -> bool:
-        """Update task active status."""
-        try:
+        """Update task active status."""        try:
             if task_id in self.tasks:
                 self.tasks[task_id].active = active
                 logger.info(f"Updated task {task_id} status: {active}")
@@ -196,8 +183,7 @@ class CrawlerOrchestrator:
             return False
     
     async def execute_task(self, task: CrawlingTask) -> CrawlingJobResult:
-        """Execute a single crawling task."""
-        job_id = f"{task.task_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        """Execute a single crawling task."""        job_id = f"{task.task_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         start_time = datetime.now()
         
         try:
@@ -298,8 +284,7 @@ class CrawlerOrchestrator:
             self.running_jobs.discard(job_id)
     
     async def _execute_youtube_task(self, crawler: YouTubeCrawler, task: CrawlingTask) -> List[CrawlResult]:
-        """Execute YouTube-specific crawling task."""
-        try:
+        """Execute YouTube-specific crawling task."""        try:
             operation = task.parameters.get('operation', 'search')
             
             if operation == 'search':
@@ -323,8 +308,7 @@ class CrawlerOrchestrator:
             return []
     
     async def _execute_tiktok_task(self, crawler: TikTokCrawler, task: CrawlingTask) -> List[CrawlResult]:
-        """Execute TikTok-specific crawling task."""
-        try:
+        """Execute TikTok-specific crawling task."""        try:
             operation = task.parameters.get('operation', 'search')
             
             if operation == 'search':
@@ -348,8 +332,7 @@ class CrawlerOrchestrator:
             return []
     
     async def _execute_instagram_task(self, crawler: InstagramCrawler, task: CrawlingTask) -> List[CrawlResult]:
-        """Execute Instagram-specific crawling task."""
-        try:
+        """Execute Instagram-specific crawling task."""        try:
             operation = task.parameters.get('operation', 'search')
             
             if operation == 'search':
@@ -373,8 +356,7 @@ class CrawlerOrchestrator:
             return []
     
     async def _execute_twitter_task(self, crawler: TwitterCrawler, task: CrawlingTask) -> List[CrawlResult]:
-        """Execute Twitter-specific crawling task."""
-        try:
+        """Execute Twitter-specific crawling task."""        try:
             operation = task.parameters.get('operation', 'search')
             
             if operation == 'search':
@@ -398,8 +380,7 @@ class CrawlerOrchestrator:
             return []
     
     async def _execute_web_task(self, crawler: UniversalWebCrawler, task: CrawlingTask) -> List[CrawlResult]:
-        """Execute web crawling task."""
-        try:
+        """Execute web crawling task."""        try:
             operation = task.parameters.get('operation', 'crawl_url')
             
             if operation == 'crawl_url':
@@ -422,8 +403,7 @@ class CrawlerOrchestrator:
             return []
     
     async def _analyze_violations(self, results: List[CrawlResult], task: CrawlingTask) -> List[CrawlResult]:
-        """Analyze crawl results for potential violations."""
-        try:
+        """Analyze crawl results for potential violations."""        try:
             violations = []
             
             for result in results:
@@ -444,8 +424,7 @@ class CrawlerOrchestrator:
             return []
     
     def _check_violation_patterns(self, result: CrawlResult, task: CrawlingTask) -> bool:
-        """Check for known violation patterns in content."""
-        try:
+        """Check for known violation patterns in content."""        try:
             # Check title/description for known patterns
             text_content = f"{result.title} {result.description}".lower()
             
@@ -472,8 +451,7 @@ class CrawlerOrchestrator:
             return False
     
     def _check_youtube_violations(self, result: CrawlResult) -> bool:
-        """Check YouTube-specific violation patterns."""
-        try:
+        """Check YouTube-specific violation patterns."""        try:
             metadata = result.metadata.get('platform_specific', {})
             
             # Check for copyright indicators
@@ -491,8 +469,7 @@ class CrawlerOrchestrator:
             return False
     
     def _check_tiktok_violations(self, result: CrawlResult) -> bool:
-        """Check TikTok-specific violation patterns."""
-        try:
+        """Check TikTok-specific violation patterns."""        try:
             # Check for suspicious engagement patterns
             engagement = result.metadata.get('engagement', {})
             view_count = result.view_count or 0
@@ -509,8 +486,7 @@ class CrawlerOrchestrator:
             return False
     
     async def _send_violation_alerts(self, violations: List[CrawlResult], task: CrawlingTask) -> int:
-        """Send alerts for detected violations."""
-        try:
+        """Send alerts for detected violations."""        try:
             alerts_sent = 0
             
             for violation in violations:
@@ -535,8 +511,7 @@ class CrawlerOrchestrator:
             return 0
     
     async def run_scheduled_tasks(self):
-        """Run scheduled monitoring tasks."""
-        try:
+        """Run scheduled monitoring tasks."""        try:
             current_time = datetime.now()
             tasks_to_run = []
             
@@ -574,8 +549,7 @@ class CrawlerOrchestrator:
             logger.error(f"Scheduled tasks execution error: {e}")
     
     async def start_monitoring(self):
-        """Start continuous monitoring."""
-        self.is_running = True
+        """Start continuous monitoring."""        self.is_running = True
         logger.info("Crawler orchestrator started")
         
         while self.is_running:
@@ -588,13 +562,11 @@ class CrawlerOrchestrator:
                 await asyncio.sleep(60)
     
     def stop_monitoring(self):
-        """Stop continuous monitoring."""
-        self.is_running = False
+        """Stop continuous monitoring."""        self.is_running = False
         logger.info("Crawler orchestrator stopped")
     
     def get_task_status(self, task_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of a specific task."""
-        try:
+        """Get status of a specific task."""        try:
             task = self.tasks.get(task_id)
             if not task:
                 return None
@@ -616,8 +588,7 @@ class CrawlerOrchestrator:
             return None
     
     def get_system_status(self) -> Dict[str, Any]:
-        """Get overall system status."""
-        try:
+        """Get overall system status."""        try:
             active_tasks = sum(1 for task in self.tasks.values() if task.active)
             total_tasks = len(self.tasks)
             running_jobs = len(self.running_jobs)
@@ -646,8 +617,7 @@ class CrawlerOrchestrator:
             return {}
     
     async def cleanup(self):
-        """Clean up resources."""
-        try:
+        """Clean up resources."""        try:
             self.stop_monitoring()
             
             # Cleanup crawlers

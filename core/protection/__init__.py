@@ -18,8 +18,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-from .fingerprint_engine import FingerprintEngine
+"""from .fingerprint_engine import FingerprintEngine
 from .content_monitor import ContentMonitor
 from .violation_detector import ViolationDetector
 from .protection_manager import ProtectionManager

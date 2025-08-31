@@ -1,5 +1,4 @@
-"""
-Advanced Notification and Communication System
+"""Advanced Notification and Communication System
 
 Ultra-sophisticated notification and communication engine for copyright enforcement,
 providing real-time alerts, multi-channel messaging, automated escalation,
@@ -27,9 +26,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + DevOps + Leg
 ALL RIGHTS RESERVED. UNAUTHORIZED USE PROHIBITED.
 This code belongs exclusively to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use will result in immediate legal action.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import smtplib
 import aiohttp
@@ -64,8 +61,7 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationChannel(Enum):
-    """Available notification channels"""
-    EMAIL = "email"
+    """Available notification channels"""    EMAIL = "email"
     SMS = "sms"
     SLACK = "slack"
     TEAMS = "teams"
@@ -78,8 +74,7 @@ class NotificationChannel(Enum):
 
 
 class NotificationPriority(Enum):
-    """Notification priority levels"""
-    LOW = "low"
+    """Notification priority levels"""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
@@ -88,8 +83,7 @@ class NotificationPriority(Enum):
 
 
 class MessageType(Enum):
-    """Types of messages/notifications"""
-    VIOLATION_ALERT = "violation_alert"
+    """Types of messages/notifications"""    VIOLATION_ALERT = "violation_alert"
     DMCA_STATUS_UPDATE = "dmca_status_update"
     LEGAL_ACTION_NOTICE = "legal_action_notice"
     REVENUE_RECOVERY_UPDATE = "revenue_recovery_update"
@@ -102,8 +96,7 @@ class MessageType(Enum):
 
 
 class DeliveryStatus(Enum):
-    """Message delivery status"""
-    PENDING = "pending"
+    """Message delivery status"""    PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
     READ = "read"
@@ -115,8 +108,7 @@ class DeliveryStatus(Enum):
 
 @dataclass
 class NotificationRecipient:
-    """Notification recipient information"""
-    identifier: str  # email, phone, user_id, etc.
+    """Notification recipient information"""    identifier: str  # email, phone, user_id, etc.
     name: str
     channel: NotificationChannel
     preferences: Dict[str, Any] = field(default_factory=dict)
@@ -127,8 +119,7 @@ class NotificationRecipient:
 
 @dataclass
 class NotificationRule:
-    """Notification rule configuration"""
-    rule_id: str
+    """Notification rule configuration"""    rule_id: str
     name: str
     trigger_event: str
     conditions: Dict[str, Any]
@@ -142,8 +133,7 @@ class NotificationRule:
 
 @dataclass
 class MessageContent:
-    """Message content structure"""
-    subject: str
+    """Message content structure"""    subject: str
     body: str
     template_id: Optional[str] = None
     variables: Dict[str, Any] = field(default_factory=dict)
@@ -153,8 +143,7 @@ class MessageContent:
 
 @dataclass
 class NotificationRequest:
-    """Notification request structure"""
-    message_type: MessageType
+    """Notification request structure"""    message_type: MessageType
     priority: NotificationPriority
     recipients: List[NotificationRecipient]
     content: MessageContent
@@ -166,8 +155,7 @@ class NotificationRequest:
 
 
 class AdvancedNotificationEngine:
-    """Ultra-advanced notification and communication engine"""
-    
+    """Ultra-advanced notification and communication engine"""    
     def __init__(self):
         self.settings = get_settings()
         self.cache_manager = CacheManager()
@@ -197,8 +185,7 @@ class AdvancedNotificationEngine:
         self.notification_tasks = set()
     
     def _initialize_channels(self) -> None:
-        """Initialize communication channel clients"""
-        try:
+        """Initialize communication channel clients"""        try:
             # Email configuration
             if self.settings.smtp_host:
                 self.email_config = {
@@ -232,8 +219,7 @@ class AdvancedNotificationEngine:
             logger.error(f"Error initializing communication channels: {e}")
     
     async def send_notification(self, request: NotificationRequest) -> Dict[str, Any]:
-        """Send notification through multiple channels"""
-        try:
+        """Send notification through multiple channels"""        try:
             notification_id = self._generate_notification_id()
             
             # Log notification request
@@ -293,8 +279,7 @@ class AdvancedNotificationEngine:
         content: MessageContent,
         request: NotificationRequest
     ) -> Dict[str, Any]:
-        """Send notification via specific channel"""
-        try:
+        """Send notification via specific channel"""        try:
             if channel == NotificationChannel.EMAIL:
                 return await self._send_email(recipients, content, request)
             elif channel == NotificationChannel.SMS:
@@ -322,8 +307,7 @@ class AdvancedNotificationEngine:
         content: MessageContent,
         request: NotificationRequest
     ) -> Dict[str, Any]:
-        """Send email notifications"""
-        try:
+        """Send email notifications"""        try:
             if not self.email_config:
                 raise ValueError("Email not configured")
             
@@ -388,8 +372,7 @@ class AdvancedNotificationEngine:
         content: MessageContent,
         request: NotificationRequest
     ) -> Dict[str, Any]:
-        """Send SMS notifications"""
-        try:
+        """Send SMS notifications"""        try:
             if not self.sms_client:
                 raise ValueError("SMS client not configured")
             
@@ -436,8 +419,7 @@ class AdvancedNotificationEngine:
         content: MessageContent,
         request: NotificationRequest
     ) -> Dict[str, Any]:
-        """Send Slack notifications"""
-        try:
+        """Send Slack notifications"""        try:
             if not self.slack_client:
                 raise ValueError("Slack client not configured")
             
@@ -487,8 +469,7 @@ class AdvancedNotificationEngine:
         content: MessageContent,
         request: NotificationRequest
     ) -> Dict[str, Any]:
-        """Send Discord notifications"""
-        try:
+        """Send Discord notifications"""        try:
             if not self.discord_bot:
                 raise ValueError("Discord bot not configured")
             
@@ -549,8 +530,7 @@ class AdvancedNotificationEngine:
         content: MessageContent,
         request: NotificationRequest
     ) -> Dict[str, Any]:
-        """Send webhook notifications"""
-        try:
+        """Send webhook notifications"""        try:
             results = []
             
             async with aiohttp.ClientSession() as session:
@@ -610,8 +590,7 @@ class AdvancedNotificationEngine:
         content: MessageContent,
         request: NotificationRequest
     ) -> Dict[str, Any]:
-        """Send push notifications"""
-        try:
+        """Send push notifications"""        try:
             # This would integrate with a push notification service
             # like Firebase Cloud Messaging, Apple Push Notification Service, etc.
             
@@ -637,8 +616,7 @@ class AdvancedNotificationEngine:
             return {"success": False, "error": str(e)}
     
     def _create_slack_blocks(self, content: MessageContent, request: NotificationRequest) -> List[Dict]:
-        """Create Slack block kit message"""
-        blocks = [
+        """Create Slack block kit message"""        blocks = [
             {
                 "type": "header",
                 "text": {
@@ -668,8 +646,7 @@ class AdvancedNotificationEngine:
         return blocks
     
     def _get_discord_color(self, priority: NotificationPriority) -> int:
-        """Get Discord embed color based on priority"""
-        color_map = {
+        """Get Discord embed color based on priority"""        color_map = {
             NotificationPriority.LOW: 0x95a5a6,      # Gray
             NotificationPriority.NORMAL: 0x3498db,   # Blue
             NotificationPriority.HIGH: 0xf39c12,     # Orange
@@ -680,8 +657,7 @@ class AdvancedNotificationEngine:
         return color_map.get(priority, 0x3498db)
     
     async def _prepare_message_content(self, content: MessageContent) -> MessageContent:
-        """Prepare and render message content using templates"""
-        try:
+        """Prepare and render message content using templates"""        try:
             if content.template_id:
                 # Load template
                 template = self.template_env.get_template(f"{content.template_id}.html")
@@ -716,8 +692,7 @@ class AdvancedNotificationEngine:
             return content
     
     async def _determine_delivery_channels(self, request: NotificationRequest) -> List[NotificationChannel]:
-        """Determine which channels to use based on priority and preferences"""
-        channels = request.channels.copy()
+        """Determine which channels to use based on priority and preferences"""        channels = request.channels.copy()
         
         # For critical/emergency notifications, add additional channels
         if request.priority in [NotificationPriority.CRITICAL, NotificationPriority.EMERGENCY]:
@@ -729,13 +704,11 @@ class AdvancedNotificationEngine:
         return channels
     
     def _generate_notification_id(self) -> str:
-        """Generate unique notification ID"""
-        import uuid
+        """Generate unique notification ID"""        import uuid
         return f"notif_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{str(uuid.uuid4())[:8]}"
     
     async def _log_notification_request(self, notification_id: str, request: NotificationRequest) -> None:
-        """Log notification request to database"""
-        try:
+        """Log notification request to database"""        try:
             async with get_async_session() as session:
                 notification_log = NotificationLog(
                     notification_id=notification_id,
@@ -754,8 +727,7 @@ class AdvancedNotificationEngine:
             logger.error(f"Error logging notification request: {e}")
     
     async def _update_notification_log(self, notification_id: str, delivery_results: Dict[str, Any]) -> None:
-        """Update notification log with delivery results"""
-        try:
+        """Update notification log with delivery results"""        try:
             async with get_async_session() as session:
                 await session.execute(
                     update(NotificationLog)
@@ -771,8 +743,7 @@ class AdvancedNotificationEngine:
             logger.error(f"Error updating notification log: {e}")
     
     async def _add_email_attachment(self, msg: MIMEMultipart, attachment_path: str) -> None:
-        """Add attachment to email message"""
-        try:
+        """Add attachment to email message"""        try:
             with open(attachment_path, "rb") as attachment:
                 part = MIMEBase('application', 'octet-stream')
                 part.set_payload(attachment.read())
@@ -793,8 +764,7 @@ class AdvancedNotificationEngine:
         recipients: List[str],
         priority: NotificationPriority = NotificationPriority.HIGH
     ) -> Dict[str, Any]:
-        """Create and send violation alert notification"""
-        try:
+        """Create and send violation alert notification"""        try:
             # Prepare recipients
             notification_recipients = [
                 NotificationRecipient(
@@ -829,9 +799,7 @@ class AdvancedNotificationEngine:
             return {"error": str(e)}
     
     def _create_violation_alert_body(self, violation_data: Dict[str, Any]) -> str:
-        """Create violation alert email body"""
-        return f"""
-        <h2>Copyright Violation Detected</h2>
+        """Create violation alert email body"""        return f"""        <h2>Copyright Violation Detected</h2>
         
         <p><strong>Platform:</strong> {violation_data.get('platform', 'Unknown')}</p>
         <p><strong>Violation URL:</strong> <a href="{violation_data.get('violation_url', '')}">{violation_data.get('violation_url', '')}</a></p>
@@ -853,15 +821,13 @@ class AdvancedNotificationEngine:
            style="background-color: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
            View in Dashboard
         </a></p>
-        """
-    
+        """    
     async def create_dmca_status_update(
         self,
         dmca_data: Dict[str, Any],
         recipients: List[str]
     ) -> Dict[str, Any]:
-        """Create and send DMCA status update notification"""
-        try:
+        """Create and send DMCA status update notification"""        try:
             # Determine priority based on status
             status = dmca_data.get('status', '')
             priority = NotificationPriority.HIGH if status in ['complied', 'rejected'] else NotificationPriority.NORMAL
@@ -900,8 +866,7 @@ class AdvancedNotificationEngine:
             return {"error": str(e)}
     
     def _create_dmca_update_body(self, dmca_data: Dict[str, Any]) -> str:
-        """Create DMCA status update email body"""
-        status = dmca_data.get('status', 'Unknown')
+        """Create DMCA status update email body"""        status = dmca_data.get('status', 'Unknown')
         status_icon = {
             'submitted': '📤',
             'acknowledged': '✅',
@@ -911,8 +876,7 @@ class AdvancedNotificationEngine:
             'escalated': '⚠️'
         }.get(status, '📋')
         
-        return f"""
-        <h2>{status_icon} DMCA Notice Status Update</h2>
+        return f"""        <h2>{status_icon} DMCA Notice Status Update</h2>
         
         <p><strong>Status:</strong> {status.title()}</p>
         <p><strong>Platform:</strong> {dmca_data.get('platform', 'Unknown')}</p>
@@ -926,11 +890,9 @@ class AdvancedNotificationEngine:
            style="background-color: #28a745; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
            View DMCA Details
         </a></p>
-        """
-    
+        """    
     def _get_dmca_next_steps(self, status: str) -> str:
-        """Get next steps based on DMCA status"""
-        steps = {
+        """Get next steps based on DMCA status"""        steps = {
             'submitted': '<ul><li>Monitor for platform acknowledgment</li><li>Prepare evidence for potential disputes</li></ul>',
             'acknowledged': '<ul><li>Wait for platform review</li><li>Monitor for compliance</li></ul>',
             'processing': '<ul><li>Platform is reviewing the notice</li><li>Expect response within 14 days</li></ul>',
@@ -942,8 +904,7 @@ class AdvancedNotificationEngine:
 
 
 class EscalationManager:
-    """Automated escalation management for notifications"""
-    
+    """Automated escalation management for notifications"""    
     def __init__(self):
         self.notification_engine = AdvancedNotificationEngine()
         self.escalation_rules = {}
@@ -955,8 +916,7 @@ class EscalationManager:
         escalation_chain: List[Dict[str, Any]],
         escalation_delays: List[timedelta]
     ) -> bool:
-        """Setup automated escalation rule"""
-        try:
+        """Setup automated escalation rule"""        try:
             self.escalation_rules[rule_id] = {
                 "trigger_conditions": trigger_conditions,
                 "escalation_chain": escalation_chain,
@@ -971,8 +931,7 @@ class EscalationManager:
             return False
     
     async def check_escalation_triggers(self) -> None:
-        """Check for escalation triggers and initiate escalations"""
-        try:
+        """Check for escalation triggers and initiate escalations"""        try:
             # This would be called periodically
             # Implementation depends on specific escalation logic
             pass

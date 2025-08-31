@@ -1,5 +1,4 @@
-"""
-Content Monetization Engine - IA Influencer Agent Platform
+"""Content Monetization Engine - IA Influencer Agent Platform
 ==========================================================
 
 Advanced monetization system enabling creators to generate revenue through multiple
@@ -7,9 +6,7 @@ channels including subscriptions, NFTs, brand partnerships, and premium content 
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -36,8 +33,7 @@ settings = get_settings()
 
 
 class ContentMonetizationEngine:
-    """Advanced monetization system for content creators."""
-    
+    """Advanced monetization system for content creators."""    
     def __init__(self):
         self.db = get_database()
         self.payment_manager = PaymentGatewayManager()
@@ -133,8 +129,7 @@ class ContentMonetizationEngine:
         strategy_type: str,
         strategy_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Create new monetization strategy for creator.
+        """        Create new monetization strategy for creator.
         
         Args:
             creator_id: Creator setting up monetization
@@ -143,8 +138,7 @@ class ContentMonetizationEngine:
             
         Returns:
             Created monetization strategy details
-        """
-        try:
+        """        try:
             # Validate strategy type
             if strategy_type not in self.monetization_strategies:
                 raise MonetizationError(f"Invalid strategy type: {strategy_type}")
@@ -223,8 +217,7 @@ class ContentMonetizationEngine:
         subscriber_id: UUID,
         payment_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Process subscription payment.
+        """        Process subscription payment.
         
         Args:
             strategy_id: Monetization strategy ID
@@ -233,8 +226,7 @@ class ContentMonetizationEngine:
             
         Returns:
             Payment processing result and subscription details
-        """
-        try:
+        """        try:
             # Get strategy details
             strategy = await self.db.monetization_strategies.get_by_id(strategy_id)
             if not strategy or strategy.strategy_type != 'subscription':
@@ -346,8 +338,7 @@ class ContentMonetizationEngine:
         creator_id: UUID,
         collection_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Create NFT collection for content monetization.
+        """        Create NFT collection for content monetization.
         
         Args:
             creator_id: Creator creating the collection
@@ -355,8 +346,7 @@ class ContentMonetizationEngine:
             
         Returns:
             Created NFT collection details
-        """
-        try:
+        """        try:
             # Validate collection configuration
             required_fields = ['name', 'description', 'content_items', 'price_per_nft']
             for field in required_fields:
@@ -455,8 +445,7 @@ class ContentMonetizationEngine:
         creator_id: UUID,
         partnership_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Establish brand partnership for sponsored content.
+        """        Establish brand partnership for sponsored content.
         
         Args:
             creator_id: Creator entering partnership
@@ -464,8 +453,7 @@ class ContentMonetizationEngine:
             
         Returns:
             Partnership agreement details
-        """
-        try:
+        """        try:
             # Validate partnership configuration
             required_fields = ['brand_name', 'campaign_type', 'compensation_amount', 'deliverables']
             for field in required_fields:
@@ -551,8 +539,7 @@ class ContentMonetizationEngine:
         period: str = 'month',
         strategy_filter: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive revenue analytics for creator.
+        """        Get comprehensive revenue analytics for creator.
         
         Args:
             creator_id: Creator to analyze
@@ -561,8 +548,7 @@ class ContentMonetizationEngine:
             
         Returns:
             Detailed revenue analytics and insights
-        """
-        try:
+        """        try:
             # Calculate period dates
             end_date = datetime.utcnow()
             start_date = self._calculate_period_start(period, end_date)
@@ -622,8 +608,7 @@ class ContentMonetizationEngine:
         creator_id: UUID,
         payout_amount: Optional[Decimal] = None
     ) -> Dict[str, Any]:
-        """
-        Process creator payout.
+        """        Process creator payout.
         
         Args:
             creator_id: Creator to pay out
@@ -631,8 +616,7 @@ class ContentMonetizationEngine:
             
         Returns:
             Payout processing result
-        """
-        try:
+        """        try:
             # Get creator's available balance
             available_balance = await self._get_available_balance(creator_id)
             
@@ -736,8 +720,7 @@ class ContentMonetizationEngine:
         strategy_id: UUID,
         strategy_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Set up payment processing for monetization strategy."""
-        try:
+        """Set up payment processing for monetization strategy."""        try:
             # Configure payment gateway
             gateway_config = await self.payment_manager.setup_merchant_account(
                 merchant_id=str(strategy_data['creator_id']),
@@ -767,8 +750,7 @@ class ContentMonetizationEngine:
         strategy_id: UUID,
         strategy_config: Dict[str, Any]
     ) -> None:
-        """Create welcome campaign for new subscribers/customers."""
-        campaign_config = {
+        """Create welcome campaign for new subscribers/customers."""        campaign_config = {
             'strategy_id': strategy_id,
             'campaign_type': 'welcome_series',
             'triggers': ['subscription_created', 'payment_completed'],
@@ -794,8 +776,7 @@ class ContentMonetizationEngine:
         await self.notification_service.create_automated_campaign(campaign_config)
     
     async def _calculate_revenue_projection(self, strategy_data: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate revenue projections for strategy."""
-        base_price = float(strategy_data['price'])
+        """Calculate revenue projections for strategy."""        base_price = float(strategy_data['price'])
         strategy_type = strategy_data['strategy_type']
         
         # Estimation factors based on strategy type and market data
@@ -841,15 +822,13 @@ class ContentMonetizationEngine:
         return projections
     
     def _calculate_trial_end(self, settings: Dict[str, Any]) -> Optional[datetime]:
-        """Calculate trial period end date."""
-        trial_days = settings.get('trial_period_days', 0)
+        """Calculate trial period end date."""        trial_days = settings.get('trial_period_days', 0)
         if trial_days > 0:
             return datetime.utcnow() + timedelta(days=trial_days)
         return None
     
     def _calculate_next_billing(self, frequency: str) -> datetime:
-        """Calculate next billing date."""
-        now = datetime.utcnow()
+        """Calculate next billing date."""        now = datetime.utcnow()
         
         if frequency == 'monthly':
             return now + timedelta(days=30)
@@ -870,8 +849,7 @@ class ContentMonetizationEngine:
         transaction_type: str,
         payment_gateway_id: str
     ) -> None:
-        """Record revenue transaction in database."""
-        transaction_data = {
+        """Record revenue transaction in database."""        transaction_data = {
             'id': uuid4(),
             'strategy_id': strategy_id,
             'payer_id': payer_id,
@@ -895,8 +873,7 @@ class ContentMonetizationEngine:
         strategy_id: UUID,
         access_type: str
     ) -> None:
-        """Grant content access to user."""
-        access_data = {
+        """Grant content access to user."""        access_data = {
             'user_id': user_id,
             'strategy_id': strategy_id,
             'access_type': access_type,
@@ -908,8 +885,7 @@ class ContentMonetizationEngine:
         await self.db.content_access.create(access_data)
     
     async def _get_creator_wallet_address(self, creator_id: UUID) -> str:
-        """Get creator's blockchain wallet address."""
-        wallet = await self.db.creator_wallets.get_primary(creator_id)
+        """Get creator's blockchain wallet address."""        wallet = await self.db.creator_wallets.get_primary(creator_id)
         if not wallet:
             # Create default wallet
             wallet = await self.blockchain_manager.create_wallet(creator_id)
@@ -928,8 +904,7 @@ class ContentMonetizationEngine:
         content_item: Dict[str, Any],
         token_id: int
     ) -> Dict[str, Any]:
-        """Create individual NFT item."""
-        nft_item_data = {
+        """Create individual NFT item."""        nft_item_data = {
             'collection_id': collection_id,
             'token_id': token_id,
             'name': content_item['name'],
@@ -958,8 +933,7 @@ class ContentMonetizationEngine:
         nft_items: List[Dict[str, Any]],
         collection_config: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Create marketplace listings for NFT collection."""
-        listings = []
+        """Create marketplace listings for NFT collection."""        listings = []
         
         for nft_item in nft_items:
             listing_data = {
@@ -985,8 +959,7 @@ class ContentMonetizationEngine:
         self,
         partnership_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate partnership agreement document."""
-        # This would use a document generation service
+        """Generate partnership agreement document."""        # This would use a document generation service
         agreement_id = uuid4()
         
         # Store agreement in database
@@ -1009,9 +982,7 @@ class ContentMonetizationEngine:
         }
     
     def _generate_agreement_content(self, partnership_data: Dict[str, Any]) -> str:
-        """Generate partnership agreement content."""
-        return f"""
-        BRAND PARTNERSHIP AGREEMENT
+        """Generate partnership agreement content."""        return f"""        BRAND PARTNERSHIP AGREEMENT
         
         Partnership ID: {partnership_data['id']}
         Brand: {partnership_data['brand_name']}
@@ -1030,15 +1001,13 @@ class ContentMonetizationEngine:
         - Payment processed within 30 days of completion
         
         Generated on: {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')}
-        """
-    
+        """    
     async def _create_partnership_milestones(
         self,
         partnership_id: UUID,
         deliverables: List[str]
     ) -> List[Dict[str, Any]]:
-        """Create partnership milestones."""
-        milestones = []
+        """Create partnership milestones."""        milestones = []
         
         for i, deliverable in enumerate(deliverables):
             milestone_data = {
@@ -1062,8 +1031,7 @@ class ContentMonetizationEngine:
         return milestones
     
     async def _calculate_partnership_earnings(self, partnership_data: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate estimated partnership earnings."""
-        base_compensation = float(partnership_data['compensation_amount'])
+        """Calculate estimated partnership earnings."""        base_compensation = float(partnership_data['compensation_amount'])
         
         # Platform commission
         commission_rate = self.monetization_strategies['brand_partnerships']['commission_rate']
@@ -1078,8 +1046,7 @@ class ContentMonetizationEngine:
         }
     
     def _calculate_period_start(self, period: str, end_date: datetime) -> datetime:
-        """Calculate start date for analysis period."""
-        if period == 'day':
+        """Calculate start date for analysis period."""        if period == 'day':
             return end_date - timedelta(days=1)
         elif period == 'week':
             return end_date - timedelta(weeks=1)
@@ -1093,26 +1060,21 @@ class ContentMonetizationEngine:
             return end_date - timedelta(days=30)  # Default to month
     
     def _calculate_total_revenue(self, transactions: List[Any]) -> float:
-        """Calculate total gross revenue."""
-        return float(sum(t.gross_amount for t in transactions))
+        """Calculate total gross revenue."""        return float(sum(t.gross_amount for t in transactions))
     
     def _calculate_net_revenue(self, transactions: List[Any]) -> float:
-        """Calculate net revenue after platform fees."""
-        return float(sum(t.net_amount for t in transactions))
+        """Calculate net revenue after platform fees."""        return float(sum(t.net_amount for t in transactions))
     
     def _calculate_platform_fees(self, transactions: List[Any]) -> float:
-        """Calculate total platform fees."""
-        return float(sum(t.commission_amount for t in transactions))
+        """Calculate total platform fees."""        return float(sum(t.commission_amount for t in transactions))
     
     def _calculate_average_transaction(self, transactions: List[Any]) -> float:
-        """Calculate average transaction value."""
-        if not transactions:
+        """Calculate average transaction value."""        if not transactions:
             return 0.0
         return self._calculate_total_revenue(transactions) / len(transactions)
     
     async def _calculate_revenue_growth(self, creator_id: UUID, period: str) -> Dict[str, float]:
-        """Calculate revenue growth compared to previous period."""
-        # Get current period revenue
+        """Calculate revenue growth compared to previous period."""        # Get current period revenue
         current_end = datetime.utcnow()
         current_start = self._calculate_period_start(period, current_end)
         current_transactions = await self.db.revenue_transactions.get_by_creator_period(
@@ -1146,8 +1108,7 @@ class ContentMonetizationEngine:
         transactions: List[Any],
         strategies: List[Any]
     ) -> Dict[str, Dict[str, float]]:
-        """Analyze revenue breakdown by strategy."""
-        strategy_revenue = {}
+        """Analyze revenue breakdown by strategy."""        strategy_revenue = {}
         
         # Create strategy lookup
         strategy_lookup = {str(s.id): s for s in strategies}
@@ -1173,8 +1134,7 @@ class ContentMonetizationEngine:
         return strategy_revenue
     
     def _analyze_revenue_by_source(self, transactions: List[Any]) -> Dict[str, float]:
-        """Analyze revenue by source type."""
-        source_revenue = {}
+        """Analyze revenue by source type."""        source_revenue = {}
         
         for transaction in transactions:
             source = transaction.transaction_type
@@ -1185,8 +1145,7 @@ class ContentMonetizationEngine:
         return source_revenue
     
     def _analyze_payment_methods(self, transactions: List[Any]) -> Dict[str, int]:
-        """Analyze payment method distribution."""
-        method_counts = {}
+        """Analyze payment method distribution."""        method_counts = {}
         
         for transaction in transactions:
             # This would come from payment gateway data
@@ -1198,8 +1157,7 @@ class ContentMonetizationEngine:
         return method_counts
     
     async def _analyze_geographic_revenue(self, transactions: List[Any]) -> Dict[str, float]:
-        """Analyze revenue by geographic region."""
-        # This would integrate with payment gateway geolocation data
+        """Analyze revenue by geographic region."""        # This would integrate with payment gateway geolocation data
         # For now, return mock data
         return {
             'North America': 60.5,
@@ -1214,8 +1172,7 @@ class ContentMonetizationEngine:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Get subscription-specific metrics."""
-        subscriptions = await self.db.subscriptions.get_by_creator_period(
+        """Get subscription-specific metrics."""        subscriptions = await self.db.subscriptions.get_by_creator_period(
             creator_id, start_date, end_date
         )
         
@@ -1234,8 +1191,7 @@ class ContentMonetizationEngine:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Get NFT-specific metrics."""
-        collections = await self.db.nft_collections.get_by_creator(creator_id)
+        """Get NFT-specific metrics."""        collections = await self.db.nft_collections.get_by_creator(creator_id)
         sales = await self.db.nft_sales.get_by_creator_period(
             creator_id, start_date, end_date
         )
@@ -1255,8 +1211,7 @@ class ContentMonetizationEngine:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Get partnership-specific metrics."""
-        partnerships = await self.db.brand_partnerships.get_by_creator_period(
+        """Get partnership-specific metrics."""        partnerships = await self.db.brand_partnerships.get_by_creator_period(
             creator_id, start_date, end_date
         )
         
@@ -1273,8 +1228,7 @@ class ContentMonetizationEngine:
         creator_id: UUID,
         transactions: List[Any]
     ) -> Dict[str, float]:
-        """Generate revenue forecast based on historical data."""
-        if len(transactions) < 3:
+        """Generate revenue forecast based on historical data."""        if len(transactions) < 3:
             return {'forecast_available': False}
         
         # Simple linear regression forecast
@@ -1308,8 +1262,7 @@ class ContentMonetizationEngine:
         transactions: List[Any],
         strategies: List[Any]
     ) -> List[Dict[str, str]]:
-        """Generate monetization optimization suggestions."""
-        suggestions = []
+        """Generate monetization optimization suggestions."""        suggestions = []
         
         # Analyze transaction patterns
         if not transactions:
@@ -1356,8 +1309,7 @@ class ContentMonetizationEngine:
         return suggestions[:5]  # Return top 5 suggestions
     
     async def _cache_analytics(self, cache_key: str, data: Dict[str, Any], ttl: int = 300) -> None:
-        """Cache analytics data for performance."""
-        self.revenue_cache[cache_key] = {
+        """Cache analytics data for performance."""        self.revenue_cache[cache_key] = {
             'data': data,
             'cached_at': datetime.utcnow(),
             'ttl': ttl
@@ -1373,13 +1325,11 @@ class ContentMonetizationEngine:
             del self.revenue_cache[key]
     
     async def _get_available_balance(self, creator_id: UUID) -> Decimal:
-        """Get creator's available balance for payout."""
-        balance = await self.db.creator_balances.get_by_creator(creator_id)
+        """Get creator's available balance for payout."""        balance = await self.db.creator_balances.get_by_creator(creator_id)
         return balance.available_amount if balance else Decimal('0.00')
     
     async def _update_creator_balance(self, creator_id: UUID, amount_change: Decimal) -> None:
-        """Update creator's balance."""
-        current_balance = await self.db.creator_balances.get_by_creator(creator_id)
+        """Update creator's balance."""        current_balance = await self.db.creator_balances.get_by_creator(creator_id)
         
         if current_balance:
             new_amount = current_balance.available_amount + amount_change
@@ -1395,8 +1345,7 @@ class ContentMonetizationEngine:
             })
     
     def _calculate_payout_arrival(self, payout_method: str) -> str:
-        """Calculate estimated payout arrival time."""
-        arrival_times = {
+        """Calculate estimated payout arrival time."""        arrival_times = {
             'bank_transfer': '1-3 business days',
             'paypal': '1 business day',
             'crypto': '24 hours',

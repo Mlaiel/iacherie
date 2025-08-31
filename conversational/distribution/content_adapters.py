@@ -1,5 +1,4 @@
-"""
-Content Adapters Enterprise
+"""Content Adapters Enterprise
 
 Industrial-grade content adaptation and optimization system for multi-platform distribution.
 Provides AI-powered content transformation, format optimization, and platform-specific adaptation.
@@ -10,9 +9,7 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
 WARNING: This code is proprietary and protected. Unauthorized use, reproduction, 
 or distribution is strictly prohibited and will result in legal action.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union, Set
 from datetime import datetime, timedelta
@@ -76,16 +73,14 @@ logger = logging.getLogger(__name__)
 
 
 class AdaptationQuality(str, Enum):
-    """Quality levels for content adaptation"""
-    LOW = "low"
+    """Quality levels for content adaptation"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     ULTRA = "ultra"
 
 
 class ContentFormat(str, Enum):
-    """Content format specifications"""
-    SQUARE = "square"  # 1:1
+    """Content format specifications"""    SQUARE = "square"  # 1:1
     PORTRAIT = "portrait"  # 9:16
     LANDSCAPE = "landscape"  # 16:9
     STORY = "story"  # 9:16
@@ -95,8 +90,7 @@ class ContentFormat(str, Enum):
 
 @dataclass
 class PlatformSpecs:
-    """Platform-specific content specifications"""
-    max_file_size: int  # bytes
+    """Platform-specific content specifications"""    max_file_size: int  # bytes
     max_duration: Optional[int]  # seconds
     supported_formats: List[str]
     preferred_aspect_ratios: List[str]
@@ -108,8 +102,7 @@ class PlatformSpecs:
 
 @dataclass
 class AdaptationResult:
-    """Result of content adaptation process"""
-    adapted_url: str
+    """Result of content adaptation process"""    adapted_url: str
     original_url: str
     platform: PlatformType
     format_changes: List[str]
@@ -121,8 +114,7 @@ class AdaptationResult:
 
 
 class BaseContentAdapter(ABC):
-    """Base class for all content adapters"""
-    
+    """Base class for all content adapters"""    
     def __init__(self, db: Session):
         self.db = db
         self.platform_specs = self._initialize_platform_specs()
@@ -135,12 +127,10 @@ class BaseContentAdapter(ABC):
         target_format: Optional[ContentFormat] = None,
         quality: AdaptationQuality = AdaptationQuality.HIGH
     ) -> AdaptationResult:
-        """Adapt content for specific platform"""
-        pass
+        """Adapt content for specific platform"""        pass
     
     def _initialize_platform_specs(self) -> Dict[PlatformType, PlatformSpecs]:
-        """Initialize platform-specific specifications"""
-        return {
+        """Initialize platform-specific specifications"""        return {
             PlatformType.YOUTUBE: PlatformSpecs(
                 max_file_size=128 * 1024 * 1024 * 1024,  # 128GB
                 max_duration=12 * 3600,  # 12 hours
@@ -228,8 +218,7 @@ class BaseContentAdapter(ABC):
         }
     
     def _get_aspect_ratio(self, width: int, height: int) -> str:
-        """Calculate aspect ratio from dimensions"""
-        from math import gcd
+        """Calculate aspect ratio from dimensions"""        from math import gcd
         
         ratio_gcd = gcd(width, height)
         ratio_w = width // ratio_gcd
@@ -244,8 +233,7 @@ class BaseContentAdapter(ABC):
         target_format: ContentFormat,
         platform_specs: PlatformSpecs
     ) -> Tuple[int, int]:
-        """Calculate target dimensions for adaptation"""
-        
+        """Calculate target dimensions for adaptation"""        
         # Define target aspect ratios
         aspect_ratios = {
             ContentFormat.SQUARE: (1, 1),
@@ -291,8 +279,7 @@ class BaseContentAdapter(ABC):
 
 
 class AudioContentAdapter(BaseContentAdapter):
-    """Adapter for audio content optimization"""
-    
+    """Adapter for audio content optimization"""    
     async def adapt_content(
         self,
         content: ContentModel,
@@ -300,8 +287,7 @@ class AudioContentAdapter(BaseContentAdapter):
         target_format: Optional[ContentFormat] = None,
         quality: AdaptationQuality = AdaptationQuality.HIGH
     ) -> AdaptationResult:
-        """Adapt audio content for platform requirements"""
-        try:
+        """Adapt audio content for platform requirements"""        try:
             platform_specs = self.platform_specs[platform]
             
             if not platform_specs.audio_requirements:
@@ -417,8 +403,7 @@ class AudioContentAdapter(BaseContentAdapter):
             )
     
     def _estimate_bitrate(self, file_path: str) -> int:
-        """Estimate audio bitrate from file"""
-        try:
+        """Estimate audio bitrate from file"""        try:
             import os
             file_size = os.path.getsize(file_path)
             audio_data, sample_rate = librosa.load(file_path, sr=None)
@@ -435,8 +420,7 @@ class AudioContentAdapter(BaseContentAdapter):
         audio: np.ndarray, 
         quality: AdaptationQuality
     ) -> np.ndarray:
-        """Apply audio quality enhancements"""
-        enhanced_audio = audio.copy()
+        """Apply audio quality enhancements"""        enhanced_audio = audio.copy()
         
         if quality == AdaptationQuality.HIGH:
             # Apply mild noise reduction
@@ -451,8 +435,7 @@ class AudioContentAdapter(BaseContentAdapter):
         return enhanced_audio
     
     def _reduce_noise(self, audio: np.ndarray, strength: float) -> np.ndarray:
-        """Simple noise reduction using spectral gating"""
-        # This is a simplified noise reduction
+        """Simple noise reduction using spectral gating"""        # This is a simplified noise reduction
         # In production, you'd use more sophisticated algorithms
         stft = librosa.stft(audio)
         magnitude = np.abs(stft)
@@ -472,8 +455,7 @@ class AudioContentAdapter(BaseContentAdapter):
         return cleaned_audio
     
     def _enhance_clarity(self, audio: np.ndarray) -> np.ndarray:
-        """Enhance audio clarity using harmonic enhancement"""
-        # Apply harmonic enhancement
+        """Enhance audio clarity using harmonic enhancement"""        # Apply harmonic enhancement
         harmonic, percussive = librosa.effects.hpss(audio)
         
         # Boost harmonics slightly
@@ -482,8 +464,7 @@ class AudioContentAdapter(BaseContentAdapter):
         return enhanced
     
     def _dynamic_range_compression(self, audio: np.ndarray) -> np.ndarray:
-        """Apply dynamic range compression"""
-        # Simple compression algorithm
+        """Apply dynamic range compression"""        # Simple compression algorithm
         threshold = 0.7
         ratio = 4.0
         
@@ -499,8 +480,7 @@ class AudioContentAdapter(BaseContentAdapter):
         return compressed
     
     def _normalize_audio(self, audio: np.ndarray) -> np.ndarray:
-        """Normalize audio to optimal levels"""
-        # Normalize to prevent clipping while maintaining dynamic range
+        """Normalize audio to optimal levels"""        # Normalize to prevent clipping while maintaining dynamic range
         peak = np.max(np.abs(audio))
         if peak > 0:
             normalized = audio * (0.95 / peak)
@@ -510,8 +490,7 @@ class AudioContentAdapter(BaseContentAdapter):
         return normalized
     
     def _determine_output_format(self, platform: PlatformType) -> str:
-        """Determine optimal output format for platform"""
-        format_map = {
+        """Determine optimal output format for platform"""        format_map = {
             PlatformType.SPOTIFY: "mp3",
             PlatformType.YOUTUBE: "mp4",  # Will be used in video container
             PlatformType.INSTAGRAM: "mp4",
@@ -524,8 +503,7 @@ class AudioContentAdapter(BaseContentAdapter):
 
 
 class VideoContentAdapter(BaseContentAdapter):
-    """Adapter for video content optimization"""
-    
+    """Adapter for video content optimization"""    
     async def adapt_content(
         self,
         content: ContentModel,
@@ -533,8 +511,7 @@ class VideoContentAdapter(BaseContentAdapter):
         target_format: Optional[ContentFormat] = None,
         quality: AdaptationQuality = AdaptationQuality.HIGH
     ) -> AdaptationResult:
-        """Adapt video content for platform requirements"""
-        try:
+        """Adapt video content for platform requirements"""        try:
             platform_specs = self.platform_specs[platform]
             
             # Download original video
@@ -688,8 +665,7 @@ class VideoContentAdapter(BaseContentAdapter):
         width: int, 
         height: int
     ) -> ContentFormat:
-        """Determine optimal content format for platform"""
-        aspect_ratio = width / height
+        """Determine optimal content format for platform"""        aspect_ratio = width / height
         
         platform_preferences = {
             PlatformType.YOUTUBE: ContentFormat.LANDSCAPE,
@@ -702,8 +678,7 @@ class VideoContentAdapter(BaseContentAdapter):
         return platform_preferences.get(platform, ContentFormat.LANDSCAPE)
     
     def _determine_optimal_fps(self, platform: PlatformType, current_fps: float) -> float:
-        """Determine optimal frame rate for platform"""
-        platform_fps = {
+        """Determine optimal frame rate for platform"""        platform_fps = {
             PlatformType.YOUTUBE: 30,
             PlatformType.INSTAGRAM: 30,
             PlatformType.TIKTOK: 30,
@@ -721,8 +696,7 @@ class VideoContentAdapter(BaseContentAdapter):
         clip: VideoFileClip, 
         quality: AdaptationQuality
     ) -> VideoFileClip:
-        """Apply video quality enhancements"""
-        if quality == AdaptationQuality.HIGH:
+        """Apply video quality enhancements"""        if quality == AdaptationQuality.HIGH:
             # Apply basic enhancements
             enhanced_clip = clip.fx(lambda frame: self._enhance_frame_basic(frame))
             
@@ -735,8 +709,7 @@ class VideoContentAdapter(BaseContentAdapter):
         return enhanced_clip
     
     def _enhance_frame_basic(self, frame: np.ndarray) -> np.ndarray:
-        """Apply basic frame enhancements"""
-        # Convert to PIL Image for processing
+        """Apply basic frame enhancements"""        # Convert to PIL Image for processing
         img = Image.fromarray(frame)
         
         # Enhance sharpness slightly
@@ -750,8 +723,7 @@ class VideoContentAdapter(BaseContentAdapter):
         return np.array(img)
     
     def _enhance_frame_advanced(self, frame: np.ndarray) -> np.ndarray:
-        """Apply advanced frame enhancements"""
-        img = Image.fromarray(frame)
+        """Apply advanced frame enhancements"""        img = Image.fromarray(frame)
         
         # Enhance sharpness
         enhancer = ImageEnhance.Sharpness(img)
@@ -775,8 +747,7 @@ class VideoContentAdapter(BaseContentAdapter):
         clip: VideoFileClip, 
         platform: PlatformType
     ) -> VideoFileClip:
-        """Apply platform-specific optimizations"""
-        optimized_clip = clip
+        """Apply platform-specific optimizations"""        optimized_clip = clip
         
         if platform == PlatformType.TIKTOK:
             # TikTok-specific optimizations
@@ -801,8 +772,7 @@ class VideoContentAdapter(BaseContentAdapter):
         audio_clip: AudioFileClip, 
         audio_specs: Dict[str, Any]
     ) -> AudioFileClip:
-        """Process audio track for video"""
-        processed_audio = audio_clip
+        """Process audio track for video"""        processed_audio = audio_clip
         
         # Set sample rate
         target_sample_rate = audio_specs.get("sample_rate", 44100)
@@ -818,8 +788,7 @@ class VideoContentAdapter(BaseContentAdapter):
         platform: PlatformType, 
         quality: AdaptationQuality
     ) -> Tuple[str, str]:
-        """Determine output format and codec"""
-        # Most platforms prefer MP4 with H.264
+        """Determine output format and codec"""        # Most platforms prefer MP4 with H.264
         format_settings = {
             PlatformType.YOUTUBE: ("mp4", "libx264"),
             PlatformType.INSTAGRAM: ("mp4", "libx264"),
@@ -832,8 +801,7 @@ class VideoContentAdapter(BaseContentAdapter):
 
 
 class ImageContentAdapter(BaseContentAdapter):
-    """Adapter for image content optimization"""
-    
+    """Adapter for image content optimization"""    
     async def adapt_content(
         self,
         content: ContentModel,
@@ -841,8 +809,7 @@ class ImageContentAdapter(BaseContentAdapter):
         target_format: Optional[ContentFormat] = None,
         quality: AdaptationQuality = AdaptationQuality.HIGH
     ) -> AdaptationResult:
-        """Adapt image content for platform requirements"""
-        try:
+        """Adapt image content for platform requirements"""        try:
             platform_specs = self.platform_specs[platform]
             
             # Download original image
@@ -960,8 +927,7 @@ class ImageContentAdapter(BaseContentAdapter):
         width: int, 
         height: int
     ) -> ContentFormat:
-        """Determine optimal image format for platform"""
-        aspect_ratio = width / height
+        """Determine optimal image format for platform"""        aspect_ratio = width / height
         
         if platform == PlatformType.INSTAGRAM:
             if 0.8 <= aspect_ratio <= 1.25:
@@ -982,8 +948,7 @@ class ImageContentAdapter(BaseContentAdapter):
         img: Image.Image, 
         quality: AdaptationQuality
     ) -> Image.Image:
-        """Apply image quality enhancements"""
-        enhanced_img = img.copy()
+        """Apply image quality enhancements"""        enhanced_img = img.copy()
         
         if quality == AdaptationQuality.HIGH:
             # Apply basic enhancements
@@ -1021,8 +986,7 @@ class ImageContentAdapter(BaseContentAdapter):
         img: Image.Image, 
         platform: PlatformType
     ) -> Image.Image:
-        """Apply platform-specific image optimizations"""
-        optimized_img = img
+        """Apply platform-specific image optimizations"""        optimized_img = img
         
         if platform == PlatformType.INSTAGRAM:
             # Instagram prefers slightly saturated images
@@ -1038,14 +1002,12 @@ class ImageContentAdapter(BaseContentAdapter):
         return optimized_img
     
     def _determine_image_output_format(self, platform: PlatformType) -> str:
-        """Determine optimal output format for platform"""
-        # Most platforms prefer JPEG for photos, PNG for graphics with transparency
+        """Determine optimal output format for platform"""        # Most platforms prefer JPEG for photos, PNG for graphics with transparency
         return "jpeg"  # Default to JPEG for better compression
 
 
 class TextContentAdapter(BaseContentAdapter):
-    """Adapter for text content optimization"""
-    
+    """Adapter for text content optimization"""    
     async def adapt_content(
         self,
         content: ContentModel,
@@ -1053,8 +1015,7 @@ class TextContentAdapter(BaseContentAdapter):
         target_format: Optional[ContentFormat] = None,
         quality: AdaptationQuality = AdaptationQuality.HIGH
     ) -> AdaptationResult:
-        """Adapt text content for platform requirements"""
-        try:
+        """Adapt text content for platform requirements"""        try:
             platform_specs = self.platform_specs[platform]
             
             # Get original text content
@@ -1119,8 +1080,7 @@ class TextContentAdapter(BaseContentAdapter):
             )
     
     def _optimize_text_for_platform(self, text: str, platform: PlatformType) -> str:
-        """Optimize text content for specific platform"""
-        # Platform-specific text limits and optimizations
+        """Optimize text content for specific platform"""        # Platform-specific text limits and optimizations
         limits = {
             PlatformType.TWITTER: 280,
             PlatformType.INSTAGRAM: 2200,
@@ -1147,8 +1107,7 @@ class TextContentAdapter(BaseContentAdapter):
         hashtags: List[str], 
         platform: PlatformType
     ) -> List[str]:
-        """Optimize hashtags for specific platform"""
-        limits = {
+        """Optimize hashtags for specific platform"""        limits = {
             PlatformType.TWITTER: 10,
             PlatformType.INSTAGRAM: 30,
             PlatformType.LINKEDIN: 15,
@@ -1167,8 +1126,7 @@ class TextContentAdapter(BaseContentAdapter):
         hashtags: List[str], 
         platform: PlatformType
     ) -> str:
-        """Format text with hashtags for specific platform"""
-        formatted_text = text
+        """Format text with hashtags for specific platform"""        formatted_text = text
         
         if hashtags:
             hashtag_text = " ".join([f"#{tag.lstrip('#')}" for tag in hashtags])

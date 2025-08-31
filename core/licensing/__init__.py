@@ -45,8 +45,7 @@ Core Licensing Components:
 - AI-Powered Revenue Optimization: Intelligent pricing and terms
 - Advanced Analytics & Intelligence: Predictive insights and performance metrics
 - Cross-Platform Distribution: Automated multi-channel deployment
-"""
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass
 from enum import Enum
 import logging
@@ -332,8 +331,7 @@ intellectual property of Fahed Mlaiel. Any unauthorized use, copying,
 distribution, or commercialization is strictly prohibited and will result 
 in immediate legal action including criminal prosecution.
 Contact mlaiel@live.de for licensing rights.
-"""
-# Core exports for simplified imports
+"""# Core exports for simplified imports
 __all__ = [
     # Core Engine
     "UltraAdvancedLicensingEngine",

@@ -1,5 +1,4 @@
-"""
-Elasticsearch Connection Handler - IA Influencer Agent Platform
+"""Elasticsearch Connection Handler - IA Influencer Agent Platform
 
 Manages Elasticsearch connections for search, indexing, and analytics:
 - Content search and discovery indexing
@@ -11,9 +10,7 @@ Manages Elasticsearch connections for search, indexing, and analytics:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Union
 from dataclasses import dataclass
@@ -25,8 +22,7 @@ from elasticsearch.exceptions import ConnectionError, NotFoundError, RequestErro
 
 @dataclass
 class ElasticsearchConfig:
-    """Elasticsearch connection configuration"""
-    hosts: List[str]
+    """Elasticsearch connection configuration"""    hosts: List[str]
     username: Optional[str] = None
     password: Optional[str] = None
     api_key: Optional[str] = None
@@ -50,8 +46,7 @@ class ElasticsearchConfig:
 
 
 class ElasticsearchConnectionHandler:
-    """
-    Elasticsearch connection handler for IA Influencer platform.
+    """    Elasticsearch connection handler for IA Influencer platform.
     
     Manages Elasticsearch for:
     - Content search and discovery
@@ -60,8 +55,7 @@ class ElasticsearchConnectionHandler:
     - User behavior tracking
     - Performance monitoring
     - Revenue analytics and reporting
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = ElasticsearchConfig(**config)
         self.logger = logging.getLogger(__name__)
@@ -78,8 +72,7 @@ class ElasticsearchConnectionHandler:
         self.index_mappings = self._get_index_mappings()
     
     async def initialize(self) -> None:
-        """Initialize Elasticsearch connection"""
-        try:
+        """Initialize Elasticsearch connection"""        try:
             self.logger.info("Initializing Elasticsearch connection...")
             
             # Create client
@@ -102,8 +95,7 @@ class ElasticsearchConnectionHandler:
             raise
     
     def _build_client_config(self) -> Dict[str, Any]:
-        """Build Elasticsearch client configuration"""
-        config = {
+        """Build Elasticsearch client configuration"""        config = {
             "hosts": self.config.hosts,
             "timeout": self.config.timeout,
             "max_retries": self.config.max_retries,
@@ -137,8 +129,7 @@ class ElasticsearchConnectionHandler:
         return config
     
     async def _test_connection(self) -> None:
-        """Test Elasticsearch connection"""
-        if not self.client:
+        """Test Elasticsearch connection"""        if not self.client:
             raise RuntimeError("Elasticsearch client not initialized")
         
         try:
@@ -149,8 +140,7 @@ class ElasticsearchConnectionHandler:
             raise
     
     def _get_index_mappings(self) -> Dict[str, Dict[str, Any]]:
-        """Get index mappings for different content types"""
-        return {
+        """Get index mappings for different content types"""        return {
             "content_fingerprints": {
                 "mappings": {
                     "properties": {
@@ -260,8 +250,7 @@ class ElasticsearchConnectionHandler:
         }
     
     async def _create_default_indexes(self) -> None:
-        """Create default indexes with mappings"""
-        for index_suffix, mapping in self.index_mappings.items():
+        """Create default indexes with mappings"""        for index_suffix, mapping in self.index_mappings.items():
             index_name = f"{self.config.default_index_prefix}_{index_suffix}"
             
             try:
@@ -279,20 +268,17 @@ class ElasticsearchConnectionHandler:
                 # Don't raise here, continue with other indexes
     
     async def get_connection(self) -> AsyncElasticsearch:
-        """Get Elasticsearch connection"""
-        if not self.client:
+        """Get Elasticsearch connection"""        if not self.client:
             raise RuntimeError("Elasticsearch client not initialized")
         
         self.connection_count += 1
         return self.client
     
     def _get_tenant_index_name(self, base_index: str, tenant_id: str) -> str:
-        """Get tenant-specific index name"""
-        return f"{self.config.tenant_index_prefix}_{tenant_id}_{base_index}"
+        """Get tenant-specific index name"""        return f"{self.config.tenant_index_prefix}_{tenant_id}_{base_index}"
     
     async def get_tenant_index(self, index_suffix: str, tenant_id: str) -> str:
-        """Get or create tenant-specific index"""
-        index_name = self._get_tenant_index_name(index_suffix, tenant_id)
+        """Get or create tenant-specific index"""        index_name = self._get_tenant_index_name(index_suffix, tenant_id)
         
         # Create index if it doesn't exist
         if not await self.client.indices.exists(index=index_name):
@@ -312,8 +298,7 @@ class ElasticsearchConnectionHandler:
                            document: Dict[str, Any],
                            doc_id: Optional[str] = None,
                            tenant_id: Optional[str] = None) -> str:
-        """Index a document"""
-        try:
+        """Index a document"""        try:
             client = await self.get_connection()
             
             if tenant_id:
@@ -343,8 +328,7 @@ class ElasticsearchConnectionHandler:
                           index: str, 
                           doc_id: str,
                           tenant_id: Optional[str] = None) -> Optional[Dict[str, Any]]:
-        """Get document by ID"""
-        try:
+        """Get document by ID"""        try:
             client = await self.get_connection()
             
             if tenant_id:
@@ -372,8 +356,7 @@ class ElasticsearchConnectionHandler:
                             doc_id: str,
                             update_data: Dict[str, Any],
                             tenant_id: Optional[str] = None) -> bool:
-        """Update document"""
-        try:
+        """Update document"""        try:
             client = await self.get_connection()
             
             if tenant_id:
@@ -402,8 +385,7 @@ class ElasticsearchConnectionHandler:
                             index: str, 
                             doc_id: str,
                             tenant_id: Optional[str] = None) -> bool:
-        """Delete document"""
-        try:
+        """Delete document"""        try:
             client = await self.get_connection()
             
             if tenant_id:
@@ -433,8 +415,7 @@ class ElasticsearchConnectionHandler:
                     from_: int = 0,
                     sort: Optional[List[Dict]] = None,
                     tenant_id: Optional[str] = None) -> Dict[str, Any]:
-        """Search documents"""
-        try:
+        """Search documents"""        try:
             client = await self.get_connection()
             
             if tenant_id:
@@ -467,8 +448,7 @@ class ElasticsearchConnectionHandler:
     async def bulk_index(self, 
                         operations: List[Dict[str, Any]],
                         tenant_id: Optional[str] = None) -> Dict[str, Any]:
-        """Bulk index operations"""
-        try:
+        """Bulk index operations"""        try:
             client = await self.get_connection()
             
             # Process operations for tenant isolation
@@ -493,8 +473,7 @@ class ElasticsearchConnectionHandler:
                        aggregations: Dict[str, Any],
                        query: Optional[Dict[str, Any]] = None,
                        tenant_id: Optional[str] = None) -> Dict[str, Any]:
-        """Execute aggregation query"""
-        try:
+        """Execute aggregation query"""        try:
             client = await self.get_connection()
             
             if tenant_id:
@@ -524,8 +503,7 @@ class ElasticsearchConnectionHandler:
             raise
     
     async def health_check(self) -> Dict[str, Any]:
-        """Check Elasticsearch connection health"""
-        try:
+        """Check Elasticsearch connection health"""        try:
             start_time = datetime.utcnow()
             
             client = await self.get_connection()
@@ -579,8 +557,7 @@ class ElasticsearchConnectionHandler:
             }
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get detailed Elasticsearch metrics"""
-        try:
+        """Get detailed Elasticsearch metrics"""        try:
             client = await self.get_connection()
             
             # Cluster stats
@@ -608,8 +585,7 @@ class ElasticsearchConnectionHandler:
             return {"error": str(e)}
     
     async def shutdown(self) -> None:
-        """Shutdown Elasticsearch connections"""
-        self.logger.info("Shutting down Elasticsearch connections...")
+        """Shutdown Elasticsearch connections"""        self.logger.info("Shutting down Elasticsearch connections...")
         
         if self.client:
             await self.client.close()

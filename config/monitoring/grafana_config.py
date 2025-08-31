@@ -1,5 +1,4 @@
-"""
-Grafana Configuration Module for IA-Influencer Agent Platform
+"""Grafana Configuration Module for IA-Influencer Agent Platform
 =============================================================
 
 Professional Grafana dashboard and visualization configuration for
@@ -15,9 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import os
+"""import os
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, field
 from enum import Enum
@@ -25,8 +22,7 @@ import json
 
 
 class DashboardType(Enum):
-    """Grafana dashboard types"""
-    SYSTEM_OVERVIEW = "system_overview"
+    """Grafana dashboard types"""    SYSTEM_OVERVIEW = "system_overview"
     AI_SERVICES = "ai_services"
     CONTENT_PROTECTION = "content_protection"
     BUSINESS_METRICS = "business_metrics"
@@ -36,8 +32,7 @@ class DashboardType(Enum):
 
 
 class VisualizationType(Enum):
-    """Grafana visualization types"""
-    GRAPH = "graph"
+    """Grafana visualization types"""    GRAPH = "graph"
     STAT = "stat"
     GAUGE = "gauge"
     BAR_GAUGE = "bargauge"
@@ -49,8 +44,7 @@ class VisualizationType(Enum):
 
 @dataclass
 class GrafanaPanel:
-    """Grafana panel configuration"""
-    title: str
+    """Grafana panel configuration"""    title: str
     type: VisualizationType
     targets: List[Dict[str, Any]]
     grid_pos: Dict[str, int] = field(default_factory=dict)
@@ -60,8 +54,7 @@ class GrafanaPanel:
 
 @dataclass
 class GrafanaDashboard:
-    """Grafana dashboard configuration"""
-    title: str
+    """Grafana dashboard configuration"""    title: str
     tags: List[str]
     panels: List[GrafanaPanel]
     uid: Optional[str] = None
@@ -71,8 +64,7 @@ class GrafanaDashboard:
 
 
 class GrafanaConfig:
-    """Professional Grafana configuration for IA-Influencer platform"""
-    
+    """Professional Grafana configuration for IA-Influencer platform"""    
     def __init__(self):
         self.grafana_url = os.getenv("GRAFANA_URL", "http://grafana:3000")
         self.grafana_admin_user = os.getenv("GRAFANA_ADMIN_USER", "admin")
@@ -81,8 +73,7 @@ class GrafanaConfig:
         self.organization_name = os.getenv("GRAFANA_ORG_NAME", "IA-Influencer")
     
     def get_datasource_config(self) -> Dict[str, Any]:
-        """Get Prometheus datasource configuration"""
-        return {
+        """Get Prometheus datasource configuration"""        return {
             "name": "Prometheus",
             "type": "prometheus",
             "access": "proxy",
@@ -97,8 +88,7 @@ class GrafanaConfig:
         }
     
     def get_system_overview_dashboard(self) -> GrafanaDashboard:
-        """Create system overview dashboard"""
-        panels = [
+        """Create system overview dashboard"""        panels = [
             GrafanaPanel(
                 title="System Health Overview",
                 type=VisualizationType.STAT,
@@ -160,8 +150,7 @@ class GrafanaConfig:
         )
     
     def get_ai_services_dashboard(self) -> GrafanaDashboard:
-        """Create AI services monitoring dashboard"""
-        panels = [
+        """Create AI services monitoring dashboard"""        panels = [
             GrafanaPanel(
                 title="AI Model Inference Latency",
                 type=VisualizationType.GRAPH,
@@ -219,8 +208,7 @@ class GrafanaConfig:
         )
     
     def get_content_protection_dashboard(self) -> GrafanaDashboard:
-        """Create content protection monitoring dashboard"""
-        panels = [
+        """Create content protection monitoring dashboard"""        panels = [
             GrafanaPanel(
                 title="Content Protection Matches",
                 type=VisualizationType.GRAPH,
@@ -271,8 +259,7 @@ class GrafanaConfig:
         )
     
     def get_business_metrics_dashboard(self) -> GrafanaDashboard:
-        """Create business metrics dashboard"""
-        panels = [
+        """Create business metrics dashboard"""        panels = [
             GrafanaPanel(
                 title="Content Uploads by Type",
                 type=VisualizationType.PIE_CHART,
@@ -333,8 +320,7 @@ class GrafanaConfig:
         )
     
     def get_audio_processing_dashboard(self) -> GrafanaDashboard:
-        """Create audio processing monitoring dashboard"""
-        panels = [
+        """Create audio processing monitoring dashboard"""        panels = [
             GrafanaPanel(
                 title="Audio Processing Latency",
                 type=VisualizationType.GRAPH,
@@ -385,8 +371,7 @@ class GrafanaConfig:
         )
     
     def get_security_dashboard(self) -> GrafanaDashboard:
-        """Create security monitoring dashboard"""
-        panels = [
+        """Create security monitoring dashboard"""        panels = [
             GrafanaPanel(
                 title="Authentication Attempts",
                 type=VisualizationType.GRAPH,
@@ -444,8 +429,7 @@ class GrafanaConfig:
         )
     
     def get_monetization_dashboard(self) -> GrafanaDashboard:
-        """Create monetization tracking dashboard"""
-        panels = [
+        """Create monetization tracking dashboard"""        panels = [
             GrafanaPanel(
                 title="Revenue by Platform",
                 type=VisualizationType.GRAPH,
@@ -496,8 +480,7 @@ class GrafanaConfig:
         )
     
     def get_all_dashboards(self) -> List[GrafanaDashboard]:
-        """Get all configured dashboards"""
-        return [
+        """Get all configured dashboards"""        return [
             self.get_system_overview_dashboard(),
             self.get_ai_services_dashboard(),
             self.get_content_protection_dashboard(),
@@ -508,8 +491,7 @@ class GrafanaConfig:
         ]
     
     def export_dashboard_json(self, dashboard: GrafanaDashboard) -> str:
-        """Export dashboard configuration as JSON"""
-        dashboard_json = {
+        """Export dashboard configuration as JSON"""        dashboard_json = {
             "dashboard": {
                 "id": None,
                 "uid": dashboard.uid,

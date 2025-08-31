@@ -1,5 +1,4 @@
-"""
-Enterprise Rights Manager - Ultra-Advanced Content Rights Protection System
+"""Enterprise Rights Manager - Ultra-Advanced Content Rights Protection System
 
 Revolutionary rights management engine providing industrial-strength capabilities
 for comprehensive content rights protection, copyright verification, and automated
@@ -27,9 +26,7 @@ Business Logic: Content Upload → Rights Analysis → Protection Registration �
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
 from dataclasses import dataclass, field
@@ -61,8 +58,7 @@ from .exceptions import AdaptationError, ValidationError
 
 
 class RightsType(str, Enum):
-    """Comprehensive rights types for all creator content"""
-    COPYRIGHT = "copyright"
+    """Comprehensive rights types for all creator content"""    COPYRIGHT = "copyright"
     PERFORMANCE_RIGHTS = "performance_rights"
     MECHANICAL_RIGHTS = "mechanical_rights"
     SYNCHRONIZATION_RIGHTS = "synchronization_rights"
@@ -80,8 +76,7 @@ class RightsType(str, Enum):
 
 
 class CreatorRightsCategory(str, Enum):
-    """Creator-specific rights categories"""
-    MUSICIAN_RIGHTS = "musician_rights"
+    """Creator-specific rights categories"""    MUSICIAN_RIGHTS = "musician_rights"
     BLOGGER_RIGHTS = "blogger_rights"
     PHOTOGRAPHER_RIGHTS = "photographer_rights"
     INFLUENCER_RIGHTS = "influencer_rights"
@@ -92,8 +87,7 @@ class CreatorRightsCategory(str, Enum):
 
 
 class RightsStatus(str, Enum):
-    """Rights registration and protection status"""
-    PENDING_REGISTRATION = "pending_registration"
+    """Rights registration and protection status"""    PENDING_REGISTRATION = "pending_registration"
     REGISTERED = "registered"
     PROTECTED = "protected"
     MONITORING = "monitoring"
@@ -106,8 +100,7 @@ class RightsStatus(str, Enum):
 
 
 class LicenseType(str, Enum):
-    """Comprehensive licensing types"""
-    EXCLUSIVE = "exclusive"
+    """Comprehensive licensing types"""    EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     ROYALTY_FREE = "royalty_free"
     CREATIVE_COMMONS = "creative_commons"
@@ -120,8 +113,7 @@ class LicenseType(str, Enum):
 
 
 class InfringementSeverity(str, Enum):
-    """Infringement severity levels for prioritization"""
-    CRITICAL = "critical"      # Commercial use without permission
+    """Infringement severity levels for prioritization"""    CRITICAL = "critical"      # Commercial use without permission
     HIGH = "high"             # Large-scale distribution
     MEDIUM = "medium"         # Moderate exposure
     LOW = "low"              # Limited exposure
@@ -130,8 +122,7 @@ class InfringementSeverity(str, Enum):
 
 @dataclass
 class RightsRegistration:
-    """Comprehensive rights registration with international compliance"""
-    registration_id: str
+    """Comprehensive rights registration with international compliance"""    registration_id: str
     content_id: str
     creator_id: str
     creator_type: str
@@ -152,8 +143,7 @@ class RightsRegistration:
 
 @dataclass
 class InfringementAlert:
-    """Advanced infringement detection and alert system"""
-    alert_id: str
+    """Advanced infringement detection and alert system"""    alert_id: str
     content_id: str
     infringing_url: str
     infringing_platform: str
@@ -172,8 +162,7 @@ class InfringementAlert:
 
 @dataclass
 class LicenseAgreement:
-    """Comprehensive licensing agreement management"""
-    license_id: str
+    """Comprehensive licensing agreement management"""    license_id: str
     content_id: str
     licensee_info: Dict[str, Any]
     license_type: LicenseType
@@ -190,8 +179,7 @@ class LicenseAgreement:
 
 @dataclass
 class RightsRequest:
-    """Enterprise-grade rights management request"""
-    content_id: str
+    """Enterprise-grade rights management request"""    content_id: str
     creator_id: str
     creator_type: str
     rights_types: List[RightsType]
@@ -212,8 +200,7 @@ class RightsRequest:
 
 @dataclass
 class RightsResult:
-    """Comprehensive rights management result with actionable insights"""
-    rights_id: str
+    """Comprehensive rights management result with actionable insights"""    rights_id: str
     content_id: str
     creator_id: str
     creator_type: str
@@ -235,8 +222,7 @@ class RightsResult:
 
 
 class RightsManager:
-    """
-    Ultra-Advanced Enterprise Rights Management Engine
+    """    Ultra-Advanced Enterprise Rights Management Engine
     
     Revolutionary rights protection system providing industrial-strength capabilities
     for comprehensive content rights protection, copyright verification, and automated
@@ -258,8 +244,7 @@ class RightsManager:
     - Photographers: Image rights, usage tracking, model releases, location permissions
     - Influencers: Brand partnership compliance, FTC disclosure, sponsored content tracking
     - Comedians: Performance rights, script protection, venue licensing, broadcast rights
-    """
-    
+    """    
     def __init__(self):
         self.settings = get_settings()
         self.logger = logging.getLogger(__name__)
@@ -287,8 +272,7 @@ class RightsManager:
         request: RightsRequest,
         session: AsyncSession = None
     ) -> RightsResult:
-        """
-        Register comprehensive rights protection for creator content
+        """        Register comprehensive rights protection for creator content
         
         Args:
             request: Rights registration configuration
@@ -296,8 +280,7 @@ class RightsManager:
             
         Returns:
             RightsResult: Complete rights registration results
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         rights_id = f"rights_{request.content_id}_{uuid.uuid4().hex[:8]}"
         
         try:
@@ -358,8 +341,7 @@ class RightsManager:
             )
     
     def _load_copyright_frameworks(self) -> Dict[str, Any]:
-        """Load international copyright law frameworks"""
-        return {
+        """Load international copyright law frameworks"""        return {
             "us_copyright": {
                 "duration": "life_plus_70",
                 "registration_required": False,
@@ -378,8 +360,7 @@ class RightsManager:
         }
     
     def _load_licensing_templates(self) -> Dict[str, Any]:
-        """Load licensing agreement templates"""
-        return {
+        """Load licensing agreement templates"""        return {
             "standard_license": {},
             "creative_commons": {},
             "commercial_license": {},
@@ -387,8 +368,7 @@ class RightsManager:
         }
     
     def _load_creator_rights_profiles(self) -> Dict[str, Any]:
-        """Load creator-specific rights management profiles"""
-        return {
+        """Load creator-specific rights management profiles"""        return {
             "musician": {
                 "primary_rights": ["copyright", "performance_rights", "mechanical_rights"],
                 "monitoring_focus": ["audio_fingerprinting", "sampling_detection"],
@@ -407,8 +387,7 @@ class RightsManager:
         }
     
     async def _analyze_content_rights(self, request: RightsRequest) -> Dict[str, Any]:
-        """Analyze content to determine rights requirements"""
-        return {
+        """Analyze content to determine rights requirements"""        return {
             "content_type": "determined_from_analysis",
             "originality_score": 0.95,
             "derivative_elements": [],
@@ -422,8 +401,7 @@ class RightsManager:
         request: RightsRequest,
         analysis: Dict[str, Any]
     ) -> RightsRegistration:
-        """Create comprehensive rights registration"""
-        return RightsRegistration(
+        """Create comprehensive rights registration"""        return RightsRegistration(
             registration_id=rights_id,
             content_id=request.content_id,
             creator_id=request.creator_id,
@@ -443,38 +421,32 @@ class RightsManager:
         )
     
     async def _setup_infringement_monitoring(self, rights_id: str, request: RightsRequest):
-        """Set up automated infringement monitoring"""
-        self.logger.info(f"Setting up infringement monitoring for {rights_id}")
+        """Set up automated infringement monitoring"""        self.logger.info(f"Setting up infringement monitoring for {rights_id}")
     
     async def _setup_licensing_framework(self, rights_id: str, request: RightsRequest):
-        """Set up automated licensing framework"""
-        self.logger.info(f"Setting up licensing framework for {rights_id}")
+        """Set up automated licensing framework"""        self.logger.info(f"Setting up licensing framework for {rights_id}")
     
     async def _register_blockchain_rights(self, registration: RightsRegistration) -> str:
-        """Register rights on blockchain for immutable proof"""
-        return hashlib.sha256(
+        """Register rights on blockchain for immutable proof"""        return hashlib.sha256(
             f"{registration.registration_id}_{registration.registration_date}".encode()
         ).hexdigest()
     
     def _generate_rights_recommendations(self, request: RightsRequest) -> List[str]:
-        """Generate rights management recommendations"""
-        return [
+        """Generate rights management recommendations"""        return [
             "Enable continuous monitoring for maximum protection",
             "Consider international registration for global protection",
             "Set up automated licensing for revenue optimization"
         ]
     
     def _generate_next_actions(self, request: RightsRequest) -> List[str]:
-        """Generate recommended next actions"""
-        return [
+        """Generate recommended next actions"""        return [
             "Monitor protection status in dashboard",
             "Review licensing opportunities",
             "Update protection settings as needed"
         ]
     
     async def _estimate_content_value(self, request: RightsRequest) -> Dict[str, float]:
-        """Estimate content value for rights management"""
-        return {
+        """Estimate content value for rights management"""        return {
             "licensing_potential": 1000.0,
             "infringement_risk": 0.15,
             "market_value": 5000.0,

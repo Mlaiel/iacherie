@@ -1,5 +1,4 @@
-"""
-Monetization Performance Monitor - Revenue & Business Intelligence for IA Influencer Agent
+"""Monetization Performance Monitor - Revenue & Business Intelligence for IA Influencer Agent
 
 Advanced monitoring system for tracking monetization performance, revenue optimization,
 and business intelligence analytics for content creators on the platform.
@@ -13,9 +12,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute violation sera poursuivie selon les lois en vigueur.
-"""
-
-import asyncio
+"""import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -36,8 +33,7 @@ from ...ai.analysis.monetization_ai import MonetizationAnalyzer
 
 
 class RevenueSource(Enum):
-    """Revenue sources for content creators"""
-    PLATFORM_STREAMING = "platform_streaming"        # Spotify, YouTube Music, etc.
+    """Revenue sources for content creators"""    PLATFORM_STREAMING = "platform_streaming"        # Spotify, YouTube Music, etc.
     CONTENT_LICENSING = "content_licensing"           # Licensing fees for content use
     COLLABORATION_FEES = "collaboration_fees"        # Creator collaboration revenue
     SUBSCRIPTION_REVENUE = "subscription_revenue"    # Premium subscriptions
@@ -50,8 +46,7 @@ class RevenueSource(Enum):
 
 
 class MonetizationStage(Enum):
-    """Monetization pipeline stages"""
-    CONTENT_ANALYSIS = "content_analysis"           # AI content value analysis
+    """Monetization pipeline stages"""    CONTENT_ANALYSIS = "content_analysis"           # AI content value analysis
     PRICING_OPTIMIZATION = "pricing_optimization"   # Dynamic pricing optimization
     PLATFORM_MATCHING = "platform_matching"        # Best platform selection
     AUDIENCE_TARGETING = "audience_targeting"       # Audience optimization
@@ -63,8 +58,7 @@ class MonetizationStage(Enum):
 
 @dataclass
 class MonetizationMetrics:
-    """Monetization performance metrics"""
-    creator_id: str
+    """Monetization performance metrics"""    creator_id: str
     content_id: str
     revenue_source: RevenueSource
     monetization_stage: MonetizationStage
@@ -82,8 +76,7 @@ class MonetizationMetrics:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for JSON serialization"""
-        return {
+        """Convert to dictionary for JSON serialization"""        return {
             'creator_id': self.creator_id,
             'content_id': self.content_id,
             'revenue_source': self.revenue_source.value,
@@ -105,8 +98,7 @@ class MonetizationMetrics:
 
 @dataclass
 class MonetizationPerformanceSnapshot:
-    """Monetization performance snapshot"""
-    timestamp: datetime
+    """Monetization performance snapshot"""    timestamp: datetime
     total_active_creators: int
     total_revenue_24h: Decimal
     average_creator_revenue: Decimal
@@ -119,8 +111,7 @@ class MonetizationPerformanceSnapshot:
     ai_optimization_impact: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'timestamp': self.timestamp.isoformat(),
             'total_active_creators': self.total_active_creators,
             'total_revenue_24h': float(self.total_revenue_24h),
@@ -136,8 +127,7 @@ class MonetizationPerformanceSnapshot:
 
 
 class MonetizationPerformanceMonitor:
-    """
-    Advanced monetization performance monitoring for IA Influencer Agent platform.
+    """    Advanced monetization performance monitoring for IA Influencer Agent platform.
     
     Tracks and optimizes:
     - Multi-platform revenue streams
@@ -146,8 +136,7 @@ class MonetizationPerformanceMonitor:
     - Real-time business intelligence
     - ROI and performance analytics
     - Cross-platform revenue correlation
-    """
-    
+    """    
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
@@ -207,8 +196,7 @@ class MonetizationPerformanceMonitor:
     async def track_revenue_event(self, creator_id: str, content_id: str, 
                                  revenue_source: RevenueSource, revenue_amount: Decimal,
                                  platform_name: str = "", metadata: Dict[str, Any] = None) -> None:
-        """Track a revenue generation event"""
-        try:
+        """Track a revenue generation event"""        try:
             metrics = MonetizationMetrics(
                 creator_id=creator_id,
                 content_id=content_id,
@@ -249,8 +237,7 @@ class MonetizationPerformanceMonitor:
             raise
     
     async def _enrich_monetization_metrics(self, metrics: MonetizationMetrics) -> None:
-        """Enrich monetization metrics with additional calculations"""
-        try:
+        """Enrich monetization metrics with additional calculations"""        try:
             # Get platform configuration
             platform_config = self.platform_configs.get(metrics.platform_name.lower(), {})
             
@@ -272,8 +259,7 @@ class MonetizationPerformanceMonitor:
             self.logger.error(f"Error enriching monetization metrics: {e}")
     
     async def _get_content_audience_data(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Get audience data for content"""
-        try:
+        """Get audience data for content"""        try:
             # Try cache first
             cached_data = await self.cache.get(f"content:{content_id}:audience")
             if cached_data:
@@ -281,8 +267,7 @@ class MonetizationPerformanceMonitor:
             
             # Query database for audience data
             async with get_database_session() as session:
-                result = await session.execute(text("""
-                    SELECT audience_reach, engagement_rate, platform_metrics
+                result = await session.execute(text("""                    SELECT audience_reach, engagement_rate, platform_metrics
                     FROM content_analytics 
                     WHERE content_id = :content_id
                     ORDER BY created_at DESC LIMIT 1
@@ -312,8 +297,7 @@ class MonetizationPerformanceMonitor:
             return None
     
     async def _calculate_roi(self, metrics: MonetizationMetrics) -> float:
-        """Calculate ROI for monetization effort"""
-        try:
+        """Calculate ROI for monetization effort"""        try:
             # Get content production cost (simplified calculation)
             production_cost = await self._get_content_production_cost(metrics.content_id)
             if production_cost > 0:
@@ -327,8 +311,7 @@ class MonetizationPerformanceMonitor:
             return 0.0
     
     async def _get_content_production_cost(self, content_id: str) -> float:
-        """Get estimated production cost for content"""
-        try:
+        """Get estimated production cost for content"""        try:
             # This would typically come from content metadata or cost tracking
             # For now, return a simplified estimate based on content type
             cached_cost = await self.cache.get(f"content:{content_id}:production_cost")
@@ -343,8 +326,7 @@ class MonetizationPerformanceMonitor:
             return 10.0
     
     async def _calculate_optimization_score(self, metrics: MonetizationMetrics) -> float:
-        """Calculate optimization score based on multiple factors"""
-        try:
+        """Calculate optimization score based on multiple factors"""        try:
             score = 0.0
             
             # Conversion rate score (30%)
@@ -378,11 +360,9 @@ class MonetizationPerformanceMonitor:
             return 0.0
     
     async def _store_monetization_metrics(self, metrics: MonetizationMetrics) -> None:
-        """Store monetization metrics in database"""
-        try:
+        """Store monetization metrics in database"""        try:
             async with get_database_session() as session:
-                await session.execute(text("""
-                    INSERT INTO monetization_metrics 
+                await session.execute(text("""                    INSERT INTO monetization_metrics 
                     (creator_id, content_id, revenue_source, monetization_stage, timestamp,
                      revenue_amount, currency, platform_name, audience_reach, engagement_rate,
                      conversion_rate, cost_per_acquisition, lifetime_value, roi_percentage,
@@ -415,8 +395,7 @@ class MonetizationPerformanceMonitor:
             self.logger.error(f"Error storing monetization metrics: {e}")
     
     async def _check_monetization_performance(self, metrics: MonetizationMetrics) -> None:
-        """Check monetization performance against thresholds"""
-        try:
+        """Check monetization performance against thresholds"""        try:
             alerts = []
             
             # Check conversion rate
@@ -451,8 +430,7 @@ class MonetizationPerformanceMonitor:
             self.logger.error(f"Error checking monetization performance: {e}")
     
     async def _send_monetization_alert(self, metrics: MonetizationMetrics, alert: Dict[str, Any]) -> None:
-        """Send monetization performance alert"""
-        try:
+        """Send monetization performance alert"""        try:
             alert_data = {
                 'alert_type': 'monetization_performance',
                 'creator_id': metrics.creator_id,
@@ -478,8 +456,7 @@ class MonetizationPerformanceMonitor:
             self.logger.error(f"Error sending monetization alert: {e}")
     
     async def get_creator_revenue_analytics(self, creator_id: str, days: int = 30) -> Dict[str, Any]:
-        """Get comprehensive revenue analytics for a creator"""
-        try:
+        """Get comprehensive revenue analytics for a creator"""        try:
             cutoff_time = datetime.utcnow() - timedelta(days=days)
             
             # Get creator's monetization data
@@ -534,8 +511,7 @@ class MonetizationPerformanceMonitor:
             return {"error": str(e)}
     
     async def _calculate_revenue_growth_trend(self, creator_id: str, days: int) -> float:
-        """Calculate revenue growth trend for creator"""
-        try:
+        """Calculate revenue growth trend for creator"""        try:
             # Split period into two halves
             half_days = days // 2
             cutoff_time = datetime.utcnow() - timedelta(days=days)
@@ -565,8 +541,7 @@ class MonetizationPerformanceMonitor:
             return 0.0
     
     async def get_platform_performance_comparison(self) -> Dict[str, Any]:
-        """Get performance comparison across platforms"""
-        try:
+        """Get performance comparison across platforms"""        try:
             platform_metrics = defaultdict(lambda: {
                 'total_revenue': 0.0,
                 'event_count': 0,
@@ -613,5 +588,4 @@ class MonetizationPerformanceMonitor:
 
 
 async def create_monetization_performance_monitor(settings: Settings) -> MonetizationPerformanceMonitor:
-    """Factory function to create monetization performance monitor"""
-    return MonetizationPerformanceMonitor(settings)
+    """Factory function to create monetization performance monitor"""    return MonetizationPerformanceMonitor(settings)

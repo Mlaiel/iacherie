@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""
-🕷️ WEB CRAWLER INTELLIGENCE - ENTERPRISE AI-POWERED SURVEILLANCE SYSTEM
+"""🕷️ WEB CRAWLER INTELLIGENCE - ENTERPRISE AI-POWERED SURVEILLANCE SYSTEM
 =========================================================================
 
 Ultra-advanced web surveillance and intelligent crawling system featuring
@@ -53,9 +52,7 @@ UNAUTHORIZED USE IS STRICTLY PROHIBITED AND LEGALLY PROSECUTED.
 Respects robots.txt and platform terms of service.
 Contact: mlaiel@live.de for enterprise licensing.
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import base64
 import hashlib
 import json
@@ -119,8 +116,7 @@ from backend.utils.exceptions import (
 logger = logging.getLogger(__name__)
 
 class CrawlingStatus:
-    """Statuts de crawling."""
-    SCHEDULED = "scheduled"
+    """Statuts de crawling."""    SCHEDULED = "scheduled"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -128,15 +124,13 @@ class CrawlingStatus:
     RATE_LIMITED = "rate_limited"
 
 class DetectionType:
-    """Types de détection."""
-    EXACT_MATCH = "exact_match"
+    """Types de détection."""    EXACT_MATCH = "exact_match"
     HIGH_SIMILARITY = "high_similarity"
     PARTIAL_MATCH = "partial_match"
     SUSPICIOUS = "suspicious"
 
 class PlatformCrawler:
-    """Crawlers spécialisés par plateforme."""
-    YOUTUBE = "youtube"
+    """Crawlers spécialisés par plateforme."""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -144,8 +138,7 @@ class PlatformCrawler:
     GENERIC_WEB = "generic_web"
 
 class WebCrawlerIntelligence:
-    """
-    🕷️ SYSTÈME DE SURVEILLANCE WEB ULTRA-AVANCÉ
+    """    🕷️ SYSTÈME DE SURVEILLANCE WEB ULTRA-AVANCÉ
     
     Intelligence de crawling distribué utilisant l'IA pour la surveillance
     automatique et la détection de violations de contenu en temps réel.
@@ -157,11 +150,9 @@ class WebCrawlerIntelligence:
     - Evidence automatique : Screenshots + metadata capture
     - Real-time : <5s violation alert
     - Scalabilité : Multi-threading + async processing
-    """
-    
+    """    
     def __init__(self):
-        """Initialisation du système de surveillance web."""
-        self.settings = get_settings()
+        """Initialisation du système de surveillance web."""        self.settings = get_settings()
         self.redis_client = None
         self.elasticsearch_client = None
         self.s3_client = None
@@ -236,8 +227,7 @@ class WebCrawlerIntelligence:
         self._initialize_ai_models()
     
     async def initialize(self):
-        """Initialisation asynchrone des connexions et services."""
-        try:
+        """Initialisation asynchrone des connexions et services."""        try:
             # Database connections
             self.redis_client = await get_redis_client()
             self.elasticsearch_client = AsyncElasticsearch([
@@ -266,8 +256,7 @@ class WebCrawlerIntelligence:
             raise CrawlingError(f"Initialization failed: {e}")
     
     def _initialize_ai_models(self):
-        """Initialisation des modèles IA pour la détection."""
-        try:
+        """Initialisation des modèles IA pour la détection."""        try:
             # CLIP model for image/video similarity
             self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
             self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -290,8 +279,7 @@ class WebCrawlerIntelligence:
         search_terms: List[str],
         monitoring_frequency: int = 3600  # seconds
     ) -> Dict[str, Any]:
-        """
-        🗓️ PLANIFICATION DE CAMPAGNE DE SURVEILLANCE
+        """        🗓️ PLANIFICATION DE CAMPAGNE DE SURVEILLANCE
         
         Planifie une campagne de surveillance automatique pour détecter
         les violations de contenu sur les plateformes spécifiées.
@@ -305,8 +293,7 @@ class WebCrawlerIntelligence:
             
         Returns:
             Dict contenant les détails de la campagne
-        """
-        try:
+        """        try:
             # Create campaign record
             campaign = {
                 'id': str(uuid.uuid4()),
@@ -363,13 +350,11 @@ class WebCrawlerIntelligence:
         platform: str,
         search_terms: List[str]
     ) -> Dict[str, Any]:
-        """
-        🔍 EXÉCUTION DE SESSION DE CRAWLING
+        """        🔍 EXÉCUTION DE SESSION DE CRAWLING
         
         Exécute une session de crawling sur une plateforme spécifique
         avec détection IA en temps réel.
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         session_id = str(uuid.uuid4())
         
         try:
@@ -473,8 +458,7 @@ class WebCrawlerIntelligence:
             raise CrawlingError(f"Crawling session failed: {e}")
     
     async def _get_platform_crawler(self, platform: str):
-        """Obtient le crawler spécialisé pour la plateforme."""
-        if platform == PlatformCrawler.YOUTUBE:
+        """Obtient le crawler spécialisé pour la plateforme."""        if platform == PlatformCrawler.YOUTUBE:
             return YouTubeCrawler(self)
         elif platform == PlatformCrawler.INSTAGRAM:
             return InstagramCrawler(self)
@@ -491,8 +475,7 @@ class WebCrawlerIntelligence:
         fingerprint_data: Dict[str, Any],
         platform: str
     ) -> Optional[Dict[str, Any]]:
-        """Analyse le contenu pour détecter les violations."""
-        try:
+        """Analyse le contenu pour détecter les violations."""        try:
             # Calculate similarity score
             similarity_score = await self._calculate_content_similarity(
                 content_data,
@@ -544,8 +527,7 @@ class WebCrawlerIntelligence:
         content_data: Dict[str, Any],
         fingerprint_data: Dict[str, Any]
     ) -> float:
-        """Calcule la similarité entre le contenu trouvé et l'empreinte."""
-        try:
+        """Calcule la similarité entre le contenu trouvé et l'empreinte."""        try:
             similarity_scores = []
             
             # Text similarity (title, description)
@@ -583,8 +565,7 @@ class WebCrawlerIntelligence:
             return 0.0
     
     def _calculate_text_similarity(self, text1: str, text2: str) -> float:
-        """Calcule la similarité textuelle."""
-        try:
+        """Calcule la similarité textuelle."""        try:
             # Use sentence transformers
             embedding1 = self.text_model.encode(text1)
             embedding2 = self.text_model.encode(text2)
@@ -601,8 +582,7 @@ class WebCrawlerIntelligence:
             return 0.0
     
     async def _calculate_image_similarity(self, image_url: str, reference_hash: str) -> float:
-        """Calcule la similarité d'image."""
-        try:
+        """Calcule la similarité d'image."""        try:
             # Download image
             async with aiohttp.ClientSession() as session:
                 async with session.get(image_url) as response:
@@ -627,8 +607,7 @@ class WebCrawlerIntelligence:
             return 0.0
     
     def _calculate_metadata_similarity(self, metadata1: Dict, metadata2: Dict) -> float:
-        """Calcule la similarité des métadonnées."""
-        try:
+        """Calcule la similarité des métadonnées."""        try:
             # Simple metadata comparison
             common_keys = set(metadata1.keys()) & set(metadata2.keys())
             
@@ -651,8 +630,7 @@ class WebCrawlerIntelligence:
         violation: Dict[str, Any],
         session_id: str
     ) -> Optional[Dict[str, Any]]:
-        """Collecte automatique de preuves pour violation."""
-        try:
+        """Collecte automatique de preuves pour violation."""        try:
             evidence = {
                 'id': str(uuid.uuid4()),
                 'violation_id': violation['id'],
@@ -697,8 +675,7 @@ class WebCrawlerIntelligence:
             return None
     
     async def _capture_violation_screenshot(self, url: str) -> Optional[str]:
-        """Capture une capture d'écran de la violation."""
-        try:
+        """Capture une capture d'écran de la violation."""        try:
             # Get available driver from pool
             driver = await self._get_driver_from_pool()
             
@@ -722,8 +699,7 @@ class WebCrawlerIntelligence:
             return None
     
     async def _upload_evidence_to_s3(self, file_path: str, evidence_type: str) -> str:
-        """Upload evidence file to S3."""
-        try:
+        """Upload evidence file to S3."""        try:
             bucket_name = self.settings.EVIDENCE_S3_BUCKET
             key = f"evidence/{evidence_type}/{datetime.utcnow().strftime('%Y/%m/%d')}/{Path(file_path).name}"
             
@@ -743,13 +719,11 @@ class WebCrawlerIntelligence:
         user_id: Optional[int] = None,
         time_range: str = '30d'
     ) -> Dict[str, Any]:
-        """
-        📊 ANALYTICS DE SURVEILLANCE
+        """        📊 ANALYTICS DE SURVEILLANCE
         
         Fournit des analytics détaillées sur les campagnes de surveillance
         et les performances de détection.
-        """
-        try:
+        """        try:
             # Calculate time range
             time_ranges = {
                 '24h': timedelta(days=1),
@@ -837,8 +811,7 @@ class WebCrawlerIntelligence:
     # Platform-specific crawler implementations
     
     async def _load_proxy_pools(self):
-        """Charge les pools de proxies."""
-        try:
+        """Charge les pools de proxies."""        try:
             # Load from configuration or external service
             # Placeholder implementation
             logger.info("Proxy pools loaded")
@@ -846,8 +819,7 @@ class WebCrawlerIntelligence:
             logger.error(f"❌ Failed to load proxy pools: {e}")
     
     async def _initialize_driver_pool(self):
-        """Initialise le pool de drivers Selenium."""
-        try:
+        """Initialise le pool de drivers Selenium."""        try:
             # Create pool of Chrome drivers
             self.driver_pool = []
             for i in range(5):  # Pool of 5 drivers
@@ -867,20 +839,17 @@ class WebCrawlerIntelligence:
             self.driver_pool = []
     
     async def _get_driver_from_pool(self):
-        """Obtient un driver du pool."""
-        if self.driver_pool:
+        """Obtient un driver du pool."""        if self.driver_pool:
             return self.driver_pool.pop()
         return None
     
     async def _return_driver_to_pool(self, driver):
-        """Remet un driver dans le pool."""
-        if driver and len(self.driver_pool) < 5:
+        """Remet un driver dans le pool."""        if driver and len(self.driver_pool) < 5:
             self.driver_pool.append(driver)
     
     # Helper methods for data operations
     async def _get_campaign_data(self, campaign_id: str) -> Optional[Dict[str, Any]]:
-        """Récupère les données de campagne."""
-        try:
+        """Récupère les données de campagne."""        try:
             redis_key = f"surveillance_campaign:{campaign_id}"
             data = await self.redis_client.get(redis_key)
             if data:
@@ -891,8 +860,7 @@ class WebCrawlerIntelligence:
             return None
     
     async def _get_fingerprint_data(self, fingerprint_id: str) -> Dict[str, Any]:
-        """Récupère les données d'empreinte."""
-        try:
+        """Récupère les données d'empreinte."""        try:
             redis_key = f"fingerprint:{fingerprint_id}"
             data = await self.redis_client.get(redis_key)
             if data:
@@ -904,21 +872,18 @@ class WebCrawlerIntelligence:
             raise
     
     async def _schedule_next_crawl(self, campaign: Dict[str, Any]):
-        """Planifie le prochain crawl."""
-        # Implementation would use Celery or similar task queue
+        """Planifie le prochain crawl."""        # Implementation would use Celery or similar task queue
         logger.info(f"Next crawl scheduled for campaign {campaign['id']}")
     
     async def _respect_rate_limits(self, platform: str):
-        """Respecte les limites de taux de la plateforme."""
-        config = self.platform_configs.get(platform, {})
+        """Respecte les limites de taux de la plateforme."""        config = self.platform_configs.get(platform, {})
         delay_range = config.get('delay_range', (2, 5))
         delay = random.uniform(delay_range[0], delay_range[1])
         await asyncio.sleep(delay)
     
     # Storage methods
     async def _store_crawling_session(self, session_data: Dict[str, Any]):
-        """Stocke les données de session de crawling."""
-        try:
+        """Stocke les données de session de crawling."""        try:
             await self.elasticsearch_client.index(
                 index="crawling_sessions",
                 id=session_data['session_id'],
@@ -928,8 +893,7 @@ class WebCrawlerIntelligence:
             logger.error(f"❌ Failed to store crawling session: {e}")
     
     async def _store_evidence_record(self, evidence: Dict[str, Any]):
-        """Stocke l'enregistrement de preuve."""
-        try:
+        """Stocke l'enregistrement de preuve."""        try:
             await self.elasticsearch_client.index(
                 index="evidence_records",
                 id=evidence['id'],
@@ -939,8 +903,7 @@ class WebCrawlerIntelligence:
             logger.error(f"❌ Failed to store evidence record: {e}")
     
     async def _update_campaign_statistics(self, campaign_id: str, session_data: Dict[str, Any]):
-        """Met à jour les statistiques de campagne."""
-        try:
+        """Met à jour les statistiques de campagne."""        try:
             # Update campaign counters
             redis_key = f"surveillance_campaign:{campaign_id}"
             campaign_data = await self.redis_client.get(redis_key)
@@ -959,13 +922,11 @@ class WebCrawlerIntelligence:
             logger.error(f"❌ Failed to update campaign statistics: {e}")
     
     async def _send_violation_alerts(self, campaign_id: str, violations: List[Dict[str, Any]]):
-        """Envoie des alertes pour violations détectées."""
-        # Implementation would send emails, webhooks, etc.
+        """Envoie des alertes pour violations détectées."""        # Implementation would send emails, webhooks, etc.
         logger.info(f"Violation alerts sent for campaign {campaign_id}: {len(violations)} violations")
     
     async def _archive_violation_page(self, url: str) -> Optional[str]:
-        """Archive le contenu de la page de violation."""
-        try:
+        """Archive le contenu de la page de violation."""        try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
                     if response.status == 200:
@@ -976,8 +937,7 @@ class WebCrawlerIntelligence:
             return None
     
     async def _save_page_content(self, content: str, violation_id: str) -> str:
-        """Sauvegarde le contenu de page."""
-        file_path = f"/tmp/page_content_{violation_id}.html"
+        """Sauvegarde le contenu de page."""        file_path = f"/tmp/page_content_{violation_id}.html"
         async with aiofiles.open(file_path, 'w', encoding='utf-8') as f:
             await f.write(content)
         return file_path
@@ -985,15 +945,13 @@ class WebCrawlerIntelligence:
 # Platform-specific crawler classes
 
 class YouTubeCrawler:
-    """Crawler spécialisé pour YouTube."""
-    
+    """Crawler spécialisé pour YouTube."""    
     def __init__(self, parent):
         self.parent = parent
         self.config = parent.platform_configs[PlatformCrawler.YOUTUBE]
     
     async def search_content(self, search_term: str) -> List[Dict[str, Any]]:
-        """Recherche de contenu sur YouTube."""
-        try:
+        """Recherche de contenu sur YouTube."""        try:
             search_url = f"{self.config['base_url']}{self.config['search_endpoint']}{search_term}"
             
             # Use requests with proxy rotation
@@ -1012,8 +970,7 @@ class YouTubeCrawler:
             return []
     
     def _parse_youtube_results(self, html: str) -> List[Dict[str, Any]]:
-        """Parse les résultats de recherche YouTube."""
-        try:
+        """Parse les résultats de recherche YouTube."""        try:
             soup = BeautifulSoup(html, 'html.parser')
             results = []
             
@@ -1035,40 +992,34 @@ class YouTubeCrawler:
             return []
 
 class InstagramCrawler:
-    """Crawler spécialisé pour Instagram."""
-    
+    """Crawler spécialisé pour Instagram."""    
     def __init__(self, parent):
         self.parent = parent
         self.config = parent.platform_configs[PlatformCrawler.INSTAGRAM]
     
     async def search_content(self, search_term: str) -> List[Dict[str, Any]]:
-        """Recherche de contenu sur Instagram."""
-        # Instagram requires more sophisticated handling due to anti-bot measures
+        """Recherche de contenu sur Instagram."""        # Instagram requires more sophisticated handling due to anti-bot measures
         logger.info(f"Instagram search for: {search_term}")
         return []  # Placeholder
 
 class TikTokCrawler:
-    """Crawler spécialisé pour TikTok."""
-    
+    """Crawler spécialisé pour TikTok."""    
     def __init__(self, parent):
         self.parent = parent
         self.config = parent.platform_configs[PlatformCrawler.TIKTOK]
     
     async def search_content(self, search_term: str) -> List[Dict[str, Any]]:
-        """Recherche de contenu sur TikTok."""
-        # TikTok requires specialized handling
+        """Recherche de contenu sur TikTok."""        # TikTok requires specialized handling
         logger.info(f"TikTok search for: {search_term}")
         return []  # Placeholder
 
 class GenericWebCrawler:
-    """Crawler générique pour sites web."""
-    
+    """Crawler générique pour sites web."""    
     def __init__(self, parent):
         self.parent = parent
     
     async def search_content(self, search_term: str) -> List[Dict[str, Any]]:
-        """Recherche générique sur le web."""
-        try:
+        """Recherche générique sur le web."""        try:
             # Use search engines for generic web crawling
             search_engines = [
                 f"https://www.google.com/search?q={search_term}",
@@ -1093,8 +1044,7 @@ class GenericWebCrawler:
             return []
     
     def _parse_search_results(self, html: str) -> List[Dict[str, Any]]:
-        """Parse les résultats de moteur de recherche."""
-        try:
+        """Parse les résultats de moteur de recherche."""        try:
             soup = BeautifulSoup(html, 'html.parser')
             results = []
             
@@ -1116,8 +1066,7 @@ class GenericWebCrawler:
 
 # Factory function
 async def create_web_crawler_intelligence() -> WebCrawlerIntelligence:
-    """Factory pour créer et initialiser le système de surveillance web."""
-    crawler = WebCrawlerIntelligence()
+    """Factory pour créer et initialiser le système de surveillance web."""    crawler = WebCrawlerIntelligence()
     await crawler.initialize()
     return crawler
 

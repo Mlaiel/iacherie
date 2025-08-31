@@ -1,5 +1,4 @@
-"""
-Enterprise Features Module
+"""Enterprise Features Module
 ==========================
 
 Advanced enterprise-grade features for the Ainflue platform including
@@ -34,9 +33,7 @@ von Fahed Mlaiel ist strengstens untersagt und wird rechtlich verfolgt.
 International Copyright Protection:
 This work is protected under the Berne Convention and applicable international
 copyright treaties. All rights reserved worldwide.
-"""
-
-from .white_label_manager import (
+"""from .white_label_manager import (
     WhiteLabelManager,
     WhiteLabelConfiguration,
     BrandingTheme,

@@ -1,5 +1,4 @@
-"""
-Analysis Module Index
+"""Analysis Module Index
 ====================
 
 Professional content analysis system entry point with unified interface.
@@ -22,9 +21,7 @@ Expertise combinée:
 - Audio/Vidéo: Traitement multimédia et analyse de contenu
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Type, Union
 from dataclasses import dataclass
@@ -49,8 +46,7 @@ from .realtime_violation_detector import RealTimeViolationDetector
 logger = logging.getLogger(__name__)
 
 class AnalyzerType(Enum):
-    """Available analyzer types."""
-    CONTENT = "content"
+    """Available analyzer types."""    CONTENT = "content"
     CLASSIFIER = "classifier"
     COMPETITIVE = "competitive"
     ENGAGEMENT = "engagement"
@@ -66,8 +62,7 @@ class AnalyzerType(Enum):
 
 @dataclass
 class AnalysisCapabilities:
-    """Analysis system capabilities."""
-    supported_content_types: List[str]
+    """Analysis system capabilities."""    supported_content_types: List[str]
     supported_platforms: List[str]
     real_time_monitoring: bool
     batch_processing: bool
@@ -76,8 +71,7 @@ class AnalysisCapabilities:
     processing_speed: str
     
 class AnalysisModuleIndex:
-    """
-    Unified interface for all content analysis capabilities.
+    """    Unified interface for all content analysis capabilities.
     
     This class provides a centralized access point to all analysis modules,
     enabling easy integration and orchestration of complex analysis workflows.
@@ -89,11 +83,9 @@ class AnalysisModuleIndex:
     - Batch processing coordination
     - Error handling and recovery
     - Configuration management
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the analysis module index."""
-        self.config = config or {}
+        """Initialize the analysis module index."""        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
         # Initialize analyzer registry
@@ -129,8 +121,7 @@ class AnalysisModuleIndex:
         self.logger.info("AnalysisModuleIndex initialized successfully")
     
     def _initialize_core_analyzers(self) -> None:
-        """Initialize core analyzers automatically."""
-        core_analyzers = [
+        """Initialize core analyzers automatically."""        core_analyzers = [
             AnalyzerType.CONTENT,
             AnalyzerType.FINGERPRINT,
             AnalyzerType.SENTIMENT,
@@ -145,16 +136,14 @@ class AnalysisModuleIndex:
                 self.logger.error(f"Failed to initialize core analyzer {analyzer_type.value}: {e}")
     
     def get_analyzer(self, analyzer_type: AnalyzerType) -> Any:
-        """
-        Get or create analyzer instance.
+        """        Get or create analyzer instance.
         
         Args:
             analyzer_type: Type of analyzer to retrieve
             
         Returns:
             Analyzer instance
-        """
-        if analyzer_type not in self.analyzers:
+        """        if analyzer_type not in self.analyzers:
             if analyzer_type not in self.analyzer_classes:
                 raise ValueError(f"Unknown analyzer type: {analyzer_type}")
             
@@ -179,8 +168,7 @@ class AnalysisModuleIndex:
         content_id: str,
         analysis_types: Optional[List[AnalyzerType]] = None
     ) -> Dict[str, Any]:
-        """
-        Perform comprehensive content analysis using multiple analyzers.
+        """        Perform comprehensive content analysis using multiple analyzers.
         
         Args:
             content_data: Content to analyze
@@ -190,8 +178,7 @@ class AnalysisModuleIndex:
             
         Returns:
             Comprehensive analysis results
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         results = {
             'content_id': content_id,
             'content_type': content_type,
@@ -272,8 +259,7 @@ class AnalysisModuleIndex:
         content_type: str,
         content_id: str
     ) -> Any:
-        """Run single analyzer analysis."""
-        try:
+        """Run single analyzer analysis."""        try:
             # Route to appropriate analysis method based on analyzer type
             if analyzer_type == AnalyzerType.CONTENT:
                 return await analyzer.analyze_content(content_data, content_type, content_id)
@@ -318,8 +304,7 @@ class AnalysisModuleIndex:
         analysis_types: Optional[List[AnalyzerType]] = None,
         batch_size: int = 10
     ) -> List[Dict[str, Any]]:
-        """
-        Perform batch analysis on multiple content items.
+        """        Perform batch analysis on multiple content items.
         
         Args:
             content_batch: List of content items to analyze
@@ -328,8 +313,7 @@ class AnalysisModuleIndex:
             
         Returns:
             List of analysis results
-        """
-        results = []
+        """        results = []
         
         # Process in batches
         for i in range(0, len(content_batch), batch_size):
@@ -362,8 +346,7 @@ class AnalysisModuleIndex:
         monitoring_targets: List[Dict[str, Any]],
         config: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """
-        Start real-time monitoring for content violations.
+        """        Start real-time monitoring for content violations.
         
         Args:
             monitoring_targets: List of content to monitor
@@ -371,8 +354,7 @@ class AnalysisModuleIndex:
             
         Returns:
             True if monitoring started successfully
-        """
-        try:
+        """        try:
             violation_detector = self.get_analyzer(AnalyzerType.VIOLATION)
             
             # Add monitoring targets
@@ -404,8 +386,7 @@ class AnalysisModuleIndex:
             return False
     
     def get_system_capabilities(self) -> AnalysisCapabilities:
-        """Get system analysis capabilities."""
-        return AnalysisCapabilities(
+        """Get system analysis capabilities."""        return AnalysisCapabilities(
             supported_content_types=['audio', 'video', 'image', 'text', 'document'],
             supported_platforms=['youtube', 'instagram', 'tiktok', 'spotify', 'twitter'],
             real_time_monitoring=True,
@@ -416,8 +397,7 @@ class AnalysisModuleIndex:
         )
     
     def get_analysis_statistics(self) -> Dict[str, Any]:
-        """Get analysis system statistics."""
-        return {
+        """Get analysis system statistics."""        return {
             **self.analysis_stats,
             'available_analyzers': list(self.analyzer_classes.keys()),
             'active_analyzers_list': list(self.analyzers.keys()),
@@ -426,12 +406,10 @@ class AnalysisModuleIndex:
         }
     
     def _get_system_uptime(self) -> str:
-        """Get system uptime (placeholder)."""
-        return "Available on request"
+        """Get system uptime (placeholder)."""        return "Available on request"
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform system health check."""
-        health_status = {
+        """Perform system health check."""        health_status = {
             'status': 'healthy',
             'timestamp': datetime.now(),
             'analyzer_status': {},
@@ -460,8 +438,7 @@ class AnalysisModuleIndex:
         return health_status
     
     def shutdown(self) -> None:
-        """Shutdown all analyzers gracefully."""
-        for analyzer_type, analyzer in self.analyzers.items():
+        """Shutdown all analyzers gracefully."""        for analyzer_type, analyzer in self.analyzers.items():
             try:
                 if hasattr(analyzer, 'shutdown'):
                     analyzer.shutdown()

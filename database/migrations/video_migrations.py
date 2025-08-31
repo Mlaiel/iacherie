@@ -1,5 +1,4 @@
-"""
-🎬 Video Content Migrations - Advanced Video Processing & Protection Schema Evolution
+"""🎬 Video Content Migrations - Advanced Video Processing & Protection Schema Evolution
 ====================================================================================
 Module: backend/database/migrations/video_migrations.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -24,9 +23,7 @@ Video Content Types Supported:
 - Entertainment: Comedy sketches, performances, interviews
 - Live Streams: Concerts, Q&As, gaming, events
 - Promotional Content: Trailers, ads, brand content
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Tuple, Any, Union
 from datetime import datetime, timedelta
@@ -48,8 +45,7 @@ logger = logging.getLogger(__name__)
 
 
 class VideoFormat(Enum):
-    """Supported video formats with compression types"""
-    MP4 = "mp4"
+    """Supported video formats with compression types"""    MP4 = "mp4"
     AVI = "avi"
     MOV = "mov"
     WMV = "wmv"
@@ -60,8 +56,7 @@ class VideoFormat(Enum):
 
 
 class VideoQuality(Enum):
-    """Video quality classifications"""
-    LOW_QUALITY = "low_quality"      # <480p
+    """Video quality classifications"""    LOW_QUALITY = "low_quality"      # <480p
     STANDARD_DEFINITION = "standard_definition"  # 480p
     HIGH_DEFINITION = "high_definition"  # 720p
     FULL_HD = "full_hd"              # 1080p
@@ -71,8 +66,7 @@ class VideoQuality(Enum):
 
 
 class VideoContentType(Enum):
-    """Video content categorization"""
-    MUSIC_VIDEO = "music_video"
+    """Video content categorization"""    MUSIC_VIDEO = "music_video"
     SOCIAL_MEDIA = "social_media"
     EDUCATIONAL = "educational"
     ENTERTAINMENT = "entertainment"
@@ -84,8 +78,7 @@ class VideoContentType(Enum):
 
 @dataclass
 class VideoMigrationConfiguration:
-    """Migration configuration for video processing systems"""
-    enable_frame_analysis: bool = True
+    """Migration configuration for video processing systems"""    enable_frame_analysis: bool = True
     enable_object_detection: bool = True
     enable_scene_detection: bool = True
     enable_ai_enhancement: bool = True
@@ -95,8 +88,7 @@ class VideoMigrationConfiguration:
 
 
 class VideoMigrations:
-    """
-    Ultra-advanced video database migrations for professional video content management
+    """    Ultra-advanced video database migrations for professional video content management
     
     Handles schema evolution for:
     - Video file metadata and technical specifications
@@ -104,21 +96,17 @@ class VideoMigrations:
     - AI-powered video content analysis
     - Scene detection and object recognition
     - Professional video quality assessment
-    """
-    
+    """    
     def __init__(self, migration_manager: EnterpriseMigrationManager):
         self.migration_manager = migration_manager
         self.logger = logging.getLogger(__name__)
     
     async def create_video_files_table(self) -> str:
-        """
-        Create comprehensive video files table with professional metadata support
+        """        Create comprehensive video files table with professional metadata support
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        CREATE TABLE IF NOT EXISTS video_files (
+        """        migration_sql = """        CREATE TABLE IF NOT EXISTS video_files (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             content_id UUID NOT NULL REFERENCES content_items(id) ON DELETE CASCADE,
             creator_id UUID NOT NULL REFERENCES creator_profiles(id) ON DELETE CASCADE,
@@ -240,8 +228,7 @@ class VideoMigrations:
         CREATE INDEX IF NOT EXISTS idx_video_files_objects ON video_files USING GIN(object_detection_results);
         CREATE INDEX IF NOT EXISTS idx_video_files_scenes ON video_files USING GIN(scene_analysis);
         CREATE INDEX IF NOT EXISTS idx_video_files_ai_classification ON video_files USING GIN(ai_classification);
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.SCHEMA,
@@ -250,14 +237,11 @@ class VideoMigrations:
         )
     
     async def create_video_frames_table(self) -> str:
-        """
-        Create video frames table for detailed frame-by-frame analysis
+        """        Create video frames table for detailed frame-by-frame analysis
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        CREATE TABLE IF NOT EXISTS video_frames (
+        """        migration_sql = """        CREATE TABLE IF NOT EXISTS video_frames (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             video_file_id UUID NOT NULL REFERENCES video_files(id) ON DELETE CASCADE,
             
@@ -341,8 +325,7 @@ class VideoMigrations:
         -- Fingerprint matching
         CREATE INDEX IF NOT EXISTS idx_video_frames_perceptual ON video_frames(perceptual_hash) WHERE perceptual_hash IS NOT NULL;
         CREATE INDEX IF NOT EXISTS idx_video_frames_difference ON video_frames(difference_hash) WHERE difference_hash IS NOT NULL;
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.SCHEMA,
@@ -351,14 +334,11 @@ class VideoMigrations:
         )
     
     async def create_video_scenes_table(self) -> str:
-        """
-        Create video scenes table for scene detection and analysis
+        """        Create video scenes table for scene detection and analysis
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        CREATE TABLE IF NOT EXISTS video_scenes (
+        """        migration_sql = """        CREATE TABLE IF NOT EXISTS video_scenes (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             video_file_id UUID NOT NULL REFERENCES video_files(id) ON DELETE CASCADE,
             
@@ -441,8 +421,7 @@ class VideoMigrations:
         
         -- Similarity search
         CREATE INDEX IF NOT EXISTS idx_video_scenes_similarity ON video_scenes(similarity_hash);
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.SCHEMA,
@@ -451,14 +430,11 @@ class VideoMigrations:
         )
     
     async def create_video_fingerprints_table(self) -> str:
-        """
-        Create specialized video fingerprints table for advanced protection
+        """        Create specialized video fingerprints table for advanced protection
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        CREATE TABLE IF NOT EXISTS video_fingerprints (
+        """        migration_sql = """        CREATE TABLE IF NOT EXISTS video_fingerprints (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             video_file_id UUID NOT NULL REFERENCES video_files(id) ON DELETE CASCADE,
             
@@ -537,8 +513,7 @@ class VideoMigrations:
         CREATE INDEX IF NOT EXISTS idx_video_fingerprints_temporal ON video_fingerprints USING GIN(temporal_fingerprints);
         CREATE INDEX IF NOT EXISTS idx_video_fingerprints_motion ON video_fingerprints USING GIN(motion_fingerprints);
         CREATE INDEX IF NOT EXISTS idx_video_fingerprints_params ON video_fingerprints USING GIN(algorithm_parameters);
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.SCHEMA,
@@ -547,14 +522,11 @@ class VideoMigrations:
         )
     
     async def create_video_analytics_table(self) -> str:
-        """
-        Create video-specific analytics table for performance tracking
+        """        Create video-specific analytics table for performance tracking
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        CREATE TABLE IF NOT EXISTS video_analytics (
+        """        migration_sql = """        CREATE TABLE IF NOT EXISTS video_analytics (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             video_file_id UUID NOT NULL REFERENCES video_files(id) ON DELETE CASCADE,
             
@@ -633,8 +605,7 @@ class VideoMigrations:
         CREATE INDEX IF NOT EXISTS idx_video_analytics_platforms ON video_analytics USING GIN(platform_views);
         CREATE INDEX IF NOT EXISTS idx_video_analytics_sources ON video_analytics USING GIN(traffic_sources);
         CREATE INDEX IF NOT EXISTS idx_video_analytics_scenes ON video_analytics USING GIN(most_watched_scenes);
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.SCHEMA,
@@ -643,16 +614,14 @@ class VideoMigrations:
         )
     
     async def execute_full_video_migration(self, config: VideoMigrationConfiguration) -> List[str]:
-        """
-        Execute complete video database migration according to configuration
+        """        Execute complete video database migration according to configuration
         
         Args:
             config: VideoMigrationConfiguration with specific settings
             
         Returns:
             List[str]: Migration IDs for tracking
-        """
-        migration_ids = []
+        """        migration_ids = []
         
         try:
             self.logger.info("Starting comprehensive video database migration")
@@ -678,14 +647,11 @@ class VideoMigrations:
             raise
     
     async def add_video_performance_optimizations(self) -> str:
-        """
-        Add performance optimizations for video processing workloads
+        """        Add performance optimizations for video processing workloads
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        -- Partitioning for video analytics by date
+        """        migration_sql = """        -- Partitioning for video analytics by date
         CREATE TABLE IF NOT EXISTS video_analytics_partitioned (
             LIKE video_analytics INCLUDING DEFAULTS INCLUDING CONSTRAINTS
         ) PARTITION BY RANGE (analytics_date);
@@ -711,8 +677,7 @@ class VideoMigrations:
         -- Large object storage for video fingerprints
         ALTER TABLE video_fingerprints 
         ADD COLUMN IF NOT EXISTS fingerprint_compressed BYTEA;
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.OPTIMIZATION,

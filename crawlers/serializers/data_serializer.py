@@ -1,5 +1,4 @@
-"""
-Serializers Usage Examples
+"""Serializers Usage Examples
 ===========================
 
 Complete usage examples for the IA-Influencer-Agent serialization system.
@@ -11,9 +10,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime
 from typing import List, Dict, Any
@@ -37,8 +34,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 async def basic_serialization_example():
-    """Basic serialization example using the index."""
-    logger.info("=== Basic Serialization Example ===")
+    """Basic serialization example using the index."""    logger.info("=== Basic Serialization Example ===")
     
     # Get the serializer index
     serializer_index = get_serializer_index(enable_orchestrator=True, max_workers=5)
@@ -73,8 +69,7 @@ async def basic_serialization_example():
     return content
 
 async def batch_processing_example():
-    """Demonstrate batch processing capabilities."""
-    logger.info("=== Batch Processing Example ===")
+    """Demonstrate batch processing capabilities."""    logger.info("=== Batch Processing Example ===")
     
     serializer_index = get_serializer_index()
     
@@ -105,8 +100,7 @@ async def batch_processing_example():
     return content_list
 
 async def multi_serializer_example():
-    """Example using multiple serializer types."""
-    logger.info("=== Multi-Serializer Example ===")
+    """Example using multiple serializer types."""    logger.info("=== Multi-Serializer Example ===")
     
     serializer_index = get_serializer_index()
     
@@ -178,8 +172,7 @@ async def multi_serializer_example():
     return tasks
 
 async def performance_monitoring_example():
-    """Demonstrate performance monitoring and metrics."""
-    logger.info("=== Performance Monitoring Example ===")
+    """Demonstrate performance monitoring and metrics."""    logger.info("=== Performance Monitoring Example ===")
     
     serializer_index = get_serializer_index()
     
@@ -261,8 +254,7 @@ async def performance_monitoring_example():
     return tasks, metrics
 
 async def direct_serializer_access_example():
-    """Example of direct serializer access without orchestrator."""
-    logger.info("=== Direct Serializer Access Example ===")
+    """Example of direct serializer access without orchestrator."""    logger.info("=== Direct Serializer Access Example ===")
     
     # Create index without orchestrator for direct access
     serializer_index = get_serializer_index(enable_orchestrator=False)
@@ -302,8 +294,7 @@ async def direct_serializer_access_example():
     return content, serialized, deserialized
 
 async def error_handling_example():
-    """Demonstrate error handling and circuit breaker patterns."""
-    logger.info("=== Error Handling Example ===")
+    """Demonstrate error handling and circuit breaker patterns."""    logger.info("=== Error Handling Example ===")
     
     serializer_index = get_serializer_index()
     
@@ -337,8 +328,7 @@ async def error_handling_example():
         logger.info(f"Error types recorded: {metrics.error_types}")
 
 async def caching_example():
-    """Demonstrate caching capabilities."""
-    logger.info("=== Caching Example ===")
+    """Demonstrate caching capabilities."""    logger.info("=== Caching Example ===")
     
     serializer_index = get_serializer_index()
     
@@ -375,8 +365,7 @@ async def caching_example():
     logger.info("Cache cleared")
 
 async def main():
-    """Run all examples."""
-    logger.info("🚀 Starting IA-Influencer-Agent Serialization System Examples")
+    """Run all examples."""    logger.info("🚀 Starting IA-Influencer-Agent Serialization System Examples")
     logger.info("=" * 70)
     
     try:

@@ -1,28 +1,22 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Simple Pytest Validation Test
+"""Simple Pytest Validation Test
 =============================
 
 Basic pytest test to validate that pytest framework works 
 independently of conftest configuration issues.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -34,22 +28,19 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 def test_basic_functionality():
-    """Test basic Python functionality"""
-    assert 1 + 1 == 2
+    """Test basic Python functionality"""    assert 1 + 1 == 2
     assert "test" in "testing"
     assert len([1, 2, 3]) == 3
 
 def test_async_functionality():
-    """Test async functionality works"""
-    async def async_test():
+    """Test async functionality works"""    async def async_test():
         return "async works"
     
     result = asyncio.run(async_test())
     assert result == "async works"
 
 def test_imports_work():
-    """Test that basic imports work without conftest"""
-    try:
+    """Test that basic imports work without conftest"""    try:
         import numpy as np
         # Test numpy works
         arr = np.array([1, 2, 3])
@@ -67,8 +58,7 @@ def test_imports_work():
     assert json.dumps(data) == '{"test": "value"}'
 
 def test_test_file_structure():
-    """Test that test files exist"""
-    test_files = [
+    """Test that test files exist"""    test_files = [
         "test_ai_agents_core.py",
         "test_fingerprinting_agent.py",
         "test_monetization_agent.py"

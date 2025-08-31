@@ -1,5 +1,4 @@
-"""
-Surveillance and Monitoring Configurations
+"""Surveillance and Monitoring Configurations
 ==========================================
 
 Advanced surveillance system configuration for content protection and violation detection.
@@ -15,9 +14,7 @@ Contact: mlaiel@live.de | www.fahed-mlaiel.de
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, modification, or distribution is strictly prohibited.
 Legal action will be taken against violators.
-"""
-
-import os
+"""import os
 from typing import Dict, List, Optional, Union, Callable
 from dataclasses import dataclass, field
 from enum import Enum
@@ -26,16 +23,14 @@ import json
 from pathlib import Path
 
 class SurveillanceMode(Enum):
-    """Surveillance operation modes."""
-    REAL_TIME = "real_time"
+    """Surveillance operation modes."""    REAL_TIME = "real_time"
     SCHEDULED = "scheduled"
     ON_DEMAND = "on_demand"
     CONTINUOUS = "continuous"
     BURST = "burst"
 
 class MonitoringType(Enum):
-    """Types of content monitoring."""
-    FINGERPRINT_MATCHING = "fingerprint_matching"
+    """Types of content monitoring."""    FINGERPRINT_MATCHING = "fingerprint_matching"
     METADATA_ANALYSIS = "metadata_analysis"
     VISUAL_SIMILARITY = "visual_similarity"
     AUDIO_SIMILARITY = "audio_similarity"
@@ -45,16 +40,14 @@ class MonitoringType(Enum):
     ENGAGEMENT_ANOMALIES = "engagement_anomalies"
 
 class AlertSeverity(Enum):
-    """Alert severity levels."""
-    CRITICAL = "critical"
+    """Alert severity levels."""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
     INFO = "info"
 
 class AlertChannel(Enum):
-    """Alert notification channels."""
-    EMAIL = "email"
+    """Alert notification channels."""    EMAIL = "email"
     WEBHOOK = "webhook"
     SMS = "sms"
     DASHBOARD = "dashboard"
@@ -64,8 +57,7 @@ class AlertChannel(Enum):
     PUSH_NOTIFICATION = "push_notification"
 
 class FingerprintEngine(Enum):
-    """Fingerprinting engines for content analysis."""
-    CHROMAPRINT = "chromaprint"  # Audio fingerprinting
+    """Fingerprinting engines for content analysis."""    CHROMAPRINT = "chromaprint"  # Audio fingerprinting
     ESSENTIA = "essentia"        # Advanced audio analysis
     OPENCV = "opencv"            # Video frame analysis
     PHASH = "phash"             # Perceptual hashing
@@ -77,8 +69,7 @@ class FingerprintEngine(Enum):
 
 @dataclass
 class FingerprintingConfig:
-    """Configuration for content fingerprinting engines."""
-    enabled: bool = True
+    """Configuration for content fingerprinting engines."""    enabled: bool = True
     engines: List[FingerprintEngine] = field(default_factory=lambda: [
         FingerprintEngine.CHROMAPRINT,
         FingerprintEngine.OPENCV,
@@ -119,8 +110,7 @@ class FingerprintingConfig:
 
 @dataclass
 class MonitoringSchedule:
-    """Monitoring schedule configuration."""
-    enabled: bool = True
+    """Monitoring schedule configuration."""    enabled: bool = True
     frequency_minutes: int = 60
     peak_hours_frequency_minutes: int = 15
     off_hours_frequency_minutes: int = 120
@@ -138,8 +128,7 @@ class MonitoringSchedule:
 
 @dataclass
 class AlertConfig:
-    """Alert system configuration."""
-    enabled: bool = True
+    """Alert system configuration."""    enabled: bool = True
     channels: List[AlertChannel] = field(default_factory=lambda: [
         AlertChannel.EMAIL,
         AlertChannel.WEBHOOK,
@@ -172,8 +161,7 @@ class AlertConfig:
 
 @dataclass
 class ViolationAction:
-    """Actions to take when violations are detected."""
-    enabled: bool = True
+    """Actions to take when violations are detected."""    enabled: bool = True
     automatic_takedown: bool = False  # Requires manual approval
     evidence_collection: bool = True
     screenshot_capture: bool = True
@@ -197,8 +185,7 @@ class ViolationAction:
 
 @dataclass
 class PerformanceConfig:
-    """Performance monitoring configuration."""
-    enabled: bool = True
+    """Performance monitoring configuration."""    enabled: bool = True
     metrics_collection: bool = True
     detailed_logging: bool = True
     
@@ -221,8 +208,7 @@ class PerformanceConfig:
 
 @dataclass
 class StorageConfig:
-    """Storage configuration for surveillance data."""
-    enabled: bool = True
+    """Storage configuration for surveillance data."""    enabled: bool = True
     storage_backend: str = "s3"  # s3, gcs, azure, local
     
     # Retention policies
@@ -249,8 +235,7 @@ class StorageConfig:
 
 @dataclass
 class PrivacyConfig:
-    """Privacy and compliance configuration."""
-    gdpr_compliance: bool = True
+    """Privacy and compliance configuration."""    gdpr_compliance: bool = True
     ccpa_compliance: bool = True
     data_anonymization: bool = True
     
@@ -272,8 +257,7 @@ class PrivacyConfig:
 
 @dataclass
 class SurveillanceConfig:
-    """Complete surveillance system configuration."""
-    enabled: bool = True
+    """Complete surveillance system configuration."""    enabled: bool = True
     mode: SurveillanceMode = SurveillanceMode.REAL_TIME
     monitoring_types: List[MonitoringType] = field(default_factory=lambda: [
         MonitoringType.FINGERPRINT_MATCHING,
@@ -314,17 +298,14 @@ class SurveillanceConfig:
     })
 
 class SurveillanceConfigManager:
-    """Manager for surveillance system configurations."""
-    
+    """Manager for surveillance system configurations."""    
     def __init__(self, config_dir: Optional[str] = None):
-        """Initialize surveillance config manager."""
-        self.config_dir = Path(config_dir or os.getenv("SURVEILLANCE_CONFIG_DIR", "./configs"))
+        """Initialize surveillance config manager."""        self.config_dir = Path(config_dir or os.getenv("SURVEILLANCE_CONFIG_DIR", "./configs"))
         self.config_dir.mkdir(parents=True, exist_ok=True)
         self.config = self._load_default_config()
     
     def _load_default_config(self) -> SurveillanceConfig:
-        """Load default surveillance configuration."""
-        return SurveillanceConfig(
+        """Load default surveillance configuration."""        return SurveillanceConfig(
             enabled=True,
             mode=SurveillanceMode.REAL_TIME,
             monitoring_types=[
@@ -381,23 +362,19 @@ class SurveillanceConfigManager:
         )
     
     def get_config(self) -> SurveillanceConfig:
-        """Get current surveillance configuration."""
-        return self.config
+        """Get current surveillance configuration."""        return self.config
     
     def update_config(self, config: SurveillanceConfig) -> None:
-        """Update surveillance configuration."""
-        self.config = config
+        """Update surveillance configuration."""        self.config = config
         self.save_config()
     
     def save_config(self) -> None:
-        """Save configuration to file."""
-        config_file = self.config_dir / "surveillance_config.json"
+        """Save configuration to file."""        config_file = self.config_dir / "surveillance_config.json"
         with open(config_file, 'w') as f:
             json.dump(self.config.__dict__, f, indent=2, default=str)
     
     def load_config(self) -> None:
-        """Load configuration from file."""
-        config_file = self.config_dir / "surveillance_config.json"
+        """Load configuration from file."""        config_file = self.config_dir / "surveillance_config.json"
         if config_file.exists():
             with open(config_file, 'r') as f:
                 data = json.load(f)
@@ -405,14 +382,12 @@ class SurveillanceConfigManager:
                 self.config = self._deserialize_config(data)
     
     def _deserialize_config(self, data: dict) -> SurveillanceConfig:
-        """Deserialize configuration data."""
-        # Implementation for converting dict back to SurveillanceConfig
+        """Deserialize configuration data."""        # Implementation for converting dict back to SurveillanceConfig
         # This would include proper enum conversion and nested object creation
         pass
     
     def validate_config(self) -> List[str]:
-        """Validate surveillance configuration."""
-        errors = []
+        """Validate surveillance configuration."""        errors = []
         
         if not self.config.enabled:
             return errors  # Skip validation if disabled
@@ -441,25 +416,20 @@ class SurveillanceConfigManager:
         return errors
     
     def get_fingerprinting_config(self) -> FingerprintingConfig:
-        """Get fingerprinting configuration."""
-        return self.config.fingerprinting
+        """Get fingerprinting configuration."""        return self.config.fingerprinting
     
     def get_alert_config(self) -> AlertConfig:
-        """Get alert configuration."""
-        return self.config.alerts
+        """Get alert configuration."""        return self.config.alerts
     
     def get_performance_config(self) -> PerformanceConfig:
-        """Get performance configuration."""
-        return self.config.performance
+        """Get performance configuration."""        return self.config.performance
     
     def export_config(self, file_path: str) -> None:
-        """Export configuration to file."""
-        with open(file_path, 'w') as f:
+        """Export configuration to file."""        with open(file_path, 'w') as f:
             json.dump(self.config.__dict__, f, indent=2, default=str)
     
     def import_config(self, file_path: str) -> None:
-        """Import configuration from file."""
-        with open(file_path, 'r') as f:
+        """Import configuration from file."""        with open(file_path, 'r') as f:
             data = json.load(f)
             self.config = self._deserialize_config(data)
 

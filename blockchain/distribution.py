@@ -1,13 +1,10 @@
-"""
-Advanced Multi-Platform Distribution for IA Influencer Agent
+"""Advanced Multi-Platform Distribution for IA Influencer Agent
 Blockchain-secured content distribution across platforms
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -26,8 +23,7 @@ from .copyright_registry import CopyrightRegistryManager
 
 
 class Platform(Enum):
-    """Supported distribution platforms"""
-    SPOTIFY = "spotify"
+    """Supported distribution platforms"""    SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE_MUSIC = "youtube_music"
     SOUNDCLOUD = "soundcloud"
@@ -50,8 +46,7 @@ class Platform(Enum):
 
 
 class DistributionStatus(Enum):
-    """Distribution status states"""
-    PENDING = "pending"
+    """Distribution status states"""    PENDING = "pending"
     PROCESSING = "processing"
     LIVE = "live"
     FAILED = "failed"
@@ -61,8 +56,7 @@ class DistributionStatus(Enum):
 
 
 class ContentFormat(Enum):
-    """Content format types"""
-    AUDIO = "audio"
+    """Content format types"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -75,8 +69,7 @@ class ContentFormat(Enum):
 
 @dataclass
 class PlatformConfiguration:
-    """Platform-specific configuration"""
-    platform: Platform
+    """Platform-specific configuration"""    platform: Platform
     api_credentials: Dict[str, str]
     content_requirements: Dict[str, Any]
     monetization_settings: Dict[str, Any]
@@ -91,8 +84,7 @@ class PlatformConfiguration:
 
 @dataclass
 class DistributionJob:
-    """Content distribution job"""
-    job_id: str
+    """Content distribution job"""    job_id: str
     asset_id: str
     creator_id: str
     target_platforms: List[Platform]
@@ -113,8 +105,7 @@ class DistributionJob:
 
 @dataclass
 class PlatformMetrics:
-    """Platform performance metrics"""
-    platform: Platform
+    """Platform performance metrics"""    platform: Platform
     asset_id: str
     views: int
     likes: int
@@ -135,8 +126,7 @@ class PlatformMetrics:
 
 @dataclass
 class CrossPlatformAnalytics:
-    """Cross-platform analytics aggregation"""
-    asset_id: str
+    """Cross-platform analytics aggregation"""    asset_id: str
     creator_id: str
     time_period: Tuple[datetime, datetime]
     total_views: int
@@ -151,11 +141,9 @@ class CrossPlatformAnalytics:
 
 
 class DistributionManager:
-    """
-    Advanced multi-platform distribution management
+    """    Advanced multi-platform distribution management
     Orchestrates content distribution with blockchain verification
-    """
-    
+    """    
     def __init__(self, transaction_manager: TransactionManager,
                  smart_contract_manager: SmartContractManager,
                  copyright_registry: CopyrightRegistryManager,
@@ -174,8 +162,7 @@ class DistributionManager:
     
     async def configure_platform(self, creator_id: str, platform: Platform,
                                config_data: Dict[str, Any]) -> PlatformConfiguration:
-        """
-        Configure platform settings for creator
+        """        Configure platform settings for creator
         
         Args:
             creator_id: Creator identifier
@@ -184,8 +171,7 @@ class DistributionManager:
             
         Returns:
             PlatformConfiguration: Platform configuration
-        """
-        try:
+        """        try:
             # Encrypt API credentials
             encrypted_credentials = await self.encryption_manager.encrypt_data(
                 json.dumps(config_data.get('api_credentials', {})).encode()
@@ -228,8 +214,7 @@ class DistributionManager:
     async def distribute_content(self, creator_id: str, asset_id: str,
                                target_platforms: List[Platform],
                                distribution_config: Dict[str, Any]) -> DistributionJob:
-        """
-        Distribute content across multiple platforms
+        """        Distribute content across multiple platforms
         
         Args:
             creator_id: Creator identifier
@@ -239,8 +224,7 @@ class DistributionManager:
             
         Returns:
             DistributionJob: Distribution job tracking
-        """
-        try:
+        """        try:
             # Verify asset ownership
             asset = await self.copyright_registry.get_copyright_asset(asset_id)
             if not asset or asset.creator_id != creator_id:
@@ -314,8 +298,7 @@ class DistributionManager:
             raise DistributionError(f"Failed to distribute content: {str(e)}")
     
     async def _execute_distribution_job(self, job: DistributionJob):
-        """Execute distribution job across platforms"""
-        try:
+        """Execute distribution job across platforms"""        try:
             job.status = DistributionStatus.PROCESSING
             job.updated_at = datetime.now(timezone.utc)
             
@@ -353,8 +336,7 @@ class DistributionManager:
             job.updated_at = datetime.now(timezone.utc)
     
     async def _distribute_to_platform(self, job: DistributionJob, platform: Platform):
-        """Distribute content to specific platform"""
-        try:
+        """Distribute content to specific platform"""        try:
             # Get platform configuration
             config = self._platform_configs[job.creator_id][platform]
             
@@ -384,49 +366,42 @@ class DistributionManager:
     async def _distribute_to_music_platform(self, job: DistributionJob,
                                           platform: Platform,
                                           config: PlatformConfiguration) -> str:
-        """Distribute to music streaming platforms"""
-        # Implementation would integrate with music distribution APIs
+        """Distribute to music streaming platforms"""        # Implementation would integrate with music distribution APIs
         # For now, return mock URL
         return f"https://{platform.value}.com/track/{job.asset_id}"
     
     async def _distribute_to_youtube(self, job: DistributionJob,
                                    platform: Platform,
                                    config: PlatformConfiguration) -> str:
-        """Distribute to YouTube platforms"""
-        # Implementation would use YouTube API
+        """Distribute to YouTube platforms"""        # Implementation would use YouTube API
         return f"https://youtube.com/watch?v={uuid.uuid4().hex[:11]}"
     
     async def _distribute_to_social_media(self, job: DistributionJob,
                                         platform: Platform,
                                         config: PlatformConfiguration) -> str:
-        """Distribute to social media platforms"""
-        # Implementation would use respective platform APIs
+        """Distribute to social media platforms"""        # Implementation would use respective platform APIs
         return f"https://{platform.value}.com/post/{uuid.uuid4().hex[:12]}"
     
     async def _distribute_to_blog_platform(self, job: DistributionJob,
                                          platform: Platform,
                                          config: PlatformConfiguration) -> str:
-        """Distribute to blog platforms"""
-        # Implementation would use blogging platform APIs
+        """Distribute to blog platforms"""        # Implementation would use blogging platform APIs
         return f"https://{platform.value}.com/article/{uuid.uuid4().hex[:12]}"
     
     async def _distribute_to_generic_platform(self, job: DistributionJob,
                                             platform: Platform,
                                             config: PlatformConfiguration) -> str:
-        """Generic platform distribution"""
-        return f"https://{platform.value}.com/content/{job.asset_id}"
+        """Generic platform distribution"""        return f"https://{platform.value}.com/content/{job.asset_id}"
     
     async def collect_platform_metrics(self, job_id: str) -> Dict[Platform, PlatformMetrics]:
-        """
-        Collect performance metrics from all platforms
+        """        Collect performance metrics from all platforms
         
         Args:
             job_id: Distribution job ID
             
         Returns:
             Dict[Platform, PlatformMetrics]: Platform metrics
-        """
-        try:
+        """        try:
             job = self._distribution_jobs.get(job_id)
             if not job:
                 raise DistributionError("Distribution job not found")
@@ -453,8 +428,7 @@ class DistributionManager:
     
     async def _collect_platform_specific_metrics(self, job: DistributionJob,
                                                platform: Platform) -> PlatformMetrics:
-        """Collect metrics from specific platform"""
-        # Implementation would use platform APIs to collect real metrics
+        """Collect metrics from specific platform"""        # Implementation would use platform APIs to collect real metrics
         # For now, return mock metrics
         return PlatformMetrics(
             platform=platform,
@@ -479,8 +453,7 @@ class DistributionManager:
     async def generate_cross_platform_analytics(self, asset_id: str,
                                               start_date: datetime = None,
                                               end_date: datetime = None) -> CrossPlatformAnalytics:
-        """
-        Generate comprehensive cross-platform analytics
+        """        Generate comprehensive cross-platform analytics
         
         Args:
             asset_id: Asset identifier
@@ -489,8 +462,7 @@ class DistributionManager:
             
         Returns:
             CrossPlatformAnalytics: Cross-platform analytics
-        """
-        try:
+        """        try:
             # Set default date range
             if not end_date:
                 end_date = datetime.now(timezone.utc)
@@ -564,8 +536,7 @@ class DistributionManager:
     
     async def optimize_distribution_strategy(self, creator_id: str,
                                            analytics: CrossPlatformAnalytics) -> Dict[str, Any]:
-        """
-        AI-powered distribution strategy optimization
+        """        AI-powered distribution strategy optimization
         
         Args:
             creator_id: Creator identifier
@@ -573,8 +544,7 @@ class DistributionManager:
             
         Returns:
             Dict[str, Any]: Optimization recommendations
-        """
-        try:
+        """        try:
             recommendations = {
                 'platform_priorities': {},
                 'content_adjustments': {},
@@ -616,13 +586,11 @@ class DistributionManager:
             return {}
     
     def _generate_config_hash(self, config_data: Dict[str, Any]) -> str:
-        """Generate configuration hash"""
-        config_str = json.dumps(config_data, sort_keys=True, default=str)
+        """Generate configuration hash"""        config_str = json.dumps(config_data, sort_keys=True, default=str)
         return hashlib.sha256(config_str.encode()).hexdigest()
     
     def _generate_content_optimization_suggestions(self, metrics: List[PlatformMetrics]) -> List[str]:
-        """Generate content optimization suggestions"""
-        suggestions = []
+        """Generate content optimization suggestions"""        suggestions = []
         
         avg_engagement = sum(m.engagement_rate for m in metrics) / len(metrics) if metrics else 0
         if avg_engagement < 3.0:
@@ -634,8 +602,7 @@ class DistributionManager:
         return suggestions
     
     def _generate_revenue_optimization_suggestions(self, metrics: List[PlatformMetrics]) -> List[str]:
-        """Generate revenue optimization suggestions"""
-        suggestions = []
+        """Generate revenue optimization suggestions"""        suggestions = []
         
         total_revenue = sum(m.revenue for m in metrics)
         total_views = sum(m.views for m in metrics)

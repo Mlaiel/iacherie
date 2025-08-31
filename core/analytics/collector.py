@@ -1,5 +1,4 @@
-"""
-Metrics Collector - Advanced Metrics Collection System
+"""Metrics Collector - Advanced Metrics Collection System
 
 Enterprise-grade metrics collection framework for multi-format content creators
 with real-time monitoring, business intelligence, and performance analytics.
@@ -23,9 +22,7 @@ Team Specialists:
 - Audio Processing Specialist: Advanced audio AI algorithms
 - DevOps Engineer: Production-ready infrastructure
 - IA Prompt Engineer: Optimized AI model interactions
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Union, Callable
 from datetime import datetime, timedelta
@@ -44,8 +41,7 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics that can be collected"""
-    COUNTER = "counter"
+    """Types of metrics that can be collected"""    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     TIMER = "timer"
@@ -55,8 +51,7 @@ class MetricType(Enum):
 
 
 class MetricScope(Enum):
-    """Scope of metric collection"""
-    USER = "user"
+    """Scope of metric collection"""    USER = "user"
     CONTENT = "content"
     SYSTEM = "system"
     BUSINESS = "business"
@@ -65,8 +60,7 @@ class MetricScope(Enum):
 
 
 class AggregationMethod(Enum):
-    """Aggregation methods for metrics"""
-    SUM = "sum"
+    """Aggregation methods for metrics"""    SUM = "sum"
     AVERAGE = "average"
     MIN = "min"
     MAX = "max"
@@ -78,8 +72,7 @@ class AggregationMethod(Enum):
 
 @dataclass
 class MetricPoint:
-    """Individual metric data point"""
-    name: str
+    """Individual metric data point"""    name: str
     value: Union[int, float]
     metric_type: MetricType
     scope: MetricScope
@@ -88,8 +81,7 @@ class MetricPoint:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert metric point to dictionary"""
-        return {
+        """Convert metric point to dictionary"""        return {
             'name': self.name,
             'value': self.value,
             'type': self.metric_type.value,
@@ -102,8 +94,7 @@ class MetricPoint:
 
 @dataclass
 class AggregatedMetric:
-    """Aggregated metric result"""
-    name: str
+    """Aggregated metric result"""    name: str
     aggregation_method: AggregationMethod
     value: Union[int, float]
     period_start: datetime
@@ -112,8 +103,7 @@ class AggregatedMetric:
     tags: Dict[str, str] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert aggregated metric to dictionary"""
-        return {
+        """Convert aggregated metric to dictionary"""        return {
             'name': self.name,
             'aggregation_method': self.aggregation_method.value,
             'value': self.value,
@@ -125,13 +115,11 @@ class AggregatedMetric:
 
 
 class MetricsCollector:
-    """
-    Advanced metrics collection system for IA influencer platform.
+    """    Advanced metrics collection system for IA influencer platform.
     
     Collects, validates, and stores metrics from various sources with
     real-time processing and business intelligence capabilities.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -158,8 +146,7 @@ class MetricsCollector:
         self.executor = ThreadPoolExecutor(max_workers=4)
     
     async def initialize(self) -> None:
-        """Initialize the metrics collector"""
-        try:
+        """Initialize the metrics collector"""        try:
             self.logger.info("Initializing MetricsCollector...")
             
             # Start background processing
@@ -173,8 +160,7 @@ class MetricsCollector:
             raise MetricsError(f"Initialization failed: {str(e)}")
     
     async def shutdown(self) -> None:
-        """Shutdown the metrics collector"""
-        try:
+        """Shutdown the metrics collector"""        try:
             self.logger.info("Shutting down MetricsCollector...")
             
             self.is_running = False
@@ -192,8 +178,7 @@ class MetricsCollector:
             raise MetricsError(f"Shutdown failed: {str(e)}")
     
     async def collect_metric(self, metric: MetricPoint) -> None:
-        """Collect a single metric point"""
-        try:
+        """Collect a single metric point"""        try:
             # Validate metric
             self._validate_metric(metric)
             
@@ -212,8 +197,7 @@ class MetricsCollector:
             raise MetricsError(f"Metric collection failed: {str(e)}")
     
     async def collect_metrics_batch(self, metrics: List[MetricPoint]) -> None:
-        """Collect multiple metrics in batch"""
-        try:
+        """Collect multiple metrics in batch"""        try:
             valid_metrics = []
             
             for metric in metrics:
@@ -245,8 +229,7 @@ class MetricsCollector:
         end_time: Optional[datetime] = None,
         tags: Optional[Dict[str, str]] = None
     ) -> List[MetricPoint]:
-        """Retrieve metrics based on filters"""
-        try:
+        """Retrieve metrics based on filters"""        try:
             filtered_metrics = []
             
             for metric in self.metrics_buffer:
@@ -268,8 +251,7 @@ class MetricsCollector:
         period_end: datetime,
         tags: Optional[Dict[str, str]] = None
     ) -> Optional[AggregatedMetric]:
-        """Aggregate metrics over a time period"""
-        try:
+        """Aggregate metrics over a time period"""        try:
             # Get metrics for aggregation
             metrics = await self.get_metrics(
                 name_pattern=name,
@@ -308,8 +290,7 @@ class MetricsCollector:
             raise MetricsError(f"Metrics aggregation failed: {str(e)}")
     
     async def get_realtime_metrics(self) -> Dict[str, Any]:
-        """Get real-time metrics summary"""
-        try:
+        """Get real-time metrics summary"""        try:
             current_time = datetime.now()
             last_hour = current_time - timedelta(hours=1)
             
@@ -351,8 +332,7 @@ class MetricsCollector:
         format_type: str = "json",
         include_aggregated: bool = True
     ) -> Union[str, bytes]:
-        """Export metrics in specified format"""
-        try:
+        """Export metrics in specified format"""        try:
             export_data = {
                 'export_timestamp': datetime.now().isoformat(),
                 'raw_metrics': [metric.to_dict() for metric in self.metrics_buffer],
@@ -378,8 +358,7 @@ class MetricsCollector:
     # Private Methods
     
     def _validate_metric(self, metric: MetricPoint) -> None:
-        """Validate metric point"""
-        if not metric.name:
+        """Validate metric point"""        if not metric.name:
             raise DataValidationError("Metric name is required")
         
         if metric.value is None:
@@ -403,8 +382,7 @@ class MetricsCollector:
         end_time: Optional[datetime],
         tags: Optional[Dict[str, str]]
     ) -> bool:
-        """Check if metric matches filters"""
-        # Name pattern filter
+        """Check if metric matches filters"""        # Name pattern filter
         if name_pattern and name_pattern not in metric.name:
             return False
         
@@ -432,8 +410,7 @@ class MetricsCollector:
         values: List[Union[int, float]],
         method: AggregationMethod
     ) -> Union[int, float]:
-        """Calculate aggregated value"""
-        if not values:
+        """Calculate aggregated value"""        if not values:
             return 0
         
         if method == AggregationMethod.SUM:
@@ -456,8 +433,7 @@ class MetricsCollector:
             raise ValueError(f"Unsupported aggregation method: {method}")
     
     async def _background_processor(self) -> None:
-        """Background task for processing metrics"""
-        while self.is_running:
+        """Background task for processing metrics"""        while self.is_running:
             try:
                 # Process metrics every flush interval
                 await asyncio.sleep(self.flush_interval)
@@ -472,8 +448,7 @@ class MetricsCollector:
                 await asyncio.sleep(5)
     
     async def _flush_metrics(self) -> None:
-        """Flush metrics to storage"""
-        try:
+        """Flush metrics to storage"""        try:
             if not self.metrics_buffer:
                 return
             
@@ -499,8 +474,7 @@ class MetricsCollector:
             self.metrics_buffer.extendleft(reversed(batch_metrics))
     
     def _process_metrics_batch(self, metrics: List[MetricPoint]) -> None:
-        """Process batch of metrics (CPU intensive operations)"""
-        try:
+        """Process batch of metrics (CPU intensive operations)"""        try:
             # Perform CPU-intensive processing here
             # For now, just update processing stats
             for metric in metrics:
@@ -513,13 +487,11 @@ class MetricsCollector:
 
 
 class BusinessMetricsCollector(MetricsCollector):
-    """
-    Specialized metrics collector for business-critical metrics.
+    """    Specialized metrics collector for business-critical metrics.
     
     Extends base collector with business-specific functionality and
     enhanced monitoring for revenue, user engagement, and platform performance.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
         
@@ -546,8 +518,7 @@ class BusinessMetricsCollector(MetricsCollector):
         source: str = "platform",
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Track revenue-related metrics"""
-        try:
+        """Track revenue-related metrics"""        try:
             metric = MetricPoint(
                 name=f"revenue_{source}",
                 value=amount,
@@ -576,8 +547,7 @@ class BusinessMetricsCollector(MetricsCollector):
         value: float,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Track user engagement metrics"""
-        try:
+        """Track user engagement metrics"""        try:
             metric = MetricPoint(
                 name=f"engagement_{engagement_type}",
                 value=value,
@@ -606,8 +576,7 @@ class BusinessMetricsCollector(MetricsCollector):
         value: float,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Track content performance metrics"""
-        try:
+        """Track content performance metrics"""        try:
             metric = MetricPoint(
                 name=f"content_{performance_type}",
                 value=value,
@@ -630,8 +599,7 @@ class BusinessMetricsCollector(MetricsCollector):
             raise MetricsError(f"Content tracking failed: {str(e)}")
     
     async def get_business_kpis(self) -> Dict[str, Any]:
-        """Get current business KPIs"""
-        try:
+        """Get current business KPIs"""        try:
             current_time = datetime.now()
             today_start = current_time.replace(hour=0, minute=0, second=0, microsecond=0)
             
@@ -669,8 +637,7 @@ class BusinessMetricsCollector(MetricsCollector):
             raise MetricsError(f"Business KPIs retrieval failed: {str(e)}")
     
     async def generate_business_summary(self) -> Dict[str, Any]:
-        """Generate business metrics summary"""
-        try:
+        """Generate business metrics summary"""        try:
             summary = {
                 'generated_at': datetime.now().isoformat(),
                 'revenue_summary': await self._get_revenue_summary(),
@@ -688,21 +655,17 @@ class BusinessMetricsCollector(MetricsCollector):
     # Private Methods
     
     async def _get_revenue_summary(self) -> Dict[str, Any]:
-        """Get revenue metrics summary"""
-        # Implementation for revenue summary
+        """Get revenue metrics summary"""        # Implementation for revenue summary
         return {'total_revenue': 0, 'revenue_sources': {}}
     
     async def _get_engagement_summary(self) -> Dict[str, Any]:
-        """Get engagement metrics summary"""
-        # Implementation for engagement summary
+        """Get engagement metrics summary"""        # Implementation for engagement summary
         return {'avg_engagement': 0, 'engagement_trends': {}}
     
     async def _get_content_summary(self) -> Dict[str, Any]:
-        """Get content metrics summary"""
-        # Implementation for content summary
+        """Get content metrics summary"""        # Implementation for content summary
         return {'total_content': 0, 'performance_trends': {}}
     
     async def _get_platform_summary(self) -> Dict[str, Any]:
-        """Get platform metrics summary"""
-        # Implementation for platform summary
+        """Get platform metrics summary"""        # Implementation for platform summary
         return {'uptime': 0, 'active_users': 0}

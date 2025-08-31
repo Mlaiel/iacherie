@@ -1,5 +1,4 @@
-"""
-🚀 Revenue Distributor - Ultra-Advanced Revenue Distribution System
+"""🚀 Revenue Distributor - Ultra-Advanced Revenue Distribution System
 =================================================================
 
 Industrial-grade revenue distribution system handling automated payouts,
@@ -17,9 +16,7 @@ Contact mlaiel@live.de for licensing inquiries.
 
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Revenue Distribution
 ==============================================================================================
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
 from dataclasses import dataclass, field
@@ -42,8 +39,7 @@ logger = logging.getLogger(__name__)
 
 
 class DistributionStatus(Enum):
-    """Revenue distribution status"""
-    PENDING = "pending"
+    """Revenue distribution status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -53,8 +49,7 @@ class DistributionStatus(Enum):
 
 
 class PaymentMethod(Enum):
-    """Supported payment methods"""
-    BANK_TRANSFER = "bank_transfer"
+    """Supported payment methods"""    BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE = "stripe"
     WISE = "wise"
@@ -63,8 +58,7 @@ class PaymentMethod(Enum):
 
 
 class DistributionFrequency(Enum):
-    """Revenue distribution frequency options"""
-    IMMEDIATE = "immediate"
+    """Revenue distribution frequency options"""    IMMEDIATE = "immediate"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -73,8 +67,7 @@ class DistributionFrequency(Enum):
 
 @dataclass
 class RevenueShare:
-    """Revenue share configuration"""
-    recipient_id: str
+    """Revenue share configuration"""    recipient_id: str
     recipient_type: str  # creator, collaborator, platform, agency
     share_percentage: Decimal
     minimum_amount: Decimal = Decimal('5.00')
@@ -85,8 +78,7 @@ class RevenueShare:
 
 @dataclass
 class DistributionRecord:
-    """Revenue distribution record"""
-    distribution_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Revenue distribution record"""    distribution_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     source_revenue_id: str = ""
     creator_id: str = ""
     total_amount: Decimal = Decimal('0')
@@ -102,8 +94,7 @@ class DistributionRecord:
 
 @dataclass
 class PayoutInstruction:
-    """Individual payout instruction"""
-    payout_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Individual payout instruction"""    payout_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     recipient_id: str = ""
     amount: Decimal = Decimal('0')
     currency: str = "USD"
@@ -116,8 +107,7 @@ class PayoutInstruction:
 
 
 class RevenueDistributor:
-    """
-    Ultra-advanced revenue distribution system for content creators
+    """    Ultra-advanced revenue distribution system for content creators
     
     Features:
     - Automated revenue distribution with complex sharing rules
@@ -128,8 +118,7 @@ class RevenueDistributor:
     - Real-time payout tracking and notifications
     - Batch processing for efficiency
     - International banking support
-    """
-    
+    """    
     def __init__(self,
                  db_manager: DatabaseManager,
                  security_manager: SecurityManager,
@@ -156,8 +145,7 @@ class RevenueDistributor:
         self._fraud_detection = {}
         
     async def initialize(self):
-        """Initialize the revenue distribution system"""
-        try:
+        """Initialize the revenue distribution system"""        try:
             # Initialize payment processors
             for processor in self.payment_processors.values():
                 await processor.initialize()
@@ -186,8 +174,7 @@ class RevenueDistributor:
                                total_amount: Decimal,
                                currency: str = "USD",
                                distribution_rules: Optional[Dict[str, Any]] = None) -> DistributionRecord:
-        """
-        Distribute revenue according to configured rules
+        """        Distribute revenue according to configured rules
         
         Args:
             revenue_id: Source revenue identifier
@@ -198,8 +185,7 @@ class RevenueDistributor:
             
         Returns:
             Distribution record with all payout details
-        """
-        try:
+        """        try:
             # Validate distribution request
             await self._validate_distribution_request(revenue_id, creator_id, total_amount)
             
@@ -248,8 +234,7 @@ class RevenueDistributor:
     async def process_bulk_distributions(self,
                                        distributions: List[Dict[str, Any]],
                                        batch_size: int = 50) -> Dict[str, Any]:
-        """
-        Process multiple revenue distributions in batches
+        """        Process multiple revenue distributions in batches
         
         Args:
             distributions: List of distribution requests
@@ -257,8 +242,7 @@ class RevenueDistributor:
             
         Returns:
             Bulk processing results
-        """
-        try:
+        """        try:
             results = {
                 'total_distributions': len(distributions),
                 'successful': 0,
@@ -294,8 +278,7 @@ class RevenueDistributor:
     async def _process_distribution_batch(self,
                                         batch: List[Dict[str, Any]],
                                         batch_number: int) -> Dict[str, Any]:
-        """Process a single batch of distributions"""
-        batch_result = {
+        """Process a single batch of distributions"""        batch_result = {
             'batch_number': batch_number,
             'batch_size': len(batch),
             'successful': 0,
@@ -346,8 +329,7 @@ class RevenueDistributor:
             return batch_result
 
     async def _execute_distribution(self, distribution: DistributionRecord):
-        """Execute the actual revenue distribution"""
-        try:
+        """Execute the actual revenue distribution"""        try:
             distribution.status = DistributionStatus.PROCESSING
             await self._update_distribution_status(distribution.distribution_id, distribution.status)
             
@@ -398,8 +380,7 @@ class RevenueDistributor:
                                       total_amount: Decimal,
                                       currency: str,
                                       dist_config: Dict[str, Any]) -> List[RevenueShare]:
-        """Calculate revenue shares for all recipients"""
-        try:
+        """Calculate revenue shares for all recipients"""        try:
             shares = []
             
             # Get base revenue sharing rules
@@ -478,8 +459,7 @@ class RevenueDistributor:
                                         creator_id: str,
                                         revenue_shares: List[RevenueShare],
                                         currency: str) -> Dict[str, Decimal]:
-        """Calculate tax withholdings for each recipient"""
-        try:
+        """Calculate tax withholdings for each recipient"""        try:
             tax_withholdings = {}
             
             for share in revenue_shares:
@@ -519,8 +499,7 @@ class RevenueDistributor:
             return {}
 
     async def _calculate_distribution_fees(self, revenue_shares: List[RevenueShare]) -> Dict[str, Decimal]:
-        """Calculate distribution processing fees"""
-        try:
+        """Calculate distribution processing fees"""        try:
             fees = {
                 'payment_processing': Decimal('0'),
                 'currency_conversion': Decimal('0'),
@@ -558,8 +537,7 @@ class RevenueDistributor:
             return {'total': Decimal('0')}
 
     async def _generate_payout_instructions(self, distribution: DistributionRecord) -> List[PayoutInstruction]:
-        """Generate individual payout instructions for each recipient"""
-        try:
+        """Generate individual payout instructions for each recipient"""        try:
             payout_instructions = []
             
             for share in distribution.shares:
@@ -614,8 +592,7 @@ class RevenueDistributor:
             raise
 
     async def _execute_payouts(self, instructions: List[PayoutInstruction]) -> Dict[str, Dict[str, Any]]:
-        """Execute all payout instructions"""
-        results = {}
+        """Execute all payout instructions"""        results = {}
         
         try:
             # Group instructions by payment method for batch processing
@@ -658,8 +635,7 @@ class RevenueDistributor:
     async def _process_payment_method_payouts(self,
                                             processor,
                                             instructions: List[PayoutInstruction]) -> Dict[str, Dict[str, Any]]:
-        """Process payouts for a specific payment method"""
-        results = {}
+        """Process payouts for a specific payment method"""        results = {}
         
         try:
             # Execute payouts concurrently for this payment method
@@ -697,8 +673,7 @@ class RevenueDistributor:
             return results
 
     async def _execute_single_payout(self, processor, instruction: PayoutInstruction) -> Dict[str, Any]:
-        """Execute a single payout instruction"""
-        try:
+        """Execute a single payout instruction"""        try:
             # Validate payout before execution
             validation_result = await processor.validate_payout(
                 instruction.amount,
@@ -755,11 +730,9 @@ class RevenueDistributor:
             }
 
     async def get_distribution_status(self, distribution_id: str) -> Dict[str, Any]:
-        """Get detailed status of a revenue distribution"""
-        try:
+        """Get detailed status of a revenue distribution"""        try:
             # Get distribution record
-            distribution_data = await self.db.fetch_one("""
-                SELECT * FROM revenue_distributions 
+            distribution_data = await self.db.fetch_one("""                SELECT * FROM revenue_distributions 
                 WHERE distribution_id = %s
             """, (distribution_id,))
             
@@ -767,8 +740,7 @@ class RevenueDistributor:
                 raise ValueError(f"Distribution {distribution_id} not found")
             
             # Get payout details
-            payout_details = await self.db.fetch_all("""
-                SELECT * FROM revenue_payouts 
+            payout_details = await self.db.fetch_all("""                SELECT * FROM revenue_payouts 
                 WHERE distribution_id = %s
                 ORDER BY created_at DESC
             """, (distribution_id,))
@@ -807,8 +779,7 @@ class RevenueDistributor:
     # (Due to length constraints, showing key structure and main methods)
 
     async def cleanup(self):
-        """Cleanup distribution resources"""
-        try:
+        """Cleanup distribution resources"""        try:
             # Close all payment processor connections
             for processor in self.payment_processors.values():
                 if hasattr(processor, 'cleanup'):

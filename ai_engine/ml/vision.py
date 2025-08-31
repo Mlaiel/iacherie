@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Advanced Computer Vision Module for IA-Influencer-Agent
+"""Advanced Computer Vision Module for IA-Influencer-Agent
 ===============================================
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -17,9 +16,7 @@ Features:
 - Real-time processing capabilities
 - High accuracy recognition
 - Extensible architecture
-"""
-
-import logging
+"""import logging
 import numpy as np
 import torch
 import torch.nn as nn
@@ -37,16 +34,14 @@ logger = logging.getLogger(__name__)
 
 
 class VisionTaskType(Enum):
-    """Vision task types"""
-    CLASSIFICATION = "classification"
+    """Vision task types"""    CLASSIFICATION = "classification"
     DETECTION = "detection" 
     RECOGNITION = "recognition"
     ANALYSIS = "analysis"
 
 
 class ConfidenceLevel(Enum):
-    """Confidence levels for predictions"""
-    LOW = "low"
+    """Confidence levels for predictions"""    LOW = "low"
     MEDIUM = "medium" 
     HIGH = "high"
     VERY_HIGH = "very_high"
@@ -54,24 +49,21 @@ class ConfidenceLevel(Enum):
 
 @dataclass
 class VisionResult:
-    """Result from vision processing"""
-    task_type: VisionTaskType
+    """Result from vision processing"""    task_type: VisionTaskType
     predictions: List[Dict[str, Any]]
     confidence: float
     processing_time: float
     metadata: Dict[str, Any] = None
     
     def get_best_prediction(self) -> Dict[str, Any]:
-        """Get the prediction with highest confidence"""
-        if not self.predictions:
+        """Get the prediction with highest confidence"""        if not self.predictions:
             return {}
         return max(self.predictions, key=lambda x: x.get('confidence', 0))
 
 
 @dataclass  
 class BoundingBox:
-    """Bounding box for object detection"""
-    x: int
+    """Bounding box for object detection"""    x: int
     y: int
     width: int
     height: int
@@ -90,8 +82,7 @@ class BoundingBox:
 
 
 class BaseVisionModel(ABC):
-    """Base class for vision models"""
-    
+    """Base class for vision models"""    
     def __init__(self, model_name: str = "base_vision"):
         self.model_name = model_name
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -101,22 +92,18 @@ class BaseVisionModel(ABC):
         
     @abstractmethod
     def load_model(self) -> bool:
-        """Load the vision model"""
-        pass
+        """Load the vision model"""        pass
         
     @abstractmethod
     def preprocess(self, image: Union[np.ndarray, Image.Image]) -> torch.Tensor:
-        """Preprocess image for model input"""
-        pass
+        """Preprocess image for model input"""        pass
         
     @abstractmethod
     def predict(self, image: Union[np.ndarray, Image.Image]) -> VisionResult:
-        """Make prediction on image"""
-        pass
+        """Make prediction on image"""        pass
         
     def _convert_to_pil(self, image: Union[np.ndarray, Image.Image]) -> Image.Image:
-        """Convert input to PIL Image"""
-        if isinstance(image, np.ndarray):
+        """Convert input to PIL Image"""        if isinstance(image, np.ndarray):
             if len(image.shape) == 3 and image.shape[2] == 3:
                 # BGR to RGB for OpenCV images
                 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -125,16 +112,14 @@ class BaseVisionModel(ABC):
 
 
 class ImageClassifier(BaseVisionModel):
-    """Advanced image classifier using deep learning"""
-    
+    """Advanced image classifier using deep learning"""    
     def __init__(self, model_name: str = "resnet50", num_classes: int = 1000):
         super().__init__(f"classifier_{model_name}")
         self.num_classes = num_classes
         self.class_names = [f"class_{i}" for i in range(num_classes)]  # Default names
         
     def load_model(self) -> bool:
-        """Load pre-trained classification model"""
-        try:
+        """Load pre-trained classification model"""        try:
             if "resnet" in self.model_name:
                 self.model = resnet50(pretrained=True)
                 if self.num_classes != 1000:
@@ -168,8 +153,7 @@ class ImageClassifier(BaseVisionModel):
             return False
     
     def preprocess(self, image: Union[np.ndarray, Image.Image]) -> torch.Tensor:
-        """Preprocess image for classification"""
-        if not self.is_loaded:
+        """Preprocess image for classification"""        if not self.is_loaded:
             if not self.load_model():
                 raise RuntimeError("Failed to load classification model")
                 
@@ -178,8 +162,7 @@ class ImageClassifier(BaseVisionModel):
         return tensor.to(self.device)
     
     def predict(self, image: Union[np.ndarray, Image.Image]) -> VisionResult:
-        """Classify image and return results"""
-        import time
+        """Classify image and return results"""        import time
         start_time = time.time()
         
         try:
@@ -225,16 +208,14 @@ class ImageClassifier(BaseVisionModel):
 
 
 class ObjectDetector(BaseVisionModel):
-    """Object detection using YOLO-style detection"""
-    
+    """Object detection using YOLO-style detection"""    
     def __init__(self, model_name: str = "yolo_v5", confidence_threshold: float = 0.5):
         super().__init__(f"detector_{model_name}")
         self.confidence_threshold = confidence_threshold
         self.nms_threshold = 0.4
         
     def load_model(self) -> bool:
-        """Load object detection model"""
-        try:
+        """Load object detection model"""        try:
             # For demo purposes, we'll use a simple mock detector
             # In production, this would load actual YOLO or similar models
             self.model = self._create_mock_detector()
@@ -247,8 +228,7 @@ class ObjectDetector(BaseVisionModel):
             return False
     
     def _create_mock_detector(self):
-        """Create a mock detector for demonstration"""
-        class MockDetector(nn.Module):
+        """Create a mock detector for demonstration"""        class MockDetector(nn.Module):
             def forward(self, x):
                 # Mock detection results
                 batch_size = x.shape[0]
@@ -257,8 +237,7 @@ class ObjectDetector(BaseVisionModel):
         return MockDetector()
     
     def preprocess(self, image: Union[np.ndarray, Image.Image]) -> torch.Tensor:
-        """Preprocess image for object detection"""
-        if not self.is_loaded:
+        """Preprocess image for object detection"""        if not self.is_loaded:
             if not self.load_model():
                 raise RuntimeError("Failed to load detection model")
                 
@@ -274,8 +253,7 @@ class ObjectDetector(BaseVisionModel):
         return tensor.to(self.device)
     
     def predict(self, image: Union[np.ndarray, Image.Image]) -> VisionResult:
-        """Detect objects in image"""
-        import time
+        """Detect objects in image"""        import time
         start_time = time.time()
         
         try:
@@ -321,15 +299,13 @@ class ObjectDetector(BaseVisionModel):
 
 
 class FaceRecognizer(BaseVisionModel):
-    """Face recognition and analysis"""
-    
+    """Face recognition and analysis"""    
     def __init__(self, model_name: str = "face_net"):
         super().__init__(f"face_{model_name}")
         self.face_cascade = None
         
     def load_model(self) -> bool:
-        """Load face recognition model"""
-        try:
+        """Load face recognition model"""        try:
             # Load OpenCV face cascade for detection
             self.face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
             
@@ -344,8 +320,7 @@ class FaceRecognizer(BaseVisionModel):
             return False
     
     def _create_face_model(self):
-        """Create face recognition model"""
-        class FaceModel(nn.Module):
+        """Create face recognition model"""        class FaceModel(nn.Module):
             def __init__(self):
                 super().__init__()
                 self.features = nn.Sequential(
@@ -368,8 +343,7 @@ class FaceRecognizer(BaseVisionModel):
         return FaceModel()
     
     def preprocess(self, image: Union[np.ndarray, Image.Image]) -> torch.Tensor:
-        """Preprocess image for face recognition"""
-        if not self.is_loaded:
+        """Preprocess image for face recognition"""        if not self.is_loaded:
             if not self.load_model():
                 raise RuntimeError("Failed to load face recognition model")
                 
@@ -385,8 +359,7 @@ class FaceRecognizer(BaseVisionModel):
         return tensor.to(self.device)
     
     def predict(self, image: Union[np.ndarray, Image.Image]) -> VisionResult:
-        """Recognize faces in image"""
-        import time
+        """Recognize faces in image"""        import time
         start_time = time.time()
         
         try:
@@ -445,8 +418,7 @@ class FaceRecognizer(BaseVisionModel):
 
 
 class SceneAnalyzer(BaseVisionModel):
-    """Scene understanding and analysis"""
-    
+    """Scene understanding and analysis"""    
     def __init__(self, model_name: str = "scene_net"):
         super().__init__(f"scene_{model_name}")
         self.scene_categories = [
@@ -455,8 +427,7 @@ class SceneAnalyzer(BaseVisionModel):
         ]
         
     def load_model(self) -> bool:
-        """Load scene analysis model"""
-        try:
+        """Load scene analysis model"""        try:
             # Use a pre-trained model for scene classification
             self.model = self._create_scene_model()
             self.is_loaded = True
@@ -468,14 +439,12 @@ class SceneAnalyzer(BaseVisionModel):
             return False
     
     def _create_scene_model(self):
-        """Create scene analysis model"""
-        model = resnet50(pretrained=True)
+        """Create scene analysis model"""        model = resnet50(pretrained=True)
         model.fc = nn.Linear(model.fc.in_features, len(self.scene_categories))
         return model
     
     def preprocess(self, image: Union[np.ndarray, Image.Image]) -> torch.Tensor:
-        """Preprocess image for scene analysis"""
-        if not self.is_loaded:
+        """Preprocess image for scene analysis"""        if not self.is_loaded:
             if not self.load_model():
                 raise RuntimeError("Failed to load scene analysis model")
                 
@@ -493,8 +462,7 @@ class SceneAnalyzer(BaseVisionModel):
         return tensor.to(self.device)
     
     def predict(self, image: Union[np.ndarray, Image.Image]) -> VisionResult:
-        """Analyze scene in image"""
-        import time
+        """Analyze scene in image"""        import time
         start_time = time.time()
         
         try:

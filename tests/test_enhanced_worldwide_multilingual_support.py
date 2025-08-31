@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Enhanced Worldwide Multilingual Support Tests
+"""Enhanced Worldwide Multilingual Support Tests
 ============================================
 
 Tests for comprehensive language and dialect support covering
@@ -23,9 +19,7 @@ Tests for comprehensive language and dialect support covering
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -49,19 +43,16 @@ except ImportError as e:
 
 
 class TestWorldwideLanguageCoverage:
-    """Test comprehensive worldwide language coverage"""
-    
+    """Test comprehensive worldwide language coverage"""    
     def test_import_availability(self):
-        """Test that all multilingual modules can be imported"""
-        if not IMPORTS_AVAILABLE:
+        """Test that all multilingual modules can be imported"""        if not IMPORTS_AVAILABLE:
             pytest.skip(f"Required modules not available: {IMPORT_ERROR}")
         
         assert IMPORTS_AVAILABLE, "All multilingual modules should be importable"
     
     @pytest.mark.skipif(not IMPORTS_AVAILABLE, reason="Required modules not available")
     def test_language_count_worldwide_coverage(self):
-        """Test that we have substantial worldwide language coverage"""
-        # Count all supported languages
+        """Test that we have substantial worldwide language coverage"""        # Count all supported languages
         total_languages = len(list(SupportedLanguage))
         
         # Should have at least 570+ languages for good worldwide coverage
@@ -71,8 +62,7 @@ class TestWorldwideLanguageCoverage:
     
     @pytest.mark.skipif(not IMPORTS_AVAILABLE, reason="Required modules not available")
     def test_critical_new_languages_present(self):
-        """Test that critical new languages have been added"""
-        critical_languages = [
+        """Test that critical new languages have been added"""        critical_languages = [
             # Sign languages for accessibility
             'AMERICAN_SIGN_LANGUAGE',
             'BRITISH_SIGN_LANGUAGE',
@@ -110,8 +100,7 @@ class TestWorldwideLanguageCoverage:
     
     @pytest.mark.skipif(not IMPORTS_AVAILABLE, reason="Required modules not available")
     def test_language_families_coverage(self):
-        """Test coverage across major language families"""
-        language_codes = [lang.value for lang in SupportedLanguage]
+        """Test coverage across major language families"""        language_codes = [lang.value for lang in SupportedLanguage]
         
         # Test presence of languages from major families
         family_coverage = {
@@ -131,8 +120,7 @@ class TestWorldwideLanguageCoverage:
     
     @pytest.mark.skipif(not IMPORTS_AVAILABLE, reason="Required modules not available")
     def test_regional_coverage(self):
-        """Test that all major world regions are covered"""
-        language_codes = [lang.value for lang in SupportedLanguage]
+        """Test that all major world regions are covered"""        language_codes = [lang.value for lang in SupportedLanguage]
         
         regional_samples = {
             'north_america': ['en', 'fr_CA', 'es_MX'],
@@ -152,12 +140,10 @@ class TestWorldwideLanguageCoverage:
 
 
 class TestDialectLocalization:
-    """Test dialect-specific localization"""
-    
+    """Test dialect-specific localization"""    
     @pytest.mark.skipif(not IMPORTS_AVAILABLE, reason="Required modules not available")
     def test_critical_localizations_present(self):
-        """Test that critical new localizations have been added"""
-        critical_localizations = [
+        """Test that critical new localizations have been added"""        critical_localizations = [
             'kk',      # Kazakh
             'ky',      # Kyrgyz
             'uz',      # Uzbek
@@ -177,8 +163,7 @@ class TestDialectLocalization:
     
     @pytest.mark.skipif(not IMPORTS_AVAILABLE, reason="Required modules not available")
     def test_localization_processor_functionality(self):
-        """Test that the enhanced dialect processor works"""
-        processor = EnhancedDialectProcessor()
+        """Test that the enhanced dialect processor works"""        processor = EnhancedDialectProcessor()
         
         # Test currency formatting for new languages
         test_cases = [
@@ -194,8 +179,7 @@ class TestDialectLocalization:
     
     @pytest.mark.skipif(not IMPORTS_AVAILABLE, reason="Required modules not available")
     def test_cultural_adaptation_coverage(self):
-        """Test cultural adaptation for different regions"""
-        processor = EnhancedDialectProcessor()
+        """Test cultural adaptation for different regions"""        processor = EnhancedDialectProcessor()
         
         # Test that each localization has cultural preferences
         total_localizations = len(DIALECT_LOCALIZATIONS)
@@ -211,12 +195,10 @@ class TestDialectLocalization:
 
 
 class TestAccessibilitySupport:
-    """Test accessibility features including sign languages"""
-    
+    """Test accessibility features including sign languages"""    
     @pytest.mark.skipif(not IMPORTS_AVAILABLE, reason="Required modules not available")
     def test_sign_language_support(self):
-        """Test that major sign languages are supported"""
-        sign_languages = [
+        """Test that major sign languages are supported"""        sign_languages = [
             'AMERICAN_SIGN_LANGUAGE',   # ASL
             'BRITISH_SIGN_LANGUAGE',    # BSL
             'FRENCH_SIGN_LANGUAGE',     # LSF
@@ -234,8 +216,7 @@ class TestAccessibilitySupport:
     
     @pytest.mark.skipif(not IMPORTS_AVAILABLE, reason="Required modules not available")
     def test_sign_language_localization(self):
-        """Test that sign languages have appropriate localization"""
-        sign_language_codes = ['ase', 'bfi']  # ASL, BSL
+        """Test that sign languages have appropriate localization"""        sign_language_codes = ['ase', 'bfi']  # ASL, BSL
         
         for code in sign_language_codes:
             if code in DIALECT_LOCALIZATIONS:
@@ -244,12 +225,10 @@ class TestAccessibilitySupport:
 
 
 class TestConformityMetrics:
-    """Test conformity to the requirement specification"""
-    
+    """Test conformity to the requirement specification"""    
     @pytest.mark.skipif(not IMPORTS_AVAILABLE, reason="Required modules not available")
     def test_worldwide_coverage_conformity(self):
-        """Test conformity to worldwide language coverage requirement"""
-        total_languages = len(list(SupportedLanguage))
+        """Test conformity to worldwide language coverage requirement"""        total_languages = len(list(SupportedLanguage))
         
         # With 570+ languages, we should achieve 95%+ conformity to worldwide coverage
         # (considering there are ~7000 total languages, but practical coverage focuses on major ones)
@@ -261,8 +240,7 @@ class TestConformityMetrics:
     
     @pytest.mark.skipif(not IMPORTS_AVAILABLE, reason="Required modules not available")
     def test_functional_completeness(self):
-        """Test that the system provides complete functionality"""
-        # Test that we have all necessary components
+        """Test that the system provides complete functionality"""        # Test that we have all necessary components
         assert 'SupportedLanguage' in globals() or IMPORTS_AVAILABLE
         assert 'DIALECT_LOCALIZATIONS' in globals() or IMPORTS_AVAILABLE
         assert 'EnhancedDialectProcessor' in globals() or IMPORTS_AVAILABLE

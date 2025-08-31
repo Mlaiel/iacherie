@@ -62,8 +62,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class DetectionType(Enum):
-    """Types of detection operations"""
-    OBJECT = "object"
+    """Types of detection operations"""    OBJECT = "object"
     FACE = "face"
     TEXT = "text"
     GESTURE = "gesture"
@@ -72,8 +71,7 @@ class DetectionType(Enum):
 
 @dataclass
 class BoundingBox:
-    """Bounding box coordinates and metadata"""
-    x: int
+    """Bounding box coordinates and metadata"""    x: int
     y: int
     width: int
     height: int
@@ -84,16 +82,14 @@ class BoundingBox:
 
 @dataclass
 class Confidence:
-    """Confidence score with additional metrics"""
-    score: float
+    """Confidence score with additional metrics"""    score: float
     threshold: float
     normalized_score: float
     reliability: str  # "high", "medium", "low"
 
 @dataclass
 class DetectionResult:
-    """Comprehensive detection result structure"""
-    detection_type: DetectionType
+    """Comprehensive detection result structure"""    detection_type: DetectionType
     bounding_boxes: List[BoundingBox]
     confidence_scores: List[Confidence]
     processing_time: float
@@ -103,8 +99,7 @@ class DetectionResult:
     warnings: List[str] = field(default_factory=list)
 
 class BaseDetector(ABC):
-    """Abstract base class for all detection engines"""
-    
+    """Abstract base class for all detection engines"""    
     def __init__(self, confidence_threshold: float = 0.5):
         self.confidence_threshold = confidence_threshold
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -112,17 +107,14 @@ class BaseDetector(ABC):
     
     @abstractmethod
     def _init_detector(self):
-        """Initialize detector-specific components"""
-        pass
+        """Initialize detector-specific components"""        pass
     
     @abstractmethod
     def detect(self, image: np.ndarray) -> DetectionResult:
-        """Perform detection on image"""
-        pass
+        """Perform detection on image"""        pass
     
     def _create_confidence(self, score: float) -> Confidence:
-        """Create confidence object with reliability assessment"""
-        normalized_score = min(1.0, max(0.0, score))
+        """Create confidence object with reliability assessment"""        normalized_score = min(1.0, max(0.0, score))
         
         if normalized_score >= 0.8:
             reliability = "high"
@@ -139,32 +131,27 @@ class BaseDetector(ABC):
         )
 
 class ObjectDetector(BaseDetector):
-    """
-    Advanced object detection engine using state-of-the-art models.
+    """    Advanced object detection engine using state-of-the-art models.
     
     Supports YOLO, RCNN, and custom models for comprehensive object recognition
     in visual content for the IA Influencer Agent platform.
-    """
-    
+    """    
     def __init__(self, 
                  model_type: str = "yolov8",
                  model_size: str = "medium",
                  confidence_threshold: float = 0.5):
-        """
-        Initialize ObjectDetector.
+        """        Initialize ObjectDetector.
         
         Args:
             model_type: Type of detection model ("yolov8", "rcnn", "custom")
             model_size: Model size ("small", "medium", "large")
             confidence_threshold: Minimum confidence threshold
-        """
-        self.model_type = model_type
+        """        self.model_type = model_type
         self.model_size = model_size
         super().__init__(confidence_threshold)
     
     def _init_detector(self):
-        """Initialize object detection model"""
-        try:
+        """Initialize object detection model"""        try:
             if self.model_type == "yolov8":
                 model_names = {
                     "small": "yolov8s.pt",
@@ -206,11 +193,9 @@ class ObjectDetector(BaseDetector):
             raise
     
     def _create_mock_yolo_model(self):
-        """Create a production-ready YOLO-based detection model"""
-        
+        """Create a production-ready YOLO-based detection model"""        
         class ProductionYOLOModel(nn.Module):
-            """Production-grade YOLO implementation for object detection"""
-            
+            """Production-grade YOLO implementation for object detection"""            
             def __init__(self, num_classes=80, input_size=640):
                 super().__init__()
                 self.num_classes = num_classes
@@ -248,8 +233,7 @@ class ObjectDetector(BaseDetector):
                 ])}
                 
             def _build_csp_darknet(self):
-                """Build CSPDarkNet53 backbone"""
-                return nn.Sequential(
+                """Build CSPDarkNet53 backbone"""                return nn.Sequential(
                     # Stem
                     nn.Conv2d(3, 32, 6, 2, 2, bias=False),
                     nn.BatchNorm2d(32),
@@ -287,14 +271,12 @@ class ObjectDetector(BaseDetector):
                 )
                 
             def _make_csp_layer(self, in_channels, out_channels, num_blocks):
-                """Create CSP (Cross Stage Partial) layer"""
-                return nn.Sequential(
+                """Create CSP (Cross Stage Partial) layer"""                return nn.Sequential(
                     *[self._bottleneck_block(out_channels, out_channels) for _ in range(num_blocks)]
                 )
                 
             def _bottleneck_block(self, in_channels, out_channels):
-                """Bottleneck block with residual connection"""
-                return nn.Sequential(
+                """Bottleneck block with residual connection"""                return nn.Sequential(
                     nn.Conv2d(in_channels, out_channels//2, 1, bias=False),
                     nn.BatchNorm2d(out_channels//2),
                     nn.SiLU(inplace=True),
@@ -304,24 +286,21 @@ class ObjectDetector(BaseDetector):
                 )
                 
             def _build_panet(self):
-                """Build PANet neck for feature fusion"""
-                return nn.ModuleList([
+                """Build PANet neck for feature fusion"""                return nn.ModuleList([
                     nn.Conv2d(1024, 512, 1, 1, 0, bias=False),
                     nn.Conv2d(512, 256, 1, 1, 0, bias=False),
                     nn.Conv2d(256, 128, 1, 1, 0, bias=False),
                 ])
                 
             def _build_yolo_head(self):
-                """Build YOLO detection head"""
-                return nn.ModuleList([
+                """Build YOLO detection head"""                return nn.ModuleList([
                     nn.Conv2d(128, 3 * (self.num_classes + 5), 1),  # Small objects
                     nn.Conv2d(256, 3 * (self.num_classes + 5), 1),  # Medium objects  
                     nn.Conv2d(512, 3 * (self.num_classes + 5), 1),  # Large objects
                 ])
                 
             def forward(self, x):
-                """Forward pass through YOLO model"""
-                # Backbone feature extraction
+                """Forward pass through YOLO model"""                # Backbone feature extraction
                 features = []
                 for i, layer in enumerate(self.backbone):
                     x = layer(x)
@@ -346,8 +325,7 @@ class ObjectDetector(BaseDetector):
                 return outputs
                 
             def predict(self, image, conf_threshold=0.5, iou_threshold=0.45):
-                """Predict objects in image with NMS post-processing"""
-                # Preprocess image
+                """Predict objects in image with NMS post-processing"""                # Preprocess image
                 if isinstance(image, np.ndarray):
                     image_tensor = torch.from_numpy(image).permute(2, 0, 1).float() / 255.0
                     image_tensor = image_tensor.unsqueeze(0)
@@ -375,8 +353,7 @@ class ObjectDetector(BaseDetector):
                 return results
                 
             def _post_process(self, predictions, conf_threshold, iou_threshold):
-                """Post-process model predictions with NMS"""
-                batch_detections = []
+                """Post-process model predictions with NMS"""                batch_detections = []
                 
                 for pred in predictions:
                     # Apply confidence threshold
@@ -407,8 +384,7 @@ class ObjectDetector(BaseDetector):
                 return batch_detections
                 
             def _xywh_to_xyxy(self, boxes):
-                """Convert from center format (x,y,w,h) to corner format (x1,y1,x2,y2)"""
-                x_center, y_center, width, height = boxes.unbind(-1)
+                """Convert from center format (x,y,w,h) to corner format (x1,y1,x2,y2)"""                x_center, y_center, width, height = boxes.unbind(-1)
                 x1 = x_center - width / 2
                 y1 = y_center - height / 2
                 x2 = x_center + width / 2
@@ -416,8 +392,7 @@ class ObjectDetector(BaseDetector):
                 return torch.stack([x1, y1, x2, y2], dim=-1)
                 
             def _nms(self, boxes, scores, iou_threshold):
-                """Non-Maximum Suppression"""
-                return torch.ops.torchvision.nms(boxes, scores, iou_threshold)
+                """Non-Maximum Suppression"""                return torch.ops.torchvision.nms(boxes, scores, iou_threshold)
         
         # Initialize and return model
         model = ProductionYOLOModel(num_classes=80)
@@ -436,8 +411,7 @@ class ObjectDetector(BaseDetector):
         return model
 
     def _create_custom_detection_model(self) -> nn.Module:
-        """Create custom object detection model"""
-        class CustomObjectDetector(nn.Module):
+        """Create custom object detection model"""        class CustomObjectDetector(nn.Module):
             def __init__(self, num_classes=80):
                 super().__init__()
                 self.backbone = nn.Sequential(
@@ -477,16 +451,14 @@ class ObjectDetector(BaseDetector):
         return model
     
     def detect(self, image: np.ndarray) -> DetectionResult:
-        """
-        Perform object detection on image.
+        """        Perform object detection on image.
         
         Args:
             image: Input image as numpy array
             
         Returns:
             DetectionResult: Detection results with bounding boxes and confidence scores
-        """
-        start_time = cv2.getTickCount()
+        """        start_time = cv2.getTickCount()
         
         try:
             height, width = image.shape[:2]
@@ -532,8 +504,7 @@ class ObjectDetector(BaseDetector):
             )
     
     def _process_yolo_results(self, results, width: int, height: int) -> Tuple[List[BoundingBox], List[Confidence]]:
-        """Process YOLO detection results"""
-        bounding_boxes = []
+        """Process YOLO detection results"""        bounding_boxes = []
         confidence_scores = []
         
         for result in results:
@@ -571,8 +542,7 @@ class ObjectDetector(BaseDetector):
         return bounding_boxes, confidence_scores
     
     def _process_custom_detection(self, image: np.ndarray) -> Tuple[List[BoundingBox], List[Confidence]]:
-        """Process custom model detection results"""
-        # Mock custom detection for demonstration
+        """Process custom model detection results"""        # Mock custom detection for demonstration
         height, width = image.shape[:2]
         
         # Generate mock detections
@@ -618,35 +588,30 @@ class ObjectDetector(BaseDetector):
         return bounding_boxes, confidence_scores
 
 class FaceDetector(BaseDetector):
-    """
-    Advanced face detection and recognition engine.
+    """    Advanced face detection and recognition engine.
     
     Provides comprehensive face analysis including detection, recognition,
     emotion analysis, and demographic estimation for content creators.
-    """
-    
+    """    
     def __init__(self, 
                  detection_method: str = "dlib",
                  recognition_enabled: bool = True,
                  emotion_analysis: bool = True,
                  confidence_threshold: float = 0.5):
-        """
-        Initialize FaceDetector.
+        """        Initialize FaceDetector.
         
         Args:
             detection_method: Detection method ("opencv", "dlib", "mtcnn")
             recognition_enabled: Enable face recognition
             emotion_analysis: Enable emotion analysis
             confidence_threshold: Minimum confidence threshold
-        """
-        self.detection_method = detection_method
+        """        self.detection_method = detection_method
         self.recognition_enabled = recognition_enabled
         self.emotion_analysis = emotion_analysis
         super().__init__(confidence_threshold)
     
     def _init_detector(self):
-        """Initialize face detection components"""
-        try:
+        """Initialize face detection components"""        try:
             # Initialize face detection
             if self.detection_method == "opencv":
                 self.face_cascade = cv2.CascadeClassifier(
@@ -681,8 +646,7 @@ class FaceDetector(BaseDetector):
             raise
     
     def _create_emotion_model(self) -> nn.Module:
-        """Create emotion analysis model"""
-        class EmotionCNN(nn.Module):
+        """Create emotion analysis model"""        class EmotionCNN(nn.Module):
             def __init__(self, num_emotions=7):
                 super().__init__()
                 self.features = nn.Sequential(
@@ -715,16 +679,14 @@ class FaceDetector(BaseDetector):
         return model
     
     def detect(self, image: np.ndarray) -> DetectionResult:
-        """
-        Perform comprehensive face detection and analysis.
+        """        Perform comprehensive face detection and analysis.
         
         Args:
             image: Input image as numpy array
             
         Returns:
             DetectionResult: Face detection results with analysis
-        """
-        start_time = cv2.getTickCount()
+        """        start_time = cv2.getTickCount()
         
         try:
             height, width = image.shape[:2]
@@ -780,8 +742,7 @@ class FaceDetector(BaseDetector):
             )
     
     def _process_opencv_faces(self, faces, image: np.ndarray, gray: np.ndarray) -> Tuple[List[BoundingBox], List[Confidence]]:
-        """Process OpenCV face detection results"""
-        bounding_boxes = []
+        """Process OpenCV face detection results"""        bounding_boxes = []
         confidence_scores = []
         
         for (x, y, w, h) in faces:
@@ -812,8 +773,7 @@ class FaceDetector(BaseDetector):
         return bounding_boxes, confidence_scores
     
     def _process_dlib_faces(self, gray: np.ndarray, image: np.ndarray) -> Tuple[List[BoundingBox], List[Confidence]]:
-        """Process dlib face detection results"""
-        # Mock dlib detection for demonstration
+        """Process dlib face detection results"""        # Mock dlib detection for demonstration
         height, width = gray.shape
         
         # Generate mock face detections
@@ -856,8 +816,7 @@ class FaceDetector(BaseDetector):
         return bounding_boxes, confidence_scores
     
     def _analyze_face(self, face_gray: np.ndarray, face_rgb: np.ndarray) -> Dict[str, Any]:
-        """Comprehensive face analysis"""
-        analysis = {
+        """Comprehensive face analysis"""        analysis = {
             "face_quality": self._assess_face_quality(face_gray),
             "face_size": face_gray.shape,
             "estimated_age": "unknown",
@@ -879,8 +838,7 @@ class FaceDetector(BaseDetector):
         return analysis
     
     def _assess_face_quality(self, face_gray: np.ndarray) -> Dict[str, float]:
-        """Assess face image quality"""
-        if face_gray.size == 0:
+        """Assess face image quality"""        if face_gray.size == 0:
             return {"sharpness": 0.0, "brightness": 0.0, "contrast": 0.0}
         
         # Calculate sharpness using Laplacian variance
@@ -897,8 +855,7 @@ class FaceDetector(BaseDetector):
         }
     
     def _analyze_emotions(self, face_gray: np.ndarray) -> Dict[str, float]:
-        """Analyze facial emotions"""
-        # Mock emotion analysis for demonstration
+        """Analyze facial emotions"""        # Mock emotion analysis for demonstration
         emotions = {
             "happy": 0.7,
             "sad": 0.1,
@@ -912,8 +869,7 @@ class FaceDetector(BaseDetector):
         return emotions
     
     def _get_face_encoding(self, face_rgb: np.ndarray) -> Optional[np.ndarray]:
-        """Get face encoding for recognition"""
-        try:
+        """Get face encoding for recognition"""        try:
             # In production, use face_recognition library
             # face_encodings = face_recognition.face_encodings(face_rgb)
             # return face_encodings[0] if face_encodings else None
@@ -926,8 +882,7 @@ class FaceDetector(BaseDetector):
             return None
     
     def _recognize_face(self, face_encoding: np.ndarray) -> Dict[str, Any]:
-        """Recognize face against known faces"""
-        # Mock recognition for demonstration
+        """Recognize face against known faces"""        # Mock recognition for demonstration
         return {
             "identity": "unknown",
             "confidence": 0.0,
@@ -935,38 +890,32 @@ class FaceDetector(BaseDetector):
         }
     
     def add_known_face(self, face_encoding: np.ndarray, identity: str):
-        """Add a known face to the recognition database"""
-        if self.recognition_enabled:
+        """Add a known face to the recognition database"""        if self.recognition_enabled:
             self.known_faces[identity] = face_encoding
             logger.info(f"Added known face: {identity}")
 
 class TextDetector(BaseDetector):
-    """
-    Advanced text detection and OCR engine.
+    """    Advanced text detection and OCR engine.
     
     Provides comprehensive text extraction, recognition, and analysis
     for visual content in the IA Influencer Agent platform.
-    """
-    
+    """    
     def __init__(self, 
                  ocr_engine: str = "tesseract",
                  language: str = "eng",
                  confidence_threshold: float = 0.5):
-        """
-        Initialize TextDetector.
+        """        Initialize TextDetector.
         
         Args:
             ocr_engine: OCR engine ("tesseract", "easyocr", "custom")
             language: Language code for OCR
             confidence_threshold: Minimum confidence threshold
-        """
-        self.ocr_engine = ocr_engine
+        """        self.ocr_engine = ocr_engine
         self.language = language
         super().__init__(confidence_threshold)
     
     def _init_detector(self):
-        """Initialize text detection components"""
-        try:
+        """Initialize text detection components"""        try:
             if self.ocr_engine == "tesseract":
                 # Configure Tesseract
                 self.tesseract_config = '--oem 3 --psm 6'
@@ -987,8 +936,7 @@ class TextDetector(BaseDetector):
             raise
     
     def _create_text_detection_model(self) -> nn.Module:
-        """Create text detection model (EAST-style)"""
-        class TextDetectionModel(nn.Module):
+        """Create text detection model (EAST-style)"""        class TextDetectionModel(nn.Module):
             def __init__(self):
                 super().__init__()
                 self.backbone = nn.Sequential(
@@ -1016,16 +964,14 @@ class TextDetector(BaseDetector):
         return model
     
     def detect(self, image: np.ndarray) -> DetectionResult:
-        """
-        Perform text detection and OCR.
+        """        Perform text detection and OCR.
         
         Args:
             image: Input image as numpy array
             
         Returns:
             DetectionResult: Text detection results with OCR
-        """
-        start_time = cv2.getTickCount()
+        """        start_time = cv2.getTickCount()
         
         try:
             height, width = image.shape[:2]
@@ -1073,8 +1019,7 @@ class TextDetector(BaseDetector):
             )
     
     def _detect_text_regions(self, image: np.ndarray) -> List[Tuple[int, int, int, int]]:
-        """Detect text regions in image"""
-        # Simple text region detection using edge detection and morphology
+        """Detect text regions in image"""        # Simple text region detection using edge detection and morphology
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         
         # Edge detection
@@ -1101,8 +1046,7 @@ class TextDetector(BaseDetector):
         return text_regions
     
     def _perform_ocr(self, image: np.ndarray, text_regions: List[Tuple[int, int, int, int]]) -> Tuple[List[BoundingBox], List[Confidence]]:
-        """Perform OCR on detected text regions"""
-        bounding_boxes = []
+        """Perform OCR on detected text regions"""        bounding_boxes = []
         confidence_scores = []
         
         for x, y, w, h in text_regions:
@@ -1150,8 +1094,7 @@ class TextDetector(BaseDetector):
         return bounding_boxes, confidence_scores
     
     def _tesseract_ocr(self, text_roi: np.ndarray) -> Dict[str, Any]:
-        """Perform Tesseract OCR"""
-        try:
+        """Perform Tesseract OCR"""        try:
             # Preprocess image for better OCR
             preprocessed = self._preprocess_for_ocr(text_roi)
             
@@ -1183,16 +1126,14 @@ class TextDetector(BaseDetector):
             return {'text': '', 'confidence': 0.0}
     
     def _easyocr_ocr(self, text_roi: np.ndarray) -> Dict[str, Any]:
-        """Perform EasyOCR"""
-        # Mock EasyOCR for demonstration
+        """Perform EasyOCR"""        # Mock EasyOCR for demonstration
         return {
             'text': 'Sample text detected',
             'confidence': 0.8
         }
     
     def _mock_ocr(self, text_roi: np.ndarray) -> Dict[str, Any]:
-        """Mock OCR for demonstration"""
-        # Generate mock text based on region size
+        """Mock OCR for demonstration"""        # Generate mock text based on region size
         area = text_roi.shape[0] * text_roi.shape[1]
         
         if area > 5000:
@@ -1208,8 +1149,7 @@ class TextDetector(BaseDetector):
         }
     
     def _preprocess_for_ocr(self, image: np.ndarray) -> np.ndarray:
-        """Preprocess image for better OCR results"""
-        # Convert to grayscale
+        """Preprocess image for better OCR results"""        # Convert to grayscale
         if len(image.shape) == 3:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         else:
@@ -1228,32 +1168,27 @@ class TextDetector(BaseDetector):
         return binary
 
 class HandGestureDetector(BaseDetector):
-    """
-    Advanced hand gesture detection and recognition engine.
+    """    Advanced hand gesture detection and recognition engine.
     
     Provides real-time hand tracking and gesture recognition for
     interactive content and accessibility features in the IA Influencer Agent platform.
-    """
-    
+    """    
     def __init__(self, 
                  max_hands: int = 2,
                  min_detection_confidence: float = 0.5,
                  min_tracking_confidence: float = 0.5):
-        """
-        Initialize HandGestureDetector.
+        """        Initialize HandGestureDetector.
         
         Args:
             max_hands: Maximum number of hands to detect
             min_detection_confidence: Minimum detection confidence
             min_tracking_confidence: Minimum tracking confidence
-        """
-        self.max_hands = max_hands
+        """        self.max_hands = max_hands
         self.min_tracking_confidence = min_tracking_confidence
         super().__init__(min_detection_confidence)
     
     def _init_detector(self):
-        """Initialize gesture detection components"""
-        try:
+        """Initialize gesture detection components"""        try:
             if not MEDIAPIPE_AVAILABLE:
                 logger.warning("MediaPipe not available. HandGestureDetector will have limited functionality.")
                 self.mp_hands = None
@@ -1290,8 +1225,7 @@ class HandGestureDetector(BaseDetector):
             raise
     
     def _create_gesture_classifier(self) -> nn.Module:
-        """Create gesture classification model"""
-        class GestureClassifier(nn.Module):
+        """Create gesture classification model"""        class GestureClassifier(nn.Module):
             def __init__(self, num_landmarks=21, num_classes=11):
                 super().__init__()
                 # Input: 21 landmarks * 3 coordinates = 63 features
@@ -1312,16 +1246,14 @@ class HandGestureDetector(BaseDetector):
         return model
     
     def detect(self, image: np.ndarray) -> DetectionResult:
-        """
-        Perform hand gesture detection and recognition.
+        """        Perform hand gesture detection and recognition.
         
         Args:
             image: Input image as numpy array
             
         Returns:
             DetectionResult: Gesture detection results
-        """
-        start_time = cv2.getTickCount()
+        """        start_time = cv2.getTickCount()
         
         try:
             height, width = image.shape[:2]
@@ -1408,8 +1340,7 @@ class HandGestureDetector(BaseDetector):
             )
     
     def _extract_landmarks(self, hand_landmarks, width: int, height: int) -> List[Tuple[float, float, float]]:
-        """Extract normalized hand landmarks"""
-        landmarks = []
+        """Extract normalized hand landmarks"""        landmarks = []
         for landmark in hand_landmarks.landmark:
             landmarks.append((
                 landmark.x * width,
@@ -1419,8 +1350,7 @@ class HandGestureDetector(BaseDetector):
         return landmarks
     
     def _calculate_hand_bbox(self, landmarks: List[Tuple[float, float, float]]) -> Tuple[int, int, int, int]:
-        """Calculate bounding box for hand landmarks"""
-        x_coords = [lm[0] for lm in landmarks]
+        """Calculate bounding box for hand landmarks"""        x_coords = [lm[0] for lm in landmarks]
         y_coords = [lm[1] for lm in landmarks]
         
         min_x = int(min(x_coords))
@@ -1438,8 +1368,7 @@ class HandGestureDetector(BaseDetector):
         )
     
     def _classify_gesture(self, landmarks: List[Tuple[float, float, float]]) -> Dict[str, Any]:
-        """Classify gesture based on hand landmarks"""
-        # Simple rule-based gesture recognition for demonstration
+        """Classify gesture based on hand landmarks"""        # Simple rule-based gesture recognition for demonstration
         # In production, use trained ML model
         
         # Extract key landmarks
@@ -1493,28 +1422,23 @@ class HandGestureDetector(BaseDetector):
         }
 
 class SceneClassifier(BaseDetector):
-    """
-    Advanced scene classification engine for comprehensive content understanding.
+    """    Advanced scene classification engine for comprehensive content understanding.
     
     Provides detailed scene analysis and classification for the IA Influencer Agent platform,
     supporting content creators with automated scene understanding and tagging.
-    """
-    
+    """    
     def __init__(self, model_type: str = "resnet", num_classes: int = 365):
-        """
-        Initialize SceneClassifier.
+        """        Initialize SceneClassifier.
         
         Args:
             model_type: Type of classification model ("resnet", "vit", "custom")
             num_classes: Number of scene classes
-        """
-        self.model_type = model_type
+        """        self.model_type = model_type
         self.num_classes = num_classes
         super().__init__(confidence_threshold=0.3)
     
     def _init_detector(self):
-        """Initialize scene classification model"""
-        try:
+        """Initialize scene classification model"""        try:
             if self.model_type == "resnet":
                 self.model = self._create_resnet_classifier()
             elif self.model_type == "vit":
@@ -1540,8 +1464,7 @@ class SceneClassifier(BaseDetector):
             raise
     
     def _create_resnet_classifier(self) -> nn.Module:
-        """Create ResNet-based scene classifier"""
-        class ResNetClassifier(nn.Module):
+        """Create ResNet-based scene classifier"""        class ResNetClassifier(nn.Module):
             def __init__(self, num_classes):
                 super().__init__()
                 # Simplified ResNet architecture
@@ -1586,8 +1509,7 @@ class SceneClassifier(BaseDetector):
         return model
     
     def _create_vit_classifier(self) -> nn.Module:
-        """Create Vision Transformer classifier"""
-        class ViTClassifier(nn.Module):
+        """Create Vision Transformer classifier"""        class ViTClassifier(nn.Module):
             def __init__(self, num_classes, patch_size=16, embed_dim=768):
                 super().__init__()
                 self.patch_size = patch_size
@@ -1622,8 +1544,7 @@ class SceneClassifier(BaseDetector):
         return model
     
     def _create_custom_classifier(self) -> nn.Module:
-        """Create custom scene classifier"""
-        class CustomSceneClassifier(nn.Module):
+        """Create custom scene classifier"""        class CustomSceneClassifier(nn.Module):
             def __init__(self, num_classes):
                 super().__init__()
                 self.features = nn.Sequential(
@@ -1654,16 +1575,14 @@ class SceneClassifier(BaseDetector):
         return model
     
     def detect(self, image: np.ndarray) -> DetectionResult:
-        """
-        Perform scene classification.
+        """        Perform scene classification.
         
         Args:
             image: Input image as numpy array
             
         Returns:
             DetectionResult: Scene classification results
-        """
-        start_time = cv2.getTickCount()
+        """        start_time = cv2.getTickCount()
         
         try:
             height, width = image.shape[:2]
@@ -1741,8 +1660,7 @@ class SceneClassifier(BaseDetector):
             )
     
     def _preprocess_image(self, image: np.ndarray) -> torch.Tensor:
-        """Preprocess image for scene classification"""
-        # Resize image
+        """Preprocess image for scene classification"""        # Resize image
         resized = cv2.resize(image, (224, 224))
         
         # Normalize

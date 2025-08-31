@@ -1,5 +1,4 @@
-"""
-Content Optimizer - AI-Powered Content Optimization Engine
+"""Content Optimizer - AI-Powered Content Optimization Engine
 ==========================================================
 
 The ContentOptimizer enhances content quality, performance, and engagement
@@ -8,9 +7,7 @@ and user preferences.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -34,8 +31,7 @@ from ..platforms.requirements import PlatformRequirements
 
 @dataclass
 class OptimizationResult:
-    """Content optimization result container"""
-    content_id: str
+    """Content optimization result container"""    content_id: str
     optimization_type: str
     optimized_files: List[str]
     optimization_metrics: Dict[str, Any]
@@ -50,8 +46,7 @@ class OptimizationResult:
 
 @dataclass
 class OptimizationConfig:
-    """Content optimization configuration"""
-    enable_seo_optimization: bool = True
+    """Content optimization configuration"""    enable_seo_optimization: bool = True
     enable_quality_enhancement: bool = True
     enable_format_optimization: bool = True
     enable_engagement_optimization: bool = True
@@ -63,8 +58,7 @@ class OptimizationConfig:
 
 
 class ContentOptimizer:
-    """
-    AI-Powered Content Optimization Engine
+    """    AI-Powered Content Optimization Engine
     
     Provides comprehensive content optimization including:
     - SEO optimization with keyword enhancement
@@ -73,8 +67,7 @@ class ContentOptimizer:
     - Engagement optimization for maximum impact
     - Performance optimization for fast loading
     - Platform-specific optimization requirements
-    """
-    
+    """    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -100,8 +93,7 @@ class ContentOptimizer:
         optimization_types: List[str] = None,
         custom_config: OptimizationConfig = None
     ) -> Dict[str, Any]:
-        """
-        Perform comprehensive content optimization
+        """        Perform comprehensive content optimization
         
         Args:
             content_id: Content identifier
@@ -110,8 +102,7 @@ class ContentOptimizer:
             
         Returns:
             Optimization result with enhanced content variants
-        """
-        optimization_start = datetime.utcnow()
+        """        optimization_start = datetime.utcnow()
         config = custom_config or self.config
         
         try:
@@ -185,8 +176,7 @@ class ContentOptimizer:
         optimization_types: List[str],
         config: OptimizationConfig
     ) -> OptimizationResult:
-        """
-        Optimize audio content with AI enhancement
+        """        Optimize audio content with AI enhancement
         
         Args:
             content: Content database object
@@ -195,8 +185,7 @@ class ContentOptimizer:
             
         Returns:
             Audio optimization result
-        """
-        try:
+        """        try:
             optimized_files = []
             optimization_metrics = {}
             seo_improvements = {}
@@ -301,8 +290,7 @@ class ContentOptimizer:
         optimization_types: List[str],
         config: OptimizationConfig
     ) -> OptimizationResult:
-        """
-        Optimize video content with AI enhancement
+        """        Optimize video content with AI enhancement
         
         Args:
             content: Content database object
@@ -311,8 +299,7 @@ class ContentOptimizer:
             
         Returns:
             Video optimization result
-        """
-        try:
+        """        try:
             optimized_files = []
             optimization_metrics = {}
             seo_improvements = {}
@@ -424,8 +411,7 @@ class ContentOptimizer:
         optimization_types: List[str],
         config: OptimizationConfig
     ) -> OptimizationResult:
-        """
-        Optimize image content with AI enhancement
+        """        Optimize image content with AI enhancement
         
         Args:
             content: Content database object
@@ -434,8 +420,7 @@ class ContentOptimizer:
             
         Returns:
             Image optimization result
-        """
-        try:
+        """        try:
             optimized_files = []
             optimization_metrics = {}
             seo_improvements = {}
@@ -545,8 +530,7 @@ class ContentOptimizer:
         optimization_types: List[str],
         config: OptimizationConfig
     ) -> OptimizationResult:
-        """
-        Optimize text content with NLP enhancement
+        """        Optimize text content with NLP enhancement
         
         Args:
             content: Content database object
@@ -555,8 +539,7 @@ class ContentOptimizer:
             
         Returns:
             Text optimization result
-        """
-        try:
+        """        try:
             optimized_files = []
             optimization_metrics = {}
             seo_improvements = {}
@@ -666,20 +649,17 @@ class ContentOptimizer:
     # Helper methods for optimization operations
 
     async def _get_content(self, content_id: str):
-        """Get content from database"""
-        # This would query the actual database
+        """Get content from database"""        # This would query the actual database
         pass
 
     def _get_optimized_file_path(self, content_id: str, filename: str) -> str:
-        """Generate path for optimized file"""
-        optimized_dir = f"/tmp/optimized/{content_id}"
+        """Generate path for optimized file"""        optimized_dir = f"/tmp/optimized/{content_id}"
         import os
         os.makedirs(optimized_dir, exist_ok=True)
         return f"{optimized_dir}/{filename}"
 
     async def _enhance_audio_quality(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Apply AI-based audio enhancement"""
-        # Noise reduction
+        """Apply AI-based audio enhancement"""        # Noise reduction
         enhanced = signal.wiener(audio_data, noise=None)
         
         # Dynamic range compression
@@ -693,8 +673,7 @@ class ContentOptimizer:
         return enhanced
 
     async def _enhance_image_quality(self, img: Image.Image, config: OptimizationConfig) -> Image.Image:
-        """Apply AI-based image enhancement"""
-        enhanced = img.copy()
+        """Apply AI-based image enhancement"""        enhanced = img.copy()
         
         # Sharpen image
         enhanced = enhanced.filter(ImageFilter.UnsharpMask(radius=2, percent=150, threshold=3))
@@ -716,31 +695,26 @@ class ContentOptimizer:
         original: np.ndarray,
         enhanced: np.ndarray
     ) -> float:
-        """Calculate quality improvement percentage"""
-        # Simplified quality metric based on SNR improvement
+        """Calculate quality improvement percentage"""        # Simplified quality metric based on SNR improvement
         original_snr = self._calculate_snr(original)
         enhanced_snr = self._calculate_snr(enhanced)
         return max(0.0, (enhanced_snr - original_snr) / max(original_snr, 1.0))
 
     def _calculate_snr(self, audio_data: np.ndarray) -> float:
-        """Calculate signal-to-noise ratio"""
-        signal_power = np.mean(audio_data**2)
+        """Calculate signal-to-noise ratio"""        signal_power = np.mean(audio_data**2)
         noise_estimate = np.var(audio_data) * 0.1
         return 10 * np.log10(signal_power / max(noise_estimate, 1e-10))
 
     async def _get_file_size(self, file_path: str) -> int:
-        """Get file size in bytes"""
-        import os
+        """Get file size in bytes"""        import os
         return os.path.getsize(file_path)
 
     async def _save_optimization_result(self, content_id: str, result: OptimizationResult) -> None:
-        """Save optimization result to database"""
-        # This would save to the actual database
+        """Save optimization result to database"""        # This would save to the actual database
         pass
 
     def _serialize_optimization_result(self, result: OptimizationResult) -> Dict[str, Any]:
-        """Convert optimization result to serializable format"""
-        return {
+        """Convert optimization result to serializable format"""        return {
             "content_id": result.content_id,
             "optimization_type": result.optimization_type,
             "optimized_files": result.optimized_files,

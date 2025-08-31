@@ -1,5 +1,4 @@
-"""
-GDPR Manager - Advanced Data Protection & Privacy Compliance System
+"""GDPR Manager - Advanced Data Protection & Privacy Compliance System
 
 Comprehensive GDPR compliance management, data protection officer automation,
 and privacy rights enforcement for the IA-Influencer-Agent platform.
@@ -11,9 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import uuid
@@ -60,8 +57,7 @@ from ...security.audit_logger import AuditLogger
 logger = logging.getLogger(__name__)
 
 class ConsentType(Enum):
-    """Types of GDPR consent"""
-    DATA_PROCESSING = "data_processing"
+    """Types of GDPR consent"""    DATA_PROCESSING = "data_processing"
     MARKETING = "marketing"
     ANALYTICS = "analytics"
     THIRD_PARTY_SHARING = "third_party_sharing"
@@ -71,8 +67,7 @@ class ConsentType(Enum):
     LOCATION_TRACKING = "location_tracking"
 
 class DataSubjectRight(Enum):
-    """GDPR Data Subject Rights"""
-    ACCESS = "access"  # Article 15
+    """GDPR Data Subject Rights"""    ACCESS = "access"  # Article 15
     RECTIFICATION = "rectification"  # Article 16
     ERASURE = "erasure"  # Article 17 (Right to be forgotten)
     RESTRICTION = "restriction"  # Article 18
@@ -81,8 +76,7 @@ class DataSubjectRight(Enum):
     WITHDRAW_CONSENT = "withdraw_consent"  # Article 7(3)
 
 class ProcessingLawfulBasis(Enum):
-    """GDPR Lawful Basis for Processing"""
-    CONSENT = "consent"  # Article 6(1)(a)
+    """GDPR Lawful Basis for Processing"""    CONSENT = "consent"  # Article 6(1)(a)
     CONTRACT = "contract"  # Article 6(1)(b)
     LEGAL_OBLIGATION = "legal_obligation"  # Article 6(1)(c)
     VITAL_INTERESTS = "vital_interests"  # Article 6(1)(d)
@@ -90,8 +84,7 @@ class ProcessingLawfulBasis(Enum):
     LEGITIMATE_INTERESTS = "legitimate_interests"  # Article 6(1)(f)
 
 class DataCategory(Enum):
-    """Categories of personal data"""
-    BASIC_IDENTITY = "basic_identity"
+    """Categories of personal data"""    BASIC_IDENTITY = "basic_identity"
     CONTACT_INFO = "contact_info"
     DEMOGRAPHIC = "demographic"
     FINANCIAL = "financial"
@@ -104,8 +97,7 @@ class DataCategory(Enum):
 
 @dataclass
 class ConsentRecord:
-    """GDPR consent record"""
-    id: str
+    """GDPR consent record"""    id: str
     user_id: str
     consent_type: ConsentType
     granted: bool
@@ -121,8 +113,7 @@ class ConsentRecord:
 
 @dataclass
 class DataSubjectRequest:
-    """Data Subject Rights Request"""
-    id: str
+    """Data Subject Rights Request"""    id: str
     user_id: str
     request_type: DataSubjectRight
     request_date: datetime
@@ -137,8 +128,7 @@ class DataSubjectRequest:
 
 @dataclass
 class DataProcessingActivity:
-    """Record of Processing Activities (Article 30)"""
-    id: str
+    """Record of Processing Activities (Article 30)"""    id: str
     activity_name: str
     purpose: str
     lawful_basis: ProcessingLawfulBasis
@@ -155,8 +145,7 @@ class DataProcessingActivity:
 
 @dataclass
 class DataBreachIncident:
-    """Data Protection Breach Incident Record"""
-    id: str
+    """Data Protection Breach Incident Record"""    id: str
     incident_date: datetime
     discovery_date: datetime
     description: str
@@ -173,16 +162,13 @@ class DataBreachIncident:
     status: str = "open"  # open, investigating, resolved, closed
 
 class GDPRManager:
-    """
-    Comprehensive GDPR compliance management system
+    """    Comprehensive GDPR compliance management system
     
     Manages consent, data subject rights, processing records, breach notifications,
     and automated compliance monitoring for content protection platforms.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize GDPR manager with advanced privacy controls"""
-        self.config = config or {}
+        """Initialize GDPR manager with advanced privacy controls"""        self.config = config or {}
         self.encryption = ContentEncryption()
         self.performance_monitor = PerformanceMonitor()
         self.data_processor = DataProcessor()
@@ -211,8 +197,7 @@ class GDPRManager:
         logger.info("GDPRManager initialized successfully")
     
     async def initialize_processing_activities(self):
-        """Initialize standard processing activities for the platform"""
-        try:
+        """Initialize standard processing activities for the platform"""        try:
             activities = [
                 DataProcessingActivity(
                     id="user_registration",
@@ -289,8 +274,7 @@ class GDPRManager:
                            ip_address: Optional[str] = None,
                            user_agent: Optional[str] = None,
                            granular_choices: Optional[Dict[str, bool]] = None) -> ConsentRecord:
-        """Record user consent with full GDPR compliance"""
-        try:
+        """Record user consent with full GDPR compliance"""        try:
             consent_id = str(uuid.uuid4())
             
             # Set expiry date (consent should be renewed periodically)
@@ -345,8 +329,7 @@ class GDPRManager:
     
     async def withdraw_consent(self, user_id: str, consent_type: ConsentType,
                              reason: Optional[str] = None) -> bool:
-        """Process consent withdrawal"""
-        try:
+        """Process consent withdrawal"""        try:
             # Find current consent record
             user_consents = self.consent_by_user.get(user_id, {})
             current_consent = user_consents.get(consent_type)
@@ -399,8 +382,7 @@ class GDPRManager:
             raise ComplianceError(f"Consent withdrawal failed: {e}")
     
     async def get_user_consent(self, user_id: str) -> Dict[str, Any]:
-        """Get comprehensive user consent status"""
-        try:
+        """Get comprehensive user consent status"""        try:
             user_consents = self.consent_by_user.get(user_id, {})
             consent_status = {}
             
@@ -441,8 +423,7 @@ class GDPRManager:
     
     async def submit_data_subject_request(self, user_id: str, request_type: DataSubjectRight,
                                         description: str, user_email: Optional[str] = None) -> DataSubjectRequest:
-        """Submit a data subject rights request"""
-        try:
+        """Submit a data subject rights request"""        try:
             request_id = str(uuid.uuid4())
             
             # Calculate response due date (1 month under GDPR)
@@ -495,8 +476,7 @@ class GDPRManager:
             raise ComplianceError(f"Request submission failed: {e}")
     
     async def _process_data_access_request(self, request: DataSubjectRequest):
-        """Automatically process data access and portability requests"""
-        try:
+        """Automatically process data access and portability requests"""        try:
             request.status = "processing"
             
             # Collect user data from all systems
@@ -538,8 +518,7 @@ class GDPRManager:
             request.denial_reason = f"Processing error: {str(e)}"
     
     async def process_erasure_request(self, request_id: str, verified: bool = True) -> bool:
-        """Process right to erasure (right to be forgotten) request"""
-        try:
+        """Process right to erasure (right to be forgotten) request"""        try:
             request = self.data_subject_requests.get(request_id)
             if not request or request.request_type != DataSubjectRight.ERASURE:
                 return False
@@ -601,8 +580,7 @@ class GDPRManager:
     async def report_data_breach(self, description: str, affected_data_categories: List[DataCategory],
                                affected_individuals_count: int, breach_type: str,
                                discovery_date: Optional[datetime] = None) -> DataBreachIncident:
-        """Report a data protection breach incident"""
-        try:
+        """Report a data protection breach incident"""        try:
             incident_id = str(uuid.uuid4())
             incident_date = discovery_date or datetime.now(timezone.utc)
             
@@ -657,8 +635,7 @@ class GDPRManager:
             raise ComplianceError(f"Breach reporting failed: {e}")
     
     async def _collect_user_data(self, user_id: str) -> Dict[str, Any]:
-        """Collect all user data from various systems"""
-        try:
+        """Collect all user data from various systems"""        try:
             user_data = {
                 'user_profile': {},
                 'content_data': {},
@@ -703,8 +680,7 @@ class GDPRManager:
             return {}
     
     async def _get_user_profile_data(self, user_id: str) -> Dict[str, Any]:
-        """Get user profile data"""
-        # Placeholder - would integrate with actual user system
+        """Get user profile data"""        # Placeholder - would integrate with actual user system
         return {
             'user_id': user_id,
             'registration_date': '2025-01-01T00:00:00Z',
@@ -714,8 +690,7 @@ class GDPRManager:
         }
     
     async def _get_user_content_data(self, user_id: str) -> Dict[str, Any]:
-        """Get user content data"""
-        # Placeholder - would integrate with content management system
+        """Get user content data"""        # Placeholder - would integrate with content management system
         return {
             'total_uploads': 0,
             'content_types': [],
@@ -724,8 +699,7 @@ class GDPRManager:
         }
     
     async def _get_user_behavioral_data(self, user_id: str) -> Dict[str, Any]:
-        """Get user behavioral/analytics data"""
-        # Placeholder - would integrate with analytics systems
+        """Get user behavioral/analytics data"""        # Placeholder - would integrate with analytics systems
         return {
             'session_count': 0,
             'page_views': 0,
@@ -734,8 +708,7 @@ class GDPRManager:
         }
     
     async def _get_user_technical_data(self, user_id: str) -> Dict[str, Any]:
-        """Get user technical data (logs, IPs, etc.)"""
-        # Placeholder - would integrate with logging systems
+        """Get user technical data (logs, IPs, etc.)"""        # Placeholder - would integrate with logging systems
         return {
             'ip_addresses': [],
             'user_agents': [],
@@ -744,8 +717,7 @@ class GDPRManager:
         }
     
     async def _format_access_response(self, user_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Format data for Article 15 access response"""
-        return {
+        """Format data for Article 15 access response"""        return {
             'data_subject_information': user_data.get('user_profile', {}),
             'processing_purposes': [
                 'Account management',
@@ -780,8 +752,7 @@ class GDPRManager:
         }
     
     async def _format_portability_response(self, user_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Format data for Article 20 portability response"""
-        portable_data = {
+        """Format data for Article 20 portability response"""        portable_data = {
             'user_profile': user_data.get('user_profile', {}),
             'content_metadata': user_data.get('content_data', {}),
             'preferences': user_data.get('behavioral_data', {}).get('preferences', {}),
@@ -800,8 +771,7 @@ class GDPRManager:
         }
     
     async def _check_erasure_restrictions(self, user_id: str) -> Tuple[bool, List[str]]:
-        """Check if data erasure is legally possible"""
-        restrictions = []
+        """Check if data erasure is legally possible"""        restrictions = []
         
         # Check for legal obligations (Article 17(3))
         # Example: ongoing legal proceedings, regulatory requirements
@@ -822,8 +792,7 @@ class GDPRManager:
         return len(restrictions) == 0, restrictions
     
     async def _execute_data_erasure(self, user_id: str) -> Dict[str, Any]:
-        """Execute data erasure across all systems"""
-        try:
+        """Execute data erasure across all systems"""        try:
             erasure_results = {
                 'systems': [],
                 'success_count': 0,
@@ -870,14 +839,12 @@ class GDPRManager:
             return {'error': str(e)}
     
     async def _erase_from_system(self, system: str, user_id: str):
-        """Erase user data from specific system"""
-        # Placeholder for actual system integration
+        """Erase user data from specific system"""        # Placeholder for actual system integration
         logger.info(f"Erasing user {user_id} data from {system}")
         await asyncio.sleep(0.1)  # Simulate processing time
     
     async def _verify_erasure_completion(self, user_id: str, erasure_results: Dict[str, Any]) -> bool:
-        """Verify that data erasure was completed successfully"""
-        try:
+        """Verify that data erasure was completed successfully"""        try:
             # Check if any critical systems failed
             if erasure_results.get('failure_count', 0) > 0:
                 critical_failures = []
@@ -908,15 +875,13 @@ class GDPRManager:
             return False
     
     async def _verify_system_erasure(self, system: str, user_id: str) -> bool:
-        """Verify erasure from specific system"""
-        # Placeholder for actual verification logic
+        """Verify erasure from specific system"""        # Placeholder for actual verification logic
         logger.info(f"Verifying erasure of user {user_id} from {system}")
         return True
     
     async def _assess_breach_risk(self, data_categories: List[DataCategory],
                                 affected_count: int, breach_type: str) -> str:
-        """Assess data breach risk level"""
-        risk_score = 0
+        """Assess data breach risk level"""        risk_score = 0
         
         # Risk factors based on data categories
         high_risk_categories = [DataCategory.SPECIAL_CATEGORY, DataCategory.BIOMETRIC, 
@@ -956,8 +921,7 @@ class GDPRManager:
     async def _assess_notification_requirements(self, risk_level: str,
                                               data_categories: List[DataCategory],
                                               affected_count: int) -> bool:
-        """Assess whether breach notification is required"""
-        # Article 33 - Notification requirements
+        """Assess whether breach notification is required"""        # Article 33 - Notification requirements
         if risk_level == 'high':
             return True
         
@@ -974,8 +938,7 @@ class GDPRManager:
         return False
     
     async def _handle_breach_notifications(self, incident: DataBreachIncident):
-        """Handle breach notification requirements"""
-        try:
+        """Handle breach notification requirements"""        try:
             # Article 33 - Notification to supervisory authority (72 hours)
             if incident.notification_required and not incident.authority_notified:
                 await self._notify_supervisory_authority(incident)
@@ -993,18 +956,15 @@ class GDPRManager:
             logger.error(f"Failed to handle breach notifications: {e}")
     
     async def _notify_supervisory_authority(self, incident: DataBreachIncident):
-        """Notify supervisory authority of breach (Article 33)"""
-        # Placeholder for actual authority notification
+        """Notify supervisory authority of breach (Article 33)"""        # Placeholder for actual authority notification
         logger.critical(f"GDPR Article 33: Notifying supervisory authority of breach {incident.id}")
     
     async def _notify_affected_individuals(self, incident: DataBreachIncident):
-        """Notify affected individuals of breach (Article 34)"""
-        # Placeholder for individual notifications
+        """Notify affected individuals of breach (Article 34)"""        # Placeholder for individual notifications
         logger.critical(f"GDPR Article 34: Notifying {incident.affected_individuals_count} individuals of breach {incident.id}")
     
     async def _cache_consent_record(self, consent: ConsentRecord):
-        """Cache consent record in Redis"""
-        if not self.redis_client:
+        """Cache consent record in Redis"""        if not self.redis_client:
             return
         
         try:
@@ -1024,8 +984,7 @@ class GDPRManager:
             logger.warning(f"Failed to cache consent record: {e}")
     
     async def _cache_data_subject_request(self, request: DataSubjectRequest):
-        """Cache data subject request in Redis"""
-        if not self.redis_client:
+        """Cache data subject request in Redis"""        if not self.redis_client:
             return
         
         try:
@@ -1046,8 +1005,7 @@ class GDPRManager:
             logger.warning(f"Failed to cache data subject request: {e}")
     
     async def _clear_user_cache(self, user_id: str):
-        """Clear all user-related cache entries"""
-        if not self.redis_client:
+        """Clear all user-related cache entries"""        if not self.redis_client:
             return
         
         try:
@@ -1067,8 +1025,7 @@ class GDPRManager:
             logger.warning(f"Failed to clear user cache: {e}")
     
     async def _process_consent_withdrawal(self, user_id: str, consent_type: ConsentType):
-        """Process data handling changes after consent withdrawal"""
-        try:
+        """Process data handling changes after consent withdrawal"""        try:
             if consent_type == ConsentType.MARKETING:
                 # Remove from marketing lists
                 await self._remove_from_marketing_lists(user_id)
@@ -1091,48 +1048,39 @@ class GDPRManager:
             logger.error(f"Failed to process consent withdrawal actions: {e}")
     
     async def _remove_from_marketing_lists(self, user_id: str):
-        """Remove user from marketing communications"""
-        # Placeholder for marketing system integration
+        """Remove user from marketing communications"""        # Placeholder for marketing system integration
         logger.info(f"Removing user {user_id} from marketing lists")
     
     async def _stop_analytics_collection(self, user_id: str):
-        """Stop analytics data collection for user"""
-        # Placeholder for analytics system integration
+        """Stop analytics data collection for user"""        # Placeholder for analytics system integration
         logger.info(f"Stopping analytics collection for user {user_id}")
     
     async def _stop_third_party_sharing(self, user_id: str):
-        """Stop sharing user data with third parties"""
-        # Placeholder for third-party integration
+        """Stop sharing user data with third parties"""        # Placeholder for third-party integration
         logger.info(f"Stopping third-party data sharing for user {user_id}")
     
     async def _remove_from_profiling(self, user_id: str):
-        """Remove user from profiling activities"""
-        # Placeholder for profiling system integration
+        """Remove user from profiling activities"""        # Placeholder for profiling system integration
         logger.info(f"Removing user {user_id} from profiling activities")
     
     async def _send_verification_email(self, request: DataSubjectRequest, email: str):
-        """Send verification email for data subject request"""
-        # Placeholder for email service integration
+        """Send verification email for data subject request"""        # Placeholder for email service integration
         logger.info(f"Sending verification email for request {request.id} to {email}")
     
     async def _notify_user_request_completed(self, request: DataSubjectRequest):
-        """Notify user that their request has been completed"""
-        # Placeholder for notification service integration
+        """Notify user that their request has been completed"""        # Placeholder for notification service integration
         logger.info(f"Notifying user of completed request {request.id}")
 
 
 class DataProtectionOfficer:
-    """
-    Automated Data Protection Officer functions and compliance monitoring
-    """
-    
+    """    Automated Data Protection Officer functions and compliance monitoring
+    """    
     def __init__(self, gdpr_manager: GDPRManager):
         self.gdpr_manager = gdpr_manager
         self.compliance_metrics = {}
         
     async def generate_compliance_dashboard(self) -> Dict[str, Any]:
-        """Generate comprehensive GDPR compliance dashboard"""
-        try:
+        """Generate comprehensive GDPR compliance dashboard"""        try:
             # Get current metrics
             total_users = len(self.gdpr_manager.consent_by_user)
             active_requests = len([r for r in self.gdpr_manager.data_subject_requests.values() 
@@ -1175,8 +1123,7 @@ class DataProtectionOfficer:
             return {'error': str(e)}
     
     async def _calculate_compliance_score(self) -> float:
-        """Calculate overall GDPR compliance score"""
-        try:
+        """Calculate overall GDPR compliance score"""        try:
             score_components = {
                 'consent_management': 0,
                 'request_handling': 0,
@@ -1230,8 +1177,7 @@ class DataProtectionOfficer:
             return 0.0
     
     async def _get_compliance_alerts(self) -> List[Dict[str, Any]]:
-        """Get current compliance alerts and issues"""
-        alerts = []
+        """Get current compliance alerts and issues"""        alerts = []
         
         # Overdue requests
         overdue_requests = [r for r in self.gdpr_manager.data_subject_requests.values()

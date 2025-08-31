@@ -1,5 +1,4 @@
-"""
-Database Compliance Monitor - Enterprise Compliance and Governance Intelligence
+"""Database Compliance Monitor - Enterprise Compliance and Governance Intelligence
 
 Comprehensive database compliance monitoring system with automated audit trails, data governance,
 regulatory compliance tracking, and privacy protection for the IA Influencer Agent platform.
@@ -13,9 +12,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute violation sera poursuivie selon les lois en vigueur.
-"""
-
-import asyncio
+"""import asyncio
 import hashlib
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
@@ -39,8 +36,7 @@ from ...monitoring.notifications import ComplianceNotificationManager
 
 
 class ComplianceStandard(Enum):
-    """Supported compliance standards"""
-    GDPR = "gdpr"  # General Data Protection Regulation
+    """Supported compliance standards"""    GDPR = "gdpr"  # General Data Protection Regulation
     CCPA = "ccpa"  # California Consumer Privacy Act
     HIPAA = "hipaa"  # Health Insurance Portability and Accountability Act
     PCI_DSS = "pci_dss"  # Payment Card Industry Data Security Standard
@@ -51,16 +47,14 @@ class ComplianceStandard(Enum):
 
 
 class ComplianceLevel(Enum):
-    """Compliance status levels"""
-    COMPLIANT = "compliant"
+    """Compliance status levels"""    COMPLIANT = "compliant"
     WARNING = "warning"
     VIOLATION = "violation"
     CRITICAL = "critical"
 
 
 class DataCategory(Enum):
-    """Data categories for classification"""
-    PII = "personally_identifiable_information"
+    """Data categories for classification"""    PII = "personally_identifiable_information"
     PHI = "protected_health_information"
     PCI = "payment_card_information"
     FINANCIAL = "financial_information"
@@ -72,8 +66,7 @@ class DataCategory(Enum):
 
 @dataclass
 class ComplianceEvent:
-    """Compliance monitoring event"""
-    event_id: str
+    """Compliance monitoring event"""    event_id: str
     timestamp: datetime
     standard: ComplianceStandard
     event_type: str
@@ -88,8 +81,7 @@ class ComplianceEvent:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'event_id': self.event_id,
             'timestamp': self.timestamp.isoformat(),
             'standard': self.standard.value,
@@ -108,8 +100,7 @@ class ComplianceEvent:
 
 @dataclass
 class AuditRecord:
-    """Database audit record"""
-    audit_id: str
+    """Database audit record"""    audit_id: str
     timestamp: datetime
     user_id: str
     action: str
@@ -123,8 +114,7 @@ class AuditRecord:
     compliance_tags: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'audit_id': self.audit_id,
             'timestamp': self.timestamp.isoformat(),
             'user_id': self.user_id,
@@ -142,8 +132,7 @@ class AuditRecord:
 
 @dataclass
 class DataGovernancePolicy:
-    """Data governance policy definition"""
-    policy_id: str
+    """Data governance policy definition"""    policy_id: str
     name: str
     description: str
     applicable_standards: List[ComplianceStandard]
@@ -155,14 +144,12 @@ class DataGovernancePolicy:
     audit_required: bool = True
     
     def applies_to_query(self, query: str, table: str) -> bool:
-        """Check if policy applies to given query/table"""
-        # Implementation for policy matching
+        """Check if policy applies to given query/table"""        # Implementation for policy matching
         return True
 
 
 class ComplianceMonitor:
-    """Enterprise compliance monitoring system"""
-    
+    """Enterprise compliance monitoring system"""    
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
@@ -184,8 +171,7 @@ class ComplianceMonitor:
         asyncio.create_task(self._load_governance_policies())
         
     async def _load_governance_policies(self):
-        """Load data governance policies"""
-        try:
+        """Load data governance policies"""        try:
             # GDPR policies
             gdpr_policy = DataGovernancePolicy(
                 policy_id="gdpr_001",
@@ -260,8 +246,7 @@ class ComplianceMonitor:
             self.logger.error(f"Failed to load governance policies: {e}")
             
     async def start_monitoring(self, interval: int = 60):
-        """Start compliance monitoring"""
-        if self._monitoring_active:
+        """Start compliance monitoring"""        if self._monitoring_active:
             self.logger.warning("Compliance monitoring already active")
             return
             
@@ -272,8 +257,7 @@ class ComplianceMonitor:
         self.logger.info("Database compliance monitoring started")
         
     async def stop_monitoring(self):
-        """Stop compliance monitoring"""
-        self._monitoring_active = False
+        """Stop compliance monitoring"""        self._monitoring_active = False
         if self._monitoring_task:
             self._monitoring_task.cancel()
             try:
@@ -283,8 +267,7 @@ class ComplianceMonitor:
         self.logger.info("Database compliance monitoring stopped")
         
     async def _monitoring_loop(self, interval: int):
-        """Main compliance monitoring loop"""
-        while self._monitoring_active:
+        """Main compliance monitoring loop"""        while self._monitoring_active:
             try:
                 await self._collect_audit_events()
                 await self._check_compliance_violations()
@@ -297,12 +280,10 @@ class ComplianceMonitor:
                 await asyncio.sleep(interval)
                 
     async def _collect_audit_events(self):
-        """Collect database audit events"""
-        try:
+        """Collect database audit events"""        try:
             async with get_database_session() as session:
                 # Query audit logs
-                audit_query = text("""
-                    SELECT 
+                audit_query = text("""                    SELECT 
                         log_time,
                         user_name,
                         database_name,
@@ -327,8 +308,7 @@ class ComplianceMonitor:
             self.logger.error(f"Failed to collect audit events: {e}")
             
     async def _process_audit_event(self, event_data):
-        """Process individual audit event"""
-        try:
+        """Process individual audit event"""        try:
             # Extract table names from query
             tables = self._extract_table_names(event_data.query)
             
@@ -367,8 +347,7 @@ class ComplianceMonitor:
             self.logger.error(f"Failed to process audit event: {e}")
             
     def _extract_table_names(self, query: str) -> List[str]:
-        """Extract table names from SQL query"""
-        if not query:
+        """Extract table names from SQL query"""        if not query:
             return []
             
         tables = []
@@ -390,8 +369,7 @@ class ComplianceMonitor:
         return list(set(tables))  # Remove duplicates
         
     async def _classify_data_category(self, table_name: str) -> DataCategory:
-        """Classify data category for table"""
-        # Table-based classification
+        """Classify data category for table"""        # Table-based classification
         sensitive_tables = {
             'users': DataCategory.PII,
             'user_profiles': DataCategory.PII,
@@ -407,8 +385,7 @@ class ComplianceMonitor:
         return sensitive_tables.get(table_name, DataCategory.PUBLIC)
         
     def _get_applicable_policies(self, table: str, data_category: DataCategory) -> List[DataGovernancePolicy]:
-        """Get applicable governance policies"""
-        applicable = []
+        """Get applicable governance policies"""        applicable = []
         
         for policy in self.governance_policies.values():
             if data_category in policy.data_categories:
@@ -417,8 +394,7 @@ class ComplianceMonitor:
         return applicable
         
     def _extract_ip(self, connection_info: str) -> str:
-        """Extract IP from connection info"""
-        try:
+        """Extract IP from connection info"""        try:
             if ':' in connection_info:
                 return connection_info.split(':')[0]
             return connection_info
@@ -426,8 +402,7 @@ class ComplianceMonitor:
             return "unknown"
             
     async def _store_audit_record(self, record: AuditRecord):
-        """Store audit record"""
-        try:
+        """Store audit record"""        try:
             # Store in Redis for fast access
             await self.cache.set(
                 f"audit:{record.audit_id}",
@@ -459,8 +434,7 @@ class ComplianceMonitor:
             self.logger.error(f"Failed to store audit record: {e}")
             
     async def _check_event_compliance(self, event_data, table: str, data_category: DataCategory, policies: List[DataGovernancePolicy]):
-        """Check compliance for specific event"""
-        try:
+        """Check compliance for specific event"""        try:
             for policy in policies:
                 violations = await self._check_policy_compliance(event_data, table, data_category, policy)
                 
@@ -471,8 +445,7 @@ class ComplianceMonitor:
             self.logger.error(f"Failed to check event compliance: {e}")
             
     async def _check_policy_compliance(self, event_data, table: str, data_category: DataCategory, policy: DataGovernancePolicy) -> List[ComplianceEvent]:
-        """Check compliance against specific policy"""
-        violations = []
+        """Check compliance against specific policy"""        violations = []
         
         try:
             # Check each rule in the policy
@@ -487,8 +460,7 @@ class ComplianceMonitor:
         return violations
         
     async def _check_rule_compliance(self, event_data, table: str, data_category: DataCategory, policy: DataGovernancePolicy, rule: Dict[str, Any]) -> Optional[ComplianceEvent]:
-        """Check compliance against specific rule"""
-        try:
+        """Check compliance against specific rule"""        try:
             rule_type = rule.get("type")
             
             if rule_type == "consent_required":
@@ -541,8 +513,7 @@ class ComplianceMonitor:
         return None
         
     def _create_compliance_event(self, event_data, table: str, data_category: DataCategory, policy: DataGovernancePolicy, event_type: str, level: ComplianceLevel, description: str) -> ComplianceEvent:
-        """Create compliance event"""
-        return ComplianceEvent(
+        """Create compliance event"""        return ComplianceEvent(
             event_id=hashlib.md5(
                 f"{event_data.log_time}{event_type}{event_data.user_name}".encode()
             ).hexdigest(),
@@ -569,8 +540,7 @@ class ComplianceMonitor:
         )
         
     def _calculate_compliance_risk(self, level: ComplianceLevel, data_category: DataCategory) -> float:
-        """Calculate compliance risk score"""
-        level_scores = {
+        """Calculate compliance risk score"""        level_scores = {
             ComplianceLevel.COMPLIANT: 0.0,
             ComplianceLevel.WARNING: 0.3,
             ComplianceLevel.VIOLATION: 0.7,
@@ -594,16 +564,14 @@ class ComplianceMonitor:
         return min(base_score * multiplier, 1.0)
         
     async def _check_consent_violation(self, event_data, data_category: DataCategory) -> bool:
-        """Check for consent violations"""
-        # Implementation would check user consent records
+        """Check for consent violations"""        # Implementation would check user consent records
         if data_category in [DataCategory.PII, DataCategory.BIOMETRIC]:
             # Simplified check - would integrate with consent management system
             return False  # Assume consent exists for now
         return False
         
     async def _check_encryption_violation(self, table: str, data_category: DataCategory) -> bool:
-        """Check for encryption violations"""
-        # Implementation would verify encryption status
+        """Check for encryption violations"""        # Implementation would verify encryption status
         sensitive_categories = [DataCategory.PCI, DataCategory.PHI, DataCategory.BIOMETRIC]
         if data_category in sensitive_categories:
             # Would check actual encryption status
@@ -611,23 +579,20 @@ class ComplianceMonitor:
         return False
         
     async def _check_data_minimization_violation(self, query: str) -> bool:
-        """Check for data minimization violations"""
-        # Check for SELECT *
+        """Check for data minimization violations"""        # Check for SELECT *
         if re.search(r'select\s+\*', query.lower()):
             return True
         return False
         
     async def _check_unauthorized_access(self, event_data, table: str) -> bool:
-        """Check for unauthorized access to protected content"""
-        protected_tables = ['content_fingerprints', 'protected_content', 'revenue_tracking']
+        """Check for unauthorized access to protected content"""        protected_tables = ['content_fingerprints', 'protected_content', 'revenue_tracking']
         if table in protected_tables:
             # Would check user permissions and content ownership
             return False  # Assume authorized for now
         return False
         
     async def _record_compliance_violation(self, violation: ComplianceEvent):
-        """Record compliance violation"""
-        try:
+        """Record compliance violation"""        try:
             # Store violation
             await self.cache.set(
                 f"compliance_violation:{violation.event_id}",
@@ -657,8 +622,7 @@ class ComplianceMonitor:
             self.logger.error(f"Failed to record compliance violation: {e}")
             
     async def _send_compliance_alert(self, violation: ComplianceEvent):
-        """Send compliance alert notification"""
-        try:
+        """Send compliance alert notification"""        try:
             await self.notification_manager.send_compliance_alert(
                 severity=violation.compliance_level.value.upper(),
                 title=f'Compliance Violation: {violation.standard.value.upper()}',
@@ -669,8 +633,7 @@ class ComplianceMonitor:
             self.logger.error(f"Failed to send compliance alert: {e}")
             
     async def _check_compliance_violations(self):
-        """Check for ongoing compliance violations"""
-        try:
+        """Check for ongoing compliance violations"""        try:
             # Check data retention compliance
             await self._check_data_retention_compliance()
             
@@ -684,8 +647,7 @@ class ComplianceMonitor:
             self.logger.error(f"Failed to check compliance violations: {e}")
             
     async def _check_data_retention_compliance(self):
-        """Check data retention policy compliance"""
-        try:
+        """Check data retention policy compliance"""        try:
             for policy in self.governance_policies.values():
                 if policy.retention_period:
                     # Check for data that should be deleted
@@ -696,18 +658,15 @@ class ComplianceMonitor:
             self.logger.error(f"Failed to check data retention compliance: {e}")
             
     async def _check_access_control_compliance(self):
-        """Check access control compliance"""
-        # Implementation for access control verification
+        """Check access control compliance"""        # Implementation for access control verification
         pass
         
     async def _check_encryption_compliance(self):
-        """Check encryption compliance"""
-        # Implementation for encryption verification
+        """Check encryption compliance"""        # Implementation for encryption verification
         pass
         
     async def _verify_data_governance(self):
-        """Verify data governance policies"""
-        try:
+        """Verify data governance policies"""        try:
             # Verify policy enforcement
             for policy_id, policy in self.governance_policies.items():
                 await self._verify_policy_enforcement(policy)
@@ -716,13 +675,11 @@ class ComplianceMonitor:
             self.logger.error(f"Failed to verify data governance: {e}")
             
     async def _verify_policy_enforcement(self, policy: DataGovernancePolicy):
-        """Verify individual policy enforcement"""
-        # Implementation for policy verification
+        """Verify individual policy enforcement"""        # Implementation for policy verification
         pass
         
     async def _generate_compliance_reports(self):
-        """Generate automated compliance reports"""
-        try:
+        """Generate automated compliance reports"""        try:
             # Generate daily compliance summary
             if datetime.utcnow().hour == 1:  # Run at 1 AM
                 await self._generate_daily_compliance_report()
@@ -735,18 +692,15 @@ class ComplianceMonitor:
             self.logger.error(f"Failed to generate compliance reports: {e}")
             
     async def _generate_daily_compliance_report(self):
-        """Generate daily compliance report"""
-        # Implementation for daily reporting
+        """Generate daily compliance report"""        # Implementation for daily reporting
         pass
         
     async def _generate_weekly_compliance_report(self):
-        """Generate weekly compliance report"""
-        # Implementation for weekly reporting
+        """Generate weekly compliance report"""        # Implementation for weekly reporting
         pass
         
     async def _cleanup_old_records(self):
-        """Cleanup old compliance records"""
-        try:
+        """Cleanup old compliance records"""        try:
             # Remove records older than retention period
             cutoff_time = datetime.utcnow() - timedelta(days=90)
             cutoff_timestamp = cutoff_time.timestamp()
@@ -771,8 +725,7 @@ class ComplianceMonitor:
             self.logger.error(f"Failed to cleanup old records: {e}")
             
     async def get_compliance_summary(self, hours: int = 24) -> Dict[str, Any]:
-        """Get compliance monitoring summary"""
-        try:
+        """Get compliance monitoring summary"""        try:
             # Get recent violations
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             cutoff_timestamp = cutoff_time.timestamp()
@@ -820,36 +773,30 @@ class ComplianceMonitor:
 
 
 class AuditTrail:
-    """Comprehensive audit trail management"""
-    
+    """Comprehensive audit trail management"""    
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
         
     async def create_audit_entry(self, action: str, user_id: str, details: Dict[str, Any]):
-        """Create new audit trail entry"""
-        # Implementation for audit trail creation
+        """Create new audit trail entry"""        # Implementation for audit trail creation
         pass
         
     async def search_audit_trail(self, filters: Dict[str, Any]) -> List[Dict]:
-        """Search audit trail with filters"""
-        # Implementation for audit trail search
+        """Search audit trail with filters"""        # Implementation for audit trail search
         pass
 
 
 class DataGovernanceTracker:
-    """Data governance policy tracking and enforcement"""
-    
+    """Data governance policy tracking and enforcement"""    
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
         
     async def enforce_governance_policies(self, event_data: Dict[str, Any]) -> bool:
-        """Enforce data governance policies"""
-        # Implementation for policy enforcement
+        """Enforce data governance policies"""        # Implementation for policy enforcement
         pass
         
     async def validate_data_access(self, user_id: str, resource: str) -> bool:
-        """Validate data access permissions"""
-        # Implementation for access validation
+        """Validate data access permissions"""        # Implementation for access validation
         pass

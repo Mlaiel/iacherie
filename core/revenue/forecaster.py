@@ -1,5 +1,4 @@
-"""
-Revenue Forecasting Engine - Advanced AI-powered revenue prediction and forecasting
+"""Revenue Forecasting Engine - Advanced AI-powered revenue prediction and forecasting
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -10,9 +9,7 @@ Unauthorized use, reproduction, modification, or distribution without explicit
 written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -45,8 +42,7 @@ logger = logging.getLogger(__name__)
 
 
 class ForecastModel(Enum):
-    """Revenue forecasting model types"""
-    LINEAR_REGRESSION = "linear_regression"
+    """Revenue forecasting model types"""    LINEAR_REGRESSION = "linear_regression"
     RANDOM_FOREST = "random_forest"
     GRADIENT_BOOSTING = "gradient_boosting"
     ARIMA = "arima"
@@ -57,16 +53,14 @@ class ForecastModel(Enum):
 
 
 class ForecastHorizon(Enum):
-    """Forecast time horizons"""
-    SHORT_TERM = "short_term"  # 1-7 days
+    """Forecast time horizons"""    SHORT_TERM = "short_term"  # 1-7 days
     MEDIUM_TERM = "medium_term"  # 1-4 weeks
     LONG_TERM = "long_term"  # 1-12 months
     YEARLY = "yearly"  # 1-5 years
 
 
 class ForecastConfidence(Enum):
-    """Forecast confidence levels"""
-    LOW = "low"
+    """Forecast confidence levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     VERY_HIGH = "very_high"
@@ -74,8 +68,7 @@ class ForecastConfidence(Enum):
 
 @dataclass
 class PredictionAccuracy:
-    """Prediction accuracy metrics"""
-    mae: float  # Mean Absolute Error
+    """Prediction accuracy metrics"""    mae: float  # Mean Absolute Error
     mse: float  # Mean Squared Error
     rmse: float  # Root Mean Squared Error
     r2_score: float  # R-squared score
@@ -86,14 +79,12 @@ class PredictionAccuracy:
     
     @property
     def accuracy_percentage(self) -> float:
-        """Get accuracy as percentage"""
-        return max(0, (1 - self.mape / 100) * 100)
+        """Get accuracy as percentage"""        return max(0, (1 - self.mape / 100) * 100)
 
 
 @dataclass
 class RevenueForecast:
-    """Revenue forecast result"""
-    predicted_revenue: Decimal
+    """Revenue forecast result"""    predicted_revenue: Decimal
     confidence_level: ForecastConfidence
     accuracy_metrics: PredictionAccuracy
     forecast_horizon: ForecastHorizon
@@ -107,8 +98,7 @@ class RevenueForecast:
 
 @dataclass
 class ForecastScenario:
-    """Revenue forecast scenario"""
-    scenario_name: str
+    """Revenue forecast scenario"""    scenario_name: str
     assumptions: Dict[str, Any]
     predicted_revenue: Decimal
     probability: float
@@ -117,27 +107,22 @@ class ForecastScenario:
 
 
 class BaseForecastModel(ABC):
-    """Abstract base class for forecast models"""
-    
+    """Abstract base class for forecast models"""    
     @abstractmethod
     async def train(self, data: pd.DataFrame) -> None:
-        """Train the forecast model"""
-        pass
+        """Train the forecast model"""        pass
     
     @abstractmethod
     async def predict(self, horizon: int) -> np.ndarray:
-        """Make revenue predictions"""
-        pass
+        """Make revenue predictions"""        pass
     
     @abstractmethod
     def get_accuracy_metrics(self, y_true: np.ndarray, y_pred: np.ndarray) -> PredictionAccuracy:
-        """Calculate accuracy metrics"""
-        pass
+        """Calculate accuracy metrics"""        pass
 
 
 class LSTMForecastModel(BaseForecastModel):
-    """LSTM Neural Network forecast model"""
-    
+    """LSTM Neural Network forecast model"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.model = None
@@ -146,8 +131,7 @@ class LSTMForecastModel(BaseForecastModel):
         self.sequence_length = self.config.get('sequence_length', 30)
         
     async def train(self, data: pd.DataFrame) -> None:
-        """Train LSTM model"""
-        try:
+        """Train LSTM model"""        try:
             # Prepare data
             revenue_data = data['revenue'].values.reshape(-1, 1)
             scaled_data = self.scaler.fit_transform(revenue_data)
@@ -185,16 +169,14 @@ class LSTMForecastModel(BaseForecastModel):
             raise RevenueForecastError(f"LSTM training failed: {e}")
     
     def _create_sequences(self, data: np.ndarray, seq_length: int) -> Tuple[np.ndarray, np.ndarray]:
-        """Create sequences for LSTM training"""
-        X, y = [], []
+        """Create sequences for LSTM training"""        X, y = [], []
         for i in range(seq_length, len(data)):
             X.append(data[i-seq_length:i, 0])
             y.append(data[i, 0])
         return np.array(X), np.array(y)
     
     async def predict(self, horizon: int) -> np.ndarray:
-        """Make LSTM predictions"""
-        if not self.is_trained:
+        """Make LSTM predictions"""        if not self.is_trained:
             raise RevenueForecastError("LSTM model not trained")
         
         try:
@@ -210,8 +192,7 @@ class LSTMForecastModel(BaseForecastModel):
             raise RevenueForecastError(f"LSTM prediction failed: {e}")
     
     def get_accuracy_metrics(self, y_true: np.ndarray, y_pred: np.ndarray) -> PredictionAccuracy:
-        """Calculate LSTM accuracy metrics"""
-        mae = mean_absolute_error(y_true, y_pred)
+        """Calculate LSTM accuracy metrics"""        mae = mean_absolute_error(y_true, y_pred)
         mse = mean_squared_error(y_true, y_pred)
         rmse = np.sqrt(mse)
         r2 = r2_score(y_true, y_pred)
@@ -230,8 +211,7 @@ class LSTMForecastModel(BaseForecastModel):
 
 
 class EnsembleForecastModel(BaseForecastModel):
-    """Ensemble forecast model combining multiple algorithms"""
-    
+    """Ensemble forecast model combining multiple algorithms"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.models = {}
@@ -239,8 +219,7 @@ class EnsembleForecastModel(BaseForecastModel):
         self.is_trained = False
         
     async def train(self, data: pd.DataFrame) -> None:
-        """Train ensemble of models"""
-        try:
+        """Train ensemble of models"""        try:
             # Initialize models
             self.models = {
                 'rf': RandomForestRegressor(n_estimators=100, random_state=42),
@@ -271,8 +250,7 @@ class EnsembleForecastModel(BaseForecastModel):
             raise RevenueForecastError(f"Ensemble training failed: {e}")
     
     def _prepare_features(self, data: pd.DataFrame) -> np.ndarray:
-        """Prepare features for training"""
-        # Create time-based features
+        """Prepare features for training"""        # Create time-based features
         data['timestamp'] = pd.to_datetime(data['timestamp'])
         data['day_of_week'] = data['timestamp'].dt.dayofweek
         data['month'] = data['timestamp'].dt.month
@@ -292,8 +270,7 @@ class EnsembleForecastModel(BaseForecastModel):
         return data[feature_columns].fillna(0).values
     
     async def predict(self, horizon: int) -> np.ndarray:
-        """Make ensemble predictions"""
-        if not self.is_trained:
+        """Make ensemble predictions"""        if not self.is_trained:
             raise RevenueForecastError("Ensemble model not trained")
         
         try:
@@ -317,8 +294,7 @@ class EnsembleForecastModel(BaseForecastModel):
             raise RevenueForecastError(f"Ensemble prediction failed: {e}")
     
     def get_accuracy_metrics(self, y_true: np.ndarray, y_pred: np.ndarray) -> PredictionAccuracy:
-        """Calculate ensemble accuracy metrics"""
-        mae = mean_absolute_error(y_true, y_pred)
+        """Calculate ensemble accuracy metrics"""        mae = mean_absolute_error(y_true, y_pred)
         mse = mean_squared_error(y_true, y_pred)
         rmse = np.sqrt(mse)
         r2 = r2_score(y_true, y_pred)
@@ -337,8 +313,7 @@ class EnsembleForecastModel(BaseForecastModel):
 
 
 class RevenueForecastEngine:
-    """Advanced revenue forecasting engine"""
-    
+    """Advanced revenue forecasting engine"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.models = {}
@@ -348,8 +323,7 @@ class RevenueForecastEngine:
         self.forecast_history = []
         
     async def initialize(self) -> None:
-        """Initialize the forecast engine"""
-        try:
+        """Initialize the forecast engine"""        try:
             # Initialize models
             self.models = {
                 ForecastModel.ENSEMBLE: EnsembleForecastModel(self.config),
@@ -373,8 +347,7 @@ class RevenueForecastEngine:
         model: Optional[ForecastModel] = None,
         confidence_level: float = 0.95
     ) -> RevenueForecast:
-        """Generate revenue forecast"""
-        try:
+        """Generate revenue forecast"""        try:
             validate_forecast_data(historical_data)
             
             # Select model
@@ -438,8 +411,7 @@ class RevenueForecastEngine:
             raise RevenueForecastError(f"Forecast generation failed: {e}")
     
     def _get_horizon_days(self, horizon: ForecastHorizon) -> int:
-        """Convert forecast horizon to days"""
-        horizon_mapping = {
+        """Convert forecast horizon to days"""        horizon_mapping = {
             ForecastHorizon.SHORT_TERM: 7,
             ForecastHorizon.MEDIUM_TERM: 30,
             ForecastHorizon.LONG_TERM: 365,
@@ -453,8 +425,7 @@ class RevenueForecastEngine:
         historical_data: pd.DataFrame,
         model: BaseForecastModel
     ) -> PredictionAccuracy:
-        """Calculate forecast accuracy using historical data"""
-        try:
+        """Calculate forecast accuracy using historical data"""        try:
             # Split data for validation
             split_point = int(len(historical_data) * 0.8)
             train_data = historical_data[:split_point]
@@ -485,8 +456,7 @@ class RevenueForecastEngine:
             )
     
     def _determine_confidence_level(self, accuracy_metrics: PredictionAccuracy) -> ForecastConfidence:
-        """Determine confidence level based on accuracy"""
-        if accuracy_metrics.r2_score >= 0.9 and accuracy_metrics.mape <= 10:
+        """Determine confidence level based on accuracy"""        if accuracy_metrics.r2_score >= 0.9 and accuracy_metrics.mape <= 10:
             return ForecastConfidence.VERY_HIGH
         elif accuracy_metrics.r2_score >= 0.8 and accuracy_metrics.mape <= 15:
             return ForecastConfidence.HIGH
@@ -496,8 +466,7 @@ class RevenueForecastEngine:
             return ForecastConfidence.LOW
     
     async def _analyze_contributing_factors(self, data: pd.DataFrame) -> Dict[str, float]:
-        """Analyze factors contributing to revenue"""
-        factors = {}
+        """Analyze factors contributing to revenue"""        factors = {}
         
         # Calculate correlations with revenue
         numeric_columns = data.select_dtypes(include=[np.number]).columns
@@ -515,8 +484,7 @@ class RevenueForecastEngine:
         return factors
     
     async def _identify_risk_factors(self, data: pd.DataFrame, predictions: np.ndarray) -> List[str]:
-        """Identify potential risk factors"""
-        risks = []
+        """Identify potential risk factors"""        risks = []
         
         # Volatility risk
         if data['revenue'].std() / data['revenue'].mean() > 0.3:
@@ -540,8 +508,7 @@ class RevenueForecastEngine:
         return risks
     
     async def _identify_opportunities(self, data: pd.DataFrame, predictions: np.ndarray) -> List[str]:
-        """Identify potential opportunities"""
-        opportunities = []
+        """Identify potential opportunities"""        opportunities = []
         
         # Growth opportunity
         recent_growth = (data['revenue'].tail(5).mean() / data['revenue'].head(5).mean() - 1) * 100
@@ -572,8 +539,7 @@ class RevenueForecastEngine:
         scenarios: List[Dict[str, Any]],
         horizon: ForecastHorizon
     ) -> List[ForecastScenario]:
-        """Generate forecasts for multiple scenarios"""
-        try:
+        """Generate forecasts for multiple scenarios"""        try:
             scenario_forecasts = []
             
             for scenario_config in scenarios:
@@ -608,8 +574,7 @@ class RevenueForecastEngine:
         data: pd.DataFrame,
         scenario_config: Dict[str, Any]
     ) -> pd.DataFrame:
-        """Apply scenario assumptions to historical data"""
-        
+        """Apply scenario assumptions to historical data"""        
         assumptions = scenario_config.get('assumptions', {})
         
         for factor, change in assumptions.items():
@@ -627,8 +592,7 @@ class RevenueForecastEngine:
         return data
     
     async def get_forecast_accuracy_history(self) -> List[Dict[str, Any]]:
-        """Get historical forecast accuracy"""
-        accuracy_history = []
+        """Get historical forecast accuracy"""        accuracy_history = []
         
         for forecast_record in self.forecast_history:
             accuracy_history.append({
@@ -645,8 +609,7 @@ class RevenueForecastEngine:
         return accuracy_history
     
     async def export_forecast_report(self, format: str = 'json') -> Dict[str, Any]:
-        """Export comprehensive forecast report"""
-        try:
+        """Export comprehensive forecast report"""        try:
             report = {
                 'timestamp': datetime.utcnow().isoformat(),
                 'total_forecasts': len(self.forecast_history),
@@ -664,8 +627,7 @@ class RevenueForecastEngine:
             raise RevenueForecastError(f"Report export failed: {e}")
     
     async def _calculate_accuracy_summary(self) -> Dict[str, float]:
-        """Calculate overall accuracy summary"""
-        if not self.forecast_history:
+        """Calculate overall accuracy summary"""        if not self.forecast_history:
             return {'average_r2': 0.0, 'average_mape': 100.0}
         
         r2_scores = [f['forecast'].accuracy_metrics.r2_score for f in self.forecast_history]
@@ -679,8 +641,7 @@ class RevenueForecastEngine:
         }
     
     async def _analyze_model_performance(self) -> Dict[str, Dict[str, float]]:
-        """Analyze performance of different models"""
-        model_performance = {}
+        """Analyze performance of different models"""        model_performance = {}
         
         for model_type in self.models.keys():
             model_forecasts = [

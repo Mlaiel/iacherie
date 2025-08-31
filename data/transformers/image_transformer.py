@@ -1,5 +1,4 @@
-"""
-Image Transformer - Professional image processing for IA Influencer Agent Platform
+"""Image Transformer - Professional image processing for IA Influencer Agent Platform
 ===================================================================================
 
 Advanced image transformation, conversion, and enhancement capabilities
@@ -8,9 +7,7 @@ for creators' image content workflows.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import os
 import tempfile
@@ -36,8 +33,7 @@ logger = logging.getLogger(__name__)
 
 
 class ImageFormat(Enum):
-    """Supported image formats."""
-    JPEG = "jpg"
+    """Supported image formats."""    JPEG = "jpg"
     PNG = "png"
     WEBP = "webp"
     GIF = "gif"
@@ -48,8 +44,7 @@ class ImageFormat(Enum):
 
 
 class ImageQuality(Enum):
-    """Image quality presets."""
-    LOW = "low"          # Compressed, small file size
+    """Image quality presets."""    LOW = "low"          # Compressed, small file size
     MEDIUM = "medium"    # Balanced quality/size
     HIGH = "high"        # High quality, larger size
     LOSSLESS = "lossless"  # No compression
@@ -57,8 +52,7 @@ class ImageQuality(Enum):
 
 
 class ColorSpace(Enum):
-    """Color space options."""
-    RGB = "RGB"
+    """Color space options."""    RGB = "RGB"
     RGBA = "RGBA"
     GRAYSCALE = "L"
     CMYK = "CMYK"
@@ -68,8 +62,7 @@ class ColorSpace(Enum):
 
 @dataclass
 class ImageSettings:
-    """Image processing settings."""
-    format: ImageFormat = ImageFormat.JPEG
+    """Image processing settings."""    format: ImageFormat = ImageFormat.JPEG
     quality: ImageQuality = ImageQuality.HIGH
     width: Optional[int] = None
     height: Optional[int] = None
@@ -103,8 +96,7 @@ class ImageSettings:
 
 @dataclass
 class ImageMetadata:
-    """Image file metadata."""
-    width: Optional[int] = None
+    """Image file metadata."""    width: Optional[int] = None
     height: Optional[int] = None
     format: Optional[str] = None
     mode: Optional[str] = None
@@ -124,28 +116,24 @@ class ImageMetadata:
 
 
 class ImageTransformer:
-    """
-    Professional image transformation engine for the IA Influencer Agent Platform.
+    """    Professional image transformation engine for the IA Influencer Agent Platform.
     
     Provides advanced image processing, conversion, and enhancement capabilities
     optimized for creator content workflows.
-    """
-    
+    """    
     def __init__(
         self,
         enable_gpu: bool = True,
         config: Optional[Dict[str, Any]] = None,
         temp_dir: Optional[str] = None
     ):
-        """
-        Initialize image transformer.
+        """        Initialize image transformer.
         
         Args:
             enable_gpu: Enable GPU acceleration if available
             config: Configuration options
             temp_dir: Temporary directory for processing
-        """
-        self.enable_gpu = enable_gpu
+        """        self.enable_gpu = enable_gpu
         self.config = config or {}
         self.temp_dir = Path(temp_dir) if temp_dir else Path(tempfile.gettempdir()) / "image_transform"
         
@@ -172,16 +160,14 @@ class ImageTransformer:
         logger.info(f"ImageTransformer initialized (GPU: {enable_gpu})")
     
     async def transform(self, request) -> Any:
-        """
-        Transform image based on request configuration.
+        """        Transform image based on request configuration.
         
         Args:
             request: Transformation request with image settings
             
         Returns:
             TransformationResult with processing metrics
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             if not IMAGE_LIBS_AVAILABLE:
@@ -250,8 +236,7 @@ class ImageTransformer:
         quality: Union[str, ImageQuality] = ImageQuality.HIGH,
         **kwargs
     ) -> bool:
-        """
-        Convert image file to specified format and quality.
+        """        Convert image file to specified format and quality.
         
         Args:
             input_path: Input image file path
@@ -262,8 +247,7 @@ class ImageTransformer:
             
         Returns:
             Success status
-        """
-        if not IMAGE_LIBS_AVAILABLE:
+        """        if not IMAGE_LIBS_AVAILABLE:
             logger.error("Image processing libraries not available")
             return False
         
@@ -292,8 +276,7 @@ class ImageTransformer:
         output_path: str,
         enhancement_options: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """
-        Enhance image quality using AI and image processing.
+        """        Enhance image quality using AI and image processing.
         
         Args:
             input_path: Input image file path
@@ -302,8 +285,7 @@ class ImageTransformer:
             
         Returns:
             Success status
-        """
-        if not IMAGE_LIBS_AVAILABLE:
+        """        if not IMAGE_LIBS_AVAILABLE:
             logger.error("Image processing libraries not available")
             return False
         
@@ -332,8 +314,7 @@ class ImageTransformer:
         height: Optional[int] = None,
         maintain_aspect: bool = True
     ) -> bool:
-        """
-        Resize image to specified dimensions.
+        """        Resize image to specified dimensions.
         
         Args:
             input_path: Input image file path
@@ -344,8 +325,7 @@ class ImageTransformer:
             
         Returns:
             Success status
-        """
-        if not IMAGE_LIBS_AVAILABLE:
+        """        if not IMAGE_LIBS_AVAILABLE:
             return False
         
         try:
@@ -379,16 +359,14 @@ class ImageTransformer:
             return False
     
     async def get_metadata(self, file_path: str) -> ImageMetadata:
-        """
-        Extract comprehensive image metadata.
+        """        Extract comprehensive image metadata.
         
         Args:
             file_path: Image file path
             
         Returns:
             ImageMetadata object
-        """
-        try:
+        """        try:
             metadata = ImageMetadata()
             file_path_obj = Path(file_path)
             
@@ -450,8 +428,7 @@ class ImageTransformer:
             return ImageMetadata()
     
     async def _process_image(self, image: Image.Image, settings: ImageSettings) -> Image.Image:
-        """Process image according to settings."""
-        processed = image.copy()
+        """Process image according to settings."""        processed = image.copy()
         
         try:
             # Convert color space
@@ -486,8 +463,7 @@ class ImageTransformer:
             return image
     
     async def _resize_image(self, image: Image.Image, settings: ImageSettings) -> Image.Image:
-        """Resize image according to settings."""
-        try:
+        """Resize image according to settings."""        try:
             width = settings.width
             height = settings.height
             
@@ -518,8 +494,7 @@ class ImageTransformer:
             return image
     
     async def _apply_filters(self, image: Image.Image, settings: ImageSettings) -> Image.Image:
-        """Apply image filters."""
-        try:
+        """Apply image filters."""        try:
             filtered = image
             
             if settings.blur:
@@ -544,8 +519,7 @@ class ImageTransformer:
             return image
     
     async def _apply_enhancements(self, image: Image.Image, settings: ImageSettings) -> Image.Image:
-        """Apply image enhancements."""
-        try:
+        """Apply image enhancements."""        try:
             enhanced = image
             
             if settings.enhance_brightness:
@@ -571,8 +545,7 @@ class ImageTransformer:
             return image
     
     async def _enhance_image(self, image: Image.Image, settings: ImageSettings) -> Image.Image:
-        """Advanced image enhancement using AI and image processing."""
-        try:
+        """Advanced image enhancement using AI and image processing."""        try:
             enhanced = image.copy()
             
             # Auto enhancement
@@ -604,8 +577,7 @@ class ImageTransformer:
             return image
     
     async def _add_watermark(self, image: Image.Image, settings: ImageSettings) -> Image.Image:
-        """Add watermark to image."""
-        try:
+        """Add watermark to image."""        try:
             from PIL import ImageDraw, ImageFont
             
             # Create a copy for watermarking
@@ -657,8 +629,7 @@ class ImageTransformer:
             return image
     
     async def _save_image(self, image: Image.Image, output_path: Path, settings: ImageSettings) -> None:
-        """Save image with format-specific settings."""
-        try:
+        """Save image with format-specific settings."""        try:
             # Prepare save parameters
             save_kwargs = {}
             
@@ -711,8 +682,7 @@ class ImageTransformer:
             raise
     
     async def _calculate_quality_score(self, input_path: str, output_path: str) -> Optional[float]:
-        """Calculate image quality score comparing input and output."""
-        try:
+        """Calculate image quality score comparing input and output."""        try:
             if not IMAGE_LIBS_AVAILABLE:
                 return None
             
@@ -743,8 +713,7 @@ class ImageTransformer:
             return None
     
     def _parse_image_settings(self, request) -> ImageSettings:
-        """Parse transformation request into image settings."""
-        settings = ImageSettings()
+        """Parse transformation request into image settings."""        settings = ImageSettings()
         
         if hasattr(request, 'target_format') and request.target_format:
             settings.format = ImageFormat(request.target_format)
@@ -793,8 +762,7 @@ class ImageTransformer:
         settings: ImageSettings,
         requested_output: Optional[str] = None
     ) -> Path:
-        """Generate output file path."""
-        if requested_output:
+        """Generate output file path."""        if requested_output:
             return Path(requested_output)
         
         # Generate based on input and settings
@@ -802,8 +770,7 @@ class ImageTransformer:
         return input_path.parent / output_name
     
     async def cleanup(self):
-        """Cleanup temporary files and resources."""
-        try:
+        """Cleanup temporary files and resources."""        try:
             # Clean temp directory
             if self.temp_dir.exists():
                 import shutil
@@ -816,8 +783,7 @@ class ImageTransformer:
 
 
 class ImageConverter:
-    """Simplified image converter interface."""
-    
+    """Simplified image converter interface."""    
     def __init__(self, transformer: Optional[ImageTransformer] = None):
         self.transformer = transformer or ImageTransformer()
     
@@ -828,13 +794,11 @@ class ImageConverter:
         format: str = "jpg",
         quality: str = "high"
     ) -> bool:
-        """Convert image file."""
-        return await self.transformer.convert(input_path, output_path, format, quality)
+        """Convert image file."""        return await self.transformer.convert(input_path, output_path, format, quality)
 
 
 class ImageEnhancer:
-    """Simplified image enhancer interface."""
-    
+    """Simplified image enhancer interface."""    
     def __init__(self, transformer: Optional[ImageTransformer] = None):
         self.transformer = transformer or ImageTransformer()
     
@@ -844,5 +808,4 @@ class ImageEnhancer:
         output_path: str,
         options: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """Enhance image quality."""
-        return await self.transformer.enhance(input_path, output_path, options)
+        """Enhance image quality."""        return await self.transformer.enhance(input_path, output_path, options)

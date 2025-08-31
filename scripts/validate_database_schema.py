@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Database Schema and Migration Validation Script
+"""Database Schema and Migration Validation Script
 ===============================================
 
 Validates database schemas and migrations for Ainflue Platform.
@@ -8,9 +7,7 @@ Addresses the requirement: "Base de données - schémas et migrations"
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import os
+"""import os
 import sys
 import subprocess
 import importlib.util
@@ -31,8 +28,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class DatabaseValidator:
-    """Validates database schemas and migration configurations"""
-    
+    """Validates database schemas and migration configurations"""    
     def __init__(self, project_root: str):
         self.project_root = Path(project_root)
         self.database_dir = self.project_root / "database"
@@ -41,8 +37,7 @@ class DatabaseValidator:
         self.validation_results = {}
         
     def validate_database_structure(self) -> Tuple[bool, List[str]]:
-        """Validate database directory structure"""
-        issues = []
+        """Validate database directory structure"""        issues = []
         
         # Check main database directory
         if not self.database_dir.exists():
@@ -76,8 +71,7 @@ class DatabaseValidator:
         return len(issues) == 0, issues
     
     def validate_schema_file(self) -> Tuple[bool, List[str]]:
-        """Validate the main schema file"""
-        issues = []
+        """Validate the main schema file"""        issues = []
         
         if not self.schema_file.exists():
             issues.append("Schema file does not exist")
@@ -125,8 +119,7 @@ class DatabaseValidator:
         return len(issues) == 0, issues
     
     def validate_migration_files(self) -> Tuple[bool, Dict[str, Any]]:
-        """Validate migration files"""
-        issues = []
+        """Validate migration files"""        issues = []
         migration_details = {}
         
         if not self.migrations_dir.exists():
@@ -212,8 +205,7 @@ class DatabaseValidator:
         }
     
     def check_migration_dependencies(self) -> Tuple[bool, List[str]]:
-        """Check migration dependency resolution"""
-        issues = []
+        """Check migration dependency resolution"""        issues = []
         
         # Check for migration manager/runner
         migration_files = [
@@ -249,8 +241,7 @@ class DatabaseValidator:
         return len(issues) == 0, issues
     
     def validate_database_connections(self) -> Tuple[bool, List[str]]:
-        """Validate database connection configurations"""
-        issues = []
+        """Validate database connection configurations"""        issues = []
         
         # Check for database configuration files
         config_paths = [
@@ -285,8 +276,7 @@ class DatabaseValidator:
         return len(issues) == 0, issues
     
     def generate_migration_test_script(self) -> str:
-        """Generate a script to test database migrations"""
-        script_content = """#!/bin/bash
+        """Generate a script to test database migrations"""        script_content = """#!/bin/bash
 # Database Migration Test Script
 set -e
 
@@ -343,12 +333,10 @@ echo "🔍 Verifying database structure..."
 docker exec ainflue-postgres psql -U ainflue -d ainflue_platform -c "\\dt"
 
 echo "🎉 Database migration test completed!"
-"""
-        return script_content
+"""        return script_content
     
     def check_required_packages(self) -> Tuple[bool, List[str]]:
-        """Check if required database packages are available"""
-        issues = []
+        """Check if required database packages are available"""        issues = []
         
         required_packages = [
             'asyncpg',
@@ -373,31 +361,25 @@ echo "🎉 Database migration test completed!"
         return len(missing_packages) == 0, issues
     
     def generate_basic_schema(self) -> None:
-        """Generate a basic database schema if missing"""
-        if self.schema_file.exists():
+        """Generate a basic database schema if missing"""        if self.schema_file.exists():
             return
         
-        basic_schema = '''"""
-Basic Database Schema for Ainflue Platform
+        basic_schema = '''"""Basic Database Schema for Ainflue Platform
 Generated automatically for testing purposes
-"""
-
-from sqlalchemy import text
+"""from sqlalchemy import text
 import asyncio
 import logging
 
 logger = logging.getLogger(__name__)
 
 async def create_tables():
-    """Create basic database tables"""
-    try:
+    """Create basic database tables"""    try:
         # This is a placeholder - implement actual database connection
         logger.info("Creating database tables...")
         
         # Basic tables structure
         tables = {
-            'users': """
-                CREATE TABLE IF NOT EXISTS users (
+            'users': """                CREATE TABLE IF NOT EXISTS users (
                     id VARCHAR(32) PRIMARY KEY,
                     email VARCHAR(255) UNIQUE NOT NULL,
                     username VARCHAR(50) UNIQUE NOT NULL,
@@ -405,8 +387,7 @@ async def create_tables():
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
             """,
-            'content': """
-                CREATE TABLE IF NOT EXISTS content (
+            'content': """                CREATE TABLE IF NOT EXISTS content (
                     id VARCHAR(36) PRIMARY KEY,
                     user_id VARCHAR(32) REFERENCES users(id),
                     title VARCHAR(255) NOT NULL,
@@ -415,16 +396,14 @@ async def create_tables():
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
             """,
-            'analytics': """
-                CREATE TABLE IF NOT EXISTS analytics (
+            'analytics': """                CREATE TABLE IF NOT EXISTS analytics (
                     id SERIAL PRIMARY KEY,
                     content_id VARCHAR(36) REFERENCES content(id),
                     metric_type VARCHAR(50) NOT NULL,
                     metric_value INTEGER DEFAULT 0,
                     recorded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
-            """
-        }
+            """        }
         
         logger.info(f"Schema defines {len(tables)} tables")
         for table_name in tables:
@@ -448,8 +427,7 @@ if __name__ == "__main__":
         logger.info(f"✅ Generated basic schema file: {self.schema_file}")
     
     def run_validation(self) -> Dict[str, Any]:
-        """Run complete database validation"""
-        logger.info("🗄️ Starting Database Schema and Migration Validation")
+        """Run complete database validation"""        logger.info("🗄️ Starting Database Schema and Migration Validation")
         
         # Check basic structure
         logger.info("\n" + "="*60)
@@ -539,16 +517,13 @@ if __name__ == "__main__":
         return self.validation_results
     
     def generate_report(self) -> str:
-        """Generate database validation report"""
-        if not self.validation_results:
+        """Generate database validation report"""        if not self.validation_results:
             return "No validation results available. Run validation first."
         
-        report = """
-Database Schema and Migration Validation Report
+        report = """Database Schema and Migration Validation Report
 ===============================================
 
-"""
-        
+"""        
         # Structure
         struct = self.validation_results['structure']
         report += f"📁 Database Structure: {'✅ VALID' if struct['valid'] else '❌ ISSUES'}\n"
@@ -630,8 +605,7 @@ Database Schema and Migration Validation Report
 
 
 def main():
-    """Main execution function"""
-    script_dir = Path(__file__).parent
+    """Main execution function"""    script_dir = Path(__file__).parent
     project_root = script_dir.parent
     
     logger.info("🗄️ Database Schema and Migration Validation")

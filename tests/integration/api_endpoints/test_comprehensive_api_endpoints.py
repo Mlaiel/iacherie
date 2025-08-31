@@ -1,30 +1,24 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive integration tests for API endpoints.
+"""Comprehensive integration tests for API endpoints.
 
 Tests all critical API endpoints with mocked responses to validate
 endpoint structure, authentication, validation, and error handling.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -47,30 +41,25 @@ MOCK_AUTH_TOKEN = "mock_jwt_token_123"
 
 
 class MockAPIClient:
-    """Mock API test client that simulates responses without actual HTTP calls."""
-    
+    """Mock API test client that simulates responses without actual HTTP calls."""    
     def __init__(self, base_url: str = TEST_BASE_URL):
         self.base_url = base_url
         self.auth_token: Optional[str] = None
         self.user_id: str = MOCK_USER_ID
         
     async def __aenter__(self):
-        """Async context manager entry."""
-        return self
+        """Async context manager entry."""        return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
-        pass
+        """Async context manager exit."""        pass
     
     async def authenticate(self, email: str = TEST_USER_EMAIL, password: str = TEST_USER_PASSWORD):
-        """Mock authentication and store auth token."""
-        # Simulate successful authentication
+        """Mock authentication and store auth token."""        # Simulate successful authentication
         self.auth_token = MOCK_AUTH_TOKEN
         return True
     
     async def register_user(self, email: str, password: str, **kwargs):
-        """Mock user registration."""
-        return {
+        """Mock user registration."""        return {
             "user_id": self.user_id,
             "email": email,
             "first_name": kwargs.get("first_name", "Test"),
@@ -80,38 +69,31 @@ class MockAPIClient:
         }
     
     def get_auth_headers(self) -> Dict[str, str]:
-        """Get authorization headers."""
-        headers = {"Content-Type": "application/json"}
+        """Get authorization headers."""        headers = {"Content-Type": "application/json"}
         if self.auth_token:
             headers["Authorization"] = f"Bearer {self.auth_token}"
         return headers
     
     def _mock_response(self, status: int, data: Any = None):
-        """Create a mock response."""
-        response = Mock()
+        """Create a mock response."""        response = Mock()
         response.status = status
         response.json = AsyncMock(return_value=data or {})
         return response
     
     async def get(self, endpoint: str, **kwargs):
-        """Mock authenticated GET request."""
-        return self._handle_mock_request("GET", endpoint, **kwargs)
+        """Mock authenticated GET request."""        return self._handle_mock_request("GET", endpoint, **kwargs)
     
     async def post(self, endpoint: str, data: Any = None, **kwargs):
-        """Mock authenticated POST request."""
-        return self._handle_mock_request("POST", endpoint, data=data, **kwargs)
+        """Mock authenticated POST request."""        return self._handle_mock_request("POST", endpoint, data=data, **kwargs)
     
     async def put(self, endpoint: str, data: Any = None, **kwargs):
-        """Mock authenticated PUT request."""
-        return self._handle_mock_request("PUT", endpoint, data=data, **kwargs)
+        """Mock authenticated PUT request."""        return self._handle_mock_request("PUT", endpoint, data=data, **kwargs)
     
     async def delete(self, endpoint: str, **kwargs):
-        """Mock authenticated DELETE request."""
-        return self._handle_mock_request("DELETE", endpoint, **kwargs)
+        """Mock authenticated DELETE request."""        return self._handle_mock_request("DELETE", endpoint, **kwargs)
     
     def _handle_mock_request(self, method: str, endpoint: str, data: Any = None, **kwargs):
-        """Handle mock request and return appropriate response."""
-        # Handle invalid data/error conditions first (only for specific error test cases)
+        """Handle mock request and return appropriate response."""        # Handle invalid data/error conditions first (only for specific error test cases)
         if data == "invalid json":
             return self._mock_response(400, {"error": "Invalid JSON"})
         elif data and isinstance(data, dict) and data.get("_trigger_missing_fields_error"):
@@ -274,20 +256,17 @@ class MockAPIClient:
 
 @pytest_asyncio.fixture
 async def api_client():
-    """Create authenticated API client."""
-    client = MockAPIClient()
+    """Create authenticated API client."""    client = MockAPIClient()
     await client.authenticate()
     return client
 
 
 class TestAuthenticationEndpoints:
-    """Test authentication and user management endpoints."""
-    
+    """Test authentication and user management endpoints."""    
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_user_registration(self):
-        """Test user registration endpoint."""
-        async with MockAPIClient() as client:
+        """Test user registration endpoint."""        async with MockAPIClient() as client:
             user_data = {
                 "email": f"newuser_{datetime.now().timestamp()}@example.com",
                 "password": "secure_password_123",
@@ -308,8 +287,7 @@ class TestAuthenticationEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_user_login(self):
-        """Test user login endpoint."""
-        async with MockAPIClient() as client:
+        """Test user login endpoint."""        async with MockAPIClient() as client:
             login_data = {"email": TEST_USER_EMAIL, "password": TEST_USER_PASSWORD}
             response = await client.post("/auth/login", login_data)
             
@@ -325,8 +303,7 @@ class TestAuthenticationEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_token_validation(self):
-        """Test token validation with authenticated requests."""
-        async with MockAPIClient() as client:
+        """Test token validation with authenticated requests."""        async with MockAPIClient() as client:
             await client.authenticate()
             
             # Test that authentication headers are properly set
@@ -338,8 +315,7 @@ class TestAuthenticationEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_authentication_flow_complete(self):
-        """Test complete authentication flow."""
-        async with MockAPIClient() as client:
+        """Test complete authentication flow."""        async with MockAPIClient() as client:
             # Test registration
             user_data = {
                 "email": f"flowtest_{datetime.now().timestamp()}@example.com",
@@ -363,13 +339,11 @@ class TestAuthenticationEndpoints:
 
 
 class TestContentManagementEndpoints:
-    """Test content upload and management endpoints."""
-    
+    """Test content upload and management endpoints."""    
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_content_upload(self):
-        """Test content upload endpoint."""
-        async with MockAPIClient() as client:
+        """Test content upload endpoint."""        async with MockAPIClient() as client:
             await client.authenticate()
             
             content_data = {
@@ -393,8 +367,7 @@ class TestContentManagementEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_content_list(self):
-        """Test content listing endpoint."""
-        async with MockAPIClient() as client:
+        """Test content listing endpoint."""        async with MockAPIClient() as client:
             await client.authenticate()
             
             response = await client.get("/content/list")
@@ -408,8 +381,7 @@ class TestContentManagementEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_content_metadata_update(self):
-        """Test content metadata update."""
-        async with MockAPIClient() as client:
+        """Test content metadata update."""        async with MockAPIClient() as client:
             await client.authenticate()
             
             content_id = "test_content_123"
@@ -429,8 +401,7 @@ class TestContentManagementEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_content_deletion(self):
-        """Test content deletion endpoint."""
-        async with MockAPIClient() as client:
+        """Test content deletion endpoint."""        async with MockAPIClient() as client:
             await client.authenticate()
             
             content_id = "test_content_123"
@@ -442,13 +413,11 @@ class TestContentManagementEndpoints:
 
 
 class TestFingerprintingEndpoints:
-    """Test content fingerprinting endpoints."""
-    
+    """Test content fingerprinting endpoints."""    
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_create_fingerprint(self, api_client):
-        """Test fingerprint creation endpoint."""
-        fingerprint_data = {
+        """Test fingerprint creation endpoint."""        fingerprint_data = {
             "content_id": "test_content_123",
             "content_type": "audio",
             "quality_settings": {
@@ -468,8 +437,7 @@ class TestFingerprintingEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_fingerprint_search(self, api_client):
-        """Test fingerprint search endpoint."""
-        search_data = {
+        """Test fingerprint search endpoint."""        search_data = {
             "query_fingerprint": "sample_fingerprint_data",
             "similarity_threshold": 0.85,
             "max_results": 10
@@ -484,8 +452,7 @@ class TestFingerprintingEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_fingerprint_match_detection(self, api_client):
-        """Test fingerprint match detection."""
-        response = await api_client.get("/fingerprint/matches")
+        """Test fingerprint match detection."""        response = await api_client.get("/fingerprint/matches")
         
         assert response.status == 200
         data = await response.json()
@@ -493,13 +460,11 @@ class TestFingerprintingEndpoints:
 
 
 class TestProtectionEndpoints:
-    """Test content protection and monitoring endpoints."""
-    
+    """Test content protection and monitoring endpoints."""    
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_enable_monitoring(self, api_client):
-        """Test content monitoring activation."""
-        monitoring_data = {
+        """Test content monitoring activation."""        monitoring_data = {
             "content_id": "test_content_123",
             "platforms": ["youtube", "soundcloud", "instagram", "tiktok"],
             "monitoring_frequency": "daily",
@@ -518,8 +483,7 @@ class TestProtectionEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_violation_alerts(self, api_client):
-        """Test violation alerts endpoint."""
-        response = await api_client.get("/protection/alerts")
+        """Test violation alerts endpoint."""        response = await api_client.get("/protection/alerts")
         
         assert response.status == 200
         data = await response.json()
@@ -528,8 +492,7 @@ class TestProtectionEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_takedown_request(self, api_client):
-        """Test copyright takedown request."""
-        takedown_data = {
+        """Test copyright takedown request."""        takedown_data = {
             "violation_id": "violation_123",
             "platform": "youtube",
             "infringing_url": "https://youtube.com/watch?v=example",
@@ -544,13 +507,11 @@ class TestProtectionEndpoints:
 
 
 class TestAnalyticsEndpoints:
-    """Test analytics and reporting endpoints."""
-    
+    """Test analytics and reporting endpoints."""    
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_content_analytics(self, api_client):
-        """Test content analytics endpoint."""
-        content_id = "test_content_123"
+        """Test content analytics endpoint."""        content_id = "test_content_123"
         response = await api_client.get(f"/analytics/content/{content_id}")
         
         assert response.status == 200
@@ -563,8 +524,7 @@ class TestAnalyticsEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_revenue_analytics(self, api_client):
-        """Test revenue analytics endpoint."""
-        response = await api_client.get("/analytics/revenue")
+        """Test revenue analytics endpoint."""        response = await api_client.get("/analytics/revenue")
         
         assert response.status == 200
         data = await response.json()
@@ -574,8 +534,7 @@ class TestAnalyticsEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_platform_breakdown(self, api_client):
-        """Test platform performance breakdown."""
-        response = await api_client.get("/analytics/platforms")
+        """Test platform performance breakdown."""        response = await api_client.get("/analytics/platforms")
         
         assert response.status == 200
         data = await response.json()
@@ -584,13 +543,11 @@ class TestAnalyticsEndpoints:
 
 
 class TestCollaborationEndpoints:
-    """Test collaboration and networking endpoints."""
-    
+    """Test collaboration and networking endpoints."""    
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_find_collaborators(self, api_client):
-        """Test collaborator matching endpoint."""
-        search_criteria = {
+        """Test collaborator matching endpoint."""        search_criteria = {
             "creator_types": ["musician", "video_creator"],
             "genres": ["electronic", "pop"],
             "location_preference": "remote",
@@ -613,8 +570,7 @@ class TestCollaborationEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_collaboration_request(self, api_client):
-        """Test collaboration request endpoint."""
-        request_data = {
+        """Test collaboration request endpoint."""        request_data = {
             "target_creator_id": "creator_123",
             "collaboration_type": "remix",
             "message": "Would love to collaborate on a remix!",
@@ -630,8 +586,7 @@ class TestCollaborationEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_collaboration_history(self, api_client):
-        """Test collaboration history endpoint."""
-        response = await api_client.get("/collaboration/history")
+        """Test collaboration history endpoint."""        response = await api_client.get("/collaboration/history")
         
         assert response.status == 200
         data = await response.json()
@@ -639,13 +594,11 @@ class TestCollaborationEndpoints:
 
 
 class TestMonetizationEndpoints:
-    """Test monetization and licensing endpoints."""
-    
+    """Test monetization and licensing endpoints."""    
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_licensing_options(self, api_client):
-        """Test content licensing options."""
-        content_id = "test_content_123"
+        """Test content licensing options."""        content_id = "test_content_123"
         response = await api_client.get(f"/monetization/licensing/{content_id}")
         
         assert response.status == 200
@@ -655,8 +608,7 @@ class TestMonetizationEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_revenue_tracking(self, api_client):
-        """Test revenue tracking endpoint."""
-        response = await api_client.get("/monetization/revenue")
+        """Test revenue tracking endpoint."""        response = await api_client.get("/monetization/revenue")
         
         assert response.status == 200
         data = await response.json()
@@ -665,8 +617,7 @@ class TestMonetizationEndpoints:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_payment_setup(self, api_client):
-        """Test payment method setup."""
-        payment_data = {
+        """Test payment method setup."""        payment_data = {
             "payment_method": "bank_transfer",
             "account_details": {
                 "account_number": "****1234",
@@ -683,13 +634,11 @@ class TestMonetizationEndpoints:
 
 
 class TestErrorHandlingAndValidation:
-    """Test API error handling and input validation."""
-    
+    """Test API error handling and input validation."""    
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_invalid_authentication(self):
-        """Test behavior with invalid authentication."""
-        async with MockAPIClient() as client:
+        """Test behavior with invalid authentication."""        async with MockAPIClient() as client:
             # Don't authenticate - should fail for protected endpoints
             client.auth_token = None
             
@@ -701,8 +650,7 @@ class TestErrorHandlingAndValidation:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_malformed_request_data(self, api_client):
-        """Test handling of malformed request data."""
-        # Test with missing required fields
+        """Test handling of malformed request data."""        # Test with missing required fields
         incomplete_data = {
             "title": "Incomplete Content"
             # Missing required fields like content_type
@@ -717,8 +665,7 @@ class TestErrorHandlingAndValidation:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_rate_limiting_behavior(self, api_client):
-        """Test API rate limiting behavior."""
-        # Make multiple rapid requests to test rate limiting
+        """Test API rate limiting behavior."""        # Make multiple rapid requests to test rate limiting
         responses = []
         for _ in range(5):
             response = await api_client.get("/analytics/revenue")
@@ -731,8 +678,7 @@ class TestErrorHandlingAndValidation:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_endpoint_not_found(self, api_client):
-        """Test behavior for non-existent endpoints."""
-        response = await api_client.get("/nonexistent/endpoint")
+        """Test behavior for non-existent endpoints."""        response = await api_client.get("/nonexistent/endpoint")
         
         # Mock client returns success for any endpoint
         # Real API would return 404
@@ -740,13 +686,11 @@ class TestErrorHandlingAndValidation:
 
 
 class TestAPIPerformanceIntegration:
-    """Test API performance characteristics in integration scenarios."""
-    
+    """Test API performance characteristics in integration scenarios."""    
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_concurrent_requests(self, api_client):
-        """Test handling of concurrent requests."""
-        import time
+        """Test handling of concurrent requests."""        import time
         
         async def make_request():
             start_time = time.time()
@@ -769,8 +713,7 @@ class TestAPIPerformanceIntegration:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_large_payload_handling(self, api_client):
-        """Test handling of large request payloads."""
-        large_data = {
+        """Test handling of large request payloads."""        large_data = {
             "title": "Large Content Test",
             "description": "x" * 5000,  # Large description
             "tags": [f"tag_{i}" for i in range(100)],  # Many tags
@@ -799,8 +742,7 @@ class TestAPIPerformanceIntegration:
     
     @pytest.mark.asyncio
     async def test_protected_endpoint_without_auth(self):
-        """Test accessing protected endpoint without authentication."""
-        # Test with unauthenticated client
+        """Test accessing protected endpoint without authentication."""        # Test with unauthenticated client
         client = MockAPIClient()
         # Don't authenticate the client
         response = await client.get("/user/profile")
@@ -809,8 +751,7 @@ class TestAPIPerformanceIntegration:
     
     @pytest.mark.asyncio
     async def test_user_profile_retrieval(self, api_client):
-        """Test retrieving user profile."""
-        response = await api_client.get("/user/profile")
+        """Test retrieving user profile."""        response = await api_client.get("/user/profile")
         
         assert response.status == 200
         data = await response.json()
@@ -819,12 +760,10 @@ class TestAPIPerformanceIntegration:
 
 
 class TestFingerprintingEndpoints:
-    """Test fingerprinting and content protection endpoints."""
-    
+    """Test fingerprinting and content protection endpoints."""    
     @pytest.mark.asyncio
     async def test_upload_content_for_fingerprinting(self, api_client):
-        """Test uploading content for fingerprinting."""
-        # Create a temporary test file
+        """Test uploading content for fingerprinting."""        # Create a temporary test file
         with tempfile.NamedTemporaryFile(suffix='.txt', delete=False) as f:
             f.write(b"This is test content for fingerprinting analysis.")
             temp_file = f.name
@@ -855,8 +794,7 @@ class TestFingerprintingEndpoints:
     
     @pytest.mark.asyncio
     async def test_get_fingerprint_status(self, api_client):
-        """Test getting fingerprint processing status."""
-        # Mock fingerprint ID
+        """Test getting fingerprint processing status."""        # Mock fingerprint ID
         fingerprint_id = "fp_test_12345"
         
         response = await api_client.get(f"/fingerprinting/status/{fingerprint_id}")
@@ -866,8 +804,7 @@ class TestFingerprintingEndpoints:
     
     @pytest.mark.asyncio
     async def test_search_similar_content(self, api_client):
-        """Test searching for similar content."""
-        search_data = {
+        """Test searching for similar content."""        search_data = {
             "fingerprint_hash": "test_hash_123456",
             "similarity_threshold": 0.85,
             "max_results": 10
@@ -882,8 +819,7 @@ class TestFingerprintingEndpoints:
     
     @pytest.mark.asyncio
     async def test_batch_fingerprint_processing(self, api_client):
-        """Test batch fingerprinting of multiple files."""
-        batch_data = {
+        """Test batch fingerprinting of multiple files."""        batch_data = {
             "content_items": [
                 {"content_id": "item1", "content_text": "First test content"},
                 {"content_id": "item2", "content_text": "Second test content"},
@@ -901,12 +837,10 @@ class TestFingerprintingEndpoints:
 
 
 class TestMonetizationEndpoints:
-    """Test monetization and payment endpoints."""
-    
+    """Test monetization and payment endpoints."""    
     @pytest.mark.asyncio
     async def test_create_payment_intent(self, api_client):
-        """Test creating a payment intent."""
-        payment_data = {
+        """Test creating a payment intent."""        payment_data = {
             "amount": 99.99,
             "currency": "USD",
             "description": "Premium subscription",
@@ -923,8 +857,7 @@ class TestMonetizationEndpoints:
     
     @pytest.mark.asyncio
     async def test_get_revenue_analytics(self, api_client):
-        """Test retrieving revenue analytics."""
-        params = {
+        """Test retrieving revenue analytics."""        params = {
             "start_date": "2023-01-01",
             "end_date": "2023-12-31",
             "granularity": "monthly"
@@ -940,8 +873,7 @@ class TestMonetizationEndpoints:
     
     @pytest.mark.asyncio
     async def test_create_license(self, api_client):
-        """Test creating a content license."""
-        license_data = {
+        """Test creating a content license."""        license_data = {
             "content_id": "content_123",
             "license_type": "commercial",
             "terms": {
@@ -961,8 +893,7 @@ class TestMonetizationEndpoints:
     
     @pytest.mark.asyncio
     async def test_royalty_distribution(self, api_client):
-        """Test calculating royalty distribution."""
-        distribution_data = {
+        """Test calculating royalty distribution."""        distribution_data = {
             "content_id": "track_456",
             "total_revenue": 1000.00,
             "stakeholders": [
@@ -981,12 +912,10 @@ class TestMonetizationEndpoints:
 
 
 class TestCrawlerEndpoints:
-    """Test crawler and platform monitoring endpoints."""
-    
+    """Test crawler and platform monitoring endpoints."""    
     @pytest.mark.asyncio
     async def test_start_platform_monitoring(self, api_client):
-        """Test starting platform monitoring."""
-        monitoring_data = {
+        """Test starting platform monitoring."""        monitoring_data = {
             "platforms": ["spotify", "youtube", "instagram"],
             "search_terms": ["test artist", "test song"],
             "content_fingerprints": ["hash_123", "hash_456"],
@@ -1002,8 +931,7 @@ class TestCrawlerEndpoints:
     
     @pytest.mark.asyncio
     async def test_get_monitoring_results(self, api_client):
-        """Test retrieving monitoring results."""
-        monitoring_id = "mon_test_123"
+        """Test retrieving monitoring results."""        monitoring_id = "mon_test_123"
         
         response = await api_client.get(f"/monitoring/results/{monitoring_id}")
         
@@ -1015,8 +943,7 @@ class TestCrawlerEndpoints:
     
     @pytest.mark.asyncio
     async def test_manual_platform_scan(self, api_client):
-        """Test manual platform scanning."""
-        scan_data = {
+        """Test manual platform scanning."""        scan_data = {
             "platform": "spotify",
             "search_query": "test content",
             "max_results": 50
@@ -1031,12 +958,10 @@ class TestCrawlerEndpoints:
 
 
 class TestAnalyticsEndpoints:
-    """Test analytics and reporting endpoints."""
-    
+    """Test analytics and reporting endpoints."""    
     @pytest.mark.asyncio
     async def test_get_content_analytics(self, api_client):
-        """Test retrieving content analytics."""
-        content_id = "content_analytics_test"
+        """Test retrieving content analytics."""        content_id = "content_analytics_test"
         
         response = await api_client.get(f"/analytics/content/{content_id}")
         
@@ -1048,8 +973,7 @@ class TestAnalyticsEndpoints:
     
     @pytest.mark.asyncio
     async def test_get_platform_performance(self, api_client):
-        """Test retrieving platform performance analytics."""
-        params = {
+        """Test retrieving platform performance analytics."""        params = {
             "platforms": ["spotify", "youtube"],
             "start_date": "2023-01-01",
             "end_date": "2023-12-31"
@@ -1064,8 +988,7 @@ class TestAnalyticsEndpoints:
     
     @pytest.mark.asyncio
     async def test_generate_report(self, api_client):
-        """Test generating analytics report."""
-        report_data = {
+        """Test generating analytics report."""        report_data = {
             "report_type": "monthly_summary",
             "period": "2023-01",
             "include_sections": ["revenue", "protection", "engagement"],
@@ -1081,12 +1004,10 @@ class TestAnalyticsEndpoints:
 
 
 class TestCollaborationEndpoints:
-    """Test collaboration and partnership endpoints."""
-    
+    """Test collaboration and partnership endpoints."""    
     @pytest.mark.asyncio
     async def test_create_collaboration_request(self, api_client):
-        """Test creating a collaboration request."""
-        collaboration_data = {
+        """Test creating a collaboration request."""        collaboration_data = {
             "target_user_id": "creator_456",
             "collaboration_type": "music_collaboration",
             "message": "Would love to collaborate on a new track!",
@@ -1105,8 +1026,7 @@ class TestCollaborationEndpoints:
     
     @pytest.mark.asyncio
     async def test_get_collaboration_matches(self, api_client):
-        """Test getting collaboration matches."""
-        match_criteria = {
+        """Test getting collaboration matches."""        match_criteria = {
             "content_type": "music",
             "genre": "electronic",
             "experience_level": "intermediate",
@@ -1122,12 +1042,10 @@ class TestCollaborationEndpoints:
 
 
 class TestAPIDocumentationEndpoints:
-    """Test API documentation endpoints."""
-    
+    """Test API documentation endpoints."""    
     @pytest.mark.asyncio
     async def test_get_api_documentation(self):
-        """Test retrieving API documentation."""
-        client = MockAPIClient()
+        """Test retrieving API documentation."""        client = MockAPIClient()
         response = await client.get("/docs/")
         
         assert response.status == 200
@@ -1135,8 +1053,7 @@ class TestAPIDocumentationEndpoints:
     
     @pytest.mark.asyncio
     async def test_get_openapi_spec(self):
-        """Test retrieving OpenAPI specification."""
-        client = MockAPIClient()
+        """Test retrieving OpenAPI specification."""        client = MockAPIClient()
         response = await client.get("/openapi.json")
         
         assert response.status == 200
@@ -1146,12 +1063,10 @@ class TestAPIDocumentationEndpoints:
 
 
 class TestErrorHandlingAndValidation:
-    """Test error handling and input validation."""
-    
+    """Test error handling and input validation."""    
     @pytest.mark.asyncio
     async def test_invalid_json_request(self, api_client):
-        """Test handling of invalid JSON requests."""
-        response = await api_client.post(
+        """Test handling of invalid JSON requests."""        response = await api_client.post(
             "/fingerprinting/upload",
             data="invalid json"
         )
@@ -1159,8 +1074,7 @@ class TestErrorHandlingAndValidation:
     
     @pytest.mark.asyncio
     async def test_missing_required_fields(self, api_client):
-        """Test validation of missing required fields."""
-        incomplete_data = {
+        """Test validation of missing required fields."""        incomplete_data = {
             "amount": 99.99,
             "_trigger_missing_fields_error": True  # Trigger the validation error
         }
@@ -1173,8 +1087,7 @@ class TestErrorHandlingAndValidation:
     
     @pytest.mark.asyncio
     async def test_invalid_field_types(self, api_client):
-        """Test validation of invalid field types."""
-        invalid_data = {
+        """Test validation of invalid field types."""        invalid_data = {
             "amount": "not_a_number",  # Should be float
             "currency": 123,  # Should be string
             "description": {"object": "not_string"},  # Should be string
@@ -1187,8 +1100,7 @@ class TestErrorHandlingAndValidation:
     
     @pytest.mark.asyncio
     async def test_rate_limiting(self, api_client):
-        """Test API rate limiting."""
-        # Make many requests quickly
+        """Test API rate limiting."""        # Make many requests quickly
         responses = []
         for _ in range(100):
             response = await api_client.get("/user/profile")
@@ -1199,12 +1111,10 @@ class TestErrorHandlingAndValidation:
 
 
 class TestPerformanceAndLoad:
-    """Test API performance under load."""
-    
+    """Test API performance under load."""    
     @pytest.mark.asyncio
     async def test_concurrent_requests(self, api_client):
-        """Test handling concurrent requests."""
-        async def make_request():
+        """Test handling concurrent requests."""        async def make_request():
             response = await api_client.get("/user/profile")
             return response.status
         
@@ -1218,8 +1128,7 @@ class TestPerformanceAndLoad:
     
     @pytest.mark.asyncio
     async def test_large_payload_handling(self, api_client):
-        """Test handling of large payloads."""
-        # Create large content data
+        """Test handling of large payloads."""        # Create large content data
         large_content = "x" * 1000000  # 1MB of text
         
         data = {

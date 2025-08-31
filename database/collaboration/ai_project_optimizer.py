@@ -1,5 +1,4 @@
-"""
-AI Project Optimizer Database Module
+"""AI Project Optimizer Database Module
 
 Intelligent project optimization system using machine learning algorithms
 for predictive analytics, resource optimization, and automated decision making
@@ -10,9 +9,7 @@ Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Micros
 
 Copyright © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use is strictly prohibited.
-"""
-
-from typing import List, Dict, Any, Optional, Union, Tuple
+"""from typing import List, Dict, Any, Optional, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
 import json
@@ -42,8 +39,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class OptimizationType(Enum):
-    """Types of AI-driven optimizations"""
-    RESOURCE_ALLOCATION = "resource_allocation"
+    """Types of AI-driven optimizations"""    RESOURCE_ALLOCATION = "resource_allocation"
     TIMELINE_OPTIMIZATION = "timeline_optimization"
     BUDGET_OPTIMIZATION = "budget_optimization"
     TEAM_COMPOSITION = "team_composition"
@@ -55,16 +51,14 @@ class OptimizationType(Enum):
     CONTENT_OPTIMIZATION = "content_optimization"
 
 class PredictionConfidence(Enum):
-    """Confidence levels for AI predictions"""
-    VERY_LOW = "very_low"      # 0-20%
+    """Confidence levels for AI predictions"""    VERY_LOW = "very_low"      # 0-20%
     LOW = "low"                # 20-40%
     MEDIUM = "medium"          # 40-60%
     HIGH = "high"              # 60-80%
     VERY_HIGH = "very_high"    # 80-100%
 
 class OptimizationStatus(Enum):
-    """Status of optimization processes"""
-    QUEUED = "queued"
+    """Status of optimization processes"""    QUEUED = "queued"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -74,10 +68,8 @@ class OptimizationStatus(Enum):
     REJECTED = "rejected"
 
 class AIProjectOptimization(Base):
-    """
-    Core AI project optimization model for tracking optimization jobs and results.
-    """
-    __tablename__ = 'ai_project_optimizations'
+    """    Core AI project optimization model for tracking optimization jobs and results.
+    """    __tablename__ = 'ai_project_optimizations'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     project_id = Column(UUID(as_uuid=True), ForeignKey('collaboration_projects.id'), nullable=False)
@@ -134,10 +126,8 @@ class AIProjectOptimization(Base):
     )
 
 class ProjectPredictionModel(Base):
-    """
-    Trained AI models for project outcome predictions and optimizations.
-    """
-    __tablename__ = 'project_prediction_models'
+    """    Trained AI models for project outcome predictions and optimizations.
+    """    __tablename__ = 'project_prediction_models'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     model_name = Column(String(255), nullable=False)
@@ -189,10 +179,8 @@ class ProjectPredictionModel(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class OptimizationMetrics(Base):
-    """
-    Metrics and KPIs tracking for optimization effectiveness.
-    """
-    __tablename__ = 'optimization_metrics'
+    """    Metrics and KPIs tracking for optimization effectiveness.
+    """    __tablename__ = 'optimization_metrics'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     optimization_id = Column(UUID(as_uuid=True), ForeignKey('ai_project_optimizations.id'), nullable=False)
@@ -241,10 +229,8 @@ class OptimizationMetrics(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
 class AIInsight(Base):
-    """
-    AI-generated insights and recommendations for project improvement.
-    """
-    __tablename__ = 'ai_insights'
+    """    AI-generated insights and recommendations for project improvement.
+    """    __tablename__ = 'ai_insights'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     project_id = Column(UUID(as_uuid=True), ForeignKey('collaboration_projects.id'), nullable=False)
@@ -293,8 +279,7 @@ class AIInsight(Base):
 
 @dataclass
 class OptimizationRequest:
-    """Request configuration for AI optimization"""
-    project_id: str
+    """Request configuration for AI optimization"""    project_id: str
     optimization_type: OptimizationType
     parameters: Dict[str, Any]
     constraints: Dict[str, Any] = None
@@ -303,11 +288,9 @@ class OptimizationRequest:
     requested_by: str = None
 
 class AIProjectOptimizerEngine:
-    """
-    Advanced AI-powered project optimization engine.
+    """    Advanced AI-powered project optimization engine.
     Uses machine learning models for predictive analytics and automated optimization.
-    """
-    
+    """    
     def __init__(self, db_session, redis_client=None, model_storage_path="/models"):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -319,16 +302,14 @@ class AIProjectOptimizerEngine:
         self._load_trained_models()
     
     async def request_optimization(self, request: OptimizationRequest) -> AIProjectOptimization:
-        """
-        Request AI-powered project optimization.
+        """        Request AI-powered project optimization.
         
         Args:
             request: Optimization request configuration
             
         Returns:
             Created optimization job
-        """
-        try:
+        """        try:
             # Validate project exists
             project = await self._get_project(request.project_id)
             if not project:
@@ -363,8 +344,7 @@ class AIProjectOptimizerEngine:
             raise
     
     async def process_resource_allocation_optimization(self, project_id: str, parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Optimize resource allocation using AI predictions.
+        """        Optimize resource allocation using AI predictions.
         
         Args:
             project_id: Project to optimize
@@ -372,8 +352,7 @@ class AIProjectOptimizerEngine:
             
         Returns:
             Optimization recommendations
-        """
-        try:
+        """        try:
             # Get project data
             project_data = await self._get_project_data(project_id)
             team_data = await self._get_team_data(project_id)
@@ -421,8 +400,7 @@ class AIProjectOptimizerEngine:
             raise
     
     async def process_timeline_optimization(self, project_id: str, parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Optimize project timeline using predictive models.
+        """        Optimize project timeline using predictive models.
         
         Args:
             project_id: Project to optimize
@@ -430,8 +408,7 @@ class AIProjectOptimizerEngine:
             
         Returns:
             Timeline optimization recommendations
-        """
-        try:
+        """        try:
             # Get historical project data
             historical_data = await self._get_historical_project_data()
             current_project_data = await self._get_project_data(project_id)
@@ -480,8 +457,7 @@ class AIProjectOptimizerEngine:
             raise
     
     async def process_quality_prediction(self, project_id: str, parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Predict and optimize project quality outcomes.
+        """        Predict and optimize project quality outcomes.
         
         Args:
             project_id: Project to analyze
@@ -489,8 +465,7 @@ class AIProjectOptimizerEngine:
             
         Returns:
             Quality predictions and optimization recommendations
-        """
-        try:
+        """        try:
             # Get project quality data
             quality_data = await self._get_quality_data(project_id)
             team_performance = await self._get_team_performance_data(project_id)
@@ -537,8 +512,7 @@ class AIProjectOptimizerEngine:
             raise
     
     async def generate_ai_insights(self, project_id: str, insight_types: List[str] = None) -> List[AIInsight]:
-        """
-        Generate AI-powered insights for project improvement.
+        """        Generate AI-powered insights for project improvement.
         
         Args:
             project_id: Project to analyze
@@ -546,8 +520,7 @@ class AIProjectOptimizerEngine:
             
         Returns:
             List of generated insights
-        """
-        try:
+        """        try:
             # Get comprehensive project data
             project_data = await self._get_comprehensive_project_data(project_id)
             
@@ -605,8 +578,7 @@ class AIProjectOptimizerEngine:
             raise
     
     def _load_trained_models(self):
-        """Load pre-trained ML models from storage"""
-        try:
+        """Load pre-trained ML models from storage"""        try:
             # Load models from database
             active_models = self.db_session.query(ProjectPredictionModel).filter(
                 ProjectPredictionModel.is_active == True
@@ -631,15 +603,13 @@ class AIProjectOptimizerEngine:
             self.logger.error(f"Error loading trained models: {str(e)}")
     
     def _get_model(self, optimization_type: str):
-        """Get trained model for specific optimization type"""
-        if optimization_type not in self.models:
+        """Get trained model for specific optimization type"""        if optimization_type not in self.models:
             raise ValueError(f"Model not available for optimization type: {optimization_type}")
         
         return self.models[optimization_type]["model"]
     
     async def _process_optimization(self, optimization_id: str):
-        """Process optimization job asynchronously"""
-        try:
+        """Process optimization job asynchronously"""        try:
             optimization = self.db_session.query(AIProjectOptimization).filter(
                 AIProjectOptimization.id == optimization_id
             ).first()
@@ -695,8 +665,7 @@ class AIProjectOptimizerEngine:
             self.logger.error(f"Error processing optimization {optimization_id}: {str(e)}")
     
     def _determine_confidence_level(self, confidence_score: float) -> PredictionConfidence:
-        """Determine confidence level based on score"""
-        if confidence_score >= 80:
+        """Determine confidence level based on score"""        if confidence_score >= 80:
             return PredictionConfidence.VERY_HIGH
         elif confidence_score >= 60:
             return PredictionConfidence.HIGH

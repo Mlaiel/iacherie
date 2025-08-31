@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Video Quality Analysis Tests
+"""Video Quality Analysis Tests
 
 Comprehensive test suite for professional video quality assessment with advanced video analysis,
 motion detection, encoding quality evaluation, and platform-specific video standards validation.
@@ -45,9 +41,7 @@ ANYONE WHO THINKS OF STEALING THE IDEA, CONCEPT, OR CODE WITHOUT MY PERSONAL, CL
 AND WRITTEN AUTHORIZATION WILL FACE SEVERE LEGAL CONSEQUENCES.
 
 Contact: Fahed Mlaiel - mlaiel@live.de
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -71,11 +65,9 @@ from ai.quality_assessment.video_quality import (
 
 
 class TestVideoQualityAnalyzer(TestCase):
-    """Comprehensive test suite for VideoQualityAnalyzer with professional video standards."""
-    
+    """Comprehensive test suite for VideoQualityAnalyzer with professional video standards."""    
     def setUp(self):
-        """Set up test environment with various video samples and configurations."""
-        self.analyzer = VideoQualityAnalyzer()
+        """Set up test environment with various video samples and configurations."""        self.analyzer = VideoQualityAnalyzer()
         self.temp_dir = tempfile.mkdtemp()
         
         # Video generation parameters
@@ -121,8 +113,7 @@ class TestVideoQualityAnalyzer(TestCase):
         }
     
     def _generate_high_quality_video(self, file_path: Path):
-        """Generate a high-quality test video with clean content."""
-        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+        """Generate a high-quality test video with clean content."""        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
         writer = cv2.VideoWriter(str(file_path), fourcc, self.fps, (self.width, self.height))
         
         for frame_num in range(self.total_frames):
@@ -147,8 +138,7 @@ class TestVideoQualityAnalyzer(TestCase):
         writer.release()
     
     def _generate_low_quality_video(self, file_path: Path):
-        """Generate a low-quality test video with compression artifacts and noise."""
-        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+        """Generate a low-quality test video with compression artifacts and noise."""        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
         writer = cv2.VideoWriter(str(file_path), fourcc, self.fps, (self.width, self.height))
         
         for frame_num in range(self.total_frames):
@@ -178,8 +168,7 @@ class TestVideoQualityAnalyzer(TestCase):
         writer.release()
     
     def _generate_motion_video(self, file_path: Path):
-        """Generate a video with significant motion for motion analysis testing."""
-        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+        """Generate a video with significant motion for motion analysis testing."""        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
         writer = cv2.VideoWriter(str(file_path), fourcc, self.fps, (self.width, self.height))
         
         for frame_num in range(self.total_frames):
@@ -208,8 +197,7 @@ class TestVideoQualityAnalyzer(TestCase):
         writer.release()
     
     def _generate_static_video(self, file_path: Path):
-        """Generate a static video with minimal motion for comparison."""
-        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+        """Generate a static video with minimal motion for comparison."""        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
         writer = cv2.VideoWriter(str(file_path), fourcc, self.fps, (self.width, self.height))
         
         # Create one static frame and repeat it
@@ -236,8 +224,7 @@ class TestVideoQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_comprehensive_video_analysis(self):
-        """Test comprehensive video quality analysis with all metrics."""
-        analysis_result = await self.analyzer.analyze_video_quality(
+        """Test comprehensive video quality analysis with all metrics."""        analysis_result = await self.analyzer.analyze_video_quality(
             str(self.high_quality_video_path),
             platform='youtube',
             content_type='educational'
@@ -279,8 +266,7 @@ class TestVideoQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_motion_analysis_comprehensive(self):
-        """Test detailed motion analysis functionality."""
-        # Test high-motion video
+        """Test detailed motion analysis functionality."""        # Test high-motion video
         motion_result = await self.analyzer.analyze_motion(
             str(self.motion_video_path)
         )
@@ -313,8 +299,7 @@ class TestVideoQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_compression_artifacts_detection(self):
-        """Test compression artifacts detection and analysis."""
-        # Test high-quality video (should have minimal artifacts)
+        """Test compression artifacts detection and analysis."""        # Test high-quality video (should have minimal artifacts)
         hq_artifacts = await self.analyzer.detect_compression_artifacts(
             str(self.high_quality_video_path)
         )
@@ -346,8 +331,7 @@ class TestVideoQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_resolution_analysis(self):
-        """Test video resolution analysis and quality assessment."""
-        resolution_result = await self.analyzer.analyze_resolution_quality(
+        """Test video resolution analysis and quality assessment."""        resolution_result = await self.analyzer.analyze_resolution_quality(
             str(self.high_quality_video_path)
         )
         
@@ -375,8 +359,7 @@ class TestVideoQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_frame_rate_analysis(self):
-        """Test frame rate analysis and smoothness evaluation."""
-        framerate_result = await self.analyzer.analyze_frame_rate(
+        """Test frame rate analysis and smoothness evaluation."""        framerate_result = await self.analyzer.analyze_frame_rate(
             str(self.motion_video_path)
         )
         
@@ -404,8 +387,7 @@ class TestVideoQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_bitrate_analysis(self):
-        """Test bitrate analysis and encoding efficiency."""
-        bitrate_result = await self.analyzer.analyze_bitrate(
+        """Test bitrate analysis and encoding efficiency."""        bitrate_result = await self.analyzer.analyze_bitrate(
             str(self.high_quality_video_path)
         )
         
@@ -429,8 +411,7 @@ class TestVideoQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_platform_specific_compliance(self):
-        """Test platform-specific video compliance validation."""
-        for platform, config in self.platform_configs.items():
+        """Test platform-specific video compliance validation."""        for platform, config in self.platform_configs.items():
             compliance_result = await self.analyzer.check_platform_compliance(
                 str(self.high_quality_video_path),
                 platform=platform
@@ -463,8 +444,7 @@ class TestVideoQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_video_encoding_quality_assessment(self):
-        """Test video encoding quality evaluation."""
-        encoding_result = await self.analyzer.assess_encoding_quality(
+        """Test video encoding quality evaluation."""        encoding_result = await self.analyzer.assess_encoding_quality(
             str(self.high_quality_video_path)
         )
         
@@ -489,8 +469,7 @@ class TestVideoQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_color_analysis(self):
-        """Test color analysis and color space evaluation."""
-        color_result = await self.analyzer.analyze_color_quality(
+        """Test color analysis and color space evaluation."""        color_result = await self.analyzer.analyze_color_quality(
             str(self.high_quality_video_path)
         )
         
@@ -521,8 +500,7 @@ class TestVideoQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_temporal_analysis(self):
-        """Test temporal analysis for scene changes and consistency."""
-        temporal_result = await self.analyzer.analyze_temporal_quality(
+        """Test temporal analysis for scene changes and consistency."""        temporal_result = await self.analyzer.analyze_temporal_quality(
             str(self.motion_video_path)
         )
         
@@ -553,8 +531,7 @@ class TestVideoQualityAnalyzer(TestCase):
         self.assertIsInstance(flicker['flicker_detected'], bool)
     
     def test_video_quality_metrics_data_model(self):
-        """Test VideoQualityMetrics data model validation."""
-        metrics = VideoQualityMetrics(
+        """Test VideoQualityMetrics data model validation."""        metrics = VideoQualityMetrics(
             overall_score=87.5,
             resolution_score=95.0,
             motion_quality=82.0,
@@ -579,8 +556,7 @@ class TestVideoQualityAnalyzer(TestCase):
         self.assertIn(quality_level, ['excellent', 'good', 'acceptable', 'poor'])
     
     def test_video_quality_profile_functionality(self):
-        """Test VideoQualityProfile class with comprehensive video characteristics."""
-        profile = VideoQualityProfile(
+        """Test VideoQualityProfile class with comprehensive video characteristics."""        profile = VideoQualityProfile(
             content_type='educational',
             platform='youtube',
             target_audience='students',
@@ -611,8 +587,7 @@ class TestVideoQualityAnalyzer(TestCase):
         self.assertIn('violations', validation_result)
     
     def test_platform_video_standards_validation(self):
-        """Test PlatformVideoStandards compliance checking."""
-        standards = PlatformVideoStandards()
+        """Test PlatformVideoStandards compliance checking."""        standards = PlatformVideoStandards()
         
         # Test YouTube standards
         youtube_standards = standards.get_standards('youtube')
@@ -641,18 +616,15 @@ class TestVideoQualityAnalyzer(TestCase):
         self.assertIn('violations', compliance)
     
     def tearDown(self):
-        """Clean up test environment and temporary files."""
-        import shutil
+        """Clean up test environment and temporary files."""        import shutil
         if hasattr(self, 'temp_dir') and Path(self.temp_dir).exists():
             shutil.rmtree(self.temp_dir)
 
 
 # class TestMotionAnalysis(TestCase):
-#     """Test suite for MotionAnalysis class and functionality."""
-#     
+#     """Test suite for MotionAnalysis class and functionality."""#     
 #     def test_motion_analysis_initialization(self):
-#         """Test MotionAnalysis initialization and basic functionality."""
-#         motion_vectors = [
+#         """Test MotionAnalysis initialization and basic functionality."""#         motion_vectors = [
 #             {'magnitude': 5.2, 'direction': 45.0, 'frame': 10},
 #             {'magnitude': 3.8, 'direction': 90.0, 'frame': 15},
 #             {'magnitude': 7.1, 'direction': 180.0, 'frame': 20}
@@ -672,8 +644,7 @@ class TestVideoQualityAnalyzer(TestCase):
 #         self.assertEqual(motion.object_motion['detected_objects'], 3)
 #     
 #     def test_motion_analysis_calculations(self):
-#         """Test motion analysis calculation methods."""
-#         motion_vectors = [
+#         """Test motion analysis calculation methods."""#         motion_vectors = [
 #             {'magnitude': 10.0, 'direction': 0.0, 'frame': 1},
 #             {'magnitude': 8.0, 'direction': 90.0, 'frame': 2},
 #             {'magnitude': 6.0, 'direction': 180.0, 'frame': 3}

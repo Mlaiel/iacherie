@@ -1,5 +1,4 @@
-"""
-Content Violation Scanner - Détecteur avancé de violations de contenu
+"""Content Violation Scanner - Détecteur avancé de violations de contenu
 ====================================================================
 
 Scanner spécialisé dans la détection automatisée de violations de droits d'auteur
@@ -8,9 +7,7 @@ utilisant l'IA et les techniques de comparaison avancées.
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel. Tous droits réservés.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import hashlib
@@ -36,8 +33,7 @@ from ...utils.video_processor import VideoProcessor
 
 
 class ViolationType(Enum):
-    """Types de violations détectables"""
-    EXACT_COPY = "exact_copy"
+    """Types de violations détectables"""    EXACT_COPY = "exact_copy"
     PARTIAL_COPY = "partial_copy"
     MODIFIED_COPY = "modified_copy"
     DERIVATIVE_WORK = "derivative_work"
@@ -49,8 +45,7 @@ class ViolationType(Enum):
 
 
 class ConfidenceLevel(Enum):
-    """Niveaux de confiance"""
-    VERY_HIGH = 0.95
+    """Niveaux de confiance"""    VERY_HIGH = 0.95
     HIGH = 0.85
     MEDIUM = 0.75
     LOW = 0.65
@@ -58,8 +53,7 @@ class ConfidenceLevel(Enum):
 
 @dataclass
 class ScanResult:
-    """Résultat d'un scan de violation"""
-    original_url: str
+    """Résultat d'un scan de violation"""    original_url: str
     suspect_url: str
     violation_type: ViolationType
     confidence_score: float
@@ -72,8 +66,7 @@ class ScanResult:
 
 @dataclass
 class ContentSignature:
-    """Signature avancée d'un contenu"""
-    content_hash: str
+    """Signature avancée d'un contenu"""    content_hash: str
     perceptual_hash: str
     feature_vector: np.ndarray
     metadata_fingerprint: str
@@ -83,18 +76,14 @@ class ContentSignature:
 
 
 class ContentViolationScanner:
-    """
-    Scanner avancé de violations de contenu avec IA
-    """
-    
+    """    Scanner avancé de violations de contenu avec IA
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialise le scanner de violations
+        """        Initialise le scanner de violations
         
         Args:
             config: Configuration du scanner
-        """
-        self.config = config
+        """        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialisation des composants IA
@@ -123,10 +112,8 @@ class ContentViolationScanner:
         }
 
     def _initialize_ai_models(self) -> None:
-        """
-        Initialise les modèles d'IA pour la détection
-        """
-        try:
+        """        Initialise les modèles d'IA pour la détection
+        """        try:
             # Modèle CLIP pour comparaison multimodale
             self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
             self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -148,8 +135,7 @@ class ContentViolationScanner:
         original_content: str, 
         suspect_contents: List[str]
     ) -> List[ScanResult]:
-        """
-        Scanne une liste de contenus suspects
+        """        Scanne une liste de contenus suspects
         
         Args:
             original_content: URL ou chemin du contenu original
@@ -157,8 +143,7 @@ class ContentViolationScanner:
             
         Returns:
             List[ScanResult]: Résultats des scans
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         results = []
         
         try:
@@ -201,8 +186,7 @@ class ContentViolationScanner:
         original_url: str, 
         suspect_url: str
     ) -> Optional[ScanResult]:
-        """
-        Scanne un contenu suspect spécifique
+        """        Scanne un contenu suspect spécifique
         
         Args:
             original_signature: Signature du contenu original
@@ -211,8 +195,7 @@ class ContentViolationScanner:
             
         Returns:
             Optional[ScanResult]: Résultat du scan
-        """
-        scan_start = datetime.now()
+        """        scan_start = datetime.now()
         
         try:
             # Vérification rapide si déjà connu comme violation
@@ -264,16 +247,14 @@ class ContentViolationScanner:
             return None
 
     async def _generate_content_signature(self, content_url: str) -> Optional[ContentSignature]:
-        """
-        Génère une signature complète du contenu
+        """        Génère une signature complète du contenu
         
         Args:
             content_url: URL du contenu
             
         Returns:
             Optional[ContentSignature]: Signature générée
-        """
-        try:
+        """        try:
             # Vérification du cache
             cache_key = hashlib.md5(content_url.encode()).hexdigest()
             if cache_key in self.signature_cache:
@@ -322,33 +303,28 @@ class ContentViolationScanner:
             return None
 
     async def _detect_content_type(self, content_url: str) -> str:
-        """
-        Détecte le type de contenu
+        """        Détecte le type de contenu
         
         Args:
             content_url: URL du contenu
             
         Returns:
             str: Type de contenu
-        """
-        # Utilise l'analyseur de contenu pour déterminer le type
+        """        # Utilise l'analyseur de contenu pour déterminer le type
         return await self.content_analyzer.detect_content_type(content_url)
 
     async def _generate_content_hash(self, content_url: str) -> str:
-        """
-        Génère un hash MD5 du contenu
+        """        Génère un hash MD5 du contenu
         
         Args:
             content_url: URL du contenu
             
         Returns:
             str: Hash du contenu
-        """
-        return await self.fingerprint_engine.generate_content_hash(content_url)
+        """        return await self.fingerprint_engine.generate_content_hash(content_url)
 
     async def _generate_perceptual_hash(self, content_url: str, content_type: str) -> str:
-        """
-        Génère un hash perceptuel
+        """        Génère un hash perceptuel
         
         Args:
             content_url: URL du contenu
@@ -356,8 +332,7 @@ class ContentViolationScanner:
             
         Returns:
             str: Hash perceptuel
-        """
-        if content_type == 'image':
+        """        if content_type == 'image':
             return await self.image_processor.generate_perceptual_hash(content_url)
         elif content_type == 'video':
             return await self.video_processor.generate_perceptual_hash(content_url)
@@ -367,8 +342,7 @@ class ContentViolationScanner:
             return await self.fingerprint_engine.generate_text_hash(content_url)
 
     async def _extract_feature_vector(self, content_url: str, content_type: str) -> np.ndarray:
-        """
-        Extrait un vecteur de caractéristiques avancé
+        """        Extrait un vecteur de caractéristiques avancé
         
         Args:
             content_url: URL du contenu
@@ -376,8 +350,7 @@ class ContentViolationScanner:
             
         Returns:
             np.ndarray: Vecteur de caractéristiques
-        """
-        try:
+        """        try:
             if self.clip_model and content_type in ['image', 'video']:
                 return await self._extract_clip_features(content_url)
             elif content_type == 'audio':
@@ -390,16 +363,14 @@ class ContentViolationScanner:
             return np.zeros(512)  # Vecteur par défaut
 
     async def _extract_clip_features(self, content_url: str) -> np.ndarray:
-        """
-        Extrait les features CLIP pour image/vidéo
+        """        Extrait les features CLIP pour image/vidéo
         
         Args:
             content_url: URL du contenu
             
         Returns:
             np.ndarray: Features CLIP
-        """
-        try:
+        """        try:
             # Chargement et préparation de l'image
             image = await self.image_processor.load_image(content_url)
             inputs = self.clip_processor(images=image, return_tensors="pt")
@@ -416,16 +387,14 @@ class ContentViolationScanner:
             return np.zeros(512)
 
     async def _extract_audio_features(self, content_url: str) -> np.ndarray:
-        """
-        Extrait les features audio avancées
+        """        Extrait les features audio avancées
         
         Args:
             content_url: URL du contenu audio
             
         Returns:
             np.ndarray: Features audio
-        """
-        try:
+        """        try:
             # Chargement audio
             audio_data = await self.audio_processor.load_audio(content_url)
             
@@ -444,72 +413,61 @@ class ContentViolationScanner:
             return np.zeros(141)  # 128 mel + 13 mfcc
 
     async def _extract_text_features(self, content_url: str) -> np.ndarray:
-        """
-        Extrait les features texte avancées
+        """        Extrait les features texte avancées
         
         Args:
             content_url: URL du contenu texte
             
         Returns:
             np.ndarray: Features texte
-        """
-        return await self.content_analyzer.extract_text_features(content_url)
+        """        return await self.content_analyzer.extract_text_features(content_url)
 
     async def _generate_metadata_fingerprint(self, content_url: str) -> str:
-        """
-        Génère une empreinte des métadonnées
+        """        Génère une empreinte des métadonnées
         
         Args:
             content_url: URL du contenu
             
         Returns:
             str: Empreinte des métadonnées
-        """
-        return await self.fingerprint_engine.generate_metadata_fingerprint(content_url)
+        """        return await self.fingerprint_engine.generate_metadata_fingerprint(content_url)
 
     async def _generate_audio_fingerprint(self, content_url: str) -> str:
-        """
-        Génère une empreinte audio spécialisée
+        """        Génère une empreinte audio spécialisée
         
         Args:
             content_url: URL du contenu
             
         Returns:
             str: Empreinte audio
-        """
-        return await self.audio_processor.generate_audio_fingerprint(content_url)
+        """        return await self.audio_processor.generate_audio_fingerprint(content_url)
 
     async def _generate_visual_fingerprint(self, content_url: str) -> str:
-        """
-        Génère une empreinte visuelle spécialisée
+        """        Génère une empreinte visuelle spécialisée
         
         Args:
             content_url: URL du contenu
             
         Returns:
             str: Empreinte visuelle
-        """
-        return await self.image_processor.generate_visual_fingerprint(content_url)
+        """        return await self.image_processor.generate_visual_fingerprint(content_url)
 
     async def _generate_text_fingerprint(self, content_url: str) -> str:
-        """
-        Génère une empreinte textuelle spécialisée
+        """        Génère une empreinte textuelle spécialisée
         
         Args:
             content_url: URL du contenu
             
         Returns:
             str: Empreinte textuelle
-        """
-        return await self.content_analyzer.generate_text_fingerprint(content_url)
+        """        return await self.content_analyzer.generate_text_fingerprint(content_url)
 
     async def _compare_signatures(
         self, 
         original: ContentSignature, 
         suspect: ContentSignature
     ) -> Dict[str, float]:
-        """
-        Compare deux signatures de contenu
+        """        Compare deux signatures de contenu
         
         Args:
             original: Signature originale
@@ -517,8 +475,7 @@ class ContentViolationScanner:
             
         Returns:
             Dict[str, float]: Métriques de similarité
-        """
-        metrics = {}
+        """        metrics = {}
         
         try:
             # Comparaison des hashes
@@ -561,8 +518,7 @@ class ContentViolationScanner:
             return {}
 
     def _calculate_hash_similarity(self, hash1: str, hash2: str) -> float:
-        """
-        Calcule la similarité entre deux hashes
+        """        Calcule la similarité entre deux hashes
         
         Args:
             hash1: Premier hash
@@ -570,8 +526,7 @@ class ContentViolationScanner:
             
         Returns:
             float: Score de similarité
-        """
-        if hash1 == hash2:
+        """        if hash1 == hash2:
             return 1.0
         
         # Calcul de la distance de Hamming pour les hashes perceptuels
@@ -583,8 +538,7 @@ class ContentViolationScanner:
         return 0.0
 
     def _calculate_cosine_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """
-        Calcule la similarité cosinus entre deux vecteurs
+        """        Calcule la similarité cosinus entre deux vecteurs
         
         Args:
             vec1: Premier vecteur
@@ -592,8 +546,7 @@ class ContentViolationScanner:
             
         Returns:
             float: Score de similarité cosinus
-        """
-        try:
+        """        try:
             # Reshape pour sklearn si nécessaire
             v1 = vec1.reshape(1, -1)
             v2 = vec2.reshape(1, -1)
@@ -606,8 +559,7 @@ class ContentViolationScanner:
             return 0.0
 
     async def _compare_audio_fingerprints(self, fp1: str, fp2: str) -> float:
-        """
-        Compare deux empreintes audio
+        """        Compare deux empreintes audio
         
         Args:
             fp1: Première empreinte
@@ -615,12 +567,10 @@ class ContentViolationScanner:
             
         Returns:
             float: Score de similarité
-        """
-        return await self.audio_processor.compare_fingerprints(fp1, fp2)
+        """        return await self.audio_processor.compare_fingerprints(fp1, fp2)
 
     async def _compare_visual_fingerprints(self, fp1: str, fp2: str) -> float:
-        """
-        Compare deux empreintes visuelles
+        """        Compare deux empreintes visuelles
         
         Args:
             fp1: Première empreinte
@@ -628,12 +578,10 @@ class ContentViolationScanner:
             
         Returns:
             float: Score de similarité
-        """
-        return await self.image_processor.compare_fingerprints(fp1, fp2)
+        """        return await self.image_processor.compare_fingerprints(fp1, fp2)
 
     async def _compare_text_fingerprints(self, fp1: str, fp2: str) -> float:
-        """
-        Compare deux empreintes textuelles
+        """        Compare deux empreintes textuelles
         
         Args:
             fp1: Première empreinte
@@ -641,20 +589,17 @@ class ContentViolationScanner:
             
         Returns:
             float: Score de similarité
-        """
-        return await self.content_analyzer.compare_text_fingerprints(fp1, fp2)
+        """        return await self.content_analyzer.compare_text_fingerprints(fp1, fp2)
 
     def _assess_violation(self, similarity_metrics: Dict[str, float]) -> Dict[str, Any]:
-        """
-        Évalue si il y a violation basé sur les métriques
+        """        Évalue si il y a violation basé sur les métriques
         
         Args:
             similarity_metrics: Métriques de similarité
             
         Returns:
             Dict[str, Any]: Évaluation de la violation
-        """
-        # Calcul du score global pondéré
+        """        # Calcul du score global pondéré
         weights = {
             'content_hash_match': 0.3,
             'perceptual_hash_similarity': 0.2,
@@ -691,16 +636,14 @@ class ContentViolationScanner:
         }
 
     def _determine_violation_type(self, metrics: Dict[str, float]) -> ViolationType:
-        """
-        Détermine le type de violation basé sur les métriques
+        """        Détermine le type de violation basé sur les métriques
         
         Args:
             metrics: Métriques de similarité
             
         Returns:
             ViolationType: Type de violation détecté
-        """
-        # Copie exacte
+        """        # Copie exacte
         if metrics.get('content_hash_match', 0.0) == 1.0:
             return ViolationType.EXACT_COPY
         
@@ -728,8 +671,7 @@ class ContentViolationScanner:
         suspect_url: str, 
         metrics: Dict[str, float]
     ) -> Dict[str, Any]:
-        """
-        Collecte des preuves détaillées de la violation
+        """        Collecte des preuves détaillées de la violation
         
         Args:
             original_url: URL originale
@@ -738,8 +680,7 @@ class ContentViolationScanner:
             
         Returns:
             Dict[str, Any]: Données de preuve
-        """
-        evidence = {
+        """        evidence = {
             'similarity_breakdown': metrics,
             'detection_algorithm': 'advanced_ai_fingerprinting',
             'model_version': '2.0.0',
@@ -771,30 +712,24 @@ class ContentViolationScanner:
             return evidence
 
     async def _is_visual_content(self, url: str) -> bool:
-        """Vérifie si le contenu est visuel"""
-        content_type = await self._detect_content_type(url)
+        """Vérifie si le contenu est visuel"""        content_type = await self._detect_content_type(url)
         return content_type in ['image', 'video']
 
     async def _is_audio_content(self, url: str) -> bool:
-        """Vérifie si le contenu est audio"""
-        content_type = await self._detect_content_type(url)
+        """Vérifie si le contenu est audio"""        content_type = await self._detect_content_type(url)
         return content_type in ['audio', 'video']
 
     async def _create_visual_comparison(self, original_url: str, suspect_url: str) -> Dict[str, Any]:
-        """Crée une comparaison visuelle"""
-        return await self.image_processor.create_comparison_analysis(original_url, suspect_url)
+        """Crée une comparaison visuelle"""        return await self.image_processor.create_comparison_analysis(original_url, suspect_url)
 
     async def _create_audio_analysis(self, original_url: str, suspect_url: str) -> Dict[str, Any]:
-        """Crée une analyse audio comparative"""
-        return await self.audio_processor.create_comparison_analysis(original_url, suspect_url)
+        """Crée une analyse audio comparative"""        return await self.audio_processor.create_comparison_analysis(original_url, suspect_url)
 
     async def _analyze_metadata_differences(self, original_url: str, suspect_url: str) -> Dict[str, Any]:
-        """Analyse les différences de métadonnées"""
-        return await self.content_analyzer.analyze_metadata_differences(original_url, suspect_url)
+        """Analyse les différences de métadonnées"""        return await self.content_analyzer.analyze_metadata_differences(original_url, suspect_url)
 
     async def _compare_metadata(self, original_url: str, suspect_url: str) -> Dict[str, Any]:
-        """
-        Compare les métadonnées de deux contenus
+        """        Compare les métadonnées de deux contenus
         
         Args:
             original_url: URL originale
@@ -802,8 +737,7 @@ class ContentViolationScanner:
             
         Returns:
             Dict[str, Any]: Comparaison des métadonnées
-        """
-        return await self.content_analyzer.compare_comprehensive_metadata(original_url, suspect_url)
+        """        return await self.content_analyzer.compare_comprehensive_metadata(original_url, suspect_url)
 
     def _update_scan_statistics(
         self, 
@@ -811,15 +745,13 @@ class ContentViolationScanner:
         violations_found: int, 
         processing_time: float
     ) -> None:
-        """
-        Met à jour les statistiques de scan
+        """        Met à jour les statistiques de scan
         
         Args:
             scanned_count: Nombre de contenus scannés
             violations_found: Nombre de violations trouvées
             processing_time: Temps de traitement
-        """
-        self.scan_statistics['total_scans'] += scanned_count
+        """        self.scan_statistics['total_scans'] += scanned_count
         self.scan_statistics['violations_detected'] += violations_found
         
         # Mise à jour de la moyenne du temps de traitement
@@ -833,16 +765,14 @@ class ContentViolationScanner:
         self, 
         scan_requests: List[Tuple[str, List[str]]]
     ) -> Dict[str, List[ScanResult]]:
-        """
-        Effectue un scan en lot de plusieurs contenus
+        """        Effectue un scan en lot de plusieurs contenus
         
         Args:
             scan_requests: Liste de (contenu_original, liste_suspects)
             
         Returns:
             Dict[str, List[ScanResult]]: Résultats groupés par contenu original
-        """
-        results = {}
+        """        results = {}
         
         tasks = []
         for original_content, suspect_list in scan_requests:
@@ -866,14 +796,12 @@ class ContentViolationScanner:
         monitoring_targets: List[str], 
         suspect_sources: List[str]
     ) -> None:
-        """
-        Lance un scan de surveillance continue
+        """        Lance un scan de surveillance continue
         
         Args:
             monitoring_targets: Contenus à protéger
             suspect_sources: Sources à surveiller
-        """
-        self.logger.info("Démarrage du scan de surveillance continue")
+        """        self.logger.info("Démarrage du scan de surveillance continue")
         
         while True:
             try:
@@ -893,13 +821,11 @@ class ContentViolationScanner:
                 await asyncio.sleep(60)
 
     async def _handle_high_confidence_violation(self, result: ScanResult) -> None:
-        """
-        Traite une violation à haute confiance
+        """        Traite une violation à haute confiance
         
         Args:
             result: Résultat de scan à haute confiance
-        """
-        # Ajout à la liste des violations connues
+        """        # Ajout à la liste des violations connues
         self.known_violations.add(result.suspect_url)
         
         # Notification immédiate
@@ -910,8 +836,7 @@ class ContentViolationScanner:
             await self._initiate_takedown_process(result)
 
     async def _send_violation_alert(self, result: ScanResult) -> None:
-        """Envoie une alerte de violation"""
-        alert_data = {
+        """Envoie une alerte de violation"""        alert_data = {
             'type': 'high_confidence_violation',
             'original_url': result.original_url,
             'violation_url': result.suspect_url,
@@ -923,18 +848,15 @@ class ContentViolationScanner:
         self.logger.warning(f"VIOLATION DÉTECTÉE: {result.suspect_url} (confiance: {result.confidence_score:.2f})")
 
     async def _initiate_takedown_process(self, result: ScanResult) -> None:
-        """Initie un processus de retrait automatique"""
-        # Implémentation du processus de takedown
+        """Initie un processus de retrait automatique"""        # Implémentation du processus de takedown
         pass
 
     def get_scan_statistics(self) -> Dict[str, Any]:
-        """
-        Retourne les statistiques de scan
+        """        Retourne les statistiques de scan
         
         Returns:
             Dict[str, Any]: Statistiques détaillées
-        """
-        return {
+        """        return {
             **self.scan_statistics,
             'cache_size': len(self.signature_cache),
             'known_violations': len(self.known_violations),
@@ -945,13 +867,11 @@ class ContentViolationScanner:
         }
 
     async def clear_cache(self) -> None:
-        """Vide le cache des signatures"""
-        self.signature_cache.clear()
+        """Vide le cache des signatures"""        self.signature_cache.clear()
         self.logger.info("Cache des signatures vidé")
 
     async def optimize_models(self) -> None:
-        """Optimise les modèles IA pour de meilleures performances"""
-        try:
+        """Optimise les modèles IA pour de meilleures performances"""        try:
             if self.clip_model:
                 # Optimisation du modèle CLIP
                 self.clip_model.eval()

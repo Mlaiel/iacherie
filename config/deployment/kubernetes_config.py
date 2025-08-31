@@ -1,5 +1,4 @@
-"""
-Kubernetes Configuration Module for IA-Influencer Agent Platform
+"""Kubernetes Configuration Module for IA-Influencer Agent Platform
 ===============================================================
 
 Professional Kubernetes orchestration and deployment configuration
@@ -15,9 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import os
+"""import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 import yaml
@@ -26,8 +23,7 @@ from pathlib import Path
 
 @dataclass
 class KubernetesResourceLimits:
-    """Resource limits configuration for Kubernetes pods"""
-    cpu_request: str = "100m"
+    """Resource limits configuration for Kubernetes pods"""    cpu_request: str = "100m"
     cpu_limit: str = "500m"
     memory_request: str = "128Mi"
     memory_limit: str = "512Mi"
@@ -37,8 +33,7 @@ class KubernetesResourceLimits:
 
 @dataclass
 class KubernetesService:
-    """Kubernetes service configuration"""
-    name: str
+    """Kubernetes service configuration"""    name: str
     namespace: str = "ia-influencer"
     labels: Dict[str, str] = field(default_factory=dict)
     selector: Dict[str, str] = field(default_factory=dict)
@@ -49,8 +44,7 @@ class KubernetesService:
 
 @dataclass
 class KubernetesDeployment:
-    """Kubernetes deployment configuration"""
-    name: str
+    """Kubernetes deployment configuration"""    name: str
     namespace: str = "ia-influencer"
     replicas: int = 1
     image: str = ""
@@ -68,8 +62,7 @@ class KubernetesDeployment:
 
 
 class KubernetesConfig:
-    """
-    Professional Kubernetes configuration manager for IA-Influencer Agent Platform.
+    """    Professional Kubernetes configuration manager for IA-Influencer Agent Platform.
     
     Provides enterprise-grade orchestration for:
     - AI processing microservices with GPU support
@@ -79,8 +72,7 @@ class KubernetesConfig:
     - Web crawlers with scheduled workloads
     - Real-time processing pipelines
     - Load balancing and service mesh integration
-    """
-    
+    """    
     def __init__(self, environment: str = "development", cluster_name: str = "ia-influencer-cluster"):
         self.environment = environment
         self.cluster_name = cluster_name
@@ -89,8 +81,7 @@ class KubernetesConfig:
         self.storage_class = self._get_storage_class()
         
     def _get_registry_url(self) -> str:
-        """Get container registry URL based on environment"""
-        registry_map = {
+        """Get container registry URL based on environment"""        registry_map = {
             "development": "localhost:5000",
             "staging": "registry.staging.ia-influencer.com",
             "production": "registry.ia-influencer.com"
@@ -98,8 +89,7 @@ class KubernetesConfig:
         return registry_map.get(self.environment, "localhost:5000")
     
     def _get_storage_class(self) -> str:
-        """Get storage class based on environment"""
-        storage_map = {
+        """Get storage class based on environment"""        storage_map = {
             "development": "standard",
             "staging": "fast-ssd",
             "production": "premium-ssd"
@@ -107,8 +97,7 @@ class KubernetesConfig:
         return storage_map.get(self.environment, "standard")
     
     def generate_namespace(self) -> Dict[str, Any]:
-        """Generate namespace configuration"""
-        return {
+        """Generate namespace configuration"""        return {
             "apiVersion": "v1",
             "kind": "Namespace",
             "metadata": {
@@ -128,8 +117,7 @@ class KubernetesConfig:
         }
     
     def generate_config_maps(self) -> List[Dict[str, Any]]:
-        """Generate configuration maps for all services"""
-        config_maps = []
+        """Generate configuration maps for all services"""        config_maps = []
         
         # Main API configuration
         api_config = {
@@ -205,8 +193,7 @@ class KubernetesConfig:
         return config_maps
     
     def generate_secrets(self) -> List[Dict[str, Any]]:
-        """Generate secret configurations"""
-        secrets = []
+        """Generate secret configurations"""        secrets = []
         
         # Database secrets
         db_secrets = {
@@ -281,8 +268,7 @@ class KubernetesConfig:
         return secrets
     
     def generate_persistent_volumes(self) -> List[Dict[str, Any]]:
-        """Generate persistent volume configurations"""
-        volumes = []
+        """Generate persistent volume configurations"""        volumes = []
         
         # Database volumes
         db_volumes = [
@@ -403,8 +389,7 @@ class KubernetesConfig:
         return volumes
     
     def generate_deployments(self) -> List[Dict[str, Any]]:
-        """Generate deployment configurations for all services"""
-        deployments = []
+        """Generate deployment configurations for all services"""        deployments = []
         
         # Main API deployment
         api_deployment = self._create_deployment(
@@ -545,8 +530,7 @@ class KubernetesConfig:
         return deployments
     
     def _create_deployment(self, config: KubernetesDeployment) -> Dict[str, Any]:
-        """Create deployment manifest from configuration"""
-        deployment = {
+        """Create deployment manifest from configuration"""        deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -642,8 +626,7 @@ class KubernetesConfig:
         return deployment
     
     def _generate_database_deployments(self) -> List[Dict[str, Any]]:
-        """Generate database deployment configurations"""
-        databases = []
+        """Generate database deployment configurations"""        databases = []
         
         # PostgreSQL deployment
         postgres_deployment = self._create_deployment(
@@ -767,8 +750,7 @@ class KubernetesConfig:
         return databases
     
     def generate_services(self) -> List[Dict[str, Any]]:
-        """Generate service configurations"""
-        services = []
+        """Generate service configurations"""        services = []
         
         # API service with load balancer
         api_service = {
@@ -842,8 +824,7 @@ class KubernetesConfig:
         return services
     
     def generate_ingress(self) -> Dict[str, Any]:
-        """Generate ingress configuration"""
-        return {
+        """Generate ingress configuration"""        return {
             "apiVersion": "networking.k8s.io/v1",
             "kind": "Ingress",
             "metadata": {
@@ -893,8 +874,7 @@ class KubernetesConfig:
         }
     
     def generate_horizontal_pod_autoscaler(self) -> List[Dict[str, Any]]:
-        """Generate HPA configurations for auto-scaling"""
-        hpas = []
+        """Generate HPA configurations for auto-scaling"""        hpas = []
         
         # API HPA
         api_hpa = {
@@ -973,8 +953,7 @@ class KubernetesConfig:
         return hpas
     
     def generate_network_policies(self) -> List[Dict[str, Any]]:
-        """Generate network security policies"""
-        policies = []
+        """Generate network security policies"""        policies = []
         
         # Database access policy
         db_policy = {
@@ -1063,8 +1042,7 @@ class KubernetesConfig:
         return policies
     
     def generate_all_manifests(self, output_dir: str = "./k8s-manifests") -> None:
-        """Generate all Kubernetes manifests"""
-        Path(output_dir).mkdir(parents=True, exist_ok=True)
+        """Generate all Kubernetes manifests"""        Path(output_dir).mkdir(parents=True, exist_ok=True)
         
         manifests = {
             "00-namespace.yaml": [self.generate_namespace()],
@@ -1094,8 +1072,7 @@ class KubernetesConfig:
                     f.write("\n")
     
     def get_deployment_script(self) -> str:
-        """Generate Kubernetes deployment script"""
-        return f'''#!/bin/bash
+        """Generate Kubernetes deployment script"""        return f'''#!/bin/bash
 # Kubernetes deployment script for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
 
@@ -1152,8 +1129,7 @@ echo "📊 Logs: kubectl logs -f deployment/ia-influencer-api -n $NAMESPACE"
 '''
     
     def get_monitoring_setup(self) -> str:
-        """Generate monitoring and observability setup"""
-        return '''# Monitoring setup for IA-Influencer Agent Platform
+        """Generate monitoring and observability setup"""        return '''# Monitoring setup for IA-Influencer Agent Platform
 apiVersion: v1
 kind: ConfigMap
 metadata:

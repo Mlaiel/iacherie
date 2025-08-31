@@ -1,5 +1,4 @@
-"""
-Collaborative Matching Module for IA Influencer Agent Platform
+"""Collaborative Matching Module for IA Influencer Agent Platform
 
 Advanced AI-powered collaboration matching system for content creators,
 influencers, musicians, and multi-format content collaboration opportunities.
@@ -9,9 +8,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 from dataclasses import dataclass, field
@@ -29,8 +26,7 @@ import json
 logger = logging.getLogger(__name__)
 
 class CollaborationType(Enum):
-    """Types of collaboration"""
-    MUSIC_COLLAB = "music_collaboration"
+    """Types of collaboration"""    MUSIC_COLLAB = "music_collaboration"
     CONTENT_CREATION = "content_creation"
     CROSS_PROMOTION = "cross_promotion"
     BRAND_PARTNERSHIP = "brand_partnership"
@@ -40,8 +36,7 @@ class CollaborationType(Enum):
     LONG_TERM = "long_term_partnership"
 
 class CreatorType(Enum):
-    """Types of content creators"""
-    MUSICIAN = "musician"
+    """Types of content creators"""    MUSICIAN = "musician"
     INFLUENCER = "influencer"
     PHOTOGRAPHER = "photographer"
     VIDEOGRAPHER = "videographer"
@@ -53,8 +48,7 @@ class CreatorType(Enum):
     ACTOR = "actor"
 
 class MatchingCriteria(Enum):
-    """Criteria for collaboration matching"""
-    AUDIENCE_OVERLAP = "audience_overlap"
+    """Criteria for collaboration matching"""    AUDIENCE_OVERLAP = "audience_overlap"
     CONTENT_STYLE = "content_style"
     ENGAGEMENT_RATE = "engagement_rate"
     GENRE_SIMILARITY = "genre_similarity"
@@ -67,8 +61,7 @@ class MatchingCriteria(Enum):
 
 @dataclass
 class CreatorProfile:
-    """Comprehensive creator profile for matching"""
-    user_id: str
+    """Comprehensive creator profile for matching"""    user_id: str
     creator_type: CreatorType
     name: str
     description: str
@@ -92,8 +85,7 @@ class CreatorProfile:
 
 @dataclass
 class CollaborationOpportunity:
-    """Collaboration opportunity definition"""
-    opportunity_id: str
+    """Collaboration opportunity definition"""    opportunity_id: str
     creator_id: str
     title: str
     description: str
@@ -116,8 +108,7 @@ class CollaborationOpportunity:
 
 @dataclass
 class MatchResult:
-    """Collaboration match result"""
-    match_id: str
+    """Collaboration match result"""    match_id: str
     creator_1_id: str
     creator_2_id: str
     opportunity_id: Optional[str] = None
@@ -132,8 +123,7 @@ class MatchResult:
     timestamp: datetime = field(default_factory=datetime.utcnow)
 
 class CollaborativeMatchingEngine:
-    """
-    Advanced AI-powered collaborative matching engine
+    """    Advanced AI-powered collaborative matching engine
     
     Capabilities:
     - Multi-dimensional creator profile analysis
@@ -142,8 +132,7 @@ class CollaborativeMatchingEngine:
     - Network effect optimization
     - Collaboration history analysis
     - Real-time compatibility assessment
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or self._get_default_config()
         self.creator_profiles: Dict[str, CreatorProfile] = {}
@@ -154,8 +143,7 @@ class CollaborativeMatchingEngine:
         self.trending_collaborations = []
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration"""
-        return {
+        """Get default configuration"""        return {
             'min_match_score': 0.6,
             'max_matches_per_request': 10,
             'enable_ml_scoring': True,
@@ -171,8 +159,7 @@ class CollaborativeMatchingEngine:
         }
     
     async def register_creator(self, profile: CreatorProfile) -> bool:
-        """Register a new creator profile"""
-        try:
+        """Register a new creator profile"""        try:
             # Validate profile completeness
             completeness_score = self._calculate_profile_completeness(profile)
             if completeness_score < 0.5:
@@ -201,8 +188,7 @@ class CollaborativeMatchingEngine:
             return False
     
     async def create_collaboration_opportunity(self, opportunity: CollaborationOpportunity) -> bool:
-        """Create a new collaboration opportunity"""
-        try:
+        """Create a new collaboration opportunity"""        try:
             # Validate opportunity
             if not self._validate_opportunity(opportunity):
                 return False
@@ -229,8 +215,7 @@ class CollaborativeMatchingEngine:
         collaboration_type: Optional[CollaborationType] = None,
         max_matches: Optional[int] = None
     ) -> List[MatchResult]:
-        """Find collaboration matches for a creator"""
-        try:
+        """Find collaboration matches for a creator"""        try:
             if creator_id not in self.creator_profiles:
                 raise ValueError(f"Creator {creator_id} not found")
             
@@ -271,8 +256,7 @@ class CollaborativeMatchingEngine:
         creator_2_id: str,
         collaboration_type: CollaborationType
     ) -> Dict[str, Any]:
-        """Predict success probability of a collaboration"""
-        try:
+        """Predict success probability of a collaboration"""        try:
             if creator_1_id not in self.creator_profiles or creator_2_id not in self.creator_profiles:
                 raise ValueError("One or both creators not found")
             
@@ -314,8 +298,7 @@ class CollaborativeMatchingEngine:
             return {'success_probability': 0.0, 'error': str(e)}
     
     async def get_trending_collaborations(self, time_window: timedelta = None) -> List[Dict[str, Any]]:
-        """Get trending collaboration patterns and opportunities"""
-        try:
+        """Get trending collaboration patterns and opportunities"""        try:
             time_window = time_window or timedelta(days=30)
             cutoff_time = datetime.utcnow() - time_window
             
@@ -359,8 +342,7 @@ class CollaborativeMatchingEngine:
         creator_1: CreatorProfile,
         creator_2: CreatorProfile
     ) -> float:
-        """Calculate comprehensive match score between two creators"""
-        
+        """Calculate comprehensive match score between two creators"""        
         # Audience overlap score
         audience_score = self._calculate_audience_overlap(creator_1, creator_2)
         
@@ -401,8 +383,7 @@ class CollaborativeMatchingEngine:
         creator_1: CreatorProfile,
         creator_2: CreatorProfile
     ) -> float:
-        """Calculate audience demographic overlap"""
-        try:
+        """Calculate audience demographic overlap"""        try:
             if not creator_1.audience_demographics or not creator_2.audience_demographics:
                 return 0.5  # Default score if demographics not available
             
@@ -453,8 +434,7 @@ class CollaborativeMatchingEngine:
         creator_1: CreatorProfile,
         creator_2: CreatorProfile
     ) -> float:
-        """Calculate content style and theme similarity"""
-        try:
+        """Calculate content style and theme similarity"""        try:
             similarity_score = 0.0
             total_factors = 0
             
@@ -493,8 +473,7 @@ class CollaborativeMatchingEngine:
         creator_1: CreatorProfile,
         creator_2: CreatorProfile
     ) -> float:
-        """Calculate engagement rate and quality compatibility"""
-        try:
+        """Calculate engagement rate and quality compatibility"""        try:
             if not creator_1.engagement_metrics or not creator_2.engagement_metrics:
                 return 0.5
             
@@ -531,8 +510,7 @@ class CollaborativeMatchingEngine:
         creator_1: CreatorProfile,
         creator_2: CreatorProfile
     ) -> float:
-        """Calculate geographic proximity score"""
-        try:
+        """Calculate geographic proximity score"""        try:
             if not creator_1.location or not creator_2.location:
                 return 0.5  # Neutral score if location not available
             
@@ -569,8 +547,7 @@ class CollaborativeMatchingEngine:
         creator_1: CreatorProfile,
         creator_2: CreatorProfile
     ) -> float:
-        """Calculate brand values and vision alignment"""
-        try:
+        """Calculate brand values and vision alignment"""        try:
             values_1 = set(creator_1.brand_values)
             values_2 = set(creator_2.brand_values)
             
@@ -600,8 +577,7 @@ class CollaborativeMatchingEngine:
         creator_1: CreatorProfile,
         creator_2: CreatorProfile
     ) -> float:
-        """Calculate skill complementarity score"""
-        try:
+        """Calculate skill complementarity score"""        try:
             skills_1 = set(creator_1.skills)
             skills_2 = set(creator_2.skills)
             
@@ -631,8 +607,7 @@ class CollaborativeMatchingEngine:
             return 0.5
     
     def _calculate_network_effect(self, creator_1_id: str, creator_2_id: str) -> float:
-        """Calculate network effect bonus based on mutual connections"""
-        try:
+        """Calculate network effect bonus based on mutual connections"""        try:
             if not self.collaboration_network.has_node(creator_1_id) or \
                not self.collaboration_network.has_node(creator_2_id):
                 return 0.0
@@ -662,8 +637,7 @@ class CollaborativeMatchingEngine:
         match_score: float,
         collaboration_type: Optional[CollaborationType] = None
     ) -> MatchResult:
-        """Generate detailed match result"""
-        try:
+        """Generate detailed match result"""        try:
             match_id = f"match_{creator_1.user_id}_{creator_2.user_id}_{int(datetime.utcnow().timestamp())}"
             
             # Calculate detailed compatibility breakdown
@@ -716,8 +690,7 @@ class CollaborativeMatchingEngine:
             return None
     
     def _calculate_profile_completeness(self, profile: CreatorProfile) -> float:
-        """Calculate profile completeness score"""
-        required_fields = [
+        """Calculate profile completeness score"""        required_fields = [
             'name', 'description', 'creator_type', 'genres', 'skills',
             'languages', 'location', 'audience_demographics'
         ]
@@ -736,8 +709,7 @@ class CollaborativeMatchingEngine:
         return completeness / len(required_fields)
     
     async def get_collaboration_insights(self, creator_id: str) -> Dict[str, Any]:
-        """Get collaboration insights and recommendations for a creator"""
-        try:
+        """Get collaboration insights and recommendations for a creator"""        try:
             if creator_id not in self.creator_profiles:
                 raise ValueError(f"Creator {creator_id} not found")
             

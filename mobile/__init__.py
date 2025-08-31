@@ -1,5 +1,4 @@
-"""
-Mobile Application Infrastructure - Ainflue Platform
+"""Mobile Application Infrastructure - Ainflue Platform
 Enterprise-grade mobile backend services and infrastructure
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -11,9 +10,7 @@ Any unauthorized use, copying, modification, or distribution
 without explicit written permission is strictly prohibited.
 Violations will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-__version__ = "2.0.0"
+"""__version__ = "2.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 
 # Core mobile infrastructure modules

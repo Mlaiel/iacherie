@@ -1,21 +1,17 @@
-"""
-Platform APIs Integration Usage Example
+"""Platform APIs Integration Usage Example
 ======================================
 
 Example demonstrating how to use the Platform APIs Integration module.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 from datetime import datetime, timedelta
 from integrations.platforms import PlatformCoordinator
 
 
 async def main():
-    """Demonstrate platform integration usage"""
-    
+    """Demonstrate platform integration usage"""    
     # Initialize the platform coordinator
     async with PlatformCoordinator() as coordinator:
         

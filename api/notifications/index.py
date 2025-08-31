@@ -5,9 +5,7 @@ and serves as the main entry point for the notification infrastructure.
 
 Built by Fahed Mlaiel and the IA Influencer Agent Team.
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-# Import all major components for easy access
+"""# Import all major components for easy access
 from .orchestrator import (
     NotificationOrchestrator,
     UniversalNotification,
@@ -35,8 +33,7 @@ from .in_app import InAppNotifier, InAppNotification, InAppNotificationType, Not
 
 # Quick setup function for common use cases
 def create_notification_system():
-    """Create a fully configured notification system for IA Influencer Agent."""
-    orchestrator = NotificationOrchestrator()
+    """Create a fully configured notification system for IA Influencer Agent."""    orchestrator = NotificationOrchestrator()
     template_engine = NotificationTemplateEngine()
     
     return {
@@ -51,8 +48,7 @@ def create_notification_system():
 
 # Business-specific notification creators
 def create_content_protection_notification(user_id: str, content_title: str, protection_status: str):
-    """Create notification for content protection events."""
-    return UniversalNotification(
+    """Create notification for content protection events."""    return UniversalNotification(
         user_id=user_id,
         title=f"Content Protection Update: {content_title}",
         message=f"Your content '{content_title}' protection status: {protection_status}",
@@ -61,8 +57,7 @@ def create_content_protection_notification(user_id: str, content_title: str, pro
     )
 
 def create_collaboration_notification(user_id: str, requester_name: str, project_type: str):
-    """Create notification for collaboration requests."""
-    return UniversalNotification(
+    """Create notification for collaboration requests."""    return UniversalNotification(
         user_id=user_id,
         title="New Collaboration Opportunity",
         message=f"{requester_name} wants to collaborate on a {project_type} project",
@@ -71,8 +66,7 @@ def create_collaboration_notification(user_id: str, requester_name: str, project
     )
 
 def create_revenue_notification(user_id: str, amount: float, period: str):
-    """Create notification for revenue milestones."""
-    return UniversalNotification(
+    """Create notification for revenue milestones."""    return UniversalNotification(
         user_id=user_id,
         title="Revenue Milestone Reached!",
         message=f"You've earned ${amount:.2f} in {period}!",
@@ -81,8 +75,7 @@ def create_revenue_notification(user_id: str, amount: float, period: str):
     )
 
 def create_viral_content_notification(user_id: str, content_title: str, views: int):
-    """Create notification for viral content alerts."""
-    return UniversalNotification(
+    """Create notification for viral content alerts."""    return UniversalNotification(
         user_id=user_id,
         title="Your Content is Going Viral!",
         message=f"'{content_title}' has reached {views:,} views!",

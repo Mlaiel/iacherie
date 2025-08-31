@@ -1,14 +1,11 @@
-"""
-Comprehensive OpenAPI/Swagger Specification Generator
+"""Comprehensive OpenAPI/Swagger Specification Generator
 
 Complete API documentation with detailed schemas, examples,
 and comprehensive endpoint descriptions.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-from typing import Dict, Any, List, Optional
+"""from typing import Dict, Any, List, Optional
 from pydantic import BaseModel, Field
 from datetime import datetime
 from decimal import Decimal
@@ -16,14 +13,12 @@ import json
 
 
 class ApiDocumentationGenerator:
-    """Generate comprehensive OpenAPI specification."""
-    
+    """Generate comprehensive OpenAPI specification."""    
     def __init__(self):
         self.spec_version = "3.0.3"
         self.api_version = "2.0.0"
         self.title = "Ainflue API - AI-Powered Content Protection Platform"
-        self.description = """
-        ## Enterprise AI Content Protection & Monetization Platform
+        self.description = """        ## Enterprise AI Content Protection & Monetization Platform
         
         Comprehensive API for AI-powered content protection, fingerprinting, 
         monetization, and creator collaboration platform.
@@ -47,11 +42,9 @@ class ApiDocumentationGenerator:
         - Rate limiting with tier-based quotas
         - Comprehensive error handling and validation
         - Real-time webhooks for event notifications
-        """
-    
+        """    
     def generate_openapi_spec(self) -> Dict[str, Any]:
-        """Generate complete OpenAPI specification."""
-        return {
+        """Generate complete OpenAPI specification."""        return {
             "openapi": self.spec_version,
             "info": self._generate_info(),
             "servers": self._generate_servers(),
@@ -63,8 +56,7 @@ class ApiDocumentationGenerator:
         }
     
     def _generate_info(self) -> Dict[str, Any]:
-        """Generate API info section."""
-        return {
+        """Generate API info section."""        return {
             "title": self.title,
             "version": self.api_version,
             "description": self.description,
@@ -81,8 +73,7 @@ class ApiDocumentationGenerator:
         }
     
     def _generate_servers(self) -> List[Dict[str, Any]]:
-        """Generate server configurations."""
-        return [
+        """Generate server configurations."""        return [
             {
                 "url": "https://api.ainflue.com/v2",
                 "description": "Production server"
@@ -98,12 +89,10 @@ class ApiDocumentationGenerator:
         ]
     
     def _generate_security(self) -> List[Dict[str, List]]:
-        """Generate security requirements."""
-        return [{"BearerAuth": []}]
+        """Generate security requirements."""        return [{"BearerAuth": []}]
     
     def _generate_paths(self) -> Dict[str, Any]:
-        """Generate all API paths with complete documentation."""
-        return {
+        """Generate all API paths with complete documentation."""        return {
             "/auth/register": self._auth_register_endpoint(),
             "/auth/login": self._auth_login_endpoint(),
             "/auth/refresh": self._auth_refresh_endpoint(),
@@ -128,8 +117,7 @@ class ApiDocumentationGenerator:
         }
     
     def _auth_register_endpoint(self) -> Dict[str, Any]:
-        """Authentication registration endpoint documentation."""
-        return {
+        """Authentication registration endpoint documentation."""        return {
             "post": {
                 "tags": ["Authentication"],
                 "summary": "Register new user account",
@@ -168,8 +156,7 @@ class ApiDocumentationGenerator:
         }
     
     def _auth_login_endpoint(self) -> Dict[str, Any]:
-        """Authentication login endpoint documentation."""
-        return {
+        """Authentication login endpoint documentation."""        return {
             "post": {
                 "tags": ["Authentication"],
                 "summary": "User login",
@@ -204,8 +191,7 @@ class ApiDocumentationGenerator:
         }
     
     def _fingerprinting_upload_endpoint(self) -> Dict[str, Any]:
-        """Fingerprinting upload endpoint documentation."""
-        return {
+        """Fingerprinting upload endpoint documentation."""        return {
             "post": {
                 "tags": ["Fingerprinting"],
                 "summary": "Upload content for fingerprinting",
@@ -244,8 +230,7 @@ class ApiDocumentationGenerator:
         }
     
     def _payments_intent_endpoint(self) -> Dict[str, Any]:
-        """Payment intent endpoint documentation."""
-        return {
+        """Payment intent endpoint documentation."""        return {
             "post": {
                 "tags": ["Payments"],
                 "summary": "Create payment intent",
@@ -287,8 +272,7 @@ class ApiDocumentationGenerator:
         }
     
     def _health_endpoint(self) -> Dict[str, Any]:
-        """Health check endpoint documentation."""
-        return {
+        """Health check endpoint documentation."""        return {
             "get": {
                 "tags": ["System"],
                 "summary": "Health check",
@@ -316,8 +300,7 @@ class ApiDocumentationGenerator:
         }
     
     def _generate_components(self) -> Dict[str, Any]:
-        """Generate reusable components."""
-        return {
+        """Generate reusable components."""        return {
             "schemas": self._generate_schemas(),
             "responses": self._generate_responses(),
             "parameters": self._generate_parameters(),
@@ -326,8 +309,7 @@ class ApiDocumentationGenerator:
         }
     
     def _generate_schemas(self) -> Dict[str, Any]:
-        """Generate data schemas."""
-        return {
+        """Generate data schemas."""        return {
             "UserRegistration": {
                 "type": "object",
                 "required": ["email", "password", "first_name", "last_name"],
@@ -559,8 +541,7 @@ class ApiDocumentationGenerator:
         }
     
     def _generate_responses(self) -> Dict[str, Any]:
-        """Generate common response definitions."""
-        return {
+        """Generate common response definitions."""        return {
             "BadRequest": {
                 "description": "Bad Request",
                 "content": {
@@ -634,8 +615,7 @@ class ApiDocumentationGenerator:
         }
     
     def _generate_security_schemes(self) -> Dict[str, Any]:
-        """Generate security scheme definitions."""
-        return {
+        """Generate security scheme definitions."""        return {
             "BearerAuth": {
                 "type": "http",
                 "scheme": "bearer",
@@ -645,8 +625,7 @@ class ApiDocumentationGenerator:
         }
     
     def _generate_tags(self) -> List[Dict[str, Any]]:
-        """Generate API tags for organization."""
-        return [
+        """Generate API tags for organization."""        return [
             {
                 "name": "Authentication",
                 "description": "User authentication and account management"
@@ -690,24 +669,21 @@ class ApiDocumentationGenerator:
         ]
     
     def _generate_external_docs(self) -> Dict[str, Any]:
-        """Generate external documentation links."""
-        return {
+        """Generate external documentation links."""        return {
             "description": "Complete API Documentation and Guides",
             "url": "https://docs.ainflue.com/api"
         }
     
     # Additional endpoint methods would continue here...
     def _auth_refresh_endpoint(self) -> Dict[str, Any]:
-        """Auth refresh endpoint placeholder."""
-        return {"post": {"tags": ["Authentication"], "summary": "Refresh access token"}}
+        """Auth refresh endpoint placeholder."""        return {"post": {"tags": ["Authentication"], "summary": "Refresh access token"}}
     
     def _auth_logout_endpoint(self) -> Dict[str, Any]:
         """Auth logout endpoint placeholder.""" 
         return {"post": {"tags": ["Authentication"], "summary": "Logout user"}}
     
     def _user_profile_endpoint(self) -> Dict[str, Any]:
-        """User profile endpoint placeholder."""
-        return {"get": {"tags": ["Authentication"], "summary": "Get user profile"}}
+        """User profile endpoint placeholder."""        return {"get": {"tags": ["Authentication"], "summary": "Get user profile"}}
     
     # Additional placeholder methods for other endpoints...
     def _fingerprinting_status_endpoint(self) -> Dict[str, Any]:
@@ -750,12 +726,10 @@ class ApiDocumentationGenerator:
         return {"post": {"tags": ["Crawlers"], "summary": "Manual platform scan"}}
     
     def _generate_parameters(self) -> Dict[str, Any]:
-        """Generate common parameters."""
-        return {}
+        """Generate common parameters."""        return {}
     
     def _generate_examples(self) -> Dict[str, Any]:
-        """Generate examples."""
-        return {}
+        """Generate examples."""        return {}
 
 
 # Usage example

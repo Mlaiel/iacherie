@@ -1,6 +1,4 @@
-"""Violation Scoring Manager - AI-Powered Violation Assessment"""
-
-import asyncio
+"""Violation Scoring Manager - AI-Powered Violation Assessment"""import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
 from typing import Dict, List, Optional, Any, Set
@@ -30,8 +28,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ViolationScoringConfig:
-    """Configuration for violation scoring operations"""
-    enable_ai_scoring: bool = True
+    """Configuration for violation scoring operations"""    enable_ai_scoring: bool = True
     enable_pattern_analysis: bool = True
     enable_risk_assessment: bool = True
     scoring_model_version: str = "v2.1"
@@ -49,8 +46,7 @@ class ViolationScoringConfig:
     ])
 
 class ViolationScoringManager(BaseAgent):
-    """
-    Enterprise Violation Scoring Manager
+    """    Enterprise Violation Scoring Manager
     
     Provides AI-powered violation assessment with:
     - Multi-factor scoring algorithms
@@ -59,8 +55,7 @@ class ViolationScoringManager(BaseAgent):
     - Automated response recommendations
     - Historical trend analysis
     - Machine learning optimization
-    """
-    
+    """    
     def __init__(self, agent_id: str = "violation_scoring_manager"):
         super().__init__(
             agent_id=agent_id,
@@ -82,8 +77,7 @@ class ViolationScoringManager(BaseAgent):
         self.pattern_models: Dict[str, Any] = {}
         
     async def _load_models_and_resources(self):
-        """Load AI models and initialize resources"""
-        try:
+        """Load AI models and initialize resources"""        try:
             await self.violation_detector.initialize()
             await self.similarity_analyzer.initialize()
             await self.violation_classifier.initialize()
@@ -97,8 +91,7 @@ class ViolationScoringManager(BaseAgent):
             raise
     
     async def _load_scoring_models(self):
-        """Load machine learning models for scoring"""
-        # This would load actual ML models in production
+        """Load machine learning models for scoring"""        # This would load actual ML models in production
         self.pattern_models = {
             'severity_predictor': {'type': 'neural_network', 'accuracy': 0.94},
             'risk_classifier': {'type': 'random_forest', 'accuracy': 0.91},
@@ -107,12 +100,10 @@ class ViolationScoringManager(BaseAgent):
         logger.info("Scoring models loaded successfully")
     
     def get_required_config_keys(self) -> List[str]:
-        """Required configuration keys"""
-        return ['severity_weights', 'confidence_threshold']
+        """Required configuration keys"""        return ['severity_weights', 'confidence_threshold']
     
     async def process(self, request: AgentRequest) -> AgentResponse:
-        """Main request processing logic"""
-        action = request.action.lower()
+        """Main request processing logic"""        action = request.action.lower()
         
         try:
             if action == "score_violation":
@@ -147,8 +138,7 @@ class ViolationScoringManager(BaseAgent):
             )
     
     async def _score_violation(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Score a specific violation using AI algorithms"""
-        violation_id = data.get('violation_id')
+        """Score a specific violation using AI algorithms"""        violation_id = data.get('violation_id')
         violation_data = data.get('violation_data', {})
         content_id = data.get('content_id')
         
@@ -221,8 +211,7 @@ class ViolationScoringManager(BaseAgent):
         }
     
     async def _calculate_scoring_factors(self, violation_data: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate individual scoring factors"""
-        factors = {}
+        """Calculate individual scoring factors"""        factors = {}
         
         # Similarity factor (0-1)
         similarity = float(violation_data.get('similarity_score', 0))
@@ -279,8 +268,7 @@ class ViolationScoringManager(BaseAgent):
         return factors
     
     def _compute_weighted_score(self, factors: Dict[str, float]) -> float:
-        """Compute weighted violation score"""
-        weighted_sum = 0.0
+        """Compute weighted violation score"""        weighted_sum = 0.0
         total_weight = 0.0
         
         for factor_name, factor_value in factors.items():
@@ -295,8 +283,7 @@ class ViolationScoringManager(BaseAgent):
             return 0.0
     
     def _determine_severity_level(self, score: float) -> str:
-        """Determine severity level from score"""
-        if score >= 0.9:
+        """Determine severity level from score"""        if score >= 0.9:
             return "critical"
         elif score >= 0.7:
             return "high"
@@ -312,8 +299,7 @@ class ViolationScoringManager(BaseAgent):
         violation_data: Dict[str, Any], 
         scoring_factors: Dict[str, float]
     ) -> RiskLevel:
-        """Calculate risk level based on multiple factors"""
-        risk_score = 0.0
+        """Calculate risk level based on multiple factors"""        risk_score = 0.0
         factor_count = 0
         
         # Check each risk factor
@@ -352,8 +338,7 @@ class ViolationScoringManager(BaseAgent):
         risk_level: RiskLevel, 
         violation_data: Dict[str, Any]
     ) -> List[str]:
-        """Generate automated action recommendations"""
-        recommendations = []
+        """Generate automated action recommendations"""        recommendations = []
         
         # High-priority actions for critical violations
         if severity == "critical" or risk_level == RiskLevel.CRITICAL:
@@ -400,16 +385,14 @@ class ViolationScoringManager(BaseAgent):
         return list(set(recommendations))  # Remove duplicates
     
     def _extract_domain(self, url: str) -> str:
-        """Extract domain from URL"""
-        try:
+        """Extract domain from URL"""        try:
             from urllib.parse import urlparse
             return urlparse(url).netloc.lower()
         except:
             return "unknown"
     
     async def _get_historical_violations(self, domain: str) -> List[Dict]:
-        """Get historical violations for a domain"""
-        # Filter scoring history by domain
+        """Get historical violations for a domain"""        # Filter scoring history by domain
         historical = []
         for record in self.scoring_history:
             if domain in record.get('violation_id', ''):
@@ -418,8 +401,7 @@ class ViolationScoringManager(BaseAgent):
         return historical[-50:]  # Return last 50 violations
     
     async def _analyze_patterns(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze violation patterns for content or timeframe"""
-        content_id = data.get('content_id')
+        """Analyze violation patterns for content or timeframe"""        content_id = data.get('content_id')
         timeframe_days = data.get('timeframe_days', 30)
         
         # Filter violations by criteria
@@ -473,8 +455,7 @@ class ViolationScoringManager(BaseAgent):
         return patterns
     
     async def _assess_risk(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess overall risk level for content or platform"""
-        content_id = data.get('content_id')
+        """Assess overall risk level for content or platform"""        content_id = data.get('content_id')
         platform = data.get('platform')
         
         # Get relevant violations
@@ -521,8 +502,7 @@ class ViolationScoringManager(BaseAgent):
         }
     
     async def _batch_score(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Score multiple violations in batch"""
-        violations = data.get('violations', [])
+        """Score multiple violations in batch"""        violations = data.get('violations', [])
         
         if not violations:
             raise ValueError("violations list is required")
@@ -560,8 +540,7 @@ class ViolationScoringManager(BaseAgent):
         }
     
     async def _get_scoring_trends(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Get scoring trends and analytics"""
-        timeframe_days = data.get('timeframe_days', 30)
+        """Get scoring trends and analytics"""        timeframe_days = data.get('timeframe_days', 30)
         group_by = data.get('group_by', 'day')  # day, week, month
         
         cutoff_date = datetime.now(timezone.utc) - timedelta(days=timeframe_days)
@@ -612,8 +591,7 @@ class ViolationScoringManager(BaseAgent):
         }
     
     async def _recommend_actions(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Get action recommendations based on violation scores"""
-        violation_ids = data.get('violation_ids', [])
+        """Get action recommendations based on violation scores"""        violation_ids = data.get('violation_ids', [])
         
         if not violation_ids:
             raise ValueError("violation_ids list is required")
@@ -640,8 +618,7 @@ class ViolationScoringManager(BaseAgent):
         }
     
     def _get_action_priority(self, score_obj: ViolationScore) -> str:
-        """Get priority level for actions"""
-        if score_obj.severity_level == "critical":
+        """Get priority level for actions"""        if score_obj.severity_level == "critical":
             return "urgent"
         elif score_obj.severity_level == "high":
             return "high"
@@ -651,8 +628,7 @@ class ViolationScoringManager(BaseAgent):
             return "low"
     
     def _estimate_action_cost(self, actions: List[str]) -> Dict[str, int]:
-        """Estimate cost of recommended actions"""
-        cost_estimates = {
+        """Estimate cost of recommended actions"""        cost_estimates = {
             'immediate_dmca_takedown': 50,
             'dmca_takedown': 25,
             'legal_escalation': 500,
@@ -672,8 +648,7 @@ class ViolationScoringManager(BaseAgent):
         }
     
     def _estimate_success_probability(self, score_obj: ViolationScore) -> float:
-        """Estimate probability of successful action"""
-        # Base probability on confidence and severity
+        """Estimate probability of successful action"""        # Base probability on confidence and severity
         base_probability = score_obj.confidence_score * 0.7
         
         # Adjust based on severity
@@ -685,8 +660,7 @@ class ViolationScoringManager(BaseAgent):
         return min(base_probability, 0.95)
     
     async def _update_scoring_model(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Update scoring model with new training data"""
-        feedback_data = data.get('feedback_data', [])
+        """Update scoring model with new training data"""        feedback_data = data.get('feedback_data', [])
         model_type = data.get('model_type', 'severity_predictor')
         
         if not feedback_data:

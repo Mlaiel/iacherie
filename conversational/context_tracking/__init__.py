@@ -83,8 +83,7 @@ Contact: mlaiel@live.de for enterprise licensing inquiries.
 ✅ Professional English naming conventions
 ✅ No TODOs, placeholders, or incomplete implementations
 ✅ Production-ready, industrial-grade code quality
-"""
-from .ai_fingerprinting_engine import (
+"""from .ai_fingerprinting_engine import (
     AIFingerprintingEngine,
     FingerprintType,
     ContentFormat,
@@ -393,8 +392,7 @@ Code propriétaire ultra-confidentiel de l'IA-Influencer-Agent Platform.
 Système de protection de contenu numérique de niveau entreprise.
 Utilisation commerciale et distribution strictement interdites sans licence.
 Copyright 2024 IA-Influencer-Agent. Tous droits réservés.
-"""
-# Core Context Engines (Existants)
+"""# Core Context Engines (Existants)
 from .behavioral_context_engine import BehavioralContextEngine, create_behavioral_engine
 from .content_context_analyzer import ContentContextAnalyzer, create_content_analyzer  
 from .collaboration_context_tracker import CollaborationContextTracker, create_collaboration_tracker

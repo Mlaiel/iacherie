@@ -1,5 +1,4 @@
-"""
-AI Observability Module - Advanced AI/ML Model Monitoring
+"""AI Observability Module - Advanced AI/ML Model Monitoring
 
 Provides comprehensive monitoring and observability for AI/ML models
 including performance tracking, bias detection, model drift analysis,
@@ -13,9 +12,7 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 import numpy as np
@@ -64,8 +61,7 @@ except ImportError:
 
 
 class ModelType(Enum):
-    """Types of AI/ML models"""
-    CLASSIFICATION = "classification"
+    """Types of AI/ML models"""    CLASSIFICATION = "classification"
     REGRESSION = "regression"
     CLUSTERING = "clustering"
     RECOMMENDATION = "recommendation"
@@ -78,8 +74,7 @@ class ModelType(Enum):
 
 
 class ModelFramework(Enum):
-    """AI/ML frameworks"""
-    TENSORFLOW = "tensorflow"
+    """AI/ML frameworks"""    TENSORFLOW = "tensorflow"
     PYTORCH = "pytorch"
     SCIKIT_LEARN = "scikit_learn"
     XGBOOST = "xgboost"
@@ -90,8 +85,7 @@ class ModelFramework(Enum):
 
 
 class ModelStatus(Enum):
-    """Model deployment status"""
-    TRAINING = "training"
+    """Model deployment status"""    TRAINING = "training"
     VALIDATION = "validation"
     DEPLOYED = "deployed"
     DEPRECATED = "deprecated"
@@ -100,8 +94,7 @@ class ModelStatus(Enum):
 
 
 class DriftType(Enum):
-    """Types of model drift"""
-    DATA_DRIFT = "data_drift"
+    """Types of model drift"""    DATA_DRIFT = "data_drift"
     CONCEPT_DRIFT = "concept_drift"
     PREDICTION_DRIFT = "prediction_drift"
     FEATURE_DRIFT = "feature_drift"
@@ -109,8 +102,7 @@ class DriftType(Enum):
 
 
 class BiasType(Enum):
-    """Types of bias in AI models"""
-    DEMOGRAPHIC_PARITY = "demographic_parity"
+    """Types of bias in AI models"""    DEMOGRAPHIC_PARITY = "demographic_parity"
     EQUALIZED_ODDS = "equalized_odds"
     STATISTICAL_PARITY = "statistical_parity"
     INDIVIDUAL_FAIRNESS = "individual_fairness"
@@ -119,8 +111,7 @@ class BiasType(Enum):
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
-    CRITICAL = "critical"
+    """Alert severity levels"""    CRITICAL = "critical"
     HIGH = "high" 
     MEDIUM = "medium"
     LOW = "low"
@@ -129,8 +120,7 @@ class AlertSeverity(Enum):
 
 @dataclass
 class ModelMetrics:
-    """Model performance metrics"""
-    model_id: str
+    """Model performance metrics"""    model_id: str
     model_name: str
     timestamp: datetime = field(default_factory=datetime.utcnow)
     
@@ -163,14 +153,12 @@ class ModelMetrics:
     custom_metrics: Dict[str, float] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        result = asdict(self)
+        """Convert to dictionary"""        result = asdict(self)
         result['timestamp'] = self.timestamp.isoformat()
         return result
     
     def get_performance_score(self) -> float:
-        """Calculate overall performance score (0-1)"""
-        scores = []
+        """Calculate overall performance score (0-1)"""        scores = []
         
         if self.accuracy is not None:
             scores.append(self.accuracy)
@@ -190,8 +178,7 @@ class ModelMetrics:
 
 @dataclass
 class DriftDetectionResult:
-    """Result of drift detection analysis"""
-    model_id: str
+    """Result of drift detection analysis"""    model_id: str
     drift_type: DriftType
     timestamp: datetime = field(default_factory=datetime.utcnow)
     
@@ -215,8 +202,7 @@ class DriftDetectionResult:
     severity: AlertSeverity = AlertSeverity.LOW
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        result = asdict(self)
+        """Convert to dictionary"""        result = asdict(self)
         result['drift_type'] = self.drift_type.value
         result['timestamp'] = self.timestamp.isoformat()
         result['severity'] = self.severity.value
@@ -225,8 +211,7 @@ class DriftDetectionResult:
 
 @dataclass  
 class BiasDetectionResult:
-    """Result of bias detection analysis"""
-    model_id: str
+    """Result of bias detection analysis"""    model_id: str
     bias_type: BiasType
     timestamp: datetime = field(default_factory=datetime.utcnow)
     
@@ -252,8 +237,7 @@ class BiasDetectionResult:
     severity: AlertSeverity = AlertSeverity.MEDIUM
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        result = asdict(self)
+        """Convert to dictionary"""        result = asdict(self)
         result['bias_type'] = self.bias_type.value
         result['timestamp'] = self.timestamp.isoformat()
         result['severity'] = self.severity.value
@@ -262,8 +246,7 @@ class BiasDetectionResult:
 
 @dataclass
 class ModelExplainabilityResult:
-    """Result of model explainability analysis"""
-    model_id: str
+    """Result of model explainability analysis"""    model_id: str
     timestamp: datetime = field(default_factory=datetime.utcnow)
     
     # Feature importance
@@ -284,15 +267,13 @@ class ModelExplainabilityResult:
     regulatory_explanation: str = ""
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        result = asdict(self)
+        """Convert to dictionary"""        result = asdict(self)
         result['timestamp'] = self.timestamp.isoformat()
         return result
 
 
 class BaseModelMonitor(ABC):
-    """Abstract base class for model monitors"""
-    
+    """Abstract base class for model monitors"""    
     def __init__(self, model_id: str, model_name: str, model_type: ModelType):
         self.model_id = model_id
         self.model_name = model_name
@@ -303,26 +284,22 @@ class BaseModelMonitor(ABC):
         
     @abstractmethod
     async def collect_metrics(self) -> ModelMetrics:
-        """Collect model performance metrics"""
-        pass
+        """Collect model performance metrics"""        pass
     
     @abstractmethod
     async def detect_drift(self, reference_data: np.ndarray, 
                           current_data: np.ndarray) -> List[DriftDetectionResult]:
-        """Detect model drift"""
-        pass
+        """Detect model drift"""        pass
     
     @abstractmethod
     async def detect_bias(self, predictions: np.ndarray, 
                          ground_truth: np.ndarray,
                          protected_attributes: np.ndarray) -> List[BiasDetectionResult]:
-        """Detect model bias"""
-        pass
+        """Detect model bias"""        pass
 
 
 class ContentProtectionModelMonitor(BaseModelMonitor):
-    """Specialized monitor for content protection models"""
-    
+    """Specialized monitor for content protection models"""    
     def __init__(self, model_id: str, model_name: str, endpoint_url: str = None):
         super().__init__(model_id, model_name, ModelType.CONTENT_PROTECTION)
         self.endpoint_url = endpoint_url
@@ -331,8 +308,7 @@ class ContentProtectionModelMonitor(BaseModelMonitor):
         self.processing_time_threshold = 2000  # ms
         
     async def collect_metrics(self) -> ModelMetrics:
-        """Collect content protection model metrics"""
-        start_time = time.time()
+        """Collect content protection model metrics"""        start_time = time.time()
         
         # Simulate or collect real metrics
         metrics = ModelMetrics(
@@ -413,8 +389,7 @@ class ContentProtectionModelMonitor(BaseModelMonitor):
     
     async def detect_drift(self, reference_data: np.ndarray, 
                           current_data: np.ndarray) -> List[DriftDetectionResult]:
-        """Detect drift in content protection models"""
-        results = []
+        """Detect drift in content protection models"""        results = []
         
         if not HAS_SKLEARN:
             self.logger.warning("scikit-learn not available, skipping drift detection")
@@ -500,8 +475,7 @@ class ContentProtectionModelMonitor(BaseModelMonitor):
     async def detect_bias(self, predictions: np.ndarray, 
                          ground_truth: np.ndarray,
                          protected_attributes: np.ndarray) -> List[BiasDetectionResult]:
-        """Detect bias in content protection models"""
-        results = []
+        """Detect bias in content protection models"""        results = []
         
         if not HAS_SKLEARN:
             self.logger.warning("scikit-learn not available, skipping bias detection")
@@ -579,16 +553,14 @@ class ContentProtectionModelMonitor(BaseModelMonitor):
 
 
 class FingerprintingModelMonitor(BaseModelMonitor):
-    """Specialized monitor for fingerprinting models"""
-    
+    """Specialized monitor for fingerprinting models"""    
     def __init__(self, model_id: str, model_name: str):
         super().__init__(model_id, model_name, ModelType.FINGERPRINTING)
         self.similarity_threshold = 0.8
         self.processing_time_threshold = 1000  # ms
         
     async def collect_metrics(self) -> ModelMetrics:
-        """Collect fingerprinting model metrics"""
-        metrics = ModelMetrics(
+        """Collect fingerprinting model metrics"""        metrics = ModelMetrics(
             model_id=self.model_id,
             model_name=self.model_name,
             timestamp=datetime.utcnow()
@@ -622,8 +594,7 @@ class FingerprintingModelMonitor(BaseModelMonitor):
     
     async def detect_drift(self, reference_data: np.ndarray, 
                           current_data: np.ndarray) -> List[DriftDetectionResult]:
-        """Detect drift in fingerprinting models"""
-        # Implementation similar to ContentProtectionModelMonitor
+        """Detect drift in fingerprinting models"""        # Implementation similar to ContentProtectionModelMonitor
         # but with fingerprinting-specific considerations
         results = []
         
@@ -669,8 +640,7 @@ class FingerprintingModelMonitor(BaseModelMonitor):
     async def detect_bias(self, predictions: np.ndarray,
                          ground_truth: np.ndarray, 
                          protected_attributes: np.ndarray) -> List[BiasDetectionResult]:
-        """Detect bias in fingerprinting models"""
-        # Fingerprinting models might show bias based on content type, quality, or format
+        """Detect bias in fingerprinting models"""        # Fingerprinting models might show bias based on content type, quality, or format
         results = []
         
         # Implementation would analyze performance across different:
@@ -683,16 +653,14 @@ class FingerprintingModelMonitor(BaseModelMonitor):
 
 
 class ModelExplainabilityAnalyzer:
-    """Provides explainability analysis for AI models"""
-    
+    """Provides explainability analysis for AI models"""    
     def __init__(self):
         self.logger = logging.getLogger("ai_observability.explainability")
     
     async def analyze_feature_importance(self, model: Any, 
                                        feature_names: List[str],
                                        sample_data: np.ndarray) -> Dict[str, float]:
-        """Analyze global feature importance"""
-        feature_importance = {}
+        """Analyze global feature importance"""        feature_importance = {}
         
         try:
             # For tree-based models
@@ -734,8 +702,7 @@ class ModelExplainabilityAnalyzer:
     async def _permutation_importance(self, model: Any, 
                                     sample_data: np.ndarray,
                                     feature_names: List[str]) -> Dict[str, float]:
-        """Calculate permutation importance for neural networks"""
-        importance = {}
+        """Calculate permutation importance for neural networks"""        importance = {}
         
         try:
             # Get baseline prediction
@@ -761,8 +728,7 @@ class ModelExplainabilityAnalyzer:
     async def generate_local_explanations(self, model: Any, 
                                         instance: np.ndarray,
                                         feature_names: List[str]) -> Dict[str, Any]:
-        """Generate instance-level explanations"""
-        explanation = {
+        """Generate instance-level explanations"""        explanation = {
             "instance_id": hashlib.md5(instance.tobytes()).hexdigest()[:8],
             "prediction": None,
             "confidence": None,
@@ -828,8 +794,7 @@ class ModelExplainabilityAnalyzer:
     async def analyze_model_explainability(self, model_id: str, model: Any,
                                          feature_names: List[str],
                                          sample_data: np.ndarray) -> ModelExplainabilityResult:
-        """Comprehensive explainability analysis"""
-        result = ModelExplainabilityResult(
+        """Comprehensive explainability analysis"""        result = ModelExplainabilityResult(
             model_id=model_id,
             timestamp=datetime.utcnow()
         )
@@ -866,8 +831,7 @@ class ModelExplainabilityAnalyzer:
         return result
     
     def _calculate_explanation_quality(self, result: ModelExplainabilityResult) -> float:
-        """Calculate overall explanation quality score"""
-        # Based on feature importance distribution and local explanation consistency
+        """Calculate overall explanation quality score"""        # Based on feature importance distribution and local explanation consistency
         if not result.feature_importance:
             return 0.0
         
@@ -883,8 +847,7 @@ class ModelExplainabilityAnalyzer:
     
     def _calculate_interpretability_score(self, model: Any, 
                                         result: ModelExplainabilityResult) -> float:
-        """Calculate model interpretability score"""
-        score = 0.5  # Base score
+        """Calculate model interpretability score"""        score = 0.5  # Base score
         
         # Linear models are more interpretable
         if hasattr(model, 'coef_'):
@@ -907,8 +870,7 @@ class ModelExplainabilityAnalyzer:
         return max(0.0, min(1.0, score))
     
     def _calculate_consistency_score(self, result: ModelExplainabilityResult) -> float:
-        """Calculate explanation consistency score"""
-        if len(result.local_explanations) < 2:
+        """Calculate explanation consistency score"""        if len(result.local_explanations) < 2:
             return 0.5
         
         # Check consistency of top contributing features across instances
@@ -931,8 +893,7 @@ class ModelExplainabilityAnalyzer:
         return consistency
     
     def _generate_technical_explanation(self, result: ModelExplainabilityResult) -> str:
-        """Generate technical explanation for developers"""
-        if not result.feature_importance:
+        """Generate technical explanation for developers"""        if not result.feature_importance:
             return "No feature importance data available for technical analysis."
         
         top_features = sorted(result.feature_importance.items(), key=lambda x: x[1], reverse=True)[:3]
@@ -949,8 +910,7 @@ class ModelExplainabilityAnalyzer:
         return explanation
     
     def _generate_business_explanation(self, result: ModelExplainabilityResult) -> str:
-        """Generate business-friendly explanation"""
-        if not result.feature_importance:
+        """Generate business-friendly explanation"""        if not result.feature_importance:
             return "Model analysis unavailable for business review."
         
         top_feature = max(result.feature_importance.items(), key=lambda x: x[1])
@@ -969,8 +929,7 @@ class ModelExplainabilityAnalyzer:
         return explanation
     
     def _generate_regulatory_explanation(self, result: ModelExplainabilityResult) -> str:
-        """Generate regulatory compliance explanation"""
-        explanation = f"Regulatory Compliance Report for Model {result.model_id}:\n\n"
+        """Generate regulatory compliance explanation"""        explanation = f"Regulatory Compliance Report for Model {result.model_id}:\n\n"
         
         explanation += f"Transparency Score: {result.explanation_quality:.1%}\n"
         explanation += f"Interpretability Score: {result.interpretability_score:.1%}\n"
@@ -993,8 +952,7 @@ class ModelExplainabilityAnalyzer:
 
 
 class AIObservabilityEngine:
-    """Main AI observability engine"""
-    
+    """Main AI observability engine"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.monitors: Dict[str, BaseModelMonitor] = {}
@@ -1022,26 +980,22 @@ class AIObservabilityEngine:
         })
     
     def register_model(self, monitor: BaseModelMonitor):
-        """Register a model monitor"""
-        self.monitors[monitor.model_id] = monitor
+        """Register a model monitor"""        self.monitors[monitor.model_id] = monitor
         self.logger.info(f"Registered model monitor: {monitor.model_id}")
     
     def create_content_protection_monitor(self, model_id: str, model_name: str,
                                         endpoint_url: str = None) -> ContentProtectionModelMonitor:
-        """Create and register content protection model monitor"""
-        monitor = ContentProtectionModelMonitor(model_id, model_name, endpoint_url)
+        """Create and register content protection model monitor"""        monitor = ContentProtectionModelMonitor(model_id, model_name, endpoint_url)
         self.register_model(monitor)
         return monitor
     
     def create_fingerprinting_monitor(self, model_id: str, model_name: str) -> FingerprintingModelMonitor:
-        """Create and register fingerprinting model monitor"""
-        monitor = FingerprintingModelMonitor(model_id, model_name)
+        """Create and register fingerprinting model monitor"""        monitor = FingerprintingModelMonitor(model_id, model_name)
         self.register_model(monitor)
         return monitor
     
     async def start_monitoring(self):
-        """Start background monitoring of all registered models"""
-        if self._running:
+        """Start background monitoring of all registered models"""        if self._running:
             return
         
         self._running = True
@@ -1049,8 +1003,7 @@ class AIObservabilityEngine:
         self.logger.info(f"Started AI observability monitoring for {len(self.monitors)} models")
     
     async def stop_monitoring(self):
-        """Stop background monitoring"""
-        self._running = False
+        """Stop background monitoring"""        self._running = False
         if self._monitoring_task:
             self._monitoring_task.cancel()
             try:
@@ -1060,8 +1013,7 @@ class AIObservabilityEngine:
         self.logger.info("Stopped AI observability monitoring")
     
     async def _monitoring_worker(self):
-        """Background monitoring worker"""
-        while self._running:
+        """Background monitoring worker"""        while self._running:
             try:
                 await self._collect_all_metrics()
                 await asyncio.sleep(self._monitoring_interval)
@@ -1072,8 +1024,7 @@ class AIObservabilityEngine:
                 await asyncio.sleep(30)  # Wait before retry
     
     async def _collect_all_metrics(self):
-        """Collect metrics from all registered models"""
-        if not self.monitors:
+        """Collect metrics from all registered models"""        if not self.monitors:
             return
         
         # Collect metrics in parallel
@@ -1091,8 +1042,7 @@ class AIObservabilityEngine:
                 self.logger.error(f"Error collecting metrics from {monitor_id}: {str(result)}")
     
     async def _collect_monitor_metrics(self, monitor: BaseModelMonitor):
-        """Collect metrics from a single monitor"""
-        try:
+        """Collect metrics from a single monitor"""        try:
             metrics = await monitor.collect_metrics()
             self.metrics_history.append(metrics)
             
@@ -1103,8 +1053,7 @@ class AIObservabilityEngine:
             self.logger.error(f"Error collecting metrics from {monitor.model_id}: {str(e)}")
     
     async def _check_metrics_alerts(self, metrics: ModelMetrics):
-        """Check metrics against alert thresholds"""
-        alerts = []
+        """Check metrics against alert thresholds"""        alerts = []
         
         # Check accuracy drop
         if metrics.accuracy is not None:
@@ -1143,8 +1092,7 @@ class AIObservabilityEngine:
             self.logger.warning(f"AI Model Alert: {alert}")
     
     def _get_recent_metrics_values(self, metric_name: str, model_id: str, hours: int = 24) -> List[float]:
-        """Get recent values for a specific metric"""
-        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
+        """Get recent values for a specific metric"""        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
         values = []
         
         for metrics in self.metrics_history:
@@ -1159,8 +1107,7 @@ class AIObservabilityEngine:
     
     async def analyze_model_drift(self, model_id: str, reference_data: np.ndarray,
                                 current_data: np.ndarray) -> List[DriftDetectionResult]:
-        """Analyze drift for a specific model"""
-        if model_id not in self.monitors:
+        """Analyze drift for a specific model"""        if model_id not in self.monitors:
             raise ValueError(f"Model {model_id} not registered")
         
         monitor = self.monitors[model_id]
@@ -1175,8 +1122,7 @@ class AIObservabilityEngine:
     async def analyze_model_bias(self, model_id: str, predictions: np.ndarray,
                                ground_truth: np.ndarray,
                                protected_attributes: np.ndarray) -> List[BiasDetectionResult]:
-        """Analyze bias for a specific model"""
-        if model_id not in self.monitors:
+        """Analyze bias for a specific model"""        if model_id not in self.monitors:
             raise ValueError(f"Model {model_id} not registered")
         
         monitor = self.monitors[model_id]
@@ -1191,8 +1137,7 @@ class AIObservabilityEngine:
     async def analyze_model_explainability(self, model_id: str, model: Any,
                                          feature_names: List[str],
                                          sample_data: np.ndarray) -> ModelExplainabilityResult:
-        """Analyze explainability for a specific model"""
-        result = await self.explainability_analyzer.analyze_model_explainability(
+        """Analyze explainability for a specific model"""        result = await self.explainability_analyzer.analyze_model_explainability(
             model_id, model, feature_names, sample_data
         )
         
@@ -1202,8 +1147,7 @@ class AIObservabilityEngine:
         return result
     
     def get_model_health_summary(self, model_id: str = None) -> Dict[str, Any]:
-        """Get health summary for a model or all models"""
-        if model_id:
+        """Get health summary for a model or all models"""        if model_id:
             if model_id not in self.monitors:
                 return {}
             
@@ -1249,8 +1193,7 @@ class AIObservabilityEngine:
         return summary
     
     def _calculate_trend(self, values: List[float]) -> str:
-        """Calculate trend direction for a list of values"""
-        if len(values) < 2:
+        """Calculate trend direction for a list of values"""        if len(values) < 2:
             return "stable"
         
         # Simple linear trend calculation
@@ -1271,14 +1214,12 @@ class AIObservabilityEngine:
             return "stable"
     
     def _get_recent_alerts(self, model_id: str, hours: int = 24) -> List[Dict[str, Any]]:
-        """Get recent alerts for a model"""
-        # This would integrate with the alerting system
+        """Get recent alerts for a model"""        # This would integrate with the alerting system
         # For now, return empty list
         return []
     
     def get_comprehensive_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive AI observability statistics"""
-        return {
+        """Get comprehensive AI observability statistics"""        return {
             "registered_models": len(self.monitors),
             "monitoring_active": self._running,
             "monitoring_interval_seconds": self._monitoring_interval,
@@ -1295,14 +1236,12 @@ class AIObservabilityEngine:
         }
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get basic statistics"""
-        return self.get_comprehensive_statistics()
+        """Get basic statistics"""        return self.get_comprehensive_statistics()
 
 
 # Factory function
 def create_ai_observability_engine(config: Dict[str, Any] = None) -> AIObservabilityEngine:
-    """Factory function to create AI observability engine"""
-    return AIObservabilityEngine(config)
+    """Factory function to create AI observability engine"""    return AIObservabilityEngine(config)
 
 
 # Export AI observability components

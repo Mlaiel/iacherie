@@ -1,5 +1,4 @@
-"""
-Collaboration AI Agents
+"""Collaboration AI Agents
 
 Specialized agents for creator collaboration, partnership matching, and network building.
 
@@ -8,9 +7,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 This module contains AI agents specialized in creator collaboration matching,
 partnership opportunities, cross-promotion strategies, and network building.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -24,8 +21,7 @@ from ..neural_networks.recommendation_networks import CollaborationRecommendatio
 
 @dataclass
 class CollaborationMatch:
-    """Collaboration match structure"""
-    partner_id: str
+    """Collaboration match structure"""    partner_id: str
     partner_name: str
     compatibility_score: float
     audience_overlap: float
@@ -38,8 +34,7 @@ class CollaborationMatch:
 
 @dataclass
 class NetworkAnalysis:
-    """Creator network analysis results"""
-    network_strength: float
+    """Creator network analysis results"""    network_strength: float
     influence_score: float
     collaboration_history: Dict[str, Any]
     growth_opportunities: List[str]
@@ -48,13 +43,11 @@ class NetworkAnalysis:
 
 
 class CollaborationMatcherAgent(BaseAIAgent):
-    """
-    AI agent specialized in creator collaboration and partnership matching.
+    """    AI agent specialized in creator collaboration and partnership matching.
     
     Provides intelligent matching of creators for collaborations, cross-promotion
     opportunities, and strategic partnerships based on audience synergy.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(agent_id="collaboration_matcher", config=config)
         self.recommendation_network = CollaborationRecommendationNetwork()
@@ -83,8 +76,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
 
     async def find_collaboration_matches(self, creator_profile: Dict[str, Any], 
                                        collaboration_goals: Dict[str, Any]) -> List[CollaborationMatch]:
-        """
-        Find potential collaboration partners based on creator profile and goals.
+        """        Find potential collaboration partners based on creator profile and goals.
         
         Args:
             creator_profile: Creator's profile, audience, and content data
@@ -92,8 +84,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
             
         Returns:
             List of ranked collaboration matches
-        """
-        try:
+        """        try:
             matches = []
             creator_niche = creator_profile.get('niche', 'general')
             creator_followers = creator_profile.get('total_followers', 0)
@@ -168,16 +159,14 @@ class CollaborationMatcherAgent(BaseAIAgent):
             return []
 
     async def analyze_creator_network(self, creator_profile: Dict[str, Any]) -> NetworkAnalysis:
-        """
-        Analyze creator's collaboration network and identify growth opportunities.
+        """        Analyze creator's collaboration network and identify growth opportunities.
         
         Args:
             creator_profile: Creator's profile and collaboration history
             
         Returns:
             Comprehensive network analysis
-        """
-        try:
+        """        try:
             creator_id = creator_profile.get('creator_id')
             past_collaborations = creator_profile.get('collaborations', [])
             current_network = creator_profile.get('creator_network', [])
@@ -234,8 +223,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
 
     async def plan_collaboration_campaign(self, collaboration_match: CollaborationMatch,
                                         campaign_objectives: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Plan detailed collaboration campaign strategy.
+        """        Plan detailed collaboration campaign strategy.
         
         Args:
             collaboration_match: Selected collaboration partner
@@ -243,8 +231,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
             
         Returns:
             Detailed campaign plan
-        """
-        try:
+        """        try:
             campaign_type = campaign_objectives.get('campaign_type', 'cross_promotion')
             duration = campaign_objectives.get('duration_weeks', 4)
             budget = campaign_objectives.get('budget', 0)
@@ -297,8 +284,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
 
     async def _find_potential_partners(self, creator_profile: Dict[str, Any],
                                      goals: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Find potential collaboration partners from database"""
-        # Simulate partner database query
+        """Find potential collaboration partners from database"""        # Simulate partner database query
         # In production, this would query actual creator database
         
         creator_niche = creator_profile.get('niche', 'general')
@@ -352,8 +338,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
 
     async def _calculate_compatibility(self, creator1: Dict[str, Any], 
                                      creator2: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate compatibility between two creators"""
-        compatibility_scores = {}
+        """Calculate compatibility between two creators"""        compatibility_scores = {}
         
         # Content style similarity
         style1 = creator1.get('content_style', 'general')
@@ -395,8 +380,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
 
     def _calculate_audience_synergy(self, audience1: Dict[str, Any], 
                                   audience2: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate audience overlap and synergy potential"""
-        if not audience1 or not audience2:
+        """Calculate audience overlap and synergy potential"""        if not audience1 or not audience2:
             return {'overlap': 0.3, 'synergy': 0.5}  # Default values
         
         # Calculate age group overlap
@@ -426,8 +410,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
         }
 
     def _estimate_reach_boost(self, followers1: int, followers2: int, overlap: float) -> float:
-        """Estimate potential reach boost from collaboration"""
-        # Calculate effective new reach (accounting for overlap)
+        """Estimate potential reach boost from collaboration"""        # Calculate effective new reach (accounting for overlap)
         new_reach_potential = followers2 * (1 - overlap)
         
         # Apply engagement and sharing factors
@@ -441,8 +424,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
     def _identify_collaboration_types(self, creator1: Dict[str, Any], 
                                     creator2: Dict[str, Any],
                                     goals: Dict[str, Any]) -> List[str]:
-        """Identify suitable collaboration types"""
-        suitable_types = []
+        """Identify suitable collaboration types"""        suitable_types = []
         
         primary_goal = goals.get('primary_goal', 'growth')
         niche1 = creator1.get('niche', 'general')
@@ -470,8 +452,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
 
     def _identify_mutual_benefits(self, creator1: Dict[str, Any], 
                                 creator2: Dict[str, Any], goal: str) -> List[str]:
-        """Identify mutual benefits of collaboration"""
-        benefits = []
+        """Identify mutual benefits of collaboration"""        benefits = []
         
         followers1 = creator1.get('total_followers', 0)
         followers2 = creator2.get('total_followers', 0)
@@ -521,8 +502,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
     def _generate_approach_strategy(self, creator1: Dict[str, Any], 
                                   creator2: Dict[str, Any],
                                   compatibility: Dict[str, float]) -> str:
-        """Generate approach strategy for initial contact"""
-        compatibility_score = compatibility.get('overall_score', 0.5)
+        """Generate approach strategy for initial contact"""        compatibility_score = compatibility.get('overall_score', 0.5)
         
         if compatibility_score > 0.8:
             return "Direct approach: High compatibility suggests direct collaboration proposal"
@@ -533,8 +513,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
 
     def _calculate_network_strength(self, collaborations: List[Dict], 
                                   network: List[Dict]) -> float:
-        """Calculate creator's network strength"""
-        if not collaborations and not network:
+        """Calculate creator's network strength"""        if not collaborations and not network:
             return 0.1
         
         # Factor in number of collaborations
@@ -552,16 +531,14 @@ class CollaborationMatcherAgent(BaseAIAgent):
 
     def _calculate_influence_score(self, creator_profile: Dict[str, Any], 
                                  collaborations: List[Dict]) -> float:
-        """Calculate creator's influence score within their network"""
-        base_influence = min(creator_profile.get('total_followers', 0) / 1000000, 0.5)
+        """Calculate creator's influence score within their network"""        base_influence = min(creator_profile.get('total_followers', 0) / 1000000, 0.5)
         engagement_influence = creator_profile.get('engagement_rate', 0.03) * 5
         collaboration_influence = len(collaborations) * 0.05
         
         return min(base_influence + engagement_influence + collaboration_influence, 1.0)
 
     def _analyze_collaboration_history(self, collaborations: List[Dict]) -> Dict[str, Any]:
-        """Analyze past collaborations for insights"""
-        if not collaborations:
+        """Analyze past collaborations for insights"""        if not collaborations:
             return {"total_collaborations": 0, "success_rate": 0, "patterns": []}
         
         total = len(collaborations)
@@ -583,8 +560,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
 
     def _identify_growth_opportunities(self, creator_profile: Dict[str, Any],
                                      collab_analysis: Dict[str, Any]) -> List[str]:
-        """Identify network growth opportunities"""
-        opportunities = []
+        """Identify network growth opportunities"""        opportunities = []
         
         niche = creator_profile.get('niche', 'general')
         total_collabs = collab_analysis.get('total_collaborations', 0)
@@ -605,8 +581,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
 
     def _identify_relationship_gaps(self, creator_profile: Dict[str, Any],
                                   network: List[Dict]) -> List[str]:
-        """Identify gaps in creator's professional relationships"""
-        gaps = []
+        """Identify gaps in creator's professional relationships"""        gaps = []
         
         niche = creator_profile.get('niche', 'general')
         network_niches = [contact.get('niche') for contact in network]
@@ -627,8 +602,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
 
     async def _suggest_strategic_connections(self, creator_profile: Dict[str, Any],
                                           network_strength: float) -> List[str]:
-        """Suggest strategic connections to make"""
-        suggestions = []
+        """Suggest strategic connections to make"""        suggestions = []
         
         niche = creator_profile.get('niche', 'general')
         
@@ -647,8 +621,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
         return suggestions
 
     def _get_similar_niches(self, niche: str) -> List[str]:
-        """Get similar niches for collaboration matching"""
-        niche_map = {
+        """Get similar niches for collaboration matching"""        niche_map = {
             'gaming': ['esports', 'streaming', 'tech_reviews'],
             'lifestyle': ['fashion', 'wellness', 'home_decor'],
             'tech': ['gadgets', 'software', 'innovation'],
@@ -659,8 +632,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
         return niche_map.get(niche, ['general', 'lifestyle', 'entertainment'])
 
     def _get_complementary_niches(self, niche: str) -> List[str]:
-        """Get complementary niches that work well together"""
-        complement_map = {
+        """Get complementary niches that work well together"""        complement_map = {
             'gaming': ['tech', 'entertainment', 'streaming'],
             'lifestyle': ['fashion', 'wellness', 'travel'],
             'tech': ['business', 'education', 'innovation'],
@@ -671,8 +643,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
         return complement_map.get(niche, ['lifestyle', 'entertainment', 'general'])
 
     def _get_important_niches_for(self, niche: str) -> List[str]:
-        """Get important niches for network building"""
-        importance_map = {
+        """Get important niches for network building"""        importance_map = {
             'gaming': ['tech', 'streaming', 'esports', 'entertainment'],
             'lifestyle': ['fashion', 'wellness', 'beauty', 'home'],
             'tech': ['business', 'innovation', 'startups', 'education'],
@@ -682,8 +653,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
         return importance_map.get(niche, ['lifestyle', 'entertainment', 'business'])
 
     def _create_campaign_timeline(self, campaign_type: str, duration_weeks: int) -> Dict[str, List[str]]:
-        """Create campaign timeline"""
-        timeline = {}
+        """Create campaign timeline"""        timeline = {}
         
         if campaign_type == "joint_creation":
             timeline = {
@@ -703,8 +673,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
         return timeline
 
     def _develop_content_strategy(self, match: CollaborationMatch, campaign_type: str) -> Dict[str, Any]:
-        """Develop content strategy for collaboration"""
-        return {
+        """Develop content strategy for collaboration"""        return {
             "content_themes": ["shared_expertise", "audience_education", "entertainment"],
             "format_mix": {"video": 0.6, "images": 0.3, "text": 0.1},
             "posting_frequency": "3x per week",
@@ -713,8 +682,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
         }
 
     def _create_promotion_strategy(self, match: CollaborationMatch, target_metrics: Dict[str, Any]) -> Dict[str, Any]:
-        """Create promotion strategy"""
-        return {
+        """Create promotion strategy"""        return {
             "organic_promotion": ["story_mentions", "feed_posts", "community_engagement"],
             "paid_promotion_budget": target_metrics.get('paid_budget', 0),
             "influencer_network_activation": True,
@@ -723,8 +691,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
         }
 
     def _define_success_metrics(self, match: CollaborationMatch, targets: Dict[str, Any]) -> Dict[str, Any]:
-        """Define success metrics for collaboration"""
-        return {
+        """Define success metrics for collaboration"""        return {
             "reach_increase": targets.get('reach_target', match.estimated_reach_boost),
             "follower_growth": targets.get('follower_target', match.estimated_reach_boost * 0.1),
             "engagement_rate_improvement": targets.get('engagement_target', 0.01),
@@ -733,8 +700,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
         }
 
     def _allocate_campaign_budget(self, total_budget: float, campaign_type: str) -> Dict[str, float]:
-        """Allocate budget across campaign activities"""
-        if total_budget == 0:
+        """Allocate budget across campaign activities"""        if total_budget == 0:
             return {"organic_only": True}
         
         allocation = {
@@ -747,8 +713,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
         return allocation
 
     def _identify_campaign_risks(self, match: CollaborationMatch) -> List[str]:
-        """Identify potential campaign risks"""
-        risks = []
+        """Identify potential campaign risks"""        risks = []
         
         if match.audience_overlap > 0.6:
             risks.append("High audience overlap may limit reach expansion")
@@ -765,8 +730,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
         return risks
 
     def _create_communication_plan(self, duration_weeks: int) -> Dict[str, Any]:
-        """Create communication plan for collaboration"""
-        return {
+        """Create communication plan for collaboration"""        return {
             "kickoff_meeting": "Week 0 - Strategy alignment and planning",
             "weekly_check_ins": True,
             "content_review_schedule": "48 hours before posting",
@@ -775,8 +739,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
         }
 
     def _create_creative_guidelines(self, match: CollaborationMatch) -> Dict[str, Any]:
-        """Create creative guidelines for joint content"""
-        return {
+        """Create creative guidelines for joint content"""        return {
             "brand_voice_alignment": "Maintain individual voices while finding common ground",
             "visual_consistency": "Coordinated color schemes and styling",
             "content_approval_process": "Mutual approval required for all collaborative content",
@@ -785,8 +748,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
         }
 
     def _create_content_calendar(self, campaign_type: str, duration_weeks: int) -> Dict[str, List[str]]:
-        """Create detailed content calendar"""
-        calendar = {}
+        """Create detailed content calendar"""        calendar = {}
         
         for week in range(1, duration_weeks + 1):
             calendar[f"week_{week}"] = [
@@ -798,8 +760,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
         return calendar
 
     def _create_cross_promotion_schedule(self, duration_weeks: int) -> Dict[str, str]:
-        """Create cross-promotion posting schedule"""
-        schedule = {}
+        """Create cross-promotion posting schedule"""        schedule = {}
         
         for week in range(1, duration_weeks + 1):
             schedule[f"week_{week}"] = {
@@ -811,8 +772,7 @@ class CollaborationMatcherAgent(BaseAIAgent):
         return schedule
 
     def _optimize_audience_targeting(self, match: CollaborationMatch) -> Dict[str, Any]:
-        """Optimize audience targeting for cross-promotion"""
-        return {
+        """Optimize audience targeting for cross-promotion"""        return {
             "primary_target": "Partner's engaged audience with interest overlap",
             "secondary_target": "Lookalike audiences based on current followers",
             "content_customization": "Adapt content style to partner's audience preferences",

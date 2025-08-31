@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive Tests for NLP Classification Module
+"""Comprehensive Tests for NLP Classification Module
 
 Industrial-grade tests for AdvancedClassificationEngine covering content classification,
 topic modeling, and categorization with real implementations.
@@ -25,9 +21,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -51,12 +45,10 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class TestAdvancedContentClassifier:
-    """Comprehensive tests for AdvancedContentClassifier"""
-    
+    """Comprehensive tests for AdvancedContentClassifier"""    
     @pytest.mark.asyncio
     async def test_engine_initialization(self, classification_engine):
-        """Test classification engine initialization"""
-        assert classification_engine is not None
+        """Test classification engine initialization"""        assert classification_engine is not None
         assert hasattr(classification_engine, 'config')
         assert hasattr(classification_engine, 'topic_modeler')
         assert hasattr(classification_engine, 'content_categorizer')
@@ -70,8 +62,7 @@ class TestAdvancedContentClassifier:
 
     @pytest.mark.asyncio
     async def test_content_classification(self, classification_engine):
-        """Test basic content classification"""
-        test_cases = [
+        """Test basic content classification"""        test_cases = [
             {
                 'content': "Check out our new AI-powered content creation tool! It's perfect for social media marketing and brand engagement. #AI #Marketing #SocialMedia",
                 'expected_categories': ['Technology', 'Marketing', 'Business'],
@@ -144,8 +135,7 @@ class TestAdvancedContentClassifier:
 
     @pytest.mark.asyncio
     async def test_topic_modeling(self, classification_engine):
-        """Test topic modeling and extraction"""
-        documents = [
+        """Test topic modeling and extraction"""        documents = [
             "Artificial intelligence is revolutionizing the way we create content for social media platforms.",
             "Machine learning algorithms can analyze user behavior and optimize engagement strategies.",
             "Natural language processing helps in understanding customer sentiment and feedback.",
@@ -189,8 +179,7 @@ class TestAdvancedContentClassifier:
 
     @pytest.mark.asyncio
     async def test_intent_classification(self, classification_engine):
-        """Test intent classification for user content"""
-        intent_test_cases = [
+        """Test intent classification for user content"""        intent_test_cases = [
             {
                 'content': "I want to buy this product. Where can I purchase it?",
                 'expected_intent': 'purchase',
@@ -248,8 +237,7 @@ class TestAdvancedContentClassifier:
 
     @pytest.mark.asyncio
     async def test_hierarchical_classification(self, classification_engine):
-        """Test hierarchical content classification"""
-        content = "Our new smartphone features advanced AI camera technology with machine learning image enhancement and real-time photo optimization."
+        """Test hierarchical content classification"""        content = "Our new smartphone features advanced AI camera technology with machine learning image enhancement and real-time photo optimization."
         
         hierarchical_result = await classification_engine.classify_hierarchical(
             content=content,
@@ -283,8 +271,7 @@ class TestAdvancedContentClassifier:
 
     @pytest.mark.asyncio
     async def test_platform_specific_classification(self, classification_engine, sample_social_content):
-        """Test platform-specific content classification"""
-        platforms = [Platform.INSTAGRAM, Platform.TWITTER, Platform.LINKEDIN, Platform.TIKTOK]
+        """Test platform-specific content classification"""        platforms = [Platform.INSTAGRAM, Platform.TWITTER, Platform.LINKEDIN, Platform.TIKTOK]
         
         for platform in platforms:
             content = sample_social_content[platform.value.lower()]['post']
@@ -318,8 +305,7 @@ class TestAdvancedContentClassifier:
 
     @pytest.mark.asyncio
     async def test_multilingual_classification(self, classification_engine):
-        """Test multilingual content classification"""
-        multilingual_content = [
+        """Test multilingual content classification"""        multilingual_content = [
             {
                 'text': "Artificial intelligence is transforming digital marketing strategies.",
                 'language': 'english',
@@ -365,8 +351,7 @@ class TestAdvancedContentClassifier:
 
     @pytest.mark.asyncio
     async def test_dynamic_category_learning(self, classification_engine):
-        """Test dynamic category learning and adaptation"""
-        # Simulate new content that might represent emerging categories
+        """Test dynamic category learning and adaptation"""        # Simulate new content that might represent emerging categories
         emerging_content = [
             "NFT marketplace for digital art collectors and crypto enthusiasts.",
             "Metaverse virtual reality experiences for remote collaboration.",
@@ -402,8 +387,7 @@ class TestAdvancedContentClassifier:
 
     @pytest.mark.asyncio
     async def test_content_similarity_classification(self, classification_engine):
-        """Test content similarity-based classification"""
-        reference_content = {
+        """Test content similarity-based classification"""        reference_content = {
             'technology': "Latest advances in artificial intelligence and machine learning applications.",
             'health': "Nutrition tips for maintaining a healthy lifestyle and balanced diet.",
             'travel': "Exploring beautiful destinations around the world and travel photography.",
@@ -447,8 +431,7 @@ class TestAdvancedContentClassifier:
 
     @pytest.mark.asyncio
     async def test_batch_classification(self, classification_engine, performance_test_data):
-        """Test batch content classification"""
-        texts = performance_test_data['small_batch']
+        """Test batch content classification"""        texts = performance_test_data['small_batch']
         
         start_time = time.time()
         batch_classification = await classification_engine.classify_batch(
@@ -481,8 +464,7 @@ class TestAdvancedContentClassifier:
 
     @pytest.mark.asyncio
     async def test_classification_explanation(self, classification_engine):
-        """Test classification explanation and interpretability"""
-        content = "Innovative startup using AI to revolutionize healthcare diagnostics and patient care."
+        """Test classification explanation and interpretability"""        content = "Innovative startup using AI to revolutionize healthcare diagnostics and patient care."
         
         explanation_result = await classification_engine.explain_classification(
             content=content,
@@ -513,8 +495,7 @@ class TestAdvancedContentClassifier:
 
     @pytest.mark.asyncio
     async def test_custom_classification_models(self, classification_engine):
-        """Test custom classification model integration"""
-        # Define custom categories for a specific domain
+        """Test custom classification model integration"""        # Define custom categories for a specific domain
         custom_categories = {
             'ai_content_tools': [
                 "AI writing assistants and content generation tools",
@@ -564,8 +545,7 @@ class TestAdvancedContentClassifier:
 
     @pytest.mark.asyncio
     async def test_real_time_classification(self, classification_engine):
-        """Test real-time content classification"""
-        # Simulate real-time content stream
+        """Test real-time content classification"""        # Simulate real-time content stream
         content_stream = [
             "Breaking: New AI breakthrough in natural language processing!",
             "Quick workout tips for busy professionals - stay fit on the go!",
@@ -604,8 +584,7 @@ class TestAdvancedContentClassifier:
 
     @pytest.mark.asyncio
     async def test_performance_benchmarks(self, classification_engine, benchmark_config):
-        """Test classification performance benchmarks"""
-        test_content = "This is a performance test for content classification benchmarking."
+        """Test classification performance benchmarks"""        test_content = "This is a performance test for content classification benchmarking."
         
         # Single classification performance
         start_time = time.time()
@@ -635,8 +614,7 @@ class TestAdvancedContentClassifier:
 
     @pytest.mark.asyncio
     async def test_error_handling(self, classification_engine):
-        """Test classification error handling"""
-        # Test empty content
+        """Test classification error handling"""        # Test empty content
         result = await classification_engine.classify_content(
             content="",
             options={'handle_empty': True}
@@ -660,41 +638,33 @@ class TestAdvancedContentClassifier:
         assert result is not None
 
 class TestTopicModeler:
-    """Test topic modeler component"""
-    
+    """Test topic modeler component"""    
     @pytest.mark.asyncio
     async def test_topic_modeler_initialization(self):
-        """Test topic modeler initialization"""
-        modeler = TopicModeler()
+        """Test topic modeler initialization"""        modeler = TopicModeler()
         assert modeler is not None
         assert hasattr(modeler, 'extract_topics')
 
 class TestContentCategorizer:
-    """Test content categorizer component"""
-    
+    """Test content categorizer component"""    
     @pytest.mark.asyncio
     async def test_content_categorizer_initialization(self):
-        """Test content categorizer initialization"""
-        categorizer = ContentCategorizer()
+        """Test content categorizer initialization"""        categorizer = ContentCategorizer()
         assert categorizer is not None
         assert hasattr(categorizer, 'categorize_content')
 
 class TestIntentClassifier:
-    """Test intent classifier component"""
-    
+    """Test intent classifier component"""    
     @pytest.mark.asyncio
     async def test_intent_classifier_initialization(self):
-        """Test intent classifier initialization"""
-        classifier = IntentClassifier()
+        """Test intent classifier initialization"""        classifier = IntentClassifier()
         assert classifier is not None
         assert hasattr(classifier, 'classify_intent')
 
 class TestClassificationConfig:
-    """Test classification configuration"""
-    
+    """Test classification configuration"""    
     def test_config_creation(self):
-        """Test classification configuration creation"""
-        config = ClassificationConfig(
+        """Test classification configuration creation"""        config = ClassificationConfig(
             classification_models=['basic', 'advanced'],
             topic_categories=['technology', 'health', 'business'],
             confidence_threshold=0.7

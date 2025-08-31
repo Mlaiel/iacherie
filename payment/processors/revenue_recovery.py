@@ -1,5 +1,4 @@
-"""
-💰 Revenue Recovery Automated Processor
+"""💰 Revenue Recovery Automated Processor
 ======================================
 
 Automated revenue recovery system for failed payments, chargebacks,
@@ -7,9 +6,7 @@ disputes, and dunning management with machine learning optimization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -23,8 +20,7 @@ logger = logging.getLogger(__name__)
 
 
 class RecoveryType(Enum):
-    """Revenue recovery types"""
-    FAILED_PAYMENT = "failed_payment"
+    """Revenue recovery types"""    FAILED_PAYMENT = "failed_payment"
     CHARGEBACK = "chargeback"
     DISPUTE = "dispute"
     SUBSCRIPTION_DUNNING = "subscription_dunning"
@@ -34,8 +30,7 @@ class RecoveryType(Enum):
 
 
 class RecoveryStatus(Enum):
-    """Recovery attempt status"""
-    PENDING = "pending"
+    """Recovery attempt status"""    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     SUCCESSFUL = "successful"
     FAILED = "failed"
@@ -45,8 +40,7 @@ class RecoveryStatus(Enum):
 
 
 class RecoveryStrategy(Enum):
-    """Recovery strategies"""
-    AUTOMATIC_RETRY = "automatic_retry"
+    """Recovery strategies"""    AUTOMATIC_RETRY = "automatic_retry"
     EMAIL_CAMPAIGN = "email_campaign"
     SMS_REMINDER = "sms_reminder"
     PHONE_OUTREACH = "phone_outreach"
@@ -56,8 +50,7 @@ class RecoveryStrategy(Enum):
 
 
 class DunningLevel(Enum):
-    """Dunning campaign levels"""
-    SOFT_REMINDER = "soft_reminder"
+    """Dunning campaign levels"""    SOFT_REMINDER = "soft_reminder"
     FIRM_REMINDER = "firm_reminder"
     FINAL_NOTICE = "final_notice"
     COLLECTION_THREAT = "collection_threat"
@@ -66,8 +59,7 @@ class DunningLevel(Enum):
 
 @dataclass
 class RecoveryCase:
-    """Revenue recovery case"""
-    id: str
+    """Revenue recovery case"""    id: str
     recovery_type: RecoveryType
     status: RecoveryStatus
     amount: Decimal
@@ -87,8 +79,7 @@ class RecoveryCase:
 
 @dataclass
 class DunningCampaign:
-    """Subscription dunning campaign"""
-    id: str
+    """Subscription dunning campaign"""    id: str
     customer_id: str
     subscription_id: str
     amount: Decimal
@@ -103,8 +94,7 @@ class DunningCampaign:
 
 @dataclass
 class RecoveryAttempt:
-    """Individual recovery attempt"""
-    id: str
+    """Individual recovery attempt"""    id: str
     case_id: str
     strategy: RecoveryStrategy
     attempted_at: datetime
@@ -116,20 +106,17 @@ class RecoveryAttempt:
 
 
 class RevenueRecoveryProcessor:
-    """
-    Automated revenue recovery processor
+    """    Automated revenue recovery processor
     
     Handles failed payment recovery, chargeback disputes, dunning management,
     and fraud recovery with ML-based optimization and automation.
-    """
-    
+    """    
     def __init__(
         self,
         config: Dict[str, Any],
         ml_model_endpoint: Optional[str] = None
     ):
-        """Initialize revenue recovery processor"""
-        self.config = config
+        """Initialize revenue recovery processor"""        self.config = config
         self.ml_model_endpoint = ml_model_endpoint
         self.logger = logging.getLogger(__name__)
         
@@ -167,8 +154,7 @@ class RevenueRecoveryProcessor:
         original_transaction_id: str,
         deadline: Optional[datetime] = None
     ) -> RecoveryCase:
-        """Create a new revenue recovery case"""
-        try:
+        """Create a new revenue recovery case"""        try:
             case_id = f"recovery_{uuid.uuid4().hex[:12]}"
             
             # Calculate success probability using ML model
@@ -217,8 +203,7 @@ class RevenueRecoveryProcessor:
         case: RecoveryCase,
         strategy: Optional[RecoveryStrategy] = None
     ) -> RecoveryAttempt:
-        """Execute a recovery attempt"""
-        try:
+        """Execute a recovery attempt"""        try:
             if not strategy:
                 strategy = case.strategy
             
@@ -271,8 +256,7 @@ class RevenueRecoveryProcessor:
         amount: Decimal,
         currency: str
     ) -> DunningCampaign:
-        """Create a subscription dunning campaign"""
-        try:
+        """Create a subscription dunning campaign"""        try:
             campaign_id = f"dunning_{uuid.uuid4().hex[:12]}"
             
             campaign = DunningCampaign(
@@ -295,8 +279,7 @@ class RevenueRecoveryProcessor:
             raise
     
     async def execute_dunning_step(self, campaign: DunningCampaign) -> Dict[str, Any]:
-        """Execute next step in dunning campaign"""
-        try:
+        """Execute next step in dunning campaign"""        try:
             if campaign.paused or datetime.now() < campaign.next_attempt_date:
                 return {"skipped": True, "reason": "Not due or paused"}
             
@@ -340,8 +323,7 @@ class RevenueRecoveryProcessor:
         reason_code: str,
         customer_id: str
     ) -> RecoveryCase:
-        """Handle chargeback dispute"""
-        try:
+        """Handle chargeback dispute"""        try:
             # Create recovery case for chargeback
             case = await self.create_recovery_case(
                 RecoveryType.CHARGEBACK,
@@ -375,8 +357,7 @@ class RevenueRecoveryProcessor:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Analyze recovery performance metrics"""
-        try:
+        """Analyze recovery performance metrics"""        try:
             # Mock performance data (in production, query actual database)
             total_cases = 150
             successful_recoveries = 85
@@ -435,8 +416,7 @@ class RevenueRecoveryProcessor:
         amount: Decimal,
         customer_id: str
     ) -> float:
-        """Calculate success probability using ML model"""
-        try:
+        """Calculate success probability using ML model"""        try:
             if self.ml_model_endpoint:
                 # In production, call actual ML model
                 # For now, use heuristics
@@ -472,8 +452,7 @@ class RevenueRecoveryProcessor:
         amount: Decimal,
         success_probability: float
     ) -> RecoveryStrategy:
-        """Determine optimal recovery strategy"""
-        try:
+        """Determine optimal recovery strategy"""        try:
             # Calculate ROI for each strategy
             strategy_rois = {}
             for strategy in RecoveryStrategy:
@@ -496,8 +475,7 @@ class RevenueRecoveryProcessor:
             return RecoveryStrategy.EMAIL_CAMPAIGN  # Default strategy
     
     def _calculate_priority(self, amount: Decimal, success_probability: float) -> int:
-        """Calculate case priority (1-10)"""
-        try:
+        """Calculate case priority (1-10)"""        try:
             # Base priority on amount
             if amount >= Decimal("1000"):
                 base_priority = 8
@@ -523,8 +501,7 @@ class RevenueRecoveryProcessor:
         case: RecoveryCase,
         strategy: RecoveryStrategy
     ) -> Dict[str, Any]:
-        """Execute specific recovery strategy"""
-        try:
+        """Execute specific recovery strategy"""        try:
             if strategy == RecoveryStrategy.AUTOMATIC_RETRY:
                 return await self._retry_payment(case)
             elif strategy == RecoveryStrategy.EMAIL_CAMPAIGN:
@@ -545,8 +522,7 @@ class RevenueRecoveryProcessor:
             return {"status": RecoveryStatus.FAILED, "notes": str(e)}
     
     async def _retry_payment(self, case: RecoveryCase) -> Dict[str, Any]:
-        """Attempt automatic payment retry"""
-        # Simulate payment retry
+        """Attempt automatic payment retry"""        # Simulate payment retry
         await asyncio.sleep(0.1)
         
         # Mock success rate for automatic retry
@@ -565,8 +541,7 @@ class RevenueRecoveryProcessor:
             }
     
     async def _send_email_campaign(self, case: RecoveryCase) -> Dict[str, Any]:
-        """Send email recovery campaign"""
-        # Simulate email sending
+        """Send email recovery campaign"""        # Simulate email sending
         await asyncio.sleep(0.05)
         
         return {
@@ -576,8 +551,7 @@ class RevenueRecoveryProcessor:
         }
     
     async def _send_sms_reminder(self, case: RecoveryCase) -> Dict[str, Any]:
-        """Send SMS payment reminder"""
-        # Simulate SMS sending
+        """Send SMS payment reminder"""        # Simulate SMS sending
         await asyncio.sleep(0.05)
         
         return {
@@ -587,32 +561,28 @@ class RevenueRecoveryProcessor:
         }
     
     async def _schedule_phone_call(self, case: RecoveryCase) -> Dict[str, Any]:
-        """Schedule phone outreach call"""
-        return {
+        """Schedule phone outreach call"""        return {
             "status": RecoveryStatus.IN_PROGRESS,
             "amount_recovered": Decimal("0"),
             "notes": "Phone outreach scheduled"
         }
     
     async def _initiate_legal_action(self, case: RecoveryCase) -> Dict[str, Any]:
-        """Initiate legal recovery action"""
-        return {
+        """Initiate legal recovery action"""        return {
             "status": RecoveryStatus.IN_PROGRESS,
             "amount_recovered": Decimal("0"),
             "notes": "Legal action initiated"
         }
     
     async def _transfer_to_collections(self, case: RecoveryCase) -> Dict[str, Any]:
-        """Transfer case to collection agency"""
-        return {
+        """Transfer case to collection agency"""        return {
             "status": RecoveryStatus.IN_PROGRESS,
             "amount_recovered": Decimal("0"),
             "notes": "Case transferred to collection agency"
         }
     
     async def _execute_dunning_level(self, campaign: DunningCampaign) -> Dict[str, Any]:
-        """Execute specific dunning level"""
-        # Simulate dunning execution
+        """Execute specific dunning level"""        # Simulate dunning execution
         await asyncio.sleep(0.1)
         
         # Mock success rates by dunning level
@@ -635,8 +605,7 @@ class RevenueRecoveryProcessor:
         }
     
     def _get_next_dunning_level(self, current_level: DunningLevel) -> Optional[DunningLevel]:
-        """Get next dunning level"""
-        levels = list(DunningLevel)
+        """Get next dunning level"""        levels = list(DunningLevel)
         try:
             current_index = levels.index(current_level)
             if current_index < len(levels) - 1:
@@ -646,8 +615,7 @@ class RevenueRecoveryProcessor:
             return None
     
     def _calculate_next_attempt_date(self, level: DunningLevel) -> datetime:
-        """Calculate next dunning attempt date"""
-        delays = {
+        """Calculate next dunning attempt date"""        delays = {
             DunningLevel.SOFT_REMINDER: 3,
             DunningLevel.FIRM_REMINDER: 5,
             DunningLevel.FINAL_NOTICE: 7,
@@ -663,8 +631,7 @@ class RevenueRecoveryProcessor:
         transaction_id: str,
         reason_code: str
     ) -> Dict[str, Any]:
-        """Gather evidence for chargeback dispute"""
-        # Mock evidence gathering
+        """Gather evidence for chargeback dispute"""        # Mock evidence gathering
         return {
             "transaction_id": transaction_id,
             "reason_code": reason_code,
@@ -678,8 +645,7 @@ class RevenueRecoveryProcessor:
         transaction_id: str,
         evidence: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Submit chargeback dispute"""
-        # Mock dispute submission
+        """Submit chargeback dispute"""        # Mock dispute submission
         return {
             "success": True,
             "dispute_id": f"dispute_{uuid.uuid4().hex[:12]}",

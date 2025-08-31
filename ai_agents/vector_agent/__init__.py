@@ -9,8 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""
-# Core vector agent components
+"""# Core vector agent components
 from .vector_orchestrator import VectorOrchestrator
 from .faiss_manager import FAISSManager, FAISSIndexManager
 from .similarity_engine import SimilarityEngine, ContentTypeSimilarityProcessor

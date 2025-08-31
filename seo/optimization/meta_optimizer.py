@@ -1,14 +1,11 @@
-"""
-Meta Optimizer - SEO Meta-data Optimization
+"""Meta Optimizer - SEO Meta-data Optimization
 
 This module provides comprehensive meta-data optimization for SEO including
 title tags, meta descriptions, Open Graph tags, Twitter cards, and schema markup.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import re
+"""import re
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass
@@ -20,8 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 class MetaTagType(Enum):
-    """Types of meta tags"""
-    TITLE = "title"
+    """Types of meta tags"""    TITLE = "title"
     DESCRIPTION = "description"
     KEYWORDS = "keywords"
     OPEN_GRAPH = "open_graph"
@@ -32,8 +28,7 @@ class MetaTagType(Enum):
 
 
 class ContentType(Enum):
-    """Content types for meta optimization"""
-    ARTICLE = "article"
+    """Content types for meta optimization"""    ARTICLE = "article"
     PRODUCT = "product"
     VIDEO = "video"
     IMAGE = "image"
@@ -45,8 +40,7 @@ class ContentType(Enum):
 
 @dataclass
 class MetaTag:
-    """Individual meta tag"""
-    name: str
+    """Individual meta tag"""    name: str
     content: str
     tag_type: MetaTagType
     is_valid: bool
@@ -56,8 +50,7 @@ class MetaTag:
 
 @dataclass
 class MetaOptimizationResult:
-    """Result of meta optimization"""
-    optimized_title: str
+    """Result of meta optimization"""    optimized_title: str
     optimized_description: str
     optimized_keywords: List[str]
     open_graph_tags: Dict[str, str]
@@ -71,20 +64,15 @@ class MetaOptimizationResult:
 
 
 class MetaOptimizer:
-    """
-    Comprehensive meta-data optimizer for SEO that generates and optimizes
+    """    Comprehensive meta-data optimizer for SEO that generates and optimizes
     all necessary meta tags for better search engine visibility.
-    """
-
-    def __init__(self, language: str = "en", region: str = "US"):
-        """
-        Initialize the meta optimizer.
+    """    def __init__(self, language: str = "en", region: str = "US"):
+        """        Initialize the meta optimizer.
         
         Args:
             language: Target language for meta tags
             region: Target region for localization
-        """
-        self.language = language
+        """        self.language = language
         self.region = region
         self.title_length_limits = {"min": 50, "max": 60}
         self.description_length_limits = {"min": 150, "max": 160}
@@ -101,8 +89,7 @@ class MetaOptimizer:
         image_url: str = "",
         additional_data: Optional[Dict[str, Any]] = None
     ) -> MetaOptimizationResult:
-        """
-        Optimize all meta data for a piece of content.
+        """        Optimize all meta data for a piece of content.
         
         Args:
             content: Main content to optimize meta data for
@@ -117,8 +104,7 @@ class MetaOptimizer:
             
         Returns:
             MetaOptimizationResult with optimized meta data
-        """
-        try:
+        """        try:
             logger.info(f"Starting meta optimization for {content_type.value} content")
             
             # Optimize title tag
@@ -183,8 +169,7 @@ class MetaOptimizer:
             raise
 
     def _optimize_title(self, title: str, keywords: List[str]) -> str:
-        """Optimize title tag for SEO"""
-        if not title.strip():
+        """Optimize title tag for SEO"""        if not title.strip():
             title = f"{keywords[0] if keywords else 'Content'} - Professional Guide"
         
         # Clean title
@@ -221,8 +206,7 @@ class MetaOptimizer:
         return title
 
     def _optimize_description(self, content: str, keywords: List[str]) -> str:
-        """Optimize meta description"""
-        # Extract first paragraph or sentences
+        """Optimize meta description"""        # Extract first paragraph or sentences
         sentences = re.split(r'[.!?]', content)
         description = ""
         
@@ -263,8 +247,7 @@ class MetaOptimizer:
         return description
 
     def _optimize_keywords(self, keywords: List[str], content: str) -> List[str]:
-        """Optimize meta keywords (though less important for modern SEO)"""
-        # Limit to top 10 keywords
+        """Optimize meta keywords (though less important for modern SEO)"""        # Limit to top 10 keywords
         optimized = keywords[:10]
         
         # Add relevant keywords from content
@@ -290,8 +273,7 @@ class MetaOptimizer:
         image_url: str, 
         content_type: ContentType
     ) -> Dict[str, str]:
-        """Generate Open Graph meta tags"""
-        og_tags = {
+        """Generate Open Graph meta tags"""        og_tags = {
             "og:title": title,
             "og:description": description,
             "og:type": self._get_og_type(content_type),
@@ -321,8 +303,7 @@ class MetaOptimizer:
         image_url: str, 
         url: str
     ) -> Dict[str, str]:
-        """Generate Twitter Card meta tags"""
-        twitter_tags = {
+        """Generate Twitter Card meta tags"""        twitter_tags = {
             "twitter:card": "summary_large_image" if image_url else "summary",
             "twitter:title": title,
             "twitter:description": description[:200]  # Twitter description limit
@@ -349,8 +330,7 @@ class MetaOptimizer:
         image_url: str,
         additional_data: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Generate JSON-LD Schema markup"""
-        
+        """Generate JSON-LD Schema markup"""        
         base_schema = {
             "@context": "https://schema.org",
             "@type": self._get_schema_type(content_type),
@@ -431,8 +411,7 @@ class MetaOptimizer:
         return schema
 
     def _generate_canonical_url(self, url: str) -> str:
-        """Generate canonical URL"""
-        if not url:
+        """Generate canonical URL"""        if not url:
             return ""
         
         # Clean URL - remove query parameters and fragments for canonical
@@ -450,8 +429,7 @@ class MetaOptimizer:
         content_type: ContentType, 
         additional_data: Optional[Dict[str, Any]]
     ) -> str:
-        """Generate robots meta directive"""
-        
+        """Generate robots meta directive"""        
         # Default to index, follow
         directives = ["index", "follow"]
         
@@ -480,8 +458,7 @@ class MetaOptimizer:
         canonical_url: str,
         robots_directive: str
     ) -> List[MetaTag]:
-        """Create list of all meta tags with validation"""
-        
+        """Create list of all meta tags with validation"""        
         meta_tags = []
         
         # Title tag
@@ -578,8 +555,7 @@ class MetaOptimizer:
         content: str, 
         keywords: List[str]
     ) -> float:
-        """Calculate SEO score based on meta tags quality"""
-        
+        """Calculate SEO score based on meta tags quality"""        
         score = 0.0
         max_score = 100.0
         
@@ -626,8 +602,7 @@ class MetaOptimizer:
         return min(max_score, score)
 
     def _generate_meta_recommendations(self, meta_tags: List[MetaTag], seo_score: float) -> List[str]:
-        """Generate recommendations for meta tag improvements"""
-        
+        """Generate recommendations for meta tag improvements"""        
         recommendations = []
         
         # Collect recommendations from individual tags
@@ -658,8 +633,7 @@ class MetaOptimizer:
         return list(set(recommendations))  # Remove duplicates
 
     def _get_og_type(self, content_type: ContentType) -> str:
-        """Get Open Graph type for content type"""
-        mapping = {
+        """Get Open Graph type for content type"""        mapping = {
             ContentType.ARTICLE: "article",
             ContentType.PRODUCT: "product",
             ContentType.VIDEO: "video.other",
@@ -672,8 +646,7 @@ class MetaOptimizer:
         return mapping.get(content_type, "website")
 
     def _get_schema_type(self, content_type: ContentType) -> str:
-        """Get Schema.org type for content type"""
-        mapping = {
+        """Get Schema.org type for content type"""        mapping = {
             ContentType.ARTICLE: "Article",
             ContentType.PRODUCT: "Product",
             ContentType.VIDEO: "VideoObject",
@@ -686,8 +659,7 @@ class MetaOptimizer:
         return mapping.get(content_type, "Thing")
 
     def _get_locale_code(self) -> str:
-        """Get locale code for Open Graph"""
-        locale_map = {
+        """Get locale code for Open Graph"""        locale_map = {
             "en": "en_US",
             "fr": "fr_FR",
             "de": "de_DE",
@@ -701,8 +673,7 @@ class MetaOptimizer:
         return locale_map.get(self.language, "en_US")
 
     def generate_html_meta_tags(self, result: MetaOptimizationResult) -> str:
-        """Generate HTML meta tags from optimization result"""
-        
+        """Generate HTML meta tags from optimization result"""        
         html_tags = []
         
         # Title
@@ -735,8 +706,7 @@ class MetaOptimizer:
         return '\n'.join(html_tags)
 
     def validate_meta_tags(self, html_content: str) -> Dict[str, Any]:
-        """Validate existing meta tags in HTML content"""
-        
+        """Validate existing meta tags in HTML content"""        
         validation_result = {
             "has_title": bool(re.search(r'<title[^>]*>(.*?)</title>', html_content, re.IGNORECASE)),
             "has_description": bool(re.search(r'<meta[^>]*name=["\']description["\'][^>]*>', html_content, re.IGNORECASE)),

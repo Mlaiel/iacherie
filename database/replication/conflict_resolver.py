@@ -1,5 +1,4 @@
-"""
-Conflict Resolver - IA Influencer Agent Platform
+"""Conflict Resolver - IA Influencer Agent Platform
 
 Advanced conflict detection and resolution for multi-master database replication
 with intelligent merge strategies and data consistency guarantees.
@@ -10,9 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is proprietary and confidential. Any unauthorized use, modification,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Set, Tuple, Union
 from datetime import datetime, timedelta
@@ -24,8 +21,7 @@ from .config import ReplicationConfig
 
 
 class ConflictType(Enum):
-    """Types of replication conflicts"""
-    INSERT_INSERT = "insert_insert"
+    """Types of replication conflicts"""    INSERT_INSERT = "insert_insert"
     UPDATE_UPDATE = "update_update"
     UPDATE_DELETE = "update_delete"
     DELETE_UPDATE = "delete_update"
@@ -36,8 +32,7 @@ class ConflictType(Enum):
 
 
 class ResolutionStrategy(Enum):
-    """Conflict resolution strategies"""
-    LAST_WRITE_WINS = "last_write_wins"
+    """Conflict resolution strategies"""    LAST_WRITE_WINS = "last_write_wins"
     FIRST_WRITE_WINS = "first_write_wins"
     MANUAL_RESOLUTION = "manual_resolution"
     MERGE_VALUES = "merge_values"
@@ -47,8 +42,7 @@ class ResolutionStrategy(Enum):
 
 
 class ConflictSeverity(Enum):
-    """Conflict severity levels"""
-    LOW = "low"
+    """Conflict severity levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -56,8 +50,7 @@ class ConflictSeverity(Enum):
 
 @dataclass
 class ConflictRecord:
-    """Database conflict record"""
-    id: str
+    """Database conflict record"""    id: str
     conflict_type: ConflictType
     severity: ConflictSeverity
     table_name: str
@@ -78,8 +71,7 @@ class ConflictRecord:
 
 @dataclass
 class ConflictResolutionRule:
-    """Conflict resolution rule configuration"""
-    table_pattern: str
+    """Conflict resolution rule configuration"""    table_pattern: str
     conflict_types: List[ConflictType]
     strategy: ResolutionStrategy
     priority: int
@@ -89,22 +81,18 @@ class ConflictResolutionRule:
 
 
 class ConflictResolver:
-    """
-    Advanced conflict resolution system for database replication.
+    """    Advanced conflict resolution system for database replication.
     
     Provides intelligent conflict detection, analysis, and resolution
     with multiple strategies and customizable rules for the content
     creator platform.
-    """
-    
+    """    
     def __init__(self, config: ReplicationConfig):
-        """
-        Initialize conflict resolver.
+        """        Initialize conflict resolver.
         
         Args:
             config: Replication configuration
-        """
-        self.config = config
+        """        self.config = config
         self.logger = logging.getLogger(f"{__name__}.ConflictResolver")
         
         # Conflict storage
@@ -139,13 +127,11 @@ class ConflictResolver:
         self.logger.info("ConflictResolver initialized")
     
     async def initialize(self) -> bool:
-        """
-        Initialize conflict resolver.
+        """        Initialize conflict resolver.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             self.logger.info("Initializing conflict resolver...")
             
             # Load custom resolution rules
@@ -165,8 +151,7 @@ class ConflictResolver:
             return False
     
     def _load_default_resolution_rules(self) -> None:
-        """Load default conflict resolution rules"""
-        try:
+        """Load default conflict resolution rules"""        try:
             default_rules = [
                 # User data conflicts - priority based
                 ConflictResolutionRule(
@@ -230,8 +215,7 @@ class ConflictResolver:
             self.logger.error(f"Failed to load default resolution rules: {e}")
     
     async def _load_custom_resolution_rules(self) -> None:
-        """Load custom resolution rules from configuration"""
-        try:
+        """Load custom resolution rules from configuration"""        try:
             custom_rules_config = self.config.config_data.get("conflict_resolution", {}).get("rules", [])
             
             for rule_config in custom_rules_config:
@@ -256,8 +240,7 @@ class ConflictResolver:
             self.logger.error(f"Failed to load custom resolution rules: {e}")
     
     async def _register_custom_resolvers(self) -> None:
-        """Register custom conflict resolver functions"""
-        try:
+        """Register custom conflict resolver functions"""        try:
             # Register built-in custom resolvers
             self.custom_resolvers.update({
                 "content_fingerprint_resolver": self._resolve_content_fingerprint_conflict,
@@ -273,14 +256,12 @@ class ConflictResolver:
             self.logger.error(f"Failed to register custom resolvers: {e}")
     
     async def _start_monitoring(self) -> None:
-        """Start conflict monitoring"""
-        self.is_monitoring = True
+        """Start conflict monitoring"""        self.is_monitoring = True
         self.monitoring_task = asyncio.create_task(self._monitoring_loop())
         self.logger.info("Conflict monitoring started")
     
     async def _monitoring_loop(self) -> None:
-        """Main monitoring loop for conflict resolution"""
-        while self.is_monitoring:
+        """Main monitoring loop for conflict resolution"""        while self.is_monitoring:
             try:
                 # Process pending conflicts
                 await self._process_pending_conflicts()
@@ -310,8 +291,7 @@ class ConflictResolver:
         target_node: str,
         database_type: str = "postgresql"
     ) -> Optional[ConflictRecord]:
-        """
-        Detect and analyze potential conflicts.
+        """        Detect and analyze potential conflicts.
         
         Args:
             table_name: Name of the table
@@ -324,8 +304,7 @@ class ConflictResolver:
             
         Returns:
             ConflictRecord if conflict detected, None otherwise
-        """
-        try:
+        """        try:
             # Determine conflict type
             conflict_type = self._determine_conflict_type(source_data, target_data)
             
@@ -390,8 +369,7 @@ class ConflictResolver:
         source_data: Dict[str, Any], 
         target_data: Dict[str, Any]
     ) -> Optional[ConflictType]:
-        """Determine the type of conflict"""
-        try:
+        """Determine the type of conflict"""        try:
             source_exists = source_data is not None and len(source_data) > 0
             target_exists = target_data is not None and len(target_data) > 0
             
@@ -417,8 +395,7 @@ class ConflictResolver:
             return ConflictType.UPDATE_UPDATE  # Default fallback
     
     def _data_differs(self, data1: Dict[str, Any], data2: Dict[str, Any]) -> bool:
-        """Check if two data records differ significantly"""
-        try:
+        """Check if two data records differ significantly"""        try:
             # Exclude timestamp fields from comparison
             exclude_fields = {"updated_at", "modified_at", "last_modified", "timestamp"}
             
@@ -438,8 +415,7 @@ class ConflictResolver:
         source_data: Dict[str, Any],
         target_data: Dict[str, Any]
     ) -> ConflictSeverity:
-        """Determine conflict severity based on context"""
-        try:
+        """Determine conflict severity based on context"""        try:
             # Critical tables always get high severity
             critical_tables = ["users", "revenue", "payments", "content_protection"]
             if any(critical in table_name.lower() for critical in critical_tables):
@@ -478,8 +454,7 @@ class ConflictResolver:
         source_node: str,
         target_node: str
     ) -> str:
-        """Generate unique conflict identifier"""
-        try:
+        """Generate unique conflict identifier"""        try:
             # Create a hash from conflict components
             conflict_string = f"{table_name}:{json.dumps(primary_key, sort_keys=True)}:{source_node}:{target_node}"
             conflict_hash = hashlib.md5(conflict_string.encode()).hexdigest()[:8]
@@ -493,8 +468,7 @@ class ConflictResolver:
             return f"conflict_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_unknown"
     
     async def _should_auto_resolve(self, conflict: ConflictRecord) -> bool:
-        """Determine if conflict should be automatically resolved"""
-        try:
+        """Determine if conflict should be automatically resolved"""        try:
             # Find matching resolution rule
             rule = self._find_resolution_rule(conflict)
             
@@ -509,8 +483,7 @@ class ConflictResolver:
             return False
     
     def _find_resolution_rule(self, conflict: ConflictRecord) -> Optional[ConflictResolutionRule]:
-        """Find applicable resolution rule for conflict"""
-        try:
+        """Find applicable resolution rule for conflict"""        try:
             import fnmatch
             
             for rule in self.resolution_rules:
@@ -536,8 +509,7 @@ class ConflictResolver:
             return None
     
     def _check_rule_conditions(self, conflict: ConflictRecord, conditions: Dict[str, Any]) -> bool:
-        """Check if conflict meets rule conditions"""
-        try:
+        """Check if conflict meets rule conditions"""        try:
             # Check severity condition
             if "severity" in conditions:
                 required_severity = ConflictSeverity(conditions["severity"])
@@ -566,8 +538,7 @@ class ConflictResolver:
             return False
     
     async def resolve_conflict(self, conflict_id: str, strategy: Optional[ResolutionStrategy] = None) -> bool:
-        """
-        Resolve a specific conflict.
+        """        Resolve a specific conflict.
         
         Args:
             conflict_id: Conflict identifier
@@ -575,8 +546,7 @@ class ConflictResolver:
             
         Returns:
             bool: True if conflict resolved successfully
-        """
-        try:
+        """        try:
             if conflict_id not in self.active_conflicts:
                 self.logger.error(f"Conflict not found: {conflict_id}")
                 return False
@@ -636,8 +606,7 @@ class ConflictResolver:
         conflict: ConflictRecord, 
         strategy: ResolutionStrategy
     ) -> Optional[Dict[str, Any]]:
-        """Apply specific resolution strategy to conflict"""
-        try:
+        """Apply specific resolution strategy to conflict"""        try:
             if strategy == ResolutionStrategy.LAST_WRITE_WINS:
                 return await self._resolve_last_write_wins(conflict)
             elif strategy == ResolutionStrategy.FIRST_WRITE_WINS:
@@ -661,8 +630,7 @@ class ConflictResolver:
             return None
     
     async def _resolve_last_write_wins(self, conflict: ConflictRecord) -> Dict[str, Any]:
-        """Resolve using last write wins strategy"""
-        try:
+        """Resolve using last write wins strategy"""        try:
             # Compare timestamps
             source_timestamp = self._extract_timestamp(conflict.source_data)
             target_timestamp = self._extract_timestamp(conflict.target_data)
@@ -681,8 +649,7 @@ class ConflictResolver:
             return conflict.source_data.copy()
     
     async def _resolve_first_write_wins(self, conflict: ConflictRecord) -> Dict[str, Any]:
-        """Resolve using first write wins strategy"""
-        try:
+        """Resolve using first write wins strategy"""        try:
             # Compare timestamps
             source_timestamp = self._extract_timestamp(conflict.source_data)
             target_timestamp = self._extract_timestamp(conflict.target_data)
@@ -701,8 +668,7 @@ class ConflictResolver:
             return conflict.target_data.copy()
     
     async def _resolve_merge_values(self, conflict: ConflictRecord) -> Dict[str, Any]:
-        """Resolve by merging non-conflicting values"""
-        try:
+        """Resolve by merging non-conflicting values"""        try:
             merged_data = conflict.target_data.copy()
             
             for key, source_value in conflict.source_data.items():
@@ -739,8 +705,7 @@ class ConflictResolver:
             return conflict.source_data.copy()
     
     async def _resolve_priority_based(self, conflict: ConflictRecord) -> Dict[str, Any]:
-        """Resolve based on node priority"""
-        try:
+        """Resolve based on node priority"""        try:
             # This would integrate with topology manager to get node priorities
             # For now, use a simple rule: primary nodes have higher priority
             
@@ -757,8 +722,7 @@ class ConflictResolver:
             return conflict.source_data.copy()
     
     async def _resolve_custom(self, conflict: ConflictRecord) -> Optional[Dict[str, Any]]:
-        """Resolve using custom resolver function"""
-        try:
+        """Resolve using custom resolver function"""        try:
             # Find applicable custom resolver
             rule = self._find_resolution_rule(conflict)
             
@@ -778,8 +742,7 @@ class ConflictResolver:
             return None
     
     async def _resolve_reject_conflict(self, conflict: ConflictRecord) -> Dict[str, Any]:
-        """Reject the conflict and keep target data"""
-        try:
+        """Reject the conflict and keep target data"""        try:
             self.metrics["rejected_conflicts"] += 1
             self.logger.info(f"Conflict rejected: {conflict.id}")
             
@@ -790,8 +753,7 @@ class ConflictResolver:
             return conflict.target_data.copy()
     
     async def _queue_manual_resolution(self, conflict: ConflictRecord) -> None:
-        """Queue conflict for manual resolution"""
-        try:
+        """Queue conflict for manual resolution"""        try:
             # This would integrate with a manual resolution queue/UI
             self.logger.info(f"Conflict queued for manual resolution: {conflict.id}")
             
@@ -807,8 +769,7 @@ class ConflictResolver:
             return None
     
     def _extract_timestamp(self, data: Dict[str, Any]) -> Optional[datetime]:
-        """Extract timestamp from data record"""
-        try:
+        """Extract timestamp from data record"""        try:
             timestamp_fields = ["updated_at", "modified_at", "last_modified", "timestamp", "created_at"]
             
             for field in timestamp_fields:
@@ -832,8 +793,7 @@ class ConflictResolver:
     
     # Custom resolver functions
     async def _resolve_content_fingerprint_conflict(self, conflict: ConflictRecord) -> Dict[str, Any]:
-        """Custom resolver for content fingerprint conflicts"""
-        try:
+        """Custom resolver for content fingerprint conflicts"""        try:
             # For fingerprints, prefer the one with more complete metadata
             source_metadata = conflict.source_data.get("metadata", {})
             target_metadata = conflict.target_data.get("metadata", {})
@@ -848,8 +808,7 @@ class ConflictResolver:
             return await self._resolve_first_write_wins(conflict)
     
     async def _resolve_user_profile_conflict(self, conflict: ConflictRecord) -> Dict[str, Any]:
-        """Custom resolver for user profile conflicts"""
-        try:
+        """Custom resolver for user profile conflicts"""        try:
             # Merge user profiles intelligently
             merged_data = conflict.target_data.copy()
             
@@ -873,8 +832,7 @@ class ConflictResolver:
             return await self._resolve_merge_values(conflict)
     
     async def _resolve_analytics_aggregation_conflict(self, conflict: ConflictRecord) -> Dict[str, Any]:
-        """Custom resolver for analytics aggregation conflicts"""
-        try:
+        """Custom resolver for analytics aggregation conflicts"""        try:
             # For analytics, sum numerical values
             merged_data = conflict.target_data.copy()
             
@@ -891,8 +849,7 @@ class ConflictResolver:
             return await self._resolve_merge_values(conflict)
     
     async def _resolve_revenue_validation_conflict(self, conflict: ConflictRecord) -> Optional[Dict[str, Any]]:
-        """Custom resolver for revenue data conflicts - requires validation"""
-        try:
+        """Custom resolver for revenue data conflicts - requires validation"""        try:
             # Revenue conflicts always require manual validation
             self.logger.critical(f"Revenue conflict detected - manual validation required: {conflict.id}")
             
@@ -907,8 +864,7 @@ class ConflictResolver:
             return None
     
     async def _resolve_timestamp_based_conflict(self, conflict: ConflictRecord) -> Dict[str, Any]:
-        """Custom resolver based on timestamp comparison"""
-        try:
+        """Custom resolver based on timestamp comparison"""        try:
             # Use the record with the latest timestamp
             return await self._resolve_last_write_wins(conflict)
             
@@ -917,8 +873,7 @@ class ConflictResolver:
             return conflict.source_data.copy()
     
     async def _process_pending_conflicts(self) -> None:
-        """Process pending conflicts for auto-resolution"""
-        try:
+        """Process pending conflicts for auto-resolution"""        try:
             conflicts_to_process = list(self.active_conflicts.values())
             
             for conflict in conflicts_to_process:
@@ -929,8 +884,7 @@ class ConflictResolver:
             self.logger.error(f"Failed to process pending conflicts: {e}")
     
     async def _cleanup_old_conflicts(self) -> None:
-        """Clean up old resolved conflicts"""
-        try:
+        """Clean up old resolved conflicts"""        try:
             cutoff_time = datetime.utcnow() - timedelta(days=30)
             
             # Remove old resolved conflicts
@@ -955,8 +909,7 @@ class ConflictResolver:
             self.logger.error(f"Failed to cleanup old conflicts: {e}")
     
     async def _update_metrics(self) -> None:
-        """Update conflict resolution metrics"""
-        try:
+        """Update conflict resolution metrics"""        try:
             # Update current metrics
             active_count = len(self.active_conflicts)
             resolved_count = len(self.resolved_conflicts)
@@ -975,8 +928,7 @@ class ConflictResolver:
             self.logger.error(f"Failed to update metrics: {e}")
     
     async def _log_conflict_statistics(self) -> None:
-        """Log conflict statistics periodically"""
-        try:
+        """Log conflict statistics periodically"""        try:
             # Log every 10 minutes
             if datetime.utcnow().minute % 10 == 0:
                 stats = {
@@ -993,74 +945,62 @@ class ConflictResolver:
             self.logger.error(f"Failed to log conflict statistics: {e}")
     
     def get_conflict_by_id(self, conflict_id: str) -> Optional[ConflictRecord]:
-        """
-        Get conflict by ID.
+        """        Get conflict by ID.
         
         Args:
             conflict_id: Conflict identifier
             
         Returns:
             ConflictRecord or None if not found
-        """
-        return (self.active_conflicts.get(conflict_id) or 
+        """        return (self.active_conflicts.get(conflict_id) or 
                 self.resolved_conflicts.get(conflict_id))
     
     def get_active_conflicts(self) -> List[ConflictRecord]:
-        """
-        Get all active conflicts.
+        """        Get all active conflicts.
         
         Returns:
             List of active conflicts
-        """
-        return list(self.active_conflicts.values())
+        """        return list(self.active_conflicts.values())
     
     def get_conflicts_by_table(self, table_name: str) -> List[ConflictRecord]:
-        """
-        Get conflicts for specific table.
+        """        Get conflicts for specific table.
         
         Args:
             table_name: Name of the table
             
         Returns:
             List of conflicts for the table
-        """
-        return [
+        """        return [
             conflict for conflict in self.active_conflicts.values()
             if conflict.table_name == table_name
         ]
     
     def get_conflicts_by_severity(self, severity: ConflictSeverity) -> List[ConflictRecord]:
-        """
-        Get conflicts by severity level.
+        """        Get conflicts by severity level.
         
         Args:
             severity: Conflict severity
             
         Returns:
             List of conflicts with specified severity
-        """
-        return [
+        """        return [
             conflict for conflict in self.active_conflicts.values()
             if conflict.severity == severity
         ]
     
     def get_conflict_metrics(self) -> Dict[str, Any]:
-        """
-        Get comprehensive conflict metrics.
+        """        Get comprehensive conflict metrics.
         
         Returns:
             Dict containing conflict metrics
-        """
-        return self.metrics.copy()
+        """        return self.metrics.copy()
     
     def get_resolution_rules(self) -> List[Dict[str, Any]]:
-        """
-        Get all resolution rules.
+        """        Get all resolution rules.
         
         Returns:
             List of resolution rules as dictionaries
-        """
-        return [
+        """        return [
             {
                 "table_pattern": rule.table_pattern,
                 "conflict_types": [ct.value for ct in rule.conflict_types],
@@ -1073,8 +1013,7 @@ class ConflictResolver:
         ]
     
     async def shutdown(self) -> None:
-        """Shutdown conflict resolver"""
-        try:
+        """Shutdown conflict resolver"""        try:
             self.logger.info("Shutting down conflict resolver...")
             
             # Stop monitoring

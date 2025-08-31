@@ -1,5 +1,4 @@
-"""
-📊 Quality Control Dashboard - Real-time Quality Management Interface
+"""📊 Quality Control Dashboard - Real-time Quality Management Interface
 
 Advanced dashboard system for real-time monitoring, management, and visualization
 of audio quality control operations with comprehensive analytics and reporting.
@@ -13,9 +12,7 @@ Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou reproduction sans 
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 
 interdite et passible de poursuites judiciaires selon la loi allemande et internationale.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from dataclasses import dataclass, field, asdict
@@ -38,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 class DashboardMetricType(Enum):
-    """Dashboard metric types"""
-    QUALITY_SCORE = "quality_score"
+    """Dashboard metric types"""    QUALITY_SCORE = "quality_score"
     PROCESSING_TIME = "processing_time"
     SUCCESS_RATE = "success_rate"
     ALERT_COUNT = "alert_count"
@@ -50,8 +46,7 @@ class DashboardMetricType(Enum):
 
 
 class TimeRange(Enum):
-    """Time range options for analytics"""
-    LAST_HOUR = "1h"
+    """Time range options for analytics"""    LAST_HOUR = "1h"
     LAST_6_HOURS = "6h"
     LAST_24_HOURS = "24h"
     LAST_WEEK = "7d"
@@ -61,8 +56,7 @@ class TimeRange(Enum):
 
 @dataclass
 class DashboardWidget:
-    """Dashboard widget configuration"""
-    widget_id: str
+    """Dashboard widget configuration"""    widget_id: str
     title: str
     type: str  # "chart", "metric", "table", "alert", "status"
     metric_type: Optional[DashboardMetricType] = None
@@ -76,8 +70,7 @@ class DashboardWidget:
 
 @dataclass
 class DashboardData:
-    """Complete dashboard data structure"""
-    timestamp: datetime
+    """Complete dashboard data structure"""    timestamp: datetime
     summary_metrics: Dict[str, Any]
     quality_trends: Dict[str, List[Dict[str, Any]]]
     active_alerts: List[QualityAlert]
@@ -88,8 +81,7 @@ class DashboardData:
 
 
 class RealTimeDashboard:
-    """
-    📊 Real-time Quality Control Dashboard
+    """    📊 Real-time Quality Control Dashboard
     
     Comprehensive dashboard for monitoring and managing audio quality control:
     - Real-time quality metrics visualization
@@ -97,9 +89,7 @@ class RealTimeDashboard:
     - Compliance tracking across platforms
     - Performance analytics and reporting
     - Interactive quality control management
-    """
-
-    def __init__(
+    """    def __init__(
         self,
         quality_controller: QualityController,
         quality_monitor: QualityMonitor,
@@ -127,8 +117,7 @@ class RealTimeDashboard:
         logger.info(f"RealTimeDashboard initialized with ID: {self.dashboard_id}")
 
     def _initialize_default_widgets(self):
-        """Initialize default dashboard widgets"""
-        
+        """Initialize default dashboard widgets"""        
         # Quality Score Overview
         self.widgets["quality_overview"] = DashboardWidget(
             widget_id="quality_overview",
@@ -205,8 +194,7 @@ class RealTimeDashboard:
         custom_start: Optional[datetime] = None,
         custom_end: Optional[datetime] = None
     ) -> DashboardData:
-        """Get complete dashboard data"""
-        
+        """Get complete dashboard data"""        
         cache_key = f"dashboard_data_{time_range.value}"
         
         # Check cache
@@ -257,8 +245,7 @@ class RealTimeDashboard:
         return dashboard_data
 
     async def _get_summary_metrics(self, start_time: datetime, end_time: datetime) -> Dict[str, Any]:
-        """Get summary metrics for the dashboard"""
-        
+        """Get summary metrics for the dashboard"""        
         # Get quality statistics from controller
         controller_stats = self.controller.get_processing_statistics()
         
@@ -288,8 +275,7 @@ class RealTimeDashboard:
         return summary
 
     async def _get_quality_trends(self, start_time: datetime, end_time: datetime) -> Dict[str, List[Dict[str, Any]]]:
-        """Get quality trends data"""
-        
+        """Get quality trends data"""        
         trends = {
             "quality_scores": [],
             "processing_times": [],
@@ -359,12 +345,10 @@ class RealTimeDashboard:
         return trends
 
     async def _get_active_alerts(self) -> List[QualityAlert]:
-        """Get active quality alerts"""
-        return self.monitor.get_active_alerts()
+        """Get active quality alerts"""        return self.monitor.get_active_alerts()
 
     async def _get_recent_reports(self, start_time: datetime, end_time: datetime) -> List[Dict[str, Any]]:
-        """Get recent quality reports"""
-        
+        """Get recent quality reports"""        
         # Get quality reports from controller history
         processing_history = self.controller.get_processing_history(
             hours=int((end_time - start_time).total_seconds() / 3600)
@@ -387,8 +371,7 @@ class RealTimeDashboard:
         return recent_reports
 
     async def _get_compliance_status(self, start_time: datetime, end_time: datetime) -> Dict[str, Any]:
-        """Get compliance status across platforms"""
-        
+        """Get compliance status across platforms"""        
         platforms = self.compliance_manager.get_supported_platforms()
         compliance_status = {}
         
@@ -436,8 +419,7 @@ class RealTimeDashboard:
         return compliance_status
 
     async def _get_system_health(self) -> Dict[str, Any]:
-        """Get system health metrics"""
-        
+        """Get system health metrics"""        
         # Controller health
         controller_stats = self.controller.get_processing_statistics()
         controller_health = "healthy" if controller_stats.get("success_rate", 0) > 0.95 else "degraded"
@@ -461,8 +443,7 @@ class RealTimeDashboard:
         }
 
     async def _get_performance_metrics(self, start_time: datetime, end_time: datetime) -> Dict[str, Any]:
-        """Get performance metrics"""
-        
+        """Get performance metrics"""        
         controller_stats = self.controller.get_processing_statistics()
         optimizer_stats = self.optimizer.get_optimization_statistics()
         
@@ -478,15 +459,13 @@ class RealTimeDashboard:
         }
 
     def _is_cache_valid(self, cache_key: str) -> bool:
-        """Check if cached data is still valid"""
-        if cache_key not in self.cache_timestamps:
+        """Check if cached data is still valid"""        if cache_key not in self.cache_timestamps:
             return False
         
         return (datetime.now() - self.cache_timestamps[cache_key]).total_seconds() < self.cache_ttl
 
     async def get_widget_data(self, widget_id: str) -> Dict[str, Any]:
-        """Get data for a specific widget"""
-        
+        """Get data for a specific widget"""        
         if widget_id not in self.widgets:
             return {"error": "Widget not found"}
         
@@ -518,8 +497,7 @@ class RealTimeDashboard:
         return widget_data
 
     async def _get_metric_widget_data(self, widget: DashboardWidget) -> Dict[str, Any]:
-        """Get data for metric widget"""
-        
+        """Get data for metric widget"""        
         dashboard_data = await self.get_dashboard_data(widget.time_range)
         
         if widget.metric_type == DashboardMetricType.QUALITY_SCORE:
@@ -543,8 +521,7 @@ class RealTimeDashboard:
         }
 
     async def _get_chart_widget_data(self, widget: DashboardWidget) -> Dict[str, Any]:
-        """Get data for chart widget"""
-        
+        """Get data for chart widget"""        
         dashboard_data = await self.get_dashboard_data(widget.time_range)
         
         chart_type = widget.config.get("chart_type", "line")
@@ -563,8 +540,7 @@ class RealTimeDashboard:
         }
 
     async def _get_table_widget_data(self, widget: DashboardWidget) -> Dict[str, Any]:
-        """Get data for table widget"""
-        
+        """Get data for table widget"""        
         dashboard_data = await self.get_dashboard_data(widget.time_range)
         
         columns = widget.config.get("columns", [])
@@ -580,8 +556,7 @@ class RealTimeDashboard:
         }
 
     async def _get_alert_widget_data(self, widget: DashboardWidget) -> Dict[str, Any]:
-        """Get data for alert widget"""
-        
+        """Get data for alert widget"""        
         active_alerts = await self._get_active_alerts()
         max_displayed = widget.config.get("max_displayed", 10)
         
@@ -600,8 +575,7 @@ class RealTimeDashboard:
         }
 
     async def _get_status_widget_data(self, widget: DashboardWidget) -> Dict[str, Any]:
-        """Get data for status widget"""
-        
+        """Get data for status widget"""        
         if widget.metric_type == DashboardMetricType.COMPLIANCE_RATE:
             dashboard_data = await self.get_dashboard_data(widget.time_range)
             platforms = widget.config.get("platforms", [])
@@ -624,8 +598,7 @@ class RealTimeDashboard:
             return {"error": "Unsupported metric type for status widget"}
 
     def _calculate_trend_change(self, trend_data: List[Dict[str, Any]]) -> float:
-        """Calculate trend change percentage"""
-        
+        """Calculate trend change percentage"""        
         if len(trend_data) < 2:
             return 0.0
         
@@ -644,8 +617,7 @@ class RealTimeDashboard:
         return ((recent_avg - older_avg) / older_avg) * 100
 
     def _get_metric_status(self, value: float, metric_type: DashboardMetricType) -> str:
-        """Get status for metric value"""
-        
+        """Get status for metric value"""        
         thresholds = {
             DashboardMetricType.QUALITY_SCORE: {"good": 0.8, "warning": 0.6},
             DashboardMetricType.SUCCESS_RATE: {"good": 0.95, "warning": 0.85},
@@ -676,13 +648,11 @@ class RealTimeDashboard:
                 return "critical"
 
     def add_widget(self, widget: DashboardWidget):
-        """Add custom widget to dashboard"""
-        self.widgets[widget.widget_id] = widget
+        """Add custom widget to dashboard"""        self.widgets[widget.widget_id] = widget
         logger.info(f"Added widget {widget.widget_id} to dashboard")
 
     def remove_widget(self, widget_id: str):
-        """Remove widget from dashboard"""
-        if widget_id in self.widgets:
+        """Remove widget from dashboard"""        if widget_id in self.widgets:
             del self.widgets[widget_id]
             # Clear cache
             cache_key = f"widget_{widget_id}"
@@ -692,8 +662,7 @@ class RealTimeDashboard:
             logger.info(f"Removed widget {widget_id} from dashboard")
 
     def update_widget_config(self, widget_id: str, config: Dict[str, Any]):
-        """Update widget configuration"""
-        if widget_id in self.widgets:
+        """Update widget configuration"""        if widget_id in self.widgets:
             self.widgets[widget_id].config.update(config)
             # Clear cache to force refresh
             cache_key = f"widget_{widget_id}"
@@ -703,8 +672,7 @@ class RealTimeDashboard:
             logger.info(f"Updated configuration for widget {widget_id}")
 
     def get_dashboard_config(self) -> Dict[str, Any]:
-        """Get complete dashboard configuration"""
-        return {
+        """Get complete dashboard configuration"""        return {
             "dashboard_id": self.dashboard_id,
             "widgets": {wid: asdict(widget) for wid, widget in self.widgets.items()},
             "cache_ttl": self.cache_ttl,
@@ -712,8 +680,7 @@ class RealTimeDashboard:
         }
 
     def start_session(self, session_id: str, user_info: Dict[str, Any] = None) -> str:
-        """Start dashboard session"""
-        session_id = session_id or str(uuid.uuid4())
+        """Start dashboard session"""        session_id = session_id or str(uuid.uuid4())
         
         self.active_sessions[session_id] = {
             "started_at": datetime.now(),
@@ -727,15 +694,13 @@ class RealTimeDashboard:
         return session_id
 
     def end_session(self, session_id: str):
-        """End dashboard session"""
-        if session_id in self.active_sessions:
+        """End dashboard session"""        if session_id in self.active_sessions:
             session_duration = (datetime.now() - self.active_sessions[session_id]["started_at"]).total_seconds()
             logger.info(f"Ended dashboard session {session_id} after {session_duration:.1f} seconds")
             del self.active_sessions[session_id]
 
     def clear_cache(self):
-        """Clear all cached data"""
-        self.data_cache.clear()
+        """Clear all cached data"""        self.data_cache.clear()
         self.cache_timestamps.clear()
         logger.info("Cleared dashboard cache")
 
@@ -744,8 +709,7 @@ class RealTimeDashboard:
         format: str = "json",
         time_range: TimeRange = TimeRange.LAST_24_HOURS
     ) -> str:
-        """Export dashboard data"""
-        
+        """Export dashboard data"""        
         dashboard_data = await self.get_dashboard_data(time_range)
         
         if format.lower() == "json":
@@ -763,8 +727,7 @@ class RealTimeDashboard:
             return f"Unsupported export format: {format}"
 
     def get_dashboard_statistics(self) -> Dict[str, Any]:
-        """Get dashboard usage statistics"""
-        
+        """Get dashboard usage statistics"""        
         active_sessions_count = len(self.active_sessions)
         total_widgets = len(self.widgets)
         cache_entries = len(self.data_cache)

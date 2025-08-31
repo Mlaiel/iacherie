@@ -1,5 +1,4 @@
-"""
-🔍 Content Analyzer - IA Influencer Agent Platform Enterprise
+"""🔍 Content Analyzer - IA Influencer Agent Platform Enterprise
 ============================================================
 Module: backend/data_management/storage/content_analyzer.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -27,9 +26,7 @@ interdite et fera l'objet de poursuites judiciaires.
 - Audio Engineer: Fahed Mlaiel
 - DevOps: Fahed Mlaiel
 - IA Prompt Engineer: Fahed Mlaiel
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple, Set
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Set
 import logging
 import asyncio
 import hashlib
@@ -55,8 +52,7 @@ import json
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Types of content"""
-    AUDIO = "audio"
+    """Types of content"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -64,23 +60,20 @@ class ContentType(Enum):
     UNKNOWN = "unknown"
 
 class AnalysisLevel(Enum):
-    """Analysis depth levels"""
-    BASIC = "basic"
+    """Analysis depth levels"""    BASIC = "basic"
     STANDARD = "standard"
     DETAILED = "detailed"
     AI_ENHANCED = "ai_enhanced"
 
 class QualityLevel(Enum):
-    """Content quality levels"""
-    EXCELLENT = "excellent"
+    """Content quality levels"""    EXCELLENT = "excellent"
     GOOD = "good"
     AVERAGE = "average"
     POOR = "poor"
     UNACCEPTABLE = "unacceptable"
 
 class ContentRisk(Enum):
-    """Content risk categories"""
-    SAFE = "safe"
+    """Content risk categories"""    SAFE = "safe"
     MODERATE = "moderate"
     SENSITIVE = "sensitive"
     RESTRICTED = "restricted"
@@ -88,8 +81,7 @@ class ContentRisk(Enum):
 
 @dataclass
 class ContentFeatures:
-    """Content feature extraction results"""
-    dominant_colors: List[Tuple[int, int, int]] = field(default_factory=list)
+    """Content feature extraction results"""    dominant_colors: List[Tuple[int, int, int]] = field(default_factory=list)
     brightness: float = 0.0
     contrast: float = 0.0
     sharpness: float = 0.0
@@ -100,8 +92,7 @@ class ContentFeatures:
 
 @dataclass
 class AudioFeatures:
-    """Audio feature extraction results"""
-    duration: float = 0.0
+    """Audio feature extraction results"""    duration: float = 0.0
     sample_rate: int = 0
     channels: int = 0
     bitrate: int = 0
@@ -118,8 +109,7 @@ class AudioFeatures:
 
 @dataclass
 class TextFeatures:
-    """Text feature extraction results"""
-    word_count: int = 0
+    """Text feature extraction results"""    word_count: int = 0
     character_count: int = 0
     sentence_count: int = 0
     paragraph_count: int = 0
@@ -133,8 +123,7 @@ class TextFeatures:
 
 @dataclass
 class ContentAnalysis:
-    """Complete content analysis results"""
-    content_id: str
+    """Complete content analysis results"""    content_id: str
     content_type: ContentType
     file_path: str
     file_size: int
@@ -179,14 +168,12 @@ class ContentAnalysis:
     processing_time: float = 0.0
 
 class ImageAnalyzer:
-    """Advanced image content analysis"""
-    
+    """Advanced image content analysis"""    
     def __init__(self):
         self.supported_formats = {'.jpg', '.jpeg', '.png', '.bmp', '.tiff', '.gif', '.webp'}
     
     async def analyze_image(self, file_path: str, analysis_level: AnalysisLevel = AnalysisLevel.STANDARD) -> ContentFeatures:
-        """Analyze image content and extract features"""
-        try:
+        """Analyze image content and extract features"""        try:
             # Load image
             image = cv2.imread(file_path)
             if image is None:
@@ -216,24 +203,20 @@ class ImageAnalyzer:
             return ContentFeatures()
     
     def _calculate_brightness(self, image: np.ndarray) -> float:
-        """Calculate image brightness"""
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        """Calculate image brightness"""        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         return float(np.mean(gray) / 255.0)
     
     def _calculate_contrast(self, image: np.ndarray) -> float:
-        """Calculate image contrast using standard deviation"""
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        """Calculate image contrast using standard deviation"""        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         return float(np.std(gray) / 255.0)
     
     def _calculate_sharpness(self, image: np.ndarray) -> float:
-        """Calculate image sharpness using Laplacian variance"""
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        """Calculate image sharpness using Laplacian variance"""        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         laplacian = cv2.Laplacian(gray, cv2.CV_64F)
         return float(np.var(laplacian) / 10000.0)  # Normalized
     
     def _calculate_noise_level(self, image: np.ndarray) -> float:
-        """Estimate noise level in image"""
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        """Estimate noise level in image"""        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         
         # Use Gaussian blur difference to estimate noise
         blurred = cv2.GaussianBlur(gray, (5, 5), 0)
@@ -242,8 +225,7 @@ class ImageAnalyzer:
         return float(np.mean(noise) / 255.0)
     
     def _extract_dominant_colors(self, image: np.ndarray, k: int = 5) -> List[Tuple[int, int, int]]:
-        """Extract dominant colors using K-means clustering"""
-        try:
+        """Extract dominant colors using K-means clustering"""        try:
             # Reshape image data
             data = image.reshape((-1, 3))
             data = np.float32(data)
@@ -263,8 +245,7 @@ class ImageAnalyzer:
             return []
     
     def _calculate_edge_density(self, image: np.ndarray) -> float:
-        """Calculate edge density using Canny edge detection"""
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        """Calculate edge density using Canny edge detection"""        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         edges = cv2.Canny(gray, 50, 150)
         edge_pixels = np.sum(edges > 0)
         total_pixels = edges.shape[0] * edges.shape[1]
@@ -272,8 +253,7 @@ class ImageAnalyzer:
         return float(edge_pixels / total_pixels)
     
     def _calculate_texture_complexity(self, image: np.ndarray) -> float:
-        """Calculate texture complexity using Local Binary Pattern"""
-        try:
+        """Calculate texture complexity using Local Binary Pattern"""        try:
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             
             # Simplified texture analysis using variance of local patches
@@ -293,8 +273,7 @@ class ImageAnalyzer:
             return 0.0
     
     def _analyze_composition(self, image: np.ndarray) -> float:
-        """Analyze image composition using rule of thirds and other principles"""
-        try:
+        """Analyze image composition using rule of thirds and other principles"""        try:
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             h, w = gray.shape
             
@@ -335,14 +314,12 @@ class ImageAnalyzer:
             return 0.5
 
 class AudioAnalyzer:
-    """Advanced audio content analysis"""
-    
+    """Advanced audio content analysis"""    
     def __init__(self):
         self.supported_formats = {'.mp3', '.wav', '.flac', '.aac', '.ogg', '.m4a'}
     
     async def analyze_audio(self, file_path: str, analysis_level: AnalysisLevel = AnalysisLevel.STANDARD) -> AudioFeatures:
-        """Analyze audio content and extract features"""
-        try:
+        """Analyze audio content and extract features"""        try:
             features = AudioFeatures()
             
             # Load audio metadata
@@ -389,22 +366,18 @@ class AudioAnalyzer:
             return AudioFeatures()
     
     def _calculate_loudness(self, y: np.ndarray) -> float:
-        """Calculate audio loudness (RMS)"""
-        rms = librosa.feature.rms(y=y)
+        """Calculate audio loudness (RMS)"""        rms = librosa.feature.rms(y=y)
         return float(np.mean(rms))
     
     def _calculate_dynamic_range(self, y: np.ndarray) -> float:
-        """Calculate dynamic range"""
-        return float(np.max(y) - np.min(y))
+        """Calculate dynamic range"""        return float(np.max(y) - np.min(y))
     
     def _calculate_silence_ratio(self, y: np.ndarray, threshold: float = 0.01) -> float:
-        """Calculate ratio of silence in audio"""
-        silent_samples = np.sum(np.abs(y) < threshold)
+        """Calculate ratio of silence in audio"""        silent_samples = np.sum(np.abs(y) < threshold)
         return float(silent_samples / len(y))
     
     def _get_key_profiles(self) -> List[np.ndarray]:
-        """Get major key profiles for key detection"""
-        # Simplified key profiles (Krumhansl-Schmuckler)
+        """Get major key profiles for key detection"""        # Simplified key profiles (Krumhansl-Schmuckler)
         major_profile = np.array([6.35, 2.23, 3.48, 2.33, 4.38, 4.09, 2.52, 5.19, 2.39, 3.66, 2.29, 2.88])
         
         # Generate all 12 major key profiles
@@ -415,13 +388,11 @@ class AudioAnalyzer:
         return profiles
     
     def _index_to_key(self, index: int) -> str:
-        """Convert key index to key name"""
-        keys = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+        """Convert key index to key name"""        keys = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
         return keys[index] + " Major"
 
 class TextAnalyzer:
-    """Advanced text content analysis"""
-    
+    """Advanced text content analysis"""    
     def __init__(self):
         self.supported_formats = {'.txt', '.md', '.json', '.xml', '.html'}
         self.stop_words = set([
@@ -430,8 +401,7 @@ class TextAnalyzer:
         ])
     
     async def analyze_text(self, text: str, analysis_level: AnalysisLevel = AnalysisLevel.STANDARD) -> TextFeatures:
-        """Analyze text content and extract features"""
-        try:
+        """Analyze text content and extract features"""        try:
             features = TextFeatures()
             
             # Basic statistics
@@ -472,8 +442,7 @@ class TextAnalyzer:
             return TextFeatures()
     
     def _calculate_keyword_density(self, text: str, top_n: int = 10) -> Dict[str, float]:
-        """Calculate keyword density"""
-        words = re.findall(r'\b\w+\b', text.lower())
+        """Calculate keyword density"""        words = re.findall(r'\b\w+\b', text.lower())
         words = [word for word in words if word not in self.stop_words and len(word) > 2]
         
         word_counts = Counter(words)
@@ -490,8 +459,7 @@ class TextAnalyzer:
         return densities
     
     def _analyze_sentiment(self, text: str) -> float:
-        """Simple sentiment analysis using word lists"""
-        positive_words = {
+        """Simple sentiment analysis using word lists"""        positive_words = {
             'good', 'great', 'excellent', 'amazing', 'wonderful', 'fantastic',
             'love', 'like', 'enjoy', 'happy', 'pleased', 'satisfied'
         }
@@ -514,8 +482,7 @@ class TextAnalyzer:
         return (positive_count - negative_count) / total_sentiment_words
     
     def _extract_topics(self, text: str, max_topics: int = 5) -> List[str]:
-        """Extract topics using keyword frequency"""
-        # Simplified topic extraction
+        """Extract topics using keyword frequency"""        # Simplified topic extraction
         words = re.findall(r'\b\w+\b', text.lower())
         words = [word for word in words if word not in self.stop_words and len(word) > 3]
         
@@ -525,8 +492,7 @@ class TextAnalyzer:
         return topics
     
     def _extract_named_entities(self, text: str) -> List[Dict[str, str]]:
-        """Simple named entity recognition"""
-        entities = []
+        """Simple named entity recognition"""        entities = []
         
         # Simple patterns for basic entity types
         patterns = {
@@ -549,8 +515,7 @@ class TextAnalyzer:
         return entities
     
     def _analyze_emotions(self, text: str) -> Dict[str, float]:
-        """Simple emotion analysis using word lists"""
-        emotion_words = {
+        """Simple emotion analysis using word lists"""        emotion_words = {
             'joy': {'happy', 'joy', 'excited', 'thrilled', 'delighted', 'cheerful'},
             'anger': {'angry', 'furious', 'mad', 'irritated', 'annoyed', 'rage'},
             'sadness': {'sad', 'depressed', 'melancholy', 'grief', 'sorrow', 'crying'},
@@ -569,8 +534,7 @@ class TextAnalyzer:
         return emotion_scores
 
 class ContentAnalyzer:
-    """
-    Comprehensive content analysis system.
+    """    Comprehensive content analysis system.
     
     Features:
     - Multi-format content analysis
@@ -581,11 +545,9 @@ class ContentAnalyzer:
     - Performance optimization
     - Content fingerprinting
     - Similarity detection
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize content analyzer"""
-        self.config = config or {}
+        """Initialize content analyzer"""        self.config = config or {}
         
         # Specialized analyzers
         self.image_analyzer = ImageAnalyzer()
@@ -641,8 +603,7 @@ class ContentAnalyzer:
         content_id: Optional[str] = None,
         analysis_level: AnalysisLevel = AnalysisLevel.STANDARD
     ) -> ContentAnalysis:
-        """
-        Perform comprehensive content analysis.
+        """        Perform comprehensive content analysis.
         
         Args:
             file_path: Path to content file
@@ -651,8 +612,7 @@ class ContentAnalyzer:
             
         Returns:
             ContentAnalysis: Complete analysis results
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         if not content_id:
             content_id = hashlib.sha256(file_path.encode()).hexdigest()[:16]
@@ -720,8 +680,7 @@ class ContentAnalyzer:
             return analysis
     
     def _detect_content_type(self, file_path: str) -> ContentType:
-        """Detect content type from file extension"""
-        extension = Path(file_path).suffix.lower()
+        """Detect content type from file extension"""        extension = Path(file_path).suffix.lower()
         
         if extension in {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.webp'}:
             return ContentType.IMAGE
@@ -737,8 +696,7 @@ class ContentAnalyzer:
             return ContentType.UNKNOWN
     
     async def _analyze_file_basics(self, analysis: ContentAnalysis):
-        """Analyze basic file properties"""
-        try:
+        """Analyze basic file properties"""        try:
             file_path = Path(analysis.file_path)
             stat = file_path.stat()
             
@@ -760,8 +718,7 @@ class ContentAnalyzer:
             logger.error(f"File basics analysis error: {str(e)}")
     
     async def _assess_quality(self, analysis: ContentAnalysis):
-        """Assess content quality"""
-        try:
+        """Assess content quality"""        try:
             quality_scores = {}
             
             # Technical quality
@@ -798,8 +755,7 @@ class ContentAnalyzer:
             analysis.quality_level = QualityLevel.AVERAGE
     
     async def _assess_technical_quality(self, analysis: ContentAnalysis) -> float:
-        """Assess technical quality of content"""
-        score = 0.5  # Default neutral score
+        """Assess technical quality of content"""        score = 0.5  # Default neutral score
         
         try:
             if analysis.content_type == ContentType.IMAGE and analysis.content_features:
@@ -838,8 +794,7 @@ class ContentAnalyzer:
         return max(0.0, min(1.0, score))
     
     async def _assess_content_relevance(self, analysis: ContentAnalysis) -> float:
-        """Assess content relevance for influencer marketing"""
-        score = 0.5  # Default neutral score
+        """Assess content relevance for influencer marketing"""        score = 0.5  # Default neutral score
         
         try:
             # Content type relevance
@@ -873,8 +828,7 @@ class ContentAnalyzer:
         return max(0.0, min(1.0, score))
     
     async def _assess_engagement_potential(self, analysis: ContentAnalysis) -> float:
-        """Assess potential for user engagement"""
-        score = 0.5  # Default neutral score
+        """Assess potential for user engagement"""        score = 0.5  # Default neutral score
         
         try:
             if analysis.content_type == ContentType.IMAGE and analysis.content_features:
@@ -911,8 +865,7 @@ class ContentAnalyzer:
         return max(0.0, min(1.0, score))
     
     async def _assess_brand_safety(self, analysis: ContentAnalysis) -> float:
-        """Assess brand safety score"""
-        score = 0.8  # Default safe score
+        """Assess brand safety score"""        score = 0.8  # Default safe score
         
         try:
             # File size check (extremely large files might be suspicious)
@@ -950,8 +903,7 @@ class ContentAnalyzer:
         return max(0.0, min(1.0, score))
     
     def _score_to_quality_level(self, score: float) -> QualityLevel:
-        """Convert quality score to quality level"""
-        if score >= 0.9:
+        """Convert quality score to quality level"""        if score >= 0.9:
             return QualityLevel.EXCELLENT
         elif score >= 0.7:
             return QualityLevel.GOOD
@@ -963,8 +915,7 @@ class ContentAnalyzer:
             return QualityLevel.UNACCEPTABLE
     
     def _identify_quality_issues(self, analysis: ContentAnalysis, quality_scores: Dict[str, float]) -> List[str]:
-        """Identify specific quality issues"""
-        issues = []
+        """Identify specific quality issues"""        issues = []
         
         # Check each quality metric
         if quality_scores.get('technical_quality', 0.5) < 0.5:
@@ -1006,8 +957,7 @@ class ContentAnalyzer:
         return issues
     
     async def _assess_risk(self, analysis: ContentAnalysis):
-        """Assess content risk factors"""
-        try:
+        """Assess content risk factors"""        try:
             risk_scores = {}
             
             # Basic risk assessment
@@ -1035,8 +985,7 @@ class ContentAnalyzer:
             analysis.risk_level = ContentRisk.SAFE
     
     async def _assess_explicit_content_risk(self, analysis: ContentAnalysis) -> float:
-        """Assess explicit content risk"""
-        risk = 0.1  # Default low risk
+        """Assess explicit content risk"""        risk = 0.1  # Default low risk
         
         try:
             # Text-based explicit content detection
@@ -1063,8 +1012,7 @@ class ContentAnalyzer:
         return max(0.0, min(1.0, risk))
     
     async def _assess_copyright_risk(self, analysis: ContentAnalysis) -> float:
-        """Assess copyright risk"""
-        risk = 0.1  # Default low risk
+        """Assess copyright risk"""        risk = 0.1  # Default low risk
         
         try:
             # Check for copyright-related metadata
@@ -1093,8 +1041,7 @@ class ContentAnalyzer:
         return max(0.0, min(1.0, risk))
     
     async def _assess_brand_risk(self, analysis: ContentAnalysis) -> float:
-        """Assess brand risk"""
-        risk = 0.1  # Default low risk
+        """Assess brand risk"""        risk = 0.1  # Default low risk
         
         try:
             # Inverse of brand safety score
@@ -1107,8 +1054,7 @@ class ContentAnalyzer:
         return max(0.0, min(1.0, risk))
     
     async def _assess_legal_risk(self, analysis: ContentAnalysis) -> float:
-        """Assess legal risk"""
-        risk = 0.1  # Default low risk
+        """Assess legal risk"""        risk = 0.1  # Default low risk
         
         try:
             # Check for legal terms in text
@@ -1131,8 +1077,7 @@ class ContentAnalyzer:
         return max(0.0, min(1.0, risk))
     
     async def _assess_reputation_risk(self, analysis: ContentAnalysis) -> float:
-        """Assess reputation risk"""
-        risk = 0.1  # Default low risk
+        """Assess reputation risk"""        risk = 0.1  # Default low risk
         
         try:
             # Negative sentiment can be reputation risk
@@ -1159,8 +1104,7 @@ class ContentAnalyzer:
         return max(0.0, min(1.0, risk))
     
     def _score_to_risk_level(self, score: float) -> ContentRisk:
-        """Convert risk score to risk level"""
-        if score >= 0.8:
+        """Convert risk score to risk level"""        if score >= 0.8:
             return ContentRisk.FORBIDDEN
         elif score >= 0.6:
             return ContentRisk.RESTRICTED
@@ -1172,8 +1116,7 @@ class ContentAnalyzer:
             return ContentRisk.SAFE
     
     def _identify_risk_factors(self, risk_scores: Dict[str, float]) -> List[str]:
-        """Identify specific risk factors"""
-        factors = []
+        """Identify specific risk factors"""        factors = []
         
         threshold = 0.3  # Risk threshold
         
@@ -1195,8 +1138,7 @@ class ContentAnalyzer:
         return factors
     
     async def _calculate_business_metrics(self, analysis: ContentAnalysis):
-        """Calculate business-relevant metrics"""
-        try:
+        """Calculate business-relevant metrics"""        try:
             # Engagement potential (already calculated in quality assessment)
             engagement_score = await self._assess_engagement_potential(analysis)
             analysis.engagement_potential = engagement_score
@@ -1217,8 +1159,7 @@ class ContentAnalyzer:
             logger.error(f"Business metrics calculation error: {str(e)}")
     
     async def _calculate_monetization_potential(self, analysis: ContentAnalysis) -> float:
-        """Calculate monetization potential"""
-        score = 0.5  # Default neutral score
+        """Calculate monetization potential"""        score = 0.5  # Default neutral score
         
         try:
             # Content type monetization potential
@@ -1247,8 +1188,7 @@ class ContentAnalyzer:
         return max(0.0, min(1.0, score))
     
     async def _calculate_virality_score(self, analysis: ContentAnalysis) -> float:
-        """Calculate virality potential score"""
-        score = 0.5  # Default neutral score
+        """Calculate virality potential score"""        score = 0.5  # Default neutral score
         
         try:
             # Engagement is key for virality
@@ -1283,8 +1223,7 @@ class ContentAnalyzer:
         return max(0.0, min(1.0, score))
     
     async def _generate_similarity_hash(self, file_path: str, content_type: ContentType) -> str:
-        """Generate similarity hash for content deduplication"""
-        try:
+        """Generate similarity hash for content deduplication"""        try:
             if content_type == ContentType.IMAGE:
                 # Use perceptual hashing for images
                 image = Image.open(file_path)
@@ -1331,8 +1270,7 @@ class ContentAnalyzer:
             return hashlib.sha256(file_path.encode()).hexdigest()[:32]
     
     async def _ai_enhanced_analysis(self, analysis: ContentAnalysis):
-        """Perform AI-enhanced analysis (placeholder for future AI integration)"""
-        try:
+        """Perform AI-enhanced analysis (placeholder for future AI integration)"""        try:
             # Placeholder for AI-powered analysis
             # In production, this would integrate with ML models for:
             # - Object detection in images
@@ -1350,8 +1288,7 @@ class ContentAnalyzer:
             logger.error(f"AI enhanced analysis error: {str(e)}")
     
     def _generate_mock_ai_tags(self, analysis: ContentAnalysis) -> List[str]:
-        """Generate mock AI tags based on content analysis"""
-        tags = []
+        """Generate mock AI tags based on content analysis"""        tags = []
         
         # Base tags on content type
         if analysis.content_type == ContentType.IMAGE:
@@ -1397,8 +1334,7 @@ class ContentAnalyzer:
         return tags
     
     def _generate_mock_ai_description(self, analysis: ContentAnalysis) -> str:
-        """Generate mock AI description"""
-        descriptions = {
+        """Generate mock AI description"""        descriptions = {
             ContentType.IMAGE: f"Image content with {analysis.quality_level.value} quality",
             ContentType.AUDIO: f"Audio content with {analysis.quality_level.value} quality",
             ContentType.VIDEO: f"Video content with {analysis.quality_level.value} quality",

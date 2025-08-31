@@ -1,12 +1,9 @@
-"""
-Webhooks API Routes
+"""Webhooks API Routes
 Platform webhooks and external integrations endpoints.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import hmac
+"""import hmac
 import hashlib
 from typing import List, Dict, Any, Optional
 from datetime import datetime, timedelta
@@ -138,8 +135,7 @@ spotify_api = SpotifyAPI()
 
 
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
-    """Get current authenticated user"""
-    if not credentials:
+    """Get current authenticated user"""    if not credentials:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Authentication required"
@@ -161,8 +157,7 @@ async def create_webhook_endpoint(
     webhook: WebhookEndpoint,
     user: dict = Depends(get_current_user)
 ):
-    """Create a new webhook endpoint"""
-    try:
+    """Create a new webhook endpoint"""    try:
         # Validate URL accessibility
         url_validation = await _validate_webhook_url(webhook.url)
         if not url_validation['valid']:
@@ -177,8 +172,7 @@ async def create_webhook_endpoint(
         
         # Create webhook endpoint
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""
-                INSERT INTO webhook_endpoints (webhook_id, user_id, url, platform, events,
+            await session.execute("""                INSERT INTO webhook_endpoints (webhook_id, user_id, url, platform, events,
                                              secret_hash, is_active, retry_policy, filters,
                                              custom_headers, created_at)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -218,15 +212,12 @@ async def get_webhook_endpoints(
     is_active: Optional[bool] = None,
     user: dict = Depends(get_current_user)
 ):
-    """Get user's webhook endpoints"""
-    try:
-        query = """
-            SELECT webhook_id, url, platform, events, is_active, retry_policy,
+    """Get user's webhook endpoints"""    try:
+        query = """            SELECT webhook_id, url, platform, events, is_active, retry_policy,
                    filters, custom_headers, created_at, updated_at
             FROM webhook_endpoints
             WHERE user_id = %s
-        """
-        params = [user['user_id']]
+        """        params = [user['user_id']]
         
         if platform:
             query += " AND platform = %s"
@@ -279,8 +270,7 @@ async def receive_platform_webhook(
     x_signature: Optional[str] = Header(None),
     x_hub_signature: Optional[str] = Header(None)
 ):
-    """Receive webhook from external platform"""
-    try:
+    """Receive webhook from external platform"""    try:
         # Get raw body
         raw_body = await request.body()
         
@@ -313,8 +303,7 @@ async def receive_platform_webhook(
         
         # Store incoming webhook
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""
-                INSERT INTO incoming_webhooks (webhook_id, platform, event_type, payload,
+            await session.execute("""                INSERT INTO incoming_webhooks (webhook_id, platform, event_type, payload,
                                              signature, received_at, processed)
                 VALUES (%s, %s, %s, %s, %s, %s, %s)
             """, (
@@ -348,12 +337,10 @@ async def send_webhook(
     background_tasks: BackgroundTasks,
     user: dict = Depends(get_current_user)
 ):
-    """Send webhook to registered endpoints"""
-    try:
+    """Send webhook to registered endpoints"""    try:
         # Get matching webhook endpoints
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""
-                SELECT webhook_id, url, platform, secret_hash, custom_headers, retry_policy
+            result = await session.execute("""                SELECT webhook_id, url, platform, secret_hash, custom_headers, retry_policy
                 FROM webhook_endpoints
                 WHERE user_id = %s AND is_active = true
                   AND platform = ANY(%s) AND %s = ANY(events)
@@ -374,8 +361,7 @@ async def send_webhook(
             for endpoint in endpoints:
                 webhook_id, url, platform, secret_hash, custom_headers, retry_policy = endpoint
                 
-                await session.execute("""
-                    INSERT INTO webhook_deliveries (delivery_id, webhook_id, user_id, event_type,
+                await session.execute("""                    INSERT INTO webhook_deliveries (delivery_id, webhook_id, user_id, event_type,
                                                    payload, status, attempts, created_at, next_retry_at)
                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
                 """, (
@@ -417,19 +403,16 @@ async def get_webhook_deliveries(
     limit: int = Field(default=50, ge=1, le=200),
     user: dict = Depends(get_current_user)
 ):
-    """Get webhook delivery history"""
-    try:
+    """Get webhook delivery history"""    try:
         start_date = datetime.utcnow() - timedelta(days=days)
         
-        query = """
-            SELECT wd.delivery_id, wd.webhook_id, wd.event_type, wd.payload, wd.status,
+        query = """            SELECT wd.delivery_id, wd.webhook_id, wd.event_type, wd.payload, wd.status,
                    wd.attempts, wd.last_attempt_at, wd.next_retry_at, wd.response_status,
                    wd.response_body, wd.created_at
             FROM webhook_deliveries wd
             JOIN webhook_endpoints we ON wd.webhook_id = we.webhook_id
             WHERE wd.user_id = %s AND wd.created_at >= %s
-        """
-        params = [user['user_id'], start_date]
+        """        params = [user['user_id'], start_date]
         
         if webhook_id:
             query += " AND wd.webhook_id = %s"
@@ -482,12 +465,10 @@ async def test_webhook(
     background_tasks: BackgroundTasks,
     user: dict = Depends(get_current_user)
 ):
-    """Test a webhook endpoint"""
-    try:
+    """Test a webhook endpoint"""    try:
         # Get webhook details
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""
-                SELECT url, platform, secret_hash, custom_headers, retry_policy
+            result = await session.execute("""                SELECT url, platform, secret_hash, custom_headers, retry_policy
                 FROM webhook_endpoints
                 WHERE webhook_id = %s AND user_id = %s
             """, (webhook_id, user['user_id']))
@@ -517,8 +498,7 @@ async def test_webhook(
         
         # Record test delivery
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""
-                INSERT INTO webhook_deliveries (delivery_id, webhook_id, user_id, event_type,
+            await session.execute("""                INSERT INTO webhook_deliveries (delivery_id, webhook_id, user_id, event_type,
                                                payload, status, attempts, created_at, next_retry_at)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
             """, (
@@ -555,12 +535,10 @@ async def get_webhook_statistics(
     days: int = Field(default=30, ge=1, le=90),
     user: dict = Depends(get_current_user)
 ):
-    """Get webhook statistics"""
-    try:
+    """Get webhook statistics"""    try:
         # Verify webhook ownership
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""
-                SELECT webhook_id FROM webhook_endpoints
+            result = await session.execute("""                SELECT webhook_id FROM webhook_endpoints
                 WHERE webhook_id = %s AND user_id = %s
             """, (webhook_id, user['user_id']))
             
@@ -574,8 +552,7 @@ async def get_webhook_statistics(
         
         # Get delivery statistics
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""
-                SELECT 
+            result = await session.execute("""                SELECT 
                     COUNT(*) as total_deliveries,
                     COUNT(CASE WHEN status = 'active' THEN 1 END) as successful_deliveries,
                     COUNT(CASE WHEN status = 'failed' THEN 1 END) as failed_deliveries,
@@ -622,12 +599,10 @@ async def update_webhook_endpoint(
     webhook_update: WebhookEndpoint,
     user: dict = Depends(get_current_user)
 ):
-    """Update webhook endpoint"""
-    try:
+    """Update webhook endpoint"""    try:
         # Verify ownership
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""
-                SELECT webhook_id FROM webhook_endpoints
+            result = await session.execute("""                SELECT webhook_id FROM webhook_endpoints
                 WHERE webhook_id = %s AND user_id = %s
             """, (webhook_id, user['user_id']))
             
@@ -638,8 +613,7 @@ async def update_webhook_endpoint(
                 )
             
             # Update webhook
-            await session.execute("""
-                UPDATE webhook_endpoints 
+            await session.execute("""                UPDATE webhook_endpoints 
                 SET url = %s, platform = %s, events = %s, is_active = %s,
                     retry_policy = %s, filters = %s, custom_headers = %s, updated_at = %s
                 WHERE webhook_id = %s
@@ -671,12 +645,10 @@ async def delete_webhook_endpoint(
     webhook_id: str,
     user: dict = Depends(get_current_user)
 ):
-    """Delete webhook endpoint"""
-    try:
+    """Delete webhook endpoint"""    try:
         async with database_manager.get_postgres_session() as session:
             # Verify ownership
-            result = await session.execute("""
-                SELECT platform FROM webhook_endpoints
+            result = await session.execute("""                SELECT platform FROM webhook_endpoints
                 WHERE webhook_id = %s AND user_id = %s
             """, (webhook_id, user['user_id']))
             
@@ -690,8 +662,7 @@ async def delete_webhook_endpoint(
             platform = webhook_info[0]
             
             # Delete webhook
-            await session.execute("""
-                DELETE FROM webhook_endpoints WHERE webhook_id = %s
+            await session.execute("""                DELETE FROM webhook_endpoints WHERE webhook_id = %s
             """, (webhook_id,))
             await session.commit()
         
@@ -713,8 +684,7 @@ async def delete_webhook_endpoint(
 
 # Helper functions
 async def _validate_webhook_url(url: str) -> Dict[str, Any]:
-    """Validate webhook URL accessibility"""
-    try:
+    """Validate webhook URL accessibility"""    try:
         async with aiohttp.ClientSession() as session:
             async with session.head(url, timeout=aiohttp.ClientTimeout(total=10)) as response:
                 return {
@@ -729,15 +699,13 @@ async def _validate_webhook_url(url: str) -> Dict[str, Any]:
 
 
 async def _verify_platform_signature(platform: PlatformType, body: bytes, signature: Optional[str]) -> bool:
-    """Verify webhook signature from platform"""
-    if not signature:
+    """Verify webhook signature from platform"""    if not signature:
         return False
     
     try:
         # Get platform webhook secret
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""
-                SELECT webhook_secret FROM platform_integrations
+            result = await session.execute("""                SELECT webhook_secret FROM platform_integrations
                 WHERE platform = %s AND is_active = true
             """, (platform.value,))
             
@@ -772,11 +740,9 @@ async def _verify_platform_signature(platform: PlatformType, body: bytes, signat
 
 
 async def _get_webhook_stats(webhook_id: str) -> Dict[str, Any]:
-    """Get basic webhook statistics"""
-    try:
+    """Get basic webhook statistics"""    try:
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""
-                SELECT 
+            result = await session.execute("""                SELECT 
                     COUNT(*) as total_deliveries,
                     COUNT(CASE WHEN status = 'active' THEN 1 END) as successful_deliveries,
                     MAX(created_at) as last_delivery
@@ -798,8 +764,7 @@ async def _get_webhook_stats(webhook_id: str) -> Dict[str, Any]:
 
 # Background task functions
 async def _process_incoming_webhook(webhook_id: str, incoming_webhook: IncomingWebhook):
-    """Process incoming webhook from external platform"""
-    try:
+    """Process incoming webhook from external platform"""    try:
         # Determine event type and extract relevant data
         event_handlers = {
             PlatformType.YOUTUBE: _process_youtube_webhook,
@@ -815,8 +780,7 @@ async def _process_incoming_webhook(webhook_id: str, incoming_webhook: IncomingW
         
         # Mark as processed
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""
-                UPDATE incoming_webhooks 
+            await session.execute("""                UPDATE incoming_webhooks 
                 SET processed = true, processed_at = %s
                 WHERE webhook_id = %s
             """, (datetime.utcnow(), webhook_id))
@@ -831,8 +795,7 @@ async def _process_incoming_webhook(webhook_id: str, incoming_webhook: IncomingW
 async def _deliver_webhook(delivery_id: str, url: str, event_type: str, payload: Dict[str, Any],
                           secret_hash: str, custom_headers: Optional[Dict[str, str]],
                           retry_policy: Dict[str, int]):
-    """Deliver webhook to endpoint"""
-    try:
+    """Deliver webhook to endpoint"""    try:
         start_time = datetime.utcnow()
         
         # Update status to attempting
@@ -898,8 +861,7 @@ async def _update_delivery_status(delivery_id: str, status: WebhookStatus,
                                  response_time: Optional[float] = None,
                                  attempts: Optional[int] = None,
                                  error_message: Optional[str] = None):
-    """Update webhook delivery status"""
-    try:
+    """Update webhook delivery status"""    try:
         async with database_manager.get_postgres_session() as session:
             update_fields = ["status = %s", "last_attempt_at = %s"]
             params = [status.value, datetime.utcnow()]
@@ -926,12 +888,10 @@ async def _update_delivery_status(delivery_id: str, status: WebhookStatus,
             
             params.append(delivery_id)
             
-            query = f"""
-                UPDATE webhook_deliveries 
+            query = f"""                UPDATE webhook_deliveries 
                 SET {', '.join(update_fields)}
                 WHERE delivery_id = %s
-            """
-            
+            """            
             await session.execute(query, params)
             await session.commit()
     except Exception as e:
@@ -940,42 +900,35 @@ async def _update_delivery_status(delivery_id: str, status: WebhookStatus,
 
 # Platform-specific webhook processors
 async def _process_youtube_webhook(webhook_id: str, webhook: IncomingWebhook):
-    """Process YouTube webhook"""
-    # Implementation for YouTube-specific webhook processing
+    """Process YouTube webhook"""    # Implementation for YouTube-specific webhook processing
     pass
 
 
 async def _process_instagram_webhook(webhook_id: str, webhook: IncomingWebhook):
-    """Process Instagram webhook"""
-    # Implementation for Instagram-specific webhook processing
+    """Process Instagram webhook"""    # Implementation for Instagram-specific webhook processing
     pass
 
 
 async def _process_tiktok_webhook(webhook_id: str, webhook: IncomingWebhook):
-    """Process TikTok webhook"""
-    # Implementation for TikTok-specific webhook processing
+    """Process TikTok webhook"""    # Implementation for TikTok-specific webhook processing
     pass
 
 
 async def _process_spotify_webhook(webhook_id: str, webhook: IncomingWebhook):
-    """Process Spotify webhook"""
-    # Implementation for Spotify-specific webhook processing
+    """Process Spotify webhook"""    # Implementation for Spotify-specific webhook processing
     pass
 
 
 async def _process_stripe_webhook(webhook_id: str, webhook: IncomingWebhook):
-    """Process Stripe webhook"""
-    # Implementation for Stripe-specific webhook processing
+    """Process Stripe webhook"""    # Implementation for Stripe-specific webhook processing
     pass
 
 
 async def _register_platform_webhook(webhook: WebhookEndpoint, user: dict):
-    """Register webhook with external platform"""
-    # Implementation for registering webhooks with platforms
+    """Register webhook with external platform"""    # Implementation for registering webhooks with platforms
     pass
 
 
 async def _unregister_platform_webhook(webhook_id: str, platform: str):
-    """Unregister webhook from external platform"""
-    # Implementation for unregistering webhooks from platforms
+    """Unregister webhook from external platform"""    # Implementation for unregistering webhooks from platforms
     pass

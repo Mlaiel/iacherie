@@ -14,8 +14,7 @@ Support intelligent avec IA et automatisation avancée
 - Live chat avec agents IA et humains
 - Knowledge base avec recherche sémantique
 - Analytics et KPIs de satisfaction client
-"""
-from .support_manager import (
+"""from .support_manager import (
     SupportManager,
     KnowledgeBaseManager,
     SupportTicket,

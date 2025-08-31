@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent Platform - User Models
+"""IA Influencer Agent Platform - User Models
 Comprehensive user management system with enterprise security features
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -13,9 +12,7 @@ will result in legal action.
 
 Contact: mlaiel@live.de
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-from datetime import datetime, timezone
+"""from datetime import datetime, timezone
 from typing import Optional, Dict, Any, List
 from sqlalchemy import (
     String, Text, Boolean, DateTime, Integer, Numeric,
@@ -31,8 +28,7 @@ from .base import (
 
 
 class User(BaseModel, UUIDMixin, TimestampMixin, SoftDeleteMixin, AuditMixin):
-    """Core user model with enterprise authentication"""
-    
+    """Core user model with enterprise authentication"""    
     __tablename__ = 'users'
     
     # Basic Information
@@ -165,8 +161,7 @@ class User(BaseModel, UUIDMixin, TimestampMixin, SoftDeleteMixin, AuditMixin):
 
 
 class UserProfile(BaseModel, UUIDMixin, TimestampMixin, MetadataMixin, GeoLocationMixin):
-    """Extended user profile information"""
-    
+    """Extended user profile information"""    
     __tablename__ = 'user_profiles'
     
     user_id: Mapped[UUID] = mapped_column(
@@ -268,8 +263,7 @@ class UserProfile(BaseModel, UUIDMixin, TimestampMixin, MetadataMixin, GeoLocati
 
 
 class UserSettings(BaseModel, UUIDMixin, TimestampMixin):
-    """User preferences and configuration settings"""
-    
+    """User preferences and configuration settings"""    
     __tablename__ = 'user_settings'
     
     user_id: Mapped[UUID] = mapped_column(
@@ -396,8 +390,7 @@ class UserSettings(BaseModel, UUIDMixin, TimestampMixin):
 
 
 class UserSession(BaseModel, UUIDMixin, TimestampMixin):
-    """User session management for security tracking"""
-    
+    """User session management for security tracking"""    
     __tablename__ = 'user_sessions'
     
     user_id: Mapped[UUID] = mapped_column(
@@ -505,8 +498,7 @@ class UserSession(BaseModel, UUIDMixin, TimestampMixin):
 
 
 class UserVerification(BaseModel, UUIDMixin, TimestampMixin):
-    """User verification tokens and processes"""
-    
+    """User verification tokens and processes"""    
     __tablename__ = 'user_verifications'
     
     user_id: Mapped[UUID] = mapped_column(

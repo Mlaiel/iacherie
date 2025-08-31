@@ -1,5 +1,4 @@
-"""
-Content Fingerprinting Module for IA Influencer Agent Platform
+"""Content Fingerprinting Module for IA Influencer Agent Platform
 
 Advanced content fingerprinting and copyright protection system for digital content
 creators and influencers. Provides robust content identification and plagiarism detection.
@@ -9,9 +8,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import hmac
@@ -33,8 +30,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ContentFingerprint:
-    """Comprehensive content fingerprint"""
-    content_id: str
+    """Comprehensive content fingerprint"""    content_id: str
     content_hash: str
     structural_hash: str
     semantic_hash: str
@@ -47,8 +43,7 @@ class ContentFingerprint:
 
 @dataclass
 class SimilarityMatch:
-    """Content similarity match result"""
-    source_fingerprint: ContentFingerprint
+    """Content similarity match result"""    source_fingerprint: ContentFingerprint
     target_fingerprint: ContentFingerprint
     similarity_score: float
     match_type: str  # 'exact', 'substantial', 'partial', 'semantic'
@@ -58,8 +53,7 @@ class SimilarityMatch:
 
 @dataclass
 class CopyrightViolation:
-    """Copyright violation detection result"""
-    violation_id: str
+    """Copyright violation detection result"""    violation_id: str
     original_content: ContentFingerprint
     suspected_copy: ContentFingerprint
     violation_type: str  # 'plagiarism', 'unauthorized_use', 'substantial_similarity'
@@ -70,20 +64,17 @@ class CopyrightViolation:
     detected_at: datetime = field(default_factory=datetime.utcnow)
 
 class FingerprintGenerator(ABC):
-    """Abstract base class for fingerprint generators"""
-    
+    """Abstract base class for fingerprint generators"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.name = self.__class__.__name__
     
     @abstractmethod
     async def generate_fingerprint(self, content: str, metadata: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Generate fingerprint for content"""
-        pass
+        """Generate fingerprint for content"""        pass
 
 class AdvancedContentFingerprinter:
-    """
-    Advanced content fingerprinting system
+    """    Advanced content fingerprinting system
     
     Capabilities:
     - Multi-level hash generation (structural, semantic, linguistic)
@@ -91,8 +82,7 @@ class AdvancedContentFingerprinter:
     - Plagiarism identification
     - Copyright protection
     - Content provenance tracking
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or self._get_default_config()
         self.fingerprint_generators = {}
@@ -105,8 +95,7 @@ class AdvancedContentFingerprinter:
         self._initialize_generators()
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration"""
-        return {
+        """Get default configuration"""        return {
             'similarity_threshold': 0.8,
             'semantic_threshold': 0.7,
             'hash_algorithm': 'sha256',
@@ -119,8 +108,7 @@ class AdvancedContentFingerprinter:
         }
     
     def _initialize_generators(self):
-        """Initialize fingerprint generators"""
-        self.fingerprint_generators = {
+        """Initialize fingerprint generators"""        self.fingerprint_generators = {
             'hash': HashFingerprintGenerator(self.config),
             'structural': StructuralFingerprintGenerator(self.config),
             'semantic': SemanticFingerprintGenerator(self.config),
@@ -129,8 +117,7 @@ class AdvancedContentFingerprinter:
         }
     
     async def create_comprehensive_fingerprint(self, content: str, metadata: Dict[str, Any] = None) -> ContentFingerprint:
-        """Create comprehensive content fingerprint"""
-        if len(content) < self.config.get('min_content_length', 50):
+        """Create comprehensive content fingerprint"""        if len(content) < self.config.get('min_content_length', 50):
             raise ValueError("Content too short for reliable fingerprinting")
         
         metadata = metadata or {}
@@ -192,8 +179,7 @@ class AdvancedContentFingerprinter:
             raise
     
     async def detect_similarity(self, fingerprint1: ContentFingerprint, fingerprint2: ContentFingerprint) -> SimilarityMatch:
-        """Detect similarity between two content fingerprints"""
-        
+        """Detect similarity between two content fingerprints"""        
         # Calculate different types of similarity
         similarities = {}
         
@@ -247,8 +233,7 @@ class AdvancedContentFingerprinter:
         )
     
     async def scan_for_violations(self, new_fingerprint: ContentFingerprint, database_fingerprints: List[ContentFingerprint] = None) -> List[CopyrightViolation]:
-        """Scan for potential copyright violations"""
-        violations = []
+        """Scan for potential copyright violations"""        violations = []
         
         # Use cached fingerprints if no database provided
         if database_fingerprints is None:
@@ -277,8 +262,7 @@ class AdvancedContentFingerprinter:
         return violations
     
     async def _analyze_potential_violation(self, similarity_match: SimilarityMatch) -> Optional[CopyrightViolation]:
-        """Analyze similarity match for potential copyright violation"""
-        
+        """Analyze similarity match for potential copyright violation"""        
         # Determine violation type
         violation_type = self._determine_violation_type(similarity_match)
         
@@ -308,8 +292,7 @@ class AdvancedContentFingerprinter:
         )
     
     async def track_content_lineage(self, fingerprint: ContentFingerprint) -> Dict[str, Any]:
-        """Track content lineage and derivation history"""
-        lineage = {
+        """Track content lineage and derivation history"""        lineage = {
             'original_fingerprint': fingerprint,
             'derived_content': [],
             'similar_content': [],
@@ -361,14 +344,12 @@ class AdvancedContentFingerprinter:
         return lineage
     
     def _generate_content_id(self, content: str, metadata: Dict[str, Any]) -> str:
-        """Generate unique content ID"""
-        # Create deterministic ID based on content and metadata
+        """Generate unique content ID"""        # Create deterministic ID based on content and metadata
         id_string = f"{content[:100]}{json.dumps(sorted(metadata.items()), sort_keys=True)}"
         return hashlib.sha256(id_string.encode()).hexdigest()[:16]
     
     def _cache_fingerprint(self, fingerprint: ContentFingerprint):
-        """Cache fingerprint for future comparisons"""
-        self.fingerprint_database[fingerprint.content_id] = fingerprint
+        """Cache fingerprint for future comparisons"""        self.fingerprint_database[fingerprint.content_id] = fingerprint
         
         # Manage cache size
         max_cache_size = self.config.get('max_cache_size', 10000)
@@ -385,8 +366,7 @@ class AdvancedContentFingerprinter:
                 del self.fingerprint_database[sorted_fps[i][0]]
     
     async def _calculate_structural_similarity(self, fp1: ContentFingerprint, fp2: ContentFingerprint) -> float:
-        """Calculate structural similarity between fingerprints"""
-        if not fp1.structural_hash or not fp2.structural_hash:
+        """Calculate structural similarity between fingerprints"""        if not fp1.structural_hash or not fp2.structural_hash:
             return 0.0
         
         # Simple hash comparison
@@ -397,8 +377,7 @@ class AdvancedContentFingerprinter:
         return 0.0
     
     async def _calculate_semantic_similarity(self, fp1: ContentFingerprint, fp2: ContentFingerprint) -> float:
-        """Calculate semantic similarity between fingerprints"""
-        if not fp1.semantic_hash or not fp2.semantic_hash:
+        """Calculate semantic similarity between fingerprints"""        if not fp1.semantic_hash or not fp2.semantic_hash:
             return 0.0
         
         # Simple hash comparison for now
@@ -409,8 +388,7 @@ class AdvancedContentFingerprinter:
         return 0.0
     
     async def _calculate_linguistic_similarity(self, fp1: ContentFingerprint, fp2: ContentFingerprint) -> float:
-        """Calculate linguistic similarity between fingerprints"""
-        ling1 = fp1.linguistic_fingerprint
+        """Calculate linguistic similarity between fingerprints"""        ling1 = fp1.linguistic_fingerprint
         ling2 = fp2.linguistic_fingerprint
         
         if not ling1 or not ling2:
@@ -442,8 +420,7 @@ class AdvancedContentFingerprinter:
         return np.mean(similarities) if similarities else 0.0
     
     async def _calculate_ngram_similarity(self, fp1: ContentFingerprint, fp2: ContentFingerprint) -> float:
-        """Calculate n-gram similarity between fingerprints"""
-        fp1_data = fp1.metadata.get('all_fingerprints', {}).get('ngram', {})
+        """Calculate n-gram similarity between fingerprints"""        fp1_data = fp1.metadata.get('all_fingerprints', {}).get('ngram', {})
         fp2_data = fp2.metadata.get('all_fingerprints', {}).get('ngram', {})
         
         if not fp1_data or not fp2_data:
@@ -465,8 +442,7 @@ class AdvancedContentFingerprinter:
         return np.mean(similarities) if similarities else 0.0
     
     def _determine_match_type(self, similarities: Dict[str, float]) -> str:
-        """Determine the type of match based on similarity scores"""
-        if similarities['hash'] == 1.0:
+        """Determine the type of match based on similarity scores"""        if similarities['hash'] == 1.0:
             return 'exact'
         elif similarities['structural'] > 0.9 and similarities['ngram'] > 0.8:
             return 'substantial'
@@ -478,8 +454,7 @@ class AdvancedContentFingerprinter:
             return 'minimal'
     
     def _calculate_similarity_confidence(self, similarities: Dict[str, float]) -> float:
-        """Calculate confidence in similarity assessment"""
-        # Higher confidence for multiple high similarity scores
+        """Calculate confidence in similarity assessment"""        # Higher confidence for multiple high similarity scores
         high_scores = [score for score in similarities.values() if score > 0.7]
         moderate_scores = [score for score in similarities.values() if 0.4 <= score <= 0.7]
         
@@ -498,8 +473,7 @@ class AdvancedContentFingerprinter:
         return min(1.0, confidence)
     
     def _determine_violation_type(self, similarity_match: SimilarityMatch) -> Optional[str]:
-        """Determine the type of copyright violation"""
-        similarity = similarity_match.similarity_score
+        """Determine the type of copyright violation"""        similarity = similarity_match.similarity_score
         match_type = similarity_match.match_type
         
         if match_type == 'exact' or similarity > 0.95:
@@ -512,8 +486,7 @@ class AdvancedContentFingerprinter:
             return None  # No violation
     
     def _calculate_violation_severity(self, similarity_match: SimilarityMatch) -> str:
-        """Calculate severity of copyright violation"""
-        similarity = similarity_match.similarity_score
+        """Calculate severity of copyright violation"""        similarity = similarity_match.similarity_score
         
         if similarity > 0.9:
             return 'high'
@@ -523,8 +496,7 @@ class AdvancedContentFingerprinter:
             return 'low'
     
     def _gather_violation_evidence(self, similarity_match: SimilarityMatch) -> Dict[str, Any]:
-        """Gather evidence for copyright violation"""
-        return {
+        """Gather evidence for copyright violation"""        return {
             'similarity_breakdown': similarity_match.matching_elements,
             'overall_similarity': similarity_match.similarity_score,
             'match_type': similarity_match.match_type,
@@ -535,8 +507,7 @@ class AdvancedContentFingerprinter:
         }
     
     def _generate_violation_recommendation(self, violation_type: str, severity: str, similarity_match: SimilarityMatch) -> str:
-        """Generate recommendation for handling violation"""
-        recommendations = {
+        """Generate recommendation for handling violation"""        recommendations = {
             ('plagiarism', 'high'): 'Immediate takedown notice and legal action recommended',
             ('plagiarism', 'medium'): 'Send formal cease and desist notice',
             ('plagiarism', 'low'): 'Contact content creator for clarification',
@@ -551,13 +522,11 @@ class AdvancedContentFingerprinter:
         return recommendations.get((violation_type, severity), 'Manual review required')
     
     def _generate_violation_id(self, similarity_match: SimilarityMatch) -> str:
-        """Generate unique violation ID"""
-        id_string = f"{similarity_match.source_fingerprint.content_id}{similarity_match.target_fingerprint.content_id}{similarity_match.detected_at}"
+        """Generate unique violation ID"""        id_string = f"{similarity_match.source_fingerprint.content_id}{similarity_match.target_fingerprint.content_id}{similarity_match.detected_at}"
         return hashlib.sha256(id_string.encode()).hexdigest()[:12]
     
     def _calculate_distribution_similarity(self, dist1: Dict[str, float], dist2: Dict[str, float]) -> float:
-        """Calculate similarity between two distributions"""
-        all_keys = set(dist1.keys()).union(set(dist2.keys()))
+        """Calculate similarity between two distributions"""        all_keys = set(dist1.keys()).union(set(dist2.keys()))
         
         if not all_keys:
             return 0.0
@@ -576,8 +545,7 @@ class AdvancedContentFingerprinter:
         return dot_product / (norm1 * norm2)
     
     def _calculate_metrics_similarity(self, metrics1: Dict[str, float], metrics2: Dict[str, float]) -> float:
-        """Calculate similarity between two sets of metrics"""
-        common_keys = set(metrics1.keys()).intersection(set(metrics2.keys()))
+        """Calculate similarity between two sets of metrics"""        common_keys = set(metrics1.keys()).intersection(set(metrics2.keys()))
         
         if not common_keys:
             return 0.0
@@ -598,11 +566,9 @@ class AdvancedContentFingerprinter:
 
 # Specific fingerprint generators
 class HashFingerprintGenerator(FingerprintGenerator):
-    """Generate cryptographic hash fingerprints"""
-    
+    """Generate cryptographic hash fingerprints"""    
     async def generate_fingerprint(self, content: str, metadata: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Generate hash-based fingerprint"""
-        algorithm = self.config.get('hash_algorithm', 'sha256')
+        """Generate hash-based fingerprint"""        algorithm = self.config.get('hash_algorithm', 'sha256')
         
         # Generate different types of hashes
         content_bytes = content.encode('utf-8')
@@ -626,11 +592,9 @@ class HashFingerprintGenerator(FingerprintGenerator):
         }
 
 class StructuralFingerprintGenerator(FingerprintGenerator):
-    """Generate structural fingerprints based on content structure"""
-    
+    """Generate structural fingerprints based on content structure"""    
     async def generate_fingerprint(self, content: str, metadata: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Generate structure-based fingerprint"""
-        
+        """Generate structure-based fingerprint"""        
         # Analyze content structure
         structure_features = self._extract_structure_features(content)
         
@@ -647,8 +611,7 @@ class StructuralFingerprintGenerator(FingerprintGenerator):
         }
     
     def _extract_structure_features(self, content: str) -> Dict[str, Any]:
-        """Extract structural features from content"""
-        lines = content.split('\n')
+        """Extract structural features from content"""        lines = content.split('\n')
         sentences = content.split('.')
         paragraphs = content.split('\n\n')
         words = content.split()
@@ -665,8 +628,7 @@ class StructuralFingerprintGenerator(FingerprintGenerator):
         }
     
     def _create_structure_signature(self, features: Dict[str, Any]) -> str:
-        """Create signature from structural features"""
-        # Create normalized signature
+        """Create signature from structural features"""        # Create normalized signature
         signature_parts = [
             f"lines:{features['line_count']}",
             f"sentences:{features['sentence_count']}",
@@ -679,8 +641,7 @@ class StructuralFingerprintGenerator(FingerprintGenerator):
         return "|".join(signature_parts)
     
     def _analyze_punctuation_pattern(self, content: str) -> str:
-        """Analyze punctuation patterns"""
-        punctuation_chars = '.,!?;:'
+        """Analyze punctuation patterns"""        punctuation_chars = '.,!?;:'
         pattern = ""
         
         for char in content[:100]:  # First 100 chars
@@ -696,8 +657,7 @@ class StructuralFingerprintGenerator(FingerprintGenerator):
         return pattern[:20]  # Limit pattern length
     
     def _analyze_capitalization_pattern(self, content: str) -> str:
-        """Analyze capitalization patterns"""
-        pattern = ""
+        """Analyze capitalization patterns"""        pattern = ""
         
         for char in content[:50]:  # First 50 chars
             if char.isupper():
@@ -712,8 +672,7 @@ class StructuralFingerprintGenerator(FingerprintGenerator):
         return pattern
 
 class SemanticFingerprintGenerator(FingerprintGenerator):
-    """Generate semantic fingerprints based on content meaning"""
-    
+    """Generate semantic fingerprints based on content meaning"""    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.vectorizer = TfidfVectorizer(
@@ -723,8 +682,7 @@ class SemanticFingerprintGenerator(FingerprintGenerator):
         )
     
     async def generate_fingerprint(self, content: str, metadata: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Generate semantic fingerprint"""
-        
+        """Generate semantic fingerprint"""        
         try:
             # Generate TF-IDF vector
             tfidf_matrix = self.vectorizer.fit_transform([content])
@@ -757,11 +715,9 @@ class SemanticFingerprintGenerator(FingerprintGenerator):
             }
 
 class LinguisticFingerprintGenerator(FingerprintGenerator):
-    """Generate linguistic fingerprints based on language patterns"""
-    
+    """Generate linguistic fingerprints based on language patterns"""    
     async def generate_fingerprint(self, content: str, metadata: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Generate linguistic fingerprint"""
-        
+        """Generate linguistic fingerprint"""        
         try:
             # Download required NLTK data if not present
             try:
@@ -808,8 +764,7 @@ class LinguisticFingerprintGenerator(FingerprintGenerator):
             }
     
     def _calculate_word_length_distribution(self, tokens: List[str]) -> Dict[str, float]:
-        """Calculate distribution of word lengths"""
-        if not tokens:
+        """Calculate distribution of word lengths"""        if not tokens:
             return {}
         
         length_counts = Counter(len(word) for word in tokens if word.isalpha())
@@ -824,8 +779,7 @@ class LinguisticFingerprintGenerator(FingerprintGenerator):
         }
     
     def _calculate_pos_distribution(self, pos_tags: List[Tuple[str, str]]) -> Dict[str, float]:
-        """Calculate part-of-speech distribution"""
-        if not pos_tags:
+        """Calculate part-of-speech distribution"""        if not pos_tags:
             return {}
         
         pos_counts = Counter(tag for word, tag in pos_tags)
@@ -837,8 +791,7 @@ class LinguisticFingerprintGenerator(FingerprintGenerator):
         }
     
     def _calculate_complexity_score(self, content: str) -> float:
-        """Calculate content complexity score"""
-        sentences = content.split('.')
+        """Calculate content complexity score"""        sentences = content.split('.')
         words = content.split()
         
         if not sentences or not words:
@@ -856,11 +809,9 @@ class LinguisticFingerprintGenerator(FingerprintGenerator):
         return min(1.0, complexity)
 
 class NGramFingerprintGenerator(FingerprintGenerator):
-    """Generate n-gram based fingerprints"""
-    
+    """Generate n-gram based fingerprints"""    
     async def generate_fingerprint(self, content: str, metadata: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Generate n-gram fingerprint"""
-        
+        """Generate n-gram fingerprint"""        
         try:
             # Tokenize content
             tokens = word_tokenize(content.lower())
@@ -886,8 +837,7 @@ class NGramFingerprintGenerator(FingerprintGenerator):
 
 # Utility functions
 async def create_content_fingerprint(content: str, creator_id: str = None, platform: str = None) -> ContentFingerprint:
-    """Quick function to create a content fingerprint"""
-    fingerprinter = AdvancedContentFingerprinter()
+    """Quick function to create a content fingerprint"""    fingerprinter = AdvancedContentFingerprinter()
     
     metadata = {}
     if creator_id:
@@ -898,8 +848,7 @@ async def create_content_fingerprint(content: str, creator_id: str = None, platf
     return await fingerprinter.create_comprehensive_fingerprint(content, metadata)
 
 async def check_content_similarity(content1: str, content2: str) -> float:
-    """Quick function to check similarity between two content pieces"""
-    fingerprinter = AdvancedContentFingerprinter()
+    """Quick function to check similarity between two content pieces"""    fingerprinter = AdvancedContentFingerprinter()
     
     fp1 = await fingerprinter.create_comprehensive_fingerprint(content1)
     fp2 = await fingerprinter.create_comprehensive_fingerprint(content2)
@@ -909,8 +858,7 @@ async def check_content_similarity(content1: str, content2: str) -> float:
 
 # Content protection system
 class ContentProtectionSystem:
-    """Comprehensive content protection and monitoring system"""
-    
+    """Comprehensive content protection and monitoring system"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.fingerprinter = AdvancedContentFingerprinter(config)
@@ -919,8 +867,7 @@ class ContentProtectionSystem:
         self.monitoring_active = True
     
     async def protect_content(self, content: str, creator_id: str, metadata: Dict[str, Any] = None) -> ContentFingerprint:
-        """Add content to protection system"""
-        metadata = metadata or {}
+        """Add content to protection system"""        metadata = metadata or {}
         metadata['creator_id'] = creator_id
         metadata['protection_enabled'] = True
         metadata['protection_timestamp'] = datetime.utcnow()
@@ -932,8 +879,7 @@ class ContentProtectionSystem:
         return fingerprint
     
     async def monitor_violations(self, new_content: str, source_metadata: Dict[str, Any] = None) -> List[CopyrightViolation]:
-        """Monitor for violations against protected content"""
-        if not self.monitoring_active:
+        """Monitor for violations against protected content"""        if not self.monitoring_active:
             return []
         
         # Create fingerprint for new content
@@ -953,8 +899,7 @@ class ContentProtectionSystem:
         return violations
     
     def get_protection_stats(self) -> Dict[str, Any]:
-        """Get protection system statistics"""
-        return {
+        """Get protection system statistics"""        return {
             'protected_content_count': len(self.protected_content),
             'total_violations_detected': len(self.violation_alerts),
             'monitoring_active': self.monitoring_active,

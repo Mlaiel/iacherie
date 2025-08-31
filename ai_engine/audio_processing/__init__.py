@@ -39,8 +39,7 @@ Key Features:
 This module integrates with the content protection system to ensure
 audio rights management and supports the platform's monetization
 through enhanced audio quality and professional processing capabilities.
-"""
-from .core import AudioProcessor, AudioAnalyzer, AudioEnhancer, AudioMetadata, AudioFeatures
+"""from .core import AudioProcessor, AudioAnalyzer, AudioEnhancer, AudioMetadata, AudioFeatures
 from .embeddings import AudioEmbeddingModel, AudioEmbeddingGenerator, SimilarityMatcher, SimilarityResult
 from .effects import EffectsProcessor, AudioRestoration, EffectType
 from .fingerprinting import SpectralLandmarkExtractor, AudioFingerprinter, ContentMatcher, AudioFingerprint, MatchResult

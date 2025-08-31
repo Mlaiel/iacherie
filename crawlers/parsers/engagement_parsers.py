@@ -1,5 +1,4 @@
-"""
-Engagement Parsers Module
+"""Engagement Parsers Module
 ========================
 
 Specialized parsers for extracting engagement metrics from social media platforms.
@@ -12,9 +11,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import json
 import re
 from abc import ABC, abstractmethod
@@ -30,42 +27,35 @@ from .parser_config import ParserConfig
 
 
 class BaseEngagementParser(ABC):
-    """Abstract base class for engagement parsers"""
-    
+    """Abstract base class for engagement parsers"""    
     def __init__(self, config: ParserConfig):
         self.config = config
         self.engagement_config = config.engagement
         self.session = None
     
     async def __aenter__(self):
-        """Async context manager entry"""
-        self.session = aiohttp.ClientSession()
+        """Async context manager entry"""        self.session = aiohttp.ClientSession()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
-        if self.session:
+        """Async context manager exit"""        if self.session:
             await self.session.close()
     
     @abstractmethod
     async def parse_engagement(self, content_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse engagement data for specific content"""
-        pass
+        """Parse engagement data for specific content"""        pass
     
     @abstractmethod
     def get_platform_name(self) -> str:
-        """Get the platform name for this engagement parser"""
-        pass
+        """Get the platform name for this engagement parser"""        pass
     
     def _calculate_engagement_rate(self, interactions: int, impressions: int) -> float:
-        """Calculate engagement rate as percentage"""
-        if impressions == 0:
+        """Calculate engagement rate as percentage"""        if impressions == 0:
             return 0.0
         return (interactions / impressions) * 100
     
     def _classify_engagement_level(self, engagement_rate: float) -> str:
-        """Classify engagement level based on rate"""
-        if engagement_rate >= 10:
+        """Classify engagement level based on rate"""        if engagement_rate >= 10:
             return "excellent"
         elif engagement_rate >= 5:
             return "good"
@@ -77,8 +67,7 @@ class BaseEngagementParser(ABC):
             return "very_low"
     
     def _analyze_sentiment(self, comments: List[str]) -> Dict[str, Any]:
-        """Basic sentiment analysis of comments"""
-        if not comments:
+        """Basic sentiment analysis of comments"""        if not comments:
             return {'positive': 0, 'negative': 0, 'neutral': 0, 'total': 0}
         
         positive_words = ['good', 'great', 'amazing', 'awesome', 'love', 'excellent', 'fantastic', 'wonderful']
@@ -103,14 +92,12 @@ class BaseEngagementParser(ABC):
 
 
 class YouTubeEngagementParser(BaseEngagementParser):
-    """Parser for YouTube engagement metrics"""
-    
+    """Parser for YouTube engagement metrics"""    
     def get_platform_name(self) -> str:
         return "youtube"
     
     async def parse_engagement(self, video_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse YouTube video engagement"""
-        try:
+        """Parse YouTube video engagement"""        try:
             video_data = await self._get_video_data(video_id)
             comments_data = await self._get_comments_data(video_id)
             
@@ -133,8 +120,7 @@ class YouTubeEngagementParser(BaseEngagementParser):
             )
     
     async def _get_video_data(self, video_id: str) -> Dict[str, Any]:
-        """Get video statistics from YouTube Data API"""
-        url = "https://www.googleapis.com/youtube/v3/videos"
+        """Get video statistics from YouTube Data API"""        url = "https://www.googleapis.com/youtube/v3/videos"
         params = {
             'id': video_id,
             'part': 'statistics,snippet',
@@ -162,8 +148,7 @@ class YouTubeEngagementParser(BaseEngagementParser):
             return data['items'][0]
     
     async def _get_comments_data(self, video_id: str, max_results: int = 100) -> List[Dict[str, Any]]:
-        """Get comments from YouTube Data API"""
-        url = "https://www.googleapis.com/youtube/v3/commentThreads"
+        """Get comments from YouTube Data API"""        url = "https://www.googleapis.com/youtube/v3/commentThreads"
         params = {
             'videoId': video_id,
             'part': 'snippet',
@@ -196,8 +181,7 @@ class YouTubeEngagementParser(BaseEngagementParser):
         return all_comments
     
     async def _parse_youtube_engagement(self, video_data: Dict[str, Any], comments_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Parse YouTube engagement metrics"""
-        statistics = video_data.get('statistics', {})
+        """Parse YouTube engagement metrics"""        statistics = video_data.get('statistics', {})
         snippet = video_data.get('snippet', {})
         
         # Basic metrics
@@ -256,14 +240,12 @@ class YouTubeEngagementParser(BaseEngagementParser):
 
 
 class InstagramEngagementParser(BaseEngagementParser):
-    """Parser for Instagram engagement metrics"""
-    
+    """Parser for Instagram engagement metrics"""    
     def get_platform_name(self) -> str:
         return "instagram"
     
     async def parse_engagement(self, media_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse Instagram media engagement"""
-        try:
+        """Parse Instagram media engagement"""        try:
             media_data = await self._get_media_data(media_id)
             comments_data = await self._get_media_comments(media_id)
             
@@ -286,8 +268,7 @@ class InstagramEngagementParser(BaseEngagementParser):
             )
     
     async def _get_media_data(self, media_id: str) -> Dict[str, Any]:
-        """Get media data from Instagram Basic Display API"""
-        url = f"https://graph.instagram.com/{media_id}"
+        """Get media data from Instagram Basic Display API"""        url = f"https://graph.instagram.com/{media_id}"
         params = {
             'fields': 'id,media_type,media_url,permalink,timestamp,caption,like_count,comments_count',
             'access_token': self.config.platform['instagram'].access_token
@@ -298,8 +279,7 @@ class InstagramEngagementParser(BaseEngagementParser):
             return await response.json()
     
     async def _get_media_comments(self, media_id: str) -> List[Dict[str, Any]]:
-        """Get comments for Instagram media"""
-        url = f"https://graph.instagram.com/{media_id}/comments"
+        """Get comments for Instagram media"""        url = f"https://graph.instagram.com/{media_id}/comments"
         params = {
             'fields': 'id,text,timestamp,username,like_count',
             'access_token': self.config.platform['instagram'].access_token
@@ -320,8 +300,7 @@ class InstagramEngagementParser(BaseEngagementParser):
         return all_comments
     
     async def _parse_instagram_engagement(self, media_data: Dict[str, Any], comments_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Parse Instagram engagement metrics"""
-        likes = media_data.get('like_count', 0)
+        """Parse Instagram engagement metrics"""        likes = media_data.get('like_count', 0)
         comments_count = media_data.get('comments_count', 0)
         
         # For Instagram, we don't have view count, so we use likes + comments as base
@@ -373,14 +352,12 @@ class InstagramEngagementParser(BaseEngagementParser):
 
 
 class FacebookEngagementParser(BaseEngagementParser):
-    """Parser for Facebook engagement metrics"""
-    
+    """Parser for Facebook engagement metrics"""    
     def get_platform_name(self) -> str:
         return "facebook"
     
     async def parse_engagement(self, post_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse Facebook post engagement"""
-        try:
+        """Parse Facebook post engagement"""        try:
             post_data = await self._get_post_data(post_id)
             comments_data = await self._get_post_comments(post_id)
             reactions_data = await self._get_post_reactions(post_id)
@@ -404,8 +381,7 @@ class FacebookEngagementParser(BaseEngagementParser):
             )
     
     async def _get_post_data(self, post_id: str) -> Dict[str, Any]:
-        """Get post data from Facebook Graph API"""
-        url = f"https://graph.facebook.com/v18.0/{post_id}"
+        """Get post data from Facebook Graph API"""        url = f"https://graph.facebook.com/v18.0/{post_id}"
         params = {
             'fields': 'id,message,created_time,shares,likes.summary(true),comments.summary(true),reactions.summary(true)',
             'access_token': self.config.platform['facebook'].access_token
@@ -416,8 +392,7 @@ class FacebookEngagementParser(BaseEngagementParser):
             return await response.json()
     
     async def _get_post_comments(self, post_id: str) -> List[Dict[str, Any]]:
-        """Get comments for Facebook post"""
-        url = f"https://graph.facebook.com/v18.0/{post_id}/comments"
+        """Get comments for Facebook post"""        url = f"https://graph.facebook.com/v18.0/{post_id}/comments"
         params = {
             'fields': 'id,message,created_time,from,like_count',
             'limit': 100,
@@ -438,8 +413,7 @@ class FacebookEngagementParser(BaseEngagementParser):
         return all_comments
     
     async def _get_post_reactions(self, post_id: str) -> Dict[str, int]:
-        """Get reaction breakdown for Facebook post"""
-        reactions = {}
+        """Get reaction breakdown for Facebook post"""        reactions = {}
         reaction_types = ['LIKE', 'LOVE', 'WOW', 'HAHA', 'SAD', 'ANGRY', 'THANKFUL']
         
         for reaction_type in reaction_types:
@@ -461,8 +435,7 @@ class FacebookEngagementParser(BaseEngagementParser):
         return reactions
     
     async def _parse_facebook_engagement(self, post_data: Dict[str, Any], comments_data: List[Dict[str, Any]], reactions_data: Dict[str, int]) -> Dict[str, Any]:
-        """Parse Facebook engagement metrics"""
-        # Extract basic metrics
+        """Parse Facebook engagement metrics"""        # Extract basic metrics
         total_reactions = sum(reactions_data.values())
         comments_count = post_data.get('comments', {}).get('summary', {}).get('total_count', 0)
         shares_count = post_data.get('shares', {}).get('count', 0)
@@ -505,14 +478,12 @@ class FacebookEngagementParser(BaseEngagementParser):
 
 
 class TwitterEngagementParser(BaseEngagementParser):
-    """Parser for Twitter engagement metrics"""
-    
+    """Parser for Twitter engagement metrics"""    
     def get_platform_name(self) -> str:
         return "twitter"
     
     async def parse_engagement(self, tweet_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse Twitter tweet engagement"""
-        try:
+        """Parse Twitter tweet engagement"""        try:
             tweet_data = await self._get_tweet_data(tweet_id)
             parsed_engagement = await self._parse_twitter_engagement(tweet_data)
             
@@ -533,8 +504,7 @@ class TwitterEngagementParser(BaseEngagementParser):
             )
     
     async def _get_tweet_data(self, tweet_id: str) -> Dict[str, Any]:
-        """Get tweet data from Twitter API v2"""
-        url = f"https://api.twitter.com/2/tweets/{tweet_id}"
+        """Get tweet data from Twitter API v2"""        url = f"https://api.twitter.com/2/tweets/{tweet_id}"
         params = {
             'expansions': 'author_id,referenced_tweets.id',
             'tweet.fields': 'created_at,text,public_metrics,context_annotations,entities',
@@ -557,8 +527,7 @@ class TwitterEngagementParser(BaseEngagementParser):
             return await response.json()
     
     async def _parse_twitter_engagement(self, tweet_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse Twitter engagement metrics"""
-        data = tweet_data.get('data', {})
+        """Parse Twitter engagement metrics"""        data = tweet_data.get('data', {})
         public_metrics = data.get('public_metrics', {})
         
         # Basic metrics
@@ -613,14 +582,12 @@ class TwitterEngagementParser(BaseEngagementParser):
 
 
 class TikTokEngagementParser(BaseEngagementParser):
-    """Parser for TikTok engagement metrics"""
-    
+    """Parser for TikTok engagement metrics"""    
     def get_platform_name(self) -> str:
         return "tiktok"
     
     async def parse_engagement(self, video_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse TikTok video engagement"""
-        try:
+        """Parse TikTok video engagement"""        try:
             # TikTok API access is limited, this would require business API
             video_data = await self._get_tiktok_video_data(video_id)
             parsed_engagement = await self._parse_tiktok_engagement(video_data)
@@ -642,13 +609,11 @@ class TikTokEngagementParser(BaseEngagementParser):
             )
     
     async def _get_tiktok_video_data(self, video_id: str) -> Dict[str, Any]:
-        """Get TikTok video data (placeholder implementation)"""
-        # This would require TikTok Business API access
+        """Get TikTok video data (placeholder implementation)"""        # This would require TikTok Business API access
         return {}
     
     async def _parse_tiktok_engagement(self, video_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse TikTok engagement metrics"""
-        return {
+        """Parse TikTok engagement metrics"""        return {
             'overview': {
                 'views': 0,
                 'likes': 0,
@@ -663,14 +628,12 @@ class TikTokEngagementParser(BaseEngagementParser):
 
 
 class LinkedInEngagementParser(BaseEngagementParser):
-    """Parser for LinkedIn engagement metrics"""
-    
+    """Parser for LinkedIn engagement metrics"""    
     def get_platform_name(self) -> str:
         return "linkedin"
     
     async def parse_engagement(self, post_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse LinkedIn post engagement"""
-        try:
+        """Parse LinkedIn post engagement"""        try:
             post_data = await self._get_linkedin_post_data(post_id)
             parsed_engagement = await self._parse_linkedin_engagement(post_data)
             
@@ -691,13 +654,11 @@ class LinkedInEngagementParser(BaseEngagementParser):
             )
     
     async def _get_linkedin_post_data(self, post_id: str) -> Dict[str, Any]:
-        """Get LinkedIn post data"""
-        # LinkedIn API implementation would go here
+        """Get LinkedIn post data"""        # LinkedIn API implementation would go here
         return {}
     
     async def _parse_linkedin_engagement(self, post_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse LinkedIn engagement metrics"""
-        return {
+        """Parse LinkedIn engagement metrics"""        return {
             'overview': {
                 'impressions': 0,
                 'likes': 0,

@@ -1,5 +1,4 @@
-"""
-Advanced Video Fingerprinting Engine
+"""Advanced Video Fingerprinting Engine
 Uses OpenCV, pHash, YOLO frame analysis for video content identification
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -9,9 +8,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + Video Processing Expert
 WARNING: This code is proprietary and confidential. Any unauthorized copying,
 distribution, modification or use is strictly prohibited and will be prosecuted
 to the full extent of the law.
-"""
-
-import cv2
+"""import cv2
 import numpy as np
 from typing import Dict, List, Tuple, Optional
 import hashlib
@@ -30,8 +27,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class VideoFingerprint:
-    """Video fingerprint data structure"""
-    frame_hashes: List[str]
+    """Video fingerprint data structure"""    frame_hashes: List[str]
     perceptual_hash: str
     temporal_signature: str
     object_signatures: List[Dict]
@@ -43,11 +39,9 @@ class VideoFingerprint:
 
 
 class VideoFingerprintEngine:
-    """
-    Enterprise-grade video fingerprinting using multiple algorithms
+    """    Enterprise-grade video fingerprinting using multiple algorithms
     Combines frame hashing, YOLO object detection, and motion analysis
-    """
-    
+    """    
     def __init__(self, model_path: Optional[str] = None):
         self.yolo_model = None
         if model_path and Path(model_path).exists():
@@ -58,8 +52,7 @@ class VideoFingerprintEngine:
                 
     def extract_fingerprint(self, video_file_path: str, 
                            sample_rate: int = 1) -> VideoFingerprint:
-        """Extract comprehensive video fingerprint from file"""
-        try:
+        """Extract comprehensive video fingerprint from file"""        try:
             cap = cv2.VideoCapture(video_file_path)
             if not cap.isOpened():
                 raise ValueError(f"Cannot open video file: {video_file_path}")
@@ -140,8 +133,7 @@ class VideoFingerprintEngine:
             raise
             
     def _compute_frame_hash(self, frame: np.ndarray) -> str:
-        """Compute hash for a single frame"""
-        try:
+        """Compute hash for a single frame"""        try:
             # Convert to grayscale
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             
@@ -162,8 +154,7 @@ class VideoFingerprintEngine:
             
     def _compute_motion_vector(self, prev_frame: np.ndarray, 
                              curr_frame: np.ndarray) -> float:
-        """Compute motion vector between two frames"""
-        try:
+        """Compute motion vector between two frames"""        try:
             # Convert to grayscale
             prev_gray = cv2.cvtColor(prev_frame, cv2.COLOR_BGR2GRAY)
             curr_gray = cv2.cvtColor(curr_frame, cv2.COLOR_BGR2GRAY)
@@ -190,8 +181,7 @@ class VideoFingerprintEngine:
             return 0.0
             
     def _detect_objects(self, frame: np.ndarray) -> List[Dict]:
-        """Detect objects in frame using YOLO"""
-        try:
+        """Detect objects in frame using YOLO"""        try:
             if not self.yolo_model:
                 return []
                 
@@ -215,8 +205,7 @@ class VideoFingerprintEngine:
             return []
             
     def _compute_perceptual_hash(self, frame_hashes: List[str]) -> str:
-        """Compute overall perceptual hash from frame hashes"""
-        try:
+        """Compute overall perceptual hash from frame hashes"""        try:
             if not frame_hashes:
                 return ""
                 
@@ -234,8 +223,7 @@ class VideoFingerprintEngine:
             return ""
             
     def _compute_temporal_signature(self, motion_vectors: List[float]) -> str:
-        """Compute temporal signature from motion vectors"""
-        try:
+        """Compute temporal signature from motion vectors"""        try:
             if not motion_vectors:
                 return ""
                 
@@ -260,8 +248,7 @@ class VideoFingerprintEngine:
             
     def _calculate_confidence(self, frames_processed: int, duration: float, 
                             object_count: int) -> float:
-        """Calculate confidence score based on video quality metrics"""
-        try:
+        """Calculate confidence score based on video quality metrics"""        try:
             # Frame coverage (more frames = better confidence)
             frame_score = min(1.0, frames_processed / 100.0)
             
@@ -283,8 +270,7 @@ class VideoFingerprintEngine:
             
     def compare_fingerprints(self, fp1: VideoFingerprint, 
                            fp2: VideoFingerprint) -> float:
-        """Compare two video fingerprints and return similarity score (0-1)"""
-        try:
+        """Compare two video fingerprints and return similarity score (0-1)"""        try:
             scores = []
             
             # 1. Perceptual hash similarity
@@ -322,8 +308,7 @@ class VideoFingerprintEngine:
             return 0.0
             
     def _compare_frame_hashes(self, hashes1: List[str], hashes2: List[str]) -> float:
-        """Compare frame hash sequences"""
-        try:
+        """Compare frame hash sequences"""        try:
             if not hashes1 or not hashes2:
                 return 0.0
                 
@@ -342,8 +327,7 @@ class VideoFingerprintEngine:
             return 0.0
             
     def _compare_motion_vectors(self, motion1: np.ndarray, motion2: np.ndarray) -> float:
-        """Compare motion vector patterns"""
-        try:
+        """Compare motion vector patterns"""        try:
             if len(motion1) == 0 or len(motion2) == 0:
                 return 0.0
                 
@@ -363,8 +347,7 @@ class VideoFingerprintEngine:
             return 0.0
             
     def _compare_object_signatures(self, objects1: List[Dict], objects2: List[Dict]) -> float:
-        """Compare object detection signatures"""
-        try:
+        """Compare object detection signatures"""        try:
             if not objects1 or not objects2:
                 return 0.0 if not objects1 and not objects2 else 0.0
                 
@@ -394,8 +377,7 @@ class VideoFingerprintEngine:
             return 0.0
             
     def batch_extract_fingerprints(self, video_files: List[str]) -> Dict[str, VideoFingerprint]:
-        """Extract fingerprints from multiple video files"""
-        fingerprints = {}
+        """Extract fingerprints from multiple video files"""        fingerprints = {}
         
         for video_file in video_files:
             try:
@@ -410,8 +392,7 @@ class VideoFingerprintEngine:
     def find_similar_videos(self, target_fingerprint: VideoFingerprint,
                           candidate_fingerprints: Dict[str, VideoFingerprint],
                           threshold: float = 0.8) -> List[Tuple[str, float]]:
-        """Find similar video files above threshold"""
-        similar_files = []
+        """Find similar video files above threshold"""        similar_files = []
         
         for file_path, candidate_fp in candidate_fingerprints.items():
             similarity = self.compare_fingerprints(target_fingerprint, candidate_fp)

@@ -10,8 +10,7 @@ Contact: mlaiel@live.de
 WARNING: This code is proprietary and confidential. Unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action. All intellectual property rights
 belong exclusively to Fahed Mlaiel.
-"""
-from .email import EmailNotifier
+"""from .email import EmailNotifier
 from .sms import SMSNotifier, SMSMessage, SMSDeliveryResult, SMSProvider
 from .push import PushNotifier, PushMessage, PushContent, PushDeliveryResult, PushPlatform, NotificationPriority
 from .webhook import WebhookNotifier, WebhookPayload, WebhookDeliveryResult, WebhookEvent, WebhookEndpoint
@@ -35,8 +34,7 @@ __all__ = [
     
     # Enums
     "NotificationPriority"
-]on system: email, SMS, push notifications, webhooks."""
-from .email import EmailNotifier
+]on system: email, SMS, push notifications, webhooks."""from .email import EmailNotifier
 from .sms import SMSNotifier  
 from .push import PushNotifier
 from .webhook import WebhookNotifier

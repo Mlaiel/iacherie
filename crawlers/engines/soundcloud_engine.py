@@ -1,5 +1,4 @@
-"""
-SoundCloud Crawling Engine
+"""SoundCloud Crawling Engine
 ==========================
 
 Advanced SoundCloud crawler for music discovery, artist analytics, and track monitoring.
@@ -12,9 +11,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator
 from dataclasses import dataclass, asdict
@@ -50,8 +47,7 @@ settings = get_settings()
 
 @dataclass
 class SoundCloudTrack:
-    """SoundCloud track data structure"""
-    id: str
+    """SoundCloud track data structure"""    id: str
     title: str
     description: Optional[str]
     user_id: str
@@ -83,8 +79,7 @@ class SoundCloudTrack:
 
 @dataclass
 class SoundCloudUser:
-    """SoundCloud user data structure"""
-    id: str
+    """SoundCloud user data structure"""    id: str
     username: str
     permalink: str
     display_name: str
@@ -111,8 +106,7 @@ class SoundCloudUser:
 
 @dataclass
 class SoundCloudPlaylist:
-    """SoundCloud playlist data structure"""
-    id: str
+    """SoundCloud playlist data structure"""    id: str
     title: str
     description: Optional[str]
     user_id: str
@@ -134,8 +128,7 @@ class SoundCloudPlaylist:
 
 
 class SoundCloudCrawlerEngine(BaseCrawlerEngine):
-    """
-    Professional SoundCloud crawler engine for music content analysis.
+    """    Professional SoundCloud crawler engine for music content analysis.
     
     Features:
     - Track discovery and analytics
@@ -144,11 +137,9 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
     - Genre trend tracking
     - Audio content protection
     - Music recommendation analysis
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize SoundCloud crawler engine"""
-        super().__init__(platform="soundcloud", config=config)
+        """Initialize SoundCloud crawler engine"""        super().__init__(platform="soundcloud", config=config)
         
         # Rate limiting
         self.rate_limiter = RateLimiter(
@@ -176,8 +167,7 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
         logger.info("SoundCloud crawler engine initialized")
     
     async def initialize(self) -> None:
-        """Initialize the crawler engine"""
-        try:
+        """Initialize the crawler engine"""        try:
             await self._create_session()
             self._setup_selenium()
             if not self.client_id:
@@ -188,8 +178,7 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Initialization failed: {e}")
     
     async def _create_session(self) -> None:
-        """Create HTTP session with proper headers"""
-        headers = {
+        """Create HTTP session with proper headers"""        headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
             'Accept': 'application/json, text/javascript, */*; q=0.01',
             'Accept-Language': 'en-US,en;q=0.9',
@@ -207,8 +196,7 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
         )
     
     def _setup_selenium(self) -> None:
-        """Setup Selenium WebDriver"""
-        try:
+        """Setup Selenium WebDriver"""        try:
             options = webdriver.ChromeOptions()
             options.add_argument('--headless')
             options.add_argument('--no-sandbox')
@@ -222,8 +210,7 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
             logger.warning(f"Failed to initialize Selenium: {e}")
     
     async def _extract_client_id(self) -> None:
-        """Extract client ID from SoundCloud website"""
-        try:
+        """Extract client ID from SoundCloud website"""        try:
             if not self.driver:
                 logger.warning("Cannot extract client ID without Selenium")
                 return
@@ -254,8 +241,7 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
         limit: int = 50,
         genre: Optional[str] = None
     ) -> List[SoundCloudTrack]:
-        """
-        Search for tracks on SoundCloud
+        """        Search for tracks on SoundCloud
         
         Args:
             query: Search query
@@ -264,8 +250,7 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of tracks matching the query
-        """
-        try:
+        """        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -315,16 +300,14 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Track search failed: {e}")
     
     async def get_track_details(self, track_id: str) -> Optional[SoundCloudTrack]:
-        """
-        Get detailed information about a track
+        """        Get detailed information about a track
         
         Args:
             track_id: SoundCloud track ID
             
         Returns:
             Track details or None if not found
-        """
-        try:
+        """        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -360,16 +343,14 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Track details retrieval failed: {e}")
     
     async def get_user_profile(self, username: str) -> Optional[SoundCloudUser]:
-        """
-        Get user profile information
+        """        Get user profile information
         
         Args:
             username: SoundCloud username
             
         Returns:
             User profile data or None if not found
-        """
-        try:
+        """        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -413,8 +394,7 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
         user_id: str,
         limit: int = 50
     ) -> List[SoundCloudTrack]:
-        """
-        Get tracks from a user
+        """        Get tracks from a user
         
         Args:
             user_id: SoundCloud user ID
@@ -422,8 +402,7 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of user's tracks
-        """
-        try:
+        """        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -468,8 +447,7 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"User tracks retrieval failed: {e}")
     
     def _parse_track_data(self, track_data: Dict[str, Any]) -> SoundCloudTrack:
-        """Parse track data from API response"""
-        try:
+        """Parse track data from API response"""        try:
             user_data = track_data.get('user', {})
             
             return SoundCloudTrack(
@@ -507,8 +485,7 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Track data parsing failed: {e}")
     
     def _parse_user_data(self, user_data: Dict[str, Any]) -> SoundCloudUser:
-        """Parse user data from API response"""
-        try:
+        """Parse user data from API response"""        try:
             return SoundCloudUser(
                 id=str(user_data.get('id', '')),
                 username=user_data.get('username', ''),
@@ -539,13 +516,11 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"User data parsing failed: {e}")
     
     async def analyze_trending_genres(self) -> List[Dict[str, Any]]:
-        """
-        Analyze trending genres on SoundCloud
+        """        Analyze trending genres on SoundCloud
         
         Returns:
             List of trending genres with metadata
-        """
-        try:
+        """        try:
             # Search for popular tracks in different genres
             genres = [
                 'electronic', 'hip-hop', 'pop', 'rock', 'indie', 'ambient',
@@ -591,8 +566,7 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
         track_title: str,
         artist_name: str
     ) -> Dict[str, Any]:
-        """
-        Monitor for unauthorized use of audio content
+        """        Monitor for unauthorized use of audio content
         
         Args:
             track_title: Title of the track to monitor
@@ -600,8 +574,7 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             Content protection monitoring results
-        """
-        try:
+        """        try:
             protection_results = {
                 'track_title': track_title,
                 'original_artist': artist_name,
@@ -647,8 +620,7 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Audio content protection monitoring failed: {e}")
     
     def _calculate_title_similarity(self, title1: str, title2: str) -> float:
-        """Calculate similarity between two track titles"""
-        words1 = set(title1.lower().split())
+        """Calculate similarity between two track titles"""        words1 = set(title1.lower().split())
         words2 = set(title2.lower().split())
         
         if not words1 or not words2:
@@ -660,8 +632,7 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
         return len(intersection) / len(union)
     
     async def cleanup(self) -> None:
-        """Clean up resources"""
-        try:
+        """Clean up resources"""        try:
             if self.session:
                 await self.session.close()
             if self.driver:

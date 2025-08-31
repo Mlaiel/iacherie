@@ -1,5 +1,4 @@
-"""
-Stream Monitoring System for IA Influencer Agent Platform
+"""Stream Monitoring System for IA Influencer Agent Platform
 ========================================================
 
 Advanced monitoring and alerting system for real-time stream health,
@@ -7,9 +6,7 @@ performance tracking, and automated incident response.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable
 from datetime import datetime, timezone, timedelta
@@ -31,8 +28,7 @@ settings = get_settings()
 
 
 class AlertSeverity(str, Enum):
-    """Alert severity levels"""
-    INFO = "info"
+    """Alert severity levels"""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
@@ -40,8 +36,7 @@ class AlertSeverity(str, Enum):
 
 
 class MonitoringMetric(str, Enum):
-    """Monitoring metric types"""
-    THROUGHPUT = "throughput"
+    """Monitoring metric types"""    THROUGHPUT = "throughput"
     LATENCY = "latency"
     ERROR_RATE = "error_rate"
     MEMORY_USAGE = "memory_usage"
@@ -53,8 +48,7 @@ class MonitoringMetric(str, Enum):
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration"""
-    id: str
+    """Alert rule configuration"""    id: str
     name: str
     metric: MonitoringMetric
     threshold: float
@@ -68,8 +62,7 @@ class AlertRule:
 
 @dataclass
 class Alert:
-    """Alert instance"""
-    id: str
+    """Alert instance"""    id: str
     rule_id: str
     severity: AlertSeverity
     message: str
@@ -82,8 +75,7 @@ class Alert:
 
 
 class StreamHealth(BaseModel):
-    """Stream health status"""
-    stream_id: str = Field(description="Stream identifier")
+    """Stream health status"""    stream_id: str = Field(description="Stream identifier")
     status: str = Field(description="Health status")
     last_activity: datetime = Field(description="Last activity timestamp")
     event_count: int = Field(default=0, description="Total events processed")
@@ -94,8 +86,7 @@ class StreamHealth(BaseModel):
 
 
 class MonitoringStats(BaseModel):
-    """Comprehensive monitoring statistics"""
-    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    """Comprehensive monitoring statistics"""    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     active_streams: int = Field(default=0, description="Number of active streams")
     total_events: int = Field(default=0, description="Total events processed")
     events_per_second: float = Field(default=0.0, description="Current throughput")
@@ -107,11 +98,9 @@ class MonitoringStats(BaseModel):
 
 
 class StreamMonitor:
-    """
-    Enterprise-grade stream monitoring system for real-time health tracking,
+    """    Enterprise-grade stream monitoring system for real-time health tracking,
     performance analysis, and automated incident response.
-    """
-    
+    """    
     def __init__(self):
         self.redis: Optional[Redis] = None
         self.notification_manager: Optional[NotificationManager] = None
@@ -123,8 +112,7 @@ class StreamMonitor:
         self._shutdown_event = asyncio.Event()
         
     async def initialize(self) -> None:
-        """Initialize stream monitor with dependencies"""
-        try:
+        """Initialize stream monitor with dependencies"""        try:
             from ...core.cache import get_redis_client
             self.redis = await get_redis_client()
             
@@ -146,8 +134,7 @@ class StreamMonitor:
             raise
             
     async def _setup_default_alert_rules(self) -> None:
-        """Setup default monitoring alert rules"""
-        default_rules = [
+        """Setup default monitoring alert rules"""        default_rules = [
             AlertRule(
                 id="high_error_rate",
                 name="High Error Rate",
@@ -205,16 +192,14 @@ class StreamMonitor:
         processing_time: Optional[float] = None,
         error: Optional[str] = None
     ) -> None:
-        """
-        Track stream event for monitoring
+        """        Track stream event for monitoring
         
         Args:
             stream_id: Stream identifier
             event: Stream event
             processing_time: Processing time in seconds
             error: Error message if failed
-        """
-        try:
+        """        try:
             # Update stream health
             if stream_id not in self.stream_health:
                 self.stream_health[stream_id] = StreamHealth(
@@ -250,16 +235,13 @@ class StreamMonitor:
             logger.error(f"Failed to track stream event: {e}")
             
     async def get_stream_health(self, stream_id: str) -> Optional[StreamHealth]:
-        """Get health status for specific stream"""
-        return self.stream_health.get(stream_id)
+        """Get health status for specific stream"""        return self.stream_health.get(stream_id)
         
     async def get_all_stream_health(self) -> List[StreamHealth]:
-        """Get health status for all monitored streams"""
-        return list(self.stream_health.values())
+        """Get health status for all monitored streams"""        return list(self.stream_health.values())
         
     async def get_monitoring_stats(self) -> MonitoringStats:
-        """Get comprehensive monitoring statistics"""
-        try:
+        """Get comprehensive monitoring statistics"""        try:
             total_events = sum(health.event_count for health in self.stream_health.values())
             total_errors = sum(health.error_count for health in self.stream_health.values())
             
@@ -298,13 +280,11 @@ class StreamMonitor:
             return MonitoringStats()
             
     async def create_alert_rule(self, rule: AlertRule) -> None:
-        """Create new alert rule"""
-        self.alert_rules[rule.id] = rule
+        """Create new alert rule"""        self.alert_rules[rule.id] = rule
         logger.info(f"Created alert rule: {rule.name}")
         
     async def update_alert_rule(self, rule_id: str, updates: Dict[str, Any]) -> bool:
-        """Update existing alert rule"""
-        if rule_id not in self.alert_rules:
+        """Update existing alert rule"""        if rule_id not in self.alert_rules:
             return False
             
         rule = self.alert_rules[rule_id]
@@ -316,36 +296,31 @@ class StreamMonitor:
         return True
         
     async def delete_alert_rule(self, rule_id: str) -> bool:
-        """Delete alert rule"""
-        if rule_id in self.alert_rules:
+        """Delete alert rule"""        if rule_id in self.alert_rules:
             del self.alert_rules[rule_id]
             logger.info(f"Deleted alert rule: {rule_id}")
             return True
         return False
         
     async def get_active_alerts(self) -> List[Alert]:
-        """Get all active alerts"""
-        return [alert for alert in self.active_alerts.values() if not alert.resolved_at]
+        """Get all active alerts"""        return [alert for alert in self.active_alerts.values() if not alert.resolved_at]
         
     async def acknowledge_alert(self, alert_id: str) -> bool:
-        """Acknowledge alert"""
-        if alert_id in self.active_alerts:
+        """Acknowledge alert"""        if alert_id in self.active_alerts:
             self.active_alerts[alert_id].acknowledged = True
             logger.info(f"Acknowledged alert: {alert_id}")
             return True
         return False
         
     async def resolve_alert(self, alert_id: str) -> bool:
-        """Resolve alert"""
-        if alert_id in self.active_alerts:
+        """Resolve alert"""        if alert_id in self.active_alerts:
             self.active_alerts[alert_id].resolved_at = datetime.now(timezone.utc)
             logger.info(f"Resolved alert: {alert_id}")
             return True
         return False
         
     async def register_monitoring_callback(self, callback: Callable[[MonitoringStats], None]) -> None:
-        """Register callback for monitoring stats updates"""
-        self.monitoring_callbacks.append(callback)
+        """Register callback for monitoring stats updates"""        self.monitoring_callbacks.append(callback)
         
     async def get_metrics_history(
         self,
@@ -354,8 +329,7 @@ class StreamMonitor:
         start_time: Optional[datetime] = None,
         end_time: Optional[datetime] = None
     ) -> List[Dict[str, Any]]:
-        """Get historical metrics data"""
-        try:
+        """Get historical metrics data"""        try:
             # Filter metrics based on parameters
             if stream_id:
                 history = self.metrics_history.get(stream_id, [])
@@ -390,8 +364,7 @@ class StreamMonitor:
             return []
             
     async def _health_checker(self) -> None:
-        """Periodic health checker task"""
-        while not self._shutdown_event.is_set():
+        """Periodic health checker task"""        while not self._shutdown_event.is_set():
             try:
                 await asyncio.sleep(30)  # Check every 30 seconds
                 
@@ -423,8 +396,7 @@ class StreamMonitor:
                 logger.error(f"Health checker error: {e}")
                 
     async def _metrics_collector(self) -> None:
-        """Periodic metrics collection task"""
-        while not self._shutdown_event.is_set():
+        """Periodic metrics collection task"""        while not self._shutdown_event.is_set():
             try:
                 await asyncio.sleep(60)  # Collect every minute
                 
@@ -445,8 +417,7 @@ class StreamMonitor:
                 logger.error(f"Metrics collector error: {e}")
                 
     async def _alert_processor(self) -> None:
-        """Periodic alert evaluation task"""
-        while not self._shutdown_event.is_set():
+        """Periodic alert evaluation task"""        while not self._shutdown_event.is_set():
             try:
                 await asyncio.sleep(15)  # Check every 15 seconds
                 
@@ -474,8 +445,7 @@ class StreamMonitor:
                 logger.error(f"Alert processor error: {e}")
                 
     def _get_metric_value(self, stats: MonitoringStats, metric: MonitoringMetric) -> float:
-        """Get metric value from monitoring stats"""
-        metric_map = {
+        """Get metric value from monitoring stats"""        metric_map = {
             MonitoringMetric.THROUGHPUT: stats.events_per_second,
             MonitoringMetric.LATENCY: stats.average_latency,
             MonitoringMetric.ERROR_RATE: stats.error_rate,
@@ -485,8 +455,7 @@ class StreamMonitor:
         return metric_map.get(metric, 0.0)
         
     def _evaluate_condition(self, value: float, threshold: float, operator: str) -> bool:
-        """Evaluate alert condition"""
-        operators = {
+        """Evaluate alert condition"""        operators = {
             ">": lambda v, t: v > t,
             "<": lambda v, t: v < t,
             ">=": lambda v, t: v >= t,
@@ -497,8 +466,7 @@ class StreamMonitor:
         return operators.get(operator, lambda v, t: False)(value, threshold)
         
     async def _trigger_alert(self, rule: AlertRule, metric_value: float) -> None:
-        """Trigger alert for rule violation"""
-        try:
+        """Trigger alert for rule violation"""        try:
             alert = Alert(
                 id=f"alert_{rule.id}_{int(datetime.now(timezone.utc).timestamp())}",
                 rule_id=rule.id,
@@ -529,8 +497,7 @@ class StreamMonitor:
         processing_time: Optional[float],
         error: Optional[str]
     ) -> None:
-        """Store metrics for historical analysis"""
-        try:
+        """Store metrics for historical analysis"""        try:
             if stream_id not in self.metrics_history:
                 self.metrics_history[stream_id] = []
                 
@@ -555,8 +522,7 @@ class StreamMonitor:
             logger.error(f"Failed to store metrics: {e}")
             
     async def _get_recent_event_count(self) -> int:
-        """Get event count in the last minute"""
-        try:
+        """Get event count in the last minute"""        try:
             cutoff_time = datetime.now(timezone.utc) - timedelta(minutes=1)
             recent_count = 0
             
@@ -573,8 +539,7 @@ class StreamMonitor:
             return 0
             
     async def shutdown(self) -> None:
-        """Gracefully shutdown stream monitor"""
-        try:
+        """Gracefully shutdown stream monitor"""        try:
             self._shutdown_event.set()
             
             if self.notification_manager:

@@ -1,5 +1,4 @@
-"""
-Content Protection Worker - IA-Influencer-Agent
+"""Content Protection Worker - IA-Influencer-Agent
 ================================================================================
 Module: backend/crawlers/workers/content_protection_worker.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,9 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Content intake → Multi-modal fingerprinting → Vector similarity search → 
 Piracy detection → DMCA automation → Revenue protection → Blockchain timestamping
-"""
-
-from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, AsyncGenerator
+"""from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, AsyncGenerator
 import logging
 import asyncio
 from datetime import datetime, timedelta
@@ -54,8 +51,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Content types for protection"""
-    AUDIO = "audio"
+    """Content types for protection"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -64,16 +60,14 @@ class ContentType(Enum):
 
 
 class ProtectionLevel(Enum):
-    """Protection levels"""
-    BASIC = "basic"
+    """Protection levels"""    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
 
 
 class FingerprintType(Enum):
-    """Fingerprint types"""
-    PERCEPTUAL_HASH = "perceptual_hash"
+    """Fingerprint types"""    PERCEPTUAL_HASH = "perceptual_hash"
     CHROMAPRINT = "chromaprint"
     VISUAL_HASH = "visual_hash"
     SEMANTIC_VECTOR = "semantic_vector"
@@ -82,8 +76,7 @@ class FingerprintType(Enum):
 
 
 class DetectionStatus(Enum):
-    """Detection status"""
-    SCANNING = "scanning"
+    """Detection status"""    SCANNING = "scanning"
     FOUND_MATCH = "found_match"
     FALSE_POSITIVE = "false_positive"
     DMCA_ISSUED = "dmca_issued"
@@ -93,8 +86,7 @@ class DetectionStatus(Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint data structure"""
-    fingerprint_id: str
+    """Content fingerprint data structure"""    fingerprint_id: str
     content_id: str
     content_type: ContentType
     fingerprint_type: FingerprintType
@@ -109,8 +101,7 @@ class ContentFingerprint:
 
 @dataclass
 class PiracyDetection:
-    """Piracy detection result"""
-    detection_id: str
+    """Piracy detection result"""    detection_id: str
     original_fingerprint_id: str
     detected_url: str
     platform: str
@@ -125,8 +116,7 @@ class PiracyDetection:
 
 @dataclass
 class ProtectionTask:
-    """Content protection task"""
-    task_id: str
+    """Content protection task"""    task_id: str
     content_path: str
     content_type: ContentType
     creator_id: str
@@ -139,8 +129,7 @@ class ProtectionTask:
 
 
 class ContentProtectionWorker:
-    """Advanced content protection worker with AI-powered security"""
-    
+    """Advanced content protection worker with AI-powered security"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.worker_id = str(uuid.uuid4())
@@ -177,8 +166,7 @@ class ContentProtectionWorker:
         logger.info(f"🛡️ ContentProtectionWorker {self.worker_id} initialized")
     
     def _initialize_ai_models(self):
-        """Initialize AI models for content analysis"""
-        try:
+        """Initialize AI models for content analysis"""        try:
             # Initialize CLIP model for visual/text analysis
             self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-large-patch14")
             self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-large-patch14")
@@ -200,8 +188,7 @@ class ContentProtectionWorker:
             self.device = torch.device("cpu")
     
     async def start(self) -> bool:
-        """Start the content protection worker"""
-        try:
+        """Start the content protection worker"""        try:
             if self.is_running:
                 logger.warning("ContentProtectionWorker is already running")
                 return True
@@ -223,8 +210,7 @@ class ContentProtectionWorker:
             return False
     
     async def stop(self) -> bool:
-        """Stop the content protection worker"""
-        try:
+        """Stop the content protection worker"""        try:
             self.is_running = False
             
             # Wait for active tasks to complete
@@ -242,8 +228,7 @@ class ContentProtectionWorker:
             return False
     
     async def submit_protection_task(self, task: ProtectionTask) -> bool:
-        """Submit a content protection task"""
-        try:
+        """Submit a content protection task"""        try:
             if not self.is_running:
                 logger.error("ContentProtectionWorker is not running")
                 return False
@@ -265,8 +250,7 @@ class ContentProtectionWorker:
             return False
     
     async def _processing_loop(self):
-        """Main processing loop for protection tasks"""
-        while self.is_running:
+        """Main processing loop for protection tasks"""        while self.is_running:
             try:
                 # Get task from queue (with timeout)
                 try:
@@ -288,8 +272,7 @@ class ContentProtectionWorker:
                 await asyncio.sleep(1)
     
     async def _process_protection_task(self, task: ProtectionTask):
-        """Process a single protection task"""
-        start_time = time.time()
+        """Process a single protection task"""        start_time = time.time()
         
         try:
             logger.info(f"🔄 Processing protection task: {task.task_id}")
@@ -332,8 +315,7 @@ class ContentProtectionWorker:
                 del self.active_tasks[task.task_id]
     
     async def _parse_content(self, task: ProtectionTask) -> Optional[Dict[str, Any]]:
-        """Parse and validate content"""
-        try:
+        """Parse and validate content"""        try:
             content_path = Path(task.content_path)
             
             if not content_path.exists():
@@ -365,8 +347,7 @@ class ContentProtectionWorker:
             return None
     
     async def _parse_audio_content(self, content_path: Path) -> Dict[str, Any]:
-        """Parse audio content"""
-        try:
+        """Parse audio content"""        try:
             # Load audio using librosa
             audio_data, sample_rate = librosa.load(str(content_path))
             
@@ -397,8 +378,7 @@ class ContentProtectionWorker:
             raise
     
     async def _parse_video_content(self, content_path: Path) -> Dict[str, Any]:
-        """Parse video content"""
-        try:
+        """Parse video content"""        try:
             # Open video using OpenCV
             cap = cv2.VideoCapture(str(content_path))
             
@@ -445,8 +425,7 @@ class ContentProtectionWorker:
             raise
     
     async def _parse_image_content(self, content_path: Path) -> Dict[str, Any]:
-        """Parse image content"""
-        try:
+        """Parse image content"""        try:
             # Load image using PIL
             image = Image.open(content_path)
             
@@ -478,8 +457,7 @@ class ContentProtectionWorker:
             raise
     
     async def _parse_text_content(self, content_path: Path) -> Dict[str, Any]:
-        """Parse text content"""
-        try:
+        """Parse text content"""        try:
             # Read text file
             async with aiofiles.open(content_path, 'r', encoding='utf-8') as f:
                 text_content = await f.read()
@@ -510,8 +488,7 @@ class ContentProtectionWorker:
             raise
     
     async def _parse_generic_content(self, content_path: Path) -> Dict[str, Any]:
-        """Parse generic content"""
-        try:
+        """Parse generic content"""        try:
             # Basic file information
             file_stat = content_path.stat()
             
@@ -537,8 +514,7 @@ class ContentProtectionWorker:
             raise
     
     async def _generate_fingerprints(self, task: ProtectionTask, content_data: Dict[str, Any]) -> List[ContentFingerprint]:
-        """Generate multiple fingerprints for content"""
-        try:
+        """Generate multiple fingerprints for content"""        try:
             fingerprints = []
             content_id = str(uuid.uuid4())
             
@@ -568,8 +544,7 @@ class ContentProtectionWorker:
             return []
     
     async def _generate_audio_fingerprints(self, content_id: str, task: ProtectionTask, content_data: Dict[str, Any]) -> List[ContentFingerprint]:
-        """Generate audio-specific fingerprints"""
-        fingerprints = []
+        """Generate audio-specific fingerprints"""        fingerprints = []
         
         try:
             # Chromaprint fingerprint
@@ -620,8 +595,7 @@ class ContentProtectionWorker:
         return fingerprints
     
     async def _generate_video_fingerprints(self, content_id: str, task: ProtectionTask, content_data: Dict[str, Any]) -> List[ContentFingerprint]:
-        """Generate video-specific fingerprints"""
-        fingerprints = []
+        """Generate video-specific fingerprints"""        fingerprints = []
         
         try:
             # Visual hash for each key frame
@@ -686,8 +660,7 @@ class ContentProtectionWorker:
         return fingerprints
     
     async def _generate_image_fingerprints(self, content_id: str, task: ProtectionTask, content_data: Dict[str, Any]) -> List[ContentFingerprint]:
-        """Generate image-specific fingerprints"""
-        fingerprints = []
+        """Generate image-specific fingerprints"""        fingerprints = []
         
         try:
             image = content_data["pil_image"]
@@ -741,8 +714,7 @@ class ContentProtectionWorker:
         return fingerprints
     
     async def _generate_text_fingerprints(self, content_id: str, task: ProtectionTask, content_data: Dict[str, Any]) -> List[ContentFingerprint]:
-        """Generate text-specific fingerprints"""
-        fingerprints = []
+        """Generate text-specific fingerprints"""        fingerprints = []
         
         try:
             text_content = content_data["content"]
@@ -803,8 +775,7 @@ class ContentProtectionWorker:
         return fingerprints
     
     async def _store_fingerprints(self, fingerprints: List[ContentFingerprint]):
-        """Store fingerprints in vector database"""
-        try:
+        """Store fingerprints in vector database"""        try:
             for fingerprint in fingerprints:
                 # Store in vector database
                 if fingerprint.vector_embedding is not None:
@@ -829,8 +800,7 @@ class ContentProtectionWorker:
             raise
     
     async def _enable_content_monitoring(self, fingerprints: List[ContentFingerprint]):
-        """Enable ongoing monitoring for content"""
-        try:
+        """Enable ongoing monitoring for content"""        try:
             for fingerprint in fingerprints:
                 # Register with piracy detector
                 await self.piracy_detector.register_content(
@@ -846,8 +816,7 @@ class ContentProtectionWorker:
             logger.error(f"❌ Failed to enable content monitoring: {e}")
     
     async def _blockchain_timestamp(self, fingerprints: List[ContentFingerprint]):
-        """Create blockchain timestamp for content"""
-        try:
+        """Create blockchain timestamp for content"""        try:
             for fingerprint in fingerprints:
                 # Create blockchain timestamp
                 timestamp_id = await self.timestamping_service.create_timestamp(
@@ -868,8 +837,7 @@ class ContentProtectionWorker:
             logger.error(f"❌ Failed to create blockchain timestamps: {e}")
     
     def _validate_protection_task(self, task: ProtectionTask) -> bool:
-        """Validate protection task parameters"""
-        try:
+        """Validate protection task parameters"""        try:
             # Check required fields
             if not task.task_id or not task.content_path or not task.creator_id:
                 return False
@@ -893,8 +861,7 @@ class ContentProtectionWorker:
             return False
     
     def _update_processing_stats(self, processing_time: float, success: bool):
-        """Update processing statistics"""
-        try:
+        """Update processing statistics"""        try:
             self.processing_stats["total_processed"] += 1
             
             if success:
@@ -916,8 +883,7 @@ class ContentProtectionWorker:
             logger.error(f"❌ Error updating processing stats: {e}")
     
     async def _monitoring_loop(self):
-        """Monitoring loop for worker health"""
-        while self.is_running:
+        """Monitoring loop for worker health"""        while self.is_running:
             try:
                 # Report worker status
                 await self.security_monitor.report_worker_status(
@@ -937,8 +903,7 @@ class ContentProtectionWorker:
                 await asyncio.sleep(5)
     
     async def get_worker_status(self) -> Dict[str, Any]:
-        """Get current worker status"""
-        return {
+        """Get current worker status"""        return {
             "worker_id": self.worker_id,
             "is_running": self.is_running,
             "active_tasks": len(self.active_tasks),
@@ -954,13 +919,11 @@ _content_protection_worker: Optional[ContentProtectionWorker] = None
 
 
 async def get_content_protection_worker() -> Optional[ContentProtectionWorker]:
-    """Get the global content protection worker instance"""
-    return _content_protection_worker
+    """Get the global content protection worker instance"""    return _content_protection_worker
 
 
 async def initialize_content_protection_worker(config: Dict[str, Any] = None) -> bool:
-    """Initialize the content protection worker"""
-    global _content_protection_worker
+    """Initialize the content protection worker"""    global _content_protection_worker
     
     try:
         if _content_protection_worker is not None:
@@ -985,8 +948,7 @@ async def initialize_content_protection_worker(config: Dict[str, Any] = None) ->
 
 
 async def shutdown_content_protection_worker() -> bool:
-    """Shutdown the content protection worker"""
-    global _content_protection_worker
+    """Shutdown the content protection worker"""    global _content_protection_worker
     
     try:
         if _content_protection_worker is None:

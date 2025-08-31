@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Format Optimizer Tests
+"""Format Optimizer Tests
 
 Comprehensive tests for the FormatOptimizer class that handles
 platform-specific content formatting and optimization.
@@ -25,9 +21,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -48,18 +42,14 @@ from ai.content_generation.content_models import ContentType, Platform
 
 
 class TestFormatOptimizer:
-    """Test suite for FormatOptimizer"""
-    
+    """Test suite for FormatOptimizer"""    
     @pytest.fixture
     def optimizer(self):
-        """Create a format optimizer instance"""
-        return FormatOptimizer()
+        """Create a format optimizer instance"""        return FormatOptimizer()
     
     @pytest.fixture
     def sample_content(self):
-        """Create sample content for formatting"""
-        return """
-        # The Future of AI Technology
+        """Create sample content for formatting"""        return """        # The Future of AI Technology
         
         Artificial Intelligence is revolutionizing our world. Here are the key points:
         
@@ -81,13 +71,10 @@ class TestFormatOptimizer:
         Contact us: info@example.com
         
         #AI #Technology #Innovation #MachineLearning
-        """
-    
+        """    
     @pytest.fixture
     def blog_content(self):
-        """Create blog content for formatting"""
-        return """
-        # Complete Guide to AI in Business
+        """Create blog content for formatting"""        return """        # Complete Guide to AI in Business
         
         ## Introduction
         
@@ -125,11 +112,9 @@ class TestFormatOptimizer:
         ## Conclusion
         
         AI implementation requires careful planning and execution. Start small, measure results, and scale gradually for best outcomes.
-        """
-    
+        """    
     def test_optimizer_initialization(self, optimizer):
-        """Test format optimizer initialization"""
-        assert optimizer is not None
+        """Test format optimizer initialization"""        assert optimizer is not None
         assert hasattr(optimizer, 'platform_rules')
         assert hasattr(optimizer, 'formatting_engine')
         assert hasattr(optimizer, 'layout_templates')
@@ -142,8 +127,7 @@ class TestFormatOptimizer:
     
     @pytest.mark.asyncio
     async def test_instagram_formatting(self, optimizer, sample_content):
-        """Test Instagram-specific formatting"""
-        with patch.object(optimizer, '_format_for_platform') as mock_format:
+        """Test Instagram-specific formatting"""        with patch.object(optimizer, '_format_for_platform') as mock_format:
             mock_format.return_value = {
                 "success": True,
                 "formatted_content": """🚀 The Future of AI Technology
@@ -186,8 +170,7 @@ class TestFormatOptimizer:
     
     @pytest.mark.asyncio
     async def test_linkedin_formatting(self, optimizer, blog_content):
-        """Test LinkedIn-specific formatting"""
-        with patch.object(optimizer, '_format_for_platform') as mock_format:
+        """Test LinkedIn-specific formatting"""        with patch.object(optimizer, '_format_for_platform') as mock_format:
             mock_format.return_value = {
                 "success": True,
                 "formatted_content": """🎯 Complete Guide to AI in Business
@@ -243,8 +226,7 @@ What's your experience with AI in business? Share your thoughts below! 👇
     
     @pytest.mark.asyncio
     async def test_twitter_thread_formatting(self, optimizer, blog_content):
-        """Test Twitter thread formatting"""
-        with patch.object(optimizer, '_format_as_thread') as mock_thread:
+        """Test Twitter thread formatting"""        with patch.object(optimizer, '_format_as_thread') as mock_thread:
             mock_thread.return_value = {
                 "success": True,
                 "thread_tweets": [
@@ -273,8 +255,7 @@ What's your experience with AI in business? Share your thoughts below! 👇
     
     @pytest.mark.asyncio
     async def test_tiktok_formatting(self, optimizer, sample_content):
-        """Test TikTok-specific formatting"""
-        with patch.object(optimizer, '_format_for_platform') as mock_format:
+        """Test TikTok-specific formatting"""        with patch.object(optimizer, '_format_for_platform') as mock_format:
             mock_format.return_value = {
                 "success": True,
                 "formatted_content": """🤖 AI is CHANGING EVERYTHING! 
@@ -319,8 +300,7 @@ What AI tool do you use? Tell me! ⬇️
     
     @pytest.mark.asyncio
     async def test_youtube_description_formatting(self, optimizer, blog_content):
-        """Test YouTube description formatting"""
-        with patch.object(optimizer, '_format_for_platform') as mock_format:
+        """Test YouTube description formatting"""        with patch.object(optimizer, '_format_for_platform') as mock_format:
             mock_format.return_value = {
                 "success": True,
                 "formatted_content": """🎯 Complete Guide to AI in Business | Everything You Need to Know
@@ -385,8 +365,7 @@ In this comprehensive video, we dive deep into how Artificial Intelligence is tr
     
     @pytest.mark.asyncio
     async def test_email_formatting(self, optimizer, blog_content):
-        """Test email newsletter formatting"""
-        with patch.object(optimizer, '_format_for_platform') as mock_format:
+        """Test email newsletter formatting"""        with patch.object(optimizer, '_format_for_platform') as mock_format:
             mock_format.return_value = {
                 "success": True,
                 "formatted_content": """Subject: 🚀 Your Complete Guide to AI in Business (7-minute read)
@@ -483,8 +462,7 @@ Unsubscribe | Update Preferences""",
     
     @pytest.mark.asyncio
     async def test_responsive_formatting(self, optimizer, sample_content):
-        """Test responsive formatting for multiple devices"""
-        with patch.object(optimizer, '_create_responsive_format') as mock_responsive:
+        """Test responsive formatting for multiple devices"""        with patch.object(optimizer, '_create_responsive_format') as mock_responsive:
             mock_responsive.return_value = {
                 "success": True,
                 "formats": {
@@ -527,8 +505,7 @@ Unsubscribe | Update Preferences""",
     
     @pytest.mark.asyncio
     async def test_accessibility_formatting(self, optimizer, sample_content):
-        """Test accessibility-focused formatting"""
-        with patch.object(optimizer, '_format_for_accessibility') as mock_accessibility:
+        """Test accessibility-focused formatting"""        with patch.object(optimizer, '_format_for_accessibility') as mock_accessibility:
             mock_accessibility.return_value = {
                 "success": True,
                 "accessible_content": """<article role="main">
@@ -587,8 +564,7 @@ Unsubscribe | Update Preferences""",
     
     @pytest.mark.asyncio
     async def test_multi_platform_optimization(self, optimizer, sample_content):
-        """Test multi-platform optimization"""
-        platforms = [Platform.INSTAGRAM, Platform.LINKEDIN, Platform.TWITTER]
+        """Test multi-platform optimization"""        platforms = [Platform.INSTAGRAM, Platform.LINKEDIN, Platform.TWITTER]
         
         with patch.object(optimizer, '_optimize_for_platforms') as mock_multi:
             mock_multi.return_value = {
@@ -629,8 +605,7 @@ Unsubscribe | Update Preferences""",
     
     @pytest.mark.asyncio
     async def test_custom_formatting_rules(self, optimizer, sample_content):
-        """Test custom formatting rules"""
-        custom_rules = {
+        """Test custom formatting rules"""        custom_rules = {
             "max_sentence_length": 20,
             "emoji_usage": "minimal",
             "link_format": "shortened",
@@ -664,8 +639,7 @@ Unsubscribe | Update Preferences""",
     
     @pytest.mark.asyncio
     async def test_performance_optimization(self, optimizer, sample_content):
-        """Test performance optimization features"""
-        with patch.object(optimizer, '_format_for_platform') as mock_format:
+        """Test performance optimization features"""        with patch.object(optimizer, '_format_for_platform') as mock_format:
             mock_format.return_value = {
                 "success": True,
                 "formatted_content": "Optimized content...",
@@ -690,11 +664,9 @@ Unsubscribe | Update Preferences""",
 
 
 class TestPlatformFormat:
-    """Test suite for PlatformFormat model"""
-    
+    """Test suite for PlatformFormat model"""    
     def test_platform_format_creation(self):
-        """Test platform format creation"""
-        format_config = PlatformFormat(
+        """Test platform format creation"""        format_config = PlatformFormat(
             platform=Platform.INSTAGRAM,
             max_characters=2200,
             max_hashtags=30,
@@ -711,11 +683,9 @@ class TestPlatformFormat:
 
 
 class TestOptimizationRule:
-    """Test suite for OptimizationRule model"""
-    
+    """Test suite for OptimizationRule model"""    
     def test_optimization_rule_creation(self):
-        """Test optimization rule creation"""
-        rule = OptimizationRule(
+        """Test optimization rule creation"""        rule = OptimizationRule(
             rule_id="emoji_limit",
             description="Limit emoji usage",
             condition="emoji_count > 5",

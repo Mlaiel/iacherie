@@ -25,8 +25,7 @@ PROJECT TEAM SPECIALTIES:
 ✅ IA Prompt Engineer: Advanced prompt engineering and LLM optimization
 
 PROJECT OWNER: Fahed Mlaiel - mlaiel@live.de
-"""
-# Core generation components
+"""# Core generation components
 from .base_generator import (
     BaseContentGenerator,
     ContentGenerationContext,

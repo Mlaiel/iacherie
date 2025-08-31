@@ -1,13 +1,10 @@
-"""
-IA Influencer Agent - Audio Fingerprinting Engine
+"""IA Influencer Agent - Audio Fingerprinting Engine
 Advanced audio fingerprinting for content protection and identification
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved to Fahed Mlaiel
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited
-"""
-
-import asyncio
+"""import asyncio
 import hashlib
 import logging
 import numpy as np
@@ -25,20 +22,16 @@ logger = logging.getLogger(__name__)
 
 
 class AudioFingerprintEngine:
-    """
-    Professional audio fingerprinting engine using multiple algorithms
+    """    Professional audio fingerprinting engine using multiple algorithms
     for robust content identification and protection
-    """
-    
+    """    
     def __init__(self, sample_rate: int = 22050, hop_length: int = 512):
-        """
-        Initialize audio fingerprinting engine
+        """        Initialize audio fingerprinting engine
         
         Args:
             sample_rate: Target sample rate for processing
             hop_length: Hop length for spectral analysis
-        """
-        self.sample_rate = sample_rate
+        """        self.sample_rate = sample_rate
         self.hop_length = hop_length
         self.duration_threshold = 0.5  # Minimum duration in seconds
         self.similarity_threshold = 0.85
@@ -53,8 +46,7 @@ class AudioFingerprintEngine:
         audio_path: Union[str, Path],
         methods: List[str] = None
     ) -> Dict[str, any]:
-        """
-        Extract comprehensive audio fingerprint using multiple methods
+        """        Extract comprehensive audio fingerprint using multiple methods
         
         Args:
             audio_path: Path to audio file
@@ -63,8 +55,7 @@ class AudioFingerprintEngine:
         
         Returns:
             Dictionary containing all fingerprint data
-        """
-        if methods is None:
+        """        if methods is None:
             methods = ['chromaprint', 'spectral_hash', 'mfcc', 'tempo_rhythm']
         
         try:
@@ -113,8 +104,7 @@ class AudioFingerprintEngine:
             raise
     
     async def _extract_chromaprint(self, y: np.ndarray, sr: int) -> Dict[str, any]:
-        """Extract Chromaprint fingerprint"""
-        try:
+        """Extract Chromaprint fingerprint"""        try:
             # Convert to int16 for chromaprint
             audio_int16 = (y * 32767).astype(np.int16)
             
@@ -138,8 +128,7 @@ class AudioFingerprintEngine:
             return {'error': str(e), 'algorithm': 'chromaprint'}
     
     async def _extract_spectral_hash(self, y: np.ndarray, sr: int) -> Dict[str, any]:
-        """Extract spectral-based hash fingerprint"""
-        try:
+        """Extract spectral-based hash fingerprint"""        try:
             # Compute spectrogram
             D = librosa.stft(y, hop_length=self.hop_length)
             magnitude = np.abs(D)
@@ -173,8 +162,7 @@ class AudioFingerprintEngine:
             return {'error': str(e), 'algorithm': 'spectral_hash'}
     
     async def _extract_mfcc_features(self, y: np.ndarray, sr: int) -> Dict[str, any]:
-        """Extract MFCC-based fingerprint"""
-        try:
+        """Extract MFCC-based fingerprint"""        try:
             # Extract MFCC features
             mfccs = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13, hop_length=self.hop_length)
             
@@ -200,8 +188,7 @@ class AudioFingerprintEngine:
             return {'error': str(e), 'algorithm': 'mfcc'}
     
     async def _extract_tempo_rhythm(self, y: np.ndarray, sr: int) -> Dict[str, any]:
-        """Extract tempo and rhythm features"""
-        try:
+        """Extract tempo and rhythm features"""        try:
             # Tempo estimation
             tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
             
@@ -234,8 +221,7 @@ class AudioFingerprintEngine:
             return {'error': str(e), 'algorithm': 'tempo_rhythm'}
     
     def _generate_combined_hash(self, methods_data: Dict[str, any]) -> str:
-        """Generate combined hash from all fingerprinting methods"""
-        try:
+        """Generate combined hash from all fingerprinting methods"""        try:
             hash_parts = []
             
             for method, data in methods_data.items():
@@ -265,8 +251,7 @@ class AudioFingerprintEngine:
         fingerprint1: Dict[str, any], 
         fingerprint2: Dict[str, any]
     ) -> Dict[str, float]:
-        """
-        Compare two audio fingerprints and return similarity scores
+        """        Compare two audio fingerprints and return similarity scores
         
         Args:
             fingerprint1: First fingerprint data
@@ -274,8 +259,7 @@ class AudioFingerprintEngine:
         
         Returns:
             Dictionary with similarity scores for each method
-        """
-        similarities = {}
+        """        similarities = {}
         
         try:
             # Compare each method
@@ -314,8 +298,7 @@ class AudioFingerprintEngine:
         data2: Dict[str, any], 
         method: str
     ) -> float:
-        """Compare two fingerprints using specific method"""
-        try:
+        """Compare two fingerprints using specific method"""        try:
             if 'error' in data1 or 'error' in data2:
                 return 0.0
             
@@ -335,8 +318,7 @@ class AudioFingerprintEngine:
             return 0.0
     
     def _compare_chromaprint(self, data1: Dict, data2: Dict) -> float:
-        """Compare chromaprint fingerprints"""
-        try:
+        """Compare chromaprint fingerprints"""        try:
             hash1 = data1.get('hash', '')
             hash2 = data2.get('hash', '')
             
@@ -355,8 +337,7 @@ class AudioFingerprintEngine:
             return 0.0
     
     def _compare_spectral(self, data1: Dict, data2: Dict) -> float:
-        """Compare spectral hash fingerprints"""
-        try:
+        """Compare spectral hash fingerprints"""        try:
             # Compare statistical features
             centroid_diff = abs(data1.get('centroid_mean', 0) - data2.get('centroid_mean', 0))
             rolloff_diff = abs(data1.get('rolloff_mean', 0) - data2.get('rolloff_mean', 0))
@@ -375,8 +356,7 @@ class AudioFingerprintEngine:
             return 0.0
     
     def _compare_mfcc(self, data1: Dict, data2: Dict) -> float:
-        """Compare MFCC fingerprints"""
-        try:
+        """Compare MFCC fingerprints"""        try:
             means1 = np.array(data1.get('mfcc_means', []))
             means2 = np.array(data2.get('mfcc_means', []))
             
@@ -396,8 +376,7 @@ class AudioFingerprintEngine:
             return 0.0
     
     def _compare_rhythm(self, data1: Dict, data2: Dict) -> float:
-        """Compare rhythm/tempo fingerprints"""
-        try:
+        """Compare rhythm/tempo fingerprints"""        try:
             tempo1 = data1.get('tempo', 0)
             tempo2 = data2.get('tempo', 0)
             
@@ -430,8 +409,7 @@ class AudioFingerprintEngine:
         audio_paths: List[Union[str, Path]], 
         methods: List[str] = None
     ) -> List[Dict[str, any]]:
-        """
-        Process multiple audio files in batch
+        """        Process multiple audio files in batch
         
         Args:
             audio_paths: List of audio file paths
@@ -439,8 +417,7 @@ class AudioFingerprintEngine:
         
         Returns:
             List of fingerprint data for each file
-        """
-        tasks = []
+        """        tasks = []
         for audio_path in audio_paths:
             task = self.extract_fingerprint(audio_path, methods)
             tasks.append(task)
@@ -464,8 +441,7 @@ class AudioFingerprintEngine:
             raise
     
     def get_engine_info(self) -> Dict[str, any]:
-        """Get engine configuration and capabilities"""
-        return {
+        """Get engine configuration and capabilities"""        return {
             'engine': 'AudioFingerprintEngine',
             'version': '1.0.0',
             'sample_rate': self.sample_rate,

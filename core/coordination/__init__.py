@@ -41,8 +41,7 @@ Automated Monetization → Rights Management → Performance Analytics
 - Audio Expert: Audio processing workflow coordination and optimization
 - DevOps Engineer: Infrastructure orchestration and deployment coordination
 - IA Prompt Engineer: AI-driven process optimization and intelligence
-"""
-from .workflow_coordinator import WorkflowCoordinator, WorkflowStatus, WorkflowPriority
+"""from .workflow_coordinator import WorkflowCoordinator, WorkflowStatus, WorkflowPriority
 from .process_manager import ProcessManager, ProcessType, ExecutionContext
 from .task_scheduler import TaskScheduler, ScheduleType, TaskPriority
 from .resource_coordinator import ResourceCoordinator, ResourceType, AllocationStrategy

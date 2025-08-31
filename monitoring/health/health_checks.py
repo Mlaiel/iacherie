@@ -1,5 +1,4 @@
-"""
-📊 Health Checks - IA-Influencer-Agent Monitoring
+"""📊 Health Checks - IA-Influencer-Agent Monitoring
 ==================================================================
 Expert: DEVOPS_ENGINEER + SRE_SPECIALIST
 Technologies: Prometheus + Grafana + ELK Stack + APM
@@ -7,9 +6,7 @@ Date: 2025-07-31 06:28:26
 
 Monitoring et observabilité complète avec métriques temps réel.
 ==================================================================
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 from typing import Dict, List, Optional, Any, Callable
@@ -27,8 +24,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MonitoringConfig:
-    """Configuration du monitoring"""
-    metrics_enabled: bool = True
+    """Configuration du monitoring"""    metrics_enabled: bool = True
     health_check_interval: int = 30
     performance_tracking: bool = True
     log_level: str = "INFO"
@@ -43,8 +39,7 @@ class MonitoringConfig:
 # =============== MÉTRIQUES SYSTÈME ===============
 
 class SystemMetrics:
-    """Collecteur de métriques système"""
-    
+    """Collecteur de métriques système"""    
     def __init__(self):
         self.start_time = time.time()
         self.request_count = 0
@@ -52,8 +47,7 @@ class SystemMetrics:
         self.response_times = []
     
     def get_system_stats(self) -> Dict[str, Any]:
-        """Statistiques système en temps réel"""
-        return {
+        """Statistiques système en temps réel"""        return {
             "timestamp": datetime.now().isoformat(),
             "uptime_seconds": time.time() - self.start_time,
             "cpu_percent": psutil.cpu_percent(interval=1),
@@ -74,8 +68,7 @@ class SystemMetrics:
         }
     
     def get_application_stats(self) -> Dict[str, Any]:
-        """Statistiques applicatives"""
-        avg_response_time = sum(self.response_times) / len(self.response_times) if self.response_times else 0
+        """Statistiques applicatives"""        avg_response_time = sum(self.response_times) / len(self.response_times) if self.response_times else 0
         
         return {
             "timestamp": datetime.now().isoformat(),
@@ -89,21 +82,18 @@ class SystemMetrics:
 # =============== HEALTH CHECKS ===============
 
 class HealthChecker:
-    """Vérificateur de santé des services"""
-    
+    """Vérificateur de santé des services"""    
     def __init__(self, config: MonitoringConfig):
         self.config = config
         self.checks = {}
         self.last_check_results = {}
     
     def register_check(self, name: str, check_func: Callable) -> None:
-        """Enregistrer une vérification de santé"""
-        self.checks[name] = check_func
+        """Enregistrer une vérification de santé"""        self.checks[name] = check_func
         logger.info(f"✅ Health check enregistré: {name}")
     
     async def run_health_check(self, name: str) -> Dict[str, Any]:
-        """Exécuter une vérification de santé"""
-        try:
+        """Exécuter une vérification de santé"""        try:
             start_time = time.time()
             
             if name in self.checks:
@@ -139,8 +129,7 @@ class HealthChecker:
             return error_result
     
     async def run_all_checks(self) -> Dict[str, Any]:
-        """Exécuter toutes les vérifications"""
-        results = {}
+        """Exécuter toutes les vérifications"""        results = {}
         
         for name in self.checks.keys():
             results[name] = await self.run_health_check(name)
@@ -160,8 +149,7 @@ class HealthChecker:
 # =============== PERFORMANCE TRACKING ===============
 
 def track_performance(metric_name: str = None):
-    """Décorateur pour tracker les performances"""
-    def decorator(func):
+    """Décorateur pour tracker les performances"""    def decorator(func):
         @wraps(func)
         async def async_wrapper(*args, **kwargs):
             start_time = time.time()
@@ -199,8 +187,7 @@ def track_performance(metric_name: str = None):
 # =============== GESTIONNAIRE PRINCIPAL ===============
 
 class HealthChecksManager:
-    """Gestionnaire principal du monitoring"""
-    
+    """Gestionnaire principal du monitoring"""    
     def __init__(self, config: MonitoringConfig):
         self.config = config
         self.metrics = SystemMetrics()
@@ -209,8 +196,7 @@ class HealthChecksManager:
         self.monitoring_task = None
     
     async def start(self) -> bool:
-        """Démarrage du monitoring"""
-        try:
+        """Démarrage du monitoring"""        try:
             self.running = True
             
             # Enregistrer les health checks par défaut
@@ -228,8 +214,7 @@ class HealthChecksManager:
             return False
     
     async def stop(self) -> bool:
-        """Arrêt du monitoring"""
-        try:
+        """Arrêt du monitoring"""        try:
             self.running = False
             
             if self.monitoring_task:
@@ -247,8 +232,7 @@ class HealthChecksManager:
             return False
     
     async def _monitoring_loop(self):
-        """Boucle de monitoring continue"""
-        while self.running:
+        """Boucle de monitoring continue"""        while self.running:
             try:
                 # Collecter les métriques
                 system_stats = self.metrics.get_system_stats()
@@ -267,18 +251,15 @@ class HealthChecksManager:
                 await asyncio.sleep(5)
     
     async def _system_health_check(self) -> bool:
-        """Health check système"""
-        stats = self.metrics.get_system_stats()
+        """Health check système"""        stats = self.metrics.get_system_stats()
         return stats["cpu_percent"] < 95 and stats["memory"]["percent"] < 95
     
     async def _memory_health_check(self) -> bool:
-        """Health check mémoire"""
-        stats = self.metrics.get_system_stats()
+        """Health check mémoire"""        stats = self.metrics.get_system_stats()
         return stats["memory"]["percent"] < self.config.alert_thresholds["memory_percent"]
     
     async def _check_alerts(self, stats: Dict[str, Any]):
-        """Vérification des seuils d'alerte"""
-        alerts = []
+        """Vérification des seuils d'alerte"""        alerts = []
         
         if stats["cpu_percent"] > self.config.alert_thresholds["cpu_percent"]:
             alerts.append(f"CPU élevé: {stats['cpu_percent']}%")

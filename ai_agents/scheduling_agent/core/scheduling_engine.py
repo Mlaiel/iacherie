@@ -1,14 +1,11 @@
-"""
-Scheduling Engine - Ultra-Advanced Processing Engine
+"""Scheduling Engine - Ultra-Advanced Processing Engine
 
 Core processing engine for scheduling operations with intelligent
 optimization and comprehensive functionality.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime
@@ -18,24 +15,21 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SchedulingJob:
-    """Job configuration for scheduling operations"""
-    job_id: str
+    """Job configuration for scheduling operations"""    job_id: str
     data: Dict[str, Any]
     priority: int = 5
     created_at: datetime = None
 
 @dataclass 
 class SchedulingResult:
-    """Result of scheduling operations"""
-    job_id: str
+    """Result of scheduling operations"""    job_id: str
     success: bool
     data: Optional[Dict[str, Any]] = None
     error: Optional[str] = None
     completed_at: datetime = None
 
 class SchedulingEngine:
-    """
-    Ultra-Advanced Scheduling Processing Engine
+    """    Ultra-Advanced Scheduling Processing Engine
     
     Provides enterprise-grade scheduling processing with:
     - High-performance operation handling
@@ -43,8 +37,7 @@ class SchedulingEngine:
     - Comprehensive error handling
     - Real-time monitoring and metrics
     - Scalable architecture design
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.is_running = False
@@ -53,8 +46,7 @@ class SchedulingEngine:
         logger.info("SchedulingEngine initialized")
 
     async def start(self) -> None:
-        """Start the scheduling processing engine"""
-        try:
+        """Start the scheduling processing engine"""        try:
             self.is_running = True
             logger.info("SchedulingEngine started successfully")
         except Exception as e:
@@ -62,8 +54,7 @@ class SchedulingEngine:
             raise
 
     async def process(self, data: Dict[str, Any]) -> SchedulingResult:
-        """Process scheduling operation"""
-        try:
+        """Process scheduling operation"""        try:
             job_id = data.get('job_id', 'auto-generated')
             
             # Implementation specific processing logic here
@@ -90,6 +81,5 @@ class SchedulingEngine:
             )
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of the processing engine"""
-        self.is_running = False
+        """Graceful shutdown of the processing engine"""        self.is_running = False
         logger.info("SchedulingEngine shutdown complete")

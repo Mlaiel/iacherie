@@ -1,14 +1,11 @@
-"""
-Anomaly Detection Engine - Advanced Statistical Anomaly Detection
+"""Anomaly Detection Engine - Advanced Statistical Anomaly Detection
 
 Sophisticated anomaly detection system using machine learning and statistical methods
 for identifying unusual patterns in user behavior and system interactions.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 from datetime import datetime, timedelta
@@ -37,8 +34,7 @@ from ...data.models.user_behavior import BehaviorMetrics
 logger = logging.getLogger(__name__)
 
 class AnomalyType(Enum):
-    """Types of anomalies that can be detected"""
-    STATISTICAL_OUTLIER = "statistical_outlier"
+    """Types of anomalies that can be detected"""    STATISTICAL_OUTLIER = "statistical_outlier"
     BEHAVIORAL_DRIFT = "behavioral_drift"
     VOLUME_ANOMALY = "volume_anomaly"
     TEMPORAL_ANOMALY = "temporal_anomaly"
@@ -49,8 +45,7 @@ class AnomalyType(Enum):
 
 @dataclass
 class AnomalyResult:
-    """Individual anomaly detection result"""
-    anomaly_type: AnomalyType
+    """Individual anomaly detection result"""    anomaly_type: AnomalyType
     severity: float
     confidence: float
     description: str
@@ -60,8 +55,7 @@ class AnomalyResult:
 
 @dataclass
 class AnomalyDetectionOutput:
-    """Comprehensive anomaly detection output"""
-    anomaly_score: float
+    """Comprehensive anomaly detection output"""    anomaly_score: float
     anomalies: List[AnomalyResult]
     baseline_comparison: Dict[str, float]
     risk_assessment: str
@@ -69,8 +63,7 @@ class AnomalyDetectionOutput:
     detection_metadata: Dict[str, Any]
 
 class AnomalyDetectionEngine:
-    """
-    Advanced Anomaly Detection Engine
+    """    Advanced Anomaly Detection Engine
     
     Detects anomalies through:
     - Statistical outlier detection
@@ -78,8 +71,7 @@ class AnomalyDetectionEngine:
     - Time series analysis
     - Behavioral drift detection
     - Contextual anomaly identification
-    """
-    
+    """    
     def __init__(self, redis_client: Optional[aioredis.Redis] = None):
         self.redis_client = redis_client
         self.statistical_analyzer = StatisticalAnalyzer()
@@ -128,8 +120,7 @@ class AnomalyDetectionEngine:
         current_session: Dict[str, Any],
         historical_baseline: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Comprehensive anomaly detection analysis
+        """        Comprehensive anomaly detection analysis
         
         Args:
             user_id: User identifier
@@ -138,8 +129,7 @@ class AnomalyDetectionEngine:
             
         Returns:
             Comprehensive anomaly detection results
-        """
-        try:
+        """        try:
             # Extract feature vectors
             current_features = await self._extract_feature_vector(current_session)
             baseline_features = await self._get_baseline_features(user_id, historical_baseline)
@@ -228,8 +218,7 @@ class AnomalyDetectionEngine:
             raise AnomalyDetectionError(f"Anomaly detection failed: {str(e)}")
 
     async def _extract_feature_vector(self, session_data: Dict[str, Any]) -> np.ndarray:
-        """Extract numerical feature vector from session data"""
-        features = []
+        """Extract numerical feature vector from session data"""        features = []
         
         # Session duration (minutes)
         session_start = session_data.get('start_time', datetime.now())
@@ -280,8 +269,7 @@ class AnomalyDetectionEngine:
         user_id: str, 
         historical_baseline: Dict[str, Any]
     ) -> np.ndarray:
-        """Get baseline feature vector for user"""
-        try:
+        """Get baseline feature vector for user"""        try:
             # Try to get from cache first
             cache_key = f"baseline_features:{user_id}"
             cached_features = await self.redis_client.get(cache_key)
@@ -322,8 +310,7 @@ class AnomalyDetectionEngine:
         current_features: np.ndarray,
         baseline_features: np.ndarray
     ) -> Optional[AnomalyResult]:
-        """Detect statistical outliers using various methods"""
-        try:
+        """Detect statistical outliers using various methods"""        try:
             # Z-score based outlier detection
             z_scores = np.abs((current_features - baseline_features) / (np.std(baseline_features) + 1e-6))
             max_z_score = np.max(z_scores)
@@ -379,8 +366,7 @@ class AnomalyDetectionEngine:
         current_features: np.ndarray,
         baseline_features: np.ndarray
     ) -> Optional[AnomalyResult]:
-        """Detect gradual behavioral drift"""
-        try:
+        """Detect gradual behavioral drift"""        try:
             # Calculate euclidean distance between current and baseline
             euclidean_distance = np.linalg.norm(current_features - baseline_features)
             
@@ -438,8 +424,7 @@ class AnomalyDetectionEngine:
         current_session: Dict[str, Any],
         historical_baseline: Dict[str, Any]
     ) -> Optional[AnomalyResult]:
-        """Detect unusual volume patterns"""
-        try:
+        """Detect unusual volume patterns"""        try:
             # Current session metrics
             actions_count = len(current_session.get('actions', []))
             content_interactions = current_session.get('content_views', 0) + current_session.get('content_uploads', 0)
@@ -503,8 +488,7 @@ class AnomalyDetectionEngine:
         current_session: Dict[str, Any],
         historical_baseline: Dict[str, Any]
     ) -> Optional[AnomalyResult]:
-        """Detect temporal pattern anomalies"""
-        try:
+        """Detect temporal pattern anomalies"""        try:
             # Extract timestamps from session actions
             actions = current_session.get('actions', [])
             if len(actions) < 5:  # Need sufficient data
@@ -581,8 +565,7 @@ class AnomalyDetectionEngine:
         current_features: np.ndarray,
         user_id: str
     ) -> Optional[AnomalyResult]:
-        """Detect deviations from user's typical behavior cluster"""
-        try:
+        """Detect deviations from user's typical behavior cluster"""        try:
             # Get historical feature vectors for clustering
             cluster_features = await self._get_cluster_features(user_id)
             
@@ -643,8 +626,7 @@ class AnomalyDetectionEngine:
         self, 
         current_session: Dict[str, Any]
     ) -> Optional[AnomalyResult]:
-        """Detect anomalous action sequences"""
-        try:
+        """Detect anomalous action sequences"""        try:
             actions = current_session.get('actions', [])
             
             if len(actions) < 5:
@@ -709,8 +691,7 @@ class AnomalyDetectionEngine:
         current_session: Dict[str, Any],
         historical_baseline: Dict[str, Any]
     ) -> Optional[AnomalyResult]:
-        """Detect contextual anomalies based on external factors"""
-        try:
+        """Detect contextual anomalies based on external factors"""        try:
             contextual_anomalies = []
             
             # Time-based contextual anomalies
@@ -790,8 +771,7 @@ class AnomalyDetectionEngine:
             return None
 
     async def _get_cluster_features(self, user_id: str) -> np.ndarray:
-        """Get historical feature vectors for clustering"""
-        try:
+        """Get historical feature vectors for clustering"""        try:
             cache_key = f"cluster_features:{user_id}"
             cached_features = await self.redis_client.get(cache_key)
             
@@ -808,8 +788,7 @@ class AnomalyDetectionEngine:
             return np.array([])
 
     def _calculate_distance(self, coord1: Tuple[float, float], coord2: Tuple[float, float]) -> float:
-        """Calculate distance between two geographic coordinates in km"""
-        lat1, lon1 = coord1
+        """Calculate distance between two geographic coordinates in km"""        lat1, lon1 = coord1
         lat2, lon2 = coord2
         
         # Haversine formula
@@ -826,8 +805,7 @@ class AnomalyDetectionEngine:
         return R * c
 
     async def _calculate_composite_anomaly_score(self, anomalies: List[AnomalyResult]) -> float:
-        """Calculate composite anomaly score from all detected anomalies"""
-        if not anomalies:
+        """Calculate composite anomaly score from all detected anomalies"""        if not anomalies:
             return 0.0
             
         # Weight by severity and confidence
@@ -851,8 +829,7 @@ class AnomalyDetectionEngine:
         current_features: np.ndarray,
         baseline_features: np.ndarray
     ) -> Dict[str, float]:
-        """Generate comparison metrics between current and baseline features"""
-        feature_names = [
+        """Generate comparison metrics between current and baseline features"""        feature_names = [
             'session_duration', 'action_frequency', 'error_rate', 'response_time',
             'cpu_usage', 'memory_usage', 'network_usage', 'location_variance',
             'device_consistency', 'content_views', 'content_uploads', 'social_interactions'
@@ -876,8 +853,7 @@ class AnomalyDetectionEngine:
         return comparison
 
     def _assess_risk_level(self, anomaly_score: float, anomalies: List[AnomalyResult]) -> str:
-        """Assess overall risk level based on anomaly score and types"""
-        if anomaly_score >= 0.8:
+        """Assess overall risk level based on anomaly score and types"""        if anomaly_score >= 0.8:
             return "CRITICAL"
         elif anomaly_score >= 0.6:
             return "HIGH"
@@ -893,8 +869,7 @@ class AnomalyDetectionEngine:
         anomalies: List[AnomalyResult],
         anomaly_score: float
     ) -> List[str]:
-        """Generate recommended actions based on detected anomalies"""
-        recommendations = []
+        """Generate recommended actions based on detected anomalies"""        recommendations = []
         
         if anomaly_score >= 0.8:
             recommendations.extend([
@@ -947,8 +922,7 @@ class AnomalyDetectionEngine:
         anomalies: List[AnomalyResult],
         anomaly_score: float
     ):
-        """Update user's anomaly detection history"""
-        try:
+        """Update user's anomaly detection history"""        try:
             history_key = f"anomaly_history:{user_id}"
             
             anomaly_record = {
@@ -969,8 +943,7 @@ class AnomalyDetectionEngine:
             logger.error(f"Failed to update anomaly history for user {user_id}: {str(e)}")
 
     async def get_anomaly_trends(self, user_id: str, days: int = 7) -> Dict[str, Any]:
-        """Get anomaly trends for a user over time"""
-        try:
+        """Get anomaly trends for a user over time"""        try:
             history_key = f"anomaly_history:{user_id}"
             history_records = await self.redis_client.lrange(history_key, 0, -1)
             
@@ -1038,8 +1011,7 @@ class AnomalyDetectionEngine:
             return {'error': str(e)}
 
     def _calculate_score_trend(self, timestamps: List[datetime], scores: List[float]) -> float:
-        """Calculate trend direction for anomaly scores over time"""
-        if len(timestamps) < 2 or len(scores) < 2:
+        """Calculate trend direction for anomaly scores over time"""        if len(timestamps) < 2 or len(scores) < 2:
             return 0.0
             
         # Convert timestamps to numeric values

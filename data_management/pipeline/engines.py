@@ -1,12 +1,9 @@
-"""
-Processing Engines Module
+"""Processing Engines Module
 Author: Fahed Mlaiel <mlaiel@live.de>
 
 High-performance processing engines for real-time and batch content processing
 with advanced AI capabilities, distributed computing, and intelligent optimization.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable, AsyncGenerator
 from datetime import datetime, timedelta
@@ -52,16 +49,14 @@ from ..utils.resource_manager import ResourceManager
 
 
 class ProcessingMode(Enum):
-    """Processing execution modes."""
-    REALTIME = "realtime"
+    """Processing execution modes."""    REALTIME = "realtime"
     BATCH = "batch"
     STREAMING = "streaming"
     DISTRIBUTED = "distributed"
 
 
 class ProcessingPriority(Enum):
-    """Processing priority levels."""
-    LOW = 1
+    """Processing priority levels."""    LOW = 1
     NORMAL = 2
     HIGH = 3
     CRITICAL = 4
@@ -69,8 +64,7 @@ class ProcessingPriority(Enum):
 
 @dataclass
 class ProcessingJob:
-    """Processing job specification."""
-    job_id: str
+    """Processing job specification."""    job_id: str
     content_data: Dict[str, Any]
     processing_config: Dict[str, Any]
     priority: ProcessingPriority
@@ -82,11 +76,9 @@ class ProcessingJob:
 
 
 class StreamProcessingEngine:
-    """
-    High-performance stream processing engine for real-time content analysis
+    """    High-performance stream processing engine for real-time content analysis
     and transformation with sub-second latency requirements.
-    """
-    
+    """    
     def __init__(self, config: ProcessingConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -112,8 +104,7 @@ class StreamProcessingEngine:
         self._initialize_processors()
     
     def _setup_kafka_streams(self):
-        """Setup Kafka streams for distributed processing."""
-        from kafka import KafkaProducer, KafkaConsumer
+        """Setup Kafka streams for distributed processing."""        from kafka import KafkaProducer, KafkaConsumer
         
         self.kafka_producer = KafkaProducer(
             bootstrap_servers=self.config.kafka_brokers,
@@ -126,8 +117,7 @@ class StreamProcessingEngine:
         )
     
     def _initialize_processors(self):
-        """Initialize stream processors for different content types."""
-        # Audio stream processors
+        """Initialize stream processors for different content types."""        # Audio stream processors
         self.stream_processors['audio'] = {
             'realtime_analyzer': self._create_audio_stream_processor(),
             'feature_extractor': self._create_audio_feature_processor(),
@@ -156,10 +146,8 @@ class StreamProcessingEngine:
         }
     
     def _create_audio_stream_processor(self):
-        """Create real-time audio stream processor."""
-        def process_audio_chunk(audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-            """Process audio chunk in real-time."""
-            # Extract features
+        """Create real-time audio stream processor."""        def process_audio_chunk(audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
+            """Process audio chunk in real-time."""            # Extract features
             mfccs = librosa.feature.mfcc(y=audio_data, sr=sample_rate, n_mfcc=13)
             spectral_centroid = librosa.feature.spectral_centroid(y=audio_data, sr=sample_rate)
             chroma = librosa.feature.chroma_stft(y=audio_data, sr=sample_rate)
@@ -187,10 +175,8 @@ class StreamProcessingEngine:
         return process_audio_chunk
     
     def _create_video_stream_processor(self):
-        """Create real-time video stream processor."""
-        def process_video_frame(frame: np.ndarray) -> Dict[str, Any]:
-            """Process video frame in real-time."""
-            # Frame analysis
+        """Create real-time video stream processor."""        def process_video_frame(frame: np.ndarray) -> Dict[str, Any]:
+            """Process video frame in real-time."""            # Frame analysis
             height, width = frame.shape[:2]
             
             # Quality metrics
@@ -222,10 +208,8 @@ class StreamProcessingEngine:
         return process_video_frame
     
     def _create_image_stream_processor(self):
-        """Create real-time image stream processor."""
-        def process_image(image: np.ndarray) -> Dict[str, Any]:
-            """Process image in real-time."""
-            # Image analysis
+        """Create real-time image stream processor."""        def process_image(image: np.ndarray) -> Dict[str, Any]:
+            """Process image in real-time."""            # Image analysis
             height, width = image.shape[:2]
             
             # Quality assessment
@@ -261,13 +245,11 @@ class StreamProcessingEngine:
         return process_image
     
     def _create_text_stream_processor(self):
-        """Create real-time text stream processor."""
-        # Load NLP model
+        """Create real-time text stream processor."""        # Load NLP model
         nlp = spacy.load("en_core_web_sm") if spacy.util.is_package("en_core_web_sm") else None
         
         def process_text_chunk(text: str) -> Dict[str, Any]:
-            """Process text chunk in real-time."""
-            # Basic text analysis
+            """Process text chunk in real-time."""            # Basic text analysis
             word_count = len(text.split())
             char_count = len(text)
             sentence_count = len([s for s in text.split('.') if s.strip()])
@@ -296,8 +278,7 @@ class StreamProcessingEngine:
         return process_text_chunk
     
     def _calculate_snr(self, audio_data: np.ndarray) -> float:
-        """Calculate signal-to-noise ratio."""
-        # Simplified SNR calculation
+        """Calculate signal-to-noise ratio."""        # Simplified SNR calculation
         signal_power = np.mean(audio_data ** 2)
         noise_power = np.var(audio_data)  # Simplified noise estimation
         
@@ -314,8 +295,7 @@ class StreamProcessingEngine:
         content_data: Dict[str, Any],
         processing_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Process content in real-time with sub-second latency.
+        """        Process content in real-time with sub-second latency.
         
         Args:
             content_data: Content to process
@@ -323,8 +303,7 @@ class StreamProcessingEngine:
             
         Returns:
             Dict containing real-time processing results
-        """
-        content_type = content_data.get('type')
+        """        content_type = content_data.get('type')
         processor = self.stream_processors.get(content_type, {}).get('realtime_analyzer')
         
         if not processor:
@@ -347,8 +326,7 @@ class StreamProcessingEngine:
         content_data: Dict[str, Any],
         processor: Callable
     ) -> Dict[str, Any]:
-        """Process audio in real-time chunks."""
-        file_path = content_data.get('file_path')
+        """Process audio in real-time chunks."""        file_path = content_data.get('file_path')
         chunk_size = content_data.get('chunk_size', 4096)
         
         # Load audio
@@ -379,8 +357,7 @@ class StreamProcessingEngine:
         content_data: Dict[str, Any],
         processor: Callable
     ) -> Dict[str, Any]:
-        """Process video frames in real-time."""
-        file_path = content_data.get('file_path')
+        """Process video frames in real-time."""        file_path = content_data.get('file_path')
         frame_skip = content_data.get('frame_skip', 30)  # Process every 30th frame for real-time
         
         cap = cv2.VideoCapture(file_path)
@@ -417,8 +394,7 @@ class StreamProcessingEngine:
         content_data: Dict[str, Any],
         processor: Callable
     ) -> Dict[str, Any]:
-        """Process image in real-time."""
-        file_path = content_data.get('file_path')
+        """Process image in real-time."""        file_path = content_data.get('file_path')
         
         # Load image
         image = cv2.imread(file_path)
@@ -442,8 +418,7 @@ class StreamProcessingEngine:
         content_data: Dict[str, Any],
         processor: Callable
     ) -> Dict[str, Any]:
-        """Process text in real-time chunks."""
-        text = content_data.get('text', '')
+        """Process text in real-time chunks."""        text = content_data.get('text', '')
         chunk_size = content_data.get('chunk_size', 500)  # 500 characters per chunk
         
         results = []
@@ -471,8 +446,7 @@ class StreamProcessingEngine:
         content_stream: AsyncGenerator[Dict[str, Any], None],
         processing_config: Dict[str, Any]
     ) -> AsyncGenerator[Dict[str, Any], None]:
-        """
-        Process continuous content stream.
+        """        Process continuous content stream.
         
         Args:
             content_stream: Async generator of content data
@@ -480,8 +454,7 @@ class StreamProcessingEngine:
             
         Yields:
             Processed content results
-        """
-        buffer_size = processing_config.get('buffer_size', 10)
+        """        buffer_size = processing_config.get('buffer_size', 10)
         batch_timeout = processing_config.get('batch_timeout', 1.0)
         
         buffer = []
@@ -515,8 +488,7 @@ class StreamProcessingEngine:
         batch: List[Dict[str, Any]],
         processing_config: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Process a batch of content in stream mode."""
-        tasks = []
+        """Process a batch of content in stream mode."""        tasks = []
         
         for content_data in batch:
             task = self.process_realtime(content_data, processing_config)
@@ -536,11 +508,9 @@ class StreamProcessingEngine:
 
 
 class BatchProcessingEngine:
-    """
-    High-throughput batch processing engine for large-scale content processing
+    """    High-throughput batch processing engine for large-scale content processing
     with advanced parallelization and resource optimization.
-    """
-    
+    """    
     def __init__(self, config: ProcessingConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -556,8 +526,7 @@ class BatchProcessingEngine:
         self._start_worker_threads()
     
     def _initialize_batch_processors(self):
-        """Initialize batch processors for different content types."""
-        self.batch_processors = {
+        """Initialize batch processors for different content types."""        self.batch_processors = {
             'audio': {
                 'feature_extraction': self._create_audio_batch_processor(),
                 'quality_analysis': self._create_audio_quality_batch_processor(),
@@ -581,10 +550,8 @@ class BatchProcessingEngine:
         }
     
     def _create_audio_batch_processor(self):
-        """Create batch audio processor."""
-        def process_audio_batch(file_paths: List[str]) -> List[Dict[str, Any]]:
-            """Process batch of audio files."""
-            results = []
+        """Create batch audio processor."""        def process_audio_batch(file_paths: List[str]) -> List[Dict[str, Any]]:
+            """Process batch of audio files."""            results = []
             
             for file_path in file_paths:
                 try:
@@ -643,10 +610,8 @@ class BatchProcessingEngine:
         return process_audio_batch
     
     def _create_video_batch_processor(self):
-        """Create batch video processor."""
-        def process_video_batch(file_paths: List[str]) -> List[Dict[str, Any]]:
-            """Process batch of video files."""
-            results = []
+        """Create batch video processor."""        def process_video_batch(file_paths: List[str]) -> List[Dict[str, Any]]:
+            """Process batch of video files."""            results = []
             
             for file_path in file_paths:
                 try:
@@ -718,10 +683,8 @@ class BatchProcessingEngine:
         return process_video_batch
     
     def _create_image_batch_processor(self):
-        """Create batch image processor."""
-        def process_image_batch(file_paths: List[str]) -> List[Dict[str, Any]]:
-            """Process batch of image files."""
-            results = []
+        """Create batch image processor."""        def process_image_batch(file_paths: List[str]) -> List[Dict[str, Any]]:
+            """Process batch of image files."""            results = []
             
             for file_path in file_paths:
                 try:
@@ -785,13 +748,11 @@ class BatchProcessingEngine:
         return process_image_batch
     
     def _create_text_batch_processor(self):
-        """Create batch text processor."""
-        # Load NLP model if available
+        """Create batch text processor."""        # Load NLP model if available
         nlp = spacy.load("en_core_web_sm") if spacy.util.is_package("en_core_web_sm") else None
         
         def process_text_batch(texts: List[str]) -> List[Dict[str, Any]]:
-            """Process batch of texts."""
-            results = []
+            """Process batch of texts."""            results = []
             
             for i, text in enumerate(texts):
                 try:
@@ -853,8 +814,7 @@ class BatchProcessingEngine:
         return process_text_batch
     
     def _start_worker_threads(self):
-        """Start worker threads for batch processing."""
-        num_workers = self.config.batch_workers
+        """Start worker threads for batch processing."""        num_workers = self.config.batch_workers
         
         for i in range(num_workers):
             worker = threading.Thread(
@@ -865,8 +825,7 @@ class BatchProcessingEngine:
             worker.start()
     
     def _worker_thread(self):
-        """Worker thread for processing batch jobs."""
-        while True:
+        """Worker thread for processing batch jobs."""        while True:
             try:
                 # Get job from queue (blocks until available)
                 priority, job = self.job_queue.get(timeout=1)
@@ -886,8 +845,7 @@ class BatchProcessingEngine:
                 self.logger.error(f"Worker thread error: {e}")
     
     def _process_batch_job(self, job: ProcessingJob) -> Dict[str, Any]:
-        """Process a single batch job."""
-        try:
+        """Process a single batch job."""        try:
             content_data = job.content_data
             content_type = content_data.get('type')
             processing_type = job.processing_config.get('processing_type', 'feature_extraction')
@@ -927,8 +885,7 @@ class BatchProcessingEngine:
         content_data: Dict[str, Any],
         processing_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Process content in batch mode for high throughput.
+        """        Process content in batch mode for high throughput.
         
         Args:
             content_data: Batch content data
@@ -936,8 +893,7 @@ class BatchProcessingEngine:
             
         Returns:
             Dict containing batch processing results
-        """
-        job = ProcessingJob(
+        """        job = ProcessingJob(
             job_id=str(uuid.uuid4()),
             content_data=content_data,
             processing_config=processing_config,
@@ -971,11 +927,9 @@ class BatchProcessingEngine:
 
 
 class TransformationEngine:
-    """
-    Advanced content transformation engine for format conversion,
+    """    Advanced content transformation engine for format conversion,
     quality enhancement, and platform-specific optimization.
-    """
-    
+    """    
     def __init__(self, config: ProcessingConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -986,8 +940,7 @@ class TransformationEngine:
         self._initialize_transformers()
     
     def _initialize_transformers(self):
-        """Initialize content transformers."""
-        self.transformers = {
+        """Initialize content transformers."""        self.transformers = {
             'audio': {
                 'format_converter': self._create_audio_format_converter(),
                 'quality_enhancer': self._create_audio_quality_enhancer(),
@@ -1011,15 +964,13 @@ class TransformationEngine:
         }
     
     def _create_audio_format_converter(self):
-        """Create audio format converter."""
-        def convert_audio_format(
+        """Create audio format converter."""        def convert_audio_format(
             input_path: str,
             output_path: str,
             target_format: str,
             quality_settings: Dict[str, Any]
         ) -> Dict[str, Any]:
-            """Convert audio to target format with quality settings."""
-            try:
+            """Convert audio to target format with quality settings."""            try:
                 # Load audio
                 y, sr = librosa.load(input_path)
                 
@@ -1064,15 +1015,13 @@ class TransformationEngine:
         return convert_audio_format
     
     def _create_video_format_converter(self):
-        """Create video format converter."""
-        def convert_video_format(
+        """Create video format converter."""        def convert_video_format(
             input_path: str,
             output_path: str,
             target_format: str,
             quality_settings: Dict[str, Any]
         ) -> Dict[str, Any]:
-            """Convert video to target format with quality settings."""
-            try:
+            """Convert video to target format with quality settings."""            try:
                 # Use ffmpeg-python for video conversion
                 input_stream = ffmpeg.input(input_path)
                 
@@ -1109,15 +1058,13 @@ class TransformationEngine:
         return convert_video_format
     
     def _create_image_format_converter(self):
-        """Create image format converter."""
-        def convert_image_format(
+        """Create image format converter."""        def convert_image_format(
             input_path: str,
             output_path: str,
             target_format: str,
             quality_settings: Dict[str, Any]
         ) -> Dict[str, Any]:
-            """Convert image to target format with quality settings."""
-            try:
+            """Convert image to target format with quality settings."""            try:
                 with Image.open(input_path) as img:
                     # Apply quality settings
                     if 'resolution' in quality_settings:
@@ -1158,14 +1105,12 @@ class TransformationEngine:
         return convert_image_format
     
     def _create_text_format_converter(self):
-        """Create text format converter."""
-        def convert_text_format(
+        """Create text format converter."""        def convert_text_format(
             input_text: str,
             target_format: str,
             formatting_options: Dict[str, Any]
         ) -> Dict[str, Any]:
-            """Convert text to target format."""
-            try:
+            """Convert text to target format."""            try:
                 if target_format.lower() == 'markdown':
                     # Convert to markdown
                     lines = input_text.split('\n')
@@ -1213,14 +1158,12 @@ class TransformationEngine:
         return convert_text_format
     
     def _create_audio_quality_enhancer(self):
-        """Create audio quality enhancer."""
-        def enhance_audio_quality(
+        """Create audio quality enhancer."""        def enhance_audio_quality(
             input_path: str,
             output_path: str,
             enhancement_settings: Dict[str, Any]
         ) -> Dict[str, Any]:
-            """Enhance audio quality using signal processing techniques."""
-            try:
+            """Enhance audio quality using signal processing techniques."""            try:
                 # Load audio
                 y, sr = librosa.load(input_path)
                 
@@ -1278,15 +1221,13 @@ class TransformationEngine:
         return enhance_audio_quality
     
     def _create_audio_platform_optimizer(self):
-        """Create audio platform optimizer."""
-        def optimize_audio_for_platform(
+        """Create audio platform optimizer."""        def optimize_audio_for_platform(
             input_path: str,
             output_path: str,
             platform: str,
             optimization_settings: Dict[str, Any]
         ) -> Dict[str, Any]:
-            """Optimize audio for specific platform requirements."""
-            platform_specs = {
+            """Optimize audio for specific platform requirements."""            platform_specs = {
                 'spotify': {'sample_rate': 44100, 'bitrate': '320k', 'format': 'mp3'},
                 'youtube': {'sample_rate': 48000, 'bitrate': '192k', 'format': 'mp4'},
                 'soundcloud': {'sample_rate': 44100, 'bitrate': '256k', 'format': 'mp3'},
@@ -1341,14 +1282,12 @@ class TransformationEngine:
         return optimize_audio_for_platform
     
     def _create_video_quality_enhancer(self):
-        """Create video quality enhancer."""
-        def enhance_video_quality(
+        """Create video quality enhancer."""        def enhance_video_quality(
             input_path: str,
             output_path: str,
             enhancement_settings: Dict[str, Any]
         ) -> Dict[str, Any]:
-            """Enhance video quality using computer vision techniques."""
-            # Placeholder for video enhancement
+            """Enhance video quality using computer vision techniques."""            # Placeholder for video enhancement
             return {
                 'status': 'success',
                 'output_path': output_path,
@@ -1358,15 +1297,13 @@ class TransformationEngine:
         return enhance_video_quality
     
     def _create_video_platform_optimizer(self):
-        """Create video platform optimizer."""
-        def optimize_video_for_platform(
+        """Create video platform optimizer."""        def optimize_video_for_platform(
             input_path: str,
             output_path: str,
             platform: str,
             optimization_settings: Dict[str, Any]
         ) -> Dict[str, Any]:
-            """Optimize video for specific platform requirements."""
-            platform_specs = {
+            """Optimize video for specific platform requirements."""            platform_specs = {
                 'youtube': {'max_resolution': '1920x1080', 'fps': 30, 'bitrate': '8000k', 'format': 'mp4'},
                 'instagram': {'max_resolution': '1080x1080', 'fps': 30, 'bitrate': '3500k', 'format': 'mp4', 'max_duration': 60},
                 'tiktok': {'max_resolution': '1080x1920', 'fps': 30, 'bitrate': '2000k', 'format': 'mp4', 'max_duration': 180},
@@ -1416,14 +1353,12 @@ class TransformationEngine:
         return optimize_video_for_platform
     
     def _create_image_quality_enhancer(self):
-        """Create image quality enhancer."""
-        def enhance_image_quality(
+        """Create image quality enhancer."""        def enhance_image_quality(
             input_path: str,
             output_path: str,
             enhancement_settings: Dict[str, Any]
         ) -> Dict[str, Any]:
-            """Enhance image quality using computer vision techniques."""
-            try:
+            """Enhance image quality using computer vision techniques."""            try:
                 with Image.open(input_path) as img:
                     enhanced_img = img.copy()
                     
@@ -1469,15 +1404,13 @@ class TransformationEngine:
         return enhance_image_quality
     
     def _create_image_platform_optimizer(self):
-        """Create image platform optimizer."""
-        def optimize_image_for_platform(
+        """Create image platform optimizer."""        def optimize_image_for_platform(
             input_path: str,
             output_path: str,
             platform: str,
             optimization_settings: Dict[str, Any]
         ) -> Dict[str, Any]:
-            """Optimize image for specific platform requirements."""
-            platform_specs = {
+            """Optimize image for specific platform requirements."""            platform_specs = {
                 'instagram': {
                     'post': {'size': '1080x1080', 'format': 'JPEG', 'quality': 85},
                     'story': {'size': '1080x1920', 'format': 'JPEG', 'quality': 85},
@@ -1575,13 +1508,11 @@ class TransformationEngine:
         return optimize_image_for_platform
     
     def _create_text_quality_enhancer(self):
-        """Create text quality enhancer."""
-        def enhance_text_quality(
+        """Create text quality enhancer."""        def enhance_text_quality(
             input_text: str,
             enhancement_settings: Dict[str, Any]
         ) -> Dict[str, Any]:
-            """Enhance text quality through NLP processing."""
-            try:
+            """Enhance text quality through NLP processing."""            try:
                 enhanced_text = input_text
                 enhancements_applied = []
                 
@@ -1660,14 +1591,12 @@ class TransformationEngine:
         return enhance_text_quality
     
     def _create_text_platform_optimizer(self):
-        """Create text platform optimizer."""
-        def optimize_text_for_platform(
+        """Create text platform optimizer."""        def optimize_text_for_platform(
             input_text: str,
             platform: str,
             optimization_settings: Dict[str, Any]
         ) -> Dict[str, Any]:
-            """Optimize text for specific platform requirements."""
-            platform_specs = {
+            """Optimize text for specific platform requirements."""            platform_specs = {
                 'twitter': {'max_length': 280, 'hashtag_limit': 2},
                 'instagram': {'max_length': 2200, 'hashtag_limit': 30},
                 'facebook': {'max_length': 63206, 'hashtag_limit': 10},
@@ -1740,8 +1669,7 @@ class TransformationEngine:
         return optimize_text_for_platform
     
     def _calculate_quality_improvement(self, original: np.ndarray, enhanced: np.ndarray, sr: int) -> Dict[str, float]:
-        """Calculate quality improvement metrics."""
-        try:
+        """Calculate quality improvement metrics."""        try:
             # Calculate SNR improvement
             original_rms = np.sqrt(np.mean(original**2))
             enhanced_rms = np.sqrt(np.mean(enhanced**2))
@@ -1769,8 +1697,7 @@ class TransformationEngine:
         content_data: Dict[str, Any],
         transformation_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Transform content according to specifications.
+        """        Transform content according to specifications.
         
         Args:
             content_data: Content to transform
@@ -1778,8 +1705,7 @@ class TransformationEngine:
             
         Returns:
             Dict containing transformation results
-        """
-        content_type = content_data.get('type')
+        """        content_type = content_data.get('type')
         transformation_type = transformation_config.get('transformation_type', 'format_converter')
         
         transformer = self.transformers.get(content_type, {}).get(transformation_type)
@@ -1797,8 +1723,7 @@ class TransformationEngine:
         config: Dict[str, Any],
         transformer: Callable
     ) -> Dict[str, Any]:
-        """Transform text content."""
-        text = content_data.get('text', '')
+        """Transform text content."""        text = content_data.get('text', '')
         target_format = config.get('target_format', 'plain')
         formatting_options = config.get('formatting_options', {})
         
@@ -1816,8 +1741,7 @@ class TransformationEngine:
         config: Dict[str, Any],
         transformer: Callable
     ) -> Dict[str, Any]:
-        """Transform file-based content."""
-        input_path = content_data.get('file_path')
+        """Transform file-based content."""        input_path = content_data.get('file_path')
         output_path = config.get('output_path')
         target_format = config.get('target_format')
         quality_settings = config.get('quality_settings', {})
@@ -1832,11 +1756,9 @@ class TransformationEngine:
 
 
 class ValidationEngine:
-    """
-    Comprehensive content validation engine for ensuring content
+    """    Comprehensive content validation engine for ensuring content
     quality, compliance, and platform compatibility.
-    """
-    
+    """    
     def __init__(self, config: ProcessingConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -1851,8 +1773,7 @@ class ValidationEngine:
         self._initialize_validators()
     
     def _initialize_validators(self):
-        """Initialize content validators."""
-        self.validators = {
+        """Initialize content validators."""        self.validators = {
             'audio': {
                 'format_validator': self._create_audio_format_validator(),
                 'quality_validator': self._create_audio_quality_validator(),
@@ -1881,8 +1802,7 @@ class ValidationEngine:
         content_data: Dict[str, Any],
         validation_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Comprehensive content validation.
+        """        Comprehensive content validation.
         
         Args:
             content_data: Content to validate
@@ -1890,8 +1810,7 @@ class ValidationEngine:
             
         Returns:
             Dict containing validation results
-        """
-        content_type = content_data.get('type')
+        """        content_type = content_data.get('type')
         validation_types = validation_config.get('validation_types', ['format', 'quality', 'content'])
         
         validation_results = {
@@ -1940,8 +1859,7 @@ class ValidationEngine:
         content_data: Dict[str, Any],
         config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Run a specific validator."""
-        # Run validator in thread pool to avoid blocking
+        """Run a specific validator."""        # Run validator in thread pool to avoid blocking
         loop = asyncio.get_event_loop()
         with ThreadPoolExecutor() as executor:
             result = await loop.run_in_executor(executor, validator, content_data, config)
@@ -1949,10 +1867,8 @@ class ValidationEngine:
         return result
     
     def _create_audio_format_validator(self):
-        """Create audio format validator."""
-        def validate_audio_format(content_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-            """Validate audio format and technical specifications."""
-            file_path = content_data.get('file_path')
+        """Create audio format validator."""        def validate_audio_format(content_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
+            """Validate audio format and technical specifications."""            file_path = content_data.get('file_path')
             issues = []
             warnings = []
             recommendations = []
@@ -2018,10 +1934,8 @@ class ValidationEngine:
         return validate_audio_format
     
     def _create_audio_quality_validator(self):
-        """Create audio quality validator."""
-        def validate_audio_quality(content_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-            """Validate audio quality metrics."""
-            file_path = content_data.get('file_path')
+        """Create audio quality validator."""        def validate_audio_quality(content_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
+            """Validate audio quality metrics."""            file_path = content_data.get('file_path')
             issues = []
             warnings = []
             recommendations = []
@@ -2078,10 +1992,8 @@ class ValidationEngine:
         return validate_audio_quality
     
     def _create_audio_content_validator(self):
-        """Create audio content validator."""
-        def validate_audio_content(content_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-            """Validate audio content for appropriateness and quality."""
-            # Placeholder for content validation (would use ML models)
+        """Create audio content validator."""        def validate_audio_content(content_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
+            """Validate audio content for appropriateness and quality."""            # Placeholder for content validation (would use ML models)
             return {
                 'valid': True,
                 'issues': [],
@@ -2093,10 +2005,8 @@ class ValidationEngine:
         return validate_audio_content
     
     def _create_video_format_validator(self):
-        """Create video format validator."""
-        def validate_video_format(content_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-            """Validate video format and technical specifications."""
-            file_path = content_data.get('file_path')
+        """Create video format validator."""        def validate_video_format(content_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
+            """Validate video format and technical specifications."""            file_path = content_data.get('file_path')
             issues = []
             warnings = []
             recommendations = []
@@ -2164,10 +2074,8 @@ class ValidationEngine:
         return validate_video_format
     
     def _create_video_quality_validator(self):
-        """Create video quality validator."""
-        def validate_video_quality(content_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-            """Validate video quality metrics."""
-            # Placeholder for video quality validation
+        """Create video quality validator."""        def validate_video_quality(content_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
+            """Validate video quality metrics."""            # Placeholder for video quality validation
             return {
                 'valid': True,
                 'issues': [],
@@ -2179,10 +2087,8 @@ class ValidationEngine:
         return validate_video_quality
     
     def _create_video_content_validator(self):
-        """Create video content validator."""
-        def validate_video_content(content_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-            """Validate video content for appropriateness."""
-            # Placeholder for content validation
+        """Create video content validator."""        def validate_video_content(content_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
+            """Validate video content for appropriateness."""            # Placeholder for content validation
             return {
                 'valid': True,
                 'issues': [],
@@ -2194,10 +2100,8 @@ class ValidationEngine:
         return validate_video_content
     
     def _create_image_format_validator(self):
-        """Create image format validator."""
-        def validate_image_format(content_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-            """Validate image format and technical specifications."""
-            file_path = content_data.get('file_path')
+        """Create image format validator."""        def validate_image_format(content_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
+            """Validate image format and technical specifications."""            file_path = content_data.get('file_path')
             issues = []
             warnings = []
             recommendations = []
@@ -2255,10 +2159,8 @@ class ValidationEngine:
         return validate_image_format
     
     def _create_image_quality_validator(self):
-        """Create image quality validator."""
-        def validate_image_quality(content_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-            """Validate image quality metrics."""
-            # Placeholder for image quality validation
+        """Create image quality validator."""        def validate_image_quality(content_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
+            """Validate image quality metrics."""            # Placeholder for image quality validation
             return {
                 'valid': True,
                 'issues': [],
@@ -2270,10 +2172,8 @@ class ValidationEngine:
         return validate_image_quality
     
     def _create_image_content_validator(self):
-        """Create image content validator."""
-        def validate_image_content(content_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-            """Validate image content for appropriateness."""
-            # Placeholder for content validation
+        """Create image content validator."""        def validate_image_content(content_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
+            """Validate image content for appropriateness."""            # Placeholder for content validation
             return {
                 'valid': True,
                 'issues': [],
@@ -2285,10 +2185,8 @@ class ValidationEngine:
         return validate_image_content
     
     def _create_text_format_validator(self):
-        """Create text format validator."""
-        def validate_text_format(content_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-            """Validate text format and structure."""
-            text = content_data.get('text', '')
+        """Create text format validator."""        def validate_text_format(content_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
+            """Validate text format and structure."""            text = content_data.get('text', '')
             issues = []
             warnings = []
             recommendations = []
@@ -2331,10 +2229,8 @@ class ValidationEngine:
         return validate_text_format
     
     def _create_text_quality_validator(self):
-        """Create text quality validator."""
-        def validate_text_quality(content_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-            """Validate text quality and readability."""
-            # Placeholder for text quality validation
+        """Create text quality validator."""        def validate_text_quality(content_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
+            """Validate text quality and readability."""            # Placeholder for text quality validation
             return {
                 'valid': True,
                 'issues': [],
@@ -2346,10 +2242,8 @@ class ValidationEngine:
         return validate_text_quality
     
     def _create_text_content_validator(self):
-        """Create text content validator."""
-        def validate_text_content(content_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-            """Validate text content for appropriateness."""
-            # Placeholder for content validation
+        """Create text content validator."""        def validate_text_content(content_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
+            """Validate text content for appropriateness."""            # Placeholder for content validation
             return {
                 'valid': True,
                 'issues': [],
@@ -2367,8 +2261,7 @@ class ValidationEngine:
         )
     
     def _initialize_processors(self):
-        """Initialize specialized stream processors for different content types."""
-        
+        """Initialize specialized stream processors for different content types."""        
         # Audio stream processor
         self.stream_processors['audio'] = AudioStreamProcessor(self.config)
         
@@ -2394,8 +2287,7 @@ class ValidationEngine:
         content_type: str,
         processing_options: Dict[str, Any]
     ) -> AsyncGenerator[Dict[str, Any], None]:
-        """
-        Process continuous stream of content with real-time constraints.
+        """        Process continuous stream of content with real-time constraints.
         
         Args:
             stream_data: Async generator yielding content chunks
@@ -2404,8 +2296,7 @@ class ValidationEngine:
             
         Yields:
             Processed content chunks with metadata
-        """
-        if content_type not in self.stream_processors:
+        """        if content_type not in self.stream_processors:
             raise ProcessingError(f"No stream processor available for {content_type}")
         
         processor = self.stream_processors[content_type]
@@ -2466,8 +2357,7 @@ class ValidationEngine:
         pipeline: Any,
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process individual content chunk."""
-        start_time = datetime.utcnow()
+        """Process individual content chunk."""        start_time = datetime.utcnow()
         
         try:
             # Apply pipeline transformations
@@ -2498,8 +2388,7 @@ class ValidationEngine:
         content_type: str,
         options: Dict[str, Any]
     ) -> Pipeline:
-        """Create optimized processing pipeline for stream processing."""
-        
+        """Create optimized processing pipeline for stream processing."""        
         processor = self.stream_processors[content_type]
         pipeline_components = []
         
@@ -2523,11 +2412,9 @@ class ValidationEngine:
 
 
 class BatchProcessingEngine:
-    """
-    Scalable batch processing engine for large-scale content processing
+    """    Scalable batch processing engine for large-scale content processing
     with distributed computing and intelligent workload management.
-    """
-    
+    """    
     def __init__(self, config: ProcessingConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -2550,8 +2437,7 @@ class BatchProcessingEngine:
         self._start_background_workers()
     
     def _start_background_workers(self):
-        """Start background worker threads for job processing."""
-        
+        """Start background worker threads for job processing."""        
         # Job dispatcher thread
         self.dispatcher_thread = threading.Thread(
             target=self._job_dispatcher,
@@ -2571,16 +2457,14 @@ class BatchProcessingEngine:
         self,
         job_spec: ProcessingJob
     ) -> str:
-        """
-        Submit batch processing job with priority scheduling.
+        """        Submit batch processing job with priority scheduling.
         
         Args:
             job_spec: Complete job specification
             
         Returns:
             Job ID for tracking
-        """
-        
+        """        
         # Validate job specification
         await self._validate_job_spec(job_spec)
         
@@ -2604,8 +2488,7 @@ class BatchProcessingEngine:
         return job_spec.job_id
     
     async def _validate_job_spec(self, job_spec: ProcessingJob):
-        """Validate job specification before submission."""
-        
+        """Validate job specification before submission."""        
         required_fields = ['job_id', 'content_data', 'processing_config']
         for field in required_fields:
             if not hasattr(job_spec, field) or getattr(job_spec, field) is None:
@@ -2620,8 +2503,7 @@ class BatchProcessingEngine:
             raise ProcessingError("No content data or source path provided")
     
     async def _estimate_resources(self, job_spec: ProcessingJob) -> Dict[str, Any]:
-        """Estimate processing resources required for job."""
-        
+        """Estimate processing resources required for job."""        
         content_type = job_spec.content_data.get('type')
         content_size = job_spec.content_data.get('size', 0)
         processing_options = job_spec.processing_config
@@ -2660,8 +2542,7 @@ class BatchProcessingEngine:
         job_spec: ProcessingJob,
         resource_estimate: Dict[str, Any]
     ) -> float:
-        """Calculate priority score for job scheduling."""
-        
+        """Calculate priority score for job scheduling."""        
         # Base priority from job specification
         base_priority = job_spec.priority.value
         
@@ -2681,8 +2562,7 @@ class BatchProcessingEngine:
         return priority_score
     
     def _job_dispatcher(self):
-        """Background job dispatcher thread."""
-        
+        """Background job dispatcher thread."""        
         while True:
             try:
                 if not self.job_queue.empty():
@@ -2704,8 +2584,7 @@ class BatchProcessingEngine:
                 self.logger.error(f"Job dispatcher error: {e}")
     
     def _check_resource_availability(self, job_id: str) -> bool:
-        """Check if resources are available for job execution."""
-        
+        """Check if resources are available for job execution."""        
         job_info = self.active_jobs.get(job_id)
         if not job_info:
             return False
@@ -2727,8 +2606,7 @@ class BatchProcessingEngine:
         return True
     
     def _execute_job_async(self, job_spec: ProcessingJob):
-        """Execute job asynchronously."""
-        
+        """Execute job asynchronously."""        
         self.active_jobs[job_spec.job_id]['status'] = 'running'
         self.active_jobs[job_spec.job_id]['started_at'] = datetime.utcnow()
         
@@ -2744,8 +2622,7 @@ class BatchProcessingEngine:
         )
     
     def _execute_job(self, job_spec: ProcessingJob) -> Dict[str, Any]:
-        """Execute processing job in separate process."""
-        
+        """Execute processing job in separate process."""        
         try:
             # Initialize processor for content type
             content_type = job_spec.content_data['type']
@@ -2768,8 +2645,7 @@ class BatchProcessingEngine:
             }
     
     def _handle_job_completion(self, job_id: str, future):
-        """Handle job completion and cleanup."""
-        
+        """Handle job completion and cleanup."""        
         try:
             result = future.result()
             
@@ -2796,8 +2672,7 @@ class BatchProcessingEngine:
             self.logger.error(f"Job completion handling error: {e}")
     
     def _resource_monitor(self):
-        """Background resource monitoring thread."""
-        
+        """Background resource monitoring thread."""        
         while True:
             try:
                 # Monitor system resources
@@ -2820,11 +2695,9 @@ class BatchProcessingEngine:
 
 
 class TransformationEngine:
-    """
-    Advanced content transformation engine with AI-powered optimization
+    """    Advanced content transformation engine with AI-powered optimization
     and multi-format conversion capabilities.
-    """
-    
+    """    
     def __init__(self, config: ProcessingConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -2836,8 +2709,7 @@ class TransformationEngine:
         self._load_transformation_modules()
     
     def _load_transformation_modules(self):
-        """Load specialized transformation modules."""
-        
+        """Load specialized transformation modules."""        
         # Audio transformers
         self.transformers['audio'] = {
             'format_converter': AudioFormatConverter(),
@@ -2872,8 +2744,7 @@ class TransformationEngine:
         content_data: Dict[str, Any],
         transformation_spec: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Apply comprehensive content transformations.
+        """        Apply comprehensive content transformations.
         
         Args:
             content_data: Source content data
@@ -2881,8 +2752,7 @@ class TransformationEngine:
             
         Returns:
             Transformed content with metadata
-        """
-        
+        """        
         content_type = content_data.get('type')
         if content_type not in self.transformers:
             raise ProcessingError(f"No transformers available for {content_type}")
@@ -2944,11 +2814,9 @@ class TransformationEngine:
 
 
 class ValidationEngine:
-    """
-    Comprehensive validation engine ensuring content quality and compliance
+    """    Comprehensive validation engine ensuring content quality and compliance
     across multiple platforms and standards.
-    """
-    
+    """    
     def __init__(self, config: ProcessingConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -2956,8 +2824,7 @@ class ValidationEngine:
         self._initialize_validators()
     
     def _initialize_validators(self):
-        """Initialize content-specific validators."""
-        
+        """Initialize content-specific validators."""        
         self.validators = {
             'audio': AudioValidator(self.config),
             'video': VideoValidator(self.config),
@@ -2971,8 +2838,7 @@ class ValidationEngine:
         content_data: Dict[str, Any],
         validation_rules: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Perform comprehensive content validation.
+        """        Perform comprehensive content validation.
         
         Args:
             content_data: Content to validate
@@ -2980,8 +2846,7 @@ class ValidationEngine:
             
         Returns:
             Validation results with detailed metrics
-        """
-        
+        """        
         content_type = content_data.get('type')
         if content_type not in self.validators:
             raise ProcessingError(f"No validator available for {content_type}")

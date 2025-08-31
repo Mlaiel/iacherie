@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Content Recovery System
+"""IA Influencer Agent - Content Recovery System
 Enterprise-grade content recovery and restoration for multi-format creator platform
 
 This module provides specialized recovery capabilities for content protection platform:
@@ -12,9 +11,7 @@ This module provides specialized recovery capabilities for content protection pl
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 License: Proprietary - All rights reserved
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
@@ -40,8 +37,7 @@ from backend.security.encryption import EncryptionManager
 
 
 class ContentType(Enum):
-    """Content types for recovery"""
-    AUDIO = "audio"
+    """Content types for recovery"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -51,8 +47,7 @@ class ContentType(Enum):
 
 
 class RecoveryMode(Enum):
-    """Content recovery modes"""
-    FULL_RESTORATION = "full_restoration"
+    """Content recovery modes"""    FULL_RESTORATION = "full_restoration"
     PARTIAL_RECOVERY = "partial_recovery"
     METADATA_ONLY = "metadata_only"
     FINGERPRINT_REBUILD = "fingerprint_rebuild"
@@ -61,8 +56,7 @@ class RecoveryMode(Enum):
 
 
 class ContentIntegrityLevel(Enum):
-    """Content integrity verification levels"""
-    BASIC = "basic"              # Hash verification only
+    """Content integrity verification levels"""    BASIC = "basic"              # Hash verification only
     STANDARD = "standard"        # Hash + metadata validation
     ADVANCED = "advanced"        # Full content analysis
     FORENSIC = "forensic"        # Deep integrity verification
@@ -71,8 +65,7 @@ class ContentIntegrityLevel(Enum):
 
 @dataclass
 class ContentRecoveryRequest:
-    """Content recovery request specification"""
-    request_id: str
+    """Content recovery request specification"""    request_id: str
     creator_id: str
     content_types: List[ContentType]
     recovery_mode: RecoveryMode
@@ -87,8 +80,7 @@ class ContentRecoveryRequest:
 
 @dataclass
 class ContentRecoveryResult:
-    """Content recovery operation result"""
-    request_id: str
+    """Content recovery operation result"""    request_id: str
     recovery_id: str
     start_time: datetime
     end_time: Optional[datetime] = None
@@ -103,8 +95,7 @@ class ContentRecoveryResult:
 
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint data structure"""
-    fingerprint_id: str
+    """Content fingerprint data structure"""    fingerprint_id: str
     creator_id: str
     content_type: ContentType
     original_filename: str
@@ -117,8 +108,7 @@ class ContentFingerprint:
 
 
 class ContentRecoverySystem:
-    """
-    Enterprise-grade content recovery system for multi-format creator platform
+    """    Enterprise-grade content recovery system for multi-format creator platform
     
     Capabilities:
     - Multi-format content restoration with AI-powered reconstruction
@@ -127,9 +117,7 @@ class ContentRecoverySystem:
     - Real-time content integrity verification and repair
     - Automated content metadata restoration
     - Cross-platform content synchronization recovery
-    """
-
-    def __init__(self, config: Config):
+    """    def __init__(self, config: Config):
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.db_manager = DatabaseManager(config)
@@ -186,8 +174,7 @@ class ContentRecoverySystem:
         }
 
     async def initialize(self):
-        """Initialize the content recovery system"""
-        try:
+        """Initialize the content recovery system"""        try:
             # Initialize content processing engines
             await self.vector_matcher.initialize()
             await self.audio_engine.initialize()
@@ -208,16 +195,14 @@ class ContentRecoverySystem:
             raise
 
     async def submit_recovery_request(self, recovery_request: ContentRecoveryRequest) -> str:
-        """
-        Submit a content recovery request
+        """        Submit a content recovery request
         
         Args:
             recovery_request: Content recovery request specification
             
         Returns:
             str: Recovery request ID
-        """
-        try:
+        """        try:
             request_id = recovery_request.request_id
             
             # Validate recovery request
@@ -249,8 +234,7 @@ class ContentRecoverySystem:
             raise
 
     async def _process_recovery_queue(self):
-        """Background processor for recovery queue"""
-        while True:
+        """Background processor for recovery queue"""        while True:
             try:
                 # Check if we can process more recoveries
                 if (len(self.active_recoveries) < self.max_concurrent_recoveries and 
@@ -269,8 +253,7 @@ class ContentRecoverySystem:
                 await asyncio.sleep(5)
 
     async def _execute_content_recovery(self, recovery_request: ContentRecoveryRequest):
-        """Execute complete content recovery process"""
-        recovery_id = self._generate_recovery_id()
+        """Execute complete content recovery process"""        recovery_id = self._generate_recovery_id()
         start_time = datetime.utcnow()
         
         try:
@@ -332,8 +315,7 @@ class ContentRecoverySystem:
                 await self._archive_recovery_result(completed_recovery)
 
     async def _discover_recoverable_content(self, recovery_request: ContentRecoveryRequest) -> Dict[str, Any]:
-        """Discover available content for recovery"""
-        try:
+        """Discover available content for recovery"""        try:
             content_inventory = {
                 'available_backups': [],
                 'fingerprint_records': [],
@@ -372,8 +354,7 @@ class ContentRecoverySystem:
 
     async def _analyze_content_availability(self, content_id: str, 
                                           content_types: List[ContentType]) -> Dict[str, Any]:
-        """Analyze availability of specific content for recovery"""
-        try:
+        """Analyze availability of specific content for recovery"""        try:
             content_info = {
                 'content_id': content_id,
                 'available_sources': [],
@@ -428,8 +409,7 @@ class ContentRecoverySystem:
 
     async def _create_recovery_plan(self, recovery_request: ContentRecoveryRequest,
                                   content_inventory: Dict[str, Any]) -> Dict[str, Any]:
-        """Create optimized recovery plan based on available content"""
-        try:
+        """Create optimized recovery plan based on available content"""        try:
             recovery_plan = {
                 'plan_id': f"plan_{recovery_request.request_id}",
                 'recovery_phases': [],
@@ -485,8 +465,7 @@ class ContentRecoverySystem:
     async def _execute_recovery_plan(self, recovery_request: ContentRecoveryRequest,
                                    recovery_plan: Dict[str, Any],
                                    recovery_result: ContentRecoveryResult):
-        """Execute the recovery plan phases"""
-        try:
+        """Execute the recovery plan phases"""        try:
             total_phases = len(recovery_plan['recovery_phases'])
             
             for phase_index, phase in enumerate(recovery_plan['recovery_phases']):
@@ -531,8 +510,7 @@ class ContentRecoverySystem:
     async def _execute_critical_content_recovery(self, phase: Dict[str, Any],
                                                recovery_request: ContentRecoveryRequest,
                                                recovery_result: ContentRecoveryResult) -> Dict[str, Any]:
-        """Execute critical content recovery phase"""
-        try:
+        """Execute critical content recovery phase"""        try:
             phase_result = {
                 'phase_name': 'critical_content',
                 'items_processed': 0,
@@ -589,8 +567,7 @@ class ContentRecoverySystem:
 
     async def _recover_content_item(self, item: Dict[str, Any], recovery_method: str,
                                   integrity_level: ContentIntegrityLevel) -> Dict[str, Any]:
-        """Recover individual content item using specified method"""
-        try:
+        """Recover individual content item using specified method"""        try:
             content_id = item['content_id']
             content_type = ContentType(item['content_type'])
             
@@ -649,8 +626,7 @@ class ContentRecoverySystem:
 
     async def _recover_from_backup_storage(self, content_id: str, content_type: ContentType,
                                          item: Dict[str, Any]) -> Dict[str, Any]:
-        """Recover content from backup storage with validation"""
-        try:
+        """Recover content from backup storage with validation"""        try:
             # Find best backup source
             backup_sources = item.get('available_sources', [])
             backup_sources = [s for s in backup_sources if s['source'].startswith('backup_')]
@@ -701,8 +677,7 @@ class ContentRecoverySystem:
 
     async def _recover_using_ai_reconstruction(self, content_id: str, content_type: ContentType,
                                              item: Dict[str, Any]) -> Dict[str, Any]:
-        """Recover content using AI-powered reconstruction techniques"""
-        try:
+        """Recover content using AI-powered reconstruction techniques"""        try:
             # Get available fingerprint data
             fingerprint_data = await self._get_fingerprint_data(content_id, content_type)
             
@@ -762,8 +737,7 @@ class ContentRecoverySystem:
             return {'success': False, 'error': str(e)}
 
     async def get_recovery_status(self, request_id: str) -> Dict[str, Any]:
-        """Get status of content recovery request"""
-        try:
+        """Get status of content recovery request"""        try:
             # Find active recovery
             for recovery_id, recovery_result in self.active_recoveries.items():
                 if recovery_result.request_id == request_id:
@@ -809,8 +783,7 @@ class ContentRecoverySystem:
             return {'error': str(e)}
 
     async def get_recovery_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive content recovery metrics"""
-        try:
+        """Get comprehensive content recovery metrics"""        try:
             return {
                 'recovery_metrics': self.recovery_metrics.copy(),
                 'system_status': {
@@ -828,12 +801,10 @@ class ContentRecoverySystem:
             return {'error': str(e)}
 
     def _generate_recovery_id(self) -> str:
-        """Generate unique recovery identifier"""
-        return f"recovery_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
+        """Generate unique recovery identifier"""        return f"recovery_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
 
     def _update_recovery_metrics(self, recovery_result: ContentRecoveryResult, success: bool):
-        """Update recovery performance metrics"""
-        if success:
+        """Update recovery performance metrics"""        if success:
             self.recovery_metrics['successful_recoveries'] += 1
             
             # Update average recovery time
@@ -876,8 +847,7 @@ from backend.content_protection.integrity_validator import ContentIntegrityValid
 
 
 class ContentType(Enum):
-    """Types of content for recovery"""
-    AUDIO_FINGERPRINT = "audio_fingerprint"
+    """Types of content for recovery"""    AUDIO_FINGERPRINT = "audio_fingerprint"
     VIDEO_FINGERPRINT = "video_fingerprint"
     IMAGE_FINGERPRINT = "image_fingerprint"
     AUDIO_FILE = "audio_file"
@@ -888,8 +858,7 @@ class ContentType(Enum):
 
 
 class RecoveryMethod(Enum):
-    """Content recovery methods"""
-    BACKUP_RESTORE = "backup_restore"
+    """Content recovery methods"""    BACKUP_RESTORE = "backup_restore"
     REGENERATE_FINGERPRINT = "regenerate_fingerprint"
     CROSS_REFERENCE = "cross_reference"
     FORENSIC_RECONSTRUCTION = "forensic_reconstruction"
@@ -897,8 +866,7 @@ class RecoveryMethod(Enum):
 
 
 class ContentState(Enum):
-    """Content recovery states"""
-    INTACT = "intact"
+    """Content recovery states"""    INTACT = "intact"
     CORRUPTED = "corrupted"
     MISSING = "missing"
     PARTIAL = "partial"
@@ -909,8 +877,7 @@ class ContentState(Enum):
 
 @dataclass
 class ContentItem:
-    """Content item for recovery"""
-    content_id: str
+    """Content item for recovery"""    content_id: str
     content_type: ContentType
     file_path: Optional[str]
     fingerprint_data: Optional[bytes]
@@ -924,8 +891,7 @@ class ContentItem:
 
 @dataclass
 class RecoveryOperation:
-    """Content recovery operation"""
-    operation_id: str
+    """Content recovery operation"""    operation_id: str
     timestamp: datetime
     content_items: List[str]  # Content IDs
     recovery_method: RecoveryMethod
@@ -940,8 +906,7 @@ class RecoveryOperation:
 
 @dataclass
 class FingerprintValidationResult:
-    """Fingerprint validation result"""
-    content_id: str
+    """Fingerprint validation result"""    content_id: str
     is_valid: bool
     confidence: float
     issues_detected: List[str]
@@ -950,8 +915,7 @@ class FingerprintValidationResult:
 
 
 class ContentRecoverySystem:
-    """
-    Specialized content recovery system for creator protection
+    """    Specialized content recovery system for creator protection
     
     Features:
     - Audio fingerprint database recovery with validation
@@ -960,9 +924,7 @@ class ContentRecoverySystem:
     - Cross-platform content correlation and verification
     - Advanced forensic analysis for corruption detection
     - Creator-specific recovery prioritization
-    """
-
-    def __init__(self, config: Config):
+    """    def __init__(self, config: Config):
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.db_manager = DatabaseManager(config)
@@ -1004,8 +966,7 @@ class ContentRecoverySystem:
         }
 
     async def initialize(self):
-        """Initialize content recovery system"""
-        try:
+        """Initialize content recovery system"""        try:
             # Load content inventory from database
             await self._load_content_inventory()
             
@@ -1024,8 +985,7 @@ class ContentRecoverySystem:
             raise
 
     async def _load_content_inventory(self):
-        """Load content inventory from database"""
-        try:
+        """Load content inventory from database"""        try:
             # Load fingerprints
             fingerprints = await self.db_manager.get_all_fingerprints()
             for fp in fingerprints:
@@ -1062,8 +1022,7 @@ class ContentRecoverySystem:
             self.logger.error(f"Failed to load content inventory: {e}")
 
     async def _build_correlation_indices(self):
-        """Build content correlation indices for cross-reference recovery"""
-        try:
+        """Build content correlation indices for cross-reference recovery"""        try:
             # Group content by creator for correlation
             creator_content = defaultdict(list)
             for content_id, item in self.content_inventory.items():
@@ -1085,8 +1044,7 @@ class ContentRecoverySystem:
             self.logger.error(f"Failed to build correlation indices: {e}")
 
     async def _build_fingerprint_similarity_index(self):
-        """Build fingerprint similarity index for recovery"""
-        try:
+        """Build fingerprint similarity index for recovery"""        try:
             fingerprint_items = [
                 item for item in self.content_inventory.values()
                 if item.content_type == ContentType.AUDIO_FINGERPRINT and item.fingerprint_data
@@ -1114,8 +1072,7 @@ class ContentRecoverySystem:
             self.logger.error(f"Failed to build fingerprint similarity index: {e}")
 
     async def _calculate_fingerprint_similarity(self, fp1: bytes, fp2: bytes) -> float:
-        """Calculate similarity between two fingerprints"""
-        try:
+        """Calculate similarity between two fingerprints"""        try:
             # Convert bytes to numpy arrays (simplified implementation)
             arr1 = np.frombuffer(fp1, dtype=np.float32)
             arr2 = np.frombuffer(fp2, dtype=np.float32)
@@ -1144,16 +1101,14 @@ class ContentRecoverySystem:
             return 0.0
 
     async def validate_content_integrity(self, content_ids: Optional[List[str]] = None) -> Dict[str, Any]:
-        """
-        Validate integrity of content items
+        """        Validate integrity of content items
         
         Args:
             content_ids: Specific content IDs to validate (all if None)
             
         Returns:
             Dict[str, Any]: Validation results
-        """
-        try:
+        """        try:
             if content_ids is None:
                 content_ids = list(self.content_inventory.keys())
             
@@ -1204,8 +1159,7 @@ class ContentRecoverySystem:
             return {'error': str(e)}
 
     async def _validate_single_content_item(self, content_item: ContentItem) -> Dict[str, Any]:
-        """Validate integrity of single content item"""
-        try:
+        """Validate integrity of single content item"""        try:
             validation_result = {
                 'content_id': content_item.content_id,
                 'content_type': content_item.content_type.value,
@@ -1264,8 +1218,7 @@ class ContentRecoverySystem:
             }
 
     async def _validate_fingerprint_data(self, content_item: ContentItem) -> Dict[str, Any]:
-        """Validate fingerprint data integrity"""
-        try:
+        """Validate fingerprint data integrity"""        try:
             fingerprint_data = content_item.fingerprint_data
             
             validation_result = {
@@ -1309,8 +1262,7 @@ class ContentRecoverySystem:
             }
 
     async def _validate_media_file(self, content_item: ContentItem) -> Dict[str, Any]:
-        """Validate media file integrity"""
-        try:
+        """Validate media file integrity"""        try:
             if not content_item.file_path or not await aiofiles.os.path.exists(content_item.file_path):
                 return {
                     'is_valid': False,
@@ -1382,8 +1334,7 @@ class ContentRecoverySystem:
             }
 
     async def _generate_recovery_recommendation(self, content_item: ContentItem) -> Optional[Dict[str, Any]]:
-        """Generate recovery recommendation for corrupted/missing content"""
-        try:
+        """Generate recovery recommendation for corrupted/missing content"""        try:
             recommendation = {
                 'content_id': content_item.content_id,
                 'priority': self._calculate_recovery_priority(content_item),
@@ -1440,8 +1391,7 @@ class ContentRecoverySystem:
             return None
 
     def _calculate_recovery_priority(self, content_item: ContentItem) -> int:
-        """Calculate recovery priority for content item"""
-        try:
+        """Calculate recovery priority for content item"""        try:
             priority = self.priority_rules['standard_content']  # Default
             
             # Check creator tier
@@ -1475,8 +1425,7 @@ class ContentRecoverySystem:
 
     async def recover_content(self, content_ids: List[str], 
                             recovery_method: Optional[RecoveryMethod] = None) -> str:
-        """
-        Initiate content recovery operation
+        """        Initiate content recovery operation
         
         Args:
             content_ids: List of content IDs to recover
@@ -1484,8 +1433,7 @@ class ContentRecoverySystem:
             
         Returns:
             str: Recovery operation ID
-        """
-        try:
+        """        try:
             # Validate content IDs
             valid_content_ids = []
             for content_id in content_ids:
@@ -1534,8 +1482,7 @@ class ContentRecoverySystem:
             raise
 
     async def _select_optimal_recovery_method(self, content_ids: List[str]) -> RecoveryMethod:
-        """Select optimal recovery method for content items"""
-        try:
+        """Select optimal recovery method for content items"""        try:
             # Analyze content items and available recovery options
             method_scores = defaultdict(float)
             
@@ -1572,8 +1519,7 @@ class ContentRecoverySystem:
             return RecoveryMethod.BACKUP_RESTORE
 
     async def _process_recovery_queue(self):
-        """Process recovery operation queue"""
-        while True:
+        """Process recovery operation queue"""        while True:
             try:
                 if self.recovery_queue:
                     operation = self.recovery_queue.popleft()
@@ -1586,8 +1532,7 @@ class ContentRecoverySystem:
                 await asyncio.sleep(10)
 
     async def _execute_recovery_operation(self, operation: RecoveryOperation):
-        """Execute recovery operation"""
-        try:
+        """Execute recovery operation"""        try:
             operation.status = 'in_progress'
             start_time = datetime.utcnow()
             
@@ -1649,8 +1594,7 @@ class ContentRecoverySystem:
 
     async def _execute_recovery_method(self, content_item: ContentItem, 
                                      method: RecoveryMethod) -> bool:
-        """Execute specific recovery method for content item"""
-        try:
+        """Execute specific recovery method for content item"""        try:
             if method == RecoveryMethod.BACKUP_RESTORE:
                 return await self._restore_from_backup(content_item)
             elif method == RecoveryMethod.REGENERATE_FINGERPRINT:
@@ -1670,8 +1614,7 @@ class ContentRecoverySystem:
             return False
 
     async def _restore_from_backup(self, content_item: ContentItem) -> bool:
-        """Restore content from backup"""
-        try:
+        """Restore content from backup"""        try:
             # Check for available backups
             backup_info = await self.db_manager.get_content_backups(content_item.content_id)
             
@@ -1716,8 +1659,7 @@ class ContentRecoverySystem:
             return False
 
     async def _regenerate_fingerprint(self, content_item: ContentItem) -> bool:
-        """Regenerate fingerprint from source file"""
-        try:
+        """Regenerate fingerprint from source file"""        try:
             if not content_item.file_path or not await aiofiles.os.path.exists(content_item.file_path):
                 return False
             
@@ -1751,8 +1693,7 @@ class ContentRecoverySystem:
             return False
 
     async def _calculate_file_checksum(self, file_path: str) -> str:
-        """Calculate SHA-256 checksum of file"""
-        try:
+        """Calculate SHA-256 checksum of file"""        try:
             hasher = hashlib.sha256()
             
             async with aiofiles.open(file_path, 'rb') as file:
@@ -1766,16 +1707,14 @@ class ContentRecoverySystem:
             return ""
 
     async def _has_backup_available(self, content_id: str) -> bool:
-        """Check if backup is available for content"""
-        try:
+        """Check if backup is available for content"""        try:
             backup_info = await self.db_manager.get_content_backups(content_id)
             return len(backup_info) > 0
         except:
             return False
 
     async def get_recovery_status(self) -> Dict[str, Any]:
-        """Get comprehensive recovery system status"""
-        try:
+        """Get comprehensive recovery system status"""        try:
             # Count content by state
             content_by_state = defaultdict(int)
             for content_item in self.content_inventory.values():
@@ -1813,8 +1752,7 @@ class ContentRecoverySystem:
             return {'error': str(e)}
 
     async def execute_emergency_recovery(self) -> Dict[str, Any]:
-        """Execute emergency content recovery procedures"""
-        try:
+        """Execute emergency content recovery procedures"""        try:
             emergency_id = f"emergency_content_recovery_{int(datetime.utcnow().timestamp())}"
             
             self.logger.warning(f"Executing emergency content recovery: {emergency_id}")
@@ -1870,8 +1808,7 @@ class ContentRecoverySystem:
             }
 
     async def get_health_status(self) -> Dict[str, Any]:
-        """Get content recovery system health status for disaster recovery coordinator"""
-        try:
+        """Get content recovery system health status for disaster recovery coordinator"""        try:
             # Calculate system health metrics
             total_operations = self.recovery_stats['total_operations']
             successful_recoveries = self.recovery_stats['successful_recoveries']
@@ -1920,8 +1857,7 @@ class ContentRecoverySystem:
             }
 
     async def _identify_critical_content_for_recovery(self) -> List[Dict[str, Any]]:
-        """Identify critical content that needs immediate recovery"""
-        try:
+        """Identify critical content that needs immediate recovery"""        try:
             # Get high-value content from premium creators
             critical_content = []
             

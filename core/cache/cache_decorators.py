@@ -1,12 +1,9 @@
-"""
-Cache Decorators for IA Influencer Agent Platform
+"""Cache Decorators for IA Influencer Agent Platform
 Comprehensive caching decorators and utilities for automatic cache management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import functools
 import inspect
@@ -23,16 +20,14 @@ from collections import defaultdict
 logger = logging.getLogger(__name__)
 
 class CacheMode(Enum):
-    """Cache operation modes"""
-    READ_THROUGH = "read_through"
+    """Cache operation modes"""    READ_THROUGH = "read_through"
     WRITE_THROUGH = "write_through"
     WRITE_BACK = "write_back"
     WRITE_AROUND = "write_around"
     REFRESH_AHEAD = "refresh_ahead"
 
 class InvalidationTrigger(Enum):
-    """Cache invalidation triggers"""
-    TIME_BASED = "time_based"
+    """Cache invalidation triggers"""    TIME_BASED = "time_based"
     EVENT_BASED = "event_based"
     SIZE_BASED = "size_based"
     ACCESS_BASED = "access_based"
@@ -40,8 +35,7 @@ class InvalidationTrigger(Enum):
 
 @dataclass
 class CacheConfig:
-    """Cache configuration for decorators"""
-    ttl: Optional[int] = None
+    """Cache configuration for decorators"""    ttl: Optional[int] = None
     namespace: str = "default"
     mode: CacheMode = CacheMode.READ_THROUGH
     invalidation_trigger: InvalidationTrigger = InvalidationTrigger.TIME_BASED
@@ -60,8 +54,7 @@ class CacheConfig:
             self.dependency_keys = []
 
 class CacheDecoratorManager:
-    """Manage cache decorators and their configurations"""
-    
+    """Manage cache decorators and their configurations"""    
     def __init__(self):
         self.cache_instances = {}
         self.configurations = {}
@@ -78,16 +71,13 @@ class CacheDecoratorManager:
         logger.info("CacheDecoratorManager initialized")
     
     def register_cache(self, name: str, cache_instance):
-        """Register cache instance"""
-        self.cache_instances[name] = cache_instance
+        """Register cache instance"""        self.cache_instances[name] = cache_instance
     
     def get_cache(self, name: str = "default"):
-        """Get cache instance by name"""
-        return self.cache_instances.get(name)
+        """Get cache instance by name"""        return self.cache_instances.get(name)
     
     def update_metrics(self, func_name: str, hit: bool, cache_time: float, compute_time: float):
-        """Update cache metrics"""
-        with self._lock:
+        """Update cache metrics"""        with self._lock:
             metrics = self.metrics[func_name]
             metrics['calls'] += 1
             if hit:
@@ -99,8 +89,7 @@ class CacheDecoratorManager:
             metrics['total_time'] += cache_time + compute_time
     
     def get_metrics(self, func_name: Optional[str] = None) -> Dict[str, Any]:
-        """Get cache metrics"""
-        with self._lock:
+        """Get cache metrics"""        with self._lock:
             if func_name:
                 metrics = self.metrics.get(func_name, {})
                 if metrics.get('calls', 0) > 0:
@@ -115,16 +104,13 @@ class CacheDecoratorManager:
 _decorator_manager = CacheDecoratorManager()
 
 def register_cache_instance(name: str, cache_instance):
-    """Register cache instance globally"""
-    _decorator_manager.register_cache(name, cache_instance)
+    """Register cache instance globally"""    _decorator_manager.register_cache(name, cache_instance)
 
 def get_cache_metrics(func_name: Optional[str] = None) -> Dict[str, Any]:
-    """Get cache metrics globally"""
-    return _decorator_manager.get_metrics(func_name)
+    """Get cache metrics globally"""    return _decorator_manager.get_metrics(func_name)
 
 def _generate_cache_key(func: Callable, args: Tuple, kwargs: Dict[str, Any], config: CacheConfig) -> str:
-    """Generate cache key for function call"""
-    # Build key components
+    """Generate cache key for function call"""    # Build key components
     key_parts = []
     
     # Add namespace and prefix
@@ -143,8 +129,7 @@ def _generate_cache_key(func: Callable, args: Tuple, kwargs: Dict[str, Any], con
     return ":".join(key_parts)
 
 def _hash_arguments(args: Tuple, kwargs: Dict[str, Any]) -> str:
-    """Generate hash for function arguments"""
-    # Create a stable representation of arguments
+    """Generate hash for function arguments"""    # Create a stable representation of arguments
     arg_repr = []
     
     # Process positional arguments
@@ -160,8 +145,7 @@ def _hash_arguments(args: Tuple, kwargs: Dict[str, Any]) -> str:
     return hashlib.md5(arg_string.encode()).hexdigest()
 
 def _serialize_argument(arg: Any) -> str:
-    """Serialize argument to string"""
-    try:
+    """Serialize argument to string"""    try:
         if hasattr(arg, '__dict__'):
             # Object with attributes
             return f"{type(arg).__name__}:{hash(str(arg.__dict__))}"
@@ -187,8 +171,7 @@ def cached(
     compress: bool = False,
     refresh_threshold: float = 0.8
 ):
-    """
-    Cache decorator for function results
+    """    Cache decorator for function results
     
     Args:
         ttl: Time to live in seconds
@@ -201,8 +184,7 @@ def cached(
         serialize: Whether to serialize the result
         compress: Whether to compress the cached data
         refresh_threshold: Threshold for refresh-ahead pattern
-    """
-    
+    """    
     def decorator(func: Callable) -> Callable:
         config = CacheConfig(
             ttl=ttl,
@@ -224,8 +206,7 @@ def cached(
     return decorator
 
 def _async_cached_wrapper(func: Callable, config: CacheConfig, cache_name: str) -> Callable:
-    """Async cache wrapper"""
-    
+    """Async cache wrapper"""    
     @functools.wraps(func)
     async def wrapper(*args, **kwargs):
         cache = _decorator_manager.get_cache(cache_name)
@@ -289,8 +270,7 @@ def _async_cached_wrapper(func: Callable, config: CacheConfig, cache_name: str) 
     return wrapper
 
 def _sync_cached_wrapper(func: Callable, config: CacheConfig, cache_name: str) -> Callable:
-    """Sync cache wrapper"""
-    
+    """Sync cache wrapper"""    
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         cache = _decorator_manager.get_cache(cache_name)
@@ -358,8 +338,7 @@ def _sync_cached_wrapper(func: Callable, config: CacheConfig, cache_name: str) -
     return wrapper
 
 async def _refresh_cache_async(func: Callable, args: Tuple, kwargs: Dict, cache, cache_key: str, config: CacheConfig):
-    """Refresh cache entry in background"""
-    try:
+    """Refresh cache entry in background"""    try:
         result = await func(*args, **kwargs)
         serialized_result = _serialize_result(result, config)
         await cache.set(cache_key, serialized_result, ttl=config.ttl)
@@ -368,8 +347,7 @@ async def _refresh_cache_async(func: Callable, args: Tuple, kwargs: Dict, cache,
         logger.error(f"Failed to refresh cache key {cache_key}: {e}")
 
 def _serialize_result(result: Any, config: CacheConfig) -> Union[str, bytes, Any]:
-    """Serialize result for caching"""
-    if not config.serialize:
+    """Serialize result for caching"""    if not config.serialize:
         return result
     
     try:
@@ -384,8 +362,7 @@ def _serialize_result(result: Any, config: CacheConfig) -> Union[str, bytes, Any
         return result
 
 def _deserialize_result(cached_data: Union[str, bytes, Any], config: CacheConfig) -> Any:
-    """Deserialize cached result"""
-    if not config.serialize:
+    """Deserialize cached result"""    if not config.serialize:
         return cached_data
     
     try:
@@ -409,16 +386,14 @@ def cache_invalidate(
     namespace: str = "default",
     cache_name: str = "default"
 ):
-    """
-    Decorator to invalidate cache entries after function execution
+    """    Decorator to invalidate cache entries after function execution
     
     Args:
         pattern: Key pattern to invalidate
         tags: Tags to invalidate
         namespace: Cache namespace
         cache_name: Name of cache instance to use
-    """
-    
+    """    
     def decorator(func: Callable) -> Callable:
         if asyncio.iscoroutinefunction(func):
             return _async_invalidate_wrapper(func, pattern, tags, namespace, cache_name)
@@ -428,8 +403,7 @@ def cache_invalidate(
     return decorator
 
 def _async_invalidate_wrapper(func: Callable, pattern: Optional[str], tags: Optional[List[str]], namespace: str, cache_name: str) -> Callable:
-    """Async invalidation wrapper"""
-    
+    """Async invalidation wrapper"""    
     @functools.wraps(func)
     async def wrapper(*args, **kwargs):
         result = await func(*args, **kwargs)
@@ -457,8 +431,7 @@ def _async_invalidate_wrapper(func: Callable, pattern: Optional[str], tags: Opti
     return wrapper
 
 def _sync_invalidate_wrapper(func: Callable, pattern: Optional[str], tags: Optional[List[str]], namespace: str, cache_name: str) -> Callable:
-    """Sync invalidation wrapper"""
-    
+    """Sync invalidation wrapper"""    
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         result = func(*args, **kwargs)
@@ -502,15 +475,13 @@ def memoize(
     max_size: Optional[int] = 1000,
     typed: bool = False
 ):
-    """
-    Simple memoization decorator using local memory
+    """    Simple memoization decorator using local memory
     
     Args:
         ttl: Time to live in seconds
         max_size: Maximum number of cached items
         typed: Whether to consider argument types in cache key
-    """
-    
+    """    
     def decorator(func: Callable) -> Callable:
         cache = {}
         cache_info = {'hits': 0, 'misses': 0, 'maxsize': max_size, 'currsize': 0}
@@ -582,15 +553,13 @@ def cache_warmup(
     namespace: str = "default",
     batch_size: int = 100
 ):
-    """
-    Decorator for cache warmup functions
+    """    Decorator for cache warmup functions
     
     Args:
         cache_name: Name of cache instance to use
         namespace: Cache namespace
         batch_size: Batch size for warmup operations
-    """
-    
+    """    
     def decorator(func: Callable) -> Callable:
         @functools.wraps(func)
         async def wrapper(*args, **kwargs):
@@ -653,14 +622,12 @@ def rate_limited_cache(
     calls_per_second: int = 100,
     cache_name: str = "default"
 ):
-    """
-    Rate-limited cache decorator to prevent cache overload
+    """    Rate-limited cache decorator to prevent cache overload
     
     Args:
         calls_per_second: Maximum cache calls per second
         cache_name: Name of cache instance to use
-    """
-    
+    """    
     def decorator(func: Callable) -> Callable:
         call_times = []
         lock = threading.RLock()
@@ -698,15 +665,13 @@ def cache_circuit_breaker(
     recovery_timeout: int = 60,
     cache_name: str = "default"
 ):
-    """
-    Circuit breaker pattern for cache operations
+    """    Circuit breaker pattern for cache operations
     
     Args:
         failure_threshold: Number of failures before opening circuit
         recovery_timeout: Timeout before attempting to close circuit
         cache_name: Name of cache instance to use
-    """
-    
+    """    
     def decorator(func: Callable) -> Callable:
         failure_count = 0
         last_failure_time = 0
@@ -763,12 +728,10 @@ def cache_circuit_breaker(
 # Utility functions for decorator management
 
 def clear_cache_metrics():
-    """Clear all cache metrics"""
-    _decorator_manager.metrics.clear()
+    """Clear all cache metrics"""    _decorator_manager.metrics.clear()
 
 def get_cache_decorator_stats() -> Dict[str, Any]:
-    """Get comprehensive cache decorator statistics"""
-    return {
+    """Get comprehensive cache decorator statistics"""    return {
         'registered_caches': list(_decorator_manager.cache_instances.keys()),
         'function_metrics': _decorator_manager.get_metrics(),
         'total_functions': len(_decorator_manager.metrics),
@@ -778,8 +741,7 @@ def get_cache_decorator_stats() -> Dict[str, Any]:
     }
 
 def optimize_cache_decorators() -> Dict[str, Any]:
-    """Analyze and optimize cache decorator configurations"""
-    metrics = _decorator_manager.get_metrics()
+    """Analyze and optimize cache decorator configurations"""    metrics = _decorator_manager.get_metrics()
     recommendations = {}
     
     for func_name, stats in metrics.items():
@@ -822,8 +784,7 @@ def optimize_cache_decorators() -> Dict[str, Any]:
     return recommendations
 
 def _calculate_cache_health_score(stats: Dict[str, Any]) -> str:
-    """Calculate cache health score for a function"""
-    hit_rate = stats.get('hit_rate', 0.0)
+    """Calculate cache health score for a function"""    hit_rate = stats.get('hit_rate', 0.0)
     calls = stats.get('calls', 0)
     
     if calls < 10:

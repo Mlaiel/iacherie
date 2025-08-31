@@ -1,5 +1,4 @@
-"""
-📊 DMCA Performance Analytics & Metrics Engine
+"""📊 DMCA Performance Analytics & Metrics Engine
 ==============================================
 
 Enterprise-grade performance monitoring and analytics system for DMCA operations.
@@ -30,9 +29,7 @@ Project Team Specialties:
 - Audio Processing Engineer: Digital signal processing
 - Database Administrator: High-performance data systems
 - Microservices Architect: Distributed systems design
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Set
 from dataclasses import dataclass, field
@@ -54,8 +51,7 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of performance metrics"""
-    SUCCESS_RATE = "success_rate"
+    """Types of performance metrics"""    SUCCESS_RATE = "success_rate"
     RESPONSE_TIME = "response_time"
     RESOLUTION_TIME = "resolution_time"
     COMPLIANCE_RATE = "compliance_rate"
@@ -68,8 +64,7 @@ class MetricType(Enum):
 
 
 class TimeFrame(Enum):
-    """Time frames for analytics"""
-    HOURLY = "hourly"
+    """Time frames for analytics"""    HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -78,8 +73,7 @@ class TimeFrame(Enum):
 
 
 class PerformanceIndicator(Enum):
-    """Key performance indicators"""
-    EXCELLENT = "excellent"    # >95%
+    """Key performance indicators"""    EXCELLENT = "excellent"    # >95%
     GOOD = "good"             # 85-95%
     AVERAGE = "average"       # 70-85%
     POOR = "poor"             # 50-70%
@@ -88,8 +82,7 @@ class PerformanceIndicator(Enum):
 
 @dataclass
 class PerformanceMetric:
-    """Individual performance metric"""
-    metric_type: MetricType
+    """Individual performance metric"""    metric_type: MetricType
     value: float
     unit: str
     timestamp: datetime
@@ -101,8 +94,7 @@ class PerformanceMetric:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report"""
-    report_id: str
+    """Comprehensive analytics report"""    report_id: str
     generated_at: datetime
     time_frame: TimeFrame
     period_start: datetime
@@ -118,8 +110,7 @@ class AnalyticsReport:
 
 @dataclass
 class PlatformPerformance:
-    """Platform-specific performance data"""
-    platform: PlatformType
+    """Platform-specific performance data"""    platform: PlatformType
     total_cases: int
     success_rate: float
     avg_response_time: float
@@ -132,8 +123,7 @@ class PlatformPerformance:
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis results"""
-    metric_type: MetricType
+    """Trend analysis results"""    metric_type: MetricType
     trend_direction: str
     trend_strength: float
     correlation_coefficient: float
@@ -143,8 +133,7 @@ class TrendAnalysis:
 
 
 class DMCAPerformanceAnalyzer:
-    """Enterprise performance analyzer for DMCA operations"""
-    
+    """Enterprise performance analyzer for DMCA operations"""    
     def __init__(self):
         self.metrics_history: List[PerformanceMetric] = []
         self.reports_cache: Dict[str, AnalyticsReport] = {}
@@ -152,8 +141,7 @@ class DMCAPerformanceAnalyzer:
         self.targets: Dict[MetricType, float] = self._initialize_targets()
     
     def _initialize_benchmarks(self) -> Dict[MetricType, float]:
-        """Initialize industry benchmarks"""
-        return {
+        """Initialize industry benchmarks"""        return {
             MetricType.SUCCESS_RATE: 85.0,
             MetricType.RESPONSE_TIME: 24.0,  # hours
             MetricType.RESOLUTION_TIME: 168.0,  # hours (7 days)
@@ -167,8 +155,7 @@ class DMCAPerformanceAnalyzer:
         }
     
     def _initialize_targets(self) -> Dict[MetricType, float]:
-        """Initialize performance targets"""
-        return {
+        """Initialize performance targets"""        return {
             MetricType.SUCCESS_RATE: 95.0,
             MetricType.RESPONSE_TIME: 12.0,  # hours
             MetricType.RESOLUTION_TIME: 72.0,  # hours (3 days)
@@ -188,8 +175,7 @@ class DMCAPerformanceAnalyzer:
         end_date: datetime,
         case_data: List[Dict[str, Any]]
     ) -> AnalyticsReport:
-        """Generate comprehensive performance analytics report"""
-        report_id = f"ANALYTICS_{int(datetime.utcnow().timestamp())}"
+        """Generate comprehensive performance analytics report"""        report_id = f"ANALYTICS_{int(datetime.utcnow().timestamp())}"
         
         logger.info(f"Generating analytics report {report_id} for {time_frame.value}")
         
@@ -248,8 +234,7 @@ class DMCAPerformanceAnalyzer:
             raise
     
     async def _calculate_success_rate(self, case_data: List[Dict[str, Any]], report: AnalyticsReport):
-        """Calculate DMCA success rate"""
-        if not case_data:
+        """Calculate DMCA success rate"""        if not case_data:
             return
         
         successful_cases = len([
@@ -273,8 +258,7 @@ class DMCAPerformanceAnalyzer:
         self.metrics_history.append(metric)
     
     async def _calculate_response_times(self, case_data: List[Dict[str, Any]], report: AnalyticsReport):
-        """Calculate average response times"""
-        response_times = []
+        """Calculate average response times"""        response_times = []
         
         for case in case_data:
             created_at = case.get('created_at')
@@ -309,8 +293,7 @@ class DMCAPerformanceAnalyzer:
             self.metrics_history.append(metric)
     
     async def _calculate_resolution_times(self, case_data: List[Dict[str, Any]], report: AnalyticsReport):
-        """Calculate average case resolution times"""
-        resolution_times = []
+        """Calculate average case resolution times"""        resolution_times = []
         
         for case in case_data:
             created_at = case.get('created_at')
@@ -345,8 +328,7 @@ class DMCAPerformanceAnalyzer:
             self.metrics_history.append(metric)
     
     async def _calculate_compliance_rate(self, case_data: List[Dict[str, Any]], report: AnalyticsReport):
-        """Calculate legal compliance rate"""
-        if not case_data:
+        """Calculate legal compliance rate"""        if not case_data:
             return
         
         compliant_cases = len([
@@ -370,8 +352,7 @@ class DMCAPerformanceAnalyzer:
         self.metrics_history.append(metric)
     
     async def _calculate_cost_effectiveness(self, case_data: List[Dict[str, Any]], report: AnalyticsReport):
-        """Calculate cost effectiveness metrics"""
-        total_costs = sum(case.get('processing_cost', 0) for case in case_data)
+        """Calculate cost effectiveness metrics"""        total_costs = sum(case.get('processing_cost', 0) for case in case_data)
         
         if case_data:
             cost_per_case = total_costs / len(case_data)
@@ -390,8 +371,7 @@ class DMCAPerformanceAnalyzer:
             self.metrics_history.append(metric)
     
     async def _calculate_platform_efficiency(self, case_data: List[Dict[str, Any]], report: AnalyticsReport):
-        """Calculate platform-specific efficiency"""
-        platform_stats = defaultdict(list)
+        """Calculate platform-specific efficiency"""        platform_stats = defaultdict(list)
         
         for case in case_data:
             platform = case.get('platform', 'unknown')
@@ -420,8 +400,7 @@ class DMCAPerformanceAnalyzer:
             self.metrics_history.append(metric)
     
     async def _calculate_evidence_quality(self, case_data: List[Dict[str, Any]], report: AnalyticsReport):
-        """Calculate evidence quality score"""
-        quality_scores = []
+        """Calculate evidence quality score"""        quality_scores = []
         
         for case in case_data:
             evidence_list = case.get('evidence', [])
@@ -448,8 +427,7 @@ class DMCAPerformanceAnalyzer:
             self.metrics_history.append(metric)
     
     async def _calculate_escalation_rate(self, case_data: List[Dict[str, Any]], report: AnalyticsReport):
-        """Calculate case escalation rate"""
-        if not case_data:
+        """Calculate case escalation rate"""        if not case_data:
             return
         
         escalated_cases = len([
@@ -473,8 +451,7 @@ class DMCAPerformanceAnalyzer:
         self.metrics_history.append(metric)
     
     async def _calculate_revenue_recovery(self, case_data: List[Dict[str, Any]], report: AnalyticsReport):
-        """Calculate revenue recovery metrics"""
-        total_potential = sum(case.get('potential_revenue', 0) for case in case_data)
+        """Calculate revenue recovery metrics"""        total_potential = sum(case.get('potential_revenue', 0) for case in case_data)
         total_recovered = sum(case.get('recovered_revenue', 0) for case in case_data)
         
         if total_potential > 0:
@@ -498,8 +475,7 @@ class DMCAPerformanceAnalyzer:
             self.metrics_history.append(metric)
     
     async def _calculate_user_satisfaction(self, case_data: List[Dict[str, Any]], report: AnalyticsReport):
-        """Calculate user satisfaction score"""
-        satisfaction_scores = [
+        """Calculate user satisfaction score"""        satisfaction_scores = [
             case.get('satisfaction_score', 0) for case in case_data
             if case.get('satisfaction_score') is not None
         ]
@@ -521,8 +497,7 @@ class DMCAPerformanceAnalyzer:
             self.metrics_history.append(metric)
     
     async def _analyze_trends(self, case_data: List[Dict[str, Any]], report: AnalyticsReport):
-        """Analyze performance trends"""
-        # Group cases by time periods
+        """Analyze performance trends"""        # Group cases by time periods
         time_series_data = defaultdict(list)
         
         for case in case_data:
@@ -540,8 +515,7 @@ class DMCAPerformanceAnalyzer:
         report.trends = trends
     
     async def _analyze_platform_performance(self, case_data: List[Dict[str, Any]], report: AnalyticsReport):
-        """Analyze platform-specific performance"""
-        platform_data = defaultdict(list)
+        """Analyze platform-specific performance"""        platform_data = defaultdict(list)
         
         for case in case_data:
             platform = case.get('platform', 'unknown')
@@ -569,8 +543,7 @@ class DMCAPerformanceAnalyzer:
         ]
     
     async def _calculate_platform_metrics(self, platform: str, cases: List[Dict[str, Any]]) -> PlatformPerformance:
-        """Calculate metrics for specific platform"""
-        total_cases = len(cases)
+        """Calculate metrics for specific platform"""        total_cases = len(cases)
         
         # Success rate
         successful = len([c for c in cases if c.get('status') in [DMCAStatus.COMPLIED.value, DMCAStatus.SETTLED.value]])
@@ -620,8 +593,7 @@ class DMCAPerformanceAnalyzer:
         )
     
     async def _generate_forecasts(self, case_data: List[Dict[str, Any]], report: AnalyticsReport):
-        """Generate performance forecasts"""
-        # Simplified forecasting logic
+        """Generate performance forecasts"""        # Simplified forecasting logic
         forecasts = {}
         
         for metric in report.metrics:
@@ -631,8 +603,7 @@ class DMCAPerformanceAnalyzer:
         report.forecasts = forecasts
     
     def _calculate_metric_trend(self, metric_type: MetricType, time_series_data: Dict) -> Dict[str, Any]:
-        """Calculate trend for specific metric"""
-        # Simplified trend calculation
+        """Calculate trend for specific metric"""        # Simplified trend calculation
         return {
             "direction": "stable",
             "strength": 0.5,
@@ -641,8 +612,7 @@ class DMCAPerformanceAnalyzer:
         }
     
     def _generate_metric_forecast(self, metric: PerformanceMetric) -> Dict[str, Any]:
-        """Generate forecast for specific metric"""
-        # Simplified forecasting
+        """Generate forecast for specific metric"""        # Simplified forecasting
         return {
             "next_period": metric.value * 1.02,  # 2% improvement assumption
             "confidence_interval": [metric.value * 0.95, metric.value * 1.05],
@@ -650,8 +620,7 @@ class DMCAPerformanceAnalyzer:
         }
     
     def _generate_summary(self, report: AnalyticsReport):
-        """Generate report summary"""
-        metrics_by_type = {m.metric_type: m for m in report.metrics}
+        """Generate report summary"""        metrics_by_type = {m.metric_type: m for m in report.metrics}
         
         report.summary.update({
             "total_cases": report.total_cases,
@@ -665,8 +634,7 @@ class DMCAPerformanceAnalyzer:
         })
     
     def _generate_recommendations(self, report: AnalyticsReport):
-        """Generate performance recommendations"""
-        recommendations = []
+        """Generate performance recommendations"""        recommendations = []
         
         for metric in report.metrics:
             if metric.target and metric.value < metric.target:
@@ -690,8 +658,7 @@ class DMCAPerformanceAnalyzer:
         report.recommendations = recommendations
     
     def _generate_alerts(self, report: AnalyticsReport):
-        """Generate performance alerts"""
-        alerts = []
+        """Generate performance alerts"""        alerts = []
         
         for metric in report.metrics:
             # Critical alerts
@@ -717,8 +684,7 @@ class DMCAPerformanceAnalyzer:
         report.alerts = alerts
     
     def _calculate_performance_indicators(self, metrics: List[PerformanceMetric]) -> Dict[str, str]:
-        """Calculate performance indicators for each metric"""
-        indicators = {}
+        """Calculate performance indicators for each metric"""        indicators = {}
         
         for metric in metrics:
             if metric.target:
@@ -737,8 +703,7 @@ class DMCAPerformanceAnalyzer:
         return indicators
     
     def get_real_time_metrics(self) -> Dict[str, Any]:
-        """Get real-time performance metrics"""
-        if not self.metrics_history:
+        """Get real-time performance metrics"""        if not self.metrics_history:
             return {}
         
         # Get latest metrics
@@ -761,5 +726,4 @@ class DMCAPerformanceAnalyzer:
 
 # Factory function
 def create_performance_analyzer() -> DMCAPerformanceAnalyzer:
-    """Factory function to create DMCA performance analyzer"""
-    return DMCAPerformanceAnalyzer()
+    """Factory function to create DMCA performance analyzer"""    return DMCAPerformanceAnalyzer()

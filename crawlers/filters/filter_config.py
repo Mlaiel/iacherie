@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Advanced Filter Configuration
+"""IA Influencer Agent - Advanced Filter Configuration
 ==================================================
 
 Enterprise-grade advanced configuration for production optimization.
@@ -11,9 +10,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 ⚠️ STRICT COPYRIGHT PROTECTION ⚠️
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
-"""
-
-import os
+"""import os
 from typing import Dict, Any, Optional
 from dataclasses import dataclass, field
 from enum import Enum
@@ -22,16 +19,14 @@ from .config import FilterConfigManager
 
 
 class DeploymentEnvironment(Enum):
-    """Deployment environment types."""
-    DEVELOPMENT = "development"
+    """Deployment environment types."""    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
 
 
 class PerformanceProfile(Enum):
-    """Performance optimization profiles."""
-    ECONOMY = "economy"          # Minimal resources
+    """Performance optimization profiles."""    ECONOMY = "economy"          # Minimal resources
     BALANCED = "balanced"        # Balanced performance
     PERFORMANCE = "performance"  # High performance
     ENTERPRISE = "enterprise"    # Maximum capabilities
@@ -39,8 +34,7 @@ class PerformanceProfile(Enum):
 
 @dataclass
 class AdvancedFilterConfig:
-    """Advanced configuration for enterprise deployments."""
-    
+    """Advanced configuration for enterprise deployments."""    
     # Environment settings
     environment: DeploymentEnvironment = DeploymentEnvironment.PRODUCTION
     performance_profile: PerformanceProfile = PerformanceProfile.ENTERPRISE
@@ -94,11 +88,9 @@ class AdvancedFilterConfig:
 
 
 class AdvancedConfigManager:
-    """Advanced configuration manager for enterprise deployments."""
-    
+    """Advanced configuration manager for enterprise deployments."""    
     def __init__(self, config_file: Optional[str] = None):
-        """Initialize advanced configuration manager."""
-        self.base_config = FilterConfigManager()
+        """Initialize advanced configuration manager."""        self.base_config = FilterConfigManager()
         self.advanced_config = AdvancedFilterConfig()
         
         # Load from file if provided
@@ -112,14 +104,12 @@ class AdvancedConfigManager:
         self._apply_performance_optimizations()
     
     def _load_from_file(self, config_file: str) -> None:
-        """Load configuration from YAML/JSON file."""
-        # Implementation would load from file
+        """Load configuration from YAML/JSON file."""        # Implementation would load from file
         # For now, using environment variables
         pass
     
     def _apply_environment_optimizations(self) -> None:
-        """Apply environment-specific optimizations."""
-        env = self.advanced_config.environment
+        """Apply environment-specific optimizations."""        env = self.advanced_config.environment
         
         if env == DeploymentEnvironment.DEVELOPMENT:
             # Development optimizations
@@ -145,8 +135,7 @@ class AdvancedConfigManager:
             self.advanced_config.enable_audit_logging = True
     
     def _apply_performance_optimizations(self) -> None:
-        """Apply performance profile optimizations."""
-        profile = self.advanced_config.performance_profile
+        """Apply performance profile optimizations."""        profile = self.advanced_config.performance_profile
         
         if profile == PerformanceProfile.ECONOMY:
             # Economy profile - minimal resources
@@ -178,16 +167,13 @@ class AdvancedConfigManager:
             self.advanced_config.enable_model_quantization = False
     
     def get_filter_config(self) -> FilterConfigManager:
-        """Get optimized filter configuration."""
-        return self.base_config
+        """Get optimized filter configuration."""        return self.base_config
     
     def get_advanced_config(self) -> AdvancedFilterConfig:
-        """Get advanced configuration."""
-        return self.advanced_config
+        """Get advanced configuration."""        return self.advanced_config
     
     def export_config(self) -> Dict[str, Any]:
-        """Export complete configuration as dictionary."""
-        return {
+        """Export complete configuration as dictionary."""        return {
             'environment': self.advanced_config.environment.value,
             'performance_profile': self.advanced_config.performance_profile.value,
             'resource_limits': {
@@ -223,8 +209,7 @@ advanced_config_manager = AdvancedConfigManager()
 
 
 def get_production_config() -> AdvancedConfigManager:
-    """Get production-optimized configuration."""
-    config = AdvancedConfigManager()
+    """Get production-optimized configuration."""    config = AdvancedConfigManager()
     config.advanced_config.environment = DeploymentEnvironment.PRODUCTION
     config.advanced_config.performance_profile = PerformanceProfile.ENTERPRISE
     config._apply_environment_optimizations()
@@ -233,8 +218,7 @@ def get_production_config() -> AdvancedConfigManager:
 
 
 def get_development_config() -> AdvancedConfigManager:
-    """Get development-optimized configuration."""
-    config = AdvancedConfigManager()
+    """Get development-optimized configuration."""    config = AdvancedConfigManager()
     config.advanced_config.environment = DeploymentEnvironment.DEVELOPMENT
     config.advanced_config.performance_profile = PerformanceProfile.BALANCED
     config._apply_environment_optimizations()

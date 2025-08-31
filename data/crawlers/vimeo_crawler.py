@@ -1,5 +1,4 @@
-"""
-Vimeo Crawler Implementation
+"""Vimeo Crawler Implementation
 ============================
 
 Advanced Vimeo video platform crawler for professional video content monitoring.
@@ -22,9 +21,7 @@ will be prosecuted to the FULL EXTENT OF THE LAW under German and
 International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -41,8 +38,7 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class VimeoVideo:
-    """Vimeo video information"""
-    video_id: str
+    """Vimeo video information"""    video_id: str
     name: str
     description: Optional[str]
     uri: str
@@ -90,8 +86,7 @@ class VimeoVideo:
 
 @dataclass
 class VimeoUser:
-    """Vimeo user information"""
-    user_id: str
+    """Vimeo user information"""    user_id: str
     uri: str
     name: str
     link: str
@@ -127,8 +122,7 @@ class VimeoUser:
 
 @dataclass
 class VimeoChannel:
-    """Vimeo channel information"""
-    channel_id: str
+    """Vimeo channel information"""    channel_id: str
     uri: str
     name: str
     description: Optional[str]
@@ -150,8 +144,7 @@ class VimeoChannel:
 
 
 class VimeoCrawler(PlatformCrawler):
-    """
-    Advanced Vimeo crawler for professional video content monitoring.
+    """    Advanced Vimeo crawler for professional video content monitoring.
     
     Features:
     - Video discovery and metadata extraction
@@ -162,8 +155,7 @@ class VimeoCrawler(PlatformCrawler):
     - Privacy-aware content access
     - Live streaming monitoring
     - Portfolio and showcase analysis
-    """
-    
+    """    
     def __init__(self, config: CrawlerConfig, vector_matcher=None, access_token: str = None):
         super().__init__(config, vector_matcher)
         self.platform_name = "vimeo"
@@ -198,8 +190,7 @@ class VimeoCrawler(PlatformCrawler):
         self._setup_session_headers()
     
     def _setup_session_headers(self):
-        """Setup Vimeo-specific headers"""
-        self.session_headers.update({
+        """Setup Vimeo-specific headers"""        self.session_headers.update({
             'Accept': 'application/vnd.vimeo.*+json;version=3.4',
             'Accept-Encoding': 'gzip, deflate, br',
             'Accept-Language': 'en-US,en;q=0.9',
@@ -213,8 +204,7 @@ class VimeoCrawler(PlatformCrawler):
     
     async def search_content(self, query: str, content_type: str = "videos", 
                            max_results: int = 50) -> List[CrawlerResult]:
-        """
-        Search for content on Vimeo.
+        """        Search for content on Vimeo.
         
         Args:
             query: Search query
@@ -223,8 +213,7 @@ class VimeoCrawler(PlatformCrawler):
             
         Returns:
             List of crawler results
-        """
-        try:
+        """        try:
             await self._check_rate_limit()
             
             if content_type not in self.content_types:
@@ -242,8 +231,7 @@ class VimeoCrawler(PlatformCrawler):
             return []
     
     async def _crawl_videos(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl Vimeo videos"""
-        try:
+        """Crawl Vimeo videos"""        try:
             results = []
             
             # Search for videos
@@ -306,8 +294,7 @@ class VimeoCrawler(PlatformCrawler):
             return []
     
     async def _crawl_users(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl Vimeo users"""
-        try:
+        """Crawl Vimeo users"""        try:
             results = []
             
             # Search for users
@@ -367,8 +354,7 @@ class VimeoCrawler(PlatformCrawler):
             return []
     
     async def _crawl_channels(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl Vimeo channels"""
-        try:
+        """Crawl Vimeo channels"""        try:
             results = []
             
             # Search for channels
@@ -425,8 +411,7 @@ class VimeoCrawler(PlatformCrawler):
             return []
     
     async def _crawl_search(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """General Vimeo search"""
-        try:
+        """General Vimeo search"""        try:
             results = []
             
             # Search across different content types
@@ -445,8 +430,7 @@ class VimeoCrawler(PlatformCrawler):
             return []
     
     async def _crawl_featured(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl featured content"""
-        try:
+        """Crawl featured content"""        try:
             results = []
             
             # Get featured videos
@@ -498,8 +482,7 @@ class VimeoCrawler(PlatformCrawler):
             return []
     
     async def _crawl_staff_picks(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl staff picks"""
-        try:
+        """Crawl staff picks"""        try:
             results = []
             
             # Get staff pick videos
@@ -549,8 +532,7 @@ class VimeoCrawler(PlatformCrawler):
             return []
     
     async def _crawl_categories(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl by categories"""
-        try:
+        """Crawl by categories"""        try:
             results = []
             
             # Get categories first
@@ -617,8 +599,7 @@ class VimeoCrawler(PlatformCrawler):
             return []
     
     async def _crawl_live(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl live streams"""
-        try:
+        """Crawl live streams"""        try:
             results = []
             
             # Search for live videos
@@ -671,8 +652,7 @@ class VimeoCrawler(PlatformCrawler):
     # Helper methods
     
     async def _parse_video_data(self, video_data: Dict[str, Any]) -> Optional[VimeoVideo]:
-        """Parse video data from API response"""
-        try:
+        """Parse video data from API response"""        try:
             created_time = datetime.fromisoformat(video_data.get('created_time', '').replace('Z', '+00:00'))
             modified_time = datetime.fromisoformat(video_data.get('modified_time', '').replace('Z', '+00:00'))
             release_time = datetime.fromisoformat(video_data.get('release_time', '').replace('Z', '+00:00'))
@@ -730,8 +710,7 @@ class VimeoCrawler(PlatformCrawler):
             return None
     
     async def _parse_user_data(self, user_data: Dict[str, Any]) -> Optional[VimeoUser]:
-        """Parse user data from API response"""
-        try:
+        """Parse user data from API response"""        try:
             created_time = datetime.fromisoformat(user_data.get('created_time', '').replace('Z', '+00:00'))
             
             user = VimeoUser(
@@ -776,8 +755,7 @@ class VimeoCrawler(PlatformCrawler):
             return None
     
     async def _parse_channel_data(self, channel_data: Dict[str, Any]) -> Optional[VimeoChannel]:
-        """Parse channel data from API response"""
-        try:
+        """Parse channel data from API response"""        try:
             created_time = datetime.fromisoformat(channel_data.get('created_time', '').replace('Z', '+00:00'))
             modified_time = datetime.fromisoformat(channel_data.get('modified_time', '').replace('Z', '+00:00'))
             
@@ -810,8 +788,7 @@ class VimeoCrawler(PlatformCrawler):
             return None
     
     async def _check_rate_limit(self):
-        """Check and enforce rate limiting"""
-        try:
+        """Check and enforce rate limiting"""        try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
             
@@ -827,8 +804,7 @@ class VimeoCrawler(PlatformCrawler):
             self.logger.error(f"Error in rate limiting: {str(e)}")
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
-        """Extract metadata from Vimeo content"""
-        try:
+        """Extract metadata from Vimeo content"""        try:
             # Parse Vimeo URL
             parsed_url = urlparse(url)
             path_parts = parsed_url.path.strip('/').split('/')
@@ -870,8 +846,7 @@ class VimeoCrawler(PlatformCrawler):
             return {'error': str(e)}
     
     def get_platform_info(self) -> Dict[str, Any]:
-        """Get Vimeo platform information"""
-        return {
+        """Get Vimeo platform information"""        return {
             'platform_name': 'Vimeo',
             'base_url': self.base_url,
             'api_base_url': self.api_base_url,

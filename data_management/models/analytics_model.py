@@ -1,5 +1,4 @@
-"""
-📊 Analytics Model - IA Influencer Agent Platform Enterprise
+"""📊 Analytics Model - IA Influencer Agent Platform Enterprise
 ===========================================================
 Module: backend/data_management/models/analytics_model.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,9 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER ANALYTICS:
 Événement → Collecte → Agrégation → Analyse → Insights → 
 Prédictions → Recommandations → Actions → ROI
-"""
-
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timezone, timedelta
 from enum import Enum
 from dataclasses import dataclass, field
@@ -26,8 +23,7 @@ from decimal import Decimal
 import uuid
 
 class MetricType(Enum):
-    """Types de métriques"""
-    CONTENT = "content"
+    """Types de métriques"""    CONTENT = "content"
     USER = "user"
     ENGAGEMENT = "engagement"
     REVENUE = "revenue"
@@ -37,8 +33,7 @@ class MetricType(Enum):
     SYSTEM = "system"
 
 class EventType(Enum):
-    """Types d'événements"""
-    VIEW = "view"
+    """Types d'événements"""    VIEW = "view"
     DOWNLOAD = "download"
     SHARE = "share"
     LIKE = "like"
@@ -51,8 +46,7 @@ class EventType(Enum):
     API_CALL = "api_call"
 
 class TimeGranularity(Enum):
-    """Granularité temporelle"""
-    MINUTE = "minute"
+    """Granularité temporelle"""    MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -62,8 +56,7 @@ class TimeGranularity(Enum):
 
 @dataclass
 class MetricsModel:
-    """Modèle pour métriques individuelles"""
-    
+    """Modèle pour métriques individuelles"""    
     # Identifiants
     metric_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     tenant_id: str = ""
@@ -105,8 +98,7 @@ class MetricsModel:
     updated_at: Optional[datetime] = None
     
     def calculate_change(self) -> float:
-        """Calcule le pourcentage de changement"""
-        if self.previous_value == 0:
+        """Calcule le pourcentage de changement"""        if self.previous_value == 0:
             return 100.0 if self.value > 0 else 0.0
         
         change = ((float(self.value) - float(self.previous_value)) / float(self.previous_value)) * 100
@@ -143,8 +135,7 @@ class MetricsModel:
 
 @dataclass
 class RevenueModel:
-    """Modèle pour tracking des revenus"""
-    
+    """Modèle pour tracking des revenus"""    
     # Identifiants
     revenue_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     tenant_id: str = ""
@@ -187,13 +178,11 @@ class RevenueModel:
     updated_at: Optional[datetime] = None
     
     def calculate_net_amount(self) -> Decimal:
-        """Calcule le montant net après déductions"""
-        self.net_amount = self.gross_amount - self.platform_fee - self.service_fee - self.tax_amount
+        """Calcule le montant net après déductions"""        self.net_amount = self.gross_amount - self.platform_fee - self.service_fee - self.tax_amount
         return self.net_amount
     
     def convert_to_base_currency(self) -> Decimal:
-        """Convertit vers la devise de base"""
-        self.base_amount = self.net_amount * self.exchange_rate
+        """Convertit vers la devise de base"""        self.base_amount = self.net_amount * self.exchange_rate
         return self.base_amount
     
     def to_dict(self) -> Dict[str, Any]:
@@ -227,8 +216,7 @@ class RevenueModel:
 
 @dataclass
 class AnalyticsModel:
-    """Modèle principal pour analytics agrégées"""
-    
+    """Modèle principal pour analytics agrégées"""    
     # Identifiants
     analytics_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     tenant_id: str = ""
@@ -302,8 +290,7 @@ class AnalyticsModel:
     computed_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def calculate_engagement_rate(self) -> float:
-        """Calcule le taux d'engagement"""
-        if self.total_views == 0:
+        """Calcule le taux d'engagement"""        if self.total_views == 0:
             return 0.0
         
         total_interactions = self.total_likes + self.total_comments + self.total_shares
@@ -311,8 +298,7 @@ class AnalyticsModel:
         return self.engagement_rate
     
     def calculate_revenue_metrics(self) -> Dict[str, Decimal]:
-        """Calcule les métriques de revenus dérivées"""
-        if self.total_views > 0:
+        """Calcule les métriques de revenus dérivées"""        if self.total_views > 0:
             self.revenue_per_view = self.total_revenue / Decimal(str(self.total_views))
         
         if self.unique_views > 0:
@@ -324,8 +310,7 @@ class AnalyticsModel:
         }
     
     def generate_insights(self) -> List[str]:
-        """Génère des insights automatiques"""
-        insights = []
+        """Génère des insights automatiques"""        insights = []
         
         # Insights sur l'engagement
         if self.engagement_rate > 5.0:
@@ -351,8 +336,7 @@ class AnalyticsModel:
         return insights
     
     def generate_recommendations(self) -> List[str]:
-        """Génère des recommandations automatiques"""
-        recommendations = []
+        """Génère des recommandations automatiques"""        recommendations = []
         
         # Recommandations sur l'engagement
         if self.engagement_rate < 2.0:

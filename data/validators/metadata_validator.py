@@ -1,5 +1,4 @@
-"""
-Metadata Validator - Industrial metadata validation and enrichment for IA Influencer Agent Platform
+"""Metadata Validator - Industrial metadata validation and enrichment for IA Influencer Agent Platform
 ===================================================================================================
 
 Advanced metadata validation system with AI-powered extraction, validation, enrichment,
@@ -19,9 +18,7 @@ Features:
 - Copyright and licensing metadata management
 - Multilingual metadata support
 - Real-time metadata validation and enrichment
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Callable, Set, Tuple
 from pathlib import Path
@@ -66,8 +63,7 @@ logger = logging.getLogger(__name__)
 
 
 class MetadataType(Enum):
-    """Types of metadata for comprehensive management."""
-    TECHNICAL = "technical"          # Technical specifications
+    """Types of metadata for comprehensive management."""    TECHNICAL = "technical"          # Technical specifications
     DESCRIPTIVE = "descriptive"      # Title, description, keywords
     ADMINISTRATIVE = "administrative" # Creation date, file info
     STRUCTURAL = "structural"        # File structure, relationships
@@ -82,8 +78,7 @@ class MetadataType(Enum):
 
 
 class MetadataStandard(Enum):
-    """Metadata standards and formats."""
-    DUBLIN_CORE = "dublin_core"
+    """Metadata standards and formats."""    DUBLIN_CORE = "dublin_core"
     EXIF = "exif"
     IPTC = "iptc"
     XMP = "xmp"
@@ -98,16 +93,14 @@ class MetadataStandard(Enum):
 
 
 class ValidationSeverity(Enum):
-    """Metadata validation issue severity levels."""
-    INFO = "info"
+    """Metadata validation issue severity levels."""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
 
 
 class MetadataField(Enum):
-    """Standard metadata fields for creator content."""
-    # Basic identification
+    """Standard metadata fields for creator content."""    # Basic identification
     TITLE = "title"
     ARTIST = "artist"
     ALBUM = "album"
@@ -172,8 +165,7 @@ class MetadataField(Enum):
 
 
 class PlatformRequirement(Enum):
-    """Platform-specific metadata requirements."""
-    REQUIRED = "required"
+    """Platform-specific metadata requirements."""    REQUIRED = "required"
     RECOMMENDED = "recommended"
     OPTIONAL = "optional"
     FORBIDDEN = "forbidden"
@@ -181,8 +173,7 @@ class PlatformRequirement(Enum):
 
 @dataclass
 class MetadataValidationIssue:
-    """Metadata validation issue."""
-    field: str
+    """Metadata validation issue."""    field: str
     issue_type: str
     severity: ValidationSeverity
     message: str
@@ -193,8 +184,7 @@ class MetadataValidationIssue:
     standard: Optional[MetadataStandard] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
-        return {
+        """Convert to dictionary."""        return {
             "field": self.field,
             "issue_type": self.issue_type,
             "severity": self.severity.value,
@@ -209,8 +199,7 @@ class MetadataValidationIssue:
 
 @dataclass
 class ExtractedMetadata:
-    """Extracted metadata from content."""
-    file_path: Optional[str] = None
+    """Extracted metadata from content."""    file_path: Optional[str] = None
     file_size: int = 0
     mime_type: str = ""
     
@@ -239,8 +228,7 @@ class ExtractedMetadata:
     confidence_scores: Dict[str, float] = field(default_factory=dict)
     
     def get_field_value(self, field: MetadataField) -> Optional[Any]:
-        """Get value for a specific metadata field."""
-        field_name = field.value
+        """Get value for a specific metadata field."""        field_name = field.value
         
         # Check descriptive metadata first
         if field_name in self.descriptive:
@@ -265,8 +253,7 @@ class ExtractedMetadata:
         return None
     
     def set_field_value(self, field: MetadataField, value: Any, category: str = "descriptive") -> None:
-        """Set value for a specific metadata field."""
-        field_name = field.value
+        """Set value for a specific metadata field."""        field_name = field.value
         
         if category == "technical":
             self.technical[field_name] = value
@@ -282,8 +269,7 @@ class ExtractedMetadata:
 
 @dataclass
 class MetadataValidationResult:
-    """Metadata validation result."""
-    is_valid: bool
+    """Metadata validation result."""    is_valid: bool
     extracted_metadata: ExtractedMetadata
     
     # Validation details
@@ -314,16 +300,13 @@ class MetadataValidationResult:
     total_fields_validated: int = 0
     
     def get_critical_issues(self) -> List[MetadataValidationIssue]:
-        """Get critical validation issues."""
-        return [issue for issue in self.issues if issue.severity == ValidationSeverity.CRITICAL]
+        """Get critical validation issues."""        return [issue for issue in self.issues if issue.severity == ValidationSeverity.CRITICAL]
     
     def get_auto_fixable_issues(self) -> List[MetadataValidationIssue]:
-        """Get issues that can be automatically fixed."""
-        return [issue for issue in self.issues if issue.auto_fixable]
+        """Get issues that can be automatically fixed."""        return [issue for issue in self.issues if issue.auto_fixable]
     
     def calculate_completeness_score(self) -> float:
-        """Calculate metadata completeness score."""
-        essential_fields = [
+        """Calculate metadata completeness score."""        essential_fields = [
             MetadataField.TITLE, MetadataField.ARTIST, MetadataField.DESCRIPTION,
             MetadataField.CREATION_DATE, MetadataField.COPYRIGHT
         ]
@@ -337,8 +320,7 @@ class MetadataValidationResult:
         return self.completeness_score
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
-        return {
+        """Convert to dictionary."""        return {
             "is_valid": self.is_valid,
             "validation_timestamp": self.validation_timestamp.isoformat(),
             "validation_duration": self.validation_duration,
@@ -358,8 +340,7 @@ class MetadataValidationResult:
 
 
 class MetadataValidator:
-    """
-    Industrial-grade metadata validator for the IA Influencer Agent Platform.
+    """    Industrial-grade metadata validator for the IA Influencer Agent Platform.
     
     Provides comprehensive metadata validation, extraction, enhancement,
     and standardization for creator content workflows.
@@ -371,8 +352,7 @@ class MetadataValidator:
     - Metadata standardization and normalization
     - Creator workflow integration
     - Real-time metadata processing
-    """
-    
+    """    
     VERSION = "2.0.0"
     
     # Platform-specific metadata requirements
@@ -412,15 +392,13 @@ class MetadataValidator:
         enable_ai_enhancement: bool = True,
         enable_auto_fix: bool = True
     ):
-        """
-        Initialize metadata validator.
+        """        Initialize metadata validator.
         
         Args:
             config: Validator configuration
             enable_ai_enhancement: Enable AI-powered metadata enhancement
             enable_auto_fix: Enable automatic metadata fixes
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self.enable_ai_enhancement = enable_ai_enhancement and METADATA_FEATURES
         self.enable_auto_fix = enable_auto_fix
         
@@ -453,8 +431,7 @@ class MetadataValidator:
         logger.info(f"Auto Fix: {'Enabled' if self.enable_auto_fix else 'Disabled'}")
     
     async def _initialize_ai_models(self) -> None:
-        """Initialize AI models for metadata enhancement."""
-        try:
+        """Initialize AI models for metadata enhancement."""        try:
             if not METADATA_FEATURES:
                 logger.warning("Advanced features not available, skipping AI model initialization")
                 return
@@ -476,8 +453,7 @@ class MetadataValidator:
             self._ai_initialized = False
     
     def _initialize_validation_rules(self) -> None:
-        """Initialize metadata validation rules."""
-        # Title validation rules
+        """Initialize metadata validation rules."""        # Title validation rules
         self._validation_rules[MetadataField.TITLE] = [
             self._validate_title_length,
             self._validate_title_content,
@@ -522,8 +498,7 @@ class MetadataValidator:
         target_platforms: Optional[List[str]] = None,
         enhancement_level: str = "standard"
     ) -> MetadataValidationResult:
-        """
-        Comprehensive metadata validation with extraction and enhancement.
+        """        Comprehensive metadata validation with extraction and enhancement.
         
         Args:
             content_data: Content to validate metadata for
@@ -533,8 +508,7 @@ class MetadataValidator:
         
         Returns:
             Comprehensive metadata validation result
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         self._stats["total_validations"] += 1
         
         try:
@@ -596,8 +570,7 @@ class MetadataValidator:
         content_data: Union[str, bytes, Path],
         content_type: str
     ) -> ExtractedMetadata:
-        """Extract comprehensive metadata from content."""
-        try:
+        """Extract comprehensive metadata from content."""        try:
             metadata = ExtractedMetadata()
             
             # Determine content type if auto
@@ -625,8 +598,7 @@ class MetadataValidator:
             return ExtractedMetadata()
     
     async def _detect_content_type(self, content_data: Union[str, bytes, Path]) -> str:
-        """Detect content type from data."""
-        try:
+        """Detect content type from data."""        try:
             # Simple MIME type detection based on file extension or magic bytes
             if isinstance(content_data, (str, Path)):
                 file_path = Path(content_data)
@@ -657,8 +629,7 @@ class MetadataValidator:
             return "unknown"
     
     async def _extract_audio_metadata(self, content_data: Union[str, bytes, Path], metadata: ExtractedMetadata) -> None:
-        """Extract metadata from audio files."""
-        try:
+        """Extract metadata from audio files."""        try:
             if not METADATA_FEATURES:
                 logger.warning("Audio metadata extraction requires additional dependencies")
                 return
@@ -718,8 +689,7 @@ class MetadataValidator:
             logger.error(f"Audio metadata extraction failed: {e}")
     
     async def _extract_id3_metadata(self, audio_file: MP3, metadata: ExtractedMetadata) -> None:
-        """Extract ID3 metadata from MP3 files."""
-        try:
+        """Extract ID3 metadata from MP3 files."""        try:
             tags = audio_file.tags
             if not tags:
                 return
@@ -755,8 +725,7 @@ class MetadataValidator:
             logger.error(f"ID3 metadata extraction failed: {e}")
     
     async def _extract_flac_metadata(self, audio_file: FLAC, metadata: ExtractedMetadata) -> None:
-        """Extract metadata from FLAC files."""
-        try:
+        """Extract metadata from FLAC files."""        try:
             tags = audio_file.tags
             if not tags:
                 return
@@ -783,8 +752,7 @@ class MetadataValidator:
             logger.error(f"FLAC metadata extraction failed: {e}")
     
     async def _extract_mp4_metadata(self, audio_file: MP4, metadata: ExtractedMetadata) -> None:
-        """Extract metadata from MP4/M4A files."""
-        try:
+        """Extract metadata from MP4/M4A files."""        try:
             tags = audio_file.tags
             if not tags:
                 return
@@ -809,8 +777,7 @@ class MetadataValidator:
             logger.error(f"MP4 metadata extraction failed: {e}")
     
     async def _extract_image_metadata(self, content_data: Union[str, bytes, Path], metadata: ExtractedMetadata) -> None:
-        """Extract metadata from image files."""
-        try:
+        """Extract metadata from image files."""        try:
             if not METADATA_FEATURES:
                 logger.warning("Image metadata extraction requires additional dependencies")
                 return
@@ -853,8 +820,7 @@ class MetadataValidator:
             logger.error(f"Image metadata extraction failed: {e}")
     
     async def _extract_exif_metadata(self, exif_data: dict, metadata: ExtractedMetadata) -> None:
-        """Extract EXIF metadata from image files."""
-        try:
+        """Extract EXIF metadata from image files."""        try:
             for tag_id, value in exif_data.items():
                 tag_name = TAGS.get(tag_id, tag_id)
                 
@@ -875,8 +841,7 @@ class MetadataValidator:
             logger.error(f"EXIF metadata extraction failed: {e}")
     
     async def _extract_video_metadata(self, content_data: Union[str, bytes, Path], metadata: ExtractedMetadata) -> None:
-        """Extract metadata from video files."""
-        try:
+        """Extract metadata from video files."""        try:
             if not METADATA_FEATURES:
                 logger.warning("Video metadata extraction requires ffmpeg")
                 return
@@ -959,8 +924,7 @@ class MetadataValidator:
             logger.error(f"Video metadata extraction failed: {e}")
     
     async def _extract_text_metadata(self, content_data: Union[str, bytes, Path], metadata: ExtractedMetadata) -> None:
-        """Extract metadata from text content."""
-        try:
+        """Extract metadata from text content."""        try:
             # Read text content
             text_content = ""
             if isinstance(content_data, str):
@@ -1010,8 +974,7 @@ class MetadataValidator:
             logger.error(f"Text metadata extraction failed: {e}")
     
     async def _extract_universal_metadata(self, content_data: Union[str, bytes, Path], metadata: ExtractedMetadata) -> None:
-        """Extract universal metadata applicable to all content types."""
-        try:
+        """Extract universal metadata applicable to all content types."""        try:
             # Set extraction timestamp
             metadata.extraction_timestamp = datetime.now(timezone.utc)
             metadata.extraction_method = "automated"
@@ -1053,8 +1016,7 @@ class MetadataValidator:
             logger.error(f"Universal metadata extraction failed: {e}")
     
     async def _apply_automatic_fixes(self, validation_result: MetadataValidationResult) -> None:
-        """Apply automatic fixes to metadata issues."""
-        try:
+        """Apply automatic fixes to metadata issues."""        try:
             if not self.enable_auto_fix:
                 return
             
@@ -1086,8 +1048,7 @@ class MetadataValidator:
             logger.error(f"Automatic fixes application failed: {e}")
     
     def _calculate_quality_scores(self, validation_result: MetadataValidationResult) -> None:
-        """Calculate metadata quality scores."""
-        try:
+        """Calculate metadata quality scores."""        try:
             # Calculate completeness score
             validation_result.calculate_completeness_score()
             
@@ -1108,8 +1069,7 @@ class MetadataValidator:
             logger.error(f"Quality score calculation failed: {e}")
     
     def _calculate_accuracy_score(self, validation_result: MetadataValidationResult) -> float:
-        """Calculate metadata accuracy score."""
-        try:
+        """Calculate metadata accuracy score."""        try:
             total_issues = len(validation_result.issues) + len(validation_result.warnings)
             total_fields = len([f for f in MetadataField if validation_result.extracted_metadata.get_field_value(f)])
             
@@ -1131,8 +1091,7 @@ class MetadataValidator:
             return 0.0
     
     def _calculate_consistency_score(self, validation_result: MetadataValidationResult) -> float:
-        """Calculate metadata consistency score."""
-        try:
+        """Calculate metadata consistency score."""        try:
             # Check for consistency between related fields
             consistency_checks = [
                 self._check_date_consistency(validation_result.extracted_metadata),
@@ -1150,8 +1109,7 @@ class MetadataValidator:
             return 0.0
     
     def _calculate_richness_score(self, validation_result: MetadataValidationResult) -> float:
-        """Calculate metadata richness score."""
-        try:
+        """Calculate metadata richness score."""        try:
             # Count different types of metadata
             descriptive_fields = len([k for k in validation_result.extracted_metadata.descriptive.keys() if validation_result.extracted_metadata.descriptive[k]])
             technical_fields = len([k for k in validation_result.extracted_metadata.technical.keys() if validation_result.extracted_metadata.technical[k]])
@@ -1169,8 +1127,7 @@ class MetadataValidator:
             return 0.0
     
     def _calculate_standardization_score(self, validation_result: MetadataValidationResult) -> float:
-        """Calculate metadata standardization score."""
-        try:
+        """Calculate metadata standardization score."""        try:
             # Check adherence to standards
             standard_scores = []
             
@@ -1207,8 +1164,7 @@ class MetadataValidator:
             return 0.0
     
     def _check_date_consistency(self, metadata: ExtractedMetadata) -> bool:
-        """Check consistency between date fields."""
-        try:
+        """Check consistency between date fields."""        try:
             creation_date = metadata.get_field_value(MetadataField.CREATION_DATE)
             release_date = metadata.get_field_value(MetadataField.RELEASE_DATE)
             
@@ -1228,8 +1184,7 @@ class MetadataValidator:
             return False
     
     def _check_format_consistency(self, metadata: ExtractedMetadata) -> bool:
-        """Check consistency between format-related fields."""
-        try:
+        """Check consistency between format-related fields."""        try:
             file_format = metadata.get_field_value(MetadataField.FILE_FORMAT)
             codec = metadata.technical.get("codec")
             
@@ -1256,8 +1211,7 @@ class MetadataValidator:
             return False
     
     def _check_content_consistency(self, metadata: ExtractedMetadata) -> bool:
-        """Check consistency between content fields."""
-        try:
+        """Check consistency between content fields."""        try:
             title = metadata.get_field_value(MetadataField.TITLE)
             description = metadata.get_field_value(MetadataField.DESCRIPTION)
             
@@ -1279,8 +1233,7 @@ class MetadataValidator:
             return False
     
     def _update_statistics(self, validation_result: MetadataValidationResult) -> None:
-        """Update validator statistics."""
-        try:
+        """Update validator statistics."""        try:
             # Update processing time
             total_time = self._stats["avg_processing_time"] * self._stats["total_validations"]
             total_time += validation_result.validation_duration
@@ -1303,8 +1256,7 @@ class MetadataValidator:
         format_type: MetadataStandard = MetadataStandard.DUBLIN_CORE,
         output_path: Optional[Path] = None
     ) -> Union[Dict[str, Any], str]:
-        """
-        Export metadata in specified standard format.
+        """        Export metadata in specified standard format.
         
         Args:
             metadata: Metadata to export
@@ -1313,8 +1265,7 @@ class MetadataValidator:
         
         Returns:
             Exported metadata as dict or file path if saved
-        """
-        try:
+        """        try:
             logger.info(f"Exporting metadata in {format_type.value} format")
             
             exported_data = {}
@@ -1341,8 +1292,7 @@ class MetadataValidator:
             return {}
     
     def _export_dublin_core(self, metadata: ExtractedMetadata) -> Dict[str, Any]:
-        """Export metadata in Dublin Core format."""
-        return {
+        """Export metadata in Dublin Core format."""        return {
             "dc:title": metadata.get_field_value(MetadataField.TITLE),
             "dc:creator": metadata.get_field_value(MetadataField.ARTIST),
             "dc:description": metadata.get_field_value(MetadataField.DESCRIPTION),
@@ -1354,16 +1304,13 @@ class MetadataValidator:
         }
     
     def _export_exif(self, metadata: ExtractedMetadata) -> Dict[str, Any]:
-        """Export metadata in EXIF format."""
-        return metadata.exif_metadata
+        """Export metadata in EXIF format."""        return metadata.exif_metadata
     
     def _export_id3(self, metadata: ExtractedMetadata) -> Dict[str, Any]:
-        """Export metadata in ID3 format."""
-        return metadata.id3_metadata
+        """Export metadata in ID3 format."""        return metadata.id3_metadata
     
     def _export_custom(self, metadata: ExtractedMetadata) -> Dict[str, Any]:
-        """Export metadata in custom format."""
-        return {
+        """Export metadata in custom format."""        return {
             "descriptive": metadata.descriptive,
             "technical": metadata.technical,
             "administrative": metadata.administrative,
@@ -1376,8 +1323,7 @@ class MetadataValidator:
         import_data: Union[Dict[str, Any], str, Path],
         source_format: MetadataStandard = MetadataStandard.CUSTOM
     ) -> ExtractedMetadata:
-        """
-        Import metadata from various formats.
+        """        Import metadata from various formats.
         
         Args:
             import_data: Data to import (dict, JSON string, or file path)
@@ -1385,8 +1331,7 @@ class MetadataValidator:
         
         Returns:
             Imported metadata
-        """
-        try:
+        """        try:
             logger.info(f"Importing metadata from {source_format.value} format")
             
             # Parse input data
@@ -1417,8 +1362,7 @@ class MetadataValidator:
             return ExtractedMetadata()
     
     def _import_dublin_core(self, data: Dict[str, Any], metadata: ExtractedMetadata) -> None:
-        """Import Dublin Core metadata."""
-        dc_mapping = {
+        """Import Dublin Core metadata."""        dc_mapping = {
             "dc:title": MetadataField.TITLE,
             "dc:creator": MetadataField.ARTIST,
             "dc:description": MetadataField.DESCRIPTION,
@@ -1433,8 +1377,7 @@ class MetadataValidator:
                 metadata.set_field_value(metadata_field, data[dc_field], "descriptive")
     
     def _import_exif(self, data: Dict[str, Any], metadata: ExtractedMetadata) -> None:
-        """Import EXIF metadata."""
-        metadata.exif_metadata = data
+        """Import EXIF metadata."""        metadata.exif_metadata = data
         
         # Map common EXIF fields
         if "DateTime" in data:
@@ -1445,8 +1388,7 @@ class MetadataValidator:
             metadata.set_field_value(MetadataField.COPYRIGHT, data["Copyright"], "rights")
     
     def _import_id3(self, data: Dict[str, Any], metadata: ExtractedMetadata) -> None:
-        """Import ID3 metadata."""
-        metadata.id3_metadata = data
+        """Import ID3 metadata."""        metadata.id3_metadata = data
         
         # Map common ID3 fields
         id3_mapping = {
@@ -1462,8 +1404,7 @@ class MetadataValidator:
                 metadata.set_field_value(metadata_field, data[id3_field], "descriptive")
     
     def _import_custom(self, data: Dict[str, Any], metadata: ExtractedMetadata) -> None:
-        """Import custom format metadata."""
-        if "descriptive" in data:
+        """Import custom format metadata."""        if "descriptive" in data:
             metadata.descriptive.update(data["descriptive"])
         if "technical" in data:
             metadata.technical.update(data["technical"])
@@ -1475,8 +1416,7 @@ class MetadataValidator:
             metadata.ai_generated.update(data["ai_generated"])
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get validator statistics."""
-        return {
+        """Get validator statistics."""        return {
             "total_validations": self._stats["total_validations"],
             "successful_extractions": self._stats["successful_extractions"],
             "enhancements_applied": self._stats["enhancements_applied"],
@@ -1489,8 +1429,7 @@ class MetadataValidator:
         }
     
     def reset_statistics(self) -> None:
-        """Reset validator statistics."""
-        self._stats = {
+        """Reset validator statistics."""        self._stats = {
             "total_validations": 0,
             "successful_extractions": 0,
             "enhancements_applied": 0,
@@ -1507,8 +1446,7 @@ async def extract_metadata_from_file(
     validator: Optional[MetadataValidator] = None,
     enhancement_level: str = "standard"
 ) -> MetadataValidationResult:
-    """
-    Convenience function to extract metadata from a file.
+    """    Convenience function to extract metadata from a file.
     
     Args:
         file_path: Path to the file
@@ -1517,8 +1455,7 @@ async def extract_metadata_from_file(
     
     Returns:
         Metadata validation result
-    """
-    if validator is None:
+    """    if validator is None:
         validator = MetadataValidator()
     
     return await validator.validate_metadata_comprehensive(
@@ -1533,8 +1470,7 @@ async def batch_validate_metadata(
     validator: Optional[MetadataValidator] = None,
     max_concurrent: int = 5
 ) -> List[MetadataValidationResult]:
-    """
-    Batch validate metadata for multiple files.
+    """    Batch validate metadata for multiple files.
     
     Args:
         file_paths: List of file paths
@@ -1543,8 +1479,7 @@ async def batch_validate_metadata(
     
     Returns:
         List of metadata validation results
-    """
-    if validator is None:
+    """    if validator is None:
         validator = MetadataValidator()
     
     semaphore = asyncio.Semaphore(max_concurrent)
@@ -1561,8 +1496,7 @@ def create_metadata_report(
     validation_results: List[MetadataValidationResult],
     output_path: Optional[Path] = None
 ) -> Dict[str, Any]:
-    """
-    Create a comprehensive metadata validation report.
+    """    Create a comprehensive metadata validation report.
     
     Args:
         validation_results: List of validation results
@@ -1570,8 +1504,7 @@ def create_metadata_report(
     
     Returns:
         Report data
-    """
-    try:
+    """    try:
         total_files = len(validation_results)
         valid_files = len([r for r in validation_results if r.is_valid])
         
@@ -1613,8 +1546,7 @@ def create_metadata_report(
         return {}
     
     async def _run_validation_rules(self, validation_result: MetadataValidationResult) -> None:
-        """Run validation rules on extracted metadata."""
-        try:
+        """Run validation rules on extracted metadata."""        try:
             logger.debug("Running metadata validation rules")
             
             for field, rules in self._validation_rules.items():
@@ -1641,8 +1573,7 @@ def create_metadata_report(
             logger.error(f"Validation rules execution failed: {e}")
     
     async def _validate_title_length(self, value: Any, field: MetadataField) -> Optional[MetadataValidationIssue]:
-        """Validate title length."""
-        if not value:
+        """Validate title length."""        if not value:
             return MetadataValidationIssue(
                 field=field.value,
                 issue_type="missing_value",
@@ -1676,8 +1607,7 @@ def create_metadata_report(
         return None
     
     async def _validate_title_content(self, value: Any, field: MetadataField) -> Optional[MetadataValidationIssue]:
-        """Validate title content quality."""
-        if not value:
+        """Validate title content quality."""        if not value:
             return None
         
         title_str = str(value).strip()
@@ -1717,8 +1647,7 @@ def create_metadata_report(
         return None
     
     async def _validate_title_encoding(self, value: Any, field: MetadataField) -> Optional[MetadataValidationIssue]:
-        """Validate title encoding and characters."""
-        if not value:
+        """Validate title encoding and characters."""        if not value:
             return None
         
         title_str = str(value)
@@ -1745,8 +1674,7 @@ def create_metadata_report(
         return None
     
     async def _validate_artist_format(self, value: Any, field: MetadataField) -> Optional[MetadataValidationIssue]:
-        """Validate artist field format."""
-        if not value:
+        """Validate artist field format."""        if not value:
             return MetadataValidationIssue(
                 field=field.value,
                 issue_type="missing_value",
@@ -1771,8 +1699,7 @@ def create_metadata_report(
         return None
     
     async def _validate_artist_length(self, value: Any, field: MetadataField) -> Optional[MetadataValidationIssue]:
-        """Validate artist field length."""
-        if not value:
+        """Validate artist field length."""        if not value:
             return None
         
         artist_str = str(value)
@@ -1789,8 +1716,7 @@ def create_metadata_report(
         return None
     
     async def _validate_artist_characters(self, value: Any, field: MetadataField) -> Optional[MetadataValidationIssue]:
-        """Validate artist field characters."""
-        if not value:
+        """Validate artist field characters."""        if not value:
             return None
         
         artist_str = str(value)
@@ -1810,8 +1736,7 @@ def create_metadata_report(
         return None
     
     async def _validate_duration_format(self, value: Any, field: MetadataField) -> Optional[MetadataValidationIssue]:
-        """Validate duration format and range."""
-        if not value:
+        """Validate duration format and range."""        if not value:
             return None
         
         try:
@@ -1862,8 +1787,7 @@ def create_metadata_report(
         return None
     
     async def _validate_duration_range(self, value: Any, field: MetadataField) -> Optional[MetadataValidationIssue]:
-        """Validate duration is within reasonable range for content type."""
-        if not value:
+        """Validate duration is within reasonable range for content type."""        if not value:
             return None
         
         try:
@@ -1897,8 +1821,7 @@ def create_metadata_report(
         return None
     
     async def _validate_date_format(self, value: Any, field: MetadataField) -> Optional[MetadataValidationIssue]:
-        """Validate date format."""
-        if not value:
+        """Validate date format."""        if not value:
             return None
         
         date_str = str(value)
@@ -1937,8 +1860,7 @@ def create_metadata_report(
         return None
     
     async def _validate_date_validity(self, value: Any, field: MetadataField) -> Optional[MetadataValidationIssue]:
-        """Validate date logical validity."""
-        if not value:
+        """Validate date logical validity."""        if not value:
             return None
         
         date_str = str(value)
@@ -1972,8 +1894,7 @@ def create_metadata_report(
         return None
     
     async def _validate_copyright_format(self, value: Any, field: MetadataField) -> Optional[MetadataValidationIssue]:
-        """Validate copyright format."""
-        if not value:
+        """Validate copyright format."""        if not value:
             return MetadataValidationIssue(
                 field=field.value,
                 issue_type="missing_copyright",
@@ -1999,8 +1920,7 @@ def create_metadata_report(
         return None
     
     async def _validate_copyright_completeness(self, value: Any, field: MetadataField) -> Optional[MetadataValidationIssue]:
-        """Validate copyright information completeness."""
-        if not value:
+        """Validate copyright information completeness."""        if not value:
             return None
         
         copyright_str = str(value)
@@ -2025,8 +1945,7 @@ def create_metadata_report(
 
 @dataclass
 class MetadataField:
-    """Metadata field definition."""
-    field_name: str
+    """Metadata field definition."""    field_name: str
     field_type: type
     required: bool = False
     default_value: Optional[Any] = None
@@ -2045,8 +1964,7 @@ class MetadataField:
 
 @dataclass
 class MetadataValidationIssue:
-    """Metadata validation issue."""
-    field_name: str
+    """Metadata validation issue."""    field_name: str
     issue_type: str
     severity: ValidationSeverity
     message: str
@@ -2057,8 +1975,7 @@ class MetadataValidationIssue:
 
 @dataclass
 class MetadataValidationResult:
-    """Metadata validation result."""
-    is_valid: bool
+    """Metadata validation result."""    is_valid: bool
     completeness_score: float
     quality_score: float
     compliance_score: float
@@ -2083,21 +2000,17 @@ class MetadataValidationResult:
 
 
 class ID3Validator:
-    """
-    ID3 metadata validator for audio files.
+    """    ID3 metadata validator for audio files.
     
     Validates and enriches ID3 tags in audio content with comprehensive
     tag validation, version compatibility, and automatic enrichment.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize ID3 validator.
+        """        Initialize ID3 validator.
         
         Args:
             config: Validator configuration
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         
         # ID3 field definitions
         self.id3_fields = self._init_id3_fields()
@@ -2112,8 +2025,7 @@ class ID3Validator:
         metadata: Dict[str, Any],
         strict_mode: bool = False
     ) -> MetadataValidationResult:
-        """
-        Validate ID3 metadata.
+        """        Validate ID3 metadata.
         
         Args:
             metadata: ID3 metadata to validate
@@ -2121,8 +2033,7 @@ class ID3Validator:
             
         Returns:
             Validation result
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             result = MetadataValidationResult(
@@ -2181,8 +2092,7 @@ class ID3Validator:
         metadata: Dict[str, Any],
         auto_generate: bool = True
     ) -> Dict[str, Any]:
-        """
-        Enrich ID3 metadata with missing or improved information.
+        """        Enrich ID3 metadata with missing or improved information.
         
         Args:
             metadata: Existing metadata
@@ -2190,8 +2100,7 @@ class ID3Validator:
             
         Returns:
             Enriched metadata
-        """
-        enriched = metadata.copy()
+        """        enriched = metadata.copy()
         
         try:
             # Auto-generate missing basic fields
@@ -2229,8 +2138,7 @@ class ID3Validator:
         result: MetadataValidationResult,
         strict_mode: bool
     ):
-        """Validate required ID3 fields."""
-        required_fields = ["TIT2", "TPE1"]  # Title, Artist
+        """Validate required ID3 fields."""        required_fields = ["TIT2", "TPE1"]  # Title, Artist
         if strict_mode:
             required_fields.extend(["TALB", "TYER", "TCON"])  # Album, Year, Genre
         
@@ -2250,8 +2158,7 @@ class ID3Validator:
         metadata: Dict[str, Any],
         result: MetadataValidationResult
     ):
-        """Validate ID3 field formats."""
-        for field_name, field_def in self.id3_fields.items():
+        """Validate ID3 field formats."""        for field_name, field_def in self.id3_fields.items():
             if field_name in metadata:
                 value = metadata[field_name]
                 
@@ -2291,8 +2198,7 @@ class ID3Validator:
         metadata: Dict[str, Any],
         result: MetadataValidationResult
     ):
-        """Validate ID3 field values."""
-        # Year validation
+        """Validate ID3 field values."""        # Year validation
         if "TYER" in metadata:
             year = metadata["TYER"]
             try:
@@ -2332,8 +2238,7 @@ class ID3Validator:
         metadata: Dict[str, Any],
         result: MetadataValidationResult
     ):
-        """Validate ID3 version compatibility."""
-        version = metadata.get("version", "2.4")
+        """Validate ID3 version compatibility."""        version = metadata.get("version", "2.4")
         
         if version not in self.supported_versions:
             result.issues.append(MetadataValidationIssue(
@@ -2350,8 +2255,7 @@ class ID3Validator:
         metadata: Dict[str, Any],
         result: MetadataValidationResult
     ) -> float:
-        """Calculate metadata completeness score."""
-        try:
+        """Calculate metadata completeness score."""        try:
             total_fields = len(self.id3_fields)
             present_fields = len([field for field in self.id3_fields.keys() if field in metadata and metadata[field]])
             
@@ -2365,8 +2269,7 @@ class ID3Validator:
         metadata: Dict[str, Any],
         result: MetadataValidationResult
     ) -> float:
-        """Calculate metadata quality score."""
-        try:
+        """Calculate metadata quality score."""        try:
             score = 100.0
             
             # Deduct for issues
@@ -2388,8 +2291,7 @@ class ID3Validator:
         metadata: Dict[str, Any],
         result: MetadataValidationResult
     ) -> float:
-        """Calculate standards compliance score."""
-        try:
+        """Calculate standards compliance score."""        try:
             compliance_score = 100.0
             
             # Check required fields compliance
@@ -2411,8 +2313,7 @@ class ID3Validator:
         metadata: Dict[str, Any],
         result: MetadataValidationResult
     ) -> List[str]:
-        """Generate ID3 improvement suggestions."""
-        suggestions = []
+        """Generate ID3 improvement suggestions."""        suggestions = []
         
         try:
             # Missing field suggestions
@@ -2439,8 +2340,7 @@ class ID3Validator:
             return []
     
     async def _identify_enrichment_opportunities(self, metadata: Dict[str, Any]) -> List[str]:
-        """Identify metadata enrichment opportunities."""
-        opportunities = []
+        """Identify metadata enrichment opportunities."""        opportunities = []
         
         try:
             # Check for missing descriptive fields
@@ -2463,8 +2363,7 @@ class ID3Validator:
             return []
     
     async def _normalize_id3_fields(self, metadata: Dict[str, Any]):
-        """Normalize ID3 field values."""
-        try:
+        """Normalize ID3 field values."""        try:
             # Normalize text fields
             text_fields = ["TIT2", "TPE1", "TALB", "TPE2"]
             for field in text_fields:
@@ -2491,8 +2390,7 @@ class ID3Validator:
             logger.error(f"Field normalization failed: {str(e)}")
     
     async def _add_technical_metadata(self, metadata: Dict[str, Any]):
-        """Add technical metadata if missing."""
-        try:
+        """Add technical metadata if missing."""        try:
             # Add encoding settings if missing
             if not metadata.get("TSSE"):  # Software/Hardware and settings used for encoding
                 metadata["TSSE"] = "IA Influencer Agent Platform"
@@ -2505,8 +2403,7 @@ class ID3Validator:
             logger.error(f"Technical metadata addition failed: {str(e)}")
     
     def _init_id3_fields(self) -> Dict[str, MetadataField]:
-        """Initialize ID3 field definitions."""
-        return {
+        """Initialize ID3 field definitions."""        return {
             "TIT2": MetadataField(
                 field_name="TIT2",
                 field_type=str,
@@ -2573,21 +2470,17 @@ class ID3Validator:
 
 
 class EXIFValidator:
-    """
-    EXIF metadata validator for image files.
+    """    EXIF metadata validator for image files.
     
     Validates and enriches EXIF data in image content with comprehensive
     tag validation, technical analysis, and privacy protection.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize EXIF validator.
+        """        Initialize EXIF validator.
         
         Args:
             config: Validator configuration
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         
         # EXIF field definitions
         self.exif_fields = self._init_exif_fields()
@@ -2602,8 +2495,7 @@ class EXIFValidator:
         metadata: Dict[str, Any],
         check_privacy: bool = True
     ) -> MetadataValidationResult:
-        """
-        Validate EXIF metadata.
+        """        Validate EXIF metadata.
         
         Args:
             metadata: EXIF metadata to validate
@@ -2611,8 +2503,7 @@ class EXIFValidator:
             
         Returns:
             Validation result
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             result = MetadataValidationResult(
@@ -2656,16 +2547,14 @@ class EXIFValidator:
             )
     
     async def sanitize_exif_for_privacy(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Remove privacy-sensitive EXIF data.
+        """        Remove privacy-sensitive EXIF data.
         
         Args:
             metadata: Original EXIF metadata
             
         Returns:
             Sanitized metadata
-        """
-        sanitized = metadata.copy()
+        """        sanitized = metadata.copy()
         
         try:
             # Remove GPS data
@@ -2703,8 +2592,7 @@ class EXIFValidator:
         metadata: Dict[str, Any],
         result: MetadataValidationResult
     ):
-        """Validate technical EXIF fields."""
-        # Image dimensions validation
+        """Validate technical EXIF fields."""        # Image dimensions validation
         if "ImageWidth" in metadata and "ImageHeight" in metadata:
             width = metadata["ImageWidth"]
             height = metadata["ImageHeight"]
@@ -2746,8 +2634,7 @@ class EXIFValidator:
         metadata: Dict[str, Any],
         result: MetadataValidationResult
     ):
-        """Validate EXIF format compliance."""
-        for field_name, field_def in self.exif_fields.items():
+        """Validate EXIF format compliance."""        for field_name, field_def in self.exif_fields.items():
             if field_name in metadata:
                 value = metadata[field_name]
                 
@@ -2766,8 +2653,7 @@ class EXIFValidator:
         metadata: Dict[str, Any],
         result: MetadataValidationResult
     ):
-        """Validate privacy-sensitive fields."""
-        for field in self.privacy_fields:
+        """Validate privacy-sensitive fields."""        for field in self.privacy_fields:
             matching_fields = [key for key in metadata.keys() if key.startswith(field)]
             
             if matching_fields:
@@ -2780,8 +2666,7 @@ class EXIFValidator:
                 ))
     
     async def _calculate_exif_completeness(self, metadata: Dict[str, Any]) -> float:
-        """Calculate EXIF completeness score."""
-        try:
+        """Calculate EXIF completeness score."""        try:
             essential_fields = ["ImageWidth", "ImageHeight", "Orientation", "XResolution", "YResolution"]
             present_essential = len([field for field in essential_fields if field in metadata])
             
@@ -2795,8 +2680,7 @@ class EXIFValidator:
         metadata: Dict[str, Any],
         result: MetadataValidationResult
     ) -> float:
-        """Calculate EXIF quality score."""
-        try:
+        """Calculate EXIF quality score."""        try:
             score = 100.0
             
             # Deduct for validation issues
@@ -2816,8 +2700,7 @@ class EXIFValidator:
         metadata: Dict[str, Any],
         result: MetadataValidationResult
     ) -> float:
-        """Calculate EXIF compliance score."""
-        try:
+        """Calculate EXIF compliance score."""        try:
             compliance_score = 100.0
             
             # Check for required fields
@@ -2835,8 +2718,7 @@ class EXIFValidator:
         metadata: Dict[str, Any],
         result: MetadataValidationResult
     ) -> List[str]:
-        """Generate EXIF improvement suggestions."""
-        suggestions = []
+        """Generate EXIF improvement suggestions."""        suggestions = []
         
         try:
             # Resolution suggestions
@@ -2859,8 +2741,7 @@ class EXIFValidator:
             return []
     
     def _init_exif_fields(self) -> Dict[str, MetadataField]:
-        """Initialize EXIF field definitions."""
-        return {
+        """Initialize EXIF field definitions."""        return {
             "ImageWidth": MetadataField(
                 field_name="ImageWidth",
                 field_type=int,
@@ -2899,21 +2780,17 @@ class EXIFValidator:
 
 
 class XMPValidator:
-    """
-    XMP metadata validator for multimedia files.
+    """    XMP metadata validator for multimedia files.
     
     Validates and enriches XMP (Extensible Metadata Platform) data
     with comprehensive schema validation and namespace support.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize XMP validator.
+        """        Initialize XMP validator.
         
         Args:
             config: Validator configuration
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         
         # XMP namespaces
         self.xmp_namespaces = self._init_xmp_namespaces()
@@ -2928,8 +2805,7 @@ class XMPValidator:
         metadata: Dict[str, Any],
         validate_namespaces: bool = True
     ) -> MetadataValidationResult:
-        """
-        Validate XMP metadata.
+        """        Validate XMP metadata.
         
         Args:
             metadata: XMP metadata to validate
@@ -2937,8 +2813,7 @@ class XMPValidator:
             
         Returns:
             Validation result
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             result = MetadataValidationResult(
@@ -2986,8 +2861,7 @@ class XMPValidator:
         metadata: Dict[str, Any],
         result: MetadataValidationResult
     ):
-        """Validate XMP namespaces."""
-        for field_name in metadata.keys():
+        """Validate XMP namespaces."""        for field_name in metadata.keys():
             if ":" in field_name:
                 namespace = field_name.split(":")[0]
                 if namespace not in self.xmp_namespaces:
@@ -3004,8 +2878,7 @@ class XMPValidator:
         metadata: Dict[str, Any],
         result: MetadataValidationResult
     ):
-        """Validate XMP field formats."""
-        for field_name, value in metadata.items():
+        """Validate XMP field formats."""        for field_name, value in metadata.items():
             if field_name in self.xmp_fields:
                 field_def = self.xmp_fields[field_name]
                 
@@ -3024,8 +2897,7 @@ class XMPValidator:
         metadata: Dict[str, Any],
         result: MetadataValidationResult
     ):
-        """Validate rights and licensing metadata."""
-        rights_fields = ["dc:rights", "xmpRights:Marked", "xmpRights:WebStatement"]
+        """Validate rights and licensing metadata."""        rights_fields = ["dc:rights", "xmpRights:Marked", "xmpRights:WebStatement"]
         
         # Check for rights information
         has_rights_info = any(field in metadata for field in rights_fields)
@@ -3040,8 +2912,7 @@ class XMPValidator:
             ))
     
     async def _calculate_xmp_completeness(self, metadata: Dict[str, Any]) -> float:
-        """Calculate XMP completeness score."""
-        try:
+        """Calculate XMP completeness score."""        try:
             essential_fields = ["dc:title", "dc:creator", "dc:description", "dc:rights"]
             present_essential = len([field for field in essential_fields if field in metadata])
             
@@ -3055,8 +2926,7 @@ class XMPValidator:
         metadata: Dict[str, Any],
         result: MetadataValidationResult
     ) -> float:
-        """Calculate XMP quality score."""
-        try:
+        """Calculate XMP quality score."""        try:
             score = 100.0
             
             # Deduct for validation issues
@@ -3076,8 +2946,7 @@ class XMPValidator:
         metadata: Dict[str, Any],
         result: MetadataValidationResult
     ) -> float:
-        """Calculate XMP compliance score."""
-        try:
+        """Calculate XMP compliance score."""        try:
             compliance_score = 100.0
             
             # Check namespace compliance
@@ -3094,8 +2963,7 @@ class XMPValidator:
         metadata: Dict[str, Any],
         result: MetadataValidationResult
     ) -> List[str]:
-        """Generate XMP improvement suggestions."""
-        suggestions = []
+        """Generate XMP improvement suggestions."""        suggestions = []
         
         try:
             # Essential field suggestions
@@ -3118,8 +2986,7 @@ class XMPValidator:
             return []
     
     def _init_xmp_namespaces(self) -> List[str]:
-        """Initialize standard XMP namespaces."""
-        return [
+        """Initialize standard XMP namespaces."""        return [
             "dc",       # Dublin Core
             "xmp",      # XMP Basic
             "xmpRights", # XMP Rights Management
@@ -3135,8 +3002,7 @@ class XMPValidator:
         ]
     
     def _init_xmp_fields(self) -> Dict[str, MetadataField]:
-        """Initialize XMP field definitions."""
-        return {
+        """Initialize XMP field definitions."""        return {
             "dc:title": MetadataField(
                 field_name="dc:title",
                 field_type=str,
@@ -3176,8 +3042,7 @@ class XMPValidator:
 
 @dataclass
 class MetadataField:
-    """Individual metadata field definition."""
-    name: str
+    """Individual metadata field definition."""    name: str
     field_type: str
     is_required: bool = False
     is_repeatable: bool = False
@@ -3199,8 +3064,7 @@ class MetadataField:
 
 @dataclass
 class MetadataIssue:
-    """Metadata validation issue."""
-    field_name: str
+    """Metadata validation issue."""    field_name: str
     issue_type: str
     severity: ValidationSeverity
     message: str
@@ -3220,8 +3084,7 @@ class MetadataIssue:
 
 @dataclass
 class MetadataValidationResult:
-    """Comprehensive metadata validation result."""
-    is_valid: bool
+    """Comprehensive metadata validation result."""    is_valid: bool
     completeness_score: float
     quality_score: float
     
@@ -3259,28 +3122,24 @@ class MetadataValidationResult:
 
 
 class MetadataValidator:
-    """
-    Comprehensive metadata validator for the IA Influencer Agent Platform.
+    """    Comprehensive metadata validator for the IA Influencer Agent Platform.
     
     Provides metadata validation, enrichment, and standardization
     for creator content with support for multiple metadata standards.
-    """
-    
+    """    
     def __init__(
         self,
         config: Optional[Dict[str, Any]] = None,
         enable_enrichment: bool = True,
         enable_auto_fix: bool = False
     ):
-        """
-        Initialize metadata validator.
+        """        Initialize metadata validator.
         
         Args:
             config: Validator configuration
             enable_enrichment: Enable metadata enrichment
             enable_auto_fix: Enable automatic fixing of issues
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self.enable_enrichment = enable_enrichment
         self.enable_auto_fix = enable_auto_fix
         
@@ -3309,8 +3168,7 @@ class MetadataValidator:
         standard: MetadataStandard = MetadataStandard.CUSTOM,
         enable_enrichment: Optional[bool] = None
     ) -> MetadataValidationResult:
-        """
-        Validate and optionally enrich metadata.
+        """        Validate and optionally enrich metadata.
         
         Args:
             metadata: Metadata to validate
@@ -3320,8 +3178,7 @@ class MetadataValidator:
             
         Returns:
             Metadata validation result
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             result = MetadataValidationResult(
@@ -3387,8 +3244,7 @@ class MetadataValidator:
         file_data: Optional[bytes] = None,
         content_type: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Extract metadata from file.
+        """        Extract metadata from file.
         
         Args:
             file_path: Path to file
@@ -3397,8 +3253,7 @@ class MetadataValidator:
             
         Returns:
             Extracted metadata
-        """
-        try:
+        """        try:
             metadata = {}
             
             # Prepare file data
@@ -3447,8 +3302,7 @@ class MetadataValidator:
         content_type: Optional[str] = None,
         sources: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """
-        Enrich metadata with additional information.
+        """        Enrich metadata with additional information.
         
         Args:
             metadata: Original metadata
@@ -3457,8 +3311,7 @@ class MetadataValidator:
             
         Returns:
             Enriched metadata
-        """
-        try:
+        """        try:
             enriched = metadata.copy()
             enrichment_log = []
             
@@ -3493,8 +3346,7 @@ class MetadataValidator:
         target_standard: MetadataStandard,
         content_type: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Standardize metadata to specific standard.
+        """        Standardize metadata to specific standard.
         
         Args:
             metadata: Original metadata
@@ -3503,8 +3355,7 @@ class MetadataValidator:
             
         Returns:
             Standardized metadata
-        """
-        try:
+        """        try:
             if target_standard not in self.standard_mappings:
                 return metadata
             
@@ -3534,8 +3385,7 @@ class MetadataValidator:
         metadata: Dict[str, Any],
         schema: Dict[str, Any]
     ) -> MetadataValidationResult:
-        """
-        Validate metadata against custom schema.
+        """        Validate metadata against custom schema.
         
         Args:
             metadata: Metadata to validate
@@ -3543,8 +3393,7 @@ class MetadataValidator:
             
         Returns:
             Validation result
-        """
-        try:
+        """        try:
             result = MetadataValidationResult(
                 is_valid=True,
                 completeness_score=0.0,
@@ -3579,8 +3428,7 @@ class MetadataValidator:
         field_def: MetadataField,
         result: MetadataValidationResult
     ):
-        """Validate individual metadata field."""
-        try:
+        """Validate individual metadata field."""        try:
             field_name = field_def.name
             field_value = metadata.get(field_name)
             
@@ -3635,8 +3483,7 @@ class MetadataValidator:
             logger.error(f"Field validation failed for {field_def.name}: {str(e)}")
     
     async def _validate_field_type(self, value: Any, expected_type: str) -> bool:
-        """Validate field type."""
-        try:
+        """Validate field type."""        try:
             type_map = {
                 "string": str,
                 "integer": int,
@@ -3668,8 +3515,7 @@ class MetadataValidator:
         field_def: MetadataField,
         result: MetadataValidationResult
     ):
-        """Validate field length."""
-        try:
+        """Validate field length."""        try:
             length = len(value)
             
             if field_def.min_length and length < field_def.min_length:
@@ -3704,8 +3550,7 @@ class MetadataValidator:
         field_def: MetadataField,
         result: MetadataValidationResult
     ):
-        """Validate field pattern."""
-        try:
+        """Validate field pattern."""        try:
             if not re.match(field_def.pattern, value):
                 result.issues.append(MetadataIssue(
                     field_name=field_name,
@@ -3727,8 +3572,7 @@ class MetadataValidator:
         field_def: MetadataField,
         result: MetadataValidationResult
     ):
-        """Validate allowed values."""
-        try:
+        """Validate allowed values."""        try:
             if value not in field_def.allowed_values:
                 result.issues.append(MetadataIssue(
                     field_name=field_name,
@@ -3749,8 +3593,7 @@ class MetadataValidator:
         field_definitions: List[MetadataField],
         result: MetadataValidationResult
     ):
-        """Check for missing required fields."""
-        try:
+        """Check for missing required fields."""        try:
             required_fields = [field.name for field in field_definitions if field.is_required]
             
             for field_name in required_fields:
@@ -3774,8 +3617,7 @@ class MetadataValidator:
         metadata: Dict[str, Any],
         result: MetadataValidationResult
     ):
-        """Validate cross-field consistency."""
-        try:
+        """Validate cross-field consistency."""        try:
             # Date consistency checks
             created_date = metadata.get("created_date")
             modified_date = metadata.get("modified_date")
@@ -3813,8 +3655,7 @@ class MetadataValidator:
             logger.error(f"Field consistency validation failed: {str(e)}")
     
     async def _detect_metadata_standards(self, metadata: Dict[str, Any]) -> List[MetadataStandard]:
-        """Detect metadata standards used."""
-        try:
+        """Detect metadata standards used."""        try:
             detected = []
             
             # Dublin Core detection
@@ -3844,8 +3685,7 @@ class MetadataValidator:
         content_type: Optional[str],
         result: MetadataValidationResult
     ):
-        """Enrich metadata with additional information."""
-        try:
+        """Enrich metadata with additional information."""        try:
             enriched = {}
             
             # Generate missing required fields
@@ -3876,8 +3716,7 @@ class MetadataValidator:
             logger.error(f"Metadata enrichment failed: {str(e)}")
     
     async def _calculate_completeness_score(self, result: MetadataValidationResult) -> float:
-        """Calculate metadata completeness score."""
-        try:
+        """Calculate metadata completeness score."""        try:
             if result.total_fields == 0:
                 return 100.0
             
@@ -3888,8 +3727,7 @@ class MetadataValidator:
             return 0.0
     
     async def _calculate_quality_score(self, result: MetadataValidationResult) -> float:
-        """Calculate overall metadata quality score."""
-        try:
+        """Calculate overall metadata quality score."""        try:
             # Base score
             base_score = result.completeness_score
             
@@ -3912,8 +3750,7 @@ class MetadataValidator:
             return 50.0
     
     async def _calculate_standardization_score(self, result: MetadataValidationResult) -> float:
-        """Calculate standardization score."""
-        try:
+        """Calculate standardization score."""        try:
             # Higher score for using recognized standards
             score = len(result.detected_standards) * 20
             return min(100, score)
@@ -3922,8 +3759,7 @@ class MetadataValidator:
             return 0.0
     
     async def _calculate_consistency_score(self, result: MetadataValidationResult) -> float:
-        """Calculate consistency score."""
-        try:
+        """Calculate consistency score."""        try:
             consistency_issues = [issue for issue in result.issues 
                                 if "consistency" in issue.issue_type]
             
@@ -3938,8 +3774,7 @@ class MetadataValidator:
             return 50.0
     
     async def _calculate_richness_score(self, result: MetadataValidationResult) -> float:
-        """Calculate metadata richness score."""
-        try:
+        """Calculate metadata richness score."""        try:
             # Score based on number of fields and types
             field_count = len(result.original_metadata)
             type_count = len(result.metadata_types)
@@ -3955,8 +3790,7 @@ class MetadataValidator:
         content_type: Optional[str],
         standard: MetadataStandard
     ) -> List[MetadataField]:
-        """Get applicable field definitions."""
-        try:
+        """Get applicable field definitions."""        try:
             applicable = []
             
             for field_def in self.field_definitions:
@@ -3974,8 +3808,7 @@ class MetadataValidator:
             return []
     
     def _detect_content_type(self, filename: str, file_data: bytes) -> str:
-        """Detect content type from filename and data."""
-        try:
+        """Detect content type from filename and data."""        try:
             ext = Path(filename).suffix.lower()
             
             if ext in ['.jpg', '.jpeg', '.png', '.gif', '.bmp']:
@@ -3993,8 +3826,7 @@ class MetadataValidator:
             return "unknown"
     
     async def _extract_image_metadata(self, file_data: bytes) -> Dict[str, Any]:
-        """Extract image-specific metadata."""
-        try:
+        """Extract image-specific metadata."""        try:
             metadata = {}
             
             # Would use libraries like Pillow, exifread, etc.
@@ -4010,8 +3842,7 @@ class MetadataValidator:
             return {}
     
     async def _extract_audio_metadata(self, file_data: bytes) -> Dict[str, Any]:
-        """Extract audio-specific metadata."""
-        try:
+        """Extract audio-specific metadata."""        try:
             metadata = {}
             
             # Would use libraries like mutagen, eyed3, etc.
@@ -4027,8 +3858,7 @@ class MetadataValidator:
             return {}
     
     async def _extract_video_metadata(self, file_data: bytes) -> Dict[str, Any]:
-        """Extract video-specific metadata."""
-        try:
+        """Extract video-specific metadata."""        try:
             metadata = {}
             
             # Would use libraries like ffmpeg-python, etc.
@@ -4044,8 +3874,7 @@ class MetadataValidator:
             return {}
     
     async def _extract_document_metadata(self, file_data: bytes) -> Dict[str, Any]:
-        """Extract document-specific metadata."""
-        try:
+        """Extract document-specific metadata."""        try:
             metadata = {}
             
             # Would use libraries like python-docx, PyPDF2, etc.
@@ -4061,8 +3890,7 @@ class MetadataValidator:
             return {}
     
     async def _extract_technical_metadata(self, file_data: bytes, filename: str) -> Dict[str, Any]:
-        """Extract technical metadata."""
-        try:
+        """Extract technical metadata."""        try:
             import hashlib
             import mimetypes
             
@@ -4081,8 +3909,7 @@ class MetadataValidator:
             return {}
     
     async def _extract_administrative_metadata(self, file_path: Optional[Path]) -> Dict[str, Any]:
-        """Extract administrative metadata."""
-        try:
+        """Extract administrative metadata."""        try:
             metadata = {}
             
             if file_path and file_path.exists():
@@ -4101,8 +3928,7 @@ class MetadataValidator:
             return {}
     
     def _create_error_result(self, error_message: str) -> MetadataValidationResult:
-        """Create error validation result."""
-        return MetadataValidationResult(
+        """Create error validation result."""        return MetadataValidationResult(
             is_valid=False,
             completeness_score=0.0,
             quality_score=0.0,
@@ -4116,8 +3942,7 @@ class MetadataValidator:
         )
     
     def _init_field_definitions(self) -> List[MetadataField]:
-        """Initialize metadata field definitions."""
-        return [
+        """Initialize metadata field definitions."""        return [
             # Core descriptive fields
             MetadataField("title", "string", True, False, min_length=1, max_length=200),
             MetadataField("description", "string", False, False, max_length=2000),
@@ -4149,8 +3974,7 @@ class MetadataValidator:
         ]
     
     def _init_validation_rules(self) -> Dict[str, Any]:
-        """Initialize validation rules."""
-        return {
+        """Initialize validation rules."""        return {
             "require_title": True,
             "require_creator": True,
             "require_content_type": True,
@@ -4161,8 +3985,7 @@ class MetadataValidator:
         }
     
     def _init_enrichment_sources(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize enrichment sources."""
-        return {
+        """Initialize enrichment sources."""        return {
             "auto_generation": {
                 "created_date": "current_timestamp",
                 "file_hash": "calculate_hash",
@@ -4179,8 +4002,7 @@ class MetadataValidator:
         }
     
     def _init_standard_mappings(self) -> Dict[MetadataStandard, Dict[str, str]]:
-        """Initialize standard field mappings."""
-        return {
+        """Initialize standard field mappings."""        return {
             MetadataStandard.DUBLIN_CORE: {
                 "title": "dc:title",
                 "creator": "dc:creator",
@@ -4198,8 +4020,7 @@ class MetadataValidator:
         }
     
     def _init_pattern_validators(self) -> Dict[str, str]:
-        """Initialize pattern validators."""
-        return {
+        """Initialize pattern validators."""        return {
             "email": r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
             "url": r'^https?://(?:[-\w.])+(?:[:\d]+)?(?:/(?:[\w/_.])*(?:\?(?:[\w&=%.])*)?(?:#(?:[\w.])*)?)?$',
             "date": r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}',

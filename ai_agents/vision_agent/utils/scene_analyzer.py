@@ -1,5 +1,4 @@
-"""
-Scene Analyzer - Enterprise Scene Understanding & Context Analysis
+"""Scene Analyzer - Enterprise Scene Understanding & Context Analysis
 ==================================================================
 
 Advanced scene analysis system with AI-powered content understanding,
@@ -12,9 +11,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import cv2
 import numpy as np
@@ -40,8 +37,7 @@ from ...utils.performance_monitor import PerformanceMonitor
 logger = logging.getLogger(__name__)
 
 class SceneCategory:
-    """Scene categories for classification"""
-    INDOOR = "indoor"
+    """Scene categories for classification"""    INDOOR = "indoor"
     OUTDOOR = "outdoor"
     URBAN = "urban"
     NATURE = "nature"
@@ -53,11 +49,9 @@ class SceneCategory:
     ENTERTAINMENT = "entertainment"
 
 class SceneAnalyzer(BaseAgent):
-    """
-    Enterprise-grade scene analysis system providing comprehensive
+    """    Enterprise-grade scene analysis system providing comprehensive
     scene understanding, context recognition, and semantic analysis.
-    """
-    
+    """    
     def __init__(self):
         super().__init__(
             agent_id="scene_analyzer",
@@ -113,8 +107,7 @@ class SceneAnalyzer(BaseAgent):
         ]
 
     async def initialize(self) -> bool:
-        """Initialize scene analysis components"""
-        try:
+        """Initialize scene analysis components"""        try:
             logger.info("Initializing Scene Analyzer...")
             
             # Initialize color analysis
@@ -144,8 +137,7 @@ class SceneAnalyzer(BaseAgent):
             return False
 
     async def _initialize_color_analyzer(self) -> Dict[str, Any]:
-        """Initialize color analysis components"""
-        return {
+        """Initialize color analysis components"""        return {
             'dominant_colors_count': 5,
             'color_harmony_types': ['complementary', 'triadic', 'analogous', 'monochromatic'],
             'color_temperature_ranges': {
@@ -158,15 +150,13 @@ class SceneAnalyzer(BaseAgent):
         }
 
     async def _initialize_texture_analyzer(self) -> Dict[str, Any]:
-        """Initialize texture analysis components"""
-        return {
+        """Initialize texture analysis components"""        return {
             'texture_features': ['smoothness', 'roughness', 'regularity', 'directionality'],
             'texture_patterns': ['uniform', 'random', 'structured', 'organic']
         }
 
     async def _initialize_composition_analyzer(self) -> Dict[str, Any]:
-        """Initialize composition analysis components"""
-        return {
+        """Initialize composition analysis components"""        return {
             'grid_divisions': (3, 3),  # Rule of thirds grid
             'balance_threshold': 0.3,
             'symmetry_threshold': 0.8
@@ -177,8 +167,7 @@ class SceneAnalyzer(BaseAgent):
         image: np.ndarray,
         include_detailed_analysis: bool = True
     ) -> Dict[str, Any]:
-        """
-        Comprehensive scene analysis
+        """        Comprehensive scene analysis
         
         Args:
             image: Input image as numpy array
@@ -186,8 +175,7 @@ class SceneAnalyzer(BaseAgent):
             
         Returns:
             Complete scene analysis results
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             logger.info("Starting comprehensive scene analysis...")
@@ -253,8 +241,7 @@ class SceneAnalyzer(BaseAgent):
             }
 
     async def _classify_scene(self, image: np.ndarray) -> Dict[str, Any]:
-        """Classify scene into categories"""
-        try:
+        """Classify scene into categories"""        try:
             # Basic scene classification using image features
             classification_result = {
                 'primary_category': SceneCategory.INDOOR,
@@ -311,8 +298,7 @@ class SceneAnalyzer(BaseAgent):
             return {'primary_category': 'unknown', 'confidence': 0.0}
 
     async def _extract_dominant_hues(self, hsv_image: np.ndarray) -> List[int]:
-        """Extract dominant hue values from HSV image"""
-        try:
+        """Extract dominant hue values from HSV image"""        try:
             # Calculate hue histogram
             hist = cv2.calcHist([hsv_image], [0], None, [180], [0, 180])
             
@@ -333,8 +319,7 @@ class SceneAnalyzer(BaseAgent):
             return []
 
     def _contains_sky_colors(self, dominant_hues: List[int]) -> bool:
-        """Check if dominant hues contain sky-like colors"""
-        # Sky hues in HSV: blue range (100-130), light blue (80-120)
+        """Check if dominant hues contain sky-like colors"""        # Sky hues in HSV: blue range (100-130), light blue (80-120)
         sky_hue_ranges = [(80, 130)]
         
         for hue in dominant_hues:
@@ -344,8 +329,7 @@ class SceneAnalyzer(BaseAgent):
         return False
 
     def _contains_nature_colors(self, dominant_hues: List[int]) -> bool:
-        """Check if dominant hues contain nature-like colors"""
-        # Nature hues: green (40-80), brown (10-25), earth tones
+        """Check if dominant hues contain nature-like colors"""        # Nature hues: green (40-80), brown (10-25), earth tones
         nature_hue_ranges = [(40, 80), (10, 25)]
         
         for hue in dominant_hues:
@@ -355,8 +339,7 @@ class SceneAnalyzer(BaseAgent):
         return False
 
     def _contains_indoor_indicators(self, image: np.ndarray) -> bool:
-        """Check for indoor scene indicators"""
-        try:
+        """Check for indoor scene indicators"""        try:
             # Simple heuristics for indoor detection
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) if len(image.shape) == 3 else image
             
@@ -378,8 +361,7 @@ class SceneAnalyzer(BaseAgent):
             return False
 
     async def _analyze_lighting(self, image: np.ndarray) -> Dict[str, Any]:
-        """Analyze lighting conditions in the scene"""
-        try:
+        """Analyze lighting conditions in the scene"""        try:
             # Convert to different color spaces for analysis
             if len(image.shape) == 3:
                 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -467,8 +449,7 @@ class SceneAnalyzer(BaseAgent):
             return {'lighting_quality': 'unknown'}
 
     async def _analyze_colors(self, image: np.ndarray) -> Dict[str, Any]:
-        """Analyze color composition and harmony"""
-        try:
+        """Analyze color composition and harmony"""        try:
             if len(image.shape) != 3:
                 return {'error': 'Color analysis requires RGB image'}
             
@@ -512,8 +493,7 @@ class SceneAnalyzer(BaseAgent):
             return {'color_harmony': 'unknown'}
 
     async def _extract_dominant_colors(self, image: np.ndarray, k: int = 5) -> List[Dict[str, Any]]:
-        """Extract dominant colors using K-means clustering"""
-        try:
+        """Extract dominant colors using K-means clustering"""        try:
             # Reshape image to list of pixels
             pixels = image.reshape(-1, 3)
             
@@ -541,8 +521,7 @@ class SceneAnalyzer(BaseAgent):
             return []
 
     async def _calculate_color_diversity(self, image: np.ndarray) -> float:
-        """Calculate color diversity score"""
-        try:
+        """Calculate color diversity score"""        try:
             # Convert to HSV for better color analysis
             hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
             
@@ -564,8 +543,7 @@ class SceneAnalyzer(BaseAgent):
             return 0.5
 
     async def _analyze_color_harmony(self, dominant_colors: List[Dict]) -> str:
-        """Analyze color harmony type"""
-        try:
+        """Analyze color harmony type"""        try:
             if len(dominant_colors) < 2:
                 return 'monochromatic'
             
@@ -603,8 +581,7 @@ class SceneAnalyzer(BaseAgent):
             return 'unknown'
 
     async def _analyze_texture(self, image: np.ndarray) -> Dict[str, Any]:
-        """Analyze texture patterns in the scene"""
-        try:
+        """Analyze texture patterns in the scene"""        try:
             # Convert to grayscale for texture analysis
             if len(image.shape) == 3:
                 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -651,8 +628,7 @@ class SceneAnalyzer(BaseAgent):
             return {'texture_complexity': 'unknown'}
 
     async def _analyze_content(self, image: np.ndarray) -> Dict[str, Any]:
-        """Analyze content elements in the scene"""
-        try:
+        """Analyze content elements in the scene"""        try:
             content_analysis = {
                 'estimated_object_count': 0,
                 'human_presence': False,
@@ -694,8 +670,7 @@ class SceneAnalyzer(BaseAgent):
             return {'estimated_object_count': 0}
 
     async def _recognize_context(self, image: np.ndarray, content_analysis: Dict) -> Dict[str, Any]:
-        """Recognize scene context and purpose"""
-        try:
+        """Recognize scene context and purpose"""        try:
             context_analysis = {
                 'likely_context': 'general',
                 'confidence': 0.5,
@@ -728,8 +703,7 @@ class SceneAnalyzer(BaseAgent):
             return {'likely_context': 'unknown'}
 
     async def _perform_detailed_analysis(self, image: np.ndarray) -> Dict[str, Any]:
-        """Perform detailed compositional analysis"""
-        try:
+        """Perform detailed compositional analysis"""        try:
             detailed_analysis = {
                 'composition_rules': {},
                 'visual_balance': 'unknown',
@@ -760,8 +734,7 @@ class SceneAnalyzer(BaseAgent):
             return {'aesthetic_score': 0.5}
 
     async def _analyze_rule_of_thirds(self, image: np.ndarray) -> Dict[str, Any]:
-        """Analyze adherence to rule of thirds"""
-        try:
+        """Analyze adherence to rule of thirds"""        try:
             height, width = image.shape[:2]
             
             # Define rule of thirds grid
@@ -802,8 +775,7 @@ class SceneAnalyzer(BaseAgent):
             return {'adherence_score': 0.5}
 
     async def _analyze_visual_balance(self, image: np.ndarray) -> str:
-        """Analyze visual balance in the image"""
-        try:
+        """Analyze visual balance in the image"""        try:
             # Simple balance analysis based on weight distribution
             height, width = image.shape[:2]
             
@@ -836,8 +808,7 @@ class SceneAnalyzer(BaseAgent):
         lighting_analysis: Dict, 
         color_analysis: Dict
     ) -> Dict[str, Any]:
-        """Assess quality for content creation purposes"""
-        try:
+        """Assess quality for content creation purposes"""        try:
             creation_quality = {
                 'overall_rating': 'good',
                 'technical_score': 0.7,
@@ -889,8 +860,7 @@ class SceneAnalyzer(BaseAgent):
         color_analysis: Dict, 
         content_analysis: Dict
     ) -> Dict[str, Any]:
-        """Generate human-readable scene summary"""
-        try:
+        """Generate human-readable scene summary"""        try:
             summary = {
                 'description': '',
                 'key_features': [],
@@ -936,8 +906,7 @@ class SceneAnalyzer(BaseAgent):
             return {'description': 'Scene analysis completed'}
 
     def get_analysis_capabilities(self) -> Dict[str, Any]:
-        """Get scene analysis capabilities"""
-        return {
+        """Get scene analysis capabilities"""        return {
             'scene_categories': list(self.scene_categories.keys()),
             'lighting_types': self.lighting_types,
             'composition_rules': self.composition_rules,
@@ -949,8 +918,7 @@ class SceneAnalyzer(BaseAgent):
         }
 
     async def cleanup(self) -> None:
-        """Cleanup resources"""
-        try:
+        """Cleanup resources"""        try:
             await self.performance_monitor.close()
             logger.info("Scene Analyzer cleanup completed")
         except Exception as e:

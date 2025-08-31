@@ -1,5 +1,4 @@
-"""
-Spotify Tracker - Tracking Spotify Premium
+"""Spotify Tracker - Tracking Spotify Premium
 ==========================================
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
@@ -13,9 +12,7 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
 
 Advanced Spotify tracking system for music content monitoring and copyright protection.
 Provides comprehensive tracking of artists, tracks, playlists, and user activities.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Union
 from datetime import datetime, timedelta
@@ -30,8 +27,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SpotifyTrack:
-    """Spotify track data."""
-    track_id: str
+    """Spotify track data."""    track_id: str
     name: str
     artist_ids: List[str]
     artist_names: List[str]
@@ -60,8 +56,7 @@ class SpotifyTrack:
 
 @dataclass
 class SpotifyArtist:
-    """Spotify artist data."""
-    artist_id: str
+    """Spotify artist data."""    artist_id: str
     name: str
     popularity: int
     followers: int
@@ -76,8 +71,7 @@ class SpotifyArtist:
 
 @dataclass
 class SpotifyAlbum:
-    """Spotify album data."""
-    album_id: str
+    """Spotify album data."""    album_id: str
     name: str
     artist_ids: List[str]
     artist_names: List[str]
@@ -98,8 +92,7 @@ class SpotifyAlbum:
 
 @dataclass
 class SpotifyPlaylist:
-    """Spotify playlist data."""
-    playlist_id: str
+    """Spotify playlist data."""    playlist_id: str
     name: str
     description: str
     owner_id: str
@@ -118,8 +111,7 @@ class SpotifyPlaylist:
 
 @dataclass
 class SpotifyUser:
-    """Spotify user data."""
-    user_id: str
+    """Spotify user data."""    user_id: str
     display_name: str
     followers: int
     external_urls: Dict[str, str] = field(default_factory=dict)
@@ -135,8 +127,7 @@ class SpotifyUser:
 
 @dataclass
 class SpotifyViolation:
-    """Spotify content violation detection result."""
-    violation_id: str
+    """Spotify content violation detection result."""    violation_id: str
     content_type: str  # track, album, artist, playlist, user
     content_id: str
     violation_type: str
@@ -150,8 +141,7 @@ class SpotifyViolation:
 
 @dataclass
 class SpotifyTrackingMetrics:
-    """Spotify tracking system metrics."""
-    tracks_tracked: int = 0
+    """Spotify tracking system metrics."""    tracks_tracked: int = 0
     artists_tracked: int = 0
     albums_tracked: int = 0
     playlists_tracked: int = 0
@@ -165,8 +155,7 @@ class SpotifyTrackingMetrics:
 
 
 class SpotifyTracker:
-    """
-    Advanced Spotify tracking and monitoring system.
+    """    Advanced Spotify tracking and monitoring system.
     
     Features:
     - Artist and track monitoring
@@ -177,11 +166,9 @@ class SpotifyTracker:
     - User behavior tracking
     - Playlist monitoring
     - Real-time notifications
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Spotify tracker."""
-        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize Spotify tracker."""        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
         self.config = config or {}
@@ -244,8 +231,7 @@ class SpotifyTracker:
         self._logger.info("Spotify Tracker initialized")
     
     async def initialize(self) -> None:
-        """Initialize the Spotify tracker."""
-        try:
+        """Initialize the Spotify tracker."""        try:
             self._logger.info("Initializing Spotify tracker...")
             
             # Validate configuration
@@ -268,8 +254,7 @@ class SpotifyTracker:
             raise
     
     async def _initialize_spotify_client(self) -> None:
-        """Initialize Spotify Web API client."""
-        try:
+        """Initialize Spotify Web API client."""        try:
             # This would initialize the actual Spotify Web API client
             # For now, implement placeholder
             await self._authenticate()
@@ -280,8 +265,7 @@ class SpotifyTracker:
             raise
     
     async def _authenticate(self) -> None:
-        """Authenticate with Spotify API."""
-        try:
+        """Authenticate with Spotify API."""        try:
             # This would handle OAuth2 authentication with Spotify
             # For now, simulate authentication
             self._token_expires_at = datetime.now() + timedelta(hours=1)
@@ -292,8 +276,7 @@ class SpotifyTracker:
             raise
     
     async def _setup_audio_analysis(self) -> None:
-        """Setup audio analysis capabilities."""
-        try:
+        """Setup audio analysis capabilities."""        try:
             # This would setup actual audio analysis and fingerprinting
             # For now, implement placeholder
             self._logger.debug("Audio analysis setup complete")
@@ -303,8 +286,7 @@ class SpotifyTracker:
             raise
     
     async def _setup_violation_detection(self) -> None:
-        """Setup violation detection systems."""
-        try:
+        """Setup violation detection systems."""        try:
             # This would setup actual ML models for violation detection
             # For now, implement placeholder
             self._logger.debug("Violation detection setup complete")
@@ -314,8 +296,7 @@ class SpotifyTracker:
             raise
     
     async def start_tracking(self) -> None:
-        """Start Spotify tracking operations."""
-        try:
+        """Start Spotify tracking operations."""        try:
             if self._tracking_active:
                 self._logger.warning("Spotify tracking is already active")
                 return
@@ -333,8 +314,7 @@ class SpotifyTracker:
             raise
     
     async def stop_tracking(self) -> None:
-        """Stop Spotify tracking operations."""
-        try:
+        """Stop Spotify tracking operations."""        try:
             if not self._tracking_active:
                 self._logger.warning("Spotify tracking is not active")
                 return
@@ -357,8 +337,7 @@ class SpotifyTracker:
             raise
     
     async def add_artist_tracking(self, artist_id: str) -> bool:
-        """Add artist to tracking."""
-        try:
+        """Add artist to tracking."""        try:
             self.monitored_artists.add(artist_id)
             self._logger.info(f"Added artist tracking: {artist_id}")
             return True
@@ -368,8 +347,7 @@ class SpotifyTracker:
             return False
     
     async def add_track_tracking(self, track_id: str) -> bool:
-        """Add track to tracking."""
-        try:
+        """Add track to tracking."""        try:
             self.monitored_tracks.add(track_id)
             self._logger.info(f"Added track tracking: {track_id}")
             return True
@@ -379,8 +357,7 @@ class SpotifyTracker:
             return False
     
     async def add_playlist_tracking(self, playlist_id: str) -> bool:
-        """Add playlist to tracking."""
-        try:
+        """Add playlist to tracking."""        try:
             self.monitored_playlists.add(playlist_id)
             self._logger.info(f"Added playlist tracking: {playlist_id}")
             return True
@@ -395,8 +372,7 @@ class SpotifyTracker:
         content_type: str,
         owner_info: Dict[str, Any]
     ) -> bool:
-        """Add content to copyright protection."""
-        try:
+        """Add content to copyright protection."""        try:
             self.protected_content[content_id] = {
                 'content_type': content_type,
                 'owner_info': owner_info,
@@ -417,8 +393,7 @@ class SpotifyTracker:
             return False
     
     async def track_artist(self, artist_id: str) -> Optional[SpotifyArtist]:
-        """Track Spotify artist."""
-        try:
+        """Track Spotify artist."""        try:
             self._logger.debug(f"Tracking artist: {artist_id}")
             
             # Rate limiting and authentication
@@ -451,8 +426,7 @@ class SpotifyTracker:
         return None
     
     async def track_track(self, track_id: str) -> Optional[SpotifyTrack]:
-        """Track Spotify track."""
-        try:
+        """Track Spotify track."""        try:
             self._logger.debug(f"Tracking track: {track_id}")
             
             # Rate limiting and authentication
@@ -488,8 +462,7 @@ class SpotifyTracker:
         return None
     
     async def track_playlist(self, playlist_id: str) -> Optional[SpotifyPlaylist]:
-        """Track Spotify playlist."""
-        try:
+        """Track Spotify playlist."""        try:
             self._logger.debug(f"Tracking playlist: {playlist_id}")
             
             # Rate limiting and authentication
@@ -528,8 +501,7 @@ class SpotifyTracker:
         limit: int = 50,
         market: str = "US"
     ) -> List[SpotifyTrack]:
-        """Search for tracks."""
-        try:
+        """Search for tracks."""        try:
             self._logger.debug(f"Searching tracks: {query}")
             
             # Rate limiting and authentication
@@ -560,8 +532,7 @@ class SpotifyTracker:
             return []
     
     async def _tracking_loop(self) -> None:
-        """Main tracking loop."""
-        self._logger.info("Spotify tracking loop started")
+        """Main tracking loop."""        self._logger.info("Spotify tracking loop started")
         
         try:
             while self._tracking_active:
@@ -609,8 +580,7 @@ class SpotifyTracker:
         self._logger.info("Spotify tracking loop stopped")
     
     async def _fetch_artist_data(self, artist_id: str) -> Optional[Dict[str, Any]]:
-        """Fetch Spotify artist data."""
-        try:
+        """Fetch Spotify artist data."""        try:
             # Simulate Spotify Web API call
             await asyncio.sleep(0.2)
             
@@ -633,8 +603,7 @@ class SpotifyTracker:
             return None
     
     async def _fetch_track_data(self, track_id: str) -> Optional[Dict[str, Any]]:
-        """Fetch Spotify track data."""
-        try:
+        """Fetch Spotify track data."""        try:
             # Simulate Spotify Web API call
             await asyncio.sleep(0.2)
             
@@ -663,8 +632,7 @@ class SpotifyTracker:
             return None
     
     async def _fetch_playlist_data(self, playlist_id: str) -> Optional[Dict[str, Any]]:
-        """Fetch Spotify playlist data."""
-        try:
+        """Fetch Spotify playlist data."""        try:
             # Simulate Spotify Web API call
             await asyncio.sleep(0.3)
             
@@ -697,8 +665,7 @@ class SpotifyTracker:
         limit: int,
         market: str
     ) -> List[Dict[str, Any]]:
-        """Search Spotify content."""
-        try:
+        """Search Spotify content."""        try:
             # Simulate Spotify Web API search
             await asyncio.sleep(0.4)
             
@@ -729,8 +696,7 @@ class SpotifyTracker:
             return []
     
     async def _track_artist_content(self, artist_id: str) -> None:
-        """Track artist's content (albums and top tracks)."""
-        try:
+        """Track artist's content (albums and top tracks)."""        try:
             # Get artist's albums
             albums = await self._fetch_artist_albums(artist_id)
             for album_data in albums[:5]:  # Limit to 5 albums
@@ -749,8 +715,7 @@ class SpotifyTracker:
             self._logger.error(f"Error tracking content for artist {artist_id}: {e}")
     
     async def _fetch_artist_albums(self, artist_id: str) -> List[Dict[str, Any]]:
-        """Fetch artist's albums."""
-        try:
+        """Fetch artist's albums."""        try:
             # Simulate API call
             await asyncio.sleep(0.3)
             
@@ -777,8 +742,7 @@ class SpotifyTracker:
             return []
     
     async def _fetch_artist_top_tracks(self, artist_id: str) -> List[Dict[str, Any]]:
-        """Fetch artist's top tracks."""
-        try:
+        """Fetch artist's top tracks."""        try:
             # Simulate API call
             await asyncio.sleep(0.2)
             
@@ -805,8 +769,7 @@ class SpotifyTracker:
             return []
     
     async def _analyze_track_audio(self, track_id: str) -> None:
-        """Analyze track audio features."""
-        try:
+        """Analyze track audio features."""        try:
             # Simulate audio analysis
             await asyncio.sleep(0.5)
             
@@ -819,8 +782,7 @@ class SpotifyTracker:
             self._logger.error(f"Error analyzing audio for track {track_id}: {e}")
     
     async def _generate_audio_fingerprint(self, track_id: str) -> Optional[str]:
-        """Generate audio fingerprint for track."""
-        try:
+        """Generate audio fingerprint for track."""        try:
             # Simulate audio fingerprint generation
             await asyncio.sleep(0.3)
             
@@ -835,8 +797,7 @@ class SpotifyTracker:
             return None
     
     async def _check_copyright_matches(self, track_id: str) -> None:
-        """Check track for copyright matches."""
-        try:
+        """Check track for copyright matches."""        try:
             # Check against protected content
             for protected_id, protected_info in self.protected_content.items():
                 if protected_info['content_type'] == 'track':
@@ -868,8 +829,7 @@ class SpotifyTracker:
             self._logger.error(f"Error checking copyright matches for track {track_id}: {e}")
     
     async def _compare_audio_fingerprints(self, track_id1: str, track_id2: str) -> float:
-        """Compare audio fingerprints between two tracks."""
-        try:
+        """Compare audio fingerprints between two tracks."""        try:
             # Simulate fingerprint comparison
             await asyncio.sleep(0.1)
             
@@ -883,8 +843,7 @@ class SpotifyTracker:
             return 0.0
     
     async def _check_all_copyright_matches(self) -> None:
-        """Check all tracked content for copyright matches."""
-        try:
+        """Check all tracked content for copyright matches."""        try:
             for track_id in list(self.tracks.keys())[-50:]:  # Check last 50 tracks
                 await self._check_copyright_matches(track_id)
             
@@ -892,8 +851,7 @@ class SpotifyTracker:
             self._logger.error(f"Error checking all copyright matches: {e}")
     
     async def _analyze_track_for_violations(self, track: SpotifyTrack) -> List[SpotifyViolation]:
-        """Analyze track for violations."""
-        violations = []
+        """Analyze track for violations."""        violations = []
         
         try:
             # Analyze track name and artist
@@ -931,8 +889,7 @@ class SpotifyTracker:
         return violations
     
     async def _analyze_artist_for_violations(self, artist: SpotifyArtist) -> List[SpotifyViolation]:
-        """Analyze artist for violations."""
-        violations = []
+        """Analyze artist for violations."""        violations = []
         
         try:
             # Analyze artist name
@@ -970,8 +927,7 @@ class SpotifyTracker:
         return violations
     
     async def _analyze_playlist_for_violations(self, playlist: SpotifyPlaylist) -> List[SpotifyViolation]:
-        """Analyze playlist for violations."""
-        violations = []
+        """Analyze playlist for violations."""        violations = []
         
         try:
             # Analyze playlist name and description
@@ -1009,8 +965,7 @@ class SpotifyTracker:
         return violations
     
     def _calculate_severity(self, violation_type: str, confidence: float) -> str:
-        """Calculate violation severity."""
-        if violation_type == 'copyright':
+        """Calculate violation severity."""        if violation_type == 'copyright':
             if confidence >= 0.8:
                 return "critical"
             elif confidence >= 0.6:
@@ -1026,13 +981,11 @@ class SpotifyTracker:
                 return "low"
     
     async def _ensure_authenticated(self) -> None:
-        """Ensure Spotify API authentication is valid."""
-        if datetime.now() >= self._token_expires_at:
+        """Ensure Spotify API authentication is valid."""        if datetime.now() >= self._token_expires_at:
             await self._authenticate()
     
     async def _enforce_rate_limit(self) -> None:
-        """Enforce rate limiting for Spotify API requests."""
-        current_time = asyncio.get_event_loop().time()
+        """Enforce rate limiting for Spotify API requests."""        current_time = asyncio.get_event_loop().time()
         time_since_last_request = current_time - self._last_request_time
         
         if time_since_last_request < self._request_delay:
@@ -1042,8 +995,7 @@ class SpotifyTracker:
         self._last_request_time = asyncio.get_event_loop().time()
     
     def get_tracking_status(self) -> Dict[str, Any]:
-        """Get current tracking status."""
-        return {
+        """Get current tracking status."""        return {
             'tracking_active': self._tracking_active,
             'monitored_targets': {
                 'artists': len(self.monitored_artists),
@@ -1076,8 +1028,7 @@ class SpotifyTracker:
         }
     
     def get_recent_violations(self, limit: int = 100) -> List[Dict[str, Any]]:
-        """Get recent violations."""
-        recent_violations = sorted(
+        """Get recent violations."""        recent_violations = sorted(
             self.violations,
             key=lambda v: v.detected_at,
             reverse=True
@@ -1100,8 +1051,7 @@ class SpotifyTracker:
         ]
     
     async def shutdown(self) -> None:
-        """Shutdown the Spotify tracker."""
-        try:
+        """Shutdown the Spotify tracker."""        try:
             self._logger.info("Shutting down Spotify tracker...")
             
             await self.stop_tracking()

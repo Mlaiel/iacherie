@@ -14,8 +14,7 @@ explicit written permission from Fahed Mlaiel is strictly prohibited and will be
 to the full extent of the law.
 
 Business Logic: User Upload → AI Quality Assessment → Protection → SEO → Collaboration → Distribution
-"""
-from .core import (
+"""from .core import (
     QualityAssessmentEngine,
     ContentQualityScore,
     QualityMetrics,

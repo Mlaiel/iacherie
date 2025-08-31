@@ -1,14 +1,11 @@
-"""
-Context Integration System - Advanced Conversational Context Management
+"""Context Integration System - Advanced Conversational Context Management
 
 Enterprise-grade context integration for intelligent response generation
 with multi-layered context awareness and business logic integration.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
@@ -30,8 +27,7 @@ from ...core.database import DatabaseManager
 
 
 class ContextType(Enum):
-    """Context type enumeration"""
-    USER_PROFILE = "user_profile"
+    """Context type enumeration"""    USER_PROFILE = "user_profile"
     CONVERSATION_HISTORY = "conversation_history"
     BUSINESS_CONTEXT = "business_context"
     PLATFORM_CONTEXT = "platform_context"
@@ -44,8 +40,7 @@ class ContextType(Enum):
 
 
 class ContextPriority(Enum):
-    """Context priority levels"""
-    CRITICAL = "critical"
+    """Context priority levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -53,8 +48,7 @@ class ContextPriority(Enum):
 
 
 class ContextScope(Enum):
-    """Context scope enumeration"""
-    SESSION = "session"
+    """Context scope enumeration"""    SESSION = "session"
     CONVERSATION = "conversation"
     USER = "user"
     GLOBAL = "global"
@@ -62,8 +56,7 @@ class ContextScope(Enum):
 
 
 class ConversationContext(BaseModel):
-    """Comprehensive conversation context data structure"""
-    context_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive conversation context data structure"""    context_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str
     session_id: str
     conversation_id: str
@@ -115,8 +108,7 @@ class ConversationContext(BaseModel):
 
 
 class ContextualMemory(BaseModel):
-    """Contextual memory for intelligent context retention"""
-    memory_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Contextual memory for intelligent context retention"""    memory_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     context_type: ContextType
     content: Dict[str, Any]
     importance_score: float = Field(..., ge=0.0, le=1.0)
@@ -128,8 +120,7 @@ class ContextualMemory(BaseModel):
     tags: List[str] = Field(default_factory=list)
     
     def calculate_memory_strength(self) -> float:
-        """Calculate overall memory strength"""
-        weights = {
+        """Calculate overall memory strength"""        weights = {
             "importance": 0.4,
             "recency": 0.3,
             "relevance": 0.2,
@@ -151,8 +142,7 @@ class ContextualMemory(BaseModel):
 
 
 class ConversationContextIntegrator:
-    """Advanced context integration and management system"""
-    
+    """Advanced context integration and management system"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.cache = CacheManager()
@@ -169,8 +159,7 @@ class ConversationContextIntegrator:
         current_input: str,
         additional_context: Optional[Dict[str, Any]] = None
     ) -> ConversationContext:
-        """
-        Integrate comprehensive conversation context
+        """        Integrate comprehensive conversation context
         
         Args:
             user_id: User identifier
@@ -181,8 +170,7 @@ class ConversationContextIntegrator:
             
         Returns:
             Integrated conversation context
-        """
-        try:
+        """        try:
             # Get or create base context
             context = await self._get_or_create_context(user_id, session_id, conversation_id)
             
@@ -219,8 +207,7 @@ class ConversationContextIntegrator:
         session_id: str,
         conversation_id: str
     ) -> ConversationContext:
-        """Get existing context or create new one"""
-        
+        """Get existing context or create new one"""        
         # Try to get from cache first
         cache_key = f"context:{conversation_id}"
         cached_context = await self.cache.get(cache_key)
@@ -251,8 +238,7 @@ class ConversationContextIntegrator:
         current_input: str,
         additional_context: Optional[Dict[str, Any]]
     ):
-        """Update context with current interaction data"""
-        
+        """Update context with current interaction data"""        
         # Add to conversation history
         interaction = {
             "timestamp": datetime.utcnow().isoformat(),
@@ -285,8 +271,7 @@ class ConversationContextIntegrator:
             context.interaction_frequency = sum(time_diffs) / len(time_diffs) if time_diffs else 0
     
     async def _integrate_user_profile_context(self, context: ConversationContext):
-        """Integrate user profile context"""
-        try:
+        """Integrate user profile context"""        try:
             # Load user profile from database
             user_profile = await self._load_user_profile(context.user_id)
             
@@ -312,8 +297,7 @@ class ConversationContextIntegrator:
             self.logger.warning(f"Failed to integrate user profile context: {str(e)}")
     
     async def _integrate_conversation_history_context(self, context: ConversationContext):
-        """Integrate conversation history context for pattern recognition"""
-        try:
+        """Integrate conversation history context for pattern recognition"""        try:
             if len(context.conversation_history) < 2:
                 return
             
@@ -342,8 +326,7 @@ class ConversationContextIntegrator:
             self.logger.warning(f"Failed to integrate conversation history context: {str(e)}")
     
     async def _integrate_business_context(self, context: ConversationContext):
-        """Integrate business logic context"""
-        try:
+        """Integrate business logic context"""        try:
             # Determine current workflow stage
             workflow_stage = await self._determine_workflow_stage(context)
             context.current_workflow_stage = workflow_stage
@@ -369,8 +352,7 @@ class ConversationContextIntegrator:
             self.logger.warning(f"Failed to integrate business context: {str(e)}")
     
     async def _integrate_temporal_context(self, context: ConversationContext):
-        """Integrate temporal context for time-aware responses"""
-        try:
+        """Integrate temporal context for time-aware responses"""        try:
             current_time = datetime.utcnow()
             
             # Time-based context factors
@@ -401,8 +383,7 @@ class ConversationContextIntegrator:
             self.logger.warning(f"Failed to integrate temporal context: {str(e)}")
     
     async def _integrate_emotional_context(self, context: ConversationContext, current_input: str):
-        """Integrate emotional context analysis"""
-        try:
+        """Integrate emotional context analysis"""        try:
             # Analyze emotional state from current input
             emotional_analysis = await self._analyze_emotional_state(current_input)
             
@@ -432,8 +413,7 @@ class ConversationContextIntegrator:
             self.logger.warning(f"Failed to integrate emotional context: {str(e)}")
     
     async def _integrate_intent_context(self, context: ConversationContext, current_input: str):
-        """Integrate intent recognition context"""
-        try:
+        """Integrate intent recognition context"""        try:
             # Detect current intent
             intent_analysis = await self._detect_user_intent(current_input, context)
             
@@ -466,8 +446,7 @@ class ConversationContextIntegrator:
             self.logger.warning(f"Failed to integrate intent context: {str(e)}")
     
     async def _calculate_context_priorities(self, context: ConversationContext):
-        """Calculate dynamic context priorities"""
-        try:
+        """Calculate dynamic context priorities"""        try:
             # Normalize priorities to sum to 1.0
             total_priority = sum(context.current_priorities.values())
             
@@ -496,8 +475,7 @@ class ConversationContextIntegrator:
             self.logger.warning(f"Failed to calculate context priorities: {str(e)}")
     
     async def _calculate_context_weights(self, context: ConversationContext):
-        """Calculate context type weights for response generation"""
-        try:
+        """Calculate context type weights for response generation"""        try:
             base_weights = {
                 ContextType.USER_PROFILE: 0.25,
                 ContextType.CONVERSATION_HISTORY: 0.20,
@@ -533,8 +511,7 @@ class ConversationContextIntegrator:
             self.logger.warning(f"Failed to calculate context weights: {str(e)}")
     
     async def _analyze_conversation_patterns(self, history: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze conversation history for patterns"""
-        try:
+        """Analyze conversation history for patterns"""        try:
             if len(history) < 2:
                 return {}
             
@@ -584,8 +561,7 @@ class ConversationContextIntegrator:
             return {}
     
     async def _determine_workflow_stage(self, context: ConversationContext) -> str:
-        """Determine current workflow stage based on context"""
-        try:
+        """Determine current workflow stage based on context"""        try:
             # Analyze user profile completeness
             profile_completeness = len(context.user_profile) / 10.0  # Assume 10 key fields
             
@@ -625,8 +601,7 @@ class ConversationContextIntegrator:
             return "content_creation"
     
     def _get_time_of_day_context(self, current_time: datetime) -> str:
-        """Get time of day context"""
-        hour = current_time.hour
+        """Get time of day context"""        hour = current_time.hour
         
         if 5 <= hour < 12:
             return "morning"
@@ -638,8 +613,7 @@ class ConversationContextIntegrator:
             return "night"
     
     def _get_day_of_week_context(self, current_time: datetime) -> str:
-        """Get day of week context"""
-        weekday = current_time.weekday()
+        """Get day of week context"""        weekday = current_time.weekday()
         
         if weekday < 5:
             return "weekday"
@@ -647,8 +621,7 @@ class ConversationContextIntegrator:
             return "weekend"
     
     def _get_session_length_context(self, session_duration: Optional[float]) -> str:
-        """Get session length context"""
-        if not session_duration:
+        """Get session length context"""        if not session_duration:
             return "new"
         
         if session_duration < 300:  # 5 minutes
@@ -659,8 +632,7 @@ class ConversationContextIntegrator:
             return "long"
     
     def _get_conversation_pace_context(self, interaction_frequency: Optional[float]) -> str:
-        """Get conversation pace context"""
-        if not interaction_frequency:
+        """Get conversation pace context"""        if not interaction_frequency:
             return "unknown"
         
         if interaction_frequency < 30:  # Less than 30 seconds between messages
@@ -671,8 +643,7 @@ class ConversationContextIntegrator:
             return "slow"
     
     async def _analyze_emotional_state(self, text: str) -> Dict[str, Any]:
-        """Analyze emotional state from text (simplified implementation)"""
-        try:
+        """Analyze emotional state from text (simplified implementation)"""        try:
             text_lower = text.lower()
             
             # Simple emotion detection based on keywords
@@ -705,8 +676,7 @@ class ConversationContextIntegrator:
             return {"primary_emotion": "neutral", "intensity": 0.5}
     
     async def _detect_user_intent(self, text: str, context: ConversationContext) -> Dict[str, Any]:
-        """Detect user intent from text and context"""
-        try:
+        """Detect user intent from text and context"""        try:
             text_lower = text.lower()
             
             # Intent detection patterns
@@ -748,8 +718,7 @@ class ConversationContextIntegrator:
             return {"primary_intent": "help_request", "confidence": 0.5}
     
     async def _load_user_profile(self, user_id: str) -> Optional[Dict[str, Any]]:
-        """Load user profile from database"""
-        try:
+        """Load user profile from database"""        try:
             # Placeholder implementation - would fetch from actual database
             # For now, return a mock profile
             return {
@@ -770,8 +739,7 @@ class ConversationContextIntegrator:
             return None
     
     async def _load_context_from_db(self, conversation_id: str) -> Optional[ConversationContext]:
-        """Load context from database"""
-        try:
+        """Load context from database"""        try:
             # Placeholder implementation - would fetch from actual database
             return None
         except Exception as e:
@@ -779,8 +747,7 @@ class ConversationContextIntegrator:
             return None
     
     async def _store_context(self, context: ConversationContext):
-        """Store context to cache and database"""
-        try:
+        """Store context to cache and database"""        try:
             # Update timestamp
             context.last_updated = datetime.utcnow()
             
@@ -796,8 +763,7 @@ class ConversationContextIntegrator:
 
 
 class ContextAwareResponseEngine:
-    """Context-aware response generation engine"""
-    
+    """Context-aware response generation engine"""    
     def __init__(self, context_integrator: ConversationContextIntegrator):
         self.context_integrator = context_integrator
         self.logger = logging.getLogger(__name__)
@@ -812,8 +778,7 @@ class ContextAwareResponseEngine:
         conversation_id: str,
         additional_context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Generate response with full context awareness
+        """        Generate response with full context awareness
         
         Args:
             user_input: User's input text
@@ -824,8 +789,7 @@ class ContextAwareResponseEngine:
             
         Returns:
             Context-aware response with metadata
-        """
-        try:
+        """        try:
             # Integrate conversation context
             context = await self.context_integrator.integrate_conversation_context(
                 user_id, session_id, conversation_id, user_input, additional_context
@@ -861,8 +825,7 @@ class ContextAwareResponseEngine:
             return {"error": str(e), "fallback": True}
     
     def _generate_context_summary(self, context: ConversationContext) -> Dict[str, Any]:
-        """Generate comprehensive context summary"""
-        return {
+        """Generate comprehensive context summary"""        return {
             "user_profile_summary": {
                 "user_type": context.user_profile.get("user_type", "content_creator"),
                 "experience_level": context.user_profile.get("experience_level", "intermediate"),
@@ -882,8 +845,7 @@ class ContextAwareResponseEngine:
         }
     
     def _generate_response_guidance(self, context: ConversationContext) -> Dict[str, Any]:
-        """Generate response guidance based on context"""
-        guidance = {
+        """Generate response guidance based on context"""        guidance = {
             "primary_focus": max(context.current_priorities.items(), key=lambda x: x[1])[0] if context.current_priorities else "help",
             "tone_guidance": self._determine_response_tone(context),
             "length_guidance": self._determine_response_length(context),
@@ -894,8 +856,7 @@ class ContextAwareResponseEngine:
         return guidance
     
     def _generate_personalization_hints(self, context: ConversationContext) -> Dict[str, Any]:
-        """Generate personalization hints for response customization"""
-        hints = {
+        """Generate personalization hints for response customization"""        hints = {
             "user_preferences": {
                 "communication_style": context.user_profile.get("preferred_communication_style", "professional"),
                 "detail_level": context.user_profile.get("detail_preference", "medium"),
@@ -918,8 +879,7 @@ class ContextAwareResponseEngine:
         return hints
     
     def _determine_response_tone(self, context: ConversationContext) -> str:
-        """Determine appropriate response tone"""
-        emotional_state = context.emotional_state
+        """Determine appropriate response tone"""        emotional_state = context.emotional_state
         user_style = context.user_profile.get("preferred_communication_style", "professional")
         
         # Emotional state takes priority
@@ -941,8 +901,7 @@ class ContextAwareResponseEngine:
             return "professional_friendly"
     
     def _determine_response_length(self, context: ConversationContext) -> str:
-        """Determine appropriate response length"""
-        factors = {
+        """Determine appropriate response length"""        factors = {
             "session_length": self._get_session_length_context(context.session_duration),
             "conversation_pace": self._get_conversation_pace_context(context.interaction_frequency),
             "complexity": context.user_profile.get("detail_preference", "medium"),
@@ -967,8 +926,7 @@ class ContextAwareResponseEngine:
         return "medium"
     
     def _determine_response_structure(self, context: ConversationContext) -> str:
-        """Determine appropriate response structure"""
-        if context.current_intent == "help_request":
+        """Determine appropriate response structure"""        if context.current_intent == "help_request":
             return "step_by_step"
         elif context.current_intent == "information_seeking":
             return "explanatory"
@@ -980,8 +938,7 @@ class ContextAwareResponseEngine:
             return "conversational"
     
     def _determine_content_guidance(self, context: ConversationContext) -> Dict[str, Any]:
-        """Determine content guidance for response"""
-        guidance = {
+        """Determine content guidance for response"""        guidance = {
             "include_examples": context.user_profile.get("example_preference", "practical") == "practical",
             "technical_depth": context.user_profile.get("experience_level", "intermediate"),
             "business_context": context.current_workflow_stage,
@@ -992,8 +949,7 @@ class ContextAwareResponseEngine:
         return guidance
     
     async def _generate_follow_up_suggestions(self, context: ConversationContext) -> List[str]:
-        """Generate contextual follow-up suggestions"""
-        suggestions = []
+        """Generate contextual follow-up suggestions"""        suggestions = []
         
         # Stage-based suggestions
         stage_suggestions = {
@@ -1033,8 +989,7 @@ class ContextAwareResponseEngine:
         return suggestions[:3]
     
     def _get_conversation_pace_context(self, interaction_frequency: Optional[float]) -> str:
-        """Get conversation pace context (reused from integrator)"""
-        if not interaction_frequency:
+        """Get conversation pace context (reused from integrator)"""        if not interaction_frequency:
             return "unknown"
         
         if interaction_frequency < 30:
@@ -1045,8 +1000,7 @@ class ContextAwareResponseEngine:
             return "slow"
     
     def _get_session_length_context(self, session_duration: Optional[float]) -> str:
-        """Get session length context (reused from integrator)"""
-        if not session_duration:
+        """Get session length context (reused from integrator)"""        if not session_duration:
             return "new"
         
         if session_duration < 300:
@@ -1058,8 +1012,7 @@ class ContextAwareResponseEngine:
 
 
 class ResponseContextManager:
-    """High-level context management for response generation"""
-    
+    """High-level context management for response generation"""    
     def __init__(self):
         self.context_integrator = ConversationContextIntegrator()
         self.context_engine = ContextAwareResponseEngine(self.context_integrator)
@@ -1073,8 +1026,7 @@ class ResponseContextManager:
         conversation_id: str,
         additional_context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Get comprehensive response context for generation"""
-        return await self.context_engine.generate_context_aware_response(
+        """Get comprehensive response context for generation"""        return await self.context_engine.generate_context_aware_response(
             user_input, user_id, session_id, conversation_id, additional_context
         )
     
@@ -1084,8 +1036,7 @@ class ResponseContextManager:
         response_effectiveness: float,
         user_satisfaction: Optional[float] = None
     ):
-        """Update context with response feedback"""
-        try:
+        """Update context with response feedback"""        try:
             # Load current context
             cache_key = f"context:{conversation_id}"
             cached_context = await self.context_integrator.cache.get(cache_key)
@@ -1106,8 +1057,7 @@ class ResponseContextManager:
 
 
 class ContextualIntelligence:
-    """Advanced contextual intelligence for response optimization"""
-    
+    """Advanced contextual intelligence for response optimization"""    
     def __init__(self):
         self.context_manager = ResponseContextManager()
         self.logger = logging.getLogger(__name__)
@@ -1118,8 +1068,7 @@ class ContextualIntelligence:
         user_id: str,
         timeframe_days: int = 30
     ) -> Dict[str, Any]:
-        """Analyze user context patterns over time"""
-        try:
+        """Analyze user context patterns over time"""        try:
             # This would analyze patterns from stored contexts
             # Placeholder implementation
             analysis = {
@@ -1153,8 +1102,7 @@ class ContextualIntelligence:
         conversation_id: str,
         performance_feedback: Dict[str, float]
     ) -> Dict[str, float]:
-        """Optimize context weights based on performance feedback"""
-        try:
+        """Optimize context weights based on performance feedback"""        try:
             # Load current context
             cache_key = f"context:{conversation_id}"
             cached_context = await self.context_manager.context_integrator.cache.get(cache_key)

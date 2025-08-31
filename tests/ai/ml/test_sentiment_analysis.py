@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Sentiment Analysis Tests - Enterprise Grade Test Suite
+"""Sentiment Analysis Tests - Enterprise Grade Test Suite
 
 Comprehensive tests for sentiment analysis, emotion detection, opinion mining,
 and advanced natural language understanding capabilities.
@@ -25,9 +21,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT LEGAL WARNING ⚠️
 Contact: mlaiel@live.de - Unauthorized use STRICTLY PROHIBITED
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -51,11 +45,9 @@ from ai.ml.sentiment_analysis import (
 
 
 class TestSentimentAnalyzer:
-    """Tests for basic sentiment analysis functionality"""
-    
+    """Tests for basic sentiment analysis functionality"""    
     def test_init_sentiment_analyzer(self):
-        """Test sentiment analyzer initialization"""
-        analyzer = SentimentAnalyzer(
+        """Test sentiment analyzer initialization"""        analyzer = SentimentAnalyzer(
             model_name="bert-base-uncased",
             max_length=512,
             batch_size=32,
@@ -68,8 +60,7 @@ class TestSentimentAnalyzer:
         assert analyzer.confidence_threshold == 0.7
 
     def test_sentiment_preprocessing(self, sample_text_data):
-        """Test text preprocessing for sentiment analysis"""
-        analyzer = SentimentAnalyzer()
+        """Test text preprocessing for sentiment analysis"""        analyzer = SentimentAnalyzer()
         
         raw_text = "This is AMAZING!!! 😀 #love #happy"
         processed_text = analyzer.preprocess_text(raw_text)
@@ -79,8 +70,7 @@ class TestSentimentAnalyzer:
         # Should handle emojis and hashtags appropriately
 
     def test_single_text_sentiment(self, sample_text_data):
-        """Test sentiment analysis for single text"""
-        analyzer = SentimentAnalyzer()
+        """Test sentiment analysis for single text"""        analyzer = SentimentAnalyzer()
         
         with patch.object(analyzer, '_predict_sentiment') as mock_predict:
             mock_predict.return_value = {
@@ -105,8 +95,7 @@ class TestSentimentAnalyzer:
             assert 0 <= result["confidence"] <= 1
 
     def test_batch_sentiment_analysis(self, sample_text_data):
-        """Test batch sentiment analysis"""
-        analyzer = SentimentAnalyzer(batch_size=4)
+        """Test batch sentiment analysis"""        analyzer = SentimentAnalyzer(batch_size=4)
         
         with patch.object(analyzer, '_predict_batch_sentiment') as mock_batch:
             mock_batch.return_value = [
@@ -124,8 +113,7 @@ class TestSentimentAnalyzer:
             assert all("confidence" in result for result in results)
 
     def test_aspect_based_sentiment(self):
-        """Test aspect-based sentiment analysis"""
-        analyzer = SentimentAnalyzer(enable_aspect_analysis=True)
+        """Test aspect-based sentiment analysis"""        analyzer = SentimentAnalyzer(enable_aspect_analysis=True)
         
         with patch.object(analyzer, 'analyze_aspect_sentiment') as mock_aspect:
             mock_aspect.return_value = {
@@ -147,8 +135,7 @@ class TestSentimentAnalyzer:
             assert "service" in result["aspects"]
 
     def test_temporal_sentiment_analysis(self):
-        """Test temporal sentiment analysis"""
-        analyzer = SentimentAnalyzer(enable_temporal_analysis=True)
+        """Test temporal sentiment analysis"""        analyzer = SentimentAnalyzer(enable_temporal_analysis=True)
         
         timestamped_texts = [
             {"text": "Great product launch!", "timestamp": datetime.now()},
@@ -175,8 +162,7 @@ class TestSentimentAnalyzer:
             assert len(result["sentiment_timeline"]) == 3
 
     def test_confidence_calibration(self):
-        """Test sentiment confidence calibration"""
-        analyzer = SentimentAnalyzer()
+        """Test sentiment confidence calibration"""        analyzer = SentimentAnalyzer()
         
         # Mock raw model outputs
         raw_predictions = [
@@ -204,11 +190,9 @@ class TestSentimentAnalyzer:
 
 
 class TestEmotionDetector:
-    """Tests for emotion detection functionality"""
-    
+    """Tests for emotion detection functionality"""    
     def test_init_emotion_detector(self):
-        """Test emotion detector initialization"""
-        detector = EmotionDetector(
+        """Test emotion detector initialization"""        detector = EmotionDetector(
             emotion_model="roberta-base",
             emotions=["joy", "sadness", "anger", "fear", "surprise", "disgust"],
             enable_intensity_scoring=True
@@ -219,8 +203,7 @@ class TestEmotionDetector:
         assert detector.enable_intensity_scoring
 
     def test_basic_emotion_detection(self, sample_text_data):
-        """Test basic emotion detection"""
-        detector = EmotionDetector()
+        """Test basic emotion detection"""        detector = EmotionDetector()
         
         with patch.object(detector, 'detect_emotions') as mock_detect:
             mock_detect.return_value = {
@@ -247,8 +230,7 @@ class TestEmotionDetector:
             assert result["primary_emotion"] in detector.emotions
 
     def test_multi_emotion_detection(self):
-        """Test detection of multiple emotions in text"""
-        detector = EmotionDetector(enable_multi_emotion=True)
+        """Test detection of multiple emotions in text"""        detector = EmotionDetector(enable_multi_emotion=True)
         
         with patch.object(detector, 'detect_multiple_emotions') as mock_multi:
             mock_multi.return_value = {
@@ -269,8 +251,7 @@ class TestEmotionDetector:
             assert len(result["detected_emotions"]) == 2
 
     def test_emotion_intensity_scoring(self):
-        """Test emotion intensity scoring"""
-        detector = EmotionDetector(enable_intensity_scoring=True)
+        """Test emotion intensity scoring"""        detector = EmotionDetector(enable_intensity_scoring=True)
         
         intensity_texts = [
             "I'm happy",           # Low intensity
@@ -289,8 +270,7 @@ class TestEmotionDetector:
         assert all(0 <= intensity <= 1 for intensity in intensities)
 
     def test_contextual_emotion_analysis(self):
-        """Test contextual emotion analysis"""
-        detector = EmotionDetector(enable_contextual_analysis=True)
+        """Test contextual emotion analysis"""        detector = EmotionDetector(enable_contextual_analysis=True)
         
         context_data = {
             "text": "Great job everyone!",
@@ -320,11 +300,9 @@ class TestEmotionDetector:
 
 
 class TestAdvancedSentimentModel:
-    """Tests for advanced sentiment analysis models"""
-    
+    """Tests for advanced sentiment analysis models"""    
     def test_init_advanced_model(self):
-        """Test advanced sentiment model initialization"""
-        model = AdvancedSentimentModel(
+        """Test advanced sentiment model initialization"""        model = AdvancedSentimentModel(
             architecture="transformer",
             pretrained_model="roberta-large",
             fine_tuning_enabled=True,
@@ -339,8 +317,7 @@ class TestAdvancedSentimentModel:
         assert model.target_domain == "social_media"
 
     def test_domain_specific_sentiment(self, sample_text_data):
-        """Test domain-specific sentiment analysis"""
-        model = AdvancedSentimentModel(target_domain="finance")
+        """Test domain-specific sentiment analysis"""        model = AdvancedSentimentModel(target_domain="finance")
         
         financial_text = "Stock prices are up 15% this quarter, showing strong market confidence"
         
@@ -363,15 +340,12 @@ class TestAdvancedSentimentModel:
             assert "financial_indicators" in result
 
     def test_hierarchical_sentiment_analysis(self):
-        """Test hierarchical sentiment analysis (document -> sentences -> phrases)"""
-        model = AdvancedSentimentModel(enable_hierarchical_analysis=True)
+        """Test hierarchical sentiment analysis (document -> sentences -> phrases)"""        model = AdvancedSentimentModel(enable_hierarchical_analysis=True)
         
-        document = """
-        The new product launch was fantastic. Everyone loved the design and features.
+        document = """        The new product launch was fantastic. Everyone loved the design and features.
         However, the price point seems a bit high for the target market.
         Overall, I think this will be successful despite some concerns.
-        """
-        
+        """        
         with patch.object(model, 'analyze_hierarchical_sentiment') as mock_hierarchical:
             mock_hierarchical.return_value = {
                 "document_sentiment": {"label": "POSITIVE", "score": 0.68},
@@ -393,8 +367,7 @@ class TestAdvancedSentimentModel:
             assert len(result["sentence_sentiments"]) == 4
 
     def test_fine_grained_sentiment_scoring(self):
-        """Test fine-grained sentiment scoring (beyond positive/negative/neutral)"""
-        model = AdvancedSentimentModel(enable_fine_grained_scoring=True)
+        """Test fine-grained sentiment scoring (beyond positive/negative/neutral)"""        model = AdvancedSentimentModel(enable_fine_grained_scoring=True)
         
         with patch.object(model, 'get_fine_grained_sentiment') as mock_fine:
             mock_fine.return_value = {
@@ -415,11 +388,9 @@ class TestAdvancedSentimentModel:
 
 
 class TestMultilingualSentimentAnalyzer:
-    """Tests for multilingual sentiment analysis"""
-    
+    """Tests for multilingual sentiment analysis"""    
     def test_init_multilingual_analyzer(self):
-        """Test multilingual sentiment analyzer initialization"""
-        analyzer = MultilingualSentimentAnalyzer(
+        """Test multilingual sentiment analyzer initialization"""        analyzer = MultilingualSentimentAnalyzer(
             supported_languages=["en", "fr", "de", "es", "it"],
             model_name="xlm-roberta-base",
             enable_auto_detection=True
@@ -430,8 +401,7 @@ class TestMultilingualSentimentAnalyzer:
         assert analyzer.enable_auto_detection
 
     def test_language_detection(self):
-        """Test automatic language detection"""
-        analyzer = MultilingualSentimentAnalyzer(enable_auto_detection=True)
+        """Test automatic language detection"""        analyzer = MultilingualSentimentAnalyzer(enable_auto_detection=True)
         
         texts = {
             "en": "This is a great product!",
@@ -454,8 +424,7 @@ class TestMultilingualSentimentAnalyzer:
                 assert result["confidence"] > 0.9
 
     def test_cross_lingual_sentiment_analysis(self):
-        """Test sentiment analysis across different languages"""
-        analyzer = MultilingualSentimentAnalyzer()
+        """Test sentiment analysis across different languages"""        analyzer = MultilingualSentimentAnalyzer()
         
         multilingual_texts = [
             {"text": "I love this!", "language": "en"},
@@ -482,8 +451,7 @@ class TestMultilingualSentimentAnalyzer:
         assert all(result["sentiment"] == "POSITIVE" for result in results)
 
     def test_translation_based_sentiment(self):
-        """Test translation-based sentiment analysis"""
-        analyzer = MultilingualSentimentAnalyzer(
+        """Test translation-based sentiment analysis"""        analyzer = MultilingualSentimentAnalyzer(
             translation_strategy="translate_then_analyze"
         )
         
@@ -508,11 +476,9 @@ class TestMultilingualSentimentAnalyzer:
 
 
 class TestSentimentTrendAnalyzer:
-    """Tests for sentiment trend analysis"""
-    
+    """Tests for sentiment trend analysis"""    
     def test_init_trend_analyzer(self):
-        """Test sentiment trend analyzer initialization"""
-        analyzer = SentimentTrendAnalyzer(
+        """Test sentiment trend analyzer initialization"""        analyzer = SentimentTrendAnalyzer(
             time_window="7d",
             aggregation_method="weighted_average",
             enable_anomaly_detection=True
@@ -523,8 +489,7 @@ class TestSentimentTrendAnalyzer:
         assert analyzer.enable_anomaly_detection
 
     def test_sentiment_time_series_analysis(self, sample_trend_data):
-        """Test sentiment time series analysis"""
-        analyzer = SentimentTrendAnalyzer()
+        """Test sentiment time series analysis"""        analyzer = SentimentTrendAnalyzer()
         
         # Use sample trend data with sentiment scores
         sentiment_trends = analyzer.analyze_sentiment_trends(sample_trend_data)
@@ -536,8 +501,7 @@ class TestSentimentTrendAnalyzer:
         assert "seasonal_patterns" in sentiment_trends
 
     def test_sentiment_anomaly_detection(self):
-        """Test sentiment anomaly detection"""
-        analyzer = SentimentTrendAnalyzer(enable_anomaly_detection=True)
+        """Test sentiment anomaly detection"""        analyzer = SentimentTrendAnalyzer(enable_anomaly_detection=True)
         
         # Mock sentiment time series with anomalies
         sentiment_scores = np.array([0.6, 0.65, 0.7, 0.68, 0.72, -0.8, 0.69, 0.71])  # -0.8 is anomaly
@@ -552,8 +516,7 @@ class TestSentimentTrendAnalyzer:
         assert all("anomaly_type" in anomaly for anomaly in anomalies)
 
     def test_sentiment_correlation_analysis(self):
-        """Test sentiment correlation with external factors"""
-        analyzer = SentimentTrendAnalyzer()
+        """Test sentiment correlation with external factors"""        analyzer = SentimentTrendAnalyzer()
         
         sentiment_data = np.random.uniform(-1, 1, 100)
         external_factors = {
@@ -574,11 +537,9 @@ class TestSentimentTrendAnalyzer:
 
 
 class TestOpinionMiningEngine:
-    """Tests for opinion mining functionality"""
-    
+    """Tests for opinion mining functionality"""    
     def test_init_opinion_mining(self):
-        """Test opinion mining engine initialization"""
-        engine = OpinionMiningEngine(
+        """Test opinion mining engine initialization"""        engine = OpinionMiningEngine(
             enable_aspect_extraction=True,
             enable_opinion_summarization=True,
             enable_stance_detection=True
@@ -589,15 +550,12 @@ class TestOpinionMiningEngine:
         assert engine.enable_stance_detection
 
     def test_aspect_extraction(self):
-        """Test aspect extraction from opinions"""
-        engine = OpinionMiningEngine(enable_aspect_extraction=True)
+        """Test aspect extraction from opinions"""        engine = OpinionMiningEngine(enable_aspect_extraction=True)
         
-        review_text = """
-        The camera quality is excellent and takes stunning photos.
+        review_text = """        The camera quality is excellent and takes stunning photos.
         However, the battery life is quite poor and needs frequent charging.
         The build quality feels premium but the price is too expensive.
-        """
-        
+        """        
         with patch.object(engine, 'extract_aspects') as mock_extract:
             mock_extract.return_value = {
                 "aspects": [
@@ -619,8 +577,7 @@ class TestOpinionMiningEngine:
             assert len(result["aspects"]) == 4
 
     def test_opinion_summarization(self):
-        """Test opinion summarization"""
-        engine = OpinionMiningEngine(enable_opinion_summarization=True)
+        """Test opinion summarization"""        engine = OpinionMiningEngine(enable_opinion_summarization=True)
         
         multiple_opinions = [
             "Great product, love the features",
@@ -650,8 +607,7 @@ class TestOpinionMiningEngine:
             assert "consensus_level" in result
 
     def test_stance_detection(self):
-        """Test stance detection in opinions"""
-        engine = OpinionMiningEngine(enable_stance_detection=True)
+        """Test stance detection in opinions"""        engine = OpinionMiningEngine(enable_stance_detection=True)
         
         topic = "artificial intelligence in healthcare"
         opinions = [
@@ -678,11 +634,9 @@ class TestOpinionMiningEngine:
 
 
 class TestBrandSentimentAnalyzer:
-    """Tests for brand sentiment analysis"""
-    
+    """Tests for brand sentiment analysis"""    
     def test_init_brand_analyzer(self):
-        """Test brand sentiment analyzer initialization"""
-        analyzer = BrandSentimentAnalyzer(
+        """Test brand sentiment analyzer initialization"""        analyzer = BrandSentimentAnalyzer(
             brand_name="TechCorp",
             competitor_brands=["CompetitorA", "CompetitorB"],
             enable_competitor_comparison=True
@@ -693,8 +647,7 @@ class TestBrandSentimentAnalyzer:
         assert analyzer.enable_competitor_comparison
 
     def test_brand_mention_extraction(self):
-        """Test brand mention extraction from text"""
-        analyzer = BrandSentimentAnalyzer(brand_name="TechCorp")
+        """Test brand mention extraction from text"""        analyzer = BrandSentimentAnalyzer(brand_name="TechCorp")
         
         texts = [
             "I love TechCorp's new product release",
@@ -722,8 +675,7 @@ class TestBrandSentimentAnalyzer:
         assert all(mention["brand"] == "TechCorp" for mention in mentions)
 
     def test_brand_sentiment_tracking(self):
-        """Test brand sentiment tracking over time"""
-        analyzer = BrandSentimentAnalyzer(brand_name="TechCorp")
+        """Test brand sentiment tracking over time"""        analyzer = BrandSentimentAnalyzer(brand_name="TechCorp")
         
         brand_mentions = [
             {"text": "TechCorp is amazing!", "timestamp": datetime.now()},
@@ -751,8 +703,7 @@ class TestBrandSentimentAnalyzer:
             assert "time_series" in result
 
     def test_competitor_sentiment_comparison(self):
-        """Test competitor sentiment comparison"""
-        analyzer = BrandSentimentAnalyzer(
+        """Test competitor sentiment comparison"""        analyzer = BrandSentimentAnalyzer(
             brand_name="TechCorp",
             competitor_brands=["CompetitorA", "CompetitorB"],
             enable_competitor_comparison=True
@@ -780,11 +731,9 @@ class TestBrandSentimentAnalyzer:
 
 
 class TestSentimentMetrics:
-    """Tests for sentiment analysis metrics and evaluation"""
-    
+    """Tests for sentiment analysis metrics and evaluation"""    
     def test_init_metrics(self):
-        """Test sentiment metrics initialization"""
-        metrics = SentimentMetrics()
+        """Test sentiment metrics initialization"""        metrics = SentimentMetrics()
         
         assert hasattr(metrics, 'accuracy_scores')
         assert hasattr(metrics, 'precision_scores')
@@ -792,8 +741,7 @@ class TestSentimentMetrics:
         assert hasattr(metrics, 'f1_scores')
 
     def test_classification_metrics(self):
-        """Test sentiment classification metrics"""
-        metrics = SentimentMetrics()
+        """Test sentiment classification metrics"""        metrics = SentimentMetrics()
         
         # Mock predictions and ground truth
         y_true = ["POSITIVE", "NEGATIVE", "NEUTRAL", "POSITIVE", "NEGATIVE"]
@@ -808,8 +756,7 @@ class TestSentimentMetrics:
         assert 0 <= results["accuracy"] <= 1
 
     def test_confidence_calibration_metrics(self):
-        """Test confidence calibration metrics"""
-        metrics = SentimentMetrics()
+        """Test confidence calibration metrics"""        metrics = SentimentMetrics()
         
         # Mock predictions with confidence scores
         predictions = [
@@ -826,8 +773,7 @@ class TestSentimentMetrics:
         assert "reliability_diagram" in calibration_metrics
 
     def test_aspect_sentiment_metrics(self):
-        """Test aspect-based sentiment analysis metrics"""
-        metrics = SentimentMetrics()
+        """Test aspect-based sentiment analysis metrics"""        metrics = SentimentMetrics()
         
         # Mock aspect-based predictions
         aspect_predictions = {
@@ -843,8 +789,7 @@ class TestSentimentMetrics:
         assert "overall_aspect_performance" in aspect_metrics
 
     def test_temporal_consistency_metrics(self):
-        """Test temporal consistency metrics for sentiment analysis"""
-        metrics = SentimentMetrics()
+        """Test temporal consistency metrics for sentiment analysis"""        metrics = SentimentMetrics()
         
         # Mock temporal sentiment predictions
         temporal_predictions = [
@@ -863,12 +808,10 @@ class TestSentimentMetrics:
 
 @pytest.mark.integration
 class TestSentimentAnalysisIntegration:
-    """Integration tests for sentiment analysis components"""
-    
+    """Integration tests for sentiment analysis components"""    
     @pytest.mark.slow
     def test_end_to_end_sentiment_pipeline(self, sample_text_data, temp_dir):
-        """Test complete sentiment analysis pipeline"""
-        # Initialize components
+        """Test complete sentiment analysis pipeline"""        # Initialize components
         analyzer = SentimentAnalyzer(batch_size=4)
         emotion_detector = EmotionDetector()
         opinion_miner = OpinionMiningEngine(enable_aspect_extraction=True)
@@ -905,8 +848,7 @@ class TestSentimentAnalysisIntegration:
         assert all("opinions" in result for result in batch_results)
 
     def test_multilingual_sentiment_integration(self):
-        """Test multilingual sentiment analysis integration"""
-        analyzer = MultilingualSentimentAnalyzer(
+        """Test multilingual sentiment analysis integration"""        analyzer = MultilingualSentimentAnalyzer(
             supported_languages=["en", "fr", "de"],
             enable_auto_detection=True
         )
@@ -934,8 +876,7 @@ class TestSentimentAnalysisIntegration:
         assert all(result["sentiment"] == "POSITIVE" for result in results)
 
     def test_real_time_sentiment_monitoring(self):
-        """Test real-time sentiment monitoring integration"""
-        analyzer = SentimentTrendAnalyzer(
+        """Test real-time sentiment monitoring integration"""        analyzer = SentimentTrendAnalyzer(
             time_window="1h",
             enable_anomaly_detection=True
         )

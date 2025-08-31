@@ -1,5 +1,4 @@
-"""
-Advanced Security Middleware
+"""Advanced Security Middleware
 ===========================
 
 Production-ready security stack with WAF, OAuth2, rate limiting,
@@ -7,9 +6,7 @@ and comprehensive security controls.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import time
 import json
 import logging
@@ -34,16 +31,14 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityLevel(Enum):
-    """Security level classifications"""
-    LOW = "low"
+    """Security level classifications"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class AttackType(Enum):
-    """Types of security attacks"""
-    SQL_INJECTION = "sql_injection"
+    """Types of security attacks"""    SQL_INJECTION = "sql_injection"
     XSS = "xss"
     CSRF = "csrf"
     PATH_TRAVERSAL = "path_traversal"
@@ -56,8 +51,7 @@ class AttackType(Enum):
 
 
 class RateLimitType(Enum):
-    """Rate limiting strategies"""
-    FIXED_WINDOW = "fixed_window"
+    """Rate limiting strategies"""    FIXED_WINDOW = "fixed_window"
     SLIDING_WINDOW = "sliding_window"
     TOKEN_BUCKET = "token_bucket"
     LEAKY_BUCKET = "leaky_bucket"
@@ -65,8 +59,7 @@ class RateLimitType(Enum):
 
 @dataclass
 class SecurityRule:
-    """Security rule definition"""
-    rule_id: str
+    """Security rule definition"""    rule_id: str
     name: str
     pattern: str
     attack_type: AttackType
@@ -78,8 +71,7 @@ class SecurityRule:
 
 @dataclass
 class RateLimitRule:
-    """Rate limiting rule"""
-    name: str
+    """Rate limiting rule"""    name: str
     requests_per_window: int
     window_size_seconds: int
     rate_limit_type: RateLimitType
@@ -90,8 +82,7 @@ class RateLimitRule:
 
 @dataclass
 class SecurityEvent:
-    """Security event log"""
-    event_id: str
+    """Security event log"""    event_id: str
     timestamp: datetime
     client_ip: str
     user_agent: str
@@ -104,8 +95,7 @@ class SecurityEvent:
 
 
 class WAFEngine:
-    """Web Application Firewall engine"""
-    
+    """Web Application Firewall engine"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.rules: List[SecurityRule] = []
@@ -116,8 +106,7 @@ class WAFEngine:
         self._initialize_default_rules()
         
     async def initialize(self):
-        """Initialize WAF engine"""
-        try:
+        """Initialize WAF engine"""        try:
             # Initialize Redis for caching and rate limiting
             redis_config = self.config.get('redis', {})
             if redis_config:
@@ -134,8 +123,7 @@ class WAFEngine:
             raise
     
     def _initialize_default_rules(self):
-        """Initialize default WAF rules"""
-        default_rules = [
+        """Initialize default WAF rules"""        default_rules = [
             # SQL Injection patterns
             SecurityRule(
                 rule_id="sql_001",
@@ -223,8 +211,7 @@ class WAFEngine:
         self.logger.info(f"Initialized {len(default_rules)} default WAF rules")
     
     async def analyze_request(self, request_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze incoming request for security threats"""
-        try:
+        """Analyze incoming request for security threats"""        try:
             analysis_start = time.time()
             
             # Extract request components
@@ -315,8 +302,7 @@ class WAFEngine:
             }
     
     async def _analyze_bot_behavior(self, request_data: Dict[str, Any]) -> float:
-        """Analyze request for bot behavior patterns"""
-        try:
+        """Analyze request for bot behavior patterns"""        try:
             headers = request_data.get('headers', {})
             user_agent = headers.get('User-Agent', '').lower()
             client_ip = request_data.get('client_ip', '')
@@ -362,8 +348,7 @@ class WAFEngine:
             return 0.0
     
     async def _log_security_event(self, request_data: Dict[str, Any], threats: List[Dict], status: str):
-        """Log security event"""
-        try:
+        """Log security event"""        try:
             event = SecurityEvent(
                 event_id=str(uuid.uuid4()),
                 timestamp=datetime.utcnow(),
@@ -406,8 +391,7 @@ class WAFEngine:
 
 
 class RateLimiter:
-    """Advanced rate limiting with multiple strategies"""
-    
+    """Advanced rate limiting with multiple strategies"""    
     def __init__(self, redis_client, config: Dict[str, Any] = None):
         self.redis_client = redis_client
         self.config = config or {}
@@ -418,8 +402,7 @@ class RateLimiter:
         self._initialize_default_rules()
     
     def _initialize_default_rules(self):
-        """Initialize default rate limiting rules"""
-        default_rules = [
+        """Initialize default rate limiting rules"""        default_rules = [
             RateLimitRule(
                 name="api_global",
                 requests_per_window=1000,
@@ -447,8 +430,7 @@ class RateLimiter:
         self.rules.extend(default_rules)
     
     async def check_rate_limit(self, identifier: str, rule_name: str) -> Dict[str, Any]:
-        """Check if request is within rate limits"""
-        try:
+        """Check if request is within rate limits"""        try:
             rule = next((r for r in self.rules if r.name == rule_name), None)
             if not rule or not rule.enabled:
                 return {'allowed': True, 'rule': None}
@@ -467,8 +449,7 @@ class RateLimiter:
             return {'allowed': True, 'error': str(e)}
     
     async def _check_fixed_window(self, identifier: str, rule: RateLimitRule) -> Dict[str, Any]:
-        """Fixed window rate limiting"""
-        current_window = int(time.time()) // rule.window_size_seconds
+        """Fixed window rate limiting"""        current_window = int(time.time()) // rule.window_size_seconds
         key = f"rate_limit:fixed:{rule.name}:{identifier}:{current_window}"
         
         current_count = await self.redis_client.get(key)
@@ -496,8 +477,7 @@ class RateLimiter:
         }
     
     async def _check_sliding_window(self, identifier: str, rule: RateLimitRule) -> Dict[str, Any]:
-        """Sliding window rate limiting"""
-        now = time.time()
+        """Sliding window rate limiting"""        now = time.time()
         window_start = now - rule.window_size_seconds
         key = f"rate_limit:sliding:{rule.name}:{identifier}"
         
@@ -528,8 +508,7 @@ class RateLimiter:
         }
     
     async def _check_token_bucket(self, identifier: str, rule: RateLimitRule) -> Dict[str, Any]:
-        """Token bucket rate limiting"""
-        key = f"rate_limit:bucket:{rule.name}:{identifier}"
+        """Token bucket rate limiting"""        key = f"rate_limit:bucket:{rule.name}:{identifier}"
         
         # Get current bucket state
         bucket_data = await self.redis_client.hmget(key, 'tokens', 'last_refill')
@@ -568,14 +547,12 @@ class RateLimiter:
         }
     
     async def _check_leaky_bucket(self, identifier: str, rule: RateLimitRule) -> Dict[str, Any]:
-        """Leaky bucket rate limiting"""
-        # Simplified implementation - similar to token bucket but with different semantics
+        """Leaky bucket rate limiting"""        # Simplified implementation - similar to token bucket but with different semantics
         return await self._check_token_bucket(identifier, rule)
 
 
 class OAuth2Provider:
-    """OAuth2 authentication and authorization provider"""
-    
+    """OAuth2 authentication and authorization provider"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.secret_key = self.config.get('secret_key', secrets.token_urlsafe(32))
@@ -584,8 +561,7 @@ class OAuth2Provider:
         self.logger = logging.getLogger(__name__)
     
     async def create_access_token(self, user_data: Dict[str, Any], scopes: List[str] = None) -> str:
-        """Create JWT access token"""
-        try:
+        """Create JWT access token"""        try:
             now = datetime.utcnow()
             payload = {
                 'user_id': user_data.get('user_id'),
@@ -606,8 +582,7 @@ class OAuth2Provider:
             raise
     
     async def create_refresh_token(self, user_data: Dict[str, Any]) -> str:
-        """Create refresh token"""
-        try:
+        """Create refresh token"""        try:
             now = datetime.utcnow()
             payload = {
                 'user_id': user_data.get('user_id'),
@@ -626,8 +601,7 @@ class OAuth2Provider:
             raise
     
     async def verify_token(self, token: str) -> Dict[str, Any]:
-        """Verify and decode JWT token"""
-        try:
+        """Verify and decode JWT token"""        try:
             payload = jwt.decode(token, self.secret_key, algorithms=['HS256'])
             
             # Check token type
@@ -655,8 +629,7 @@ class OAuth2Provider:
             return {'valid': False, 'error': str(e)}
     
     async def refresh_access_token(self, refresh_token: str) -> Dict[str, Any]:
-        """Refresh access token using refresh token"""
-        try:
+        """Refresh access token using refresh token"""        try:
             # Verify refresh token
             verification = await self.verify_token(refresh_token)
             if not verification['valid']:
@@ -688,8 +661,7 @@ class OAuth2Provider:
 
 
 class SecurityMiddleware:
-    """Comprehensive security middleware orchestrator"""
-    
+    """Comprehensive security middleware orchestrator"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.waf = WAFEngine(config.get('waf', {}))
@@ -699,8 +671,7 @@ class SecurityMiddleware:
         self.logger = logging.getLogger(__name__)
         
     async def initialize(self):
-        """Initialize security middleware"""
-        try:
+        """Initialize security middleware"""        try:
             # Initialize WAF
             await self.waf.initialize()
             
@@ -723,8 +694,7 @@ class SecurityMiddleware:
             raise
     
     async def process_request(self, request_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process incoming request through security pipeline"""
-        try:
+        """Process incoming request through security pipeline"""        try:
             security_result = {
                 'request_id': request_data.get('request_id', str(uuid.uuid4())),
                 'allowed': True,
@@ -813,8 +783,7 @@ security_middleware = None
 
 
 async def initialize_security(config: Dict[str, Any] = None) -> SecurityMiddleware:
-    """Initialize global security middleware"""
-    global security_middleware
+    """Initialize global security middleware"""    global security_middleware
     
     if security_middleware is None:
         security_middleware = SecurityMiddleware(config)
@@ -824,5 +793,4 @@ async def initialize_security(config: Dict[str, Any] = None) -> SecurityMiddlewa
 
 
 def get_security_middleware() -> Optional[SecurityMiddleware]:
-    """Get global security middleware instance"""
-    return security_middleware
+    """Get global security middleware instance"""    return security_middleware

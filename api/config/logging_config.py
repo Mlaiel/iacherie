@@ -1,13 +1,10 @@
-"""
-Logging Configuration - IA Influencer Agent Platform
+"""Logging Configuration - IA Influencer Agent Platform
 Advanced logging configuration with structured logging and multiple handlers
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""
-
-import os
+"""import os
 import logging
 import logging.handlers
 from typing import Dict, List, Optional, Any, Union
@@ -18,8 +15,7 @@ from pathlib import Path
 
 
 class LogLevel(Enum):
-    """Supported logging levels"""
-    CRITICAL = "CRITICAL"
+    """Supported logging levels"""    CRITICAL = "CRITICAL"
     ERROR = "ERROR"
     WARNING = "WARNING"
     INFO = "INFO"
@@ -28,8 +24,7 @@ class LogLevel(Enum):
 
 
 class LogFormat(Enum):
-    """Supported log formats"""
-    STANDARD = "standard"
+    """Supported log formats"""    STANDARD = "standard"
     DETAILED = "detailed"
     JSON = "json"
     SYSLOG = "syslog"
@@ -37,8 +32,7 @@ class LogFormat(Enum):
 
 
 class LogHandler(Enum):
-    """Supported log handlers"""
-    CONSOLE = "console"
+    """Supported log handlers"""    CONSOLE = "console"
     FILE = "file"
     ROTATING_FILE = "rotating_file"
     TIMED_ROTATING_FILE = "timed_rotating_file"
@@ -50,8 +44,7 @@ class LogHandler(Enum):
 
 @dataclass
 class StructuredLogConfig:
-    """Configuration for structured logging"""
-    
+    """Configuration for structured logging"""    
     enabled: bool = field(default_factory=lambda: 
         os.getenv("STRUCTURED_LOGGING_ENABLED", "true").lower() == "true")
     
@@ -101,8 +94,7 @@ class StructuredLogConfig:
 
 @dataclass
 class FileHandlerConfig:
-    """Configuration for file-based log handlers"""
-    
+    """Configuration for file-based log handlers"""    
     # Basic file settings
     filename: str = field(default_factory=lambda: 
         os.getenv("LOG_FILE_PATH", "/var/log/ia_influencer_agent.log"))
@@ -127,15 +119,13 @@ class FileHandlerConfig:
     directory_permissions: int = 0o755
     
     def __post_init__(self):
-        """Ensure log directory exists"""
-        log_dir = Path(self.filename).parent
+        """Ensure log directory exists"""        log_dir = Path(self.filename).parent
         log_dir.mkdir(parents=True, exist_ok=True, mode=self.directory_permissions)
 
 
 @dataclass
 class SyslogHandlerConfig:
-    """Configuration for syslog handler"""
-    
+    """Configuration for syslog handler"""    
     enabled: bool = field(default_factory=lambda: 
         os.getenv("SYSLOG_ENABLED", "false").lower() == "true")
     host: str = field(default_factory=lambda: os.getenv("SYSLOG_HOST", "localhost"))
@@ -145,14 +135,12 @@ class SyslogHandlerConfig:
     
     @property
     def address(self) -> tuple:
-        """Get syslog server address"""
-        return (self.host, self.port)
+        """Get syslog server address"""        return (self.host, self.port)
 
 
 @dataclass
 class ElasticsearchHandlerConfig:
-    """Configuration for Elasticsearch log handler"""
-    
+    """Configuration for Elasticsearch log handler"""    
     enabled: bool = field(default_factory=lambda: 
         os.getenv("ELASTICSEARCH_LOGGING_ENABLED", "false").lower() == "true")
     hosts: List[str] = field(default_factory=lambda: 
@@ -180,8 +168,7 @@ class ElasticsearchHandlerConfig:
 
 @dataclass
 class WebhookHandlerConfig:
-    """Configuration for webhook log handler"""
-    
+    """Configuration for webhook log handler"""    
     enabled: bool = field(default_factory=lambda: 
         os.getenv("WEBHOOK_LOGGING_ENABLED", "false").lower() == "true")
     url: Optional[str] = field(default_factory=lambda: os.getenv("LOG_WEBHOOK_URL"))
@@ -205,8 +192,7 @@ class WebhookHandlerConfig:
 
 @dataclass
 class LoggingConfig:
-    """Comprehensive logging configuration"""
-    
+    """Comprehensive logging configuration"""    
     # Global logging settings
     enabled: bool = field(default_factory=lambda: 
         os.getenv("LOGGING_ENABLED", "true").lower() == "true")
@@ -268,14 +254,12 @@ class LoggingConfig:
         float(os.getenv("LOG_SAMPLING_RATE", "0.1")))  # 10%
     
     def __post_init__(self):
-        """Initialize logging configuration"""
-        self._validate_configuration()
+        """Initialize logging configuration"""        self._validate_configuration()
         if self.file_handler.auth_header and self.file_handler.auth_token:
             self.webhook_handler.headers[self.webhook_handler.auth_header] = self.webhook_handler.auth_token
     
     def _validate_configuration(self):
-        """Validate logging configuration"""
-        if not any([self.console_enabled, self.file_enabled, 
+        """Validate logging configuration"""        if not any([self.console_enabled, self.file_enabled, 
                    self.syslog_handler.enabled, self.elasticsearch_handler.enabled,
                    self.webhook_handler.enabled]):
             raise ValueError("At least one log handler must be enabled")
@@ -288,12 +272,10 @@ class LoggingConfig:
     
     @property
     def log_level_int(self) -> int:
-        """Get log level as integer"""
-        return getattr(logging, self.root_level.value)
+        """Get log level as integer"""        return getattr(logging, self.root_level.value)
     
     def get_format_string(self, handler_type: LogHandler = LogHandler.CONSOLE) -> str:
-        """Get format string based on log format type"""
-        if self.log_format == LogFormat.JSON:
+        """Get format string based on log format type"""        if self.log_format == LogFormat.JSON:
             return "%(message)s"  # JSON formatter will handle structure
         elif self.log_format == LogFormat.DETAILED:
             return (
@@ -309,8 +291,7 @@ class LoggingConfig:
                            "%(asctime)s - %(name)s - %(levelname)s - %(message)s")
     
     def get_handlers_config(self) -> Dict[str, Dict[str, Any]]:
-        """Get handlers configuration dictionary"""
-        handlers = {}
+        """Get handlers configuration dictionary"""        handlers = {}
         
         if self.console_enabled:
             handlers["console"] = {
@@ -372,8 +353,7 @@ class LoggingConfig:
         return handlers
     
     def get_formatters_config(self) -> Dict[str, Dict[str, Any]]:
-        """Get formatters configuration dictionary"""
-        formatters = {
+        """Get formatters configuration dictionary"""        formatters = {
             "default": {
                 "format": self.get_format_string(LogHandler.CONSOLE),
                 "datefmt": self.date_format
@@ -397,8 +377,7 @@ class LoggingConfig:
         return formatters
     
     def get_loggers_config(self) -> Dict[str, Dict[str, Any]]:
-        """Get loggers configuration dictionary"""
-        loggers = {}
+        """Get loggers configuration dictionary"""        loggers = {}
         
         for logger_name, config in self.logger_configs.items():
             loggers[logger_name] = {
@@ -411,8 +390,7 @@ class LoggingConfig:
         return loggers
     
     def get_logging_dict_config(self) -> Dict[str, Any]:
-        """Get complete logging configuration dictionary for dictConfig"""
-        return {
+        """Get complete logging configuration dictionary for dictConfig"""        return {
             "version": 1,
             "disable_existing_loggers": self.disable_existing_loggers,
             "formatters": self.get_formatters_config(),
@@ -425,8 +403,7 @@ class LoggingConfig:
         }
     
     def configure_logging(self):
-        """Configure Python logging using dictConfig"""
-        if not self.enabled:
+        """Configure Python logging using dictConfig"""        if not self.enabled:
             logging.disable(logging.CRITICAL)
             return
         
@@ -443,8 +420,7 @@ class LoggingConfig:
             self._setup_sampling()
     
     def _setup_sampling(self):
-        """Set up log sampling for high-volume loggers"""
-        import random
+        """Set up log sampling for high-volume loggers"""        import random
         
         class SamplingFilter(logging.Filter):
             def __init__(self, rate: float):
@@ -461,8 +437,7 @@ class LoggingConfig:
             logger.addFilter(SamplingFilter(self.sampling_rate))
     
     def get_logger(self, name: str) -> logging.Logger:
-        """Get configured logger instance"""
-        if not self.enabled:
+        """Get configured logger instance"""        if not self.enabled:
             return logging.getLogger(name)
         
         logger = logging.getLogger(name)
@@ -476,8 +451,7 @@ class LoggingConfig:
         return logger
     
     def create_request_logger(self, request_id: str, user_id: Optional[str] = None) -> logging.Logger:
-        """Create logger with request context"""
-        logger = self.get_logger("ia_influencer_agent.request")
+        """Create logger with request context"""        logger = self.get_logger("ia_influencer_agent.request")
         
         if self.structured.enabled:
             extra = {"request_id": request_id}

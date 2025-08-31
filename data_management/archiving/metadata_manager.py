@@ -1,5 +1,4 @@
-"""
-Archival Metadata Management Module
+"""Archival Metadata Management Module
 
 Comprehensive metadata management system for archived content with advanced
 indexing, search capabilities, schema management, and content classification.
@@ -15,9 +14,7 @@ Any unauthorized use is strictly prohibited.
 
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + 
 Microservices + Audio + DevOps + IA Prompt Engineer
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import hashlib
@@ -36,8 +33,7 @@ logger = logging.getLogger(__name__)
 
 
 class MetadataType(Enum):
-    """Types of metadata"""
-    TECHNICAL = "technical"
+    """Types of metadata"""    TECHNICAL = "technical"
     DESCRIPTIVE = "descriptive"
     ADMINISTRATIVE = "administrative"
     PRESERVATION = "preservation"
@@ -46,8 +42,7 @@ class MetadataType(Enum):
 
 
 class IndexingStrategy(Enum):
-    """Metadata indexing strategies"""
-    FULL_TEXT = "full_text"
+    """Metadata indexing strategies"""    FULL_TEXT = "full_text"
     KEYWORD = "keyword"
     SEMANTIC = "semantic"
     HIERARCHICAL = "hierarchical"
@@ -56,8 +51,7 @@ class IndexingStrategy(Enum):
 
 
 class SearchOperator(Enum):
-    """Search operators for metadata queries"""
-    EQUALS = "eq"
+    """Search operators for metadata queries"""    EQUALS = "eq"
     NOT_EQUALS = "ne"
     CONTAINS = "contains"
     STARTS_WITH = "starts_with"
@@ -72,8 +66,7 @@ class SearchOperator(Enum):
 
 @dataclass
 class MetadataField:
-    """Definition of a metadata field"""
-    field_name: str
+    """Definition of a metadata field"""    field_name: str
     field_type: str  # string, integer, float, boolean, datetime, json
     description: str
     
@@ -100,15 +93,13 @@ class MetadataField:
     updated_at: Optional[datetime] = None
     
     def __post_init__(self):
-        """Post-initialization processing"""
-        if not self.display_name:
+        """Post-initialization processing"""        if not self.display_name:
             self.display_name = self.field_name.replace('_', ' ').title()
 
 
 @dataclass
 class MetadataSchema:
-    """Schema definition for metadata"""
-    schema_id: str
+    """Schema definition for metadata"""    schema_id: str
     name: str
     description: str
     version: str
@@ -141,8 +132,7 @@ class MetadataSchema:
 
 @dataclass
 class MetadataEntry:
-    """Metadata entry for archived content"""
-    entry_id: str
+    """Metadata entry for archived content"""    entry_id: str
     archive_id: str
     schema_id: str
     
@@ -180,8 +170,7 @@ class MetadataEntry:
 
 @dataclass
 class SearchCriteria:
-    """Search criteria for metadata queries"""
-    query_id: str
+    """Search criteria for metadata queries"""    query_id: str
     
     # Basic search
     keywords: Optional[str] = None
@@ -220,8 +209,7 @@ class SearchCriteria:
 
 @dataclass
 class SearchResult:
-    """Search result entry"""
-    entry_id: str
+    """Search result entry"""    entry_id: str
     archive_id: str
     schema_id: str
     
@@ -241,8 +229,7 @@ class SearchResult:
 
 
 class MetadataValidator:
-    """Validator for metadata against schemas"""
-    
+    """Validator for metadata against schemas"""    
     def __init__(self):
         self.validation_cache: Dict[str, bool] = {}
         logger.info("Metadata validator initialized")
@@ -252,8 +239,7 @@ class MetadataValidator:
         metadata: Dict[str, Any],
         schema: MetadataSchema
     ) -> Tuple[bool, List[str]]:
-        """
-        Validate metadata against schema.
+        """        Validate metadata against schema.
         
         Args:
             metadata: Metadata to validate
@@ -261,8 +247,7 @@ class MetadataValidator:
             
         Returns:
             Tuple of (is_valid, error_messages)
-        """
-        try:
+        """        try:
             errors = []
             
             # Check required fields
@@ -293,8 +278,7 @@ class MetadataValidator:
         value: Any,
         field_def: MetadataField
     ) -> List[str]:
-        """Validate individual field"""
-        errors = []
+        """Validate individual field"""        errors = []
         
         try:
             # Type validation
@@ -329,8 +313,7 @@ class MetadataValidator:
             return [f"Field validation error: {e}"]
     
     async def _validate_type(self, value: Any, expected_type: str) -> bool:
-        """Validate value type"""
-        type_map = {
+        """Validate value type"""        type_map = {
             "string": str,
             "integer": int,
             "float": (int, float),
@@ -347,8 +330,7 @@ class MetadataValidator:
 
 
 class MetadataIndexer:
-    """Advanced indexer for metadata search"""
-    
+    """Advanced indexer for metadata search"""    
     def __init__(self):
         self.indexes: Dict[str, Dict[str, Set[str]]] = {}
         self.full_text_index: Dict[str, Set[str]] = {}
@@ -357,8 +339,7 @@ class MetadataIndexer:
         logger.info("Metadata indexer initialized")
     
     async def index_metadata(self, entry: MetadataEntry, schema: MetadataSchema):
-        """Index metadata entry for search"""
-        try:
+        """Index metadata entry for search"""        try:
             entry_id = entry.entry_id
             
             # Index by content type
@@ -383,8 +364,7 @@ class MetadataIndexer:
             logger.error(f"Failed to index metadata entry {entry.entry_id}: {e}")
     
     async def search_index(self, criteria: SearchCriteria) -> List[str]:
-        """Search indexed metadata"""
-        try:
+        """Search indexed metadata"""        try:
             candidate_entry_ids = set()
             
             # Keyword search
@@ -433,8 +413,7 @@ class MetadataIndexer:
             return []
     
     async def _add_to_index(self, index_name: str, value: str, entry_id: str):
-        """Add entry to index"""
-        if index_name not in self.indexes:
+        """Add entry to index"""        if index_name not in self.indexes:
             self.indexes[index_name] = {}
         
         if value not in self.indexes[index_name]:
@@ -449,8 +428,7 @@ class MetadataIndexer:
         field_def: MetadataField,
         entry_id: str
     ):
-        """Index individual field"""
-        if not field_def.indexed:
+        """Index individual field"""        if not field_def.indexed:
             return
         
         # Convert value to indexable string
@@ -470,8 +448,7 @@ class MetadataIndexer:
             await self._add_to_semantic_index(field_name, index_value, entry_id)
     
     async def _index_full_text(self, entry: MetadataEntry):
-        """Index for full-text search"""
-        # Combine all string values for full-text indexing
+        """Index for full-text search"""        # Combine all string values for full-text indexing
         text_content = []
         
         for value in entry.metadata.values():
@@ -486,8 +463,7 @@ class MetadataIndexer:
         await self._add_to_full_text_index(combined_text, entry.entry_id)
     
     async def _add_to_full_text_index(self, text: str, entry_id: str):
-        """Add to full-text index"""
-        # Simple word-based indexing
+        """Add to full-text index"""        # Simple word-based indexing
         words = re.findall(r'\b\w+\b', text.lower())
         
         for word in words:
@@ -496,8 +472,7 @@ class MetadataIndexer:
             self.full_text_index[word].add(entry_id)
     
     async def _add_to_semantic_index(self, field_name: str, value: str, entry_id: str):
-        """Add to semantic index (simplified)"""
-        # In a real implementation, this would use embeddings
+        """Add to semantic index (simplified)"""        # In a real implementation, this would use embeddings
         if field_name not in self.semantic_index:
             self.semantic_index[field_name] = []
         
@@ -506,8 +481,7 @@ class MetadataIndexer:
         self.semantic_index[field_name].append((entry_id, similarity_score))
     
     async def _search_keywords(self, keywords: str) -> Set[str]:
-        """Search using keywords"""
-        words = re.findall(r'\b\w+\b', keywords.lower())
+        """Search using keywords"""        words = re.findall(r'\b\w+\b', keywords.lower())
         matching_entries = set()
         
         for word in words:
@@ -520,8 +494,7 @@ class MetadataIndexer:
         return matching_entries
     
     async def _search_field(self, field_name: str, filter_config: Dict[str, Any]) -> Set[str]:
-        """Search specific field with filters"""
-        operator = filter_config.get("operator", SearchOperator.EQUALS)
+        """Search specific field with filters"""        operator = filter_config.get("operator", SearchOperator.EQUALS)
         value = filter_config.get("value")
         
         if field_name not in self.indexes:
@@ -542,13 +515,11 @@ class MetadataIndexer:
 
 
 class ArchivalMetadataManager:
-    """
-    Comprehensive metadata management system for archived content.
+    """    Comprehensive metadata management system for archived content.
     
     Provides schema management, validation, indexing, and advanced search
     capabilities for archival metadata.
-    """
-    
+    """    
     def __init__(self):
         self.schemas: Dict[str, MetadataSchema] = {}
         self.metadata_entries: Dict[str, MetadataEntry] = {}
@@ -568,8 +539,7 @@ class ArchivalMetadataManager:
         logger.info("Archival Metadata Manager initialized")
     
     async def create_schema(self, schema: MetadataSchema) -> bool:
-        """Create a new metadata schema"""
-        try:
+        """Create a new metadata schema"""        try:
             # Validate schema
             if not await self._validate_schema(schema):
                 raise ArchivalError(f"Invalid schema: {schema.schema_id}")
@@ -590,8 +560,7 @@ class ArchivalMetadataManager:
             return False
     
     async def update_schema(self, schema_id: str, updates: Dict[str, Any]) -> bool:
-        """Update an existing schema"""
-        try:
+        """Update an existing schema"""        try:
             if schema_id not in self.schemas:
                 raise ArchivalError(f"Schema not found: {schema_id}")
             
@@ -612,8 +581,7 @@ class ArchivalMetadataManager:
             return False
     
     async def add_metadata(self, entry: MetadataEntry) -> bool:
-        """Add metadata entry for archived content"""
-        try:
+        """Add metadata entry for archived content"""        try:
             # Validate schema exists
             if entry.schema_id not in self.schemas:
                 raise ArchivalError(f"Schema not found: {entry.schema_id}")
@@ -644,8 +612,7 @@ class ArchivalMetadataManager:
             return False
     
     async def update_metadata(self, entry_id: str, updates: Dict[str, Any]) -> bool:
-        """Update existing metadata entry"""
-        try:
+        """Update existing metadata entry"""        try:
             if entry_id not in self.metadata_entries:
                 raise ArchivalError(f"Metadata entry not found: {entry_id}")
             
@@ -681,8 +648,7 @@ class ArchivalMetadataManager:
             return False
     
     async def search_metadata(self, criteria: SearchCriteria) -> Tuple[List[SearchResult], int]:
-        """Search metadata with advanced criteria"""
-        try:
+        """Search metadata with advanced criteria"""        try:
             self.total_searches += 1
             
             # Get candidate entry IDs from index
@@ -736,27 +702,22 @@ class ArchivalMetadataManager:
             return [], 0
     
     async def get_metadata(self, entry_id: str) -> Optional[MetadataEntry]:
-        """Get metadata entry by ID"""
-        return self.metadata_entries.get(entry_id)
+        """Get metadata entry by ID"""        return self.metadata_entries.get(entry_id)
     
     async def get_metadata_by_archive(self, archive_id: str) -> List[MetadataEntry]:
-        """Get all metadata entries for an archive"""
-        return [
+        """Get all metadata entries for an archive"""        return [
             entry for entry in self.metadata_entries.values()
             if entry.archive_id == archive_id
         ]
     
     async def get_schema(self, schema_id: str) -> Optional[MetadataSchema]:
-        """Get schema by ID"""
-        return self.schemas.get(schema_id)
+        """Get schema by ID"""        return self.schemas.get(schema_id)
     
     async def list_schemas(self) -> List[MetadataSchema]:
-        """List all available schemas"""
-        return list(self.schemas.values())
+        """List all available schemas"""        return list(self.schemas.values())
     
     async def get_metadata_stats(self) -> Dict[str, Any]:
-        """Get comprehensive metadata statistics"""
-        try:
+        """Get comprehensive metadata statistics"""        try:
             # Schema statistics
             active_schemas = sum(1 for s in self.schemas.values() if s.active)
             deprecated_schemas = sum(1 for s in self.schemas.values() if s.deprecated)
@@ -794,8 +755,7 @@ class ArchivalMetadataManager:
             return {}
     
     async def _validate_schema(self, schema: MetadataSchema) -> bool:
-        """Validate schema definition"""
-        try:
+        """Validate schema definition"""        try:
             # Basic validation
             if not schema.schema_id or not schema.name or not schema.version:
                 return False
@@ -812,8 +772,7 @@ class ArchivalMetadataManager:
             return False
     
     async def _matches_criteria(self, entry: MetadataEntry, criteria: SearchCriteria) -> bool:
-        """Check if entry matches search criteria"""
-        try:
+        """Check if entry matches search criteria"""        try:
             # Date range filters
             if criteria.created_after and entry.created_at < criteria.created_after:
                 return False
@@ -839,8 +798,7 @@ class ArchivalMetadataManager:
             return False
     
     async def _calculate_relevance(self, entry: MetadataEntry, criteria: SearchCriteria) -> float:
-        """Calculate relevance score for search result"""
-        try:
+        """Calculate relevance score for search result"""        try:
             score = 0.0
             
             # Base score
@@ -873,8 +831,7 @@ class ArchivalMetadataManager:
             return 0.5  # Default score
     
     async def _create_summary(self, entry: MetadataEntry) -> Dict[str, Any]:
-        """Create summary of metadata entry"""
-        try:
+        """Create summary of metadata entry"""        try:
             # Select most important fields for summary
             summary = {}
             
@@ -892,8 +849,7 @@ class ArchivalMetadataManager:
             return {}
     
     async def _initialize_default_schemas(self):
-        """Initialize default metadata schemas"""
-        try:
+        """Initialize default metadata schemas"""        try:
             # Audio content schema
             audio_schema = MetadataSchema(
                 schema_id="audio_content_v1",

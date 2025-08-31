@@ -1,5 +1,4 @@
-"""
-Backup Validator for IA Influencer Agent Platform.
+"""Backup Validator for IA Influencer Agent Platform.
 
 Provides comprehensive backup validation, integrity checking,
 and verification capabilities for enterprise backup operations.
@@ -7,9 +6,7 @@ and verification capabilities for enterprise backup operations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import json
@@ -25,16 +22,14 @@ from ...core.exceptions import ValidationError
 
 
 class ValidationLevel(Enum):
-    """Validation level enumeration."""
-    BASIC = "basic"
+    """Validation level enumeration."""    BASIC = "basic"
     STANDARD = "standard"
     COMPREHENSIVE = "comprehensive"
     DEEP = "deep"
 
 
 class ValidationStatus(Enum):
-    """Validation status enumeration."""
-    VALID = "valid"
+    """Validation status enumeration."""    VALID = "valid"
     INVALID = "invalid"
     WARNING = "warning"
     ERROR = "error"
@@ -43,8 +38,7 @@ class ValidationStatus(Enum):
 
 @dataclass
 class ValidationResult:
-    """Validation result container."""
-    backup_id: str
+    """Validation result container."""    backup_id: str
     validation_level: ValidationLevel
     overall_status: ValidationStatus
     started_at: datetime
@@ -62,8 +56,7 @@ class ValidationResult:
 
 @dataclass
 class ValidationCheck:
-    """Individual validation check definition."""
-    check_id: str
+    """Individual validation check definition."""    check_id: str
     name: str
     description: str
     category: str
@@ -73,21 +66,16 @@ class ValidationCheck:
 
 
 class BackupValidator:
-    """
-    Enterprise backup validator with comprehensive integrity checking.
+    """    Enterprise backup validator with comprehensive integrity checking.
     
     Performs multi-level validation including checksums, structure integrity,
     data consistency, and metadata verification.
-    """
-
-    def __init__(self, storage: Optional[BackupStorage] = None):
-        """
-        Initialize backup validator.
+    """    def __init__(self, storage: Optional[BackupStorage] = None):
+        """        Initialize backup validator.
         
         Args:
             storage: Backup storage interface
-        """
-        self.logger = logging.getLogger(__name__)
+        """        self.logger = logging.getLogger(__name__)
         self.storage = storage
         
         # Validation tracking
@@ -103,8 +91,7 @@ class BackupValidator:
         validation_level: ValidationLevel = ValidationLevel.STANDARD,
         quick_check: bool = False
     ) -> bool:
-        """
-        Verify backup integrity and consistency.
+        """        Verify backup integrity and consistency.
         
         Args:
             backup_id: Backup identifier
@@ -113,8 +100,7 @@ class BackupValidator:
             
         Returns:
             Validation success status
-        """
-        validation_result = await self.validate_backup(
+        """        validation_result = await self.validate_backup(
             backup_id, validation_level, quick_check
         )
         
@@ -126,8 +112,7 @@ class BackupValidator:
         validation_level: ValidationLevel = ValidationLevel.STANDARD,
         quick_check: bool = False
     ) -> ValidationResult:
-        """
-        Perform comprehensive backup validation.
+        """        Perform comprehensive backup validation.
         
         Args:
             backup_id: Backup identifier
@@ -136,8 +121,7 @@ class BackupValidator:
             
         Returns:
             Detailed validation results
-        """
-        started_at = datetime.now()
+        """        started_at = datetime.now()
         
         self.logger.info(f"Starting backup validation: {backup_id} (level: {validation_level.value})")
         
@@ -219,8 +203,7 @@ class BackupValidator:
             return result
 
     async def calculate_checksum(self, data: bytes, algorithm: str = "sha256") -> str:
-        """
-        Calculate checksum for data.
+        """        Calculate checksum for data.
         
         Args:
             data: Data to checksum
@@ -228,8 +211,7 @@ class BackupValidator:
             
         Returns:
             Calculated checksum
-        """
-        if algorithm == "sha256":
+        """        if algorithm == "sha256":
             return hashlib.sha256(data).hexdigest()
         elif algorithm == "sha1":
             return hashlib.sha1(data).hexdigest()
@@ -243,8 +225,7 @@ class BackupValidator:
         backup_ids: List[str],
         validation_level: ValidationLevel = ValidationLevel.STANDARD
     ) -> Dict[str, ValidationResult]:
-        """
-        Validate a chain of related backups.
+        """        Validate a chain of related backups.
         
         Args:
             backup_ids: List of backup identifiers
@@ -252,8 +233,7 @@ class BackupValidator:
             
         Returns:
             Validation results for each backup
-        """
-        self.logger.info(f"Starting backup chain validation: {len(backup_ids)} backups")
+        """        self.logger.info(f"Starting backup chain validation: {len(backup_ids)} backups")
         
         results = {}
         
@@ -273,16 +253,14 @@ class BackupValidator:
         return results
 
     async def get_validation_status(self, backup_id: str) -> Optional[Dict[str, Any]]:
-        """
-        Get validation status for backup.
+        """        Get validation status for backup.
         
         Args:
             backup_id: Backup identifier
             
         Returns:
             Validation status information
-        """
-        # Check active validations
+        """        # Check active validations
         if backup_id in self.active_validations:
             result = self.active_validations[backup_id]
             return {
@@ -320,13 +298,11 @@ class BackupValidator:
         return None
 
     async def get_validation_statistics(self) -> Dict[str, Any]:
-        """
-        Get comprehensive validation statistics.
+        """        Get comprehensive validation statistics.
         
         Returns:
             Validation statistics
-        """
-        total_validations = len(self.validation_history)
+        """        total_validations = len(self.validation_history)
         active_validations = len(self.active_validations)
         
         if total_validations == 0:
@@ -388,8 +364,7 @@ class BackupValidator:
         }
 
     def _initialize_validation_checks(self) -> List[ValidationCheck]:
-        """Initialize validation check definitions."""
-        checks = [
+        """Initialize validation check definitions."""        checks = [
             # Basic checks
             ValidationCheck(
                 check_id="metadata_exists",
@@ -523,8 +498,7 @@ class BackupValidator:
         validation_level: ValidationLevel, 
         quick_check: bool
     ) -> List[ValidationCheck]:
-        """Get validation checks applicable for the specified level."""
-        applicable_checks = []
+        """Get validation checks applicable for the specified level."""        applicable_checks = []
         
         for check in self.validation_checks:
             # Check if validation level meets requirement
@@ -550,8 +524,7 @@ class BackupValidator:
         check: ValidationCheck,
         result: ValidationResult
     ) -> Dict[str, Any]:
-        """Perform individual validation check."""
-        check_start = time.time()
+        """Perform individual validation check."""        check_start = time.time()
         
         self.logger.debug(f"Performing check: {check.check_id} for backup: {backup_id}")
         
@@ -590,8 +563,7 @@ class BackupValidator:
             }
 
     async def _execute_check(self, backup_id: str, check: ValidationCheck) -> Dict[str, Any]:
-        """Execute specific validation check."""
-        if check.check_id == "metadata_exists":
+        """Execute specific validation check."""        if check.check_id == "metadata_exists":
             return await self._check_metadata_exists(backup_id)
         elif check.check_id == "backup_size_valid":
             return await self._check_backup_size_valid(backup_id)
@@ -622,8 +594,7 @@ class BackupValidator:
 
     # Individual check implementations
     async def _check_metadata_exists(self, backup_id: str) -> Dict[str, Any]:
-        """Check if backup metadata exists and is readable."""
-        try:
+        """Check if backup metadata exists and is readable."""        try:
             if not self.storage:
                 return {"status": "warning", "message": "No storage interface available"}
             
@@ -646,8 +617,7 @@ class BackupValidator:
             return {"status": "failed", "message": f"Metadata check failed: {str(e)}"}
 
     async def _check_backup_size_valid(self, backup_id: str) -> Dict[str, Any]:
-        """Check if backup size matches metadata."""
-        try:
+        """Check if backup size matches metadata."""        try:
             if not self.storage:
                 return {"status": "warning", "message": "No storage interface available"}
             
@@ -683,8 +653,7 @@ class BackupValidator:
             return {"status": "failed", "message": f"Size check failed: {str(e)}"}
 
     async def _check_checksum_verification(self, backup_id: str) -> Dict[str, Any]:
-        """Verify backup data checksum."""
-        try:
+        """Verify backup data checksum."""        try:
             if not self.storage:
                 return {"status": "warning", "message": "No storage interface available"}
             
@@ -724,8 +693,7 @@ class BackupValidator:
             return {"status": "failed", "message": f"Checksum verification failed: {str(e)}"}
 
     async def _check_data_structure_valid(self, backup_id: str) -> Dict[str, Any]:
-        """Check if backup data structure is valid."""
-        try:
+        """Check if backup data structure is valid."""        try:
             if not self.storage:
                 return {"status": "warning", "message": "No storage interface available"}
             
@@ -750,48 +718,39 @@ class BackupValidator:
             return {"status": "failed", "message": f"Structure validation failed: {str(e)}"}
 
     async def _check_component_completeness(self, backup_id: str) -> Dict[str, Any]:
-        """Check if all expected components are present."""
-        # Implementation would check for expected backup components
+        """Check if all expected components are present."""        # Implementation would check for expected backup components
         return {"status": "passed", "message": "All components present"}
 
     async def _check_encryption_integrity(self, backup_id: str) -> Dict[str, Any]:
-        """Check encryption integrity if applicable."""
-        # Implementation would verify encryption integrity
+        """Check encryption integrity if applicable."""        # Implementation would verify encryption integrity
         return {"status": "passed", "message": "Encryption integrity verified"}
 
     async def _check_compression_integrity(self, backup_id: str) -> Dict[str, Any]:
-        """Check compression integrity if applicable."""
-        # Implementation would verify compression integrity
+        """Check compression integrity if applicable."""        # Implementation would verify compression integrity
         return {"status": "passed", "message": "Compression integrity verified"}
 
     async def _check_data_consistency(self, backup_id: str) -> Dict[str, Any]:
-        """Check internal data consistency."""
-        # Implementation would perform data consistency checks
+        """Check internal data consistency."""        # Implementation would perform data consistency checks
         return {"status": "passed", "message": "Data consistency verified"}
 
     async def _check_referential_integrity(self, backup_id: str) -> Dict[str, Any]:
-        """Check referential integrity between components."""
-        # Implementation would check referential integrity
+        """Check referential integrity between components."""        # Implementation would check referential integrity
         return {"status": "passed", "message": "Referential integrity verified"}
 
     async def _check_timestamp_consistency(self, backup_id: str) -> Dict[str, Any]:
-        """Check timestamp consistency across backup."""
-        # Implementation would verify timestamp consistency
+        """Check timestamp consistency across backup."""        # Implementation would verify timestamp consistency
         return {"status": "passed", "message": "Timestamp consistency verified"}
 
     async def _check_content_sampling(self, backup_id: str) -> Dict[str, Any]:
-        """Sample and verify backup content integrity."""
-        # Implementation would perform content sampling
+        """Sample and verify backup content integrity."""        # Implementation would perform content sampling
         return {"status": "passed", "message": "Content sampling completed"}
 
     async def _check_restoration_test(self, backup_id: str) -> Dict[str, Any]:
-        """Test partial restoration capability."""
-        # Implementation would test restoration
+        """Test partial restoration capability."""        # Implementation would test restoration
         return {"status": "passed", "message": "Restoration test completed"}
 
     async def _check_performance_validation(self, backup_id: str) -> Dict[str, Any]:
-        """Validate backup performance characteristics."""
-        # Implementation would validate performance
+        """Validate backup performance characteristics."""        # Implementation would validate performance
         return {"status": "passed", "message": "Performance validation completed"}
 
     async def _validate_chain_consistency(
@@ -799,8 +758,7 @@ class BackupValidator:
         backup_ids: List[str],
         results: Dict[str, ValidationResult]
     ) -> Dict[str, Any]:
-        """Validate consistency across backup chain."""
-        # Implementation would validate chain consistency
+        """Validate consistency across backup chain."""        # Implementation would validate chain consistency
         return {
             "status": "passed",
             "message": "Chain consistency verified",
@@ -808,8 +766,7 @@ class BackupValidator:
         }
 
     async def _generate_recommendations(self, result: ValidationResult) -> List[str]:
-        """Generate recommendations based on validation results."""
-        recommendations = []
+        """Generate recommendations based on validation results."""        recommendations = []
         
         if result.checks_failed > 0:
             recommendations.append("Review and address failed validation checks immediately")
@@ -823,8 +780,7 @@ class BackupValidator:
         return recommendations
 
     def _calculate_validation_progress(self, result: ValidationResult) -> float:
-        """Calculate validation progress percentage."""
-        total_checks = len(self._get_applicable_checks(result.validation_level, False))
+        """Calculate validation progress percentage."""        total_checks = len(self._get_applicable_checks(result.validation_level, False))
         if total_checks == 0:
             return 0.0
         

@@ -1,13 +1,10 @@
-"""
-Database Index - IA Influencer Agent Platform
+"""Database Index - IA Influencer Agent Platform
 Main entry point for all database services and utilities
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""
-
-# Database connections and session management
+"""# Database connections and session management
 from .connection import (
     DatabaseConnection,
     ConnectionPool,
@@ -135,78 +132,63 @@ from .optimization import (
 
 
 def get_database_connection():
-    """Get the main database connection"""
-    return DatabaseConnection.get_instance()
+    """Get the main database connection"""    return DatabaseConnection.get_instance()
 
 
 def get_session_manager():
-    """Get the database session manager"""
-    return SessionManager()
+    """Get the database session manager"""    return SessionManager()
 
 
 def get_transaction_manager():
-    """Get the database transaction manager"""
-    return TransactionManager()
+    """Get the database transaction manager"""    return TransactionManager()
 
 
 def get_transaction_manager():
-    """Get the database transaction manager"""
-    return TransactionManager()
+    """Get the database transaction manager"""    return TransactionManager()
 
 
 def get_database_security():
-    """Get the database security manager"""
-    return DatabaseSecurity()
+    """Get the database security manager"""    return DatabaseSecurity()
 
 
 def get_database_optimizer():
-    """Get the database optimizer"""
-    return DatabaseOptimizer()
+    """Get the database optimizer"""    return DatabaseOptimizer()
 
 
 def get_query_analyzer():
-    """Get the query analyzer"""
-    return QueryAnalyzer()
+    """Get the query analyzer"""    return QueryAnalyzer()
 
 
 def get_index_optimizer():
-    """Get the index optimizer"""
-    return IndexOptimizer()
+    """Get the index optimizer"""    return IndexOptimizer()
 
 
 def get_database_cache():
-    """Get the database cache manager"""
-    return DatabaseCache()
+    """Get the database cache manager"""    return DatabaseCache()
 
 
 def get_database_monitor():
-    """Get the database monitor"""
-    return DatabaseMonitor()
+    """Get the database monitor"""    return DatabaseMonitor()
 
 
 def get_performance_monitor():
-    """Get the performance monitor"""
-    return PerformanceMonitor()
+    """Get the performance monitor"""    return PerformanceMonitor()
 
 
 def get_health_checker():
-    """Get the health checker"""
-    return HealthChecker()
+    """Get the health checker"""    return HealthChecker()
 
 
 def get_database_auditor():
-    """Get the database auditor"""
-    return DatabaseAuditor()
+    """Get the database auditor"""    return DatabaseAuditor()
 
 
 def get_access_control_manager():
-    """Get the access control manager"""
-    return AccessControlManager()
+    """Get the access control manager"""    return AccessControlManager()
 
 
 async def initialize_database_services():
-    """Initialize all database services"""
-    logger.info("Initializing database services...")
+    """Initialize all database services"""    logger.info("Initializing database services...")
     
     try:
         # Initialize core connection
@@ -244,8 +226,7 @@ async def initialize_database_services():
 
 
 async def setup_database_middleware():
-    """Setup database middleware and event handlers"""
-    logger.info("Setting up database middleware...")
+    """Setup database middleware and event handlers"""    logger.info("Setting up database middleware...")
     
     try:
         # Initialize all services
@@ -263,8 +244,7 @@ async def setup_database_middleware():
 
 
 async def check_database_health():
-    """Comprehensive database health check"""
-    try:
+    """Comprehensive database health check"""    try:
         health_checker = await get_health_checker()
         health_report = await health_checker.comprehensive_health_check()
         
@@ -280,8 +260,7 @@ async def check_database_health():
 
 
 async def optimize_database_performance():
-    """Run database performance optimization"""
-    try:
+    """Run database performance optimization"""    try:
         optimizer = await get_database_optimizer()
         analysis = await optimizer.perform_comprehensive_analysis()
         
@@ -296,63 +275,51 @@ async def optimize_database_performance():
 
 
 def get_creator_repository():
-    """Get the creator repository"""
-    return CreatorRepository()
+    """Get the creator repository"""    return CreatorRepository()
 
 
 def get_content_repository():
-    """Get the content repository"""
-    return ContentRepository()
+    """Get the content repository"""    return ContentRepository()
 
 
 def get_media_repository():
-    """Get the media repository"""
-    return MediaRepository()
+    """Get the media repository"""    return MediaRepository()
 
 
 def get_copyright_repository():
-    """Get the copyright repository"""
-    return CopyrightRepository()
+    """Get the copyright repository"""    return CopyrightRepository()
 
 
 def get_license_repository():
-    """Get the license repository"""
-    return LicenseRepository()
+    """Get the license repository"""    return LicenseRepository()
 
 
 def get_collaboration_repository():
-    """Get the collaboration repository"""
-    return CollaborationRepository()
+    """Get the collaboration repository"""    return CollaborationRepository()
 
 
 def get_project_repository():
-    """Get the project repository"""
-    return ProjectRepository()
+    """Get the project repository"""    return ProjectRepository()
 
 
 def get_revenue_repository():
-    """Get the revenue repository"""
-    return RevenueRepository()
+    """Get the revenue repository"""    return RevenueRepository()
 
 
 def get_distribution_repository():
-    """Get the distribution repository"""
-    return DistributionRepository()
+    """Get the distribution repository"""    return DistributionRepository()
 
 
 def get_analytics_repository():
-    """Get the analytics repository"""
-    return AnalyticsRepository()
+    """Get the analytics repository"""    return AnalyticsRepository()
 
 
 def get_notification_repository():
-    """Get the notification repository"""
-    return NotificationRepository()
+    """Get the notification repository"""    return NotificationRepository()
 
 
 def get_all_repositories():
-    """Get all repository instances"""
-    return {
+    """Get all repository instances"""    return {
         'user': get_user_repository(),
         'creator': get_creator_repository(),
         'content': get_content_repository(),
@@ -369,48 +336,39 @@ def get_all_repositories():
 
 
 def get_migration_manager():
-    """Get the database migration manager"""
-    return MigrationManager()
+    """Get the database migration manager"""    return MigrationManager()
 
 
 def get_schema_manager():
-    """Get the database schema manager"""
-    return SchemaManager()
+    """Get the database schema manager"""    return SchemaManager()
 
 
 def get_backup_manager():
-    """Get the database backup manager"""
-    return BackupManager()
+    """Get the database backup manager"""    return BackupManager()
 
 
 def get_query_builder():
-    """Get the standard query builder"""
-    return QueryBuilder()
+    """Get the standard query builder"""    return QueryBuilder()
 
 
 def get_advanced_query_builder():
-    """Get the advanced query builder"""
-    return AdvancedQueryBuilder()
+    """Get the advanced query builder"""    return AdvancedQueryBuilder()
 
 
 def get_database_cache():
-    """Get the database cache manager"""
-    return DatabaseCache()
+    """Get the database cache manager"""    return DatabaseCache()
 
 
 def get_database_monitor():
-    """Get the database monitoring service"""
-    return DatabaseMonitor()
+    """Get the database monitoring service"""    return DatabaseMonitor()
 
 
 def initialize_database_services():
-    """
-    Initialize all database services with proper configuration
+    """    Initialize all database services with proper configuration
     
     Returns:
         Dictionary containing all database services
-    """
-    services = {
+    """    services = {
         'connection': get_database_connection(),
         'session_manager': get_session_manager(),
         'transaction_manager': get_transaction_manager(),
@@ -439,13 +397,11 @@ def initialize_database_services():
 
 
 def setup_database_middleware():
-    """
-    Setup all database middleware for the application
+    """    Setup all database middleware for the application
     
     Returns:
         List of configured middleware instances
-    """
-    middleware = [
+    """    middleware = [
         SessionManager(),
         TransactionManager(),
         DatabaseCache(),
@@ -456,52 +412,44 @@ def setup_database_middleware():
 
 
 def create_database_backup(backup_type: str = 'full'):
-    """
-    Create a database backup
+    """    Create a database backup
     
     Args:
         backup_type: Type of backup (full, incremental, differential)
         
     Returns:
         Backup result information
-    """
-    backup_manager = get_backup_manager()
+    """    backup_manager = get_backup_manager()
     return backup_manager.create_backup(backup_type)
 
 
 def restore_database_backup(backup_id: str):
-    """
-    Restore database from backup
+    """    Restore database from backup
     
     Args:
         backup_id: ID of the backup to restore
         
     Returns:
         Restoration result information
-    """
-    backup_manager = get_backup_manager()
+    """    backup_manager = get_backup_manager()
     return backup_manager.restore_backup(backup_id)
 
 
 def run_database_migrations():
-    """
-    Run pending database migrations
+    """    Run pending database migrations
     
     Returns:
         Migration execution results
-    """
-    migration_manager = get_migration_manager()
+    """    migration_manager = get_migration_manager()
     return migration_manager.run_migrations()
 
 
 def check_database_health():
-    """
-    Perform comprehensive database health check
+    """    Perform comprehensive database health check
     
     Returns:
         Health check results
-    """
-    monitor = get_database_monitor()
+    """    monitor = get_database_monitor()
     health_checker = HealthChecker()
     
     return {
@@ -517,13 +465,11 @@ def check_database_health():
 
 
 def optimize_database_performance():
-    """
-    Run database optimization procedures
+    """    Run database optimization procedures
     
     Returns:
         Optimization results
-    """
-    performance_analyzer = PerformanceAnalyzer()
+    """    performance_analyzer = PerformanceAnalyzer()
     
     return {
         'index_recommendations': performance_analyzer.analyze_indexes(),
@@ -535,13 +481,11 @@ def optimize_database_performance():
 
 
 def get_database_statistics():
-    """
-    Get comprehensive database statistics
+    """    Get comprehensive database statistics
     
     Returns:
         Database statistics and metrics
-    """
-    monitor = get_database_monitor()
+    """    monitor = get_database_monitor()
     metrics_collector = MetricsCollector()
     
     return {

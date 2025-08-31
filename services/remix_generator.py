@@ -1,12 +1,9 @@
-"""
-Remix Generator
+"""Remix Generator
 AI-powered remix and music generation service.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 from typing import Dict, List, Optional, Any
 from datetime import datetime
 from dataclasses import dataclass
@@ -18,8 +15,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class RemixParameters:
-    """Remix generation parameters"""
-    source_content_id: str
+    """Remix generation parameters"""    source_content_id: str
     remix_style: str
     tempo_change: float
     key_change: int
@@ -30,8 +26,7 @@ class RemixParameters:
 
 @dataclass
 class RemixResult:
-    """Remix generation result"""
-    remix_id: str
+    """Remix generation result"""    remix_id: str
     source_content_id: str
     generated_file_path: str
     parameters_used: RemixParameters
@@ -41,8 +36,7 @@ class RemixResult:
 
 
 class RemixGenerator:
-    """AI-powered remix and music generation engine"""
-    
+    """AI-powered remix and music generation engine"""    
     def __init__(self):
         self.remix_history = {}
         self.style_templates = {
@@ -58,8 +52,7 @@ class RemixGenerator:
         source_content_id: str,
         remix_params: RemixParameters
     ) -> RemixResult:
-        """Generate AI remix of source content"""
-        try:
+        """Generate AI remix of source content"""        try:
             start_time = datetime.now()
             
             # Simulate AI remix generation
@@ -102,8 +95,7 @@ class RemixGenerator:
         source_content_id: str,
         user_preferences: Optional[Dict] = None
     ) -> List[Dict[str, Any]]:
-        """Suggest optimal remix styles for content"""
-        try:
+        """Suggest optimal remix styles for content"""        try:
             # Analyze source content (simulated)
             suggestions = []
             
@@ -134,8 +126,7 @@ class RemixGenerator:
         collaboration_id: str,
         participant_contributions: List[Dict]
     ) -> RemixResult:
-        """Create collaborative remix from multiple contributions"""
-        try:
+        """Create collaborative remix from multiple contributions"""        try:
             logger.info(f"Creating collaborative remix for collaboration {collaboration_id}")
             
             # Simulate collaborative mixing process

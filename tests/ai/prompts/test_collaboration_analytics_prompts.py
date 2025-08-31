@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Advanced Collaboration & Analytics Prompts Tests
+"""Advanced Collaboration & Analytics Prompts Tests
 Ultra-professional test suite for Collaboration & Analytics Prompts system
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
@@ -25,9 +21,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -46,20 +40,17 @@ from ai.prompts.collaboration_analytics_prompts import (
 
 
 class TestCollaborationAnalyticsPrompts:
-    """Ultra-comprehensive test suite for Collaboration & Analytics Prompts"""
-    
+    """Ultra-comprehensive test suite for Collaboration & Analytics Prompts"""    
     @pytest.fixture
     async def collaboration_analytics_prompts(self):
-        """Create a fresh CollaborationAnalyticsPrompts instance for each test"""
-        prompts = CollaborationAnalyticsPrompts()
+        """Create a fresh CollaborationAnalyticsPrompts instance for each test"""        prompts = CollaborationAnalyticsPrompts()
         await prompts.initialize()
         yield prompts
         await prompts.cleanup()
     
     @pytest.fixture
     def sample_music_collaboration_context(self):
-        """Create sample music collaboration context for testing"""
-        return CollaborationContext(
+        """Create sample music collaboration context for testing"""        return CollaborationContext(
             collaboration_type=CollaborationType.MUSIC_COLLABORATION,
             stage=CollaborationStage.PLANNING,
             participants=[
@@ -104,8 +95,7 @@ class TestCollaborationAnalyticsPrompts:
     
     @pytest.fixture
     def sample_performance_analytics_context(self):
-        """Create sample performance analytics context for testing"""
-        return AnalyticsContext(
+        """Create sample performance analytics context for testing"""        return AnalyticsContext(
             analytics_type=AnalyticsType.PERFORMANCE_ANALYTICS,
             time_period={"start": "2024-01-01", "end": "2024-12-31"},
             platforms=[Platform.SPOTIFY, Platform.YOUTUBE, Platform.INSTAGRAM],
@@ -151,8 +141,7 @@ class TestCollaborationAnalyticsPrompts:
     
     @pytest.fixture
     def sample_brand_partnership_context(self):
-        """Create sample brand partnership context for testing"""
-        return CollaborationContext(
+        """Create sample brand partnership context for testing"""        return CollaborationContext(
             collaboration_type=CollaborationType.BRAND_PARTNERSHIP,
             stage=CollaborationStage.NEGOTIATION,
             participants=[
@@ -206,8 +195,7 @@ class TestCollaborationAnalyticsPrompts:
     
     @pytest.mark.asyncio
     async def test_collaboration_analytics_prompts_initialization(self, collaboration_analytics_prompts):
-        """Test CollaborationAnalyticsPrompts initialization"""
-        assert collaboration_analytics_prompts is not None
+        """Test CollaborationAnalyticsPrompts initialization"""        assert collaboration_analytics_prompts is not None
         assert hasattr(collaboration_analytics_prompts, 'collaboration_templates')
         assert hasattr(collaboration_analytics_prompts, 'analytics_engines')
         assert hasattr(collaboration_analytics_prompts, 'collaboration_matcher')
@@ -218,8 +206,7 @@ class TestCollaborationAnalyticsPrompts:
     
     @pytest.mark.asyncio
     async def test_collaboration_analytics_registry_loading(self, collaboration_analytics_prompts):
-        """Test that collaboration analytics registry is properly loaded"""
-        registry = COLLABORATION_ANALYTICS_REGISTRY
+        """Test that collaboration analytics registry is properly loaded"""        registry = COLLABORATION_ANALYTICS_REGISTRY
         assert registry is not None
         assert isinstance(registry, dict)
         
@@ -235,8 +222,7 @@ class TestCollaborationAnalyticsPrompts:
     
     @pytest.mark.asyncio
     async def test_music_collaboration_planning_prompts(self, collaboration_analytics_prompts, sample_music_collaboration_context):
-        """Test music collaboration planning prompts generation"""
-        result = await collaboration_analytics_prompts.generate_collaboration_prompt(sample_music_collaboration_context)
+        """Test music collaboration planning prompts generation"""        result = await collaboration_analytics_prompts.generate_collaboration_prompt(sample_music_collaboration_context)
         
         assert result["success"] is True
         assert "prompt" in result
@@ -265,8 +251,7 @@ class TestCollaborationAnalyticsPrompts:
     
     @pytest.mark.asyncio
     async def test_music_collaboration_outreach_prompts(self, collaboration_analytics_prompts):
-        """Test music collaboration outreach prompts"""
-        outreach_context = CollaborationContext(
+        """Test music collaboration outreach prompts"""        outreach_context = CollaborationContext(
             collaboration_type=CollaborationType.MUSIC_COLLABORATION,
             stage=CollaborationStage.OUTREACH,
             participants=[
@@ -316,8 +301,7 @@ class TestCollaborationAnalyticsPrompts:
     
     @pytest.mark.asyncio
     async def test_brand_partnership_negotiation_prompts(self, collaboration_analytics_prompts, sample_brand_partnership_context):
-        """Test brand partnership negotiation prompts generation"""
-        result = await collaboration_analytics_prompts.generate_collaboration_prompt(sample_brand_partnership_context)
+        """Test brand partnership negotiation prompts generation"""        result = await collaboration_analytics_prompts.generate_collaboration_prompt(sample_brand_partnership_context)
         
         assert result["success"] is True
         prompt = result["prompt"]
@@ -338,8 +322,7 @@ class TestCollaborationAnalyticsPrompts:
     
     @pytest.mark.asyncio
     async def test_sponsorship_deal_prompts(self, collaboration_analytics_prompts):
-        """Test sponsorship deal prompts generation"""
-        sponsorship_context = CollaborationContext(
+        """Test sponsorship deal prompts generation"""        sponsorship_context = CollaborationContext(
             collaboration_type=CollaborationType.SPONSORSHIP_DEAL,
             stage=CollaborationStage.EXECUTION,
             participants=[
@@ -406,8 +389,7 @@ class TestCollaborationAnalyticsPrompts:
     
     @pytest.mark.asyncio
     async def test_performance_analytics_prompts(self, collaboration_analytics_prompts, sample_performance_analytics_context):
-        """Test performance analytics prompts generation"""
-        result = await collaboration_analytics_prompts.generate_analytics_prompt(sample_performance_analytics_context)
+        """Test performance analytics prompts generation"""        result = await collaboration_analytics_prompts.generate_analytics_prompt(sample_performance_analytics_context)
         
         assert result["success"] is True
         prompt = result["prompt"]
@@ -436,8 +418,7 @@ class TestCollaborationAnalyticsPrompts:
     
     @pytest.mark.asyncio
     async def test_audience_insights_analytics_prompts(self, collaboration_analytics_prompts):
-        """Test audience insights analytics prompts"""
-        audience_context = AnalyticsContext(
+        """Test audience insights analytics prompts"""        audience_context = AnalyticsContext(
             analytics_type=AnalyticsType.AUDIENCE_INSIGHTS,
             time_period={"start": "2024-06-01", "end": "2024-12-01"},
             platforms=[Platform.YOUTUBE, Platform.INSTAGRAM, Platform.TIKTOK],
@@ -497,8 +478,7 @@ class TestCollaborationAnalyticsPrompts:
     
     @pytest.mark.asyncio
     async def test_competitive_analytics_prompts(self, collaboration_analytics_prompts):
-        """Test competitive analytics prompts generation"""
-        competitive_context = AnalyticsContext(
+        """Test competitive analytics prompts generation"""        competitive_context = AnalyticsContext(
             analytics_type=AnalyticsType.COMPETITIVE_ANALYTICS,
             time_period={"start": "2024-01-01", "end": "2024-12-31"},
             platforms=[Platform.SPOTIFY, Platform.YOUTUBE, Platform.APPLE_MUSIC],
@@ -573,8 +553,7 @@ class TestCollaborationAnalyticsPrompts:
     
     @pytest.mark.asyncio
     async def test_cross_promotion_collaboration_prompts(self, collaboration_analytics_prompts):
-        """Test cross-promotion collaboration prompts"""
-        cross_promo_context = CollaborationContext(
+        """Test cross-promotion collaboration prompts"""        cross_promo_context = CollaborationContext(
             collaboration_type=CollaborationType.CROSS_PROMOTION,
             stage=CollaborationStage.PLANNING,
             participants=[
@@ -639,8 +618,7 @@ class TestCollaborationAnalyticsPrompts:
     
     @pytest.mark.asyncio
     async def test_revenue_analytics_prompts(self, collaboration_analytics_prompts):
-        """Test revenue analytics prompts generation"""
-        revenue_context = AnalyticsContext(
+        """Test revenue analytics prompts generation"""        revenue_context = AnalyticsContext(
             analytics_type=AnalyticsType.REVENUE_ANALYTICS,
             time_period={"start": "2024-01-01", "end": "2024-12-31"},
             platforms=[Platform.SPOTIFY, Platform.YOUTUBE, Platform.DIRECT_SALES],
@@ -712,8 +690,7 @@ class TestCollaborationAnalyticsPrompts:
     
     @pytest.mark.asyncio
     async def test_collaboration_matching_prompts(self, collaboration_analytics_prompts):
-        """Test collaboration matching and recommendation prompts"""
-        matching_context = {
+        """Test collaboration matching and recommendation prompts"""        matching_context = {
             "seeking_creator": {
                 "id": "seeker_1",
                 "name": "Rising Producer",
@@ -776,8 +753,7 @@ class TestCollaborationAnalyticsPrompts:
     
     @pytest.mark.asyncio
     async def test_invalid_collaboration_type_error(self, collaboration_analytics_prompts):
-        """Test error handling for invalid collaboration type"""
-        with pytest.raises(ValueError) or pytest.raises(TypeError):
+        """Test error handling for invalid collaboration type"""        with pytest.raises(ValueError) or pytest.raises(TypeError):
             invalid_context = CollaborationContext(
                 collaboration_type="invalid_collaboration",
                 stage=CollaborationStage.PLANNING,
@@ -790,8 +766,7 @@ class TestCollaborationAnalyticsPrompts:
     
     @pytest.mark.asyncio
     async def test_missing_participant_data_handling(self, collaboration_analytics_prompts):
-        """Test handling of missing participant data"""
-        minimal_context = CollaborationContext(
+        """Test handling of missing participant data"""        minimal_context = CollaborationContext(
             collaboration_type=CollaborationType.MUSIC_COLLABORATION,
             stage=CollaborationStage.DISCOVERY,
             participants=[],  # Empty participants
@@ -812,8 +787,7 @@ class TestCollaborationAnalyticsPrompts:
     
     @pytest.mark.asyncio
     async def test_collaboration_prompt_generation_performance(self, collaboration_analytics_prompts, sample_music_collaboration_context):
-        """Test collaboration prompt generation performance"""
-        # Test single generation performance
+        """Test collaboration prompt generation performance"""        # Test single generation performance
         start_time = datetime.now()
         result = await collaboration_analytics_prompts.generate_collaboration_prompt(sample_music_collaboration_context)
         single_duration = (datetime.now() - start_time).total_seconds()
@@ -835,8 +809,7 @@ class TestCollaborationAnalyticsPrompts:
     
     @pytest.mark.asyncio
     async def test_comprehensive_collaboration_workflow(self, collaboration_analytics_prompts):
-        """Test comprehensive collaboration workflow integration"""
-        # Step 1: Discovery and matching
+        """Test comprehensive collaboration workflow integration"""        # Step 1: Discovery and matching
         discovery_result = await collaboration_analytics_prompts.discover_collaboration_opportunities({
             "creator_profile": {
                 "type": "music_producer",

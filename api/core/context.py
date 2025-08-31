@@ -1,12 +1,9 @@
-"""
-Enterprise-grade request context management for IA Influencer Agent.
+"""Enterprise-grade request context management for IA Influencer Agent.
 Professional context tracking with correlation IDs and user sessions.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
-"""
-
-from typing import Any, Dict, Optional, Union
+"""from typing import Any, Dict, Optional, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from contextvars import ContextVar
@@ -18,8 +15,7 @@ from starlette.middleware.base import BaseHTTPMiddleware
 
 
 class ContextScope(Enum):
-    """Context scope levels."""
-    REQUEST = "request"
+    """Context scope levels."""    REQUEST = "request"
     USER_SESSION = "user_session"
     TENANT = "tenant"
     GLOBAL = "global"
@@ -27,8 +23,7 @@ class ContextScope(Enum):
 
 @dataclass
 class UserContext:
-    """User context information."""
-    user_id: Optional[str] = None
+    """User context information."""    user_id: Optional[str] = None
     username: Optional[str] = None
     email: Optional[str] = None
     tenant_id: Optional[str] = None
@@ -41,8 +36,7 @@ class UserContext:
 
 @dataclass
 class RequestMetadata:
-    """Request metadata and tracking information."""
-    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Request metadata and tracking information."""    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     correlation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     parent_correlation_id: Optional[str] = None
     trace_id: Optional[str] = None
@@ -60,8 +54,7 @@ class RequestMetadata:
 
 @dataclass
 class BusinessContext:
-    """Business logic context information."""
-    operation_name: Optional[str] = None
+    """Business logic context information."""    operation_name: Optional[str] = None
     resource_type: Optional[str] = None
     resource_id: Optional[str] = None
     action: Optional[str] = None
@@ -72,15 +65,13 @@ class BusinessContext:
 
 @dataclass
 class RequestContext:
-    """Comprehensive request context container."""
-    user: UserContext = field(default_factory=UserContext)
+    """Comprehensive request context container."""    user: UserContext = field(default_factory=UserContext)
     request: RequestMetadata = field(default_factory=RequestMetadata)
     business: BusinessContext = field(default_factory=BusinessContext)
     custom_data: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert context to dictionary for logging."""
-        return {
+        """Convert context to dictionary for logging."""        return {
             "request_id": self.request.request_id,
             "correlation_id": self.request.correlation_id,
             "user_id": self.user.user_id,
@@ -94,12 +85,10 @@ class RequestContext:
         }
     
     def get_correlation_id(self) -> str:
-        """Get correlation ID for distributed tracing."""
-        return self.request.correlation_id
+        """Get correlation ID for distributed tracing."""        return self.request.correlation_id
     
     def get_trace_context(self) -> Dict[str, str]:
-        """Get trace context for propagation."""
-        context = {
+        """Get trace context for propagation."""        context = {
             "correlation-id": self.request.correlation_id,
             "request-id": self.request.request_id
         }
@@ -120,8 +109,7 @@ class RequestContext:
         action: Optional[str] = None,
         **business_data
     ) -> 'RequestContext':
-        """Create new context with business information."""
-        new_context = RequestContext(
+        """Create new context with business information."""        new_context = RequestContext(
             user=self.user,
             request=self.request,
             business=BusinessContext(
@@ -146,21 +134,18 @@ _context_stack: ContextVar[list] = ContextVar('context_stack', default=[])
 
 
 class ContextManager:
-    """Professional context management system."""
-    
+    """Professional context management system."""    
     def __init__(self):
         self._thread_local = threading.local()
     
     def set_context(self, context: RequestContext) -> None:
-        """Set current request context."""
-        _current_context.set(context)
+        """Set current request context."""        _current_context.set(context)
         
         # Also set in thread local for sync code
         self._thread_local.current_context = context
     
     def get_context(self) -> Optional[RequestContext]:
-        """Get current request context."""
-        try:
+        """Get current request context."""        try:
             # Try async context first
             context = _current_context.get()
             if context:
@@ -172,14 +157,12 @@ class ContextManager:
         return getattr(self._thread_local, 'current_context', None)
     
     def clear_context(self) -> None:
-        """Clear current context."""
-        _current_context.set(None)
+        """Clear current context."""        _current_context.set(None)
         if hasattr(self._thread_local, 'current_context'):
             delattr(self._thread_local, 'current_context')
     
     def push_context(self, context: RequestContext) -> None:
-        """Push context to stack for nested operations."""
-        stack = _context_stack.get([])
+        """Push context to stack for nested operations."""        stack = _context_stack.get([])
         current = self.get_context()
         if current:
             stack.append(current)
@@ -188,8 +171,7 @@ class ContextManager:
         self.set_context(context)
     
     def pop_context(self) -> Optional[RequestContext]:
-        """Pop context from stack."""
-        stack = _context_stack.get([])
+        """Pop context from stack."""        stack = _context_stack.get([])
         if not stack:
             self.clear_context()
             return None
@@ -205,8 +187,7 @@ class ContextManager:
         correlation_id: Optional[str] = None,
         user_context: Optional[UserContext] = None
     ) -> RequestContext:
-        """Create new request context from HTTP request."""
-        request_metadata = RequestMetadata()
+        """Create new request context from HTTP request."""        request_metadata = RequestMetadata()
         
         if correlation_id:
             request_metadata.correlation_id = correlation_id
@@ -251,8 +232,7 @@ class ContextManager:
         session_id: Optional[str] = None,
         is_authenticated: bool = False
     ) -> None:
-        """Enrich current context with user information."""
-        context = self.get_context()
+        """Enrich current context with user information."""        context = self.get_context()
         if context:
             if user_id:
                 context.user.user_id = user_id
@@ -272,29 +252,25 @@ class ContextManager:
             context.user.is_authenticated = is_authenticated
     
     def add_custom_attribute(self, key: str, value: Any) -> None:
-        """Add custom attribute to current context."""
-        context = self.get_context()
+        """Add custom attribute to current context."""        context = self.get_context()
         if context:
             context.custom_data[key] = value
     
     def get_custom_attribute(self, key: str, default: Any = None) -> Any:
-        """Get custom attribute from current context."""
-        context = self.get_context()
+        """Get custom attribute from current context."""        context = self.get_context()
         if context:
             return context.custom_data.get(key, default)
         return default
 
 
 class ContextMiddleware(BaseHTTPMiddleware):
-    """Middleware to automatically manage request context."""
-    
+    """Middleware to automatically manage request context."""    
     def __init__(self, app, context_manager: ContextManager):
         super().__init__(app)
         self.context_manager = context_manager
     
     async def dispatch(self, request: Request, call_next):
-        """Process request with context management."""
-        # Create context from request
+        """Process request with context management."""        # Create context from request
         context = self.context_manager.create_context(request)
         
         # Set context for this request
@@ -318,55 +294,46 @@ _context_manager = ContextManager()
 
 
 def get_context_manager() -> ContextManager:
-    """Get global context manager instance."""
-    return _context_manager
+    """Get global context manager instance."""    return _context_manager
 
 
 def get_current_context() -> Optional[RequestContext]:
-    """Get current request context."""
-    return _context_manager.get_context()
+    """Get current request context."""    return _context_manager.get_context()
 
 
 def set_current_context(context: RequestContext) -> None:
-    """Set current request context."""
-    _context_manager.set_context(context)
+    """Set current request context."""    _context_manager.set_context(context)
 
 
 def get_correlation_id() -> Optional[str]:
-    """Get current correlation ID."""
-    context = get_current_context()
+    """Get current correlation ID."""    context = get_current_context()
     return context.get_correlation_id() if context else None
 
 
 def get_user_id() -> Optional[str]:
-    """Get current user ID."""
-    context = get_current_context()
+    """Get current user ID."""    context = get_current_context()
     return context.user.user_id if context else None
 
 
 def get_tenant_id() -> Optional[str]:
-    """Get current tenant ID."""
-    context = get_current_context()
+    """Get current tenant ID."""    context = get_current_context()
     return context.user.tenant_id if context else None
 
 
 def is_authenticated() -> bool:
-    """Check if current user is authenticated."""
-    context = get_current_context()
+    """Check if current user is authenticated."""    context = get_current_context()
     return context.user.is_authenticated if context else False
 
 
 def has_role(role: str) -> bool:
-    """Check if current user has specific role."""
-    context = get_current_context()
+    """Check if current user has specific role."""    context = get_current_context()
     if context and context.user.roles:
         return role in context.user.roles
     return False
 
 
 def has_permission(permission: str) -> bool:
-    """Check if current user has specific permission."""
-    context = get_current_context()
+    """Check if current user has specific permission."""    context = get_current_context()
     if context and context.user.permissions:
         return permission in context.user.permissions
     return False
@@ -379,8 +346,7 @@ def with_business_operation(
     action: Optional[str] = None,
     **business_data
 ):
-    """Decorator to set business context for operation."""
-    def decorator(func):
+    """Decorator to set business context for operation."""    def decorator(func):
         async def async_wrapper(*args, **kwargs):
             context = get_current_context()
             if context:

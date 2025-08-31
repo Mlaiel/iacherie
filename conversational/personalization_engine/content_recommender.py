@@ -1,5 +1,4 @@
-"""
-Content Recommender
+"""Content Recommender
 ==================
 
 Industrial-grade ML-powered content recommendation engine for IA Influencer Agent.
@@ -14,9 +13,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
 WARNING: Any attempt to steal, copy, or use the concept, idea, or code without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -43,8 +40,7 @@ logger = logging.getLogger(__name__)
 
 
 class RecommendationType(str, Enum):
-    """Types of recommendations"""
-    CONTENT_DISCOVERY = "content_discovery"
+    """Types of recommendations"""    CONTENT_DISCOVERY = "content_discovery"
     COLLABORATION_MATCHING = "collaboration_matching"
     TRENDING_CONTENT = "trending_content"
     SIMILAR_CREATORS = "similar_creators"
@@ -54,8 +50,7 @@ class RecommendationType(str, Enum):
 
 
 class RecommendationStrategy(str, Enum):
-    """Recommendation generation strategies"""
-    COLLABORATIVE_FILTERING = "collaborative_filtering"
+    """Recommendation generation strategies"""    COLLABORATIVE_FILTERING = "collaborative_filtering"
     CONTENT_BASED = "content_based"
     HYBRID = "hybrid"
     DEEP_LEARNING = "deep_learning"
@@ -65,8 +60,7 @@ class RecommendationStrategy(str, Enum):
 
 
 class ContentCategory(str, Enum):
-    """Content categories for recommendations"""
-    AUDIO_MUSIC = "audio_music"
+    """Content categories for recommendations"""    AUDIO_MUSIC = "audio_music"
     VIDEO_CONTENT = "video_content"
     IMAGE_PHOTOGRAPHY = "image_photography"
     TEXT_BLOG = "text_blog"
@@ -78,8 +72,7 @@ class ContentCategory(str, Enum):
 
 @dataclass
 class RecommendationRequest:
-    """Request for content recommendations"""
-    user_id: str
+    """Request for content recommendations"""    user_id: str
     recommendation_type: RecommendationType
     strategy: Optional[RecommendationStrategy] = None
     content_categories: Optional[List[ContentCategory]] = None
@@ -91,8 +84,7 @@ class RecommendationRequest:
 
 @dataclass
 class RecommendationItem:
-    """Individual recommendation item"""
-    item_id: str
+    """Individual recommendation item"""    item_id: str
     item_type: str
     title: str
     description: str
@@ -108,8 +100,7 @@ class RecommendationItem:
 
 @dataclass
 class RecommendationResponse:
-    """Response containing recommendations"""
-    request_id: str
+    """Response containing recommendations"""    request_id: str
     user_id: str
     recommendation_type: RecommendationType
     strategy_used: RecommendationStrategy
@@ -123,8 +114,7 @@ class RecommendationResponse:
 
 @dataclass
 class UserProfile:
-    """User profile for recommendations"""
-    user_id: str
+    """User profile for recommendations"""    user_id: str
     content_preferences: Dict[str, float]
     creator_affinities: Dict[str, float]
     genre_preferences: Dict[str, float]
@@ -137,10 +127,8 @@ class UserProfile:
 
 
 class ContentRecommender(BaseService):
-    """
-    Enterprise-grade content recommendation engine
-    """
-    
+    """    Enterprise-grade content recommendation engine
+    """    
     def __init__(
         self,
         mongodb_handler: MongoDBHandler,
@@ -181,8 +169,7 @@ class ContentRecommender(BaseService):
         logger.info("ContentRecommender initialized successfully")
 
     async def initialize(self) -> None:
-        """Initialize content recommender"""
-        try:
+        """Initialize content recommender"""        try:
             # Initialize ML models
             await self.embedding_model.initialize()
             await self.collaborative_model.initialize()
@@ -204,16 +191,14 @@ class ContentRecommender(BaseService):
         self,
         request: RecommendationRequest
     ) -> RecommendationResponse:
-        """
-        Generate personalized content recommendations
+        """        Generate personalized content recommendations
         
         Args:
             request: Recommendation request with user context
             
         Returns:
             Personalized recommendations response
-        """
-        try:
+        """        try:
             request_id = f"rec_{int(datetime.now().timestamp())}"
             
             # Validate request
@@ -303,8 +288,7 @@ class ContentRecommender(BaseService):
         feedback_value: float,
         context: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """
-        Update user feedback for recommendation improvement
+        """        Update user feedback for recommendation improvement
         
         Args:
             user_id: User identifier
@@ -315,8 +299,7 @@ class ContentRecommender(BaseService):
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             # Store feedback
             feedback_data = {
                 "user_id": user_id,
@@ -353,8 +336,7 @@ class ContentRecommender(BaseService):
         time_window: int = 24,  # hours
         max_results: int = 50
     ) -> List[RecommendationItem]:
-        """
-        Get trending content based on recent interactions
+        """        Get trending content based on recent interactions
         
         Args:
             category: Content category filter
@@ -363,8 +345,7 @@ class ContentRecommender(BaseService):
             
         Returns:
             List of trending content items
-        """
-        try:
+        """        try:
             # Calculate trending period
             end_time = datetime.now()
             start_time = end_time - timedelta(hours=time_window)
@@ -394,8 +375,7 @@ class ContentRecommender(BaseService):
         user_id: str,
         max_results: int = 20
     ) -> List[Dict[str, Any]]:
-        """
-        Find creators similar to the given user
+        """        Find creators similar to the given user
         
         Args:
             user_id: Target user identifier
@@ -403,8 +383,7 @@ class ContentRecommender(BaseService):
             
         Returns:
             List of similar creators with similarity scores
-        """
-        try:
+        """        try:
             # Get user profile
             user_profile = await self._get_user_profile(user_id)
             
@@ -446,8 +425,7 @@ class ContentRecommender(BaseService):
         self,
         request: RecommendationRequest
     ) -> None:
-        """Validate recommendation request"""
-        if not request.user_id:
+        """Validate recommendation request"""        if not request.user_id:
             raise ValidationError("User ID is required")
         
         if request.max_recommendations <= 0 or request.max_recommendations > 100:
@@ -459,8 +437,7 @@ class ContentRecommender(BaseService):
                     raise ValidationError(f"Invalid content category: {category}")
 
     async def _get_user_profile(self, user_id: str) -> UserProfile:
-        """Get user profile for recommendations"""
-        try:
+        """Get user profile for recommendations"""        try:
             # Check cache
             cache_key = f"user_profile:{user_id}"
             cached_profile = await self.redis_cache.get(cache_key)
@@ -511,8 +488,7 @@ class ContentRecommender(BaseService):
         user_profile: UserProfile,
         request: RecommendationRequest
     ) -> List[RecommendationItem]:
-        """Generate recommendations using specified strategy"""
-        try:
+        """Generate recommendations using specified strategy"""        try:
             if strategy == RecommendationStrategy.COLLABORATIVE_FILTERING:
                 return await self._generate_collaborative_recommendations(
                     user_profile, request
@@ -556,8 +532,7 @@ class ContentRecommender(BaseService):
         user_profile: UserProfile,
         request: RecommendationRequest
     ) -> List[RecommendationItem]:
-        """Generate collaborative filtering recommendations"""
-        try:
+        """Generate collaborative filtering recommendations"""        try:
             # Get user interaction matrix
             user_item_matrix = await self._build_user_item_matrix(user_profile.user_id)
             
@@ -586,8 +561,7 @@ class ContentRecommender(BaseService):
         user_profile: UserProfile,
         request: RecommendationRequest
     ) -> List[RecommendationItem]:
-        """Generate content-based filtering recommendations"""
-        try:
+        """Generate content-based filtering recommendations"""        try:
             # Get user content preferences
             content_preferences = user_profile.content_preferences
             
@@ -616,8 +590,7 @@ class ContentRecommender(BaseService):
         user_profile: UserProfile,
         request: RecommendationRequest
     ) -> List[RecommendationItem]:
-        """Generate hybrid recommendations combining multiple strategies"""
-        try:
+        """Generate hybrid recommendations combining multiple strategies"""        try:
             # Generate recommendations from multiple strategies
             collaborative_recs = await self._generate_collaborative_recommendations(
                 user_profile, request
@@ -703,8 +676,7 @@ def create_content_recommender(
     collaborative_model: CollaborativeFilteringModel,
     content_based_model: ContentBasedModel
 ) -> ContentRecommender:
-    """Create content recommender instance"""
-    return ContentRecommender(
+    """Create content recommender instance"""    return ContentRecommender(
         mongodb_handler=mongodb_handler,
         vector_store=vector_store,
         redis_cache=redis_cache,
@@ -715,8 +687,7 @@ def create_content_recommender(
 
 
 def validate_recommendation_request(request: RecommendationRequest) -> bool:
-    """Validate recommendation request"""
-    if not request.user_id or not isinstance(request.user_id, str):
+    """Validate recommendation request"""    if not request.user_id or not isinstance(request.user_id, str):
         return False
     
     if not isinstance(request.recommendation_type, RecommendationType):

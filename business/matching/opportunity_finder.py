@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-IA Influencer Agent - Advanced Opportunity Discovery System
+"""IA Influencer Agent - Advanced Opportunity Discovery System
 ===========================================================
 
 Professional Collaboration Opportunity Detection & Partnership Intelligence
@@ -34,9 +33,7 @@ CONSEQUENCES OF UNAUTHORIZED USE:
 - Permanent legal documentation and public disclosure of violation
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import List, Dict, Any, Optional, Tuple, Set
 from dataclasses import dataclass
@@ -53,8 +50,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class OpportunityMetrics:
-    """Metrics for collaboration opportunity assessment"""
-    reach_potential: float
+    """Metrics for collaboration opportunity assessment"""    reach_potential: float
     revenue_projection: Decimal
     engagement_compatibility: float
     content_synergy: float
@@ -66,8 +62,7 @@ class OpportunityMetrics:
 
 @dataclass
 class CollaborationOpportunity:
-    """Comprehensive collaboration opportunity model"""
-    opportunity_id: str
+    """Comprehensive collaboration opportunity model"""    opportunity_id: str
     primary_creator_id: str
     target_creator_id: str
     opportunity_type: str
@@ -85,8 +80,7 @@ class CollaborationOpportunity:
 
 
 class OpportunityFinder:
-    """Advanced opportunity discovery and analysis engine"""
-    
+    """Advanced opportunity discovery and analysis engine"""    
     def __init__(self, db_session, redis_client, ml_models):
         self.db = db_session
         self.redis = redis_client
@@ -99,8 +93,7 @@ class OpportunityFinder:
         criteria: Dict[str, Any],
         limit: int = 50
     ) -> List[CollaborationOpportunity]:
-        """Discover collaboration opportunities for a creator"""
-        try:
+        """Discover collaboration opportunities for a creator"""        try:
             # Get creator profile and performance data
             creator_profile = await self._get_creator_profile(creator_id)
             if not creator_profile:
@@ -132,8 +125,7 @@ class OpportunityFinder:
             return []
     
     async def _get_creator_profile(self, creator_id: str) -> Optional[Dict[str, Any]]:
-        """Get comprehensive creator profile data"""
-        try:
+        """Get comprehensive creator profile data"""        try:
             # Check cache first
             cache_key = f"creator_profile:{creator_id}"
             cached_profile = await self.redis.get(cache_key)
@@ -141,8 +133,7 @@ class OpportunityFinder:
                 return json.loads(cached_profile)
             
             # Query database for creator data
-            query = """
-                SELECT 
+            query = """                SELECT 
                     c.*,
                     cp.content_categories,
                     cp.audience_demographics,
@@ -151,8 +142,7 @@ class OpportunityFinder:
                 FROM creators c
                 LEFT JOIN creator_profiles cp ON c.id = cp.creator_id
                 WHERE c.id = %s AND c.is_active = true
-            """
-            
+            """            
             result = await self.db.fetch_one(query, (creator_id,))
             if not result:
                 return None
@@ -171,11 +161,9 @@ class OpportunityFinder:
             return None
     
     async def _analyze_market_trends(self, niche: str) -> Dict[str, Any]:
-        """Analyze current market trends for the niche"""
-        try:
+        """Analyze current market trends for the niche"""        try:
             # Get trending topics and hashtags
-            trending_query = """
-                SELECT 
+            trending_query = """                SELECT 
                     topic,
                     engagement_rate,
                     growth_rate,
@@ -185,8 +173,7 @@ class OpportunityFinder:
                 AND created_at >= %s
                 ORDER BY growth_rate DESC
                 LIMIT 20
-            """
-            
+            """            
             week_ago = datetime.now() - timedelta(days=7)
             trends = await self.db.fetch_all(trending_query, (niche, week_ago))
             
@@ -214,11 +201,9 @@ class OpportunityFinder:
         criteria: Dict[str, Any],
         limit: int
     ) -> List[Dict[str, Any]]:
-        """Find potential collaboration partners"""
-        try:
+        """Find potential collaboration partners"""        try:
             # Build dynamic query based on criteria
-            base_query = """
-                SELECT DISTINCT
+            base_query = """                SELECT DISTINCT
                     c.*,
                     cp.content_categories,
                     cp.audience_demographics,
@@ -229,8 +214,7 @@ class OpportunityFinder:
                 WHERE c.id != %s 
                 AND c.is_active = true
                 AND c.accepts_collaborations = true
-            """
-            
+            """            
             params = [creator_profile['id']]
             conditions = []
             
@@ -271,8 +255,7 @@ class OpportunityFinder:
         partner_profile: Dict[str, Any],
         market_trends: Dict[str, Any]
     ) -> Optional[CollaborationOpportunity]:
-        """Evaluate collaboration opportunity between two creators"""
-        try:
+        """Evaluate collaboration opportunity between two creators"""        try:
             # Calculate compatibility metrics
             content_synergy = await self._calculate_content_synergy(
                 creator_profile, partner_profile
@@ -349,8 +332,7 @@ class OpportunityFinder:
         creator1: Dict[str, Any],
         creator2: Dict[str, Any]
     ) -> float:
-        """Calculate content synergy score between creators"""
-        try:
+        """Calculate content synergy score between creators"""        try:
             # Get content categories and themes
             categories1 = set(creator1.get('content_categories', []))
             categories2 = set(creator2.get('content_categories', []))
@@ -383,8 +365,7 @@ class OpportunityFinder:
 
 
 class CollaborationScout:
-    """Advanced collaboration scouting and opportunity identification"""
-    
+    """Advanced collaboration scouting and opportunity identification"""    
     def __init__(self, db_session, ml_models):
         self.db = db_session
         self.ml_models = ml_models
@@ -395,8 +376,7 @@ class CollaborationScout:
         search_criteria: Dict[str, Any],
         geographic_scope: str = "global"
     ) -> List[Dict[str, Any]]:
-        """Scout for collaboration opportunities across platforms"""
-        try:
+        """Scout for collaboration opportunities across platforms"""        try:
             opportunities = []
             
             # Scout by content type
@@ -430,8 +410,7 @@ class CollaborationScout:
 
 
 class PartnershipDetector:
-    """AI-powered partnership detection and matching system"""
-    
+    """AI-powered partnership detection and matching system"""    
     def __init__(self, db_session, vector_store, ml_models):
         self.db = db_session
         self.vector_store = vector_store
@@ -443,8 +422,7 @@ class PartnershipDetector:
         creator_id: str,
         partnership_goals: List[str]
     ) -> List[Dict[str, Any]]:
-        """Detect strategic partnership opportunities"""
-        try:
+        """Detect strategic partnership opportunities"""        try:
             creator_embedding = await self._get_creator_embedding(creator_id)
             if creator_embedding is None:
                 return []
@@ -474,8 +452,7 @@ class PartnershipDetector:
 
 
 class NetworkExpander:
-    """Advanced network expansion and relationship building system"""
-    
+    """Advanced network expansion and relationship building system"""    
     def __init__(self, db_session, graph_db):
         self.db = db_session
         self.graph_db = graph_db
@@ -486,8 +463,7 @@ class NetworkExpander:
         creator_id: str,
         expansion_strategy: str = "quality_over_quantity"
     ) -> Dict[str, Any]:
-        """Expand creator's professional network strategically"""
-        try:
+        """Expand creator's professional network strategically"""        try:
             current_network = await self._analyze_current_network(creator_id)
             
             # Identify network gaps
@@ -519,8 +495,7 @@ class NetworkExpander:
 
 
 class MarketAnalyzer:
-    """Comprehensive market analysis and opportunity assessment"""
-    
+    """Comprehensive market analysis and opportunity assessment"""    
     def __init__(self, db_session, analytics_engine):
         self.db = db_session
         self.analytics = analytics_engine
@@ -531,8 +506,7 @@ class MarketAnalyzer:
         market_segment: str,
         time_horizon: str = "6_months"
     ) -> Dict[str, Any]:
-        """Analyze market opportunities in specific segment"""
-        try:
+        """Analyze market opportunities in specific segment"""        try:
             # Market size and growth analysis
             market_size = await self._calculate_market_size(market_segment)
             growth_trends = await self._analyze_growth_trends(market_segment, time_horizon)
@@ -568,10 +542,8 @@ class MarketAnalyzer:
             return {}
     
     async def _calculate_market_size(self, market_segment: str) -> Dict[str, Any]:
-        """Calculate total addressable market size"""
-        try:
-            query = """
-                SELECT 
+        """Calculate total addressable market size"""        try:
+            query = """                SELECT 
                     COUNT(*) as total_creators,
                     AVG(monthly_revenue) as avg_revenue,
                     SUM(monthly_revenue) as total_market_value,
@@ -579,8 +551,7 @@ class MarketAnalyzer:
                 FROM creator_profiles 
                 WHERE primary_niche = %s
                 AND is_monetized = true
-            """
-            
+            """            
             result = await self.db.fetch_one(query, (market_segment,))
             
             return {

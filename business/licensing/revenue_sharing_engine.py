@@ -1,5 +1,4 @@
-"""
-Revenue Sharing Engine - Advanced revenue distribution and sharing management
+"""Revenue Sharing Engine - Advanced revenue distribution and sharing management
 
 Manages complex revenue sharing agreements, automated distribution calculations,
 and transparent payment processing for multi-party content monetization.
@@ -11,9 +10,7 @@ WARNING - COPYRIGHT PROTECTION:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 authorization from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
-"""
-
-from typing import Dict, List, Optional, Any, Tuple
+"""from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
 from dataclasses import dataclass, field
@@ -33,8 +30,7 @@ from ..integrations.payment_processors import PaymentProcessorManager
 
 
 class RevenueType(Enum):
-    """Types of revenue streams"""
-    STREAMING_ROYALTIES = "streaming_royalties"
+    """Types of revenue streams"""    STREAMING_ROYALTIES = "streaming_royalties"
     DOWNLOAD_SALES = "download_sales"
     SYNCHRONIZATION_FEES = "synchronization_fees"
     PERFORMANCE_ROYALTIES = "performance_royalties"
@@ -49,8 +45,7 @@ class RevenueType(Enum):
 
 
 class ShareType(Enum):
-    """Types of revenue sharing arrangements"""
-    PERCENTAGE = "percentage"           # Fixed percentage
+    """Types of revenue sharing arrangements"""    PERCENTAGE = "percentage"           # Fixed percentage
     TIERED = "tiered"                  # Tiered based on performance
     WATERFALL = "waterfall"            # Sequential distribution
     EQUAL_SPLIT = "equal_split"        # Equal distribution among parties
@@ -59,8 +54,7 @@ class ShareType(Enum):
 
 
 class PaymentFrequency(Enum):
-    """Payment schedule frequencies"""
-    REAL_TIME = "real_time"
+    """Payment schedule frequencies"""    REAL_TIME = "real_time"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -72,8 +66,7 @@ class PaymentFrequency(Enum):
 
 
 class DistributionStatus(Enum):
-    """Revenue distribution status"""
-    PENDING = "pending"
+    """Revenue distribution status"""    PENDING = "pending"
     CALCULATING = "calculating"
     READY_FOR_PAYMENT = "ready_for_payment"
     PROCESSING = "processing"
@@ -85,8 +78,7 @@ class DistributionStatus(Enum):
 
 @dataclass
 class RevenueMetrics:
-    """Revenue performance metrics"""
-    total_revenue: Decimal
+    """Revenue performance metrics"""    total_revenue: Decimal
     distributed_amount: Decimal
     pending_distribution: Decimal
     processing_fees: Decimal
@@ -97,8 +89,7 @@ class RevenueMetrics:
 
 
 class RevenueShareConfiguration(BaseModel):
-    """Revenue sharing configuration"""
-    content_id: str = Field(..., description="Content associated with revenue sharing")
+    """Revenue sharing configuration"""    content_id: str = Field(..., description="Content associated with revenue sharing")
     share_type: ShareType = Field(..., description="Type of sharing arrangement")
     revenue_types: List[RevenueType] = Field(..., description="Types of revenue to share")
     parties: List[Dict[str, Any]] = Field(..., description="Parties involved in sharing")
@@ -121,8 +112,7 @@ class RevenueShareConfiguration(BaseModel):
 
 
 class RevenueDistributionRequest(BaseModel):
-    """Revenue distribution processing request"""
-    content_id: str = Field(..., description="Content for revenue distribution")
+    """Revenue distribution processing request"""    content_id: str = Field(..., description="Content for revenue distribution")
     revenue_period_start: datetime = Field(..., description="Revenue period start date")
     revenue_period_end: datetime = Field(..., description="Revenue period end date")
     revenue_data: List[Dict[str, Any]] = Field(..., description="Revenue data to distribute")
@@ -130,11 +120,9 @@ class RevenueDistributionRequest(BaseModel):
 
 
 class RevenueSharingEngine:
-    """
-    Advanced revenue sharing system with AI-driven optimization, automated calculations,
+    """    Advanced revenue sharing system with AI-driven optimization, automated calculations,
     transparent distribution, and multi-currency support.
-    """
-    
+    """    
     def __init__(self, db: Session = None):
         self.db = db or next(get_db())
         self.logger = get_logger(__name__)
@@ -149,16 +137,14 @@ class RevenueSharingEngine:
         self,
         configuration: RevenueShareConfiguration
     ) -> Dict[str, Any]:
-        """
-        Create comprehensive revenue sharing agreement with automated validation
+        """        Create comprehensive revenue sharing agreement with automated validation
         
         Args:
             configuration: Revenue sharing configuration details
             
         Returns:
             Created agreement details and validation results
-        """
-        try:
+        """        try:
             self.logger.info(f"Creating revenue sharing agreement for content {configuration.content_id}")
             
             # Validate configuration
@@ -219,16 +205,14 @@ class RevenueSharingEngine:
         self,
         distribution_request: RevenueDistributionRequest
     ) -> Dict[str, Any]:
-        """
-        Process revenue distribution with automated calculations and validation
+        """        Process revenue distribution with automated calculations and validation
         
         Args:
             distribution_request: Revenue distribution parameters
             
         Returns:
             Distribution processing results with detailed breakdown
-        """
-        try:
+        """        try:
             self.logger.info(f"Processing revenue distribution for content {distribution_request.content_id}")
             
             # Get revenue sharing configuration
@@ -321,16 +305,14 @@ class RevenueSharingEngine:
         self,
         distribution_id: str
     ) -> Dict[str, Any]:
-        """
-        Track payment status and processing for revenue distribution
+        """        Track payment status and processing for revenue distribution
         
         Args:
             distribution_id: Distribution to track payments for
             
         Returns:
             Comprehensive payment status and tracking information
-        """
-        try:
+        """        try:
             distribution_record = await self._get_distribution_record(distribution_id)
             
             if not distribution_record:
@@ -397,8 +379,7 @@ class RevenueSharingEngine:
         date_range: Optional[Dict[str, datetime]] = None,
         analytics_type: str = "comprehensive"
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive revenue sharing analytics and insights
+        """        Generate comprehensive revenue sharing analytics and insights
         
         Args:
             content_ids: Specific content to analyze
@@ -408,8 +389,7 @@ class RevenueSharingEngine:
             
         Returns:
             Detailed revenue analytics and business insights
-        """
-        try:
+        """        try:
             # Collect revenue data for analysis
             revenue_data = await self._collect_revenue_analytics_data(
                 content_ids, party_id, date_range
@@ -481,8 +461,7 @@ class RevenueSharingEngine:
         revenue_share_id: str,
         optimization_criteria: List[str] = None
     ) -> Dict[str, Any]:
-        """
-        Optimize existing revenue sharing agreement based on performance data
+        """        Optimize existing revenue sharing agreement based on performance data
         
         Args:
             revenue_share_id: Revenue sharing agreement to optimize
@@ -490,8 +469,7 @@ class RevenueSharingEngine:
             
         Returns:
             Optimization recommendations and implementation plan
-        """
-        try:
+        """        try:
             if not optimization_criteria:
                 optimization_criteria = [
                     "maximize_total_revenue",
@@ -559,8 +537,7 @@ class RevenueSharingEngine:
         self, 
         configuration: RevenueShareConfiguration
     ) -> Dict[str, Any]:
-        """Validate revenue sharing configuration"""
-        # Implementation for configuration validation
+        """Validate revenue sharing configuration"""        # Implementation for configuration validation
         pass
     
     async def _calculate_revenue_distribution(
@@ -568,8 +545,7 @@ class RevenueSharingEngine:
         revenue_data: List[Dict[str, Any]], 
         config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate detailed revenue distribution"""
-        # Implementation for revenue distribution calculation
+        """Calculate detailed revenue distribution"""        # Implementation for revenue distribution calculation
         pass
     
     async def _calculate_payment_metrics(
@@ -577,6 +553,5 @@ class RevenueSharingEngine:
         payment_updates: List[Dict[str, Any]], 
         distribution_record: Any
     ) -> Dict[str, Any]:
-        """Calculate comprehensive payment metrics"""
-        # Implementation for payment metrics calculation
+        """Calculate comprehensive payment metrics"""        # Implementation for payment metrics calculation
         pass

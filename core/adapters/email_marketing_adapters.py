@@ -1,5 +1,4 @@
-"""
-Email Marketing Platform Adapters - Marketing Automation Integration
+"""Email Marketing Platform Adapters - Marketing Automation Integration
 
 This module provides comprehensive adapter infrastructure for integrating with
 email marketing platforms, newsletter services, and marketing automation tools.
@@ -16,9 +15,7 @@ Features:
 - A/B testing and performance optimization
 - Behavioral trigger automation
 - Comprehensive analytics and reporting
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from abc import abstractmethod
 from typing import Dict, List, Optional, Any, Union, Set
@@ -41,8 +38,7 @@ from .base_adapter import (
 logger = logging.getLogger(__name__)
 
 class EmailPlatform(Enum):
-    """Supported email marketing platforms."""
-    MAILCHIMP = "mailchimp"
+    """Supported email marketing platforms."""    MAILCHIMP = "mailchimp"
     SENDGRID = "sendgrid"
     KLAVIYO = "klaviyo"
     CONSTANT_CONTACT = "constant_contact"
@@ -55,8 +51,7 @@ class EmailPlatform(Enum):
     SMTP_CUSTOM = "smtp_custom"
 
 class CampaignType(Enum):
-    """Types of email campaigns."""
-    NEWSLETTER = "newsletter"
+    """Types of email campaigns."""    NEWSLETTER = "newsletter"
     PROMOTIONAL = "promotional"
     TRANSACTIONAL = "transactional"
     WELCOME_SERIES = "welcome_series"
@@ -69,8 +64,7 @@ class CampaignType(Enum):
     ABANDONMENT_RECOVERY = "abandonment_recovery"
 
 class SegmentCriteria(Enum):
-    """Audience segmentation criteria."""
-    DEMOGRAPHIC = "demographic"
+    """Audience segmentation criteria."""    DEMOGRAPHIC = "demographic"
     BEHAVIORAL = "behavioral"
     GEOGRAPHIC = "geographic"
     PSYCHOGRAPHIC = "psychographic"
@@ -83,8 +77,7 @@ class SegmentCriteria(Enum):
 
 @dataclass
 class EmailContact:
-    """Represents an email contact/subscriber."""
-    email: str
+    """Represents an email contact/subscriber."""    email: str
     first_name: Optional[str] = None
     last_name: Optional[str] = None
     phone: Optional[str] = None
@@ -99,8 +92,7 @@ class EmailContact:
 
 @dataclass
 class EmailTemplate:
-    """Email template configuration."""
-    template_id: str
+    """Email template configuration."""    template_id: str
     name: str
     subject: str
     html_content: str
@@ -113,8 +105,7 @@ class EmailTemplate:
 
 @dataclass
 class EmailCampaign:
-    """Email campaign configuration."""
-    campaign_id: str
+    """Email campaign configuration."""    campaign_id: str
     name: str
     subject: str
     template_id: str
@@ -135,8 +126,7 @@ class EmailCampaign:
 
 @dataclass
 class CampaignStats:
-    """Email campaign performance statistics."""
-    campaign_id: str
+    """Email campaign performance statistics."""    campaign_id: str
     sent_count: int
     delivered_count: int
     opened_count: int
@@ -155,8 +145,7 @@ class CampaignStats:
     last_updated: datetime = field(default_factory=datetime.utcnow)
 
 class BaseEmailAdapter(BasePlatformAdapter):
-    """Base class for email marketing platform adapters."""
-    
+    """Base class for email marketing platform adapters."""    
     def __init__(
         self, 
         platform_name: str,
@@ -183,43 +172,35 @@ class BaseEmailAdapter(BasePlatformAdapter):
     
     @abstractmethod
     async def create_contact(self, contact: EmailContact) -> bool:
-        """Create or update a contact in the email platform."""
-        pass
+        """Create or update a contact in the email platform."""        pass
     
     @abstractmethod
     async def create_template(self, template: EmailTemplate) -> bool:
-        """Create an email template."""
-        pass
+        """Create an email template."""        pass
     
     @abstractmethod
     async def create_campaign(self, campaign: EmailCampaign) -> bool:
-        """Create an email campaign."""
-        pass
+        """Create an email campaign."""        pass
     
     @abstractmethod
     async def send_campaign(self, campaign_id: str) -> bool:
-        """Send an email campaign."""
-        pass
+        """Send an email campaign."""        pass
     
     @abstractmethod
     async def get_campaign_stats(self, campaign_id: str) -> Optional[CampaignStats]:
-        """Get campaign performance statistics."""
-        pass
+        """Get campaign performance statistics."""        pass
     
     @abstractmethod
     async def create_audience_segment(self, name: str, criteria: Dict[str, Any]) -> str:
-        """Create an audience segment based on criteria."""
-        pass
+        """Create an audience segment based on criteria."""        pass
     
     async def validate_email(self, email: str) -> bool:
-        """Validate email address format."""
-        import re
+        """Validate email address format."""        import re
         pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         return re.match(pattern, email) is not None
     
     async def calculate_engagement_score(self, contact: EmailContact) -> float:
-        """Calculate engagement score for a contact."""
-        score = 0.0
+        """Calculate engagement score for a contact."""        score = 0.0
         
         # Recent engagement bonus
         if contact.last_engagement:
@@ -257,8 +238,7 @@ class BaseEmailAdapter(BasePlatformAdapter):
         return min(score, 1.0)
     
     async def personalize_content(self, content: str, contact: EmailContact) -> str:
-        """Personalize email content for a specific contact."""
-        personalized = content
+        """Personalize email content for a specific contact."""        personalized = content
         
         # Basic personalization
         if contact.first_name:
@@ -277,8 +257,7 @@ class BaseEmailAdapter(BasePlatformAdapter):
         return personalized
 
 class MailchimpAdapter(BaseEmailAdapter):
-    """Mailchimp API adapter implementation."""
-    
+    """Mailchimp API adapter implementation."""    
     def __init__(self, credentials: AdapterCredentials, config: Dict[str, Any]):
         super().__init__(
             platform_name="mailchimp",
@@ -291,8 +270,7 @@ class MailchimpAdapter(BaseEmailAdapter):
     
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
     async def create_contact(self, contact: EmailContact) -> bool:
-        """Create or update a contact in Mailchimp."""
-        try:
+        """Create or update a contact in Mailchimp."""        try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}",
                 "Content-Type": "application/json"
@@ -337,8 +315,7 @@ class MailchimpAdapter(BaseEmailAdapter):
             return False
     
     async def create_template(self, template: EmailTemplate) -> bool:
-        """Create an email template in Mailchimp."""
-        try:
+        """Create an email template in Mailchimp."""        try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}",
                 "Content-Type": "application/json"
@@ -373,8 +350,7 @@ class MailchimpAdapter(BaseEmailAdapter):
             return False
     
     async def create_campaign(self, campaign: EmailCampaign) -> bool:
-        """Create an email campaign in Mailchimp."""
-        try:
+        """Create an email campaign in Mailchimp."""        try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}",
                 "Content-Type": "application/json"
@@ -448,8 +424,7 @@ class MailchimpAdapter(BaseEmailAdapter):
             return False
     
     async def send_campaign(self, campaign_id: str) -> bool:
-        """Send a Mailchimp campaign."""
-        try:
+        """Send a Mailchimp campaign."""        try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}",
                 "Content-Type": "application/json"
@@ -476,8 +451,7 @@ class MailchimpAdapter(BaseEmailAdapter):
             return False
     
     async def get_campaign_stats(self, campaign_id: str) -> Optional[CampaignStats]:
-        """Get Mailchimp campaign statistics."""
-        try:
+        """Get Mailchimp campaign statistics."""        try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}"
             }
@@ -529,8 +503,7 @@ class MailchimpAdapter(BaseEmailAdapter):
             return None
     
     async def create_audience_segment(self, name: str, criteria: Dict[str, Any]) -> str:
-        """Create an audience segment in Mailchimp."""
-        try:
+        """Create an audience segment in Mailchimp."""        try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}",
                 "Content-Type": "application/json"
@@ -585,8 +558,7 @@ class MailchimpAdapter(BaseEmailAdapter):
             return ""
 
 class SendGridAdapter(BaseEmailAdapter):
-    """SendGrid API adapter implementation."""
-    
+    """SendGrid API adapter implementation."""    
     def __init__(self, credentials: AdapterCredentials, config: Dict[str, Any]):
         super().__init__(
             platform_name="sendgrid",
@@ -597,8 +569,7 @@ class SendGridAdapter(BaseEmailAdapter):
         self.api_base_url = "https://api.sendgrid.com/v3"
     
     async def create_contact(self, contact: EmailContact) -> bool:
-        """Create or update a contact in SendGrid."""
-        try:
+        """Create or update a contact in SendGrid."""        try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}",
                 "Content-Type": "application/json"
@@ -633,8 +604,7 @@ class SendGridAdapter(BaseEmailAdapter):
             return False
     
     async def create_template(self, template: EmailTemplate) -> bool:
-        """Create a template in SendGrid."""
-        try:
+        """Create a template in SendGrid."""        try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}",
                 "Content-Type": "application/json"
@@ -686,8 +656,7 @@ class SendGridAdapter(BaseEmailAdapter):
             return False
     
     async def create_campaign(self, campaign: EmailCampaign) -> bool:
-        """Create a campaign in SendGrid."""
-        try:
+        """Create a campaign in SendGrid."""        try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}",
                 "Content-Type": "application/json"
@@ -729,8 +698,7 @@ class SendGridAdapter(BaseEmailAdapter):
             return False
     
     async def send_campaign(self, campaign_id: str) -> bool:
-        """Send a SendGrid campaign."""
-        try:
+        """Send a SendGrid campaign."""        try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}",
                 "Content-Type": "application/json"
@@ -762,8 +730,7 @@ class SendGridAdapter(BaseEmailAdapter):
             return False
     
     async def get_campaign_stats(self, campaign_id: str) -> Optional[CampaignStats]:
-        """Get SendGrid campaign statistics."""
-        try:
+        """Get SendGrid campaign statistics."""        try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}"
             }
@@ -818,8 +785,7 @@ class SendGridAdapter(BaseEmailAdapter):
             return None
     
     async def create_audience_segment(self, name: str, criteria: Dict[str, Any]) -> str:
-        """Create an audience segment in SendGrid."""
-        try:
+        """Create an audience segment in SendGrid."""        try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}",
                 "Content-Type": "application/json"
@@ -850,8 +816,7 @@ class SendGridAdapter(BaseEmailAdapter):
             return ""
 
 class EmailAdapterFactory:
-    """Factory for creating email marketing adapters."""
-    
+    """Factory for creating email marketing adapters."""    
     _adapters = {
         EmailPlatform.MAILCHIMP: MailchimpAdapter,
         EmailPlatform.SENDGRID: SendGridAdapter
@@ -864,8 +829,7 @@ class EmailAdapterFactory:
         credentials: AdapterCredentials, 
         config: Dict[str, Any]
     ) -> BaseEmailAdapter:
-        """Create an email adapter instance."""
-        adapter_class = cls._adapters.get(platform)
+        """Create an email adapter instance."""        adapter_class = cls._adapters.get(platform)
         if not adapter_class:
             raise ValueError(f"Unsupported email platform: {platform}")
         
@@ -873,25 +837,21 @@ class EmailAdapterFactory:
     
     @classmethod
     def get_supported_platforms(cls) -> List[EmailPlatform]:
-        """Get list of supported email platforms."""
-        return list(cls._adapters.keys())
+        """Get list of supported email platforms."""        return list(cls._adapters.keys())
 
 class EmailAdapterManager:
-    """Manager for email marketing adapter instances and campaign orchestration."""
-    
+    """Manager for email marketing adapter instances and campaign orchestration."""    
     def __init__(self):
         self.adapters: Dict[EmailPlatform, BaseEmailAdapter] = {}
         self.primary_platform = EmailPlatform.MAILCHIMP
         self.backup_platforms = [EmailPlatform.SENDGRID]
     
     def register_adapter(self, platform: EmailPlatform, adapter: BaseEmailAdapter):
-        """Register an email adapter."""
-        self.adapters[platform] = adapter
+        """Register an email adapter."""        self.adapters[platform] = adapter
         logger.info(f"Registered email adapter for platform: {platform.value}")
     
     async def sync_contact_across_platforms(self, contact: EmailContact) -> Dict[EmailPlatform, bool]:
-        """Sync a contact across all registered platforms."""
-        results = {}
+        """Sync a contact across all registered platforms."""        results = {}
         
         for platform, adapter in self.adapters.items():
             try:
@@ -903,8 +863,7 @@ class EmailAdapterManager:
         return results
     
     async def send_multi_platform_campaign(self, campaign: EmailCampaign) -> Dict[EmailPlatform, bool]:
-        """Send campaign across multiple platforms for redundancy."""
-        results = {}
+        """Send campaign across multiple platforms for redundancy."""        results = {}
         
         # Try primary platform first
         if self.primary_platform in self.adapters:
@@ -936,8 +895,7 @@ class EmailAdapterManager:
         return results
     
     async def get_consolidated_stats(self, campaign_id: str) -> Dict[str, Any]:
-        """Get consolidated campaign statistics across platforms."""
-        all_stats = {}
+        """Get consolidated campaign statistics across platforms."""        all_stats = {}
         
         for platform, adapter in self.adapters.items():
             try:

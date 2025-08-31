@@ -1,5 +1,4 @@
-"""
-🕷️ Generic Web Crawler
+"""🕷️ Generic Web Crawler
 ======================
 
 Professional generic web crawling system using Scrapy framework.
@@ -11,9 +10,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 ⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import re
 import json
@@ -41,8 +38,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class WebPageInfo:
-    """Web page information structure."""
-    url: str
+    """Web page information structure."""    url: str
     title: str
     description: str
     content: str
@@ -61,8 +57,7 @@ class WebPageInfo:
 
 @dataclass
 class CrawlConfig:
-    """Crawling configuration structure."""
-    allowed_domains: List[str]
+    """Crawling configuration structure."""    allowed_domains: List[str]
     start_urls: List[str]
     max_depth: int = 3
     max_pages: int = 1000
@@ -78,12 +73,10 @@ class CrawlConfig:
     file_extensions: List[str] = None  # File extensions to crawl
 
 class ContentAnalyzer:
-    """Intelligent content analysis and extraction."""
-    
+    """Intelligent content analysis and extraction."""    
     @staticmethod
     def extract_metadata(soup: BeautifulSoup, url: str) -> Dict[str, Any]:
-        """Extract comprehensive metadata from HTML."""
-        metadata = {}
+        """Extract comprehensive metadata from HTML."""        metadata = {}
         
         try:
             # Basic meta tags
@@ -163,8 +156,7 @@ class ContentAnalyzer:
     
     @staticmethod
     def _extract_microdata(soup: BeautifulSoup) -> List[Dict[str, Any]]:
-        """Extract microdata from HTML."""
-        microdata_items = []
+        """Extract microdata from HTML."""        microdata_items = []
         
         items = soup.find_all(attrs={'itemscope': True})
         for item in items:
@@ -197,8 +189,7 @@ class ContentAnalyzer:
     
     @staticmethod
     def extract_media_urls(soup: BeautifulSoup, base_url: str) -> Dict[str, List[str]]:
-        """Extract media URLs from HTML."""
-        media_urls = {
+        """Extract media URLs from HTML."""        media_urls = {
             'images': [],
             'videos': [],
             'audio': [],
@@ -260,8 +251,7 @@ class ContentAnalyzer:
     
     @staticmethod
     def detect_content_type(soup: BeautifulSoup, url: str) -> str:
-        """Detect content type based on page structure and content."""
-        try:
+        """Detect content type based on page structure and content."""        try:
             # Check for video platforms
             if any(domain in url for domain in ['youtube.com', 'vimeo.com', 'dailymotion.com']):
                 return 'video'
@@ -310,8 +300,7 @@ class ContentAnalyzer:
             return 'webpage'
 
 class GenericSpider(scrapy.Spider):
-    """Generic Scrapy spider for web crawling."""
-    
+    """Generic Scrapy spider for web crawling."""    
     name = 'generic_spider'
     
     def __init__(self, crawl_config: CrawlConfig, *args, **kwargs):
@@ -329,8 +318,7 @@ class GenericSpider(scrapy.Spider):
         self.content_analyzer = ContentAnalyzer()
     
     def parse(self, response: Response):
-        """Parse web page response."""
-        try:
+        """Parse web page response."""        try:
             # Update statistics
             self.pages_crawled += 1
             
@@ -356,8 +344,7 @@ class GenericSpider(scrapy.Spider):
             self.errors_encountered += 1
     
     def _extract_page_info(self, response: Response, soup: BeautifulSoup) -> WebPageInfo:
-        """Extract comprehensive page information."""
-        url = response.url
+        """Extract comprehensive page information."""        url = response.url
         
         # Basic information
         title = ""
@@ -404,8 +391,7 @@ class GenericSpider(scrapy.Spider):
         )
     
     def _extract_text_content(self, soup: BeautifulSoup) -> str:
-        """Extract clean text content from HTML."""
-        try:
+        """Extract clean text content from HTML."""        try:
             # Remove script and style elements
             for script in soup(["script", "style"]):
                 script.decompose()
@@ -425,8 +411,7 @@ class GenericSpider(scrapy.Spider):
             return ""
     
     def _extract_links(self, response: Response, soup: BeautifulSoup) -> List[str]:
-        """Extract valid links for further crawling."""
-        links = []
+        """Extract valid links for further crawling."""        links = []
         
         try:
             for link_tag in soup.find_all('a', href=True):
@@ -446,8 +431,7 @@ class GenericSpider(scrapy.Spider):
         return links
     
     def _is_valid_link(self, url: str) -> bool:
-        """Check if link is valid for crawling."""
-        try:
+        """Check if link is valid for crawling."""        try:
             parsed_url = urlparse(url)
             
             # Skip fragments and javascript links
@@ -469,15 +453,13 @@ class GenericSpider(scrapy.Spider):
             return False
 
 class RobotsTxtChecker:
-    """Robots.txt compliance checker."""
-    
+    """Robots.txt compliance checker."""    
     def __init__(self):
         self.robots_cache = {}
         self.cache_timeout = timedelta(hours=24)
     
     def can_fetch(self, url: str, user_agent: str = '*') -> bool:
-        """Check if URL can be fetched according to robots.txt."""
-        try:
+        """Check if URL can be fetched according to robots.txt."""        try:
             parsed_url = urlparse(url)
             robots_url = f"{parsed_url.scheme}://{parsed_url.netloc}/robots.txt"
             
@@ -507,8 +489,7 @@ class RobotsTxtChecker:
             return True
 
 class GenericWebCrawler(BasePlatformCrawler):
-    """
-    Professional Generic Web Crawler
+    """    Professional Generic Web Crawler
     ================================
     
     Advanced web crawling system featuring:
@@ -520,11 +501,9 @@ class GenericWebCrawler(BasePlatformCrawler):
     - Media content discovery
     - Rate limiting and politeness policies
     - Content deduplication
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize generic web crawler."""
-        super().__init__("web", config)
+        """Initialize generic web crawler."""        super().__init__("web", config)
         
         # Crawling configuration
         self.max_depth = config.get('max_depth', 3)
@@ -553,8 +532,7 @@ class GenericWebCrawler(BasePlatformCrawler):
         logger.info("Generic web crawler initialized")
     
     def _get_scrapy_settings(self) -> Dict[str, Any]:
-        """Get Scrapy settings for crawling."""
-        return {
+        """Get Scrapy settings for crawling."""        return {
             'USER_AGENT': self.user_agent,
             'ROBOTSTXT_OBEY': self.respect_robots_txt,
             'DOWNLOAD_DELAY': self.delay,
@@ -575,12 +553,10 @@ class GenericWebCrawler(BasePlatformCrawler):
         max_results: int = 50,
         filters: Optional[Dict[str, Any]] = None
     ) -> List[CrawlResult]:
-        """
-        Search for content using web crawling.
+        """        Search for content using web crawling.
         
         For generic web crawler, 'query' should be a domain or URL pattern.
-        """
-        if not query:
+        """        if not query:
             return []
         
         try:
@@ -617,8 +593,7 @@ class GenericWebCrawler(BasePlatformCrawler):
             return []
     
     async def _crawl_website(self, crawl_config: CrawlConfig) -> List[WebPageInfo]:
-        """Execute website crawling using Scrapy."""
-        results = []
+        """Execute website crawling using Scrapy."""        results = []
         
         try:
             # Create Scrapy runner
@@ -649,8 +624,7 @@ class GenericWebCrawler(BasePlatformCrawler):
         return results
     
     async def _wait_for_crawler(self, deferred):
-        """Wait for Scrapy crawler to complete."""
-        # This is a simplified implementation
+        """Wait for Scrapy crawler to complete."""        # This is a simplified implementation
         # In a real implementation, you would properly handle Twisted deferreds
         try:
             # Wait for crawler completion (simplified)
@@ -674,8 +648,7 @@ class GenericWebCrawler(BasePlatformCrawler):
         pages: List[WebPageInfo],
         content_type_filter: str
     ) -> List[CrawlResult]:
-        """Convert web pages to CrawlResult format."""
-        results = []
+        """Convert web pages to CrawlResult format."""        results = []
         
         for page in pages:
             try:
@@ -744,8 +717,7 @@ class GenericWebCrawler(BasePlatformCrawler):
         max_pages: int = 100,
         max_depth: int = 3
     ) -> List[CrawlResult]:
-        """Crawl an entire domain."""
-        start_url = f"https://{domain}" if not domain.startswith(('http://', 'https://')) else domain
+        """Crawl an entire domain."""        start_url = f"https://{domain}" if not domain.startswith(('http://', 'https://')) else domain
         
         return await self.search_content(
             query=start_url,
@@ -754,8 +726,7 @@ class GenericWebCrawler(BasePlatformCrawler):
         )
     
     async def crawl_sitemap(self, sitemap_url: str) -> List[CrawlResult]:
-        """Crawl URLs from a sitemap."""
-        try:
+        """Crawl URLs from a sitemap."""        try:
             # Fetch sitemap
             response = requests.get(sitemap_url, timeout=30)
             response.raise_for_status()
@@ -788,13 +759,11 @@ class GenericWebCrawler(BasePlatformCrawler):
             return []
     
     async def check_rate_limits(self) -> bool:
-        """Check if crawler is within rate limits."""
-        # Generic web crawler uses delay-based rate limiting
+        """Check if crawler is within rate limits."""        # Generic web crawler uses delay-based rate limiting
         return True
     
     async def get_crawler_stats(self) -> Dict[str, Any]:
-        """Get crawler statistics."""
-        return {
+        """Get crawler statistics."""        return {
             "platform": "web",
             "crawled_urls": len(self.crawled_urls),
             "active_monitoring": len(self.monitoring_tasks),
@@ -808,8 +777,7 @@ class GenericWebCrawler(BasePlatformCrawler):
         }
     
     def cleanup(self):
-        """Cleanup crawler resources."""
-        self.crawled_urls.clear()
+        """Cleanup crawler resources."""        self.crawled_urls.clear()
         
         # Cancel monitoring tasks
         for task in self.monitoring_tasks.values():

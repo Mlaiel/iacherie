@@ -1,5 +1,4 @@
-"""
-Market Intelligence Analytics Engine
+"""Market Intelligence Analytics Engine
 ===================================
 
 Advanced market intelligence and trend analysis for content creators and influencers.
@@ -16,9 +15,7 @@ WARNING: This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized copying, distribution, or modification without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -43,8 +40,7 @@ from ..vector_db.vector_db_manager import VectorDBManager
 
 
 class MarketSegment(Enum):
-    """Market segments"""
-    MUSIC_STREAMING = "music_streaming"
+    """Market segments"""    MUSIC_STREAMING = "music_streaming"
     VIDEO_CONTENT = "video_content"
     SOCIAL_MEDIA = "social_media"
     PODCAST = "podcast"
@@ -55,8 +51,7 @@ class MarketSegment(Enum):
 
 
 class TrendType(Enum):
-    """Trend types"""
-    VIRAL_CONTENT = "viral_content"
+    """Trend types"""    VIRAL_CONTENT = "viral_content"
     EMERGING_ARTISTS = "emerging_artists"
     GENRE_TRENDS = "genre_trends"
     PLATFORM_TRENDS = "platform_trends"
@@ -66,8 +61,7 @@ class TrendType(Enum):
 
 
 class CompetitivePosition(Enum):
-    """Competitive positioning"""
-    MARKET_LEADER = "market_leader"
+    """Competitive positioning"""    MARKET_LEADER = "market_leader"
     CHALLENGER = "challenger"
     FOLLOWER = "follower"
     NICHE_PLAYER = "niche_player"
@@ -75,8 +69,7 @@ class CompetitivePosition(Enum):
 
 
 class MarketMaturity(Enum):
-    """Market maturity levels"""
-    EMERGING = "emerging"
+    """Market maturity levels"""    EMERGING = "emerging"
     GROWTH = "growth"
     MATURE = "mature"
     DECLINING = "declining"
@@ -84,8 +77,7 @@ class MarketMaturity(Enum):
 
 @dataclass
 class MarketTrend:
-    """Market trend information"""
-    trend_id: str
+    """Market trend information"""    trend_id: str
     trend_type: TrendType
     description: str
     momentum_score: float
@@ -102,8 +94,7 @@ class MarketTrend:
 
 @dataclass
 class CompetitorProfile:
-    """Competitor profile analysis"""
-    competitor_id: str
+    """Competitor profile analysis"""    competitor_id: str
     competitor_name: str
     market_position: CompetitivePosition
     market_share: float
@@ -120,8 +111,7 @@ class CompetitorProfile:
 
 @dataclass
 class MarketOpportunity:
-    """Identified market opportunity"""
-    opportunity_id: str
+    """Identified market opportunity"""    opportunity_id: str
     market_segment: MarketSegment
     description: str
     market_size: float
@@ -139,8 +129,7 @@ class MarketOpportunity:
 
 @dataclass
 class MarketForecast:
-    """Market forecast analysis"""
-    market_segment: MarketSegment
+    """Market forecast analysis"""    market_segment: MarketSegment
     forecast_period: int  # days
     predicted_growth: float
     market_size_prediction: float
@@ -153,8 +142,7 @@ class MarketForecast:
 
 @dataclass
 class MarketIntelligenceReport:
-    """Comprehensive market intelligence report"""
-    user_id: str
+    """Comprehensive market intelligence report"""    user_id: str
     analysis_date: datetime
     market_overview: Dict[str, Any]
     trending_topics: List[MarketTrend]
@@ -167,25 +155,21 @@ class MarketIntelligenceReport:
 
 
 class MarketIntelligenceAnalytics:
-    """
-    Professional market intelligence analytics engine for IA Influencer Agent platform.
+    """    Professional market intelligence analytics engine for IA Influencer Agent platform.
     
     Provides comprehensive market analysis, trend identification, competitive intelligence,
     and strategic recommendations for content creators and influencers.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, redis_client: Redis,
                  storage_manager: StorageManager, vector_db: VectorDBManager):
-        """
-        Initialize MarketIntelligenceAnalytics engine.
+        """        Initialize MarketIntelligenceAnalytics engine.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
             storage_manager: Storage management service
             vector_db: Vector database manager
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.redis = redis_client
         self.storage = storage_manager
         self.vector_db = vector_db
@@ -203,8 +187,7 @@ class MarketIntelligenceAnalytics:
     
     async def identify_market_trends(self, segment: MarketSegment = None, 
                                    lookback_days: int = 30) -> List[MarketTrend]:
-        """
-        Identify current and emerging market trends.
+        """        Identify current and emerging market trends.
         
         Args:
             segment: Specific market segment to analyze (optional)
@@ -212,8 +195,7 @@ class MarketIntelligenceAnalytics:
             
         Returns:
             List[MarketTrend]: Identified market trends
-        """
-        try:
+        """        try:
             cache_key = self.trend_cache_key.format(f"{segment}_{lookback_days}")
             cached_data = await self._get_from_cache(cache_key)
             if cached_data:
@@ -243,8 +225,7 @@ class MarketIntelligenceAnalytics:
     
     async def analyze_competitive_landscape(self, user_id: str, 
                                           market_segment: MarketSegment = None) -> List[CompetitorProfile]:
-        """
-        Analyze competitive landscape and competitor profiles.
+        """        Analyze competitive landscape and competitor profiles.
         
         Args:
             user_id: User identifier for competitive analysis
@@ -252,8 +233,7 @@ class MarketIntelligenceAnalytics:
             
         Returns:
             List[CompetitorProfile]: Competitor analysis profiles
-        """
-        try:
+        """        try:
             # Identify relevant competitors
             competitors = await self._identify_competitors(user_id, market_segment)
             
@@ -273,8 +253,7 @@ class MarketIntelligenceAnalytics:
     
     async def discover_market_opportunities(self, user_id: str, 
                                           user_profile: Dict[str, Any] = None) -> List[MarketOpportunity]:
-        """
-        Discover market opportunities based on user profile and market analysis.
+        """        Discover market opportunities based on user profile and market analysis.
         
         Args:
             user_id: User identifier
@@ -282,8 +261,7 @@ class MarketIntelligenceAnalytics:
             
         Returns:
             List[MarketOpportunity]: Identified market opportunities
-        """
-        try:
+        """        try:
             # Get user profile if not provided
             if not user_profile:
                 user_profile = await self._get_user_profile(user_id)
@@ -313,8 +291,7 @@ class MarketIntelligenceAnalytics:
     
     async def generate_market_forecast(self, segment: MarketSegment, 
                                      forecast_days: int = 90) -> MarketForecast:
-        """
-        Generate market forecast for specific segment.
+        """        Generate market forecast for specific segment.
         
         Args:
             segment: Market segment to forecast
@@ -322,8 +299,7 @@ class MarketIntelligenceAnalytics:
             
         Returns:
             MarketForecast: Market forecast analysis
-        """
-        try:
+        """        try:
             cache_key = self.market_cache_key.format(f"forecast_{segment}_{forecast_days}")
             cached_data = await self._get_from_cache(cache_key)
             if cached_data:
@@ -366,16 +342,14 @@ class MarketIntelligenceAnalytics:
             raise
     
     async def analyze_user_market_position(self, user_id: str) -> Dict[str, Any]:
-        """
-        Analyze user's current market position and competitive standing.
+        """        Analyze user's current market position and competitive standing.
         
         Args:
             user_id: User identifier
             
         Returns:
             Dict[str, Any]: Market position analysis
-        """
-        try:
+        """        try:
             # Get user performance metrics
             user_metrics = await self._get_user_performance_metrics(user_id)
             
@@ -423,16 +397,14 @@ class MarketIntelligenceAnalytics:
             raise
     
     async def generate_intelligence_report(self, user_id: str) -> MarketIntelligenceReport:
-        """
-        Generate comprehensive market intelligence report.
+        """        Generate comprehensive market intelligence report.
         
         Args:
             user_id: User identifier
             
         Returns:
             MarketIntelligenceReport: Comprehensive market intelligence
-        """
-        try:
+        """        try:
             # Gather all intelligence components
             trending_topics = await self.identify_market_trends()
             competitor_analysis = await self.analyze_competitive_landscape(user_id)
@@ -486,33 +458,27 @@ class MarketIntelligenceAnalytics:
     # Private helper methods
     
     async def _collect_market_data(self, segment: MarketSegment, days: int) -> Dict[str, Any]:
-        """Collect market data for analysis"""
-        # Market data collection logic
+        """Collect market data for analysis"""        # Market data collection logic
         return {}
     
     async def _detect_trends(self, market_data: Dict) -> List[Dict]:
-        """Detect trends using ML algorithms"""
-        # Trend detection implementation
+        """Detect trends using ML algorithms"""        # Trend detection implementation
         return []
     
     async def _validate_trends(self, trends: List[Dict]) -> List[MarketTrend]:
-        """Validate and score identified trends"""
-        # Trend validation logic
+        """Validate and score identified trends"""        # Trend validation logic
         return []
     
     async def _enhance_trend_predictions(self, trends: List[MarketTrend]) -> List[MarketTrend]:
-        """Enhance trends with predictions"""
-        # Prediction enhancement logic
+        """Enhance trends with predictions"""        # Prediction enhancement logic
         return trends
     
     async def _identify_competitors(self, user_id: str, segment: MarketSegment) -> List[str]:
-        """Identify relevant competitors"""
-        # Competitor identification logic
+        """Identify relevant competitors"""        # Competitor identification logic
         return []
     
     async def _analyze_competitor(self, competitor_id: str, user_id: str) -> CompetitorProfile:
-        """Analyze individual competitor"""
-        # Competitor analysis implementation
+        """Analyze individual competitor"""        # Competitor analysis implementation
         return CompetitorProfile(
             competitor_id=competitor_id,
             competitor_name="Competitor Name",
@@ -530,138 +496,113 @@ class MarketIntelligenceAnalytics:
         )
     
     async def _get_user_profile(self, user_id: str) -> Dict[str, Any]:
-        """Get user profile data"""
-        # User profile retrieval
+        """Get user profile data"""        # User profile retrieval
         return {}
     
     async def _identify_market_gaps(self, user_profile: Dict) -> List[Dict]:
-        """Identify market gaps"""
-        # Market gap analysis
+        """Identify market gaps"""        # Market gap analysis
         return []
     
     async def _analyze_user_capabilities(self, user_id: str) -> Dict[str, Any]:
-        """Analyze user capabilities"""
-        # Capability analysis
+        """Analyze user capabilities"""        # Capability analysis
         return {}
     
     async def _match_opportunities_with_capabilities(self, gaps: List[Dict], 
                                                    capabilities: Dict,
                                                    profile: Dict) -> List[MarketOpportunity]:
-        """Match opportunities with user capabilities"""
-        # Opportunity matching logic
+        """Match opportunities with user capabilities"""        # Opportunity matching logic
         return []
     
     async def _validate_opportunities(self, opportunities: List[MarketOpportunity]) -> List[MarketOpportunity]:
-        """Validate market opportunities"""
-        # Opportunity validation
+        """Validate market opportunities"""        # Opportunity validation
         return opportunities
     
     async def _collect_historical_market_data(self, segment: MarketSegment) -> Dict[str, Any]:
-        """Collect historical market data"""
-        # Historical data collection
+        """Collect historical market data"""        # Historical data collection
         return {}
     
     async def _apply_forecasting_models(self, data: Dict, days: int) -> Dict[str, float]:
-        """Apply forecasting models"""
-        # Forecasting implementation
+        """Apply forecasting models"""        # Forecasting implementation
         return {}
     
     async def _identify_forecast_drivers_and_risks(self, segment: MarketSegment) -> Dict[str, List[str]]:
-        """Identify forecast drivers and risks"""
-        # Driver and risk identification
+        """Identify forecast drivers and risks"""        # Driver and risk identification
         return {'drivers': [], 'risks': []}
     
     async def _generate_scenario_analysis(self, forecast_data: Dict, segment: MarketSegment) -> Dict[str, Dict[str, float]]:
-        """Generate scenario analysis"""
-        # Scenario analysis implementation
+        """Generate scenario analysis"""        # Scenario analysis implementation
         return {}
     
     async def _calculate_confidence_intervals(self, forecast_data: Dict) -> Dict[str, Tuple[float, float]]:
-        """Calculate confidence intervals"""
-        # Confidence interval calculation
+        """Calculate confidence intervals"""        # Confidence interval calculation
         return {}
     
     async def _get_user_performance_metrics(self, user_id: str) -> Dict[str, Any]:
-        """Get user performance metrics"""
-        # Performance metrics retrieval
+        """Get user performance metrics"""        # Performance metrics retrieval
         return {'segments': []}
     
     async def _get_market_benchmarks(self, segments: List[str]) -> Dict[str, Any]:
-        """Get market benchmarks"""
-        # Benchmark data retrieval
+        """Get market benchmarks"""        # Benchmark data retrieval
         return {}
     
     async def _calculate_market_share(self, user_id: str, metrics: Dict) -> Dict[str, float]:
-        """Calculate market share"""
-        # Market share calculation
+        """Calculate market share"""        # Market share calculation
         return {}
     
     async def _determine_competitive_position(self, metrics: Dict, benchmarks: Dict) -> CompetitivePosition:
-        """Determine competitive position"""
-        # Position determination logic
+        """Determine competitive position"""        # Position determination logic
         return CompetitivePosition.FOLLOWER
     
     async def _analyze_positioning_strengths_weaknesses(self, metrics: Dict, benchmarks: Dict) -> Dict[str, List[str]]:
-        """Analyze positioning strengths and weaknesses"""
-        # Strength/weakness analysis
+        """Analyze positioning strengths and weaknesses"""        # Strength/weakness analysis
         return {'strengths': [], 'weaknesses': []}
     
     async def _calculate_growth_potential(self, user_id: str, market_share: Dict) -> Dict[str, float]:
-        """Calculate growth potential"""
-        # Growth potential calculation
+        """Calculate growth potential"""        # Growth potential calculation
         return {}
     
     async def _compare_to_benchmarks(self, metrics: Dict, benchmarks: Dict) -> Dict[str, float]:
-        """Compare user metrics to benchmarks"""
-        # Benchmark comparison
+        """Compare user metrics to benchmarks"""        # Benchmark comparison
         return {}
     
     async def _recommend_positioning_strategies(self, position: CompetitivePosition, 
                                               strengths_weaknesses: Dict) -> List[str]:
-        """Recommend positioning strategies"""
-        # Strategy recommendation logic
+        """Recommend positioning strategies"""        # Strategy recommendation logic
         return []
     
     async def _identify_market_threats(self, user_id: str) -> List[str]:
-        """Identify market threats"""
-        # Threat identification
+        """Identify market threats"""        # Threat identification
         return []
     
     async def _identify_positioning_opportunities(self, user_id: str) -> List[str]:
-        """Identify positioning opportunities"""
-        # Opportunity identification
+        """Identify positioning opportunities"""        # Opportunity identification
         return []
     
     async def _generate_market_overview(self, trends: List[MarketTrend], 
                                       competitors: List[CompetitorProfile],
                                       forecasts: List[MarketForecast]) -> Dict[str, Any]:
-        """Generate market overview"""
-        # Market overview generation
+        """Generate market overview"""        # Market overview generation
         return {}
     
     async def _generate_strategic_recommendations(self, position: Dict, opportunities: List[MarketOpportunity],
                                                 trends: List[MarketTrend]) -> List[str]:
-        """Generate strategic recommendations"""
-        # Strategic recommendation generation
+        """Generate strategic recommendations"""        # Strategic recommendation generation
         return []
     
     async def _assess_market_risks(self, user_id: str, competitors: List[CompetitorProfile],
                                  forecasts: List[MarketForecast]) -> Dict[str, float]:
-        """Assess market risks"""
-        # Risk assessment logic
+        """Assess market risks"""        # Risk assessment logic
         return {}
     
     async def _get_from_cache(self, key: str) -> Optional[Dict]:
-        """Get data from Redis cache"""
-        try:
+        """Get data from Redis cache"""        try:
             data = self.redis.get(key)
             return json.loads(data) if data else None
         except Exception:
             return None
     
     async def _cache_data(self, key: str, data: Any, ttl: int):
-        """Cache data in Redis"""
-        try:
+        """Cache data in Redis"""        try:
             self.redis.setex(key, ttl, json.dumps(data, default=str))
         except Exception as e:
             self.logger.warning(f"Failed to cache data: {str(e)}")

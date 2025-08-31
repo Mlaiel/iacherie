@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Docker Compose Services Validation Script
+"""Docker Compose Services Validation Script
 ===========================================
 
 Tests and validates Docker Compose service startup for Ainflue Platform.
@@ -8,9 +7,7 @@ Addresses the requirement: "Docker Compose - tester démarrage services"
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import subprocess
+"""import subprocess
 import time
 import sys
 import json
@@ -31,8 +28,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class DockerServicesValidator:
-    """Validates Docker Compose services startup and health"""
-    
+    """Validates Docker Compose services startup and health"""    
     def __init__(self, project_root: str):
         self.project_root = Path(project_root)
         self.compose_files = {
@@ -43,8 +39,7 @@ class DockerServicesValidator:
         self.validation_results = {}
         
     def validate_compose_file_syntax(self, compose_file: str) -> Tuple[bool, str]:
-        """Validate Docker Compose file syntax"""
-        try:
+        """Validate Docker Compose file syntax"""        try:
             cmd = ['docker', 'compose', '-f', compose_file, 'config']
             result = subprocess.run(cmd, capture_output=True, text=True, cwd=self.project_root)
             
@@ -60,8 +55,7 @@ class DockerServicesValidator:
             return False, str(e)
     
     def check_required_files(self, compose_file: str) -> Tuple[bool, List[str]]:
-        """Check if required configuration files exist"""
-        missing_files = []
+        """Check if required configuration files exist"""        missing_files = []
         
         # Check Dockerfile
         dockerfile_path = self.project_root / "Dockerfile"
@@ -93,8 +87,7 @@ class DockerServicesValidator:
         return success, missing_files
     
     def create_missing_config_files(self, missing_files: List[str]) -> None:
-        """Create minimal required configuration files"""
-        for file_path in missing_files:
+        """Create minimal required configuration files"""        for file_path in missing_files:
             full_path = self.project_root / file_path
             
             if file_path == "nginx.conf":
@@ -103,9 +96,7 @@ class DockerServicesValidator:
                 self.create_basic_prometheus_config(full_path)
                 
     def create_basic_nginx_config(self, path: Path) -> None:
-        """Create a basic nginx configuration"""
-        nginx_config = """
-events {
+        """Create a basic nginx configuration"""        nginx_config = """events {
     worker_connections 1024;
 }
 
@@ -131,28 +122,23 @@ http {
         }
     }
 }
-"""
-        path.write_text(nginx_config.strip())
+"""        path.write_text(nginx_config.strip())
         logger.info(f"✅ Created basic nginx.conf at {path}")
     
     def create_basic_prometheus_config(self, path: Path) -> None:
-        """Create a basic prometheus configuration"""
-        prometheus_config = """
-global:
+        """Create a basic prometheus configuration"""        prometheus_config = """global:
   scrape_interval: 15s
 
 scrape_configs:
   - job_name: 'prometheus'
     static_configs:
       - targets: ['localhost:9090']
-"""
-        path.parent.mkdir(parents=True, exist_ok=True)
+"""        path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(prometheus_config.strip())
         logger.info(f"✅ Created basic prometheus.yml at {path}")
     
     def test_compose_services_dry_run(self, compose_file: str) -> Tuple[bool, str]:
-        """Test if services can be started (dry run)"""
-        try:
+        """Test if services can be started (dry run)"""        try:
             # First try to pull images without starting
             cmd = ['docker', 'compose', '-f', compose_file, 'pull', '--ignore-pull-failures']
             result = subprocess.run(cmd, capture_output=True, text=True, cwd=self.project_root)
@@ -176,8 +162,7 @@ scrape_configs:
             return False, str(e)
     
     def get_service_health_endpoints(self, compose_file: str) -> Dict[str, str]:
-        """Get health check endpoints for services"""
-        health_endpoints = {}
+        """Get health check endpoints for services"""        health_endpoints = {}
         
         if compose_file == 'docker-compose.yml':
             health_endpoints = {
@@ -200,8 +185,7 @@ scrape_configs:
         return health_endpoints
     
     def validate_service_dependencies(self, compose_file: str) -> Tuple[bool, List[str]]:
-        """Validate service dependencies are properly configured"""
-        issues = []
+        """Validate service dependencies are properly configured"""        issues = []
         
         try:
             # Get compose configuration
@@ -232,8 +216,7 @@ scrape_configs:
             return False, [f"Error validating dependencies: {str(e)}"]
     
     def generate_startup_test_script(self, compose_file: str) -> str:
-        """Generate a test script for starting services"""
-        script_content = f"""#!/bin/bash
+        """Generate a test script for starting services"""        script_content = f"""#!/bin/bash
 # Generated startup test script for {compose_file}
 # Run this to test service startup
 
@@ -258,32 +241,26 @@ sleep 30
 
 # Check service health
 echo "🩺 Checking service health..."
-"""
-        
+"""        
         health_endpoints = self.get_service_health_endpoints(compose_file)
         for service, endpoint in health_endpoints.items():
             if endpoint.startswith('http'):
-                script_content += f"""
-# Check {service}
+                script_content += f"""# Check {service}
 if curl -f -s {endpoint} > /dev/null; then
     echo "✅ {service} is healthy"
 else
     echo "❌ {service} is not responding"
 fi
-"""
-        
-        script_content += """
-echo "📊 Service status:"
+"""        
+        script_content += """echo "📊 Service status:"
 docker compose -f """ + compose_file + """ ps
 
 echo "🎉 Startup test completed!"
-"""
-        
+"""        
         return script_content
     
     def run_validation(self) -> Dict[str, Dict]:
-        """Run complete validation for all compose files"""
-        logger.info("🚀 Starting Docker Compose services validation")
+        """Run complete validation for all compose files"""        logger.info("🚀 Starting Docker Compose services validation")
         
         for env_name, compose_file in self.compose_files.items():
             logger.info(f"\n{'='*60}")
@@ -361,13 +338,10 @@ echo "🎉 Startup test completed!"
         return self.validation_results
     
     def generate_report(self) -> str:
-        """Generate a comprehensive validation report"""
-        report = """
-Docker Compose Services Validation Report
+        """Generate a comprehensive validation report"""        report = """Docker Compose Services Validation Report
 ==========================================
 
-"""
-        
+"""        
         for env_name, result in self.validation_results.items():
             report += f"\n{env_name.upper()} Environment:\n"
             report += f"{'='*40}\n"
@@ -415,8 +389,7 @@ Docker Compose Services Validation Report
 
 
 def main():
-    """Main execution function"""
-    script_dir = Path(__file__).parent
+    """Main execution function"""    script_dir = Path(__file__).parent
     project_root = script_dir.parent
     
     logger.info("🐳 Docker Compose Services Validation")

@@ -1,14 +1,11 @@
-"""
-Deepfake Detector - Advanced AI Content Manipulation Detection
+"""Deepfake Detector - Advanced AI Content Manipulation Detection
 
 Sophisticated deepfake and content manipulation detection system using
 advanced machine learning models for audio, video, and image analysis.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import cv2
@@ -46,15 +43,13 @@ from ...ml.models.deepfake_models import (
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Content types for deepfake detection"""
-    VIDEO = "video"
+    """Content types for deepfake detection"""    VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
     TEXT = "text"
 
 class ManipulationType(Enum):
-    """Types of content manipulation"""
-    FACE_SWAP = "face_swap"
+    """Types of content manipulation"""    FACE_SWAP = "face_swap"
     VOICE_CLONING = "voice_cloning"
     LIP_SYNC = "lip_sync"
     EXPRESSION_MANIPULATION = "expression_manipulation"
@@ -67,8 +62,7 @@ class ManipulationType(Enum):
 
 @dataclass
 class DeepfakeAnalysisResult:
-    """Comprehensive deepfake analysis result"""
-    content_type: ContentType
+    """Comprehensive deepfake analysis result"""    content_type: ContentType
     deepfake_probability: float
     manipulation_types: List[ManipulationType]
     confidence_scores: Dict[str, float]
@@ -80,8 +74,7 @@ class DeepfakeAnalysisResult:
     pixel_analysis: Optional[Dict] = None
 
 class DeepfakeDetector:
-    """
-    Advanced Deepfake Detection Engine
+    """    Advanced Deepfake Detection Engine
     
     Detects content manipulation through:
     - Deep learning model analysis
@@ -89,8 +82,7 @@ class DeepfakeDetector:
     - Spectral analysis for audio
     - Temporal consistency checking
     - Biometric verification
-    """
-    
+    """    
     def __init__(self, redis_client: Optional[aioredis.Redis] = None):
         self.redis_client = redis_client
         self.media_processor = MediaProcessor()
@@ -120,16 +112,14 @@ class DeepfakeDetector:
         logger.info("Deepfake Detector initialized successfully")
 
     async def analyze_content(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Comprehensive deepfake analysis of content
+        """        Comprehensive deepfake analysis of content
         
         Args:
             content_data: Content data including type, binary data, metadata
             
         Returns:
             Detailed deepfake analysis results
-        """
-        try:
+        """        try:
             if not content_data:
                 return {
                     'deepfake_probability': 0.0,
@@ -185,8 +175,7 @@ class DeepfakeDetector:
             raise DeepfakeDetectionError(f"Content analysis failed: {str(e)}")
 
     def _determine_content_type(self, content_data: Dict[str, Any]) -> ContentType:
-        """Determine the type of content from data"""
-        content_type = content_data.get('type', '').lower()
+        """Determine the type of content from data"""        content_type = content_data.get('type', '').lower()
         mime_type = content_data.get('mime_type', '').lower()
         
         if any(t in content_type for t in ['video', 'mp4', 'avi', 'mov']) or 'video' in mime_type:
@@ -202,8 +191,7 @@ class DeepfakeDetector:
             return ContentType.IMAGE
 
     async def _analyze_video_content(self, content_data: Dict[str, Any]) -> DeepfakeAnalysisResult:
-        """Analyze video content for deepfake manipulation"""
-        try:
+        """Analyze video content for deepfake manipulation"""        try:
             # Extract video data
             video_bytes = self._extract_content_bytes(content_data)
             
@@ -278,8 +266,7 @@ class DeepfakeDetector:
             return self._create_empty_result(ContentType.VIDEO)
 
     async def _analyze_audio_content(self, content_data: Dict[str, Any]) -> DeepfakeAnalysisResult:
-        """Analyze audio content for deepfake manipulation"""
-        try:
+        """Analyze audio content for deepfake manipulation"""        try:
             # Extract audio data
             audio_bytes = self._extract_content_bytes(content_data)
             
@@ -351,8 +338,7 @@ class DeepfakeDetector:
             return self._create_empty_result(ContentType.AUDIO)
 
     async def _analyze_image_content(self, content_data: Dict[str, Any]) -> DeepfakeAnalysisResult:
-        """Analyze image content for manipulation"""
-        try:
+        """Analyze image content for manipulation"""        try:
             # Extract image data
             image_bytes = self._extract_content_bytes(content_data)
             
@@ -423,8 +409,7 @@ class DeepfakeDetector:
             return self._create_empty_result(ContentType.IMAGE)
 
     async def _analyze_text_content(self, content_data: Dict[str, Any]) -> DeepfakeAnalysisResult:
-        """Analyze text content for AI generation"""
-        try:
+        """Analyze text content for AI generation"""        try:
             # Extract text data
             text_content = content_data.get('text', content_data.get('content', ''))
             
@@ -479,8 +464,7 @@ class DeepfakeDetector:
             return self._create_empty_result(ContentType.TEXT)
 
     def _extract_content_bytes(self, content_data: Dict[str, Any]) -> Optional[bytes]:
-        """Extract binary content data from various formats"""
-        try:
+        """Extract binary content data from various formats"""        try:
             # Direct bytes
             if 'bytes' in content_data:
                 return content_data['bytes']
@@ -506,8 +490,7 @@ class DeepfakeDetector:
             return None
 
     async def _extract_video_frames(self, video_bytes: bytes, max_frames: int = 50) -> List[np.ndarray]:
-        """Extract frames from video for analysis"""
-        try:
+        """Extract frames from video for analysis"""        try:
             # Save bytes to temporary file
             import tempfile
             import os
@@ -545,8 +528,7 @@ class DeepfakeDetector:
             return []
 
     async def _load_audio_data(self, audio_bytes: bytes) -> Tuple[np.ndarray, int]:
-        """Load audio data for analysis"""
-        try:
+        """Load audio data for analysis"""        try:
             # Save bytes to temporary file
             import tempfile
             import os
@@ -567,8 +549,7 @@ class DeepfakeDetector:
             return np.array([]), 16000
 
     async def _load_image_data(self, image_bytes: bytes) -> np.ndarray:
-        """Load image data for analysis"""
-        try:
+        """Load image data for analysis"""        try:
             # Convert bytes to PIL Image
             image = Image.open(io.BytesIO(image_bytes))
             
@@ -584,8 +565,7 @@ class DeepfakeDetector:
             return np.array([])
 
     async def _neural_video_analysis(self, frames: List[np.ndarray]) -> Dict[str, Any]:
-        """Neural network-based video deepfake detection"""
-        try:
+        """Neural network-based video deepfake detection"""        try:
             if not frames:
                 return {'confidence': 0.0, 'deepfake_score': 0.0}
                 
@@ -617,8 +597,7 @@ class DeepfakeDetector:
             return {'confidence': 0.0, 'deepfake_score': 0.0}
 
     async def _temporal_consistency_analysis(self, frames: List[np.ndarray]) -> Dict[str, Any]:
-        """Analyze temporal consistency between frames"""
-        try:
+        """Analyze temporal consistency between frames"""        try:
             if len(frames) < 2:
                 return {'confidence': 0.0, 'inconsistency_score': 0.0}
                 
@@ -655,8 +634,7 @@ class DeepfakeDetector:
             return {'confidence': 0.0, 'inconsistency_score': 0.0}
 
     async def _facial_landmark_analysis(self, frames: List[np.ndarray]) -> Dict[str, Any]:
-        """Analyze facial landmark consistency"""
-        try:
+        """Analyze facial landmark consistency"""        try:
             # This would use dlib or MediaPipe for landmark detection
             # For now, return simulated analysis
             
@@ -674,8 +652,7 @@ class DeepfakeDetector:
             return {'confidence': 0.0, 'landmark_inconsistency': 0.0}
 
     async def _compression_artifacts_analysis(self, frames: List[np.ndarray]) -> Dict[str, Any]:
-        """Analyze compression artifacts that may indicate manipulation"""
-        try:
+        """Analyze compression artifacts that may indicate manipulation"""        try:
             if not frames:
                 return {'confidence': 0.0, 'artifact_score': 0.0}
                 
@@ -708,8 +685,7 @@ class DeepfakeDetector:
             return {'confidence': 0.0, 'artifact_score': 0.0}
 
     async def _neural_audio_analysis(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Neural network-based audio deepfake detection"""
-        try:
+        """Neural network-based audio deepfake detection"""        try:
             if len(audio_data) == 0:
                 return {'confidence': 0.0, 'deepfake_score': 0.0}
                 
@@ -735,8 +711,7 @@ class DeepfakeDetector:
             return {'confidence': 0.0, 'deepfake_score': 0.0}
 
     async def _spectral_analysis(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Spectral analysis for audio authenticity"""
-        try:
+        """Spectral analysis for audio authenticity"""        try:
             if len(audio_data) == 0:
                 return {'confidence': 0.0, 'spectral_anomaly': 0.0}
                 
@@ -770,8 +745,7 @@ class DeepfakeDetector:
             return {'confidence': 0.0, 'spectral_anomaly': 0.0}
 
     def _create_empty_result(self, content_type: ContentType) -> DeepfakeAnalysisResult:
-        """Create empty result for failed analysis"""
-        return DeepfakeAnalysisResult(
+        """Create empty result for failed analysis"""        return DeepfakeAnalysisResult(
             content_type=content_type,
             deepfake_probability=0.0,
             manipulation_types=[],
@@ -782,8 +756,7 @@ class DeepfakeDetector:
         )
 
     async def _calculate_video_composite_score(self, analysis_results: Dict[str, Dict]) -> float:
-        """Calculate composite video deepfake score"""
-        scores = []
+        """Calculate composite video deepfake score"""        scores = []
         weights = []
         
         # Neural network score
@@ -809,8 +782,7 @@ class DeepfakeDetector:
         return min(1.0, weighted_score)
 
     async def _calculate_audio_composite_score(self, analysis_results: Dict[str, Dict]) -> float:
-        """Calculate composite audio deepfake score"""
-        scores = []
+        """Calculate composite audio deepfake score"""        scores = []
         weights = []
         
         # Neural network score
@@ -830,8 +802,7 @@ class DeepfakeDetector:
         return min(1.0, weighted_score)
 
     async def _calculate_image_composite_score(self, analysis_results: Dict[str, Dict]) -> float:
-        """Calculate composite image manipulation score"""
-        scores = []
+        """Calculate composite image manipulation score"""        scores = []
         weights = []
         
         # Neural network score
@@ -856,8 +827,7 @@ class DeepfakeDetector:
         temporal_result: Dict, 
         landmark_result: Dict
     ) -> List[ManipulationType]:
-        """Identify specific video manipulation types"""
-        manipulation_types = []
+        """Identify specific video manipulation types"""        manipulation_types = []
         
         if neural_result.get('deepfake_score', 0) > 0.7:
             manipulation_types.append(ManipulationType.FACE_SWAP)
@@ -876,8 +846,7 @@ class DeepfakeDetector:
         spectral_result: Dict,
         prosodic_result: Dict
     ) -> List[ManipulationType]:
-        """Identify specific audio manipulation types"""
-        manipulation_types = []
+        """Identify specific audio manipulation types"""        manipulation_types = []
         
         if neural_result.get('deepfake_score', 0) > 0.7:
             manipulation_types.append(ManipulationType.VOICE_CLONING)
@@ -893,8 +862,7 @@ class DeepfakeDetector:
         pixel_result: Dict,
         metadata_result: Dict
     ) -> List[ManipulationType]:
-        """Identify specific image manipulation types"""
-        manipulation_types = []
+        """Identify specific image manipulation types"""        manipulation_types = []
         
         if neural_result.get('manipulation_score', 0) > 0.7:
             manipulation_types.append(ManipulationType.FACE_SWAP)
@@ -908,8 +876,7 @@ class DeepfakeDetector:
         return manipulation_types
 
     def _extract_video_indicators(self, analysis_results: Dict[str, Dict]) -> List[str]:
-        """Extract video manipulation indicators"""
-        indicators = []
+        """Extract video manipulation indicators"""        indicators = []
         
         if analysis_results.get('neural', {}).get('deepfake_score', 0) > 0.5:
             indicators.append("Neural network detected facial manipulation")
@@ -923,8 +890,7 @@ class DeepfakeDetector:
         return indicators
 
     def _extract_audio_indicators(self, analysis_results: Dict[str, Dict]) -> List[str]:
-        """Extract audio manipulation indicators"""
-        indicators = []
+        """Extract audio manipulation indicators"""        indicators = []
         
         if analysis_results.get('neural', {}).get('deepfake_score', 0) > 0.5:
             indicators.append("Neural network detected voice synthesis")
@@ -935,8 +901,7 @@ class DeepfakeDetector:
         return indicators
 
     def _extract_image_indicators(self, analysis_results: Dict[str, Dict]) -> List[str]:
-        """Extract image manipulation indicators"""
-        indicators = []
+        """Extract image manipulation indicators"""        indicators = []
         
         if analysis_results.get('neural', {}).get('manipulation_score', 0) > 0.5:
             indicators.append("Neural network detected image manipulation")
@@ -950,8 +915,7 @@ class DeepfakeDetector:
         return indicators
 
     def _extract_text_indicators(self, analysis_results: Dict[str, Dict]) -> List[str]:
-        """Extract text generation indicators"""
-        indicators = []
+        """Extract text generation indicators"""        indicators = []
         
         if analysis_results.get('linguistic', {}).get('ai_probability', 0) > 0.6:
             indicators.append("Linguistic patterns suggest AI generation")
@@ -962,8 +926,7 @@ class DeepfakeDetector:
         return indicators
 
     async def _cache_analysis_result(self, content_data: Dict[str, Any], result: DeepfakeAnalysisResult):
-        """Cache analysis result for performance optimization"""
-        try:
+        """Cache analysis result for performance optimization"""        try:
             if not self.redis_client:
                 return
                 
@@ -986,44 +949,34 @@ class DeepfakeDetector:
 
     # Placeholder methods for additional analysis types
     async def _prosodic_analysis(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Analyze prosodic features of speech"""
-        return {'confidence': 0.5, 'prosodic_anomaly': 0.1}
+        """Analyze prosodic features of speech"""        return {'confidence': 0.5, 'prosodic_anomaly': 0.1}
 
     async def _voice_consistency_analysis(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Analyze voice consistency throughout audio"""
-        return {'confidence': 0.6, 'consistency_score': 0.9}
+        """Analyze voice consistency throughout audio"""        return {'confidence': 0.6, 'consistency_score': 0.9}
 
     async def _neural_image_analysis(self, image: np.ndarray) -> Dict[str, Any]:
-        """Neural network-based image manipulation detection"""
-        return {'confidence': 0.8, 'manipulation_score': 0.1}
+        """Neural network-based image manipulation detection"""        return {'confidence': 0.8, 'manipulation_score': 0.1}
 
     async def _pixel_inconsistency_analysis(self, image: np.ndarray) -> Dict[str, Any]:
-        """Analyze pixel-level inconsistencies"""
-        return {'confidence': 0.7, 'inconsistency_score': 0.1}
+        """Analyze pixel-level inconsistencies"""        return {'confidence': 0.7, 'inconsistency_score': 0.1}
 
     async def _metadata_analysis(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze metadata for manipulation indicators"""
-        return {'confidence': 0.6, 'modification_detected': False}
+        """Analyze metadata for manipulation indicators"""        return {'confidence': 0.6, 'modification_detected': False}
 
     async def _compression_signature_analysis(self, image: np.ndarray) -> Dict[str, Any]:
-        """Analyze compression signatures"""
-        return {'confidence': 0.5, 'compression_anomaly': 0.1}
+        """Analyze compression signatures"""        return {'confidence': 0.5, 'compression_anomaly': 0.1}
 
     async def _linguistic_analysis(self, text: str) -> Dict[str, Any]:
-        """Analyze linguistic patterns for AI generation"""
-        return {'confidence': 0.7, 'ai_probability': 0.2}
+        """Analyze linguistic patterns for AI generation"""        return {'confidence': 0.7, 'ai_probability': 0.2}
 
     async def _style_analysis(self, text: str) -> Dict[str, Any]:
-        """Analyze writing style consistency"""
-        return {'confidence': 0.6, 'consistency_score': 0.8}
+        """Analyze writing style consistency"""        return {'confidence': 0.6, 'consistency_score': 0.8}
 
     async def _coherence_analysis(self, text: str) -> Dict[str, Any]:
-        """Analyze text coherence and flow"""
-        return {'confidence': 0.5, 'coherence_score': 0.9}
+        """Analyze text coherence and flow"""        return {'confidence': 0.5, 'coherence_score': 0.9}
 
     async def _calculate_text_composite_score(self, analysis_results: Dict[str, Dict]) -> float:
-        """Calculate composite text AI generation score"""
-        scores = []
+        """Calculate composite text AI generation score"""        scores = []
         weights = []
         
         if 'linguistic' in analysis_results:
@@ -1041,8 +994,7 @@ class DeepfakeDetector:
         return min(1.0, weighted_score)
 
     async def _analyze_key_frames(self, frames: List[np.ndarray]) -> List[Dict[str, Any]]:
-        """Analyze key frames in detail"""
-        frame_analyses = []
+        """Analyze key frames in detail"""        frame_analyses = []
         
         for i, frame in enumerate(frames):
             analysis = {

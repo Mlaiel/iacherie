@@ -1,5 +1,4 @@
-"""
-Enterprise Analytics Service - AI-Powered Content Performance Intelligence
+"""Enterprise Analytics Service - AI-Powered Content Performance Intelligence
 Real-time metrics, predictive analytics, and comprehensive KPI dashboard
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -9,9 +8,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + Data Scientist + DevOps Exper
 This code and concept are proprietary to Fahed Mlaiel.
 Unauthorized copying, distribution, or use without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
@@ -67,11 +64,9 @@ class PredictiveInsights:
 
 
 class AnalyticsService:
-    """
-    Professional analytics service providing real-time metrics, 
+    """    Professional analytics service providing real-time metrics, 
     predictive insights, and comprehensive performance intelligence
-    """
-    
+    """    
     def __init__(self, redis_client: Optional[redis.Redis] = None):
         self.redis_client = redis_client or redis.Redis(host='localhost', port=6379, db=0)
         self.seo_optimizer = SEOOptimizerService()
@@ -96,13 +91,11 @@ class AnalyticsService:
         }
 
     def _get_cache_key(self, key_type: str, asset_id: int, **kwargs) -> str:
-        """Generate Redis cache key"""
-        extra = "_".join(f"{k}_{v}" for k, v in kwargs.items())
+        """Generate Redis cache key"""        extra = "_".join(f"{k}_{v}" for k, v in kwargs.items())
         return f"analytics:{key_type}:{asset_id}:{extra}" if extra else f"analytics:{key_type}:{asset_id}"
 
     async def _cache_get(self, key: str) -> Optional[Dict]:
-        """Get data from Redis cache"""
-        try:
+        """Get data from Redis cache"""        try:
             cached = self.redis_client.get(key)
             return json.loads(cached) if cached else None
         except Exception as e:
@@ -110,8 +103,7 @@ class AnalyticsService:
             return None
 
     async def _cache_set(self, key: str, data: Dict, ttl: int = None) -> None:
-        """Set data in Redis cache"""
-        try:
+        """Set data in Redis cache"""        try:
             self.redis_client.setex(
                 key, 
                 ttl or self.cache_ttl, 
@@ -121,8 +113,7 @@ class AnalyticsService:
             logger.warning(f"Cache set failed: {str(e)}")
 
     async def get_comprehensive_metrics(self, db: Session, asset: ContentAsset) -> AnalyticsMetrics:
-        """Get comprehensive analytics metrics for content asset"""
-        cache_key = self._get_cache_key("comprehensive", asset.id)
+        """Get comprehensive analytics metrics for content asset"""        cache_key = self._get_cache_key("comprehensive", asset.id)
         
         # Try cache first
         cached_metrics = await self._cache_get(cache_key)
@@ -162,8 +153,7 @@ class AnalyticsService:
             raise AnalyticsError(f"Failed to calculate metrics: {str(e)}")
 
     async def _calculate_base_metrics(self, db: Session, asset: ContentAsset) -> Dict[str, int]:
-        """Calculate base performance metrics with AI enhancement"""
-        # Platform-specific calculations based on asset metadata
+        """Calculate base performance metrics with AI enhancement"""        # Platform-specific calculations based on asset metadata
         platform_data = asset.metadata.get('platforms', {})
         total_views = 0
         total_reach = 0
@@ -194,8 +184,7 @@ class AnalyticsService:
         }
 
     async def _calculate_engagement_metrics(self, db: Session, asset: ContentAsset) -> Dict[str, Any]:
-        """Calculate advanced engagement metrics with ML predictions"""
-        base_views = (await self._calculate_base_metrics(db, asset))['views']
+        """Calculate advanced engagement metrics with ML predictions"""        base_views = (await self._calculate_base_metrics(db, asset))['views']
         
         # Content-type specific engagement rates
         engagement_rates = {
@@ -224,8 +213,7 @@ class AnalyticsService:
         }
 
     async def _calculate_revenue_metrics(self, db: Session, asset: ContentAsset) -> Dict[str, float]:
-        """Calculate revenue and conversion metrics"""
-        # Get actual revenue data from database
+        """Calculate revenue and conversion metrics"""        # Get actual revenue data from database
         revenue_records = db.query(RevenueTracking).filter(
             RevenueTracking.content_id == asset.id
         ).all()
@@ -242,8 +230,7 @@ class AnalyticsService:
         }
 
     async def _calculate_protection_metrics(self, db: Session, asset: ContentAsset) -> Dict[str, float]:
-        """Calculate content protection effectiveness metrics"""
-        # Get protection alerts for this asset
+        """Calculate content protection effectiveness metrics"""        # Get protection alerts for this asset
         protection_alerts = db.query(ProtectionAlert).filter(
             ProtectionAlert.fingerprint_id == asset.id
         ).all()
@@ -265,8 +252,7 @@ class AnalyticsService:
         }
 
     async def _calculate_seo_metrics(self, asset: ContentAsset) -> Dict[str, float]:
-        """Calculate SEO optimization score"""
-        try:
+        """Calculate SEO optimization score"""        try:
             seo_analysis = await self.seo_optimizer.analyze_content_seo(
                 title=asset.title,
                 description=asset.metadata.get('description', ''),
@@ -278,8 +264,7 @@ class AnalyticsService:
             return {'seo_score': 50.0}  # Default middle score
 
     async def _calculate_trend_momentum(self, db: Session, asset: ContentAsset) -> float:
-        """Calculate trending momentum using time-series analysis"""
-        try:
+        """Calculate trending momentum using time-series analysis"""        try:
             # Get recent performance data (last 7 days)
             week_ago = datetime.now() - timedelta(days=7)
             
@@ -299,8 +284,7 @@ class AnalyticsService:
             return 50.0
 
     def _get_content_quality_factor(self, asset: ContentAsset) -> float:
-        """Calculate content quality factor based on metadata and characteristics"""
-        factors = []
+        """Calculate content quality factor based on metadata and characteristics"""        factors = []
         
         # Title quality
         if asset.title and len(asset.title) > 5:
@@ -328,8 +312,7 @@ class AnalyticsService:
         return sum(factors) / len(factors) if factors else 1.0
 
     async def get_predictive_insights(self, db: Session, asset: ContentAsset) -> PredictiveInsights:
-        """Generate AI-powered predictive insights and recommendations"""
-        cache_key = self._get_cache_key("predictive", asset.id)
+        """Generate AI-powered predictive insights and recommendations"""        cache_key = self._get_cache_key("predictive", asset.id)
         
         cached_insights = await self._cache_get(cache_key)
         if cached_insights:
@@ -361,8 +344,7 @@ class AnalyticsService:
             raise AnalyticsError(f"Failed to generate insights: {str(e)}")
 
     async def _calculate_growth_rate(self, db: Session, asset: ContentAsset) -> float:
-        """Calculate content growth rate for predictions"""
-        # This would analyze historical performance data
+        """Calculate content growth rate for predictions"""        # This would analyze historical performance data
         # For now, use content characteristics
         quality_factor = self._get_content_quality_factor(asset)
         content_age = (datetime.now() - asset.created_at).days
@@ -375,8 +357,7 @@ class AnalyticsService:
         return max(0.0, base_growth + quality_bonus - age_penalty)
 
     async def _analyze_viral_potential(self, asset: ContentAsset, metrics: AnalyticsMetrics) -> Dict[str, Any]:
-        """Analyze viral potential using multiple factors"""
-        viral_indicators = []
+        """Analyze viral potential using multiple factors"""        viral_indicators = []
         
         # High engagement rate
         if metrics.engagement_rate > 0.15:
@@ -412,8 +393,7 @@ class AnalyticsService:
         }
 
     async def _generate_optimization_recommendations(self, asset: ContentAsset, metrics: AnalyticsMetrics) -> List[str]:
-        """Generate actionable optimization recommendations"""
-        recommendations = []
+        """Generate actionable optimization recommendations"""        recommendations = []
         
         if metrics.engagement_rate < 0.08:
             recommendations.append("Improve content engagement with better titles and descriptions")
@@ -433,8 +413,7 @@ class AnalyticsService:
         return recommendations[:5]  # Return top 5 recommendations
 
     async def _identify_risk_factors(self, asset: ContentAsset, metrics: AnalyticsMetrics) -> List[str]:
-        """Identify potential risk factors"""
-        risks = []
+        """Identify potential risk factors"""        risks = []
         
         if metrics.protection_score < 50:
             risks.append("High vulnerability to content theft")
@@ -448,8 +427,7 @@ class AnalyticsService:
         return risks
 
     async def _identify_growth_opportunities(self, asset: ContentAsset, metrics: AnalyticsMetrics) -> List[str]:
-        """Identify growth opportunities"""
-        opportunities = []
+        """Identify growth opportunities"""        opportunities = []
         
         if metrics.viral_probability > 0.7:
             opportunities.append("High viral potential - consider boosting promotion")
@@ -468,8 +446,7 @@ class AnalyticsService:
         creator_id: int, 
         period_days: int = 30
     ) -> Dict[str, Any]:
-        """Generate comprehensive performance report for creator"""
-        try:
+        """Generate comprehensive performance report for creator"""        try:
             # Get all assets for creator in period
             start_date = datetime.now() - timedelta(days=period_days)
             assets = db.query(ContentAsset).filter(
@@ -533,8 +510,7 @@ class AnalyticsService:
             raise AnalyticsError(f"Failed to generate report: {str(e)}")
 
     async def _calculate_creator_trends(self, db: Session, creator_id: int, period_days: int) -> Dict[str, Any]:
-        """Calculate creator-level trends and insights"""
-        # This would implement sophisticated trend analysis
+        """Calculate creator-level trends and insights"""        # This would implement sophisticated trend analysis
         # For now, return basic trend indicators
         return {
             'growth_trend': 'increasing',
@@ -545,8 +521,7 @@ class AnalyticsService:
 
     # Legacy method for backward compatibility
     def metrics(self, asset: ContentAsset) -> Dict:
-        """Legacy metrics method - deprecated, use get_comprehensive_metrics instead"""
-        logger.warning("Using deprecated metrics method. Switch to get_comprehensive_metrics")
+        """Legacy metrics method - deprecated, use get_comprehensive_metrics instead"""        logger.warning("Using deprecated metrics method. Switch to get_comprehensive_metrics")
         
         # Deterministic pseudo-metrics (original implementation)
         views = 1000 + (asset.id % 2000)

@@ -1,5 +1,4 @@
-"""
-Performance Monitoring Audit Module
+"""Performance Monitoring Audit Module
 
 Ultra-advanced performance monitoring and audit system for IA Influencer Agent platform.
 Tracks system performance, resource utilization, scaling events, SLA compliance,
@@ -13,9 +12,7 @@ This revolutionary performance monitoring system is the EXCLUSIVE property of Fa
 Unauthorized use, copying, distribution, or reverse engineering is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
-"""
-
-from typing import List, Dict, Any, Optional, Union, Tuple, Set
+"""from typing import List, Dict, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timezone, timedelta
 from enum import Enum
 from dataclasses import dataclass, asdict
@@ -33,8 +30,7 @@ Base = declarative_base()
 
 
 class MetricType(Enum):
-    """Performance metric types."""
-    
+    """Performance metric types."""    
     # System Metrics
     CPU_UTILIZATION = "cpu_utilization"
     MEMORY_USAGE = "memory_usage"
@@ -72,8 +68,7 @@ class MetricType(Enum):
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels."""
-    
+    """Alert severity levels."""    
     CRITICAL = "critical"    # System failure or severe degradation
     HIGH = "high"           # Performance significantly impacted
     MEDIUM = "medium"       # Performance degraded but functional
@@ -82,8 +77,7 @@ class AlertSeverity(Enum):
 
 
 class ScalingEventType(Enum):
-    """Scaling event types."""
-    
+    """Scaling event types."""    
     SCALE_UP = "scale_up"
     SCALE_DOWN = "scale_down"
     AUTO_SCALE = "auto_scale"
@@ -93,8 +87,7 @@ class ScalingEventType(Enum):
 
 
 class SLAStatus(Enum):
-    """SLA compliance status."""
-    
+    """SLA compliance status."""    
     COMPLIANT = "compliant"
     WARNING = "warning"
     BREACH = "breach"
@@ -103,8 +96,7 @@ class SLAStatus(Enum):
 
 @dataclass
 class PerformanceMetric:
-    """Performance metric data structure."""
-    
+    """Performance metric data structure."""    
     metric_type: MetricType
     value: float
     unit: str
@@ -115,8 +107,7 @@ class PerformanceMetric:
 
 @dataclass
 class AlertContext:
-    """Alert context information."""
-    
+    """Alert context information."""    
     alert_id: str
     metric_type: MetricType
     threshold_value: float
@@ -130,8 +121,7 @@ class AlertContext:
 
 
 class PerformanceLog(Base):
-    """Performance monitoring audit log model."""
-    
+    """Performance monitoring audit log model."""    
     __tablename__ = "performance_monitoring_logs"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -175,11 +165,9 @@ class PerformanceLog(Base):
 
 
 class MetricsCollector:
-    """Advanced metrics collection and processing system."""
-    
+    """Advanced metrics collection and processing system."""    
     def __init__(self, db_session=None, config: Dict[str, Any] = None):
-        """Initialize metrics collector."""
-        self.db_session = db_session
+        """Initialize metrics collector."""        self.db_session = db_session
         self.config = config or {}
         self.metric_buffer = {}
         self.collection_interval = self.config.get('collection_interval', 30)  # seconds
@@ -202,8 +190,7 @@ class MetricsCollector:
         instance_id: str,
         metadata: Dict[str, Any] = None
     ) -> str:
-        """
-        Collect a performance metric.
+        """        Collect a performance metric.
         
         Args:
             metric_type: Type of metric
@@ -213,8 +200,7 @@ class MetricsCollector:
             
         Returns:
             str: Collection ID
-        """
-        try:
+        """        try:
             collection_id = str(uuid.uuid4())
             timestamp = datetime.now(timezone.utc)
             
@@ -271,16 +257,14 @@ class MetricsCollector:
         self,
         metrics: List[Dict[str, Any]]
     ) -> List[str]:
-        """
-        Collect multiple metrics in batch.
+        """        Collect multiple metrics in batch.
         
         Args:
             metrics: List of metric data
             
         Returns:
             List[str]: Collection IDs
-        """
-        collection_ids = []
+        """        collection_ids = []
         
         try:
             for metric_data in metrics:
@@ -300,8 +284,7 @@ class MetricsCollector:
             raise
     
     async def _check_metric_thresholds(self, metric: PerformanceMetric):
-        """Check metric against configured thresholds."""
-        if metric.metric_type in self.thresholds:
+        """Check metric against configured thresholds."""        if metric.metric_type in self.thresholds:
             thresholds = self.thresholds[metric.metric_type]
             
             if metric.value >= thresholds.get('critical', float('inf')):
@@ -310,15 +293,13 @@ class MetricsCollector:
                 await self._trigger_alert(metric, AlertSeverity.HIGH)
     
     async def _trigger_alert(self, metric: PerformanceMetric, severity: AlertSeverity):
-        """Trigger performance alert."""
-        alert_id = f"PERF-{uuid.uuid4().hex[:8].upper()}"
+        """Trigger performance alert."""        alert_id = f"PERF-{uuid.uuid4().hex[:8].upper()}"
         
         # Alert will be handled by AlertManager
         logger.warning(f"Performance alert triggered: {alert_id} - {metric.metric_type.value} = {metric.value}")
     
     def _get_metric_unit(self, metric_type: MetricType) -> str:
-        """Get unit for metric type."""
-        unit_map = {
+        """Get unit for metric type."""        unit_map = {
             MetricType.CPU_UTILIZATION: '%',
             MetricType.MEMORY_USAGE: '%',
             MetricType.DISK_USAGE: '%',
@@ -335,11 +316,9 @@ class MetricsCollector:
 
 
 class AlertManager:
-    """Advanced alert management and escalation system."""
-    
+    """Advanced alert management and escalation system."""    
     def __init__(self, db_session=None, config: Dict[str, Any] = None):
-        """Initialize alert manager."""
-        self.db_session = db_session
+        """Initialize alert manager."""        self.db_session = db_session
         self.config = config or {}
         self.active_alerts = {}
         self.escalation_rules = self.config.get('escalation_rules', {})
@@ -354,8 +333,7 @@ class AlertManager:
         severity: AlertSeverity,
         context: Dict[str, Any] = None
     ) -> str:
-        """
-        Create and manage performance alert.
+        """        Create and manage performance alert.
         
         Args:
             metric_type: Type of metric triggering alert
@@ -367,8 +345,7 @@ class AlertManager:
             
         Returns:
             str: Alert ID
-        """
-        try:
+        """        try:
             alert_id = f"ALERT-{uuid.uuid4().hex[:8].upper()}"
             
             alert_context = AlertContext(
@@ -436,8 +413,7 @@ class AlertManager:
         resolution_type: str = "auto",
         resolution_notes: str = ""
     ) -> bool:
-        """
-        Resolve an active alert.
+        """        Resolve an active alert.
         
         Args:
             alert_id: Alert identifier
@@ -446,8 +422,7 @@ class AlertManager:
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             if alert_id not in self.active_alerts:
                 logger.warning(f"Alert {alert_id} not found in active alerts")
                 return False
@@ -500,8 +475,7 @@ class AlertManager:
             return False
     
     async def _handle_escalation(self, alert_id: str):
-        """Handle alert escalation based on rules."""
-        if alert_id in self.active_alerts:
+        """Handle alert escalation based on rules."""        if alert_id in self.active_alerts:
             alert_info = self.active_alerts[alert_id]
             alert_info['escalation_count'] += 1
             alert_info['last_escalation'] = datetime.now(timezone.utc)
@@ -510,13 +484,11 @@ class AlertManager:
             logger.warning(f"Alert escalated: {alert_id} - Level {alert_info['escalation_count']}")
     
     async def _send_notifications(self, alert_context: AlertContext):
-        """Send alert notifications through configured channels."""
-        # Implementation would integrate with notification systems
+        """Send alert notifications through configured channels."""        # Implementation would integrate with notification systems
         logger.info(f"Notifications sent for alert: {alert_context.alert_id}")
     
     def _get_metric_unit(self, metric_type: MetricType) -> str:
-        """Get unit for metric type."""
-        unit_map = {
+        """Get unit for metric type."""        unit_map = {
             MetricType.CPU_UTILIZATION: '%',
             MetricType.MEMORY_USAGE: '%',
             MetricType.DISK_USAGE: '%',
@@ -527,11 +499,9 @@ class AlertManager:
 
 
 class ResourceTracker:
-    """Advanced resource utilization tracking system."""
-    
+    """Advanced resource utilization tracking system."""    
     def __init__(self, db_session=None):
-        """Initialize resource tracker."""
-        self.db_session = db_session
+        """Initialize resource tracker."""        self.db_session = db_session
         self.resource_baselines = {}
         self.capacity_forecasts = {}
     
@@ -541,8 +511,7 @@ class ResourceTracker:
         resource_data: Dict[str, float],
         metadata: Dict[str, Any] = None
     ) -> str:
-        """
-        Track resource utilization for an instance.
+        """        Track resource utilization for an instance.
         
         Args:
             instance_id: Instance identifier
@@ -551,8 +520,7 @@ class ResourceTracker:
             
         Returns:
             str: Tracking ID
-        """
-        try:
+        """        try:
             tracking_id = str(uuid.uuid4())
             
             # Calculate overall utilization score
@@ -597,8 +565,7 @@ class ResourceTracker:
             raise
     
     def _calculate_utilization_score(self, resource_data: Dict[str, float]) -> float:
-        """Calculate overall utilization score."""
-        weights = {
+        """Calculate overall utilization score."""        weights = {
             'cpu': 0.3,
             'memory': 0.3,
             'disk': 0.2,
@@ -613,8 +580,7 @@ class ResourceTracker:
         return min(100.0, weighted_sum)
     
     def _get_utilization_severity(self, score: float) -> str:
-        """Get severity based on utilization score."""
-        if score >= 90:
+        """Get severity based on utilization score."""        if score >= 90:
             return "critical"
         elif score >= 75:
             return "high"
@@ -624,8 +590,7 @@ class ResourceTracker:
             return "info"
     
     def _update_resource_baseline(self, instance_id: str, resource_data: Dict[str, float]):
-        """Update resource utilization baseline."""
-        if instance_id not in self.resource_baselines:
+        """Update resource utilization baseline."""        if instance_id not in self.resource_baselines:
             self.resource_baselines[instance_id] = []
         
         self.resource_baselines[instance_id].append({
@@ -639,11 +604,9 @@ class ResourceTracker:
 
 
 class ScalingEventLogger:
-    """Advanced scaling event logging and analysis."""
-    
+    """Advanced scaling event logging and analysis."""    
     def __init__(self, db_session=None):
-        """Initialize scaling event logger."""
-        self.db_session = db_session
+        """Initialize scaling event logger."""        self.db_session = db_session
         self.scaling_history = {}
     
     async def log_scaling_event(
@@ -653,8 +616,7 @@ class ScalingEventLogger:
         scaling_details: Dict[str, Any],
         trigger_reason: str
     ) -> str:
-        """
-        Log scaling event.
+        """        Log scaling event.
         
         Args:
             event_type: Type of scaling event
@@ -664,8 +626,7 @@ class ScalingEventLogger:
             
         Returns:
             str: Event ID
-        """
-        try:
+        """        try:
             event_id = f"SCALE-{uuid.uuid4().hex[:8].upper()}"
             
             # Determine severity based on event type
@@ -726,11 +687,9 @@ class ScalingEventLogger:
 
 
 class SLAMonitor:
-    """Advanced SLA monitoring and compliance tracking."""
-    
+    """Advanced SLA monitoring and compliance tracking."""    
     def __init__(self, db_session=None, config: Dict[str, Any] = None):
-        """Initialize SLA monitor."""
-        self.db_session = db_session
+        """Initialize SLA monitor."""        self.db_session = db_session
         self.config = config or {}
         self.sla_targets = self.config.get('sla_targets', {
             'availability': 99.9,
@@ -746,8 +705,7 @@ class SLAMonitor:
         metrics: Dict[str, float],
         time_window: str = "1h"
     ) -> Dict[str, Any]:
-        """
-        Monitor SLA compliance for a service.
+        """        Monitor SLA compliance for a service.
         
         Args:
             service_name: Service to monitor
@@ -756,8 +714,7 @@ class SLAMonitor:
             
         Returns:
             Dict[str, Any]: SLA compliance report
-        """
-        try:
+        """        try:
             compliance_report = {
                 'service_name': service_name,
                 'monitoring_timestamp': datetime.now(timezone.utc).isoformat(),
@@ -822,8 +779,7 @@ class SLAMonitor:
         current_value: float, 
         target_value: float
     ) -> SLAStatus:
-        """Check SLA compliance for a specific metric."""
-        
+        """Check SLA compliance for a specific metric."""        
         # Different logic based on metric type
         if metric_name == "availability":
             if current_value >= target_value:
@@ -873,8 +829,7 @@ class SLAMonitor:
         current_value: float, 
         target_value: float
     ) -> float:
-        """Calculate compliance percentage."""
-        if metric_name == "availability":
+        """Calculate compliance percentage."""        if metric_name == "availability":
             return min(100.0, (current_value / target_value) * 100)
         elif metric_name in ["response_time", "error_rate"]:
             if current_value <= target_value:
@@ -892,8 +847,7 @@ class SLAMonitor:
         target_value: float,
         status: SLAStatus
     ) -> Dict[str, Any]:
-        """Log SLA violation."""
-        violation_id = f"SLA-{uuid.uuid4().hex[:8].upper()}"
+        """Log SLA violation."""        violation_id = f"SLA-{uuid.uuid4().hex[:8].upper()}"
         
         violation = {
             'violation_id': violation_id,
@@ -931,8 +885,7 @@ class SLAMonitor:
         return violation
     
     async def _log_sla_monitoring(self, service_name: str, report: Dict[str, Any]):
-        """Log SLA monitoring activity."""
-        log_entry = PerformanceLog(
+        """Log SLA monitoring activity."""        log_entry = PerformanceLog(
             event_type="sla_monitoring",
             severity="info",
             metric_type="sla_compliance",
@@ -955,8 +908,7 @@ class SLAMonitor:
             await self.db_session.commit()
     
     def _generate_sla_recommendations(self, violations: List[Dict[str, Any]]) -> List[str]:
-        """Generate recommendations based on SLA violations."""
-        recommendations = []
+        """Generate recommendations based on SLA violations."""        recommendations = []
         
         if not violations:
             recommendations.append("Continue monitoring current performance levels")
@@ -984,8 +936,7 @@ class SLAMonitor:
         return recommendations
     
     def _get_metric_unit(self, metric_name: str) -> str:
-        """Get unit for metric."""
-        unit_map = {
+        """Get unit for metric."""        unit_map = {
             'availability': '%',
             'response_time': 'ms',
             'error_rate': '%',
@@ -995,11 +946,9 @@ class SLAMonitor:
 
 
 class PerformanceMonitor:
-    """Main performance monitoring orchestrator."""
-    
+    """Main performance monitoring orchestrator."""    
     def __init__(self, db_session=None, config: Dict[str, Any] = None):
-        """Initialize performance monitor."""
-        self.db_session = db_session
+        """Initialize performance monitor."""        self.db_session = db_session
         self.config = config or {}
         
         # Initialize components
@@ -1024,8 +973,7 @@ class PerformanceMonitor:
         service_name: str,
         audit_scope: List[str] = None
     ) -> Dict[str, Any]:
-        """
-        Perform comprehensive performance audit.
+        """        Perform comprehensive performance audit.
         
         Args:
             service_name: Service to audit
@@ -1033,8 +981,7 @@ class PerformanceMonitor:
             
         Returns:
             Dict[str, Any]: Comprehensive performance audit results
-        """
-        if audit_scope is None:
+        """        if audit_scope is None:
             audit_scope = ['metrics', 'alerts', 'resources', 'scaling', 'sla']
         
         audit_results = {
@@ -1084,8 +1031,7 @@ class PerformanceMonitor:
             raise
     
     async def _audit_metrics(self, service_name: str) -> Dict[str, Any]:
-        """Audit metrics collection for service."""
-        # Implementation would query metrics logs
+        """Audit metrics collection for service."""        # Implementation would query metrics logs
         return {
             'metrics_collected_24h': 1440,  # 24h * 60min
             'collection_success_rate': 99.5,
@@ -1094,8 +1040,7 @@ class PerformanceMonitor:
         }
     
     async def _audit_alerts(self, service_name: str) -> Dict[str, Any]:
-        """Audit alerts for service."""
-        # Implementation would query alert logs
+        """Audit alerts for service."""        # Implementation would query alert logs
         return {
             'alerts_triggered_24h': 5,
             'critical_alerts': 1,
@@ -1104,8 +1049,7 @@ class PerformanceMonitor:
         }
     
     async def _audit_resources(self, service_name: str) -> Dict[str, Any]:
-        """Audit resource utilization for service."""
-        # Implementation would query resource logs
+        """Audit resource utilization for service."""        # Implementation would query resource logs
         return {
             'average_cpu_utilization': 65.5,
             'average_memory_utilization': 72.3,
@@ -1114,8 +1058,7 @@ class PerformanceMonitor:
         }
     
     async def _audit_scaling(self, service_name: str) -> Dict[str, Any]:
-        """Audit scaling events for service."""
-        # Implementation would query scaling logs
+        """Audit scaling events for service."""        # Implementation would query scaling logs
         return {
             'scaling_events_7d': 12,
             'auto_scaling_success_rate': 95.0,
@@ -1124,8 +1067,7 @@ class PerformanceMonitor:
         }
     
     async def _audit_sla(self, service_name: str) -> Dict[str, Any]:
-        """Audit SLA compliance for service."""
-        # Implementation would query SLA logs
+        """Audit SLA compliance for service."""        # Implementation would query SLA logs
         return {
             'overall_sla_compliance': 99.2,
             'availability_compliance': 99.8,
@@ -1134,8 +1076,7 @@ class PerformanceMonitor:
         }
     
     def _generate_audit_summary(self, results: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate audit summary."""
-        summary = {
+        """Generate audit summary."""        summary = {
             'overall_health_score': 90,
             'performance_grade': 'A',
             'critical_issues': 0,
@@ -1174,8 +1115,7 @@ class PerformanceMonitor:
         return summary
     
     def _generate_audit_recommendations(self, results: Dict[str, Any]) -> List[Dict[str, str]]:
-        """Generate audit recommendations."""
-        recommendations = []
+        """Generate audit recommendations."""        recommendations = []
         
         # Resource optimization recommendations
         if 'resources' in results:
@@ -1223,8 +1163,7 @@ async def create_performance_monitor(
     db_session=None,
     config: Dict[str, Any] = None
 ) -> PerformanceMonitor:
-    """
-    Create and configure performance monitor.
+    """    Create and configure performance monitor.
     
     Args:
         db_session: Database session
@@ -1232,8 +1171,7 @@ async def create_performance_monitor(
         
     Returns:
         PerformanceMonitor: Configured monitor
-    """
-    monitor = PerformanceMonitor(db_session, config)
+    """    monitor = PerformanceMonitor(db_session, config)
     return monitor
 
 

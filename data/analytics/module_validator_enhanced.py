@@ -1,5 +1,4 @@
-"""
-Module Validator for Analytics Engine
+"""Module Validator for Analytics Engine
 ====================================
 
 Professional validation system for the analytics module implementation.
@@ -16,9 +15,7 @@ WARNING: This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized copying, distribution, or modification without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import os
+"""import os
 import importlib
 import inspect
 import asyncio
@@ -29,8 +26,7 @@ import logging
 
 @dataclass
 class ValidationResult:
-    """Validation result structure"""
-    module_name: str
+    """Validation result structure"""    module_name: str
     is_valid: bool
     issues: List[str]
     warnings: List[str]
@@ -39,28 +35,23 @@ class ValidationResult:
 
 
 class ValidationLevel(Enum):
-    """Validation levels"""
-    BASIC = "basic"
+    """Validation levels"""    BASIC = "basic"
     STANDARD = "standard"
     PROFESSIONAL = "professional"
     INDUSTRIAL = "industrial"
 
 
 class AnalyticsModuleValidator:
-    """
-    Professional validator for analytics module implementation.
+    """    Professional validator for analytics module implementation.
     
     Validates all components against industrial standards and business requirements.
-    """
-    
+    """    
     def __init__(self, module_path: str = "/workspaces/Achiri/IA-Influencer-Agent/backend/data/analytics"):
-        """
-        Initialize Analytics Module Validator.
+        """        Initialize Analytics Module Validator.
         
         Args:
             module_path: Path to analytics module
-        """
-        self.module_path = module_path
+        """        self.module_path = module_path
         self.logger = logging.getLogger(__name__)
         
         # Expected modules and their requirements
@@ -170,16 +161,14 @@ class AnalyticsModuleValidator:
         }
         
     async def validate_full_module(self, validation_level: ValidationLevel = ValidationLevel.INDUSTRIAL) -> Dict[str, Any]:
-        """
-        Validate the complete analytics module.
+        """        Validate the complete analytics module.
         
         Args:
             validation_level: Level of validation to perform
             
         Returns:
             Comprehensive validation report
-        """
-        try:
+        """        try:
             validation_results = {}
             overall_score = 0.0
             total_modules = len(self.expected_modules)
@@ -222,8 +211,7 @@ class AnalyticsModuleValidator:
     
     async def _validate_module(self, module_name: str, requirements: Dict[str, Any], 
                              validation_level: ValidationLevel) -> ValidationResult:
-        """Validate individual module"""
-        try:
+        """Validate individual module"""        try:
             issues = []
             warnings = []
             score = 0.0
@@ -310,8 +298,7 @@ class AnalyticsModuleValidator:
     
     async def _validate_industrial_standards(self, module: Any, module_name: str, 
                                            details: Dict[str, Any]) -> float:
-        """Validate industrial-grade standards"""
-        score = 0.0
+        """Validate industrial-grade standards"""        score = 0.0
         
         # Check for proper documentation
         if hasattr(module, '__doc__') and module.__doc__:
@@ -357,8 +344,7 @@ class AnalyticsModuleValidator:
         return score
     
     async def _validate_business_logic(self) -> Dict[str, Any]:
-        """Validate business logic compliance"""
-        validation_result = {
+        """Validate business logic compliance"""        validation_result = {
             "compliant": True,
             "details": {}
         }
@@ -376,8 +362,7 @@ class AnalyticsModuleValidator:
         return validation_result
     
     def _validate_file_structure(self) -> Dict[str, Any]:
-        """Validate file structure requirements"""
-        structure_result = {
+        """Validate file structure requirements"""        structure_result = {
             "valid": True,
             "details": {}
         }
@@ -399,8 +384,7 @@ class AnalyticsModuleValidator:
         return structure_result
     
     def _determine_overall_status(self, score: float) -> str:
-        """Determine overall status based on score"""
-        if score >= 95:
+        """Determine overall status based on score"""        if score >= 95:
             return "EXCELLENT"
         elif score >= 85:
             return "VERY_GOOD"
@@ -412,8 +396,7 @@ class AnalyticsModuleValidator:
             return "NEEDS_IMPROVEMENT"
     
     def _generate_recommendations(self, validation_results: Dict[str, ValidationResult]) -> List[str]:
-        """Generate recommendations based on validation results"""
-        recommendations = []
+        """Generate recommendations based on validation results"""        recommendations = []
         
         for module_name, result in validation_results.items():
             if not result.is_valid:
@@ -424,8 +407,7 @@ class AnalyticsModuleValidator:
         return recommendations
     
     def _generate_completion_summary(self, validation_results: Dict[str, ValidationResult]) -> Dict[str, Any]:
-        """Generate completion summary"""
-        total_modules = len(validation_results)
+        """Generate completion summary"""        total_modules = len(validation_results)
         completed_modules = len([r for r in validation_results.values() if r.is_valid])
         
         return {
@@ -439,8 +421,7 @@ class AnalyticsModuleValidator:
 
 # Main validation function
 async def validate_analytics_module():
-    """Main function to validate the analytics module"""
-    validator = AnalyticsModuleValidator()
+    """Main function to validate the analytics module"""    validator = AnalyticsModuleValidator()
     return await validator.validate_full_module(ValidationLevel.INDUSTRIAL)
 
 

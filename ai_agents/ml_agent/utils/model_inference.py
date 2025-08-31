@@ -1,5 +1,4 @@
-"""
-Model Inference Engine - High-Performance ML Inference & Batch Processing System
+"""Model Inference Engine - High-Performance ML Inference & Batch Processing System
 
 Ultra-optimized inference engine providing real-time predictions, batch processing,
 streaming inference, and advanced caching for the IA-Influencer-Agent ML platform.
@@ -13,9 +12,7 @@ Any unauthorized use, copying, distribution, or commercialization without explic
 is strictly PROHIBITED and will result in legal action.
 
 ALL RIGHTS RESERVED - FAHED MLAIEL ©2025
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import uuid
@@ -84,8 +81,7 @@ from prometheus_client import Counter, Histogram, Gauge
 logger = logging.getLogger(__name__)
 
 class InferenceMode(Enum):
-    """Inference execution modes"""
-    REAL_TIME = "real_time"
+    """Inference execution modes"""    REAL_TIME = "real_time"
     BATCH = "batch"
     STREAMING = "streaming"
     ASYNC = "async"
@@ -93,8 +89,7 @@ class InferenceMode(Enum):
     DISTRIBUTED = "distributed"
 
 class ModelFormat(Enum):
-    """Supported model formats"""
-    SKLEARN = "sklearn"
+    """Supported model formats"""    SKLEARN = "sklearn"
     TENSORFLOW = "tensorflow"
     PYTORCH = "pytorch" 
     ONNX = "onnx"
@@ -102,8 +97,7 @@ class ModelFormat(Enum):
     CUSTOM = "custom"
 
 class ProcessingStrategy(Enum):
-    """Data processing strategies"""
-    SEQUENTIAL = "sequential"
+    """Data processing strategies"""    SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     VECTORIZED = "vectorized"
     GPU_ACCELERATED = "gpu_accelerated"
@@ -111,8 +105,7 @@ class ProcessingStrategy(Enum):
 
 @dataclass
 class InferenceConfig:
-    """Comprehensive inference configuration"""
-    model_name: str
+    """Comprehensive inference configuration"""    model_name: str
     model_version: Optional[str] = None
     inference_mode: InferenceMode = InferenceMode.REAL_TIME
     batch_size: int = 32
@@ -147,8 +140,7 @@ class InferenceConfig:
 
 @dataclass
 class InferenceMetrics:
-    """Comprehensive inference performance metrics"""
-    total_requests: int = 0
+    """Comprehensive inference performance metrics"""    total_requests: int = 0
     successful_requests: int = 0
     failed_requests: int = 0
     average_latency_ms: float = 0.0
@@ -182,8 +174,7 @@ class InferenceMetrics:
 
 @dataclass
 class InferenceResult:
-    """Comprehensive inference result"""
-    request_id: str
+    """Comprehensive inference result"""    request_id: str
     model_name: str
     model_version: str
     success: bool
@@ -222,8 +213,7 @@ class InferenceResult:
     created_at: datetime = field(default_factory=datetime.utcnow)
 
 class ModelInference:
-    """
-    Ultra-High-Performance Model Inference Engine
+    """    Ultra-High-Performance Model Inference Engine
     
     Advanced inference system providing:
     - Multi-framework model support (TensorFlow, PyTorch, ONNX, scikit-learn)
@@ -234,8 +224,7 @@ class ModelInference:
     - Quality control and validation pipelines
     - Comprehensive monitoring and observability
     - Explainable AI and uncertainty quantification
-    """
-    
+    """    
     # Prometheus metrics
     INFERENCE_REQUESTS = Counter('model_inference_requests_total', 'Total inference requests', ['model_name', 'status'])
     INFERENCE_LATENCY = Histogram('model_inference_duration_seconds', 'Inference latency', ['model_name', 'mode'])
@@ -306,8 +295,7 @@ class ModelInference:
         logger.info(f"GPU available: {self.gpu_available}")
         
     async def initialize(self) -> bool:
-        """Initialize inference engine"""
-        try:
+        """Initialize inference engine"""        try:
             # Start background monitoring
             monitor_task = asyncio.create_task(self._monitor_inference_performance())
             self.background_tasks.add(monitor_task)
@@ -333,8 +321,7 @@ class ModelInference:
                         model_path: str, 
                         model_name: str,
                         config: Optional[InferenceConfig] = None) -> bool:
-        """
-        Load and cache ML model with optimization
+        """        Load and cache ML model with optimization
         
         Supports multiple model formats:
         - scikit-learn (.pkl, .joblib)
@@ -342,8 +329,7 @@ class ModelInference:
         - PyTorch (.pt, .pth)
         - ONNX (.onnx)
         - Hugging Face transformers
-        """
-        try:
+        """        try:
             logger.info(f"Loading model: {model_name} from {model_path}")
             
             model_path = Path(model_path)
@@ -388,10 +374,8 @@ class ModelInference:
                      model_name: str,
                      input_data: Any,
                      config: Optional[InferenceConfig] = None) -> InferenceResult:
-        """
-        Execute high-performance model inference
-        """
-        start_time = time.time()
+        """        Execute high-performance model inference
+        """        start_time = time.time()
         request_id = str(uuid.uuid4())
         
         try:
@@ -524,10 +508,8 @@ class ModelInference:
                            model_name: str,
                            input_batch: List[Any],
                            config: Optional[InferenceConfig] = None) -> List[InferenceResult]:
-        """
-        High-performance batch inference with parallel processing
-        """
-        try:
+        """        High-performance batch inference with parallel processing
+        """        try:
             logger.info(f"Starting batch inference: {model_name} ({len(input_batch)} items)")
             
             if model_name not in self.loaded_models:
@@ -580,10 +562,8 @@ class ModelInference:
                            model_name: str,
                            input_stream: AsyncIterator[Any],
                            config: Optional[InferenceConfig] = None) -> AsyncIterator[InferenceResult]:
-        """
-        Streaming inference for real-time data processing
-        """
-        try:
+        """        Streaming inference for real-time data processing
+        """        try:
             logger.info(f"Starting streaming inference: {model_name}")
             
             if model_name not in self.loaded_models:
@@ -611,8 +591,7 @@ class ModelInference:
             raise InferenceError(f"Streaming inference failed: {str(e)}")
 
     async def get_model_info(self, model_name: str) -> Optional[Dict[str, Any]]:
-        """Get comprehensive model information and statistics"""
-        if model_name not in self.loaded_models:
+        """Get comprehensive model information and statistics"""        if model_name not in self.loaded_models:
             return None
         
         model_info = self.loaded_models[model_name].copy()
@@ -633,8 +612,7 @@ class ModelInference:
         }
 
     async def unload_model(self, model_name: str) -> bool:
-        """Unload model from memory"""
-        try:
+        """Unload model from memory"""        try:
             if model_name in self.loaded_models:
                 del self.loaded_models[model_name]
                 del self.model_configs[model_name]
@@ -654,8 +632,7 @@ class ModelInference:
 
     # Private helper methods
     def _detect_model_format(self, model_path: Path) -> ModelFormat:
-        """Detect model format from file extension and content"""
-        suffix = model_path.suffix.lower()
+        """Detect model format from file extension and content"""        suffix = model_path.suffix.lower()
         
         if suffix in ['.pkl', '.joblib']:
             return ModelFormat.SKLEARN
@@ -671,8 +648,7 @@ class ModelInference:
             return ModelFormat.CUSTOM
 
     async def _load_model_by_format(self, model_path: Path, model_format: ModelFormat) -> Dict[str, Any]:
-        """Load model based on detected format"""
-        try:
+        """Load model based on detected format"""        try:
             if model_format == ModelFormat.SKLEARN:
                 model = joblib.load(model_path)
                 return {"model": model, "framework": "sklearn"}
@@ -707,8 +683,7 @@ class ModelInference:
             raise
 
     async def _optimize_model(self, model_data: Dict[str, Any], model_format: ModelFormat, config: InferenceConfig) -> Any:
-        """Optimize model for inference performance"""
-        model = model_data["model"]
+        """Optimize model for inference performance"""        model = model_data["model"]
         optimization_info = {}
         
         try:
@@ -747,8 +722,7 @@ class ModelInference:
             return model
 
     def _generate_cache_key(self, model_name: str, input_data: Any) -> str:
-        """Generate cache key for input data"""
-        try:
+        """Generate cache key for input data"""        try:
             # Create hash of input data
             if isinstance(input_data, (dict, list)):
                 data_str = json.dumps(input_data, sort_keys=True, default=str)
@@ -763,8 +737,7 @@ class ModelInference:
             return f"{model_name}:{uuid.uuid4().hex}"
 
     async def _get_from_cache(self, cache_key: str) -> Optional[InferenceResult]:
-        """Retrieve result from cache"""
-        try:
+        """Retrieve result from cache"""        try:
             # Try memory cache first
             cached_result = self.cache_manager.get(cache_key)
             if cached_result:
@@ -790,8 +763,7 @@ class ModelInference:
             return None
 
     async def _cache_result(self, cache_key: str, result: InferenceResult, ttl_seconds: int):
-        """Cache inference result"""
-        try:
+        """Cache inference result"""        try:
             # Store in memory cache
             self.cache_manager.set(cache_key, result, ttl_seconds)
             
@@ -807,8 +779,7 @@ class ModelInference:
             logger.warning(f"Result caching failed: {e}")
 
     async def _validate_input(self, input_data: Any, model_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate input data against model requirements"""
-        errors = []
+        """Validate input data against model requirements"""        errors = []
         
         try:
             if input_data is None:
@@ -830,8 +801,7 @@ class ModelInference:
             return {"valid": False, "errors": errors}
 
     async def _preprocess_input(self, input_data: Any, model_info: Dict[str, Any], config: InferenceConfig) -> Any:
-        """Preprocess input data for model inference"""
-        try:
+        """Preprocess input data for model inference"""        try:
             model_format = model_info["format"]
             
             if model_format == ModelFormat.SKLEARN:
@@ -865,8 +835,7 @@ class ModelInference:
             raise InferenceError(f"Input preprocessing failed: {str(e)}")
 
     async def _real_time_inference(self, model_info: Dict[str, Any], input_data: Any, config: InferenceConfig) -> Dict[str, Any]:
-        """Execute real-time inference"""
-        model = model_info["model"]
+        """Execute real-time inference"""        model = model_info["model"]
         model_format = model_info["format"]
         
         try:
@@ -915,24 +884,20 @@ class ModelInference:
             raise InferenceError(f"Real-time inference failed: {str(e)}")
 
     async def _batch_inference(self, model_info: Dict[str, Any], input_data: Any, config: InferenceConfig) -> Dict[str, Any]:
-        """Execute optimized batch inference"""
-        return await self._real_time_inference(model_info, input_data, config)
+        """Execute optimized batch inference"""        return await self._real_time_inference(model_info, input_data, config)
 
     async def _gpu_inference(self, model_info: Dict[str, Any], input_data: Any, config: InferenceConfig) -> Dict[str, Any]:
-        """Execute GPU-accelerated inference"""
-        if not self.gpu_available:
+        """Execute GPU-accelerated inference"""        if not self.gpu_available:
             logger.warning("GPU inference requested but no GPU available, falling back to CPU")
             return await self._real_time_inference(model_info, input_data, config)
         
         return await self._real_time_inference(model_info, input_data, config)
 
     async def _default_inference(self, model_info: Dict[str, Any], input_data: Any, config: InferenceConfig) -> Dict[str, Any]:
-        """Default inference implementation"""
-        return await self._real_time_inference(model_info, input_data, config)
+        """Default inference implementation"""        return await self._real_time_inference(model_info, input_data, config)
 
     async def _postprocess_output(self, predictions: Dict[str, Any], model_info: Dict[str, Any], config: InferenceConfig) -> Dict[str, Any]:
-        """Postprocess model output"""
-        try:
+        """Postprocess model output"""        try:
             processed_predictions = predictions.copy()
             
             # Add confidence scores if not present
@@ -948,8 +913,7 @@ class ModelInference:
             return predictions
 
     async def _assess_prediction_quality(self, predictions: Dict[str, Any], config: InferenceConfig) -> Dict[str, Any]:
-        """Assess prediction quality and generate quality score"""
-        try:
+        """Assess prediction quality and generate quality score"""        try:
             quality_score = 1.0
             quality_flags = []
             
@@ -968,8 +932,7 @@ class ModelInference:
             return {"score": 1.0, "flags": []}
 
     def _update_inference_metrics(self, model_name: str, result: InferenceResult):
-        """Update inference metrics"""
-        if model_name not in self.inference_metrics:
+        """Update inference metrics"""        if model_name not in self.inference_metrics:
             self.inference_metrics[model_name] = InferenceMetrics()
         
         metrics = self.inference_metrics[model_name]
@@ -997,8 +960,7 @@ class ModelInference:
         self.CACHE_HIT_RATE.labels(model_name=model_name).set(metrics.cache_hit_rate)
 
     async def _monitor_inference_performance(self):
-        """Background performance monitoring"""
-        while True:
+        """Background performance monitoring"""        while True:
             try:
                 for model_name, metrics in self.inference_metrics.items():
                     # Calculate throughput
@@ -1016,8 +978,7 @@ class ModelInference:
                 await asyncio.sleep(60)
 
     async def _cleanup_cache(self):
-        """Background cache cleanup"""
-        while True:
+        """Background cache cleanup"""        while True:
             try:
                 # Clean up expired cache entries
                 self.cache_manager.cleanup_expired()
@@ -1032,8 +993,7 @@ class ModelInference:
                 await asyncio.sleep(1800)
 
     async def _warmup_gpu(self):
-        """Warm up GPU for optimal performance"""
-        try:
+        """Warm up GPU for optimal performance"""        try:
             if torch.cuda.is_available():
                 # Warm up CUDA context
                 dummy_tensor = torch.randn(1, 100).cuda()
@@ -1044,10 +1004,8 @@ class ModelInference:
 
 
 class BatchProcessor:
-    """
-    High-Performance Batch Processing Engine for ML Inference
-    """
-    
+    """    High-Performance Batch Processing Engine for ML Inference
+    """    
     def __init__(self, inference_engine: ModelInference, config: Optional[Dict[str, Any]] = None):
         self.inference_engine = inference_engine
         self.config = config or {}
@@ -1068,8 +1026,7 @@ class BatchProcessor:
                           model_name: str,
                           input_batch: List[Any],
                           config: Optional[InferenceConfig] = None) -> List[InferenceResult]:
-        """Process large batch with optimal chunking and parallelization"""
-        try:
+        """Process large batch with optimal chunking and parallelization"""        try:
             batch_id = f"batch_{uuid.uuid4().hex[:8]}"
             logger.info(f"Processing batch {batch_id}: {len(input_batch)} items")
             
@@ -1118,7 +1075,6 @@ class BatchProcessor:
             asyncio.create_task(self._cleanup_completed_batch(batch_id, delay=3600))
     
     async def _cleanup_completed_batch(self, batch_id: str, delay: int = 3600):
-        """Cleanup completed batch after delay"""
-        await asyncio.sleep(delay)
+        """Cleanup completed batch after delay"""        await asyncio.sleep(delay)
         if batch_id in self.active_batches:
             del self.active_batches[batch_id]

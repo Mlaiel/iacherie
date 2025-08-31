@@ -1,5 +1,4 @@
-"""
-Content Processing Pipeline
+"""Content Processing Pipeline
 
 Ultra-advanced content processing pipeline for multi-format content creators.
 Handles audio, video, image, and text content with AI-powered optimization.
@@ -8,9 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: Content Upload → Format Detection → Quality Analysis → AI Enhancement → Optimization → Validation
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import hashlib
@@ -27,8 +24,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentPipelineStage(Enum):
-    """Content processing pipeline stages"""
-    UPLOAD_VALIDATION = "upload_validation"
+    """Content processing pipeline stages"""    UPLOAD_VALIDATION = "upload_validation"
     FORMAT_DETECTION = "format_detection"
     CONTENT_ANALYSIS = "content_analysis"
     QUALITY_ASSESSMENT = "quality_assessment"
@@ -43,8 +39,7 @@ class ContentPipelineStage(Enum):
 
 
 class ContentType(Enum):
-    """Supported content types"""
-    AUDIO = "audio"
+    """Supported content types"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -53,8 +48,7 @@ class ContentType(Enum):
 
 
 class ProcessingQuality(Enum):
-    """Processing quality levels"""
-    BASIC = "basic"
+    """Processing quality levels"""    BASIC = "basic"
     STANDARD = "standard"
     HIGH = "high"
     PREMIUM = "premium"
@@ -63,8 +57,7 @@ class ProcessingQuality(Enum):
 
 @dataclass
 class ContentMetrics:
-    """Content processing metrics"""
-    file_size: int = 0
+    """Content processing metrics"""    file_size: int = 0
     duration: Optional[float] = None
     resolution: Optional[Tuple[int, int]] = None
     bitrate: Optional[int] = None
@@ -80,8 +73,7 @@ class ContentMetrics:
 
 @dataclass
 class ProcessingResult:
-    """Content processing result"""
-    success: bool = False
+    """Content processing result"""    success: bool = False
     content_id: str = ""
     original_path: Optional[str] = None
     processed_path: Optional[str] = None
@@ -100,8 +92,7 @@ class ProcessingResult:
 
 @dataclass
 class QualityGate:
-    """Quality gate definition"""
-    name: str
+    """Quality gate definition"""    name: str
     validator: Callable
     threshold: float = 0.8
     required: bool = True
@@ -110,8 +101,7 @@ class QualityGate:
 
 @dataclass
 class ValidationGate:
-    """Validation gate definition"""
-    name: str
+    """Validation gate definition"""    name: str
     validator: Callable
     required: bool = True
     error_message: str = ""
@@ -119,24 +109,21 @@ class ValidationGate:
 
 @dataclass
 class OptimizationGate:
-    """Optimization gate definition"""
-    name: str
+    """Optimization gate definition"""    name: str
     optimizer: Callable
     enabled: bool = True
     parameters: Dict[str, Any] = field(default_factory=dict)
 
 
 class ContentProcessor:
-    """Individual content processor"""
-    
+    """Individual content processor"""    
     def __init__(self, processor_type: str, config: Dict[str, Any]):
         self.processor_type = processor_type
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{processor_type}")
     
     async def process(self, content_path: str, parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Process content"""
-        self.logger.info(f"Processing {self.processor_type}: {content_path}")
+        """Process content"""        self.logger.info(f"Processing {self.processor_type}: {content_path}")
         
         # Simulate processing based on type
         await asyncio.sleep(0.1)
@@ -151,8 +138,7 @@ class ContentProcessor:
 
 
 class ContentProcessingPipeline:
-    """
-    Ultra-advanced content processing pipeline for multi-format content.
+    """    Ultra-advanced content processing pipeline for multi-format content.
     
     Features:
     - Multi-format content support (audio, video, image, text)
@@ -162,8 +148,7 @@ class ContentProcessingPipeline:
     - Thumbnail and preview generation
     - Metadata extraction and enrichment
     - Performance monitoring and optimization
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or self._get_default_config()
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -194,8 +179,7 @@ class ContentProcessingPipeline:
         self.logger.info("Content Processing Pipeline initialized successfully")
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration"""
-        return {
+        """Get default configuration"""        return {
             "max_file_size": 500 * 1024 * 1024,  # 500MB
             "supported_formats": {
                 "audio": [".mp3", ".wav", ".flac", ".aac", ".ogg"],
@@ -228,8 +212,7 @@ class ContentProcessingPipeline:
         }
     
     def _initialize_processors(self):
-        """Initialize content processors"""
-        # Audio processors
+        """Initialize content processors"""        # Audio processors
         self.content_processors[ContentType.AUDIO] = [
             ContentProcessor("audio_analyzer", self.config),
             ContentProcessor("audio_enhancer", self.config),
@@ -262,8 +245,7 @@ class ContentProcessingPipeline:
         ]
     
     def _initialize_stage_processors(self):
-        """Initialize stage processors"""
-        self.stage_processors = {
+        """Initialize stage processors"""        self.stage_processors = {
             ContentPipelineStage.UPLOAD_VALIDATION: self._process_upload_validation,
             ContentPipelineStage.FORMAT_DETECTION: self._process_format_detection,
             ContentPipelineStage.CONTENT_ANALYSIS: self._process_content_analysis,
@@ -279,8 +261,7 @@ class ContentProcessingPipeline:
         }
     
     def _initialize_quality_gates(self):
-        """Initialize quality gates"""
-        self.quality_gates = [
+        """Initialize quality gates"""        self.quality_gates = [
             QualityGate(
                 name="file_size_check",
                 validator=self._validate_file_size,
@@ -312,8 +293,7 @@ class ContentProcessingPipeline:
         ]
     
     def _initialize_validation_gates(self):
-        """Initialize validation gates"""
-        self.validation_gates = [
+        """Initialize validation gates"""        self.validation_gates = [
             ValidationGate(
                 name="virus_scan",
                 validator=self._validate_virus_scan,
@@ -335,8 +315,7 @@ class ContentProcessingPipeline:
         ]
     
     def _initialize_optimization_gates(self):
-        """Initialize optimization gates"""
-        self.optimization_gates = [
+        """Initialize optimization gates"""        self.optimization_gates = [
             OptimizationGate(
                 name="compression_optimization",
                 optimizer=self._optimize_compression,
@@ -364,8 +343,7 @@ class ContentProcessingPipeline:
         processing_quality: ProcessingQuality = ProcessingQuality.HIGH,
         parameters: Optional[Dict[str, Any]] = None
     ) -> ProcessingResult:
-        """
-        Process content through the complete pipeline
+        """        Process content through the complete pipeline
         
         Args:
             content_path: Path to content file
@@ -375,8 +353,7 @@ class ContentProcessingPipeline:
             
         Returns:
             ProcessingResult with complete processing information
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         content_id = hashlib.md5(f"{content_path}_{start_time}".encode()).hexdigest()
         
         # Initialize result
@@ -434,8 +411,7 @@ class ContentProcessingPipeline:
     
     # Stage Processing Methods
     async def _process_upload_validation(self, result: ProcessingResult, parameters: Dict[str, Any]):
-        """Process upload validation stage"""
-        self.logger.info("Processing upload validation")
+        """Process upload validation stage"""        self.logger.info("Processing upload validation")
         
         # Run validation gates
         for gate in self.validation_gates:
@@ -448,8 +424,7 @@ class ContentProcessingPipeline:
         result.metadata["upload_validated"] = True
     
     async def _process_format_detection(self, result: ProcessingResult, parameters: Dict[str, Any]):
-        """Process format detection stage"""
-        self.logger.info("Processing format detection")
+        """Process format detection stage"""        self.logger.info("Processing format detection")
         
         if not result.content_type:
             # Auto-detect content type
@@ -468,8 +443,7 @@ class ContentProcessingPipeline:
         result.metadata["file_extension"] = Path(result.original_path).suffix
     
     async def _process_content_analysis(self, result: ProcessingResult, parameters: Dict[str, Any]):
-        """Process content analysis stage"""
-        self.logger.info("Processing content analysis")
+        """Process content analysis stage"""        self.logger.info("Processing content analysis")
         
         # Get appropriate processors for content type
         processors = self.content_processors.get(result.content_type, [])
@@ -485,8 +459,7 @@ class ContentProcessingPipeline:
         result.metadata["analysis_completed"] = True
     
     async def _process_quality_assessment(self, result: ProcessingResult, parameters: Dict[str, Any]):
-        """Process quality assessment stage"""
-        self.logger.info("Processing quality assessment")
+        """Process quality assessment stage"""        self.logger.info("Processing quality assessment")
         
         # Run quality gates
         quality_scores = []
@@ -507,8 +480,7 @@ class ContentProcessingPipeline:
         result.metadata["quality_assessment_completed"] = True
     
     async def _process_ai_enhancement(self, result: ProcessingResult, parameters: Dict[str, Any]):
-        """Process AI enhancement stage"""
-        self.logger.info("Processing AI enhancement")
+        """Process AI enhancement stage"""        self.logger.info("Processing AI enhancement")
         
         if not self.config["optimization_settings"]["enable_ai_enhancement"]:
             result.warnings.append("AI enhancement disabled")
@@ -530,8 +502,7 @@ class ContentProcessingPipeline:
         result.metadata["ai_enhancement_completed"] = True
     
     async def _process_format_conversion(self, result: ProcessingResult, parameters: Dict[str, Any]):
-        """Process format conversion stage"""
-        self.logger.info("Processing format conversion")
+        """Process format conversion stage"""        self.logger.info("Processing format conversion")
         
         if not self.config["optimization_settings"]["enable_format_conversion"]:
             result.warnings.append("Format conversion disabled")
@@ -554,8 +525,7 @@ class ContentProcessingPipeline:
         result.metadata["format_conversion_completed"] = True
     
     async def _process_optimization(self, result: ProcessingResult, parameters: Dict[str, Any]):
-        """Process optimization stage"""
-        self.logger.info("Processing optimization")
+        """Process optimization stage"""        self.logger.info("Processing optimization")
         
         # Run optimization gates
         for gate in self.optimization_gates:
@@ -569,8 +539,7 @@ class ContentProcessingPipeline:
         result.metadata["optimization_completed"] = True
     
     async def _process_metadata_extraction(self, result: ProcessingResult, parameters: Dict[str, Any]):
-        """Process metadata extraction stage"""
-        self.logger.info("Processing metadata extraction")
+        """Process metadata extraction stage"""        self.logger.info("Processing metadata extraction")
         
         if not self.config["output_settings"]["extract_metadata"]:
             result.warnings.append("Metadata extraction disabled")
@@ -610,8 +579,7 @@ class ContentProcessingPipeline:
         result.metadata["metadata_extraction_completed"] = True
     
     async def _process_thumbnail_generation(self, result: ProcessingResult, parameters: Dict[str, Any]):
-        """Process thumbnail generation stage"""
-        self.logger.info("Processing thumbnail generation")
+        """Process thumbnail generation stage"""        self.logger.info("Processing thumbnail generation")
         
         if not self.config["output_settings"]["generate_thumbnails"]:
             result.warnings.append("Thumbnail generation disabled")
@@ -631,8 +599,7 @@ class ContentProcessingPipeline:
         result.metadata["thumbnail_generation_completed"] = True
     
     async def _process_preview_generation(self, result: ProcessingResult, parameters: Dict[str, Any]):
-        """Process preview generation stage"""
-        self.logger.info("Processing preview generation")
+        """Process preview generation stage"""        self.logger.info("Processing preview generation")
         
         if not self.config["output_settings"]["generate_previews"]:
             result.warnings.append("Preview generation disabled")
@@ -649,8 +616,7 @@ class ContentProcessingPipeline:
         result.metadata["preview_generation_completed"] = True
     
     async def _process_storage_preparation(self, result: ProcessingResult, parameters: Dict[str, Any]):
-        """Process storage preparation stage"""
-        self.logger.info("Processing storage preparation")
+        """Process storage preparation stage"""        self.logger.info("Processing storage preparation")
         
         # Prepare for storage (organize files, create manifest, etc.)
         storage_manifest = {
@@ -667,8 +633,7 @@ class ContentProcessingPipeline:
         result.metadata["storage_preparation_completed"] = True
     
     async def _process_final_validation(self, result: ProcessingResult, parameters: Dict[str, Any]):
-        """Process final validation stage"""
-        self.logger.info("Processing final validation")
+        """Process final validation stage"""        self.logger.info("Processing final validation")
         
         # Validate final result
         validation_checks = [
@@ -688,8 +653,7 @@ class ContentProcessingPipeline:
     
     # Validation Methods
     async def _validate_file_size(self, file_path: str, parameters: Dict[str, Any]) -> float:
-        """Validate file size"""
-        try:
+        """Validate file size"""        try:
             file_size = Path(file_path).stat().st_size
             max_size = self.config["max_file_size"]
             return 1.0 if file_size <= max_size else 0.0
@@ -697,8 +661,7 @@ class ContentProcessingPipeline:
             return 0.0
     
     async def _validate_format_support(self, file_path: str, parameters: Dict[str, Any]) -> float:
-        """Validate format support"""
-        try:
+        """Validate format support"""        try:
             file_extension = Path(file_path).suffix.lower()
             all_formats = []
             for formats in self.config["supported_formats"].values():
@@ -708,34 +671,28 @@ class ContentProcessingPipeline:
             return 0.0
     
     async def _validate_content_quality(self, file_path: str, parameters: Dict[str, Any]) -> float:
-        """Validate content quality"""
-        # Simulate quality validation
+        """Validate content quality"""        # Simulate quality validation
         return 0.85  # Would implement actual quality analysis
     
     async def _validate_ai_enhancement(self, file_path: str, parameters: Dict[str, Any]) -> float:
-        """Validate AI enhancement quality"""
-        # Simulate AI enhancement validation
+        """Validate AI enhancement quality"""        # Simulate AI enhancement validation
         return 0.90  # Would implement actual AI quality assessment
     
     async def _validate_virus_scan(self, file_path: str, parameters: Dict[str, Any]) -> bool:
-        """Validate virus scan"""
-        # Simulate virus scan
+        """Validate virus scan"""        # Simulate virus scan
         return True  # Would implement actual virus scanning
     
     async def _validate_copyright(self, file_path: str, parameters: Dict[str, Any]) -> bool:
-        """Validate copyright"""
-        # Simulate copyright check
+        """Validate copyright"""        # Simulate copyright check
         return True  # Would implement actual copyright verification
     
     async def _validate_content_policy(self, file_path: str, parameters: Dict[str, Any]) -> bool:
-        """Validate content policy"""
-        # Simulate content policy check
+        """Validate content policy"""        # Simulate content policy check
         return True  # Would implement actual policy validation
     
     # Optimization Methods
     async def _optimize_compression(self, file_path: str, parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize compression"""
-        target_reduction = parameters.get("target_size_reduction", 0.3)
+        """Optimize compression"""        target_reduction = parameters.get("target_size_reduction", 0.3)
         
         return {
             "compression_applied": True,
@@ -745,8 +702,7 @@ class ContentProcessingPipeline:
         }
     
     async def _optimize_quality(self, file_path: str, parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize quality"""
-        target_quality = parameters.get("target_quality", 0.9)
+        """Optimize quality"""        target_quality = parameters.get("target_quality", 0.9)
         
         return {
             "quality_optimization_applied": True,
@@ -756,8 +712,7 @@ class ContentProcessingPipeline:
         }
     
     async def _optimize_performance(self, file_path: str, parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize performance"""
-        target_load_time = parameters.get("target_load_time", 2.0)
+        """Optimize performance"""        target_load_time = parameters.get("target_load_time", 2.0)
         
         return {
             "performance_optimization_applied": True,
@@ -768,16 +723,13 @@ class ContentProcessingPipeline:
     
     # Public API Methods
     def get_processing_status(self, content_id: str) -> Optional[ProcessingResult]:
-        """Get processing status"""
-        return self.active_processes.get(content_id) or self.completed_processes.get(content_id)
+        """Get processing status"""        return self.active_processes.get(content_id) or self.completed_processes.get(content_id)
     
     def get_active_processes(self) -> Dict[str, ProcessingResult]:
-        """Get all active processes"""
-        return self.active_processes.copy()
+        """Get all active processes"""        return self.active_processes.copy()
     
     def get_processing_metrics(self) -> Dict[str, Any]:
-        """Get processing metrics"""
-        completed_processes = list(self.completed_processes.values())
+        """Get processing metrics"""        completed_processes = list(self.completed_processes.values())
         
         return {
             "active_processes": len(self.active_processes),
@@ -788,8 +740,7 @@ class ContentProcessingPipeline:
         }
     
     async def cancel_processing(self, content_id: str) -> bool:
-        """Cancel content processing"""
-        if content_id in self.active_processes:
+        """Cancel content processing"""        if content_id in self.active_processes:
             result = self.active_processes[content_id]
             result.success = False
             result.errors.append("Processing cancelled")

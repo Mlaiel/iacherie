@@ -1,5 +1,4 @@
-"""
-Distributed Tracing Configuration for IA-Influencer Agent Platform
+"""Distributed Tracing Configuration for IA-Influencer Agent Platform
 ==================================================================
 
 Professional distributed tracing configuration for microservices observability.
@@ -14,9 +13,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import os
+"""import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -24,8 +21,7 @@ from pydantic import BaseSettings, Field, validator
 
 
 class TracingBackend(str, Enum):
-    """Distributed tracing backend types."""
-    JAEGER = "jaeger"
+    """Distributed tracing backend types."""    JAEGER = "jaeger"
     ZIPKIN = "zipkin"
     OPENTELEMETRY = "opentelemetry"
     AWS_XRAY = "aws_xray"
@@ -35,8 +31,7 @@ class TracingBackend(str, Enum):
 
 
 class SamplingStrategy(str, Enum):
-    """Trace sampling strategies."""
-    CONST = "const"              # Constant sampling rate
+    """Trace sampling strategies."""    CONST = "const"              # Constant sampling rate
     PROBABILISTIC = "probabilistic"  # Probabilistic sampling
     RATE_LIMITING = "rate_limiting"  # Rate-limited sampling
     ADAPTIVE = "adaptive"        # Adaptive sampling
@@ -44,8 +39,7 @@ class SamplingStrategy(str, Enum):
 
 
 class SpanKind(str, Enum):
-    """OpenTelemetry span kinds."""
-    INTERNAL = "internal"
+    """OpenTelemetry span kinds."""    INTERNAL = "internal"
     SERVER = "server"
     CLIENT = "client"
     PRODUCER = "producer"
@@ -54,8 +48,7 @@ class SpanKind(str, Enum):
 
 @dataclass
 class SamplingConfig:
-    """Sampling configuration for different services."""
-    strategy: SamplingStrategy = SamplingStrategy.PROBABILISTIC
+    """Sampling configuration for different services."""    strategy: SamplingStrategy = SamplingStrategy.PROBABILISTIC
     param: float = 0.1  # Sampling rate (0.0-1.0)
     max_traces_per_second: int = 100
     operation_sampling: Dict[str, float] = field(default_factory=dict)
@@ -64,8 +57,7 @@ class SamplingConfig:
 
 @dataclass
 class SpanProcessorConfig:
-    """Span processor configuration."""
-    processor_type: str = "batch"  # batch or simple
+    """Span processor configuration."""    processor_type: str = "batch"  # batch or simple
     max_queue_size: int = 2048
     schedule_delay_millis: int = 5000
     export_timeout_millis: int = 30000
@@ -74,8 +66,7 @@ class SpanProcessorConfig:
 
 @dataclass
 class ResourceConfig:
-    """Resource configuration for tracing."""
-    service_name: str
+    """Resource configuration for tracing."""    service_name: str
     service_version: str = "1.0.0"
     service_namespace: str = "ia-influencer"
     service_instance_id: Optional[str] = None
@@ -85,8 +76,7 @@ class ResourceConfig:
 
 @dataclass
 class InstrumentationConfig:
-    """Instrumentation configuration for different libraries."""
-    enabled: bool = True
+    """Instrumentation configuration for different libraries."""    enabled: bool = True
     http_client: bool = True
     http_server: bool = True
     database: bool = True
@@ -101,11 +91,9 @@ class InstrumentationConfig:
 
 
 class DistributedTracingConfig(BaseSettings):
-    """
-    Centralized distributed tracing configuration for microservices observability.
+    """    Centralized distributed tracing configuration for microservices observability.
     Supports Jaeger, Zipkin, OpenTelemetry, AWS X-Ray, and other tracing backends.
-    """
-    
+    """    
     # Global tracing settings
     enabled: bool = Field(True, env="TRACING_ENABLED")
     backend: TracingBackend = Field(TracingBackend.JAEGER, env="TRACING_BACKEND")
@@ -202,8 +190,7 @@ class DistributedTracingConfig(BaseSettings):
         case_sensitive = False
         
     def get_sampling_config(self, service_name: Optional[str] = None) -> SamplingConfig:
-        """Get sampling configuration for a service."""
-        service_sampling = {}
+        """Get sampling configuration for a service."""        service_sampling = {}
         operation_sampling = {}
         
         # Service-specific sampling rates
@@ -241,8 +228,7 @@ class DistributedTracingConfig(BaseSettings):
         )
     
     def get_span_processor_config(self) -> SpanProcessorConfig:
-        """Get span processor configuration."""
-        return SpanProcessorConfig(
+        """Get span processor configuration."""        return SpanProcessorConfig(
             processor_type=self.span_processor_type,
             max_queue_size=self.span_processor_max_queue_size,
             schedule_delay_millis=self.span_processor_schedule_delay_millis,
@@ -251,8 +237,7 @@ class DistributedTracingConfig(BaseSettings):
         )
     
     def get_resource_config(self, service_name: Optional[str] = None) -> ResourceConfig:
-        """Get resource configuration."""
-        attributes = {
+        """Get resource configuration."""        attributes = {
             "deployment.environment": self.deployment_environment,
             **self.resource_attributes,
             **self.global_tags
@@ -267,8 +252,7 @@ class DistributedTracingConfig(BaseSettings):
         )
     
     def get_instrumentation_config(self) -> InstrumentationConfig:
-        """Get instrumentation configuration."""
-        return InstrumentationConfig(
+        """Get instrumentation configuration."""        return InstrumentationConfig(
             enabled=self.enabled,
             http_client=self.trace_http_client,
             http_server=self.trace_http_server,
@@ -283,8 +267,7 @@ class DistributedTracingConfig(BaseSettings):
         )
     
     def get_jaeger_config(self) -> Dict[str, Any]:
-        """Get Jaeger-specific configuration."""
-        config = {
+        """Get Jaeger-specific configuration."""        config = {
             "service_name": self.service_name,
             "agent_host_name": self.jaeger_agent_host,
             "agent_port": self.jaeger_agent_port,
@@ -304,16 +287,14 @@ class DistributedTracingConfig(BaseSettings):
         return config
     
     def get_zipkin_config(self) -> Dict[str, Any]:
-        """Get Zipkin-specific configuration."""
-        return {
+        """Get Zipkin-specific configuration."""        return {
             "service_name": self.service_name,
             "zipkin_endpoint": self.zipkin_endpoint,
             "sample_rate": self.sampling_rate
         }
     
     def get_opentelemetry_config(self) -> Dict[str, Any]:
-        """Get OpenTelemetry-specific configuration."""
-        return {
+        """Get OpenTelemetry-specific configuration."""        return {
             "service_name": self.service_name,
             "service_version": self.service_version,
             "service_namespace": self.service_namespace,
@@ -326,8 +307,7 @@ class DistributedTracingConfig(BaseSettings):
         }
     
     def get_tracing_config(self) -> Dict[str, Any]:
-        """Get complete distributed tracing configuration."""
-        return {
+        """Get complete distributed tracing configuration."""        return {
             "enabled": self.enabled,
             "backend": self.backend,
             "service": {

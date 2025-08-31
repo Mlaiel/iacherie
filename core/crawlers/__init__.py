@@ -24,8 +24,7 @@ Project Team Specialties:
 - Audio Processing: Advanced spectral analysis & fingerprinting
 - DevOps & Infrastructure: Kubernetes orchestration & monitoring
 - Prompt Engineering: Sophisticated AI model optimization
-"""
-# Core crawler infrastructure
+"""# Core crawler infrastructure
 from .base import BaseCrawler, CrawlResult
 from .config import CrawlerConfig, PlatformConfig, CrawlerType, ContentType
 

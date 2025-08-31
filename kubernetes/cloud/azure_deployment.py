@@ -1,5 +1,4 @@
-"""
-Azure Deployment Manager - Enterprise Azure Infrastructure Management
+"""Azure Deployment Manager - Enterprise Azure Infrastructure Management
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -14,9 +13,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 This module provides comprehensive Azure deployment and management capabilities
 for the IA Influencer Agent platform, including App Service, Container Instances,
 Function Apps, Azure SQL, Storage Accounts, and other Azure services.
-"""
-
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
@@ -36,8 +33,7 @@ from azure.mgmt.monitor import MonitorManagementClient
 logger = logging.getLogger(__name__)
 
 class AzureRegion(Enum):
-    """Azure regions for global deployment"""
-    WEST_EUROPE = "westeurope"
+    """Azure regions for global deployment"""    WEST_EUROPE = "westeurope"
     NORTH_EUROPE = "northeurope"
     EAST_US = "eastus"
     WEST_US_2 = "westus2"
@@ -45,8 +41,7 @@ class AzureRegion(Enum):
     JAPAN_EAST = "japaneast"
 
 class AzureServiceType(Enum):
-    """Azure service types"""
-    APP_SERVICE = "app_service"
+    """Azure service types"""    APP_SERVICE = "app_service"
     CONTAINER_INSTANCE = "container_instance"
     FUNCTION_APP = "function_app"
     SQL_DATABASE = "sql_database"
@@ -61,8 +56,7 @@ class AzureServiceType(Enum):
 
 @dataclass
 class AzureCredentials:
-    """Azure credentials configuration"""
-    subscription_id: str
+    """Azure credentials configuration"""    subscription_id: str
     tenant_id: str
     client_id: str
     client_secret: str
@@ -70,8 +64,7 @@ class AzureCredentials:
 
 @dataclass
 class AzureDeploymentConfig:
-    """Azure deployment configuration"""
-    environment: str
+    """Azure deployment configuration"""    environment: str
     region: AzureRegion
     resource_group_name: str
     virtual_network_config: Dict[str, Any]
@@ -88,8 +81,7 @@ class AzureDeploymentConfig:
 
 @dataclass
 class AzureResource:
-    """Azure resource representation"""
-    resource_id: str
+    """Azure resource representation"""    resource_id: str
     resource_type: AzureServiceType
     region: AzureRegion
     resource_group: str
@@ -101,11 +93,9 @@ class AzureResource:
     security_compliance: bool = True
 
 class AzureDeploymentManager:
-    """Enterprise Azure deployment and management system"""
-    
+    """Enterprise Azure deployment and management system"""    
     def __init__(self, credentials: AzureCredentials):
-        """Initialize Azure deployment manager"""
-        self.logger = logging.getLogger(self.__class__.__name__)
+        """Initialize Azure deployment manager"""        self.logger = logging.getLogger(self.__class__.__name__)
         self.credentials = credentials
         self.credential = ClientSecretCredential(
             tenant_id=credentials.tenant_id,
@@ -143,8 +133,7 @@ class AzureDeploymentManager:
         self.deployment_history: List[Dict[str, Any]] = []
         
     async def initialize(self) -> bool:
-        """Initialize Azure connection and validate credentials"""
-        try:
+        """Initialize Azure connection and validate credentials"""        try:
             # Test connectivity by listing resource groups
             resource_groups = list(self.resource_client.resource_groups.list())
             self.logger.info(f"Azure credentials validated. Found {len(resource_groups)} resource groups")
@@ -154,8 +143,7 @@ class AzureDeploymentManager:
             return False
     
     async def deploy_infrastructure(self, config: AzureDeploymentConfig) -> Dict[str, Any]:
-        """Deploy complete infrastructure stack"""
-        deployment_id = f"deploy-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
+        """Deploy complete infrastructure stack"""        deployment_id = f"deploy-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
         self.logger.info(f"Starting Azure infrastructure deployment: {deployment_id}")
         
         try:
@@ -219,8 +207,7 @@ class AzureDeploymentManager:
             raise
     
     async def _create_resource_group(self, config: AzureDeploymentConfig) -> Dict[str, Any]:
-        """Create Azure resource group"""
-        try:
+        """Create Azure resource group"""        try:
             resource_group_params = {
                 'location': config.region.value,
                 'tags': {
@@ -247,8 +234,7 @@ class AzureDeploymentManager:
             raise
     
     async def _deploy_virtual_network(self, config: AzureDeploymentConfig) -> Dict[str, Any]:
-        """Deploy virtual network infrastructure"""
-        vnet_config = config.virtual_network_config
+        """Deploy virtual network infrastructure"""        vnet_config = config.virtual_network_config
         
         # Create virtual network
         vnet_params = {
@@ -341,8 +327,7 @@ class AzureDeploymentManager:
         }
     
     async def _deploy_security_infrastructure(self, config: AzureDeploymentConfig) -> Dict[str, Any]:
-        """Deploy security infrastructure"""
-        # Security infrastructure implementation
+        """Deploy security infrastructure"""        # Security infrastructure implementation
         return {
             "key_vault": await self._create_key_vault(config),
             "managed_identity": await self._create_managed_identity(config),
@@ -350,8 +335,7 @@ class AzureDeploymentManager:
         }
     
     async def _create_key_vault(self, config: AzureDeploymentConfig) -> Dict[str, Any]:
-        """Create Azure Key Vault"""
-        # Key Vault implementation
+        """Create Azure Key Vault"""        # Key Vault implementation
         return {
             "name": f"ia-influencer-kv-{config.environment}",
             "location": config.region.value,
@@ -359,8 +343,7 @@ class AzureDeploymentManager:
         }
     
     async def _create_managed_identity(self, config: AzureDeploymentConfig) -> Dict[str, Any]:
-        """Create managed identity"""
-        # Managed Identity implementation
+        """Create managed identity"""        # Managed Identity implementation
         return {
             "name": f"ia-influencer-identity-{config.environment}",
             "type": "SystemAssigned",
@@ -368,8 +351,7 @@ class AzureDeploymentManager:
         }
     
     async def _configure_security_policies(self, config: AzureDeploymentConfig) -> Dict[str, Any]:
-        """Configure security policies"""
-        # Security policies implementation
+        """Configure security policies"""        # Security policies implementation
         return {
             "policies_count": 5,
             "compliance_level": "Enterprise",
@@ -377,8 +359,7 @@ class AzureDeploymentManager:
         }
     
     async def _deploy_database_infrastructure(self, config: AzureDeploymentConfig) -> Dict[str, Any]:
-        """Deploy Azure SQL database infrastructure"""
-        db_config = config.database_config
+        """Deploy Azure SQL database infrastructure"""        db_config = config.database_config
         
         # Create SQL Server
         server_params = {
@@ -463,8 +444,7 @@ class AzureDeploymentManager:
         }
     
     async def _deploy_application_services(self, config: AzureDeploymentConfig) -> Dict[str, Any]:
-        """Deploy application services"""
-        services = {}
+        """Deploy application services"""        services = {}
         
         for service_config in config.services:
             if service_config['type'] == 'app_service':
@@ -480,8 +460,7 @@ class AzureDeploymentManager:
         return services
     
     async def _deploy_app_service(self, service_config: Dict[str, Any], config: AzureDeploymentConfig) -> Dict[str, Any]:
-        """Deploy Azure App Service"""
-        # Create App Service Plan
+        """Deploy Azure App Service"""        # Create App Service Plan
         plan_name = f"{service_config['name']}-plan-{config.environment}"
         plan_params = {
             'location': config.region.value,
@@ -546,8 +525,7 @@ class AzureDeploymentManager:
         }
     
     async def _deploy_container_instance(self, service_config: Dict[str, Any], config: AzureDeploymentConfig) -> Dict[str, Any]:
-        """Deploy Azure Container Instance"""
-        container_params = {
+        """Deploy Azure Container Instance"""        container_params = {
             'location': config.region.value,
             'containers': [{
                 'name': service_config['name'],
@@ -599,8 +577,7 @@ class AzureDeploymentManager:
         }
     
     async def _deploy_function_app(self, service_config: Dict[str, Any], config: AzureDeploymentConfig) -> Dict[str, Any]:
-        """Deploy Azure Function App"""
-        # Create storage account for function app
+        """Deploy Azure Function App"""        # Create storage account for function app
         storage_name = f"{service_config['name']}storage{config.environment}"
         storage_params = {
             'location': config.region.value,
@@ -660,8 +637,7 @@ class AzureDeploymentManager:
         }
     
     async def _deploy_load_balancers(self, config: AzureDeploymentConfig) -> Dict[str, Any]:
-        """Deploy Azure Load Balancers"""
-        lb_config = config.load_balancer_config
+        """Deploy Azure Load Balancers"""        lb_config = config.load_balancer_config
         
         # Create Public IP for Load Balancer
         public_ip_params = {
@@ -737,8 +713,7 @@ class AzureDeploymentManager:
         }
     
     async def _deploy_storage_infrastructure(self, config: AzureDeploymentConfig) -> Dict[str, Any]:
-        """Deploy Azure Storage infrastructure"""
-        storage_config = config.storage_config
+        """Deploy Azure Storage infrastructure"""        storage_config = config.storage_config
         storage_accounts = {}
         
         for storage_account_config in storage_config.get('storage_accounts', []):
@@ -781,8 +756,7 @@ class AzureDeploymentManager:
         return storage_accounts
     
     async def _deploy_monitoring_infrastructure(self, config: AzureDeploymentConfig) -> Dict[str, Any]:
-        """Deploy Azure Monitor infrastructure"""
-        monitoring_config = config.monitoring_config
+        """Deploy Azure Monitor infrastructure"""        monitoring_config = config.monitoring_config
         
         # Create Log Analytics Workspace
         workspace_params = {
@@ -829,8 +803,7 @@ class AzureDeploymentManager:
         }
     
     async def _configure_auto_scaling(self, config: AzureDeploymentConfig) -> Dict[str, Any]:
-        """Configure auto-scaling policies"""
-        scaling_config = config.scaling_config
+        """Configure auto-scaling policies"""        scaling_config = config.scaling_config
         scaling_settings = {}
         
         for setting_config in scaling_config.get('settings', []):
@@ -850,8 +823,7 @@ class AzureDeploymentManager:
         return scaling_settings
     
     async def _configure_backup_systems(self, config: AzureDeploymentConfig) -> Dict[str, Any]:
-        """Configure Azure Backup systems"""
-        backup_config = config.backup_config
+        """Configure Azure Backup systems"""        backup_config = config.backup_config
         
         # Recovery Services Vault configuration
         vault_config = {
@@ -888,8 +860,7 @@ class AzureDeploymentManager:
         }
     
     async def _get_deployment_endpoints(self) -> Dict[str, str]:
-        """Get deployment endpoints"""
-        return {
+        """Get deployment endpoints"""        return {
             "api_gateway": "https://api.ia-influencer.com",
             "web_app": "https://app.ia-influencer.com",
             "admin_panel": "https://admin.ia-influencer.com",
@@ -897,8 +868,7 @@ class AzureDeploymentManager:
         }
     
     async def _calculate_deployment_cost(self) -> Dict[str, float]:
-        """Calculate estimated deployment cost"""
-        return {
+        """Calculate estimated deployment cost"""        return {
             "monthly_estimate": 2800.0,
             "compute_cost": 900.0,
             "storage_cost": 180.0,
@@ -910,14 +880,12 @@ class AzureDeploymentManager:
         }
     
     async def _rollback_deployment(self, deployment_id: str) -> bool:
-        """Rollback failed deployment"""
-        self.logger.info(f"Rolling back deployment: {deployment_id}")
+        """Rollback failed deployment"""        self.logger.info(f"Rolling back deployment: {deployment_id}")
         # Implementation for rollback logic
         return True
     
     async def scale_app_service(self, app_name: str, instance_count: int) -> bool:
-        """Scale Azure App Service"""
-        try:
+        """Scale Azure App Service"""        try:
             # Get current App Service Plan
             app_service = self.web_client.web_apps.get(
                 self.credentials.subscription_id,
@@ -948,8 +916,7 @@ class AzureDeploymentManager:
             return False
     
     async def get_service_status(self, service_name: str, resource_group: str) -> Dict[str, Any]:
-        """Get service status"""
-        try:
+        """Get service status"""        try:
             app_service = self.web_client.web_apps.get(resource_group, service_name)
             
             return {
@@ -967,8 +934,7 @@ class AzureDeploymentManager:
             return {"service_name": service_name, "status": "error", "error": str(e)}
     
     async def get_deployment_costs(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get deployment costs for period"""
-        try:
+        """Get deployment costs for period"""        try:
             # Azure cost management would require additional client and implementation
             # This is a placeholder implementation
             
@@ -991,8 +957,7 @@ class AzureDeploymentManager:
             return {"error": str(e)}
     
     async def cleanup_resources(self, deployment_id: str) -> bool:
-        """Cleanup deployment resources"""
-        try:
+        """Cleanup deployment resources"""        try:
             self.logger.info(f"Cleaning up resources for deployment: {deployment_id}")
             # Implementation for cleanup logic
             return True

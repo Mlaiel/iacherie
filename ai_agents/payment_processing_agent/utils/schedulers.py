@@ -1,5 +1,4 @@
-"""
-Payment Schedulers - Industrial Payout Automation
+"""Payment Schedulers - Industrial Payout Automation
 
 Advanced scheduling system for automated payouts, recurring payments,
 batch processing, and flexible payout strategies.
@@ -11,9 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
 from decimal import Decimal
@@ -36,8 +33,7 @@ logger = logging.getLogger(__name__)
 
 
 class SchedulerStatus(str, Enum):
-    """Scheduler operational status"""
-    RUNNING = "running"
+    """Scheduler operational status"""    RUNNING = "running"
     STOPPED = "stopped"
     PAUSED = "paused"
     ERROR = "error"
@@ -45,8 +41,7 @@ class SchedulerStatus(str, Enum):
 
 @dataclass
 class PayoutStrategy:
-    """Payout strategy configuration"""
-    name: str
+    """Payout strategy configuration"""    name: str
     frequency: PayoutFrequency
     minimum_amount: Decimal
     maximum_amount: Optional[Decimal] = None
@@ -59,8 +54,7 @@ class PayoutStrategy:
 
 @dataclass
 class BatchPayoutResult:
-    """Batch payout processing result"""
-    total_processed: int = 0
+    """Batch payout processing result"""    total_processed: int = 0
     successful_payouts: int = 0
     failed_payouts: int = 0
     total_amount: Decimal = Decimal("0.00")
@@ -71,20 +65,16 @@ class BatchPayoutResult:
 
 
 class PayoutScheduler:
-    """
-    Industrial payout scheduling system with flexible strategies.
+    """    Industrial payout scheduling system with flexible strategies.
     
     Handles automated payout scheduling, batch processing, retry logic,
     and comprehensive monitoring for creator payments.
-    """
-
-    def __init__(
+    """    def __init__(
         self,
         config: Optional[PaymentConfig] = None,
         db_session: Optional[Session] = None
     ):
-        """Initialize payout scheduler"""
-        self.config = config or PaymentConfig()
+        """Initialize payout scheduler"""        self.config = config or PaymentConfig()
         self.db_session = db_session
         self.scheduler = AsyncIOScheduler(timezone=timezone.utc)
         self.status = SchedulerStatus.STOPPED
@@ -111,8 +101,7 @@ class PayoutScheduler:
         }
 
     def _initialize_default_strategies(self):
-        """Initialize default payout strategies"""
-        self.strategies = {
+        """Initialize default payout strategies"""        self.strategies = {
             "daily": PayoutStrategy(
                 name="daily",
                 frequency=PayoutFrequency.DAILY,
@@ -143,8 +132,7 @@ class PayoutScheduler:
         }
 
     async def start(self):
-        """Start the payout scheduler"""
-        try:
+        """Start the payout scheduler"""        try:
             if self.status == SchedulerStatus.RUNNING:
                 logger.warning("Scheduler is already running")
                 return
@@ -167,8 +155,7 @@ class PayoutScheduler:
             raise PayoutSchedulingError(f"Scheduler start failed: {str(e)}")
 
     async def stop(self):
-        """Stop the payout scheduler"""
-        try:
+        """Stop the payout scheduler"""        try:
             if self.status == SchedulerStatus.STOPPED:
                 logger.warning("Scheduler is already stopped")
                 return
@@ -183,8 +170,7 @@ class PayoutScheduler:
             raise PayoutSchedulingError(f"Scheduler stop failed: {str(e)}")
 
     async def pause(self):
-        """Pause the payout scheduler"""
-        try:
+        """Pause the payout scheduler"""        try:
             self.scheduler.pause()
             self.status = SchedulerStatus.PAUSED
             logger.info("Payout scheduler paused")
@@ -194,8 +180,7 @@ class PayoutScheduler:
             raise PayoutSchedulingError(f"Scheduler pause failed: {str(e)}")
 
     async def resume(self):
-        """Resume the payout scheduler"""
-        try:
+        """Resume the payout scheduler"""        try:
             self.scheduler.resume()
             self.status = SchedulerStatus.RUNNING
             logger.info("Payout scheduler resumed")
@@ -209,8 +194,7 @@ class PayoutScheduler:
         payout: PayoutSchedule,
         strategy: Optional[str] = None
     ) -> bool:
-        """
-        Schedule individual payout for execution.
+        """        Schedule individual payout for execution.
         
         Args:
             payout: PayoutSchedule object to process
@@ -218,8 +202,7 @@ class PayoutScheduler:
             
         Returns:
             True if scheduled successfully
-        """
-        try:
+        """        try:
             # Validate payout
             if not payout or not payout.creator_id:
                 raise PayoutSchedulingError("Invalid payout object")
@@ -270,8 +253,7 @@ class PayoutScheduler:
         strategy: str = "weekly",
         dry_run: bool = False
     ) -> BatchPayoutResult:
-        """
-        Process batch payouts for eligible creators.
+        """        Process batch payouts for eligible creators.
         
         Args:
             creator_ids: Optional list of specific creators
@@ -281,8 +263,7 @@ class PayoutScheduler:
             
         Returns:
             BatchPayoutResult with processing statistics
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         result = BatchPayoutResult(start_time=start_time)
         
         try:
@@ -384,16 +365,14 @@ class PayoutScheduler:
             raise PayoutSchedulingError(f"Batch processing failed: {str(e)}")
 
     async def add_strategy(self, strategy: PayoutStrategy):
-        """Add custom payout strategy"""
-        self.strategies[strategy.name] = strategy
+        """Add custom payout strategy"""        self.strategies[strategy.name] = strategy
         
         # If scheduler is running, update the jobs
         if self.status == SchedulerStatus.RUNNING:
             await self._schedule_strategy_job(strategy)
 
     async def remove_strategy(self, strategy_name: str):
-        """Remove payout strategy"""
-        if strategy_name in self.strategies:
+        """Remove payout strategy"""        if strategy_name in self.strategies:
             del self.strategies[strategy_name]
             
             # Remove associated jobs
@@ -410,8 +389,7 @@ class PayoutScheduler:
         creator_id: Optional[str] = None,
         limit: int = 100
     ) -> List[PayoutSchedule]:
-        """Get list of pending payouts"""
-        if not self.db_session:
+        """Get list of pending payouts"""        if not self.db_session:
             return []
 
         query = self.db_session.query(PayoutSchedule).filter(
@@ -424,8 +402,7 @@ class PayoutScheduler:
         return query.order_by(PayoutSchedule.scheduled_date).limit(limit).all()
 
     async def cancel_payout(self, payout_id: str) -> bool:
-        """Cancel scheduled payout"""
-        try:
+        """Cancel scheduled payout"""        try:
             if not self.db_session:
                 return False
 
@@ -459,18 +436,15 @@ class PayoutScheduler:
             raise PayoutError(f"Payout cancellation failed: {str(e)}")
 
     def add_callback(self, event: str, callback: Callable):
-        """Add event callback"""
-        if event in self.callbacks:
+        """Add event callback"""        if event in self.callbacks:
             self.callbacks[event].append(callback)
 
     def remove_callback(self, event: str, callback: Callable):
-        """Remove event callback"""
-        if event in self.callbacks and callback in self.callbacks[event]:
+        """Remove event callback"""        if event in self.callbacks and callback in self.callbacks[event]:
             self.callbacks[event].remove(callback)
 
     async def get_scheduler_status(self) -> Dict[str, Any]:
-        """Get comprehensive scheduler status"""
-        running_jobs = len(self.scheduler.get_jobs())
+        """Get comprehensive scheduler status"""        running_jobs = len(self.scheduler.get_jobs())
         
         return {
             "status": self.status.value,
@@ -482,14 +456,12 @@ class PayoutScheduler:
 
     # Private methods
     async def _schedule_payout_jobs(self):
-        """Schedule automatic payout jobs based on strategies"""
-        for strategy in self.strategies.values():
+        """Schedule automatic payout jobs based on strategies"""        for strategy in self.strategies.values():
             if strategy.enabled:
                 await self._schedule_strategy_job(strategy)
 
     async def _schedule_strategy_job(self, strategy: PayoutStrategy):
-        """Schedule job for specific payout strategy"""
-        job_id = f"strategy_{strategy.name}"
+        """Schedule job for specific payout strategy"""        job_id = f"strategy_{strategy.name}"
         
         # Remove existing job
         try:
@@ -535,8 +507,7 @@ class PayoutScheduler:
         )
 
     async def _schedule_maintenance_jobs(self):
-        """Schedule maintenance and cleanup jobs"""
-        # Clean up old completed payouts
+        """Schedule maintenance and cleanup jobs"""        # Clean up old completed payouts
         self.scheduler.add_job(
             self._cleanup_old_payouts,
             IntervalTrigger(hours=24),
@@ -555,8 +526,7 @@ class PayoutScheduler:
         )
 
     async def _execute_strategy_payouts(self, strategy_name: str):
-        """Execute payouts for a specific strategy"""
-        try:
+        """Execute payouts for a specific strategy"""        try:
             logger.info(f"Executing strategy payouts: {strategy_name}")
             
             result = await self.process_batch_payouts(
@@ -570,8 +540,7 @@ class PayoutScheduler:
             logger.error(f"Strategy execution failed for {strategy_name}: {str(e)}")
 
     async def _execute_single_payout(self, payout_id: str):
-        """Execute single scheduled payout"""
-        try:
+        """Execute single scheduled payout"""        try:
             if not self.db_session:
                 raise PayoutError("Database session not available")
 
@@ -610,8 +579,7 @@ class PayoutScheduler:
         minimum_amount: Decimal = Decimal("10.00"),
         maximum_amount: Optional[Decimal] = None
     ) -> List[Dict[str, Any]]:
-        """Find creators eligible for payouts"""
-        if not self.db_session:
+        """Find creators eligible for payouts"""        if not self.db_session:
             return []
 
         # This would implement complex logic to find eligible creators
@@ -626,8 +594,7 @@ class PayoutScheduler:
         ]
 
     async def _execute_payout_from_data(self, payout_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute payout from payout data"""
-        # This would create and execute a payout
+        """Execute payout from payout data"""        # This would create and execute a payout
         # For now, simulate execution
         await asyncio.sleep(0.1)  # Simulate processing time
         
@@ -638,8 +605,7 @@ class PayoutScheduler:
         }
 
     async def _simulate_payout(self, payout_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Simulate payout execution for dry run"""
-        return {
+        """Simulate payout execution for dry run"""        return {
             "success": True,
             "amount": payout_data["available_balance"],
             "creator_id": payout_data["creator_id"],
@@ -647,8 +613,7 @@ class PayoutScheduler:
         }
 
     async def _execute_payout_logic(self, payout: PayoutSchedule):
-        """Execute the actual payout logic"""
-        # Update status
+        """Execute the actual payout logic"""        # Update status
         payout.status = "processing"
         payout.processing_started_at = datetime.utcnow()
         
@@ -677,8 +642,7 @@ class PayoutScheduler:
             raise
 
     async def _cleanup_old_payouts(self):
-        """Clean up old completed payouts"""
-        if not self.db_session:
+        """Clean up old completed payouts"""        if not self.db_session:
             return
 
         # Delete payouts older than 90 days
@@ -697,8 +661,7 @@ class PayoutScheduler:
             logger.info(f"Cleaned up {deleted} old payout records")
 
     async def _retry_failed_payouts(self):
-        """Retry failed payouts that are eligible for retry"""
-        if not self.db_session:
+        """Retry failed payouts that are eligible for retry"""        if not self.db_session:
             return
 
         # Find failed payouts from last 24 hours with retry count < 3
@@ -728,8 +691,7 @@ class PayoutScheduler:
                 logger.error(f"Failed to retry payout {payout.id}: {str(e)}")
 
     async def _fire_callback(self, event: str, data: Dict[str, Any]):
-        """Fire event callbacks"""
-        if event in self.callbacks:
+        """Fire event callbacks"""        if event in self.callbacks:
             for callback in self.callbacks[event]:
                 try:
                     await callback(data)

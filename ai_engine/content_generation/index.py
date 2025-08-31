@@ -1,5 +1,4 @@
-"""
-Content Generation Module Index
+"""Content Generation Module Index
 Ultra-Professional Content Generation Suite for IA Influencer Agent
 
 This module provides comprehensive AI-powered content generation capabilities including
@@ -28,9 +27,7 @@ Team Specialties:
 Business Logic Coverage:
 Content Request → AI Model Selection → Creative Generation → Quality Enhancement
 → SEO Optimization → Format Adaptation → Distribution Preparation → Performance Analytics
-"""
-
-from typing import Dict, List, Any, Optional, Union, Tuple, AsyncGenerator
+"""from typing import Dict, List, Any, Optional, Union, Tuple, AsyncGenerator
 import asyncio
 from pathlib import Path
 from dataclasses import dataclass, field
@@ -195,8 +192,7 @@ __email__ = "mlaiel@live.de"
 
 # Content Generation Enums
 class ContentType(Enum):
-    """Types of content that can be generated."""
-    TEXT = "text"
+    """Types of content that can be generated."""    TEXT = "text"
     IMAGE = "image"
     AUDIO = "audio"
     VIDEO = "video"
@@ -207,8 +203,7 @@ class ContentType(Enum):
     CREATIVE = "creative"
 
 class GenerationStyle(Enum):
-    """Styles of content generation."""
-    PROFESSIONAL = "professional"
+    """Styles of content generation."""    PROFESSIONAL = "professional"
     CREATIVE = "creative"
     CASUAL = "casual"
     FORMAL = "formal"
@@ -218,8 +213,7 @@ class GenerationStyle(Enum):
     INSPIRATIONAL = "inspirational"
 
 class QualityLevel(Enum):
-    """Quality levels for generated content."""
-    DRAFT = "draft"
+    """Quality levels for generated content."""    DRAFT = "draft"
     STANDARD = "standard"
     HIGH = "high"
     PREMIUM = "premium"
@@ -227,8 +221,7 @@ class QualityLevel(Enum):
     BROADCAST = "broadcast"
 
 class Platform(Enum):
-    """Target platforms for content distribution."""
-    INSTAGRAM = "instagram"
+    """Target platforms for content distribution."""    INSTAGRAM = "instagram"
     TWITTER = "twitter"
     LINKEDIN = "linkedin"
     TIKTOK = "tiktok"
@@ -241,8 +234,7 @@ class Platform(Enum):
 
 @dataclass
 class ContentGenerationCapability:
-    """Content generation capability configuration."""
-    name: str
+    """Content generation capability configuration."""    name: str
     generator: Any
     content_types: List[ContentType]
     styles: List[GenerationStyle]
@@ -395,11 +387,9 @@ CONTENT_GENERATION_ARCHITECTURE = {
 
 # Enterprise Content Generation Framework
 class ContentGenerationFramework:
-    """
-    Ultra-Professional Content Generation Framework
+    """    Ultra-Professional Content Generation Framework
     Comprehensive AI-powered content creation suite for multi-format platform.
-    """
-    
+    """    
     def __init__(self):
         self.architecture = CONTENT_GENERATION_ARCHITECTURE
         self.version = __version__
@@ -408,8 +398,7 @@ class ContentGenerationFramework:
         self.active_generators = {}
         
     def _initialize_capabilities(self) -> Dict[str, Any]:
-        """Initialize content generation capabilities."""
-        capabilities = {}
+        """Initialize content generation capabilities."""        capabilities = {}
         
         for category, components in self.architecture.items():
             capabilities[category] = {}
@@ -436,8 +425,7 @@ class ContentGenerationFramework:
     
     async def generate_content_comprehensive(self, 
                                            generation_request: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate content with comprehensive AI processing."""
-        content_type = ContentType(generation_request['content_type'])
+        """Generate content with comprehensive AI processing."""        content_type = ContentType(generation_request['content_type'])
         generator_config = generation_request.get('config', {})
         
         # Select appropriate generator
@@ -481,8 +469,7 @@ class ContentGenerationFramework:
     async def _select_optimal_generator(self, 
                                       content_type: ContentType, 
                                       config: Dict[str, Any]) -> Any:
-        """Select optimal generator based on content type and requirements."""
-        generator_mapping = {
+        """Select optimal generator based on content type and requirements."""        generator_mapping = {
             ContentType.TEXT: TextGenerator,
             ContentType.IMAGE: ImageGenerator,
             ContentType.AUDIO: AudioGenerator,
@@ -498,16 +485,13 @@ class ContentGenerationFramework:
         return generator
     
     def get_supported_content_types(self) -> List[str]:
-        """Get list of all supported content types."""
-        return [ct.value for ct in ContentType]
+        """Get list of all supported content types."""        return [ct.value for ct in ContentType]
     
     def get_available_platforms(self) -> List[str]:
-        """Get list of all available platforms."""
-        return [platform.value for platform in Platform]
+        """Get list of all available platforms."""        return [platform.value for platform in Platform]
     
     def get_generation_capabilities(self) -> Dict[str, Any]:
-        """Get comprehensive generation capabilities information."""
-        total_capabilities = sum(len(category) for category in self.architecture.values())
+        """Get comprehensive generation capabilities information."""        total_capabilities = sum(len(category) for category in self.architecture.values())
         real_time_capabilities = sum(
             1 for category in self.architecture.values()
             for capability in category.values()
@@ -547,8 +531,7 @@ class ContentGenerationFramework:
         }
     
     def validate_business_logic_completeness(self) -> bool:
-        """Validate complete business logic coverage."""
-        required_business_logic = [
+        """Validate complete business logic coverage."""        required_business_logic = [
             'professional_blog_content_creation',
             'intelligent_social_media_content_optimization',
             'advanced_creative_content_generation',
@@ -572,16 +555,14 @@ content_generation_framework = ContentGenerationFramework()
 
 # Content Generation Utilities
 async def create_generation_pipeline(content_type: str, config: Dict[str, Any]) -> ContentPipeline:
-    """Create optimized content generation pipeline."""
-    pipeline = ContentPipeline(content_type, config)
+    """Create optimized content generation pipeline."""    pipeline = ContentPipeline(content_type, config)
     await pipeline.initialize()
     return pipeline
 
 async def generate_multi_platform_content(base_content: str, 
                                         platforms: List[str], 
                                         optimization_config: Dict[str, Any]) -> Dict[str, Any]:
-    """Generate optimized content for multiple platforms."""
-    optimizer = PlatformOptimizer()
+    """Generate optimized content for multiple platforms."""    optimizer = PlatformOptimizer()
     results = {}
     
     for platform in platforms:
@@ -594,13 +575,11 @@ async def generate_multi_platform_content(base_content: str,
     return results
 
 async def assess_content_quality(content: Any, quality_criteria: Dict[str, Any]) -> Dict[str, float]:
-    """Assess content quality against specified criteria."""
-    quality_assessor = ContentQualityAssessment()
+    """Assess content quality against specified criteria."""    quality_assessor = ContentQualityAssessment()
     return await quality_assessor.assess(content, quality_criteria)
 
 def get_optimal_ai_model(content_type: str, quality_level: str, budget: str = "standard") -> str:
-    """Get optimal AI model recommendation for content generation."""
-    model_recommendations = {
+    """Get optimal AI model recommendation for content generation."""    model_recommendations = {
         'text': {
             'high': 'gpt-4-turbo' if budget == 'premium' else 'claude-3-sonnet',
             'standard': 'llama-2-70b',

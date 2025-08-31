@@ -1,5 +1,4 @@
-"""
-🛡️ Content Protection Docker Configuration - IA-Influencer-Agent Platform
+"""🛡️ Content Protection Docker Configuration - IA-Influencer-Agent Platform
 ===========================================================================
 Expert: Security Engineer + Content Protection Specialist + ML Security
 Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -13,9 +12,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 
 Professional content protection Docker configuration for real-time
 monitoring, violation detection, and automated protection systems.
-"""
-
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 import logging
 from dataclasses import dataclass, field
 import yaml
@@ -25,8 +22,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ContentProtectionDockerConfig:
-    """Enterprise Content Protection Docker configuration"""
-    
+    """Enterprise Content Protection Docker configuration"""    
     # Container Configuration
     image_name: str = "ia-influencer/content-protection"
     image_tag: str = "2.0.0"
@@ -128,9 +124,7 @@ class ContentProtectionDockerConfig:
     health_check_retries: int = 3
     
     def generate_dockerfile(self) -> str:
-        """Generate production Dockerfile for Content Protection"""
-        return f"""
-# IA-Influencer Content Protection - Production Docker Image
+        """Generate production Dockerfile for Content Protection"""        return f"""# IA-Influencer Content Protection - Production Docker Image
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 # Professional content protection and monitoring system
 
@@ -278,18 +272,14 @@ CMD ["gunicorn", \\
      "--log-level", "{self.log_level.lower()}", \\
      "--preload", \\
      "main:app"]
-"""
-
-    def _generate_protection_env_vars(self) -> str:
-        """Generate protection mode environment variables"""
-        env_vars = []
+"""    def _generate_protection_env_vars(self) -> str:
+        """Generate protection mode environment variables"""        env_vars = []
         for mode, enabled in self.protection_modes.items():
             env_vars.append(f"ENV PROTECTION_{mode.upper()}_ENABLED={str(enabled).lower()}")
         return "\n".join(env_vars)
 
     def _generate_platform_env_vars(self) -> str:
-        """Generate platform-specific environment variables"""
-        env_vars = []
+        """Generate platform-specific environment variables"""        env_vars = []
         for platform, interval in self.scan_intervals.items():
             env_vars.append(f"ENV SCAN_INTERVAL_{platform.upper()}={interval}")
         
@@ -299,22 +289,19 @@ CMD ["gunicorn", \\
         return "\n".join(env_vars)
 
     def _generate_threshold_env_vars(self) -> str:
-        """Generate threshold environment variables"""
-        env_vars = []
+        """Generate threshold environment variables"""        env_vars = []
         for threshold_name, value in self.violation_thresholds.items():
             env_vars.append(f"ENV {threshold_name.upper()}={value}")
         return "\n".join(env_vars)
 
     def _generate_alert_env_vars(self) -> str:
-        """Generate alert channel environment variables"""
-        env_vars = []
+        """Generate alert channel environment variables"""        env_vars = []
         for channel, enabled in self.alert_channels.items():
             env_vars.append(f"ENV ALERT_{channel.upper()}_ENABLED={str(enabled).lower()}")
         return "\n".join(env_vars)
 
     def generate_docker_compose_service(self) -> Dict[str, Any]:
-        """Generate docker-compose service configuration"""
-        return {
+        """Generate docker-compose service configuration"""        return {
             "image": f"{self.image_name}:{self.image_tag}",
             "container_name": self.container_name,
             "restart": "unless-stopped",
@@ -401,8 +388,7 @@ CMD ["gunicorn", \\
         }
 
     def generate_crawler_worker_service(self) -> Dict[str, Any]:
-        """Generate crawler worker service configuration"""
-        return {
+        """Generate crawler worker service configuration"""        return {
             "image": f"{self.image_name}:{self.image_tag}",
             "container_name": f"{self.container_name}-crawler",
             "restart": "unless-stopped",
@@ -465,9 +451,7 @@ CMD ["gunicorn", \\
         }
 
     def generate_requirements_txt(self) -> str:
-        """Generate content protection requirements.txt"""
-        return """
-# IA-Influencer Content Protection - Production Dependencies
+        """Generate content protection requirements.txt"""        return """# IA-Influencer Content Protection - Production Dependencies
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
 # Core Framework
@@ -596,11 +580,8 @@ pytest-asyncio==0.21.1
 black==23.11.0
 isort==5.12.0
 flake8==6.1.0
-"""
-
-    def save_config_files(self, output_dir: str) -> List[str]:
-        """Save all configuration files to output directory"""
-        import os
+"""    def save_config_files(self, output_dir: str) -> List[str]:
+        """Save all configuration files to output directory"""        import os
         from pathlib import Path
         
         config_dir = Path(output_dir)

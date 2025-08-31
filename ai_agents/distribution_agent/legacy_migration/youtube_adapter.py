@@ -1,5 +1,4 @@
-"""
-YouTube Distribution Adapter - Professional Multi-Format Content Distribution System
+"""YouTube Distribution Adapter - Professional Multi-Format Content Distribution System
 
 Enterprise-grade YouTube API integration with advanced optimization, monetization,
 and comprehensive business logic for the IA Influencer Agent ecosystem.
@@ -14,9 +13,7 @@ without written authorization is STRICTLY PROHIBITED and will result in
 immediate legal action under German and International IP law.
 
 For licensing inquiries: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -43,8 +40,7 @@ from ...models.distribution import DistributionResult, PlatformConfig
 
 
 class YouTubeContentType(Enum):
-    """YouTube content type enumeration"""
-    VIDEO = "video"
+    """YouTube content type enumeration"""    VIDEO = "video"
     SHORTS = "shorts"
     LIVE_STREAM = "live"
     PREMIERE = "premiere"
@@ -52,8 +48,7 @@ class YouTubeContentType(Enum):
 
 
 class YouTubeMonetization(Enum):
-    """YouTube monetization type enumeration"""
-    ADSENSE = "adsense"
+    """YouTube monetization type enumeration"""    ADSENSE = "adsense"
     CHANNEL_MEMBERSHIPS = "memberships"
     SUPER_CHAT = "super_chat"
     MERCHANDISE = "merchandise"
@@ -61,8 +56,7 @@ class YouTubeMonetization(Enum):
 
 
 class YouTubePrivacy(Enum):
-    """YouTube privacy settings enumeration"""
-    PUBLIC = "public"
+    """YouTube privacy settings enumeration"""    PUBLIC = "public"
     UNLISTED = "unlisted"
     PRIVATE = "private"
     SCHEDULED = "scheduled"
@@ -70,8 +64,7 @@ class YouTubePrivacy(Enum):
 
 @dataclass
 class YouTubeMetadata:
-    """YouTube-specific metadata structure"""
-    title: str
+    """YouTube-specific metadata structure"""    title: str
     description: str
     tags: List[str]
     category_id: str
@@ -100,8 +93,7 @@ class YouTubeMetadata:
 
 @dataclass
 class YouTubeAnalytics:
-    """YouTube analytics data structure"""
-    views: int = 0
+    """YouTube analytics data structure"""    views: int = 0
     watch_time_minutes: int = 0
     subscribers_gained: int = 0
     likes: int = 0
@@ -125,8 +117,7 @@ class YouTubeAnalytics:
 
 
 class YouTubeAdapter(BaseAgent):
-    """
-    Professional YouTube distribution adapter with advanced features
+    """    Professional YouTube distribution adapter with advanced features
     
     Capabilities:
     - Multi-format video upload and optimization
@@ -137,16 +128,13 @@ class YouTubeAdapter(BaseAgent):
     - Audience engagement analytics
     - Content compliance and rights management
     - Multi-language support and localization
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize YouTube adapter with comprehensive configuration
+        """        Initialize YouTube adapter with comprehensive configuration
         
         Args:
             config: YouTube API configuration and settings
-        """
-        super().__init__(config)
+        """        super().__init__(config)
         self.api_key = config.get('api_key')
         self.client_id = config.get('client_id')
         self.client_secret = config.get('client_secret')
@@ -175,8 +163,7 @@ class YouTubeAdapter(BaseAgent):
         self.logger = logging.getLogger(__name__)
     
     async def initialize(self) -> bool:
-        """Initialize YouTube adapter with authentication and validation"""
-        try:
+        """Initialize YouTube adapter with authentication and validation"""        try:
             # Initialize HTTP session
             connector = aiohttp.TCPConnector(
                 limit=self.upload_pool_size,
@@ -209,8 +196,7 @@ class YouTubeAdapter(BaseAgent):
         metadata: YouTubeMetadata,
         platform_config: Optional[PlatformConfig] = None
     ) -> DistributionResult:
-        """
-        Distribute content to YouTube with advanced optimization
+        """        Distribute content to YouTube with advanced optimization
         
         Args:
             content: Content item to distribute
@@ -219,8 +205,7 @@ class YouTubeAdapter(BaseAgent):
             
         Returns:
             Comprehensive distribution result with analytics
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         
         try:
             # Validate content and metadata
@@ -285,8 +270,7 @@ class YouTubeAdapter(BaseAgent):
         platform_id: str,
         updates: Dict[str, Any]
     ) -> bool:
-        """Update existing YouTube video with new metadata or settings"""
-        try:
+        """Update existing YouTube video with new metadata or settings"""        try:
             # Validate update permissions
             if not await self._validate_video_ownership(platform_id):
                 raise PlatformError("No permission to update this video")
@@ -313,8 +297,7 @@ class YouTubeAdapter(BaseAgent):
             return False
     
     async def delete_content(self, platform_id: str) -> bool:
-        """Delete YouTube video with proper cleanup"""
-        try:
+        """Delete YouTube video with proper cleanup"""        try:
             # Validate deletion permissions
             if not await self._validate_video_ownership(platform_id):
                 raise PlatformError("No permission to delete this video")
@@ -343,8 +326,7 @@ class YouTubeAdapter(BaseAgent):
         start_date: datetime,
         end_date: datetime
     ) -> YouTubeAnalytics:
-        """Retrieve comprehensive YouTube analytics"""
-        try:
+        """Retrieve comprehensive YouTube analytics"""        try:
             # Get video analytics
             analytics_data = await self._fetch_video_analytics(
                 platform_id, start_date, end_date
@@ -382,8 +364,7 @@ class YouTubeAdapter(BaseAgent):
             return YouTubeAnalytics()
     
     async def _validate_credentials(self) -> bool:
-        """Validate YouTube API credentials"""
-        try:
+        """Validate YouTube API credentials"""        try:
             response = await self._make_api_request(
                 "GET",
                 f"{self.base_url}/channels",
@@ -398,8 +379,7 @@ class YouTubeAdapter(BaseAgent):
             return False
     
     async def _verify_channel_access(self) -> bool:
-        """Verify access to YouTube channel"""
-        try:
+        """Verify access to YouTube channel"""        try:
             if self.channel_id:
                 response = await self._make_api_request(
                     "GET",
@@ -416,8 +396,7 @@ class YouTubeAdapter(BaseAgent):
             return False
     
     async def _initialize_quota_monitoring(self) -> None:
-        """Initialize YouTube API quota monitoring"""
-        # Implementation for quota monitoring
+        """Initialize YouTube API quota monitoring"""        # Implementation for quota monitoring
         self.daily_quota_limit = 10000
         self.current_quota_usage = 0
         self.quota_reset_time = datetime.utcnow().replace(
@@ -425,8 +404,7 @@ class YouTubeAdapter(BaseAgent):
         ) + timedelta(days=1)
     
     async def _validate_content(self, content: ContentItem, metadata: YouTubeMetadata) -> None:
-        """Validate content and metadata for YouTube distribution"""
-        # Validate content format
+        """Validate content and metadata for YouTube distribution"""        # Validate content format
         if not content.file_path or not content.content_type.startswith('video/'):
             raise ContentError("Invalid video content for YouTube")
         
@@ -441,8 +419,7 @@ class YouTubeAdapter(BaseAgent):
             raise ContentError("Too many tags for YouTube (max 500)")
     
     async def _perform_security_checks(self, content: ContentItem) -> None:
-        """Perform security and compliance checks"""
-        # Content security validation
+        """Perform security and compliance checks"""        # Content security validation
         if not await self.security.validate_content(content):
             raise SecurityError("Content failed security validation")
         
@@ -455,8 +432,7 @@ class YouTubeAdapter(BaseAgent):
         content: ContentItem,
         metadata: YouTubeMetadata
     ) -> ContentItem:
-        """Optimize content for YouTube distribution"""
-        # This would involve video encoding, format optimization, etc.
+        """Optimize content for YouTube distribution"""        # This would involve video encoding, format optimization, etc.
         # For now, return original content
         return content
     
@@ -465,8 +441,7 @@ class YouTubeAdapter(BaseAgent):
         content: ContentItem,
         metadata: YouTubeMetadata
     ) -> str:
-        """Upload video to YouTube with resumable upload"""
-        try:
+        """Upload video to YouTube with resumable upload"""        try:
             # Prepare video metadata
             video_metadata = {
                 "snippet": {
@@ -495,14 +470,12 @@ class YouTubeAdapter(BaseAgent):
             raise DistributionError(f"Video upload failed: {str(e)}")
     
     async def _initiate_resumable_upload(self, metadata: Dict[str, Any]) -> str:
-        """Initiate resumable upload session"""
-        # Implementation would create resumable upload session
+        """Initiate resumable upload session"""        # Implementation would create resumable upload session
         # Return upload URL for chunk uploads
         pass
     
     async def _upload_video_chunks(self, upload_url: str, file_path: str) -> str:
-        """Upload video file in chunks"""
-        # Implementation would handle chunked upload
+        """Upload video file in chunks"""        # Implementation would handle chunked upload
         # Return video ID after successful upload
         pass
     
@@ -511,18 +484,15 @@ class YouTubeAdapter(BaseAgent):
         video_id: str,
         monetization_types: List[YouTubeMonetization]
     ) -> None:
-        """Configure monetization settings for video"""
-        # Implementation would set up monetization
+        """Configure monetization settings for video"""        # Implementation would set up monetization
         pass
     
     async def _upload_thumbnail(self, video_id: str, thumbnail_path: str) -> None:
-        """Upload custom thumbnail for video"""
-        # Implementation would upload custom thumbnail
+        """Upload custom thumbnail for video"""        # Implementation would upload custom thumbnail
         pass
     
     async def _add_to_playlists(self, video_id: str, playlist_ids: List[str]) -> None:
-        """Add video to specified playlists"""
-        # Implementation would add video to playlists
+        """Add video to specified playlists"""        # Implementation would add video to playlists
         pass
     
     async def _configure_interactive_elements(
@@ -530,18 +500,15 @@ class YouTubeAdapter(BaseAgent):
         video_id: str,
         metadata: YouTubeMetadata
     ) -> None:
-        """Configure end screens and cards"""
-        # Implementation would set up interactive elements
+        """Configure end screens and cards"""        # Implementation would set up interactive elements
         pass
     
     async def _schedule_publication(self, video_id: str, publish_time: datetime) -> None:
-        """Schedule video publication"""
-        # Implementation would schedule video publication
+        """Schedule video publication"""        # Implementation would schedule video publication
         pass
     
     async def _collect_analytics(self, video_id: str) -> YouTubeAnalytics:
-        """Collect initial analytics for uploaded video"""
-        # Return basic analytics structure
+        """Collect initial analytics for uploaded video"""        # Return basic analytics structure
         return YouTubeAnalytics()
     
     async def _make_api_request(
@@ -550,8 +517,7 @@ class YouTubeAdapter(BaseAgent):
         url: str,
         **kwargs
     ) -> Dict[str, Any]:
-        """Make authenticated YouTube API request"""
-        if not self.session:
+        """Make authenticated YouTube API request"""        if not self.session:
             raise PlatformError("HTTP session not initialized")
         
         # Add authentication headers
@@ -567,18 +533,15 @@ class YouTubeAdapter(BaseAgent):
             return await response.json()
     
     async def _get_access_token(self) -> str:
-        """Get valid access token for YouTube API"""
-        # Implementation would handle OAuth token management
+        """Get valid access token for YouTube API"""        # Implementation would handle OAuth token management
         return "mock_access_token"
     
     async def _validate_video_ownership(self, video_id: str) -> bool:
-        """Validate ownership of video"""
-        # Implementation would check video ownership
+        """Validate ownership of video"""        # Implementation would check video ownership
         return True
     
     async def _prepare_update_data(self, updates: Dict[str, Any]) -> Dict[str, Any]:
-        """Prepare update data for video modification"""
-        # Implementation would prepare update payload
+        """Prepare update data for video modification"""        # Implementation would prepare update payload
         return updates
     
     async def _fetch_video_analytics(
@@ -587,8 +550,7 @@ class YouTubeAdapter(BaseAgent):
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Fetch video-specific analytics"""
-        # Implementation would fetch analytics data
+        """Fetch video-specific analytics"""        # Implementation would fetch analytics data
         return {}
     
     async def _fetch_audience_insights(
@@ -597,8 +559,7 @@ class YouTubeAdapter(BaseAgent):
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Fetch audience insights and demographics"""
-        # Implementation would fetch audience data
+        """Fetch audience insights and demographics"""        # Implementation would fetch audience data
         return {}
     
     async def _fetch_revenue_analytics(
@@ -607,18 +568,15 @@ class YouTubeAdapter(BaseAgent):
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Fetch revenue and monetization analytics"""
-        # Implementation would fetch revenue data
+        """Fetch revenue and monetization analytics"""        # Implementation would fetch revenue data
         return {}
     
     async def _check_content_rights(self, content: ContentItem) -> bool:
-        """Check content rights and licensing"""
-        # Implementation would verify content rights
+        """Check content rights and licensing"""        # Implementation would verify content rights
         return True
     
     async def cleanup(self) -> None:
-        """Cleanup resources and connections"""
-        if self.session:
+        """Cleanup resources and connections"""        if self.session:
             await self.session.close()
             self.session = None
         

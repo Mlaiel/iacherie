@@ -1,5 +1,4 @@
-"""
-🔄 Vector Storage Interface
+"""🔄 Vector Storage Interface
 ===========================
 
 Unified interface for different vector storage backends.
@@ -7,9 +6,7 @@ Abstracts storage implementation details and provides consistent API.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -21,8 +18,7 @@ logger = logging.getLogger(__name__)
 
 
 class StorageBackend(Enum):
-    """Available storage backends"""
-    FAISS = "faiss"
+    """Available storage backends"""    FAISS = "faiss"
     ELASTICSEARCH = "elasticsearch"
     HNSWLIB = "hnswlib"
     ANNOY = "annoy"
@@ -31,8 +27,7 @@ class StorageBackend(Enum):
 
 @dataclass
 class VectorRecord:
-    """Record for storing vector with metadata"""
-    vector_id: str
+    """Record for storing vector with metadata"""    vector_id: str
     vector: np.ndarray
     metadata: Dict[str, Any]
     timestamp: float
@@ -41,8 +36,7 @@ class VectorRecord:
 
 @dataclass
 class SearchQuery:
-    """Query for vector search"""
-    query_vector: np.ndarray
+    """Query for vector search"""    query_vector: np.ndarray
     k: int = 10
     similarity_threshold: Optional[float] = None
     metadata_filters: Optional[Dict[str, Any]] = None
@@ -52,8 +46,7 @@ class SearchQuery:
 
 @dataclass
 class SearchResultItem:
-    """Single search result item"""
-    vector_id: str
+    """Single search result item"""    vector_id: str
     similarity_score: float
     distance: float
     metadata: Dict[str, Any]
@@ -61,67 +54,54 @@ class SearchResultItem:
 
 
 class VectorStorageInterface(ABC):
-    """Abstract interface for vector storage backends"""
-    
+    """Abstract interface for vector storage backends"""    
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialize the storage backend"""
-        pass
+        """Initialize the storage backend"""        pass
     
     @abstractmethod
     async def add_vector(self, record: VectorRecord) -> bool:
-        """Add a single vector record"""
-        pass
+        """Add a single vector record"""        pass
     
     @abstractmethod
     async def add_vectors_batch(self, records: List[VectorRecord]) -> List[bool]:
-        """Add multiple vector records in batch"""
-        pass
+        """Add multiple vector records in batch"""        pass
     
     @abstractmethod
     async def search(self, query: SearchQuery) -> List[SearchResultItem]:
-        """Search for similar vectors"""
-        pass
+        """Search for similar vectors"""        pass
     
     @abstractmethod
     async def get_vector(self, vector_id: str) -> Optional[VectorRecord]:
-        """Get a specific vector by ID"""
-        pass
+        """Get a specific vector by ID"""        pass
     
     @abstractmethod
     async def update_metadata(self, vector_id: str, metadata: Dict[str, Any]) -> bool:
-        """Update metadata for a vector"""
-        pass
+        """Update metadata for a vector"""        pass
     
     @abstractmethod
     async def remove_vector(self, vector_id: str) -> bool:
-        """Remove a vector"""
-        pass
+        """Remove a vector"""        pass
     
     @abstractmethod
     async def get_stats(self) -> Dict[str, Any]:
-        """Get storage statistics"""
-        pass
+        """Get storage statistics"""        pass
     
     @abstractmethod
     async def save(self, path: str) -> bool:
-        """Save storage to disk"""
-        pass
+        """Save storage to disk"""        pass
     
     @abstractmethod
     async def load(self, path: str) -> bool:
-        """Load storage from disk"""
-        pass
+        """Load storage from disk"""        pass
     
     @abstractmethod
     async def clear(self) -> bool:
-        """Clear all vectors"""
-        pass
+        """Clear all vectors"""        pass
 
 
 class MemoryVectorStorage(VectorStorageInterface):
-    """In-memory vector storage implementation"""
-    
+    """In-memory vector storage implementation"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.MemoryVectorStorage")
@@ -137,8 +117,7 @@ class MemoryVectorStorage(VectorStorageInterface):
         self.similarity_metric = config.get('similarity_metric', 'cosine')
     
     async def initialize(self) -> bool:
-        """Initialize memory storage"""
-        try:
+        """Initialize memory storage"""        try:
             self.logger.info("Initializing memory vector storage")
             return True
         except Exception as e:
@@ -146,8 +125,7 @@ class MemoryVectorStorage(VectorStorageInterface):
             return False
     
     async def add_vector(self, record: VectorRecord) -> bool:
-        """Add a single vector record"""
-        try:
+        """Add a single vector record"""        try:
             if len(self.vectors) >= self.max_vectors:
                 self.logger.warning(f"Maximum vector limit ({self.max_vectors}) reached")
                 return False
@@ -169,8 +147,7 @@ class MemoryVectorStorage(VectorStorageInterface):
             return False
     
     async def add_vectors_batch(self, records: List[VectorRecord]) -> List[bool]:
-        """Add multiple vector records in batch"""
-        results = []
+        """Add multiple vector records in batch"""        results = []
         
         for record in records:
             result = await self.add_vector(record)
@@ -179,8 +156,7 @@ class MemoryVectorStorage(VectorStorageInterface):
         return results
     
     async def search(self, query: SearchQuery) -> List[SearchResultItem]:
-        """Search for similar vectors"""
-        try:
+        """Search for similar vectors"""        try:
             self.total_searches += 1
             
             if not self.vectors:
@@ -225,8 +201,7 @@ class MemoryVectorStorage(VectorStorageInterface):
             return []
     
     def _calculate_similarity(self, vector1: np.ndarray, vector2: np.ndarray) -> float:
-        """Calculate similarity between two vectors"""
-        try:
+        """Calculate similarity between two vectors"""        try:
             if self.similarity_metric == 'cosine':
                 # Cosine similarity
                 dot_product = np.dot(vector1, vector2)
@@ -252,8 +227,7 @@ class MemoryVectorStorage(VectorStorageInterface):
             return 0.0
     
     def _matches_filters(self, metadata: Dict[str, Any], filters: Dict[str, Any]) -> bool:
-        """Check if metadata matches filters"""
-        for key, value in filters.items():
+        """Check if metadata matches filters"""        for key, value in filters.items():
             if key not in metadata:
                 return False
             
@@ -266,12 +240,10 @@ class MemoryVectorStorage(VectorStorageInterface):
         return True
     
     async def get_vector(self, vector_id: str) -> Optional[VectorRecord]:
-        """Get a specific vector by ID"""
-        return self.vectors.get(vector_id)
+        """Get a specific vector by ID"""        return self.vectors.get(vector_id)
     
     async def update_metadata(self, vector_id: str, metadata: Dict[str, Any]) -> bool:
-        """Update metadata for a vector"""
-        try:
+        """Update metadata for a vector"""        try:
             if vector_id not in self.vectors:
                 return False
             
@@ -283,8 +255,7 @@ class MemoryVectorStorage(VectorStorageInterface):
             return False
     
     async def remove_vector(self, vector_id: str) -> bool:
-        """Remove a vector"""
-        try:
+        """Remove a vector"""        try:
             if vector_id in self.vectors:
                 del self.vectors[vector_id]
                 return True
@@ -295,8 +266,7 @@ class MemoryVectorStorage(VectorStorageInterface):
             return False
     
     async def get_stats(self) -> Dict[str, Any]:
-        """Get storage statistics"""
-        memory_usage = sum(
+        """Get storage statistics"""        memory_usage = sum(
             record.vector.nbytes + len(str(record.metadata))
             for record in self.vectors.values()
         )
@@ -314,8 +284,7 @@ class MemoryVectorStorage(VectorStorageInterface):
         }
     
     async def save(self, path: str) -> bool:
-        """Save storage to disk"""
-        try:
+        """Save storage to disk"""        try:
             import pickle
             
             with open(path, 'wb') as f:
@@ -335,8 +304,7 @@ class MemoryVectorStorage(VectorStorageInterface):
             return False
     
     async def load(self, path: str) -> bool:
-        """Load storage from disk"""
-        try:
+        """Load storage from disk"""        try:
             import pickle
             
             with open(path, 'rb') as f:
@@ -355,8 +323,7 @@ class MemoryVectorStorage(VectorStorageInterface):
             return False
     
     async def clear(self) -> bool:
-        """Clear all vectors"""
-        try:
+        """Clear all vectors"""        try:
             self.vectors.clear()
             self.dimension = None
             self.total_searches = 0
@@ -370,12 +337,10 @@ class MemoryVectorStorage(VectorStorageInterface):
 
 
 class VectorStorageFactory:
-    """Factory for creating vector storage instances"""
-    
+    """Factory for creating vector storage instances"""    
     @staticmethod
     def create_storage(backend: StorageBackend, config: Dict[str, Any]) -> VectorStorageInterface:
-        """Create a vector storage instance"""
-        
+        """Create a vector storage instance"""        
         if backend == StorageBackend.MEMORY:
             return MemoryVectorStorage(config)
         
@@ -401,8 +366,7 @@ class VectorStorageFactory:
 
 
 class VectorStorageManager:
-    """Manager for multiple vector storage backends"""
-    
+    """Manager for multiple vector storage backends"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.VectorStorageManager")
@@ -419,8 +383,7 @@ class VectorStorageManager:
         backend: Optional[StorageBackend] = None,
         storage_config: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """Create a new storage instance"""
-        try:
+        """Create a new storage instance"""        try:
             backend = backend or self.default_backend
             config = storage_config or self.config.get('storage_configs', {}).get(storage_name, {})
             
@@ -439,8 +402,7 @@ class VectorStorageManager:
             return False
     
     def get_storage(self, storage_name: str) -> Optional[VectorStorageInterface]:
-        """Get a storage instance"""
-        return self.storages.get(storage_name)
+        """Get a storage instance"""        return self.storages.get(storage_name)
     
     async def route_operation(
         self,
@@ -448,8 +410,7 @@ class VectorStorageManager:
         storage_name: Optional[str] = None,
         **kwargs
     ) -> Any:
-        """Route operation to appropriate storage"""
-        try:
+        """Route operation to appropriate storage"""        try:
             # Use specified storage or default
             if storage_name and storage_name in self.storages:
                 storage = self.storages[storage_name]
@@ -489,12 +450,10 @@ class VectorStorageManager:
             return None
     
     def list_storages(self) -> List[str]:
-        """List available storage instances"""
-        return list(self.storages.keys())
+        """List available storage instances"""        return list(self.storages.keys())
     
     async def get_all_stats(self) -> Dict[str, Dict[str, Any]]:
-        """Get statistics for all storages"""
-        stats = {}
+        """Get statistics for all storages"""        stats = {}
         
         for name, storage in self.storages.items():
             try:
@@ -505,8 +464,7 @@ class VectorStorageManager:
         return stats
     
     async def remove_storage(self, storage_name: str) -> bool:
-        """Remove a storage instance"""
-        try:
+        """Remove a storage instance"""        try:
             if storage_name in self.storages:
                 del self.storages[storage_name]
                 self.logger.info(f"Removed storage '{storage_name}'")

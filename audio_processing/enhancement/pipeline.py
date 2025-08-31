@@ -1,5 +1,4 @@
-"""
-Audio Enhancement Pipeline Orchestrator
+"""Audio Enhancement Pipeline Orchestrator
 =======================================
 
 High-level orchestration system for audio enhancement workflows.
@@ -12,9 +11,7 @@ Copyright: 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is proprietary and confidential. Unauthorized use, reproduction, 
 or distribution without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will be prosecuted to the full extent of the law.
-"""
-
-import numpy as np
+"""import numpy as np
 import logging
 from typing import Dict, List, Optional, Union, Callable, Any, Tuple
 from dataclasses import dataclass, field
@@ -34,8 +31,7 @@ from ..core.validators import AudioValidator
 
 
 class PipelineMode(Enum):
-    """Processing pipeline modes"""
-    SINGLE_PASS = "single_pass"              # One-time enhancement
+    """Processing pipeline modes"""    SINGLE_PASS = "single_pass"              # One-time enhancement
     MULTI_PASS = "multi_pass"                # Multiple enhancement passes
     ADAPTIVE_QUALITY = "adaptive_quality"    # Quality-guided enhancement
     REAL_TIME = "real_time"                  # Real-time processing
@@ -43,8 +39,7 @@ class PipelineMode(Enum):
 
 
 class ProcessingPriority(Enum):
-    """Processing priority levels"""
-    LOW = "low"
+    """Processing priority levels"""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     CRITICAL = "critical"
@@ -52,8 +47,7 @@ class ProcessingPriority(Enum):
 
 @dataclass
 class PipelineConfig:
-    """Audio enhancement pipeline configuration"""
-    mode: PipelineMode = PipelineMode.SINGLE_PASS
+    """Audio enhancement pipeline configuration"""    mode: PipelineMode = PipelineMode.SINGLE_PASS
     priority: ProcessingPriority = ProcessingPriority.NORMAL
     target_quality_score: float = 75.0
     max_processing_time: float = 300.0  # seconds
@@ -68,8 +62,7 @@ class PipelineConfig:
 
 @dataclass
 class ProcessingTask:
-    """Individual processing task definition"""
-    task_id: str
+    """Individual processing task definition"""    task_id: str
     audio: np.ndarray
     sample_rate: int
     content_type: ContentType = ContentType.GENERAL
@@ -82,8 +75,7 @@ class ProcessingTask:
 
 @dataclass
 class PipelineResult:
-    """Complete pipeline processing result"""
-    task_id: str
+    """Complete pipeline processing result"""    task_id: str
     success: bool
     enhancement_result: Optional[EnhancementResult] = None
     quality_metrics: Optional[QualityMetrics] = None
@@ -96,18 +88,15 @@ class PipelineResult:
 
 
 class AudioEnhancementPipeline:
-    """
-    Professional Audio Enhancement Pipeline Orchestrator
+    """    Professional Audio Enhancement Pipeline Orchestrator
     
     High-level orchestration system that combines audio enhancement processing,
     quality analysis, and configuration management into comprehensive workflows.
-    """
-    
+    """    
     def __init__(self, 
                  config: Optional[PipelineConfig] = None,
                  config_dir: Optional[Union[str, Path]] = None):
-        """Initialize audio enhancement pipeline"""
-        self.logger = logging.getLogger(__name__)
+        """Initialize audio enhancement pipeline"""        self.logger = logging.getLogger(__name__)
         
         # Configuration
         self.config = config or PipelineConfig()
@@ -136,17 +125,14 @@ class AudioEnhancementPipeline:
         self.logger.info("Audio enhancement pipeline initialized")
     
     def add_progress_callback(self, callback: Callable[[str, str, float], None]):
-        """Add progress callback function"""
-        self.progress_callbacks.append(callback)
+        """Add progress callback function"""        self.progress_callbacks.append(callback)
     
     def remove_progress_callback(self, callback: Callable[[str, str, float], None]):
-        """Remove progress callback function"""
-        if callback in self.progress_callbacks:
+        """Remove progress callback function"""        if callback in self.progress_callbacks:
             self.progress_callbacks.remove(callback)
     
     def _notify_progress(self, task_id: str, stage: str, progress: float):
-        """Notify progress callbacks"""
-        if self.config.enable_progress_callback:
+        """Notify progress callbacks"""        if self.config.enable_progress_callback:
             for callback in self.progress_callbacks:
                 try:
                     callback(task_id, stage, progress)
@@ -161,8 +147,7 @@ class AudioEnhancementPipeline:
                      preset_name: Optional[str] = None,
                      custom_parameters: Optional[EnhancementParameters] = None,
                      priority: ProcessingPriority = ProcessingPriority.NORMAL) -> PipelineResult:
-        """
-        Process single audio input through enhancement pipeline
+        """        Process single audio input through enhancement pipeline
         
         Args:
             audio: Input audio signal
@@ -175,8 +160,7 @@ class AudioEnhancementPipeline:
             
         Returns:
             PipelineResult with processing outcomes
-        """
-        if task_id is None:
+        """        if task_id is None:
             task_id = f"task_{int(time.time() * 1000)}"
         
         start_time = time.time()
@@ -268,8 +252,7 @@ class AudioEnhancementPipeline:
                                    custom_parameters: Optional[EnhancementParameters],
                                    audio: np.ndarray,
                                    sample_rate: int) -> EnhancementParameters:
-        """Get enhancement parameters from preset or custom settings"""
-        if custom_parameters:
+        """Get enhancement parameters from preset or custom settings"""        if custom_parameters:
             return custom_parameters
         
         if preset_name:
@@ -291,8 +274,7 @@ class AudioEnhancementPipeline:
         return EnhancementParameters()
     
     def _analyze_audio_content(self, audio: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Analyze audio content for adaptive parameter selection"""
-        analysis = {}
+        """Analyze audio content for adaptive parameter selection"""        analysis = {}
         
         try:
             # Basic metrics
@@ -336,8 +318,7 @@ class AudioEnhancementPipeline:
                                sample_rate: int,
                                parameters: EnhancementParameters,
                                task_id: str) -> EnhancementResult:
-        """Single pass enhancement processing"""
-        self._notify_progress(task_id, "single_pass_enhancement", 0.4)
+        """Single pass enhancement processing"""        self._notify_progress(task_id, "single_pass_enhancement", 0.4)
         
         result = self.processor.enhance_audio(
             audio, sample_rate, parameters, ContentType.GENERAL
@@ -352,8 +333,7 @@ class AudioEnhancementPipeline:
                               parameters: EnhancementParameters,
                               task_id: str,
                               result: PipelineResult) -> EnhancementResult:
-        """Multi-pass enhancement processing"""
-        current_audio = audio.copy()
+        """Multi-pass enhancement processing"""        current_audio = audio.copy()
         best_result = None
         best_quality_score = 0.0
         
@@ -404,8 +384,7 @@ class AudioEnhancementPipeline:
                                    original_metrics: Optional[QualityMetrics],
                                    task_id: str,
                                    result: PipelineResult) -> EnhancementResult:
-        """Adaptive quality-guided processing"""
-        current_audio = audio.copy()
+        """Adaptive quality-guided processing"""        current_audio = audio.copy()
         current_parameters = parameters
         best_result = None
         best_improvement = -float('inf')
@@ -460,8 +439,7 @@ class AudioEnhancementPipeline:
     def _adjust_parameters_for_pass(self, 
                                    base_parameters: EnhancementParameters,
                                    pass_number: int) -> EnhancementParameters:
-        """Adjust parameters for multi-pass processing"""
-        # Create copy to avoid modifying original
+        """Adjust parameters for multi-pass processing"""        # Create copy to avoid modifying original
         adjusted = EnhancementParameters(**base_parameters.__dict__)
         
         # Reduce intensity for subsequent passes
@@ -477,8 +455,7 @@ class AudioEnhancementPipeline:
                                      current_parameters: EnhancementParameters,
                                      current_metrics: QualityMetrics,
                                      original_metrics: Optional[QualityMetrics]) -> EnhancementParameters:
-        """Adapt parameters based on current quality metrics"""
-        adapted = EnhancementParameters(**current_parameters.__dict__)
+        """Adapt parameters based on current quality metrics"""        adapted = EnhancementParameters(**current_parameters.__dict__)
         
         if original_metrics is None:
             return adapted
@@ -501,8 +478,7 @@ class AudioEnhancementPipeline:
     
     def start_realtime_processing(self, 
                                  realtime_config: Optional[RealTimeConfig] = None) -> bool:
-        """Start real-time processing mode"""
-        if self.realtime_processor and self.realtime_processor.is_running:
+        """Start real-time processing mode"""        if self.realtime_processor and self.realtime_processor.is_running:
             self.logger.warning("Real-time processing already running")
             return False
         
@@ -526,36 +502,31 @@ class AudioEnhancementPipeline:
             return False
     
     def stop_realtime_processing(self):
-        """Stop real-time processing mode"""
-        if self.realtime_processor:
+        """Stop real-time processing mode"""        if self.realtime_processor:
             self.realtime_processor.stop_processing()
             self.logger.info("Real-time processing stopped")
     
     def process_realtime_chunk(self, audio_chunk: np.ndarray) -> bool:
-        """Process audio chunk in real-time mode"""
-        if not self.realtime_processor or not self.realtime_processor.is_running:
+        """Process audio chunk in real-time mode"""        if not self.realtime_processor or not self.realtime_processor.is_running:
             return False
         
         return self.realtime_processor.process_audio_chunk(audio_chunk)
     
     def get_realtime_output(self, num_samples: int) -> Optional[np.ndarray]:
-        """Get processed real-time audio output"""
-        if not self.realtime_processor:
+        """Get processed real-time audio output"""        if not self.realtime_processor:
             return None
         
         return self.realtime_processor.get_processed_audio(num_samples)
     
     def submit_batch_task(self, task: ProcessingTask):
-        """Submit task for batch processing"""
-        with self.processing_lock:
+        """Submit task for batch processing"""        with self.processing_lock:
             self.task_queue.append(task)
             self.active_tasks[task.task_id] = task
         
         self.logger.debug(f"Submitted batch task: {task.task_id}")
     
     def start_batch_processing(self, max_workers: Optional[int] = None) -> bool:
-        """Start batch processing of queued tasks"""
-        if self.batch_executor and not self.batch_executor._shutdown:
+        """Start batch processing of queued tasks"""        if self.batch_executor and not self.batch_executor._shutdown:
             self.logger.warning("Batch processing already running")
             return False
         
@@ -599,8 +570,7 @@ class AudioEnhancementPipeline:
             return False
     
     def _process_batch_task(self, task: ProcessingTask) -> PipelineResult:
-        """Process individual batch task"""
-        return self.process_audio(
+        """Process individual batch task"""        return self.process_audio(
             task.audio,
             task.sample_rate,
             task.task_id,
@@ -611,15 +581,13 @@ class AudioEnhancementPipeline:
         )
     
     def stop_batch_processing(self):
-        """Stop batch processing"""
-        if self.batch_executor:
+        """Stop batch processing"""        if self.batch_executor:
             self.batch_executor.shutdown(wait=True)
             self.batch_executor = None
             self.logger.info("Batch processing stopped")
     
     def get_task_status(self, task_id: str) -> Dict[str, Any]:
-        """Get status of specific task"""
-        with self.processing_lock:
+        """Get status of specific task"""        with self.processing_lock:
             if task_id in self.active_tasks:
                 return {
                     'status': 'active',
@@ -634,8 +602,7 @@ class AudioEnhancementPipeline:
                 return {'status': 'not_found'}
     
     def get_pipeline_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive pipeline statistics"""
-        with self.processing_lock:
+        """Get comprehensive pipeline statistics"""        with self.processing_lock:
             completed_results = list(self.completed_tasks.values())
         
         if not completed_results:
@@ -676,8 +643,7 @@ class AudioEnhancementPipeline:
         return stats
     
     def cleanup_completed_tasks(self, keep_recent: int = 100):
-        """Clean up old completed tasks to free memory"""
-        with self.processing_lock:
+        """Clean up old completed tasks to free memory"""        with self.processing_lock:
             if len(self.completed_tasks) <= keep_recent:
                 return
             
@@ -697,8 +663,7 @@ class AudioEnhancementPipeline:
         self.logger.info(f"Cleaned up {removed_count} completed tasks")
     
     def export_pipeline_config(self, file_path: Union[str, Path]):
-        """Export pipeline configuration"""
-        config_data = {
+        """Export pipeline configuration"""        config_data = {
             'pipeline_config': {
                 'mode': self.config.mode.value,
                 'priority': self.config.priority.value,
@@ -720,10 +685,8 @@ class AudioEnhancementPipeline:
         self.logger.info(f"Pipeline configuration exported to {file_path}")
     
     def __enter__(self):
-        """Context manager entry"""
-        return self
+        """Context manager entry"""        return self
     
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Context manager exit"""
-        self.stop_realtime_processing()
+        """Context manager exit"""        self.stop_realtime_processing()
         self.stop_batch_processing()

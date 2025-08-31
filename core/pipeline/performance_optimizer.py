@@ -1,5 +1,4 @@
-"""
-Performance Optimizer
+"""Performance Optimizer
 
 Ultra-advanced performance optimization system for pipeline executions
 with AI-powered analysis, real-time adaptation, and intelligent tuning.
@@ -8,9 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: Performance Profiling → Bottleneck Detection → Optimization Strategy → Implementation → Continuous Monitoring
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import psutil
@@ -28,8 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 class PerformanceMetric(Enum):
-    """Performance metrics"""
-    EXECUTION_TIME = "execution_time"
+    """Performance metrics"""    EXECUTION_TIME = "execution_time"
     THROUGHPUT = "throughput"
     LATENCY = "latency"
     CPU_USAGE = "cpu_usage"
@@ -42,8 +38,7 @@ class PerformanceMetric(Enum):
 
 
 class OptimizationType(Enum):
-    """Optimization types"""
-    ALGORITHM = "algorithm"
+    """Optimization types"""    ALGORITHM = "algorithm"
     RESOURCE = "resource"
     CACHING = "caching"
     PARALLELIZATION = "parallelization"
@@ -55,16 +50,14 @@ class OptimizationType(Enum):
 
 
 class OptimizationPriority(Enum):
-    """Optimization priorities"""
-    LOW = 1
+    """Optimization priorities"""    LOW = 1
     MEDIUM = 2
     HIGH = 3
     CRITICAL = 4
 
 
 class PerformanceStatus(Enum):
-    """Performance status"""
-    EXCELLENT = "excellent"
+    """Performance status"""    EXCELLENT = "excellent"
     GOOD = "good"
     AVERAGE = "average"
     POOR = "poor"
@@ -73,8 +66,7 @@ class PerformanceStatus(Enum):
 
 @dataclass
 class PerformanceBenchmark:
-    """Performance benchmark"""
-    metric: PerformanceMetric = PerformanceMetric.EXECUTION_TIME
+    """Performance benchmark"""    metric: PerformanceMetric = PerformanceMetric.EXECUTION_TIME
     baseline_value: float = 0.0
     target_value: float = 0.0
     threshold_warning: float = 0.0
@@ -86,8 +78,7 @@ class PerformanceBenchmark:
 
 @dataclass
 class PerformanceMeasurement:
-    """Performance measurement"""
-    metric: PerformanceMetric = PerformanceMetric.EXECUTION_TIME
+    """Performance measurement"""    metric: PerformanceMetric = PerformanceMetric.EXECUTION_TIME
     value: float = 0.0
     unit: str = "seconds"
     timestamp: datetime = field(default_factory=datetime.now)
@@ -97,8 +88,7 @@ class PerformanceMeasurement:
 
 @dataclass
 class PerformanceProfile:
-    """Performance profile"""
-    profile_id: str = ""
+    """Performance profile"""    profile_id: str = ""
     component_name: str = ""
     measurements: List[PerformanceMeasurement] = field(default_factory=list)
     benchmarks: Dict[PerformanceMetric, PerformanceBenchmark] = field(default_factory=dict)
@@ -120,8 +110,7 @@ class PerformanceProfile:
 
 @dataclass
 class OptimizationRecommendation:
-    """Optimization recommendation"""
-    recommendation_id: str = ""
+    """Optimization recommendation"""    recommendation_id: str = ""
     optimization_type: OptimizationType = OptimizationType.ALGORITHM
     priority: OptimizationPriority = OptimizationPriority.MEDIUM
     title: str = ""
@@ -147,8 +136,7 @@ class OptimizationRecommendation:
 
 @dataclass
 class OptimizationResult:
-    """Optimization implementation result"""
-    recommendation_id: str = ""
+    """Optimization implementation result"""    recommendation_id: str = ""
     implementation_status: str = "pending"
     actual_impact: Dict[str, float] = field(default_factory=dict)
     implementation_time: float = 0.0
@@ -173,8 +161,7 @@ class OptimizationResult:
 
 
 class PerformanceProfiler:
-    """Advanced performance profiler"""
-    
+    """Advanced performance profiler"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.PerformanceProfiler")
@@ -198,13 +185,11 @@ class PerformanceProfiler:
         self._start_system_monitoring()
     
     def _start_system_monitoring(self):
-        """Start system-wide performance monitoring"""
-        self.monitoring_active = True
+        """Start system-wide performance monitoring"""        self.monitoring_active = True
         self.system_monitor_task = asyncio.create_task(self._monitor_system_performance())
     
     async def _monitor_system_performance(self):
-        """Monitor system-wide performance"""
-        while self.monitoring_active:
+        """Monitor system-wide performance"""        while self.monitoring_active:
             try:
                 # Collect system metrics
                 cpu_percent = psutil.cpu_percent(interval=1)
@@ -245,8 +230,7 @@ class PerformanceProfiler:
         component_name: str,
         benchmarks: Optional[Dict[PerformanceMetric, PerformanceBenchmark]] = None
     ) -> str:
-        """Start performance profiling for component"""
-        profile_id = f"profile_{component_name}_{uuid.uuid4().hex[:8]}"
+        """Start performance profiling for component"""        profile_id = f"profile_{component_name}_{uuid.uuid4().hex[:8]}"
         
         profile = PerformanceProfile(
             profile_id=profile_id,
@@ -266,8 +250,7 @@ class PerformanceProfiler:
         return profile_id
     
     async def _profile_component(self, profile_id: str):
-        """Profile component performance"""
-        profile = self.active_profiles.get(profile_id)
+        """Profile component performance"""        profile = self.active_profiles.get(profile_id)
         if not profile:
             return
         
@@ -300,8 +283,7 @@ class PerformanceProfiler:
                 await asyncio.sleep(profiling_interval * 2)
     
     async def _collect_component_measurements(self, component_name: str) -> List[PerformanceMeasurement]:
-        """Collect performance measurements for component"""
-        measurements = []
+        """Collect performance measurements for component"""        measurements = []
         current_time = datetime.now()
         
         # Simulate component-specific measurements
@@ -343,8 +325,7 @@ class PerformanceProfiler:
         return measurements
     
     def _simulate_execution_time_measurement(self, component_name: str) -> float:
-        """Simulate execution time measurement"""
-        # Base execution time with some variation
+        """Simulate execution time measurement"""        # Base execution time with some variation
         base_times = {
             "content_processing": 2.5,
             "ai_analysis": 3.2,
@@ -360,8 +341,7 @@ class PerformanceProfiler:
         return base_time * (1 + variation)
     
     def _simulate_throughput_measurement(self, component_name: str) -> float:
-        """Simulate throughput measurement"""
-        base_throughput = {
+        """Simulate throughput measurement"""        base_throughput = {
             "content_processing": 50.0,
             "ai_analysis": 30.0,
             "protection": 75.0,
@@ -375,8 +355,7 @@ class PerformanceProfiler:
         return base * (1 + variation)
     
     def _simulate_memory_measurement(self, component_name: str) -> float:
-        """Simulate memory usage measurement"""
-        base_memory = {
+        """Simulate memory usage measurement"""        base_memory = {
             "content_processing": 512.0,
             "ai_analysis": 1024.0,
             "protection": 256.0,
@@ -390,8 +369,7 @@ class PerformanceProfiler:
         return base * (1 + variation)
     
     def _get_default_benchmarks(self) -> Dict[PerformanceMetric, PerformanceBenchmark]:
-        """Get default performance benchmarks"""
-        return {
+        """Get default performance benchmarks"""        return {
             PerformanceMetric.EXECUTION_TIME: PerformanceBenchmark(
                 metric=PerformanceMetric.EXECUTION_TIME,
                 baseline_value=5.0,
@@ -425,8 +403,7 @@ class PerformanceProfiler:
         }
     
     def _update_profile_statistics(self, profile: PerformanceProfile):
-        """Update profile statistics"""
-        if not profile.measurements:
+        """Update profile statistics"""        if not profile.measurements:
             return
         
         # Group measurements by metric
@@ -448,8 +425,7 @@ class PerformanceProfiler:
                 }
     
     async def _detect_bottlenecks(self, profile: PerformanceProfile) -> List[Dict[str, Any]]:
-        """Detect performance bottlenecks"""
-        bottlenecks = []
+        """Detect performance bottlenecks"""        bottlenecks = []
         
         for metric, benchmark in profile.benchmarks.items():
             stats = profile.statistics.get(metric.value)
@@ -481,8 +457,7 @@ class PerformanceProfiler:
         return bottlenecks
     
     def _calculate_performance_status(self, profile: PerformanceProfile) -> PerformanceStatus:
-        """Calculate overall performance status"""
-        if not profile.statistics:
+        """Calculate overall performance status"""        if not profile.statistics:
             return PerformanceStatus.AVERAGE
         
         critical_issues = sum(1 for b in profile.bottlenecks if b.get("severity") == "critical")
@@ -526,8 +501,7 @@ class PerformanceProfiler:
             return PerformanceStatus.AVERAGE
     
     def _calculate_overall_score(self, profile: PerformanceProfile) -> float:
-        """Calculate overall performance score"""
-        if not profile.statistics or not profile.benchmarks:
+        """Calculate overall performance score"""        if not profile.statistics or not profile.benchmarks:
             return 0.0
         
         total_score = 0.0
@@ -569,8 +543,7 @@ class PerformanceProfiler:
         return total_score / max(total_weight, 1.0)
     
     async def stop_profiling(self, profile_id: str) -> PerformanceProfile:
-        """Stop profiling and return final profile"""
-        if profile_id not in self.active_profiles:
+        """Stop profiling and return final profile"""        if profile_id not in self.active_profiles:
             raise ValueError(f"Profile {profile_id} not found")
         
         profile = self.active_profiles[profile_id]
@@ -590,17 +563,14 @@ class PerformanceProfiler:
         return profile
     
     def get_profile(self, profile_id: str) -> Optional[PerformanceProfile]:
-        """Get profile by ID"""
-        return (self.active_profiles.get(profile_id) or 
+        """Get profile by ID"""        return (self.active_profiles.get(profile_id) or 
                 self.completed_profiles.get(profile_id))
     
     def get_real_time_metrics(self) -> Dict[str, Any]:
-        """Get real-time system metrics"""
-        return self.real_time_metrics.copy()
+        """Get real-time system metrics"""        return self.real_time_metrics.copy()
     
     def stop_monitoring(self):
-        """Stop performance monitoring"""
-        self.monitoring_active = False
+        """Stop performance monitoring"""        self.monitoring_active = False
         if self.system_monitor_task:
             self.system_monitor_task.cancel()
         
@@ -611,8 +581,7 @@ class PerformanceProfiler:
 
 
 class OptimizationEngine:
-    """AI-powered optimization engine"""
-    
+    """AI-powered optimization engine"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.OptimizationEngine")
@@ -625,8 +594,7 @@ class OptimizationEngine:
         self._initialize_optimization_patterns()
     
     def _initialize_optimization_patterns(self):
-        """Initialize optimization patterns"""
-        self.optimization_patterns = {
+        """Initialize optimization patterns"""        self.optimization_patterns = {
             "high_execution_time": [
                 {
                     "type": OptimizationType.ALGORITHM,
@@ -692,8 +660,7 @@ class OptimizationEngine:
         }
     
     async def analyze_performance_profile(self, profile: PerformanceProfile) -> List[OptimizationRecommendation]:
-        """Analyze profile and generate optimization recommendations"""
-        recommendations = []
+        """Analyze profile and generate optimization recommendations"""        recommendations = []
         
         # Analyze bottlenecks
         for bottleneck in profile.bottlenecks:
@@ -720,8 +687,7 @@ class OptimizationEngine:
         bottleneck: Dict[str, Any],
         profile: PerformanceProfile
     ) -> List[OptimizationRecommendation]:
-        """Generate recommendations for specific bottleneck"""
-        recommendations = []
+        """Generate recommendations for specific bottleneck"""        recommendations = []
         metric = bottleneck["metric"]
         severity = bottleneck["severity"]
         
@@ -754,8 +720,7 @@ class OptimizationEngine:
         return recommendations
     
     async def _analyze_performance_patterns(self, profile: PerformanceProfile) -> List[OptimizationRecommendation]:
-        """Analyze performance patterns for additional recommendations"""
-        recommendations = []
+        """Analyze performance patterns for additional recommendations"""        recommendations = []
         
         # Check for general performance improvement opportunities
         if profile.overall_score < 0.7:
@@ -790,8 +755,7 @@ class OptimizationEngine:
         return recommendations
     
     def _prioritize_recommendations(self, recommendations: List[OptimizationRecommendation]) -> List[OptimizationRecommendation]:
-        """Prioritize optimization recommendations"""
-        def priority_score(rec):
+        """Prioritize optimization recommendations"""        def priority_score(rec):
             priority_weight = {
                 OptimizationPriority.CRITICAL: 4,
                 OptimizationPriority.HIGH: 3,
@@ -818,8 +782,7 @@ class OptimizationEngine:
         recommendation: OptimizationRecommendation,
         profile: PerformanceProfile
     ):
-        """Enhance recommendation with implementation details"""
-        # Add implementation steps based on optimization type
+        """Enhance recommendation with implementation details"""        # Add implementation steps based on optimization type
         if recommendation.optimization_type == OptimizationType.CACHING:
             recommendation.implementation_steps = [
                 "Identify cacheable operations",
@@ -887,8 +850,7 @@ class OptimizationEngine:
         recommendation: OptimizationRecommendation,
         dry_run: bool = False
     ) -> OptimizationResult:
-        """Implement optimization recommendation"""
-        result = OptimizationResult(
+        """Implement optimization recommendation"""        result = OptimizationResult(
             recommendation_id=recommendation.recommendation_id,
             implementation_status="started"
         )
@@ -943,8 +905,7 @@ class OptimizationEngine:
             return result
     
     async def _collect_current_metrics(self) -> Dict[str, float]:
-        """Collect current performance metrics"""
-        # Simulate metric collection
+        """Collect current performance metrics"""        # Simulate metric collection
         await asyncio.sleep(0.1)
         
         return {
@@ -960,8 +921,7 @@ class OptimizationEngine:
         recommendation: OptimizationRecommendation,
         result: OptimizationResult
     ):
-        """Apply optimization changes"""
-        # Simulate optimization implementation
+        """Apply optimization changes"""        # Simulate optimization implementation
         await asyncio.sleep(1.0)
         
         # Record applied changes
@@ -976,8 +936,7 @@ class OptimizationEngine:
         before_metrics: Dict[str, float],
         after_metrics: Dict[str, float]
     ) -> Dict[str, float]:
-        """Calculate improvement percentages"""
-        improvements = {}
+        """Calculate improvement percentages"""        improvements = {}
         
         for metric, after_value in after_metrics.items():
             if metric in before_metrics:
@@ -1000,8 +959,7 @@ class OptimizationEngine:
         recommendation: OptimizationRecommendation,
         result: OptimizationResult
     ) -> bool:
-        """Validate optimization results"""
-        # Check if success criteria are met
+        """Validate optimization results"""        # Check if success criteria are met
         validation_details = {}
         
         for criterion in recommendation.success_criteria:
@@ -1025,13 +983,11 @@ class OptimizationEngine:
         return passed_criteria >= (total_criteria * 0.8)  # 80% threshold
     
     def get_optimization_history(self) -> List[OptimizationResult]:
-        """Get optimization implementation history"""
-        return self.implementation_history.copy()
+        """Get optimization implementation history"""        return self.implementation_history.copy()
 
 
 class PerformanceOptimizer:
-    """
-    Ultra-advanced performance optimization system for pipeline executions
+    """    Ultra-advanced performance optimization system for pipeline executions
     with AI-powered analysis, real-time adaptation, and intelligent tuning.
     
     Features:
@@ -1042,8 +998,7 @@ class PerformanceOptimizer:
     - Real-time performance tracking and adaptation
     - Performance trend analysis and prediction
     - Resource utilization optimization
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or self._get_default_config()
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -1071,8 +1026,7 @@ class PerformanceOptimizer:
         self.logger.info("Performance Optimizer initialized successfully")
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration"""
-        return {
+        """Get default configuration"""        return {
             "profiling": {
                 "profiling_interval": 2.0,
                 "max_profiles": 100,
@@ -1106,16 +1060,14 @@ class PerformanceOptimizer:
         }
     
     def _start_monitoring(self):
-        """Start performance monitoring"""
-        self.monitoring_active = True
+        """Start performance monitoring"""        self.monitoring_active = True
         self.monitoring_task = asyncio.create_task(self._monitoring_loop())
         
         if self.auto_optimization_enabled:
             self.auto_optimization_task = asyncio.create_task(self._auto_optimization_loop())
     
     async def _monitoring_loop(self):
-        """Main monitoring loop"""
-        monitoring_interval = self.config["monitoring"]["monitoring_interval"]
+        """Main monitoring loop"""        monitoring_interval = self.config["monitoring"]["monitoring_interval"]
         
         while self.monitoring_active:
             try:
@@ -1129,8 +1081,7 @@ class PerformanceOptimizer:
                 await asyncio.sleep(monitoring_interval * 2)
     
     async def _auto_optimization_loop(self):
-        """Auto-optimization loop"""
-        optimization_interval = self.config["auto_optimization"]["optimization_interval"]
+        """Auto-optimization loop"""        optimization_interval = self.config["auto_optimization"]["optimization_interval"]
         
         while self.monitoring_active:
             try:
@@ -1142,8 +1093,7 @@ class PerformanceOptimizer:
                 await asyncio.sleep(optimization_interval * 2)
     
     async def _update_optimization_metrics(self):
-        """Update optimization metrics"""
-        # Get real-time metrics
+        """Update optimization metrics"""        # Get real-time metrics
         real_time_metrics = self.profiler.get_real_time_metrics()
         
         # Get optimization history
@@ -1166,8 +1116,7 @@ class PerformanceOptimizer:
         }
     
     def _calculate_average_improvement(self, optimization_history: List[OptimizationResult]) -> Dict[str, float]:
-        """Calculate average improvement from optimization history"""
-        if not optimization_history:
+        """Calculate average improvement from optimization history"""        if not optimization_history:
             return {}
         
         improvements_by_metric = defaultdict(list)
@@ -1184,8 +1133,7 @@ class PerformanceOptimizer:
         }
     
     async def _check_performance_alerts(self):
-        """Check for performance alerts"""
-        real_time_metrics = self.profiler.get_real_time_metrics()
+        """Check for performance alerts"""        real_time_metrics = self.profiler.get_real_time_metrics()
         thresholds = self.config["thresholds"]
         
         alerts = []
@@ -1210,8 +1158,7 @@ class PerformanceOptimizer:
                 self.logger.warning(f"Performance Alert: {alert}")
     
     async def _run_auto_optimization(self):
-        """Run automatic optimization"""
-        if not self.auto_optimization_enabled:
+        """Run automatic optimization"""        if not self.auto_optimization_enabled:
             return
         
         threshold = self.config["auto_optimization"]["optimization_threshold"]
@@ -1274,16 +1221,13 @@ class PerformanceOptimizer:
         component_name: str,
         benchmarks: Optional[Dict[PerformanceMetric, PerformanceBenchmark]] = None
     ) -> str:
-        """Start performance profiling for component"""
-        return await self.profiler.start_profiling(component_name, benchmarks)
+        """Start performance profiling for component"""        return await self.profiler.start_profiling(component_name, benchmarks)
     
     async def stop_performance_profiling(self, profile_id: str) -> PerformanceProfile:
-        """Stop performance profiling"""
-        return await self.profiler.stop_profiling(profile_id)
+        """Stop performance profiling"""        return await self.profiler.stop_profiling(profile_id)
     
     async def analyze_performance(self, profile_id: str) -> List[OptimizationRecommendation]:
-        """Analyze performance profile and get recommendations"""
-        profile = self.profiler.get_profile(profile_id)
+        """Analyze performance profile and get recommendations"""        profile = self.profiler.get_profile(profile_id)
         if not profile:
             raise ValueError(f"Profile {profile_id} not found")
         
@@ -1295,8 +1239,7 @@ class PerformanceOptimizer:
         auto_apply: bool = False,
         dry_run: bool = False
     ) -> List[OptimizationResult]:
-        """Optimize performance based on recommendations"""
-        results = []
+        """Optimize performance based on recommendations"""        results = []
         
         for recommendation in recommendations:
             try:
@@ -1319,8 +1262,7 @@ class PerformanceOptimizer:
         component_name: str,
         duration: float = 60.0
     ) -> Dict[str, Any]:
-        """Perform comprehensive performance analysis"""
-        # Start profiling
+        """Perform comprehensive performance analysis"""        # Start profiling
         profile_id = await self.start_performance_profiling(component_name)
         
         # Wait for profiling duration
@@ -1355,35 +1297,29 @@ class PerformanceOptimizer:
         }
     
     def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get current performance metrics"""
-        return self.optimization_metrics.copy()
+        """Get current performance metrics"""        return self.optimization_metrics.copy()
     
     def get_real_time_metrics(self) -> Dict[str, Any]:
-        """Get real-time system metrics"""
-        return self.profiler.get_real_time_metrics()
+        """Get real-time system metrics"""        return self.profiler.get_real_time_metrics()
     
     def get_optimization_history(self) -> List[OptimizationResult]:
-        """Get optimization history"""
-        return self.optimization_engine.get_optimization_history()
+        """Get optimization history"""        return self.optimization_engine.get_optimization_history()
     
     def enable_auto_optimization(self):
-        """Enable automatic optimization"""
-        self.auto_optimization_enabled = True
+        """Enable automatic optimization"""        self.auto_optimization_enabled = True
         if self.monitoring_active and not self.auto_optimization_task:
             self.auto_optimization_task = asyncio.create_task(self._auto_optimization_loop())
         self.logger.info("Auto-optimization enabled")
     
     def disable_auto_optimization(self):
-        """Disable automatic optimization"""
-        self.auto_optimization_enabled = False
+        """Disable automatic optimization"""        self.auto_optimization_enabled = False
         if self.auto_optimization_task:
             self.auto_optimization_task.cancel()
             self.auto_optimization_task = None
         self.logger.info("Auto-optimization disabled")
     
     async def shutdown(self):
-        """Shutdown performance optimizer"""
-        self.logger.info("Shutting down performance optimizer")
+        """Shutdown performance optimizer"""        self.logger.info("Shutting down performance optimizer")
         
         # Stop monitoring
         self.monitoring_active = False
@@ -1400,8 +1336,7 @@ class PerformanceOptimizer:
 
 
 class AdvancedPerformanceAnalyzer:
-    """Advanced AI-powered performance analyzer with machine learning capabilities"""
-    
+    """Advanced AI-powered performance analyzer with machine learning capabilities"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.AdvancedPerformanceAnalyzer")
@@ -1422,8 +1357,7 @@ class AdvancedPerformanceAnalyzer:
         self._initialize_ml_models()
         
     def _initialize_ml_models(self):
-        """Initialize machine learning models for performance prediction"""
-        try:
+        """Initialize machine learning models for performance prediction"""        try:
             import numpy as np
             
             # Simple linear regression for performance prediction
@@ -1456,8 +1390,7 @@ class AdvancedPerformanceAnalyzer:
             self.logger.warning("ML dependencies not available, using rule-based analysis")
     
     def analyze_performance_trends(self, profile: PerformanceProfile) -> Dict[str, Any]:
-        """Analyze performance trends using AI/ML"""
-        analysis_results = {
+        """Analyze performance trends using AI/ML"""        analysis_results = {
             "trend_analysis": {},
             "anomaly_detection": {},
             "performance_prediction": {},
@@ -1493,8 +1426,7 @@ class AdvancedPerformanceAnalyzer:
         return analysis_results
     
     def _extract_metrics_timeseries(self, measurements: List[PerformanceMeasurement]) -> Dict[str, List[float]]:
-        """Extract time series data from measurements"""
-        metrics_data = defaultdict(list)
+        """Extract time series data from measurements"""        metrics_data = defaultdict(list)
         
         for measurement in measurements:
             metrics_data[measurement.metric.value].append(measurement.value)
@@ -1503,8 +1435,7 @@ class AdvancedPerformanceAnalyzer:
         return dict(metrics_data)
     
     def _analyze_trends(self, metrics_data: Dict[str, List[float]]) -> Dict[str, Any]:
-        """Analyze performance trends"""
-        trends = {}
+        """Analyze performance trends"""        trends = {}
         
         for metric, values in metrics_data.items():
             if metric == "timestamp" or len(values) < 2:
@@ -1538,8 +1469,7 @@ class AdvancedPerformanceAnalyzer:
         return trends
     
     def _calculate_stability(self, values: List[float]) -> float:
-        """Calculate stability metric (inverse of coefficient of variation)"""
-        if len(values) < 2:
+        """Calculate stability metric (inverse of coefficient of variation)"""        if len(values) < 2:
             return 1.0
             
         mean_val = sum(values) / len(values)
@@ -1553,8 +1483,7 @@ class AdvancedPerformanceAnalyzer:
         return max(0.0, 1.0 - cv)  # Higher stability = lower CV
     
     def _calculate_volatility(self, values: List[float]) -> float:
-        """Calculate volatility metric"""
-        if len(values) < 2:
+        """Calculate volatility metric"""        if len(values) < 2:
             return 0.0
             
         changes = [abs(values[i] - values[i-1]) for i in range(1, len(values))]
@@ -1564,8 +1493,7 @@ class AdvancedPerformanceAnalyzer:
         return mean_change / (mean_value + 1e-6)  # Normalized volatility
     
     def _detect_anomalies(self, metrics_data: Dict[str, List[float]]) -> Dict[str, Any]:
-        """Detect performance anomalies"""
-        anomalies = {
+        """Detect performance anomalies"""        anomalies = {
             "detected_anomalies": [],
             "anomaly_score": 0.0,
             "severity": "low"
@@ -1628,8 +1556,7 @@ class AdvancedPerformanceAnalyzer:
         return anomalies
     
     def _predict_performance(self, metrics_data: Dict[str, List[float]]) -> Dict[str, Any]:
-        """Predict future performance based on trends"""
-        predictions = {
+        """Predict future performance based on trends"""        predictions = {
             "short_term": {},  # Next 5 measurements
             "medium_term": {},  # Next 20 measurements
             "confidence_level": 0.0,
@@ -1683,8 +1610,7 @@ class AdvancedPerformanceAnalyzer:
         return predictions
     
     def _identify_optimization_opportunities(self, metrics_data: Dict[str, List[float]]) -> List[Dict[str, Any]]:
-        """Identify optimization opportunities based on performance patterns"""
-        opportunities = []
+        """Identify optimization opportunities based on performance patterns"""        opportunities = []
         
         try:
             # Analyze CPU usage patterns
@@ -1810,8 +1736,7 @@ class AdvancedPerformanceAnalyzer:
         return opportunities
     
     def _assess_performance_risks(self, metrics_data: Dict[str, List[float]]) -> Dict[str, Any]:
-        """Assess performance-related risks"""
-        risks = {
+        """Assess performance-related risks"""        risks = {
             "overall_risk_level": "low",
             "risk_factors": [],
             "critical_thresholds": {},
@@ -1927,8 +1852,7 @@ class AdvancedPerformanceAnalyzer:
 
 
 class RealTimePerformanceMonitor:
-    """Real-time performance monitoring with streaming analytics"""
-    
+    """Real-time performance monitoring with streaming analytics"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.RealTimePerformanceMonitor")
@@ -1949,8 +1873,7 @@ class RealTimePerformanceMonitor:
         self._initialize_thresholds()
     
     def _initialize_thresholds(self):
-        """Initialize performance alert thresholds"""
-        self.alert_thresholds = {
+        """Initialize performance alert thresholds"""        self.alert_thresholds = {
             "cpu_usage": {"warning": 70.0, "critical": 90.0},
             "memory_usage": {"warning": 75.0, "critical": 90.0},
             "execution_time": {"warning": 3.0, "critical": 10.0},
@@ -1960,8 +1883,7 @@ class RealTimePerformanceMonitor:
         }
     
     async def start_monitoring(self):
-        """Start real-time performance monitoring"""
-        if self.monitoring_active:
+        """Start real-time performance monitoring"""        if self.monitoring_active:
             return
             
         self.monitoring_active = True
@@ -1969,8 +1891,7 @@ class RealTimePerformanceMonitor:
         self.logger.info("Real-time performance monitoring started")
     
     async def stop_monitoring(self):
-        """Stop real-time performance monitoring"""
-        self.monitoring_active = False
+        """Stop real-time performance monitoring"""        self.monitoring_active = False
         if self.monitor_task:
             self.monitor_task.cancel()
             try:
@@ -1980,8 +1901,7 @@ class RealTimePerformanceMonitor:
         self.logger.info("Real-time performance monitoring stopped")
     
     async def _monitor_loop(self):
-        """Main monitoring loop"""
-        while self.monitoring_active:
+        """Main monitoring loop"""        while self.monitoring_active:
             try:
                 # Collect real-time metrics
                 metrics = await self._collect_realtime_metrics()
@@ -2005,8 +1925,7 @@ class RealTimePerformanceMonitor:
                 await asyncio.sleep(5.0)
     
     async def _collect_realtime_metrics(self) -> Dict[str, float]:
-        """Collect real-time performance metrics"""
-        try:
+        """Collect real-time performance metrics"""        try:
             # System metrics
             cpu_percent = psutil.cpu_percent()
             memory = psutil.virtual_memory()
@@ -2036,8 +1955,7 @@ class RealTimePerformanceMonitor:
             return {}
     
     def _update_metric_streams(self, metrics: Dict[str, float]):
-        """Update metric streams with new data"""
-        for metric_name, value in metrics.items():
+        """Update metric streams with new data"""        for metric_name, value in metrics.items():
             if metric_name != "timestamp":
                 self.metric_streams[metric_name].append({
                     "value": value,
@@ -2045,8 +1963,7 @@ class RealTimePerformanceMonitor:
                 })
     
     async def _check_alerts(self, metrics: Dict[str, float]):
-        """Check for performance alerts"""
-        current_time = time.time()
+        """Check for performance alerts"""        current_time = time.time()
         
         for metric_name, value in metrics.items():
             if metric_name in self.alert_thresholds and metric_name != "timestamp":
@@ -2092,8 +2009,7 @@ class RealTimePerformanceMonitor:
                         del self.active_alerts[key]
     
     async def _trigger_alert(self, alert: Dict[str, Any]):
-        """Trigger a performance alert"""
-        self.logger.warning(
+        """Trigger a performance alert"""        self.logger.warning(
             f"PERFORMANCE ALERT - {alert['level'].upper()}: "
             f"{alert['metric']} = {alert['value']:.2f} "
             f"(threshold: {alert['threshold']:.2f})"
@@ -2103,16 +2019,14 @@ class RealTimePerformanceMonitor:
         # like Slack, email, PagerDuty, etc.
     
     async def _clear_alert(self, alert: Dict[str, Any]):
-        """Clear a performance alert"""
-        duration = time.time() - alert["started_at"]
+        """Clear a performance alert"""        duration = time.time() - alert["started_at"]
         self.logger.info(
             f"PERFORMANCE ALERT CLEARED: {alert['metric']} "
             f"(duration: {duration:.1f}s, count: {alert['count']})"
         )
     
     async def _perform_realtime_analysis(self) -> Dict[str, Any]:
-        """Perform real-time performance analysis"""
-        analysis = {
+        """Perform real-time performance analysis"""        analysis = {
             "current_metrics": {},
             "trends": {},
             "alerts": len(self.active_alerts),
@@ -2169,14 +2083,12 @@ class RealTimePerformanceMonitor:
         return analysis
     
     def _update_analytics(self, analysis: Dict[str, Any]):
-        """Update analytics with real-time data"""
-        # Store analysis results for historical tracking
+        """Update analytics with real-time data"""        # Store analysis results for historical tracking
         if hasattr(self.analytics_engine, 'real_time_analytics'):
             self.analytics_engine.real_time_analytics = analysis
     
     def get_current_status(self) -> Dict[str, Any]:
-        """Get current performance status"""
-        return {
+        """Get current performance status"""        return {
             "monitoring_active": self.monitoring_active,
             "active_alerts": len(self.active_alerts),
             "alert_details": list(self.active_alerts.values()),
@@ -2185,8 +2097,7 @@ class RealTimePerformanceMonitor:
         }
     
     def get_metric_history(self, metric_name: str, duration_minutes: int = 10) -> List[Dict[str, Any]]:
-        """Get metric history for specified duration"""
-        if metric_name not in self.metric_streams:
+        """Get metric history for specified duration"""        if metric_name not in self.metric_streams:
             return []
         
         cutoff_time = time.time() - (duration_minutes * 60)

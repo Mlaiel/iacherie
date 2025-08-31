@@ -36,8 +36,7 @@ Main Components:
 - CacheMonitor: Real-time monitoring and alerting
 - PolicyEngine: Advanced policy management
 - CacheSerializer: Data serialization system
-"""
-# Core cache management
+"""# Core cache management
 from .cache_manager import (
     IndustrialCacheManager as CacheManager,
     CacheConfig,

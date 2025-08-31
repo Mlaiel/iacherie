@@ -1,5 +1,4 @@
-"""
-Similarity Matcher - Advanced Multi-Modal Content Similarity Analysis
+"""Similarity Matcher - Advanced Multi-Modal Content Similarity Analysis
 
 Ultra-sophisticated similarity matching system for cross-format content comparison
 using advanced ML algorithms, vector similarity, and multi-modal analysis.
@@ -10,9 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -56,8 +53,7 @@ from ...utils.similarity_utils import SimilarityCalculator
 logger = logging.getLogger(__name__)
 
 class SimilarityType(Enum):
-    """Types of similarity analysis"""
-    EXACT_MATCH = "exact_match"
+    """Types of similarity analysis"""    EXACT_MATCH = "exact_match"
     NEAR_DUPLICATE = "near_duplicate"
     STRUCTURAL_SIMILAR = "structural_similar"
     SEMANTIC_SIMILAR = "semantic_similar"
@@ -65,8 +61,7 @@ class SimilarityType(Enum):
     PARTIAL_MATCH = "partial_match"
 
 class MatchConfidence(Enum):
-    """Confidence levels for similarity matches"""
-    VERY_HIGH = "very_high"    # >0.95
+    """Confidence levels for similarity matches"""    VERY_HIGH = "very_high"    # >0.95
     HIGH = "high"              # 0.85-0.95
     MEDIUM = "medium"          # 0.70-0.85
     LOW = "low"                # 0.50-0.70
@@ -74,8 +69,7 @@ class MatchConfidence(Enum):
 
 @dataclass
 class SimilarityResult:
-    """Comprehensive similarity analysis result"""
-    overall_score: float
+    """Comprehensive similarity analysis result"""    overall_score: float
     confidence: MatchConfidence
     similarity_type: SimilarityType
     detailed_scores: Dict[str, float]
@@ -83,8 +77,7 @@ class SimilarityResult:
     processing_time: float
 
 class SimilarityMatcher:
-    """
-    Ultra-advanced multi-modal similarity matching system.
+    """    Ultra-advanced multi-modal similarity matching system.
     
     Features:
     - Cross-format similarity analysis
@@ -94,8 +87,7 @@ class SimilarityMatcher:
     - Confidence estimation
     - Detailed analysis reports
     - Performance optimization
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -134,8 +126,7 @@ class SimilarityMatcher:
         }
         
     async def initialize(self):
-        """Initialize similarity matching system"""
-        try:
+        """Initialize similarity matching system"""        try:
             # Initialize similarity calculator
             await self.similarity_calculator.initialize()
             
@@ -149,10 +140,8 @@ class SimilarityMatcher:
                                fingerprint1: Dict[str, Any], 
                                fingerprint2: Dict[str, Any],
                                content_type: str) -> Dict[str, Any]:
-        """
-        Analyze similarity between two fingerprints with comprehensive analysis
-        """
-        start_time = time.time()
+        """        Analyze similarity between two fingerprints with comprehensive analysis
+        """        start_time = time.time()
         
         try:
             # Validate inputs
@@ -227,8 +216,7 @@ class SimilarityMatcher:
             raise SimilarityError(f"Analysis failed: {e}")
     
     async def _calculate_hash_similarity(self, hash1: str, hash2: str) -> float:
-        """Calculate similarity between hash values"""
-        try:
+        """Calculate similarity between hash values"""        try:
             if not hash1 or not hash2:
                 return 0.0
             
@@ -253,8 +241,7 @@ class SimilarityMatcher:
                                           features1: Union[List, Dict], 
                                           features2: Union[List, Dict], 
                                           content_type: str) -> Dict[str, float]:
-        """Calculate similarity between feature vectors"""
-        try:
+        """Calculate similarity between feature vectors"""        try:
             feature_similarities = {}
             
             # Handle different feature formats
@@ -295,8 +282,7 @@ class SimilarityMatcher:
     async def _calculate_embedding_similarity(self, 
                                             embedding1: Union[np.ndarray, List], 
                                             embedding2: Union[np.ndarray, List]) -> float:
-        """Calculate similarity between embedding vectors"""
-        try:
+        """Calculate similarity between embedding vectors"""        try:
             # Convert to numpy arrays
             if isinstance(embedding1, list):
                 embedding1 = np.array(embedding1)
@@ -318,8 +304,7 @@ class SimilarityMatcher:
             return 0.0
     
     async def _calculate_vector_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Calculate similarity between two vectors using multiple metrics"""
-        try:
+        """Calculate similarity between two vectors using multiple metrics"""        try:
             if len(vec1) == 0 or len(vec2) == 0:
                 return 0.0
             
@@ -361,8 +346,7 @@ class SimilarityMatcher:
                                                  fingerprint1: Dict[str, Any], 
                                                  fingerprint2: Dict[str, Any], 
                                                  content_type: str) -> Dict[str, float]:
-        """Analyze content-specific similarity features"""
-        try:
+        """Analyze content-specific similarity features"""        try:
             if content_type == 'audio':
                 return await self._analyze_audio_similarity(fingerprint1, fingerprint2)
             elif content_type == 'video':
@@ -379,8 +363,7 @@ class SimilarityMatcher:
             return {}
     
     async def _analyze_audio_similarity(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze audio-specific similarity features"""
-        similarities = {}
+        """Analyze audio-specific similarity features"""        similarities = {}
         
         try:
             # Chromaprint similarity
@@ -410,8 +393,7 @@ class SimilarityMatcher:
         return similarities
     
     async def _analyze_video_similarity(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze video-specific similarity features"""
-        similarities = {}
+        """Analyze video-specific similarity features"""        similarities = {}
         
         try:
             # Frame similarity
@@ -441,8 +423,7 @@ class SimilarityMatcher:
         return similarities
     
     async def _analyze_image_similarity(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze image-specific similarity features"""
-        similarities = {}
+        """Analyze image-specific similarity features"""        similarities = {}
         
         try:
             # Perceptual hash similarity
@@ -472,8 +453,7 @@ class SimilarityMatcher:
         return similarities
     
     async def _analyze_text_similarity(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze text-specific similarity features"""
-        similarities = {}
+        """Analyze text-specific similarity features"""        similarities = {}
         
         try:
             # N-gram similarity
@@ -503,8 +483,7 @@ class SimilarityMatcher:
         return similarities
     
     async def _calculate_chromaprint_similarity(self, chromaprint1: str, chromaprint2: str) -> float:
-        """Calculate similarity between Chromaprint fingerprints"""
-        try:
+        """Calculate similarity between Chromaprint fingerprints"""        try:
             if not chromaprint1 or not chromaprint2:
                 return 0.0
             
@@ -537,8 +516,7 @@ class SimilarityMatcher:
             return 0.0
     
     async def _calculate_audio_metadata_similarity(self, metadata1: Dict, metadata2: Dict) -> float:
-        """Calculate similarity between audio metadata"""
-        try:
+        """Calculate similarity between audio metadata"""        try:
             similarities = []
             
             # Tempo similarity
@@ -585,8 +563,7 @@ class SimilarityMatcher:
             return 0.0
     
     async def _calculate_deep_embedding_similarity(self, embeddings1: Dict, embeddings2: Dict) -> float:
-        """Calculate similarity between deep learning embeddings"""
-        try:
+        """Calculate similarity between deep learning embeddings"""        try:
             similarities = []
             
             # Compare embeddings from same models
@@ -612,8 +589,7 @@ class SimilarityMatcher:
             return 0.0
     
     async def _calculate_weighted_score(self, similarity_scores: Dict[str, Any], content_type: str) -> float:
-        """Calculate weighted overall similarity score"""
-        try:
+        """Calculate weighted overall similarity score"""        try:
             if not similarity_scores:
                 return 0.0
             
@@ -651,8 +627,7 @@ class SimilarityMatcher:
             return 0.0
     
     def _determine_similarity_type(self, overall_score: float, similarity_scores: Dict) -> SimilarityType:
-        """Determine the type of similarity based on scores"""
-        try:
+        """Determine the type of similarity based on scores"""        try:
             if overall_score >= self.thresholds['exact_match']:
                 return SimilarityType.EXACT_MATCH
             elif overall_score >= self.thresholds['near_duplicate']:
@@ -673,8 +648,7 @@ class SimilarityMatcher:
             return SimilarityType.PARTIAL_MATCH
     
     def _calculate_confidence(self, similarity_scores: Dict, overall_score: float) -> MatchConfidence:
-        """Calculate confidence level for the similarity match"""
-        try:
+        """Calculate confidence level for the similarity match"""        try:
             # Factors that affect confidence:
             # 1. Number of different similarity metrics agreeing
             # 2. Variance in similarity scores
@@ -725,8 +699,7 @@ class SimilarityMatcher:
                                      fingerprint2: Dict, 
                                      similarity_scores: Dict, 
                                      content_type: str) -> Dict[str, Any]:
-        """Create detailed analysis report"""
-        try:
+        """Create detailed analysis report"""        try:
             details = {
                 'content_type': content_type,
                 'algorithms_used': list(similarity_scores.keys()),
@@ -763,8 +736,7 @@ class SimilarityMatcher:
             return {'error': str(e)}
     
     def _calculate_algorithm_agreement(self, similarity_scores: Dict) -> float:
-        """Calculate how much different algorithms agree"""
-        try:
+        """Calculate how much different algorithms agree"""        try:
             scores = []
             for value in similarity_scores.values():
                 if isinstance(value, dict):
@@ -789,8 +761,7 @@ class SimilarityMatcher:
             return 0.5
     
     def _get_reliability_indicators(self, similarity_scores: Dict) -> Dict[str, Any]:
-        """Get indicators of match reliability"""
-        try:
+        """Get indicators of match reliability"""        try:
             indicators = {
                 'multiple_algorithms': len(similarity_scores) > 2,
                 'consistent_scores': np.std(list(similarity_scores.values())) < 0.2,
@@ -815,8 +786,7 @@ class SimilarityMatcher:
             return {'overall_reliability': 0.5}
     
     def _update_performance_metrics(self, processing_time: float, accuracy_score: float):
-        """Update internal performance metrics"""
-        self.performance_metrics['total_comparisons'] += 1
+        """Update internal performance metrics"""        self.performance_metrics['total_comparisons'] += 1
         self.performance_metrics['processing_times'].append(processing_time)
         self.performance_metrics['accuracy_scores'].append(accuracy_score)
         
@@ -832,8 +802,7 @@ class SimilarityMatcher:
                                       candidate_fingerprints: List[Dict[str, Any]],
                                       content_type: str,
                                       threshold: float = 0.5) -> List[Dict[str, Any]]:
-        """Perform batch similarity analysis against multiple candidates"""
-        try:
+        """Perform batch similarity analysis against multiple candidates"""        try:
             results = []
             
             # Process candidates concurrently
@@ -874,8 +843,7 @@ class SimilarityMatcher:
             return []
     
     async def get_performance_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive performance statistics"""
-        try:
+        """Get comprehensive performance statistics"""        try:
             metrics = self.performance_metrics
             
             stats = {
@@ -894,8 +862,7 @@ class SimilarityMatcher:
             return {}
     
     async def cleanup(self):
-        """Clean up resources"""
-        try:
+        """Clean up resources"""        try:
             # Clear performance metrics
             self.performance_metrics = {
                 'total_comparisons': 0,
@@ -915,19 +882,16 @@ class SimilarityMatcher:
     # Additional helper methods for specific similarity calculations
     
     async def _calculate_frame_similarity(self, frames1: List, frames2: List) -> float:
-        """Calculate similarity between video frame sequences"""
-        # Implementation for video frame comparison
+        """Calculate similarity between video frame sequences"""        # Implementation for video frame comparison
         # This would involve comparing frame features, optical flow, etc.
         return 0.5  # Placeholder
     
     async def _calculate_motion_similarity(self, motion1: Dict, motion2: Dict) -> float:
-        """Calculate similarity between motion features"""
-        # Implementation for motion vector comparison
+        """Calculate similarity between motion features"""        # Implementation for motion vector comparison
         return 0.5  # Placeholder
     
     async def _calculate_perceptual_hash_similarity(self, hash1: str, hash2: str) -> float:
-        """Calculate similarity between perceptual hashes"""
-        try:
+        """Calculate similarity between perceptual hashes"""        try:
             # Convert hex strings to integers and calculate Hamming distance
             h1 = int(hash1, 16)
             h2 = int(hash2, 16)
@@ -949,8 +913,7 @@ class SimilarityMatcher:
             return 0.0
     
     async def _calculate_color_similarity(self, hist1: List, hist2: List) -> float:
-        """Calculate similarity between color histograms"""
-        try:
+        """Calculate similarity between color histograms"""        try:
             h1 = np.array(hist1)
             h2 = np.array(hist2)
             
@@ -968,8 +931,7 @@ class SimilarityMatcher:
             return 0.0
     
     async def _calculate_ngram_similarity(self, ngrams1: Dict, ngrams2: Dict) -> float:
-        """Calculate similarity between n-gram features"""
-        try:
+        """Calculate similarity between n-gram features"""        try:
             # Calculate Jaccard similarity for n-grams
             set1 = set(ngrams1.keys())
             set2 = set(ngrams2.keys())
@@ -1052,8 +1014,7 @@ class SimilarityMatcher:
             raise SimilarityError(f"Similarity analysis failed: {e}")
     
     async def _calculate_hash_similarity(self, hash1: str, hash2: str, content_type: str) -> Dict[str, float]:
-        """Calculate hash-based similarity"""
-        try:
+        """Calculate hash-based similarity"""        try:
             scores = {}
             
             if content_type == 'audio':
@@ -1145,8 +1106,7 @@ class SimilarityMatcher:
     
     async def _calculate_feature_similarity(self, features1: np.ndarray, features2: np.ndarray, 
                                           content_type: str) -> Dict[str, float]:
-        """Calculate feature-based similarity using multiple metrics"""
-        try:
+        """Calculate feature-based similarity using multiple metrics"""        try:
             scores = {}
             
             # Ensure features are numpy arrays
@@ -1217,8 +1177,7 @@ class SimilarityMatcher:
     
     async def _calculate_embedding_similarity(self, embedding1: np.ndarray, embedding2: np.ndarray,
                                             content_type: str) -> Dict[str, float]:
-        """Calculate embedding-based similarity"""
-        try:
+        """Calculate embedding-based similarity"""        try:
             scores = {}
             
             # Ensure embeddings are numpy arrays
@@ -1274,8 +1233,7 @@ class SimilarityMatcher:
     
     async def _analyze_content_specific(self, fingerprint1: Dict[str, Any], 
                                       fingerprint2: Dict[str, Any], content_type: str) -> Dict[str, float]:
-        """Perform content-specific similarity analysis"""
-        try:
+        """Perform content-specific similarity analysis"""        try:
             scores = {}
             
             if content_type == 'audio':
@@ -1294,8 +1252,7 @@ class SimilarityMatcher:
             return {}
     
     async def _calculate_weighted_score(self, similarity_scores: Dict[str, Any], content_type: str) -> float:
-        """Calculate weighted overall similarity score"""
-        try:
+        """Calculate weighted overall similarity score"""        try:
             weighted_score = 0.0
             total_weight = 0.0
             
@@ -1347,8 +1304,7 @@ class SimilarityMatcher:
     
     async def _determine_similarity_type(self, overall_score: float, 
                                        similarity_scores: Dict[str, Any]) -> SimilarityType:
-        """Determine the type of similarity based on scores"""
-        try:
+        """Determine the type of similarity based on scores"""        try:
             # Check for exact match
             if overall_score >= self.thresholds['exact_match']:
                 return SimilarityType.EXACT_MATCH
@@ -1388,8 +1344,7 @@ class SimilarityMatcher:
     
     async def _calculate_confidence(self, similarity_scores: Dict[str, Any], 
                                   content_type: str) -> MatchConfidence:
-        """Calculate confidence level for similarity match"""
-        try:
+        """Calculate confidence level for similarity match"""        try:
             # Calculate confidence based on score consistency
             all_scores = []
             for score in similarity_scores.values():
@@ -1428,8 +1383,7 @@ class SimilarityMatcher:
     async def _generate_analysis_details(self, similarity_scores: Dict[str, Any],
                                        fingerprint1: Dict[str, Any], fingerprint2: Dict[str, Any],
                                        content_type: str) -> Dict[str, Any]:
-        """Generate detailed analysis report"""
-        try:
+        """Generate detailed analysis report"""        try:
             analysis = {
                 'content_type': content_type,
                 'algorithm_breakdown': {},
@@ -1474,8 +1428,7 @@ class SimilarityMatcher:
     
     async def _generate_recommendations(self, similarity_scores: Dict[str, Any], 
                                       content_type: str) -> List[str]:
-        """Generate recommendations based on similarity analysis"""
-        recommendations = []
+        """Generate recommendations based on similarity analysis"""        recommendations = []
         
         try:
             # Get overall performance
@@ -1526,24 +1479,21 @@ class SimilarityMatcher:
     
     # Content-specific analysis methods (simplified implementations)
     async def _analyze_audio_features(self, features1: np.ndarray, features2: np.ndarray) -> float:
-        """Analyze audio-specific features"""
-        try:
+        """Analyze audio-specific features"""        try:
             # Simplified audio feature analysis
             return 1 - cosine(features1, features2) if len(features1) == len(features2) else 0.0
         except:
             return 0.0
     
     async def _analyze_image_features(self, features1: np.ndarray, features2: np.ndarray) -> float:
-        """Analyze image-specific features"""
-        try:
+        """Analyze image-specific features"""        try:
             # Simplified image feature analysis
             return 1 - cosine(features1, features2) if len(features1) == len(features2) else 0.0
         except:
             return 0.0
     
     async def _analyze_text_features(self, features1: np.ndarray, features2: np.ndarray) -> float:
-        """Analyze text-specific features"""
-        try:
+        """Analyze text-specific features"""        try:
             # Simplified text feature analysis
             return 1 - cosine(features1, features2) if len(features1) == len(features2) else 0.0
         except:
@@ -1551,25 +1501,20 @@ class SimilarityMatcher:
     
     # Content-specific similarity methods (simplified)
     async def _analyze_audio_similarity(self, fp1: Dict, fp2: Dict) -> Dict[str, float]:
-        """Audio-specific similarity analysis"""
-        return {'audio_specific': 0.5}  # Placeholder
+        """Audio-specific similarity analysis"""        return {'audio_specific': 0.5}  # Placeholder
     
     async def _analyze_video_similarity(self, fp1: Dict, fp2: Dict) -> Dict[str, float]:
-        """Video-specific similarity analysis"""
-        return {'video_specific': 0.5}  # Placeholder
+        """Video-specific similarity analysis"""        return {'video_specific': 0.5}  # Placeholder
     
     async def _analyze_image_similarity(self, fp1: Dict, fp2: Dict) -> Dict[str, float]:
-        """Image-specific similarity analysis"""
-        return {'image_specific': 0.5}  # Placeholder
+        """Image-specific similarity analysis"""        return {'image_specific': 0.5}  # Placeholder
     
     async def _analyze_text_similarity(self, fp1: Dict, fp2: Dict) -> Dict[str, float]:
-        """Text-specific similarity analysis"""
-        return {'text_specific': 0.5}  # Placeholder
+        """Text-specific similarity analysis"""        return {'text_specific': 0.5}  # Placeholder
     
     async def _validate_fingerprints(self, fp1: Dict[str, Any], fp2: Dict[str, Any], 
                                    content_type: str):
-        """Validate fingerprint inputs"""
-        if not fp1 or not fp2:
+        """Validate fingerprint inputs"""        if not fp1 or not fp2:
             raise ValidationError("Both fingerprints are required")
         
         if not content_type:
@@ -1584,5 +1529,4 @@ class SimilarityMatcher:
             raise ValidationError("No comparable fingerprint data found")
     
     async def cleanup(self):
-        """Cleanup resources"""
-        logger.info("Similarity matcher cleaned up")
+        """Cleanup resources"""        logger.info("Similarity matcher cleaned up")

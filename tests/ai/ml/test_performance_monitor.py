@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Performance Monitor Tests - Enterprise Grade Performance & Metrics Test Suite
+"""Performance Monitor Tests - Enterprise Grade Performance & Metrics Test Suite
 
 Comprehensive tests for performance monitoring, system metrics tracking, 
 optimization analysis, resource utilization, and performance intelligence systems.
@@ -25,9 +21,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT LEGAL WARNING ⚠️
 Contact: mlaiel@live.de - Unauthorized use STRICTLY PROHIBITED
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -68,8 +62,7 @@ from ai.ml.performance_monitor import (
 
 @dataclass
 class MockSystemMetrics:
-    """Mock system metrics for testing"""
-    cpu_percent: float
+    """Mock system metrics for testing"""    cpu_percent: float
     memory_percent: float  
     disk_io_read_mb: float
     disk_io_write_mb: float
@@ -79,11 +72,9 @@ class MockSystemMetrics:
 
 
 class TestPerformanceMonitor:
-    """Tests for core performance monitoring functionality"""
-    
+    """Tests for core performance monitoring functionality"""    
     def test_init_performance_monitor(self):
-        """Test performance monitor initialization"""
-        monitor = PerformanceMonitor(
+        """Test performance monitor initialization"""        monitor = PerformanceMonitor(
             monitoring_interval=1.0,
             metrics_to_collect=["cpu", "memory", "disk", "network", "gpu"],
             alert_thresholds={"cpu": 80, "memory": 85, "disk_io": 100},
@@ -98,8 +89,7 @@ class TestPerformanceMonitor:
         assert monitor.historical_data_retention_hours == 168
 
     def test_system_metrics_collection(self):
-        """Test system metrics collection functionality"""
-        monitor = PerformanceMonitor()
+        """Test system metrics collection functionality"""        monitor = PerformanceMonitor()
         
         collection_config = {
             "detailed_process_info": True,
@@ -171,8 +161,7 @@ class TestPerformanceMonitor:
             assert metrics_result["system_info"]["disk"]["total_space_gb"] > 0
 
     def test_performance_thresholds_and_alerting(self, mock_system_metrics):
-        """Test performance threshold monitoring and alerting"""
-        monitor = PerformanceMonitor(
+        """Test performance threshold monitoring and alerting"""        monitor = PerformanceMonitor(
             alert_thresholds={
                 "cpu_usage": 80.0,
                 "memory_usage": 85.0,
@@ -240,8 +229,7 @@ class TestPerformanceMonitor:
             assert threshold_result["notification_status"]["email_sent"]
 
     def test_performance_trend_analysis(self, historical_metrics_data):
-        """Test performance trend analysis and prediction"""
-        monitor = PerformanceMonitor()
+        """Test performance trend analysis and prediction"""        monitor = PerformanceMonitor()
         
         if not historical_metrics_data:
             # Generate 24 hours of synthetic metrics data
@@ -325,8 +313,7 @@ class TestPerformanceMonitor:
             assert "seasonal_pattern" in trend_result["trend_analysis"]["cpu_usage"]
 
     def test_real_time_performance_monitoring(self):
-        """Test real-time performance monitoring capabilities"""
-        monitor = PerformanceMonitor(enable_real_time_monitoring=True)
+        """Test real-time performance monitoring capabilities"""        monitor = PerformanceMonitor(enable_real_time_monitoring=True)
         
         realtime_config = {
             "sampling_interval_seconds": 1.0,
@@ -388,11 +375,9 @@ class TestPerformanceMonitor:
 
 
 class TestModelPerformanceTracker:
-    """Tests for ML model performance tracking"""
-    
+    """Tests for ML model performance tracking"""    
     def test_init_model_performance_tracker(self):
-        """Test model performance tracker initialization"""
-        tracker = ModelPerformanceTracker(
+        """Test model performance tracker initialization"""        tracker = ModelPerformanceTracker(
             track_training_metrics=True,
             track_inference_metrics=True,
             model_versioning=True,
@@ -407,8 +392,7 @@ class TestModelPerformanceTracker:
         assert tracker.resource_efficiency_tracking
 
     def test_training_performance_monitoring(self, training_session_data):
-        """Test ML training performance monitoring"""
-        tracker = ModelPerformanceTracker(track_training_metrics=True)
+        """Test ML training performance monitoring"""        tracker = ModelPerformanceTracker(track_training_metrics=True)
         
         if not training_session_data:
             training_session_data = {
@@ -481,8 +465,7 @@ class TestModelPerformanceTracker:
             assert training_result["performance_metrics"]["training_accuracy"] > 0.8
 
     def test_inference_performance_monitoring(self, inference_workload_data):
-        """Test ML inference performance monitoring"""
-        tracker = ModelPerformanceTracker(track_inference_metrics=True)
+        """Test ML inference performance monitoring"""        tracker = ModelPerformanceTracker(track_inference_metrics=True)
         
         if not inference_workload_data:
             inference_workload_data = {
@@ -550,8 +533,7 @@ class TestModelPerformanceTracker:
             assert inference_result["quality_metrics"]["prediction_confidence_average"] > 0.8
 
     def test_model_comparison_benchmarking(self, model_versions_data):
-        """Test model performance comparison and benchmarking"""
-        tracker = ModelPerformanceTracker(benchmark_comparisons=True)
+        """Test model performance comparison and benchmarking"""        tracker = ModelPerformanceTracker(benchmark_comparisons=True)
         
         if not model_versions_data:
             model_versions_data = [
@@ -643,11 +625,9 @@ class TestModelPerformanceTracker:
 
 
 class TestMemoryProfiler:
-    """Tests for memory profiling and optimization"""
-    
+    """Tests for memory profiling and optimization"""    
     def test_init_memory_profiler(self):
-        """Test memory profiler initialization"""
-        profiler = MemoryProfiler(
+        """Test memory profiler initialization"""        profiler = MemoryProfiler(
             enable_detailed_tracking=True,
             track_allocations=True,
             detect_memory_leaks=True,
@@ -660,8 +640,7 @@ class TestMemoryProfiler:
         assert profiler.profile_garbage_collection
 
     def test_memory_usage_profiling(self, memory_intensive_function):
-        """Test memory usage profiling for functions"""
-        profiler = MemoryProfiler()
+        """Test memory usage profiling for functions"""        profiler = MemoryProfiler()
         
         # Mock memory-intensive function if not provided
         if not memory_intensive_function:
@@ -735,8 +714,7 @@ class TestMemoryProfiler:
             assert memory_result["memory_profile"]["peak_memory_mb"] > 100
 
     def test_memory_leak_detection(self, potential_leak_scenario):
-        """Test memory leak detection capabilities"""
-        profiler = MemoryProfiler(detect_memory_leaks=True)
+        """Test memory leak detection capabilities"""        profiler = MemoryProfiler(detect_memory_leaks=True)
         
         if not potential_leak_scenario:
             def potential_leak_scenario():
@@ -810,11 +788,9 @@ class TestMemoryProfiler:
 
 
 class TestLoadTestRunner:
-    """Tests for load testing and scalability analysis"""
-    
+    """Tests for load testing and scalability analysis"""    
     def test_init_load_test_runner(self):
-        """Test load test runner initialization"""
-        load_tester = LoadTestRunner(
+        """Test load test runner initialization"""        load_tester = LoadTestRunner(
             max_concurrent_users=1000,
             test_duration_minutes=30,
             ramp_up_strategies=["linear", "exponential", "step"],
@@ -827,8 +803,7 @@ class TestLoadTestRunner:
         assert load_tester.performance_targets["response_time_p95"] == 500
 
     def test_stress_testing_execution(self, target_system_config):
-        """Test stress testing execution and analysis"""
-        load_tester = LoadTestRunner()
+        """Test stress testing execution and analysis"""        load_tester = LoadTestRunner()
         
         if not target_system_config:
             target_system_config = {
@@ -936,8 +911,7 @@ class TestLoadTestRunner:
             assert stress_test_result["performance_metrics"]["error_analysis"]["total_error_rate"] < 1.0
 
     def test_capacity_planning_analysis(self, production_requirements):
-        """Test capacity planning and resource prediction"""
-        load_tester = LoadTestRunner()
+        """Test capacity planning and resource prediction"""        load_tester = LoadTestRunner()
         
         if not production_requirements:
             production_requirements = {
@@ -1047,12 +1021,10 @@ class TestLoadTestRunner:
 
 @pytest.mark.integration
 class TestPerformanceMonitorIntegration:
-    """Integration tests for performance monitoring systems"""
-    
+    """Integration tests for performance monitoring systems"""    
     @pytest.mark.slow
     def test_comprehensive_performance_monitoring_pipeline(self, temp_dir):
-        """Test complete performance monitoring pipeline"""
-        # Initialize all components
+        """Test complete performance monitoring pipeline"""        # Initialize all components
         monitor = PerformanceMonitor(output_directory=str(temp_dir))
         model_tracker = ModelPerformanceTracker()
         memory_profiler = MemoryProfiler()
@@ -1151,8 +1123,7 @@ class TestPerformanceMonitorIntegration:
         assert integrated_report["critical_issues"] == 0
 
     def test_performance_monitoring_under_load(self):
-        """Test performance monitoring system under high load"""
-        monitor = PerformanceMonitor()
+        """Test performance monitoring system under high load"""        monitor = PerformanceMonitor()
         
         # Simulate high-frequency monitoring
         high_load_config = {

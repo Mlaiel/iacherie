@@ -1,5 +1,4 @@
-"""
-🔧 Container Registry Manager - IA-Influencer-Agent CI/CD
+"""🔧 Container Registry Manager - IA-Influencer-Agent CI/CD
 ================================================================
 Expert: DEVOPS_ENGINEER + CONTAINER_SPECIALIST  
 Created: 2025-08-24
@@ -8,9 +7,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Enterprise container registry management for multi-format content processing.
 Handles AI model containers, audio processing images, and security scanning.
 ================================================================
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 import asyncio
 import logging
 import docker
@@ -28,8 +25,7 @@ from kubernetes import client, config
 logger = logging.getLogger(__name__)
 
 class RegistryType(Enum):
-    """Container registry type enumeration"""
-    DOCKER_HUB = "docker_hub"
+    """Container registry type enumeration"""    DOCKER_HUB = "docker_hub"
     AWS_ECR = "aws_ecr"
     GCP_GCR = "gcp_gcr"
     AZURE_ACR = "azure_acr"
@@ -37,8 +33,7 @@ class RegistryType(Enum):
     LOCAL = "local"
 
 class ImageType(Enum):
-    """Container image type enumeration"""
-    API_GATEWAY = "api_gateway"
+    """Container image type enumeration"""    API_GATEWAY = "api_gateway"
     AI_PROCESSOR = "ai_processor"
     AUDIO_ENGINE = "audio_engine"
     FINGERPRINT_ENGINE = "fingerprint_engine"
@@ -50,8 +45,7 @@ class ImageType(Enum):
     MONITORING = "monitoring"
 
 class SecurityLevel(Enum):
-    """Security scanning level enumeration"""
-    CRITICAL = "critical"
+    """Security scanning level enumeration"""    CRITICAL = "critical"
     HIGH = "high" 
     MEDIUM = "medium"
     LOW = "low"
@@ -59,8 +53,7 @@ class SecurityLevel(Enum):
 
 @dataclass
 class ContainerConfiguration:
-    """Container configuration"""
-    image_name: str
+    """Container configuration"""    image_name: str
     tag: str
     registry_type: RegistryType
     image_type: ImageType
@@ -83,8 +76,7 @@ class ContainerConfiguration:
 
 @dataclass
 class RegistryCredentials:
-    """Registry credentials configuration"""
-    registry_type: RegistryType
+    """Registry credentials configuration"""    registry_type: RegistryType
     username: str
     password: str
     registry_url: str
@@ -94,8 +86,7 @@ class RegistryCredentials:
 
 @dataclass
 class SecurityScanResult:
-    """Security scan result"""
-    image_name: str
+    """Security scan result"""    image_name: str
     tag: str
     scan_date: datetime
     vulnerabilities: Dict[SecurityLevel, int]
@@ -107,11 +98,9 @@ class SecurityScanResult:
     layers_count: int
     
 class ContainerRegistryManager:
-    """Enterprise container registry management system"""
-    
+    """Enterprise container registry management system"""    
     def __init__(self):
-        """Initialize container registry manager"""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize container registry manager"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.docker_client = None
         self.registries: Dict[RegistryType, RegistryCredentials] = {}
         self.configurations: Dict[str, ContainerConfiguration] = {}
@@ -119,8 +108,7 @@ class ContainerRegistryManager:
         self.initialized = False
     
     async def initialize(self) -> bool:
-        """Initialize container registry manager"""
-        try:
+        """Initialize container registry manager"""        try:
             # Initialize Docker client
             self.docker_client = docker.from_env()
             
@@ -142,8 +130,7 @@ class ContainerRegistryManager:
             return False
     
     async def _load_registry_configurations(self) -> None:
-        """Load registry configurations"""
-        # AWS ECR for production
+        """Load registry configurations"""        # AWS ECR for production
         self.registries[RegistryType.AWS_ECR] = RegistryCredentials(
             registry_type=RegistryType.AWS_ECR,
             username="AWS",
@@ -171,8 +158,7 @@ class ContainerRegistryManager:
         )
     
     async def _setup_container_configurations(self) -> None:
-        """Setup container configurations for IA-Influencer components"""
-        
+        """Setup container configurations for IA-Influencer components"""        
         # API Gateway - FastAPI application
         self.configurations["api_gateway"] = ContainerConfiguration(
             image_name="ia-influencer/api-gateway",
@@ -316,8 +302,7 @@ class ContainerRegistryManager:
         build_args: Optional[Dict[str, str]] = None,
         no_cache: bool = False
     ) -> Tuple[bool, str]:
-        """Build container image"""
-        try:
+        """Build container image"""        try:
             if config_name not in self.configurations:
                 raise ValueError(f"Configuration not found: {config_name}")
             
@@ -360,8 +345,7 @@ class ContainerRegistryManager:
         config_name: str,
         tag: Optional[str] = None
     ) -> bool:
-        """Push image to registry"""
-        try:
+        """Push image to registry"""        try:
             if config_name not in self.configurations:
                 raise ValueError(f"Configuration not found: {config_name}")
             
@@ -401,8 +385,7 @@ class ContainerRegistryManager:
         config_name: str,
         tag: Optional[str] = None
     ) -> SecurityScanResult:
-        """Perform security scan on image"""
-        try:
+        """Perform security scan on image"""        try:
             if config_name not in self.configurations:
                 raise ValueError(f"Configuration not found: {config_name}")
             
@@ -448,8 +431,7 @@ class ContainerRegistryManager:
             raise
     
     async def _simulate_security_scan(self, image_type: ImageType) -> Dict[SecurityLevel, int]:
-        """Simulate security scan results based on image type"""
-        # Base images generally have different vulnerability profiles
+        """Simulate security scan results based on image type"""        # Base images generally have different vulnerability profiles
         base_vulnerabilities = {
             ImageType.AI_PROCESSOR: {
                 SecurityLevel.CRITICAL: 0,
@@ -486,12 +468,10 @@ class ContainerRegistryManager:
         return base_vulnerabilities.get(image_type, default_vulnerabilities)
     
     def _generate_mock_cves(self, count: int) -> List[str]:
-        """Generate mock CVE identifiers"""
-        return [f"CVE-2024-{1000 + i}" for i in range(count)]
+        """Generate mock CVE identifiers"""        return [f"CVE-2024-{1000 + i}" for i in range(count)]
     
     async def _authenticate_registry(self, registry: RegistryCredentials) -> None:
-        """Authenticate with container registry"""
-        try:
+        """Authenticate with container registry"""        try:
             if registry.registry_type == RegistryType.AWS_ECR:
                 # Use AWS CLI to get login token
                 import boto3
@@ -519,8 +499,7 @@ class ContainerRegistryManager:
         keep_latest: int = 5,
         max_age_days: int = 30
     ) -> Dict[str, int]:
-        """Cleanup old container images"""
-        try:
+        """Cleanup old container images"""        try:
             cleanup_stats = {"removed": 0, "size_freed_mb": 0}
             cutoff_date = datetime.now() - timedelta(days=max_age_days)
             
@@ -565,8 +544,7 @@ class ContainerRegistryManager:
             return {"removed": 0, "size_freed_mb": 0}
     
     async def get_registry_status(self) -> Dict[RegistryType, Dict[str, Any]]:
-        """Get status of all configured registries"""
-        registry_status = {}
+        """Get status of all configured registries"""        registry_status = {}
         
         for registry_type, registry in self.registries.items():
             try:
@@ -590,8 +568,7 @@ class ContainerRegistryManager:
         return registry_status
     
     async def _test_ecr_connectivity(self, registry: RegistryCredentials) -> Dict[str, Any]:
-        """Test AWS ECR connectivity"""
-        try:
+        """Test AWS ECR connectivity"""        try:
             import boto3
             ecr_client = boto3.client('ecr', region_name=registry.region)
             repositories = ecr_client.describe_repositories(maxResults=1)
@@ -610,8 +587,7 @@ class ContainerRegistryManager:
             }
     
     async def _test_dockerhub_connectivity(self, registry: RegistryCredentials) -> Dict[str, Any]:
-        """Test Docker Hub connectivity"""
-        try:
+        """Test Docker Hub connectivity"""        try:
             response = requests.get(f"https://{registry.registry_url}/v2/", timeout=10)
             return {
                 "status": "healthy" if response.status_code == 200 else "warning",
@@ -626,8 +602,7 @@ class ContainerRegistryManager:
             }
     
     async def _test_generic_registry_connectivity(self, registry: RegistryCredentials) -> Dict[str, Any]:
-        """Test generic registry connectivity"""
-        try:
+        """Test generic registry connectivity"""        try:
             response = requests.get(f"https://{registry.registry_url}/v2/", timeout=10)
             return {
                 "status": "healthy" if response.status_code in [200, 401] else "warning",
@@ -642,8 +617,7 @@ class ContainerRegistryManager:
             }
     
     async def _initialize_security_scanning(self) -> None:
-        """Initialize security scanning tools"""
-        # In production, this would install and configure tools like:
+        """Initialize security scanning tools"""        # In production, this would install and configure tools like:
         # - Trivy for vulnerability scanning
         # - Clair for static analysis
         # - Docker Bench for Docker security

@@ -1,13 +1,10 @@
-"""
-Platform Connector - Multi-Platform Integration and Optimization System
+"""Platform Connector - Multi-Platform Integration and Optimization System
 
 Enterprise-grade platform connectivity with automated optimization,
 cross-platform synchronization, and intelligent content distribution.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 from typing import Dict, List, Optional, Any, Tuple
@@ -45,8 +42,7 @@ from ...security.token_manager import TokenManager
 logger = logging.getLogger(__name__)
 
 class PlatformType(Enum):
-    """Supported platform types"""
-    SPOTIFY = "spotify"
+    """Supported platform types"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -58,8 +54,7 @@ class PlatformType(Enum):
     PINTEREST = "pinterest"
 
 class ConnectionStatus(Enum):
-    """Platform connection status"""
-    CONNECTED = "connected"
+    """Platform connection status"""    CONNECTED = "connected"
     PENDING = "pending"
     FAILED = "failed"
     EXPIRED = "expired"
@@ -67,8 +62,7 @@ class ConnectionStatus(Enum):
 
 @dataclass
 class PlatformConnection:
-    """Platform connection information"""
-    platform: PlatformType
+    """Platform connection information"""    platform: PlatformType
     user_id: str
     platform_user_id: str = ""
     username: str = ""
@@ -103,8 +97,7 @@ class PlatformConnection:
     sync_errors: List[str] = field(default_factory=list)
 
 class PlatformConnector:
-    """
-    Advanced multi-platform integration and optimization system.
+    """    Advanced multi-platform integration and optimization system.
     
     Core Capabilities:
     - OAuth-based platform authentication
@@ -114,8 +107,7 @@ class PlatformConnector:
     - Intelligent posting optimization
     - Platform-specific content adaptation
     - Performance monitoring and optimization
-    """
-    
+    """    
     def __init__(self):
         # Initialize platform clients
         self.spotify_client = SpotifyClient()
@@ -138,8 +130,7 @@ class PlatformConnector:
         logger.info("PlatformConnector initialized successfully")
     
     def _initialize_platform_configs(self) -> Dict[PlatformType, Dict[str, Any]]:
-        """Initialize platform-specific configurations."""
-        return {
+        """Initialize platform-specific configurations."""        return {
             PlatformType.SPOTIFY: {
                 'required_scopes': ['user-read-email', 'user-read-private', 'user-library-read'],
                 'optional_scopes': ['user-modify-playback-state', 'playlist-modify-public'],
@@ -179,10 +170,8 @@ class PlatformConnector:
     
     async def connect_platforms(self, user_id: str, creator_type: str,
                               platform_configs: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Connect multiple platforms for a creator with intelligent optimization.
-        """
-        try:
+        """        Connect multiple platforms for a creator with intelligent optimization.
+        """        try:
             connection_results = {
                 'user_id': user_id,
                 'creator_type': creator_type,
@@ -254,10 +243,8 @@ class PlatformConnector:
     async def optimize_platforms(self, user_id: str, 
                                connections: Dict[str, Any],
                                profile_data: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Optimize platform settings and configurations based on creator profile.
-        """
-        try:
+        """        Optimize platform settings and configurations based on creator profile.
+        """        try:
             optimization_results = {
                 'user_id': user_id,
                 'optimizations_applied': 0,
@@ -310,8 +297,7 @@ class PlatformConnector:
     
     async def _connect_single_platform(self, user_id: str, platform: PlatformType,
                                      config: Dict[str, Any]) -> Dict[str, Any]:
-        """Connect to a single platform with OAuth authentication."""
-        try:
+        """Connect to a single platform with OAuth authentication."""        try:
             # Check if already connected
             existing_connection = await self._get_existing_connection(user_id, platform)
             if existing_connection and existing_connection.connection_status == ConnectionStatus.CONNECTED:
@@ -389,8 +375,7 @@ class PlatformConnector:
     
     async def _perform_oauth_authentication(self, user_id: str, platform: PlatformType,
                                           config: Dict[str, Any], client: Any) -> Dict[str, Any]:
-        """Perform OAuth authentication for platform."""
-        try:
+        """Perform OAuth authentication for platform."""        try:
             # Get OAuth configuration
             oauth_config = await self.oauth_manager.get_platform_config(platform.value)
             
@@ -415,8 +400,7 @@ class PlatformConnector:
     
     async def _fetch_platform_metrics(self, connection: PlatformConnection, 
                                     client: Any) -> Optional[Dict[str, Any]]:
-        """Fetch platform metrics and analytics."""
-        try:
+        """Fetch platform metrics and analytics."""        try:
             # Rate limiting
             await self.rate_limiter.acquire(
                 f"{connection.platform.value}_{connection.user_id}"
@@ -458,8 +442,7 @@ class PlatformConnector:
     
     async def _optimize_single_platform(self, user_id: str, platform_name: str,
                                       profile_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize settings for a single platform."""
-        try:
+        """Optimize settings for a single platform."""        try:
             optimization_result = {
                 'platform': platform_name,
                 'optimizations_count': 0,
@@ -515,8 +498,7 @@ class PlatformConnector:
     async def _apply_cross_platform_optimizations(self, user_id: str,
                                                 connections: Dict[str, PlatformConnection],
                                                 profile_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply optimizations across multiple platforms."""
-        try:
+        """Apply optimizations across multiple platforms."""        try:
             cross_platform_settings = {
                 'content_synchronization': False,
                 'unified_branding': False,
@@ -552,8 +534,7 @@ class PlatformConnector:
             return {}
     
     def _get_platform_client(self, platform: PlatformType):
-        """Get appropriate platform client."""
-        clients = {
+        """Get appropriate platform client."""        clients = {
             PlatformType.SPOTIFY: self.spotify_client,
             PlatformType.YOUTUBE: self.youtube_client,
             PlatformType.INSTAGRAM: self.instagram_client,
@@ -565,8 +546,7 @@ class PlatformConnector:
     # Helper methods for specific platform optimizations
     async def _optimize_spotify_for_musician(self, connection: PlatformConnection,
                                            profile_data: Dict[str, Any]) -> List[str]:
-        """Apply Spotify-specific optimizations for musicians."""
-        optimizations = []
+        """Apply Spotify-specific optimizations for musicians."""        optimizations = []
         
         # Artist profile optimization
         optimizations.append("Optimized artist profile with genre tags")
@@ -581,8 +561,7 @@ class PlatformConnector:
     
     async def _optimize_instagram_visual(self, connection: PlatformConnection,
                                        profile_data: Dict[str, Any]) -> List[str]:
-        """Apply Instagram visual content optimizations."""
-        optimizations = []
+        """Apply Instagram visual content optimizations."""        optimizations = []
         
         # Profile visual consistency
         optimizations.append("Applied consistent visual theme")
@@ -597,8 +576,7 @@ class PlatformConnector:
     
     async def _optimize_youtube_content(self, connection: PlatformConnection,
                                       profile_data: Dict[str, Any]) -> List[str]:
-        """Apply YouTube content optimizations."""
-        optimizations = []
+        """Apply YouTube content optimizations."""        optimizations = []
         
         # Channel optimization
         optimizations.append("Optimized channel layout and branding")
@@ -613,8 +591,7 @@ class PlatformConnector:
     
     async def _apply_general_optimizations(self, connection: PlatformConnection,
                                          profile_data: Dict[str, Any]) -> List[str]:
-        """Apply general optimizations for any platform."""
-        optimizations = []
+        """Apply general optimizations for any platform."""        optimizations = []
         
         # Posting schedule optimization
         optimizations.append("Optimized posting schedule based on audience")
@@ -629,8 +606,7 @@ class PlatformConnector:
     
     async def _generate_platform_recommendations(self, connection: PlatformConnection,
                                                profile_data: Dict[str, Any]) -> List[str]:
-        """Generate platform-specific recommendations."""
-        recommendations = []
+        """Generate platform-specific recommendations."""        recommendations = []
         
         # Engagement recommendations
         if connection.engagement_rate < 0.02:
@@ -648,8 +624,7 @@ class PlatformConnector:
     async def _generate_optimization_recommendations(self, user_id: str,
                                                    connections: Dict[str, PlatformConnection],
                                                    profile_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate comprehensive optimization recommendations."""
-        recommendations = []
+        """Generate comprehensive optimization recommendations."""        recommendations = []
         
         # Platform expansion recommendations
         connected_platforms = set(connections.keys())
@@ -678,8 +653,7 @@ class PlatformConnector:
     
     # Helper methods for platform analysis
     def _get_recommended_platforms(self, profile_data: Dict[str, Any]) -> List[str]:
-        """Get recommended platforms based on creator type."""
-        creator_type = profile_data.get('creator_type', 'multi_format')
+        """Get recommended platforms based on creator type."""        creator_type = profile_data.get('creator_type', 'multi_format')
         
         platform_recommendations = {
             'musician': ['spotify', 'youtube', 'instagram', 'soundcloud'],
@@ -694,37 +668,31 @@ class PlatformConnector:
     
     def _has_consistent_branding(self, connections: Dict[str, PlatformConnection],
                                profile_data: Dict[str, Any]) -> bool:
-        """Check if branding is consistent across platforms."""
-        # Simplified check - in production would analyze actual branding elements
+        """Check if branding is consistent across platforms."""        # Simplified check - in production would analyze actual branding elements
         return len(set(conn.username for conn in connections.values())) == 1
     
     def _find_compatible_platforms(self, connections: Dict[str, PlatformConnection]) -> List[str]:
-        """Find platforms that are compatible for cross-promotion."""
-        # All connected platforms are potentially compatible
+        """Find platforms that are compatible for cross-promotion."""        # All connected platforms are potentially compatible
         return list(connections.keys())
     
     def _supports_automated_posting(self, connections: Dict[str, PlatformConnection]) -> bool:
-        """Check if platforms support automated posting."""
-        # Most modern platforms support some form of automated posting
+        """Check if platforms support automated posting."""        # Most modern platforms support some form of automated posting
         return len(connections) > 0
     
     # Storage and persistence methods
     async def _get_existing_connection(self, user_id: str, platform: PlatformType) -> Optional[PlatformConnection]:
-        """Get existing platform connection from database."""
-        # Placeholder - would query database
+        """Get existing platform connection from database."""        # Placeholder - would query database
         return None
     
     async def _should_refresh_connection(self, connection: PlatformConnection) -> bool:
-        """Check if connection needs refreshing."""
-        if not connection.token_expires_at:
+        """Check if connection needs refreshing."""        if not connection.token_expires_at:
             return False
         
         # Refresh if token expires within 1 hour
         return connection.token_expires_at <= datetime.utcnow() + timedelta(hours=1)
     
     async def _refresh_platform_connection(self, connection: PlatformConnection) -> bool:
-        """Refresh platform connection tokens."""
-        try:
+        """Refresh platform connection tokens."""        try:
             # Placeholder - would refresh actual tokens
             connection.token_expires_at = datetime.utcnow() + timedelta(hours=1)
             return True
@@ -733,8 +701,7 @@ class PlatformConnector:
             return False
     
     async def _store_platform_connection(self, connection: PlatformConnection) -> None:
-        """Store platform connection in database."""
-        try:
+        """Store platform connection in database."""        try:
             # Placeholder - would store in actual database
             logger.info(f"Stored connection for {connection.platform.value} user {connection.user_id}")
         except Exception as e:
@@ -742,8 +709,7 @@ class PlatformConnector:
     
     async def _apply_creator_optimizations(self, user_id: str, creator_type: str,
                                          connections: Dict[str, PlatformConnection]) -> bool:
-        """Apply creator type-specific optimizations."""
-        try:
+        """Apply creator type-specific optimizations."""        try:
             optimization_count = 0
             
             for platform_name, connection in connections.items():

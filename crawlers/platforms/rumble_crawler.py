@@ -1,11 +1,8 @@
-"""
-Rumble Video Crawler
+"""Rumble Video Crawler
 Advanced industrial-grade Rumble crawler for video content protection and analytics
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 - All rights reserved
-"""
-
-import asyncio
+"""import asyncio
 import json
 import re
 from datetime import datetime, timedelta
@@ -29,8 +26,7 @@ settings = get_settings()
 
 
 class RumbleVideo(BaseModel):
-    """Rumble Video data model"""
-    video_id: str
+    """Rumble Video data model"""    video_id: str
     title: str
     description: str
     duration: int = 0  # in seconds
@@ -73,8 +69,7 @@ class RumbleVideo(BaseModel):
 
 
 class RumbleChannel(BaseModel):
-    """Rumble Channel data model"""
-    channel_id: str
+    """Rumble Channel data model"""    channel_id: str
     name: str
     username: str
     description: Optional[str] = None
@@ -102,8 +97,7 @@ class RumbleChannel(BaseModel):
 
 
 class RumblePlaylist(BaseModel):
-    """Rumble Playlist data model"""
-    playlist_id: str
+    """Rumble Playlist data model"""    playlist_id: str
     title: str
     description: Optional[str] = None
     creator: str
@@ -120,8 +114,7 @@ class RumblePlaylist(BaseModel):
 
 
 class RumbleLiveStream(BaseModel):
-    """Rumble Live Stream data model"""
-    stream_id: str
+    """Rumble Live Stream data model"""    stream_id: str
     title: str
     description: Optional[str] = None
     streamer: str
@@ -144,8 +137,7 @@ class RumbleLiveStream(BaseModel):
 
 
 class RumbleCrawler(BaseCrawler):
-    """
-    Advanced Rumble crawler for comprehensive video content monitoring
+    """    Advanced Rumble crawler for comprehensive video content monitoring
     
     Features:
     - Video content analysis with metadata extraction
@@ -158,8 +150,7 @@ class RumbleCrawler(BaseCrawler):
     - Monetization and revenue tracking
     - Content moderation and safety analysis
     - Alternative platform migration tracking
-    """
-    
+    """    
     def __init__(self):
         super().__init__()
         self.platform = "rumble"
@@ -180,8 +171,7 @@ class RumbleCrawler(BaseCrawler):
         }
         
     async def authenticate(self, username: str = None, password: str = None) -> bool:
-        """Authenticate with Rumble (optional for basic access)"""
-        try:
+        """Authenticate with Rumble (optional for basic access)"""        try:
             if username and password:
                 login_data = {
                     'username': username,
@@ -221,8 +211,7 @@ class RumbleCrawler(BaseCrawler):
         quality: str = None,
         limit: int = 50
     ) -> List[Dict]:
-        """
-        Search Rumble videos with filtering options
+        """        Search Rumble videos with filtering options
         
         Args:
             query: Search query
@@ -234,8 +223,7 @@ class RumbleCrawler(BaseCrawler):
             
         Returns:
             List of matching videos
-        """
-        await self.rate_limiter.wait()
+        """        await self.rate_limiter.wait()
         
         try:
             search_url = f"{self.base_url}/search/video"
@@ -269,8 +257,7 @@ class RumbleCrawler(BaseCrawler):
             return []
     
     async def get_video_details(self, video_id: str) -> Optional[RumbleVideo]:
-        """Get detailed information about a specific video"""
-        await self.rate_limiter.wait()
+        """Get detailed information about a specific video"""        await self.rate_limiter.wait()
         
         try:
             video_url = f"{self.base_url}/v{video_id}"
@@ -290,8 +277,7 @@ class RumbleCrawler(BaseCrawler):
             return None
     
     async def get_channel_details(self, channel_id: str) -> Optional[RumbleChannel]:
-        """Get detailed information about a specific channel"""
-        await self.rate_limiter.wait()
+        """Get detailed information about a specific channel"""        await self.rate_limiter.wait()
         
         try:
             channel_url = f"{self.base_url}/c/{channel_id}"
@@ -311,8 +297,7 @@ class RumbleCrawler(BaseCrawler):
             return None
     
     async def get_channel_videos(self, channel_id: str, limit: int = 100) -> List[RumbleVideo]:
-        """Get all videos from a specific channel"""
-        await self.rate_limiter.wait()
+        """Get all videos from a specific channel"""        await self.rate_limiter.wait()
         
         try:
             videos_url = f"{self.base_url}/c/{channel_id}/videos"
@@ -356,8 +341,7 @@ class RumbleCrawler(BaseCrawler):
         time_period: str = "today",
         limit: int = 50
     ) -> List[RumbleVideo]:
-        """
-        Get trending videos on Rumble
+        """        Get trending videos on Rumble
         
         Args:
             category: Category filter
@@ -366,8 +350,7 @@ class RumbleCrawler(BaseCrawler):
             
         Returns:
             List of trending videos
-        """
-        await self.rate_limiter.wait()
+        """        await self.rate_limiter.wait()
         
         try:
             trending_url = f"{self.base_url}/trending"
@@ -401,8 +384,7 @@ class RumbleCrawler(BaseCrawler):
             return []
     
     async def get_live_streams(self, category: str = None, limit: int = 20) -> List[RumbleLiveStream]:
-        """Get current live streams on Rumble"""
-        await self.rate_limiter.wait()
+        """Get current live streams on Rumble"""        await self.rate_limiter.wait()
         
         try:
             live_url = f"{self.base_url}/live"
@@ -438,8 +420,7 @@ class RumbleCrawler(BaseCrawler):
         protected_content: Dict,
         similarity_threshold: float = 0.8
     ) -> List[ContentMatch]:
-        """
-        Monitor Rumble for potential copyright infringement
+        """        Monitor Rumble for potential copyright infringement
         
         Args:
             protected_content: Content to protect
@@ -447,8 +428,7 @@ class RumbleCrawler(BaseCrawler):
             
         Returns:
             List of potential copyright matches
-        """
-        matches = []
+        """        matches = []
         
         try:
             # Generate search queries from protected content
@@ -497,16 +477,14 @@ class RumbleCrawler(BaseCrawler):
             return []
     
     async def analyze_video_performance(self, video_id: str) -> Dict[str, Any]:
-        """
-        Analyze video performance metrics and engagement
+        """        Analyze video performance metrics and engagement
         
         Args:
             video_id: Rumble video ID
             
         Returns:
             Comprehensive performance analysis
-        """
-        try:
+        """        try:
             video = await self.get_video_details(video_id)
             if not video:
                 return {}
@@ -569,16 +547,14 @@ class RumbleCrawler(BaseCrawler):
             return {}
     
     async def analyze_channel_growth(self, channel_id: str) -> Dict[str, Any]:
-        """
-        Analyze channel growth and performance metrics
+        """        Analyze channel growth and performance metrics
         
         Args:
             channel_id: Rumble channel ID
             
         Returns:
             Comprehensive channel growth analysis
-        """
-        try:
+        """        try:
             channel = await self.get_channel_details(channel_id)
             if not channel:
                 return {}
@@ -642,8 +618,7 @@ class RumbleCrawler(BaseCrawler):
         time_period: str = "week",
         limit: int = 100
     ) -> Dict[str, Any]:
-        """
-        Analyze overall platform trends on Rumble
+        """        Analyze overall platform trends on Rumble
         
         Args:
             category: Category filter for trend analysis
@@ -652,8 +627,7 @@ class RumbleCrawler(BaseCrawler):
             
         Returns:
             Comprehensive platform trend analysis
-        """
-        try:
+        """        try:
             trending_videos = await self.get_trending_videos(category, time_period, limit)
             live_streams = await self.get_live_streams(category, limit=20)
             
@@ -710,8 +684,7 @@ class RumbleCrawler(BaseCrawler):
     
     # HTML Parsing Methods
     async def _parse_search_results(self, html_content: str) -> List[Dict]:
-        """Parse search results from Rumble HTML"""
-        try:
+        """Parse search results from Rumble HTML"""        try:
             soup = BeautifulSoup(html_content, 'html.parser')
             results = []
             
@@ -776,8 +749,7 @@ class RumbleCrawler(BaseCrawler):
             return []
     
     async def _parse_video_page(self, html_content: str, video_id: str) -> Dict:
-        """Parse video page HTML for detailed information"""
-        try:
+        """Parse video page HTML for detailed information"""        try:
             soup = BeautifulSoup(html_content, 'html.parser')
             video_data = {'video_id': video_id}
             
@@ -847,8 +819,7 @@ class RumbleCrawler(BaseCrawler):
             return {'video_id': video_id}
     
     def _extract_video_id_from_url(self, url: str) -> str:
-        """Extract video ID from Rumble URL"""
-        try:
+        """Extract video ID from Rumble URL"""        try:
             # Rumble video URLs: /v[video_id] or /video/[video_id]
             match = re.search(r'/v([a-zA-Z0-9]+)', url)
             if match:
@@ -865,8 +836,7 @@ class RumbleCrawler(BaseCrawler):
             return ""
     
     def _extract_channel_id_from_url(self, url: str) -> str:
-        """Extract channel ID from Rumble URL"""
-        try:
+        """Extract channel ID from Rumble URL"""        try:
             # Rumble channel URLs: /c/[channel_id] or /user/[username]
             match = re.search(r'/c/([a-zA-Z0-9_-]+)', url)
             if match:
@@ -883,8 +853,7 @@ class RumbleCrawler(BaseCrawler):
             return ""
     
     def _parse_count(self, count_text: str) -> int:
-        """Parse count string (e.g., '1.2K', '10M') to integer"""
-        try:
+        """Parse count string (e.g., '1.2K', '10M') to integer"""        try:
             if not count_text:
                 return 0
             
@@ -912,8 +881,7 @@ class RumbleCrawler(BaseCrawler):
             return 0
     
     def _parse_duration(self, duration_text: str) -> int:
-        """Parse duration string to seconds"""
-        try:
+        """Parse duration string to seconds"""        try:
             if not duration_text:
                 return 0
             
@@ -934,8 +902,7 @@ class RumbleCrawler(BaseCrawler):
             return 0
     
     def _parse_date(self, date_text: str) -> datetime:
-        """Parse date string to datetime object"""
-        try:
+        """Parse date string to datetime object"""        try:
             if not date_text:
                 return datetime.utcnow()
             
@@ -965,8 +932,7 @@ class RumbleCrawler(BaseCrawler):
             return datetime.utcnow()
     
     def _parse_relative_date(self, relative_text: str) -> datetime:
-        """Parse relative date (e.g., '2 hours ago', '3 days ago')"""
-        try:
+        """Parse relative date (e.g., '2 hours ago', '3 days ago')"""        try:
             now = datetime.utcnow()
             
             # Extract number and unit
@@ -997,8 +963,7 @@ class RumbleCrawler(BaseCrawler):
             return datetime.utcnow()
     
     async def _create_video_model(self, video_data: Dict) -> Optional[RumbleVideo]:
-        """Create RumbleVideo model from parsed data"""
-        try:
+        """Create RumbleVideo model from parsed data"""        try:
             video = RumbleVideo(
                 video_id=video_data.get('video_id', ''),
                 title=video_data.get('title', ''),
@@ -1026,8 +991,7 @@ class RumbleCrawler(BaseCrawler):
     
     # Placeholder implementations for analysis methods
     def _generate_search_queries(self, protected_content: Dict) -> List[str]:
-        """Generate search queries for content protection"""
-        queries = []
+        """Generate search queries for content protection"""        queries = []
         
         if 'title' in protected_content:
             queries.append(protected_content['title'])
@@ -1043,8 +1007,7 @@ class RumbleCrawler(BaseCrawler):
         return queries[:3]
     
     async def _calculate_content_similarity(self, protected_content: Dict, video: RumbleVideo) -> float:
-        """Calculate similarity between protected content and Rumble video"""
-        from difflib import SequenceMatcher
+        """Calculate similarity between protected content and Rumble video"""        from difflib import SequenceMatcher
         
         similarity_scores = []
         
@@ -1078,8 +1041,7 @@ class RumbleCrawler(BaseCrawler):
     
     # Helper methods for analysis
     def _calculate_viral_coefficient(self, video: RumbleVideo) -> float:
-        """Calculate viral coefficient for video"""
-        if video.view_count < 1000:
+        """Calculate viral coefficient for video"""        if video.view_count < 1000:
             return 0.0
         
         video_age_days = (datetime.utcnow() - video.upload_date).days
@@ -1092,8 +1054,7 @@ class RumbleCrawler(BaseCrawler):
         return min(views_per_day * engagement_score / 10000, 10.0)
     
     def _categorize_duration(self, duration: int) -> str:
-        """Categorize video duration"""
-        if duration < 60:
+        """Categorize video duration"""        if duration < 60:
             return "very_short"
         elif duration < 300:
             return "short"
@@ -1105,8 +1066,7 @@ class RumbleCrawler(BaseCrawler):
             return "very_long"
     
     def _calculate_quality_score(self, video: RumbleVideo) -> float:
-        """Calculate video quality score"""
-        score = 0.5  # Base score
+        """Calculate video quality score"""        score = 0.5  # Base score
         
         if '720p' in str(video.quality_levels):
             score += 0.2
@@ -1118,8 +1078,7 @@ class RumbleCrawler(BaseCrawler):
         return min(score, 1.0)
     
     def _calculate_content_safety_score(self, video: RumbleVideo) -> float:
-        """Calculate content safety score"""
-        score = 1.0
+        """Calculate content safety score"""        score = 1.0
         
         if video.age_restricted:
             score -= 0.3
@@ -1130,57 +1089,44 @@ class RumbleCrawler(BaseCrawler):
     
     # Placeholder methods for complex analysis (would need more data/API access)
     async def _parse_channel_page(self, html_content: str, channel_id: str) -> Dict:
-        """Parse channel page HTML"""
-        return {'channel_id': channel_id}
+        """Parse channel page HTML"""        return {'channel_id': channel_id}
     
     async def _create_channel_model(self, channel_data: Dict) -> Optional[RumbleChannel]:
-        """Create RumbleChannel model"""
-        return None
+        """Create RumbleChannel model"""        return None
     
     async def _parse_channel_videos_page(self, html_content: str) -> List[Dict]:
-        """Parse channel videos page"""
-        return []
+        """Parse channel videos page"""        return []
     
     async def _parse_trending_page(self, html_content: str) -> List[Dict]:
-        """Parse trending page"""
-        return []
+        """Parse trending page"""        return []
     
     async def _parse_live_streams_page(self, html_content: str) -> List[Dict]:
-        """Parse live streams page"""
-        return []
+        """Parse live streams page"""        return []
     
     async def _create_live_stream_model(self, stream_data: Dict) -> Optional[RumbleLiveStream]:
-        """Create RumbleLiveStream model"""
-        return None
+        """Create RumbleLiveStream model"""        return None
     
     # Additional placeholder methods for comprehensive analysis
     def _calculate_growth_velocity(self, video: RumbleVideo) -> float:
-        """Calculate growth velocity"""
-        return 0.0
+        """Calculate growth velocity"""        return 0.0
     
     def _estimate_revenue_potential(self, video: RumbleVideo) -> float:
-        """Estimate revenue potential"""
-        return 0.0
+        """Estimate revenue potential"""        return 0.0
     
     def _assess_advertiser_friendliness(self, video: RumbleVideo) -> float:
-        """Assess advertiser friendliness"""
-        return 0.5
+        """Assess advertiser friendliness"""        return 0.5
     
     async def _analyze_demographic_appeal(self, video: RumbleVideo) -> Dict:
-        """Analyze demographic appeal"""
-        return {}
+        """Analyze demographic appeal"""        return {}
     
     async def _analyze_geographic_performance(self, video: RumbleVideo) -> Dict:
-        """Analyze geographic performance"""
-        return {}
+        """Analyze geographic performance"""        return {}
     
     async def _analyze_discovery_sources(self, video: RumbleVideo) -> Dict:
-        """Analyze discovery sources"""
-        return {}
+        """Analyze discovery sources"""        return {}
     
     def _generate_video_optimization_recommendations(self, video: RumbleVideo) -> List[str]:
-        """Generate video optimization recommendations"""
-        recommendations = []
+        """Generate video optimization recommendations"""        recommendations = []
         
         if len(video.title) < 40:
             recommendations.append("Consider expanding the title for better SEO")

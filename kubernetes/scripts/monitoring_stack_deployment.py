@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-🔧 Monitoring Stack Deployment Manager - Ainflue Platform
+"""🔧 Monitoring Stack Deployment Manager - Ainflue Platform
 ==========================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps + SRE + Backend Senior + Observability Engineer
@@ -15,9 +14,7 @@ Contact: mlaiel@live.de
 
 Production monitoring stack deployment with Prometheus, Grafana, Jaeger, and ELK.
 ==========================================================
-"""
-
-import os
+"""import os
 import yaml
 import logging
 from typing import Dict, Any, List, Optional
@@ -30,8 +27,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring stack configuration"""
-    namespace: str = "ainflue-monitoring"
+    """Monitoring stack configuration"""    namespace: str = "ainflue-monitoring"
     prometheus_enabled: bool = True
     grafana_enabled: bool = True
     jaeger_enabled: bool = True
@@ -63,8 +59,7 @@ class MonitoringConfig:
 
 
 class MonitoringStackDeployment:
-    """
-    Production monitoring stack deployment manager.
+    """    Production monitoring stack deployment manager.
     
     Features:
     - Prometheus metrics collection
@@ -74,8 +69,7 @@ class MonitoringStackDeployment:
     - AlertManager notifications
     - PagerDuty integration
     - Automated dashboard provisioning
-    """
-    
+    """    
     def __init__(self, config: MonitoringConfig):
         self.config = config
         self.kubernetes_client = None
@@ -97,8 +91,7 @@ class MonitoringStackDeployment:
                 logger.warning(f"Could not load Kubernetes configuration: {e}")
     
     def create_namespace(self) -> bool:
-        """Create monitoring namespace"""
-        try:
+        """Create monitoring namespace"""        try:
             namespace_manifest = client.V1Namespace(
                 metadata=client.V1ObjectMeta(
                     name=self.config.namespace,
@@ -126,12 +119,10 @@ class MonitoringStackDeployment:
             return False
     
     def deploy_prometheus(self) -> bool:
-        """Deploy Prometheus monitoring"""
-        try:
+        """Deploy Prometheus monitoring"""        try:
             # Create Prometheus ConfigMap
             prometheus_config = {
-                "prometheus.yml": """
-global:
+                "prometheus.yml": """global:
   scrape_interval: 15s
   evaluation_interval: 15s
 
@@ -176,8 +167,7 @@ scrape_configs:
         action: replace
         target_label: __metrics_path__
         regex: (.+)
-"""
-            }
+"""            }
             
             configmap = client.V1ConfigMap(
                 metadata=client.V1ObjectMeta(
@@ -329,12 +319,10 @@ scrape_configs:
             return False
     
     def deploy_grafana(self) -> bool:
-        """Deploy Grafana dashboards"""
-        try:
+        """Deploy Grafana dashboards"""        try:
             # Create Grafana ConfigMap for datasources
             grafana_datasources = {
-                "datasources.yaml": """
-apiVersion: 1
+                "datasources.yaml": """apiVersion: 1
 datasources:
   - name: Prometheus
     type: prometheus
@@ -351,8 +339,7 @@ datasources:
     url: http://elasticsearch:9200
     database: "[logstash-]YYYY.MM.DD"
     interval: Daily
-"""
-            }
+"""            }
             
             datasources_configmap = client.V1ConfigMap(
                 metadata=client.V1ObjectMeta(
@@ -506,8 +493,7 @@ datasources:
             return False
     
     def deploy_jaeger(self) -> bool:
-        """Deploy Jaeger tracing"""
-        try:
+        """Deploy Jaeger tracing"""        try:
             # Create Jaeger All-in-One Deployment
             jaeger_deployment = client.V1Deployment(
                 metadata=client.V1ObjectMeta(
@@ -646,8 +632,7 @@ datasources:
             return False
     
     def deploy_monitoring_stack(self) -> bool:
-        """Deploy complete monitoring stack"""
-        try:
+        """Deploy complete monitoring stack"""        try:
             # Create namespace
             if not self.create_namespace():
                 return False
@@ -676,8 +661,7 @@ datasources:
             return False
     
     def get_deployment_status(self) -> Dict[str, Any]:
-        """Get monitoring stack deployment status"""
-        status = {
+        """Get monitoring stack deployment status"""        status = {
             'namespace': self.config.namespace,
             'components': {},
             'services': {},

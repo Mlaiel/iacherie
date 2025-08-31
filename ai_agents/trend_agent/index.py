@@ -1,5 +1,4 @@
-"""
-Trend Agent Index Module - Centralized Service Orchestration & Management System
+"""Trend Agent Index Module - Centralized Service Orchestration & Management System
 
 Advanced service orchestration system that provides:
 - Unified API interface for all trend analysis services
@@ -25,9 +24,7 @@ Team Specialties:
 - Database Administrator & Security Expert: Data layer management and security protocols
 - Microservices Architect & DevOps Engineer: Service mesh and deployment automation
 - AI Prompt Engineer & Content Protection: Intelligent service coordination and protection
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 from datetime import datetime, timezone
@@ -44,16 +41,14 @@ from .market_intelligence import MarketIntelligence, CompetitorAnalyzer
 logger = logging.getLogger(__name__)
 
 class ServiceType(Enum):
-    """Available trend analysis services"""
-    TREND_ANALYSIS = "trend_analysis"
+    """Available trend analysis services"""    TREND_ANALYSIS = "trend_analysis"
     VIRAL_DETECTION = "viral_detection"
     HASHTAG_OPTIMIZATION = "hashtag_optimization"
     MARKET_INTELLIGENCE = "market_intelligence"
     COMPETITIVE_ANALYSIS = "competitive_analysis"
 
 class ServiceStatus(Enum):
-    """Service operational status"""
-    INITIALIZING = "initializing"
+    """Service operational status"""    INITIALIZING = "initializing"
     ACTIVE = "active"
     ERROR = "error"
     MAINTENANCE = "maintenance"
@@ -61,8 +56,7 @@ class ServiceStatus(Enum):
 
 @dataclass
 class TrendServiceRequest:
-    """Unified request structure for all trend services"""
-    service_type: ServiceType
+    """Unified request structure for all trend services"""    service_type: ServiceType
     user_id: str
     request_data: Dict[str, Any]
     priority: int = 5  # 1-10, higher is more priority
@@ -71,8 +65,7 @@ class TrendServiceRequest:
 
 @dataclass
 class TrendServiceResponse:
-    """Unified response structure for all trend services"""
-    service_type: ServiceType
+    """Unified response structure for all trend services"""    service_type: ServiceType
     request_id: str
     success: bool
     data: Optional[Dict[str, Any]]
@@ -81,13 +74,11 @@ class TrendServiceResponse:
     timestamp: datetime
 
 class TrendAgentIndex:
-    """
-    Central Index and Orchestrator for Trend Agent Services
+    """    Central Index and Orchestrator for Trend Agent Services
     
     Provides unified access to all trend analysis capabilities with intelligent
     routing, caching, and performance optimization.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         
@@ -112,8 +103,7 @@ class TrendAgentIndex:
         self.is_initialized = False
 
     async def initialize(self) -> bool:
-        """Initialize all trend analysis services"""
-        async with self._initialization_lock:
+        """Initialize all trend analysis services"""        async with self._initialization_lock:
             if self.is_initialized:
                 return True
                 
@@ -143,16 +133,14 @@ class TrendAgentIndex:
         self, 
         request: TrendServiceRequest
     ) -> TrendServiceResponse:
-        """
-        Process trend analysis request with intelligent routing
+        """        Process trend analysis request with intelligent routing
         
         Args:
             request: Trend service request
             
         Returns:
             TrendServiceResponse: Processing results
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             return TrendServiceResponse(
                 service_type=request.service_type,
                 request_id=f"req_{int(time.time())}",
@@ -213,16 +201,14 @@ class TrendAgentIndex:
         self,
         requests: List[TrendServiceRequest]
     ) -> List[TrendServiceResponse]:
-        """
-        Process multiple requests in batch with optimization
+        """        Process multiple requests in batch with optimization
         
         Args:
             requests: List of trend service requests
             
         Returns:
             List of trend service responses
-        """
-        if not requests:
+        """        if not requests:
             return []
         
         logger.info(f"Processing batch of {len(requests)} requests")
@@ -253,8 +239,7 @@ class TrendAgentIndex:
         return responses
 
     async def get_service_status(self) -> Dict[str, Any]:
-        """Get comprehensive service status information"""
-        return {
+        """Get comprehensive service status information"""        return {
             "overall_status": "active" if self.is_initialized else "inactive",
             "services": {
                 service_type.value: {
@@ -281,8 +266,7 @@ class TrendAgentIndex:
         }
 
     async def health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive health check of all services"""
-        health_status = {
+        """Perform comprehensive health check of all services"""        health_status = {
             "overall_health": "healthy",
             "services": {},
             "issues": []
@@ -308,8 +292,7 @@ class TrendAgentIndex:
         return health_status
 
     async def _route_request(self, request: TrendServiceRequest) -> Dict[str, Any]:
-        """Route request to appropriate service handler"""
-        service_type = request.service_type
+        """Route request to appropriate service handler"""        service_type = request.service_type
         
         if service_type == ServiceType.TREND_ANALYSIS:
             return await self._handle_trend_analysis(request)
@@ -325,8 +308,7 @@ class TrendAgentIndex:
             raise ValueError(f"Unknown service type: {service_type}")
 
     async def _handle_trend_analysis(self, request: TrendServiceRequest) -> Dict[str, Any]:
-        """Handle trend analysis request"""
-        agent_manager = self._service_managers.get(ServiceType.TREND_ANALYSIS)
+        """Handle trend analysis request"""        agent_manager = self._service_managers.get(ServiceType.TREND_ANALYSIS)
         if not agent_manager:
             raise RuntimeError("Trend analysis service not available")
         
@@ -361,8 +343,7 @@ class TrendAgentIndex:
             await agent_manager.release_agent(agent)
 
     async def _handle_viral_detection(self, request: TrendServiceRequest) -> Dict[str, Any]:
-        """Handle viral detection request"""
-        detector = self._services.get(ServiceType.VIRAL_DETECTION)
+        """Handle viral detection request"""        detector = self._services.get(ServiceType.VIRAL_DETECTION)
         if not detector:
             raise RuntimeError("Viral detection service not available")
         
@@ -390,8 +371,7 @@ class TrendAgentIndex:
         }
 
     async def _handle_hashtag_optimization(self, request: TrendServiceRequest) -> Dict[str, Any]:
-        """Handle hashtag optimization request"""
-        analyzer = self._services.get(ServiceType.HASHTAG_OPTIMIZATION)
+        """Handle hashtag optimization request"""        analyzer = self._services.get(ServiceType.HASHTAG_OPTIMIZATION)
         if not analyzer:
             raise RuntimeError("Hashtag optimization service not available")
         
@@ -406,8 +386,7 @@ class TrendAgentIndex:
         return analysis_result
 
     async def _initialize_trend_agent(self):
-        """Initialize trend agent service"""
-        try:
+        """Initialize trend agent service"""        try:
             manager = TrendAgentManager(max_agents=self.config.get("max_trend_agents", 5))
             self._service_managers[ServiceType.TREND_ANALYSIS] = manager
             self._service_status[ServiceType.TREND_ANALYSIS] = ServiceStatus.ACTIVE
@@ -417,8 +396,7 @@ class TrendAgentIndex:
             self._service_status[ServiceType.TREND_ANALYSIS] = ServiceStatus.ERROR
 
     async def _initialize_viral_detector(self):
-        """Initialize viral detector service"""
-        try:
+        """Initialize viral detector service"""        try:
             detector = ViralDetector(self.config.get("viral_detector", {}))
             await detector.initialize()
             self._services[ServiceType.VIRAL_DETECTION] = detector
@@ -429,8 +407,7 @@ class TrendAgentIndex:
             self._service_status[ServiceType.VIRAL_DETECTION] = ServiceStatus.ERROR
 
     async def _monitor_services(self):
-        """Background task to monitor service health"""
-        while self.is_initialized:
+        """Background task to monitor service health"""        while self.is_initialized:
             try:
                 for service_type in ServiceType:
                     await self._check_service_health(service_type)
@@ -442,8 +419,7 @@ class TrendAgentIndex:
                 await asyncio.sleep(300)  # Wait 5 minutes on error
 
     async def cleanup(self):
-        """Clean up all services and resources"""
-        try:
+        """Clean up all services and resources"""        try:
             logger.info("Cleaning up TrendAgentIndex")
             
             # Cleanup all services
@@ -471,8 +447,7 @@ class TrendAgentIndex:
 _trend_index = None
 
 async def get_trend_index(config: Optional[Dict[str, Any]] = None) -> TrendAgentIndex:
-    """Get or create global trend index instance"""
-    global _trend_index
+    """Get or create global trend index instance"""    global _trend_index
     
     if _trend_index is None:
         _trend_index = TrendAgentIndex(config)
@@ -486,8 +461,7 @@ async def analyze_trends(
     target_platforms: List[str],
     analysis_depth: str = "standard"
 ) -> Dict[str, Any]:
-    """Convenience function for trend analysis"""
-    index = await get_trend_index()
+    """Convenience function for trend analysis"""    index = await get_trend_index()
     
     request = TrendServiceRequest(
         service_type=ServiceType.TREND_ANALYSIS,
@@ -511,8 +485,7 @@ async def detect_viral_content(
     platforms: List[str],
     detection_sensitivity: float = 0.75
 ) -> Dict[str, Any]:
-    """Convenience function for viral detection"""
-    index = await get_trend_index()
+    """Convenience function for viral detection"""    index = await get_trend_index()
     
     request = TrendServiceRequest(
         service_type=ServiceType.VIRAL_DETECTION,
@@ -538,8 +511,7 @@ async def optimize_hashtags(
     platforms: List[str],
     time_range: int = 7
 ) -> Dict[str, Any]:
-    """Convenience function for hashtag optimization"""
-    index = await get_trend_index()
+    """Convenience function for hashtag optimization"""    index = await get_trend_index()
     
     request = TrendServiceRequest(
         service_type=ServiceType.HASHTAG_OPTIMIZATION,

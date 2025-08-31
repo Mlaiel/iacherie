@@ -1,5 +1,4 @@
-"""
-Licensing Agreements Database Model
+"""Licensing Agreements Database Model
 
 Enterprise-grade SQLAlchemy model for managing content licensing, usage rights,
 and legal agreements for content protection and monetization.
@@ -23,9 +22,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-
-from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric
+"""from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID, ARRAY
@@ -39,8 +36,7 @@ Base = declarative_base()
 
 
 class LicenseType(Enum):
-    """License type enumeration"""
-    EXCLUSIVE = "exclusive"
+    """License type enumeration"""    EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     SYNC_LICENSE = "sync_license"
     MECHANICAL_LICENSE = "mechanical_license"
@@ -63,8 +59,7 @@ class LicenseType(Enum):
 
 
 class LicenseStatus(Enum):
-    """License status enumeration"""
-    DRAFT = "draft"
+    """License status enumeration"""    DRAFT = "draft"
     PENDING_APPROVAL = "pending_approval"
     ACTIVE = "active"
     SUSPENDED = "suspended"
@@ -77,8 +72,7 @@ class LicenseStatus(Enum):
 
 
 class UsageRight(Enum):
-    """Usage rights enumeration"""
-    REPRODUCTION = "reproduction"
+    """Usage rights enumeration"""    REPRODUCTION = "reproduction"
     DISTRIBUTION = "distribution"
     PUBLIC_PERFORMANCE = "public_performance"
     SYNCHRONIZATION = "synchronization"
@@ -102,8 +96,7 @@ class UsageRight(Enum):
 
 
 class RevenueModel(Enum):
-    """Revenue model enumeration"""
-    FLAT_FEE = "flat_fee"
+    """Revenue model enumeration"""    FLAT_FEE = "flat_fee"
     PERCENTAGE_ROYALTY = "percentage_royalty"
     PER_UNIT = "per_unit"
     PER_STREAM = "per_stream"
@@ -120,8 +113,7 @@ class RevenueModel(Enum):
 
 
 class TerritoryScope(Enum):
-    """Territory scope enumeration"""
-    WORLDWIDE = "worldwide"
+    """Territory scope enumeration"""    WORLDWIDE = "worldwide"
     NORTH_AMERICA = "north_america"
     EUROPE = "europe"
     ASIA_PACIFIC = "asia_pacific"
@@ -135,13 +127,11 @@ class TerritoryScope(Enum):
 
 
 class LicensingAgreement(Base):
-    """
-    Enterprise Licensing Agreement Model
+    """    Enterprise Licensing Agreement Model
     
     Comprehensive licensing system for content usage rights, revenue sharing,
     and legal compliance with automated enforcement and tracking.
-    """
-    __tablename__ = "licensing_agreements"
+    """    __tablename__ = "licensing_agreements"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -338,8 +328,7 @@ class LicensingAgreement(Base):
         return f"<LicensingAgreement(id={self.id}, agreement_number='{self.agreement_number}', type={self.license_type.value}, status={self.license_status.value})>"
     
     def to_dict(self, include_sensitive: bool = False, include_analytics: bool = True) -> Dict[str, Any]:
-        """Convert model to dictionary for API responses"""
-        base_dict = {
+        """Convert model to dictionary for API responses"""        base_dict = {
             "id": str(self.id),
             "content_fingerprint_id": str(self.content_fingerprint_id) if self.content_fingerprint_id else None,
             "licensor_user_id": str(self.licensor_user_id),
@@ -441,14 +430,12 @@ class LicensingAgreement(Base):
         return base_dict
     
     def is_expired(self) -> bool:
-        """Check if agreement is expired"""
-        if not self.expiration_date:
+        """Check if agreement is expired"""        if not self.expiration_date:
             return False
         return datetime.now(timezone.utc) >= self.expiration_date
     
     def is_effective(self) -> bool:
-        """Check if agreement is currently effective"""
-        now = datetime.now(timezone.utc)
+        """Check if agreement is currently effective"""        now = datetime.now(timezone.utc)
         return (
             self.effective_date <= now and
             (not self.expiration_date or self.expiration_date > now) and
@@ -456,16 +443,14 @@ class LicensingAgreement(Base):
         )
     
     def days_until_expiration(self) -> Optional[int]:
-        """Calculate days until expiration"""
-        if not self.expiration_date:
+        """Calculate days until expiration"""        if not self.expiration_date:
             return None
         
         delta = self.expiration_date - datetime.now(timezone.utc)
         return max(delta.days, 0)
     
     def calculate_revenue_share(self, gross_revenue: Decimal) -> Dict[str, Decimal]:
-        """Calculate revenue shares based on agreement terms"""
-        if self.revenue_model == RevenueModel.PERCENTAGE_ROYALTY and self.royalty_percentage:
+        """Calculate revenue shares based on agreement terms"""        if self.revenue_model == RevenueModel.PERCENTAGE_ROYALTY and self.royalty_percentage:
             royalty_amount = gross_revenue * Decimal(str(self.royalty_percentage / 100))
             return {
                 "gross_revenue": gross_revenue,
@@ -483,14 +468,12 @@ class LicensingAgreement(Base):
         return {"gross_revenue": gross_revenue, "net_revenue": gross_revenue}
     
     def needs_review(self) -> bool:
-        """Check if agreement needs review"""
-        if not self.next_review_due:
+        """Check if agreement needs review"""        if not self.next_review_due:
             return False
         return datetime.now(timezone.utc) >= self.next_review_due
     
     def is_compliant(self) -> bool:
-        """Check overall compliance status"""
-        return (
+        """Check overall compliance status"""        return (
             self.compliance_status == "compliant" and
             self.violation_count < 3 and
             not self.is_expired() and
@@ -499,8 +482,7 @@ class LicensingAgreement(Base):
     
     @classmethod
     def create_agreement(cls, agreement_data: Dict[str, Any], licensor_user_id: str) -> 'LicensingAgreement':
-        """Create LicensingAgreement from agreement data"""
-        # Generate unique agreement number
+        """Create LicensingAgreement from agreement data"""        # Generate unique agreement number
         agreement_number = f"LIC-{datetime.now().strftime('%Y%m%d')}-{str(uuid.uuid4())[:8].upper()}"
         
         return cls(

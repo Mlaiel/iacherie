@@ -1,24 +1,19 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Unit Tests for Core Security Components
+"""Unit Tests for Core Security Components
 Ensures comprehensive testing of security-critical modules
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -29,11 +24,9 @@ from datetime import datetime, timedelta
 
 
 class TestAuthenticationSecurity:
-    """Unit tests for authentication security"""
-    
+    """Unit tests for authentication security"""    
     def test_password_hashing(self):
-        """Test secure password hashing"""
-        password = "test_password_123"
+        """Test secure password hashing"""        password = "test_password_123"
         
         # Mock bcrypt hashing
         hashed = hashlib.sha256(password.encode()).hexdigest()
@@ -41,16 +34,14 @@ class TestAuthenticationSecurity:
         assert hashed != password
     
     def test_jwt_token_generation(self):
-        """Test JWT token generation"""
-        payload = {"user_id": "123", "exp": datetime.utcnow() + timedelta(hours=1)}
+        """Test JWT token generation"""        payload = {"user_id": "123", "exp": datetime.utcnow() + timedelta(hours=1)}
         
         # Mock JWT encoding
         token = "mock.jwt.token"
         assert len(token.split('.')) == 3  # Header.Payload.Signature
     
     def test_jwt_token_validation(self):
-        """Test JWT token validation"""
-        valid_token = "valid.jwt.token"
+        """Test JWT token validation"""        valid_token = "valid.jwt.token"
         invalid_token = "invalid.token"
         
         # Mock validation
@@ -58,8 +49,7 @@ class TestAuthenticationSecurity:
         assert "." in valid_token
     
     def test_login_rate_limiting(self):
-        """Test login attempt rate limiting"""
-        user_ip = "192.168.1.1"
+        """Test login attempt rate limiting"""        user_ip = "192.168.1.1"
         max_attempts = 5
         
         # Mock rate limiting
@@ -67,8 +57,7 @@ class TestAuthenticationSecurity:
         assert current_attempts < max_attempts
     
     def test_session_management(self):
-        """Test secure session management"""
-        session_id = "session_123456"
+        """Test secure session management"""        session_id = "session_123456"
         
         # Mock session validation
         session_valid = True
@@ -79,11 +68,9 @@ class TestAuthenticationSecurity:
 
 
 class TestDataEncryption:
-    """Unit tests for data encryption"""
-    
+    """Unit tests for data encryption"""    
     def test_aes_encryption(self):
-        """Test AES encryption/decryption"""
-        plaintext = "sensitive_data_123"
+        """Test AES encryption/decryption"""        plaintext = "sensitive_data_123"
         encryption_key = "32_character_encryption_key_here"
         
         # Mock encryption
@@ -92,8 +79,7 @@ class TestDataEncryption:
         assert len(ciphertext) > len(plaintext)
     
     def test_key_derivation(self):
-        """Test cryptographic key derivation"""
-        password = "user_password"
+        """Test cryptographic key derivation"""        password = "user_password"
         salt = "random_salt_123"
         
         # Mock PBKDF2
@@ -101,8 +87,7 @@ class TestDataEncryption:
         assert len(derived_key) == 32
     
     def test_secure_random_generation(self):
-        """Test secure random number generation"""
-        import secrets
+        """Test secure random number generation"""        import secrets
         
         # Generate secure random values
         random_bytes = secrets.token_bytes(32)
@@ -113,27 +98,23 @@ class TestDataEncryption:
 
 
 class TestInputValidation:
-    """Unit tests for input validation and sanitization"""
-    
+    """Unit tests for input validation and sanitization"""    
     def test_sql_injection_prevention(self):
-        """Test SQL injection prevention"""
-        malicious_input = "'; DROP TABLE users; --"
+        """Test SQL injection prevention"""        malicious_input = "'; DROP TABLE users; --"
         
         # Mock input sanitization
         sanitized = malicious_input.replace("'", "").replace(";", "").replace("--", "")
         assert "DROP TABLE" not in sanitized
     
     def test_xss_prevention(self):
-        """Test XSS attack prevention"""
-        malicious_script = "<script>alert('xss')</script>"
+        """Test XSS attack prevention"""        malicious_script = "<script>alert('xss')</script>"
         
         # Mock HTML escaping
         escaped = malicious_script.replace("<", "&lt;").replace(">", "&gt;")
         assert "<script>" not in escaped
     
     def test_file_upload_validation(self):
-        """Test file upload security validation"""
-        allowed_extensions = ['.jpg', '.png', '.mp4', '.mp3']
+        """Test file upload security validation"""        allowed_extensions = ['.jpg', '.png', '.mp4', '.mp3']
         test_filename = "test_file.jpg"
         
         # Mock file validation
@@ -142,8 +123,7 @@ class TestInputValidation:
         assert is_valid is True
     
     def test_email_validation(self):
-        """Test email format validation"""
-        valid_email = "user@example.com"
+        """Test email format validation"""        valid_email = "user@example.com"
         invalid_email = "invalid.email"
         
         # Mock email validation
@@ -155,11 +135,9 @@ class TestInputValidation:
 
 
 class TestAPISecurityHeaders:
-    """Unit tests for API security headers"""
-    
+    """Unit tests for API security headers"""    
     def test_cors_headers(self):
-        """Test CORS security headers"""
-        cors_headers = {
+        """Test CORS security headers"""        cors_headers = {
             "Access-Control-Allow-Origin": "https://ainflue.com",
             "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
             "Access-Control-Allow-Headers": "Authorization, Content-Type"
@@ -169,8 +147,7 @@ class TestAPISecurityHeaders:
         assert "GET" in cors_headers["Access-Control-Allow-Methods"]
     
     def test_security_headers(self):
-        """Test HTTP security headers"""
-        security_headers = {
+        """Test HTTP security headers"""        security_headers = {
             "X-Content-Type-Options": "nosniff",
             "X-Frame-Options": "DENY",
             "X-XSS-Protection": "1; mode=block",
@@ -181,8 +158,7 @@ class TestAPISecurityHeaders:
         assert "DENY" in security_headers["X-Frame-Options"]
     
     def test_rate_limiting_headers(self):
-        """Test rate limiting headers"""
-        rate_headers = {
+        """Test rate limiting headers"""        rate_headers = {
             "X-RateLimit-Limit": "1000",
             "X-RateLimit-Remaining": "950",
             "X-RateLimit-Reset": "1640995200"
@@ -193,11 +169,9 @@ class TestAPISecurityHeaders:
 
 
 class TestContentSecurityPolicy:
-    """Unit tests for Content Security Policy"""
-    
+    """Unit tests for Content Security Policy"""    
     def test_csp_directives(self):
-        """Test CSP directive validation"""
-        csp_policy = {
+        """Test CSP directive validation"""        csp_policy = {
             "default-src": "'self'",
             "script-src": "'self' 'unsafe-inline'",
             "style-src": "'self' 'unsafe-inline'",
@@ -209,8 +183,7 @@ class TestContentSecurityPolicy:
         assert "https://api.ainflue.com" in csp_policy["connect-src"]
     
     def test_csp_nonce_generation(self):
-        """Test CSP nonce generation"""
-        import secrets
+        """Test CSP nonce generation"""        import secrets
         
         nonce = secrets.token_urlsafe(16)
         assert len(nonce) >= 16
@@ -218,18 +191,15 @@ class TestContentSecurityPolicy:
 
 
 class TestDatabaseSecurity:
-    """Unit tests for database security"""
-    
+    """Unit tests for database security"""    
     def test_connection_encryption(self):
-        """Test database connection encryption"""
-        connection_string = "postgresql://user:pass@host:5432/db?sslmode=require"
+        """Test database connection encryption"""        connection_string = "postgresql://user:pass@host:5432/db?sslmode=require"
         
         assert "sslmode=require" in connection_string
         assert "postgresql://" in connection_string
     
     def test_prepared_statements(self):
-        """Test SQL prepared statements"""
-        query_template = "SELECT * FROM users WHERE id = %s AND email = %s"
+        """Test SQL prepared statements"""        query_template = "SELECT * FROM users WHERE id = %s AND email = %s"
         user_id = 123
         email = "user@example.com"
         
@@ -241,8 +211,7 @@ class TestDatabaseSecurity:
         assert len(parameters) == 2
     
     def test_database_access_control(self):
-        """Test database access control"""
-        user_roles = {
+        """Test database access control"""        user_roles = {
             "read_only": ["SELECT"],
             "read_write": ["SELECT", "INSERT", "UPDATE"],
             "admin": ["SELECT", "INSERT", "UPDATE", "DELETE", "CREATE", "DROP"]
@@ -254,11 +223,9 @@ class TestDatabaseSecurity:
 
 
 class TestAuditLogging:
-    """Unit tests for security audit logging"""
-    
+    """Unit tests for security audit logging"""    
     def test_authentication_logging(self):
-        """Test authentication event logging"""
-        auth_event = {
+        """Test authentication event logging"""        auth_event = {
             "event_type": "login_attempt",
             "user_id": "123",
             "ip_address": "192.168.1.1",
@@ -271,8 +238,7 @@ class TestAuditLogging:
         assert "timestamp" in auth_event
     
     def test_data_access_logging(self):
-        """Test data access logging"""
-        access_event = {
+        """Test data access logging"""        access_event = {
             "event_type": "data_access",
             "user_id": "123",
             "resource": "/api/v1/content/456",
@@ -284,8 +250,7 @@ class TestAuditLogging:
         assert access_event["method"] == "GET"
     
     def test_security_incident_logging(self):
-        """Test security incident logging"""
-        incident = {
+        """Test security incident logging"""        incident = {
             "event_type": "security_incident",
             "incident_type": "brute_force_attempt",
             "severity": "high",
@@ -299,11 +264,9 @@ class TestAuditLogging:
 
 
 class TestThreatDetection:
-    """Unit tests for threat detection"""
-    
+    """Unit tests for threat detection"""    
     def test_anomaly_detection(self):
-        """Test anomaly detection algorithms"""
-        normal_requests_per_minute = [50, 55, 48, 52, 49]
+        """Test anomaly detection algorithms"""        normal_requests_per_minute = [50, 55, 48, 52, 49]
         current_requests = 200  # Anomalous spike
         
         average_normal = sum(normal_requests_per_minute) / len(normal_requests_per_minute)
@@ -313,16 +276,14 @@ class TestThreatDetection:
         assert is_anomaly is True
     
     def test_bot_detection(self):
-        """Test bot traffic detection"""
-        user_agent = "Mozilla/5.0 (compatible; bot/1.0)"
+        """Test bot traffic detection"""        user_agent = "Mozilla/5.0 (compatible; bot/1.0)"
         suspicious_patterns = ["bot", "crawler", "spider", "scraper"]
         
         is_bot = any(pattern in user_agent.lower() for pattern in suspicious_patterns)
         assert is_bot is True
     
     def test_ip_reputation_check(self):
-        """Test IP reputation checking"""
-        suspicious_ip = "192.168.1.666"  # Mock suspicious IP
+        """Test IP reputation checking"""        suspicious_ip = "192.168.1.666"  # Mock suspicious IP
         known_bad_ips = ["192.168.1.666", "10.0.0.100"]
         
         is_suspicious = suspicious_ip in known_bad_ips
@@ -330,11 +291,9 @@ class TestThreatDetection:
 
 
 class TestComplianceChecks:
-    """Unit tests for regulatory compliance"""
-    
+    """Unit tests for regulatory compliance"""    
     def test_gdpr_compliance(self):
-        """Test GDPR compliance checks"""
-        user_data = {
+        """Test GDPR compliance checks"""        user_data = {
             "user_id": "123",
             "email": "user@example.com",
             "consent_given": True,
@@ -345,8 +304,7 @@ class TestComplianceChecks:
         assert user_data["data_retention_period"] > 0
     
     def test_data_anonymization(self):
-        """Test data anonymization processes"""
-        personal_data = {
+        """Test data anonymization processes"""        personal_data = {
             "email": "user@example.com",
             "name": "John Doe",
             "ip_address": "192.168.1.1"
@@ -363,8 +321,7 @@ class TestComplianceChecks:
         assert anonymized["name"] != personal_data["name"]
     
     def test_consent_management(self):
-        """Test user consent management"""
-        consent_record = {
+        """Test user consent management"""        consent_record = {
             "user_id": "123",
             "consent_type": "marketing",
             "given_at": datetime.utcnow().isoformat(),

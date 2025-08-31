@@ -1,5 +1,4 @@
-"""
-Revenue Tracking Repository Module
+"""Revenue Tracking Repository Module
 
 Enterprise-grade repository for revenue tracking and monetization management
 with advanced analytics, payment processing, and financial compliance.
@@ -23,9 +22,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-
-from typing import List, Optional, Dict, Any, Union, Tuple
+"""from typing import List, Optional, Dict, Any, Union, Tuple
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, func, desc, asc, extract
 from datetime import datetime, timedelta
@@ -47,14 +44,11 @@ import logging
 logger = logging.getLogger(__name__)
 
 class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
-    """
-    Repository for revenue tracking operations with comprehensive financial analytics,
+    """    Repository for revenue tracking operations with comprehensive financial analytics,
     multi-currency support, tax compliance, and automated payment processing.
-    """
-    
+    """    
     def __init__(self, db_session: Session):
-        """Initialize revenue tracking repository"""
-        super().__init__(db_session, RevenueTracking)
+        """Initialize revenue tracking repository"""        super().__init__(db_session, RevenueTracking)
         
     def create_revenue_entry(self,
                            user_id: int,
@@ -68,8 +62,7 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
                            period_end: Optional[datetime] = None,
                            tax_status: TaxStatus = TaxStatus.PENDING,
                            metadata: Optional[Dict[str, Any]] = None) -> RevenueTracking:
-        """
-        Create revenue tracking entry with validation and compliance checks
+        """        Create revenue tracking entry with validation and compliance checks
         
         Args:
             user_id: User/creator ID
@@ -86,8 +79,7 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
             
         Returns:
             Created RevenueTracking instance
-        """
-        try:
+        """        try:
             # Validate revenue amount
             if revenue_amount <= 0:
                 raise RepositoryException("Revenue amount must be positive")
@@ -142,8 +134,7 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
                         platform: Optional[str] = None,
                         revenue_type: Optional[RevenueType] = None,
                         status: Optional[RevenueStatus] = None) -> List[RevenueTracking]:
-        """
-        Get revenue entries for a user with comprehensive filtering
+        """        Get revenue entries for a user with comprehensive filtering
         
         Args:
             user_id: User ID to filter by
@@ -156,8 +147,7 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
             
         Returns:
             List of RevenueTracking instances
-        """
-        try:
+        """        try:
             query = self.db_session.query(RevenueTracking).filter(
                 RevenueTracking.user_id == user_id
             )
@@ -199,8 +189,7 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
                               end_date: Optional[datetime] = None,
                               currency: Currency = Currency.EUR,
                               exclude_pending: bool = True) -> Dict[str, Any]:
-        """
-        Calculate total revenue for user with breakdown by various dimensions
+        """        Calculate total revenue for user with breakdown by various dimensions
         
         Args:
             user_id: User ID to calculate revenue for
@@ -211,8 +200,7 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
             
         Returns:
             Dictionary containing revenue calculations
-        """
-        try:
+        """        try:
             query = self.db_session.query(RevenueTracking).filter(
                 and_(
                     RevenueTracking.user_id == user_id,
@@ -291,8 +279,7 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
                                   user_id: int,
                                   months_back: int = 12,
                                   currency: Currency = Currency.EUR) -> List[Dict[str, Any]]:
-        """
-        Get monthly revenue trends for analytics and forecasting
+        """        Get monthly revenue trends for analytics and forecasting
         
         Args:
             user_id: User ID to get trends for
@@ -301,8 +288,7 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
             
         Returns:
             List of monthly revenue data
-        """
-        try:
+        """        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=months_back * 30)
             
@@ -366,8 +352,7 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
                                user_id: int,
                                start_date: Optional[datetime] = None,
                                end_date: Optional[datetime] = None) -> List[Dict[str, Any]]:
-        """
-        Get platform performance analytics
+        """        Get platform performance analytics
         
         Args:
             user_id: User ID to analyze
@@ -376,8 +361,7 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
             
         Returns:
             List of platform performance data
-        """
-        try:
+        """        try:
             query = self.db_session.query(
                 RevenueTracking.platform,
                 func.sum(RevenueTracking.revenue_amount).label('total_revenue'),
@@ -429,8 +413,7 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
                             payment_method: Optional[PaymentMethod] = None,
                             transaction_reference: Optional[str] = None,
                             notes: Optional[str] = None) -> Optional[RevenueTracking]:
-        """
-        Update revenue status with payment processing information
+        """        Update revenue status with payment processing information
         
         Args:
             revenue_id: Revenue entry ID
@@ -441,8 +424,7 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
             
         Returns:
             Updated RevenueTracking instance
-        """
-        try:
+        """        try:
             revenue_entry = self.get_by_id(revenue_id)
             if not revenue_entry:
                 return None
@@ -496,8 +478,7 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
                            user_id: Optional[int] = None,
                            minimum_amount: Optional[Decimal] = None,
                            currency: Optional[Currency] = None) -> List[RevenueTracking]:
-        """
-        Get pending payment entries for processing
+        """        Get pending payment entries for processing
         
         Args:
             user_id: Optional user ID filter
@@ -506,8 +487,7 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
             
         Returns:
             List of pending RevenueTracking instances
-        """
-        try:
+        """        try:
             query = self.db_session.query(RevenueTracking).filter(
                 RevenueTracking.status == RevenueStatus.PENDING
             )
@@ -542,8 +522,7 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
                               start_date: datetime,
                               end_date: datetime,
                               currency: Currency = Currency.EUR) -> Dict[str, Any]:
-        """
-        Generate comprehensive revenue report for a user
+        """        Generate comprehensive revenue report for a user
         
         Args:
             user_id: User ID to generate report for
@@ -553,8 +532,7 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
             
         Returns:
             Comprehensive revenue report
-        """
-        try:
+        """        try:
             # Get revenue entries for period
             revenue_entries = self.get_user_revenue(
                 user_id=user_id,
@@ -654,8 +632,7 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
     def get_revenue_forecasting_data(self,
                                    user_id: int,
                                    months_back: int = 6) -> Dict[str, Any]:
-        """
-        Get data for revenue forecasting and trend analysis
+        """        Get data for revenue forecasting and trend analysis
         
         Args:
             user_id: User ID to analyze
@@ -663,8 +640,7 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
             
         Returns:
             Forecasting data and trends
-        """
-        try:
+        """        try:
             # Get monthly trends
             monthly_trends = self.get_monthly_revenue_trends(
                 user_id=user_id,

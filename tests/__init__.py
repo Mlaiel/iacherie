@@ -1,5 +1,4 @@
-"""
-Ainflue Platform Test Suite
+"""Ainflue Platform Test Suite
 Test suite for the AI-powered content protection and monetization platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)

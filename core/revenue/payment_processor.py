@@ -1,5 +1,4 @@
-"""
-Revenue Payment Processing System - Multi-Payment Gateway Integration
+"""Revenue Payment Processing System - Multi-Payment Gateway Integration
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -25,9 +24,7 @@ Developed by Expert Team:
 🎵 Audio Expert: Audio Revenue Payment Processing
 ⚙️  DevOps: Production Infrastructure & Monitoring
 🧠 IA Prompt Engineer: AI-Powered Payment Optimization
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from decimal import Decimal, ROUND_HALF_UP
@@ -52,8 +49,7 @@ logger = logging.getLogger(__name__)
 
 
 class PaymentProvider(Enum):
-    """Supported payment providers"""
-    STRIPE = "stripe"
+    """Supported payment providers"""    STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
     BANK_TRANSFER = "bank_transfer"
@@ -66,8 +62,7 @@ class PaymentProvider(Enum):
 
 
 class PaymentType(Enum):
-    """Types of payments"""
-    REVENUE_PAYOUT = "revenue_payout"
+    """Types of payments"""    REVENUE_PAYOUT = "revenue_payout"
     LICENSING_PAYMENT = "licensing_payment"
     ROYALTY_PAYMENT = "royalty_payment"
     COLLABORATION_SPLIT = "collaboration_split"
@@ -77,8 +72,7 @@ class PaymentType(Enum):
 
 
 class PaymentStatus(Enum):
-    """Payment processing status"""
-    PENDING = "pending"
+    """Payment processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -89,8 +83,7 @@ class PaymentStatus(Enum):
 
 
 class PaymentFrequency(Enum):
-    """Payment frequency options"""
-    IMMEDIATE = "immediate"
+    """Payment frequency options"""    IMMEDIATE = "immediate"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -100,8 +93,7 @@ class PaymentFrequency(Enum):
 
 
 class CurrencyCode(Enum):
-    """Supported currency codes"""
-    USD = "USD"
+    """Supported currency codes"""    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     JPY = "JPY"
@@ -125,8 +117,7 @@ class CurrencyCode(Enum):
 
 @dataclass
 class PaymentAccount:
-    """Payment account information"""
-    account_id: str
+    """Payment account information"""    account_id: str
     user_id: str
     provider: PaymentProvider
     account_type: str  # business, personal
@@ -139,8 +130,7 @@ class PaymentAccount:
     
     @property
     def masked_account_info(self) -> Dict[str, str]:
-        """Get masked account information for display"""
-        masked = {}
+        """Get masked account information for display"""        masked = {}
         
         if self.provider == PaymentProvider.STRIPE:
             masked['account_id'] = f"acct_****{self.account_details.get('account_id', '')[-4:]}"
@@ -156,8 +146,7 @@ class PaymentAccount:
 
 @dataclass
 class PaymentMethod:
-    """Payment method configuration"""
-    method_id: str
+    """Payment method configuration"""    method_id: str
     user_id: str
     provider: PaymentProvider
     payment_type: PaymentType
@@ -173,8 +162,7 @@ class PaymentMethod:
 
 @dataclass
 class PaymentRequest:
-    """Payment request structure"""
-    request_id: str
+    """Payment request structure"""    request_id: str
     user_id: str
     recipient_id: str
     amount: Decimal
@@ -194,8 +182,7 @@ class PaymentRequest:
 
 @dataclass
 class PaymentTransaction:
-    """Payment transaction record"""
-    transaction_id: str
+    """Payment transaction record"""    transaction_id: str
     request_id: str
     user_id: str
     recipient_id: str
@@ -215,68 +202,56 @@ class PaymentTransaction:
     
     @property
     def net_amount(self) -> Decimal:
-        """Calculate net amount after fees"""
-        total_fees = sum(self.fees.values())
+        """Calculate net amount after fees"""        total_fees = sum(self.fees.values())
         return self.amount - total_fees
     
     @property
     def processing_time(self) -> Optional[timedelta]:
-        """Calculate processing time"""
-        if self.processed_at and self.created_at:
+        """Calculate processing time"""        if self.processed_at and self.created_at:
             return self.processed_at - self.created_at
         return None
 
 
 class BasePaymentProcessor(ABC):
-    """Base class for payment processors"""
-    
+    """Base class for payment processors"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.session = None
         self.encryption_manager = EncryptionManager()
     
     async def initialize(self) -> None:
-        """Initialize payment processor"""
-        self.session = aiohttp.ClientSession()
+        """Initialize payment processor"""        self.session = aiohttp.ClientSession()
         await self._setup_authentication()
     
     async def cleanup(self) -> None:
-        """Cleanup resources"""
-        if self.session:
+        """Cleanup resources"""        if self.session:
             await self.session.close()
     
     @abstractmethod
     async def create_payment(self, request: PaymentRequest) -> PaymentTransaction:
-        """Create payment transaction"""
-        pass
+        """Create payment transaction"""        pass
     
     @abstractmethod
     async def process_payment(self, transaction: PaymentTransaction) -> PaymentTransaction:
-        """Process payment transaction"""
-        pass
+        """Process payment transaction"""        pass
     
     @abstractmethod
     async def get_transaction_status(self, transaction_id: str) -> PaymentStatus:
-        """Get transaction status"""
-        pass
+        """Get transaction status"""        pass
     
     @abstractmethod
     async def cancel_payment(self, transaction_id: str) -> bool:
-        """Cancel payment transaction"""
-        pass
+        """Cancel payment transaction"""        pass
     
     @abstractmethod
     async def refund_payment(self, transaction_id: str, amount: Optional[Decimal] = None) -> PaymentTransaction:
-        """Refund payment transaction"""
-        pass
+        """Refund payment transaction"""        pass
     
     async def _setup_authentication(self) -> None:
-        """Setup authentication for payment provider"""
-        pass
+        """Setup authentication for payment provider"""        pass
     
     def _calculate_fees(self, amount: Decimal, currency: CurrencyCode) -> Dict[str, Decimal]:
-        """Calculate processing fees"""
-        fees = {}
+        """Calculate processing fees"""        fees = {}
         
         # Base processing fee (typically percentage + fixed fee)
         base_percentage = self.config.get('base_fee_percentage', Decimal('2.9'))
@@ -294,11 +269,9 @@ class BasePaymentProcessor(ABC):
 
 
 class StripePaymentProcessor(BasePaymentProcessor):
-    """Stripe payment processor implementation"""
-    
+    """Stripe payment processor implementation"""    
     async def _setup_authentication(self) -> None:
-        """Setup Stripe authentication"""
-        self.api_key = self.config.get('api_key')
+        """Setup Stripe authentication"""        self.api_key = self.config.get('api_key')
         self.webhook_secret = self.config.get('webhook_secret')
         self.headers = {
             'Authorization': f'Bearer {self.api_key}',
@@ -306,8 +279,7 @@ class StripePaymentProcessor(BasePaymentProcessor):
         }
     
     async def create_payment(self, request: PaymentRequest) -> PaymentTransaction:
-        """Create Stripe payment"""
-        try:
+        """Create Stripe payment"""        try:
             transaction_id = str(uuid.uuid4())
             
             # Calculate fees
@@ -358,8 +330,7 @@ class StripePaymentProcessor(BasePaymentProcessor):
             raise PaymentProcessingError(f"Stripe payment creation failed: {e}")
     
     async def process_payment(self, transaction: PaymentTransaction) -> PaymentTransaction:
-        """Process Stripe payment"""
-        try:
+        """Process Stripe payment"""        try:
             # Confirm payment intent
             confirm_data = {
                 'payment_method': 'pm_card_visa'  # Default test payment method
@@ -398,8 +369,7 @@ class StripePaymentProcessor(BasePaymentProcessor):
             return transaction
     
     async def get_transaction_status(self, transaction_id: str) -> PaymentStatus:
-        """Get Stripe transaction status"""
-        try:
+        """Get Stripe transaction status"""        try:
             async with self.session.get(
                 f"https://api.stripe.com/v1/payment_intents/{transaction_id}",
                 headers=self.headers
@@ -425,8 +395,7 @@ class StripePaymentProcessor(BasePaymentProcessor):
             return PaymentStatus.FAILED
     
     async def cancel_payment(self, transaction_id: str) -> bool:
-        """Cancel Stripe payment"""
-        try:
+        """Cancel Stripe payment"""        try:
             async with self.session.post(
                 f"https://api.stripe.com/v1/payment_intents/{transaction_id}/cancel",
                 headers=self.headers
@@ -438,8 +407,7 @@ class StripePaymentProcessor(BasePaymentProcessor):
             return False
     
     async def refund_payment(self, transaction_id: str, amount: Optional[Decimal] = None) -> PaymentTransaction:
-        """Refund Stripe payment"""
-        try:
+        """Refund Stripe payment"""        try:
             refund_data = {
                 'payment_intent': transaction_id
             }
@@ -481,11 +449,9 @@ class StripePaymentProcessor(BasePaymentProcessor):
 
 
 class PayPalPaymentProcessor(BasePaymentProcessor):
-    """PayPal payment processor implementation"""
-    
+    """PayPal payment processor implementation"""    
     async def _setup_authentication(self) -> None:
-        """Setup PayPal authentication"""
-        self.client_id = self.config.get('client_id')
+        """Setup PayPal authentication"""        self.client_id = self.config.get('client_id')
         self.client_secret = self.config.get('client_secret')
         self.base_url = self.config.get('base_url', 'https://api.paypal.com')
         
@@ -493,8 +459,7 @@ class PayPalPaymentProcessor(BasePaymentProcessor):
         await self._get_access_token()
     
     async def _get_access_token(self) -> None:
-        """Get PayPal access token"""
-        try:
+        """Get PayPal access token"""        try:
             auth = aiohttp.BasicAuth(self.client_id, self.client_secret)
             headers = {
                 'Accept': 'application/json',
@@ -523,8 +488,7 @@ class PayPalPaymentProcessor(BasePaymentProcessor):
             raise PaymentProcessingError(f"PayPal authentication failed: {e}")
     
     async def create_payment(self, request: PaymentRequest) -> PaymentTransaction:
-        """Create PayPal payment"""
-        try:
+        """Create PayPal payment"""        try:
             transaction_id = str(uuid.uuid4())
             
             # Calculate fees
@@ -583,14 +547,12 @@ class PayPalPaymentProcessor(BasePaymentProcessor):
             raise PaymentProcessingError(f"PayPal payment creation failed: {e}")
     
     async def process_payment(self, transaction: PaymentTransaction) -> PaymentTransaction:
-        """Process PayPal payment (already processed on creation)"""
-        # PayPal payouts are processed immediately on creation
+        """Process PayPal payment (already processed on creation)"""        # PayPal payouts are processed immediately on creation
         transaction.status = PaymentStatus.PROCESSING
         return transaction
     
     async def get_transaction_status(self, transaction_id: str) -> PaymentStatus:
-        """Get PayPal transaction status"""
-        try:
+        """Get PayPal transaction status"""        try:
             async with self.session.get(
                 f"{self.base_url}/v1/payments/payouts/{transaction_id}",
                 headers=self.headers
@@ -618,21 +580,18 @@ class PayPalPaymentProcessor(BasePaymentProcessor):
             return PaymentStatus.FAILED
     
     async def cancel_payment(self, transaction_id: str) -> bool:
-        """Cancel PayPal payment"""
-        # PayPal payouts cannot be cancelled once created
+        """Cancel PayPal payment"""        # PayPal payouts cannot be cancelled once created
         logger.warning(f"PayPal payout {transaction_id} cannot be cancelled")
         return False
     
     async def refund_payment(self, transaction_id: str, amount: Optional[Decimal] = None) -> PaymentTransaction:
-        """Refund PayPal payment"""
-        # PayPal payouts cannot be refunded directly
+        """Refund PayPal payment"""        # PayPal payouts cannot be refunded directly
         # This would require a separate payout to reverse the transaction
         raise PaymentProcessingError("PayPal payout refunds not supported directly")
 
 
 class PaymentProcessingManager:
-    """Comprehensive payment processing management system"""
-    
+    """Comprehensive payment processing management system"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.processors = {}
@@ -646,8 +605,7 @@ class PaymentProcessingManager:
         self._initialize_processors()
     
     async def initialize(self) -> None:
-        """Initialize payment processing manager"""
-        try:
+        """Initialize payment processing manager"""        try:
             # Initialize all processors
             for processor in self.processors.values():
                 await processor.initialize()
@@ -662,8 +620,7 @@ class PaymentProcessingManager:
             raise
     
     def _initialize_processors(self) -> None:
-        """Initialize payment processors"""
-        # Stripe processor
+        """Initialize payment processors"""        # Stripe processor
         if 'stripe' in self.config:
             self.processors[PaymentProvider.STRIPE] = StripePaymentProcessor(
                 self.config['stripe']
@@ -682,8 +639,7 @@ class PaymentProcessingManager:
         account_details: Dict[str, Any],
         account_type: str = "personal"
     ) -> str:
-        """Create payment account"""
-        try:
+        """Create payment account"""        try:
             account_id = str(uuid.uuid4())
             
             # Encrypt sensitive account details
@@ -719,8 +675,7 @@ class PaymentProcessingManager:
         account_id: str,
         configuration: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Create payment method"""
-        try:
+        """Create payment method"""        try:
             if account_id not in self.accounts:
                 raise PaymentProcessingError(f"Payment account not found: {account_id}")
             
@@ -765,8 +720,7 @@ class PaymentProcessingManager:
         metadata: Optional[Dict[str, Any]] = None,
         payment_method_id: Optional[str] = None
     ) -> str:
-        """Process payment transaction"""
-        try:
+        """Process payment transaction"""        try:
             request_id = str(uuid.uuid4())
             
             # Create payment request
@@ -819,8 +773,7 @@ class PaymentProcessingManager:
             raise PaymentProcessingError(f"Payment processing failed: {e}")
     
     async def get_payment_status(self, transaction_id: str) -> Dict[str, Any]:
-        """Get payment transaction status"""
-        try:
+        """Get payment transaction status"""        try:
             if transaction_id not in self.transactions:
                 raise PaymentProcessingError(f"Transaction not found: {transaction_id}")
             
@@ -857,8 +810,7 @@ class PaymentProcessingManager:
             raise PaymentProcessingError(f"Payment status retrieval failed: {e}")
     
     async def cancel_payment(self, transaction_id: str) -> bool:
-        """Cancel payment transaction"""
-        try:
+        """Cancel payment transaction"""        try:
             if transaction_id not in self.transactions:
                 raise PaymentProcessingError(f"Transaction not found: {transaction_id}")
             
@@ -890,8 +842,7 @@ class PaymentProcessingManager:
         amount: Optional[Decimal] = None,
         reason: str = ""
     ) -> str:
-        """Refund payment transaction"""
-        try:
+        """Refund payment transaction"""        try:
             if transaction_id not in self.transactions:
                 raise PaymentProcessingError(f"Transaction not found: {transaction_id}")
             
@@ -925,8 +876,7 @@ class PaymentProcessingManager:
         user_id: Optional[str] = None,
         period_days: int = 30
     ) -> Dict[str, Any]:
-        """Get payment analytics"""
-        try:
+        """Get payment analytics"""        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=period_days)
             
@@ -1019,8 +969,7 @@ class PaymentProcessingManager:
         amount: Decimal,
         currency: CurrencyCode
     ) -> PaymentMethod:
-        """Select optimal payment method for transaction"""
-        # Get user's payment methods
+        """Select optimal payment method for transaction"""        # Get user's payment methods
         user_methods = [
             method for method in self.payment_methods.values()
             if method.user_id == user_id and method.is_active
@@ -1057,8 +1006,7 @@ class PaymentProcessingManager:
         payment_method: PaymentMethod,
         payment_request: PaymentRequest
     ) -> None:
-        """Validate payment method for request"""
-        if not payment_method.is_active:
+        """Validate payment method for request"""        if not payment_method.is_active:
             raise PaymentProcessingError("Payment method is not active")
         
         if not payment_method.account.is_active:
@@ -1074,8 +1022,7 @@ class PaymentProcessingManager:
             raise PaymentProcessingError(f"Currency not supported: {payment_request.currency.value}")
     
     def _get_supported_currencies(self, provider: PaymentProvider) -> List[CurrencyCode]:
-        """Get supported currencies for payment provider"""
-        if provider == PaymentProvider.STRIPE:
+        """Get supported currencies for payment provider"""        if provider == PaymentProvider.STRIPE:
             return [CurrencyCode.USD, CurrencyCode.EUR, CurrencyCode.GBP, CurrencyCode.CAD, CurrencyCode.AUD]
         elif provider == PaymentProvider.PAYPAL:
             return [CurrencyCode.USD, CurrencyCode.EUR, CurrencyCode.GBP, CurrencyCode.JPY, CurrencyCode.CAD]
@@ -1083,17 +1030,14 @@ class PaymentProcessingManager:
             return [CurrencyCode.USD, CurrencyCode.EUR]
     
     async def _load_payment_accounts(self) -> None:
-        """Load existing payment accounts"""
-        # In production, load from database
+        """Load existing payment accounts"""        # In production, load from database
         pass
     
     async def _setup_monitoring(self) -> None:
-        """Setup payment monitoring"""
-        pass
+        """Setup payment monitoring"""        pass
     
     async def _record_payment_metrics(self, transaction: PaymentTransaction) -> None:
-        """Record payment metrics for monitoring"""
-        metrics = {
+        """Record payment metrics for monitoring"""        metrics = {
             'transaction_id': transaction.transaction_id,
             'user_id': transaction.user_id,
             'amount': str(transaction.amount),
@@ -1108,5 +1052,4 @@ class PaymentProcessingManager:
 
 
 def create_payment_processing_manager(config: Optional[Dict[str, Any]] = None) -> PaymentProcessingManager:
-    """Factory function to create payment processing manager"""
-    return PaymentProcessingManager(config)
+    """Factory function to create payment processing manager"""    return PaymentProcessingManager(config)

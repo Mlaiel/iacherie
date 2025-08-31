@@ -1,5 +1,4 @@
-"""
-🔮 Prediction Engine
+"""🔮 Prediction Engine
 ==================
 
 Advanced AI prediction system for content protection:
@@ -12,9 +11,7 @@ Advanced AI prediction system for content protection:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + ML Engineer + Data Scientist
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import logging
+"""import logging
 import numpy as np
 import pandas as pd
 from typing import Dict, Any, List, Optional, Tuple
@@ -38,10 +35,8 @@ warnings.filterwarnings('ignore')
 logger = logging.getLogger(__name__)
 
 class PredictionEngine:
-    """
-    Enterprise AI prediction engine for content protection
-    """
-    
+    """    Enterprise AI prediction engine for content protection
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.models = {}
@@ -67,8 +62,7 @@ class PredictionEngine:
         logger.info("Prediction Engine initialized with advanced ML models")
     
     def _initialize_models(self):
-        """Initialize all prediction models"""
-        try:
+        """Initialize all prediction models"""        try:
             for prediction_type, model_type in self.prediction_types.items():
                 self.models[prediction_type] = self._create_ensemble_model(model_type)
                 self.scalers[prediction_type] = StandardScaler()
@@ -81,8 +75,7 @@ class PredictionEngine:
             raise
     
     def _create_ensemble_model(self, model_type: str) -> Dict[str, Any]:
-        """Create ensemble model for specific prediction type"""
-        if model_type == 'classification':
+        """Create ensemble model for specific prediction type"""        if model_type == 'classification':
             return {
                 'random_forest': RandomForestRegressor(n_estimators=100, random_state=42),
                 'gradient_boosting': GradientBoostingClassifier(n_estimators=100, random_state=42),
@@ -103,10 +96,8 @@ class PredictionEngine:
     
     async def predict_risks(self, content_data: Dict[str, Any], classification: Dict[str, Any], 
                            threats: List[Dict[str, Any]], patterns: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Main risk prediction entry point
-        """
-        try:
+        """        Main risk prediction entry point
+        """        try:
             prediction_results = {
                 'content_id': content_data.get('id'),
                 'timestamp': datetime.utcnow().isoformat(),
@@ -174,8 +165,7 @@ class PredictionEngine:
     
     async def _extract_prediction_features(self, content_data: Dict[str, Any], classification: Dict[str, Any], 
                                          threats: List[Dict[str, Any]], patterns: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract comprehensive features for prediction"""
-        try:
+        """Extract comprehensive features for prediction"""        try:
             features = {
                 'content_features': self._extract_content_features(content_data),
                 'classification_features': self._extract_classification_features(classification),
@@ -196,8 +186,7 @@ class PredictionEngine:
             raise
     
     async def _predict_risk_assessment(self, features: Dict[str, Any]) -> Dict[str, Any]:
-        """Predict overall risk assessment"""
-        try:
+        """Predict overall risk assessment"""        try:
             model_ensemble = self.models['risk_assessment']
             scaler = self.scalers['risk_assessment']
             
@@ -261,8 +250,7 @@ class PredictionEngine:
             return {'risk_level': 'unknown', 'confidence': 0.0, 'probability': 0.5}
     
     async def _predict_violation_likelihood(self, features: Dict[str, Any]) -> Dict[str, Any]:
-        """Predict likelihood of copyright violation"""
-        try:
+        """Predict likelihood of copyright violation"""        try:
             # Similar structure to risk assessment but for violation prediction
             model_ensemble = self.models['violation_likelihood']
             scaler = self.scalers['violation_likelihood']
@@ -299,8 +287,7 @@ class PredictionEngine:
             return {'likelihood': 'unknown', 'probability': 0.5, 'confidence': 0.0}
     
     async def _predict_revenue_impact(self, features: Dict[str, Any]) -> Dict[str, Any]:
-        """Predict revenue impact of protection measures"""
-        try:
+        """Predict revenue impact of protection measures"""        try:
             model_ensemble = self.models['revenue_impact']
             scaler = self.scalers['revenue_impact']
             
@@ -348,8 +335,7 @@ class PredictionEngine:
             return {'impact_amount': 0.0, 'confidence': 0.0, 'currency': 'EUR'}
     
     async def _predict_threat_severity(self, features: Dict[str, Any], threats: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Predict threat severity evolution"""
-        try:
+        """Predict threat severity evolution"""        try:
             if not threats:
                 return {'severity': 'none', 'escalation_probability': 0.0, 'confidence': 1.0}
             
@@ -380,8 +366,7 @@ class PredictionEngine:
             return {'severity': 'unknown', 'escalation_probability': 0.5, 'confidence': 0.0}
     
     async def _predict_user_behavior(self, features: Dict[str, Any]) -> Dict[str, Any]:
-        """Predict user behavior patterns"""
-        try:
+        """Predict user behavior patterns"""        try:
             user_features = features.get('user_features', {})
             
             # Behavior classification
@@ -423,8 +408,7 @@ class PredictionEngine:
             return {'behavior_class': 'unknown', 'confidence': 0.0}
     
     async def _predict_content_popularity(self, features: Dict[str, Any]) -> Dict[str, Any]:
-        """Predict content popularity and spread"""
-        try:
+        """Predict content popularity and spread"""        try:
             content_features = features.get('content_features', {})
             
             # Popularity score calculation
@@ -465,8 +449,7 @@ class PredictionEngine:
             return {'popularity_score': 0.5, 'confidence': 0.0}
     
     async def _predict_protection_effectiveness(self, features: Dict[str, Any]) -> Dict[str, Any]:
-        """Predict effectiveness of protection measures"""
-        try:
+        """Predict effectiveness of protection measures"""        try:
             # Analyze protection factors
             protection_factors = {
                 'fingerprint_quality': features.get('technical_features', {}).get('fingerprint_strength', 0.8),
@@ -498,8 +481,7 @@ class PredictionEngine:
             return {'effectiveness_score': 0.7, 'confidence': 0.0}
     
     async def update_model(self, feedback_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Update prediction models based on feedback"""
-        try:
+        """Update prediction models based on feedback"""        try:
             update_results = {
                 'timestamp': datetime.utcnow().isoformat(),
                 'samples_processed': len(feedback_data),
@@ -533,8 +515,7 @@ class PredictionEngine:
     
     # Helper methods for feature extraction and model operations
     def _extract_content_features(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract content-specific features"""
-        return {
+        """Extract content-specific features"""        return {
             'file_size': content_data.get('file_size', 0),
             'duration': content_data.get('duration', 0),
             'quality_score': content_data.get('quality_score', 0.5),
@@ -544,8 +525,7 @@ class PredictionEngine:
         }
     
     def _extract_classification_features(self, classification: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract classification-based features"""
-        classifications = classification.get('classifications', {})
+        """Extract classification-based features"""        classifications = classification.get('classifications', {})
         return {
             'adult_content_score': classifications.get('adult_content', 0.0),
             'violence_score': classifications.get('violence', 0.0),
@@ -554,8 +534,7 @@ class PredictionEngine:
         }
     
     def _extract_threat_features(self, threats: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Extract threat-based features"""
-        if not threats:
+        """Extract threat-based features"""        if not threats:
             return {'threat_count': 0, 'max_severity': 0.0, 'avg_confidence': 0.0}
         
         severities = [self._map_severity_to_score(t.get('severity', 'low')) for t in threats]
@@ -570,8 +549,7 @@ class PredictionEngine:
         }
     
     def _extract_pattern_features(self, patterns: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract pattern-based features"""
-        return {
+        """Extract pattern-based features"""        return {
             'anomaly_count': len(patterns.get('anomalies', [])),
             'usage_pattern_confidence': patterns.get('usage', {}).get('confidence', 0.0),
             'geographic_spread': patterns.get('geographic', {}).get('geographic_spread', 0.0),
@@ -579,8 +557,7 @@ class PredictionEngine:
         }
     
     def _extract_temporal_features(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract temporal features"""
-        now = datetime.utcnow()
+        """Extract temporal features"""        now = datetime.utcnow()
         upload_time = content_data.get('upload_time')
         
         if upload_time:
@@ -597,8 +574,7 @@ class PredictionEngine:
         }
     
     def _extract_user_features(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract user-based features"""
-        user_data = content_data.get('user_data', {})
+        """Extract user-based features"""        user_data = content_data.get('user_data', {})
         return {
             'user_reputation': user_data.get('reputation_score', 0.5),
             'account_age_days': user_data.get('account_age_days', 0),
@@ -608,8 +584,7 @@ class PredictionEngine:
         }
     
     def _extract_technical_features(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract technical features"""
-        return {
+        """Extract technical features"""        return {
             'fingerprint_strength': content_data.get('fingerprint_strength', 0.8),
             'compression_ratio': content_data.get('compression_ratio', 1.0),
             'metadata_completeness': content_data.get('metadata_completeness', 0.5),
@@ -617,16 +592,14 @@ class PredictionEngine:
         }
     
     def _flatten_features(self, features: Dict[str, Any]) -> Dict[str, Any]:
-        """Flatten nested feature dictionary"""
-        flattened = {}
+        """Flatten nested feature dictionary"""        flattened = {}
         for category, category_features in features.items():
             for feature_name, feature_value in category_features.items():
                 flattened[f"{category}_{feature_name}"] = feature_value
         return flattened
     
     def _prepare_feature_vector(self, features: Dict[str, Any], prediction_type: str) -> List[float]:
-        """Prepare feature vector for specific prediction type"""
-        # Select relevant features for this prediction type
+        """Prepare feature vector for specific prediction type"""        # Select relevant features for this prediction type
         relevant_features = self._get_relevant_features(prediction_type)
         
         vector = []
@@ -642,8 +615,7 @@ class PredictionEngine:
         return vector
     
     def _get_relevant_features(self, prediction_type: str) -> List[str]:
-        """Get relevant features for specific prediction type"""
-        # This would be configured based on feature importance analysis
+        """Get relevant features for specific prediction type"""        # This would be configured based on feature importance analysis
         base_features = [
             'content_features_file_size', 'content_features_quality_score',
             'classification_features_copyright_risk_score', 'threat_features_threat_count',
@@ -653,13 +625,11 @@ class PredictionEngine:
     
     # Additional helper methods...
     def _map_severity_to_score(self, severity: str) -> float:
-        """Map severity string to numeric score"""
-        mapping = {'low': 0.2, 'medium': 0.4, 'high': 0.7, 'critical': 1.0}
+        """Map severity string to numeric score"""        mapping = {'low': 0.2, 'medium': 0.4, 'high': 0.7, 'critical': 1.0}
         return mapping.get(severity, 0.2)
     
     def _map_score_to_severity(self, score: float) -> str:
-        """Map numeric score to severity string"""
-        if score >= 0.8:
+        """Map numeric score to severity string"""        if score >= 0.8:
             return 'critical'
         elif score >= 0.6:
             return 'high'
@@ -669,8 +639,7 @@ class PredictionEngine:
             return 'low'
     
     def _predict_time_to_violation(self, probability: float) -> str:
-        """Predict time until potential violation"""
-        if probability >= 0.8:
+        """Predict time until potential violation"""        if probability >= 0.8:
             return 'within_24_hours'
         elif probability >= 0.6:
             return 'within_week'
@@ -680,8 +649,7 @@ class PredictionEngine:
             return 'unlikely'
     
     def _predict_violation_type(self, features: Dict[str, Any]) -> str:
-        """Predict most likely type of violation"""
-        # Simplified logic - would use ML model in practice
+        """Predict most likely type of violation"""        # Simplified logic - would use ML model in practice
         copyright_risk = features.get('classification_features_copyright_risk_score', 0.0)
         if copyright_risk > 0.7:
             return 'direct_copy'
@@ -692,8 +660,7 @@ class PredictionEngine:
     
     # Additional methods would continue here for completeness...
     def _calculate_prediction_confidence(self, predictions: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate confidence scores for all predictions"""
-        confidences = {}
+        """Calculate confidence scores for all predictions"""        confidences = {}
         for pred_type, pred_data in predictions.items():
             if isinstance(pred_data, dict) and 'confidence' in pred_data:
                 confidences[f'{pred_type}_confidence'] = pred_data['confidence']
@@ -707,18 +674,15 @@ class PredictionEngine:
         return confidences
     
     def _extract_feature_importance(self, features: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract feature importance from trained models"""
-        # Placeholder implementation
+        """Extract feature importance from trained models"""        # Placeholder implementation
         return {'top_features': ['copyright_risk', 'user_reputation', 'threat_count']}
     
     def _identify_risk_factors(self, predictions: Dict[str, Any], features: Dict[str, Any]) -> Dict[str, Any]:
-        """Identify key risk factors from predictions"""
-        # Placeholder implementation
+        """Identify key risk factors from predictions"""        # Placeholder implementation
         return {'primary_risks': ['high_copyright_risk', 'suspicious_user_behavior']}
     
     async def _generate_recommendations(self, predictions: Dict[str, Any], features: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate actionable recommendations based on predictions"""
-        # Placeholder implementation
+        """Generate actionable recommendations based on predictions"""        # Placeholder implementation
         return [
             {'action': 'increase_monitoring', 'priority': 'high', 'reason': 'High violation likelihood'},
             {'action': 'strengthen_watermarks', 'priority': 'medium', 'reason': 'Medium protection effectiveness'}

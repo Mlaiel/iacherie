@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Advanced Indexing Analytics
+"""IA Influencer Agent - Advanced Indexing Analytics
 =================================================
 
 Enterprise-grade analytics system for content indexing insights,
@@ -13,9 +12,7 @@ This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import pandas as pd
 import numpy as np
@@ -41,8 +38,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ContentAnalytics:
-    """Content analytics structure"""
-    total_content_indexed: int
+    """Content analytics structure"""    total_content_indexed: int
     content_by_type: Dict[str, int]
     content_by_creator: Dict[str, int]
     trending_tags: List[Tuple[str, int]]
@@ -54,8 +50,7 @@ class ContentAnalytics:
 
 @dataclass
 class SearchAnalytics:
-    """Search analytics structure"""
-    total_searches: int
+    """Search analytics structure"""    total_searches: int
     search_types: Dict[str, int]  # text, vector, hybrid
     popular_queries: List[Tuple[str, int]]
     search_success_rate: float
@@ -67,8 +62,7 @@ class SearchAnalytics:
 
 @dataclass
 class PerformanceAnalytics:
-    """Performance analytics structure"""
-    processing_throughput: Dict[str, float]  # items per minute by type
+    """Performance analytics structure"""    processing_throughput: Dict[str, float]  # items per minute by type
     resource_utilization: Dict[str, float]  # CPU, memory, GPU, storage
     bottlenecks_identified: List[str]
     scalability_metrics: Dict[str, float]
@@ -78,8 +72,7 @@ class PerformanceAnalytics:
 
 @dataclass
 class BusinessInsights:
-    """Business intelligence insights"""
-    creator_engagement: Dict[str, Any]
+    """Business intelligence insights"""    creator_engagement: Dict[str, Any]
     content_performance: Dict[str, Any]
     revenue_potential: Dict[str, float]
     market_trends: List[str]
@@ -88,16 +81,14 @@ class BusinessInsights:
 
 
 class ContentAnalyticsEngine:
-    """Analyzes content indexing patterns and trends"""
-    
+    """Analyzes content indexing patterns and trends"""    
     def __init__(self, redis_url: str):
         self.redis_url = redis_url
         self.redis_client = None
         self.analytics_cache = {}
         
     async def initialize(self):
-        """Initialize analytics engine"""
-        try:
+        """Initialize analytics engine"""        try:
             self.redis_client = Redis.from_url(self.redis_url)
             await self.redis_client.ping()
             logger.info("ContentAnalyticsEngine initialized successfully")
@@ -109,8 +100,7 @@ class ContentAnalyticsEngine:
     async def generate_content_analytics(
         self, time_range: Dict[str, datetime] = None
     ) -> ContentAnalytics:
-        """Generate comprehensive content analytics"""
-        try:
+        """Generate comprehensive content analytics"""        try:
             if not time_range:
                 end_date = datetime.now(timezone.utc)
                 start_date = end_date - timedelta(days=30)
@@ -174,8 +164,7 @@ class ContentAnalyticsEngine:
     async def _fetch_content_data(
         self, time_range: Dict[str, datetime]
     ) -> List[Dict[str, Any]]:
-        """Fetch content data from Redis for the specified time range"""
-        try:
+        """Fetch content data from Redis for the specified time range"""        try:
             # Get content IDs within time range
             start_timestamp = time_range["start"].timestamp()
             end_timestamp = time_range["end"].timestamp()
@@ -209,8 +198,7 @@ class ContentAnalyticsEngine:
     async def analyze_content_clusters(
         self, content_data: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze content clusters using machine learning"""
-        try:
+        """Analyze content clusters using machine learning"""        try:
             if len(content_data) < 10:
                 return {"status": "insufficient_data"}
             
@@ -285,8 +273,7 @@ class ContentAnalyticsEngine:
     def _calculate_silhouette_score(
         self, features: np.ndarray, labels: np.ndarray
     ) -> float:
-        """Calculate silhouette score for clustering quality"""
-        try:
+        """Calculate silhouette score for clustering quality"""        try:
             from sklearn.metrics import silhouette_score
             return float(silhouette_score(features, labels))
         except:
@@ -295,8 +282,7 @@ class ContentAnalyticsEngine:
     async def generate_trend_analysis(
         self, days_back: int = 30
     ) -> Dict[str, Any]:
-        """Generate trend analysis for content indexing"""
-        try:
+        """Generate trend analysis for content indexing"""        try:
             end_date = datetime.now(timezone.utc)
             start_date = end_date - timedelta(days=days_back)
             
@@ -357,8 +343,7 @@ class ContentAnalyticsEngine:
             return {"status": "error", "message": str(e)}
     
     def _generate_trend_insights(self, trends: Dict[str, Any]) -> List[str]:
-        """Generate insights from trend analysis"""
-        insights = []
+        """Generate insights from trend analysis"""        insights = []
         
         for content_type, trend_data in trends.items():
             if content_type == "total":
@@ -394,15 +379,13 @@ class ContentAnalyticsEngine:
 
 
 class SearchAnalyticsEngine:
-    """Analyzes search patterns and user behavior"""
-    
+    """Analyzes search patterns and user behavior"""    
     def __init__(self, redis_url: str):
         self.redis_url = redis_url
         self.redis_client = None
         
     async def initialize(self):
-        """Initialize search analytics engine"""
-        try:
+        """Initialize search analytics engine"""        try:
             self.redis_client = Redis.from_url(self.redis_url)
             await self.redis_client.ping()
             logger.info("SearchAnalyticsEngine initialized successfully")
@@ -414,8 +397,7 @@ class SearchAnalyticsEngine:
     async def generate_search_analytics(
         self, time_range: Dict[str, datetime] = None
     ) -> SearchAnalytics:
-        """Generate comprehensive search analytics"""
-        try:
+        """Generate comprehensive search analytics"""        try:
             if not time_range:
                 end_date = datetime.now(timezone.utc)
                 start_date = end_date - timedelta(days=7)
@@ -494,8 +476,7 @@ class SearchAnalyticsEngine:
     async def _fetch_search_data(
         self, time_range: Dict[str, datetime]
     ) -> List[Dict[str, Any]]:
-        """Fetch search data from Redis"""
-        try:
+        """Fetch search data from Redis"""        try:
             start_timestamp = time_range["start"].timestamp()
             end_timestamp = time_range["end"].timestamp()
             
@@ -524,8 +505,7 @@ class SearchAnalyticsEngine:
     async def _analyze_search_patterns(
         self, search_data: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze search patterns"""
-        try:
+        """Analyze search patterns"""        try:
             # Hourly distribution
             hourly_distribution = defaultdict(int)
             for search in search_data:
@@ -566,8 +546,7 @@ class SearchAnalyticsEngine:
     async def _analyze_user_behavior(
         self, search_data: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze user search behavior"""
-        try:
+        """Analyze user search behavior"""        try:
             # User session analysis
             user_sessions = defaultdict(list)
             for search in search_data:
@@ -615,8 +594,7 @@ class SearchAnalyticsEngine:
 
 
 class VisualizationEngine:
-    """Generates visualizations for analytics data"""
-    
+    """Generates visualizations for analytics data"""    
     def __init__(self):
         plt.style.use('seaborn-v0_8')
         self.color_palette = sns.color_palette("husl", 10)
@@ -624,8 +602,7 @@ class VisualizationEngine:
     async def create_content_distribution_chart(
         self, content_analytics: ContentAnalytics
     ) -> str:
-        """Create content distribution pie chart"""
-        try:
+        """Create content distribution pie chart"""        try:
             fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
             
             # Content by type
@@ -661,8 +638,7 @@ class VisualizationEngine:
     async def create_trend_analysis_chart(
         self, trend_data: Dict[str, Any]
     ) -> str:
-        """Create trend analysis line chart"""
-        try:
+        """Create trend analysis line chart"""        try:
             trends = trend_data.get("trends", {})
             
             fig, ax = plt.subplots(figsize=(12, 8))

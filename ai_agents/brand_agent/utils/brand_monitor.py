@@ -1,5 +1,4 @@
-"""
-Brand Monitor - Advanced Brand Reputation & Monitoring System
+"""Brand Monitor - Advanced Brand Reputation & Monitoring System
 
 Real-time brand monitoring across multiple platforms and channels.
 Tracks brand mentions, sentiment analysis, and reputation management.
@@ -18,9 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -54,8 +51,7 @@ from ...utils.notification_service import NotificationService
 logger = logging.getLogger(__name__)
 
 class MonitoringSource(Enum):
-    """Sources for brand monitoring"""
-    GOOGLE_NEWS = "google_news"
+    """Sources for brand monitoring"""    GOOGLE_NEWS = "google_news"
     SOCIAL_MEDIA = "social_media"
     WEB_SEARCH = "web_search"
     MARKETPLACES = "marketplaces"
@@ -69,16 +65,14 @@ class MonitoringSource(Enum):
     DOMAIN_REGISTRIES = "domain_registries"
 
 class SentimentType(Enum):
-    """Sentiment analysis categories"""
-    HIGHLY_POSITIVE = "highly_positive"
+    """Sentiment analysis categories"""    HIGHLY_POSITIVE = "highly_positive"
     POSITIVE = "positive"
     NEUTRAL = "neutral"
     NEGATIVE = "negative"
     HIGHLY_NEGATIVE = "highly_negative"
     
 class AlertPriority(Enum):
-    """Alert priority levels"""
-    LOW = "low"
+    """Alert priority levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -86,8 +80,7 @@ class AlertPriority(Enum):
 
 @dataclass
 class BrandMention:
-    """Single brand mention with analysis"""
-    mention_id: str
+    """Single brand mention with analysis"""    mention_id: str
     brand_id: str
     source: MonitoringSource
     platform: str
@@ -108,8 +101,7 @@ class BrandMention:
 
 @dataclass
 class ReputationMetrics:
-    """Brand reputation metrics and trends"""
-    brand_id: str
+    """Brand reputation metrics and trends"""    brand_id: str
     period_start: datetime
     period_end: datetime
     total_mentions: int = 0
@@ -133,16 +125,14 @@ class ReputationMetrics:
     VIDEO_PLATFORMS = "video_platforms"
 
 class SentimentScore(Enum):
-    """Sentiment classification levels"""
-    VERY_NEGATIVE = "very_negative"
+    """Sentiment classification levels"""    VERY_NEGATIVE = "very_negative"
     NEGATIVE = "negative"
     NEUTRAL = "neutral"
     POSITIVE = "positive"
     VERY_POSITIVE = "very_positive"
 
 class AlertLevel(Enum):
-    """Alert severity levels"""
-    INFO = "info"
+    """Alert severity levels"""    INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -150,8 +140,7 @@ class AlertLevel(Enum):
 
 @dataclass
 class BrandMention:
-    """Individual brand mention data"""
-    mention_id: str
+    """Individual brand mention data"""    mention_id: str
     brand_id: str
     source: MonitoringSource
     platform: str
@@ -173,8 +162,7 @@ class BrandMention:
 
 @dataclass
 class ReputationMetrics:
-    """Brand reputation aggregated metrics"""
-    brand_id: str
+    """Brand reputation aggregated metrics"""    brand_id: str
     time_period: str
     total_mentions: int = 0
     positive_mentions: int = 0
@@ -192,8 +180,7 @@ class ReputationMetrics:
 
 @dataclass
 class MonitoringAlert:
-    """Brand monitoring alert"""
-    alert_id: str
+    """Brand monitoring alert"""    alert_id: str
     brand_id: str
     alert_level: AlertLevel
     alert_type: str
@@ -205,8 +192,7 @@ class MonitoringAlert:
     actions_taken: List[str] = field(default_factory=list)
 
 class BrandMonitor:
-    """
-    Advanced Brand Reputation & Monitoring System
+    """    Advanced Brand Reputation & Monitoring System
     
     Provides comprehensive brand monitoring including:
     - Multi-platform brand mention tracking
@@ -215,9 +201,7 @@ class BrandMonitor:
     - Crisis detection and alerts
     - Competitive intelligence
     - Automated reporting
-    """
-
-    def __init__(self, brand_id: str):
+    """    def __init__(self, brand_id: str):
         self.brand_id = brand_id
         self.monitoring_active = False
         self.monitoring_tasks: Dict[str, asyncio.Task] = {}
@@ -243,8 +227,7 @@ class BrandMonitor:
         logger.info(f"Brand monitor initialized for brand: {brand_id}")
 
     def _default_alert_thresholds(self) -> Dict[str, Any]:
-        """Default alert threshold configuration"""
-        return {
+        """Default alert threshold configuration"""        return {
             "negative_sentiment_spike": {
                 "threshold": 0.3,
                 "time_window": 3600,  # 1 hour
@@ -266,8 +249,7 @@ class BrandMonitor:
         }
 
     async def configure_monitoring(self, config: Dict[str, Any]) -> None:
-        """Configure brand monitoring parameters"""
-        try:
+        """Configure brand monitoring parameters"""        try:
             self.monitoring_keywords = config.get("keywords", [])
             self.excluded_keywords = config.get("excluded_keywords", [])
             
@@ -290,8 +272,7 @@ class BrandMonitor:
             raise
 
     async def start_monitoring(self) -> None:
-        """Start continuous brand monitoring"""
-        try:
+        """Start continuous brand monitoring"""        try:
             if self.monitoring_active:
                 logger.warning("Brand monitoring already active")
                 return
@@ -316,8 +297,7 @@ class BrandMonitor:
             raise
 
     async def stop_monitoring(self) -> None:
-        """Stop brand monitoring"""
-        try:
+        """Stop brand monitoring"""        try:
             self.monitoring_active = False
             
             # Cancel all monitoring tasks
@@ -332,8 +312,7 @@ class BrandMonitor:
             logger.error(f"Brand monitoring stop failed: {str(e)}")
 
     async def _monitor_source(self, source: MonitoringSource) -> None:
-        """Monitor specific source for brand mentions"""
-        try:
+        """Monitor specific source for brand mentions"""        try:
             while self.monitoring_active:
                 try:
                     new_mentions = []
@@ -377,8 +356,7 @@ class BrandMonitor:
             logger.error(f"Source monitoring task failed ({source.value}): {str(e)}")
 
     def _get_source_scan_interval(self, source: MonitoringSource) -> int:
-        """Get scan interval for different sources"""
-        intervals = {
+        """Get scan interval for different sources"""        intervals = {
             MonitoringSource.GOOGLE_NEWS: 1800,      # 30 minutes
             MonitoringSource.SOCIAL_MEDIA: 900,      # 15 minutes
             MonitoringSource.FORUMS: 3600,           # 1 hour
@@ -391,8 +369,7 @@ class BrandMonitor:
         return intervals.get(source, 3600)
 
     async def _monitor_google_news(self) -> List[BrandMention]:
-        """Monitor Google News for brand mentions"""
-        mentions = []
+        """Monitor Google News for brand mentions"""        mentions = []
         
         try:
             for keyword in self.monitoring_keywords:
@@ -410,8 +387,7 @@ class BrandMonitor:
         return mentions
 
     async def _monitor_social_media(self) -> List[BrandMention]:
-        """Monitor social media platforms for brand mentions"""
-        mentions = []
+        """Monitor social media platforms for brand mentions"""        mentions = []
         
         try:
             platforms = ["twitter", "facebook", "instagram", "linkedin", "tiktok"]
@@ -431,8 +407,7 @@ class BrandMonitor:
         return mentions
 
     async def _monitor_forums(self) -> List[BrandMention]:
-        """Monitor forums and discussion boards"""
-        mentions = []
+        """Monitor forums and discussion boards"""        mentions = []
         
         try:
             forum_sites = [
@@ -451,8 +426,7 @@ class BrandMonitor:
         return mentions
 
     async def _monitor_review_sites(self) -> List[BrandMention]:
-        """Monitor review sites and rating platforms"""
-        mentions = []
+        """Monitor review sites and rating platforms"""        mentions = []
         
         try:
             review_sites = [
@@ -471,8 +445,7 @@ class BrandMonitor:
         return mentions
 
     async def _search_google_news(self, keyword: str) -> List[Dict[str, Any]]:
-        """Search Google News for keyword mentions"""
-        try:
+        """Search Google News for keyword mentions"""        try:
             # This would integrate with Google News API
             # For now, return placeholder data
             return [
@@ -489,8 +462,7 @@ class BrandMonitor:
             return []
 
     async def _search_social_platform(self, platform: str, keyword: str) -> List[Dict[str, Any]]:
-        """Search social media platform for mentions"""
-        try:
+        """Search social media platform for mentions"""        try:
             # This would integrate with platform APIs (Twitter API, Facebook Graph API, etc.)
             return await self.social_media_api.search_mentions(platform, keyword)
         except Exception as e:
@@ -498,8 +470,7 @@ class BrandMonitor:
             return []
 
     async def _search_forum_site(self, site: str, keyword: str) -> List[BrandMention]:
-        """Search forum site for brand mentions"""
-        mentions = []
+        """Search forum site for brand mentions"""        mentions = []
         
         try:
             # Use web scraping or site-specific APIs
@@ -516,8 +487,7 @@ class BrandMonitor:
         return mentions
 
     async def _search_review_site(self, site: str, keyword: str) -> List[BrandMention]:
-        """Search review site for brand mentions"""
-        mentions = []
+        """Search review site for brand mentions"""        mentions = []
         
         try:
             reviews = await self.web_scraper.search_reviews(site, keyword)
@@ -533,8 +503,7 @@ class BrandMonitor:
         return mentions
 
     def _should_include_mention(self, title: str, content: str = "") -> bool:
-        """Check if mention should be included based on filters"""
-        try:
+        """Check if mention should be included based on filters"""        try:
             full_text = f"{title} {content}".lower()
             
             # Check excluded keywords
@@ -555,8 +524,7 @@ class BrandMonitor:
             return False
 
     async def _create_mention_from_news(self, result: Dict[str, Any], keyword: str) -> BrandMention:
-        """Create BrandMention from news result"""
-        mention_id = f"news_{hashlib.md5(result.get('url', '').encode()).hexdigest()[:12]}"
+        """Create BrandMention from news result"""        mention_id = f"news_{hashlib.md5(result.get('url', '').encode()).hexdigest()[:12]}"
         
         mention = BrandMention(
             mention_id=mention_id,
@@ -575,8 +543,7 @@ class BrandMonitor:
         return mention
 
     async def _create_mention_from_social(self, result: Dict[str, Any], platform: str, keyword: str) -> BrandMention:
-        """Create BrandMention from social media result"""
-        mention_id = f"social_{platform}_{hashlib.md5(result.get('id', '').encode()).hexdigest()[:12]}"
+        """Create BrandMention from social media result"""        mention_id = f"social_{platform}_{hashlib.md5(result.get('id', '').encode()).hexdigest()[:12]}"
         
         mention = BrandMention(
             mention_id=mention_id,
@@ -597,8 +564,7 @@ class BrandMonitor:
         return mention
 
     async def _create_mention_from_forum(self, result: Dict[str, Any], site: str, keyword: str) -> BrandMention:
-        """Create BrandMention from forum result"""
-        mention_id = f"forum_{site}_{hashlib.md5(result.get('url', '').encode()).hexdigest()[:12]}"
+        """Create BrandMention from forum result"""        mention_id = f"forum_{site}_{hashlib.md5(result.get('url', '').encode()).hexdigest()[:12]}"
         
         mention = BrandMention(
             mention_id=mention_id,
@@ -617,8 +583,7 @@ class BrandMonitor:
         return mention
 
     async def _create_mention_from_review(self, result: Dict[str, Any], site: str, keyword: str) -> BrandMention:
-        """Create BrandMention from review result"""
-        mention_id = f"review_{site}_{hashlib.md5(result.get('url', '').encode()).hexdigest()[:12]}"
+        """Create BrandMention from review result"""        mention_id = f"review_{site}_{hashlib.md5(result.get('url', '').encode()).hexdigest()[:12]}"
         
         mention = BrandMention(
             mention_id=mention_id,
@@ -638,8 +603,7 @@ class BrandMonitor:
         return mention
 
     async def _process_new_mention(self, mention: BrandMention) -> None:
-        """Process a new brand mention"""
-        try:
+        """Process a new brand mention"""        try:
             # Analyze sentiment
             await self._analyze_mention_sentiment(mention)
             
@@ -662,8 +626,7 @@ class BrandMonitor:
             logger.error(f"Mention processing failed: {str(e)}")
 
     async def _analyze_mention_sentiment(self, mention: BrandMention) -> None:
-        """Analyze sentiment of brand mention"""
-        try:
+        """Analyze sentiment of brand mention"""        try:
             # Combine title and content for analysis
             text = f"{mention.title} {mention.content}"
             
@@ -689,8 +652,7 @@ class BrandMonitor:
             mention.sentiment_label = SentimentScore.NEUTRAL
 
     async def _calculate_influence_score(self, mention: BrandMention) -> float:
-        """Calculate influence score of mention source"""
-        try:
+        """Calculate influence score of mention source"""        try:
             base_score = 0.5
             
             # Platform influence multipliers
@@ -728,8 +690,7 @@ class BrandMonitor:
             return 0.5
 
     async def _calculate_credibility_score(self, mention: BrandMention) -> float:
-        """Calculate credibility score of mention source"""
-        try:
+        """Calculate credibility score of mention source"""        try:
             base_score = 0.5
             
             # Source credibility ratings
@@ -766,8 +727,7 @@ class BrandMonitor:
             return 0.5
 
     async def _check_mention_alerts(self, mention: BrandMention) -> None:
-        """Check if mention triggers any alerts"""
-        try:
+        """Check if mention triggers any alerts"""        try:
             alerts_triggered = []
             
             # Crisis keyword detection
@@ -801,8 +761,7 @@ class BrandMonitor:
             logger.error(f"Mention alert checking failed: {str(e)}")
 
     async def _create_crisis_alert(self, mention: BrandMention, crisis_keyword: str) -> MonitoringAlert:
-        """Create crisis-level alert"""
-        alert_id = f"crisis_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{mention.mention_id[:8]}"
+        """Create crisis-level alert"""        alert_id = f"crisis_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{mention.mention_id[:8]}"
         
         return MonitoringAlert(
             alert_id=alert_id,
@@ -815,8 +774,7 @@ class BrandMonitor:
         )
 
     async def _create_negative_sentiment_alert(self, mention: BrandMention) -> MonitoringAlert:
-        """Create negative sentiment alert"""
-        alert_id = f"sentiment_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{mention.mention_id[:8]}"
+        """Create negative sentiment alert"""        alert_id = f"sentiment_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{mention.mention_id[:8]}"
         
         return MonitoringAlert(
             alert_id=alert_id,
@@ -829,8 +787,7 @@ class BrandMonitor:
         )
 
     async def _create_high_impact_alert(self, mention: BrandMention) -> MonitoringAlert:
-        """Create high impact mention alert"""
-        alert_id = f"impact_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{mention.mention_id[:8]}"
+        """Create high impact mention alert"""        alert_id = f"impact_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{mention.mention_id[:8]}"
         
         return MonitoringAlert(
             alert_id=alert_id,
@@ -843,8 +800,7 @@ class BrandMonitor:
         )
 
     async def _send_alert(self, alert: MonitoringAlert) -> None:
-        """Send alert through notification service"""
-        try:
+        """Send alert through notification service"""        try:
             await self.notification_service.send_alert(
                 alert_level=alert.alert_level.value,
                 message=alert.message,
@@ -857,8 +813,7 @@ class BrandMonitor:
             logger.error(f"Alert sending failed: {str(e)}")
 
     async def _continuous_sentiment_analysis(self) -> None:
-        """Continuous sentiment analysis task"""
-        try:
+        """Continuous sentiment analysis task"""        try:
             while self.monitoring_active:
                 try:
                     # Analyze recent mentions that haven't been analyzed
@@ -882,8 +837,7 @@ class BrandMonitor:
             logger.error(f"Continuous sentiment analysis failed: {str(e)}")
 
     async def _continuous_alert_monitoring(self) -> None:
-        """Continuous alert monitoring task"""
-        try:
+        """Continuous alert monitoring task"""        try:
             while self.monitoring_active:
                 try:
                     # Check for volume spikes
@@ -907,8 +861,7 @@ class BrandMonitor:
             logger.error(f"Continuous alert monitoring failed: {str(e)}")
 
     async def _continuous_reputation_calculation(self) -> None:
-        """Continuous reputation score calculation task"""
-        try:
+        """Continuous reputation score calculation task"""        try:
             while self.monitoring_active:
                 try:
                     # Calculate hourly reputation metrics
@@ -929,8 +882,7 @@ class BrandMonitor:
             logger.error(f"Continuous reputation calculation failed: {str(e)}")
 
     async def get_reputation_metrics(self, time_period: str = "24h") -> ReputationMetrics:
-        """Get current reputation metrics"""
-        try:
+        """Get current reputation metrics"""        try:
             cutoff_time = self._get_cutoff_time(time_period)
             relevant_mentions = [
                 m for m in self.mentions
@@ -987,8 +939,7 @@ class BrandMonitor:
             return ReputationMetrics(brand_id=self.brand_id, time_period=time_period)
 
     def _get_cutoff_time(self, time_period: str) -> datetime:
-        """Get cutoff time for time period"""
-        now = datetime.utcnow()
+        """Get cutoff time for time period"""        now = datetime.utcnow()
         
         if time_period == "1h":
             return now - timedelta(hours=1)
@@ -1002,8 +953,7 @@ class BrandMonitor:
             return now - timedelta(hours=24)  # Default to 24h
 
     def _calculate_reputation_score(self, mentions: List[BrandMention]) -> float:
-        """Calculate overall reputation score"""
-        if not mentions:
+        """Calculate overall reputation score"""        if not mentions:
             return 0.5  # Neutral score
         
         try:
@@ -1031,8 +981,7 @@ class BrandMonitor:
             return 0.5
 
     def _get_top_keywords(self, mentions: List[BrandMention], top_n: int = 10) -> List[str]:
-        """Get most frequently mentioned keywords"""
-        try:
+        """Get most frequently mentioned keywords"""        try:
             all_keywords = []
             for mention in mentions:
                 all_keywords.extend(mention.keywords_matched)
@@ -1051,8 +1000,7 @@ class BrandMonitor:
             return []
 
     def _get_top_platforms(self, mentions: List[BrandMention], top_n: int = 10) -> List[str]:
-        """Get platforms with most mentions"""
-        try:
+        """Get platforms with most mentions"""        try:
             platform_counts = {}
             for mention in mentions:
                 platform_counts[mention.platform] = platform_counts.get(mention.platform, 0) + 1
@@ -1065,8 +1013,7 @@ class BrandMonitor:
             return []
 
     async def _detect_crisis_indicators(self, mentions: List[BrandMention]) -> List[str]:
-        """Detect potential crisis indicators"""
-        indicators = []
+        """Detect potential crisis indicators"""        indicators = []
         
         try:
             # High volume of negative mentions
@@ -1103,21 +1050,17 @@ class BrandMonitor:
 
 
 class ReputationTracker:
-    """
-    Brand Reputation Tracking & Historical Analysis
+    """    Brand Reputation Tracking & Historical Analysis
     
     Tracks reputation changes over time and provides insights into brand health trends.
-    """
-
-    def __init__(self, brand_id: str):
+    """    def __init__(self, brand_id: str):
         self.brand_id = brand_id
         self.reputation_history: List[ReputationMetrics] = []
         
         logger.info(f"Reputation tracker initialized for brand: {brand_id}")
 
     async def track_reputation_change(self, current_metrics: ReputationMetrics, previous_metrics: Optional[ReputationMetrics] = None) -> Dict[str, Any]:
-        """Track reputation changes between time periods"""
-        try:
+        """Track reputation changes between time periods"""        try:
             if not previous_metrics:
                 # Get previous metrics from history
                 if len(self.reputation_history) >= 2:
@@ -1152,8 +1095,7 @@ class ReputationTracker:
             return {"trend": "error", "error": str(e)}
 
     def _determine_reputation_trend(self, reputation_change: float, sentiment_change: float) -> str:
-        """Determine overall reputation trend"""
-        if reputation_change > 0.05 and sentiment_change > 0.1:
+        """Determine overall reputation trend"""        if reputation_change > 0.05 and sentiment_change > 0.1:
             return "strongly_improving"
         elif reputation_change > 0.02 or sentiment_change > 0.05:
             return "improving"
@@ -1167,8 +1109,7 @@ class ReputationTracker:
             return "stable"
 
     async def generate_reputation_report(self, time_period: str = "30d") -> Dict[str, Any]:
-        """Generate comprehensive reputation analysis report"""
-        try:
+        """Generate comprehensive reputation analysis report"""        try:
             if not self.reputation_history:
                 return {"error": "No reputation data available"}
             
@@ -1200,8 +1141,7 @@ class ReputationTracker:
             return {"error": str(e)}
 
     async def _generate_reputation_summary(self, metrics: List[ReputationMetrics]) -> Dict[str, Any]:
-        """Generate reputation summary statistics"""
-        if not metrics:
+        """Generate reputation summary statistics"""        if not metrics:
             return {}
         
         latest = metrics[-1]
@@ -1220,8 +1160,7 @@ class ReputationTracker:
         }
 
     async def _analyze_reputation_trends(self, metrics: List[ReputationMetrics]) -> Dict[str, Any]:
-        """Analyze reputation trends over time"""
-        if len(metrics) < 2:
+        """Analyze reputation trends over time"""        if len(metrics) < 2:
             return {"error": "Insufficient data for trend analysis"}
         
         # Extract time series data
@@ -1244,8 +1183,7 @@ class ReputationTracker:
         }
 
     def _calculate_trend(self, values: List[float]) -> str:
-        """Calculate trend direction from time series values"""
-        if len(values) < 2:
+        """Calculate trend direction from time series values"""        if len(values) < 2:
             return "insufficient_data"
         
         # Simple linear trend calculation
@@ -1260,8 +1198,7 @@ class ReputationTracker:
             return "stable"
 
     async def _generate_reputation_insights(self, metrics: List[ReputationMetrics]) -> List[str]:
-        """Generate key insights from reputation data"""
-        insights = []
+        """Generate key insights from reputation data"""        insights = []
         
         try:
             if not metrics:
@@ -1307,8 +1244,7 @@ class ReputationTracker:
         return insights
 
     async def _generate_reputation_recommendations(self, metrics: List[ReputationMetrics]) -> List[str]:
-        """Generate actionable recommendations for reputation improvement"""
-        recommendations = []
+        """Generate actionable recommendations for reputation improvement"""        recommendations = []
         
         try:
             if not metrics:

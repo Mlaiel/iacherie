@@ -1,5 +1,4 @@
-"""
-Fingerprint Utilities Module
+"""Fingerprint Utilities Module
 ============================
 
 Professional content fingerprinting utilities for web crawlers.
@@ -22,9 +21,7 @@ Project Team Specialties:
 - Audio Engineer: Advanced audio processing and analysis
 - DevOps Engineer: CI/CD and infrastructure automation
 - IA Prompt Engineer: Intelligent prompt optimization
-"""
-
-import hashlib
+"""import hashlib
 import hmac
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -64,8 +61,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ContentFingerprint:
-    """Structure for content fingerprints."""
-    content_id: str
+    """Structure for content fingerprints."""    content_id: str
     content_type: str  # text, image, audio, video, html
     primary_hash: str
     secondary_hashes: Dict[str, str]
@@ -83,8 +79,7 @@ class ContentFingerprint:
 
 @dataclass
 class SimilarityResult:
-    """Structure for similarity comparison results."""
-    content_id_1: str
+    """Structure for similarity comparison results."""    content_id_1: str
     content_id_2: str
     similarity_score: float
     similarity_type: str
@@ -99,19 +94,16 @@ class SimilarityResult:
             self.metadata = {}
 
 class ContentFingerprintGenerator:
-    """
-    Advanced content fingerprinting generator.
+    """    Advanced content fingerprinting generator.
     
     Supports multiple content types with various fingerprinting strategies:
     - Text: Semantic embeddings, n-grams, linguistic features
     - Images: Perceptual hashing, feature descriptors, color histograms
     - Audio: Spectral fingerprints, MFCC features, chromagrams
     - HTML: DOM structure, content patterns, meta information
-    """
-    
+    """    
     def __init__(self):
-        """Initialize fingerprint generator."""
-        self.text_model = None
+        """Initialize fingerprint generator."""        self.text_model = None
         self.spacy_nlp = None
         self.tfidf_vectorizer = None
         
@@ -119,8 +111,7 @@ class ContentFingerprintGenerator:
         self._init_text_models()
         
     def _init_text_models(self) -> None:
-        """Initialize text processing models."""
-        try:
+        """Initialize text processing models."""        try:
             # Initialize sentence transformer
             self.text_model = SentenceTransformer('all-MiniLM-L6-v2')
             
@@ -150,8 +141,7 @@ class ContentFingerprintGenerator:
         content_id: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> ContentFingerprint:
-        """
-        Generate comprehensive fingerprint for content.
+        """        Generate comprehensive fingerprint for content.
         
         Args:
             content: Content data (text, bytes, or array)
@@ -161,8 +151,7 @@ class ContentFingerprintGenerator:
             
         Returns:
             ContentFingerprint object
-        """
-        metadata = metadata or {}
+        """        metadata = metadata or {}
         
         try:
             if content_type == 'text':
@@ -199,8 +188,7 @@ class ContentFingerprintGenerator:
         content_id: str,
         metadata: Dict[str, Any]
     ) -> ContentFingerprint:
-        """Generate fingerprint for text content."""
-        # Primary hash (content-based)
+        """Generate fingerprint for text content."""        # Primary hash (content-based)
         normalized_text = self._normalize_text(text)
         primary_hash = self._semantic_hash(normalized_text)
         
@@ -259,8 +247,7 @@ class ContentFingerprintGenerator:
         content_id: str,
         metadata: Dict[str, Any]
     ) -> ContentFingerprint:
-        """Generate fingerprint for HTML content."""
-        from bs4 import BeautifulSoup
+        """Generate fingerprint for HTML content."""        from bs4 import BeautifulSoup
         
         try:
             soup = BeautifulSoup(html, 'html.parser')
@@ -325,8 +312,7 @@ class ContentFingerprintGenerator:
         content_id: str,
         metadata: Dict[str, Any]
     ) -> ContentFingerprint:
-        """Generate fingerprint for image content."""
-        if not VISION_AVAILABLE:
+        """Generate fingerprint for image content."""        if not VISION_AVAILABLE:
             logger.warning("Vision libraries not available, using basic fingerprint")
             return await self._fingerprint_generic(image_data, content_id, metadata)
         
@@ -394,8 +380,7 @@ class ContentFingerprintGenerator:
         content_id: str,
         metadata: Dict[str, Any]
     ) -> ContentFingerprint:
-        """Generate fingerprint for audio content."""
-        if not AUDIO_AVAILABLE:
+        """Generate fingerprint for audio content."""        if not AUDIO_AVAILABLE:
             logger.warning("Audio libraries not available, using basic fingerprint")
             return await self._fingerprint_generic(audio_data, content_id, metadata)
         
@@ -467,8 +452,7 @@ class ContentFingerprintGenerator:
         content_id: str,
         metadata: Dict[str, Any]
     ) -> ContentFingerprint:
-        """Generate fingerprint for video content."""
-        if not VISION_AVAILABLE:
+        """Generate fingerprint for video content."""        if not VISION_AVAILABLE:
             logger.warning("Vision libraries not available, using basic fingerprint")
             return await self._fingerprint_generic(video_data, content_id, metadata)
         
@@ -555,8 +539,7 @@ class ContentFingerprintGenerator:
         content_id: str,
         metadata: Dict[str, Any]
     ) -> ContentFingerprint:
-        """Generate basic fingerprint for unknown content types."""
-        content_str = str(content)
+        """Generate basic fingerprint for unknown content types."""        content_str = str(content)
         
         primary_hash = hashlib.sha256(content_str.encode()).hexdigest()
         
@@ -580,20 +563,17 @@ class ContentFingerprintGenerator:
     
     # Helper methods for hashing
     def _basic_hash(self, content: str) -> str:
-        """Generate basic SHA-256 hash."""
-        return hashlib.sha256(content.encode()).hexdigest()
+        """Generate basic SHA-256 hash."""        return hashlib.sha256(content.encode()).hexdigest()
     
     def _normalize_text(self, text: str) -> str:
-        """Normalize text for consistent hashing."""
-        # Remove extra whitespace, lowercase, basic cleanup
+        """Normalize text for consistent hashing."""        # Remove extra whitespace, lowercase, basic cleanup
         normalized = re.sub(r'\s+', ' ', text.lower().strip())
         # Remove punctuation for fuzzy matching
         normalized = re.sub(r'[^\w\s]', '', normalized)
         return normalized
     
     def _semantic_hash(self, text: str) -> str:
-        """Generate semantic hash based on meaning."""
-        # Use TF-IDF or other semantic features
+        """Generate semantic hash based on meaning."""        # Use TF-IDF or other semantic features
         words = text.split()
         # Create a hash based on significant words
         significant_words = sorted([w for w in words if len(w) > 3])[:50]
@@ -601,8 +581,7 @@ class ContentFingerprintGenerator:
         return hashlib.sha256(semantic_content.encode()).hexdigest()
     
     def _fuzzy_hash(self, text: str) -> str:
-        """Generate fuzzy hash for approximate matching."""
-        # Simplified fuzzy hash - in production use ssdeep or similar
+        """Generate fuzzy hash for approximate matching."""        # Simplified fuzzy hash - in production use ssdeep or similar
         words = text.split()
         # Group similar length words
         short_words = [w for w in words if len(w) <= 4]
@@ -612,8 +591,7 @@ class ContentFingerprintGenerator:
         return hashlib.md5(fuzzy_content.encode()).hexdigest()
     
     def _ngram_hash(self, text: str, n: int = 3) -> str:
-        """Generate n-gram based hash."""
-        # Create character n-grams
+        """Generate n-gram based hash."""        # Create character n-grams
         ngrams = [text[i:i+n] for i in range(len(text)-n+1)]
         # Use most common n-grams
         from collections import Counter
@@ -622,8 +600,7 @@ class ContentFingerprintGenerator:
         return hashlib.md5(ngram_content.encode()).hexdigest()
     
     def _linguistic_hash(self, text: str) -> str:
-        """Generate hash based on linguistic features."""
-        # Basic linguistic features
+        """Generate hash based on linguistic features."""        # Basic linguistic features
         words = text.split()
         avg_word_length = sum(len(w) for w in words) / len(words) if words else 0
         sentence_count = text.count('.') + text.count('!') + text.count('?')
@@ -632,23 +609,20 @@ class ContentFingerprintGenerator:
         return hashlib.md5(features.encode()).hexdigest()
     
     def _get_pos_distribution(self, doc) -> Dict[str, int]:
-        """Get part-of-speech distribution."""
-        pos_counts = {}
+        """Get part-of-speech distribution."""        pos_counts = {}
         for token in doc:
             pos = token.pos_
             pos_counts[pos] = pos_counts.get(pos, 0) + 1
         return pos_counts
     
     def _html_structure_hash(self, soup) -> str:
-        """Generate hash based on HTML structure."""
-        # Extract tag structure
+        """Generate hash based on HTML structure."""        # Extract tag structure
         tags = [tag.name for tag in soup.find_all()]
         structure = ':'.join(tags[:50])  # Limit for performance
         return hashlib.md5(structure.encode()).hexdigest()
     
     def _html_metadata_hash(self, soup) -> str:
-        """Generate hash based on HTML metadata."""
-        meta_tags = soup.find_all('meta')
+        """Generate hash based on HTML metadata."""        meta_tags = soup.find_all('meta')
         meta_content = []
         for meta in meta_tags:
             name = meta.get('name', '')
@@ -660,8 +634,7 @@ class ContentFingerprintGenerator:
         return hashlib.md5(meta_string.encode()).hexdigest()
     
     def _html_links_hash(self, soup) -> str:
-        """Generate hash based on HTML links."""
-        links = [a.get('href', '') for a in soup.find_all('a', href=True)]
+        """Generate hash based on HTML links."""        links = [a.get('href', '') for a in soup.find_all('a', href=True)]
         # Normalize links (remove parameters, etc.)
         normalized_links = []
         for link in links[:20]:  # Limit for performance
@@ -674,8 +647,7 @@ class ContentFingerprintGenerator:
     
     # Image processing methods
     def _perceptual_hash(self, image: Image.Image, hash_size: int = 8) -> str:
-        """Generate perceptual hash for image."""
-        # Resize and convert to grayscale
+        """Generate perceptual hash for image."""        # Resize and convert to grayscale
         image = image.resize((hash_size + 1, hash_size), Image.Resampling.LANCZOS)
         image = image.convert('L')
         
@@ -696,8 +668,7 @@ class ContentFingerprintGenerator:
         return f"{hash_int:016x}"
     
     def _difference_hash(self, image: Image.Image, hash_size: int = 8) -> str:
-        """Generate difference hash for image."""
-        image = image.resize((hash_size + 1, hash_size), Image.Resampling.LANCZOS)
+        """Generate difference hash for image."""        image = image.resize((hash_size + 1, hash_size), Image.Resampling.LANCZOS)
         image = image.convert('L')
         
         pixels = list(image.getdata())
@@ -714,8 +685,7 @@ class ContentFingerprintGenerator:
         return f"{hash_int:016x}"
     
     def _average_hash(self, image: Image.Image, hash_size: int = 8) -> str:
-        """Generate average hash for image."""
-        image = image.resize((hash_size, hash_size), Image.Resampling.LANCZOS)
+        """Generate average hash for image."""        image = image.resize((hash_size, hash_size), Image.Resampling.LANCZOS)
         image = image.convert('L')
         
         pixels = list(image.getdata())
@@ -726,8 +696,7 @@ class ContentFingerprintGenerator:
         return f"{hash_int:016x}"
     
     def _wavelet_hash(self, image: Image.Image, hash_size: int = 8) -> str:
-        """Generate wavelet hash for image."""
-        try:
+        """Generate wavelet hash for image."""        try:
             import pywt
             
             image = image.resize((hash_size * 2, hash_size * 2), Image.Resampling.LANCZOS)
@@ -760,8 +729,7 @@ class ContentFingerprintGenerator:
             return self._average_hash(image, hash_size)
     
     def _color_histogram_hash(self, image: Image.Image) -> str:
-        """Generate hash based on color histogram."""
-        # Convert to RGB if needed
+        """Generate hash based on color histogram."""        # Convert to RGB if needed
         if image.mode != 'RGB':
             image = image.convert('RGB')
         
@@ -788,8 +756,7 @@ class ContentFingerprintGenerator:
         return hashlib.md5(feature_string.encode()).hexdigest()
     
     def _texture_hash(self, image: Image.Image) -> str:
-        """Generate hash based on texture features."""
-        # Convert to grayscale
+        """Generate hash based on texture features."""        # Convert to grayscale
         gray = image.convert('L')
         gray = gray.resize((64, 64), Image.Resampling.LANCZOS)
         
@@ -829,8 +796,7 @@ class ContentFingerprintGenerator:
         return hashlib.md5(feature_string.encode()).hexdigest()
     
     def _extract_image_features(self, image: Image.Image) -> List[float]:
-        """Extract comprehensive image features."""
-        features = []
+        """Extract comprehensive image features."""        features = []
         
         # Color features
         if image.mode == 'RGB':
@@ -865,22 +831,19 @@ class ContentFingerprintGenerator:
     
     # Audio processing methods
     def _mfcc_hash(self, y: np.ndarray, sr: int) -> str:
-        """Generate hash based on MFCC features."""
-        mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)
+        """Generate hash based on MFCC features."""        mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)
         mfcc_mean = np.mean(mfcc, axis=1)
         feature_string = ':'.join([f"{f:.4f}" for f in mfcc_mean])
         return hashlib.md5(feature_string.encode()).hexdigest()
     
     def _chroma_hash(self, y: np.ndarray, sr: int) -> str:
-        """Generate hash based on chroma features."""
-        chroma = librosa.feature.chroma(y=y, sr=sr)
+        """Generate hash based on chroma features."""        chroma = librosa.feature.chroma(y=y, sr=sr)
         chroma_mean = np.mean(chroma, axis=1)
         feature_string = ':'.join([f"{f:.4f}" for f in chroma_mean])
         return hashlib.md5(feature_string.encode()).hexdigest()
     
     def _spectral_hash(self, y: np.ndarray, sr: int) -> str:
-        """Generate hash based on spectral features."""
-        spectral_centroids = librosa.feature.spectral_centroid(y=y, sr=sr)
+        """Generate hash based on spectral features."""        spectral_centroids = librosa.feature.spectral_centroid(y=y, sr=sr)
         spectral_rolloff = librosa.feature.spectral_rolloff(y=y, sr=sr)
         spectral_bandwidth = librosa.feature.spectral_bandwidth(y=y, sr=sr)
         
@@ -894,8 +857,7 @@ class ContentFingerprintGenerator:
         return hashlib.md5(feature_string.encode()).hexdigest()
     
     def _rhythm_hash(self, y: np.ndarray, sr: int) -> str:
-        """Generate hash based on rhythm features."""
-        tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
+        """Generate hash based on rhythm features."""        tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
         
         # Beat intervals
         if len(beats) > 1:
@@ -912,8 +874,7 @@ class ContentFingerprintGenerator:
         return hashlib.md5(feature_string.encode()).hexdigest()
     
     def _extract_audio_features(self, y: np.ndarray, sr: int) -> List[float]:
-        """Extract comprehensive audio features."""
-        features = []
+        """Extract comprehensive audio features."""        features = []
         
         # Temporal features
         features.append(len(y) / sr)  # Duration
@@ -947,8 +908,7 @@ class ContentFingerprintGenerator:
     
     # Video processing methods
     def _calculate_frame_variance(self, frames: List[np.ndarray]) -> str:
-        """Calculate variance between frames."""
-        if len(frames) < 2:
+        """Calculate variance between frames."""        if len(frames) < 2:
             return "0"
         
         variances = []
@@ -964,8 +924,7 @@ class ContentFingerprintGenerator:
         return hashlib.md5(f"{avg_variance:.4f}".encode()).hexdigest()
     
     def _extract_video_features(self, frames: List[np.ndarray]) -> List[float]:
-        """Extract video features from frames."""
-        if not frames:
+        """Extract video features from frames."""        if not frames:
             return []
         
         features = []
@@ -1007,15 +966,12 @@ class ContentFingerprintGenerator:
         return features
 
 class SimilarityAnalyzer:
-    """
-    Advanced similarity analysis for content fingerprints.
+    """    Advanced similarity analysis for content fingerprints.
     
     Supports multiple similarity metrics and algorithms for different content types.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize similarity analyzer."""
-        pass
+        """Initialize similarity analyzer."""        pass
     
     async def calculate_similarity(
         self,
@@ -1023,8 +979,7 @@ class SimilarityAnalyzer:
         fingerprint2: ContentFingerprint,
         similarity_type: str = "auto"
     ) -> SimilarityResult:
-        """
-        Calculate similarity between two content fingerprints.
+        """        Calculate similarity between two content fingerprints.
         
         Args:
             fingerprint1: First content fingerprint
@@ -1033,8 +988,7 @@ class SimilarityAnalyzer:
             
         Returns:
             SimilarityResult object
-        """
-        if fingerprint1.content_type != fingerprint2.content_type:
+        """        if fingerprint1.content_type != fingerprint2.content_type:
             # Different content types - very low similarity
             return SimilarityResult(
                 content_id_1=fingerprint1.content_id,
@@ -1086,8 +1040,7 @@ class SimilarityAnalyzer:
             )
     
     def _get_best_similarity_method(self, content_type: str) -> str:
-        """Get best similarity method for content type."""
-        method_map = {
+        """Get best similarity method for content type."""        method_map = {
             "text": "semantic",
             "image": "perceptual",
             "audio": "spectral",
@@ -1103,8 +1056,7 @@ class SimilarityAnalyzer:
         fp2: ContentFingerprint,
         method: str
     ) -> SimilarityResult:
-        """Calculate text similarity."""
-        matched_features = []
+        """Calculate text similarity."""        matched_features = []
         similarity_score = 0.0
         confidence = 0.5
         
@@ -1159,8 +1111,7 @@ class SimilarityAnalyzer:
         fp2: ContentFingerprint,
         method: str
     ) -> SimilarityResult:
-        """Calculate image similarity."""
-        matched_features = []
+        """Calculate image similarity."""        matched_features = []
         similarity_score = 0.0
         confidence = 0.5
         
@@ -1236,8 +1187,7 @@ class SimilarityAnalyzer:
         fp2: ContentFingerprint,
         method: str
     ) -> SimilarityResult:
-        """Calculate audio similarity."""
-        matched_features = []
+        """Calculate audio similarity."""        matched_features = []
         similarity_score = 0.0
         confidence = 0.5
         
@@ -1293,8 +1243,7 @@ class SimilarityAnalyzer:
         fp2: ContentFingerprint,
         method: str
     ) -> SimilarityResult:
-        """Calculate video similarity."""
-        matched_features = []
+        """Calculate video similarity."""        matched_features = []
         similarity_score = 0.0
         confidence = 0.5
         
@@ -1372,8 +1321,7 @@ class SimilarityAnalyzer:
         fp2: ContentFingerprint,
         method: str
     ) -> SimilarityResult:
-        """Calculate generic similarity."""
-        matched_features = []
+        """Calculate generic similarity."""        matched_features = []
         similarity_score = 0.0
         confidence = 0.3
         
@@ -1409,8 +1357,7 @@ class SimilarityAnalyzer:
         )
     
     def _hamming_distance(self, hash1: str, hash2: str) -> int:
-        """Calculate Hamming distance between two hex hashes."""
-        if len(hash1) != len(hash2):
+        """Calculate Hamming distance between two hex hashes."""        if len(hash1) != len(hash2):
             return max(len(hash1), len(hash2)) * 4  # Maximum distance
         
         distance = 0
@@ -1427,12 +1374,10 @@ class SimilarityAnalyzer:
 
 # Factory functions
 def create_fingerprint_generator() -> ContentFingerprintGenerator:
-    """Create a new fingerprint generator."""
-    return ContentFingerprintGenerator()
+    """Create a new fingerprint generator."""    return ContentFingerprintGenerator()
 
 def create_similarity_analyzer() -> SimilarityAnalyzer:
-    """Create a new similarity analyzer."""
-    return SimilarityAnalyzer()
+    """Create a new similarity analyzer."""    return SimilarityAnalyzer()
 
 async def generate_content_fingerprint(
     content: Union[str, bytes, np.ndarray],
@@ -1440,8 +1385,7 @@ async def generate_content_fingerprint(
     content_id: str,
     metadata: Optional[Dict[str, Any]] = None
 ) -> ContentFingerprint:
-    """Quick function to generate content fingerprint."""
-    generator = create_fingerprint_generator()
+    """Quick function to generate content fingerprint."""    generator = create_fingerprint_generator()
     return await generator.generate_fingerprint(content, content_type, content_id, metadata)
 
 async def calculate_content_similarity(
@@ -1449,8 +1393,7 @@ async def calculate_content_similarity(
     fingerprint2: ContentFingerprint,
     similarity_type: str = "auto"
 ) -> SimilarityResult:
-    """Quick function to calculate content similarity."""
-    analyzer = create_similarity_analyzer()
+    """Quick function to calculate content similarity."""    analyzer = create_similarity_analyzer()
     return await analyzer.calculate_similarity(fingerprint1, fingerprint2, similarity_type)
 
 # Export main components

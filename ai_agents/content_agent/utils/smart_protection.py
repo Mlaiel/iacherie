@@ -1,5 +1,4 @@
-"""
-Smart Content Protection Module - Advanced AI-Powered Rights Management
+"""Smart Content Protection Module - Advanced AI-Powered Rights Management
 
 Industrial-grade content protection system with AI-powered fingerprinting,
 rights detection, and automated protection mechanisms for creators.
@@ -16,9 +15,7 @@ without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICT
 and will result in immediate legal action under German and International copyright laws.
 
 Contact mlaiel@live.de for licensing inquiries only.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
@@ -72,8 +69,7 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
-    BASIC = "basic"
+    """Content protection levels"""    BASIC = "basic"
     STANDARD = "standard" 
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
@@ -81,8 +77,7 @@ class ProtectionLevel(Enum):
 
 
 class RightsType(Enum):
-    """Types of content rights"""
-    COPYRIGHT = "copyright"
+    """Types of content rights"""    COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     PERSONALITY_RIGHTS = "personality_rights"
     LICENSING = "licensing"
@@ -92,8 +87,7 @@ class RightsType(Enum):
 
 
 class ViolationType(Enum):
-    """Types of rights violations"""
-    UNAUTHORIZED_USE = "unauthorized_use"
+    """Types of rights violations"""    UNAUTHORIZED_USE = "unauthorized_use"
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     PLAGIARISM = "plagiarism"
     UNAUTHORIZED_DISTRIBUTION = "unauthorized_distribution"
@@ -104,8 +98,7 @@ class ViolationType(Enum):
 
 @dataclass
 class ProtectionConfig:
-    """Configuration for content protection"""
-    protection_level: ProtectionLevel = ProtectionLevel.STANDARD
+    """Configuration for content protection"""    protection_level: ProtectionLevel = ProtectionLevel.STANDARD
     enable_watermarking: bool = True
     enable_fingerprinting: bool = True
     enable_blockchain_registry: bool = False
@@ -118,8 +111,7 @@ class ProtectionConfig:
 
 @dataclass
 class ContentFingerprint:
-    """Comprehensive content fingerprint"""
-    content_id: str
+    """Comprehensive content fingerprint"""    content_id: str
     creator_id: str
     fingerprint_id: str
     creation_timestamp: datetime
@@ -145,8 +137,7 @@ class ContentFingerprint:
 
 
 class SmartContentProtector:
-    """
-    Advanced AI-powered content protection system.
+    """    Advanced AI-powered content protection system.
     
     Provides comprehensive content protection including:
     - AI-powered content fingerprinting
@@ -155,8 +146,7 @@ class SmartContentProtector:
     - Automated violation detection
     - Legal protection automation
     - Blockchain-based proof of ownership
-    """
-    
+    """    
     def __init__(self, config: ProtectionConfig = None):
         self.config = config or ProtectionConfig()
         
@@ -183,8 +173,7 @@ class SmartContentProtector:
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
     async def initialize(self):
-        """Initialize content protection system"""
-        try:
+        """Initialize content protection system"""        try:
             logger.info("Initializing Smart Content Protection System...")
             
             # Initialize AI models for fingerprinting
@@ -215,8 +204,7 @@ class SmartContentProtector:
     
     async def protect_content(self, content_path: str, creator_id: str, 
                             protection_config: ProtectionConfig = None) -> ContentFingerprint:
-        """
-        Apply comprehensive protection to content.
+        """        Apply comprehensive protection to content.
         
         Args:
             content_path: Path to content file
@@ -225,8 +213,7 @@ class SmartContentProtector:
             
         Returns:
             ContentFingerprint: Generated fingerprint and protection data
-        """
-        try:
+        """        try:
             config = protection_config or self.config
             content_id = str(uuid.uuid4())
             
@@ -273,8 +260,7 @@ class SmartContentProtector:
             raise ContentProtectionError(f"Protection failed: {e}")
     
     async def detect_violations(self, query_content: str, similarity_threshold: float = 0.8) -> List[Dict[str, Any]]:
-        """
-        Detect potential rights violations by comparing content.
+        """        Detect potential rights violations by comparing content.
         
         Args:
             query_content: Path to potentially infringing content
@@ -282,8 +268,7 @@ class SmartContentProtector:
             
         Returns:
             List of potential violations with similarity scores
-        """
-        try:
+        """        try:
             # Generate fingerprint for query content
             query_fingerprint = await self._generate_query_fingerprint(query_content)
             
@@ -321,16 +306,14 @@ class SmartContentProtector:
             return []
     
     async def initiate_takedown_process(self, violation_data: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Initiate automated takedown process for rights violations.
+        """        Initiate automated takedown process for rights violations.
         
         Args:
             violation_data: Violation information
             
         Returns:
             Takedown process status
-        """
-        try:
+        """        try:
             violation_id = str(uuid.uuid4())
             
             # Create violation report
@@ -380,8 +363,7 @@ class SmartContentProtector:
             return {"status": "failed", "error": str(e)}
     
     async def verify_content_ownership(self, content_path: str, claimed_owner: str) -> Dict[str, Any]:
-        """
-        Verify content ownership using AI fingerprinting and blockchain.
+        """        Verify content ownership using AI fingerprinting and blockchain.
         
         Args:
             content_path: Path to content to verify
@@ -389,8 +371,7 @@ class SmartContentProtector:
             
         Returns:
             Ownership verification result
-        """
-        try:
+        """        try:
             # Generate fingerprint for verification
             verification_fingerprint = await self._generate_query_fingerprint(content_path)
             
@@ -449,8 +430,7 @@ class SmartContentProtector:
     async def _generate_content_fingerprint(self, content_path: str, content_id: str, 
                                           creator_id: str, content_type: str, 
                                           config: ProtectionConfig) -> ContentFingerprint:
-        """Generate comprehensive content fingerprint"""
-        try:
+        """Generate comprehensive content fingerprint"""        try:
             # Basic file information
             file_path = Path(content_path)
             file_size = file_path.stat().st_size
@@ -513,8 +493,7 @@ class SmartContentProtector:
             raise ContentProtectionError(f"Fingerprint generation failed: {e}")
     
     async def _initialize_fingerprinting_models(self):
-        """Initialize AI models for content fingerprinting"""
-        try:
+        """Initialize AI models for content fingerprinting"""        try:
             # Initialize vision model for image/video fingerprinting
             from torchvision.models import resnet50
             self.vision_model = resnet50(pretrained=True)

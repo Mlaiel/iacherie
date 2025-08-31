@@ -1,5 +1,4 @@
-"""
-Content Optimization Repository
+"""Content Optimization Repository
 
 Enterprise-grade repository for AI-powered content optimization,
 SEO enhancement, and performance-driven content suggestions.
@@ -23,9 +22,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-
-from typing import Dict, List, Optional, Union, Any, Tuple
+"""from typing import Dict, List, Optional, Union, Any, Tuple
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, desc, func, text
 from datetime import datetime, timedelta
@@ -41,14 +38,11 @@ from ..models.content_optimization import ContentOptimization
 logger = logging.getLogger(__name__)
 
 class ContentOptimizationRepository(BaseRepository[ContentOptimization]):
-    """
-    Repository for content optimization management with enterprise-grade
+    """    Repository for content optimization management with enterprise-grade
     features including AI-powered SEO, hashtag optimization, and performance enhancement.
-    """
-    
+    """    
     def __init__(self, db_session: Session):
-        """Initialize Content Optimization Repository"""
-        super().__init__(db_session, ContentOptimization)
+        """Initialize Content Optimization Repository"""        super().__init__(db_session, ContentOptimization)
         
     def create_optimization_analysis(self, 
                                    user_id: int,
@@ -57,8 +51,7 @@ class ContentOptimizationRepository(BaseRepository[ContentOptimization]):
                                    original_content: Dict[str, Any],
                                    analysis_type: str,
                                    optimization_goals: List[str]) -> ContentOptimization:
-        """
-        Create new content optimization analysis
+        """        Create new content optimization analysis
         
         Args:
             user_id: User ID
@@ -70,8 +63,7 @@ class ContentOptimizationRepository(BaseRepository[ContentOptimization]):
             
         Returns:
             Created content optimization instance
-        """
-        try:
+        """        try:
             optimization_data = {
                 'user_id': user_id,
                 'content_id': content_id,
@@ -98,8 +90,7 @@ class ContentOptimizationRepository(BaseRepository[ContentOptimization]):
                                   optimized_content: Optional[Dict[str, Any]] = None,
                                   seo_score: Optional[float] = None,
                                   readability_score: Optional[float] = None) -> Optional[ContentOptimization]:
-        """
-        Update optimization analysis with results
+        """        Update optimization analysis with results
         
         Args:
             optimization_id: Optimization ID
@@ -111,8 +102,7 @@ class ContentOptimizationRepository(BaseRepository[ContentOptimization]):
             
         Returns:
             Updated optimization instance
-        """
-        try:
+        """        try:
             update_data = {
                 'status': status,
                 'suggestions': json.dumps(suggestions),
@@ -147,8 +137,7 @@ class ContentOptimizationRepository(BaseRepository[ContentOptimization]):
                              analysis_type: Optional[str] = None,
                              limit: int = 50,
                              offset: int = 0) -> List[ContentOptimization]:
-        """
-        Get user's content optimizations with filtering
+        """        Get user's content optimizations with filtering
         
         Args:
             user_id: User ID
@@ -159,8 +148,7 @@ class ContentOptimizationRepository(BaseRepository[ContentOptimization]):
             
         Returns:
             List of content optimizations
-        """
-        try:
+        """        try:
             filters = {'user_id': user_id}
             
             if content_type:
@@ -185,8 +173,7 @@ class ContentOptimizationRepository(BaseRepository[ContentOptimization]):
     def analyze_seo_performance(self, 
                               user_id: int,
                               days: int = 30) -> Dict[str, Any]:
-        """
-        Analyze SEO performance trends and improvements
+        """        Analyze SEO performance trends and improvements
         
         Args:
             user_id: User ID
@@ -194,8 +181,7 @@ class ContentOptimizationRepository(BaseRepository[ContentOptimization]):
             
         Returns:
             SEO performance analysis
-        """
-        try:
+        """        try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
             seo_optimizations = self.db_session.query(ContentOptimization).filter(
@@ -274,8 +260,7 @@ class ContentOptimizationRepository(BaseRepository[ContentOptimization]):
             raise RepositoryException(f"Failed to analyze SEO performance: {str(e)}")
             
     def _calculate_score_distribution(self, scores: List[float]) -> Dict[str, int]:
-        """Calculate score distribution by ranges"""
-        distribution = {
+        """Calculate score distribution by ranges"""        distribution = {
             'excellent': 0,  # 90-100
             'good': 0,       # 70-89
             'fair': 0,       # 50-69
@@ -295,8 +280,7 @@ class ContentOptimizationRepository(BaseRepository[ContentOptimization]):
         return distribution
         
     def _calculate_monthly_progress(self, optimizations: List[ContentOptimization]) -> Dict[str, Any]:
-        """Calculate monthly progress in SEO scores"""
-        monthly_data = {}
+        """Calculate monthly progress in SEO scores"""        monthly_data = {}
         
         for opt in optimizations:
             month_key = opt.created_at.strftime('%Y-%m')
@@ -322,8 +306,7 @@ class ContentOptimizationRepository(BaseRepository[ContentOptimization]):
                                         user_id: int,
                                         platform: Optional[str] = None,
                                         days: int = 30) -> Dict[str, Any]:
-        """
-        Get hashtag optimization insights and performance data
+        """        Get hashtag optimization insights and performance data
         
         Args:
             user_id: User ID
@@ -332,8 +315,7 @@ class ContentOptimizationRepository(BaseRepository[ContentOptimization]):
             
         Returns:
             Hashtag optimization insights
-        """
-        try:
+        """        try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
             hashtag_optimizations = self.db_session.query(ContentOptimization).filter(
@@ -420,8 +402,7 @@ class ContentOptimizationRepository(BaseRepository[ContentOptimization]):
             raise RepositoryException(f"Failed to get hashtag optimization insights: {str(e)}")
             
     def _generate_hashtag_tips(self, hashtag_performance: Dict[str, Any]) -> List[str]:
-        """Generate hashtag optimization tips based on performance data"""
-        tips = []
+        """Generate hashtag optimization tips based on performance data"""        tips = []
         
         if not hashtag_performance:
             tips.append("Start using hashtags to improve content discoverability")
@@ -452,8 +433,7 @@ class ContentOptimizationRepository(BaseRepository[ContentOptimization]):
                                        user_id: int,
                                        content_type: str = 'post',
                                        days: int = 30) -> Dict[str, Any]:
-        """
-        Analyze content readability trends and improvements
+        """        Analyze content readability trends and improvements
         
         Args:
             user_id: User ID
@@ -462,8 +442,7 @@ class ContentOptimizationRepository(BaseRepository[ContentOptimization]):
             
         Returns:
             Readability analysis data
-        """
-        try:
+        """        try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
             readability_optimizations = self.db_session.query(ContentOptimization).filter(
@@ -552,8 +531,7 @@ class ContentOptimizationRepository(BaseRepository[ContentOptimization]):
             raise RepositoryException(f"Failed to analyze content readability: {str(e)}")
             
     def _calculate_readability_distribution(self, scores: List[float]) -> Dict[str, int]:
-        """Calculate readability score distribution"""
-        distribution = {
+        """Calculate readability score distribution"""        distribution = {
             'very_easy': 0,    # 90-100
             'easy': 0,         # 80-89
             'fairly_easy': 0,  # 70-79
@@ -584,8 +562,7 @@ class ContentOptimizationRepository(BaseRepository[ContentOptimization]):
     def get_optimization_recommendations(self, 
                                        user_id: int,
                                        content_type: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Get personalized optimization recommendations for user
+        """        Get personalized optimization recommendations for user
         
         Args:
             user_id: User ID
@@ -593,8 +570,7 @@ class ContentOptimizationRepository(BaseRepository[ContentOptimization]):
             
         Returns:
             Personalized optimization recommendations
-        """
-        try:
+        """        try:
             # Get recent optimizations for analysis
             filters = {'user_id': user_id, 'status': 'completed'}
             if content_type:

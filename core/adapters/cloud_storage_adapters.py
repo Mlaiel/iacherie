@@ -1,5 +1,4 @@
-"""
-Cloud Storage Adapters - Enterprise File Management
+"""Cloud Storage Adapters - Enterprise File Management
 
 This module provides comprehensive adapters for major cloud storage providers
 including AWS S3, Google Cloud Storage, Azure Blob, and others. Each adapter
@@ -18,9 +17,7 @@ Supported Providers:
 - MinIO: Self-hosted S3-compatible storage
 - Cloudflare R2: Edge storage with zero egress fees
 - DigitalOcean Spaces: Object storage with CDN
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, BinaryIO
 from dataclasses import dataclass, field
@@ -43,8 +40,7 @@ from .base_adapter import (
 logger = logging.getLogger(__name__)
 
 class CloudProvider(Enum):
-    """Supported cloud storage providers."""
-    AWS_S3 = "aws_s3"
+    """Supported cloud storage providers."""    AWS_S3 = "aws_s3"
     GOOGLE_CLOUD = "google_cloud"
     AZURE_BLOB = "azure_blob"
     MINIO = "minio"
@@ -54,8 +50,7 @@ class CloudProvider(Enum):
     WASABI = "wasabi"
 
 class StorageClass(Enum):
-    """Storage class types for cost optimization."""
-    STANDARD = "standard"
+    """Storage class types for cost optimization."""    STANDARD = "standard"
     REDUCED_REDUNDANCY = "reduced_redundancy"
     INTELLIGENT_TIERING = "intelligent_tiering"
     GLACIER = "glacier"
@@ -66,8 +61,7 @@ class StorageClass(Enum):
     COLD = "cold"
 
 class AccessLevel(Enum):
-    """File access levels."""
-    PUBLIC_READ = "public_read"
+    """File access levels."""    PUBLIC_READ = "public_read"
     PUBLIC_READ_WRITE = "public_read_write"
     PRIVATE = "private"
     AUTHENTICATED_READ = "authenticated_read"
@@ -76,8 +70,7 @@ class AccessLevel(Enum):
 
 @dataclass
 class StorageFile:
-    """File metadata structure for cloud storage."""
-    key: str
+    """File metadata structure for cloud storage."""    key: str
     bucket: str
     size: Optional[int] = None
     content_type: Optional[str] = None
@@ -94,8 +87,7 @@ class StorageFile:
 
 @dataclass
 class UploadRequest:
-    """File upload request structure."""
-    file_path: str
+    """File upload request structure."""    file_path: str
     bucket: str
     key: Optional[str] = None
     content_type: Optional[str] = None
@@ -109,8 +101,7 @@ class UploadRequest:
 
 @dataclass
 class StorageAnalytics:
-    """Storage usage analytics and metrics."""
-    total_files: int = 0
+    """Storage usage analytics and metrics."""    total_files: int = 0
     total_size_bytes: int = 0
     storage_costs: Dict[str, float] = field(default_factory=dict)
     bandwidth_usage: Dict[str, int] = field(default_factory=dict)
@@ -121,8 +112,7 @@ class StorageAnalytics:
     access_patterns: Dict[str, Any] = field(default_factory=dict)
 
 class AWSS3Adapter(BasePlatformAdapter):
-    """
-    Enterprise AWS S3 storage adapter with comprehensive features.
+    """    Enterprise AWS S3 storage adapter with comprehensive features.
     
     Supports:
     - Multi-part uploads for large files
@@ -133,8 +123,7 @@ class AWSS3Adapter(BasePlatformAdapter):
     - Cross-region replication
     - Server-side encryption (SSE-S3, SSE-KMS)
     - Versioning and backup management
-    """
-    
+    """    
     def __init__(self, credentials: AdapterCredentials, redis_client=None):
         rate_config = RateLimitConfig(
             requests_per_second=100.0,
@@ -157,8 +146,7 @@ class AWSS3Adapter(BasePlatformAdapter):
         self.cdn_domain = credentials.custom_headers.get('cdn_domain')
     
     async def authenticate(self) -> bool:
-        """Authenticate with AWS S3."""
-        try:
+        """Authenticate with AWS S3."""        try:
             # Initialize boto3 S3 client
             self.s3_client = boto3.client(
                 's3',
@@ -182,8 +170,7 @@ class AWSS3Adapter(BasePlatformAdapter):
             return False
     
     async def upload_file(self, upload_request: UploadRequest) -> StorageFile:
-        """Upload file to S3 with advanced features."""
-        try:
+        """Upload file to S3 with advanced features."""        try:
             # Determine key if not provided
             if not upload_request.key:
                 upload_request.key = Path(upload_request.file_path).name
@@ -256,8 +243,7 @@ class AWSS3Adapter(BasePlatformAdapter):
             raise AdapterError(f"Failed to upload file to S3: {e}")
     
     async def download_file(self, bucket: str, key: str, local_path: str) -> bool:
-        """Download file from S3."""
-        try:
+        """Download file from S3."""        try:
             self.s3_client.download_file(bucket, key, local_path)
             logger.info(f"File downloaded from S3: {bucket}/{key} -> {local_path}")
             return True
@@ -267,8 +253,7 @@ class AWSS3Adapter(BasePlatformAdapter):
             return False
     
     async def delete_file(self, bucket: str, key: str) -> bool:
-        """Delete file from S3."""
-        try:
+        """Delete file from S3."""        try:
             self.s3_client.delete_object(Bucket=bucket, Key=key)
             logger.info(f"File deleted from S3: {bucket}/{key}")
             return True
@@ -278,8 +263,7 @@ class AWSS3Adapter(BasePlatformAdapter):
             return False
     
     async def list_files(self, bucket: str, prefix: str = "", max_keys: int = 1000) -> List[StorageFile]:
-        """List files in S3 bucket."""
-        try:
+        """List files in S3 bucket."""        try:
             response = self.s3_client.list_objects_v2(
                 Bucket=bucket,
                 Prefix=prefix,
@@ -314,8 +298,7 @@ class AWSS3Adapter(BasePlatformAdapter):
     async def generate_presigned_url(self, bucket: str, key: str, 
                                     expiration: int = 3600, 
                                     http_method: str = 'GET') -> str:
-        """Generate presigned URL for secure file access."""
-        try:
+        """Generate presigned URL for secure file access."""        try:
             url = self.s3_client.generate_presigned_url(
                 'get_object' if http_method.upper() == 'GET' else 'put_object',
                 Params={'Bucket': bucket, 'Key': key},
@@ -331,8 +314,7 @@ class AWSS3Adapter(BasePlatformAdapter):
     async def get_storage_analytics(self, bucket: str, 
                                    start_date: Optional[datetime] = None,
                                    end_date: Optional[datetime] = None) -> StorageAnalytics:
-        """Get S3 storage analytics."""
-        try:
+        """Get S3 storage analytics."""        try:
             analytics = StorageAnalytics()
             
             # List all objects in bucket
@@ -359,8 +341,7 @@ class AWSS3Adapter(BasePlatformAdapter):
             return StorageAnalytics()
     
     def _map_storage_class(self, storage_class: StorageClass) -> str:
-        """Map StorageClass enum to S3 storage class."""
-        mapping = {
+        """Map StorageClass enum to S3 storage class."""        mapping = {
             StorageClass.STANDARD: 'STANDARD',
             StorageClass.REDUCED_REDUNDANCY: 'REDUCED_REDUNDANCY',
             StorageClass.INTELLIGENT_TIERING: 'INTELLIGENT_TIERING',
@@ -370,8 +351,7 @@ class AWSS3Adapter(BasePlatformAdapter):
         return mapping.get(storage_class, 'STANDARD')
     
     def _map_access_level(self, access_level: AccessLevel) -> str:
-        """Map AccessLevel enum to S3 ACL."""
-        mapping = {
+        """Map AccessLevel enum to S3 ACL."""        mapping = {
             AccessLevel.PUBLIC_READ: 'public-read',
             AccessLevel.PUBLIC_READ_WRITE: 'public-read-write',
             AccessLevel.PRIVATE: 'private',
@@ -382,16 +362,14 @@ class AWSS3Adapter(BasePlatformAdapter):
         return mapping.get(access_level, 'private')
     
     async def health_check(self) -> bool:
-        """Perform S3 health check."""
-        try:
+        """Perform S3 health check."""        try:
             response = self.s3_client.list_buckets()
             return 'Buckets' in response
         except:
             return False
 
 class GoogleCloudStorageAdapter(BasePlatformAdapter):
-    """
-    Enterprise Google Cloud Storage adapter.
+    """    Enterprise Google Cloud Storage adapter.
     
     Supports:
     - Multi-regional storage buckets
@@ -399,8 +377,7 @@ class GoogleCloudStorageAdapter(BasePlatformAdapter):
     - Object lifecycle management
     - IAM and signed URLs
     - Transfer service integration
-    """
-    
+    """    
     def __init__(self, credentials: AdapterCredentials, redis_client=None):
         rate_config = RateLimitConfig(
             requests_per_second=50.0,
@@ -421,8 +398,7 @@ class GoogleCloudStorageAdapter(BasePlatformAdapter):
         )
     
     async def authenticate(self) -> bool:
-        """Authenticate with Google Cloud Storage."""
-        try:
+        """Authenticate with Google Cloud Storage."""        try:
             # Test authentication by listing buckets
             response = await self.make_request(
                 method="GET",
@@ -443,8 +419,7 @@ class GoogleCloudStorageAdapter(BasePlatformAdapter):
             return False
     
     async def health_check(self) -> bool:
-        """Perform Google Cloud Storage health check."""
-        try:
+        """Perform Google Cloud Storage health check."""        try:
             response = await self.make_request(
                 method="GET",
                 endpoint="b",
@@ -456,8 +431,7 @@ class GoogleCloudStorageAdapter(BasePlatformAdapter):
             return False
 
 class MinIOAdapter(BasePlatformAdapter):
-    """
-    Enterprise MinIO adapter for self-hosted S3-compatible storage.
+    """    Enterprise MinIO adapter for self-hosted S3-compatible storage.
     
     Supports:
     - S3-compatible API
@@ -465,8 +439,7 @@ class MinIOAdapter(BasePlatformAdapter):
     - Erasure coding
     - Object locking and retention
     - Distributed deployment
-    """
-    
+    """    
     def __init__(self, credentials: AdapterCredentials, redis_client=None):
         rate_config = RateLimitConfig(
             requests_per_second=100.0,
@@ -487,8 +460,7 @@ class MinIOAdapter(BasePlatformAdapter):
         self.minio_client = None
     
     async def authenticate(self) -> bool:
-        """Authenticate with MinIO."""
-        try:
+        """Authenticate with MinIO."""        try:
             # MinIO uses S3-compatible authentication
             from minio import Minio
             
@@ -509,8 +481,7 @@ class MinIOAdapter(BasePlatformAdapter):
             return False
     
     async def health_check(self) -> bool:
-        """Perform MinIO health check."""
-        try:
+        """Perform MinIO health check."""        try:
             if self.minio_client:
                 list(self.minio_client.list_buckets())
                 return True
@@ -519,8 +490,7 @@ class MinIOAdapter(BasePlatformAdapter):
             return False
 
 class CloudStorageAdapterFactory:
-    """Factory for creating cloud storage adapters."""
-    
+    """Factory for creating cloud storage adapters."""    
     _adapters = {
         CloudProvider.AWS_S3: AWSS3Adapter,
         CloudProvider.GOOGLE_CLOUD: GoogleCloudStorageAdapter,
@@ -530,8 +500,7 @@ class CloudStorageAdapterFactory:
     
     @classmethod
     def create_adapter(cls, provider: CloudProvider, credentials: AdapterCredentials, redis_client=None) -> BasePlatformAdapter:
-        """Create adapter for specified cloud storage provider."""
-        if provider not in cls._adapters:
+        """Create adapter for specified cloud storage provider."""        if provider not in cls._adapters:
             raise AdapterError(f"Unsupported cloud storage provider: {provider}")
         
         adapter_class = cls._adapters[provider]
@@ -539,8 +508,7 @@ class CloudStorageAdapterFactory:
     
     @classmethod
     def get_supported_providers(cls) -> List[CloudProvider]:
-        """Get list of supported cloud storage providers."""
-        return list(cls._adapters.keys())
+        """Get list of supported cloud storage providers."""        return list(cls._adapters.keys())
 
 # Export all classes
 __all__ = [

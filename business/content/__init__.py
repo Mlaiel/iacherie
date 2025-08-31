@@ -14,8 +14,7 @@ result in legal action under German and international copyright laws.
 
 Expert Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
-"""
-# Central orchestration system (NEW)
+"""# Central orchestration system (NEW)
 from .index import (
     ContentManagementSystem,
     initialize_content_system,

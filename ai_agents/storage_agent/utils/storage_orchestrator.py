@@ -1,5 +1,4 @@
-"""
-Storage Orchestrator - Enterprise Multi-Backend Storage Management System
+"""Storage Orchestrator - Enterprise Multi-Backend Storage Management System
 
 Advanced storage orchestration engine managing AWS S3, MinIO, local storage, and CDN
 distribution with intelligent file processing, compression, and content optimization.
@@ -18,9 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert: Fahed Mlaiel
 - Microservices Architect & DevOps Engineer: Fahed Mlaiel
 - AI Prompt Engineer & Content Protection Specialist: Fahed Mlaiel
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import mimetypes
@@ -56,16 +53,14 @@ from ...monitoring.metrics import MetricsCollector
 logger = logging.getLogger(__name__)
 
 class StorageStrategy(str, Enum):
-    """Storage strategy definitions"""
-    PERFORMANCE = "performance"
+    """Storage strategy definitions"""    PERFORMANCE = "performance"
     COST_EFFECTIVE = "cost_effective"
     HIGH_AVAILABILITY = "high_availability"
     SECURE = "secure"
     HYBRID = "hybrid"
 
 class FileCategory(str, Enum):
-    """File category classifications"""
-    AUDIO = "audio"
+    """File category classifications"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -75,8 +70,7 @@ class FileCategory(str, Enum):
 
 @dataclass
 class StorageRequest:
-    """Storage request configuration"""
-    file_path: Union[str, Path, BinaryIO]
+    """Storage request configuration"""    file_path: Union[str, Path, BinaryIO]
     filename: str
     content_type: Optional[str] = None
     category: Optional[FileCategory] = None
@@ -91,8 +85,7 @@ class StorageRequest:
 
 @dataclass
 class StorageResponse:
-    """Storage operation response"""
-    success: bool
+    """Storage operation response"""    success: bool
     file_id: str
     primary_url: str
     backup_urls: List[str]
@@ -106,11 +99,9 @@ class StorageResponse:
     error_message: Optional[str] = None
 
 class StorageOrchestrator:
-    """
-    Enterprise storage orchestration system managing multi-backend storage,
+    """    Enterprise storage orchestration system managing multi-backend storage,
     intelligent file processing, content optimization, and backup strategies.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or self._load_default_config()
         
@@ -191,8 +182,7 @@ class StorageOrchestrator:
         logger.info("StorageOrchestrator initialized successfully")
     
     def _load_default_config(self) -> Dict[str, Any]:
-        """Load default storage configuration"""
-        return {
+        """Load default storage configuration"""        return {
             'backends': {
                 'local': {
                     'enabled': True,
@@ -237,16 +227,14 @@ class StorageOrchestrator:
         self, 
         request: StorageRequest
     ) -> StorageResponse:
-        """
-        Store file with intelligent backend selection and optimization
+        """        Store file with intelligent backend selection and optimization
         
         Args:
             request: Storage request configuration
             
         Returns:
             StorageResponse with storage details and URLs
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         processing_stats = {
             'original_size': 0,
             'final_size': 0,
@@ -397,8 +385,7 @@ class StorageOrchestrator:
         prefer_cdn: bool = True,
         fallback_enabled: bool = True
     ) -> Dict[str, Any]:
-        """
-        Retrieve file from storage with intelligent URL selection
+        """        Retrieve file from storage with intelligent URL selection
         
         Args:
             file_id: Unique file identifier
@@ -407,8 +394,7 @@ class StorageOrchestrator:
             
         Returns:
             File access information with URLs and metadata
-        """
-        try:
+        """        try:
             # Check cache first
             cached_metadata = await self.cache_manager.get(f"file_metadata:{file_id}")
             if cached_metadata:
@@ -451,8 +437,7 @@ class StorageOrchestrator:
         delete_backups: bool = True,
         soft_delete: bool = False
     ) -> bool:
-        """
-        Delete file from all storage backends
+        """        Delete file from all storage backends
         
         Args:
             file_id: Unique file identifier
@@ -461,8 +446,7 @@ class StorageOrchestrator:
             
         Returns:
             True if deletion successful
-        """
-        try:
+        """        try:
             file_record = await self._get_file_record(file_id)
             if not file_record:
                 raise StorageError(f"File {file_id} not found")
@@ -516,8 +500,7 @@ class StorageOrchestrator:
         requests: List[StorageRequest],
         max_workers: Optional[int] = None
     ) -> List[StorageResponse]:
-        """
-        Store multiple files concurrently with intelligent batching
+        """        Store multiple files concurrently with intelligent batching
         
         Args:
             requests: List of storage requests
@@ -525,8 +508,7 @@ class StorageOrchestrator:
             
         Returns:
             List of storage responses
-        """
-        max_workers = max_workers or self.config.get('processing', {}).get('max_workers', 8)
+        """        max_workers = max_workers or self.config.get('processing', {}).get('max_workers', 8)
         
         # Process files in batches
         semaphore = asyncio.Semaphore(max_workers)
@@ -566,8 +548,7 @@ class StorageOrchestrator:
         return results
     
     async def get_storage_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive storage statistics and analytics"""
-        try:
+        """Get comprehensive storage statistics and analytics"""        try:
             # Get current statistics
             stats = self.stats.copy()
             
@@ -598,14 +579,12 @@ class StorageOrchestrator:
             raise StorageError(f"Statistics retrieval failed: {e}")
     
     def _generate_file_id(self, filename: str) -> str:
-        """Generate unique file identifier"""
-        timestamp = datetime.utcnow().isoformat()
+        """Generate unique file identifier"""        timestamp = datetime.utcnow().isoformat()
         unique_string = f"{filename}_{timestamp}_{uuid.uuid4()}"
         return hashlib.sha256(unique_string.encode()).hexdigest()[:32]
     
     async def _prepare_file(self, request: StorageRequest) -> Dict[str, Any]:
-        """Prepare file for storage with validation and metadata extraction"""
-        if isinstance(request.file_path, (str, Path)):
+        """Prepare file for storage with validation and metadata extraction"""        if isinstance(request.file_path, (str, Path)):
             file_path = Path(request.file_path)
             if not file_path.exists():
                 raise ValidationError(f"File not found: {request.file_path}")
@@ -646,8 +625,7 @@ class StorageOrchestrator:
         }
     
     def _detect_file_category(self, content_type: str) -> FileCategory:
-        """Detect file category from MIME type"""
-        if not content_type:
+        """Detect file category from MIME type"""        if not content_type:
             return FileCategory.UNKNOWN
         
         for category, mime_prefixes in self.category_mappings.items():
@@ -664,8 +642,7 @@ class StorageOrchestrator:
         request: StorageRequest,
         strategy_config: Dict[str, Any]
     ) -> str:
-        """Process and optimize file based on category and strategy"""
-        try:
+        """Process and optimize file based on category and strategy"""        try:
             # Prepare processing options
             processing_options = ProcessingOptions(
                 compression_level=strategy_config.get('compression_level', 5),
@@ -719,8 +696,7 @@ class StorageOrchestrator:
         file_info: Dict[str, Any],
         request: StorageRequest
     ) -> str:
-        """Store file in primary backend"""
-        primary_backend = strategy_config['primary_backend']
+        """Store file in primary backend"""        primary_backend = strategy_config['primary_backend']
         
         storage_path = self._generate_storage_path(
             file_id,
@@ -744,8 +720,7 @@ class StorageOrchestrator:
         file_info: Dict[str, Any],
         request: StorageRequest
     ) -> List[str]:
-        """Store file in backup backends"""
-        backup_urls = []
+        """Store file in backup backends"""        backup_urls = []
         backup_backends = strategy_config.get('backup_backends', [])
         
         for backend in backup_backends:
@@ -777,13 +752,11 @@ class StorageOrchestrator:
         filename: str,
         backend: StorageBackend
     ) -> str:
-        """Generate storage path for backend"""
-        date_path = datetime.utcnow().strftime("%Y/%m/%d")
+        """Generate storage path for backend"""        date_path = datetime.utcnow().strftime("%Y/%m/%d")
         return f"{date_path}/{file_id}/{filename}"
     
     async def _calculate_file_checksum(self, file_path: Path) -> str:
-        """Calculate SHA256 checksum of file"""
-        hasher = hashlib.sha256()
+        """Calculate SHA256 checksum of file"""        hasher = hashlib.sha256()
         
         async with aiofiles.open(file_path, 'rb') as f:
             while chunk := await f.read(8192):
@@ -798,8 +771,7 @@ class StorageOrchestrator:
         category: FileCategory,
         retention_days: Optional[int]
     ) -> float:
-        """Calculate estimated storage cost"""
-        # Base cost per GB per month
+        """Calculate estimated storage cost"""        # Base cost per GB per month
         base_cost_per_gb = 0.023  # AWS S3 Standard IA pricing
         
         # Category multipliers
@@ -824,8 +796,7 @@ class StorageOrchestrator:
         file_id: str,
         file_info: Dict[str, Any]
     ) -> Optional[str]:
-        """Setup CDN distribution for file"""
-        try:
+        """Setup CDN distribution for file"""        try:
             # This would integrate with CDN providers like CloudFlare, AWS CloudFront
             # For now, return a mock CDN URL
             return f"https://cdn.ia-influencer.com/{file_id}"
@@ -845,19 +816,16 @@ class StorageOrchestrator:
         processing_stats: Dict[str, Any],
         storage_cost: float
     ):
-        """Store file record in database"""
-        # This would store in the database
+        """Store file record in database"""        # This would store in the database
         # For now, we'll use in-memory storage
         pass
     
     async def _get_file_record(self, file_id: str) -> Optional[Dict[str, Any]]:
-        """Retrieve file record from database"""
-        # Mock implementation - would query database
+        """Retrieve file record from database"""        # Mock implementation - would query database
         return None
     
     async def _update_statistics(self, category: FileCategory, stats: Dict[str, Any]):
-        """Update storage statistics"""
-        self.stats['total_files_stored'] += 1
+        """Update storage statistics"""        self.stats['total_files_stored'] += 1
         self.stats['total_bytes_stored'] += stats['final_size']
         self.stats['total_bytes_saved'] += stats['original_size'] - stats['final_size']
         self.stats['category_distribution'][category] += 1
@@ -874,8 +842,7 @@ class StorageOrchestrator:
         )
     
     async def _cleanup_temp_files(self, file_paths: List[str]):
-        """Clean up temporary files"""
-        for file_path in file_paths:
+        """Clean up temporary files"""        for file_path in file_paths:
             try:
                 path = Path(file_path)
                 if path.exists() and '/tmp/' in str(path):
@@ -884,16 +851,14 @@ class StorageOrchestrator:
                 logger.warning(f"Failed to cleanup temp file {file_path}: {e}")
     
     async def _cache_file_metadata(self, file_id: str, metadata: Dict[str, Any]):
-        """Cache file metadata for quick access"""
-        await self.cache_manager.set(
+        """Cache file metadata for quick access"""        await self.cache_manager.set(
             f"file_metadata:{file_id}",
             metadata,
             ttl_hours=self.config.get('cache_ttl_hours', 24)
         )
     
     def _select_best_url(self, available_urls: Dict[str, Any], prefer_cdn: bool) -> Dict[str, Any]:
-        """Select the best URL for file access"""
-        if prefer_cdn and available_urls.get('cdn_url'):
+        """Select the best URL for file access"""        if prefer_cdn and available_urls.get('cdn_url'):
             return {
                 'url': available_urls['cdn_url'],
                 'type': 'cdn',
@@ -908,8 +873,7 @@ class StorageOrchestrator:
         }
     
     async def _test_url_availability(self, file_record: Dict[str, Any]) -> Dict[str, Any]:
-        """Test URL availability and return accessible URLs"""
-        # Mock implementation - would test actual URLs
+        """Test URL availability and return accessible URLs"""        # Mock implementation - would test actual URLs
         return {
             'primary_url': file_record.get('primary_url'),
             'backup_urls': file_record.get('backup_urls', []),
@@ -917,13 +881,11 @@ class StorageOrchestrator:
         }
     
     async def _test_backup_urls(self, file_record: Dict[str, Any]) -> Dict[str, Any]:
-        """Test backup URL availability"""
-        # Mock implementation
+        """Test backup URL availability"""        # Mock implementation
         return {}
     
     async def _get_system_health(self) -> Dict[str, Any]:
-        """Get system health metrics"""
-        return {
+        """Get system health metrics"""        return {
             'backends_healthy': await self.backend_manager.health_check(),
             'processing_queue_size': 0,
             'cache_hit_ratio': 0.95,
@@ -932,8 +894,7 @@ class StorageOrchestrator:
         }
     
     async def _get_cost_analysis(self) -> Dict[str, Any]:
-        """Get storage cost analysis"""
-        return {
+        """Get storage cost analysis"""        return {
             'monthly_storage_cost': 125.50,
             'monthly_bandwidth_cost': 45.30,
             'cost_per_file': 0.02,
@@ -942,8 +903,7 @@ class StorageOrchestrator:
         }
     
     async def cleanup(self):
-        """Cleanup resources"""
-        try:
+        """Cleanup resources"""        try:
             await self.backend_manager.cleanup()
             await self.file_processor.cleanup()
             await self.content_optimizer.cleanup()

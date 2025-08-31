@@ -1,5 +1,4 @@
-"""
-📊 Monitoring Stack Docker Configuration - IA-Influencer-Agent Platform
+"""📊 Monitoring Stack Docker Configuration - IA-Influencer-Agent Platform
 =======================================================================
 Expert: DevOps Engineer + Monitoring Specialist + Observability Expert
 Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -13,9 +12,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 
 Professional monitoring stack Docker configuration for comprehensive
 observability, metrics collection, and alerting systems.
-"""
-
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 import logging
 from dataclasses import dataclass, field
 import yaml
@@ -25,8 +22,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MonitoringStackDockerConfig:
-    """Enterprise Monitoring Stack Docker configuration"""
-    
+    """Enterprise Monitoring Stack Docker configuration"""    
     # Prometheus Configuration
     prometheus_image: str = "prom/prometheus:v2.48.0"
     prometheus_port: int = 9090
@@ -82,9 +78,7 @@ class MonitoringStackDockerConfig:
     grafana_memory_limit: str = "2Gi"
     
     def generate_prometheus_config(self) -> str:
-        """Generate Prometheus configuration"""
-        return f"""
-# IA-Influencer Prometheus Configuration
+        """Generate Prometheus configuration"""        return f"""# IA-Influencer Prometheus Configuration
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
 global:
@@ -180,12 +174,8 @@ scrape_configs:
     static_configs:
       - targets: ['cadvisor:8080']
     scrape_interval: 30s
-"""
-
-    def generate_alert_rules(self) -> str:
-        """Generate Prometheus alert rules"""
-        return """
-# IA-Influencer Alert Rules
+"""    def generate_alert_rules(self) -> str:
+        """Generate Prometheus alert rules"""        return """# IA-Influencer Alert Rules
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
 groups:
@@ -316,11 +306,8 @@ groups:
         annotations:
           summary: "Revenue tracking errors"
           description: "{{ $value }} revenue tracking errors per second"
-"""
-
-    def generate_docker_compose_services(self) -> Dict[str, Any]:
-        """Generate docker-compose services for monitoring stack"""
-        services = {
+"""    def generate_docker_compose_services(self) -> Dict[str, Any]:
+        """Generate docker-compose services for monitoring stack"""        services = {
             # Prometheus
             "prometheus": {
                 "image": self.prometheus_image,
@@ -557,8 +544,7 @@ groups:
         return services
 
     def save_config_files(self, output_dir: str) -> List[str]:
-        """Save all configuration files to output directory"""
-        import os
+        """Save all configuration files to output directory"""        import os
         from pathlib import Path
         
         config_dir = Path(output_dir)

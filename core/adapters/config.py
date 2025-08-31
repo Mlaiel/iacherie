@@ -1,5 +1,4 @@
-"""
-Adapter Configuration Management
+"""Adapter Configuration Management
 
 This module handles configuration loading, validation, and management for all
 platform adapters. It provides a centralized way to configure adapters with
@@ -17,9 +16,7 @@ Features:
 - Configuration validation and schema enforcement
 - Secure credential management
 - Multi-environment support (dev, staging, prod)
-"""
-
-import os
+"""import os
 import json
 import yaml
 import logging
@@ -33,24 +30,21 @@ import base64
 logger = logging.getLogger(__name__)
 
 class Environment(str, Enum):
-    """Supported deployment environments."""
-    DEVELOPMENT = "development"
+    """Supported deployment environments."""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
 
 @dataclass
 class RateLimitConfig:
-    """Rate limiting configuration."""
-    max_requests: int = 100
+    """Rate limiting configuration."""    max_requests: int = 100
     time_window: int = 60  # seconds
     burst_limit: int = 10
     retry_after: int = 60
 
 @dataclass
 class SecurityConfig:
-    """Security configuration for adapters."""
-    use_ssl: bool = True
+    """Security configuration for adapters."""    use_ssl: bool = True
     verify_certificates: bool = True
     timeout: int = 30
     max_retries: int = 3
@@ -59,8 +53,7 @@ class SecurityConfig:
 
 @dataclass
 class HealthCheckConfig:
-    """Health check configuration."""
-    enabled: bool = True
+    """Health check configuration."""    enabled: bool = True
     interval: int = 300  # seconds
     timeout: int = 10
     retry_attempts: int = 3
@@ -68,8 +61,7 @@ class HealthCheckConfig:
 
 @dataclass
 class AdapterBaseConfig:
-    """Base configuration for all adapters."""
-    name: str
+    """Base configuration for all adapters."""    name: str
     platform_type: str
     enabled: bool = True
     priority: int = 1
@@ -80,8 +72,7 @@ class AdapterBaseConfig:
 
 @dataclass
 class SocialMediaAdapterConfig(AdapterBaseConfig):
-    """Configuration for social media adapters."""
-    api_key: Optional[str] = None
+    """Configuration for social media adapters."""    api_key: Optional[str] = None
     api_secret: Optional[str] = None
     access_token: Optional[str] = None
     access_token_secret: Optional[str] = None
@@ -92,8 +83,7 @@ class SocialMediaAdapterConfig(AdapterBaseConfig):
 
 @dataclass
 class AIAdapterConfig(AdapterBaseConfig):
-    """Configuration for AI platform adapters."""
-    api_key: Optional[str] = None
+    """Configuration for AI platform adapters."""    api_key: Optional[str] = None
     api_endpoint: Optional[str] = None
     model_name: str = "gpt-3.5-turbo"
     max_tokens: int = 4000
@@ -104,8 +94,7 @@ class AIAdapterConfig(AdapterBaseConfig):
 
 @dataclass
 class ContentProtectionConfig(AdapterBaseConfig):
-    """Configuration for content protection adapters."""
-    api_key: Optional[str] = None
+    """Configuration for content protection adapters."""    api_key: Optional[str] = None
     content_id_system: str = "youtube"
     auto_claim: bool = False
     auto_takedown: bool = False
@@ -115,8 +104,7 @@ class ContentProtectionConfig(AdapterBaseConfig):
 
 @dataclass
 class EmailMarketingConfig(AdapterBaseConfig):
-    """Configuration for email marketing adapters."""
-    api_key: Optional[str] = None
+    """Configuration for email marketing adapters."""    api_key: Optional[str] = None
     list_id: Optional[str] = None
     sender_email: Optional[str] = None
     sender_name: Optional[str] = None
@@ -127,8 +115,7 @@ class EmailMarketingConfig(AdapterBaseConfig):
 
 @dataclass
 class SEOPlatformConfig(AdapterBaseConfig):
-    """Configuration for SEO platform adapters."""
-    api_key: Optional[str] = None
+    """Configuration for SEO platform adapters."""    api_key: Optional[str] = None
     site_url: Optional[str] = None
     country_code: str = "US"
     language_code: str = "en"
@@ -137,8 +124,7 @@ class SEOPlatformConfig(AdapterBaseConfig):
     competitor_domains: List[str] = field(default_factory=list)
 
 class CredentialManager:
-    """Manages secure credential storage and retrieval."""
-    
+    """Manages secure credential storage and retrieval."""    
     def __init__(self, encryption_key: Optional[str] = None):
         if encryption_key:
             self.cipher = Fernet(encryption_key.encode() if isinstance(encryption_key, str) else encryption_key)
@@ -154,15 +140,13 @@ class CredentialManager:
             self.cipher = Fernet(key)
     
     def encrypt_credential(self, value: str) -> str:
-        """Encrypt a credential value."""
-        if not value:
+        """Encrypt a credential value."""        if not value:
             return value
         encrypted = self.cipher.encrypt(value.encode())
         return base64.b64encode(encrypted).decode()
     
     def decrypt_credential(self, encrypted_value: str) -> str:
-        """Decrypt a credential value."""
-        if not encrypted_value:
+        """Decrypt a credential value."""        if not encrypted_value:
             return encrypted_value
         try:
             decoded = base64.b64decode(encrypted_value.encode())
@@ -173,8 +157,7 @@ class CredentialManager:
             return encrypted_value  # Return as-is if decryption fails
 
 class ConfigurationManager:
-    """Manages adapter configurations across different environments."""
-    
+    """Manages adapter configurations across different environments."""    
     def __init__(self, config_dir: Optional[Path] = None, environment: Environment = Environment.DEVELOPMENT):
         self.config_dir = config_dir or Path(__file__).parent
         self.environment = environment
@@ -183,8 +166,7 @@ class ConfigurationManager:
         self._load_configurations()
     
     def _load_configurations(self):
-        """Load configurations from files and environment variables."""
-        # Load base configuration
+        """Load configurations from files and environment variables."""        # Load base configuration
         base_config_file = self.config_dir / f"adapters_config.yaml"
         if base_config_file.exists():
             self._load_from_file(base_config_file)
@@ -195,8 +177,7 @@ class ConfigurationManager:
         self._load_from_environment()
     
     def _load_from_file(self, config_file: Path):
-        """Load configuration from a YAML or JSON file."""
-        try:
+        """Load configuration from a YAML or JSON file."""        try:
             with open(config_file, 'r') as f:
                 if config_file.suffix.lower() == '.yaml' or config_file.suffix.lower() == '.yml':
                     config_data = yaml.safe_load(f)
@@ -213,8 +194,7 @@ class ConfigurationManager:
             logger.error(f"Failed to load configuration from {config_file}: {str(e)}")
     
     def _parse_adapter_config(self, adapter_name: str, config_data: Dict[str, Any]):
-        """Parse adapter configuration data into appropriate config object."""
-        platform_type = config_data.get('platform_type', '').lower()
+        """Parse adapter configuration data into appropriate config object."""        platform_type = config_data.get('platform_type', '').lower()
         
         # Decrypt sensitive fields
         sensitive_fields = ['api_key', 'api_secret', 'access_token', 'access_token_secret', 'webhook_secret']
@@ -239,8 +219,7 @@ class ConfigurationManager:
         self.configurations[adapter_name] = config
     
     def _load_from_environment(self):
-        """Load configuration overrides from environment variables."""
-        # Look for environment variables with pattern: ADAPTER_{ADAPTER_NAME}_{SETTING}
+        """Load configuration overrides from environment variables."""        # Look for environment variables with pattern: ADAPTER_{ADAPTER_NAME}_{SETTING}
         for key, value in os.environ.items():
             if key.startswith('ADAPTER_'):
                 parts = key.split('_', 2)
@@ -256,8 +235,7 @@ class ConfigurationManager:
                             logger.debug(f"Override {adapter_name}.{setting_name} from environment")
     
     def _convert_env_value(self, value: str) -> Union[str, int, float, bool]:
-        """Convert environment variable string to appropriate type."""
-        # Try boolean
+        """Convert environment variable string to appropriate type."""        # Try boolean
         if value.lower() in ('true', 'false'):
             return value.lower() == 'true'
         
@@ -277,8 +255,7 @@ class ConfigurationManager:
         return value
     
     def _create_default_config_file(self, config_file: Path):
-        """Create a default configuration file."""
-        default_config = {
+        """Create a default configuration file."""        default_config = {
             'environment': self.environment.value,
             'adapters': {
                 'youtube_adapter': {
@@ -314,17 +291,14 @@ class ConfigurationManager:
             logger.error(f"Failed to create default configuration file: {str(e)}")
     
     def get_adapter_config(self, adapter_name: str) -> Optional[AdapterBaseConfig]:
-        """Get configuration for a specific adapter."""
-        return self.configurations.get(adapter_name)
+        """Get configuration for a specific adapter."""        return self.configurations.get(adapter_name)
     
     def update_adapter_config(self, adapter_name: str, config: AdapterBaseConfig):
-        """Update configuration for an adapter."""
-        self.configurations[adapter_name] = config
+        """Update configuration for an adapter."""        self.configurations[adapter_name] = config
         logger.info(f"Updated configuration for adapter: {adapter_name}")
     
     def save_configuration(self, config_file: Optional[Path] = None):
-        """Save current configurations to file."""
-        if not config_file:
+        """Save current configurations to file."""        if not config_file:
             config_file = self.config_dir / f"adapters_config.yaml"
         
         # Prepare data for saving
@@ -352,12 +326,10 @@ class ConfigurationManager:
             logger.error(f"Failed to save configuration: {str(e)}")
     
     def list_adapters(self) -> List[str]:
-        """List all configured adapters."""
-        return list(self.configurations.keys())
+        """List all configured adapters."""        return list(self.configurations.keys())
     
     def validate_configuration(self, adapter_name: str) -> Dict[str, Any]:
-        """Validate adapter configuration and return validation results."""
-        config = self.configurations.get(adapter_name)
+        """Validate adapter configuration and return validation results."""        config = self.configurations.get(adapter_name)
         if not config:
             return {'valid': False, 'errors': [f'Adapter {adapter_name} not found']}
         
@@ -405,8 +377,7 @@ class ConfigurationManager:
         }
     
     def get_environment_info(self) -> Dict[str, Any]:
-        """Get information about the current environment configuration."""
-        return {
+        """Get information about the current environment configuration."""        return {
             'environment': self.environment.value,
             'config_dir': str(self.config_dir),
             'total_adapters': len(self.configurations),
@@ -418,21 +389,18 @@ class ConfigurationManager:
 _config_manager: Optional[ConfigurationManager] = None
 
 def get_configuration_manager(environment: Optional[Environment] = None) -> ConfigurationManager:
-    """Get the global configuration manager instance."""
-    global _config_manager
+    """Get the global configuration manager instance."""    global _config_manager
     if _config_manager is None or (environment and _config_manager.environment != environment):
         env = environment or Environment(os.getenv('ADAPTER_ENVIRONMENT', 'development'))
         _config_manager = ConfigurationManager(environment=env)
     return _config_manager
 
 def get_adapter_config(adapter_name: str) -> Optional[AdapterBaseConfig]:
-    """Get configuration for a specific adapter."""
-    manager = get_configuration_manager()
+    """Get configuration for a specific adapter."""    manager = get_configuration_manager()
     return manager.get_adapter_config(adapter_name)
 
 def validate_adapter_config(adapter_name: str) -> Dict[str, Any]:
-    """Validate configuration for a specific adapter."""
-    manager = get_configuration_manager()
+    """Validate configuration for a specific adapter."""    manager = get_configuration_manager()
     return manager.validate_configuration(adapter_name)
 
 # Export all public classes and functions

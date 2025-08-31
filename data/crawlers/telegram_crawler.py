@@ -1,5 +1,4 @@
-"""
-Telegram Crawler Implementation
+"""Telegram Crawler Implementation
 ==============================
 
 Advanced Telegram content monitoring and channel analysis crawler.
@@ -22,9 +21,7 @@ will be prosecuted to the FULL EXTENT OF THE LAW under German and
 International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -50,8 +47,7 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class TelegramMessage:
-    """Telegram message information"""
-    message_id: int
+    """Telegram message information"""    message_id: int
     chat_id: int
     chat_username: Optional[str]
     chat_title: str
@@ -96,8 +92,7 @@ class TelegramMessage:
 
 @dataclass
 class TelegramChannel:
-    """Telegram channel information"""
-    channel_id: int
+    """Telegram channel information"""    channel_id: int
     username: Optional[str]
     title: str
     about: Optional[str]
@@ -142,8 +137,7 @@ class TelegramChannel:
 
 @dataclass
 class TelegramUser:
-    """Telegram user information"""
-    user_id: int
+    """Telegram user information"""    user_id: int
     username: Optional[str]
     first_name: str
     last_name: Optional[str]
@@ -184,8 +178,7 @@ class TelegramUser:
 
 
 class TelegramCrawler(PlatformCrawler):
-    """
-    Advanced Telegram crawler for messaging content monitoring and analysis.
+    """    Advanced Telegram crawler for messaging content monitoring and analysis.
     
     Features:
     - Channel and group monitoring
@@ -197,8 +190,7 @@ class TelegramCrawler(PlatformCrawler):
     - Reaction and engagement metrics
     - Bot interaction monitoring
     - Privacy-respecting crawling
-    """
-    
+    """    
     def __init__(self, config: CrawlerConfig, vector_matcher=None, 
                  api_id: int = None, api_hash: str = None, 
                  bot_token: str = None, session_name: str = "telegram_crawler"):
@@ -245,8 +237,7 @@ class TelegramCrawler(PlatformCrawler):
         self._setup_session_headers()
     
     def _setup_session_headers(self):
-        """Setup Telegram-specific headers"""
-        self.session_headers.update({
+        """Setup Telegram-specific headers"""        self.session_headers.update({
             'Accept': 'application/json',
             'Accept-Encoding': 'gzip, deflate, br',
             'Accept-Language': 'en-US,en;q=0.9',
@@ -260,8 +251,7 @@ class TelegramCrawler(PlatformCrawler):
     
     async def search_content(self, query: str, content_type: str = "messages", 
                            max_results: int = 50, channel_username: str = None) -> List[CrawlerResult]:
-        """
-        Search for content on Telegram.
+        """        Search for content on Telegram.
         
         Args:
             query: Search query
@@ -271,8 +261,7 @@ class TelegramCrawler(PlatformCrawler):
             
         Returns:
             List of crawler results
-        """
-        try:
+        """        try:
             await self._check_rate_limit()
             
             if content_type not in self.content_types:
@@ -298,8 +287,7 @@ class TelegramCrawler(PlatformCrawler):
             return []
     
     async def _crawl_messages(self, query: str, max_results: int, channel_username: str = None) -> List[CrawlerResult]:
-        """Crawl Telegram messages"""
-        try:
+        """Crawl Telegram messages"""        try:
             results = []
             
             if not self.client:
@@ -373,8 +361,7 @@ class TelegramCrawler(PlatformCrawler):
             return []
     
     async def _crawl_channels(self, query: str, max_results: int, channel_username: str = None) -> List[CrawlerResult]:
-        """Crawl Telegram channels"""
-        try:
+        """Crawl Telegram channels"""        try:
             results = []
             
             if not self.client:
@@ -449,8 +436,7 @@ class TelegramCrawler(PlatformCrawler):
             return []
     
     async def _crawl_users(self, query: str, max_results: int, channel_username: str = None) -> List[CrawlerResult]:
-        """Crawl Telegram users"""
-        try:
+        """Crawl Telegram users"""        try:
             results = []
             
             if not self.client:
@@ -529,8 +515,7 @@ class TelegramCrawler(PlatformCrawler):
             return []
     
     async def _crawl_search(self, query: str, max_results: int, channel_username: str = None) -> List[CrawlerResult]:
-        """General Telegram search across all content types"""
-        try:
+        """General Telegram search across all content types"""        try:
             results = []
             
             # Search across different content types
@@ -549,8 +534,7 @@ class TelegramCrawler(PlatformCrawler):
             return []
     
     async def _crawl_media(self, query: str, max_results: int, channel_username: str = None) -> List[CrawlerResult]:
-        """Crawl media messages on Telegram"""
-        try:
+        """Crawl media messages on Telegram"""        try:
             results = []
             
             if not self.client:
@@ -627,8 +611,7 @@ class TelegramCrawler(PlatformCrawler):
             return []
     
     async def _crawl_forwards(self, query: str, max_results: int, channel_username: str = None) -> List[CrawlerResult]:
-        """Crawl forwarded messages"""
-        try:
+        """Crawl forwarded messages"""        try:
             results = []
             
             if not self.client:
@@ -700,8 +683,7 @@ class TelegramCrawler(PlatformCrawler):
             return []
     
     async def _crawl_reactions(self, query: str, max_results: int, channel_username: str = None) -> List[CrawlerResult]:
-        """Crawl messages with reactions"""
-        try:
+        """Crawl messages with reactions"""        try:
             results = []
             
             if not self.client:
@@ -775,8 +757,7 @@ class TelegramCrawler(PlatformCrawler):
     # Helper methods
     
     async def _parse_message_data(self, message, channel) -> Optional[TelegramMessage]:
-        """Parse message data from Telegram API"""
-        try:
+        """Parse message data from Telegram API"""        try:
             # Get sender information
             sender = await message.get_sender() if message.sender_id else None
             
@@ -936,8 +917,7 @@ class TelegramCrawler(PlatformCrawler):
             return None
     
     async def _get_detailed_channel_info(self, channel) -> Optional[TelegramChannel]:
-        """Get detailed channel information"""
-        try:
+        """Get detailed channel information"""        try:
             # Get full channel information
             full_channel = await self.client(GetFullChannelRequest(channel))
             full_info = full_channel.full_chat
@@ -1007,8 +987,7 @@ class TelegramCrawler(PlatformCrawler):
             return None
     
     async def _parse_user_data(self, user) -> Optional[TelegramUser]:
-        """Parse user data from Telegram API"""
-        try:
+        """Parse user data from Telegram API"""        try:
             # Get full user information if possible
             full_user = None
             try:
@@ -1065,8 +1044,7 @@ class TelegramCrawler(PlatformCrawler):
             return None
     
     async def _check_rate_limit(self):
-        """Check and enforce rate limiting"""
-        try:
+        """Check and enforce rate limiting"""        try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
             
@@ -1082,8 +1060,7 @@ class TelegramCrawler(PlatformCrawler):
             self.logger.error(f"Error in rate limiting: {str(e)}")
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
-        """Extract metadata from Telegram content"""
-        try:
+        """Extract metadata from Telegram content"""        try:
             # Parse Telegram URL
             parsed_url = urlparse(url)
             
@@ -1132,8 +1109,7 @@ class TelegramCrawler(PlatformCrawler):
             return {'error': str(e)}
     
     def get_platform_info(self) -> Dict[str, Any]:
-        """Get Telegram platform information"""
-        return {
+        """Get Telegram platform information"""        return {
             'platform_name': 'Telegram',
             'base_url': self.base_url,
             'supported_content_types': list(self.content_types.keys()),

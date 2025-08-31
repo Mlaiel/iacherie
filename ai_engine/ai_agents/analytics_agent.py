@@ -1,5 +1,4 @@
-"""
-Analytics Agent
+"""Analytics Agent
 
 Specialized AI agent for comprehensive performance analytics, data insights,
 and predictive analytics across all content and platform metrics.
@@ -10,9 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import uuid
 from datetime import datetime, timedelta
@@ -33,8 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsScope(Enum):
-    """Scope of analytics analysis"""
-    CONTENT = "content"
+    """Scope of analytics analysis"""    CONTENT = "content"
     PLATFORM = "platform"
     AUDIENCE = "audience"
     ENGAGEMENT = "engagement"
@@ -46,8 +42,7 @@ class AnalyticsScope(Enum):
 
 
 class TimeRange(Enum):
-    """Time range for analytics"""
-    REAL_TIME = "real_time"
+    """Time range for analytics"""    REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -59,8 +54,7 @@ class TimeRange(Enum):
 
 @dataclass
 class AnalyticsQuery:
-    """Analytics query configuration"""
-    query_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Analytics query configuration"""    query_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     scope: AnalyticsScope = AnalyticsScope.CONTENT
     time_range: TimeRange = TimeRange.WEEKLY
     start_date: Optional[datetime] = None
@@ -79,8 +73,7 @@ class AnalyticsQuery:
 
 @dataclass
 class AnalyticsInsight:
-    """Analytics insight result"""
-    insight_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Analytics insight result"""    insight_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     title: str = ""
     description: str = ""
     category: str = ""
@@ -95,8 +88,7 @@ class AnalyticsInsight:
 
 @dataclass
 class PerformanceReport:
-    """Comprehensive performance report"""
-    report_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive performance report"""    report_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     title: str = ""
     period: str = ""
     executive_summary: str = ""
@@ -114,8 +106,7 @@ class PerformanceReport:
 
 
 class AnalyticsAgent(BaseAIAgent):
-    """
-    Advanced analytics agent for comprehensive data analysis
+    """    Advanced analytics agent for comprehensive data analysis
     
     Capabilities:
     - Real-time performance monitoring
@@ -126,8 +117,7 @@ class AnalyticsAgent(BaseAIAgent):
     - Competitive analysis
     - ROI and revenue analytics
     - Growth pattern analysis
-    """
-    
+    """    
     def __init__(self, config: AgentConfiguration):
         # Ensure required capabilities
         required_capabilities = {
@@ -170,8 +160,7 @@ class AnalyticsAgent(BaseAIAgent):
         ]
     
     async def _custom_initialize(self) -> None:
-        """Initialize analytics components"""
-        try:
+        """Initialize analytics components"""        try:
             # Initialize data collection and analysis engines
             self.metrics_collector = MetricsCollector()
             await self.metrics_collector.initialize()
@@ -195,8 +184,7 @@ class AnalyticsAgent(BaseAIAgent):
             raise
     
     async def _execute_task_impl(self, task: AgentTask) -> Dict[str, Any]:
-        """Execute analytics task"""
-        task_type = task.task_type
+        """Execute analytics task"""        task_type = task.task_type
         context = task.context
         
         if task_type == "analyze_performance":
@@ -219,8 +207,7 @@ class AnalyticsAgent(BaseAIAgent):
             raise ValueError(f"Unknown task type: {task_type}")
     
     async def _analyze_performance(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Comprehensive performance analysis"""
-        query = AnalyticsQuery(**context.get("query", {}))
+        """Comprehensive performance analysis"""        query = AnalyticsQuery(**context.get("query", {}))
         
         self.logger.info(f"Analyzing {query.scope.value} performance for {query.time_range.value}")
         
@@ -277,8 +264,7 @@ class AnalyticsAgent(BaseAIAgent):
             }
     
     async def _generate_insights(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate actionable insights from data"""
-        query = AnalyticsQuery(**context.get("query", {}))
+        """Generate actionable insights from data"""        query = AnalyticsQuery(**context.get("query", {}))
         
         try:
             # Get performance data
@@ -340,8 +326,7 @@ class AnalyticsAgent(BaseAIAgent):
             }
     
     async def _create_comprehensive_report(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Create comprehensive analytics report"""
-        report_config = context.get("report_config", {})
+        """Create comprehensive analytics report"""        report_config = context.get("report_config", {})
         
         try:
             # Generate performance analysis
@@ -416,8 +401,7 @@ class AnalyticsAgent(BaseAIAgent):
             }
     
     async def _predict_trends(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Predict future trends and performance"""
-        prediction_config = context.get("prediction_config", {})
+        """Predict future trends and performance"""        prediction_config = context.get("prediction_config", {})
         
         try:
             # Collect historical data for prediction
@@ -460,8 +444,7 @@ class AnalyticsAgent(BaseAIAgent):
             }
     
     async def _real_time_monitoring(self) -> None:
-        """Real-time performance monitoring"""
-        while not self.shutdown_event.is_set() and self.monitoring_active:
+        """Real-time performance monitoring"""        while not self.shutdown_event.is_set() and self.monitoring_active:
             try:
                 # Collect real-time metrics
                 current_metrics = await self.metrics_collector.collect_real_time_metrics()
@@ -485,8 +468,7 @@ class AnalyticsAgent(BaseAIAgent):
             await asyncio.sleep(60)  # Check every minute
     
     async def _calculate_performance_scores(self, data: Dict[str, Any], query: AnalyticsQuery) -> Dict[str, float]:
-        """Calculate comprehensive performance scores"""
-        scores = {}
+        """Calculate comprehensive performance scores"""        scores = {}
         
         # Overall performance score (0-100)
         scores["overall"] = await self._calculate_overall_score(data)
@@ -512,8 +494,7 @@ class AnalyticsAgent(BaseAIAgent):
         return scores
     
     async def can_handle_task(self, task_type: str, context: Dict[str, Any]) -> bool:
-        """Check if agent can handle specific analytics task"""
-        supported_tasks = [
+        """Check if agent can handle specific analytics task"""        supported_tasks = [
             "analyze_performance",
             "generate_insights",
             "create_report",

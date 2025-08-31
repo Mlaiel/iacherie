@@ -1,12 +1,9 @@
-"""
-Revenue Tracker
+"""Revenue Tracker
 Advanced revenue tracking and analytics system.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
 from dataclasses import dataclass, asdict
@@ -19,8 +16,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class RevenueMetrics:
-    """Revenue metrics data structure"""
-    period_start: datetime
+    """Revenue metrics data structure"""    period_start: datetime
     period_end: datetime
     total_revenue: float
     platform_breakdown: Dict[str, float]
@@ -31,8 +27,7 @@ class RevenueMetrics:
 
 
 class RevenueTracker:
-    """Advanced revenue tracking and monitoring system"""
-    
+    """Advanced revenue tracking and monitoring system"""    
     def __init__(self):
         self.revenue_data = {}
         self.alerts = {}
@@ -46,8 +41,7 @@ class RevenueTracker:
         currency: str = "EUR",
         metadata: Optional[Dict] = None
     ) -> bool:
-        """Track real-time revenue updates"""
-        try:
+        """Track real-time revenue updates"""        try:
             timestamp = datetime.now()
             
             # Create revenue record
@@ -88,8 +82,7 @@ class RevenueTracker:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Analyze revenue correlation across platforms"""
-        try:
+        """Analyze revenue correlation across platforms"""        try:
             platform_revenues = {}
             
             # Get revenue data for each platform
@@ -142,8 +135,7 @@ class RevenueTracker:
         marketing_cost: float = 0.0,
         time_period_days: int = 30
     ) -> Dict[str, Any]:
-        """Calculate ROI for specific content"""
-        try:
+        """Calculate ROI for specific content"""        try:
             end_date = datetime.now()
             start_date = end_date - timedelta(days=time_period_days)
             
@@ -187,8 +179,7 @@ class RevenueTracker:
         content_id: str,
         forecast_days: int = 30
     ) -> Dict[str, Any]:
-        """ML-based revenue forecasting"""
-        try:
+        """ML-based revenue forecasting"""        try:
             # Get historical revenue data
             historical_data = await self._get_historical_revenue_data(content_id, days=90)
             
@@ -236,8 +227,7 @@ class RevenueTracker:
         start_date: datetime,
         end_date: datetime
     ) -> float:
-        """Get total revenue sum for content in date range"""
-        try:
+        """Get total revenue sum for content in date range"""        try:
             total = 0.0
             content_data = self.revenue_data.get(content_id, {})
             
@@ -263,8 +253,7 @@ class RevenueTracker:
         content_id: str,
         days: int = 90
     ) -> List[Dict]:
-        """Get historical daily revenue data"""
-        try:
+        """Get historical daily revenue data"""        try:
             daily_data = []
             end_date = datetime.now()
             start_date = end_date - timedelta(days=days)
@@ -295,8 +284,7 @@ class RevenueTracker:
             return []
     
     def _calculate_linear_trend(self, data: List[float]) -> float:
-        """Calculate linear trend from data"""
-        try:
+        """Calculate linear trend from data"""        try:
             if len(data) < 2:
                 return 0.0
                 

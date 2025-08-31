@@ -1,5 +1,4 @@
-"""
-Predictive Analytics Agent - Enterprise AI-Powered Forecasting and Market Intelligence System
+"""Predictive Analytics Agent - Enterprise AI-Powered Forecasting and Market Intelligence System
 Industrial-grade predictive analytics platform for IA Influencer Agent with comprehensive forecasting,
 trend prediction, risk assessment, and business intelligence capabilities.
 
@@ -23,9 +22,7 @@ Enterprise Features:
 - Revenue forecasting with dynamic market factors
 - Viral content prediction with algorithm favorability scoring
 - Comprehensive competitive intelligence and benchmarking
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import uuid
@@ -81,8 +78,7 @@ from ...utils.cache_manager import CacheManager
 logger = logging.getLogger(__name__)
 
 class PredictionType(Enum):
-    """Types of predictions available"""
-    CONTENT_PERFORMANCE = "content_performance"
+    """Types of predictions available"""    CONTENT_PERFORMANCE = "content_performance"
     REVENUE_FORECAST = "revenue_forecast"
     AUDIENCE_GROWTH = "audience_growth"
     COLLABORATION_SUCCESS = "collaboration_success"
@@ -92,22 +88,19 @@ class PredictionType(Enum):
     OPPORTUNITY_ANALYSIS = "opportunity_analysis"
 
 class ForecastHorizon(Enum):
-    """Forecast time horizons"""
-    SHORT_TERM = 7   # 1 week
+    """Forecast time horizons"""    SHORT_TERM = 7   # 1 week
     MEDIUM_TERM = 30  # 1 month
     LONG_TERM = 90    # 3 months
     STRATEGIC = 365   # 1 year
 
 class RiskLevel(Enum):
-    """Risk assessment levels"""
-    LOW = "low"
+    """Risk assessment levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 class ModelType(Enum):
-    """Supported ML model types"""
-    PROPHET = "prophet"
+    """Supported ML model types"""    PROPHET = "prophet"
     LSTM = "lstm"
     XGBOOST = "xgboost"
     RANDOM_FOREST = "random_forest"
@@ -116,8 +109,7 @@ class ModelType(Enum):
 
 @dataclass
 class PredictionRequest:
-    """Prediction request structure"""
-    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Prediction request structure"""    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
     prediction_type: PredictionType = PredictionType.CONTENT_PERFORMANCE
     forecast_horizon: ForecastHorizon = ForecastHorizon.MEDIUM_TERM
@@ -133,8 +125,7 @@ class PredictionRequest:
 
 @dataclass
 class PredictionResult:
-    """Prediction result structure"""
-    request_id: str
+    """Prediction result structure"""    request_id: str
     prediction_type: PredictionType
     predicted_value: Dict[str, Any]
     confidence_score: float
@@ -149,8 +140,7 @@ class PredictionResult:
 
 @dataclass
 class TrendForecast:
-    """Trend forecast data structure"""
-    trend_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Trend forecast data structure"""    trend_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     trend_name: str = ""
     trend_category: str = ""
     growth_trajectory: str = ""  # emerging, growing, mature, declining
@@ -164,8 +154,7 @@ class TrendForecast:
 
 @dataclass
 class MarketInsight:
-    """Market intelligence insight"""
-    insight_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Market intelligence insight"""    insight_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     title: str = ""
     description: str = ""
     category: str = ""  # competitive, opportunity, threat, trend
@@ -179,8 +168,7 @@ class MarketInsight:
 
 @dataclass
 class RiskAssessment:
-    """Risk assessment result"""
-    assessment_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Risk assessment result"""    assessment_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     overall_risk_level: RiskLevel = RiskLevel.MEDIUM
     risk_score: float = 0.5  # 0-1 scale
     risk_factors: Dict[str, Dict[str, Any]] = field(default_factory=dict)
@@ -192,8 +180,7 @@ class RiskAssessment:
 
 @dataclass
 class OpportunityAnalysis:
-    """Opportunity analysis result"""
-    analysis_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Opportunity analysis result"""    analysis_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     opportunities: List[Dict[str, Any]] = field(default_factory=list)
     priority_ranking: List[str] = field(default_factory=list)
     roi_projections: Dict[str, float] = field(default_factory=dict)
@@ -205,8 +192,7 @@ class OpportunityAnalysis:
 
 @dataclass
 class PredictionConfig:
-    """Prediction engine configuration"""
-    ensemble_models: List[ModelType] = field(default_factory=lambda: [ModelType.PROPHET, ModelType.XGBOOST, ModelType.RANDOM_FOREST])
+    """Prediction engine configuration"""    ensemble_models: List[ModelType] = field(default_factory=lambda: [ModelType.PROPHET, ModelType.XGBOOST, ModelType.RANDOM_FOREST])
     ensemble_weights: Dict[str, float] = field(default_factory=dict)
     minimum_data_points: int = 30
     train_test_split_ratio: float = 0.8
@@ -218,8 +204,7 @@ class PredictionConfig:
     performance_threshold: float = 0.7
     
 class PredictiveAnalyticsAgent(BaseAIAgent):
-    """
-    Enterprise Predictive Analytics Agent for IA Influencer Platform - Production Edition
+    """    Enterprise Predictive Analytics Agent for IA Influencer Platform - Production Edition
     
     Industrial-grade predictive analytics system providing comprehensive forecasting capabilities:
     
@@ -265,11 +250,8 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
     - PostgreSQL integration for persistent prediction storage
     - Comprehensive audit logging and compliance tracking
     - Enterprise security with end-to-end encryption
-    """
-
-    def __init__(self, config: Dict[str, Any] = None):
-        """Initialize the Predictive Analytics Agent with enterprise configurations"""
-        
+    """    def __init__(self, config: Dict[str, Any] = None):
+        """Initialize the Predictive Analytics Agent with enterprise configurations"""        
         # Define agent capabilities
         agent_config = {
             "agent_id": "predictive_analytics_agent",
@@ -335,8 +317,7 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
         logger.info(f"Predictive Analytics Agent initialized - Version {agent_config['version']}")
 
     def _initialize_models(self):
-        """Initialize ML models and preprocessing components"""
-        try:
+        """Initialize ML models and preprocessing components"""        try:
             # Initialize Prophet model for time series forecasting
             self.models[ModelType.PROPHET.value] = Prophet(
                 daily_seasonality=True,
@@ -388,8 +369,7 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
             raise AgentError(f"Model initialization failed: {str(e)}")
 
     async def start(self):
-        """Start the predictive analytics agent"""
-        try:
+        """Start the predictive analytics agent"""        try:
             await super().start()
             
             # Load pre-trained models if available
@@ -410,8 +390,7 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
             raise
 
     async def stop(self):
-        """Stop the predictive analytics agent"""
-        try:
+        """Stop the predictive analytics agent"""        try:
             await super().stop()
             
             # Save models
@@ -432,16 +411,14 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
             logger.error(f"Error stopping predictive analytics agent: {str(e)}")
 
     async def predict_content_performance(self, request: PredictionRequest) -> PredictionResult:
-        """
-        Predict content performance using ensemble ML models
+        """        Predict content performance using ensemble ML models
         
         Args:
             request: Prediction request with content data and parameters
             
         Returns:
             PredictionResult: Comprehensive prediction with confidence scores
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Validate request
@@ -532,16 +509,14 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
             raise ProcessingError(f"Prediction failed: {str(e)}")
 
     async def forecast_revenue(self, request: PredictionRequest) -> PredictionResult:
-        """
-        Forecast revenue using advanced time series and ML models
+        """        Forecast revenue using advanced time series and ML models
         
         Args:
             request: Prediction request with revenue data and parameters
             
         Returns:
             PredictionResult: Revenue forecast with confidence intervals
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Validate request
@@ -629,16 +604,14 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
             raise ProcessingError(f"Revenue forecast failed: {str(e)}")
 
     async def predict_audience_growth(self, request: PredictionRequest) -> PredictionResult:
-        """
-        Predict audience growth using viral coefficient modeling and ML
+        """        Predict audience growth using viral coefficient modeling and ML
         
         Args:
             request: Prediction request with audience data
             
         Returns:
             PredictionResult: Audience growth prediction with viral analysis
-        """
-        try:
+        """        try:
             # Get historical audience data
             historical_audience = await self._get_historical_audience_data(request.creator_id)
             
@@ -714,16 +687,14 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
             raise ProcessingError(f"Audience growth prediction failed: {str(e)}")
 
     async def analyze_market_trends(self, request: PredictionRequest) -> TrendForecast:
-        """
-        Analyze market trends and predict future opportunities
+        """        Analyze market trends and predict future opportunities
         
         Args:
             request: Prediction request with market analysis parameters
             
         Returns:
             TrendForecast: Comprehensive market trend analysis
-        """
-        try:
+        """        try:
             # Collect market data from multiple sources
             market_data = await self._collect_market_intelligence_data(request)
             
@@ -770,16 +741,14 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
             raise ProcessingError(f"Market trend analysis failed: {str(e)}")
 
     async def assess_collaboration_success(self, request: PredictionRequest) -> PredictionResult:
-        """
-        Predict collaboration success probability using advanced matching algorithms
+        """        Predict collaboration success probability using advanced matching algorithms
         
         Args:
             request: Prediction request with collaboration data
             
         Returns:
             PredictionResult: Collaboration success probability and recommendations
-        """
-        try:
+        """        try:
             # Extract collaboration features
             collaboration_features = await self._extract_collaboration_features(request)
             
@@ -854,8 +823,7 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
     # Helper methods for feature extraction and processing
 
     async def _extract_content_features(self, request: PredictionRequest) -> Dict[str, Any]:
-        """Extract features from content data for ML models"""
-        content_data = request.content_data
+        """Extract features from content data for ML models"""        content_data = request.content_data
         
         features = {
             # Content characteristics
@@ -885,8 +853,7 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
         return features
 
     async def _extract_revenue_features(self, request: PredictionRequest) -> Dict[str, Any]:
-        """Extract features for revenue prediction"""
-        return {
+        """Extract features for revenue prediction"""        return {
             'current_monthly_revenue': request.historical_data.get('monthly_revenue', 0),
             'revenue_streams_count': len(request.historical_data.get('revenue_streams', [])),
             'monetization_rate': request.historical_data.get('monetization_rate', 0.0),
@@ -897,8 +864,7 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
         }
 
     async def _predict_with_prophet(self, features: Dict[str, Any], request: PredictionRequest) -> Dict[str, Any]:
-        """Generate prediction using Prophet time series model"""
-        # Simulate Prophet prediction (in production, use actual historical data)
+        """Generate prediction using Prophet time series model"""        # Simulate Prophet prediction (in production, use actual historical data)
         base_prediction = features.get('avg_views_30d', 1000)
         growth_factor = 1 + (features.get('algorithm_favorability', 0.5) - 0.5) * 0.2
         seasonal_adjustment = features.get('seasonal_factor', 1.0)
@@ -912,8 +878,7 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
         }
 
     async def _predict_with_xgboost(self, features: Dict[str, Any], request: PredictionRequest) -> Dict[str, Any]:
-        """Generate prediction using XGBoost model"""
-        # Simulate XGBoost prediction
+        """Generate prediction using XGBoost model"""        # Simulate XGBoost prediction
         feature_importance_weighted_score = (
             features.get('content_quality_score', 0.5) * 0.3 +
             features.get('algorithm_favorability', 0.5) * 0.25 +
@@ -937,8 +902,7 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
         }
 
     async def _predict_with_random_forest(self, features: Dict[str, Any], request: PredictionRequest) -> Dict[str, Any]:
-        """Generate prediction using Random Forest model"""
-        # Simulate Random Forest prediction
+        """Generate prediction using Random Forest model"""        # Simulate Random Forest prediction
         ensemble_factors = [
             features.get('content_quality_score', 0.5),
             features.get('algorithm_favorability', 0.5),
@@ -957,8 +921,7 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
         }
 
     async def _ensemble_predictions(self, predictions: Dict[str, Dict[str, Any]], request: PredictionRequest) -> Dict[str, Any]:
-        """Combine predictions from multiple models using weighted ensemble"""
-        if not predictions:
+        """Combine predictions from multiple models using weighted ensemble"""        if not predictions:
             return {'predicted_views': 1000, 'ensemble_confidence': 0.5}
         
         # Default ensemble weights
@@ -999,8 +962,7 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
         }
 
     async def _calculate_confidence_score(self, predictions: Dict[str, Dict[str, Any]], ensemble_prediction: Dict[str, Any]) -> float:
-        """Calculate confidence score based on model agreement and historical accuracy"""
-        if not predictions or len(predictions) < 2:
+        """Calculate confidence score based on model agreement and historical accuracy"""        if not predictions or len(predictions) < 2:
             return 0.6  # Low confidence with single model
         
         # Calculate agreement between models
@@ -1023,8 +985,7 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
         return min(max(confidence_score, 0.0), 1.0)
 
     async def _assess_content_risk(self, request: PredictionRequest, prediction: Dict[str, Any]) -> RiskAssessment:
-        """Assess risks associated with content performance prediction"""
-        risk_factors = {}
+        """Assess risks associated with content performance prediction"""        risk_factors = {}
         
         # Algorithm dependency risk
         algorithm_score = request.platform_data.get('algorithm_score', 0.5)
@@ -1107,8 +1068,7 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
         )
 
     async def _identify_content_opportunities(self, request: PredictionRequest, prediction: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Identify opportunities for content optimization and growth"""
-        opportunities = []
+        """Identify opportunities for content optimization and growth"""        opportunities = []
         
         # High algorithm favorability opportunity
         algorithm_score = request.platform_data.get('algorithm_score', 0.5)
@@ -1188,8 +1148,7 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
                                                prediction: Dict[str, Any], 
                                                risk_assessment: RiskAssessment = None, 
                                                opportunities: List[Dict[str, Any]] = None) -> List[str]:
-        """Generate actionable recommendations for content optimization"""
-        recommendations = []
+        """Generate actionable recommendations for content optimization"""        recommendations = []
         
         # Performance-based recommendations
         predicted_views = prediction.get('predicted_views', 0)
@@ -1239,18 +1198,15 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
         return recommendations
 
     async def _load_pretrained_models(self):
-        """Load pre-trained models from storage"""
-        # In production, load actual trained models
+        """Load pre-trained models from storage"""        # In production, load actual trained models
         logger.info("Loading pre-trained models (simulated)")
 
     async def _save_models(self):
-        """Save trained models to storage"""
-        # In production, save actual trained models
+        """Save trained models to storage"""        # In production, save actual trained models
         logger.info("Saving models (simulated)")
 
     def _validate_prediction_request(self, request: PredictionRequest):
-        """Validate prediction request parameters"""
-        if not request.creator_id:
+        """Validate prediction request parameters"""        if not request.creator_id:
             raise ValidationError("Creator ID is required")
         
         if not isinstance(request.prediction_type, PredictionType):
@@ -1271,8 +1227,7 @@ class PredictiveAnalyticsAgent(BaseAIAgent):
     # - And many more specialized functions
 
     async def get_status(self) -> Dict[str, Any]:
-        """Get agent status and metrics"""
-        return {
+        """Get agent status and metrics"""        return {
             "agent_id": self.agent_id,
             "status": self.status.value,
             "version": "2.0.0",

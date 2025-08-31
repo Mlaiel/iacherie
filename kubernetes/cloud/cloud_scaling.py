@@ -1,5 +1,4 @@
-"""
-Cloud Auto-Scaling Manager - Enterprise Dynamic Scaling System
+"""Cloud Auto-Scaling Manager - Enterprise Dynamic Scaling System
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -14,9 +13,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 This module provides comprehensive auto-scaling capabilities for the IA Influencer
 Agent platform, supporting intelligent scaling decisions, predictive scaling,
 and multi-cloud scaling orchestration.
-"""
-
-import logging
+"""import logging
 import asyncio
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -31,24 +28,21 @@ import pandas as pd
 logger = logging.getLogger(__name__)
 
 class ScalingAction(Enum):
-    """Auto-scaling actions"""
-    SCALE_UP = "scale_up"
+    """Auto-scaling actions"""    SCALE_UP = "scale_up"
     SCALE_DOWN = "scale_down"
     SCALE_OUT = "scale_out"
     SCALE_IN = "scale_in"
     NO_ACTION = "no_action"
 
 class ScalingPolicy(Enum):
-    """Scaling policy types"""
-    TARGET_TRACKING = "target_tracking"
+    """Scaling policy types"""    TARGET_TRACKING = "target_tracking"
     STEP_SCALING = "step_scaling"
     SIMPLE_SCALING = "simple_scaling"
     PREDICTIVE_SCALING = "predictive_scaling"
     SCHEDULE_BASED = "schedule_based"
 
 class MetricType(Enum):
-    """Scaling metric types"""
-    CPU_UTILIZATION = "cpu_utilization"
+    """Scaling metric types"""    CPU_UTILIZATION = "cpu_utilization"
     MEMORY_UTILIZATION = "memory_utilization"
     NETWORK_IO = "network_io"
     DISK_IO = "disk_io"
@@ -59,8 +53,7 @@ class MetricType(Enum):
 
 @dataclass
 class ScalingMetric:
-    """Scaling metric definition"""
-    metric_name: str
+    """Scaling metric definition"""    metric_name: str
     metric_type: MetricType
     threshold_up: float
     threshold_down: float
@@ -73,8 +66,7 @@ class ScalingMetric:
 
 @dataclass
 class ScalingConfiguration:
-    """Auto-scaling configuration"""
-    resource_id: str
+    """Auto-scaling configuration"""    resource_id: str
     resource_type: str
     min_capacity: int
     max_capacity: int
@@ -90,8 +82,7 @@ class ScalingConfiguration:
 
 @dataclass
 class ScalingEvent:
-    """Auto-scaling event"""
-    event_id: str
+    """Auto-scaling event"""    event_id: str
     resource_id: str
     action: ScalingAction
     reason: str
@@ -105,8 +96,7 @@ class ScalingEvent:
 
 @dataclass
 class PredictionData:
-    """Scaling prediction data"""
-    resource_id: str
+    """Scaling prediction data"""    resource_id: str
     predicted_load: float
     confidence_score: float
     time_horizon: int
@@ -114,11 +104,9 @@ class PredictionData:
     created_at: datetime
 
 class CloudAutoScaler:
-    """Enterprise cloud auto-scaling management system"""
-    
+    """Enterprise cloud auto-scaling management system"""    
     def __init__(self):
-        """Initialize cloud auto-scaler"""
-        self.logger = logging.getLogger(self.__class__.__name__)
+        """Initialize cloud auto-scaler"""        self.logger = logging.getLogger(self.__class__.__name__)
         self.scaling_configs: Dict[str, ScalingConfiguration] = {}
         self.scaling_history: List[ScalingEvent] = []
         self.metrics_data: Dict[str, List[Dict[str, Any]]] = {}
@@ -130,8 +118,7 @@ class CloudAutoScaler:
         self.is_trained = False
         
     async def initialize(self) -> bool:
-        """Initialize auto-scaler"""
-        try:
+        """Initialize auto-scaler"""        try:
             self.logger.info("Initializing cloud auto-scaler")
             
             # Load existing configurations
@@ -150,8 +137,7 @@ class CloudAutoScaler:
             return False
     
     async def configure_auto_scaling(self, config: ScalingConfiguration) -> bool:
-        """Configure auto-scaling for a resource"""
-        try:
+        """Configure auto-scaling for a resource"""        try:
             # Validate configuration
             validation_result = await self._validate_scaling_config(config)
             if not validation_result['valid']:
@@ -177,8 +163,7 @@ class CloudAutoScaler:
     
     async def evaluate_scaling_decision(self, resource_id: str, 
                                        current_metrics: Dict[str, float]) -> Dict[str, Any]:
-        """Evaluate scaling decision for a resource"""
-        try:
+        """Evaluate scaling decision for a resource"""        try:
             if resource_id not in self.scaling_configs:
                 return {"action": ScalingAction.NO_ACTION, "reason": "No scaling configuration found"}
             
@@ -225,8 +210,7 @@ class CloudAutoScaler:
     
     async def execute_scaling_action(self, resource_id: str, action: ScalingAction, 
                                    new_capacity: int, reason: str) -> bool:
-        """Execute scaling action"""
-        try:
+        """Execute scaling action"""        try:
             if resource_id not in self.scaling_configs:
                 raise ValueError(f"No scaling configuration for resource: {resource_id}")
             
@@ -277,8 +261,7 @@ class CloudAutoScaler:
     
     async def _evaluate_target_tracking(self, config: ScalingConfiguration, 
                                       metrics: Dict[str, float]) -> Dict[str, Any]:
-        """Evaluate target tracking scaling policy"""
-        for metric in config.metrics:
+        """Evaluate target tracking scaling policy"""        for metric in config.metrics:
             if metric.metric_name not in metrics:
                 continue
             
@@ -311,8 +294,7 @@ class CloudAutoScaler:
     
     async def _evaluate_step_scaling(self, config: ScalingConfiguration, 
                                    metrics: Dict[str, float]) -> Dict[str, Any]:
-        """Evaluate step scaling policy"""
-        for metric in config.metrics:
+        """Evaluate step scaling policy"""        for metric in config.metrics:
             if metric.metric_name not in metrics:
                 continue
             
@@ -360,8 +342,7 @@ class CloudAutoScaler:
     
     async def _evaluate_simple_scaling(self, config: ScalingConfiguration, 
                                      metrics: Dict[str, float]) -> Dict[str, Any]:
-        """Evaluate simple scaling policy"""
-        for metric in config.metrics:
+        """Evaluate simple scaling policy"""        for metric in config.metrics:
             if metric.metric_name not in metrics:
                 continue
             
@@ -388,8 +369,7 @@ class CloudAutoScaler:
     
     async def _evaluate_predictive_scaling(self, config: ScalingConfiguration, 
                                          metrics: Dict[str, float]) -> Dict[str, Any]:
-        """Evaluate predictive scaling policy"""
-        if not config.predictive_scaling_enabled:
+        """Evaluate predictive scaling policy"""        if not config.predictive_scaling_enabled:
             return {"action": ScalingAction.NO_ACTION, "reason": "Predictive scaling disabled"}
         
         resource_id = config.resource_id
@@ -424,8 +404,7 @@ class CloudAutoScaler:
         return {"action": ScalingAction.NO_ACTION, "reason": "No predictive scaling action needed"}
     
     async def _evaluate_schedule_based_scaling(self, config: ScalingConfiguration) -> Dict[str, Any]:
-        """Evaluate schedule-based scaling policy"""
-        schedule_config = config.schedule_based_scaling
+        """Evaluate schedule-based scaling policy"""        schedule_config = config.schedule_based_scaling
         
         if not schedule_config.get('enabled', False):
             return {"action": ScalingAction.NO_ACTION, "reason": "Schedule-based scaling disabled"}
@@ -450,8 +429,7 @@ class CloudAutoScaler:
         return {"action": ScalingAction.NO_ACTION, "reason": "No scheduled scaling events"}
     
     def _matches_schedule(self, schedule: Dict[str, Any], current_hour: int, current_day: str) -> bool:
-        """Check if current time matches schedule"""
-        # Check day of week
+        """Check if current time matches schedule"""        # Check day of week
         if 'days' in schedule and current_day not in schedule['days']:
             return False
         
@@ -469,8 +447,7 @@ class CloudAutoScaler:
     
     async def _generate_load_prediction(self, resource_id: str, 
                                       current_metrics: Dict[str, float]) -> Optional[PredictionData]:
-        """Generate load prediction using ML model"""
-        if resource_id not in self.prediction_models:
+        """Generate load prediction using ML model"""        if resource_id not in self.prediction_models:
             return None
         
         # Get historical metrics
@@ -504,8 +481,7 @@ class CloudAutoScaler:
     
     async def _prepare_prediction_features(self, historical_data: List[Dict[str, Any]], 
                                          current_metrics: Dict[str, float]) -> List[float]:
-        """Prepare features for prediction model"""
-        # Extract time-based features
+        """Prepare features for prediction model"""        # Extract time-based features
         current_time = datetime.now()
         hour_of_day = current_time.hour
         day_of_week = current_time.weekday()
@@ -536,8 +512,7 @@ class CloudAutoScaler:
     
     async def _calculate_prediction_confidence(self, historical_data: List[Dict[str, Any]], 
                                              predicted_load: float) -> float:
-        """Calculate confidence score for prediction"""
-        # Simple confidence calculation based on data variance
+        """Calculate confidence score for prediction"""        # Simple confidence calculation based on data variance
         recent_loads = [data.get('cpu_utilization', 0) for data in historical_data[-10:]]
         
         if len(recent_loads) < 2:
@@ -551,8 +526,7 @@ class CloudAutoScaler:
         return confidence
     
     async def _resolve_scaling_decisions(self, decisions: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Resolve multiple scaling decisions"""
-        if not decisions:
+        """Resolve multiple scaling decisions"""        if not decisions:
             return {"action": ScalingAction.NO_ACTION, "reason": "No scaling decisions"}
         
         # If all decisions agree, use the strongest one
@@ -582,8 +556,7 @@ class CloudAutoScaler:
     
     async def _validate_scaling_limits(self, config: ScalingConfiguration, 
                                      decision: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate scaling decision against limits"""
-        if decision['action'] == ScalingAction.NO_ACTION:
+        """Validate scaling decision against limits"""        if decision['action'] == ScalingAction.NO_ACTION:
             return decision
         
         new_capacity = decision.get('new_capacity', config.desired_capacity)
@@ -604,16 +577,14 @@ class CloudAutoScaler:
         return decision
     
     async def _is_in_cooldown(self, resource_id: str) -> bool:
-        """Check if resource is in cooldown period"""
-        if resource_id not in self.active_cooldowns:
+        """Check if resource is in cooldown period"""        if resource_id not in self.active_cooldowns:
             return False
         
         cooldown_end = self.active_cooldowns[resource_id]
         return datetime.now() < cooldown_end
     
     async def _store_metrics(self, resource_id: str, metrics: Dict[str, float]) -> None:
-        """Store metrics data for historical analysis"""
-        metrics_entry = {
+        """Store metrics data for historical analysis"""        metrics_entry = {
             "timestamp": datetime.now().isoformat(),
             **metrics
         }
@@ -631,8 +602,7 @@ class CloudAutoScaler:
         ]
     
     async def _get_current_metrics_snapshot(self, resource_id: str) -> Dict[str, float]:
-        """Get current metrics snapshot"""
-        if resource_id not in self.metrics_data or not self.metrics_data[resource_id]:
+        """Get current metrics snapshot"""        if resource_id not in self.metrics_data or not self.metrics_data[resource_id]:
             return {}
         
         latest_entry = self.metrics_data[resource_id][-1]
@@ -640,23 +610,20 @@ class CloudAutoScaler:
     
     async def _execute_resource_scaling(self, config: ScalingConfiguration, 
                                       action: ScalingAction, new_capacity: int) -> bool:
-        """Execute scaling action on the actual resource"""
-        # This would integrate with cloud provider APIs
+        """Execute scaling action on the actual resource"""        # This would integrate with cloud provider APIs
         # For now, return success simulation
         self.logger.info(f"Executing {action.value} for {config.resource_type} {config.resource_id} to capacity {new_capacity}")
         return True
     
     async def _send_scaling_notifications(self, config: ScalingConfiguration, event: ScalingEvent) -> None:
-        """Send scaling notifications"""
-        notification_config = config.notification_config
+        """Send scaling notifications"""        notification_config = config.notification_config
         
         if notification_config.get('enabled', False):
             # Send notifications via configured channels
             self.logger.info(f"Scaling notification: {event.action.value} for {event.resource_id}")
     
     async def _validate_scaling_config(self, config: ScalingConfiguration) -> Dict[str, Any]:
-        """Validate scaling configuration"""
-        errors = []
+        """Validate scaling configuration"""        errors = []
         
         if config.min_capacity < 0:
             errors.append("Minimum capacity cannot be negative")
@@ -673,23 +640,19 @@ class CloudAutoScaler:
         return {"valid": len(errors) == 0, "errors": errors}
     
     async def _load_scaling_configurations(self) -> None:
-        """Load existing scaling configurations"""
-        # Implementation would load from persistent storage
+        """Load existing scaling configurations"""        # Implementation would load from persistent storage
         pass
     
     async def _initialize_prediction_models(self) -> None:
-        """Initialize ML prediction models"""
-        # Initialize basic linear regression models for each resource
+        """Initialize ML prediction models"""        # Initialize basic linear regression models for each resource
         # Real implementation would use more sophisticated models
         pass
     
     async def _setup_predictive_model(self, resource_id: str) -> None:
-        """Setup predictive model for resource"""
-        self.prediction_models[resource_id] = LinearRegression()
+        """Setup predictive model for resource"""        self.prediction_models[resource_id] = LinearRegression()
     
     async def _monitoring_loop(self) -> None:
-        """Main monitoring loop"""
-        while True:
+        """Main monitoring loop"""        while True:
             try:
                 # Check all configured resources
                 for resource_id, config in self.scaling_configs.items():
@@ -717,8 +680,7 @@ class CloudAutoScaler:
                 await asyncio.sleep(60)
     
     async def _get_current_metrics(self, resource_id: str) -> Dict[str, float]:
-        """Get current metrics for resource"""
-        # This would integrate with monitoring system
+        """Get current metrics for resource"""        # This would integrate with monitoring system
         # For now, return simulated metrics
         return {
             "cpu_utilization": 45.0,
@@ -728,8 +690,7 @@ class CloudAutoScaler:
         }
     
     async def get_scaling_history(self, resource_id: str) -> List[Dict[str, Any]]:
-        """Get scaling history for resource"""
-        resource_events = [
+        """Get scaling history for resource"""        resource_events = [
             {
                 "event_id": event.event_id,
                 "action": event.action.value,
@@ -747,8 +708,7 @@ class CloudAutoScaler:
         return sorted(resource_events, key=lambda x: x['executed_at'], reverse=True)
     
     async def get_scaling_recommendations(self, resource_id: str) -> Dict[str, Any]:
-        """Get scaling recommendations for resource"""
-        if resource_id not in self.scaling_configs:
+        """Get scaling recommendations for resource"""        if resource_id not in self.scaling_configs:
             return {"error": "Resource not configured for auto-scaling"}
         
         config = self.scaling_configs[resource_id]

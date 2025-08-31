@@ -1,5 +1,4 @@
-"""
-Translation Engine - Advanced Multi-Provider Translation System
+"""Translation Engine - Advanced Multi-Provider Translation System
 
 Enterprise-grade translation services with quality assessment, caching,
 and cultural adaptation for global content creator communications.
@@ -53,9 +52,7 @@ Contact: mlaiel@li        try:
 
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
@@ -88,8 +85,7 @@ logger = logging.getLogger(__name__)
 
 
 class TranslationProvider(Enum):
-    """Available translation service providers"""
-    GOOGLE_TRANSLATE = "google"
+    """Available translation service providers"""    GOOGLE_TRANSLATE = "google"
     OPENAI_GPT = "openai"
     MARIAN_MT = "marian"
     AZURE_TRANSLATOR = "azure"
@@ -99,8 +95,7 @@ class TranslationProvider(Enum):
 
 
 class TranslationQuality(Enum):
-    """Translation quality levels"""
-    EXCELLENT = "excellent"    # 0.9-1.0
+    """Translation quality levels"""    EXCELLENT = "excellent"    # 0.9-1.0
     GOOD = "good"             # 0.7-0.9
     ACCEPTABLE = "acceptable"  # 0.5-0.7
     POOR = "poor"             # 0.3-0.5
@@ -109,8 +104,7 @@ class TranslationQuality(Enum):
 
 @dataclass
 class TranslationRequest:
-    """Comprehensive translation request structure"""
-    text: str
+    """Comprehensive translation request structure"""    text: str
     source_language: SupportedLanguage
     target_language: SupportedLanguage
     domain: str = "general"  # general, technical, creative, business, legal
@@ -130,8 +124,7 @@ class TranslationRequest:
 
 @dataclass 
 class TranslationResult:
-    """Comprehensive translation result with quality metrics"""
-    original_text: str
+    """Comprehensive translation result with quality metrics"""    original_text: str
     translated_text: str
     source_language: SupportedLanguage
     target_language: SupportedLanguage
@@ -150,8 +143,7 @@ class TranslationResult:
 
 
 class TranslationCache:
-    """Advanced translation caching with versioning and cleanup"""
-    
+    """Advanced translation caching with versioning and cleanup"""    
     def __init__(self, redis_client: aioredis.Redis):
         self.redis_client = redis_client
         self.cache_stats = defaultdict(int)
@@ -161,8 +153,7 @@ class TranslationCache:
         self, 
         request: TranslationRequest
     ) -> Optional[TranslationResult]:
-        """Get cached translation if available"""
-        try:
+        """Get cached translation if available"""        try:
             cache_key = self._generate_cache_key(request)
             cached_data = await self.redis_client.get(cache_key)
             
@@ -187,8 +178,7 @@ class TranslationCache:
         result: TranslationResult,
         ttl: Optional[int] = None
     ):
-        """Cache translation result with quality-based TTL"""
-        try:
+        """Cache translation result with quality-based TTL"""        try:
             cache_key = self._generate_cache_key(request)
             
             # Adjust TTL based on quality
@@ -215,8 +205,7 @@ class TranslationCache:
             logger.error(f"Cache storage failed: {e}")
     
     def _generate_cache_key(self, request: TranslationRequest) -> str:
-        """Generate unique cache key for translation request"""
-        # Include important parameters that affect translation
+        """Generate unique cache key for translation request"""        # Include important parameters that affect translation
         key_components = [
             request.text,
             request.source_language.value,
@@ -232,8 +221,7 @@ class TranslationCache:
         return f"translation:{key_hash[:16]}"
     
     def _serialize_translation_result(self, result: TranslationResult) -> Dict[str, Any]:
-        """Serialize translation result for caching"""
-        return {
+        """Serialize translation result for caching"""        return {
             "original_text": result.original_text,
             "translated_text": result.translated_text,
             "source_language": result.source_language.value,
@@ -252,8 +240,7 @@ class TranslationCache:
         }
     
     def _deserialize_translation_result(self, data: Dict[str, Any]) -> TranslationResult:
-        """Deserialize cached translation result"""
-        return TranslationResult(
+        """Deserialize cached translation result"""        return TranslationResult(
             original_text=data["original_text"],
             translated_text=data["translated_text"],
             source_language=SupportedLanguage(data["source_language"]),
@@ -273,8 +260,7 @@ class TranslationCache:
 
 
 class TranslationQualityAssessor:
-    """Advanced translation quality assessment system"""
-    
+    """Advanced translation quality assessment system"""    
     def __init__(self):
         self.quality_weights = {
             "fluency": 0.3,
@@ -292,8 +278,7 @@ class TranslationQualityAssessor:
         target_lang: SupportedLanguage,
         context: Optional[str] = None
     ) -> Tuple[float, TranslationQuality, Dict[str, float]]:
-        """Comprehensive translation quality assessment"""
-        try:
+        """Comprehensive translation quality assessment"""        try:
             metrics = {}
             
             # 1. Fluency assessment (target language naturalness)
@@ -341,8 +326,7 @@ class TranslationQualityAssessor:
             return 0.5, TranslationQuality.ACCEPTABLE, {}
     
     async def _assess_fluency(self, text: str, language: SupportedLanguage) -> float:
-        """Assess translation fluency using language models"""
-        try:
+        """Assess translation fluency using language models"""        try:
             # Simple fluency checks
             score = 1.0
             
@@ -368,8 +352,7 @@ class TranslationQualityAssessor:
             return 0.7  # Default fluency score
     
     def _assess_length_ratio(self, original: str, translation: str) -> float:
-        """Assess if translation length is reasonable"""
-        orig_len = len(original.split())
+        """Assess if translation length is reasonable"""        orig_len = len(original.split())
         trans_len = len(translation.split())
         
         if orig_len == 0:
@@ -388,8 +371,7 @@ class TranslationQualityAssessor:
             return 0.3
     
     def _assess_vocabulary_richness(self, text: str) -> float:
-        """Assess vocabulary diversity in translation"""
-        words = text.lower().split()
+        """Assess vocabulary diversity in translation"""        words = text.lower().split()
         if len(words) < 5:
             return 0.7
         
@@ -400,8 +382,7 @@ class TranslationQualityAssessor:
         return min(vocabulary_ratio * 1.2, 1.0)
     
     def _assess_structural_similarity(self, original: str, translation: str) -> float:
-        """Assess structural similarity between original and translation"""
-        # Count punctuation patterns
+        """Assess structural similarity between original and translation"""        # Count punctuation patterns
         orig_punct = len(re.findall(r'[.!?,:;]', original))
         trans_punct = len(re.findall(r'[.!?,:;]', translation))
         
@@ -415,8 +396,7 @@ class TranslationQualityAssessor:
         return (punct_similarity + sentence_similarity) / 2
     
     def _assess_context_appropriateness(self, translation: str, context: str) -> float:
-        """Assess if translation is appropriate for given context"""
-        # Simple keyword matching approach
+        """Assess if translation is appropriate for given context"""        # Simple keyword matching approach
         context_lower = context.lower()
         translation_lower = translation.lower()
         
@@ -433,8 +413,7 @@ class TranslationQualityAssessor:
         return 0.8  # Default context appropriateness
     
     def _assess_cultural_appropriateness(self, translation: str, target_lang: SupportedLanguage) -> float:
-        """Assess cultural appropriateness of translation"""
-        score = 1.0
+        """Assess cultural appropriateness of translation"""        score = 1.0
         
         # Basic cultural checks
         translation_lower = translation.lower()
@@ -462,8 +441,7 @@ class TranslationQualityAssessor:
         return max(score, 0.0)
     
     def _determine_quality_level(self, score: float) -> TranslationQuality:
-        """Determine quality level from score"""
-        if score >= 0.9:
+        """Determine quality level from score"""        if score >= 0.9:
             return TranslationQuality.EXCELLENT
         elif score >= 0.7:
             return TranslationQuality.GOOD
@@ -476,16 +454,14 @@ class TranslationQualityAssessor:
 
 
 class TranslationService:
-    """Individual translation service implementation"""
-    
+    """Individual translation service implementation"""    
     def __init__(self, provider: TranslationProvider):
         self.provider = provider
         self.client = None
         self._initialize_client()
         
     def _initialize_client(self):
-        """Initialize translation service client"""
-        try:
+        """Initialize translation service client"""        try:
             if self.provider == TranslationProvider.GOOGLE_TRANSLATE:
                 self.client = GoogleTranslator()
             
@@ -502,8 +478,7 @@ class TranslationService:
             logger.error(f"Failed to initialize {self.provider.value} client: {e}")
     
     async def translate(self, request: TranslationRequest) -> TranslationResult:
-        """Perform translation using this service"""
-        start_time = datetime.now()
+        """Perform translation using this service"""        start_time = datetime.now()
         
         try:
             if self.provider == TranslationProvider.GOOGLE_TRANSLATE:
@@ -551,8 +526,7 @@ class TranslationService:
             )
     
     async def _translate_google(self, request: TranslationRequest) -> TranslationResult:
-        """Translate using Google Translate"""
-        try:
+        """Translate using Google Translate"""        try:
             if not self.client:
                 raise Exception("Google Translate client not initialized")
             
@@ -577,8 +551,7 @@ class TranslationService:
             raise
     
     async def _translate_openai(self, request: TranslationRequest) -> TranslationResult:
-        """Translate using OpenAI GPT"""
-        try:
+        """Translate using OpenAI GPT"""        try:
             if not self.client:
                 raise Exception("OpenAI client not available")
             
@@ -613,8 +586,7 @@ class TranslationService:
             raise
     
     async def _translate_marian(self, request: TranslationRequest) -> TranslationResult:
-        """Translate using MarianMT models"""
-        try:
+        """Translate using MarianMT models"""        try:
             model_name = self._get_marian_model_name(
                 request.source_language, 
                 request.target_language
@@ -650,8 +622,7 @@ class TranslationService:
             raise
     
     def _build_openai_prompt(self, request: TranslationRequest) -> str:
-        """Build prompt for OpenAI translation"""
-        prompt = f"Translate the following text from {request.source_language.value} to {request.target_language.value}"
+        """Build prompt for OpenAI translation"""        prompt = f"Translate the following text from {request.source_language.value} to {request.target_language.value}"
         
         if request.domain != "general":
             prompt += f" in the {request.domain} domain"
@@ -671,8 +642,7 @@ class TranslationService:
         source: SupportedLanguage, 
         target: SupportedLanguage
     ) -> Optional[str]:
-        """Get MarianMT model name for language pair"""
-        # Common MarianMT model mappings
+        """Get MarianMT model name for language pair"""        # Common MarianMT model mappings
         model_mappings = {
             (SupportedLanguage.ENGLISH, SupportedLanguage.GERMAN): "Helsinki-NLP/opus-mt-en-de",
             (SupportedLanguage.GERMAN, SupportedLanguage.ENGLISH): "Helsinki-NLP/opus-mt-de-en",
@@ -686,8 +656,7 @@ class TranslationService:
 
 
 class TranslationEngine:
-    """Master translation engine with multiple providers and quality assessment"""
-    
+    """Master translation engine with multiple providers and quality assessment"""    
     def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
         self.redis_client = redis_client
         self.db_session = db_session
@@ -714,10 +683,8 @@ class TranslationEngine:
         request: TranslationRequest,
         use_cache: bool = True
     ) -> TranslationResult:
-        """
-        Perform translation with quality assessment and provider fallback
-        """
-        try:
+        """        Perform translation with quality assessment and provider fallback
+        """        try:
             # Check cache first
             if use_cache:
                 cached_result = await self.cache.get_cached_translation(request)
@@ -800,8 +767,7 @@ class TranslationEngine:
             return best_result
 
     def _calculate_openai_confidence(self, translated_text: str, request: TranslationRequest) -> float:
-        """Calculate confidence score for OpenAI translation result."""
-        confidence = 0.85  # Base confidence for GPT-4
+        """Calculate confidence score for OpenAI translation result."""        confidence = 0.85  # Base confidence for GPT-4
         
         # Adjust based on text characteristics
         if len(translated_text.strip()) == 0:
@@ -836,8 +802,7 @@ class TranslationEngine:
             )
     
     async def get_translation_statistics(self) -> Dict[str, Any]:
-        """Get translation usage statistics"""
-        cache_stats = dict(self.cache.cache_stats)
+        """Get translation usage statistics"""        cache_stats = dict(self.cache.cache_stats)
         
         return {
             "translation_stats": dict(self.translation_stats),
@@ -851,8 +816,7 @@ class TranslationEngine:
         source: SupportedLanguage, 
         target: SupportedLanguage
     ) -> bool:
-        """Check if language pair is supported by any provider"""
-        for provider, service in self.services.items():
+        """Check if language pair is supported by any provider"""        for provider, service in self.services.items():
             if provider == TranslationProvider.GOOGLE_TRANSLATE:
                 return True  # Google supports most language pairs
             elif provider == TranslationProvider.MARIAN_MT:

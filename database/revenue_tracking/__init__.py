@@ -11,8 +11,7 @@ Auteur: Fahed Mlaiel <mlaiel@live.de>
 Ce code et concept sont la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Violation = Poursuites judiciaires selon le droit allemand et international.
-"""
-from typing import List, Dict, Any, Optional, Union
+"""from typing import List, Dict, Any, Optional, Union
 from datetime import datetime
 from decimal import Decimal
 import logging

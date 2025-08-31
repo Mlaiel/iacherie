@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive Tests for NLP Extraction Module
+"""Comprehensive Tests for NLP Extraction Module
 
 Industrial-grade tests for AdvancedExtractionEngine covering entity extraction,
 keyword extraction, and information extraction with real implementations.
@@ -25,9 +21,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -51,12 +45,10 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class TestAdvancedContentExtractor:
-    """Comprehensive tests for AdvancedContentExtractor"""
-    
+    """Comprehensive tests for AdvancedContentExtractor"""    
     @pytest.mark.asyncio
     async def test_engine_initialization(self, extraction_engine):
-        """Test extraction engine initialization"""
-        assert extraction_engine is not None
+        """Test extraction engine initialization"""        assert extraction_engine is not None
         assert hasattr(extraction_engine, 'config')
         assert hasattr(extraction_engine, 'entity_extractor')
         assert hasattr(extraction_engine, 'keyword_extractor')
@@ -70,8 +62,7 @@ class TestAdvancedContentExtractor:
 
     @pytest.mark.asyncio
     async def test_entity_extraction(self, extraction_engine):
-        """Test named entity recognition and extraction"""
-        test_cases = [
+        """Test named entity recognition and extraction"""        test_cases = [
             {
                 'text': "Fahed Mlaiel from IA Influencer Agent Platform visited Berlin, Germany on January 15, 2025 to meet with Microsoft executives.",
                 'expected_entities': {
@@ -143,11 +134,9 @@ class TestAdvancedContentExtractor:
 
     @pytest.mark.asyncio
     async def test_keyword_extraction(self, extraction_engine):
-        """Test keyword and key phrase extraction"""
-        test_texts = [
+        """Test keyword and key phrase extraction"""        test_texts = [
             {
-                'text': """
-                Artificial intelligence and machine learning are revolutionizing content creation for social media platforms.
+                'text': """                Artificial intelligence and machine learning are revolutionizing content creation for social media platforms.
                 Advanced natural language processing algorithms enable automated content generation, sentiment analysis,
                 and personalized user engagement strategies. Content creators can now leverage AI-powered tools
                 to optimize their social media presence and increase audience engagement rates.
@@ -159,8 +148,7 @@ class TestAdvancedContentExtractor:
                 ]
             },
             {
-                'text': """
-                Digital marketing strategies require comprehensive understanding of SEO optimization, keyword research,
+                'text': """                Digital marketing strategies require comprehensive understanding of SEO optimization, keyword research,
                 and competitor analysis. Successful brands implement data-driven approaches to content marketing,
                 influencer partnerships, and cross-platform campaign management for maximum ROI.
                 """,
@@ -215,8 +203,7 @@ class TestAdvancedContentExtractor:
 
     @pytest.mark.asyncio
     async def test_social_media_extraction(self, extraction_engine, sample_social_content):
-        """Test social media specific extraction"""
-        platforms = [Platform.INSTAGRAM, Platform.TWITTER, Platform.LINKEDIN]
+        """Test social media specific extraction"""        platforms = [Platform.INSTAGRAM, Platform.TWITTER, Platform.LINKEDIN]
         
         for platform in platforms:
             content = sample_social_content[platform.value.lower()]['post']
@@ -256,8 +243,7 @@ class TestAdvancedContentExtractor:
 
     @pytest.mark.asyncio
     async def test_multilingual_extraction(self, extraction_engine):
-        """Test multilingual content extraction"""
-        multilingual_texts = [
+        """Test multilingual content extraction"""        multilingual_texts = [
             {
                 'text': "Fahed Mlaiel arbeitet bei IA Influencer Agent Platform in Berlin, Deutschland.",
                 'language': 'german',
@@ -307,11 +293,9 @@ class TestAdvancedContentExtractor:
 
     @pytest.mark.asyncio
     async def test_structured_information_extraction(self, extraction_engine):
-        """Test structured information extraction"""
-        structured_texts = [
+        """Test structured information extraction"""        structured_texts = [
             {
-                'text': """
-                Product Launch Event
+                'text': """                Product Launch Event
                 Date: March 15, 2025
                 Time: 2:00 PM - 5:00 PM EST
                 Location: Tech Conference Center, San Francisco
@@ -363,11 +347,9 @@ class TestAdvancedContentExtractor:
 
     @pytest.mark.asyncio
     async def test_contact_information_extraction(self, extraction_engine):
-        """Test contact information extraction"""
-        contact_texts = [
+        """Test contact information extraction"""        contact_texts = [
             {
-                'text': """
-                Contact Fahed Mlaiel for business inquiries:
+                'text': """                Contact Fahed Mlaiel for business inquiries:
                 Email: mlaiel@live.de
                 Phone: +49 30 12345678
                 LinkedIn: linkedin.com/in/fahed-mlaiel
@@ -417,11 +399,9 @@ class TestAdvancedContentExtractor:
 
     @pytest.mark.asyncio
     async def test_temporal_extraction(self, extraction_engine):
-        """Test temporal information extraction"""
-        temporal_texts = [
+        """Test temporal information extraction"""        temporal_texts = [
             {
-                'text': """
-                The AI conference is scheduled for next Monday at 9:00 AM.
+                'text': """                The AI conference is scheduled for next Monday at 9:00 AM.
                 Registration closes tomorrow at midnight.
                 The early bird discount ends in 3 days.
                 Sessions run from March 15-17, 2025.
@@ -470,11 +450,9 @@ class TestAdvancedContentExtractor:
 
     @pytest.mark.asyncio
     async def test_technical_information_extraction(self, extraction_engine):
-        """Test technical information extraction"""
-        technical_texts = [
+        """Test technical information extraction"""        technical_texts = [
             {
-                'text': """
-                Our API supports REST endpoints at https://api.example.com/v1/.
+                'text': """                Our API supports REST endpoints at https://api.example.com/v1/.
                 Authentication via Bearer token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
                 Database: PostgreSQL 13.2, Redis 6.0.9
                 Deployment: Docker containers on AWS EC2 t3.medium instances
@@ -528,8 +506,7 @@ class TestAdvancedContentExtractor:
 
     @pytest.mark.asyncio
     async def test_batch_extraction(self, extraction_engine, performance_test_data):
-        """Test batch content extraction"""
-        texts = performance_test_data['small_batch'][:10]  # Use smaller batch for complex extraction
+        """Test batch content extraction"""        texts = performance_test_data['small_batch'][:10]  # Use smaller batch for complex extraction
         
         start_time = time.time()
         batch_extraction = await extraction_engine.extract_batch(
@@ -562,21 +539,18 @@ class TestAdvancedContentExtractor:
 
     @pytest.mark.asyncio
     async def test_custom_extraction_patterns(self, extraction_engine):
-        """Test custom extraction pattern definition"""
-        custom_patterns = {
+        """Test custom extraction pattern definition"""        custom_patterns = {
             'product_codes': r'[A-Z]{2,3}-\d{4,6}',
             'order_numbers': r'ORD-\d{8}',
             'user_ids': r'USR_[a-z0-9]{8}',
             'api_keys': r'api_[a-z0-9]{32}'
         }
         
-        text_with_patterns = """
-        Product codes: AI-2025, ML-456789, NLP-12345
+        text_with_patterns = """        Product codes: AI-2025, ML-456789, NLP-12345
         Order numbers: ORD-20250801, ORD-20250802
         User IDs: USR_abc12345, USR_def67890
         API keys: api_1234567890abcdef1234567890abcdef
-        """
-        
+        """        
         custom_result = await extraction_engine.extract_with_custom_patterns(
             text=text_with_patterns,
             patterns=custom_patterns,
@@ -601,8 +575,7 @@ class TestAdvancedContentExtractor:
 
     @pytest.mark.asyncio
     async def test_real_time_extraction(self, extraction_engine):
-        """Test real-time content extraction"""
-        # Simulate real-time content stream
+        """Test real-time content extraction"""        # Simulate real-time content stream
         content_stream = [
             "Breaking: @elonmusk announces new AI breakthrough at #TechConf2025",
             "Contact us at support@example.com or call +1-555-0123 for assistance",
@@ -642,8 +615,7 @@ class TestAdvancedContentExtractor:
 
     @pytest.mark.asyncio
     async def test_extraction_confidence_calibration(self, extraction_engine):
-        """Test extraction confidence calibration"""
-        confidence_test_cases = [
+        """Test extraction confidence calibration"""        confidence_test_cases = [
             {
                 'text': "Fahed Mlaiel is the CEO of IA Influencer Agent Platform.",
                 'expected_high_confidence': ['Fahed Mlaiel', 'IA Influencer Agent Platform']
@@ -679,8 +651,7 @@ class TestAdvancedContentExtractor:
 
     @pytest.mark.asyncio
     async def test_performance_benchmarks(self, extraction_engine, benchmark_config):
-        """Test extraction performance benchmarks"""
-        test_text = "This is a performance test for extraction benchmarking with entities and keywords."
+        """Test extraction performance benchmarks"""        test_text = "This is a performance test for extraction benchmarking with entities and keywords."
         
         # Single extraction performance
         start_time = time.time()
@@ -711,8 +682,7 @@ class TestAdvancedContentExtractor:
 
     @pytest.mark.asyncio
     async def test_error_handling(self, extraction_engine):
-        """Test extraction error handling"""
-        # Test empty content
+        """Test extraction error handling"""        # Test empty content
         result = await extraction_engine.extract_entities(
             text="",
             options={'handle_empty': True}
@@ -736,41 +706,33 @@ class TestAdvancedContentExtractor:
         assert result is not None
 
 class TestEntityExtractor:
-    """Test entity extractor component"""
-    
+    """Test entity extractor component"""    
     @pytest.mark.asyncio
     async def test_entity_extractor_initialization(self):
-        """Test entity extractor initialization"""
-        extractor = EntityExtractor()
+        """Test entity extractor initialization"""        extractor = EntityExtractor()
         assert extractor is not None
         assert hasattr(extractor, 'extract_entities')
 
 class TestKeywordExtractor:
-    """Test keyword extractor component"""
-    
+    """Test keyword extractor component"""    
     @pytest.mark.asyncio
     async def test_keyword_extractor_initialization(self):
-        """Test keyword extractor initialization"""
-        extractor = KeywordExtractor()
+        """Test keyword extractor initialization"""        extractor = KeywordExtractor()
         assert extractor is not None
         assert hasattr(extractor, 'extract_keywords')
 
 class TestInformationExtractor:
-    """Test information extractor component"""
-    
+    """Test information extractor component"""    
     @pytest.mark.asyncio
     async def test_information_extractor_initialization(self):
-        """Test information extractor initialization"""
-        extractor = InformationExtractor()
+        """Test information extractor initialization"""        extractor = InformationExtractor()
         assert extractor is not None
         assert hasattr(extractor, 'extract_information')
 
 class TestExtractionConfig:
-    """Test extraction configuration"""
-    
+    """Test extraction configuration"""    
     def test_config_creation(self):
-        """Test extraction configuration creation"""
-        config = ExtractionConfig(
+        """Test extraction configuration creation"""        config = ExtractionConfig(
             entity_types=['PERSON', 'ORG', 'GPE', 'DATE'],
             extraction_models=['basic', 'advanced'],
             confidence_threshold=0.8

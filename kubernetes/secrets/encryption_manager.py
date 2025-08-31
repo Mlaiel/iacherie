@@ -1,12 +1,9 @@
-"""
-IA Influencer Agent - Encryption Manager
+"""IA Influencer Agent - Encryption Manager
 Advanced encryption/decryption operations with HSM support
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""
-
-import os
+"""import os
 import logging
 import hashlib
 import secrets
@@ -35,8 +32,7 @@ logger = logging.getLogger(__name__)
 
 
 class EncryptionAlgorithm(Enum):
-    """Supported encryption algorithms."""
-    AES_256_GCM = "aes_256_gcm"
+    """Supported encryption algorithms."""    AES_256_GCM = "aes_256_gcm"
     AES_256_CBC = "aes_256_cbc"
     CHACHA20_POLY1305 = "chacha20_poly1305"
     FERNET = "fernet"
@@ -44,8 +40,7 @@ class EncryptionAlgorithm(Enum):
 
 
 class KeyDerivationFunction(Enum):
-    """Supported key derivation functions."""
-    PBKDF2 = "pbkdf2"
+    """Supported key derivation functions."""    PBKDF2 = "pbkdf2"
     SCRYPT = "scrypt"
     ARGON2 = "argon2"
     HKDF = "hkdf"
@@ -53,8 +48,7 @@ class KeyDerivationFunction(Enum):
 
 @dataclass
 class EncryptionKey:
-    """Encryption key metadata."""
-    key_id: str
+    """Encryption key metadata."""    key_id: str
     algorithm: EncryptionAlgorithm
     key_data: bytes
     salt: bytes
@@ -65,8 +59,7 @@ class EncryptionKey:
 
 @dataclass
 class EncryptionResult:
-    """Encryption operation result."""
-    success: bool
+    """Encryption operation result."""    success: bool
     encrypted_data: Optional[bytes] = None
     key_id: Optional[str] = None
     algorithm: Optional[str] = None
@@ -76,19 +69,15 @@ class EncryptionResult:
 
 
 class EncryptionManager:
-    """
-    Enterprise-grade encryption manager with support for multiple algorithms,
+    """    Enterprise-grade encryption manager with support for multiple algorithms,
     hardware security modules (HSM), key rotation, and secure key derivation.
-    """
-    
+    """    
     def __init__(self, config: SecretsConfig = None):
-        """
-        Initialize encryption manager.
+        """        Initialize encryption manager.
         
         Args:
             config: Optional secrets configuration
-        """
-        self.config = config or SecretsConfig()
+        """        self.config = config or SecretsConfig()
         self.security = SecurityUtils()
         
         # Key storage
@@ -111,8 +100,7 @@ class EncryptionManager:
         key_id: str = None,
         metadata: Dict[str, Any] = None
     ) -> EncryptionResult:
-        """
-        Encrypt data using specified algorithm.
+        """        Encrypt data using specified algorithm.
         
         Args:
             data: Data to encrypt
@@ -122,8 +110,7 @@ class EncryptionManager:
             
         Returns:
             EncryptionResult: Encryption result with encrypted data
-        """
-        try:
+        """        try:
             # Convert algorithm to enum
             if isinstance(algorithm, str):
                 algorithm = EncryptionAlgorithm(algorithm)
@@ -167,8 +154,7 @@ class EncryptionManager:
         tag: bytes = None,
         metadata: Dict[str, Any] = None
     ) -> Optional[bytes]:
-        """
-        Decrypt data using specified key and algorithm.
+        """        Decrypt data using specified key and algorithm.
         
         Args:
             encrypted_data: Encrypted data to decrypt
@@ -180,8 +166,7 @@ class EncryptionManager:
             
         Returns:
             bytes: Decrypted data or None if failed
-        """
-        try:
+        """        try:
             # Convert algorithm to enum
             if isinstance(algorithm, str):
                 algorithm = EncryptionAlgorithm(algorithm)
@@ -214,8 +199,7 @@ class EncryptionManager:
         secret_data: Dict[str, Any],
         algorithm: EncryptionAlgorithm = EncryptionAlgorithm.AES_256_GCM
     ) -> Dict[str, Any]:
-        """
-        Encrypt secret data dictionary.
+        """        Encrypt secret data dictionary.
         
         Args:
             secret_data: Secret data to encrypt
@@ -223,8 +207,7 @@ class EncryptionManager:
             
         Returns:
             dict: Encrypted secret data with metadata
-        """
-        try:
+        """        try:
             # Serialize secret data
             serialized_data = json.dumps(secret_data, sort_keys=True)
             
@@ -254,16 +237,14 @@ class EncryptionManager:
         self,
         encrypted_secret: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Decrypt secret data dictionary.
+        """        Decrypt secret data dictionary.
         
         Args:
             encrypted_secret: Encrypted secret data
             
         Returns:
             dict: Decrypted secret data
-        """
-        try:
+        """        try:
             # Extract encryption metadata
             metadata = encrypted_secret['encryption_metadata']
             encrypted_data = base64.b64decode(encrypted_secret['encrypted_data'])
@@ -299,8 +280,7 @@ class EncryptionManager:
         kdf: KeyDerivationFunction = KeyDerivationFunction.PBKDF2,
         metadata: Dict[str, Any] = None
     ) -> str:
-        """
-        Generate new encryption key.
+        """        Generate new encryption key.
         
         Args:
             algorithm: Encryption algorithm
@@ -312,8 +292,7 @@ class EncryptionManager:
             
         Returns:
             str: Generated key ID
-        """
-        try:
+        """        try:
             key_id = self._generate_key_id()
             
             if password:
@@ -352,8 +331,7 @@ class EncryptionManager:
         old_key_id: str,
         new_algorithm: EncryptionAlgorithm = None
     ) -> str:
-        """
-        Rotate encryption key.
+        """        Rotate encryption key.
         
         Args:
             old_key_id: ID of key to rotate
@@ -361,8 +339,7 @@ class EncryptionManager:
             
         Returns:
             str: New key ID
-        """
-        with self.key_rotation_lock:
+        """        with self.key_rotation_lock:
             try:
                 old_key = self.encryption_keys.get(old_key_id)
                 if not old_key:
@@ -394,8 +371,7 @@ class EncryptionManager:
         key_id: str,
         secure_delete: bool = True
     ) -> bool:
-        """
-        Delete encryption key.
+        """        Delete encryption key.
         
         Args:
             key_id: Key ID to delete
@@ -403,8 +379,7 @@ class EncryptionManager:
             
         Returns:
             bool: True if successful
-        """
-        try:
+        """        try:
             key = self.encryption_keys.get(key_id)
             if not key:
                 logger.warning(f"Key not found for deletion: {key_id}")
@@ -431,8 +406,7 @@ class EncryptionManager:
         password: str,
         format: str = "pem"
     ) -> Optional[bytes]:
-        """
-        Export encryption key in encrypted format.
+        """        Export encryption key in encrypted format.
         
         Args:
             key_id: Key ID to export
@@ -441,8 +415,7 @@ class EncryptionManager:
             
         Returns:
             bytes: Encrypted key data
-        """
-        try:
+        """        try:
             key = self.encryption_keys.get(key_id)
             if not key:
                 raise ValueError(f"Key not found: {key_id}")
@@ -489,8 +462,7 @@ class EncryptionManager:
         password: str,
         format: str = "auto"
     ) -> Optional[str]:
-        """
-        Import encrypted key.
+        """        Import encrypted key.
         
         Args:
             encrypted_key_data: Encrypted key data
@@ -499,8 +471,7 @@ class EncryptionManager:
             
         Returns:
             str: Imported key ID
-        """
-        try:
+        """        try:
             # Parse format
             if format == "auto":
                 if encrypted_key_data.startswith(b'-----'):
@@ -555,16 +526,14 @@ class EncryptionManager:
             return None
     
     def get_key_info(self, key_id: str) -> Optional[Dict[str, Any]]:
-        """
-        Get encryption key information.
+        """        Get encryption key information.
         
         Args:
             key_id: Key ID to query
             
         Returns:
             dict: Key information (without sensitive data)
-        """
-        key = self.encryption_keys.get(key_id)
+        """        key = self.encryption_keys.get(key_id)
         if not key:
             return None
         
@@ -577,13 +546,11 @@ class EncryptionManager:
         }
     
     def list_keys(self) -> List[Dict[str, Any]]:
-        """
-        List all encryption keys.
+        """        List all encryption keys.
         
         Returns:
             list: List of key information
-        """
-        return [self.get_key_info(key_id) for key_id in self.encryption_keys.keys()]
+        """        return [self.get_key_info(key_id) for key_id in self.encryption_keys.keys()]
     
     def _encrypt_aes_gcm(
         self,
@@ -591,8 +558,7 @@ class EncryptionManager:
         key: EncryptionKey,
         metadata: Dict[str, Any] = None
     ) -> EncryptionResult:
-        """Encrypt using AES-256-GCM."""
-        try:
+        """Encrypt using AES-256-GCM."""        try:
             aesgcm = AESGCM(key.key_data)
             iv = secrets.token_bytes(12)  # GCM recommends 96-bit IV
             
@@ -622,8 +588,7 @@ class EncryptionManager:
         tag: bytes,
         metadata: Dict[str, Any] = None
     ) -> Optional[bytes]:
-        """Decrypt using AES-256-GCM."""
-        try:
+        """Decrypt using AES-256-GCM."""        try:
             aesgcm = AESGCM(key.key_data)
             
             # Combine ciphertext and tag
@@ -641,8 +606,7 @@ class EncryptionManager:
         key: EncryptionKey,
         metadata: Dict[str, Any] = None
     ) -> EncryptionResult:
-        """Encrypt using AES-256-CBC."""
-        try:
+        """Encrypt using AES-256-CBC."""        try:
             # Pad data to block size
             padding_length = 16 - (len(data) % 16)
             padded_data = data + bytes([padding_length] * padding_length)
@@ -671,8 +635,7 @@ class EncryptionManager:
         iv: bytes,
         metadata: Dict[str, Any] = None
     ) -> Optional[bytes]:
-        """Decrypt using AES-256-CBC."""
-        try:
+        """Decrypt using AES-256-CBC."""        try:
             cipher = Cipher(algorithms.AES(key.key_data), modes.CBC(iv))
             decryptor = cipher.decryptor()
             
@@ -692,8 +655,7 @@ class EncryptionManager:
         key: EncryptionKey,
         metadata: Dict[str, Any] = None
     ) -> EncryptionResult:
-        """Encrypt using ChaCha20-Poly1305."""
-        try:
+        """Encrypt using ChaCha20-Poly1305."""        try:
             chacha = ChaCha20Poly1305(key.key_data)
             iv = secrets.token_bytes(12)
             
@@ -722,8 +684,7 @@ class EncryptionManager:
         iv: bytes,
         metadata: Dict[str, Any] = None
     ) -> Optional[bytes]:
-        """Decrypt using ChaCha20-Poly1305."""
-        try:
+        """Decrypt using ChaCha20-Poly1305."""        try:
             chacha = ChaCha20Poly1305(key.key_data)
             
             # Note: ChaCha20Poly1305.decrypt expects ciphertext+tag
@@ -739,8 +700,7 @@ class EncryptionManager:
         key: EncryptionKey,
         metadata: Dict[str, Any] = None
     ) -> EncryptionResult:
-        """Encrypt using Fernet."""
-        try:
+        """Encrypt using Fernet."""        try:
             fernet_key = base64.urlsafe_b64encode(key.key_data)
             fernet = Fernet(fernet_key)
             
@@ -762,8 +722,7 @@ class EncryptionManager:
         key: EncryptionKey,
         metadata: Dict[str, Any] = None
     ) -> Optional[bytes]:
-        """Decrypt using Fernet."""
-        try:
+        """Decrypt using Fernet."""        try:
             fernet_key = base64.urlsafe_b64encode(key.key_data)
             fernet = Fernet(fernet_key)
             
@@ -779,8 +738,7 @@ class EncryptionManager:
         key: EncryptionKey,
         metadata: Dict[str, Any] = None
     ) -> EncryptionResult:
-        """Encrypt using RSA."""
-        try:
+        """Encrypt using RSA."""        try:
             # RSA encryption is limited by key size
             # For larger data, use hybrid encryption
             if len(data) > 446:  # Max for RSA-4096 with OAEP
@@ -840,8 +798,7 @@ class EncryptionManager:
         key: EncryptionKey,
         metadata: Dict[str, Any] = None
     ) -> Optional[bytes]:
-        """Decrypt using RSA."""
-        try:
+        """Decrypt using RSA."""        try:
             private_key = serialization.load_der_private_key(key.key_data, password=None)
             
             # Check if hybrid encryption was used
@@ -879,15 +836,13 @@ class EncryptionManager:
             return None
     
     def _encrypt_aes_gcm_direct(self, data: bytes, key: bytes) -> bytes:
-        """Direct AES-GCM encryption."""
-        aesgcm = AESGCM(key)
+        """Direct AES-GCM encryption."""        aesgcm = AESGCM(key)
         iv = secrets.token_bytes(12)
         encrypted = aesgcm.encrypt(iv, data, None)
         return iv + encrypted
     
     def _decrypt_aes_gcm_direct(self, encrypted_data: bytes, key: bytes) -> bytes:
-        """Direct AES-GCM decryption."""
-        aesgcm = AESGCM(key)
+        """Direct AES-GCM decryption."""        aesgcm = AESGCM(key)
         iv = encrypted_data[:12]
         ciphertext = encrypted_data[12:]
         return aesgcm.decrypt(iv, ciphertext, None)
@@ -899,8 +854,7 @@ class EncryptionManager:
         kdf: KeyDerivationFunction,
         key_length: int
     ) -> bytes:
-        """Derive key from password using specified KDF."""
-        password_bytes = password.encode('utf-8')
+        """Derive key from password using specified KDF."""        password_bytes = password.encode('utf-8')
         
         if kdf == KeyDerivationFunction.PBKDF2:
             kdf_instance = PBKDF2HMAC(
@@ -946,8 +900,7 @@ class EncryptionManager:
             raise ValueError(f"Unsupported KDF: {kdf}")
     
     def _get_or_create_key(self, algorithm: EncryptionAlgorithm) -> EncryptionKey:
-        """Get existing key or create new one for algorithm."""
-        # Look for existing key
+        """Get existing key or create new one for algorithm."""        # Look for existing key
         for key in self.encryption_keys.values():
             if key.algorithm == algorithm:
                 return key
@@ -957,8 +910,7 @@ class EncryptionManager:
         return self.encryption_keys[key_id]
     
     def _get_key_size_bytes(self, algorithm: EncryptionAlgorithm, key_size: int = None) -> int:
-        """Get key size in bytes for algorithm."""
-        if key_size:
+        """Get key size in bytes for algorithm."""        if key_size:
             return key_size // 8
         
         if algorithm in [EncryptionAlgorithm.AES_256_GCM, EncryptionAlgorithm.AES_256_CBC]:
@@ -971,12 +923,10 @@ class EncryptionManager:
             return 32  # Default
     
     def _generate_key_id(self) -> str:
-        """Generate unique key ID."""
-        return f"key_{secrets.token_hex(16)}_{int(datetime.utcnow().timestamp())}"
+        """Generate unique key ID."""        return f"key_{secrets.token_hex(16)}_{int(datetime.utcnow().timestamp())}"
     
     def _initialize_master_key(self) -> None:
-        """Initialize master key for key encryption."""
-        master_key_path = Path(self.config.master_key_path)
+        """Initialize master key for key encryption."""        master_key_path = Path(self.config.master_key_path)
         
         if master_key_path.exists():
             # Load existing master key
@@ -997,8 +947,7 @@ class EncryptionManager:
         logger.info("Master key initialized")
     
     def _load_encryption_keys(self) -> None:
-        """Load encryption keys from storage."""
-        try:
+        """Load encryption keys from storage."""        try:
             keys_file = Path(self.config.encryption_keys_file)
             if not keys_file.exists():
                 return
@@ -1031,8 +980,7 @@ class EncryptionManager:
             logger.error(f"Failed to load encryption keys: {e}")
     
     def _save_encryption_keys(self) -> None:
-        """Save encryption keys to storage."""
-        try:
+        """Save encryption keys to storage."""        try:
             keys_data = {
                 'version': '1.0',
                 'keys': []
@@ -1067,8 +1015,7 @@ class EncryptionManager:
             logger.error(f"Failed to save encryption keys: {e}")
     
     def _secure_delete_key_data(self, key_data: bytes) -> None:
-        """Securely overwrite key data in memory."""
-        try:
+        """Securely overwrite key data in memory."""        try:
             # Overwrite with random data multiple times
             for _ in range(3):
                 for i in range(len(key_data)):
@@ -1078,8 +1025,7 @@ class EncryptionManager:
             pass
     
     def _format_as_pem(self, data: bytes, label: str) -> bytes:
-        """Format data as PEM."""
-        encoded = base64.b64encode(data).decode()
+        """Format data as PEM."""        encoded = base64.b64encode(data).decode()
         lines = [encoded[i:i+64] for i in range(0, len(encoded), 64)]
         
         pem_content = f"-----BEGIN {label}-----\n"
@@ -1089,8 +1035,7 @@ class EncryptionManager:
         return pem_content.encode()
     
     def _parse_pem(self, pem_data: bytes) -> bytes:
-        """Parse PEM formatted data."""
-        pem_text = pem_data.decode()
+        """Parse PEM formatted data."""        pem_text = pem_data.decode()
         lines = pem_text.split('\n')
         
         # Find content between BEGIN and END
@@ -1111,8 +1056,7 @@ class EncryptionManager:
 
 
 class ContentProtectionEncryption(EncryptionManager):
-    """
-    Specialized encryption manager for IA Influencer Agent content protection.
+    """    Specialized encryption manager for IA Influencer Agent content protection.
     
     Handles encryption for:
     - Audio fingerprint data
@@ -1120,8 +1064,7 @@ class ContentProtectionEncryption(EncryptionManager):
     - Image hash signatures
     - Text content embeddings
     - User-generated content
-    """
-    
+    """    
     def __init__(self, config: SecretsConfig = None):
         super().__init__(config)
         self.content_keys: Dict[str, EncryptionKey] = {}
@@ -1139,8 +1082,7 @@ class ContentProtectionEncryption(EncryptionManager):
         logger.info("ContentProtectionEncryption initialized")
     
     def _initialize_content_protection_keys(self) -> None:
-        """Initialize content-specific encryption keys."""
-        for content_type, algorithm in self.protection_algorithms.items():
+        """Initialize content-specific encryption keys."""        for content_type, algorithm in self.protection_algorithms.items():
             key_id = f"content_protection_{content_type}"
             
             if key_id not in self.encryption_keys:
@@ -1163,8 +1105,7 @@ class ContentProtectionEncryption(EncryptionManager):
         content_type: str,
         user_id: Optional[str] = None
     ) -> EncryptionResult:
-        """
-        Encrypt fingerprint data for content protection.
+        """        Encrypt fingerprint data for content protection.
         
         Args:
             fingerprint_data: Raw fingerprint data
@@ -1173,8 +1114,7 @@ class ContentProtectionEncryption(EncryptionManager):
             
         Returns:
             EncryptionResult: Encryption operation result
-        """
-        try:
+        """        try:
             # Get content-specific encryption key
             key_id = f"content_protection_{content_type}"
             if key_id not in self.encryption_keys:
@@ -1216,8 +1156,7 @@ class ContentProtectionEncryption(EncryptionManager):
         iv: Optional[bytes] = None,
         tag: Optional[bytes] = None
     ) -> EncryptionResult:
-        """
-        Decrypt fingerprint data for content protection.
+        """        Decrypt fingerprint data for content protection.
         
         Args:
             encrypted_data: Encrypted fingerprint data
@@ -1228,8 +1167,7 @@ class ContentProtectionEncryption(EncryptionManager):
             
         Returns:
             EncryptionResult: Decryption operation result with fingerprint data
-        """
-        try:
+        """        try:
             # Get content-specific encryption key
             key_id = f"content_protection_{content_type}"
             if key_id not in self.encryption_keys:
@@ -1283,8 +1221,7 @@ class ContentProtectionEncryption(EncryptionManager):
         user_id: str,
         content_metadata: Dict[str, Any] = None
     ) -> EncryptionResult:
-        """
-        Encrypt user-generated content with user-specific keys.
+        """        Encrypt user-generated content with user-specific keys.
         
         Args:
             content_data: Raw content data
@@ -1293,8 +1230,7 @@ class ContentProtectionEncryption(EncryptionManager):
             
         Returns:
             EncryptionResult: Encryption operation result
-        """
-        try:
+        """        try:
             # Get user content encryption key
             key_id = "content_protection_user_content"
             if key_id not in self.encryption_keys:
@@ -1337,8 +1273,7 @@ class ContentProtectionEncryption(EncryptionManager):
         iv: Optional[bytes] = None,
         tag: Optional[bytes] = None
     ) -> EncryptionResult:
-        """
-        Decrypt user-generated content with user-specific keys.
+        """        Decrypt user-generated content with user-specific keys.
         
         Args:
             encrypted_data: Encrypted content data
@@ -1349,8 +1284,7 @@ class ContentProtectionEncryption(EncryptionManager):
             
         Returns:
             EncryptionResult: Decryption operation result with content data
-        """
-        try:
+        """        try:
             # Get user content encryption key
             key_id = "content_protection_user_content"
             if key_id not in self.encryption_keys:
@@ -1392,8 +1326,7 @@ class ContentProtectionEncryption(EncryptionManager):
         platform: str,
         user_id: Optional[str] = None
     ) -> EncryptionResult:
-        """
-        Encrypt platform API credentials.
+        """        Encrypt platform API credentials.
         
         Args:
             credentials: API credentials dictionary
@@ -1402,8 +1335,7 @@ class ContentProtectionEncryption(EncryptionManager):
             
         Returns:
             EncryptionResult: Encryption operation result
-        """
-        try:
+        """        try:
             # Serialize credentials
             credentials_data = json.dumps(credentials, sort_keys=True).encode()
             
@@ -1456,8 +1388,7 @@ class ContentProtectionEncryption(EncryptionManager):
         iv: Optional[bytes] = None,
         tag: Optional[bytes] = None
     ) -> Dict[str, str]:
-        """
-        Decrypt platform API credentials.
+        """        Decrypt platform API credentials.
         
         Args:
             encrypted_data: Encrypted credentials data
@@ -1468,8 +1399,7 @@ class ContentProtectionEncryption(EncryptionManager):
             
         Returns:
             dict: Decrypted credentials or empty dict on failure
-        """
-        try:
+        """        try:
             # Get platform-specific key
             key_id = f"api_credentials_{platform}"
             if key_id not in self.encryption_keys:
@@ -1514,8 +1444,7 @@ class ContentProtectionEncryption(EncryptionManager):
         processor: str,
         compliance_level: str = "PCI_DSS_L1"
     ) -> EncryptionResult:
-        """
-        Encrypt payment processor data with PCI DSS compliance.
+        """        Encrypt payment processor data with PCI DSS compliance.
         
         Args:
             payment_data: Payment data dictionary
@@ -1524,8 +1453,7 @@ class ContentProtectionEncryption(EncryptionManager):
             
         Returns:
             EncryptionResult: Encryption operation result
-        """
-        try:
+        """        try:
             # Use strongest encryption for payment data
             key_id = f"payment_data_{processor}"
             
@@ -1575,8 +1503,7 @@ class ContentProtectionEncryption(EncryptionManager):
         iv: Optional[bytes] = None,
         tag: Optional[bytes] = None
     ) -> Dict[str, Any]:
-        """
-        Decrypt payment processor data with PCI DSS compliance verification.
+        """        Decrypt payment processor data with PCI DSS compliance verification.
         
         Args:
             encrypted_data: Encrypted payment data
@@ -1587,8 +1514,7 @@ class ContentProtectionEncryption(EncryptionManager):
             
         Returns:
             dict: Decrypted payment data or empty dict on failure
-        """
-        try:
+        """        try:
             # Get payment-specific key
             key_id = f"payment_data_{processor}"
             if key_id not in self.encryption_keys:
@@ -1622,8 +1548,7 @@ class ContentProtectionEncryption(EncryptionManager):
             return {}
     
     def _derive_user_key(self, master_key: bytes, user_id: str) -> bytes:
-        """
-        Derive user-specific encryption key from master key.
+        """        Derive user-specific encryption key from master key.
         
         Args:
             master_key: Master encryption key
@@ -1631,8 +1556,7 @@ class ContentProtectionEncryption(EncryptionManager):
             
         Returns:
             bytes: Derived user-specific key
-        """
-        try:
+        """        try:
             # Use HKDF to derive user-specific key
             hkdf = HKDF(
                 algorithm=hashes.SHA256(),
@@ -1654,8 +1578,7 @@ class ContentProtectionEncryption(EncryptionManager):
         key: bytes,
         additional_data: str = None
     ) -> EncryptionResult:
-        """Encrypt data using AES-GCM."""
-        try:
+        """Encrypt data using AES-GCM."""        try:
             # Generate random IV
             iv = secrets.token_bytes(12)  # 96 bits for GCM
             
@@ -1689,8 +1612,7 @@ class ContentProtectionEncryption(EncryptionManager):
         tag: bytes,
         additional_data: str = None
     ) -> EncryptionResult:
-        """Decrypt data using AES-GCM."""
-        try:
+        """Decrypt data using AES-GCM."""        try:
             # Create cipher
             cipher = AESGCM(key)
             
@@ -1717,8 +1639,7 @@ class ContentProtectionEncryption(EncryptionManager):
         nonce: bytes,
         additional_data: str = None
     ) -> EncryptionResult:
-        """Decrypt data using ChaCha20-Poly1305."""
-        try:
+        """Decrypt data using ChaCha20-Poly1305."""        try:
             # Create cipher
             cipher = ChaCha20Poly1305(key)
             
@@ -1736,13 +1657,11 @@ class ContentProtectionEncryption(EncryptionManager):
             return EncryptionResult(success=False, error=str(e))
     
     def rotate_content_protection_keys(self) -> Dict[str, bool]:
-        """
-        Rotate all content protection encryption keys.
+        """        Rotate all content protection encryption keys.
         
         Returns:
             dict: Rotation results by content type
-        """
-        results = {}
+        """        results = {}
         
         try:
             for content_type in self.protection_algorithms.keys():
@@ -1795,13 +1714,11 @@ class ContentProtectionEncryption(EncryptionManager):
             return {content_type: False for content_type in self.protection_algorithms.keys()}
     
     def get_content_protection_status(self) -> Dict[str, Any]:
-        """
-        Get status of content protection encryption keys.
+        """        Get status of content protection encryption keys.
         
         Returns:
             dict: Status information for all content protection keys
-        """
-        status = {
+        """        status = {
             'timestamp': datetime.utcnow().isoformat(),
             'total_keys': len(self.encryption_keys),
             'content_keys': {},

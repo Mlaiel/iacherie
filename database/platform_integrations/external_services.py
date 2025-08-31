@@ -1,5 +1,4 @@
-"""
-External Services Management Module
+"""External Services Management Module
 
 Gestion des services externes et APIs tierces pour les intégrations plateformes
 dans la plateforme IA Influencer Agent.
@@ -22,9 +21,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 judiciaires selon le droit allemand et international.
 
 Contact pour autorisation: mlaiel@live.de
-"""
-
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, Text, JSON, Enum as SQLEnum, Float
+"""from sqlalchemy import Column, Integer, String, Boolean, DateTime, Text, JSON, Enum as SQLEnum, Float
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
@@ -41,8 +38,7 @@ logger = logging.getLogger(__name__)
 
 
 class ServiceType(Enum):
-    """Types de services externes."""
-    SOCIAL_MEDIA_API = "social_media_api"
+    """Types de services externes."""    SOCIAL_MEDIA_API = "social_media_api"
     MUSIC_STREAMING_API = "music_streaming_api"
     VIDEO_PLATFORM_API = "video_platform_api"
     BLOGGING_PLATFORM_API = "blogging_platform_api"
@@ -65,8 +61,7 @@ class ServiceType(Enum):
 
 
 class ServiceStatus(Enum):
-    """Statuts des services externes."""
-    ACTIVE = "active"
+    """Statuts des services externes."""    ACTIVE = "active"
     INACTIVE = "inactive"
     MAINTENANCE = "maintenance"
     DEPRECATED = "deprecated"
@@ -78,21 +73,18 @@ class ServiceStatus(Enum):
 
 
 class IntegrationComplexity(Enum):
-    """Niveaux de complexité d'intégration."""
-    SIMPLE = "simple"  # Configuration minimale
+    """Niveaux de complexité d'intégration."""    SIMPLE = "simple"  # Configuration minimale
     MODERATE = "moderate"  # Configuration standard
     COMPLEX = "complex"  # Configuration avancée
     EXPERT = "expert"  # Configuration experte
 
 
 class ExternalService(BaseModel):
-    """
-    Modèle pour les services externes disponibles.
+    """    Modèle pour les services externes disponibles.
     
     Catalogue complet des services tiers avec leurs
     configurations, capacités et métadonnées.
-    """
-    
+    """    
     __tablename__ = "external_services"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -201,8 +193,7 @@ EXTERNAL_SERVICES_CATALOG = {
 
 
 def create_external_service_from_catalog(catalog_key: str) -> ExternalService:
-    """
-    Crée une instance ExternalService à partir du catalogue.
+    """    Crée une instance ExternalService à partir du catalogue.
     
     Args:
         catalog_key: Clé du service dans le catalogue
@@ -212,8 +203,7 @@ def create_external_service_from_catalog(catalog_key: str) -> ExternalService:
         
     Raises:
         ValueError: Si le service n'existe pas dans le catalogue
-    """
-    if catalog_key not in EXTERNAL_SERVICES_CATALOG:
+    """    if catalog_key not in EXTERNAL_SERVICES_CATALOG:
         raise ValueError(f"Service '{catalog_key}' not found in catalog")
     
     config = EXTERNAL_SERVICES_CATALOG[catalog_key]
@@ -237,16 +227,14 @@ def create_external_service_from_catalog(catalog_key: str) -> ExternalService:
 
 
 def get_services_by_type(service_type: ServiceType) -> List[str]:
-    """
-    Retourne la liste des services par type.
+    """    Retourne la liste des services par type.
     
     Args:
         service_type: Type de service recherché
         
     Returns:
         Liste des noms de services
-    """
-    return [
+    """    return [
         key for key, config in EXTERNAL_SERVICES_CATALOG.items()
         if config["service_type"] == service_type
     ]

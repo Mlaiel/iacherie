@@ -53,8 +53,7 @@ except ImportError:
 
 @dataclass
 class StreamingConfig:
-    """Advanced streaming configuration for real-time processing"""
-    input_resolution: Tuple[int, int] = (1920, 1080)
+    """Advanced streaming configuration for real-time processing"""    input_resolution: Tuple[int, int] = (1920, 1080)
     output_resolution: Tuple[int, int] = (1920, 1080)
     fps: int = 30
     bitrate: int = 5000
@@ -76,8 +75,7 @@ class StreamingConfig:
     
 @dataclass
 class StreamMetrics:
-    """Comprehensive streaming performance metrics"""
-    timestamp: datetime = field(default_factory=datetime.now)
+    """Comprehensive streaming performance metrics"""    timestamp: datetime = field(default_factory=datetime.now)
     fps_current: float = 0.0
     fps_average: float = 0.0
     latency_ms: float = 0.0
@@ -95,8 +93,7 @@ class StreamMetrics:
     
 @dataclass
 class QualityAdaptation:
-    """Adaptive quality management for streaming optimization"""
-    current_quality: str
+    """Adaptive quality management for streaming optimization"""    current_quality: str
     target_quality: str
     adaptation_reason: str
     bandwidth_estimate: float
@@ -107,8 +104,7 @@ class QualityAdaptation:
     recommended_settings: Dict[str, Any]
 
 class AdaptiveBitrate:
-    """Professional adaptive bitrate streaming controller"""
-    
+    """Professional adaptive bitrate streaming controller"""    
     def __init__(self, config: StreamingConfig):
         self.config = config
         self.quality_levels = {
@@ -122,8 +118,7 @@ class AdaptiveBitrate:
         self.adaptation_lock = threading.Lock()
         
     def analyze_network_conditions(self) -> Dict[str, float]:
-        """Analyze current network and system conditions"""
-        try:
+        """Analyze current network and system conditions"""        try:
             # Get system metrics
             cpu_percent = psutil.cpu_percent(interval=0.1)
             memory = psutil.virtual_memory()
@@ -148,8 +143,7 @@ class AdaptiveBitrate:
             return {"error": str(e)}
     
     def _get_gpu_usage(self) -> float:
-        """Get GPU usage percentage"""
-        try:
+        """Get GPU usage percentage"""        try:
             if torch.cuda.is_available():
                 gpu_memory = torch.cuda.memory_allocated() / torch.cuda.max_memory_allocated()
                 return gpu_memory * 100
@@ -158,8 +152,7 @@ class AdaptiveBitrate:
             return 0.0
     
     def _estimate_bandwidth(self) -> float:
-        """Estimate available bandwidth based on streaming history"""
-        if len(self.metrics_history) < 5:
+        """Estimate available bandwidth based on streaming history"""        if len(self.metrics_history) < 5:
             return 10.0  # Default bandwidth estimate
         
         recent_metrics = list(self.metrics_history)[-10:]
@@ -167,8 +160,7 @@ class AdaptiveBitrate:
         return np.mean(bitrates) / 1000  # Convert to Mbps
     
     def _calculate_network_stability(self) -> float:
-        """Calculate network stability score (0-1)"""
-        if len(self.metrics_history) < 10:
+        """Calculate network stability score (0-1)"""        if len(self.metrics_history) < 10:
             return 0.8  # Default stability score
         
         recent_metrics = list(self.metrics_history)[-20:]
@@ -186,8 +178,7 @@ class AdaptiveBitrate:
         return (normalized_latency_score + frame_drop_score) / 2
     
     def _get_lower_quality(self, current_quality: str) -> str:
-        """Get lower quality level for adaptation"""
-        quality_order = ["4K", "1080p", "720p", "480p"]
+        """Get lower quality level for adaptation"""        quality_order = ["4K", "1080p", "720p", "480p"]
         try:
             current_index = quality_order.index(current_quality)
             if current_index < len(quality_order) - 1:
@@ -197,8 +188,7 @@ class AdaptiveBitrate:
             return "720p"  # Default fallback
     
     def _get_higher_quality(self, current_quality: str) -> str:
-        """Get higher quality level for adaptation"""
-        quality_order = ["480p", "720p", "1080p", "4K"]
+        """Get higher quality level for adaptation"""        quality_order = ["480p", "720p", "1080p", "4K"]
         try:
             current_index = quality_order.index(current_quality)
             if current_index > 0:
@@ -208,8 +198,7 @@ class AdaptiveBitrate:
             return "720p"  # Default fallback
 
     def recommend_quality_adaptation(self, current_metrics: StreamMetrics) -> QualityAdaptation:
-        """Recommend quality adaptation based on current conditions"""
-        with self.adaptation_lock:
+        """Recommend quality adaptation based on current conditions"""        with self.adaptation_lock:
             conditions = self.analyze_network_conditions()
             
             # Analyze performance indicators
@@ -266,8 +255,7 @@ class AdaptiveBitrate:
             )
     
     def _get_lower_quality(self, current: str) -> str:
-        """Get the next lower quality level"""
-        levels = ["4K", "1080p", "720p", "480p"]
+        """Get the next lower quality level"""        levels = ["4K", "1080p", "720p", "480p"]
         try:
             current_index = levels.index(current)
             return levels[min(current_index + 1, len(levels) - 1)]
@@ -275,8 +263,7 @@ class AdaptiveBitrate:
             return "720p"
     
     def _get_higher_quality(self, current: str) -> str:
-        """Get the next higher quality level"""
-        levels = ["480p", "720p", "1080p", "4K"]
+        """Get the next higher quality level"""        levels = ["480p", "720p", "1080p", "4K"]
         try:
             current_index = levels.index(current)
             return levels[min(current_index + 1, len(levels) - 1)]
@@ -284,8 +271,7 @@ class AdaptiveBitrate:
             return "1080p"
     
     def _generate_optimal_settings(self, quality: str, conditions: Dict, metrics: StreamMetrics) -> Dict[str, Any]:
-        """Generate optimal streaming settings for the target quality"""
-        base_settings = self.quality_levels[quality].copy()
+        """Generate optimal streaming settings for the target quality"""        base_settings = self.quality_levels[quality].copy()
         
         # Adjust based on system conditions
         if conditions["cpu_usage"] > 70:
@@ -308,8 +294,7 @@ class AdaptiveBitrate:
         return base_settings
 
 class RealTimeAnalyzer:
-    """Advanced real-time video analysis engine for streaming"""
-    
+    """Advanced real-time video analysis engine for streaming"""    
     def __init__(self, config: StreamingConfig):
         self.config = config
         self.analysis_queue = queue.Queue(maxsize=config.buffer_size)
@@ -323,8 +308,7 @@ class RealTimeAnalyzer:
         self._initialize_models()
         
     def _initialize_models(self):
-        """Initialize optimized models for real-time analysis"""
-        try:
+        """Initialize optimized models for real-time analysis"""        try:
             # Load lightweight detection model
             self.object_detector = self._load_optimized_detector()
             
@@ -344,8 +328,7 @@ class RealTimeAnalyzer:
             raise
     
     def _load_optimized_detector(self):
-        """Load optimized object detection model for real-time processing"""
-        try:
+        """Load optimized object detection model for real-time processing"""        try:
             # Use lightweight YOLO model optimized for speed - suppress warnings
             import warnings
             with warnings.catch_warnings():
@@ -367,8 +350,7 @@ class RealTimeAnalyzer:
             return None
     
     def _load_face_detector(self):
-        """Load optimized face detection model"""
-        try:
+        """Load optimized face detection model"""        try:
             # Use OpenCV's DNN face detector for speed
             net = cv2.dnn.readNetFromTensorflow(
                 'opencv_face_detector_uint8.pb',
@@ -380,8 +362,7 @@ class RealTimeAnalyzer:
             return cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
     
     def _load_emotion_classifier(self):
-        """Load emotion classification model"""
-        try:
+        """Load emotion classification model"""        try:
             # Lightweight emotion recognition model - suppress warnings
             import warnings
             from torchvision.models import mobilenet_v3_small
@@ -403,8 +384,7 @@ class RealTimeAnalyzer:
             return None
     
     def _load_content_classifier(self):
-        """Load content classification model"""
-        try:
+        """Load content classification model"""        try:
             # Lightweight content classification for streaming safety - suppress warnings
             import warnings
             from torchvision.models import efficientnet_b0
@@ -423,8 +403,7 @@ class RealTimeAnalyzer:
             return None
     
     def start_analysis(self):
-        """Start real-time analysis threads"""
-        if self.is_running:
+        """Start real-time analysis threads"""        if self.is_running:
             return
             
         self.is_running = True
@@ -442,8 +421,7 @@ class RealTimeAnalyzer:
         logger.info(f"Started {len(self.analysis_threads)} analysis threads")
     
     def stop_analysis(self):
-        """Stop real-time analysis"""
-        self.is_running = False
+        """Stop real-time analysis"""        self.is_running = False
         
         # Wait for threads to finish
         for thread in self.analysis_threads:
@@ -453,8 +431,7 @@ class RealTimeAnalyzer:
         logger.info("Real-time analysis stopped")
     
     def _analysis_worker(self):
-        """Worker thread for real-time frame analysis"""
-        while self.is_running:
+        """Worker thread for real-time frame analysis"""        while self.is_running:
             try:
                 # Get frame from queue with timeout
                 frame_data = self.analysis_queue.get(timeout=0.1)
@@ -484,8 +461,7 @@ class RealTimeAnalyzer:
                 continue
     
     def _analyze_frame(self, frame_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze a single frame with multiple AI models"""
-        frame = frame_data['frame']
+        """Analyze a single frame with multiple AI models"""        frame = frame_data['frame']
         timestamp = frame_data['timestamp']
         frame_id = frame_data['frame_id']
         
@@ -531,8 +507,7 @@ class RealTimeAnalyzer:
         return analysis_result
     
     def _detect_objects(self, frame: np.ndarray) -> List[Dict[str, Any]]:
-        """Detect objects in frame using YOLO"""
-        try:
+        """Detect objects in frame using YOLO"""        try:
             # Convert BGR to RGB
             rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             
@@ -557,8 +532,7 @@ class RealTimeAnalyzer:
             return []
     
     def _detect_faces(self, frame: np.ndarray) -> List[Dict[str, Any]]:
-        """Detect faces in frame"""
-        try:
+        """Detect faces in frame"""        try:
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             
             if hasattr(self.face_detector, 'detectMultiScale'):
@@ -606,8 +580,7 @@ class RealTimeAnalyzer:
             return []
     
     def _analyze_emotions(self, frame: np.ndarray, faces: List[Dict]) -> List[Dict[str, Any]]:
-        """Analyze emotions for detected faces"""
-        if not self.emotion_classifier:
+        """Analyze emotions for detected faces"""        if not self.emotion_classifier:
             return []
         
         emotions = []
@@ -655,8 +628,7 @@ class RealTimeAnalyzer:
         return emotions
     
     def _classify_content(self, frame: np.ndarray) -> Dict[str, Any]:
-        """Classify content type and safety"""
-        if not self.content_classifier:
+        """Classify content type and safety"""        if not self.content_classifier:
             return {'content_type': 'unknown', 'safety_score': 1.0}
         
         try:
@@ -698,8 +670,7 @@ class RealTimeAnalyzer:
             return {'content_type': 'unknown', 'safety_score': 1.0}
     
     def _analyze_frame_quality(self, frame: np.ndarray) -> Dict[str, float]:
-        """Analyze frame quality metrics"""
-        try:
+        """Analyze frame quality metrics"""        try:
             # Convert to grayscale for some metrics
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             
@@ -736,8 +707,7 @@ class RealTimeAnalyzer:
             return {}
     
     def _estimate_noise(self, gray_frame: np.ndarray) -> float:
-        """Estimate noise level in grayscale frame"""
-        try:
+        """Estimate noise level in grayscale frame"""        try:
             # Use Laplacian to estimate noise
             laplacian = cv2.Laplacian(gray_frame, cv2.CV_64F)
             noise_estimate = np.sqrt(np.mean(laplacian**2))
@@ -747,8 +717,7 @@ class RealTimeAnalyzer:
     
     def _calculate_quality_score(self, sharpness: float, brightness: float, 
                                contrast: float, noise_level: float) -> float:
-        """Calculate overall quality score (0-1)"""
-        try:
+        """Calculate overall quality score (0-1)"""        try:
             # Normalize individual metrics
             sharpness_score = min(sharpness / 1000, 1.0)  # Normalize sharpness
             brightness_score = 1.0 - abs(brightness - 128) / 128  # Optimal brightness around 128
@@ -768,8 +737,7 @@ class RealTimeAnalyzer:
             return 0.5  # Default quality score
     
     def analyze_frame_async(self, frame: np.ndarray, frame_id: int) -> bool:
-        """Submit frame for asynchronous analysis"""
-        if not self.is_running:
+        """Submit frame for asynchronous analysis"""        if not self.is_running:
             return False
         
         if frame is None:
@@ -790,15 +758,13 @@ class RealTimeAnalyzer:
             return False
     
     def get_analysis_result(self, timeout: float = 0.1) -> Optional[Dict[str, Any]]:
-        """Get analysis result if available"""
-        try:
+        """Get analysis result if available"""        try:
             return self.result_queue.get(timeout=timeout)
         except queue.Empty:
             return None
     
     def get_latest_results(self, count: int = 10) -> List[Dict[str, Any]]:
-        """Get latest analysis results"""
-        results = []
+        """Get latest analysis results"""        results = []
         try:
             while len(results) < count and not self.result_queue.empty():
                 result = self.result_queue.get_nowait()
@@ -808,8 +774,7 @@ class RealTimeAnalyzer:
         return results
 
 class PerformanceMonitor:
-    """Real-time performance monitoring for streaming"""
-    
+    """Real-time performance monitoring for streaming"""    
     def __init__(self):
         self.metrics_history = deque(maxlen=1000)
         self.start_time = time.time()
@@ -819,8 +784,7 @@ class PerformanceMonitor:
         
     def record_frame_metrics(self, processing_time_ms: float, encoding_time_ms: float,
                            latency_ms: float, frame_drops: int = 0) -> StreamMetrics:
-        """Record metrics for a processed frame"""
-        # Normalize negative values
+        """Record metrics for a processed frame"""        # Normalize negative values
         processing_time_ms = max(0.0, processing_time_ms)
         encoding_time_ms = max(0.0, encoding_time_ms)
         latency_ms = max(0.0, latency_ms)
@@ -873,15 +837,13 @@ class PerformanceMonitor:
         return metrics
     
     def _estimate_bitrate(self, processing_time_ms: float) -> float:
-        """Estimate bitrate based on processing performance"""
-        # This is a simplified estimation - in production, you'd get this from the encoder
+        """Estimate bitrate based on processing performance"""        # This is a simplified estimation - in production, you'd get this from the encoder
         base_bitrate = 5000  # kbps
         performance_factor = max(0.5, min(2.0, 50 / max(processing_time_ms, 1)))
         return base_bitrate * performance_factor
     
     def _get_gpu_usage(self) -> float:
-        """Get GPU usage percentage"""
-        try:
+        """Get GPU usage percentage"""        try:
             if torch.cuda.is_available():
                 return torch.cuda.utilization() if hasattr(torch.cuda, 'utilization') else 0.0
             return 0.0
@@ -889,8 +851,7 @@ class PerformanceMonitor:
             return 0.0
     
     def _calculate_streaming_quality_score(self, fps: float, latency: float, drops: int) -> float:
-        """Calculate overall streaming quality score"""
-        # FPS score (target 30 FPS)
+        """Calculate overall streaming quality score"""        # FPS score (target 30 FPS)
         fps_score = min(fps / 30.0, 1.0)
         
         # Latency score (target <100ms)
@@ -902,14 +863,12 @@ class PerformanceMonitor:
         return (fps_score * 0.4 + latency_score * 0.4 + drop_score * 0.2)
     
     def get_latest_metrics(self) -> Optional[StreamMetrics]:
-        """Get the latest recorded metrics"""
-        if self.metrics_history:
+        """Get the latest recorded metrics"""        if self.metrics_history:
             return self.metrics_history[-1]
         return None
 
 class LiveStreamProcessor:
-    """Advanced live streaming processor with real-time AI analysis"""
-    
+    """Advanced live streaming processor with real-time AI analysis"""    
     def __init__(self, config: StreamingConfig):
         self.config = config
         self.is_streaming = False
@@ -933,8 +892,7 @@ class LiveStreamProcessor:
             self._initialize_enhancement_pipeline()
     
     def _initialize_enhancement_pipeline(self):
-        """Initialize real-time enhancement pipeline"""
-        try:
+        """Initialize real-time enhancement pipeline"""        try:
             # Import enhancement modules
             from .enhancement import ImageEnhancer, EnhancementSettings
             
@@ -956,8 +914,7 @@ class LiveStreamProcessor:
             self.enhancement_pipeline = None
     
     def start_streaming(self, input_source: str, output_destinations: List[str]):
-        """Start live streaming with real-time processing"""
-        if self.is_streaming:
+        """Start live streaming with real-time processing"""        if self.is_streaming:
             logger.warning("Streaming already in progress")
             return False
         
@@ -986,8 +943,7 @@ class LiveStreamProcessor:
             return False
     
     def stop_streaming(self):
-        """Stop live streaming"""
-        self.is_streaming = False
+        """Stop live streaming"""        self.is_streaming = False
         
         # Stop real-time analyzer
         self.realtime_analyzer.stop_analysis()
@@ -999,16 +955,13 @@ class LiveStreamProcessor:
         logger.info("Live streaming stopped")
     
     def get_current_metrics(self) -> Optional[StreamMetrics]:
-        """Get current streaming metrics"""
-        return self.performance_monitor.get_latest_metrics()
+        """Get current streaming metrics"""        return self.performance_monitor.get_latest_metrics()
     
     def get_analysis_results(self) -> List[Dict]:
-        """Get latest analysis results from real-time analyzer"""
-        return self.realtime_analyzer.get_latest_results()
+        """Get latest analysis results from real-time analyzer"""        return self.realtime_analyzer.get_latest_results()
     
     def _streaming_loop(self):
-        """Main streaming processing loop"""
-        try:
+        """Main streaming processing loop"""        try:
             # Initialize video capture
             cap = self._initialize_video_capture()
             if cap is None:
@@ -1079,8 +1032,7 @@ class LiveStreamProcessor:
             cv2.destroyAllWindows()
     
     def _initialize_video_capture(self):
-        """Initialize video capture from input source"""
-        try:
+        """Initialize video capture from input source"""        try:
             if self.input_source.isdigit():
                 # Camera input
                 cap = cv2.VideoCapture(int(self.input_source))
@@ -1107,8 +1059,7 @@ class LiveStreamProcessor:
             return None
     
     def _initialize_video_writers(self):
-        """Initialize video writers for output destinations"""
-        writers = []
+        """Initialize video writers for output destinations"""        writers = []
         
         for destination in self.output_destinations:
             try:
@@ -1135,8 +1086,7 @@ class LiveStreamProcessor:
         return writers
     
     def _create_rtmp_writer(self, rtmp_url: str):
-        """Create RTMP writer using FFmpeg"""
-        try:
+        """Create RTMP writer using FFmpeg"""        try:
             # This would use FFmpeg for RTMP output
             # For now, return None as it requires FFmpeg integration
             logger.warning("RTMP output requires FFmpeg integration")
@@ -1146,8 +1096,7 @@ class LiveStreamProcessor:
             return None
     
     def _process_frame(self, frame: np.ndarray) -> np.ndarray:
-        """Process frame with enhancement and filters"""
-        try:
+        """Process frame with enhancement and filters"""        try:
             processed_frame = frame.copy()
             
             # Apply real-time enhancement if enabled
@@ -1165,8 +1114,7 @@ class LiveStreamProcessor:
             return frame
     
     def _adapt_streaming_quality(self, metrics: StreamMetrics):
-        """Adapt streaming quality based on performance metrics"""
-        try:
+        """Adapt streaming quality based on performance metrics"""        try:
             # Get quality adaptation recommendation
             adaptation = self.adaptive_bitrate.recommend_quality_adaptation(metrics)
             
@@ -1185,8 +1133,7 @@ class LiveStreamProcessor:
             logger.error(f"Error in quality adaptation: {e}")
     
     def _apply_quality_settings(self, settings: Dict[str, Any]):
-        """Apply new quality settings to streaming pipeline"""
-        try:
+        """Apply new quality settings to streaming pipeline"""        try:
             # Update output resolution
             if 'width' in settings and 'height' in settings:
                 self.config.output_resolution = (settings['width'], settings['height'])
@@ -1205,8 +1152,7 @@ class LiveStreamProcessor:
             logger.error(f"Error applying quality settings: {e}")
     
     def _control_frame_rate(self, loop_start_time: float):
-        """Control frame rate to maintain target FPS"""
-        try:
+        """Control frame rate to maintain target FPS"""        try:
             target_frame_time = 1.0 / self.config.fps
             elapsed_time = time.time() - loop_start_time
             
@@ -1218,14 +1164,12 @@ class LiveStreamProcessor:
             logger.error(f"Error in frame rate control: {e}")
     
     def get_current_metrics(self) -> Optional[StreamMetrics]:
-        """Get current streaming metrics"""
-        if self.performance_monitor.metrics_history:
+        """Get current streaming metrics"""        if self.performance_monitor.metrics_history:
             return self.performance_monitor.metrics_history[-1]
         return None
     
     def get_analysis_results(self) -> List[Dict[str, Any]]:
-        """Get latest AI analysis results"""
-        results = []
+        """Get latest AI analysis results"""        results = []
         while True:
             result = self.realtime_analyzer.get_analysis_result(timeout=0.001)
             if result is None:
@@ -1234,8 +1178,7 @@ class LiveStreamProcessor:
         return results
 
 class StreamOptimizer:
-    """Advanced stream optimization engine"""
-    
+    """Advanced stream optimization engine"""    
     def __init__(self, config: StreamingConfig):
         self.config = config
         self.optimization_history = deque(maxlen=500)
@@ -1246,8 +1189,7 @@ class StreamOptimizer:
         self._initialize_optimization_strategies()
     
     def _initialize_optimization_strategies(self):
-        """Initialize various optimization strategies"""
-        self.optimization_strategies = [
+        """Initialize various optimization strategies"""        self.optimization_strategies = [
             self._cpu_optimization_strategy,
             self._memory_optimization_strategy,
             self._network_optimization_strategy,
@@ -1257,8 +1199,7 @@ class StreamOptimizer:
     
     def optimize_stream_settings(self, metrics: StreamMetrics, 
                                analysis_results: List[Dict]) -> Dict[str, Any]:
-        """Optimize streaming settings based on performance and content analysis"""
-        try:
+        """Optimize streaming settings based on performance and content analysis"""        try:
             optimization_recommendations = {
                 'settings_changes': {},
                 'performance_improvements': [],
@@ -1289,8 +1230,7 @@ class StreamOptimizer:
     
     def _cpu_optimization_strategy(self, metrics: StreamMetrics, 
                                  analysis_results: List[Dict]) -> Dict[str, Any]:
-        """CPU-focused optimization strategy"""
-        if metrics.cpu_usage < 60:
+        """CPU-focused optimization strategy"""        if metrics.cpu_usage < 60:
             return {}
         
         recommendations = {
@@ -1320,8 +1260,7 @@ class StreamOptimizer:
     
     def _memory_optimization_strategy(self, metrics: StreamMetrics, 
                                     analysis_results: List[Dict]) -> Dict[str, Any]:
-        """Memory-focused optimization strategy"""
-        memory_usage_gb = metrics.memory_usage_mb / 1024
+        """Memory-focused optimization strategy"""        memory_usage_gb = metrics.memory_usage_mb / 1024
         
         if memory_usage_gb < 4.0:
             return {}
@@ -1352,8 +1291,7 @@ class StreamOptimizer:
     
     def _network_optimization_strategy(self, metrics: StreamMetrics, 
                                      analysis_results: List[Dict]) -> Dict[str, Any]:
-        """Network-focused optimization strategy"""
-        if metrics.latency_ms < 150 and metrics.frame_drops < 3:
+        """Network-focused optimization strategy"""        if metrics.latency_ms < 150 and metrics.frame_drops < 3:
             return {}
         
         recommendations = {
@@ -1381,8 +1319,7 @@ class StreamOptimizer:
     
     def _gpu_optimization_strategy(self, metrics: StreamMetrics, 
                                  analysis_results: List[Dict]) -> Dict[str, Any]:
-        """GPU-focused optimization strategy"""
-        if not self.config.enable_gpu or metrics.gpu_usage < 70:
+        """GPU-focused optimization strategy"""        if not self.config.enable_gpu or metrics.gpu_usage < 70:
             return {}
         
         recommendations = {
@@ -1410,8 +1347,7 @@ class StreamOptimizer:
     
     def _quality_optimization_strategy(self, metrics: StreamMetrics, 
                                      analysis_results: List[Dict]) -> Dict[str, Any]:
-        """Content quality-focused optimization strategy"""
-        recommendations = {
+        """Content quality-focused optimization strategy"""        recommendations = {
             'settings_changes': {},
             'quality_adjustments': []
         }
@@ -1450,8 +1386,7 @@ class StreamOptimizer:
     
     def _ml_based_optimization(self, metrics: StreamMetrics, 
                              analysis_results: List[Dict]) -> Dict[str, Any]:
-        """Machine learning-based optimization recommendations"""
-        try:
+        """Machine learning-based optimization recommendations"""        try:
             # This would use a trained ML model to predict optimal settings
             # For now, implement rule-based heuristics
             
@@ -1491,8 +1426,7 @@ class StreamOptimizer:
             return {}
     
     def _merge_recommendations(self, base: Dict, additional: Dict) -> Dict:
-        """Merge optimization recommendations"""
-        result = base.copy()
+        """Merge optimization recommendations"""        result = base.copy()
         
         for key, value in additional.items():
             if key in result:

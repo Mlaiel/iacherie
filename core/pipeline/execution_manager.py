@@ -1,5 +1,4 @@
-"""
-Execution Manager
+"""Execution Manager
 
 Ultra-advanced execution management system for coordinating and controlling
 pipeline executions with intelligent resource allocation and optimization.
@@ -8,9 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: Resource Management → Execution Scheduling → Performance Monitoring → Dynamic Optimization → Result Coordination
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 from typing import Dict, List, Any, Optional, Union, Callable, Tuple, Set
@@ -26,8 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 class ExecutionStatus(Enum):
-    """Execution status types"""
-    QUEUED = "queued"
+    """Execution status types"""    QUEUED = "queued"
     PREPARING = "preparing"
     RUNNING = "running"
     PAUSED = "paused"
@@ -39,8 +35,7 @@ class ExecutionStatus(Enum):
 
 
 class ResourceType(Enum):
-    """Resource types"""
-    CPU = "cpu"
+    """Resource types"""    CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
     NETWORK = "network"
@@ -49,8 +44,7 @@ class ResourceType(Enum):
 
 
 class Priority(Enum):
-    """Execution priorities"""
-    LOW = 1
+    """Execution priorities"""    LOW = 1
     NORMAL = 2
     HIGH = 3
     CRITICAL = 4
@@ -58,8 +52,7 @@ class Priority(Enum):
 
 
 class SchedulingStrategy(Enum):
-    """Scheduling strategies"""
-    FIFO = "fifo"
+    """Scheduling strategies"""    FIFO = "fifo"
     PRIORITY = "priority"
     ROUND_ROBIN = "round_robin"
     SHORTEST_JOB_FIRST = "shortest_job_first"
@@ -69,8 +62,7 @@ class SchedulingStrategy(Enum):
 
 @dataclass
 class ResourceRequirement:
-    """Resource requirement specification"""
-    resource_type: ResourceType = ResourceType.CPU
+    """Resource requirement specification"""    resource_type: ResourceType = ResourceType.CPU
     amount: float = 1.0
     unit: str = "cores"
     minimum: float = 0.5
@@ -82,8 +74,7 @@ class ResourceRequirement:
 
 @dataclass
 class ResourceAllocation:
-    """Resource allocation result"""
-    allocation_id: str = ""
+    """Resource allocation result"""    allocation_id: str = ""
     resource_type: ResourceType = ResourceType.CPU
     allocated_amount: float = 0.0
     unit: str = "cores"
@@ -96,8 +87,7 @@ class ResourceAllocation:
 
 @dataclass
 class ExecutionRequest:
-    """Execution request"""
-    request_id: str = ""
+    """Execution request"""    request_id: str = ""
     execution_type: str = ""
     pipeline_config: Dict[str, Any] = field(default_factory=dict)
     input_data: Dict[str, Any] = field(default_factory=dict)
@@ -118,8 +108,7 @@ class ExecutionRequest:
 
 @dataclass
 class ExecutionContext:
-    """Execution context"""
-    context_id: str = ""
+    """Execution context"""    context_id: str = ""
     request: ExecutionRequest = field(default_factory=ExecutionRequest)
     status: ExecutionStatus = ExecutionStatus.QUEUED
     assigned_resources: List[ResourceAllocation] = field(default_factory=list)
@@ -147,8 +136,7 @@ class ExecutionContext:
 
 
 class ResourceManager:
-    """Intelligent resource manager"""
-    
+    """Intelligent resource manager"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.ResourceManager")
@@ -170,8 +158,7 @@ class ResourceManager:
         self._start_resource_monitoring()
     
     def _initialize_resources(self):
-        """Initialize available resources"""
-        # CPU resources
+        """Initialize available resources"""        # CPU resources
         cpu_count = psutil.cpu_count(logical=True)
         self.total_resources[ResourceType.CPU] = cpu_count
         self.available_resources[ResourceType.CPU] = cpu_count
@@ -195,13 +182,11 @@ class ResourceManager:
         self.logger.info(f"Initialized resources: {self.total_resources}")
     
     def _start_resource_monitoring(self):
-        """Start resource monitoring"""
-        self.monitoring_active = True
+        """Start resource monitoring"""        self.monitoring_active = True
         self.resource_monitor_task = asyncio.create_task(self._monitor_resources())
     
     async def _monitor_resources(self):
-        """Monitor resource usage"""
-        while self.monitoring_active:
+        """Monitor resource usage"""        while self.monitoring_active:
             try:
                 # Update available resources based on system usage
                 cpu_percent = psutil.cpu_percent(interval=1)
@@ -233,8 +218,7 @@ class ResourceManager:
                 await asyncio.sleep(30)
     
     async def allocate_resources(self, requirements: List[ResourceRequirement]) -> List[ResourceAllocation]:
-        """Allocate resources for execution"""
-        allocations = []
+        """Allocate resources for execution"""        allocations = []
         
         try:
             for requirement in requirements:
@@ -256,8 +240,7 @@ class ResourceManager:
             return []
     
     async def _allocate_single_resource(self, requirement: ResourceRequirement) -> Optional[ResourceAllocation]:
-        """Allocate single resource"""
-        resource_type = requirement.resource_type
+        """Allocate single resource"""        resource_type = requirement.resource_type
         requested_amount = requirement.amount
         
         # Check availability
@@ -289,8 +272,7 @@ class ResourceManager:
         return allocation
     
     async def deallocate_resource(self, allocation_id: str) -> bool:
-        """Deallocate resource"""
-        if allocation_id in self.allocated_resources:
+        """Deallocate resource"""        if allocation_id in self.allocated_resources:
             allocation = self.allocated_resources[allocation_id]
             
             # Return resources to available pool
@@ -305,8 +287,7 @@ class ResourceManager:
         return False
     
     def get_resource_status(self) -> Dict[str, Any]:
-        """Get resource status"""
-        return {
+        """Get resource status"""        return {
             "total_resources": self.total_resources,
             "available_resources": self.available_resources,
             "allocated_count": len(self.allocated_resources),
@@ -320,15 +301,13 @@ class ResourceManager:
         }
     
     def stop_monitoring(self):
-        """Stop resource monitoring"""
-        self.monitoring_active = False
+        """Stop resource monitoring"""        self.monitoring_active = False
         if self.resource_monitor_task:
             self.resource_monitor_task.cancel()
 
 
 class ExecutionScheduler:
-    """Intelligent execution scheduler"""
-    
+    """Intelligent execution scheduler"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.ExecutionScheduler")
@@ -351,13 +330,11 @@ class ExecutionScheduler:
         self._start_scheduler()
     
     def _start_scheduler(self):
-        """Start execution scheduler"""
-        self.scheduling_active = True
+        """Start execution scheduler"""        self.scheduling_active = True
         self.scheduler_task = asyncio.create_task(self._scheduler_loop())
     
     async def _scheduler_loop(self):
-        """Main scheduler loop"""
-        while self.scheduling_active:
+        """Main scheduler loop"""        while self.scheduling_active:
             try:
                 await self._schedule_executions()
                 await asyncio.sleep(self.scheduling_interval)
@@ -367,8 +344,7 @@ class ExecutionScheduler:
                 await asyncio.sleep(10)
     
     async def _schedule_executions(self):
-        """Schedule pending executions"""
-        if not self.execution_queue:
+        """Schedule pending executions"""        if not self.execution_queue:
             return
         
         # Check if we can schedule more executions
@@ -394,8 +370,7 @@ class ExecutionScheduler:
                     scheduled_count += 1
     
     def _sort_queue_by_strategy(self) -> List[ExecutionContext]:
-        """Sort execution queue by scheduling strategy"""
-        if self.strategy == SchedulingStrategy.FIFO:
+        """Sort execution queue by scheduling strategy"""        if self.strategy == SchedulingStrategy.FIFO:
             return sorted(self.execution_queue, key=lambda x: x.request.submitted_at)
         
         elif self.strategy == SchedulingStrategy.PRIORITY:
@@ -418,8 +393,7 @@ class ExecutionScheduler:
             return self.execution_queue[:]
     
     def _estimate_execution_time(self, context: ExecutionContext) -> float:
-        """Estimate execution time"""
-        # Simple estimation based on pipeline type and data size
+        """Estimate execution time"""        # Simple estimation based on pipeline type and data size
         base_time = 60.0  # 1 minute base
         
         pipeline_type = context.request.pipeline_config.get("type", "standard")
@@ -436,8 +410,7 @@ class ExecutionScheduler:
         return time_estimate
     
     def _adaptive_sort(self) -> List[ExecutionContext]:
-        """Adaptive sorting based on multiple factors"""
-        def adaptive_score(context: ExecutionContext) -> float:
+        """Adaptive sorting based on multiple factors"""        def adaptive_score(context: ExecutionContext) -> float:
             # Calculate composite score
             priority_score = context.request.priority.value * 0.4
             age_score = (datetime.now() - context.request.submitted_at).total_seconds() / 3600 * 0.3  # Hours waiting
@@ -448,8 +421,7 @@ class ExecutionScheduler:
         return sorted(self.execution_queue, key=adaptive_score, reverse=True)
     
     def _check_dependencies(self, context: ExecutionContext) -> bool:
-        """Check if execution dependencies are satisfied"""
-        for dep_id in context.request.dependencies:
+        """Check if execution dependencies are satisfied"""        for dep_id in context.request.dependencies:
             if dep_id not in self.completed_executions:
                 # Check if dependency is running
                 if dep_id in self.running_executions:
@@ -463,14 +435,12 @@ class ExecutionScheduler:
         return True
     
     async def _check_resource_availability(self, context: ExecutionContext) -> bool:
-        """Check if required resources are available"""
-        # This would integrate with ResourceManager
+        """Check if required resources are available"""        # This would integrate with ResourceManager
         # For now, return True as simplified implementation
         return True
     
     async def _schedule_execution(self, context: ExecutionContext):
-        """Schedule execution for immediate start"""
-        # Remove from queue
+        """Schedule execution for immediate start"""        # Remove from queue
         if context in self.execution_queue:
             self.execution_queue.remove(context)
         
@@ -484,8 +454,7 @@ class ExecutionScheduler:
         self.logger.info(f"Scheduled execution: {context.context_id}")
     
     def submit_execution(self, request: ExecutionRequest) -> str:
-        """Submit execution request"""
-        context_id = f"exec_{uuid.uuid4().hex[:16]}"
+        """Submit execution request"""        context_id = f"exec_{uuid.uuid4().hex[:16]}"
         
         context = ExecutionContext(
             context_id=context_id,
@@ -499,8 +468,7 @@ class ExecutionScheduler:
         return context_id
     
     def get_execution_status(self, context_id: str) -> Optional[ExecutionContext]:
-        """Get execution status"""
-        # Check running executions
+        """Get execution status"""        # Check running executions
         if context_id in self.running_executions:
             return self.running_executions[context_id]
         
@@ -516,8 +484,7 @@ class ExecutionScheduler:
         return None
     
     def complete_execution(self, context_id: str, result_data: Dict[str, Any]):
-        """Mark execution as completed"""
-        if context_id in self.running_executions:
+        """Mark execution as completed"""        if context_id in self.running_executions:
             context = self.running_executions[context_id]
             context.status = ExecutionStatus.COMPLETED
             context.result_data = result_data
@@ -534,8 +501,7 @@ class ExecutionScheduler:
             self.logger.info(f"Completed execution: {context_id}")
     
     def fail_execution(self, context_id: str, error_message: str):
-        """Mark execution as failed"""
-        if context_id in self.running_executions:
+        """Mark execution as failed"""        if context_id in self.running_executions:
             context = self.running_executions[context_id]
             context.status = ExecutionStatus.FAILED
             context.errors.append(error_message)
@@ -548,8 +514,7 @@ class ExecutionScheduler:
             self.logger.error(f"Failed execution: {context_id} - {error_message}")
     
     def cancel_execution(self, context_id: str) -> bool:
-        """Cancel execution"""
-        # Check queue
+        """Cancel execution"""        # Check queue
         for context in self.execution_queue[:]:
             if context.context_id == context_id:
                 context.status = ExecutionStatus.CANCELLED
@@ -574,8 +539,7 @@ class ExecutionScheduler:
         return False
     
     def get_queue_status(self) -> Dict[str, Any]:
-        """Get queue status"""
-        return {
+        """Get queue status"""        return {
             "queue_length": len(self.execution_queue),
             "running_executions": len(self.running_executions),
             "completed_executions": len(self.completed_executions),
@@ -584,15 +548,13 @@ class ExecutionScheduler:
         }
     
     def stop_scheduler(self):
-        """Stop scheduler"""
-        self.scheduling_active = False
+        """Stop scheduler"""        self.scheduling_active = False
         if self.scheduler_task:
             self.scheduler_task.cancel()
 
 
 class PerformanceOptimizer:
-    """Execution performance optimizer"""
-    
+    """Execution performance optimizer"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.PerformanceOptimizer")
@@ -605,8 +567,7 @@ class PerformanceOptimizer:
         self._initialize_strategies()
     
     def _initialize_strategies(self):
-        """Initialize optimization strategies"""
-        self.optimization_strategies = {
+        """Initialize optimization strategies"""        self.optimization_strategies = {
             "resource_optimization": self._optimize_resources,
             "scheduling_optimization": self._optimize_scheduling,
             "pipeline_optimization": self._optimize_pipeline,
@@ -614,8 +575,7 @@ class PerformanceOptimizer:
         }
     
     async def optimize_execution(self, context: ExecutionContext) -> Dict[str, Any]:
-        """Optimize execution performance"""
-        self.logger.info(f"Optimizing execution: {context.context_id}")
+        """Optimize execution performance"""        self.logger.info(f"Optimizing execution: {context.context_id}")
         
         optimizations = {}
         
@@ -650,8 +610,7 @@ class PerformanceOptimizer:
         return optimization_result
     
     async def _optimize_resources(self, context: ExecutionContext) -> Dict[str, Any]:
-        """Optimize resource allocation"""
-        return {
+        """Optimize resource allocation"""        return {
             "cpu_optimization": {
                 "current_allocation": 2.0,
                 "recommended_allocation": 2.5,
@@ -670,8 +629,7 @@ class PerformanceOptimizer:
         }
     
     async def _optimize_scheduling(self, context: ExecutionContext) -> Dict[str, Any]:
-        """Optimize execution scheduling"""
-        return {
+        """Optimize execution scheduling"""        return {
             "priority_adjustment": {
                 "current_priority": context.request.priority.value,
                 "recommended_priority": min(context.request.priority.value + 1, 5),
@@ -685,8 +643,7 @@ class PerformanceOptimizer:
         }
     
     async def _optimize_pipeline(self, context: ExecutionContext) -> Dict[str, Any]:
-        """Optimize pipeline configuration"""
-        return {
+        """Optimize pipeline configuration"""        return {
             "stage_optimization": {
                 "parallel_stages": ["content_processing", "ai_analysis"],
                 "sequential_stages": ["protection", "distribution"],
@@ -700,8 +657,7 @@ class PerformanceOptimizer:
         }
     
     async def _optimize_caching(self, context: ExecutionContext) -> Dict[str, Any]:
-        """Optimize caching strategy"""
-        return {
+        """Optimize caching strategy"""        return {
             "cache_strategy": {
                 "intermediate_results": True,
                 "model_caching": True,
@@ -716,8 +672,7 @@ class PerformanceOptimizer:
         }
     
     def _calculate_optimization_score(self, optimizations: Dict[str, Any]) -> float:
-        """Calculate overall optimization score"""
-        scores = []
+        """Calculate overall optimization score"""        scores = []
         
         for strategy, result in optimizations.items():
             if "error" not in result:
@@ -728,8 +683,7 @@ class PerformanceOptimizer:
         return sum(scores) / max(len(scores), 1)
     
     def _calculate_expected_improvement(self, optimizations: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate expected improvement from optimizations"""
-        return {
+        """Calculate expected improvement from optimizations"""        return {
             "execution_time_improvement": "35%",
             "resource_efficiency_improvement": "25%",
             "throughput_improvement": "40%",
@@ -738,8 +692,7 @@ class PerformanceOptimizer:
         }
     
     def get_performance_analytics(self) -> Dict[str, Any]:
-        """Get performance analytics"""
-        if not self.performance_history:
+        """Get performance analytics"""        if not self.performance_history:
             return {"message": "No performance data available"}
         
         recent_optimizations = self.performance_history[-10:]
@@ -756,8 +709,7 @@ class PerformanceOptimizer:
 
 
 class ExecutionManager:
-    """
-    Ultra-advanced execution management system for coordinating and controlling
+    """    Ultra-advanced execution management system for coordinating and controlling
     pipeline executions with intelligent resource allocation and optimization.
     
     Features:
@@ -767,8 +719,7 @@ class ExecutionManager:
     - Dynamic load balancing and scaling
     - Comprehensive execution lifecycle management
     - Performance analytics and reporting
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or self._get_default_config()
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -794,8 +745,7 @@ class ExecutionManager:
         self.logger.info("Execution Manager initialized successfully")
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration"""
-        return {
+        """Get default configuration"""        return {
             "resources": {
                 "monitoring_interval": 10,
                 "allocation_timeout": 30,
@@ -824,8 +774,7 @@ class ExecutionManager:
         }
     
     def _initialize_execution_handlers(self):
-        """Initialize execution handlers"""
-        # Default execution handlers for different pipeline types
+        """Initialize execution handlers"""        # Default execution handlers for different pipeline types
         self.execution_handlers = {
             "content_processing": self._handle_content_processing,
             "ai_analysis": self._handle_ai_analysis,
@@ -835,13 +784,11 @@ class ExecutionManager:
         }
     
     def _start_monitoring(self):
-        """Start execution monitoring"""
-        self.monitoring_active = True
+        """Start execution monitoring"""        self.monitoring_active = True
         self.monitoring_task = asyncio.create_task(self._monitoring_loop())
     
     async def _monitoring_loop(self):
-        """Main monitoring loop"""
-        while self.monitoring_active:
+        """Main monitoring loop"""        while self.monitoring_active:
             try:
                 await self._monitor_executions()
                 await self._update_metrics()
@@ -854,8 +801,7 @@ class ExecutionManager:
                 await asyncio.sleep(30)
     
     async def _monitor_executions(self):
-        """Monitor active executions"""
-        for context_id, context in list(self.active_executions.items()):
+        """Monitor active executions"""        for context_id, context in list(self.active_executions.items()):
             try:
                 # Check execution timeout
                 if context.request.started_at:
@@ -878,8 +824,7 @@ class ExecutionManager:
                 self.logger.error(f"Monitoring execution {context_id} failed: {e}")
     
     async def _update_resource_usage(self, context: ExecutionContext):
-        """Update resource usage for execution"""
-        if context.process_id:
+        """Update resource usage for execution"""        if context.process_id:
             try:
                 process = psutil.Process(context.process_id)
                 context.resource_usage = {
@@ -895,8 +840,7 @@ class ExecutionManager:
                 context.resource_usage = {"error": "Process not accessible"}
     
     async def _timeout_execution(self, context_id: str):
-        """Handle execution timeout"""
-        if context_id in self.active_executions:
+        """Handle execution timeout"""        if context_id in self.active_executions:
             context = self.active_executions[context_id]
             context.status = ExecutionStatus.TIMEOUT
             context.errors.append("Execution timeout")
@@ -910,8 +854,7 @@ class ExecutionManager:
             self.logger.warning(f"Execution timed out: {context_id}")
     
     async def _update_metrics(self):
-        """Update execution metrics"""
-        self.execution_metrics = {
+        """Update execution metrics"""        self.execution_metrics = {
             "active_executions": len(self.active_executions),
             "queue_status": self.scheduler.get_queue_status(),
             "resource_status": self.resource_manager.get_resource_status(),
@@ -920,8 +863,7 @@ class ExecutionManager:
         }
     
     async def _cleanup_completed_executions(self):
-        """Clean up completed executions"""
-        cleanup_delay = self.config["execution"]["cleanup_delay"]
+        """Clean up completed executions"""        cleanup_delay = self.config["execution"]["cleanup_delay"]
         cutoff_time = datetime.now() - timedelta(seconds=cleanup_delay)
         
         for context_id, context in list(self.active_executions.items()):
@@ -935,8 +877,7 @@ class ExecutionManager:
                 self.logger.info(f"Cleaned up execution: {context_id}")
     
     async def _cleanup_execution_resources(self, context: ExecutionContext):
-        """Clean up execution resources"""
-        # Deallocate resources
+        """Clean up execution resources"""        # Deallocate resources
         for allocation in context.assigned_resources:
             await self.resource_manager.deallocate_resource(allocation.allocation_id)
         
@@ -944,8 +885,7 @@ class ExecutionManager:
         context.assigned_resources.clear()
     
     def register_execution_handler(self, execution_type: str, handler: Callable):
-        """Register custom execution handler"""
-        self.execution_handlers[execution_type] = handler
+        """Register custom execution handler"""        self.execution_handlers[execution_type] = handler
         self.logger.info(f"Registered execution handler for type: {execution_type}")
     
     async def submit_execution(
@@ -957,8 +897,7 @@ class ExecutionManager:
         timeout: int = 3600,
         resource_requirements: Optional[List[ResourceRequirement]] = None
     ) -> str:
-        """
-        Submit execution request
+        """        Submit execution request
         
         Args:
             execution_type: Type of execution (content_processing, ai_analysis, etc.)
@@ -970,8 +909,7 @@ class ExecutionManager:
             
         Returns:
             Execution ID
-        """
-        # Create execution request
+        """        # Create execution request
         request = ExecutionRequest(
             request_id=f"req_{uuid.uuid4().hex[:16]}",
             execution_type=execution_type,
@@ -995,8 +933,7 @@ class ExecutionManager:
         input_data: Dict[str, Any],
         priority: Priority = Priority.URGENT
     ) -> Dict[str, Any]:
-        """
-        Execute immediately without queuing
+        """        Execute immediately without queuing
         
         Args:
             execution_type: Type of execution
@@ -1006,8 +943,7 @@ class ExecutionManager:
             
         Returns:
             Execution result
-        """
-        # Create execution context
+        """        # Create execution context
         context_id = f"immediate_{uuid.uuid4().hex[:16]}"
         request = ExecutionRequest(
             request_id=context_id,
@@ -1064,8 +1000,7 @@ class ExecutionManager:
                 del self.active_executions[context_id]
     
     async def _execute_context(self, context: ExecutionContext) -> Dict[str, Any]:
-        """Execute context using appropriate handler"""
-        execution_type = context.request.execution_type
+        """Execute context using appropriate handler"""        execution_type = context.request.execution_type
         
         if execution_type not in self.execution_handlers:
             raise ValueError(f"No handler for execution type: {execution_type}")
@@ -1075,8 +1010,7 @@ class ExecutionManager:
     
     # Default execution handlers
     async def _handle_content_processing(self, context: ExecutionContext) -> Dict[str, Any]:
-        """Handle content processing execution"""
-        self.logger.info(f"Executing content processing: {context.context_id}")
+        """Handle content processing execution"""        self.logger.info(f"Executing content processing: {context.context_id}")
         
         # Simulate content processing
         await asyncio.sleep(2.0)
@@ -1092,8 +1026,7 @@ class ExecutionManager:
         }
     
     async def _handle_ai_analysis(self, context: ExecutionContext) -> Dict[str, Any]:
-        """Handle AI analysis execution"""
-        self.logger.info(f"Executing AI analysis: {context.context_id}")
+        """Handle AI analysis execution"""        self.logger.info(f"Executing AI analysis: {context.context_id}")
         
         # Simulate AI analysis
         await asyncio.sleep(3.0)
@@ -1113,8 +1046,7 @@ class ExecutionManager:
         }
     
     async def _handle_protection_scan(self, context: ExecutionContext) -> Dict[str, Any]:
-        """Handle protection scan execution"""
-        self.logger.info(f"Executing protection scan: {context.context_id}")
+        """Handle protection scan execution"""        self.logger.info(f"Executing protection scan: {context.context_id}")
         
         # Simulate protection scanning
         await asyncio.sleep(1.5)
@@ -1134,8 +1066,7 @@ class ExecutionManager:
         }
     
     async def _handle_distribution(self, context: ExecutionContext) -> Dict[str, Any]:
-        """Handle distribution execution"""
-        self.logger.info(f"Executing distribution: {context.context_id}")
+        """Handle distribution execution"""        self.logger.info(f"Executing distribution: {context.context_id}")
         
         # Simulate distribution
         await asyncio.sleep(4.0)
@@ -1155,8 +1086,7 @@ class ExecutionManager:
         }
     
     async def _handle_workflow(self, context: ExecutionContext) -> Dict[str, Any]:
-        """Handle workflow execution"""
-        self.logger.info(f"Executing workflow: {context.context_id}")
+        """Handle workflow execution"""        self.logger.info(f"Executing workflow: {context.context_id}")
         
         # Simulate workflow execution
         await asyncio.sleep(5.0)
@@ -1177,8 +1107,7 @@ class ExecutionManager:
     
     # Public API methods
     def get_execution_status(self, execution_id: str) -> Optional[ExecutionContext]:
-        """Get execution status"""
-        # Check active executions
+        """Get execution status"""        # Check active executions
         if execution_id in self.active_executions:
             return self.active_executions[execution_id]
         
@@ -1186,12 +1115,10 @@ class ExecutionManager:
         return self.scheduler.get_execution_status(execution_id)
     
     def get_execution_metrics(self) -> Dict[str, Any]:
-        """Get execution metrics"""
-        return self.execution_metrics
+        """Get execution metrics"""        return self.execution_metrics
     
     async def cancel_execution(self, execution_id: str) -> bool:
-        """Cancel execution"""
-        # Try to cancel from scheduler first
+        """Cancel execution"""        # Try to cancel from scheduler first
         if self.scheduler.cancel_execution(execution_id):
             return True
         
@@ -1210,8 +1137,7 @@ class ExecutionManager:
         return False
     
     async def pause_execution(self, execution_id: str) -> bool:
-        """Pause execution"""
-        if execution_id in self.active_executions:
+        """Pause execution"""        if execution_id in self.active_executions:
             context = self.active_executions[execution_id]
             if context.status == ExecutionStatus.RUNNING:
                 context.status = ExecutionStatus.PAUSED
@@ -1221,8 +1147,7 @@ class ExecutionManager:
         return False
     
     async def resume_execution(self, execution_id: str) -> bool:
-        """Resume execution"""
-        if execution_id in self.active_executions:
+        """Resume execution"""        if execution_id in self.active_executions:
             context = self.active_executions[execution_id]
             if context.status == ExecutionStatus.PAUSED:
                 context.status = ExecutionStatus.RUNNING
@@ -1232,16 +1157,13 @@ class ExecutionManager:
         return False
     
     def get_resource_status(self) -> Dict[str, Any]:
-        """Get resource status"""
-        return self.resource_manager.get_resource_status()
+        """Get resource status"""        return self.resource_manager.get_resource_status()
     
     def get_queue_status(self) -> Dict[str, Any]:
-        """Get queue status"""
-        return self.scheduler.get_queue_status()
+        """Get queue status"""        return self.scheduler.get_queue_status()
     
     async def shutdown(self):
-        """Shutdown execution manager"""
-        self.logger.info("Shutting down execution manager")
+        """Shutdown execution manager"""        self.logger.info("Shutting down execution manager")
         
         # Stop monitoring
         self.monitoring_active = False

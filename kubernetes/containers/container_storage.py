@@ -1,5 +1,4 @@
-"""
-💾 Container Storage Manager - IA-Influencer-Agent Infrastructure
+"""💾 Container Storage Manager - IA-Influencer-Agent Infrastructure
 =================================================================
 Expert: Storage Engineer + DevOps + Data Architect
 Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -13,9 +12,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 
 Professional container storage management with persistent volumes,
 storage classes, and advanced data lifecycle management.
-"""
-
-import os
+"""import os
 import asyncio
 import logging
 import json
@@ -36,33 +33,28 @@ from google.cloud import storage as gcs
 logger = logging.getLogger(__name__)
 
 class StorageType(Enum):
-    """Storage types"""
-    BLOCK = "block"
+    """Storage types"""    BLOCK = "block"
     FILE = "file"
     OBJECT = "object"
     NETWORK = "network"
 
 class AccessMode(Enum):
-    """Persistent volume access modes"""
-    READ_WRITE_ONCE = "ReadWriteOnce"
+    """Persistent volume access modes"""    READ_WRITE_ONCE = "ReadWriteOnce"
     READ_ONLY_MANY = "ReadOnlyMany"
     READ_WRITE_MANY = "ReadWriteMany"
     READ_WRITE_ONCE_POD = "ReadWriteOncePod"
 
 class ReclaimPolicy(Enum):
-    """Persistent volume reclaim policies"""
-    RETAIN = "Retain"
+    """Persistent volume reclaim policies"""    RETAIN = "Retain"
     DELETE = "Delete"
     RECYCLE = "Recycle"
 
 class VolumeBindingMode(Enum):
-    """Volume binding modes"""
-    IMMEDIATE = "Immediate"
+    """Volume binding modes"""    IMMEDIATE = "Immediate"
     WAIT_FOR_FIRST_CONSUMER = "WaitForFirstConsumer"
 
 class StorageProvisioner(Enum):
-    """Storage provisioners"""
-    AWS_EBS = "ebs.csi.aws.com"
+    """Storage provisioners"""    AWS_EBS = "ebs.csi.aws.com"
     AZURE_DISK = "disk.csi.azure.com"
     AZURE_FILE = "file.csi.azure.com"
     GCE_PD = "pd.csi.storage.gke.io"
@@ -72,8 +64,7 @@ class StorageProvisioner(Enum):
 
 @dataclass
 class StorageClass:
-    """Storage class configuration"""
-    name: str
+    """Storage class configuration"""    name: str
     provisioner: StorageProvisioner
     reclaim_policy: ReclaimPolicy = ReclaimPolicy.DELETE
     volume_binding_mode: VolumeBindingMode = VolumeBindingMode.WAIT_FOR_FIRST_CONSUMER
@@ -85,8 +76,7 @@ class StorageClass:
 
 @dataclass
 class PersistentVolume:
-    """Persistent volume configuration"""
-    name: str
+    """Persistent volume configuration"""    name: str
     capacity: str
     access_modes: List[AccessMode]
     storage_class: str
@@ -99,8 +89,7 @@ class PersistentVolume:
 
 @dataclass
 class PersistentVolumeClaim:
-    """Persistent volume claim configuration"""
-    name: str
+    """Persistent volume claim configuration"""    name: str
     namespace: str
     access_modes: List[AccessMode]
     resources: Dict[str, str]
@@ -112,16 +101,14 @@ class PersistentVolumeClaim:
 
 @dataclass
 class VolumeMount:
-    """Volume mount configuration"""
-    name: str
+    """Volume mount configuration"""    name: str
     mount_path: str
     sub_path: Optional[str] = None
     read_only: bool = False
 
 @dataclass
 class VolumeSnapshot:
-    """Volume snapshot configuration"""
-    name: str
+    """Volume snapshot configuration"""    name: str
     namespace: str
     volume_snapshot_class: str
     source_pvc_name: str
@@ -130,8 +117,7 @@ class VolumeSnapshot:
 
 @dataclass
 class BackupConfig:
-    """Backup configuration"""
-    name: str
+    """Backup configuration"""    name: str
     source_pvc: str
     namespace: str
     schedule: str  # Cron format
@@ -143,8 +129,7 @@ class BackupConfig:
     labels: Dict[str, str] = field(default_factory=dict)
 
 class ContainerStorageManager:
-    """Professional container storage manager"""
-    
+    """Professional container storage manager"""    
     def __init__(self, config_path: str = "/app/config/storage"):
         self.config_path = Path(config_path)
         self.k8s_client = None
@@ -161,8 +146,7 @@ class ContainerStorageManager:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
     async def initialize(self) -> bool:
-        """Initialize container storage manager"""
-        try:
+        """Initialize container storage manager"""        try:
             # Initialize Kubernetes client
             try:
                 config.load_incluster_config()
@@ -200,8 +184,7 @@ class ContainerStorageManager:
             return False
     
     async def _initialize_cloud_storage(self) -> None:
-        """Initialize cloud storage clients"""
-        try:
+        """Initialize cloud storage clients"""        try:
             # Initialize AWS S3 client
             try:
                 self.s3_client = boto3.client(
@@ -236,8 +219,7 @@ class ContainerStorageManager:
             self.logger.error(f"❌ Error initializing cloud storage: {e}")
     
     async def _load_configurations(self) -> None:
-        """Load existing storage configurations"""
-        try:
+        """Load existing storage configurations"""        try:
             # Load storage classes
             storage_classes_file = self.config_path / "storage_classes.yml"
             if storage_classes_file.exists():
@@ -269,8 +251,7 @@ class ContainerStorageManager:
             self.logger.warning(f"⚠️ Error loading configurations: {e}")
     
     async def _setup_default_storage_classes(self) -> None:
-        """Setup default storage classes"""
-        try:
+        """Setup default storage classes"""        try:
             # Fast SSD storage class
             fast_ssd_sc = StorageClass(
                 name="fast-ssd",
@@ -387,8 +368,7 @@ class ContainerStorageManager:
             self.logger.error(f"❌ Error setting up default storage classes: {e}")
     
     async def _setup_default_storage(self) -> None:
-        """Setup default storage for IA-Influencer platform"""
-        try:
+        """Setup default storage for IA-Influencer platform"""        try:
             # Database PVC
             database_pvc = PersistentVolumeClaim(
                 name="ia-influencer-database-data",
@@ -495,8 +475,7 @@ class ContainerStorageManager:
             self.logger.error(f"❌ Error setting up default storage: {e}")
     
     async def _setup_default_backups(self) -> None:
-        """Setup default backup configurations"""
-        try:
+        """Setup default backup configurations"""        try:
             # Database backup
             database_backup = BackupConfig(
                 name="database-backup",
@@ -569,8 +548,7 @@ class ContainerStorageManager:
             self.logger.error(f"❌ Error setting up default backups: {e}")
     
     async def _save_storage_classes(self) -> None:
-        """Save storage classes configuration"""
-        try:
+        """Save storage classes configuration"""        try:
             data = {
                 "storage_classes": [asdict(sc) for sc in self.storage_classes.values()]
             }
@@ -580,8 +558,7 @@ class ContainerStorageManager:
             self.logger.error(f"❌ Error saving storage classes: {e}")
     
     async def _save_pvcs(self) -> None:
-        """Save PVCs configuration"""
-        try:
+        """Save PVCs configuration"""        try:
             data = {
                 "pvcs": [asdict(pvc) for pvc in self.persistent_volume_claims.values()]
             }
@@ -591,8 +568,7 @@ class ContainerStorageManager:
             self.logger.error(f"❌ Error saving PVCs: {e}")
     
     async def _save_backup_configs(self) -> None:
-        """Save backup configurations"""
-        try:
+        """Save backup configurations"""        try:
             data = {
                 "backups": [asdict(backup) for backup in self.backup_configs.values()]
             }
@@ -602,8 +578,7 @@ class ContainerStorageManager:
             self.logger.error(f"❌ Error saving backup configs: {e}")
     
     async def create_storage_class(self, storage_class: StorageClass) -> bool:
-        """Create Kubernetes storage class"""
-        try:
+        """Create Kubernetes storage class"""        try:
             storage_v1 = client.StorageV1Api()
             
             # Create storage class manifest
@@ -648,8 +623,7 @@ class ContainerStorageManager:
             return False
     
     async def create_persistent_volume_claim(self, pvc: PersistentVolumeClaim) -> bool:
-        """Create persistent volume claim"""
-        try:
+        """Create persistent volume claim"""        try:
             v1 = client.CoreV1Api()
             
             # Create PVC manifest
@@ -704,8 +678,7 @@ class ContainerStorageManager:
             return False
     
     async def create_volume_snapshot(self, snapshot: VolumeSnapshot) -> bool:
-        """Create volume snapshot"""
-        try:
+        """Create volume snapshot"""        try:
             # Note: VolumeSnapshot requires snapshot.storage.k8s.io/v1 API
             # This is a simplified implementation
             
@@ -738,8 +711,7 @@ class ContainerStorageManager:
             return False
     
     async def resize_pvc(self, namespace: str, pvc_name: str, new_size: str) -> bool:
-        """Resize persistent volume claim"""
-        try:
+        """Resize persistent volume claim"""        try:
             v1 = client.CoreV1Api()
             
             # Get existing PVC
@@ -776,8 +748,7 @@ class ContainerStorageManager:
             return False
     
     async def _monitor_storage_usage(self) -> None:
-        """Monitor storage usage"""
-        while True:
+        """Monitor storage usage"""        while True:
             try:
                 v1 = client.CoreV1Api()
                 
@@ -817,8 +788,7 @@ class ContainerStorageManager:
                 await asyncio.sleep(300)
     
     async def _check_storage_alerts(self) -> None:
-        """Check for storage alerts"""
-        try:
+        """Check for storage alerts"""        try:
             for pvc_key, usage_info in self.storage_usage.items():
                 # Check for PVCs in pending state
                 if usage_info["status"] == "Pending":
@@ -831,8 +801,7 @@ class ContainerStorageManager:
             self.logger.error(f"❌ Error checking storage alerts: {e}")
     
     async def _backup_scheduler(self) -> None:
-        """Backup scheduler task"""
-        while True:
+        """Backup scheduler task"""        while True:
             try:
                 current_time = datetime.now()
                 
@@ -848,8 +817,7 @@ class ContainerStorageManager:
                 await asyncio.sleep(3600)
     
     async def _should_run_backup(self, backup_config: BackupConfig, current_time: datetime) -> bool:
-        """Check if backup should run based on schedule"""
-        try:
+        """Check if backup should run based on schedule"""        try:
             # Simplified cron parsing - in production, use a proper cron library
             schedule_parts = backup_config.schedule.split()
             
@@ -875,8 +843,7 @@ class ContainerStorageManager:
             return False
     
     async def _perform_backup(self, backup_config: BackupConfig) -> bool:
-        """Perform backup operation"""
-        try:
+        """Perform backup operation"""        try:
             self.logger.info(f"🔄 Starting backup: {backup_config.name}")
             
             # Create volume snapshot first
@@ -922,8 +889,7 @@ class ContainerStorageManager:
             return False
     
     async def _export_to_s3(self, snapshot: VolumeSnapshot, backup_config: BackupConfig) -> bool:
-        """Export snapshot to S3"""
-        try:
+        """Export snapshot to S3"""        try:
             if not self.s3_client:
                 self.logger.error("❌ S3 client not initialized")
                 return False
@@ -961,8 +927,7 @@ class ContainerStorageManager:
             return False
     
     async def _export_to_azure(self, snapshot: VolumeSnapshot, backup_config: BackupConfig) -> bool:
-        """Export snapshot to Azure Blob Storage"""
-        try:
+        """Export snapshot to Azure Blob Storage"""        try:
             if not self.azure_client:
                 self.logger.error("❌ Azure client not initialized")
                 return False
@@ -976,8 +941,7 @@ class ContainerStorageManager:
             return False
     
     async def _export_to_gcs(self, snapshot: VolumeSnapshot, backup_config: BackupConfig) -> bool:
-        """Export snapshot to Google Cloud Storage"""
-        try:
+        """Export snapshot to Google Cloud Storage"""        try:
             if not self.gcs_client:
                 self.logger.error("❌ GCS client not initialized")
                 return False
@@ -991,8 +955,7 @@ class ContainerStorageManager:
             return False
     
     async def _cleanup_old_snapshots(self) -> None:
-        """Cleanup old snapshots and backups"""
-        while True:
+        """Cleanup old snapshots and backups"""        while True:
             try:
                 current_time = datetime.now()
                 
@@ -1017,8 +980,7 @@ class ContainerStorageManager:
                 await asyncio.sleep(24 * 3600)
     
     async def _cleanup_old_backups(self, backup_config: BackupConfig, current_time: datetime) -> None:
-        """Cleanup old backups for a specific backup configuration"""
-        try:
+        """Cleanup old backups for a specific backup configuration"""        try:
             cutoff_date = current_time - timedelta(days=backup_config.retention_days)
             
             if backup_config.destination_type == "s3" and self.s3_client:
@@ -1043,8 +1005,7 @@ class ContainerStorageManager:
             self.logger.error(f"❌ Error cleaning up old backups: {e}")
     
     async def get_storage_usage_report(self, namespace: str = None) -> Dict[str, Any]:
-        """Get storage usage report"""
-        try:
+        """Get storage usage report"""        try:
             report = {
                 "total_pvcs": 0,
                 "total_requested_storage": 0,
@@ -1099,8 +1060,7 @@ class ContainerStorageManager:
             return {}
     
     async def restore_backup(self, backup_name: str, target_pvc: str, target_namespace: str) -> bool:
-        """Restore backup to PVC"""
-        try:
+        """Restore backup to PVC"""        try:
             if backup_name not in self.backup_configs:
                 self.logger.error(f"❌ Backup configuration not found: {backup_name}")
                 return False
@@ -1124,8 +1084,7 @@ class ContainerStorageManager:
             return False
     
     async def clone_pvc(self, source_pvc: str, source_namespace: str, target_pvc: str, target_namespace: str) -> bool:
-        """Clone PVC"""
-        try:
+        """Clone PVC"""        try:
             v1 = client.CoreV1Api()
             
             # Get source PVC
@@ -1169,16 +1128,14 @@ class ContainerStorageManager:
             return False
 
 class StorageMetricsCollector:
-    """Storage metrics collector for monitoring"""
-    
+    """Storage metrics collector for monitoring"""    
     def __init__(self, storage_manager: ContainerStorageManager):
         self.storage_manager = storage_manager
         self.metrics = {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def collect_metrics(self) -> Dict[str, Any]:
-        """Collect storage metrics"""
-        try:
+        """Collect storage metrics"""        try:
             metrics = {
                 "timestamp": datetime.now().isoformat(),
                 "total_pvcs": len(self.storage_manager.storage_usage),

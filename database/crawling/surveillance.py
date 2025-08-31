@@ -1,5 +1,4 @@
-"""
-Enterprise Content Surveillance Database Module
+"""Enterprise Content Surveillance Database Module
 
 Advanced database layer for real-time content monitoring, copyright infringement
 detection, and multi-platform surveillance operations.
@@ -13,9 +12,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team Specialties: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + 
                  Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: All rights reserved
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, desc, asc, func, text
@@ -36,8 +33,7 @@ from ..core.exceptions import (
 
 
 class SurveillanceType(Enum):
-    """Types of content surveillance."""
-    COPYRIGHT_MONITORING = "copyright_monitoring"
+    """Types of content surveillance."""    COPYRIGHT_MONITORING = "copyright_monitoring"
     BRAND_PROTECTION = "brand_protection"
     CONTENT_DISCOVERY = "content_discovery"
     COMPETITOR_ANALYSIS = "competitor_analysis"
@@ -48,8 +44,7 @@ class SurveillanceType(Enum):
 
 
 class MatchConfidence(Enum):
-    """Content match confidence levels."""
-    EXACT = "exact"           # 95-100% similarity
+    """Content match confidence levels."""    EXACT = "exact"           # 95-100% similarity
     HIGH = "high"             # 85-94% similarity
     MEDIUM = "medium"         # 70-84% similarity
     LOW = "low"               # 50-69% similarity
@@ -57,8 +52,7 @@ class MatchConfidence(Enum):
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels."""
-    CRITICAL = "critical"     # Immediate action required
+    """Alert severity levels."""    CRITICAL = "critical"     # Immediate action required
     HIGH = "high"             # Action within 1 hour
     MEDIUM = "medium"         # Action within 24 hours
     LOW = "low"               # Informational
@@ -66,8 +60,7 @@ class AlertSeverity(Enum):
 
 
 class MonitoringStatus(Enum):
-    """Monitoring session status."""
-    ACTIVE = "active"
+    """Monitoring session status."""    ACTIVE = "active"
     PAUSED = "paused"
     STOPPED = "stopped"
     COMPLETED = "completed"
@@ -75,8 +68,7 @@ class MonitoringStatus(Enum):
 
 
 class ContentSurveillanceManager(DatabaseManager):
-    """
-    Enterprise content surveillance and monitoring system.
+    """    Enterprise content surveillance and monitoring system.
     
     Manages:
     - Real-time content monitoring across multiple platforms
@@ -85,11 +77,9 @@ class ContentSurveillanceManager(DatabaseManager):
     - Competitor content analysis and discovery
     - Automated takedown notice generation
     - Comprehensive surveillance reporting and analytics
-    """
-    
+    """    
     def __init__(self, db_session: Session):
-        """Initialize content surveillance manager."""
-        super().__init__(db_session)
+        """Initialize content surveillance manager."""        super().__init__(db_session)
         self.active_monitors = {}
         self.alert_dispatchers = {}
         self._initialize_surveillance_system()
@@ -104,8 +94,7 @@ class ContentSurveillanceManager(DatabaseManager):
         user_id: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Create a new content surveillance target for monitoring.
+        """        Create a new content surveillance target for monitoring.
         
         Args:
             target_name: Human-readable target name
@@ -121,8 +110,7 @@ class ContentSurveillanceManager(DatabaseManager):
             
         Raises:
             SurveillanceError: If target creation fails
-        """
-        try:
+        """        try:
             target_id = str(uuid4())
             
             # Create surveillance target record
@@ -166,8 +154,7 @@ class ContentSurveillanceManager(DatabaseManager):
         similarity_score: float,
         detection_method: str
     ) -> Optional[str]:
-        """
-        Record a potential content match with similarity analysis.
+        """        Record a potential content match with similarity analysis.
         
         Args:
             target_id: Surveillance target identifier
@@ -181,8 +168,7 @@ class ContentSurveillanceManager(DatabaseManager):
             
         Raises:
             ContentMatchError: If match processing fails
-        """
-        try:
+        """        try:
             # Determine match confidence based on similarity score
             confidence = self._calculate_match_confidence(similarity_score)
             
@@ -240,8 +226,7 @@ class ContentSurveillanceManager(DatabaseManager):
         priority: int,
         user_id: str
     ) -> str:
-        """
-        Create a custom monitoring rule for automated surveillance.
+        """        Create a custom monitoring rule for automated surveillance.
         
         Args:
             rule_name: Human-readable rule name
@@ -253,8 +238,7 @@ class ContentSurveillanceManager(DatabaseManager):
             
         Returns:
             Rule ID for management operations
-        """
-        try:
+        """        try:
             rule_id = str(uuid4())
             
             # Validate rule configuration
@@ -295,8 +279,7 @@ class ContentSurveillanceManager(DatabaseManager):
         severity: AlertSeverity,
         custom_message: Optional[str] = None
     ) -> str:
-        """
-        Generate an infringement alert with automated dispatch.
+        """        Generate an infringement alert with automated dispatch.
         
         Args:
             match_id: Content match identifier
@@ -306,8 +289,7 @@ class ContentSurveillanceManager(DatabaseManager):
             
         Returns:
             Alert ID for tracking and management
-        """
-        try:
+        """        try:
             alert_id = str(uuid4())
             
             # Get match details
@@ -356,8 +338,7 @@ class ContentSurveillanceManager(DatabaseManager):
         target_ids: List[str],
         monitoring_config: Dict[str, Any]
     ) -> str:
-        """
-        Start real-time monitoring session for specified targets.
+        """        Start real-time monitoring session for specified targets.
         
         Args:
             target_ids: List of surveillance target IDs
@@ -365,8 +346,7 @@ class ContentSurveillanceManager(DatabaseManager):
             
         Returns:
             Session ID for monitoring management
-        """
-        try:
+        """        try:
             session_id = str(uuid4())
             
             # Create surveillance session
@@ -403,8 +383,7 @@ class ContentSurveillanceManager(DatabaseManager):
         user_id: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Add entry to surveillance watchlist for enhanced monitoring.
+        """        Add entry to surveillance watchlist for enhanced monitoring.
         
         Args:
             entry_type: Type of watchlist entry (keyword, url, user, etc.)
@@ -416,8 +395,7 @@ class ContentSurveillanceManager(DatabaseManager):
             
         Returns:
             Watchlist entry ID
-        """
-        try:
+        """        try:
             entry_id = str(uuid4())
             
             # Create watchlist entry
@@ -454,8 +432,7 @@ class ContentSurveillanceManager(DatabaseManager):
         report_period: timedelta,
         include_detailed_matches: bool = True
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive surveillance report for a target.
+        """        Generate comprehensive surveillance report for a target.
         
         Args:
             target_id: Surveillance target identifier
@@ -464,8 +441,7 @@ class ContentSurveillanceManager(DatabaseManager):
             
         Returns:
             Comprehensive surveillance report
-        """
-        try:
+        """        try:
             cutoff_time = datetime.utcnow() - report_period
             
             # Get target information
@@ -532,8 +508,7 @@ class ContentSurveillanceManager(DatabaseManager):
             )
     
     def _calculate_match_confidence(self, similarity_score: float) -> MatchConfidence:
-        """Calculate match confidence based on similarity score."""
-        if similarity_score >= 0.95:
+        """Calculate match confidence based on similarity score."""        if similarity_score >= 0.95:
             return MatchConfidence.EXACT
         elif similarity_score >= 0.85:
             return MatchConfidence.HIGH
@@ -545,8 +520,7 @@ class ContentSurveillanceManager(DatabaseManager):
             return MatchConfidence.SUSPECTED
     
     async def _extract_content_features(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract features from discovered content for analysis."""
-        features = {
+        """Extract features from discovered content for analysis."""        features = {
             "content_type": content.get("type", "unknown"),
             "duration": content.get("duration", 0),
             "file_size": content.get("file_size", 0),
@@ -573,8 +547,7 @@ class ContentSurveillanceManager(DatabaseManager):
         content: Dict[str, Any],
         similarity_score: float
     ) -> float:
-        """Calculate infringement risk score based on multiple factors."""
-        risk_factors = {
+        """Calculate infringement risk score based on multiple factors."""        risk_factors = {
             "similarity_score": similarity_score * 0.4,  # 40% weight
             "commercial_use": 0.3 if content.get("monetized", False) else 0.0,  # 30% weight
             "view_count": min(content.get("view_count", 0) / 1000000, 1.0) * 0.2,  # 20% weight
@@ -590,8 +563,7 @@ class ContentSurveillanceManager(DatabaseManager):
         target_id: str,
         risk_score: float
     ) -> None:
-        """Generate automated infringement alert for high-risk matches."""
-        severity = AlertSeverity.CRITICAL if risk_score >= 0.9 else AlertSeverity.HIGH
+        """Generate automated infringement alert for high-risk matches."""        severity = AlertSeverity.CRITICAL if risk_score >= 0.9 else AlertSeverity.HIGH
         
         await self.generate_infringement_alert(
             match_id,
@@ -605,8 +577,7 @@ class ContentSurveillanceManager(DatabaseManager):
         conditions: Dict[str, Any],
         actions: Dict[str, Any]
     ) -> bool:
-        """Validate monitoring rule configuration."""
-        required_condition_fields = ["trigger_type", "threshold"]
+        """Validate monitoring rule configuration."""        required_condition_fields = ["trigger_type", "threshold"]
         required_action_fields = ["action_type"]
         
         for field in required_condition_fields:
@@ -628,8 +599,7 @@ class ContentSurveillanceManager(DatabaseManager):
         match: ContentMatch,
         alert_type: str
     ) -> str:
-        """Generate human-readable alert message."""
-        platform = match.platform.title()
+        """Generate human-readable alert message."""        platform = match.platform.title()
         confidence = match.confidence_level.title()
         similarity = f"{match.similarity_score * 100:.1f}%"
         
@@ -639,8 +609,7 @@ class ContentSurveillanceManager(DatabaseManager):
         )
     
     async def _dispatch_alert(self, alert_id: str, severity: AlertSeverity) -> None:
-        """Dispatch alert through configured channels."""
-        # Implementation would include email, webhook, SMS dispatch
+        """Dispatch alert through configured channels."""        # Implementation would include email, webhook, SMS dispatch
         dispatch_channels = {
             AlertSeverity.CRITICAL: ["email", "sms", "webhook"],
             AlertSeverity.HIGH: ["email", "webhook"],
@@ -655,13 +624,11 @@ class ContentSurveillanceManager(DatabaseManager):
             await self._send_alert_notification(alert_id, channel)
     
     async def _send_alert_notification(self, alert_id: str, channel: str) -> None:
-        """Send alert notification through specific channel."""
-        # Implementation would handle actual notification dispatch
+        """Send alert notification through specific channel."""        # Implementation would handle actual notification dispatch
         pass
     
     async def _initialize_surveillance_system(self) -> None:
-        """Initialize surveillance system components."""
-        self.active_monitors = {}
+        """Initialize surveillance system components."""        self.active_monitors = {}
         self.alert_dispatchers = {
             "email": [],
             "sms": [],
@@ -675,13 +642,11 @@ class ContentSurveillanceManager(DatabaseManager):
         platform: str,
         surveillance_types: List[SurveillanceType]
     ) -> None:
-        """Initialize monitoring for specific platform."""
-        # Implementation would set up platform-specific monitoring
+        """Initialize monitoring for specific platform."""        # Implementation would set up platform-specific monitoring
         pass
     
     async def _activate_surveillance_target(self, target_id: str) -> None:
-        """Activate surveillance target in monitoring system."""
-        self.active_monitors[target_id] = {
+        """Activate surveillance target in monitoring system."""        self.active_monitors[target_id] = {
             "status": "active",
             "last_check": datetime.utcnow(),
             "next_check": datetime.utcnow() + timedelta(minutes=30)
@@ -693,8 +658,7 @@ class ContentSurveillanceManager(DatabaseManager):
         conditions: Dict[str, Any],
         actions: Dict[str, Any]
     ) -> None:
-        """Activate monitoring rule in surveillance system."""
-        # Implementation would activate rule in monitoring engine
+        """Activate monitoring rule in surveillance system."""        # Implementation would activate rule in monitoring engine
         pass
     
     async def _start_real_time_processes(
@@ -703,8 +667,7 @@ class ContentSurveillanceManager(DatabaseManager):
         target_ids: List[str],
         config: Dict[str, Any]
     ) -> None:
-        """Start real-time monitoring processes."""
-        # Implementation would start real-time monitoring workers
+        """Start real-time monitoring processes."""        # Implementation would start real-time monitoring workers
         pass
     
     async def _activate_watchlist_entry(
@@ -713,13 +676,11 @@ class ContentSurveillanceManager(DatabaseManager):
         entry_type: str,
         entry_value: str
     ) -> None:
-        """Activate watchlist entry in monitoring system."""
-        # Implementation would add entry to active watchlist
+        """Activate watchlist entry in monitoring system."""        # Implementation would add entry to active watchlist
         pass
     
     async def _calculate_match_statistics(self, matches: List) -> Dict[str, Any]:
-        """Calculate statistics from content matches."""
-        if not matches:
+        """Calculate statistics from content matches."""        if not matches:
             return {
                 "total_matches": 0,
                 "high_confidence_matches": 0,
@@ -748,8 +709,7 @@ class ContentSurveillanceManager(DatabaseManager):
         }
     
     async def _calculate_alert_statistics(self, alerts: List) -> Dict[str, Any]:
-        """Calculate statistics from infringement alerts."""
-        if not alerts:
+        """Calculate statistics from infringement alerts."""        if not alerts:
             return {
                 "total_alerts": 0,
                 "critical_alerts": 0,
@@ -768,8 +728,7 @@ class ContentSurveillanceManager(DatabaseManager):
         }
     
     async def _calculate_platform_statistics(self, matches: List) -> Dict[str, Any]:
-        """Calculate platform-specific statistics."""
-        platform_stats = {}
+        """Calculate platform-specific statistics."""        platform_stats = {}
         
         for match in matches:
             platform = match.platform
@@ -801,8 +760,7 @@ class ContentSurveillanceManager(DatabaseManager):
         target_id: str,
         matches: List
     ) -> Dict[str, Any]:
-        """Generate trend analysis from surveillance data."""
-        # Simplified trend analysis
+        """Generate trend analysis from surveillance data."""        # Simplified trend analysis
         return {
             "trend_direction": "increasing" if len(matches) > 10 else "stable",
             "peak_detection_day": "monday",
@@ -811,8 +769,7 @@ class ContentSurveillanceManager(DatabaseManager):
         }
     
     async def _format_match_details(self, match: ContentMatch) -> Dict[str, Any]:
-        """Format match details for reporting."""
-        return {
+        """Format match details for reporting."""        return {
             "match_id": match.match_id,
             "platform": match.platform,
             "similarity_score": match.similarity_score,

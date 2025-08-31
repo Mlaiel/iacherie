@@ -1,5 +1,4 @@
-"""
-Content Monetization Module - Advanced Revenue Generation & Distribution System
+"""Content Monetization Module - Advanced Revenue Generation & Distribution System
 
 Module gérant la monétisation complète du contenu, le tracking des revenus,
 la distribution automatisée et l'optimisation des gains.
@@ -13,9 +12,7 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""
-
-from typing import Dict, List, Any, Optional, Union, Tuple, Set
+"""from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from enum import Enum
@@ -37,8 +34,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class RevenueSource(Enum):
-    """Sources of revenue generation"""
-    STREAMING = "streaming"
+    """Sources of revenue generation"""    STREAMING = "streaming"
     DOWNLOADS = "downloads"
     LICENSING = "licensing"
     SYNC_LICENSING = "sync_licensing"
@@ -56,8 +52,7 @@ class RevenueSource(Enum):
     AFFILIATE_MARKETING = "affiliate_marketing"
 
 class PaymentMethod(Enum):
-    """Available payment methods for payouts"""
-    BANK_TRANSFER = "bank_transfer"
+    """Available payment methods for payouts"""    BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE = "stripe"
     WISE = "wise"
@@ -67,8 +62,7 @@ class PaymentMethod(Enum):
     DIGITAL_WALLET = "digital_wallet"
 
 class PaymentStatus(Enum):
-    """Status of payment transactions"""
-    PENDING = "pending"
+    """Status of payment transactions"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -78,8 +72,7 @@ class PaymentStatus(Enum):
     FROZEN = "frozen"
 
 class Currency(Enum):
-    """Supported currencies"""
-    EUR = "EUR"
+    """Supported currencies"""    EUR = "EUR"
     USD = "USD"
     GBP = "GBP"
     JPY = "JPY"
@@ -96,8 +89,7 @@ class Currency(Enum):
     ETH = "ETH"
 
 class TaxCategory(Enum):
-    """Tax categories for revenue classification"""
-    ROYALTIES = "royalties"
+    """Tax categories for revenue classification"""    ROYALTIES = "royalties"
     BUSINESS_INCOME = "business_income"
     FREELANCE_INCOME = "freelance_income"
     INVESTMENT_INCOME = "investment_income"
@@ -105,8 +97,7 @@ class TaxCategory(Enum):
     PERFORMANCE_INCOME = "performance_income"
 
 class RevenueStream(Base):
-    """Revenue stream tracking model"""
-    __tablename__ = "revenue_streams"
+    """Revenue stream tracking model"""    __tablename__ = "revenue_streams"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     content_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -174,8 +165,7 @@ class RevenueStream(Base):
     allocations = relationship("RevenueAllocation", back_populates="revenue_stream")
 
 class RevenueAllocation(Base):
-    """Revenue allocation to stakeholders"""
-    __tablename__ = "revenue_allocations"
+    """Revenue allocation to stakeholders"""    __tablename__ = "revenue_allocations"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     revenue_stream_id = Column(UUID(as_uuid=True), ForeignKey('revenue_streams.id'), nullable=False)
@@ -209,8 +199,7 @@ class RevenueAllocation(Base):
     payment = relationship("Payment", backref="allocations")
 
 class Payment(Base):
-    """Payment transaction model"""
-    __tablename__ = "payments"
+    """Payment transaction model"""    __tablename__ = "payments"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     
@@ -260,8 +249,7 @@ class Payment(Base):
     updated_at = Column(DateTime(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class MonetizationSettings(Base):
-    """User monetization preferences and settings"""
-    __tablename__ = "monetization_settings"
+    """User monetization preferences and settings"""    __tablename__ = "monetization_settings"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False, unique=True)
@@ -307,8 +295,7 @@ class MonetizationSettings(Base):
 
 @dataclass
 class RevenueProjection:
-    """Revenue projection data structure"""
-    content_id: str
+    """Revenue projection data structure"""    content_id: str
     projection_period: str  # daily, weekly, monthly, yearly
     projected_revenue: Decimal
     confidence_level: float
@@ -317,8 +304,7 @@ class RevenueProjection:
     projection_date: datetime
     
 class MonetizationEngine:
-    """Core monetization processing engine"""
-    
+    """Core monetization processing engine"""    
     def __init__(self):
         self.revenue_processors = {}
         self.payment_processors = {}
@@ -330,8 +316,7 @@ class MonetizationEngine:
         platform: str,
         revenue_data: Dict[str, Any]
     ) -> str:
-        """Process incoming revenue data from platforms"""
-        try:
+        """Process incoming revenue data from platforms"""        try:
             # Validate revenue data
             self._validate_revenue_data(revenue_data)
             
@@ -396,8 +381,7 @@ class MonetizationEngine:
         content_id: str,
         net_amount: Decimal
     ) -> List[str]:
-        """Allocate revenue to stakeholders based on ownership and agreements"""
-        try:
+        """Allocate revenue to stakeholders based on ownership and agreements"""        try:
             # Get content ownership information
             ownership_data = await self._get_content_ownership(content_id)
             
@@ -434,8 +418,7 @@ class MonetizationEngine:
         recipient_id: str,
         payment_period: Tuple[datetime, datetime]
     ) -> Optional[str]:
-        """Process payments for a recipient for a given period"""
-        try:
+        """Process payments for a recipient for a given period"""        try:
             # Get monetization settings for recipient
             settings = await self._get_monetization_settings(recipient_id)
             
@@ -500,8 +483,7 @@ class MonetizationEngine:
         content_id: str,
         projection_period: str = "monthly"
     ) -> RevenueProjection:
-        """Generate revenue projections based on historical data and trends"""
-        try:
+        """Generate revenue projections based on historical data and trends"""        try:
             # Get historical revenue data
             historical_data = await self._get_historical_revenue(content_id)
             
@@ -542,8 +524,7 @@ class MonetizationEngine:
         user_id: str,
         content_portfolio: List[str]
     ) -> Dict[str, Any]:
-        """Analyze and optimize monetization strategy for user's content portfolio"""
-        try:
+        """Analyze and optimize monetization strategy for user's content portfolio"""        try:
             optimization_recommendations = {}
             
             for content_id in content_portfolio:
@@ -589,8 +570,7 @@ class MonetizationEngine:
             raise
     
     def _validate_revenue_data(self, data: Dict[str, Any]):
-        """Validate incoming revenue data"""
-        required_fields = ['amount', 'currency', 'source', 'earned_date']
+        """Validate incoming revenue data"""        required_fields = ['amount', 'currency', 'source', 'earned_date']
         for field in required_fields:
             if field not in data:
                 raise ValueError(f"Missing required field: {field}")
@@ -599,8 +579,7 @@ class MonetizationEngine:
             raise ValueError("Revenue amount must be positive")
     
     async def _normalize_currency(self, amount: Decimal, currency: str) -> Decimal:
-        """Convert amount to EUR using current exchange rates"""
-        if currency == "EUR":
+        """Convert amount to EUR using current exchange rates"""        if currency == "EUR":
             return amount
         
         # Get exchange rate (implementation would use real exchange rate API)
@@ -613,8 +592,7 @@ class MonetizationEngine:
         platform: str,
         fee_structure: Dict[str, Any]
     ) -> Dict[str, Decimal]:
-        """Calculate platform-specific fees and deductions"""
-        platform_fee_rates = {
+        """Calculate platform-specific fees and deductions"""        platform_fee_rates = {
             'spotify': 0.30,
             'youtube': 0.45,
             'instagram': 0.30,
@@ -639,8 +617,7 @@ class MonetizationEngine:
         jurisdiction: str,
         tax_category: TaxCategory
     ) -> Dict[str, Any]:
-        """Calculate applicable taxes"""
-        tax_rates = {
+        """Calculate applicable taxes"""        tax_rates = {
             'DE': {'royalties': 0.19, 'business_income': 0.25},
             'US': {'royalties': 0.30, 'business_income': 0.21},
             'GB': {'royalties': 0.20, 'business_income': 0.19}
@@ -657,13 +634,11 @@ class MonetizationEngine:
         }
     
     async def _get_exchange_rate(self, from_currency: str, to_currency: str) -> Decimal:
-        """Get current exchange rate"""
-        # Implementation would use real exchange rate API
+        """Get current exchange rate"""        # Implementation would use real exchange rate API
         return Decimal('1.0')  # Placeholder
     
     async def _get_content_ownership(self, content_id: str) -> Dict[str, Any]:
-        """Get content ownership and rights information"""
-        # Implementation would query database for ownership data
+        """Get content ownership and rights information"""        # Implementation would query database for ownership data
         return {
             'stakeholders': [
                 {'user_id': 'user1', 'type': 'artist', 'percentage': 70.0},
@@ -672,8 +647,7 @@ class MonetizationEngine:
         }
     
     async def _get_applicable_contracts(self, content_id: str) -> List[Dict[str, Any]]:
-        """Get applicable contracts and agreements for content"""
-        # Implementation would query contract database
+        """Get applicable contracts and agreements for content"""        # Implementation would query contract database
         return []
     
     async def _process_revenue_allocations(
@@ -682,8 +656,7 @@ class MonetizationEngine:
         content_id: str,
         net_amount: Decimal
     ):
-        """Process revenue allocations to stakeholders"""
-        await self.allocate_revenue(revenue_stream_id, content_id, net_amount)
+        """Process revenue allocations to stakeholders"""        await self.allocate_revenue(revenue_stream_id, content_id, net_amount)
     
     # Additional helper methods would be implemented here...
 

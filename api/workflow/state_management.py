@@ -1,12 +1,9 @@
-"""
-Workflow state management and persistence.
+"""Workflow state management and persistence.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
-"""
-
-import asyncio
+"""import asyncio
 from typing import Dict, List, Optional, Any, Set, Union
 from enum import Enum
 from datetime import datetime, timedelta
@@ -25,8 +22,7 @@ from ..utils.metrics import MetricsCollector
 
 
 class StateTransitionType(Enum):
-    """Types of state transitions."""
-    INITIALIZATION = "initialization"
+    """Types of state transitions."""    INITIALIZATION = "initialization"
     STAGE_COMPLETION = "stage_completion"
     ERROR_HANDLING = "error_handling"
     COMPENSATION = "compensation"
@@ -37,8 +33,7 @@ class StateTransitionType(Enum):
 
 
 class PersistenceLevel(Enum):
-    """Levels of state persistence."""
-    NONE = "none"  # In-memory only
+    """Levels of state persistence."""    NONE = "none"  # In-memory only
     CHECKPOINT = "checkpoint"  # Save at checkpoints
     STAGE = "stage"  # Save after each stage
     CONTINUOUS = "continuous"  # Save all changes
@@ -46,8 +41,7 @@ class PersistenceLevel(Enum):
 
 @dataclass
 class StateSnapshot:
-    """Immutable snapshot of workflow state."""
-    workflow_id: str
+    """Immutable snapshot of workflow state."""    workflow_id: str
     timestamp: datetime
     stage_index: int
     stage_results: Dict[str, Any]
@@ -71,27 +65,23 @@ class StateSnapshot:
         self.checksum = hash(json.dumps(content, sort_keys=True, cls=JsonEncoder))
     
     def verify_integrity(self) -> bool:
-        """Verify snapshot integrity."""
-        expected_checksum = self.checksum
+        """Verify snapshot integrity."""        expected_checksum = self.checksum
         # Recalculate checksum
         self.__post_init__()
         return self.checksum == expected_checksum
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
-        return asdict(self)
+        """Convert to dictionary."""        return asdict(self)
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'StateSnapshot':
-        """Create from dictionary."""
-        data["timestamp"] = datetime.fromisoformat(data["timestamp"])
+        """Create from dictionary."""        data["timestamp"] = datetime.fromisoformat(data["timestamp"])
         return cls(**data)
 
 
 @dataclass
 class StateTransition:
-    """Record of state transition."""
-    transition_id: str
+    """Record of state transition."""    transition_id: str
     workflow_id: str
     transition_type: StateTransitionType
     from_stage: Optional[str]
@@ -103,8 +93,7 @@ class StateTransition:
     error: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
-        return {
+        """Convert to dictionary."""        return {
             **asdict(self),
             "timestamp": self.timestamp.isoformat(),
             "transition_type": self.transition_type.value
@@ -112,8 +101,7 @@ class StateTransition:
 
 
 class WorkflowStateManager:
-    """Manages workflow state with persistence and recovery."""
-    
+    """Manages workflow state with persistence and recovery."""    
     def __init__(
         self,
         persistence_level: PersistenceLevel = PersistenceLevel.STAGE,
@@ -142,8 +130,7 @@ class WorkflowStateManager:
         self.locks = {}
     
     async def initialize(self):
-        """Initialize state manager."""
-        self.logger.info("Initializing workflow state manager")
+        """Initialize state manager."""        self.logger.info("Initializing workflow state manager")
         
         # Start background tasks
         if self.persistence_level in [PersistenceLevel.CHECKPOINT, PersistenceLevel.CONTINUOUS]:
@@ -155,8 +142,7 @@ class WorkflowStateManager:
         await self._load_active_states()
     
     async def shutdown(self):
-        """Shutdown state manager."""
-        self.logger.info("Shutting down workflow state manager")
+        """Shutdown state manager."""        self.logger.info("Shutting down workflow state manager")
         
         # Cancel background tasks
         if self.checkpoint_task:
@@ -169,8 +155,7 @@ class WorkflowStateManager:
     
     @asynccontextmanager
     async def workflow_state_lock(self, workflow_id: str):
-        """Get distributed lock for workflow state."""
-        lock_key = f"workflow_state:{workflow_id}"
+        """Get distributed lock for workflow state."""        lock_key = f"workflow_state:{workflow_id}"
         
         if lock_key not in self.locks:
             self.locks[lock_key] = DistributedLock(lock_key)
@@ -185,8 +170,7 @@ class WorkflowStateManager:
         input_data: Dict[str, Any],
         metadata: Optional[Dict[str, Any]] = None
     ) -> WorkflowState:
-        """Create new workflow state."""
-        async with self.workflow_state_lock(workflow_id):
+        """Create new workflow state."""        async with self.workflow_state_lock(workflow_id):
             if workflow_id in self.workflow_states:
                 raise StateManagementException(f"Workflow state {workflow_id} already exists")
             
@@ -225,8 +209,7 @@ class WorkflowStateManager:
             return state
     
     async def get_workflow_state(self, workflow_id: str) -> Optional[WorkflowState]:
-        """Get workflow state."""
-        # Try memory cache first
+        """Get workflow state."""        # Try memory cache first
         if workflow_id in self.workflow_states:
             return self.workflow_states[workflow_id]
         
@@ -242,8 +225,7 @@ class WorkflowStateManager:
         workflow_id: str,
         updates: Dict[str, Any]
     ) -> WorkflowState:
-        """Update workflow state."""
-        async with self.workflow_state_lock(workflow_id):
+        """Update workflow state."""        async with self.workflow_state_lock(workflow_id):
             state = await self.get_workflow_state(workflow_id)
             if not state:
                 raise StateManagementException(f"Workflow state {workflow_id} not found")
@@ -268,8 +250,7 @@ class WorkflowStateManager:
         stage_result: Dict[str, Any],
         stage_name: Optional[str] = None
     ) -> WorkflowState:
-        """Advance workflow to next stage."""
-        async with self.workflow_state_lock(workflow_id):
+        """Advance workflow to next stage."""        async with self.workflow_state_lock(workflow_id):
             state = await self.get_workflow_state(workflow_id)
             if not state:
                 raise StateManagementException(f"Workflow state {workflow_id} not found")
@@ -326,8 +307,7 @@ class WorkflowStateManager:
         error_type: str = "execution",
         recoverable: bool = True
     ) -> WorkflowState:
-        """Handle workflow error."""
-        async with self.workflow_state_lock(workflow_id):
+        """Handle workflow error."""        async with self.workflow_state_lock(workflow_id):
             state = await self.get_workflow_state(workflow_id)
             if not state:
                 raise StateManagementException(f"Workflow state {workflow_id} not found")
@@ -370,8 +350,7 @@ class WorkflowStateManager:
         key: str,
         value: Any
     ) -> WorkflowState:
-        """Set workflow variable."""
-        async with self.workflow_state_lock(workflow_id):
+        """Set workflow variable."""        async with self.workflow_state_lock(workflow_id):
             state = await self.get_workflow_state(workflow_id)
             if not state:
                 raise StateManagementException(f"Workflow state {workflow_id} not found")
@@ -391,8 +370,7 @@ class WorkflowStateManager:
         key: str,
         default: Any = None
     ) -> Any:
-        """Get workflow variable."""
-        state = await self.get_workflow_state(workflow_id)
+        """Get workflow variable."""        state = await self.get_workflow_state(workflow_id)
         if not state:
             return default
         
@@ -403,8 +381,7 @@ class WorkflowStateManager:
         workflow_id: str,
         snapshot_type: str = "checkpoint"
     ) -> StateSnapshot:
-        """Create state snapshot."""
-        state = await self.get_workflow_state(workflow_id)
+        """Create state snapshot."""        state = await self.get_workflow_state(workflow_id)
         if not state:
             raise StateManagementException(f"Workflow state {workflow_id} not found")
         
@@ -438,8 +415,7 @@ class WorkflowStateManager:
         workflow_id: str,
         snapshot_timestamp: Optional[datetime] = None
     ) -> WorkflowState:
-        """Restore workflow state from snapshot."""
-        async with self.workflow_state_lock(workflow_id):
+        """Restore workflow state from snapshot."""        async with self.workflow_state_lock(workflow_id):
             # Find appropriate snapshot
             snapshot = await self._find_snapshot(workflow_id, snapshot_timestamp)
             if not snapshot:
@@ -496,8 +472,7 @@ class WorkflowStateManager:
         include_transitions: bool = True,
         include_snapshots: bool = False
     ) -> Dict[str, Any]:
-        """Get comprehensive workflow history."""
-        state = await self.get_workflow_state(workflow_id)
+        """Get comprehensive workflow history."""        state = await self.get_workflow_state(workflow_id)
         if not state:
             return {}
         
@@ -536,8 +511,7 @@ class WorkflowStateManager:
         return history
     
     async def cleanup_workflow_state(self, workflow_id: str) -> bool:
-        """Clean up workflow state and related data."""
-        async with self.workflow_state_lock(workflow_id):
+        """Clean up workflow state and related data."""        async with self.workflow_state_lock(workflow_id):
             # Remove from memory
             if workflow_id in self.workflow_states:
                 del self.workflow_states[workflow_id]
@@ -566,8 +540,7 @@ class WorkflowStateManager:
             return True
     
     async def get_state_metrics(self) -> Dict[str, Any]:
-        """Get state management metrics."""
-        active_states = len(self.workflow_states)
+        """Get state management metrics."""        active_states = len(self.workflow_states)
         total_snapshots = len(self.state_snapshots)
         total_transitions = len(self.state_transitions)
         
@@ -592,8 +565,7 @@ class WorkflowStateManager:
         }
     
     def _estimate_memory_usage(self) -> float:
-        """Estimate memory usage of state data."""
-        total_size = 0
+        """Estimate memory usage of state data."""        total_size = 0
         
         # Estimate state sizes
         for state in self.workflow_states.values():
@@ -618,8 +590,7 @@ class WorkflowStateManager:
         error: Optional[str] = None,
         duration_ms: int = 0
     ):
-        """Record state transition."""
-        transition_id = f"{workflow_id}_{uuid.uuid4().hex[:8]}"
+        """Record state transition."""        transition_id = f"{workflow_id}_{uuid.uuid4().hex[:8]}"
         
         transition = StateTransition(
             transition_id=transition_id,
@@ -641,8 +612,7 @@ class WorkflowStateManager:
             await self._save_transition(transition)
     
     async def _checkpoint_loop(self):
-        """Background checkpoint loop."""
-        while True:
+        """Background checkpoint loop."""        while True:
             try:
                 await asyncio.sleep(self.checkpoint_interval)
                 
@@ -658,8 +628,7 @@ class WorkflowStateManager:
                 await asyncio.sleep(60)  # Back off on error
     
     async def _cleanup_loop(self):
-        """Background cleanup loop."""
-        while True:
+        """Background cleanup loop."""        while True:
             try:
                 await asyncio.sleep(3600)  # Run every hour
                 
@@ -693,8 +662,7 @@ class WorkflowStateManager:
                 self.logger.error(f"Error in cleanup loop: {e}")
     
     async def _load_active_states(self):
-        """Load active workflow states from persistence."""
-        if self.persistence_level == PersistenceLevel.NONE:
+        """Load active workflow states from persistence."""        if self.persistence_level == PersistenceLevel.NONE:
             return
         
         try:
@@ -705,8 +673,7 @@ class WorkflowStateManager:
             self.logger.error(f"Error loading active states: {e}")
     
     async def _save_state(self, workflow_id: str):
-        """Save workflow state to persistence."""
-        if self.persistence_level == PersistenceLevel.NONE:
+        """Save workflow state to persistence."""        if self.persistence_level == PersistenceLevel.NONE:
             return
         
         state = self.workflow_states.get(workflow_id)
@@ -721,8 +688,7 @@ class WorkflowStateManager:
             self.logger.error(f"Error saving state for {workflow_id}: {e}")
     
     async def _load_state(self, workflow_id: str) -> Optional[WorkflowState]:
-        """Load workflow state from persistence."""
-        if self.persistence_level == PersistenceLevel.NONE:
+        """Load workflow state from persistence."""        if self.persistence_level == PersistenceLevel.NONE:
             return None
         
         try:
@@ -734,13 +700,11 @@ class WorkflowStateManager:
             return None
     
     async def _save_all_states(self):
-        """Save all workflow states to persistence."""
-        for workflow_id in self.workflow_states.keys():
+        """Save all workflow states to persistence."""        for workflow_id in self.workflow_states.keys():
             await self._save_state(workflow_id)
     
     async def _save_snapshot(self, snapshot: StateSnapshot):
-        """Save snapshot to persistence."""
-        try:
+        """Save snapshot to persistence."""        try:
             # Implementation would save snapshot to database
             # Placeholder for actual database saving
             pass
@@ -748,8 +712,7 @@ class WorkflowStateManager:
             self.logger.error(f"Error saving snapshot: {e}")
     
     async def _save_transition(self, transition: StateTransition):
-        """Save state transition to persistence."""
-        try:
+        """Save state transition to persistence."""        try:
             # Implementation would save transition to database
             # Placeholder for actual database saving
             pass
@@ -761,8 +724,7 @@ class WorkflowStateManager:
         workflow_id: str, 
         timestamp: Optional[datetime] = None
     ) -> Optional[StateSnapshot]:
-        """Find appropriate snapshot for workflow."""
-        workflow_snapshots = [
+        """Find appropriate snapshot for workflow."""        workflow_snapshots = [
             snapshot for snapshot in self.state_snapshots.values()
             if snapshot.workflow_id == workflow_id
         ]
@@ -782,8 +744,7 @@ class WorkflowStateManager:
             return max(workflow_snapshots, key=lambda s: s.timestamp)
     
     async def _delete_persisted_state(self, workflow_id: str):
-        """Delete persisted state data."""
-        try:
+        """Delete persisted state data."""        try:
             # Implementation would delete from database
             # Placeholder for actual database deletion
             pass

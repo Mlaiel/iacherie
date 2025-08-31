@@ -1,5 +1,4 @@
-"""
-Security Audit Monitor - Advanced Security Event Detection & Analysis
+"""Security Audit Monitor - Advanced Security Event Detection & Analysis
 
 Industrial-grade security monitoring system for real-time threat detection,
 security incident response, and advanced threat analytics.
@@ -10,9 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, distribution, or commercialization is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import hashlib
@@ -59,16 +56,14 @@ from ...utils.behavior_analyzer import BehaviorAnalyzer
 logger = logging.getLogger(__name__)
 
 class ThreatLevel(IntEnum):
-    """Security threat level classification"""
-    LOW = 1
+    """Security threat level classification"""    LOW = 1
     MEDIUM = 2
     HIGH = 3
     CRITICAL = 4
     EMERGENCY = 5
 
 class SecurityEventType(Enum):
-    """Security event type classification"""
-    FAILED_LOGIN = "failed_login"
+    """Security event type classification"""    FAILED_LOGIN = "failed_login"
     BRUTE_FORCE = "brute_force_attack"
     SQL_INJECTION = "sql_injection_attempt"
     XSS_ATTEMPT = "xss_attempt"
@@ -85,8 +80,7 @@ class SecurityEventType(Enum):
     COMPLIANCE_VIOLATION = "compliance_violation"
 
 class ResponseAction(Enum):
-    """Automated security response actions"""
-    LOG_ONLY = "log_only"
+    """Automated security response actions"""    LOG_ONLY = "log_only"
     ALERT_ADMIN = "alert_admin"
     BLOCK_IP = "block_ip"
     SUSPEND_ACCOUNT = "suspend_account"
@@ -97,8 +91,7 @@ class ResponseAction(Enum):
 
 @dataclass
 class SecurityConfiguration:
-    """Advanced security monitoring configuration"""
-    enable_real_time_monitoring: bool = True
+    """Advanced security monitoring configuration"""    enable_real_time_monitoring: bool = True
     enable_behavioral_analysis: bool = True
     enable_threat_intelligence: bool = True
     enable_automated_response: bool = True
@@ -112,8 +105,7 @@ class SecurityConfiguration:
 
 @dataclass
 class SecurityMetrics:
-    """Comprehensive security metrics tracking"""
-    total_threats_detected: int = 0
+    """Comprehensive security metrics tracking"""    total_threats_detected: int = 0
     threats_by_type: Dict[str, int] = field(default_factory=dict)
     blocked_ips: int = 0
     suspended_accounts: int = 0
@@ -122,8 +114,7 @@ class SecurityMetrics:
     mean_response_time: float = 0.0
 
 class SecurityAuditMonitor:
-    """
-    Enterprise Security Audit Monitor
+    """    Enterprise Security Audit Monitor
     
     Advanced security monitoring system providing:
     - Real-time threat detection
@@ -132,9 +123,7 @@ class SecurityAuditMonitor:
     - Threat intelligence integration
     - Geographic access control
     - Advanced attack pattern recognition
-    """
-
-    def __init__(self, config: Optional[SecurityConfiguration] = None):
+    """    def __init__(self, config: Optional[SecurityConfiguration] = None):
         self.config = config or SecurityConfiguration()
         self.metrics = SecurityMetrics()
         
@@ -173,8 +162,7 @@ class SecurityAuditMonitor:
         request_data: Optional[Dict[str, Any]] = None,
         timestamp: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """
-        Monitor and analyze security event with comprehensive threat assessment
+        """        Monitor and analyze security event with comprehensive threat assessment
         
         Args:
             event_type: Type of security event
@@ -186,8 +174,7 @@ class SecurityAuditMonitor:
             
         Returns:
             Security analysis results with recommended actions
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             if not timestamp:
@@ -275,8 +262,7 @@ class SecurityAuditMonitor:
         user_id: Optional[str] = None,
         time_window: timedelta = timedelta(minutes=15)
     ) -> Dict[str, Any]:
-        """
-        Advanced brute force attack detection with pattern analysis
+        """        Advanced brute force attack detection with pattern analysis
         
         Args:
             source_ip: Source IP address
@@ -285,8 +271,7 @@ class SecurityAuditMonitor:
             
         Returns:
             Brute force detection results
-        """
-        try:
+        """        try:
             current_time = datetime.now(timezone.utc)
             window_start = current_time - time_window
             
@@ -355,8 +340,7 @@ class SecurityAuditMonitor:
         request_count: int = 1,
         time_window: timedelta = timedelta(hours=1)
     ) -> Dict[str, Any]:
-        """
-        Detect and analyze API abuse patterns and rate limiting violations
+        """        Detect and analyze API abuse patterns and rate limiting violations
         
         Args:
             api_endpoint: API endpoint being accessed
@@ -367,8 +351,7 @@ class SecurityAuditMonitor:
             
         Returns:
             API abuse analysis results
-        """
-        try:
+        """        try:
             current_time = datetime.now(timezone.utc)
             
             # Track API usage patterns
@@ -430,8 +413,7 @@ class SecurityAuditMonitor:
         resource_accessed: Optional[str] = None,
         time_context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Advanced insider threat detection using behavioral analytics
+        """        Advanced insider threat detection using behavioral analytics
         
         Args:
             user_id: User performing the action
@@ -441,8 +423,7 @@ class SecurityAuditMonitor:
             
         Returns:
             Insider threat analysis results
-        """
-        try:
+        """        try:
             # Analyze user behavior patterns
             behavior_baseline = await self.behavior_analyzer.get_user_baseline(user_id)
             current_behavior = await self.behavior_analyzer.analyze_current_session(user_id)
@@ -503,13 +484,11 @@ class SecurityAuditMonitor:
             raise SecurityError(f"Insider threat detection failed: {str(e)}")
 
     async def get_security_dashboard(self) -> Dict[str, Any]:
-        """
-        Generate comprehensive security monitoring dashboard data
+        """        Generate comprehensive security monitoring dashboard data
         
         Returns:
             Security dashboard data with real-time metrics
-        """
-        try:
+        """        try:
             current_time = datetime.now(timezone.utc)
             last_24h = current_time - timedelta(hours=24)
             
@@ -565,8 +544,7 @@ class SecurityAuditMonitor:
 
     # Private helper methods
     async def _analyze_geographic_context(self, ip_address: str) -> Dict[str, Any]:
-        """Analyze geographic context of IP address"""
-        geo_info = {
+        """Analyze geographic context of IP address"""        geo_info = {
             "country": "Unknown",
             "is_allowed_country": True,
             "is_suspicious_location": False,
@@ -594,8 +572,7 @@ class SecurityAuditMonitor:
         event_type: SecurityEventType,
         timestamp: datetime
     ) -> Dict[str, Any]:
-        """Analyze user behavioral patterns for anomaly detection"""
-        baseline = await self.behavior_analyzer.get_user_baseline(user_id)
+        """Analyze user behavioral patterns for anomaly detection"""        baseline = await self.behavior_analyzer.get_user_baseline(user_id)
         current_session = await self.behavior_analyzer.analyze_current_session(user_id)
         
         # Compare current behavior with baseline
@@ -620,8 +597,7 @@ class SecurityAuditMonitor:
         source_ip: str,
         request_data: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze attack patterns and signatures"""
-        patterns = {
+        """Analyze attack patterns and signatures"""        patterns = {
             "sql_injection_detected": False,
             "xss_detected": False,
             "command_injection_detected": False,
@@ -660,8 +636,7 @@ class SecurityAuditMonitor:
         return patterns
 
     async def _calculate_threat_score(self, threat_context: Dict[str, Any]) -> float:
-        """Calculate composite threat score from multiple indicators"""
-        score = 0.0
+        """Calculate composite threat score from multiple indicators"""        score = 0.0
         
         # IP reputation score
         ip_rep = threat_context.get('ip_reputation', {})
@@ -689,8 +664,7 @@ class SecurityAuditMonitor:
         return min(score, 1.0)
 
     def _determine_threat_level(self, threat_score: float) -> ThreatLevel:
-        """Determine threat level based on composite score"""
-        if threat_score >= 0.9:
+        """Determine threat level based on composite score"""        if threat_score >= 0.9:
             return ThreatLevel.EMERGENCY
         elif threat_score >= 0.7:
             return ThreatLevel.CRITICAL
@@ -706,8 +680,7 @@ class SecurityAuditMonitor:
         threat_context: Dict[str, Any],
         threat_level: ThreatLevel
     ) -> List[ResponseAction]:
-        """Determine appropriate automated response actions"""
-        actions = [ResponseAction.LOG_ONLY]
+        """Determine appropriate automated response actions"""        actions = [ResponseAction.LOG_ONLY]
         
         if threat_level >= ThreatLevel.MEDIUM:
             actions.append(ResponseAction.ALERT_ADMIN)
@@ -732,8 +705,7 @@ class SecurityAuditMonitor:
         actions: List[ResponseAction],
         threat_context: Dict[str, Any]
     ) -> List[str]:
-        """Execute automated security response actions"""
-        executed = []
+        """Execute automated security response actions"""        executed = []
         
         for action in actions:
             try:
@@ -763,8 +735,7 @@ class SecurityAuditMonitor:
         threat_context: Dict[str, Any],
         threat_level: ThreatLevel
     ) -> str:
-        """Create security incident record"""
-        incident_id = str(uuid.uuid4())
+        """Create security incident record"""        incident_id = str(uuid.uuid4())
         
         try:
             async with get_db_session() as session:
@@ -795,8 +766,7 @@ class SecurityAuditMonitor:
         event_type: SecurityEventType,
         threat_level: ThreatLevel
     ) -> None:
-        """Update internal tracking state for ongoing monitoring"""
-        # Update failed attempt tracking
+        """Update internal tracking state for ongoing monitoring"""        # Update failed attempt tracking
         if event_type == SecurityEventType.FAILED_LOGIN:
             self.failed_attempts[source_ip].append({
                 'timestamp': datetime.now(timezone.utc),

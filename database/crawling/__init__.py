@@ -7,8 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team Specialties: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + 
                  Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: All rights reserved
-"""
-from .index import CrawlerDatabaseManager
+"""from .index import CrawlerDatabaseManager
 from .analytics import CrawlerAnalyticsManager
 from .content_discoveries import ContentDiscoveryManager
 from .jobs import CrawlerJobManager

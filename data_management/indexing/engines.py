@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Advanced Indexing Engines
+"""IA Influencer Agent - Advanced Indexing Engines
 ===============================================
 
 High-performance indexing engines for multi-format content processing,
@@ -13,9 +12,7 @@ This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import hashlib
 import logging
 from abc import ABC, abstractmethod
@@ -40,8 +37,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class IndexingConfig:
-    """Configuration for indexing engines"""
-    vector_dimension: int = 768
+    """Configuration for indexing engines"""    vector_dimension: int = 768
     similarity_threshold: float = 0.85
     batch_size: int = 100
     max_concurrent_operations: int = 50
@@ -53,8 +49,7 @@ class IndexingConfig:
 
 
 class BaseIndexEngine(ABC):
-    """Abstract base class for all indexing engines"""
-    
+    """Abstract base class for all indexing engines"""    
     def __init__(self, config: IndexingConfig):
         self.config = config
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -62,27 +57,22 @@ class BaseIndexEngine(ABC):
     
     @abstractmethod
     async def initialize(self) -> None:
-        """Initialize the indexing engine"""
-        pass
+        """Initialize the indexing engine"""        pass
     
     @abstractmethod
     async def index_content(self, content_id: str, data: Any) -> Dict[str, Any]:
-        """Index content and return indexing result"""
-        pass
+        """Index content and return indexing result"""        pass
     
     @abstractmethod
     async def search(self, query: Any, filters: Dict = None) -> List[Dict[str, Any]]:
-        """Search indexed content"""
-        pass
+        """Search indexed content"""        pass
     
     @abstractmethod
     async def delete_index(self, content_id: str) -> bool:
-        """Delete indexed content"""
-        pass
+        """Delete indexed content"""        pass
     
     async def health_check(self) -> Dict[str, Any]:
-        """Check engine health status"""
-        return {
+        """Check engine health status"""        return {
             "engine": self.__class__.__name__,
             "status": "healthy" if self._initialized else "not_initialized",
             "timestamp": datetime.now(timezone.utc).isoformat()
@@ -90,8 +80,7 @@ class BaseIndexEngine(ABC):
 
 
 class VectorSearchEngine(BaseIndexEngine):
-    """Advanced vector search engine with FAISS backend for similarity search"""
-    
+    """Advanced vector search engine with FAISS backend for similarity search"""    
     def __init__(self, config: IndexingConfig):
         super().__init__(config)
         self.faiss_index = None
@@ -101,8 +90,7 @@ class VectorSearchEngine(BaseIndexEngine):
         self.tokenizer = None
         
     async def initialize(self) -> None:
-        """Initialize FAISS index and embedding models"""
-        try:
+        """Initialize FAISS index and embedding models"""        try:
             # Initialize Redis connection
             self.redis_client = Redis.from_url(self.config.redis_url)
             await self.redis_client.ping()
@@ -139,8 +127,7 @@ class VectorSearchEngine(BaseIndexEngine):
             raise
     
     async def _generate_embedding(self, text: str) -> np.ndarray:
-        """Generate text embedding using transformer model"""
-        try:
+        """Generate text embedding using transformer model"""        try:
             inputs = self.tokenizer(
                 text, 
                 return_tensors="pt", 
@@ -163,8 +150,7 @@ class VectorSearchEngine(BaseIndexEngine):
             raise
     
     async def index_content(self, content_id: str, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Index content with vector embeddings"""
-        try:
+        """Index content with vector embeddings"""        try:
             text_content = data.get("text", "")
             metadata = data.get("metadata", {})
             
@@ -210,8 +196,7 @@ class VectorSearchEngine(BaseIndexEngine):
             raise
     
     async def search(self, query: str, filters: Dict = None, top_k: int = 10) -> List[Dict[str, Any]]:
-        """Perform similarity search"""
-        try:
+        """Perform similarity search"""        try:
             # Generate query embedding
             query_embedding = await self._generate_embedding(query)
             
@@ -244,16 +229,14 @@ class VectorSearchEngine(BaseIndexEngine):
             raise
     
     def _apply_filters(self, result: Dict, filters: Dict) -> bool:
-        """Apply search filters"""
-        for key, value in filters.items():
+        """Apply search filters"""        for key, value in filters.items():
             if key in result.get("metadata", {}):
                 if result["metadata"][key] != value:
                     return False
         return True
     
     async def delete_index(self, content_id: str) -> bool:
-        """Delete indexed content"""
-        try:
+        """Delete indexed content"""        try:
             # Find vector_id from Redis
             vector_data = await self.redis_client.hgetall(f"vector:{content_id}")
             if not vector_data:
@@ -274,15 +257,13 @@ class VectorSearchEngine(BaseIndexEngine):
 
 
 class ContentIndexEngine(BaseIndexEngine):
-    """Advanced content indexing engine with Elasticsearch backend"""
-    
+    """Advanced content indexing engine with Elasticsearch backend"""    
     def __init__(self, config: IndexingConfig):
         super().__init__(config)
         self.es_client = None
         
     async def initialize(self) -> None:
-        """Initialize Elasticsearch connection"""
-        try:
+        """Initialize Elasticsearch connection"""        try:
             hosts = self.config.elasticsearch_hosts or ["http://localhost:9200"]
             self.es_client = AsyncElasticsearch(hosts=hosts)
             
@@ -297,8 +278,7 @@ class ContentIndexEngine(BaseIndexEngine):
             raise
     
     async def _create_mappings(self) -> None:
-        """Create Elasticsearch index mappings"""
-        mappings = {
+        """Create Elasticsearch index mappings"""        mappings = {
             "mappings": {
                 "properties": {
                     "content_id": {"type": "keyword"},
@@ -323,8 +303,7 @@ class ContentIndexEngine(BaseIndexEngine):
             await self.es_client.indices.create(index=index_name, body=mappings)
     
     async def index_content(self, content_id: str, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Index content in Elasticsearch"""
-        try:
+        """Index content in Elasticsearch"""        try:
             index_name = f"{self.config.index_prefix}_content"
             
             document = {
@@ -360,8 +339,7 @@ class ContentIndexEngine(BaseIndexEngine):
             raise
     
     async def search(self, query: Dict, filters: Dict = None) -> List[Dict[str, Any]]:
-        """Search indexed content"""
-        try:
+        """Search indexed content"""        try:
             index_name = f"{self.config.index_prefix}_content"
             
             search_body = {
@@ -389,8 +367,7 @@ class ContentIndexEngine(BaseIndexEngine):
             raise
     
     def _build_query(self, query: Dict, filters: Dict = None) -> Dict:
-        """Build Elasticsearch query"""
-        if "text" in query:
+        """Build Elasticsearch query"""        if "text" in query:
             es_query = {
                 "multi_match": {
                     "query": query["text"],
@@ -421,8 +398,7 @@ class ContentIndexEngine(BaseIndexEngine):
         return es_query
     
     async def delete_index(self, content_id: str) -> bool:
-        """Delete indexed content"""
-        try:
+        """Delete indexed content"""        try:
             index_name = f"{self.config.index_prefix}_content"
             response = await self.es_client.delete(
                 index=index_name,
@@ -436,16 +412,14 @@ class ContentIndexEngine(BaseIndexEngine):
 
 
 class FingerprintIndexEngine(BaseIndexEngine):
-    """Advanced fingerprinting engine for content protection and similarity detection"""
-    
+    """Advanced fingerprinting engine for content protection and similarity detection"""    
     def __init__(self, config: IndexingConfig):
         super().__init__(config)
         self.redis_client = None
         self.fingerprint_store = {}
         
     async def initialize(self) -> None:
-        """Initialize fingerprint storage"""
-        try:
+        """Initialize fingerprint storage"""        try:
             self.redis_client = Redis.from_url(self.config.redis_url)
             await self.redis_client.ping()
             
@@ -457,8 +431,7 @@ class FingerprintIndexEngine(BaseIndexEngine):
             raise
     
     async def index_content(self, content_id: str, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate and index content fingerprints"""
-        try:
+        """Generate and index content fingerprints"""        try:
             content_type = data.get("content_type", "unknown")
             fingerprints = {}
             
@@ -503,8 +476,7 @@ class FingerprintIndexEngine(BaseIndexEngine):
             raise
     
     async def _generate_audio_fingerprint(self, data: Dict) -> Dict[str, str]:
-        """Generate audio fingerprints using multiple algorithms"""
-        fingerprints = {}
+        """Generate audio fingerprints using multiple algorithms"""        fingerprints = {}
         
         try:
             audio_path = data.get("file_path")
@@ -536,8 +508,7 @@ class FingerprintIndexEngine(BaseIndexEngine):
         return fingerprints
     
     async def _generate_image_fingerprint(self, data: Dict) -> Dict[str, str]:
-        """Generate image fingerprints using multiple algorithms"""
-        fingerprints = {}
+        """Generate image fingerprints using multiple algorithms"""        fingerprints = {}
         
         try:
             image_path = data.get("file_path")
@@ -571,8 +542,7 @@ class FingerprintIndexEngine(BaseIndexEngine):
         return fingerprints
     
     async def _generate_video_fingerprint(self, data: Dict) -> Dict[str, str]:
-        """Generate video fingerprints"""
-        fingerprints = {}
+        """Generate video fingerprints"""        fingerprints = {}
         
         try:
             video_path = data.get("file_path")
@@ -604,8 +574,7 @@ class FingerprintIndexEngine(BaseIndexEngine):
         return fingerprints
     
     async def _generate_text_fingerprint(self, data: Dict) -> Dict[str, str]:
-        """Generate text fingerprints"""
-        fingerprints = {}
+        """Generate text fingerprints"""        fingerprints = {}
         
         try:
             text = data.get("text", "")
@@ -632,8 +601,7 @@ class FingerprintIndexEngine(BaseIndexEngine):
         return fingerprints
     
     async def search(self, query: Dict, filters: Dict = None) -> List[Dict[str, Any]]:
-        """Search for similar fingerprints"""
-        try:
+        """Search for similar fingerprints"""        try:
             query_fingerprints = query.get("fingerprints", {})
             similarity_threshold = query.get("threshold", self.config.similarity_threshold)
             
@@ -662,8 +630,7 @@ class FingerprintIndexEngine(BaseIndexEngine):
             raise
     
     def _calculate_fingerprint_similarity(self, fp1: Dict, fp2: Dict) -> float:
-        """Calculate similarity between two fingerprint sets"""
-        if not fp1 or not fp2:
+        """Calculate similarity between two fingerprint sets"""        if not fp1 or not fp2:
             return 0.0
         
         common_types = set(fp1.keys()) & set(fp2.keys())
@@ -687,8 +654,7 @@ class FingerprintIndexEngine(BaseIndexEngine):
         return sum(similarities) / len(similarities)
     
     async def delete_index(self, content_id: str) -> bool:
-        """Delete fingerprint index"""
-        try:
+        """Delete fingerprint index"""        try:
             if content_id in self.fingerprint_store:
                 del self.fingerprint_store[content_id]
             
@@ -701,16 +667,14 @@ class FingerprintIndexEngine(BaseIndexEngine):
 
 
 class MetadataIndexEngine(BaseIndexEngine):
-    """Advanced metadata indexing for fast filtering and aggregation"""
-    
+    """Advanced metadata indexing for fast filtering and aggregation"""    
     def __init__(self, config: IndexingConfig):
         super().__init__(config)
         self.redis_client = None
         self.metadata_store = {}
         
     async def initialize(self) -> None:
-        """Initialize metadata storage"""
-        try:
+        """Initialize metadata storage"""        try:
             self.redis_client = Redis.from_url(self.config.redis_url)
             await self.redis_client.ping()
             
@@ -722,8 +686,7 @@ class MetadataIndexEngine(BaseIndexEngine):
             raise
     
     async def index_content(self, content_id: str, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Index content metadata"""
-        try:
+        """Index content metadata"""        try:
             metadata = {
                 "content_id": content_id,
                 "creator_id": data.get("creator_id", ""),
@@ -762,8 +725,7 @@ class MetadataIndexEngine(BaseIndexEngine):
             raise
     
     async def _index_redis_metadata(self, content_id: str, metadata: Dict) -> None:
-        """Index metadata in Redis with multiple access patterns"""
-        # Main metadata
+        """Index metadata in Redis with multiple access patterns"""        # Main metadata
         await self.redis_client.hset(
             f"metadata:{content_id}",
             mapping={k: str(v) for k, v in metadata.items()}
@@ -794,8 +756,7 @@ class MetadataIndexEngine(BaseIndexEngine):
             await self.redis_client.sadd(f"date:{created_date}:content", content_id)
     
     async def search(self, query: Dict, filters: Dict = None) -> List[Dict[str, Any]]:
-        """Search metadata with advanced filtering"""
-        try:
+        """Search metadata with advanced filtering"""        try:
             results = []
             content_ids = set()
             
@@ -835,8 +796,7 @@ class MetadataIndexEngine(BaseIndexEngine):
             raise
     
     async def _apply_metadata_filters(self, filters: Dict) -> set:
-        """Apply metadata filters using Redis sets"""
-        filter_sets = []
+        """Apply metadata filters using Redis sets"""        filter_sets = []
         
         for key, value in filters.items():
             if key == "creator_id":
@@ -873,8 +833,7 @@ class MetadataIndexEngine(BaseIndexEngine):
         return {item.decode() if isinstance(item, bytes) else item for item in result}
     
     async def _search_metadata_text(self, text: str) -> set:
-        """Search metadata text fields"""
-        matching_content = set()
+        """Search metadata text fields"""        matching_content = set()
         text_lower = text.lower()
         
         for content_id, metadata in self.metadata_store.items():
@@ -891,8 +850,7 @@ class MetadataIndexEngine(BaseIndexEngine):
         return matching_content
     
     async def delete_index(self, content_id: str) -> bool:
-        """Delete metadata index"""
-        try:
+        """Delete metadata index"""        try:
             if content_id not in self.metadata_store:
                 return False
             
@@ -927,8 +885,7 @@ class MetadataIndexEngine(BaseIndexEngine):
             return False
     
     async def get_aggregations(self, field: str, filters: Dict = None) -> Dict[str, int]:
-        """Get aggregation statistics for a field"""
-        try:
+        """Get aggregation statistics for a field"""        try:
             aggregations = {}
             
             # Get content IDs based on filters

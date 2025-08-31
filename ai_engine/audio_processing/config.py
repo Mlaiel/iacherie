@@ -1,14 +1,11 @@
-"""
-⚙️ Audio Processing Configuration - Professional Configuration Management
+"""⚙️ Audio Processing Configuration - Professional Configuration Management
 
 Centralized configuration system for all audio processing components.
 Supports multiple environments, validation, and dynamic updates.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import logging
+"""import logging
 import os
 import json
 import yaml
@@ -22,16 +19,14 @@ logger = logging.getLogger(__name__)
 
 
 class Environment(Enum):
-    """Deployment environments"""
-    DEVELOPMENT = "development"
+    """Deployment environments"""    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
 
 
 class LogLevel(Enum):
-    """Logging levels"""
-    DEBUG = "DEBUG"
+    """Logging levels"""    DEBUG = "DEBUG"
     INFO = "INFO"
     WARNING = "WARNING"
     ERROR = "ERROR"
@@ -40,8 +35,7 @@ class LogLevel(Enum):
 
 @dataclass
 class AudioProcessingConfig:
-    """
-    🔧 Comprehensive Audio Processing Configuration
+    """    🔧 Comprehensive Audio Processing Configuration
     
     Centralized configuration for all audio processing components:
     - Audio parameters and quality settings
@@ -49,8 +43,7 @@ class AudioProcessingConfig:
     - Performance and resource management
     - File paths and directories
     - External service configurations
-    """
-    
+    """    
     # Environment and general settings
     environment: Environment = Environment.DEVELOPMENT
     debug_mode: bool = True
@@ -126,8 +119,7 @@ class AudioProcessingConfig:
     custom_parameters: Dict[str, Any] = None
     
     def __post_init__(self):
-        """Initialize derived settings after object creation"""
-        # Initialize lists if None
+        """Initialize derived settings after object creation"""        # Initialize lists if None
         if self.supported_input_formats is None:
             self.supported_input_formats = [
                 "wav", "mp3", "flac", "aac", "ogg", "m4a", "aiff", "wma"
@@ -160,8 +152,7 @@ class AudioProcessingConfig:
         self._validate_config()
     
     def _validate_config(self):
-        """Validate configuration parameters"""
-        # Validate sample rate
+        """Validate configuration parameters"""        # Validate sample rate
         if self.default_sample_rate <= 0:
             raise ValueError("Sample rate must be positive")
         
@@ -200,8 +191,7 @@ class AudioProcessingConfig:
             raise ValueError("Default output format must be in supported output formats")
     
     def get_quality_parameters(self) -> Dict[str, Any]:
-        """Get quality-specific parameters"""
-        quality_params = {
+        """Get quality-specific parameters"""        quality_params = {
             "low": {
                 "fft_size": 1024,
                 "hop_length": 512,
@@ -235,8 +225,7 @@ class AudioProcessingConfig:
         return quality_params.get(self.processing_quality, quality_params["high"])
     
     def get_memory_limits(self) -> Dict[str, int]:
-        """Get memory limits for different components"""
-        total_memory = self.memory_limit_mb
+        """Get memory limits for different components"""        total_memory = self.memory_limit_mb
         
         return {
             "audio_processing": int(total_memory * 0.4),  # 40%
@@ -246,8 +235,7 @@ class AudioProcessingConfig:
         }
     
     def get_cpu_allocation(self) -> Dict[str, int]:
-        """Get CPU core allocation for different components"""
-        total_cores = min(self.max_cpu_cores, os.cpu_count() or 1)
+        """Get CPU core allocation for different components"""        total_cores = min(self.max_cpu_cores, os.cpu_count() or 1)
         
         if total_cores == 1:
             return {
@@ -272,8 +260,7 @@ class AudioProcessingConfig:
             }
     
     def is_format_supported(self, format_name: str, input_format: bool = True) -> bool:
-        """Check if a format is supported"""
-        format_name = format_name.lower().lstrip('.')
+        """Check if a format is supported"""        format_name = format_name.lower().lstrip('.')
         
         if input_format:
             return format_name in self.supported_input_formats
@@ -281,12 +268,10 @@ class AudioProcessingConfig:
             return format_name in self.supported_output_formats
     
     def get_api_timeout(self, api_name: str) -> float:
-        """Get timeout for specific API"""
-        return self.api_timeouts.get(api_name, self.api_timeouts.get("default", 30.0))
+        """Get timeout for specific API"""        return self.api_timeouts.get(api_name, self.api_timeouts.get("default", 30.0))
     
     def update_parameter(self, parameter_path: str, value: Any):
-        """Update a configuration parameter dynamically"""
-        keys = parameter_path.split('.')
+        """Update a configuration parameter dynamically"""        keys = parameter_path.split('.')
         obj = self
         
         # Navigate to the parent object
@@ -305,8 +290,7 @@ class AudioProcessingConfig:
             raise KeyError(f"Parameter not found: {parameter_path}")
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""
-        config_dict = {}
+        """Convert configuration to dictionary"""        config_dict = {}
         
         for key, value in self.__dict__.items():
             if isinstance(value, (Path, Enum)):
@@ -320,8 +304,7 @@ class AudioProcessingConfig:
     
     @classmethod
     def from_dict(cls, config_dict: Dict[str, Any]) -> 'AudioProcessingConfig':
-        """Create configuration from dictionary"""
-        # Convert string paths back to Path objects
+        """Create configuration from dictionary"""        # Convert string paths back to Path objects
         for key in ['temp_directory', 'cache_directory', 'ml_model_directory']:
             if key in config_dict and config_dict[key] is not None:
                 config_dict[key] = Path(config_dict[key])
@@ -336,8 +319,7 @@ class AudioProcessingConfig:
         return cls(**config_dict)
     
     def save_to_file(self, file_path: Union[str, Path]):
-        """Save configuration to file"""
-        file_path = Path(file_path)
+        """Save configuration to file"""        file_path = Path(file_path)
         config_dict = self.to_dict()
         
         if file_path.suffix.lower() == '.json':
@@ -353,8 +335,7 @@ class AudioProcessingConfig:
     
     @classmethod
     def load_from_file(cls, file_path: Union[str, Path]) -> 'AudioProcessingConfig':
-        """Load configuration from file"""
-        file_path = Path(file_path)
+        """Load configuration from file"""        file_path = Path(file_path)
         
         if not file_path.exists():
             raise FileNotFoundError(f"Configuration file not found: {file_path}")
@@ -373,16 +354,14 @@ class AudioProcessingConfig:
 
 
 class ConfigurationManager:
-    """
-    🔧 Configuration Manager
+    """    🔧 Configuration Manager
     
     Advanced configuration management system:
     - Environment-specific configurations
     - Configuration validation and merging
     - Dynamic configuration updates
     - Configuration templates and presets
-    """
-    
+    """    
     def __init__(self, config_directory: Optional[Path] = None):
         self.config_directory = config_directory or Path.cwd() / "config"
         self.config_directory.mkdir(parents=True, exist_ok=True)
@@ -396,8 +375,7 @@ class ConfigurationManager:
         logger.info(f"ConfigurationManager initialized with directory: {self.config_directory}")
     
     def _initialize_templates(self) -> Dict[str, AudioProcessingConfig]:
-        """Initialize configuration templates"""
-        templates = {}
+        """Initialize configuration templates"""        templates = {}
         
         # Development template
         templates['development'] = AudioProcessingConfig(
@@ -471,8 +449,7 @@ class ConfigurationManager:
         return templates
     
     def get_template(self, template_name: str) -> AudioProcessingConfig:
-        """Get a configuration template"""
-        if template_name not in self.templates:
+        """Get a configuration template"""        if template_name not in self.templates:
             available = list(self.templates.keys())
             raise ValueError(f"Template '{template_name}' not found. Available: {available}")
         
@@ -481,8 +458,7 @@ class ConfigurationManager:
     def create_config_from_template(self, 
                                   template_name: str,
                                   overrides: Optional[Dict[str, Any]] = None) -> AudioProcessingConfig:
-        """Create configuration from template with optional overrides"""
-        base_config = self.get_template(template_name)
+        """Create configuration from template with optional overrides"""        base_config = self.get_template(template_name)
         config_dict = base_config.to_dict()
         
         # Apply overrides
@@ -494,8 +470,7 @@ class ConfigurationManager:
     def load_config(self, 
                    config_name: str = "default",
                    environment: Optional[Environment] = None) -> AudioProcessingConfig:
-        """Load configuration from file"""
-        if environment:
+        """Load configuration from file"""        if environment:
             config_file = self.config_directory / f"{config_name}_{environment.value}.yaml"
         else:
             config_file = self.config_directory / f"{config_name}.yaml"
@@ -520,8 +495,7 @@ class ConfigurationManager:
                    config_name: str = "default",
                    environment: Optional[Environment] = None,
                    config: Optional[AudioProcessingConfig] = None):
-        """Save configuration to file"""
-        if config is None:
+        """Save configuration to file"""        if config is None:
             config = self.current_config
         
         if config is None:
@@ -537,8 +511,7 @@ class ConfigurationManager:
     def merge_configs(self, 
                      base_config: AudioProcessingConfig,
                      override_config: AudioProcessingConfig) -> AudioProcessingConfig:
-        """Merge two configurations, with override taking precedence"""
-        base_dict = base_config.to_dict()
+        """Merge two configurations, with override taking precedence"""        base_dict = base_config.to_dict()
         override_dict = override_config.to_dict()
         
         # Merge dictionaries
@@ -547,8 +520,7 @@ class ConfigurationManager:
         return AudioProcessingConfig.from_dict(merged_dict)
     
     def validate_config(self, config: AudioProcessingConfig) -> List[str]:
-        """Validate configuration and return list of issues"""
-        issues = []
+        """Validate configuration and return list of issues"""        issues = []
         
         try:
             # Basic validation is done in __post_init__
@@ -584,12 +556,10 @@ class ConfigurationManager:
         return issues
     
     def get_environment_config(self, environment: Environment) -> AudioProcessingConfig:
-        """Get configuration for specific environment"""
-        return self.load_config("default", environment)
+        """Get configuration for specific environment"""        return self.load_config("default", environment)
     
     def list_available_configs(self) -> List[str]:
-        """List available configuration files"""
-        config_files = []
+        """List available configuration files"""        config_files = []
         
         for file_path in self.config_directory.glob("*.yaml"):
             config_files.append(file_path.stem)
@@ -600,12 +570,10 @@ class ConfigurationManager:
         return sorted(list(set(config_files)))
     
     def get_current_config(self) -> Optional[AudioProcessingConfig]:
-        """Get current configuration"""
-        return self.current_config
+        """Get current configuration"""        return self.current_config
     
     def set_current_config(self, config: AudioProcessingConfig):
-        """Set current configuration"""
-        self.current_config = config
+        """Set current configuration"""        self.current_config = config
         logger.info(f"Current configuration set to {config.environment.value} mode")
 
 
@@ -614,8 +582,7 @@ _config_manager = ConfigurationManager()
 
 
 def get_config() -> AudioProcessingConfig:
-    """Get current audio processing configuration"""
-    config = _config_manager.get_current_config()
+    """Get current audio processing configuration"""    config = _config_manager.get_current_config()
     if config is None:
         # Load default configuration
         config = _config_manager.load_config()
@@ -623,38 +590,32 @@ def get_config() -> AudioProcessingConfig:
 
 
 def set_config(config: AudioProcessingConfig):
-    """Set current audio processing configuration"""
-    _config_manager.set_current_config(config)
+    """Set current audio processing configuration"""    _config_manager.set_current_config(config)
 
 
 def load_config(config_name: str = "default", 
                environment: Optional[Environment] = None) -> AudioProcessingConfig:
-    """Load configuration from file"""
-    return _config_manager.load_config(config_name, environment)
+    """Load configuration from file"""    return _config_manager.load_config(config_name, environment)
 
 
 def save_config(config: AudioProcessingConfig,
                config_name: str = "default",
                environment: Optional[Environment] = None):
-    """Save configuration to file"""
-    _config_manager.save_config(config_name, environment, config)
+    """Save configuration to file"""    _config_manager.save_config(config_name, environment, config)
 
 
 def get_template(template_name: str) -> AudioProcessingConfig:
-    """Get configuration template"""
-    return _config_manager.get_template(template_name)
+    """Get configuration template"""    return _config_manager.get_template(template_name)
 
 
 def create_config_from_template(template_name: str,
                                overrides: Optional[Dict[str, Any]] = None) -> AudioProcessingConfig:
-    """Create configuration from template"""
-    return _config_manager.create_config_from_template(template_name, overrides)
+    """Create configuration from template"""    return _config_manager.create_config_from_template(template_name, overrides)
 
 
 # Environment detection
 def detect_environment() -> Environment:
-    """Detect current environment from environment variables"""
-    env_name = os.getenv('AUDIO_PROCESSING_ENV', 'development').lower()
+    """Detect current environment from environment variables"""    env_name = os.getenv('AUDIO_PROCESSING_ENV', 'development').lower()
     
     env_mapping = {
         'dev': Environment.DEVELOPMENT,
@@ -671,8 +632,7 @@ def detect_environment() -> Environment:
 
 
 def initialize_config(environment: Optional[Environment] = None) -> AudioProcessingConfig:
-    """Initialize configuration for current environment"""
-    if environment is None:
+    """Initialize configuration for current environment"""    if environment is None:
         environment = detect_environment()
     
     config = _config_manager.load_config("default", environment)

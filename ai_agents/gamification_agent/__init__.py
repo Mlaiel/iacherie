@@ -1,5 +1,4 @@
-"""
-Gamification Agent Module - Advanced AI-Powered Creator Engagement System
+"""Gamification Agent Module - Advanced AI-Powered Creator Engagement System
 
 Industrial-grade gamification intelligence providing automated challenge generation,
 reward optimization, engagement prediction, and social competition management
@@ -25,9 +24,7 @@ Team Specialties:
 - Microservices Architect & Database Expert
 - DevOps Engineer & Security Specialist
 - Audio Processing & Multimedia Expert
-"""
-
-from .gamification_agent import GamificationAgent, GamificationConfig
+"""from .gamification_agent import GamificationAgent, GamificationConfig
 from .challenge_ai import ChallengeGenerator, ChallengeConfig
 from .reward_optimization_ai import RewardOptimizer, RewardConfig
 from .user_engagement_predictor import EngagementPredictor, EngagementConfig

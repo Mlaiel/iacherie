@@ -1,5 +1,4 @@
-"""
-Revenue Tracking Infrastructure Manager
+"""Revenue Tracking Infrastructure Manager
 
 Enterprise-grade infrastructure for automated revenue tracking, monetization analytics,
 payment processing integration, and multi-platform earnings aggregation.
@@ -12,9 +11,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 ⚠️  Unauthorized reproduction, distribution, or use is strictly        ⚠️
 ⚠️  prohibited and may result in severe civil and criminal penalties.  ⚠️
 ⚠️  All rights reserved to Fahed Mlaiel (mlaiel@live.de).             ⚠️
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
@@ -37,8 +34,7 @@ from paypal_checkout_serversdk.core import PayPalHttpClient, SandboxEnvironment,
 logger = logging.getLogger(__name__)
 
 class RevenueSource(Enum):
-    """Revenue sources"""
-    YOUTUBE = "youtube"
+    """Revenue sources"""    YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -55,8 +51,7 @@ class RevenueSource(Enum):
     BRAND_PARTNERSHIPS = "brand_partnerships"
 
 class PaymentProvider(Enum):
-    """Payment providers"""
-    STRIPE = "stripe"
+    """Payment providers"""    STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
     BANK_TRANSFER = "bank_transfer"
@@ -64,8 +59,7 @@ class PaymentProvider(Enum):
     CUSTOM = "custom"
 
 class RevenueType(Enum):
-    """Types of revenue"""
-    AD_REVENUE = "ad_revenue"
+    """Types of revenue"""    AD_REVENUE = "ad_revenue"
     STREAMING_ROYALTIES = "streaming_royalties"
     MERCHANDISE_SALES = "merchandise_sales"
     LICENSING_FEES = "licensing_fees"
@@ -77,8 +71,7 @@ class RevenueType(Enum):
     LIVE_EVENT_SALES = "live_event_sales"
 
 class PayoutFrequency(Enum):
-    """Payout frequency options"""
-    DAILY = "daily"
+    """Payout frequency options"""    DAILY = "daily"
     WEEKLY = "weekly"
     BIWEEKLY = "biweekly"
     MONTHLY = "monthly"
@@ -86,8 +79,7 @@ class PayoutFrequency(Enum):
     MANUAL = "manual"
 
 class Currency(Enum):
-    """Supported currencies"""
-    USD = "USD"
+    """Supported currencies"""    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     CAD = "CAD"
@@ -100,8 +92,7 @@ class Currency(Enum):
 
 @dataclass
 class RevenueEntry:
-    """Individual revenue entry"""
-    entry_id: str
+    """Individual revenue entry"""    entry_id: str
     user_id: str
     source: RevenueSource
     revenue_type: RevenueType
@@ -119,8 +110,7 @@ class RevenueEntry:
 
 @dataclass
 class PayoutRequest:
-    """Payout request"""
-    payout_id: str
+    """Payout request"""    payout_id: str
     user_id: str
     amount: Decimal
     currency: Currency
@@ -136,8 +126,7 @@ class PayoutRequest:
 
 @dataclass
 class RevenueAnalytics:
-    """Revenue analytics data"""
-    user_id: str
+    """Revenue analytics data"""    user_id: str
     period_start: datetime
     period_end: datetime
     total_revenue: Decimal
@@ -151,8 +140,7 @@ class RevenueAnalytics:
 
 @dataclass
 class RevenueInfrastructureSpec:
-    """Revenue tracking infrastructure specification"""
-    api_credentials: Dict[str, Dict[str, str]] = field(default_factory=dict)
+    """Revenue tracking infrastructure specification"""    api_credentials: Dict[str, Dict[str, str]] = field(default_factory=dict)
     payment_providers: List[PaymentProvider] = field(default_factory=lambda: [
         PaymentProvider.STRIPE, PaymentProvider.PAYPAL
     ])
@@ -170,16 +158,14 @@ class RevenueInfrastructureSpec:
     max_concurrent_api_calls: int = 100
 
 class YouTubeRevenueTracker:
-    """YouTube revenue tracking integration"""
-    
+    """YouTube revenue tracking integration"""    
     def __init__(self, api_credentials: Dict[str, str]):
         self.api_key = api_credentials.get("api_key")
         self.client_id = api_credentials.get("client_id")
         self.client_secret = api_credentials.get("client_secret")
         
     async def fetch_revenue_data(self, user_id: str, start_date: datetime, end_date: datetime) -> List[RevenueEntry]:
-        """Fetch revenue data from YouTube Analytics API"""
-        try:
+        """Fetch revenue data from YouTube Analytics API"""        try:
             # This would integrate with YouTube Analytics API
             # Placeholder implementation
             entries = []
@@ -214,8 +200,7 @@ class YouTubeRevenueTracker:
             raise
 
     async def _call_youtube_analytics_api(self, user_id: str, start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
-        """Call YouTube Analytics API"""
-        # Placeholder - implement actual API calls
+        """Call YouTube Analytics API"""        # Placeholder - implement actual API calls
         return [
             {
                 "revenue": 125.50,
@@ -228,15 +213,13 @@ class YouTubeRevenueTracker:
         ]
 
 class SpotifyRevenueTracker:
-    """Spotify revenue tracking integration"""
-    
+    """Spotify revenue tracking integration"""    
     def __init__(self, api_credentials: Dict[str, str]):
         self.client_id = api_credentials.get("client_id")
         self.client_secret = api_credentials.get("client_secret")
         
     async def fetch_revenue_data(self, user_id: str, start_date: datetime, end_date: datetime) -> List[RevenueEntry]:
-        """Fetch revenue data from Spotify for Artists API"""
-        try:
+        """Fetch revenue data from Spotify for Artists API"""        try:
             entries = []
             
             # Simulate API call to Spotify for Artists
@@ -270,8 +253,7 @@ class SpotifyRevenueTracker:
             raise
 
     async def _call_spotify_artists_api(self, user_id: str, start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
-        """Call Spotify for Artists API"""
-        # Placeholder - implement actual API calls
+        """Call Spotify for Artists API"""        # Placeholder - implement actual API calls
         return [
             {
                 "royalties": 89.25,
@@ -285,15 +267,13 @@ class SpotifyRevenueTracker:
         ]
 
 class StripePaymentProcessor:
-    """Stripe payment processing integration"""
-    
+    """Stripe payment processing integration"""    
     def __init__(self, api_credentials: Dict[str, str]):
         stripe.api_key = api_credentials.get("secret_key")
         self.publishable_key = api_credentials.get("publishable_key")
         
     async def create_payout(self, payout_request: PayoutRequest) -> Dict[str, Any]:
-        """Create payout via Stripe"""
-        try:
+        """Create payout via Stripe"""        try:
             # Calculate fees
             fee_amount = payout_request.amount * (Decimal('2.5') / Decimal('100'))
             net_amount = payout_request.amount - fee_amount
@@ -334,8 +314,7 @@ class StripePaymentProcessor:
             }
 
 class PayPalPaymentProcessor:
-    """PayPal payment processing integration"""
-    
+    """PayPal payment processing integration"""    
     def __init__(self, api_credentials: Dict[str, str]):
         self.client_id = api_credentials.get("client_id")
         self.client_secret = api_credentials.get("client_secret")
@@ -343,8 +322,7 @@ class PayPalPaymentProcessor:
         self.client = PayPalHttpClient(self.environment)
         
     async def create_payout(self, payout_request: PayoutRequest) -> Dict[str, Any]:
-        """Create payout via PayPal"""
-        try:
+        """Create payout via PayPal"""        try:
             # Calculate fees
             fee_amount = payout_request.amount * (Decimal('2.5') / Decimal('100'))
             net_amount = payout_request.amount - fee_amount
@@ -395,8 +373,7 @@ class PayPalPaymentProcessor:
             }
 
 class RevenueAnalyticsEngine:
-    """Advanced revenue analytics and prediction engine"""
-    
+    """Advanced revenue analytics and prediction engine"""    
     def __init__(self):
         self.executor = ThreadPoolExecutor(max_workers=10)
         
@@ -405,8 +382,7 @@ class RevenueAnalyticsEngine:
                                        period_start: datetime, 
                                        period_end: datetime,
                                        revenue_entries: List[RevenueEntry]) -> RevenueAnalytics:
-        """Generate comprehensive revenue analytics"""
-        try:
+        """Generate comprehensive revenue analytics"""        try:
             # Calculate total revenue
             total_revenue = sum(entry.amount for entry in revenue_entries)
             currency = revenue_entries[0].currency if revenue_entries else Currency.USD
@@ -464,8 +440,7 @@ class RevenueAnalyticsEngine:
             raise
 
     async def _calculate_growth_rate(self, user_id: str, period_start: datetime, period_end: datetime, current_revenue: Decimal) -> Optional[float]:
-        """Calculate revenue growth rate"""
-        try:
+        """Calculate revenue growth rate"""        try:
             # Get previous period revenue (same duration, previous period)
             period_duration = period_end - period_start
             prev_period_start = period_start - period_duration
@@ -486,8 +461,7 @@ class RevenueAnalyticsEngine:
             return None
 
     async def _predict_future_revenue(self, user_id: str, revenue_entries: List[RevenueEntry]) -> Optional[Decimal]:
-        """Predict future revenue using ML models"""
-        try:
+        """Predict future revenue using ML models"""        try:
             if len(revenue_entries) < 3:
                 return None
             
@@ -509,8 +483,7 @@ class RevenueAnalyticsEngine:
             return None
 
     async def _analyze_top_performing_content(self, revenue_entries: List[RevenueEntry]) -> List[Dict[str, Any]]:
-        """Analyze top performing content"""
-        try:
+        """Analyze top performing content"""        try:
             content_revenue = {}
             
             for entry in revenue_entries:
@@ -547,8 +520,7 @@ class RevenueAnalyticsEngine:
             return []
 
     async def _analyze_revenue_trends(self, revenue_entries: List[RevenueEntry]) -> Dict[str, Any]:
-        """Analyze revenue trends"""
-        try:
+        """Analyze revenue trends"""        try:
             if not revenue_entries:
                 return {}
             
@@ -584,13 +556,11 @@ class RevenueAnalyticsEngine:
             return {}
 
 class RevenueTrackingInfrastructureManager:
-    """
-    Enterprise Revenue Tracking Infrastructure Manager
+    """    Enterprise Revenue Tracking Infrastructure Manager
     
     Manages comprehensive revenue tracking, analytics, payment processing,
     and automated payout systems for multi-platform monetization.
-    """
-    
+    """    
     def __init__(self, spec: RevenueInfrastructureSpec):
         self.spec = spec
         self.revenue_trackers = {}
@@ -602,8 +572,7 @@ class RevenueTrackingInfrastructureManager:
         self._initialize_payment_processors()
         
     async def initialize_revenue_infrastructure(self) -> Dict[str, Any]:
-        """Initialize complete revenue tracking infrastructure"""
-        try:
+        """Initialize complete revenue tracking infrastructure"""        try:
             logger.info("Initializing revenue tracking infrastructure...")
             
             # Setup revenue tracking APIs
@@ -644,8 +613,7 @@ class RevenueTrackingInfrastructureManager:
                                    source: RevenueSource,
                                    start_date: datetime,
                                    end_date: datetime) -> List[RevenueEntry]:
-        """Track revenue from specific platform"""
-        try:
+        """Track revenue from specific platform"""        try:
             if source not in self.revenue_trackers:
                 raise ValueError(f"Revenue tracker not configured for {source.value}")
             
@@ -669,8 +637,7 @@ class RevenueTrackingInfrastructureManager:
                                   user_id: str,
                                   start_date: datetime,
                                   end_date: datetime) -> RevenueAnalytics:
-        """Aggregate revenue from all platforms"""
-        try:
+        """Aggregate revenue from all platforms"""        try:
             all_entries = []
             
             # Track revenue from all configured sources
@@ -698,8 +665,7 @@ class RevenueTrackingInfrastructureManager:
                                   payment_provider: PaymentProvider,
                                   recipient_details: Dict[str, Any],
                                   minimum_amount: Optional[Decimal] = None) -> PayoutRequest:
-        """Create payout request for user"""
-        try:
+        """Create payout request for user"""        try:
             min_amount = minimum_amount or self.spec.minimum_payout_amount
             
             # Get eligible revenue entries
@@ -733,8 +699,7 @@ class RevenueTrackingInfrastructureManager:
             raise
 
     async def process_payout(self, payout_id: str) -> Dict[str, Any]:
-        """Process payout request"""
-        try:
+        """Process payout request"""        try:
             if payout_id not in self.payout_requests:
                 raise ValueError("Payout request not found")
             
@@ -756,8 +721,7 @@ class RevenueTrackingInfrastructureManager:
     async def get_user_revenue_summary(self, 
                                      user_id: str,
                                      period_days: int = 30) -> Dict[str, Any]:
-        """Get user revenue summary"""
-        try:
+        """Get user revenue summary"""        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=period_days)
             
@@ -801,8 +765,7 @@ class RevenueTrackingInfrastructureManager:
     # Private helper methods
     
     def _initialize_trackers(self):
-        """Initialize revenue trackers"""
-        credentials = self.spec.api_credentials
+        """Initialize revenue trackers"""        credentials = self.spec.api_credentials
         
         if "youtube" in credentials:
             self.revenue_trackers[RevenueSource.YOUTUBE] = YouTubeRevenueTracker(credentials["youtube"])
@@ -811,8 +774,7 @@ class RevenueTrackingInfrastructureManager:
             self.revenue_trackers[RevenueSource.SPOTIFY] = SpotifyRevenueTracker(credentials["spotify"])
 
     def _initialize_payment_processors(self):
-        """Initialize payment processors"""
-        credentials = self.spec.api_credentials
+        """Initialize payment processors"""        credentials = self.spec.api_credentials
         
         if "stripe" in credentials:
             self.payment_processors[PaymentProvider.STRIPE] = StripePaymentProcessor(credentials["stripe"])
@@ -821,16 +783,14 @@ class RevenueTrackingInfrastructureManager:
             self.payment_processors[PaymentProvider.PAYPAL] = PayPalPaymentProcessor(credentials["paypal"])
 
     async def _setup_revenue_trackers(self) -> Dict[str, Any]:
-        """Setup revenue tracking APIs"""
-        return {
+        """Setup revenue tracking APIs"""        return {
             "configured_sources": list(self.revenue_trackers.keys()),
             "max_concurrent_calls": self.spec.max_concurrent_api_calls,
             "real_time_tracking": self.spec.enable_real_time_tracking
         }
 
     async def _setup_payment_processors(self) -> Dict[str, Any]:
-        """Setup payment processors"""
-        return {
+        """Setup payment processors"""        return {
             "configured_providers": [p.value for p in self.spec.payment_providers],
             "minimum_payout": float(self.spec.minimum_payout_amount),
             "payout_frequency": self.spec.payout_frequency.value,
@@ -838,32 +798,28 @@ class RevenueTrackingInfrastructureManager:
         }
 
     async def _setup_analytics_engine(self) -> Dict[str, Any]:
-        """Setup analytics engine"""
-        return {
+        """Setup analytics engine"""        return {
             "predictive_analytics": self.spec.enable_predictive_analytics,
             "supported_currencies": [c.value for c in self.spec.supported_currencies],
             "retention_days": self.spec.revenue_retention_days
         }
 
     async def _setup_automated_payouts(self) -> Dict[str, Any]:
-        """Setup automated payout system"""
-        return {
+        """Setup automated payout system"""        return {
             "enabled": self.spec.enable_automated_payouts,
             "frequency": self.spec.payout_frequency.value,
             "fee_percentage": float(self.spec.payout_fee_percentage)
         }
 
     async def _setup_revenue_monitoring(self) -> Dict[str, Any]:
-        """Setup revenue monitoring"""
-        return {
+        """Setup revenue monitoring"""        return {
             "real_time_alerts": True,
             "anomaly_detection": True,
             "performance_tracking": True
         }
 
     async def _get_eligible_revenue_entries(self, user_id: str, minimum_amount: Decimal) -> List[RevenueEntry]:
-        """Get revenue entries eligible for payout"""
-        user_entries = self.revenue_entries.get(user_id, [])
+        """Get revenue entries eligible for payout"""        user_entries = self.revenue_entries.get(user_id, [])
         
         eligible_entries = [
             entry for entry in user_entries

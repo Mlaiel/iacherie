@@ -1,5 +1,4 @@
-"""
-Analytics Module Index - Central access point for all analytics services
+"""Analytics Module Index - Central access point for all analytics services
 ========================================================================
 
 Central index file providing unified access to all analytics engines and services.
@@ -7,9 +6,7 @@ This file serves as the main entry point for external modules to access analytic
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 import redis
@@ -31,11 +28,9 @@ from .dashboard_aggregator import DashboardAggregatorEngine
 logger = logging.getLogger(__name__)
 
 class AnalyticsServiceManager:
-    """
-    Central manager for all analytics services providing unified access
+    """    Central manager for all analytics services providing unified access
     and orchestration of analytics engines for the IA Influencer Agent platform.
-    """
-    
+    """    
     def __init__(self, redis_client: redis.Redis, db_pool: asyncpg.Pool):
         self.redis = redis_client
         self.db_pool = db_pool
@@ -55,8 +50,7 @@ class AnalyticsServiceManager:
         self._initialized = False
         
     async def initialize_all_services(self) -> Dict[str, bool]:
-        """Initialize all analytics services and return status"""
-        if self._initialized:
+        """Initialize all analytics services and return status"""        if self._initialized:
             return {"status": "already_initialized"}
             
         try:
@@ -110,8 +104,7 @@ class AnalyticsServiceManager:
             }
 
     async def get_comprehensive_analytics(self, creator_id: str) -> Dict[str, Any]:
-        """Get comprehensive analytics data from all services"""
-        if not self._initialized:
+        """Get comprehensive analytics data from all services"""        if not self._initialized:
             raise HTTPException(status_code=503, detail="Analytics services not initialized")
             
         try:
@@ -132,8 +125,7 @@ class AnalyticsServiceManager:
             raise HTTPException(status_code=500, detail="Comprehensive analytics generation failed")
 
     async def get_performance_insights(self, creator_id: str) -> Dict[str, Any]:
-        """Get performance insights and recommendations"""
-        if not self._initialized:
+        """Get performance insights and recommendations"""        if not self._initialized:
             raise HTTPException(status_code=503, detail="Analytics services not initialized")
             
         try:
@@ -148,8 +140,7 @@ class AnalyticsServiceManager:
             raise HTTPException(status_code=500, detail="Performance insights generation failed")
 
     async def get_audience_analysis(self, creator_id: str) -> Dict[str, Any]:
-        """Get audience intelligence and segmentation analysis"""
-        if not self._initialized:
+        """Get audience intelligence and segmentation analysis"""        if not self._initialized:
             raise HTTPException(status_code=503, detail="Analytics services not initialized")
             
         try:
@@ -164,8 +155,7 @@ class AnalyticsServiceManager:
             raise HTTPException(status_code=500, detail="Audience analysis generation failed")
 
     async def get_revenue_optimization(self, creator_id: str) -> Dict[str, Any]:
-        """Get revenue optimization strategies and forecasts"""
-        if not self._initialized:
+        """Get revenue optimization strategies and forecasts"""        if not self._initialized:
             raise HTTPException(status_code=503, detail="Analytics services not initialized")
             
         try:
@@ -180,8 +170,7 @@ class AnalyticsServiceManager:
             raise HTTPException(status_code=500, detail="Revenue optimization generation failed")
 
     async def get_content_recommendations(self, creator_id: str) -> Dict[str, Any]:
-        """Get content insights and optimization recommendations"""
-        if not self._initialized:
+        """Get content insights and optimization recommendations"""        if not self._initialized:
             raise HTTPException(status_code=503, detail="Analytics services not initialized")
             
         try:
@@ -196,8 +185,7 @@ class AnalyticsServiceManager:
             raise HTTPException(status_code=500, detail="Content recommendations generation failed")
 
     async def get_trend_opportunities(self, creator_id: str) -> Dict[str, Any]:
-        """Get trending opportunities and viral content predictions"""
-        if not self._initialized:
+        """Get trending opportunities and viral content predictions"""        if not self._initialized:
             raise HTTPException(status_code=503, detail="Analytics services not initialized")
             
         try:
@@ -212,8 +200,7 @@ class AnalyticsServiceManager:
             raise HTTPException(status_code=500, detail="Trend opportunities generation failed")
 
     async def get_roi_analysis(self, creator_id: str) -> Dict[str, Any]:
-        """Get ROI analysis and investment optimization"""
-        if not self._initialized:
+        """Get ROI analysis and investment optimization"""        if not self._initialized:
             raise HTTPException(status_code=503, detail="Analytics services not initialized")
             
         try:
@@ -228,8 +215,7 @@ class AnalyticsServiceManager:
             raise HTTPException(status_code=500, detail="ROI analysis generation failed")
 
     async def get_predictions_forecast(self, creator_id: str) -> Dict[str, Any]:
-        """Get ML predictions and forecasts"""
-        if not self._initialized:
+        """Get ML predictions and forecasts"""        if not self._initialized:
             raise HTTPException(status_code=503, detail="Analytics services not initialized")
             
         try:
@@ -244,8 +230,7 @@ class AnalyticsServiceManager:
             raise HTTPException(status_code=500, detail="Predictions forecast generation failed")
 
     async def get_real_time_metrics(self, creator_id: str) -> Dict[str, Any]:
-        """Get real-time engagement and performance metrics"""
-        if not self._initialized:
+        """Get real-time engagement and performance metrics"""        if not self._initialized:
             raise HTTPException(status_code=503, detail="Analytics services not initialized")
             
         try:
@@ -265,8 +250,7 @@ class AnalyticsServiceManager:
             raise HTTPException(status_code=500, detail="Real-time metrics generation failed")
 
     async def refresh_all_analytics(self, creator_id: str) -> Dict[str, Any]:
-        """Refresh all cached analytics data for a creator"""
-        if not self._initialized:
+        """Refresh all cached analytics data for a creator"""        if not self._initialized:
             raise HTTPException(status_code=503, detail="Analytics services not initialized")
             
         try:
@@ -304,8 +288,7 @@ class AnalyticsServiceManager:
             raise HTTPException(status_code=500, detail="Analytics refresh failed")
 
     def get_service_status(self) -> Dict[str, Any]:
-        """Get status of all analytics services"""
-        return {
+        """Get status of all analytics services"""        return {
             "analytics_services_initialized": self._initialized,
             "available_services": [
                 "performance_analytics",
@@ -327,14 +310,12 @@ class AnalyticsServiceManager:
 analytics_manager: Optional[AnalyticsServiceManager] = None
 
 def get_analytics_manager() -> AnalyticsServiceManager:
-    """Dependency injection for FastAPI to get analytics manager"""
-    if analytics_manager is None:
+    """Dependency injection for FastAPI to get analytics manager"""    if analytics_manager is None:
         raise HTTPException(status_code=503, detail="Analytics manager not initialized")
     return analytics_manager
 
 async def initialize_analytics_services(redis_client: redis.Redis, db_pool: asyncpg.Pool) -> AnalyticsServiceManager:
-    """Initialize the global analytics manager"""
-    global analytics_manager
+    """Initialize the global analytics manager"""    global analytics_manager
     
     if analytics_manager is None:
         analytics_manager = AnalyticsServiceManager(redis_client, db_pool)

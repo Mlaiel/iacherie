@@ -1,5 +1,4 @@
-"""
-Enterprise Revenue Optimization Engine for IA Influencer Platform
+"""Enterprise Revenue Optimization Engine for IA Influencer Platform
 
 Advanced revenue optimization system providing monetization strategy optimization,
 pricing intelligence, and revenue prediction for multi-modal content creators.
@@ -10,9 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -31,11 +28,9 @@ from .models import (
 
 
 class RevenueOptimizer(IRevenueOptimizer):
-    """
-    Enterprise-grade revenue optimization engine providing intelligent
+    """    Enterprise-grade revenue optimization engine providing intelligent
     monetization strategies, pricing optimization, and revenue prediction.
-    """
-    
+    """    
     def __init__(
         self,
         redis_client: redis.Redis,
@@ -102,11 +97,9 @@ class RevenueOptimizer(IRevenueOptimizer):
         content_id: str,
         target_metrics: Dict[str, float]
     ) -> Dict[str, Any]:
-        """
-        Optimize monetization strategy for specific content based on
+        """        Optimize monetization strategy for specific content based on
         content characteristics, audience analysis, and market conditions.
-        """
-        try:
+        """        try:
             self.logger.info(f"Optimizing monetization for content {content_id}")
             
             # Get content and creator data
@@ -177,11 +170,9 @@ class RevenueOptimizer(IRevenueOptimizer):
         content_id: str,
         time_horizon: str = "30d"
     ) -> RevenueMetrics:
-        """
-        Calculate comprehensive revenue potential for content across
+        """        Calculate comprehensive revenue potential for content across
         multiple monetization channels and time horizons.
-        """
-        try:
+        """        try:
             content_item = await self._get_content_item(content_id)
             if not content_item:
                 return RevenueMetrics(content_id=content_id, creator_id="")
@@ -251,11 +242,9 @@ class RevenueOptimizer(IRevenueOptimizer):
         creator_id: str,
         content_type: str
     ) -> Dict[str, Any]:
-        """
-        Recommend optimal pricing strategy for creator based on
+        """        Recommend optimal pricing strategy for creator based on
         market analysis, competitor research, and audience insights.
-        """
-        try:
+        """        try:
             creator_profile = await self._get_creator_profile(creator_id)
             if not creator_profile:
                 return {}
@@ -308,11 +297,9 @@ class RevenueOptimizer(IRevenueOptimizer):
         category: str,
         creator_tier: str
     ) -> Dict[str, float]:
-        """
-        Analyze competitor pricing in specific category and creator tier
+        """        Analyze competitor pricing in specific category and creator tier
         to provide market-informed pricing recommendations.
-        """
-        try:
+        """        try:
             # In real implementation, would query competitor database
             # Mock competitor analysis data
             competitor_data = {
@@ -360,8 +347,7 @@ class RevenueOptimizer(IRevenueOptimizer):
         creator_profile: CreatorProfile,
         target_metrics: Dict[str, float]
     ) -> List[Dict[str, Any]]:
-        """Recommend optimal monetization strategies for content"""
-        try:
+        """Recommend optimal monetization strategies for content"""        try:
             strategies = []
             
             for strategy in MonetizationStrategy:
@@ -406,8 +392,7 @@ class RevenueOptimizer(IRevenueOptimizer):
         creator_profile: CreatorProfile,
         strategies: List[Dict[str, Any]]
     ) -> Dict[str, Dict[str, float]]:
-        """Calculate optimal pricing for each recommended strategy"""
-        try:
+        """Calculate optimal pricing for each recommended strategy"""        try:
             pricing_recommendations = {}
             
             for strategy_info in strategies:
@@ -461,8 +446,7 @@ class RevenueOptimizer(IRevenueOptimizer):
         strategies: List[Dict[str, Any]],
         pricing: Dict[str, Dict[str, float]]
     ) -> Dict[str, Dict[str, float]]:
-        """Project revenue for different scenarios and strategies"""
-        try:
+        """Project revenue for different scenarios and strategies"""        try:
             projections = {}
             
             # Define scenario parameters
@@ -510,8 +494,7 @@ class RevenueOptimizer(IRevenueOptimizer):
         creator_profile: CreatorProfile,
         strategy: MonetizationStrategy
     ) -> bool:
-        """Check if monetization strategy is viable for creator/content"""
-        try:
+        """Check if monetization strategy is viable for creator/content"""        try:
             config = self.monetization_configs.get(strategy, {})
             
             # Check minimum thresholds
@@ -552,11 +535,9 @@ class RevenueOptimizer(IRevenueOptimizer):
             return False
     
     async def _get_content_item(self, content_id: str) -> Optional[ContentItem]:
-        """Retrieve content item from storage"""
-        # Mock implementation - would query database
+        """Retrieve content item from storage"""        # Mock implementation - would query database
         return None
     
     async def _get_creator_profile(self, creator_id: str) -> Optional[CreatorProfile]:
-        """Retrieve creator profile from storage"""
-        # Mock implementation - would query database
+        """Retrieve creator profile from storage"""        # Mock implementation - would query database
         return None

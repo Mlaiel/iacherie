@@ -1,14 +1,11 @@
-"""
-Advanced Query Optimization Module
+"""Advanced Query Optimization Module
 
 Enhanced query optimization with machine learning-based cost estimation,
 adaptive query rewriting, and intelligent execution plan optimization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import re
 import json
 import hashlib
@@ -30,16 +27,14 @@ logger = get_logger(__name__)
 
 
 class OptimizationLevel(Enum):
-    """Query optimization levels"""
-    BASIC = "basic"
+    """Query optimization levels"""    BASIC = "basic"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
     AGGRESSIVE = "aggressive"
 
 
 class QueryComplexity(Enum):
-    """Query complexity classification"""
-    SIMPLE = "simple"
+    """Query complexity classification"""    SIMPLE = "simple"
     MODERATE = "moderate"
     COMPLEX = "complex"
     VERY_COMPLEX = "very_complex"
@@ -47,8 +42,7 @@ class QueryComplexity(Enum):
 
 @dataclass
 class QueryPerformanceMetrics:
-    """Query performance metrics"""
-    execution_time: float
+    """Query performance metrics"""    execution_time: float
     rows_examined: int
     rows_returned: int
     index_usage_count: int
@@ -61,8 +55,7 @@ class QueryPerformanceMetrics:
 
 @dataclass
 class OptimizationResult:
-    """Query optimization result"""
-    original_query: str
+    """Query optimization result"""    original_query: str
     optimized_query: str
     optimization_level: OptimizationLevel
     estimated_improvement: float
@@ -72,8 +65,7 @@ class OptimizationResult:
 
 
 class MLQueryCostEstimator:
-    """Machine learning-based query cost estimation"""
-    
+    """Machine learning-based query cost estimation"""    
     def __init__(self):
         self.feature_weights = {
             'table_count': 2.0,
@@ -90,8 +82,7 @@ class MLQueryCostEstimator:
         self.historical_costs: List[Dict[str, Any]] = []
         
     def extract_features(self, query_plan: QueryPlan) -> Dict[str, float]:
-        """Extract features from query plan for cost estimation"""
-        components = query_plan.components
+        """Extract features from query plan for cost estimation"""        components = query_plan.components
         
         features = {
             'table_count': float(len(components.tables)),
@@ -109,8 +100,7 @@ class MLQueryCostEstimator:
         return features
     
     def estimate_cost(self, features: Dict[str, float]) -> float:
-        """Estimate query cost using weighted features"""
-        cost = 1.0  # Base cost
+        """Estimate query cost using weighted features"""        cost = 1.0  # Base cost
         
         for feature, value in features.items():
             weight = self.feature_weights.get(feature, 1.0)
@@ -127,8 +117,7 @@ class MLQueryCostEstimator:
         return max(cost, 1.0)
     
     def learn_from_execution(self, query_plan: QueryPlan, actual_cost: float):
-        """Learn from actual query execution"""
-        features = self.extract_features(query_plan)
+        """Learn from actual query execution"""        features = self.extract_features(query_plan)
         
         self.historical_costs.append({
             'timestamp': datetime.now(),
@@ -145,8 +134,7 @@ class MLQueryCostEstimator:
         self._update_weights()
     
     def _classify_complexity(self, query_plan: QueryPlan) -> QueryComplexity:
-        """Classify query complexity"""
-        score = query_plan.components.complexity_score
+        """Classify query complexity"""        score = query_plan.components.complexity_score
         
         if score <= 10:
             return QueryComplexity.SIMPLE
@@ -158,8 +146,7 @@ class MLQueryCostEstimator:
             return QueryComplexity.VERY_COMPLEX
     
     def _update_weights(self):
-        """Update feature weights based on historical performance"""
-        if len(self.historical_costs) < 10:
+        """Update feature weights based on historical performance"""        if len(self.historical_costs) < 10:
             return
         
         # Simple weight adjustment based on recent performance
@@ -179,8 +166,7 @@ class MLQueryCostEstimator:
 
 
 class AdaptiveQueryRewriter:
-    """Adaptive query rewriting system"""
-    
+    """Adaptive query rewriting system"""    
     def __init__(self):
         self.rewrite_patterns = [
             self._rewrite_or_to_union,
@@ -194,8 +180,7 @@ class AdaptiveQueryRewriter:
         self.rewrite_success_rates: Dict[str, float] = {}
         
     async def rewrite_query(self, query: str, optimization_level: OptimizationLevel) -> str:
-        """Rewrite query based on optimization level"""
-        try:
+        """Rewrite query based on optimization level"""        try:
             original_query = query
             current_query = query
             applied_rewrites = []
@@ -222,8 +207,7 @@ class AdaptiveQueryRewriter:
             return query
     
     def _get_patterns_for_level(self, level: OptimizationLevel) -> List:
-        """Get rewrite patterns based on optimization level"""
-        if level == OptimizationLevel.BASIC:
+        """Get rewrite patterns based on optimization level"""        if level == OptimizationLevel.BASIC:
             return self.rewrite_patterns[:2]
         elif level == OptimizationLevel.INTERMEDIATE:
             return self.rewrite_patterns[:4]
@@ -233,8 +217,7 @@ class AdaptiveQueryRewriter:
             return self.rewrite_patterns
     
     def _rewrite_or_to_union(self, query: str) -> str:
-        """Rewrite OR conditions to UNION for better index usage"""
-        # Simple OR to UNION rewrite
+        """Rewrite OR conditions to UNION for better index usage"""        # Simple OR to UNION rewrite
         pattern = r"WHERE\s+(\w+)\s*=\s*'?(\w+)'?\s+OR\s+\1\s*=\s*'?(\w+)'?"
         
         def replace_or(match):
@@ -252,8 +235,7 @@ class AdaptiveQueryRewriter:
         return re.sub(pattern, replace_or, query, flags=re.IGNORECASE)
     
     def _rewrite_exists_to_join(self, query: str) -> str:
-        """Rewrite EXISTS subqueries to JOINs when beneficial"""
-        # Pattern for EXISTS subqueries
+        """Rewrite EXISTS subqueries to JOINs when beneficial"""        # Pattern for EXISTS subqueries
         exists_pattern = r"EXISTS\s*\(\s*SELECT.*?FROM\s+(\w+).*?WHERE\s+(\w+\.\w+)\s*=\s*(\w+\.\w+).*?\)"
         
         def replace_exists(match):
@@ -272,8 +254,7 @@ class AdaptiveQueryRewriter:
         return query
     
     def _rewrite_subquery_to_cte(self, query: str) -> str:
-        """Rewrite repeated subqueries to CTEs"""
-        # Detect repeated subquery patterns
+        """Rewrite repeated subqueries to CTEs"""        # Detect repeated subquery patterns
         subquery_pattern = r"\((SELECT.*?)\)"
         subqueries = re.findall(subquery_pattern, query, re.IGNORECASE | re.DOTALL)
         
@@ -305,8 +286,7 @@ class AdaptiveQueryRewriter:
         return query
     
     def _rewrite_case_to_filter(self, query: str) -> str:
-        """Rewrite CASE statements to filters when possible"""
-        # Pattern for simple CASE statements that can be filtered
+        """Rewrite CASE statements to filters when possible"""        # Pattern for simple CASE statements that can be filtered
         case_pattern = r"CASE\s+WHEN\s+(\w+)\s*=\s*'?(\w+)'?\s+THEN\s+(\w+)\s+ELSE\s+NULL\s+END"
         
         def replace_case(match):
@@ -320,8 +300,7 @@ class AdaptiveQueryRewriter:
         return re.sub(case_pattern, replace_case, query, flags=re.IGNORECASE)
     
     def _optimize_window_functions(self, query: str) -> str:
-        """Optimize window function usage"""
-        # Detect window functions that can be optimized
+        """Optimize window function usage"""        # Detect window functions that can be optimized
         if "OVER" in query.upper():
             # Add RANGE BETWEEN optimization for window functions
             window_pattern = r"(\w+\s*\([^)]*\))\s+OVER\s*\(\s*ORDER\s+BY\s+(\w+)\s*\)"
@@ -338,8 +317,7 @@ class AdaptiveQueryRewriter:
         return query
     
     def _optimize_aggregations(self, query: str) -> str:
-        """Optimize aggregation queries"""
-        # Optimize COUNT(*) to COUNT(1) when appropriate
+        """Optimize aggregation queries"""        # Optimize COUNT(*) to COUNT(1) when appropriate
         query = re.sub(r"COUNT\s*\(\s*\*\s*\)", "COUNT(1)", query, flags=re.IGNORECASE)
         
         # Optimize DISTINCT aggregations
@@ -350,8 +328,7 @@ class AdaptiveQueryRewriter:
         return query
     
     def _rewrite_inefficient_joins(self, query: str) -> str:
-        """Rewrite inefficient JOIN patterns"""
-        # Detect and optimize inefficient join conditions
+        """Rewrite inefficient JOIN patterns"""        # Detect and optimize inefficient join conditions
         if "JOIN" in query.upper() and "OR" in query.upper():
             logger.debug("JOIN with OR condition detected - candidate for optimization")
         
@@ -359,8 +336,7 @@ class AdaptiveQueryRewriter:
 
 
 class IntelligentExecutionPlanOptimizer:
-    """Intelligent execution plan optimization"""
-    
+    """Intelligent execution plan optimization"""    
     def __init__(self):
         self.plan_cache: Dict[str, Any] = {}
         self.optimization_strategies = [
@@ -371,8 +347,7 @@ class IntelligentExecutionPlanOptimizer:
         ]
     
     async def optimize_execution_plan(self, engine: AsyncEngine, query: str) -> Dict[str, Any]:
-        """Optimize query execution plan"""
-        try:
+        """Optimize query execution plan"""        try:
             # Get current execution plan
             plan_key = hashlib.md5(query.encode()).hexdigest()
             
@@ -416,8 +391,7 @@ class IntelligentExecutionPlanOptimizer:
             return {}
     
     def _optimize_join_order(self, plan_info: Dict[str, Any], query: str) -> Optional[str]:
-        """Optimize JOIN order"""
-        # Analyze join nodes in plan
+        """Optimize JOIN order"""        # Analyze join nodes in plan
         join_nodes = self._find_join_nodes(plan_info)
         
         if len(join_nodes) > 2:
@@ -427,8 +401,7 @@ class IntelligentExecutionPlanOptimizer:
         return None
     
     def _optimize_index_selection(self, plan_info: Dict[str, Any], query: str) -> Optional[str]:
-        """Optimize index selection"""
-        # Look for sequential scans that could use indexes
+        """Optimize index selection"""        # Look for sequential scans that could use indexes
         seq_scans = self._find_sequential_scans(plan_info)
         
         if seq_scans:
@@ -438,8 +411,7 @@ class IntelligentExecutionPlanOptimizer:
         return None
     
     def _optimize_parallel_execution(self, plan_info: Dict[str, Any], query: str) -> Optional[str]:
-        """Optimize parallel execution"""
-        estimated_cost = plan_info.get('Total Cost', 0)
+        """Optimize parallel execution"""        estimated_cost = plan_info.get('Total Cost', 0)
         
         if estimated_cost > 1000 and 'Parallel' not in str(plan_info):
             return "Consider enabling parallel execution for this expensive query"
@@ -447,8 +419,7 @@ class IntelligentExecutionPlanOptimizer:
         return None
     
     def _optimize_memory_usage(self, plan_info: Dict[str, Any], query: str) -> Optional[str]:
-        """Optimize memory usage"""
-        # Check for memory-intensive operations
+        """Optimize memory usage"""        # Check for memory-intensive operations
         memory_intensive_nodes = ['Hash', 'Sort', 'Materialize']
         
         for node_type in memory_intensive_nodes:
@@ -458,8 +429,7 @@ class IntelligentExecutionPlanOptimizer:
         return None
     
     def _find_join_nodes(self, plan_info: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Find join nodes in execution plan"""
-        joins = []
+        """Find join nodes in execution plan"""        joins = []
         
         def find_joins(node):
             if 'Join' in node.get('Node Type', ''):
@@ -472,8 +442,7 @@ class IntelligentExecutionPlanOptimizer:
         return joins
     
     def _find_sequential_scans(self, plan_info: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Find sequential scan nodes"""
-        scans = []
+        """Find sequential scan nodes"""        scans = []
         
         def find_scans(node):
             if node.get('Node Type') == 'Seq Scan':
@@ -486,8 +455,7 @@ class IntelligentExecutionPlanOptimizer:
         return scans
     
     def _has_node_type(self, plan_info: Dict[str, Any], node_type: str) -> bool:
-        """Check if plan contains specific node type"""
-        def check_node(node):
+        """Check if plan contains specific node type"""        def check_node(node):
             if node_type in node.get('Node Type', ''):
                 return True
             
@@ -497,8 +465,7 @@ class IntelligentExecutionPlanOptimizer:
 
 
 class AdvancedQueryOptimizer:
-    """Advanced query optimizer with ML and adaptive capabilities"""
-    
+    """Advanced query optimizer with ML and adaptive capabilities"""    
     def __init__(self, base_optimizer: QueryOptimizer):
         self.base_optimizer = base_optimizer
         self.cost_estimator = MLQueryCostEstimator()
@@ -510,8 +477,7 @@ class AdvancedQueryOptimizer:
     
     async def optimize_query_advanced(self, engine: AsyncEngine, query: str, 
                                     optimization_level: OptimizationLevel = OptimizationLevel.INTERMEDIATE) -> OptimizationResult:
-        """Perform advanced query optimization"""
-        try:
+        """Perform advanced query optimization"""        try:
             logger.info(f"Starting advanced optimization for query (level: {optimization_level.value})")
             
             # Step 1: Analyze original query
@@ -579,8 +545,7 @@ class AdvancedQueryOptimizer:
             )
     
     async def batch_optimize_queries(self, engine: AsyncEngine, queries: List[str]) -> List[OptimizationResult]:
-        """Batch optimize multiple queries"""
-        results = []
+        """Batch optimize multiple queries"""        results = []
         
         for i, query in enumerate(queries):
             logger.info(f"Optimizing query {i+1}/{len(queries)}")
@@ -595,8 +560,7 @@ class AdvancedQueryOptimizer:
         return results
     
     def _determine_optimization_level(self, query_plan: QueryPlan) -> OptimizationLevel:
-        """Determine appropriate optimization level based on query complexity"""
-        complexity_score = query_plan.components.complexity_score
+        """Determine appropriate optimization level based on query complexity"""        complexity_score = query_plan.components.complexity_score
         
         if complexity_score <= 10:
             return OptimizationLevel.BASIC
@@ -609,8 +573,7 @@ class AdvancedQueryOptimizer:
     
     async def learn_from_execution(self, query: str, execution_time: float, 
                                  metrics: QueryPerformanceMetrics):
-        """Learn from actual query execution"""
-        try:
+        """Learn from actual query execution"""        try:
             # Analyze query
             plan = await self.base_optimizer.analyze_query(query)
             
@@ -631,8 +594,7 @@ class AdvancedQueryOptimizer:
             logger.error(f"Failed to learn from execution: {e}")
     
     def get_optimization_stats(self) -> Dict[str, Any]:
-        """Get optimization statistics"""
-        if not self.optimization_history:
+        """Get optimization statistics"""        if not self.optimization_history:
             return {}
         
         improvements = [h['improvement'] for h in self.optimization_history]
@@ -650,8 +612,7 @@ class AdvancedQueryOptimizer:
         }
     
     def _calculate_estimator_accuracy(self) -> float:
-        """Calculate cost estimator accuracy"""
-        if len(self.cost_estimator.historical_costs) < 10:
+        """Calculate cost estimator accuracy"""        if len(self.cost_estimator.historical_costs) < 10:
             return 0.0
         
         recent_costs = self.cost_estimator.historical_costs[-50:]

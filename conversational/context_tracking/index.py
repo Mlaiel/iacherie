@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""
-📋 CONTEXT TRACKING MODULE INDEX - ENTERPRISE MODULE ORCHESTRATION SYSTEM
+"""📋 CONTEXT TRACKING MODULE INDEX - ENTERPRISE MODULE ORCHESTRATION SYSTEM
 ==========================================================================
 
 Central index and orchestration system for the Context Tracking module,
@@ -35,9 +34,7 @@ Lead Module Orchestration Engineer : Fahed Mlaiel <mlaiel@live.de>
 This orchestration system is the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 UNAUTHORIZED USE IS STRICTLY PROHIBITED AND LEGALLY PROSECUTED.
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Type
 from dataclasses import dataclass
@@ -68,8 +65,7 @@ from . import (
 logger = logging.getLogger(__name__)
 
 class ModuleType(Enum):
-    """Context tracking module types"""
-    AI_FINGERPRINTING = "ai_fingerprinting"
+    """Context tracking module types"""    AI_FINGERPRINTING = "ai_fingerprinting"
     BEHAVIORAL_ANALYSIS = "behavioral_analysis"
     CONTENT_ANALYSIS = "content_analysis"
     CONTENT_PROTECTION = "content_protection"
@@ -88,8 +84,7 @@ class ModuleType(Enum):
 
 @dataclass
 class ModuleInfo:
-    """Module information and metadata"""
-    name: str
+    """Module information and metadata"""    name: str
     module_type: ModuleType
     class_type: Type
     description: str
@@ -100,23 +95,19 @@ class ModuleInfo:
     health_status: str = "healthy"
 
 class ContextTrackingIndex:
-    """
-    Enterprise Context Tracking Module Index
+    """    Enterprise Context Tracking Module Index
     
     Central orchestration system for all context tracking modules,
     providing unified access, intelligent routing, and performance monitoring.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the context tracking index"""
-        self.modules: Dict[str, ModuleInfo] = {}
+        """Initialize the context tracking index"""        self.modules: Dict[str, ModuleInfo] = {}
         self.instances: Dict[str, Any] = {}
         self.metrics = {}
         self._initialize_modules()
     
     def _initialize_modules(self):
-        """Initialize all available modules"""
-        
+        """Initialize all available modules"""        
         # Define module registry
         module_registry = {
             "ai_fingerprinting": ModuleInfo(
@@ -252,8 +243,7 @@ class ContextTrackingIndex:
             logger.info(f"Registered module: {module_info.name}")
     
     async def get_module(self, module_id: str, **kwargs) -> Any:
-        """Get or create module instance"""
-        if module_id not in self.modules:
+        """Get or create module instance"""        if module_id not in self.modules:
             raise ValueError(f"Module {module_id} not found")
         
         if module_id not in self.instances:
@@ -264,18 +254,15 @@ class ContextTrackingIndex:
         return self.instances[module_id]
     
     def list_modules(self) -> Dict[str, ModuleInfo]:
-        """List all available modules"""
-        return self.modules.copy()
+        """List all available modules"""        return self.modules.copy()
     
     def get_module_capabilities(self, module_id: str) -> List[str]:
-        """Get module capabilities"""
-        if module_id not in self.modules:
+        """Get module capabilities"""        if module_id not in self.modules:
             return []
         return self.modules[module_id].capabilities
     
     def get_health_status(self) -> Dict[str, str]:
-        """Get health status of all modules"""
-        return {
+        """Get health status of all modules"""        return {
             module_id: info.health_status 
             for module_id, info in self.modules.items()
         }
@@ -285,40 +272,31 @@ context_tracking_index = ContextTrackingIndex()
 
 # Convenience functions for module access
 async def get_ai_fingerprinting_engine(**kwargs):
-    """Get AI Fingerprinting Engine instance"""
-    return await context_tracking_index.get_module("ai_fingerprinting", **kwargs)
+    """Get AI Fingerprinting Engine instance"""    return await context_tracking_index.get_module("ai_fingerprinting", **kwargs)
 
 async def get_behavioral_context_engine(**kwargs):
-    """Get Behavioral Context Engine instance"""
-    return await context_tracking_index.get_module("behavioral_analysis", **kwargs)
+    """Get Behavioral Context Engine instance"""    return await context_tracking_index.get_module("behavioral_analysis", **kwargs)
 
 async def get_content_context_analyzer(**kwargs):
-    """Get Content Context Analyzer instance"""
-    return await context_tracking_index.get_module("content_analysis", **kwargs)
+    """Get Content Context Analyzer instance"""    return await context_tracking_index.get_module("content_analysis", **kwargs)
 
 async def get_content_protection_manager(**kwargs):
-    """Get Content Protection Manager instance"""
-    return await context_tracking_index.get_module("content_protection", **kwargs)
+    """Get Content Protection Manager instance"""    return await context_tracking_index.get_module("content_protection", **kwargs)
 
 async def get_collaboration_context_tracker(**kwargs):
-    """Get Collaboration Context Tracker instance"""
-    return await context_tracking_index.get_module("collaboration", **kwargs)
+    """Get Collaboration Context Tracker instance"""    return await context_tracking_index.get_module("collaboration", **kwargs)
 
 async def get_revenue_optimization_engine(**kwargs):
-    """Get Revenue Optimization Engine instance"""
-    return await context_tracking_index.get_module("revenue_optimization", **kwargs)
+    """Get Revenue Optimization Engine instance"""    return await context_tracking_index.get_module("revenue_optimization", **kwargs)
 
 async def get_web_crawler_intelligence(**kwargs):
-    """Get Web Crawler Intelligence instance"""
-    return await context_tracking_index.get_module("web_intelligence", **kwargs)
+    """Get Web Crawler Intelligence instance"""    return await context_tracking_index.get_module("web_intelligence", **kwargs)
 
 def list_available_modules():
-    """List all available context tracking modules"""
-    return context_tracking_index.list_modules()
+    """List all available context tracking modules"""    return context_tracking_index.list_modules()
 
 def get_module_health():
-    """Get health status of all modules"""
-    return context_tracking_index.get_health_status()
+    """Get health status of all modules"""    return context_tracking_index.get_health_status()
 
 # Export all convenience functions
 __all__ = [

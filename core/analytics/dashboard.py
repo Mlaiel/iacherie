@@ -1,5 +1,4 @@
-"""
-Analytics Dashboard - Real-time Analytics Visualization
+"""Analytics Dashboard - Real-time Analytics Visualization
 
 Advanced dashboard system for real-time analytics, business intelligence,
 and performance monitoring for multi-format content creator platform.
@@ -23,9 +22,7 @@ Team Specialists:
 - Audio Processing Specialist: Advanced audio AI algorithms
 - DevOps Engineer: Production-ready infrastructure
 - IA Prompt Engineer: Optimized AI model interactions
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Union, Callable
 from datetime import datetime, timedelta
@@ -44,8 +41,7 @@ logger = logging.getLogger(__name__)
 
 
 class DashboardType(Enum):
-    """Types of dashboards"""
-    EXECUTIVE = "executive"
+    """Types of dashboards"""    EXECUTIVE = "executive"
     OPERATIONAL = "operational"
     TECHNICAL = "technical"
     BUSINESS = "business"
@@ -54,8 +50,7 @@ class DashboardType(Enum):
 
 
 class WidgetType(Enum):
-    """Types of dashboard widgets"""
-    METRIC_CARD = "metric_card"
+    """Types of dashboard widgets"""    METRIC_CARD = "metric_card"
     TIME_SERIES_CHART = "time_series_chart"
     BAR_CHART = "bar_chart"
     PIE_CHART = "pie_chart"
@@ -68,8 +63,7 @@ class WidgetType(Enum):
 
 
 class RefreshRate(Enum):
-    """Dashboard refresh rates"""
-    REALTIME = 1  # seconds
+    """Dashboard refresh rates"""    REALTIME = 1  # seconds
     FAST = 5
     NORMAL = 30
     SLOW = 60
@@ -78,8 +72,7 @@ class RefreshRate(Enum):
 
 @dataclass
 class DashboardWidget:
-    """Dashboard widget configuration"""
-    id: str
+    """Dashboard widget configuration"""    id: str
     type: WidgetType
     title: str
     data_source: str
@@ -89,8 +82,7 @@ class DashboardWidget:
     filters: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert widget to dictionary"""
-        return {
+        """Convert widget to dictionary"""        return {
             'id': self.id,
             'type': self.type.value,
             'title': self.title,
@@ -104,8 +96,7 @@ class DashboardWidget:
 
 @dataclass
 class DashboardLayout:
-    """Dashboard layout configuration"""
-    dashboard_id: str
+    """Dashboard layout configuration"""    dashboard_id: str
     dashboard_type: DashboardType
     title: str
     description: str
@@ -115,8 +106,7 @@ class DashboardLayout:
     refresh_rate: RefreshRate = RefreshRate.NORMAL
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert layout to dictionary"""
-        return {
+        """Convert layout to dictionary"""        return {
             'dashboard_id': self.dashboard_id,
             'dashboard_type': self.dashboard_type.value,
             'title': self.title,
@@ -129,13 +119,11 @@ class DashboardLayout:
 
 
 class AnalyticsDashboard:
-    """
-    Advanced analytics dashboard system for business intelligence.
+    """    Advanced analytics dashboard system for business intelligence.
     
     Provides configurable dashboards with real-time data visualization,
     interactive filtering, and customizable layouts for different user roles.
-    """
-    
+    """    
     def __init__(
         self,
         metrics_collector: Optional[MetricsCollector] = None,
@@ -175,8 +163,7 @@ class AnalyticsDashboard:
         }
     
     async def initialize(self) -> None:
-        """Initialize the dashboard system"""
-        try:
+        """Initialize the dashboard system"""        try:
             self.logger.info("Initializing AnalyticsDashboard...")
             
             # Create default dashboards
@@ -189,8 +176,7 @@ class AnalyticsDashboard:
             raise DashboardError(f"Initialization failed: {str(e)}")
     
     async def shutdown(self) -> None:
-        """Shutdown the dashboard system"""
-        try:
+        """Shutdown the dashboard system"""        try:
             self.logger.info("Shutting down AnalyticsDashboard...")
             
             # Clear caches
@@ -203,8 +189,7 @@ class AnalyticsDashboard:
             raise DashboardError(f"Shutdown failed: {str(e)}")
     
     async def create_dashboard(self, layout: DashboardLayout) -> str:
-        """Create a new dashboard"""
-        try:
+        """Create a new dashboard"""        try:
             # Validate layout
             self._validate_dashboard_layout(layout)
             
@@ -221,8 +206,7 @@ class AnalyticsDashboard:
             raise DashboardError(f"Dashboard creation failed: {str(e)}")
     
     async def get_dashboard_layout(self, dashboard_id: str) -> Optional[DashboardLayout]:
-        """Get dashboard layout configuration"""
-        try:
+        """Get dashboard layout configuration"""        try:
             return self.dashboards.get(dashboard_id)
             
         except Exception as e:
@@ -234,8 +218,7 @@ class AnalyticsDashboard:
         dashboard_id: Optional[str] = None,
         force_refresh: bool = False
     ) -> Dict[str, Any]:
-        """Get dashboard data"""
-        try:
+        """Get dashboard data"""        try:
             if dashboard_id:
                 return await self._get_dashboard_data(dashboard_id, force_refresh)
             else:
@@ -251,8 +234,7 @@ class AnalyticsDashboard:
         widget: DashboardWidget,
         filters: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Get data for a specific widget"""
-        try:
+        """Get data for a specific widget"""        try:
             # Check cache first
             cache_key = f"{widget.id}_{hash(str(filters))}"
             if cache_key in self.dashboard_data_cache and not filters:
@@ -287,8 +269,7 @@ class AnalyticsDashboard:
         widget_id: str,
         updates: Dict[str, Any]
     ) -> None:
-        """Update widget configuration"""
-        try:
+        """Update widget configuration"""        try:
             dashboard = self.dashboards.get(dashboard_id)
             if not dashboard:
                 raise ValueError(f"Dashboard not found: {dashboard_id}")
@@ -318,8 +299,7 @@ class AnalyticsDashboard:
             raise DashboardError(f"Widget update failed: {str(e)}")
     
     async def delete_dashboard(self, dashboard_id: str) -> None:
-        """Delete a dashboard"""
-        try:
+        """Delete a dashboard"""        try:
             if dashboard_id in self.dashboards:
                 dashboard = self.dashboards[dashboard_id]
                 
@@ -344,8 +324,7 @@ class AnalyticsDashboard:
             raise DashboardError(f"Dashboard deletion failed: {str(e)}")
     
     async def get_dashboard_list(self) -> List[Dict[str, Any]]:
-        """Get list of available dashboards"""
-        try:
+        """Get list of available dashboards"""        try:
             dashboards = []
             for dashboard_id, layout in self.dashboards.items():
                 dashboards.append({
@@ -365,8 +344,7 @@ class AnalyticsDashboard:
             raise DashboardError(f"Dashboard list retrieval failed: {str(e)}")
     
     async def get_performance_stats(self) -> Dict[str, Any]:
-        """Get dashboard performance statistics"""
-        try:
+        """Get dashboard performance statistics"""        try:
             stats = self.dashboard_stats.copy()
             stats['cache_size'] = len(self.dashboard_data_cache)
             stats['cache_hit_rate'] = (
@@ -383,8 +361,7 @@ class AnalyticsDashboard:
     # Private Methods
     
     async def _create_default_dashboards(self) -> None:
-        """Create default dashboard layouts"""
-        # Executive Dashboard
+        """Create default dashboard layouts"""        # Executive Dashboard
         executive_dashboard = DashboardLayout(
             dashboard_id="executive",
             dashboard_type=DashboardType.EXECUTIVE,
@@ -443,8 +420,7 @@ class AnalyticsDashboard:
         await self.create_dashboard(operational_dashboard)
     
     def _validate_dashboard_layout(self, layout: DashboardLayout) -> None:
-        """Validate dashboard layout"""
-        if not layout.dashboard_id:
+        """Validate dashboard layout"""        if not layout.dashboard_id:
             raise ValueError("Dashboard ID is required")
         
         if not layout.title:
@@ -468,8 +444,7 @@ class AnalyticsDashboard:
         dashboard_id: str,
         force_refresh: bool = False
     ) -> Dict[str, Any]:
-        """Get complete dashboard data"""
-        dashboard = self.dashboards.get(dashboard_id)
+        """Get complete dashboard data"""        dashboard = self.dashboards.get(dashboard_id)
         if not dashboard:
             raise ValueError(f"Dashboard not found: {dashboard_id}")
         
@@ -492,8 +467,7 @@ class AnalyticsDashboard:
         return dashboard_data
     
     async def _get_default_dashboard_data(self) -> Dict[str, Any]:
-        """Get default dashboard data"""
-        # Return executive dashboard as default
+        """Get default dashboard data"""        # Return executive dashboard as default
         return await self._get_dashboard_data("executive")
     
     # Widget Data Providers
@@ -503,8 +477,7 @@ class AnalyticsDashboard:
         widget: DashboardWidget,
         filters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Get metric card data"""
-        # Implement metric card data retrieval
+        """Get metric card data"""        # Implement metric card data retrieval
         return {
             'type': 'metric_card',
             'value': 12345,
@@ -519,8 +492,7 @@ class AnalyticsDashboard:
         widget: DashboardWidget,
         filters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Get time series chart data"""
-        # Implement time series data retrieval
+        """Get time series chart data"""        # Implement time series data retrieval
         return {
             'type': 'time_series',
             'data_points': [
@@ -536,8 +508,7 @@ class AnalyticsDashboard:
         widget: DashboardWidget,
         filters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Get bar chart data"""
-        return {
+        """Get bar chart data"""        return {
             'type': 'bar_chart',
             'categories': ['Audio', 'Video', 'Image', 'Text'],
             'values': [45, 30, 15, 10],
@@ -549,8 +520,7 @@ class AnalyticsDashboard:
         widget: DashboardWidget,
         filters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Get pie chart data"""
-        return {
+        """Get pie chart data"""        return {
             'type': 'pie_chart',
             'segments': [
                 {'label': 'Audio', 'value': 45, 'color': '#FF6384'},
@@ -566,8 +536,7 @@ class AnalyticsDashboard:
         widget: DashboardWidget,
         filters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Get gauge data"""
-        return {
+        """Get gauge data"""        return {
             'type': 'gauge',
             'value': 87.5,
             'min': 0,
@@ -586,8 +555,7 @@ class AnalyticsDashboard:
         widget: DashboardWidget,
         filters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Get table data"""
-        return {
+        """Get table data"""        return {
             'type': 'table',
             'columns': ['Content ID', 'Type', 'Views', 'Revenue'],
             'rows': [
@@ -603,8 +571,7 @@ class AnalyticsDashboard:
         widget: DashboardWidget,
         filters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Get alert list data"""
-        return {
+        """Get alert list data"""        return {
             'type': 'alert_list',
             'alerts': [
                 {
@@ -623,8 +590,7 @@ class AnalyticsDashboard:
         widget: DashboardWidget,
         filters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Get trend indicator data"""
-        return {
+        """Get trend indicator data"""        return {
             'type': 'trend_indicator',
             'current_value': 1234,
             'previous_value': 1100,
@@ -638,8 +604,7 @@ class AnalyticsDashboard:
         widget: DashboardWidget,
         filters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Get KPI grid data"""
-        return {
+        """Get KPI grid data"""        return {
             'type': 'kpi_grid',
             'kpis': [
                 {'name': 'Revenue', 'value': '€12,345', 'change': '+5.2%'},
@@ -655,8 +620,7 @@ class AnalyticsDashboard:
         widget: DashboardWidget,
         filters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Get heatmap data"""
-        return {
+        """Get heatmap data"""        return {
             'type': 'heatmap',
             'data': [
                 {'x': 0, 'y': 0, 'value': 10},
@@ -671,13 +635,11 @@ class AnalyticsDashboard:
 
 
 class RealtimeDashboard(AnalyticsDashboard):
-    """
-    Real-time dashboard with WebSocket support and live data streaming.
+    """    Real-time dashboard with WebSocket support and live data streaming.
     
     Extends base dashboard with real-time capabilities for live monitoring
     and instant updates of critical business metrics.
-    """
-    
+    """    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         
@@ -692,38 +654,32 @@ class RealtimeDashboard(AnalyticsDashboard):
         self.connection_timeout = 300  # 5 minutes
     
     async def initialize(self) -> None:
-        """Initialize real-time dashboard"""
-        await super().initialize()
+        """Initialize real-time dashboard"""        await super().initialize()
         
         # Start real-time update task
         asyncio.create_task(self._realtime_update_processor())
     
     async def add_connection(self, connection_id: str) -> None:
-        """Add real-time connection"""
-        if len(self.active_connections) >= self.max_connections:
+        """Add real-time connection"""        if len(self.active_connections) >= self.max_connections:
             raise ValueError("Maximum connections reached")
         
         self.active_connections.add(connection_id)
         self.logger.info(f"Added real-time connection: {connection_id}")
     
     async def remove_connection(self, connection_id: str) -> None:
-        """Remove real-time connection"""
-        self.active_connections.discard(connection_id)
+        """Remove real-time connection"""        self.active_connections.discard(connection_id)
         self.logger.info(f"Removed real-time connection: {connection_id}")
     
     async def subscribe_widget(self, widget_id: str) -> None:
-        """Subscribe widget for real-time updates"""
-        self.streaming_widgets.add(widget_id)
+        """Subscribe widget for real-time updates"""        self.streaming_widgets.add(widget_id)
         self.logger.debug(f"Subscribed widget for real-time updates: {widget_id}")
     
     async def unsubscribe_widget(self, widget_id: str) -> None:
-        """Unsubscribe widget from real-time updates"""
-        self.streaming_widgets.discard(widget_id)
+        """Unsubscribe widget from real-time updates"""        self.streaming_widgets.discard(widget_id)
         self.logger.debug(f"Unsubscribed widget from real-time updates: {widget_id}")
     
     async def push_update(self, widget_id: str, data: Dict[str, Any]) -> None:
-        """Push real-time update for widget"""
-        if widget_id in self.streaming_widgets and self.active_connections:
+        """Push real-time update for widget"""        if widget_id in self.streaming_widgets and self.active_connections:
             update = {
                 'type': 'widget_update',
                 'widget_id': widget_id,
@@ -734,8 +690,7 @@ class RealtimeDashboard(AnalyticsDashboard):
             await self.update_queue.put(update)
     
     async def get_realtime_stats(self) -> Dict[str, Any]:
-        """Get real-time dashboard statistics"""
-        return {
+        """Get real-time dashboard statistics"""        return {
             'active_connections': len(self.active_connections),
             'streaming_widgets': len(self.streaming_widgets),
             'queue_size': self.update_queue.qsize(),
@@ -744,8 +699,7 @@ class RealtimeDashboard(AnalyticsDashboard):
         }
     
     async def _realtime_update_processor(self) -> None:
-        """Process real-time updates"""
-        while True:
+        """Process real-time updates"""        while True:
             try:
                 # Collect updates in batches
                 updates = []
@@ -780,8 +734,7 @@ class RealtimeDashboard(AnalyticsDashboard):
                 await asyncio.sleep(1)
     
     async def _process_update_batch(self, updates: List[Dict[str, Any]]) -> None:
-        """Process batch of real-time updates"""
-        # Group updates by widget
+        """Process batch of real-time updates"""        # Group updates by widget
         widget_updates = defaultdict(list)
         for update in updates:
             widget_id = update.get('widget_id')
@@ -797,8 +750,7 @@ class RealtimeDashboard(AnalyticsDashboard):
         dashboard_id: Optional[str] = None,
         force_refresh: bool = False
     ) -> Dict[str, Any]:
-        """Get real-time dashboard data"""
-        # Get base dashboard data
+        """Get real-time dashboard data"""        # Get base dashboard data
         data = await super().get_data(dashboard_id, force_refresh)
         
         # Add real-time specific information

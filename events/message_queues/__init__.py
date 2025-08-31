@@ -6,8 +6,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 Version: 3.0.0
 
 ⚠️ LEGAL WARNING: Unauthorized use prohibited. See __init__.py for full notice.
-"""
-from typing import Dict, Any, List, Optional, Callable, Union
+"""from typing import Dict, Any, List, Optional, Callable, Union
 from datetime import datetime, timezone, timedelta
 from dataclasses import dataclass, field
 from abc import ABC, abstractmethod

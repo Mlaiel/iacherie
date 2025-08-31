@@ -1,5 +1,4 @@
-"""
-High-Performance Distributed Queue System for IA Influencer Agent
+"""High-Performance Distributed Queue System for IA Influencer Agent
 ================================================================
 
 Enterprise-grade queue management with intelligent prioritization,
@@ -7,9 +6,7 @@ load balancing, and guaranteed message delivery.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import time
@@ -33,8 +30,7 @@ settings = get_settings()
 
 
 class QueuePriority(int, Enum):
-    """Queue priority levels"""
-    LOW = 1
+    """Queue priority levels"""    LOW = 1
     NORMAL = 2
     HIGH = 3
     URGENT = 4
@@ -42,8 +38,7 @@ class QueuePriority(int, Enum):
 
 
 class MessageStatus(str, Enum):
-    """Message processing status"""
-    PENDING = "pending"
+    """Message processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -52,8 +47,7 @@ class MessageStatus(str, Enum):
 
 
 class QueueType(str, Enum):
-    """Queue type definitions"""
-    FIFO = "fifo"
+    """Queue type definitions"""    FIFO = "fifo"
     PRIORITY = "priority"
     DELAY = "delay"
     UNIQUE = "unique"
@@ -62,8 +56,7 @@ class QueueType(str, Enum):
 
 @dataclass
 class QueueMessage:
-    """Queue message structure"""
-    message_id: str
+    """Queue message structure"""    message_id: str
     queue_name: str
     payload: Any
     priority: QueuePriority = QueuePriority.NORMAL
@@ -79,13 +72,11 @@ class QueueMessage:
     consumer_id: Optional[str] = None
     
     def __lt__(self, other):
-        """Priority comparison for heap operations"""
-        return self.priority.value > other.priority.value
+        """Priority comparison for heap operations"""        return self.priority.value > other.priority.value
 
 
 class QueueConfig(BaseModel):
-    """Queue configuration"""
-    name: str = Field(..., description="Queue name")
+    """Queue configuration"""    name: str = Field(..., description="Queue name")
     queue_type: QueueType = Field(default=QueueType.FIFO, description="Queue type")
     max_size: int = Field(default=10000, description="Maximum queue size")
     max_retries: int = Field(default=3, description="Maximum retry attempts")
@@ -99,8 +90,7 @@ class QueueConfig(BaseModel):
 
 
 class QueueMetrics(BaseModel):
-    """Queue performance metrics"""
-    total_messages: int = Field(default=0, description="Total messages processed")
+    """Queue performance metrics"""    total_messages: int = Field(default=0, description="Total messages processed")
     pending_messages: int = Field(default=0, description="Pending messages")
     processing_messages: int = Field(default=0, description="Currently processing")
     completed_messages: int = Field(default=0, description="Completed messages")
@@ -112,8 +102,7 @@ class QueueMetrics(BaseModel):
 
 
 class MessageProcessor:
-    """Message processor for handling queue messages"""
-    
+    """Message processor for handling queue messages"""    
     def __init__(self, processor_id: str, handler: Callable):
         self.processor_id = processor_id
         self.handler = handler
@@ -123,8 +112,7 @@ class MessageProcessor:
         self.error_count = 0
         
     async def process(self, message: QueueMessage) -> bool:
-        """Process a single message"""
-        try:
+        """Process a single message"""        try:
             self.current_message = message
             message.processing_started_at = datetime.now(timezone.utc)
             message.status = MessageStatus.PROCESSING
@@ -153,8 +141,7 @@ class MessageProcessor:
 
 
 class DistributedQueue:
-    """Single queue implementation"""
-    
+    """Single queue implementation"""    
     def __init__(self, config: QueueConfig, redis_client: Redis):
         self.config = config
         self.redis = redis_client
@@ -182,8 +169,7 @@ class DistributedQueue:
         delay_seconds: float = 0,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Optional[str]:
-        """
-        Add message to queue
+        """        Add message to queue
         
         Args:
             payload: Message payload
@@ -193,8 +179,7 @@ class DistributedQueue:
             
         Returns:
             Message ID or None if failed
-        """
-        try:
+        """        try:
             # Check queue size limit
             if len(self.pending_queue) >= self.config.max_size:
                 logger.warning(f"Queue {self.config.name} is full")
@@ -252,16 +237,14 @@ class DistributedQueue:
             return None
             
     async def dequeue(self, processor_id: str) -> Optional[QueueMessage]:
-        """
-        Get next message from queue
+        """        Get next message from queue
         
         Args:
             processor_id: Processor identifier
             
         Returns:
             Next message or None
-        """
-        try:
+        """        try:
             current_time = datetime.now(timezone.utc)
             
             # Find next available message
@@ -313,16 +296,14 @@ class DistributedQueue:
             return None
             
     async def acknowledge(self, message_id: str) -> bool:
-        """
-        Acknowledge message completion
+        """        Acknowledge message completion
         
         Args:
             message_id: Message identifier
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             if message_id not in self.processing_messages:
                 return False
                 
@@ -355,8 +336,7 @@ class DistributedQueue:
             return False
             
     async def reject(self, message_id: str, requeue: bool = True) -> bool:
-        """
-        Reject message and optionally requeue
+        """        Reject message and optionally requeue
         
         Args:
             message_id: Message identifier
@@ -364,8 +344,7 @@ class DistributedQueue:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             if message_id not in self.processing_messages:
                 return False
                 
@@ -409,20 +388,17 @@ class DistributedQueue:
             return False
             
     async def get_queue_size(self) -> int:
-        """Get current queue size"""
-        return len(self.pending_queue)
+        """Get current queue size"""        return len(self.pending_queue)
         
     async def get_metrics(self) -> QueueMetrics:
-        """Get queue performance metrics"""
-        # Update average processing time
+        """Get queue performance metrics"""        # Update average processing time
         if self.processing_times:
             self.metrics.avg_processing_time = sum(self.processing_times) / len(self.processing_times)
             
         return self.metrics
         
     async def purge(self) -> bool:
-        """Clear all messages from queue"""
-        try:
+        """Clear all messages from queue"""        try:
             self.pending_queue.clear()
             self.processing_messages.clear()
             self.completed_messages.clear()
@@ -441,8 +417,7 @@ class DistributedQueue:
             return False
             
     async def _persist_message(self, message: QueueMessage) -> None:
-        """Persist message to Redis"""
-        try:
+        """Persist message to Redis"""        try:
             key = f"queue:{self.config.name}:message:{message.message_id}"
             data = {
                 "message_id": message.message_id,
@@ -465,8 +440,7 @@ class DistributedQueue:
             logger.error(f"Failed to persist message: {e}")
             
     async def _delete_message(self, message: QueueMessage) -> None:
-        """Delete persisted message"""
-        try:
+        """Delete persisted message"""        try:
             key = f"queue:{self.config.name}:message:{message.message_id}"
             await self.redis.delete(key)
             
@@ -474,8 +448,7 @@ class DistributedQueue:
             logger.error(f"Failed to delete message: {e}")
             
     def _update_throughput(self) -> None:
-        """Update throughput metrics"""
-        current_time = time.time()
+        """Update throughput metrics"""        current_time = time.time()
         self.throughput_tracker.append(current_time)
         
         # Calculate messages per second over last 60 seconds
@@ -486,13 +459,11 @@ class DistributedQueue:
 
 
 class StreamQueue:
-    """
-    High-Performance Distributed Queue System for IA Influencer Agent
+    """    High-Performance Distributed Queue System for IA Influencer Agent
     
     Enterprise-grade queue management with intelligent prioritization,
     load balancing, and guaranteed message delivery.
-    """
-    
+    """    
     def __init__(self):
         self.queues: Dict[str, DistributedQueue] = {}
         self.redis_client: Optional[Redis] = None
@@ -501,8 +472,7 @@ class StreamQueue:
         self._monitor_task: Optional[asyncio.Task] = None
         
     async def initialize(self) -> None:
-        """Initialize queue system"""
-        try:
+        """Initialize queue system"""        try:
             # Initialize Redis connection
             redis_url = settings.redis_url or "redis://localhost:6379"
             self.redis_client = Redis.from_url(redis_url)
@@ -520,16 +490,14 @@ class StreamQueue:
             raise
             
     async def create_queue(self, config: QueueConfig) -> bool:
-        """
-        Create new queue
+        """        Create new queue
         
         Args:
             config: Queue configuration
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             if config.name in self.queues:
                 logger.warning(f"Queue {config.name} already exists")
                 return False
@@ -545,16 +513,14 @@ class StreamQueue:
             return False
             
     async def delete_queue(self, queue_name: str) -> bool:
-        """
-        Delete queue
+        """        Delete queue
         
         Args:
             queue_name: Queue name
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             if queue_name not in self.queues:
                 return False
                 
@@ -577,8 +543,7 @@ class StreamQueue:
         delay_seconds: float = 0,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Optional[str]:
-        """
-        Add message to queue
+        """        Add message to queue
         
         Args:
             queue_name: Target queue name
@@ -589,8 +554,7 @@ class StreamQueue:
             
         Returns:
             Message ID or None
-        """
-        if queue_name not in self.queues:
+        """        if queue_name not in self.queues:
             logger.error(f"Queue {queue_name} not found")
             return None
             
@@ -599,8 +563,7 @@ class StreamQueue:
         )
         
     async def dequeue(self, queue_name: str, processor_id: str) -> Optional[QueueMessage]:
-        """
-        Get next message from queue
+        """        Get next message from queue
         
         Args:
             queue_name: Source queue name
@@ -608,22 +571,19 @@ class StreamQueue:
             
         Returns:
             Next message or None
-        """
-        if queue_name not in self.queues:
+        """        if queue_name not in self.queues:
             return None
             
         return await self.queues[queue_name].dequeue(processor_id)
         
     async def acknowledge(self, queue_name: str, message_id: str) -> bool:
-        """Acknowledge message completion"""
-        if queue_name not in self.queues:
+        """Acknowledge message completion"""        if queue_name not in self.queues:
             return False
             
         return await self.queues[queue_name].acknowledge(message_id)
         
     async def reject(self, queue_name: str, message_id: str, requeue: bool = True) -> bool:
-        """Reject message"""
-        if queue_name not in self.queues:
+        """Reject message"""        if queue_name not in self.queues:
             return False
             
         return await self.queues[queue_name].reject(message_id, requeue)
@@ -634,8 +594,7 @@ class StreamQueue:
         queue_name: str,
         handler: Callable
     ) -> bool:
-        """
-        Register message processor
+        """        Register message processor
         
         Args:
             processor_id: Processor identifier
@@ -644,8 +603,7 @@ class StreamQueue:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             if queue_name not in self.queues:
                 logger.error(f"Queue {queue_name} not found")
                 return False
@@ -664,8 +622,7 @@ class StreamQueue:
             return False
             
     async def unregister_processor(self, processor_id: str) -> bool:
-        """Unregister processor"""
-        try:
+        """Unregister processor"""        try:
             if processor_id in self.processors:
                 self.processors[processor_id].active = False
                 del self.processors[processor_id]
@@ -677,14 +634,12 @@ class StreamQueue:
             return False
             
     async def get_queue_metrics(self, queue_name: str) -> Optional[QueueMetrics]:
-        """Get queue metrics"""
-        if queue_name in self.queues:
+        """Get queue metrics"""        if queue_name in self.queues:
             return await self.queues[queue_name].get_metrics()
         return None
         
     async def list_queues(self) -> List[Dict[str, Any]]:
-        """List all queues with metrics"""
-        queues = []
+        """List all queues with metrics"""        queues = []
         
         for queue_name, queue in self.queues.items():
             metrics = await queue.get_metrics()
@@ -698,8 +653,7 @@ class StreamQueue:
         return queues
         
     async def _process_messages(self, processor: MessageProcessor, queue_name: str) -> None:
-        """Background message processing"""
-        while processor.active and not self._shutdown_event.is_set():
+        """Background message processing"""        while processor.active and not self._shutdown_event.is_set():
             try:
                 # Get next message
                 message = await self.dequeue(queue_name, processor.processor_id)
@@ -721,8 +675,7 @@ class StreamQueue:
                 await asyncio.sleep(5)
                 
     async def _monitor_queues(self) -> None:
-        """Background queue monitoring"""
-        while not self._shutdown_event.is_set():
+        """Background queue monitoring"""        while not self._shutdown_event.is_set():
             try:
                 await asyncio.sleep(30)  # Monitor every 30 seconds
                 
@@ -748,8 +701,7 @@ class StreamQueue:
                 logger.error(f"Queue monitoring error: {e}")
                 
     async def shutdown(self) -> None:
-        """Gracefully shutdown queue system"""
-        try:
+        """Gracefully shutdown queue system"""        try:
             self._shutdown_event.set()
             
             # Stop all processors

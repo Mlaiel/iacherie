@@ -1,5 +1,4 @@
-"""
-Audio Analysis Events - Industrial Grade AI Analysis & Music Intelligence
+"""Audio Analysis Events - Industrial Grade AI Analysis & Music Intelligence
 ========================================================================
 
 This module handles all events related to advanced audio analysis including
@@ -7,9 +6,7 @@ genre detection, mood analysis, BPM detection, and AI-powered music intelligence
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-from dataclasses import dataclass, field
+"""from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, List, Optional, Any, Tuple
 from uuid import UUID
@@ -19,8 +16,7 @@ from ...core.events.base_event import BaseEvent, EventPriority, EventCategory
 
 
 class AnalysisType(Enum):
-    """Types of audio analysis"""
-    GENRE_DETECTION = "genre_detection"
+    """Types of audio analysis"""    GENRE_DETECTION = "genre_detection"
     MOOD_ANALYSIS = "mood_analysis"
     BPM_DETECTION = "bpm_detection"
     KEY_DETECTION = "key_detection"
@@ -33,8 +29,7 @@ class AnalysisType(Enum):
 
 
 class MusicalKey(Enum):
-    """Musical keys"""
-    C_MAJOR = "C major"
+    """Musical keys"""    C_MAJOR = "C major"
     C_SHARP_MAJOR = "C# major"
     D_MAJOR = "D major"
     D_SHARP_MAJOR = "D# major"
@@ -61,8 +56,7 @@ class MusicalKey(Enum):
 
 
 class TimeSignature(Enum):
-    """Common time signatures"""
-    FOUR_FOUR = "4/4"
+    """Common time signatures"""    FOUR_FOUR = "4/4"
     THREE_FOUR = "3/4"
     TWO_FOUR = "2/4"
     SIX_EIGHT = "6/8"
@@ -74,12 +68,10 @@ class TimeSignature(Enum):
 
 @dataclass
 class AudioAnalysisStartedEvent(BaseEvent):
-    """
-    Event triggered when comprehensive audio analysis begins.
+    """    Event triggered when comprehensive audio analysis begins.
     
     Initializes AI-powered music intelligence analysis pipeline.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     analysis_id: UUID
     filename: str
@@ -113,12 +105,10 @@ class AudioAnalysisStartedEvent(BaseEvent):
 
 @dataclass
 class AudioAnalysisProgressEvent(BaseEvent):
-    """
-    Event triggered during audio analysis progress updates.
+    """    Event triggered during audio analysis progress updates.
     
     Provides real-time feedback about AI analysis pipeline progress.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     analysis_id: UUID
     current_analysis_type: AnalysisType
@@ -149,12 +139,10 @@ class AudioAnalysisProgressEvent(BaseEvent):
 
 @dataclass
 class AudioAnalysisCompletedEvent(BaseEvent):
-    """
-    Event triggered when comprehensive audio analysis is completed.
+    """    Event triggered when comprehensive audio analysis is completed.
     
     Contains all analysis results and AI-generated insights.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     analysis_id: UUID
     analysis_duration: float
@@ -186,12 +174,10 @@ class AudioAnalysisCompletedEvent(BaseEvent):
 
 @dataclass
 class AudioAnalysisFailedEvent(BaseEvent):
-    """
-    Event triggered when audio analysis fails.
+    """    Event triggered when audio analysis fails.
     
     Contains detailed error information and recovery options.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     analysis_id: UUID
     failed_analysis_type: AnalysisType
@@ -225,12 +211,10 @@ class AudioAnalysisFailedEvent(BaseEvent):
 
 @dataclass
 class AudioGenreDetectionEvent(BaseEvent):
-    """
-    Event triggered when genre detection analysis is completed.
+    """    Event triggered when genre detection analysis is completed.
     
     Contains detailed genre classification and confidence scores.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     detection_id: UUID
     primary_genre: str
@@ -265,12 +249,10 @@ class AudioGenreDetectionEvent(BaseEvent):
 
 @dataclass
 class AudioMoodAnalysisEvent(BaseEvent):
-    """
-    Event triggered when mood analysis is completed.
+    """    Event triggered when mood analysis is completed.
     
     Contains emotional and atmospheric analysis results.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     analysis_id: UUID
     primary_mood: str
@@ -307,12 +289,10 @@ class AudioMoodAnalysisEvent(BaseEvent):
 
 @dataclass
 class AudioBPMDetectionEvent(BaseEvent):
-    """
-    Event triggered when BPM (tempo) detection is completed.
+    """    Event triggered when BPM (tempo) detection is completed.
     
     Contains detailed tempo analysis and rhythmic information.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     detection_id: UUID
     bpm: float
@@ -350,12 +330,10 @@ class AudioBPMDetectionEvent(BaseEvent):
 
 @dataclass
 class AudioKeyDetectionEvent(BaseEvent):
-    """
-    Event triggered when musical key detection is completed.
+    """    Event triggered when musical key detection is completed.
     
     Contains harmonic analysis and key progression information.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     detection_id: UUID
     musical_key: MusicalKey
@@ -392,12 +370,10 @@ class AudioKeyDetectionEvent(BaseEvent):
 
 @dataclass
 class AudioInstrumentRecognitionEvent(BaseEvent):
-    """
-    Event triggered when instrument recognition is completed.
+    """    Event triggered when instrument recognition is completed.
     
     Contains detailed information about detected instruments.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     recognition_id: UUID
     detected_instruments: List[Tuple[str, float, float, float]]  # (instrument, confidence, start, end)
@@ -431,12 +407,10 @@ class AudioInstrumentRecognitionEvent(BaseEvent):
 
 @dataclass
 class AudioVocalAnalysisEvent(BaseEvent):
-    """
-    Event triggered when vocal analysis is completed.
+    """    Event triggered when vocal analysis is completed.
     
     Contains detailed vocal performance and characteristics analysis.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     analysis_id: UUID
     vocals_detected: bool

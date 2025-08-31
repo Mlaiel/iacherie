@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Distributed Cache Implementation - Industrial-Grade Multi-Node Caching
+"""Distributed Cache Implementation - Industrial-Grade Multi-Node Caching
 =====================================================================
 
 Enterprise distributed cache with consistent hashing, automatic failover,
@@ -17,9 +16,7 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC:
 Multi-node cache requests → Consistent hashing → Node selection →
 Replication strategy → Failover handling → Performance optimization
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import time
@@ -39,8 +36,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CacheNode:
-    """Distributed cache node configuration."""
-    id: str
+    """Distributed cache node configuration."""    id: str
     host: str
     port: int
     weight: int = 1
@@ -56,22 +52,18 @@ class CacheNode:
         return f"{self.host}:{self.port}"
 
 class ConsistentHashRing:
-    """
-    Consistent hash ring for distributed cache nodes.
+    """    Consistent hash ring for distributed cache nodes.
     
     Provides consistent mapping of keys to nodes with minimal
     remapping when nodes are added or removed.
-    """
-    
+    """    
     def __init__(self, nodes: List[CacheNode], virtual_nodes: int = 150):
-        """
-        Initialize consistent hash ring.
+        """        Initialize consistent hash ring.
         
         Args:
             nodes: List of cache nodes
             virtual_nodes: Number of virtual nodes per physical node
-        """
-        self.nodes = {node.id: node for node in nodes}
+        """        self.nodes = {node.id: node for node in nodes}
         self.virtual_nodes = virtual_nodes
         self.ring: Dict[int, str] = {}
         self.sorted_hashes: List[int] = []
@@ -79,12 +71,10 @@ class ConsistentHashRing:
         self._build_ring()
     
     def _hash(self, key: str) -> int:
-        """Generate hash for key."""
-        return int(hashlib.md5(key.encode()).hexdigest(), 16)
+        """Generate hash for key."""        return int(hashlib.md5(key.encode()).hexdigest(), 16)
     
     def _build_ring(self) -> None:
-        """Build the hash ring with virtual nodes."""
-        self.ring.clear()
+        """Build the hash ring with virtual nodes."""        self.ring.clear()
         self.sorted_hashes.clear()
         
         for node_id, node in self.nodes.items():
@@ -101,8 +91,7 @@ class ConsistentHashRing:
                 bisect.insort(self.sorted_hashes, hash_value)
     
     def get_node(self, key: str) -> Optional[CacheNode]:
-        """Get node responsible for key."""
-        if not self.sorted_hashes:
+        """Get node responsible for key."""        if not self.sorted_hashes:
             return None
         
         hash_value = self._hash(key)
@@ -118,8 +107,7 @@ class ConsistentHashRing:
         return self.nodes.get(node_id)
     
     def get_nodes(self, key: str, count: int = 1) -> List[CacheNode]:
-        """Get multiple nodes for replication."""
-        if not self.sorted_hashes or count <= 0:
+        """Get multiple nodes for replication."""        if not self.sorted_hashes or count <= 0:
             return []
         
         hash_value = self._hash(key)
@@ -147,27 +135,23 @@ class ConsistentHashRing:
         return nodes
     
     def add_node(self, node: CacheNode) -> None:
-        """Add node to ring."""
-        self.nodes[node.id] = node
+        """Add node to ring."""        self.nodes[node.id] = node
         self._build_ring()
     
     def remove_node(self, node_id: str) -> None:
-        """Remove node from ring."""
-        if node_id in self.nodes:
+        """Remove node from ring."""        if node_id in self.nodes:
             del self.nodes[node_id]
             self._build_ring()
     
     def update_node_status(self, node_id: str, status: str) -> None:
-        """Update node status."""
-        if node_id in self.nodes:
+        """Update node status."""        if node_id in self.nodes:
             self.nodes[node_id].status = status
             self.nodes[node_id].last_seen = datetime.now()
             if status != "active":
                 self._build_ring()
 
 class DistributedCache:
-    """
-    Distributed cache implementation with consistent hashing.
+    """    Distributed cache implementation with consistent hashing.
     
     Features:
     - Consistent hashing for key distribution
@@ -175,19 +159,16 @@ class DistributedCache:
     - Health monitoring and failover
     - Async operations
     - Load balancing
-    """
-    
+    """    
     def __init__(self, nodes: List[Dict[str, Any]], replication_factor: int = 2,
                  health_check_interval: int = 30):
-        """
-        Initialize distributed cache.
+        """        Initialize distributed cache.
         
         Args:
             nodes: List of node configurations
             replication_factor: Number of replicas per key
             health_check_interval: Health check interval in seconds
-        """
-        self.replication_factor = replication_factor
+        """        self.replication_factor = replication_factor
         self.health_check_interval = health_check_interval
         self.logger = logging.getLogger(f"{__name__}.DistributedCache")
         
@@ -219,8 +200,7 @@ class DistributedCache:
         self.logger.info(f"Distributed cache initialized with {len(nodes)} nodes")
     
     async def _get_node_connection(self, node: CacheNode) -> Any:
-        """Get or create connection to node."""
-        # This would typically create actual connections to cache servers
+        """Get or create connection to node."""        # This would typically create actual connections to cache servers
         # For now, we'll simulate with a mock connection
         if node.id not in self.node_connections:
             # In real implementation, this would create Redis/Memcached connections
@@ -234,8 +214,7 @@ class DistributedCache:
     
     async def _node_operation(self, node: CacheNode, operation: str, 
                             key: str, value: Any = None, **kwargs) -> Any:
-        """Execute operation on specific node."""
-        try:
+        """Execute operation on specific node."""        try:
             connection = await self._get_node_connection(node)
             
             # Simulate node operations
@@ -266,16 +245,14 @@ class DistributedCache:
             raise
     
     async def get(self, key: str) -> Any:
-        """
-        Get value from distributed cache.
+        """        Get value from distributed cache.
         
         Args:
             key: Cache key
             
         Returns:
             Cached value or None if not found
-        """
-        try:
+        """        try:
             self._operations_count += 1
             
             # Get primary node
@@ -312,8 +289,7 @@ class DistributedCache:
             return None
     
     async def set(self, key: str, value: Any, ttl: Optional[int] = None) -> bool:
-        """
-        Set value in distributed cache with replication.
+        """        Set value in distributed cache with replication.
         
         Args:
             key: Cache key
@@ -322,8 +298,7 @@ class DistributedCache:
             
         Returns:
             True if set on at least one node
-        """
-        try:
+        """        try:
             self._operations_count += 1
             
             # Get nodes for replication
@@ -357,16 +332,14 @@ class DistributedCache:
             return False
     
     async def delete(self, key: str) -> bool:
-        """
-        Delete key from all replica nodes.
+        """        Delete key from all replica nodes.
         
         Args:
             key: Cache key to delete
             
         Returns:
             True if deleted from at least one node
-        """
-        try:
+        """        try:
             self._operations_count += 1
             
             # Get all nodes that might have this key
@@ -392,8 +365,7 @@ class DistributedCache:
             return False
     
     async def exists(self, key: str) -> bool:
-        """Check if key exists in cache."""
-        try:
+        """Check if key exists in cache."""        try:
             # Check primary node
             primary_node = self.hash_ring.get_node(key)
             if primary_node:
@@ -419,8 +391,7 @@ class DistributedCache:
             return False
     
     async def invalidate_pattern(self, pattern: str) -> int:
-        """Invalidate keys matching pattern across all nodes."""
-        total_deleted = 0
+        """Invalidate keys matching pattern across all nodes."""        total_deleted = 0
         
         for node in self.hash_ring.nodes.values():
             if node.status != "active":
@@ -437,8 +408,7 @@ class DistributedCache:
         return total_deleted
     
     async def clear(self) -> bool:
-        """Clear cache on all nodes."""
-        success = True
+        """Clear cache on all nodes."""        success = True
         
         for node in self.hash_ring.nodes.values():
             if node.status != "active":
@@ -454,8 +424,7 @@ class DistributedCache:
         return success
     
     async def get_stats(self) -> Dict[str, Any]:
-        """Get distributed cache statistics."""
-        active_nodes = sum(1 for node in self.hash_ring.nodes.values() 
+        """Get distributed cache statistics."""        active_nodes = sum(1 for node in self.hash_ring.nodes.values() 
                           if node.status == "active")
         
         return {
@@ -477,8 +446,7 @@ class DistributedCache:
         }
     
     async def health_check(self) -> Dict[str, str]:
-        """Perform health check on all nodes."""
-        results = {}
+        """Perform health check on all nodes."""        results = {}
         
         for node in self.hash_ring.nodes.values():
             try:
@@ -499,8 +467,7 @@ class DistributedCache:
         return results
     
     async def start_health_monitoring(self) -> None:
-        """Start periodic health monitoring."""
-        if self._health_check_task is not None:
+        """Start periodic health monitoring."""        if self._health_check_task is not None:
             return
         
         async def health_check_loop():
@@ -517,8 +484,7 @@ class DistributedCache:
         self.logger.info("Health monitoring started")
     
     async def stop_health_monitoring(self) -> None:
-        """Stop health monitoring."""
-        if self._health_check_task:
+        """Stop health monitoring."""        if self._health_check_task:
             self._health_check_task.cancel()
             try:
                 await self._health_check_task
@@ -527,8 +493,7 @@ class DistributedCache:
             self._health_check_task = None
     
     async def close(self) -> None:
-        """Close all connections and stop monitoring."""
-        await self.stop_health_monitoring()
+        """Close all connections and stop monitoring."""        await self.stop_health_monitoring()
         
         # Close node connections
         for connection_info in self.node_connections.values():
@@ -539,15 +504,12 @@ class DistributedCache:
         self.logger.info("Distributed cache closed")
 
 class ConsistentHashCache(DistributedCache):
-    """
-    Specialized distributed cache with advanced consistent hashing.
+    """    Specialized distributed cache with advanced consistent hashing.
     
     Enhanced version with better load balancing and partition tolerance.
-    """
-    
+    """    
     def __init__(self, nodes: List[Dict[str, Any]], **kwargs):
-        """Initialize consistent hash cache."""
-        super().__init__(nodes, **kwargs)
+        """Initialize consistent hash cache."""        super().__init__(nodes, **kwargs)
         self.logger = logging.getLogger(f"{__name__}.ConsistentHashCache")
         
         # Enhanced configuration for consistent hashing

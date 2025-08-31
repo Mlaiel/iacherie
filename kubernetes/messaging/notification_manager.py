@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Email & SMS Notification Manager
+"""IA Influencer Agent - Email & SMS Notification Manager
 Enterprise notification delivery system for multi-channel communication
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -13,9 +12,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import smtplib
 import time
@@ -40,8 +37,7 @@ settings = get_settings()
 
 
 class EmailTemplate(BaseModel):
-    """Email template configuration"""
-    name: str = Field(..., description="Template name")
+    """Email template configuration"""    name: str = Field(..., description="Template name")
     subject: str = Field(..., description="Email subject")
     html_template: str = Field(..., description="HTML template path")
     text_template: Optional[str] = Field(None, description="Text template path")
@@ -50,15 +46,13 @@ class EmailTemplate(BaseModel):
 
 
 class SMSTemplate(BaseModel):
-    """SMS template configuration"""
-    name: str = Field(..., description="Template name")
+    """SMS template configuration"""    name: str = Field(..., description="Template name")
     message: str = Field(..., description="SMS message template")
     max_length: int = Field(default=160, description="Maximum message length")
 
 
 class NotificationPreferences(BaseModel):
-    """User notification preferences"""
-    user_id: str = Field(..., description="User ID")
+    """User notification preferences"""    user_id: str = Field(..., description="User ID")
     email_enabled: bool = Field(default=True, description="Email notifications enabled")
     sms_enabled: bool = Field(default=False, description="SMS notifications enabled")
     push_enabled: bool = Field(default=True, description="Push notifications enabled")
@@ -71,12 +65,9 @@ class NotificationPreferences(BaseModel):
 
 
 class EmailNotificationManager:
-    """
-    Enterprise email notification management system
+    """    Enterprise email notification management system
     Handles templated emails, delivery tracking, and bounce management
-    """
-
-    def __init__(self):
+    """    def __init__(self):
         self.smtp_config = {
             "server": settings.SMTP_SERVER,
             "port": settings.SMTP_PORT,
@@ -106,8 +97,7 @@ class EmailNotificationManager:
         sender_email: Optional[str] = None,
         sender_name: Optional[str] = None
     ) -> Dict[str, Union[bool, str]]:
-        """Send templated email"""
-        try:
+        """Send templated email"""        try:
             # Get email template
             template = self._get_email_template(template_name)
             if not template:
@@ -154,8 +144,7 @@ class EmailNotificationManager:
         sender_email: str = None,
         sender_name: str = None
     ) -> Dict[str, Union[bool, str]]:
-        """Send email via SMTP"""
-        try:
+        """Send email via SMTP"""        try:
             # Create message
             msg = MIMEMultipart("alternative")
             msg["Subject"] = subject
@@ -191,8 +180,7 @@ class EmailNotificationManager:
             return {"success": False, "error": str(e)}
 
     async def _render_template(self, template_path: str, context: Dict[str, any]) -> str:
-        """Render Jinja2 template"""
-        try:
+        """Render Jinja2 template"""        try:
             template = self.template_env.get_template(template_path)
             return template.render(**context)
             
@@ -201,8 +189,7 @@ class EmailNotificationManager:
             raise
 
     async def _render_string_template(self, template_string: str, context: Dict[str, any]) -> str:
-        """Render template string"""
-        try:
+        """Render template string"""        try:
             template = self.template_env.from_string(template_string)
             return template.render(**context)
             
@@ -211,8 +198,7 @@ class EmailNotificationManager:
             return template_string
 
     def _get_email_template(self, template_name: str) -> Optional[EmailTemplate]:
-        """Get email template configuration"""
-        templates = {
+        """Get email template configuration"""        templates = {
             "protection_alert": EmailTemplate(
                 name="protection_alert",
                 subject="🚨 Content Protection Alert - {{ violation_type }}",
@@ -262,8 +248,7 @@ class EmailNotificationManager:
         return templates.get(template_name)
 
     async def send_protection_alert(self, user_email: str, violation_data: Dict[str, any]) -> bool:
-        """Send content protection alert email"""
-        try:
+        """Send content protection alert email"""        try:
             context = {
                 "violation_type": violation_data.get("type", "Unknown"),
                 "platform": violation_data.get("platform", "Unknown"),
@@ -282,8 +267,7 @@ class EmailNotificationManager:
             return False
 
     async def send_revenue_notification(self, user_email: str, revenue_data: Dict[str, any]) -> bool:
-        """Send revenue notification email"""
-        try:
+        """Send revenue notification email"""        try:
             context = {
                 "amount": revenue_data.get("amount", 0),
                 "currency": revenue_data.get("currency", "EUR"),
@@ -302,8 +286,7 @@ class EmailNotificationManager:
             return False
 
     async def send_collaboration_invite(self, recipient_email: str, invite_data: Dict[str, any]) -> bool:
-        """Send collaboration invitation email"""
-        try:
+        """Send collaboration invitation email"""        try:
             context = {
                 "inviter_name": invite_data.get("inviter_name", "Someone"),
                 "project_name": invite_data.get("project_name", "a project"),
@@ -321,17 +304,13 @@ class EmailNotificationManager:
             return False
 
     def get_delivery_stats(self) -> Dict[str, int]:
-        """Get email delivery statistics"""
-        return self.delivery_stats.copy()
+        """Get email delivery statistics"""        return self.delivery_stats.copy()
 
 
 class SMSNotificationManager:
-    """
-    Enterprise SMS notification management system
+    """    Enterprise SMS notification management system
     Handles SMS delivery via Twilio and other providers
-    """
-
-    def __init__(self):
+    """    def __init__(self):
         self.twilio_client = None
         if settings.TWILIO_ACCOUNT_SID and settings.TWILIO_AUTH_TOKEN:
             self.twilio_client = TwilioClient(
@@ -352,8 +331,7 @@ class SMSNotificationManager:
         context: Dict[str, any],
         sender_number: Optional[str] = None
     ) -> Dict[str, Union[bool, str]]:
-        """Send templated SMS"""
-        try:
+        """Send templated SMS"""        try:
             if not self.twilio_client:
                 raise ValueError("SMS provider not configured")
             
@@ -395,8 +373,7 @@ class SMSNotificationManager:
         message: str,
         sender_number: str
     ) -> Dict[str, Union[bool, str]]:
-        """Send SMS via Twilio"""
-        try:
+        """Send SMS via Twilio"""        try:
             message = self.twilio_client.messages.create(
                 body=message,
                 from_=sender_number,
@@ -411,8 +388,7 @@ class SMSNotificationManager:
             return {"success": False, "error": str(e)}
 
     async def _render_sms_template(self, template_string: str, context: Dict[str, any]) -> str:
-        """Render SMS template"""
-        try:
+        """Render SMS template"""        try:
             # Simple string templating for SMS
             message = template_string
             for key, value in context.items():
@@ -424,8 +400,7 @@ class SMSNotificationManager:
             return template_string
 
     def _get_sms_template(self, template_name: str) -> Optional[SMSTemplate]:
-        """Get SMS template configuration"""
-        templates = {
+        """Get SMS template configuration"""        templates = {
             "protection_alert": SMSTemplate(
                 name="protection_alert",
                 message="🚨 IA Influencer Alert: Potential violation detected on {{platform}}. Check your dashboard for details.",
@@ -456,8 +431,7 @@ class SMSNotificationManager:
         return templates.get(template_name)
 
     async def send_protection_alert_sms(self, phone_number: str, violation_data: Dict[str, any]) -> bool:
-        """Send protection alert SMS"""
-        try:
+        """Send protection alert SMS"""        try:
             context = {
                 "platform": violation_data.get("platform", "unknown platform"),
                 "content_name": violation_data.get("content_name", "your content")
@@ -471,17 +445,13 @@ class SMSNotificationManager:
             return False
 
     def get_delivery_stats(self) -> Dict[str, int]:
-        """Get SMS delivery statistics"""
-        return self.delivery_stats.copy()
+        """Get SMS delivery statistics"""        return self.delivery_stats.copy()
 
 
 class MultiChannelNotificationManager:
-    """
-    Unified notification manager for email, SMS, and push notifications
+    """    Unified notification manager for email, SMS, and push notifications
     Handles user preferences and delivery orchestration
-    """
-
-    def __init__(self):
+    """    def __init__(self):
         self.email_manager = EmailNotificationManager()
         self.sms_manager = SMSNotificationManager()
         self.user_preferences: Dict[str, NotificationPreferences] = {}
@@ -493,8 +463,7 @@ class MultiChannelNotificationManager:
         data: Dict[str, any],
         channels: Optional[List[str]] = None
     ) -> Dict[str, bool]:
-        """Send notification through multiple channels based on user preferences"""
-        try:
+        """Send notification through multiple channels based on user preferences"""        try:
             # Get user and preferences
             user = await self._get_user(user_id)
             if not user:
@@ -538,8 +507,7 @@ class MultiChannelNotificationManager:
     async def _send_email_notification(
         self, email: str, notification_type: str, data: Dict[str, any]
     ) -> bool:
-        """Send email notification based on type"""
-        try:
+        """Send email notification based on type"""        try:
             if notification_type == "protection_alert":
                 return await self.email_manager.send_protection_alert(email, data)
             elif notification_type == "revenue_notification":
@@ -559,8 +527,7 @@ class MultiChannelNotificationManager:
     async def _send_sms_notification(
         self, phone: str, notification_type: str, data: Dict[str, any]
     ) -> bool:
-        """Send SMS notification based on type"""
-        try:
+        """Send SMS notification based on type"""        try:
             if notification_type == "protection_alert":
                 return await self.sms_manager.send_protection_alert_sms(phone, data)
             else:
@@ -576,8 +543,7 @@ class MultiChannelNotificationManager:
     def _get_preferred_channels(
         self, preferences: NotificationPreferences, notification_type: str
     ) -> List[str]:
-        """Get preferred notification channels for specific type"""
-        channels = []
+        """Get preferred notification channels for specific type"""        channels = []
         
         # Check if this notification type is enabled
         type_enabled = getattr(preferences, notification_type.replace("_", "_"), True)
@@ -600,8 +566,7 @@ class MultiChannelNotificationManager:
     async def _send_push_notification(
         self, user_id: str, notification_type: str, data: Dict[str, Any]
     ) -> bool:
-        """
-        Send push notification to user's registered devices
+        """        Send push notification to user's registered devices
         
         Args:
             user_id: User identifier
@@ -610,8 +575,7 @@ class MultiChannelNotificationManager:
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             # Get user's push notification tokens
             push_tokens = await self._get_user_push_tokens(user_id)
             if not push_tokens:
@@ -659,8 +623,7 @@ class MultiChannelNotificationManager:
             return False
     
     async def _get_user_push_tokens(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get user's registered push notification tokens"""
-        try:
+        """Get user's registered push notification tokens"""        try:
             # In production, this would query the database
             # For now, return mock tokens
             return [
@@ -685,8 +648,7 @@ class MultiChannelNotificationManager:
             return []
     
     async def _create_push_payload(self, notification_type: str, data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Create platform-specific push notification payload"""
-        try:
+        """Create platform-specific push notification payload"""        try:
             # Base payload structure
             base_payload = {
                 'notification_type': notification_type,
@@ -780,8 +742,7 @@ class MultiChannelNotificationManager:
             return None
     
     async def _send_apns_notification(self, token: str, payload: Dict[str, Any]) -> bool:
-        """Send notification via Apple Push Notification Service (APNS)"""
-        try:
+        """Send notification via Apple Push Notification Service (APNS)"""        try:
             # APNS payload format
             apns_payload = {
                 'aps': {
@@ -810,8 +771,7 @@ class MultiChannelNotificationManager:
             return False
     
     async def _send_fcm_notification(self, token: str, payload: Dict[str, Any]) -> bool:
-        """Send notification via Firebase Cloud Messaging (FCM)"""
-        try:
+        """Send notification via Firebase Cloud Messaging (FCM)"""        try:
             # FCM payload format
             fcm_payload = {
                 'message': {
@@ -848,8 +808,7 @@ class MultiChannelNotificationManager:
             return False
     
     async def _send_web_push_notification(self, token: str, payload: Dict[str, Any]) -> bool:
-        """Send web push notification"""
-        try:
+        """Send web push notification"""        try:
             # Web Push payload format
             web_push_payload = {
                 'title': payload['title'],
@@ -879,8 +838,7 @@ class MultiChannelNotificationManager:
             return False
     
     def _update_push_stats(self, notification_type: str, success_count: int, total_count: int) -> None:
-        """Update push notification statistics"""
-        try:
+        """Update push notification statistics"""        try:
             if not hasattr(self, 'push_stats'):
                 self.push_stats = {
                     'total_sent': 0,
@@ -904,8 +862,7 @@ class MultiChannelNotificationManager:
             logger.error(f"Error updating push stats: {e}")
 
     async def _get_user(self, user_id: str):
-        """Get user from database"""
-        # This would fetch from database
+        """Get user from database"""        # This would fetch from database
         # For now, return mock user
         return type('User', (), {
             'id': user_id,
@@ -914,8 +871,7 @@ class MultiChannelNotificationManager:
         })()
 
     async def _get_user_preferences(self, user_id: str) -> NotificationPreferences:
-        """Get user notification preferences"""
-        if user_id not in self.user_preferences:
+        """Get user notification preferences"""        if user_id not in self.user_preferences:
             # Load from database or use defaults
             self.user_preferences[user_id] = NotificationPreferences(user_id=user_id)
         
@@ -924,8 +880,7 @@ class MultiChannelNotificationManager:
     async def update_user_preferences(
         self, user_id: str, preferences: NotificationPreferences
     ) -> bool:
-        """Update user notification preferences"""
-        try:
+        """Update user notification preferences"""        try:
             self.user_preferences[user_id] = preferences
             # Save to database
             return True
@@ -935,8 +890,7 @@ class MultiChannelNotificationManager:
             return False
 
     def get_delivery_stats(self) -> Dict[str, Dict[str, int]]:
-        """Get comprehensive delivery statistics"""
-        return {
+        """Get comprehensive delivery statistics"""        return {
             "email": self.email_manager.get_delivery_stats(),
             "sms": self.sms_manager.get_delivery_stats()
         }

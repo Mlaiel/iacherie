@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Standalone AI Engines Test Suite
+"""Standalone AI Engines Test Suite
 
 Independent test suite that doesn't rely on complex imports.
 Tests the structure and functionality without circular dependencies.
@@ -28,9 +24,7 @@ This software is proprietary and confidential.
 Unauthorized use, modification, or distribution by any individual or entity 
 without explicit written consent from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will face legal action under international copyright law.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -43,8 +37,7 @@ from pathlib import Path
 
 
 def test_engines_directory_exists():
-    """Test that engines directory exists"""
-    engines_path = Path("/workspaces/Ainflue/backend/ai/engines")
+    """Test that engines directory exists"""    engines_path = Path("/workspaces/Ainflue/backend/ai/engines")
     assert engines_path.exists(), "Engines directory must exist"
     assert engines_path.is_dir(), "Engines path must be a directory"
 
@@ -57,8 +50,7 @@ def test_tests_directory_exists():
 
 
 def test_all_engine_files_exist():
-    """Test that all required engine files exist"""
-    engines_path = Path("/workspaces/Ainflue/backend/ai/engines")
+    """Test that all required engine files exist"""    engines_path = Path("/workspaces/Ainflue/backend/ai/engines")
     
     required_files = [
         "__init__.py",
@@ -86,8 +78,7 @@ def test_all_engine_files_exist():
 
 
 def test_all_test_files_exist():
-    """Test that all required test files exist"""
-    tests_path = Path("/workspaces/Ainflue/tests_backend/ai/engines")
+    """Test that all required test files exist"""    tests_path = Path("/workspaces/Ainflue/tests_backend/ai/engines")
     
     required_test_files = [
         "__init__.py",
@@ -116,8 +107,7 @@ def test_all_test_files_exist():
 
 
 def test_readme_files_exist():
-    """Test that README files exist in all languages"""
-    tests_path = Path("/workspaces/Ainflue/tests_backend/ai/engines")
+    """Test that README files exist in all languages"""    tests_path = Path("/workspaces/Ainflue/tests_backend/ai/engines")
     
     readme_files = ["README.md", "README.de.md", "README.fr.md"]
     
@@ -127,8 +117,7 @@ def test_readme_files_exist():
 
 
 def test_readme_content_has_copyright():
-    """Test that README files contain proper copyright notices"""
-    tests_path = Path("/workspaces/Ainflue/tests_backend/ai/engines")
+    """Test that README files contain proper copyright notices"""    tests_path = Path("/workspaces/Ainflue/tests_backend/ai/engines")
     
     for readme_file in ["README.md", "README.de.md", "README.fr.md"]:
         file_path = tests_path / readme_file
@@ -144,8 +133,7 @@ def test_readme_content_has_copyright():
 
 
 def test_test_files_have_proper_headers():
-    """Test that test files have proper copyright headers"""
-    tests_path = Path("/workspaces/Ainflue/tests_backend/ai/engines")
+    """Test that test files have proper copyright headers"""    tests_path = Path("/workspaces/Ainflue/tests_backend/ai/engines")
     
     test_files = [
         "test_collaboration_engine.py",
@@ -167,8 +155,7 @@ def test_test_files_have_proper_headers():
 
 
 def test_python_files_syntax_valid():
-    """Test that all Python files have valid syntax"""
-    
+    """Test that all Python files have valid syntax"""    
     # Test new test files
     test_files = [
         "/workspaces/Ainflue/tests_backend/ai/engines/test_collaboration_engine.py",
@@ -192,8 +179,7 @@ def test_python_files_syntax_valid():
 
 
 def test_test_files_contain_test_classes():
-    """Test that test files contain proper test classes"""
-    
+    """Test that test files contain proper test classes"""    
     test_files = [
         "/workspaces/Ainflue/tests_backend/ai/engines/test_collaboration_engine.py",
         "/workspaces/Ainflue/tests_backend/ai/engines/test_seo_engine.py",
@@ -212,8 +198,7 @@ def test_test_files_contain_test_classes():
 
 
 def test_docstrings_exist():
-    """Test that files have proper docstrings"""
-    
+    """Test that files have proper docstrings"""    
     test_files = [
         "/workspaces/Ainflue/tests_backend/ai/engines/test_collaboration_engine.py",
         "/workspaces/Ainflue/tests_backend/ai/engines/test_seo_engine.py",
@@ -232,8 +217,7 @@ def test_docstrings_exist():
 
 @pytest.mark.asyncio
 async def test_async_patterns():
-    """Test async/await patterns commonly used in engines"""
-    
+    """Test async/await patterns commonly used in engines"""    
     async def mock_async_function():
         await asyncio.sleep(0.01)
         return {"status": "success", "data": "processed"}
@@ -244,8 +228,7 @@ async def test_async_patterns():
 
 
 def test_enum_patterns():
-    """Test enum patterns used in engines"""
-    from enum import Enum
+    """Test enum patterns used in engines"""    from enum import Enum
     
     class MockStatus(Enum):
         READY = "ready"
@@ -261,8 +244,7 @@ def test_enum_patterns():
 
 
 def test_dataclass_patterns():
-    """Test dataclass patterns used in engines"""
-    from dataclasses import dataclass, field
+    """Test dataclass patterns used in engines"""    from dataclasses import dataclass, field
     from typing import List, Dict, Optional
     
     @dataclass
@@ -283,8 +265,7 @@ def test_dataclass_patterns():
 
 
 def test_error_handling_patterns():
-    """Test error handling patterns used in engines"""
-    
+    """Test error handling patterns used in engines"""    
     def process_with_validation(data):
         try:
             if not data:
@@ -317,8 +298,7 @@ def test_error_handling_patterns():
 
 
 def test_configuration_patterns():
-    """Test configuration patterns used in engines"""
-    
+    """Test configuration patterns used in engines"""    
     default_config = {
         "timeout": 30,
         "max_workers": 4,
@@ -344,8 +324,7 @@ def test_configuration_patterns():
 
 
 def test_logging_patterns():
-    """Test logging patterns used in engines"""
-    import logging
+    """Test logging patterns used in engines"""    import logging
     
     # Create logger
     logger = logging.getLogger("test_engine")
@@ -357,8 +336,7 @@ def test_logging_patterns():
 
 
 def test_json_serialization_patterns():
-    """Test JSON serialization patterns used in engines"""
-    from datetime import datetime
+    """Test JSON serialization patterns used in engines"""    from datetime import datetime
     import json
     
     # Mock data structure

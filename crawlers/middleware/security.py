@@ -1,5 +1,4 @@
-"""
-Security Middleware Module
+"""Security Middleware Module
 =========================
 
 Enterprise-grade security middleware for crawler pipeline.
@@ -14,9 +13,7 @@ Business Logic Security:
 - AI-powered threat detection for content theft
 - GDPR-compliant data processing and privacy protection
 - Enterprise-grade security for monetization workflows
-"""
-
-import asyncio
+"""import asyncio
 import json
 import time
 import hashlib
@@ -47,8 +44,7 @@ logger = logging.getLogger(__name__)
 
 
 class ThreatLevel(str, Enum):
-    """Security threat levels"""
-    LOW = "low"
+    """Security threat levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -56,8 +52,7 @@ class ThreatLevel(str, Enum):
 
 
 class SecurityAction(str, Enum):
-    """Security actions"""
-    ALLOW = "allow"
+    """Security actions"""    ALLOW = "allow"
     BLOCK = "block"
     QUARANTINE = "quarantine"
     MONITOR = "monitor"
@@ -67,8 +62,7 @@ class SecurityAction(str, Enum):
 
 
 class AttackType(str, Enum):
-    """Types of security attacks"""
-    INJECTION = "injection"
+    """Types of security attacks"""    INJECTION = "injection"
     XSS = "xss"
     MALWARE = "malware"
     DDOS = "ddos"
@@ -83,8 +77,7 @@ class AttackType(str, Enum):
 
 
 class ComplianceStandard(str, Enum):
-    """Compliance standards"""
-    GDPR = "gdpr"
+    """Compliance standards"""    GDPR = "gdpr"
     CCPA = "ccpa"
     HIPAA = "hipaa"
     SOX = "sox"
@@ -93,8 +86,7 @@ class ComplianceStandard(str, Enum):
 
 
 class SecurityRequest(BaseModel):
-    """Security validation request model"""
-    request_id: str = Field(description="Unique request identifier")
+    """Security validation request model"""    request_id: str = Field(description="Unique request identifier")
     user_id: Optional[str] = Field(None, description="User identifier")
     ip_address: str = Field(description="Client IP address")
     user_agent: str = Field(description="Client user agent")
@@ -108,8 +100,7 @@ class SecurityRequest(BaseModel):
 
 
 class SecurityResult(BaseModel):
-    """Security validation result model"""
-    request_id: str = Field(description="Request identifier")
+    """Security validation result model"""    request_id: str = Field(description="Request identifier")
     action: SecurityAction = Field(description="Recommended security action")
     threat_level: ThreatLevel = Field(description="Detected threat level")
     threats_detected: List[AttackType] = Field(default_factory=list, description="Detected threats")
@@ -123,8 +114,7 @@ class SecurityResult(BaseModel):
 
 
 class IPSecurityAnalyzer:
-    """Advanced IP address security analysis"""
-    
+    """Advanced IP address security analysis"""    
     def __init__(self, redis_client: redis.Redis):
         self.redis_client = redis_client
         self.cache = CacheManager()
@@ -143,8 +133,7 @@ class IPSecurityAnalyzer:
         }
     
     async def analyze_ip(self, ip_addr: str, user_id: Optional[str] = None) -> Dict[str, Any]:
-        """Comprehensive IP address analysis"""
-        analysis = {
+        """Comprehensive IP address analysis"""        analysis = {
             "ip_address": ip_addr,
             "is_suspicious": False,
             "threat_level": ThreatLevel.LOW,
@@ -201,13 +190,11 @@ class IPSecurityAnalyzer:
             return analysis
     
     async def check_ip_blacklist(self, ip_addr: str) -> bool:
-        """Check if IP is in blacklist"""
-        blacklist_key = f"ip_blacklist:{ip_addr}"
+        """Check if IP is in blacklist"""        blacklist_key = f"ip_blacklist:{ip_addr}"
         return await self.redis_client.exists(blacklist_key)
     
     async def check_ip_rate_limit(self, ip_addr: str) -> bool:
-        """Check IP rate limiting"""
-        now = time.time()
+        """Check IP rate limiting"""        now = time.time()
         minute_key = f"ip_rate:{ip_addr}:{int(now // 60)}"
         hour_key = f"ip_rate:{ip_addr}:{int(now // 3600)}"
         
@@ -223,8 +210,7 @@ class IPSecurityAnalyzer:
                 hour_count > self.ip_rate_limits["requests_per_hour"])
     
     async def get_ip_geolocation(self, ip_addr: str) -> Optional[Dict[str, Any]]:
-        """Get IP geolocation information"""
-        cache_key = f"ip_geo:{ip_addr}"
+        """Get IP geolocation information"""        cache_key = f"ip_geo:{ip_addr}"
         
         # Try cache first
         cached_geo = await self.cache.get(cache_key)
@@ -246,8 +232,7 @@ class IPSecurityAnalyzer:
         return geo_data
     
     async def check_ip_reputation(self, ip_addr: str) -> float:
-        """Check IP reputation score (0.0 = bad, 1.0 = good)"""
-        cache_key = f"ip_reputation:{ip_addr}"
+        """Check IP reputation score (0.0 = bad, 1.0 = good)"""        cache_key = f"ip_reputation:{ip_addr}"
         
         # Try cache first
         cached_reputation = await self.cache.get(cache_key)
@@ -268,8 +253,7 @@ class IPSecurityAnalyzer:
 
 
 class ContentSecurityAnalyzer:
-    """Advanced content security analysis"""
-    
+    """Advanced content security analysis"""    
     def __init__(self):
         self.malware_signatures = [
             b"X5O!P%@AP[4\\PZX54(P^)7CC)7}",  # EICAR test signature
@@ -301,8 +285,7 @@ class ContentSecurityAnalyzer:
         ]
     
     async def analyze_content(self, content: Union[str, bytes]) -> Dict[str, Any]:
-        """Comprehensive content security analysis"""
-        analysis = {
+        """Comprehensive content security analysis"""        analysis = {
             "is_malicious": False,
             "threat_level": ThreatLevel.LOW,
             "threats_detected": [],
@@ -366,32 +349,28 @@ class ContentSecurityAnalyzer:
             return analysis
     
     async def detect_malware(self, content: bytes) -> bool:
-        """Detect malware signatures in content"""
-        for signature in self.malware_signatures:
+        """Detect malware signatures in content"""        for signature in self.malware_signatures:
             if signature in content:
                 logger.warning(f"Malware signature detected: {signature}")
                 return True
         return False
     
     async def detect_xss(self, content: str) -> bool:
-        """Detect XSS patterns in content"""
-        for pattern in self.xss_patterns:
+        """Detect XSS patterns in content"""        for pattern in self.xss_patterns:
             if pattern.search(content):
                 logger.warning(f"XSS pattern detected: {pattern.pattern}")
                 return True
         return False
     
     async def detect_sql_injection(self, content: str) -> bool:
-        """Detect SQL injection patterns in content"""
-        for pattern in self.sql_injection_patterns:
+        """Detect SQL injection patterns in content"""        for pattern in self.sql_injection_patterns:
             if pattern.search(content):
                 logger.warning(f"SQL injection pattern detected: {pattern.pattern}")
                 return True
         return False
     
     async def detect_content_manipulation(self, content: str) -> bool:
-        """Detect content manipulation attempts"""
-        # Look for suspicious encoding or obfuscation
+        """Detect content manipulation attempts"""        # Look for suspicious encoding or obfuscation
         suspicious_patterns = [
             r"eval\s*\(",
             r"setTimeout\s*\(",
@@ -411,15 +390,13 @@ class ContentSecurityAnalyzer:
 
 
 class BehaviorAnalyzer:
-    """Advanced behavioral security analysis"""
-    
+    """Advanced behavioral security analysis"""    
     def __init__(self, redis_client: redis.Redis):
         self.redis_client = redis_client
         
     async def analyze_behavior(self, user_id: str, ip_addr: str, 
                              request_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze user/IP behavior patterns"""
-        analysis = {
+        """Analyze user/IP behavior patterns"""        analysis = {
             "is_suspicious": False,
             "anomaly_score": 0.0,
             "behavioral_indicators": [],
@@ -474,8 +451,7 @@ class BehaviorAnalyzer:
             return analysis
     
     async def analyze_request_frequency(self, user_id: str, ip_addr: str) -> Dict[str, Any]:
-        """Analyze request frequency patterns"""
-        now = time.time()
+        """Analyze request frequency patterns"""        now = time.time()
         hour_window = int(now // 3600)
         
         # Count requests in current hour
@@ -504,8 +480,7 @@ class BehaviorAnalyzer:
         }
     
     async def analyze_time_patterns(self, user_id: str) -> Dict[str, Any]:
-        """Analyze temporal access patterns"""
-        now = datetime.utcnow()
+        """Analyze temporal access patterns"""        now = datetime.utcnow()
         hour = now.hour
         
         # Track hourly access patterns
@@ -532,8 +507,7 @@ class BehaviorAnalyzer:
         }
     
     async def analyze_user_agent(self, user_id: str, user_agent: str) -> Dict[str, Any]:
-        """Analyze user agent patterns"""
-        analysis = {
+        """Analyze user agent patterns"""        analysis = {
             "user_agent": user_agent,
             "is_suspicious": False,
             "suspicious_indicators": []
@@ -570,8 +544,7 @@ class BehaviorAnalyzer:
         return analysis
     
     async def analyze_geographic_patterns(self, user_id: str, ip_addr: str) -> Dict[str, Any]:
-        """Analyze geographic access patterns"""
-        # Get IP geolocation (mock implementation)
+        """Analyze geographic access patterns"""        # Get IP geolocation (mock implementation)
         current_country = "US"  # Would use actual GeoIP service
         
         # Track countries accessed from
@@ -594,8 +567,7 @@ class BehaviorAnalyzer:
         }
     
     def calculate_risk_level(self, anomaly_score: float) -> str:
-        """Calculate overall risk level"""
-        if anomaly_score >= 0.8:
+        """Calculate overall risk level"""        if anomaly_score >= 0.8:
             return "critical"
         elif anomaly_score >= 0.6:
             return "high"
@@ -606,8 +578,7 @@ class BehaviorAnalyzer:
 
 
 class SecurityMiddleware:
-    """Main security middleware orchestrator"""
-    
+    """Main security middleware orchestrator"""    
     def __init__(self):
         self.redis_client = redis.from_url(settings.REDIS_URL)
         self.cache = CacheManager()
@@ -626,8 +597,7 @@ class SecurityMiddleware:
         }
     
     async def validate_security(self, request: SecurityRequest) -> SecurityResult:
-        """Main security validation method"""
-        start_time = time.time()
+        """Main security validation method"""        start_time = time.time()
         threats_detected = []
         overall_confidence = 1.0
         threat_level = ThreatLevel.LOW
@@ -712,8 +682,7 @@ class SecurityMiddleware:
             )
     
     async def analyze_headers(self, headers: Dict[str, str]) -> Dict[str, Any]:
-        """Analyze HTTP headers for security threats"""
-        analysis = {
+        """Analyze HTTP headers for security threats"""        analysis = {
             "is_suspicious": False,
             "suspicious_headers": [],
             "missing_security_headers": []
@@ -749,8 +718,7 @@ class SecurityMiddleware:
     async def determine_security_action(self, threat_level: ThreatLevel, 
                                       confidence: float, 
                                       threats: List[AttackType]) -> SecurityAction:
-        """Determine appropriate security action"""
-        # Critical threats always block
+        """Determine appropriate security action"""        # Critical threats always block
         if threat_level == ThreatLevel.CRITICAL:
             return SecurityAction.BLOCK
         
@@ -784,8 +752,7 @@ class SecurityMiddleware:
     
     async def generate_remediation_steps(self, threats: List[AttackType], 
                                        action: SecurityAction) -> List[str]:
-        """Generate specific remediation steps"""
-        steps = []
+        """Generate specific remediation steps"""        steps = []
         
         if action == SecurityAction.BLOCK:
             steps.append("Request blocked due to security threat")
@@ -834,8 +801,7 @@ class SecurityMiddleware:
                                 threats: List[AttackType], 
                                 action: SecurityAction, 
                                 threat_level: ThreatLevel):
-        """Log security events for monitoring and compliance"""
-        event = {
+        """Log security events for monitoring and compliance"""        event = {
             "request_id": request.request_id,
             "user_id": request.user_id,
             "ip_address": request.ip_address,
@@ -856,8 +822,7 @@ class SecurityMiddleware:
             await self.send_security_alert(event)
     
     async def send_security_alert(self, event: Dict[str, Any]):
-        """Send security alert for critical threats"""
-        alert = {
+        """Send security alert for critical threats"""        alert = {
             "type": "critical_security_threat",
             "event": event,
             "timestamp": datetime.utcnow().isoformat(),
@@ -873,14 +838,12 @@ class SecurityMiddleware:
 
 # Factory function for dependency injection
 def get_security_middleware() -> SecurityMiddleware:
-    """Get security middleware instance"""
-    return SecurityMiddleware()
+    """Get security middleware instance"""    return SecurityMiddleware()
 
 
 # Decorator for automatic security validation
 def require_security_validation():
-    """Decorator for automatic security validation"""
-    def decorator(func):
+    """Decorator for automatic security validation"""    def decorator(func):
         async def wrapper(*args, **kwargs):
             # Extract security information from request
             # This would be customized based on your application structure

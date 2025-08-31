@@ -1,5 +1,4 @@
-"""
-Multimedia Index - Enterprise Content Indexing System
+"""Multimedia Index - Enterprise Content Indexing System
 
 Advanced indexing system for multimedia content discovery and search.
 Provides comprehensive indexing, search, and retrieval capabilities.
@@ -11,9 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import hashlib
@@ -54,8 +51,7 @@ logger = logging.getLogger(__name__)
 
 
 class IndexType(Enum):
-    """Index types"""
-    TEXT = "text"
+    """Index types"""    TEXT = "text"
     VECTOR = "vector"
     METADATA = "metadata"
     CONTENT = "content"
@@ -64,8 +60,7 @@ class IndexType(Enum):
 
 
 class SearchMode(Enum):
-    """Search modes"""
-    EXACT = "exact"
+    """Search modes"""    EXACT = "exact"
     FUZZY = "fuzzy"
     SEMANTIC = "semantic"
     HYBRID = "hybrid"
@@ -74,8 +69,7 @@ class SearchMode(Enum):
 
 @dataclass
 class IndexedContent:
-    """Indexed content entry"""
-    content_id: str
+    """Indexed content entry"""    content_id: str
     file_path: str
     content_type: str
     title: Optional[str] = None
@@ -96,8 +90,7 @@ class IndexedContent:
 
 @dataclass
 class SearchQuery:
-    """Search query specification"""
-    query_id: str = field(default_factory=lambda: f"q_{datetime.now().timestamp()}")
+    """Search query specification"""    query_id: str = field(default_factory=lambda: f"q_{datetime.now().timestamp()}")
     query_text: Optional[str] = None
     filters: Dict[str, Any] = field(default_factory=dict)
     content_types: List[str] = field(default_factory=list)
@@ -116,8 +109,7 @@ class SearchQuery:
 
 @dataclass
 class SearchResult:
-    """Search result entry"""
-    content_id: str
+    """Search result entry"""    content_id: str
     score: float
     content: IndexedContent
     highlights: Dict[str, List[str]] = field(default_factory=dict)
@@ -127,8 +119,7 @@ class SearchResult:
 
 @dataclass
 class SearchResponse:
-    """Search response"""
-    query_id: str
+    """Search response"""    query_id: str
     total_results: int
     results: List[SearchResult]
     facets: Dict[str, Dict[str, int]] = field(default_factory=dict)
@@ -138,8 +129,7 @@ class SearchResponse:
 
 
 class MultimediaIndex:
-    """Enterprise multimedia content index"""
-    
+    """Enterprise multimedia content index"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.analyzer = MultimediaAnalyzer(config.get("analyzer", {}))
@@ -172,8 +162,7 @@ class MultimediaIndex:
         }
         
     async def initialize(self):
-        """Initialize index system"""
-        try:
+        """Initialize index system"""        try:
             await self.analyzer.initialize()
             await self.metadata_extractor.initialize()
             
@@ -198,8 +187,7 @@ class MultimediaIndex:
         user_id: Optional[str] = None,
         metadata: Dict[str, Any] = None
     ) -> str:
-        """Index multimedia content"""
-        try:
+        """Index multimedia content"""        try:
             # Generate content ID
             content_id = self._generate_content_id(file_path)
             
@@ -253,8 +241,7 @@ class MultimediaIndex:
         user_id: Optional[str] = None,
         metadata_list: Optional[List[Dict[str, Any]]] = None
     ) -> List[str]:
-        """Index multiple files in batch"""
-        try:
+        """Index multiple files in batch"""        try:
             # Create semaphore for parallel processing
             semaphore = asyncio.Semaphore(self.batch_size)
             
@@ -282,8 +269,7 @@ class MultimediaIndex:
             return []
             
     async def search(self, query: SearchQuery) -> SearchResponse:
-        """Search indexed content"""
-        start_time = datetime.now()
+        """Search indexed content"""        start_time = datetime.now()
         
         try:
             # Initialize response
@@ -342,8 +328,7 @@ class MultimediaIndex:
         max_results: int = 10,
         similarity_threshold: float = 0.7
     ) -> List[SearchResult]:
-        """Find similar content"""
-        try:
+        """Find similar content"""        try:
             content = self.indexed_content.get(content_id)
             if not content:
                 return []
@@ -380,16 +365,14 @@ class MultimediaIndex:
             return []
             
     async def get_content(self, content_id: str) -> Optional[IndexedContent]:
-        """Get indexed content by ID"""
-        return self.indexed_content.get(content_id)
+        """Get indexed content by ID"""        return self.indexed_content.get(content_id)
         
     async def update_content(
         self, 
         content_id: str, 
         updates: Dict[str, Any]
     ) -> bool:
-        """Update indexed content"""
-        try:
+        """Update indexed content"""        try:
             content = self.indexed_content.get(content_id)
             if not content:
                 return False
@@ -412,8 +395,7 @@ class MultimediaIndex:
             return False
             
     async def remove_content(self, content_id: str) -> bool:
-        """Remove content from index"""
-        try:
+        """Remove content from index"""        try:
             if content_id not in self.indexed_content:
                 return False
                 
@@ -437,16 +419,14 @@ class MultimediaIndex:
             return False
             
     async def get_index_stats(self) -> Dict[str, Any]:
-        """Get index statistics"""
-        return {
+        """Get index statistics"""        return {
             **self.index_stats,
             "index_size_mb": sum(content.file_size for content in self.indexed_content.values()) / (1024 * 1024),
             "timestamp": datetime.now(timezone.utc).isoformat()
         }
         
     async def health_check(self) -> Dict[str, Any]:
-        """Index health check"""
-        try:
+        """Index health check"""        try:
             # Check search engines
             search_engines_status = {}
             
@@ -487,8 +467,7 @@ class MultimediaIndex:
     # Private methods
     
     async def _initialize_search_engines(self):
-        """Initialize search engines"""
-        # Elasticsearch
+        """Initialize search engines"""        # Elasticsearch
         if self.elasticsearch_url and ELASTICSEARCH_AVAILABLE:
             try:
                 self.elasticsearch_client = Elasticsearch([self.elasticsearch_url])
@@ -532,8 +511,7 @@ class MultimediaIndex:
                 logger.warning(f"Failed to initialize FAISS: {e}")
                 
     async def _index_in_search_engines(self, content: IndexedContent):
-        """Index content in all search engines"""
-        # Elasticsearch
+        """Index content in all search engines"""        # Elasticsearch
         if self.elasticsearch_client:
             try:
                 doc = asdict(content)
@@ -581,8 +559,7 @@ class MultimediaIndex:
                 logger.error(f"FAISS indexing failed: {e}")
                 
     async def _remove_from_search_engines(self, content_id: str):
-        """Remove content from search engines"""
-        # Elasticsearch
+        """Remove content from search engines"""        # Elasticsearch
         if self.elasticsearch_client:
             try:
                 self.elasticsearch_client.delete(
@@ -603,8 +580,7 @@ class MultimediaIndex:
                 logger.error(f"Whoosh removal failed: {e}")
                 
     async def _exact_search(self, query: SearchQuery) -> List[SearchResult]:
-        """Perform exact text search"""
-        results = []
+        """Perform exact text search"""        results = []
         
         if not query.query_text:
             return results
@@ -643,8 +619,7 @@ class MultimediaIndex:
         return results
         
     async def _fuzzy_search(self, query: SearchQuery) -> List[SearchResult]:
-        """Perform fuzzy text search"""
-        # This is a simplified implementation
+        """Perform fuzzy text search"""        # This is a simplified implementation
         # In production, you would use proper fuzzy matching algorithms
         results = await self._exact_search(query)
         
@@ -685,8 +660,7 @@ class MultimediaIndex:
         return results
         
     async def _semantic_search(self, query: SearchQuery) -> List[SearchResult]:
-        """Perform semantic search"""
-        results = []
+        """Perform semantic search"""        results = []
         
         if not query.feature_vector:
             # If no feature vector provided, fall back to text search
@@ -724,8 +698,7 @@ class MultimediaIndex:
         return results
         
     async def _similarity_search(self, query: SearchQuery) -> List[SearchResult]:
-        """Perform similarity search using FAISS"""
-        if not self.vector_index or not query.feature_vector:
+        """Perform similarity search using FAISS"""        if not self.vector_index or not query.feature_vector:
             return []
             
         try:
@@ -755,8 +728,7 @@ class MultimediaIndex:
             return []
             
     async def _hybrid_search(self, query: SearchQuery) -> List[SearchResult]:
-        """Perform hybrid search combining multiple methods"""
-        # Combine text and semantic search results
+        """Perform hybrid search combining multiple methods"""        # Combine text and semantic search results
         text_results = await self._fuzzy_search(query)
         semantic_results = await self._semantic_search(query) if query.feature_vector else []
         
@@ -780,8 +752,7 @@ class MultimediaIndex:
         return list(combined_results.values())
         
     def _apply_filters(self, results: List[SearchResult], query: SearchQuery) -> List[SearchResult]:
-        """Apply filters to search results"""
-        filtered_results = results
+        """Apply filters to search results"""        filtered_results = results
         
         # Content type filter
         if query.content_types:
@@ -828,8 +799,7 @@ class MultimediaIndex:
         return filtered_results
         
     def _sort_results(self, results: List[SearchResult], query: SearchQuery) -> List[SearchResult]:
-        """Sort search results"""
-        if query.sort_by == "relevance":
+        """Sort search results"""        if query.sort_by == "relevance":
             return sorted(results, key=lambda x: x.score, reverse=(query.sort_order == "desc"))
         elif query.sort_by == "date":
             return sorted(results, key=lambda x: x.content.created_at, reverse=(query.sort_order == "desc"))
@@ -841,8 +811,7 @@ class MultimediaIndex:
             return results
             
     def _generate_facets(self, results: List[SearchResult]) -> Dict[str, Dict[str, int]]:
-        """Generate facets for search results"""
-        facets = {
+        """Generate facets for search results"""        facets = {
             "content_types": {},
             "tags": {},
             "users": {}
@@ -866,8 +835,7 @@ class MultimediaIndex:
         return facets
         
     def _calculate_content_similarity(self, content1: IndexedContent, content2: IndexedContent) -> float:
-        """Calculate similarity between two content items"""
-        similarities = []
+        """Calculate similarity between two content items"""        similarities = []
         
         # Feature vector similarity
         for vector_name in content1.feature_vectors:
@@ -896,15 +864,13 @@ class MultimediaIndex:
         return np.mean(similarities) if similarities else 0.0
         
     def _generate_content_id(self, file_path: str) -> str:
-        """Generate unique content ID"""
-        # Use file path and modification time for uniqueness
+        """Generate unique content ID"""        # Use file path and modification time for uniqueness
         file_stat = Path(file_path).stat()
         content_string = f"{file_path}_{file_stat.st_mtime}_{file_stat.st_size}"
         return hashlib.md5(content_string.encode()).hexdigest()
         
     def _calculate_content_hash(self, file_path: str) -> str:
-        """Calculate content hash"""
-        hash_obj = hashlib.sha256()
+        """Calculate content hash"""        hash_obj = hashlib.sha256()
         
         try:
             with open(file_path, 'rb') as f:
@@ -916,8 +882,7 @@ class MultimediaIndex:
             return ""
             
     def _update_index_stats(self, content: IndexedContent):
-        """Update index statistics"""
-        self.index_stats["total_indexed"] += 1
+        """Update index statistics"""        self.index_stats["total_indexed"] += 1
         self.index_stats["last_update"] = datetime.now(timezone.utc).isoformat()
         
         content_type = content.content_type
@@ -926,8 +891,7 @@ class MultimediaIndex:
         self.index_stats["content_types"][content_type] += 1
         
     def _update_search_stats(self, processing_time: float):
-        """Update search statistics"""
-        self.index_stats["search_queries"] += 1
+        """Update search statistics"""        self.index_stats["search_queries"] += 1
         
         # Update average search time
         total_queries = self.index_stats["search_queries"]
@@ -936,7 +900,6 @@ class MultimediaIndex:
         self.index_stats["average_search_time"] = new_avg
         
     async def _load_existing_index(self):
-        """Load existing index from storage"""
-        # This would typically load from persistent storage
+        """Load existing index from storage"""        # This would typically load from persistent storage
         # For now, this is a placeholder
         pass

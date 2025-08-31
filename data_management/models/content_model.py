@@ -1,5 +1,4 @@
-"""
-🎯 Content Model - IA Influencer Agent Platform Enterprise
+"""🎯 Content Model - IA Influencer Agent Platform Enterprise
 =========================================================
 Module: backend/data_management/models/content_model.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,9 +15,7 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC CONTENT PIPELINE:
 Upload → Validation → AI Fingerprinting → Metadata Extraction → Vector Embeddings → 
 Indexing → Protection → SEO Optimization → Multi-Platform Distribution → Revenue Analytics
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple, ClassVar
+"""from typing import Dict, List, Optional, Any, Union, Tuple, ClassVar
 from datetime import datetime, timezone, timedelta
 from enum import Enum, IntEnum
 from dataclasses import dataclass, field
@@ -30,8 +27,7 @@ from decimal import Decimal
 import numpy as np
 
 class ContentType(Enum):
-    """Content types supported by the platform"""
-    AUDIO = "audio"
+    """Content types supported by the platform"""    AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
     DOCUMENT = "document"
@@ -47,8 +43,7 @@ class ContentType(Enum):
     MIXED = "mixed"
 
 class ContentStatus(Enum):
-    """Content processing status lifecycle"""
-    UPLOADED = "uploaded"
+    """Content processing status lifecycle"""    UPLOADED = "uploaded"
     VALIDATING = "validating"
     PROCESSING = "processing"
     FINGERPRINTING = "fingerprinting"
@@ -67,16 +62,14 @@ class ContentStatus(Enum):
     DELETED = "deleted"
 
 class ContentQuality(IntEnum):
-    """Content quality rating"""
-    POOR = 1
+    """Content quality rating"""    POOR = 1
     FAIR = 2
     GOOD = 3
     EXCELLENT = 4
     PREMIUM = 5
 
 class ContentOriginality(Enum):
-    """Content originality status"""
-    ORIGINAL = "original"
+    """Content originality status"""    ORIGINAL = "original"
     DERIVATIVE = "derivative"
     COVER = "cover"
     REMIX = "remix"
@@ -85,8 +78,7 @@ class ContentOriginality(Enum):
     UNKNOWN = "unknown"
 
 class DistributionStatus(Enum):
-    """Multi-platform distribution status"""
-    PENDING = "pending"
+    """Multi-platform distribution status"""    PENDING = "pending"
     DISTRIBUTING = "distributing"
     DISTRIBUTED = "distributed"
     PARTIAL = "partial"
@@ -94,8 +86,7 @@ class DistributionStatus(Enum):
     BLOCKED = "blocked"
 
 class MonetizationStatus(Enum):
-    """Content monetization status"""
-    NOT_ELIGIBLE = "not_eligible"
+    """Content monetization status"""    NOT_ELIGIBLE = "not_eligible"
     PENDING_REVIEW = "pending_review"
     APPROVED = "approved"
     MONETIZING = "monetizing"
@@ -104,16 +95,14 @@ class MonetizationStatus(Enum):
     DEMONETIZED = "demonetized"
 
 class CreatorType(Enum):
-    """Types de créateurs"""
-    MUSICIAN = "musician"
+    """Types de créateurs"""    MUSICIAN = "musician"
     INFLUENCER = "influencer"
     PHOTOGRAPHER = "photographer"
     BLOGGER = "blogger"
     COMEDIAN = "comedian"
 
 class QualityLevel(Enum):
-    """Niveaux de qualité"""
-    LOW = "low"
+    """Niveaux de qualité"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     ULTRA = "ultra"
@@ -121,8 +110,7 @@ class QualityLevel(Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Advanced AI fingerprint for content protection and similarity matching"""
-    
+    """Advanced AI fingerprint for content protection and similarity matching"""    
     # Core fingerprint identifiers
     fingerprint_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_id: str = ""
@@ -153,8 +141,7 @@ class ContentFingerprint:
     updated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def calculate_similarity(self, other: 'ContentFingerprint') -> float:
-        """Calculate similarity score with another fingerprint"""
-        if not other or self.fingerprint_type != other.fingerprint_type:
+        """Calculate similarity score with another fingerprint"""        if not other or self.fingerprint_type != other.fingerprint_type:
             return 0.0
             
         similarities = []
@@ -179,8 +166,7 @@ class ContentFingerprint:
         return max(similarities) if similarities else 0.0
     
     def _cosine_similarity(self, vec1: List[float], vec2: List[float]) -> float:
-        """Calculate cosine similarity between two vectors"""
-        try:
+        """Calculate cosine similarity between two vectors"""        try:
             import numpy as np
             v1 = np.array(vec1)
             v2 = np.array(vec2)
@@ -189,8 +175,7 @@ class ContentFingerprint:
             return 0.0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage"""
-        return {
+        """Convert to dictionary for storage"""        return {
             "fingerprint_id": self.fingerprint_id,
             "content_id": self.content_id,
             "fingerprint_type": self.fingerprint_type.value,
@@ -212,8 +197,7 @@ class ContentFingerprint:
 
 @dataclass 
 class ContentMetadata:
-    """Advanced metadata extraction and enrichment for all content types"""
-    
+    """Advanced metadata extraction and enrichment for all content types"""    
     # Core technical metadata
     file_size: int = 0
     mime_type: str = ""
@@ -278,8 +262,7 @@ class ContentMetadata:
     updated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def calculate_seo_score(self) -> float:
-        """Calculate SEO optimization score"""
-        score = 0.0
+        """Calculate SEO optimization score"""        score = 0.0
         max_score = 10.0
         
         # Title optimization
@@ -313,8 +296,7 @@ class ContentMetadata:
         return min(score / max_score, 1.0)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage"""
-        return {
+        """Convert to dictionary for storage"""        return {
             "file_size": self.file_size,
             "mime_type": self.mime_type,
             "file_extension": self.file_extension,
@@ -361,11 +343,9 @@ class ContentMetadata:
         }
 @dataclass
 class ContentModel:
-    """
-    Ultra-advanced content model for multi-format creator content with AI protection and monetization
+    """    Ultra-advanced content model for multi-format creator content with AI protection and monetization
     Supports: Audio, Video, Images, Documents, Podcasts, Streams with full lifecycle management
-    """
-    
+    """    
     # Core identifiers
     content_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
@@ -457,8 +437,7 @@ class ContentModel:
     etag: str = field(default_factory=lambda: hashlib.md5(str(datetime.now().timestamp()).encode()).hexdigest())
     
     def update_status(self, new_status: ContentStatus, error: Optional[str] = None) -> None:
-        """Update content status with timestamp tracking"""
-        old_status = self.content_status
+        """Update content status with timestamp tracking"""        old_status = self.content_status
         self.content_status = new_status
         self.updated_at = datetime.now(timezone.utc)
         
@@ -476,34 +455,29 @@ class ContentModel:
             self.processing_completed_at = self.updated_at
     
     def calculate_engagement_rate(self) -> float:
-        """Calculate content engagement rate"""
-        total_views = max(self.view_count, 1)  # Avoid division by zero
+        """Calculate content engagement rate"""        total_views = max(self.view_count, 1)  # Avoid division by zero
         total_engagement = self.like_count + self.share_count + self.comment_count
         self.engagement_rate = (total_engagement / total_views) * 100
         return self.engagement_rate
     
     def update_seo_score(self) -> float:
-        """Update and calculate SEO optimization score"""
-        if self.metadata:
+        """Update and calculate SEO optimization score"""        if self.metadata:
             self.seo_score = self.metadata.calculate_seo_score()
         return self.seo_score
     
     def add_fingerprint_match(self, match_content_id: str, similarity: float) -> None:
-        """Add a fingerprint match with similarity score"""
-        match_data = f"{match_content_id}:{similarity:.3f}"
+        """Add a fingerprint match with similarity score"""        match_data = f"{match_content_id}:{similarity:.3f}"
         if match_data not in self.fingerprint_matches:
             self.fingerprint_matches.append(match_data)
     
     def get_processing_duration(self) -> Optional[float]:
-        """Get total processing duration in seconds"""
-        if self.processing_started_at and self.processing_completed_at:
+        """Get total processing duration in seconds"""        if self.processing_started_at and self.processing_completed_at:
             delta = self.processing_completed_at - self.processing_started_at
             return delta.total_seconds()
         return None
     
     def is_monetizable(self) -> bool:
-        """Check if content meets monetization criteria"""
-        criteria = [
+        """Check if content meets monetization criteria"""        criteria = [
             self.content_status == ContentStatus.PROCESSED,
             self.quality.value >= ContentQuality.GOOD.value,
             self.originality in [ContentOriginality.ORIGINAL, ContentOriginality.COLLABORATION],
@@ -513,14 +487,12 @@ class ContentModel:
         return all(criteria)
     
     def generate_cache_key(self) -> str:
-        """Generate optimized cache key"""
-        key_data = f"{self.content_id}:{self.version}:{self.updated_at.timestamp()}"
+        """Generate optimized cache key"""        key_data = f"{self.content_id}:{self.version}:{self.updated_at.timestamp()}"
         self.cache_key = hashlib.sha256(key_data.encode()).hexdigest()[:32]
         return self.cache_key
     
     def to_dict(self, include_sensitive: bool = False) -> Dict[str, Any]:
-        """Convert to dictionary with optional sensitive data inclusion"""
-        base_data = {
+        """Convert to dictionary with optional sensitive data inclusion"""        base_data = {
             "content_id": self.content_id,
             "creator_id": self.creator_id,
             "tenant_id": self.tenant_id,
@@ -585,8 +557,7 @@ class ContentModel:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'ContentModel':
-        """Create ContentModel instance from dictionary"""
-        # Handle enum conversions
+        """Create ContentModel instance from dictionary"""        # Handle enum conversions
         if 'content_type' in data:
             data['content_type'] = ContentType(data['content_type'])
         if 'content_status' in data:
@@ -619,8 +590,7 @@ class ContentModel:
 
 @dataclass 
 class ContentFingerprint:
-    """Empreinte digitale du contenu pour protection"""
-    
+    """Empreinte digitale du contenu pour protection"""    
     # Identifiants
     fingerprint_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_hash: str = ""
@@ -645,15 +615,13 @@ class ContentFingerprint:
     updated_at: Optional[datetime] = None
     
     def generate_content_hash(self, content_bytes: bytes) -> str:
-        """Génère un hash unique du contenu"""
-        sha256_hash = hashlib.sha256()
+        """Génère un hash unique du contenu"""        sha256_hash = hashlib.sha256()
         sha256_hash.update(content_bytes)
         self.content_hash = sha256_hash.hexdigest()
         return self.content_hash
     
     def to_dict(self) -> Dict[str, Any]:
-        """Conversion en dictionnaire pour stockage"""
-        return {
+        """Conversion en dictionnaire pour stockage"""        return {
             "fingerprint_id": self.fingerprint_id,
             "content_hash": self.content_hash,
             "perceptual_hash": self.perceptual_hash,
@@ -671,8 +639,7 @@ class ContentFingerprint:
 
 @dataclass
 class ContentModel:
-    """Modèle principal pour le contenu créateur"""
-    
+    """Modèle principal pour le contenu créateur"""    
     # Identifiants uniques
     content_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
@@ -741,8 +708,7 @@ class ContentModel:
 
 # Content processing utility functions
 def validate_content_type(file_extension: str) -> ContentType:
-    """Validate and determine content type from file extension"""
-    ext = file_extension.lower().lstrip('.')
+    """Validate and determine content type from file extension"""    ext = file_extension.lower().lstrip('.')
     
     audio_extensions = {'mp3', 'wav', 'flac', 'ogg', 'm4a', 'aiff', 'wma', 'aac'}
     video_extensions = {'mp4', 'avi', 'mov', 'mkv', 'webm', 'flv', 'wmv', 'm4v'}
@@ -762,8 +728,7 @@ def validate_content_type(file_extension: str) -> ContentType:
 
 
 def generate_content_path(creator_id: str, content_type: ContentType, created_at: datetime) -> str:
-    """Generate optimized storage path for content"""
-    date_path = created_at.strftime("%Y/%m/%d")
+    """Generate optimized storage path for content"""    date_path = created_at.strftime("%Y/%m/%d")
     type_path = content_type.value
     creator_hash = hashlib.md5(creator_id.encode()).hexdigest()[:8]
     
@@ -771,8 +736,7 @@ def generate_content_path(creator_id: str, content_type: ContentType, created_at
 
 
 def calculate_content_hash(file_path: str) -> str:
-    """Calculate SHA-256 hash of content file"""
-    hash_sha256 = hashlib.sha256()
+    """Calculate SHA-256 hash of content file"""    hash_sha256 = hashlib.sha256()
     try:
         with open(file_path, "rb") as f:
             for chunk in iter(lambda: f.read(4096), b""):

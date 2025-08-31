@@ -1,5 +1,4 @@
-"""
-Forensic Analysis Module
+"""Forensic Analysis Module
 
 Enterprise-grade forensic analysis for IA Influencer Agent platform.
 Provides deep forensic investigation capabilities for security incidents and compliance violations.
@@ -11,9 +10,7 @@ Team: Lead AI Developer & Digital Forensics Specialist
 This code is the EXCLUSIVE property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 Contact: mlaiel@live.de for authorization.
-"""
-
-from typing import List, Dict, Any, Optional, Union, Tuple
+"""from typing import List, Dict, Any, Optional, Union, Tuple
 from datetime import datetime, timezone, timedelta
 from enum import Enum
 import json
@@ -31,8 +28,7 @@ Base = declarative_base()
 
 
 class ForensicEventType(Enum):
-    """Types of forensic events and investigations."""
-    
+    """Types of forensic events and investigations."""    
     # Digital Evidence Collection
     EVIDENCE_ACQUISITION = "evidence_acquisition"
     LOG_ANALYSIS = "log_analysis"
@@ -69,8 +65,7 @@ class ForensicEventType(Enum):
 
 
 class ForensicStatus(Enum):
-    """Status of forensic investigations."""
-    
+    """Status of forensic investigations."""    
     INITIATED = "initiated"
     IN_PROGRESS = "in_progress"
     EVIDENCE_COLLECTED = "evidence_collected"
@@ -83,8 +78,7 @@ class ForensicStatus(Enum):
 
 
 class EvidenceType(Enum):
-    """Types of digital evidence."""
-    
+    """Types of digital evidence."""    
     SYSTEM_LOGS = "system_logs"
     APPLICATION_LOGS = "application_logs"
     ACCESS_LOGS = "access_logs"
@@ -103,8 +97,7 @@ class EvidenceType(Enum):
 
 
 class ForensicPriority(Enum):
-    """Priority levels for forensic investigations."""
-    
+    """Priority levels for forensic investigations."""    
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -114,8 +107,7 @@ class ForensicPriority(Enum):
 
 @dataclass
 class ForensicContext:
-    """Context information for forensic investigations."""
-    
+    """Context information for forensic investigations."""    
     incident_id: str
     investigation_scope: str
     legal_authority: Optional[str]
@@ -127,8 +119,7 @@ class ForensicContext:
 
 
 class ForensicAnalysisLog(Base):
-    """Forensic analysis log model."""
-    
+    """Forensic analysis log model."""    
     __tablename__ = "forensic_analysis_logs"
     
     # Primary identifiers
@@ -254,8 +245,7 @@ class ForensicAnalysisLog(Base):
     )
     
     def to_dict(self, include_sensitive: bool = False) -> Dict[str, Any]:
-        """Convert model to dictionary."""
-        result = {
+        """Convert model to dictionary."""        result = {
             "id": str(self.id),
             "case_id": self.case_id,
             "investigation_id": self.investigation_id,
@@ -341,17 +331,14 @@ class ForensicAnalysisLog(Base):
 
 
 class ForensicAnalyzer:
-    """Enterprise forensic analysis system."""
-    
+    """Enterprise forensic analysis system."""    
     def __init__(self, db_session, service_name: str = "ia_influencer_agent"):
-        """
-        Initialize forensic analyzer.
+        """        Initialize forensic analyzer.
         
         Args:
             db_session: Database session
             service_name: Name of the service
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.service_name = service_name
         self.logger = logging.getLogger(f"{__name__}.{service_name}")
     
@@ -375,8 +362,7 @@ class ForensicAnalyzer:
         investigators: Optional[List[str]] = None,
         investigation_id: Optional[str] = None
     ) -> str:
-        """
-        Initiate a forensic investigation.
+        """        Initiate a forensic investigation.
         
         Args:
             case_name: Name of the forensic case
@@ -399,8 +385,7 @@ class ForensicAnalyzer:
             
         Returns:
             str: Generated case ID
-        """
-        try:
+        """        try:
             case_id = f"case_{uuid.uuid4().hex[:12]}"
             
             # Generate investigation ID if not provided
@@ -501,8 +486,7 @@ class ForensicAnalyzer:
         preservation_method: str = "digital_copy",
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Collect and document digital evidence.
+        """        Collect and document digital evidence.
         
         Args:
             case_id: Forensic case ID
@@ -518,8 +502,7 @@ class ForensicAnalyzer:
             
         Returns:
             str: Evidence ID
-        """
-        try:
+        """        try:
             case = self.db_session.query(ForensicAnalysisLog).filter_by(case_id=case_id).first()
             
             if not case:
@@ -585,8 +568,7 @@ class ForensicAnalyzer:
         events: List[Dict[str, Any]],
         analyst: str
     ) -> Dict[str, Any]:
-        """
-        Perform timeline analysis for forensic investigation.
+        """        Perform timeline analysis for forensic investigation.
         
         Args:
             case_id: Forensic case ID
@@ -597,8 +579,7 @@ class ForensicAnalyzer:
             
         Returns:
             Dict[str, Any]: Timeline analysis results
-        """
-        try:
+        """        try:
             case = self.db_session.query(ForensicAnalysisLog).filter_by(case_id=case_id).first()
             
             if not case:
@@ -646,8 +627,7 @@ class ForensicAnalyzer:
             raise
     
     def _analyze_patterns(self, events: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze patterns in timeline events."""
-        patterns = {
+        """Analyze patterns in timeline events."""        patterns = {
             "frequency_analysis": {},
             "temporal_patterns": {},
             "behavioral_patterns": {}
@@ -676,8 +656,7 @@ class ForensicAnalyzer:
         return patterns
     
     def _detect_anomalies(self, events: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Detect anomalies in timeline events."""
-        anomalies = []
+        """Detect anomalies in timeline events."""        anomalies = []
         
         # Detect time gaps (>1 hour between events)
         for i in range(1, len(events)):
@@ -725,8 +704,7 @@ class ForensicAnalyzer:
         return anomalies
     
     def _find_correlations(self, events: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Find correlations between events."""
-        correlations = {
+        """Find correlations between events."""        correlations = {
             "user_correlations": {},
             "system_correlations": {},
             "temporal_correlations": {}
@@ -770,8 +748,7 @@ class ForensicAnalyzer:
         risk_assessment: Optional[str] = None,
         impact_analysis: Optional[str] = None
     ) -> bool:
-        """
-        Complete forensic analysis and generate findings.
+        """        Complete forensic analysis and generate findings.
         
         Args:
             case_id: Forensic case ID
@@ -784,8 +761,7 @@ class ForensicAnalyzer:
             
         Returns:
             bool: True if successfully completed
-        """
-        try:
+        """        try:
             case = self.db_session.query(ForensicAnalysisLog).filter_by(case_id=case_id).first()
             
             if not case:
@@ -829,8 +805,7 @@ class ForensicAnalyzer:
         include_technical_details: bool = True,
         include_executive_summary: bool = True
     ) -> Dict[str, Any]:
-        """
-        Generate forensic investigation report.
+        """        Generate forensic investigation report.
         
         Args:
             case_id: Forensic case ID
@@ -840,8 +815,7 @@ class ForensicAnalyzer:
             
         Returns:
             Dict[str, Any]: Forensic report
-        """
-        try:
+        """        try:
             case = self.db_session.query(ForensicAnalysisLog).filter_by(case_id=case_id).first()
             
             if not case:
@@ -922,8 +896,7 @@ class ForensicAnalyzer:
         priority: Optional[ForensicPriority] = None,
         status: Optional[ForensicStatus] = None
     ) -> List[Dict[str, Any]]:
-        """
-        Get active forensic investigations.
+        """        Get active forensic investigations.
         
         Args:
             investigator: Filter by investigator
@@ -932,8 +905,7 @@ class ForensicAnalyzer:
             
         Returns:
             List[Dict[str, Any]]: List of active investigations
-        """
-        try:
+        """        try:
             query = self.db_session.query(ForensicAnalysisLog)
             
             if investigator:
@@ -964,8 +936,7 @@ class ForensicAnalyzer:
 
 
 def create_forensic_analyzer(db_session, service_name: str = "ia_influencer_agent") -> ForensicAnalyzer:
-    """
-    Factory function to create forensic analyzer.
+    """    Factory function to create forensic analyzer.
     
     Args:
         db_session: Database session
@@ -973,8 +944,7 @@ def create_forensic_analyzer(db_session, service_name: str = "ia_influencer_agen
         
     Returns:
         ForensicAnalyzer: Configured forensic analyzer
-    """
-    return ForensicAnalyzer(db_session, service_name)
+    """    return ForensicAnalyzer(db_session, service_name)
 
 
 # Export main classes and functions

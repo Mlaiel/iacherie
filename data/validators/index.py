@@ -1,5 +1,4 @@
-"""
-Validator Index - Central validation system orchestrator
+"""Validator Index - Central validation system orchestrator
 ========================================================
 
 Main validation engine and registry system for coordinating all validators
@@ -8,9 +7,7 @@ in the IA Influencer Agent Platform.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Type, Union, Callable
 from dataclasses import dataclass, field
@@ -25,16 +22,14 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationMode(Enum):
-    """Validation execution modes."""
-    SYNC = "sync"
+    """Validation execution modes."""    SYNC = "sync"
     ASYNC = "async"
     PARALLEL = "parallel"
     STREAMING = "streaming"
 
 
 class ValidationPriority(Enum):
-    """Validation priority levels."""
-    LOW = "low"
+    """Validation priority levels."""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     CRITICAL = "critical"
@@ -42,8 +37,7 @@ class ValidationPriority(Enum):
 
 @dataclass
 class ValidationConfig:
-    """Global validation configuration."""
-    strict_mode: bool = True
+    """Global validation configuration."""    strict_mode: bool = True
     cache_enabled: bool = True
     parallel_processing: bool = True
     max_workers: int = 4
@@ -65,8 +59,7 @@ class ValidationConfig:
     enable_ai_analysis: bool = True
     
     def dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
-        return {
+        """Convert to dictionary."""        return {
             "strict_mode": self.strict_mode,
             "cache_enabled": self.cache_enabled,
             "parallel_processing": self.parallel_processing,
@@ -86,8 +79,7 @@ class ValidationConfig:
 
 @dataclass
 class ValidatorInfo:
-    """Validator registration information."""
-    name: str
+    """Validator registration information."""    name: str
     validator_class: Type
     description: str
     version: str
@@ -99,8 +91,7 @@ class ValidatorInfo:
 
 @dataclass
 class ValidationRequest:
-    """Validation request structure."""
-    request_id: str
+    """Validation request structure."""    request_id: str
     validator_name: str
     data: Any
     options: Dict[str, Any] = field(default_factory=dict)
@@ -111,8 +102,7 @@ class ValidationRequest:
 
 @dataclass
 class ValidationResponse:
-    """Validation response structure."""
-    request_id: str
+    """Validation response structure."""    request_id: str
     validator_name: str
     result: Any
     success: bool
@@ -123,15 +113,12 @@ class ValidationResponse:
 
 
 class ValidatorRegistry:
-    """
-    Central registry for all validators.
+    """    Central registry for all validators.
     
     Manages validator registration, discovery, and lifecycle.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize validator registry."""
-        self._validators: Dict[str, ValidatorInfo] = {}
+        """Initialize validator registry."""        self._validators: Dict[str, ValidatorInfo] = {}
         self._instances: Dict[str, Any] = {}
         self._locks: Dict[str, asyncio.Lock] = {}
         
@@ -151,8 +138,7 @@ class ValidatorRegistry:
         priority: ValidationPriority = ValidationPriority.NORMAL,
         enabled: bool = True
     ) -> None:
-        """
-        Register a validator.
+        """        Register a validator.
         
         Args:
             name: Validator name
@@ -163,8 +149,7 @@ class ValidatorRegistry:
             dependencies: List of dependencies
             priority: Validation priority
             enabled: Whether validator is enabled
-        """
-        try:
+        """        try:
             info = ValidatorInfo(
                 name=name,
                 validator_class=validator_class,
@@ -186,13 +171,11 @@ class ValidatorRegistry:
             raise
     
     def unregister_validator(self, name: str) -> None:
-        """
-        Unregister a validator.
+        """        Unregister a validator.
         
         Args:
             name: Validator name
-        """
-        try:
+        """        try:
             if name in self._validators:
                 del self._validators[name]
                 
@@ -208,8 +191,7 @@ class ValidatorRegistry:
             logger.error(f"Failed to unregister validator {name}: {str(e)}")
     
     async def get_validator(self, name: str, config: Optional[ValidationConfig] = None) -> Any:
-        """
-        Get validator instance.
+        """        Get validator instance.
         
         Args:
             name: Validator name
@@ -217,8 +199,7 @@ class ValidatorRegistry:
             
         Returns:
             Validator instance
-        """
-        try:
+        """        try:
             if name not in self._validators:
                 raise ValueError(f"Validator '{name}' not registered")
             
@@ -253,56 +234,47 @@ class ValidatorRegistry:
             raise
     
     def get_available_validators(self) -> List[str]:
-        """
-        Get list of available validators.
+        """        Get list of available validators.
         
         Returns:
             List of validator names
-        """
-        return [name for name, info in self._validators.items() if info.enabled]
+        """        return [name for name, info in self._validators.items() if info.enabled]
     
     def get_validator_info(self, name: str) -> Optional[ValidatorInfo]:
-        """
-        Get validator information.
+        """        Get validator information.
         
         Args:
             name: Validator name
             
         Returns:
             Validator information or None
-        """
-        return self._validators.get(name)
+        """        return self._validators.get(name)
     
     def get_validators_by_capability(self, capability: str) -> List[str]:
-        """
-        Get validators by capability.
+        """        Get validators by capability.
         
         Args:
             capability: Required capability
             
         Returns:
             List of validator names
-        """
-        return [
+        """        return [
             name for name, info in self._validators.items()
             if info.enabled and capability in info.capabilities
         ]
     
     def enable_validator(self, name: str) -> None:
-        """Enable a validator."""
-        if name in self._validators:
+        """Enable a validator."""        if name in self._validators:
             self._validators[name].enabled = True
             logger.info(f"Enabled validator: {name}")
     
     def disable_validator(self, name: str) -> None:
-        """Disable a validator."""
-        if name in self._validators:
+        """Disable a validator."""        if name in self._validators:
             self._validators[name].enabled = False
             logger.info(f"Disabled validator: {name}")
     
     def _register_builtin_validators(self) -> None:
-        """Register built-in validators."""
-        try:
+        """Register built-in validators."""        try:
             # Import validator classes
             from .content_validator import ContentValidator
             from .schema_validator import SchemaValidator
@@ -403,21 +375,17 @@ class ValidatorRegistry:
 
 
 class ValidationManager:
-    """
-    Manages validation execution and coordination.
+    """    Manages validation execution and coordination.
     
     Handles request queuing, execution, and result management.
-    """
-    
+    """    
     def __init__(self, config: ValidationConfig, registry: ValidatorRegistry):
-        """
-        Initialize validation manager.
+        """        Initialize validation manager.
         
         Args:
             config: Validation configuration
             registry: Validator registry
-        """
-        self.config = config
+        """        self.config = config
         self.registry = registry
         
         # Execution management
@@ -447,8 +415,7 @@ class ValidationManager:
         priority: ValidationPriority = ValidationPriority.NORMAL,
         timeout: Optional[int] = None
     ) -> ValidationResponse:
-        """
-        Execute validation.
+        """        Execute validation.
         
         Args:
             validator_name: Name of validator to use
@@ -459,8 +426,7 @@ class ValidationManager:
             
         Returns:
             Validation response
-        """
-        request_id = f"req_{int(time.time() * 1000)}"
+        """        request_id = f"req_{int(time.time() * 1000)}"
         start_time = time.time()
         
         try:
@@ -528,8 +494,7 @@ class ValidationManager:
         requests: List[Dict[str, Any]],
         mode: ValidationMode = ValidationMode.PARALLEL
     ) -> List[ValidationResponse]:
-        """
-        Execute batch validation.
+        """        Execute batch validation.
         
         Args:
             requests: List of validation requests
@@ -537,8 +502,7 @@ class ValidationManager:
             
         Returns:
             List of validation responses
-        """
-        try:
+        """        try:
             if mode == ValidationMode.PARALLEL:
                 # Execute in parallel
                 tasks = [
@@ -590,8 +554,7 @@ class ValidationManager:
         data: Any,
         stop_on_error: bool = True
     ) -> List[ValidationResponse]:
-        """
-        Execute validation chain.
+        """        Execute validation chain.
         
         Args:
             validators: List of validators to execute
@@ -600,8 +563,7 @@ class ValidationManager:
             
         Returns:
             List of validation responses
-        """
-        results = []
+        """        results = []
         current_data = data
         
         try:
@@ -634,22 +596,18 @@ class ValidationManager:
             raise
     
     def get_statistics(self) -> Dict[str, Any]:
-        """
-        Get validation statistics.
+        """        Get validation statistics.
         
         Returns:
             Statistics dictionary
-        """
-        return self._stats.copy()
+        """        return self._stats.copy()
     
     def clear_cache(self) -> None:
-        """Clear validation cache."""
-        self._results_cache.clear()
+        """Clear validation cache."""        self._results_cache.clear()
         logger.info("Validation cache cleared")
     
     async def _execute_validation(self, validator: Any, request: ValidationRequest) -> Any:
-        """Execute validation with timeout."""
-        try:
+        """Execute validation with timeout."""        try:
             # Determine validation method
             if hasattr(validator, 'validate_async'):
                 # Async validation
@@ -674,8 +632,7 @@ class ValidationManager:
             raise Exception(f"Validation execution failed: {str(e)}")
     
     def _generate_cache_key(self, request: ValidationRequest) -> str:
-        """Generate cache key for request."""
-        try:
+        """Generate cache key for request."""        try:
             # Create deterministic key from request data
             key_data = {
                 "validator": request.validator_name,
@@ -688,8 +645,7 @@ class ValidationManager:
             return f"cache_{request.validator_name}_{int(time.time())}"
     
     def _update_stats(self, success: bool, duration: float) -> None:
-        """Update validation statistics."""
-        self._stats["total_requests"] += 1
+        """Update validation statistics."""        self._stats["total_requests"] += 1
         
         if success:
             self._stats["successful_validations"] += 1
@@ -705,20 +661,16 @@ class ValidationManager:
 
 
 class ValidationEngine:
-    """
-    Main validation engine for the IA Influencer Agent Platform.
+    """    Main validation engine for the IA Influencer Agent Platform.
     
     Provides unified interface for all validation operations.
-    """
-    
+    """    
     def __init__(self, config: Optional[ValidationConfig] = None):
-        """
-        Initialize validation engine.
+        """        Initialize validation engine.
         
         Args:
             config: Validation configuration
-        """
-        self.config = config or ValidationConfig()
+        """        self.config = config or ValidationConfig()
         self.registry = ValidatorRegistry()
         self.manager = ValidationManager(self.config, self.registry)
         
@@ -735,8 +687,7 @@ class ValidationEngine:
         content_type: Optional[str] = None,
         validation_level: str = "standard"
     ) -> ValidationResponse:
-        """
-        Validate content using content validator.
+        """        Validate content using content validator.
         
         Args:
             file_path: Path to content file
@@ -747,8 +698,7 @@ class ValidationEngine:
             
         Returns:
             Validation response
-        """
-        return await self.manager.validate(
+        """        return await self.manager.validate(
             validator_name="content",
             data={
                 "file_path": file_path,
@@ -765,8 +715,7 @@ class ValidationEngine:
         schema_type: str = "json_schema",
         schema: Optional[Dict[str, Any]] = None
     ) -> ValidationResponse:
-        """
-        Validate data schema.
+        """        Validate data schema.
         
         Args:
             data: Data to validate
@@ -775,8 +724,7 @@ class ValidationEngine:
             
         Returns:
             Validation response
-        """
-        return await self.manager.validate(
+        """        return await self.manager.validate(
             validator_name="schema",
             data=data,
             options={
@@ -791,8 +739,7 @@ class ValidationEngine:
         scan_malware: bool = True,
         check_injections: bool = True
     ) -> ValidationResponse:
-        """
-        Validate security aspects.
+        """        Validate security aspects.
         
         Args:
             data: Data to validate
@@ -801,8 +748,7 @@ class ValidationEngine:
             
         Returns:
             Validation response
-        """
-        return await self.manager.validate(
+        """        return await self.manager.validate(
             validator_name="security",
             data=data,
             options={
@@ -816,8 +762,7 @@ class ValidationEngine:
         validators: List[tuple],
         data: Any
     ) -> List[ValidationResponse]:
-        """
-        Execute validation chain.
+        """        Execute validation chain.
         
         Args:
             validators: List of (validator_name, options) tuples
@@ -825,8 +770,7 @@ class ValidationEngine:
             
         Returns:
             List of validation responses
-        """
-        validator_configs = [
+        """        validator_configs = [
             {"name": name, "options": options}
             for name, options in validators
         ]
@@ -838,8 +782,7 @@ class ValidationEngine:
         items: List[Dict[str, Any]],
         parallel: bool = True
     ) -> List[ValidationResponse]:
-        """
-        Validate multiple items.
+        """        Validate multiple items.
         
         Args:
             items: List of validation items
@@ -847,8 +790,7 @@ class ValidationEngine:
             
         Returns:
             List of validation responses
-        """
-        mode = ValidationMode.PARALLEL if parallel else ValidationMode.SYNC
+        """        mode = ValidationMode.PARALLEL if parallel else ValidationMode.SYNC
         return await self.manager.validate_batch(items, mode)
     
     def register_custom_validator(
@@ -857,49 +799,40 @@ class ValidationEngine:
         validator_class: Type,
         **kwargs
     ) -> None:
-        """
-        Register custom validator.
+        """        Register custom validator.
         
         Args:
             name: Validator name
             validator_class: Validator class
             **kwargs: Additional registration options
-        """
-        self.registry.register_validator(name, validator_class, **kwargs)
+        """        self.registry.register_validator(name, validator_class, **kwargs)
     
     def get_available_validators(self) -> List[str]:
-        """Get list of available validators."""
-        return self.registry.get_available_validators()
+        """Get list of available validators."""        return self.registry.get_available_validators()
     
     def update_config(self, config: Dict[str, Any]) -> None:
-        """
-        Update configuration.
+        """        Update configuration.
         
         Args:
             config: Configuration updates
-        """
-        for key, value in config.items():
+        """        for key, value in config.items():
             if hasattr(self.config, key):
                 setattr(self.config, key, value)
         
         logger.info("ValidationEngine configuration updated")
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get validation statistics."""
-        return self.manager.get_statistics()
+        """Get validation statistics."""        return self.manager.get_statistics()
     
     def clear_cache(self) -> None:
-        """Clear validation cache."""
-        self.manager.clear_cache()
+        """Clear validation cache."""        self.manager.clear_cache()
     
     async def health_check(self) -> Dict[str, Any]:
-        """
-        Perform health check on validation system.
+        """        Perform health check on validation system.
         
         Returns:
             Health check results
-        """
-        try:
+        """        try:
             health = {
                 "status": "healthy",
                 "validators": len(self.registry.get_available_validators()),

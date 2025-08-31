@@ -1,5 +1,4 @@
-"""
-Extraction Engine - Core Industrial IA Data Extraction System
+"""Extraction Engine - Core Industrial IA Data Extraction System
 ============================================================
 
 Ultra-advanced professional extraction engine for multi-platform content processing.
@@ -15,9 +14,7 @@ legal action. Contact mlaiel@live.de for licensing.
 ⚠️ STRICT COPYRIGHT PROTECTION ⚠️
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import traceback
@@ -38,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 class ExtractionStatus(Enum):
-    """Extraction status enumeration"""
-    PENDING = "pending"
+    """Extraction status enumeration"""    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -48,16 +44,14 @@ class ExtractionStatus(Enum):
 
 
 class ExtractionPriority(Enum):
-    """Extraction priority levels"""
-    LOW = 1
+    """Extraction priority levels"""    LOW = 1
     NORMAL = 2
     HIGH = 3
     CRITICAL = 4
 
 
 class ContentType(Enum):
-    """Supported content types"""
-    AUDIO = "audio"
+    """Supported content types"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -69,8 +63,7 @@ class ContentType(Enum):
 
 @dataclass
 class ExtractionRequest:
-    """Data extraction request specification"""
-    
+    """Data extraction request specification"""    
     request_id: str = field(default_factory=lambda: str(uuid4()))
     source_url: Optional[str] = None
     source_path: Optional[str] = None
@@ -88,8 +81,7 @@ class ExtractionRequest:
     created_at: datetime = field(default_factory=datetime.utcnow)
     
     def __post_init__(self):
-        """Validate request after initialization"""
-        if not any([self.source_url, self.source_path, self.source_data]):
+        """Validate request after initialization"""        if not any([self.source_url, self.source_path, self.source_data]):
             raise ValueError("At least one source must be provided")
         
         if not self.extraction_types:
@@ -98,8 +90,7 @@ class ExtractionRequest:
 
 @dataclass  
 class ExtractionResult:
-    """Data extraction result container"""
-    
+    """Data extraction result container"""    
     request_id: str
     status: ExtractionStatus
     extracted_data: Dict[str, Any] = field(default_factory=dict)
@@ -113,21 +104,18 @@ class ExtractionResult:
     completed_at: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert result to dictionary"""
-        result = asdict(self)
+        """Convert result to dictionary"""        result = asdict(self)
         result['status'] = self.status.value
         if self.completed_at:
             result['completed_at'] = self.completed_at.isoformat()
         return result
     
     def is_successful(self) -> bool:
-        """Check if extraction was successful"""
-        return self.status == ExtractionStatus.COMPLETED and bool(self.extracted_data)
+        """Check if extraction was successful"""        return self.status == ExtractionStatus.COMPLETED and bool(self.extracted_data)
 
 
 class BaseExtractor(ABC):
-    """Abstract base class for all extractors"""
-    
+    """Abstract base class for all extractors"""    
     def __init__(self, name: str = None):
         self.name = name or self.__class__.__name__
         self.logger = logging.getLogger(f"{__name__}.{self.name}")
@@ -140,17 +128,14 @@ class BaseExtractor(ABC):
     
     @abstractmethod
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Check if extractor can handle the request"""
-        pass
+        """Check if extractor can handle the request"""        pass
     
     @abstractmethod
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
-        """Perform data extraction"""
-        pass
+        """Perform data extraction"""        pass
     
     async def validate_request(self, request: ExtractionRequest) -> bool:
-        """Validate extraction request"""
-        try:
+        """Validate extraction request"""        try:
             if not request.request_id:
                 return False
             
@@ -164,8 +149,7 @@ class BaseExtractor(ABC):
             return False
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get extractor statistics"""
-        stats = self._stats.copy()
+        """Get extractor statistics"""        stats = self._stats.copy()
         if stats['total_extractions'] > 0:
             stats['success_rate'] = stats['successful_extractions'] / stats['total_extractions']
             stats['average_time'] = stats['total_time'] / stats['total_extractions']
@@ -175,8 +159,7 @@ class BaseExtractor(ABC):
         return stats
     
     def _update_stats(self, success: bool, extraction_time: float):
-        """Update extractor statistics"""
-        self._stats['total_extractions'] += 1
+        """Update extractor statistics"""        self._stats['total_extractions'] += 1
         self._stats['total_time'] += extraction_time
         
         if success:
@@ -186,8 +169,7 @@ class BaseExtractor(ABC):
 
 
 class ExtractionEngine:
-    """High-performance data extraction engine"""
-    
+    """High-performance data extraction engine"""    
     def __init__(self, 
                  max_workers: int = 10,
                  max_concurrent_extractions: int = 50,
@@ -225,8 +207,7 @@ class ExtractionEngine:
         self.logger.info(f"Extraction engine initialized with {max_workers} workers")
     
     async def start(self):
-        """Start the extraction engine"""
-        self.logger.info("Starting extraction engine...")
+        """Start the extraction engine"""        self.logger.info("Starting extraction engine...")
         
         # Start worker tasks
         for i in range(self.max_workers):
@@ -236,8 +217,7 @@ class ExtractionEngine:
         self.logger.info(f"Started {len(self._worker_tasks)} worker tasks")
     
     async def stop(self):
-        """Stop the extraction engine"""
-        self.logger.info("Stopping extraction engine...")
+        """Stop the extraction engine"""        self.logger.info("Stopping extraction engine...")
         
         # Signal shutdown
         self._shutdown_event.set()
@@ -256,20 +236,17 @@ class ExtractionEngine:
         self.logger.info("Extraction engine stopped")
     
     def register_extractor(self, extractor: BaseExtractor, name: Optional[str] = None):
-        """Register a data extractor"""
-        extractor_name = name or extractor.name
+        """Register a data extractor"""        extractor_name = name or extractor.name
         self._extractors[extractor_name] = extractor
         self.logger.info(f"Registered extractor: {extractor_name}")
     
     def unregister_extractor(self, name: str):
-        """Unregister a data extractor"""
-        if name in self._extractors:
+        """Unregister a data extractor"""        if name in self._extractors:
             del self._extractors[name]
             self.logger.info(f"Unregistered extractor: {name}")
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
-        """Submit extraction request and wait for result"""
-        
+        """Submit extraction request and wait for result"""        
         # Update metrics
         self._metrics['total_requests'] += 1
         
@@ -338,8 +315,7 @@ class ExtractionEngine:
             )
     
     async def extract_async(self, request: ExtractionRequest) -> str:
-        """Submit extraction request for asynchronous processing"""
-        
+        """Submit extraction request for asynchronous processing"""        
         # Add to queue
         await self._extraction_queue.put(request)
         self._metrics['queued_requests'] += 1
@@ -348,8 +324,7 @@ class ExtractionEngine:
         return request.request_id
     
     async def get_result(self, request_id: str) -> Optional[ExtractionResult]:
-        """Get result of asynchronous extraction"""
-        
+        """Get result of asynchronous extraction"""        
         # Check active extractions
         if request_id in self._active_extractions:
             task = self._active_extractions[request_id]
@@ -376,8 +351,7 @@ class ExtractionEngine:
         return None
     
     async def _worker_loop(self, worker_name: str):
-        """Main worker loop for processing extraction queue"""
-        
+        """Main worker loop for processing extraction queue"""        
         self.logger.info(f"Worker {worker_name} started")
         
         while not self._shutdown_event.is_set():
@@ -405,8 +379,7 @@ class ExtractionEngine:
         self.logger.info(f"Worker {worker_name} stopped")
     
     async def _find_extractor(self, request: ExtractionRequest) -> Optional[BaseExtractor]:
-        """Find suitable extractor for request"""
-        
+        """Find suitable extractor for request"""        
         for extractor in self._extractors.values():
             try:
                 if await extractor.can_handle(request):
@@ -417,8 +390,7 @@ class ExtractionEngine:
         return None
     
     async def _cleanup_completed_tasks(self):
-        """Clean up completed extraction tasks"""
-        
+        """Clean up completed extraction tasks"""        
         completed_ids = []
         for request_id, task in self._active_extractions.items():
             if task.done():
@@ -428,8 +400,7 @@ class ExtractionEngine:
             del self._active_extractions[request_id]
     
     def _generate_cache_key(self, request: ExtractionRequest) -> str:
-        """Generate cache key for request"""
-        
+        """Generate cache key for request"""        
         # Create unique identifier from request components
         key_data = {
             'source_url': request.source_url,
@@ -448,8 +419,7 @@ class ExtractionEngine:
         return hashlib.sha256(key_str.encode()).hexdigest()
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive engine metrics and performance data"""
-        metrics = self._metrics.copy()
+        """Get comprehensive engine metrics and performance data"""        metrics = self._metrics.copy()
         metrics['queue_size'] = self._extraction_queue.qsize()
         metrics['active_tasks'] = len(self._active_extractions)
         metrics['registered_extractors'] = len(self._extractors)
@@ -475,14 +445,12 @@ class ExtractionEngine:
         return metrics
     
     def _calculate_cache_hit_rate(self) -> float:
-        """Calculate cache hit rate percentage"""
-        total_requests = self._metrics.get('total_requests', 0)
+        """Calculate cache hit rate percentage"""        total_requests = self._metrics.get('total_requests', 0)
         cache_hits = self._metrics.get('cache_hits', 0)
         return (cache_hits / total_requests * 100) if total_requests > 0 else 0.0
     
     def _calculate_throughput(self) -> float:
-        """Calculate requests throughput per minute"""
-        if not hasattr(self, '_start_time'):
+        """Calculate requests throughput per minute"""        if not hasattr(self, '_start_time'):
             return 0.0
         
         uptime_minutes = (datetime.utcnow() - self._start_time).total_seconds() / 60
@@ -490,14 +458,12 @@ class ExtractionEngine:
         return completed / uptime_minutes if uptime_minutes > 0 else 0.0
     
     def _calculate_error_rate(self) -> float:
-        """Calculate error rate percentage"""
-        total = self._metrics.get('total_requests', 0)
+        """Calculate error rate percentage"""        total = self._metrics.get('total_requests', 0)
         failed = self._metrics.get('failed_requests', 0)
         return (failed / total * 100) if total > 0 else 0.0
     
     def _get_resource_utilization(self) -> Dict[str, float]:
-        """Get current resource utilization metrics"""
-        return {
+        """Get current resource utilization metrics"""        return {
             'cpu_usage': self._get_cpu_usage(),
             'memory_usage': self._get_memory_usage(),
             'active_threads': threading.active_count(),
@@ -505,24 +471,21 @@ class ExtractionEngine:
         }
     
     def _get_cpu_usage(self) -> float:
-        """Get current CPU usage percentage"""
-        try:
+        """Get current CPU usage percentage"""        try:
             import psutil
             return psutil.cpu_percent(interval=1)
         except ImportError:
             return 0.0
     
     def _get_memory_usage(self) -> float:
-        """Get current memory usage percentage"""
-        try:
+        """Get current memory usage percentage"""        try:
             import psutil
             return psutil.virtual_memory().percent
         except ImportError:
             return 0.0
     
     def get_extractor_stats(self) -> Dict[str, Dict[str, Any]]:
-        """Get comprehensive statistics for all registered extractors"""
-        stats = {}
+        """Get comprehensive statistics for all registered extractors"""        stats = {}
         for name, extractor in self._extractors.items():
             extractor_stats = extractor.get_stats()
             extractor_stats['supported_types'] = getattr(extractor, 'supported_types', [])
@@ -531,8 +494,7 @@ class ExtractionEngine:
         return stats
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive system health check"""
-        health_status = {
+        """Perform comprehensive system health check"""        health_status = {
             'status': 'healthy',
             'timestamp': datetime.utcnow().isoformat(),
             'uptime_seconds': (datetime.utcnow() - self._start_time).total_seconds(),
@@ -596,8 +558,7 @@ class ExtractionEngine:
         return health_status
     
     async def optimize_performance(self) -> Dict[str, Any]:
-        """Perform automatic performance optimization"""
-        optimization_results = {
+        """Perform automatic performance optimization"""        optimization_results = {
             'timestamp': datetime.utcnow().isoformat(),
             'actions_taken': [],
             'performance_improvement': {}
@@ -627,8 +588,7 @@ class ExtractionEngine:
         return optimization_results
     
     async def _cleanup_cache(self) -> int:
-        """Clean up old cache entries"""
-        current_time = datetime.utcnow()
+        """Clean up old cache entries"""        current_time = datetime.utcnow()
         cache_ttl = timedelta(hours=24)  # 24 hour TTL
         
         expired_keys = [
@@ -642,8 +602,7 @@ class ExtractionEngine:
         return len(expired_keys)
     
     def _cleanup_completed_tasks(self) -> int:
-        """Clean up completed async tasks"""
-        completed_tasks = [
+        """Clean up completed async tasks"""        completed_tasks = [
             request_id for request_id, task in self._active_extractions.items()
             if task.done()
         ]
@@ -654,8 +613,7 @@ class ExtractionEngine:
         return len(completed_tasks)
     
     async def _optimize_queue(self):
-        """Optimize extraction queue by reordering high-priority items"""
-        queue_items = []
+        """Optimize extraction queue by reordering high-priority items"""        queue_items = []
         
         # Extract all items from queue
         while not self._extraction_queue.empty():
@@ -674,8 +632,7 @@ class ExtractionEngine:
     
     @asynccontextmanager
     async def extraction_context(self):
-        """Context manager for engine lifecycle with proper resource management"""
-        self._start_time = datetime.utcnow()
+        """Context manager for engine lifecycle with proper resource management"""        self._start_time = datetime.utcnow()
         await self.start()
         try:
             yield self
@@ -683,8 +640,7 @@ class ExtractionEngine:
             await self.stop()
 
     async def export_metrics(self, format_type: str = "json") -> Union[Dict, str]:
-        """Export comprehensive metrics in various formats"""
-        metrics_data = {
+        """Export comprehensive metrics in various formats"""        metrics_data = {
             'engine_metrics': self.get_metrics(),
             'extractor_stats': self.get_extractor_stats(),
             'health_status': await self.health_check(),
@@ -701,8 +657,7 @@ class ExtractionEngine:
             raise ValueError(f"Unsupported export format: {format_type}")
     
     def _export_to_csv(self, metrics_data: Dict) -> str:
-        """Export metrics to CSV format"""
-        import csv
+        """Export metrics to CSV format"""        import csv
         import io
         
         output = io.StringIO()
@@ -725,8 +680,7 @@ class ExtractionEngine:
         return output.getvalue()
     
     def _export_to_prometheus(self, metrics_data: Dict) -> str:
-        """Export metrics to Prometheus format"""
-        lines = []
+        """Export metrics to Prometheus format"""        lines = []
         timestamp = int(datetime.utcnow().timestamp() * 1000)
         
         # Engine metrics
@@ -745,8 +699,7 @@ class ExtractionEngine:
     async def create_extraction_pipeline(self, 
                                        requests: List[ExtractionRequest],
                                        pipeline_id: str = None) -> Dict[str, Any]:
-        """Create and execute a pipeline of related extractions"""
-        pipeline_id = pipeline_id or str(uuid4())
+        """Create and execute a pipeline of related extractions"""        pipeline_id = pipeline_id or str(uuid4())
         
         pipeline_results = {
             'pipeline_id': pipeline_id,
@@ -799,8 +752,7 @@ class ExtractionEngine:
             return pipeline_results
 
     def __del__(self):
-        """Cleanup on object destruction"""
-        try:
+        """Cleanup on object destruction"""        try:
             # Cancel any running tasks
             for task in self._active_extractions.values():
                 if not task.done():
@@ -811,8 +763,7 @@ class ExtractionEngine:
 
 # Factory functions for common extraction scenarios
 async def create_content_extraction_engine() -> ExtractionEngine:
-    """Factory function to create a content-focused extraction engine"""
-    engine = ExtractionEngine(
+    """Factory function to create a content-focused extraction engine"""    engine = ExtractionEngine(
         max_workers=20,
         max_concurrent_extractions=100,
         default_timeout=600
@@ -824,8 +775,7 @@ async def create_content_extraction_engine() -> ExtractionEngine:
 
 
 async def create_realtime_extraction_engine() -> ExtractionEngine:
-    """Factory function to create a real-time extraction engine"""
-    engine = ExtractionEngine(
+    """Factory function to create a real-time extraction engine"""    engine = ExtractionEngine(
         max_workers=50,
         max_concurrent_extractions=200,
         default_timeout=30
@@ -835,8 +785,7 @@ async def create_realtime_extraction_engine() -> ExtractionEngine:
 
 
 async def create_batch_extraction_engine() -> ExtractionEngine:
-    """Factory function to create a batch processing extraction engine"""
-    engine = ExtractionEngine(
+    """Factory function to create a batch processing extraction engine"""    engine = ExtractionEngine(
         max_workers=10,
         max_concurrent_extractions=500,
         default_timeout=1800  # 30 minutes

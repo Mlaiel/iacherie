@@ -14,8 +14,7 @@ Notifications intelligentes avec templates et targeting avancé
 - Templates dynamiques avec personnalisation IA
 - Scheduling et automation de campagnes
 - Analytics et tracking des engagements
-"""
-from .notification_manager import (
+"""from .notification_manager import (
     NotificationManager,
     TemplateManager,
     NotificationTemplate,

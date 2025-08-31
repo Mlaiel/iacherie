@@ -1,5 +1,4 @@
-"""
-Database Health Monitor - IA Influencer Agent Platform
+"""Database Health Monitor - IA Influencer Agent Platform
 
 Monitors health and performance of all database connections:
 - Real-time health monitoring and alerting
@@ -11,9 +10,7 @@ Monitors health and performance of all database connections:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Callable, Set
 from dataclasses import dataclass, field
@@ -26,8 +23,7 @@ from ..monitoring.metrics import MetricsCollector
 
 
 class HealthStatus(Enum):
-    """Database health status levels"""
-    HEALTHY = "healthy"
+    """Database health status levels"""    HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
     UNKNOWN = "unknown"
@@ -35,8 +31,7 @@ class HealthStatus(Enum):
 
 @dataclass
 class HealthThresholds:
-    """Health monitoring thresholds"""
-    response_time_warning: float = 2.0  # seconds
+    """Health monitoring thresholds"""    response_time_warning: float = 2.0  # seconds
     response_time_critical: float = 5.0  # seconds
     error_rate_warning: float = 0.05  # 5%
     error_rate_critical: float = 0.15  # 15%
@@ -48,8 +43,7 @@ class HealthThresholds:
 
 @dataclass
 class HealthCheckResult:
-    """Health check result for a single database"""
-    database_type: str
+    """Health check result for a single database"""    database_type: str
     status: HealthStatus
     response_time: float
     error_count: int
@@ -59,8 +53,7 @@ class HealthCheckResult:
 
 
 class DatabaseHealthMonitor:
-    """
-    Comprehensive health monitor for all database connections.
+    """    Comprehensive health monitor for all database connections.
     
     Monitors:
     - PostgreSQL connection pools and query performance
@@ -69,8 +62,7 @@ class DatabaseHealthMonitor:
     - Elasticsearch cluster health and index performance
     - Vector store index integrity and search performance
     - Object storage availability and transfer speeds
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -99,8 +91,7 @@ class DatabaseHealthMonitor:
         self.health_callbacks: List[Callable[[Dict[str, HealthCheckResult]], None]] = []
     
     async def initialize(self, handlers: Dict[str, Any]) -> None:
-        """Initialize health monitoring with database handlers"""
-        self.handlers = handlers
+        """Initialize health monitoring with database handlers"""        self.handlers = handlers
         self.logger.info("Database health monitor initialized")
         
         # Initialize alert manager
@@ -113,8 +104,7 @@ class DatabaseHealthMonitor:
         await self.start_monitoring()
     
     async def start_monitoring(self) -> None:
-        """Start continuous health monitoring"""
-        if self.monitoring_active:
+        """Start continuous health monitoring"""        if self.monitoring_active:
             return
         
         self.monitoring_active = True
@@ -122,8 +112,7 @@ class DatabaseHealthMonitor:
         self.logger.info("Started database health monitoring")
     
     async def stop_monitoring(self) -> None:
-        """Stop health monitoring"""
-        self.monitoring_active = False
+        """Stop health monitoring"""        self.monitoring_active = False
         
         if self.monitoring_task:
             self.monitoring_task.cancel()
@@ -135,8 +124,7 @@ class DatabaseHealthMonitor:
         self.logger.info("Stopped database health monitoring")
     
     async def _monitoring_loop(self) -> None:
-        """Main monitoring loop"""
-        while self.monitoring_active:
+        """Main monitoring loop"""        while self.monitoring_active:
             try:
                 # Perform comprehensive health check
                 results = await self.comprehensive_health_check()
@@ -154,8 +142,7 @@ class DatabaseHealthMonitor:
                 await asyncio.sleep(self.check_interval)
     
     async def comprehensive_health_check(self) -> Dict[str, HealthCheckResult]:
-        """Perform comprehensive health check on all databases"""
-        results = {}
+        """Perform comprehensive health check on all databases"""        results = {}
         check_tasks = []
         
         # Create health check tasks for each database
@@ -185,8 +172,7 @@ class DatabaseHealthMonitor:
         return results
     
     async def _check_database_health(self, db_type: str, handler: Any) -> HealthCheckResult:
-        """Check health of a single database"""
-        start_time = datetime.utcnow()
+        """Check health of a single database"""        start_time = datetime.utcnow()
         
         try:
             # Get health check from handler
@@ -232,8 +218,7 @@ class DatabaseHealthMonitor:
                               db_type: str, 
                               health_data: Dict[str, Any], 
                               response_time: float) -> HealthStatus:
-        """Evaluate overall health status based on metrics"""
-        issues = []
+        """Evaluate overall health status based on metrics"""        issues = []
         
         # Check response time
         if response_time >= self.thresholds.response_time_critical:
@@ -275,8 +260,7 @@ class DatabaseHealthMonitor:
         return HealthStatus.WARNING if issues else HealthStatus.HEALTHY
     
     def _check_postgresql_health(self, health_data: Dict[str, Any]) -> HealthStatus:
-        """Check PostgreSQL-specific health metrics"""
-        # Check connection pool usage
+        """Check PostgreSQL-specific health metrics"""        # Check connection pool usage
         pool_size = health_data.get("pool_size", 0)
         pool_idle = health_data.get("pool_idle", 0)
         
@@ -295,8 +279,7 @@ class DatabaseHealthMonitor:
         return HealthStatus.HEALTHY
     
     def _check_redis_health(self, health_data: Dict[str, Any]) -> HealthStatus:
-        """Check Redis-specific health metrics"""
-        # Check memory usage
+        """Check Redis-specific health metrics"""        # Check memory usage
         used_memory = health_data.get("used_memory")
         if used_memory and "GB" in str(used_memory):
             # Parse memory usage and check against limits
@@ -311,8 +294,7 @@ class DatabaseHealthMonitor:
         return HealthStatus.HEALTHY
     
     def _check_mongodb_health(self, health_data: Dict[str, Any]) -> HealthStatus:
-        """Check MongoDB-specific health metrics"""
-        # Check database storage
+        """Check MongoDB-specific health metrics"""        # Check database storage
         database = health_data.get("database", {})
         storage_size = database.get("storage_size", 0)
         data_size = database.get("data_size", 0)
@@ -327,8 +309,7 @@ class DatabaseHealthMonitor:
         return HealthStatus.HEALTHY
     
     def _check_elasticsearch_health(self, health_data: Dict[str, Any]) -> HealthStatus:
-        """Check Elasticsearch-specific health metrics"""
-        cluster = health_data.get("cluster", {})
+        """Check Elasticsearch-specific health metrics"""        cluster = health_data.get("cluster", {})
         cluster_status = cluster.get("status", "unknown")
         
         if cluster_status == "red":
@@ -344,8 +325,7 @@ class DatabaseHealthMonitor:
                         db_type: str, 
                         health_data: Dict[str, Any], 
                         response_time: float) -> List[str]:
-        """Identify specific health issues"""
-        issues = []
+        """Identify specific health issues"""        issues = []
         
         # General issues
         if response_time >= self.thresholds.response_time_warning:
@@ -369,8 +349,7 @@ class DatabaseHealthMonitor:
         return issues
     
     def _identify_postgresql_issues(self, health_data: Dict[str, Any]) -> List[str]:
-        """Identify PostgreSQL-specific issues"""
-        issues = []
+        """Identify PostgreSQL-specific issues"""        issues = []
         
         conn_stats = health_data.get("connection_stats", {})
         if conn_stats.get("available", 0) <= 5:
@@ -379,8 +358,7 @@ class DatabaseHealthMonitor:
         return issues
     
     def _identify_redis_issues(self, health_data: Dict[str, Any]) -> List[str]:
-        """Identify Redis-specific issues"""
-        issues = []
+        """Identify Redis-specific issues"""        issues = []
         
         # Check for rejected connections
         if health_data.get("rejected_connections", 0) > 0:
@@ -389,8 +367,7 @@ class DatabaseHealthMonitor:
         return issues
     
     def _identify_mongodb_issues(self, health_data: Dict[str, Any]) -> List[str]:
-        """Identify MongoDB-specific issues"""
-        issues = []
+        """Identify MongoDB-specific issues"""        issues = []
         
         # Check for high connection count
         connections = health_data.get("connections", {})
@@ -400,8 +377,7 @@ class DatabaseHealthMonitor:
         return issues
     
     def _identify_elasticsearch_issues(self, health_data: Dict[str, Any]) -> List[str]:
-        """Identify Elasticsearch-specific issues"""
-        issues = []
+        """Identify Elasticsearch-specific issues"""        issues = []
         
         cluster = health_data.get("cluster", {})
         if cluster.get("unassigned_shards", 0) > 0:
@@ -413,8 +389,7 @@ class DatabaseHealthMonitor:
         return issues
     
     async def _process_health_results(self, results: Dict[str, HealthCheckResult]) -> None:
-        """Process health check results"""
-        # Update current status
+        """Process health check results"""        # Update current status
         for db_type, result in results.items():
             self.current_status[db_type] = result.status
             
@@ -441,8 +416,7 @@ class DatabaseHealthMonitor:
         await self._notify_callbacks(results)
     
     async def _send_alerts(self, results: Dict[str, HealthCheckResult]) -> None:
-        """Send alerts for health issues"""
-        for db_type, result in results.items():
+        """Send alerts for health issues"""        for db_type, result in results.items():
             if result.status == HealthStatus.CRITICAL:
                 await self.alert_manager.send_alert(
                     severity="critical",
@@ -468,8 +442,7 @@ class DatabaseHealthMonitor:
                 )
     
     async def _collect_metrics(self, results: Dict[str, HealthCheckResult]) -> None:
-        """Collect metrics from health results"""
-        for db_type, result in results.items():
+        """Collect metrics from health results"""        for db_type, result in results.items():
             # Collect basic health metrics
             await self.metrics_collector.record_gauge(
                 f"database_health_status_{db_type}",
@@ -490,26 +463,22 @@ class DatabaseHealthMonitor:
             )
     
     async def _notify_callbacks(self, results: Dict[str, HealthCheckResult]) -> None:
-        """Notify registered health check callbacks"""
-        for callback in self.health_callbacks:
+        """Notify registered health check callbacks"""        for callback in self.health_callbacks:
             try:
                 await callback(results)
             except Exception as e:
                 self.logger.error(f"Health callback error: {e}")
     
     def register_health_callback(self, callback: Callable[[Dict[str, HealthCheckResult]], None]) -> None:
-        """Register a callback for health check results"""
-        self.health_callbacks.append(callback)
+        """Register a callback for health check results"""        self.health_callbacks.append(callback)
     
     def get_current_health_status(self) -> Dict[str, HealthStatus]:
-        """Get current health status for all databases"""
-        return self.current_status.copy()
+        """Get current health status for all databases"""        return self.current_status.copy()
     
     def get_health_history(self, 
                           database_type: Optional[str] = None,
                           hours: int = 1) -> Dict[str, List[HealthCheckResult]]:
-        """Get health history for specified time period"""
-        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
+        """Get health history for specified time period"""        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
         
         if database_type:
             if database_type in self.health_history:
@@ -530,8 +499,7 @@ class DatabaseHealthMonitor:
             }
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive health monitoring metrics"""
-        current_health = {
+        """Get comprehensive health monitoring metrics"""        current_health = {
             db_type: status.value 
             for db_type, status in self.current_status.items()
         }
@@ -567,8 +535,7 @@ class DatabaseHealthMonitor:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown health monitoring"""
-        self.logger.info("Shutting down database health monitor...")
+        """Shutdown health monitoring"""        self.logger.info("Shutting down database health monitor...")
         
         await self.stop_monitoring()
         

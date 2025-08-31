@@ -1,5 +1,4 @@
-"""
-Optimization Agent Index - Main Entry Point & API Gateway
+"""Optimization Agent Index - Main Entry Point & API Gateway
 
 Ultra-advanced industrial-grade optimization system index providing centralized access to all
 optimization services, APIs, and management interfaces for the IA-Influencer-Agent platform.
@@ -22,9 +21,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 from datetime import datetime, timedelta
@@ -94,8 +91,7 @@ logger = logging.getLogger(__name__)
 
 # API Models
 class OptimizationRequestModel(BaseModel):
-    """Request model for optimization operations"""
-    optimization_type: OptimizationType
+    """Request model for optimization operations"""    optimization_type: OptimizationType
     content_type: Optional[str] = None
     priority: str = "medium"
     quality_target: Optional[str] = "balanced"
@@ -108,8 +104,7 @@ class OptimizationRequestModel(BaseModel):
         use_enum_values = True
 
 class OptimizationResponseModel(BaseModel):
-    """Response model for optimization operations"""
-    optimization_id: str
+    """Response model for optimization operations"""    optimization_id: str
     status: OptimizationStatus
     optimization_type: OptimizationType
     results: Optional[Dict[str, Any]] = None
@@ -125,8 +120,7 @@ class OptimizationResponseModel(BaseModel):
         use_enum_values = True
 
 class SystemMetricsModel(BaseModel):
-    """System metrics response model"""
-    timestamp: datetime
+    """System metrics response model"""    timestamp: datetime
     cpu_usage: float = Field(..., ge=0, le=100)
     memory_usage: float = Field(..., ge=0, le=100)
     disk_usage: float = Field(..., ge=0, le=100)
@@ -137,8 +131,7 @@ class SystemMetricsModel(BaseModel):
     error_rate: float = Field(..., ge=0, le=100)
 
 class ResourceAllocationModel(BaseModel):
-    """Resource allocation request model"""
-    workload_type: str
+    """Resource allocation request model"""    workload_type: str
     content_volume: PositiveInt
     deadline: Optional[datetime] = None
     priority: str = "medium"
@@ -146,16 +139,14 @@ class ResourceAllocationModel(BaseModel):
     quality_requirements: Optional[Dict[str, str]] = None
 
 class CostOptimizationModel(BaseModel):
-    """Cost optimization request model"""
-    operation_type: str
+    """Cost optimization request model"""    operation_type: str
     budget_limit: NonNegativeFloat
     time_constraint: Optional[datetime] = None
     cost_optimization_strategy: str = "balanced"
     acceptable_quality_trade_off: float = Field(0.1, ge=0, le=1)
 
 class EfficiencyAnalysisModel(BaseModel):
-    """Efficiency analysis request model"""
-    analysis_type: str = "comprehensive"
+    """Efficiency analysis request model"""    analysis_type: str = "comprehensive"
     time_range: int = Field(24, ge=1, le=168)  # Hours, max 1 week
     include_recommendations: bool = True
     benchmark_comparison: bool = True
@@ -188,8 +179,7 @@ security = HTTPBearer()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Application lifespan management"""
-    global optimization_system
+    """Application lifespan management"""    global optimization_system
     
     logger.info("Starting Optimization Agent API...")
     
@@ -212,8 +202,7 @@ app.router.lifespan_context = lifespan
 
 # Dependency functions
 async def get_optimization_system() -> OptimizationAgent:
-    """Get the global optimization system instance"""
-    if optimization_system is None:
+    """Get the global optimization system instance"""    if optimization_system is None:
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail="Optimization system not initialized"
@@ -221,8 +210,7 @@ async def get_optimization_system() -> OptimizationAgent:
     return optimization_system
 
 async def validate_rate_limit(request_info: Dict[str, Any]) -> None:
-    """Validate rate limiting for requests"""
-    client_id = request_info.get("client_id", "anonymous")
+    """Validate rate limiting for requests"""    client_id = request_info.get("client_id", "anonymous")
     if not await rate_limiter.allow_request(client_id):
         raise HTTPException(
             status_code=status.HTTP_429_TOO_MANY_REQUESTS,
@@ -233,8 +221,7 @@ async def validate_rate_limit(request_info: Dict[str, Any]) -> None:
 
 @app.get("/")
 async def root():
-    """Root endpoint with service information"""
-    return {
+    """Root endpoint with service information"""    return {
         "service": "Optimization Agent API",
         "version": "2.0.0",
         "status": "operational",
@@ -245,8 +232,7 @@ async def root():
 
 @app.get("/health")
 async def health_check():
-    """Health check endpoint"""
-    try:
+    """Health check endpoint"""    try:
         system = await get_optimization_system()
         health_status = await system.health_check()
         
@@ -268,15 +254,13 @@ async def health_check():
 
 @app.get("/info")
 async def get_module_info():
-    """Get comprehensive module information"""
-    return get_optimization_module_info()
+    """Get comprehensive module information"""    return get_optimization_module_info()
 
 @app.get("/metrics", response_model=SystemMetricsModel)
 async def get_system_metrics(
     credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
-    """Get current system metrics"""
-    user = await verify_token(credentials.credentials)
+    """Get current system metrics"""    user = await verify_token(credentials.credentials)
     system = await get_optimization_system()
     
     try:
@@ -295,8 +279,7 @@ async def create_optimization_request(
     background_tasks: BackgroundTasks,
     credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
-    """Create a new optimization request"""
-    user = await verify_token(credentials.credentials)
+    """Create a new optimization request"""    user = await verify_token(credentials.credentials)
     system = await get_optimization_system()
     
     # Rate limiting
@@ -352,8 +335,7 @@ async def get_optimization_status(
     optimization_id: str,
     credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
-    """Get optimization request status and results"""
-    user = await verify_token(credentials.credentials)
+    """Get optimization request status and results"""    user = await verify_token(credentials.credentials)
     system = await get_optimization_system()
     
     try:
@@ -391,8 +373,7 @@ async def allocate_resources(
     request: ResourceAllocationModel,
     credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
-    """Request intelligent resource allocation"""
-    user = await verify_token(credentials.credentials)
+    """Request intelligent resource allocation"""    user = await verify_token(credentials.credentials)
     system = await get_optimization_system()
     
     try:
@@ -426,8 +407,7 @@ async def optimize_costs(
     request: CostOptimizationModel,
     credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
-    """Optimize costs for operations"""
-    user = await verify_token(credentials.credentials)
+    """Optimize costs for operations"""    user = await verify_token(credentials.credentials)
     system = await get_optimization_system()
     
     try:
@@ -460,8 +440,7 @@ async def analyze_efficiency(
     request: EfficiencyAnalysisModel,
     credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
-    """Perform system efficiency analysis"""
-    user = await verify_token(credentials.credentials)
+    """Perform system efficiency analysis"""    user = await verify_token(credentials.credentials)
     system = await get_optimization_system()
     
     try:
@@ -495,8 +474,7 @@ async def analyze_efficiency(
 async def get_performance_dashboard(
     credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
-    """Get comprehensive performance dashboard data"""
-    user = await verify_token(credentials.credentials)
+    """Get comprehensive performance dashboard data"""    user = await verify_token(credentials.credentials)
     system = await get_optimization_system()
     
     try:
@@ -515,8 +493,7 @@ async def cancel_optimization(
     optimization_id: str,
     credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
-    """Cancel an ongoing optimization request"""
-    user = await verify_token(credentials.credentials)
+    """Cancel an ongoing optimization request"""    user = await verify_token(credentials.credentials)
     system = await get_optimization_system()
     
     try:
@@ -539,8 +516,7 @@ async def cancel_optimization(
 
 # Background tasks
 async def monitor_optimization_progress(optimization_id: str, user_id: str):
-    """Monitor optimization progress and send notifications"""
-    try:
+    """Monitor optimization progress and send notifications"""    try:
         system = await get_optimization_system()
         
         while True:
@@ -580,8 +556,7 @@ async def validation_error_handler(request, exc: ValidationError):
 
 # Main application factory
 def create_optimization_app(config: Optional[OptimizationModuleConfig] = None) -> FastAPI:
-    """Create and configure the optimization application"""
-    if config:
+    """Create and configure the optimization application"""    if config:
         # Apply custom configuration
         pass
     
@@ -701,11 +676,9 @@ OPTIMIZATION_DATA_CLASSES = {
 
 
 class OptimizationModuleIndex:
-    """
-    Complete index of all optimization module components.
+    """    Complete index of all optimization module components.
     Provides component discovery, registration, and metadata.
-    """
-    
+    """    
     # Main agent classes
     AGENTS = {
         'optimization_agent': OptimizationAgent,
@@ -749,16 +722,14 @@ class OptimizationModuleIndex:
     
     @classmethod
     def get_component(cls, component_name: str) -> Type[Any]:
-        """Get a component by name from any category"""
-        for category in [cls.AGENTS, cls.OPTIMIZERS, cls.ENUMS, cls.DATA_MODELS]:
+        """Get a component by name from any category"""        for category in [cls.AGENTS, cls.OPTIMIZERS, cls.ENUMS, cls.DATA_MODELS]:
             if component_name in category:
                 return category[component_name]
         raise KeyError(f"Component '{component_name}' not found in optimization module")
     
     @classmethod
     def list_components(cls, category: str = None) -> Dict[str, List[str]]:
-        """List all components by category"""
-        if category:
+        """List all components by category"""        if category:
             category_map = {
                 'agents': cls.AGENTS,
                 'optimizers': cls.OPTIMIZERS,
@@ -779,8 +750,7 @@ class OptimizationModuleIndex:
     
     @classmethod
     def get_component_info(cls, component_name: str) -> Dict[str, Any]:
-        """Get detailed information about a component"""
-        component = cls.get_component(component_name)
+        """Get detailed information about a component"""        component = cls.get_component(component_name)
         
         info = {
             'name': component_name,
@@ -811,8 +781,7 @@ class OptimizationModuleIndex:
     
     @classmethod
     def validate_module_integrity(cls) -> Dict[str, Any]:
-        """Validate the integrity of all optimization components"""
-        validation_result = {
+        """Validate the integrity of all optimization components"""        validation_result = {
             'valid': True,
             'errors': [],
             'warnings': [],
@@ -869,16 +838,13 @@ optimization_index = OptimizationModuleIndex()
 
 # Export convenience functions
 def get_optimizer(name: str):
-    """Get an optimizer component by name"""
-    return optimization_index.get_component(name)
+    """Get an optimizer component by name"""    return optimization_index.get_component(name)
 
 def list_optimizers():
-    """List all available optimization components"""
-    return optimization_index.list_components()
+    """List all available optimization components"""    return optimization_index.list_components()
 
 def validate_optimization_module():
-    """Validate optimization module integrity"""
-    return optimization_index.validate_module_integrity()
+    """Validate optimization module integrity"""    return optimization_index.validate_module_integrity()
 
 # Module metadata
 __index_version__ = "1.0.0"

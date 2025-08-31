@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Intelligence Agent Module - Main Entry Point
+"""Intelligence Agent Module - Main Entry Point
 
 This module serves as the central entry point for the Intelligence Agent system,
 providing a unified interface to all intelligence capabilities including decision making,
@@ -8,9 +7,7 @@ agent coordination, system optimization, learning, and predictive analytics.
 
 Copyright © 2024 Fahed Mlaiel. All Rights Reserved.
 This software is proprietary and confidential.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import sys
 from datetime import datetime
@@ -41,8 +38,7 @@ logger = logging.getLogger(__name__)
 
 
 class IntelligenceAgentFactory:
-    """Factory class for creating and managing intelligence agent instances."""
-    
+    """Factory class for creating and managing intelligence agent instances."""    
     _instances: Dict[str, IntelligenceAgent] = {}
     _default_config: Dict[str, Any] = {
         'monitoring_interval': 30,
@@ -83,8 +79,7 @@ class IntelligenceAgentFactory:
         config: Optional[Dict[str, Any]] = None,
         components: Optional[List[str]] = None
     ) -> IntelligenceAgent:
-        """
-        Create a new intelligence agent instance with specified configuration.
+        """        Create a new intelligence agent instance with specified configuration.
         
         Args:
             agent_id: Unique identifier for the agent instance
@@ -93,8 +88,7 @@ class IntelligenceAgentFactory:
         
         Returns:
             IntelligenceAgent: Fully configured and initialized intelligence agent
-        """
-        if agent_id in cls._instances:
+        """        if agent_id in cls._instances:
             logger.info(f"Returning existing intelligence agent: {agent_id}")
             return cls._instances[agent_id]
         
@@ -156,13 +150,11 @@ class IntelligenceAgentFactory:
     
     @classmethod
     def get_instance(cls, agent_id: str = "default") -> Optional[IntelligenceAgent]:
-        """Get an existing intelligence agent instance."""
-        return cls._instances.get(agent_id)
+        """Get an existing intelligence agent instance."""        return cls._instances.get(agent_id)
     
     @classmethod
     async def destroy_instance(cls, agent_id: str) -> bool:
-        """Safely destroy an intelligence agent instance."""
-        if agent_id in cls._instances:
+        """Safely destroy an intelligence agent instance."""        if agent_id in cls._instances:
             try:
                 await cls._instances[agent_id].shutdown()
                 del cls._instances[agent_id]
@@ -175,20 +167,17 @@ class IntelligenceAgentFactory:
     
     @classmethod
     def list_instances(cls) -> List[str]:
-        """List all active intelligence agent instances."""
-        return list(cls._instances.keys())
+        """List all active intelligence agent instances."""        return list(cls._instances.keys())
 
 
 class IntelligenceServiceManager:
-    """High-level service manager for intelligence operations."""
-    
+    """High-level service manager for intelligence operations."""    
     def __init__(self, intelligence_agent: IntelligenceAgent):
         self.intelligence = intelligence_agent
         self.logger = logging.getLogger(f"{__name__}.ServiceManager")
     
     async def quick_start(self) -> Dict[str, Any]:
-        """Quick start method to get the intelligence system up and running."""
-        try:
+        """Quick start method to get the intelligence system up and running."""        try:
             self.logger.info("Starting intelligence system quick start...")
             
             # Start monitoring
@@ -223,8 +212,7 @@ class IntelligenceServiceManager:
             raise
     
     async def register_agents_bulk(self, agents_config: List[Dict[str, Any]]) -> Dict[str, bool]:
-        """Register multiple agents at once."""
-        results = {}
+        """Register multiple agents at once."""        results = {}
         
         for agent_config in agents_config:
             try:
@@ -250,8 +238,7 @@ class IntelligenceServiceManager:
         priority: int = 1,
         context: Optional[Dict[str, Any]] = None
     ) -> WorkflowResult:
-        """Execute a complete intelligence workflow."""
-        try:
+        """Execute a complete intelligence workflow."""        try:
             self.logger.info(f"Executing intelligence workflow: {workflow_name}")
             
             # Execute workflow through agent coordinator
@@ -274,8 +261,7 @@ class IntelligenceServiceManager:
             raise
     
     async def generate_intelligence_report(self) -> Dict[str, Any]:
-        """Generate comprehensive intelligence system report."""
-        try:
+        """Generate comprehensive intelligence system report."""        try:
             # Get system analytics
             analytics = await self.intelligence.get_intelligence_analytics()
             
@@ -309,24 +295,19 @@ class IntelligenceServiceManager:
             raise
     
     async def _get_decision_analytics(self) -> Dict[str, Any]:
-        """Get decision engine analytics."""
-        return await self.intelligence.decision_engine.get_decision_analytics()
+        """Get decision engine analytics."""        return await self.intelligence.decision_engine.get_decision_analytics()
     
     async def _get_coordination_analytics(self) -> Dict[str, Any]:
-        """Get agent coordination analytics."""
-        return await self.intelligence.agent_coordinator.get_coordination_analytics()
+        """Get agent coordination analytics."""        return await self.intelligence.agent_coordinator.get_coordination_analytics()
     
     async def _get_optimization_analytics(self) -> Dict[str, Any]:
-        """Get system optimization analytics."""
-        return await self.intelligence.system_optimizer.get_optimization_analytics()
+        """Get system optimization analytics."""        return await self.intelligence.system_optimizer.get_optimization_analytics()
     
     async def _get_learning_analytics(self) -> Dict[str, Any]:
-        """Get learning engine analytics."""
-        return await self.intelligence.learning_engine.get_learning_analytics()
+        """Get learning engine analytics."""        return await self.intelligence.learning_engine.get_learning_analytics()
     
     async def _get_prediction_analytics(self) -> Dict[str, Any]:
-        """Get prediction engine analytics."""
-        return await self.intelligence.prediction_engine.get_prediction_analytics()
+        """Get prediction engine analytics."""        return await self.intelligence.prediction_engine.get_prediction_analytics()
 
 
 # Convenience functions for common operations
@@ -334,8 +315,7 @@ async def create_intelligence_system(
     config: Optional[Dict[str, Any]] = None,
     agent_id: str = "default"
 ) -> IntelligenceAgent:
-    """
-    Convenience function to create and initialize a complete intelligence system.
+    """    Convenience function to create and initialize a complete intelligence system.
     
     Args:
         config: Optional configuration dictionary
@@ -343,8 +323,7 @@ async def create_intelligence_system(
     
     Returns:
         IntelligenceAgent: Fully initialized intelligence system
-    """
-    return await IntelligenceAgentFactory.create_intelligence_agent(
+    """    return await IntelligenceAgentFactory.create_intelligence_agent(
         agent_id=agent_id,
         config=config
     )
@@ -354,8 +333,7 @@ async def quick_start_intelligence(
     agents_config: Optional[List[Dict[str, Any]]] = None,
     system_config: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
-    """
-    Quick start function to get an intelligence system running with pre-configured agents.
+    """    Quick start function to get an intelligence system running with pre-configured agents.
     
     Args:
         agents_config: List of agent configurations to register
@@ -363,8 +341,7 @@ async def quick_start_intelligence(
     
     Returns:
         Dict containing startup information and system status
-    """
-    # Create intelligence system
+    """    # Create intelligence system
     intelligence = await create_intelligence_system(config=system_config)
     
     # Create service manager
@@ -386,8 +363,7 @@ async def execute_intelligence_decision(
     context: Dict[str, Any],
     agent_id: str = "default"
 ) -> DecisionResult:
-    """
-    Convenience function to execute a single intelligence decision.
+    """    Convenience function to execute a single intelligence decision.
     
     Args:
         decision_type: Type of decision to make
@@ -396,8 +372,7 @@ async def execute_intelligence_decision(
     
     Returns:
         DecisionResult: Result of the decision process
-    """
-    intelligence = IntelligenceAgentFactory.get_instance(agent_id)
+    """    intelligence = IntelligenceAgentFactory.get_instance(agent_id)
     if not intelligence:
         raise ValueError(f"Intelligence agent '{agent_id}' not found")
     
@@ -405,16 +380,14 @@ async def execute_intelligence_decision(
 
 
 async def get_system_health_report(agent_id: str = "default") -> Dict[str, Any]:
-    """
-    Get comprehensive system health report.
+    """    Get comprehensive system health report.
     
     Args:
         agent_id: Intelligence agent to query
     
     Returns:
         Dict containing detailed system health information
-    """
-    intelligence = IntelligenceAgentFactory.get_instance(agent_id)
+    """    intelligence = IntelligenceAgentFactory.get_instance(agent_id)
     if not intelligence:
         raise ValueError(f"Intelligence agent '{agent_id}' not found")
     
@@ -424,8 +397,7 @@ async def get_system_health_report(agent_id: str = "default") -> Dict[str, Any]:
 
 # Main execution function
 async def main():
-    """Main function for running intelligence system as standalone application."""
-    logger.info("Starting Intelligence Agent System...")
+    """Main function for running intelligence system as standalone application."""    logger.info("Starting Intelligence Agent System...")
     
     try:
         # Load configuration if exists
@@ -463,8 +435,7 @@ async def main():
 
 
 if __name__ == "__main__":
-    """Entry point when running as standalone application."""
-    try:
+    """Entry point when running as standalone application."""    try:
         asyncio.run(main())
     except KeyboardInterrupt:
         logger.info("Application interrupted by user")

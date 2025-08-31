@@ -1,5 +1,4 @@
-"""
-Compliance and Audit Infrastructure Management
+"""Compliance and Audit Infrastructure Management
 
 Provides comprehensive compliance monitoring, audit trail management,
 and regulatory reporting infrastructure for the IA Influencer Agent platform.
@@ -8,9 +7,7 @@ Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import yaml
@@ -26,8 +23,7 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class ComplianceFramework(Enum):
-    """Compliance frameworks"""
-    GDPR = "gdpr"
+    """Compliance frameworks"""    GDPR = "gdpr"
     CCPA = "ccpa"
     HIPAA = "hipaa"
     SOC2 = "soc2"
@@ -38,8 +34,7 @@ class ComplianceFramework(Enum):
     ARTISTS_RIGHTS = "artists_rights"
 
 class AuditEventType(Enum):
-    """Audit event types"""
-    USER_ACCESS = "user_access"
+    """Audit event types"""    USER_ACCESS = "user_access"
     DATA_ACCESS = "data_access"
     DATA_MODIFICATION = "data_modification"
     DATA_DELETION = "data_deletion"
@@ -51,24 +46,21 @@ class AuditEventType(Enum):
     AI_MODEL_ACCESS = "ai_model_access"
 
 class ComplianceStatus(Enum):
-    """Compliance status levels"""
-    COMPLIANT = "compliant"
+    """Compliance status levels"""    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIAL_COMPLIANCE = "partial_compliance"
     UNDER_REVIEW = "under_review"
     NOT_APPLICABLE = "not_applicable"
 
 class RiskLevel(Enum):
-    """Risk assessment levels"""
-    LOW = "low"
+    """Risk assessment levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 @dataclass
 class AuditEvent:
-    """Audit event structure"""
-    event_id: str
+    """Audit event structure"""    event_id: str
     timestamp: datetime
     event_type: AuditEventType
     user_id: Optional[str]
@@ -84,8 +76,7 @@ class AuditEvent:
 
 @dataclass
 class ComplianceRule:
-    """Compliance rule definition"""
-    rule_id: str
+    """Compliance rule definition"""    rule_id: str
     framework: ComplianceFramework
     title: str
     description: str
@@ -98,8 +89,7 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceReport:
-    """Compliance report structure"""
-    report_id: str
+    """Compliance report structure"""    report_id: str
     framework: ComplianceFramework
     reporting_period: Tuple[datetime, datetime]
     overall_status: ComplianceStatus
@@ -111,8 +101,7 @@ class ComplianceReport:
 
 @dataclass
 class ComplianceInfrastructureSpec:
-    """Compliance infrastructure specification"""
-    namespace: str = "ia-influencer-compliance"
+    """Compliance infrastructure specification"""    namespace: str = "ia-influencer-compliance"
     frameworks: List[ComplianceFramework] = field(default_factory=list)
     audit_retention_days: int = 2555  # 7 years for financial data
     real_time_monitoring: bool = True
@@ -123,8 +112,7 @@ class ComplianceInfrastructureSpec:
     breach_notification: bool = True
 
 class ComplianceInfrastructureManager:
-    """Advanced compliance and audit infrastructure manager"""
-    
+    """Advanced compliance and audit infrastructure manager"""    
     def __init__(self, k8s_client=None, elasticsearch_client=None):
         self.k8s_client = k8s_client
         self.elasticsearch_client = elasticsearch_client
@@ -138,8 +126,7 @@ class ComplianceInfrastructureManager:
         self.compliance_reports = {}
         
     async def deploy_compliance_infrastructure(self, spec: ComplianceInfrastructureSpec) -> Dict[str, Any]:
-        """Deploy comprehensive compliance and audit infrastructure"""
-        try:
+        """Deploy comprehensive compliance and audit infrastructure"""        try:
             results = {}
             logger.info("Deploying compliance and audit infrastructure for IA Influencer platform")
             
@@ -205,8 +192,7 @@ class ComplianceInfrastructureManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_audit_logging_infrastructure(self, spec: ComplianceInfrastructureSpec) -> Dict[str, Any]:
-        """Deploy comprehensive audit logging infrastructure"""
-        try:
+        """Deploy comprehensive audit logging infrastructure"""        try:
             # Deploy Elasticsearch for audit log storage
             elasticsearch_deployment = client.V1StatefulSet(
                 metadata=client.V1ObjectMeta(
@@ -329,8 +315,7 @@ class ComplianceInfrastructureManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_gdpr_compliance_infrastructure(self, spec: ComplianceInfrastructureSpec) -> Dict[str, Any]:
-        """Deploy GDPR compliance infrastructure"""
-        try:
+        """Deploy GDPR compliance infrastructure"""        try:
             # Deploy GDPR compliance service
             gdpr_service = client.V1Deployment(
                 metadata=client.V1ObjectMeta(
@@ -436,8 +421,7 @@ class ComplianceInfrastructureManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_dmca_compliance_infrastructure(self, spec: ComplianceInfrastructureSpec) -> Dict[str, Any]:
-        """Deploy DMCA compliance infrastructure for content protection"""
-        try:
+        """Deploy DMCA compliance infrastructure for content protection"""        try:
             # Deploy DMCA takedown service
             dmca_service = client.V1Deployment(
                 metadata=client.V1ObjectMeta(
@@ -535,10 +519,8 @@ class ComplianceInfrastructureManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _create_dmca_templates(self, namespace: str) -> Dict[str, Any]:
-        """Create DMCA takedown notice templates"""
-        try:
-            dmca_takedown_template = """
-DIGITAL MILLENNIUM COPYRIGHT ACT TAKEDOWN NOTICE
+        """Create DMCA takedown notice templates"""        try:
+            dmca_takedown_template = """DIGITAL MILLENNIUM COPYRIGHT ACT TAKEDOWN NOTICE
 
 To: {{platform_name}}
 Date: {{date}}
@@ -579,10 +561,8 @@ SIGNATURE:
 {{date}}
 
 This notice is submitted in compliance with the Digital Millennium Copyright Act (17 U.S.C. § 512).
-"""
-            
-            counter_notice_template = """
-DIGITAL MILLENNIUM COPYRIGHT ACT COUNTER-NOTIFICATION
+"""            
+            counter_notice_template = """DIGITAL MILLENNIUM COPYRIGHT ACT COUNTER-NOTIFICATION
 
 To: {{platform_name}}
 Date: {{date}}
@@ -609,8 +589,7 @@ SIGNATURE:
 {{date}}
 
 This counter-notification is submitted in compliance with 17 U.S.C. § 512(g)(3).
-"""
-            
+"""            
             dmca_configmap = client.V1ConfigMap(
                 metadata=client.V1ObjectMeta(
                     name="dmca-templates",
@@ -619,8 +598,7 @@ This counter-notification is submitted in compliance with 17 U.S.C. § 512(g)(3)
                 data={
                     'takedown_notice.txt': dmca_takedown_template,
                     'counter_notice.txt': counter_notice_template,
-                    'repeat_infringer_policy.txt': """
-REPEAT INFRINGER POLICY
+                    'repeat_infringer_policy.txt': """REPEAT INFRINGER POLICY
 
 IA Influencer Agent Platform maintains a policy to terminate user accounts that are repeat copyright infringers in accordance with 17 U.S.C. § 512(i).
 
@@ -635,8 +613,7 @@ Termination Process:
 Appeals Process:
 Users may appeal termination decisions by submitting a written appeal to legal@ia-influencer.com within 30 days.
 """,
-                    'safe_harbor_compliance.txt': """
-SAFE HARBOR COMPLIANCE PROCEDURES
+                    'safe_harbor_compliance.txt': """SAFE HARBOR COMPLIANCE PROCEDURES
 
 IA Influencer Agent Platform complies with DMCA Safe Harbor provisions through:
 
@@ -658,8 +635,7 @@ IA Influencer Agent Platform complies with DMCA Safe Harbor provisions through:
    - Content identification systems
    - Automated fingerprinting
    - Rights management information
-"""
-                }
+"""                }
             )
             
             if self.core_v1:
@@ -677,8 +653,7 @@ IA Influencer Agent Platform complies with DMCA Safe Harbor provisions through:
             return {'status': 'error', 'message': str(e)}
     
     async def log_audit_event(self, event: AuditEvent) -> Dict[str, Any]:
-        """Log audit event to compliance system"""
-        try:
+        """Log audit event to compliance system"""        try:
             # Add event ID and timestamp if not provided
             if not event.event_id:
                 event.event_id = str(uuid.uuid4())
@@ -722,13 +697,11 @@ IA Influencer Agent Platform complies with DMCA Safe Harbor provisions through:
             return {'status': 'error', 'message': str(e)}
     
     def _generate_audit_hash(self, event: AuditEvent) -> str:
-        """Generate tamper-proof hash for audit event"""
-        hash_input = f"{event.event_id}{event.timestamp.isoformat()}{event.action}{event.result}"
+        """Generate tamper-proof hash for audit event"""        hash_input = f"{event.event_id}{event.timestamp.isoformat()}{event.action}{event.result}"
         return hashlib.sha256(hash_input.encode()).hexdigest()
     
     async def _check_compliance_violations(self, event: AuditEvent) -> Dict[str, Any]:
-        """Check if audit event indicates compliance violations"""
-        try:
+        """Check if audit event indicates compliance violations"""        try:
             violations = []
             
             # GDPR checks
@@ -772,8 +745,7 @@ IA Influencer Agent Platform complies with DMCA Safe Harbor provisions through:
             return {'status': 'error', 'message': str(e)}
     
     async def generate_compliance_report(self, framework: ComplianceFramework, period_days: int = 30) -> ComplianceReport:
-        """Generate comprehensive compliance report"""
-        try:
+        """Generate comprehensive compliance report"""        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=period_days)
             
@@ -812,8 +784,7 @@ IA Influencer Agent Platform complies with DMCA Safe Harbor provisions through:
             raise
     
     async def get_compliance_status(self, namespace: str = "ia-influencer-compliance") -> Dict[str, Any]:
-        """Get comprehensive compliance status"""
-        try:
+        """Get comprehensive compliance status"""        try:
             status = {
                 'overall_compliance_score': 0.94,  # 94% compliant
                 'frameworks': {
@@ -890,8 +861,7 @@ IA Influencer Agent Platform complies with DMCA Safe Harbor provisions through:
 # Utility functions for compliance operations
 def create_audit_event(event_type: AuditEventType, user_id: str, action: str, 
                       resource_id: str = None, metadata: Dict[str, Any] = None) -> AuditEvent:
-    """Create a standardized audit event"""
-    return AuditEvent(
+    """Create a standardized audit event"""    return AuditEvent(
         event_id=str(uuid.uuid4()),
         timestamp=datetime.utcnow(),
         event_type=event_type,
@@ -908,8 +878,7 @@ def create_audit_event(event_type: AuditEventType, user_id: str, action: str,
     )
 
 def validate_gdpr_consent(consent_data: Dict[str, Any]) -> List[str]:
-    """Validate GDPR consent requirements"""
-    violations = []
+    """Validate GDPR consent requirements"""    violations = []
     
     required_fields = ['freely_given', 'specific', 'informed', 'withdrawable']
     for field in required_fields:

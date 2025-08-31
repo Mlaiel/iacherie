@@ -1,5 +1,4 @@
-"""
-Pinecone Vector Store Implementation
+"""Pinecone Vector Store Implementation
 
 This module provides Pinecone-based vector storage for cloud-native vector search.
 Optimized for high-scale similarity search with managed infrastructure.
@@ -11,9 +10,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 WARNING: This code is proprietary to Fahed Mlaiel. Any unauthorized copying, modification, 
 or distribution without explicit written permission is strictly prohibited and will result 
 in legal action under German and international copyright law.
-"""
-
-import os
+"""import os
 import json
 import logging
 import asyncio
@@ -38,8 +35,7 @@ settings = get_settings()
 
 @dataclass
 class PineconeSearchResult:
-    """Pinecone search result with metadata"""
-    content_id: str
+    """Pinecone search result with metadata"""    content_id: str
     fingerprint_id: int
     similarity_score: float
     content_type: str
@@ -49,8 +45,7 @@ class PineconeSearchResult:
 
 @dataclass
 class PineconeIndexStats:
-    """Pinecone index statistics"""
-    total_vectors: int
+    """Pinecone index statistics"""    total_vectors: int
     dimension: int
     index_fullness: float
     namespaces: Dict[str, int]
@@ -59,8 +54,7 @@ class PineconeIndexStats:
 
 
 class PineconeVectorStore:
-    """
-    Pinecone-based vector store for cloud-native vector search.
+    """    Pinecone-based vector store for cloud-native vector search.
     
     Features:
     - Managed vector database with auto-scaling
@@ -69,8 +63,7 @@ class PineconeVectorStore:
     - Real-time updates and queries
     - Built-in metadata filtering
     - Global deployment options
-    """
-    
+    """    
     def __init__(
         self,
         api_key: str = None,
@@ -81,8 +74,7 @@ class PineconeVectorStore:
         cloud: str = "aws",
         region: str = "us-east-1"
     ):
-        """
-        Initialize Pinecone vector store
+        """        Initialize Pinecone vector store
         
         Args:
             api_key: Pinecone API key
@@ -92,8 +84,7 @@ class PineconeVectorStore:
             metric: Distance metric (cosine, euclidean, dotproduct)
             cloud: Cloud provider (aws, gcp, azure)
             region: Cloud region
-        """
-        self.api_key = api_key or settings.PINECONE_API_KEY
+        """        self.api_key = api_key or settings.PINECONE_API_KEY
         self.environment = environment or settings.PINECONE_ENVIRONMENT
         self.index_name = index_name
         self.dimension = dimension
@@ -131,8 +122,7 @@ class PineconeVectorStore:
         )
     
     async def initialize(self) -> None:
-        """Initialize Pinecone index"""
-        try:
+        """Initialize Pinecone index"""        try:
             # Check if index exists
             existing_indexes = self.pc.list_indexes()
             index_names = [idx.name for idx in existing_indexes.indexes]
@@ -161,8 +151,7 @@ class PineconeVectorStore:
         content_type: str,
         vectors: List[Tuple[str, np.ndarray, Dict[str, Any]]]
     ) -> Dict[str, int]:
-        """
-        Upsert vectors to Pinecone index
+        """        Upsert vectors to Pinecone index
         
         Args:
             content_type: Content type
@@ -170,8 +159,7 @@ class PineconeVectorStore:
             
         Returns:
             Upsert statistics
-        """
-        try:
+        """        try:
             if not self.index:
                 await self.initialize()
             
@@ -244,8 +232,7 @@ class PineconeVectorStore:
         metadata_filter: Dict[str, Any] = None,
         include_metadata: bool = True
     ) -> List[PineconeSearchResult]:
-        """
-        Search for similar vectors in Pinecone
+        """        Search for similar vectors in Pinecone
         
         Args:
             content_type: Content type to search
@@ -257,8 +244,7 @@ class PineconeVectorStore:
             
         Returns:
             List of search results
-        """
-        try:
+        """        try:
             self.search_stats["total_searches"] += 1
             start_time = datetime.now()
             
@@ -339,8 +325,7 @@ class PineconeVectorStore:
         content_type: str,
         content_ids: List[str]
     ) -> Dict[str, int]:
-        """
-        Delete vectors from Pinecone index
+        """        Delete vectors from Pinecone index
         
         Args:
             content_type: Content type
@@ -348,8 +333,7 @@ class PineconeVectorStore:
             
         Returns:
             Deletion statistics
-        """
-        try:
+        """        try:
             if not self.index:
                 await self.initialize()
             
@@ -394,8 +378,7 @@ class PineconeVectorStore:
         content_id: str,
         include_metadata: bool = True
     ) -> Optional[Dict[str, Any]]:
-        """
-        Fetch a specific vector by ID
+        """        Fetch a specific vector by ID
         
         Args:
             content_type: Content type
@@ -404,8 +387,7 @@ class PineconeVectorStore:
             
         Returns:
             Vector data or None if not found
-        """
-        try:
+        """        try:
             if not self.index:
                 await self.initialize()
             
@@ -437,8 +419,7 @@ class PineconeVectorStore:
             raise VectorStoreError(f"Vector fetch failed: {str(e)}")
     
     async def get_index_stats(self) -> Optional[PineconeIndexStats]:
-        """Get Pinecone index statistics"""
-        try:
+        """Get Pinecone index statistics"""        try:
             if not self.index:
                 await self.initialize()
             
@@ -469,8 +450,7 @@ class PineconeVectorStore:
         content_id: str,
         metadata: Dict[str, Any]
     ) -> bool:
-        """
-        Update metadata for a vector
+        """        Update metadata for a vector
         
         Args:
             content_type: Content type
@@ -479,8 +459,7 @@ class PineconeVectorStore:
             
         Returns:
             True if updated successfully
-        """
-        try:
+        """        try:
             if not self.index:
                 await self.initialize()
             
@@ -514,16 +493,14 @@ class PineconeVectorStore:
             raise VectorStoreError(f"Metadata update failed: {str(e)}")
     
     async def clear_namespace(self, content_type: str) -> bool:
-        """
-        Clear all vectors in a namespace
+        """        Clear all vectors in a namespace
         
         Args:
             content_type: Content type (namespace to clear)
             
         Returns:
             True if cleared successfully
-        """
-        try:
+        """        try:
             if not self.index:
                 await self.initialize()
             
@@ -543,8 +520,7 @@ class PineconeVectorStore:
             raise VectorStoreError(f"Namespace clear failed: {str(e)}")
     
     async def _create_index(self) -> None:
-        """Create Pinecone index"""
-        try:
+        """Create Pinecone index"""        try:
             # Determine index spec based on environment
             if self.environment.startswith("gcp-starter"):
                 spec = ServerlessSpec(cloud=self.cloud, region=self.region)
@@ -573,8 +549,7 @@ class PineconeVectorStore:
             raise VectorStoreError(f"Index creation failed: {str(e)}")
     
     async def _get_fingerprint_info(self, content_id: str) -> Dict[str, Any]:
-        """Get fingerprint information from database"""
-        try:
+        """Get fingerprint information from database"""        try:
             async with get_db_session() as session:
                 stmt = select(ContentFingerprint).where(
                     ContentFingerprint.content_id == content_id
@@ -597,8 +572,7 @@ class PineconeVectorStore:
             return {"id": 0}
     
     def _update_search_stats(self, response_time: float) -> None:
-        """Update search performance statistics"""
-        total_searches = self.search_stats["total_searches"]
+        """Update search performance statistics"""        total_searches = self.search_stats["total_searches"]
         current_avg = self.search_stats["avg_response_time"]
         
         # Calculate new average
@@ -606,8 +580,7 @@ class PineconeVectorStore:
         self.search_stats["avg_response_time"] = new_avg
     
     async def close(self) -> None:
-        """Close Pinecone connection"""
-        try:
+        """Close Pinecone connection"""        try:
             # Pinecone client doesn't require explicit closing
             self.index = None
             logger.info("Pinecone vector store closed successfully")

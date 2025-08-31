@@ -1,5 +1,4 @@
-"""
-Advanced Contract Generator
+"""Advanced Contract Generator
 =========================
 
 AI-powered professional contract generation system with multi-language support,
@@ -12,9 +11,7 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing and usage rights.
-"""
-
-from typing import Dict, List, Any, Optional, Tuple, Union
+"""from typing import Dict, List, Any, Optional, Tuple, Union
 from datetime import datetime, date
 from uuid import UUID
 import logging
@@ -38,8 +35,7 @@ settings = get_settings()
 
 
 class ContractLanguage(Enum):
-    """Supported contract languages"""
-    ENGLISH = "en"
+    """Supported contract languages"""    ENGLISH = "en"
     GERMAN = "de"
     FRENCH = "fr"
     SPANISH = "es"
@@ -53,8 +49,7 @@ class ContractLanguage(Enum):
 
 
 class ContractFormat(Enum):
-    """Contract output formats"""
-    PDF = "pdf"
+    """Contract output formats"""    PDF = "pdf"
     HTML = "html"
     DOCX = "docx"
     PLAIN_TEXT = "txt"
@@ -62,8 +57,7 @@ class ContractFormat(Enum):
 
 
 class ClauseType(Enum):
-    """Legal clause types"""
-    GRANT_OF_RIGHTS = "grant_of_rights"
+    """Legal clause types"""    GRANT_OF_RIGHTS = "grant_of_rights"
     TERRITORY = "territory"
     DURATION = "duration"
     ROYALTIES = "royalties"
@@ -81,19 +75,16 @@ class ClauseType(Enum):
 
 
 class ContractComplexity(Enum):
-    """Contract complexity levels"""
-    SIMPLE = "simple"
+    """Contract complexity levels"""    SIMPLE = "simple"
     STANDARD = "standard"
     COMPREHENSIVE = "comprehensive"
     ENTERPRISE = "enterprise"
 
 
 class ContractGenerator:
-    """
-    Professional AI-powered contract generation system with advanced
+    """    Professional AI-powered contract generation system with advanced
     legal template management, multi-language support, and compliance validation.
-    """
-    
+    """    
     def __init__(
         self,
         repository: LicensingRepository = None,
@@ -103,8 +94,7 @@ class ContractGenerator:
         pdf_generator: PDFGenerator = None,
         signature_manager: DigitalSignatureManager = None
     ):
-        """Initialize contract generator with dependencies"""
-        self.repository = repository or LicensingRepository()
+        """Initialize contract generator with dependencies"""        self.repository = repository or LicensingRepository()
         self.template_engine = template_engine or LegalTemplateEngine()
         self.legal_validator = legal_validator or LegalValidator()
         self.language_processor = language_processor or LanguageProcessor()
@@ -139,8 +129,7 @@ class ContractGenerator:
         custom_clauses: List[Dict[str, Any]] = None,
         user_id: UUID = None
     ) -> Dict[str, Any]:
-        """Generate comprehensive license contract"""
-        try:
+        """Generate comprehensive license contract"""        try:
             # Get license agreement with full details
             license_agreement = await self.repository.get_license_agreement(
                 license_agreement_id, user_id, include_relations=True
@@ -239,8 +228,7 @@ class ContractGenerator:
         complexity: str = "standard",
         jurisdiction: str = "international"
     ) -> Dict[str, Any]:
-        """Generate reusable contract template"""
-        try:
+        """Generate reusable contract template"""        try:
             # Validate template parameters
             validated_params = await self._validate_template_parameters(
                 license_type, language, complexity, jurisdiction
@@ -296,8 +284,7 @@ class ContractGenerator:
         customizations: List[Dict[str, Any]],
         user_id: UUID
     ) -> Dict[str, Any]:
-        """Customize contract clauses with AI-powered suggestions"""
-        try:
+        """Customize contract clauses with AI-powered suggestions"""        try:
             customized_contract = base_contract.copy()
             customization_log = []
             
@@ -358,8 +345,7 @@ class ContractGenerator:
         target_language: str,
         preserve_legal_terms: bool = True
     ) -> Dict[str, Any]:
-        """Translate contract to target language with legal term preservation"""
-        try:
+        """Translate contract to target language with legal term preservation"""        try:
             # Validate target language
             if target_language not in [lang.value for lang in ContractLanguage]:
                 raise ValidationError(f"Unsupported target language: {target_language}")
@@ -415,8 +401,7 @@ class ContractGenerator:
         amendments: List[Dict[str, Any]],
         user_id: UUID
     ) -> Dict[str, Any]:
-        """Generate formal contract amendments"""
-        try:
+        """Generate formal contract amendments"""        try:
             # Load original contract
             original_contract = await self._load_contract_by_id(original_contract_id)
             if not original_contract:
@@ -469,8 +454,7 @@ class ContractGenerator:
         format_type: str,
         complexity: str
     ) -> Dict[str, str]:
-        """Validate contract generation parameters"""
-        # Validate language
+        """Validate contract generation parameters"""        # Validate language
         if language not in [lang.value for lang in ContractLanguage]:
             raise ValidationError(f"Unsupported language: {language}")
         
@@ -494,8 +478,7 @@ class ContractGenerator:
         params: Dict[str, str],
         custom_clauses: List[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Prepare contract generation context"""
-        context = {
+        """Prepare contract generation context"""        context = {
             "license_agreement": {
                 "license_number": license_agreement.license_number,
                 "license_type": license_agreement.license_type,
@@ -532,8 +515,7 @@ class ContractGenerator:
         context: Dict[str, Any],
         params: Dict[str, str]
     ) -> Dict[str, Any]:
-        """Generate contract content using AI templates"""
-        # Load appropriate template
+        """Generate contract content using AI templates"""        # Load appropriate template
         template_name = f"{context['license_agreement']['license_type']}_{params['complexity']}_{params['language']}.j2"
         
         try:
@@ -571,8 +553,7 @@ class ContractGenerator:
         contract_content: Dict[str, Any],
         params: Dict[str, str]
     ) -> Dict[str, Any]:
-        """Generate final contract document in specified format"""
-        if params["format"] == ContractFormat.PDF.value:
+        """Generate final contract document in specified format"""        if params["format"] == ContractFormat.PDF.value:
             pdf_data = await self.pdf_generator.generate_from_html(
                 contract_content["html_content"],
                 title=contract_content["title"]
@@ -618,8 +599,7 @@ class ContractGenerator:
         contract_content: Dict[str, Any],
         license_agreement: LicenseAgreement
     ) -> Dict[str, Any]:
-        """Validate contract for legal compliance"""
-        if self.legal_validator:
+        """Validate contract for legal compliance"""        if self.legal_validator:
             return await self.legal_validator.validate_contract_document(
                 contract_content, license_agreement
             )
@@ -637,8 +617,7 @@ class ContractGenerator:
         contract_document: Dict[str, Any],
         license_agreement: LicenseAgreement
     ) -> Dict[str, Any]:
-        """Apply digital signature to contract"""
-        if self.signature_manager:
+        """Apply digital signature to contract"""        if self.signature_manager:
             return await self.signature_manager.prepare_signature_fields(
                 contract_document, [
                     {"party": "licensor", "party_id": str(license_agreement.licensor_id)},
@@ -653,31 +632,26 @@ class ContractGenerator:
             }
     
     async def _generate_contract_id(self) -> str:
-        """Generate unique contract ID"""
-        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+        """Generate unique contract ID"""        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
         return f"CONTRACT-{timestamp}-{hash(timestamp) % 10000:04d}"
     
     async def _calculate_contract_hash(self, contract_document: Dict[str, Any]) -> str:
-        """Calculate hash for contract integrity"""
-        import hashlib
+        """Calculate hash for contract integrity"""        import hashlib
         content_str = json.dumps(contract_document, sort_keys=True)
         return hashlib.sha256(content_str.encode()).hexdigest()
     
     async def _extract_contract_sections(self, html_content: str) -> List[Dict[str, str]]:
-        """Extract contract sections from HTML"""
-        # Implement HTML parsing to extract sections
+        """Extract contract sections from HTML"""        # Implement HTML parsing to extract sections
         # This would use BeautifulSoup or similar
         return []
     
     async def _extract_contract_clauses(self, html_content: str) -> List[Dict[str, str]]:
-        """Extract contract clauses from HTML"""
-        # Implement HTML parsing to extract clauses
+        """Extract contract clauses from HTML"""        # Implement HTML parsing to extract clauses
         # This would use BeautifulSoup or similar  
         return []
     
     async def _html_to_plain_text(self, html_content: str) -> str:
-        """Convert HTML to plain text"""
-        # Implement HTML to text conversion
+        """Convert HTML to plain text"""        # Implement HTML to text conversion
         # This would use BeautifulSoup or similar
         import re
         # Basic HTML stripping (would be more sophisticated in practice)
@@ -704,8 +678,7 @@ settings = get_settings()
 
 
 class ContractTemplate(Enum):
-    """Contract template types"""
-    STANDARD_MUSIC_LICENSE = "standard_music_license"
+    """Contract template types"""    STANDARD_MUSIC_LICENSE = "standard_music_license"
     SYNC_LICENSING = "sync_licensing"
     EXCLUSIVE_DISTRIBUTION = "exclusive_distribution"
     NON_EXCLUSIVE_DISTRIBUTION = "non_exclusive_distribution"
@@ -716,8 +689,7 @@ class ContractTemplate(Enum):
 
 
 class ContractLanguage(Enum):
-    """Supported contract languages"""
-    ENGLISH = "en"
+    """Supported contract languages"""    ENGLISH = "en"
     GERMAN = "de"
     FRENCH = "fr"
     SPANISH = "es"
@@ -725,19 +697,16 @@ class ContractLanguage(Enum):
 
 
 class ContractGenerator:
-    """
-    Professional contract generation engine with AI-powered legal
+    """    Professional contract generation engine with AI-powered legal
     language creation, template management, and compliance validation.
-    """
-    
+    """    
     def __init__(
         self,
         repository: LicensingRepository = None,
         legal_engine: LegalTemplateEngine = None,
         ai_generator: AITextGenerator = None
     ):
-        """Initialize contract generator with dependencies"""
-        self.repository = repository or LicensingRepository()
+        """Initialize contract generator with dependencies"""        self.repository = repository or LicensingRepository()
         self.legal_engine = legal_engine or LegalTemplateEngine()
         self.ai_generator = ai_generator or AITextGenerator()
         self._logger = logger
@@ -757,8 +726,7 @@ class ContractGenerator:
         custom_clauses: List[Dict[str, Any]] = None,
         user_id: UUID = None
     ) -> Dict[str, Any]:
-        """Generate complete license contract with legal language"""
-        try:
+        """Generate complete license contract with legal language"""        try:
             self._logger.info(
                 f"Generating contract for license {license_agreement.license_number} "
                 f"using template {template_type} in {language}"
@@ -832,8 +800,7 @@ class ContractGenerator:
         contract_data: Dict[str, Any],
         language: str = ContractLanguage.ENGLISH.value
     ) -> Dict[str, Any]:
-        """Generate contract from predefined template"""
-        try:
+        """Generate contract from predefined template"""        try:
             # Load template
             template = await self._get_contract_template(template_name, language)
             
@@ -863,8 +830,7 @@ class ContractGenerator:
         customizations: List[Dict[str, Any]],
         language: str = ContractLanguage.ENGLISH.value
     ) -> Dict[str, Any]:
-        """Customize contract clauses with specific requirements"""
-        try:
+        """Customize contract clauses with specific requirements"""        try:
             customized_contract = base_contract.copy()
             
             for customization in customizations:
@@ -912,8 +878,7 @@ class ContractGenerator:
         amendment_data: Dict[str, Any],
         language: str = ContractLanguage.ENGLISH.value
     ) -> Dict[str, Any]:
-        """Generate contract amendment"""
-        try:
+        """Generate contract amendment"""        try:
             amendment_template = await self._get_amendment_template(language)
             
             amendment = {
@@ -941,8 +906,7 @@ class ContractGenerator:
     # Private helper methods
     
     def _load_contract_templates(self) -> Dict[str, Any]:
-        """Load contract templates from storage"""
-        templates = {
+        """Load contract templates from storage"""        templates = {
             ContractTemplate.STANDARD_MUSIC_LICENSE.value: {
                 "name": "Standard Music License Agreement",
                 "sections": [
@@ -1011,8 +975,7 @@ class ContractGenerator:
         template_type: str,
         language: str
     ) -> None:
-        """Validate contract generation inputs"""
-        # Check template exists
+        """Validate contract generation inputs"""        # Check template exists
         if template_type not in self.templates:
             raise ValidationError(f"Unknown contract template: {template_type}")
         
@@ -1033,8 +996,7 @@ class ContractGenerator:
         template_type: str,
         language: str
     ) -> Dict[str, Any]:
-        """Get contract template with language-specific content"""
-        if template_type not in self.templates:
+        """Get contract template with language-specific content"""        if template_type not in self.templates:
             raise ValidationError(f"Template not found: {template_type}")
         
         base_template = self.templates[template_type].copy()
@@ -1052,8 +1014,7 @@ class ContractGenerator:
         template: Dict[str, Any],
         custom_clauses: List[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Generate contract sections with data"""
-        sections = {}
+        """Generate contract sections with data"""        sections = {}
         
         for section_name in template.get("sections", []):
             section_data = await self._generate_section_data(
@@ -1069,8 +1030,7 @@ class ContractGenerator:
         license_agreement: LicenseAgreement,
         custom_clauses: List[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Generate data for a specific contract section"""
-        if section_name == "parties_and_definitions":
+        """Generate data for a specific contract section"""        if section_name == "parties_and_definitions":
             return {
                 "licensor_id": str(license_agreement.licensor_id),
                 "licensee_id": str(license_agreement.licensee_id),
@@ -1132,8 +1092,7 @@ class ContractGenerator:
         contract_sections: Dict[str, Any],
         language: str
     ) -> Dict[str, Any]:
-        """Generate legal language for contract sections using AI"""
-        legal_contract = {}
+        """Generate legal language for contract sections using AI"""        legal_contract = {}
         
         for section_name, section_data in contract_sections.items():
             # Use AI to generate professional legal language
@@ -1155,8 +1114,7 @@ class ContractGenerator:
         contract: Dict[str, Any],
         license_agreement: LicenseAgreement = None
     ) -> Dict[str, Any]:
-        """Validate contract for legal compliance"""
-        compliance_result = {
+        """Validate contract for legal compliance"""        compliance_result = {
             "is_compliant": True,
             "issues": [],
             "warnings": [],
@@ -1177,8 +1135,7 @@ class ContractGenerator:
         language: str,
         user_id: UUID = None
     ) -> Dict[str, Any]:
-        """Generate contract metadata"""
-        return {
+        """Generate contract metadata"""        return {
             "contract_id": await self._generate_contract_id(),
             "version": "1.0",
             "template_type": template_type,
@@ -1194,8 +1151,7 @@ class ContractGenerator:
         }
     
     async def _compile_contract_text(self, legal_contract: Dict[str, Any]) -> str:
-        """Compile all sections into full contract text"""
-        contract_text = []
+        """Compile all sections into full contract text"""        contract_text = []
         
         # Add header
         contract_text.append("LICENSE AGREEMENT\n")
@@ -1213,8 +1169,7 @@ class ContractGenerator:
         self,
         license_agreement: LicenseAgreement
     ) -> Dict[str, Any]:
-        """Generate signature requirements for contract"""
-        return {
+        """Generate signature requirements for contract"""        return {
             "required_signatures": [
                 {
                     "party": "licensor",
@@ -1235,8 +1190,7 @@ class ContractGenerator:
         }
     
     async def _generate_legal_notices(self, language: str) -> List[str]:
-        """Generate required legal notices"""
-        notices = [
+        """Generate required legal notices"""        notices = [
             "This agreement constitutes the entire agreement between the parties.",
             "Any modifications must be in writing and signed by both parties.",
             "If any provision is found unenforceable, the remainder shall remain valid."
@@ -1249,18 +1203,15 @@ class ContractGenerator:
         return notices
     
     async def _generate_contract_id(self) -> str:
-        """Generate unique contract ID"""
-        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+        """Generate unique contract ID"""        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
         return f"CONTRACT-{timestamp}-{hash(timestamp) % 10000:04d}"
     
     async def _generate_amendment_id(self) -> str:
-        """Generate unique amendment ID"""
-        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+        """Generate unique amendment ID"""        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
         return f"AMEND-{timestamp}-{hash(timestamp) % 10000:04d}"
     
     async def _get_section_title(self, section_name: str, language: str) -> str:
-        """Get localized section title"""
-        titles = {
+        """Get localized section title"""        titles = {
             "parties_and_definitions": "Parties and Definitions",
             "grant_of_rights": "Grant of Rights",
             "territory_and_duration": "Territory and Duration",
@@ -1275,15 +1226,12 @@ class ContractGenerator:
         return titles.get(section_name, section_name.replace("_", " ").title())
     
     async def _store_contract(self, contract: Dict[str, Any]) -> None:
-        """Store generated contract"""
-        # Implementation would store contract in database or file system
+        """Store generated contract"""        # Implementation would store contract in database or file system
         pass
     
     async def _load_language_content(self, template_type: str, language: str) -> Dict[str, Any]:
-        """Load language-specific template content"""
-        # Implementation would load localized content
+        """Load language-specific template content"""        # Implementation would load localized content
         return {}
     
     async def _get_template_version(self, template_type: str) -> str:
-        """Get template version"""
-        return "1.0"
+        """Get template version"""        return "1.0"

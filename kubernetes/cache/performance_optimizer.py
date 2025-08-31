@@ -1,5 +1,4 @@
-"""
-Enterprise Performance Optimizer for Cache Deployment
+"""Enterprise Performance Optimizer for Cache Deployment
 
 Advanced AI-powered performance optimization engine specifically designed for the
 IA Influencer Agent platform's multi-format content caching, with intelligent
@@ -35,9 +34,7 @@ Performance Guarantees:
 - >95% cache hit ratio for frequently accessed content
 - <10MB memory usage per 1000 cached items
 - Auto-scaling based on creator activity patterns
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import statistics
@@ -59,8 +56,7 @@ import asyncpg
 
 
 class OptimizationStrategy(Enum):
-    """Performance optimization strategies for different content types"""
-    THROUGHPUT_FOCUSED = "throughput_focused"      # High-volume content processing
+    """Performance optimization strategies for different content types"""    THROUGHPUT_FOCUSED = "throughput_focused"      # High-volume content processing
     LATENCY_FOCUSED = "latency_focused"            # Real-time interactive content
     MEMORY_EFFICIENT = "memory_efficient"         # Large media files optimization
     AI_ADAPTIVE = "ai_adaptive"                    # ML-driven optimization
@@ -71,8 +67,7 @@ class OptimizationStrategy(Enum):
 
 
 class PredictionModel(Enum):
-    """AI prediction models for cache optimization"""
-    STATISTICAL = "statistical"                    # Traditional statistical models
+    """AI prediction models for cache optimization"""    STATISTICAL = "statistical"                    # Traditional statistical models
     MACHINE_LEARNING = "machine_learning"          # Random Forest, XGBoost
     DEEP_LEARNING = "deep_learning"                # Neural networks, LSTM
     HYBRID = "hybrid"                              # Combination of multiple models
@@ -81,8 +76,7 @@ class PredictionModel(Enum):
 
 
 class ContentPriority(Enum):
-    """Content priority levels for optimization"""
-    CRITICAL = "critical"        # Revenue-generating content
+    """Content priority levels for optimization"""    CRITICAL = "critical"        # Revenue-generating content
     HIGH = "high"               # Verified creator content
     MEDIUM = "medium"           # Standard creator content
     LOW = "low"                 # Preview/thumbnail content
@@ -90,8 +84,7 @@ class ContentPriority(Enum):
 
 
 class PerformanceMetric(Enum):
-    """Key performance metrics to optimize"""
-    RESPONSE_TIME = "response_time"
+    """Key performance metrics to optimize"""    RESPONSE_TIME = "response_time"
     THROUGHPUT = "throughput"
     CACHE_HIT_RATIO = "cache_hit_ratio"
     MEMORY_USAGE = "memory_usage"
@@ -103,8 +96,7 @@ class PerformanceMetric(Enum):
 
 @dataclass
 class PerformanceTarget:
-    """Performance targets for optimization"""
-    metric: PerformanceMetric
+    """Performance targets for optimization"""    metric: PerformanceMetric
     target_value: float
     tolerance: float
     priority: int
@@ -114,8 +106,7 @@ class PerformanceTarget:
 
 @dataclass
 class OptimizationResult:
-    """Result of performance optimization"""
-    strategy_applied: OptimizationStrategy
+    """Result of performance optimization"""    strategy_applied: OptimizationStrategy
     metrics_before: Dict[str, float]
     metrics_after: Dict[str, float]
     improvement_percentage: Dict[str, float]
@@ -127,8 +118,7 @@ class OptimizationResult:
 
 @dataclass
 class ContentAccessPattern:
-    """Content access pattern analysis"""
-    content_id: str
+    """Content access pattern analysis"""    content_id: str
     content_type: str
     creator_id: str
     access_frequency: float
@@ -141,8 +131,7 @@ class ContentAccessPattern:
 
 
 class AIPerformancePredictor:
-    """AI-powered performance prediction and optimization"""
-    
+    """AI-powered performance prediction and optimization"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.models: Dict[str, Any] = {}
@@ -154,8 +143,7 @@ class AIPerformancePredictor:
         asyncio.create_task(self._initialize_models())
     
     async def _initialize_models(self):
-        """Initialize machine learning models for prediction"""
-        
+        """Initialize machine learning models for prediction"""        
         try:
             # Content access prediction model
             self.models["content_access"] = RandomForestRegressor(
@@ -198,8 +186,7 @@ class AIPerformancePredictor:
         content_patterns: List[ContentAccessPattern],
         prediction_horizon_hours: int = 24
     ) -> Dict[str, float]:
-        """Predict content access patterns for optimization"""
-        
+        """Predict content access patterns for optimization"""        
         try:
             predictions = {}
             
@@ -231,8 +218,7 @@ class AIPerformancePredictor:
             return {}
     
     def _extract_access_features(self, pattern: ContentAccessPattern) -> List[float]:
-        """Extract features for ML prediction"""
-        
+        """Extract features for ML prediction"""        
         # Time-based features
         current_hour = datetime.now().hour
         current_day = datetime.now().weekday()
@@ -263,8 +249,7 @@ class AIPerformancePredictor:
         return features
     
     def _calculate_avg_access_interval(self, access_times: List[datetime]) -> float:
-        """Calculate average interval between accesses"""
-        if len(access_times) < 2:
+        """Calculate average interval between accesses"""        if len(access_times) < 2:
             return 0.0
         
         intervals = []
@@ -275,8 +260,7 @@ class AIPerformancePredictor:
         return statistics.mean(intervals) if intervals else 0.0
     
     def _calculate_access_trend(self, access_times: List[datetime]) -> float:
-        """Calculate access trend (increasing/decreasing)"""
-        if len(access_times) < 3:
+        """Calculate access trend (increasing/decreasing)"""        if len(access_times) < 3:
             return 0.0
         
         # Simple linear trend calculation
@@ -291,8 +275,7 @@ class AIPerformancePredictor:
         return slope
     
     def _calculate_geographic_entropy(self, geographic_distribution: Dict[str, int]) -> float:
-        """Calculate geographic distribution entropy"""
-        if not geographic_distribution:
+        """Calculate geographic distribution entropy"""        if not geographic_distribution:
             return 0.0
         
         total = sum(geographic_distribution.values())
@@ -306,8 +289,7 @@ class AIPerformancePredictor:
         return entropy
     
     def _statistical_access_prediction(self, pattern: ContentAccessPattern) -> float:
-        """Fallback statistical prediction"""
-        
+        """Fallback statistical prediction"""        
         # Simple prediction based on recent access frequency
         if not pattern.access_times:
             return 0.0
@@ -323,8 +305,7 @@ class AIPerformancePredictor:
         return prediction
     
     async def _load_pretrained_models(self):
-        """Load pre-trained models from disk"""
-        try:
+        """Load pre-trained models from disk"""        try:
             model_dir = self.config.get("model_directory", "models/")
             
             for model_name in self.models.keys():
@@ -343,8 +324,7 @@ class AIPerformancePredictor:
 
 
 class AdaptiveCacheOptimizer:
-    """Adaptive cache optimization with real-time tuning"""
-    
+    """Adaptive cache optimization with real-time tuning"""    
     def __init__(self, redis_client: redis.Redis, config: Dict[str, Any]):
         self.redis_client = redis_client
         self.config = config
@@ -364,8 +344,7 @@ class AdaptiveCacheOptimizer:
         self._initialize_optimization_targets()
     
     def _initialize_optimization_targets(self):
-        """Initialize performance optimization targets"""
-        
+        """Initialize performance optimization targets"""        
         self.optimization_targets = [
             PerformanceTarget(
                 metric=PerformanceMetric.RESPONSE_TIME,
@@ -401,8 +380,7 @@ class AdaptiveCacheOptimizer:
         current_metrics: Dict[str, float],
         content_patterns: List[ContentAccessPattern]
     ) -> OptimizationResult:
-        """Perform adaptive cache optimization"""
-        
+        """Perform adaptive cache optimization"""        
         start_time = time.time()
         optimization_actions = []
         
@@ -477,8 +455,7 @@ class AdaptiveCacheOptimizer:
             )
     
     def _analyze_performance_gaps(self, current_metrics: Dict[str, float]) -> Set[PerformanceMetric]:
-        """Analyze performance gaps against targets"""
-        
+        """Analyze performance gaps against targets"""        
         gaps = set()
         
         for target in self.optimization_targets:
@@ -506,8 +483,7 @@ class AdaptiveCacheOptimizer:
         performance_gaps: Set[PerformanceMetric],
         content_patterns: List[ContentAccessPattern]
     ) -> OptimizationStrategy:
-        """Determine optimal strategy based on current conditions"""
-        
+        """Determine optimal strategy based on current conditions"""        
         if not performance_gaps:
             return OptimizationStrategy.AI_ADAPTIVE
         
@@ -535,8 +511,7 @@ class AdaptiveCacheOptimizer:
             return OptimizationStrategy.AI_ADAPTIVE
     
     async def _optimize_memory_usage(self, content_patterns: List[ContentAccessPattern]):
-        """Optimize memory usage through intelligent eviction"""
-        
+        """Optimize memory usage through intelligent eviction"""        
         try:
             # Identify low-priority content for eviction
             eviction_candidates = sorted(
@@ -558,8 +533,7 @@ class AdaptiveCacheOptimizer:
             logging.error(f"Memory optimization failed: {e}")
     
     async def _optimize_cache_hit_ratio(self, content_patterns: List[ContentAccessPattern]):
-        """Optimize cache hit ratio through predictive preloading"""
-        
+        """Optimize cache hit ratio through predictive preloading"""        
         try:
             # Identify high-probability access content
             high_probability_content = [
@@ -581,8 +555,7 @@ class AdaptiveCacheOptimizer:
             logging.error(f"Cache hit optimization failed: {e}")
     
     async def _optimize_response_time(self, content_patterns: List[ContentAccessPattern]):
-        """Optimize response time through caching strategies"""
-        
+        """Optimize response time through caching strategies"""        
         try:
             # Implement hot data caching
             hot_content = [
@@ -604,8 +577,7 @@ class AdaptiveCacheOptimizer:
             logging.error(f"Response time optimization failed: {e}")
     
     async def _optimize_throughput(self, content_patterns: List[ContentAccessPattern]):
-        """Optimize throughput through parallel processing"""
-        
+        """Optimize throughput through parallel processing"""        
         try:
             # Enable batch operations for high-volume content
             batch_size = self.config.get("batch_size", 100)
@@ -629,8 +601,7 @@ class AdaptiveCacheOptimizer:
             logging.error(f"Throughput optimization failed: {e}")
     
     async def _optimize_content_compression(self, content_patterns: List[ContentAccessPattern]):
-        """Optimize content compression based on access patterns"""
-        
+        """Optimize content compression based on access patterns"""        
         try:
             for pattern in content_patterns:
                 # Determine optimal compression based on access frequency
@@ -651,8 +622,7 @@ class AdaptiveCacheOptimizer:
             logging.error(f"Compression optimization failed: {e}")
     
     async def _optimize_pipeline_operations(self):
-        """Optimize Redis pipeline operations"""
-        
+        """Optimize Redis pipeline operations"""        
         try:
             # Configure optimal pipeline settings
             pipeline_size = self.config.get("pipeline_size", 1000)
@@ -667,8 +637,7 @@ class AdaptiveCacheOptimizer:
             logging.error(f"Pipeline optimization failed: {e}")
     
     async def _process_content_batch(self, batch: List[ContentAccessPattern]):
-        """Process a batch of content asynchronously"""
-        
+        """Process a batch of content asynchronously"""        
         try:
             # Process batch operations
             pipe = self.redis_client.pipeline()
@@ -682,8 +651,7 @@ class AdaptiveCacheOptimizer:
             logging.error(f"Batch processing failed: {e}")
     
     async def _measure_current_metrics(self) -> Dict[str, float]:
-        """Measure current performance metrics"""
-        
+        """Measure current performance metrics"""        
         try:
             # Get Redis info
             redis_info = await self.redis_client.info()
@@ -708,8 +676,7 @@ class AdaptiveCacheOptimizer:
             return {}
     
     async def _measure_response_time(self) -> float:
-        """Measure average response time"""
-        
+        """Measure average response time"""        
         try:
             start_time = time.time()
             await self.redis_client.ping()
@@ -722,8 +689,7 @@ class AdaptiveCacheOptimizer:
             return 0.0
     
     async def _calculate_hit_ratio(self) -> float:
-        """Calculate cache hit ratio"""
-        
+        """Calculate cache hit ratio"""        
         try:
             redis_info = await self.redis_client.info()
             hits = float(redis_info.get("keyspace_hits", 0))
@@ -742,8 +708,7 @@ class AdaptiveCacheOptimizer:
         before_metrics: Dict[str, float],
         after_metrics: Dict[str, float]
     ) -> Dict[str, float]:
-        """Calculate performance improvements"""
-        
+        """Calculate performance improvements"""        
         improvements = {}
         
         for metric_name in before_metrics.keys():
@@ -764,8 +729,7 @@ class AdaptiveCacheOptimizer:
         return improvements
     
     async def _generate_recommendations(self, current_metrics: Dict[str, float]) -> List[str]:
-        """Generate optimization recommendations"""
-        
+        """Generate optimization recommendations"""        
         recommendations = []
         
         # Memory recommendations
@@ -792,8 +756,7 @@ class PerformanceOptimizer:
 
 @dataclass
 class PerformanceMetrics:
-    """Performance metrics for cache operations"""
-    timestamp: datetime
+    """Performance metrics for cache operations"""    timestamp: datetime
     hit_rate: float
     miss_rate: float
     avg_response_time_ms: float
@@ -807,8 +770,7 @@ class PerformanceMetrics:
 
 @dataclass
 class OptimizationRecommendation:
-    """Optimization recommendation with rationale"""
-    strategy: OptimizationStrategy
+    """Optimization recommendation with rationale"""    strategy: OptimizationStrategy
     priority: int  # 1-10, higher is more important
     description: str
     expected_improvement: float
@@ -818,26 +780,21 @@ class OptimizationRecommendation:
 
 
 class PerformanceOptimizer:
-    """
-    Enterprise performance optimizer for cache deployment with AI-driven
+    """    Enterprise performance optimizer for cache deployment with AI-driven
     optimization, predictive analytics, and real-time performance tuning.
-    """
-
-    def __init__(
+    """    def __init__(
         self,
         config: CacheConfiguration,
         metrics_collector: CacheMetricsCollector,
         content_manager: ContentCacheManager
     ):
-        """
-        Initialize performance optimizer with enterprise configuration.
+        """        Initialize performance optimizer with enterprise configuration.
         
         Args:
             config: Cache configuration instance
             metrics_collector: Metrics collection service
             content_manager: Content cache manager instance
-        """
-        self.config = config
+        """        self.config = config
         self.metrics = metrics_collector
         self.content_manager = content_manager
         self.logger = logging.getLogger(__name__)
@@ -880,8 +837,7 @@ class PerformanceOptimizer:
         force_optimization: bool = False,
         target_metrics: Optional[Dict[str, float]] = None
     ) -> List[OptimizationRecommendation]:
-        """
-        Perform comprehensive performance optimization with AI-driven recommendations.
+        """        Perform comprehensive performance optimization with AI-driven recommendations.
         
         Args:
             force_optimization: Force optimization even if recently performed
@@ -889,8 +845,7 @@ class PerformanceOptimizer:
             
         Returns:
             List of optimization recommendations
-        """
-        try:
+        """        try:
             if self._optimization_in_progress and not force_optimization:
                 self.logger.info("Optimization already in progress, skipping")
                 return []
@@ -940,8 +895,7 @@ class PerformanceOptimizer:
         time_horizon_hours: int = 24,
         confidence_level: float = 0.95
     ) -> Dict[str, Any]:
-        """
-        Predict future cache needs using AI models and historical data.
+        """        Predict future cache needs using AI models and historical data.
         
         Args:
             time_horizon_hours: Hours into the future to predict
@@ -949,8 +903,7 @@ class PerformanceOptimizer:
             
         Returns:
             Dict containing prediction results and recommendations
-        """
-        try:
+        """        try:
             # Predict access patterns
             access_predictions = await self._access_pattern_predictor.predict(
                 time_horizon_hours=time_horizon_hours,
@@ -1002,8 +955,7 @@ class PerformanceOptimizer:
         target_nodes: List[str],
         optimization_objective: str = "balanced"
     ) -> Dict[str, Any]:
-        """
-        Optimize cache distribution across multiple nodes or regions.
+        """        Optimize cache distribution across multiple nodes or regions.
         
         Args:
             target_nodes: List of target nodes/regions for distribution
@@ -1011,8 +963,7 @@ class PerformanceOptimizer:
             
         Returns:
             Dict containing distribution optimization results
-        """
-        try:
+        """        try:
             # Analyze current distribution
             current_distribution = await self._analyze_current_distribution(target_nodes)
             
@@ -1052,8 +1003,7 @@ class PerformanceOptimizer:
         monitoring_duration_seconds: int = 3600,
         alert_thresholds: Optional[Dict[str, float]] = None
     ) -> Dict[str, Any]:
-        """
-        Monitor real-time cache performance with intelligent alerting.
+        """        Monitor real-time cache performance with intelligent alerting.
         
         Args:
             monitoring_duration_seconds: Duration to monitor in seconds
@@ -1061,8 +1011,7 @@ class PerformanceOptimizer:
             
         Returns:
             Dict containing monitoring results and alerts
-        """
-        try:
+        """        try:
             start_time = time.time()
             alerts_triggered = []
             performance_samples = []
@@ -1105,8 +1054,7 @@ class PerformanceOptimizer:
             return {}
 
     async def _collect_performance_metrics(self) -> PerformanceMetrics:
-        """Collect comprehensive performance metrics"""
-        try:
+        """Collect comprehensive performance metrics"""        try:
             # Get cache statistics
             cache_stats = await self.content_manager.get_cache_statistics()
             
@@ -1150,8 +1098,7 @@ class PerformanceOptimizer:
             )
 
     async def _analyze_performance_trends(self) -> Dict[str, Any]:
-        """Analyze performance trends from historical data"""
-        if len(self._performance_history) < 10:
+        """Analyze performance trends from historical data"""        if len(self._performance_history) < 10:
             return {"status": "insufficient_data"}
         
         try:
@@ -1194,8 +1141,7 @@ class PerformanceOptimizer:
         performance_trends: Dict[str, Any],
         target_metrics: Dict[str, float]
     ) -> List[OptimizationRecommendation]:
-        """Generate AI-driven optimization recommendations"""
-        recommendations = []
+        """Generate AI-driven optimization recommendations"""        recommendations = []
         
         try:
             # Check hit rate optimization
@@ -1279,8 +1225,7 @@ class PerformanceOptimizer:
             return []
 
     async def _collect_system_metrics(self) -> Dict[str, float]:
-        """Collect system-level performance metrics"""
-        # This would integrate with actual system monitoring
+        """Collect system-level performance metrics"""        # This would integrate with actual system monitoring
         # For now, we'll simulate realistic metrics
         import random
         
@@ -1293,8 +1238,7 @@ class PerformanceOptimizer:
         }
 
     def _calculate_trend(self, values: List[float]) -> Dict[str, float]:
-        """Calculate trend statistics for a series of values"""
-        if len(values) < 2:
+        """Calculate trend statistics for a series of values"""        if len(values) < 2:
             return {"trend": 0, "slope": 0, "r_squared": 0}
         
         try:
@@ -1329,8 +1273,7 @@ class PerformanceOptimizer:
             return {"trend": 0, "slope": 0, "r_squared": 0}
 
     async def _calculate_ai_optimization_score(self) -> float:
-        """Calculate AI optimization effectiveness score"""
-        try:
+        """Calculate AI optimization effectiveness score"""        try:
             if len(self._performance_history) < 5:
                 return 0.5
             
@@ -1364,8 +1307,7 @@ class PerformanceOptimizer:
 
 
 class AccessPatternPredictor:
-    """Predicts future access patterns using machine learning"""
-    
+    """Predicts future access patterns using machine learning"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self._historical_patterns = defaultdict(list)
@@ -1375,8 +1317,7 @@ class AccessPatternPredictor:
         time_horizon_hours: int,
         confidence_level: float
     ) -> Dict[str, Any]:
-        """Predict access patterns for the specified time horizon"""
-        # This would implement actual ML prediction
+        """Predict access patterns for the specified time horizon"""        # This would implement actual ML prediction
         # For now, we'll return simulated predictions
         return {
             "predicted_access_rate": 1000 + (time_horizon_hours * 50),
@@ -1392,8 +1333,7 @@ class AccessPatternPredictor:
 
 
 class LoadPredictor:
-    """Predicts future load patterns and resource requirements"""
-    
+    """Predicts future load patterns and resource requirements"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self._load_history = deque(maxlen=1000)
@@ -1403,8 +1343,7 @@ class LoadPredictor:
         time_horizon_hours: int,
         confidence_level: float
     ) -> Dict[str, Any]:
-        """Predict load patterns for the specified time horizon"""
-        return {
+        """Predict load patterns for the specified time horizon"""        return {
             "predicted_peak_load": 2000,
             "predicted_average_load": 800,
             "load_distribution": [800, 1200, 1800, 2000, 1500, 1000, 600],
@@ -1418,8 +1357,7 @@ class LoadPredictor:
 
 
 class ResourceUsagePredictor:
-    """Predicts future resource usage patterns"""
-    
+    """Predicts future resource usage patterns"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self._usage_history = deque(maxlen=1000)
@@ -1429,8 +1367,7 @@ class ResourceUsagePredictor:
         time_horizon_hours: int,
         confidence_level: float
     ) -> Dict[str, Any]:
-        """Predict resource usage for the specified time horizon"""
-        return {
+        """Predict resource usage for the specified time horizon"""        return {
             "predicted_memory_usage_gb": 24,
             "predicted_cpu_usage_percent": 65,
             "predicted_network_io_mbps": 80,

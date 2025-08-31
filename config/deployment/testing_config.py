@@ -1,5 +1,4 @@
-"""
-Testing Framework and Configuration Module for IA-Influencer Agent Platform
+"""Testing Framework and Configuration Module for IA-Influencer Agent Platform
 ===========================================================================
 
 Professional testing infrastructure for comprehensive validation
@@ -15,9 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import os
+"""import os
 import pytest
 import asyncio
 import docker
@@ -45,8 +42,7 @@ import sqlalchemy
 
 @dataclass
 class TestEnvironment:
-    """Test environment configuration"""
-    name: str
+    """Test environment configuration"""    name: str
     cloud_provider: str
     kubernetes_namespace: str = "testing"
     database_url: str = "postgresql://test:test@localhost:5432/test_db"
@@ -60,8 +56,7 @@ class TestEnvironment:
 
 @dataclass
 class TestResult:
-    """Test execution result"""
-    test_name: str
+    """Test execution result"""    test_name: str
     status: str  # passed, failed, skipped
     duration: float
     error_message: Optional[str] = None
@@ -70,8 +65,7 @@ class TestResult:
 
 
 class TestingConfig:
-    """
-    Professional testing framework for IA-Influencer Agent Platform.
+    """    Professional testing framework for IA-Influencer Agent Platform.
     
     Provides comprehensive testing infrastructure:
     - Unit tests for all components
@@ -86,8 +80,7 @@ class TestingConfig:
     - AI/ML model validation
     - Content protection verification
     - Monetization engine testing
-    """
-    
+    """    
     def __init__(self, environment: str = "test", cloud_provider: str = "aws"):
         self.environment = environment
         self.cloud_provider = cloud_provider.lower()
@@ -111,8 +104,7 @@ class TestingConfig:
         self._setup_test_infrastructure()
     
     def _setup_test_infrastructure(self) -> None:
-        """Setup testing infrastructure"""
-        try:
+        """Setup testing infrastructure"""        try:
             # Initialize Docker client
             self.docker_client = docker.from_env()
             
@@ -125,8 +117,7 @@ class TestingConfig:
             self.logger.warning(f"Failed to initialize test infrastructure: {e}")
     
     def get_pytest_configuration(self) -> Dict[str, Any]:
-        """Get pytest configuration"""
-        return {
+        """Get pytest configuration"""        return {
             "pytest_config": {
                 "testpaths": [
                     "tests_backend",
@@ -179,8 +170,7 @@ class TestingConfig:
         }
     
     def get_unit_test_configuration(self) -> Dict[str, Any]:
-        """Get unit test configuration"""
-        return {
+        """Get unit test configuration"""        return {
             "unit_tests": {
                 "test_modules": [
                     "ai.content_protection.test_fingerprinting",
@@ -256,8 +246,7 @@ class TestingConfig:
         }
     
     def get_integration_test_configuration(self) -> Dict[str, Any]:
-        """Get integration test configuration"""
-        return {
+        """Get integration test configuration"""        return {
             "integration_tests": {
                 "test_scenarios": [
                     {
@@ -348,8 +337,7 @@ class TestingConfig:
         }
     
     def get_performance_test_configuration(self) -> Dict[str, Any]:
-        """Get performance test configuration"""
-        return {
+        """Get performance test configuration"""        return {
             "performance_tests": {
                 "load_testing": {
                     "scenarios": [
@@ -402,8 +390,7 @@ class TestingConfig:
         }
     
     def get_security_test_configuration(self) -> Dict[str, Any]:
-        """Get security test configuration"""
-        return {
+        """Get security test configuration"""        return {
             "security_tests": {
                 "vulnerability_scanning": {
                     "tools": [
@@ -473,8 +460,7 @@ class TestingConfig:
         }
     
     def get_chaos_engineering_configuration(self) -> Dict[str, Any]:
-        """Get chaos engineering test configuration"""
-        return {
+        """Get chaos engineering test configuration"""        return {
             "chaos_tests": {
                 "failure_scenarios": [
                     {
@@ -525,8 +511,7 @@ class TestingConfig:
         }
     
     def get_cloud_specific_tests(self) -> Dict[str, Any]:
-        """Get cloud provider specific tests"""
-        cloud_tests = {
+        """Get cloud provider specific tests"""        cloud_tests = {
             "aws": {
                 "services": [
                     {
@@ -609,8 +594,7 @@ class TestingConfig:
         return cloud_tests.get(self.cloud_provider, {})
     
     def create_test_fixtures(self) -> Dict[str, str]:
-        """Create test fixture files"""
-        fixtures = {
+        """Create test fixture files"""        fixtures = {
             "conftest.py": self._get_conftest_content(),
             "test_fixtures.py": self._get_test_fixtures_content(),
             "test_data_factory.py": self._get_test_data_factory_content(),
@@ -620,13 +604,9 @@ class TestingConfig:
         return fixtures
     
     def _get_conftest_content(self) -> str:
-        """Generate conftest.py content"""
-        return '''"""
-Pytest configuration and fixtures for IA-Influencer Agent Platform
+        """Generate conftest.py content"""        return '''"""Pytest configuration and fixtures for IA-Influencer Agent Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-
-import pytest
+"""import pytest
 import asyncio
 import os
 from typing import AsyncGenerator, Generator
@@ -643,16 +623,14 @@ from backend.core.config import get_settings
 
 @pytest.fixture(scope="session")
 def event_loop():
-    """Create an instance of the default event loop for the test session."""
-    loop = asyncio.get_event_loop_policy().new_event_loop()
+    """Create an instance of the default event loop for the test session."""    loop = asyncio.get_event_loop_policy().new_event_loop()
     yield loop
     loop.close()
 
 
 @pytest.fixture(scope="session")
 async def test_database():
-    """Setup test database."""
-    settings = get_settings()
+    """Setup test database."""    settings = get_settings()
     test_db_url = settings.TEST_DATABASE_URL
     
     engine = create_engine(test_db_url)
@@ -668,8 +646,7 @@ async def test_database():
 
 @pytest.fixture(scope="function")
 async def db_session(test_database):
-    """Get database session for tests."""
-    session = test_database()
+    """Get database session for tests."""    session = test_database()
     try:
         yield session
     finally:
@@ -678,8 +655,7 @@ async def db_session(test_database):
 
 @pytest.fixture(scope="session")
 async def redis_client():
-    """Setup test Redis client."""
-    client = redis.Redis.from_url("redis://localhost:6379/15")
+    """Setup test Redis client."""    client = redis.Redis.from_url("redis://localhost:6379/15")
     await client.flushall()
     yield client
     await client.flushall()
@@ -688,15 +664,13 @@ async def redis_client():
 
 @pytest.fixture(scope="session")
 async def http_client():
-    """Setup test HTTP client."""
-    async with aiohttp.ClientSession() as session:
+    """Setup test HTTP client."""    async with aiohttp.ClientSession() as session:
         yield session
 
 
 @pytest.fixture(scope="function")
 def mock_s3_client():
-    """Mock S3 client."""
-    mock = MagicMock()
+    """Mock S3 client."""    mock = MagicMock()
     mock.upload_file.return_value = True
     mock.download_file.return_value = True
     mock.delete_object.return_value = True
@@ -705,8 +679,7 @@ def mock_s3_client():
 
 @pytest.fixture(scope="function")
 def mock_kubernetes_client():
-    """Mock Kubernetes client."""
-    mock = MagicMock()
+    """Mock Kubernetes client."""    mock = MagicMock()
     mock.create_deployment.return_value = {"status": "success"}
     mock.delete_deployment.return_value = {"status": "success"}
     mock.scale_deployment.return_value = {"status": "success"}
@@ -715,26 +688,20 @@ def mock_kubernetes_client():
 
 @pytest.fixture(scope="session")
 def docker_client():
-    """Docker client for container tests."""
-    return docker.from_env()
+    """Docker client for container tests."""    return docker.from_env()
 
 
 @pytest.fixture(autouse=True)
 def setup_test_environment(monkeypatch):
-    """Setup test environment variables."""
-    monkeypatch.setenv("TESTING", "true")
+    """Setup test environment variables."""    monkeypatch.setenv("TESTING", "true")
     monkeypatch.setenv("DATABASE_URL", "postgresql://test:test@localhost:5432/test_db")
     monkeypatch.setenv("REDIS_URL", "redis://localhost:6379/15")
 '''
     
     def _get_test_fixtures_content(self) -> str:
-        """Generate test_fixtures.py content"""
-        return '''"""
-Test fixtures and data for IA-Influencer Agent Platform
+        """Generate test_fixtures.py content"""        return '''"""Test fixtures and data for IA-Influencer Agent Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-
-import pytest
+"""import pytest
 from typing import Dict, List, Any
 import json
 import tempfile
@@ -744,8 +711,7 @@ from pathlib import Path
 
 @pytest.fixture
 def sample_audio_data() -> Dict[str, Any]:
-    """Sample audio data for testing."""
-    return {
+    """Sample audio data for testing."""    return {
         "title": "Test Audio Track",
         "artist": "Test Artist",
         "duration": 180,
@@ -759,8 +725,7 @@ def sample_audio_data() -> Dict[str, Any]:
 
 @pytest.fixture
 def sample_video_data() -> Dict[str, Any]:
-    """Sample video data for testing."""
-    return {
+    """Sample video data for testing."""    return {
         "title": "Test Video Content",
         "creator": "Test Creator",
         "duration": 300,
@@ -774,8 +739,7 @@ def sample_video_data() -> Dict[str, Any]:
 
 @pytest.fixture
 def sample_user_data() -> Dict[str, Any]:
-    """Sample user data for testing."""
-    return {
+    """Sample user data for testing."""    return {
         "id": "test_user_123",
         "username": "testuser",
         "email": "test@example.com",
@@ -788,8 +752,7 @@ def sample_user_data() -> Dict[str, Any]:
 
 @pytest.fixture
 def sample_protection_config() -> Dict[str, Any]:
-    """Sample content protection configuration."""
-    return {
+    """Sample content protection configuration."""    return {
         "sensitivity": 0.85,
         "match_threshold": 0.9,
         "takedown_enabled": True,
@@ -805,8 +768,7 @@ def sample_protection_config() -> Dict[str, Any]:
 
 @pytest.fixture
 def temp_audio_file():
-    """Create temporary audio file for testing."""
-    with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as f:
+    """Create temporary audio file for testing."""    with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as f:
         # Write minimal WAV header
         f.write(b"RIFF\\x00\\x00\\x00\\x00WAVEfmt \\x10\\x00\\x00\\x00")
         f.write(b"\\x01\\x00\\x02\\x00\\x44\\xac\\x00\\x00\\x10\\xb1\\x02\\x00")
@@ -817,8 +779,7 @@ def temp_audio_file():
 
 @pytest.fixture
 def mock_api_responses() -> Dict[str, Any]:
-    """Mock API responses for testing."""
-    return {
+    """Mock API responses for testing."""    return {
         "fingerprint_success": {
             "status": "success",
             "fingerprint": "abcd1234efgh5678",
@@ -849,13 +810,9 @@ def mock_api_responses() -> Dict[str, Any]:
 '''
     
     def _get_test_data_factory_content(self) -> str:
-        """Generate test_data_factory.py content"""
-        return '''"""
-Test data factory for IA-Influencer Agent Platform
+        """Generate test_data_factory.py content"""        return '''"""Test data factory for IA-Influencer Agent Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-
-import random
+"""import random
 import string
 import uuid
 from datetime import datetime, timedelta
@@ -866,12 +823,10 @@ fake = Faker()
 
 
 class TestDataFactory:
-    """Factory for generating test data."""
-    
+    """Factory for generating test data."""    
     @staticmethod
     def create_user(override: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Create test user data."""
-        data = {
+        """Create test user data."""        data = {
             "id": str(uuid.uuid4()),
             "username": fake.user_name(),
             "email": fake.email(),
@@ -889,8 +844,7 @@ class TestDataFactory:
     
     @staticmethod
     def create_content(content_type: str = "audio", override: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Create test content data."""
-        base_data = {
+        """Create test content data."""        base_data = {
             "id": str(uuid.uuid4()),
             "title": fake.sentence(nb_words=4),
             "creator": fake.name(),
@@ -928,8 +882,7 @@ class TestDataFactory:
     
     @staticmethod
     def create_protection_rule(override: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Create test protection rule."""
-        data = {
+        """Create test protection rule."""        data = {
             "id": str(uuid.uuid4()),
             "content_id": str(uuid.uuid4()),
             "sensitivity": round(random.uniform(0.7, 1.0), 2),
@@ -948,8 +901,7 @@ class TestDataFactory:
     
     @staticmethod
     def create_match_result(override: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Create test match result."""
-        data = {
+        """Create test match result."""        data = {
             "id": str(uuid.uuid4()),
             "original_content_id": str(uuid.uuid4()),
             "detected_content_id": str(uuid.uuid4()),
@@ -975,8 +927,7 @@ class TestDataFactory:
     
     @staticmethod
     def create_revenue_data(override: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Create test revenue data."""
-        data = {
+        """Create test revenue data."""        data = {
             "id": str(uuid.uuid4()),
             "content_id": str(uuid.uuid4()),
             "user_id": str(uuid.uuid4()),
@@ -997,18 +948,13 @@ class TestDataFactory:
     
     @staticmethod
     def create_bulk_data(factory_method, count: int = 10, **kwargs) -> List[Dict[str, Any]]:
-        """Create bulk test data."""
-        return [factory_method(**kwargs) for _ in range(count)]
+        """Create bulk test data."""        return [factory_method(**kwargs) for _ in range(count)]
 '''
     
     def _get_test_utils_content(self) -> str:
-        """Generate test_utils.py content"""
-        return '''"""
-Test utilities for IA-Influencer Agent Platform
+        """Generate test_utils.py content"""        return '''"""Test utilities for IA-Influencer Agent Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-
-import asyncio
+"""import asyncio
 import json
 import time
 from typing import Dict, List, Any, Optional, Callable
@@ -1019,16 +965,14 @@ from contextlib import asynccontextmanager
 
 
 class TestUtils:
-    """Utilities for testing."""
-    
+    """Utilities for testing."""    
     @staticmethod
     async def wait_for_condition(
         condition: Callable[[], bool],
         timeout: float = 30.0,
         poll_interval: float = 0.5
     ) -> bool:
-        """Wait for a condition to be true."""
-        start_time = time.time()
+        """Wait for a condition to be true."""        start_time = time.time()
         while time.time() - start_time < timeout:
             if condition():
                 return True
@@ -1042,8 +986,7 @@ class TestUtils:
         url: str,
         **kwargs
     ) -> Dict[str, Any]:
-        """Make HTTP request and return response."""
-        async with session.request(method, url, **kwargs) as response:
+        """Make HTTP request and return response."""        async with session.request(method, url, **kwargs) as response:
             return {
                 "status": response.status,
                 "headers": dict(response.headers),
@@ -1052,25 +995,21 @@ class TestUtils:
     
     @staticmethod
     def assert_response_success(response: Dict[str, Any]) -> None:
-        """Assert response is successful."""
-        assert response["status"] in [200, 201, 202], f"Unexpected status: {response['status']}"
+        """Assert response is successful."""        assert response["status"] in [200, 201, 202], f"Unexpected status: {response['status']}"
         if isinstance(response["data"], dict):
             assert response["data"].get("status") != "error", f"API error: {response['data']}"
     
     @staticmethod
     def assert_response_error(response: Dict[str, Any], expected_status: int = 400) -> None:
-        """Assert response is an error."""
-        assert response["status"] == expected_status, f"Expected status {expected_status}, got {response['status']}"
+        """Assert response is an error."""        assert response["status"] == expected_status, f"Expected status {expected_status}, got {response['status']}"
     
     @staticmethod
     def mock_database_session():
-        """Mock database session."""
-        return MagicMock()
+        """Mock database session."""        return MagicMock()
     
     @staticmethod
     def mock_redis_client():
-        """Mock Redis client."""
-        mock = MagicMock()
+        """Mock Redis client."""        mock = MagicMock()
         mock.get.return_value = None
         mock.set.return_value = True
         mock.delete.return_value = True
@@ -1080,8 +1019,7 @@ class TestUtils:
     @staticmethod
     @asynccontextmanager
     async def temporary_environment_vars(**kwargs):
-        """Temporarily set environment variables."""
-        import os
+        """Temporarily set environment variables."""        import os
         original_values = {}
         
         for key, value in kwargs.items():
@@ -1099,8 +1037,7 @@ class TestUtils:
     
     @staticmethod
     def performance_test(max_duration: float = 5.0, max_memory_mb: float = 512.0):
-        """Decorator for performance testing."""
-        def decorator(func):
+        """Decorator for performance testing."""        def decorator(func):
             async def wrapper(*args, **kwargs):
                 import psutil
                 import time
@@ -1126,8 +1063,7 @@ class TestUtils:
     
     @staticmethod
     def retry_on_failure(max_retries: int = 3, delay: float = 1.0):
-        """Decorator to retry function on failure."""
-        def decorator(func):
+        """Decorator to retry function on failure."""        def decorator(func):
             async def wrapper(*args, **kwargs):
                 last_exception = None
                 
@@ -1149,12 +1085,10 @@ class TestUtils:
 
 
 class DatabaseTestUtils:
-    """Database testing utilities."""
-    
+    """Database testing utilities."""    
     @staticmethod
     async def create_test_data(session, model_class, **kwargs):
-        """Create test data in database."""
-        instance = model_class(**kwargs)
+        """Create test data in database."""        instance = model_class(**kwargs)
         session.add(instance)
         await session.commit()
         await session.refresh(instance)
@@ -1162,18 +1096,15 @@ class DatabaseTestUtils:
     
     @staticmethod
     async def cleanup_test_data(session, model_class):
-        """Clean up test data from database."""
-        await session.execute(f"DELETE FROM {model_class.__tablename__}")
+        """Clean up test data from database."""        await session.execute(f"DELETE FROM {model_class.__tablename__}")
         await session.commit()
 
 
 class KubernetesTestUtils:
-    """Kubernetes testing utilities."""
-    
+    """Kubernetes testing utilities."""    
     @staticmethod
     def create_test_deployment(name: str, image: str, replicas: int = 1) -> Dict[str, Any]:
-        """Create test Kubernetes deployment manifest."""
-        return {
+        """Create test Kubernetes deployment manifest."""        return {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -1198,8 +1129,7 @@ class KubernetesTestUtils:
     
     @staticmethod
     async def wait_for_pod_ready(k8s_client, namespace: str, label_selector: str, timeout: int = 300):
-        """Wait for pod to be ready."""
-        import time
+        """Wait for pod to be ready."""        import time
         start_time = time.time()
         
         while time.time() - start_time < timeout:
@@ -1214,8 +1144,7 @@ class KubernetesTestUtils:
 '''
     
     def create_docker_compose_test(self) -> str:
-        """Create Docker Compose for testing"""
-        return f'''version: '3.8'
+        """Create Docker Compose for testing"""        return f'''version: '3.8'
 
 services:
   postgres-test:
@@ -1292,8 +1221,7 @@ networks:
 '''
     
     def generate_test_configuration_files(self, output_dir: str = "./tests") -> None:
-        """Generate all test configuration files"""
-        Path(output_dir).mkdir(parents=True, exist_ok=True)
+        """Generate all test configuration files"""        Path(output_dir).mkdir(parents=True, exist_ok=True)
         
         # Create pytest.ini
         pytest_config = self.get_pytest_configuration()
@@ -1327,8 +1255,7 @@ networks:
             script_path.chmod(0o755)
     
     def get_test_runner_scripts(self) -> Dict[str, str]:
-        """Get test runner scripts"""
-        return {
+        """Get test runner scripts"""        return {
             "run_tests.sh": f'''#!/bin/bash
 # Test runner for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -1442,8 +1369,7 @@ fi
         }
     
     async def run_test_suite(self, test_categories: List[str] = None) -> List[TestResult]:
-        """Run test suite"""
-        if test_categories is None:
+        """Run test suite"""        if test_categories is None:
             test_categories = ["unit", "integration"]
         
         results = []
@@ -1508,8 +1434,7 @@ fi
         return results
     
     def generate_test_report(self, output_file: str = "test_report.html") -> None:
-        """Generate comprehensive test report"""
-        if not self.test_results:
+        """Generate comprehensive test report"""        if not self.test_results:
             self.logger.warning("No test results available for report generation")
             return
         

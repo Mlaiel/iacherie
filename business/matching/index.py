@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-IA Influencer Agent - Matching Module Index
+"""IA Influencer Agent - Matching Module Index
 ===========================================
 
 Central Index for Advanced Creator Matching Business Module
@@ -34,9 +33,7 @@ CONSEQUENCES OF UNAUTHORIZED USE:
 - Permanent legal documentation and public disclosure of violation
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
-"""
-
-from typing import Dict, Any, List, Optional
+"""from typing import Dict, Any, List, Optional
 import logging
 
 logger = logging.getLogger(__name__)
@@ -79,8 +76,7 @@ __email__ = "mlaiel@live.de"
 __copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
 
 def get_module_info() -> Dict[str, Any]:
-    """Get comprehensive module information"""
-    return {
+    """Get comprehensive module information"""    return {
         'name': 'IA Influencer Agent - Matching Module',
         'version': __version__,
         'author': __author__,
@@ -105,8 +101,7 @@ def get_module_info() -> Dict[str, Any]:
     }
 
 def validate_module_integrity() -> Dict[str, bool]:
-    """Validate that all required modules are properly loaded"""
-    validation_results = {}
+    """Validate that all required modules are properly loaded"""    validation_results = {}
     
     try:
         # Check core modules

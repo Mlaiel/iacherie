@@ -44,8 +44,7 @@ Collaboration matching → Multi-platform distribution → Monetization
 This module integrates with the content protection system to ensure
 visual rights management and supports the platform's monetization
 through enhanced visual quality and professional processing capabilities.
-"""
-# Robust imports with fallback handling
+"""# Robust imports with fallback handling
 try:
     from .core import (
         VisionProcessor, 

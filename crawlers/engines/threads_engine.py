@@ -1,5 +1,4 @@
-"""
-Threads Content Crawling Engine
+"""Threads Content Crawling Engine
 
 Advanced industry-grade engine for Meta Threads content crawling and social analysis.
 Implements real-time conversation tracking with AI-powered engagement optimization.
@@ -10,9 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is proprietary and confidential. 
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator
 from datetime import datetime, timedelta
@@ -29,8 +26,7 @@ from ...monitoring.metrics import MetricsCollector
 
 
 class ThreadType(Enum):
-    """Thread content types"""
-    TEXT = "text"
+    """Thread content types"""    TEXT = "text"
     IMAGE = "image"
     VIDEO = "video"
     CAROUSEL = "carousel"
@@ -40,8 +36,7 @@ class ThreadType(Enum):
 
 
 class ConversationStatus(Enum):
-    """Conversation status"""
-    ACTIVE = "active"
+    """Conversation status"""    ACTIVE = "active"
     TRENDING = "trending"
     VIRAL = "viral"
     DECLINING = "declining"
@@ -50,8 +45,7 @@ class ConversationStatus(Enum):
 
 @dataclass
 class ThreadsPost:
-    """Threads post data structure"""
-    post_id: str
+    """Threads post data structure"""    post_id: str
     user_id: str
     username: str
     thread_type: ThreadType
@@ -75,11 +69,9 @@ class ThreadsPost:
 
 
 class ThreadsEngine(BaseCrawlerEngine):
-    """
-    Professional Threads crawling engine with advanced conversation analysis
+    """    Professional Threads crawling engine with advanced conversation analysis
     and real-time engagement optimization for social media creators.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.platform = ThreadsPlatform(config.get('threads', {}))
@@ -103,8 +95,7 @@ class ThreadsEngine(BaseCrawlerEngine):
         include_replies: bool = True,
         date_range: Optional[tuple] = None
     ) -> AsyncGenerator[ThreadsPost, None]:
-        """
-        Crawl threads from a specific user with conversation context
+        """        Crawl threads from a specific user with conversation context
         
         Args:
             user_id: User identifier
@@ -114,8 +105,7 @@ class ThreadsEngine(BaseCrawlerEngine):
             
         Yields:
             ThreadsPost: Processed thread objects
-        """
-        self.logger.info(f"Starting Threads crawl for user: {user_id}")
+        """        self.logger.info(f"Starting Threads crawl for user: {user_id}")
         
         try:
             async with self._create_session() as session:
@@ -143,8 +133,7 @@ class ThreadsEngine(BaseCrawlerEngine):
         include_replies: bool,
         date_range: Optional[tuple]
     ) -> AsyncGenerator[Dict[str, Any], None]:
-        """Internal method to crawl user threads"""
-        
+        """Internal method to crawl user threads"""        
         max_id = None
         max_pages = 50
         page_count = 0
@@ -188,8 +177,7 @@ class ThreadsEngine(BaseCrawlerEngine):
         include_replies: bool,
         date_range: Optional[tuple]
     ) -> Dict[str, Any]:
-        """Fetch a single page of threads"""
-        
+        """Fetch a single page of threads"""        
         url = f"https://graph.threads.net/v1.0/{user_id}/threads"
         
         params = {
@@ -229,14 +217,12 @@ class ThreadsEngine(BaseCrawlerEngine):
             return {}
             
     def _matches_thread_type_filter(self, thread: Dict[str, Any], thread_types: List[ThreadType]) -> bool:
-        """Check if thread matches the thread type filter"""
-        
+        """Check if thread matches the thread type filter"""        
         thread_type = self._determine_thread_type(thread)
         return thread_type in thread_types
         
     def _determine_thread_type(self, thread: Dict[str, Any]) -> ThreadType:
-        """Determine thread type from thread data"""
-        
+        """Determine thread type from thread data"""        
         media_type = thread.get('media_type', 'TEXT')
         has_children = thread.get('children', {}).get('data', [])
         is_quote = thread.get('is_quote_post', False)
@@ -256,8 +242,7 @@ class ThreadsEngine(BaseCrawlerEngine):
             return ThreadType.TEXT
             
     async def _process_thread(self, raw_thread: Dict[str, Any]) -> Optional[ThreadsPost]:
-        """Process and analyze thread with conversation context"""
-        
+        """Process and analyze thread with conversation context"""        
         try:
             post_id = raw_thread.get('id')
             if not post_id:
@@ -359,8 +344,7 @@ class ThreadsEngine(BaseCrawlerEngine):
             return None
             
     def _extract_media_urls(self, thread: Dict[str, Any]) -> List[str]:
-        """Extract media URLs from thread"""
-        
+        """Extract media URLs from thread"""        
         urls = []
         
         # Main media URL
@@ -383,8 +367,7 @@ class ThreadsEngine(BaseCrawlerEngine):
         return urls
         
     async def _get_conversation_id(self, thread: Dict[str, Any]) -> str:
-        """Get or generate conversation ID for thread grouping"""
-        
+        """Get or generate conversation ID for thread grouping"""        
         # If it's a reply, find the root thread
         parent_id = thread.get('parent_id')
         if parent_id:
@@ -395,8 +378,7 @@ class ThreadsEngine(BaseCrawlerEngine):
             return f"conv_{thread.get('id', '')}"
             
     async def _fetch_engagement_metrics(self, post_id: str) -> Dict[str, int]:
-        """Fetch engagement metrics for a post"""
-        
+        """Fetch engagement metrics for a post"""        
         # This would use Threads Insights API
         # Placeholder implementation
         return {
@@ -408,8 +390,7 @@ class ThreadsEngine(BaseCrawlerEngine):
         }
         
     def _calculate_engagement_rate(self, metrics: Dict[str, int]) -> float:
-        """Calculate engagement rate from metrics"""
-        
+        """Calculate engagement rate from metrics"""        
         views = metrics.get('views', 1)
         likes = metrics.get('likes', 0)
         replies = metrics.get('replies', 0)
@@ -430,8 +411,7 @@ class ThreadsEngine(BaseCrawlerEngine):
         conversation_id: str,
         post_id: str
     ) -> float:
-        """Analyze the momentum of the conversation this thread is part of"""
-        
+        """Analyze the momentum of the conversation this thread is part of"""        
         if not self.enable_conversation_analysis:
             return 0.5
             
@@ -459,8 +439,7 @@ class ThreadsEngine(BaseCrawlerEngine):
             return 0.5
             
     async def _fetch_conversation_data(self, conversation_id: str) -> Dict[str, Any]:
-        """Fetch conversation data and replies"""
-        
+        """Fetch conversation data and replies"""        
         # This would fetch the full conversation thread
         # Placeholder implementation
         return {
@@ -470,8 +449,7 @@ class ThreadsEngine(BaseCrawlerEngine):
         }
         
     def _is_recent_activity(self, timestamp: str) -> bool:
-        """Check if activity is recent (within last hour)"""
-        
+        """Check if activity is recent (within last hour)"""        
         try:
             activity_time = datetime.fromisoformat(timestamp.replace('Z', '+00:00'))
             cutoff_time = datetime.now() - timedelta(hours=1)
@@ -480,8 +458,7 @@ class ThreadsEngine(BaseCrawlerEngine):
             return False
             
     def _calculate_conversation_timespan(self, conversation_data: Dict[str, Any]) -> float:
-        """Calculate conversation timespan in hours"""
-        
+        """Calculate conversation timespan in hours"""        
         try:
             start_time = datetime.fromisoformat(
                 conversation_data.get('start_time', '').replace('Z', '+00:00')
@@ -496,8 +473,7 @@ class ThreadsEngine(BaseCrawlerEngine):
         thread: Dict[str, Any],
         metrics: Dict[str, int]
     ) -> float:
-        """Calculate viral potential for the thread"""
-        
+        """Calculate viral potential for the thread"""        
         # Factors: engagement rate, repost velocity, content type
         engagement_rate = self._calculate_engagement_rate(metrics)
         reposts = metrics.get('reposts', 0)
@@ -527,8 +503,7 @@ class ThreadsEngine(BaseCrawlerEngine):
         return min(viral_potential, 1.0)
         
     async def _analyze_sentiment(self, content: str) -> float:
-        """Analyze sentiment of the content"""
-        
+        """Analyze sentiment of the content"""        
         # This would use advanced sentiment analysis
         # Placeholder implementation with simple keyword analysis
         positive_words = ['great', 'amazing', 'love', 'awesome', 'fantastic', 'excellent']
@@ -551,8 +526,7 @@ class ThreadsEngine(BaseCrawlerEngine):
         metrics: Dict[str, int],
         quality_score: float
     ) -> float:
-        """Calculate monetization potential for the thread"""
-        
+        """Calculate monetization potential for the thread"""        
         # Factors: engagement, reach, content quality, brand safety
         engagement_rate = self._calculate_engagement_rate(metrics)
         views = metrics.get('views', 0)
@@ -589,8 +563,7 @@ class ThreadsEngine(BaseCrawlerEngine):
         limit: int = 100,
         time_range: str = '24h'
     ) -> List[ThreadsPost]:
-        """Crawl trending threads across the platform"""
-        
+        """Crawl trending threads across the platform"""        
         self.logger.info(f"Crawling trending threads, limit: {limit}")
         
         trending_threads = []
@@ -615,8 +588,7 @@ class ThreadsEngine(BaseCrawlerEngine):
         limit: int,
         time_range: str
     ) -> List[Dict[str, Any]]:
-        """Fetch trending threads data"""
-        
+        """Fetch trending threads data"""        
         # This would use Threads trending API
         # Placeholder implementation
         return []
@@ -626,8 +598,7 @@ class ThreadsEngine(BaseCrawlerEngine):
         keywords: List[str],
         monitoring_duration: timedelta = timedelta(hours=1)
     ) -> Dict[str, Any]:
-        """Monitor real-time conversations around specific keywords"""
-        
+        """Monitor real-time conversations around specific keywords"""        
         self.logger.info(f"Monitoring real-time conversations for: {keywords}")
         
         if not self.real_time_monitoring:
@@ -671,22 +642,19 @@ class ThreadsEngine(BaseCrawlerEngine):
         return monitoring_results
         
     async def _search_keyword_conversations(self, keyword: str) -> List[Dict[str, Any]]:
-        """Search for conversations containing specific keyword"""
-        
+        """Search for conversations containing specific keyword"""        
         # This would use Threads search API
         # Placeholder implementation
         return []
         
     async def _identify_trending_topics(self, conversations: List[Dict[str, Any]]) -> List[str]:
-        """Identify trending topics from conversations"""
-        
+        """Identify trending topics from conversations"""        
         # Analyze conversation content for trending topics
         # Placeholder implementation
         return ['ai', 'technology', 'social media']
         
     async def _analyze_engagement_patterns(self, conversations: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze engagement patterns from conversations"""
-        
+        """Analyze engagement patterns from conversations"""        
         if not conversations:
             return {}
             
@@ -706,8 +674,7 @@ class ThreadsEngine(BaseCrawlerEngine):
         }
         
     async def _get_authenticated_headers(self) -> Dict[str, str]:
-        """Get authenticated headers for API requests"""
-        
+        """Get authenticated headers for API requests"""        
         return {
             'User-Agent': 'Threads/1.0',
             'Accept': 'application/json',
@@ -716,8 +683,7 @@ class ThreadsEngine(BaseCrawlerEngine):
         }
         
     async def _create_session(self) -> aiohttp.ClientSession:
-        """Create configured HTTP session"""
-        
+        """Create configured HTTP session"""        
         connector = aiohttp.TCPConnector(
             limit=self.max_concurrent_requests,
             limit_per_host=self.max_concurrent_requests
@@ -731,6 +697,5 @@ class ThreadsEngine(BaseCrawlerEngine):
         )
         
     async def _apply_rate_limiting(self):
-        """Apply rate limiting to prevent API abuse"""
-        
+        """Apply rate limiting to prevent API abuse"""        
         await asyncio.sleep(60 / self.rate_limit_per_minute)

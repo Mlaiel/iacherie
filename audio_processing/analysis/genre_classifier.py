@@ -1,14 +1,11 @@
-"""
-🎼 Genre Classifier - AI-Powered Music Genre Classification System
+"""🎼 Genre Classifier - AI-Powered Music Genre Classification System
 
 Advanced machine learning-based music genre classification engine using
 multi-feature analysis and deep learning models for accurate genre identification.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import numpy as np
+"""import numpy as np
 import logging
 from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass
@@ -21,8 +18,7 @@ from sklearn.preprocessing import StandardScaler
 
 
 class GenreCategory(Enum):
-    """Music genre categories"""
-    ELECTRONIC = "electronic"
+    """Music genre categories"""    ELECTRONIC = "electronic"
     ROCK = "rock"
     POP = "pop"
     JAZZ = "jazz"
@@ -41,8 +37,7 @@ class GenreCategory(Enum):
 
 @dataclass
 class GenreClassificationResult:
-    """Genre classification result"""
-    primary_genre: GenreCategory
+    """Genre classification result"""    primary_genre: GenreCategory
     confidence: float
     genre_probabilities: Dict[str, float]
     feature_contributions: Dict[str, float]
@@ -51,16 +46,13 @@ class GenreClassificationResult:
 
 
 class GenreClassifier:
-    """
-    🎼 Professional Music Genre Classification Engine
+    """    🎼 Professional Music Genre Classification Engine
     
     AI-powered genre classification using advanced feature extraction
     and machine learning models for accurate music categorization.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize genre classifier"""
-        self.logger = logging.getLogger(self.__class__.__name__)
+        """Initialize genre classifier"""        self.logger = logging.getLogger(self.__class__.__name__)
         
         # Genre definitions with characteristics
         self.genre_characteristics = {
@@ -98,8 +90,7 @@ class GenreClassifier:
         self.logger.info("GenreClassifier initialized")
     
     async def classify_genre(self, audio_data: np.ndarray, sample_rate: int = 44100) -> GenreClassificationResult:
-        """
-        Classify music genre from audio data
+        """        Classify music genre from audio data
         
         Args:
             audio_data: Input audio signal
@@ -107,8 +98,7 @@ class GenreClassifier:
             
         Returns:
             Genre classification result
-        """
-        try:
+        """        try:
             self.logger.info("Starting genre classification...")
             
             # Extract features
@@ -154,8 +144,7 @@ class GenreClassifier:
             raise
     
     async def _extract_genre_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """Extract features relevant for genre classification"""
-        def extract():
+        """Extract features relevant for genre classification"""        def extract():
             features = {}
             
             # Tempo
@@ -196,8 +185,7 @@ class GenreClassifier:
         return await asyncio.get_event_loop().run_in_executor(self.executor, extract)
     
     async def _compute_genre_scores(self, features: Dict[str, float]) -> Dict[GenreCategory, float]:
-        """Compute scores for each genre based on features"""
-        def compute():
+        """Compute scores for each genre based on features"""        def compute():
             scores = {}
             
             for genre, characteristics in self.genre_characteristics.items():
@@ -252,8 +240,7 @@ class GenreClassifier:
     async def _compute_feature_contributions(self, 
                                            features: Dict[str, float], 
                                            primary_genre: GenreCategory) -> Dict[str, float]:
-        """Compute feature contributions to genre classification"""
-        def compute():
+        """Compute feature contributions to genre classification"""        def compute():
             contributions = {}
             
             characteristics = self.genre_characteristics[primary_genre]
@@ -287,8 +274,7 @@ class GenreClassifier:
     async def _suggest_subgenres(self, 
                                primary_genre: GenreCategory, 
                                features: Dict[str, float]) -> List[str]:
-        """Suggest subgenres based on detailed analysis"""
-        def suggest():
+        """Suggest subgenres based on detailed analysis"""        def suggest():
             subgenres = []
             
             tempo = features.get('tempo', 120)
@@ -339,11 +325,9 @@ class GenreClassifier:
         return await asyncio.get_event_loop().run_in_executor(self.executor, suggest)
     
     def classify_real_time_genre(self, frame: np.ndarray, sample_rate: int = 44100) -> Dict[str, Any]:
-        """
-        Real-time genre classification for single frame
+        """        Real-time genre classification for single frame
         Optimized for low-latency processing
-        """
-        try:
+        """        try:
             # Extract basic features quickly
             rms_energy = np.sqrt(np.mean(frame ** 2))
             spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=frame, sr=sample_rate))
@@ -395,6 +379,5 @@ class GenreClassifier:
             }
     
     def __del__(self):
-        """Cleanup thread pool"""
-        if hasattr(self, 'executor'):
+        """Cleanup thread pool"""        if hasattr(self, 'executor'):
             self.executor.shutdown(wait=False)

@@ -11,8 +11,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
-"""
-from .nginx_manager import NginxManager
+"""from .nginx_manager import NginxManager
 from .haproxy_manager import HAProxyManager
 from .envoy_manager import EnvoyManager
 from .health_monitor import HealthMonitor

@@ -1,5 +1,4 @@
-"""
-Substack Crawler
+"""Substack Crawler
 ================
 
 Professional Substack content crawler with advanced monitoring capabilities.
@@ -11,9 +10,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator
 from datetime import datetime, timedelta
@@ -42,8 +39,7 @@ settings = get_settings()
 
 @dataclass
 class SubstackPost:
-    """Substack post data structure."""
-    post_id: str
+    """Substack post data structure."""    post_id: str
     title: str
     subtitle: str
     content: str
@@ -76,8 +72,7 @@ class SubstackPost:
 
 @dataclass
 class SubstackPublication:
-    """Substack publication data structure."""
-    publication_id: str
+    """Substack publication data structure."""    publication_id: str
     name: str
     subdomain: str
     custom_domain: Optional[str]
@@ -103,8 +98,7 @@ class SubstackPublication:
 
 @dataclass
 class SubstackAuthor:
-    """Substack author data structure."""
-    author_id: str
+    """Substack author data structure."""    author_id: str
     name: str
     bio: str
     photo_url: Optional[str]
@@ -119,8 +113,7 @@ class SubstackAuthor:
     specialties: List[str]
 
 class SubstackCrawler:
-    """
-    Professional Substack crawler implementation.
+    """    Professional Substack crawler implementation.
     
     Features:
     - RSS feed parsing for public content
@@ -133,11 +126,9 @@ class SubstackCrawler:
     - Cross-platform content monitoring
     - Trending posts discovery
     - Publication analytics
-    """
-    
+    """    
     def __init__(self):
-        """Initialize Substack crawler."""
-        self.rate_limiter = SubstackRateLimiter()
+        """Initialize Substack crawler."""        self.rate_limiter = SubstackRateLimiter()
         self.proxy_manager = ProxyManager()
         self.user_agent_rotator = UserAgentRotator()
         self.session = None
@@ -169,13 +160,11 @@ class SubstackCrawler:
         self.url_pattern = re.compile(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
     
     async def __aenter__(self):
-        """Async context manager entry."""
-        self.session = aiohttp.ClientSession(headers=self.headers)
+        """Async context manager entry."""        self.session = aiohttp.ClientSession(headers=self.headers)
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
-        if self.session:
+        """Async context manager exit."""        if self.session:
             await self.session.close()
     
     async def discover_publications(
@@ -185,8 +174,7 @@ class SubstackCrawler:
         min_subscribers: int = 0,
         max_results: int = 50
     ) -> List[SubstackPublication]:
-        """
-        Discover Substack publications.
+        """        Discover Substack publications.
         
         Args:
             search_query: Search term for publications
@@ -196,8 +184,7 @@ class SubstackCrawler:
             
         Returns:
             List of Substack publication objects
-        """
-        try:
+        """        try:
             await self.rate_limiter.wait_if_needed()
             
             publications = []
@@ -228,8 +215,7 @@ class SubstackCrawler:
             return []
     
     async def _search_publications(self, query: str, max_results: int) -> List[SubstackPublication]:
-        """Search for publications using Substack search."""
-        try:
+        """Search for publications using Substack search."""        try:
             search_url = f"{self.base_url}/discover/search"
             params = {
                 'query': query,
@@ -264,8 +250,7 @@ class SubstackCrawler:
             return []
     
     async def _get_trending_publications(self, max_results: int) -> List[SubstackPublication]:
-        """Get trending/featured publications."""
-        try:
+        """Get trending/featured publications."""        try:
             trending_url = f"{self.base_url}/discover"
             
             async with self.session.get(trending_url) as response:
@@ -301,8 +286,7 @@ class SubstackCrawler:
             return []
     
     async def _parse_publication_element(self, element) -> Optional[SubstackPublication]:
-        """Parse publication data from HTML element."""
-        try:
+        """Parse publication data from HTML element."""        try:
             # Extract basic information
             name_elem = element.find('h3') or element.find('h2') or element.find('.publication-name')
             name = name_elem.get_text(strip=True) if name_elem else ""
@@ -367,8 +351,7 @@ class SubstackCrawler:
             return None
     
     def _parse_count_text(self, count_text: str) -> int:
-        """Parse subscriber count text like '1.2K' or '5M'."""
-        try:
+        """Parse subscriber count text like '1.2K' or '5M'."""        try:
             count_text = count_text.lower().replace(',', '').strip()
             
             if 'k' in count_text:
@@ -389,8 +372,7 @@ class SubstackCrawler:
         max_posts: int = 50,
         include_paid: bool = False
     ) -> List[SubstackPost]:
-        """
-        Get posts from a Substack publication.
+        """        Get posts from a Substack publication.
         
         Args:
             subdomain: Publication subdomain (e.g., 'newsletter' for newsletter.substack.com)
@@ -399,8 +381,7 @@ class SubstackCrawler:
             
         Returns:
             List of Substack post objects
-        """
-        try:
+        """        try:
             await self.rate_limiter.wait_if_needed()
             
             # First try RSS feed (most reliable for public content)
@@ -430,8 +411,7 @@ class SubstackCrawler:
             return []
     
     async def _get_posts_from_rss(self, subdomain: str, max_posts: int) -> List[SubstackPost]:
-        """Get posts from RSS feed."""
-        try:
+        """Get posts from RSS feed."""        try:
             rss_url = f"https://{subdomain}.substack.com/feed"
             
             async with self.session.get(rss_url) as response:
@@ -459,8 +439,7 @@ class SubstackCrawler:
             return []
     
     async def _parse_rss_entry(self, entry, subdomain: str) -> Optional[SubstackPost]:
-        """Parse RSS entry into SubstackPost object."""
-        try:
+        """Parse RSS entry into SubstackPost object."""        try:
             # Extract basic information
             title = entry.get('title', '')
             link = entry.get('link', '')
@@ -531,8 +510,7 @@ class SubstackCrawler:
         max_posts: int,
         include_paid: bool
     ) -> List[SubstackPost]:
-        """Scrape publication posts using Selenium."""
-        try:
+        """Scrape publication posts using Selenium."""        try:
             driver = webdriver.Chrome(options=self.selenium_options)
             publication_url = f"https://{subdomain}.substack.com"
             driver.get(publication_url)
@@ -574,8 +552,7 @@ class SubstackCrawler:
             return []
     
     async def _extract_post_from_element(self, element, subdomain: str) -> Optional[SubstackPost]:
-        """Extract post data from DOM element."""
-        try:
+        """Extract post data from DOM element."""        try:
             # Extract title
             title_elem = element.find_element(By.CSS_SELECTOR, "h2, h3, .post-title")
             title = title_elem.text.strip() if title_elem else ""
@@ -636,8 +613,7 @@ class SubstackCrawler:
             return None
     
     def _parse_date_text(self, date_text: str) -> datetime:
-        """Parse date text into datetime object."""
-        try:
+        """Parse date text into datetime object."""        try:
             # Handle common Substack date formats
             if 'ago' in date_text.lower():
                 # Handle relative dates like "2 days ago"
@@ -666,8 +642,7 @@ class SubstackCrawler:
         check_interval: int = 1800,  # 30 minutes
         max_posts_per_check: int = 10
     ) -> AsyncGenerator[List[SubstackPost], None]:
-        """
-        Monitor publication for new posts.
+        """        Monitor publication for new posts.
         
         Args:
             subdomain: Publication subdomain to monitor
@@ -676,8 +651,7 @@ class SubstackCrawler:
             
         Yields:
             Lists of new posts
-        """
-        last_check = datetime.now()
+        """        last_check = datetime.now()
         seen_posts = set()
         
         while True:
@@ -713,8 +687,7 @@ class SubstackCrawler:
         content_type: str = 'all',  # 'all', 'free', 'paid'
         date_range: Optional[tuple] = None
     ) -> List[SubstackPost]:
-        """
-        Search Substack content across publications.
+        """        Search Substack content across publications.
         
         Args:
             query: Search query
@@ -724,8 +697,7 @@ class SubstackCrawler:
             
         Returns:
             List of matching posts
-        """
-        try:
+        """        try:
             search_results = []
             
             # Use multiple search strategies
@@ -778,8 +750,7 @@ class SubstackCrawler:
             return []
     
     async def _search_via_google_site_search(self, query: str, max_results: int) -> List[SubstackPost]:
-        """Search using Google site:substack.com search."""
-        try:
+        """Search using Google site:substack.com search."""        try:
             # This would require Google Search API or web scraping
             # Placeholder implementation
             logger.info(f"Google site search for: {query}")
@@ -790,8 +761,7 @@ class SubstackCrawler:
             return []
     
     async def _search_via_substack_discover(self, query: str, max_results: int) -> List[SubstackPost]:
-        """Search using Substack's discover page."""
-        try:
+        """Search using Substack's discover page."""        try:
             search_url = f"{self.base_url}/discover/search"
             params = {
                 'query': query,
@@ -830,8 +800,7 @@ class SubstackCrawler:
             return []
     
     async def _search_via_rss_aggregation(self, query: str, max_results: int) -> List[SubstackPost]:
-        """Search by aggregating RSS feeds."""
-        try:
+        """Search by aggregating RSS feeds."""        try:
             # This would involve maintaining a list of known publications
             # and searching their RSS feeds
             logger.info(f"RSS aggregation search for: {query}")
@@ -846,8 +815,7 @@ class SubstackCrawler:
         reference_post: SubstackPost,
         similarity_threshold: float = 0.7
     ) -> List[Dict]:
-        """
-        Find posts similar to a reference post.
+        """        Find posts similar to a reference post.
         
         Args:
             reference_post: Post to find similarities for
@@ -855,8 +823,7 @@ class SubstackCrawler:
             
         Returns:
             List of similar posts with similarity scores
-        """
-        try:
+        """        try:
             similar_posts = []
             
             # Extract keywords from reference post
@@ -894,8 +861,7 @@ class SubstackCrawler:
             return []
     
     def _extract_content_keywords(self, content: str) -> List[List[str]]:
-        """Extract important keywords from content."""
-        try:
+        """Extract important keywords from content."""        try:
             # Simple keyword extraction (could be enhanced with NLP)
             words = re.findall(r'\b[a-zA-Z]{4,}\b', content.lower())
             
@@ -924,8 +890,7 @@ class SubstackCrawler:
             return []
     
     def _calculate_content_similarity(self, post1: SubstackPost, post2: SubstackPost) -> float:
-        """Calculate similarity score between two posts."""
-        try:
+        """Calculate similarity score between two posts."""        try:
             # Title similarity
             title1_words = set(post1.title.lower().split())
             title2_words = set(post2.title.lower().split())
@@ -979,8 +944,7 @@ class SubstackCrawler:
             return 0.0
     
     def _get_similarity_factors(self, post1: SubstackPost, post2: SubstackPost) -> List[str]:
-        """Get factors contributing to similarity."""
-        factors = []
+        """Get factors contributing to similarity."""        factors = []
         
         if post1.author_name == post2.author_name:
             factors.append('same_author')
@@ -1011,16 +975,14 @@ class SubstackCrawler:
         return factors
     
     async def get_publication_analytics(self, subdomain: str) -> Dict:
-        """
-        Get analytics for a Substack publication.
+        """        Get analytics for a Substack publication.
         
         Args:
             subdomain: Publication subdomain
             
         Returns:
             Analytics dictionary
-        """
-        try:
+        """        try:
             # Get recent posts for analysis
             posts = await self.get_publication_posts(subdomain, max_posts=100)
             
@@ -1067,16 +1029,14 @@ class SubstackCrawler:
             return {}
     
     async def get_trending_topics(self, time_period: str = 'week') -> List[Dict]:
-        """
-        Get trending topics on Substack.
+        """        Get trending topics on Substack.
         
         Args:
             time_period: 'day', 'week', 'month'
             
         Returns:
             List of trending topics with metadata
-        """
-        try:
+        """        try:
             trending_url = f"{self.base_url}/discover"
             
             async with self.session.get(trending_url) as response:

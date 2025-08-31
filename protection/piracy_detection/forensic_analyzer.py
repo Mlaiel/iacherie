@@ -1,5 +1,4 @@
-"""
-🔬 Digital Forensic Analysis Engine
+"""🔬 Digital Forensic Analysis Engine
 ===================================
 
 Advanced digital forensics and evidence collection for content piracy cases.
@@ -32,9 +31,7 @@ This module provides:
 - Network traffic analysis and IP tracking
 - Browser automation for evidence collection
 - Court-admissible evidence formatting
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
 from datetime import datetime, timedelta
@@ -74,8 +71,7 @@ from reportlab.lib.units import inch
 logger = logging.getLogger(__name__)
 
 class EvidenceType(Enum):
-    """Types of digital evidence."""
-    SCREENSHOT = "screenshot"
+    """Types of digital evidence."""    SCREENSHOT = "screenshot"
     WEBPAGE_CAPTURE = "webpage_capture"
     METADATA_ANALYSIS = "metadata_analysis"
     NETWORK_TRACE = "network_trace"
@@ -87,16 +83,14 @@ class EvidenceType(Enum):
     BEHAVIORAL_PATTERN = "behavioral_pattern"
 
 class IntegrityLevel(Enum):
-    """Evidence integrity levels."""
-    PRISTINE = "pristine"
+    """Evidence integrity levels."""    PRISTINE = "pristine"
     VERIFIED = "verified"  
     AUTHENTICATED = "authenticated"
     QUESTIONABLE = "questionable"
     COMPROMISED = "compromised"
 
 class ForensicStandard(Enum):
-    """Forensic analysis standards."""
-    ISO_27037 = "iso_27037"
+    """Forensic analysis standards."""    ISO_27037 = "iso_27037"
     NIST_SP_800_86 = "nist_sp_800_86"
     RFC_3227 = "rfc_3227"
     ACPO_GUIDELINES = "acpo_guidelines"
@@ -104,8 +98,7 @@ class ForensicStandard(Enum):
 
 @dataclass
 class ChainOfCustody:
-    """Chain of custody record."""
-    evidence_id: str
+    """Chain of custody record."""    evidence_id: str
     collector: str
     collection_timestamp: datetime
     collection_method: str
@@ -119,8 +112,7 @@ class ChainOfCustody:
 
 @dataclass
 class DigitalEvidence:
-    """Digital evidence container."""
-    evidence_id: str
+    """Digital evidence container."""    evidence_id: str
     evidence_type: EvidenceType
     content_data: Union[bytes, str, Dict[str, Any]]
     metadata: Dict[str, Any]
@@ -135,8 +127,7 @@ class DigitalEvidence:
 
 @dataclass
 class ForensicAnalysisResult:
-    """Result of forensic analysis."""
-    analysis_id: str
+    """Result of forensic analysis."""    analysis_id: str
     content_id: str
     evidence_collection: List[DigitalEvidence]
     technical_findings: Dict[str, Any]
@@ -151,17 +142,14 @@ class ForensicAnalysisResult:
     timestamp: datetime
 
 class DigitalForensicAnalyzer:
-    """
-    Advanced digital forensic analysis engine for content piracy investigations.
+    """    Advanced digital forensic analysis engine for content piracy investigations.
     
     This class provides comprehensive forensic capabilities including evidence
     collection, integrity verification, timeline reconstruction, and court-ready
     documentation formatting.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the digital forensic analyzer."""
-        self.config = config or {}
+        """Initialize the digital forensic analyzer."""        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
         # Core components
@@ -217,8 +205,7 @@ import tempfile
 logger = logging.getLogger(__name__)
 
 class EvidenceType(Enum):
-    """Types of digital evidence."""
-    METADATA = "metadata"
+    """Types of digital evidence."""    METADATA = "metadata"
     EXIF_DATA = "exif_data"
     STEGANOGRAPHY = "steganography"
     TEMPORAL_ANALYSIS = "temporal_analysis"
@@ -228,8 +215,7 @@ class EvidenceType(Enum):
     BEHAVIORAL_PATTERNS = "behavioral_patterns"
 
 class ForensicConfidence(Enum):
-    """Confidence levels for forensic findings."""
-    VERY_HIGH = "very_high"  # 95-100%
+    """Confidence levels for forensic findings."""    VERY_HIGH = "very_high"  # 95-100%
     HIGH = "high"           # 85-94%
     MEDIUM = "medium"       # 70-84%
     LOW = "low"            # 50-69%
@@ -237,8 +223,7 @@ class ForensicConfidence(Enum):
 
 @dataclass
 class DigitalEvidence:
-    """Digital evidence collected during forensic analysis."""
-    evidence_id: str
+    """Digital evidence collected during forensic analysis."""    evidence_id: str
     evidence_type: EvidenceType
     confidence_level: ForensicConfidence
     description: str
@@ -250,8 +235,7 @@ class DigitalEvidence:
 
 @dataclass
 class ForensicTimeline:
-    """Timeline of events in content creation and distribution."""
-    content_id: str
+    """Timeline of events in content creation and distribution."""    content_id: str
     events: List[Dict[str, Any]]
     creation_time: Optional[datetime]
     first_upload_time: Optional[datetime]
@@ -261,8 +245,7 @@ class ForensicTimeline:
 
 @dataclass
 class AttributionResult:
-    """Content attribution analysis result."""
-    content_id: str
+    """Content attribution analysis result."""    content_id: str
     suspected_source: str
     attribution_confidence: float
     supporting_evidence: List[DigitalEvidence]
@@ -271,8 +254,7 @@ class AttributionResult:
     geographic_indicators: Optional[Dict[str, Any]]
 
 class MetadataAnalyzer:
-    """Analyzes metadata from various file formats."""
-    
+    """Analyzes metadata from various file formats."""    
     def __init__(self):
         self.supported_formats = {
             'image': ['.jpg', '.jpeg', '.png', '.tiff', '.bmp', '.gif'],
@@ -282,8 +264,7 @@ class MetadataAnalyzer:
         }
     
     async def extract_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract comprehensive metadata from file."""
-        try:
+        """Extract comprehensive metadata from file."""        try:
             file_extension = Path(file_path).suffix.lower()
             file_type = self._determine_file_type(file_extension)
             
@@ -306,15 +287,13 @@ class MetadataAnalyzer:
             return {}
     
     def _determine_file_type(self, extension: str) -> str:
-        """Determine file type based on extension."""
-        for file_type, extensions in self.supported_formats.items():
+        """Determine file type based on extension."""        for file_type, extensions in self.supported_formats.items():
             if extension in extensions:
                 return file_type
         return 'unknown'
     
     async def _extract_basic_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract basic file metadata."""
-        try:
+        """Extract basic file metadata."""        try:
             file_stat = Path(file_path).stat()
             mime_type = magic.from_file(file_path, mime=True)
             
@@ -331,8 +310,7 @@ class MetadataAnalyzer:
             return {}
     
     async def _extract_image_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract image-specific metadata including EXIF."""
-        try:
+        """Extract image-specific metadata including EXIF."""        try:
             metadata = {}
             
             # Extract EXIF data
@@ -362,8 +340,7 @@ class MetadataAnalyzer:
             return {}
     
     async def _extract_audio_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract audio-specific metadata."""
-        try:
+        """Extract audio-specific metadata."""        try:
             # Use librosa for audio analysis
             y, sr = librosa.load(file_path)
             
@@ -386,8 +363,7 @@ class MetadataAnalyzer:
             return {}
     
     async def _extract_video_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract video-specific metadata."""
-        try:
+        """Extract video-specific metadata."""        try:
             cap = cv2.VideoCapture(file_path)
             
             metadata = {
@@ -406,8 +382,7 @@ class MetadataAnalyzer:
             return {}
     
     async def _calculate_file_hash(self, file_path: str) -> str:
-        """Calculate SHA-256 hash of file."""
-        try:
+        """Calculate SHA-256 hash of file."""        try:
             sha256_hash = hashlib.sha256()
             with open(file_path, "rb") as f:
                 for chunk in iter(lambda: f.read(4096), b""):
@@ -418,8 +393,7 @@ class MetadataAnalyzer:
             return ""
 
 class SteganographyDetector:
-    """Detects hidden data in digital content."""
-    
+    """Detects hidden data in digital content."""    
     def __init__(self):
         self.detection_methods = [
             'lsb_analysis',
@@ -429,8 +403,7 @@ class SteganographyDetector:
         ]
     
     async def detect_hidden_data(self, file_path: str) -> Dict[str, Any]:
-        """Detect potential steganographic content."""
-        try:
+        """Detect potential steganographic content."""        try:
             results = {}
             
             file_extension = Path(file_path).suffix.lower()
@@ -447,8 +420,7 @@ class SteganographyDetector:
             return {}
     
     async def _detect_image_steganography(self, file_path: str) -> Dict[str, Any]:
-        """Detect steganography in images."""
-        try:
+        """Detect steganography in images."""        try:
             img = cv2.imread(file_path)
             results = {}
             
@@ -468,8 +440,7 @@ class SteganographyDetector:
             return {}
     
     async def _detect_audio_steganography(self, file_path: str) -> Dict[str, Any]:
-        """Detect steganography in audio files."""
-        try:
+        """Detect steganography in audio files."""        try:
             y, sr = librosa.load(file_path)
             results = {}
             
@@ -486,8 +457,7 @@ class SteganographyDetector:
             return {}
     
     async def _analyze_lsb_patterns(self, img: np.ndarray) -> Dict[str, Any]:
-        """Analyze least significant bit patterns."""
-        # Extract LSBs
+        """Analyze least significant bit patterns."""        # Extract LSBs
         lsb_image = img & 1
         
         # Calculate entropy of LSB plane
@@ -504,8 +474,7 @@ class SteganographyDetector:
         }
     
     async def _analyze_pixel_statistics(self, img: np.ndarray) -> Dict[str, Any]:
-        """Analyze pixel value statistics for anomalies."""
-        # Calculate pixel value distribution
+        """Analyze pixel value statistics for anomalies."""        # Calculate pixel value distribution
         hist = cv2.calcHist([img], [0, 1, 2], None, [256, 256, 256], [0, 256, 0, 256, 0, 256])
         
         # Detect unusual distributions
@@ -517,8 +486,7 @@ class SteganographyDetector:
         }
     
     async def _analyze_visual_anomalies(self, img: np.ndarray) -> Dict[str, Any]:
-        """Analyze visual anomalies that might indicate hidden data."""
-        # Convert to grayscale
+        """Analyze visual anomalies that might indicate hidden data."""        # Convert to grayscale
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         
         # Edge detection
@@ -535,8 +503,7 @@ class SteganographyDetector:
         }
     
     async def _analyze_frequency_anomalies(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Analyze frequency domain for hidden data."""
-        # FFT analysis
+        """Analyze frequency domain for hidden data."""        # FFT analysis
         fft = np.fft.fft(audio)
         magnitude = np.abs(fft)
         
@@ -549,8 +516,7 @@ class SteganographyDetector:
         }
     
     async def _analyze_audio_statistics(self, audio: np.ndarray) -> Dict[str, Any]:
-        """Analyze audio statistical properties."""
-        # Calculate statistical measures
+        """Analyze audio statistical properties."""        # Calculate statistical measures
         mean_val = np.mean(audio)
         std_val = np.std(audio)
         skewness = np.mean(((audio - mean_val) / std_val) ** 3)
@@ -565,14 +531,12 @@ class SteganographyDetector:
         }
 
 class ChainOfCustodyManager:
-    """Manages legal chain of custody for digital evidence."""
-    
+    """Manages legal chain of custody for digital evidence."""    
     def __init__(self):
         self.custody_records = {}
     
     def create_custody_record(self, evidence_id: str, initial_custodian: str) -> Dict[str, Any]:
-        """Create initial chain of custody record."""
-        record = {
+        """Create initial chain of custody record."""        record = {
             'evidence_id': evidence_id,
             'creation_timestamp': datetime.now(),
             'initial_custodian': initial_custodian,
@@ -591,8 +555,7 @@ class ChainOfCustodyManager:
     
     def transfer_custody(self, evidence_id: str, new_custodian: str, 
                         action: str, notes: str = "") -> bool:
-        """Transfer custody of evidence."""
-        if evidence_id not in self.custody_records:
+        """Transfer custody of evidence."""        if evidence_id not in self.custody_records:
             return False
         
         transfer_record = {
@@ -607,8 +570,7 @@ class ChainOfCustodyManager:
         return True
     
     def verify_custody_integrity(self, evidence_id: str) -> bool:
-        """Verify integrity of custody chain."""
-        if evidence_id not in self.custody_records:
+        """Verify integrity of custody chain."""        if evidence_id not in self.custody_records:
             return False
         
         record = self.custody_records[evidence_id]
@@ -618,21 +580,17 @@ class ChainOfCustodyManager:
         return timestamps == sorted(timestamps)
 
 class DigitalForensicsAnalyzer:
-    """
-    Advanced digital forensics analysis system.
+    """    Advanced digital forensics analysis system.
     
     Provides comprehensive forensic investigation capabilities
     for digital content piracy cases with legal-grade evidence collection.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize the Digital Forensics Analyzer.
+        """        Initialize the Digital Forensics Analyzer.
         
         Args:
             config: Forensics configuration parameters
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self._initialized = False
         
         # Initialize components
@@ -659,13 +617,11 @@ class DigitalForensicsAnalyzer:
         logger.info("Digital Forensics Analyzer initialized")
     
     async def initialize(self) -> bool:
-        """
-        Initialize forensics components and evidence storage.
+        """        Initialize forensics components and evidence storage.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             # Create evidence preservation directory
             Path(self.evidence_preservation_path).mkdir(parents=True, exist_ok=True)
             
@@ -681,8 +637,7 @@ class DigitalForensicsAnalyzer:
                                       content_path: str,
                                       case_id: str,
                                       investigator: str) -> Dict[str, Any]:
-        """
-        Conduct comprehensive forensic analysis of digital content.
+        """        Conduct comprehensive forensic analysis of digital content.
         
         Args:
             content_path: Path to content file
@@ -691,8 +646,7 @@ class DigitalForensicsAnalyzer:
             
         Returns:
             Comprehensive forensic analysis report
-        """
-        if not self._initialized:
+        """        if not self._initialized:
             await self.initialize()
         
         analysis_id = f"analysis_{case_id}_{int(datetime.now().timestamp())}"
@@ -765,8 +719,7 @@ class DigitalForensicsAnalyzer:
             raise
     
     async def _preserve_evidence(self, original_path: str, analysis_id: str) -> str:
-        """Preserve original evidence with integrity verification."""
-        try:
+        """Preserve original evidence with integrity verification."""        try:
             preserved_filename = f"{analysis_id}_{Path(original_path).name}"
             preserved_path = Path(self.evidence_preservation_path) / preserved_filename
             
@@ -789,8 +742,7 @@ class DigitalForensicsAnalyzer:
             raise
     
     async def _collect_metadata_evidence(self, file_path: str, analysis_id: str) -> DigitalEvidence:
-        """Collect metadata evidence from file."""
-        try:
+        """Collect metadata evidence from file."""        try:
             metadata = await self.metadata_analyzer.extract_metadata(file_path)
             
             evidence = DigitalEvidence(
@@ -813,8 +765,7 @@ class DigitalForensicsAnalyzer:
             raise
     
     async def _collect_steganography_evidence(self, file_path: str, analysis_id: str) -> DigitalEvidence:
-        """Collect steganography analysis evidence."""
-        try:
+        """Collect steganography analysis evidence."""        try:
             steganography_results = await self.steganography_detector.detect_hidden_data(file_path)
             
             # Determine confidence based on findings
@@ -842,8 +793,7 @@ class DigitalForensicsAnalyzer:
             raise
     
     async def _reconstruct_timeline(self, metadata_evidence: DigitalEvidence, analysis_id: str) -> ForensicTimeline:
-        """Reconstruct timeline of content creation and modification."""
-        try:
+        """Reconstruct timeline of content creation and modification."""        try:
             metadata = metadata_evidence.data
             
             events = []
@@ -907,8 +857,7 @@ class DigitalForensicsAnalyzer:
                                  metadata_evidence: DigitalEvidence,
                                  steganography_evidence: DigitalEvidence,
                                  analysis_id: str) -> AttributionResult:
-        """Analyze content attribution and source identification."""
-        try:
+        """Analyze content attribution and source identification."""        try:
             attribution_indicators = []
             device_fingerprints = []
             
@@ -970,8 +919,7 @@ class DigitalForensicsAnalyzer:
             raise
     
     async def _assess_overall_confidence(self, evidence_list: List[DigitalEvidence]) -> Dict[str, Any]:
-        """Assess overall confidence in forensic findings."""
-        try:
+        """Assess overall confidence in forensic findings."""        try:
             confidence_scores = []
             evidence_types = []
             
@@ -1021,8 +969,7 @@ class DigitalForensicsAnalyzer:
             }
     
     def _generate_confidence_recommendation(self, confidence: ForensicConfidence) -> str:
-        """Generate recommendation based on confidence level."""
-        recommendations = {
+        """Generate recommendation based on confidence level."""        recommendations = {
             ForensicConfidence.VERY_HIGH: "Evidence is highly reliable for legal proceedings",
             ForensicConfidence.HIGH: "Evidence is suitable for legal use with proper documentation",
             ForensicConfidence.MEDIUM: "Evidence requires additional corroboration",
@@ -1033,8 +980,7 @@ class DigitalForensicsAnalyzer:
         return recommendations.get(confidence, "Unable to assess reliability")
     
     def get_analysis_statistics(self) -> Dict[str, Any]:
-        """Get forensic analysis statistics."""
-        return {
+        """Get forensic analysis statistics."""        return {
             **self.analysis_stats,
             'evidence_database_size': len(self.evidence_database),
             'forensic_reports_count': len(self.forensic_reports),

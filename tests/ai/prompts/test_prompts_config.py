@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Advanced Prompts Configuration Tests
+"""Advanced Prompts Configuration Tests
 Ultra-professional test suite for Prompts Configuration system
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
@@ -25,9 +21,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -47,18 +41,15 @@ from ai.prompts.prompts_config import (
 
 
 class TestPromptsConfig:
-    """Ultra-comprehensive test suite for Prompts Configuration"""
-    
+    """Ultra-comprehensive test suite for Prompts Configuration"""    
     @pytest.fixture
     def fresh_config(self):
-        """Create a fresh PromptsConfig instance for each test"""
-        config = PromptsConfig()
+        """Create a fresh PromptsConfig instance for each test"""        config = PromptsConfig()
         return config
     
     @pytest.fixture
     def custom_config(self):
-        """Create a custom configuration for testing"""
-        return PromptsConfig(
+        """Create a custom configuration for testing"""        return PromptsConfig(
             default_quality_level=PromptQualityLevel.ENTERPRISE,
             min_quality_score=90.0,
             max_prompt_length=2500,
@@ -80,8 +71,7 @@ class TestPromptsConfig:
     
     @pytest.fixture
     def minimal_config(self):
-        """Create a minimal configuration for testing"""
-        return PromptsConfig(
+        """Create a minimal configuration for testing"""        return PromptsConfig(
             default_quality_level=PromptQualityLevel.BASIC,
             min_quality_score=60.0,
             max_prompt_length=500,
@@ -99,8 +89,7 @@ class TestPromptsConfig:
     # ===== INITIALIZATION TESTS =====
     
     def test_config_initialization_default(self, fresh_config):
-        """Test default configuration initialization"""
-        assert fresh_config.default_quality_level == PromptQualityLevel.ADVANCED
+        """Test default configuration initialization"""        assert fresh_config.default_quality_level == PromptQualityLevel.ADVANCED
         assert fresh_config.min_quality_score == 85.0
         assert fresh_config.max_prompt_length == 2000
         assert fresh_config.cache_enabled is True
@@ -118,8 +107,7 @@ class TestPromptsConfig:
         assert fresh_config.log_level == "INFO"
     
     def test_config_post_init_languages(self, fresh_config):
-        """Test post-init default language configuration"""
-        expected_languages = ["en", "de", "fr", "es", "it", "pt"]
+        """Test post-init default language configuration"""        expected_languages = ["en", "de", "fr", "es", "it", "pt"]
         assert fresh_config.supported_languages == expected_languages
         assert len(fresh_config.supported_languages) == 6
         assert "en" in fresh_config.supported_languages
@@ -127,8 +115,7 @@ class TestPromptsConfig:
         assert "fr" in fresh_config.supported_languages
     
     def test_config_post_init_platforms(self, fresh_config):
-        """Test post-init default platform configuration"""
-        expected_platforms = [
+        """Test post-init default platform configuration"""        expected_platforms = [
             Platform.SPOTIFY, Platform.APPLE_MUSIC, Platform.YOUTUBE,
             Platform.INSTAGRAM, Platform.TIKTOK, Platform.FACEBOOK,
             Platform.TWITTER, Platform.SOUNDCLOUD, Platform.LINKEDIN,
@@ -141,8 +128,7 @@ class TestPromptsConfig:
         assert Platform.TIKTOK in fresh_config.supported_platforms
     
     def test_config_post_init_formats(self, fresh_config):
-        """Test post-init default format configuration"""
-        expected_formats = [
+        """Test post-init default format configuration"""        expected_formats = [
             ContentFormat.AUDIO, ContentFormat.VIDEO, 
             ContentFormat.IMAGE, ContentFormat.TEXT, ContentFormat.MIXED
         ]
@@ -153,8 +139,7 @@ class TestPromptsConfig:
         assert ContentFormat.MIXED in fresh_config.supported_formats
     
     def test_custom_config_initialization(self, custom_config):
-        """Test custom configuration initialization"""
-        assert custom_config.default_quality_level == PromptQualityLevel.ENTERPRISE
+        """Test custom configuration initialization"""        assert custom_config.default_quality_level == PromptQualityLevel.ENTERPRISE
         assert custom_config.min_quality_score == 90.0
         assert custom_config.max_prompt_length == 2500
         assert custom_config.cache_ttl_seconds == 7200
@@ -171,8 +156,7 @@ class TestPromptsConfig:
     # ===== ENUM TESTS =====
     
     def test_prompt_quality_level_enum(self):
-        """Test PromptQualityLevel enum values"""
-        assert PromptQualityLevel.BASIC.value == "basic"
+        """Test PromptQualityLevel enum values"""        assert PromptQualityLevel.BASIC.value == "basic"
         assert PromptQualityLevel.ADVANCED.value == "advanced"
         assert PromptQualityLevel.PROFESSIONAL.value == "professional"
         assert PromptQualityLevel.ENTERPRISE.value == "enterprise"
@@ -186,8 +170,7 @@ class TestPromptsConfig:
         assert PromptQualityLevel.ENTERPRISE in quality_levels
     
     def test_content_format_enum(self):
-        """Test ContentFormat enum values"""
-        assert ContentFormat.AUDIO.value == "audio"
+        """Test ContentFormat enum values"""        assert ContentFormat.AUDIO.value == "audio"
         assert ContentFormat.VIDEO.value == "video"
         assert ContentFormat.IMAGE.value == "image"
         assert ContentFormat.TEXT.value == "text"
@@ -203,8 +186,7 @@ class TestPromptsConfig:
         assert ContentFormat.MIXED in content_formats
     
     def test_platform_enum(self):
-        """Test Platform enum values"""
-        assert Platform.SPOTIFY.value == "spotify"
+        """Test Platform enum values"""        assert Platform.SPOTIFY.value == "spotify"
         assert Platform.APPLE_MUSIC.value == "apple_music"
         assert Platform.YOUTUBE.value == "youtube"
         assert Platform.INSTAGRAM.value == "instagram"
@@ -225,8 +207,7 @@ class TestPromptsConfig:
     # ===== VALIDATION TESTS =====
     
     def test_validate_config_valid(self):
-        """Test configuration validation with valid config"""
-        # Temporarily modify global config to valid values
+        """Test configuration validation with valid config"""        # Temporarily modify global config to valid values
         original_config = PROMPTS_CONFIG
         
         try:
@@ -253,8 +234,7 @@ class TestPromptsConfig:
             pass  # Global config restoration handled by patch
     
     def test_validate_config_invalid_quality_score(self):
-        """Test validation with invalid quality score"""
-        test_config = PromptsConfig(min_quality_score=150.0)  # Invalid: > 100
+        """Test validation with invalid quality score"""        test_config = PromptsConfig(min_quality_score=150.0)  # Invalid: > 100
         
         with patch('backend.ai.prompts.prompts_config.PROMPTS_CONFIG', test_config):
             validation_result = validate_config()
@@ -263,8 +243,7 @@ class TestPromptsConfig:
             assert any("min_quality_score must be between 0 and 100" in issue for issue in validation_result["issues"])
     
     def test_validate_config_invalid_temperature(self):
-        """Test validation with invalid temperature"""
-        test_config = PromptsConfig(temperature=3.0)  # Invalid: > 2
+        """Test validation with invalid temperature"""        test_config = PromptsConfig(temperature=3.0)  # Invalid: > 2
         
         with patch('backend.ai.prompts.prompts_config.PROMPTS_CONFIG', test_config):
             validation_result = validate_config()
@@ -273,8 +252,7 @@ class TestPromptsConfig:
             assert any("temperature must be between 0 and 2" in issue for issue in validation_result["issues"])
     
     def test_validate_config_invalid_max_tokens(self):
-        """Test validation with invalid max tokens"""
-        test_config = PromptsConfig(max_tokens=30)  # Invalid: < 50
+        """Test validation with invalid max tokens"""        test_config = PromptsConfig(max_tokens=30)  # Invalid: < 50
         
         with patch('backend.ai.prompts.prompts_config.PROMPTS_CONFIG', test_config):
             validation_result = validate_config()
@@ -283,8 +261,7 @@ class TestPromptsConfig:
             assert any("max_tokens is too low for quality prompts" in issue for issue in validation_result["issues"])
     
     def test_validate_config_invalid_concurrent_generations(self):
-        """Test validation with invalid concurrent generations"""
-        test_config = PromptsConfig(max_concurrent_generations=0)  # Invalid: < 1
+        """Test validation with invalid concurrent generations"""        test_config = PromptsConfig(max_concurrent_generations=0)  # Invalid: < 1
         
         with patch('backend.ai.prompts.prompts_config.PROMPTS_CONFIG', test_config):
             validation_result = validate_config()
@@ -293,8 +270,7 @@ class TestPromptsConfig:
             assert any("max_concurrent_generations must be at least 1" in issue for issue in validation_result["issues"])
     
     def test_validate_config_warnings(self):
-        """Test configuration validation with warnings"""
-        test_config = PromptsConfig(
+        """Test configuration validation with warnings"""        test_config = PromptsConfig(
             max_prompt_length=50,  # Warning: very low
             cache_ttl_seconds=30   # Warning: very low
         )
@@ -308,8 +284,7 @@ class TestPromptsConfig:
             assert any("cache_ttl_seconds is very low" in warning for warning in validation_result["warnings"])
     
     def test_validate_config_multiple_issues(self):
-        """Test validation with multiple configuration issues"""
-        test_config = PromptsConfig(
+        """Test validation with multiple configuration issues"""        test_config = PromptsConfig(
             min_quality_score=-10.0,    # Invalid
             temperature=5.0,            # Invalid
             max_tokens=10,              # Invalid
@@ -328,8 +303,7 @@ class TestPromptsConfig:
     # ===== CONFIGURATION SCENARIOS TESTS =====
     
     def test_development_environment_config(self):
-        """Test configuration for development environment"""
-        dev_config = PromptsConfig(
+        """Test configuration for development environment"""        dev_config = PromptsConfig(
             default_quality_level=PromptQualityLevel.ADVANCED,
             cache_enabled=True,
             cache_ttl_seconds=1800,  # 30 minutes
@@ -353,8 +327,7 @@ class TestPromptsConfig:
             assert validation_result["valid"] is True
     
     def test_production_environment_config(self):
-        """Test configuration for production environment"""
-        prod_config = PromptsConfig(
+        """Test configuration for production environment"""        prod_config = PromptsConfig(
             default_quality_level=PromptQualityLevel.PROFESSIONAL,
             min_quality_score=90.0,
             cache_enabled=True,
@@ -385,8 +358,7 @@ class TestPromptsConfig:
             assert validation_result["valid"] is True
     
     def test_enterprise_environment_config(self):
-        """Test configuration for enterprise environment"""
-        enterprise_config = PromptsConfig(
+        """Test configuration for enterprise environment"""        enterprise_config = PromptsConfig(
             default_quality_level=PromptQualityLevel.ENTERPRISE,
             min_quality_score=95.0,
             max_prompt_length=3000,
@@ -421,8 +393,7 @@ class TestPromptsConfig:
             assert validation_result["valid"] is True
     
     def test_minimal_resource_config(self):
-        """Test configuration for minimal resource environments"""
-        minimal_config = PromptsConfig(
+        """Test configuration for minimal resource environments"""        minimal_config = PromptsConfig(
             default_quality_level=PromptQualityLevel.BASIC,
             min_quality_score=70.0,
             max_prompt_length=800,
@@ -455,8 +426,7 @@ class TestPromptsConfig:
     # ===== PLATFORM-SPECIFIC TESTS =====
     
     def test_music_platform_config(self):
-        """Test configuration optimized for music platforms"""
-        music_config = PromptsConfig(
+        """Test configuration optimized for music platforms"""        music_config = PromptsConfig(
             supported_platforms=[
                 Platform.SPOTIFY, Platform.APPLE_MUSIC, Platform.SOUNDCLOUD,
                 Platform.YOUTUBE, Platform.BANDCAMP
@@ -477,8 +447,7 @@ class TestPromptsConfig:
         assert music_config.temperature == 0.65
     
     def test_video_platform_config(self):
-        """Test configuration optimized for video platforms"""
-        video_config = PromptsConfig(
+        """Test configuration optimized for video platforms"""        video_config = PromptsConfig(
             supported_platforms=[
                 Platform.YOUTUBE, Platform.INSTAGRAM, Platform.TIKTOK,
                 Platform.FACEBOOK, Platform.TWITCH
@@ -501,8 +470,7 @@ class TestPromptsConfig:
         assert video_config.max_prompt_length == 2500
     
     def test_social_media_config(self):
-        """Test configuration optimized for social media platforms"""
-        social_config = PromptsConfig(
+        """Test configuration optimized for social media platforms"""        social_config = PromptsConfig(
             supported_platforms=[
                 Platform.INSTAGRAM, Platform.TIKTOK, Platform.FACEBOOK,
                 Platform.TWITTER, Platform.LINKEDIN
@@ -528,8 +496,7 @@ class TestPromptsConfig:
     # ===== SERIALIZATION TESTS =====
     
     def test_config_to_dict(self, custom_config):
-        """Test configuration serialization to dictionary"""
-        # Note: Since dataclass doesn't have built-in to_dict, we'll test the attributes
+        """Test configuration serialization to dictionary"""        # Note: Since dataclass doesn't have built-in to_dict, we'll test the attributes
         config_dict = {
             "default_quality_level": custom_config.default_quality_level.value,
             "min_quality_score": custom_config.min_quality_score,
@@ -562,8 +529,7 @@ class TestPromptsConfig:
         assert "audio" in config_dict["supported_formats"]
     
     def test_config_json_serialization(self, custom_config):
-        """Test configuration JSON serialization"""
-        config_dict = {
+        """Test configuration JSON serialization"""        config_dict = {
             "default_quality_level": custom_config.default_quality_level.value,
             "min_quality_score": custom_config.min_quality_score,
             "max_prompt_length": custom_config.max_prompt_length,
@@ -585,16 +551,14 @@ class TestPromptsConfig:
     # ===== GLOBAL CONFIG TESTS =====
     
     def test_global_config_instance(self):
-        """Test global configuration instance"""
-        assert PROMPTS_CONFIG is not None
+        """Test global configuration instance"""        assert PROMPTS_CONFIG is not None
         assert isinstance(PROMPTS_CONFIG, PromptsConfig)
         assert PROMPTS_CONFIG.default_quality_level == PromptQualityLevel.ADVANCED
         assert PROMPTS_CONFIG.cache_enabled is True
         assert PROMPTS_CONFIG.enable_content_filtering is True
     
     def test_global_config_validation(self):
-        """Test global configuration validation"""
-        validation_result = validate_config()
+        """Test global configuration validation"""        validation_result = validate_config()
         assert isinstance(validation_result, dict)
         assert "valid" in validation_result
         assert "issues" in validation_result
@@ -607,8 +571,7 @@ class TestPromptsConfig:
     # ===== PERFORMANCE TESTS =====
     
     def test_config_initialization_performance(self):
-        """Test configuration initialization performance"""
-        start_time = datetime.now()
+        """Test configuration initialization performance"""        start_time = datetime.now()
         
         # Create multiple config instances
         configs = []
@@ -629,8 +592,7 @@ class TestPromptsConfig:
             assert len(config.supported_platforms) == 10
     
     def test_validation_performance(self):
-        """Test configuration validation performance"""
-        test_configs = []
+        """Test configuration validation performance"""        test_configs = []
         
         # Create various config scenarios
         for i in range(20):

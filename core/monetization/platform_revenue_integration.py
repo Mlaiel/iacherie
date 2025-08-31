@@ -1,12 +1,9 @@
-"""
-Platform Revenue Integration System
+"""Platform Revenue Integration System
 Multi-platform revenue tracking and synchronization for content creators
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -23,8 +20,7 @@ from ...core.security.encryption import SecurityManager
 
 
 class PlatformType(Enum):
-    """Supported content platforms"""
-    SPOTIFY = "spotify"
+    """Supported content platforms"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -42,8 +38,7 @@ class PlatformType(Enum):
 
 
 class RevenueType(Enum):
-    """Types of revenue streams"""
-    STREAMING = "streaming"
+    """Types of revenue streams"""    STREAMING = "streaming"
     ADVERTISING = "advertising"
     SPONSORSHIP = "sponsorship"
     MERCHANDISE = "merchandise"
@@ -57,8 +52,7 @@ class RevenueType(Enum):
 
 @dataclass
 class PlatformCredentials:
-    """Platform API credentials"""
-    platform: PlatformType
+    """Platform API credentials"""    platform: PlatformType
     api_key: Optional[str] = None
     access_token: Optional[str] = None
     refresh_token: Optional[str] = None
@@ -67,8 +61,7 @@ class PlatformCredentials:
     expires_at: Optional[datetime] = None
     
     def is_valid(self) -> bool:
-        """Check if credentials are valid"""
-        if self.expires_at and self.expires_at < datetime.now():
+        """Check if credentials are valid"""        if self.expires_at and self.expires_at < datetime.now():
             return False
         
         required_fields = {
@@ -84,8 +77,7 @@ class PlatformCredentials:
 
 @dataclass
 class RevenueData:
-    """Platform revenue data"""
-    platform: PlatformType
+    """Platform revenue data"""    platform: PlatformType
     revenue_type: RevenueType
     amount: Decimal
     currency: str
@@ -98,8 +90,7 @@ class RevenueData:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             "platform": self.platform.value,
             "revenue_type": self.revenue_type.value,
             "amount": float(self.amount),
@@ -115,8 +106,7 @@ class RevenueData:
 
 
 class SpotifyRevenueIntegration:
-    """Spotify Artists API integration"""
-    
+    """Spotify Artists API integration"""    
     BASE_URL = "https://api.spotify.com/v1"
     
     def __init__(self, credentials: PlatformCredentials):
@@ -129,8 +119,7 @@ class SpotifyRevenueIntegration:
         start_date: datetime,
         end_date: datetime
     ) -> List[RevenueData]:
-        """Get Spotify artist analytics and revenue data"""
-        try:
+        """Get Spotify artist analytics and revenue data"""        try:
             async with aiohttp.ClientSession() as session:
                 headers = {
                     'Authorization': f'Bearer {self.credentials.access_token}',
@@ -157,8 +146,7 @@ class SpotifyRevenueIntegration:
         start_date: datetime,
         end_date: datetime
     ) -> List[RevenueData]:
-        """Process Spotify API response"""
-        revenue_records = []
+        """Process Spotify API response"""        revenue_records = []
         
         # Calculate estimated revenue from streams
         # Spotify pays approximately $0.003-$0.005 per stream
@@ -187,8 +175,7 @@ class SpotifyRevenueIntegration:
 
 
 class YouTubeRevenueIntegration:
-    """YouTube Analytics API integration"""
-    
+    """YouTube Analytics API integration"""    
     BASE_URL = "https://youtubeanalytics.googleapis.com/v2"
     
     def __init__(self, credentials: PlatformCredentials):
@@ -201,8 +188,7 @@ class YouTubeRevenueIntegration:
         start_date: datetime,
         end_date: datetime
     ) -> List[RevenueData]:
-        """Get YouTube channel revenue data"""
-        try:
+        """Get YouTube channel revenue data"""        try:
             async with aiohttp.ClientSession() as session:
                 headers = {
                     'Authorization': f'Bearer {self.credentials.access_token}',
@@ -237,8 +223,7 @@ class YouTubeRevenueIntegration:
         start_date: datetime,
         end_date: datetime
     ) -> List[RevenueData]:
-        """Process YouTube Analytics response"""
-        revenue_records = []
+        """Process YouTube Analytics response"""        revenue_records = []
         
         rows = data.get('rows', [])
         total_revenue = Decimal("0")
@@ -272,8 +257,7 @@ class YouTubeRevenueIntegration:
 
 
 class InstagramRevenueIntegration:
-    """Instagram Creator API integration"""
-    
+    """Instagram Creator API integration"""    
     BASE_URL = "https://graph.facebook.com/v18.0"
     
     def __init__(self, credentials: PlatformCredentials):
@@ -286,8 +270,7 @@ class InstagramRevenueIntegration:
         start_date: datetime,
         end_date: datetime
     ) -> List[RevenueData]:
-        """Get Instagram creator insights and estimated revenue"""
-        try:
+        """Get Instagram creator insights and estimated revenue"""        try:
             async with aiohttp.ClientSession() as session:
                 params = {
                     'access_token': self.credentials.access_token,
@@ -316,8 +299,7 @@ class InstagramRevenueIntegration:
         start_date: datetime,
         end_date: datetime
     ) -> List[RevenueData]:
-        """Process Instagram insights data"""
-        revenue_records = []
+        """Process Instagram insights data"""        revenue_records = []
         
         insights = data.get('data', [])
         total_impressions = 0
@@ -358,8 +340,7 @@ class InstagramRevenueIntegration:
 
 
 class TikTokRevenueIntegration:
-    """TikTok Creator API integration"""
-    
+    """TikTok Creator API integration"""    
     BASE_URL = "https://open-api.tiktok.com/v1.3"
     
     def __init__(self, credentials: PlatformCredentials):
@@ -372,8 +353,7 @@ class TikTokRevenueIntegration:
         start_date: datetime,
         end_date: datetime
     ) -> List[RevenueData]:
-        """Get TikTok creator revenue data"""
-        try:
+        """Get TikTok creator revenue data"""        try:
             async with aiohttp.ClientSession() as session:
                 headers = {
                     'Authorization': f'Bearer {self.credentials.access_token}',
@@ -406,8 +386,7 @@ class TikTokRevenueIntegration:
         start_date: datetime,
         end_date: datetime
     ) -> List[RevenueData]:
-        """Process TikTok analytics data"""
-        revenue_records = []
+        """Process TikTok analytics data"""        revenue_records = []
         
         videos = data.get('data', {}).get('videos', [])
         total_views = sum(video.get('video_views', 0) for video in videos)
@@ -442,8 +421,7 @@ class TikTokRevenueIntegration:
 
 
 class PlatformRevenueAggregator:
-    """Aggregates revenue data from all platforms"""
-    
+    """Aggregates revenue data from all platforms"""    
     def __init__(self, security_manager: SecurityManager):
         self.security_manager = security_manager
         self.integrations = {}
@@ -453,8 +431,7 @@ class PlatformRevenueAggregator:
         self._initialize_integrations()
     
     def _initialize_integrations(self):
-        """Initialize platform integration classes"""
-        self.integration_classes = {
+        """Initialize platform integration classes"""        self.integration_classes = {
             PlatformType.SPOTIFY: SpotifyRevenueIntegration,
             PlatformType.YOUTUBE: YouTubeRevenueIntegration,
             PlatformType.INSTAGRAM: InstagramRevenueIntegration,
@@ -467,8 +444,7 @@ class PlatformRevenueAggregator:
         credentials: PlatformCredentials,
         session: AsyncSession
     ) -> bool:
-        """Add platform credentials for user"""
-        try:
+        """Add platform credentials for user"""        try:
             if not credentials.is_valid():
                 raise ValueError(f"Invalid credentials for {credentials.platform.value}")
             
@@ -499,8 +475,7 @@ class PlatformRevenueAggregator:
         end_date: datetime,
         session: AsyncSession
     ) -> List[RevenueData]:
-        """Sync revenue data from all connected platforms"""
-        all_revenue_data = []
+        """Sync revenue data from all connected platforms"""        all_revenue_data = []
         
         try:
             # Get user's connected platforms
@@ -552,8 +527,7 @@ class PlatformRevenueAggregator:
         revenue_data: List[RevenueData],
         session: AsyncSession
     ) -> None:
-        """Store revenue data in database"""
-        try:
+        """Store revenue data in database"""        try:
             for data in revenue_data:
                 # Check if record already exists
                 existing = await session.execute(
@@ -598,8 +572,7 @@ class PlatformRevenueAggregator:
         end_date: datetime,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Get total revenue across all platforms"""
-        try:
+        """Get total revenue across all platforms"""        try:
             result = await session.execute(
                 select(
                     RevenueRecord.platform,
@@ -670,16 +643,14 @@ class PlatformRevenueAggregator:
 
 
 class RevenueSync:
-    """Automated revenue synchronization service"""
-    
+    """Automated revenue synchronization service"""    
     def __init__(self, aggregator: PlatformRevenueAggregator):
         self.aggregator = aggregator
         self.logger = logging.getLogger(__name__)
         self.sync_running = False
     
     async def start_automated_sync(self, interval_hours: int = 24):
-        """Start automated revenue synchronization"""
-        self.sync_running = True
+        """Start automated revenue synchronization"""        self.sync_running = True
         
         while self.sync_running:
             try:
@@ -691,11 +662,9 @@ class RevenueSync:
                 await asyncio.sleep(3600)  # Wait 1 hour before retry
     
     def stop_automated_sync(self):
-        """Stop automated revenue synchronization"""
-        self.sync_running = False
+        """Stop automated revenue synchronization"""        self.sync_running = False
     
     async def _sync_all_users(self):
-        """Sync revenue for all users with connected platforms"""
-        # This would get all users from database and sync their platforms
+        """Sync revenue for all users with connected platforms"""        # This would get all users from database and sync their platforms
         # Implementation depends on your user management system
         pass

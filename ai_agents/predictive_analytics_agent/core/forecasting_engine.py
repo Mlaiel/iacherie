@@ -1,5 +1,4 @@
-"""
-Forecasting Engine - Advanced Time Series and ML-Based Prediction Models
+"""Forecasting Engine - Advanced Time Series and ML-Based Prediction Models
 
 Enterprise-grade forecasting system providing comprehensive prediction capabilities
 for content performance, revenue, audience growth, and market trends.
@@ -11,9 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This forecasting engine and its algorithms are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import pandas as pd
@@ -47,8 +44,7 @@ from ...utils.cache_manager import CacheManager
 logger = logging.getLogger(__name__)
 
 class ForecastModel(Enum):
-    """Available forecasting models"""
-    PROPHET = "prophet"
+    """Available forecasting models"""    PROPHET = "prophet"
     LSTM = "lstm"
     ARIMA = "arima"
     XGBOOST = "xgboost"
@@ -59,8 +55,7 @@ class ForecastModel(Enum):
 
 @dataclass
 class ForecastResult:
-    """Forecasting result structure"""
-    model_name: str
+    """Forecasting result structure"""    model_name: str
     predictions: List[float]
     confidence_intervals: List[Tuple[float, float]]
     timestamps: List[datetime]
@@ -72,16 +67,14 @@ class ForecastResult:
 
 @dataclass 
 class TrainingData:
-    """Training data structure for forecasting models"""
-    timestamps: List[datetime]
+    """Training data structure for forecasting models"""    timestamps: List[datetime]
     values: List[float]
     features: Optional[pd.DataFrame] = None
     target_column: str = "value"
     frequency: str = "D"  # Daily frequency by default
     
 class ForecastingEngine:
-    """
-    Advanced Forecasting Engine for IA Influencer Platform
+    """    Advanced Forecasting Engine for IA Influencer Platform
     
     Provides enterprise-grade time series forecasting and prediction capabilities:
     
@@ -106,11 +99,9 @@ class ForecastingEngine:
     - Seasonal pattern detection and decomposition
     - Anomaly detection and outlier handling
     - Real-time model retraining and adaptation
-    """
-    
+    """    
     def __init__(self, cache_manager: CacheManager = None):
-        """Initialize the forecasting engine"""
-        self.cache_manager = cache_manager or CacheManager("forecasting_engine")
+        """Initialize the forecasting engine"""        self.cache_manager = cache_manager or CacheManager("forecasting_engine")
         self.models: Dict[str, Any] = {}
         self.scalers: Dict[str, MinMaxScaler] = {}
         self.trained_models: Dict[str, Any] = {}
@@ -150,8 +141,7 @@ class ForecastingEngine:
                                  forecast_periods: int = 30,
                                  model_type: ForecastModel = ForecastModel.PROPHET,
                                  include_confidence_intervals: bool = True) -> ForecastResult:
-        """
-        Generate time series forecast using specified model
+        """        Generate time series forecast using specified model
         
         Args:
             data: Historical training data
@@ -161,8 +151,7 @@ class ForecastingEngine:
             
         Returns:
             ForecastResult: Comprehensive forecast results
-        """
-        try:
+        """        try:
             # Validate input data
             self._validate_training_data(data)
             
@@ -205,8 +194,7 @@ class ForecastingEngine:
             raise ProcessingError(f"Forecasting error: {str(e)}")
 
     async def _forecast_with_prophet(self, data: TrainingData, forecast_periods: int) -> ForecastResult:
-        """Forecast using Facebook Prophet model"""
-        try:
+        """Forecast using Facebook Prophet model"""        try:
             # Prepare data for Prophet
             df = pd.DataFrame({
                 'ds': data.timestamps,
@@ -278,8 +266,7 @@ class ForecastingEngine:
             raise ProcessingError(f"Prophet model error: {str(e)}")
 
     async def _forecast_with_lstm(self, data: TrainingData, forecast_periods: int) -> ForecastResult:
-        """Forecast using LSTM neural network"""
-        try:
+        """Forecast using LSTM neural network"""        try:
             # Prepare data for LSTM
             values = np.array(data.values).reshape(-1, 1)
             
@@ -363,8 +350,7 @@ class ForecastingEngine:
             raise ProcessingError(f"LSTM model error: {str(e)}")
 
     async def _forecast_with_arima(self, data: TrainingData, forecast_periods: int) -> ForecastResult:
-        """Forecast using ARIMA statistical model"""
-        try:
+        """Forecast using ARIMA statistical model"""        try:
             # Convert to pandas series
             ts = pd.Series(data.values, index=pd.to_datetime(data.timestamps))
             
@@ -429,8 +415,7 @@ class ForecastingEngine:
             raise ProcessingError(f"ARIMA model error: {str(e)}")
 
     async def _forecast_with_xgboost(self, data: TrainingData, forecast_periods: int) -> ForecastResult:
-        """Forecast using XGBoost gradient boosting"""
-        try:
+        """Forecast using XGBoost gradient boosting"""        try:
             # Create features from time series data
             df = self._create_feature_matrix(data)
             
@@ -488,8 +473,7 @@ class ForecastingEngine:
             raise ProcessingError(f"XGBoost model error: {str(e)}")
 
     async def _forecast_with_lightgbm(self, data: TrainingData, forecast_periods: int) -> ForecastResult:
-        """Forecast using LightGBM gradient boosting"""
-        try:
+        """Forecast using LightGBM gradient boosting"""        try:
             # Create features from time series data
             df = self._create_feature_matrix(data)
             
@@ -551,8 +535,7 @@ class ForecastingEngine:
             raise ProcessingError(f"LightGBM model error: {str(e)}")
 
     async def _forecast_with_ensemble(self, data: TrainingData, forecast_periods: int) -> ForecastResult:
-        """Forecast using ensemble of multiple models"""
-        try:
+        """Forecast using ensemble of multiple models"""        try:
             # Get predictions from multiple models
             models_to_use = [ForecastModel.PROPHET, ForecastModel.XGBOOST, ForecastModel.LIGHTGBM]
             model_results = {}
@@ -642,8 +625,7 @@ class ForecastingEngine:
             raise ProcessingError(f"Ensemble model error: {str(e)}")
 
     def _validate_training_data(self, data: TrainingData):
-        """Validate training data format and completeness"""
-        if not data.timestamps or not data.values:
+        """Validate training data format and completeness"""        if not data.timestamps or not data.values:
             raise ValidationError("Training data must contain timestamps and values")
         
         if len(data.timestamps) != len(data.values):
@@ -657,16 +639,14 @@ class ForecastingEngine:
             raise ValidationError("Training data contains missing values")
 
     def _create_sequences(self, data: np.ndarray, sequence_length: int) -> Tuple[np.ndarray, np.ndarray]:
-        """Create sequences for LSTM training"""
-        X, y = [], []
+        """Create sequences for LSTM training"""        X, y = [], []
         for i in range(sequence_length, len(data)):
             X.append(data[i-sequence_length:i])
             y.append(data[i])
         return np.array(X), np.array(y)
 
     def _create_feature_matrix(self, data: TrainingData) -> pd.DataFrame:
-        """Create feature matrix from time series data for ML models"""
-        df = pd.DataFrame({
+        """Create feature matrix from time series data for ML models"""        df = pd.DataFrame({
             'timestamp': data.timestamps,
             'value': data.values
         })
@@ -697,8 +677,7 @@ class ForecastingEngine:
         return df
 
     def _create_features_for_prediction(self, last_values: np.ndarray, period_ahead: int) -> List[float]:
-        """Create features for a future prediction"""
-        features = []
+        """Create features for a future prediction"""        features = []
         
         # Add lag features
         lag_values = [1, 2, 3, 7, 14, 30]
@@ -739,8 +718,7 @@ class ForecastingEngine:
         return features
 
     def _calculate_accuracy_metrics(self, actual: List[float], predicted: List[float]) -> Dict[str, float]:
-        """Calculate accuracy metrics for model evaluation"""
-        try:
+        """Calculate accuracy metrics for model evaluation"""        try:
             actual_arr = np.array(actual)
             predicted_arr = np.array(predicted)
             
@@ -782,8 +760,7 @@ class ForecastingEngine:
             return {'mae': 0, 'mse': 0, 'rmse': 0, 'r2': 0, 'mape': 0}
 
     async def _calculate_confidence_intervals(self, predictions: List[float], historical_values: List[float]) -> List[Tuple[float, float]]:
-        """Calculate confidence intervals for predictions"""
-        try:
+        """Calculate confidence intervals for predictions"""        try:
             if not historical_values or len(historical_values) < 2:
                 # Fallback to simple percentage-based intervals
                 return [(pred * 0.8, pred * 1.2) for pred in predictions]
@@ -808,14 +785,12 @@ class ForecastingEngine:
 
 
 class TimeSeriesForecaster:
-    """Specialized time series forecasting component"""
-    
+    """Specialized time series forecasting component"""    
     def __init__(self, forecasting_engine: ForecastingEngine):
         self.engine = forecasting_engine
         
     async def forecast_content_performance(self, historical_views: List[Tuple[datetime, int]], days_ahead: int = 30) -> ForecastResult:
-        """Forecast content performance metrics"""
-        timestamps, values = zip(*historical_views) if historical_views else ([], [])
+        """Forecast content performance metrics"""        timestamps, values = zip(*historical_views) if historical_views else ([], [])
         
         data = TrainingData(
             timestamps=list(timestamps),
@@ -828,14 +803,12 @@ class TimeSeriesForecaster:
         )
 
 class ContentPerformancePredictor:
-    """Specialized content performance prediction component"""
-    
+    """Specialized content performance prediction component"""    
     def __init__(self, forecasting_engine: ForecastingEngine):
         self.engine = forecasting_engine
         
     async def predict_viral_potential(self, content_features: Dict[str, Any]) -> Dict[str, Any]:
-        """Predict viral potential of content"""
-        # Implementation would include viral coefficient calculation
+        """Predict viral potential of content"""        # Implementation would include viral coefficient calculation
         # Algorithm favorability scoring, engagement prediction, etc.
         return {
             'viral_score': 0.75,
@@ -844,14 +817,12 @@ class ContentPerformancePredictor:
         }
 
 class RevenueForecaster:
-    """Specialized revenue forecasting component"""
-    
+    """Specialized revenue forecasting component"""    
     def __init__(self, forecasting_engine: ForecastingEngine):
         self.engine = forecasting_engine
         
     async def forecast_monthly_revenue(self, historical_revenue: List[Tuple[datetime, float]], months_ahead: int = 6) -> ForecastResult:
-        """Forecast monthly revenue"""
-        timestamps, values = zip(*historical_revenue) if historical_revenue else ([], [])
+        """Forecast monthly revenue"""        timestamps, values = zip(*historical_revenue) if historical_revenue else ([], [])
         
         data = TrainingData(
             timestamps=list(timestamps),
@@ -864,14 +835,12 @@ class RevenueForecaster:
         )
 
 class AudienceGrowthPredictor:
-    """Specialized audience growth prediction component"""
-    
+    """Specialized audience growth prediction component"""    
     def __init__(self, forecasting_engine: ForecastingEngine):
         self.engine = forecasting_engine
         
     async def predict_subscriber_growth(self, historical_subscribers: List[Tuple[datetime, int]], days_ahead: int = 90) -> Dict[str, Any]:
-        """Predict subscriber growth with viral coefficient modeling"""
-        timestamps, values = zip(*historical_subscribers) if historical_subscribers else ([], [])
+        """Predict subscriber growth with viral coefficient modeling"""        timestamps, values = zip(*historical_subscribers) if historical_subscribers else ([], [])
         
         # Calculate growth rate and viral coefficient
         growth_rates = []
@@ -901,14 +870,12 @@ class AudienceGrowthPredictor:
         }
 
 class CollaborationSuccessPredictor:
-    """Specialized collaboration success prediction component"""
-    
+    """Specialized collaboration success prediction component"""    
     def __init__(self, forecasting_engine: ForecastingEngine):
         self.engine = forecasting_engine
         
     async def predict_collaboration_outcome(self, collaboration_features: Dict[str, Any]) -> Dict[str, Any]:
-        """Predict collaboration success probability and impact"""
-        # Extract key features
+        """Predict collaboration success probability and impact"""        # Extract key features
         audience_overlap = collaboration_features.get('audience_overlap', 0.3)
         engagement_compatibility = collaboration_features.get('engagement_compatibility', 0.7)
         brand_alignment = collaboration_features.get('brand_alignment', 0.8)
@@ -936,8 +903,7 @@ class CollaborationSuccessPredictor:
         }
     
     def _identify_collaboration_risks(self, features: Dict[str, Any]) -> List[str]:
-        """Identify risks in collaboration"""
-        risks = []
+        """Identify risks in collaboration"""        risks = []
         
         if features.get('audience_overlap', 0.3) < 0.2:
             risks.append("Low audience overlap may limit cross-promotion effectiveness")
@@ -951,8 +917,7 @@ class CollaborationSuccessPredictor:
         return risks
     
     def _generate_collaboration_recommendations(self, success_probability: float) -> List[str]:
-        """Generate collaboration optimization recommendations"""
-        recommendations = []
+        """Generate collaboration optimization recommendations"""        recommendations = []
         
         if success_probability > 0.8:
             recommendations.append("High success probability - proceed with collaboration")

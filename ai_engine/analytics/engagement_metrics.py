@@ -1,13 +1,10 @@
-"""
-Engagement Metrics Analyzer - Advanced Metrics Collection and Analysis
+"""Engagement Metrics Analyzer - Advanced Metrics Collection and Analysis
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive engagement metrics analysis, real-time tracking,
 and performance insights for social media content and user interactions.
-"""
-
-import logging
+"""import logging
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
@@ -20,8 +17,7 @@ from collections import defaultdict, Counter
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Types of engagement metrics"""
-    IMPRESSION = "impression"
+    """Types of engagement metrics"""    IMPRESSION = "impression"
     VIEW = "view"
     LIKE = "like"
     COMMENT = "comment"
@@ -40,8 +36,7 @@ class MetricType(Enum):
     SUBSCRIPTION = "subscription"
 
 class PlatformType(Enum):
-    """Social media platforms"""
-    INSTAGRAM = "instagram"
+    """Social media platforms"""    INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
     TWITTER = "twitter"
     LINKEDIN = "linkedin"
@@ -58,16 +53,14 @@ class PlatformType(Enum):
     SMS = "sms"
 
 class EngagementLevel(Enum):
-    """Engagement quality levels"""
-    LOW = "low"
+    """Engagement quality levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     VIRAL = "viral"
     EXCEPTIONAL = "exceptional"
 
 class TimeFrame(Enum):
-    """Time frames for metrics analysis"""
-    MINUTE = "minute"
+    """Time frames for metrics analysis"""    MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -77,8 +70,7 @@ class TimeFrame(Enum):
 
 @dataclass
 class MetricEvent:
-    """Individual metric event"""
-    event_id: str
+    """Individual metric event"""    event_id: str
     metric_type: MetricType
     platform: PlatformType
     content_id: str
@@ -93,8 +85,7 @@ class MetricEvent:
 
 @dataclass
 class EngagementSummary:
-    """Summary of engagement metrics"""
-    content_id: str
+    """Summary of engagement metrics"""    content_id: str
     platform: PlatformType
     time_period: Dict[str, datetime] = field(default_factory=dict)
     total_impressions: int = 0
@@ -115,8 +106,7 @@ class EngagementSummary:
 
 @dataclass
 class RealTimeMetrics:
-    """Real-time engagement metrics"""
-    timestamp: datetime = field(default_factory=datetime.utcnow)
+    """Real-time engagement metrics"""    timestamp: datetime = field(default_factory=datetime.utcnow)
     active_users: int = 0
     current_engagement_rate: float = 0.0
     trending_content: List[str] = field(default_factory=list)
@@ -126,8 +116,7 @@ class RealTimeMetrics:
 
 @dataclass
 class EngagementTrend:
-    """Engagement trend analysis"""
-    metric_type: MetricType
+    """Engagement trend analysis"""    metric_type: MetricType
     platform: PlatformType
     time_frame: TimeFrame
     trend_direction: str = "stable"  # up, down, stable, volatile
@@ -138,8 +127,7 @@ class EngagementTrend:
     predictions: Dict[str, float] = field(default_factory=dict)
 
 class EngagementMetricsAnalyzer:
-    """Main engagement metrics analysis engine"""
-    
+    """Main engagement metrics analysis engine"""    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.metric_events = []
@@ -152,8 +140,7 @@ class EngagementMetricsAnalyzer:
         self.logger.info("EngagementMetricsAnalyzer initialized successfully")
     
     def _load_performance_benchmarks(self) -> Dict[str, Dict[str, float]]:
-        """Load platform-specific performance benchmarks"""
-        return {
+        """Load platform-specific performance benchmarks"""        return {
             PlatformType.INSTAGRAM.value: {
                 "engagement_rate": {"excellent": 0.06, "good": 0.03, "average": 0.015, "poor": 0.005},
                 "comment_rate": {"excellent": 0.004, "good": 0.002, "average": 0.001, "poor": 0.0005},
@@ -193,8 +180,7 @@ class EngagementMetricsAnalyzer:
         }
     
     def _initialize_analytics(self):
-        """Initialize analytics components"""
-        self.engagement_patterns = {
+        """Initialize analytics components"""        self.engagement_patterns = {
             "peak_hours": {},  # Platform -> hour -> engagement_level
             "day_patterns": {},  # Platform -> day -> engagement_level
             "content_performance": {},  # content_type -> metrics
@@ -207,8 +193,7 @@ class EngagementMetricsAnalyzer:
         self.real_time_monitors = {}
     
     def record_metric_event(self, event: MetricEvent) -> bool:
-        """Record a new metric event"""
-        try:
+        """Record a new metric event"""        try:
             # Validate event
             if not event.event_id or not event.content_id:
                 self.logger.warning("Invalid metric event: missing required fields")
@@ -234,8 +219,7 @@ class EngagementMetricsAnalyzer:
             return False
     
     def _update_real_time_metrics(self, event: MetricEvent):
-        """Update real-time metrics with new event"""
-        try:
+        """Update real-time metrics with new event"""        try:
             # Update platform activity
             platform_key = event.platform.value
             if platform_key not in self.real_time_data.platform_activity:
@@ -277,8 +261,7 @@ class EngagementMetricsAnalyzer:
             self.logger.error(f"Failed to update real-time metrics: {e}")
     
     def _update_engagement_summary(self, event: MetricEvent):
-        """Update engagement summary for content"""
-        try:
+        """Update engagement summary for content"""        try:
             summary_key = f"{event.content_id}_{event.platform.value}"
             
             if summary_key not in self.engagement_summaries:
@@ -343,8 +326,7 @@ class EngagementMetricsAnalyzer:
             self.logger.error(f"Failed to update engagement summary: {e}")
     
     def _check_for_anomalies(self, event: MetricEvent):
-        """Check for anomalous engagement patterns"""
-        try:
+        """Check for anomalous engagement patterns"""        try:
             # Simple anomaly detection based on recent activity
             recent_events = [
                 e for e in self.metric_events 
@@ -370,21 +352,18 @@ class EngagementMetricsAnalyzer:
             self.logger.error(f"Anomaly detection failed: {e}")
     
     def get_engagement_summary(self, content_id: str, platform: PlatformType) -> Optional[EngagementSummary]:
-        """Get engagement summary for specific content"""
-        summary_key = f"{content_id}_{platform.value}"
+        """Get engagement summary for specific content"""        summary_key = f"{content_id}_{platform.value}"
         return self.engagement_summaries.get(summary_key)
     
     def calculate_engagement_rate(self, content_id: str, platform: PlatformType) -> float:
-        """Calculate current engagement rate for content"""
-        summary = self.get_engagement_summary(content_id, platform)
+        """Calculate current engagement rate for content"""        summary = self.get_engagement_summary(content_id, platform)
         if summary:
             return summary.engagement_rate
         return 0.0
     
     def analyze_performance_trends(self, platform: PlatformType, 
                                  days_back: int = 30) -> Dict[str, Any]:
-        """Analyze performance trends over time"""
-        try:
+        """Analyze performance trends over time"""        try:
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(days=days_back)
             
@@ -452,8 +431,7 @@ class EngagementMetricsAnalyzer:
     def get_top_performing_content(self, platform: Optional[PlatformType] = None, 
                                  metric_type: MetricType = MetricType.LIKE,
                                  limit: int = 10) -> List[Dict[str, Any]]:
-        """Get top performing content by metric"""
-        try:
+        """Get top performing content by metric"""        try:
             # Filter summaries by platform if specified
             relevant_summaries = []
             for summary in self.engagement_summaries.values():
@@ -501,8 +479,7 @@ class EngagementMetricsAnalyzer:
             return []
     
     def calculate_viral_coefficient(self, content_id: str, platform: PlatformType) -> float:
-        """Calculate viral coefficient (shares per impression)"""
-        try:
+        """Calculate viral coefficient (shares per impression)"""        try:
             summary = self.get_engagement_summary(content_id, platform)
             if summary and summary.total_impressions > 0:
                 viral_coefficient = (summary.total_shares + summary.total_saves) / summary.total_impressions
@@ -515,12 +492,10 @@ class EngagementMetricsAnalyzer:
             return 0.0
     
     def get_engagement_benchmarks(self, platform: PlatformType) -> Dict[str, Any]:
-        """Get engagement benchmarks for platform"""
-        return self.performance_benchmarks.get(platform.value, {})
+        """Get engagement benchmarks for platform"""        return self.performance_benchmarks.get(platform.value, {})
     
     def analyze_audience_behavior(self, content_id: str, platform: PlatformType) -> Dict[str, Any]:
-        """Analyze audience behavior patterns"""
-        try:
+        """Analyze audience behavior patterns"""        try:
             relevant_events = [
                 e for e in self.metric_events
                 if e.content_id == content_id and e.platform == platform
@@ -567,8 +542,7 @@ class EngagementMetricsAnalyzer:
             return {"error": str(e)}
     
     def get_real_time_metrics(self) -> RealTimeMetrics:
-        """Get current real-time engagement metrics"""
-        # Update current engagement rate based on recent activity
+        """Get current real-time engagement metrics"""        # Update current engagement rate based on recent activity
         recent_events = [
             e for e in self.metric_events
             if (datetime.utcnow() - e.timestamp).total_seconds() < 300  # Last 5 minutes
@@ -599,8 +573,7 @@ class EngagementMetricsAnalyzer:
         return self.real_time_data
     
     def export_metrics(self, format_type: str = "json") -> Union[str, Dict[str, Any]]:
-        """Export collected metrics in specified format"""
-        try:
+        """Export collected metrics in specified format"""        try:
             export_data = {
                 "export_timestamp": datetime.utcnow().isoformat(),
                 "total_events": len(self.metric_events),

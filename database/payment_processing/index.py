@@ -1,5 +1,4 @@
-"""
-Advanced Payment Processing Module - Main Entry Point
+"""Advanced Payment Processing Module - Main Entry Point
 
 Point d'entrée principal pour le module de traitement des paiements enterprise-grade
 avec orchestration complète des services, monitoring et gestion centralisée.
@@ -22,9 +21,7 @@ ENTERPRISE FEATURES:
 - Gestion des erreurs et retry automatiques
 - Circuit breaker et load balancing intégrés
 - Conformité et sécurité enforced
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Union
 from decimal import Decimal
@@ -90,8 +87,7 @@ __email__ = "mlaiel@live.de"
 
 @dataclass
 class PaymentProcessingRequest:
-    """Unified payment processing request"""
-    operation: str  # process_payment, refund, payout, etc.
+    """Unified payment processing request"""    operation: str  # process_payment, refund, payout, etc.
     user_id: str
     amount: Decimal
     currency: CurrencyCode
@@ -106,8 +102,7 @@ class PaymentProcessingRequest:
 
 @dataclass
 class PaymentProcessingResponse:
-    """Unified payment processing response"""
-    success: bool
+    """Unified payment processing response"""    success: bool
     operation: str
     transaction_id: Optional[str] = None
     status: Optional[PaymentStatus] = None
@@ -125,21 +120,17 @@ class PaymentProcessingResponse:
 
 
 class PaymentProcessingOrchestrator:
-    """
-    Orchestrateur principal pour toutes les opérations de paiement enterprise
+    """    Orchestrateur principal pour toutes les opérations de paiement enterprise
     
     Cette classe centralise et coordonne tous les services de paiement,
     fournit une interface unifiée et gère le monitoring centralisé.
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None):
-        """
-        Initialise l'orchestrateur avec configuration et services
+        """        Initialise l'orchestrateur avec configuration et services
         
         Args:
             config_path: Chemin vers le fichier de configuration (optionnel)
-        """
-        # Load configuration
+        """        # Load configuration
         self.config = self._load_configuration(config_path)
         
         # Initialize core services
@@ -168,13 +159,11 @@ class PaymentProcessingOrchestrator:
         logger.info(f"Payment Processing Orchestrator v{__version__} created")
     
     async def initialize(self) -> bool:
-        """
-        Initialise tous les services et composants
+        """        Initialise tous les services et composants
         
         Returns:
             bool: True si l'initialisation réussit, False sinon
-        """
-        try:
+        """        try:
             logger.info("Initializing Payment Processing Orchestrator...")
             
             # Initialize all services in parallel
@@ -217,16 +206,14 @@ class PaymentProcessingOrchestrator:
             return False
     
     async def process_payment(self, request: PaymentProcessingRequest) -> PaymentProcessingResponse:
-        """
-        Traite un paiement avec orchestration complète des services
+        """        Traite un paiement avec orchestration complète des services
         
         Args:
             request: Requête de traitement de paiement
             
         Returns:
             PaymentProcessingResponse: Résultat du traitement
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             return PaymentProcessingResponse(
                 success=False,
                 operation="process_payment",
@@ -351,8 +338,7 @@ class PaymentProcessingOrchestrator:
             )
     
     async def process_refund(self, transaction_id: str, amount: Optional[Decimal] = None, reason: str = "") -> PaymentProcessingResponse:
-        """
-        Traite un remboursement avec orchestration complète
+        """        Traite un remboursement avec orchestration complète
         
         Args:
             transaction_id: ID de la transaction à rembourser
@@ -361,8 +347,7 @@ class PaymentProcessingOrchestrator:
             
         Returns:
             PaymentProcessingResponse: Résultat du remboursement
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         
         try:
             refund_request = {
@@ -412,13 +397,11 @@ class PaymentProcessingOrchestrator:
             )
     
     async def health_check(self) -> Dict[str, Any]:
-        """
-        Effectue un contrôle de santé complet de tous les services
+        """        Effectue un contrôle de santé complet de tous les services
         
         Returns:
             Dict: Statut de santé détaillé
-        """
-        try:
+        """        try:
             health_status = {
                 'timestamp': datetime.utcnow().isoformat(),
                 'overall_healthy': True,
@@ -459,13 +442,11 @@ class PaymentProcessingOrchestrator:
             }
     
     async def get_analytics_dashboard(self) -> Dict[str, Any]:
-        """
-        Génère le dashboard analytics en temps réel
+        """        Génère le dashboard analytics en temps réel
         
         Returns:
             Dict: Données du dashboard
-        """
-        try:
+        """        try:
             dashboard_data = await self.analytics_engine.generate_real_time_dashboard()
             
             # Add orchestrator-specific metrics
@@ -482,8 +463,7 @@ class PaymentProcessingOrchestrator:
             return {'error': str(e)}
     
     def _load_configuration(self, config_path: Optional[str] = None) -> Dict[str, Any]:
-        """Charge la configuration depuis le fichier YAML"""
-        try:
+        """Charge la configuration depuis le fichier YAML"""        try:
             if config_path:
                 config_file = Path(config_path)
             else:
@@ -504,44 +484,37 @@ class PaymentProcessingOrchestrator:
             return PAYMENT_PROCESSING_CONFIG
     
     async def _initialize_payment_services(self):
-        """Initialise les services de paiement principaux"""
-        logger.info("Initializing payment services...")
+        """Initialise les services de paiement principaux"""        logger.info("Initializing payment services...")
         # Service initialization logic here
         pass
     
     async def _initialize_fraud_detection(self):
-        """Initialise le moteur de détection de fraude"""
-        logger.info("Initializing fraud detection engine...")
+        """Initialise le moteur de détection de fraude"""        logger.info("Initializing fraud detection engine...")
         # Fraud engine initialization logic here
         pass
     
     async def _initialize_analytics(self):
-        """Initialise le moteur d'analytics"""
-        logger.info("Initializing analytics engine...")
+        """Initialise le moteur d'analytics"""        logger.info("Initializing analytics engine...")
         # Analytics engine initialization logic here
         pass
     
     async def _initialize_compliance(self):
-        """Initialise le gestionnaire de conformité"""
-        logger.info("Initializing compliance manager...")
+        """Initialise le gestionnaire de conformité"""        logger.info("Initializing compliance manager...")
         # Compliance manager initialization logic here
         pass
     
     async def _initialize_webhooks(self):
-        """Initialise le gestionnaire de webhooks"""
-        logger.info("Initializing webhook manager...")
+        """Initialise le gestionnaire de webhooks"""        logger.info("Initializing webhook manager...")
         # Webhook manager initialization logic here
         pass
     
     async def _initialize_monitoring(self):
-        """Initialise le monitoring et les métriques"""
-        logger.info("Initializing monitoring systems...")
+        """Initialise le monitoring et les métriques"""        logger.info("Initializing monitoring systems...")
         # Monitoring initialization logic here
         pass
     
     async def _perform_transaction_compliance_check(self, payment_request: Dict, payment_result: Dict) -> Dict[str, Any]:
-        """Effectue les vérifications de conformité pour une transaction"""
-        # Simplified compliance check
+        """Effectue les vérifications de conformité pour une transaction"""        # Simplified compliance check
         return {
             'pci_dss_compliant': True,
             'gdpr_compliant': True,
@@ -555,16 +528,14 @@ _orchestrator_instance: Optional[PaymentProcessingOrchestrator] = None
 
 
 def get_payment_orchestrator(config_path: Optional[str] = None) -> PaymentProcessingOrchestrator:
-    """
-    Retourne l'instance singleton de l'orchestrateur de paiements
+    """    Retourne l'instance singleton de l'orchestrateur de paiements
     
     Args:
         config_path: Chemin vers le fichier de configuration (optionnel)
         
     Returns:
         PaymentProcessingOrchestrator: Instance de l'orchestrateur
-    """
-    global _orchestrator_instance
+    """    global _orchestrator_instance
     
     if _orchestrator_instance is None:
         _orchestrator_instance = PaymentProcessingOrchestrator(config_path)
@@ -574,14 +545,12 @@ def get_payment_orchestrator(config_path: Optional[str] = None) -> PaymentProces
 
 @asynccontextmanager
 async def payment_processing_context(config_path: Optional[str] = None):
-    """
-    Context manager pour l'orchestrateur de paiements avec initialisation automatique
+    """    Context manager pour l'orchestrateur de paiements avec initialisation automatique
     
     Usage:
         async with payment_processing_context() as orchestrator:
             result = await orchestrator.process_payment(request)
-    """
-    orchestrator = get_payment_orchestrator(config_path)
+    """    orchestrator = get_payment_orchestrator(config_path)
     
     if not orchestrator.is_initialized:
         await orchestrator.initialize()
@@ -602,8 +571,7 @@ async def process_payment_simple(
     description: str = "",
     **kwargs
 ) -> PaymentProcessingResponse:
-    """
-    Fonction utilitaire pour traiter un paiement de manière simple
+    """    Fonction utilitaire pour traiter un paiement de manière simple
     
     Args:
         user_id: ID de l'utilisateur
@@ -615,8 +583,7 @@ async def process_payment_simple(
         
     Returns:
         PaymentProcessingResponse: Résultat du traitement
-    """
-    async with payment_processing_context() as orchestrator:
+    """    async with payment_processing_context() as orchestrator:
         request = PaymentProcessingRequest(
             operation="process_payment",
             user_id=user_id,
@@ -631,16 +598,14 @@ async def process_payment_simple(
 
 
 async def get_payment_status(transaction_id: str) -> Dict[str, Any]:
-    """
-    Récupère le statut d'une transaction
+    """    Récupère le statut d'une transaction
     
     Args:
         transaction_id: ID de la transaction
         
     Returns:
         Dict: Statut de la transaction
-    """
-    async with payment_processing_context() as orchestrator:
+    """    async with payment_processing_context() as orchestrator:
         # Simplified status check
         return {
             'transaction_id': transaction_id,
@@ -650,13 +615,11 @@ async def get_payment_status(transaction_id: str) -> Dict[str, Any]:
 
 
 def get_module_status() -> Dict[str, Any]:
-    """
-    Retourne le statut général du module
+    """    Retourne le statut général du module
     
     Returns:
         Dict: Informations sur le module et son statut
-    """
-    return {
+    """    return {
         'module_info': get_module_info(),
         'compliance_status': get_compliance_status(),
         'supported_gateways': get_supported_gateways(),
@@ -672,8 +635,7 @@ if __name__ == "__main__":
     import sys
     
     async def main():
-        """Point d'entrée principal pour tests et démonstration"""
-        print(f"Payment Processing Module v{__version__}")
+        """Point d'entrée principal pour tests et démonstration"""        print(f"Payment Processing Module v{__version__}")
         print(f"Author: {__author__} <{__email__}>")
         print("=" * 50)
         

@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -15,24 +12,20 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 #!/usr/bin/env python3
-"""
-Test TODO Completion Implementation
+"""Test TODO Completion Implementation
 ==================================
 
 Simple validation script to verify that the critical TODO items have been 
 properly implemented without external dependencies.
 
 Author: Copilot Assistant
-"""
-
-import os
+"""import os
 import re
 import sys
 from pathlib import Path
 
 def test_licensing_enforcement_implementation():
-    """Test that licensing enforcement TODOs are implemented"""
-    file_path = "business/protection/licensing_enforcement.py"
+    """Test that licensing enforcement TODOs are implemented"""    file_path = "business/protection/licensing_enforcement.py"
     
     if not os.path.exists(file_path):
         return False, f"File {file_path} does not exist"
@@ -59,8 +52,7 @@ def test_licensing_enforcement_implementation():
     return True, "Licensing enforcement implementation complete"
 
 def test_copyright_management_implementation():
-    """Test that copyright management TODOs are implemented"""
-    file_path = "database/licensing/copyright_management.py"
+    """Test that copyright management TODOs are implemented"""    file_path = "database/licensing/copyright_management.py"
     
     if not os.path.exists(file_path):
         return False, f"File {file_path} does not exist"
@@ -96,8 +88,7 @@ def test_copyright_management_implementation():
     return True, "Copyright management implementation complete"
 
 def test_content_database_implementation():
-    """Test that content database TODOs are implemented"""
-    file_path = "data/fingerprinting/content_database.py"
+    """Test that content database TODOs are implemented"""    file_path = "data/fingerprinting/content_database.py"
     
     if not os.path.exists(file_path):
         return False, f"File {file_path} does not exist"
@@ -129,8 +120,7 @@ def test_content_database_implementation():
     return True, "Content database implementation complete"
 
 def test_ai_agents_implementation():
-    """Test that AI agents empty methods are implemented"""
-    files_to_check = [
+    """Test that AI agents empty methods are implemented"""    files_to_check = [
         "ai_engine/ai_agents/music_producer.py",
         "ai_engine/ai_agents/creative_director.py"
     ]
@@ -155,8 +145,7 @@ def test_ai_agents_implementation():
     return True, "AI agents implementation complete"
 
 def count_remaining_todos():
-    """Count remaining TODO items in the codebase"""
-    todo_count = 0
+    """Count remaining TODO items in the codebase"""    todo_count = 0
     todo_files = []
     
     for root, dirs, files in os.walk("."):
@@ -179,8 +168,7 @@ def count_remaining_todos():
     return todo_count, todo_files
 
 def main():
-    """Run all TODO completion tests"""
-    print("🧪 TODO Completion Implementation Tests")
+    """Run all TODO completion tests"""    print("🧪 TODO Completion Implementation Tests")
     print("=" * 50)
     
     tests = [

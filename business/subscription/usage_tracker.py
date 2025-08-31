@@ -1,5 +1,4 @@
-"""
-Usage Tracker
+"""Usage Tracker
 
 Real-time usage tracking and quota management system for subscription features.
 Monitors feature usage, enforces limits, and provides usage analytics.
@@ -8,9 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use strictly prohibited.
-"""
-
-from datetime import datetime, timedelta
+"""from datetime import datetime, timedelta
 from decimal import Decimal
 from typing import Optional, Dict, Any, List
 import logging
@@ -35,8 +32,7 @@ logger = get_logger(__name__)
 
 
 class UsageTracker:
-    """
-    Comprehensive usage tracking and quota management system.
+    """    Comprehensive usage tracking and quota management system.
     
     Features:
     - Real-time usage tracking for all subscription features
@@ -47,11 +43,9 @@ class UsageTracker:
     - Feature usage optimization recommendations
     - Quota warning systems and notifications
     - Historical usage reporting and insights
-    """
-    
+    """    
     def __init__(self):
-        """Initialize usage tracker."""
-        self.logger = get_logger(__name__)
+        """Initialize usage tracker."""        self.logger = get_logger(__name__)
         self.cache = CacheManager()
         self.events = EventPublisher()
         
@@ -72,8 +66,7 @@ class UsageTracker:
         metadata: Optional[Dict[str, Any]] = None,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Track feature usage for user.
+        """        Track feature usage for user.
         
         Args:
             user_id: User ID
@@ -84,8 +77,7 @@ class UsageTracker:
             
         Returns:
             Usage tracking result with current status
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         try:
@@ -156,8 +148,7 @@ class UsageTracker:
         requested_usage: int = 1,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Check if requested usage is within limits.
+        """        Check if requested usage is within limits.
         
         Args:
             user_id: User ID
@@ -167,8 +158,7 @@ class UsageTracker:
             
         Returns:
             Usage limit check result
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         try:
@@ -231,8 +221,7 @@ class UsageTracker:
         feature_name: Optional[str] = None,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Get current usage for user.
+        """        Get current usage for user.
         
         Args:
             user_id: User ID
@@ -241,8 +230,7 @@ class UsageTracker:
             
         Returns:
             Current usage information
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         try:
@@ -300,8 +288,7 @@ class UsageTracker:
         days_back: int = 30,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive usage analytics for user.
+        """        Get comprehensive usage analytics for user.
         
         Args:
             user_id: User ID
@@ -311,8 +298,7 @@ class UsageTracker:
             
         Returns:
             Comprehensive usage analytics
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         try:
@@ -355,8 +341,7 @@ class UsageTracker:
         feature_names: Optional[List[str]] = None,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Reset usage metrics for new billing period.
+        """        Reset usage metrics for new billing period.
         
         Args:
             user_id: User ID
@@ -365,8 +350,7 @@ class UsageTracker:
             
         Returns:
             Reset operation result
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         try:
@@ -439,8 +423,7 @@ class UsageTracker:
         user_id: int,
         db: Session
     ) -> Optional[UserSubscription]:
-        """Get active subscription for user."""
-        return db.query(UserSubscription).filter(
+        """Get active subscription for user."""        return db.query(UserSubscription).filter(
             UserSubscription.user_id == user_id,
             UserSubscription.status.in_([
                 SubscriptionStatus.ACTIVE.value,
@@ -456,8 +439,7 @@ class UsageTracker:
         feature_name: str,
         db: Session
     ) -> UsageMetrics:
-        """Get or create usage metric for current period."""
-        current_time = datetime.utcnow()
+        """Get or create usage metric for current period."""        current_time = datetime.utcnow()
         
         # Try to get existing metric for current period
         existing_metric = db.query(UsageMetrics).filter(
@@ -503,16 +485,14 @@ class UsageTracker:
         feature_name: str,
         db: Session
     ) -> Optional[UsageMetrics]:
-        """Get current usage metric for feature."""
-        return db.query(UsageMetrics).filter(
+        """Get current usage metric for feature."""        return db.query(UsageMetrics).filter(
             UsageMetrics.user_id == user_id,
             UsageMetrics.feature_name == feature_name,
             UsageMetrics.period_end > datetime.utcnow()
         ).first()
     
     async def _check_quota_status(self, usage_metric: UsageMetrics) -> Dict[str, Any]:
-        """Check quota status for usage metric."""
-        quota_status = {
+        """Check quota status for usage metric."""        quota_status = {
             "has_limit": usage_metric.quota_limit is not None,
             "within_limit": True,
             "quota_exceeded": False,
@@ -539,8 +519,7 @@ class UsageTracker:
         usage_amount: int,
         quota_status: Dict[str, Any]
     ) -> None:
-        """Publish usage tracking event."""
-        await self.events.publish("usage.tracked", {
+        """Publish usage tracking event."""        await self.events.publish("usage.tracked", {
             "user_id": user_id,
             "feature_name": feature_name,
             "usage_amount": usage_amount,
@@ -554,8 +533,7 @@ class UsageTracker:
         feature_name: str,
         quota_status: Dict[str, Any]
     ) -> None:
-        """Send quota warning notification."""
-        # Implementation would send notification
+        """Send quota warning notification."""        # Implementation would send notification
         await self.events.publish("usage.quota_warning", {
             "user_id": user_id,
             "feature_name": feature_name,
@@ -569,8 +547,7 @@ class UsageTracker:
         start_date: datetime,
         db: Session
     ) -> List[Dict[str, Any]]:
-        """Get historical usage data."""
-        historical_metrics = db.query(UsageMetrics).filter(
+        """Get historical usage data."""        historical_metrics = db.query(UsageMetrics).filter(
             UsageMetrics.user_id == user_id,
             UsageMetrics.period_start >= start_date
         ).order_by(UsageMetrics.period_start.desc()).all()
@@ -589,8 +566,7 @@ class UsageTracker:
         start_date: datetime,
         db: Session
     ) -> Dict[str, Any]:
-        """Calculate usage trends and patterns."""
-        # Implementation would analyze usage trends
+        """Calculate usage trends and patterns."""        # Implementation would analyze usage trends
         return {"trends": "Usage trend analysis would be implemented here"}
     
     async def _generate_usage_recommendations(
@@ -599,8 +575,7 @@ class UsageTracker:
         current_usage: Dict[str, Any],
         db: Session
     ) -> List[Dict[str, Any]]:
-        """Generate usage optimization recommendations."""
-        recommendations = []
+        """Generate usage optimization recommendations."""        recommendations = []
         
         features = current_usage.get("features", {})
         for feature_name, usage_data in features.items():

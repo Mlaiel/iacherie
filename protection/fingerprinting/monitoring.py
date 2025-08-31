@@ -1,5 +1,4 @@
-"""
-📊 Advanced Monitoring & Analytics System for Content Fingerprinting
+"""📊 Advanced Monitoring & Analytics System for Content Fingerprinting
 ===================================================================
 
 Enterprise-grade monitoring, metrics collection, and analytics system
@@ -12,9 +11,7 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission from Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 from typing import Dict, List, Optional, Any, Callable, Tuple
@@ -38,31 +35,27 @@ from .models import ContentType, ProcessingStatus, ProcessingMetrics, QualityMet
 logger = logging.getLogger(__name__)
 
 class MetricType(str, Enum):
-    """Types of metrics collected."""
-    COUNTER = "counter"
+    """Types of metrics collected."""    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     TIMER = "timer"
 
 class AlertLevel(str, Enum):
-    """Alert severity levels."""
-    INFO = "info"
+    """Alert severity levels."""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
 
 @dataclass
 class MetricPoint:
-    """Single metric data point."""
-    timestamp: datetime
+    """Single metric data point."""    timestamp: datetime
     value: float
     labels: Dict[str, str] = field(default_factory=dict)
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 @dataclass
 class Alert:
-    """System alert definition."""
-    alert_id: str
+    """System alert definition."""    alert_id: str
     level: AlertLevel
     message: str
     metric_name: str
@@ -74,8 +67,7 @@ class Alert:
 
 @dataclass
 class PerformanceReport:
-    """Comprehensive performance report."""
-    report_id: str
+    """Comprehensive performance report."""    report_id: str
     period_start: datetime
     period_end: datetime
     total_files_processed: int
@@ -89,8 +81,7 @@ class PerformanceReport:
     recommendations: List[str]
 
 class MetricsCollector:
-    """Advanced metrics collection and aggregation system."""
-    
+    """Advanced metrics collection and aggregation system."""    
     def __init__(self, collection_interval: float = 1.0, max_history: int = 10000):
         self.collection_interval = collection_interval
         self.max_history = max_history
@@ -113,8 +104,7 @@ class MetricsCollector:
         self.custom_collectors: List[Callable] = []
         
     def _setup_prometheus_metrics(self):
-        """Setup Prometheus metrics."""
-        self.prom_counters = {
+        """Setup Prometheus metrics."""        self.prom_counters = {
             'files_processed_total': Counter(
                 'fingerprinting_files_processed_total',
                 'Total number of files processed',
@@ -170,8 +160,7 @@ class MetricsCollector:
         }
     
     def start_collection(self):
-        """Start metrics collection."""
-        if self.collecting:
+        """Start metrics collection."""        if self.collecting:
             return
         
         self.collecting = True
@@ -180,15 +169,13 @@ class MetricsCollector:
         logger.info("Metrics collection started")
     
     def stop_collection(self):
-        """Stop metrics collection."""
-        self.collecting = False
+        """Stop metrics collection."""        self.collecting = False
         if self.collection_thread:
             self.collection_thread.join(timeout=5.0)
         logger.info("Metrics collection stopped")
     
     def _collection_loop(self):
-        """Main collection loop."""
-        while self.collecting:
+        """Main collection loop."""        while self.collecting:
             try:
                 # Collect system metrics
                 self._collect_system_metrics()
@@ -206,8 +193,7 @@ class MetricsCollector:
                 logger.error(f"Metrics collection error: {e}")
     
     def _collect_system_metrics(self):
-        """Collect system resource metrics."""
-        try:
+        """Collect system resource metrics."""        try:
             # CPU metrics
             cpu_percent = psutil.cpu_percent()
             self.record_gauge('system.cpu.usage', cpu_percent)
@@ -235,30 +221,25 @@ class MetricsCollector:
             logger.warning(f"System metrics collection failed: {e}")
     
     def record_counter(self, name: str, value: float = 1.0, labels: Dict[str, str] = None):
-        """Record counter metric."""
-        self.counters[name] += value
+        """Record counter metric."""        self.counters[name] += value
         self._record_metric(name, value, MetricType.COUNTER, labels)
     
     def record_gauge(self, name: str, value: float, labels: Dict[str, str] = None):
-        """Record gauge metric."""
-        self.gauges[name] = value
+        """Record gauge metric."""        self.gauges[name] = value
         self._record_metric(name, value, MetricType.GAUGE, labels)
     
     def record_histogram(self, name: str, value: float, labels: Dict[str, str] = None):
-        """Record histogram metric."""
-        self.histograms[name].append(value)
+        """Record histogram metric."""        self.histograms[name].append(value)
         if len(self.histograms[name]) > self.max_history:
             self.histograms[name] = self.histograms[name][-self.max_history:]
         self._record_metric(name, value, MetricType.HISTOGRAM, labels)
     
     def record_timer(self, name: str, duration: float, labels: Dict[str, str] = None):
-        """Record timing metric."""
-        self.record_histogram(f"{name}.duration", duration, labels)
+        """Record timing metric."""        self.record_histogram(f"{name}.duration", duration, labels)
     
     def _record_metric(self, name: str, value: float, metric_type: MetricType, 
                       labels: Dict[str, str] = None):
-        """Record metric point."""
-        point = MetricPoint(
+        """Record metric point."""        point = MetricPoint(
             timestamp=datetime.utcnow(),
             value=value,
             labels=labels or {},
@@ -267,8 +248,7 @@ class MetricsCollector:
         self.metrics[name].append(point)
     
     def get_metric_stats(self, name: str, window_minutes: int = 60) -> Dict[str, float]:
-        """Get statistical summary of metric over time window."""
-        cutoff_time = datetime.utcnow() - timedelta(minutes=window_minutes)
+        """Get statistical summary of metric over time window."""        cutoff_time = datetime.utcnow() - timedelta(minutes=window_minutes)
         
         recent_points = [
             point for point in self.metrics[name]
@@ -292,16 +272,13 @@ class MetricsCollector:
         }
     
     def add_custom_collector(self, collector: Callable):
-        """Add custom metrics collector function."""
-        self.custom_collectors.append(collector)
+        """Add custom metrics collector function."""        self.custom_collectors.append(collector)
     
     def get_prometheus_metrics(self) -> str:
-        """Get metrics in Prometheus format."""
-        return generate_latest(self.registry).decode('utf-8')
+        """Get metrics in Prometheus format."""        return generate_latest(self.registry).decode('utf-8')
 
 class AlertingSystem:
-    """Intelligent alerting system with configurable thresholds."""
-    
+    """Intelligent alerting system with configurable thresholds."""    
     def __init__(self, metrics_collector: MetricsCollector):
         self.metrics_collector = metrics_collector
         self.alert_rules: Dict[str, Dict[str, Any]] = {}
@@ -313,8 +290,7 @@ class AlertingSystem:
         self._setup_default_rules()
         
     def _setup_default_rules(self):
-        """Setup default alerting rules."""
-        self.alert_rules = {
+        """Setup default alerting rules."""        self.alert_rules = {
             'high_cpu_usage': {
                 'metric': 'system.cpu.usage',
                 'threshold': 90.0,
@@ -347,8 +323,7 @@ class AlertingSystem:
     
     def add_rule(self, rule_name: str, metric: str, threshold: float, 
                 operator: str, level: AlertLevel, message: str):
-        """Add custom alert rule."""
-        self.alert_rules[rule_name] = {
+        """Add custom alert rule."""        self.alert_rules[rule_name] = {
             'metric': metric,
             'threshold': threshold,
             'operator': operator,
@@ -357,8 +332,7 @@ class AlertingSystem:
         }
     
     def check_alerts(self):
-        """Check all alert rules and trigger alerts if needed."""
-        for rule_name, rule in self.alert_rules.items():
+        """Check all alert rules and trigger alerts if needed."""        for rule_name, rule in self.alert_rules.items():
             try:
                 # Get recent metric stats
                 stats = self.metrics_collector.get_metric_stats(rule['metric'], window_minutes=5)
@@ -404,8 +378,7 @@ class AlertingSystem:
                 logger.error(f"Alert check failed for rule {rule_name}: {e}")
     
     def _send_alert(self, alert: Alert):
-        """Send alert through configured notification handlers."""
-        logger.warning(f"ALERT [{alert.level.value.upper()}]: {alert.message}")
+        """Send alert through configured notification handlers."""        logger.warning(f"ALERT [{alert.level.value.upper()}]: {alert.message}")
         
         for handler in self.notification_handlers:
             try:
@@ -414,19 +387,16 @@ class AlertingSystem:
                 logger.error(f"Alert notification failed: {e}")
     
     def add_notification_handler(self, handler: Callable[[Alert], None]):
-        """Add alert notification handler."""
-        self.notification_handlers.append(handler)
+        """Add alert notification handler."""        self.notification_handlers.append(handler)
     
     def acknowledge_alert(self, alert_id: str):
-        """Acknowledge an active alert."""
-        for alert in self.active_alerts.values():
+        """Acknowledge an active alert."""        for alert in self.active_alerts.values():
             if alert.alert_id == alert_id:
                 alert.acknowledged = True
                 break
 
 class AnalyticsEngine:
-    """Advanced analytics and reporting engine."""
-    
+    """Advanced analytics and reporting engine."""    
     def __init__(self, metrics_collector: MetricsCollector):
         self.metrics_collector = metrics_collector
         self.reports_cache: Dict[str, PerformanceReport] = {}
@@ -434,8 +404,7 @@ class AnalyticsEngine:
     def generate_performance_report(self, 
                                   start_time: datetime, 
                                   end_time: datetime) -> PerformanceReport:
-        """Generate comprehensive performance report."""
-        
+        """Generate comprehensive performance report."""        
         # Collect metrics for period
         period_metrics = self._collect_period_metrics(start_time, end_time)
         
@@ -485,8 +454,7 @@ class AnalyticsEngine:
         return report
     
     def _collect_period_metrics(self, start_time: datetime, end_time: datetime) -> Dict[str, Any]:
-        """Collect metrics for specific time period."""
-        metrics = {}
+        """Collect metrics for specific time period."""        metrics = {}
         
         # Aggregate data from metrics collector
         for metric_name, points in self.metrics_collector.metrics.items():
@@ -508,8 +476,7 @@ class AnalyticsEngine:
         return metrics
     
     def _calculate_trends(self, start_time: datetime, end_time: datetime) -> Dict[str, List[float]]:
-        """Calculate performance trends over time."""
-        trends = {}
+        """Calculate performance trends over time."""        trends = {}
         
         # Split period into segments for trend analysis
         period_duration = end_time - start_time
@@ -531,8 +498,7 @@ class AnalyticsEngine:
         return trends
     
     def _analyze_quality_metrics(self, start_time: datetime, end_time: datetime) -> Dict[str, float]:
-        """Analyze quality metrics for the period."""
-        quality_stats = self.metrics_collector.get_metric_stats('processing.quality_score', 
+        """Analyze quality metrics for the period."""        quality_stats = self.metrics_collector.get_metric_stats('processing.quality_score', 
                                                                window_minutes=int((end_time - start_time).total_seconds() / 60))
         
         return {
@@ -543,8 +509,7 @@ class AnalyticsEngine:
         }
     
     def _analyze_resource_usage(self, start_time: datetime, end_time: datetime) -> Dict[str, float]:
-        """Analyze resource utilization for the period."""
-        window_minutes = int((end_time - start_time).total_seconds() / 60)
+        """Analyze resource utilization for the period."""        window_minutes = int((end_time - start_time).total_seconds() / 60)
         
         cpu_stats = self.metrics_collector.get_metric_stats('system.cpu.usage', window_minutes)
         memory_stats = self.metrics_collector.get_metric_stats('system.memory.usage', window_minutes)
@@ -558,8 +523,7 @@ class AnalyticsEngine:
     
     def _generate_recommendations(self, success_rate: float, error_rate: float,
                                 resources: Dict[str, float], trends: Dict[str, List[float]]) -> List[str]:
-        """Generate optimization recommendations."""
-        recommendations = []
+        """Generate optimization recommendations."""        recommendations = []
         
         # Performance recommendations
         if success_rate < 90:
@@ -584,8 +548,7 @@ class AnalyticsEngine:
         return recommendations
     
     def create_dashboard_data(self, report: PerformanceReport) -> Dict[str, Any]:
-        """Create data structure for dashboard visualization."""
-        return {
+        """Create data structure for dashboard visualization."""        return {
             'overview': {
                 'total_files': report.total_files_processed,
                 'success_rate': round(report.success_rate, 2),
@@ -604,15 +567,13 @@ class AnalyticsEngine:
         }
 
 class MonitoringDashboard:
-    """Real-time monitoring dashboard generator."""
-    
+    """Real-time monitoring dashboard generator."""    
     def __init__(self, metrics_collector: MetricsCollector, analytics_engine: AnalyticsEngine):
         self.metrics_collector = metrics_collector
         self.analytics_engine = analytics_engine
         
     def generate_realtime_chart(self, metric_name: str, window_minutes: int = 60) -> str:
-        """Generate real-time chart for a metric."""
-        # Get metric data
+        """Generate real-time chart for a metric."""        # Get metric data
         cutoff_time = datetime.utcnow() - timedelta(minutes=window_minutes)
         points = [
             point for point in self.metrics_collector.metrics[metric_name]
@@ -649,8 +610,7 @@ class MonitoringDashboard:
 
 # Main monitoring system class
 class FingerprintingMonitor:
-    """
-    Unified monitoring system for content fingerprinting operations.
+    """    Unified monitoring system for content fingerprinting operations.
     
     Features:
     - Real-time metrics collection and visualization
@@ -659,8 +619,7 @@ class FingerprintingMonitor:
     - Resource utilization monitoring
     - Quality assurance tracking
     - Business intelligence reporting
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -678,8 +637,7 @@ class FingerprintingMonitor:
         self.running = False
         
     async def start(self):
-        """Start the monitoring system."""
-        if self.running:
+        """Start the monitoring system."""        if self.running:
             return
         
         self.metrics_collector.start_collection()
@@ -691,14 +649,12 @@ class FingerprintingMonitor:
         logger.info("Fingerprinting monitoring system started")
     
     async def stop(self):
-        """Stop the monitoring system."""
-        self.running = False
+        """Stop the monitoring system."""        self.running = False
         self.metrics_collector.stop_collection()
         logger.info("Fingerprinting monitoring system stopped")
     
     async def _alert_check_loop(self):
-        """Background loop for checking alerts."""
-        while self.running:
+        """Background loop for checking alerts."""        while self.running:
             try:
                 self.alerting_system.check_alerts()
                 await asyncio.sleep(30)  # Check every 30 seconds
@@ -708,8 +664,7 @@ class FingerprintingMonitor:
     
     def record_processing_event(self, content_type: ContentType, status: ProcessingStatus,
                                duration: float, quality_score: float = None):
-        """Record a processing event for monitoring."""
-        # Record basic metrics
+        """Record a processing event for monitoring."""        # Record basic metrics
         self.metrics_collector.record_counter(
             'files_processed_total',
             labels={'content_type': content_type.value, 'status': status.value}
@@ -738,8 +693,7 @@ class FingerprintingMonitor:
         ).observe(duration)
     
     def get_system_health(self) -> Dict[str, Any]:
-        """Get overall system health status."""
-        return {
+        """Get overall system health status."""        return {
             'status': 'healthy' if self.running else 'stopped',
             'active_alerts': len(self.alerting_system.active_alerts),
             'metrics_collected': len(self.metrics_collector.metrics),

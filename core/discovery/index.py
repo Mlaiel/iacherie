@@ -1,5 +1,4 @@
-"""
-🔍 DISCOVERY MODULE INDEX - Central Discovery Service Registry
+"""🔍 DISCOVERY MODULE INDEX - Central Discovery Service Registry
 ============================================================
 
 Team Specialties:
@@ -35,9 +34,7 @@ Features:
 - Enterprise-grade security and access control
 - Real-time analytics and metrics collection
 - Fault tolerance and automatic failover
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple, Union, Callable
@@ -61,16 +58,14 @@ from .performance_tracker import PerformanceTracker, SearchPerformance, UserEnga
 logger = logging.getLogger(__name__)
 
 class ServiceStatus(Enum):
-    """Discovery service status enumeration"""
-    HEALTHY = "healthy"
+    """Discovery service status enumeration"""    HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
     UNAVAILABLE = "unavailable"
     MAINTENANCE = "maintenance"
 
 class QueryType(Enum):
-    """Discovery query type enumeration"""
-    CONTENT_SEARCH = "content_search"
+    """Discovery query type enumeration"""    CONTENT_SEARCH = "content_search"
     CREATOR_SEARCH = "creator_search"
     OPPORTUNITY_SCAN = "opportunity_scan"
     TREND_ANALYSIS = "trend_analysis"
@@ -80,8 +75,7 @@ class QueryType(Enum):
 
 @dataclass
 class ServiceInfo:
-    """Discovery service information"""
-    service_name: str
+    """Discovery service information"""    service_name: str
     service_type: str
     status: ServiceStatus
     version: str
@@ -97,8 +91,7 @@ class ServiceInfo:
 
 @dataclass
 class DiscoveryRequest:
-    """Unified discovery request"""
-    request_id: str
+    """Unified discovery request"""    request_id: str
     query_type: QueryType
     query_text: str
     user_id: Optional[str]
@@ -113,8 +106,7 @@ class DiscoveryRequest:
 
 @dataclass
 class DiscoveryResponse:
-    """Unified discovery response"""
-    request_id: str
+    """Unified discovery response"""    request_id: str
     query_type: QueryType
     status: str
     total_results: int
@@ -130,8 +122,7 @@ class DiscoveryResponse:
 
 
 class DiscoveryIndex:
-    """
-    Central discovery service registry and orchestration engine
+    """    Central discovery service registry and orchestration engine
     
     This class provides unified access to all discovery services with:
     - Service discovery and registration management
@@ -141,11 +132,9 @@ class DiscoveryIndex:
     - Comprehensive monitoring and health management
     - Enterprise-grade security and access control
     - Real-time analytics and fault tolerance
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize discovery index with configuration"""
-        self.config = config or {}
+        """Initialize discovery index with configuration"""        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
         # Service registry and management
@@ -189,8 +178,7 @@ class DiscoveryIndex:
         self._analytics_task: Optional[asyncio.Task] = None
 
     async def initialize(self) -> bool:
-        """Initialize all discovery services and components"""
-        try:
+        """Initialize all discovery services and components"""        try:
             self.logger.info("Initializing DiscoveryIndex...")
             
             # Initialize individual services
@@ -216,16 +204,14 @@ class DiscoveryIndex:
             return False
 
     async def process_discovery_request(self, request: DiscoveryRequest) -> DiscoveryResponse:
-        """
-        Process unified discovery request across all relevant services
+        """        Process unified discovery request across all relevant services
         
         Args:
             request: Discovery request with query and parameters
             
         Returns:
             Unified discovery response with results from all services
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Validate request
@@ -307,8 +293,7 @@ class DiscoveryIndex:
         options: Optional[Dict[str, Any]] = None,
         user_id: Optional[str] = None
     ) -> List[ExplorationResult]:
-        """
-        Search for content using the content explorer service
+        """        Search for content using the content explorer service
         
         Args:
             query: Search query string
@@ -318,8 +303,7 @@ class DiscoveryIndex:
             
         Returns:
             List of content exploration results
-        """
-        try:
+        """        try:
             request = DiscoveryRequest(
                 request_id=str(uuid.uuid4()),
                 query_type=QueryType.CONTENT_SEARCH,
@@ -343,8 +327,7 @@ class DiscoveryIndex:
         options: Optional[Dict[str, Any]] = None,
         user_id: Optional[str] = None
     ) -> List[CreatorMatch]:
-        """
-        Find creators using the creator finder service
+        """        Find creators using the creator finder service
         
         Args:
             query: Search query describing desired creators
@@ -354,8 +337,7 @@ class DiscoveryIndex:
             
         Returns:
             List of creator matches
-        """
-        try:
+        """        try:
             request = DiscoveryRequest(
                 request_id=str(uuid.uuid4()),
                 query_type=QueryType.CREATOR_SEARCH,
@@ -378,8 +360,7 @@ class DiscoveryIndex:
         filters: Optional[OpportunityFilter] = None,
         options: Optional[Dict[str, Any]] = None
     ) -> List[BusinessOpportunity]:
-        """
-        Scan for business opportunities using the opportunity scanner
+        """        Scan for business opportunities using the opportunity scanner
         
         Args:
             creator_id: Creator ID to scan opportunities for
@@ -388,8 +369,7 @@ class DiscoveryIndex:
             
         Returns:
             List of business opportunities
-        """
-        try:
+        """        try:
             request = DiscoveryRequest(
                 request_id=str(uuid.uuid4()),
                 query_type=QueryType.OPPORTUNITY_SCAN,
@@ -412,8 +392,7 @@ class DiscoveryIndex:
         time_window: Optional[timedelta] = None,
         options: Optional[Dict[str, Any]] = None
     ) -> List[TrendPrediction]:
-        """
-        Analyze trends using the trend analyzer service
+        """        Analyze trends using the trend analyzer service
         
         Args:
             category: Category to analyze trends for
@@ -422,8 +401,7 @@ class DiscoveryIndex:
             
         Returns:
             List of trend predictions
-        """
-        try:
+        """        try:
             query = f"trends analysis for {category}" if category else "general trends analysis"
             
             request = DiscoveryRequest(
@@ -448,8 +426,7 @@ class DiscoveryIndex:
         context: Optional[Dict[str, Any]] = None,
         options: Optional[Dict[str, Any]] = None
     ) -> List[RecommendationResult]:
-        """
-        Get personalized recommendations using the recommendation engine
+        """        Get personalized recommendations using the recommendation engine
         
         Args:
             user_id: User ID for personalized recommendations
@@ -459,8 +436,7 @@ class DiscoveryIndex:
             
         Returns:
             List of personalized recommendations
-        """
-        try:
+        """        try:
             request = DiscoveryRequest(
                 request_id=str(uuid.uuid4()),
                 query_type=QueryType.RECOMMENDATION,
@@ -483,8 +459,7 @@ class DiscoveryIndex:
         context: Optional[SearchContext] = None,
         options: Optional[Dict[str, Any]] = None
     ) -> List[Dict[str, Any]]:
-        """
-        Perform semantic search using the semantic search engine
+        """        Perform semantic search using the semantic search engine
         
         Args:
             query: Semantic search query
@@ -493,8 +468,7 @@ class DiscoveryIndex:
             
         Returns:
             List of semantic search results
-        """
-        try:
+        """        try:
             request = DiscoveryRequest(
                 request_id=str(uuid.uuid4()),
                 query_type=QueryType.SEMANTIC_SEARCH,
@@ -517,8 +491,7 @@ class DiscoveryIndex:
         filters: Optional[Dict[str, Any]] = None,
         options: Optional[Dict[str, Any]] = None
     ) -> DiscoveryResponse:
-        """
-        Perform comprehensive discovery across all services
+        """        Perform comprehensive discovery across all services
         
         Args:
             query: Discovery query string
@@ -528,8 +501,7 @@ class DiscoveryIndex:
             
         Returns:
             Comprehensive discovery response with results from all services
-        """
-        try:
+        """        try:
             request = DiscoveryRequest(
                 request_id=str(uuid.uuid4()),
                 query_type=QueryType.COMBINED_DISCOVERY,
@@ -558,8 +530,7 @@ class DiscoveryIndex:
     # Service management and health monitoring
 
     async def get_service_health(self) -> Dict[str, ServiceInfo]:
-        """Get health status of all registered discovery services"""
-        try:
+        """Get health status of all registered discovery services"""        try:
             with self.service_lock:
                 return self.service_health.copy()
                 
@@ -568,8 +539,7 @@ class DiscoveryIndex:
             return {}
 
     async def get_discovery_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive discovery index metrics"""
-        try:
+        """Get comprehensive discovery index metrics"""        try:
             return {
                 'request_metrics': self.request_metrics.copy(),
                 'service_health': await self.get_service_health(),
@@ -586,8 +556,7 @@ class DiscoveryIndex:
             return {}
 
     async def shutdown(self):
-        """Shutdown discovery index and all services"""
-        try:
+        """Shutdown discovery index and all services"""        try:
             # Cancel background tasks
             if self._health_monitoring_task:
                 self._health_monitoring_task.cancel()
@@ -627,8 +596,7 @@ class DiscoveryIndex:
     # Private implementation methods
 
     async def _initialize_discovery_services(self):
-        """Initialize all discovery services"""
-        try:
+        """Initialize all discovery services"""        try:
             # Initialize core discovery manager
             self.discovery_manager = DiscoveryManager(self.config.get('discovery_manager', {}))
             await self.discovery_manager.initialize()
@@ -668,8 +636,7 @@ class DiscoveryIndex:
             raise
 
     async def _register_services(self):
-        """Register all services in the service registry"""
-        try:
+        """Register all services in the service registry"""        try:
             services_to_register = [
                 ('discovery_manager', self.discovery_manager, 'Core Discovery Management'),
                 ('content_explorer', self.content_explorer, 'Content Discovery & Analysis'),
@@ -706,8 +673,7 @@ class DiscoveryIndex:
             raise
 
     async def _setup_query_routing(self):
-        """Setup intelligent query routing"""
-        try:
+        """Setup intelligent query routing"""        try:
             self.query_router = {
                 QueryType.CONTENT_SEARCH: ['content_explorer', 'semantic_search'],
                 QueryType.CREATOR_SEARCH: ['creator_finder', 'semantic_search'],
@@ -724,8 +690,7 @@ class DiscoveryIndex:
             self.logger.error(f"Failed to setup query routing: {e}")
 
     async def _start_background_services(self):
-        """Start background monitoring and optimization services"""
-        try:
+        """Start background monitoring and optimization services"""        try:
             # Health monitoring task
             self._health_monitoring_task = asyncio.create_task(self._health_monitoring_loop())
             
@@ -741,8 +706,7 @@ class DiscoveryIndex:
             self.logger.error(f"Failed to start background services: {e}")
 
     async def _health_monitoring_loop(self):
-        """Background task for service health monitoring"""
-        while True:
+        """Background task for service health monitoring"""        while True:
             try:
                 await asyncio.sleep(60)  # Check health every minute
                 await self._check_service_health()
@@ -750,8 +714,7 @@ class DiscoveryIndex:
                 self.logger.error(f"Error in health monitoring loop: {e}")
 
     async def _cache_optimization_loop(self):
-        """Background task for cache optimization"""
-        while True:
+        """Background task for cache optimization"""        while True:
             try:
                 await asyncio.sleep(300)  # Optimize cache every 5 minutes
                 await self._optimize_cache()
@@ -759,8 +722,7 @@ class DiscoveryIndex:
                 self.logger.error(f"Error in cache optimization loop: {e}")
 
     async def _analytics_collection_loop(self):
-        """Background task for analytics collection"""
-        while True:
+        """Background task for analytics collection"""        while True:
             try:
                 await asyncio.sleep(180)  # Collect analytics every 3 minutes
                 await self._collect_analytics()
@@ -772,8 +734,7 @@ class DiscoveryIndex:
 _discovery_index: Optional[DiscoveryIndex] = None
 
 async def get_discovery_index() -> DiscoveryIndex:
-    """Get global discovery index instance"""
-    global _discovery_index
+    """Get global discovery index instance"""    global _discovery_index
     
     if _discovery_index is None:
         _discovery_index = DiscoveryIndex()
@@ -782,8 +743,7 @@ async def get_discovery_index() -> DiscoveryIndex:
     return _discovery_index
 
 async def initialize_discovery_services(config: Optional[Dict[str, Any]] = None) -> bool:
-    """Initialize global discovery services"""
-    global _discovery_index
+    """Initialize global discovery services"""    global _discovery_index
     
     try:
         _discovery_index = DiscoveryIndex(config)
@@ -793,8 +753,7 @@ async def initialize_discovery_services(config: Optional[Dict[str, Any]] = None)
         return False
 
 async def shutdown_discovery_services():
-    """Shutdown global discovery services"""
-    global _discovery_index
+    """Shutdown global discovery services"""    global _discovery_index
     
     if _discovery_index:
         await _discovery_index.shutdown()

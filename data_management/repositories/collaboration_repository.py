@@ -1,5 +1,4 @@
-"""
-🤝 Collaboration Repository - IA Influencer Agent Platform Enterprise
+"""🤝 Collaboration Repository - IA Influencer Agent Platform Enterprise
 ================================================================
 Module: backend/data_management/repositories/collaboration_repository.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -21,9 +20,7 @@ Performance Tracking → Relationship Building
 COLLABORATION REPOSITORY ARCHITECTURE:
 Matching Algorithm → Partnership Management → Project Workflow → 
 Revenue Distribution → Performance Analytics → Relationship Tracking
-"""
-
-from typing import Dict, List, Optional, Any, Tuple, Union
+"""from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
 import hashlib
@@ -42,8 +39,7 @@ except ImportError:
         pass
 
 class CollaborationType(Enum):
-    """Types of collaborations"""
-    CONTENT_CREATION = "content_creation"
+    """Types of collaborations"""    CONTENT_CREATION = "content_creation"
     SKILL_EXCHANGE = "skill_exchange"
     CROSS_PROMOTION = "cross_promotion"
     JOINT_PROJECT = "joint_project"
@@ -52,8 +48,7 @@ class CollaborationType(Enum):
     EVENT_COLLABORATION = "event_collaboration"
 
 class CollaborationStatus(Enum):
-    """Collaboration status"""
-    PROPOSED = "proposed"
+    """Collaboration status"""    PROPOSED = "proposed"
     NEGOTIATING = "negotiating"
     ACCEPTED = "accepted"
     ACTIVE = "active"
@@ -62,8 +57,7 @@ class CollaborationStatus(Enum):
     DISPUTED = "disputed"
 
 class MatchingCriteria(Enum):
-    """Criteria for matching creators"""
-    SKILLS = "skills"
+    """Criteria for matching creators"""    SKILLS = "skills"
     AUDIENCE = "audience"
     STYLE = "style"
     GENRE = "genre"
@@ -73,8 +67,7 @@ class MatchingCriteria(Enum):
     BUDGET = "budget"
 
 class ProjectRole(Enum):
-    """Roles in collaboration projects"""
-    LEAD = "lead"
+    """Roles in collaboration projects"""    LEAD = "lead"
     CONTRIBUTOR = "contributor"
     CONSULTANT = "consultant"
     MENTOR = "mentor"
@@ -83,8 +76,7 @@ class ProjectRole(Enum):
 
 @dataclass
 class CollaborationMatch:
-    """AI-powered collaboration match"""
-    match_id: str
+    """AI-powered collaboration match"""    match_id: str
     creator_1_id: str
     creator_2_id: str
     compatibility_score: float
@@ -96,8 +88,7 @@ class CollaborationMatch:
 
 @dataclass
 class CollaborationProposal:
-    """Collaboration proposal"""
-    proposal_id: str
+    """Collaboration proposal"""    proposal_id: str
     proposer_id: str
     recipient_id: str
     collaboration_type: CollaborationType
@@ -113,8 +104,7 @@ class CollaborationProposal:
 
 @dataclass
 class ActiveCollaboration:
-    """Active collaboration project"""
-    collaboration_id: str
+    """Active collaboration project"""    collaboration_id: str
     participants: List[str]
     collaboration_type: CollaborationType
     title: str
@@ -133,8 +123,7 @@ class ActiveCollaboration:
 
 @dataclass
 class CollaborationAnalytics:
-    """Analytics for collaborations"""
-    total_collaborations: int
+    """Analytics for collaborations"""    total_collaborations: int
     active_collaborations: int
     completed_collaborations: int
     success_rate: float
@@ -145,8 +134,7 @@ class CollaborationAnalytics:
     partner_satisfaction_score: float
 
 class CollaborationRepository(BaseRepository):
-    """
-    Advanced collaboration repository for creator partnerships
+    """    Advanced collaboration repository for creator partnerships
     
     Features:
     - AI-powered creator matching and compatibility analysis
@@ -156,8 +144,7 @@ class CollaborationRepository(BaseRepository):
     - Performance analytics and success metrics
     - Relationship building and network effects
     - Dispute resolution and mediation support
-    """
-    
+    """    
     def __init__(self, db_connection=None, cache_manager=None,
                  ai_matcher=None, analytics_service=None,
                  notification_service=None, payment_service=None):
@@ -193,8 +180,7 @@ class CollaborationRepository(BaseRepository):
     def find_collaboration_matches(self, creator_id: str,
                                  criteria: Dict[str, Any],
                                  max_matches: int = 10) -> List[CollaborationMatch]:
-        """Find potential collaboration matches using AI"""
-        try:
+        """Find potential collaboration matches using AI"""        try:
             if not self.ai_matcher:
                 return []
             
@@ -247,8 +233,7 @@ class CollaborationRepository(BaseRepository):
                                     collaboration_type: CollaborationType,
                                     title: str, description: str,
                                     custom_terms: Dict[str, Any] = None) -> CollaborationProposal:
-        """Create a new collaboration proposal"""
-        try:
+        """Create a new collaboration proposal"""        try:
             proposal_id = self._generate_unique_id("prop", proposer_id)
             
             # Get default terms for collaboration type
@@ -312,8 +297,7 @@ class CollaborationRepository(BaseRepository):
     def calculate_collaboration_analytics(self, creator_id: str,
                                         start_date: datetime,
                                         end_date: datetime) -> CollaborationAnalytics:
-        """Calculate comprehensive collaboration analytics"""
-        try:
+        """Calculate comprehensive collaboration analytics"""        try:
             # Get collaboration data for period
             collaboration_data = self._get_collaboration_data(creator_id, start_date, end_date)
             
@@ -367,16 +351,14 @@ class CollaborationRepository(BaseRepository):
     # Helper methods for collaboration logic
     def _calculate_compatibility_score(self, profile1: Dict[str, Any], 
                                      profile2: Dict[str, Any]) -> float:
-        """Calculate compatibility score between two creators"""
-        if not self.ai_matcher:
+        """Calculate compatibility score between two creators"""        if not self.ai_matcher:
             return 0.5  # Default compatibility
         
         return self.ai_matcher.calculate_compatibility(profile1, profile2)
     
     def _generate_match_reasons(self, profile1: Dict[str, Any], 
                               profile2: Dict[str, Any]) -> List[str]:
-        """Generate reasons why two creators are a good match"""
-        reasons = []
+        """Generate reasons why two creators are a good match"""        reasons = []
         
         # Check skill complementarity
         skills1 = set(profile1.get('skills', []))
@@ -392,8 +374,7 @@ class CollaborationRepository(BaseRepository):
     
     def _suggest_collaboration_types(self, profile1: Dict[str, Any], 
                                    profile2: Dict[str, Any]) -> List[CollaborationType]:
-        """Suggest collaboration types based on creator profiles"""
-        suggestions = []
+        """Suggest collaboration types based on creator profiles"""        suggestions = []
         
         # Analyze profiles and suggest appropriate collaboration types
         skills1 = set(profile1.get('skills', []))
@@ -411,8 +392,7 @@ class CollaborationRepository(BaseRepository):
     
     def _estimate_collaboration_revenue(self, profile1: Dict[str, Any], 
                                       profile2: Dict[str, Any]) -> float:
-        """Estimate potential revenue from collaboration"""
-        # Base revenue on combined audience and engagement
+        """Estimate potential revenue from collaboration"""        # Base revenue on combined audience and engagement
         audience1 = profile1.get('follower_count', 0)
         audience2 = profile2.get('follower_count', 0)
         
@@ -430,33 +410,26 @@ class CollaborationRepository(BaseRepository):
     
     # Data fetching methods (placeholders - would connect to actual data sources)
     def _get_creator_profile(self, creator_id: str) -> Dict[str, Any]:
-        """Get creator profile for matching"""
-        return {}
+        """Get creator profile for matching"""        return {}
     
     def _get_collaboration_data(self, creator_id: str, start_date: datetime, end_date: datetime) -> List[ActiveCollaboration]:
-        """Get collaboration data for analytics"""
-        return []
+        """Get collaboration data for analytics"""        return []
     
     def _calculate_partner_satisfaction(self, creator_id: str) -> float:
-        """Calculate partner satisfaction score"""
-        return 85.0  # Placeholder
+        """Calculate partner satisfaction score"""        return 85.0  # Placeholder
     
     def _get_default_collaboration_terms(self, collaboration_type: CollaborationType) -> Dict[str, Any]:
-        """Get default terms for collaboration type"""
-        return {}
+        """Get default terms for collaboration type"""        return {}
     
     def _suggest_roles(self, proposer_id: str, recipient_id: str, collaboration_type: CollaborationType) -> Dict[str, ProjectRole]:
-        """Suggest roles for collaboration participants"""
-        return {}
+        """Suggest roles for collaboration participants"""        return {}
     
     def _generate_collaboration_timeline(self, collaboration_type: CollaborationType, terms: Dict[str, Any]) -> Dict[str, datetime]:
-        """Generate collaboration timeline"""
-        return {}
+        """Generate collaboration timeline"""        return {}
 
 
 class AsyncCollaborationRepository(AsyncBaseRepository):
-    """Asynchronous collaboration repository for high-performance operations"""
-    
+    """Asynchronous collaboration repository for high-performance operations"""    
     def __init__(self, db_connection=None, cache_manager=None,
                  ai_matcher=None, analytics_service=None):
         super().__init__(db_connection, cache_manager)
@@ -468,13 +441,11 @@ class AsyncCollaborationRepository(AsyncBaseRepository):
     async def find_collaboration_matches_async(self, creator_id: str,
                                              criteria: Dict[str, Any],
                                              max_matches: int = 10) -> List[CollaborationMatch]:
-        """Find collaboration matches asynchronously"""
-        # Async implementation would go here
+        """Find collaboration matches asynchronously"""        # Async implementation would go here
         pass
     
     async def process_bulk_collaboration_updates_async(self, updates: List[Dict[str, Any]]) -> List[bool]:
-        """Process multiple collaboration updates asynchronously"""
-        # Async implementation would go here
+        """Process multiple collaboration updates asynchronously"""        # Async implementation would go here
         pass
         return collaboration
     

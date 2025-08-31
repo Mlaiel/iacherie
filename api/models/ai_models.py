@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent Platform - AI and Machine Learning Models
+"""IA Influencer Agent Platform - AI and Machine Learning Models
 Advanced AI system management and analytics
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -13,9 +12,7 @@ will result in legal action.
 
 Contact: mlaiel@live.de
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-from datetime import datetime, timezone
+"""from datetime import datetime, timezone
 from typing import Optional, Dict, Any, List
 from decimal import Decimal
 from sqlalchemy import (
@@ -32,8 +29,7 @@ from .base import (
 
 
 class AIModel(BaseModel, UUIDMixin, TimestampMixin, SoftDeleteMixin, AuditMixin, StatusMixin, MetadataMixin):
-    """AI model registry and management"""
-    
+    """AI model registry and management"""    
     __tablename__ = 'ai_models'
     
     # Model Identity
@@ -174,8 +170,7 @@ class AIModel(BaseModel, UUIDMixin, TimestampMixin, SoftDeleteMixin, AuditMixin,
 
 
 class AITraining(BaseModel, UUIDMixin, TimestampMixin, AuditMixin, StatusMixin):
-    """AI model training job tracking"""
-    
+    """AI model training job tracking"""    
     __tablename__ = 'ai_training'
     
     model_id: Mapped[UUID] = mapped_column(
@@ -318,8 +313,7 @@ class AITraining(BaseModel, UUIDMixin, TimestampMixin, AuditMixin, StatusMixin):
 
 
 class AIInference(BaseModel, UUIDMixin, TimestampMixin):
-    """AI model inference execution tracking"""
-    
+    """AI model inference execution tracking"""    
     __tablename__ = 'ai_inferences'
     
     model_id: Mapped[UUID] = mapped_column(
@@ -441,8 +435,7 @@ class AIInference(BaseModel, UUIDMixin, TimestampMixin):
 
 
 class AIFingerprint(BaseModel, UUIDMixin, TimestampMixin):
-    """AI-generated fingerprints for content similarity"""
-    
+    """AI-generated fingerprints for content similarity"""    
     __tablename__ = 'ai_fingerprints'
     
     content_id: Mapped[UUID] = mapped_column(
@@ -518,8 +511,7 @@ class AIFingerprint(BaseModel, UUIDMixin, TimestampMixin):
 
 
 class VectorEmbedding(BaseModel, UUIDMixin, TimestampMixin):
-    """High-dimensional vector embeddings for similarity search"""
-    
+    """High-dimensional vector embeddings for similarity search"""    
     __tablename__ = 'vector_embeddings'
     
     # Source Reference
@@ -585,8 +577,7 @@ class VectorEmbedding(BaseModel, UUIDMixin, TimestampMixin):
 
 
 class SimilarityMatch(BaseModel, UUIDMixin, TimestampMixin):
-    """Similarity matching results and analytics"""
-    
+    """Similarity matching results and analytics"""    
     __tablename__ = 'similarity_matches'
     
     # Query Information
@@ -662,8 +653,7 @@ class SimilarityMatch(BaseModel, UUIDMixin, TimestampMixin):
 
 
 class ContentAnalysis(BaseModel, UUIDMixin, TimestampMixin):
-    """AI-powered content analysis and insights"""
-    
+    """AI-powered content analysis and insights"""    
     __tablename__ = 'content_analysis'
     
     content_id: Mapped[UUID] = mapped_column(

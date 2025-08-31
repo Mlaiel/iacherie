@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-IA Influencer Agent - Deployment Scripts Index
+"""IA Influencer Agent - Deployment Scripts Index
 Main entry point for enterprise-grade deployment automation and orchestration
 of AI-powered content protection, monetization, and multi-platform integration systems.
 
@@ -25,9 +24,7 @@ and international copyright laws.
 
 Project: IA Influencer Agent Platform - Complete Deployment Orchestration
 Copyright: Fahed Mlaiel - All rights reserved
-"""
-
-import os
+"""import os
 import sys
 import json
 import logging
@@ -78,8 +75,7 @@ logger = logging.getLogger(__name__)
 
 
 class DeploymentPhase(Enum):
-    """Deployment phases for orchestrated rollout"""
-    INFRASTRUCTURE = "infrastructure"
+    """Deployment phases for orchestrated rollout"""    INFRASTRUCTURE = "infrastructure"
     CORE_SERVICES = "core_services"
     DATA_LAYER = "data_layer"
     SECURITY = "security"
@@ -92,8 +88,7 @@ class DeploymentPhase(Enum):
 
 
 class DeploymentMode(Enum):
-    """Deployment execution modes"""
-    FULL_DEPLOYMENT = "full_deployment"
+    """Deployment execution modes"""    FULL_DEPLOYMENT = "full_deployment"
     INCREMENTAL_UPDATE = "incremental_update"
     ROLLBACK = "rollback"
     DISASTER_RECOVERY = "disaster_recovery"
@@ -105,8 +100,7 @@ class DeploymentMode(Enum):
 
 @dataclass
 class DeploymentConfiguration:
-    """Complete deployment configuration"""
-    deployment_id: str
+    """Complete deployment configuration"""    deployment_id: str
     deployment_name: str
     deployment_mode: DeploymentMode
     target_environment: str = "production"
@@ -124,14 +118,11 @@ class DeploymentConfiguration:
 
 
 class DeploymentOrchestrator:
-    """
-    Master Deployment Orchestrator
+    """    Master Deployment Orchestrator
     Coordinates all deployment managers for complete system rollout
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize the deployment orchestrator"""
-        self.config_path = config_path or os.getenv('DEPLOYMENT_CONFIG_PATH', '/etc/deployment/config.json')
+        """Initialize the deployment orchestrator"""        self.config_path = config_path or os.getenv('DEPLOYMENT_CONFIG_PATH', '/etc/deployment/config.json')
         self.deployment_managers = {}
         self.deployment_status = {}
         
@@ -141,8 +132,7 @@ class DeploymentOrchestrator:
         logger.info("Deployment Orchestrator initialized successfully")
     
     def _initialize_deployment_managers(self):
-        """Initialize all deployment managers"""
-        try:
+        """Initialize all deployment managers"""        try:
             # Core Infrastructure Managers
             self.deployment_managers['application'] = ApplicationDeployment()
             self.deployment_managers['infrastructure'] = InfrastructureProvisioner()
@@ -175,8 +165,7 @@ class DeploymentOrchestrator:
             raise
     
     def execute_full_deployment(self, config: DeploymentConfiguration) -> bool:
-        """Execute complete deployment according to configuration"""
-        logger.info(f"Starting full deployment: {config.deployment_name}")
+        """Execute complete deployment according to configuration"""        logger.info(f"Starting full deployment: {config.deployment_name}")
         
         try:
             # Phase 1: Infrastructure Provisioning
@@ -239,8 +228,7 @@ class DeploymentOrchestrator:
             return False
     
     def _execute_infrastructure_phase(self) -> bool:
-        """Execute infrastructure provisioning phase"""
-        logger.info("Executing infrastructure provisioning phase")
+        """Execute infrastructure provisioning phase"""        logger.info("Executing infrastructure provisioning phase")
         
         try:
             # Provision cloud infrastructure
@@ -263,8 +251,7 @@ class DeploymentOrchestrator:
             return False
     
     def _execute_core_services_phase(self) -> bool:
-        """Execute core services deployment phase"""
-        logger.info("Executing core services deployment phase")
+        """Execute core services deployment phase"""        logger.info("Executing core services deployment phase")
         
         try:
             # Deploy main application
@@ -281,8 +268,7 @@ class DeploymentOrchestrator:
             return False
     
     def _execute_data_layer_phase(self) -> bool:
-        """Execute data layer setup phase"""
-        logger.info("Executing data layer setup phase")
+        """Execute data layer setup phase"""        logger.info("Executing data layer setup phase")
         
         try:
             # Run database migrations
@@ -305,8 +291,7 @@ class DeploymentOrchestrator:
             return False
     
     def _execute_security_phase(self) -> bool:
-        """Execute security hardening phase"""
-        logger.info("Executing security hardening phase")
+        """Execute security hardening phase"""        logger.info("Executing security hardening phase")
         
         try:
             # Apply security hardening
@@ -323,8 +308,7 @@ class DeploymentOrchestrator:
             return False
     
     def _execute_ai_services_phase(self) -> bool:
-        """Execute AI services deployment phase"""
-        logger.info("Executing AI services deployment phase")
+        """Execute AI services deployment phase"""        logger.info("Executing AI services deployment phase")
         
         try:
             # Deploy AI fingerprinting system
@@ -353,8 +337,7 @@ class DeploymentOrchestrator:
             return False
     
     def _execute_platform_integrations_phase(self) -> bool:
-        """Execute platform integrations phase"""
-        logger.info("Executing platform integrations phase")
+        """Execute platform integrations phase"""        logger.info("Executing platform integrations phase")
         
         try:
             # Deploy platform integrations
@@ -377,8 +360,7 @@ class DeploymentOrchestrator:
             return False
     
     def _execute_monitoring_phase(self) -> bool:
-        """Execute monitoring setup phase"""
-        logger.info("Executing monitoring setup phase")
+        """Execute monitoring setup phase"""        logger.info("Executing monitoring setup phase")
         
         try:
             # Setup health monitoring
@@ -413,8 +395,7 @@ class DeploymentOrchestrator:
             return False
     
     def _execute_backup_recovery_phase(self) -> bool:
-        """Execute backup and recovery setup phase"""
-        logger.info("Executing backup and recovery setup phase")
+        """Execute backup and recovery setup phase"""        logger.info("Executing backup and recovery setup phase")
         
         try:
             # Deploy backup and recovery system
@@ -431,8 +412,7 @@ class DeploymentOrchestrator:
             return False
     
     def _execute_validation_phase(self) -> bool:
-        """Execute validation phase"""
-        logger.info("Executing validation phase")
+        """Execute validation phase"""        logger.info("Executing validation phase")
         
         try:
             # Validate all systems
@@ -456,8 +436,7 @@ class DeploymentOrchestrator:
             return False
     
     def _execute_finalization_phase(self) -> bool:
-        """Execute finalization phase"""
-        logger.info("Executing finalization phase")
+        """Execute finalization phase"""        logger.info("Executing finalization phase")
         
         try:
             # Setup system maintenance
@@ -477,13 +456,11 @@ class DeploymentOrchestrator:
             return False
     
     def _handle_deployment_failure(self, error_message: str) -> bool:
-        """Handle deployment failure"""
-        logger.error(f"Deployment failure: {error_message}")
+        """Handle deployment failure"""        logger.error(f"Deployment failure: {error_message}")
         return False
     
     def _execute_rollback(self) -> bool:
-        """Execute rollback procedures"""
-        logger.info("Executing deployment rollback")
+        """Execute rollback procedures"""        logger.info("Executing deployment rollback")
         
         try:
             # Implement rollback logic for each manager
@@ -503,8 +480,7 @@ class DeploymentOrchestrator:
             return False
     
     def _generate_deployment_report(self):
-        """Generate comprehensive deployment report"""
-        report = {
+        """Generate comprehensive deployment report"""        report = {
             'deployment_id': f"deploy_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
             'timestamp': datetime.now().isoformat(),
             'deployment_managers': list(self.deployment_managers.keys()),
@@ -529,8 +505,7 @@ class DeploymentOrchestrator:
         logger.info(f"Deployment report generated: {report_path}")
     
     def get_deployment_status(self) -> Dict[str, Any]:
-        """Get current deployment status"""
-        status = {
+        """Get current deployment status"""        status = {
             'timestamp': datetime.now().isoformat(),
             'managers': {},
             'overall_health': 'unknown'
@@ -568,8 +543,7 @@ class DeploymentOrchestrator:
 
 
 def main():
-    """Main function for deployment orchestration"""
-    parser = argparse.ArgumentParser(description='IA Influencer Agent Deployment Orchestrator')
+    """Main function for deployment orchestration"""    parser = argparse.ArgumentParser(description='IA Influencer Agent Deployment Orchestrator')
     parser.add_argument('--mode', choices=['full', 'incremental', 'rollback', 'status'], 
                        default='status', help='Deployment mode')
     parser.add_argument('--environment', choices=['development', 'staging', 'production'], 

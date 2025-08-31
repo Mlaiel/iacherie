@@ -1,5 +1,4 @@
-"""
-Mood Analyzer
+"""Mood Analyzer
 
 Advanced AI-powered mood and emotional state analysis for multimedia content
 with support for cross-modal emotion detection and sentiment analysis.
@@ -16,9 +15,7 @@ Contact: mlaiel@live.de for licensing and collaboration.
 Any unauthorized use, copying, or distribution without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted
 to the full extent of the law.
-"""
-
-import numpy as np
+"""import numpy as np
 from typing import Dict, List, Optional, Tuple, Any, Union
 import logging
 from collections import Counter, defaultdict
@@ -33,8 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 class MoodAnalyzer:
-    """
-    Enterprise-grade mood and emotional analysis system.
+    """    Enterprise-grade mood and emotional analysis system.
     
     Features:
     - Multi-modal emotion detection (audio, text, visual)
@@ -44,11 +40,9 @@ class MoodAnalyzer:
     - Composite emotion detection
     - Mood transition analysis
     - Contextual emotion understanding
-    """
-    
+    """    
     def __init__(self):
-        """Initialize mood analyzer."""
-        self.settings = get_settings()
+        """Initialize mood analyzer."""        self.settings = get_settings()
         
         # Initialize emotion models and mappings
         self._init_emotion_models()
@@ -65,8 +59,7 @@ class MoodAnalyzer:
         }
 
     def _init_emotion_models(self):
-        """Initialize emotion models and mapping systems."""
-        
+        """Initialize emotion models and mapping systems."""        
         # Primary emotion categories (Plutchik's wheel extended)
         self.primary_emotions = {
             'joy': {
@@ -245,8 +238,7 @@ class MoodAnalyzer:
         content_type: str,
         options: Optional[Dict] = None
     ) -> Dict[str, Any]:
-        """
-        Comprehensive mood and emotion analysis.
+        """        Comprehensive mood and emotion analysis.
         
         Args:
             content_data: Analyzed content data
@@ -255,8 +247,7 @@ class MoodAnalyzer:
             
         Returns:
             Detailed mood analysis results
-        """
-        try:
+        """        try:
             if not content_data:
                 raise ClassificationError("No content data provided")
             
@@ -319,8 +310,7 @@ class MoodAnalyzer:
             raise ClassificationError(f"Mood analysis failed: {e}")
 
     def _extract_emotion_indicators(self, content_data: Dict[str, Any], content_type: str) -> Dict[str, Any]:
-        """Extract emotion indicators from content analysis data."""
-        try:
+        """Extract emotion indicators from content analysis data."""        try:
             indicators = {
                 'keywords': [],
                 'sentiment': None,
@@ -375,8 +365,7 @@ class MoodAnalyzer:
             return {}
 
     def _extract_audio_emotion_indicators(self, classifications: Dict, features: Dict) -> Dict[str, Any]:
-        """Extract audio-specific emotion indicators."""
-        indicators = {}
+        """Extract audio-specific emotion indicators."""        indicators = {}
         
         try:
             # Tempo analysis
@@ -429,8 +418,7 @@ class MoodAnalyzer:
         return indicators
 
     def _extract_text_emotion_indicators(self, classifications: Dict, features: Dict) -> Dict[str, Any]:
-        """Extract text-specific emotion indicators."""
-        indicators = {}
+        """Extract text-specific emotion indicators."""        indicators = {}
         
         try:
             # Sentiment details
@@ -479,8 +467,7 @@ class MoodAnalyzer:
         return indicators
 
     def _extract_visual_emotion_indicators(self, classifications: Dict, features: Dict) -> Dict[str, Any]:
-        """Extract visual-specific emotion indicators."""
-        indicators = {}
+        """Extract visual-specific emotion indicators."""        indicators = {}
         
         try:
             # Color analysis for emotions
@@ -549,8 +536,7 @@ class MoodAnalyzer:
         indicators: Dict[str, Any], 
         content_type: str
     ) -> Dict[str, Any]:
-        """Analyze primary emotions from indicators."""
-        try:
+        """Analyze primary emotions from indicators."""        try:
             emotion_scores = {}
             emotion_keywords = []
             
@@ -620,8 +606,7 @@ class MoodAnalyzer:
             return {}
 
     def _score_audio_emotion(self, emotion: str, indicators: Dict[str, Any]) -> float:
-        """Score emotion based on audio characteristics."""
-        score = 0
+        """Score emotion based on audio characteristics."""        score = 0
         emotion_data = self.primary_emotions[emotion]
         audio_features = emotion_data.get('audio_features', [])
         
@@ -669,8 +654,7 @@ class MoodAnalyzer:
         return score
 
     def _score_text_emotion(self, emotion: str, indicators: Dict[str, Any]) -> float:
-        """Score emotion based on text characteristics."""
-        score = 0
+        """Score emotion based on text characteristics."""        score = 0
         
         try:
             # Sentiment scores alignment
@@ -712,8 +696,7 @@ class MoodAnalyzer:
         return score
 
     def _score_visual_emotion(self, emotion: str, indicators: Dict[str, Any]) -> float:
-        """Score emotion based on visual characteristics."""
-        score = 0
+        """Score emotion based on visual characteristics."""        score = 0
         
         try:
             # Color emotions
@@ -768,8 +751,7 @@ class MoodAnalyzer:
         indicators: Dict[str, Any], 
         emotion_scores: Dict[str, float]
     ) -> Dict[str, Any]:
-        """Analyze complex emotions from primary emotion combinations."""
-        try:
+        """Analyze complex emotions from primary emotion combinations."""        try:
             complex_emotions = {}
             
             for complex_emotion, emotion_data in self.complex_emotions.items():
@@ -816,8 +798,7 @@ class MoodAnalyzer:
         emotion_scores: Dict[str, float], 
         indicators: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Determine overall mood state from emotions."""
-        try:
+        """Determine overall mood state from emotions."""        try:
             mood_scores = {}
             
             for mood_state, mood_data in self.mood_states.items():
@@ -867,8 +848,7 @@ class MoodAnalyzer:
             return {}
 
     def _calculate_valence_arousal(self, emotion_scores: Dict[str, float]) -> Dict[str, float]:
-        """Calculate valence and arousal dimensions."""
-        try:
+        """Calculate valence and arousal dimensions."""        try:
             if not emotion_scores:
                 return {'valence': 0.5, 'arousal': 0.5}
             
@@ -904,8 +884,7 @@ class MoodAnalyzer:
             return {'valence': 0.5, 'arousal': 0.5}
 
     def _get_emotion_quadrant(self, valence: float, arousal: float) -> str:
-        """Get emotion quadrant based on valence-arousal."""
-        if valence >= 0.5 and arousal >= 0.5:
+        """Get emotion quadrant based on valence-arousal."""        if valence >= 0.5 and arousal >= 0.5:
             return 'high_positive'  # Joy, excitement
         elif valence >= 0.5 and arousal < 0.5:
             return 'low_positive'   # Calm, content
@@ -915,8 +894,7 @@ class MoodAnalyzer:
             return 'low_negative'   # Sadness, depression
 
     def _analyze_temporal_emotions(self, indicators: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze temporal emotion patterns."""
-        try:
+        """Analyze temporal emotion patterns."""        try:
             temporal_analysis = {
                 'emotion_stability': 0.5,
                 'emotion_intensity_trend': 'stable',
@@ -950,8 +928,7 @@ class MoodAnalyzer:
             return {}
 
     def _analyze_cultural_context(self, indicators: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze cultural context of emotions."""
-        try:
+        """Analyze cultural context of emotions."""        try:
             cultural_analysis = {
                 'detected_culture': None,
                 'cultural_confidence': 0.0,
@@ -1004,8 +981,7 @@ class MoodAnalyzer:
             return {}
 
     def _calculate_emotion_complexity(self, emotion_scores: Dict[str, float]) -> float:
-        """Calculate emotion complexity score."""
-        try:
+        """Calculate emotion complexity score."""        try:
             if not emotion_scores:
                 return 0.0
             
@@ -1032,8 +1008,7 @@ class MoodAnalyzer:
             return 0.0
 
     def _calculate_overall_confidence(self, analysis: Dict[str, Any]) -> float:
-        """Calculate overall confidence in mood analysis."""
-        try:
+        """Calculate overall confidence in mood analysis."""        try:
             confidence_scores = analysis.get('confidence_scores', {})
             
             # Weight factors
@@ -1063,8 +1038,7 @@ class MoodAnalyzer:
 
     # Helper methods
     def _analyze_color_emotions(self, dominant_colors: List[Dict]) -> Dict[str, float]:
-        """Analyze emotional impact of colors."""
-        color_emotions = defaultdict(float)
+        """Analyze emotional impact of colors."""        color_emotions = defaultdict(float)
         
         try:
             color_emotion_mapping = {
@@ -1097,8 +1071,7 @@ class MoodAnalyzer:
             return {}
 
     def _hex_to_color_name(self, hex_color: str) -> str:
-        """Convert hex color to basic color name."""
-        # Simplified color mapping
+        """Convert hex color to basic color name."""        # Simplified color mapping
         try:
             if hex_color.startswith('#'):
                 hex_color = hex_color[1:]
@@ -1131,8 +1104,7 @@ class MoodAnalyzer:
             return 'unknown'
 
     def _map_scene_to_emotions(self, scene_type: str) -> List[str]:
-        """Map scene types to emotions."""
-        scene_emotion_mapping = {
+        """Map scene types to emotions."""        scene_emotion_mapping = {
             'beach': ['joy', 'calm', 'relaxation'],
             'forest': ['peace', 'tranquility', 'mystery'],
             'city': ['energy', 'excitement', 'stress'],
@@ -1146,13 +1118,11 @@ class MoodAnalyzer:
         return scene_emotion_mapping.get(scene_type.lower(), [])
 
     def _get_timestamp(self) -> str:
-        """Get current timestamp."""
-        from datetime import datetime
+        """Get current timestamp."""        from datetime import datetime
         return datetime.now().isoformat()
 
     def get_emotion_info(self, emotion: str) -> Dict[str, Any]:
-        """Get detailed information about a specific emotion."""
-        try:
+        """Get detailed information about a specific emotion."""        try:
             emotion = emotion.lower()
             
             # Check primary emotions
@@ -1176,8 +1146,7 @@ class MoodAnalyzer:
             return {'error': str(e)}
 
     def get_mood_recommendations(self, analysis: Dict[str, Any]) -> List[str]:
-        """Get recommendations based on mood analysis."""
-        try:
+        """Get recommendations based on mood analysis."""        try:
             recommendations = []
             
             primary_emotion = analysis.get('primary_emotion')
@@ -1227,8 +1196,7 @@ class MoodAnalyzer:
             return []
 
     def compare_moods(self, analysis1: Dict[str, Any], analysis2: Dict[str, Any]) -> Dict[str, Any]:
-        """Compare two mood analyses."""
-        try:
+        """Compare two mood analyses."""        try:
             comparison = {
                 'emotion_similarity': 0.0,
                 'valence_difference': 0.0,
@@ -1284,8 +1252,7 @@ class MoodAnalyzer:
             return {}
 
     def get_analysis_summary(self, analysis: Dict[str, Any]) -> str:
-        """Generate a human-readable summary of mood analysis."""
-        try:
+        """Generate a human-readable summary of mood analysis."""        try:
             summary_parts = []
             
             # Primary emotion

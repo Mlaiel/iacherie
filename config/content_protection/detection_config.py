@@ -1,5 +1,4 @@
-"""
-Content Detection Configuration Module
+"""Content Detection Configuration Module
 =====================================
 
 Professional content detection configuration for AI-powered content analysis.
@@ -14,32 +13,27 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, modification, or distribution of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
-"""
-
-from typing import Dict, Any, List, Optional, Set, Tuple
+"""from typing import Dict, Any, List, Optional, Set, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 import os
 
 
 class DetectionMode(str, Enum):
-    """Detection operation modes."""
-    REALTIME = "realtime"
+    """Detection operation modes."""    REALTIME = "realtime"
     BATCH = "batch"
     HYBRID = "hybrid"
 
 
 class DetectionLevel(str, Enum):
-    """Detection sensitivity levels."""
-    LOW = "low"          # Basic detection, high performance
+    """Detection sensitivity levels."""    LOW = "low"          # Basic detection, high performance
     MEDIUM = "medium"    # Balanced detection and performance
     HIGH = "high"        # Maximum detection accuracy
     ULTRA = "ultra"      # Enterprise-grade detection
 
 
 class ContentCategory(str, Enum):
-    """Content categories for detection."""
-    MUSIC = "music"
+    """Content categories for detection."""    MUSIC = "music"
     PODCAST = "podcast"
     VOICE = "voice"
     VIDEO = "video"
@@ -54,8 +48,7 @@ class ContentCategory(str, Enum):
 
 
 class DetectionEngine(str, Enum):
-    """Available detection engines."""
-    # Audio detection engines
+    """Available detection engines."""    # Audio detection engines
     CHROMAPRINT = "chromaprint"
     ESSENTIA = "essentia"
     LIBROSA = "librosa"
@@ -82,8 +75,7 @@ class DetectionEngine(str, Enum):
 
 @dataclass
 class AudioDetectionConfig:
-    """Audio content detection configuration."""
-    engines: List[DetectionEngine] = field(default_factory=lambda: [
+    """Audio content detection configuration."""    engines: List[DetectionEngine] = field(default_factory=lambda: [
         DetectionEngine.CHROMAPRINT, DetectionEngine.ESSENTIA
     ])
     sample_rate: int = 22050
@@ -105,8 +97,7 @@ class AudioDetectionConfig:
 
 @dataclass
 class VideoDetectionConfig:
-    """Video content detection configuration."""
-    engines: List[DetectionEngine] = field(default_factory=lambda: [
+    """Video content detection configuration."""    engines: List[DetectionEngine] = field(default_factory=lambda: [
         DetectionEngine.OPENCV, DetectionEngine.YOLO
     ])
     frame_sample_rate: int = 1  # frames per second
@@ -126,8 +117,7 @@ class VideoDetectionConfig:
 
 @dataclass
 class ImageDetectionConfig:
-    """Image content detection configuration."""
-    engines: List[DetectionEngine] = field(default_factory=lambda: [
+    """Image content detection configuration."""    engines: List[DetectionEngine] = field(default_factory=lambda: [
         DetectionEngine.CLIP, DetectionEngine.RESNET
     ])
     min_resolution: Tuple[int, int] = (224, 224)
@@ -147,8 +137,7 @@ class ImageDetectionConfig:
 
 @dataclass
 class TextDetectionConfig:
-    """Text content detection configuration."""
-    engines: List[DetectionEngine] = field(default_factory=lambda: [
+    """Text content detection configuration."""    engines: List[DetectionEngine] = field(default_factory=lambda: [
         DetectionEngine.BERT, DetectionEngine.ROBERTA
     ])
     max_sequence_length: int = 512
@@ -168,8 +157,7 @@ class TextDetectionConfig:
 
 @dataclass
 class RealTimeConfig:
-    """Real-time detection configuration."""
-    enable_streaming: bool = True
+    """Real-time detection configuration."""    enable_streaming: bool = True
     buffer_size_seconds: float = 30.0
     processing_interval_ms: int = 1000
     max_concurrent_streams: int = 100
@@ -181,8 +169,7 @@ class RealTimeConfig:
 
 @dataclass
 class BatchConfig:
-    """Batch processing configuration."""
-    batch_size: int = 32
+    """Batch processing configuration."""    batch_size: int = 32
     max_batch_duration_minutes: int = 60
     enable_parallel_processing: bool = True
     max_workers: int = 8
@@ -194,8 +181,7 @@ class BatchConfig:
 
 @dataclass
 class MachineLearningConfig:
-    """Machine learning models configuration."""
-    model_precision: str = "fp16"  # fp32, fp16, int8
+    """Machine learning models configuration."""    model_precision: str = "fp16"  # fp32, fp16, int8
     enable_gpu_acceleration: bool = True
     model_caching: bool = True
     cache_size_gb: int = 2
@@ -208,8 +194,7 @@ class MachineLearningConfig:
 
 @dataclass
 class QualityAssuranceConfig:
-    """Quality assurance and validation configuration."""
-    enable_content_validation: bool = True
+    """Quality assurance and validation configuration."""    enable_content_validation: bool = True
     enable_metadata_extraction: bool = True
     enable_duplicate_detection: bool = True
     similarity_threshold: float = 0.95
@@ -224,8 +209,7 @@ class QualityAssuranceConfig:
 
 @dataclass
 class OutputConfig:
-    """Detection output configuration."""
-    output_format: str = "json"  # json, xml, csv
+    """Detection output configuration."""    output_format: str = "json"  # json, xml, csv
     include_confidence_scores: bool = True
     include_metadata: bool = True
     include_thumbnails: bool = True
@@ -237,11 +221,9 @@ class OutputConfig:
 
 
 class ContentDetectionConfig:
-    """
-    Professional content detection configuration manager.
+    """    Professional content detection configuration manager.
     Provides industrial-grade configuration for AI-powered content analysis.
-    """
-    
+    """    
     def __init__(self):
         # General detection settings
         self.detection_mode = DetectionMode.HYBRID
@@ -273,8 +255,7 @@ class ContentDetectionConfig:
         self._load_from_environment()
     
     def _load_from_environment(self) -> None:
-        """Load configuration from environment variables."""
-        # General settings
+        """Load configuration from environment variables."""        # General settings
         detection_mode = os.getenv("DETECTION_MODE", "hybrid")
         self.detection_mode = DetectionMode(detection_mode)
         
@@ -311,8 +292,7 @@ class ContentDetectionConfig:
         self.batch.max_workers = int(os.getenv("DETECTION_BATCH_WORKERS", "8"))
     
     def get_detection_config(self, category: ContentCategory) -> Dict[str, Any]:
-        """Get detection configuration for specific content category."""
-        category_map = {
+        """Get detection configuration for specific content category."""        category_map = {
             ContentCategory.MUSIC: self.audio,
             ContentCategory.PODCAST: self.audio,
             ContentCategory.VOICE: self.audio,
@@ -342,8 +322,7 @@ class ContentDetectionConfig:
         }
     
     def get_engine_config(self, engine: DetectionEngine) -> Dict[str, Any]:
-        """Get configuration for specific detection engine."""
-        engine_configs = {
+        """Get configuration for specific detection engine."""        engine_configs = {
             # Audio engines
             DetectionEngine.CHROMAPRINT: {
                 "sample_rate": self.audio.sample_rate,
@@ -398,8 +377,7 @@ class ContentDetectionConfig:
         return engine_configs.get(engine, {})
     
     def get_processing_config(self) -> Dict[str, Any]:
-        """Get processing configuration based on detection mode."""
-        config = {
+        """Get processing configuration based on detection mode."""        config = {
             "detection_mode": self.detection_mode,
             "max_concurrent_detections": self.max_concurrent_detections,
             "timeout_seconds": self.timeout_seconds,
@@ -415,8 +393,7 @@ class ContentDetectionConfig:
         return config
     
     def optimize_for_performance(self) -> None:
-        """Optimize configuration for maximum performance."""
-        self.detection_level = DetectionLevel.MEDIUM
+        """Optimize configuration for maximum performance."""        self.detection_level = DetectionLevel.MEDIUM
         self.ml_config.model_precision = "fp16"
         self.ml_config.enable_model_ensemble = False
         self.batch.batch_size = 64
@@ -429,8 +406,7 @@ class ContentDetectionConfig:
         self.text.min_confidence = 0.8
     
     def optimize_for_accuracy(self) -> None:
-        """Optimize configuration for maximum accuracy."""
-        self.detection_level = DetectionLevel.ULTRA
+        """Optimize configuration for maximum accuracy."""        self.detection_level = DetectionLevel.ULTRA
         self.ml_config.model_precision = "fp32"
         self.ml_config.enable_model_ensemble = True
         self.ml_config.enable_uncertainty_estimation = True
@@ -447,8 +423,7 @@ class ContentDetectionConfig:
         self.quality_assurance.enable_anomaly_detection = True
     
     def validate_configuration(self) -> List[str]:
-        """Validate current configuration and return any issues."""
-        issues = []
+        """Validate current configuration and return any issues."""        issues = []
         
         # Validate confidence thresholds
         if not 0.5 <= self.audio.min_confidence <= 1.0:
@@ -490,8 +465,7 @@ class ContentDetectionConfig:
         return issues
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary."""
-        return {
+        """Convert configuration to dictionary."""        return {
             "detection_mode": self.detection_mode,
             "detection_level": self.detection_level,
             "enable_multi_engine_fusion": self.enable_multi_engine_fusion,
@@ -514,8 +488,7 @@ class ContentDetectionConfig:
     
     @classmethod
     def from_dict(cls, config_dict: Dict[str, Any]) -> 'ContentDetectionConfig':
-        """Create configuration from dictionary."""
-        config = cls()
+        """Create configuration from dictionary."""        config = cls()
         
         # Load basic settings
         if "detection_mode" in config_dict:

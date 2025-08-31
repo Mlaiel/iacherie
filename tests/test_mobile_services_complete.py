@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Centralized Mobile Services Tests
+"""Centralized Mobile Services Tests
 Comprehensive test suite for mobile infrastructure components integrated with main test system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -27,9 +23,7 @@ Any unauthorized use, copying, modification, or distribution
 without explicit written permission is strictly prohibited.
 Violations will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import pytest
 import sys
 import os
@@ -72,17 +66,14 @@ except ImportError as e:
 
 
 class TestMobileContentPipeline:
-    """Test mobile content processing pipeline."""
-    
+    """Test mobile content processing pipeline."""    
     @pytest.fixture
     def pipeline(self):
-        """Create content pipeline for testing."""
-        return MobileContentPipeline()
+        """Create content pipeline for testing."""        return MobileContentPipeline()
     
     @pytest.fixture
     def sample_metadata(self):
-        """Create sample content metadata."""
-        return MobileContentMetadata(
+        """Create sample content metadata."""        return MobileContentMetadata(
             content_id="test_content_123",
             user_id="user_456",
             device_id="device_789",
@@ -96,8 +87,7 @@ class TestMobileContentPipeline:
     
     @pytest.mark.asyncio
     async def test_content_pipeline_complete_flow(self, pipeline, sample_metadata):
-        """Test complete mobile content processing flow."""
-        
+        """Test complete mobile content processing flow."""        
         # Create mock content data
         content_data = b"mock_audio_data" * 1000  # Mock audio content
         
@@ -119,8 +109,7 @@ class TestMobileContentPipeline:
     
     @pytest.mark.asyncio
     async def test_content_validation_failure(self, pipeline):
-        """Test content validation failure scenarios."""
-        
+        """Test content validation failure scenarios."""        
         # Test oversized content
         large_metadata = MobileContentMetadata(
             content_id="large_content",
@@ -143,8 +132,7 @@ class TestMobileContentPipeline:
     
     @pytest.mark.asyncio
     async def test_ai_processing_stage(self, pipeline, sample_metadata):
-        """Test AI processing stage specifically."""
-        
+        """Test AI processing stage specifically."""        
         content_data = b"mock_audio_data" * 100
         
         result = await pipeline.process_mobile_content(sample_metadata, content_data)
@@ -158,8 +146,7 @@ class TestMobileContentPipeline:
     
     @pytest.mark.asyncio
     async def test_processing_status_tracking(self, pipeline, sample_metadata):
-        """Test processing status tracking."""
-        
+        """Test processing status tracking."""        
         content_data = b"test_data"
         
         # Start processing
@@ -180,17 +167,14 @@ class TestMobileContentPipeline:
 
 
 class TestMobileMonetizationEngine:
-    """Test mobile monetization engine."""
-    
+    """Test mobile monetization engine."""    
     @pytest.fixture
     def monetization_engine(self):
-        """Create monetization engine for testing."""
-        return MobileMonetizationEngine()
+        """Create monetization engine for testing."""        return MobileMonetizationEngine()
     
     @pytest.mark.asyncio
     async def test_monetization_setup(self, monetization_engine):
-        """Test monetization configuration setup."""
-        
+        """Test monetization configuration setup."""        
         config = await monetization_engine.setup_monetization(
             user_id="user_123",
             content_id="content_456",
@@ -210,8 +194,7 @@ class TestMobileMonetizationEngine:
     
     @pytest.mark.asyncio
     async def test_revenue_tracking(self, monetization_engine):
-        """Test mobile revenue tracking."""
-        
+        """Test mobile revenue tracking."""        
         revenue = await monetization_engine.track_mobile_revenue(
             user_id="user_123",
             content_id="content_456",
@@ -232,8 +215,7 @@ class TestMobileMonetizationEngine:
     
     @pytest.mark.asyncio
     async def test_earnings_calculation(self, monetization_engine):
-        """Test real-time earnings calculation."""
-        
+        """Test real-time earnings calculation."""        
         # Track some revenue first
         await monetization_engine.track_mobile_revenue(
             "user_123", "content_456", "device_789",
@@ -263,8 +245,7 @@ class TestMobileMonetizationEngine:
     
     @pytest.mark.asyncio
     async def test_monetization_optimization(self, monetization_engine):
-        """Test monetization strategy optimization."""
-        
+        """Test monetization strategy optimization."""        
         # Track some revenue for optimization analysis
         await monetization_engine.track_mobile_revenue(
             "user_123", "content_456", "device_789",
@@ -287,8 +268,7 @@ class TestMobileMonetizationEngine:
     
     @pytest.mark.asyncio
     async def test_mobile_payout_processing(self, monetization_engine):
-        """Test mobile payout processing."""
-        
+        """Test mobile payout processing."""        
         payout_result = await monetization_engine.process_mobile_payout(
             user_id="user_123",
             amount=Decimal("100.00"),
@@ -305,17 +285,14 @@ class TestMobileMonetizationEngine:
 
 
 class TestMobileCollaborationService:
-    """Test mobile collaboration service."""
-    
+    """Test mobile collaboration service."""    
     @pytest.fixture
     def collaboration_service(self):
-        """Create collaboration service for testing."""
-        return MobileCollaborationService()
+        """Create collaboration service for testing."""        return MobileCollaborationService()
     
     @pytest.mark.asyncio
     async def test_collaboration_matching(self, collaboration_service):
-        """Test AI-powered collaboration matching."""
-        
+        """Test AI-powered collaboration matching."""        
         matches = await collaboration_service.find_mobile_collaboration_matches(
             user_id="user_123",
             content_id="content_456",
@@ -334,8 +311,7 @@ class TestMobileCollaborationService:
     
     @pytest.mark.asyncio
     async def test_collaboration_project_creation(self, collaboration_service):
-        """Test mobile collaboration project creation."""
-        
+        """Test mobile collaboration project creation."""        
         from mobile.collaboration_service import MobileWorkspaceFeature
         
         project = await collaboration_service.create_mobile_collaboration_project(
@@ -361,8 +337,7 @@ class TestMobileCollaborationService:
     
     @pytest.mark.asyncio
     async def test_joining_collaboration(self, collaboration_service):
-        """Test joining a mobile collaboration project."""
-        
+        """Test joining a mobile collaboration project."""        
         from mobile.collaboration_service import MobileWorkspaceFeature
         
         # Create project first
@@ -391,8 +366,7 @@ class TestMobileCollaborationService:
     
     @pytest.mark.asyncio
     async def test_collaboration_analytics(self, collaboration_service):
-        """Test collaboration analytics generation."""
-        
+        """Test collaboration analytics generation."""        
         from mobile.collaboration_service import MobileWorkspaceFeature
         
         # Create some test projects
@@ -422,17 +396,14 @@ class TestMobileCollaborationService:
 
 
 class TestMobilePWAService:
-    """Test Progressive Web App service."""
-    
+    """Test Progressive Web App service."""    
     @pytest.fixture
     def pwa_service(self):
-        """Create PWA service for testing."""
-        return MobilePWAService()
+        """Create PWA service for testing."""        return MobilePWAService()
     
     @pytest.mark.asyncio
     async def test_pwa_manifest_generation(self, pwa_service):
-        """Test PWA manifest generation."""
-        
+        """Test PWA manifest generation."""        
         manifest = await pwa_service.generate_pwa_manifest()
         
         assert manifest["name"] == "Ainflue - AI Content Protection"
@@ -445,8 +416,7 @@ class TestMobilePWAService:
     
     @pytest.mark.asyncio
     async def test_service_worker_generation(self, pwa_service):
-        """Test service worker code generation."""
-        
+        """Test service worker code generation."""        
         service_worker = await pwa_service.generate_service_worker()
         
         assert "const CACHE_NAME" in service_worker
@@ -458,8 +428,7 @@ class TestMobilePWAService:
     
     @pytest.mark.asyncio
     async def test_pwa_install_tracking(self, pwa_service):
-        """Test PWA installation tracking."""
-        
+        """Test PWA installation tracking."""        
         install_data = await pwa_service.track_pwa_install(
             user_id="user_123",
             session_id="session_456",
@@ -479,8 +448,7 @@ class TestMobilePWAService:
     
     @pytest.mark.asyncio
     async def test_pwa_optimization(self, pwa_service):
-        """Test PWA mobile optimization."""
-        
+        """Test PWA mobile optimization."""        
         optimization = await pwa_service.optimize_pwa_for_mobile(
             device_capabilities={
                 "camera": True,
@@ -498,8 +466,7 @@ class TestMobilePWAService:
     
     @pytest.mark.asyncio
     async def test_offline_page_generation(self, pwa_service):
-        """Test offline page HTML generation."""
-        
+        """Test offline page HTML generation."""        
         offline_html = await pwa_service.generate_offline_page()
         
         assert "<!DOCTYPE html>" in offline_html
@@ -510,12 +477,10 @@ class TestMobilePWAService:
 
 
 class TestMobileIntegration:
-    """Test mobile services integration."""
-    
+    """Test mobile services integration."""    
     @pytest.mark.asyncio
     async def test_complete_mobile_business_flow(self):
-        """Test complete mobile business logic flow: upload → AI → protection → monetization → collaboration."""
-        
+        """Test complete mobile business logic flow: upload → AI → protection → monetization → collaboration."""        
         # Step 1: Content upload and processing
         pipeline = MobileContentPipeline()
         metadata = MobileContentMetadata(
@@ -594,8 +559,7 @@ class TestMobileIntegration:
     
     @pytest.mark.asyncio
     async def test_mobile_service_statistics(self):
-        """Test mobile services statistics and analytics."""
-        
+        """Test mobile services statistics and analytics."""        
         # Get pipeline statistics
         pipeline = mobile_pipeline
         pipeline_stats = pipeline.get_processing_statistics()
@@ -620,12 +584,10 @@ class TestMobileIntegration:
 
 # Performance tests
 class TestMobilePerformance:
-    """Test mobile services performance."""
-    
+    """Test mobile services performance."""    
     @pytest.mark.asyncio
     async def test_content_processing_performance(self):
-        """Test content processing performance under load."""
-        
+        """Test content processing performance under load."""        
         pipeline = MobileContentPipeline()
         
         # Process multiple content items concurrently
@@ -663,8 +625,7 @@ class TestMobilePerformance:
     
     @pytest.mark.asyncio
     async def test_collaboration_matching_performance(self):
-        """Test collaboration matching performance."""
-        
+        """Test collaboration matching performance."""        
         collaboration = MobileCollaborationService()
         
         start_time = datetime.now()

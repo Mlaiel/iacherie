@@ -1,14 +1,11 @@
-"""
-Marketplace Security - Advanced Security and Fraud Protection
+"""Marketplace Security - Advanced Security and Fraud Protection
 
 Provides comprehensive security features including fraud detection,
 threat analysis, user verification, and transaction security.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -22,8 +19,7 @@ from .marketplace_agent import MarketplaceConfig, MarketplaceTransaction
 
 
 class ThreatLevel(Enum):
-    """Security threat levels."""
-    MINIMAL = "minimal"
+    """Security threat levels."""    MINIMAL = "minimal"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -31,8 +27,7 @@ class ThreatLevel(Enum):
 
 
 class SecurityEventType(Enum):
-    """Types of security events."""
-    FRAUD_ATTEMPT = "fraud_attempt"
+    """Types of security events."""    FRAUD_ATTEMPT = "fraud_attempt"
     SUSPICIOUS_LOGIN = "suspicious_login"
     UNUSUAL_TRANSACTION = "unusual_transaction"
     ACCOUNT_COMPROMISE = "account_compromise"
@@ -42,8 +37,7 @@ class SecurityEventType(Enum):
 
 
 class UserRiskLevel(Enum):
-    """User risk assessment levels."""
-    TRUSTED = "trusted"
+    """User risk assessment levels."""    TRUSTED = "trusted"
     LOW_RISK = "low_risk"
     MEDIUM_RISK = "medium_risk"
     HIGH_RISK = "high_risk"
@@ -52,8 +46,7 @@ class UserRiskLevel(Enum):
 
 @dataclass
 class SecurityValidation:
-    """Security validation result."""
-    is_valid: bool = False
+    """Security validation result."""    is_valid: bool = False
     risk_score: float = 0.0
     threat_level: ThreatLevel = ThreatLevel.LOW
     blocked_reasons: List[str] = field(default_factory=list)
@@ -66,8 +59,7 @@ class SecurityValidation:
 
 @dataclass
 class FraudAnalysis:
-    """Fraud detection analysis result."""
-    fraud_score: float = 0.0
+    """Fraud detection analysis result."""    fraud_score: float = 0.0
     is_fraudulent: bool = False
     fraud_indicators: List[str] = field(default_factory=list)
     behavior_anomalies: List[str] = field(default_factory=list)
@@ -78,8 +70,7 @@ class FraudAnalysis:
 
 @dataclass
 class SecurityEvent:
-    """Security event record."""
-    id: Optional[str] = None
+    """Security event record."""    id: Optional[str] = None
     event_type: SecurityEventType = SecurityEventType.POLICY_VIOLATION
     severity: ThreatLevel = ThreatLevel.LOW
     user_id: Optional[int] = None
@@ -94,8 +85,7 @@ class SecurityEvent:
 
 @dataclass
 class UserRiskProfile:
-    """Comprehensive user risk assessment profile."""
-    user_id: int = 0
+    """Comprehensive user risk assessment profile."""    user_id: int = 0
     risk_level: UserRiskLevel = UserRiskLevel.LOW_RISK
     risk_score: float = 0.0
     account_age_days: int = 0
@@ -107,8 +97,7 @@ class UserRiskProfile:
 
 
 class MarketplaceSecurity:
-    """
-    Advanced marketplace security and fraud protection system.
+    """    Advanced marketplace security and fraud protection system.
     
     Provides comprehensive security features including:
     - Real-time fraud detection using machine learning
@@ -117,16 +106,12 @@ class MarketplaceSecurity:
     - Transaction security monitoring and validation
     - Threat intelligence and risk assessment
     - Automated security response and incident management
-    """
-
-    def __init__(self, config: MarketplaceConfig):
-        """
-        Initialize marketplace security system.
+    """    def __init__(self, config: MarketplaceConfig):
+        """        Initialize marketplace security system.
         
         Args:
             config: Marketplace configuration
-        """
-        self.config = config
+        """        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize security components
@@ -147,8 +132,7 @@ class MarketplaceSecurity:
         self.logger.info("Marketplace security system initialized")
 
     def _initialize_fraud_detection(self) -> None:
-        """Initialize fraud detection algorithms and models."""
-        try:
+        """Initialize fraud detection algorithms and models."""        try:
             # Initialize ML models for fraud detection
             # Initialize behavioral analysis engines
             # Initialize anomaly detection algorithms
@@ -159,8 +143,7 @@ class MarketplaceSecurity:
             raise
 
     def _initialize_threat_intelligence(self) -> None:
-        """Initialize threat intelligence and monitoring systems."""
-        try:
+        """Initialize threat intelligence and monitoring systems."""        try:
             # Initialize threat intelligence feeds
             # Initialize security monitoring systems
             # Initialize intrusion detection
@@ -174,16 +157,14 @@ class MarketplaceSecurity:
         self,
         transaction: MarketplaceTransaction
     ) -> SecurityValidation:
-        """
-        Comprehensive transaction security validation.
+        """        Comprehensive transaction security validation.
         
         Args:
             transaction: Transaction to validate
             
         Returns:
             Security validation result
-        """
-        try:
+        """        try:
             validation = SecurityValidation()
 
             # Basic transaction security checks
@@ -255,16 +236,14 @@ class MarketplaceSecurity:
             )
 
     async def detect_fraud(self, transaction: MarketplaceTransaction) -> float:
-        """
-        Advanced fraud detection using machine learning.
+        """        Advanced fraud detection using machine learning.
         
         Args:
             transaction: Transaction to analyze for fraud
             
         Returns:
             Fraud score between 0.0 and 1.0
-        """
-        try:
+        """        try:
             fraud_analysis = FraudAnalysis()
 
             # Amount-based fraud indicators
@@ -323,8 +302,7 @@ class MarketplaceSecurity:
         user_id: int,
         update_profile: bool = True
     ) -> UserRiskProfile:
-        """
-        Comprehensive user risk assessment.
+        """        Comprehensive user risk assessment.
         
         Args:
             user_id: ID of user to assess
@@ -332,8 +310,7 @@ class MarketplaceSecurity:
             
         Returns:
             User risk assessment profile
-        """
-        try:
+        """        try:
             # Check cache first
             if user_id in self.user_risk_profiles and not update_profile:
                 return self.user_risk_profiles[user_id]
@@ -397,13 +374,11 @@ class MarketplaceSecurity:
             )
 
     async def monitor_security_events(self) -> Dict[str, Any]:
-        """
-        Monitor and analyze security events in real-time.
+        """        Monitor and analyze security events in real-time.
         
         Returns:
             Security monitoring summary
-        """
-        try:
+        """        try:
             # Collect recent security events
             recent_events = await self._get_recent_security_events()
             
@@ -437,16 +412,14 @@ class MarketplaceSecurity:
         self,
         time_range: str = "7d"
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive security analytics report.
+        """        Generate comprehensive security analytics report.
         
         Args:
             time_range: Time range for report analysis
             
         Returns:
             Detailed security report
-        """
-        try:
+        """        try:
             start_date, end_date = await self._parse_time_range(time_range)
             
             # Security event analysis
@@ -492,15 +465,13 @@ class MarketplaceSecurity:
             return {"error": str(e)}
 
     async def _assess_user_risk(self, user_id: int) -> UserRiskProfile:
-        """Internal method for user risk assessment."""
-        return await self.assess_user_risk(user_id, update_profile=False)
+        """Internal method for user risk assessment."""        return await self.assess_user_risk(user_id, update_profile=False)
 
     async def _perform_basic_security_checks(
         self,
         transaction: MarketplaceTransaction
     ) -> Dict[str, List[str]]:
-        """Perform basic security validation checks."""
-        try:
+        """Perform basic security validation checks."""        try:
             flags = []
             warnings = []
 
@@ -528,8 +499,7 @@ class MarketplaceSecurity:
             return {"flags": ["security_check_error"], "warnings": []}
 
     async def _analyze_transaction_amount(self, transaction: MarketplaceTransaction) -> float:
-        """Analyze transaction amount for risk patterns."""
-        try:
+        """Analyze transaction amount for risk patterns."""        try:
             risk_score = 0.0
             
             # Very high amounts
@@ -559,8 +529,7 @@ class MarketplaceSecurity:
         user_id: Optional[int],
         description: str
     ) -> None:
-        """Log security event for monitoring and analysis."""
-        try:
+        """Log security event for monitoring and analysis."""        try:
             event = SecurityEvent(
                 id=secrets.token_hex(16),
                 event_type=event_type,
@@ -581,8 +550,7 @@ class MarketplaceSecurity:
             self.logger.error(f"Security event logging failed: {e}")
 
     async def _get_user_account_info(self, user_id: int) -> Dict[str, Any]:
-        """Get user account information for risk assessment."""
-        try:
+        """Get user account information for risk assessment."""        try:
             # Mock implementation - would fetch from user database
             return {
                 "age_days": 150,  # Account age in days

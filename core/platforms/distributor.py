@@ -1,14 +1,11 @@
-"""
-Platform Distributor Module
+"""Platform Distributor Module
 
 Handles automated content distribution across multiple platforms with intelligent routing.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 from typing import Dict, List, Optional, Any, Set
 from datetime import datetime, timedelta
 import logging
@@ -24,8 +21,7 @@ logger = logging.getLogger(__name__)
 
 
 class DistributionStrategy(Enum):
-    """Distribution strategy enumeration"""
-    SIMULTANEOUS = "simultaneous"
+    """Distribution strategy enumeration"""    SIMULTANEOUS = "simultaneous"
     SEQUENTIAL = "sequential"
     PRIORITY_FIRST = "priority_first"
     SCHEDULED = "scheduled"
@@ -33,16 +29,14 @@ class DistributionStrategy(Enum):
 
 
 class ContentFormat(Enum):
-    """Content format enumeration"""
-    ORIGINAL = "original"
+    """Content format enumeration"""    ORIGINAL = "original"
     OPTIMIZED = "optimized"
     PLATFORM_SPECIFIC = "platform_specific"
 
 
 @dataclass
 class PlatformTarget:
-    """Platform target configuration"""
-    platform_id: str
+    """Platform target configuration"""    platform_id: str
     priority: int = 1
     format: ContentFormat = ContentFormat.ORIGINAL
     custom_metadata: Optional[ContentMetadata] = None
@@ -53,8 +47,7 @@ class PlatformTarget:
 
 @dataclass
 class DistributionRule:
-    """Distribution rule configuration"""
-    content_types: List[ContentType]
+    """Distribution rule configuration"""    content_types: List[ContentType]
     platform_types: List[PlatformType]
     min_quality_score: float = 0.7
     max_file_size: int = 100 * 1024 * 1024  # 100MB
@@ -65,8 +58,7 @@ class DistributionRule:
 
 @dataclass
 class DistributionTask:
-    """Distribution task definition"""
-    task_id: str
+    """Distribution task definition"""    task_id: str
     content_path: str
     metadata: ContentMetadata
     targets: List[PlatformTarget]
@@ -80,8 +72,7 @@ class DistributionTask:
 
 @dataclass
 class DistributionResult:
-    """Distribution result summary"""
-    task_id: str
+    """Distribution result summary"""    task_id: str
     success_count: int
     failure_count: int
     total_platforms: int
@@ -93,24 +84,20 @@ class DistributionResult:
 
 
 class PlatformDistributor:
-    """Intelligent platform distribution manager"""
-    
+    """Intelligent platform distribution manager"""    
     def __init__(self, platform_manager: PlatformManager):
-        """Initialize distributor with platform manager"""
-        self.platform_manager = platform_manager
+        """Initialize distributor with platform manager"""        self.platform_manager = platform_manager
         self.active_tasks: Dict[str, DistributionTask] = {}
         self.completed_tasks: Dict[str, DistributionResult] = {}
         self.distribution_rules: List[DistributionRule] = []
         self.default_strategy = DistributionStrategy.SMART_ROUTING
         
     def add_distribution_rule(self, rule: DistributionRule):
-        """Add distribution rule"""
-        self.distribution_rules.append(rule)
+        """Add distribution rule"""        self.distribution_rules.append(rule)
         logger.info(f"Added distribution rule for content types: {rule.content_types}")
     
     def remove_distribution_rule(self, index: int):
-        """Remove distribution rule by index"""
-        if 0 <= index < len(self.distribution_rules):
+        """Remove distribution rule by index"""        if 0 <= index < len(self.distribution_rules):
             removed_rule = self.distribution_rules.pop(index)
             logger.info(f"Removed distribution rule for content types: {removed_rule.content_types}")
     
@@ -122,8 +109,7 @@ class PlatformDistributor:
         platform_targets: List[PlatformTarget],
         strategy: DistributionStrategy = None
     ) -> DistributionResult:
-        """Distribute content to multiple platforms"""
-        start_time = datetime.utcnow()
+        """Distribute content to multiple platforms"""        start_time = datetime.utcnow()
         strategy = strategy or self.default_strategy
         
         # Create distribution task
@@ -187,8 +173,7 @@ class PlatformDistributor:
                 del self.active_tasks[task_id]
     
     async def _validate_distribution(self, task: DistributionTask) -> List[str]:
-        """Validate distribution task"""
-        errors = []
+        """Validate distribution task"""        errors = []
         
         # Check if content file exists
         import os
@@ -218,8 +203,7 @@ class PlatformDistributor:
         return errors
     
     async def _prepare_targets(self, task: DistributionTask) -> List[PlatformTarget]:
-        """Prepare and filter valid targets"""
-        valid_targets = []
+        """Prepare and filter valid targets"""        valid_targets = []
         
         for target in task.targets:
             platform = self.platform_manager.get_platform(target.platform_id)
@@ -239,8 +223,7 @@ class PlatformDistributor:
         task: DistributionTask, 
         targets: List[PlatformTarget]
     ) -> Dict[str, UploadResult]:
-        """Execute distribution based on strategy"""
-        if task.strategy == DistributionStrategy.SIMULTANEOUS:
+        """Execute distribution based on strategy"""        if task.strategy == DistributionStrategy.SIMULTANEOUS:
             return await self._distribute_simultaneous(task, targets)
         elif task.strategy == DistributionStrategy.SEQUENTIAL:
             return await self._distribute_sequential(task, targets)
@@ -258,8 +241,7 @@ class PlatformDistributor:
         task: DistributionTask, 
         targets: List[PlatformTarget]
     ) -> Dict[str, UploadResult]:
-        """Distribute to all platforms simultaneously"""
-        tasks = []
+        """Distribute to all platforms simultaneously"""        tasks = []
         for target in targets:
             platform = self.platform_manager.get_platform(target.platform_id)
             metadata = target.custom_metadata or task.metadata
@@ -286,8 +268,7 @@ class PlatformDistributor:
         task: DistributionTask, 
         targets: List[PlatformTarget]
     ) -> Dict[str, UploadResult]:
-        """Distribute to platforms sequentially"""
-        results = {}
+        """Distribute to platforms sequentially"""        results = {}
         
         for target in targets:
             platform = self.platform_manager.get_platform(target.platform_id)
@@ -306,8 +287,7 @@ class PlatformDistributor:
         task: DistributionTask, 
         targets: List[PlatformTarget]
     ) -> Dict[str, UploadResult]:
-        """Distribute to highest priority platforms first"""
-        results = {}
+        """Distribute to highest priority platforms first"""        results = {}
         
         # Group by priority
         priority_groups = {}
@@ -337,8 +317,7 @@ class PlatformDistributor:
         task: DistributionTask, 
         targets: List[PlatformTarget]
     ) -> Dict[str, UploadResult]:
-        """Distribute based on scheduled times"""
-        results = {}
+        """Distribute based on scheduled times"""        results = {}
         now = datetime.utcnow()
         
         # Separate immediate and scheduled targets
@@ -374,8 +353,7 @@ class PlatformDistributor:
         task: DistributionTask, 
         targets: List[PlatformTarget]
     ) -> Dict[str, UploadResult]:
-        """Intelligent distribution based on platform characteristics"""
-        results = {}
+        """Intelligent distribution based on platform characteristics"""        results = {}
         
         # Analyze content and platforms
         content_type = self._detect_content_type(task.content_path)
@@ -429,8 +407,7 @@ class PlatformDistributor:
         metadata: ContentMetadata, 
         target: PlatformTarget
     ) -> UploadResult:
-        """Upload with retry logic"""
-        last_error = None
+        """Upload with retry logic"""        last_error = None
         
         for attempt in range(target.retry_count):
             try:
@@ -456,8 +433,7 @@ class PlatformDistributor:
         )
     
     def _detect_content_type(self, file_path: str) -> ContentType:
-        """Detect content type from file"""
-        import mimetypes
+        """Detect content type from file"""        import mimetypes
         mime_type, _ = mimetypes.guess_type(file_path)
         
         if mime_type:
@@ -471,8 +447,7 @@ class PlatformDistributor:
         return ContentType.TEXT
     
     def _is_content_type_allowed(self, content_type: ContentType, rules: List[DistributionRule]) -> bool:
-        """Check if content type is allowed by rules"""
-        if not rules:
+        """Check if content type is allowed by rules"""        if not rules:
             return True
         
         for rule in rules:
@@ -482,8 +457,7 @@ class PlatformDistributor:
         return False
     
     def _is_platform_compatible(self, platform: PlatformBase, task: DistributionTask) -> bool:
-        """Check if platform is compatible with content"""
-        content_type = self._detect_content_type(task.content_path)
+        """Check if platform is compatible with content"""        content_type = self._detect_content_type(task.content_path)
         
         # Check if platform supports the content type
         if content_type not in platform.config.content_types:
@@ -497,13 +471,11 @@ class PlatformDistributor:
         return len(task.rules) == 0  # If no rules, allow all platforms
     
     def _get_applicable_rules(self, metadata: ContentMetadata) -> List[DistributionRule]:
-        """Get applicable distribution rules for content"""
-        # For now, return all rules. In practice, you'd filter based on content characteristics
+        """Get applicable distribution rules for content"""        # For now, return all rules. In practice, you'd filter based on content characteristics
         return self.distribution_rules
     
     def _generate_warnings(self, task: DistributionTask, results: Dict[str, UploadResult]) -> List[str]:
-        """Generate warnings based on distribution results"""
-        warnings = []
+        """Generate warnings based on distribution results"""        warnings = []
         
         success_rate = sum(1 for r in results.values() if r.success) / max(len(results), 1)
         if success_rate < 0.5:
@@ -516,8 +488,7 @@ class PlatformDistributor:
         return warnings
     
     def _create_failed_result(self, task_id: str, errors: List[str], start_time: datetime) -> DistributionResult:
-        """Create failed distribution result"""
-        return DistributionResult(
+        """Create failed distribution result"""        return DistributionResult(
             task_id=task_id,
             success_count=0,
             failure_count=0,
@@ -530,8 +501,7 @@ class PlatformDistributor:
         )
     
     def get_task_status(self, task_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of a distribution task"""
-        if task_id in self.active_tasks:
+        """Get status of a distribution task"""        if task_id in self.active_tasks:
             task = self.active_tasks[task_id]
             return {
                 'status': 'active',
@@ -548,8 +518,7 @@ class PlatformDistributor:
             return None
     
     def get_distribution_stats(self) -> Dict[str, Any]:
-        """Get distribution statistics"""
-        total_tasks = len(self.completed_tasks)
+        """Get distribution statistics"""        total_tasks = len(self.completed_tasks)
         successful_tasks = sum(1 for r in self.completed_tasks.values() if r.success_count > 0)
         
         platform_stats = {}

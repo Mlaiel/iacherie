@@ -1,5 +1,4 @@
-"""
-🔧 Production Environment Configuration - IA-Influencer-Agent
+"""🔧 Production Environment Configuration - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps + Backend Senior + ML Engineer + DBA + Security
@@ -14,9 +13,7 @@ Contact: mlaiel@live.de
 
 Configuration environnement production avec sécurité maximale.
 ==================================================================
-"""
-
-import os
+"""import os
 import secrets
 from typing import Dict, Any, List, Optional
 from .base import (
@@ -33,11 +30,9 @@ from .base import (
 
 
 class ProductionConfigManager(BaseEnvironmentConfigManager):
-    """
-    Configuration manager pour l'environnement de production.
+    """    Configuration manager pour l'environnement de production.
     Sécurité maximale, performance optimisée, monitoring complet.
-    """
-    
+    """    
     def __init__(self):
         super().__init__(
             environment=EnvironmentType.PRODUCTION,
@@ -51,8 +46,7 @@ class ProductionConfigManager(BaseEnvironmentConfigManager):
         )
         
     def _get_production_cors_origins(self) -> List[str]:
-        """Définit les origins CORS autorisées en production"""
-        origins_env = os.getenv("CORS_ORIGINS", "")
+        """Définit les origins CORS autorisées en production"""        origins_env = os.getenv("CORS_ORIGINS", "")
         if origins_env:
             return [origin.strip() for origin in origins_env.split(",")]
         return [
@@ -63,8 +57,7 @@ class ProductionConfigManager(BaseEnvironmentConfigManager):
         ]
         
     def _get_production_allowed_hosts(self) -> List[str]:
-        """Définit les hosts autorisés en production"""
-        hosts_env = os.getenv("ALLOWED_HOSTS", "")
+        """Définit les hosts autorisés en production"""        hosts_env = os.getenv("ALLOWED_HOSTS", "")
         if hosts_env:
             return [host.strip() for host in hosts_env.split(",")]
         return [
@@ -75,8 +68,7 @@ class ProductionConfigManager(BaseEnvironmentConfigManager):
         ]
         
     def load_environment_specific_config(self) -> None:
-        """Charge la configuration spécifique à la production"""
-        
+        """Charge la configuration spécifique à la production"""        
         # Configuration Base de Données Production
         self.database_config = DatabaseConfig(
             host=os.getenv("PROD_DB_HOST"),
@@ -153,12 +145,10 @@ class ProductionConfigManager(BaseEnvironmentConfigManager):
         )
         
     def _generate_secure_key(self) -> str:
-        """Génère une clé sécurisée pour production"""
-        return secrets.token_urlsafe(32)
+        """Génère une clé sécurisée pour production"""        return secrets.token_urlsafe(32)
         
     def validate_configuration(self) -> bool:
-        """Valide la configuration production avec vérifications strictes"""
-        try:
+        """Valide la configuration production avec vérifications strictes"""        try:
             # Vérifications critiques pour production
             assert self.database_config is not None, "Configuration base de données requise"
             assert self.redis_config is not None, "Configuration Redis requise"
@@ -209,8 +199,7 @@ class ProductionConfigManager(BaseEnvironmentConfigManager):
             return False
             
     def get_production_features(self) -> Dict[str, Any]:
-        """Retourne les fonctionnalités spécifiques à la production"""
-        return {
+        """Retourne les fonctionnalités spécifiques à la production"""        return {
             "hot_reload": False,
             "debug_mode": False,
             "detailed_logging": False,
@@ -228,8 +217,7 @@ class ProductionConfigManager(BaseEnvironmentConfigManager):
         }
         
     def get_security_settings(self) -> Dict[str, Any]:
-        """Paramètres de sécurité renforcés pour production"""
-        base_settings = super().get_security_settings()
+        """Paramètres de sécurité renforcés pour production"""        base_settings = super().get_security_settings()
         base_settings.update({
             "ssl_required": True,
             "hsts_enabled": True,
@@ -245,8 +233,7 @@ class ProductionConfigManager(BaseEnvironmentConfigManager):
         return base_settings
         
     def get_performance_settings(self) -> Dict[str, Any]:
-        """Paramètres de performance pour production"""
-        return {
+        """Paramètres de performance pour production"""        return {
             "connection_pooling": True,
             "query_caching": True,
             "response_caching": True,
@@ -260,8 +247,7 @@ class ProductionConfigManager(BaseEnvironmentConfigManager):
         }
         
     def get_monitoring_settings(self) -> Dict[str, Any]:
-        """Configuration monitoring complète"""
-        return {
+        """Configuration monitoring complète"""        return {
             "health_checks": True,
             "metrics_collection": True,
             "distributed_tracing": True,
@@ -273,8 +259,7 @@ class ProductionConfigManager(BaseEnvironmentConfigManager):
         }
         
     def export_to_dict(self) -> Dict[str, Any]:
-        """Exporte la configuration production complète"""
-        base_config = super().export_to_dict()
+        """Exporte la configuration production complète"""        base_config = super().export_to_dict()
         base_config.update({
             "production_features": self.get_production_features(),
             "security_settings": self.get_security_settings(),
@@ -288,7 +273,6 @@ class ProductionConfigManager(BaseEnvironmentConfigManager):
 
 # Fonction utilitaire pour configuration production
 def create_production_config() -> ProductionConfigManager:
-    """Crée et initialise la configuration production"""
-    config = ProductionConfigManager()
+    """Crée et initialise la configuration production"""    config = ProductionConfigManager()
     config.initialize_configuration()
     return config

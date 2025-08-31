@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Commission Processors - Advanced Commission Processing and Payment Gateway Integration
+"""Commission Processors - Advanced Commission Processing and Payment Gateway Integration
 ====================================================================================
 
 Professional commission processing components with multi-gateway support, transaction management,
@@ -15,9 +14,7 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert 
 © 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from datetime import datetime, timedelta
@@ -54,16 +51,14 @@ from ...security.encryption import encrypt_sensitive_data, decrypt_sensitive_dat
 logger = get_structured_logger(__name__)
 
 class ProcessorStatus(str, Enum):
-    """Processor status enumeration"""
-    ACTIVE = "active"
+    """Processor status enumeration"""    ACTIVE = "active"
     INACTIVE = "inactive"
     MAINTENANCE = "maintenance"
     ERROR = "error"
     DEPRECATED = "deprecated"
 
 class TransactionType(str, Enum):
-    """Transaction type enumeration"""
-    COMMISSION_PAYMENT = "commission_payment"
+    """Transaction type enumeration"""    COMMISSION_PAYMENT = "commission_payment"
     REFUND = "refund"
     CHARGEBACK = "chargeback"
     DISPUTE = "dispute"
@@ -71,8 +66,7 @@ class TransactionType(str, Enum):
     PAYOUT = "payout"
 
 class PaymentMethod(str, Enum):
-    """Payment method enumeration"""
-    CREDIT_CARD = "credit_card"
+    """Payment method enumeration"""    CREDIT_CARD = "credit_card"
     BANK_TRANSFER = "bank_transfer"
     DIGITAL_WALLET = "digital_wallet"
     CRYPTOCURRENCY = "cryptocurrency"
@@ -81,8 +75,7 @@ class PaymentMethod(str, Enum):
 
 @dataclass
 class ProcessorConfig:
-    """Payment processor configuration"""
-    processor: PaymentProcessor
+    """Payment processor configuration"""    processor: PaymentProcessor
     api_key: str
     secret_key: str
     webhook_secret: str
@@ -95,8 +88,7 @@ class ProcessorConfig:
     supported_methods: List[PaymentMethod] = None
 
 class PaymentRequest(BaseModel):
-    """Payment processing request model"""
-    
+    """Payment processing request model"""    
     request_id: str = Field(default_factory=lambda: f"pay_req_{uuid.uuid4().hex}")
     transaction_id: str = Field(..., min_length=1)
     
@@ -126,8 +118,7 @@ class PaymentRequest(BaseModel):
         }
 
 class PaymentResult(BaseModel):
-    """Payment processing result model"""
-    
+    """Payment processing result model"""    
     result_id: str = Field(..., min_length=1)
     request: PaymentRequest
     
@@ -161,16 +152,13 @@ class PaymentResult(BaseModel):
         }
 
 class CommissionProcessor:
-    """
-    Base Commission Processor
+    """    Base Commission Processor
     
     Abstract base class for all payment processors providing common
     functionality and interface standardization.
-    """
-    
+    """    
     def __init__(self, config: ProcessorConfig):
-        """Initialize commission processor"""
-        self.config = config
+        """Initialize commission processor"""        self.config = config
         self.status = ProcessorStatus.INACTIVE
         self._client = None
         self._webhook_handlers: Dict[str, Any] = {}
@@ -178,8 +166,7 @@ class CommissionProcessor:
         logger.info(f"Initialized {config.processor.value} processor")
     
     async def initialize(self) -> None:
-        """Initialize processor connection"""
-        try:
+        """Initialize processor connection"""        try:
             await self._setup_client()
             await self._validate_credentials()
             self.status = ProcessorStatus.ACTIVE
@@ -191,8 +178,7 @@ class CommissionProcessor:
             raise PaymentError(f"Processor initialization failed: {e}")
     
     async def process_payment(self, request: PaymentRequest) -> PaymentResult:
-        """Process payment request"""
-        if self.status != ProcessorStatus.ACTIVE:
+        """Process payment request"""        if self.status != ProcessorStatus.ACTIVE:
             raise PaymentError(f"Processor {self.config.processor.value} not active")
         
         try:
@@ -246,8 +232,7 @@ class CommissionProcessor:
         original_transaction_id: str, 
         refund_amount: Optional[Decimal] = None
     ) -> PaymentResult:
-        """Process payment refund"""
-        # Default implementation for processors without refund support
+        """Process payment refund"""        # Default implementation for processors without refund support
         logging.warning(f"Payment refund not implemented for {self.__class__.__name__}")
         return PaymentResult(
             success=False,
@@ -257,8 +242,7 @@ class CommissionProcessor:
         )
     
     async def get_transaction_status(self, transaction_id: str) -> Dict[str, Any]:
-        """Get transaction status from processor"""
-        # Default implementation for processors without status checking
+        """Get transaction status from processor"""        # Default implementation for processors without status checking
         logging.warning(f"Transaction status checking not implemented for {self.__class__.__name__}")
         return {
             "transaction_id": transaction_id,
@@ -267,8 +251,7 @@ class CommissionProcessor:
         }
     
     async def handle_webhook(self, payload: Dict[str, Any], signature: str) -> Dict[str, Any]:
-        """Handle webhook from payment processor"""
-        # Default implementation for processors without webhook support
+        """Handle webhook from payment processor"""        # Default implementation for processors without webhook support
         logging.warning(f"Webhook handling not implemented for {self.__class__.__name__}")
         return {
             "status": "not_supported",
@@ -277,20 +260,17 @@ class CommissionProcessor:
     
     # Abstract methods to be implemented by subclasses
     async def _setup_client(self) -> None:
-        """Setup processor client"""
-        # Default implementation for processors without specific client setup
+        """Setup processor client"""        # Default implementation for processors without specific client setup
         logging.warning(f"Client setup not implemented for {self.__class__.__name__}")
         pass
     
     async def _validate_credentials(self) -> None:
-        """Validate processor credentials"""
-        # Default implementation for processors without credential validation
+        """Validate processor credentials"""        # Default implementation for processors without credential validation
         logging.warning(f"Credential validation not implemented for {self.__class__.__name__}")
         pass
     
     async def _execute_payment(self, request: PaymentRequest) -> Dict[str, Any]:
-        """Execute payment with processor"""
-        # Default implementation for processors without payment execution
+        """Execute payment with processor"""        # Default implementation for processors without payment execution
         logging.warning(f"Payment execution not implemented for {self.__class__.__name__}")
         return {
             "status": "not_supported",
@@ -300,8 +280,7 @@ class CommissionProcessor:
     
     # Common helper methods
     async def _validate_payment_request(self, request: PaymentRequest) -> None:
-        """Validate payment request"""
-        if request.amount <= 0:
+        """Validate payment request"""        if request.amount <= 0:
             raise ValidationError("Payment amount must be positive")
         
         if request.currency not in (self.config.supported_currencies or []):
@@ -313,14 +292,12 @@ class CommissionProcessor:
                 raise ValidationError(f"Payment method {request.payment_method} not supported")
     
     async def _calculate_fees(self, amount: Decimal, currency: Currency) -> Decimal:
-        """Calculate processing fees"""
-        percentage_fee = amount * self.config.fee_percentage
+        """Calculate processing fees"""        percentage_fee = amount * self.config.fee_percentage
         total_fee = percentage_fee + self.config.fee_fixed
         return total_fee.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
     
     async def _update_result_status(self, result: PaymentResult, processor_response: Dict[str, Any]) -> None:
-        """Update result status based on processor response"""
-        # Default implementation - override in subclasses
+        """Update result status based on processor response"""        # Default implementation - override in subclasses
         if processor_response.get("status") == "success":
             result.status = PaymentStatus.COMPLETED
             result.processed_at = datetime.utcnow()
@@ -331,8 +308,7 @@ class CommissionProcessor:
             result.error_message = processor_response.get("error_message")
     
     async def shutdown(self) -> None:
-        """Shutdown processor"""
-        try:
+        """Shutdown processor"""        try:
             self.status = ProcessorStatus.INACTIVE
             if self._client:
                 # Close connections if needed
@@ -343,28 +319,23 @@ class CommissionProcessor:
             logger.error(f"Processor shutdown error: {e}")
 
 class StripeProcessor(CommissionProcessor):
-    """
-    Stripe Payment Processor
+    """    Stripe Payment Processor
     
     Implements Stripe-specific payment processing functionality.
-    """
-    
+    """    
     async def _setup_client(self) -> None:
-        """Setup Stripe client"""
-        stripe.api_key = self.config.secret_key
+        """Setup Stripe client"""        stripe.api_key = self.config.secret_key
         self._client = stripe
     
     async def _validate_credentials(self) -> None:
-        """Validate Stripe credentials"""
-        try:
+        """Validate Stripe credentials"""        try:
             # Test API connection
             await asyncio.to_thread(stripe.Account.retrieve)
         except Exception as e:
             raise PaymentError(f"Stripe credential validation failed: {e}")
     
     async def _execute_payment(self, request: PaymentRequest) -> Dict[str, Any]:
-        """Execute payment with Stripe"""
-        try:
+        """Execute payment with Stripe"""        try:
             # Create payment intent
             payment_intent = await asyncio.to_thread(
                 stripe.PaymentIntent.create,
@@ -417,8 +388,7 @@ class StripeProcessor(CommissionProcessor):
         original_transaction_id: str, 
         refund_amount: Optional[Decimal] = None
     ) -> PaymentResult:
-        """Process Stripe refund"""
-        try:
+        """Process Stripe refund"""        try:
             refund_data = {"payment_intent": original_transaction_id}
             if refund_amount:
                 refund_data["amount"] = int(refund_amount * 100)
@@ -445,8 +415,7 @@ class StripeProcessor(CommissionProcessor):
             raise PaymentError(f"Refund processing failed: {e}")
     
     async def get_transaction_status(self, transaction_id: str) -> Dict[str, Any]:
-        """Get Stripe transaction status"""
-        try:
+        """Get Stripe transaction status"""        try:
             payment_intent = await asyncio.to_thread(
                 stripe.PaymentIntent.retrieve,
                 transaction_id
@@ -465,8 +434,7 @@ class StripeProcessor(CommissionProcessor):
             return {"status": "unknown", "error": str(e)}
     
     async def handle_webhook(self, payload: Dict[str, Any], signature: str) -> Dict[str, Any]:
-        """Handle Stripe webhook"""
-        try:
+        """Handle Stripe webhook"""        try:
             # Verify webhook signature
             event = stripe.Webhook.construct_event(
                 json.dumps(payload),
@@ -497,15 +465,12 @@ class StripeProcessor(CommissionProcessor):
             return {"processed": False, "error": str(e)}
 
 class PayPalProcessor(CommissionProcessor):
-    """
-    PayPal Payment Processor
+    """    PayPal Payment Processor
     
     Implements PayPal-specific payment processing functionality.
-    """
-    
+    """    
     async def _setup_client(self) -> None:
-        """Setup PayPal client"""
-        if self.config.environment == "sandbox":
+        """Setup PayPal client"""        if self.config.environment == "sandbox":
             environment = SandboxEnvironment(
                 client_id=self.config.api_key,
                 client_secret=self.config.secret_key
@@ -519,8 +484,7 @@ class PayPalProcessor(CommissionProcessor):
         self._client = PayPalHttpClient(environment)
     
     async def _validate_credentials(self) -> None:
-        """Validate PayPal credentials"""
-        try:
+        """Validate PayPal credentials"""        try:
             # Test API connection by creating a dummy order request
             request = OrdersCreateRequest()
             request.request_body({
@@ -542,8 +506,7 @@ class PayPalProcessor(CommissionProcessor):
             raise PaymentError(f"PayPal credential validation failed: {e}")
     
     async def _execute_payment(self, request: PaymentRequest) -> Dict[str, Any]:
-        """Execute payment with PayPal"""
-        try:
+        """Execute payment with PayPal"""        try:
             # Create PayPal order
             order_request = OrdersCreateRequest()
             order_request.request_body({
@@ -597,8 +560,7 @@ class PayPalProcessor(CommissionProcessor):
         original_transaction_id: str, 
         refund_amount: Optional[Decimal] = None
     ) -> PaymentResult:
-        """Process PayPal refund"""
-        try:
+        """Process PayPal refund"""        try:
             logger = get_structured_logger(__name__)
             logger.info(f"Processing PayPal refund for transaction {original_transaction_id}")
             
@@ -664,8 +626,7 @@ class PayPalProcessor(CommissionProcessor):
             )
     
     async def get_transaction_status(self, transaction_id: str) -> Dict[str, Any]:
-        """Get PayPal transaction status"""
-        try:
+        """Get PayPal transaction status"""        try:
             logger = get_structured_logger(__name__)
             logger.info(f"Getting PayPal transaction status for {transaction_id}")
             
@@ -703,8 +664,7 @@ class PayPalProcessor(CommissionProcessor):
             }
     
     async def _get_paypal_transaction(self, transaction_id: str) -> Optional[Dict[str, Any]]:
-        """Get PayPal transaction details (mock implementation)"""
-        # In production, this would make actual PayPal API calls
+        """Get PayPal transaction details (mock implementation)"""        # In production, this would make actual PayPal API calls
         # For safety, returning mock data structure
         if transaction_id.startswith('paypal_'):
             return {
@@ -720,20 +680,16 @@ class PayPalProcessor(CommissionProcessor):
         return None
     
     async def handle_webhook(self, payload: Dict[str, Any], signature: str) -> Dict[str, Any]:
-        """Handle PayPal webhook"""
-        # Implementation for PayPal webhook handling
+        """Handle PayPal webhook"""        # Implementation for PayPal webhook handling
         return {"processed": True, "note": "PayPal webhook not fully implemented"}
 
 class CryptocurrencyProcessor(CommissionProcessor):
-    """
-    Cryptocurrency Payment Processor
+    """    Cryptocurrency Payment Processor
     
     Handles Bitcoin, Ethereum, and other cryptocurrency payments.
-    """
-    
+    """    
     async def _setup_client(self) -> None:
-        """Setup crypto client"""
-        # Initialize cryptocurrency wallet connections
+        """Setup crypto client"""        # Initialize cryptocurrency wallet connections
         # This would typically involve connecting to blockchain nodes or APIs
         self.wallet_config = {
             "bitcoin_node": "https://bitcoin-node.example.com",
@@ -743,8 +699,7 @@ class CryptocurrencyProcessor(CommissionProcessor):
         logger.info("Cryptocurrency client setup completed")
     
     async def _validate_credentials(self) -> None:
-        """Validate crypto credentials"""
-        # Validate wallet access and API keys
+        """Validate crypto credentials"""        # Validate wallet access and API keys
         try:
             # In a real system, this would validate access to crypto wallets
             if not self.config.api_key or not self.config.secret_key:
@@ -757,8 +712,7 @@ class CryptocurrencyProcessor(CommissionProcessor):
             raise PaymentError(f"Cryptocurrency credential validation failed: {e}")
     
     async def _execute_payment(self, request: PaymentRequest) -> Dict[str, Any]:
-        """Execute cryptocurrency payment"""
-        try:
+        """Execute cryptocurrency payment"""        try:
             # For cryptocurrency payments, we typically generate a payment address
             # and wait for the transaction to be confirmed on the blockchain
             
@@ -781,8 +735,7 @@ class CryptocurrencyProcessor(CommissionProcessor):
             }
     
     def _generate_payment_address(self, currency: Currency) -> str:
-        """Generate payment address for cryptocurrency"""
-        # Mock implementation - in production, this would generate real addresses
+        """Generate payment address for cryptocurrency"""        # Mock implementation - in production, this would generate real addresses
         if currency == Currency.BTC:
             return "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"  # Genesis block address (for demo)
         elif currency == Currency.ETH:
@@ -795,8 +748,7 @@ class CryptocurrencyProcessor(CommissionProcessor):
         original_transaction_id: str, 
         refund_amount: Optional[Decimal] = None
     ) -> PaymentResult:
-        """Process crypto refund"""
-        try:
+        """Process crypto refund"""        try:
             logger = get_structured_logger(__name__)
             logger.warning(f"Crypto refund requested for transaction {original_transaction_id}")
             
@@ -850,26 +802,21 @@ class CryptocurrencyProcessor(CommissionProcessor):
             )
     
     async def get_transaction_status(self, transaction_id: str) -> Dict[str, Any]:
-        """Get crypto transaction status"""
-        # Check blockchain for transaction status
+        """Get crypto transaction status"""        # Check blockchain for transaction status
         return {"status": "pending", "confirmations": 0}
     
     async def handle_webhook(self, payload: Dict[str, Any], signature: str) -> Dict[str, Any]:
-        """Handle crypto webhook"""
-        # Handle blockchain confirmation notifications
+        """Handle crypto webhook"""        # Handle blockchain confirmation notifications
         return {"processed": True}
 
 class ProcessorManager:
-    """
-    Payment Processor Manager
+    """    Payment Processor Manager
     
     Manages multiple payment processors and routes payments based on
     various criteria such as currency, amount, and processor availability.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize processor manager"""
-        self.config = config or {}
+        """Initialize processor manager"""        self.config = config or {}
         self._processors: Dict[PaymentProcessor, CommissionProcessor] = {}
         self._processor_configs: Dict[PaymentProcessor, ProcessorConfig] = {}
         self._routing_rules: List[Dict[str, Any]] = []
@@ -877,8 +824,7 @@ class ProcessorManager:
         logger.info("ProcessorManager initialized")
     
     async def initialize(self) -> None:
-        """Initialize all processors"""
-        try:
+        """Initialize all processors"""        try:
             logger.info("Initializing payment processors...")
             
             # Initialize configured processors
@@ -908,8 +854,7 @@ class ProcessorManager:
             raise PaymentError(f"Processor initialization failed: {e}")
     
     def add_processor(self, config: ProcessorConfig) -> None:
-        """Add payment processor"""
-        try:
+        """Add payment processor"""        try:
             if config.processor == PaymentProcessor.STRIPE:
                 processor = StripeProcessor(config)
             elif config.processor == PaymentProcessor.PAYPAL:
@@ -929,8 +874,7 @@ class ProcessorManager:
             raise PaymentError(f"Processor addition failed: {e}")
     
     async def process_payment(self, request: PaymentRequest) -> PaymentResult:
-        """Route and process payment"""
-        try:
+        """Route and process payment"""        try:
             # Select best processor for this payment
             processor = await self._select_processor(request)
             
@@ -950,8 +894,7 @@ class ProcessorManager:
             raise PaymentError(f"Payment processing error: {e}")
     
     async def _select_processor(self, request: PaymentRequest) -> Optional[CommissionProcessor]:
-        """Select best processor for payment request"""
-        try:
+        """Select best processor for payment request"""        try:
             # Check if specific processor requested
             if request.preferred_processor and request.preferred_processor in self._processors:
                 processor = self._processors[request.preferred_processor]
@@ -994,8 +937,7 @@ class ProcessorManager:
         payload: Dict[str, Any], 
         signature: str
     ) -> Dict[str, Any]:
-        """Handle webhook from payment processor"""
-        try:
+        """Handle webhook from payment processor"""        try:
             if processor not in self._processors:
                 raise PaymentError(f"Unknown processor: {processor}")
             
@@ -1006,8 +948,7 @@ class ProcessorManager:
             return {"processed": False, "error": str(e)}
     
     async def get_processor_status(self) -> Dict[str, Any]:
-        """Get status of all processors"""
-        status = {}
+        """Get status of all processors"""        status = {}
         
         for processor_type, processor in self._processors.items():
             status[processor_type.value] = {
@@ -1019,8 +960,7 @@ class ProcessorManager:
         return status
     
     async def shutdown(self) -> None:
-        """Shutdown all processors"""
-        try:
+        """Shutdown all processors"""        try:
             logger.info("Shutting down payment processors...")
             
             shutdown_tasks = []
@@ -1035,8 +975,7 @@ class ProcessorManager:
         except Exception as e:
             logger.error(f"Processor shutdown error: {e}")
 
-"""
-Professional Commission Processors
+"""Professional Commission Processors
 © 2025 Fahed Mlaiel - Enterprise-Grade Solution
 
 This module provides comprehensive payment processing capabilities with multi-gateway

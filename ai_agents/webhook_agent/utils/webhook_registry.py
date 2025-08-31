@@ -1,5 +1,4 @@
-"""
-Webhook Registry - Enterprise Endpoint Management System
+"""Webhook Registry - Enterprise Endpoint Management System
 
 Industrial-grade webhook endpoint registry and configuration management
 for multi-platform integrations with advanced monitoring and analytics.
@@ -11,9 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission from Fahed Mlaiel <mlaiel@live.de> is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 import time
@@ -50,8 +47,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class WebhookEndpointModel(Base):
-    """Database model for webhook endpoints"""
-    __tablename__ = "webhook_registry_endpoints"
+    """Database model for webhook endpoints"""    __tablename__ = "webhook_registry_endpoints"
     
     endpoint_id = Column(String, primary_key=True)
     user_id = Column(String, nullable=False)
@@ -74,8 +70,7 @@ class WebhookEndpointModel(Base):
     last_error = Column(Text)
 
 class EndpointStatus(Enum):
-    """Webhook endpoint status"""
-    ACTIVE = "active"
+    """Webhook endpoint status"""    ACTIVE = "active"
     INACTIVE = "inactive"
     VERIFICATION_PENDING = "verification_pending" 
     VERIFICATION_FAILED = "verification_failed"
@@ -84,8 +79,7 @@ class EndpointStatus(Enum):
 
 @dataclass
 class WebhookEndpointConfig:
-    """Webhook endpoint configuration"""
-    endpoint_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Webhook endpoint configuration"""    endpoint_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = None
     platform: str = None
     url: str = None
@@ -104,8 +98,7 @@ class WebhookEndpointConfig:
 
 @dataclass
 class EndpointMetrics:
-    """Webhook endpoint performance metrics"""
-    total_requests: int = 0
+    """Webhook endpoint performance metrics"""    total_requests: int = 0
     successful_requests: int = 0
     failed_requests: int = 0
     average_response_time: float = 0.0
@@ -115,8 +108,7 @@ class EndpointMetrics:
 
 @dataclass
 class RegistryMetrics:
-    """Webhook registry metrics"""
-    total_endpoints: int = 0
+    """Webhook registry metrics"""    total_endpoints: int = 0
     active_endpoints: int = 0
     verified_endpoints: int = 0
     endpoints_by_platform: Dict[str, int] = field(default_factory=dict)
@@ -124,13 +116,11 @@ class RegistryMetrics:
     total_events_processed: int = 0
 
 class WebhookRegistry:
-    """
-    Industrial-grade webhook endpoint registry and management system
+    """    Industrial-grade webhook endpoint registry and management system
     
     Provides comprehensive endpoint lifecycle management including registration,
     verification, monitoring, and analytics across multi-platform integrations.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.db_session = get_db_session()
@@ -154,8 +144,7 @@ class WebhookRegistry:
         logger.info("WebhookRegistry initialized")
 
     async def initialize(self) -> None:
-        """Initialize webhook registry with required services"""
-        try:
+        """Initialize webhook registry with required services"""        try:
             # Initialize Redis connection
             self._redis_client = await aioredis.from_url(
                 self.config.get('redis_url', 'redis://localhost:6379'),
@@ -190,8 +179,7 @@ class WebhookRegistry:
         custom_headers: Dict[str, str] = None,
         verify_endpoint: bool = True
     ) -> Dict[str, Any]:
-        """
-        Register new webhook endpoint
+        """        Register new webhook endpoint
         
         Args:
             user_id: User identifier
@@ -207,8 +195,7 @@ class WebhookRegistry:
             
         Returns:
             Registration result with endpoint details
-        """
-        try:
+        """        try:
             # Check user endpoint limit
             user_endpoint_count = await self._get_user_endpoint_count(user_id)
             if user_endpoint_count >= self.max_endpoints_per_user:
@@ -280,8 +267,7 @@ class WebhookRegistry:
         endpoint_url: str,
         platform: str = None
     ) -> Optional[WebhookEndpointConfig]:
-        """Get endpoint configuration by URL and platform"""
-        try:
+        """Get endpoint configuration by URL and platform"""        try:
             # Check cache first
             for endpoint in self._endpoint_cache.values():
                 if endpoint.url == endpoint_url and (not platform or endpoint.platform == platform):
@@ -307,8 +293,7 @@ class WebhookRegistry:
             return None
 
     async def get_endpoint_by_id(self, endpoint_id: str) -> Optional[WebhookEndpointConfig]:
-        """Get endpoint configuration by ID"""
-        try:
+        """Get endpoint configuration by ID"""        try:
             # Check cache first
             if endpoint_id in self._endpoint_cache:
                 return self._endpoint_cache[endpoint_id]
@@ -337,8 +322,7 @@ class WebhookRegistry:
         platform: str = None,
         active_only: bool = True
     ) -> List[WebhookEndpointConfig]:
-        """Get all endpoints for a user"""
-        try:
+        """Get all endpoints for a user"""        try:
             endpoints = []
             
             # Check cache first
@@ -368,8 +352,7 @@ class WebhookRegistry:
         endpoint_id: str,
         updates: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Update webhook endpoint configuration"""
-        try:
+        """Update webhook endpoint configuration"""        try:
             # Get existing endpoint
             endpoint = await self.get_endpoint_by_id(endpoint_id)
             if not endpoint:
@@ -414,8 +397,7 @@ class WebhookRegistry:
             raise WebhookError(f"Update failed: {str(e)}")
 
     async def delete_endpoint(self, endpoint_id: str) -> Dict[str, Any]:
-        """Delete webhook endpoint"""
-        try:
+        """Delete webhook endpoint"""        try:
             # Get endpoint
             endpoint = await self.get_endpoint_by_id(endpoint_id)
             if not endpoint:
@@ -450,8 +432,7 @@ class WebhookRegistry:
             raise WebhookError(f"Deletion failed: {str(e)}")
 
     async def verify_endpoint(self, endpoint_id: str) -> Dict[str, Any]:
-        """Verify webhook endpoint connectivity and configuration"""
-        try:
+        """Verify webhook endpoint connectivity and configuration"""        try:
             endpoint = await self.get_endpoint_by_id(endpoint_id)
             if not endpoint:
                 raise ValidationError(f"Endpoint not found: {endpoint_id}")
@@ -480,8 +461,7 @@ class WebhookRegistry:
         response_time_ms: float,
         error_message: Optional[str] = None
     ) -> None:
-        """Record webhook request metrics for endpoint"""
-        try:
+        """Record webhook request metrics for endpoint"""        try:
             # Update endpoint metrics
             if endpoint_id not in self._endpoint_metrics:
                 self._endpoint_metrics[endpoint_id] = EndpointMetrics()
@@ -526,8 +506,7 @@ class WebhookRegistry:
         endpoint_id: str = None,
         user_id: str = None
     ) -> Dict[str, Any]:
-        """Get endpoint performance metrics"""
-        try:
+        """Get endpoint performance metrics"""        try:
             if endpoint_id:
                 # Get specific endpoint metrics
                 metrics = self._endpoint_metrics.get(endpoint_id)
@@ -597,8 +576,7 @@ class WebhookRegistry:
             raise WebhookError(f"Metrics retrieval failed: {str(e)}")
 
     async def health_check(self) -> Dict[str, Any]:
-        """Comprehensive health check for webhook registry"""
-        return {
+        """Comprehensive health check for webhook registry"""        return {
             'status': 'healthy',
             'redis_connected': self._redis_client is not None,
             'cached_endpoints': len(self._endpoint_cache),
@@ -610,8 +588,7 @@ class WebhookRegistry:
         }
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of webhook registry"""
-        try:
+        """Graceful shutdown of webhook registry"""        try:
             logger.info("Shutting down WebhookRegistry")
             
             # Cancel cleanup tasks
@@ -634,8 +611,7 @@ class WebhookRegistry:
         url: str,
         event_types: List[str]
     ) -> Dict[str, Any]:
-        """Validate endpoint configuration"""
-        # URL validation
+        """Validate endpoint configuration"""        # URL validation
         if not url.startswith(('http://', 'https://')):
             return {
                 'valid': False,
@@ -673,8 +649,7 @@ class WebhookRegistry:
         return {'valid': True}
 
     async def _get_user_endpoint_count(self, user_id: str) -> int:
-        """Get count of active endpoints for user"""
-        try:
+        """Get count of active endpoints for user"""        try:
             count = 0
             for endpoint in self._endpoint_cache.values():
                 if endpoint.user_id == user_id and endpoint.active:
@@ -700,8 +675,7 @@ class WebhookRegistry:
         user_id: str,
         url: str
     ) -> Optional[WebhookEndpointConfig]:
-        """Find existing endpoint for user and URL"""
-        for endpoint in self._endpoint_cache.values():
+        """Find existing endpoint for user and URL"""        for endpoint in self._endpoint_cache.values():
             if endpoint.user_id == user_id and endpoint.url == url and endpoint.active:
                 return endpoint
         
@@ -718,8 +692,7 @@ class WebhookRegistry:
         return None
 
     async def _verify_endpoint(self, endpoint: WebhookEndpointConfig) -> Dict[str, Any]:
-        """Verify endpoint connectivity and configuration"""
-        verification_id = str(uuid.uuid4())
+        """Verify endpoint connectivity and configuration"""        verification_id = str(uuid.uuid4())
         verification_token = str(uuid.uuid4())
         
         try:
@@ -789,8 +762,7 @@ class WebhookRegistry:
             self._verification_tokens.pop(verification_id, None)
 
     async def _store_endpoint_in_db(self, endpoint: WebhookEndpointConfig) -> None:
-        """Store endpoint configuration in database"""
-        try:
+        """Store endpoint configuration in database"""        try:
             # Encrypt secret if provided
             secret_hash = None
             if endpoint.secret:
@@ -819,8 +791,7 @@ class WebhookRegistry:
             raise
 
     async def _update_endpoint_in_db(self, endpoint: WebhookEndpointConfig) -> None:
-        """Update endpoint configuration in database"""
-        try:
+        """Update endpoint configuration in database"""        try:
             db_endpoint = self.db_session.query(WebhookEndpointModel).filter(
                 WebhookEndpointModel.endpoint_id == endpoint.endpoint_id
             ).first()
@@ -846,8 +817,7 @@ class WebhookRegistry:
             raise
 
     async def _load_endpoint_from_db(self, endpoint_id: str) -> Optional[WebhookEndpointConfig]:
-        """Load endpoint configuration from database"""
-        try:
+        """Load endpoint configuration from database"""        try:
             db_endpoint = self.db_session.query(WebhookEndpointModel).filter(
                 WebhookEndpointModel.endpoint_id == endpoint_id
             ).first()
@@ -866,8 +836,7 @@ class WebhookRegistry:
         url: str,
         platform: str = None
     ) -> Optional[WebhookEndpointConfig]:
-        """Load endpoint configuration from database by URL"""
-        try:
+        """Load endpoint configuration from database by URL"""        try:
             query = self.db_session.query(WebhookEndpointModel).filter(
                 WebhookEndpointModel.url == url,
                 WebhookEndpointModel.active == True
@@ -893,8 +862,7 @@ class WebhookRegistry:
         platform: str = None,
         active_only: bool = True
     ) -> List[WebhookEndpointConfig]:
-        """Load user endpoints from database"""
-        try:
+        """Load user endpoints from database"""        try:
             query = self.db_session.query(WebhookEndpointModel).filter(
                 WebhookEndpointModel.user_id == user_id
             )
@@ -914,8 +882,7 @@ class WebhookRegistry:
             return []
 
     async def _load_endpoints_from_db(self) -> None:
-        """Load all active endpoints from database"""
-        try:
+        """Load all active endpoints from database"""        try:
             db_endpoints = self.db_session.query(WebhookEndpointModel).filter(
                 WebhookEndpointModel.active == True
             ).all()
@@ -930,8 +897,7 @@ class WebhookRegistry:
             logger.error(f"Failed to load endpoints from database: {e}")
 
     def _convert_db_to_config(self, db_endpoint: WebhookEndpointModel) -> WebhookEndpointConfig:
-        """Convert database model to configuration object"""
-        return WebhookEndpointConfig(
+        """Convert database model to configuration object"""        return WebhookEndpointConfig(
             endpoint_id=db_endpoint.endpoint_id,
             user_id=db_endpoint.user_id,
             platform=db_endpoint.platform,
@@ -946,8 +912,7 @@ class WebhookRegistry:
         )
 
     async def _cache_endpoint_in_redis(self, endpoint: WebhookEndpointConfig) -> None:
-        """Cache endpoint configuration in Redis"""
-        try:
+        """Cache endpoint configuration in Redis"""        try:
             if self._redis_client:
                 endpoint_data = {
                     'endpoint_id': endpoint.endpoint_id,
@@ -977,8 +942,7 @@ class WebhookRegistry:
             logger.error(f"Failed to cache endpoint in Redis: {e}")
 
     async def _get_endpoint_from_redis(self, endpoint_id: str) -> Optional[WebhookEndpointConfig]:
-        """Get endpoint configuration from Redis cache"""
-        try:
+        """Get endpoint configuration from Redis cache"""        try:
             if self._redis_client:
                 cache_key = f"webhook_endpoint:{endpoint_id}"
                 cached_data = await self._redis_client.get(cache_key)
@@ -1010,8 +974,7 @@ class WebhookRegistry:
             return None
 
     async def _get_endpoint_from_redis_by_key(self, cache_key: str) -> Optional[WebhookEndpointConfig]:
-        """Get endpoint configuration from Redis by cache key"""
-        try:
+        """Get endpoint configuration from Redis by cache key"""        try:
             if self._redis_client:
                 cached_data = await self._redis_client.get(cache_key)
                 
@@ -1026,8 +989,7 @@ class WebhookRegistry:
             return None
 
     def _convert_dict_to_config(self, data: Dict[str, Any]) -> WebhookEndpointConfig:
-        """Convert dictionary to endpoint configuration"""
-        return WebhookEndpointConfig(
+        """Convert dictionary to endpoint configuration"""        return WebhookEndpointConfig(
             endpoint_id=data['endpoint_id'],
             user_id=data['user_id'],
             platform=data['platform'],
@@ -1045,8 +1007,7 @@ class WebhookRegistry:
         )
 
     async def _remove_endpoint_from_redis(self, endpoint_id: str) -> None:
-        """Remove endpoint configuration from Redis cache"""
-        try:
+        """Remove endpoint configuration from Redis cache"""        try:
             if self._redis_client:
                 cache_key = f"webhook_endpoint:{endpoint_id}"
                 await self._redis_client.delete(cache_key)
@@ -1055,14 +1016,12 @@ class WebhookRegistry:
             logger.error(f"Failed to remove endpoint from Redis: {e}")
 
     async def _initialize_endpoint_metrics(self) -> None:
-        """Initialize metrics for all cached endpoints"""
-        for endpoint_id in self._endpoint_cache:
+        """Initialize metrics for all cached endpoints"""        for endpoint_id in self._endpoint_cache:
             if endpoint_id not in self._endpoint_metrics:
                 self._endpoint_metrics[endpoint_id] = EndpointMetrics()
 
     async def _update_registry_metrics(self) -> None:
-        """Update registry-wide metrics"""
-        try:
+        """Update registry-wide metrics"""        try:
             self._metrics.total_endpoints = len([e for e in self._endpoint_cache.values() if e.active])
             self._metrics.active_endpoints = len([e for e in self._endpoint_cache.values() if e.active])
             self._metrics.verified_endpoints = len([e for e in self._endpoint_cache.values() if e.active and e.verified])
@@ -1088,8 +1047,7 @@ class WebhookRegistry:
             logger.error(f"Failed to update registry metrics: {e}")
 
     async def _start_cleanup_tasks(self) -> None:
-        """Start background cleanup tasks"""
-        # Cleanup task for inactive endpoints
+        """Start background cleanup tasks"""        # Cleanup task for inactive endpoints
         task = asyncio.create_task(self._cleanup_inactive_endpoints())
         self._cleanup_tasks.add(task)
         
@@ -1098,8 +1056,7 @@ class WebhookRegistry:
         self._cleanup_tasks.add(task)
 
     async def _cleanup_inactive_endpoints(self) -> None:
-        """Background task to clean up inactive endpoints"""
-        while True:
+        """Background task to clean up inactive endpoints"""        while True:
             try:
                 cleanup_interval = self.cleanup_interval * 3600  # Convert to seconds
                 await asyncio.sleep(cleanup_interval)
@@ -1122,8 +1079,7 @@ class WebhookRegistry:
                 logger.error(f"Error in cleanup inactive endpoints task: {e}")
 
     async def _cleanup_cache(self) -> None:
-        """Background task to clean up cache"""
-        while True:
+        """Background task to clean up cache"""        while True:
             try:
                 await asyncio.sleep(3600)  # Run every hour
                 

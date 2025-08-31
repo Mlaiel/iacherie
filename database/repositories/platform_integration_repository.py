@@ -1,5 +1,4 @@
-"""
-Platform Integration Repository Module
+"""Platform Integration Repository Module
 
 Enterprise-grade repository for managing platform integrations with OAuth,
 API management, health monitoring, and automated synchronization.
@@ -23,9 +22,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-
-from typing import List, Optional, Dict, Any, Union
+"""from typing import List, Optional, Dict, Any, Union
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, func, desc, asc
 from datetime import datetime, timedelta
@@ -47,14 +44,11 @@ import logging
 logger = logging.getLogger(__name__)
 
 class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
-    """
-    Repository for platform integration operations with comprehensive OAuth management,
+    """    Repository for platform integration operations with comprehensive OAuth management,
     API health monitoring, rate limiting, and automated synchronization capabilities.
-    """
-    
+    """    
     def __init__(self, db_session: Session):
-        """Initialize platform integration repository"""
-        super().__init__(db_session, PlatformIntegration)
+        """Initialize platform integration repository"""        super().__init__(db_session, PlatformIntegration)
         
     def create_integration(self,
                           user_id: int,
@@ -68,8 +62,7 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
                           platform_user_id: Optional[str] = None,
                           platform_username: Optional[str] = None,
                           configuration: Optional[Dict[str, Any]] = None) -> PlatformIntegration:
-        """
-        Create platform integration with secure token management
+        """        Create platform integration with secure token management
         
         Args:
             user_id: User ID
@@ -86,8 +79,7 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
             
         Returns:
             Created PlatformIntegration instance
-        """
-        try:
+        """        try:
             # Check for existing integration
             existing = self.get_user_platform_integration(user_id, platform)
             if existing and existing.status == IntegrationStatus.ACTIVE:
@@ -134,50 +126,43 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
             raise RepositoryException(f"Integration creation failed: {str(e)}")
             
     def _encrypt_token(self, token: str) -> str:
-        """
-        Encrypt token for secure storage (placeholder implementation)
+        """        Encrypt token for secure storage (placeholder implementation)
         
         Args:
             token: Token to encrypt
             
         Returns:
             Encrypted token string
-        """
-        # In production, use proper encryption (AES-256, Fernet, etc.)
+        """        # In production, use proper encryption (AES-256, Fernet, etc.)
         # This is a placeholder implementation
         import base64
         return base64.b64encode(token.encode()).decode()
         
     def _decrypt_token(self, encrypted_token: str) -> str:
-        """
-        Decrypt token for use (placeholder implementation)
+        """        Decrypt token for use (placeholder implementation)
         
         Args:
             encrypted_token: Encrypted token
             
         Returns:
             Decrypted token string
-        """
-        # In production, use proper decryption
+        """        # In production, use proper decryption
         # This is a placeholder implementation
         import base64
         return base64.b64decode(encrypted_token.encode()).decode()
         
     def _calculate_next_sync(self) -> datetime:
-        """
-        Calculate next synchronization time
+        """        Calculate next synchronization time
         
         Returns:
             Next sync datetime
-        """
-        # Default to sync every hour
+        """        # Default to sync every hour
         return datetime.utcnow() + timedelta(hours=1)
         
     def get_user_platform_integration(self,
                                     user_id: int,
                                     platform: Platform) -> Optional[PlatformIntegration]:
-        """
-        Get user's integration for a specific platform
+        """        Get user's integration for a specific platform
         
         Args:
             user_id: User ID
@@ -185,8 +170,7 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
             
         Returns:
             PlatformIntegration instance or None
-        """
-        try:
+        """        try:
             return self.db_session.query(PlatformIntegration).filter(
                 and_(
                     PlatformIntegration.user_id == user_id,
@@ -204,8 +188,7 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
                             status: Optional[IntegrationStatus] = None,
                             health_status: Optional[HealthStatus] = None,
                             include_tokens: bool = False) -> List[PlatformIntegration]:
-        """
-        Get all integrations for a user with filtering
+        """        Get all integrations for a user with filtering
         
         Args:
             user_id: User ID
@@ -215,8 +198,7 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
             
         Returns:
             List of PlatformIntegration instances
-        """
-        try:
+        """        try:
             query = self.db_session.query(PlatformIntegration).filter(
                 PlatformIntegration.user_id == user_id
             )
@@ -258,8 +240,7 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
                      refresh_token: Optional[str] = None,
                      token_expires_at: Optional[datetime] = None,
                      scopes: Optional[List[str]] = None) -> Optional[PlatformIntegration]:
-        """
-        Update OAuth tokens for an integration
+        """        Update OAuth tokens for an integration
         
         Args:
             integration_id: Integration ID
@@ -270,8 +251,7 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
             
         Returns:
             Updated PlatformIntegration instance
-        """
-        try:
+        """        try:
             integration = self.get_by_id(integration_id)
             if not integration:
                 return None
@@ -317,8 +297,7 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
                           sync_status: DataSyncStatus,
                           last_sync_error: Optional[str] = None,
                           next_sync_at: Optional[datetime] = None) -> Optional[PlatformIntegration]:
-        """
-        Update synchronization status for an integration
+        """        Update synchronization status for an integration
         
         Args:
             integration_id: Integration ID
@@ -328,8 +307,7 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
             
         Returns:
             Updated PlatformIntegration instance
-        """
-        try:
+        """        try:
             integration = self.get_by_id(integration_id)
             if not integration:
                 return None
@@ -384,8 +362,7 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
                            integration_id: int,
                            health_status: HealthStatus,
                            health_details: Optional[Dict[str, Any]] = None) -> Optional[PlatformIntegration]:
-        """
-        Update health status for an integration
+        """        Update health status for an integration
         
         Args:
             integration_id: Integration ID
@@ -394,8 +371,7 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
             
         Returns:
             Updated PlatformIntegration instance
-        """
-        try:
+        """        try:
             integration = self.get_by_id(integration_id)
             if not integration:
                 return None
@@ -438,8 +414,7 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
     def get_integrations_for_sync(self,
                                 platform: Optional[Platform] = None,
                                 limit: Optional[int] = None) -> List[PlatformIntegration]:
-        """
-        Get integrations that are due for synchronization
+        """        Get integrations that are due for synchronization
         
         Args:
             platform: Optional platform filter
@@ -447,8 +422,7 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
             
         Returns:
             List of integrations due for sync
-        """
-        try:
+        """        try:
             current_time = datetime.utcnow()
             
             query = self.db_session.query(PlatformIntegration).filter(
@@ -487,13 +461,11 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
             return []
             
     def get_unhealthy_integrations(self) -> List[PlatformIntegration]:
-        """
-        Get integrations with health issues
+        """        Get integrations with health issues
         
         Returns:
             List of unhealthy integrations
-        """
-        try:
+        """        try:
             integrations = self.db_session.query(PlatformIntegration).filter(
                 and_(
                     PlatformIntegration.status == IntegrationStatus.ACTIVE,
@@ -513,16 +485,14 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
             return []
             
     def get_expiring_tokens(self, hours_ahead: int = 24) -> List[PlatformIntegration]:
-        """
-        Get integrations with tokens expiring soon
+        """        Get integrations with tokens expiring soon
         
         Args:
             hours_ahead: Number of hours ahead to check
             
         Returns:
             List of integrations with expiring tokens
-        """
-        try:
+        """        try:
             expiry_threshold = datetime.utcnow() + timedelta(hours=hours_ahead)
             
             integrations = self.db_session.query(PlatformIntegration).filter(
@@ -544,16 +514,14 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
             return []
             
     def get_integration_statistics(self, user_id: Optional[int] = None) -> Dict[str, Any]:
-        """
-        Get comprehensive integration statistics
+        """        Get comprehensive integration statistics
         
         Args:
             user_id: Optional user ID to filter statistics
             
         Returns:
             Dictionary containing integration statistics
-        """
-        try:
+        """        try:
             base_query = self.db_session.query(PlatformIntegration)
             
             if user_id:
@@ -622,8 +590,7 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
     def deactivate_integration(self,
                              integration_id: int,
                              reason: Optional[str] = None) -> Optional[PlatformIntegration]:
-        """
-        Deactivate an integration
+        """        Deactivate an integration
         
         Args:
             integration_id: Integration ID
@@ -631,8 +598,7 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
             
         Returns:
             Updated PlatformIntegration instance
-        """
-        try:
+        """        try:
             integration = self.get_by_id(integration_id)
             if not integration:
                 return None

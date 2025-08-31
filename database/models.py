@@ -1,12 +1,9 @@
-"""
-Database Models
+"""Database Models
 SQLAlchemy models for the database schema.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-from sqlalchemy import Column, String, Integer, Float, Boolean, Text, DateTime, ForeignKey, JSON, BigInteger
+"""from sqlalchemy import Column, String, Integer, Float, Boolean, Text, DateTime, ForeignKey, JSON, BigInteger
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from datetime import datetime
@@ -15,8 +12,7 @@ Base = declarative_base()
 
 
 class User(Base):
-    """User model"""
-    __tablename__ = "users"
+    """User model"""    __tablename__ = "users"
     
     id = Column(String(32), primary_key=True)
     email = Column(String(255), unique=True, nullable=False)
@@ -39,8 +35,7 @@ class User(Base):
 
 
 class Content(Base):
-    """Content model"""
-    __tablename__ = "content"
+    """Content model"""    __tablename__ = "content"
     
     id = Column(String(36), primary_key=True)
     user_id = Column(String(32), ForeignKey("users.id"), nullable=False)
@@ -62,8 +57,7 @@ class Content(Base):
 
 
 class ContentMonitoring(Base):
-    """Content monitoring model"""
-    __tablename__ = "content_monitoring"
+    """Content monitoring model"""    __tablename__ = "content_monitoring"
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(String(32), ForeignKey("users.id"), nullable=False)
@@ -83,8 +77,7 @@ class ContentMonitoring(Base):
 
 
 class ProtectionViolation(Base):
-    """Protection violation model"""
-    __tablename__ = "protection_violations"
+    """Protection violation model"""    __tablename__ = "protection_violations"
     
     id = Column(String(36), primary_key=True)
     original_content_id = Column(String(36), ForeignKey("content.id"), nullable=False)
@@ -103,8 +96,7 @@ class ProtectionViolation(Base):
 
 
 class RevenueTracking(Base):
-    """Revenue tracking model"""
-    __tablename__ = "revenue_tracking"
+    """Revenue tracking model"""    __tablename__ = "revenue_tracking"
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(String(32), ForeignKey("users.id"), nullable=False)
@@ -121,8 +113,7 @@ class RevenueTracking(Base):
 
 
 class PlatformConnections(Base):
-    """Platform connections model"""
-    __tablename__ = "platform_connections"
+    """Platform connections model"""    __tablename__ = "platform_connections"
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(String(32), ForeignKey("users.id"), nullable=False)
@@ -139,8 +130,7 @@ class PlatformConnections(Base):
 
 
 class LicensingAgreements(Base):
-    """Licensing agreements model"""
-    __tablename__ = "licensing_agreements"
+    """Licensing agreements model"""    __tablename__ = "licensing_agreements"
     
     id = Column(String(36), primary_key=True)
     content_id = Column(String(36), ForeignKey("content.id"), nullable=False)
@@ -157,8 +147,7 @@ class LicensingAgreements(Base):
 
 
 class PaymentTransactions(Base):
-    """Payment transactions model"""
-    __tablename__ = "payment_transactions"
+    """Payment transactions model"""    __tablename__ = "payment_transactions"
     
     id = Column(String(36), primary_key=True)
     user_id = Column(String(32), ForeignKey("users.id"), nullable=False)
@@ -174,8 +163,7 @@ class PaymentTransactions(Base):
 
 
 class CollaborationProjects(Base):
-    """Collaboration projects model"""
-    __tablename__ = "collaboration_projects"
+    """Collaboration projects model"""    __tablename__ = "collaboration_projects"
     
     id = Column(String(36), primary_key=True)
     creator_id = Column(String(32), ForeignKey("users.id"), nullable=False)
@@ -189,8 +177,7 @@ class CollaborationProjects(Base):
 
 
 class ContentPerformance(Base):
-    """Content performance model"""
-    __tablename__ = "content_performance"
+    """Content performance model"""    __tablename__ = "content_performance"
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     content_id = Column(String(36), ForeignKey("content.id"), nullable=False)
@@ -205,8 +192,7 @@ class ContentPerformance(Base):
 
 
 class CrawlResult(Base):
-    """Crawl result model for storing crawler data"""
-    __tablename__ = "crawl_results"
+    """Crawl result model for storing crawler data"""    __tablename__ = "crawl_results"
     
     id = Column(String(36), primary_key=True)
     platform = Column(String(50), nullable=False)
@@ -221,8 +207,7 @@ class CrawlResult(Base):
 
 
 class ContentMatch(Base):
-    """Content match model for storing detected matches"""
-    __tablename__ = "content_matches"
+    """Content match model for storing detected matches"""    __tablename__ = "content_matches"
     
     id = Column(String(36), primary_key=True)
     original_content_id = Column(String(36), ForeignKey("content.id"), nullable=False)

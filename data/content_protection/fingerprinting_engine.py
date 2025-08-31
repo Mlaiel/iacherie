@@ -1,5 +1,4 @@
-"""
-Advanced AI Fingerprinting Engine
+"""Advanced AI Fingerprinting Engine
 =================================
 
 Industrial-grade multi-format content fingerprinting system for audio, video, image, and text content.
@@ -13,9 +12,7 @@ Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, modification ou distribution sans autorisation 
 écrite explicite de l'auteur est strictement interdite et constitue une violation 
 du droit d'auteur. Les contrevenants s'exposent à des poursuites judiciaires.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import numpy as np
@@ -61,8 +58,7 @@ from redis import Redis
 
 
 class ContentType(Enum):
-    """Content type enumeration"""
-    AUDIO = "audio"
+    """Content type enumeration"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -70,8 +66,7 @@ class ContentType(Enum):
 
 
 class FingerprintMethod(Enum):
-    """Fingerprinting method enumeration"""
-    SPECTRAL_HASH = "spectral_hash"
+    """Fingerprinting method enumeration"""    SPECTRAL_HASH = "spectral_hash"
     CHROMAPRINT = "chromaprint"
     MFCC_FEATURES = "mfcc_features"
     PERCEPTUAL_HASH = "perceptual_hash"
@@ -83,8 +78,7 @@ class FingerprintMethod(Enum):
 
 @dataclass
 class FingerprintResult:
-    """Fingerprint extraction result"""
-    fingerprint_id: str
+    """Fingerprint extraction result"""    fingerprint_id: str
     content_id: str
     content_type: ContentType
     method: FingerprintMethod
@@ -98,8 +92,7 @@ class FingerprintResult:
 
 @dataclass
 class SimilarityMatch:
-    """Content similarity match result"""
-    match_id: str
+    """Content similarity match result"""    match_id: str
     query_fingerprint_id: str
     matched_fingerprint_id: str
     similarity_score: float
@@ -112,8 +105,7 @@ class SimilarityMatch:
 
 @dataclass
 class FingerprintConfig:
-    """Fingerprinting configuration"""
-    content_type: ContentType
+    """Fingerprinting configuration"""    content_type: ContentType
     methods: List[FingerprintMethod]
     quality_threshold: float
     vector_dimensions: int
@@ -123,24 +115,20 @@ class FingerprintConfig:
 
 
 class FingerprintingEngine:
-    """
-    Advanced AI-powered content fingerprinting engine.
+    """    Advanced AI-powered content fingerprinting engine.
     
     Supports multi-format content fingerprinting with state-of-the-art algorithms
     for audio, video, image, and text content similarity detection.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, redis_client: Redis, 
                  models_path: str = "./models"):
-        """
-        Initialize FingerprintingEngine.
+        """        Initialize FingerprintingEngine.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
             models_path: Path to ML models directory
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
         self.models_path = Path(models_path)
@@ -172,8 +160,7 @@ class FingerprintingEngine:
         self.text_embedding_dim = 768
     
     def _initialize_models(self):
-        """Initialize ML models for fingerprinting"""
-        try:
+        """Initialize ML models for fingerprinting"""        try:
             # Initialize text models
             self.text_tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
             self.text_model = AutoModel.from_pretrained('bert-base-uncased')
@@ -200,8 +187,7 @@ class FingerprintingEngine:
             raise
     
     def _initialize_vector_index(self):
-        """Initialize FAISS vector index for similarity search"""
-        try:
+        """Initialize FAISS vector index for similarity search"""        try:
             # Create FAISS index for high-dimensional vectors
             dimension = 768  # BERT embedding dimension
             self.vector_index = faiss.IndexFlatIP(dimension)  # Inner product similarity
@@ -217,8 +203,7 @@ class FingerprintingEngine:
     async def extract_fingerprint(self, content_data: Union[bytes, str], 
                                 content_type: ContentType,
                                 config: Optional[FingerprintConfig] = None) -> List[FingerprintResult]:
-        """
-        Extract fingerprints from content using multiple methods.
+        """        Extract fingerprints from content using multiple methods.
         
         Args:
             content_data: Raw content data (bytes) or file path (str)
@@ -227,8 +212,7 @@ class FingerprintingEngine:
             
         Returns:
             List of fingerprint extraction results
-        """
-        try:
+        """        try:
             start_time = datetime.utcnow()
             
             if config is None:
@@ -266,8 +250,7 @@ class FingerprintingEngine:
     
     async def _extract_audio_fingerprints(self, audio_data: Union[bytes, str], 
                                         config: FingerprintConfig) -> List[FingerprintResult]:
-        """Extract audio fingerprints using multiple methods"""
-        fingerprints = []
+        """Extract audio fingerprints using multiple methods"""        fingerprints = []
         
         try:
             # Load audio data
@@ -335,8 +318,7 @@ class FingerprintingEngine:
     
     async def _extract_video_fingerprints(self, video_data: Union[bytes, str], 
                                         config: FingerprintConfig) -> List[FingerprintResult]:
-        """Extract video fingerprints using multiple methods"""
-        fingerprints = []
+        """Extract video fingerprints using multiple methods"""        fingerprints = []
         
         try:
             # Load video
@@ -392,8 +374,7 @@ class FingerprintingEngine:
     
     async def _extract_image_fingerprints(self, image_data: Union[bytes, str], 
                                         config: FingerprintConfig) -> List[FingerprintResult]:
-        """Extract image fingerprints using multiple methods"""
-        fingerprints = []
+        """Extract image fingerprints using multiple methods"""        fingerprints = []
         
         try:
             # Load image
@@ -456,8 +437,7 @@ class FingerprintingEngine:
     
     async def _extract_text_fingerprints(self, text_data: Union[bytes, str], 
                                        config: FingerprintConfig) -> List[FingerprintResult]:
-        """Extract text fingerprints using multiple methods"""
-        fingerprints = []
+        """Extract text fingerprints using multiple methods"""        fingerprints = []
         
         try:
             # Handle text data
@@ -517,8 +497,7 @@ class FingerprintingEngine:
     async def find_similar_content(self, query_fingerprint: FingerprintResult,
                                  similarity_threshold: float = 0.8,
                                  max_results: int = 100) -> List[SimilarityMatch]:
-        """
-        Find similar content using fingerprint matching.
+        """        Find similar content using fingerprint matching.
         
         Args:
             query_fingerprint: Query fingerprint to match against
@@ -527,8 +506,7 @@ class FingerprintingEngine:
             
         Returns:
             List of similarity matches
-        """
-        try:
+        """        try:
             matches = []
             
             # Use vector similarity for embeddings
@@ -565,8 +543,7 @@ class FingerprintingEngine:
             return []
     
     async def _extract_chromaprint(self, audio_data: np.ndarray, sample_rate: int) -> str:
-        """Extract Chromaprint audio fingerprint"""
-        try:
+        """Extract Chromaprint audio fingerprint"""        try:
             # Convert to appropriate format for Chromaprint
             audio_int16 = (audio_data * 32767).astype(np.int16)
             
@@ -579,8 +556,7 @@ class FingerprintingEngine:
             return ""
     
     async def _extract_mfcc_features(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract MFCC features from audio"""
-        try:
+        """Extract MFCC features from audio"""        try:
             # Extract MFCC features
             mfcc = librosa.feature.mfcc(
                 y=audio_data,
@@ -616,8 +592,7 @@ class FingerprintingEngine:
             return np.array([])
     
     async def _extract_spectral_hash(self, audio_data: np.ndarray, sample_rate: int) -> str:
-        """Extract spectral hash from audio"""
-        try:
+        """Extract spectral hash from audio"""        try:
             # Compute spectrogram
             stft = librosa.stft(audio_data, hop_length=self.audio_hop_length)
             magnitude = np.abs(stft)
@@ -637,8 +612,7 @@ class FingerprintingEngine:
             return ""
     
     async def _extract_frame_hash(self, frame: np.ndarray) -> str:
-        """Extract perceptual hash from video frame"""
-        try:
+        """Extract perceptual hash from video frame"""        try:
             # Resize frame
             frame_resized = cv2.resize(frame, self.video_resize_target)
             
@@ -656,8 +630,7 @@ class FingerprintingEngine:
             return ""
     
     async def _extract_clip_embedding(self, image: Image.Image) -> Optional[np.ndarray]:
-        """Extract CLIP embedding from image"""
-        try:
+        """Extract CLIP embedding from image"""        try:
             # This would require CLIP model integration
             # Placeholder implementation
             return None
@@ -667,8 +640,7 @@ class FingerprintingEngine:
             return None
     
     async def _extract_bert_embedding(self, text: str) -> np.ndarray:
-        """Extract BERT embedding from text"""
-        try:
+        """Extract BERT embedding from text"""        try:
             # Tokenize text
             inputs = self.text_tokenizer(
                 text[:self.text_max_length],
@@ -689,8 +661,7 @@ class FingerprintingEngine:
             return np.array([])
     
     async def _extract_sentence_embedding(self, text: str) -> Optional[np.ndarray]:
-        """Extract sentence embedding using SentenceTransformer"""
-        try:
+        """Extract sentence embedding using SentenceTransformer"""        try:
             embedding = self.sentence_transformer.encode(text)
             return embedding
             
@@ -700,8 +671,7 @@ class FingerprintingEngine:
     
     async def _find_vector_similarities(self, query_fingerprint: FingerprintResult,
                                       threshold: float, max_results: int) -> List[SimilarityMatch]:
-        """Find similarities using vector embeddings"""
-        matches = []
+        """Find similarities using vector embeddings"""        matches = []
         
         try:
             if self.vector_index is None or query_fingerprint.vector_embedding is None:
@@ -733,8 +703,7 @@ class FingerprintingEngine:
     
     async def _find_hash_similarities(self, query_fingerprint: FingerprintResult,
                                     threshold: float, max_results: int) -> List[SimilarityMatch]:
-        """Find similarities using hash comparison"""
-        matches = []
+        """Find similarities using hash comparison"""        matches = []
         
         try:
             # Query database for similar hashes
@@ -749,8 +718,7 @@ class FingerprintingEngine:
         return matches
     
     def _get_default_config(self, content_type: ContentType) -> FingerprintConfig:
-        """Get default configuration for content type"""
-        method_map = {
+        """Get default configuration for content type"""        method_map = {
             ContentType.AUDIO: [FingerprintMethod.CHROMAPRINT, FingerprintMethod.MFCC_FEATURES],
             ContentType.VIDEO: [FingerprintMethod.FRAME_HASH],
             ContentType.IMAGE: [FingerprintMethod.PERCEPTUAL_HASH],
@@ -768,16 +736,14 @@ class FingerprintingEngine:
         )
     
     async def _store_fingerprint(self, fingerprint: FingerprintResult):
-        """Store fingerprint in database"""
-        try:
+        """Store fingerprint in database"""        try:
             # Implementation would store in database
             pass
         except Exception as e:
             self.logger.error(f"Error storing fingerprint: {str(e)}")
     
     async def _cache_fingerprint(self, fingerprint: FingerprintResult):
-        """Cache fingerprint data"""
-        try:
+        """Cache fingerprint data"""        try:
             cache_key = f"fingerprint:{fingerprint.fingerprint_id}"
             fingerprint_data = asdict(fingerprint)
             

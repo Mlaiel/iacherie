@@ -1,5 +1,4 @@
-"""
-Processors Index Module - IA-Influencer-Agent Platform
+"""Processors Index Module - IA-Influencer-Agent Platform
 
 Central export module for all content processors in the IA-Influencer-Agent platform.
 Provides unified access to all industrial-grade processing capabilities.
@@ -13,9 +12,7 @@ distribution, or commercialization without explicit written permission is
 strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
-"""
-
-import logging
+"""import logging
 from typing import Dict, Any, Optional, Type, Union
 
 # Import all processor classes
@@ -83,13 +80,11 @@ PROCESSOR_CLASSES = {
 
 
 class ProcessorManager:
-    """
-    🏭 ENTERPRISE PROCESSOR MANAGER
+    """    🏭 ENTERPRISE PROCESSOR MANAGER
     
     Central management system for all content processors with unified
     initialization, health monitoring, and resource management.
-    """
-    
+    """    
     def __init__(self, db_session, redis_client):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -108,8 +103,7 @@ class ProcessorManager:
         processor_type: str,
         config: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Initialize a specific processor
+        """        Initialize a specific processor
         
         Args:
             processor_type: Type of processor to initialize
@@ -117,8 +111,7 @@ class ProcessorManager:
             
         Returns:
             Initialization result
-        """
-        try:
+        """        try:
             if processor_type not in PROCESSOR_FACTORIES:
                 return {
                     "success": False,
@@ -168,16 +161,14 @@ class ProcessorManager:
         self,
         global_config: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Initialize all available processors
+        """        Initialize all available processors
         
         Args:
             global_config: Global configuration for all processors
             
         Returns:
             Initialization results for all processors
-        """
-        try:
+        """        try:
             results = {}
             successful_inits = 0
             failed_inits = 0
@@ -222,34 +213,28 @@ class ProcessorManager:
             }
     
     def get_processor(self, processor_type: str) -> Optional[Any]:
-        """
-        Get a processor instance
+        """        Get a processor instance
         
         Args:
             processor_type: Type of processor to retrieve
             
         Returns:
             Processor instance or None
-        """
-        return self._processors.get(processor_type)
+        """        return self._processors.get(processor_type)
     
     def get_all_processors(self) -> Dict[str, Any]:
-        """
-        Get all processor instances
+        """        Get all processor instances
         
         Returns:
             Dictionary of all processor instances
-        """
-        return self._processors.copy()
+        """        return self._processors.copy()
     
     async def health_check_all(self) -> Dict[str, Any]:
-        """
-        Perform health check on all processors
+        """        Perform health check on all processors
         
         Returns:
             Health check results for all processors
-        """
-        try:
+        """        try:
             health_results = {}
             healthy_count = 0
             unhealthy_count = 0
@@ -295,13 +280,11 @@ class ProcessorManager:
             }
     
     async def shutdown_all(self) -> Dict[str, Any]:
-        """
-        Shutdown all processors gracefully
+        """        Shutdown all processors gracefully
         
         Returns:
             Shutdown results
-        """
-        try:
+        """        try:
             shutdown_results = {}
             successful_shutdowns = 0
             failed_shutdowns = 0
@@ -350,13 +333,11 @@ class ProcessorManager:
             }
     
     def get_processor_info(self) -> Dict[str, Any]:
-        """
-        Get information about available processors
+        """        Get information about available processors
         
         Returns:
             Processor information
-        """
-        return {
+        """        return {
             "available_processors": list(PROCESSOR_FACTORIES.keys()),
             "initialized_processors": list(self._processors.keys()),
             "processor_classes": {
@@ -375,8 +356,7 @@ async def create_processor_manager(
     auto_initialize: bool = False,
     global_config: Optional[Dict[str, Any]] = None
 ) -> ProcessorManager:
-    """
-    Create and optionally initialize a processor manager
+    """    Create and optionally initialize a processor manager
     
     Args:
         db_session: Database session
@@ -386,8 +366,7 @@ async def create_processor_manager(
         
     Returns:
         ProcessorManager instance
-    """
-    manager = ProcessorManager(db_session, redis_client)
+    """    manager = ProcessorManager(db_session, redis_client)
     
     if auto_initialize:
         await manager.initialize_all_processors(global_config)
@@ -401,8 +380,7 @@ async def get_processor_by_type(
     redis_client,
     config: Optional[Dict[str, Any]] = None
 ) -> Optional[Any]:
-    """
-    Get a specific processor instance
+    """    Get a specific processor instance
     
     Args:
         processor_type: Type of processor
@@ -412,8 +390,7 @@ async def get_processor_by_type(
         
     Returns:
         Processor instance
-    """
-    if processor_type not in PROCESSOR_FACTORIES:
+    """    if processor_type not in PROCESSOR_FACTORIES:
         return None
     
     factory_func = PROCESSOR_FACTORIES[processor_type]
@@ -511,23 +488,19 @@ MODULE_INFO = {
 
 
 def get_module_info() -> Dict[str, Any]:
-    """Get module information"""
-    return MODULE_INFO.copy()
+    """Get module information"""    return MODULE_INFO.copy()
 
 
 def list_available_processors() -> List[str]:
-    """List all available processor types"""
-    return list(PROCESSOR_FACTORIES.keys())
+    """List all available processor types"""    return list(PROCESSOR_FACTORIES.keys())
 
 
 def get_processor_class(processor_type: str) -> Optional[Type]:
-    """Get processor class by type"""
-    return PROCESSOR_CLASSES.get(processor_type)
+    """Get processor class by type"""    return PROCESSOR_CLASSES.get(processor_type)
 
 
 def is_processor_available(processor_type: str) -> bool:
-    """Check if a processor type is available"""
-    return processor_type in PROCESSOR_FACTORIES
+    """Check if a processor type is available"""    return processor_type in PROCESSOR_FACTORIES
 
 
 # Print module loading confirmation

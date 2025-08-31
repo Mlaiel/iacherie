@@ -1,5 +1,4 @@
-"""
-Enforcement Coordinator and Violation Processing System
+"""Enforcement Coordinator and Violation Processing System
 
 Central coordination of copyright enforcement workflows,
 violation processing, and multi-platform enforcement orchestration.
@@ -7,9 +6,7 @@ violation processing, and multi-platform enforcement orchestration.
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -33,8 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 class EnforcementStrategy(str, Enum):
-    """Enforcement strategy types"""
-    IMMEDIATE_DMCA = "immediate_dmca"
+    """Enforcement strategy types"""    IMMEDIATE_DMCA = "immediate_dmca"
     ESCALATED_LEGAL = "escalated_legal"
     REVENUE_FOCUS = "revenue_focus"
     COLLABORATIVE = "collaborative"
@@ -43,8 +39,7 @@ class EnforcementStrategy(str, Enum):
 
 
 class ViolationSeverity(str, Enum):
-    """Violation severity levels"""
-    LOW = "low"
+    """Violation severity levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -52,8 +47,7 @@ class ViolationSeverity(str, Enum):
 
 
 class ActionPriority(str, Enum):
-    """Action priority levels"""
-    IMMEDIATE = "immediate"
+    """Action priority levels"""    IMMEDIATE = "immediate"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -62,8 +56,7 @@ class ActionPriority(str, Enum):
 
 @dataclass
 class ViolationReport:
-    """Comprehensive violation report"""
-    content_id: str
+    """Comprehensive violation report"""    content_id: str
     violation_url: str
     platform: str
     detected_at: datetime
@@ -79,8 +72,7 @@ class ViolationReport:
 
 @dataclass
 class EnforcementPlan:
-    """Comprehensive enforcement plan"""
-    violation_id: str
+    """Comprehensive enforcement plan"""    violation_id: str
     strategy: EnforcementStrategy
     priority: ActionPriority
     timeline: Dict[str, datetime]
@@ -92,8 +84,7 @@ class EnforcementPlan:
 
 
 class ViolationProcessor:
-    """Advanced violation processing and analysis system"""
-    
+    """Advanced violation processing and analysis system"""    
     def __init__(self):
         self.settings = get_settings()
         self.notification_service = NotificationService()
@@ -103,13 +94,11 @@ class ViolationProcessor:
         report: ViolationReport,
         session: AsyncSession
     ) -> Tuple[bool, str, Optional[str]]:
-        """
-        Process incoming violation report with comprehensive analysis
+        """        Process incoming violation report with comprehensive analysis
         
         Returns:
             Tuple[success, message, violation_id]
-        """
-        try:
+        """        try:
             # Validate violation report
             is_valid, validation_errors = await self._validate_violation_report(report)
             if not is_valid:
@@ -175,8 +164,7 @@ class ViolationProcessor:
         session: AsyncSession,
         batch_size: int = 20
     ) -> Dict[str, Any]:
-        """Process multiple violations in batches"""
-        results = {
+        """Process multiple violations in batches"""        results = {
             "total": len(reports),
             "processed": 0,
             "successful": 0,
@@ -226,8 +214,7 @@ class ViolationProcessor:
         return results
     
     async def _validate_violation_report(self, report: ViolationReport) -> Tuple[bool, List[str]]:
-        """Validate violation report data"""
-        errors = []
+        """Validate violation report data"""        errors = []
         
         if not report.content_id:
             errors.append("Content ID is required")
@@ -249,8 +236,7 @@ class ViolationProcessor:
         report: ViolationReport,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Check for duplicate violation reports"""
-        try:
+        """Check for duplicate violation reports"""        try:
             # Check by URL and content ID
             result = await session.execute(
                 select(ViolationCase)
@@ -278,8 +264,7 @@ class ViolationProcessor:
             return {"is_duplicate": False}
     
     async def _analyze_violation_severity(self, report: ViolationReport) -> Dict[str, Any]:
-        """Analyze violation severity based on multiple factors"""
-        severity_score = 0.0
+        """Analyze violation severity based on multiple factors"""        severity_score = 0.0
         factors = []
         
         # Similarity score factor (0-30 points)
@@ -357,8 +342,7 @@ class ViolationProcessor:
         }
     
     async def _assess_violation_impact(self, report: ViolationReport) -> Dict[str, Any]:
-        """Assess potential impact of violation"""
-        impact_factors = {
+        """Assess potential impact of violation"""        impact_factors = {
             "financial_impact": report.estimated_revenue_loss,
             "exposure_impact": report.estimated_views,
             "brand_impact": self._calculate_brand_impact(report),
@@ -398,8 +382,7 @@ class ViolationProcessor:
         }
     
     def _calculate_brand_impact(self, report: ViolationReport) -> float:
-        """Calculate brand impact score (0-100)"""
-        # Factors: platform visibility, content quality, audience overlap
+        """Calculate brand impact score (0-100)"""        # Factors: platform visibility, content quality, audience overlap
         base_score = 50.0
         
         # Platform visibility factor
@@ -421,8 +404,7 @@ class ViolationProcessor:
         return min(base_score, 100.0)
     
     def _calculate_legal_impact(self, report: ViolationReport) -> float:
-        """Calculate legal impact score (0-100)"""
-        base_score = 30.0
+        """Calculate legal impact score (0-100)"""        base_score = 30.0
         
         # High similarity = stronger legal case
         base_score += report.similarity_score * 40
@@ -438,8 +420,7 @@ class ViolationProcessor:
         return min(base_score, 100.0)
     
     def _calculate_reputation_impact(self, report: ViolationReport) -> float:
-        """Calculate reputation impact score (0-100)"""
-        base_score = 40.0
+        """Calculate reputation impact score (0-100)"""        base_score = 40.0
         
         # Public platforms have higher reputation impact
         public_platforms = ["youtube", "instagram", "tiktok", "facebook"]
@@ -460,8 +441,7 @@ class ViolationProcessor:
         severity_analysis: Dict[str, Any],
         impact_assessment: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate enforcement recommendations"""
-        recommendations = {
+        """Generate enforcement recommendations"""        recommendations = {
             "primary_strategy": "",
             "secondary_strategies": [],
             "immediate_actions": [],
@@ -537,8 +517,7 @@ class ViolationProcessor:
         violation_case: ViolationCase,
         severity_analysis: Dict[str, Any]
     ) -> None:
-        """Send violation notifications to stakeholders"""
-        try:
+        """Send violation notifications to stakeholders"""        try:
             notification_data = {
                 "violation_id": str(violation_case.id),
                 "platform": violation_case.platform,
@@ -567,8 +546,7 @@ class ViolationProcessor:
 
 
 class EnforcementCoordinator:
-    """Central coordinator for all enforcement activities"""
-    
+    """Central coordinator for all enforcement activities"""    
     def __init__(self):
         self.dmca_generator = DMCAGenerator()
         self.legal_manager = LegalActionManager()
@@ -583,13 +561,11 @@ class EnforcementCoordinator:
         strategy: EnforcementStrategy,
         session: AsyncSession
     ) -> Tuple[bool, Dict[str, Any]]:
-        """
-        Coordinate comprehensive enforcement action
+        """        Coordinate comprehensive enforcement action
         
         Returns:
             Tuple[success, action_results]
-        """
-        try:
+        """        try:
             # Get violation case
             violation = await self._get_violation_case(violation_id, session)
             if not violation:
@@ -632,8 +608,7 @@ class EnforcementCoordinator:
         violation_id: str,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Monitor progress of ongoing enforcement actions"""
-        try:
+        """Monitor progress of ongoing enforcement actions"""        try:
             # Get enforcement actions
             actions = await self._get_enforcement_actions(violation_id, session)
             
@@ -667,8 +642,7 @@ class EnforcementCoordinator:
         escalation_reason: str,
         session: AsyncSession
     ) -> Tuple[bool, str]:
-        """Escalate enforcement to higher level"""
-        try:
+        """Escalate enforcement to higher level"""        try:
             violation = await self._get_violation_case(violation_id, session)
             if not violation:
                 return False, "Violation case not found"
@@ -705,8 +679,7 @@ class EnforcementCoordinator:
             return False, f"Escalation failed: {str(e)}"
     
     async def _get_violation_case(self, violation_id: str, session: AsyncSession) -> Optional[ViolationCase]:
-        """Get violation case by ID"""
-        result = await session.execute(
+        """Get violation case by ID"""        result = await session.execute(
             select(ViolationCase).where(ViolationCase.id == violation_id)
         )
         return result.scalar_one_or_none()
@@ -717,8 +690,7 @@ class EnforcementCoordinator:
         strategy: EnforcementStrategy,
         session: AsyncSession
     ) -> EnforcementPlan:
-        """Generate comprehensive enforcement plan"""
-        plan_actions = []
+        """Generate comprehensive enforcement plan"""        plan_actions = []
         timeline = {}
         
         base_time = datetime.utcnow()
@@ -798,8 +770,7 @@ class EnforcementCoordinator:
         plan: EnforcementPlan,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Execute enforcement workflow based on plan"""
-        workflow_results = {
+        """Execute enforcement workflow based on plan"""        workflow_results = {
             "plan_id": plan.violation_id,
             "executed_actions": [],
             "failed_actions": [],
@@ -840,8 +811,7 @@ class EnforcementCoordinator:
         plan: EnforcementPlan,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Execute single enforcement action"""
-        action_type = action["type"]
+        """Execute single enforcement action"""        action_type = action["type"]
         
         if action_type == "dmca_notice":
             return await self._execute_dmca_action(plan, session)
@@ -855,8 +825,7 @@ class EnforcementCoordinator:
             return {"success": False, "error": f"Unknown action type: {action_type}"}
     
     async def _execute_dmca_action(self, plan: EnforcementPlan, session: AsyncSession) -> Dict[str, Any]:
-        """Execute DMCA notice action"""
-        try:
+        """Execute DMCA notice action"""        try:
             violation = await self._get_violation_case(plan.violation_id, session)
             if not violation:
                 return {"success": False, "error": "Violation not found"}
@@ -891,8 +860,7 @@ class EnforcementCoordinator:
             return {"success": False, "error": str(e)}
     
     async def _execute_legal_prep_action(self, plan: EnforcementPlan, session: AsyncSession) -> Dict[str, Any]:
-        """Execute legal case preparation action"""
-        try:
+        """Execute legal case preparation action"""        try:
             violation = await self._get_violation_case(plan.violation_id, session)
             if not violation:
                 return {"success": False, "error": "Violation not found"}
@@ -922,8 +890,7 @@ class EnforcementCoordinator:
             return {"success": False, "error": str(e)}
     
     async def _execute_revenue_claim_action(self, plan: EnforcementPlan, session: AsyncSession) -> Dict[str, Any]:
-        """Execute revenue claim action"""
-        try:
+        """Execute revenue claim action"""        try:
             violation = await self._get_violation_case(plan.violation_id, session)
             if not violation:
                 return {"success": False, "error": "Violation not found"}
@@ -954,8 +921,7 @@ class EnforcementCoordinator:
             return {"success": False, "error": str(e)}
     
     async def _execute_evidence_collection_action(self, plan: EnforcementPlan, session: AsyncSession) -> Dict[str, Any]:
-        """Execute evidence collection action"""
-        try:
+        """Execute evidence collection action"""        try:
             violation = await self._get_violation_case(plan.violation_id, session)
             if not violation:
                 return {"success": False, "error": "Violation not found"}
@@ -977,8 +943,7 @@ class EnforcementCoordinator:
             return {"success": False, "error": str(e)}
     
     def _determine_action_priority(self, violation: ViolationCase) -> ActionPriority:
-        """Determine action priority based on violation severity"""
-        if violation.severity in ["emergency", "critical"]:
+        """Determine action priority based on violation severity"""        if violation.severity in ["emergency", "critical"]:
             return ActionPriority.IMMEDIATE
         elif violation.severity == "high":
             return ActionPriority.HIGH
@@ -988,8 +953,7 @@ class EnforcementCoordinator:
             return ActionPriority.LOW
     
     def _estimate_enforcement_cost(self, strategy: EnforcementStrategy, violation: ViolationCase) -> float:
-        """Estimate cost of enforcement strategy"""
-        base_costs = {
+        """Estimate cost of enforcement strategy"""        base_costs = {
             EnforcementStrategy.IMMEDIATE_DMCA: 50.0,
             EnforcementStrategy.ESCALATED_LEGAL: 500.0,
             EnforcementStrategy.REVENUE_FOCUS: 100.0,
@@ -1014,8 +978,7 @@ class EnforcementCoordinator:
         plan: EnforcementPlan,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Setup progress tracking for enforcement"""
-        tracking_config = {
+        """Setup progress tracking for enforcement"""        tracking_config = {
             "violation_id": violation_id,
             "tracking_enabled": True,
             "check_intervals": {
@@ -1041,8 +1004,7 @@ class EnforcementCoordinator:
         results: Dict[str, Any],
         session: AsyncSession
     ) -> None:
-        """Record enforcement action in database"""
-        action = EnforcementAction(
+        """Record enforcement action in database"""        action = EnforcementAction(
             violation_id=violation_id,
             action_type=strategy.value,
             status="initiated",
@@ -1058,8 +1020,7 @@ class EnforcementCoordinator:
         violation_id: str,
         session: AsyncSession
     ) -> List[EnforcementAction]:
-        """Get enforcement actions for violation"""
-        result = await session.execute(
+        """Get enforcement actions for violation"""        result = await session.execute(
             select(EnforcementAction)
             .where(EnforcementAction.violation_id == violation_id)
             .order_by(EnforcementAction.created_at)
@@ -1067,8 +1028,7 @@ class EnforcementCoordinator:
         return result.scalars().all()
     
     async def _check_action_status(self, action: EnforcementAction) -> Dict[str, Any]:
-        """Check status of enforcement action"""
-        # This would implement actual status checking logic
+        """Check status of enforcement action"""        # This would implement actual status checking logic
         return {
             "action_id": str(action.id),
             "action_type": action.action_type,
@@ -1078,8 +1038,7 @@ class EnforcementCoordinator:
         }
     
     async def _calculate_overall_progress(self, status_updates: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calculate overall enforcement progress"""
-        if not status_updates:
+        """Calculate overall enforcement progress"""        if not status_updates:
             return {"percentage": 0.0, "status": "not_started"}
         
         total_progress = sum(update["progress_percentage"] for update in status_updates)
@@ -1107,8 +1066,7 @@ class EnforcementCoordinator:
         status_updates: List[Dict[str, Any]],
         session: AsyncSession
     ) -> List[str]:
-        """Determine next steps for enforcement"""
-        next_steps = []
+        """Determine next steps for enforcement"""        next_steps = []
         
         # Check if any actions are stuck
         stuck_actions = [u for u in status_updates if u["progress_percentage"] < 50]
@@ -1137,8 +1095,7 @@ class EnforcementCoordinator:
         current_actions: List[EnforcementAction],
         reason: str
     ) -> EnforcementStrategy:
-        """Determine appropriate escalation strategy"""
-        current_strategies = {action.action_type for action in current_actions}
+        """Determine appropriate escalation strategy"""        current_strategies = {action.action_type for action in current_actions}
         
         # If DMCA failed, escalate to legal
         if "immediate_dmca" in current_strategies and "no_response" in reason:

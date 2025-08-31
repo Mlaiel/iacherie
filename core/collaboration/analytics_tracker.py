@@ -1,5 +1,4 @@
-"""
-📊 ANALYTICS TRACKER - Collaboration Analytics & Intelligence
+"""📊 ANALYTICS TRACKER - Collaboration Analytics & Intelligence
 ===========================================================
 
 Developed by: Fahed Mlaiel
@@ -34,9 +33,7 @@ Features:
 - Machine Learning Model Performance Tracking
 - Custom KPI Tracking & Business Intelligence
 - Data Privacy Compliance & GDPR Analytics
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Callable
@@ -70,8 +67,7 @@ import seaborn as sns
 logger = logging.getLogger(__name__)
 
 class EventType(Enum):
-    """Comprehensive analytics event types"""
-    # User events
+    """Comprehensive analytics event types"""    # User events
     USER_REGISTRATION = "user_registration"
     USER_LOGIN = "user_login"
     USER_LOGOUT = "user_logout"
@@ -143,8 +139,7 @@ class EventType(Enum):
     TRIAL_CONVERTED = "trial_converted"
 
 class MetricType(Enum):
-    """Metric type enumeration"""
-    COUNTER = "counter"
+    """Metric type enumeration"""    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     TIMER = "timer"
@@ -152,8 +147,7 @@ class MetricType(Enum):
     PERCENTAGE = "percentage"
 
 class AnalyticsSegment(Enum):
-    """User segment enumeration"""
-    NEW_USERS = "new_users"
+    """User segment enumeration"""    NEW_USERS = "new_users"
     ACTIVE_USERS = "active_users"
     POWER_USERS = "power_users"
     DORMANT_USERS = "dormant_users"
@@ -164,8 +158,7 @@ class AnalyticsSegment(Enum):
     INFLUENCERS = "influencers"
 
 class TimeGranularity(Enum):
-    """Time granularity enumeration"""
-    MINUTE = "minute"
+    """Time granularity enumeration"""    MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -175,8 +168,7 @@ class TimeGranularity(Enum):
 
 @dataclass
 class AnalyticsEvent:
-    """Analytics event structure"""
-    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Analytics event structure"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     event_type: EventType = EventType.PAGE_VIEW
     user_id: Optional[str] = None
     session_id: Optional[str] = None
@@ -211,8 +203,7 @@ class AnalyticsEvent:
 
 @dataclass
 class MetricDefinition:
-    """Metric definition structure"""
-    name: str
+    """Metric definition structure"""    name: str
     metric_type: MetricType
     description: str
     unit: Optional[str] = None
@@ -223,8 +214,7 @@ class MetricDefinition:
 
 @dataclass
 class AnalyticsReport:
-    """Analytics report structure"""
-    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Analytics report structure"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     description: str = ""
     metrics: List[Dict[str, Any]] = field(default_factory=list)
@@ -238,8 +228,7 @@ class AnalyticsReport:
     generated_at: datetime = field(default_factory=datetime.utcnow)
 
 class AnalyticsTracker:
-    """Advanced analytics tracking and intelligence system"""
-    
+    """Advanced analytics tracking and intelligence system"""    
     def __init__(
         self,
         db_session,
@@ -282,8 +271,7 @@ class AnalyticsTracker:
         event: AnalyticsEvent,
         immediate_processing: bool = False
     ) -> None:
-        """Track analytics event"""
-        try:
+        """Track analytics event"""        try:
             logger.debug(f"Tracking event: {event.event_type.value} for user {event.user_id}")
             
             # Enrich event with additional context
@@ -317,8 +305,7 @@ class AnalyticsTracker:
         collaboration_id: str,
         metrics: Dict[str, Any]
     ) -> None:
-        """Track collaboration-specific metrics"""
-        try:
+        """Track collaboration-specific metrics"""        try:
             logger.info(f"Tracking collaboration metrics for {collaboration_id}")
             
             # Create collaboration tracking event
@@ -347,8 +334,7 @@ class AnalyticsTracker:
         transaction_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Track revenue and financial metrics"""
-        try:
+        """Track revenue and financial metrics"""        try:
             logger.info(f"Tracking revenue: {amount} {currency} for user {user_id}")
             
             # Create revenue tracking event
@@ -383,8 +369,7 @@ class AnalyticsTracker:
         time_range: Dict[str, datetime],
         granularity: TimeGranularity = TimeGranularity.DAY
     ) -> AnalyticsReport:
-        """Generate comprehensive analytics report"""
-        try:
+        """Generate comprehensive analytics report"""        try:
             logger.info(f"Generating analytics report: {report_name}")
             
             # Validate inputs
@@ -434,8 +419,7 @@ class AnalyticsTracker:
         user_id: str,
         time_range: Optional[Dict[str, datetime]] = None
     ) -> Dict[str, Any]:
-        """Get comprehensive user analytics"""
-        try:
+        """Get comprehensive user analytics"""        try:
             logger.info(f"Getting user analytics for {user_id}")
             
             # Set default time range
@@ -489,8 +473,7 @@ class AnalyticsTracker:
         time_range: Optional[Dict[str, datetime]] = None,
         granularity: TimeGranularity = TimeGranularity.DAY
     ) -> Dict[str, Any]:
-        """Get platform-wide analytics"""
-        try:
+        """Get platform-wide analytics"""        try:
             logger.info("Getting platform analytics")
             
             # Set default time range
@@ -547,8 +530,7 @@ class AnalyticsTracker:
         time_range: Dict[str, datetime],
         threshold: float = 2.0
     ) -> List[Dict[str, Any]]:
-        """Detect anomalies in metrics"""
-        try:
+        """Detect anomalies in metrics"""        try:
             logger.info(f"Detecting anomalies in {metric_name}")
             
             # Get metric data
@@ -592,8 +574,7 @@ class AnalyticsTracker:
         widgets: List[Dict[str, Any]],
         user_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Create custom analytics dashboard"""
-        try:
+        """Create custom analytics dashboard"""        try:
             logger.info(f"Creating custom dashboard: {dashboard_name}")
             
             # Validate widgets
@@ -632,8 +613,7 @@ class AnalyticsTracker:
         metric_name: str,
         significance_level: float = 0.05
     ) -> Dict[str, Any]:
-        """Run A/B test statistical analysis"""
-        try:
+        """Run A/B test statistical analysis"""        try:
             logger.info(f"Running A/B test analysis for {test_id}")
             
             # Get test data
@@ -709,180 +689,139 @@ class AnalyticsTracker:
             
     # Private helper methods (placeholder implementations)
     async def _enrich_event(self, event: AnalyticsEvent) -> AnalyticsEvent:
-        """Enrich event with additional context"""
-        return event  # Placeholder
+        """Enrich event with additional context"""        return event  # Placeholder
         
     async def _flush_event_buffer(self) -> None:
-        """Flush event buffer to storage"""
-        # Placeholder implementation
+        """Flush event buffer to storage"""        # Placeholder implementation
         self.event_buffer.clear()
         
     async def _process_event_immediately(self, event: AnalyticsEvent) -> None:
-        """Process event immediately"""
-        # Placeholder implementation
+        """Process event immediately"""        # Placeholder implementation
         pass
         
     async def _update_real_time_metrics(self, event: AnalyticsEvent) -> None:
-        """Update real-time metrics"""
-        self.real_time_metrics[event.event_type.value] += 1
+        """Update real-time metrics"""        self.real_time_metrics[event.event_type.value] += 1
         
     async def _check_alert_conditions(self, event: AnalyticsEvent) -> None:
-        """Check if event triggers any alerts"""
-        # Placeholder implementation
+        """Check if event triggers any alerts"""        # Placeholder implementation
         pass
         
     async def _stream_to_kafka(self, event: AnalyticsEvent) -> None:
-        """Stream event to Kafka"""
-        # Placeholder implementation
+        """Stream event to Kafka"""        # Placeholder implementation
         pass
         
     async def _store_collaboration_metrics(self, collaboration_id: str, metrics: Dict[str, Any]) -> None:
-        """Store collaboration metrics"""
-        # Placeholder implementation
+        """Store collaboration metrics"""        # Placeholder implementation
         pass
         
     async def _update_collaboration_analytics(self, collaboration_id: str, metrics: Dict[str, Any]) -> None:
-        """Update collaboration analytics"""
-        # Placeholder implementation
+        """Update collaboration analytics"""        # Placeholder implementation
         pass
         
     async def _update_revenue_analytics(self, user_id: str, amount: Decimal, currency: str, transaction_type: str) -> None:
-        """Update revenue analytics"""
-        # Placeholder implementation
+        """Update revenue analytics"""        # Placeholder implementation
         pass
         
     async def _update_user_lifetime_value(self, user_id: str, amount: Decimal) -> None:
-        """Update user lifetime value"""
-        # Placeholder implementation
+        """Update user lifetime value"""        # Placeholder implementation
         pass
         
     async def _validate_report_parameters(self, metrics: List[str], dimensions: List[str], filters: Dict[str, Any]) -> None:
-        """Validate report parameters"""
-        # Placeholder implementation
+        """Validate report parameters"""        # Placeholder implementation
         pass
         
     async def _extract_report_data(self, metrics: List[str], dimensions: List[str], filters: Dict[str, Any], time_range: Dict[str, datetime], granularity: TimeGranularity) -> pd.DataFrame:
-        """Extract data for report"""
-        return pd.DataFrame()  # Placeholder
+        """Extract data for report"""        return pd.DataFrame()  # Placeholder
         
     async def _calculate_report_metrics(self, data: pd.DataFrame, metrics: List[str]) -> List[Dict[str, Any]]:
-        """Calculate report metrics"""
-        return []  # Placeholder
+        """Calculate report metrics"""        return []  # Placeholder
         
     async def _generate_analytics_insights(self, data: pd.DataFrame, metrics: List[Dict[str, Any]]) -> List[str]:
-        """Generate analytics insights"""
-        return []  # Placeholder
+        """Generate analytics insights"""        return []  # Placeholder
         
     async def _create_report_visualizations(self, data: pd.DataFrame, metrics: List[Dict[str, Any]], dimensions: List[str]) -> List[Dict[str, Any]]:
-        """Create report visualizations"""
-        return []  # Placeholder
+        """Create report visualizations"""        return []  # Placeholder
         
     async def _store_analytics_report(self, report: AnalyticsReport) -> None:
-        """Store analytics report"""
-        # Placeholder implementation
+        """Store analytics report"""        # Placeholder implementation
         pass
         
     async def _get_user_behavior_metrics(self, user_id: str, time_range: Dict[str, datetime]) -> Dict[str, Any]:
-        """Get user behavior metrics"""
-        return {}  # Placeholder
+        """Get user behavior metrics"""        return {}  # Placeholder
         
     async def _get_user_collaboration_metrics(self, user_id: str, time_range: Dict[str, datetime]) -> Dict[str, Any]:
-        """Get user collaboration metrics"""
-        return {}  # Placeholder
+        """Get user collaboration metrics"""        return {}  # Placeholder
         
     async def _get_user_revenue_metrics(self, user_id: str, time_range: Dict[str, datetime]) -> Dict[str, Any]:
-        """Get user revenue metrics"""
-        return {}  # Placeholder
+        """Get user revenue metrics"""        return {}  # Placeholder
         
     async def _get_user_engagement_metrics(self, user_id: str, time_range: Dict[str, datetime]) -> Dict[str, Any]:
-        """Get user engagement metrics"""
-        return {}  # Placeholder
+        """Get user engagement metrics"""        return {}  # Placeholder
         
     async def _calculate_user_score(self, user_id: str) -> float:
-        """Calculate user score"""
-        return 0.85  # Placeholder
+        """Calculate user score"""        return 0.85  # Placeholder
         
     async def _determine_user_segment(self, user_id: str) -> AnalyticsSegment:
-        """Determine user segment"""
-        return AnalyticsSegment.ACTIVE_USERS  # Placeholder
+        """Determine user segment"""        return AnalyticsSegment.ACTIVE_USERS  # Placeholder
         
     async def _predict_user_behavior(self, user_id: str) -> Dict[str, Any]:
-        """Predict user behavior"""
-        return {}  # Placeholder
+        """Predict user behavior"""        return {}  # Placeholder
         
     async def _get_platform_user_metrics(self, time_range: Dict[str, datetime], granularity: TimeGranularity) -> Dict[str, Any]:
-        """Get platform user metrics"""
-        return {}  # Placeholder
+        """Get platform user metrics"""        return {}  # Placeholder
         
     async def _get_platform_content_metrics(self, time_range: Dict[str, datetime], granularity: TimeGranularity) -> Dict[str, Any]:
-        """Get platform content metrics"""
-        return {}  # Placeholder
+        """Get platform content metrics"""        return {}  # Placeholder
         
     async def _get_platform_revenue_metrics(self, time_range: Dict[str, datetime], granularity: TimeGranularity) -> Dict[str, Any]:
-        """Get platform revenue metrics"""
-        return {}  # Placeholder
+        """Get platform revenue metrics"""        return {}  # Placeholder
         
     async def _get_platform_collaboration_metrics(self, time_range: Dict[str, datetime], granularity: TimeGranularity) -> Dict[str, Any]:
-        """Get platform collaboration metrics"""
-        return {}  # Placeholder
+        """Get platform collaboration metrics"""        return {}  # Placeholder
         
     async def _calculate_growth_metrics(self, time_range: Dict[str, datetime], granularity: TimeGranularity) -> Dict[str, Any]:
-        """Calculate growth metrics"""
-        return {}  # Placeholder
+        """Calculate growth metrics"""        return {}  # Placeholder
         
     async def _get_top_creators(self, time_range: Dict[str, datetime]) -> List[Dict[str, Any]]:
-        """Get top creators"""
-        return []  # Placeholder
+        """Get top creators"""        return []  # Placeholder
         
     async def _get_top_content(self, time_range: Dict[str, datetime]) -> List[Dict[str, Any]]:
-        """Get top content"""
-        return []  # Placeholder
+        """Get top content"""        return []  # Placeholder
         
     async def _analyze_platform_trends(self, time_range: Dict[str, datetime]) -> Dict[str, Any]:
-        """Analyze platform trends"""
-        return {}  # Placeholder
+        """Analyze platform trends"""        return {}  # Placeholder
         
     async def _generate_platform_predictions(self) -> Dict[str, Any]:
-        """Generate platform predictions"""
-        return {}  # Placeholder
+        """Generate platform predictions"""        return {}  # Placeholder
         
     async def _get_metric_time_series(self, metric_name: str, time_range: Dict[str, datetime]) -> List[Dict[str, Any]]:
-        """Get metric time series data"""
-        return []  # Placeholder
+        """Get metric time series data"""        return []  # Placeholder
         
     async def _calculate_expected_range(self, data: List[Dict[str, Any]], index: int) -> Tuple[float, float]:
-        """Calculate expected range for anomaly detection"""
-        return (0.0, 100.0)  # Placeholder
+        """Calculate expected range for anomaly detection"""        return (0.0, 100.0)  # Placeholder
         
     async def _calculate_anomaly_severity(self, data: List[Dict[str, Any]], index: int) -> float:
-        """Calculate anomaly severity"""
-        return 0.8  # Placeholder
+        """Calculate anomaly severity"""        return 0.8  # Placeholder
         
     async def _describe_anomaly(self, data: List[Dict[str, Any]], index: int) -> str:
-        """Describe anomaly"""
-        return "Unusual spike detected"  # Placeholder
+        """Describe anomaly"""        return "Unusual spike detected"  # Placeholder
         
     async def _validate_dashboard_widgets(self, widgets: List[Dict[str, Any]]) -> None:
-        """Validate dashboard widgets"""
-        # Placeholder implementation
+        """Validate dashboard widgets"""        # Placeholder implementation
         pass
         
     async def _generate_widget_data(self, widget: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate data for dashboard widget"""
-        return {}  # Placeholder
+        """Generate data for dashboard widget"""        return {}  # Placeholder
         
     async def _store_custom_dashboard(self, dashboard: Dict[str, Any]) -> None:
-        """Store custom dashboard"""
-        # Placeholder implementation
+        """Store custom dashboard"""        # Placeholder implementation
         pass
         
     async def _get_ab_test_data(self, test_id: str) -> List[Dict[str, Any]]:
-        """Get A/B test data"""
-        return []  # Placeholder
+        """Get A/B test data"""        return []  # Placeholder
         
     async def _generate_ab_test_recommendation(self, is_significant: bool, improvement: float, effect_size: float) -> str:
-        """Generate A/B test recommendation"""
-        return "Continue monitoring"  # Placeholder
+        """Generate A/B test recommendation"""        return "Continue monitoring"  # Placeholder
     PARTNERSHIP_FORMED = "partnership_formed"
     PROJECT_STARTED = "project_started"
     MILESTONE_COMPLETED = "milestone_completed"
@@ -895,8 +834,7 @@ class AnalyticsTracker:
     ERROR_OCCURRED = "error_occurred"
 
 class MetricType(Enum):
-    """Metric type enumeration"""
-    COUNTER = "counter"
+    """Metric type enumeration"""    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     RATE = "rate"
@@ -905,8 +843,7 @@ class MetricType(Enum):
     MONEY = "money"
 
 class TimePeriod(Enum):
-    """Time period for analytics"""
-    HOUR = "hour"
+    """Time period for analytics"""    HOUR = "hour"
     DAY = "day"
     WEEK = "week"
     MONTH = "month"
@@ -915,8 +852,7 @@ class TimePeriod(Enum):
 
 @dataclass
 class AnalyticsEvent:
-    """Analytics event data structure"""
-    event_type: EventType
+    """Analytics event data structure"""    event_type: EventType
     user_id: Optional[str] = None
     session_id: Optional[str] = None
     timestamp: datetime = field(default_factory=datetime.utcnow)
@@ -930,8 +866,7 @@ class AnalyticsEvent:
 
 @dataclass
 class Metric:
-    """Metric definition and value"""
-    name: str
+    """Metric definition and value"""    name: str
     value: Union[int, float, Decimal]
     metric_type: MetricType
     timestamp: datetime = field(default_factory=datetime.utcnow)
@@ -941,8 +876,7 @@ class Metric:
 
 @dataclass
 class AnalyticsQuery:
-    """Analytics query parameters"""
-    metric_names: List[str]
+    """Analytics query parameters"""    metric_names: List[str]
     start_date: datetime
     end_date: datetime
     filters: Dict[str, Any] = field(default_factory=dict)
@@ -953,16 +887,14 @@ class AnalyticsQuery:
 
 @dataclass
 class AnalyticsReport:
-    """Analytics report data"""
-    query: AnalyticsQuery
+    """Analytics report data"""    query: AnalyticsQuery
     data: List[Dict[str, Any]]
     summary: Dict[str, Any]
     metadata: Dict[str, Any] = field(default_factory=dict)
     generated_at: datetime = field(default_factory=datetime.utcnow)
 
 class AnalyticsTracker:
-    """Enterprise analytics tracking and reporting system"""
-    
+    """Enterprise analytics tracking and reporting system"""    
     def __init__(self, db_session, redis_client, elasticsearch_client, config):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -988,8 +920,7 @@ class AnalyticsTracker:
         metadata: Optional[Dict[str, Any]] = None,
         session_id: Optional[str] = None
     ) -> bool:
-        """Track analytics event"""
-        try:
+        """Track analytics event"""        try:
             event = AnalyticsEvent(
                 event_type=event_type,
                 user_id=user_id,
@@ -1024,8 +955,7 @@ class AnalyticsTracker:
         dimensions: Optional[Dict[str, str]] = None,
         unit: Optional[str] = None
     ) -> bool:
-        """Record a metric value"""
-        try:
+        """Record a metric value"""        try:
             metric = Metric(
                 name=name,
                 value=value,
@@ -1057,8 +987,7 @@ class AnalyticsTracker:
         value: int = 1,
         dimensions: Optional[Dict[str, str]] = None
     ) -> bool:
-        """Increment a counter metric"""
-        return await self.record_metric(
+        """Increment a counter metric"""        return await self.record_metric(
             name=name,
             value=value,
             metric_type=MetricType.COUNTER,
@@ -1071,8 +1000,7 @@ class AnalyticsTracker:
         duration_ms: float,
         dimensions: Optional[Dict[str, str]] = None
     ) -> bool:
-        """Record a duration metric"""
-        return await self.record_metric(
+        """Record a duration metric"""        return await self.record_metric(
             name=name,
             value=duration_ms,
             metric_type=MetricType.DURATION,
@@ -1088,8 +1016,7 @@ class AnalyticsTracker:
         project_id: Optional[str] = None,
         transaction_type: Optional[str] = None
     ) -> bool:
-        """Record revenue metric"""
-        dimensions = {
+        """Record revenue metric"""        dimensions = {
             "currency": currency,
             "transaction_type": transaction_type or "unknown"
         }
@@ -1111,8 +1038,7 @@ class AnalyticsTracker:
         self,
         query: AnalyticsQuery
     ) -> AnalyticsReport:
-        """Generate analytics report based on query"""
-        try:
+        """Generate analytics report based on query"""        try:
             logger.info(f"Generating analytics report for {len(query.metric_names)} metrics")
             
             # Validate query
@@ -1152,8 +1078,7 @@ class AnalyticsTracker:
         user_id: str,
         time_period: TimePeriod = TimePeriod.MONTH
     ) -> Dict[str, Any]:
-        """Get comprehensive analytics for a specific user"""
-        try:
+        """Get comprehensive analytics for a specific user"""        try:
             end_date = datetime.utcnow()
             start_date = await self._calculate_start_date(end_date, time_period)
             
@@ -1205,8 +1130,7 @@ class AnalyticsTracker:
         self,
         collaboration_id: str
     ) -> Dict[str, Any]:
-        """Get detailed analytics for a collaboration"""
-        try:
+        """Get detailed analytics for a collaboration"""        try:
             # Get collaboration details
             collaboration = await self._get_collaboration_details(collaboration_id)
             
@@ -1248,8 +1172,7 @@ class AnalyticsTracker:
         self,
         time_period: TimePeriod = TimePeriod.DAY
     ) -> Dict[str, Any]:
-        """Get overall platform metrics and KPIs"""
-        try:
+        """Get overall platform metrics and KPIs"""        try:
             end_date = datetime.utcnow()
             start_date = await self._calculate_start_date(end_date, time_period)
             
@@ -1303,8 +1226,7 @@ class AnalyticsTracker:
         widgets: List[Dict[str, Any]],
         user_id: Optional[str] = None
     ) -> str:
-        """Create custom analytics dashboard"""
-        try:
+        """Create custom analytics dashboard"""        try:
             logger.info(f"Creating custom dashboard: {dashboard_name}")
             
             # Validate widgets
@@ -1339,8 +1261,7 @@ class AnalyticsTracker:
         query: AnalyticsQuery,
         export_format: str = "csv"  # csv, json, excel
     ) -> bytes:
-        """Export analytics data in specified format"""
-        try:
+        """Export analytics data in specified format"""        try:
             logger.info(f"Exporting analytics data as {export_format}")
             
             # Get report data
@@ -1362,8 +1283,7 @@ class AnalyticsTracker:
             
     # Event processing methods
     async def _start_event_processor(self):
-        """Start background event processing"""
-        while True:
+        """Start background event processing"""        while True:
             try:
                 await asyncio.sleep(self.flush_interval)
                 if self.event_buffer:
@@ -1372,8 +1292,7 @@ class AnalyticsTracker:
                 logger.error(f"Error in event processor: {str(e)}")
                 
     async def _flush_events(self):
-        """Flush event buffer to storage"""
-        if not self.event_buffer:
+        """Flush event buffer to storage"""        if not self.event_buffer:
             return
             
         events_to_process = self.event_buffer.copy()
@@ -1399,8 +1318,7 @@ class AnalyticsTracker:
             
     # Advanced implementation methods for analytics operations
     async def _is_critical_event(self, event: AnalyticsEvent) -> bool:
-        """Intelligent critical event detection with business impact assessment"""
-        critical_events = [
+        """Intelligent critical event detection with business impact assessment"""        critical_events = [
             EventType.ERROR_OCCURRED,
             EventType.PAYMENT_PROCESSED,
             EventType.PARTNERSHIP_FORMED,
@@ -1431,8 +1349,7 @@ class AnalyticsTracker:
         return False
         
     async def _process_event_realtime(self, event: AnalyticsEvent) -> None:
-        """Advanced real-time event processing with immediate actions"""
-        try:
+        """Advanced real-time event processing with immediate actions"""        try:
             # Send to real-time dashboard via WebSocket
             await self._broadcast_realtime_event(event)
             
@@ -1454,11 +1371,9 @@ class AnalyticsTracker:
             logger.error(f"Error processing real-time event: {str(e)}")
         
     async def _store_metric(self, metric: Metric) -> None:
-        """Comprehensive metric storage with multi-database support"""
-        try:
+        """Comprehensive metric storage with multi-database support"""        try:
             # Store in primary database
-            query = """
-            INSERT INTO analytics_metrics (
+            query = """            INSERT INTO analytics_metrics (
                 metric_id, metric_type, metric_name, value, unit,
                 dimensions, timestamp, user_id, session_id, metadata,
                 created_at
@@ -1467,8 +1382,7 @@ class AnalyticsTracker:
                 %(unit)s, %(dimensions)s, %(timestamp)s, %(user_id)s,
                 %(session_id)s, %(metadata)s, %(created_at)s
             )
-            """
-            
+            """            
             await self.db_session.execute(query, {
                 'metric_id': metric.metric_id,
                 'metric_type': metric.metric_type.value,
@@ -1493,8 +1407,7 @@ class AnalyticsTracker:
             logger.error(f"Error storing metric: {str(e)}")
         
     async def _update_metric_cache(self, metric: Metric) -> None:
-        """Advanced metric caching with intelligent invalidation"""
-        try:
+        """Advanced metric caching with intelligent invalidation"""        try:
             # Cache individual metric
             cache_key = f"metric:{metric.metric_name}:{metric.user_id}:{metric.timestamp.date()}"
             await self.cache_service.set(cache_key, metric.__dict__, expire_seconds=86400)
@@ -1522,8 +1435,7 @@ class AnalyticsTracker:
             logger.error(f"Error updating metric cache: {str(e)}")
         
     async def _send_to_timeseries(self, metric: Metric) -> None:
-        """Send metric to optimized time-series database for fast analytics"""
-        try:
+        """Send metric to optimized time-series database for fast analytics"""        try:
             # Format for InfluxDB or TimescaleDB
             point_data = {
                 'measurement': metric.metric_name,
@@ -1550,8 +1462,7 @@ class AnalyticsTracker:
             logger.error(f"Error sending to time-series database: {str(e)}")
         
     async def _validate_query(self, query: AnalyticsQuery) -> bool:
-        """Advanced query validation with security and performance checks"""
-        try:
+        """Advanced query validation with security and performance checks"""        try:
             # Check query structure
             if not query.time_range or not query.time_range.start_date or not query.time_range.end_date:
                 return False
@@ -1584,8 +1495,7 @@ class AnalyticsTracker:
             return False
         
     async def _execute_analytics_query(self, query: AnalyticsQuery) -> List[Dict[str, Any]]:
-        """Execute optimized analytics query with smart caching"""
-        try:
+        """Execute optimized analytics query with smart caching"""        try:
             # Check cache first
             cache_key = self._generate_query_cache_key(query)
             cached_result = await self.cache_service.get(cache_key)
@@ -1619,8 +1529,7 @@ class AnalyticsTracker:
             return []
         
     async def _calculate_summary_stats(self, data: List[Dict[str, Any]], query: AnalyticsQuery) -> Dict[str, Any]:
-        """Calculate comprehensive summary statistics with advanced analytics"""
-        try:
+        """Calculate comprehensive summary statistics with advanced analytics"""        try:
             if not data:
                 return {}
                 
@@ -1687,8 +1596,7 @@ class AnalyticsTracker:
             return {'error': str(e)}
         
     async def _calculate_start_date(self, end_date: datetime, time_period: TimePeriod) -> datetime:
-        """Calculate start date based on time period"""
-        if time_period == TimePeriod.HOUR:
+        """Calculate start date based on time period"""        if time_period == TimePeriod.HOUR:
             return end_date - timedelta(hours=1)
         elif time_period == TimePeriod.DAY:
             return end_date - timedelta(days=1)
@@ -1768,8 +1676,7 @@ class AnalyticsTracker:
         return f"dashboard_{datetime.utcnow().timestamp()}"
         
     async def _cache_dashboard(self, dashboard_id: str, config: Dict[str, Any]) -> None:
-        """Cache dashboard configuration for fast access"""
-        try:
+        """Cache dashboard configuration for fast access"""        try:
             if hasattr(self, 'cache_manager') and self.cache_manager:
                 cache_key = f"dashboard:{dashboard_id}"
                 
@@ -1806,8 +1713,7 @@ class AnalyticsTracker:
 
     # Storage methods (placeholders)
     async def _batch_store_events(self, events: List[AnalyticsEvent]) -> None:
-        """Batch store analytics events to database for persistence"""
-        try:
+        """Batch store analytics events to database for persistence"""        try:
             if not events:
                 return
                 
@@ -1827,13 +1733,11 @@ class AnalyticsTracker:
                     ))
                 
                 # Batch insert query
-                insert_query = """
-                INSERT INTO analytics_events 
+                insert_query = """                INSERT INTO analytics_events 
                 (event_id, event_type, user_id, session_id, timestamp, 
                  event_data, metadata, source)
                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-                """
-                
+                """                
                 # Execute batch insert
                 await self.db_manager.execute_many(insert_query, event_data)
                 
@@ -1843,8 +1747,7 @@ class AnalyticsTracker:
             logger.error(f"❌ Failed to batch store events: {e}")
     
     async def _batch_index_events(self, events: List[AnalyticsEvent]) -> None:
-        """Batch index analytics events in Elasticsearch for search and analytics"""
-        try:
+        """Batch index analytics events in Elasticsearch for search and analytics"""        try:
             if not events or not hasattr(self, 'elasticsearch'):
                 return
                 
@@ -1876,8 +1779,7 @@ class AnalyticsTracker:
             logger.error(f"❌ Failed to batch index events: {e}")
     
     async def _update_realtime_metrics(self, events: List[AnalyticsEvent]) -> None:
-        """Update real-time metrics in cache for dashboard display"""
-        try:
+        """Update real-time metrics in cache for dashboard display"""        try:
             if not events or not hasattr(self, 'cache_manager'):
                 return
                 

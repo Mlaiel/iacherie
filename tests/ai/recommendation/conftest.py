@@ -1,5 +1,4 @@
-"""
-Pytest Configuration and Fixtures for AI Recommendation System Tests
+"""Pytest Configuration and Fixtures for AI Recommendation System Tests
 Comprehensive test setup and shared fixtures for industrial-grade testing
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -9,9 +8,7 @@ Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
 
 Lead Developer: Fahed Mlaiel
 Email: mlaiel@live.de
-"""
-
-import pytest
+"""import pytest
 import pytest_asyncio
 import asyncio
 import json
@@ -45,16 +42,14 @@ pytest_plugins = ["pytest_asyncio"]
 
 @pytest.fixture(scope="session")
 def event_loop():
-    """Create an instance of the default event loop for the test session."""
-    loop = asyncio.get_event_loop_policy().new_event_loop()
+    """Create an instance of the default event loop for the test session."""    loop = asyncio.get_event_loop_policy().new_event_loop()
     yield loop
     loop.close()
 
 
 @pytest.fixture(scope="session")
 def test_config():
-    """Test configuration settings"""
-    return {
+    """Test configuration settings"""    return {
         "testing": True,
         "database_url": "sqlite:///:memory:",
         "redis_url": "redis://localhost:6379/1",
@@ -67,78 +62,68 @@ def test_config():
 
 @pytest.fixture
 def temp_directory():
-    """Create temporary directory for tests"""
-    temp_dir = tempfile.mkdtemp()
+    """Create temporary directory for tests"""    temp_dir = tempfile.mkdtemp()
     yield temp_dir
     shutil.rmtree(temp_dir)
 
 
 @pytest_asyncio.fixture
 async def recommendation_engine():
-    """Recommendation engine instance"""
-    engine = RecommendationEngine()
+    """Recommendation engine instance"""    engine = RecommendationEngine()
     await engine.initialize()
     return engine
 
 
 @pytest_asyncio.fixture
 async def content_analyzer():
-    """Content analyzer instance"""
-    analyzer = ContentAnalyzer()
+    """Content analyzer instance"""    analyzer = ContentAnalyzer()
     await analyzer.initialize()
     return analyzer
 
 
 @pytest_asyncio.fixture
 async def collaboration_matcher():
-    """Collaboration matcher instance"""
-    matcher = CollaborationMatcher()
+    """Collaboration matcher instance"""    matcher = CollaborationMatcher()
     await matcher.initialize()
     return matcher
 
 
 @pytest_asyncio.fixture
 async def trend_analyzer():
-    """Trend analyzer instance"""
-    analyzer = TrendAnalyzer()
+    """Trend analyzer instance"""    analyzer = TrendAnalyzer()
     await analyzer.initialize()
     return analyzer
 
 
 @pytest_asyncio.fixture
 async def revenue_optimizer():
-    """Revenue optimizer instance"""
-    optimizer = RevenueOptimizer()
+    """Revenue optimizer instance"""    optimizer = RevenueOptimizer()
     await optimizer.initialize()
     return optimizer
 
 
 @pytest_asyncio.fixture
 async def protection_integrator():
-    """Protection integrator instance"""
-    integrator = ProtectionIntegrator()
+    """Protection integrator instance"""    integrator = ProtectionIntegrator()
     await integrator.initialize()
     return integrator
 
 
 @pytest.fixture
 def model_manager():
-    """Model manager instance"""
-    return ModelManager()
+    """Model manager instance"""    return ModelManager()
 
 
 @pytest.fixture
 def health_checker():
-    """Health checker instance"""
-    return HealthChecker()
+    """Health checker instance"""    return HealthChecker()
 
 
 # Sample Content Data Fixtures
 
 @pytest.fixture
 def sample_video_content():
-    """Sample video content data"""
-    return {
+    """Sample video content data"""    return {
         "title": "Amazing Music Production Tutorial",
         "description": "Learn professional music production techniques in this comprehensive tutorial",
         "duration": 900,  # 15 minutes
@@ -167,8 +152,7 @@ def sample_video_content():
 
 @pytest.fixture
 def sample_audio_content():
-    """Sample audio content data"""
-    return {
+    """Sample audio content data"""    return {
         "title": "Atmospheric Electronic Track",
         "description": "Ambient electronic music perfect for relaxation",
         "duration": 180,  # 3 minutes
@@ -197,8 +181,7 @@ def sample_audio_content():
 
 @pytest.fixture
 def sample_text_content():
-    """Sample text content data"""
-    return {
+    """Sample text content data"""    return {
         "title": "Top 10 Tech Trends for 2025",
         "content": """Here are the most exciting technology trends that will shape 2025:
 
@@ -235,8 +218,7 @@ What excites you most about the future of technology? Let me know in the comment
 
 @pytest.fixture
 def sample_image_content():
-    """Sample image content data"""
-    return {
+    """Sample image content data"""    return {
         "title": "Stunning Landscape Photography",
         "description": "Captured this breathtaking sunrise over the mountains during my recent trip",
         "width": 4000,
@@ -277,8 +259,7 @@ def sample_image_content():
 
 @pytest.fixture
 def sample_creator_musician():
-    """Sample musician creator profile"""
-    return CreatorProfile(
+    """Sample musician creator profile"""    return CreatorProfile(
         creator_id="musician_001",
         username="alexmusic",
         display_name="Alex Music",
@@ -327,8 +308,7 @@ def sample_creator_musician():
 
 @pytest_asyncio.fixture(autouse=True)
 async def cleanup_after_test():
-    """Cleanup after each test"""
-    yield
+    """Cleanup after each test"""    yield
     # Cleanup any test artifacts, temporary files, etc.
     # This runs after each test automatically
 
@@ -337,8 +317,7 @@ async def cleanup_after_test():
 
 @pytest.fixture
 def sample_audio_features():
-    """Sample audio feature vectors"""
-    return {
+    """Sample audio feature vectors"""    return {
         "mfcc": np.random.rand(13, 100).tolist(),
         "chroma": np.random.rand(12, 100).tolist(),
         "spectral_centroid": np.random.rand(100).tolist(),
@@ -353,8 +332,7 @@ def sample_audio_features():
 
 @pytest.fixture
 def sample_image_features():
-    """Sample image feature vectors"""
-    return {
+    """Sample image feature vectors"""    return {
         "color_histogram": np.random.rand(256).tolist(),
         "texture_features": np.random.rand(64).tolist(),
         "edge_density": 0.42,
@@ -370,8 +348,7 @@ def sample_image_features():
 
 @pytest.fixture
 def sample_text_features():
-    """Sample text feature vectors"""
-    return {
+    """Sample text feature vectors"""    return {
         "sentiment_score": 0.72,
         "emotion_distribution": {
             "joy": 0.45,
@@ -396,8 +373,7 @@ def sample_text_features():
 
 @pytest.fixture
 def mock_external_api():
-    """Mock external API calls"""
-    mock = AsyncMock()
+    """Mock external API calls"""    mock = AsyncMock()
     mock.get_trending_hashtags.return_value = ["#trending", "#viral", "#popular"]
     mock.get_platform_insights.return_value = {
         "optimal_posting_times": ["14:00", "18:00", "20:00"],
@@ -414,8 +390,7 @@ def mock_external_api():
 
 @pytest.fixture
 def mock_database():
-    """Mock database operations"""
-    mock = AsyncMock()
+    """Mock database operations"""    mock = AsyncMock()
     mock.save_recommendation.return_value = True
     mock.get_creator_history.return_value = []
     mock.update_performance_metrics.return_value = True
@@ -426,8 +401,7 @@ def mock_database():
 
 @pytest.fixture
 def performance_thresholds():
-    """Performance benchmark thresholds"""
-    return {
+    """Performance benchmark thresholds"""    return {
         "recommendation_generation": 0.2,  # 200ms
         "content_analysis": 0.5,           # 500ms
         "collaboration_matching": 0.3,     # 300ms
@@ -441,8 +415,7 @@ def performance_thresholds():
 # Utility Functions for Tests
 
 def assert_creator_profile_valid(profile: CreatorProfile):
-    """Assert creator profile is valid"""
-    assert profile.creator_id
+    """Assert creator profile is valid"""    assert profile.creator_id
     assert profile.display_name
     assert len(profile.platforms) > 0
     assert all(platform in Platform for platform in profile.platforms)
@@ -454,8 +427,7 @@ def assert_creator_profile_valid(profile: CreatorProfile):
 
 @pytest.fixture
 def load_test_data():
-    """Load test data from JSON files"""
-    def _load_data(filename: str):
+    """Load test data from JSON files"""    def _load_data(filename: str):
         test_data_path = Path(__file__).parent / "fixtures" / filename
         if test_data_path.exists():
             with open(test_data_path, 'r') as f:
@@ -466,8 +438,7 @@ def load_test_data():
 
 @pytest.fixture
 def sample_creator_portfolio():
-    """Sample creator portfolio data"""
-    return [
+    """Sample creator portfolio data"""    return [
         {
             "content_id": "track_001",
             "content_type": "audio",
@@ -500,8 +471,7 @@ def sample_creator_portfolio():
 
 @pytest.fixture
 def sample_creator_blogger():
-    """Sample blogger creator profile"""
-    return CreatorProfile(
+    """Sample blogger creator profile"""    return CreatorProfile(
         creator_id="blogger_001",
         username="lifestyleblogger",
         display_name="Sarah Lifestyle",
@@ -552,8 +522,7 @@ def sample_creator_blogger():
 
 @pytest.fixture
 def compatibility_scorer():
-    """Sample compatibility scorer instance"""
-    from ai.recommendation.collaboration_matcher import CompatibilityScorer
+    """Sample compatibility scorer instance"""    from ai.recommendation.collaboration_matcher import CompatibilityScorer
     config = {
         'scoring_weights': {
             'audience_overlap': 0.25,
@@ -574,8 +543,7 @@ def compatibility_scorer():
 
 @pytest.fixture
 def partnership_analyzer():
-    """Sample partnership analyzer instance"""
-    from ai.recommendation.collaboration_matcher import PartnershipAnalyzer
+    """Sample partnership analyzer instance"""    from ai.recommendation.collaboration_matcher import PartnershipAnalyzer
     config = {
         'analysis_depth': 'comprehensive',
         'risk_threshold': 0.4,
@@ -590,8 +558,7 @@ def partnership_analyzer():
 
 @pytest.fixture 
 def collaboration_recommender():
-    """Sample collaboration recommender instance"""
-    from ai.recommendation.collaboration_matcher import CollaborationRecommender
+    """Sample collaboration recommender instance"""    from ai.recommendation.collaboration_matcher import CollaborationRecommender
     config = {
         'recommendation_count': 10,
         'diversity_factor': 0.3,

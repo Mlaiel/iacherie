@@ -51,8 +51,7 @@ without explicit written authorization from Fahed Mlaiel will face:
 
 For licensing inquiries or authorized usage: mlaiel@live.de
 Legal compliance required before any usage, modification, or integration.
-"""
-# Core dialogue management components - Production ready enterprise modules
+"""# Core dialogue management components - Production ready enterprise modules
 from .dialogue_flow_manager import (
     DialogueFlowManager,
     DialogueFlow,

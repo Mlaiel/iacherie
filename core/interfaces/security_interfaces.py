@@ -1,22 +1,18 @@
-"""
-Security interfaces for IA Influencer Agent.
+"""Security interfaces for IA Influencer Agent.
 
 Defines interfaces for security management, authentication,
 authorization, encryption and audit functionality.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 © 2025 - All rights reserved. Unauthorized use prohibited.
-"""
-
-from abc import ABC, abstractmethod
+"""from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Union, Any, Tuple
 from datetime import datetime
 from enum import Enum
 
 
 class SecurityLevel(Enum):
-    """Security clearance levels."""
-    PUBLIC = "public"
+    """Security clearance levels."""    PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
     SECRET = "secret"
@@ -24,8 +20,7 @@ class SecurityLevel(Enum):
 
 
 class AuthMethod(Enum):
-    """Authentication methods."""
-    PASSWORD = "password"
+    """Authentication methods."""    PASSWORD = "password"
     TWO_FACTOR = "two_factor"
     BIOMETRIC = "biometric"
     CERTIFICATE = "certificate"
@@ -33,8 +28,7 @@ class AuthMethod(Enum):
 
 
 class EncryptionAlgorithm(Enum):
-    """Encryption algorithms."""
-    AES_256 = "aes_256"
+    """Encryption algorithms."""    AES_256 = "aes_256"
     RSA_2048 = "rsa_2048"
     RSA_4096 = "rsa_4096"
     ELLIPTIC_CURVE = "elliptic_curve"
@@ -42,16 +36,14 @@ class EncryptionAlgorithm(Enum):
 
 
 class SecurityManagerInterface(ABC):
-    """Core interface for security management."""
-    
+    """Core interface for security management."""    
     @abstractmethod
     async def assess_security_risk(
         self,
         resource_id: str,
         access_request: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Assess security risk for resource access.
+        """        Assess security risk for resource access.
         
         Args:
             resource_id: Resource being accessed
@@ -59,8 +51,7 @@ class SecurityManagerInterface(ABC):
             
         Returns:
             Security risk assessment and recommendations
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def implement_security_policy(
@@ -68,8 +59,7 @@ class SecurityManagerInterface(ABC):
         policy_definition: Dict[str, Any],
         scope: List[str]
     ) -> str:
-        """Implement security policy across specified scope."""
-        pass
+        """Implement security policy across specified scope."""        pass
     
     @abstractmethod
     async def conduct_security_scan(
@@ -77,8 +67,7 @@ class SecurityManagerInterface(ABC):
         scan_target: str,
         scan_type: str
     ) -> Dict[str, Any]:
-        """Conduct comprehensive security scan."""
-        pass
+        """Conduct comprehensive security scan."""        pass
     
     @abstractmethod
     async def handle_security_incident(
@@ -86,8 +75,7 @@ class SecurityManagerInterface(ABC):
         incident_data: Dict[str, Any],
         severity_level: str
     ) -> str:
-        """Handle and respond to security incidents."""
-        pass
+        """Handle and respond to security incidents."""        pass
     
     @abstractmethod
     async def generate_security_report(
@@ -95,29 +83,25 @@ class SecurityManagerInterface(ABC):
         report_scope: List[str],
         report_period: str
     ) -> Dict[str, Any]:
-        """Generate comprehensive security status report."""
-        pass
+        """Generate comprehensive security status report."""        pass
     
     @abstractmethod
     async def update_security_configurations(
         self,
         configuration_updates: Dict[str, Any]
     ) -> bool:
-        """Update system security configurations."""
-        pass
+        """Update system security configurations."""        pass
 
 
 class AuthenticationInterface(ABC):
-    """Interface for user authentication management."""
-    
+    """Interface for user authentication management."""    
     @abstractmethod
     async def authenticate_user(
         self,
         credentials: Dict[str, Any],
         auth_method: AuthMethod
     ) -> Dict[str, Any]:
-        """
-        Authenticate user with provided credentials.
+        """        Authenticate user with provided credentials.
         
         Args:
             credentials: User authentication credentials
@@ -125,8 +109,7 @@ class AuthenticationInterface(ABC):
             
         Returns:
             Authentication result and session information
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def validate_session_token(
@@ -134,8 +117,7 @@ class AuthenticationInterface(ABC):
         token: str,
         required_permissions: List[str]
     ) -> Dict[str, Any]:
-        """Validate session token and check permissions."""
-        pass
+        """Validate session token and check permissions."""        pass
     
     @abstractmethod
     async def refresh_authentication_token(
@@ -143,8 +125,7 @@ class AuthenticationInterface(ABC):
         refresh_token: str,
         user_id: str
     ) -> Dict[str, str]:
-        """Refresh expired authentication token."""
-        pass
+        """Refresh expired authentication token."""        pass
     
     @abstractmethod
     async def revoke_user_session(
@@ -152,8 +133,7 @@ class AuthenticationInterface(ABC):
         session_id: str,
         revocation_reason: str
     ) -> bool:
-        """Revoke active user session."""
-        pass
+        """Revoke active user session."""        pass
     
     @abstractmethod
     async def setup_multi_factor_auth(
@@ -161,8 +141,7 @@ class AuthenticationInterface(ABC):
         user_id: str,
         mfa_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Setup multi-factor authentication for user."""
-        pass
+        """Setup multi-factor authentication for user."""        pass
     
     @abstractmethod
     async def verify_biometric_data(
@@ -171,13 +150,11 @@ class AuthenticationInterface(ABC):
         biometric_data: bytes,
         biometric_type: str
     ) -> bool:
-        """Verify biometric authentication data."""
-        pass
+        """Verify biometric authentication data."""        pass
 
 
 class AuthorizationInterface(ABC):
-    """Interface for access control and authorization."""
-    
+    """Interface for access control and authorization."""    
     @abstractmethod
     async def check_resource_permissions(
         self,
@@ -185,8 +162,7 @@ class AuthorizationInterface(ABC):
         resource_id: str,
         requested_actions: List[str]
     ) -> Dict[str, bool]:
-        """
-        Check user permissions for resource actions.
+        """        Check user permissions for resource actions.
         
         Args:
             user_id: User requesting access
@@ -195,8 +171,7 @@ class AuthorizationInterface(ABC):
             
         Returns:
             Permission status for each requested action
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def grant_resource_permission(
@@ -206,8 +181,7 @@ class AuthorizationInterface(ABC):
         permissions: List[str],
         grantor_id: str
     ) -> bool:
-        """Grant resource permissions to user."""
-        pass
+        """Grant resource permissions to user."""        pass
     
     @abstractmethod
     async def revoke_resource_permission(
@@ -217,8 +191,7 @@ class AuthorizationInterface(ABC):
         permissions: List[str],
         revoker_id: str
     ) -> bool:
-        """Revoke resource permissions from user."""
-        pass
+        """Revoke resource permissions from user."""        pass
     
     @abstractmethod
     async def create_role_definition(
@@ -227,8 +200,7 @@ class AuthorizationInterface(ABC):
         role_permissions: List[str],
         role_description: str
     ) -> str:
-        """Create new role with specified permissions."""
-        pass
+        """Create new role with specified permissions."""        pass
     
     @abstractmethod
     async def assign_user_role(
@@ -237,8 +209,7 @@ class AuthorizationInterface(ABC):
         role_id: str,
         assignment_scope: Optional[str] = None
     ) -> bool:
-        """Assign role to user within specified scope."""
-        pass
+        """Assign role to user within specified scope."""        pass
     
     @abstractmethod
     async def evaluate_conditional_access(
@@ -247,13 +218,11 @@ class AuthorizationInterface(ABC):
         resource_id: str,
         access_conditions: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Evaluate conditional access policies."""
-        pass
+        """Evaluate conditional access policies."""        pass
 
 
 class EncryptionInterface(ABC):
-    """Interface for encryption and cryptographic operations."""
-    
+    """Interface for encryption and cryptographic operations."""    
     @abstractmethod
     async def encrypt_sensitive_data(
         self,
@@ -261,8 +230,7 @@ class EncryptionInterface(ABC):
         encryption_key: str,
         algorithm: EncryptionAlgorithm
     ) -> Dict[str, Any]:
-        """
-        Encrypt sensitive data using specified algorithm.
+        """        Encrypt sensitive data using specified algorithm.
         
         Args:
             plaintext_data: Data to encrypt
@@ -271,8 +239,7 @@ class EncryptionInterface(ABC):
             
         Returns:
             Encrypted data and metadata
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def decrypt_sensitive_data(
@@ -280,8 +247,7 @@ class EncryptionInterface(ABC):
         encrypted_data: Dict[str, Any],
         decryption_key: str
     ) -> Union[str, bytes]:
-        """Decrypt previously encrypted sensitive data."""
-        pass
+        """Decrypt previously encrypted sensitive data."""        pass
     
     @abstractmethod
     async def generate_encryption_key(
@@ -290,8 +256,7 @@ class EncryptionInterface(ABC):
         key_strength: int,
         key_purpose: str
     ) -> str:
-        """Generate new encryption key for specified purpose."""
-        pass
+        """Generate new encryption key for specified purpose."""        pass
     
     @abstractmethod
     async def rotate_encryption_keys(
@@ -299,8 +264,7 @@ class EncryptionInterface(ABC):
         key_identifiers: List[str],
         rotation_policy: Dict[str, Any]
     ) -> Dict[str, str]:
-        """Rotate encryption keys according to policy."""
-        pass
+        """Rotate encryption keys according to policy."""        pass
     
     @abstractmethod
     async def create_digital_signature(
@@ -308,8 +272,7 @@ class EncryptionInterface(ABC):
         data_to_sign: Union[str, bytes],
         signing_key: str
     ) -> str:
-        """Create digital signature for data integrity."""
-        pass
+        """Create digital signature for data integrity."""        pass
     
     @abstractmethod
     async def verify_digital_signature(
@@ -318,13 +281,11 @@ class EncryptionInterface(ABC):
         signature: str,
         verification_key: str
     ) -> bool:
-        """Verify digital signature authenticity."""
-        pass
+        """Verify digital signature authenticity."""        pass
 
 
 class AuditInterface(ABC):
-    """Interface for security auditing and compliance."""
-    
+    """Interface for security auditing and compliance."""    
     @abstractmethod
     async def log_security_event(
         self,
@@ -332,8 +293,7 @@ class AuditInterface(ABC):
         event_data: Dict[str, Any],
         severity_level: str
     ) -> str:
-        """
-        Log security event for audit trail.
+        """        Log security event for audit trail.
         
         Args:
             event_type: Type of security event
@@ -342,8 +302,7 @@ class AuditInterface(ABC):
             
         Returns:
             Audit log entry ID
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def generate_audit_report(
@@ -352,8 +311,7 @@ class AuditInterface(ABC):
         report_period: Tuple[datetime, datetime],
         report_format: str
     ) -> Dict[str, Any]:
-        """Generate comprehensive audit report."""
-        pass
+        """Generate comprehensive audit report."""        pass
     
     @abstractmethod
     async def track_data_access(
@@ -362,8 +320,7 @@ class AuditInterface(ABC):
         resource_id: str,
         access_details: Dict[str, Any]
     ) -> bool:
-        """Track data access for compliance monitoring."""
-        pass
+        """Track data access for compliance monitoring."""        pass
     
     @abstractmethod
     async def monitor_privilege_escalation(
@@ -371,8 +328,7 @@ class AuditInterface(ABC):
         user_id: str,
         privilege_changes: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Monitor and analyze privilege escalation attempts."""
-        pass
+        """Monitor and analyze privilege escalation attempts."""        pass
     
     @abstractmethod
     async def conduct_compliance_check(
@@ -380,8 +336,7 @@ class AuditInterface(ABC):
         compliance_framework: str,
         check_scope: List[str]
     ) -> Dict[str, Any]:
-        """Conduct compliance check against specified framework."""
-        pass
+        """Conduct compliance check against specified framework."""        pass
     
     @abstractmethod
     async def archive_audit_logs(
@@ -389,5 +344,4 @@ class AuditInterface(ABC):
         retention_policy: Dict[str, Any],
         archive_criteria: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Archive audit logs according to retention policy."""
-        pass
+        """Archive audit logs according to retention policy."""        pass

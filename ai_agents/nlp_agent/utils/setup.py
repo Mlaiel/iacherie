@@ -1,14 +1,11 @@
-"""
-Setup configuration for NLP Agent package
+"""Setup configuration for NLP Agent package
 =========================================
 
 Advanced Natural Language Processing System for content analysis and protection.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-from setuptools import setup, find_packages
+"""from setuptools import setup, find_packages
 import os
 
 # Read README file
@@ -146,10 +143,8 @@ setup(
 
 # Post-installation setup
 def post_install():
-    """
-    Post-installation setup for NLP models and data
-    """
-    print("Setting up NLP Agent...")
+    """    Post-installation setup for NLP models and data
+    """    print("Setting up NLP Agent...")
     
     try:
         # Download required NLTK data

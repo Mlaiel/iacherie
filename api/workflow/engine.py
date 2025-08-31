@@ -1,12 +1,9 @@
-"""
-Enterprise workflow engine with event-driven architecture.
+"""Enterprise workflow engine with event-driven architecture.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
-"""
-
-import asyncio
+"""import asyncio
 from typing import Dict, List, Optional, Callable, Any, Set
 from enum import Enum
 from datetime import datetime, timedelta
@@ -25,8 +22,7 @@ from ..utils.metrics import MetricsCollector
 
 
 class WorkflowEventType(Enum):
-    """Workflow event types for enterprise orchestration."""
-    WORKFLOW_STARTED = "workflow.started"
+    """Workflow event types for enterprise orchestration."""    WORKFLOW_STARTED = "workflow.started"
     WORKFLOW_COMPLETED = "workflow.completed"
     WORKFLOW_FAILED = "workflow.failed"
     WORKFLOW_PAUSED = "workflow.paused"
@@ -43,8 +39,7 @@ class WorkflowEventType(Enum):
 
 
 class WorkflowState(Enum):
-    """Enterprise workflow states."""
-    DRAFT = "draft"
+    """Enterprise workflow states."""    DRAFT = "draft"
     READY = "ready"
     RUNNING = "running"
     WAITING = "waiting"
@@ -57,8 +52,7 @@ class WorkflowState(Enum):
 
 
 class WorkflowPriority(Enum):
-    """Workflow execution priorities."""
-    LOW = 1
+    """Workflow execution priorities."""    LOW = 1
     NORMAL = 2
     HIGH = 3
     CRITICAL = 4
@@ -67,8 +61,7 @@ class WorkflowPriority(Enum):
 
 @dataclass
 class WorkflowCondition:
-    """Workflow execution condition."""
-    name: str
+    """Workflow execution condition."""    name: str
     condition_type: str
     expression: str
     timeout_seconds: Optional[int] = None
@@ -77,15 +70,13 @@ class WorkflowCondition:
     dependencies: List[str] = field(default_factory=list)
     
     def evaluate(self, context: Dict[str, Any]) -> bool:
-        """Evaluate condition against context."""
-        # Placeholder for condition evaluation logic
+        """Evaluate condition against context."""        # Placeholder for condition evaluation logic
         return True
 
 
 @dataclass  
 class WorkflowStage:
-    """Enhanced workflow stage definition."""
-    id: str
+    """Enhanced workflow stage definition."""    id: str
     name: str
     stage_type: str
     handler: str
@@ -101,8 +92,7 @@ class WorkflowStage:
 
 @dataclass
 class WorkflowTemplate:
-    """Enterprise workflow template."""
-    id: str
+    """Enterprise workflow template."""    id: str
     name: str
     version: str
     description: str
@@ -119,8 +109,7 @@ class WorkflowTemplate:
 
 
 class WorkflowExecutionContext:
-    """Runtime execution context for workflows."""
-    
+    """Runtime execution context for workflows."""    
     def __init__(self, workflow_id: str, template: WorkflowTemplate, input_data: Dict):
         self.workflow_id = workflow_id
         self.template = template
@@ -135,17 +124,14 @@ class WorkflowExecutionContext:
         self.updated_at = datetime.utcnow()
     
     def set_variable(self, key: str, value: Any) -> None:
-        """Set runtime variable."""
-        self.variables[key] = value
+        """Set runtime variable."""        self.variables[key] = value
         self.updated_at = datetime.utcnow()
     
     def get_variable(self, key: str, default: Any = None) -> Any:
-        """Get runtime variable."""
-        return self.variables.get(key, default)
+        """Get runtime variable."""        return self.variables.get(key, default)
     
     def set_stage_result(self, stage_id: str, result: Dict) -> None:
-        """Set result for completed stage."""
-        self.stage_results[stage_id] = {
+        """Set result for completed stage."""        self.stage_results[stage_id] = {
             "result": result,
             "completed_at": datetime.utcnow().isoformat(),
             "duration": result.get("duration", 0)
@@ -153,8 +139,7 @@ class WorkflowExecutionContext:
         self.updated_at = datetime.utcnow()
     
     def add_error(self, stage_id: str, error: str, error_type: str = "execution") -> None:
-        """Add error to execution log."""
-        self.error_log.append({
+        """Add error to execution log."""        self.error_log.append({
             "stage_id": stage_id,
             "error": error,
             "error_type": error_type,
@@ -163,16 +148,14 @@ class WorkflowExecutionContext:
         self.updated_at = datetime.utcnow()
     
     def record_metric(self, metric_name: str, value: float, stage_id: Optional[str] = None) -> None:
-        """Record execution metric."""
-        key = f"{stage_id}.{metric_name}" if stage_id else metric_name
+        """Record execution metric."""        key = f"{stage_id}.{metric_name}" if stage_id else metric_name
         self.metrics[key] = {
             "value": value,
             "timestamp": datetime.utcnow().isoformat()
         }
     
     def to_dict(self) -> Dict:
-        """Convert context to dictionary."""
-        return {
+        """Convert context to dictionary."""        return {
             "workflow_id": self.workflow_id,
             "template_id": self.template.id,
             "input_data": self.input_data,
@@ -188,8 +171,7 @@ class WorkflowExecutionContext:
 
 
 class WorkflowStageHandler:
-    """Base class for workflow stage handlers."""
-    
+    """Base class for workflow stage handlers."""    
     def __init__(self, stage_type: str):
         self.stage_type = stage_type
         self.logger = logging.getLogger(f"workflow.handler.{stage_type}")
@@ -199,8 +181,7 @@ class WorkflowStageHandler:
         stage: WorkflowStage, 
         context: WorkflowExecutionContext
     ) -> Dict[str, Any]:
-        """Execute workflow stage."""
-        start_time = datetime.utcnow()
+        """Execute workflow stage."""        start_time = datetime.utcnow()
         
         try:
             self.logger.info(f"Executing stage {stage.id} of type {stage.stage_type}")
@@ -241,8 +222,7 @@ class WorkflowStageHandler:
         stage: WorkflowStage, 
         context: WorkflowExecutionContext
     ) -> None:
-        """Validate stage can be executed."""
-        # Check dependencies
+        """Validate stage can be executed."""        # Check dependencies
         for dep_id in stage.dependencies:
             if dep_id not in context.stage_results:
                 raise WorkflowEngineException(f"Dependency {dep_id} not satisfied for stage {stage.id}")
@@ -261,8 +241,7 @@ class WorkflowStageHandler:
         stage: WorkflowStage, 
         context: WorkflowExecutionContext
     ) -> Dict[str, Any]:
-        """Execute the actual stage logic - to be overridden by subclasses."""
-        # Default implementation for base stage handler
+        """Execute the actual stage logic - to be overridden by subclasses."""        # Default implementation for base stage handler
         self.logger.info(f"Executing base stage logic for {stage.id} of type {stage.stage_type}")
         
         # Simulate basic stage execution
@@ -287,8 +266,7 @@ class WorkflowStageHandler:
         context: WorkflowExecutionContext,
         result: Dict[str, Any]
     ) -> None:
-        """Post-execution processing."""
-        # Record stage completion in execution path
+        """Post-execution processing."""        # Record stage completion in execution path
         context.execution_path.append({
             "stage_id": stage.id,
             "completed_at": datetime.utcnow().isoformat(),
@@ -297,8 +275,7 @@ class WorkflowStageHandler:
 
 
 class ContentAnalysisStageHandler(WorkflowStageHandler):
-    """Handler for content analysis workflow stages."""
-    
+    """Handler for content analysis workflow stages."""    
     def __init__(self):
         super().__init__("content_analysis")
     
@@ -307,8 +284,7 @@ class ContentAnalysisStageHandler(WorkflowStageHandler):
         stage: WorkflowStage, 
         context: WorkflowExecutionContext
     ) -> Dict[str, Any]:
-        """Execute content analysis logic."""
-        content_item = context.input_data.get("content_item")
+        """Execute content analysis logic."""        content_item = context.input_data.get("content_item")
         if not content_item:
             raise WorkflowEngineException("No content item provided for analysis")
         
@@ -334,8 +310,7 @@ class ContentAnalysisStageHandler(WorkflowStageHandler):
 
 
 class ContentProtectionStageHandler(WorkflowStageHandler):
-    """Handler for content protection workflow stages."""
-    
+    """Handler for content protection workflow stages."""    
     def __init__(self):
         super().__init__("content_protection")
     
@@ -344,8 +319,7 @@ class ContentProtectionStageHandler(WorkflowStageHandler):
         stage: WorkflowStage, 
         context: WorkflowExecutionContext
     ) -> Dict[str, Any]:
-        """Execute content protection logic."""
-        content_item = context.input_data.get("content_item")
+        """Execute content protection logic."""        content_item = context.input_data.get("content_item")
         analysis_result = context.get_variable("content_analysis", {})
         
         protection_level = stage.metadata.get("protection_level", "standard")
@@ -372,8 +346,7 @@ class ContentProtectionStageHandler(WorkflowStageHandler):
 
 
 class DistributionStageHandler(WorkflowStageHandler):
-    """Handler for content distribution workflow stages."""
-    
+    """Handler for content distribution workflow stages."""    
     def __init__(self):
         super().__init__("distribution")
     
@@ -382,8 +355,7 @@ class DistributionStageHandler(WorkflowStageHandler):
         stage: WorkflowStage, 
         context: WorkflowExecutionContext
     ) -> Dict[str, Any]:
-        """Execute content distribution logic."""
-        content_item = context.input_data.get("content_item")
+        """Execute content distribution logic."""        content_item = context.input_data.get("content_item")
         analysis_result = context.get_variable("content_analysis", {})
         
         target_platforms = stage.metadata.get("target_platforms", [])
@@ -411,8 +383,7 @@ class DistributionStageHandler(WorkflowStageHandler):
 
 
 class MonitoringStageHandler(WorkflowStageHandler):
-    """Handler for monitoring setup workflow stages."""
-    
+    """Handler for monitoring setup workflow stages."""    
     def __init__(self):
         super().__init__("monitoring")
     
@@ -421,8 +392,7 @@ class MonitoringStageHandler(WorkflowStageHandler):
         stage: WorkflowStage, 
         context: WorkflowExecutionContext
     ) -> Dict[str, Any]:
-        """Execute monitoring setup logic."""
-        protection_result = context.get_variable("content_protection", {})
+        """Execute monitoring setup logic."""        protection_result = context.get_variable("content_protection", {})
         distribution_result = context.get_variable("content_distribution", {})
         
         monitoring_scope = stage.metadata.get("monitoring_scope", "comprehensive")
@@ -453,8 +423,7 @@ class MonitoringStageHandler(WorkflowStageHandler):
 
 
 class EnterpriseWorkflowEngine:
-    """Enterprise-grade workflow engine with advanced features."""
-    
+    """Enterprise-grade workflow engine with advanced features."""    
     def __init__(self):
         self.logger = logging.getLogger("workflow.engine")
         self.event_bus = EventBus()
@@ -483,14 +452,12 @@ class EnterpriseWorkflowEngine:
         self._setup_event_handlers()
     
     def _setup_event_handlers(self):
-        """Set up event handlers for workflow events."""
-        self.event_bus.subscribe(WorkflowEventType.WORKFLOW_FAILED, self._handle_workflow_failure)
+        """Set up event handlers for workflow events."""        self.event_bus.subscribe(WorkflowEventType.WORKFLOW_FAILED, self._handle_workflow_failure)
         self.event_bus.subscribe(WorkflowEventType.TIMEOUT_REACHED, self._handle_timeout)
         self.event_bus.subscribe(WorkflowEventType.ESCALATION_TRIGGERED, self._handle_escalation)
     
     async def register_template(self, template: WorkflowTemplate) -> str:
-        """Register a workflow template."""
-        template_id = template.id
+        """Register a workflow template."""        template_id = template.id
         self.templates[template_id] = template
         
         self.logger.info(f"Registered workflow template {template_id}")
@@ -503,8 +470,7 @@ class EnterpriseWorkflowEngine:
         user_id: str,
         processing_options: Optional[Dict] = None
     ) -> str:
-        """Create a comprehensive content processing workflow."""
-        processing_options = processing_options or {}
+        """Create a comprehensive content processing workflow."""        processing_options = processing_options or {}
         
         # Define workflow stages based on content type and options
         stages = []
@@ -616,8 +582,7 @@ class EnterpriseWorkflowEngine:
         priority: WorkflowPriority = WorkflowPriority.NORMAL,
         scheduled_start: Optional[datetime] = None
     ) -> str:
-        """Start a new workflow instance."""
-        if template_id not in self.templates:
+        """Start a new workflow instance."""        if template_id not in self.templates:
             raise WorkflowEngineException(f"Template {template_id} not found")
         
         template = self.templates[template_id]
@@ -670,8 +635,7 @@ class EnterpriseWorkflowEngine:
         priority: WorkflowPriority,
         scheduled_start: Optional[datetime] = None
     ):
-        """Queue workflow for execution."""
-        queue_item = {
+        """Queue workflow for execution."""        queue_item = {
             "workflow_id": workflow_id,
             "priority": priority.value,
             "scheduled_start": scheduled_start or datetime.utcnow(),
@@ -690,8 +654,7 @@ class EnterpriseWorkflowEngine:
             self.execution_queue.append(queue_item)
     
     async def execute_workflows(self):
-        """Main workflow execution loop."""
-        while True:
+        """Main workflow execution loop."""        while True:
             try:
                 # Check for workflows ready to execute
                 current_time = datetime.utcnow()
@@ -729,8 +692,7 @@ class EnterpriseWorkflowEngine:
                 await asyncio.sleep(5)  # Back off on error
     
     async def _execute_workflow_instance(self, workflow_id: str):
-        """Execute a single workflow instance."""
-        instance = self.workflow_instances.get(workflow_id)
+        """Execute a single workflow instance."""        instance = self.workflow_instances.get(workflow_id)
         if not instance:
             self.logger.error(f"Workflow instance {workflow_id} not found")
             return
@@ -849,8 +811,7 @@ class EnterpriseWorkflowEngine:
             ))
     
     async def _execute_workflow_stage(self, workflow_id: str, stage: WorkflowStage) -> Dict:
-        """Execute a single workflow stage."""
-        instance = self.workflow_instances[workflow_id]
+        """Execute a single workflow stage."""        instance = self.workflow_instances[workflow_id]
         context = instance["context"]
         
         handler = self.stage_handlers.get(stage.stage_type)
@@ -887,8 +848,7 @@ class EnterpriseWorkflowEngine:
             }
     
     async def _cleanup_completed_workflows(self):
-        """Clean up old completed workflows."""
-        cutoff_time = datetime.utcnow() - timedelta(hours=self.cleanup_completed_after_hours)
+        """Clean up old completed workflows."""        cutoff_time = datetime.utcnow() - timedelta(hours=self.cleanup_completed_after_hours)
         
         workflows_to_remove = []
         for workflow_id, instance in self.workflow_instances.items():
@@ -901,8 +861,7 @@ class EnterpriseWorkflowEngine:
             self.logger.info(f"Cleaned up workflow {workflow_id}")
     
     async def _handle_workflow_failure(self, event: Event):
-        """Handle workflow failure events."""
-        workflow_id = event.data.get("workflow_id")
+        """Handle workflow failure events."""        workflow_id = event.data.get("workflow_id")
         error = event.data.get("error", "Unknown error")
         
         # Send notification
@@ -916,8 +875,7 @@ class EnterpriseWorkflowEngine:
         )
     
     async def _handle_timeout(self, event: Event):
-        """Handle workflow timeout events."""
-        workflow_id = event.data.get("workflow_id")
+        """Handle workflow timeout events."""        workflow_id = event.data.get("workflow_id")
         
         if workflow_id in self.workflow_instances:
             instance = self.workflow_instances[workflow_id]
@@ -926,15 +884,13 @@ class EnterpriseWorkflowEngine:
             self.logger.warning(f"Workflow {workflow_id} timed out")
     
     async def _handle_escalation(self, event: Event):
-        """Handle workflow escalation events."""
-        workflow_id = event.data.get("workflow_id")
+        """Handle workflow escalation events."""        workflow_id = event.data.get("workflow_id")
         
         # Implement escalation logic
         self.logger.warning(f"Workflow {workflow_id} escalated")
     
     def get_workflow_status(self, workflow_id: str) -> Optional[Dict]:
-        """Get comprehensive workflow status."""
-        instance = self.workflow_instances.get(workflow_id)
+        """Get comprehensive workflow status."""        instance = self.workflow_instances.get(workflow_id)
         if not instance:
             return None
         
@@ -962,8 +918,7 @@ class EnterpriseWorkflowEngine:
         }
     
     def _estimate_completion_time(self, workflow_id: str) -> Optional[str]:
-        """Estimate workflow completion time."""
-        instance = self.workflow_instances.get(workflow_id)
+        """Estimate workflow completion time."""        instance = self.workflow_instances.get(workflow_id)
         if not instance or instance["state"] not in [WorkflowState.RUNNING, WorkflowState.WAITING]:
             return None
         
@@ -975,8 +930,7 @@ class EnterpriseWorkflowEngine:
         return estimated_completion.isoformat()
     
     def _get_resource_utilization(self, workflow_id: str) -> Dict:
-        """Get current resource utilization for workflow."""
-        return {
+        """Get current resource utilization for workflow."""        return {
             "cpu_usage": 0.15,
             "memory_usage": 0.08,
             "storage_usage": 0.05,
@@ -984,8 +938,7 @@ class EnterpriseWorkflowEngine:
         }
     
     def get_active_workflows(self, user_id: Optional[str] = None) -> List[Dict]:
-        """Get list of active workflows."""
-        workflows = []
+        """Get list of active workflows."""        workflows = []
         
         for workflow_id, instance in self.workflow_instances.items():
             if user_id:
@@ -999,8 +952,7 @@ class EnterpriseWorkflowEngine:
         return workflows
     
     def get_workflow_metrics(self, template_id: Optional[str] = None) -> Dict:
-        """Get workflow execution metrics."""
-        total_workflows = len(self.workflow_instances)
+        """Get workflow execution metrics."""        total_workflows = len(self.workflow_instances)
         completed = sum(1 for w in self.workflow_instances.values() if w["state"] == WorkflowState.COMPLETED)
         failed = sum(1 for w in self.workflow_instances.values() if w["state"] == WorkflowState.FAILED)
         running = sum(1 for w in self.workflow_instances.values() if w["state"] == WorkflowState.RUNNING)
@@ -1016,8 +968,7 @@ class EnterpriseWorkflowEngine:
         }
     
     def _calculate_average_execution_time(self) -> float:
-        """Calculate average workflow execution time."""
-        completed_workflows = [
+        """Calculate average workflow execution time."""        completed_workflows = [
             w for w in self.workflow_instances.values() 
             if w["state"] == WorkflowState.COMPLETED and w["started_at"] and w["completed_at"]
         ]

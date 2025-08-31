@@ -1,5 +1,4 @@
-"""
-🚨 Intelligent Alert System for Ainflue Platform
+"""🚨 Intelligent Alert System for Ainflue Platform
 ===============================================
 
 Comprehensive intelligent alert management system providing:
@@ -12,9 +11,7 @@ and automated escalation across all platform components.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-# Core alert management
+"""# Core alert management
 from .intelligent_alert_manager import (
     IntelligentAlertManager,
     AlertCategory,
@@ -111,44 +108,36 @@ __all__ = [
 
 
 def create_alert_system() -> AlertCoordinator:
-    """
-    Create and configure a complete intelligent alert system
+    """    Create and configure a complete intelligent alert system
     
     Returns:
         AlertCoordinator: Fully configured alert coordinator
-    """
-    return AlertCoordinator()
+    """    return AlertCoordinator()
 
 
 def get_alert_system() -> AlertCoordinator:
-    """
-    Get the global alert coordinator instance
+    """    Get the global alert coordinator instance
     
     Returns:
         AlertCoordinator: Global alert coordinator
-    """
-    return alert_coordinator
+    """    return alert_coordinator
 
 
 # Quick access functions
 async def evaluate_business_metrics(metrics: BusinessMetrics):
-    """Quick access to business metrics evaluation"""
-    return await alert_coordinator.evaluate_all_metrics(business_metrics=metrics)
+    """Quick access to business metrics evaluation"""    return await alert_coordinator.evaluate_all_metrics(business_metrics=metrics)
 
 
 async def evaluate_technical_metrics(metrics: TechnicalMetrics):
-    """Quick access to technical metrics evaluation"""
-    return await alert_coordinator.evaluate_all_metrics(technical_metrics=metrics)
+    """Quick access to technical metrics evaluation"""    return await alert_coordinator.evaluate_all_metrics(technical_metrics=metrics)
 
 
 async def evaluate_ai_metrics(metrics: list):
-    """Quick access to AI metrics evaluation"""
-    return await alert_coordinator.evaluate_all_metrics(ai_metrics=metrics)
+    """Quick access to AI metrics evaluation"""    return await alert_coordinator.evaluate_all_metrics(ai_metrics=metrics)
 
 
 async def get_system_health():
-    """Quick access to system health status"""
-    return await alert_coordinator.get_comprehensive_status()
+    """Quick access to system health status"""    return await alert_coordinator.get_comprehensive_status()
 
 
 # Module initialization

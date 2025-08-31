@@ -1,5 +1,4 @@
-"""
-AI Recommendation Exceptions - Error Handling for Recommendation System
+"""AI Recommendation Exceptions - Error Handling for Recommendation System
 ======================================================================
 
 Comprehensive exception handling and validation for the Ainflue AI recommendation system.
@@ -7,17 +6,14 @@ Provides custom exceptions, validation functions, and error management utilities
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-from typing import Any, Dict, List, Optional, Union
+"""from typing import Any, Dict, List, Optional, Union
 import logging
 import traceback
 
 
 # Base Exception Classes
 class RecommendationError(Exception):
-    """Base exception for recommendation system errors."""
-    
+    """Base exception for recommendation system errors."""    
     def __init__(self, message: str, error_code: str = None, details: Dict[str, Any] = None):
         super().__init__(message)
         self.message = message
@@ -26,40 +22,35 @@ class RecommendationError(Exception):
 
 
 class ContentAnalysisError(RecommendationError):
-    """Exception for content analysis errors."""
-    
+    """Exception for content analysis errors."""    
     def __init__(self, message: str, content_id: str = None, **kwargs):
         super().__init__(message, "CONTENT_ANALYSIS_ERROR", **kwargs)
         self.content_id = content_id
 
 
 class CollaborationMatchingError(RecommendationError):
-    """Exception for collaboration matching errors."""
-    
+    """Exception for collaboration matching errors."""    
     def __init__(self, message: str, creator_ids: List[str] = None, **kwargs):
         super().__init__(message, "COLLABORATION_MATCHING_ERROR", **kwargs)
         self.creator_ids = creator_ids or []
 
 
 class TrendAnalysisError(RecommendationError):
-    """Exception for trend analysis errors."""
-    
+    """Exception for trend analysis errors."""    
     def __init__(self, message: str, trend_id: str = None, **kwargs):
         super().__init__(message, "TREND_ANALYSIS_ERROR", **kwargs)
         self.trend_id = trend_id
 
 
 class RevenueOptimizationError(RecommendationError):
-    """Exception for revenue optimization errors."""
-    
+    """Exception for revenue optimization errors."""    
     def __init__(self, message: str, strategy_id: str = None, **kwargs):
         super().__init__(message, "REVENUE_OPTIMIZATION_ERROR", **kwargs)
         self.strategy_id = strategy_id
 
 
 class ProtectionError(RecommendationError):
-    """Exception for content protection errors."""
-    
+    """Exception for content protection errors."""    
     def __init__(self, message: str, protection_type: str = None, **kwargs):
         super().__init__(message, "PROTECTION_ERROR", **kwargs)
         self.protection_type = protection_type
@@ -67,24 +58,21 @@ class ProtectionError(RecommendationError):
 
 # System Errors
 class ModelInitializationError(RecommendationError):
-    """Exception for model initialization errors."""
-    
+    """Exception for model initialization errors."""    
     def __init__(self, message: str, model_name: str = None, **kwargs):
         super().__init__(message, "MODEL_INITIALIZATION_ERROR", **kwargs)
         self.model_name = model_name
 
 
 class ValidationError(RecommendationError):
-    """Exception for data validation errors."""
-    
+    """Exception for data validation errors."""    
     def __init__(self, message: str, field_name: str = None, **kwargs):
         super().__init__(message, "VALIDATION_ERROR", **kwargs)
         self.field_name = field_name
 
 
 class DataProcessingError(RecommendationError):
-    """Exception for data processing errors."""
-    
+    """Exception for data processing errors."""    
     def __init__(self, message: str, data_type: str = None, **kwargs):
         super().__init__(message, "DATA_PROCESSING_ERROR", **kwargs)
         self.data_type = data_type
@@ -92,48 +80,42 @@ class DataProcessingError(RecommendationError):
 
 # Infrastructure Errors
 class AuthenticationError(RecommendationError):
-    """Exception for authentication errors."""
-    
+    """Exception for authentication errors."""    
     def __init__(self, message: str, user_id: str = None, **kwargs):
         super().__init__(message, "AUTHENTICATION_ERROR", **kwargs)
         self.user_id = user_id
 
 
 class AuthorizationError(RecommendationError):
-    """Exception for authorization errors."""
-    
+    """Exception for authorization errors."""    
     def __init__(self, message: str, required_permission: str = None, **kwargs):
         super().__init__(message, "AUTHORIZATION_ERROR", **kwargs)
         self.required_permission = required_permission
 
 
 class RateLimitError(RecommendationError):
-    """Exception for rate limiting errors."""
-    
+    """Exception for rate limiting errors."""    
     def __init__(self, message: str, retry_after: int = None, **kwargs):
         super().__init__(message, "RATE_LIMIT_ERROR", **kwargs)
         self.retry_after = retry_after
 
 
 class ExternalServiceError(RecommendationError):
-    """Exception for external service errors."""
-    
+    """Exception for external service errors."""    
     def __init__(self, message: str, service_name: str = None, **kwargs):
         super().__init__(message, "EXTERNAL_SERVICE_ERROR", **kwargs)
         self.service_name = service_name
 
 
 class CacheError(RecommendationError):
-    """Exception for cache-related errors."""
-    
+    """Exception for cache-related errors."""    
     def __init__(self, message: str, cache_key: str = None, **kwargs):
         super().__init__(message, "CACHE_ERROR", **kwargs)
         self.cache_key = cache_key
 
 
 class DatabaseError(RecommendationError):
-    """Exception for database errors."""
-    
+    """Exception for database errors."""    
     def __init__(self, message: str, query: str = None, **kwargs):
         super().__init__(message, "DATABASE_ERROR", **kwargs)
         self.query = query
@@ -141,8 +123,7 @@ class DatabaseError(RecommendationError):
 
 # Validation Functions
 def validate_creator_profile(profile_data: Dict[str, Any]) -> bool:
-    """
-    Validate creator profile data.
+    """    Validate creator profile data.
     
     Args:
         profile_data: Creator profile data to validate
@@ -152,8 +133,7 @@ def validate_creator_profile(profile_data: Dict[str, Any]) -> bool:
         
     Raises:
         ValidationError: If validation fails
-    """
-    required_fields = ['creator_id', 'username', 'display_name']
+    """    required_fields = ['creator_id', 'username', 'display_name']
     
     for field in required_fields:
         if field not in profile_data:
@@ -171,8 +151,7 @@ def validate_creator_profile(profile_data: Dict[str, Any]) -> bool:
 
 
 def validate_recommendation_scores(scores: List[float]) -> bool:
-    """
-    Validate recommendation confidence scores.
+    """    Validate recommendation confidence scores.
     
     Args:
         scores: List of confidence scores to validate
@@ -182,8 +161,7 @@ def validate_recommendation_scores(scores: List[float]) -> bool:
         
     Raises:
         ValidationError: If validation fails
-    """
-    if not isinstance(scores, list):
+    """    if not isinstance(scores, list):
         raise ValidationError("Scores must be a list", field_name="scores")
     
     if not scores:
@@ -200,8 +178,7 @@ def validate_recommendation_scores(scores: List[float]) -> bool:
 
 
 def validate_engagement_metrics(metrics: Dict[str, Any]) -> bool:
-    """
-    Validate engagement metrics data.
+    """    Validate engagement metrics data.
     
     Args:
         metrics: Engagement metrics to validate
@@ -211,8 +188,7 @@ def validate_engagement_metrics(metrics: Dict[str, Any]) -> bool:
         
     Raises:
         ValidationError: If validation fails
-    """
-    required_fields = ['likes', 'comments', 'shares', 'views']
+    """    required_fields = ['likes', 'comments', 'shares', 'views']
     
     for field in required_fields:
         if field not in metrics:
@@ -232,8 +208,7 @@ def validate_engagement_metrics(metrics: Dict[str, Any]) -> bool:
 
 
 def sanitize_user_input(user_input: str, max_length: int = 1000) -> str:
-    """
-    Sanitize user input for security.
+    """    Sanitize user input for security.
     
     Args:
         user_input: Raw user input
@@ -244,8 +219,7 @@ def sanitize_user_input(user_input: str, max_length: int = 1000) -> str:
         
     Raises:
         ValidationError: If input is invalid
-    """
-    if not isinstance(user_input, str):
+    """    if not isinstance(user_input, str):
         raise ValidationError("User input must be a string")
     
     if len(user_input) > max_length:
@@ -267,15 +241,13 @@ def log_error_with_context(
     context: Dict[str, Any] = None,
     logger: logging.Logger = None
 ) -> None:
-    """
-    Log error with context information.
+    """    Log error with context information.
     
     Args:
         error: Exception to log
         context: Additional context information
         logger: Logger instance to use
-    """
-    if logger is None:
+    """    if logger is None:
         logger = logging.getLogger(__name__)
     
     context = context or {}
@@ -302,8 +274,7 @@ def create_error_response(
     request_id: str = None,
     include_traceback: bool = False
 ) -> Dict[str, Any]:
-    """
-    Create standardized error response.
+    """    Create standardized error response.
     
     Args:
         error: Exception that occurred
@@ -312,8 +283,7 @@ def create_error_response(
         
     Returns:
         dict: Standardized error response
-    """
-    response = {
+    """    response = {
         'success': False,
         'error': {
             'type': type(error).__name__,

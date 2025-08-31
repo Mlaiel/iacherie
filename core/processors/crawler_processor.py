@@ -1,5 +1,4 @@
-"""
-Crawler Processor Module - IA-Influencer-Agent Platform
+"""Crawler Processor Module - IA-Influencer-Agent Platform
 
 Enterprise-grade web surveillance and content monitoring system for multi-platform protection.
 AI-powered crawling, content detection, and automated surveillance across social platforms.
@@ -23,9 +22,7 @@ distribution, or commercialization without explicit written permission from
 Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import time
@@ -85,8 +82,7 @@ logger = logging.getLogger(__name__)
 
 
 class CrawlerType(str, Enum):
-    """Types of crawlers"""
-    YOUTUBE = "youtube"
+    """Types of crawlers"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -97,8 +93,7 @@ class CrawlerType(str, Enum):
 
 
 class CrawlMethod(str, Enum):
-    """Crawling methods"""
-    API = "api"
+    """Crawling methods"""    API = "api"
     SELENIUM = "selenium"
     REQUESTS = "requests"
     HEADLESS_BROWSER = "headless_browser"
@@ -106,8 +101,7 @@ class CrawlMethod(str, Enum):
 
 
 class DetectionType(str, Enum):
-    """Content detection types"""
-    EXACT_MATCH = "exact_match"
+    """Content detection types"""    EXACT_MATCH = "exact_match"
     SIMILARITY_MATCH = "similarity_match"
     HASH_MATCH = "hash_match"
     METADATA_MATCH = "metadata_match"
@@ -116,8 +110,7 @@ class DetectionType(str, Enum):
 
 
 class CrawlStatus(str, Enum):
-    """Crawl operation status"""
-    PENDING = "pending"
+    """Crawl operation status"""    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -127,8 +120,7 @@ class CrawlStatus(str, Enum):
 
 
 class MatchConfidence(str, Enum):
-    """Match confidence levels"""
-    VERY_HIGH = "very_high"    # 95%+
+    """Match confidence levels"""    VERY_HIGH = "very_high"    # 95%+
     HIGH = "high"              # 85%+
     MEDIUM = "medium"          # 70%+
     LOW = "low"                # 50%+
@@ -137,8 +129,7 @@ class MatchConfidence(str, Enum):
 
 @dataclass
 class CrawlerConfig:
-    """Configuration for crawler operations"""
-    # General settings
+    """Configuration for crawler operations"""    # General settings
     enable_multi_platform: bool = True
     enable_real_time_monitoring: bool = True
     enable_batch_processing: bool = True
@@ -195,8 +186,7 @@ class CrawlerConfig:
 
 @dataclass
 class CrawlTarget:
-    """Represents a crawl target"""
-    target_id: str
+    """Represents a crawl target"""    target_id: str
     user_id: str
     fingerprint_id: str
     platform: CrawlerType
@@ -212,8 +202,7 @@ class CrawlTarget:
 
 @dataclass
 class CrawlResult:
-    """Result of a crawl operation"""
-    result_id: str
+    """Result of a crawl operation"""    result_id: str
     target_id: str
     url: str
     platform: CrawlerType
@@ -232,8 +221,7 @@ class CrawlResult:
 
 @dataclass
 class CrawlSession:
-    """Represents a crawling session"""
-    session_id: str
+    """Represents a crawling session"""    session_id: str
     crawler_type: CrawlerType
     crawl_method: CrawlMethod
     targets_processed: int = 0
@@ -246,8 +234,7 @@ class CrawlSession:
 
 
 class YouTubeCrawler:
-    """YouTube content crawler and monitor"""
-    
+    """YouTube content crawler and monitor"""    
     def __init__(self, api_key: str, config: CrawlerConfig):
         self.api_key = api_key
         self.config = config
@@ -261,8 +248,7 @@ class YouTubeCrawler:
         self,
         target: CrawlTarget
     ) -> List[CrawlResult]:
-        """Crawl YouTube for matching content"""
-        try:
+        """Crawl YouTube for matching content"""        try:
             results = []
             
             if not self.youtube:
@@ -282,8 +268,7 @@ class YouTubeCrawler:
             return []
     
     async def _api_search(self, target: CrawlTarget) -> List[CrawlResult]:
-        """Search using YouTube Data API"""
-        try:
+        """Search using YouTube Data API"""        try:
             results = []
             
             for search_term in target.search_terms:
@@ -336,8 +321,7 @@ class YouTubeCrawler:
             return []
     
     async def _selenium_search(self, target: CrawlTarget) -> List[CrawlResult]:
-        """Search using Selenium web scraping"""
-        try:
+        """Search using Selenium web scraping"""        try:
             results = []
             
             if not WEB_SCRAPING_AVAILABLE:
@@ -430,8 +414,7 @@ class YouTubeCrawler:
         video_id: str,
         target: CrawlTarget
     ) -> float:
-        """Analyze video similarity with target content"""
-        try:
+        """Analyze video similarity with target content"""        try:
             # Get video details
             video_response = self.youtube.videos().list(
                 part='snippet,statistics',
@@ -468,8 +451,7 @@ class YouTubeCrawler:
         element,
         target: CrawlTarget
     ) -> float:
-        """Analyze scraped content similarity"""
-        try:
+        """Analyze scraped content similarity"""        try:
             title = element.get_attribute('title') or ''
             
             # Simple text matching
@@ -484,8 +466,7 @@ class YouTubeCrawler:
             return 0.0
     
     def _get_match_confidence(self, score: float) -> MatchConfidence:
-        """Convert similarity score to match confidence"""
-        if score >= 0.95:
+        """Convert similarity score to match confidence"""        if score >= 0.95:
             return MatchConfidence.VERY_HIGH
         elif score >= 0.85:
             return MatchConfidence.HIGH
@@ -498,16 +479,14 @@ class YouTubeCrawler:
 
 
 class InstagramCrawler:
-    """Instagram content crawler and monitor"""
-    
+    """Instagram content crawler and monitor"""    
     def __init__(self, api_key: str, config: CrawlerConfig):
         self.api_key = api_key
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.InstagramCrawler")
     
     async def crawl_for_content(self, target: CrawlTarget) -> List[CrawlResult]:
-        """Crawl Instagram for matching content"""
-        try:
+        """Crawl Instagram for matching content"""        try:
             results = []
             
             # Instagram requires more sophisticated scraping due to API limitations
@@ -522,8 +501,7 @@ class InstagramCrawler:
             return []
     
     async def _selenium_search(self, target: CrawlTarget) -> List[CrawlResult]:
-        """Search Instagram using Selenium"""
-        try:
+        """Search Instagram using Selenium"""        try:
             results = []
             
             if not WEB_SCRAPING_AVAILABLE:
@@ -619,8 +597,7 @@ class InstagramCrawler:
             return []
     
     async def _analyze_instagram_post(self, element, target: CrawlTarget) -> float:
-        """Analyze Instagram post for similarity"""
-        try:
+        """Analyze Instagram post for similarity"""        try:
             # For Instagram, we'd need to analyze images and captions
             # This is a simplified implementation
             
@@ -634,8 +611,7 @@ class InstagramCrawler:
             return 0.0
     
     def _get_match_confidence(self, score: float) -> MatchConfidence:
-        """Convert similarity score to match confidence"""
-        if score >= 0.95:
+        """Convert similarity score to match confidence"""        if score >= 0.95:
             return MatchConfidence.VERY_HIGH
         elif score >= 0.85:
             return MatchConfidence.HIGH
@@ -648,16 +624,14 @@ class InstagramCrawler:
 
 
 class TikTokCrawler:
-    """TikTok content crawler and monitor"""
-    
+    """TikTok content crawler and monitor"""    
     def __init__(self, api_key: str, config: CrawlerConfig):
         self.api_key = api_key
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.TikTokCrawler")
     
     async def crawl_for_content(self, target: CrawlTarget) -> List[CrawlResult]:
-        """Crawl TikTok for matching content"""
-        try:
+        """Crawl TikTok for matching content"""        try:
             results = []
             
             # TikTok primarily requires web scraping
@@ -672,8 +646,7 @@ class TikTokCrawler:
             return []
     
     async def _selenium_search(self, target: CrawlTarget) -> List[CrawlResult]:
-        """Search TikTok using Selenium"""
-        try:
+        """Search TikTok using Selenium"""        try:
             results = []
             
             if not WEB_SCRAPING_AVAILABLE:
@@ -762,8 +735,7 @@ class TikTokCrawler:
             return []
     
     async def _analyze_tiktok_video(self, element, target: CrawlTarget) -> float:
-        """Analyze TikTok video for similarity"""
-        try:
+        """Analyze TikTok video for similarity"""        try:
             # For TikTok, we'd need to analyze video frames and audio
             # This is a simplified implementation
             
@@ -774,8 +746,7 @@ class TikTokCrawler:
             return 0.0
     
     def _get_match_confidence(self, score: float) -> MatchConfidence:
-        """Convert similarity score to match confidence"""
-        if score >= 0.95:
+        """Convert similarity score to match confidence"""        if score >= 0.95:
             return MatchConfidence.VERY_HIGH
         elif score >= 0.85:
             return MatchConfidence.HIGH
@@ -788,8 +759,7 @@ class TikTokCrawler:
 
 
 class GenericWebCrawler:
-    """Generic web crawler for any website"""
-    
+    """Generic web crawler for any website"""    
     def __init__(self, config: CrawlerConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.GenericWebCrawler")
@@ -800,8 +770,7 @@ class GenericWebCrawler:
         target: CrawlTarget,
         max_pages: int = 50
     ) -> List[CrawlResult]:
-        """Crawl a website for matching content"""
-        try:
+        """Crawl a website for matching content"""        try:
             results = []
             visited_urls = set()
             urls_to_visit = [base_url]
@@ -886,16 +855,14 @@ class GenericWebCrawler:
             return []
     
     async def _check_robots_txt(self, url: str) -> bool:
-        """Check if URL is allowed by robots.txt"""
-        try:
+        """Check if URL is allowed by robots.txt"""        try:
             # Simplified robots.txt check
             return True  # In production, implement proper robots.txt parsing
         except:
             return True
     
     async def _analyze_page_content(self, soup, target: CrawlTarget) -> float:
-        """Analyze page content for similarity"""
-        try:
+        """Analyze page content for similarity"""        try:
             # Extract text content
             text_content = soup.get_text().lower()
             
@@ -917,8 +884,7 @@ class GenericWebCrawler:
             return 0.0
     
     def _should_crawl_url(self, url: str, base_url: str) -> bool:
-        """Check if URL should be crawled"""
-        try:
+        """Check if URL should be crawled"""        try:
             # Only crawl URLs from same domain
             base_domain = urlparse(base_url).netloc
             url_domain = urlparse(url).netloc
@@ -929,8 +895,7 @@ class GenericWebCrawler:
             return False
     
     def _get_match_confidence(self, score: float) -> MatchConfidence:
-        """Convert similarity score to match confidence"""
-        if score >= 0.95:
+        """Convert similarity score to match confidence"""        if score >= 0.95:
             return MatchConfidence.VERY_HIGH
         elif score >= 0.85:
             return MatchConfidence.HIGH
@@ -943,13 +908,11 @@ class GenericWebCrawler:
 
 
 class CrawlerProcessor:
-    """
-    🕷️ ENTERPRISE CRAWLER PROCESSOR
+    """    🕷️ ENTERPRISE CRAWLER PROCESSOR
     
     Industrial-grade web surveillance system with multi-platform crawling,
     content detection, and automated monitoring capabilities.
-    """
-    
+    """    
     def __init__(
         self,
         db_session,
@@ -988,8 +951,7 @@ class CrawlerProcessor:
         self,
         target: CrawlTarget
     ) -> CrawlSession:
-        """Start monitoring a target across platforms"""
-        try:
+        """Start monitoring a target across platforms"""        try:
             session = CrawlSession(
                 session_id=str(uuid.uuid4()),
                 crawler_type=target.platform,
@@ -1042,8 +1004,7 @@ class CrawlerProcessor:
         self,
         targets: List[CrawlTarget]
     ) -> List[CrawlSession]:
-        """Perform batch crawling of multiple targets"""
-        try:
+        """Perform batch crawling of multiple targets"""        try:
             sessions = []
             
             # Process targets in batches
@@ -1078,8 +1039,7 @@ class CrawlerProcessor:
         targets: List[CrawlTarget],
         duration_hours: int = 24
     ):
-        """Run continuous monitoring for specified duration"""
-        try:
+        """Run continuous monitoring for specified duration"""        try:
             end_time = datetime.utcnow() + timedelta(hours=duration_hours)
             
             self.logger.info(f"Starting continuous monitoring for {duration_hours} hours")
@@ -1107,8 +1067,7 @@ class CrawlerProcessor:
             self.logger.error(f"Continuous monitoring failed: {e}")
     
     def _should_crawl_target(self, target: CrawlTarget) -> bool:
-        """Check if target should be crawled now"""
-        if not target.last_crawled:
+        """Check if target should be crawled now"""        if not target.last_crawled:
             return True
         
         next_crawl = target.last_crawled + timedelta(
@@ -1118,8 +1077,7 @@ class CrawlerProcessor:
         return datetime.utcnow() >= next_crawl
     
     async def _store_crawl_target(self, target: CrawlTarget):
-        """Store crawl target in database and cache"""
-        try:
+        """Store crawl target in database and cache"""        try:
             target_data = {
                 "target_id": target.target_id,
                 "user_id": target.user_id,
@@ -1155,8 +1113,7 @@ class CrawlerProcessor:
             self.logger.error(f"Failed to store crawl target: {e}")
     
     async def _store_crawl_result(self, result: CrawlResult):
-        """Store crawl result in database and cache"""
-        try:
+        """Store crawl result in database and cache"""        try:
             result_data = {
                 "result_id": result.result_id,
                 "target_id": result.target_id,
@@ -1205,8 +1162,7 @@ class CrawlerProcessor:
         target_id: str,
         limit: int = 100
     ) -> List[CrawlResult]:
-        """Get crawl results for a target"""
-        try:
+        """Get crawl results for a target"""        try:
             results = []
             
             # Get result IDs from target index
@@ -1246,8 +1202,7 @@ class CrawlerProcessor:
             return []
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on crawler system"""
-        try:
+        """Perform health check on crawler system"""        try:
             health_status = {
                 "status": "healthy",
                 "timestamp": datetime.utcnow().isoformat(),
@@ -1294,16 +1249,14 @@ class CrawlerProcessor:
             }
     
     async def _test_redis_connection(self) -> bool:
-        """Test Redis connection"""
-        try:
+        """Test Redis connection"""        try:
             await self.redis_client.ping()
             return True
         except:
             return False
     
     async def _test_database_connection(self) -> bool:
-        """Test database connection"""
-        try:
+        """Test database connection"""        try:
             # Would test actual database connection
             return True
         except:
@@ -1316,8 +1269,7 @@ async def create_crawler_processor(
     redis_client,
     config: Optional[Union[CrawlerConfig, Dict[str, Any]]] = None
 ) -> CrawlerProcessor:
-    """
-    Factory function to create a CrawlerProcessor instance
+    """    Factory function to create a CrawlerProcessor instance
     
     Args:
         db_session: Database session
@@ -1326,8 +1278,7 @@ async def create_crawler_processor(
         
     Returns:
         Configured CrawlerProcessor instance
-    """
-    if isinstance(config, dict):
+    """    if isinstance(config, dict):
         config = CrawlerConfig(**config)
     
     processor = CrawlerProcessor(db_session, redis_client, config)

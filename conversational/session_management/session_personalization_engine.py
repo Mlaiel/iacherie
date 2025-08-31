@@ -1,5 +1,4 @@
-"""
-Session Personalization Engine - IA Influencer Agent
+"""Session Personalization Engine - IA Influencer Agent
 
 Enterprise-grade session personalization system for multi-format content creators
 with advanced user preference learning, adaptive conversation behavior, and
@@ -13,9 +12,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copy, modification, or distribution without 
 explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 import numpy as np
@@ -57,16 +54,14 @@ logger = get_logger(__name__)
 settings = get_settings()
 
 class PersonalizationLevel(Enum):
-    """Session personalization levels"""
-    BASIC = "basic"
+    """Session personalization levels"""    BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
 
 class UserBehaviorType(Enum):
-    """User behavior classification types"""
-    CREATIVE_FOCUSED = "creative_focused"
+    """User behavior classification types"""    CREATIVE_FOCUSED = "creative_focused"
     BUSINESS_ORIENTED = "business_oriented"
     COLLABORATION_SEEKING = "collaboration_seeking"
     LEARNING_ORIENTED = "learning_oriented"
@@ -75,8 +70,7 @@ class UserBehaviorType(Enum):
     POWER_USER = "power_user"
 
 class ContentPreferenceType(Enum):
-    """Content preference types"""
-    AUDIO = "audio"
+    """Content preference types"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -86,8 +80,7 @@ class ContentPreferenceType(Enum):
 
 @dataclass
 class UserSessionPreferences:
-    """User session preferences data structure"""
-    user_id: str
+    """User session preferences data structure"""    user_id: str
     preferred_platforms: List[str]
     content_types: List[ContentPreferenceType]
     interaction_style: str
@@ -107,8 +100,7 @@ class UserSessionPreferences:
 
 @dataclass
 class SessionPersonalizationContext:
-    """Session personalization context"""
-    session_id: str
+    """Session personalization context"""    session_id: str
     user_id: str
     current_platform: str
     session_type: str
@@ -122,9 +114,7 @@ class SessionPersonalizationContext:
     learning_insights: Dict[str, Any]
 
 class UserSessionPreferencesManager:
-    """Manages user session preferences with ML-powered learning"""
-
-    def __init__(self):
+    """Manages user session preferences with ML-powered learning"""    def __init__(self):
         self.cache_manager = CacheManager()
         self.encryption_manager = EncryptionManager()
         self.metrics = MetricsCollector("session_preferences")
@@ -135,8 +125,7 @@ class UserSessionPreferencesManager:
         self.feature_extractors = {}
 
     async def initialize(self):
-        """Initialize preference manager components"""
-        try:
+        """Initialize preference manager components"""        try:
             # Initialize Redis for real-time preferences
             self.redis_client = redis.Redis(
                 host=settings.redis_host,
@@ -166,8 +155,7 @@ class UserSessionPreferencesManager:
             raise
 
     async def _initialize_ml_models(self):
-        """Initialize ML models for preference learning"""
-        try:
+        """Initialize ML models for preference learning"""        try:
             # User behavior classification model
             self.behavior_classifier = await self._load_behavior_model()
             
@@ -198,8 +186,7 @@ class UserSessionPreferencesManager:
         session_data: Dict[str, Any],
         interaction_history: List[Dict[str, Any]]
     ) -> UserSessionPreferences:
-        """Learn and update user preferences from session data"""
-        try:
+        """Learn and update user preferences from session data"""        try:
             start_time = datetime.now(timezone.utc)
             
             # Extract current preferences
@@ -241,8 +228,7 @@ class UserSessionPreferencesManager:
             raise
 
     async def get_user_preferences(self, user_id: str) -> Optional[UserSessionPreferences]:
-        """Get user preferences with caching"""
-        try:
+        """Get user preferences with caching"""        try:
             cache_key = f"user_preferences:{user_id}"
             
             # Check cache first
@@ -253,11 +239,9 @@ class UserSessionPreferencesManager:
             
             # Query from database
             async with self.db_pool.acquire() as conn:
-                query = """
-                    SELECT * FROM user_session_preferences 
+                query = """                    SELECT * FROM user_session_preferences 
                     WHERE user_id = $1 AND active = true
-                """
-                row = await conn.fetchrow(query, user_id)
+                """                row = await conn.fetchrow(query, user_id)
                 
                 if row:
                     prefs_data = dict(row)
@@ -290,8 +274,7 @@ class UserSessionPreferencesManager:
         session_data: Dict[str, Any],
         interaction_history: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze session behavior for preference learning"""
-        try:
+        """Analyze session behavior for preference learning"""        try:
             analysis = {
                 'platform_usage': {},
                 'content_engagement': {},
@@ -367,8 +350,7 @@ class UserSessionPreferencesManager:
         behavior_analysis: Dict[str, Any],
         session_data: Dict[str, Any]
     ) -> UserSessionPreferences:
-        """Update preferences using ML-based learning"""
-        try:
+        """Update preferences using ML-based learning"""        try:
             if not current_preferences:
                 current_preferences = await self._create_default_preferences(
                     session_data.get('user_id', 'unknown')
@@ -438,8 +420,7 @@ class UserSessionPreferencesManager:
             return current_preferences
 
     async def _create_default_preferences(self, user_id: str) -> UserSessionPreferences:
-        """Create default preferences for new users"""
-        return UserSessionPreferences(
+        """Create default preferences for new users"""        return UserSessionPreferences(
             user_id=user_id,
             preferred_platforms=["instagram"],
             content_types=[ContentPreferenceType.IMAGE],
@@ -468,16 +449,13 @@ class UserSessionPreferencesManager:
         )
 
 class AdaptiveSessionBehavior:
-    """Manages adaptive session behavior based on user preferences"""
-
-    def __init__(self):
+    """Manages adaptive session behavior based on user preferences"""    def __init__(self):
         self.metrics = MetricsCollector("adaptive_behavior")
         self.adaptation_strategies = {}
         self.behavior_models = {}
 
     async def initialize(self):
-        """Initialize adaptive behavior system"""
-        try:
+        """Initialize adaptive behavior system"""        try:
             # Load adaptation strategies
             self.adaptation_strategies = {
                 'response_timing': self._adaptive_response_timing,
@@ -501,8 +479,7 @@ class AdaptiveSessionBehavior:
         context: SessionPersonalizationContext,
         real_time_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Adapt session behavior based on context and real-time data"""
-        try:
+        """Adapt session behavior based on context and real-time data"""        try:
             adaptations = {}
             
             # Apply each adaptation strategy
@@ -528,8 +505,7 @@ class AdaptiveSessionBehavior:
         context: SessionPersonalizationContext,
         real_time_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Adapt response timing based on user preferences"""
-        try:
+        """Adapt response timing based on user preferences"""        try:
             user_pace = context.preferences.learning_pace
             current_engagement = real_time_data.get('engagement_score', 0.5)
             
@@ -559,8 +535,7 @@ class AdaptiveSessionBehavior:
         context: SessionPersonalizationContext,
         real_time_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Adapt content suggestions based on preferences"""
-        try:
+        """Adapt content suggestions based on preferences"""        try:
             preferred_types = [ct.value for ct in context.preferences.content_types]
             current_platform = context.current_platform
             
@@ -597,8 +572,7 @@ class AdaptiveSessionBehavior:
         context: SessionPersonalizationContext,
         real_time_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Adapt interaction style based on user behavior"""
-        try:
+        """Adapt interaction style based on user behavior"""        try:
             user_style = context.preferences.interaction_style
             behavior_type = context.user_behavior_type
             
@@ -645,8 +619,7 @@ class AdaptiveSessionBehavior:
         context: SessionPersonalizationContext,
         real_time_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Recommend features based on usage patterns"""
-        try:
+        """Recommend features based on usage patterns"""        try:
             usage_patterns = context.preferences.feature_usage_patterns
             current_session_features = real_time_data.get('features_accessed', [])
             
@@ -686,8 +659,7 @@ class AdaptiveSessionBehavior:
         context: SessionPersonalizationContext,
         real_time_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Adapt collaboration matching based on preferences"""
-        try:
+        """Adapt collaboration matching based on preferences"""        try:
             collaboration_openness = context.preferences.collaboration_openness
             user_platforms = context.preferences.preferred_platforms
             content_types = [ct.value for ct in context.preferences.content_types]
@@ -712,17 +684,14 @@ class AdaptiveSessionBehavior:
             return {'max_suggestions': 3, 'collaboration_score_threshold': 0.5}
 
 class PersonalizedConversationManager:
-    """Manages personalized conversation experiences"""
-
-    def __init__(self):
+    """Manages personalized conversation experiences"""    def __init__(self):
         self.preferences_manager = UserSessionPreferencesManager()
         self.adaptive_behavior = AdaptiveSessionBehavior()
         self.metrics = MetricsCollector("personalized_conversations")
         self.personalization_cache = {}
 
     async def initialize(self):
-        """Initialize personalized conversation manager"""
-        try:
+        """Initialize personalized conversation manager"""        try:
             await self.preferences_manager.initialize()
             await self.adaptive_behavior.initialize()
             
@@ -739,8 +708,7 @@ class PersonalizedConversationManager:
         session_data: Dict[str, Any],
         real_time_context: Dict[str, Any]
     ) -> SessionPersonalizationContext:
-        """Create personalized session context"""
-        try:
+        """Create personalized session context"""        try:
             start_time = datetime.now(timezone.utc)
             
             # Get user preferences
@@ -801,8 +769,7 @@ class PersonalizedConversationManager:
         session_data: Dict[str, Any],
         preferences: UserSessionPreferences
     ) -> UserBehaviorType:
-        """Classify user behavior type based on session data and preferences"""
-        try:
+        """Classify user behavior type based on session data and preferences"""        try:
             # Scoring system for behavior classification
             behavior_scores = {
                 UserBehaviorType.CREATIVE_FOCUSED: 0,
@@ -867,8 +834,7 @@ class PersonalizedConversationManager:
         session_data: Dict[str, Any],
         real_time_context: Dict[str, Any]
     ) -> float:
-        """Calculate engagement score based on session metrics"""
-        try:
+        """Calculate engagement score based on session metrics"""        try:
             # Base metrics
             session_duration = session_data.get('duration', 0)
             message_count = session_data.get('message_count', 0)
@@ -904,8 +870,7 @@ class PersonalizedConversationManager:
         session_data: Dict[str, Any],
         preferences: UserSessionPreferences
     ) -> float:
-        """Calculate satisfaction score based on preference alignment"""
-        try:
+        """Calculate satisfaction score based on preference alignment"""        try:
             satisfaction_components = []
             
             # Platform satisfaction
@@ -945,9 +910,7 @@ class PersonalizedConversationManager:
             return 0.5
 
 class SessionPersonalizationEngine:
-    """Main engine for session personalization management"""
-
-    def __init__(self):
+    """Main engine for session personalization management"""    def __init__(self):
         self.preferences_manager = UserSessionPreferencesManager()
         self.conversation_manager = PersonalizedConversationManager()
         self.adaptive_behavior = AdaptiveSessionBehavior()
@@ -956,8 +919,7 @@ class SessionPersonalizationEngine:
         self.personalization_models = {}
 
     async def initialize(self):
-        """Initialize the session personalization engine"""
-        try:
+        """Initialize the session personalization engine"""        try:
             await self.preferences_manager.initialize()
             await self.conversation_manager.initialize()
             await self.adaptive_behavior.initialize()
@@ -978,8 +940,7 @@ class SessionPersonalizationEngine:
         session_metadata: Dict[str, Any],
         initial_context: Dict[str, Any]
     ) -> SessionPersonalizationContext:
-        """Create a personalized session with adaptive behavior"""
-        try:
+        """Create a personalized session with adaptive behavior"""        try:
             # Create personalization context
             context = await self.conversation_manager.personalize_session(
                 session_id,
@@ -1019,8 +980,7 @@ class SessionPersonalizationEngine:
         interaction_data: Dict[str, Any],
         performance_metrics: Dict[str, Any]
     ) -> SessionPersonalizationContext:
-        """Update session personalization based on real-time interaction"""
-        try:
+        """Update session personalization based on real-time interaction"""        try:
             if session_id not in self.active_sessions:
                 raise ValueError(f"Session {session_id} not found in active sessions")
             
@@ -1067,8 +1027,7 @@ class SessionPersonalizationEngine:
         self,
         session_id: str
     ) -> Dict[str, Any]:
-        """Get personalization insights for a session"""
-        try:
+        """Get personalization insights for a session"""        try:
             if session_id not in self.active_sessions:
                 return {}
             
@@ -1109,8 +1068,7 @@ class SessionPersonalizationEngine:
         self,
         context: SessionPersonalizationContext
     ) -> Dict[str, Any]:
-        """Generate recommendations based on session context"""
-        try:
+        """Generate recommendations based on session context"""        try:
             recommendations = {
                 'next_actions': [],
                 'feature_suggestions': [],
@@ -1150,8 +1108,7 @@ class SessionPersonalizationEngine:
             return {}
 
     async def cleanup_session(self, session_id: str):
-        """Clean up session data and save final insights"""
-        try:
+        """Clean up session data and save final insights"""        try:
             if session_id in self.active_sessions:
                 session_data = self.active_sessions[session_id]
                 context = session_data['context']
@@ -1182,8 +1139,7 @@ class SessionPersonalizationEngine:
 # ML Models for personalization
 
 class PreferenceEmbeddingNetwork(nn.Module):
-    """Neural network for learning user preference embeddings"""
-    
+    """Neural network for learning user preference embeddings"""    
     def __init__(self, input_dim=100, embedding_dim=64, hidden_dim=128):
         super().__init__()
         self.embedding_dim = embedding_dim
@@ -1214,26 +1170,22 @@ class PreferenceEmbeddingNetwork(nn.Module):
 # Factory functions for easy module access
 
 async def create_session_personalization_engine() -> SessionPersonalizationEngine:
-    """Factory function to create and initialize session personalization engine"""
-    engine = SessionPersonalizationEngine()
+    """Factory function to create and initialize session personalization engine"""    engine = SessionPersonalizationEngine()
     await engine.initialize()
     return engine
 
 async def create_user_preferences_manager() -> UserSessionPreferencesManager:
-    """Factory function to create and initialize user preferences manager"""
-    manager = UserSessionPreferencesManager()
+    """Factory function to create and initialize user preferences manager"""    manager = UserSessionPreferencesManager()
     await manager.initialize()
     return manager
 
 async def create_adaptive_behavior_manager() -> AdaptiveSessionBehavior:
-    """Factory function to create and initialize adaptive behavior manager"""
-    manager = AdaptiveSessionBehavior()
+    """Factory function to create and initialize adaptive behavior manager"""    manager = AdaptiveSessionBehavior()
     await manager.initialize()
     return manager
 
 async def create_personalized_conversation_manager() -> PersonalizedConversationManager:
-    """Factory function to create and initialize personalized conversation manager"""
-    manager = PersonalizedConversationManager()
+    """Factory function to create and initialize personalized conversation manager"""    manager = PersonalizedConversationManager()
     await manager.initialize()
     return manager
 
@@ -1241,15 +1193,13 @@ async def create_personalized_conversation_manager() -> PersonalizedConversation
 _personalization_engine: Optional[SessionPersonalizationEngine] = None
 
 async def get_personalization_engine() -> SessionPersonalizationEngine:
-    """Get or create the global personalization engine instance"""
-    global _personalization_engine
+    """Get or create the global personalization engine instance"""    global _personalization_engine
     if _personalization_engine is None:
         _personalization_engine = await create_session_personalization_engine()
     return _personalization_engine
 
 async def initialize_session_personalization():
-    """Initialize the session personalization system"""
-    try:
+    """Initialize the session personalization system"""    try:
         global _personalization_engine
         _personalization_engine = await create_session_personalization_engine()
         logger.info("Session personalization system initialized successfully")

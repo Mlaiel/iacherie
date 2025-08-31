@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-IA Influencer Agent - Advanced Creator Matching Business Models
+"""IA Influencer Agent - Advanced Creator Matching Business Models
 ==============================================================
 
 Professional Multi-Format Creator Data Models for Matching System
@@ -34,9 +33,7 @@ CONSEQUENCES OF UNAUTHORIZED USE:
 - Permanent legal documentation and public disclosure of violation
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
 from datetime import datetime, timedelta
@@ -60,8 +57,7 @@ from ...core.enums import ContentType, PlatformType, CreatorType
 
 
 class CreatorTier(str, Enum):
-    """Creator tier classification"""
-    NANO = "nano"                    # 1K - 10K followers
+    """Creator tier classification"""    NANO = "nano"                    # 1K - 10K followers
     MICRO = "micro"                  # 10K - 100K followers  
     MACRO = "macro"                  # 100K - 1M followers
     MEGA = "mega"                    # 1M+ followers
@@ -69,8 +65,7 @@ class CreatorTier(str, Enum):
 
 
 class MatchingStatus(str, Enum):
-    """Collaboration matching status"""
-    PENDING = "pending"
+    """Collaboration matching status"""    PENDING = "pending"
     MATCHED = "matched"
     ACCEPTED = "accepted"
     DECLINED = "declined"
@@ -80,8 +75,7 @@ class MatchingStatus(str, Enum):
 
 
 class CollaborationType(str, Enum):
-    """Types of creator collaborations"""
-    DUET = "duet"                           # Musical/Video duets
+    """Types of creator collaborations"""    DUET = "duet"                           # Musical/Video duets
     REMIX = "remix"                         # Content remixing
     CROSS_PROMOTION = "cross_promotion"     # Audience sharing
     JOINT_CONTENT = "joint_content"         # Collaborative creation
@@ -96,8 +90,7 @@ class CollaborationType(str, Enum):
 
 
 class CompatibilityFactor(str, Enum):
-    """Factors affecting creator compatibility"""
-    AUDIENCE_OVERLAP = "audience_overlap"
+    """Factors affecting creator compatibility"""    AUDIENCE_OVERLAP = "audience_overlap"
     CONTENT_STYLE = "content_style"
     BRAND_ALIGNMENT = "brand_alignment"
     ENGAGEMENT_RATE = "engagement_rate"
@@ -112,8 +105,7 @@ class CompatibilityFactor(str, Enum):
 
 
 class MatchingPriority(str, Enum):
-    """Priority levels for matching requests"""
-    LOW = "low"
+    """Priority levels for matching requests"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     URGENT = "urgent"
@@ -122,8 +114,7 @@ class MatchingPriority(str, Enum):
 
 @dataclass
 class CreatorProfile(BaseBusinessModel):
-    """Comprehensive creator profile for advanced matching"""
-    
+    """Comprehensive creator profile for advanced matching"""    
     # Core Identity
     creator_id: str
     user_id: str
@@ -212,8 +203,7 @@ class CreatorProfile(BaseBusinessModel):
 
 @dataclass 
 class MatchingCriteria(BaseBusinessModel):
-    """Advanced matching criteria configuration"""
-    
+    """Advanced matching criteria configuration"""    
     # Basic Filters
     min_followers: Optional[int] = None
     max_followers: Optional[int] = None
@@ -265,8 +255,7 @@ class MatchingCriteria(BaseBusinessModel):
 
 @dataclass
 class CreatorCompatibility(BaseBusinessModel):
-    """Detailed compatibility analysis between two creators"""
-    
+    """Detailed compatibility analysis between two creators"""    
     creator_a_id: str
     creator_b_id: str
     overall_compatibility_score: float
@@ -311,8 +300,7 @@ class CreatorCompatibility(BaseBusinessModel):
 
 @dataclass
 class MatchResult(BaseBusinessModel):
-    """Comprehensive match result with detailed insights"""
-    
+    """Comprehensive match result with detailed insights"""    
     match_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     requester_id: str
     matched_creator_id: str
@@ -357,8 +345,7 @@ class MatchResult(BaseBusinessModel):
 
 @dataclass
 class CollaborationOpportunity(BaseBusinessModel):
-    """Detailed collaboration opportunity with business intelligence"""
-    
+    """Detailed collaboration opportunity with business intelligence"""    
     opportunity_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     title: str
     description: str
@@ -407,8 +394,7 @@ class CollaborationOpportunity(BaseBusinessModel):
 
 @dataclass
 class CollaborationProposal(BaseBusinessModel):
-    """Formal collaboration proposal between creators"""
-    
+    """Formal collaboration proposal between creators"""    
     proposal_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     initiator_id: str
     recipient_id: str
@@ -457,8 +443,7 @@ class CollaborationProposal(BaseBusinessModel):
 
 @dataclass
 class MatchingScore(BaseBusinessModel):
-    """Detailed scoring breakdown for creator matches"""
-    
+    """Detailed scoring breakdown for creator matches"""    
     match_id: str
     overall_score: float
     normalized_score: float  # 0-100 scale
@@ -494,8 +479,7 @@ class MatchingScore(BaseBusinessModel):
 
 @dataclass
 class CreatorNetwork(BaseBusinessModel):
-    """Creator's professional network and relationship mapping"""
-    
+    """Creator's professional network and relationship mapping"""    
     creator_id: str
     network_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     
@@ -549,8 +533,7 @@ Base = declarative_base()
 
 
 class CreatorProfileDB(Base):
-    """SQLAlchemy model for creator profiles"""
-    __tablename__ = "creator_profiles"
+    """SQLAlchemy model for creator profiles"""    __tablename__ = "creator_profiles"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     creator_id = Column(String, unique=True, nullable=False, index=True)
@@ -587,8 +570,7 @@ class CreatorProfileDB(Base):
 
 
 class MatchResultDB(Base):
-    """SQLAlchemy model for match results"""
-    __tablename__ = "match_results"
+    """SQLAlchemy model for match results"""    __tablename__ = "match_results"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     match_id = Column(String, unique=True, nullable=False, index=True)
@@ -618,8 +600,7 @@ class MatchResultDB(Base):
 
 
 class CollaborationOpportunityDB(Base):
-    """SQLAlchemy model for collaboration opportunities"""
-    __tablename__ = "collaboration_opportunities"
+    """SQLAlchemy model for collaboration opportunities"""    __tablename__ = "collaboration_opportunities"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     opportunity_id = Column(String, unique=True, nullable=False, index=True)

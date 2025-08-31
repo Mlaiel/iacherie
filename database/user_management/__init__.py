@@ -23,8 +23,7 @@ Email: mlaiel@live.de pour autorisation d'utilisation.
 • Expert Audio Engineer - Traitement Audio & Fingerprinting
 • Expert DevOps - Infrastructure & Déploiement
 • Expert IA Prompt Engineer - Personnalisation & Recommandations
-"""
-from typing import List, Dict, Any, Optional
+"""from typing import List, Dict, Any, Optional
 import logging
 from datetime import datetime
 

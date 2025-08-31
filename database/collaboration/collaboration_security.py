@@ -1,5 +1,4 @@
-"""
-Collaboration Security Database Module
+"""Collaboration Security Database Module
 
 Enterprise-grade security framework for collaborative projects with advanced
 access control, audit logging, threat detection, and compliance management.
@@ -9,9 +8,7 @@ Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Micros
 
 Copyright © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use is strictly prohibited.
-"""
-
-from typing import List, Dict, Any, Optional, Union, Tuple
+"""from typing import List, Dict, Any, Optional, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
 import json
@@ -41,8 +38,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class SecurityRole(Enum):
-    """Security roles for collaboration access control"""
-    OWNER = "owner"
+    """Security roles for collaboration access control"""    OWNER = "owner"
     ADMIN = "admin"
     COLLABORATOR = "collaborator"
     REVIEWER = "reviewer"
@@ -52,8 +48,7 @@ class SecurityRole(Enum):
     RESTRICTED_ACCESS = "restricted_access"
 
 class PermissionType(Enum):
-    """Granular permission types"""
-    CREATE = "create"
+    """Granular permission types"""    CREATE = "create"
     READ = "read"
     UPDATE = "update"
     DELETE = "delete"
@@ -67,8 +62,7 @@ class PermissionType(Enum):
     PUBLISH = "publish"
 
 class AccessControlScope(Enum):
-    """Scope of access control"""
-    PROJECT = "project"
+    """Scope of access control"""    PROJECT = "project"
     CONTENT = "content"
     WORKFLOW = "workflow"
     TEAM = "team"
@@ -78,8 +72,7 @@ class AccessControlScope(Enum):
     SYSTEM = "system"
 
 class SecurityEventType(Enum):
-    """Types of security events for audit logging"""
-    LOGIN_SUCCESS = "login_success"
+    """Types of security events for audit logging"""    LOGIN_SUCCESS = "login_success"
     LOGIN_FAILURE = "login_failure"
     LOGOUT = "logout"
     PERMISSION_GRANTED = "permission_granted"
@@ -93,18 +86,15 @@ class SecurityEventType(Enum):
     CONFIGURATION_CHANGE = "configuration_change"
 
 class ThreatLevel(Enum):
-    """Threat severity levels"""
-    INFO = "info"
+    """Threat severity levels"""    INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 class CollaborationAccessControl(Base):
-    """
-    Granular access control for collaboration projects and resources.
-    """
-    __tablename__ = 'collaboration_access_control'
+    """    Granular access control for collaboration projects and resources.
+    """    __tablename__ = 'collaboration_access_control'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     project_id = Column(UUID(as_uuid=True), ForeignKey('collaboration_projects.id'), nullable=False)
@@ -161,10 +151,8 @@ class CollaborationAccessControl(Base):
     )
 
 class SecurityAuditLog(Base):
-    """
-    Comprehensive audit logging for all security-related events.
-    """
-    __tablename__ = 'security_audit_logs'
+    """    Comprehensive audit logging for all security-related events.
+    """    __tablename__ = 'security_audit_logs'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     
@@ -243,10 +231,8 @@ class SecurityAuditLog(Base):
     )
 
 class SecurityPolicy(Base):
-    """
-    Security policies and rules for collaboration projects.
-    """
-    __tablename__ = 'security_policies'
+    """    Security policies and rules for collaboration projects.
+    """    __tablename__ = 'security_policies'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     policy_name = Column(String(255), nullable=False)
@@ -297,10 +283,8 @@ class SecurityPolicy(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class ThreatDetection(Base):
-    """
-    Real-time threat detection and security monitoring.
-    """
-    __tablename__ = 'threat_detections'
+    """    Real-time threat detection and security monitoring.
+    """    __tablename__ = 'threat_detections'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     
@@ -369,10 +353,8 @@ class ThreatDetection(Base):
     )
 
 class EncryptionKey(Base):
-    """
-    Encryption key management for secure content storage and transmission.
-    """
-    __tablename__ = 'encryption_keys'
+    """    Encryption key management for secure content storage and transmission.
+    """    __tablename__ = 'encryption_keys'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     key_id = Column(String(100), unique=True, nullable=False)
@@ -426,8 +408,7 @@ class EncryptionKey(Base):
 
 @dataclass
 class SecurityContext:
-    """Security context for request validation"""
-    user_id: str
+    """Security context for request validation"""    user_id: str
     session_id: str
     ip_address: str
     user_agent: str
@@ -437,11 +418,9 @@ class SecurityContext:
     mfa_verified: bool = False
 
 class CollaborationSecurityEngine:
-    """
-    Comprehensive security engine for collaboration platform.
+    """    Comprehensive security engine for collaboration platform.
     Handles access control, threat detection, audit logging, and compliance.
-    """
-    
+    """    
     def __init__(self, db_session, redis_client=None):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -452,8 +431,7 @@ class CollaborationSecurityEngine:
         self._initialize_encryption()
     
     async def validate_access(self, context: SecurityContext, required_permission: PermissionType, scope: AccessControlScope) -> bool:
-        """
-        Validate user access for specific action and scope.
+        """        Validate user access for specific action and scope.
         
         Args:
             context: Security context
@@ -462,8 +440,7 @@ class CollaborationSecurityEngine:
             
         Returns:
             True if access is granted
-        """
-        try:
+        """        try:
             # Log access attempt
             await self._log_security_event(
                 SecurityEventType.PERMISSION_DENIED if not await self._check_access(context, required_permission, scope) else SecurityEventType.PERMISSION_GRANTED,
@@ -501,8 +478,7 @@ class CollaborationSecurityEngine:
             return False
     
     async def grant_access(self, granter_id: str, user_id: str, project_id: str, role: SecurityRole, permissions: List[PermissionType], scope: AccessControlScope, **kwargs) -> CollaborationAccessControl:
-        """
-        Grant access permissions to a user for a project/resource.
+        """        Grant access permissions to a user for a project/resource.
         
         Args:
             granter_id: User granting the access
@@ -515,8 +491,7 @@ class CollaborationSecurityEngine:
             
         Returns:
             Created access control record
-        """
-        try:
+        """        try:
             # Validate granter has permission to grant access
             granter_context = SecurityContext(
                 user_id=granter_id,
@@ -574,8 +549,7 @@ class CollaborationSecurityEngine:
             raise
     
     async def revoke_access(self, revoker_id: str, access_control_id: str, reason: str) -> bool:
-        """
-        Revoke access permissions.
+        """        Revoke access permissions.
         
         Args:
             revoker_id: User revoking the access
@@ -584,8 +558,7 @@ class CollaborationSecurityEngine:
             
         Returns:
             True if revocation successful
-        """
-        try:
+        """        try:
             # Get access control record
             access_control = self.db_session.query(CollaborationAccessControl).filter(
                 CollaborationAccessControl.id == access_control_id
@@ -633,16 +606,14 @@ class CollaborationSecurityEngine:
             raise
     
     async def detect_threats(self, context: SecurityContext) -> Optional[ThreatDetection]:
-        """
-        Real-time threat detection based on behavioral analysis.
+        """        Real-time threat detection based on behavioral analysis.
         
         Args:
             context: Security context
             
         Returns:
             Threat detection record if threat detected
-        """
-        try:
+        """        try:
             # Calculate risk score
             risk_score = await self._calculate_risk_score(context)
             
@@ -690,8 +661,7 @@ class CollaborationSecurityEngine:
             raise
     
     async def encrypt_sensitive_data(self, data: str, project_id: str, purpose: str = "content_encryption") -> Dict[str, str]:
-        """
-        Encrypt sensitive data using project-specific encryption keys.
+        """        Encrypt sensitive data using project-specific encryption keys.
         
         Args:
             data: Data to encrypt
@@ -700,8 +670,7 @@ class CollaborationSecurityEngine:
             
         Returns:
             Encryption result with encrypted data and key information
-        """
-        try:
+        """        try:
             # Get or create encryption key
             key_record = await self._get_or_create_encryption_key(project_id, purpose)
             
@@ -731,8 +700,7 @@ class CollaborationSecurityEngine:
             raise
     
     async def decrypt_sensitive_data(self, encrypted_data: str, key_id: str, context: SecurityContext) -> str:
-        """
-        Decrypt sensitive data with access validation.
+        """        Decrypt sensitive data with access validation.
         
         Args:
             encrypted_data: Encrypted data
@@ -741,8 +709,7 @@ class CollaborationSecurityEngine:
             
         Returns:
             Decrypted data
-        """
-        try:
+        """        try:
             # Get encryption key
             key_record = self.db_session.query(EncryptionKey).filter(
                 EncryptionKey.key_id == key_id,
@@ -784,8 +751,7 @@ class CollaborationSecurityEngine:
             raise
     
     async def generate_security_report(self, project_id: str, timeframe_days: int = 30) -> Dict[str, Any]:
-        """
-        Generate comprehensive security report for a project.
+        """        Generate comprehensive security report for a project.
         
         Args:
             project_id: Project ID
@@ -793,8 +759,7 @@ class CollaborationSecurityEngine:
             
         Returns:
             Security report data
-        """
-        try:
+        """        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=timeframe_days)
             
@@ -845,8 +810,7 @@ class CollaborationSecurityEngine:
             raise
     
     def _initialize_encryption(self):
-        """Initialize encryption components"""
-        try:
+        """Initialize encryption components"""        try:
             # This would typically use a master key from a secure key management service
             # For demo purposes, we'll generate a key (in production, use proper KMS)
             master_key = Fernet.generate_key()
@@ -857,8 +821,7 @@ class CollaborationSecurityEngine:
             raise
     
     async def _check_access(self, context: SecurityContext, required_permission: PermissionType, scope: AccessControlScope) -> bool:
-        """Check basic access control"""
-        try:
+        """Check basic access control"""        try:
             access_controls = self.db_session.query(CollaborationAccessControl).filter(
                 CollaborationAccessControl.user_id == context.user_id,
                 CollaborationAccessControl.project_id == context.project_id,
@@ -883,8 +846,7 @@ class CollaborationSecurityEngine:
             return False
     
     async def _calculate_risk_score(self, context: SecurityContext) -> float:
-        """Calculate risk score based on various factors"""
-        try:
+        """Calculate risk score based on various factors"""        try:
             risk_score = 0.0
             
             # IP reputation check
@@ -914,8 +876,7 @@ class CollaborationSecurityEngine:
             return 50.0  # Default medium risk
     
     async def _log_security_event(self, event_type: SecurityEventType, context: SecurityContext, event_data: Dict[str, Any]):
-        """Log security event for audit trail"""
-        try:
+        """Log security event for audit trail"""        try:
             audit_log = SecurityAuditLog(
                 event_type=event_type,
                 event_id=f"{event_type.value}_{secrets.token_hex(8)}",

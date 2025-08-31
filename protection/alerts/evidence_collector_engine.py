@@ -1,5 +1,4 @@
-"""
-Advanced Evidence Collection Engine - IA Influencer Agent Enterprise System
+"""Advanced Evidence Collection Engine - IA Influencer Agent Enterprise System
 Created by: Fahed Mlaiel (mlaiel@live.de)
 
 WARNING: This code is proprietary and confidential. Any unauthorized use, reproduction, 
@@ -10,9 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Ultra-advanced evidence collection engine with forensic-grade integrity,
 legal-compliant documentation, blockchain verification, and audit trails.
 Business Logic: Alert trigger → evidence collection → integrity verification → legal documentation → chain of custody
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import json
@@ -47,8 +44,7 @@ logger = logging.getLogger(__name__)
 
 
 class EvidenceType(Enum):
-    """Types of evidence that can be collected"""
-    SCREENSHOT = "screenshot"
+    """Types of evidence that can be collected"""    SCREENSHOT = "screenshot"
     VIDEO_RECORDING = "video_recording"
     AUDIO_RECORDING = "audio_recording"
     WEBPAGE_SNAPSHOT = "webpage_snapshot"
@@ -66,8 +62,7 @@ class EvidenceType(Enum):
 
 
 class EvidenceStatus(Enum):
-    """Status of evidence collection process"""
-    PENDING = "pending"
+    """Status of evidence collection process"""    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COLLECTED = "collected"
     VERIFIED = "verified"
@@ -80,8 +75,7 @@ class EvidenceStatus(Enum):
 
 
 class EvidenceIntegrity(Enum):
-    """Evidence integrity verification levels"""
-    BASIC = "basic"
+    """Evidence integrity verification levels"""    BASIC = "basic"
     CRYPTOGRAPHIC = "cryptographic"
     BLOCKCHAIN = "blockchain"
     LEGAL_GRADE = "legal_grade"
@@ -90,8 +84,7 @@ class EvidenceIntegrity(Enum):
 
 @dataclass
 class EvidenceMetadata:
-    """Comprehensive evidence metadata"""
-    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive evidence metadata"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     evidence_type: EvidenceType = EvidenceType.SCREENSHOT
     source_url: Optional[str] = None
     collection_timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
@@ -116,8 +109,7 @@ class EvidenceMetadata:
 
 @dataclass
 class EvidenceCollectionResult:
-    """Result of evidence collection operation"""
-    success: bool = False
+    """Result of evidence collection operation"""    success: bool = False
     evidence_id: Optional[str] = None
     file_path: Optional[str] = None
     metadata: Optional[EvidenceMetadata] = None
@@ -130,8 +122,7 @@ class EvidenceCollectionResult:
 
 @dataclass
 class ChainOfCustodyEntry:
-    """Individual chain of custody entry"""
-    timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    """Individual chain of custody entry"""    timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     actor: str = ""
     action: str = ""
     location: str = ""
@@ -142,11 +133,9 @@ class ChainOfCustodyEntry:
 
 
 class AdvancedEvidenceCollector:
-    """
-    Enterprise-grade evidence collection engine with forensic integrity,
+    """    Enterprise-grade evidence collection engine with forensic integrity,
     legal compliance, and blockchain verification capabilities.
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.forensic_analyzer = AdvancedForensicAnalyzer()
@@ -173,8 +162,7 @@ class AdvancedEvidenceCollector:
         self.redis_client = None
         
     async def initialize(self):
-        """Initialize evidence collection engine"""
-        await self.forensic_analyzer.initialize()
+        """Initialize evidence collection engine"""        await self.forensic_analyzer.initialize()
         await self.blockchain_recorder.initialize()
         await self.encryption_manager.initialize()
         await self.hash_generator.initialize()
@@ -203,8 +191,7 @@ class AdvancedEvidenceCollector:
         priority: str = "normal",
         legal_hold: bool = False
     ) -> List[EvidenceCollectionResult]:
-        """Collect multiple types of evidence for an alert"""
-        try:
+        """Collect multiple types of evidence for an alert"""        try:
             results = []
             collection_id = str(uuid.uuid4())
             
@@ -259,8 +246,7 @@ class AdvancedEvidenceCollector:
         collection_id: str,
         legal_hold: bool
     ) -> EvidenceCollectionResult:
-        """Collect a single piece of evidence"""
-        start_time = datetime.now(timezone.utc)
+        """Collect a single piece of evidence"""        start_time = datetime.now(timezone.utc)
         
         try:
             # Create evidence metadata
@@ -357,8 +343,7 @@ class AdvancedEvidenceCollector:
         evidence_type: EvidenceType,
         metadata: EvidenceMetadata
     ) -> Tuple[Optional[str], int]:
-        """Perform the actual evidence collection based on type"""
-        try:
+        """Perform the actual evidence collection based on type"""        try:
             if evidence_type == EvidenceType.SCREENSHOT:
                 return await self._collect_screenshot(alert, metadata)
             elif evidence_type == EvidenceType.VIDEO_RECORDING:
@@ -386,8 +371,7 @@ class AdvancedEvidenceCollector:
             raise
     
     async def _collect_screenshot(self, alert: ContentProtectionAlert, metadata: EvidenceMetadata) -> Tuple[str, int]:
-        """Collect screenshot evidence using headless browser"""
-        try:
+        """Collect screenshot evidence using headless browser"""        try:
             from playwright.async_api import async_playwright
             
             file_name = f"screenshot_{metadata.id}.png"
@@ -423,8 +407,7 @@ class AdvancedEvidenceCollector:
             raise
     
     async def _collect_video_recording(self, alert: ContentProtectionAlert, metadata: EvidenceMetadata) -> Tuple[str, int]:
-        """Collect video recording evidence"""
-        try:
+        """Collect video recording evidence"""        try:
             from playwright.async_api import async_playwright
             
             file_name = f"video_{metadata.id}.webm"
@@ -461,8 +444,7 @@ class AdvancedEvidenceCollector:
             raise
     
     async def _collect_webpage_snapshot(self, alert: ContentProtectionAlert, metadata: EvidenceMetadata) -> Tuple[str, int]:
-        """Collect complete webpage snapshot including HTML, CSS, images"""
-        try:
+        """Collect complete webpage snapshot including HTML, CSS, images"""        try:
             file_name = f"webpage_{metadata.id}.mhtml"
             file_path = self.evidence_storage_path / file_name
             
@@ -492,8 +474,7 @@ class AdvancedEvidenceCollector:
             raise
     
     async def _collect_metadata(self, alert: ContentProtectionAlert, metadata: EvidenceMetadata) -> Tuple[str, int]:
-        """Collect metadata information about the content"""
-        try:
+        """Collect metadata information about the content"""        try:
             file_name = f"metadata_{metadata.id}.json"
             file_path = self.evidence_storage_path / file_name
             
@@ -543,8 +524,7 @@ class AdvancedEvidenceCollector:
             raise
     
     async def _collect_network_traffic(self, alert: ContentProtectionAlert, metadata: EvidenceMetadata) -> Tuple[str, int]:
-        """Collect network traffic during content access"""
-        try:
+        """Collect network traffic during content access"""        try:
             file_name = f"network_{metadata.id}.har"
             file_path = self.evidence_storage_path / file_name
             
@@ -572,8 +552,7 @@ class AdvancedEvidenceCollector:
             raise
     
     async def _collect_file_download(self, alert: ContentProtectionAlert, metadata: EvidenceMetadata) -> Tuple[str, int]:
-        """Download and collect the actual file content"""
-        try:
+        """Download and collect the actual file content"""        try:
             from urllib.parse import urlparse
             parsed_url = urlparse(alert.content_url)
             file_extension = Path(parsed_url.path).suffix or '.bin'
@@ -604,8 +583,7 @@ class AdvancedEvidenceCollector:
             raise
     
     async def _collect_api_response(self, alert: ContentProtectionAlert, metadata: EvidenceMetadata) -> Tuple[str, int]:
-        """Collect API response data"""
-        try:
+        """Collect API response data"""        try:
             file_name = f"api_response_{metadata.id}.json"
             file_path = self.evidence_storage_path / file_name
             
@@ -629,8 +607,7 @@ class AdvancedEvidenceCollector:
             raise
     
     async def _collect_social_media_post(self, alert: ContentProtectionAlert, metadata: EvidenceMetadata) -> Tuple[str, int]:
-        """Collect social media post content"""
-        try:
+        """Collect social media post content"""        try:
             # This would integrate with platform-specific APIs
             file_name = f"social_media_{metadata.id}.json"
             file_path = self.evidence_storage_path / file_name
@@ -654,8 +631,7 @@ class AdvancedEvidenceCollector:
             raise
     
     async def _collect_digital_fingerprint(self, alert: ContentProtectionAlert, metadata: EvidenceMetadata) -> Tuple[str, int]:
-        """Collect digital fingerprint of the content"""
-        try:
+        """Collect digital fingerprint of the content"""        try:
             file_name = f"fingerprint_{metadata.id}.json"
             file_path = self.evidence_storage_path / file_name
             
@@ -675,8 +651,7 @@ class AdvancedEvidenceCollector:
             raise
     
     async def _generate_evidence_hashes(self, file_path: str) -> Dict[str, str]:
-        """Generate cryptographic hashes for evidence file"""
-        try:
+        """Generate cryptographic hashes for evidence file"""        try:
             hashes_dict = {}
             
             async with aiofiles.open(file_path, 'rb') as f:
@@ -701,8 +676,7 @@ class AdvancedEvidenceCollector:
             raise
     
     async def _encrypt_evidence_file(self, file_path: str, metadata: EvidenceMetadata) -> str:
-        """Encrypt evidence file using AES encryption"""
-        try:
+        """Encrypt evidence file using AES encryption"""        try:
             encrypted_path = f"{file_path}.encrypted"
             key_id = await self.encryption_manager.encrypt_file(file_path, encrypted_path)
             metadata.encryption_key_id = key_id
@@ -717,8 +691,7 @@ class AdvancedEvidenceCollector:
             raise
     
     async def _compress_evidence_file(self, file_path: str, metadata: EvidenceMetadata) -> Optional[str]:
-        """Compress evidence file if beneficial"""
-        try:
+        """Compress evidence file if beneficial"""        try:
             compressed_path = f"{file_path}.gz"
             compression_ratio = await self.compression_manager.compress_file(file_path, compressed_path)
             
@@ -735,8 +708,7 @@ class AdvancedEvidenceCollector:
             return None
     
     async def _verify_evidence_integrity(self, file_path: str, metadata: EvidenceMetadata) -> bool:
-        """Verify evidence integrity using multiple methods"""
-        try:
+        """Verify evidence integrity using multiple methods"""        try:
             # Verify file exists and is readable
             file_obj = Path(file_path)
             if not file_obj.exists():
@@ -762,8 +734,7 @@ class AdvancedEvidenceCollector:
             return False
     
     async def _record_evidence_in_blockchain(self, metadata: EvidenceMetadata):
-        """Record evidence existence and hashes in blockchain"""
-        try:
+        """Record evidence existence and hashes in blockchain"""        try:
             blockchain_data = {
                 "evidence_id": metadata.id,
                 "evidence_type": metadata.evidence_type.value,
@@ -782,8 +753,7 @@ class AdvancedEvidenceCollector:
             self.logger.error(f"Blockchain recording failed: {str(e)}")
     
     async def _get_collection_method(self, evidence_type: EvidenceType) -> str:
-        """Get human-readable collection method description"""
-        methods = {
+        """Get human-readable collection method description"""        methods = {
             EvidenceType.SCREENSHOT: "Headless browser screenshot capture",
             EvidenceType.VIDEO_RECORDING: "Automated browser video recording",
             EvidenceType.WEBPAGE_SNAPSHOT: "Complete HTML page archive",
@@ -799,8 +769,7 @@ class AdvancedEvidenceCollector:
     # Background maintenance tasks
     
     async def _evidence_maintenance_worker(self):
-        """Background worker for evidence maintenance"""
-        while True:
+        """Background worker for evidence maintenance"""        while True:
             try:
                 await asyncio.sleep(3600)  # Run every hour
                 await self._perform_maintenance()
@@ -808,8 +777,7 @@ class AdvancedEvidenceCollector:
                 self.logger.error(f"Evidence maintenance error: {str(e)}")
     
     async def _integrity_verification_worker(self):
-        """Background worker for periodic integrity verification"""
-        while True:
+        """Background worker for periodic integrity verification"""        while True:
             try:
                 await asyncio.sleep(21600)  # Run every 6 hours
                 await self._verify_all_evidence_integrity()
@@ -817,8 +785,7 @@ class AdvancedEvidenceCollector:
                 self.logger.error(f"Integrity verification error: {str(e)}")
     
     async def _retention_policy_worker(self):
-        """Background worker for retention policy enforcement"""
-        while True:
+        """Background worker for retention policy enforcement"""        while True:
             try:
                 await asyncio.sleep(86400)  # Run daily
                 await self._enforce_retention_policies()
@@ -826,8 +793,7 @@ class AdvancedEvidenceCollector:
                 self.logger.error(f"Retention policy error: {str(e)}")
     
     async def _perform_maintenance(self):
-        """Perform regular maintenance tasks"""
-        # Cleanup temporary files
+        """Perform regular maintenance tasks"""        # Cleanup temporary files
         temp_files = list(self.evidence_storage_path.glob("*.tmp"))
         for temp_file in temp_files:
             if temp_file.stat().st_mtime < (datetime.now().timestamp() - 3600):
@@ -837,8 +803,7 @@ class AdvancedEvidenceCollector:
         await self._save_evidence_registry()
     
     async def _verify_all_evidence_integrity(self):
-        """Verify integrity of all stored evidence"""
-        for evidence_id, metadata in self.evidence_registry.items():
+        """Verify integrity of all stored evidence"""        for evidence_id, metadata in self.evidence_registry.items():
             if metadata.file_size_bytes > 0:  # Only verify files that should exist
                 file_path = self.evidence_storage_path / f"*_{evidence_id}.*"
                 matching_files = list(self.evidence_storage_path.glob(f"*_{evidence_id}.*"))
@@ -849,8 +814,7 @@ class AdvancedEvidenceCollector:
                         self.logger.warning(f"Integrity verification failed for evidence {evidence_id}")
     
     async def _enforce_retention_policies(self):
-        """Enforce evidence retention policies"""
-        cutoff_date = datetime.now(timezone.utc) - timedelta(days=self.retention_days)
+        """Enforce evidence retention policies"""        cutoff_date = datetime.now(timezone.utc) - timedelta(days=self.retention_days)
         
         expired_evidence = []
         for evidence_id, metadata in self.evidence_registry.items():
@@ -864,8 +828,7 @@ class AdvancedEvidenceCollector:
             await self._archive_evidence(evidence_id)
     
     async def _archive_evidence(self, evidence_id: str):
-        """Archive expired evidence"""
-        try:
+        """Archive expired evidence"""        try:
             metadata = self.evidence_registry.get(evidence_id)
             if not metadata:
                 return
@@ -893,8 +856,7 @@ class AdvancedEvidenceCollector:
             self.logger.error(f"Evidence archival failed for {evidence_id}: {str(e)}")
     
     async def _load_evidence_registry(self):
-        """Load evidence registry from storage"""
-        try:
+        """Load evidence registry from storage"""        try:
             registry_file = self.evidence_storage_path / "evidence_registry.json"
             if registry_file.exists():
                 async with aiofiles.open(registry_file, 'r') as f:
@@ -909,8 +871,7 @@ class AdvancedEvidenceCollector:
             self.logger.error(f"Failed to load evidence registry: {str(e)}")
     
     async def _save_evidence_registry(self):
-        """Save evidence registry to storage"""
-        try:
+        """Save evidence registry to storage"""        try:
             registry_file = self.evidence_storage_path / "evidence_registry.json"
             registry_data = {}
             

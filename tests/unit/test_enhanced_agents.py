@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -15,17 +12,14 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 #!/usr/bin/env python3
-"""
-Test Enhanced AI Agents Implementation
+"""Test Enhanced AI Agents Implementation
 =====================================
 
 Validation script to test the enhanced AI agent implementations with
 advanced business logic and comprehensive functionality.
 
 Author: Copilot Assistant
-"""
-
-import asyncio
+"""import asyncio
 import sys
 import os
 from datetime import datetime
@@ -34,8 +28,7 @@ from datetime import datetime
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 async def test_fingerprinting_engine():
-    """Test the enhanced fingerprinting engine"""
-    print("🔍 Testing Fingerprinting Engine...")
+    """Test the enhanced fingerprinting engine"""    print("🔍 Testing Fingerprinting Engine...")
     
     try:
         # Direct import to avoid relative import issues
@@ -94,8 +87,7 @@ async def test_fingerprinting_engine():
         return False
 
 async def test_monetization_engine():
-    """Test the enhanced monetization engine"""
-    print("\n💰 Testing Monetization Engine...")
+    """Test the enhanced monetization engine"""    print("\n💰 Testing Monetization Engine...")
     
     try:
         # Direct import to avoid relative import issues
@@ -195,8 +187,7 @@ async def test_monetization_engine():
         return False
 
 async def test_seo_engine():
-    """Test the enhanced SEO engine"""
-    print("\n🔍 Testing SEO Engine...")
+    """Test the enhanced SEO engine"""    print("\n🔍 Testing SEO Engine...")
     
     try:
         # Direct import to avoid relative import issues
@@ -294,8 +285,7 @@ async def test_seo_engine():
         return False
 
 async def test_collaboration_agent():
-    """Test the collaboration agent (already advanced)"""
-    print("\n🤝 Testing Collaboration Agent...")
+    """Test the collaboration agent (already advanced)"""    print("\n🤝 Testing Collaboration Agent...")
     
     try:
         # Test file existence and basic structure
@@ -344,8 +334,7 @@ async def test_collaboration_agent():
         return False
 
 async def run_comprehensive_test():
-    """Run comprehensive test of all enhanced agents"""
-    print("🚀 Starting Comprehensive AI Agent Testing")
+    """Run comprehensive test of all enhanced agents"""    print("🚀 Starting Comprehensive AI Agent Testing")
     print("=" * 50)
     
     start_time = datetime.now()

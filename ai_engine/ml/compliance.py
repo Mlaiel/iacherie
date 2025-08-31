@@ -1,13 +1,10 @@
-"""
-Compliance Module - AI/ML compliance, governance, and regulatory requirements
+"""Compliance Module - AI/ML compliance, governance, and regulatory requirements
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive compliance capabilities including
 regulatory compliance, data governance, model auditing, and ethics checking.
-"""
-
-import logging
+"""import logging
 import json
 import os
 import time
@@ -22,8 +19,7 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class ComplianceFramework(Enum):
-    """Compliance frameworks and regulations"""
-    GDPR = "gdpr"  # General Data Protection Regulation
+    """Compliance frameworks and regulations"""    GDPR = "gdpr"  # General Data Protection Regulation
     CCPA = "ccpa"  # California Consumer Privacy Act
     HIPAA = "hipaa"  # Health Insurance Portability and Accountability Act
     SOX = "sox"  # Sarbanes-Oxley Act
@@ -33,24 +29,21 @@ class ComplianceFramework(Enum):
     IEEE_ETHICS = "ieee_ethics"  # IEEE Ethically Aligned Design
 
 class ComplianceStatus(Enum):
-    """Compliance status levels"""
-    COMPLIANT = "compliant"
+    """Compliance status levels"""    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
     UNDER_REVIEW = "under_review"
     NOT_APPLICABLE = "not_applicable"
 
 class RiskLevel(Enum):
-    """Risk assessment levels"""
-    LOW = "low"
+    """Risk assessment levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 @dataclass
 class ComplianceRule:
-    """Individual compliance rule definition"""
-    rule_id: str
+    """Individual compliance rule definition"""    rule_id: str
     framework: ComplianceFramework
     description: str
     severity: RiskLevel
@@ -60,8 +53,7 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceResult:
-    """Result of compliance check"""
-    rule_id: str
+    """Result of compliance check"""    rule_id: str
     status: ComplianceStatus
     risk_level: RiskLevel
     details: str
@@ -70,8 +62,7 @@ class ComplianceResult:
     checked_at: datetime
 
 class ComplianceChecker:
-    """Main compliance checking and validation system"""
-    
+    """Main compliance checking and validation system"""    
     def __init__(self, frameworks: List[ComplianceFramework] = None):
         self.frameworks = frameworks or [ComplianceFramework.GDPR, ComplianceFramework.AI_ACT_EU]
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -85,8 +76,7 @@ class ComplianceChecker:
     
     def check_compliance(self, model: Any, data: Any = None, 
                         metadata: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Perform comprehensive compliance check"""
-        try:
+        """Perform comprehensive compliance check"""        try:
             self.logger.info("Performing compliance check")
             
             compliance_results = []
@@ -131,8 +121,7 @@ class ComplianceChecker:
             return {"overall_status": "error", "error": str(e)}
     
     def validate_data_governance(self, data: Any, data_metadata: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Validate data governance requirements"""
-        try:
+        """Validate data governance requirements"""        try:
             self.logger.info("Validating data governance")
             
             governance_checks = [
@@ -170,8 +159,7 @@ class ComplianceChecker:
             return {"governance_status": "error", "error": str(e)}
     
     def _load_compliance_rules(self) -> List[ComplianceRule]:
-        """Load compliance rules for different frameworks"""
-        rules = []
+        """Load compliance rules for different frameworks"""        rules = []
         
         # GDPR Rules
         rules.extend([
@@ -245,8 +233,7 @@ class ComplianceChecker:
     
     def _execute_compliance_rule(self, rule: ComplianceRule, model: Any, 
                                 data: Any, metadata: Dict[str, Any]) -> ComplianceResult:
-        """Execute a single compliance rule"""
-        try:
+        """Execute a single compliance rule"""        try:
             # Execute the rule check function
             check_result = rule.check_function(model, data, metadata)
             
@@ -277,8 +264,7 @@ class ComplianceChecker:
             )
     
     def _calculate_compliance_score(self, results: List[ComplianceResult]) -> float:
-        """Calculate overall compliance score"""
-        if not results:
+        """Calculate overall compliance score"""        if not results:
             return 0.0
         
         weights = {
@@ -302,8 +288,7 @@ class ComplianceChecker:
     
     # Compliance check functions
     def _check_data_minimization(self, model: Any, data: Any, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Check GDPR data minimization compliance"""
-        # Simulate data minimization check
+        """Check GDPR data minimization compliance"""        # Simulate data minimization check
         if metadata and "data_fields" in metadata:
             fields_count = len(metadata["data_fields"])
             necessary_threshold = metadata.get("necessary_fields", 10)
@@ -318,8 +303,7 @@ class ComplianceChecker:
         return {"passed": True, "details": "No data field information available", "evidence": {}}
     
     def _check_consent(self, model: Any, data: Any, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Check GDPR consent compliance"""
-        # Check for consent records
+        """Check GDPR consent compliance"""        # Check for consent records
         consent_available = metadata and metadata.get("consent_records", False)
         
         return {
@@ -329,8 +313,7 @@ class ComplianceChecker:
         }
     
     def _check_explainability(self, model: Any, data: Any, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Check model explainability requirements"""
-        # Check for explanation capabilities
+        """Check model explainability requirements"""        # Check for explanation capabilities
         explainable = metadata and metadata.get("explainable", False)
         explanation_method = metadata.get("explanation_method", "none") if metadata else "none"
         
@@ -341,8 +324,7 @@ class ComplianceChecker:
         }
     
     def _check_ai_risk_assessment(self, model: Any, data: Any, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Check AI Act risk assessment compliance"""
-        # Check for risk assessment documentation
+        """Check AI Act risk assessment compliance"""        # Check for risk assessment documentation
         risk_assessed = metadata and metadata.get("risk_assessment_completed", False)
         risk_level = metadata.get("assessed_risk_level", "unknown") if metadata else "unknown"
         
@@ -353,8 +335,7 @@ class ComplianceChecker:
         }
     
     def _check_human_oversight(self, model: Any, data: Any, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Check human oversight requirements"""
-        # Check for human oversight mechanisms
+        """Check human oversight requirements"""        # Check for human oversight mechanisms
         human_oversight = metadata and metadata.get("human_oversight", False)
         oversight_type = metadata.get("oversight_type", "none") if metadata else "none"
         
@@ -365,8 +346,7 @@ class ComplianceChecker:
         }
     
     def _check_bias_testing(self, model: Any, data: Any, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Check bias testing compliance"""
-        # Check for bias testing results
+        """Check bias testing compliance"""        # Check for bias testing results
         bias_tested = metadata and metadata.get("bias_tested", False)
         fairness_score = metadata.get("fairness_score", 0.0) if metadata else 0.0
         
@@ -379,8 +359,7 @@ class ComplianceChecker:
         }
     
     def _check_transparency(self, model: Any, data: Any, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Check transparency requirements"""
-        # Check for transparency documentation
+        """Check transparency requirements"""        # Check for transparency documentation
         documentation_available = metadata and metadata.get("documentation_complete", False)
         transparency_report = metadata and metadata.get("transparency_report", False)
         
@@ -394,8 +373,7 @@ class ComplianceChecker:
     
     # Data governance check functions
     def _check_data_classification(self, data: Any, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Check data classification compliance"""
-        classified = metadata and metadata.get("data_classified", False) if metadata else False
+        """Check data classification compliance"""        classified = metadata and metadata.get("data_classified", False) if metadata else False
         classification_level = metadata.get("classification_level", "unclassified") if metadata else "unclassified"
         
         return {
@@ -405,8 +383,7 @@ class ComplianceChecker:
         }
     
     def _check_data_lineage(self, data: Any, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Check data lineage tracking"""
-        lineage_tracked = metadata and metadata.get("lineage_tracked", False) if metadata else False
+        """Check data lineage tracking"""        lineage_tracked = metadata and metadata.get("lineage_tracked", False) if metadata else False
         
         return {
             "passed": lineage_tracked,
@@ -415,8 +392,7 @@ class ComplianceChecker:
         }
     
     def _check_data_quality(self, data: Any) -> Dict[str, Any]:
-        """Check data quality standards"""
-        # Simulate data quality check
+        """Check data quality standards"""        # Simulate data quality check
         quality_score = 0.85  # Simulated score
         passed = quality_score >= 0.8
         
@@ -427,8 +403,7 @@ class ComplianceChecker:
         }
     
     def _check_access_controls(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Check access control implementation"""
-        access_controlled = metadata and metadata.get("access_controls", False) if metadata else False
+        """Check access control implementation"""        access_controlled = metadata and metadata.get("access_controls", False) if metadata else False
         
         return {
             "passed": access_controlled,
@@ -437,8 +412,7 @@ class ComplianceChecker:
         }
     
     def _check_retention_policy(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Check data retention policy compliance"""
-        retention_policy = metadata and metadata.get("retention_policy", False) if metadata else False
+        """Check data retention policy compliance"""        retention_policy = metadata and metadata.get("retention_policy", False) if metadata else False
         
         return {
             "passed": retention_policy,
@@ -447,8 +421,7 @@ class ComplianceChecker:
         }
     
     def _check_consent_management(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Check consent management system"""
-        consent_managed = metadata and metadata.get("consent_managed", False) if metadata else False
+        """Check consent management system"""        consent_managed = metadata and metadata.get("consent_managed", False) if metadata else False
         
         return {
             "passed": consent_managed,
@@ -457,8 +430,7 @@ class ComplianceChecker:
         }
     
     def get_compliance_status(self) -> Dict[str, Any]:
-        """Get current compliance status summary"""
-        if not self.audit_trail:
+        """Get current compliance status summary"""        if not self.audit_trail:
             return {"status": "no_checks_performed", "last_check": None}
         
         latest_report = self.audit_trail[-1]
@@ -473,8 +445,7 @@ class ComplianceChecker:
         }
 
 class DataGovernance:
-    """Data governance and management system"""
-    
+    """Data governance and management system"""    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.data_catalog = {}
@@ -483,8 +454,7 @@ class DataGovernance:
         self.logger.info("DataGovernance initialized successfully")
     
     def register_dataset(self, dataset_id: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Register dataset in data catalog"""
-        try:
+        """Register dataset in data catalog"""        try:
             self.logger.info(f"Registering dataset: {dataset_id}")
             
             dataset_record = {
@@ -505,8 +475,7 @@ class DataGovernance:
             return {"status": "failed", "error": str(e)}
     
     def apply_governance_policy(self, dataset_id: str, policy: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply governance policy to dataset"""
-        try:
+        """Apply governance policy to dataset"""        try:
             self.logger.info(f"Applying governance policy to dataset: {dataset_id}")
             
             if dataset_id not in self.data_catalog:
@@ -532,16 +501,14 @@ class DataGovernance:
             return {"policy_applied": False, "error": str(e)}
     
     def get_data_catalog(self) -> Dict[str, Any]:
-        """Get complete data catalog"""
-        return {
+        """Get complete data catalog"""        return {
             "total_datasets": len(self.data_catalog),
             "datasets": list(self.data_catalog.keys()),
             "catalog": self.data_catalog
         }
 
 class ModelAudit:
-    """Model auditing and compliance monitoring system"""
-    
+    """Model auditing and compliance monitoring system"""    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.audit_records = []
@@ -554,8 +521,7 @@ class ModelAudit:
         self.logger.info("ModelAudit initialized successfully")
     
     def conduct_audit(self, model: Any, audit_scope: str = "full") -> Dict[str, Any]:
-        """Conduct comprehensive model audit"""
-        try:
+        """Conduct comprehensive model audit"""        try:
             self.logger.info(f"Conducting model audit - Scope: {audit_scope}")
             
             audit_id = str(uuid.uuid4())[:12]
@@ -596,8 +562,7 @@ class ModelAudit:
             return {"audit_status": "error", "error": str(e)}
     
     def _audit_performance(self, model: Any) -> Dict[str, Any]:
-        """Audit model performance"""
-        # Simulate performance audit
+        """Audit model performance"""        # Simulate performance audit
         return {
             "passed": True,
             "accuracy": 0.92,
@@ -607,8 +572,7 @@ class ModelAudit:
         }
     
     def _audit_bias(self, model: Any) -> Dict[str, Any]:
-        """Audit model for bias"""
-        # Simulate bias audit
+        """Audit model for bias"""        # Simulate bias audit
         return {
             "passed": True,
             "demographic_parity": 0.85,
@@ -617,8 +581,7 @@ class ModelAudit:
         }
     
     def _audit_security(self, model: Any) -> Dict[str, Any]:
-        """Audit model security"""
-        # Simulate security audit
+        """Audit model security"""        # Simulate security audit
         return {
             "passed": True,
             "vulnerabilities_found": 0,
@@ -627,8 +590,7 @@ class ModelAudit:
         }
     
     def _audit_compliance(self, model: Any) -> Dict[str, Any]:
-        """Audit regulatory compliance"""
-        # Simulate compliance audit
+        """Audit regulatory compliance"""        # Simulate compliance audit
         return {
             "passed": True,
             "gdpr_compliant": True,
@@ -637,8 +599,7 @@ class ModelAudit:
         }
     
     def _audit_documentation(self, model: Any) -> Dict[str, Any]:
-        """Audit model documentation"""
-        # Simulate documentation audit
+        """Audit model documentation"""        # Simulate documentation audit
         return {
             "passed": True,
             "model_card_complete": True,
@@ -647,8 +608,7 @@ class ModelAudit:
         }
     
     def _generate_recommendations(self, audit_checks: List[Tuple[str, Dict[str, Any]]]) -> List[str]:
-        """Generate audit recommendations"""
-        recommendations = []
+        """Generate audit recommendations"""        recommendations = []
         
         for check_name, result in audit_checks:
             if not result.get("passed", True):
@@ -666,8 +626,7 @@ class ModelAudit:
         return recommendations
     
     def get_audit_history(self) -> Dict[str, Any]:
-        """Get audit history and trends"""
-        if not self.audit_records:
+        """Get audit history and trends"""        if not self.audit_records:
             return {"total_audits": 0, "history": []}
         
         return {

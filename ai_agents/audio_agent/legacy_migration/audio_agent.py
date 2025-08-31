@@ -1,5 +1,4 @@
-"""
-Advanced Audio Agent - Industrial Audio Processing & AI Enhancement System
+"""Advanced Audio Agent - Industrial Audio Processing & AI Enhancement System
 
 Ultra-advanced audio processing, analysis, enhancement, and AI-powered generation system implementing
 complete business logic for musicians, content creators, and audio professionals.
@@ -51,9 +50,7 @@ This system transforms raw audio content into monetized intellectual property th
 - Creator collaboration matching with revenue sharing algorithms
 - Multi-platform distribution with performance analytics
 - Revenue optimization through intelligent pricing and placement
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -79,8 +76,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioProcessingRequest(AgentRequest):
-    """Audio processing request with comprehensive parameters"""
-    audio_file_path: Optional[str] = None
+    """Audio processing request with comprehensive parameters"""    audio_file_path: Optional[str] = None
     audio_data: Optional[np.ndarray] = None
     sample_rate: Optional[int] = None
     processing_type: str = "analyze"  # analyze, enhance, generate, convert, fingerprint
@@ -94,8 +90,7 @@ class AudioProcessingRequest(AgentRequest):
     
 @dataclass
 class AudioProcessingResponse(AgentResponse):
-    """Comprehensive audio processing response"""
-    processed_audio_path: Optional[str] = None
+    """Comprehensive audio processing response"""    processed_audio_path: Optional[str] = None
     processed_audio_data: Optional[np.ndarray] = None
     audio_features: Dict[str, Any] = field(default_factory=dict)
     quality_metrics: Dict[str, float] = field(default_factory=dict)
@@ -106,8 +101,7 @@ class AudioProcessingResponse(AgentResponse):
     file_size_mb: float = 0.0
 
 class AudioProcessor:
-    """Advanced audio processing engine with ML capabilities"""
-    
+    """Advanced audio processing engine with ML capabilities"""    
     def __init__(self):
         self.settings = get_settings()
         self.cache_manager = CacheManager()
@@ -116,8 +110,7 @@ class AudioProcessor:
         self.classifier = AudioClassifier()
         
     async def analyze_audio(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Comprehensive audio analysis with ML features"""
-        try:
+        """Comprehensive audio analysis with ML features"""        try:
             start_time = datetime.now()
             
             # Basic audio properties
@@ -162,8 +155,7 @@ class AudioProcessor:
             raise
     
     def _analyze_audio_quality(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """Analyze audio quality metrics"""
-        # Dynamic range
+        """Analyze audio quality metrics"""        # Dynamic range
         dynamic_range = np.max(audio_data) - np.min(audio_data)
         
         # Signal-to-noise ratio estimation
@@ -187,8 +179,7 @@ class AudioProcessor:
         }
     
     def _calculate_quality_score(self, dynamic_range: float, snr: float, clipping: float) -> float:
-        """Calculate overall quality score (0-100)"""
-        # Normalize factors
+        """Calculate overall quality score (0-100)"""        # Normalize factors
         dr_score = min(dynamic_range * 50, 100)  # Scale dynamic range
         snr_score = min(max(snr - 20, 0) * 2, 100)  # SNR above 20dB is good
         clipping_penalty = max(0, 100 - clipping * 10)  # Penalize clipping
@@ -196,8 +187,7 @@ class AudioProcessor:
         return (dr_score + snr_score + clipping_penalty) / 3
     
     def _extract_spectral_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Extract advanced spectral features"""
-        # STFT for spectral analysis
+        """Extract advanced spectral features"""        # STFT for spectral analysis
         f, t, stft = signal.stft(audio_data, sample_rate, nperseg=2048)
         magnitude = np.abs(stft)
         
@@ -217,8 +207,7 @@ class AudioProcessor:
         }
     
     def _analyze_tempo_rhythm(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Analyze tempo and rhythm characteristics"""
-        try:
+        """Analyze tempo and rhythm characteristics"""        try:
             # Use librosa for advanced tempo/rhythm analysis
             tempo, beats = librosa.beat.beat_track(y=audio_data, sr=sample_rate)
             
@@ -241,15 +230,13 @@ class AudioProcessor:
             return {"tempo_bpm": 0.0, "beat_count": 0, "onset_count": 0, "rhythm_regularity": 0.0}
 
 class AudioEnhancer:
-    """AI-powered audio enhancement system"""
-    
+    """AI-powered audio enhancement system"""    
     def __init__(self):
         self.enhancement_model = AudioEnhancementModel()
         
     async def enhance_audio(self, audio_data: np.ndarray, sample_rate: int, 
                           enhancement_level: str = "medium") -> np.ndarray:
-        """Apply AI-powered audio enhancement"""
-        enhanced_audio = audio_data.copy()
+        """Apply AI-powered audio enhancement"""        enhanced_audio = audio_data.copy()
         enhancements_applied = []
         
         try:
@@ -282,16 +269,14 @@ class AudioEnhancer:
     
     def _reduce_noise(self, audio_data: np.ndarray, sample_rate: int, 
                      noise_gate_threshold: float = 0.01) -> np.ndarray:
-        """Apply noise reduction using spectral gating"""
-        # Simple noise gate
+        """Apply noise reduction using spectral gating"""        # Simple noise gate
         audio_abs = np.abs(audio_data)
         mask = audio_abs > noise_gate_threshold
         return audio_data * mask
     
     def _compress_dynamic_range(self, audio_data: np.ndarray, 
                                threshold: float = 0.7, ratio: float = 4.0) -> np.ndarray:
-        """Apply dynamic range compression"""
-        audio_abs = np.abs(audio_data)
+        """Apply dynamic range compression"""        audio_abs = np.abs(audio_data)
         compressed = np.where(
             audio_abs > threshold,
             np.sign(audio_data) * (threshold + (audio_abs - threshold) / ratio),
@@ -300,24 +285,21 @@ class AudioEnhancer:
         return compressed
     
     def _apply_eq_enhancement(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Apply EQ enhancement for better sound"""
-        # Design a simple EQ filter (high-pass to remove low-frequency noise)
+        """Apply EQ enhancement for better sound"""        # Design a simple EQ filter (high-pass to remove low-frequency noise)
         nyquist = sample_rate // 2
         low_cutoff = 80 / nyquist  # 80 Hz high-pass
         b, a = signal.butter(4, low_cutoff, btype='high')
         return signal.filtfilt(b, a, audio_data)
 
 class AIAudioGenerator:
-    """AI-powered audio generation system"""
-    
+    """AI-powered audio generation system"""    
     def __init__(self):
         self.generation_model = AudioGenerationModel()
         
     async def generate_audio(self, prompt: str, duration_seconds: float = 10.0, 
                            genre: Optional[str] = None, mood: Optional[str] = None,
                            sample_rate: int = 44100) -> np.ndarray:
-        """Generate audio using AI based on text prompt"""
-        try:
+        """Generate audio using AI based on text prompt"""        try:
             # Prepare generation parameters
             generation_params = {
                 "prompt": prompt,
@@ -340,8 +322,7 @@ class AIAudioGenerator:
             return 0.1 * np.sin(2 * np.pi * 440 * t)  # 440Hz sine wave
 
 class AudioAgent(BaseAgent):
-    """
-    Advanced Audio Agent for comprehensive audio processing, analysis, and AI operations
+    """    Advanced Audio Agent for comprehensive audio processing, analysis, and AI operations
     
     Capabilities:
     - Audio analysis and feature extraction
@@ -349,8 +330,7 @@ class AudioAgent(BaseAgent):
     - Audio format conversion and optimization
     - Audio generation from text prompts
     - Quality assessment and improvement recommendations
-    """
-    
+    """    
     def __init__(self, agent_id: str, config: Optional[Dict[str, Any]] = None):
         capabilities = [
             AgentCapability(
@@ -391,8 +371,7 @@ class AudioAgent(BaseAgent):
         self.generator = AIAudioGenerator()
         
     async def process_request(self, request: AudioProcessingRequest) -> AudioProcessingResponse:
-        """Process audio request with comprehensive capabilities"""
-        start_time = datetime.now()
+        """Process audio request with comprehensive capabilities"""        start_time = datetime.now()
         
         try:
             # Load audio data
@@ -472,8 +451,7 @@ class AudioAgent(BaseAgent):
             )
     
     def _load_audio_file(self, file_path: str) -> tuple[np.ndarray, int]:
-        """Load audio file with multiple format support"""
-        try:
+        """Load audio file with multiple format support"""        try:
             audio_data, sample_rate = librosa.load(file_path, sr=None)
             return audio_data, sample_rate
         except Exception as e:
@@ -485,48 +463,41 @@ class AudioAgent(BaseAgent):
                 raise ValueError(f"Failed to load audio file: {str(e)}, {str(e2)}")
     
     def _save_audio(self, audio_data: np.ndarray, sample_rate: int, filename: str) -> str:
-        """Save audio data to file"""
-        output_path = Path(self.config.get("output_dir", "/tmp")) / filename
+        """Save audio data to file"""        output_path = Path(self.config.get("output_dir", "/tmp")) / filename
         output_path.parent.mkdir(parents=True, exist_ok=True)
         sf.write(str(output_path), audio_data, sample_rate)
         return str(output_path)
     
     def _save_audio_with_format(self, audio_data: np.ndarray, sample_rate: int, 
                                base_filename: str, format: str) -> str:
-        """Save audio with specific format"""
-        filename = f"{base_filename}.{format}"
+        """Save audio with specific format"""        filename = f"{base_filename}.{format}"
         return self._save_audio(audio_data, sample_rate, filename)
     
     def _convert_format(self, audio_data: np.ndarray, sample_rate: int, 
                        target_format: str) -> np.ndarray:
-        """Convert audio to different format (mostly just returns the same data)"""
-        # In a real implementation, this would handle format-specific conversions
+        """Convert audio to different format (mostly just returns the same data)"""        # In a real implementation, this would handle format-specific conversions
         # For now, we just return the same audio data
         logger.info(f"Converting to format: {target_format}")
         return audio_data
 
 class AudioAgentManager:
-    """Manager for audio agent instances and coordination"""
-    
+    """Manager for audio agent instances and coordination"""    
     def __init__(self):
         self.agents: Dict[str, AudioAgent] = {}
         self.settings = get_settings()
         
     async def create_agent(self, agent_id: str, config: Optional[Dict[str, Any]] = None) -> AudioAgent:
-        """Create and register new audio agent"""
-        agent = AudioAgent(agent_id, config)
+        """Create and register new audio agent"""        agent = AudioAgent(agent_id, config)
         self.agents[agent_id] = agent
         await agent.initialize()
         logger.info(f"Created audio agent: {agent_id}")
         return agent
     
     async def get_agent(self, agent_id: str) -> Optional[AudioAgent]:
-        """Get audio agent by ID"""
-        return self.agents.get(agent_id)
+        """Get audio agent by ID"""        return self.agents.get(agent_id)
     
     async def process_audio_batch(self, requests: List[AudioProcessingRequest]) -> List[AudioProcessingResponse]:
-        """Process multiple audio requests in parallel"""
-        tasks = []
+        """Process multiple audio requests in parallel"""        tasks = []
         for request in requests:
             agent = await self.get_agent(request.agent_id)
             if agent:
@@ -539,8 +510,7 @@ class AudioAgentManager:
         return []
     
     async def shutdown_all_agents(self):
-        """Shutdown all audio agents"""
-        for agent_id, agent in self.agents.items():
+        """Shutdown all audio agents"""        for agent_id, agent in self.agents.items():
             await agent.shutdown()
             logger.info(f"Shutdown audio agent: {agent_id}")
         self.agents.clear()

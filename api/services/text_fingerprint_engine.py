@@ -1,5 +1,4 @@
-"""
-Advanced Text Fingerprinting Engine
+"""Advanced Text Fingerprinting Engine
 Uses BERT, RoBERTa, and NLP techniques for text content identification
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -9,9 +8,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + NLP Expert
 WARNING: This code is proprietary and confidential. Any unauthorized copying,
 distribution, modification or use is strictly prohibited and will be prosecuted
 to the full extent of the law.
-"""
-
-import numpy as np
+"""import numpy as np
 from typing import Dict, List, Tuple, Optional
 import hashlib
 import re
@@ -42,8 +39,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TextFingerprint:
-    """Text fingerprint data structure"""
-    semantic_embedding: np.ndarray
+    """Text fingerprint data structure"""    semantic_embedding: np.ndarray
     tfidf_vector: np.ndarray
     content_hash: str
     structure_hash: str
@@ -57,11 +53,9 @@ class TextFingerprint:
 
 
 class TextFingerprintEngine:
-    """
-    Enterprise-grade text fingerprinting using multiple NLP algorithms
+    """    Enterprise-grade text fingerprinting using multiple NLP algorithms
     Combines semantic embeddings, stylometric analysis, and structure hashing
-    """
-    
+    """    
     def __init__(self, model_name: str = "sentence-transformers/all-MiniLM-L6-v2"):
         self.model_name = model_name
         self.tokenizer = None
@@ -95,8 +89,7 @@ class TextFingerprintEngine:
         )
         
     def extract_fingerprint(self, text: str, title: str = "") -> TextFingerprint:
-        """Extract comprehensive text fingerprint"""
-        try:
+        """Extract comprehensive text fingerprint"""        try:
             # Clean text
             cleaned_text = self._clean_text(text)
             
@@ -153,8 +146,7 @@ class TextFingerprintEngine:
             raise
             
     def _clean_text(self, text: str) -> str:
-        """Clean and normalize text"""
-        try:
+        """Clean and normalize text"""        try:
             # Remove extra whitespace
             text = re.sub(r'\s+', ' ', text)
             
@@ -174,8 +166,7 @@ class TextFingerprintEngine:
             return text
             
     def _extract_semantic_embedding(self, text: str) -> np.ndarray:
-        """Extract semantic embedding using transformer model"""
-        try:
+        """Extract semantic embedding using transformer model"""        try:
             if not self.model or not self.tokenizer:
                 return np.array([])
                 
@@ -206,8 +197,7 @@ class TextFingerprintEngine:
             return np.array([])
             
     def _extract_tfidf_features(self, text: str) -> np.ndarray:
-        """Extract TF-IDF features"""
-        try:
+        """Extract TF-IDF features"""        try:
             # Fit and transform text
             tfidf_matrix = self.tfidf_vectorizer.fit_transform([text])
             
@@ -218,8 +208,7 @@ class TextFingerprintEngine:
             return np.array([])
             
     def _compute_content_hash(self, text: str) -> str:
-        """Compute content-based hash"""
-        try:
+        """Compute content-based hash"""        try:
             # Normalize text for hashing
             normalized = text.lower()
             normalized = re.sub(r'[^\w\s]', '', normalized)  # Remove punctuation
@@ -232,8 +221,7 @@ class TextFingerprintEngine:
             return ""
             
     def _compute_structure_hash(self, text: str) -> str:
-        """Compute structure-based hash (paragraphs, sentences, etc.)"""
-        try:
+        """Compute structure-based hash (paragraphs, sentences, etc.)"""        try:
             # Extract structural features
             paragraphs = text.split('\n\n')
             sentences = sent_tokenize(text)
@@ -258,8 +246,7 @@ class TextFingerprintEngine:
             return ""
             
     def _extract_stylometric_features(self, text: str) -> Dict:
-        """Extract stylometric features for authorship analysis"""
-        try:
+        """Extract stylometric features for authorship analysis"""        try:
             words = word_tokenize(text.lower())
             sentences = sent_tokenize(text)
             
@@ -300,8 +287,7 @@ class TextFingerprintEngine:
             return {}
             
     def _extract_ngram_signatures(self, text: str, max_n: int = 3) -> Dict:
-        """Extract character and word n-gram signatures"""
-        try:
+        """Extract character and word n-gram signatures"""        try:
             words = word_tokenize(text.lower())
             
             # Character n-grams
@@ -324,8 +310,7 @@ class TextFingerprintEngine:
             return {}
             
     def _compute_readability_scores(self, text: str) -> Dict:
-        """Compute readability and complexity scores"""
-        try:
+        """Compute readability and complexity scores"""        try:
             return {
                 'flesch_reading_ease': flesch_reading_ease(text),
                 'flesch_kincaid_grade': flesch_kincaid_grade(text),
@@ -338,8 +323,7 @@ class TextFingerprintEngine:
             return {}
             
     def _detect_language(self, text: str) -> str:
-        """Detect text language"""
-        try:
+        """Detect text language"""        try:
             # Simple heuristic language detection
             # Count common English words
             english_words = set(['the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'is', 'are', 'was', 'were', 'have', 'has', 'had'])
@@ -355,8 +339,7 @@ class TextFingerprintEngine:
             return 'unknown'
             
     def _calculate_confidence(self, text: str, word_count: int) -> float:
-        """Calculate confidence score based on text quality"""
-        try:
+        """Calculate confidence score based on text quality"""        try:
             # Length factor
             length_score = min(1.0, word_count / 100.0)  # Up to 100 words
             
@@ -380,8 +363,7 @@ class TextFingerprintEngine:
             return 0.5
             
     def compare_fingerprints(self, fp1: TextFingerprint, fp2: TextFingerprint) -> float:
-        """Compare two text fingerprints and return similarity score (0-1)"""
-        try:
+        """Compare two text fingerprints and return similarity score (0-1)"""        try:
             scores = []
             
             # 1. Content hash exact match
@@ -425,8 +407,7 @@ class TextFingerprintEngine:
             return 0.0
             
     def _compare_stylometric_features(self, features1: Dict, features2: Dict) -> float:
-        """Compare stylometric features"""
-        try:
+        """Compare stylometric features"""        try:
             if not features1 or not features2:
                 return 0.0
                 
@@ -465,8 +446,7 @@ class TextFingerprintEngine:
             return 0.0
             
     def detect_plagiarism(self, text1: str, text2: str, threshold: float = 0.8) -> Dict:
-        """Detect potential plagiarism between two texts"""
-        try:
+        """Detect potential plagiarism between two texts"""        try:
             fp1 = self.extract_fingerprint(text1)
             fp2 = self.extract_fingerprint(text2)
             
@@ -489,8 +469,7 @@ class TextFingerprintEngine:
             return {'similarity_score': 0.0, 'is_plagiarism': False}
             
     def batch_extract_fingerprints(self, texts: List[Tuple[str, str]]) -> Dict[str, TextFingerprint]:
-        """Extract fingerprints from multiple texts"""
-        fingerprints = {}
+        """Extract fingerprints from multiple texts"""        fingerprints = {}
         
         for text_id, text_content in texts:
             try:
@@ -505,8 +484,7 @@ class TextFingerprintEngine:
     def find_similar_texts(self, target_fingerprint: TextFingerprint,
                           candidate_fingerprints: Dict[str, TextFingerprint],
                           threshold: float = 0.8) -> List[Tuple[str, float]]:
-        """Find similar texts above threshold"""
-        similar_texts = []
+        """Find similar texts above threshold"""        similar_texts = []
         
         for text_id, candidate_fp in candidate_fingerprints.items():
             similarity = self.compare_fingerprints(target_fingerprint, candidate_fp)

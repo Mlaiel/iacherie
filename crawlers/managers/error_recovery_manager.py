@@ -1,5 +1,4 @@
-"""
-Error Recovery Manager
+"""Error Recovery Manager
 =====================
 
 Advanced error recovery and fault tolerance system for crawler operations.
@@ -7,9 +6,7 @@ Provides intelligent retry logic, circuit breaker patterns, and automated recove
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 import time
@@ -34,16 +31,14 @@ from ...monitoring.metrics_collector import MetricsCollector
 
 
 class ErrorSeverity(Enum):
-    """Error severity levels."""
-    LOW = "low"
+    """Error severity levels."""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class ErrorCategory(Enum):
-    """Error category classification."""
-    NETWORK = "network"
+    """Error category classification."""    NETWORK = "network"
     AUTHENTICATION = "authentication"
     RATE_LIMIT = "rate_limit"
     PARSING = "parsing"
@@ -57,8 +52,7 @@ class ErrorCategory(Enum):
 
 
 class RecoveryStrategy(Enum):
-    """Recovery strategy types."""
-    IMMEDIATE_RETRY = "immediate_retry"
+    """Recovery strategy types."""    IMMEDIATE_RETRY = "immediate_retry"
     EXPONENTIAL_BACKOFF = "exponential_backoff"
     LINEAR_BACKOFF = "linear_backoff"
     JITTERED_BACKOFF = "jittered_backoff"
@@ -70,8 +64,7 @@ class RecoveryStrategy(Enum):
 
 
 class RecoveryStatus(Enum):
-    """Recovery attempt status."""
-    PENDING = "pending"
+    """Recovery attempt status."""    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     SUCCESSFUL = "successful"
     FAILED = "failed"
@@ -81,8 +74,7 @@ class RecoveryStatus(Enum):
 
 @dataclass
 class ErrorContext:
-    """Error context information."""
-    error_id: str
+    """Error context information."""    error_id: str
     operation: str
     url: Optional[str]
     timestamp: datetime
@@ -100,8 +92,7 @@ class ErrorContext:
 
 @dataclass
 class RecoveryAttempt:
-    """Recovery attempt record."""
-    attempt_id: str
+    """Recovery attempt record."""    attempt_id: str
     error_id: str
     strategy: RecoveryStrategy
     started_at: datetime
@@ -114,8 +105,7 @@ class RecoveryAttempt:
 
 @dataclass
 class RecoveryMetrics:
-    """Recovery system metrics."""
-    total_errors: int = 0
+    """Recovery system metrics."""    total_errors: int = 0
     recovered_errors: int = 0
     failed_recoveries: int = 0
     recovery_success_rate: float = 0.0
@@ -127,13 +117,10 @@ class RecoveryMetrics:
 
 
 class ErrorClassifier:
-    """
-    Intelligent error classification system.
-    """
-    
+    """    Intelligent error classification system.
+    """    
     def __init__(self):
-        """Initialize error classifier."""
-        self.logger = get_logger(self.__class__.__name__)
+        """Initialize error classifier."""        self.logger = get_logger(self.__class__.__name__)
         
         # Classification patterns
         self.network_patterns = [
@@ -162,8 +149,7 @@ class ErrorClassifier:
         ]
         
     def classify_error(self, error: Exception, context: Dict[str, Any] = None) -> Tuple[ErrorCategory, ErrorSeverity]:
-        """Classify error by category and severity."""
-        try:
+        """Classify error by category and severity."""        try:
             error_message = str(error).lower()
             error_type = type(error).__name__.lower()
             
@@ -180,8 +166,7 @@ class ErrorClassifier:
             return ErrorCategory.UNKNOWN, ErrorSeverity.MEDIUM
             
     def _determine_category(self, error_message: str, error_type: str, context: Dict[str, Any] = None) -> ErrorCategory:
-        """Determine error category."""
-        # Network errors
+        """Determine error category."""        # Network errors
         if any(pattern in error_message for pattern in self.network_patterns):
             return ErrorCategory.NETWORK
             
@@ -220,8 +205,7 @@ class ErrorClassifier:
         return ErrorCategory.UNKNOWN
         
     def _determine_severity(self, error: Exception, category: ErrorCategory, context: Dict[str, Any] = None) -> ErrorSeverity:
-        """Determine error severity."""
-        # Critical errors
+        """Determine error severity."""        # Critical errors
         if category in [ErrorCategory.RESOURCE, ErrorCategory.CONFIGURATION]:
             return ErrorSeverity.CRITICAL
             
@@ -241,18 +225,14 @@ class ErrorClassifier:
 
 
 class RecoveryStrategySelector:
-    """
-    Intelligent recovery strategy selection system.
-    """
-    
+    """    Intelligent recovery strategy selection system.
+    """    
     def __init__(self, config: RecoveryConfig):
-        """Initialize recovery strategy selector."""
-        self.config = config
+        """Initialize recovery strategy selector."""        self.config = config
         self.logger = get_logger(self.__class__.__name__)
         
     def select_strategy(self, error_context: ErrorContext) -> RecoveryStrategy:
-        """Select appropriate recovery strategy."""
-        try:
+        """Select appropriate recovery strategy."""        try:
             category = error_context.category
             severity = error_context.severity
             retry_count = error_context.retry_count
@@ -301,16 +281,13 @@ class RecoveryStrategySelector:
 
 
 class ErrorRecoveryManager:
-    """
-    Advanced error recovery and fault tolerance system.
+    """    Advanced error recovery and fault tolerance system.
     
     Provides intelligent error classification, recovery strategy selection,
     circuit breaker patterns, and automated recovery mechanisms.
-    """
-    
+    """    
     def __init__(self, config: Optional[RecoveryConfig] = None):
-        """Initialize error recovery manager."""
-        self.config = config or RecoveryConfig()
+        """Initialize error recovery manager."""        self.config = config or RecoveryConfig()
         self.logger = get_logger(self.__class__.__name__)
         self.metrics_collector = MetricsCollector()
         
@@ -346,8 +323,7 @@ class ErrorRecoveryManager:
         self.monitoring_active = False
         
     async def start(self):
-        """Start error recovery manager."""
-        try:
+        """Start error recovery manager."""        try:
             self.monitoring_active = True
             
             # Start monitoring tasks
@@ -362,8 +338,7 @@ class ErrorRecoveryManager:
             
     async def handle_error(self, error: Exception, operation: str, url: Optional[str] = None, 
                           context: Dict[str, Any] = None, retry_func: Optional[Callable] = None) -> Any:
-        """
-        Handle an error with intelligent recovery.
+        """        Handle an error with intelligent recovery.
         
         Args:
             error: The exception that occurred
@@ -374,8 +349,7 @@ class ErrorRecoveryManager:
             
         Returns:
             Result of successful recovery or None if recovery failed
-        """
-        try:
+        """        try:
             # Create error context
             error_context = await self._create_error_context(error, operation, url, context)
             
@@ -409,8 +383,7 @@ class ErrorRecoveryManager:
             
     async def _create_error_context(self, error: Exception, operation: str, url: Optional[str], 
                                    context: Dict[str, Any] = None) -> ErrorContext:
-        """Create error context from exception."""
-        error_id = f"error_{int(time.time())}_{hashlib.md5(str(error).encode()).hexdigest()[:8]}"
+        """Create error context from exception."""        error_id = f"error_{int(time.time())}_{hashlib.md5(str(error).encode()).hexdigest()[:8]}"
         
         return ErrorContext(
             error_id=error_id,
@@ -427,8 +400,7 @@ class ErrorRecoveryManager:
         )
         
     async def _attempt_recovery(self, error_context: ErrorContext, retry_func: Callable) -> Any:
-        """Attempt to recover from error."""
-        try:
+        """Attempt to recover from error."""        try:
             # Check if max retries exceeded
             if error_context.retry_count >= error_context.max_retries:
                 error_context.recovery_status = RecoveryStatus.EXHAUSTED
@@ -500,8 +472,7 @@ class ErrorRecoveryManager:
             
     async def _immediate_retry(self, error_context: ErrorContext, retry_func: Callable, 
                              attempt: RecoveryAttempt) -> Any:
-        """Immediate retry strategy."""
-        try:
+        """Immediate retry strategy."""        try:
             self.logger.info(f"Immediate retry for error {error_context.error_id}")
             result = await retry_func()
             return result
@@ -512,8 +483,7 @@ class ErrorRecoveryManager:
             
     async def _exponential_backoff_retry(self, error_context: ErrorContext, retry_func: Callable, 
                                        attempt: RecoveryAttempt) -> Any:
-        """Exponential backoff retry strategy."""
-        try:
+        """Exponential backoff retry strategy."""        try:
             # Calculate backoff delay
             base_delay = self.config.BASE_BACKOFF_DELAY
             max_delay = self.config.MAX_BACKOFF_DELAY
@@ -532,8 +502,7 @@ class ErrorRecoveryManager:
             
     async def _linear_backoff_retry(self, error_context: ErrorContext, retry_func: Callable, 
                                   attempt: RecoveryAttempt) -> Any:
-        """Linear backoff retry strategy."""
-        try:
+        """Linear backoff retry strategy."""        try:
             # Calculate linear delay
             delay = self.config.BASE_BACKOFF_DELAY * (error_context.retry_count + 1)
             delay = min(delay, self.config.MAX_BACKOFF_DELAY)
@@ -550,8 +519,7 @@ class ErrorRecoveryManager:
             
     async def _jittered_backoff_retry(self, error_context: ErrorContext, retry_func: Callable, 
                                     attempt: RecoveryAttempt) -> Any:
-        """Jittered backoff retry strategy."""
-        try:
+        """Jittered backoff retry strategy."""        try:
             # Calculate jittered delay
             base_delay = self.config.BASE_BACKOFF_DELAY * (2 ** error_context.retry_count)
             jitter = random.uniform(0, 0.1) * base_delay
@@ -569,8 +537,7 @@ class ErrorRecoveryManager:
             
     async def _circuit_breaker_retry(self, error_context: ErrorContext, retry_func: Callable, 
                                    attempt: RecoveryAttempt) -> Any:
-        """Circuit breaker retry strategy."""
-        try:
+        """Circuit breaker retry strategy."""        try:
             # Get or create circuit breaker for this operation
             circuit_key = f"{error_context.operation}:{error_context.url or 'global'}"
             
@@ -600,8 +567,7 @@ class ErrorRecoveryManager:
             
     async def _failover_retry(self, error_context: ErrorContext, retry_func: Callable, 
                             attempt: RecoveryAttempt) -> Any:
-        """Failover retry strategy."""
-        try:
+        """Failover retry strategy."""        try:
             # Failover logic would depend on specific implementation
             # This is a placeholder
             self.logger.info(f"Failover retry for error {error_context.error_id}")
@@ -617,8 +583,7 @@ class ErrorRecoveryManager:
             
     async def _degraded_mode(self, error_context: ErrorContext, retry_func: Callable, 
                            attempt: RecoveryAttempt) -> Any:
-        """Degraded mode strategy."""
-        try:
+        """Degraded mode strategy."""        try:
             # Switch to degraded mode operation
             self.logger.info(f"Degraded mode for error {error_context.error_id}")
             
@@ -633,15 +598,13 @@ class ErrorRecoveryManager:
             
     async def _skip_error(self, error_context: ErrorContext, retry_func: Callable, 
                          attempt: RecoveryAttempt) -> Any:
-        """Skip error strategy."""
-        self.logger.info(f"Skipping error {error_context.error_id}")
+        """Skip error strategy."""        self.logger.info(f"Skipping error {error_context.error_id}")
         error_context.recovery_status = RecoveryStatus.ABANDONED
         attempt.status = RecoveryStatus.ABANDONED
         return None
         
     def _update_average_recovery_time(self, recovery_time: float):
-        """Update average recovery time metric."""
-        if self.metrics.recovered_errors == 1:
+        """Update average recovery time metric."""        if self.metrics.recovered_errors == 1:
             self.metrics.average_recovery_time = recovery_time
         else:
             current_avg = self.metrics.average_recovery_time
@@ -651,8 +614,7 @@ class ErrorRecoveryManager:
             )
             
     async def _log_error(self, error_context: ErrorContext):
-        """Log error to database."""
-        try:
+        """Log error to database."""        try:
             if self.config.ENABLE_DATABASE_LOGGING:
                 async with get_database_session() as db:
                     error_log = ErrorLog(
@@ -675,8 +637,7 @@ class ErrorRecoveryManager:
             self.logger.error(f"Failed to log error to database: {e}")
             
     async def _monitoring_loop(self):
-        """Background monitoring loop."""
-        while self.monitoring_active:
+        """Background monitoring loop."""        while self.monitoring_active:
             try:
                 # Update metrics
                 await self._update_metrics()
@@ -697,8 +658,7 @@ class ErrorRecoveryManager:
                 await asyncio.sleep(1)
                 
     async def _cleanup_loop(self):
-        """Background cleanup loop."""
-        while self.monitoring_active:
+        """Background cleanup loop."""        while self.monitoring_active:
             try:
                 # Clean up old errors
                 await self._cleanup_old_errors()
@@ -712,8 +672,7 @@ class ErrorRecoveryManager:
                 await asyncio.sleep(1)
                 
     async def _update_metrics(self):
-        """Update recovery metrics."""
-        try:
+        """Update recovery metrics."""        try:
             # Calculate success rate
             if self.metrics.total_errors > 0:
                 self.metrics.recovery_success_rate = self.metrics.recovered_errors / self.metrics.total_errors
@@ -724,8 +683,7 @@ class ErrorRecoveryManager:
             self.logger.error(f"Metrics update failed: {e}")
             
     async def _check_circuit_breakers(self):
-        """Check and update circuit breaker states."""
-        try:
+        """Check and update circuit breaker states."""        try:
             for key, circuit_breaker in self.circuit_breakers.items():
                 if circuit_breaker.state == 'half_open':
                     # Try to close the circuit breaker
@@ -735,8 +693,7 @@ class ErrorRecoveryManager:
             self.logger.error(f"Circuit breaker check failed: {e}")
             
     async def _send_metrics(self):
-        """Send metrics to monitoring system."""
-        try:
+        """Send metrics to monitoring system."""        try:
             metrics_data = {
                 'timestamp': datetime.utcnow().isoformat(),
                 'recovery_metrics': asdict(self.metrics),
@@ -757,8 +714,7 @@ class ErrorRecoveryManager:
             self.logger.error(f"Failed to send metrics: {e}")
             
     async def _cleanup_old_errors(self):
-        """Clean up old error records."""
-        try:
+        """Clean up old error records."""        try:
             cutoff_time = datetime.utcnow() - timedelta(hours=self.config.ERROR_RETENTION_HOURS)
             
             # Clean up active errors
@@ -779,8 +735,7 @@ class ErrorRecoveryManager:
             self.logger.error(f"Error cleanup failed: {e}")
             
     async def get_error_status(self, error_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of a specific error."""
-        if error_id in self.active_errors:
+        """Get status of a specific error."""        if error_id in self.active_errors:
             error_context = self.active_errors[error_id]
             attempts = self.recovery_attempts.get(error_id, [])
             
@@ -801,13 +756,11 @@ class ErrorRecoveryManager:
         return None
         
     async def get_recovery_metrics(self) -> RecoveryMetrics:
-        """Get recovery system metrics."""
-        await self._update_metrics()
+        """Get recovery system metrics."""        await self._update_metrics()
         return self.metrics
         
     async def get_circuit_breaker_status(self) -> Dict[str, Dict[str, Any]]:
-        """Get status of all circuit breakers."""
-        status = {}
+        """Get status of all circuit breakers."""        status = {}
         
         for key, circuit_breaker in self.circuit_breakers.items():
             status[key] = {
@@ -821,8 +774,7 @@ class ErrorRecoveryManager:
         return status
         
     async def force_recover_error(self, error_id: str) -> bool:
-        """Force recovery attempt for a specific error."""
-        try:
+        """Force recovery attempt for a specific error."""        try:
             if error_id not in self.active_errors:
                 return False
                 
@@ -838,8 +790,7 @@ class ErrorRecoveryManager:
             return False
             
     async def reset_circuit_breaker(self, circuit_key: str) -> bool:
-        """Reset a specific circuit breaker."""
-        try:
+        """Reset a specific circuit breaker."""        try:
             if circuit_key in self.circuit_breakers:
                 await self.circuit_breakers[circuit_key].reset()
                 self.logger.info(f"Circuit breaker reset: {circuit_key}")
@@ -852,8 +803,7 @@ class ErrorRecoveryManager:
             return False
             
     async def shutdown(self):
-        """Shutdown error recovery manager."""
-        try:
+        """Shutdown error recovery manager."""        try:
             self.monitoring_active = False
             
             # Cancel monitoring tasks
@@ -878,14 +828,12 @@ class ErrorRecoveryManager:
 
 # Factory function
 def create_error_recovery_manager(config: Optional[RecoveryConfig] = None) -> ErrorRecoveryManager:
-    """Create and return an error recovery manager instance."""
-    return ErrorRecoveryManager(config)
+    """Create and return an error recovery manager instance."""    return ErrorRecoveryManager(config)
 
 
 # Decorator for automatic error recovery
 def with_error_recovery(manager: ErrorRecoveryManager, operation: str, max_retries: int = 3):
-    """Decorator to add automatic error recovery to functions."""
-    def decorator(func):
+    """Decorator to add automatic error recovery to functions."""    def decorator(func):
         async def wrapper(*args, **kwargs):
             async def retry_func():
                 return await func(*args, **kwargs)
@@ -912,8 +860,7 @@ def with_error_recovery(manager: ErrorRecoveryManager, operation: str, max_retri
 # Utility functions
 async def create_resilient_operation(operation_func: Callable, operation_name: str, 
                                    config: Optional[RecoveryConfig] = None) -> Callable:
-    """Create a resilient operation with automatic error recovery."""
-    manager = create_error_recovery_manager(config)
+    """Create a resilient operation with automatic error recovery."""    manager = create_error_recovery_manager(config)
     await manager.start()
     
     @with_error_recovery(manager, operation_name)

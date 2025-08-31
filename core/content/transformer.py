@@ -1,5 +1,4 @@
-"""
-Content Transformer - Multi-Format Content Transformation Engine
+"""Content Transformer - Multi-Format Content Transformation Engine
 ===============================================================
 
 The ContentTransformer handles format conversion, quality enhancement,
@@ -7,9 +6,7 @@ and adaptive processing for cross-platform content distribution.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime
@@ -31,8 +28,7 @@ from ..image.processors.image_converter import ImageConverter
 
 @dataclass
 class TransformationTask:
-    """Content transformation task container"""
-    task_id: str
+    """Content transformation task container"""    task_id: str
     content_id: str
     source_format: str
     target_format: str
@@ -45,8 +41,7 @@ class TransformationTask:
 
 @dataclass
 class TransformationResult:
-    """Content transformation result container"""
-    task_id: str
+    """Content transformation result container"""    task_id: str
     content_id: str
     success: bool
     output_path: Optional[str] = None
@@ -58,8 +53,7 @@ class TransformationResult:
 
 @dataclass
 class TransformationConfig:
-    """Content transformation configuration"""
-    enable_quality_enhancement: bool = True
+    """Content transformation configuration"""    enable_quality_enhancement: bool = True
     enable_format_optimization: bool = True
     enable_compression: bool = True
     preserve_metadata: bool = True
@@ -69,8 +63,7 @@ class TransformationConfig:
 
 
 class ContentTransformer:
-    """
-    Multi-Format Content Transformation Engine
+    """    Multi-Format Content Transformation Engine
     
     Provides comprehensive content transformation including:
     - Format conversion between different media types
@@ -79,8 +72,7 @@ class ContentTransformer:
     - Platform-specific adaptations
     - Batch processing and queue management
     - Real-time transformation monitoring
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, config: TransformationConfig = None):
         self.db = db_session
         self.config = config or TransformationConfig()
@@ -108,8 +100,7 @@ class ContentTransformer:
         transformation_specs: Dict[str, Any],
         priority: int = 1
     ) -> Dict[str, Any]:
-        """
-        Transform content according to specifications
+        """        Transform content according to specifications
         
         Args:
             content_id: Content identifier
@@ -118,8 +109,7 @@ class ContentTransformer:
             
         Returns:
             Transformation result with status and output information
-        """
-        try:
+        """        try:
             self.logger.info(f"Starting content transformation for {content_id}")
             
             # Validate transformation specs
@@ -186,8 +176,7 @@ class ContentTransformer:
         target_platform: str,
         custom_specs: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """
-        Transform content for specific platform requirements
+        """        Transform content for specific platform requirements
         
         Args:
             content_id: Content identifier
@@ -196,8 +185,7 @@ class ContentTransformer:
             
         Returns:
             Platform-optimized transformation result
-        """
-        try:
+        """        try:
             self.logger.info(f"Transforming content {content_id} for platform {target_platform}")
             
             # Get platform-specific configuration
@@ -269,8 +257,7 @@ class ContentTransformer:
         platform: str,
         specs: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Transform audio content for specific platform
+        """        Transform audio content for specific platform
         
         Args:
             content_id: Content identifier
@@ -280,8 +267,7 @@ class ContentTransformer:
             
         Returns:
             Audio transformation result
-        """
-        transformation_start = datetime.utcnow()
+        """        transformation_start = datetime.utcnow()
         
         try:
             source_path = content_data.get("file_path", "")
@@ -358,8 +344,7 @@ class ContentTransformer:
         platform: str,
         specs: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Transform video content for specific platform
+        """        Transform video content for specific platform
         
         Args:
             content_id: Content identifier
@@ -369,8 +354,7 @@ class ContentTransformer:
             
         Returns:
             Video transformation result
-        """
-        transformation_start = datetime.utcnow()
+        """        transformation_start = datetime.utcnow()
         
         try:
             source_path = content_data.get("file_path", "")
@@ -470,8 +454,7 @@ class ContentTransformer:
         platform: str,
         specs: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Transform image content for specific platform
+        """        Transform image content for specific platform
         
         Args:
             content_id: Content identifier
@@ -481,8 +464,7 @@ class ContentTransformer:
             
         Returns:
             Image transformation result
-        """
-        transformation_start = datetime.utcnow()
+        """        transformation_start = datetime.utcnow()
         
         try:
             source_path = content_data.get("file_path", "")
@@ -575,8 +557,7 @@ class ContentTransformer:
     # Helper methods
 
     def _load_platform_configurations(self) -> Dict[str, Dict[str, Any]]:
-        """Load platform-specific transformation configurations"""
-        return {
+        """Load platform-specific transformation configurations"""        return {
             "youtube": {
                 "video": {
                     "format": "mp4",
@@ -646,8 +627,7 @@ class ContentTransformer:
         }
 
     def _resize_image_smart(self, img: Image.Image, target_size: Tuple[int, int], maintain_aspect: bool = True) -> Image.Image:
-        """Intelligently resize image with optional aspect ratio preservation"""
-        if maintain_aspect:
+        """Intelligently resize image with optional aspect ratio preservation"""        if maintain_aspect:
             img.thumbnail(target_size, Image.Resampling.LANCZOS)
             
             # Create new image with target size and paste resized image centered
@@ -661,8 +641,7 @@ class ContentTransformer:
             return img.resize(target_size, Image.Resampling.LANCZOS)
 
     async def _enhance_image_quality(self, img: Image.Image) -> Image.Image:
-        """Enhance image quality using various filters and adjustments"""
-        try:
+        """Enhance image quality using various filters and adjustments"""        try:
             # Enhance sharpness
             enhancer = ImageEnhance.Sharpness(img)
             img = enhancer.enhance(1.2)
@@ -686,12 +665,10 @@ class ContentTransformer:
 
     # Placeholder methods for actual implementations
     async def _validate_transformation_specs(self, specs: Dict[str, Any]) -> bool:
-        """Validate transformation specifications"""
-        return True
+        """Validate transformation specifications"""        return True
 
     async def _get_content_data(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Get content data from database"""
-        # Mock implementation
+        """Get content data from database"""        # Mock implementation
         return {
             "id": content_id,
             "content_type": "video",
@@ -706,37 +683,28 @@ class ContentTransformer:
         specs: Dict[str, Any], 
         priority: int
     ) -> List[TransformationTask]:
-        """Create transformation tasks from specifications"""
-        return []
+        """Create transformation tasks from specifications"""        return []
 
     async def _execute_transformations(self, tasks: List[TransformationTask]) -> List[TransformationResult]:
-        """Execute transformation tasks"""
-        return []
+        """Execute transformation tasks"""        return []
 
     async def _aggregate_transformation_results(self, results: List[TransformationResult]) -> Dict[str, Any]:
-        """Aggregate multiple transformation results"""
-        return {}
+        """Aggregate multiple transformation results"""        return {}
 
     async def _save_platform_version(self, content_id: str, platform: str, result: Dict[str, Any]) -> None:
-        """Save platform-specific version to database"""
-        pass
+        """Save platform-specific version to database"""        pass
 
     async def _enhance_audio_quality(self, file_path: str, params: Dict[str, Any]) -> Optional[str]:
-        """Enhance audio quality"""
-        return None
+        """Enhance audio quality"""        return None
 
     async def _apply_platform_video_optimizations(self, file_path: str, platform: str, specs: Dict[str, Any]) -> Optional[str]:
-        """Apply platform-specific video optimizations"""
-        return None
+        """Apply platform-specific video optimizations"""        return None
 
     async def _calculate_audio_quality_metrics(self, source_path: str, output_path: str) -> Dict[str, Any]:
-        """Calculate audio quality metrics"""
-        return {}
+        """Calculate audio quality metrics"""        return {}
 
     async def _calculate_video_quality_metrics(self, source_path: str, output_path: str) -> Dict[str, Any]:
-        """Calculate video quality metrics"""
-        return {}
+        """Calculate video quality metrics"""        return {}
 
     async def _calculate_image_quality_metrics(self, source_path: str, output_path: str) -> Dict[str, Any]:
-        """Calculate image quality metrics"""
-        return {}
+        """Calculate image quality metrics"""        return {}

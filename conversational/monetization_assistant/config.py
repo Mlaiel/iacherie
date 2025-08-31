@@ -1,5 +1,4 @@
-"""
-Monetization Assistant Configuration - Enterprise Revenue Optimization Settings
+"""Monetization Assistant Configuration - Enterprise Revenue Optimization Settings
 ============================================================================
 
 Advanced configuration management for monetization assistant with AI-powered revenue optimization,
@@ -17,9 +16,7 @@ WARNING: Proprietary technology - Unauthorized copying, modification or distribu
 is strictly prohibited and will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple, Set
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Set
 from decimal import Decimal
 from dataclasses import dataclass, field
 from enum import Enum, IntEnum
@@ -33,8 +30,7 @@ settings = get_settings()
 
 
 class MonetizationStrategy(Enum):
-    """Advanced monetization strategies for content creators."""
-    AGGRESSIVE_GROWTH = "aggressive_growth"
+    """Advanced monetization strategies for content creators."""    AGGRESSIVE_GROWTH = "aggressive_growth"
     STEADY_OPTIMIZATION = "steady_optimization" 
     RISK_AVERSE = "risk_averse"
     DIVERSIFICATION_FOCUSED = "diversification_focused"
@@ -45,8 +41,7 @@ class MonetizationStrategy(Enum):
 
 
 class RevenueStreamType(Enum):
-    """Comprehensive revenue stream types for multi-format creators."""
-    # Core streaming revenue
+    """Comprehensive revenue stream types for multi-format creators."""    # Core streaming revenue
     STREAMING_ROYALTIES = "streaming_royalties"
     MUSIC_LICENSING = "music_licensing"
     SYNC_LICENSING = "sync_licensing"
@@ -95,8 +90,7 @@ class RevenueStreamType(Enum):
 
 
 class PlatformType(Enum):
-    """Supported platforms for revenue optimization."""
-    # Music platforms
+    """Supported platforms for revenue optimization."""    # Music platforms
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE_MUSIC = "youtube_music"
@@ -138,8 +132,7 @@ class PlatformType(Enum):
 
 
 class PaymentGateway(Enum):
-    """Supported payment gateways for automated processing."""
-    STRIPE = "stripe"
+    """Supported payment gateways for automated processing."""    STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
     REVOLUT = "revolut"
@@ -152,8 +145,7 @@ class PaymentGateway(Enum):
 
 
 class CurrencyType(Enum):
-    """Supported currencies for international monetization."""
-    USD = "USD"
+    """Supported currencies for international monetization."""    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     JPY = "JPY"
@@ -166,8 +158,7 @@ class CurrencyType(Enum):
 
 
 class CollaborationType(Enum):
-    """Types of creator collaborations for revenue sharing."""
-    MUSICAL_COLLABORATION = "musical_collaboration"
+    """Types of creator collaborations for revenue sharing."""    MUSICAL_COLLABORATION = "musical_collaboration"
     CONTENT_CROSSOVER = "content_crossover"
     JOINT_LIVESTREAM = "joint_livestream"
     SHARED_MERCHANDISE = "shared_merchandise"
@@ -180,8 +171,7 @@ class CollaborationType(Enum):
 
 
 class RiskLevel(IntEnum):
-    """Risk levels for investment and monetization decisions."""
-    VERY_LOW = 1
+    """Risk levels for investment and monetization decisions."""    VERY_LOW = 1
     LOW = 2
     MODERATE = 3
     HIGH = 4
@@ -190,8 +180,7 @@ class RiskLevel(IntEnum):
 
 @dataclass
 class PlatformConfig:
-    """Configuration for individual platform integrations."""
-    platform_type: PlatformType
+    """Configuration for individual platform integrations."""    platform_type: PlatformType
     api_key: Optional[str] = None
     api_secret: Optional[str] = None
     webhook_url: Optional[str] = None
@@ -206,8 +195,7 @@ class PlatformConfig:
 
 @dataclass
 class PaymentConfig:
-    """Payment processing configuration."""
-    gateway: PaymentGateway
+    """Payment processing configuration."""    gateway: PaymentGateway
     api_key: str
     api_secret: str
     webhook_secret: str
@@ -223,8 +211,7 @@ class PaymentConfig:
 
 @dataclass
 class AnalyticsConfig:
-    """Analytics and tracking configuration."""
-    data_retention_days: int = 730  # 2 years
+    """Analytics and tracking configuration."""    data_retention_days: int = 730  # 2 years
     real_time_processing: bool = True
     batch_processing_interval: int = 300  # 5 minutes
     aggregation_levels: List[str] = field(default_factory=lambda: ["hourly", "daily", "weekly", "monthly"])
@@ -236,8 +223,7 @@ class AnalyticsConfig:
 
 @dataclass
 class MLConfig:
-    """Machine Learning model configuration."""
-    model_type: str = "ensemble"  # ensemble, neural_network, gradient_boosting
+    """Machine Learning model configuration."""    model_type: str = "ensemble"  # ensemble, neural_network, gradient_boosting
     feature_selection: bool = True
     auto_hyperparameter_tuning: bool = True
     cross_validation_folds: int = 5
@@ -251,8 +237,7 @@ class MLConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security and compliance configuration."""
-    encryption_algorithm: str = "AES-256"
+    """Security and compliance configuration."""    encryption_algorithm: str = "AES-256"
     api_rate_limiting: bool = True
     api_rate_limit: int = 1000  # requests per hour
     jwt_expiration: int = 3600  # 1 hour
@@ -273,8 +258,7 @@ class SecurityConfig:
 
 @dataclass
 class LicensingConfig:
-    """Licensing and rights management configuration."""
-    auto_contract_generation: bool = True
+    """Licensing and rights management configuration."""    auto_contract_generation: bool = True
     smart_contract_integration: bool = True
     blockchain_verification: bool = True
     rights_tracking_enabled: bool = True
@@ -288,8 +272,7 @@ class LicensingConfig:
 
 @dataclass
 class NotificationConfig:
-    """Notification and communication configuration."""
-    email_enabled: bool = True
+    """Notification and communication configuration."""    email_enabled: bool = True
     sms_enabled: bool = True
     push_notifications: bool = True
     webhook_notifications: bool = True
@@ -306,8 +289,7 @@ class NotificationConfig:
 
 @dataclass
 class MonetizationConfig:
-    """Comprehensive configuration for monetization assistant components."""
-    
+    """Comprehensive configuration for monetization assistant components."""    
     # Core monetization settings
     default_strategy: MonetizationStrategy = MonetizationStrategy.STEADY_OPTIMIZATION
     min_revenue_threshold: Decimal = Decimal("100.00")
@@ -534,13 +516,11 @@ RISK_ASSESSMENT_PARAMS = {
 
 
 def get_monetization_config() -> MonetizationConfig:
-    """
-    Get the default monetization configuration with environment-specific overrides.
+    """    Get the default monetization configuration with environment-specific overrides.
     
     Returns:
         MonetizationConfig: Configured monetization settings
-    """
-    config = MonetizationConfig()
+    """    config = MonetizationConfig()
     
     # Override with environment variables if available
     if os.getenv("MONETIZATION_STRATEGY"):
@@ -562,22 +542,19 @@ def get_monetization_config() -> MonetizationConfig:
 
 
 def get_platform_config(platform: PlatformType) -> Optional[PlatformConfig]:
-    """
-    Get configuration for a specific platform.
+    """    Get configuration for a specific platform.
     
     Args:
         platform: The platform type
         
     Returns:
         PlatformConfig: Platform-specific configuration or None if not supported
-    """
-    config = get_monetization_config()
+    """    config = get_monetization_config()
     return config.platform_configs.get(platform)
 
 
 def validate_config(config: MonetizationConfig) -> bool:
-    """
-    Validate the monetization configuration for completeness and consistency.
+    """    Validate the monetization configuration for completeness and consistency.
     
     Args:
         config: The configuration to validate
@@ -587,8 +564,7 @@ def validate_config(config: MonetizationConfig) -> bool:
         
     Raises:
         ValueError: If configuration is invalid
-    """
-    if config.min_revenue_threshold <= 0:
+    """    if config.min_revenue_threshold <= 0:
         raise ValueError("Minimum revenue threshold must be positive")
     
     if config.max_optimization_risk not in RiskLevel:
@@ -644,8 +620,7 @@ monetization_config = get_monetization_config()
     alert_webhook_enabled: bool = True
     
     def __post_init__(self):
-        """Initialize default values after dataclass creation."""
-        if self.supported_currencies is None:
+        """Initialize default values after dataclass creation."""        if self.supported_currencies is None:
             self.supported_currencies = [
                 "USD", "EUR", "GBP", "CAD", "AUD", "JPY", "CHF", "SEK", "NOK", "DKK"
             ]
@@ -852,5 +827,4 @@ SECURITY_CONFIGS = {
 }
 
 def get_monetization_config() -> MonetizationConfig:
-    """Get monetization configuration instance."""
-    return MonetizationConfig()
+    """Get monetization configuration instance."""    return MonetizationConfig()

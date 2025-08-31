@@ -40,8 +40,7 @@ Key Features:
 - Content fingerprinting for rights protection
 - Performance optimization with caching strategies
 - Professional analytics and insights
-"""
-from .content_explorer import (
+"""from .content_explorer import (
     ContentExplorer,
     ContentFilter,
     ContentCategory,

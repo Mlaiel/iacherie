@@ -1,5 +1,4 @@
-"""
-License Repository - Database Operations for Licensing
+"""License Repository - Database Operations for Licensing
 =====================================================
 
 Enterprise-grade database operations for license management with
@@ -7,9 +6,7 @@ comprehensive CRUD operations, statistics, and reporting.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
@@ -22,8 +19,7 @@ class BaseRepository:
         self.db_connection = db_connection
         
     async def execute_query(self, query: str, params: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Execute database query (mock implementation)"""
-        # This would normally execute the query against the database
+        """Execute database query (mock implementation)"""        # This would normally execute the query against the database
         # For now, return empty list
         return []
 
@@ -31,16 +27,13 @@ logger = logging.getLogger(__name__)
 
 
 class LicenseRepository(BaseRepository):
-    """
-    License database repository
+    """    License database repository
     
     Handles all database operations for license management including
     creation, updates, queries, and statistics generation.
-    """
-    
+    """    
     def __init__(self, db_connection=None):
-        """Initialize license repository"""
-        super().__init__(db_connection)
+        """Initialize license repository"""        super().__init__(db_connection)
         self.table_name = "licenses"
         
         # Cache for frequently accessed licenses
@@ -49,16 +42,14 @@ class LicenseRepository(BaseRepository):
         self.cache_timestamps: Dict[int, datetime] = {}
         
     async def create_license(self, license_data: Dict[str, Any]) -> int:
-        """
-        Create a new license record
+        """        Create a new license record
         
         Args:
             license_data: License information
             
         Returns:
             int: License ID
-        """
-        try:
+        """        try:
             # Prepare license data for database
             db_data = {
                 "content_id": license_data["content_id"],
@@ -81,8 +72,7 @@ class LicenseRepository(BaseRepository):
             # Insert into database
             if self.db_connection:
                 # Actual database implementation
-                query = """
-                INSERT INTO licenses (
+                query = """                INSERT INTO licenses (
                     content_id, licensor_id, licensee_id, license_type, status,
                     price, currency, start_date, end_date, territory,
                     usage_limits, terms_conditions, contract_hash,
@@ -93,8 +83,7 @@ class LicenseRepository(BaseRepository):
                     %(usage_limits)s, %(terms_conditions)s, %(contract_hash)s,
                     %(created_at)s, %(updated_at)s
                 ) RETURNING id
-                """
-                
+                """                
                 result = await self.execute_query(query, db_data)
                 license_id = result[0]["id"] if result else None
             else:
@@ -115,26 +104,22 @@ class LicenseRepository(BaseRepository):
             raise
     
     async def get_license(self, license_id: int) -> Optional[Dict[str, Any]]:
-        """
-        Get license by ID
+        """        Get license by ID
         
         Args:
             license_id: License ID
             
         Returns:
             Dict: License data or None if not found
-        """
-        try:
+        """        try:
             # Check cache first
             if self._is_cached_and_valid(license_id):
                 return self._format_license_data(self.license_cache[license_id])
             
             # Query database
             if self.db_connection:
-                query = """
-                SELECT * FROM licenses WHERE id = %(license_id)s
-                """
-                result = await self.execute_query(query, {"license_id": license_id})
+                query = """                SELECT * FROM licenses WHERE id = %(license_id)s
+                """                result = await self.execute_query(query, {"license_id": license_id})
                 
                 if result:
                     license_data = result[0]
@@ -155,8 +140,7 @@ class LicenseRepository(BaseRepository):
             return None
     
     async def update_license_status(self, license_id: int, status: str) -> bool:
-        """
-        Update license status
+        """        Update license status
         
         Args:
             license_id: License ID
@@ -164,20 +148,17 @@ class LicenseRepository(BaseRepository):
             
         Returns:
             bool: True if updated successfully
-        """
-        try:
+        """        try:
             update_data = {
                 "status": status,
                 "updated_at": datetime.utcnow()
             }
             
             if self.db_connection:
-                query = """
-                UPDATE licenses 
+                query = """                UPDATE licenses 
                 SET status = %(status)s, updated_at = %(updated_at)s
                 WHERE id = %(license_id)s
-                """
-                
+                """                
                 await self.execute_query(query, {
                     **update_data,
                     "license_id": license_id
@@ -206,8 +187,7 @@ class LicenseRepository(BaseRepository):
         usage_type: str,
         usage_data: Dict[str, Any]
     ) -> bool:
-        """
-        Update license usage statistics
+        """        Update license usage statistics
         
         Args:
             license_id: License ID
@@ -216,18 +196,15 @@ class LicenseRepository(BaseRepository):
             
         Returns:
             bool: True if updated successfully
-        """
-        try:
+        """        try:
             if self.db_connection:
                 # Update usage statistics in database
-                query = """
-                INSERT INTO license_usage_stats (
+                query = """                INSERT INTO license_usage_stats (
                     license_id, usage_type, usage_count, usage_data, recorded_at
                 ) VALUES (
                     %(license_id)s, %(usage_type)s, %(usage_count)s, %(usage_data)s, %(recorded_at)s
                 )
-                """
-                
+                """                
                 await self.execute_query(query, {
                     "license_id": license_id,
                     "usage_type": usage_type,
@@ -246,23 +223,19 @@ class LicenseRepository(BaseRepository):
             return False
     
     async def get_user_licenses_as_licensor(self, user_id: int) -> List[Dict[str, Any]]:
-        """
-        Get all licenses where user is the licensor
+        """        Get all licenses where user is the licensor
         
         Args:
             user_id: User ID
             
         Returns:
             List[Dict]: List of licenses
-        """
-        try:
+        """        try:
             if self.db_connection:
-                query = """
-                SELECT * FROM licenses 
+                query = """                SELECT * FROM licenses 
                 WHERE licensor_id = %(user_id)s
                 ORDER BY created_at DESC
-                """
-                
+                """                
                 result = await self.execute_query(query, {"user_id": user_id})
                 
                 return [self._format_license_data(row) for row in result]
@@ -280,23 +253,19 @@ class LicenseRepository(BaseRepository):
             return []
     
     async def get_user_licenses_as_licensee(self, user_id: int) -> List[Dict[str, Any]]:
-        """
-        Get all licenses where user is the licensee
+        """        Get all licenses where user is the licensee
         
         Args:
             user_id: User ID
             
         Returns:
             List[Dict]: List of licenses
-        """
-        try:
+        """        try:
             if self.db_connection:
-                query = """
-                SELECT * FROM licenses 
+                query = """                SELECT * FROM licenses 
                 WHERE licensee_id = %(user_id)s
                 ORDER BY created_at DESC
-                """
-                
+                """                
                 result = await self.execute_query(query, {"user_id": user_id})
                 
                 return [self._format_license_data(row) for row in result]
@@ -314,26 +283,22 @@ class LicenseRepository(BaseRepository):
             return []
     
     async def get_expiring_licenses(self, days_ahead: int = 30) -> List[Dict[str, Any]]:
-        """
-        Get licenses expiring within specified days
+        """        Get licenses expiring within specified days
         
         Args:
             days_ahead: Number of days to look ahead
             
         Returns:
             List[Dict]: List of expiring licenses
-        """
-        try:
+        """        try:
             expiry_threshold = datetime.utcnow() + timedelta(days=days_ahead)
             
             if self.db_connection:
-                query = """
-                SELECT * FROM licenses 
+                query = """                SELECT * FROM licenses 
                 WHERE end_date <= %(expiry_threshold)s 
                 AND status = 'active'
                 ORDER BY end_date ASC
-                """
-                
+                """                
                 result = await self.execute_query(query, {"expiry_threshold": expiry_threshold})
                 
                 return [self._format_license_data(row) for row in result]
@@ -357,8 +322,7 @@ class LicenseRepository(BaseRepository):
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """
-        Get license statistics for a period
+        """        Get license statistics for a period
         
         Args:
             period_start: Start of period
@@ -366,12 +330,10 @@ class LicenseRepository(BaseRepository):
             
         Returns:
             Dict: License statistics
-        """
-        try:
+        """        try:
             if self.db_connection:
                 # Comprehensive statistics query
-                query = """
-                SELECT 
+                query = """                SELECT 
                     COUNT(*) as total_licenses,
                     COUNT(CASE WHEN status = 'active' THEN 1 END) as active_licenses,
                     COUNT(CASE WHEN status = 'expired' THEN 1 END) as expired_licenses,
@@ -383,8 +345,7 @@ class LicenseRepository(BaseRepository):
                     COUNT(DISTINCT content_id) as unique_content
                 FROM licenses 
                 WHERE created_at BETWEEN %(period_start)s AND %(period_end)s
-                """
-                
+                """                
                 result = await self.execute_query(query, {
                     "period_start": period_start,
                     "period_end": period_end
@@ -393,13 +354,11 @@ class LicenseRepository(BaseRepository):
                 stats = result[0] if result else {}
                 
                 # License type breakdown
-                type_query = """
-                SELECT license_type, COUNT(*) as count
+                type_query = """                SELECT license_type, COUNT(*) as count
                 FROM licenses 
                 WHERE created_at BETWEEN %(period_start)s AND %(period_end)s
                 GROUP BY license_type
-                """
-                
+                """                
                 type_result = await self.execute_query(type_query, {
                     "period_start": period_start,
                     "period_end": period_end
@@ -447,8 +406,7 @@ class LicenseRepository(BaseRepository):
         limit: int = 50,
         offset: int = 0
     ) -> List[Dict[str, Any]]:
-        """
-        Search licenses with filters
+        """        Search licenses with filters
         
         Args:
             filters: Search filters
@@ -457,8 +415,7 @@ class LicenseRepository(BaseRepository):
             
         Returns:
             List[Dict]: Matching licenses
-        """
-        try:
+        """        try:
             if self.db_connection:
                 # Build dynamic query
                 where_conditions = []
@@ -490,13 +447,11 @@ class LicenseRepository(BaseRepository):
                 
                 where_clause = " AND ".join(where_conditions) if where_conditions else "1=1"
                 
-                query = f"""
-                SELECT * FROM licenses 
+                query = f"""                SELECT * FROM licenses 
                 WHERE {where_clause}
                 ORDER BY created_at DESC
                 LIMIT %(limit)s OFFSET %(offset)s
-                """
-                
+                """                
                 query_params.update({"limit": limit, "offset": offset})
                 
                 result = await self.execute_query(query, query_params)
@@ -524,8 +479,7 @@ class LicenseRepository(BaseRepository):
             return []
     
     def _is_cached_and_valid(self, license_id: int) -> bool:
-        """Check if license is cached and valid"""
-        if license_id not in self.license_cache:
+        """Check if license is cached and valid"""        if license_id not in self.license_cache:
             return False
         
         if license_id not in self.cache_timestamps:
@@ -535,8 +489,7 @@ class LicenseRepository(BaseRepository):
         return cache_age < self.cache_ttl
     
     def _format_license_data(self, raw_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Format license data for consumption"""
-        try:
+        """Format license data for consumption"""        try:
             formatted_data = raw_data.copy()
             
             # Parse JSON fields
@@ -557,8 +510,7 @@ class LicenseRepository(BaseRepository):
             return raw_data
     
     async def cleanup_cache(self) -> None:
-        """Clean up expired cache entries"""
-        try:
+        """Clean up expired cache entries"""        try:
             current_time = datetime.utcnow()
             expired_ids = []
             
@@ -577,8 +529,7 @@ class LicenseRepository(BaseRepository):
             logger.error(f"Error cleaning up cache: {e}")
     
     def get_repository_stats(self) -> Dict[str, Any]:
-        """Get repository statistics"""
-        return {
+        """Get repository statistics"""        return {
             "cache_size": len(self.license_cache),
             "cache_hit_ratio": 0.85,  # Mock value
             "total_licenses": len(self.license_cache),

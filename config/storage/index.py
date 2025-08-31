@@ -1,5 +1,4 @@
-"""
-Storage Configuration Index - IA-Influencer Agent Platform
+"""Storage Configuration Index - IA-Influencer Agent Platform
 ==========================================================
 
 Central index and orchestration for all storage configurations.
@@ -14,9 +13,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import os
+"""import os
 import json
 from typing import Dict, Any, Optional, List
 from datetime import datetime
@@ -36,19 +33,16 @@ from . import (
 )
 
 class StorageOrchestrator:
-    """
-    Central orchestrator for all storage operations and configurations.
+    """    Central orchestrator for all storage operations and configurations.
     Provides unified interface for storage management across the platform.
-    """
-    
+    """    
     def __init__(self):
         self.configs = STORAGE_CONFIGS
         self.initialized = False
         self.health_status = {}
         
     def initialize(self) -> bool:
-        """Initialize all storage configurations and validate connectivity."""
-        try:
+        """Initialize all storage configurations and validate connectivity."""        try:
             print("🚀 Initializing IA-Influencer Agent Storage System...")
             
             # Validate all configurations
@@ -74,8 +68,7 @@ class StorageOrchestrator:
             return False
     
     def _perform_health_checks(self):
-        """Perform health checks on all storage services."""
-        print("🔍 Performing storage health checks...")
+        """Perform health checks on all storage services."""        print("🔍 Performing storage health checks...")
         
         health_checks = {
             's3': self._check_s3_health,
@@ -96,32 +89,25 @@ class StorageOrchestrator:
                 print(f"  ❌ {service.upper()}: Error - {e}")
     
     def _check_s3_health(self) -> bool:
-        """Check AWS S3 connectivity and configuration."""
-        return s3_config.validate_configuration()
+        """Check AWS S3 connectivity and configuration."""        return s3_config.validate_configuration()
     
     def _check_azure_health(self) -> bool:
-        """Check Azure Blob Storage connectivity and configuration."""
-        return azure_blob_config.validate_configuration()
+        """Check Azure Blob Storage connectivity and configuration."""        return azure_blob_config.validate_configuration()
     
     def _check_gcs_health(self) -> bool:
-        """Check Google Cloud Storage connectivity and configuration."""
-        return gcs_config.validate_configuration()
+        """Check Google Cloud Storage connectivity and configuration."""        return gcs_config.validate_configuration()
     
     def _check_local_health(self) -> bool:
-        """Check local storage accessibility and configuration."""
-        return local_storage_config.validate_configuration()
+        """Check local storage accessibility and configuration."""        return local_storage_config.validate_configuration()
     
     def _check_cdn_health(self) -> bool:
-        """Check CDN configuration and endpoints."""
-        return cdn_config.validate_configuration()
+        """Check CDN configuration and endpoints."""        return cdn_config.validate_configuration()
     
     def _check_security_health(self) -> bool:
-        """Check security configuration and policies."""
-        return storage_security_config.validate_configuration()
+        """Check security configuration and policies."""        return storage_security_config.validate_configuration()
     
     def _log_initialization(self):
-        """Log storage system initialization."""
-        storage_security_config.log_security_event(
+        """Log storage system initialization."""        storage_security_config.log_security_event(
             'storage_initialization',
             {
                 'timestamp': datetime.now().isoformat(),
@@ -134,8 +120,7 @@ class StorageOrchestrator:
     def get_optimal_storage_for_content(self, content_type: str, 
                                       file_size_mb: float,
                                       access_pattern: str = 'frequent') -> Dict[str, Any]:
-        """
-        Get optimal storage configuration for specific content.
+        """        Get optimal storage configuration for specific content.
         
         Args:
             content_type: Type of content (audio, video, image, etc.)
@@ -144,8 +129,7 @@ class StorageOrchestrator:
             
         Returns:
             Dictionary with optimal storage recommendations
-        """
-        recommendations = {
+        """        recommendations = {
             'primary_storage': None,
             'backup_storage': None,
             'cdn_endpoint': None,
@@ -200,8 +184,7 @@ class StorageOrchestrator:
     
     def _estimate_storage_cost(self, storage_type: str, file_size_mb: float, 
                              access_pattern: str) -> float:
-        """Estimate monthly storage cost in USD."""
-        # Simplified cost calculation (actual costs vary by region and usage)
+        """Estimate monthly storage cost in USD."""        # Simplified cost calculation (actual costs vary by region and usage)
         cost_per_gb_month = {
             's3': {'frequent': 0.023, 'infrequent': 0.0125, 'archive': 0.004},
             'azure': {'frequent': 0.021, 'infrequent': 0.01, 'archive': 0.002},
@@ -215,8 +198,7 @@ class StorageOrchestrator:
         return round(file_size_gb * rate, 4)
     
     def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status."""
-        return {
+        """Get comprehensive system status."""        return {
             'initialized': self.initialized,
             'health_status': self.health_status,
             'timestamp': datetime.now().isoformat(),
@@ -227,8 +209,7 @@ class StorageOrchestrator:
         }
     
     def refresh_configurations(self) -> bool:
-        """Refresh all storage configurations."""
-        try:
+        """Refresh all storage configurations."""        try:
             # Re-validate configurations
             validation_result = validate_all_storage_configs()
             
@@ -247,8 +228,7 @@ class StorageOrchestrator:
             return False
     
     def export_configuration_summary(self, output_path: Optional[str] = None) -> Dict[str, Any]:
-        """Export comprehensive configuration summary."""
-        summary = {
+        """Export comprehensive configuration summary."""        summary = {
             'metadata': {
                 'generated_at': datetime.now().isoformat(),
                 'version': '1.0.0',
@@ -277,8 +257,7 @@ class StorageOrchestrator:
         return summary
     
     def get_recommended_backup_strategy(self) -> Dict[str, Any]:
-        """Get recommended backup strategy based on current configuration."""
-        active_schedules = backup_storage_config.get_active_schedules()
+        """Get recommended backup strategy based on current configuration."""        active_schedules = backup_storage_config.get_active_schedules()
         
         recommendations = {
             'current_schedules': len(active_schedules),
@@ -311,12 +290,10 @@ class StorageOrchestrator:
 storage_orchestrator = StorageOrchestrator()
 
 def initialize_storage_system() -> bool:
-    """Initialize the complete storage system."""
-    return storage_orchestrator.initialize()
+    """Initialize the complete storage system."""    return storage_orchestrator.initialize()
 
 def get_storage_orchestrator() -> StorageOrchestrator:
-    """Get the global storage orchestrator instance."""
-    return storage_orchestrator
+    """Get the global storage orchestrator instance."""    return storage_orchestrator
 
 # Auto-initialize in production environments
 if os.getenv('ENVIRONMENT') in ['production', 'staging']:

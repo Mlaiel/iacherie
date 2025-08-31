@@ -1,5 +1,4 @@
-"""
-Real-time Scraper - IA-Influencer-Agent
+"""Real-time Scraper - IA-Influencer-Agent
 =======================================
 
 Real-time content monitoring and streaming scraper.
@@ -11,9 +10,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 ⚠️ CRITICAL LEGAL WARNING ⚠️
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
-"""
-
-import asyncio
+"""import asyncio
 import aiohttp
 import websockets
 import logging
@@ -28,8 +25,7 @@ from collections import defaultdict
 
 @dataclass
 class MonitorTarget:
-    """Real-time monitoring target definition."""
-    target_id: str
+    """Real-time monitoring target definition."""    target_id: str
     url: str
     platform: str
     monitor_type: str  # content, profile, hashtag, keyword
@@ -45,8 +41,7 @@ class MonitorTarget:
 
 @dataclass
 class RealtimeEvent:
-    """Real-time event data structure."""
-    event_id: str
+    """Real-time event data structure."""    event_id: str
     target_id: str
     event_type: str  # new_content, content_change, engagement_spike, etc.
     timestamp: datetime
@@ -55,8 +50,7 @@ class RealtimeEvent:
     processed: bool = False
 
 class RealtimeScraper:
-    """
-    Real-time content monitoring and streaming scraper.
+    """    Real-time content monitoring and streaming scraper.
     
     Features:
     - Continuous monitoring
@@ -67,8 +61,7 @@ class RealtimeScraper:
     - Multi-target monitoring
     - Adaptive intervals
     - Content fingerprinting
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.session: Optional[aiohttp.ClientSession] = None
@@ -96,17 +89,14 @@ class RealtimeScraper:
         self.running = False
         
     async def __aenter__(self):
-        """Async context manager entry."""
-        await self.start()
+        """Async context manager entry."""        await self.start()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
-        await self.stop()
+        """Async context manager exit."""        await self.stop()
         
     async def start(self):
-        """Start real-time monitoring."""
-        if self.running:
+        """Start real-time monitoring."""        if self.running:
             return
             
         self.logger.info("Starting real-time scraper")
@@ -134,8 +124,7 @@ class RealtimeScraper:
         self.stats['uptime_start'] = datetime.now()
         
     async def stop(self):
-        """Stop real-time monitoring."""
-        if not self.running:
+        """Stop real-time monitoring."""        if not self.running:
             return
             
         self.logger.info("Stopping real-time scraper")
@@ -158,8 +147,7 @@ class RealtimeScraper:
             await self.session.close()
             
     async def add_target(self, target: MonitorTarget):
-        """Add monitoring target."""
-        self.targets[target.target_id] = target
+        """Add monitoring target."""        self.targets[target.target_id] = target
         
         if target.active and self.running:
             await self._start_monitor(target)
@@ -168,8 +156,7 @@ class RealtimeScraper:
         self.logger.info(f"Added monitoring target: {target.target_id}")
         
     async def remove_target(self, target_id: str):
-        """Remove monitoring target."""
-        if target_id in self.targets:
+        """Remove monitoring target."""        if target_id in self.targets:
             await self._stop_monitor(target_id)
             del self.targets[target_id]
             
@@ -177,16 +164,14 @@ class RealtimeScraper:
         self.logger.info(f"Removed monitoring target: {target_id}")
         
     async def _start_monitor(self, target: MonitorTarget):
-        """Start monitoring specific target."""
-        if target.target_id in self.active_monitors:
+        """Start monitoring specific target."""        if target.target_id in self.active_monitors:
             await self._stop_monitor(target.target_id)
             
         task = asyncio.create_task(self._monitor_target(target))
         self.active_monitors[target.target_id] = task
         
     async def _stop_monitor(self, target_id: str):
-        """Stop monitoring specific target."""
-        if target_id in self.active_monitors:
+        """Stop monitoring specific target."""        if target_id in self.active_monitors:
             self.active_monitors[target_id].cancel()
             try:
                 await self.active_monitors[target_id]
@@ -195,8 +180,7 @@ class RealtimeScraper:
             del self.active_monitors[target_id]
             
     async def _monitor_target(self, target: MonitorTarget):
-        """Monitor single target continuously."""
-        self.logger.info(f"Started monitoring {target.target_id}")
+        """Monitor single target continuously."""        self.logger.info(f"Started monitoring {target.target_id}")
         
         while self.running and target.active:
             try:
@@ -211,8 +195,7 @@ class RealtimeScraper:
         self.logger.info(f"Stopped monitoring {target.target_id}")
         
     async def _check_target(self, target: MonitorTarget):
-        """Check single target for changes."""
-        self.stats['total_checks'] += 1
+        """Check single target for changes."""        self.stats['total_checks'] += 1
         self.stats['last_activity'] = datetime.now()
         
         try:
@@ -247,8 +230,7 @@ class RealtimeScraper:
             
     async def _handle_content_change(self, target: MonitorTarget, 
                                    content: str, content_hash: str):
-        """Handle detected content change."""
-        self.stats['changes_detected'] += 1
+        """Handle detected content change."""        self.stats['changes_detected'] += 1
         
         event = RealtimeEvent(
             event_id=self._generate_event_id(),
@@ -269,8 +251,7 @@ class RealtimeScraper:
         self.logger.info(f"Content change detected for {target.target_id}")
         
     async def _check_keywords(self, target: MonitorTarget, content: str):
-        """Check content for keyword matches."""
-        content_lower = content.lower()
+        """Check content for keyword matches."""        content_lower = content.lower()
         matched_keywords = [kw for kw in target.keywords if kw.lower() in content_lower]
         
         if matched_keywords:
@@ -291,13 +272,11 @@ class RealtimeScraper:
             await self.event_queue.put(event)
             
     def _generate_event_id(self) -> str:
-        """Generate unique event ID."""
-        timestamp = str(int(time.time() * 1000))
+        """Generate unique event ID."""        timestamp = str(int(time.time() * 1000))
         return f"event_{timestamp}_{hashlib.md5(f'{timestamp}{time.time()}'.encode()).hexdigest()[:8]}"
         
     async def _event_processor(self):
-        """Process events from queue."""
-        while self.running:
+        """Process events from queue."""        while self.running:
             try:
                 # Wait for event with timeout
                 event = await asyncio.wait_for(self.event_queue.get(), timeout=1.0)
@@ -311,8 +290,7 @@ class RealtimeScraper:
                 self.logger.error(f"Error processing event: {e}")
                 
     async def _process_event(self, event: RealtimeEvent):
-        """Process single event."""
-        # Call registered handlers
+        """Process single event."""        # Call registered handlers
         for handler in self.event_handlers.get(event.event_type, []):
             try:
                 if asyncio.iscoroutinefunction(handler):
@@ -333,8 +311,7 @@ class RealtimeScraper:
         event.processed = True
         
     async def _broadcast_event(self, event: RealtimeEvent):
-        """Broadcast event to WebSocket clients."""
-        if not self.websocket_clients:
+        """Broadcast event to WebSocket clients."""        if not self.websocket_clients:
             return
             
         message = json.dumps({
@@ -362,8 +339,7 @@ class RealtimeScraper:
             self.websocket_clients.remove(client)
             
     async def _send_webhook(self, webhook_url: str, event: RealtimeEvent):
-        """Send webhook notification."""
-        try:
+        """Send webhook notification."""        try:
             payload = {
                 'event_id': event.event_id,
                 'target_id': event.target_id,
@@ -385,8 +361,7 @@ class RealtimeScraper:
             self.logger.error(f"Webhook error: {e}")
             
     async def _start_websocket_server(self, host: str = 'localhost', port: int = 8765):
-        """Start WebSocket server for real-time updates."""
-        async def handle_client(websocket, path):
+        """Start WebSocket server for real-time updates."""        async def handle_client(websocket, path):
             self.websocket_clients.append(websocket)
             self.logger.info(f"WebSocket client connected: {websocket.remote_address}")
             
@@ -406,18 +381,15 @@ class RealtimeScraper:
             self.logger.error(f"Failed to start WebSocket server: {e}")
             
     def register_event_handler(self, event_type: str, handler: Callable):
-        """Register event handler for specific event type."""
-        self.event_handlers[event_type].append(handler)
+        """Register event handler for specific event type."""        self.event_handlers[event_type].append(handler)
         self.logger.info(f"Registered handler for event type: {event_type}")
         
     def unregister_event_handler(self, event_type: str, handler: Callable):
-        """Unregister event handler."""
-        if handler in self.event_handlers[event_type]:
+        """Unregister event handler."""        if handler in self.event_handlers[event_type]:
             self.event_handlers[event_type].remove(handler)
             
     async def get_target_status(self, target_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of monitoring target."""
-        if target_id not in self.targets:
+        """Get status of monitoring target."""        if target_id not in self.targets:
             return None
             
         target = self.targets[target_id]
@@ -436,8 +408,7 @@ class RealtimeScraper:
         }
         
     async def get_all_targets(self) -> List[Dict[str, Any]]:
-        """Get status of all monitoring targets."""
-        statuses = []
+        """Get status of all monitoring targets."""        statuses = []
         for target_id in self.targets:
             status = await self.get_target_status(target_id)
             if status:
@@ -445,8 +416,7 @@ class RealtimeScraper:
         return statuses
         
     def get_stats(self) -> Dict[str, Any]:
-        """Get real-time scraper statistics."""
-        uptime = (datetime.now() - self.stats['uptime_start']).total_seconds()
+        """Get real-time scraper statistics."""        uptime = (datetime.now() - self.stats['uptime_start']).total_seconds()
         
         return {
             **self.stats,
@@ -458,8 +428,7 @@ class RealtimeScraper:
         }
         
     async def stream_events(self) -> AsyncGenerator[RealtimeEvent, None]:
-        """Stream events as they occur."""
-        temp_queue = asyncio.Queue()
+        """Stream events as they occur."""        temp_queue = asyncio.Queue()
         
         # Register temporary handler
         def temp_handler(event: RealtimeEvent):

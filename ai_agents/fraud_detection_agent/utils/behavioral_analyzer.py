@@ -1,14 +1,11 @@
-"""
-Behavioral Analyzer - Advanced User Behavior Analysis for Fraud Detection
+"""Behavioral Analyzer - Advanced User Behavior Analysis for Fraud Detection
 
 Sophisticated behavioral pattern analysis system for detecting fraudulent user behavior
 through machine learning, statistical analysis, and real-time monitoring.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 from datetime import datetime, timedelta
@@ -37,8 +34,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class BehaviorMetrics:
-    """Comprehensive user behavior metrics"""
-    session_duration: float
+    """Comprehensive user behavior metrics"""    session_duration: float
     action_frequency: float
     click_patterns: List[float]
     navigation_patterns: List[str]
@@ -53,8 +49,7 @@ class BehaviorMetrics:
 
 @dataclass
 class BehaviorAnomalies:
-    """Detected behavioral anomalies"""
-    velocity_anomalies: List[str]
+    """Detected behavioral anomalies"""    velocity_anomalies: List[str]
     pattern_deviations: List[str]
     temporal_inconsistencies: List[str]
     geographic_anomalies: List[str]
@@ -62,8 +57,7 @@ class BehaviorAnomalies:
     interaction_anomalies: List[str]
 
 class BehaviorAnalyzer:
-    """
-    Advanced Behavioral Analysis Engine
+    """    Advanced Behavioral Analysis Engine
     
     Analyzes user behavior patterns to detect fraud through:
     - Machine learning anomaly detection
@@ -71,8 +65,7 @@ class BehaviorAnalyzer:
     - Temporal behavior modeling
     - Geographic consistency checking
     - Device fingerprint analysis
-    """
-    
+    """    
     def __init__(self, redis_client: Optional[aioredis.Redis] = None):
         self.redis_client = redis_client
         self.statistical_analyzer = StatisticalAnalyzer()
@@ -117,8 +110,7 @@ class BehaviorAnalyzer:
         geolocation: Dict[str, Any],
         device_fingerprint: str
     ) -> Dict[str, Any]:
-        """
-        Comprehensive behavioral analysis for fraud detection
+        """        Comprehensive behavioral analysis for fraud detection
         
         Args:
             user_id: User identifier
@@ -129,8 +121,7 @@ class BehaviorAnalyzer:
             
         Returns:
             Behavioral analysis results with risk score
-        """
-        try:
+        """        try:
             # Extract behavior metrics
             current_metrics = await self._extract_behavior_metrics(
                 session_info, geolocation, device_fingerprint
@@ -197,8 +188,7 @@ class BehaviorAnalyzer:
         geolocation: Dict[str, Any], 
         device_fingerprint: str
     ) -> BehaviorMetrics:
-        """Extract comprehensive behavior metrics from session data"""
-        
+        """Extract comprehensive behavior metrics from session data"""        
         # Session metrics
         session_start = session_info.get('start_time', datetime.now())
         session_duration = (datetime.now() - session_start).total_seconds()
@@ -251,8 +241,7 @@ class BehaviorAnalyzer:
         )
 
     def _analyze_click_patterns(self, clicks: List[Dict]) -> List[float]:
-        """Analyze click timing patterns for bot detection"""
-        if len(clicks) < 2:
+        """Analyze click timing patterns for bot detection"""        if len(clicks) < 2:
             return [0.0]
             
         intervals = []
@@ -272,8 +261,7 @@ class BehaviorAnalyzer:
         return [0.0]
 
     def _analyze_navigation_patterns(self, page_visits: List[Dict]) -> List[str]:
-        """Analyze page navigation patterns"""
-        if len(page_visits) < 2:
+        """Analyze page navigation patterns"""        if len(page_visits) < 2:
             return []
             
         patterns = []
@@ -299,8 +287,7 @@ class BehaviorAnalyzer:
         return patterns
 
     def _analyze_typing_cadence(self, typing_data: List[Dict]) -> List[float]:
-        """Analyze typing patterns for human vs bot detection"""
-        if not typing_data:
+        """Analyze typing patterns for human vs bot detection"""        if not typing_data:
             return [0.0]
             
         keystroke_intervals = []
@@ -318,8 +305,7 @@ class BehaviorAnalyzer:
         return [0.0]
 
     def _calculate_mouse_entropy(self, mouse_movements: List[Dict]) -> float:
-        """Calculate entropy of mouse movements"""
-        if len(mouse_movements) < 10:
+        """Calculate entropy of mouse movements"""        if len(mouse_movements) < 10:
             return 0.0
             
         # Extract x, y coordinates
@@ -348,14 +334,12 @@ class BehaviorAnalyzer:
         return 0.0
 
     def _calculate_device_consistency(self, device_fingerprint: str) -> float:
-        """Calculate device fingerprint consistency score"""
-        # This would compare against historical device fingerprints
+        """Calculate device fingerprint consistency score"""        # This would compare against historical device fingerprints
         # For now, return a placeholder score
         return 0.8
 
     def _calculate_geolocation_stability(self, geolocation: Dict[str, Any]) -> float:
-        """Calculate geolocation stability score"""
-        # Check for reasonable location consistency
+        """Calculate geolocation stability score"""        # Check for reasonable location consistency
         latitude = geolocation.get('latitude', 0)
         longitude = geolocation.get('longitude', 0)
         accuracy = geolocation.get('accuracy', 1000)
@@ -370,8 +354,7 @@ class BehaviorAnalyzer:
         session_info: Dict[str, Any], 
         geolocation: Dict[str, Any]
     ) -> float:
-        """Analyze timezone consistency with location"""
-        session_timezone = session_info.get('timezone', '')
+        """Analyze timezone consistency with location"""        session_timezone = session_info.get('timezone', '')
         geo_timezone = geolocation.get('timezone', '')
         
         if session_timezone and geo_timezone:
@@ -379,8 +362,7 @@ class BehaviorAnalyzer:
         return 0.5  # Unknown consistency
 
     def _calculate_social_engagement_score(self, social_actions: List[Dict]) -> float:
-        """Calculate social engagement authenticity score"""
-        if not social_actions:
+        """Calculate social engagement authenticity score"""        if not social_actions:
             return 0.0
             
         # Analyze timing patterns of social actions
@@ -403,8 +385,7 @@ class BehaviorAnalyzer:
         user_id: str, 
         historical_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Get user's historical behavior baselines"""
-        try:
+        """Get user's historical behavior baselines"""        try:
             # Try to get from cache first
             cache_key = f"behavior_baseline:{user_id}"
             cached_baseline = await self.redis_client.get(cache_key)
@@ -437,8 +418,7 @@ class BehaviorAnalyzer:
         historical_baselines: Dict[str, Any],
         user_id: str
     ) -> BehaviorAnomalies:
-        """Detect various types of behavioral anomalies"""
-        
+        """Detect various types of behavioral anomalies"""        
         velocity_anomalies = []
         pattern_deviations = []
         temporal_inconsistencies = []
@@ -496,8 +476,7 @@ class BehaviorAnalyzer:
         anomalies: BehaviorAnomalies,
         historical_baselines: Dict[str, Any]
     ) -> float:
-        """Calculate comprehensive behavioral risk score"""
-        
+        """Calculate comprehensive behavioral risk score"""        
         risk_components = {}
         
         # Velocity risk
@@ -537,8 +516,7 @@ class BehaviorAnalyzer:
         current_metrics: BehaviorMetrics,
         historical_baselines: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate comprehensive behavior profile"""
-        return {
+        """Generate comprehensive behavior profile"""        return {
             'session_characteristics': {
                 'duration_minutes': current_metrics.session_duration / 60,
                 'activity_level': 'high' if current_metrics.action_frequency > 5 else 'normal',
@@ -561,8 +539,7 @@ class BehaviorAnalyzer:
         current_metrics: BehaviorMetrics,
         historical_baselines: Dict[str, Any]
     ) -> float:
-        """Calculate deviation score from historical baselines"""
-        deviations = []
+        """Calculate deviation score from historical baselines"""        deviations = []
         
         # Session duration deviation
         baseline_duration = historical_baselines.get('avg_session_duration', 1800)
@@ -586,8 +563,7 @@ class BehaviorAnalyzer:
         current_metrics: BehaviorMetrics,
         historical_baselines: Dict[str, Any]
     ) -> List[str]:
-        """Extract positive trust indicators from behavior"""
-        trust_indicators = []
+        """Extract positive trust indicators from behavior"""        trust_indicators = []
         
         # Consistent device usage
         if current_metrics.device_consistency > 0.8:
@@ -612,8 +588,7 @@ class BehaviorAnalyzer:
         return trust_indicators
 
     async def _update_behavior_history(self, user_id: str, metrics: BehaviorMetrics):
-        """Update user's behavior history for future baseline calculations"""
-        try:
+        """Update user's behavior history for future baseline calculations"""        try:
             history_key = f"behavior_history:{user_id}"
             
             # Store current metrics
@@ -640,8 +615,7 @@ class BehaviorAnalyzer:
         user_id: str, 
         behavior_samples: List[Dict[str, Any]]
     ):
-        """Learn and update normal behavior patterns for a user"""
-        try:
+        """Learn and update normal behavior patterns for a user"""        try:
             if len(behavior_samples) < 5:
                 logger.warning(f"Insufficient behavior samples for user {user_id}")
                 return
@@ -681,8 +655,7 @@ class BehaviorAnalyzer:
             logger.error(f"Failed to learn normal behavior for user {user_id}: {str(e)}")
 
     async def get_behavior_trends(self, user_id: str, days: int = 7) -> Dict[str, Any]:
-        """Get behavior trends over time for a user"""
-        try:
+        """Get behavior trends over time for a user"""        try:
             history_key = f"behavior_history:{user_id}"
             history_records = await self.redis_client.lrange(history_key, 0, -1)
             
@@ -731,8 +704,7 @@ class BehaviorAnalyzer:
             return {'trends': {}, 'analysis': f'Error: {str(e)}'}
 
     def _calculate_trend(self, timestamps: List[datetime], values: List[float]) -> float:
-        """Calculate trend direction (-1 to 1) for a time series"""
-        if len(timestamps) < 2:
+        """Calculate trend direction (-1 to 1) for a time series"""        if len(timestamps) < 2:
             return 0.0
             
         # Convert timestamps to numeric values

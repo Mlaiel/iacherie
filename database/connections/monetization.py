@@ -1,5 +1,4 @@
-"""
-Monetization Database Connections - IA Influencer Agent Platform
+"""Monetization Database Connections - IA Influencer Agent Platform
 
 Specialized database connections for monetization and revenue operations:
 - Revenue tracking across platforms
@@ -19,9 +18,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is proprietary and confidential. Any unauthorized use, modification,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Tuple, Union
 from contextlib import asynccontextmanager
@@ -42,8 +39,7 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Supported monetization platforms"""
-    YOUTUBE = "youtube"
+    """Supported monetization platforms"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     SPOTIFY = "spotify"
@@ -56,8 +52,7 @@ class PlatformType(Enum):
 
 
 class RevenueType(Enum):
-    """Types of revenue streams"""
-    ADVERTISING = "advertising"
+    """Types of revenue streams"""    ADVERTISING = "advertising"
     SUBSCRIPTIONS = "subscriptions"
     DONATIONS = "donations"
     MERCHANDISE = "merchandise"
@@ -68,8 +63,7 @@ class RevenueType(Enum):
 
 
 class PaymentStatus(Enum):
-    """Payment processing status"""
-    PENDING = "pending"
+    """Payment processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -78,8 +72,7 @@ class PaymentStatus(Enum):
 
 
 class PaymentMethod(Enum):
-    """Supported payment methods"""
-    STRIPE = "stripe"
+    """Supported payment methods"""    STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
     BANK_TRANSFER = "bank_transfer"
@@ -89,8 +82,7 @@ class PaymentMethod(Enum):
 
 @dataclass
 class RevenueRecord:
-    """Revenue record data structure"""
-    revenue_id: str
+    """Revenue record data structure"""    revenue_id: str
     tenant_id: str
     platform: PlatformType
     revenue_type: RevenueType
@@ -106,8 +98,7 @@ class RevenueRecord:
     verified: bool = False
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage"""
-        return {
+        """Convert to dictionary for storage"""        return {
             "revenue_id": self.revenue_id,
             "tenant_id": self.tenant_id,
             "platform": self.platform.value,
@@ -127,8 +118,7 @@ class RevenueRecord:
 
 @dataclass
 class PayoutRequest:
-    """Payout request data structure"""
-    payout_id: str
+    """Payout request data structure"""    payout_id: str
     tenant_id: str
     amount: Decimal
     currency: str
@@ -142,8 +132,7 @@ class PayoutRequest:
     notes: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage"""
-        return {
+        """Convert to dictionary for storage"""        return {
             "payout_id": self.payout_id,
             "tenant_id": self.tenant_id,
             "amount": str(self.amount),
@@ -161,8 +150,7 @@ class PayoutRequest:
 
 @dataclass
 class LicenseAgreement:
-    """License agreement data structure"""
-    license_id: str
+    """License agreement data structure"""    license_id: str
     tenant_id: str
     content_id: str
     licensee_info: Dict[str, Any]
@@ -176,8 +164,7 @@ class LicenseAgreement:
 
 
 class MonetizationConnections:
-    """
-    Specialized connection manager for monetization operations.
+    """    Specialized connection manager for monetization operations.
     
     Coordinates multiple databases for:
     - Revenue tracking (PostgreSQL + Time Series)
@@ -185,8 +172,7 @@ class MonetizationConnections:
     - License management (PostgreSQL + MongoDB)
     - Analytics and reporting (Elasticsearch + PostgreSQL)
     - Real-time revenue monitoring (Redis + WebSockets)
-    """
-    
+    """    
     def __init__(self, connection_handlers: Dict[str, Any]):
         self.logger = logging.getLogger(__name__)
         
@@ -224,8 +210,7 @@ class MonetizationConnections:
         period_end: datetime,
         platform_metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Record revenue from platform APIs.
+        """        Record revenue from platform APIs.
         
         Args:
             tenant_id: Content creator tenant ID
@@ -239,8 +224,7 @@ class MonetizationConnections:
             
         Returns:
             Revenue record ID
-        """
-        try:
+        """        try:
             # Generate unique revenue ID
             revenue_id = self._generate_revenue_id(tenant_id, platform, period_start)
             
@@ -308,8 +292,7 @@ class MonetizationConnections:
         payment_method: PaymentMethod,
         payment_details: Dict[str, Any]
     ) -> str:
-        """
-        Create payout request for creator.
+        """        Create payout request for creator.
         
         Args:
             tenant_id: Content creator tenant ID
@@ -320,8 +303,7 @@ class MonetizationConnections:
             
         Returns:
             Payout request ID
-        """
-        try:
+        """        try:
             # Validate available balance
             available_balance = await self._get_available_balance(tenant_id, currency)
             if available_balance < amount:
@@ -380,8 +362,7 @@ class MonetizationConnections:
         revenue_share: Decimal,
         duration_days: Optional[int] = None
     ) -> str:
-        """
-        Create content license agreement.
+        """        Create content license agreement.
         
         Args:
             tenant_id: Content creator tenant ID
@@ -394,8 +375,7 @@ class MonetizationConnections:
             
         Returns:
             License agreement ID
-        """
-        try:
+        """        try:
             # Generate license ID
             license_id = self._generate_license_id(tenant_id, content_id)
             
@@ -450,8 +430,7 @@ class MonetizationConnections:
         end_date: datetime,
         group_by: str = "platform"
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive revenue analytics for tenant.
+        """        Get comprehensive revenue analytics for tenant.
         
         Args:
             tenant_id: Tenant ID
@@ -461,8 +440,7 @@ class MonetizationConnections:
             
         Returns:
             Revenue analytics with breakdowns and trends
-        """
-        try:
+        """        try:
             # Get total revenue statistics
             total_stats = await self._get_total_revenue_stats(
                 tenant_id, start_date, end_date
@@ -515,13 +493,11 @@ class MonetizationConnections:
             raise
     
     async def process_automatic_payouts(self) -> Dict[str, Any]:
-        """
-        Process automatic payouts for eligible creators.
+        """        Process automatic payouts for eligible creators.
         
         Returns:
             Processing results summary
-        """
-        try:
+        """        try:
             # Get eligible payout requests
             eligible_payouts = await self._get_eligible_payouts()
             
@@ -557,8 +533,7 @@ class MonetizationConnections:
     
     @asynccontextmanager
     async def _monetization_transaction(self, tenant_id: str):
-        """Context manager for monetization operations transaction."""
-        class TransactionContext:
+        """Context manager for monetization operations transaction."""        class TransactionContext:
             def __init__(self, handlers):
                 self.postgresql = handlers["postgresql"]
                 self.mongodb = handlers["mongodb"]
@@ -566,8 +541,7 @@ class MonetizationConnections:
                 self.elasticsearch = handlers.get("elasticsearch")
             
             async def commit(self):
-                """Commit monetization transaction across all database connections"""
-                try:
+                """Commit monetization transaction across all database connections"""                try:
                     # PostgreSQL commit for financial data
                     if hasattr(self.postgresql, 'commit'):
                         await self.postgresql.commit()
@@ -593,8 +567,7 @@ class MonetizationConnections:
                     raise
             
             async def rollback(self):
-                """Rollback monetization transaction across all database connections"""
-                try:
+                """Rollback monetization transaction across all database connections"""                try:
                     # PostgreSQL rollback - critical for financial integrity
                     if hasattr(self.postgresql, 'rollback'):
                         await self.postgresql.rollback()
@@ -635,20 +608,17 @@ class MonetizationConnections:
         platform: PlatformType, 
         period_start: datetime
     ) -> str:
-        """Generate unique revenue ID."""
-        timestamp = period_start.strftime("%Y%m%d")
+        """Generate unique revenue ID."""        timestamp = period_start.strftime("%Y%m%d")
         hash_data = f"{tenant_id}_{platform.value}_{timestamp}"
         hash_suffix = hashlib.md5(hash_data.encode()).hexdigest()[:8]
         return f"rev_{tenant_id}_{platform.value}_{timestamp}_{hash_suffix}"
     
     def _generate_payout_id(self, tenant_id: str) -> str:
-        """Generate unique payout ID."""
-        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+        """Generate unique payout ID."""        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
         return f"payout_{tenant_id}_{timestamp}"
     
     def _generate_license_id(self, tenant_id: str, content_id: str) -> str:
-        """Generate unique license ID."""
-        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+        """Generate unique license ID."""        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
         return f"license_{tenant_id}_{content_id}_{timestamp}"
     
     async def _calculate_platform_fee(
@@ -657,8 +627,7 @@ class MonetizationConnections:
         revenue_type: RevenueType,
         amount: Decimal
     ) -> Decimal:
-        """Calculate platform-specific fee."""
-        # Platform fee rates (these would be configurable)
+        """Calculate platform-specific fee."""        # Platform fee rates (these would be configurable)
         platform_rates = {
             PlatformType.YOUTUBE: Decimal("0.45"),  # YouTube takes 45%
             PlatformType.INSTAGRAM: Decimal("0.30"),
@@ -675,8 +644,7 @@ class MonetizationConnections:
         tenant_id: str,
         amount: Decimal
     ) -> Decimal:
-        """Calculate service fee for IA Influencer platform."""
-        # Standard service fee (configurable per tenant)
+        """Calculate service fee for IA Influencer platform."""        # Standard service fee (configurable per tenant)
         standard_rate = Decimal("0.05")  # 5% service fee
         
         # Check for custom rates
@@ -692,8 +660,7 @@ class MonetizationConnections:
         amount: Decimal,
         payment_method: PaymentMethod
     ) -> Decimal:
-        """Calculate payment processing fees."""
-        processing_rates = {
+        """Calculate payment processing fees."""        processing_rates = {
             PaymentMethod.STRIPE: Decimal("0.029") + Decimal("0.30"),  # 2.9% + $0.30
             PaymentMethod.PAYPAL: Decimal("0.034"),  # 3.4%
             PaymentMethod.WISE: Decimal("0.010"),   # 1.0%
@@ -733,8 +700,7 @@ class MonetizationConnections:
     # - _process_single_payout
     
     async def get_monetization_metrics(self) -> Dict[str, Any]:
-        """Get monetization operation metrics."""
-        return {
+        """Get monetization operation metrics."""        return {
             "operations_count": self.operations_count,
             "revenue_records_processed": self.revenue_records_processed,
             "payouts_processed": self.payouts_processed,

@@ -1,5 +1,4 @@
-"""
-Performance Validation Engine for Crawler System
+"""Performance Validation Engine for Crawler System
 ===============================================
 
 Advanced performance validation and optimization system for the IA Influencer Agent Platform
@@ -15,9 +14,7 @@ Features:
 - Scalability assessment
 - Performance bottleneck detection
 - Optimization recommendations
-"""
-
-import time
+"""import time
 import psutil
 import threading
 from enum import Enum
@@ -33,8 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 class PerformanceMetric(Enum):
-    """Performance metric types"""
-    RESPONSE_TIME = "response_time"
+    """Performance metric types"""    RESPONSE_TIME = "response_time"
     THROUGHPUT = "throughput"
     CPU_USAGE = "cpu_usage"
     MEMORY_USAGE = "memory_usage"
@@ -47,8 +43,7 @@ class PerformanceMetric(Enum):
 
 
 class PerformanceLevel(Enum):
-    """Performance level classifications"""
-    EXCELLENT = "excellent"
+    """Performance level classifications"""    EXCELLENT = "excellent"
     GOOD = "good"
     ACCEPTABLE = "acceptable"
     POOR = "poor"
@@ -56,8 +51,7 @@ class PerformanceLevel(Enum):
 
 
 class ResourceType(Enum):
-    """System resource types"""
-    CPU = "cpu"
+    """System resource types"""    CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
     NETWORK = "network"
@@ -67,8 +61,7 @@ class ResourceType(Enum):
 
 @dataclass
 class PerformanceMeasurement:
-    """Individual performance measurement"""
-    metric: PerformanceMetric
+    """Individual performance measurement"""    metric: PerformanceMetric
     value: float
     unit: str
     timestamp: datetime = field(default_factory=datetime.utcnow)
@@ -78,16 +71,14 @@ class PerformanceMeasurement:
     
     @property
     def deviation_from_baseline(self) -> Optional[float]:
-        """Calculate deviation from baseline"""
-        if self.baseline_value is not None:
+        """Calculate deviation from baseline"""        if self.baseline_value is not None:
             return ((self.value - self.baseline_value) / self.baseline_value) * 100
         return None
 
 
 @dataclass
 class PerformanceProfile:
-    """Comprehensive performance profile"""
-    overall_score: float
+    """Comprehensive performance profile"""    overall_score: float
     performance_level: PerformanceLevel
     measurements: Dict[PerformanceMetric, PerformanceMeasurement] = field(default_factory=dict)
     bottlenecks: List[str] = field(default_factory=list)
@@ -101,30 +92,25 @@ class PerformanceProfile:
     
     @property
     def critical_issues(self) -> List[str]:
-        """Get critical performance issues"""
-        return [issue for issue in self.bottlenecks if "critical" in issue.lower()]
+        """Get critical performance issues"""        return [issue for issue in self.bottlenecks if "critical" in issue.lower()]
     
     @property
     def passed_metrics_count(self) -> int:
-        """Count of metrics that passed thresholds"""
-        return sum(1 for m in self.measurements.values() if m.threshold_passed)
+        """Count of metrics that passed thresholds"""        return sum(1 for m in self.measurements.values() if m.threshold_passed)
     
     @property
     def total_metrics_count(self) -> int:
-        """Total number of metrics measured"""
-        return len(self.measurements)
+        """Total number of metrics measured"""        return len(self.measurements)
     
     @property
     def success_rate(self) -> float:
-        """Calculate metric success rate"""
-        if self.total_metrics_count == 0:
+        """Calculate metric success rate"""        if self.total_metrics_count == 0:
             return 0.0
         return self.passed_metrics_count / self.total_metrics_count
 
 
 class PerformanceThresholds:
-    """Performance threshold definitions"""
-    
+    """Performance threshold definitions"""    
     def __init__(self):
         self.thresholds = {
             PerformanceMetric.RESPONSE_TIME: {'good': 200, 'acceptable': 500, 'poor': 2000},  # ms
@@ -140,8 +126,7 @@ class PerformanceThresholds:
         }
     
     def get_threshold_level(self, metric: PerformanceMetric, value: float) -> PerformanceLevel:
-        """Get performance level based on metric value"""
-        thresholds = self.thresholds.get(metric, {})
+        """Get performance level based on metric value"""        thresholds = self.thresholds.get(metric, {})
         
         if metric == PerformanceMetric.ERROR_RATE:
             # Lower is better for error rate
@@ -201,8 +186,7 @@ class PerformanceThresholds:
 
 
 class PerformanceValidator:
-    """
-    Enterprise-grade performance validation engine for crawler systems.
+    """    Enterprise-grade performance validation engine for crawler systems.
     
     Provides comprehensive performance assessment including:
     - Real-time performance monitoring
@@ -210,8 +194,7 @@ class PerformanceValidator:
     - Scalability assessment
     - Bottleneck detection and analysis
     - Performance optimization recommendations
-    """
-    
+    """    
     def __init__(self, monitoring_interval: float = 1.0):
         self.thresholds = PerformanceThresholds()
         self.monitoring_interval = monitoring_interval
@@ -233,8 +216,7 @@ class PerformanceValidator:
         expected_load: Optional[Dict[str, Any]] = None,
         custom_thresholds: Optional[Dict[PerformanceMetric, Dict[str, float]]] = None
     ) -> PerformanceProfile:
-        """
-        Validate performance of a specific operation.
+        """        Validate performance of a specific operation.
         
         Args:
             operation_func: Function to execute and measure
@@ -244,8 +226,7 @@ class PerformanceValidator:
             
         Returns:
             PerformanceProfile: Comprehensive performance assessment
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         profile = PerformanceProfile(
             overall_score=0.0,
@@ -318,8 +299,7 @@ class PerformanceValidator:
         duration_seconds: float,
         sample_interval: float = 1.0
     ) -> List[PerformanceProfile]:
-        """
-        Perform continuous performance monitoring.
+        """        Perform continuous performance monitoring.
         
         Args:
             duration_seconds: Duration of monitoring in seconds
@@ -327,8 +307,7 @@ class PerformanceValidator:
             
         Returns:
             List[PerformanceProfile]: Time series of performance profiles
-        """
-        profiles = []
+        """        profiles = []
         start_time = time.time()
         
         while time.time() - start_time < duration_seconds:
@@ -352,8 +331,7 @@ class PerformanceValidator:
         load_levels: List[int],
         operation_name: str = "scalability_test"
     ) -> Dict[str, Any]:
-        """
-        Validate system scalability under different load levels.
+        """        Validate system scalability under different load levels.
         
         Args:
             operation_func: Function that accepts load level parameter
@@ -362,8 +340,7 @@ class PerformanceValidator:
             
         Returns:
             Dict[str, Any]: Scalability assessment results
-        """
-        scalability_results = {
+        """        scalability_results = {
             'load_profiles': {},
             'scalability_score': 0.0,
             'bottleneck_load_level': None,
@@ -412,8 +389,7 @@ class PerformanceValidator:
         baseline_name: str,
         operation_name: str = "benchmark_test"
     ) -> Dict[str, Any]:
-        """
-        Benchmark performance against established baseline.
+        """        Benchmark performance against established baseline.
         
         Args:
             operation_func: Function to benchmark
@@ -422,8 +398,7 @@ class PerformanceValidator:
             
         Returns:
             Dict[str, Any]: Benchmark comparison results
-        """
-        # Execute performance validation
+        """        # Execute performance validation
         current_profile = self.validate_performance(operation_func, operation_name)
         
         # Get baseline measurements
@@ -479,13 +454,11 @@ class PerformanceValidator:
         return benchmark_results
     
     def set_baseline(self, baseline_name: str, measurements: Dict[PerformanceMetric, float]) -> None:
-        """Set performance baseline for future comparisons"""
-        self.baseline_measurements[baseline_name] = measurements
+        """Set performance baseline for future comparisons"""        self.baseline_measurements[baseline_name] = measurements
         logger.info(f"Set performance baseline: {baseline_name}")
     
     def get_performance_trends(self, time_window_hours: int = 24) -> Dict[str, Any]:
-        """Get performance trends over specified time window"""
-        cutoff_time = datetime.utcnow() - timedelta(hours=time_window_hours)
+        """Get performance trends over specified time window"""        cutoff_time = datetime.utcnow() - timedelta(hours=time_window_hours)
         
         # Filter historical data
         recent_measurements = [
@@ -541,13 +514,11 @@ class PerformanceValidator:
     # Helper methods
     
     def _start_performance_monitoring(self) -> None:
-        """Start performance monitoring"""
-        self.monitoring_active = True
+        """Start performance monitoring"""        self.monitoring_active = True
         self.current_measurements = {}
     
     def _stop_performance_monitoring(self) -> Dict[PerformanceMetric, PerformanceMeasurement]:
-        """Stop monitoring and return measurements"""
-        self.monitoring_active = False
+        """Stop monitoring and return measurements"""        self.monitoring_active = False
         
         measurements = {}
         
@@ -595,8 +566,7 @@ class PerformanceValidator:
         return measurements
     
     def _take_performance_snapshot(self) -> PerformanceProfile:
-        """Take a performance snapshot at current moment"""
-        profile = PerformanceProfile(
+        """Take a performance snapshot at current moment"""        profile = PerformanceProfile(
             overall_score=0.0,
             performance_level=PerformanceLevel.GOOD
         )
@@ -614,16 +584,14 @@ class PerformanceValidator:
         return profile
     
     def _validate_thresholds(self, profile: PerformanceProfile) -> None:
-        """Validate measurements against performance thresholds"""
-        for metric, measurement in profile.measurements.items():
+        """Validate measurements against performance thresholds"""        for metric, measurement in profile.measurements.items():
             threshold_level = self.thresholds.get_threshold_level(metric, measurement.value)
             measurement.threshold_passed = threshold_level in [
                 PerformanceLevel.EXCELLENT, PerformanceLevel.GOOD, PerformanceLevel.ACCEPTABLE
             ]
     
     def _assess_resource_utilization(self, profile: PerformanceProfile) -> None:
-        """Assess resource utilization levels"""
-        resource_mapping = {
+        """Assess resource utilization levels"""        resource_mapping = {
             PerformanceMetric.CPU_USAGE: ResourceType.CPU,
             PerformanceMetric.MEMORY_USAGE: ResourceType.MEMORY,
             PerformanceMetric.DISK_IO: ResourceType.DISK,
@@ -636,8 +604,7 @@ class PerformanceValidator:
                 profile.resource_utilization[resource_type] = utilization
     
     def _detect_bottlenecks(self, profile: PerformanceProfile) -> None:
-        """Detect performance bottlenecks"""
-        
+        """Detect performance bottlenecks"""        
         # Check for resource bottlenecks
         for resource_type, utilization in profile.resource_utilization.items():
             if utilization > 90:
@@ -662,8 +629,7 @@ class PerformanceValidator:
                 profile.bottlenecks.append(f"High error rate: {error_rate:.1f}%")
     
     def _calculate_performance_scores(self, profile: PerformanceProfile) -> None:
-        """Calculate various performance scores"""
-        
+        """Calculate various performance scores"""        
         # Scalability score (based on resource efficiency)
         resource_scores = []
         for utilization in profile.resource_utilization.values():
@@ -725,8 +691,7 @@ class PerformanceValidator:
         profile: PerformanceProfile, 
         expected_load: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Generate performance optimization recommendations"""
-        
+        """Generate performance optimization recommendations"""        
         # Resource-based recommendations
         for resource_type, utilization in profile.resource_utilization.items():
             if utilization > 85:
@@ -766,8 +731,7 @@ class PerformanceValidator:
             profile.recommendations.append("Focus on identified bottlenecks for targeted improvements")
     
     def _determine_performance_level(self, profile: PerformanceProfile) -> None:
-        """Determine overall performance level"""
-        score = profile.overall_score
+        """Determine overall performance level"""        score = profile.overall_score
         
         if len(profile.critical_issues) > 0:
             profile.performance_level = PerformanceLevel.CRITICAL
@@ -788,8 +752,7 @@ class PerformanceValidator:
         throughputs: List[Tuple[int, float]], 
         load_levels: List[int]
     ) -> Dict[str, Any]:
-        """Analyze scalability patterns from test results"""
-        
+        """Analyze scalability patterns from test results"""        
         analysis = {
             'scalability_score': 0.0,
             'linear_scalability': False,
@@ -831,8 +794,7 @@ class PerformanceValidator:
         return analysis
     
     def _assess_overall_stability(self, recent_measurements: List[PerformanceProfile]) -> Dict[str, Any]:
-        """Assess overall system stability from recent measurements"""
-        if not recent_measurements:
+        """Assess overall system stability from recent measurements"""        if not recent_measurements:
             return {'stability_score': 0.0, 'stability_level': 'unknown'}
         
         # Calculate coefficient of variation for key metrics
@@ -873,8 +835,7 @@ class PerformanceValidator:
         }
     
     def _store_measurement_history(self, profile: PerformanceProfile) -> None:
-        """Store measurement in history for trend analysis"""
-        self.measurement_history.append(profile)
+        """Store measurement in history for trend analysis"""        self.measurement_history.append(profile)
         
         # Limit history size
         if len(self.measurement_history) > self.max_history_size:

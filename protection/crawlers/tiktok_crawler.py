@@ -1,5 +1,4 @@
-"""
-🎵 TikTok Content Crawler  
+"""🎵 TikTok Content Crawler  
 ========================
 
 Professional TikTok content discovery and monitoring system.
@@ -11,9 +10,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 ⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import re
 import json
@@ -38,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TikTokVideoInfo:
-    """TikTok video information structure."""
-    video_id: str
+    """TikTok video information structure."""    video_id: str
     url: str
     title: str
     description: str
@@ -64,8 +60,7 @@ class TikTokVideoInfo:
 
 @dataclass
 class TikTokUserInfo:
-    """TikTok user information structure."""
-    user_id: str
+    """TikTok user information structure."""    user_id: str
     username: str
     display_name: str
     bio: str
@@ -78,12 +73,10 @@ class TikTokUserInfo:
     is_private: bool = False
 
 class TikTokAntiDetection:
-    """Advanced anti-detection measures for TikTok scraping."""
-    
+    """Advanced anti-detection measures for TikTok scraping."""    
     @staticmethod
     def get_random_user_agent() -> str:
-        """Get random realistic user agent."""
-        user_agents = [
+        """Get random realistic user agent."""        user_agents = [
             'Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1',
             'Mozilla/5.0 (Android 11; Mobile; rv:91.0) Gecko/91.0 Firefox/91.0',
             'Mozilla/5.0 (Linux; Android 11; SM-G991B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.120 Mobile Safari/537.36',
@@ -94,8 +87,7 @@ class TikTokAntiDetection:
     
     @staticmethod
     def get_random_viewport() -> tuple:
-        """Get random viewport size."""
-        viewports = [
+        """Get random viewport size."""        viewports = [
             (375, 667),   # iPhone 8
             (414, 896),   # iPhone 11 Pro
             (390, 844),   # iPhone 12
@@ -107,14 +99,12 @@ class TikTokAntiDetection:
     
     @staticmethod
     async def random_delay(min_seconds: float = 1.0, max_seconds: float = 3.0):
-        """Random delay to mimic human behavior."""
-        delay = random.uniform(min_seconds, max_seconds)
+        """Random delay to mimic human behavior."""        delay = random.uniform(min_seconds, max_seconds)
         await asyncio.sleep(delay)
     
     @staticmethod
     def setup_stealth_options() -> Options:
-        """Setup Chrome options for stealth scraping."""
-        options = Options()
+        """Setup Chrome options for stealth scraping."""        options = Options()
         
         # Basic stealth settings
         options.add_argument('--no-sandbox')
@@ -137,11 +127,9 @@ class TikTokAntiDetection:
         return options
 
 class TikTokSeleniumCrawler:
-    """Selenium-based TikTok crawler with anti-detection."""
-    
+    """Selenium-based TikTok crawler with anti-detection."""    
     def __init__(self, headless: bool = True, proxy: Optional[str] = None):
-        """Initialize TikTok Selenium crawler."""
-        self.headless = headless
+        """Initialize TikTok Selenium crawler."""        self.headless = headless
         self.proxy = proxy
         self.driver = None
         self.wait = None
@@ -155,8 +143,7 @@ class TikTokSeleniumCrawler:
         self.min_request_interval = 2.0
     
     def _setup_driver(self) -> webdriver.Chrome:
-        """Setup Chrome WebDriver with stealth configuration."""
-        options = self.anti_detection.setup_stealth_options()
+        """Setup Chrome WebDriver with stealth configuration."""        options = self.anti_detection.setup_stealth_options()
         
         if self.headless:
             options.add_argument('--headless')
@@ -172,8 +159,7 @@ class TikTokSeleniumCrawler:
             driver = webdriver.Chrome(options=options)
             
             # Execute stealth script
-            driver.execute_script("""
-                Object.defineProperty(navigator, 'webdriver', {
+            driver.execute_script("""                Object.defineProperty(navigator, 'webdriver', {
                     get: () => undefined,
                 });
             """)
@@ -186,8 +172,7 @@ class TikTokSeleniumCrawler:
             raise
     
     async def _rate_limit(self):
-        """Apply rate limiting between requests."""
-        current_time = time.time()
+        """Apply rate limiting between requests."""        current_time = time.time()
         elapsed = current_time - self.last_request_time
         
         if elapsed < self.min_request_interval:
@@ -202,8 +187,7 @@ class TikTokSeleniumCrawler:
         max_results: int = 20,
         sort_by: str = 'recent'
     ) -> List[TikTokVideoInfo]:
-        """Search for TikTok videos."""
-        if not self.driver:
+        """Search for TikTok videos."""        if not self.driver:
             self.driver = self._setup_driver()
             self.wait = WebDriverWait(self.driver, 10)
         
@@ -241,14 +225,12 @@ class TikTokSeleniumCrawler:
             return []
     
     async def _human_type(self, element, text: str):
-        """Type text with human-like delays."""
-        for char in text:
+        """Type text with human-like delays."""        for char in text:
             element.send_keys(char)
             await asyncio.sleep(random.uniform(0.05, 0.15))
     
     async def _extract_search_results(self, max_results: int) -> List[TikTokVideoInfo]:
-        """Extract video information from search results."""
-        videos = []
+        """Extract video information from search results."""        videos = []
         
         try:
             # Scroll to load more videos
@@ -278,8 +260,7 @@ class TikTokSeleniumCrawler:
             return []
     
     async def _extract_video_info(self, container) -> Optional[TikTokVideoInfo]:
-        """Extract video information from container element."""
-        try:
+        """Extract video information from container element."""        try:
             # Video URL
             link_element = container.find_element(By.CSS_SELECTOR, 'a')
             video_url = link_element.get_attribute('href')
@@ -343,16 +324,14 @@ class TikTokSeleniumCrawler:
             return None
     
     def _extract_video_id(self, url: str) -> str:
-        """Extract video ID from TikTok URL."""
-        # TikTok video URLs: https://www.tiktok.com/@user/video/1234567890
+        """Extract video ID from TikTok URL."""        # TikTok video URLs: https://www.tiktok.com/@user/video/1234567890
         match = re.search(r'/video/(\d+)', url)
         if match:
             return match.group(1)
         return url.split('/')[-1] if url else ""
     
     async def _extract_video_stats(self, container) -> Dict[str, int]:
-        """Extract video statistics."""
-        stats = {}
+        """Extract video statistics."""        stats = {}
         
         try:
             # Try to find stats elements
@@ -377,8 +356,7 @@ class TikTokSeleniumCrawler:
         return stats
     
     async def _extract_music_info(self, container) -> Dict[str, str]:
-        """Extract music information."""
-        music_info = {}
+        """Extract music information."""        music_info = {}
         
         try:
             music_element = container.find_element(
@@ -403,8 +381,7 @@ class TikTokSeleniumCrawler:
         return music_info
     
     def _parse_count(self, text: str) -> int:
-        """Parse count text to integer."""
-        if not text:
+        """Parse count text to integer."""        if not text:
             return 0
         
         # Remove non-numeric characters except K, M, B
@@ -423,24 +400,21 @@ class TikTokSeleniumCrawler:
             return 0
     
     def _extract_hashtags(self, text: str) -> List[str]:
-        """Extract hashtags from text."""
-        if not text:
+        """Extract hashtags from text."""        if not text:
             return []
         
         hashtags = re.findall(r'#(\w+)', text)
         return hashtags
     
     def _extract_mentions(self, text: str) -> List[str]:
-        """Extract mentions from text."""
-        if not text:
+        """Extract mentions from text."""        if not text:
             return []
         
         mentions = re.findall(r'@(\w+)', text)
         return mentions
     
     async def scrape_video_page(self, video_url: str) -> Optional[TikTokVideoInfo]:
-        """Scrape detailed information from TikTok video page."""
-        if not self.driver:
+        """Scrape detailed information from TikTok video page."""        if not self.driver:
             self.driver = self._setup_driver()
             self.wait = WebDriverWait(self.driver, 10)
         
@@ -478,14 +452,12 @@ class TikTokSeleniumCrawler:
             return None
     
     def close(self):
-        """Close Selenium driver."""
-        if self.driver:
+        """Close Selenium driver."""        if self.driver:
             self.driver.quit()
             self.driver = None
 
 class TikTokCrawler(BasePlatformCrawler):
-    """
-    Professional TikTok Content Crawler
+    """    Professional TikTok Content Crawler
     ===================================
     
     Advanced TikTok content discovery and monitoring system featuring:
@@ -495,11 +467,9 @@ class TikTokCrawler(BasePlatformCrawler):
     - Hashtag and trend analysis
     - User profile monitoring
     - Real-time content discovery
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize TikTok crawler."""
-        super().__init__("tiktok", config)
+        """Initialize TikTok crawler."""        super().__init__("tiktok", config)
         
         # Scraping configuration
         self.headless = config.get('headless', True)
@@ -527,8 +497,7 @@ class TikTokCrawler(BasePlatformCrawler):
         max_results: int = None,
         filters: Optional[Dict[str, Any]] = None
     ) -> List[CrawlResult]:
-        """Search for content on TikTok."""
-        if not self.selenium_crawler:
+        """Search for content on TikTok."""        if not self.selenium_crawler:
             raise Exception("TikTok crawler not available")
         
         max_results = max_results or self.max_results_per_search
@@ -593,8 +562,7 @@ class TikTokCrawler(BasePlatformCrawler):
             return []
     
     async def check_rate_limits(self) -> bool:
-        """Check if crawler is within rate limits."""
-        now = datetime.utcnow()
+        """Check if crawler is within rate limits."""        now = datetime.utcnow()
         
         # Remove requests older than 1 minute
         self.last_requests = [
@@ -605,8 +573,7 @@ class TikTokCrawler(BasePlatformCrawler):
         return len(self.last_requests) < self.requests_per_minute
     
     async def search_by_hashtag(self, hashtag: str, max_results: int = 20) -> List[CrawlResult]:
-        """Search content by hashtag."""
-        if not hashtag.startswith('#'):
+        """Search content by hashtag."""        if not hashtag.startswith('#'):
             hashtag = f"#{hashtag}"
         
         return await self.search_content(
@@ -616,15 +583,13 @@ class TikTokCrawler(BasePlatformCrawler):
         )
     
     async def search_by_sound(self, sound_name: str, max_results: int = 20) -> List[CrawlResult]:
-        """Search content by sound/music."""
-        return await self.search_content(
+        """Search content by sound/music."""        return await self.search_content(
             query=f"sound:{sound_name}",
             max_results=max_results
         )
     
     async def monitor_trending(self, callback_func: callable = None) -> List[CrawlResult]:
-        """Monitor trending TikTok content."""
-        try:
+        """Monitor trending TikTok content."""        try:
             # Search for trending content
             trending_results = await self.search_content(
                 query="trending",
@@ -642,8 +607,7 @@ class TikTokCrawler(BasePlatformCrawler):
             return []
     
     async def get_crawler_stats(self) -> Dict[str, Any]:
-        """Get crawler statistics."""
-        now = datetime.utcnow()
+        """Get crawler statistics."""        now = datetime.utcnow()
         recent_requests = [
             req for req in self.last_requests
             if now - req < timedelta(hours=1)
@@ -658,8 +622,7 @@ class TikTokCrawler(BasePlatformCrawler):
         }
     
     def cleanup(self):
-        """Cleanup crawler resources."""
-        if self.selenium_crawler:
+        """Cleanup crawler resources."""        if self.selenium_crawler:
             self.selenium_crawler.close()
         
         logger.info("TikTok crawler cleanup completed")

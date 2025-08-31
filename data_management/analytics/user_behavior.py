@@ -1,5 +1,4 @@
-"""
-User Behavior Analytics Collector - Advanced User Intelligence
+"""User Behavior Analytics Collector - Advanced User Intelligence
 =============================================================
 
 Comprehensive user behavior tracking and analysis system for
@@ -15,9 +14,7 @@ Features:
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: Proprietary - All rights reserved
-"""
-
-import asyncio
+"""import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, field
@@ -38,8 +35,7 @@ from ...models.analytics import UserEvent, UserSegment
 
 
 class BehaviorCategory(Enum):
-    """User behavior analysis categories."""
-    NAVIGATION = "navigation"
+    """User behavior analysis categories."""    NAVIGATION = "navigation"
     CONTENT_CONSUMPTION = "content_consumption"
     CREATION_PATTERNS = "creation_patterns"
     ENGAGEMENT = "engagement"
@@ -48,8 +44,7 @@ class BehaviorCategory(Enum):
 
 
 class UserSegment(Enum):
-    """User segmentation categories."""
-    POWER_CREATOR = "power_creator"
+    """User segmentation categories."""    POWER_CREATOR = "power_creator"
     CASUAL_CREATOR = "casual_creator"
     CONTENT_CONSUMER = "content_consumer"
     INACTIVE_USER = "inactive_user"
@@ -59,8 +54,7 @@ class UserSegment(Enum):
 
 @dataclass
 class BehaviorMetric:
-    """Structured behavior metric data."""
-    user_id: str
+    """Structured behavior metric data."""    user_id: str
     metric_name: str
     value: float
     category: BehaviorCategory
@@ -71,8 +65,7 @@ class BehaviorMetric:
 
 @dataclass
 class UserProfile:
-    """Comprehensive user behavioral profile."""
-    user_id: str
+    """Comprehensive user behavioral profile."""    user_id: str
     segment: UserSegment
     engagement_score: float
     churn_probability: float
@@ -82,13 +75,11 @@ class UserProfile:
 
 
 class UserBehaviorCollector:
-    """
-    Advanced user behavior analytics system.
+    """    Advanced user behavior analytics system.
     
     Provides deep insights into user patterns, preferences,
     and optimization opportunities using machine learning.
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self._user_profiles_cache = {}
@@ -100,8 +91,7 @@ class UserBehaviorCollector:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> List[BehaviorMetric]:
-        """
-        Collect comprehensive user behavior metrics.
+        """        Collect comprehensive user behavior metrics.
         
         Args:
             user_id: Specific user to analyze (None for all users)
@@ -110,8 +100,7 @@ class UserBehaviorCollector:
             
         Returns:
             List of behavior metrics
-        """
-        if not start_date:
+        """        if not start_date:
             start_date = datetime.now() - timedelta(days=30)
         if not end_date:
             end_date = datetime.now()
@@ -162,8 +151,7 @@ class UserBehaviorCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[BehaviorMetric]:
-        """Collect user navigation and journey patterns."""
-        
+        """Collect user navigation and journey patterns."""        
         async with get_database_session() as session:
             # Build base query
             base_query = select(UserEvent).where(
@@ -224,8 +212,7 @@ class UserBehaviorCollector:
             return metrics
             
     def _calculate_session_duration(self, events: List[UserEvent]) -> float:
-        """Calculate average session duration from events."""
-        if len(events) < 2:
+        """Calculate average session duration from events."""        if len(events) < 2:
             return 0.0
             
         sessions = defaultdict(list)
@@ -242,8 +229,7 @@ class UserBehaviorCollector:
         return sum(durations) / len(durations) if durations else 0.0
         
     def _calculate_bounce_rate(self, events: List[UserEvent]) -> float:
-        """Calculate bounce rate from navigation events."""
-        sessions = defaultdict(int)
+        """Calculate bounce rate from navigation events."""        sessions = defaultdict(int)
         for event in events:
             sessions[event.session_id] += 1
             
@@ -258,8 +244,7 @@ class UserBehaviorCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[BehaviorMetric]:
-        """Collect content consumption behavior patterns."""
-        
+        """Collect content consumption behavior patterns."""        
         async with get_database_session() as session:
             # Content views query
             views_query = select(
@@ -322,8 +307,7 @@ class UserBehaviorCollector:
         user_id: str,
         session: AsyncSession
     ) -> float:
-        """Calculate content diversity score for user."""
-        
+        """Calculate content diversity score for user."""        
         # Get content types viewed by user
         content_types_query = select(
             Content.content_type,
@@ -355,8 +339,7 @@ class UserBehaviorCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[BehaviorMetric]:
-        """Collect content creation behavior patterns."""
-        
+        """Collect content creation behavior patterns."""        
         async with get_database_session() as session:
             # Content creation query
             creation_query = select(
@@ -444,8 +427,7 @@ class UserBehaviorCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[BehaviorMetric]:
-        """Collect user engagement behavior patterns."""
-        
+        """Collect user engagement behavior patterns."""        
         async with get_database_session() as session:
             # Engagement interactions query
             interactions_query = select(
@@ -507,8 +489,7 @@ class UserBehaviorCollector:
             return metrics
             
     def _calculate_engagement_score(self, interactions: Dict[str, int]) -> float:
-        """Calculate weighted engagement score."""
-        weights = {
+        """Calculate weighted engagement score."""        weights = {
             'view': 1.0,
             'like': 2.0,
             'comment': 3.0,
@@ -530,8 +511,7 @@ class UserBehaviorCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[BehaviorMetric]:
-        """Collect monetization and revenue behavior patterns."""
-        
+        """Collect monetization and revenue behavior patterns."""        
         async with get_database_session() as session:
             # Revenue generation query
             revenue_query = select(
@@ -595,8 +575,7 @@ class UserBehaviorCollector:
         self,
         user_ids: Optional[List[str]] = None
     ) -> List[UserProfile]:
-        """Generate comprehensive user behavioral profiles."""
-        
+        """Generate comprehensive user behavioral profiles."""        
         try:
             # Collect behavior metrics for users
             behavior_metrics = await self.collect_user_behavior_metrics()
@@ -643,8 +622,7 @@ class UserBehaviorCollector:
         user_id: str,
         metrics: List[BehaviorMetric]
     ) -> UserSegment:
-        """Determine user segment based on behavior patterns."""
-        
+        """Determine user segment based on behavior patterns."""        
         # Extract key metrics
         creation_frequency = 0
         engagement_score = 0
@@ -671,8 +649,7 @@ class UserBehaviorCollector:
             return UserSegment.NEW_USER
             
     def _calculate_user_engagement_score(self, metrics: List[BehaviorMetric]) -> float:
-        """Calculate comprehensive user engagement score."""
-        
+        """Calculate comprehensive user engagement score."""        
         score_components = {
             'engagement_score': 0.4,
             'creation_frequency_daily': 0.3,
@@ -696,8 +673,7 @@ class UserBehaviorCollector:
         user_id: str,
         metrics: List[BehaviorMetric]
     ) -> float:
-        """Predict user churn probability using behavioral patterns."""
-        
+        """Predict user churn probability using behavioral patterns."""        
         # Simple churn prediction based on engagement trends
         # In production, this would use ML models
         
@@ -725,8 +701,7 @@ class UserBehaviorCollector:
         user_id: str,
         metrics: List[BehaviorMetric]
     ) -> float:
-        """Predict user lifetime value."""
-        
+        """Predict user lifetime value."""        
         # Extract revenue and engagement metrics
         revenue_generated = 0
         engagement_score = 0
@@ -744,8 +719,7 @@ class UserBehaviorCollector:
         return predicted_ltv
         
     def _extract_behavior_patterns(self, metrics: List[BehaviorMetric]) -> Dict[str, Any]:
-        """Extract behavioral patterns from metrics."""
-        
+        """Extract behavioral patterns from metrics."""        
         patterns = {
             "primary_activities": [],
             "engagement_trends": {},

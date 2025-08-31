@@ -1,5 +1,4 @@
-"""
-Payment Processing Exceptions - Industrial Error Handling
+"""Payment Processing Exceptions - Industrial Error Handling
 
 Comprehensive exception classes for payment processing, fraud detection,
 compliance violations, and provider-specific errors.
@@ -11,14 +10,11 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-from typing import Optional, Dict, Any
+"""from typing import Optional, Dict, Any
 
 
 class PaymentProcessingError(Exception):
-    """Base exception for payment processing errors."""
-    
+    """Base exception for payment processing errors."""    
     def __init__(
         self,
         message: str,
@@ -34,8 +30,7 @@ class PaymentProcessingError(Exception):
 
 
 class InsufficientFundsError(PaymentProcessingError):
-    """Exception raised when account has insufficient funds."""
-    
+    """Exception raised when account has insufficient funds."""    
     def __init__(
         self,
         message: str = "Insufficient funds for transaction",
@@ -49,8 +44,7 @@ class InsufficientFundsError(PaymentProcessingError):
 
 
 class InvalidPaymentMethodError(PaymentProcessingError):
-    """Exception raised for invalid or expired payment methods."""
-    
+    """Exception raised for invalid or expired payment methods."""    
     def __init__(
         self,
         message: str = "Invalid or expired payment method",
@@ -62,8 +56,7 @@ class InvalidPaymentMethodError(PaymentProcessingError):
 
 
 class FraudDetectedError(PaymentProcessingError):
-    """Exception raised when fraud is detected."""
-    
+    """Exception raised when fraud is detected."""    
     def __init__(
         self,
         message: str = "Fraudulent activity detected",
@@ -77,8 +70,7 @@ class FraudDetectedError(PaymentProcessingError):
 
 
 class ComplianceError(PaymentProcessingError):
-    """Exception raised for compliance violations."""
-    
+    """Exception raised for compliance violations."""    
     def __init__(
         self,
         message: str = "Compliance requirement not met",
@@ -92,8 +84,7 @@ class ComplianceError(PaymentProcessingError):
 
 
 class PaymentDeclinedError(PaymentProcessingError):
-    """Exception raised when payment is declined by provider."""
-    
+    """Exception raised when payment is declined by provider."""    
     def __init__(
         self,
         message: str = "Payment was declined",
@@ -105,8 +96,7 @@ class PaymentDeclinedError(PaymentProcessingError):
 
 
 class PayoutFailedError(PaymentProcessingError):
-    """Exception raised when payout fails."""
-    
+    """Exception raised when payout fails."""    
     def __init__(
         self,
         message: str = "Payout processing failed",
@@ -120,8 +110,7 @@ class PayoutFailedError(PaymentProcessingError):
 
 
 class RateLimitExceededError(PaymentProcessingError):
-    """Exception raised when rate limits are exceeded."""
-    
+    """Exception raised when rate limits are exceeded."""    
     def __init__(
         self,
         message: str = "Rate limit exceeded",
@@ -133,8 +122,7 @@ class RateLimitExceededError(PaymentProcessingError):
 
 
 class WebhookVerificationError(PaymentProcessingError):
-    """Exception raised when webhook verification fails."""
-    
+    """Exception raised when webhook verification fails."""    
     def __init__(
         self,
         message: str = "Webhook signature verification failed",
@@ -144,8 +132,7 @@ class WebhookVerificationError(PaymentProcessingError):
 
 
 class CurrencyNotSupportedError(PaymentProcessingError):
-    """Exception raised for unsupported currency operations."""
-    
+    """Exception raised for unsupported currency operations."""    
     def __init__(
         self,
         message: str = "Currency not supported",
@@ -159,8 +146,7 @@ class CurrencyNotSupportedError(PaymentProcessingError):
 
 
 class PaymentMethodNotSupportedError(PaymentProcessingError):
-    """Exception raised for unsupported payment methods."""
-    
+    """Exception raised for unsupported payment methods."""    
     def __init__(
         self,
         message: str = "Payment method not supported",
@@ -172,8 +158,7 @@ class PaymentMethodNotSupportedError(PaymentProcessingError):
 
 
 class ConfigurationError(PaymentProcessingError):
-    """Exception raised for configuration errors."""
-    
+    """Exception raised for configuration errors."""    
     def __init__(
         self,
         message: str = "Payment processor configuration error",
@@ -183,8 +168,7 @@ class ConfigurationError(PaymentProcessingError):
 
 
 class ExternalServiceError(PaymentProcessingError):
-    """Exception raised when external payment service fails."""
-    
+    """Exception raised when external payment service fails."""    
     def __init__(
         self,
         message: str = "External payment service error",
@@ -198,8 +182,7 @@ class ExternalServiceError(PaymentProcessingError):
 
 
 class TransactionNotFoundError(PaymentProcessingError):
-    """Exception raised when transaction cannot be found."""
-    
+    """Exception raised when transaction cannot be found."""    
     def __init__(
         self,
         message: str = "Transaction not found",

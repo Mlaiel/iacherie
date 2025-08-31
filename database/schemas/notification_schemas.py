@@ -1,5 +1,4 @@
-"""
-Notification and Messaging Schemas
+"""Notification and Messaging Schemas
 
 Comprehensive Pydantic schemas for notifications, messaging system,
 and communication management in the IA Influencer Agent platform.
@@ -7,9 +6,7 @@ and communication management in the IA Influencer Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-
-from datetime import datetime, date
+"""from datetime import datetime, date
 from decimal import Decimal
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any
@@ -20,8 +17,7 @@ from pydantic.types import PositiveInt, PositiveFloat
 
 
 class NotificationTypeEnum(str, Enum):
-    """Types of notifications"""
-    SYSTEM = "system"
+    """Types of notifications"""    SYSTEM = "system"
     SECURITY = "security"
     CONTENT = "content"
     COLLABORATION = "collaboration"
@@ -39,8 +35,7 @@ class NotificationTypeEnum(str, Enum):
 
 
 class NotificationPriorityEnum(str, Enum):
-    """Notification priority levels"""
-    LOW = "low"
+    """Notification priority levels"""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
@@ -48,8 +43,7 @@ class NotificationPriorityEnum(str, Enum):
 
 
 class NotificationChannelEnum(str, Enum):
-    """Notification delivery channels"""
-    IN_APP = "in_app"
+    """Notification delivery channels"""    IN_APP = "in_app"
     EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
@@ -60,8 +54,7 @@ class NotificationChannelEnum(str, Enum):
 
 
 class NotificationStatusEnum(str, Enum):
-    """Notification status"""
-    PENDING = "pending"
+    """Notification status"""    PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
     READ = "read"
@@ -71,8 +64,7 @@ class NotificationStatusEnum(str, Enum):
 
 
 class MessageTypeEnum(str, Enum):
-    """Types of messages"""
-    DIRECT_MESSAGE = "direct_message"
+    """Types of messages"""    DIRECT_MESSAGE = "direct_message"
     GROUP_MESSAGE = "group_message"
     SYSTEM_MESSAGE = "system_message"
     COLLABORATION_MESSAGE = "collaboration_message"
@@ -83,8 +75,7 @@ class MessageTypeEnum(str, Enum):
 
 
 class MessageStatusEnum(str, Enum):
-    """Message status"""
-    DRAFT = "draft"
+    """Message status"""    DRAFT = "draft"
     SENT = "sent"
     DELIVERED = "delivered"
     READ = "read"
@@ -93,8 +84,7 @@ class MessageStatusEnum(str, Enum):
 
 
 class AttachmentTypeEnum(str, Enum):
-    """Types of message attachments"""
-    AUDIO = "audio"
+    """Types of message attachments"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     DOCUMENT = "document"
@@ -104,8 +94,7 @@ class AttachmentTypeEnum(str, Enum):
 
 
 class CommunicationPreferencesSchema(BaseModel):
-    """Schema for communication preferences"""
-    # Channel preferences
+    """Schema for communication preferences"""    # Channel preferences
     email_enabled: bool = Field(True, description="Enable email notifications")
     sms_enabled: bool = Field(False, description="Enable SMS notifications")
     push_enabled: bool = Field(True, description="Enable push notifications")
@@ -149,8 +138,7 @@ class CommunicationPreferencesSchema(BaseModel):
 
 
 class NotificationTemplateSchema(BaseModel):
-    """Schema for notification templates"""
-    template_id: str = Field(..., description="Unique template identifier")
+    """Schema for notification templates"""    template_id: str = Field(..., description="Unique template identifier")
     template_name: str = Field(..., description="Template name")
     notification_type: NotificationTypeEnum = Field(..., description="Notification type")
     
@@ -191,8 +179,7 @@ class NotificationTemplateSchema(BaseModel):
 
 
 class MessageAttachmentSchema(BaseModel):
-    """Schema for message attachments"""
-    attachment_id: str = Field(..., description="Unique attachment identifier")
+    """Schema for message attachments"""    attachment_id: str = Field(..., description="Unique attachment identifier")
     attachment_type: AttachmentTypeEnum = Field(..., description="Type of attachment")
     filename: str = Field(..., description="Original filename")
     file_url: str = Field(..., description="File URL")
@@ -229,8 +216,7 @@ class MessageAttachmentSchema(BaseModel):
 
 
 class NotificationBaseSchema(BaseModel):
-    """Base schema for notifications"""
-    notification_type: NotificationTypeEnum = Field(..., description="Type of notification")
+    """Base schema for notifications"""    notification_type: NotificationTypeEnum = Field(..., description="Type of notification")
     priority: NotificationPriorityEnum = Field(..., description="Notification priority")
     title: str = Field(..., max_length=200, description="Notification title")
     message: str = Field(..., max_length=1000, description="Notification message")
@@ -259,8 +245,7 @@ class NotificationBaseSchema(BaseModel):
 
 
 class NotificationCreateSchema(NotificationBaseSchema):
-    """Schema for creating notifications"""
-    # Delivery options
+    """Schema for creating notifications"""    # Delivery options
     immediate_delivery: bool = Field(True, description="Deliver immediately")
     retry_on_failure: bool = Field(True, description="Retry on delivery failure")
     max_retries: int = Field(3, ge=0, le=10, description="Maximum retry attempts")
@@ -290,8 +275,7 @@ class NotificationCreateSchema(NotificationBaseSchema):
 
 
 class NotificationResponseSchema(NotificationBaseSchema):
-    """Schema for notification responses"""
-    id: PositiveInt = Field(..., description="Unique notification ID")
+    """Schema for notification responses"""    id: PositiveInt = Field(..., description="Unique notification ID")
     notification_reference: str = Field(..., description="Human-readable notification reference")
     
     # Status and delivery
@@ -337,8 +321,7 @@ class NotificationResponseSchema(NotificationBaseSchema):
 
 
 class MessageBaseSchema(BaseModel):
-    """Base schema for messages"""
-    message_type: MessageTypeEnum = Field(..., description="Type of message")
+    """Base schema for messages"""    message_type: MessageTypeEnum = Field(..., description="Type of message")
     subject: Optional[str] = Field(None, max_length=200, description="Message subject")
     content: str = Field(..., max_length=5000, description="Message content")
     
@@ -366,8 +349,7 @@ class MessageBaseSchema(BaseModel):
 
 
 class MessageCreateSchema(MessageBaseSchema):
-    """Schema for creating messages"""
-    # Delivery options
+    """Schema for creating messages"""    # Delivery options
     send_immediately: bool = Field(True, description="Send immediately")
     scheduled_at: Optional[datetime] = Field(None, description="Scheduled send time")
     
@@ -395,8 +377,7 @@ class MessageCreateSchema(MessageBaseSchema):
 
 
 class MessageResponseSchema(MessageBaseSchema):
-    """Schema for message responses"""
-    id: PositiveInt = Field(..., description="Unique message ID")
+    """Schema for message responses"""    id: PositiveInt = Field(..., description="Unique message ID")
     message_reference: str = Field(..., description="Human-readable message reference")
     
     # Status and delivery
@@ -439,8 +420,7 @@ class MessageResponseSchema(MessageBaseSchema):
 
 
 class ConversationThreadSchema(BaseModel):
-    """Schema for conversation threads"""
-    thread_id: str = Field(..., description="Unique thread identifier")
+    """Schema for conversation threads"""    thread_id: str = Field(..., description="Unique thread identifier")
     thread_title: Optional[str] = Field(None, description="Thread title")
     thread_type: str = Field(..., description="Type of conversation thread")
     
@@ -482,8 +462,7 @@ class ConversationThreadSchema(BaseModel):
 
 
 class NotificationBatchSchema(BaseModel):
-    """Schema for batch notification operations"""
-    batch_id: str = Field(..., description="Unique batch identifier")
+    """Schema for batch notification operations"""    batch_id: str = Field(..., description="Unique batch identifier")
     notifications: List[NotificationCreateSchema] = Field(..., description="Notifications to send")
     batch_options: Optional[Dict[str, Any]] = Field(None, description="Batch processing options")
     
@@ -505,8 +484,7 @@ class NotificationBatchSchema(BaseModel):
 
 
 class CommunicationAnalyticsSchema(BaseModel):
-    """Schema for communication analytics"""
-    analytics_period: str = Field(..., description="Analytics period")
+    """Schema for communication analytics"""    analytics_period: str = Field(..., description="Analytics period")
     
     # Notification metrics
     total_notifications_sent: int = Field(0, description="Total notifications sent")

@@ -1,12 +1,9 @@
-"""
-IA Influencer Agent - DMCA Automation System
+"""IA Influencer Agent - DMCA Automation System
 Automated Digital Millennium Copyright Act compliance and takedown management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -30,16 +27,14 @@ logger = get_logger(__name__)
 
 
 class DMCARequestType(str, Enum):
-    """DMCA request types"""
-    TAKEDOWN = "takedown"
+    """DMCA request types"""    TAKEDOWN = "takedown"
     COUNTER_NOTICE = "counter_notice"
     REPEAT_INFRINGER = "repeat_infringer"
     SAFE_HARBOR = "safe_harbor"
 
 
 class TakedownStatus(str, Enum):
-    """DMCA takedown status"""
-    PENDING = "pending"
+    """DMCA takedown status"""    PENDING = "pending"
     SENT = "sent"
     ACKNOWLEDGED = "acknowledged"
     COMPLIED = "complied"
@@ -49,8 +44,7 @@ class TakedownStatus(str, Enum):
 
 
 class InfringementType(str, Enum):
-    """Copyright infringement types"""
-    EXACT_COPY = "exact_copy"
+    """Copyright infringement types"""    EXACT_COPY = "exact_copy"
     SUBSTANTIAL_SIMILARITY = "substantial_similarity"
     DERIVATIVE_WORK = "derivative_work"
     UNAUTHORIZED_DISTRIBUTION = "unauthorized_distribution"
@@ -60,8 +54,7 @@ class InfringementType(str, Enum):
 
 @dataclass
 class InfringementEvidence:
-    """Evidence of copyright infringement"""
-    original_url: str
+    """Evidence of copyright infringement"""    original_url: str
     infringing_url: str
     similarity_score: float
     fingerprint_match: bool
@@ -74,8 +67,7 @@ class InfringementEvidence:
 
 @dataclass
 class DMCANoticeTemplate:
-    """DMCA takedown notice template"""
-    template_id: str
+    """DMCA takedown notice template"""    template_id: str
     name: str
     subject_line: str
     body_template: str
@@ -87,8 +79,7 @@ class DMCANoticeTemplate:
 
 
 class DMCAAutomation:
-    """Automated DMCA compliance and takedown system"""
-    
+    """Automated DMCA compliance and takedown system"""    
     def __init__(self):
         self.logger = logger
         self.audit_logger = AuditLogger()
@@ -133,8 +124,7 @@ class DMCAAutomation:
         fingerprint_hash: str,
         monitoring_platforms: List[str] = None
     ) -> List[InfringementEvidence]:
-        """Detect copyright infringement using AI fingerprinting"""
-        try:
+        """Detect copyright infringement using AI fingerprinting"""        try:
             infringements = []
             platforms = monitoring_platforms or list(self.platform_configs.keys())
             
@@ -185,8 +175,7 @@ class DMCAAutomation:
         platform: str,
         custom_message: str = None
     ) -> Dict[str, Any]:
-        """Generate DMCA takedown notice for platform"""
-        try:
+        """Generate DMCA takedown notice for platform"""        try:
             # Get content details
             async with get_db_session() as session:
                 content_result = await session.execute(
@@ -279,8 +268,7 @@ class DMCAAutomation:
         platform: str,
         auto_submit: bool = None
     ) -> Dict[str, Any]:
-        """Submit DMCA takedown notice automatically if configured"""
-        try:
+        """Submit DMCA takedown notice automatically if configured"""        try:
             auto_submit = auto_submit if auto_submit is not None else self.automated_takedowns
             
             if not auto_submit:
@@ -352,8 +340,7 @@ class DMCAAutomation:
         self,
         dmca_request_id: str
     ) -> Dict[str, Any]:
-        """Track status of DMCA takedown request"""
-        try:
+        """Track status of DMCA takedown request"""        try:
             async with get_db_session() as session:
                 # Get DMCA request
                 dmca_result = await session.execute(
@@ -410,8 +397,7 @@ class DMCAAutomation:
         dmca_request_id: str,
         counter_notice_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process DMCA counter-notice received"""
-        try:
+        """Process DMCA counter-notice received"""        try:
             async with get_db_session() as session:
                 # Get original DMCA request
                 dmca_result = await session.execute(
@@ -493,8 +479,7 @@ class DMCAAutomation:
         platform: str,
         fingerprint_hash: str
     ) -> List[Dict[str, Any]]:
-        """Search platform for content matches using fingerprint"""
-        try:
+        """Search platform for content matches using fingerprint"""        try:
             # This would integrate with platform-specific search APIs
             # or web scraping to find matching content
             matches = []
@@ -519,8 +504,7 @@ class DMCAAutomation:
         match: Dict[str, Any],
         platform: str
     ) -> InfringementEvidence:
-        """Collect evidence of copyright infringement"""
-        try:
+        """Collect evidence of copyright infringement"""        try:
             # Capture screenshot
             screenshot_url = await capture_webpage_evidence(match["url"])
             
@@ -548,14 +532,12 @@ class DMCAAutomation:
             raise
     
     def _load_dmca_templates(self) -> Dict[str, DMCANoticeTemplate]:
-        """Load DMCA notice templates for different platforms"""
-        return {
+        """Load DMCA notice templates for different platforms"""        return {
             "standard": DMCANoticeTemplate(
                 template_id="standard",
                 name="Standard DMCA Takedown Notice",
                 subject_line="DMCA Takedown Notice - Copyright Infringement",
-                body_template="""
-DMCA TAKEDOWN NOTICE
+                body_template="""DMCA TAKEDOWN NOTICE
 
 Date: {date}
 Notice ID: {notice_id}

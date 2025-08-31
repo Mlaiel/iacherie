@@ -1,5 +1,4 @@
-"""
-Subscription Management Database Models and Operations
+"""Subscription Management Database Models and Operations
 
 Gestion complète des abonnements avec support multi-tiers,
 facturation automatisée et analytics de revenue.
@@ -13,9 +12,7 @@ Toute utilisation, reproduction ou distribution sans autorisation
 écrite explicite est strictement interdite et fera l'objet de 
 poursuites judiciaires selon la loi allemande.
 Email: mlaiel@live.de pour autorisation d'utilisation.
-"""
-
-from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, JSON, Enum, ForeignKey, Decimal
+"""from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, JSON, Enum, ForeignKey, Decimal
 from sqlalchemy.orm import relationship, Session
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime, timedelta
@@ -31,8 +28,7 @@ Base = declarative_base()
 
 
 class SubscriptionTier(PyEnum):
-    """Niveaux d'abonnement disponibles."""
-    FREE = "free"
+    """Niveaux d'abonnement disponibles."""    FREE = "free"
     BASIC = "basic"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
@@ -41,8 +37,7 @@ class SubscriptionTier(PyEnum):
 
 
 class SubscriptionStatus(PyEnum):
-    """Statuts possibles des abonnements."""
-    ACTIVE = "active"
+    """Statuts possibles des abonnements."""    ACTIVE = "active"
     PENDING = "pending"
     CANCELLED = "cancelled"
     EXPIRED = "expired"
@@ -52,16 +47,14 @@ class SubscriptionStatus(PyEnum):
 
 
 class BillingCycle(PyEnum):
-    """Cycles de facturation disponibles."""
-    MONTHLY = "monthly"
+    """Cycles de facturation disponibles."""    MONTHLY = "monthly"
     QUARTERLY = "quarterly"
     YEARLY = "yearly"
     LIFETIME = "lifetime"
 
 
 class PaymentStatus(PyEnum):
-    """Statuts des paiements."""
-    PENDING = "pending"
+    """Statuts des paiements."""    PENDING = "pending"
     COMPLETED = "completed"
     FAILED = "failed"
     REFUNDED = "refunded"
@@ -69,10 +62,8 @@ class PaymentStatus(PyEnum):
 
 
 class SubscriptionPlan(Base):
-    """
-    Plans d'abonnement avec fonctionnalités et limites.
-    """
-    __tablename__ = "subscription_plans"
+    """    Plans d'abonnement avec fonctionnalités et limites.
+    """    __tablename__ = "subscription_plans"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     
@@ -118,8 +109,7 @@ class SubscriptionPlan(Base):
         return f"<SubscriptionPlan({self.name}, {self.tier.value})>"
     
     def get_price_for_cycle(self, cycle: BillingCycle) -> DecimalType:
-        """Retourne le prix pour un cycle de facturation donné."""
-        if cycle == BillingCycle.MONTHLY:
+        """Retourne le prix pour un cycle de facturation donné."""        if cycle == BillingCycle.MONTHLY:
             return self.price_monthly
         elif cycle == BillingCycle.QUARTERLY:
             return self.price_quarterly or (self.price_monthly * 3 * DecimalType('0.9'))  # 10% discount
@@ -130,10 +120,8 @@ class SubscriptionPlan(Base):
 
 
 class UserSubscription(Base):
-    """
-    Abonnements utilisateur avec gestion complète du cycle de vie.
-    """
-    __tablename__ = "user_subscriptions"
+    """    Abonnements utilisateur avec gestion complète du cycle de vie.
+    """    __tablename__ = "user_subscriptions"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     user_id = Column(String, ForeignKey("users.id"), nullable=False)
@@ -190,35 +178,30 @@ class UserSubscription(Base):
     
     @property
     def is_trial(self) -> bool:
-        """Vérifie si l'abonnement est en période d'essai."""
-        if not self.trial_end:
+        """Vérifie si l'abonnement est en période d'essai."""        if not self.trial_end:
             return False
         return datetime.utcnow() <= self.trial_end
     
     @property
     def is_active(self) -> bool:
-        """Vérifie si l'abonnement est actif."""
-        return self.status in [SubscriptionStatus.ACTIVE, SubscriptionStatus.TRIAL]
+        """Vérifie si l'abonnement est actif."""        return self.status in [SubscriptionStatus.ACTIVE, SubscriptionStatus.TRIAL]
     
     @property
     def days_until_renewal(self) -> int:
-        """Retourne le nombre de jours jusqu'au renouvellement."""
-        if not self.current_period_end:
+        """Retourne le nombre de jours jusqu'au renouvellement."""        if not self.current_period_end:
             return 0
         delta = self.current_period_end - datetime.utcnow()
         return max(0, delta.days)
     
     def can_use_feature(self, feature_name: str) -> bool:
-        """Vérifie si l'utilisateur peut utiliser une fonctionnalité."""
-        if not self.is_active or not self.plan:
+        """Vérifie si l'utilisateur peut utiliser une fonctionnalité."""        if not self.is_active or not self.plan:
             return False
         
         features = self.plan.features or []
         return feature_name in features
     
     def get_usage_percentage(self, usage_type: str) -> float:
-        """Retourne le pourcentage d'utilisation d'une limite."""
-        if not self.plan:
+        """Retourne le pourcentage d'utilisation d'une limite."""        if not self.plan:
             return 0.0
         
         if usage_type == "uploads":
@@ -243,10 +226,8 @@ class UserSubscription(Base):
 
 
 class SubscriptionPayment(Base):
-    """
-    Historique des paiements d'abonnements.
-    """
-    __tablename__ = "subscription_payments"
+    """    Historique des paiements d'abonnements.
+    """    __tablename__ = "subscription_payments"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     subscription_id = Column(String, ForeignKey("user_subscriptions.id"), nullable=False)
@@ -292,10 +273,8 @@ class SubscriptionPayment(Base):
 
 
 class SubscriptionUsage(Base):
-    """
-    Suivi de l'utilisation des fonctionnalités par abonnement.
-    """
-    __tablename__ = "subscription_usage"
+    """    Suivi de l'utilisation des fonctionnalités par abonnement.
+    """    __tablename__ = "subscription_usage"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     subscription_id = Column(String, ForeignKey("user_subscriptions.id"), nullable=False)
@@ -330,11 +309,9 @@ class SubscriptionUsage(Base):
 
 
 class SubscriptionRepository:
-    """
-    Repository pattern pour la gestion des abonnements.
+    """    Repository pattern pour la gestion des abonnements.
     Implémentation professionnelle avec gestion des cycles de vie.
-    """
-    
+    """    
     def __init__(self, session: Session):
         self.session = session
         self.logger = logging.getLogger(__name__)
@@ -342,8 +319,7 @@ class SubscriptionRepository:
     def create_subscription(self, user_id: str, plan_id: str, 
                           billing_cycle: BillingCycle = BillingCycle.MONTHLY,
                           start_trial: bool = False) -> UserSubscription:
-        """
-        Crée un nouvel abonnement utilisateur.
+        """        Crée un nouvel abonnement utilisateur.
         
         Args:
             user_id: ID de l'utilisateur
@@ -353,8 +329,7 @@ class SubscriptionRepository:
             
         Returns:
             UserSubscription: Abonnement créé
-        """
-        try:
+        """        try:
             plan = self.session.query(SubscriptionPlan).filter(
                 SubscriptionPlan.id == plan_id
             ).first()
@@ -407,15 +382,13 @@ class SubscriptionRepository:
             raise
     
     def get_user_active_subscription(self, user_id: str) -> Optional[UserSubscription]:
-        """Récupère l'abonnement actif d'un utilisateur."""
-        return self.session.query(UserSubscription).filter(
+        """Récupère l'abonnement actif d'un utilisateur."""        return self.session.query(UserSubscription).filter(
             UserSubscription.user_id == user_id,
             UserSubscription.status.in_([SubscriptionStatus.ACTIVE, SubscriptionStatus.TRIAL])
         ).first()
     
     def cancel_subscription(self, subscription_id: str, immediate: bool = False) -> bool:
-        """
-        Annule un abonnement.
+        """        Annule un abonnement.
         
         Args:
             subscription_id: ID de l'abonnement
@@ -423,8 +396,7 @@ class SubscriptionRepository:
             
         Returns:
             bool: True si annulé avec succès
-        """
-        try:
+        """        try:
             subscription = self.session.query(UserSubscription).filter(
                 UserSubscription.id == subscription_id
             ).first()
@@ -453,8 +425,7 @@ class SubscriptionRepository:
     
     def upgrade_subscription(self, subscription_id: str, new_plan_id: str,
                            immediate: bool = True) -> bool:
-        """
-        Met à niveau un abonnement vers un plan supérieur.
+        """        Met à niveau un abonnement vers un plan supérieur.
         
         Args:
             subscription_id: ID de l'abonnement
@@ -463,8 +434,7 @@ class SubscriptionRepository:
             
         Returns:
             bool: True si mis à niveau avec succès
-        """
-        try:
+        """        try:
             subscription = self.session.query(UserSubscription).filter(
                 UserSubscription.id == subscription_id
             ).first()
@@ -498,8 +468,7 @@ class SubscriptionRepository:
             return False
     
     def record_usage(self, subscription_id: str, usage_type: str, amount: int = 1) -> bool:
-        """
-        Enregistre l'utilisation d'une fonctionnalité.
+        """        Enregistre l'utilisation d'une fonctionnalité.
         
         Args:
             subscription_id: ID de l'abonnement
@@ -508,8 +477,7 @@ class SubscriptionRepository:
             
         Returns:
             bool: True si enregistré avec succès
-        """
-        try:
+        """        try:
             subscription = self.session.query(UserSubscription).filter(
                 UserSubscription.id == subscription_id
             ).first()
@@ -536,13 +504,11 @@ class SubscriptionRepository:
             return False
     
     def process_renewals(self) -> List[str]:
-        """
-        Traite les renouvellements d'abonnements qui arrivent à échéance.
+        """        Traite les renouvellements d'abonnements qui arrivent à échéance.
         
         Returns:
             List[str]: Liste des IDs d'abonnements traités
-        """
-        try:
+        """        try:
             # Abonnements arrivant à échéance dans les prochaines 24h
             cutoff_date = datetime.utcnow() + timedelta(hours=24)
             
@@ -595,16 +561,14 @@ class SubscriptionRepository:
             return []
     
     def get_subscription_analytics(self, period_days: int = 30) -> Dict[str, Any]:
-        """
-        Retourne les analytics des abonnements sur une période donnée.
+        """        Retourne les analytics des abonnements sur une période donnée.
         
         Args:
             period_days: Nombre de jours à analyser
             
         Returns:
             Dict[str, Any]: Analytics des abonnements
-        """
-        from datetime import timedelta
+        """        from datetime import timedelta
         
         start_date = datetime.utcnow() - timedelta(days=period_days)
         

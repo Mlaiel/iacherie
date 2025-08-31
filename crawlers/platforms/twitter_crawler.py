@@ -1,5 +1,4 @@
-"""
-Twitter/X Crawler
+"""Twitter/X Crawler
 =================
 
 Professional Twitter/X content crawler with advanced monitoring capabilities.
@@ -11,9 +10,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator
 from datetime import datetime, timedelta
@@ -40,8 +37,7 @@ settings = get_settings()
 
 @dataclass
 class TwitterTweet:
-    """Twitter tweet data structure."""
-    tweet_id: str
+    """Twitter tweet data structure."""    tweet_id: str
     text: str
     author_id: str
     author_username: str
@@ -59,8 +55,7 @@ class TwitterTweet:
 
 @dataclass
 class TwitterUser:
-    """Twitter user data structure."""
-    user_id: str
+    """Twitter user data structure."""    user_id: str
     username: str
     name: str
     description: str
@@ -75,8 +70,7 @@ class TwitterUser:
 
 @dataclass 
 class TwitterSpace:
-    """Twitter Space data structure."""
-    space_id: str
+    """Twitter Space data structure."""    space_id: str
     title: str
     state: str
     host_ids: List[str]
@@ -91,8 +85,7 @@ class TwitterSpace:
     lang: str
 
 class TwitterCrawler:
-    """
-    Professional Twitter/X crawler implementation.
+    """    Professional Twitter/X crawler implementation.
     
     Features:
     - Twitter API v2 integration
@@ -105,11 +98,9 @@ class TwitterCrawler:
     - Sentiment analysis integration
     - Content similarity detection
     - Engagement rate calculations
-    """
-    
+    """    
     def __init__(self):
-        """Initialize Twitter crawler."""
-        # API credentials
+        """Initialize Twitter crawler."""        # API credentials
         self.bearer_token = settings.TWITTER_BEARER_TOKEN
         self.api_key = settings.TWITTER_API_KEY
         self.api_secret = settings.TWITTER_API_SECRET
@@ -149,8 +140,7 @@ class TwitterCrawler:
         self.selenium_options.add_argument('--disable-gpu')
     
     async def __aenter__(self):
-        """Async context manager entry."""
-        headers = {
+        """Async context manager entry."""        headers = {
             'Authorization': f'Bearer {self.bearer_token}',
             'User-Agent': self.user_agent_rotator.get_user_agent()
         }
@@ -158,8 +148,7 @@ class TwitterCrawler:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
-        if self.session:
+        """Async context manager exit."""        if self.session:
             await self.session.close()
     
     async def search_tweets(
@@ -173,8 +162,7 @@ class TwitterCrawler:
         user_fields: List[str] = None,
         expansions: List[str] = None
     ) -> List[TwitterTweet]:
-        """
-        Search tweets with advanced filtering.
+        """        Search tweets with advanced filtering.
         
         Args:
             query: Twitter search query
@@ -188,8 +176,7 @@ class TwitterCrawler:
             
         Returns:
             List of Twitter tweet objects
-        """
-        try:
+        """        try:
             # Rate limiting check
             await self.rate_limiter.wait_if_needed()
             
@@ -216,8 +203,7 @@ class TwitterCrawler:
         user_fields: List[str],
         expansions: List[str]
     ) -> List[TwitterTweet]:
-        """Search tweets using Twitter API v2."""
-        try:
+        """Search tweets using Twitter API v2."""        try:
             # Default fields
             if not tweet_fields:
                 tweet_fields = [
@@ -283,8 +269,7 @@ class TwitterCrawler:
             return []
     
     def _parse_api_tweet_data(self, tweet, includes: Dict = None) -> Optional[TwitterTweet]:
-        """Parse Twitter API tweet data."""
-        try:
+        """Parse Twitter API tweet data."""        try:
             # Get author information from includes
             author_username = ""
             author_name = ""
@@ -318,8 +303,7 @@ class TwitterCrawler:
             return None
     
     async def _search_tweets_scraping(self, query: str, max_results: int) -> List[TwitterTweet]:
-        """Search tweets using web scraping as fallback."""
-        try:
+        """Search tweets using web scraping as fallback."""        try:
             driver = webdriver.Chrome(options=self.selenium_options)
             
             # Navigate to search page
@@ -363,8 +347,7 @@ class TwitterCrawler:
             return []
     
     async def _extract_tweet_from_element(self, element) -> Optional[TwitterTweet]:
-        """Extract tweet data from DOM element."""
-        try:
+        """Extract tweet data from DOM element."""        try:
             # Extract text
             text_elem = element.find_element(By.CSS_SELECTOR, "[data-testid='tweetText']")
             text = text_elem.text if text_elem else ""
@@ -409,8 +392,7 @@ class TwitterCrawler:
             return None
     
     async def get_user_profile(self, username: str) -> Optional[TwitterUser]:
-        """Get user profile information."""
-        try:
+        """Get user profile information."""        try:
             await self.rate_limiter.wait_if_needed()
             
             if self.client:
@@ -423,8 +405,7 @@ class TwitterCrawler:
             return None
     
     async def _get_user_profile_api(self, username: str) -> Optional[TwitterUser]:
-        """Get user profile using Twitter API."""
-        try:
+        """Get user profile using Twitter API."""        try:
             user_fields = [
                 'id', 'username', 'name', 'description', 'profile_image_url',
                 'verified', 'verified_type', 'public_metrics', 'created_at',
@@ -463,8 +444,7 @@ class TwitterCrawler:
             return None
     
     async def get_trending_topics(self, woeid: int = 1) -> List[Dict]:
-        """Get trending topics for specific location."""
-        try:
+        """Get trending topics for specific location."""        try:
             await self.rate_limiter.wait_if_needed()
             
             if self.client:
@@ -480,8 +460,7 @@ class TwitterCrawler:
             return []
     
     async def _get_trending_topics_scraping(self) -> List[Dict]:
-        """Get trending topics using web scraping."""
-        try:
+        """Get trending topics using web scraping."""        try:
             driver = webdriver.Chrome(options=self.selenium_options)
             driver.get(f"{self.web_base_url}/explore/tabs/trending")
             
@@ -521,8 +500,7 @@ class TwitterCrawler:
         username: str,
         check_interval: int = 300
     ) -> AsyncGenerator[List[TwitterTweet], None]:
-        """Monitor user timeline for new tweets."""
-        last_check = datetime.now()
+        """Monitor user timeline for new tweets."""        last_check = datetime.now()
         seen_tweets = set()
         
         while True:
@@ -549,8 +527,7 @@ class TwitterCrawler:
                 await asyncio.sleep(60)
     
     async def get_user_tweets(self, username: str, max_results: int = 20) -> List[TwitterTweet]:
-        """Get recent tweets from user."""
-        try:
+        """Get recent tweets from user."""        try:
             await self.rate_limiter.wait_if_needed()
             
             if self.client:
@@ -589,8 +566,7 @@ class TwitterCrawler:
             return []
     
     async def _scrape_user_timeline(self, username: str, max_results: int) -> List[TwitterTweet]:
-        """Scrape user timeline as fallback."""
-        try:
+        """Scrape user timeline as fallback."""        try:
             driver = webdriver.Chrome(options=self.selenium_options)
             driver.get(f"{self.web_base_url}/{username}")
             
@@ -628,8 +604,7 @@ class TwitterCrawler:
             return []
     
     async def analyze_tweet_engagement(self, tweet: TwitterTweet) -> Dict:
-        """Analyze tweet engagement metrics."""
-        try:
+        """Analyze tweet engagement metrics."""        try:
             metrics = tweet.public_metrics
             
             if not metrics:
@@ -678,8 +653,7 @@ class TwitterCrawler:
         reference_tweet: TwitterTweet,
         similarity_threshold: float = 0.7
     ) -> List[Dict]:
-        """Detect tweets similar to reference tweet."""
-        try:
+        """Detect tweets similar to reference tweet."""        try:
             similar_tweets = []
             
             # Extract keywords from reference tweet
@@ -720,8 +694,7 @@ class TwitterCrawler:
             return []
     
     def _extract_keywords(self, text: str) -> List[List[str]]:
-        """Extract important keywords from tweet text."""
-        # Remove URLs, mentions, hashtags for keyword extraction
+        """Extract important keywords from tweet text."""        # Remove URLs, mentions, hashtags for keyword extraction
         clean_text = re.sub(r'http\S+|@\w+|#\w+', '', text)
         
         # Simple keyword extraction (in practice, you'd use more sophisticated NLP)
@@ -743,8 +716,7 @@ class TwitterCrawler:
         return keyword_sets
     
     def _calculate_tweet_similarity(self, tweet1: TwitterTweet, tweet2: TwitterTweet) -> float:
-        """Calculate similarity score between two tweets."""
-        # Text similarity
+        """Calculate similarity score between two tweets."""        # Text similarity
         text1_words = set(tweet1.text.lower().split())
         text2_words = set(tweet2.text.lower().split())
         text_similarity = len(text1_words & text2_words) / len(text1_words | text2_words) if text1_words | text2_words else 0
@@ -779,8 +751,7 @@ class TwitterCrawler:
         return similarity
     
     def _get_tweet_match_factors(self, tweet1: TwitterTweet, tweet2: TwitterTweet) -> List[str]:
-        """Get factors that contribute to tweet similarity."""
-        factors = []
+        """Get factors that contribute to tweet similarity."""        factors = []
         
         if tweet1.author_id == tweet2.author_id:
             factors.append('same_author')

@@ -1,5 +1,4 @@
-"""
-Production Environment Manager - IA Influencer Agent
+"""Production Environment Manager - IA Influencer Agent
 ====================================================
 Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -15,9 +14,7 @@ Contact: mlaiel@live.de
 Production environment configuration with enterprise-grade security and performance.
 Handles large-scale multi-format content processing, AI fingerprinting, and monetization.
 ====================================================
-"""
-
-import os
+"""import os
 import secrets
 import logging
 from typing import Dict, Any, List, Optional, Set
@@ -30,8 +27,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ProductionDatabaseConfig:
-    """Production database configuration with high availability"""
-    host: str = os.getenv('PROD_DB_HOST', 'postgres-cluster.internal')
+    """Production database configuration with high availability"""    host: str = os.getenv('PROD_DB_HOST', 'postgres-cluster.internal')
     port: int = int(os.getenv('PROD_DB_PORT', '5432'))
     database: str = os.getenv('PROD_DB_NAME', 'ia_influencer_prod')
     username: str = os.getenv('PROD_DB_USER', 'ia_user')
@@ -52,8 +48,7 @@ class ProductionDatabaseConfig:
 
 @dataclass
 class ProductionRedisConfig:
-    """Production Redis configuration with clustering"""
-    cluster_nodes: List[str] = field(default_factory=lambda: [
+    """Production Redis configuration with clustering"""    cluster_nodes: List[str] = field(default_factory=lambda: [
         os.getenv('PROD_REDIS_NODE_1', 'redis-cluster-1.internal:6379'),
         os.getenv('PROD_REDIS_NODE_2', 'redis-cluster-2.internal:6379'),
         os.getenv('PROD_REDIS_NODE_3', 'redis-cluster-3.internal:6379')
@@ -73,8 +68,7 @@ class ProductionRedisConfig:
 
 @dataclass
 class ProductionAIConfig:
-    """Production AI and ML configuration with optimization"""
-    openai_api_key: str = os.getenv('OPENAI_API_KEY')
+    """Production AI and ML configuration with optimization"""    openai_api_key: str = os.getenv('OPENAI_API_KEY')
     huggingface_token: str = os.getenv('HUGGINGFACE_TOKEN')
     tensorflow_gpu_enabled: bool = bool(os.getenv('PROD_GPU_ENABLED', 'true').lower() == 'true')
     model_cache_dir: str = os.getenv('PROD_MODEL_CACHE', '/app/models/cache')
@@ -92,8 +86,7 @@ class ProductionAIConfig:
 
 @dataclass
 class ProductionStorageConfig:
-    """Production storage configuration with cloud backends"""
-    storage_backend: str = os.getenv('STORAGE_BACKEND', 'aws_s3')
+    """Production storage configuration with cloud backends"""    storage_backend: str = os.getenv('STORAGE_BACKEND', 'aws_s3')
     aws_access_key_id: str = os.getenv('AWS_ACCESS_KEY_ID')
     aws_secret_access_key: str = os.getenv('AWS_SECRET_ACCESS_KEY')
     aws_region: str = os.getenv('AWS_REGION', 'eu-central-1')
@@ -113,8 +106,7 @@ class ProductionStorageConfig:
 
 @dataclass
 class ProductionSecurityConfig:
-    """Production security configuration with maximum hardening"""
-    jwt_secret_key: str = os.getenv('PROD_JWT_SECRET') or secrets.token_urlsafe(64)
+    """Production security configuration with maximum hardening"""    jwt_secret_key: str = os.getenv('PROD_JWT_SECRET') or secrets.token_urlsafe(64)
     jwt_algorithm: str = "HS256"
     jwt_expiry_hours: int = int(os.getenv('PROD_JWT_EXPIRY', '8'))
     oauth2_secret_key: str = os.getenv('PROD_OAUTH2_SECRET') or secrets.token_urlsafe(64)
@@ -144,8 +136,7 @@ class ProductionSecurityConfig:
 
 @dataclass
 class ProductionMonitoringConfig:
-    """Production monitoring and observability configuration"""
-    log_level: str = os.getenv('LOG_LEVEL', 'INFO')
+    """Production monitoring and observability configuration"""    log_level: str = os.getenv('LOG_LEVEL', 'INFO')
     log_format: str = "json"
     log_to_file: bool = True
     log_file_path: str = "/app/logs/production.log"
@@ -169,8 +160,7 @@ class ProductionMonitoringConfig:
 
 @dataclass
 class ProductionIntegrationConfig:
-    """Production external service integration configuration"""
-    spotify_client_id: str = os.getenv('SPOTIFY_CLIENT_ID')
+    """Production external service integration configuration"""    spotify_client_id: str = os.getenv('SPOTIFY_CLIENT_ID')
     spotify_client_secret: str = os.getenv('SPOTIFY_CLIENT_SECRET')
     youtube_api_key: str = os.getenv('YOUTUBE_API_KEY')
     instagram_app_id: str = os.getenv('INSTAGRAM_APP_ID')
@@ -192,8 +182,7 @@ class ProductionIntegrationConfig:
 
 
 class ProductionEnvironmentManager:
-    """
-    Production environment manager for enterprise-grade deployment.
+    """    Production environment manager for enterprise-grade deployment.
     
     Features:
     - High availability with load balancing
@@ -204,8 +193,7 @@ class ProductionEnvironmentManager:
     - Performance optimization
     - Compliance and auditing
     - Multi-region deployment support
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None):
         self.config_path = config_path or "/config/production.yml"
         self.environment = "production"
@@ -230,8 +218,7 @@ class ProductionEnvironmentManager:
         logger.info(f"Production environment manager initialized: {self.environment}")
     
     def load_configuration(self) -> Dict[str, Any]:
-        """Load production environment configuration with security validation"""
-        try:
+        """Load production environment configuration with security validation"""        try:
             # Validate required environment variables
             self._validate_required_environment_variables()
             
@@ -363,8 +350,7 @@ class ProductionEnvironmentManager:
             raise
     
     def setup_high_availability(self) -> bool:
-        """Setup high availability configuration"""
-        try:
+        """Setup high availability configuration"""        try:
             # Configure load balancers
             self._setup_load_balancers()
             
@@ -385,8 +371,7 @@ class ProductionEnvironmentManager:
             return False
     
     def setup_auto_scaling(self) -> bool:
-        """Setup auto-scaling configuration"""
-        try:
+        """Setup auto-scaling configuration"""        try:
             # Configure horizontal pod autoscaler
             self._setup_horizontal_autoscaler()
             
@@ -407,8 +392,7 @@ class ProductionEnvironmentManager:
             return False
     
     def setup_security_hardening(self) -> bool:
-        """Setup enterprise security hardening"""
-        try:
+        """Setup enterprise security hardening"""        try:
             # Configure network policies
             self._setup_network_policies()
             
@@ -432,8 +416,7 @@ class ProductionEnvironmentManager:
             return False
     
     def setup_monitoring_stack(self) -> bool:
-        """Setup comprehensive monitoring stack"""
-        try:
+        """Setup comprehensive monitoring stack"""        try:
             # Setup Prometheus monitoring
             self._setup_prometheus_monitoring()
             
@@ -460,8 +443,7 @@ class ProductionEnvironmentManager:
             return False
     
     def setup_disaster_recovery(self) -> bool:
-        """Setup disaster recovery and backup"""
-        try:
+        """Setup disaster recovery and backup"""        try:
             # Configure database backups
             self._setup_database_backups()
             
@@ -485,8 +467,7 @@ class ProductionEnvironmentManager:
             return False
     
     def validate_production_readiness(self) -> Dict[str, bool]:
-        """Validate production readiness checklist"""
-        readiness_checks = {
+        """Validate production readiness checklist"""        readiness_checks = {
             'database_cluster': False,
             'redis_cluster': False,
             'storage_redundancy': False,
@@ -524,8 +505,7 @@ class ProductionEnvironmentManager:
             return readiness_checks
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Get production environment health status"""
-        return {
+        """Get production environment health status"""        return {
             'environment': self.environment,
             'status': 'healthy',
             'high_availability': self.high_availability_enabled,
@@ -543,8 +523,7 @@ class ProductionEnvironmentManager:
     
     # Private helper methods
     def _validate_required_environment_variables(self):
-        """Validate required environment variables are set"""
-        required_vars = [
+        """Validate required environment variables are set"""        required_vars = [
             'PROD_DB_HOST', 'PROD_DB_PASSWORD', 'PROD_REDIS_PASSWORD',
             'PROD_JWT_SECRET', 'AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_KEY'
         ]
@@ -554,100 +533,76 @@ class ProductionEnvironmentManager:
             raise ValueError(f"Missing required environment variables: {missing_vars}")
     
     def _setup_load_balancers(self):
-        """Setup load balancers"""
-        pass
+        """Setup load balancers"""        pass
     
     def _setup_database_clustering(self):
-        """Setup database clustering"""
-        pass
+        """Setup database clustering"""        pass
     
     def _setup_redis_clustering(self):
-        """Setup Redis clustering"""
-        pass
+        """Setup Redis clustering"""        pass
     
     def _setup_auto_failover(self):
-        """Setup auto-failover"""
-        pass
+        """Setup auto-failover"""        pass
     
     def _setup_horizontal_autoscaler(self):
-        """Setup horizontal pod autoscaler"""
-        pass
+        """Setup horizontal pod autoscaler"""        pass
     
     def _setup_vertical_autoscaler(self):
-        """Setup vertical pod autoscaler"""
-        pass
+        """Setup vertical pod autoscaler"""        pass
     
     def _setup_cluster_autoscaler(self):
-        """Setup cluster autoscaler"""
-        pass
+        """Setup cluster autoscaler"""        pass
     
     def _setup_custom_metrics_scaling(self):
-        """Setup custom metrics scaling"""
-        pass
+        """Setup custom metrics scaling"""        pass
     
     def _setup_network_policies(self):
-        """Setup network policies"""
-        pass
+        """Setup network policies"""        pass
     
     def _setup_pod_security_policies(self):
-        """Setup pod security policies"""
-        pass
+        """Setup pod security policies"""        pass
     
     def _setup_rbac(self):
-        """Setup RBAC"""
-        pass
+        """Setup RBAC"""        pass
     
     def _setup_secrets_management(self):
-        """Setup secrets management"""
-        pass
+        """Setup secrets management"""        pass
     
     def _setup_security_scanning(self):
-        """Setup security scanning"""
-        pass
+        """Setup security scanning"""        pass
     
     def _setup_prometheus_monitoring(self):
-        """Setup Prometheus monitoring"""
-        pass
+        """Setup Prometheus monitoring"""        pass
     
     def _setup_grafana_dashboards(self):
-        """Setup Grafana dashboards"""
-        pass
+        """Setup Grafana dashboards"""        pass
     
     def _setup_jaeger_tracing(self):
-        """Setup Jaeger tracing"""
-        pass
+        """Setup Jaeger tracing"""        pass
     
     def _setup_elk_stack(self):
-        """Setup ELK stack"""
-        pass
+        """Setup ELK stack"""        pass
     
     def _setup_alerting(self):
-        """Setup alerting"""
-        pass
+        """Setup alerting"""        pass
     
     def _setup_sla_monitoring(self):
-        """Setup SLA monitoring"""
-        pass
+        """Setup SLA monitoring"""        pass
     
     def _setup_database_backups(self):
-        """Setup database backups"""
-        pass
+        """Setup database backups"""        pass
     
     def _setup_storage_backups(self):
-        """Setup storage backups"""
-        pass
+        """Setup storage backups"""        pass
     
     def _setup_cross_region_replication(self):
-        """Setup cross-region replication"""
-        pass
+        """Setup cross-region replication"""        pass
     
     def _setup_backup_verification(self):
-        """Setup backup verification"""
-        pass
+        """Setup backup verification"""        pass
     
     def _setup_recovery_procedures(self):
-        """Setup recovery procedures"""
-        pass
+        """Setup recovery procedures"""        pass
     
     # Validation methods
     def _validate_database_cluster(self) -> bool:

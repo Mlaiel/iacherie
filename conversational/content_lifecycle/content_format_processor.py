@@ -1,5 +1,4 @@
-"""
-Content Format Processor Module - Multi-Format Content Processing System
+"""Content Format Processor Module - Multi-Format Content Processing System
 
 Enterprise-grade multi-format content processing system supporting the complete
 creator economy workflow: upload → AI processing → protection → monetization.
@@ -12,9 +11,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import uuid
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Set, Union, Any, Tuple, BinaryIO
@@ -41,8 +38,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentFormat(Enum):
-    """Supported content formats"""
-    AUDIO = "audio"
+    """Supported content formats"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -53,8 +49,7 @@ class ContentFormat(Enum):
 
 
 class ProcessingStage(Enum):
-    """Content processing stages"""
-    UPLOAD = "upload"
+    """Content processing stages"""    UPLOAD = "upload"
     VALIDATION = "validation"
     FORMAT_DETECTION = "format_detection"
     METADATA_EXTRACTION = "metadata_extraction"
@@ -69,8 +64,7 @@ class ProcessingStage(Enum):
 
 
 class ProcessingPriority(Enum):
-    """Processing priority levels"""
-    LOW = "low"
+    """Processing priority levels"""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
@@ -79,8 +73,7 @@ class ProcessingPriority(Enum):
 
 @dataclass
 class ContentFile:
-    """Content file representation"""
-    file_id: str
+    """Content file representation"""    file_id: str
     original_filename: str
     file_path: str
     file_size: int
@@ -94,8 +87,7 @@ class ContentFile:
 
 @dataclass
 class ProcessingResult:
-    """Content processing result"""
-    result_id: str
+    """Content processing result"""    result_id: str
     content_id: str
     processing_stage: ProcessingStage
     success: bool
@@ -109,8 +101,7 @@ class ProcessingResult:
 
 @dataclass
 class EnhancementProfile:
-    """Content enhancement profile"""
-    profile_id: str
+    """Content enhancement profile"""    profile_id: str
     content_format: ContentFormat
     target_quality: float
     enhancement_settings: Dict[str, Any]
@@ -122,11 +113,9 @@ class EnhancementProfile:
 
 
 class ContentFormatProcessor:
-    """
-    Enterprise-grade multi-format content processor supporting the complete
+    """    Enterprise-grade multi-format content processor supporting the complete
     creator economy workflow from upload to monetization.
-    """
-    
+    """    
     def __init__(self, cache_manager: CacheManager, event_emitter: EventEmitter):
         self.cache_manager = cache_manager
         self.event_emitter = event_emitter
@@ -140,8 +129,7 @@ class ContentFormatProcessor:
         self.quality_thresholds = self._initialize_quality_thresholds()
         
     def _initialize_quality_thresholds(self) -> Dict[ContentFormat, float]:
-        """Initialize quality thresholds for each content format"""
-        return {
+        """Initialize quality thresholds for each content format"""        return {
             ContentFormat.AUDIO: 0.85,
             ContentFormat.VIDEO: 0.80,
             ContentFormat.IMAGE: 0.90,
@@ -160,14 +148,12 @@ class ContentFormatProcessor:
         processing_priority: ProcessingPriority = ProcessingPriority.NORMAL,
         enhancement_profile_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Process uploaded content through the complete creator workflow
+        """        Process uploaded content through the complete creator workflow
         
         Business Logic Flow:
         Upload → Format Detection → Quality Analysis → AI Enhancement → 
         Protection Setup → SEO Optimization → Collaboration Prep → Distribution Prep
-        """
-        try:
+        """        try:
             content_id = str(uuid.uuid4())
             
             # Stage 1: Upload and Initial Processing
@@ -257,8 +243,7 @@ class ContentFormatProcessor:
         content_id: str,
         user_id: str
     ) -> ContentFile:
-        """Handle secure file upload and initial processing"""
-        try:
+        """Handle secure file upload and initial processing"""        try:
             # Generate secure file path
             file_extension = Path(filename).suffix.lower()
             secure_filename = f"{content_id}_{hashlib.md5(filename.encode()).hexdigest()}{file_extension}"
@@ -300,8 +285,7 @@ class ContentFormatProcessor:
             raise BusinessLogicError(f"File upload failed: {str(e)}")
     
     def _determine_content_format(self, mime_type: str, file_extension: str) -> ContentFormat:
-        """Determine content format from MIME type and extension"""
-        mime_format_map = {
+        """Determine content format from MIME type and extension"""        mime_format_map = {
             "audio/": ContentFormat.AUDIO,
             "video/": ContentFormat.VIDEO,
             "image/": ContentFormat.IMAGE,
@@ -339,8 +323,7 @@ class ContentFormatProcessor:
         return extension_map.get(file_extension.lower(), ContentFormat.DOCUMENT)
     
     async def _detect_and_validate_format(self, content_file: ContentFile) -> Dict[str, Any]:
-        """Detect and validate content format using AI"""
-        try:
+        """Detect and validate content format using AI"""        try:
             detection_result = await self.format_detector.analyze_content(content_file.file_path)
             
             # Validate format consistency
@@ -373,8 +356,7 @@ class ContentFormatProcessor:
             }
     
     async def _extract_comprehensive_metadata(self, content_file: ContentFile) -> Dict[str, Any]:
-        """Extract comprehensive metadata based on content format"""
-        try:
+        """Extract comprehensive metadata based on content format"""        try:
             metadata_extractor = self._get_metadata_extractor(content_file.content_format)
             metadata_result = await metadata_extractor.extract_metadata(content_file.file_path)
             
@@ -415,8 +397,7 @@ class ContentFormatProcessor:
             }
     
     def _get_metadata_extractor(self, content_format: ContentFormat):
-        """Get appropriate metadata extractor for content format"""
-        extractors = {
+        """Get appropriate metadata extractor for content format"""        extractors = {
             ContentFormat.AUDIO: self.audio_processor,
             ContentFormat.VIDEO: self.video_processor,
             ContentFormat.IMAGE: self.image_processor,
@@ -429,8 +410,7 @@ class ContentFormatProcessor:
         return extractors.get(content_format, self.text_processor)
     
     async def _analyze_content_quality(self, content_file: ContentFile) -> Dict[str, Any]:
-        """Analyze content quality using AI-powered assessment"""
-        try:
+        """Analyze content quality using AI-powered assessment"""        try:
             quality_analyzer = self._get_metadata_extractor(content_file.content_format)
             quality_result = await quality_analyzer.analyze_quality(content_file.file_path)
             
@@ -460,8 +440,7 @@ class ContentFormatProcessor:
             }
     
     def _categorize_quality(self, quality_score: float) -> str:
-        """Categorize quality score into descriptive category"""
-        if quality_score >= 0.95:
+        """Categorize quality score into descriptive category"""        if quality_score >= 0.95:
             return "exceptional"
         elif quality_score >= 0.90:
             return "excellent"
@@ -479,8 +458,7 @@ class ContentFormatProcessor:
         content_file: ContentFile,
         enhancement_profile_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Apply AI-powered content enhancement"""
-        try:
+        """Apply AI-powered content enhancement"""        try:
             enhancer = self._get_metadata_extractor(content_file.content_format)
             
             # Get enhancement profile or use default
@@ -519,8 +497,7 @@ class ContentFormatProcessor:
             }
     
     async def _generate_content_fingerprint(self, content_file: ContentFile) -> Dict[str, Any]:
-        """Generate content fingerprint for protection and rights management"""
-        try:
+        """Generate content fingerprint for protection and rights management"""        try:
             fingerprint_generator = self._get_metadata_extractor(content_file.content_format)
             fingerprint_result = await fingerprint_generator.generate_fingerprint(content_file.file_path)
             
@@ -547,8 +524,7 @@ class ContentFormatProcessor:
         content_file: ContentFile,
         metadata_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize content for SEO and discoverability"""
-        try:
+        """Optimize content for SEO and discoverability"""        try:
             # Extract or generate SEO-relevant metadata
             seo_optimizer = self.text_processor  # Use text processor for SEO optimization
             
@@ -583,8 +559,7 @@ class ContentFormatProcessor:
             }
     
     async def _prepare_for_collaboration(self, content_file: ContentFile) -> Dict[str, Any]:
-        """Prepare content for collaboration and matching"""
-        try:
+        """Prepare content for collaboration and matching"""        try:
             collaboration_data = {
                 "content_format": content_file.content_format.value,
                 "quality_score": content_file.metadata.get("quality_score", 0.0),
@@ -612,8 +587,7 @@ class ContentFormatProcessor:
             }
     
     async def _prepare_for_distribution(self, content_file: ContentFile) -> Dict[str, Any]:
-        """Prepare content for multi-platform distribution"""
-        try:
+        """Prepare content for multi-platform distribution"""        try:
             distribution_config = await self._generate_distribution_config(content_file)
             
             return {
@@ -632,8 +606,7 @@ class ContentFormatProcessor:
             }
     
     async def _generate_collaboration_profile(self, collaboration_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate collaboration profile for content"""
-        # Implementation for collaboration profile generation
+        """Generate collaboration profile for content"""        # Implementation for collaboration profile generation
         return {
             "matching_potential": 0.85,
             "recommended_collaborators": [],
@@ -641,8 +614,7 @@ class ContentFormatProcessor:
         }
     
     async def _generate_distribution_config(self, content_file: ContentFile) -> Dict[str, Any]:
-        """Generate distribution configuration for content"""
-        platform_map = {
+        """Generate distribution configuration for content"""        platform_map = {
             ContentFormat.AUDIO: ["spotify", "apple_music", "soundcloud", "youtube_music"],
             ContentFormat.VIDEO: ["youtube", "tiktok", "instagram_reels", "facebook"],
             ContentFormat.IMAGE: ["instagram", "pinterest", "twitter", "facebook"],
@@ -657,13 +629,11 @@ class ContentFormatProcessor:
         }
     
     async def _get_enhancement_profile(self, profile_id: str) -> EnhancementProfile:
-        """Get enhancement profile by ID"""
-        # Implementation for retrieving enhancement profile
+        """Get enhancement profile by ID"""        # Implementation for retrieving enhancement profile
         pass
     
     def _get_default_enhancement_profile(self, content_format: ContentFormat) -> EnhancementProfile:
-        """Get default enhancement profile for content format"""
-        return EnhancementProfile(
+        """Get default enhancement profile for content format"""        return EnhancementProfile(
             profile_id="default",
             content_format=content_format,
             target_quality=self.quality_thresholds[content_format],
@@ -675,8 +645,7 @@ class ContentFormatProcessor:
         )
     
     async def get_processing_status(self, content_id: str) -> Dict[str, Any]:
-        """Get current processing status for content"""
-        try:
+        """Get current processing status for content"""        try:
             # Retrieve processing status from cache or database
             status = await self.cache_manager.get(f"processing_status:{content_id}")
             
@@ -698,8 +667,7 @@ class ContentFormatProcessor:
             }
     
     async def cancel_processing(self, content_id: str, user_id: str) -> Dict[str, Any]:
-        """Cancel content processing"""
-        try:
+        """Cancel content processing"""        try:
             # Cancel active processing
             if content_id in self.active_processors:
                 processor_task = self.active_processors[content_id]
@@ -733,5 +701,4 @@ def create_content_format_processor(
     cache_manager: CacheManager,
     event_emitter: EventEmitter
 ) -> ContentFormatProcessor:
-    """Factory function to create content format processor instance"""
-    return ContentFormatProcessor(cache_manager, event_emitter)
+    """Factory function to create content format processor instance"""    return ContentFormatProcessor(cache_manager, event_emitter)

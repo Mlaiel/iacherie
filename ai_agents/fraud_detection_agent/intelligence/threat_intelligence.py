@@ -1,14 +1,11 @@
-"""
-Threat Intelligence Engine - Advanced Threat Detection and Intelligence
+"""Threat Intelligence Engine - Advanced Threat Detection and Intelligence
 
 Sophisticated threat intelligence system for real-time threat detection, 
 analysis, and response coordination in the IA-Influencer ecosystem.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import hashlib
@@ -38,8 +35,7 @@ from ...integrations.security_feeds import SecurityFeedManager
 logger = logging.getLogger(__name__)
 
 class ThreatType(Enum):
-    """Types of threats that can be detected"""
-    MALICIOUS_IP = "malicious_ip"
+    """Types of threats that can be detected"""    MALICIOUS_IP = "malicious_ip"
     SUSPICIOUS_DOMAIN = "suspicious_domain"
     BOTNET_ACTIVITY = "botnet_activity"
     PHISHING_ATTEMPT = "phishing_attempt"
@@ -51,16 +47,14 @@ class ThreatType(Enum):
     APT_ACTIVITY = "apt_activity"
 
 class ThreatSeverity(Enum):
-    """Threat severity levels"""
-    INFO = 1
+    """Threat severity levels"""    INFO = 1
     LOW = 2
     MEDIUM = 3
     HIGH = 4
     CRITICAL = 5
 
 class ThreatConfidence(Enum):
-    """Confidence levels for threat assessment"""
-    UNKNOWN = 0
+    """Confidence levels for threat assessment"""    UNKNOWN = 0
     LOW = 25
     MEDIUM = 50
     HIGH = 75
@@ -68,8 +62,7 @@ class ThreatConfidence(Enum):
 
 @dataclass
 class ThreatIndicator:
-    """Individual threat indicator"""
-    indicator_type: str
+    """Individual threat indicator"""    indicator_type: str
     indicator_value: str
     threat_type: ThreatType
     severity: ThreatSeverity
@@ -82,8 +75,7 @@ class ThreatIndicator:
 
 @dataclass
 class ThreatAnalysisResult:
-    """Comprehensive threat analysis result"""
-    threat_level: str
+    """Comprehensive threat analysis result"""    threat_level: str
     total_indicators: int
     threat_score: float
     indicators: List[Dict[str, Any]]
@@ -94,8 +86,7 @@ class ThreatAnalysisResult:
     network_risks: Dict[str, Any]
 
 class ThreatIntelligenceEngine:
-    """
-    Advanced Threat Intelligence Engine
+    """    Advanced Threat Intelligence Engine
     
     Provides threat detection through:
     - Real-time threat feed integration
@@ -104,8 +95,7 @@ class ThreatIntelligenceEngine:
     - Behavioral threat analysis
     - Geolocation risk assessment
     - Network traffic analysis
-    """
-    
+    """    
     def __init__(self, redis_client: Optional[aioredis.Redis] = None):
         self.redis_client = redis_client
         self.network_analyzer = NetworkAnalyzer()
@@ -159,8 +149,7 @@ class ThreatIntelligenceEngine:
         platform: str,
         additional_context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Comprehensive threat intelligence analysis
+        """        Comprehensive threat intelligence analysis
         
         Args:
             user_id: User identifier
@@ -171,8 +160,7 @@ class ThreatIntelligenceEngine:
             
         Returns:
             Comprehensive threat analysis results
-        """
-        try:
+        """        try:
             # Extract analysis targets
             ip_address = geolocation.get('ip_address', '')
             country_code = geolocation.get('country_code', '')
@@ -301,8 +289,7 @@ class ThreatIntelligenceEngine:
             raise ThreatIntelligenceError(f"Threat analysis failed: {str(e)}")
 
     async def _analyze_ip_reputation(self, ip_address: str) -> Dict[str, Any]:
-        """Analyze IP address reputation"""
-        try:
+        """Analyze IP address reputation"""        try:
             if not ip_address:
                 return {'risk_score': 0.0, 'indicators': [], 'reputation': 'UNKNOWN'}
                 
@@ -403,8 +390,7 @@ class ThreatIntelligenceEngine:
             return {'risk_score': 0.0, 'indicators': [], 'reputation': 'UNKNOWN'}
 
     async def _analyze_geolocation_risk(self, geolocation: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze geolocation-based risks"""
-        try:
+        """Analyze geolocation-based risks"""        try:
             country_code = geolocation.get('country_code', '')
             city = geolocation.get('city', '')
             latitude = geolocation.get('latitude', 0)
@@ -499,8 +485,7 @@ class ThreatIntelligenceEngine:
             return {'risk_score': 0.0, 'indicators': [], 'risk_factors': []}
 
     async def _analyze_device_threats(self, device_fingerprint: str) -> Dict[str, Any]:
-        """Analyze device-based threats"""
-        try:
+        """Analyze device-based threats"""        try:
             indicators = []
             risk_factors = []
             
@@ -568,8 +553,7 @@ class ThreatIntelligenceEngine:
         user_id: str, 
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze behavioral threat patterns"""
-        try:
+        """Analyze behavioral threat patterns"""        try:
             indicators = []
             risk_factors = []
             
@@ -630,8 +614,7 @@ class ThreatIntelligenceEngine:
             return {'risk_score': 0.0, 'indicators': [], 'risk_factors': []}
 
     async def _check_threat_feeds(self, ip_address: str, user_agent: str) -> Dict[str, Any]:
-        """Check against various threat intelligence feeds"""
-        try:
+        """Check against various threat intelligence feeds"""        try:
             indicators = []
             risk_factors = []
             
@@ -698,8 +681,7 @@ class ThreatIntelligenceEngine:
             return {'risk_score': 0.0, 'indicators': [], 'risk_factors': []}
 
     async def _analyze_network_patterns(self, ip_address: str) -> Dict[str, Any]:
-        """Analyze network traffic patterns for threats"""
-        try:
+        """Analyze network traffic patterns for threats"""        try:
             indicators = []
             risk_factors = []
             
@@ -757,8 +739,7 @@ class ThreatIntelligenceEngine:
             return {'risk_score': 0.0, 'indicators': [], 'risk_factors': []}
 
     async def _calculate_composite_threat_score(self, analysis_results: Dict[str, Dict]) -> float:
-        """Calculate composite threat score from all analysis methods"""
-        weights = {
+        """Calculate composite threat score from all analysis methods"""        weights = {
             'ip': 0.25,
             'geolocation': 0.20,
             'device': 0.15,
@@ -783,8 +764,7 @@ class ThreatIntelligenceEngine:
         return min(1.0, composite_score)
 
     def _determine_threat_level(self, threat_score: float, indicators: List[Dict]) -> str:
-        """Determine overall threat level"""
-        critical_indicators = [
+        """Determine overall threat level"""        critical_indicators = [
             'malicious_ip', 'botnet_ip', 'malicious_device', 
             'credential_stuffing', 'insider_threat'
         ]
@@ -804,8 +784,7 @@ class ThreatIntelligenceEngine:
             return 'GREEN'
 
     def _extract_risk_factors(self, analysis_results: Dict[str, Dict]) -> List[str]:
-        """Extract key risk factors from all analyses"""
-        risk_factors = []
+        """Extract key risk factors from all analyses"""        risk_factors = []
         
         for category_results in analysis_results.values():
             category_risks = category_results.get('risk_factors', [])
@@ -821,8 +800,7 @@ class ThreatIntelligenceEngine:
         indicators: List[Dict], 
         threat_score: float
     ) -> List[str]:
-        """Generate recommended actions based on threat analysis"""
-        recommendations = []
+        """Generate recommended actions based on threat analysis"""        recommendations = []
         
         if threat_level == 'RED':
             recommendations.extend([
@@ -865,8 +843,7 @@ class ThreatIntelligenceEngine:
 
     # Placeholder implementations for threat detection methods
     async def _check_malicious_ip_feeds(self, ip_address: str) -> bool:
-        """Check IP against malicious IP feeds"""
-        try:
+        """Check IP against malicious IP feeds"""        try:
             # This would integrate with actual threat feeds
             # For now, simulate with some basic checks
             return False  # Most IPs are not malicious
@@ -874,16 +851,14 @@ class ThreatIntelligenceEngine:
             return False
 
     async def _check_botnet_feeds(self, ip_address: str) -> bool:
-        """Check IP against botnet feeds"""
-        try:
+        """Check IP against botnet feeds"""        try:
             # This would integrate with botnet threat feeds
             return False
         except:
             return False
 
     async def _check_malware_user_agents(self, user_agent: str) -> bool:
-        """Check user agent against malware signatures"""
-        try:
+        """Check user agent against malware signatures"""        try:
             # Check for known malware user agent patterns
             malware_patterns = ['bot', 'crawler', 'spider', 'scanner']
             return any(pattern in user_agent.lower() for pattern in malware_patterns)
@@ -891,8 +866,7 @@ class ThreatIntelligenceEngine:
             return False
 
     async def _get_ip_information(self, ip_address: str) -> Dict[str, Any]:
-        """Get comprehensive IP information"""
-        try:
+        """Get comprehensive IP information"""        try:
             # This would integrate with IP intelligence services
             return {
                 'age_days': 365,
@@ -904,80 +878,70 @@ class ThreatIntelligenceEngine:
             return {}
 
     async def _detect_vpn_proxy(self, geolocation: Dict[str, Any]) -> bool:
-        """Detect VPN or proxy usage"""
-        try:
+        """Detect VPN or proxy usage"""        try:
             # This would integrate with VPN/proxy detection services
             return False
         except:
             return False
 
     async def _check_malicious_coordinates(self, latitude: float, longitude: float) -> bool:
-        """Check if coordinates are associated with malicious activity"""
-        try:
+        """Check if coordinates are associated with malicious activity"""        try:
             # This would check against databases of known malicious locations
             return False
         except:
             return False
 
     async def _calculate_location_velocity(self, geolocation: Dict[str, Any]) -> float:
-        """Calculate travel velocity between locations"""
-        try:
+        """Calculate travel velocity between locations"""        try:
             # This would compare with previous locations to calculate travel speed
             return 0.0  # No velocity calculated
         except:
             return 0.0
 
     async def _check_malicious_device_fingerprints(self, device_fingerprint: str) -> bool:
-        """Check device fingerprint against malicious device database"""
-        try:
+        """Check device fingerprint against malicious device database"""        try:
             # This would check against databases of known malicious devices
             return False
         except:
             return False
 
     async def _detect_device_spoofing(self, device_fingerprint: str) -> List[str]:
-        """Detect device fingerprint spoofing indicators"""
-        try:
+        """Detect device fingerprint spoofing indicators"""        try:
             # This would analyze device fingerprint for spoofing indicators
             return []
         except:
             return []
 
     async def _analyze_device_consistency(self, device_fingerprint: str) -> float:
-        """Analyze device consistency across sessions"""
-        try:
+        """Analyze device consistency across sessions"""        try:
             # This would compare device fingerprints across sessions
             return 0.9  # High consistency by default
         except:
             return 0.5
 
     async def _detect_credential_stuffing(self, user_id: str, context: Dict[str, Any]) -> bool:
-        """Detect credential stuffing attack patterns"""
-        try:
+        """Detect credential stuffing attack patterns"""        try:
             # This would analyze login patterns for credential stuffing
             return False
         except:
             return False
 
     async def _detect_automated_behavior(self, context: Dict[str, Any]) -> bool:
-        """Detect automated behavior patterns"""
-        try:
+        """Detect automated behavior patterns"""        try:
             # This would analyze behavioral patterns for automation
             return False
         except:
             return False
 
     async def _assess_insider_threat_risk(self, user_id: str, context: Dict[str, Any]) -> float:
-        """Assess insider threat risk for user"""
-        try:
+        """Assess insider threat risk for user"""        try:
             # This would analyze user behavior for insider threat indicators
             return 0.1  # Low risk by default
         except:
             return 0.0
 
     async def _cache_threat_analysis(self, user_id: str, result: ThreatAnalysisResult):
-        """Cache threat analysis result"""
-        try:
+        """Cache threat analysis result"""        try:
             cache_key = f"threat_analysis:{user_id}"
             
             cached_result = {
@@ -993,8 +957,7 @@ class ThreatIntelligenceEngine:
             logger.error(f"Failed to cache threat analysis for user {user_id}: {str(e)}")
 
     async def _update_threat_statistics(self, user_id: str, result: ThreatAnalysisResult):
-        """Update threat statistics"""
-        try:
+        """Update threat statistics"""        try:
             stats_key = f"threat_stats:{result.threat_level}"
             await self.redis_client.hincrby(stats_key, "count", 1)
             await self.redis_client.hset(stats_key, "last_seen", datetime.now().isoformat())
@@ -1003,8 +966,7 @@ class ThreatIntelligenceEngine:
             logger.error(f"Failed to update threat statistics: {str(e)}")
 
     async def update_threat_feeds(self):
-        """Update threat intelligence feeds"""
-        try:
+        """Update threat intelligence feeds"""        try:
             # This would update threat feeds from external sources
             await self.security_feed_manager.update_all_feeds()
             logger.info("Threat intelligence feeds updated successfully")
@@ -1013,8 +975,7 @@ class ThreatIntelligenceEngine:
             logger.error(f"Failed to update threat feeds: {str(e)}")
 
     async def get_threat_statistics(self, days: int = 7) -> Dict[str, Any]:
-        """Get threat detection statistics"""
-        try:
+        """Get threat detection statistics"""        try:
             stats = {
                 'threat_levels': {},
                 'total_analyses': 0,

@@ -1,12 +1,9 @@
-"""
-Spotify Platform Adapter for IA Influencer Agent Distribution System.
+"""Spotify Platform Adapter for IA Influencer Agent Distribution System.
 Handles music distribution, analytics, and creator monetization on Spotify.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
@@ -26,18 +23,15 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SpotifyCredentials:
-    """Spotify API credentials configuration."""
-    client_id: str
+    """Spotify API credentials configuration."""    client_id: str
     client_secret: str
     redirect_uri: str
     scope: str = "user-read-private user-read-email playlist-modify-public playlist-modify-private user-library-modify"
 
 class SpotifyAdapter(BasePlatformAdapter):
-    """
-    Advanced Spotify platform adapter for music distribution and analytics.
+    """    Advanced Spotify platform adapter for music distribution and analytics.
     Supports artist profile management, track uploads, playlist management, and revenue tracking.
-    """
-    
+    """    
     PLATFORM_NAME = "spotify"
     MAX_TRACK_SIZE_MB = 50
     SUPPORTED_FORMATS = ["mp3", "wav", "flac", "m4a"]
@@ -50,8 +44,7 @@ class SpotifyAdapter(BasePlatformAdapter):
         self._initialize_client()
     
     def _initialize_client(self):
-        """Initialize Spotify API client with authentication."""
-        try:
+        """Initialize Spotify API client with authentication."""        try:
             # For user-specific operations
             self.auth_manager = SpotifyOAuth(
                 client_id=self.credentials.client_id,
@@ -74,8 +67,7 @@ class SpotifyAdapter(BasePlatformAdapter):
             raise AuthenticationError(f"Spotify authentication failed: {e}")
     
     async def authenticate_user(self, user_id: str) -> Dict[str, Any]:
-        """Authenticate user and return access tokens."""
-        try:
+        """Authenticate user and return access tokens."""        try:
             # Get authorization URL
             auth_url = self.auth_manager.get_authorize_url()
             
@@ -91,8 +83,7 @@ class SpotifyAdapter(BasePlatformAdapter):
             raise AuthenticationError(f"Failed to authenticate user: {e}")
     
     async def validate_content(self, content_metadata: ContentMetadata) -> Dict[str, Any]:
-        """Validate content meets Spotify requirements."""
-        validation_results = {
+        """Validate content meets Spotify requirements."""        validation_results = {
             "is_valid": True,
             "errors": [],
             "warnings": []
@@ -130,11 +121,9 @@ class SpotifyAdapter(BasePlatformAdapter):
         return validation_results
     
     async def upload_content(self, distribution_request: DistributionRequest) -> DistributionResult:
-        """
-        Upload music content to Spotify for Artists.
+        """        Upload music content to Spotify for Artists.
         Note: Direct upload requires Spotify for Artists API access.
-        """
-        try:
+        """        try:
             # Validate content first
             validation = await self.validate_content(distribution_request.content_metadata)
             if not validation["is_valid"]:
@@ -183,8 +172,7 @@ class SpotifyAdapter(BasePlatformAdapter):
             )
     
     async def _create_playlist(self, user_id: str, name: str, description: str) -> Dict[str, Any]:
-        """Create a new playlist on Spotify."""
-        try:
+        """Create a new playlist on Spotify."""        try:
             # Get user's Spotify client
             user_client = spotipy.Spotify(auth_manager=self.auth_manager)
             
@@ -208,8 +196,7 @@ class SpotifyAdapter(BasePlatformAdapter):
             raise DistributionError(f"Playlist creation failed: {e}")
     
     async def get_analytics(self, content_id: str, date_range: tuple = None) -> PlatformAnalytics:
-        """Retrieve analytics data for distributed content."""
-        try:
+        """Retrieve analytics data for distributed content."""        try:
             if not date_range:
                 end_date = datetime.now()
                 start_date = end_date - timedelta(days=30)
@@ -246,8 +233,7 @@ class SpotifyAdapter(BasePlatformAdapter):
             raise DistributionError(f"Analytics retrieval failed: {e}")
     
     async def _fetch_artist_analytics(self, artist_id: str, date_range: tuple) -> Dict[str, Any]:
-        """Fetch detailed artist analytics from Spotify for Artists API."""
-        # This would require Spotify for Artists API access
+        """Fetch detailed artist analytics from Spotify for Artists API."""        # This would require Spotify for Artists API access
         # Simulated data for now
         return {
             "streams": 15420,
@@ -264,8 +250,7 @@ class SpotifyAdapter(BasePlatformAdapter):
         }
     
     async def get_revenue_data(self, content_id: str, date_range: tuple = None) -> RevenueData:
-        """Calculate revenue data for distributed content."""
-        try:
+        """Calculate revenue data for distributed content."""        try:
             analytics = await self.get_analytics(content_id, date_range)
             
             # Spotify royalty calculation (approximate)
@@ -300,8 +285,7 @@ class SpotifyAdapter(BasePlatformAdapter):
             raise DistributionError(f"Revenue calculation failed: {e}")
     
     async def update_content_metadata(self, content_id: str, metadata: Dict[str, Any]) -> bool:
-        """Update content metadata on Spotify."""
-        try:
+        """Update content metadata on Spotify."""        try:
             # This would require Spotify for Artists API access
             # For now, return success for supported metadata updates
             supported_fields = ["description", "tags", "playlist_assignment"]
@@ -323,8 +307,7 @@ class SpotifyAdapter(BasePlatformAdapter):
             return False
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete content from Spotify (requires special permissions)."""
-        try:
+        """Delete content from Spotify (requires special permissions)."""        try:
             # Direct content deletion on Spotify requires distributor-level access
             # For now, we can remove from playlists and mark as inactive
             logger.info(f"Content removal requested for Spotify track: {content_id}")
@@ -338,8 +321,7 @@ class SpotifyAdapter(BasePlatformAdapter):
             return False
     
     def get_platform_limits(self) -> Dict[str, Any]:
-        """Return platform-specific limits and requirements."""
-        return {
+        """Return platform-specific limits and requirements."""        return {
             "max_file_size_mb": self.MAX_TRACK_SIZE_MB,
             "supported_formats": self.SUPPORTED_FORMATS,
             "min_duration_seconds": 30,

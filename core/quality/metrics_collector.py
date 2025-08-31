@@ -1,5 +1,4 @@
-"""
-Quality Metrics Collector - Enterprise Monitoring System
+"""Quality Metrics Collector - Enterprise Monitoring System
 
 Advanced metrics collection and analysis system for comprehensive quality
 monitoring across all content types and platform operations.
@@ -10,9 +9,7 @@ Quality insights → Automated reporting → Continuous improvement
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import csv
 import io
 import logging
@@ -31,8 +28,7 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of quality metrics"""
-    COUNTER = "counter"
+    """Types of quality metrics"""    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     TIMER = "timer"
@@ -40,8 +36,7 @@ class MetricType(Enum):
 
 
 class MetricCategory(Enum):
-    """Categories of quality metrics"""
-    CONTENT_QUALITY = "content_quality"
+    """Categories of quality metrics"""    CONTENT_QUALITY = "content_quality"
     PERFORMANCE = "performance"
     USER_ENGAGEMENT = "user_engagement"
     SYSTEM_HEALTH = "system_health"
@@ -52,8 +47,7 @@ class MetricCategory(Enum):
 
 @dataclass
 class MetricValue:
-    """Individual metric value with metadata"""
-    value: Union[float, int]
+    """Individual metric value with metadata"""    value: Union[float, int]
     timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     tags: Dict[str, str] = field(default_factory=dict)
     metadata: Dict[str, Any] = field(default_factory=dict)
@@ -61,8 +55,7 @@ class MetricValue:
 
 @dataclass
 class MetricDefinition:
-    """Definition of a quality metric"""
-    name: str
+    """Definition of a quality metric"""    name: str
     metric_type: MetricType
     category: MetricCategory
     description: str
@@ -84,8 +77,7 @@ class MetricDefinition:
 
 @dataclass
 class MetricSummary:
-    """Statistical summary of metric values"""
-    count: int
+    """Statistical summary of metric values"""    count: int
     min_value: float
     max_value: float
     mean: float
@@ -108,8 +100,7 @@ class MetricSummary:
 
 
 class MetricStorage:
-    """Thread-safe metric storage with retention policies"""
-    
+    """Thread-safe metric storage with retention policies"""    
     def __init__(self, max_size: int = 10000, retention_hours: int = 24):
         self.max_size = max_size
         self.retention_hours = retention_hours
@@ -117,8 +108,7 @@ class MetricStorage:
         self.lock = threading.RLock()
         
     def store_metric(self, metric_name: str, value: MetricValue):
-        """Store a metric value with automatic cleanup"""
-        with self.lock:
+        """Store a metric value with automatic cleanup"""        with self.lock:
             # Add new value
             self.data[metric_name].append(value)
             
@@ -130,8 +120,7 @@ class MetricStorage:
     
     def get_metrics(self, metric_name: str, 
                    since: Optional[datetime] = None) -> List[MetricValue]:
-        """Retrieve metric values with optional time filtering"""
-        with self.lock:
+        """Retrieve metric values with optional time filtering"""        with self.lock:
             values = list(self.data[metric_name])
             
             if since:
@@ -140,19 +129,16 @@ class MetricStorage:
             return values
     
     def get_all_metric_names(self) -> List[str]:
-        """Get all stored metric names"""
-        with self.lock:
+        """Get all stored metric names"""        with self.lock:
             return list(self.data.keys())
     
     def clear_metric(self, metric_name: str):
-        """Clear all data for a specific metric"""
-        with self.lock:
+        """Clear all data for a specific metric"""        with self.lock:
             if metric_name in self.data:
                 self.data[metric_name].clear()
     
     def get_storage_stats(self) -> Dict[str, Any]:
-        """Get storage statistics"""
-        with self.lock:
+        """Get storage statistics"""        with self.lock:
             stats = {
                 'total_metrics': len(self.data),
                 'total_values': sum(len(values) for values in self.data.values()),
@@ -174,16 +160,14 @@ class MetricStorage:
             return stats
     
     def _estimate_memory_usage(self) -> float:
-        """Estimate memory usage in MB"""
-        # Rough estimation based on average object size
+        """Estimate memory usage in MB"""        # Rough estimation based on average object size
         total_objects = sum(len(values) for values in self.data.values())
         avg_object_size = 200  # bytes per MetricValue (estimated)
         return (total_objects * avg_object_size) / (1024 * 1024)
 
 
 class QualityMetricsCollector:
-    """Enterprise quality metrics collection and analysis system"""
-    
+    """Enterprise quality metrics collection and analysis system"""    
     def __init__(self, storage_config: Optional[Dict[str, Any]] = None):
         self.storage = MetricStorage(
             max_size=storage_config.get('max_size', 10000) if storage_config else 10000,
@@ -196,8 +180,7 @@ class QualityMetricsCollector:
         self._initialize_standard_metrics()
     
     def _initialize_standard_metrics(self):
-        """Initialize standard quality metrics"""
-        standard_metrics = [
+        """Initialize standard quality metrics"""        standard_metrics = [
             # Content Quality Metrics
             MetricDefinition(
                 name="content_quality_score",
@@ -298,15 +281,13 @@ class QualityMetricsCollector:
             self.register_metric(metric_def)
     
     def register_metric(self, definition: MetricDefinition):
-        """Register a new metric definition"""
-        self.definitions[definition.name] = definition
+        """Register a new metric definition"""        self.definitions[definition.name] = definition
         logger.info(f"Registered metric: {definition.name}")
     
     def collect_metric(self, metric_name: str, value: Union[float, int],
                       tags: Optional[Dict[str, str]] = None,
                       metadata: Optional[Dict[str, Any]] = None):
-        """Collect a metric value"""
-        if metric_name not in self.definitions:
+        """Collect a metric value"""        if metric_name not in self.definitions:
             logger.warning(f"Unknown metric: {metric_name}")
             return
         
@@ -322,8 +303,7 @@ class QualityMetricsCollector:
         self._check_thresholds(metric_name, value)
     
     def _check_thresholds(self, metric_name: str, value: Union[float, int]):
-        """Check if metric value exceeds defined thresholds"""
-        definition = self.definitions[metric_name]
+        """Check if metric value exceeds defined thresholds"""        definition = self.definitions[metric_name]
         
         if 'critical' in definition.thresholds:
             threshold = definition.thresholds['critical']
@@ -339,8 +319,7 @@ class QualityMetricsCollector:
     
     def get_metric_summary(self, metric_name: str,
                           since: Optional[datetime] = None) -> Optional[MetricSummary]:
-        """Get statistical summary of a metric"""
-        values = self.storage.get_metrics(metric_name, since)
+        """Get statistical summary of a metric"""        values = self.storage.get_metrics(metric_name, since)
         
         if not values:
             return None
@@ -363,8 +342,7 @@ class QualityMetricsCollector:
             return None
     
     def _percentile(self, values: List[float], percentile: int) -> float:
-        """Calculate percentile of values"""
-        if not values:
+        """Calculate percentile of values"""        if not values:
             return 0.0
         
         sorted_values = sorted(values)
@@ -386,8 +364,7 @@ class QualityMetricsCollector:
     
     def get_metrics_by_category(self, category: MetricCategory,
                                since: Optional[datetime] = None) -> Dict[str, MetricSummary]:
-        """Get all metrics summaries for a specific category"""
-        category_metrics = {
+        """Get all metrics summaries for a specific category"""        category_metrics = {
             name: definition for name, definition in self.definitions.items()
             if definition.category == category
         }
@@ -401,8 +378,7 @@ class QualityMetricsCollector:
         return summaries
     
     def get_dashboard_data(self, time_range_hours: int = 1) -> Dict[str, Any]:
-        """Get comprehensive dashboard data"""
-        since = datetime.now(timezone.utc) - timedelta(hours=time_range_hours)
+        """Get comprehensive dashboard data"""        since = datetime.now(timezone.utc) - timedelta(hours=time_range_hours)
         
         dashboard_data = {
             'timestamp': datetime.now(timezone.utc).isoformat(),
@@ -425,8 +401,7 @@ class QualityMetricsCollector:
     
     def export_metrics(self, format_type: str = "json",
                       since: Optional[datetime] = None) -> str:
-        """Export metrics in specified format"""
-        if format_type.lower() not in ['json', 'csv']:
+        """Export metrics in specified format"""        if format_type.lower() not in ['json', 'csv']:
             raise ValueError("Supported formats: json, csv")
         
         export_data = {
@@ -457,8 +432,7 @@ class QualityMetricsCollector:
             raise ValueError(f"Unsupported export format: {format_type}")
     
     def _export_to_csv(self, export_data: Dict[str, Any]) -> str:
-        """Export metrics data to CSV format"""
-        try:
+        """Export metrics data to CSV format"""        try:
             output = io.StringIO()
             writer = csv.writer(output)
             
@@ -574,15 +548,13 @@ class QualityMetricsCollector:
     async def collect_metric_async(self, metric_name: str, value: Union[float, int],
                                   tags: Optional[Dict[str, str]] = None,
                                   metadata: Optional[Dict[str, Any]] = None):
-        """Asynchronously collect a metric value"""
-        loop = asyncio.get_event_loop()
+        """Asynchronously collect a metric value"""        loop = asyncio.get_event_loop()
         await loop.run_in_executor(
             self.executor, self.collect_metric, metric_name, value, tags, metadata
         )
     
     def batch_collect_metrics(self, metrics: List[Dict[str, Any]]):
-        """Collect multiple metrics in batch"""
-        for metric_data in metrics:
+        """Collect multiple metrics in batch"""        for metric_data in metrics:
             self.collect_metric(
                 metric_data['name'],
                 metric_data['value'],
@@ -591,14 +563,12 @@ class QualityMetricsCollector:
             )
     
     def clear_all_metrics(self):
-        """Clear all stored metric data"""
-        for metric_name in self.definitions:
+        """Clear all stored metric data"""        for metric_name in self.definitions:
             self.storage.clear_metric(metric_name)
         logger.info("All metric data cleared")
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Get overall system health status based on metrics"""
-        health_status = {
+        """Get overall system health status based on metrics"""        health_status = {
             'overall_status': 'healthy',
             'timestamp': datetime.now(timezone.utc).isoformat(),
             'categories': {},
@@ -649,6 +619,5 @@ class QualityMetricsCollector:
         return health_status
     
     def shutdown(self):
-        """Gracefully shutdown the metrics collector"""
-        self.executor.shutdown(wait=True)
+        """Gracefully shutdown the metrics collector"""        self.executor.shutdown(wait=True)
         logger.info("Quality metrics collector shutdown complete")

@@ -1,5 +1,4 @@
-"""
-Moderation Agent Exceptions - Custom Exception Classes
+"""Moderation Agent Exceptions - Custom Exception Classes
 
 Enterprise-grade exception handling for the ultra-advanced content moderation system.
 Provides detailed error information and proper error categorization.
@@ -10,21 +9,17 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""
-
-from typing import Dict, Any, Optional, List
+"""from typing import Dict, Any, Optional, List
 import logging
 
 logger = logging.getLogger(__name__)
 
 class ModerationAgentException(Exception):
-    """
-    Base exception class for Moderation Agent
+    """    Base exception class for Moderation Agent
     
     All moderation-specific exceptions inherit from this class.
     Provides structured error information and logging.
-    """
-    
+    """    
     def __init__(self, message: str, error_code: str = None, context: Dict[str, Any] = None, 
                  details: str = None):
         self.message = message
@@ -39,8 +34,7 @@ class ModerationAgentException(Exception):
                     extra={'context': self.context, 'details': self.details})
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert exception to dictionary for API responses"""
-        return {
+        """Convert exception to dictionary for API responses"""        return {
             'error': True,
             'error_code': self.error_code,
             'message': self.message,
@@ -49,13 +43,11 @@ class ModerationAgentException(Exception):
         }
 
 class ModelLoadingError(ModerationAgentException):
-    """
-    Exception raised when AI models fail to load
+    """    Exception raised when AI models fail to load
     
     This can occur due to missing model files, insufficient memory,
     or incompatible model versions.
-    """
-    
+    """    
     def __init__(self, model_name: str, reason: str, context: Dict[str, Any] = None):
         message = f"Failed to load model '{model_name}': {reason}"
         super().__init__(
@@ -65,13 +57,11 @@ class ModelLoadingError(ModerationAgentException):
         )
 
 class ContentProcessingError(ModerationAgentException):
-    """
-    Exception raised during content processing
+    """    Exception raised during content processing
     
     Covers errors in text analysis, image processing, audio analysis,
     and video processing stages.
-    """
-    
+    """    
     def __init__(self, content_type: str, processing_stage: str, reason: str, 
                  content_id: str = None, context: Dict[str, Any] = None):
         message = f"Content processing failed for {content_type} at {processing_stage}: {reason}"
@@ -92,13 +82,11 @@ class ContentProcessingError(ModerationAgentException):
         )
 
 class ViolationDetectionError(ModerationAgentException):
-    """
-    Exception raised during violation detection
+    """    Exception raised during violation detection
     
     Occurs when the violation detection process fails due to model errors,
     invalid input, or processing timeouts.
-    """
-    
+    """    
     def __init__(self, violation_type: str, detection_model: str, reason: str,
                  confidence_threshold: float = None, context: Dict[str, Any] = None):
         message = f"Violation detection failed for {violation_type} using {detection_model}: {reason}"
@@ -119,13 +107,11 @@ class ViolationDetectionError(ModerationAgentException):
         )
 
 class ConfigurationError(ModerationAgentException):
-    """
-    Exception raised for configuration-related errors
+    """    Exception raised for configuration-related errors
     
     Covers missing required configuration keys, invalid configuration values,
     and configuration validation failures.
-    """
-    
+    """    
     def __init__(self, config_key: str, reason: str, valid_values: List[Any] = None,
                  current_value: Any = None, context: Dict[str, Any] = None):
         message = f"Configuration error for '{config_key}': {reason}"
@@ -147,13 +133,11 @@ class ConfigurationError(ModerationAgentException):
         )
 
 class UnsupportedContentTypeError(ModerationAgentException):
-    """
-    Exception raised for unsupported content types
+    """    Exception raised for unsupported content types
     
     Occurs when trying to process content in a format that is not
     supported by the moderation agent.
-    """
-    
+    """    
     def __init__(self, content_type: str, supported_types: List[str] = None,
                  context: Dict[str, Any] = None):
         message = f"Unsupported content type: {content_type}"
@@ -173,13 +157,11 @@ class UnsupportedContentTypeError(ModerationAgentException):
         )
 
 class ThresholdValidationError(ModerationAgentException):
-    """
-    Exception raised for threshold validation errors
+    """    Exception raised for threshold validation errors
     
     Occurs when moderation thresholds are set to invalid values
     or when threshold logic conflicts arise.
-    """
-    
+    """    
     def __init__(self, threshold_name: str, threshold_value: float, 
                  min_value: float = None, max_value: float = None,
                  context: Dict[str, Any] = None):
@@ -205,13 +187,11 @@ class ThresholdValidationError(ModerationAgentException):
         )
 
 class ContentTooLargeError(ModerationAgentException):
-    """
-    Exception raised when content exceeds size limits
+    """    Exception raised when content exceeds size limits
     
     Prevents processing of content that is too large for efficient
     or safe processing.
-    """
-    
+    """    
     def __init__(self, content_type: str, content_size: int, max_size: int,
                  size_unit: str = "bytes", context: Dict[str, Any] = None):
         message = f"Content too large: {content_size} {size_unit} exceeds limit of {max_size} {size_unit}"
@@ -232,13 +212,11 @@ class ContentTooLargeError(ModerationAgentException):
         )
 
 class ProcessingTimeoutError(ModerationAgentException):
-    """
-    Exception raised when processing exceeds time limits
+    """    Exception raised when processing exceeds time limits
     
     Prevents long-running processes from blocking the system
     and ensures timely responses.
-    """
-    
+    """    
     def __init__(self, processing_stage: str, timeout_seconds: float,
                  elapsed_time: float = None, content_id: str = None,
                  context: Dict[str, Any] = None):
@@ -264,13 +242,11 @@ class ProcessingTimeoutError(ModerationAgentException):
         )
 
 class InsufficientResourcesError(ModerationAgentException):
-    """
-    Exception raised when system resources are insufficient
+    """    Exception raised when system resources are insufficient
     
     Covers memory, disk space, GPU availability, and other
     resource-related constraints.
-    """
-    
+    """    
     def __init__(self, resource_type: str, required: str, available: str = None,
                  context: Dict[str, Any] = None):
         message = f"Insufficient {resource_type}: requires {required}"
@@ -293,13 +269,11 @@ class InsufficientResourcesError(ModerationAgentException):
         )
 
 class LiveStreamError(ModerationAgentException):
-    """
-    Exception raised during live stream moderation
+    """    Exception raised during live stream moderation
     
     Covers connection issues, streaming protocol errors,
     and real-time processing failures.
-    """
-    
+    """    
     def __init__(self, stream_id: str, error_type: str, reason: str,
                  stream_url: str = None, context: Dict[str, Any] = None):
         message = f"Live stream error ({error_type}) for stream {stream_id}: {reason}"
@@ -321,13 +295,11 @@ class LiveStreamError(ModerationAgentException):
         )
 
 class ComplianceViolationError(ModerationAgentException):
-    """
-    Exception raised for compliance framework violations
+    """    Exception raised for compliance framework violations
     
     Covers GDPR, COPPA, and other regulatory compliance issues
     that prevent content processing.
-    """
-    
+    """    
     def __init__(self, compliance_framework: str, violation_type: str, 
                  requirement: str, context: Dict[str, Any] = None):
         message = f"Compliance violation ({compliance_framework}): {violation_type} - {requirement}"
@@ -347,13 +319,11 @@ class ComplianceViolationError(ModerationAgentException):
         )
 
 class ModelInferenceError(ModerationAgentException):
-    """
-    Exception raised during model inference
+    """    Exception raised during model inference
     
     Covers prediction failures, invalid model outputs,
     and inference pipeline errors.
-    """
-    
+    """    
     def __init__(self, model_name: str, inference_stage: str, reason: str,
                  input_shape: tuple = None, context: Dict[str, Any] = None):
         message = f"Model inference failed for {model_name} at {inference_stage}: {reason}"
@@ -375,13 +345,11 @@ class ModelInferenceError(ModerationAgentException):
         )
 
 class HumanReviewRequiredError(ModerationAgentException):
-    """
-    Exception raised when human review is required
+    """    Exception raised when human review is required
     
     Not technically an error, but an exception to interrupt
     automated processing when human intervention is needed.
-    """
-    
+    """    
     def __init__(self, content_id: str, violation_types: List[str], 
                  confidence_scores: List[float], severity_level: str,
                  context: Dict[str, Any] = None):
@@ -404,13 +372,11 @@ class HumanReviewRequiredError(ModerationAgentException):
         )
 
 class DataPrivacyError(ModerationAgentException):
-    """
-    Exception raised for data privacy violations
+    """    Exception raised for data privacy violations
     
     Covers unauthorized access, data retention violations,
     and privacy policy breaches.
-    """
-    
+    """    
     def __init__(self, privacy_type: str, violation_description: str,
                  user_id: str = None, data_category: str = None,
                  context: Dict[str, Any] = None):
@@ -434,13 +400,11 @@ class DataPrivacyError(ModerationAgentException):
         )
 
 class APIQuotaExceededError(ModerationAgentException):
-    """
-    Exception raised when API quotas are exceeded
+    """    Exception raised when API quotas are exceeded
     
     Covers rate limiting, usage quotas, and service limitations
     from external APIs or internal resource limits.
-    """
-    
+    """    
     def __init__(self, api_name: str, quota_type: str, limit: int,
                  current_usage: int = None, reset_time: str = None,
                  context: Dict[str, Any] = None):
@@ -468,18 +432,15 @@ class APIQuotaExceededError(ModerationAgentException):
 
 # Exception factory for creating appropriate exceptions
 class ModerationExceptionFactory:
-    """
-    Factory class for creating appropriate moderation exceptions
+    """    Factory class for creating appropriate moderation exceptions
     
     Provides a centralized way to create exceptions with consistent
     formatting and proper error categorization.
-    """
-    
+    """    
     @staticmethod
     def create_model_error(model_name: str, error_type: str, details: str,
                           context: Dict[str, Any] = None) -> ModerationAgentException:
-        """Create model-related exception"""
-        if error_type == "loading":
+        """Create model-related exception"""        if error_type == "loading":
             return ModelLoadingError(model_name, details, context)
         elif error_type == "inference":
             return ModelInferenceError(model_name, "prediction", details, context=context)
@@ -493,25 +454,21 @@ class ModerationExceptionFactory:
     @staticmethod
     def create_content_error(content_type: str, stage: str, reason: str,
                            content_id: str = None, context: Dict[str, Any] = None) -> ContentProcessingError:
-        """Create content processing exception"""
-        return ContentProcessingError(content_type, stage, reason, content_id, context)
+        """Create content processing exception"""        return ContentProcessingError(content_type, stage, reason, content_id, context)
     
     @staticmethod
     def create_configuration_error(config_key: str, issue: str,
                                  context: Dict[str, Any] = None) -> ConfigurationError:
-        """Create configuration exception"""
-        return ConfigurationError(config_key, issue, context=context)
+        """Create configuration exception"""        return ConfigurationError(config_key, issue, context=context)
     
     @staticmethod
     def create_resource_error(resource: str, requirement: str, 
                             availability: str = None, context: Dict[str, Any] = None) -> InsufficientResourcesError:
-        """Create resource limitation exception"""
-        return InsufficientResourcesError(resource, requirement, availability, context)
+        """Create resource limitation exception"""        return InsufficientResourcesError(resource, requirement, availability, context)
 
 # Error handler for graceful exception handling
 def handle_moderation_exception(exception: Exception, context: Dict[str, Any] = None) -> Dict[str, Any]:
-    """
-    Handle moderation exceptions gracefully
+    """    Handle moderation exceptions gracefully
     
     Args:
         exception: The exception to handle
@@ -519,8 +476,7 @@ def handle_moderation_exception(exception: Exception, context: Dict[str, Any] = 
         
     Returns:
         Dictionary representation of the error for API responses
-    """
-    if isinstance(exception, ModerationAgentException):
+    """    if isinstance(exception, ModerationAgentException):
         error_dict = exception.to_dict()
         if context:
             error_dict['context'].update(context)

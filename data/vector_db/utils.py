@@ -1,5 +1,4 @@
-"""
-Vector Database Utilities and Helper Functions
+"""Vector Database Utilities and Helper Functions
 ==============================================
 
 Comprehensive utility functions for the vector database system including
@@ -23,9 +22,7 @@ TEAM SPECIALTIES:
 - Audio Processing Specialist: Audio fingerprinting & analysis
 - Computer Vision Engineer: Image/video processing & recognition
 - Microservices Architect: Distributed systems & API design
-"""
-
-import os
+"""import os
 import json
 import hashlib
 import asyncio
@@ -50,8 +47,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SystemResourceInfo:
-    """System resource information."""
-    cpu_usage_percent: float
+    """System resource information."""    cpu_usage_percent: float
     memory_usage_percent: float
     memory_available_gb: float
     disk_usage_percent: float
@@ -62,8 +58,7 @@ class SystemResourceInfo:
 
 @dataclass
 class DataProcessingStats:
-    """Statistics for data processing operations."""
-    total_items: int
+    """Statistics for data processing operations."""    total_items: int
     processed_items: int
     failed_items: int
     processing_time_seconds: float
@@ -73,23 +68,19 @@ class DataProcessingStats:
 
 @dataclass
 class ValidationResult:
-    """Result of data validation operations."""
-    is_valid: bool
+    """Result of data validation operations."""    is_valid: bool
     errors: List[str]
     warnings: List[str]
     validation_score: float
 
 
 class ContentHashGenerator:
-    """
-    Generates consistent hashes for different content types.
+    """    Generates consistent hashes for different content types.
     Used for deduplication and content identification.
-    """
-    
+    """    
     @staticmethod
     def hash_text(text: str, algorithm: str = 'sha256') -> str:
-        """Generate hash for text content."""
-        if not text:
+        """Generate hash for text content."""        if not text:
             return ""
         
         # Normalize text (lowercase, strip whitespace)
@@ -103,8 +94,7 @@ class ContentHashGenerator:
     
     @staticmethod
     def hash_audio(audio_data: np.ndarray, sample_rate: int = 22050, algorithm: str = 'sha256') -> str:
-        """Generate hash for audio content."""
-        if audio_data is None or len(audio_data) == 0:
+        """Generate hash for audio content."""        if audio_data is None or len(audio_data) == 0:
             return ""
         
         # Normalize audio data
@@ -122,8 +112,7 @@ class ContentHashGenerator:
     
     @staticmethod
     def hash_image(image: Union[Image.Image, np.ndarray], algorithm: str = 'sha256') -> str:
-        """Generate hash for image content."""
-        if image is None:
+        """Generate hash for image content."""        if image is None:
             return ""
         
         try:
@@ -157,8 +146,7 @@ class ContentHashGenerator:
     
     @staticmethod
     def hash_metadata(metadata: Dict[str, Any], algorithm: str = 'sha256') -> str:
-        """Generate hash for metadata."""
-        if not metadata:
+        """Generate hash for metadata."""        if not metadata:
             return ""
         
         # Sort keys for consistent hashing
@@ -172,14 +160,11 @@ class ContentHashGenerator:
 
 
 class DataValidator:
-    """
-    Validates data integrity and format for vector database operations.
-    """
-    
+    """    Validates data integrity and format for vector database operations.
+    """    
     @staticmethod
     def validate_text_content(text: str, max_length: Optional[int] = None) -> ValidationResult:
-        """Validate text content."""
-        errors = []
+        """Validate text content."""        errors = []
         warnings = []
         
         # Check if text exists
@@ -212,8 +197,7 @@ class DataValidator:
     
     @staticmethod
     def validate_audio_data(audio_data: np.ndarray, sample_rate: int) -> ValidationResult:
-        """Validate audio data."""
-        errors = []
+        """Validate audio data."""        errors = []
         warnings = []
         
         # Check if audio data exists
@@ -255,8 +239,7 @@ class DataValidator:
     
     @staticmethod
     def validate_image_data(image: Union[Image.Image, np.ndarray]) -> ValidationResult:
-        """Validate image data."""
-        errors = []
+        """Validate image data."""        errors = []
         warnings = []
         
         # Check if image exists
@@ -312,8 +295,7 @@ class DataValidator:
     
     @staticmethod
     def validate_metadata(metadata: Dict[str, Any]) -> ValidationResult:
-        """Validate metadata."""
-        errors = []
+        """Validate metadata."""        errors = []
         warnings = []
         
         if not isinstance(metadata, dict):
@@ -349,18 +331,15 @@ class DataValidator:
 
 
 class PerformanceProfiler:
-    """
-    Performance profiling utilities for vector database operations.
-    """
-    
+    """    Performance profiling utilities for vector database operations.
+    """    
     def __init__(self):
         self.operation_times = {}
         self.memory_snapshots = {}
         self.active_operations = {}
     
     def start_operation(self, operation_name: str) -> str:
-        """Start timing an operation."""
-        operation_id = f"{operation_name}_{time.time()}"
+        """Start timing an operation."""        operation_id = f"{operation_name}_{time.time()}"
         self.active_operations[operation_id] = {
             'name': operation_name,
             'start_time': time.time(),
@@ -369,8 +348,7 @@ class PerformanceProfiler:
         return operation_id
     
     def end_operation(self, operation_id: str) -> Dict[str, Any]:
-        """End timing an operation and return metrics."""
-        if operation_id not in self.active_operations:
+        """End timing an operation and return metrics."""        if operation_id not in self.active_operations:
             return {}
         
         operation = self.active_operations[operation_id]
@@ -397,8 +375,7 @@ class PerformanceProfiler:
         return metrics
     
     def get_operation_stats(self, operation_name: str) -> Dict[str, Any]:
-        """Get statistics for a specific operation."""
-        if operation_name not in self.operation_times:
+        """Get statistics for a specific operation."""        if operation_name not in self.operation_times:
             return {}
         
         times = [op['duration_seconds'] for op in self.operation_times[operation_name]]
@@ -416,22 +393,18 @@ class PerformanceProfiler:
         }
     
     def get_all_stats(self) -> Dict[str, Any]:
-        """Get statistics for all operations."""
-        return {
+        """Get statistics for all operations."""        return {
             operation_name: self.get_operation_stats(operation_name)
             for operation_name in self.operation_times.keys()
         }
 
 
 class FileSystemUtils:
-    """
-    File system utilities for vector database storage and management.
-    """
-    
+    """    File system utilities for vector database storage and management.
+    """    
     @staticmethod
     def ensure_directory(path: Union[str, Path]) -> bool:
-        """Ensure a directory exists, creating it if necessary."""
-        try:
+        """Ensure a directory exists, creating it if necessary."""        try:
             Path(path).mkdir(parents=True, exist_ok=True)
             return True
         except Exception as e:
@@ -440,8 +413,7 @@ class FileSystemUtils:
     
     @staticmethod
     def safe_file_write(filepath: Union[str, Path], data: Union[str, bytes], backup: bool = True) -> bool:
-        """Safely write data to a file with optional backup."""
-        try:
+        """Safely write data to a file with optional backup."""        try:
             filepath = Path(filepath)
             
             # Create backup if requested and file exists
@@ -473,8 +445,7 @@ class FileSystemUtils:
     
     @staticmethod
     def get_directory_size(path: Union[str, Path]) -> int:
-        """Get total size of directory in bytes."""
-        total_size = 0
+        """Get total size of directory in bytes."""        total_size = 0
         try:
             for dirpath, dirnames, filenames in os.walk(path):
                 for filename in filenames:
@@ -488,8 +459,7 @@ class FileSystemUtils:
     
     @staticmethod
     def cleanup_old_files(directory: Union[str, Path], max_age_days: int = 7) -> int:
-        """Remove files older than specified age."""
-        removed_count = 0
+        """Remove files older than specified age."""        removed_count = 0
         cutoff_time = time.time() - (max_age_days * 24 * 60 * 60)
         
         try:
@@ -504,14 +474,11 @@ class FileSystemUtils:
 
 
 class DataSerialization:
-    """
-    Data serialization utilities with compression and validation.
-    """
-    
+    """    Data serialization utilities with compression and validation.
+    """    
     @staticmethod
     def serialize_with_compression(data: Any, compression_level: int = 6) -> bytes:
-        """Serialize data with gzip compression."""
-        try:
+        """Serialize data with gzip compression."""        try:
             # Pickle the data
             pickled_data = pickle.dumps(data)
             
@@ -526,8 +493,7 @@ class DataSerialization:
     
     @staticmethod
     def deserialize_with_compression(data: bytes) -> Any:
-        """Deserialize compressed data."""
-        try:
+        """Deserialize compressed data."""        try:
             # Decompress
             decompressed_data = gzip.decompress(data)
             
@@ -542,8 +508,7 @@ class DataSerialization:
     
     @staticmethod
     def serialize_to_json(data: Any, indent: Optional[int] = None) -> str:
-        """Serialize data to JSON with custom handling for numpy arrays."""
-        def json_serializer(obj):
+        """Serialize data to JSON with custom handling for numpy arrays."""        def json_serializer(obj):
             if isinstance(obj, np.ndarray):
                 return {
                     '__numpy_array__': True,
@@ -562,8 +527,7 @@ class DataSerialization:
     
     @staticmethod
     def deserialize_from_json(json_str: str) -> Any:
-        """Deserialize JSON with custom handling for numpy arrays."""
-        def json_deserializer(obj):
+        """Deserialize JSON with custom handling for numpy arrays."""        def json_deserializer(obj):
             if isinstance(obj, dict) and obj.get('__numpy_array__', False):
                 return np.array(obj['data'], dtype=obj['dtype']).reshape(obj['shape'])
             return obj
@@ -586,14 +550,11 @@ class DataSerialization:
 
 
 class SystemResourceMonitor:
-    """
-    Monitor system resources for optimal vector database performance.
-    """
-    
+    """    Monitor system resources for optimal vector database performance.
+    """    
     @staticmethod
     def get_system_info() -> SystemResourceInfo:
-        """Get current system resource information."""
-        # CPU usage
+        """Get current system resource information."""        # CPU usage
         cpu_usage = psutil.cpu_percent(interval=1)
         
         # Memory usage
@@ -630,8 +591,7 @@ class SystemResourceMonitor:
     
     @staticmethod
     def check_resource_constraints(min_memory_gb: float = 1.0, max_cpu_percent: float = 90.0) -> Tuple[bool, List[str]]:
-        """Check if system meets resource constraints."""
-        info = SystemResourceMonitor.get_system_info()
+        """Check if system meets resource constraints."""        info = SystemResourceMonitor.get_system_info()
         issues = []
         
         if info.memory_available_gb < min_memory_gb:
@@ -647,8 +607,7 @@ class SystemResourceMonitor:
     
     @staticmethod
     def suggest_optimizations(info: SystemResourceInfo) -> List[str]:
-        """Suggest optimizations based on system resources."""
-        suggestions = []
+        """Suggest optimizations based on system resources."""        suggestions = []
         
         if info.memory_usage_percent > 80:
             suggestions.append("Consider reducing batch size or enabling memory optimization")
@@ -670,8 +629,7 @@ class SystemResourceMonitor:
 # Utility Functions
 
 def generate_unique_id(prefix: str = "", timestamp: bool = True) -> str:
-    """Generate a unique identifier."""
-    import uuid
+    """Generate a unique identifier."""    import uuid
     
     unique_part = str(uuid.uuid4())[:8]
     
@@ -685,8 +643,7 @@ def generate_unique_id(prefix: str = "", timestamp: bool = True) -> str:
 
 
 def normalize_similarity_score(score: float, method: str = 'minmax') -> float:
-    """Normalize similarity score to [0, 1] range."""
-    if method == 'minmax':
+    """Normalize similarity score to [0, 1] range."""    if method == 'minmax':
         # Assume input is cosine similarity [-1, 1]
         return (score + 1) / 2
     elif method == 'sigmoid':
@@ -696,8 +653,7 @@ def normalize_similarity_score(score: float, method: str = 'minmax') -> float:
 
 
 def calculate_content_diversity(embeddings: List[np.ndarray]) -> float:
-    """Calculate diversity score for a collection of embeddings."""
-    if len(embeddings) < 2:
+    """Calculate diversity score for a collection of embeddings."""    if len(embeddings) < 2:
         return 0.0
     
     # Calculate pairwise distances
@@ -716,8 +672,7 @@ def calculate_content_diversity(embeddings: List[np.ndarray]) -> float:
 
 
 def estimate_storage_requirements(vector_count: int, dimension: int, metadata_size_kb: float = 1.0) -> Dict[str, float]:
-    """Estimate storage requirements for vector database."""
-    # Vector storage (float32)
+    """Estimate storage requirements for vector database."""    # Vector storage (float32)
     vector_size_mb = (vector_count * dimension * 4) / (1024 * 1024)
     
     # Metadata storage
@@ -738,8 +693,7 @@ def estimate_storage_requirements(vector_count: int, dimension: int, metadata_si
 
 
 def format_bytes(bytes_value: int) -> str:
-    """Format bytes into human readable string."""
-    for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
+    """Format bytes into human readable string."""    for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
         if bytes_value < 1024.0:
             return f"{bytes_value:.1f} {unit}"
         bytes_value /= 1024.0
@@ -747,8 +701,7 @@ def format_bytes(bytes_value: int) -> str:
 
 
 def format_duration(seconds: float) -> str:
-    """Format duration in seconds to human readable string."""
-    if seconds < 1:
+    """Format duration in seconds to human readable string."""    if seconds < 1:
         return f"{seconds*1000:.1f}ms"
     elif seconds < 60:
         return f"{seconds:.1f}s"

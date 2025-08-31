@@ -1,5 +1,4 @@
-"""
-Audio Specialist Agent
+"""Audio Specialist Agent
 
 Advanced AI agent specialized in audio processing, analysis, enhancement,
 and protection for the IA Influencer platform.
@@ -10,9 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import uuid
 import numpy as np
@@ -33,8 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 class AudioFormat(Enum):
-    """Supported audio formats"""
-    WAV = "wav"
+    """Supported audio formats"""    WAV = "wav"
     MP3 = "mp3"
     FLAC = "flac"
     AAC = "aac"
@@ -43,16 +39,14 @@ class AudioFormat(Enum):
 
 
 class AudioQuality(Enum):
-    """Audio quality levels"""
-    LOW = "low"          # 64-128 kbps
+    """Audio quality levels"""    LOW = "low"          # 64-128 kbps
     MEDIUM = "medium"    # 128-256 kbps
     HIGH = "high"        # 256-320 kbps
     LOSSLESS = "lossless"  # FLAC, WAV
 
 
 class ProcessingMode(Enum):
-    """Audio processing modes"""
-    ANALYSIS = "analysis"
+    """Audio processing modes"""    ANALYSIS = "analysis"
     ENHANCEMENT = "enhancement"
     CONVERSION = "conversion"
     FINGERPRINTING = "fingerprinting"
@@ -64,8 +58,7 @@ class ProcessingMode(Enum):
 
 @dataclass
 class AudioMetadata:
-    """Comprehensive audio metadata"""
-    # Basic properties
+    """Comprehensive audio metadata"""    # Basic properties
     duration_seconds: float = 0.0
     sample_rate: int = 44100
     bit_depth: int = 16
@@ -108,8 +101,7 @@ class AudioMetadata:
 
 @dataclass
 class AudioProcessingRequest:
-    """Request for audio processing"""
-    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Request for audio processing"""    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     file_path: str = ""
     processing_mode: ProcessingMode = ProcessingMode.ANALYSIS
     output_format: AudioFormat = AudioFormat.WAV
@@ -138,8 +130,7 @@ class AudioProcessingRequest:
 
 @dataclass
 class AudioProcessingResult:
-    """Result of audio processing"""
-    request_id: str
+    """Result of audio processing"""    request_id: str
     success: bool
     output_file_path: Optional[str] = None
     metadata: Optional[AudioMetadata] = None
@@ -153,8 +144,7 @@ class AudioProcessingResult:
 
 
 class AudioSpecialistAgent(BaseAIAgent):
-    """
-    Advanced audio processing specialist agent
+    """    Advanced audio processing specialist agent
     
     Capabilities:
     - High-quality audio analysis and enhancement
@@ -165,8 +155,7 @@ class AudioSpecialistAgent(BaseAIAgent):
     - Stem separation and vocal extraction
     - Real-time audio processing
     - Multi-platform audio optimization
-    """
-    
+    """    
     def __init__(self, config: AgentConfiguration):
         # Ensure required capabilities
         required_capabilities = {
@@ -207,8 +196,7 @@ class AudioSpecialistAgent(BaseAIAgent):
         }
     
     async def _custom_initialize(self) -> None:
-        """Initialize audio processing components"""
-        try:
+        """Initialize audio processing components"""        try:
             # Initialize audio processing engines
             self.signal_processor = AudioSignalProcessor()
             await self.signal_processor.initialize()
@@ -236,8 +224,7 @@ class AudioSpecialistAgent(BaseAIAgent):
             raise
     
     async def _execute_task_impl(self, task: AgentTask) -> Dict[str, Any]:
-        """Execute audio processing task"""
-        task_type = task.task_type
+        """Execute audio processing task"""        task_type = task.task_type
         context = task.context
         
         if task_type == "process_audio":
@@ -260,8 +247,7 @@ class AudioSpecialistAgent(BaseAIAgent):
             raise ValueError(f"Unknown task type: {task_type}")
     
     async def _process_audio(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Comprehensive audio processing"""
-        request = AudioProcessingRequest(**context.get("request", {}))
+        """Comprehensive audio processing"""        request = AudioProcessingRequest(**context.get("request", {}))
         
         self.logger.info(f"Processing audio file: {request.file_path}")
         
@@ -374,8 +360,7 @@ class AudioSpecialistAgent(BaseAIAgent):
             }
     
     async def _comprehensive_audio_analysis(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Perform comprehensive audio analysis"""
-        analysis = {}
+        """Perform comprehensive audio analysis"""        analysis = {}
         
         # Signal analysis
         signal_analysis = await self.signal_processor.analyze_signal(audio_data, sample_rate)
@@ -405,8 +390,7 @@ class AudioSpecialistAgent(BaseAIAgent):
     
     async def _apply_audio_enhancements(self, audio_data: np.ndarray, sample_rate: int, 
                                       request: AudioProcessingRequest) -> Tuple[np.ndarray, Dict[str, float]]:
-        """Apply audio enhancements based on request"""
-        enhanced_audio = audio_data.copy()
+        """Apply audio enhancements based on request"""        enhanced_audio = audio_data.copy()
         improvements = {}
         
         # Noise reduction
@@ -454,8 +438,7 @@ class AudioSpecialistAgent(BaseAIAgent):
         return enhanced_audio, improvements
     
     async def _extract_audio_stems(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract individual stems from mixed audio"""
-        file_path = context.get("file_path", "")
+        """Extract individual stems from mixed audio"""        file_path = context.get("file_path", "")
         output_dir = context.get("output_dir", self.temp_dir)
         
         try:
@@ -486,8 +469,7 @@ class AudioSpecialistAgent(BaseAIAgent):
             }
     
     async def _detect_copyright_content(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Detect copyrighted content in audio"""
-        file_path = context.get("file_path", "")
+        """Detect copyrighted content in audio"""        file_path = context.get("file_path", "")
         
         try:
             # Load audio
@@ -519,8 +501,7 @@ class AudioSpecialistAgent(BaseAIAgent):
             }
     
     async def _validate_audio_file(self, file_path: str) -> bool:
-        """Validate audio file"""
-        try:
+        """Validate audio file"""        try:
             import os
             
             # Check file exists
@@ -546,8 +527,7 @@ class AudioSpecialistAgent(BaseAIAgent):
             return False
     
     async def can_handle_task(self, task_type: str, context: Dict[str, Any]) -> bool:
-        """Check if agent can handle specific audio task"""
-        supported_tasks = [
+        """Check if agent can handle specific audio task"""        supported_tasks = [
             "process_audio",
             "analyze_music",
             "enhance_audio",

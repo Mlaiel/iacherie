@@ -1,5 +1,4 @@
-"""
-Anonymization Engine - Advanced Data Anonymization & De-identification
+"""Anonymization Engine - Advanced Data Anonymization & De-identification
 State-of-the-art anonymization techniques for GDPR compliance and privacy protection
 
 Project: IA-Influencer Agent
@@ -8,9 +7,7 @@ Email: mlaiel@live.de
 Company: Ultra-Industrial AI Solutions
 
 ⚠️ COPYRIGHT PROTECTION - FAHED MLAIEL ⚠️
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import hmac
@@ -40,8 +37,7 @@ from ...models.gdpr_models import AnonymizationRecord, AnonymizationMapping
 logger = get_logger(__name__)
 
 class AnonymizationTechnique(Enum):
-    """Advanced anonymization techniques"""
-    K_ANONYMITY = "k_anonymity"
+    """Advanced anonymization techniques"""    K_ANONYMITY = "k_anonymity"
     L_DIVERSITY = "l_diversity"
     T_CLOSENESS = "t_closeness"
     DIFFERENTIAL_PRIVACY = "differential_privacy"
@@ -53,23 +49,20 @@ class AnonymizationTechnique(Enum):
     TOKENIZATION = "tokenization"
 
 class PrivacyLevel(Enum):
-    """Privacy protection levels"""
-    LOW = "low"
+    """Privacy protection levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     MAXIMUM = "maximum"
 
 class DataType(Enum):
-    """Data types for anonymization"""
-    IDENTIFIER = "identifier"
+    """Data types for anonymization"""    IDENTIFIER = "identifier"
     QUASI_IDENTIFIER = "quasi_identifier"
     SENSITIVE_ATTRIBUTE = "sensitive_attribute"
     NON_SENSITIVE = "non_sensitive"
 
 @dataclass
 class AnonymizationConfig:
-    """Anonymization configuration parameters"""
-    technique: AnonymizationTechnique
+    """Anonymization configuration parameters"""    technique: AnonymizationTechnique
     privacy_level: PrivacyLevel
     k_value: int = 5
     l_value: int = 3
@@ -80,8 +73,7 @@ class AnonymizationConfig:
 
 @dataclass
 class AnonymizationResult:
-    """Results of anonymization process"""
-    original_records: int
+    """Results of anonymization process"""    original_records: int
     anonymized_records: int
     suppressed_records: int
     privacy_loss: float
@@ -90,11 +82,9 @@ class AnonymizationResult:
     anonymization_id: str
 
 class AnonymizationEngine:
-    """
-    Advanced Anonymization Engine
+    """    Advanced Anonymization Engine
     Implements state-of-the-art anonymization techniques for GDPR compliance
-    """
-    
+    """    
     def __init__(self):
         # Generalization hierarchies for common data types
         self._generalization_hierarchies = self._initialize_hierarchies()
@@ -112,8 +102,7 @@ class AnonymizationEngine:
         logger.info("Anonymization Engine initialized successfully")
     
     def _initialize_hierarchies(self) -> Dict[str, Dict[str, List[str]]]:
-        """Initialize generalization hierarchies for common attributes"""
-        return {
+        """Initialize generalization hierarchies for common attributes"""        return {
             "age": {
                 "levels": [
                     ["exact_age"],
@@ -164,8 +153,7 @@ class AnonymizationEngine:
         processing_purpose: str,
         config: AnonymizationConfig = None
     ) -> Dict[str, Any]:
-        """Process data through anonymization pipeline"""
-        try:
+        """Process data through anonymization pipeline"""        try:
             anonymization_id = str(uuid.uuid4())
             
             # Auto-configure if not provided
@@ -234,8 +222,7 @@ class AnonymizationEngine:
         quasi_identifiers: List[str],
         k: int = 5
     ) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
-        """Apply k-anonymity to dataset"""
-        try:
+        """Apply k-anonymity to dataset"""        try:
             if k < 2:
                 raise ValueError("k must be at least 2 for k-anonymity")
             
@@ -281,8 +268,7 @@ class AnonymizationEngine:
         delta: float = 1e-5,
         sensitivity: float = 1.0
     ) -> Union[float, List[float]]:
-        """Apply differential privacy noise to numerical data"""
-        try:
+        """Apply differential privacy noise to numerical data"""        try:
             if isinstance(data_value, (int, float)):
                 # Single value
                 if epsilon <= 0:
@@ -313,8 +299,7 @@ class AnonymizationEngine:
         attribute_name: str,
         generalization_level: int = 1
     ) -> str:
-        """Apply generalization to data value"""
-        try:
+        """Apply generalization to data value"""        try:
             attribute_lower = attribute_name.lower()
             
             # Age generalization
@@ -393,8 +378,7 @@ class AnonymizationEngine:
         user_id: str,
         field_name: str
     ) -> str:
-        """Apply tokenization to sensitive data"""
-        try:
+        """Apply tokenization to sensitive data"""        try:
             # Generate deterministic token
             token_key = f"{user_id}_{field_name}"
             token_salt = hashlib.sha256(token_key.encode()).hexdigest()[:16]
@@ -418,8 +402,7 @@ class AnonymizationEngine:
         original_data: Dict[str, Any],
         data_type: str = "general"
     ) -> Dict[str, Any]:
-        """Generate synthetic data replacement"""
-        try:
+        """Generate synthetic data replacement"""        try:
             synthetic_data = {}
             
             for field_name, field_value in original_data.items():
@@ -440,8 +423,7 @@ class AnonymizationEngine:
         anonymization_id: str,
         authorized_user_id: str
     ) -> Dict[str, Any]:
-        """Reverse anonymization for authorized access (limited techniques only)"""
-        try:
+        """Reverse anonymization for authorized access (limited techniques only)"""        try:
             async with get_db() as db:
                 # Get anonymization record
                 record_query = await db.execute(
@@ -509,8 +491,7 @@ class AnonymizationEngine:
         data_payload: Dict[str, Any],
         processing_purpose: str
     ) -> AnonymizationConfig:
-        """Auto-configure anonymization based on data and purpose"""
-        # Determine privacy level based on purpose
+        """Auto-configure anonymization based on data and purpose"""        # Determine privacy level based on purpose
         privacy_levels = {
             "research": PrivacyLevel.HIGH,
             "analytics": PrivacyLevel.MEDIUM,
@@ -548,8 +529,7 @@ class AnonymizationEngine:
         )
     
     async def _classify_data_fields(self, data_payload: Dict[str, Any]) -> Dict[str, DataType]:
-        """Classify data fields for anonymization purposes"""
-        classifications = {}
+        """Classify data fields for anonymization purposes"""        classifications = {}
         
         # Classification rules
         identifier_keywords = ["id", "uuid", "key", "token"]
@@ -576,8 +556,7 @@ class AnonymizationEngine:
         field_classifications: Dict[str, DataType],
         config: AnonymizationConfig
     ) -> Dict[str, Any]:
-        """Apply specified anonymization technique to data"""
-        anonymized_data = {}
+        """Apply specified anonymization technique to data"""        anonymized_data = {}
         
         for field_name, field_value in data_payload.items():
             field_type = field_classifications.get(field_name, DataType.NON_SENSITIVE)
@@ -631,8 +610,7 @@ class AnonymizationEngine:
         anonymized_data: Dict[str, Any],
         config: AnonymizationConfig
     ) -> Dict[str, float]:
-        """Calculate quality metrics for anonymization"""
-        metrics = {}
+        """Calculate quality metrics for anonymization"""        metrics = {}
         
         try:
             # Information loss calculation
@@ -669,8 +647,7 @@ class AnonymizationEngine:
         dataset: List[Dict[str, Any]], 
         quasi_identifiers: List[str]
     ) -> Dict[str, List[Dict[str, Any]]]:
-        """Group dataset records by quasi-identifier combinations"""
-        groups = {}
+        """Group dataset records by quasi-identifier combinations"""        groups = {}
         
         for record in dataset:
             # Create group key from quasi-identifiers
@@ -690,8 +667,7 @@ class AnonymizationEngine:
         quasi_identifiers: List[str],
         target_k: int
     ) -> Optional[List[Dict[str, Any]]]:
-        """Generalize a group of records to achieve k-anonymity"""
-        try:
+        """Generalize a group of records to achieve k-anonymity"""        try:
             # Apply generalization to quasi-identifiers
             generalized_records = []
             
@@ -713,8 +689,7 @@ class AnonymizationEngine:
             return None
     
     async def _apply_pseudonymization(self, data_value: Any, field_name: str) -> str:
-        """Apply pseudonymization to data value"""
-        try:
+        """Apply pseudonymization to data value"""        try:
             # Create deterministic pseudonym
             pseudonym_key = f"pseudo_{field_name}"
             data_str = str(data_value)
@@ -735,8 +710,7 @@ class AnonymizationEngine:
         field_value: Any,
         data_type: str
     ) -> Any:
-        """Generate synthetic data for specific field"""
-        try:
+        """Generate synthetic data for specific field"""        try:
             field_lower = field_name.lower()
             
             # Email synthesis
@@ -781,8 +755,7 @@ class AnonymizationEngine:
         original_value: str, 
         token: str
     ) -> None:
-        """Store tokenization mapping for potential reversal"""
-        try:
+        """Store tokenization mapping for potential reversal"""        try:
             async with get_db() as db:
                 mapping = AnonymizationMapping(
                     user_id=user_id,
@@ -804,8 +777,7 @@ class AnonymizationEngine:
         anonymized_data: Dict[str, Any],
         user_id: str
     ) -> Dict[str, Any]:
-        """Reverse tokenization using stored mappings"""
-        try:
+        """Reverse tokenization using stored mappings"""        try:
             original_data = {}
             
             async with get_db() as db:
@@ -842,8 +814,7 @@ class AnonymizationEngine:
         anonymized_data: Dict[str, Any],
         user_id: str
     ) -> Dict[str, Any]:
-        """Reverse pseudonymization (limited capability)"""
-        try:
+        """Reverse pseudonymization (limited capability)"""        try:
             # Pseudonymization is typically one-way, but we can provide metadata
             original_data = {}
             
@@ -864,8 +835,7 @@ class AnonymizationEngine:
         original_data: Dict[str, Any],
         anonymized_data: Dict[str, Any]
     ) -> float:
-        """Calculate information loss from anonymization"""
-        try:
+        """Calculate information loss from anonymization"""        try:
             if not original_data or not anonymized_data:
                 return 1.0
             
@@ -904,8 +874,7 @@ class AnonymizationEngine:
         original_data: Dict[str, Any],
         anonymized_data: Dict[str, Any]
     ) -> float:
-        """Calculate utility preservation score"""
-        information_loss = await self._calculate_information_loss(original_data, anonymized_data)
+        """Calculate utility preservation score"""        information_loss = await self._calculate_information_loss(original_data, anonymized_data)
         return 1.0 - information_loss
     
     async def _calculate_privacy_risk(
@@ -913,8 +882,7 @@ class AnonymizationEngine:
         anonymized_data: Dict[str, Any],
         config: AnonymizationConfig
     ) -> float:
-        """Calculate privacy risk of anonymized data"""
-        try:
+        """Calculate privacy risk of anonymized data"""        try:
             risk_score = 0.0
             
             # Base risk by technique
@@ -958,12 +926,10 @@ class AnonymizationEngine:
         user_id: str,
         access_type: str
     ) -> None:
-        """Log access to anonymized data"""
-        logger.info(f"Anonymization access: {access_type} by {user_id} for {anonymization_id}")
+        """Log access to anonymized data"""        logger.info(f"Anonymization access: {access_type} by {user_id} for {anonymization_id}")
     
     async def _assess_reversal_completeness(self, technique: str) -> str:
-        """Assess completeness of anonymization reversal"""
-        reversal_completeness = {
+        """Assess completeness of anonymization reversal"""        reversal_completeness = {
             "tokenization": "full",
             "pseudonymization": "none",
             "data_masking": "partial",
@@ -975,8 +941,7 @@ class AnonymizationEngine:
         return reversal_completeness.get(technique, "none")
     
     def _config_to_dict(self, config: AnonymizationConfig) -> Dict[str, Any]:
-        """Convert anonymization config to dictionary"""
-        return {
+        """Convert anonymization config to dictionary"""        return {
             "technique": config.technique.value,
             "privacy_level": config.privacy_level.value,
             "k_value": config.k_value,
@@ -990,8 +955,7 @@ class AnonymizationEngine:
         config: AnonymizationConfig,
         quality_metrics: Dict[str, float]
     ) -> Dict[str, str]:
-        """Generate privacy guarantees based on technique and metrics"""
-        guarantees = {}
+        """Generate privacy guarantees based on technique and metrics"""        guarantees = {}
         
         if config.technique == AnonymizationTechnique.K_ANONYMITY:
             guarantees["k_anonymity"] = f"Each record is indistinguishable from at least {config.k_value-1} other records"
@@ -1017,8 +981,7 @@ class AnonymizationEngine:
         return guarantees
 
     async def get_anonymization_statistics(self, user_id: str) -> Dict[str, Any]:
-        """Get anonymization statistics for user"""
-        try:
+        """Get anonymization statistics for user"""        try:
             async with get_db() as db:
                 records_query = await db.execute(
                     select(AnonymizationRecord).where(AnonymizationRecord.user_id == user_id)

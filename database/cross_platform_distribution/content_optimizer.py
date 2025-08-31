@@ -1,5 +1,4 @@
-"""
-Content Optimizer - AI-Powered Content Optimization Engine
+"""Content Optimizer - AI-Powered Content Optimization Engine
 
 Advanced AI-driven content optimization system for cross-platform distribution.
 Provides platform-specific content adaptation, SEO optimization, and engagement prediction.
@@ -12,9 +11,7 @@ Architecture: Enterprise-grade, microservices-ready, production-optimized
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 Violations will be prosecuted under international copyright law.
-"""
-
-from typing import Dict, List, Optional, Any, Tuple, Union
+"""from typing import Dict, List, Optional, Any, Tuple, Union
 from dataclasses import dataclass, field
 from enum import Enum
 import logging
@@ -29,8 +26,7 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class OptimizationType(str, Enum):
-    """Content optimization types"""
-    SEO_KEYWORDS = "seo_keywords"
+    """Content optimization types"""    SEO_KEYWORDS = "seo_keywords"
     HASHTAGS = "hashtags"
     TITLE_OPTIMIZATION = "title_optimization"
     DESCRIPTION_OPTIMIZATION = "description_optimization"
@@ -41,8 +37,7 @@ class OptimizationType(str, Enum):
     PLATFORM_ADAPTATION = "platform_adaptation"
 
 class ContentType(str, Enum):
-    """Content types for optimization"""
-    MUSIC_TRACK = "music_track"
+    """Content types for optimization"""    MUSIC_TRACK = "music_track"
     MUSIC_ALBUM = "music_album"
     VIDEO_CONTENT = "video_content"
     PODCAST_EPISODE = "podcast_episode"
@@ -52,8 +47,7 @@ class ContentType(str, Enum):
     SHORT_FORM_VIDEO = "short_form_video"
 
 class PlatformTarget(str, Enum):
-    """Target platforms for optimization"""
-    SPOTIFY = "spotify"
+    """Target platforms for optimization"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     YOUTUBE_MUSIC = "youtube_music"
     INSTAGRAM = "instagram"
@@ -68,8 +62,7 @@ class PlatformTarget(str, Enum):
 
 @dataclass
 class OptimizationRequest:
-    """Request for content optimization"""
-    content_id: str
+    """Request for content optimization"""    content_id: str
     content_type: ContentType
     target_platforms: List[PlatformTarget]
     original_title: str
@@ -83,8 +76,7 @@ class OptimizationRequest:
 
 @dataclass
 class OptimizationResult:
-    """Result of content optimization"""
-    content_id: str
+    """Result of content optimization"""    content_id: str
     success: bool
     platform_optimizations: Dict[str, Dict[str, Any]] = field(default_factory=dict)
     seo_score: Optional[float] = None
@@ -96,8 +88,7 @@ class OptimizationResult:
 
 @dataclass
 class PlatformConstraints:
-    """Platform-specific constraints and requirements"""
-    max_title_length: int
+    """Platform-specific constraints and requirements"""    max_title_length: int
     max_description_length: int
     max_tags_count: int
     max_tag_length: int
@@ -110,13 +101,11 @@ class PlatformConstraints:
     required_elements: List[str] = field(default_factory=list)
 
 class ContentOptimizer:
-    """
-    Enterprise-grade AI-powered content optimization engine
+    """    Enterprise-grade AI-powered content optimization engine
     
     Provides comprehensive content optimization for cross-platform distribution
     including SEO, engagement prediction, and platform-specific adaptations.
-    """
-    
+    """    
     # Platform constraints database
     PLATFORM_CONSTRAINTS = {
         PlatformTarget.YOUTUBE: PlatformConstraints(
@@ -180,16 +169,14 @@ class ContentOptimizer:
         self.logger = logging.getLogger(__name__)
     
     async def optimize_content(self, request: OptimizationRequest) -> OptimizationResult:
-        """
-        Optimize content for cross-platform distribution
+        """        Optimize content for cross-platform distribution
         
         Args:
             request: Optimization request with content details
             
         Returns:
             OptimizationResult: Comprehensive optimization results
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         
         try:
             self.logger.info(f"Starting content optimization for {request.content_id}")
@@ -236,8 +223,7 @@ class ContentOptimizer:
         request: OptimizationRequest, 
         platform: PlatformTarget
     ) -> Dict[str, Any]:
-        """Optimize content for specific platform"""
-        
+        """Optimize content for specific platform"""        
         constraints = self.PLATFORM_CONSTRAINTS.get(platform)
         if not constraints:
             return {"error": f"Platform {platform.value} not supported"}
@@ -306,8 +292,7 @@ class ContentOptimizer:
         platform: PlatformTarget,
         content_type: ContentType
     ) -> str:
-        """Optimize title for platform constraints"""
-        
+        """Optimize title for platform constraints"""        
         title = original_title
         
         # Truncate if too long
@@ -338,8 +323,7 @@ class ContentOptimizer:
         platform: PlatformTarget,
         content_type: ContentType
     ) -> str:
-        """Optimize description for platform constraints"""
-        
+        """Optimize description for platform constraints"""        
         description = original_description
         
         # Truncate if too long
@@ -369,8 +353,7 @@ class ContentOptimizer:
         constraints: PlatformConstraints,
         platform: PlatformTarget
     ) -> List[str]:
-        """Generate platform-specific hashtags"""
-        
+        """Generate platform-specific hashtags"""        
         hashtags = []
         
         # Base hashtags based on content type
@@ -416,8 +399,7 @@ class ContentOptimizer:
         request: OptimizationRequest,
         platform: PlatformTarget
     ) -> List[str]:
-        """Generate SEO keywords for content"""
-        
+        """Generate SEO keywords for content"""        
         keywords = []
         
         # Extract keywords from title
@@ -450,8 +432,7 @@ class ContentOptimizer:
         request: OptimizationRequest,
         platform: PlatformTarget
     ) -> List[str]:
-        """Get platform-specific recommendations"""
-        
+        """Get platform-specific recommendations"""        
         recommendations = []
         
         if platform == PlatformTarget.YOUTUBE:
@@ -493,8 +474,7 @@ class ContentOptimizer:
         request: OptimizationRequest,
         result: OptimizationResult
     ):
-        """Apply SEO optimization and calculate score"""
-        
+        """Apply SEO optimization and calculate score"""        
         # Calculate SEO score based on various factors
         seo_factors = {
             "title_length": 0,
@@ -531,8 +511,7 @@ class ContentOptimizer:
         request: OptimizationRequest,
         result: OptimizationResult
     ):
-        """Predict engagement for different platforms"""
-        
+        """Predict engagement for different platforms"""        
         # Simplified engagement prediction based on content factors
         base_engagement = {
             PlatformTarget.YOUTUBE: 5.2,  # Average 5.2% engagement rate
@@ -584,8 +563,7 @@ class ContentOptimizer:
         request: OptimizationRequest,
         result: OptimizationResult
     ):
-        """Optimize posting timing for each platform"""
-        
+        """Optimize posting timing for each platform"""        
         # Optimal posting times by platform (in UTC)
         optimal_times = {
             PlatformTarget.YOUTUBE: ["14:00", "18:00", "20:00"],
@@ -611,16 +589,14 @@ class ContentOptimizer:
         self, 
         platform: PlatformTarget
     ) -> Optional[PlatformConstraints]:
-        """Get constraints for a specific platform"""
-        return self.PLATFORM_CONSTRAINTS.get(platform)
+        """Get constraints for a specific platform"""        return self.PLATFORM_CONSTRAINTS.get(platform)
     
     async def validate_content_for_platform(
         self,
         content: Dict[str, Any],
         platform: PlatformTarget
     ) -> Tuple[bool, List[str]]:
-        """Validate content against platform constraints"""
-        
+        """Validate content against platform constraints"""        
         constraints = self.PLATFORM_CONSTRAINTS.get(platform)
         if not constraints:
             return False, [f"Platform {platform.value} not supported"]

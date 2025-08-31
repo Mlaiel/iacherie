@@ -1,5 +1,4 @@
-"""
-Surveillance Extractors - Industrial IA Content Protection and Monitoring System
+"""Surveillance Extractors - Industrial IA Content Protection and Monitoring System
 ================================================================================
 
 Ultra-advanced professional surveillance extraction and content protection system.
@@ -28,9 +27,7 @@ Technical Team Expertise:
 - IA Prompt Engineer: Prompt optimization and AI interaction
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import aiohttp
 import logging
 from abc import ABC, abstractmethod
@@ -112,16 +109,14 @@ logger = logging.getLogger(__name__)
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
-    LOW = "low"
+    """Alert severity levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class ViolationType(Enum):
-    """Content violation types"""
-    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
+    """Content violation types"""    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     UNAUTHORIZED_USE = "unauthorized_use"
     TRADEMARK_VIOLATION = "trademark_violation"
     PLAGIARISM = "plagiarism"
@@ -130,8 +125,7 @@ class ViolationType(Enum):
 
 
 class MonitoringStatus(Enum):
-    """Monitoring job status"""
-    ACTIVE = "active"
+    """Monitoring job status"""    ACTIVE = "active"
     PAUSED = "paused"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -140,8 +134,7 @@ class MonitoringStatus(Enum):
 
 @dataclass
 class ViolationAlert:
-    """Content violation alert"""
-    
+    """Content violation alert"""    
     alert_id: str
     violation_type: ViolationType
     severity: AlertSeverity
@@ -159,8 +152,7 @@ class ViolationAlert:
 
 @dataclass
 class MonitoringJob:
-    """Content monitoring job configuration"""
-    
+    """Content monitoring job configuration"""    
     job_id: str
     content_fingerprints: List[str]
     target_platforms: List[str]
@@ -175,8 +167,7 @@ class MonitoringJob:
 
 @dataclass
 class EvidencePackage:
-    """Evidence collection package"""
-    
+    """Evidence collection package"""    
     violation_id: str
     screenshots: List[str]  # File paths
     html_snapshots: List[str]
@@ -187,8 +178,7 @@ class EvidencePackage:
 
 
 class BaseSurveillanceExtractor(BaseExtractor):
-    """Base class for surveillance extractors"""
-    
+    """Base class for surveillance extractors"""    
     def __init__(self, name: str, target_platform: str):
         super().__init__(name)
         self.target_platform = target_platform
@@ -201,22 +191,18 @@ class BaseSurveillanceExtractor(BaseExtractor):
         
     @abstractmethod
     async def search_content(self, keywords: List[str], content_type: str) -> List[Dict[str, Any]]:
-        """Search for content on platform"""
-        pass
+        """Search for content on platform"""        pass
     
     @abstractmethod
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
-        """Extract metadata from content URL"""
-        pass
+        """Extract metadata from content URL"""        pass
     
     async def capture_evidence(self, url: str, violation_alert: ViolationAlert) -> EvidencePackage:
-        """Capture evidence of violation"""
-        pass
+        """Capture evidence of violation"""        pass
 
 
 class YouTubeSurveillanceExtractor(BaseSurveillanceExtractor):
-    """YouTube content surveillance and monitoring"""
-    
+    """YouTube content surveillance and monitoring"""    
     def __init__(self, api_key: Optional[str] = None):
         super().__init__("YouTubeSurveillanceExtractor", "youtube")
         self.api_key = api_key
@@ -224,12 +210,10 @@ class YouTubeSurveillanceExtractor(BaseSurveillanceExtractor):
         self.search_url = "https://www.youtube.com/results"
         
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Check if request is for YouTube surveillance"""
-        return self.target_platform in str(request.source_url or request.metadata)
+        """Check if request is for YouTube surveillance"""        return self.target_platform in str(request.source_url or request.metadata)
     
     async def search_content(self, keywords: List[str], content_type: str = "video") -> List[Dict[str, Any]]:
-        """Search YouTube for potentially infringing content"""
-        results = []
+        """Search YouTube for potentially infringing content"""        results = []
         
         for keyword in keywords:
             if self.api_key:
@@ -247,8 +231,7 @@ class YouTubeSurveillanceExtractor(BaseSurveillanceExtractor):
         return results
     
     async def _search_via_api(self, query: str) -> List[Dict[str, Any]]:
-        """Search YouTube using API"""
-        try:
+        """Search YouTube using API"""        try:
             async with aiohttp.ClientSession() as session:
                 url = f"{self.base_url}/search"
                 params = {
@@ -293,8 +276,7 @@ class YouTubeSurveillanceExtractor(BaseSurveillanceExtractor):
             return []
     
     async def _search_via_scraping(self, query: str) -> List[Dict[str, Any]]:
-        """Search YouTube via web scraping"""
-        if not HAS_SELENIUM:
+        """Search YouTube via web scraping"""        if not HAS_SELENIUM:
             return []
         
         try:
@@ -356,8 +338,7 @@ class YouTubeSurveillanceExtractor(BaseSurveillanceExtractor):
             return []
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
-        """Extract detailed metadata from YouTube video"""
-        video_id = self._extract_video_id(url)
+        """Extract detailed metadata from YouTube video"""        video_id = self._extract_video_id(url)
         if not video_id:
             return {}
         
@@ -367,8 +348,7 @@ class YouTubeSurveillanceExtractor(BaseSurveillanceExtractor):
             return await self._get_video_details_scraping(url)
     
     def _extract_video_id(self, url: str) -> Optional[str]:
-        """Extract video ID from YouTube URL"""
-        patterns = [
+        """Extract video ID from YouTube URL"""        patterns = [
             r'(?:youtube\.com/watch\?v=|youtu\.be/|youtube\.com/embed/)([^&\n?#]+)',
             r'youtube\.com/v/([^&\n?#]+)'
         ]
@@ -381,8 +361,7 @@ class YouTubeSurveillanceExtractor(BaseSurveillanceExtractor):
         return None
     
     async def _get_video_details_api(self, video_id: str) -> Dict[str, Any]:
-        """Get video details using YouTube API"""
-        try:
+        """Get video details using YouTube API"""        try:
             async with aiohttp.ClientSession() as session:
                 url = f"{self.base_url}/videos"
                 params = {
@@ -424,8 +403,7 @@ class YouTubeSurveillanceExtractor(BaseSurveillanceExtractor):
             return {}
     
     async def capture_evidence(self, url: str, violation_alert: ViolationAlert) -> EvidencePackage:
-        """Capture evidence of YouTube violation"""
-        if not HAS_SELENIUM or not HAS_MEDIA_PROCESSING:
+        """Capture evidence of YouTube violation"""        if not HAS_SELENIUM or not HAS_MEDIA_PROCESSING:
             return EvidencePackage(
                 violation_id=violation_alert.alert_id,
                 screenshots=[],
@@ -501,8 +479,7 @@ class YouTubeSurveillanceExtractor(BaseSurveillanceExtractor):
             )
     
     def _add_timestamp_watermark(self, image_path: str, timestamp: str) -> str:
-        """Add timestamp watermark to evidence screenshot"""
-        try:
+        """Add timestamp watermark to evidence screenshot"""        try:
             image = Image.open(image_path)
             draw = ImageDraw.Draw(image)
             
@@ -537,19 +514,16 @@ class YouTubeSurveillanceExtractor(BaseSurveillanceExtractor):
 
 
 class InstagramSurveillanceExtractor(BaseSurveillanceExtractor):
-    """Instagram content surveillance and monitoring"""
-    
+    """Instagram content surveillance and monitoring"""    
     def __init__(self):
         super().__init__("InstagramSurveillanceExtractor", "instagram")
         self.base_url = "https://www.instagram.com"
         
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Check if request is for Instagram surveillance"""
-        return self.target_platform in str(request.source_url or request.metadata)
+        """Check if request is for Instagram surveillance"""        return self.target_platform in str(request.source_url or request.metadata)
     
     async def search_content(self, keywords: List[str], content_type: str = "post") -> List[Dict[str, Any]]:
-        """Search Instagram for potentially infringing content"""
-        if not HAS_SELENIUM:
+        """Search Instagram for potentially infringing content"""        if not HAS_SELENIUM:
             return []
         
         results = []
@@ -566,8 +540,7 @@ class InstagramSurveillanceExtractor(BaseSurveillanceExtractor):
         return results
     
     async def _search_instagram(self, query: str) -> List[Dict[str, Any]]:
-        """Search Instagram using web scraping"""
-        try:
+        """Search Instagram using web scraping"""        try:
             options = Options()
             options.add_argument('--headless')
             options.add_argument('--no-sandbox')
@@ -616,8 +589,7 @@ class InstagramSurveillanceExtractor(BaseSurveillanceExtractor):
             return []
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
-        """Extract metadata from Instagram post"""
-        if not HAS_SELENIUM:
+        """Extract metadata from Instagram post"""        if not HAS_SELENIUM:
             return {}
         
         try:
@@ -662,19 +634,16 @@ class InstagramSurveillanceExtractor(BaseSurveillanceExtractor):
 
 
 class TikTokSurveillanceExtractor(BaseSurveillanceExtractor):
-    """TikTok content surveillance and monitoring"""
-    
+    """TikTok content surveillance and monitoring"""    
     def __init__(self):
         super().__init__("TikTokSurveillanceExtractor", "tiktok")
         self.base_url = "https://www.tiktok.com"
         
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Check if request is for TikTok surveillance"""
-        return self.target_platform in str(request.source_url or request.metadata)
+        """Check if request is for TikTok surveillance"""        return self.target_platform in str(request.source_url or request.metadata)
     
     async def search_content(self, keywords: List[str], content_type: str = "video") -> List[Dict[str, Any]]:
-        """Search TikTok for potentially infringing content"""
-        if not HAS_SELENIUM:
+        """Search TikTok for potentially infringing content"""        if not HAS_SELENIUM:
             return []
         
         results = []
@@ -691,8 +660,7 @@ class TikTokSurveillanceExtractor(BaseSurveillanceExtractor):
         return results
     
     async def _search_tiktok(self, query: str) -> List[Dict[str, Any]]:
-        """Search TikTok using web scraping"""
-        try:
+        """Search TikTok using web scraping"""        try:
             options = Options()
             options.add_argument('--headless')
             options.add_argument('--no-sandbox')
@@ -742,18 +710,15 @@ class TikTokSurveillanceExtractor(BaseSurveillanceExtractor):
 
 
 class GenericWebSurveillanceExtractor(BaseSurveillanceExtractor):
-    """Generic web surveillance for any website"""
-    
+    """Generic web surveillance for any website"""    
     def __init__(self):
         super().__init__("GenericWebSurveillanceExtractor", "web")
         
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Always can handle generic web requests"""
-        return True
+        """Always can handle generic web requests"""        return True
     
     async def search_content(self, keywords: List[str], content_type: str = "any") -> List[Dict[str, Any]]:
-        """Search web using search engines"""
-        results = []
+        """Search web using search engines"""        results = []
         
         # Use multiple search engines
         search_engines = [
@@ -775,8 +740,7 @@ class GenericWebSurveillanceExtractor(BaseSurveillanceExtractor):
         return results
     
     async def _search_google(self, query: str) -> List[Dict[str, Any]]:
-        """Search Google for content"""
-        if not HAS_SELENIUM:
+        """Search Google for content"""        if not HAS_SELENIUM:
             return []
         
         try:
@@ -827,19 +791,16 @@ class GenericWebSurveillanceExtractor(BaseSurveillanceExtractor):
             return []
     
     async def _search_bing(self, query: str) -> List[Dict[str, Any]]:
-        """Search Bing for content"""
-        # Similar implementation to Google search
+        """Search Bing for content"""        # Similar implementation to Google search
         return []
     
     async def _search_duckduckgo(self, query: str) -> List[Dict[str, Any]]:
-        """Search DuckDuckGo for content"""
-        # Similar implementation to Google search
+        """Search DuckDuckGo for content"""        # Similar implementation to Google search
         return []
 
 
 class SurveillanceManager:
-    """Manager for content surveillance operations"""
-    
+    """Manager for content surveillance operations"""    
     def __init__(self):
         self.extractors = {}
         self.fingerprint_manager = FingerprintManager()
@@ -850,8 +811,7 @@ class SurveillanceManager:
         self._setup_extractors()
     
     def _setup_extractors(self):
-        """Setup surveillance extractors"""
-        self.extractors = {
+        """Setup surveillance extractors"""        self.extractors = {
             'youtube': YouTubeSurveillanceExtractor(),
             'instagram': InstagramSurveillanceExtractor(),
             'tiktok': TikTokSurveillanceExtractor(),
@@ -862,8 +822,7 @@ class SurveillanceManager:
                                   target_platforms: List[str],
                                   search_keywords: List[str],
                                   similarity_threshold: float = 0.85) -> MonitoringJob:
-        """Create new content monitoring job"""
-        job_id = hashlib.md5(f"{datetime.now().isoformat()}_{len(content_fingerprints)}".encode()).hexdigest()
+        """Create new content monitoring job"""        job_id = hashlib.md5(f"{datetime.now().isoformat()}_{len(content_fingerprints)}".encode()).hexdigest()
         
         job = MonitoringJob(
             job_id=job_id,
@@ -884,8 +843,7 @@ class SurveillanceManager:
         return job
     
     async def _monitor_job(self, job: MonitoringJob):
-        """Execute monitoring job continuously"""
-        while job.status == MonitoringStatus.ACTIVE:
+        """Execute monitoring job continuously"""        while job.status == MonitoringStatus.ACTIVE:
             try:
                 self.logger.info(f"Running monitoring job {job.job_id}")
                 
@@ -924,16 +882,14 @@ class SurveillanceManager:
     
     async def _check_content_similarity(self, content: Dict[str, Any], 
                                       fingerprints: List[str]) -> float:
-        """Check similarity between found content and protected fingerprints"""
-        # This would involve downloading/extracting the found content
+        """Check similarity between found content and protected fingerprints"""        # This would involve downloading/extracting the found content
         # and comparing it against the stored fingerprints
         # For now, return a mock similarity score
         return 0.9  # Simplified for demonstration
     
     async def _create_violation_alert(self, content: Dict[str, Any], 
                                     similarity: float, job: MonitoringJob) -> ViolationAlert:
-        """Create violation alert"""
-        alert_id = hashlib.md5(f"{content['url']}_{datetime.now().isoformat()}".encode()).hexdigest()
+        """Create violation alert"""        alert_id = hashlib.md5(f"{content['url']}_{datetime.now().isoformat()}".encode()).hexdigest()
         
         # Determine severity based on similarity score
         if similarity >= 0.95:
@@ -961,8 +917,7 @@ class SurveillanceManager:
         return alert
     
     def _extract_violator_info(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract information about the violator"""
-        return {
+        """Extract information about the violator"""        return {
             'channel_id': content.get('channel_id'),
             'channel_title': content.get('channel_title'),
             'user_id': content.get('user_id'),
@@ -971,8 +926,7 @@ class SurveillanceManager:
         }
     
     async def _process_violation(self, violation: ViolationAlert):
-        """Process detected violation"""
-        try:
+        """Process detected violation"""        try:
             # Capture evidence
             platform = violation.platform
             if platform in self.extractors:
@@ -991,17 +945,14 @@ class SurveillanceManager:
             self.logger.error(f"Violation processing failed: {e}")
     
     def add_alert_handler(self, handler):
-        """Add alert handler function"""
-        self.alert_handlers.append(handler)
+        """Add alert handler function"""        self.alert_handlers.append(handler)
     
     async def stop_monitoring_job(self, job_id: str):
-        """Stop monitoring job"""
-        if job_id in self.active_jobs:
+        """Stop monitoring job"""        if job_id in self.active_jobs:
             self.active_jobs[job_id].status = MonitoringStatus.CANCELLED
     
     def get_active_jobs(self) -> List[MonitoringJob]:
-        """Get list of active monitoring jobs"""
-        return [job for job in self.active_jobs.values() if job.status == MonitoringStatus.ACTIVE]
+        """Get list of active monitoring jobs"""        return [job for job in self.active_jobs.values() if job.status == MonitoringStatus.ACTIVE]
 
 
 __all__ = [

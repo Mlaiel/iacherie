@@ -1,5 +1,4 @@
-"""
-Regulatory Compliance Models - Enterprise Regulatory Compliance Management System
+"""Regulatory Compliance Models - Enterprise Regulatory Compliance Management System
 
 Ultra-advanced regulatory compliance system for international content protection,
 financial regulations, data privacy, and platform-specific compliance requirements.
@@ -25,9 +24,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
-"""
-
-from sqlalchemy import (
+"""from sqlalchemy import (
     Column, Integer, String, DateTime, Float, Boolean, ForeignKey,
     Text, DECIMAL, JSON, BigInteger, Index, UniqueConstraint
 )
@@ -44,8 +41,7 @@ from dataclasses import dataclass
 Base = declarative_base()
 
 class ComplianceFramework(Enum):
-    """Regulatory compliance frameworks"""
-    GDPR = "gdpr"  # General Data Protection Regulation
+    """Regulatory compliance frameworks"""    GDPR = "gdpr"  # General Data Protection Regulation
     CCPA = "ccpa"  # California Consumer Privacy Act
     COPPA = "coppa"  # Children's Online Privacy Protection Act
     DMCA = "dmca"  # Digital Millennium Copyright Act
@@ -59,8 +55,7 @@ class ComplianceFramework(Enum):
     DMA = "dma"  # Digital Markets Act
 
 class ComplianceStatus(Enum):
-    """Compliance status levels"""
-    COMPLIANT = "compliant"
+    """Compliance status levels"""    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
     UNDER_REVIEW = "under_review"
@@ -69,24 +64,21 @@ class ComplianceStatus(Enum):
     PENDING_ASSESSMENT = "pending_assessment"
 
 class RiskLevel(Enum):
-    """Risk assessment levels"""
-    VERY_LOW = "very_low"
+    """Risk assessment levels"""    VERY_LOW = "very_low"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 class AuditType(Enum):
-    """Audit types"""
-    INTERNAL = "internal"
+    """Audit types"""    INTERNAL = "internal"
     EXTERNAL = "external"
     REGULATORY = "regulatory"
     THIRD_PARTY = "third_party"
     SELF_ASSESSMENT = "self_assessment"
 
 class ComplianceRequirement(Base):
-    """Regulatory compliance requirements database"""
-    __tablename__ = 'compliance_requirements'
+    """Regulatory compliance requirements database"""    __tablename__ = 'compliance_requirements'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -154,8 +146,7 @@ class ComplianceRequirement(Base):
     )
 
 class CreatorComplianceProfile(Base):
-    """Creator compliance profile and status"""
-    __tablename__ = 'creator_compliance_profiles'
+    """Creator compliance profile and status"""    __tablename__ = 'creator_compliance_profiles'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -235,8 +226,7 @@ class CreatorComplianceProfile(Base):
     )
 
 class ComplianceAssessment(Base):
-    """Compliance assessment results and findings"""
-    __tablename__ = 'compliance_assessments'
+    """Compliance assessment results and findings"""    __tablename__ = 'compliance_assessments'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -312,8 +302,7 @@ class ComplianceAssessment(Base):
     )
 
 class ComplianceAction(Base):
-    """Compliance remediation and improvement actions"""
-    __tablename__ = 'compliance_actions'
+    """Compliance remediation and improvement actions"""    __tablename__ = 'compliance_actions'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -398,8 +387,7 @@ class ComplianceAction(Base):
     )
 
 class ComplianceMonitoring(Base):
-    """Continuous compliance monitoring and alerts"""
-    __tablename__ = 'compliance_monitoring'
+    """Continuous compliance monitoring and alerts"""    __tablename__ = 'compliance_monitoring'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -468,8 +456,7 @@ class ComplianceMonitoring(Base):
     )
 
 class ComplianceIncident(Base):
-    """Compliance incidents and violations"""
-    __tablename__ = 'compliance_incidents'
+    """Compliance incidents and violations"""    __tablename__ = 'compliance_incidents'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -558,8 +545,7 @@ class ComplianceIncident(Base):
 
 @dataclass
 class ComplianceDashboard:
-    """Compliance dashboard data structure"""
-    overall_score: float
+    """Compliance dashboard data structure"""    overall_score: float
     framework_scores: Dict[str, float]
     risk_level: str
     active_incidents: int
@@ -569,8 +555,7 @@ class ComplianceDashboard:
     compliance_trends: Dict[str, Any]
 
 class RegulatoryUpdate(Base):
-    """Regulatory updates and changes tracking"""
-    __tablename__ = 'regulatory_updates'
+    """Regulatory updates and changes tracking"""    __tablename__ = 'regulatory_updates'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)

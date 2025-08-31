@@ -1,5 +1,4 @@
-"""
-Workflow Synchronization Module - Advanced Collaboration Synchronization
+"""Workflow Synchronization Module - Advanced Collaboration Synchronization
 
 Enterprise-grade workflow synchronization for multi-format content creators
 enabling version control, conflict resolution, synchronous editing, and workflow state management.
@@ -12,9 +11,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import uuid
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Set, Union, Any, Tuple
@@ -38,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 class SyncStatus(Enum):
-    """Synchronization status for workflow items"""
-    SYNCED = "synced"
+    """Synchronization status for workflow items"""    SYNCED = "synced"
     PENDING = "pending"
     CONFLICT = "conflict"
     MERGING = "merging"
@@ -48,8 +44,7 @@ class SyncStatus(Enum):
 
 
 class ConflictType(Enum):
-    """Types of synchronization conflicts"""
-    CONTENT_CONFLICT = "content_conflict"
+    """Types of synchronization conflicts"""    CONTENT_CONFLICT = "content_conflict"
     METADATA_CONFLICT = "metadata_conflict"
     PERMISSION_CONFLICT = "permission_conflict"
     VERSION_CONFLICT = "version_conflict"
@@ -58,8 +53,7 @@ class ConflictType(Enum):
 
 
 class VersionType(Enum):
-    """Types of version changes"""
-    MAJOR = "major"      # Breaking changes
+    """Types of version changes"""    MAJOR = "major"      # Breaking changes
     MINOR = "minor"      # Feature additions
     PATCH = "patch"      # Bug fixes
     DRAFT = "draft"      # Work in progress
@@ -67,8 +61,7 @@ class VersionType(Enum):
 
 
 class EditOperation(Enum):
-    """Types of editing operations for collaborative editing"""
-    INSERT = "insert"
+    """Types of editing operations for collaborative editing"""    INSERT = "insert"
     DELETE = "delete"
     REPLACE = "replace"
     FORMAT = "format"
@@ -78,8 +71,7 @@ class EditOperation(Enum):
 
 @dataclass
 class WorkflowVersion:
-    """Workflow version with comprehensive metadata"""
-    version_id: str
+    """Workflow version with comprehensive metadata"""    version_id: str
     workflow_id: str
     version_number: str
     version_type: VersionType
@@ -97,8 +89,7 @@ class WorkflowVersion:
     created_at: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert version to dictionary representation"""
-        return {
+        """Convert version to dictionary representation"""        return {
             "version_id": self.version_id,
             "workflow_id": self.workflow_id,
             "version_number": self.version_number,
@@ -120,8 +111,7 @@ class WorkflowVersion:
 
 @dataclass
 class SyncConflict:
-    """Synchronization conflict representation"""
-    conflict_id: str
+    """Synchronization conflict representation"""    conflict_id: str
     workflow_id: str
     conflict_type: ConflictType
     affected_users: List[str]
@@ -137,8 +127,7 @@ class SyncConflict:
     resolved_by: Optional[str]
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert conflict to dictionary representation"""
-        return {
+        """Convert conflict to dictionary representation"""        return {
             "conflict_id": self.conflict_id,
             "workflow_id": self.workflow_id,
             "conflict_type": self.conflict_type.value,
@@ -158,8 +147,7 @@ class SyncConflict:
 
 @dataclass
 class EditEvent:
-    """Real-time editing event for collaborative editing"""
-    event_id: str
+    """Real-time editing event for collaborative editing"""    event_id: str
     workflow_id: str
     user_id: str
     operation: EditOperation
@@ -171,8 +159,7 @@ class EditEvent:
     applied: bool
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert edit event to dictionary"""
-        return {
+        """Convert edit event to dictionary"""        return {
             "event_id": self.event_id,
             "workflow_id": self.workflow_id,
             "user_id": self.user_id,
@@ -187,8 +174,7 @@ class EditEvent:
 
 
 class WorkflowSynchronizer:
-    """Advanced workflow synchronization manager"""
-    
+    """Advanced workflow synchronization manager"""    
     def __init__(self, db_session: AsyncSession, cache_manager: CacheManager):
         self.db = db_session
         self.cache = cache_manager
@@ -205,8 +191,7 @@ class WorkflowSynchronizer:
         created_by: str,
         sync_settings: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Initialize workflow synchronization system"""
-        try:
+        """Initialize workflow synchronization system"""        try:
             # Create initial version
             initial_version = await self._create_initial_version(
                 workflow_id, initial_content, created_by
@@ -256,8 +241,7 @@ class WorkflowSynchronizer:
         user_id: str,
         client_version: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Join collaborative workflow session"""
-        try:
+        """Join collaborative workflow session"""        try:
             sync_metadata = await self.cache.get(f"workflow_sync:{workflow_id}")
             if not sync_metadata:
                 raise ValidationError("Workflow sync not found")
@@ -317,8 +301,7 @@ class WorkflowSynchronizer:
         workflow_id: str,
         user_id: str
     ) -> Dict[str, Any]:
-        """Leave collaborative workflow session"""
-        try:
+        """Leave collaborative workflow session"""        try:
             sync_metadata = await self.cache.get(f"workflow_sync:{workflow_id}")
             if sync_metadata:
                 # Remove from active editors
@@ -356,8 +339,7 @@ class WorkflowSynchronizer:
         changes: List[Dict[str, Any]],
         client_version: str
     ) -> Dict[str, Any]:
-        """Synchronize workflow changes across collaborators"""
-        try:
+        """Synchronize workflow changes across collaborators"""        try:
             # Acquire sync lock
             if not await self._acquire_sync_lock(workflow_id, user_id):
                 return {
@@ -420,8 +402,7 @@ class WorkflowSynchronizer:
         content: Dict[str, Any],
         author_id: str
     ) -> Dict[str, Any]:
-        """Create initial version for workflow"""
-        version_id = str(uuid.uuid4())
+        """Create initial version for workflow"""        version_id = str(uuid.uuid4())
         content_hash = hashlib.sha256(json.dumps(content, sort_keys=True).encode()).hexdigest()
         
         version = WorkflowVersion(
@@ -454,8 +435,7 @@ class WorkflowSynchronizer:
         return version_data
     
     async def _get_version(self, workflow_id: str, version_id: str) -> Dict[str, Any]:
-        """Get workflow version data"""
-        version_data = await self.cache.get(f"version:{version_id}")
+        """Get workflow version data"""        version_data = await self.cache.get(f"version:{version_id}")
         if not version_data:
             raise ValidationError(f"Version {version_id} not found")
         return version_data
@@ -466,8 +446,7 @@ class WorkflowSynchronizer:
         from_version: str,
         to_version: str
     ) -> List[Dict[str, Any]]:
-        """Get operations needed to sync from one version to another"""
-        try:
+        """Get operations needed to sync from one version to another"""        try:
             from_version_data = await self._get_version(workflow_id, from_version)
             to_version_data = await self._get_version(workflow_id, to_version)
             
@@ -490,8 +469,7 @@ class WorkflowSynchronizer:
         server_version: str,
         changes: List[Dict[str, Any]]
     ) -> List[SyncConflict]:
-        """Detect synchronization conflicts"""
-        conflicts = []
+        """Detect synchronization conflicts"""        conflicts = []
         
         try:
             if client_version == server_version:
@@ -525,8 +503,7 @@ class WorkflowSynchronizer:
         server_data: Dict[str, Any],
         changes: List[Dict[str, Any]]
     ) -> List[SyncConflict]:
-        """Detect content-based conflicts"""
-        conflicts = []
+        """Detect content-based conflicts"""        conflicts = []
         
         # Implementation would analyze content differences
         # and detect overlapping changes
@@ -540,8 +517,7 @@ class WorkflowSynchronizer:
         server_data: Dict[str, Any],
         changes: List[Dict[str, Any]]
     ) -> List[SyncConflict]:
-        """Detect metadata-based conflicts"""
-        conflicts = []
+        """Detect metadata-based conflicts"""        conflicts = []
         
         # Implementation would analyze metadata differences
         # such as permissions, timestamps, etc.
@@ -555,8 +531,7 @@ class WorkflowSynchronizer:
         changes: List[Dict[str, Any]],
         author_id: str
     ) -> Dict[str, Any]:
-        """Apply changes and create new version"""
-        try:
+        """Apply changes and create new version"""        try:
             current_version = await self._get_version(workflow_id, current_version_id)
             
             # Apply changes to content
@@ -612,8 +587,7 @@ class WorkflowSynchronizer:
         content: Dict[str, Any],
         changes: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Merge changes into content"""
-        merged_content = content.copy()
+        """Merge changes into content"""        merged_content = content.copy()
         
         for change in changes:
             change_type = change.get("type")
@@ -635,8 +609,7 @@ class WorkflowSynchronizer:
         path: List[str],
         value: Any
     ):
-        """Apply update change to content"""
-        current = content
+        """Apply update change to content"""        current = content
         for key in path[:-1]:
             current = current[key]
         current[path[-1]] = value
@@ -647,8 +620,7 @@ class WorkflowSynchronizer:
         path: List[str],
         value: Any
     ):
-        """Apply add change to content"""
-        current = content
+        """Apply add change to content"""        current = content
         for key in path[:-1]:
             if key not in current:
                 current[key] = {}
@@ -660,8 +632,7 @@ class WorkflowSynchronizer:
         content: Dict[str, Any],
         path: List[str]
     ):
-        """Apply delete change to content"""
-        current = content
+        """Apply delete change to content"""        current = content
         for key in path[:-1]:
             current = current[key]
         if path[-1] in current:
@@ -672,8 +643,7 @@ class WorkflowSynchronizer:
         current_version: str,
         changes: List[Dict[str, Any]]
     ) -> str:
-        """Calculate next version number based on changes"""
-        # Simple semantic versioning
+        """Calculate next version number based on changes"""        # Simple semantic versioning
         parts = current_version.split(".")
         major, minor, patch = int(parts[0]), int(parts[1]), int(parts[2])
         
@@ -692,8 +662,7 @@ class WorkflowSynchronizer:
         return f"{major}.{minor}.{patch}"
     
     async def _summarize_changes(self, changes: List[Dict[str, Any]]) -> str:
-        """Create summary of changes"""
-        if not changes:
+        """Create summary of changes"""        if not changes:
             return "No changes"
         
         change_types = {}
@@ -713,8 +682,7 @@ class WorkflowSynchronizer:
         new_version: Dict[str, Any],
         author_id: str
     ):
-        """Broadcast changes to other collaborators"""
-        if workflow_id not in self.active_workflows:
+        """Broadcast changes to other collaborators"""        if workflow_id not in self.active_workflows:
             return
         
         active_users = self.active_workflows[workflow_id]["active_users"]
@@ -734,27 +702,23 @@ class WorkflowSynchronizer:
                 await self._send_sync_notification(user_id, broadcast_data)
     
     async def _send_sync_notification(self, user_id: str, data: Dict[str, Any]):
-        """Send sync notification to user"""
-        # Implementation would send via WebSocket or notification service
+        """Send sync notification to user"""        # Implementation would send via WebSocket or notification service
         logger.info(f"Sending sync notification to user {user_id}")
     
     async def _acquire_sync_lock(self, workflow_id: str, user_id: str) -> bool:
-        """Acquire sync lock for workflow"""
-        if workflow_id in self.sync_locks:
+        """Acquire sync lock for workflow"""        if workflow_id in self.sync_locks:
             return self.sync_locks[workflow_id] == user_id
         
         self.sync_locks[workflow_id] = user_id
         return True
     
     async def _release_sync_lock(self, workflow_id: str, user_id: str):
-        """Release sync lock for workflow"""
-        if workflow_id in self.sync_locks and self.sync_locks[workflow_id] == user_id:
+        """Release sync lock for workflow"""        if workflow_id in self.sync_locks and self.sync_locks[workflow_id] == user_id:
             del self.sync_locks[workflow_id]
 
 
 class ContentVersionController:
-    """Advanced content version control system"""
-    
+    """Advanced content version control system"""    
     def __init__(self, cache_manager: CacheManager, file_manager: FileManager):
         self.cache = cache_manager
         self.file_manager = file_manager
@@ -768,8 +732,7 @@ class ContentVersionController:
         created_by: str,
         description: str
     ) -> Dict[str, Any]:
-        """Create new branch from existing version"""
-        try:
+        """Create new branch from existing version"""        try:
             # Validate source version
             source_version = await self.cache.get(f"version:{source_version_id}")
             if not source_version:
@@ -815,8 +778,7 @@ class ContentVersionController:
         merge_strategy: str,
         merged_by: str
     ) -> Dict[str, Any]:
-        """Merge one branch into another"""
-        try:
+        """Merge one branch into another"""        try:
             source_branch = await self.cache.get(f"branch:{source_branch_id}")
             target_branch = await self.cache.get(f"branch:{target_branch_id}")
             
@@ -868,8 +830,7 @@ class ContentVersionController:
         version_a_id: str,
         version_b_id: str
     ) -> Dict[str, Any]:
-        """Compare two versions and show differences"""
-        try:
+        """Compare two versions and show differences"""        try:
             version_a = await self.cache.get(f"version:{version_a_id}")
             version_b = await self.cache.get(f"version:{version_b_id}")
             
@@ -896,8 +857,7 @@ class ContentVersionController:
             raise BusinessLogicError(f"Failed to compare versions: {str(e)}")
     
     async def _add_branch_to_workflow(self, workflow_id: str, branch_id: str):
-        """Add branch to workflow branches list"""
-        branches_key = f"workflow_branches:{workflow_id}"
+        """Add branch to workflow branches list"""        branches_key = f"workflow_branches:{workflow_id}"
         branches_data = await self.cache.get(branches_key)
         
         if not branches_data:
@@ -911,8 +871,7 @@ class ContentVersionController:
         source_version: Dict[str, Any],
         target_version: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Detect conflicts between two versions"""
-        conflicts = []
+        """Detect conflicts between two versions"""        conflicts = []
         
         # Implementation would analyze content differences
         # and detect conflicting changes
@@ -925,8 +884,7 @@ class ContentVersionController:
         target_version: Dict[str, Any],
         strategy: str
     ) -> Dict[str, Any]:
-        """Perform merge operation"""
-        if strategy == "theirs":
+        """Perform merge operation"""        if strategy == "theirs":
             return source_version["content_data"]
         elif strategy == "ours":
             return target_version["content_data"]
@@ -939,8 +897,7 @@ class ContentVersionController:
         source_version: Dict[str, Any],
         target_version: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Perform three-way merge"""
-        # Implementation would find common ancestor and merge changes
+        """Perform three-way merge"""        # Implementation would find common ancestor and merge changes
         merged_content = target_version["content_data"].copy()
         
         # Merge source changes that don't conflict
@@ -960,8 +917,7 @@ class ContentVersionController:
         merged_content: Dict[str, Any],
         merged_by: str
     ) -> Dict[str, Any]:
-        """Create version from merge result"""
-        version_id = str(uuid.uuid4())
+        """Create version from merge result"""        version_id = str(uuid.uuid4())
         content_hash = hashlib.sha256(
             json.dumps(merged_content, sort_keys=True).encode()
         ).hexdigest()
@@ -1002,8 +958,7 @@ class ContentVersionController:
         return version_data
     
     async def _increment_version(self, version_string: str, increment_type: str) -> str:
-        """Increment version number"""
-        parts = version_string.split(".")
+        """Increment version number"""        parts = version_string.split(".")
         major, minor, patch = int(parts[0]), int(parts[1]), int(parts[2])
         
         if increment_type == "major":
@@ -1023,8 +978,7 @@ class ContentVersionController:
         content_a: Dict[str, Any],
         content_b: Dict[str, Any]
     ) -> float:
-        """Calculate similarity score between two content versions"""
-        # Simple similarity calculation based on shared keys
+        """Calculate similarity score between two content versions"""        # Simple similarity calculation based on shared keys
         keys_a = set(content_a.keys())
         keys_b = set(content_b.keys())
         
@@ -1038,8 +992,7 @@ class ContentVersionController:
 
 
 class ConflictResolutionManager:
-    """Advanced conflict resolution for collaborative workflows"""
-    
+    """Advanced conflict resolution for collaborative workflows"""    
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
         self.resolution_strategies = {
@@ -1056,8 +1009,7 @@ class ConflictResolutionManager:
         resolved_by: str,
         resolution_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Resolve synchronization conflict"""
-        try:
+        """Resolve synchronization conflict"""        try:
             conflict_data = await self.cache.get(f"conflict:{conflict_id}")
             if not conflict_data:
                 raise ValidationError("Conflict not found")
@@ -1097,8 +1049,7 @@ class ConflictResolutionManager:
         conflict_data: Dict[str, Any],
         resolution_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Automatic merge conflict resolution"""
-        # Implementation would automatically merge non-conflicting parts
+        """Automatic merge conflict resolution"""        # Implementation would automatically merge non-conflicting parts
         return {
             "strategy": "auto_merge",
             "merged_content": {},
@@ -1110,8 +1061,7 @@ class ConflictResolutionManager:
         conflict_data: Dict[str, Any],
         resolution_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Manual review conflict resolution"""
-        return {
+        """Manual review conflict resolution"""        return {
             "strategy": "manual_review",
             "reviewer_decision": resolution_data.get("decision"),
             "final_content": resolution_data.get("resolved_content")
@@ -1122,8 +1072,7 @@ class ConflictResolutionManager:
         conflict_data: Dict[str, Any],
         resolution_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Timestamp-based priority resolution"""
-        # Use most recent changes
+        """Timestamp-based priority resolution"""        # Use most recent changes
         local_time = conflict_data["local_version"].get("timestamp")
         remote_time = conflict_data["remote_version"].get("timestamp")
         
@@ -1145,8 +1094,7 @@ class ConflictResolutionManager:
         conflict_data: Dict[str, Any],
         resolution_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """User priority-based resolution"""
-        priority_user = resolution_data.get("priority_user")
+        """User priority-based resolution"""        priority_user = resolution_data.get("priority_user")
         
         if priority_user == conflict_data["local_version"]["author"]:
             final_content = conflict_data["local_version"]["content"]
@@ -1161,8 +1109,7 @@ class ConflictResolutionManager:
 
 
 class SynchronousEditingEngine:
-    """Real-time collaborative editing engine"""
-    
+    """Real-time collaborative editing engine"""    
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
         self.operational_transform = OperationalTransform()
@@ -1175,8 +1122,7 @@ class SynchronousEditingEngine:
         user_id: str,
         document_id: str
     ) -> Dict[str, Any]:
-        """Start real-time editing session"""
-        try:
+        """Start real-time editing session"""        try:
             # Initialize editor tracking
             if workflow_id not in self.active_editors:
                 self.active_editors[workflow_id] = set()
@@ -1219,8 +1165,7 @@ class SynchronousEditingEngine:
         user_id: str,
         operation: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply real-time edit operation"""
-        try:
+        """Apply real-time edit operation"""        try:
             # Validate operation
             if not await self._validate_edit_operation(operation):
                 raise ValidationError("Invalid edit operation")
@@ -1259,8 +1204,7 @@ class SynchronousEditingEngine:
         position: int,
         selection: Dict[str, int]
     ) -> Dict[str, Any]:
-        """Update user cursor position"""
-        try:
+        """Update user cursor position"""        try:
             if workflow_id in self.edit_cursors and user_id in self.edit_cursors[workflow_id]:
                 self.edit_cursors[workflow_id][user_id].update({
                     "position": position,
@@ -1286,8 +1230,7 @@ class SynchronousEditingEngine:
         workflow_id: str,
         user_id: str
     ) -> Dict[str, Any]:
-        """End real-time editing session"""
-        try:
+        """End real-time editing session"""        try:
             if workflow_id in self.active_editors:
                 self.active_editors[workflow_id].discard(user_id)
                 
@@ -1317,8 +1260,7 @@ class SynchronousEditingEngine:
         workflow_id: str,
         document_id: str
     ) -> Dict[str, Any]:
-        """Get current document state"""
-        document_data = await self.cache.get(f"document:{workflow_id}:{document_id}")
+        """Get current document state"""        document_data = await self.cache.get(f"document:{workflow_id}:{document_id}")
         if not document_data:
             # Initialize empty document
             document_data = {
@@ -1333,8 +1275,7 @@ class SynchronousEditingEngine:
         return document_data
     
     async def _validate_edit_operation(self, operation: Dict[str, Any]) -> bool:
-        """Validate edit operation"""
-        required_fields = ["type", "position"]
+        """Validate edit operation"""        required_fields = ["type", "position"]
         return all(field in operation for field in required_fields)
     
     async def _apply_operation_to_document(
@@ -1342,8 +1283,7 @@ class SynchronousEditingEngine:
         workflow_id: str,
         operation: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply operation to document"""
-        # Implementation would apply the operation to the document content
+        """Apply operation to document"""        # Implementation would apply the operation to the document content
         # and return the updated document state
         return {"version": 1, "applied": True}
     
@@ -1353,8 +1293,7 @@ class SynchronousEditingEngine:
         sender_id: str,
         operation: Dict[str, Any]
     ):
-        """Broadcast operation to other editors"""
-        if workflow_id not in self.active_editors:
+        """Broadcast operation to other editors"""        if workflow_id not in self.active_editors:
             return
         
         for editor_id in self.active_editors[workflow_id]:
@@ -1369,8 +1308,7 @@ class SynchronousEditingEngine:
         position: int,
         selection: Dict[str, int]
     ):
-        """Broadcast cursor update to other editors"""
-        if workflow_id not in self.active_editors:
+        """Broadcast cursor update to other editors"""        if workflow_id not in self.active_editors:
             return
         
         cursor_data = {
@@ -1385,8 +1323,7 @@ class SynchronousEditingEngine:
                 await self._send_cursor_update_to_editor(editor_id, cursor_data)
     
     async def _broadcast_editor_left(self, workflow_id: str, user_id: str):
-        """Broadcast that editor left session"""
-        if workflow_id not in self.active_editors:
+        """Broadcast that editor left session"""        if workflow_id not in self.active_editors:
             return
         
         leave_data = {
@@ -1403,8 +1340,7 @@ class SynchronousEditingEngine:
         user_id: str,
         operation: Dict[str, Any]
     ):
-        """Update cursor position based on operation"""
-        if workflow_id in self.edit_cursors and user_id in self.edit_cursors[workflow_id]:
+        """Update cursor position based on operation"""        if workflow_id in self.edit_cursors and user_id in self.edit_cursors[workflow_id]:
             # Adjust cursor position based on operation type
             operation_type = operation.get("type")
             operation_position = operation.get("position", 0)
@@ -1422,24 +1358,20 @@ class SynchronousEditingEngine:
             self.edit_cursors[workflow_id][user_id]["position"] = new_position
     
     async def _send_operation_to_editor(self, editor_id: str, operation: Dict[str, Any]):
-        """Send operation to specific editor"""
-        # Implementation would send via WebSocket or message queue
+        """Send operation to specific editor"""        # Implementation would send via WebSocket or message queue
         logger.info(f"Sending operation to editor {editor_id}")
     
     async def _send_cursor_update_to_editor(self, editor_id: str, cursor_data: Dict[str, Any]):
-        """Send cursor update to specific editor"""
-        # Implementation would send via WebSocket
+        """Send cursor update to specific editor"""        # Implementation would send via WebSocket
         logger.info(f"Sending cursor update to editor {editor_id}")
     
     async def _send_editor_update_to_editor(self, editor_id: str, update_data: Dict[str, Any]):
-        """Send editor update to specific editor"""
-        # Implementation would send via WebSocket
+        """Send editor update to specific editor"""        # Implementation would send via WebSocket
         logger.info(f"Sending editor update to editor {editor_id}")
 
 
 class WorkflowStateManager:
-    """Workflow state management for collaborative processes"""
-    
+    """Workflow state management for collaborative processes"""    
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
         self.state_transitions = {
@@ -1452,8 +1384,7 @@ class WorkflowStateManager:
         }
     
     async def get_workflow_state(self, workflow_id: str) -> Dict[str, Any]:
-        """Get current workflow state"""
-        try:
+        """Get current workflow state"""        try:
             state_data = await self.cache.get(f"workflow_state:{workflow_id}")
             if not state_data:
                 # Initialize default state
@@ -1481,8 +1412,7 @@ class WorkflowStateManager:
         user_id: str,
         comment: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Transition workflow to new state"""
-        try:
+        """Transition workflow to new state"""        try:
             state_data = await self.get_workflow_state(workflow_id)
             current_state = state_data["current_state"]
             
@@ -1527,8 +1457,7 @@ class WorkflowStateManager:
         new_state: str,
         user_id: str
     ):
-        """Handle state-specific transition actions"""
-        state_handlers = {
+        """Handle state-specific transition actions"""        state_handlers = {
             "review": self._handle_review_state,
             "approved": self._handle_approved_state,
             "published": self._handle_published_state,
@@ -1540,21 +1469,17 @@ class WorkflowStateManager:
             await handler(workflow_id, user_id)
     
     async def _handle_review_state(self, workflow_id: str, user_id: str):
-        """Handle transition to review state"""
-        # Notify reviewers, create review tasks, etc.
+        """Handle transition to review state"""        # Notify reviewers, create review tasks, etc.
         logger.info(f"Workflow {workflow_id} moved to review state by {user_id}")
     
     async def _handle_approved_state(self, workflow_id: str, user_id: str):
-        """Handle transition to approved state"""
-        # Notify team, prepare for publication, etc.
+        """Handle transition to approved state"""        # Notify team, prepare for publication, etc.
         logger.info(f"Workflow {workflow_id} approved by {user_id}")
     
     async def _handle_published_state(self, workflow_id: str, user_id: str):
-        """Handle transition to published state"""
-        # Publish content, notify stakeholders, etc.
+        """Handle transition to published state"""        # Publish content, notify stakeholders, etc.
         logger.info(f"Workflow {workflow_id} published by {user_id}")
     
     async def _handle_archived_state(self, workflow_id: str, user_id: str):
-        """Handle transition to archived state"""
-        # Archive data, clean up resources, etc.
+        """Handle transition to archived state"""        # Archive data, clean up resources, etc.
         logger.info(f"Workflow {workflow_id} archived by {user_id}")

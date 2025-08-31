@@ -1,5 +1,4 @@
-"""
-Dashboard Aggregator - Real-time dashboard data aggregation system
+"""Dashboard Aggregator - Real-time dashboard data aggregation system
 =================================================================
 
 Comprehensive dashboard aggregation engine that combines data from all analytics
@@ -7,9 +6,7 @@ modules to provide unified real-time insights and performance dashboards.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
@@ -35,8 +32,7 @@ from .roi_calculator import ROICalculatorEngine
 logger = logging.getLogger(__name__)
 
 class DashboardType(Enum):
-    """Types of dashboards"""
-    OVERVIEW = "overview"
+    """Types of dashboards"""    OVERVIEW = "overview"
     PERFORMANCE = "performance"
     AUDIENCE = "audience"
     REVENUE = "revenue"
@@ -46,18 +42,15 @@ class DashboardType(Enum):
 
 @dataclass
 class DashboardCache:
-    """Dashboard cache configuration"""
-    cache_key: str
+    """Dashboard cache configuration"""    cache_key: str
     ttl_seconds: int
     data: Dict[str, Any]
     last_updated: datetime
 
 class DashboardAggregatorEngine:
-    """
-    Real-time dashboard data aggregation system that combines insights
+    """    Real-time dashboard data aggregation system that combines insights
     from all analytics modules into unified performance dashboards.
-    """
-    
+    """    
     def __init__(self, redis_client: redis.Redis, db_pool: asyncpg.Pool):
         self.redis = redis_client
         self.db_pool = db_pool
@@ -74,8 +67,7 @@ class DashboardAggregatorEngine:
         self.roi_calculator = ROICalculatorEngine(redis_client, db_pool)
         
     async def initialize(self) -> None:
-        """Initialize dashboard aggregator and all engines"""
-        try:
+        """Initialize dashboard aggregator and all engines"""        try:
             # Initialize all engines
             await asyncio.gather(
                 self.performance_engine.initialize(),
@@ -96,10 +88,8 @@ class DashboardAggregatorEngine:
             raise
 
     async def _setup_database_tables(self) -> None:
-        """Setup database tables for dashboard caching"""
-        async with self.db_pool.acquire() as conn:
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS dashboard_cache (
+        """Setup database tables for dashboard caching"""        async with self.db_pool.acquire() as conn:
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS dashboard_cache (
                     id SERIAL PRIMARY KEY,
                     creator_id VARCHAR(255) NOT NULL,
                     dashboard_type VARCHAR(50) NOT NULL,
@@ -112,8 +102,7 @@ class DashboardAggregatorEngine:
             """)
 
     async def get_overview_dashboard(self, creator_id: str) -> Dict[str, Any]:
-        """Get comprehensive overview dashboard combining all modules"""
-        try:
+        """Get comprehensive overview dashboard combining all modules"""        try:
             cache_key = f"dashboard_overview_{creator_id}"
             cached_data = await self._get_cached_dashboard(cache_key)
             
@@ -159,8 +148,7 @@ class DashboardAggregatorEngine:
             raise HTTPException(status_code=500, detail="Overview dashboard generation failed")
 
     async def _get_performance_summary(self, creator_id: str) -> Dict[str, Any]:
-        """Get performance summary from performance engine"""
-        try:
+        """Get performance summary from performance engine"""        try:
             analytics_data = await self.performance_engine.get_performance_dashboard_data(creator_id)
             
             return {
@@ -175,8 +163,7 @@ class DashboardAggregatorEngine:
             return {}
 
     async def _get_audience_summary(self, creator_id: str) -> Dict[str, Any]:
-        """Get audience summary from audience intelligence"""
-        try:
+        """Get audience summary from audience intelligence"""        try:
             audience_data = await self.audience_intelligence.get_audience_dashboard_data(creator_id)
             
             return {
@@ -191,8 +178,7 @@ class DashboardAggregatorEngine:
             return {}
 
     async def _get_revenue_summary(self, creator_id: str) -> Dict[str, Any]:
-        """Get revenue summary from revenue optimizer"""
-        try:
+        """Get revenue summary from revenue optimizer"""        try:
             revenue_data = await self.revenue_optimizer.get_revenue_dashboard_data(creator_id)
             
             return {
@@ -207,8 +193,7 @@ class DashboardAggregatorEngine:
             return {}
 
     async def _get_content_summary(self, creator_id: str) -> Dict[str, Any]:
-        """Get content summary from content insights"""
-        try:
+        """Get content summary from content insights"""        try:
             content_data = await self.content_insights.get_content_dashboard_data(creator_id)
             
             return {
@@ -223,8 +208,7 @@ class DashboardAggregatorEngine:
             return {}
 
     async def _get_trends_summary(self, creator_id: str) -> Dict[str, Any]:
-        """Get trends summary from trend detector"""
-        try:
+        """Get trends summary from trend detector"""        try:
             trends_data = await self.trend_detector.get_trend_dashboard_data(creator_id)
             
             return {
@@ -239,8 +223,7 @@ class DashboardAggregatorEngine:
             return {}
 
     async def _get_roi_summary(self, creator_id: str) -> Dict[str, Any]:
-        """Get ROI summary from ROI calculator"""
-        try:
+        """Get ROI summary from ROI calculator"""        try:
             roi_data = await self.roi_calculator.get_roi_dashboard_data(creator_id)
             
             return {
@@ -255,8 +238,7 @@ class DashboardAggregatorEngine:
             return {}
 
     async def _get_predictions_summary(self, creator_id: str) -> Dict[str, Any]:
-        """Get predictions summary from predictive modeling"""
-        try:
+        """Get predictions summary from predictive modeling"""        try:
             predictions = await self.predictive_modeling.get_predictions_dashboard_data(creator_id)
             
             return {
@@ -271,12 +253,10 @@ class DashboardAggregatorEngine:
             return {}
 
     async def _get_key_metrics(self, creator_id: str) -> Dict[str, Any]:
-        """Get key performance indicators across all modules"""
-        try:
+        """Get key performance indicators across all modules"""        try:
             async with self.db_pool.acquire() as conn:
                 # Get key metrics from database
-                metrics = await conn.fetchrow("""
-                    SELECT 
+                metrics = await conn.fetchrow("""                    SELECT 
                         COALESCE(SUM(total_views), 0) as total_views,
                         COALESCE(SUM(total_engagements), 0) as total_engagements,
                         COALESCE(AVG(engagement_rate), 0) as avg_engagement_rate,
@@ -286,8 +266,7 @@ class DashboardAggregatorEngine:
                     AND created_at >= NOW() - INTERVAL '30 days'
                 """, creator_id)
                 
-                revenue_metrics = await conn.fetchrow("""
-                    SELECT 
+                revenue_metrics = await conn.fetchrow("""                    SELECT 
                         COALESCE(SUM(revenue_amount), 0) as total_revenue,
                         COUNT(DISTINCT revenue_stream) as revenue_streams_count
                     FROM revenue_streams 
@@ -309,8 +288,7 @@ class DashboardAggregatorEngine:
             return {}
 
     async def _get_alerts_notifications(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Get alerts and notifications for the creator"""
-        try:
+        """Get alerts and notifications for the creator"""        try:
             alerts = []
             
             # Performance alerts
@@ -359,8 +337,7 @@ class DashboardAggregatorEngine:
             return []
 
     async def get_specialized_dashboard(self, creator_id: str, dashboard_type: DashboardType) -> Dict[str, Any]:
-        """Get specialized dashboard for specific module"""
-        try:
+        """Get specialized dashboard for specific module"""        try:
             cache_key = f"dashboard_{dashboard_type.value}_{creator_id}"
             cached_data = await self._get_cached_dashboard(cache_key)
             
@@ -400,8 +377,7 @@ class DashboardAggregatorEngine:
             raise HTTPException(status_code=500, detail=f"{dashboard_type.value} dashboard generation failed")
 
     async def _get_cached_dashboard(self, cache_key: str) -> Optional[Dict[str, Any]]:
-        """Get cached dashboard data from Redis"""
-        try:
+        """Get cached dashboard data from Redis"""        try:
             cached_data = self.redis.get(cache_key)
             if cached_data:
                 import json
@@ -412,16 +388,14 @@ class DashboardAggregatorEngine:
             return None
 
     async def _cache_dashboard(self, cache_key: str, data: Dict[str, Any], ttl_seconds: int) -> None:
-        """Cache dashboard data in Redis"""
-        try:
+        """Cache dashboard data in Redis"""        try:
             import json
             self.redis.setex(cache_key, ttl_seconds, json.dumps(data, default=str))
         except Exception as e:
             logger.error(f"Failed to cache dashboard: {e}")
 
     async def refresh_all_dashboards(self, creator_id: str) -> Dict[str, bool]:
-        """Refresh all cached dashboards for a creator"""
-        try:
+        """Refresh all cached dashboards for a creator"""        try:
             # Clear existing caches
             cache_patterns = [
                 f"dashboard_overview_{creator_id}",
@@ -459,8 +433,7 @@ class DashboardAggregatorEngine:
             return {}
 
     async def get_real_time_metrics(self, creator_id: str) -> Dict[str, Any]:
-        """Get real-time metrics for live dashboard updates"""
-        try:
+        """Get real-time metrics for live dashboard updates"""        try:
             # Get real-time engagement data
             engagement_data = await self.engagement_tracker.get_real_time_metrics(creator_id)
             
@@ -492,11 +465,9 @@ class DashboardAggregatorEngine:
             return {}
 
     async def _get_latest_content_performance(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Get performance data for latest content"""
-        try:
+        """Get performance data for latest content"""        try:
             async with self.db_pool.acquire() as conn:
-                latest_content = await conn.fetch("""
-                    SELECT 
+                latest_content = await conn.fetch("""                    SELECT 
                         content_id,
                         title,
                         platform,

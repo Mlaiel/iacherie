@@ -1,5 +1,4 @@
-"""
-Cloud Provisioning Engine - Enterprise Infrastructure Provisioning System
+"""Cloud Provisioning Engine - Enterprise Infrastructure Provisioning System
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -14,9 +13,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 This module provides comprehensive cloud infrastructure provisioning capabilities
 for the IA Influencer Agent platform, supporting automated resource provisioning,
 infrastructure as code, and dynamic scaling across cloud providers.
-"""
-
-import logging
+"""import logging
 import asyncio
 import yaml
 import json
@@ -31,8 +28,7 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class ProvisioningEngine(Enum):
-    """Infrastructure provisioning engines"""
-    TERRAFORM = "terraform"
+    """Infrastructure provisioning engines"""    TERRAFORM = "terraform"
     ANSIBLE = "ansible"
     CLOUDFORMATION = "cloudformation"
     ARM_TEMPLATES = "arm_templates"
@@ -41,8 +37,7 @@ class ProvisioningEngine(Enum):
     CDK = "cdk"
 
 class ResourceState(Enum):
-    """Resource provisioning states"""
-    PLANNING = "planning"
+    """Resource provisioning states"""    PLANNING = "planning"
     PROVISIONING = "provisioning"
     ACTIVE = "active"
     UPDATING = "updating"
@@ -51,8 +46,7 @@ class ResourceState(Enum):
     ERROR = "error"
 
 class ProvisioningMode(Enum):
-    """Provisioning execution modes"""
-    IMMEDIATE = "immediate"
+    """Provisioning execution modes"""    IMMEDIATE = "immediate"
     SCHEDULED = "scheduled"
     ON_DEMAND = "on_demand"
     AUTO_SCALING = "auto_scaling"
@@ -60,8 +54,7 @@ class ProvisioningMode(Enum):
 
 @dataclass
 class ProvisioningTemplate:
-    """Infrastructure provisioning template"""
-    template_id: str
+    """Infrastructure provisioning template"""    template_id: str
     name: str
     description: str
     engine: ProvisioningEngine
@@ -76,8 +69,7 @@ class ProvisioningTemplate:
 
 @dataclass
 class ProvisioningJob:
-    """Infrastructure provisioning job"""
-    job_id: str
+    """Infrastructure provisioning job"""    job_id: str
     template_id: str
     environment: str
     mode: ProvisioningMode
@@ -93,19 +85,16 @@ class ProvisioningJob:
 
 @dataclass
 class ResourceDependency:
-    """Resource dependency definition"""
-    resource_id: str
+    """Resource dependency definition"""    resource_id: str
     dependency_id: str
     dependency_type: str
     required: bool
     wait_for_completion: bool
 
 class CloudProvisioningEngine:
-    """Enterprise cloud infrastructure provisioning system"""
-    
+    """Enterprise cloud infrastructure provisioning system"""    
     def __init__(self, workspace_path: str = "/tmp/provisioning"):
-        """Initialize cloud provisioning engine"""
-        self.logger = logging.getLogger(self.__class__.__name__)
+        """Initialize cloud provisioning engine"""        self.logger = logging.getLogger(self.__class__.__name__)
         self.workspace_path = Path(workspace_path)
         self.workspace_path.mkdir(parents=True, exist_ok=True)
         
@@ -121,8 +110,7 @@ class CloudProvisioningEngine:
         self.arm_templates_config = ARMTemplatesEngine(self.workspace_path)
         
     async def initialize(self) -> bool:
-        """Initialize provisioning engine"""
-        try:
+        """Initialize provisioning engine"""        try:
             self.logger.info("Initializing cloud provisioning engine")
             
             # Initialize workspace
@@ -144,8 +132,7 @@ class CloudProvisioningEngine:
             return False
     
     async def create_template(self, template_data: Dict[str, Any]) -> str:
-        """Create infrastructure provisioning template"""
-        try:
+        """Create infrastructure provisioning template"""        try:
             template_id = f"template-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
             
             template = ProvisioningTemplate(
@@ -182,8 +169,7 @@ class CloudProvisioningEngine:
     async def provision_infrastructure(self, template_id: str, environment: str, 
                                      parameters: Dict[str, Any], 
                                      mode: ProvisioningMode = ProvisioningMode.IMMEDIATE) -> str:
-        """Provision infrastructure using template"""
-        try:
+        """Provision infrastructure using template"""        try:
             if template_id not in self.templates:
                 raise ValueError(f"Template not found: {template_id}")
             
@@ -225,8 +211,7 @@ class CloudProvisioningEngine:
             raise
     
     async def _execute_provisioning_job(self, job: ProvisioningJob) -> None:
-        """Execute provisioning job"""
-        template = self.templates[job.template_id]
+        """Execute provisioning job"""        template = self.templates[job.template_id]
         
         try:
             job.state = ResourceState.PROVISIONING
@@ -271,8 +256,7 @@ class CloudProvisioningEngine:
                 del self.active_jobs[job.job_id]
     
     async def update_infrastructure(self, job_id: str, updates: Dict[str, Any]) -> bool:
-        """Update existing infrastructure"""
-        try:
+        """Update existing infrastructure"""        try:
             if job_id not in self.active_jobs and not any(j.job_id == job_id for j in self.job_history):
                 raise ValueError(f"Job not found: {job_id}")
             
@@ -323,8 +307,7 @@ class CloudProvisioningEngine:
             return False
     
     async def destroy_infrastructure(self, job_id: str) -> bool:
-        """Destroy provisioned infrastructure"""
-        try:
+        """Destroy provisioned infrastructure"""        try:
             if job_id not in self.active_jobs and not any(j.job_id == job_id for j in self.job_history):
                 raise ValueError(f"Job not found: {job_id}")
             
@@ -357,8 +340,7 @@ class CloudProvisioningEngine:
             return False
     
     async def get_job_status(self, job_id: str) -> Dict[str, Any]:
-        """Get provisioning job status"""
-        try:
+        """Get provisioning job status"""        try:
             # Check active jobs first
             if job_id in self.active_jobs:
                 job = self.active_jobs[job_id]
@@ -388,8 +370,7 @@ class CloudProvisioningEngine:
             return {"job_id": job_id, "status": "error", "error": str(e)}
     
     async def list_templates(self) -> List[Dict[str, Any]]:
-        """List all provisioning templates"""
-        templates = []
+        """List all provisioning templates"""        templates = []
         for template in self.templates.values():
             templates.append({
                 "template_id": template.template_id,
@@ -404,8 +385,7 @@ class CloudProvisioningEngine:
         return templates
     
     async def get_cost_estimation(self, template_id: str, parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Get cost estimation for infrastructure provisioning"""
-        try:
+        """Get cost estimation for infrastructure provisioning"""        try:
             if template_id not in self.templates:
                 raise ValueError(f"Template not found: {template_id}")
             
@@ -429,8 +409,7 @@ class CloudProvisioningEngine:
     
     # Helper methods
     async def _initialize_workspace(self) -> None:
-        """Initialize provisioning workspace"""
-        directories = [
+        """Initialize provisioning workspace"""        directories = [
             "templates",
             "jobs",
             "terraform",
@@ -445,8 +424,7 @@ class CloudProvisioningEngine:
             (self.workspace_path / directory).mkdir(parents=True, exist_ok=True)
     
     async def _load_templates(self) -> None:
-        """Load existing templates from workspace"""
-        templates_dir = self.workspace_path / "templates"
+        """Load existing templates from workspace"""        templates_dir = self.workspace_path / "templates"
         if templates_dir.exists():
             for template_file in templates_dir.glob("*.json"):
                 try:
@@ -458,8 +436,7 @@ class CloudProvisioningEngine:
                     self.logger.warning(f"Failed to load template {template_file}: {e}")
     
     async def _validate_template(self, template: ProvisioningTemplate) -> Dict[str, Any]:
-        """Validate provisioning template"""
-        errors = []
+        """Validate provisioning template"""        errors = []
         warnings = []
         
         # Basic validation
@@ -487,8 +464,7 @@ class CloudProvisioningEngine:
         }
     
     async def _save_template(self, template: ProvisioningTemplate) -> None:
-        """Save template to workspace"""
-        template_file = self.workspace_path / "templates" / f"{template.template_id}.json"
+        """Save template to workspace"""        template_file = self.workspace_path / "templates" / f"{template.template_id}.json"
         
         template_data = {
             "template_id": template.template_id,
@@ -509,8 +485,7 @@ class CloudProvisioningEngine:
             json.dump(template_data, f, indent=2)
     
     async def _check_dependencies(self, job: ProvisioningJob) -> None:
-        """Check and wait for job dependencies"""
-        if job.template_id in self.resource_dependencies:
+        """Check and wait for job dependencies"""        if job.template_id in self.resource_dependencies:
             dependencies = self.resource_dependencies[job.template_id]
             
             for dependency in dependencies:
@@ -521,14 +496,12 @@ class CloudProvisioningEngine:
                         raise ValueError(f"Required dependency not satisfied: {dependency.dependency_id}")
     
     async def _check_dependency_satisfied(self, dependency: ResourceDependency) -> bool:
-        """Check if dependency is satisfied"""
-        # Implementation would check if the dependency resource exists and is ready
+        """Check if dependency is satisfied"""        # Implementation would check if the dependency resource exists and is ready
         return True
     
     async def _estimate_provisioning_cost(self, template: ProvisioningTemplate, 
                                         parameters: Dict[str, Any]) -> float:
-        """Estimate provisioning cost"""
-        # This is a simplified cost estimation
+        """Estimate provisioning cost"""        # This is a simplified cost estimation
         # Real implementation would integrate with cloud provider cost APIs
         
         base_cost = 100.0  # Base cost per template
@@ -546,8 +519,7 @@ class CloudProvisioningEngine:
     
     async def _get_cost_breakdown(self, template: ProvisioningTemplate, 
                                 parameters: Dict[str, Any]) -> Dict[str, float]:
-        """Get detailed cost breakdown"""
-        return {
+        """Get detailed cost breakdown"""        return {
             "compute": 500.0,
             "storage": 100.0,
             "network": 50.0,
@@ -556,121 +528,99 @@ class CloudProvisioningEngine:
         }
     
     async def _schedule_provisioning_job(self, job: ProvisioningJob) -> None:
-        """Schedule provisioning job for later execution"""
-        # Implementation would add job to scheduler
+        """Schedule provisioning job for later execution"""        # Implementation would add job to scheduler
         job.execution_log.append("Job scheduled for later execution")
     
     async def _queue_provisioning_job(self, job: ProvisioningJob) -> None:
-        """Queue provisioning job for on-demand execution"""
-        # Implementation would add job to queue
+        """Queue provisioning job for on-demand execution"""        # Implementation would add job to queue
         job.execution_log.append("Job queued for on-demand execution")
 
 
 class TerraformEngine:
-    """Terraform provisioning engine"""
-    
+    """Terraform provisioning engine"""    
     def __init__(self, workspace_path: Path):
         self.workspace_path = workspace_path / "terraform"
         self.logger = logging.getLogger(self.__class__.__name__)
     
     async def initialize(self) -> None:
-        """Initialize Terraform engine"""
-        self.workspace_path.mkdir(parents=True, exist_ok=True)
+        """Initialize Terraform engine"""        self.workspace_path.mkdir(parents=True, exist_ok=True)
     
     async def validate_template(self, template_content: str) -> Dict[str, Any]:
-        """Validate Terraform template"""
-        # Implementation would use terraform validate
+        """Validate Terraform template"""        # Implementation would use terraform validate
         return {"errors": [], "warnings": []}
     
     async def execute_template(self, template: ProvisioningTemplate, job: ProvisioningJob) -> Dict[str, Any]:
-        """Execute Terraform template"""
-        # Implementation would run terraform apply
+        """Execute Terraform template"""        # Implementation would run terraform apply
         return {"outputs": {"status": "completed"}}
     
     async def update_infrastructure(self, template: ProvisioningTemplate, job: ProvisioningJob, 
                                   current_outputs: Dict[str, Any]) -> Dict[str, Any]:
-        """Update infrastructure using Terraform"""
-        # Implementation would run terraform apply with updates
+        """Update infrastructure using Terraform"""        # Implementation would run terraform apply with updates
         return {"outputs": {"status": "updated"}}
     
     async def destroy_infrastructure(self, template: ProvisioningTemplate, job: ProvisioningJob) -> Dict[str, Any]:
-        """Destroy infrastructure using Terraform"""
-        # Implementation would run terraform destroy
+        """Destroy infrastructure using Terraform"""        # Implementation would run terraform destroy
         return {"status": "destroyed"}
 
 
 class AnsibleEngine:
-    """Ansible provisioning engine"""
-    
+    """Ansible provisioning engine"""    
     def __init__(self, workspace_path: Path):
         self.workspace_path = workspace_path / "ansible"
         self.logger = logging.getLogger(self.__class__.__name__)
     
     async def initialize(self) -> None:
-        """Initialize Ansible engine"""
-        self.workspace_path.mkdir(parents=True, exist_ok=True)
+        """Initialize Ansible engine"""        self.workspace_path.mkdir(parents=True, exist_ok=True)
     
     async def execute_template(self, template: ProvisioningTemplate, job: ProvisioningJob) -> Dict[str, Any]:
-        """Execute Ansible playbook"""
-        # Implementation would run ansible-playbook
+        """Execute Ansible playbook"""        # Implementation would run ansible-playbook
         return {"outputs": {"status": "completed"}}
     
     async def destroy_infrastructure(self, template: ProvisioningTemplate, job: ProvisioningJob) -> Dict[str, Any]:
-        """Destroy infrastructure using Ansible"""
-        # Implementation would run destroy playbook
+        """Destroy infrastructure using Ansible"""        # Implementation would run destroy playbook
         return {"status": "destroyed"}
 
 
 class CloudFormationEngine:
-    """AWS CloudFormation provisioning engine"""
-    
+    """AWS CloudFormation provisioning engine"""    
     def __init__(self, workspace_path: Path):
         self.workspace_path = workspace_path / "cloudformation"
         self.logger = logging.getLogger(self.__class__.__name__)
     
     async def initialize(self) -> None:
-        """Initialize CloudFormation engine"""
-        self.workspace_path.mkdir(parents=True, exist_ok=True)
+        """Initialize CloudFormation engine"""        self.workspace_path.mkdir(parents=True, exist_ok=True)
     
     async def validate_template(self, template_content: str) -> Dict[str, Any]:
-        """Validate CloudFormation template"""
-        # Implementation would use AWS API to validate
+        """Validate CloudFormation template"""        # Implementation would use AWS API to validate
         return {"errors": [], "warnings": []}
     
     async def execute_template(self, template: ProvisioningTemplate, job: ProvisioningJob) -> Dict[str, Any]:
-        """Execute CloudFormation template"""
-        # Implementation would create CloudFormation stack
+        """Execute CloudFormation template"""        # Implementation would create CloudFormation stack
         return {"outputs": {"status": "completed"}}
     
     async def update_infrastructure(self, template: ProvisioningTemplate, job: ProvisioningJob, 
                                   current_outputs: Dict[str, Any]) -> Dict[str, Any]:
-        """Update CloudFormation stack"""
-        # Implementation would update CloudFormation stack
+        """Update CloudFormation stack"""        # Implementation would update CloudFormation stack
         return {"outputs": {"status": "updated"}}
     
     async def destroy_infrastructure(self, template: ProvisioningTemplate, job: ProvisioningJob) -> Dict[str, Any]:
-        """Destroy CloudFormation stack"""
-        # Implementation would delete CloudFormation stack
+        """Destroy CloudFormation stack"""        # Implementation would delete CloudFormation stack
         return {"status": "destroyed"}
 
 
 class ARMTemplatesEngine:
-    """Azure ARM Templates provisioning engine"""
-    
+    """Azure ARM Templates provisioning engine"""    
     def __init__(self, workspace_path: Path):
         self.workspace_path = workspace_path / "arm_templates"
         self.logger = logging.getLogger(self.__class__.__name__)
     
     async def initialize(self) -> None:
-        """Initialize ARM Templates engine"""
-        self.workspace_path.mkdir(parents=True, exist_ok=True)
+        """Initialize ARM Templates engine"""        self.workspace_path.mkdir(parents=True, exist_ok=True)
     
     async def execute_template(self, template: ProvisioningTemplate, job: ProvisioningJob) -> Dict[str, Any]:
-        """Execute ARM template"""
-        # Implementation would deploy ARM template
+        """Execute ARM template"""        # Implementation would deploy ARM template
         return {"outputs": {"status": "completed"}}
     
     async def destroy_infrastructure(self, template: ProvisioningTemplate, job: ProvisioningJob) -> Dict[str, Any]:
-        """Destroy ARM template deployment"""
-        # Implementation would delete resource group
+        """Destroy ARM template deployment"""        # Implementation would delete resource group
         return {"status": "destroyed"}

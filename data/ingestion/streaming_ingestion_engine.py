@@ -1,5 +1,4 @@
-"""
-Streaming Ingestion Engine
+"""Streaming Ingestion Engine
 =========================
 
 Professional real-time streaming ingestion engine for multi-format content processing.
@@ -23,9 +22,7 @@ PROJECT TEAM SPECIALTIES:
 - Audio/Video Specialist: Multimedia processing and codec optimization
 - Microservices Architect: Distributed systems and service orchestration
 - IA Prompt Engineer: AI model fine-tuning and content analysis
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import time
@@ -66,24 +63,21 @@ from ...core.security.auth_manager import AuthManager
 
 
 class StreamingMode(Enum):
-    """Streaming ingestion modes"""
-    PROGRESSIVE = "progressive"  # Progressive upload with processing
+    """Streaming ingestion modes"""    PROGRESSIVE = "progressive"  # Progressive upload with processing
     REALTIME = "realtime"       # Real-time streaming processing
     BUFFERED = "buffered"       # Buffered streaming with optimization
     ADAPTIVE = "adaptive"       # Adaptive quality streaming
 
 
 class StreamingQuality(Enum):
-    """Streaming quality levels"""
-    LOW = "low"          # 64kbps audio, 500kbps video
+    """Streaming quality levels"""    LOW = "low"          # 64kbps audio, 500kbps video
     STANDARD = "standard"  # 128kbps audio, 1Mbps video
     HIGH = "high"        # 256kbps audio, 2Mbps video
     ULTRA = "ultra"      # 320kbps audio, 4Mbps video
 
 
 class StreamingPriority(IntEnum):
-    """Streaming processing priority"""
-    LOW = 1
+    """Streaming processing priority"""    LOW = 1
     NORMAL = 3
     HIGH = 5
     URGENT = 7
@@ -91,8 +85,7 @@ class StreamingPriority(IntEnum):
 
 
 class ChunkStatus(Enum):
-    """Chunk processing status"""
-    PENDING = "pending"
+    """Chunk processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -101,8 +94,7 @@ class ChunkStatus(Enum):
 
 @dataclass
 class StreamingChunk:
-    """Individual streaming chunk data"""
-    chunk_id: str
+    """Individual streaming chunk data"""    chunk_id: str
     sequence_number: int
     data: bytes
     chunk_size: int
@@ -116,8 +108,7 @@ class StreamingChunk:
 
 @dataclass
 class StreamingSession:
-    """Streaming session management"""
-    session_id: str
+    """Streaming session management"""    session_id: str
     user_id: str
     websocket: WebSocketServerProtocol
     content_type: str
@@ -142,8 +133,7 @@ class StreamingSession:
 
 @dataclass
 class StreamingResult:
-    """Streaming processing result"""
-    session_id: str
+    """Streaming processing result"""    session_id: str
     success: bool
     content_id: Optional[str] = None
     total_chunks: int = 0
@@ -161,8 +151,7 @@ class StreamingResult:
 
 
 class StreamingConfiguration(BaseModel):
-    """Streaming engine configuration"""
-    
+    """Streaming engine configuration"""    
     # WebSocket settings
     host: str = Field(default="0.0.0.0", description="WebSocket server host")
     port: int = Field(default=8765, description="WebSocket server port")
@@ -201,8 +190,7 @@ class StreamingConfiguration(BaseModel):
 
 
 class StreamingIngestionEngine:
-    """
-    Professional streaming ingestion engine for real-time content processing.
+    """    Professional streaming ingestion engine for real-time content processing.
     
     Features:
     - WebSocket-based streaming upload
@@ -211,16 +199,14 @@ class StreamingIngestionEngine:
     - Adaptive streaming quality
     - Concurrent session management
     - Enterprise security and authentication
-    """
-    
+    """    
     def __init__(self, 
                  db_session: AsyncSession,
                  redis_client: Redis,
                  content_manager: ContentIngestionManager,
                  auth_manager: AuthManager,
                  config: Optional[StreamingConfiguration] = None):
-        """
-        Initialize streaming ingestion engine.
+        """        Initialize streaming ingestion engine.
         
         Args:
             db_session: Database session
@@ -228,8 +214,7 @@ class StreamingIngestionEngine:
             content_manager: Content ingestion manager
             auth_manager: Authentication manager
             config: Streaming configuration
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.redis = redis_client
         self.content_manager = content_manager
         self.auth_manager = auth_manager
@@ -263,13 +248,11 @@ class StreamingIngestionEngine:
         self.settings = get_settings()
     
     async def start_server(self) -> bool:
-        """
-        Start WebSocket streaming server.
+        """        Start WebSocket streaming server.
         
         Returns:
             bool: True if server started successfully
-        """
-        try:
+        """        try:
             if self.is_running:
                 self.logger.warning("Streaming server already running")
                 return True
@@ -303,8 +286,7 @@ class StreamingIngestionEngine:
             return False
     
     async def stop_server(self):
-        """Stop WebSocket streaming server"""
-        try:
+        """Stop WebSocket streaming server"""        try:
             if not self.is_running:
                 return
             
@@ -328,8 +310,7 @@ class StreamingIngestionEngine:
             self.logger.error(f"Error stopping streaming server: {str(e)}")
     
     async def _handle_websocket_connection(self, websocket: WebSocketServerProtocol, path: str):
-        """Handle new WebSocket connection"""
-        client_ip = websocket.remote_address[0] if websocket.remote_address else "unknown"
+        """Handle new WebSocket connection"""        client_ip = websocket.remote_address[0] if websocket.remote_address else "unknown"
         session_id = None
         
         try:
@@ -356,16 +337,14 @@ class StreamingIngestionEngine:
                 await self._close_session(session_id, "connection_closed")
     
     async def _authenticate_connection(self, websocket: WebSocketServerProtocol) -> Optional[str]:
-        """
-        Authenticate WebSocket connection.
+        """        Authenticate WebSocket connection.
         
         Args:
             websocket: WebSocket connection
             
         Returns:
             str: Session ID if authenticated, None otherwise
-        """
-        try:
+        """        try:
             if not self.config.require_authentication:
                 # Create anonymous session
                 return str(uuid.uuid4())
@@ -429,8 +408,7 @@ class StreamingIngestionEngine:
     async def _create_session(self, session_id: str, user_id: str, 
                             websocket: WebSocketServerProtocol, 
                             session_data: Dict[str, Any]) -> StreamingSession:
-        """Create new streaming session"""
-        async with self.session_lock:
+        """Create new streaming session"""        async with self.session_lock:
             session = StreamingSession(
                 session_id=session_id,
                 user_id=user_id,
@@ -455,8 +433,7 @@ class StreamingIngestionEngine:
             return session
     
     async def _handle_session_communication(self, websocket: WebSocketServerProtocol, session_id: str):
-        """Handle WebSocket communication for a session"""
-        session = self.active_sessions.get(session_id)
+        """Handle WebSocket communication for a session"""        session = self.active_sessions.get(session_id)
         if not session:
             return
         
@@ -484,8 +461,7 @@ class StreamingIngestionEngine:
             session.last_error = str(e)
     
     async def _handle_chunk_data(self, session: StreamingSession, chunk_data: bytes):
-        """Handle binary chunk data"""
-        try:
+        """Handle binary chunk data"""        try:
             # Create chunk object
             chunk = StreamingChunk(
                 chunk_id=str(uuid.uuid4()),
@@ -540,8 +516,7 @@ class StreamingIngestionEngine:
             await self._send_error_message(session, "chunk_processing_error", [str(e)])
     
     async def _handle_control_message(self, session: StreamingSession, message: str):
-        """Handle JSON control messages"""
-        try:
+        """Handle JSON control messages"""        try:
             data = json.loads(message)
             message_type = data.get('type')
             
@@ -568,8 +543,7 @@ class StreamingIngestionEngine:
             self.logger.error(f"Error handling control message: {str(e)}")
     
     async def _process_chunk_async(self, session: StreamingSession, chunk: StreamingChunk):
-        """Process chunk asynchronously"""
-        try:
+        """Process chunk asynchronously"""        try:
             start_time = time.time()
             chunk.status = ChunkStatus.PROCESSING
             
@@ -602,8 +576,7 @@ class StreamingIngestionEngine:
             self.logger.error(f"Chunk processing failed: {str(e)}")
     
     def _process_chunk_sync(self, session: StreamingSession, chunk: StreamingChunk) -> Dict[str, Any]:
-        """Synchronous chunk processing (runs in thread pool)"""
-        try:
+        """Synchronous chunk processing (runs in thread pool)"""        try:
             # Decompress if needed
             chunk_data = chunk.data
             if self.config.enable_compression:
@@ -640,8 +613,7 @@ class StreamingIngestionEngine:
             }
     
     def _process_image_chunk(self, chunk_data: bytes) -> Dict[str, Any]:
-        """Process image chunk data"""
-        try:
+        """Process image chunk data"""        try:
             # Try to load as image
             import io
             image = Image.open(io.BytesIO(chunk_data))
@@ -656,8 +628,7 @@ class StreamingIngestionEngine:
             return {'error': f"Image processing failed: {str(e)}"}
     
     def _process_audio_chunk(self, chunk_data: bytes) -> Dict[str, Any]:
-        """Process audio chunk data"""
-        try:
+        """Process audio chunk data"""        try:
             # Basic audio chunk validation
             # In a full implementation, this would use librosa or similar
             return {
@@ -668,8 +639,7 @@ class StreamingIngestionEngine:
             return {'error': f"Audio processing failed: {str(e)}"}
     
     def _process_video_chunk(self, chunk_data: bytes) -> Dict[str, Any]:
-        """Process video chunk data"""
-        try:
+        """Process video chunk data"""        try:
             # Basic video chunk validation
             return {
                 'chunk_size': len(chunk_data),
@@ -679,8 +649,7 @@ class StreamingIngestionEngine:
             return {'error': f"Video processing failed: {str(e)}"}
     
     def _process_text_chunk(self, chunk_data: bytes) -> Dict[str, Any]:
-        """Process text chunk data"""
-        try:
+        """Process text chunk data"""        try:
             # Decode text
             text = chunk_data.decode('utf-8')
             
@@ -694,8 +663,7 @@ class StreamingIngestionEngine:
             return {'error': f"Text processing failed: {str(e)}"}
     
     async def _validate_chunk(self, session: StreamingSession, chunk: StreamingChunk) -> Dict[str, Any]:
-        """Validate chunk data"""
-        try:
+        """Validate chunk data"""        try:
             validation_result = {'valid': True, 'errors': []}
             
             # Size validation
@@ -720,8 +688,7 @@ class StreamingIngestionEngine:
             return {'valid': False, 'errors': [f"Validation error: {str(e)}"]}
     
     async def _send_chunk_ack(self, session: StreamingSession, chunk: StreamingChunk):
-        """Send chunk acknowledgment"""
-        try:
+        """Send chunk acknowledgment"""        try:
             ack_message = {
                 'type': 'chunk_ack',
                 'chunk_id': chunk.chunk_id,
@@ -738,8 +705,7 @@ class StreamingIngestionEngine:
     async def _send_processing_update(self, session: StreamingSession, 
                                     chunk: StreamingChunk, 
                                     processing_result: Dict[str, Any]):
-        """Send processing update to client"""
-        try:
+        """Send processing update to client"""        try:
             update_message = {
                 'type': 'processing_update',
                 'chunk_id': chunk.chunk_id,
@@ -762,8 +728,7 @@ class StreamingIngestionEngine:
     async def _send_error_message(self, session: StreamingSession, 
                                 error_type: str, 
                                 errors: List[str]):
-        """Send error message to client"""
-        try:
+        """Send error message to client"""        try:
             error_message = {
                 'type': 'error',
                 'error_type': error_type,
@@ -778,8 +743,7 @@ class StreamingIngestionEngine:
             self.logger.error(f"Error sending error message: {str(e)}")
     
     async def _finalize_session(self, session: StreamingSession):
-        """Finalize streaming session and create final content"""
-        try:
+        """Finalize streaming session and create final content"""        try:
             session.processing_stage = "finalizing"
             
             # Combine all chunks into final content
@@ -826,8 +790,7 @@ class StreamingIngestionEngine:
             await self._send_error_message(session, "finalization_error", [str(e)])
     
     async def _combine_chunks(self, session: StreamingSession) -> Optional[bytes]:
-        """Combine all session chunks into final content"""
-        try:
+        """Combine all session chunks into final content"""        try:
             # Sort chunks by sequence number
             sorted_chunks = sorted(session.buffer, key=lambda c: c.sequence_number)
             
@@ -844,8 +807,7 @@ class StreamingIngestionEngine:
             return None
     
     async def _send_session_complete(self, session: StreamingSession, result: StreamingResult):
-        """Send session completion message"""
-        try:
+        """Send session completion message"""        try:
             completion_message = {
                 'type': 'session_complete',
                 'session_id': session.session_id,
@@ -868,8 +830,7 @@ class StreamingIngestionEngine:
             self.logger.error(f"Error sending completion message: {str(e)}")
     
     async def _close_session(self, session_id: str, reason: str):
-        """Close streaming session"""
-        try:
+        """Close streaming session"""        try:
             async with self.session_lock:
                 session = self.active_sessions.get(session_id)
                 if not session:
@@ -894,8 +855,7 @@ class StreamingIngestionEngine:
             self.logger.error(f"Error closing session {session_id}: {str(e)}")
     
     async def _store_session_in_redis(self, session: StreamingSession):
-        """Store session data in Redis"""
-        try:
+        """Store session data in Redis"""        try:
             session_data = {
                 'session_id': session.session_id,
                 'user_id': session.user_id,
@@ -915,23 +875,20 @@ class StreamingIngestionEngine:
             self.logger.error(f"Error storing session in Redis: {str(e)}")
     
     async def _remove_session_from_redis(self, session_id: str):
-        """Remove session data from Redis"""
-        try:
+        """Remove session data from Redis"""        try:
             await self.redis.delete(f"streaming_session:{session_id}")
         except Exception as e:
             self.logger.error(f"Error removing session from Redis: {str(e)}")
     
     async def get_active_sessions(self, user_id: Optional[str] = None) -> List[Dict[str, Any]]:
-        """
-        Get active streaming sessions.
+        """        Get active streaming sessions.
         
         Args:
             user_id: Filter by user ID (optional)
             
         Returns:
             List of active session information
-        """
-        try:
+        """        try:
             sessions = []
             
             async with self.session_lock:
@@ -963,8 +920,7 @@ class StreamingIngestionEngine:
             return []
     
     async def get_session_status(self, session_id: str) -> Optional[Dict[str, Any]]:
-        """Get detailed session status"""
-        try:
+        """Get detailed session status"""        try:
             session = self.active_sessions.get(session_id)
             if not session:
                 return None
@@ -1010,8 +966,7 @@ class StreamingIngestionEngine:
             return None
     
     async def get_server_metrics(self) -> Dict[str, Any]:
-        """Get server performance metrics"""
-        try:
+        """Get server performance metrics"""        try:
             uptime = (datetime.now(timezone.utc) - self.global_metrics['uptime_start']).total_seconds()
             
             return {
@@ -1034,8 +989,7 @@ class StreamingIngestionEngine:
             return {}
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on streaming engine"""
-        try:
+        """Perform health check on streaming engine"""        try:
             health_status = {
                 'status': 'healthy',
                 'timestamp': datetime.now(timezone.utc).isoformat(),

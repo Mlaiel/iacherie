@@ -1,28 +1,23 @@
 #!/usr/bin/env python3
-"""
-🎯 Générateur de priorités business actionables
+"""🎯 Générateur de priorités business actionables
 Author: Fahed Mlaiel <mlaiel@live.de>
 
 Extrait les insights business critiques de l'analyse TODO et génère
 des recommandations d'actions concrètes par impact métier.
-"""
-
-import json
+"""import json
 from pathlib import Path
 from typing import Dict, List
 from datetime import datetime
 
 def load_analysis_data() -> Dict:
-    """Charger les données d'analyse"""
-    try:
+    """Charger les données d'analyse"""    try:
         with open("todo_business_impact_analysis.json", 'r', encoding='utf-8') as f:
             return json.load(f)
     except FileNotFoundError:
         return {}
 
 def extract_critical_business_actions(data: Dict) -> Dict:
-    """Extraire les actions critiques pour le business"""
-    
+    """Extraire les actions critiques pour le business"""    
     if not data or 'detailed_analysis' not in data:
         return {}
     
@@ -82,8 +77,7 @@ def extract_critical_business_actions(data: Dict) -> Dict:
     return action_plan
 
 def _generate_sprint_actions(files: List[Dict], priority_level: str) -> Dict:
-    """Générer des actions de sprint spécifiques"""
-    
+    """Générer des actions de sprint spécifiques"""    
     if not files:
         return {}
     
@@ -124,8 +118,7 @@ def _generate_sprint_actions(files: List[Dict], priority_level: str) -> Dict:
     }
 
 def _analyze_domain_priority(files: List[Dict]) -> Dict:
-    """Analyser la priorité d'un domaine métier"""
-    
+    """Analyser la priorité d'un domaine métier"""    
     if not files:
         return {}
     
@@ -151,8 +144,7 @@ def _analyze_domain_priority(files: List[Dict]) -> Dict:
     }
 
 def _estimate_implementation_effort(file_item: Dict) -> float:
-    """Estimer l'effort d'implémentation en jours"""
-    
+    """Estimer l'effort d'implémentation en jours"""    
     # Facteurs d'effort
     base_effort = 0.5  # Minimum 0.5 jour par fichier
     
@@ -182,8 +174,7 @@ def _estimate_implementation_effort(file_item: Dict) -> float:
     return round(total_effort, 1)
 
 def _generate_business_rationale(file_item: Dict) -> str:
-    """Générer la justification business pour un fichier"""
-    
+    """Générer la justification business pour un fichier"""    
     file_path = file_item['file_path'].lower()
     impact = file_item['business_impact']
     
@@ -207,8 +198,7 @@ def _generate_business_rationale(file_item: Dict) -> str:
         return "Support aux fonctionnalités principales"
 
 def _generate_success_criteria(file_item: Dict) -> List[str]:
-    """Générer les critères de succès pour un fichier"""
-    
+    """Générer les critères de succès pour un fichier"""    
     criteria = []
     file_path = file_item['file_path'].lower()
     
@@ -241,8 +231,7 @@ def _generate_success_criteria(file_item: Dict) -> List[str]:
     return criteria
 
 def _assess_domain_business_impact(files: List[Dict]) -> str:
-    """Évaluer l'impact business d'un domaine"""
-    
+    """Évaluer l'impact business d'un domaine"""    
     if not files:
         return "Impact minimal"
     
@@ -260,8 +249,7 @@ def _assess_domain_business_impact(files: List[Dict]) -> str:
         return "Impact minimal - Utilitaires et maintenance"
 
 def _create_implementation_roadmap(detailed: List[Dict]) -> Dict:
-    """Créer une roadmap d'implémentation"""
-    
+    """Créer une roadmap d'implémentation"""    
     # Classifier par phases
     phases = {
         'phase_1_foundations': [],  # Critical files
@@ -295,8 +283,7 @@ def _create_implementation_roadmap(detailed: List[Dict]) -> Dict:
     return roadmap
 
 def _calculate_roi_impact(data: Dict) -> Dict:
-    """Calculer l'impact ROI de l'implémentation"""
-    
+    """Calculer l'impact ROI de l'implémentation"""    
     if not data or 'summary' not in data:
         return {}
     
@@ -330,8 +317,7 @@ def _calculate_roi_impact(data: Dict) -> Dict:
     }
 
 def main():
-    """Générer le rapport d'actions business"""
-    print("🎯 Génération des priorités business actionables...")
+    """Générer le rapport d'actions business"""    print("🎯 Génération des priorités business actionables...")
     
     # Charger les données
     data = load_analysis_data()

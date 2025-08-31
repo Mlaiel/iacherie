@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-IA Influencer Agent - Content Management System
+"""IA Influencer Agent - Content Management System
 Quick Start & Installation Guide
 ==============================================
 
@@ -17,9 +16,7 @@ Expert Team Specialties:
 Any unauthorized copying, modification, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
-"""
-
-import os
+"""import os
 import sys
 import subprocess
 import asyncio
@@ -29,9 +26,7 @@ from typing import List, Dict, Any
 
 
 def print_banner():
-    """Print system banner."""
-    print("""
-╔══════════════════════════════════════════════════════════════════════════════╗
+    """Print system banner."""    print("""╔══════════════════════════════════════════════════════════════════════════════╗
 ║                    IA Influencer Agent - Content Module                     ║
 ║                         Quick Start & Installation                          ║
 ║                                                                              ║
@@ -47,8 +42,7 @@ def print_banner():
 
 
 def check_python_version():
-    """Check Python version compatibility."""
-    if sys.version_info < (3, 9):
+    """Check Python version compatibility."""    if sys.version_info < (3, 9):
         print("❌ Python 3.9+ required. Current version:", sys.version)
         return False
     print(f"✅ Python version: {sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}")
@@ -56,8 +50,7 @@ def check_python_version():
 
 
 def install_dependencies():
-    """Install required dependencies."""
-    print("\n📦 Installing Dependencies...")
+    """Install required dependencies."""    print("\n📦 Installing Dependencies...")
     
     requirements = [
         "fastapi>=0.104.0",
@@ -90,8 +83,7 @@ def install_dependencies():
 
 
 async def quick_setup():
-    """Perform quick setup and configuration."""
-    print("\n⚙️ Running Quick Setup...")
+    """Perform quick setup and configuration."""    print("\n⚙️ Running Quick Setup...")
     
     # Run setup script
     try:
@@ -120,8 +112,7 @@ async def quick_setup():
 
 
 def run_health_check():
-    """Run basic health check."""
-    print("\n🔍 Running Health Check...")
+    """Run basic health check."""    print("\n🔍 Running Health Check...")
     
     try:
         # Import and run health check
@@ -144,8 +135,7 @@ def run_health_check():
 
 
 def run_demo():
-    """Run system demonstration."""
-    print("\n🎬 Launching System Demo...")
+    """Run system demonstration."""    print("\n🎬 Launching System Demo...")
     
     try:
         # Run demo system
@@ -160,9 +150,7 @@ def run_demo():
 
 
 def print_next_steps():
-    """Print next steps for the user."""
-    print("""
-╔══════════════════════════════════════════════════════════════════════════════╗
+    """Print next steps for the user."""    print("""╔══════════════════════════════════════════════════════════════════════════════╗
 ║                               SETUP COMPLETE                                ║
 ║                                                                              ║
 ║  🎉 Content Management System Successfully Installed!                       ║
@@ -216,8 +204,7 @@ def print_next_steps():
 
 
 def main():
-    """Main installation and setup process."""
-    print_banner()
+    """Main installation and setup process."""    print_banner()
     
     # Step 1: Check Python version
     if not check_python_version():

@@ -1,30 +1,24 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-User Profile Management Tests
+"""User Profile Management Tests
 
 Comprehensive tests for user profile creation, management, and personalization.
 Tests profile building, preference learning, demographic analysis, and behavioral modeling.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -62,11 +56,8 @@ from ai.personalization.exceptions import (
 
 
 class TestUserProfile(IsolatedAsyncioTestCase):
-    """Comprehensive tests for UserProfile class"""
-
-    async def asyncSetUp(self):
-        """Set up test environment"""
-        self.user_id = 'user_12345'
+    """Comprehensive tests for UserProfile class"""    async def asyncSetUp(self):
+        """Set up test environment"""        self.user_id = 'user_12345'
         self.profile_data = self._generate_profile_data()
         self.profile = UserProfile(
             user_id=self.user_id,
@@ -75,8 +66,7 @@ class TestUserProfile(IsolatedAsyncioTestCase):
         )
 
     def _generate_profile_data(self) -> Dict[str, Any]:
-        """Generate comprehensive profile data"""
-        return {
+        """Generate comprehensive profile data"""        return {
             'demographics': {
                 'age': 28,
                 'gender': 'F',
@@ -142,16 +132,14 @@ class TestUserProfile(IsolatedAsyncioTestCase):
         }
 
     async def test_profile_initialization(self):
-        """Test profile proper initialization"""
-        self.assertEqual(self.profile.user_id, self.user_id)
+        """Test profile proper initialization"""        self.assertEqual(self.profile.user_id, self.user_id)
         self.assertEqual(self.profile.privacy_level, PrivacyLevel.MEDIUM)
         self.assertIsNotNone(self.profile.created_at)
         self.assertIsNotNone(self.profile.updated_at)
         self.assertTrue(self.profile.is_valid)
 
     async def test_profile_data_access(self):
-        """Test profile data access methods"""
-        # Test demographics access
+        """Test profile data access methods"""        # Test demographics access
         age = self.profile.get_demographic('age')
         self.assertEqual(age, 28)
         
@@ -168,8 +156,7 @@ class TestUserProfile(IsolatedAsyncioTestCase):
         self.assertEqual(skip_rate, 0.15)
 
     async def test_profile_updates(self):
-        """Test profile data updates"""
-        # Update demographic
+        """Test profile data updates"""        # Update demographic
         await self.profile.update_demographic('age', 29)
         self.assertEqual(self.profile.get_demographic('age'), 29)
         
@@ -182,8 +169,7 @@ class TestUserProfile(IsolatedAsyncioTestCase):
         self.assertEqual(self.profile.get_behavior('interaction_patterns.skip_rate'), 0.12)
 
     async def test_profile_privacy_filtering(self):
-        """Test privacy-aware data filtering"""
-        # Set high privacy level
+        """Test privacy-aware data filtering"""        # Set high privacy level
         self.profile.privacy_level = PrivacyLevel.HIGH
         
         # Request sensitive data
@@ -194,8 +180,7 @@ class TestUserProfile(IsolatedAsyncioTestCase):
         self.assertNotIn('income_bracket', filtered_data.get('demographics', {}))
 
     async def test_profile_serialization(self):
-        """Test profile serialization and deserialization"""
-        # Serialize profile
+        """Test profile serialization and deserialization"""        # Serialize profile
         serialized = await self.profile.to_dict()
         
         self.assertIsInstance(serialized, dict)
@@ -211,8 +196,7 @@ class TestUserProfile(IsolatedAsyncioTestCase):
         self.assertEqual(new_profile.privacy_level, self.profile.privacy_level)
 
     async def test_profile_similarity(self):
-        """Test profile similarity computation"""
-        # Create similar profile
+        """Test profile similarity computation"""        # Create similar profile
         similar_profile_data = self.profile_data.copy()
         similar_profile_data['preferences']['music_genres']['electronic'] = 0.75
         
@@ -230,8 +214,7 @@ class TestUserProfile(IsolatedAsyncioTestCase):
         self.assertGreater(similarity, 0.8)  # Should be highly similar
 
     async def test_profile_validation(self):
-        """Test profile data validation"""
-        # Test valid profile
+        """Test profile data validation"""        # Test valid profile
         is_valid = await self.profile.validate()
         self.assertTrue(is_valid)
         
@@ -248,8 +231,7 @@ class TestUserProfile(IsolatedAsyncioTestCase):
         self.assertFalse(is_valid)
 
     async def test_profile_metrics(self):
-        """Test profile metrics computation"""
-        metrics = await self.profile.compute_metrics()
+        """Test profile metrics computation"""        metrics = await self.profile.compute_metrics()
         
         self.assertIsInstance(metrics, ProfileMetrics)
         self.assertIn('completeness_score', metrics.__dict__)
@@ -262,11 +244,8 @@ class TestUserProfile(IsolatedAsyncioTestCase):
 
 
 class TestUserProfileManager(IsolatedAsyncioTestCase):
-    """Comprehensive tests for UserProfileManager"""
-
-    async def asyncSetUp(self):
-        """Set up test environment"""
-        self.manager = UserProfileManager(
+    """Comprehensive tests for UserProfileManager"""    async def asyncSetUp(self):
+        """Set up test environment"""        self.manager = UserProfileManager(
             storage_backend='memory',  # Use in-memory storage for tests
             cache_size=100,
             auto_backup=False
@@ -274,8 +253,7 @@ class TestUserProfileManager(IsolatedAsyncioTestCase):
         self.test_users = self._generate_test_users(20)
 
     def _generate_test_users(self, n_users: int) -> List[Dict[str, Any]]:
-        """Generate test user data"""
-        users = []
+        """Generate test user data"""        users = []
         for i in range(n_users):
             user_data = {
                 'user_id': f'user_{i}',
@@ -304,8 +282,7 @@ class TestUserProfileManager(IsolatedAsyncioTestCase):
         return users
 
     async def test_profile_creation(self):
-        """Test profile creation and storage"""
-        user_data = self.test_users[0]
+        """Test profile creation and storage"""        user_data = self.test_users[0]
         
         profile = await self.manager.create_profile(
             user_id=user_data['user_id'],
@@ -317,8 +294,7 @@ class TestUserProfileManager(IsolatedAsyncioTestCase):
         self.assertTrue(profile.is_valid)
 
     async def test_profile_retrieval(self):
-        """Test profile retrieval"""
-        # Create profile
+        """Test profile retrieval"""        # Create profile
         user_data = self.test_users[0]
         created_profile = await self.manager.create_profile(
             user_id=user_data['user_id'],
@@ -332,13 +308,11 @@ class TestUserProfileManager(IsolatedAsyncioTestCase):
         self.assertEqual(retrieved_profile.user_id, created_profile.user_id)
 
     async def test_profile_not_found(self):
-        """Test handling of non-existent profiles"""
-        with self.assertRaises(ProfileNotFoundError):
+        """Test handling of non-existent profiles"""        with self.assertRaises(ProfileNotFoundError):
             await self.manager.get_profile('non_existent_user')
 
     async def test_batch_profile_operations(self):
-        """Test batch profile operations"""
-        # Create multiple profiles
+        """Test batch profile operations"""        # Create multiple profiles
         created_profiles = await self.manager.create_profiles_batch(self.test_users)
         
         self.assertEqual(len(created_profiles), len(self.test_users))
@@ -350,8 +324,7 @@ class TestUserProfileManager(IsolatedAsyncioTestCase):
         self.assertEqual(len(retrieved_profiles), len(self.test_users))
 
     async def test_profile_updates(self):
-        """Test profile update functionality"""
-        user_data = self.test_users[0]
+        """Test profile update functionality"""        user_data = self.test_users[0]
         profile = await self.manager.create_profile(
             user_id=user_data['user_id'],
             profile_data=user_data
@@ -372,8 +345,7 @@ class TestUserProfileManager(IsolatedAsyncioTestCase):
         self.assertEqual(updated_profile.get_preferences('music_genres')['jazz'], 0.8)
 
     async def test_profile_deletion(self):
-        """Test profile deletion"""
-        user_data = self.test_users[0]
+        """Test profile deletion"""        user_data = self.test_users[0]
         await self.manager.create_profile(
             user_id=user_data['user_id'],
             profile_data=user_data
@@ -388,8 +360,7 @@ class TestUserProfileManager(IsolatedAsyncioTestCase):
             await self.manager.get_profile(user_data['user_id'])
 
     async def test_profile_search(self):
-        """Test profile search functionality"""
-        # Create profiles
+        """Test profile search functionality"""        # Create profiles
         await self.manager.create_profiles_batch(self.test_users)
         
         # Search by demographics
@@ -402,8 +373,7 @@ class TestUserProfileManager(IsolatedAsyncioTestCase):
             self.assertEqual(profile.get_demographic('location'), 'Berlin')
 
     async def test_profile_clustering(self):
-        """Test user profile clustering"""
-        # Create profiles
+        """Test user profile clustering"""        # Create profiles
         await self.manager.create_profiles_batch(self.test_users)
         
         # Perform clustering
@@ -420,8 +390,7 @@ class TestUserProfileManager(IsolatedAsyncioTestCase):
         self.assertEqual(total_users, len(self.test_users))
 
     async def test_profile_statistics(self):
-        """Test profile statistics computation"""
-        # Create profiles
+        """Test profile statistics computation"""        # Create profiles
         await self.manager.create_profiles_batch(self.test_users)
         
         stats = await self.manager.compute_profile_statistics()
@@ -434,11 +403,8 @@ class TestUserProfileManager(IsolatedAsyncioTestCase):
 
 
 class TestProfileBuilder(IsolatedAsyncioTestCase):
-    """Comprehensive tests for ProfileBuilder"""
-
-    async def asyncSetUp(self):
-        """Set up test environment"""
-        self.builder = ProfileBuilder(
+    """Comprehensive tests for ProfileBuilder"""    async def asyncSetUp(self):
+        """Set up test environment"""        self.builder = ProfileBuilder(
             confidence_threshold=0.7,
             min_interactions=10,
             feature_extractors=['demographic', 'behavioral', 'contextual']
@@ -446,8 +412,7 @@ class TestProfileBuilder(IsolatedAsyncioTestCase):
         self.interaction_data = self._generate_interaction_data()
 
     def _generate_interaction_data(self) -> List[Dict[str, Any]]:
-        """Generate interaction data for profile building"""
-        interactions = []
+        """Generate interaction data for profile building"""        interactions = []
         user_id = 'user_builder_test'
         
         for i in range(100):
@@ -477,16 +442,14 @@ class TestProfileBuilder(IsolatedAsyncioTestCase):
         return interactions
 
     async def test_profile_building_from_interactions(self):
-        """Test building profile from interaction data"""
-        profile = await self.builder.build_from_interactions(self.interaction_data)
+        """Test building profile from interaction data"""        profile = await self.builder.build_from_interactions(self.interaction_data)
         
         self.assertIsNotNone(profile)
         self.assertIsInstance(profile, UserProfile)
         self.assertEqual(profile.user_id, 'user_builder_test')
 
     async def test_preference_extraction(self):
-        """Test preference extraction from interactions"""
-        preferences = await self.builder.extract_preferences(self.interaction_data)
+        """Test preference extraction from interactions"""        preferences = await self.builder.extract_preferences(self.interaction_data)
         
         self.assertIsInstance(preferences, dict)
         self.assertIn('music_genres', preferences)
@@ -499,8 +462,7 @@ class TestProfileBuilder(IsolatedAsyncioTestCase):
             self.assertLessEqual(weight, 1.0)
 
     async def test_behavioral_pattern_extraction(self):
-        """Test behavioral pattern extraction"""
-        patterns = await self.builder.extract_behavioral_patterns(self.interaction_data)
+        """Test behavioral pattern extraction"""        patterns = await self.builder.extract_behavioral_patterns(self.interaction_data)
         
         self.assertIsInstance(patterns, dict)
         self.assertIn('listening_patterns', patterns)
@@ -508,8 +470,7 @@ class TestProfileBuilder(IsolatedAsyncioTestCase):
         self.assertIn('device_usage', patterns)
 
     async def test_temporal_pattern_analysis(self):
-        """Test temporal pattern analysis"""
-        temporal_patterns = await self.builder.analyze_temporal_patterns(self.interaction_data)
+        """Test temporal pattern analysis"""        temporal_patterns = await self.builder.analyze_temporal_patterns(self.interaction_data)
         
         self.assertIsInstance(temporal_patterns, dict)
         self.assertIn('hourly_distribution', temporal_patterns)
@@ -517,8 +478,7 @@ class TestProfileBuilder(IsolatedAsyncioTestCase):
         self.assertIn('peak_hours', temporal_patterns)
 
     async def test_contextual_feature_extraction(self):
-        """Test contextual feature extraction"""
-        contextual_features = await self.builder.extract_contextual_features(self.interaction_data)
+        """Test contextual feature extraction"""        contextual_features = await self.builder.extract_contextual_features(self.interaction_data)
         
         self.assertIsInstance(contextual_features, dict)
         self.assertIn('location_preferences', contextual_features)
@@ -526,8 +486,7 @@ class TestProfileBuilder(IsolatedAsyncioTestCase):
         self.assertIn('temporal_preferences', contextual_features)
 
     async def test_incremental_profile_building(self):
-        """Test incremental profile building"""
-        # Build initial profile from first half of interactions
+        """Test incremental profile building"""        # Build initial profile from first half of interactions
         initial_interactions = self.interaction_data[:50]
         initial_profile = await self.builder.build_from_interactions(initial_interactions)
         
@@ -549,8 +508,7 @@ class TestProfileBuilder(IsolatedAsyncioTestCase):
         self.assertNotEqual(initial_prefs, updated_prefs)
 
     async def test_confidence_scoring(self):
-        """Test confidence scoring for profile elements"""
-        profile = await self.builder.build_from_interactions(self.interaction_data)
+        """Test confidence scoring for profile elements"""        profile = await self.builder.build_from_interactions(self.interaction_data)
         
         confidence_scores = await self.builder.compute_confidence_scores(
             profile,
@@ -569,11 +527,8 @@ class TestProfileBuilder(IsolatedAsyncioTestCase):
 
 
 class TestPreferenceAnalyzer(IsolatedAsyncioTestCase):
-    """Comprehensive tests for PreferenceAnalyzer"""
-
-    async def asyncSetUp(self):
-        """Set up test environment"""
-        self.analyzer = PreferenceAnalyzer(
+    """Comprehensive tests for PreferenceAnalyzer"""    async def asyncSetUp(self):
+        """Set up test environment"""        self.analyzer = PreferenceAnalyzer(
             weight_decay=0.95,
             novelty_factor=0.1,
             diversity_bonus=0.05
@@ -581,8 +536,7 @@ class TestPreferenceAnalyzer(IsolatedAsyncioTestCase):
         self.preference_data = self._generate_preference_data()
 
     def _generate_preference_data(self) -> List[Dict[str, Any]]:
-        """Generate preference data for analysis"""
-        data = []
+        """Generate preference data for analysis"""        data = []
         user_id = 'user_preference_test'
         
         # Simulate evolving preferences over time
@@ -613,8 +567,7 @@ class TestPreferenceAnalyzer(IsolatedAsyncioTestCase):
         return data
 
     async def test_preference_evolution_tracking(self):
-        """Test tracking of preference evolution over time"""
-        evolution = await self.analyzer.track_preference_evolution(self.preference_data)
+        """Test tracking of preference evolution over time"""        evolution = await self.analyzer.track_preference_evolution(self.preference_data)
         
         self.assertIsInstance(evolution, dict)
         self.assertIn('timeline', evolution)
@@ -622,8 +575,7 @@ class TestPreferenceAnalyzer(IsolatedAsyncioTestCase):
         self.assertIn('volatility', evolution)
 
     async def test_preference_stability_analysis(self):
-        """Test preference stability analysis"""
-        stability = await self.analyzer.analyze_preference_stability(self.preference_data)
+        """Test preference stability analysis"""        stability = await self.analyzer.analyze_preference_stability(self.preference_data)
         
         self.assertIsInstance(stability, dict)
         
@@ -633,8 +585,7 @@ class TestPreferenceAnalyzer(IsolatedAsyncioTestCase):
             self.assertLessEqual(stability_score, 1.0)
 
     async def test_preference_clustering(self):
-        """Test preference clustering"""
-        clusters = await self.analyzer.cluster_preferences(
+        """Test preference clustering"""        clusters = await self.analyzer.cluster_preferences(
             self.preference_data,
             n_clusters=3
         )
@@ -645,8 +596,7 @@ class TestPreferenceAnalyzer(IsolatedAsyncioTestCase):
         self.assertIn('cluster_descriptions', clusters)
 
     async def test_preference_anomaly_detection(self):
-        """Test preference anomaly detection"""
-        # Add some anomalous preferences
+        """Test preference anomaly detection"""        # Add some anomalous preferences
         anomalous_data = self.preference_data.copy()
         anomalous_data.append({
             'user_id': 'user_preference_test',
@@ -662,8 +612,7 @@ class TestPreferenceAnalyzer(IsolatedAsyncioTestCase):
         self.assertGreater(len(anomalies), 0)  # Should detect the anomaly
 
     async def test_preference_prediction(self):
-        """Test preference prediction"""
-        # Use historical data to predict future preferences
+        """Test preference prediction"""        # Use historical data to predict future preferences
         historical_data = self.preference_data[:-5]  # All but last 5
         
         predicted_prefs = await self.analyzer.predict_future_preferences(
@@ -679,8 +628,7 @@ class TestPreferenceAnalyzer(IsolatedAsyncioTestCase):
             self.assertLessEqual(predicted_value, 1.0)
 
     async def test_preference_diversity_analysis(self):
-        """Test preference diversity analysis"""
-        diversity = await self.analyzer.analyze_preference_diversity(self.preference_data)
+        """Test preference diversity analysis"""        diversity = await self.analyzer.analyze_preference_diversity(self.preference_data)
         
         self.assertIsInstance(diversity, dict)
         self.assertIn('shannon_entropy', diversity)
@@ -688,8 +636,7 @@ class TestPreferenceAnalyzer(IsolatedAsyncioTestCase):
         self.assertIn('effective_preferences', diversity)
 
     async def test_preference_weight_computation(self):
-        """Test preference weight computation"""
-        weights = await self.analyzer.compute_preference_weights(
+        """Test preference weight computation"""        weights = await self.analyzer.compute_preference_weights(
             self.preference_data,
             method='frequency_inverse'
         )
@@ -702,11 +649,8 @@ class TestPreferenceAnalyzer(IsolatedAsyncioTestCase):
 
 
 class TestBehavioralAnalyzer(IsolatedAsyncioTestCase):
-    """Comprehensive tests for BehavioralAnalyzer"""
-
-    async def asyncSetUp(self):
-        """Set up test environment"""
-        self.analyzer = BehavioralAnalyzer(
+    """Comprehensive tests for BehavioralAnalyzer"""    async def asyncSetUp(self):
+        """Set up test environment"""        self.analyzer = BehavioralAnalyzer(
             session_timeout=30,  # minutes
             behavior_types=['listening', 'interaction', 'navigation'],
             pattern_detection_window=14  # days
@@ -714,8 +658,7 @@ class TestBehavioralAnalyzer(IsolatedAsyncioTestCase):
         self.behavioral_data = self._generate_behavioral_data()
 
     def _generate_behavioral_data(self) -> List[Dict[str, Any]]:
-        """Generate behavioral data for analysis"""
-        data = []
+        """Generate behavioral data for analysis"""        data = []
         user_id = 'user_behavior_test'
         
         # Simulate 30 days of behavior
@@ -765,8 +708,7 @@ class TestBehavioralAnalyzer(IsolatedAsyncioTestCase):
         return data
 
     async def test_session_analysis(self):
-        """Test session analysis"""
-        sessions = await self.analyzer.analyze_sessions(self.behavioral_data)
+        """Test session analysis"""        sessions = await self.analyzer.analyze_sessions(self.behavioral_data)
         
         self.assertIsInstance(sessions, dict)
         self.assertIn('session_statistics', sessions)
@@ -778,8 +720,7 @@ class TestBehavioralAnalyzer(IsolatedAsyncioTestCase):
         self.assertIn('total_sessions', stats)
 
     async def test_temporal_behavior_patterns(self):
-        """Test temporal behavior pattern analysis"""
-        patterns = await self.analyzer.analyze_temporal_patterns(self.behavioral_data)
+        """Test temporal behavior pattern analysis"""        patterns = await self.analyzer.analyze_temporal_patterns(self.behavioral_data)
         
         self.assertIsInstance(patterns, dict)
         self.assertIn('hourly_activity', patterns)
@@ -787,8 +728,7 @@ class TestBehavioralAnalyzer(IsolatedAsyncioTestCase):
         self.assertIn('weekend_vs_weekday', patterns)
 
     async def test_interaction_pattern_analysis(self):
-        """Test interaction pattern analysis"""
-        interaction_patterns = await self.analyzer.analyze_interaction_patterns(
+        """Test interaction pattern analysis"""        interaction_patterns = await self.analyzer.analyze_interaction_patterns(
             self.behavioral_data
         )
         
@@ -798,8 +738,7 @@ class TestBehavioralAnalyzer(IsolatedAsyncioTestCase):
         self.assertIn('transition_probabilities', interaction_patterns)
 
     async def test_device_usage_analysis(self):
-        """Test device usage pattern analysis"""
-        device_patterns = await self.analyzer.analyze_device_usage(self.behavioral_data)
+        """Test device usage pattern analysis"""        device_patterns = await self.analyzer.analyze_device_usage(self.behavioral_data)
         
         self.assertIsInstance(device_patterns, dict)
         self.assertIn('device_distribution', device_patterns)
@@ -811,8 +750,7 @@ class TestBehavioralAnalyzer(IsolatedAsyncioTestCase):
         self.assertAlmostEqual(total_usage, 1.0, places=2)
 
     async def test_behavior_change_detection(self):
-        """Test behavior change point detection"""
-        # Introduce a behavior change in the middle of the data
+        """Test behavior change point detection"""        # Introduce a behavior change in the middle of the data
         modified_data = self.behavioral_data.copy()
         
         # Change behavior for last 10 days (simulate change in listening habits)
@@ -832,8 +770,7 @@ class TestBehavioralAnalyzer(IsolatedAsyncioTestCase):
         self.assertGreater(len(change_points), 0)
 
     async def test_behavior_segmentation(self):
-        """Test behavior-based user segmentation"""
-        segments = await self.analyzer.segment_behavior(
+        """Test behavior-based user segmentation"""        segments = await self.analyzer.segment_behavior(
             self.behavioral_data,
             segmentation_features=['session_frequency', 'interaction_diversity', 'temporal_consistency']
         )
@@ -844,8 +781,7 @@ class TestBehavioralAnalyzer(IsolatedAsyncioTestCase):
         self.assertIn('confidence', segments)
 
     async def test_behavior_prediction(self):
-        """Test behavior prediction"""
-        # Use historical data to predict future behavior
+        """Test behavior prediction"""        # Use historical data to predict future behavior
         historical_data = self.behavioral_data[:-20]  # All but last 20 interactions
         
         predicted_behavior = await self.analyzer.predict_future_behavior(
@@ -859,8 +795,7 @@ class TestBehavioralAnalyzer(IsolatedAsyncioTestCase):
         self.assertIn('confidence_intervals', predicted_behavior)
 
     async def test_behavior_anomaly_detection(self):
-        """Test behavioral anomaly detection"""
-        # Add some anomalous behavior
+        """Test behavioral anomaly detection"""        # Add some anomalous behavior
         anomalous_data = self.behavioral_data.copy()
         
         # Add unusual behavior: playing same track 100 times in a row
@@ -885,19 +820,15 @@ class TestBehavioralAnalyzer(IsolatedAsyncioTestCase):
 
 
 class TestDemographicAnalyzer(IsolatedAsyncioTestCase):
-    """Comprehensive tests for DemographicAnalyzer"""
-
-    async def asyncSetUp(self):
-        """Set up test environment"""
-        self.analyzer = DemographicAnalyzer(
+    """Comprehensive tests for DemographicAnalyzer"""    async def asyncSetUp(self):
+        """Set up test environment"""        self.analyzer = DemographicAnalyzer(
             privacy_level=PrivacyLevel.MEDIUM,
             anonymization_threshold=5
         )
         self.demographic_data = self._generate_demographic_data()
 
     def _generate_demographic_data(self) -> List[Dict[str, Any]]:
-        """Generate demographic data for analysis"""
-        data = []
+        """Generate demographic data for analysis"""        data = []
         
         for i in range(200):
             data.append({
@@ -916,8 +847,7 @@ class TestDemographicAnalyzer(IsolatedAsyncioTestCase):
         return data
 
     async def test_demographic_distribution_analysis(self):
-        """Test demographic distribution analysis"""
-        distribution = await self.analyzer.analyze_demographic_distribution(
+        """Test demographic distribution analysis"""        distribution = await self.analyzer.analyze_demographic_distribution(
             self.demographic_data
         )
         
@@ -932,8 +862,7 @@ class TestDemographicAnalyzer(IsolatedAsyncioTestCase):
         self.assertAlmostEqual(total_gender, 1.0, places=2)
 
     async def test_demographic_correlations(self):
-        """Test demographic correlation analysis"""
-        correlations = await self.analyzer.analyze_demographic_correlations(
+        """Test demographic correlation analysis"""        correlations = await self.analyzer.analyze_demographic_correlations(
             self.demographic_data
         )
         
@@ -942,8 +871,7 @@ class TestDemographicAnalyzer(IsolatedAsyncioTestCase):
         self.assertIn('significant_correlations', correlations)
 
     async def test_demographic_segmentation(self):
-        """Test demographic-based segmentation"""
-        segments = await self.analyzer.create_demographic_segments(
+        """Test demographic-based segmentation"""        segments = await self.analyzer.create_demographic_segments(
             self.demographic_data,
             segmentation_features=['age', 'location', 'education']
         )
@@ -955,8 +883,7 @@ class TestDemographicAnalyzer(IsolatedAsyncioTestCase):
         self.assertEqual(total_users, len(self.demographic_data))
 
     async def test_privacy_aware_analysis(self):
-        """Test privacy-aware demographic analysis"""
-        # Set high privacy level
+        """Test privacy-aware demographic analysis"""        # Set high privacy level
         self.analyzer.privacy_level = PrivacyLevel.HIGH
         
         anonymized_analysis = await self.analyzer.analyze_with_privacy_protection(
@@ -970,8 +897,7 @@ class TestDemographicAnalyzer(IsolatedAsyncioTestCase):
         self.assertNotIn('specific_locations', anonymized_analysis)
 
     async def test_demographic_trends(self):
-        """Test demographic trend analysis"""
-        trends = await self.analyzer.analyze_demographic_trends(
+        """Test demographic trend analysis"""        trends = await self.analyzer.analyze_demographic_trends(
             self.demographic_data,
             time_period='monthly'
         )
@@ -981,8 +907,7 @@ class TestDemographicAnalyzer(IsolatedAsyncioTestCase):
         self.assertIn('demographic_shifts', trends)
 
     async def test_demographic_inference(self):
-        """Test demographic inference from behavior"""
-        # Generate behavior data without explicit demographics
+        """Test demographic inference from behavior"""        # Generate behavior data without explicit demographics
         behavior_data = []
         for i in range(50):
             behavior_data.append({
@@ -1008,11 +933,8 @@ class TestDemographicAnalyzer(IsolatedAsyncioTestCase):
 
 
 class TestProfilePerformanceAndScalability(IsolatedAsyncioTestCase):
-    """Performance and scalability tests for profile management"""
-
-    async def test_large_scale_profile_operations(self):
-        """Test profile operations at scale"""
-        manager = UserProfileManager(storage_backend='memory')
+    """Performance and scalability tests for profile management"""    async def test_large_scale_profile_operations(self):
+        """Test profile operations at scale"""        manager = UserProfileManager(storage_backend='memory')
         
         # Generate large number of profiles
         n_profiles = 1000
@@ -1052,8 +974,7 @@ class TestProfilePerformanceAndScalability(IsolatedAsyncioTestCase):
         self.assertLess(retrieval_time, 2.0)  # 2 seconds max
 
     async def test_profile_memory_efficiency(self):
-        """Test memory efficiency of profile storage"""
-        import psutil
+        """Test memory efficiency of profile storage"""        import psutil
         import os
         
         process = psutil.Process(os.getpid())
@@ -1079,8 +1000,7 @@ class TestProfilePerformanceAndScalability(IsolatedAsyncioTestCase):
         self.assertLess(memory_increase, 100)  # Less than 100MB for 500 profiles
 
     async def test_concurrent_profile_operations(self):
-        """Test concurrent profile operations"""
-        manager = UserProfileManager(storage_backend='memory')
+        """Test concurrent profile operations"""        manager = UserProfileManager(storage_backend='memory')
         
         async def create_profile_task(task_id: int):
             for i in range(20):
@@ -1102,11 +1022,8 @@ class TestProfilePerformanceAndScalability(IsolatedAsyncioTestCase):
 
 
 class TestProfileRobustness(IsolatedAsyncioTestCase):
-    """Robustness and edge case tests"""
-
-    async def test_invalid_profile_data_handling(self):
-        """Test handling of invalid profile data"""
-        manager = UserProfileManager(storage_backend='memory')
+    """Robustness and edge case tests"""    async def test_invalid_profile_data_handling(self):
+        """Test handling of invalid profile data"""        manager = UserProfileManager(storage_backend='memory')
         
         # Test with completely invalid data
         invalid_data = {
@@ -1119,8 +1036,7 @@ class TestProfileRobustness(IsolatedAsyncioTestCase):
             await manager.create_profile('invalid_user', invalid_data)
 
     async def test_missing_required_fields(self):
-        """Test handling of missing required fields"""
-        profile_data = {
+        """Test handling of missing required fields"""        profile_data = {
             # Missing user_id
             'demographics': {'age': 25}
         }
@@ -1129,8 +1045,7 @@ class TestProfileRobustness(IsolatedAsyncioTestCase):
             UserProfile(user_id=None, profile_data=profile_data)
 
     async def test_privacy_violation_detection(self):
-        """Test detection of privacy violations"""
-        profile = UserProfile(
+        """Test detection of privacy violations"""        profile = UserProfile(
             user_id='privacy_test_user',
             profile_data={'demographics': {'ssn': '123-45-6789'}},  # Sensitive data
             privacy_level=PrivacyLevel.HIGH
@@ -1141,8 +1056,7 @@ class TestProfileRobustness(IsolatedAsyncioTestCase):
             await profile.get_privacy_filtered_data(request_sensitive_data=True)
 
     async def test_corrupted_profile_recovery(self):
-        """Test recovery from corrupted profile data"""
-        manager = UserProfileManager(storage_backend='memory')
+        """Test recovery from corrupted profile data"""        manager = UserProfileManager(storage_backend='memory')
         
         # Create valid profile
         await manager.create_profile('test_user', {
@@ -1163,8 +1077,7 @@ class TestProfileRobustness(IsolatedAsyncioTestCase):
             pass  # Expected behavior
 
     async def test_extreme_data_values(self):
-        """Test handling of extreme data values"""
-        extreme_data = {
+        """Test handling of extreme data values"""        extreme_data = {
             'user_id': 'extreme_user',
             'demographics': {
                 'age': 999,  # Unrealistic age

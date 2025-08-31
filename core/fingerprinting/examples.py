@@ -1,13 +1,10 @@
-"""
-IA Influencer Agent - Fingerprinting Module Examples
+"""IA Influencer Agent - Fingerprinting Module Examples
 Comprehensive examples and usage patterns for the fingerprinting system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved to Fahed Mlaiel
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited
-"""
-
-import asyncio
+"""import asyncio
 import os
 from pathlib import Path
 from typing import List, Dict, Any
@@ -23,25 +20,20 @@ logger = logging.getLogger(__name__)
 
 
 class FingerprintingExamples:
-    """
-    Comprehensive examples for the fingerprinting system
+    """    Comprehensive examples for the fingerprinting system
     Demonstrates all major functionality and use cases
-    """
-    
+    """    
     def __init__(self):
-        """Initialize examples with fingerprinting system"""
-        self.system = get_fingerprinting_system()
+        """Initialize examples with fingerprinting system"""        self.system = get_fingerprinting_system()
         self.manager = self.system['manager']
         self.analyzer = self.system['analyzer']
         self.similarity = self.system['similarity']
         self.hash_generator = self.system['hash_generator']
     
     async def example_1_basic_audio_fingerprinting(self):
-        """
-        Example 1: Basic audio fingerprinting
+        """        Example 1: Basic audio fingerprinting
         Demonstrates how to fingerprint a single audio file
-        """
-        print("\n=== Example 1: Basic Audio Fingerprinting ===")
+        """        print("\n=== Example 1: Basic Audio Fingerprinting ===")
         
         # Sample audio file path (replace with actual path)
         audio_path = "sample_audio.mp3"
@@ -69,11 +61,9 @@ class FingerprintingExamples:
             print(f"Error: {str(e)}")
     
     async def example_2_video_fingerprinting_with_analysis(self):
-        """
-        Example 2: Video fingerprinting with detailed analysis
+        """        Example 2: Video fingerprinting with detailed analysis
         Shows advanced video processing and quality analysis
-        """
-        print("\n=== Example 2: Video Fingerprinting with Analysis ===")
+        """        print("\n=== Example 2: Video Fingerprinting with Analysis ===")
         
         video_path = "sample_video.mp4"
         
@@ -106,11 +96,9 @@ class FingerprintingExamples:
             print(f"Error: {str(e)}")
     
     async def example_3_batch_image_processing(self):
-        """
-        Example 3: Batch image processing
+        """        Example 3: Batch image processing
         Demonstrates processing multiple images efficiently
-        """
-        print("\n=== Example 3: Batch Image Processing ===")
+        """        print("\n=== Example 3: Batch Image Processing ===")
         
         # Sample image directory (replace with actual path)
         image_dir = "sample_images/"
@@ -160,11 +148,9 @@ class FingerprintingExamples:
             print(f"Error: {str(e)}")
     
     async def example_4_similarity_search_and_clustering(self):
-        """
-        Example 4: Similarity search and clustering
+        """        Example 4: Similarity search and clustering
         Shows how to find similar content and create clusters
-        """
-        print("\n=== Example 4: Similarity Search and Clustering ===")
+        """        print("\n=== Example 4: Similarity Search and Clustering ===")
         
         try:
             # Create sample fingerprints (in real scenario, these would come from actual files)
@@ -218,11 +204,9 @@ class FingerprintingExamples:
             print(f"Error: {str(e)}")
     
     async def example_5_security_and_hashing(self):
-        """
-        Example 5: Security features and cryptographic hashing
+        """        Example 5: Security features and cryptographic hashing
         Demonstrates secure hash generation and verification
-        """
-        print("\n=== Example 5: Security and Hashing ===")
+        """        print("\n=== Example 5: Security and Hashing ===")
         
         try:
             # Original data to hash
@@ -275,11 +259,9 @@ class FingerprintingExamples:
             print(f"Error: {str(e)}")
     
     async def example_6_comprehensive_workflow(self):
-        """
-        Example 6: Comprehensive workflow
+        """        Example 6: Comprehensive workflow
         Complete example showing a full content protection workflow
-        """
-        print("\n=== Example 6: Comprehensive Content Protection Workflow ===")
+        """        print("\n=== Example 6: Comprehensive Content Protection Workflow ===")
         
         try:
             # Step 1: System validation
@@ -371,8 +353,7 @@ class FingerprintingExamples:
             print(f"Error in comprehensive workflow: {str(e)}")
     
     async def run_all_examples(self):
-        """Run all examples in sequence"""
-        print("=" * 60)
+        """Run all examples in sequence"""        print("=" * 60)
         print("IA INFLUENCER AGENT - FINGERPRINTING EXAMPLES")
         print("=" * 60)
         
@@ -397,8 +378,7 @@ class FingerprintingExamples:
 
 
 async def main():
-    """Main function to run examples"""
-    try:
+    """Main function to run examples"""    try:
         # Create examples instance
         examples = FingerprintingExamples()
         
@@ -416,18 +396,15 @@ if __name__ == "__main__":
 
 # Quick demo functions for easy testing
 async def quick_demo_audio():
-    """Quick demo for audio fingerprinting"""
-    examples = FingerprintingExamples()
+    """Quick demo for audio fingerprinting"""    examples = FingerprintingExamples()
     await examples.example_1_basic_audio_fingerprinting()
 
 async def quick_demo_security():
-    """Quick demo for security features"""
-    examples = FingerprintingExamples()
+    """Quick demo for security features"""    examples = FingerprintingExamples()
     await examples.example_5_security_and_hashing()
 
 async def quick_demo_workflow():
-    """Quick demo for complete workflow"""
-    examples = FingerprintingExamples()
+    """Quick demo for complete workflow"""    examples = FingerprintingExamples()
     await examples.example_6_comprehensive_workflow()
 
 

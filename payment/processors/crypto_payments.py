@@ -1,5 +1,4 @@
-"""
-₿ Cryptocurrency Payments Processor
+"""₿ Cryptocurrency Payments Processor
 ==================================
 
 Advanced cryptocurrency payment processor supporting multiple digital currencies
@@ -7,9 +6,7 @@ including Bitcoin, Ethereum, and popular stablecoins with DeFi integration.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -25,8 +22,7 @@ logger = logging.getLogger(__name__)
 
 
 class CryptoCurrency(Enum):
-    """Supported cryptocurrencies"""
-    BITCOIN = "BTC"
+    """Supported cryptocurrencies"""    BITCOIN = "BTC"
     ETHEREUM = "ETH"
     USDC = "USDC"
     USDT = "USDT"
@@ -44,8 +40,7 @@ class CryptoCurrency(Enum):
 
 
 class BlockchainNetwork(Enum):
-    """Supported blockchain networks"""
-    BITCOIN = "bitcoin"
+    """Supported blockchain networks"""    BITCOIN = "bitcoin"
     ETHEREUM = "ethereum"
     POLYGON = "polygon"
     BSC = "bsc"  # Binance Smart Chain
@@ -56,8 +51,7 @@ class BlockchainNetwork(Enum):
 
 
 class TransactionStatus(Enum):
-    """Cryptocurrency transaction status"""
-    PENDING = "pending"
+    """Cryptocurrency transaction status"""    PENDING = "pending"
     CONFIRMING = "confirming"
     CONFIRMED = "confirmed"
     FAILED = "failed"
@@ -65,8 +59,7 @@ class TransactionStatus(Enum):
 
 
 class WalletType(Enum):
-    """Wallet types"""
-    HOT_WALLET = "hot"
+    """Wallet types"""    HOT_WALLET = "hot"
     COLD_WALLET = "cold"
     MULTI_SIG = "multisig"
     HARDWARE = "hardware"
@@ -74,8 +67,7 @@ class WalletType(Enum):
 
 @dataclass
 class CryptoWallet:
-    """Cryptocurrency wallet information"""
-    address: str
+    """Cryptocurrency wallet information"""    address: str
     currency: CryptoCurrency
     network: BlockchainNetwork
     balance: Decimal
@@ -90,8 +82,7 @@ class CryptoWallet:
 
 @dataclass
 class CryptoTransaction:
-    """Cryptocurrency transaction details"""
-    id: str
+    """Cryptocurrency transaction details"""    id: str
     from_address: str
     to_address: str
     amount: Decimal
@@ -109,8 +100,7 @@ class CryptoTransaction:
 
 @dataclass
 class ExchangeRate:
-    """Cryptocurrency exchange rate"""
-    base_currency: CryptoCurrency
+    """Cryptocurrency exchange rate"""    base_currency: CryptoCurrency
     quote_currency: str  # Fiat currency
     rate: Decimal
     timestamp: datetime
@@ -118,21 +108,18 @@ class ExchangeRate:
 
 
 class CryptoPaymentsProcessor:
-    """
-    Advanced cryptocurrency payments processor
+    """    Advanced cryptocurrency payments processor
     
     Handles multiple cryptocurrencies across different blockchain networks
     with support for stablecoins, DeFi integration, and automated conversions.
-    """
-    
+    """    
     def __init__(
         self,
         api_keys: Dict[str, str],
         webhook_secret: Optional[str] = None,
         testnet: bool = False
     ):
-        """Initialize cryptocurrency processor"""
-        self.api_keys = api_keys
+        """Initialize cryptocurrency processor"""        self.api_keys = api_keys
         self.webhook_secret = webhook_secret
         self.testnet = testnet
         self.logger = logging.getLogger(__name__)
@@ -179,8 +166,7 @@ class CryptoPaymentsProcessor:
         network: BlockchainNetwork,
         wallet_type: WalletType = WalletType.HOT_WALLET
     ) -> CryptoWallet:
-        """Create a new cryptocurrency wallet"""
-        try:
+        """Create a new cryptocurrency wallet"""        try:
             # Generate wallet address (mock implementation)
             if network == BlockchainNetwork.BITCOIN:
                 # Generate a proper length Bitcoin address
@@ -216,8 +202,7 @@ class CryptoPaymentsProcessor:
         currency: CryptoCurrency,
         network: BlockchainNetwork
     ) -> Decimal:
-        """Get wallet balance"""
-        try:
+        """Get wallet balance"""        try:
             # Simulate API call to blockchain
             await asyncio.sleep(0.1)
             
@@ -242,8 +227,7 @@ class CryptoPaymentsProcessor:
         network: BlockchainNetwork,
         priority: str = "medium"
     ) -> Decimal:
-        """Estimate transaction fee"""
-        try:
+        """Estimate transaction fee"""        try:
             # Fee estimation based on network
             if network == BlockchainNetwork.BITCOIN:
                 # BTC fees in satoshis per byte
@@ -291,8 +275,7 @@ class CryptoPaymentsProcessor:
         memo: Optional[str] = None,
         priority: str = "medium"
     ) -> CryptoTransaction:
-        """Send cryptocurrency transaction"""
-        try:
+        """Send cryptocurrency transaction"""        try:
             # Estimate fee
             gas_fee = await self.estimate_fee(
                 from_address, to_address, amount, currency, network, priority
@@ -336,8 +319,7 @@ class CryptoPaymentsProcessor:
         transaction_hash: str,
         network: BlockchainNetwork
     ) -> Dict[str, Any]:
-        """Get transaction status from blockchain"""
-        try:
+        """Get transaction status from blockchain"""        try:
             # Simulate blockchain query
             await asyncio.sleep(0.1)
             
@@ -371,8 +353,7 @@ class CryptoPaymentsProcessor:
         crypto_currency: CryptoCurrency,
         fiat_currency: str = "USD"
     ) -> ExchangeRate:
-        """Get current cryptocurrency exchange rate"""
-        try:
+        """Get current cryptocurrency exchange rate"""        try:
             # Mock exchange rates (in production, use real API like CoinGecko)
             mock_rates = {
                 CryptoCurrency.BITCOIN: Decimal("42000.50"),
@@ -417,8 +398,7 @@ class CryptoPaymentsProcessor:
         amount: Decimal,
         slippage_tolerance: Decimal = Decimal("0.005")  # 0.5%
     ) -> Dict[str, Any]:
-        """Convert between cryptocurrencies using DEX"""
-        try:
+        """Convert between cryptocurrencies using DEX"""        try:
             # Get exchange rates
             from_rate = await self.get_exchange_rate(from_currency)
             to_rate = await self.get_exchange_rate(to_currency)
@@ -462,8 +442,7 @@ class CryptoPaymentsProcessor:
         expiry_minutes: int = 30,
         memo: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Create a cryptocurrency payment request"""
-        try:
+        """Create a cryptocurrency payment request"""        try:
             request_id = f"req_{uuid.uuid4().hex[:16]}"
             expiry_time = datetime.now() + timedelta(minutes=expiry_minutes)
             
@@ -501,8 +480,7 @@ class CryptoPaymentsProcessor:
         transaction_hash: str,
         network: BlockchainNetwork
     ) -> Dict[str, Any]:
-        """Verify a payment against a payment request"""
-        try:
+        """Verify a payment against a payment request"""        try:
             # Get transaction details
             tx_status = await self.get_transaction_status(transaction_hash, network)
             
@@ -527,8 +505,7 @@ class CryptoPaymentsProcessor:
             return {"verified": False, "error": str(e)}
     
     async def handle_webhook(self, headers: Dict[str, str], body: str) -> Dict[str, Any]:
-        """Handle cryptocurrency webhook events"""
-        try:
+        """Handle cryptocurrency webhook events"""        try:
             # Verify webhook signature
             if not self._verify_webhook_signature(headers, body):
                 return {"success": False, "error": "Invalid webhook signature"}
@@ -553,8 +530,7 @@ class CryptoPaymentsProcessor:
             return {"success": False, "error": str(e)}
     
     def _verify_webhook_signature(self, headers: Dict[str, str], body: str) -> bool:
-        """Verify cryptocurrency webhook signature"""
-        try:
+        """Verify cryptocurrency webhook signature"""        try:
             if not self.webhook_secret:
                 return True  # Skip verification if no secret configured
             
@@ -574,35 +550,30 @@ class CryptoPaymentsProcessor:
             return False
     
     async def _handle_transaction_confirmed(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle transaction confirmation event"""
-        tx_hash = data.get("transaction_hash")
+        """Handle transaction confirmation event"""        tx_hash = data.get("transaction_hash")
         self.logger.info(f"Cryptocurrency transaction confirmed: {tx_hash}")
         return {"success": True, "action": "transaction_confirmed"}
     
     async def _handle_transaction_failed(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle transaction failure event"""
-        tx_hash = data.get("transaction_hash")
+        """Handle transaction failure event"""        tx_hash = data.get("transaction_hash")
         self.logger.warning(f"Cryptocurrency transaction failed: {tx_hash}")
         return {"success": True, "action": "transaction_failed"}
     
     async def _handle_wallet_deposit(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle wallet deposit event"""
-        address = data.get("address")
+        """Handle wallet deposit event"""        address = data.get("address")
         amount = data.get("amount")
         currency = data.get("currency")
         self.logger.info(f"Wallet {address} received {amount} {currency}")
         return {"success": True, "action": "wallet_deposit"}
     
     async def _handle_price_alert(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle price alert event"""
-        currency = data.get("currency")
+        """Handle price alert event"""        currency = data.get("currency")
         price = data.get("current_price")
         self.logger.info(f"Price alert for {currency}: ${price}")
         return {"success": True, "action": "price_alert"}
     
     def get_supported_currencies(self) -> Dict[CryptoCurrency, Dict[str, Any]]:
-        """Get all supported cryptocurrencies"""
-        return {
+        """Get all supported cryptocurrencies"""        return {
             currency: {
                 "name": currency.value,
                 "networks": self._get_supported_networks(currency),
@@ -613,8 +584,7 @@ class CryptoPaymentsProcessor:
         }
     
     def _get_supported_networks(self, currency: CryptoCurrency) -> List[str]:
-        """Get supported networks for a currency"""
-        if currency == CryptoCurrency.BITCOIN:
+        """Get supported networks for a currency"""        if currency == CryptoCurrency.BITCOIN:
             return [BlockchainNetwork.BITCOIN.value]
         elif currency in [CryptoCurrency.ETHEREUM, CryptoCurrency.USDC, CryptoCurrency.USDT, CryptoCurrency.DAI]:
             return [BlockchainNetwork.ETHEREUM.value, BlockchainNetwork.POLYGON.value]
@@ -630,15 +600,13 @@ class CryptoPaymentsProcessor:
             return [BlockchainNetwork.ETHEREUM.value]
     
     def _get_currency_decimals(self, currency: CryptoCurrency) -> int:
-        """Get decimal places for a currency"""
-        if currency == CryptoCurrency.BITCOIN:
+        """Get decimal places for a currency"""        if currency == CryptoCurrency.BITCOIN:
             return 8
         else:
             return 18  # Most ERC-20 tokens use 18 decimals
     
     def _get_currency_type(self, currency: CryptoCurrency) -> str:
-        """Get currency type"""
-        stablecoins = [CryptoCurrency.USDC, CryptoCurrency.USDT, CryptoCurrency.DAI, CryptoCurrency.BUSD]
+        """Get currency type"""        stablecoins = [CryptoCurrency.USDC, CryptoCurrency.USDT, CryptoCurrency.DAI, CryptoCurrency.BUSD]
         if currency in stablecoins:
             return "stablecoin"
         elif currency in [CryptoCurrency.BITCOIN, CryptoCurrency.ETHEREUM]:

@@ -1,14 +1,11 @@
-"""
-DMCA Processor - Digital Millennium Copyright Act Compliance
+"""DMCA Processor - Digital Millennium Copyright Act Compliance
 
 Automated DMCA takedown notice processing, counter-notification handling,
 and platform compliance management for the IA Influencer Agent platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-
-from typing import Dict, List, Any, Optional, Union, Tuple
+"""from typing import Dict, List, Any, Optional, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
 import asyncio
@@ -22,8 +19,7 @@ logger = logging.getLogger(__name__)
 
 
 class DMCANoticeStatus(Enum):
-    """DMCA notice status enumeration."""
-    RECEIVED = "received"
+    """DMCA notice status enumeration."""    RECEIVED = "received"
     PROCESSING = "processing"
     VALID = "valid"
     INVALID = "invalid"
@@ -34,16 +30,14 @@ class DMCANoticeStatus(Enum):
 
 
 class NoticeType(Enum):
-    """Type of DMCA notice."""
-    TAKEDOWN = "takedown"
+    """Type of DMCA notice."""    TAKEDOWN = "takedown"
     COUNTER_NOTIFICATION = "counter_notification"
     REPEAT_INFRINGER = "repeat_infringer"
     SAFE_HARBOR = "safe_harbor"
 
 
 class InfringementType(Enum):
-    """Type of copyright infringement."""
-    DIRECT_COPY = "direct_copy"
+    """Type of copyright infringement."""    DIRECT_COPY = "direct_copy"
     SUBSTANTIAL_SIMILARITY = "substantial_similarity"
     UNAUTHORIZED_DERIVATIVE = "unauthorized_derivative"
     STREAMING_VIOLATION = "streaming_violation"
@@ -52,8 +46,7 @@ class InfringementType(Enum):
 
 @dataclass
 class DMCANotice:
-    """DMCA notice data structure."""
-    notice_id: str
+    """DMCA notice data structure."""    notice_id: str
     notice_type: NoticeType
     status: DMCANoticeStatus
     complainant_info: Dict[str, Any]
@@ -72,8 +65,7 @@ class DMCANotice:
 
 @dataclass
 class CounterNotification:
-    """DMCA counter-notification data structure."""
-    counter_id: str
+    """DMCA counter-notification data structure."""    counter_id: str
     original_notice_id: str
     respondent_info: Dict[str, Any]
     counter_statement: str
@@ -87,21 +79,17 @@ class CounterNotification:
 
 
 class DMCAProcessor:
-    """
-    Comprehensive DMCA compliance processor.
+    """    Comprehensive DMCA compliance processor.
     
     Handles takedown notices, counter-notifications, platform compliance,
     and automated response generation per DMCA requirements.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize the DMCA Processor.
+        """        Initialize the DMCA Processor.
         
         Args:
             config: Configuration dictionary with database connections
-        """
-        self.config = config
+        """        self.config = config
         self.db_config = config.get("database", {})
         self.dmca_config = config.get("dmca", {})
         
@@ -132,8 +120,7 @@ class DMCAProcessor:
         sworn_statement: bool = True,
         signature: str = ""
     ) -> Dict[str, Any]:
-        """
-        Process DMCA takedown request with full compliance validation.
+        """        Process DMCA takedown request with full compliance validation.
         
         Args:
             complainant_info: Information about the copyright owner
@@ -145,8 +132,7 @@ class DMCAProcessor:
             
         Returns:
             DMCA processing results and actions taken
-        """
-        try:
+        """        try:
             # Generate unique notice ID
             notice_id = f"dmca_{uuid.uuid4().hex[:12]}"
             
@@ -255,8 +241,7 @@ class DMCAProcessor:
         sworn_statement: bool,
         signature: str
     ) -> Dict[str, Any]:
-        """
-        Process DMCA counter-notification.
+        """        Process DMCA counter-notification.
         
         Args:
             original_notice_id: ID of the original takedown notice
@@ -269,8 +254,7 @@ class DMCAProcessor:
             
         Returns:
             Counter-notification processing results
-        """
-        try:
+        """        try:
             # Verify original notice exists
             if original_notice_id not in self.dmca_notices:
                 raise ValueError(f"Original DMCA notice {original_notice_id} not found")
@@ -355,8 +339,7 @@ class DMCAProcessor:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """
-        Get DMCA activity summary for reporting.
+        """        Get DMCA activity summary for reporting.
         
         Args:
             user_id: Optional user ID to filter by
@@ -365,8 +348,7 @@ class DMCAProcessor:
             
         Returns:
             DMCA activity summary
-        """
-        try:
+        """        try:
             if not start_date:
                 start_date = datetime.utcnow() - timedelta(days=30)
             if not end_date:
@@ -479,8 +461,7 @@ class DMCAProcessor:
         threshold_violations: int = 3,
         time_window_days: int = 365
     ) -> Dict[str, Any]:
-        """
-        Check if user is a repeat infringer under DMCA.
+        """        Check if user is a repeat infringer under DMCA.
         
         Args:
             user_id: ID of user to check
@@ -489,8 +470,7 @@ class DMCAProcessor:
             
         Returns:
             Repeat infringer assessment
-        """
-        try:
+        """        try:
             # Calculate time window
             start_date = datetime.utcnow() - timedelta(days=time_window_days)
             
@@ -557,8 +537,7 @@ class DMCAProcessor:
     
     # Private helper methods
     async def _validate_dmca_notice(self, notice: DMCANotice) -> Dict[str, Any]:
-        """Validate DMCA notice for compliance with requirements."""
-        validation_result = {
+        """Validate DMCA notice for compliance with requirements."""        validation_result = {
             "valid": True,
             "confidence_score": 1.0,
             "issues": [],
@@ -618,8 +597,7 @@ class DMCAProcessor:
         self, 
         counter: CounterNotification
     ) -> Dict[str, Any]:
-        """Validate counter-notification for DMCA compliance."""
-        validation_result = {
+        """Validate counter-notification for DMCA compliance."""        validation_result = {
             "valid": True,
             "issues": [],
             "requirements_met": []
@@ -656,8 +634,7 @@ class DMCAProcessor:
         return validation_result
     
     async def _execute_takedown(self, notice: DMCANotice) -> Dict[str, Any]:
-        """Execute content takedown based on valid DMCA notice."""
-        takedown_result = {
+        """Execute content takedown based on valid DMCA notice."""        takedown_result = {
             "content_removed": False,
             "user_notified": False,
             "removal_timestamp": None,
@@ -709,8 +686,7 @@ class DMCAProcessor:
         start_date: datetime,
         end_date: datetime
     ) -> List[DMCANotice]:
-        """Filter DMCA notices by criteria."""
-        filtered = []
+        """Filter DMCA notices by criteria."""        filtered = []
         
         for notice in self.dmca_notices.values():
             # Filter by user (as complainant or content owner)
@@ -735,8 +711,7 @@ class DMCAProcessor:
         start_date: datetime,
         end_date: datetime
     ) -> List[CounterNotification]:
-        """Filter counter-notifications by criteria."""
-        filtered = []
+        """Filter counter-notifications by criteria."""        filtered = []
         
         for counter in self.counter_notifications.values():
             # Filter by user
@@ -754,54 +729,44 @@ class DMCAProcessor:
     
     # Placeholder methods for platform integration
     async def _remove_content_from_platform(self, content_id: str) -> bool:
-        """Remove content from platform."""
-        logger.info(f"Removing content {content_id} from platform")
+        """Remove content from platform."""        logger.info(f"Removing content {content_id} from platform")
         return True
     
     async def _create_content_backup(self, content_id: str, notice_id: str) -> bool:
-        """Create backup of content for potential restoration."""
-        logger.info(f"Creating backup for content {content_id} (notice {notice_id})")
+        """Create backup of content for potential restoration."""        logger.info(f"Creating backup for content {content_id} (notice {notice_id})")
         return True
     
     async def _notify_user_of_takedown(self, user_id: str, notice: DMCANotice) -> bool:
-        """Notify user of content takedown."""
-        logger.info(f"Notifying user {user_id} of DMCA takedown")
+        """Notify user of content takedown."""        logger.info(f"Notifying user {user_id} of DMCA takedown")
         return True
     
     async def _preserve_restoration_info(self, restoration_info: Dict[str, Any]) -> bool:
-        """Preserve information needed for content restoration."""
-        logger.info(f"Preserving restoration info for content {restoration_info['content_id']}")
+        """Preserve information needed for content restoration."""        logger.info(f"Preserving restoration info for content {restoration_info['content_id']}")
         return True
     
     async def _escalate_to_legal_team(self, notice: DMCANotice) -> None:
-        """Escalate notice to legal team for manual review."""
-        logger.info(f"Escalating DMCA notice {notice.notice_id} to legal team")
+        """Escalate notice to legal team for manual review."""        logger.info(f"Escalating DMCA notice {notice.notice_id} to legal team")
     
     async def _notify_invalid_notice(self, notice: DMCANotice, validation_result: Dict[str, Any]) -> None:
-        """Notify complainant of invalid notice."""
-        logger.info(f"Notifying complainant of invalid DMCA notice {notice.notice_id}")
+        """Notify complainant of invalid notice."""        logger.info(f"Notifying complainant of invalid DMCA notice {notice.notice_id}")
     
     async def _notify_complainant_of_counter(
         self, 
         original_notice: DMCANotice, 
         counter: CounterNotification
     ) -> None:
-        """Notify original complainant of counter-notification."""
-        logger.info(f"Notifying complainant of counter-notification {counter.counter_id}")
+        """Notify original complainant of counter-notification."""        logger.info(f"Notifying complainant of counter-notification {counter.counter_id}")
     
     async def _schedule_content_restoration(self, counter: CounterNotification) -> None:
-        """Schedule automatic content restoration."""
-        logger.info(f"Scheduling content restoration for {counter.restoration_date}")
+        """Schedule automatic content restoration."""        logger.info(f"Scheduling content restoration for {counter.restoration_date}")
     
     # Logging methods
     async def _log_dmca_processing(self, notice: DMCANotice, result: Dict[str, Any]) -> None:
-        """Log DMCA notice processing."""
-        logger.info(f"DMCA notice processed: {notice.notice_id} - Status: {notice.status.value}")
+        """Log DMCA notice processing."""        logger.info(f"DMCA notice processed: {notice.notice_id} - Status: {notice.status.value}")
     
     async def _log_counter_processing(
         self, 
         counter: CounterNotification, 
         result: Dict[str, Any]
     ) -> None:
-        """Log counter-notification processing."""
-        logger.info(f"Counter-notification processed: {counter.counter_id}")
+        """Log counter-notification processing."""        logger.info(f"Counter-notification processed: {counter.counter_id}")

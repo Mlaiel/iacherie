@@ -1,5 +1,4 @@
-"""
-Advanced Exception Handling & Error Management System
+"""Advanced Exception Handling & Error Management System
 
 Ultra-sophisticated exception hierarchy providing comprehensive error handling,
 detailed error classification, advanced debugging support, and monitoring integration
@@ -43,9 +42,7 @@ Team Specialists:
 - Audio Processing Specialist: Advanced audio AI algorithms
 - DevOps Engineer: Production-ready infrastructure
 - IA Prompt Engineer: Optimized AI model interactions
-"""
-
-from typing import Any, Dict, Optional, List, Union, Callable
+"""from typing import Any, Dict, Optional, List, Union, Callable
 from enum import Enum
 from datetime import datetime
 import traceback
@@ -56,8 +53,7 @@ import logging
 
 
 class PersonalizationErrorType(Enum):
-    """Advanced classification of personalization errors"""
-    
+    """Advanced classification of personalization errors"""    
     # Core Business Logic Errors
     PROFILE_ERROR = "profile_error"
     RECOMMENDATION_ERROR = "recommendation_error"
@@ -105,8 +101,7 @@ class PersonalizationErrorType(Enum):
 
 
 class ErrorSeverity(Enum):
-    """Error severity levels for monitoring and alerting"""
-    CRITICAL = "critical"      # System down, immediate attention required
+    """Error severity levels for monitoring and alerting"""    CRITICAL = "critical"      # System down, immediate attention required
     HIGH = "high"             # Major functionality affected
     MEDIUM = "medium"         # Minor functionality affected
     LOW = "low"              # Cosmetic issues, logging only
@@ -114,8 +109,7 @@ class ErrorSeverity(Enum):
 
 
 class RecoveryStrategy(Enum):
-    """Automated recovery strategies for different error types"""
-    RETRY = "retry"                    # Retry the operation
+    """Automated recovery strategies for different error types"""    RETRY = "retry"                    # Retry the operation
     FALLBACK = "fallback"             # Use fallback mechanism
     DEGRADE = "degrade"               # Graceful degradation
     ALERT_ONLY = "alert_only"         # Alert but continue
@@ -124,16 +118,14 @@ class RecoveryStrategy(Enum):
 
 
 class PersonalizationError(Exception):
-    """
-    Base exception for personalization module.
+    """    Base exception for personalization module.
     
     Attributes:
         message: Error message
         error_type: Type of error
         error_code: Unique error code
         context: Additional context information
-    """
-    
+    """    
     def __init__(
         self,
         message: str,
@@ -151,8 +143,7 @@ class PersonalizationError(Exception):
         return f"[{self.error_code}] {self.message}"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert exception to dictionary for logging/API responses"""
-        return {
+        """Convert exception to dictionary for logging/API responses"""        return {
             'error_type': self.error_type.value,
             'error_code': self.error_code,
             'message': self.message,
@@ -161,10 +152,8 @@ class PersonalizationError(Exception):
 
 
 class ProfileNotFoundError(PersonalizationError):
-    """
-    Raised when a user profile cannot be found or accessed.
-    """
-    
+    """    Raised when a user profile cannot be found or accessed.
+    """    
     def __init__(
         self,
         user_id: str,
@@ -185,10 +174,8 @@ class ProfileNotFoundError(PersonalizationError):
 
 
 class RecommendationError(PersonalizationError):
-    """
-    Raised when recommendation generation fails.
-    """
-    
+    """    Raised when recommendation generation fails.
+    """    
     def __init__(
         self,
         message: str,
@@ -211,10 +198,8 @@ class RecommendationError(PersonalizationError):
 
 
 class ModelTrainingError(PersonalizationError):
-    """
-    Raised when ML model training or updating fails.
-    """
-    
+    """    Raised when ML model training or updating fails.
+    """    
     def __init__(
         self,
         message: str,
@@ -237,10 +222,8 @@ class ModelTrainingError(PersonalizationError):
 
 
 class InsufficientDataError(PersonalizationError):
-    """
-    Raised when there's insufficient data for personalization operations.
-    """
-    
+    """    Raised when there's insufficient data for personalization operations.
+    """    
     def __init__(
         self,
         message: str,
@@ -266,10 +249,8 @@ class InsufficientDataError(PersonalizationError):
 
 
 class PersonalizationConfigError(PersonalizationError):
-    """
-    Raised when there are configuration issues.
-    """
-    
+    """    Raised when there are configuration issues.
+    """    
     def __init__(
         self,
         message: str,
@@ -295,10 +276,8 @@ class PersonalizationConfigError(PersonalizationError):
 
 
 class CacheConnectionError(PersonalizationError):
-    """
-    Raised when cache operations fail.
-    """
-    
+    """    Raised when cache operations fail.
+    """    
     def __init__(
         self,
         message: str,
@@ -321,10 +300,8 @@ class CacheConnectionError(PersonalizationError):
 
 
 class ValidationError(PersonalizationError):
-    """
-    Raised when data validation fails.
-    """
-    
+    """    Raised when data validation fails.
+    """    
     def __init__(
         self,
         message: str,
@@ -350,10 +327,8 @@ class ValidationError(PersonalizationError):
 
 
 class ModelNotLoadedError(PersonalizationError):
-    """
-    Raised when attempting to use an ML model that hasn't been loaded.
-    """
-    
+    """    Raised when attempting to use an ML model that hasn't been loaded.
+    """    
     def __init__(
         self,
         model_name: str,
@@ -378,10 +353,8 @@ class ModelNotLoadedError(PersonalizationError):
 
 
 class EmbeddingGenerationError(PersonalizationError):
-    """
-    Raised when user or content embedding generation fails.
-    """
-    
+    """    Raised when user or content embedding generation fails.
+    """    
     def __init__(
         self,
         message: str,
@@ -404,10 +377,8 @@ class EmbeddingGenerationError(PersonalizationError):
 
 
 class CollaborationMatchingError(PersonalizationError):
-    """
-    Raised when collaboration matching fails.
-    """
-    
+    """    Raised when collaboration matching fails.
+    """    
     def __init__(
         self,
         message: str,
@@ -430,10 +401,8 @@ class CollaborationMatchingError(PersonalizationError):
 
 
 class PersonalizationTimeoutError(PersonalizationError):
-    """
-    Raised when personalization operations timeout.
-    """
-    
+    """    Raised when personalization operations timeout.
+    """    
     def __init__(
         self,
         operation: str,
@@ -455,10 +424,8 @@ class PersonalizationTimeoutError(PersonalizationError):
 
 
 class ContentFilteringError(PersonalizationError):
-    """
-    Raised when content filtering operations fail.
-    """
-    
+    """    Raised when content filtering operations fail.
+    """    
     def __init__(
         self,
         message: str,
@@ -481,14 +448,12 @@ class ContentFilteringError(PersonalizationError):
 
 
 class ProfileAnalysisError(PersonalizationError):
-    """
-    Raised when profile analysis operations fail.
+    """    Raised when profile analysis operations fail.
     
     This exception covers errors in user profile analysis,
     behavioral pattern detection, preference extraction,
     and demographic analysis failures.
-    """
-    
+    """    
     def __init__(
         self,
         message: str,
@@ -528,16 +493,14 @@ PERSONALIZATION_EXCEPTION_REGISTRY = {
 
 
 def get_personalization_exception_by_code(error_code: str) -> Optional[type]:
-    """
-    Get exception class by error code.
+    """    Get exception class by error code.
     
     Args:
         error_code: Error code to look up
         
     Returns:
         Exception class or None if not found
-    """
-    return PERSONALIZATION_EXCEPTION_REGISTRY.get(error_code)
+    """    return PERSONALIZATION_EXCEPTION_REGISTRY.get(error_code)
 
 
 def create_personalization_exception(
@@ -545,8 +508,7 @@ def create_personalization_exception(
     message: str,
     context: Optional[Dict[str, Any]] = None
 ) -> PersonalizationError:
-    """
-    Create personalization exception by error code.
+    """    Create personalization exception by error code.
     
     Args:
         error_code: Error code
@@ -555,8 +517,7 @@ def create_personalization_exception(
         
     Returns:
         Appropriate exception instance
-    """
-    exception_class = get_personalization_exception_by_code(error_code)
+    """    exception_class = get_personalization_exception_by_code(error_code)
     
     if exception_class:
         # Try to create with appropriate parameters
@@ -588,8 +549,7 @@ def create_personalization_exception(
 
 
 class AnalyticsError(PersonalizationError):
-    """Analytics-specific error"""
-    
+    """Analytics-specific error"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message=message,
@@ -599,8 +559,7 @@ class AnalyticsError(PersonalizationError):
 
 
 class ProfileNotFoundError(PersonalizationError):
-    """Profile not found error"""
-    
+    """Profile not found error"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message=message,
@@ -610,8 +569,7 @@ class ProfileNotFoundError(PersonalizationError):
 
 
 class InsufficientDataError(PersonalizationError):
-    """Insufficient data error"""
-    
+    """Insufficient data error"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message=message,
@@ -621,8 +579,7 @@ class InsufficientDataError(PersonalizationError):
 
 
 class RecommendationError(PersonalizationError):
-    """Recommendation error"""
-    
+    """Recommendation error"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message=message,
@@ -632,8 +589,7 @@ class RecommendationError(PersonalizationError):
 
 
 class ContentFilteringError(PersonalizationError):
-    """Content filtering error"""
-    
+    """Content filtering error"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message=message,
@@ -643,8 +599,7 @@ class ContentFilteringError(PersonalizationError):
 
 
 class ModelTrainingError(PersonalizationError):
-    """Model training error"""
-    
+    """Model training error"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message=message,
@@ -654,8 +609,7 @@ class ModelTrainingError(PersonalizationError):
 
 
 class ModelNotLoadedError(PersonalizationError):
-    """Model not loaded error"""
-    
+    """Model not loaded error"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message=message,
@@ -665,8 +619,7 @@ class ModelNotLoadedError(PersonalizationError):
 
 
 class ValidationError(PersonalizationError):
-    """Validation error"""
-    
+    """Validation error"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message=message,

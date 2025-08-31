@@ -1,5 +1,4 @@
-"""
-Revenue Optimization Engine - AI-Powered Revenue Maximization System
+"""Revenue Optimization Engine - AI-Powered Revenue Maximization System
 
 Ultra-advanced revenue optimization system with machine learning algorithms
 for maximizing creator revenue across all platforms and content types.
@@ -25,9 +24,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
-"""
-
-from sqlalchemy import (
+"""from sqlalchemy import (
     Column, Integer, String, DateTime, Float, Boolean, ForeignKey,
     Text, DECIMAL, JSON, BigInteger, Index, UniqueConstraint
 )
@@ -44,8 +41,7 @@ from dataclasses import dataclass
 Base = declarative_base()
 
 class OptimizationGoal(Enum):
-    """Revenue optimization objectives"""
-    MAXIMIZE_REVENUE = "maximize_revenue"
+    """Revenue optimization objectives"""    MAXIMIZE_REVENUE = "maximize_revenue"
     MAXIMIZE_PROFIT = "maximize_profit"
     MAXIMIZE_VOLUME = "maximize_volume"
     MAXIMIZE_GROWTH = "maximize_growth"
@@ -55,8 +51,7 @@ class OptimizationGoal(Enum):
     OPTIMIZE_MARGINS = "optimize_margins"
 
 class OptimizationStrategy(Enum):
-    """Optimization strategy types"""
-    AGGRESSIVE_GROWTH = "aggressive_growth"
+    """Optimization strategy types"""    AGGRESSIVE_GROWTH = "aggressive_growth"
     CONSERVATIVE_STABILITY = "conservative_stability"
     BALANCED_APPROACH = "balanced_approach"
     MARKET_PENETRATION = "market_penetration"
@@ -65,8 +60,7 @@ class OptimizationStrategy(Enum):
     PROFIT_FOCUSED = "profit_focused"
 
 class OptimizationStatus(Enum):
-    """Optimization process status"""
-    ACTIVE = "active"
+    """Optimization process status"""    ACTIVE = "active"
     PAUSED = "paused"
     COMPLETED = "completed"
     CANCELLED = "cancelled"
@@ -74,8 +68,7 @@ class OptimizationStatus(Enum):
     FAILED = "failed"
 
 class RevenueOptimizationProfile(Base):
-    """Revenue optimization configuration profiles"""
-    __tablename__ = 'revenue_optimization_profiles'
+    """Revenue optimization configuration profiles"""    __tablename__ = 'revenue_optimization_profiles'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -133,8 +126,7 @@ class RevenueOptimizationProfile(Base):
     )
 
 class OptimizationRecommendation(Base):
-    """AI-generated optimization recommendations"""
-    __tablename__ = 'optimization_recommendations'
+    """AI-generated optimization recommendations"""    __tablename__ = 'optimization_recommendations'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -208,8 +200,7 @@ class OptimizationRecommendation(Base):
     )
 
 class OptimizationExecution(Base):
-    """Optimization execution tracking and results"""
-    __tablename__ = 'optimization_executions'
+    """Optimization execution tracking and results"""    __tablename__ = 'optimization_executions'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -291,8 +282,7 @@ class OptimizationExecution(Base):
     )
 
 class RevenueOpportunity(Base):
-    """Identified revenue optimization opportunities"""
-    __tablename__ = 'revenue_opportunities'
+    """Identified revenue optimization opportunities"""    __tablename__ = 'revenue_opportunities'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -368,8 +358,7 @@ class RevenueOpportunity(Base):
     )
 
 class OptimizationMetrics(Base):
-    """Optimization performance metrics and KPIs"""
-    __tablename__ = 'optimization_metrics'
+    """Optimization performance metrics and KPIs"""    __tablename__ = 'optimization_metrics'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -446,8 +435,7 @@ class OptimizationMetrics(Base):
 
 @dataclass
 class OptimizationInsight:
-    """Optimization insight data structure"""
-    insight_type: str
+    """Optimization insight data structure"""    insight_type: str
     title: str
     description: str
     impact_score: float
@@ -458,8 +446,7 @@ class OptimizationInsight:
     implementation_timeline: str
 
 class OptimizationAlert(Base):
-    """Optimization alerts and notifications"""
-    __tablename__ = 'optimization_alerts'
+    """Optimization alerts and notifications"""    __tablename__ = 'optimization_alerts'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)

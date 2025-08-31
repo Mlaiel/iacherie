@@ -1,5 +1,4 @@
-"""
-Multimedia Metadata Extraction Module
+"""Multimedia Metadata Extraction Module
 Comprehensive metadata extraction for all multimedia formats
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -11,9 +10,7 @@ WARNING: This code is protected by copyright. Any unauthorized use, reproduction
 distribution, or modification without written permission from Fahed Mlaiel 
 (mlaiel@live.de) is strictly prohibited and will be prosecuted to the full 
 extent of the law. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
@@ -42,8 +39,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class BaseMetadata:
-    """Base metadata structure for all content types"""
-    content_id: str
+    """Base metadata structure for all content types"""    content_id: str
     file_path: Optional[Path] = None
     filename: Optional[str] = None
     file_size: int = 0
@@ -58,8 +54,7 @@ class BaseMetadata:
 
 @dataclass
 class AudioMetadata(BaseMetadata):
-    """Comprehensive audio metadata"""
-    duration: Optional[float] = None
+    """Comprehensive audio metadata"""    duration: Optional[float] = None
     sample_rate: Optional[int] = None
     bit_depth: Optional[int] = None
     channels: Optional[int] = None
@@ -105,8 +100,7 @@ class AudioMetadata(BaseMetadata):
 
 @dataclass
 class VideoMetadata(BaseMetadata):
-    """Comprehensive video metadata"""
-    duration: Optional[float] = None
+    """Comprehensive video metadata"""    duration: Optional[float] = None
     width: Optional[int] = None
     height: Optional[int] = None
     aspect_ratio: Optional[float] = None
@@ -155,8 +149,7 @@ class VideoMetadata(BaseMetadata):
 
 @dataclass
 class ImageMetadata(BaseMetadata):
-    """Comprehensive image metadata"""
-    width: Optional[int] = None
+    """Comprehensive image metadata"""    width: Optional[int] = None
     height: Optional[int] = None
     color_mode: Optional[str] = None
     bit_depth: Optional[int] = None
@@ -214,8 +207,7 @@ class ImageMetadata(BaseMetadata):
 
 @dataclass
 class MultimediaMetadata:
-    """Combined metadata for multimodal content"""
-    content_id: str
+    """Combined metadata for multimodal content"""    content_id: str
     primary_format: ContentFormat
     audio_metadata: Optional[AudioMetadata] = None
     video_metadata: Optional[VideoMetadata] = None
@@ -235,21 +227,17 @@ class MultimediaMetadata:
 
 
 class MetadataExtractor(ABC):
-    """Abstract base class for metadata extractors"""
-    
+    """Abstract base class for metadata extractors"""    
     @abstractmethod
     async def extract(self, content_path: Path) -> BaseMetadata:
-        """Extract metadata from content"""
-        pass
+        """Extract metadata from content"""        pass
     
     @abstractmethod
     def supports_format(self, format_type: Union[str, ContentFormat]) -> bool:
-        """Check if extractor supports format"""
-        pass
+        """Check if extractor supports format"""        pass
     
     def _calculate_file_hashes(self, file_path: Path) -> Tuple[str, str]:
-        """Calculate MD5 and SHA256 hashes"""
-        md5_hash = hashlib.md5()
+        """Calculate MD5 and SHA256 hashes"""        md5_hash = hashlib.md5()
         sha256_hash = hashlib.sha256()
         
         with open(file_path, 'rb') as f:
@@ -260,8 +248,7 @@ class MetadataExtractor(ABC):
         return md5_hash.hexdigest(), sha256_hash.hexdigest()
     
     def _get_file_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Get basic file system metadata"""
-        stat = file_path.stat()
+        """Get basic file system metadata"""        stat = file_path.stat()
         mime_type, _ = mimetypes.guess_type(str(file_path))
         
         return {
@@ -274,17 +261,14 @@ class MetadataExtractor(ABC):
 
 
 class AudioMetadataExtractor(MetadataExtractor):
-    """Professional audio metadata extractor"""
-    
+    """Professional audio metadata extractor"""    
     def supports_format(self, format_type: Union[str, ContentFormat]) -> bool:
-        """Check if extractor supports audio format"""
-        if isinstance(format_type, ContentFormat):
+        """Check if extractor supports audio format"""        if isinstance(format_type, ContentFormat):
             return format_type == ContentFormat.AUDIO
         return SupportedFormats.is_audio_format(format_type)
     
     async def extract(self, content_path: Path) -> AudioMetadata:
-        """Extract comprehensive audio metadata"""
-        content_id = hashlib.sha256(str(content_path).encode()).hexdigest()[:16]
+        """Extract comprehensive audio metadata"""        content_id = hashlib.sha256(str(content_path).encode()).hexdigest()[:16]
         
         # Basic file metadata
         file_metadata = self._get_file_metadata(content_path)
@@ -326,8 +310,7 @@ class AudioMetadataExtractor(MetadataExtractor):
         return metadata
     
     async def _extract_audio_tags(self, metadata: AudioMetadata, file_path: Path):
-        """Extract ID3 and other audio tags"""
-        try:
+        """Extract ID3 and other audio tags"""        try:
             audio_file = mutagen.File(str(file_path))
             if audio_file is None:
                 return
@@ -379,8 +362,7 @@ class AudioMetadataExtractor(MetadataExtractor):
     
     async def _analyze_audio_technical_properties(self, metadata: AudioMetadata, 
                                                 audio_data: np.ndarray, sample_rate: int):
-        """Analyze technical audio properties"""
-        try:
+        """Analyze technical audio properties"""        try:
             # Tempo and beat tracking
             tempo, beats = librosa.beat.beat_track(y=audio_data, sr=sample_rate)
             metadata.tempo = float(tempo)
@@ -411,8 +393,7 @@ class AudioMetadataExtractor(MetadataExtractor):
     
     async def _assess_audio_quality(self, metadata: AudioMetadata, 
                                   audio_data: np.ndarray, sample_rate: int):
-        """Assess audio quality"""
-        try:
+        """Assess audio quality"""        try:
             # Clipping detection
             clipping_threshold = 0.95
             metadata.has_clipping = np.any(np.abs(audio_data) > clipping_threshold)
@@ -453,8 +434,7 @@ class AudioMetadataExtractor(MetadataExtractor):
     
     async def _extract_audio_features(self, metadata: AudioMetadata, 
                                     audio_data: np.ndarray, sample_rate: int):
-        """Extract advanced audio features"""
-        try:
+        """Extract advanced audio features"""        try:
             # MFCC coefficients
             mfcc = librosa.feature.mfcc(y=audio_data, sr=sample_rate, n_mfcc=13)
             metadata.mfcc_features = np.mean(mfcc, axis=1).tolist()
@@ -479,17 +459,14 @@ class AudioMetadataExtractor(MetadataExtractor):
 
 
 class VideoMetadataExtractor(MetadataExtractor):
-    """Professional video metadata extractor"""
-    
+    """Professional video metadata extractor"""    
     def supports_format(self, format_type: Union[str, ContentFormat]) -> bool:
-        """Check if extractor supports video format"""
-        if isinstance(format_type, ContentFormat):
+        """Check if extractor supports video format"""        if isinstance(format_type, ContentFormat):
             return format_type == ContentFormat.VIDEO
         return SupportedFormats.is_video_format(format_type)
     
     async def extract(self, content_path: Path) -> VideoMetadata:
-        """Extract comprehensive video metadata"""
-        content_id = hashlib.sha256(str(content_path).encode()).hexdigest()[:16]
+        """Extract comprehensive video metadata"""        content_id = hashlib.sha256(str(content_path).encode()).hexdigest()[:16]
         
         # Basic file metadata
         file_metadata = self._get_file_metadata(content_path)
@@ -523,8 +500,7 @@ class VideoMetadataExtractor(MetadataExtractor):
         return metadata
     
     async def _extract_with_ffprobe(self, metadata: VideoMetadata, file_path: Path):
-        """Extract metadata using ffprobe"""
-        try:
+        """Extract metadata using ffprobe"""        try:
             probe = ffmpeg.probe(str(file_path))
             
             # Video stream info
@@ -582,8 +558,7 @@ class VideoMetadataExtractor(MetadataExtractor):
             logger.warning(f"ffprobe extraction failed: {str(e)}")
     
     async def _extract_with_moviepy(self, metadata: VideoMetadata, file_path: Path):
-        """Extract additional metadata using MoviePy"""
-        try:
+        """Extract additional metadata using MoviePy"""        try:
             video_clip = VideoFileClip(str(file_path))
             
             # Verify duration
@@ -604,8 +579,7 @@ class VideoMetadataExtractor(MetadataExtractor):
             logger.warning(f"MoviePy extraction failed: {str(e)}")
     
     async def _analyze_video_content(self, metadata: VideoMetadata, file_path: Path):
-        """Analyze video visual content"""
-        try:
+        """Analyze video visual content"""        try:
             video_clip = VideoFileClip(str(file_path))
             
             if metadata.duration and metadata.duration > 0:
@@ -639,8 +613,7 @@ class VideoMetadataExtractor(MetadataExtractor):
             logger.warning(f"Video content analysis failed: {str(e)}")
     
     async def _analyze_video_colors(self, metadata: VideoMetadata, frames: List[np.ndarray]):
-        """Analyze color composition in video frames"""
-        try:
+        """Analyze color composition in video frames"""        try:
             all_pixels = []
             brightness_values = []
             
@@ -679,8 +652,7 @@ class VideoMetadataExtractor(MetadataExtractor):
             logger.warning(f"Color analysis failed: {str(e)}")
     
     async def _analyze_video_motion(self, metadata: VideoMetadata, frames: List[np.ndarray]):
-        """Analyze motion between video frames"""
-        try:
+        """Analyze motion between video frames"""        try:
             motion_vectors = []
             scene_changes = []
             
@@ -716,8 +688,7 @@ class VideoMetadataExtractor(MetadataExtractor):
             logger.warning(f"Motion analysis failed: {str(e)}")
     
     async def _analyze_scene_complexity(self, metadata: VideoMetadata, frames: List[np.ndarray]):
-        """Analyze visual complexity of scenes"""
-        try:
+        """Analyze visual complexity of scenes"""        try:
             complexity_scores = []
             
             for frame in frames:
@@ -743,8 +714,7 @@ class VideoMetadataExtractor(MetadataExtractor):
             logger.warning(f"Scene complexity analysis failed: {str(e)}")
     
     async def _assess_video_quality(self, metadata: VideoMetadata):
-        """Assess overall video quality"""
-        try:
+        """Assess overall video quality"""        try:
             quality_factors = []
             
             # Resolution quality
@@ -784,17 +754,14 @@ class VideoMetadataExtractor(MetadataExtractor):
 
 
 class ImageMetadataExtractor(MetadataExtractor):
-    """Professional image metadata extractor"""
-    
+    """Professional image metadata extractor"""    
     def supports_format(self, format_type: Union[str, ContentFormat]) -> bool:
-        """Check if extractor supports image format"""
-        if isinstance(format_type, ContentFormat):
+        """Check if extractor supports image format"""        if isinstance(format_type, ContentFormat):
             return format_type == ContentFormat.IMAGE
         return SupportedFormats.is_image_format(format_type)
     
     async def extract(self, content_path: Path) -> ImageMetadata:
-        """Extract comprehensive image metadata"""
-        content_id = hashlib.sha256(str(content_path).encode()).hexdigest()[:16]
+        """Extract comprehensive image metadata"""        content_id = hashlib.sha256(str(content_path).encode()).hexdigest()[:16]
         
         # Basic file metadata
         file_metadata = self._get_file_metadata(content_path)
@@ -839,8 +806,7 @@ class ImageMetadataExtractor(MetadataExtractor):
         return metadata
     
     async def _extract_exif_data(self, metadata: ImageMetadata, image: Image.Image):
-        """Extract EXIF metadata from image"""
-        try:
+        """Extract EXIF metadata from image"""        try:
             exif = image.getexif()
             if not exif:
                 return
@@ -898,11 +864,9 @@ class ImageMetadataExtractor(MetadataExtractor):
             logger.warning(f"EXIF extraction failed: {str(e)}")
     
     async def _extract_gps_data(self, metadata: ImageMetadata, gps_info):
-        """Extract GPS coordinates from EXIF"""
-        try:
+        """Extract GPS coordinates from EXIF"""        try:
             def convert_to_degrees(value):
-                """Convert GPS coordinates to decimal degrees"""
-                if isinstance(value, tuple) and len(value) == 3:
+                """Convert GPS coordinates to decimal degrees"""                if isinstance(value, tuple) and len(value) == 3:
                     degrees = float(value[0])
                     minutes = float(value[1])
                     seconds = float(value[2])
@@ -934,8 +898,7 @@ class ImageMetadataExtractor(MetadataExtractor):
             logger.warning(f"GPS extraction failed: {str(e)}")
     
     async def _analyze_image_content(self, metadata: ImageMetadata, image: Image.Image):
-        """Analyze image visual content"""
-        try:
+        """Analyze image visual content"""        try:
             # Convert to RGB for analysis
             rgb_image = image.convert('RGB')
             img_array = np.array(rgb_image)
@@ -958,8 +921,7 @@ class ImageMetadataExtractor(MetadataExtractor):
             logger.warning(f"Image content analysis failed: {str(e)}")
     
     async def _analyze_image_colors(self, metadata: ImageMetadata, img_array: np.ndarray):
-        """Analyze color composition"""
-        try:
+        """Analyze color composition"""        try:
             # Reshape for color analysis
             pixels = img_array.reshape(-1, 3)
             
@@ -994,8 +956,7 @@ class ImageMetadataExtractor(MetadataExtractor):
             logger.warning(f"Color analysis failed: {str(e)}")
     
     async def _estimate_color_temperature(self, img_array: np.ndarray) -> Optional[int]:
-        """Estimate color temperature in Kelvin"""
-        try:
+        """Estimate color temperature in Kelvin"""        try:
             # Simple color temperature estimation based on R/B ratio
             avg_r = np.mean(img_array[:, :, 0])
             avg_g = np.mean(img_array[:, :, 1])
@@ -1025,8 +986,7 @@ class ImageMetadataExtractor(MetadataExtractor):
             return None
     
     async def _assess_image_quality(self, metadata: ImageMetadata, image: Image.Image):
-        """Assess overall image quality"""
-        try:
+        """Assess overall image quality"""        try:
             img_array = np.array(image.convert('RGB'))
             
             # Sharpness assessment using Laplacian variance
@@ -1064,8 +1024,7 @@ class ImageMetadataExtractor(MetadataExtractor):
             logger.warning(f"Quality assessment failed: {str(e)}")
     
     async def _detect_image_features(self, metadata: ImageMetadata, image: Image.Image):
-        """Detect faces, objects, and text in image"""
-        try:
+        """Detect faces, objects, and text in image"""        try:
             img_array = np.array(image.convert('RGB'))
             
             # Simple face detection using OpenCV
@@ -1117,8 +1076,7 @@ class ImageMetadataExtractor(MetadataExtractor):
 
 
 class UniversalMetadataExtractor:
-    """Universal metadata extractor for all multimedia formats"""
-    
+    """Universal metadata extractor for all multimedia formats"""    
     def __init__(self):
         self.extractors = {
             ContentFormat.AUDIO: AudioMetadataExtractor(),
@@ -1128,8 +1086,7 @@ class UniversalMetadataExtractor:
     
     async def extract(self, content_path: Path, 
                      content_type: Optional[Union[str, ContentFormat]] = None) -> BaseMetadata:
-        """Extract metadata from any supported multimedia format"""
-        
+        """Extract metadata from any supported multimedia format"""        
         # Auto-detect content type if not provided
         if content_type is None:
             content_type = self._detect_content_type(content_path)
@@ -1146,8 +1103,7 @@ class UniversalMetadataExtractor:
         return await extractor.extract(content_path)
     
     def _detect_content_type(self, content_path: Path) -> ContentFormat:
-        """Auto-detect content type from file extension"""
-        extension = content_path.suffix.lower().lstrip('.')
+        """Auto-detect content type from file extension"""        extension = content_path.suffix.lower().lstrip('.')
         format_enum = SupportedFormats.get_format_by_extension(extension)
         
         if format_enum:
@@ -1161,16 +1117,14 @@ class UniversalMetadataExtractor:
         raise ValueError(f"Unable to detect content type for extension: {extension}")
     
     def get_supported_formats(self) -> Dict[ContentFormat, List[str]]:
-        """Get all supported formats by content type"""
-        return {
+        """Get all supported formats by content type"""        return {
             ContentFormat.AUDIO: [fmt.value for fmt in AudioFormat],
             ContentFormat.VIDEO: [fmt.value for fmt in VideoFormat],
             ContentFormat.IMAGE: [fmt.value for fmt in ImageFormat]
         }
     
     async def extract_multimodal(self, content_paths: Dict[ContentFormat, Path]) -> MultimediaMetadata:
-        """Extract metadata from multimodal content"""
-        
+        """Extract metadata from multimodal content"""        
         # Generate combined content ID
         path_strings = [str(path) for path in content_paths.values()]
         combined_id = hashlib.sha256('_'.join(path_strings).encode()).hexdigest()[:16]
@@ -1231,8 +1185,7 @@ class UniversalMetadataExtractor:
         return metadata
     
     async def _analyze_cross_modal_coherence(self, metadata: MultimediaMetadata):
-        """Analyze coherence between different modalities"""
-        try:
+        """Analyze coherence between different modalities"""        try:
             coherence_factors = []
             
             # Audio-video synchronization (if both present)

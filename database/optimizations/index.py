@@ -1,5 +1,4 @@
-"""
-Database Optimizations Module - Main Entry Point
+"""Database Optimizations Module - Main Entry Point
 
 Ultra-advanced database optimization system for IA Influencer Agent platform providing
 enterprise-grade performance optimization, intelligent caching, specialized connection management,
@@ -19,9 +18,7 @@ Usage:
     content_optimizer = optimizer.get_content_protection_optimizer()
     monetization_optimizer = optimizer.get_monetization_optimizer()
     multimedia_optimizer = optimizer.get_multimedia_optimizer()
-"""
-
-import asyncio
+"""import asyncio
 from typing import Dict, Any, Optional
 from sqlalchemy.ext.asyncio import AsyncEngine
 
@@ -66,16 +63,14 @@ logger = get_logger(__name__)
 
 
 class DatabaseOptimizationManager:
-    """
-    Master manager for all database optimization components
+    """    Master manager for all database optimization components
     
     Provides unified interface for:
     - Content protection optimization
     - Monetization system optimization  
     - Multimedia processing optimization
     - AI processing optimization
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.is_initialized = False
@@ -112,8 +107,7 @@ class DatabaseOptimizationManager:
         self.ai_processing_execution: Optional[AIProcessingExecutionPlanner] = None
     
     async def initialize(self, engine: Optional[AsyncEngine] = None) -> None:
-        """Initialize all optimization components"""
-        if self.is_initialized:
+        """Initialize all optimization components"""        if self.is_initialized:
             logger.warning("Database optimization manager already initialized")
             return
         
@@ -141,8 +135,7 @@ class DatabaseOptimizationManager:
             raise
     
     async def _initialize_core_components(self) -> None:
-        """Initialize core optimization components"""
-        
+        """Initialize core optimization components"""        
         # Cache Manager
         cache_config = CacheConfig(**self.config.get('cache', {}))
         self.cache_manager = CacheManager(cache_config)
@@ -174,8 +167,7 @@ class DatabaseOptimizationManager:
         self.execution_planner = ExecutionPlanner(self.config.get('execution', {}))
     
     async def _initialize_specialized_managers(self) -> None:
-        """Initialize specialized optimization managers"""
-        
+        """Initialize specialized optimization managers"""        
         # Connection managers
         self.content_protection_connection = ContentProtectionConnectionManager(self.connection_optimizer)
         self.monetization_connection = MonetizationConnectionManager(self.connection_optimizer)
@@ -201,8 +193,7 @@ class DatabaseOptimizationManager:
         self.ai_processing_execution = AIProcessingExecutionPlanner(self.execution_planner)
     
     async def _initialize_indexes(self, engine: AsyncEngine) -> None:
-        """Initialize optimized indexes for all modules"""
-        logger.info("Creating optimized database indexes...")
+        """Initialize optimized indexes for all modules"""        logger.info("Creating optimized database indexes...")
         
         try:
             # Content protection indexes
@@ -226,8 +217,7 @@ class DatabaseOptimizationManager:
             # Don't raise - indexes are optional optimization
     
     async def _start_monitoring(self) -> None:
-        """Start resource monitoring"""
-        try:
+        """Start resource monitoring"""        try:
             await self.resource_monitor.start_monitoring()
             logger.info("Database resource monitoring started")
         except Exception as e:
@@ -236,8 +226,7 @@ class DatabaseOptimizationManager:
     # Getter methods for specialized optimizers
     
     def get_content_protection_optimizer(self) -> Dict[str, Any]:
-        """Get content protection optimization components"""
-        return {
+        """Get content protection optimization components"""        return {
             'connection': self.content_protection_connection,
             'index': self.content_protection_index,
             'resource': self.content_protection_resource,
@@ -246,8 +235,7 @@ class DatabaseOptimizationManager:
         }
     
     def get_monetization_optimizer(self) -> Dict[str, Any]:
-        """Get monetization optimization components"""
-        return {
+        """Get monetization optimization components"""        return {
             'connection': self.monetization_connection,
             'index': self.monetization_index,
             'resource': self.monetization_resource,
@@ -256,8 +244,7 @@ class DatabaseOptimizationManager:
         }
     
     def get_multimedia_optimizer(self) -> Dict[str, Any]:
-        """Get multimedia optimization components"""
-        return {
+        """Get multimedia optimization components"""        return {
             'connection': self.multimedia_connection,
             'index': self.multimedia_index,
             'resource': self.multimedia_resource,
@@ -266,8 +253,7 @@ class DatabaseOptimizationManager:
         }
     
     def get_ai_processing_optimizer(self) -> Dict[str, Any]:
-        """Get AI processing optimization components"""
-        return {
+        """Get AI processing optimization components"""        return {
             'connection': self.ai_processing_connection,
             'index': self.ai_processing_index,
             'resource': self.ai_processing_resource,
@@ -276,8 +262,7 @@ class DatabaseOptimizationManager:
         }
     
     def get_core_optimizer(self) -> Dict[str, Any]:
-        """Get core optimization components"""
-        return {
+        """Get core optimization components"""        return {
             'cache': self.cache_manager,
             'connection': self.connection_optimizer,
             'index': self.index_optimizer,
@@ -289,8 +274,7 @@ class DatabaseOptimizationManager:
         }
     
     async def get_comprehensive_stats(self) -> Dict[str, Any]:
-        """Get comprehensive optimization statistics"""
-        stats = {
+        """Get comprehensive optimization statistics"""        stats = {
             'initialization_status': self.is_initialized,
             'timestamp': asyncio.get_event_loop().time()
         }
@@ -330,8 +314,7 @@ class DatabaseOptimizationManager:
         return stats
     
     async def optimize_for_workload(self, workload_type: str) -> None:
-        """Optimize database for specific workload type"""
-        logger.info(f"Optimizing database for {workload_type} workload")
+        """Optimize database for specific workload type"""        logger.info(f"Optimizing database for {workload_type} workload")
         
         workload_configs = {
             'content_protection': {
@@ -372,8 +355,7 @@ class DatabaseOptimizationManager:
             logger.info(f"Applied {workload_type} workload optimizations")
     
     async def shutdown(self) -> None:
-        """Shutdown all optimization components"""
-        if not self.is_initialized:
+        """Shutdown all optimization components"""        if not self.is_initialized:
             return
         
         logger.info("Shutting down database optimization manager...")
@@ -403,8 +385,7 @@ _optimization_manager: Optional[DatabaseOptimizationManager] = None
 
 
 def get_optimization_manager(config: Optional[Dict[str, Any]] = None) -> DatabaseOptimizationManager:
-    """Get global database optimization manager instance"""
-    global _optimization_manager
+    """Get global database optimization manager instance"""    global _optimization_manager
     
     if _optimization_manager is None:
         _optimization_manager = DatabaseOptimizationManager(config)
@@ -416,15 +397,13 @@ async def initialize_optimizations(
     engine: Optional[AsyncEngine] = None,
     config: Optional[Dict[str, Any]] = None
 ) -> DatabaseOptimizationManager:
-    """Initialize global database optimizations"""
-    manager = get_optimization_manager(config)
+    """Initialize global database optimizations"""    manager = get_optimization_manager(config)
     await manager.initialize(engine)
     return manager
 
 
 async def shutdown_optimizations() -> None:
-    """Shutdown global database optimizations"""
-    global _optimization_manager
+    """Shutdown global database optimizations"""    global _optimization_manager
     
     if _optimization_manager:
         await _optimization_manager.shutdown()

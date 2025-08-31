@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Cache Manager - Industrial-Grade Multi-Tier Cache Management System
+"""Cache Manager - Industrial-Grade Multi-Tier Cache Management System
 ==================================================================
 
 Enterprise cache manager orchestrating L1-L4 cache hierarchy with AI-powered
@@ -17,9 +16,7 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC:
 User Request → Pattern Analysis → Intelligent Cache → AI Optimization →
 Ultra-Fast Response → Performance Analytics → Automatic Scaling
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 from datetime import datetime, timedelta
@@ -51,15 +48,13 @@ logger = logging.getLogger(__name__)
 T = TypeVar('T')
 
 class CacheLevel(Enum):
-    """Multi-tier cache hierarchy levels with performance characteristics."""
-    L1_MEMORY = "l1_memory"          # < 1ms, 512MB-2GB
+    """Multi-tier cache hierarchy levels with performance characteristics."""    L1_MEMORY = "l1_memory"          # < 1ms, 512MB-2GB
     L2_REDIS = "l2_redis"            # < 5ms, 8GB-64GB
     L3_DISTRIBUTED = "l3_distributed" # < 50ms, 100GB-1TB
     L4_PERSISTENT = "l4_persistent"   # < 500ms, Unlimited
 
 class CacheOperation(Enum):
-    """Cache operation types for comprehensive metrics tracking."""
-    GET = "get"
+    """Cache operation types for comprehensive metrics tracking."""    GET = "get"
     SET = "set"
     DELETE = "delete"
     INVALIDATE = "invalidate"
@@ -70,16 +65,14 @@ class CacheOperation(Enum):
     DEMOTE = "demote"
 
 class CachePriority(Enum):
-    """Cache priority levels for intelligent data placement."""
-    CRITICAL = "critical"     # Always in L1
+    """Cache priority levels for intelligent data placement."""    CRITICAL = "critical"     # Always in L1
     HIGH = "high"            # L1/L2 preferred
     NORMAL = "normal"        # L2/L3 preferred
     LOW = "low"              # L3/L4 preferred
     ARCHIVE = "archive"      # L4 only
 
 class CachePattern(Enum):
-    """Access pattern types for optimization algorithms."""
-    HOT = "hot"              # Frequent access
+    """Access pattern types for optimization algorithms."""    HOT = "hot"              # Frequent access
     WARM = "warm"            # Regular access
     COLD = "cold"            # Infrequent access
     TEMPORAL = "temporal"    # Time-based patterns
@@ -87,8 +80,7 @@ class CachePattern(Enum):
 
 @dataclass
 class CacheEntry:
-    """Comprehensive cache entry with advanced metadata."""
-    key: str
+    """Comprehensive cache entry with advanced metadata."""    key: str
     value: Any
     created_at: datetime
     expires_at: Optional[datetime] = None
@@ -107,8 +99,7 @@ class CacheEntry:
 
 @dataclass
 class CacheConfig:
-    """Industrial cache configuration with enterprise features."""
-    # General configuration
+    """Industrial cache configuration with enterprise features."""    # General configuration
     enabled_levels: Set[CacheLevel] = field(default_factory=lambda: {
         CacheLevel.L1_MEMORY, CacheLevel.L2_REDIS
     })
@@ -167,8 +158,7 @@ class CacheConfig:
 
 @dataclass 
 class CacheStats:
-    """Comprehensive cache statistics for enterprise monitoring."""
-    # Basic metrics
+    """Comprehensive cache statistics for enterprise monitoring."""    # Basic metrics
     total_requests: int = 0
     cache_hits: int = 0
     cache_misses: int = 0
@@ -201,25 +191,21 @@ class CacheStats:
     # Computed properties
     @property
     def hit_ratio(self) -> float:
-        """Calculate overall cache hit ratio."""
-        total = self.cache_hits + self.cache_misses
+        """Calculate overall cache hit ratio."""        total = self.cache_hits + self.cache_misses
         return self.cache_hits / total if total > 0 else 0.0
     
     @property
     def miss_ratio(self) -> float:
-        """Calculate cache miss ratio."""
-        return 1.0 - self.hit_ratio
+        """Calculate cache miss ratio."""        return 1.0 - self.hit_ratio
     
     @property
     def efficiency_score(self) -> float:
-        """Calculate overall cache efficiency score."""
-        return (self.hit_ratio * 0.4 + 
+        """Calculate overall cache efficiency score."""        return (self.hit_ratio * 0.4 + 
                 self.memory_efficiency * 0.3 + 
                 self.data_freshness_score * 0.3)
 
 class IndustrialCacheManager:
-    """
-    🎯 Industrial-Grade Multi-Tier Cache Manager
+    """    🎯 Industrial-Grade Multi-Tier Cache Manager
     
     Enterprise cache management system featuring:
     - Multi-tier cache hierarchy (L1 → L2 → L3 → L4)
@@ -230,11 +216,9 @@ class IndustrialCacheManager:
     - Content-aware caching strategies
     - Geographic distribution support
     - Cost-aware optimization
-    """
-    
+    """    
     def __init__(self, config: Optional[CacheConfig] = None):
-        """Initialize industrial cache manager with advanced configuration."""
-        self.config = config or CacheConfig()
+        """Initialize industrial cache manager with advanced configuration."""        self.config = config or CacheConfig()
         self.logger = logging.getLogger(f"{__name__}.IndustrialCacheManager")
         
         # Cache hierarchy
@@ -266,8 +250,7 @@ class IndustrialCacheManager:
         self.logger.info("🚀 Industrial Cache Manager initialized")
 
     async def initialize(self) -> bool:
-        """Initialize all cache levels and components asynchronously."""
-        try:
+        """Initialize all cache levels and components asynchronously."""        try:
             self.logger.info("🔧 Initializing cache hierarchy...")
             
             # Initialize cache levels based on configuration
@@ -306,8 +289,7 @@ class IndustrialCacheManager:
             return False
 
     async def _initialize_l1_memory(self) -> bool:
-        """Initialize L1 memory cache with advanced features."""
-        try:
+        """Initialize L1 memory cache with advanced features."""        try:
             self.caches[CacheLevel.L1_MEMORY] = MemoryCache(
                 max_size_mb=self.config.l1_max_size_mb,
                 max_entries=self.config.l1_max_entries,
@@ -322,8 +304,7 @@ class IndustrialCacheManager:
             return False
 
     async def _initialize_l2_redis(self) -> bool:
-        """Initialize L2 Redis cache with cluster support."""
-        try:
+        """Initialize L2 Redis cache with cluster support."""        try:
             if len(self.config.redis_cluster_nodes) > 1:
                 self.caches[CacheLevel.L2_REDIS] = RedisClusterCache(
                     nodes=self.config.redis_cluster_nodes,
@@ -347,8 +328,7 @@ class IndustrialCacheManager:
             return False
 
     async def _initialize_l3_distributed(self) -> bool:
-        """Initialize L3 distributed cache with consistent hashing."""
-        try:
+        """Initialize L3 distributed cache with consistent hashing."""        try:
             self.caches[CacheLevel.L3_DISTRIBUTED] = DistributedCache(
                 nodes=self.config.distributed_nodes,
                 replication_factor=self.config.distributed_replication_factor,
@@ -364,8 +344,7 @@ class IndustrialCacheManager:
             return False
 
     async def _initialize_l4_persistent(self) -> bool:
-        """Initialize L4 persistent cache with file-based storage."""
-        try:
+        """Initialize L4 persistent cache with file-based storage."""        try:
             from .persistence import CachePersistence
             
             self.caches[CacheLevel.L4_PERSISTENT] = CachePersistence(
@@ -385,8 +364,7 @@ class IndustrialCacheManager:
             return False
 
     async def _initialize_components(self) -> bool:
-        """Initialize cache components and optimization engines."""
-        try:
+        """Initialize cache components and optimization engines."""        try:
             # Initialize metrics system
             await self.metrics.initialize()
             
@@ -413,8 +391,7 @@ class IndustrialCacheManager:
             return False
 
     async def _start_background_tasks(self) -> None:
-        """Start background optimization and monitoring tasks."""
-        if self.config.ai_optimization_enabled:
+        """Start background optimization and monitoring tasks."""        if self.config.ai_optimization_enabled:
             asyncio.create_task(self._optimization_loop())
         
         if self.config.monitoring_enabled:
@@ -432,8 +409,7 @@ class IndustrialCacheManager:
         cache_levels: Optional[Set[CacheLevel]] = None,
         promote_on_hit: bool = True
     ) -> Any:
-        """
-        Get value from cache with intelligent promotion strategy.
+        """        Get value from cache with intelligent promotion strategy.
         
         Args:
             key: Cache key
@@ -443,8 +419,7 @@ class IndustrialCacheManager:
             
         Returns:
             Cached value or default
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Generate cache key hash for consistent distribution
@@ -500,8 +475,7 @@ class IndustrialCacheManager:
         tags: Optional[Set[str]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """
-        Set value in cache with intelligent placement strategy.
+        """        Set value in cache with intelligent placement strategy.
         
         Args:
             key: Cache key
@@ -514,8 +488,7 @@ class IndustrialCacheManager:
             
         Returns:
             Success status
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Generate cache key and entry
@@ -575,8 +548,7 @@ class IndustrialCacheManager:
         key: str,
         cache_levels: Optional[Set[CacheLevel]] = None
     ) -> bool:
-        """
-        Delete key from specified cache levels or all levels.
+        """        Delete key from specified cache levels or all levels.
         
         Args:
             key: Cache key to delete
@@ -584,8 +556,7 @@ class IndustrialCacheManager:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             cache_key = self._generate_cache_key(key)
             delete_levels = cache_levels or set(self.cache_enabled.keys())
             
@@ -620,8 +591,7 @@ class IndustrialCacheManager:
         pattern: str,
         cache_levels: Optional[Set[CacheLevel]] = None
     ) -> int:
-        """
-        Invalidate all keys matching the given pattern.
+        """        Invalidate all keys matching the given pattern.
         
         Args:
             pattern: Pattern to match (supports wildcards)
@@ -629,8 +599,7 @@ class IndustrialCacheManager:
             
         Returns:
             Number of keys invalidated
-        """
-        try:
+        """        try:
             invalidate_levels = cache_levels or set(self.cache_enabled.keys())
             total_invalidated = 0
             
@@ -660,8 +629,7 @@ class IndustrialCacheManager:
             return 0
 
     async def get_stats(self) -> CacheStats:
-        """Get comprehensive cache statistics."""
-        try:
+        """Get comprehensive cache statistics."""        try:
             # Update current statistics
             await self._update_comprehensive_stats()
             return self.stats
@@ -671,13 +639,11 @@ class IndustrialCacheManager:
             return CacheStats()
 
     async def optimize_performance(self) -> Dict[str, Any]:
-        """
-        Perform comprehensive cache optimization.
+        """        Perform comprehensive cache optimization.
         
         Returns:
             Optimization results and recommendations
-        """
-        if self.optimizer_running:
+        """        if self.optimizer_running:
             return {"status": "optimization_already_running"}
         
         self.optimizer_running = True
@@ -738,12 +704,10 @@ class IndustrialCacheManager:
     # Helper methods for internal operations
     
     def _generate_cache_key(self, key: str) -> str:
-        """Generate consistent cache key with namespace."""
-        return f"{self.config.redis_key_prefix}{hashlib.sha256(key.encode()).hexdigest()[:16]}"
+        """Generate consistent cache key with namespace."""        return f"{self.config.redis_key_prefix}{hashlib.sha256(key.encode()).hexdigest()[:16]}"
     
     def _get_search_order(self) -> List[CacheLevel]:
-        """Get optimal cache search order based on performance characteristics."""
-        order = []
+        """Get optimal cache search order based on performance characteristics."""        order = []
         
         # Always search L1 first (fastest)
         if CacheLevel.L1_MEMORY in self.config.enabled_levels:
@@ -767,8 +731,7 @@ class IndustrialCacheManager:
         self, key: str, value: Any, ttl: Optional[int], 
         priority: CachePriority, tags: Set[str], metadata: Dict[str, Any]
     ) -> CacheEntry:
-        """Create comprehensive cache entry with metadata."""
-        now = datetime.now()
+        """Create comprehensive cache entry with metadata."""        now = datetime.now()
         
         return CacheEntry(
             key=key,
@@ -782,8 +745,7 @@ class IndustrialCacheManager:
         )
     
     async def _determine_optimal_levels(self, entry: CacheEntry) -> Set[CacheLevel]:
-        """Determine optimal cache levels based on entry characteristics."""
-        levels = set()
+        """Determine optimal cache levels based on entry characteristics."""        levels = set()
         
         # Priority-based placement
         if entry.priority == CachePriority.CRITICAL:
@@ -809,8 +771,7 @@ class IndustrialCacheManager:
         return levels.intersection(self.config.enabled_levels)
 
     async def _prepare_value_for_storage(self, value: Any, entry: CacheEntry) -> bytes:
-        """Prepare value for storage with compression and encryption."""
-        # Serialize
+        """Prepare value for storage with compression and encryption."""        # Serialize
         serialized = pickle.dumps(value)
         
         # Compress if beneficial
@@ -830,8 +791,7 @@ class IndustrialCacheManager:
         return serialized
     
     def _deserialize_value(self, serialized_value: bytes) -> Any:
-        """Deserialize value with decompression and decryption."""
-        try:
+        """Deserialize value with decompression and decryption."""        try:
             # Handle decryption if needed
             data = serialized_value
             
@@ -855,8 +815,7 @@ CacheManager = IndustrialCacheManager
             raise
     
     async def _setup_cache_layers(self) -> None:
-        """Setup multi-tier cache layers."""
-        from .memory_cache import MemoryCache
+        """Setup multi-tier cache layers."""        from .memory_cache import MemoryCache
         from .redis_cache import RedisCache
         from .distributed_cache import DistributedCache
         from .persistence import CachePersistence
@@ -891,8 +850,7 @@ CacheManager = IndustrialCacheManager
         self.logger.info(f"Initialized {len(self.caches)} cache layers")
     
     async def get(self, key: str, default: Any = None) -> Any:
-        """
-        Get value from cache with multi-tier lookup.
+        """        Get value from cache with multi-tier lookup.
         
         Args:
             key: Cache key
@@ -900,8 +858,7 @@ CacheManager = IndustrialCacheManager
             
         Returns:
             Cached value or default
-        """
-        if not self._initialized:
+        """        if not self._initialized:
             await self.initialize()
         
         try:
@@ -935,8 +892,7 @@ CacheManager = IndustrialCacheManager
             return default
     
     async def set(self, key: str, value: Any, ttl: Optional[int] = None) -> bool:
-        """
-        Set value in cache across all levels.
+        """        Set value in cache across all levels.
         
         Args:
             key: Cache key
@@ -945,8 +901,7 @@ CacheManager = IndustrialCacheManager
             
         Returns:
             True if successful
-        """
-        if not self._initialized:
+        """        if not self._initialized:
             await self.initialize()
         
         try:
@@ -973,16 +928,14 @@ CacheManager = IndustrialCacheManager
             return False
     
     async def delete(self, key: str) -> bool:
-        """
-        Delete key from all cache levels.
+        """        Delete key from all cache levels.
         
         Args:
             key: Cache key to delete
             
         Returns:
             True if successful
-        """
-        if not self._initialized:
+        """        if not self._initialized:
             await self.initialize()
         
         try:
@@ -1008,16 +961,14 @@ CacheManager = IndustrialCacheManager
             return False
     
     async def invalidate_pattern(self, pattern: str) -> int:
-        """
-        Invalidate all keys matching pattern.
+        """        Invalidate all keys matching pattern.
         
         Args:
             pattern: Key pattern (supports wildcards)
             
         Returns:
             Number of keys invalidated
-        """
-        if not self._initialized:
+        """        if not self._initialized:
             await self.initialize()
         
         try:
@@ -1039,8 +990,7 @@ CacheManager = IndustrialCacheManager
             return 0
     
     async def clear(self) -> bool:
-        """Clear all cache levels."""
-        if not self._initialized:
+        """Clear all cache levels."""        if not self._initialized:
             await self.initialize()
         
         try:
@@ -1065,8 +1015,7 @@ CacheManager = IndustrialCacheManager
             return False
     
     async def get_stats(self) -> CacheStats:
-        """Get current cache statistics."""
-        if self.stats.hits + self.stats.misses > 0:
+        """Get current cache statistics."""        if self.stats.hits + self.stats.misses > 0:
             self.stats.hit_rate = self.stats.hits / (self.stats.hits + self.stats.misses)
         
         # Update memory usage
@@ -1076,8 +1025,7 @@ CacheManager = IndustrialCacheManager
         return self.stats
     
     async def _promote_cache_entry(self, key: str, value: Any, found_level: CacheLevel) -> None:
-        """Promote cache entry to higher levels."""
-        levels = [CacheLevel.L1_MEMORY, CacheLevel.L2_REDIS, 
+        """Promote cache entry to higher levels."""        levels = [CacheLevel.L1_MEMORY, CacheLevel.L2_REDIS, 
                  CacheLevel.L3_DISTRIBUTED, CacheLevel.L4_PERSISTENT]
         
         found_index = levels.index(found_level)
@@ -1092,8 +1040,7 @@ CacheManager = IndustrialCacheManager
                     self.logger.error(f"Error promoting key {key} to {level.value}: {e}")
     
     async def _count_total_keys(self) -> int:
-        """Count total keys across all cache levels."""
-        total = 0
+        """Count total keys across all cache levels."""        total = 0
         for cache in self.caches.values():
             try:
                 if hasattr(cache, 'count_keys'):
@@ -1103,13 +1050,11 @@ CacheManager = IndustrialCacheManager
         return total
     
     async def _start_monitoring(self) -> None:
-        """Start cache monitoring."""
-        # Implementation would include metrics collection
+        """Start cache monitoring."""        # Implementation would include metrics collection
         pass
     
     async def shutdown(self) -> None:
-        """Shutdown cache manager and close connections."""
-        self.logger.info("Shutting down cache manager")
+        """Shutdown cache manager and close connections."""        self.logger.info("Shutting down cache manager")
         
         for level, cache in self.caches.items():
             try:
@@ -1126,8 +1071,7 @@ CacheManager = IndustrialCacheManager
 _cache_manager: Optional[CacheManager] = None
 
 async def get_cache_manager(config: Optional[Dict[str, Any]] = None) -> CacheManager:
-    """Get global cache manager instance."""
-    global _cache_manager
+    """Get global cache manager instance."""    global _cache_manager
     
     if _cache_manager is None:
         _cache_manager = CacheManager(config)

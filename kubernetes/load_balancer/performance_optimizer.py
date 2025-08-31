@@ -1,5 +1,4 @@
-"""
-Performance Optimizer for Load Balancer - IA Influencer Agent Platform
+"""Performance Optimizer for Load Balancer - IA Influencer Agent Platform
 
 Advanced performance optimization and auto-tuning for load balancing components,
 providing intelligent resource allocation and dynamic scaling capabilities.
@@ -11,9 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import psutil
@@ -35,8 +32,7 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationType(Enum):
-    """Performance optimization types"""
-    THROUGHPUT = "throughput"
+    """Performance optimization types"""    THROUGHPUT = "throughput"
     LATENCY = "latency"
     RESOURCE_EFFICIENCY = "resource_efficiency"
     COST_OPTIMIZATION = "cost_optimization"
@@ -44,16 +40,14 @@ class OptimizationType(Enum):
 
 
 class ScalingDirection(Enum):
-    """Scaling direction"""
-    UP = "up"
+    """Scaling direction"""    UP = "up"
     DOWN = "down"
     STABLE = "stable"
 
 
 @dataclass
 class PerformanceMetrics:
-    """Performance metrics for optimization"""
-    timestamp: datetime
+    """Performance metrics for optimization"""    timestamp: datetime
     cpu_usage: float
     memory_usage: float
     network_io: float
@@ -68,8 +62,7 @@ class PerformanceMetrics:
 
 @dataclass
 class OptimizationRecommendation:
-    """Performance optimization recommendation"""
-    component: str
+    """Performance optimization recommendation"""    component: str
     optimization_type: OptimizationType
     current_value: Any
     recommended_value: Any
@@ -82,8 +75,7 @@ class OptimizationRecommendation:
 
 @dataclass
 class ScalingRecommendation:
-    """Service scaling recommendation"""
-    service_name: str
+    """Service scaling recommendation"""    service_name: str
     current_instances: int
     recommended_instances: int
     scaling_direction: ScalingDirection
@@ -94,14 +86,12 @@ class ScalingRecommendation:
 
 
 class PerformanceOptimizer:
-    """
-    Enterprise Performance Optimizer for Load Balancer
+    """    Enterprise Performance Optimizer for Load Balancer
     
     Provides intelligent performance optimization, auto-tuning,
     and predictive scaling for the IA Influencer Agent platform's
     load balancing infrastructure.
-    """
-    
+    """    
     def __init__(self, optimization_type: OptimizationType = OptimizationType.BALANCED):
         self.optimization_type = optimization_type
         
@@ -140,8 +130,7 @@ class PerformanceOptimizer:
         logger.info(f"Performance Optimizer initialized with {optimization_type.value} mode")
     
     async def initialize(self) -> None:
-        """Initialize performance optimizer"""
-        try:
+        """Initialize performance optimizer"""        try:
             logger.info("Initializing Performance Optimizer...")
             
             # Load historical data if available
@@ -160,8 +149,7 @@ class PerformanceOptimizer:
             raise
     
     async def _load_historical_data(self) -> None:
-        """Load historical performance data"""
-        try:
+        """Load historical performance data"""        try:
             # Try to load from file
             data_file = "/var/lib/ia-influencer/performance_data.json"
             try:
@@ -196,8 +184,7 @@ class PerformanceOptimizer:
             logger.error(f"Error loading historical data: {e}")
     
     async def _initialize_ml_models(self) -> None:
-        """Initialize machine learning models"""
-        try:
+        """Initialize machine learning models"""        try:
             # Initialize load prediction model
             self.load_predictor = LinearRegression()
             
@@ -219,8 +206,7 @@ class PerformanceOptimizer:
             logger.error(f"Failed to initialize ML models: {e}")
     
     async def _configure_optimization_parameters(self) -> None:
-        """Configure optimization parameters based on type"""
-        if self.optimization_type == OptimizationType.THROUGHPUT:
+        """Configure optimization parameters based on type"""        if self.optimization_type == OptimizationType.THROUGHPUT:
             # Prioritize throughput over latency
             self.cpu_high_threshold = 0.9
             self.response_time_threshold = 5.0
@@ -245,8 +231,7 @@ class PerformanceOptimizer:
         logger.info(f"Optimization parameters configured for {self.optimization_type.value}")
     
     async def start_optimization(self) -> None:
-        """Start performance optimization"""
-        if self.is_optimizing:
+        """Start performance optimization"""        if self.is_optimizing:
             logger.warning("Performance optimization already running")
             return
         
@@ -257,8 +242,7 @@ class PerformanceOptimizer:
         logger.info("Performance optimization started")
     
     async def stop_optimization(self) -> None:
-        """Stop performance optimization"""
-        self.is_optimizing = False
+        """Stop performance optimization"""        self.is_optimizing = False
         
         if self.optimizer_task:
             self.optimizer_task.cancel()
@@ -277,8 +261,7 @@ class PerformanceOptimizer:
         logger.info("Performance optimization stopped")
     
     async def _optimization_loop(self) -> None:
-        """Main optimization loop"""
-        while self.is_optimizing:
+        """Main optimization loop"""        while self.is_optimizing:
             try:
                 # Collect current metrics
                 await self._collect_metrics()
@@ -303,8 +286,7 @@ class PerformanceOptimizer:
                 await asyncio.sleep(self.optimization_interval)
     
     async def _prediction_loop(self) -> None:
-        """Predictive analysis loop"""
-        while self.is_optimizing:
+        """Predictive analysis loop"""        while self.is_optimizing:
             try:
                 # Generate load predictions
                 predictions = await self._predict_future_load()
@@ -320,8 +302,7 @@ class PerformanceOptimizer:
                 await asyncio.sleep(self.optimization_interval * 2)
     
     async def _collect_metrics(self) -> None:
-        """Collect current performance metrics"""
-        try:
+        """Collect current performance metrics"""        try:
             current_time = datetime.now()
             
             # System metrics
@@ -380,8 +361,7 @@ class PerformanceOptimizer:
             logger.error(f"Failed to collect metrics: {e}")
     
     def _estimate_requests_per_second(self) -> float:
-        """Estimate current requests per second"""
-        # This would integrate with actual monitoring system
+        """Estimate current requests per second"""        # This would integrate with actual monitoring system
         # For now, using CPU-based estimation
         if len(self.metrics_history) > 0:
             latest = self.metrics_history[-1]
@@ -391,8 +371,7 @@ class PerformanceOptimizer:
         return 50.0
     
     def _estimate_response_time(self) -> float:
-        """Estimate current average response time"""
-        # This would integrate with actual monitoring system
+        """Estimate current average response time"""        # This would integrate with actual monitoring system
         if len(self.metrics_history) > 0:
             latest = self.metrics_history[-1]
             base_time = 0.5
@@ -402,8 +381,7 @@ class PerformanceOptimizer:
         return 1.0
     
     def _estimate_error_rate(self) -> float:
-        """Estimate current error rate"""
-        # This would integrate with actual monitoring system
+        """Estimate current error rate"""        # This would integrate with actual monitoring system
         if len(self.metrics_history) > 0:
             latest = self.metrics_history[-1]
             base_error_rate = 0.01
@@ -414,8 +392,7 @@ class PerformanceOptimizer:
         return 0.01
     
     def _estimate_active_connections(self) -> int:
-        """Estimate current active connections"""
-        try:
+        """Estimate current active connections"""        try:
             # Get network connections
             connections = psutil.net_connections(kind='inet')
             established = len([c for c in connections if c.status == 'ESTABLISHED'])
@@ -424,8 +401,7 @@ class PerformanceOptimizer:
             return 100  # Default estimate
     
     def _estimate_queue_length(self) -> int:
-        """Estimate current queue length"""
-        # This would integrate with actual load balancer metrics
+        """Estimate current queue length"""        # This would integrate with actual load balancer metrics
         if len(self.metrics_history) > 0:
             latest = self.metrics_history[-1]
             if latest.cpu_usage > 0.8:
@@ -433,8 +409,7 @@ class PerformanceOptimizer:
         return 0
     
     async def _generate_recommendations(self) -> None:
-        """Generate optimization recommendations"""
-        try:
+        """Generate optimization recommendations"""        try:
             recommendations = []
             
             if len(self.metrics_history) < 10:  # Need minimum data
@@ -531,8 +506,7 @@ class PerformanceOptimizer:
             logger.error(f"Failed to generate recommendations: {e}")
     
     async def _apply_optimizations(self) -> None:
-        """Apply automatic optimizations"""
-        try:
+        """Apply automatic optimizations"""        try:
             applied_count = 0
             
             for recommendation in self.current_recommendations:
@@ -567,8 +541,7 @@ class PerformanceOptimizer:
             logger.error(f"Failed to apply optimizations: {e}")
     
     async def _apply_single_optimization(self, recommendation: OptimizationRecommendation) -> bool:
-        """Apply a single optimization"""
-        try:
+        """Apply a single optimization"""        try:
             # This would implement actual configuration changes
             # For now, just log the action
             
@@ -586,8 +559,7 @@ class PerformanceOptimizer:
             return False
     
     async def _predict_future_load(self) -> Dict[str, float]:
-        """Predict future load using ML models"""
-        try:
+        """Predict future load using ML models"""        try:
             if len(self.metrics_history) < self.min_data_points:
                 return {}
             
@@ -637,8 +609,7 @@ class PerformanceOptimizer:
             return {}
     
     async def _generate_scaling_recommendations(self, predictions: Dict[str, float]) -> None:
-        """Generate scaling recommendations based on predictions"""
-        try:
+        """Generate scaling recommendations based on predictions"""        try:
             recommendations = []
             
             if not predictions:
@@ -702,8 +673,7 @@ class PerformanceOptimizer:
             logger.error(f"Failed to generate scaling recommendations: {e}")
     
     def _get_current_instances(self, service_name: str) -> int:
-        """Get current number of instances for a service"""
-        # This would integrate with orchestration system (Kubernetes, Docker Swarm, etc.)
+        """Get current number of instances for a service"""        # This would integrate with orchestration system (Kubernetes, Docker Swarm, etc.)
         # Default values based on service type
         defaults = {
             "fingerprinting": 3,
@@ -715,14 +685,12 @@ class PerformanceOptimizer:
         return defaults.get(service_name, 2)
     
     def _calculate_cost_impact(self, current_instances: int, recommended_instances: int) -> float:
-        """Calculate cost impact of scaling change"""
-        instance_cost = 50.0  # $50 per instance per month
+        """Calculate cost impact of scaling change"""        instance_cost = 50.0  # $50 per instance per month
         change = recommended_instances - current_instances
         return change * instance_cost
     
     async def _train_models(self) -> None:
-        """Train machine learning models with available data"""
-        try:
+        """Train machine learning models with available data"""        try:
             if len(self.metrics_history) < self.min_data_points:
                 return
             
@@ -772,8 +740,7 @@ class PerformanceOptimizer:
             logger.error(f"Failed to train models: {e}")
     
     async def _save_model(self) -> None:
-        """Save trained ML model"""
-        try:
+        """Save trained ML model"""        try:
             model_file = "/var/lib/ia-influencer/load_predictor.pkl"
             model_data = {
                 'model': self.load_predictor,
@@ -789,8 +756,7 @@ class PerformanceOptimizer:
             logger.error(f"Failed to save ML model: {e}")
     
     async def _save_performance_data(self) -> None:
-        """Save performance data for persistence"""
-        try:
+        """Save performance data for persistence"""        try:
             data_file = "/var/lib/ia-influencer/performance_data.json"
             
             # Convert last 100 metrics to JSON
@@ -822,8 +788,7 @@ class PerformanceOptimizer:
             logger.error(f"Failed to save performance data: {e}")
     
     async def get_optimization_status(self) -> Dict[str, Any]:
-        """Get comprehensive optimization status"""
-        try:
+        """Get comprehensive optimization status"""        try:
             # Calculate recent performance
             recent_metrics = list(self.metrics_history)[-10:] if self.metrics_history else []
             
@@ -887,8 +852,7 @@ class PerformanceOptimizer:
             return {"error": str(e), "timestamp": datetime.now().isoformat()}
     
     async def manual_optimization(self, component: str, parameter: str, value: Any) -> bool:
-        """Apply manual optimization"""
-        try:
+        """Apply manual optimization"""        try:
             logger.info(f"Applying manual optimization: {component}.{parameter} = {value}")
             
             # This would implement actual configuration changes
@@ -922,8 +886,7 @@ class PerformanceOptimizer:
             return False
     
     async def shutdown(self) -> None:
-        """Shutdown performance optimizer"""
-        try:
+        """Shutdown performance optimizer"""        try:
             logger.info("Shutting down Performance Optimizer...")
             
             await self.stop_optimization()

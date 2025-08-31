@@ -21,8 +21,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
-"""
-# ========== ANALYTICS CORE ENTERPRISE ==========
+"""# ========== ANALYTICS CORE ENTERPRISE ==========
 
 # Analytics Principal Multi-Format
 from .content_analytics import (

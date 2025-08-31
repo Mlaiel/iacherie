@@ -26,8 +26,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 ⚠️  Unauthorized reproduction, distribution, or use is strictly        ⚠️
 ⚠️  prohibited and may result in severe civil and criminal penalties.  ⚠️
 ⚠️  All rights reserved to Fahed Mlaiel (mlaiel@live.de).             ⚠️
-"""
-# Core infrastructure managers
+"""# Core infrastructure managers
 from .cloud_provider import CloudProviderManager
 from .container_orchestration import ContainerOrchestrationManager
 from .database_provisioning import DatabaseProvisioningManager

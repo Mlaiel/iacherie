@@ -1,5 +1,4 @@
-"""
-Style Optimizer - Advanced Content Style Optimization and Adaptation Engine
+"""Style Optimizer - Advanced Content Style Optimization and Adaptation Engine
 
 Enterprise-grade style optimization system with personality matching, brand voice adaptation,
 and advanced linguistic analysis for professional content creators.
@@ -18,9 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import uuid
@@ -59,8 +56,7 @@ settings = get_settings()
 
 
 class StyleDimension(str, Enum):
-    """Style dimensions for analysis and optimization"""
-    FORMALITY = "formality"
+    """Style dimensions for analysis and optimization"""    FORMALITY = "formality"
     COMPLEXITY = "complexity"
     EMOTIONALITY = "emotionality"
     PERSUASIVENESS = "persuasiveness"
@@ -73,8 +69,7 @@ class StyleDimension(str, Enum):
 
 
 class PersonalityType(str, Enum):
-    """Personality types for content matching"""
-    ANALYTICAL = "analytical"
+    """Personality types for content matching"""    ANALYTICAL = "analytical"
     DRIVER = "driver"
     EXPRESSIVE = "expressive"
     AMIABLE = "amiable"
@@ -85,8 +80,7 @@ class PersonalityType(str, Enum):
 
 
 class BrandVoice(str, Enum):
-    """Brand voice types"""
-    CORPORATE = "corporate"
+    """Brand voice types"""    CORPORATE = "corporate"
     STARTUP = "startup"
     LUXURY = "luxury"
     FRIENDLY = "friendly"
@@ -100,8 +94,7 @@ class BrandVoice(str, Enum):
 
 @dataclass
 class StyleProfile:
-    """Comprehensive style profile for content optimization"""
-    formality_score: float  # 0.0 (very informal) to 1.0 (very formal)
+    """Comprehensive style profile for content optimization"""    formality_score: float  # 0.0 (very informal) to 1.0 (very formal)
     complexity_score: float  # 0.0 (very simple) to 1.0 (very complex)
     emotionality_score: float  # 0.0 (neutral) to 1.0 (highly emotional)
     persuasiveness_score: float  # 0.0 (informational) to 1.0 (highly persuasive)
@@ -119,8 +112,7 @@ class StyleProfile:
 
 @dataclass
 class StyleOptimizationRequest:
-    """Request for style optimization"""
-    content: str
+    """Request for style optimization"""    content: str
     target_style: StyleProfile
     optimization_goals: List[str]
     constraints: Optional[Dict[str, Any]] = None
@@ -130,13 +122,11 @@ class StyleOptimizationRequest:
 
 
 class StyleOptimizer:
-    """
-    Advanced Style Optimizer for content adaptation and enhancement
+    """    Advanced Style Optimizer for content adaptation and enhancement
     
     Provides comprehensive style analysis, personality matching, and intelligent
     content optimization for various audiences and platforms.
-    """
-    
+    """    
     def __init__(self):
         self.performance_monitor = PerformanceMonitor("style_optimizer")
         self.cache_manager = CacheManager("style_optimization")
@@ -163,8 +153,7 @@ class StyleOptimizer:
         logger.info("StyleOptimizer initialized successfully")
     
     async def _initialize_components(self):
-        """Initialize style optimization components"""
-        try:
+        """Initialize style optimization components"""        try:
             # Load sentiment analyzer
             self._sentiment_analyzer = SentimentIntensityAnalyzer()
             
@@ -201,8 +190,7 @@ class StyleOptimizer:
             await self._initialize_fallback_components()
     
     async def _initialize_fallback_components(self):
-        """Initialize fallback components if main models fail"""
-        try:
+        """Initialize fallback components if main models fail"""        try:
             # Simple rule-based fallbacks
             self._style_patterns = {
                 'formal_words': ['furthermore', 'consequently', 'therefore', 'however', 'moreover'],
@@ -220,16 +208,14 @@ class StyleOptimizer:
             raise
     
     async def analyze_style(self, content: str) -> StyleProfile:
-        """
-        Analyze the style profile of content
+        """        Analyze the style profile of content
         
         Args:
             content: Text content to analyze
             
         Returns:
             Comprehensive style profile
-        """
-        async with self.performance_monitor.track_operation("style_analysis"):
+        """        async with self.performance_monitor.track_operation("style_analysis"):
             try:
                 # Check cache
                 cache_key = self._generate_cache_key(content, "analysis")
@@ -273,16 +259,14 @@ class StyleOptimizer:
                 raise
     
     async def optimize_style(self, request: StyleOptimizationRequest) -> Dict[str, Any]:
-        """
-        Optimize content style based on target profile
+        """        Optimize content style based on target profile
         
         Args:
             request: Style optimization request
             
         Returns:
             Optimized content with metadata
-        """
-        async with self.performance_monitor.track_operation("style_optimization"):
+        """        async with self.performance_monitor.track_operation("style_optimization"):
             try:
                 # Analyze current style
                 current_profile = await self.analyze_style(request.content)
@@ -330,8 +314,7 @@ class StyleOptimizer:
                 raise
     
     async def _calculate_style_dimensions(self, content: str) -> Dict[str, float]:
-        """Calculate scores for all style dimensions"""
-        scores = {}
+        """Calculate scores for all style dimensions"""        scores = {}
         
         # Formality analysis
         scores['formality'] = await self._analyze_formality(content)
@@ -360,8 +343,7 @@ class StyleOptimizer:
         return scores
     
     async def _analyze_formality(self, content: str) -> float:
-        """Analyze formality level of content"""
-        formal_indicators = self._style_patterns.get('formal_words', [])
+        """Analyze formality level of content"""        formal_indicators = self._style_patterns.get('formal_words', [])
         informal_indicators = self._style_patterns.get('informal_words', [])
         
         words = content.lower().split()
@@ -381,8 +363,7 @@ class StyleOptimizer:
         return max(0.0, min(formality_score, 1.0))
     
     async def _analyze_complexity(self, content: str) -> float:
-        """Analyze complexity level of content"""
-        # Readability-based complexity
+        """Analyze complexity level of content"""        # Readability-based complexity
         try:
             flesch_score = flesch_reading_ease(content) / 100.0
             complexity_from_readability = 1.0 - flesch_score  # Invert: lower readability = higher complexity
@@ -404,8 +385,7 @@ class StyleOptimizer:
         return max(0.0, min(complexity_score, 1.0))
     
     async def _analyze_emotionality(self, content: str) -> float:
-        """Analyze emotional content level"""
-        if self._sentiment_analyzer:
+        """Analyze emotional content level"""        if self._sentiment_analyzer:
             scores = self._sentiment_analyzer.polarity_scores(content)
             # High emotionality indicated by strong positive or negative sentiment
             emotionality = max(abs(scores['pos']), abs(scores['neg']))
@@ -419,8 +399,7 @@ class StyleOptimizer:
         return emotionality
     
     async def _analyze_persuasiveness(self, content: str) -> float:
-        """Analyze persuasive elements in content"""
-        persuasive_indicators = [
+        """Analyze persuasive elements in content"""        persuasive_indicators = [
             'you should', 'you must', 'you need to', 'imagine', 'consider',
             'benefits', 'advantage', 'proven', 'guaranteed', 'results',
             'transform', 'improve', 'enhance', 'achieve', 'succeed'
@@ -449,8 +428,7 @@ class StyleOptimizer:
         return max(0.0, min(persuasive_score, 1.0))
     
     async def _analyze_creativity(self, content: str) -> float:
-        """Analyze creative elements in content"""
-        creative_indicators = [
+        """Analyze creative elements in content"""        creative_indicators = [
             'imagine', 'picture', 'visualize', 'dream', 'create', 'innovate',
             'unique', 'original', 'creative', 'artistic', 'inspired'
         ]
@@ -476,8 +454,7 @@ class StyleOptimizer:
         return max(0.0, min(creativity_score, 1.0))
     
     async def _analyze_clarity(self, content: str) -> float:
-        """Analyze clarity of content"""
-        try:
+        """Analyze clarity of content"""        try:
             # Readability as clarity indicator
             readability = flesch_reading_ease(content) / 100.0
             
@@ -503,8 +480,7 @@ class StyleOptimizer:
             return 0.5  # Default if calculation fails
     
     async def _analyze_engagement(self, content: str) -> float:
-        """Analyze engagement potential of content"""
-        engagement_indicators = [
+        """Analyze engagement potential of content"""        engagement_indicators = [
             'you', 'your', 'we', 'us', 'our', 'together',
             'discover', 'learn', 'explore', 'find out', 'check out'
         ]
@@ -533,8 +509,7 @@ class StyleOptimizer:
         return max(0.0, min(engagement_score, 1.0))
     
     async def _analyze_authority(self, content: str) -> float:
-        """Analyze authority/expertise indicators"""
-        authority_indicators = [
+        """Analyze authority/expertise indicators"""        authority_indicators = [
             'research shows', 'studies indicate', 'evidence suggests',
             'proven', 'demonstrated', 'established', 'confirmed',
             'expert', 'professional', 'experienced', 'certified',
@@ -562,8 +537,7 @@ class StyleOptimizer:
         return max(0.0, min(authority_score, 1.0))
     
     async def _analyze_personality(self, content: str) -> PersonalityType:
-        """Analyze personality type that matches the content style"""
-        # Simplified personality analysis based on style indicators
+        """Analyze personality type that matches the content style"""        # Simplified personality analysis based on style indicators
         scores = {}
         
         # Analytical personality indicators
@@ -590,8 +564,7 @@ class StyleOptimizer:
         return PersonalityType.PROFESSIONAL  # Default
     
     async def _detect_brand_voice(self, content: str) -> Optional[BrandVoice]:
-        """Detect brand voice from content style"""
-        # Simplified brand voice detection
+        """Detect brand voice from content style"""        # Simplified brand voice detection
         voice_indicators = {
             BrandVoice.CORPORATE: ['professional', 'industry', 'enterprise', 'business'],
             BrandVoice.STARTUP: ['innovative', 'disrupt', 'agile', 'startup'],
@@ -613,19 +586,16 @@ class StyleOptimizer:
         return None
     
     def _generate_cache_key(self, content: str, operation: str) -> str:
-        """Generate cache key for style operations"""
-        content_hash = hashlib.md5(content.encode()).hexdigest()[:16]
+        """Generate cache key for style operations"""        content_hash = hashlib.md5(content.encode()).hexdigest()[:16]
         return f"style_{operation}_{content_hash}"
 
 
 class PersonalityMatcher:
-    """
-    Advanced Personality Matching System
+    """    Advanced Personality Matching System
     
     Matches content style with target personality types and provides
     recommendations for personality-specific content optimization.
-    """
-    
+    """    
     def __init__(self):
         self.style_optimizer = StyleOptimizer()
         self.performance_monitor = PerformanceMonitor("personality_matcher")
@@ -638,8 +608,7 @@ class PersonalityMatcher:
         logger.info("PersonalityMatcher initialized")
     
     def _load_personality_profiles(self):
-        """Load personality-specific style profiles"""
-        self._personality_profiles = {
+        """Load personality-specific style profiles"""        self._personality_profiles = {
             PersonalityType.ANALYTICAL: StyleProfile(
                 formality_score=0.8,
                 complexity_score=0.7,
@@ -690,8 +659,7 @@ class PersonalityMatcher:
         }
     
     async def match_personality(self, content: str, target_personalities: List[PersonalityType]) -> Dict[str, Any]:
-        """
-        Match content with target personality types
+        """        Match content with target personality types
         
         Args:
             content: Content to analyze
@@ -699,8 +667,7 @@ class PersonalityMatcher:
             
         Returns:
             Matching results with scores and recommendations
-        """
-        async with self.performance_monitor.track_operation("personality_matching"):
+        """        async with self.performance_monitor.track_operation("personality_matching"):
             try:
                 # Analyze content style
                 content_profile = await self.style_optimizer.analyze_style(content)
@@ -737,8 +704,7 @@ class PersonalityMatcher:
                 raise
     
     async def _calculate_personality_match(self, content_profile: StyleProfile, target_profile: StyleProfile) -> float:
-        """Calculate how well content matches target personality"""
-        # Compare all style dimensions
+        """Calculate how well content matches target personality"""        # Compare all style dimensions
         dimensions = [
             'formality_score', 'complexity_score', 'emotionality_score',
             'persuasiveness_score', 'creativity_score', 'clarity_score',
@@ -760,8 +726,7 @@ class PersonalityMatcher:
         content_profile: StyleProfile,
         target_personalities: List[PersonalityType]
     ) -> List[str]:
-        """Generate recommendations for personality matching"""
-        recommendations = []
+        """Generate recommendations for personality matching"""        recommendations = []
         
         for personality in target_personalities:
             target_profile = self._personality_profiles.get(personality)

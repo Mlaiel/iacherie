@@ -22,8 +22,7 @@ Team Specialists:
 - Audio Processing Specialist: Advanced audio AI algorithms
 - DevOps Engineer: Production-ready infrastructure
 - IA Prompt Engineer: Optimized AI model interactions
-"""
-import asyncio
+"""import asyncio
 import pytest
 from typing import Dict, List, Any
 import sys

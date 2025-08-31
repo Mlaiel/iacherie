@@ -1,5 +1,4 @@
-"""
-Monetization and revenue tracking endpoints for IA Influencer Agent platform.
+"""Monetization and revenue tracking endpoints for IA Influencer Agent platform.
 
 This module handles comprehensive revenue optimization, automated licensing,
 and multi-platform monetization analytics for content creators.
@@ -7,9 +6,7 @@ and multi-platform monetization analytics for content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""
-
-from datetime import datetime, timedelta
+"""from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional
 import asyncio
 import logging
@@ -57,16 +54,14 @@ class RevenueType(str, Enum):
 
 # Pydantic models for request/response validation
 class RevenueTrackingRequest(BaseModel):
-    """Request model for revenue tracking setup"""
-    content_ids: List[str] = Field(..., description="List of content fingerprint IDs to track")
+    """Request model for revenue tracking setup"""    content_ids: List[str] = Field(..., description="List of content fingerprint IDs to track")
     platforms: List[str] = Field(..., description="Platforms for revenue tracking")
     tracking_frequency: str = Field("daily", description="Tracking frequency: hourly, daily, weekly")
     currency: str = Field("EUR", description="Primary currency for reporting")
     enable_forecasting: bool = Field(True, description="Enable AI-powered revenue forecasting")
 
 class RevenueAnalyticsResponse(BaseModel):
-    """Response model for revenue analytics"""
-    total_revenue: Decimal = Field(..., description="Total revenue across all sources")
+    """Response model for revenue analytics"""    total_revenue: Decimal = Field(..., description="Total revenue across all sources")
     revenue_by_platform: Dict[str, Decimal] = Field(..., description="Revenue breakdown by platform")
     revenue_by_type: Dict[str, Decimal] = Field(..., description="Revenue breakdown by type")
     growth_rate: float = Field(..., description="Month-over-month growth rate")
@@ -75,8 +70,7 @@ class RevenueAnalyticsResponse(BaseModel):
     forecasted_revenue: Optional[Dict[str, Any]] = Field(None, description="AI-generated revenue forecast")
 
 class LicensingDealRequest(BaseModel):
-    """Request model for licensing deal creation"""
-    content_id: str = Field(..., description="Content fingerprint ID to license")
+    """Request model for licensing deal creation"""    content_id: str = Field(..., description="Content fingerprint ID to license")
     licensee_name: str = Field(..., description="Name of licensee")
     licensee_email: str = Field(..., description="Contact email of licensee")
     usage_type: str = Field(..., description="Type of usage: commercial, non-commercial, exclusive")
@@ -87,16 +81,14 @@ class LicensingDealRequest(BaseModel):
     terms_conditions: Dict[str, Any] = Field(..., description="Additional terms and conditions")
 
 class PayoutRequest(BaseModel):
-    """Request model for payout processing"""
-    amount: Decimal = Field(..., description="Payout amount")
+    """Request model for payout processing"""    amount: Decimal = Field(..., description="Payout amount")
     currency: str = Field("EUR", description="Payout currency")
     payment_method: str = Field(..., description="Payment method: bank_transfer, paypal, stripe")
     payment_details: Dict[str, Any] = Field(..., description="Payment method specific details")
     notes: Optional[str] = Field(None, description="Optional notes for payout")
 
 class RevenueForecastRequest(BaseModel):
-    """Request model for revenue forecasting"""
-    content_ids: Optional[List[str]] = Field(None, description="Specific content IDs to forecast")
+    """Request model for revenue forecasting"""    content_ids: Optional[List[str]] = Field(None, description="Specific content IDs to forecast")
     forecast_horizon: ForecastHorizon = Field(ForecastHorizon.MEDIUM_TERM, description="Forecasting time horizon")
     confidence_level: float = Field(0.95, ge=0.5, le=0.99, description="Statistical confidence level")
     include_seasonality: bool = Field(True, description="Include seasonal patterns in forecast")
@@ -112,16 +104,14 @@ async def setup_revenue_tracking(
     monetization_service: MonetizationService = Depends(),
     revenue_service: RevenueService = Depends()
 ):
-    """
-    Setup comprehensive revenue tracking for content portfolio.
+    """    Setup comprehensive revenue tracking for content portfolio.
     
     Features:
     - Multi-platform revenue aggregation (Spotify, YouTube, Instagram, TikTok, etc.)
     - Real-time revenue monitoring and alerts
     - AI-powered revenue forecasting and optimization
     - Automated reporting and tax documentation
-    """
-    try:
+    """    try:
         # Validate content IDs belong to user
         fingerprints = db.query(ContentFingerprint).filter(
             ContentFingerprint.id.in_(tracking_request.content_ids),
@@ -232,16 +222,14 @@ async def get_revenue_analytics(
     analytics_service: AnalyticsService = Depends(),
     monetization_service: MonetizationService = Depends()
 ):
-    """
-    Get comprehensive revenue analytics with AI-powered insights.
+    """    Get comprehensive revenue analytics with AI-powered insights.
     
     Features:
     - Real-time revenue aggregation across all platforms
     - Advanced performance metrics and KPIs
     - AI-powered trend analysis and recommendations
     - Comparative analytics and benchmarking
-    """
-    try:
+    """    try:
         # Set default date range if not provided
         if not end_date:
             end_date = datetime.utcnow()
@@ -345,8 +333,7 @@ async def create_licensing_deal(
     db: Session = Depends(get_db),
     licensing_service: LicensingService = Depends()
 ):
-    """
-    Create automated licensing deal with smart contract generation.
+    """    Create automated licensing deal with smart contract generation.
     
     Features:
     - Automated legal document generation
@@ -354,8 +341,7 @@ async def create_licensing_deal(
     - Smart contract integration (blockchain-based)
     - Royalty calculation and distribution
     - Usage monitoring and compliance tracking
-    """
-    try:
+    """    try:
         # Validate content belongs to user
         fingerprint = db.query(ContentFingerprint).filter(
             ContentFingerprint.id == licensing_request.content_id,
@@ -478,8 +464,7 @@ async def process_payout(
     db: Session = Depends(get_db),
     payment_service: PaymentService = Depends()
 ):
-    """
-    Process revenue payout with multi-currency and multi-method support.
+    """    Process revenue payout with multi-currency and multi-method support.
     
     Features:
     - Multiple payment methods (bank transfer, PayPal, Stripe, crypto)
@@ -487,8 +472,7 @@ async def process_payout(
     - Tax calculation and withholding
     - Automated invoicing and documentation
     - Fraud detection and security validation
-    """
-    try:
+    """    try:
         # Validate user has sufficient balance
         available_balance = await payment_service.get_available_balance(
             current_user.id,
@@ -588,8 +572,7 @@ async def generate_revenue_forecast(
     db: Session = Depends(get_db),
     monetization_service: MonetizationService = Depends()
 ):
-    """
-    Generate AI-powered revenue forecasts with advanced modeling.
+    """    Generate AI-powered revenue forecasts with advanced modeling.
     
     Features:
     - Machine learning ensemble models (LSTM, ARIMA, Prophet)
@@ -597,8 +580,7 @@ async def generate_revenue_forecast(
     - Market trend integration and external factor analysis
     - Scenario analysis with confidence intervals
     - Platform-specific forecasting with cross-correlation
-    """
-    try:
+    """    try:
         # Validate content IDs if provided
         if forecast_request.content_ids:
             fingerprints = db.query(ContentFingerprint).filter(
@@ -669,8 +651,7 @@ async def get_licensing_deals(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """Get all licensing deals for the current user."""
-    try:
+    """Get all licensing deals for the current user."""    try:
         query = db.query(LicensingDeal).filter(
             LicensingDeal.user_id == current_user.id
         )
@@ -709,8 +690,7 @@ async def get_account_balance(
     current_user: User = Depends(get_current_user),
     payment_service: PaymentService = Depends()
 ):
-    """Get current account balance and payout information."""
-    try:
+    """Get current account balance and payout information."""    try:
         balance_info = await payment_service.get_comprehensive_balance_info(
             current_user.id,
             currency

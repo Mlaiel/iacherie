@@ -1,5 +1,4 @@
-"""
-Intelligent Matching Database Model
+"""Intelligent Matching Database Model
 
 Ultra-industrial SQLAlchemy model for AI-powered intelligent matching between creators,
 collaboration opportunities, brand partnerships, and cross-format content synergies.
@@ -24,9 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-
-from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric, ARRAY
+"""from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID, JSONB
@@ -40,8 +37,7 @@ Base = declarative_base()
 
 
 class MatchingType(Enum):
-    """Types of intelligent matching"""
-    CREATOR_COLLABORATION = "creator_collaboration"
+    """Types of intelligent matching"""    CREATOR_COLLABORATION = "creator_collaboration"
     BRAND_PARTNERSHIP = "brand_partnership"
     CONTENT_SYNERGY = "content_synergy"
     CROSS_FORMAT_FUSION = "cross_format_fusion"
@@ -59,8 +55,7 @@ class MatchingType(Enum):
 
 
 class MatchingAlgorithm(Enum):
-    """AI algorithms used for matching"""
-    NEURAL_SIMILARITY = "neural_similarity"
+    """AI algorithms used for matching"""    NEURAL_SIMILARITY = "neural_similarity"
     COLLABORATIVE_FILTERING = "collaborative_filtering"
     CONTENT_EMBEDDING = "content_embedding"
     GRAPH_NEURAL_NETWORK = "graph_neural_network"
@@ -77,8 +72,7 @@ class MatchingAlgorithm(Enum):
 
 
 class MatchingStatus(Enum):
-    """Status of matching suggestions"""
-    PENDING = "pending"
+    """Status of matching suggestions"""    PENDING = "pending"
     ACTIVE = "active"
     ACCEPTED = "accepted"
     DECLINED = "declined"
@@ -93,8 +87,7 @@ class MatchingStatus(Enum):
 
 
 class ConfidenceLevel(Enum):
-    """AI confidence in matching quality"""
-    VERY_LOW = "very_low"      # 0-20%
+    """AI confidence in matching quality"""    VERY_LOW = "very_low"      # 0-20%
     LOW = "low"                # 20-40%
     MODERATE = "moderate"      # 40-60%
     HIGH = "high"              # 60-80%
@@ -103,8 +96,7 @@ class ConfidenceLevel(Enum):
 
 
 class SynergyType(Enum):
-    """Types of content/creator synergies"""
-    COMPLEMENTARY_SKILLS = "complementary_skills"
+    """Types of content/creator synergies"""    COMPLEMENTARY_SKILLS = "complementary_skills"
     OVERLAPPING_AUDIENCE = "overlapping_audience"
     GENRE_CROSSOVER = "genre_crossover"
     PLATFORM_STRENGTH = "platform_strength"
@@ -121,8 +113,7 @@ class SynergyType(Enum):
 
 
 class CollaborationType(Enum):
-    """Types of collaboration opportunities"""
-    SINGLE_TRACK = "single_track"
+    """Types of collaboration opportunities"""    SINGLE_TRACK = "single_track"
     EP_COLLABORATION = "ep_collaboration"
     ALBUM_PROJECT = "album_project"
     LIVE_PERFORMANCE = "live_performance"
@@ -140,13 +131,11 @@ class CollaborationType(Enum):
 
 
 class IntelligentMatching(Base):
-    """
-    Ultra-Industrial Intelligent Matching Model
+    """    Ultra-Industrial Intelligent Matching Model
     
     AI-powered matching system for creator collaborations, brand partnerships,
     and multi-format content synergies with advanced predictive analytics.
-    """
-    __tablename__ = "intelligent_matching"
+    """    __tablename__ = "intelligent_matching"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -315,8 +304,7 @@ class IntelligentMatching(Base):
         return f"<IntelligentMatching(id={self.id}, type={self.matching_type.value}, score={self.matching_score})>"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert model to dictionary for API responses"""
-        return {
+        """Convert model to dictionary for API responses"""        return {
             "id": str(self.id),
             "matching_id": self.matching_id,
             "primary_creator_id": str(self.primary_creator_id),
@@ -335,20 +323,17 @@ class IntelligentMatching(Base):
         }
     
     def is_expired(self) -> bool:
-        """Check if matching has expired"""
-        if not self.expiration_date:
+        """Check if matching has expired"""        if not self.expiration_date:
             return False
         return datetime.now(timezone.utc) > self.expiration_date
     
     def is_response_overdue(self) -> bool:
-        """Check if response is overdue"""
-        if not self.response_deadline:
+        """Check if response is overdue"""        if not self.response_deadline:
             return False
         return datetime.now(timezone.utc) > self.response_deadline
     
     def calculate_overall_compatibility(self) -> float:
-        """Calculate overall compatibility score"""
-        weights = {
+        """Calculate overall compatibility score"""        weights = {
             'skill_compatibility': 0.20,
             'style_compatibility': 0.15,
             'audience_overlap': 0.15,
@@ -367,8 +352,7 @@ class IntelligentMatching(Base):
         return min(total_score, 1.0)
     
     def get_success_indicators(self) -> List[str]:
-        """Get list of success indicators"""
-        indicators = []
+        """Get list of success indicators"""        indicators = []
         
         if self.matching_score > 0.8:
             indicators.append("High matching score")
@@ -386,8 +370,7 @@ class IntelligentMatching(Base):
         return indicators
     
     def get_risk_factors(self) -> List[str]:
-        """Get list of risk factors"""
-        risks = []
+        """Get list of risk factors"""        risks = []
         
         if self.matching_score < 0.5:
             risks.append("Low matching score")
@@ -405,8 +388,7 @@ class IntelligentMatching(Base):
         return risks
     
     def update_performance_metrics(self, actual_success: bool, actual_roi: float = None):
-        """Update performance metrics based on actual outcomes"""
-        self.actual_success_rate = 1.0 if actual_success else 0.0
+        """Update performance metrics based on actual outcomes"""        self.actual_success_rate = 1.0 if actual_success else 0.0
         if actual_roi is not None:
             self.actual_roi = actual_roi
         

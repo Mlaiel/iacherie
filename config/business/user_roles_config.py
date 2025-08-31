@@ -1,5 +1,4 @@
-"""
-User Roles and Permissions Configuration Module
+"""User Roles and Permissions Configuration Module
 ===============================================
 
 Enterprise user role-based access control (RBAC) and permissions management.
@@ -13,17 +12,14 @@ Any unauthorized use, copying, or distribution without explicit written permissi
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in legal action.
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
-"""
-
-from enum import Enum
+"""from enum import Enum
 from typing import Dict, List, Optional, Set, Union
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 
 
 class UserRole(str, Enum):
-    """User roles in the platform hierarchy."""
-    PLATFORM_ADMIN = "platform_admin"
+    """User roles in the platform hierarchy."""    PLATFORM_ADMIN = "platform_admin"
     TENANT_ADMIN = "tenant_admin"
     CONTENT_MANAGER = "content_manager"
     CREATOR_PROFESSIONAL = "creator_professional"
@@ -36,8 +32,7 @@ class UserRole(str, Enum):
 
 
 class Permission(str, Enum):
-    """Granular permissions for system operations."""
-    # User management permissions
+    """Granular permissions for system operations."""    # User management permissions
     USER_CREATE = "user:create"
     USER_READ = "user:read"
     USER_UPDATE = "user:update"
@@ -95,8 +90,7 @@ class Permission(str, Enum):
 
 
 class ResourceType(str, Enum):
-    """Resource types for permission scoping."""
-    USER = "user"
+    """Resource types for permission scoping."""    USER = "user"
     CONTENT = "content"
     TENANT = "tenant"
     ANALYTICS = "analytics"
@@ -109,8 +103,7 @@ class ResourceType(str, Enum):
 
 @dataclass
 class PermissionScope:
-    """Permission scope definition."""
-    resource_type: ResourceType
+    """Permission scope definition."""    resource_type: ResourceType
     resource_ids: Optional[List[str]] = None  # None means all resources
     conditions: Optional[Dict[str, str]] = None
     time_bound: Optional[datetime] = None
@@ -119,8 +112,7 @@ class PermissionScope:
 
 @dataclass
 class RoleDefinition:
-    """Complete role definition with permissions and constraints."""
-    name: str
+    """Complete role definition with permissions and constraints."""    name: str
     description: str
     permissions: Set[Permission]
     inherits_from: Optional[List[UserRole]] = None
@@ -132,9 +124,7 @@ class RoleDefinition:
 
 
 class UserRolesConfig:
-    """Enterprise user roles and permissions configuration."""
-
-    # Role hierarchy and inheritance
+    """Enterprise user roles and permissions configuration."""    # Role hierarchy and inheritance
     ROLE_HIERARCHY = {
         UserRole.PLATFORM_ADMIN: {
             "level": 10,
@@ -515,8 +505,7 @@ class UserRolesConfig:
 
     @classmethod
     def get_role_permissions(cls, role: UserRole) -> Set[Permission]:
-        """Get all permissions for a role including inherited permissions."""
-        role_def = cls.ROLE_DEFINITIONS.get(role)
+        """Get all permissions for a role including inherited permissions."""        role_def = cls.ROLE_DEFINITIONS.get(role)
         if not role_def:
             return set()
         
@@ -532,37 +521,31 @@ class UserRolesConfig:
 
     @classmethod
     def has_permission(cls, user_role: UserRole, permission: Permission, resource_type: Optional[ResourceType] = None) -> bool:
-        """Check if a role has a specific permission."""
-        role_permissions = cls.get_role_permissions(user_role)
+        """Check if a role has a specific permission."""        role_permissions = cls.get_role_permissions(user_role)
         return permission in role_permissions
 
     @classmethod
     def can_assign_role(cls, assigner_role: UserRole, target_role: UserRole) -> bool:
-        """Check if a role can assign another role."""
-        hierarchy = cls.ROLE_HIERARCHY.get(assigner_role, {})
+        """Check if a role can assign another role."""        hierarchy = cls.ROLE_HIERARCHY.get(assigner_role, {})
         assignable_roles = hierarchy.get("can_assign_roles", [])
         return target_role in assignable_roles
 
     @classmethod
     def get_role_level(cls, role: UserRole) -> int:
-        """Get hierarchical level of a role."""
-        hierarchy = cls.ROLE_HIERARCHY.get(role, {})
+        """Get hierarchical level of a role."""        hierarchy = cls.ROLE_HIERARCHY.get(role, {})
         return hierarchy.get("level", 0)
 
     @classmethod
     def is_higher_role(cls, role1: UserRole, role2: UserRole) -> bool:
-        """Check if role1 has higher privileges than role2."""
-        return cls.get_role_level(role1) > cls.get_role_level(role2)
+        """Check if role1 has higher privileges than role2."""        return cls.get_role_level(role1) > cls.get_role_level(role2)
 
     @classmethod
     def get_role_features(cls, role: UserRole) -> Dict[str, bool]:
-        """Get feature access for a role."""
-        return cls.ROLE_FEATURES.get(role, {})
+        """Get feature access for a role."""        return cls.ROLE_FEATURES.get(role, {})
 
     @classmethod
     def validate_role_assignment(cls, assigner: UserRole, assignee: UserRole, tenant_context: bool = True) -> Dict[str, Union[bool, str]]:
-        """Validate if a role assignment is permitted."""
-        validation = {
+        """Validate if a role assignment is permitted."""        validation = {
             "valid": True,
             "reason": ""
         }
@@ -583,10 +566,8 @@ class UserRolesConfig:
 
     @classmethod
     def get_permission_groups(cls) -> Dict[str, List[Permission]]:
-        """Get all permission groups."""
-        return cls.PERMISSION_GROUPS
+        """Get all permission groups."""        return cls.PERMISSION_GROUPS
 
     @classmethod
     def get_permissions_in_group(cls, group_name: str) -> List[Permission]:
-        """Get permissions in a specific group."""
-        return cls.PERMISSION_GROUPS.get(group_name, [])
+        """Get permissions in a specific group."""        return cls.PERMISSION_GROUPS.get(group_name, [])

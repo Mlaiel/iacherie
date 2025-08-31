@@ -1,13 +1,10 @@
-"""
-Configuration Validators - IA Influencer Agent Platform
+"""Configuration Validators - IA Influencer Agent Platform
 Comprehensive validation system for all configuration components
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""
-
-import re
+"""import re
 import ipaddress
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass
@@ -30,24 +27,20 @@ from .logging_config import LoggingConfig
 
 @dataclass
 class ValidationResult:
-    """Result of configuration validation"""
-    is_valid: bool
+    """Result of configuration validation"""    is_valid: bool
     errors: List[str]
     warnings: List[str]
     component: str
     
     def add_error(self, message: str):
-        """Add validation error"""
-        self.errors.append(message)
+        """Add validation error"""        self.errors.append(message)
         self.is_valid = False
     
     def add_warning(self, message: str):
-        """Add validation warning"""
-        self.warnings.append(message)
+        """Add validation warning"""        self.warnings.append(message)
     
     def merge(self, other: 'ValidationResult') -> 'ValidationResult':
-        """Merge with another validation result"""
-        return ValidationResult(
+        """Merge with another validation result"""        return ValidationResult(
             is_valid=self.is_valid and other.is_valid,
             errors=self.errors + other.errors,
             warnings=self.warnings + other.warnings,
@@ -56,12 +49,10 @@ class ValidationResult:
 
 
 class BaseValidator:
-    """Base configuration validator"""
-    
+    """Base configuration validator"""    
     @staticmethod
     def validate_url(url: str, schemes: List[str] = None) -> bool:
-        """Validate URL format and scheme"""
-        if not url:
+        """Validate URL format and scheme"""        if not url:
             return False
         
         try:
@@ -78,14 +69,12 @@ class BaseValidator:
     
     @staticmethod
     def validate_email(email: str) -> bool:
-        """Validate email format"""
-        pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        """Validate email format"""        pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         return bool(re.match(pattern, email))
     
     @staticmethod
     def validate_ip_address(ip: str) -> bool:
-        """Validate IP address format"""
-        try:
+        """Validate IP address format"""        try:
             ipaddress.ip_address(ip)
             return True
         except ValueError:
@@ -93,13 +82,11 @@ class BaseValidator:
     
     @staticmethod
     def validate_port(port: int) -> bool:
-        """Validate port number"""
-        return 1 <= port <= 65535
+        """Validate port number"""        return 1 <= port <= 65535
     
     @staticmethod
     def validate_directory_exists(path: str, create: bool = False) -> bool:
-        """Validate directory exists or can be created"""
-        try:
+        """Validate directory exists or can be created"""        try:
             path_obj = Path(path)
             if path_obj.exists():
                 return path_obj.is_dir()
@@ -112,8 +99,7 @@ class BaseValidator:
     
     @staticmethod
     def validate_file_permissions(path: str, required_permissions: int) -> bool:
-        """Validate file permissions"""
-        try:
+        """Validate file permissions"""        try:
             if not os.path.exists(path):
                 return False
             
@@ -124,8 +110,7 @@ class BaseValidator:
     
     @staticmethod
     def test_network_connectivity(host: str, port: int, timeout: int = 5) -> bool:
-        """Test network connectivity to host:port"""
-        try:
+        """Test network connectivity to host:port"""        try:
             with socket.create_connection((host, port), timeout=timeout):
                 return True
         except (socket.error, socket.timeout):
@@ -133,8 +118,7 @@ class BaseValidator:
     
     @staticmethod
     def validate_ssl_certificate(host: str, port: int = 443) -> bool:
-        """Validate SSL certificate"""
-        try:
+        """Validate SSL certificate"""        try:
             context = ssl.create_default_context()
             with socket.create_connection((host, port), timeout=5) as sock:
                 with context.wrap_socket(sock, server_hostname=host) as ssock:
@@ -145,8 +129,7 @@ class BaseValidator:
     
     @staticmethod
     def validate_dns_resolution(hostname: str) -> bool:
-        """Validate DNS resolution"""
-        try:
+        """Validate DNS resolution"""        try:
             dns.resolver.resolve(hostname, 'A')
             return True
         except Exception:
@@ -154,12 +137,10 @@ class BaseValidator:
 
 
 class ConfigValidator(BaseValidator):
-    """Main application configuration validator"""
-    
+    """Main application configuration validator"""    
     @classmethod
     def validate_app_config(cls, config: AppConfig) -> ValidationResult:
-        """Validate main application configuration"""
-        result = ValidationResult(True, [], [], "app_config")
+        """Validate main application configuration"""        result = ValidationResult(True, [], [], "app_config")
         
         # Basic validation
         if not config.app_name:
@@ -249,12 +230,10 @@ class ConfigValidator(BaseValidator):
 
 
 class DatabaseConfigValidator(BaseValidator):
-    """Database configuration validator"""
-    
+    """Database configuration validator"""    
     @classmethod
     def validate(cls, config: DatabaseConfig) -> ValidationResult:
-        """Validate database configuration"""
-        result = ValidationResult(True, [], [], "database_config")
+        """Validate database configuration"""        result = ValidationResult(True, [], [], "database_config")
         
         # Connection parameters validation
         if not config.host:
@@ -304,8 +283,7 @@ class DatabaseConfigValidator(BaseValidator):
     
     @classmethod
     def validate_redis_config(cls, config: RedisConfig) -> ValidationResult:
-        """Validate Redis configuration"""
-        result = ValidationResult(True, [], [], "redis_config")
+        """Validate Redis configuration"""        result = ValidationResult(True, [], [], "redis_config")
         
         if not config.host:
             result.add_error("Redis host is required")
@@ -330,12 +308,10 @@ class DatabaseConfigValidator(BaseValidator):
 
 
 class SecurityConfigValidator(BaseValidator):
-    """Security configuration validator"""
-    
+    """Security configuration validator"""    
     @classmethod
     def validate(cls, config: SecurityConfig) -> ValidationResult:
-        """Validate security configuration"""
-        result = ValidationResult(True, [], [], "security_config")
+        """Validate security configuration"""        result = ValidationResult(True, [], [], "security_config")
         
         # Secret validation
         if len(config.secret_key) < 32:
@@ -442,12 +418,10 @@ class SecurityConfigValidator(BaseValidator):
 
 
 class BlockchainConfigValidator(BaseValidator):
-    """Blockchain configuration validator"""
-    
+    """Blockchain configuration validator"""    
     @classmethod
     def validate(cls, config: BlockchainConfig) -> ValidationResult:
-        """Validate blockchain configuration"""
-        result = ValidationResult(True, [], [], "blockchain_config")
+        """Validate blockchain configuration"""        result = ValidationResult(True, [], [], "blockchain_config")
         
         # Network configuration validation
         for network, network_config in config.networks.items():
@@ -554,12 +528,10 @@ class BlockchainConfigValidator(BaseValidator):
 
 
 class MonitoringConfigValidator(BaseValidator):
-    """Monitoring configuration validator"""
-    
+    """Monitoring configuration validator"""    
     @classmethod
     def validate(cls, config: MonitoringConfig) -> ValidationResult:
-        """Validate monitoring configuration"""
-        result = ValidationResult(True, [], [], "monitoring_config")
+        """Validate monitoring configuration"""        result = ValidationResult(True, [], [], "monitoring_config")
         
         if not config.enabled:
             result.add_warning("Monitoring is disabled")
@@ -681,12 +653,10 @@ class MonitoringConfigValidator(BaseValidator):
 
 
 class LoggingConfigValidator(BaseValidator):
-    """Logging configuration validator"""
-    
+    """Logging configuration validator"""    
     @classmethod
     def validate(cls, config: LoggingConfig) -> ValidationResult:
-        """Validate logging configuration"""
-        result = ValidationResult(True, [], [], "logging_config")
+        """Validate logging configuration"""        result = ValidationResult(True, [], [], "logging_config")
         
         if not config.enabled:
             result.add_warning("Logging is disabled")
@@ -779,8 +749,7 @@ class LoggingConfigValidator(BaseValidator):
 
 
 def validate_all_configurations(config: AppConfig) -> ValidationResult:
-    """Validate all configuration components"""
-    results = []
+    """Validate all configuration components"""    results = []
     
     # Validate main app config
     results.append(ConfigValidator.validate_app_config(config))

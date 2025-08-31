@@ -1,5 +1,4 @@
-"""
-Multi-Cloud Provider Management Module
+"""Multi-Cloud Provider Management Module
 
 Enterprise-grade cloud provider integrations for the IA Influencer Agent + Content Protection Platform.
 Handles provisioning, management, and orchestration across AWS, GCP, Azure, and hybrid environments.
@@ -15,9 +14,7 @@ is strictly prohibited and will result in immediate legal action. All rights res
 Business Logic Flow:
 Content Creator → Upload Multi-format → AI Protection → SEO Optimization → 
 Collaboration Matching → Multi-platform Distribution
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 from abc import ABC, abstractmethod
@@ -40,8 +37,7 @@ logger = logging.getLogger(__name__)
 
 
 class ProvisioningStatus(Enum):
-    """Infrastructure provisioning status"""
-    PENDING = "pending"
+    """Infrastructure provisioning status"""    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -50,8 +46,7 @@ class ProvisioningStatus(Enum):
 
 
 class CloudTier(Enum):
-    """Cloud service tiers for cost optimization"""
-    DEVELOPMENT = "development"
+    """Cloud service tiers for cost optimization"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     ENTERPRISE = "enterprise"
@@ -59,8 +54,7 @@ class CloudTier(Enum):
 
 @dataclass
 class CloudCredentials:
-    """Unified cloud credentials structure"""
-    provider: str
+    """Unified cloud credentials structure"""    provider: str
     access_key: Optional[str] = None
     secret_key: Optional[str] = None
     project_id: Optional[str] = None
@@ -70,8 +64,7 @@ class CloudCredentials:
     region: str = "us-east-1"
     
     def validate(self) -> bool:
-        """Validate credentials for the specified provider"""
-        if self.provider == "aws":
+        """Validate credentials for the specified provider"""        if self.provider == "aws":
             return bool(self.access_key and self.secret_key)
         elif self.provider == "gcp":
             return bool(self.project_id and self.service_account_path)
@@ -82,8 +75,7 @@ class CloudCredentials:
 
 @dataclass
 class EnvironmentSpec:
-    """Environment-specific configuration specification"""
-    name: str
+    """Environment-specific configuration specification"""    name: str
     tier: CloudTier
     region: str
     availability_zones: List[str]
@@ -96,8 +88,7 @@ class EnvironmentSpec:
     tags: Dict[str, str] = field(default_factory=dict)
     
     def __post_init__(self):
-        """Add default tags"""
-        self.tags.update({
+        """Add default tags"""        self.tags.update({
             'Project': 'IA-Influencer-Agent',
             'Environment': self.name,
             'Owner': 'Fahed-Mlaiel',
@@ -107,8 +98,7 @@ class EnvironmentSpec:
 
 @dataclass
 class ResourceQuota:
-    """Resource quota and limits for cloud environments"""
-    max_cpu_cores: int
+    """Resource quota and limits for cloud environments"""    max_cpu_cores: int
     max_memory_gb: int
     max_storage_gb: int
     max_network_bandwidth_mbps: int
@@ -119,8 +109,7 @@ class ResourceQuota:
 
 
 class CloudProviderInterface(ABC):
-    """Abstract base class for cloud provider implementations"""
-    
+    """Abstract base class for cloud provider implementations"""    
     def __init__(self, credentials: CloudCredentials, environment: EnvironmentSpec):
         self.credentials = credentials
         self.environment = environment
@@ -130,52 +119,42 @@ class CloudProviderInterface(ABC):
         
     @abstractmethod
     async def authenticate(self) -> bool:
-        """Authenticate with cloud provider"""
-        pass
+        """Authenticate with cloud provider"""        pass
     
     @abstractmethod
     async def provision_network(self) -> Dict[str, Any]:
-        """Provision network infrastructure"""
-        pass
+        """Provision network infrastructure"""        pass
     
     @abstractmethod
     async def provision_compute(self) -> Dict[str, Any]:
-        """Provision compute resources"""
-        pass
+        """Provision compute resources"""        pass
     
     @abstractmethod
     async def provision_storage(self) -> Dict[str, Any]:
-        """Provision storage resources"""
-        pass
+        """Provision storage resources"""        pass
     
     @abstractmethod
     async def provision_databases(self) -> Dict[str, Any]:
-        """Provision database services"""
-        pass
+        """Provision database services"""        pass
     
     @abstractmethod
     async def provision_monitoring(self) -> Dict[str, Any]:
-        """Provision monitoring and logging"""
-        pass
+        """Provision monitoring and logging"""        pass
     
     @abstractmethod
     async def provision_security(self) -> Dict[str, Any]:
-        """Provision security services"""
-        pass
+        """Provision security services"""        pass
     
     @abstractmethod
     async def destroy_infrastructure(self) -> bool:
-        """Destroy all provisioned infrastructure"""
-        pass
+        """Destroy all provisioned infrastructure"""        pass
     
     @abstractmethod
     async def validate_deployment(self) -> Dict[str, bool]:
-        """Validate deployment status"""
-        pass
+        """Validate deployment status"""        pass
     
     def get_resource_summary(self) -> Dict[str, Any]:
-        """Get summary of all provisioned resources"""
-        return {
+        """Get summary of all provisioned resources"""        return {
             'provider': self.credentials.provider,
             'environment': self.environment.name,
             'status': self.provisioning_status.value,
@@ -185,22 +164,19 @@ class CloudProviderInterface(ABC):
         }
     
     def _calculate_cost_estimate(self) -> float:
-        """Calculate estimated monthly cost"""
-        # Base implementation - to be overridden by providers
+        """Calculate estimated monthly cost"""        # Base implementation - to be overridden by providers
         return 0.0
 
 
 class AWSCloudProvider(CloudProviderInterface):
-    """Amazon Web Services cloud provider implementation"""
-    
+    """Amazon Web Services cloud provider implementation"""    
     def __init__(self, credentials: CloudCredentials, environment: EnvironmentSpec):
         super().__init__(credentials, environment)
         self.session = None
         self.clients = {}
         
     async def authenticate(self) -> bool:
-        """Authenticate with AWS using credentials"""
-        try:
+        """Authenticate with AWS using credentials"""        try:
             self.session = boto3.Session(
                 aws_access_key_id=self.credentials.access_key,
                 aws_secret_access_key=self.credentials.secret_key,
@@ -235,8 +211,7 @@ class AWSCloudProvider(CloudProviderInterface):
             return False
     
     async def provision_network(self) -> Dict[str, Any]:
-        """Provision AWS VPC network infrastructure"""
-        try:
+        """Provision AWS VPC network infrastructure"""        try:
             self.logger.info("Provisioning AWS network infrastructure")
             
             # Create VPC
@@ -302,8 +277,7 @@ class AWSCloudProvider(CloudProviderInterface):
             raise
     
     async def provision_compute(self) -> Dict[str, Any]:
-        """Provision AWS compute resources (EKS, EC2)"""
-        try:
+        """Provision AWS compute resources (EKS, EC2)"""        try:
             self.logger.info("Provisioning AWS compute infrastructure")
             
             # Create EKS cluster for microservices
@@ -339,8 +313,7 @@ class AWSCloudProvider(CloudProviderInterface):
             raise
     
     async def provision_storage(self) -> Dict[str, Any]:
-        """Provision AWS storage resources (S3, EBS, EFS)"""
-        try:
+        """Provision AWS storage resources (S3, EBS, EFS)"""        try:
             self.logger.info("Provisioning AWS storage infrastructure")
             
             # Create S3 buckets for different purposes
@@ -372,8 +345,7 @@ class AWSCloudProvider(CloudProviderInterface):
             raise
     
     async def provision_databases(self) -> Dict[str, Any]:
-        """Provision AWS database services (RDS, ElastiCache, DocumentDB)"""
-        try:
+        """Provision AWS database services (RDS, ElastiCache, DocumentDB)"""        try:
             self.logger.info("Provisioning AWS database infrastructure")
             
             # Create RDS PostgreSQL for main application data
@@ -409,8 +381,7 @@ class AWSCloudProvider(CloudProviderInterface):
             raise
     
     async def provision_monitoring(self) -> Dict[str, Any]:
-        """Provision AWS monitoring and logging infrastructure"""
-        try:
+        """Provision AWS monitoring and logging infrastructure"""        try:
             self.logger.info("Provisioning AWS monitoring infrastructure")
             
             # Create CloudWatch log groups
@@ -450,8 +421,7 @@ class AWSCloudProvider(CloudProviderInterface):
             raise
     
     async def provision_security(self) -> Dict[str, Any]:
-        """Provision AWS security services and configurations"""
-        try:
+        """Provision AWS security services and configurations"""        try:
             self.logger.info("Provisioning AWS security infrastructure")
             
             # Create IAM roles and policies
@@ -495,8 +465,7 @@ class AWSCloudProvider(CloudProviderInterface):
             raise
     
     async def destroy_infrastructure(self) -> bool:
-        """Destroy all AWS infrastructure safely"""
-        try:
+        """Destroy all AWS infrastructure safely"""        try:
             self.logger.info("Starting AWS infrastructure destruction")
             self.provisioning_status = ProvisioningStatus.ROLLING_BACK
             
@@ -518,8 +487,7 @@ class AWSCloudProvider(CloudProviderInterface):
             return False
     
     async def validate_deployment(self) -> Dict[str, bool]:
-        """Validate AWS deployment status"""
-        try:
+        """Validate AWS deployment status"""        try:
             validation_results = {}
             
             # Validate network components
@@ -557,8 +525,7 @@ class AWSCloudProvider(CloudProviderInterface):
             return {'error': str(e)}
     
     def _calculate_cost_estimate(self) -> float:
-        """Calculate estimated monthly AWS cost"""
-        base_cost = 0.0
+        """Calculate estimated monthly AWS cost"""        base_cost = 0.0
         
         # EKS cluster cost
         base_cost += 144.0  # $0.20/hour for EKS cluster
@@ -594,8 +561,7 @@ class AWSCloudProvider(CloudProviderInterface):
     
     # Private AWS helper methods implementation
     async def _create_nat_gateways(self, vpc_id: str) -> List[Dict[str, Any]]:
-        """Create NAT gateways for private subnet internet access"""
-        try:
+        """Create NAT gateways for private subnet internet access"""        try:
             nat_gateways = []
             public_subnets = self.environment.network_config.get('public_subnets', [])
             
@@ -648,8 +614,7 @@ class AWSCloudProvider(CloudProviderInterface):
             raise
     
     async def _create_subnets(self, vpc_id: str) -> Dict[str, List[Dict[str, Any]]]:
-        """Create public and private subnets across availability zones"""
-        try:
+        """Create public and private subnets across availability zones"""        try:
             subnets = {'public': [], 'private': [], 'database': []}
             
             # Get existing public subnets (created with NAT gateways)
@@ -723,8 +688,7 @@ class AWSCloudProvider(CloudProviderInterface):
             raise
     
     async def _create_route_tables(self, vpc_id: str, igw_id: str, nat_gateways: List[Dict[str, Any]]) -> Dict[str, List[str]]:
-        """Create and configure route tables for subnets"""
-        try:
+        """Create and configure route tables for subnets"""        try:
             route_tables = {'public': [], 'private': []}
             
             # Create public route table
@@ -773,8 +737,7 @@ class AWSCloudProvider(CloudProviderInterface):
             raise
     
     async def _create_security_groups(self, vpc_id: str) -> Dict[str, str]:
-        """Create security groups for different tiers"""
-        try:
+        """Create security groups for different tiers"""        try:
             security_groups = {}
             
             # Web tier security group
@@ -877,8 +840,7 @@ class AWSCloudProvider(CloudProviderInterface):
             raise
     
     async def _create_network_acls(self, vpc_id: str) -> List[str]:
-        """Create network ACLs for additional security layer"""
-        try:
+        """Create network ACLs for additional security layer"""        try:
             # For now, using default VPC NACL
             # In production, would create custom NACLs
             return []
@@ -888,8 +850,7 @@ class AWSCloudProvider(CloudProviderInterface):
             raise
     
     async def _create_eks_cluster(self) -> Dict[str, Any]:
-        """Create EKS Kubernetes cluster"""
-        try:
+        """Create EKS Kubernetes cluster"""        try:
             cluster_name = f"eks-{self.environment.name}"
             
             # Create EKS service role
@@ -966,8 +927,7 @@ class AWSCloudProvider(CloudProviderInterface):
             raise
     
     async def _create_eks_node_groups(self, cluster_name: str) -> List[Dict[str, Any]]:
-        """Create EKS worker node groups"""
-        try:
+        """Create EKS worker node groups"""        try:
             node_groups = []
             
             # Create node group IAM role
@@ -1043,8 +1003,7 @@ class AWSCloudProvider(CloudProviderInterface):
     
     # Additional AWS helper methods implementation continues...
     async def _create_ec2_instances(self) -> List[Dict[str, Any]]:
-        """Create specialized EC2 instances for specific workloads"""
-        try:
+        """Create specialized EC2 instances for specific workloads"""        try:
             # For now, EKS handles most compute needs
             # This is for specialized instances if needed
             return []
@@ -1053,8 +1012,7 @@ class AWSCloudProvider(CloudProviderInterface):
             raise
     
     async def _create_auto_scaling_groups(self) -> List[Dict[str, Any]]:
-        """Create Auto Scaling Groups for elastic capacity"""
-        try:
+        """Create Auto Scaling Groups for elastic capacity"""        try:
             # EKS cluster autoscaler handles scaling
             # This is for additional ASGs if needed
             return []
@@ -1063,8 +1021,7 @@ class AWSCloudProvider(CloudProviderInterface):
             raise
     
     async def _create_load_balancers(self) -> Dict[str, Any]:
-        """Create Application Load Balancers"""
-        try:
+        """Create Application Load Balancers"""        try:
             load_balancers = {}
             
             # Get public subnet IDs
@@ -1104,8 +1061,7 @@ class AWSCloudProvider(CloudProviderInterface):
             raise
     
     async def _create_s3_buckets(self) -> Dict[str, str]:
-        """Create S3 buckets for different purposes"""
-        try:
+        """Create S3 buckets for different purposes"""        try:
             buckets = {}
             
             bucket_configs = [
@@ -1159,8 +1115,7 @@ class AWSCloudProvider(CloudProviderInterface):
             raise
     
     async def _create_ebs_volumes(self) -> List[Dict[str, Any]]:
-        """Create EBS volumes for persistent storage"""
-        try:
+        """Create EBS volumes for persistent storage"""        try:
             # EKS uses dynamic provisioning with CSI drivers
             # This is for additional volumes if needed
             return []
@@ -1169,8 +1124,7 @@ class AWSCloudProvider(CloudProviderInterface):
             raise
     
     async def _create_efs_filesystems(self) -> List[Dict[str, Any]]:
-        """Create EFS file systems for shared storage"""
-        try:
+        """Create EFS file systems for shared storage"""        try:
             filesystems = []
             
             # Get private subnet IDs for EFS mount targets
@@ -1210,8 +1164,7 @@ class AWSCloudProvider(CloudProviderInterface):
             raise
     
     async def _setup_s3_lifecycle_policies(self, buckets: Dict[str, str]) -> Dict[str, Any]:
-        """Setup S3 lifecycle policies for cost optimization"""
-        try:
+        """Setup S3 lifecycle policies for cost optimization"""        try:
             policies = {}
             
             for bucket_type, bucket_name in buckets.items():
@@ -1273,8 +1226,7 @@ class AWSCloudProvider(CloudProviderInterface):
             raise
     
     async def _create_postgresql_database(self) -> Dict[str, Any]:
-        """Create RDS PostgreSQL database"""
-        try:
+        """Create RDS PostgreSQL database"""        try:
             # Get database subnet IDs
             db_subnets = self.resource_tracker.get('network', {}).get('subnets', {}).get('database', [])
             subnet_ids = [subnet['subnet_id'] for subnet in db_subnets]
@@ -1335,8 +1287,7 @@ class AWSCloudProvider(CloudProviderInterface):
             raise
     
     async def _create_redis_cluster(self) -> Dict[str, Any]:
-        """Create ElastiCache Redis cluster"""
-        try:
+        """Create ElastiCache Redis cluster"""        try:
             # Get private subnet IDs
             private_subnets = self.resource_tracker.get('network', {}).get('subnets', {}).get('private', [])
             subnet_ids = [subnet['subnet_id'] for subnet in private_subnets]
@@ -1394,8 +1345,7 @@ class AWSCloudProvider(CloudProviderInterface):
             raise
     
     async def _create_documentdb_cluster(self) -> Dict[str, Any]:
-        """Create DocumentDB cluster for MongoDB compatibility"""
-        try:
+        """Create DocumentDB cluster for MongoDB compatibility"""        try:
             # For now, using PostgreSQL for document storage
             # DocumentDB can be added later if needed
             return {}
@@ -1404,8 +1354,7 @@ class AWSCloudProvider(CloudProviderInterface):
             raise
     
     async def _create_opensearch_domain(self) -> Dict[str, Any]:
-        """Create OpenSearch domain for search and analytics"""
-        try:
+        """Create OpenSearch domain for search and analytics"""        try:
             # Get private subnet IDs
             private_subnets = self.resource_tracker.get('network', {}).get('subnets', {}).get('private', [])
             subnet_ids = [subnet['subnet_id'] for subnet in private_subnets[:2]]  # OpenSearch needs max 2 subnets
@@ -1459,15 +1408,13 @@ class AWSCloudProvider(CloudProviderInterface):
 
 
 class GCPCloudProvider(CloudProviderInterface):
-    """Google Cloud Platform provider implementation"""
-    
+    """Google Cloud Platform provider implementation"""    
     def __init__(self, credentials: CloudCredentials, environment: EnvironmentSpec):
         super().__init__(credentials, environment)
         self.clients = {}
         
     async def authenticate(self) -> bool:
-        """Authenticate with GCP using service account"""
-        try:
+        """Authenticate with GCP using service account"""        try:
             # Initialize GCP clients
             self.clients = {
                 'compute': compute_v1.InstancesClient(),
@@ -1484,55 +1431,45 @@ class GCPCloudProvider(CloudProviderInterface):
             return False
     
     async def provision_network(self) -> Dict[str, Any]:
-        """Provision GCP VPC network infrastructure"""
-        # Implementation for GCP network provisioning
+        """Provision GCP VPC network infrastructure"""        # Implementation for GCP network provisioning
         return {}
     
     async def provision_compute(self) -> Dict[str, Any]:
-        """Provision GCP compute resources (GKE, Compute Engine)"""
-        # Implementation for GCP compute provisioning
+        """Provision GCP compute resources (GKE, Compute Engine)"""        # Implementation for GCP compute provisioning
         return {}
     
     async def provision_storage(self) -> Dict[str, Any]:
-        """Provision GCP storage resources (Cloud Storage, Persistent Disks)"""
-        # Implementation for GCP storage provisioning
+        """Provision GCP storage resources (Cloud Storage, Persistent Disks)"""        # Implementation for GCP storage provisioning
         return {}
     
     async def provision_databases(self) -> Dict[str, Any]:
-        """Provision GCP database services (Cloud SQL, Firestore, Memorystore)"""
-        # Implementation for GCP database provisioning
+        """Provision GCP database services (Cloud SQL, Firestore, Memorystore)"""        # Implementation for GCP database provisioning
         return {}
     
     async def provision_monitoring(self) -> Dict[str, Any]:
-        """Provision GCP monitoring and logging infrastructure"""
-        # Implementation for GCP monitoring provisioning
+        """Provision GCP monitoring and logging infrastructure"""        # Implementation for GCP monitoring provisioning
         return {}
     
     async def provision_security(self) -> Dict[str, Any]:
-        """Provision GCP security services and configurations"""
-        # Implementation for GCP security provisioning
+        """Provision GCP security services and configurations"""        # Implementation for GCP security provisioning
         return {}
     
     async def destroy_infrastructure(self) -> bool:
-        """Destroy all GCP infrastructure safely"""
-        return True
+        """Destroy all GCP infrastructure safely"""        return True
     
     async def validate_deployment(self) -> Dict[str, bool]:
-        """Validate GCP deployment status"""
-        return {}
+        """Validate GCP deployment status"""        return {}
 
 
 class AzureCloudProvider(CloudProviderInterface):
-    """Microsoft Azure cloud provider implementation"""
-    
+    """Microsoft Azure cloud provider implementation"""    
     def __init__(self, credentials: CloudCredentials, environment: EnvironmentSpec):
         super().__init__(credentials, environment)
         self.credential = DefaultAzureCredential()
         self.clients = {}
         
     async def authenticate(self) -> bool:
-        """Authenticate with Azure using credentials"""
-        try:
+        """Authenticate with Azure using credentials"""        try:
             # Initialize Azure clients
             self.clients = {
                 'resource': ResourceManagementClient(
@@ -1557,47 +1494,38 @@ class AzureCloudProvider(CloudProviderInterface):
             return False
     
     async def provision_network(self) -> Dict[str, Any]:
-        """Provision Azure virtual network infrastructure"""
-        # Implementation for Azure network provisioning
+        """Provision Azure virtual network infrastructure"""        # Implementation for Azure network provisioning
         return {}
     
     async def provision_compute(self) -> Dict[str, Any]:
-        """Provision Azure compute resources (AKS, VMs)"""
-        # Implementation for Azure compute provisioning
+        """Provision Azure compute resources (AKS, VMs)"""        # Implementation for Azure compute provisioning
         return {}
     
     async def provision_storage(self) -> Dict[str, Any]:
-        """Provision Azure storage resources (Blob Storage, Disks)"""
-        # Implementation for Azure storage provisioning
+        """Provision Azure storage resources (Blob Storage, Disks)"""        # Implementation for Azure storage provisioning
         return {}
     
     async def provision_databases(self) -> Dict[str, Any]:
-        """Provision Azure database services (SQL Database, Cosmos DB, Redis Cache)"""
-        # Implementation for Azure database provisioning
+        """Provision Azure database services (SQL Database, Cosmos DB, Redis Cache)"""        # Implementation for Azure database provisioning
         return {}
     
     async def provision_monitoring(self) -> Dict[str, Any]:
-        """Provision Azure monitoring and logging infrastructure"""
-        # Implementation for Azure monitoring provisioning
+        """Provision Azure monitoring and logging infrastructure"""        # Implementation for Azure monitoring provisioning
         return {}
     
     async def provision_security(self) -> Dict[str, Any]:
-        """Provision Azure security services and configurations"""
-        # Implementation for Azure security provisioning
+        """Provision Azure security services and configurations"""        # Implementation for Azure security provisioning
         return {}
     
     async def destroy_infrastructure(self) -> bool:
-        """Destroy all Azure infrastructure safely"""
-        return True
+        """Destroy all Azure infrastructure safely"""        return True
     
     async def validate_deployment(self) -> Dict[str, bool]:
-        """Validate Azure deployment status"""
-        return {}
+        """Validate Azure deployment status"""        return {}
 
 
 class CloudProviderFactory:
-    """Factory class for creating cloud provider instances"""
-    
+    """Factory class for creating cloud provider instances"""    
     _providers = {
         'aws': AWSCloudProvider,
         'gcp': GCPCloudProvider,
@@ -1607,8 +1535,7 @@ class CloudProviderFactory:
     @classmethod
     def create_provider(cls, provider_name: str, credentials: CloudCredentials, 
                        environment: EnvironmentSpec) -> CloudProviderInterface:
-        """Create a cloud provider instance"""
-        provider_class = cls._providers.get(provider_name.lower())
+        """Create a cloud provider instance"""        provider_class = cls._providers.get(provider_name.lower())
         if not provider_class:
             raise ValueError(f"Unsupported cloud provider: {provider_name}")
         
@@ -1616,24 +1543,20 @@ class CloudProviderFactory:
     
     @classmethod
     def get_supported_providers(cls) -> List[str]:
-        """Get list of supported cloud providers"""
-        return list(cls._providers.keys())
+        """Get list of supported cloud providers"""        return list(cls._providers.keys())
 
 
 class MultiCloudOrchestrator:
-    """Orchestrator for managing multiple cloud providers"""
-    
+    """Orchestrator for managing multiple cloud providers"""    
     def __init__(self):
         self.providers: Dict[str, CloudProviderInterface] = {}
         self.logger = logging.getLogger(__name__)
         
     def add_provider(self, name: str, provider: CloudProviderInterface):
-        """Add a cloud provider to the orchestrator"""
-        self.providers[name] = provider
+        """Add a cloud provider to the orchestrator"""        self.providers[name] = provider
         
     async def provision_all(self) -> Dict[str, Any]:
-        """Provision infrastructure across all configured providers"""
-        results = {}
+        """Provision infrastructure across all configured providers"""        results = {}
         
         for name, provider in self.providers.items():
             try:
@@ -1673,8 +1596,7 @@ class MultiCloudOrchestrator:
         return results
     
     async def validate_all(self) -> Dict[str, Dict[str, bool]]:
-        """Validate deployments across all providers"""
-        results = {}
+        """Validate deployments across all providers"""        results = {}
         
         for name, provider in self.providers.items():
             try:
@@ -1687,8 +1609,7 @@ class MultiCloudOrchestrator:
         return results
     
     async def destroy_all(self) -> Dict[str, bool]:
-        """Destroy infrastructure across all providers"""
-        results = {}
+        """Destroy infrastructure across all providers"""        results = {}
         
         for name, provider in self.providers.items():
             try:
@@ -1701,8 +1622,7 @@ class MultiCloudOrchestrator:
         return results
     
     def get_cost_summary(self) -> Dict[str, float]:
-        """Get cost estimates for all providers"""
-        costs = {}
+        """Get cost estimates for all providers"""        costs = {}
         
         for name, provider in self.providers.items():
             summary = provider.get_resource_summary()
@@ -1713,8 +1633,7 @@ class MultiCloudOrchestrator:
 
 # Utility functions for common cloud operations
 async def setup_kubernetes_access(provider: CloudProviderInterface, cluster_name: str) -> bool:
-    """Setup kubectl access to a Kubernetes cluster"""
-    try:
+    """Setup kubectl access to a Kubernetes cluster"""    try:
         if isinstance(provider, AWSCloudProvider):
             # Setup EKS access
             import subprocess
@@ -1757,8 +1676,7 @@ async def setup_kubernetes_access(provider: CloudProviderInterface, cluster_name
 
 
 def create_environment_spec(name: str, tier: CloudTier, region: str) -> EnvironmentSpec:
-    """Create a standardized environment specification"""
-    
+    """Create a standardized environment specification"""    
     # Base configuration templates
     configs = {
         CloudTier.DEVELOPMENT: {

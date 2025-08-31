@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -83,18 +80,15 @@ except ImportError as e:
         pass
 
 class TestSEOOptimizer(unittest.TestCase):
-    """Test suite for SEOOptimizer class"""
-    
+    """Test suite for SEOOptimizer class"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.seo_optimizer = SEOOptimizer()
+        """Set up test fixtures"""        self.seo_optimizer = SEOOptimizer()
         self.test_image = self._create_test_image()
         self.seo_config = self._create_seo_config()
         self.content_data = self._create_content_data()
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for SEO optimization"""
-        image = np.zeros((400, 600, 3), dtype=np.uint8)
+        """Create a test image for SEO optimization"""        image = np.zeros((400, 600, 3), dtype=np.uint8)
         
         # Add content that should generate good SEO
         cv2.rectangle(image, (50, 50), (250, 200), (100, 150, 200), -1)
@@ -109,8 +103,7 @@ class TestSEOOptimizer(unittest.TestCase):
         return image
     
     def _create_seo_config(self):
-        """Create SEO configuration for testing"""
-        try:
+        """Create SEO configuration for testing"""        try:
             return SEOConfig(
                 target_keywords=['product', 'showcase', 'premium', 'quality'],
                 language='en',
@@ -128,8 +121,7 @@ class TestSEOOptimizer(unittest.TestCase):
             }
     
     def _create_content_data(self) -> Dict[str, Any]:
-        """Create content data for SEO optimization"""
-        return {
+        """Create content data for SEO optimization"""        return {
             'title': 'Premium Product Showcase',
             'description': 'High-quality professional product display',
             'category': 'product_photography',
@@ -139,12 +131,10 @@ class TestSEOOptimizer(unittest.TestCase):
         }
     
     def test_optimizer_initialization(self):
-        """Test SEOOptimizer initialization"""
-        self.assertIsInstance(self.seo_optimizer, SEOOptimizer)
+        """Test SEOOptimizer initialization"""        self.assertIsInstance(self.seo_optimizer, SEOOptimizer)
     
     def test_image_seo_analysis(self):
-        """Test comprehensive image SEO analysis"""
-        try:
+        """Test comprehensive image SEO analysis"""        try:
             seo_analysis = self.seo_optimizer.analyze_image_seo(
                 image=self.test_image,
                 content_data=self.content_data,
@@ -168,8 +158,7 @@ class TestSEOOptimizer(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_alt_text_optimization(self):
-        """Test alt text optimization"""
-        try:
+        """Test alt text optimization"""        try:
             alt_text = self.seo_optimizer.generate_optimized_alt_text(
                 image=self.test_image,
                 keywords=self.seo_config.get('target_keywords', []) if isinstance(self.seo_config, dict) 
@@ -195,8 +184,7 @@ class TestSEOOptimizer(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_title_optimization(self):
-        """Test title optimization"""
-        try:
+        """Test title optimization"""        try:
             optimized_title = self.seo_optimizer.optimize_title(
                 original_title=self.content_data['title'],
                 keywords=self.seo_config.get('target_keywords', []) if isinstance(self.seo_config, dict)
@@ -213,8 +201,7 @@ class TestSEOOptimizer(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_description_optimization(self):
-        """Test description optimization"""
-        try:
+        """Test description optimization"""        try:
             optimized_description = self.seo_optimizer.optimize_description(
                 original_description=self.content_data['description'],
                 keywords=self.seo_config.get('target_keywords', []) if isinstance(self.seo_config, dict)
@@ -232,8 +219,7 @@ class TestSEOOptimizer(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_keyword_density_analysis(self):
-        """Test keyword density analysis"""
-        try:
+        """Test keyword density analysis"""        try:
             text_content = "This is a premium product showcase featuring high-quality items for professional use."
             
             density_analysis = self.seo_optimizer.analyze_keyword_density(
@@ -254,8 +240,7 @@ class TestSEOOptimizer(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_semantic_seo_optimization(self):
-        """Test semantic SEO optimization"""
-        try:
+        """Test semantic SEO optimization"""        try:
             semantic_optimization = self.seo_optimizer.optimize_semantic_seo(
                 image=self.test_image,
                 primary_keywords=self.seo_config.get('target_keywords', []) if isinstance(self.seo_config, dict)
@@ -278,17 +263,14 @@ class TestSEOOptimizer(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
 
 class TestMetadataGenerator(unittest.TestCase):
-    """Test suite for MetadataGenerator class"""
-    
+    """Test suite for MetadataGenerator class"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.metadata_generator = MetadataGenerator()
+        """Set up test fixtures"""        self.metadata_generator = MetadataGenerator()
         self.test_image = self._create_test_image()
         self.base_metadata = self._create_base_metadata()
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for metadata generation"""
-        image = np.zeros((300, 400, 3), dtype=np.uint8)
+        """Create a test image for metadata generation"""        image = np.zeros((300, 400, 3), dtype=np.uint8)
         
         # Add identifiable content
         cv2.rectangle(image, (50, 50), (200, 150), (120, 160, 200), -1)
@@ -298,8 +280,7 @@ class TestMetadataGenerator(unittest.TestCase):
         return image
     
     def _create_base_metadata(self) -> Dict[str, Any]:
-        """Create base metadata for enhancement"""
-        return {
+        """Create base metadata for enhancement"""        return {
             'title': 'Test Image',
             'description': 'A test image for metadata generation',
             'author': 'Fahed Mlaiel',
@@ -309,12 +290,10 @@ class TestMetadataGenerator(unittest.TestCase):
         }
     
     def test_metadata_generator_initialization(self):
-        """Test MetadataGenerator initialization"""
-        self.assertIsInstance(self.metadata_generator, MetadataGenerator)
+        """Test MetadataGenerator initialization"""        self.assertIsInstance(self.metadata_generator, MetadataGenerator)
     
     def test_comprehensive_metadata_generation(self):
-        """Test comprehensive metadata generation"""
-        try:
+        """Test comprehensive metadata generation"""        try:
             comprehensive_metadata = self.metadata_generator.generate_comprehensive_metadata(
                 image=self.test_image,
                 base_metadata=self.base_metadata,
@@ -334,8 +313,7 @@ class TestMetadataGenerator(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_technical_metadata_extraction(self):
-        """Test technical metadata extraction"""
-        try:
+        """Test technical metadata extraction"""        try:
             technical_metadata = self.metadata_generator.extract_technical_metadata(
                 image=self.test_image
             )
@@ -358,8 +336,7 @@ class TestMetadataGenerator(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_exif_metadata_handling(self):
-        """Test EXIF metadata handling"""
-        try:
+        """Test EXIF metadata handling"""        try:
             # Save image with EXIF data
             temp_file = tempfile.NamedTemporaryFile(suffix='.jpg', delete=False)
             temp_path = temp_file.name
@@ -379,8 +356,7 @@ class TestMetadataGenerator(unittest.TestCase):
                 os.remove(temp_path)
     
     def test_semantic_metadata_generation(self):
-        """Test semantic metadata generation"""
-        try:
+        """Test semantic metadata generation"""        try:
             semantic_metadata = self.metadata_generator.generate_semantic_metadata(
                 image=self.test_image,
                 context={'domain': 'general', 'purpose': 'testing'}
@@ -401,8 +377,7 @@ class TestMetadataGenerator(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_metadata_validation(self):
-        """Test metadata validation"""
-        try:
+        """Test metadata validation"""        try:
             # Test with valid metadata
             valid_metadata = {
                 'title': 'Valid Title',
@@ -437,8 +412,7 @@ class TestMetadataGenerator(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_metadata_enrichment(self):
-        """Test metadata enrichment with external sources"""
-        try:
+        """Test metadata enrichment with external sources"""        try:
             enriched_metadata = self.metadata_generator.enrich_metadata(
                 base_metadata=self.base_metadata,
                 image=self.test_image,
@@ -459,17 +433,14 @@ class TestMetadataGenerator(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
 
 class TestTagGenerator(unittest.TestCase):
-    """Test suite for TagGenerator class"""
-    
+    """Test suite for TagGenerator class"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.tag_generator = TagGenerator()
+        """Set up test fixtures"""        self.tag_generator = TagGenerator()
         self.test_image = self._create_test_image()
         self.context = self._create_context()
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for tag generation"""
-        image = np.zeros((250, 350, 3), dtype=np.uint8)
+        """Create a test image for tag generation"""        image = np.zeros((250, 350, 3), dtype=np.uint8)
         
         # Add content that should generate meaningful tags
         cv2.rectangle(image, (50, 50), (150, 120), (100, 200, 150), -1)  # Blue rectangle
@@ -483,8 +454,7 @@ class TestTagGenerator(unittest.TestCase):
         return image
     
     def _create_context(self) -> Dict[str, Any]:
-        """Create context for tag generation"""
-        return {
+        """Create context for tag generation"""        return {
             'domain': 'technology',
             'audience': 'professionals',
             'purpose': 'marketing',
@@ -493,12 +463,10 @@ class TestTagGenerator(unittest.TestCase):
         }
     
     def test_tag_generator_initialization(self):
-        """Test TagGenerator initialization"""
-        self.assertIsInstance(self.tag_generator, TagGenerator)
+        """Test TagGenerator initialization"""        self.assertIsInstance(self.tag_generator, TagGenerator)
     
     def test_visual_tag_generation(self):
-        """Test visual tag generation from image analysis"""
-        try:
+        """Test visual tag generation from image analysis"""        try:
             visual_tags = self.tag_generator.generate_visual_tags(
                 image=self.test_image,
                 max_tags=10,
@@ -517,8 +485,7 @@ class TestTagGenerator(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_color_based_tag_generation(self):
-        """Test color-based tag generation"""
-        try:
+        """Test color-based tag generation"""        try:
             color_tags = self.tag_generator.generate_color_tags(
                 image=self.test_image,
                 include_dominant_colors=True,
@@ -542,8 +509,7 @@ class TestTagGenerator(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_content_based_tag_generation(self):
-        """Test content-based tag generation"""
-        try:
+        """Test content-based tag generation"""        try:
             content_tags = self.tag_generator.generate_content_tags(
                 image=self.test_image,
                 context=self.context,
@@ -563,8 +529,7 @@ class TestTagGenerator(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_contextual_tag_generation(self):
-        """Test contextual tag generation"""
-        try:
+        """Test contextual tag generation"""        try:
             contextual_tags = self.tag_generator.generate_contextual_tags(
                 image=self.test_image,
                 context=self.context,
@@ -590,8 +555,7 @@ class TestTagGenerator(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_hashtag_generation(self):
-        """Test hashtag generation for social media"""
-        try:
+        """Test hashtag generation for social media"""        try:
             hashtags = self.tag_generator.generate_hashtags(
                 image=self.test_image,
                 context=self.context,
@@ -612,8 +576,7 @@ class TestTagGenerator(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_trending_tag_integration(self):
-        """Test integration with trending tags"""
-        try:
+        """Test integration with trending tags"""        try:
             trending_tags = self.tag_generator.integrate_trending_tags(
                 base_tags=['technology', 'professional', 'quality'],
                 domain=self.context['domain'],
@@ -631,8 +594,7 @@ class TestTagGenerator(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_tag_relevance_scoring(self):
-        """Test tag relevance scoring"""
-        try:
+        """Test tag relevance scoring"""        try:
             candidate_tags = ['technology', 'professional', 'design', 'creative', 'business', 'random', 'unrelated']
             
             relevance_scores = self.tag_generator.score_tag_relevance(
@@ -655,17 +617,14 @@ class TestTagGenerator(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
 
 class TestImageAnalyzer(unittest.TestCase):
-    """Test suite for ImageAnalyzer class"""
-    
+    """Test suite for ImageAnalyzer class"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.image_analyzer = ImageAnalyzer()
+        """Set up test fixtures"""        self.image_analyzer = ImageAnalyzer()
         self.test_image = self._create_test_image()
         self.complex_image = self._create_complex_image()
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for analysis"""
-        image = np.zeros((200, 300, 3), dtype=np.uint8)
+        """Create a test image for analysis"""        image = np.zeros((200, 300, 3), dtype=np.uint8)
         
         # Add various elements for analysis
         cv2.rectangle(image, (50, 50), (150, 100), (100, 150, 200), -1)
@@ -675,8 +634,7 @@ class TestImageAnalyzer(unittest.TestCase):
         return image
     
     def _create_complex_image(self) -> np.ndarray:
-        """Create a complex image for advanced analysis"""
-        image = np.random.randint(0, 255, (400, 600, 3), dtype=np.uint8)
+        """Create a complex image for advanced analysis"""        image = np.random.randint(0, 255, (400, 600, 3), dtype=np.uint8)
         
         # Add structured content
         cv2.rectangle(image, (100, 100), (300, 200), (120, 180, 220), -1)
@@ -693,12 +651,10 @@ class TestImageAnalyzer(unittest.TestCase):
         return image
     
     def test_image_analyzer_initialization(self):
-        """Test ImageAnalyzer initialization"""
-        self.assertIsInstance(self.image_analyzer, ImageAnalyzer)
+        """Test ImageAnalyzer initialization"""        self.assertIsInstance(self.image_analyzer, ImageAnalyzer)
     
     def test_composition_analysis(self):
-        """Test image composition analysis"""
-        try:
+        """Test image composition analysis"""        try:
             composition_analysis = self.image_analyzer.analyze_composition(
                 image=self.test_image,
                 analyze_rule_of_thirds=True,
@@ -720,8 +676,7 @@ class TestImageAnalyzer(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_color_analysis(self):
-        """Test color analysis"""
-        try:
+        """Test color analysis"""        try:
             color_analysis = self.image_analyzer.analyze_colors(
                 image=self.test_image,
                 extract_palette=True,
@@ -748,8 +703,7 @@ class TestImageAnalyzer(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_quality_assessment(self):
-        """Test image quality assessment"""
-        try:
+        """Test image quality assessment"""        try:
             quality_assessment = self.image_analyzer.assess_quality(
                 image=self.test_image,
                 check_blur=True,
@@ -775,8 +729,7 @@ class TestImageAnalyzer(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_content_density_analysis(self):
-        """Test content density analysis"""
-        try:
+        """Test content density analysis"""        try:
             density_analysis = self.image_analyzer.analyze_content_density(
                 image=self.complex_image,
                 segment_regions=True,
@@ -798,8 +751,7 @@ class TestImageAnalyzer(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_aesthetic_scoring(self):
-        """Test aesthetic scoring"""
-        try:
+        """Test aesthetic scoring"""        try:
             aesthetic_score = self.image_analyzer.calculate_aesthetic_score(
                 image=self.test_image,
                 factors=['composition', 'color_harmony', 'contrast', 'clarity']
@@ -826,11 +778,9 @@ class TestImageAnalyzer(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
 
 class TestSEOIntegration(unittest.TestCase):
-    """Test suite for SEO integration and workflows"""
-    
+    """Test suite for SEO integration and workflows"""    
     def setUp(self):
-        """Set up integration test fixtures"""
-        self.seo_optimizer = SEOOptimizer()
+        """Set up integration test fixtures"""        self.seo_optimizer = SEOOptimizer()
         self.metadata_generator = MetadataGenerator()
         self.tag_generator = TagGenerator()
         self.image_analyzer = ImageAnalyzer()
@@ -839,8 +789,7 @@ class TestSEOIntegration(unittest.TestCase):
         self.content_context = self._create_content_context()
     
     def _create_comprehensive_test_image(self) -> np.ndarray:
-        """Create comprehensive test image for integration testing"""
-        image = np.zeros((500, 800, 3), dtype=np.uint8)
+        """Create comprehensive test image for integration testing"""        image = np.zeros((500, 800, 3), dtype=np.uint8)
         
         # Add rich content for comprehensive SEO analysis
         cv2.rectangle(image, (100, 100), (400, 250), (120, 160, 200), -1)
@@ -859,8 +808,7 @@ class TestSEOIntegration(unittest.TestCase):
         return image
     
     def _create_content_context(self) -> Dict[str, Any]:
-        """Create comprehensive content context"""
-        return {
+        """Create comprehensive content context"""        return {
             'title': 'Premium Professional Product Showcase',
             'description': 'High-quality professional product display featuring premium materials and exceptional craftsmanship',
             'category': 'product_photography',
@@ -874,8 +822,7 @@ class TestSEOIntegration(unittest.TestCase):
         }
     
     def test_complete_seo_optimization_workflow(self):
-        """Test complete SEO optimization workflow"""
-        try:
+        """Test complete SEO optimization workflow"""        try:
             # Step 1: Analyze image
             image_analysis = self.image_analyzer.analyze_composition(self.test_image)
             quality_analysis = self.image_analyzer.assess_quality(self.test_image)
@@ -919,8 +866,7 @@ class TestSEOIntegration(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_multi_platform_seo_optimization(self):
-        """Test SEO optimization for multiple platforms"""
-        try:
+        """Test SEO optimization for multiple platforms"""        try:
             platforms = ['website', 'instagram', 'facebook', 'pinterest']
             platform_optimizations = {}
             
@@ -956,8 +902,7 @@ class TestSEOIntegration(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_seo_performance_tracking(self):
-        """Test SEO performance tracking and metrics"""
-        try:
+        """Test SEO performance tracking and metrics"""        try:
             # Generate initial SEO optimization
             initial_seo = self.seo_optimizer.analyze_image_seo(
                 image=self.test_image,
@@ -989,8 +934,7 @@ class TestSEOIntegration(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_automated_seo_recommendations(self):
-        """Test automated SEO recommendations"""
-        try:
+        """Test automated SEO recommendations"""        try:
             recommendations = self.seo_optimizer.generate_seo_recommendations(
                 image=self.test_image,
                 current_metadata=self.content_context,
@@ -1012,8 +956,7 @@ class TestSEOIntegration(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_seo_a_b_testing(self):
-        """Test SEO A/B testing scenarios"""
-        try:
+        """Test SEO A/B testing scenarios"""        try:
             # Create two different optimization approaches
             approach_a = {
                 'title': 'Premium Product Showcase',
@@ -1051,8 +994,7 @@ class TestSEOIntegration(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_performance_benchmarking(self):
-        """Test performance of SEO optimization system"""
-        try:
+        """Test performance of SEO optimization system"""        try:
             start_time = time.time()
             
             # Run complete SEO optimization

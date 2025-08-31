@@ -1,5 +1,4 @@
-"""
-🔧 Rollback Automation - IA-Influencer-Agent CI/CD
+"""🔧 Rollback Automation - IA-Influencer-Agent CI/CD
 ================================================================
 Expert: DEVOPS_ENGINEER + RELIABILITY_ENGINEER  
 Created: 2025-08-24
@@ -8,9 +7,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Enterprise rollback automation system for IA Influencer platform.
 Automated detection of deployment issues and intelligent rollback strategies.
 ================================================================
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple, Callable
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Callable
 import asyncio
 import logging
 import json
@@ -26,8 +23,7 @@ import requests
 logger = logging.getLogger(__name__)
 
 class RollbackTrigger(Enum):
-    """Rollback trigger enumeration"""
-    MANUAL = "manual"
+    """Rollback trigger enumeration"""    MANUAL = "manual"
     HEALTH_CHECK_FAILURE = "health_check_failure"
     ERROR_RATE_THRESHOLD = "error_rate_threshold"
     PERFORMANCE_DEGRADATION = "performance_degradation"
@@ -37,8 +33,7 @@ class RollbackTrigger(Enum):
     USER_EXPERIENCE_DEGRADATION = "user_experience_degradation"
 
 class RollbackStrategy(Enum):
-    """Rollback strategy enumeration"""
-    IMMEDIATE = "immediate"
+    """Rollback strategy enumeration"""    IMMEDIATE = "immediate"
     GRADUAL = "gradual"
     BLUE_GREEN_SWITCH = "blue_green_switch"
     CANARY_ROLLBACK = "canary_rollback"
@@ -46,8 +41,7 @@ class RollbackStrategy(Enum):
     AI_MODEL_REVERT = "ai_model_revert"
 
 class RollbackStatus(Enum):
-    """Rollback status enumeration"""
-    PENDING = "pending"
+    """Rollback status enumeration"""    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -55,8 +49,7 @@ class RollbackStatus(Enum):
 
 @dataclass
 class HealthCheck:
-    """Health check configuration"""
-    name: str
+    """Health check configuration"""    name: str
     endpoint: str
     method: str = "GET"
     expected_status: int = 200
@@ -72,8 +65,7 @@ class HealthCheck:
 
 @dataclass
 class RollbackConfiguration:
-    """Rollback configuration"""
-    environment: str
+    """Rollback configuration"""    environment: str
     strategy: RollbackStrategy
     triggers: List[RollbackTrigger]
     health_checks: List[HealthCheck]
@@ -94,8 +86,7 @@ class RollbackConfiguration:
 
 @dataclass
 class RollbackPlan:
-    """Rollback execution plan"""
-    rollback_id: str
+    """Rollback execution plan"""    rollback_id: str
     trigger: RollbackTrigger
     strategy: RollbackStrategy
     current_version: str
@@ -108,8 +99,7 @@ class RollbackPlan:
 
 @dataclass
 class RollbackExecution:
-    """Rollback execution tracking"""
-    rollback_id: str
+    """Rollback execution tracking"""    rollback_id: str
     plan: RollbackPlan
     status: RollbackStatus
     started_at: Optional[datetime] = None
@@ -123,11 +113,9 @@ class RollbackExecution:
             self.metrics = {}
 
 class RollbackAutomation:
-    """Enterprise rollback automation system"""
-    
+    """Enterprise rollback automation system"""    
     def __init__(self):
-        """Initialize rollback automation"""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize rollback automation"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.configurations: Dict[str, RollbackConfiguration] = {}
         self.active_executions: Dict[str, RollbackExecution] = {}
         self.execution_history: List[RollbackExecution] = []
@@ -137,8 +125,7 @@ class RollbackAutomation:
         self.initialized = False
     
     async def initialize(self) -> bool:
-        """Initialize rollback automation system"""
-        try:
+        """Initialize rollback automation system"""        try:
             # Initialize Kubernetes client
             await self._initialize_kubernetes()
             
@@ -160,8 +147,7 @@ class RollbackAutomation:
             return False
     
     async def _initialize_kubernetes(self) -> None:
-        """Initialize Kubernetes client"""
-        try:
+        """Initialize Kubernetes client"""        try:
             try:
                 config.load_incluster_config()
             except:
@@ -174,8 +160,7 @@ class RollbackAutomation:
             self.logger.warning(f"Kubernetes client initialization failed: {e}")
     
     async def _initialize_docker(self) -> None:
-        """Initialize Docker client"""
-        try:
+        """Initialize Docker client"""        try:
             self.docker_client = docker.from_env()
             self.docker_client.ping()
             self.logger.info("Docker client initialized for rollback")
@@ -184,8 +169,7 @@ class RollbackAutomation:
             self.logger.warning(f"Docker client initialization failed: {e}")
     
     async def add_rollback_configuration(self, config: RollbackConfiguration) -> bool:
-        """Add rollback configuration for environment"""
-        try:
+        """Add rollback configuration for environment"""        try:
             self.configurations[config.environment] = config
             
             # Start monitoring for this environment
@@ -206,8 +190,7 @@ class RollbackAutomation:
         target_version: Optional[str] = None,
         reason: Optional[str] = None
     ) -> str:
-        """Trigger rollback for environment"""
-        try:
+        """Trigger rollback for environment"""        try:
             if environment not in self.configurations:
                 raise ValueError(f"No rollback configuration for environment: {environment}")
             
@@ -257,8 +240,7 @@ class RollbackAutomation:
         target_version: str,
         config: RollbackConfiguration
     ) -> RollbackPlan:
-        """Create detailed rollback execution plan"""
-        rollback_id = f"rollback_{environment}_{int(time.time())}"
+        """Create detailed rollback execution plan"""        rollback_id = f"rollback_{environment}_{int(time.time())}"
         
         # Generate rollback steps based on strategy
         steps = await self._generate_rollback_steps(config.strategy, environment, target_version)
@@ -288,8 +270,7 @@ class RollbackAutomation:
         environment: str,
         target_version: str
     ) -> List[Dict[str, Any]]:
-        """Generate rollback steps based on strategy"""
-        steps = []
+        """Generate rollback steps based on strategy"""        steps = []
         
         if strategy == RollbackStrategy.IMMEDIATE:
             steps = await self._generate_immediate_rollback_steps(environment, target_version)
@@ -311,8 +292,7 @@ class RollbackAutomation:
         environment: str,
         target_version: str
     ) -> List[Dict[str, Any]]:
-        """Generate immediate rollback steps"""
-        return [
+        """Generate immediate rollback steps"""        return [
             {
                 "name": "pre_rollback_validation",
                 "type": "validation",
@@ -368,8 +348,7 @@ class RollbackAutomation:
         environment: str,
         target_version: str
     ) -> List[Dict[str, Any]]:
-        """Generate gradual rollback steps"""
-        return [
+        """Generate gradual rollback steps"""        return [
             {
                 "name": "pre_rollback_validation",
                 "type": "validation",
@@ -422,8 +401,7 @@ class RollbackAutomation:
         environment: str,
         target_version: str
     ) -> List[Dict[str, Any]]:
-        """Generate AI model specific rollback steps"""
-        return [
+        """Generate AI model specific rollback steps"""        return [
             {
                 "name": "ai_model_backup",
                 "type": "backup",
@@ -469,8 +447,7 @@ class RollbackAutomation:
         ]
     
     async def _execute_rollback(self, execution: RollbackExecution) -> None:
-        """Execute rollback plan"""
-        try:
+        """Execute rollback plan"""        try:
             execution.status = RollbackStatus.IN_PROGRESS
             execution.started_at = datetime.now()
             
@@ -536,8 +513,7 @@ class RollbackAutomation:
         execution: RollbackExecution,
         step: Dict[str, Any]
     ) -> bool:
-        """Execute individual rollback step"""
-        try:
+        """Execute individual rollback step"""        try:
             step_type = step.get("type")
             
             if step_type == "validation":
@@ -575,8 +551,7 @@ class RollbackAutomation:
         execution: RollbackExecution,
         step: Dict[str, Any]
     ) -> bool:
-        """Execute validation step"""
-        # Implement validation logic
+        """Execute validation step"""        # Implement validation logic
         return True
     
     async def _execute_service_control_step(
@@ -584,8 +559,7 @@ class RollbackAutomation:
         execution: RollbackExecution,
         step: Dict[str, Any]
     ) -> bool:
-        """Execute service control step"""
-        try:
+        """Execute service control step"""        try:
             if not self.k8s_client:
                 return True  # Skip if no Kubernetes
             
@@ -641,8 +615,7 @@ class RollbackAutomation:
         execution: RollbackExecution,
         step: Dict[str, Any]
     ) -> bool:
-        """Execute deployment step"""
-        try:
+        """Execute deployment step"""        try:
             # Implementation would deploy target version
             target_version = execution.plan.target_version
             environment = execution.plan.environment
@@ -663,8 +636,7 @@ class RollbackAutomation:
         execution: RollbackExecution,
         step: Dict[str, Any]
     ) -> bool:
-        """Execute AI model validation step"""
-        try:
+        """Execute AI model validation step"""        try:
             # Test AI model endpoints
             ai_endpoints = [
                 "/api/v1/ai/music/analyze",
@@ -693,8 +665,7 @@ class RollbackAutomation:
         execution: RollbackExecution,
         step: Dict[str, Any]
     ) -> bool:
-        """Execute content protection validation step"""
-        try:
+        """Execute content protection validation step"""        try:
             # Test content protection endpoints
             protection_endpoints = [
                 "/api/v1/protection/fingerprint",
@@ -719,14 +690,12 @@ class RollbackAutomation:
             return False
     
     async def _start_monitoring(self) -> None:
-        """Start monitoring tasks for all environments"""
-        for env_name, config in self.configurations.items():
+        """Start monitoring tasks for all environments"""        for env_name, config in self.configurations.items():
             if config.auto_rollback_enabled:
                 await self._start_environment_monitoring(env_name)
     
     async def _start_environment_monitoring(self, environment: str) -> None:
-        """Start monitoring for specific environment"""
-        if environment in self.monitoring_tasks:
+        """Start monitoring for specific environment"""        if environment in self.monitoring_tasks:
             return  # Already monitoring
         
         config = self.configurations[environment]
@@ -740,8 +709,7 @@ class RollbackAutomation:
         environment: str,
         config: RollbackConfiguration
     ) -> None:
-        """Monitor environment for rollback triggers"""
-        while True:
+        """Monitor environment for rollback triggers"""        while True:
             try:
                 # Check health checks
                 for health_check in config.health_checks:
@@ -767,8 +735,7 @@ class RollbackAutomation:
                 await asyncio.sleep(60)
     
     async def _execute_health_check(self, health_check: HealthCheck) -> bool:
-        """Execute health check"""
-        try:
+        """Execute health check"""        try:
             # Implementation would make actual HTTP request
             # For now, simulate success
             return True
@@ -778,8 +745,7 @@ class RollbackAutomation:
             return False
     
     async def get_rollback_status(self, rollback_id: str) -> Optional[Dict[str, Any]]:
-        """Get rollback execution status"""
-        if rollback_id in self.active_executions:
+        """Get rollback execution status"""        if rollback_id in self.active_executions:
             execution = self.active_executions[rollback_id]
         else:
             # Search in history
@@ -808,8 +774,7 @@ class RollbackAutomation:
         }
     
     async def cancel_rollback(self, rollback_id: str) -> bool:
-        """Cancel active rollback"""
-        try:
+        """Cancel active rollback"""        try:
             if rollback_id not in self.active_executions:
                 return False
             
@@ -833,8 +798,7 @@ class RollbackAutomation:
         environment: Optional[str] = None,
         limit: int = 50
     ) -> List[Dict[str, Any]]:
-        """Get rollback execution history"""
-        history = self.execution_history.copy()
+        """Get rollback execution history"""        history = self.execution_history.copy()
         
         if environment:
             history = [e for e in history if e.plan.environment == environment]
@@ -859,18 +823,15 @@ class RollbackAutomation:
         ]
     
     async def _load_configurations(self) -> None:
-        """Load rollback configurations"""
-        # Implementation would load from persistent storage
+        """Load rollback configurations"""        # Implementation would load from persistent storage
         pass
     
     async def _get_current_version(self, environment: str) -> str:
-        """Get current deployed version"""
-        # Implementation would query actual deployment
+        """Get current deployed version"""        # Implementation would query actual deployment
         return "v1.2.3"
     
     async def _get_previous_stable_version(self, environment: str) -> str:
-        """Get previous stable version for rollback"""
-        # Implementation would query version history
+        """Get previous stable version for rollback"""        # Implementation would query version history
         return "v1.2.2"
     
     async def _estimate_rollback_duration(
@@ -878,8 +839,7 @@ class RollbackAutomation:
         steps: List[Dict[str, Any]],
         strategy: RollbackStrategy
     ) -> int:
-        """Estimate rollback duration in seconds"""
-        total_timeout = sum(step.get("timeout", 60) for step in steps)
+        """Estimate rollback duration in seconds"""        total_timeout = sum(step.get("timeout", 60) for step in steps)
         
         # Add buffer based on strategy
         if strategy == RollbackStrategy.GRADUAL:
@@ -895,8 +855,7 @@ class RollbackAutomation:
         current_version: str,
         target_version: str
     ) -> Dict[str, Any]:
-        """Assess rollback impact"""
-        return {
+        """Assess rollback impact"""        return {
             "downtime_estimate": "2-5 minutes",
             "data_loss_risk": "low",
             "user_impact": "minimal",
@@ -909,8 +868,7 @@ class RollbackAutomation:
         execution: RollbackExecution,
         success: bool
     ) -> None:
-        """Send rollback notification"""
-        status = "SUCCESS" if success else "FAILED"
+        """Send rollback notification"""        status = "SUCCESS" if success else "FAILED"
         message = f"Rollback {status}: {execution.rollback_id} ({execution.plan.environment})"
         
         self.logger.info(f"Notification: {message}")
@@ -918,36 +876,31 @@ class RollbackAutomation:
         # Implementation would send actual notifications
     
     async def _execute_pre_rollback_checks(self, execution: RollbackExecution) -> bool:
-        """Execute pre-rollback checks"""
-        return True
+        """Execute pre-rollback checks"""        return True
     
     async def _execute_post_rollback_checks(self, execution: RollbackExecution) -> bool:
-        """Execute post-rollback checks"""
-        return True
+        """Execute post-rollback checks"""        return True
     
     async def _check_performance_metrics(
         self,
         environment: str,
         config: RollbackConfiguration
     ) -> None:
-        """Check performance metrics for degradation"""
-        pass
+        """Check performance metrics for degradation"""        pass
     
     async def _check_error_rates(
         self,
         environment: str,
         config: RollbackConfiguration
     ) -> None:
-        """Check error rates for threshold breaches"""
-        pass
+        """Check error rates for threshold breaches"""        pass
     
     async def _check_ai_model_health(
         self,
         environment: str,
         config: RollbackConfiguration
     ) -> None:
-        """Check AI model health"""
-        pass
+        """Check AI model health"""        pass
     
     # Additional step execution methods would be implemented here
     async def _execute_configuration_step(self, execution: RollbackExecution, step: Dict[str, Any]) -> bool:

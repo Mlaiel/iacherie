@@ -50,8 +50,7 @@ UNAUTHORIZED ACCESS CONSTITUTES FEDERAL CYBER CRIME:
 
 Contact mlaiel@live.de for MANDATORY blockchain access authorization.
 All blockchain transactions are permanently recorded and legally traceable.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
 from dataclasses import dataclass, field

@@ -1,5 +1,4 @@
-"""
-📊 Analytics Transformation Engine - IA Influencer Agent Platform Enterprise
+"""📊 Analytics Transformation Engine - IA Influencer Agent Platform Enterprise
 ==========================================================================
 Module: backend/data_management/transformers/analytics_transformer.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -21,9 +20,7 @@ poursuivie selon les lois allemandes et internationales.
 - DevOps Engineer: Fahed Mlaiel (mlaiel@live.de)
 - DBA: Fahed Mlaiel (mlaiel@live.de)
 - Sécurité Expert: Fahed Mlaiel (mlaiel@live.de)
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import json
@@ -72,8 +69,7 @@ settings = get_settings()
 logger = logging.getLogger(__name__)
 
 class AnalyticsType(Enum):
-    """Types d'analyses supportés"""
-    CONTENT_QUALITY = "content_quality"
+    """Types d'analyses supportés"""    CONTENT_QUALITY = "content_quality"
     PERFORMANCE_ANALYSIS = "performance_analysis"
     AUDIENCE_INSIGHTS = "audience_insights"
     TREND_ANALYSIS = "trend_analysis"
@@ -83,8 +79,7 @@ class AnalyticsType(Enum):
     COMPARATIVE_ANALYSIS = "comparative_analysis"
 
 class MetricType(Enum):
-    """Types de métriques"""
-    VIEWS = "views"
+    """Types de métriques"""    VIEWS = "views"
     LIKES = "likes"
     SHARES = "shares"
     COMMENTS = "comments"
@@ -96,8 +91,7 @@ class MetricType(Enum):
     REVENUE = "revenue"
 
 class ContentCategory(Enum):
-    """Catégories de contenu"""
-    MUSIC = "music"
+    """Catégories de contenu"""    MUSIC = "music"
     PHOTOGRAPHY = "photography"
     VIDEO = "video"
     TEXT = "text"
@@ -106,8 +100,7 @@ class ContentCategory(Enum):
 
 @dataclass
 class AnalyticsConfig:
-    """Configuration pour l'analyse"""
-    analytics_type: AnalyticsType
+    """Configuration pour l'analyse"""    analytics_type: AnalyticsType
     content_category: ContentCategory
     time_period: Optional[Tuple[datetime, datetime]] = None
     metrics_to_analyze: List[MetricType] = field(default_factory=list)
@@ -119,8 +112,7 @@ class AnalyticsConfig:
 
 @dataclass
 class AnalyticsResult:
-    """Résultat d'analyse"""
-    success: bool
+    """Résultat d'analyse"""    success: bool
     analytics_type: AnalyticsType
     content_category: ContentCategory
     metrics: Dict[str, Any]
@@ -134,8 +126,7 @@ class AnalyticsResult:
     metadata: Dict[str, Any]
 
 class ContentQualityAnalyzer:
-    """Analyseur de qualité de contenu professionnel"""
-    
+    """Analyseur de qualité de contenu professionnel"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -151,8 +142,7 @@ class ContentQualityAnalyzer:
         audio_path: str,
         config: AnalyticsConfig
     ) -> Dict[str, Any]:
-        """Analyse la qualité audio avancée"""
-        
+        """Analyse la qualité audio avancée"""        
         try:
             # Chargement audio
             y, sr = librosa.load(audio_path, sr=None)
@@ -194,8 +184,7 @@ class ContentQualityAnalyzer:
         image_path: str,
         config: AnalyticsConfig
     ) -> Dict[str, Any]:
-        """Analyse la qualité image avancée"""
-        
+        """Analyse la qualité image avancée"""        
         try:
             # Chargement image
             image = cv2.imread(image_path)
@@ -238,8 +227,7 @@ class ContentQualityAnalyzer:
         text_content: str,
         config: AnalyticsConfig
     ) -> Dict[str, Any]:
-        """Analyse la qualité textuelle avancée"""
-        
+        """Analyse la qualité textuelle avancée"""        
         try:
             # Métriques de base
             word_count = len(text_content.split())
@@ -308,8 +296,7 @@ class ContentQualityAnalyzer:
             return {'error': str(e)}
     
     def _calculate_dynamic_range(self, audio: np.ndarray) -> float:
-        """Calcule la plage dynamique audio"""
-        if len(audio) == 0:
+        """Calcule la plage dynamique audio"""        if len(audio) == 0:
             return 0.0
         
         # Calcul RMS par segments
@@ -339,8 +326,7 @@ class ContentQualityAnalyzer:
         return 0.0
     
     def _calculate_snr(self, audio: np.ndarray) -> float:
-        """Calcule le rapport signal/bruit"""
-        if len(audio) == 0:
+        """Calcule le rapport signal/bruit"""        if len(audio) == 0:
             return 0.0
         
         # Estimation simple du bruit (segments de faible énergie)
@@ -375,8 +361,7 @@ class ContentQualityAnalyzer:
         return 0.0
     
     def _calculate_harmonic_ratio(self, audio: np.ndarray, sr: int) -> float:
-        """Calcule le ratio harmonique/percussif"""
-        try:
+        """Calcule le ratio harmonique/percussif"""        try:
             harmonic, percussive = librosa.effects.hpss(audio)
             
             harmonic_energy = np.mean(harmonic**2)
@@ -392,8 +377,7 @@ class ContentQualityAnalyzer:
             return 0.0
     
     def _calculate_audio_quality_score(self, metrics: Dict[str, Any]) -> float:
-        """Calcule un score de qualité audio global"""
-        
+        """Calcule un score de qualité audio global"""        
         score = 0.0
         weights = {
             'dynamic_range': 0.25,
@@ -430,8 +414,7 @@ class ContentQualityAnalyzer:
         return score
     
     def _generate_audio_recommendations(self, metrics: Dict[str, Any]) -> List[str]:
-        """Génère des recommandations d'amélioration audio"""
-        
+        """Génère des recommandations d'amélioration audio"""        
         recommendations = []
         
         if metrics.get('dynamic_range', 0) < 15:
@@ -452,8 +435,7 @@ class ContentQualityAnalyzer:
         return recommendations
     
     def _calculate_image_sharpness(self, image: np.ndarray) -> float:
-        """Calcule la netteté de l'image"""
-        
+        """Calcule la netteté de l'image"""        
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         
         # Utilisation du Laplacien pour mesurer la netteté
@@ -462,8 +444,7 @@ class ContentQualityAnalyzer:
         return laplacian_var
     
     def _estimate_noise_level(self, image: np.ndarray) -> float:
-        """Estime le niveau de bruit dans l'image"""
-        
+        """Estime le niveau de bruit dans l'image"""        
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         
         # Utilisation d'un filtre pour estimer le bruit
@@ -473,8 +454,7 @@ class ContentQualityAnalyzer:
         return noise_level
     
     def _calculate_color_diversity(self, image: np.ndarray) -> float:
-        """Calcule la diversité des couleurs"""
-        
+        """Calcule la diversité des couleurs"""        
         # Réduction de résolution pour performance
         small_image = cv2.resize(image, (100, 100))
         
@@ -488,8 +468,7 @@ class ContentQualityAnalyzer:
         return diversity
     
     def _analyze_composition(self, image: np.ndarray) -> float:
-        """Analyse la composition de l'image (règle des tiers, etc.)"""
-        
+        """Analyse la composition de l'image (règle des tiers, etc.)"""        
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         h, w = gray.shape
         
@@ -512,8 +491,7 @@ class ContentQualityAnalyzer:
         return min(1.0, interest_score / (4 * 10000))
     
     def _detect_faces_quality(self, image_path: str) -> Dict[str, Any]:
-        """Détecte et analyse la qualité des visages"""
-        
+        """Détecte et analyse la qualité des visages"""        
         try:
             # Chargement avec face_recognition
             image = face_recognition.load_image_file(image_path)
@@ -539,8 +517,7 @@ class ContentQualityAnalyzer:
             }
     
     def _calculate_image_quality_score(self, metrics: Dict[str, Any]) -> float:
-        """Calcule un score de qualité image global"""
-        
+        """Calcule un score de qualité image global"""        
         score = 0.0
         weights = {
             'sharpness': 0.25,
@@ -581,8 +558,7 @@ class ContentQualityAnalyzer:
         return score
     
     def _generate_image_recommendations(self, metrics: Dict[str, Any]) -> List[str]:
-        """Génère des recommandations d'amélioration image"""
-        
+        """Génère des recommandations d'amélioration image"""        
         recommendations = []
         
         if metrics.get('sharpness', 0) < 300:
@@ -610,8 +586,7 @@ class ContentQualityAnalyzer:
         return recommendations
     
     def _calculate_sentiment(self, doc) -> float:
-        """Calcule le sentiment du texte (polarité)"""
-        
+        """Calcule le sentiment du texte (polarité)"""        
         # Sentiment basique basé sur les mots positifs/négatifs
         positive_words = set(['good', 'great', 'excellent', 'amazing', 'wonderful', 'fantastic'])
         negative_words = set(['bad', 'terrible', 'awful', 'horrible', 'worst', 'hate'])
@@ -627,8 +602,7 @@ class ContentQualityAnalyzer:
         return 0.0
     
     def _analyze_pos_distribution(self, doc) -> Dict[str, float]:
-        """Analyse la distribution des parties du discours"""
-        
+        """Analyse la distribution des parties du discours"""        
         pos_counts = Counter([token.pos_ for token in doc])
         total_tokens = len(doc)
         
@@ -638,8 +612,7 @@ class ContentQualityAnalyzer:
         return {pos: count / total_tokens for pos, count in pos_counts.items()}
     
     def _calculate_text_complexity(self, doc) -> float:
-        """Calcule la complexité du texte"""
-        
+        """Calcule la complexité du texte"""        
         # Facteurs de complexité
         avg_word_length = np.mean([len(token.text) for token in doc if token.is_alpha])
         unique_words_ratio = len(set([token.lemma_ for token in doc])) / max(len(doc), 1)
@@ -650,8 +623,7 @@ class ContentQualityAnalyzer:
         return min(1.0, complexity)
     
     def _calculate_keyword_density(self, text: str) -> Dict[str, float]:
-        """Calcule la densité des mots-clés"""
-        
+        """Calcule la densité des mots-clés"""        
         words = re.findall(r'\b\w+\b', text.lower())
         word_count = len(words)
         
@@ -669,8 +641,7 @@ class ContentQualityAnalyzer:
         return densities
     
     def _analyze_heading_structure(self, text: str) -> Dict[str, int]:
-        """Analyse la structure des titres (HTML)"""
-        
+        """Analyse la structure des titres (HTML)"""        
         headings = {
             'h1': len(re.findall(r'<h1[^>]*>', text, re.IGNORECASE)),
             'h2': len(re.findall(r'<h2[^>]*>', text, re.IGNORECASE)),
@@ -683,8 +654,7 @@ class ContentQualityAnalyzer:
         return headings
     
     def _score_word_count_seo(self, word_count: int) -> float:
-        """Score SEO basé sur le nombre de mots"""
-        
+        """Score SEO basé sur le nombre de mots"""        
         if word_count >= 1500:
             return 1.0
         elif word_count >= 1000:
@@ -702,8 +672,7 @@ class ContentQualityAnalyzer:
         linguistic: Dict[str, Any],
         seo: Dict[str, Any]
     ) -> float:
-        """Calcule un score de qualité textuelle global"""
-        
+        """Calcule un score de qualité textuelle global"""        
         score = 0.0
         
         # Score de lisibilité (0.4)
@@ -742,8 +711,7 @@ class ContentQualityAnalyzer:
         linguistic: Dict[str, Any],
         seo: Dict[str, Any]
     ) -> List[str]:
-        """Génère des recommandations d'amélioration textuelle"""
-        
+        """Génère des recommandations d'amélioration textuelle"""        
         recommendations = []
         
         # Lisibilité
@@ -773,8 +741,7 @@ class ContentQualityAnalyzer:
         return recommendations
 
 class PerformanceAnalyzer:
-    """Analyseur de performance de contenu professionnel"""
-    
+    """Analyseur de performance de contenu professionnel"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
     
@@ -783,8 +750,7 @@ class PerformanceAnalyzer:
         metrics_data: Dict[str, List[float]],
         config: AnalyticsConfig
     ) -> Dict[str, Any]:
-        """Analyse les métriques d'engagement"""
-        
+        """Analyse les métriques d'engagement"""        
         try:
             results = {}
             
@@ -834,8 +800,7 @@ class PerformanceAnalyzer:
             return {'error': str(e)}
     
     def _calculate_trend(self, values: List[float]) -> str:
-        """Calcule la tendance des valeurs"""
-        
+        """Calcule la tendance des valeurs"""        
         if len(values) < 2:
             return 'insufficient_data'
         
@@ -851,8 +816,7 @@ class PerformanceAnalyzer:
             return 'stable'
     
     def _calculate_growth_rate(self, values: List[float]) -> float:
-        """Calcule le taux de croissance"""
-        
+        """Calcule le taux de croissance"""        
         if len(values) < 2 or values[0] == 0:
             return 0.0
         
@@ -869,8 +833,7 @@ class PerformanceAnalyzer:
         return 0.0
     
     def _calculate_volatility(self, values: List[float]) -> float:
-        """Calcule la volatilité (coefficient de variation)"""
-        
+        """Calcule la volatilité (coefficient de variation)"""        
         if len(values) < 2:
             return 0.0
         
@@ -883,8 +846,7 @@ class PerformanceAnalyzer:
         return 0.0
     
     def _calculate_correlation_matrix(self, metrics_data: Dict[str, List[float]]) -> Dict[str, Dict[str, float]]:
-        """Calcule la matrice de corrélation entre métriques"""
-        
+        """Calcule la matrice de corrélation entre métriques"""        
         # Filtrer les métriques avec des données suffisantes
         valid_metrics = {k: v for k, v in metrics_data.items() if len(v) > 1}
         
@@ -901,8 +863,7 @@ class PerformanceAnalyzer:
         return corr_matrix.to_dict()
     
     def _calculate_performance_score(self, results: Dict[str, Dict[str, Any]]) -> float:
-        """Calcule un score de performance global"""
-        
+        """Calcule un score de performance global"""        
         if not results:
             return 0.0
         
@@ -939,8 +900,7 @@ class PerformanceAnalyzer:
         results: Dict[str, Dict[str, Any]],
         correlation_matrix: Dict[str, Dict[str, float]]
     ) -> List[str]:
-        """Génère des insights sur la performance"""
-        
+        """Génère des insights sur la performance"""        
         insights = []
         
         # Insights sur les tendances
@@ -971,8 +931,7 @@ class PerformanceAnalyzer:
         return insights
     
     def _generate_performance_recommendations(self, results: Dict[str, Dict[str, Any]]) -> List[str]:
-        """Génère des recommandations d'amélioration"""
-        
+        """Génère des recommandations d'amélioration"""        
         recommendations = []
         
         # Recommandations basées sur les tendances
@@ -994,8 +953,7 @@ class PerformanceAnalyzer:
         return recommendations
 
 class AnalyticsTransformer:
-    """Gestionnaire principal des analyses de contenu"""
-    
+    """Gestionnaire principal des analyses de contenu"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -1037,8 +995,7 @@ class AnalyticsTransformer:
         content_path: str,
         analytics_config: AnalyticsConfig
     ) -> AnalyticsResult:
-        """Analyse complète du contenu"""
-        
+        """Analyse complète du contenu"""        
         start_time = time.time()
         
         try:
@@ -1110,8 +1067,7 @@ class AnalyticsTransformer:
         content_path: str,
         config: AnalyticsConfig
     ) -> Dict[str, Any]:
-        """Analyse la qualité du contenu"""
-        
+        """Analyse la qualité du contenu"""        
         content_type = self._detect_content_type(content_path)
         
         if content_type == 'audio':
@@ -1130,8 +1086,7 @@ class AnalyticsTransformer:
             return {'error': f"Type de contenu non supporté: {content_type}"}
     
     def _detect_content_type(self, content_path: str) -> str:
-        """Détecte le type de contenu"""
-        
+        """Détecte le type de contenu"""        
         ext = Path(content_path).suffix.lower()
         
         audio_exts = {'.mp3', '.wav', '.flac', '.ogg', '.m4a'}
@@ -1151,8 +1106,7 @@ class AnalyticsTransformer:
             return 'unknown'
     
     def _extract_quality_insights(self, quality_result: Dict[str, Any]) -> List[str]:
-        """Extrait des insights de l'analyse de qualité"""
-        
+        """Extrait des insights de l'analyse de qualité"""        
         insights = []
         
         overall_score = quality_result.get('overall_quality_score', 0)
@@ -1199,8 +1153,7 @@ class AnalyticsTransformer:
         results: Dict[str, Any],
         config: AnalyticsConfig
     ) -> Dict[str, str]:
-        """Génère des visualisations des résultats"""
-        
+        """Génère des visualisations des résultats"""        
         viz_paths = {}
         
         try:
@@ -1235,8 +1188,7 @@ class AnalyticsTransformer:
         quality_data: Dict[str, Any],
         output_path: Path
     ) -> Optional[Path]:
-        """Crée un dashboard de qualité"""
-        
+        """Crée un dashboard de qualité"""        
         try:
             fig, axes = plt.subplots(2, 2, figsize=(12, 10))
             fig.suptitle('Dashboard Qualité de Contenu', fontsize=16)
@@ -1298,8 +1250,7 @@ class AnalyticsTransformer:
         performance_data: Dict[str, Any],
         output_path: Path
     ) -> Optional[Path]:
-        """Crée des graphiques de performance"""
-        
+        """Crée des graphiques de performance"""        
         try:
             # Placeholder pour les graphiques de performance
             fig, ax = plt.subplots(figsize=(10, 6))
@@ -1329,8 +1280,7 @@ class AnalyticsTransformer:
         results: Dict[str, Any],
         errors: List[str]
     ) -> float:
-        """Calcule le score de confiance de l'analyse"""
-        
+        """Calcule le score de confiance de l'analyse"""        
         if errors:
             return 0.0
         
@@ -1351,8 +1301,7 @@ class AnalyticsTransformer:
         content_category: ContentCategory,
         analytics_type: AnalyticsType
     ) -> AnalyticsConfig:
-        """Génère une configuration d'analyse optimisée pour le créateur"""
-        
+        """Génère une configuration d'analyse optimisée pour le créateur"""        
         creator_config = self.creator_analytics_config.get(
             creator_type, 
             self.creator_analytics_config['influencer']
@@ -1377,8 +1326,7 @@ class AnalyticsTransformer:
         content_paths: List[str],
         analytics_config: AnalyticsConfig
     ) -> List[AnalyticsResult]:
-        """Analyse plusieurs contenus en lot"""
-        
+        """Analyse plusieurs contenus en lot"""        
         tasks = []
         for path in content_paths:
             task = asyncio.create_task(
@@ -1416,8 +1364,7 @@ class AnalyticsTransformer:
         content_path: str,
         analytics_config: AnalyticsConfig
     ) -> AnalyticsResult:
-        """Version asynchrone de l'analyse de contenu"""
-        
+        """Version asynchrone de l'analyse de contenu"""        
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             None,

@@ -1,5 +1,4 @@
-"""
-Model Factory and Registry for IA Influencer Agent Platform
+"""Model Factory and Registry for IA Influencer Agent Platform
 Centralized model management and orchestration system
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -12,9 +11,7 @@ Development Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Security
 - Microservices + Audio + DevOps + IA Prompt Engineer
 Email: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Type, Any, Union
 from dataclasses import dataclass
@@ -33,8 +30,7 @@ from ..core.base_models import BaseAIModel, ModelConfig, ModelType, ModelProvide
 
 
 class ModelCategory(Enum):
-    """Model category classifications"""
-    CONTENT_PROCESSING = "content_processing"
+    """Model category classifications"""    CONTENT_PROCESSING = "content_processing"
     CONTENT_PROTECTION = "content_protection"
     BUSINESS_INTELLIGENCE = "business_intelligence"
     CONTENT_GENERATION = "content_generation"
@@ -44,8 +40,7 @@ class ModelCategory(Enum):
 
 @dataclass
 class ModelRegistry:
-    """Model registration information"""
-    model_class: Type[BaseAIModel]
+    """Model registration information"""    model_class: Type[BaseAIModel]
     category: ModelCategory
     supported_types: List[ModelType]
     description: str
@@ -56,11 +51,9 @@ class ModelRegistry:
 
 
 class ModelOrchestrator:
-    """
-    Central orchestrator for all AI models in the platform
+    """    Central orchestrator for all AI models in the platform
     Manages model lifecycle, load balancing, and intelligent routing
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.registered_models: Dict[str, ModelRegistry] = {}
@@ -70,8 +63,7 @@ class ModelOrchestrator:
         self._register_core_models()
     
     def _register_core_models(self):
-        """Register all core models"""
-        
+        """Register all core models"""        
         # Audio Models
         self.register_model(
             "audio_feature_extractor",
@@ -232,8 +224,7 @@ class ModelOrchestrator:
         )
     
     def register_model(self, model_id: str, registry: ModelRegistry):
-        """Register a new model"""
-        self.registered_models[model_id] = registry
+        """Register a new model"""        self.registered_models[model_id] = registry
         self.model_stats[model_id] = {
             "total_requests": 0,
             "successful_requests": 0,
@@ -245,8 +236,7 @@ class ModelOrchestrator:
         self.logger.info(f"Registered model: {model_id}")
     
     async def get_model(self, model_id: str, config: Optional[ModelConfig] = None) -> BaseAIModel:
-        """Get or create model instance"""
-        if model_id not in self.registered_models:
+        """Get or create model instance"""        if model_id not in self.registered_models:
             raise ValueError(f"Model {model_id} not registered")
         
         # Check if model is already active
@@ -279,8 +269,7 @@ class ModelOrchestrator:
             raise
     
     async def process_request(self, model_id: str, data: Any, **kwargs) -> ProcessingResult:
-        """Process request through specified model"""
-        start_time = datetime.now()
+        """Process request through specified model"""        start_time = datetime.now()
         
         try:
             # Get model instance
@@ -307,8 +296,7 @@ class ModelOrchestrator:
             )
     
     def _update_model_stats(self, model_id: str, success: bool, processing_time: float):
-        """Update model statistics"""
-        stats = self.model_stats[model_id]
+        """Update model statistics"""        stats = self.model_stats[model_id]
         
         stats["total_requests"] += 1
         if success:
@@ -324,8 +312,7 @@ class ModelOrchestrator:
         stats["last_used"] = datetime.now()
     
     async def route_request(self, content_type: str, operation: str, data: Any, **kwargs) -> ProcessingResult:
-        """Intelligently route request to appropriate model"""
-        
+        """Intelligently route request to appropriate model"""        
         # Routing logic based on content type and operation
         routing_map = {
             ("audio", "analyze"): "audio_feature_extractor",
@@ -352,8 +339,7 @@ class ModelOrchestrator:
         return await self.process_request(model_id, data, **kwargs)
     
     async def batch_process(self, requests: List[Dict[str, Any]]) -> List[ProcessingResult]:
-        """Process multiple requests in parallel"""
-        tasks = []
+        """Process multiple requests in parallel"""        tasks = []
         
         for request in requests:
             model_id = request.get("model_id")
@@ -393,34 +379,29 @@ class ModelOrchestrator:
         return processed_results
     
     def get_model_stats(self, model_id: Optional[str] = None) -> Dict[str, Any]:
-        """Get model statistics"""
-        if model_id:
+        """Get model statistics"""        if model_id:
             return self.model_stats.get(model_id, {})
         return self.model_stats
     
     def get_registered_models(self) -> Dict[str, ModelRegistry]:
-        """Get all registered models"""
-        return self.registered_models
+        """Get all registered models"""        return self.registered_models
     
     def get_models_by_category(self, category: ModelCategory) -> Dict[str, ModelRegistry]:
-        """Get models by category"""
-        return {
+        """Get models by category"""        return {
             model_id: registry
             for model_id, registry in self.registered_models.items()
             if registry.category == category
         }
     
     def get_models_by_capability(self, capability: str) -> Dict[str, ModelRegistry]:
-        """Get models by capability"""
-        return {
+        """Get models by capability"""        return {
             model_id: registry
             for model_id, registry in self.registered_models.items()
             if capability in registry.capabilities
         }
     
     async def shutdown_model(self, model_id: str):
-        """Shutdown specific model"""
-        if model_id in self.active_models:
+        """Shutdown specific model"""        if model_id in self.active_models:
             model = self.active_models[model_id]
             if hasattr(model, 'shutdown'):
                 await model.shutdown()
@@ -429,8 +410,7 @@ class ModelOrchestrator:
             self.logger.info(f"Shutdown model: {model_id}")
     
     async def shutdown_all_models(self):
-        """Shutdown all active models"""
-        shutdown_tasks = []
+        """Shutdown all active models"""        shutdown_tasks = []
         for model_id in list(self.active_models.keys()):
             shutdown_tasks.append(self.shutdown_model(model_id))
         
@@ -441,23 +421,20 @@ class ModelOrchestrator:
 
 
 class ModelLoadBalancer:
-    """Load balancer for model instances"""
-    
+    """Load balancer for model instances"""    
     def __init__(self):
         self.model_instances: Dict[str, List[BaseAIModel]] = {}
         self.current_index: Dict[str, int] = {}
     
     def add_instance(self, model_id: str, instance: BaseAIModel):
-        """Add model instance to load balancer"""
-        if model_id not in self.model_instances:
+        """Add model instance to load balancer"""        if model_id not in self.model_instances:
             self.model_instances[model_id] = []
             self.current_index[model_id] = 0
         
         self.model_instances[model_id].append(instance)
     
     def get_instance(self, model_id: str) -> Optional[BaseAIModel]:
-        """Get next available instance using round-robin"""
-        if model_id not in self.model_instances or not self.model_instances[model_id]:
+        """Get next available instance using round-robin"""        if model_id not in self.model_instances or not self.model_instances[model_id]:
             return None
         
         instances = self.model_instances[model_id]
@@ -471,8 +448,7 @@ class ModelLoadBalancer:
         return instance
     
     def remove_instance(self, model_id: str, instance: BaseAIModel):
-        """Remove instance from load balancer"""
-        if model_id in self.model_instances:
+        """Remove instance from load balancer"""        if model_id in self.model_instances:
             try:
                 self.model_instances[model_id].remove(instance)
                 # Reset index if needed
@@ -485,12 +461,10 @@ class ModelLoadBalancer:
 
 
 class ModelFactory:
-    """Factory for creating model instances"""
-    
+    """Factory for creating model instances"""    
     @staticmethod
     def create_model(model_type: ModelType, config: ModelConfig) -> BaseAIModel:
-        """Create model instance based on type"""
-        
+        """Create model instance based on type"""        
         model_map = {
             ModelType.AUDIO_MODEL: AudioFeatureExtractor,
             ModelType.AUDIO_FINGERPRINT: AudioFeatureExtractor,
@@ -514,8 +488,7 @@ class ModelFactory:
     
     @staticmethod
     def create_optimized_config(model_type: ModelType, use_case: str) -> ModelConfig:
-        """Create optimized configuration for specific use case"""
-        
+        """Create optimized configuration for specific use case"""        
         base_configs = {
             ModelType.AUDIO_MODEL: ModelConfig(
                 name=f"audio_model_{use_case}",

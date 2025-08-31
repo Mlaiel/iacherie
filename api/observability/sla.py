@@ -1,5 +1,4 @@
-"""
-Enterprise SLA Monitoring & Service Level Management
+"""Enterprise SLA Monitoring & Service Level Management
 
 Comprehensive SLA monitoring system for tracking service level agreements,
 availability metrics, and performance guarantees in the IA Influencer platform.
@@ -10,9 +9,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DevOps + Security
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, copying, or implementation without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple
 from dataclasses import dataclass, asdict
@@ -23,24 +20,21 @@ import logging
 
 
 class SLAStatus(Enum):
-    """SLA compliance status."""
-    COMPLIANT = "compliant"
+    """SLA compliance status."""    COMPLIANT = "compliant"
     AT_RISK = "at_risk"
     VIOLATED = "violated"
     NOT_MEASURED = "not_measured"
 
 
 class ServiceTier(Enum):
-    """Service tier definitions."""
-    PREMIUM = "premium"
+    """Service tier definitions."""    PREMIUM = "premium"
     STANDARD = "standard"
     BASIC = "basic"
 
 
 @dataclass
 class SLATarget:
-    """SLA target definition."""
-    name: str
+    """SLA target definition."""    name: str
     description: str
     target_value: float
     measurement_unit: str
@@ -52,8 +46,7 @@ class SLATarget:
 
 @dataclass
 class SLAMeasurement:
-    """Individual SLA measurement point."""
-    timestamp: datetime
+    """Individual SLA measurement point."""    timestamp: datetime
     sla_name: str
     measured_value: float
     target_value: float
@@ -62,8 +55,7 @@ class SLAMeasurement:
     metadata: Dict = None
 
     def to_dict(self) -> Dict:
-        """Convert to dictionary."""
-        data = asdict(self)
+        """Convert to dictionary."""        data = asdict(self)
         data['timestamp'] = self.timestamp.isoformat()
         data['service_tier'] = self.service_tier.value
         return data
@@ -71,8 +63,7 @@ class SLAMeasurement:
 
 @dataclass 
 class SLAReport:
-    """SLA compliance report."""
-    sla_name: str
+    """SLA compliance report."""    sla_name: str
     service_tier: ServiceTier
     measurement_period: str
     total_measurements: int
@@ -86,8 +77,7 @@ class SLAReport:
     generated_at: datetime
 
     def to_dict(self) -> Dict:
-        """Convert to dictionary."""
-        data = asdict(self)
+        """Convert to dictionary."""        data = asdict(self)
         data['service_tier'] = self.service_tier.value
         data['status'] = self.status.value
         data['generated_at'] = self.generated_at.isoformat()
@@ -95,8 +85,7 @@ class SLAReport:
 
 
 class ServiceLevelTracker:
-    """Tracks service level metrics and compliance."""
-    
+    """Tracks service level metrics and compliance."""    
     def __init__(self, retention_days: int = 30):
         self.retention_days = retention_days
         self.measurements = defaultdict(lambda: deque(maxlen=10000))
@@ -107,8 +96,7 @@ class ServiceLevelTracker:
         self._initialize_default_slas()
     
     def _initialize_default_slas(self):
-        """Initialize default SLA targets for the platform."""
-        
+        """Initialize default SLA targets for the platform."""        
         # Content Upload SLAs
         self.sla_targets['content_upload_success_rate'] = SLATarget(
             name="content_upload_success_rate",
@@ -214,8 +202,7 @@ class ServiceLevelTracker:
         )
     
     def record_measurement(self, sla_name: str, measured_value: float, metadata: Dict = None):
-        """Record an SLA measurement."""
-        if sla_name not in self.sla_targets:
+        """Record an SLA measurement."""        if sla_name not in self.sla_targets:
             logging.warning(f"Unknown SLA target: {sla_name}")
             return
         
@@ -246,8 +233,7 @@ class ServiceLevelTracker:
             self._record_violation(measurement)
     
     def _record_violation(self, measurement: SLAMeasurement):
-        """Record SLA violation."""
-        violation = {
+        """Record SLA violation."""        violation = {
             'timestamp': measurement.timestamp,
             'sla_name': measurement.sla_name,
             'measured_value': measurement.measured_value,
@@ -260,8 +246,7 @@ class ServiceLevelTracker:
         logging.warning(f"SLA violation: {measurement.sla_name} = {measurement.measured_value} (target: {measurement.target_value})")
     
     def get_sla_status(self, sla_name: str, period_hours: int = 24) -> SLAStatus:
-        """Get current SLA compliance status."""
-        if sla_name not in self.sla_targets:
+        """Get current SLA compliance status."""        if sla_name not in self.sla_targets:
             return SLAStatus.NOT_MEASURED
         
         cutoff_time = datetime.utcnow() - timedelta(hours=period_hours)
@@ -284,8 +269,7 @@ class ServiceLevelTracker:
             return SLAStatus.VIOLATED
     
     def generate_sla_report(self, sla_name: str, period_hours: int = 24) -> Optional[SLAReport]:
-        """Generate comprehensive SLA report."""
-        if sla_name not in self.sla_targets:
+        """Generate comprehensive SLA report."""        if sla_name not in self.sla_targets:
             return None
         
         target = self.sla_targets[sla_name]
@@ -349,8 +333,7 @@ class ServiceLevelTracker:
         )
     
     def _generate_recommendations(self, sla_name: str, measurements: List[SLAMeasurement], violations: List[Dict]) -> List[str]:
-        """Generate actionable recommendations based on SLA performance."""
-        recommendations = []
+        """Generate actionable recommendations based on SLA performance."""        recommendations = []
         
         if not violations:
             recommendations.append("SLA is performing well. Continue current practices.")
@@ -407,8 +390,7 @@ class ServiceLevelTracker:
         return recommendations
     
     def cleanup_old_measurements(self):
-        """Clean up old measurements beyond retention period."""
-        cutoff_time = datetime.utcnow() - timedelta(days=self.retention_days)
+        """Clean up old measurements beyond retention period."""        cutoff_time = datetime.utcnow() - timedelta(days=self.retention_days)
         
         for sla_name in self.measurements:
             measurements = self.measurements[sla_name]
@@ -417,15 +399,13 @@ class ServiceLevelTracker:
 
 
 class AvailabilityCalculator:
-    """Calculates system availability and uptime metrics."""
-    
+    """Calculates system availability and uptime metrics."""    
     def __init__(self):
         self.uptime_events = deque(maxlen=10000)
         self.downtime_events = deque(maxlen=1000)
         
     def record_uptime_event(self, service_name: str, timestamp: datetime = None):
-        """Record a service uptime event."""
-        event = {
+        """Record a service uptime event."""        event = {
             'timestamp': timestamp or datetime.utcnow(),
             'service': service_name,
             'event_type': 'up'
@@ -433,8 +413,7 @@ class AvailabilityCalculator:
         self.uptime_events.append(event)
     
     def record_downtime_event(self, service_name: str, duration_seconds: int, reason: str = None, timestamp: datetime = None):
-        """Record a service downtime event."""
-        event = {
+        """Record a service downtime event."""        event = {
             'timestamp': timestamp or datetime.utcnow(),
             'service': service_name,
             'event_type': 'down',
@@ -444,8 +423,7 @@ class AvailabilityCalculator:
         self.downtime_events.append(event)
     
     def calculate_availability(self, service_name: str, period_hours: int = 24) -> Dict:
-        """Calculate availability metrics for a service."""
-        cutoff_time = datetime.utcnow() - timedelta(hours=period_hours)
+        """Calculate availability metrics for a service."""        cutoff_time = datetime.utcnow() - timedelta(hours=period_hours)
         
         # Get relevant events for the period
         relevant_downtime = [
@@ -480,8 +458,7 @@ class AvailabilityCalculator:
         }
     
     def _calculate_mtbf(self, service_name: str, period_hours: int) -> float:
-        """Calculate Mean Time Between Failures."""
-        cutoff_time = datetime.utcnow() - timedelta(hours=period_hours)
+        """Calculate Mean Time Between Failures."""        cutoff_time = datetime.utcnow() - timedelta(hours=period_hours)
         
         failures = [
             event for event in self.downtime_events
@@ -502,8 +479,7 @@ class AvailabilityCalculator:
         return sum(intervals) / len(intervals) if intervals else period_hours
     
     def _calculate_mttr(self, service_name: str, period_hours: int) -> float:
-        """Calculate Mean Time To Recovery."""
-        cutoff_time = datetime.utcnow() - timedelta(hours=period_hours)
+        """Calculate Mean Time To Recovery."""        cutoff_time = datetime.utcnow() - timedelta(hours=period_hours)
         
         downtimes = [
             event['duration_seconds'] for event in self.downtime_events
@@ -516,8 +492,7 @@ class AvailabilityCalculator:
         return (sum(downtimes) / len(downtimes)) / 60  # Convert to minutes
     
     def get_service_availability_summary(self, period_hours: int = 24) -> Dict:
-        """Get availability summary for all services."""
-        # Get unique service names
+        """Get availability summary for all services."""        # Get unique service names
         all_services = set()
         for event in list(self.uptime_events) + list(self.downtime_events):
             all_services.add(event['service'])
@@ -543,26 +518,22 @@ class AvailabilityCalculator:
 
 
 class SLAMonitor:
-    """Main SLA monitoring orchestrator."""
-    
+    """Main SLA monitoring orchestrator."""    
     def __init__(self, retention_days: int = 30):
         self.service_tracker = ServiceLevelTracker(retention_days)
         self.availability_calculator = AvailabilityCalculator()
         self.monitoring_active = False
         
     def start_monitoring(self):
-        """Start SLA monitoring."""
-        self.monitoring_active = True
+        """Start SLA monitoring."""        self.monitoring_active = True
         logging.info("SLA monitoring started")
     
     def stop_monitoring(self):
-        """Stop SLA monitoring."""
-        self.monitoring_active = False
+        """Stop SLA monitoring."""        self.monitoring_active = False
         logging.info("SLA monitoring stopped")
     
     async def record_content_upload_metrics(self, success: bool, response_time_ms: float):
-        """Record content upload SLA metrics."""
-        # Record success rate
+        """Record content upload SLA metrics."""        # Record success rate
         success_rate = 100.0 if success else 0.0
         self.service_tracker.record_measurement("content_upload_success_rate", success_rate)
         
@@ -581,8 +552,7 @@ class SLAMonitor:
             )
     
     async def record_ai_processing_metrics(self, processing_time_ms: float, accuracy_score: float = None):
-        """Record AI processing SLA metrics."""
-        self.service_tracker.record_measurement("ai_processing_time", processing_time_ms)
+        """Record AI processing SLA metrics."""        self.service_tracker.record_measurement("ai_processing_time", processing_time_ms)
         
         if accuracy_score is not None:
             self.service_tracker.record_measurement("ai_accuracy_rate", accuracy_score * 100)
@@ -590,8 +560,7 @@ class SLAMonitor:
         self.availability_calculator.record_uptime_event("ai_processing")
     
     async def record_protection_metrics(self, scan_time_ms: float, violation_detected: bool, detection_time_ms: float = None):
-        """Record content protection SLA metrics."""
-        self.service_tracker.record_measurement("protection_scan_time", scan_time_ms)
+        """Record content protection SLA metrics."""        self.service_tracker.record_measurement("protection_scan_time", scan_time_ms)
         
         if violation_detected and detection_time_ms:
             self.service_tracker.record_measurement("violation_detection_time", detection_time_ms)
@@ -599,8 +568,7 @@ class SLAMonitor:
         self.availability_calculator.record_uptime_event("content_protection")
     
     async def record_system_availability(self, uptime_percentage: float):
-        """Record overall system availability."""
-        self.service_tracker.record_measurement("system_uptime", uptime_percentage)
+        """Record overall system availability."""        self.service_tracker.record_measurement("system_uptime", uptime_percentage)
         
         if uptime_percentage >= 99.0:
             self.availability_calculator.record_uptime_event("system")
@@ -613,8 +581,7 @@ class SLAMonitor:
             )
     
     def get_sla_dashboard_data(self) -> Dict:
-        """Get comprehensive SLA dashboard data."""
-        dashboard_data = {
+        """Get comprehensive SLA dashboard data."""        dashboard_data = {
             'overview': {
                 'monitoring_active': self.monitoring_active,
                 'total_sla_targets': len(self.service_tracker.sla_targets),
@@ -659,6 +626,5 @@ class SLAMonitor:
         return dashboard_data
     
     async def cleanup_old_data(self):
-        """Clean up old monitoring data."""
-        self.service_tracker.cleanup_old_measurements()
+        """Clean up old monitoring data."""        self.service_tracker.cleanup_old_measurements()
         logging.info("SLA monitoring data cleanup completed")

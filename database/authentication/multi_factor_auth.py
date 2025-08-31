@@ -1,5 +1,4 @@
-"""
-🔐 Multi-Factor Authentication Database - Enterprise 2FA/MFA System
+"""🔐 Multi-Factor Authentication Database - Enterprise 2FA/MFA System
 ==================================================================
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -12,9 +11,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Business Logic: MFA Setup → Device Registration → Authentication Challenge → 
 Backup Codes → Recovery → Audit Logging
-"""
-
-import asyncio
+"""import asyncio
 import secrets
 import string
 from datetime import datetime, timedelta, timezone
@@ -41,8 +38,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class MFAMethod(Enum):
-    """Multi-factor authentication methods"""
-    TOTP = "totp"  # Time-based One-Time Password
+    """Multi-factor authentication methods"""    TOTP = "totp"  # Time-based One-Time Password
     SMS = "sms"    # SMS verification
     EMAIL = "email"  # Email verification
     PUSH = "push"  # Push notification
@@ -51,24 +47,21 @@ class MFAMethod(Enum):
     BIOMETRIC = "biometric"  # Biometric authentication
 
 class MFAStatus(Enum):
-    """MFA status states"""
-    ENABLED = "enabled"
+    """MFA status states"""    ENABLED = "enabled"
     DISABLED = "disabled"
     PENDING_SETUP = "pending_setup"
     TEMPORARILY_DISABLED = "temporarily_disabled"
     COMPROMISED = "compromised"
 
 class DeviceStatus(Enum):
-    """Trusted device status"""
-    TRUSTED = "trusted"
+    """Trusted device status"""    TRUSTED = "trusted"
     PENDING = "pending"
     REVOKED = "revoked"
     EXPIRED = "expired"
 
 @dataclass
 class MFAChallenge:
-    """MFA challenge data structure"""
-    challenge_id: str
+    """MFA challenge data structure"""    challenge_id: str
     user_id: str
     method: MFAMethod
     challenge_code: str
@@ -78,8 +71,7 @@ class MFAChallenge:
 
 @dataclass
 class TOTPConfig:
-    """TOTP configuration"""
-    secret_key: str
+    """TOTP configuration"""    secret_key: str
     algorithm: str = "SHA1"
     digits: int = 6
     period: int = 30
@@ -87,8 +79,7 @@ class TOTPConfig:
     account_name: str = ""
 
 class MFADevices(Base):
-    """Database model for MFA devices"""
-    __tablename__ = 'mfa_devices'
+    """Database model for MFA devices"""    __tablename__ = 'mfa_devices'
     
     device_id = Column(String, primary_key=True)
     user_id = Column(String, nullable=False, index=True)
@@ -114,8 +105,7 @@ class MFADevices(Base):
     )
 
 class MFABackupCodes(Base):
-    """Database model for MFA backup codes"""
-    __tablename__ = 'mfa_backup_codes'
+    """Database model for MFA backup codes"""    __tablename__ = 'mfa_backup_codes'
     
     code_id = Column(String, primary_key=True)
     user_id = Column(String, nullable=False, index=True)
@@ -132,8 +122,7 @@ class MFABackupCodes(Base):
     )
 
 class MFAChallenges(Base):
-    """Database model for MFA challenges"""
-    __tablename__ = 'mfa_challenges'
+    """Database model for MFA challenges"""    __tablename__ = 'mfa_challenges'
     
     challenge_id = Column(String, primary_key=True)
     user_id = Column(String, nullable=False, index=True)
@@ -157,8 +146,7 @@ class MFAChallenges(Base):
     )
 
 class TrustedDevices(Base):
-    """Database model for trusted devices"""
-    __tablename__ = 'trusted_devices'
+    """Database model for trusted devices"""    __tablename__ = 'trusted_devices'
     
     trust_id = Column(String, primary_key=True)
     user_id = Column(String, nullable=False, index=True)
@@ -182,8 +170,7 @@ class TrustedDevices(Base):
     )
 
 class MultiFactorAuthRepository:
-    """
-    Enterprise-grade multi-factor authentication repository.
+    """    Enterprise-grade multi-factor authentication repository.
     
     Features:
     - TOTP (Time-based One-Time Password) support
@@ -193,8 +180,7 @@ class MultiFactorAuthRepository:
     - Trusted device management
     - Challenge-response authentication
     - Comprehensive audit logging
-    """
-    
+    """    
     def __init__(
         self,
         session: AsyncSession,
@@ -213,8 +199,7 @@ class MultiFactorAuthRepository:
         )
     
     async def setup_totp(self, user_id: str, device_name: str, account_name: str) -> Dict[str, Any]:
-        """Setup TOTP for a user device"""
-        try:
+        """Setup TOTP for a user device"""        try:
             # Generate secret key
             secret = pyotp.random_base32()
             
@@ -276,8 +261,7 @@ class MultiFactorAuthRepository:
             raise
     
     async def verify_totp_setup(self, user_id: str, device_id: str, verification_code: str) -> bool:
-        """Verify TOTP setup with initial code"""
-        try:
+        """Verify TOTP setup with initial code"""        try:
             # Get device
             stmt = select(MFADevices).where(
                 MFADevices.device_id == device_id,
@@ -328,8 +312,7 @@ class MultiFactorAuthRepository:
         method: MFAMethod,
         device_id: Optional[str] = None
     ) -> MFAChallenge:
-        """Generate MFA challenge for authentication"""
-        try:
+        """Generate MFA challenge for authentication"""        try:
             challenge_id = str(uuid4())
             expires_at = datetime.now(timezone.utc) + timedelta(minutes=5)
             
@@ -387,8 +370,7 @@ class MultiFactorAuthRepository:
         user_code: str,
         device_fingerprint: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Verify MFA challenge response"""
-        try:
+        """Verify MFA challenge response"""        try:
             # Get challenge
             stmt = select(MFAChallenges).where(
                 MFAChallenges.challenge_id == challenge_id,
@@ -467,8 +449,7 @@ class MultiFactorAuthRepository:
             raise
     
     async def generate_backup_codes(self, user_id: str, count: int = 10) -> List[str]:
-        """Generate backup recovery codes"""
-        try:
+        """Generate backup recovery codes"""        try:
             # Deactivate existing backup codes
             stmt = select(MFABackupCodes).where(
                 MFABackupCodes.user_id == user_id,
@@ -515,8 +496,7 @@ class MultiFactorAuthRepository:
             raise
     
     async def get_user_mfa_devices(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get all MFA devices for a user"""
-        try:
+        """Get all MFA devices for a user"""        try:
             stmt = select(MFADevices).where(
                 MFADevices.user_id == user_id,
                 MFADevices.status == MFAStatus.ENABLED.value
@@ -546,8 +526,7 @@ class MultiFactorAuthRepository:
             raise
     
     async def disable_mfa_device(self, user_id: str, device_id: str, reason: str = "User requested") -> bool:
-        """Disable an MFA device"""
-        try:
+        """Disable an MFA device"""        try:
             stmt = select(MFADevices).where(
                 MFADevices.device_id == device_id,
                 MFADevices.user_id == user_id
@@ -576,8 +555,7 @@ class MultiFactorAuthRepository:
             raise
     
     async def is_device_trusted(self, user_id: str, device_fingerprint: str) -> bool:
-        """Check if device is trusted"""
-        try:
+        """Check if device is trusted"""        try:
             stmt = select(TrustedDevices).where(
                 TrustedDevices.user_id == user_id,
                 TrustedDevices.device_fingerprint == device_fingerprint,
@@ -602,8 +580,7 @@ class MultiFactorAuthRepository:
     # Private helper methods
     
     async def _verify_totp_code(self, user_id: str, code: str, device_id: Optional[str] = None) -> bool:
-        """Verify TOTP code against user's devices"""
-        try:
+        """Verify TOTP code against user's devices"""        try:
             query = select(MFADevices).where(
                 MFADevices.user_id == user_id,
                 MFADevices.mfa_method == MFAMethod.TOTP.value,
@@ -635,8 +612,7 @@ class MultiFactorAuthRepository:
             return False
     
     async def _verify_backup_code(self, user_id: str, code: str) -> bool:
-        """Verify backup recovery code"""
-        try:
+        """Verify backup recovery code"""        try:
             stmt = select(MFABackupCodes).where(
                 MFABackupCodes.user_id == user_id,
                 MFABackupCodes.is_used == False,
@@ -659,8 +635,7 @@ class MultiFactorAuthRepository:
             return False
     
     async def _has_primary_mfa_device(self, user_id: str) -> bool:
-        """Check if user has a primary MFA device"""
-        stmt = select(MFADevices).where(
+        """Check if user has a primary MFA device"""        stmt = select(MFADevices).where(
             MFADevices.user_id == user_id,
             MFADevices.is_primary == True,
             MFADevices.status == MFAStatus.ENABLED.value
@@ -669,8 +644,7 @@ class MultiFactorAuthRepository:
         return result.scalar_one_or_none() is not None
     
     async def _assign_new_primary_device(self, user_id: str):
-        """Assign a new primary MFA device"""
-        stmt = select(MFADevices).where(
+        """Assign a new primary MFA device"""        stmt = select(MFADevices).where(
             MFADevices.user_id == user_id,
             MFADevices.status == MFAStatus.ENABLED.value
         ).order_by(MFADevices.last_used_at.desc())
@@ -682,8 +656,7 @@ class MultiFactorAuthRepository:
             device.is_primary = True
     
     async def _update_device_last_used(self, device_id: str):
-        """Update device last used timestamp"""
-        stmt = select(MFADevices).where(MFADevices.device_id == device_id)
+        """Update device last used timestamp"""        stmt = select(MFADevices).where(MFADevices.device_id == device_id)
         result = await self.session.execute(stmt)
         device = result.scalar_one_or_none()
         
@@ -691,8 +664,7 @@ class MultiFactorAuthRepository:
             device.last_used_at = datetime.now(timezone.utc)
     
     async def _add_trusted_device(self, user_id: str, device_fingerprint: str) -> str:
-        """Add device to trusted devices list"""
-        trust_id = str(uuid4())
+        """Add device to trusted devices list"""        trust_id = str(uuid4())
         expires_at = datetime.now(timezone.utc) + timedelta(days=30)  # 30 days trust
         
         trusted_device = TrustedDevices(
@@ -709,14 +681,12 @@ class MultiFactorAuthRepository:
         return trust_id
     
     async def _send_sms_code(self, user_id: str, code: str):
-        """Send SMS verification code (placeholder)"""
-        # This would integrate with SMS service (Twilio, AWS SNS, etc.)
+        """Send SMS verification code (placeholder)"""        # This would integrate with SMS service (Twilio, AWS SNS, etc.)
         logger.info(f"SMS code {code} would be sent to user {user_id}")
         pass
     
     async def _send_email_code(self, user_id: str, code: str):
-        """Send email verification code (placeholder)"""
-        # This would integrate with email service (SendGrid, AWS SES, etc.)
+        """Send email verification code (placeholder)"""        # This would integrate with email service (SendGrid, AWS SES, etc.)
         logger.info(f"Email code {code} would be sent to user {user_id}")
         pass
 

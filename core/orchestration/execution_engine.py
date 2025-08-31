@@ -1,5 +1,4 @@
-"""
-Execution Engine - High-Performance Task Execution Framework
+"""Execution Engine - High-Performance Task Execution Framework
 
 Advanced execution engine for running distributed tasks with intelligent load balancing,
 fault tolerance, and performance optimization across multi-node environments.
@@ -11,9 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Callable, Union, Set
@@ -28,8 +25,7 @@ from backend.core.utils.event_dispatcher import EventDispatcher
 
 
 class ExecutionStatus(Enum):
-    """Task execution status enumeration."""
-    PENDING = "pending"
+    """Task execution status enumeration."""    PENDING = "pending"
     RUNNING = "running"
     PAUSED = "paused"
     COMPLETED = "completed"
@@ -39,16 +35,14 @@ class ExecutionStatus(Enum):
 
 
 class ExecutionMode(Enum):
-    """Execution mode options."""
-    SYNCHRONOUS = "synchronous"
+    """Execution mode options."""    SYNCHRONOUS = "synchronous"
     ASYNCHRONOUS = "asynchronous"
     PARALLEL = "parallel"
     DISTRIBUTED = "distributed"
 
 
 class ExecutorType(Enum):
-    """Executor type classification."""
-    LOCAL_PROCESS = "local_process"
+    """Executor type classification."""    LOCAL_PROCESS = "local_process"
     THREAD_POOL = "thread_pool"
     ASYNC_COROUTINE = "async_coroutine"
     REMOTE_NODE = "remote_node"
@@ -58,8 +52,7 @@ class ExecutorType(Enum):
 
 @dataclass
 class ExecutionContext:
-    """Execution context with environment and configuration."""
-    execution_id: str
+    """Execution context with environment and configuration."""    execution_id: str
     task_id: str
     executor_id: str
     environment: Dict[str, Any] = field(default_factory=dict)
@@ -71,8 +64,7 @@ class ExecutionContext:
 
 @dataclass
 class ExecutionResult:
-    """Task execution result with metrics and output."""
-    execution_id: str
+    """Task execution result with metrics and output."""    execution_id: str
     task_id: str
     status: ExecutionStatus
     result_data: Optional[Any] = None
@@ -87,8 +79,7 @@ class ExecutionResult:
 
 @dataclass
 class ExecutorNode:
-    """Execution node configuration and status."""
-    node_id: str
+    """Execution node configuration and status."""    node_id: str
     name: str
     executor_type: ExecutorType
     endpoint: Optional[str] = None
@@ -103,8 +94,7 @@ class ExecutorNode:
 
 @dataclass
 class ExecutionTask:
-    """Task definition for execution."""
-    task_id: str
+    """Task definition for execution."""    task_id: str
     name: str
     task_type: str
     handler: str
@@ -122,8 +112,7 @@ class ExecutionTask:
 
 @dataclass
 class BatchExecution:
-    """Batch execution tracking."""
-    batch_id: str
+    """Batch execution tracking."""    batch_id: str
     name: str
     tasks: List[ExecutionTask]
     execution_mode: ExecutionMode = ExecutionMode.PARALLEL
@@ -137,8 +126,7 @@ class BatchExecution:
 
 
 class ExecutionEngine:
-    """
-    High-performance task execution engine with distributed capabilities.
+    """    High-performance task execution engine with distributed capabilities.
     
     Provides comprehensive execution capabilities including:
     - Multi-mode task execution (sync, async, parallel, distributed)
@@ -146,8 +134,7 @@ class ExecutionEngine:
     - Fault tolerance with automatic retry and failover
     - Resource monitoring and performance optimization
     - Batch execution with dependency management
-    """
-    
+    """    
     def __init__(self, max_concurrent_executions: int = 1000):
         self.logger = logging.getLogger(__name__)
         self.metrics_collector = MetricsCollector()
@@ -185,8 +172,7 @@ class ExecutionEngine:
         self.logger.info("ExecutionEngine initialized successfully")
     
     async def register_task_handler(self, handler_name: str, handler_func: Callable) -> bool:
-        """
-        Register a task handler function.
+        """        Register a task handler function.
         
         Args:
             handler_name: Unique handler identifier
@@ -194,8 +180,7 @@ class ExecutionEngine:
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             self.task_handlers[handler_name] = handler_func
             
             await self.event_dispatcher.emit('handler_registered', {
@@ -212,16 +197,14 @@ class ExecutionEngine:
             return False
     
     async def register_executor_node(self, node: ExecutorNode) -> bool:
-        """
-        Register an executor node.
+        """        Register an executor node.
         
         Args:
             node: Executor node configuration
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             self.executor_nodes[node.node_id] = node
             
             await self.event_dispatcher.emit('executor_registered', {
@@ -239,16 +222,14 @@ class ExecutionEngine:
             return False
     
     async def execute_task(self, task: ExecutionTask) -> str:
-        """
-        Execute a single task.
+        """        Execute a single task.
         
         Args:
             task: Task definition to execute
             
         Returns:
             str: Execution ID
-        """
-        execution_id = str(uuid.uuid4())
+        """        execution_id = str(uuid.uuid4())
         
         try:
             # Check concurrency limits
@@ -323,16 +304,14 @@ class ExecutionEngine:
             raise
     
     async def execute_batch(self, batch: BatchExecution) -> str:
-        """
-        Execute a batch of tasks.
+        """        Execute a batch of tasks.
         
         Args:
             batch: Batch execution definition
             
         Returns:
             str: Batch execution ID
-        """
-        try:
+        """        try:
             batch.status = ExecutionStatus.RUNNING
             batch.started_at = datetime.now()
             
@@ -362,8 +341,7 @@ class ExecutionEngine:
             raise
     
     async def _execute_synchronous(self, task: ExecutionTask, context: ExecutionContext) -> ExecutionResult:
-        """Execute task synchronously."""
-        start_time = datetime.now()
+        """Execute task synchronously."""        start_time = datetime.now()
         
         try:
             # Get task handler
@@ -469,8 +447,7 @@ class ExecutionEngine:
                 del self.active_executions[context.execution_id]
     
     async def _execute_asynchronous(self, task: ExecutionTask, context: ExecutionContext) -> None:
-        """Execute task asynchronously."""
-        try:
+        """Execute task asynchronously."""        try:
             result = await self._execute_synchronous(task, context)
             self.execution_results[context.execution_id] = result
             
@@ -478,8 +455,7 @@ class ExecutionEngine:
             self.logger.error(f"Async execution failed: {e}")
     
     async def _execute_parallel(self, task: ExecutionTask, context: ExecutionContext) -> None:
-        """Execute task with parallel processing."""
-        try:
+        """Execute task with parallel processing."""        try:
             # For parallel execution, we might split the task into sub-tasks
             # This is a simplified implementation
             result = await self._execute_synchronous(task, context)
@@ -489,8 +465,7 @@ class ExecutionEngine:
             self.logger.error(f"Parallel execution failed: {e}")
     
     async def _execute_distributed(self, task: ExecutionTask, context: ExecutionContext) -> None:
-        """Execute task on distributed nodes."""
-        try:
+        """Execute task on distributed nodes."""        try:
             # For distributed execution, we would send task to remote nodes
             # This is a simplified implementation
             result = await self._execute_synchronous(task, context)
@@ -500,8 +475,7 @@ class ExecutionEngine:
             self.logger.error(f"Distributed execution failed: {e}")
     
     async def _execute_batch_parallel(self, batch: BatchExecution) -> None:
-        """Execute batch tasks in parallel."""
-        semaphore = asyncio.Semaphore(batch.max_concurrent)
+        """Execute batch tasks in parallel."""        semaphore = asyncio.Semaphore(batch.max_concurrent)
         
         async def execute_task_with_semaphore(task):
             async with semaphore:
@@ -525,8 +499,7 @@ class ExecutionEngine:
         batch.completed_at = datetime.now()
     
     async def _execute_batch_sequential(self, batch: BatchExecution) -> None:
-        """Execute batch tasks sequentially."""
-        for task in batch.tasks:
+        """Execute batch tasks sequentially."""        for task in batch.tasks:
             try:
                 execution_id = await self.execute_task(task)
                 
@@ -542,13 +515,11 @@ class ExecutionEngine:
         batch.completed_at = datetime.now()
     
     async def _execute_batch_distributed(self, batch: BatchExecution) -> None:
-        """Execute batch tasks on distributed nodes."""
-        # Simplified - would implement actual distribution logic
+        """Execute batch tasks on distributed nodes."""        # Simplified - would implement actual distribution logic
         await self._execute_batch_parallel(batch)
     
     async def _select_optimal_executor(self, task: ExecutionTask) -> Optional[ExecutorNode]:
-        """Select optimal executor node for task."""
-        if not self.executor_nodes:
+        """Select optimal executor node for task."""        if not self.executor_nodes:
             return None
         
         # Filter suitable executors
@@ -573,8 +544,7 @@ class ExecutionEngine:
         executors: List[ExecutorNode],
         task: ExecutionTask
     ) -> ExecutorNode:
-        """Select executor using load balancing."""
-        # Calculate load scores
+        """Select executor using load balancing."""        # Calculate load scores
         best_executor = None
         best_score = float('inf')
         
@@ -603,8 +573,7 @@ class ExecutionEngine:
         return best_executor or executors[0]
     
     async def _check_executor_capacity(self, node: ExecutorNode, task: ExecutionTask) -> bool:
-        """Check if executor has sufficient capacity."""
-        for resource, required in task.resource_requirements.items():
+        """Check if executor has sufficient capacity."""        for resource, required in task.resource_requirements.items():
             if resource in node.capacity:
                 available = node.capacity[resource] - node.current_load.get(resource, 0.0)
                 if available < required:
@@ -612,8 +581,7 @@ class ExecutionEngine:
         return True
     
     async def _validate_task(self, task: ExecutionTask) -> bool:
-        """Validate task definition."""
-        try:
+        """Validate task definition."""        try:
             if not task.task_id or not task.handler:
                 return False
             
@@ -629,16 +597,13 @@ class ExecutionEngine:
             return False
     
     async def get_execution_result(self, execution_id: str) -> Optional[ExecutionResult]:
-        """Get execution result by ID."""
-        return self.execution_results.get(execution_id)
+        """Get execution result by ID."""        return self.execution_results.get(execution_id)
     
     async def get_batch_status(self, batch_id: str) -> Optional[BatchExecution]:
-        """Get batch execution status."""
-        return self.batch_executions.get(batch_id)
+        """Get batch execution status."""        return self.batch_executions.get(batch_id)
     
     async def cancel_execution(self, execution_id: str) -> bool:
-        """Cancel running execution."""
-        try:
+        """Cancel running execution."""        try:
             if execution_id in self.active_executions:
                 context = self.active_executions[execution_id]
                 
@@ -668,8 +633,7 @@ class ExecutionEngine:
             return False
     
     async def get_execution_stats(self) -> Dict[str, Any]:
-        """Get execution engine statistics."""
-        # Update performance metrics
+        """Get execution engine statistics."""        # Update performance metrics
         if self.execution_stats['total_executions'] > 0:
             self.execution_stats['error_rate'] = (
                 self.execution_stats['failed_executions'] /
@@ -686,8 +650,7 @@ class ExecutionEngine:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown execution engine gracefully."""
-        # Cancel all active executions
+        """Shutdown execution engine gracefully."""        # Cancel all active executions
         for execution_id in list(self.active_executions.keys()):
             await self.cancel_execution(execution_id)
         

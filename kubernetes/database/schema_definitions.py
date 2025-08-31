@@ -1,5 +1,4 @@
-"""
-Enterprise Schema Definition Manager
+"""Enterprise Schema Definition Manager
 Advanced database schema management and validation for IA Influencer Agent
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -71,9 +70,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Performance tuning automation
 - Schema evolution management
 - Dependency tracking
-"""
-
-import asyncio
+"""import asyncio
 from typing import Dict, Any, Optional, List, Union, Tuple, Set
 from datetime import datetime, timedelta
 from enum import Enum
@@ -99,8 +96,7 @@ from backend.core.logging import get_logger
 
 
 class DataType(Enum):
-    """Types de données supportés"""
-    INTEGER = "integer"
+    """Types de données supportés"""    INTEGER = "integer"
     BIGINT = "bigint"
     SMALLINT = "smallint"
     DECIMAL = "decimal"
@@ -141,8 +137,7 @@ class DataType(Enum):
 
 
 class IndexType(Enum):
-    """Types d'index disponibles"""
-    BTREE = "btree"
+    """Types d'index disponibles"""    BTREE = "btree"
     HASH = "hash"
     GIN = "gin"
     GIST = "gist"
@@ -151,8 +146,7 @@ class IndexType(Enum):
 
 
 class ConstraintType(Enum):
-    """Types de contraintes"""
-    PRIMARY_KEY = "primary_key"
+    """Types de contraintes"""    PRIMARY_KEY = "primary_key"
     FOREIGN_KEY = "foreign_key"
     UNIQUE = "unique"
     CHECK = "check"
@@ -161,16 +155,14 @@ class ConstraintType(Enum):
 
 
 class PartitionType(Enum):
-    """Types de partitioning"""
-    RANGE = "range"
+    """Types de partitioning"""    RANGE = "range"
     LIST = "list"
     HASH = "hash"
 
 
 @dataclass
 class ColumnDefinition:
-    """Définition d'une colonne de table"""
-    name: str
+    """Définition d'une colonne de table"""    name: str
     data_type: DataType
     nullable: bool = True
     default_value: Optional[Any] = None
@@ -200,8 +192,7 @@ class ColumnDefinition:
 
 @dataclass
 class IndexDefinition:
-    """Définition d'un index"""
-    name: str
+    """Définition d'un index"""    name: str
     table_name: str
     columns: List[str]
     index_type: IndexType = IndexType.BTREE
@@ -226,8 +217,7 @@ class IndexDefinition:
 
 @dataclass
 class ConstraintDefinition:
-    """Définition d'une contrainte"""
-    name: str
+    """Définition d'une contrainte"""    name: str
     table_name: str
     constraint_type: ConstraintType
     columns: List[str]
@@ -252,8 +242,7 @@ class ConstraintDefinition:
 
 @dataclass
 class TableDefinition:
-    """Définition complète d'une table"""
-    name: str
+    """Définition complète d'une table"""    name: str
     schema_name: str = "public"
     columns: List[ColumnDefinition] = field(default_factory=list)
     indexes: List[IndexDefinition] = field(default_factory=list)
@@ -292,11 +281,9 @@ class TableDefinition:
 
 
 class SchemaDefinitionManager:
-    """
-    Gestionnaire de définitions de schémas de base de données
+    """    Gestionnaire de définitions de schémas de base de données
     Fournit des outils avancés pour la gestion des schémas
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or get_settings()
         self.logger = get_logger(f"{__name__}.SchemaDefinitionManager")
@@ -318,8 +305,7 @@ class SchemaDefinitionManager:
         self._initialize_schema_manager()
     
     def _initialize_schema_manager(self):
-        """Initialise le gestionnaire de schémas"""
-        try:
+        """Initialise le gestionnaire de schémas"""        try:
             self.logger.info("🗄️ Initializing schema definition manager...")
             
             # Chargement des définitions existantes
@@ -335,8 +321,7 @@ class SchemaDefinitionManager:
             raise
     
     def _load_validation_rules(self) -> Dict[str, Any]:
-        """Charge les règles de validation"""
-        return {
+        """Charge les règles de validation"""        return {
             'naming_conventions': {
                 'table_pattern': r'^[a-z][a-z0-9_]*[a-z0-9]$',
                 'column_pattern': r'^[a-z][a-z0-9_]*[a-z0-9]$',
@@ -363,8 +348,7 @@ class SchemaDefinitionManager:
         }
     
     def _load_optimization_rules(self) -> Dict[str, Any]:
-        """Charge les règles d'optimisation"""
-        return {
+        """Charge les règles d'optimisation"""        return {
             'indexing': {
                 'foreign_key_auto_index': True,
                 'unique_constraint_auto_index': True,
@@ -385,8 +369,7 @@ class SchemaDefinitionManager:
         }
     
     def _load_existing_definitions(self):
-        """Charge les définitions existantes depuis la base"""
-        try:
+        """Charge les définitions existantes depuis la base"""        try:
             # Si moteur disponible, inspection de la base existante
             if self.engine:
                 inspector = inspect(self.engine)
@@ -402,8 +385,7 @@ class SchemaDefinitionManager:
             self.logger.warning(f"Could not load existing definitions: {e}")
     
     def _reverse_engineer_table(self, table_name: str, inspector) -> TableDefinition:
-        """Effectue la rétro-ingénierie d'une table existante"""
-        try:
+        """Effectue la rétro-ingénierie d'une table existante"""        try:
             # Récupération des colonnes
             columns = []
             for col_info in inspector.get_columns(table_name):
@@ -487,8 +469,7 @@ class SchemaDefinitionManager:
             return TableDefinition(name=table_name)
     
     def _map_sqlalchemy_type(self, sa_type) -> DataType:
-        """Mappe les types SQLAlchemy vers nos types internes"""
-        type_mapping = {
+        """Mappe les types SQLAlchemy vers nos types internes"""        type_mapping = {
             'INTEGER': DataType.INTEGER,
             'BIGINT': DataType.BIGINT,
             'SMALLINT': DataType.SMALLINT,
@@ -520,8 +501,7 @@ class SchemaDefinitionManager:
         columns: List[ColumnDefinition],
         **kwargs
     ) -> TableDefinition:
-        """
-        Définit une nouvelle table
+        """        Définit une nouvelle table
         
         Args:
             name: Nom de la table
@@ -530,8 +510,7 @@ class SchemaDefinitionManager:
             
         Returns:
             Définition de la table
-        """
-        try:
+        """        try:
             table_def = TableDefinition(
                 name=name,
                 columns=columns,
@@ -567,8 +546,7 @@ class SchemaDefinitionManager:
         table_name: str,
         column: ColumnDefinition
     ) -> bool:
-        """
-        Ajoute une colonne à une table existante
+        """        Ajoute une colonne à une table existante
         
         Args:
             table_name: Nom de la table
@@ -576,8 +554,7 @@ class SchemaDefinitionManager:
             
         Returns:
             True si succès
-        """
-        try:
+        """        try:
             if table_name not in self.table_definitions:
                 raise ValueError(f"Table {table_name} not found")
             
@@ -611,8 +588,7 @@ class SchemaDefinitionManager:
         table_name: str,
         index: IndexDefinition
     ) -> bool:
-        """
-        Ajoute un index à une table
+        """        Ajoute un index à une table
         
         Args:
             table_name: Nom de la table
@@ -620,8 +596,7 @@ class SchemaDefinitionManager:
             
         Returns:
             True si succès
-        """
-        try:
+        """        try:
             if table_name not in self.table_definitions:
                 raise ValueError(f"Table {table_name} not found")
             
@@ -652,8 +627,7 @@ class SchemaDefinitionManager:
         table_name: str,
         constraint: ConstraintDefinition
     ) -> bool:
-        """
-        Ajoute une contrainte à une table
+        """        Ajoute une contrainte à une table
         
         Args:
             table_name: Nom de la table
@@ -661,8 +635,7 @@ class SchemaDefinitionManager:
             
         Returns:
             True si succès
-        """
-        try:
+        """        try:
             if table_name not in self.table_definitions:
                 raise ValueError(f"Table {table_name} not found")
             
@@ -685,16 +658,14 @@ class SchemaDefinitionManager:
             return False
     
     def validate_table_definition(self, table_def: TableDefinition) -> List[str]:
-        """
-        Valide une définition de table
+        """        Valide une définition de table
         
         Args:
             table_def: Définition de la table
             
         Returns:
             Liste des erreurs de validation
-        """
-        errors = []
+        """        errors = []
         
         try:
             # Validation du nom
@@ -746,8 +717,7 @@ class SchemaDefinitionManager:
         column: ColumnDefinition,
         table_def: TableDefinition
     ) -> List[str]:
-        """
-        Valide une définition de colonne
+        """        Valide une définition de colonne
         
         Args:
             column: Définition de la colonne
@@ -755,8 +725,7 @@ class SchemaDefinitionManager:
             
         Returns:
             Liste des erreurs de validation
-        """
-        errors = []
+        """        errors = []
         
         try:
             # Validation du nom
@@ -798,8 +767,7 @@ class SchemaDefinitionManager:
         index: IndexDefinition,
         table_def: TableDefinition
     ) -> List[str]:
-        """
-        Valide une définition d'index
+        """        Valide une définition d'index
         
         Args:
             index: Définition de l'index
@@ -807,8 +775,7 @@ class SchemaDefinitionManager:
             
         Returns:
             Liste des erreurs de validation
-        """
-        errors = []
+        """        errors = []
         
         try:
             # Validation du nom
@@ -856,8 +823,7 @@ class SchemaDefinitionManager:
         constraint: ConstraintDefinition,
         table_def: TableDefinition
     ) -> List[str]:
-        """
-        Valide une définition de contrainte
+        """        Valide une définition de contrainte
         
         Args:
             constraint: Définition de la contrainte
@@ -865,8 +831,7 @@ class SchemaDefinitionManager:
             
         Returns:
             Liste des erreurs de validation
-        """
-        errors = []
+        """        errors = []
         
         try:
             # Validation du nom
@@ -915,8 +880,7 @@ class SchemaDefinitionManager:
         return errors
     
     def _validate_all_definitions(self):
-        """Valide toutes les définitions chargées"""
-        try:
+        """Valide toutes les définitions chargées"""        try:
             total_errors = 0
             
             for table_name, table_def in self.table_definitions.items():
@@ -934,8 +898,7 @@ class SchemaDefinitionManager:
             self.logger.error(f"Schema validation failed: {e}")
     
     def _apply_optimization_rules(self, table_def: TableDefinition):
-        """Applique les règles d'optimisation à une table"""
-        try:
+        """Applique les règles d'optimisation à une table"""        try:
             # Génération d'index automatiques
             self._generate_automatic_indexes(table_def)
             
@@ -949,8 +912,7 @@ class SchemaDefinitionManager:
             self.logger.warning(f"Failed to apply optimization rules: {e}")
     
     def _generate_automatic_indexes(self, table_def: TableDefinition, specific_column: Optional[ColumnDefinition] = None):
-        """Génère des index automatiques selon les règles"""
-        try:
+        """Génère des index automatiques selon les règles"""        try:
             columns_to_index = [specific_column] if specific_column else table_def.columns
             
             for column in columns_to_index:
@@ -1019,8 +981,7 @@ class SchemaDefinitionManager:
             self.logger.warning(f"Failed to generate automatic indexes: {e}")
     
     def _apply_partitioning_strategy(self, table_def: TableDefinition):
-        """Applique une stratégie de partitioning si approprié"""
-        try:
+        """Applique une stratégie de partitioning si approprié"""        try:
             # Recherche de colonnes appropriées pour le partitioning
             timestamp_columns = [
                 col for col in table_def.columns 
@@ -1046,8 +1007,7 @@ class SchemaDefinitionManager:
             self.logger.warning(f"Failed to apply partitioning strategy: {e}")
     
     def _optimize_storage_parameters(self, table_def: TableDefinition):
-        """Optimise les paramètres de stockage"""
-        try:
+        """Optimise les paramètres de stockage"""        try:
             # Configuration auto-vacuum
             if self.optimization_rules['storage']['auto_vacuum_enabled']:
                 table_def.storage_parameters.update({
@@ -1072,16 +1032,14 @@ class SchemaDefinitionManager:
             self.logger.warning(f"Failed to optimize storage parameters: {e}")
     
     def generate_ddl(self, table_name: str) -> List[str]:
-        """
-        Génère les instructions DDL pour une table
+        """        Génère les instructions DDL pour une table
         
         Args:
             table_name: Nom de la table
             
         Returns:
             Liste des instructions DDL
-        """
-        try:
+        """        try:
             if table_name not in self.table_definitions:
                 raise ValueError(f"Table {table_name} not found")
             
@@ -1121,8 +1079,7 @@ class SchemaDefinitionManager:
             return []
     
     def _generate_create_table_sql(self, table_def: TableDefinition) -> str:
-        """Génère l'instruction CREATE TABLE"""
-        try:
+        """Génère l'instruction CREATE TABLE"""        try:
             lines = []
             lines.append(f"CREATE TABLE {table_def.schema_name}.{table_def.name} (")
             
@@ -1162,8 +1119,7 @@ class SchemaDefinitionManager:
             return ""
     
     def _generate_column_sql(self, column: ColumnDefinition) -> str:
-        """Génère la définition SQL d'une colonne"""
-        try:
+        """Génère la définition SQL d'une colonne"""        try:
             parts = [column.name]
             
             # Type de données
@@ -1199,8 +1155,7 @@ class SchemaDefinitionManager:
             return ""
     
     def _map_data_type_to_sql(self, column: ColumnDefinition) -> str:
-        """Mappe les types de données internes vers SQL"""
-        type_mapping = {
+        """Mappe les types de données internes vers SQL"""        type_mapping = {
             DataType.INTEGER: "INTEGER",
             DataType.BIGINT: "BIGINT", 
             DataType.SMALLINT: "SMALLINT",
@@ -1246,8 +1201,7 @@ class SchemaDefinitionManager:
         return base_type
     
     def _generate_constraint_sql(self, constraint: ConstraintDefinition) -> str:
-        """Génère l'instruction SQL pour une contrainte"""
-        try:
+        """Génère l'instruction SQL pour une contrainte"""        try:
             if constraint.constraint_type == ConstraintType.FOREIGN_KEY:
                 return self._generate_foreign_key_sql(constraint)
             elif constraint.constraint_type == ConstraintType.UNIQUE:
@@ -1262,8 +1216,7 @@ class SchemaDefinitionManager:
             return ""
     
     def _generate_foreign_key_sql(self, constraint: ConstraintDefinition) -> str:
-        """Génère une contrainte de clé étrangère"""
-        columns = ', '.join(constraint.columns)
+        """Génère une contrainte de clé étrangère"""        columns = ', '.join(constraint.columns)
         ref_columns = ', '.join(constraint.referenced_columns)
         
         sql = f"ALTER TABLE {constraint.table_name} ADD CONSTRAINT {constraint.name} "
@@ -1278,17 +1231,14 @@ class SchemaDefinitionManager:
         return sql + ";"
     
     def _generate_unique_constraint_sql(self, constraint: ConstraintDefinition) -> str:
-        """Génère une contrainte unique"""
-        columns = ', '.join(constraint.columns)
+        """Génère une contrainte unique"""        columns = ', '.join(constraint.columns)
         return f"ALTER TABLE {constraint.table_name} ADD CONSTRAINT {constraint.name} UNIQUE ({columns});"
     
     def _generate_check_constraint_sql(self, constraint: ConstraintDefinition) -> str:
-        """Génère une contrainte de vérification"""
-        return f"ALTER TABLE {constraint.table_name} ADD CONSTRAINT {constraint.name} CHECK ({constraint.check_expression});"
+        """Génère une contrainte de vérification"""        return f"ALTER TABLE {constraint.table_name} ADD CONSTRAINT {constraint.name} CHECK ({constraint.check_expression});"
     
     def _generate_index_sql(self, index: IndexDefinition) -> str:
-        """Génère l'instruction CREATE INDEX"""
-        try:
+        """Génère l'instruction CREATE INDEX"""        try:
             sql_parts = ["CREATE"]
             
             if index.unique:
@@ -1330,16 +1280,13 @@ class SchemaDefinitionManager:
             return ""
     
     def get_table_definition(self, table_name: str) -> Optional[TableDefinition]:
-        """Récupère la définition d'une table"""
-        return self.table_definitions.get(table_name)
+        """Récupère la définition d'une table"""        return self.table_definitions.get(table_name)
     
     def list_tables(self) -> List[str]:
-        """Liste toutes les tables définies"""
-        return list(self.table_definitions.keys())
+        """Liste toutes les tables définies"""        return list(self.table_definitions.keys())
     
     def get_schema_summary(self) -> Dict[str, Any]:
-        """Récupère un résumé du schéma"""
-        try:
+        """Récupère un résumé du schéma"""        try:
             summary = {
                 'total_tables': len(self.table_definitions),
                 'total_indexes': len(self.index_definitions),
@@ -1379,8 +1326,7 @@ class SchemaDefinitionManager:
             return {'error': str(e)}
     
     async def health_check(self) -> Dict[str, Any]:
-        """Vérification de santé du gestionnaire de schémas"""
-        try:
+        """Vérification de santé du gestionnaire de schémas"""        try:
             health_status = {
                 'status': 'healthy',
                 'timestamp': datetime.utcnow().isoformat(),
@@ -1431,10 +1377,8 @@ class SchemaDefinitionManager:
             }
     
     async def _perform_persistent_backup(self) -> None:
-        """
-        Effectue une sauvegarde persistante des définitions de schémas
-        """
-        try:
+        """        Effectue une sauvegarde persistante des définitions de schémas
+        """        try:
             self.logger.info("🔄 Starting persistent schema backup...")
             
             # Créer le dossier de sauvegarde s'il n'existe pas
@@ -1508,8 +1452,7 @@ class SchemaDefinitionManager:
             self.logger.error(f"❌ Schema backup failed: {e}")
     
     async def _compress_backup(self, backup_path: str) -> None:
-        """Compresse le fichier de sauvegarde"""
-        try:
+        """Compresse le fichier de sauvegarde"""        try:
             import gzip
             import shutil
             
@@ -1528,8 +1471,7 @@ class SchemaDefinitionManager:
             self.logger.warning(f"Failed to compress backup: {e}")
     
     async def _cleanup_old_backups(self, backup_dir: str) -> None:
-        """Nettoie les anciennes sauvegardes"""
-        try:
+        """Nettoie les anciennes sauvegardes"""        try:
             # Garder seulement les 10 dernières sauvegardes
             max_backups = int(os.environ.get('SCHEMA_BACKUP_RETENTION', '10'))
             
@@ -1552,8 +1494,7 @@ class SchemaDefinitionManager:
             self.logger.warning(f"Failed to cleanup old backups: {e}")
     
     async def _upload_backup_to_remote(self, backup_path: str) -> None:
-        """Upload de la sauvegarde vers un stockage distant"""
-        try:
+        """Upload de la sauvegarde vers un stockage distant"""        try:
             # Configuration du stockage distant
             remote_storage = os.environ.get('SCHEMA_BACKUP_REMOTE_STORAGE')
             
@@ -1573,8 +1514,7 @@ class SchemaDefinitionManager:
             self.logger.warning(f"Failed to upload backup to remote storage: {e}")
     
     async def _upload_to_s3(self, backup_path: str, s3_url: str) -> None:
-        """Upload vers Amazon S3"""
-        try:
+        """Upload vers Amazon S3"""        try:
             # Simulation d'upload S3 (en production, utiliser boto3)
             self.logger.info(f"📤 Would upload backup to S3: {s3_url}")
             
@@ -1588,8 +1528,7 @@ class SchemaDefinitionManager:
             self.logger.error(f"S3 upload failed: {e}")
     
     async def _upload_to_ftp(self, backup_path: str, ftp_url: str) -> None:
-        """Upload vers serveur FTP"""
-        try:
+        """Upload vers serveur FTP"""        try:
             # Simulation d'upload FTP
             self.logger.info(f"📤 Would upload backup to FTP: {ftp_url}")
             
@@ -1601,8 +1540,7 @@ class SchemaDefinitionManager:
             self.logger.error(f"FTP upload failed: {e}")
     
     async def _upload_to_sftp(self, backup_path: str, sftp_url: str) -> None:
-        """Upload vers serveur SFTP"""
-        try:
+        """Upload vers serveur SFTP"""        try:
             # Simulation d'upload SFTP
             self.logger.info(f"📤 Would upload backup to SFTP: {sftp_url}")
             
@@ -1613,8 +1551,7 @@ class SchemaDefinitionManager:
             self.logger.error(f"SFTP upload failed: {e}")
     
     async def shutdown(self):
-        """Arrêt propre du gestionnaire de schémas"""
-        try:
+        """Arrêt propre du gestionnaire de schémas"""        try:
             self.logger.info("🔒 Shutting down schema definition manager...")
             
             # Sauvegarde des définitions si nécessaire
@@ -1631,8 +1568,7 @@ _schema_manager: Optional[SchemaDefinitionManager] = None
 
 
 def get_schema_manager(config: Optional[Dict[str, Any]] = None) -> SchemaDefinitionManager:
-    """Récupère ou crée l'instance du gestionnaire de schémas"""
-    global _schema_manager
+    """Récupère ou crée l'instance du gestionnaire de schémas"""    global _schema_manager
     
     if _schema_manager is None:
         _schema_manager = SchemaDefinitionManager(config)

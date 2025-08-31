@@ -1,5 +1,4 @@
-"""
-Recommendation System Exceptions
+"""Recommendation System Exceptions
 Custom exception classes for recommendation engine error handling
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -19,15 +18,12 @@ Development Team Specialties:
 - DevOps Engineer
 - AI Prompt Engineer
 Email: mlaiel@live.de
-"""
-
-from typing import Optional, Dict, Any, Union, List
+"""from typing import Optional, Dict, Any, Union, List
 from datetime import datetime
 
 
 class RecommendationError(Exception):
-    """Base exception for recommendation system errors"""
-    
+    """Base exception for recommendation system errors"""    
     def __init__(
         self,
         message: str,
@@ -42,8 +38,7 @@ class RecommendationError(Exception):
         self.cause = cause
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert exception to dictionary format"""
-        return {
+        """Convert exception to dictionary format"""        return {
             "error": self.__class__.__name__,
             "message": self.message,
             "error_code": self.error_code,
@@ -53,8 +48,7 @@ class RecommendationError(Exception):
 
 
 class ContentAnalysisError(RecommendationError):
-    """Exception raised during content analysis operations"""
-    
+    """Exception raised during content analysis operations"""    
     def __init__(
         self,
         message: str,
@@ -72,8 +66,7 @@ class ContentAnalysisError(RecommendationError):
 
 
 class ValidationError(RecommendationError):
-    """Exception raised for validation errors"""
-    
+    """Exception raised for validation errors"""    
     def __init__(
         self,
         message: str,
@@ -91,8 +84,7 @@ class ValidationError(RecommendationError):
 
 
 class CollaborationError(RecommendationError):
-    """Exception raised for collaboration-related errors"""
-    
+    """Exception raised for collaboration-related errors"""    
     def __init__(
         self,
         message: str,
@@ -110,8 +102,7 @@ class CollaborationError(RecommendationError):
 
 
 class CollaborationMatchingError(RecommendationError):
-    """Exception raised during collaboration matching operations"""
-    
+    """Exception raised during collaboration matching operations"""    
     def __init__(
         self,
         message: str,
@@ -129,8 +120,7 @@ class CollaborationMatchingError(RecommendationError):
 
 
 class TrendAnalysisError(RecommendationError):
-    """Exception raised during trend analysis operations"""
-    
+    """Exception raised during trend analysis operations"""    
     def __init__(
         self,
         message: str,
@@ -152,8 +142,7 @@ class TrendAnalysisError(RecommendationError):
 
 
 class RevenueOptimizationError(RecommendationError):
-    """Exception raised during revenue optimization operations"""
-    
+    """Exception raised during revenue optimization operations"""    
     def __init__(
         self,
         message: str,
@@ -175,8 +164,7 @@ class RevenueOptimizationError(RecommendationError):
 
 
 class ProtectionError(RecommendationError):
-    """Exception raised during content protection operations"""
-    
+    """Exception raised during content protection operations"""    
     def __init__(
         self,
         message: str,
@@ -198,8 +186,7 @@ class ProtectionError(RecommendationError):
 
 
 class ModelLoadingError(RecommendationError):
-    """Exception raised when failing to load recommendation models"""
-    
+    """Exception raised when failing to load recommendation models"""    
     def __init__(
         self,
         message: str,
@@ -217,8 +204,7 @@ class ModelLoadingError(RecommendationError):
 
 
 class DataValidationError(RecommendationError):
-    """Exception raised when input data validation fails"""
-    
+    """Exception raised when input data validation fails"""    
     def __init__(
         self,
         message: str,
@@ -240,8 +226,7 @@ class DataValidationError(RecommendationError):
 
 
 class ModelInitializationError(RecommendationError):
-    """Exception raised when model initialization fails"""
-    
+    """Exception raised when model initialization fails"""    
     def __init__(
         self,
         message: str,
@@ -259,8 +244,7 @@ class ModelInitializationError(RecommendationError):
 
 
 class DataProcessingError(RecommendationError):
-    """Exception raised during data processing operations"""
-    
+    """Exception raised during data processing operations"""    
     def __init__(
         self,
         message: str,
@@ -278,29 +262,25 @@ class DataProcessingError(RecommendationError):
 
 
 class AuthenticationError(RecommendationError):
-    """Exception raised for authentication failures"""
-    
+    """Exception raised for authentication failures"""    
     def __init__(self, message: str = "Authentication failed", **kwargs):
         super().__init__(message, error_code="AUTHENTICATION_ERROR", **kwargs)
 
 
 class AuthorizationError(RecommendationError):
-    """Exception raised for authorization failures"""
-    
+    """Exception raised for authorization failures"""    
     def __init__(self, message: str = "Authorization failed", **kwargs):
         super().__init__(message, error_code="AUTHORIZATION_ERROR", **kwargs)
 
 
 class RateLimitError(RecommendationError):
-    """Exception raised when rate limits are exceeded"""
-    
+    """Exception raised when rate limits are exceeded"""    
     def __init__(self, message: str = "Rate limit exceeded", **kwargs):
         super().__init__(message, error_code="RATE_LIMIT_ERROR", **kwargs)
 
 
 class ExternalServiceError(RecommendationError):
-    """Exception raised for external service failures"""
-    
+    """Exception raised for external service failures"""    
     def __init__(self, message: str, service_name: Optional[str] = None, **kwargs):
         super().__init__(message, error_code="EXTERNAL_SERVICE_ERROR", **kwargs)
         self.service_name = service_name
@@ -309,22 +289,19 @@ class ExternalServiceError(RecommendationError):
 
 
 class CacheError(RecommendationError):
-    """Exception raised for cache-related errors"""
-    
+    """Exception raised for cache-related errors"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(message, error_code="CACHE_ERROR", **kwargs)
 
 
 class DatabaseError(RecommendationError):
-    """Exception raised for database-related errors"""
-    
+    """Exception raised for database-related errors"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(message, error_code="DATABASE_ERROR", **kwargs)
 
 
 class ResourceLimitError(RecommendationError):
-    """Exception raised when resource limits are exceeded"""
-    
+    """Exception raised when resource limits are exceeded"""    
     def __init__(
         self,
         message: str,
@@ -346,8 +323,7 @@ class ResourceLimitError(RecommendationError):
 
 
 class APIRateLimitError(RecommendationError):
-    """Exception raised when API rate limits are exceeded"""
-    
+    """Exception raised when API rate limits are exceeded"""    
     def __init__(
         self,
         message: str,
@@ -369,8 +345,7 @@ class APIRateLimitError(RecommendationError):
 
 
 class CacheError(RecommendationError):
-    """Exception raised during cache operations"""
-    
+    """Exception raised during cache operations"""    
     def __init__(
         self,
         message: str,
@@ -388,8 +363,7 @@ class CacheError(RecommendationError):
 
 
 class DatabaseError(RecommendationError):
-    """Exception raised during database operations"""
-    
+    """Exception raised during database operations"""    
     def __init__(
         self,
         message: str,
@@ -411,8 +385,7 @@ class DatabaseError(RecommendationError):
 
 
 class ExternalServiceError(RecommendationError):
-    """Exception raised when external service calls fail"""
-    
+    """Exception raised when external service calls fail"""    
     def __init__(
         self,
         message: str,
@@ -434,8 +407,7 @@ class ExternalServiceError(RecommendationError):
 
 
 class ModelInferenceError(RecommendationError):
-    """Exception raised during model inference"""
-    
+    """Exception raised during model inference"""    
     def __init__(
         self,
         message: str,
@@ -457,8 +429,7 @@ class ModelInferenceError(RecommendationError):
 
 
 class ConfigurationError(RecommendationError):
-    """Exception raised for configuration-related errors"""
-    
+    """Exception raised for configuration-related errors"""    
     def __init__(
         self,
         message: str,
@@ -480,8 +451,7 @@ class ConfigurationError(RecommendationError):
 
 
 class PermissionError(RecommendationError):
-    """Exception raised for permission-related errors"""
-    
+    """Exception raised for permission-related errors"""    
     def __init__(
         self,
         message: str,
@@ -503,8 +473,7 @@ class PermissionError(RecommendationError):
 
 
 class TimeoutError(RecommendationError):
-    """Exception raised when operations timeout"""
-    
+    """Exception raised when operations timeout"""    
     def __init__(
         self,
         message: str,
@@ -524,8 +493,7 @@ class TimeoutError(RecommendationError):
 # Exception utility functions
 
 def handle_recommendation_exception(func):
-    """Decorator for handling recommendation exceptions"""
-    async def wrapper(*args, **kwargs):
+    """Decorator for handling recommendation exceptions"""    async def wrapper(*args, **kwargs):
         try:
             return await func(*args, **kwargs)
         except RecommendationError:
@@ -542,8 +510,7 @@ def handle_recommendation_exception(func):
 
 
 def validate_required_fields(data: Dict[str, Any], required_fields: list) -> None:
-    """Validate that required fields are present in data"""
-    missing_fields = [field for field in required_fields if field not in data or data[field] is None]
+    """Validate that required fields are present in data"""    missing_fields = [field for field in required_fields if field not in data or data[field] is None]
     if missing_fields:
         raise DataValidationError(
             message=f"Missing required fields: {', '.join(missing_fields)}",
@@ -552,8 +519,7 @@ def validate_required_fields(data: Dict[str, Any], required_fields: list) -> Non
 
 
 def validate_field_type(value: Any, expected_type: type, field_name: str) -> None:
-    """Validate that a field has the expected type"""
-    if not isinstance(value, expected_type):
+    """Validate that a field has the expected type"""    if not isinstance(value, expected_type):
         raise DataValidationError(
             message=f"Field '{field_name}' must be of type {expected_type.__name__}",
             field_name=field_name,
@@ -563,8 +529,7 @@ def validate_field_type(value: Any, expected_type: type, field_name: str) -> Non
 
 
 def validate_field_range(value: Union[int, float], min_val: Union[int, float], max_val: Union[int, float], field_name: str) -> None:
-    """Validate that a numeric field is within the expected range"""
-    if not min_val <= value <= max_val:
+    """Validate that a numeric field is within the expected range"""    if not min_val <= value <= max_val:
         raise DataValidationError(
             message=f"Field '{field_name}' must be between {min_val} and {max_val}",
             field_name=field_name,
@@ -580,8 +545,7 @@ ValidationError = DataValidationError
 # Utility functions for validation and error handling
 
 def validate_creator_profile(profile: Dict[str, Any]) -> None:
-    """Validate creator profile data"""
-    required_fields = ["creator_id", "username", "display_name"]
+    """Validate creator profile data"""    required_fields = ["creator_id", "username", "display_name"]
     validate_required_fields(profile, required_fields)
     
     if "follower_count" in profile:
@@ -590,15 +554,13 @@ def validate_creator_profile(profile: Dict[str, Any]) -> None:
 
 
 def validate_recommendation_scores(scores: Dict[str, float]) -> None:
-    """Validate recommendation scores"""
-    for score_name, score_value in scores.items():
+    """Validate recommendation scores"""    for score_name, score_value in scores.items():
         validate_field_type(score_value, (int, float), score_name)
         validate_field_range(score_value, 0.0, 1.0, score_name)
 
 
 def validate_engagement_metrics(metrics: Dict[str, Any]) -> None:
-    """Validate engagement metrics"""
-    numeric_fields = ["likes", "comments", "shares", "views"]
+    """Validate engagement metrics"""    numeric_fields = ["likes", "comments", "shares", "views"]
     for field in numeric_fields:
         if field in metrics:
             validate_field_type(metrics[field], int, field)
@@ -606,8 +568,7 @@ def validate_engagement_metrics(metrics: Dict[str, Any]) -> None:
 
 
 def sanitize_user_input(input_data: Any) -> Any:
-    """Sanitize user input data"""
-    if isinstance(input_data, str):
+    """Sanitize user input data"""    if isinstance(input_data, str):
         # Basic sanitization
         return input_data.strip()[:1000]  # Limit length
     elif isinstance(input_data, dict):
@@ -618,8 +579,7 @@ def sanitize_user_input(input_data: Any) -> Any:
 
 
 def log_error_with_context(error: RecommendationError, context: Dict[str, Any]) -> None:
-    """Log error with additional context"""
-    import logging
+    """Log error with additional context"""    import logging
     logger = logging.getLogger(__name__)
     
     error_data = error.to_dict()
@@ -629,8 +589,7 @@ def log_error_with_context(error: RecommendationError, context: Dict[str, Any]) 
 
 
 def create_error_response(error: RecommendationError) -> Dict[str, Any]:
-    """Create standardized error response"""
-    return {
+    """Create standardized error response"""    return {
         "success": False,
         "error": error.to_dict(),
         "timestamp": str(datetime.now()),

@@ -1,5 +1,4 @@
-"""
-Content Ingestion Manager
+"""Content Ingestion Manager
 ========================
 
 Professional enterprise-grade content ingestion system for multi-format content processing.
@@ -23,9 +22,7 @@ PROJECT TEAM SPECIALTIES:
 - Audio/Video Specialist: Multimedia processing and codec optimization
 - Microservices Architect: Distributed systems and service orchestration
 - IA Prompt Engineer: AI model fine-tuning and content analysis
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import json
@@ -77,8 +74,7 @@ from ..analytics.content_analyzer import ContentAnalyzer
 
 
 class IngestionStatus(Enum):
-    """Content ingestion status enumeration"""
-    PENDING = "pending"
+    """Content ingestion status enumeration"""    PENDING = "pending"
     VALIDATING = "validating"
     SCANNING = "scanning"
     PROCESSING = "processing"
@@ -94,8 +90,7 @@ class IngestionStatus(Enum):
 
 
 class IngestionPriority(IntEnum):
-    """Content ingestion priority levels"""
-    LOW = 1
+    """Content ingestion priority levels"""    LOW = 1
     NORMAL = 5
     HIGH = 10
     URGENT = 20
@@ -103,8 +98,7 @@ class IngestionPriority(IntEnum):
 
 
 class ProcessingMode(Enum):
-    """Content processing modes"""
-    STANDARD = "standard"
+    """Content processing modes"""    STANDARD = "standard"
     FAST = "fast"
     QUALITY = "quality"
     ENTERPRISE = "enterprise"
@@ -112,8 +106,7 @@ class ProcessingMode(Enum):
 
 
 class ContentSource(Enum):
-    """Content source types"""
-    DIRECT_UPLOAD = "direct_upload"
+    """Content source types"""    DIRECT_UPLOAD = "direct_upload"
     URL_IMPORT = "url_import"
     API_UPLOAD = "api_upload"
     BULK_IMPORT = "bulk_import"
@@ -122,8 +115,7 @@ class ContentSource(Enum):
 
 @dataclass
 class IngestionRequest:
-    """Enterprise-grade content ingestion request"""
-    user_id: str
+    """Enterprise-grade content ingestion request"""    user_id: str
     file_data: Union[bytes, BinaryIO, str]  # Data or URL
     filename: str
     content_type: Optional[ContentType] = None
@@ -157,8 +149,7 @@ class IngestionRequest:
 
 @dataclass 
 class ProcessingMetrics:
-    """Content processing performance metrics"""
-    validation_time: float = 0.0
+    """Content processing performance metrics"""    validation_time: float = 0.0
     scanning_time: float = 0.0
     processing_time: float = 0.0
     fingerprinting_time: float = 0.0
@@ -174,8 +165,7 @@ class ProcessingMetrics:
 
 @dataclass
 class QualityMetrics:
-    """Content quality assessment metrics"""
-    overall_score: float = 0.0
+    """Content quality assessment metrics"""    overall_score: float = 0.0
     technical_quality: float = 0.0
     content_quality: float = 0.0
     ai_confidence: float = 0.0
@@ -187,8 +177,7 @@ class QualityMetrics:
 
 @dataclass
 class SecurityAssessment:
-    """Content security assessment results"""
-    is_safe: bool = True
+    """Content security assessment results"""    is_safe: bool = True
     threat_level: str = "none"
     detected_threats: List[str] = field(default_factory=list)
     malware_scan_result: str = "clean"
@@ -200,8 +189,7 @@ class SecurityAssessment:
 
 @dataclass
 class IngestionResult:
-    """Comprehensive content ingestion result"""
-    success: bool
+    """Comprehensive content ingestion result"""    success: bool
     content_id: str
     status: IngestionStatus
     file_path: str
@@ -229,18 +217,15 @@ class IngestionResult:
 
 
 class ContentIngestionManager:
-    """
-    Enterprise-grade content ingestion manager for IA Influencer Agent platform.
+    """    Enterprise-grade content ingestion manager for IA Influencer Agent platform.
     
     Provides comprehensive content upload, validation, processing, and storage
     with AI-powered analysis, quality assurance, security validation, and 
     automated optimization for multi-format creator content.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, redis_client: Redis,
                  storage_manager, content_validator, quality_manager):
-        """
-        Initialize ContentIngestionManager.
+        """        Initialize ContentIngestionManager.
         
         Args:
             db_session: Async database session
@@ -248,8 +233,7 @@ class ContentIngestionManager:
             storage_manager: Storage management service
             content_validator: Content validation service
             quality_manager: Data quality management service
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.redis = redis_client
         self.storage = storage_manager
         self.validator = content_validator
@@ -277,16 +261,14 @@ class ContentIngestionManager:
         self.processing_timeout = 3600  # 1 hour
     
     async def ingest_content(self, request: IngestionRequest) -> IngestionResult:
-        """
-        Ingest content with comprehensive processing pipeline.
+        """        Ingest content with comprehensive processing pipeline.
         
         Args:
             request: Content ingestion request
             
         Returns:
             Ingestion result with processing details
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         content_id = str(uuid.uuid4())
         
         try:
@@ -389,16 +371,14 @@ class ContentIngestionManager:
             )
     
     async def batch_ingest_content(self, requests: List[IngestionRequest]) -> List[IngestionResult]:
-        """
-        Batch ingest multiple content items.
+        """        Batch ingest multiple content items.
         
         Args:
             requests: List of ingestion requests
             
         Returns:
             List of ingestion results
-        """
-        try:
+        """        try:
             # Process in batches to control resource usage
             semaphore = asyncio.Semaphore(self.concurrent_uploads)
             
@@ -427,16 +407,14 @@ class ContentIngestionManager:
             raise
     
     async def get_ingestion_status(self, content_id: str) -> Dict[str, Any]:
-        """
-        Get current ingestion status.
+        """        Get current ingestion status.
         
         Args:
             content_id: Content identifier
             
         Returns:
             Status information
-        """
-        try:
+        """        try:
             cache_key = f"ingestion_status:{content_id}"
             status_data = await self.redis.get(cache_key)
             
@@ -456,16 +434,14 @@ class ContentIngestionManager:
             return {'content_id': content_id, 'status': 'error', 'message': str(e)}
     
     async def cancel_ingestion(self, content_id: str) -> bool:
-        """
-        Cancel ongoing ingestion.
+        """        Cancel ongoing ingestion.
         
         Args:
             content_id: Content identifier
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             # Mark as cancelled in cache
             cancel_key = f"ingestion_cancel:{content_id}"
             await self.redis.setex(cancel_key, 3600, "true")
@@ -481,16 +457,14 @@ class ContentIngestionManager:
             return False
     
     async def resume_failed_ingestion(self, content_id: str) -> IngestionResult:
-        """
-        Resume failed ingestion from last checkpoint.
+        """        Resume failed ingestion from last checkpoint.
         
         Args:
             content_id: Content identifier
             
         Returns:
             Resume result
-        """
-        try:
+        """        try:
             # Get ingestion checkpoint
             checkpoint = await self._get_ingestion_checkpoint(content_id)
             
@@ -522,8 +496,7 @@ class ContentIngestionManager:
     # Private helper methods
     
     async def _validate_content(self, request: IngestionRequest) -> Dict[str, Any]:
-        """Validate content before processing"""
-        try:
+        """Validate content before processing"""        try:
             errors = []
             warnings = []
             
@@ -578,8 +551,7 @@ class ContentIngestionManager:
             }
     
     async def _process_content(self, request: IngestionRequest, content_id: str) -> Dict[str, Any]:
-        """Process content based on type"""
-        try:
+        """Process content based on type"""        try:
             # Select appropriate processor
             if request.content_type == ContentType.AUDIO:
                 processor = self.audio_processor
@@ -620,8 +592,7 @@ class ContentIngestionManager:
     
     async def _store_content(self, content_id: str, processed_data: bytes, 
                            metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Store processed content"""
-        try:
+        """Store processed content"""        try:
             # Generate storage path
             file_extension = metadata.get('file_extension', '')
             storage_path = f"content/{content_id[:2]}/{content_id}{file_extension}"
@@ -647,8 +618,7 @@ class ContentIngestionManager:
     
     async def _create_content_record(self, content_id: str, request: IngestionRequest,
                                    processing_result: Dict, storage_result: Dict) -> ContentModel:
-        """Create content database record"""
-        try:
+        """Create content database record"""        try:
             metadata = processing_result.get('metadata', {})
             
             content = ContentModel(
@@ -688,8 +658,7 @@ class ContentIngestionManager:
             raise
     
     async def _index_content(self, content: ContentModel, metadata: Dict[str, Any]):
-        """Index content for search and discovery"""
-        try:
+        """Index content for search and discovery"""        try:
             # Index in search engine (Elasticsearch)
             index_data = {
                 'id': content.id,
@@ -713,8 +682,7 @@ class ContentIngestionManager:
     
     async def _update_ingestion_status(self, content_id: str, status: IngestionStatus,
                                      progress: float = 0, message: str = ""):
-        """Update ingestion status in cache"""
-        try:
+        """Update ingestion status in cache"""        try:
             status_data = {
                 'content_id': content_id,
                 'status': status.value,
@@ -730,8 +698,7 @@ class ContentIngestionManager:
             self.logger.warning(f"Error updating ingestion status: {str(e)}")
     
     async def _get_ingestion_checkpoint(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Get ingestion checkpoint data"""
-        try:
+        """Get ingestion checkpoint data"""        try:
             checkpoint_key = f"ingestion_checkpoint:{content_id}"
             checkpoint_data = await self.redis.get(checkpoint_key)
             
@@ -746,8 +713,7 @@ class ContentIngestionManager:
             return None
     
     async def _save_checkpoint(self, content_id: str, stage: str, data: Dict[str, Any]):
-        """Save ingestion checkpoint"""
-        try:
+        """Save ingestion checkpoint"""        try:
             checkpoint_data = {
                 'content_id': content_id,
                 'stage': stage,
@@ -762,15 +728,13 @@ class ContentIngestionManager:
             self.logger.warning(f"Error saving checkpoint: {str(e)}")
     
     def get_supported_formats(self) -> Dict[str, List[str]]:
-        """Get supported file formats by content type"""
-        return {
+        """Get supported file formats by content type"""        return {
             content_type.value: formats 
             for content_type, formats in self.supported_formats.items()
         }
     
     def get_ingestion_stats(self) -> Dict[str, Any]:
-        """Get ingestion statistics"""
-        return {
+        """Get ingestion statistics"""        return {
             'max_file_size': self.max_file_size,
             'chunk_size': self.chunk_size,
             'concurrent_uploads': self.concurrent_uploads,

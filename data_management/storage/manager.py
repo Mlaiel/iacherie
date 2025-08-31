@@ -1,5 +1,4 @@
-"""
-🗄️ Storage Manager - IA Influencer Agent Platform Enterprise
+"""🗄️ Storage Manager - IA Influencer Agent Platform Enterprise
 ============================================================
 Module: backend/data_management/storage/manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -11,9 +10,7 @@ with intelligent tiering, multi-cloud support, and advanced features.
 ⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
-"""
-
-from typing import Dict, List, Optional, Any, Union, BinaryIO, AsyncGenerator
+"""from typing import Dict, List, Optional, Any, Union, BinaryIO, AsyncGenerator
 import logging
 import asyncio
 from pathlib import Path
@@ -43,15 +40,13 @@ from .utils.performance_monitor import PerformanceMonitor
 logger = logging.getLogger(__name__)
 
 class StorageTier(Enum):
-    """Storage tiers based on access frequency and business requirements"""
-    HOT = "hot"          # Frequently accessed (< 30 days) - Active content
+    """Storage tiers based on access frequency and business requirements"""    HOT = "hot"          # Frequently accessed (< 30 days) - Active content
     WARM = "warm"        # Occasional access (30-90 days) - Recent content  
     COLD = "cold"        # Rare access (90-365 days) - Archived content
     ARCHIVE = "archive"  # Long-term storage (> 365 days) - Historical data
 
 class ContentType(Enum):
-    """Content types for specialized handling"""
-    AUDIO = "audio"           # Music, podcasts, sound effects
+    """Content types for specialized handling"""    AUDIO = "audio"           # Music, podcasts, sound effects
     VIDEO = "video"           # Performance videos, tutorials
     IMAGE = "image"           # Album covers, photos, artwork
     TEXT = "text"             # Lyrics, blog posts, descriptions
@@ -63,8 +58,7 @@ class ContentType(Enum):
 
 @dataclass
 class StorageRequest:
-    """Request for storage operations"""
-    content: Union[bytes, BinaryIO, str]
+    """Request for storage operations"""    content: Union[bytes, BinaryIO, str]
     filename: str
     content_type: ContentType
     metadata: Dict[str, Any] = field(default_factory=dict)
@@ -77,8 +71,7 @@ class StorageRequest:
 
 @dataclass
 class StorageResponse:
-    """Response from storage operations"""
-    success: bool
+    """Response from storage operations"""    success: bool
     storage_id: str
     file_path: str
     file_size: int
@@ -91,16 +84,13 @@ class StorageResponse:
     processing_time: float = 0.0
 
 class StorageManager:
-    """
-    Enterprise storage manager for IA Influencer Agent platform.
+    """    Enterprise storage manager for IA Influencer Agent platform.
     
     Handles multi-format content with intelligent tiering, replication,
     encryption, compression, and distribution across multiple providers.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize storage manager with configuration"""
-        self.config = config
+        """Initialize storage manager with configuration"""        self.config = config
         self.providers: Dict[str, Any] = {}
         self.engines: Dict[str, Any] = {}
         self.performance_monitor = PerformanceMonitor()
@@ -125,8 +115,7 @@ class StorageManager:
         logger.info("StorageManager initialized successfully")
     
     def _initialize_providers(self) -> None:
-        """Initialize storage providers based on configuration"""
-        try:
+        """Initialize storage providers based on configuration"""        try:
             # Cloud providers
             if self.config.get('cloud_enabled', True):
                 self.providers['cloud'] = CloudStorageProvider(
@@ -158,8 +147,7 @@ class StorageManager:
             raise
     
     def _initialize_engines(self) -> None:
-        """Initialize processing engines"""
-        try:
+        """Initialize processing engines"""        try:
             self.engines['lifecycle'] = LifecycleEngine(
                 self.config.get('lifecycle_config', {})
             )
@@ -183,8 +171,7 @@ class StorageManager:
             raise
     
     async def store_content(self, request: StorageRequest) -> StorageResponse:
-        """
-        Store content with intelligent processing and distribution.
+        """        Store content with intelligent processing and distribution.
         
         Business Logic:
         1. Analyze content and extract metadata
@@ -195,8 +182,7 @@ class StorageManager:
         6. Store in primary and replica locations
         7. Distribute to CDN if requested
         8. Update metadata and analytics
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             # Validate request
@@ -299,8 +285,7 @@ class StorageManager:
         storage_id: str, 
         include_metadata: bool = True
     ) -> Optional[Dict[str, Any]]:
-        """Retrieve content by storage ID with optional metadata"""
-        try:
+        """Retrieve content by storage ID with optional metadata"""        try:
             # Check cache first for fast retrieval
             if 'cache' in self.providers:
                 cached_content = await self.providers['cache'].get(storage_id)
@@ -335,8 +320,7 @@ class StorageManager:
             return None
     
     async def delete_content(self, storage_id: str) -> bool:
-        """Delete content from all storage locations"""
-        try:
+        """Delete content from all storage locations"""        try:
             success_count = 0
             total_providers = len(self.providers)
             
@@ -371,8 +355,7 @@ class StorageManager:
         limit: int = 100,
         offset: int = 0
     ) -> List[Dict[str, Any]]:
-        """List stored content with filtering options"""
-        try:
+        """List stored content with filtering options"""        try:
             # Use primary provider for listing
             primary_provider = self.providers.get('cloud') or self.providers.get('local')
             if not primary_provider:
@@ -395,8 +378,7 @@ class StorageManager:
             return []
     
     async def get_storage_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive storage statistics"""
-        try:
+        """Get comprehensive storage statistics"""        try:
             # Collect statistics from all providers
             provider_stats = {}
             for provider_name, provider in self.providers.items():
@@ -421,8 +403,7 @@ class StorageManager:
             return {}
     
     async def optimize_storage(self) -> Dict[str, Any]:
-        """Run storage optimization tasks"""
-        try:
+        """Run storage optimization tasks"""        try:
             optimization_results = {}
             
             # Run lifecycle management
@@ -450,8 +431,7 @@ class StorageManager:
     # Private helper methods
     
     async def _prepare_content(self, content: Union[bytes, BinaryIO, str]) -> bytes:
-        """Prepare content for processing"""
-        if isinstance(content, bytes):
+        """Prepare content for processing"""        if isinstance(content, bytes):
             return content
         elif isinstance(content, str):
             return content.encode('utf-8')
@@ -462,12 +442,10 @@ class StorageManager:
             raise ValueError(f"Unsupported content type: {type(content)}")
     
     def _calculate_hash(self, content: bytes) -> str:
-        """Calculate SHA-256 hash of content"""
-        return hashlib.sha256(content).hexdigest()
+        """Calculate SHA-256 hash of content"""        return hashlib.sha256(content).hexdigest()
     
     async def _check_duplicate(self, content_hash: str) -> Optional[StorageResponse]:
-        """Check if content with same hash already exists"""
-        try:
+        """Check if content with same hash already exists"""        try:
             if 'deduplication' in self.engines:
                 return await self.engines['deduplication'].check_duplicate(content_hash)
             return None
@@ -481,8 +459,7 @@ class StorageManager:
         filename: str, 
         content_type: ContentType
     ) -> Dict[str, Any]:
-        """Analyze content and extract metadata"""
-        try:
+        """Analyze content and extract metadata"""        try:
             # Basic metadata
             metadata = {
                 'filename': filename,
@@ -517,8 +494,7 @@ class StorageManager:
         content_type: ContentType, 
         metadata: Dict[str, Any]
     ) -> StorageTier:
-        """Determine optimal storage tier based on content and business rules"""
-        try:
+        """Determine optimal storage tier based on content and business rules"""        try:
             # Business logic for tier assignment
             
             # High-priority content types go to HOT tier
@@ -552,8 +528,7 @@ class StorageManager:
         content: bytes, 
         request: StorageRequest
     ) -> bytes:
-        """Process content through configured engines"""
-        processed_content = content
+        """Process content through configured engines"""        processed_content = content
         
         try:
             # Apply compression if enabled
@@ -575,8 +550,7 @@ class StorageManager:
             return content  # Return original content on processing failure
     
     def _generate_storage_id(self, content_hash: str, filename: str) -> str:
-        """Generate unique storage identifier"""
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        """Generate unique storage identifier"""        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         file_part = Path(filename).stem[:20]  # Limit filename part
         return f"{timestamp}_{file_part}_{content_hash[:12]}"
     
@@ -585,8 +559,7 @@ class StorageManager:
         storage_id: str, 
         tier: StorageTier
     ) -> Dict[str, str]:
-        """Generate file paths for different storage locations"""
-        year = datetime.now().year
+        """Generate file paths for different storage locations"""        year = datetime.now().year
         month = datetime.now().month
         
         base_path = f"{tier.value}/{year:04d}/{month:02d}"
@@ -604,8 +577,7 @@ class StorageManager:
         file_paths: Dict[str, str], 
         request: StorageRequest
     ) -> Dict[str, bool]:
-        """Store content in configured providers"""
-        results = {}
+        """Store content in configured providers"""        results = {}
         
         # Store in primary providers
         primary_providers = ['cloud', 'local']
@@ -644,8 +616,7 @@ class StorageManager:
         storage_id: str, 
         request: StorageRequest
     ) -> List[str]:
-        """Distribute content to CDN for global access"""
-        cdn_urls = []
+        """Distribute content to CDN for global access"""        cdn_urls = []
         
         if 'cdn' in self.providers:
             try:
@@ -664,8 +635,7 @@ class StorageManager:
         storage_results: Dict[str, bool], 
         metadata: Dict[str, Any]
     ) -> None:
-        """Update internal statistics"""
-        self.stats['total_files'] += 1
+        """Update internal statistics"""        self.stats['total_files'] += 1
         self.stats['total_size'] += metadata.get('processed_size', 0)
         self.stats['requests_count'] += 1
         

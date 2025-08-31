@@ -1,14 +1,11 @@
-"""
-Transaction Processor - Secure Marketplace Transaction Management
+"""Transaction Processor - Secure Marketplace Transaction Management
 
 Handles secure payment processing, escrow services, transaction validation,
 and fraud detection for marketplace transactions.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -21,8 +18,7 @@ from .marketplace_agent import MarketplaceConfig, MarketplaceTransaction
 
 
 class TransactionStatus(Enum):
-    """Transaction status enumeration."""
-    INITIATED = "initiated"
+    """Transaction status enumeration."""    INITIATED = "initiated"
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -33,8 +29,7 @@ class TransactionStatus(Enum):
 
 
 class PaymentMethod(Enum):
-    """Supported payment methods."""
-    CREDIT_CARD = "credit_card"
+    """Supported payment methods."""    CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     PAYPAL = "paypal"
     STRIPE = "stripe"
@@ -45,8 +40,7 @@ class PaymentMethod(Enum):
 
 
 class EscrowStatus(Enum):
-    """Escrow service status."""
-    NOT_REQUIRED = "not_required"
+    """Escrow service status."""    NOT_REQUIRED = "not_required"
     PENDING = "pending"
     HELD = "held"
     RELEASED_TO_SELLER = "released_to_seller"
@@ -56,8 +50,7 @@ class EscrowStatus(Enum):
 
 @dataclass
 class PaymentProvider:
-    """Payment provider configuration."""
-    name: str = ""
+    """Payment provider configuration."""    name: str = ""
     provider_type: PaymentMethod = PaymentMethod.STRIPE
     api_key: str = ""
     api_secret: str = ""
@@ -72,8 +65,7 @@ class PaymentProvider:
 
 @dataclass
 class TransactionValidation:
-    """Transaction validation result."""
-    is_valid: bool = False
+    """Transaction validation result."""    is_valid: bool = False
     validation_score: float = 0.0
     errors: List[str] = field(default_factory=list)
     warnings: List[str] = field(default_factory=list)
@@ -84,8 +76,7 @@ class TransactionValidation:
 
 @dataclass
 class EscrowTransaction:
-    """Escrow transaction data."""
-    id: Optional[str] = None
+    """Escrow transaction data."""    id: Optional[str] = None
     transaction_id: int = 0
     buyer_id: int = 0
     seller_id: int = 0
@@ -100,8 +91,7 @@ class EscrowTransaction:
 
 
 class TransactionProcessor:
-    """
-    Secure marketplace transaction processing system.
+    """    Secure marketplace transaction processing system.
     
     Provides comprehensive transaction management including:
     - Multi-provider payment processing integration
@@ -110,16 +100,12 @@ class TransactionProcessor:
     - Real-time transaction validation and monitoring
     - Automated dispute resolution workflows
     - Compliance with financial regulations
-    """
-
-    def __init__(self, config: MarketplaceConfig):
-        """
-        Initialize transaction processor.
+    """    def __init__(self, config: MarketplaceConfig):
+        """        Initialize transaction processor.
         
         Args:
             config: Marketplace configuration
-        """
-        self.config = config
+        """        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize payment providers and security
@@ -140,8 +126,7 @@ class TransactionProcessor:
         self.logger.info("Transaction processor initialized")
 
     def _initialize_payment_providers(self) -> None:
-        """Initialize payment provider integrations."""
-        try:
+        """Initialize payment provider integrations."""        try:
             # Initialize Stripe integration
             # Initialize PayPal integration
             # Initialize Wise integration
@@ -153,8 +138,7 @@ class TransactionProcessor:
             raise
 
     def _initialize_security_components(self) -> None:
-        """Initialize security and fraud detection components."""
-        try:
+        """Initialize security and fraud detection components."""        try:
             # Initialize fraud detection algorithms
             # Initialize risk assessment models
             # Initialize encryption services
@@ -168,16 +152,14 @@ class TransactionProcessor:
         self,
         transaction: MarketplaceTransaction
     ) -> MarketplaceTransaction:
-        """
-        Process a marketplace transaction with full security validation.
+        """        Process a marketplace transaction with full security validation.
         
         Args:
             transaction: Transaction data to process
             
         Returns:
             Processed transaction with updated status
-        """
-        try:
+        """        try:
             # Generate unique transaction ID if not present
             if not transaction.id:
                 transaction.id = await self._generate_transaction_id()
@@ -252,8 +234,7 @@ class TransactionProcessor:
         currency: str = "USD",
         hold_duration: int = 72
     ) -> EscrowTransaction:
-        """
-        Create escrow transaction for secure high-value transactions.
+        """        Create escrow transaction for secure high-value transactions.
         
         Args:
             buyer_id: ID of the buyer
@@ -264,8 +245,7 @@ class TransactionProcessor:
             
         Returns:
             Created escrow transaction
-        """
-        try:
+        """        try:
             escrow = EscrowTransaction(
                 id=str(uuid.uuid4()),
                 buyer_id=buyer_id,
@@ -307,8 +287,7 @@ class TransactionProcessor:
         release_to: str = "seller",  # "seller" or "buyer"
         reason: str = "completed"
     ) -> bool:
-        """
-        Release funds from escrow to specified party.
+        """        Release funds from escrow to specified party.
         
         Args:
             escrow_id: ID of the escrow transaction
@@ -317,8 +296,7 @@ class TransactionProcessor:
             
         Returns:
             True if funds successfully released
-        """
-        try:
+        """        try:
             # Get escrow transaction
             escrow = self.escrow_transactions.get(escrow_id)
             if not escrow:
@@ -367,8 +345,7 @@ class TransactionProcessor:
         refund_amount: Optional[float] = None,
         reason: str = "customer_request"
     ) -> bool:
-        """
-        Process transaction refund.
+        """        Process transaction refund.
         
         Args:
             transaction_id: ID of the transaction to refund
@@ -377,8 +354,7 @@ class TransactionProcessor:
             
         Returns:
             True if refund successful
-        """
-        try:
+        """        try:
             # Get original transaction
             transaction = await self._get_transaction(transaction_id)
             if not transaction:
@@ -420,16 +396,14 @@ class TransactionProcessor:
             return False
 
     async def get_transaction_status(self, transaction_id: int) -> Dict[str, Any]:
-        """
-        Get comprehensive transaction status and details.
+        """        Get comprehensive transaction status and details.
         
         Args:
             transaction_id: ID of the transaction
             
         Returns:
             Transaction status and details
-        """
-        try:
+        """        try:
             transaction = await self._get_transaction(transaction_id)
             if not transaction:
                 return {"error": "Transaction not found"}
@@ -459,8 +433,7 @@ class TransactionProcessor:
             return {"error": str(e)}
 
     async def get_success_rate(self) -> float:
-        """Get transaction success rate."""
-        try:
+        """Get transaction success rate."""        try:
             total = self.transaction_metrics["total_processed"]
             if total == 0:
                 return 0.0
@@ -473,8 +446,7 @@ class TransactionProcessor:
             return 0.0
 
     async def _validate_transaction(self, transaction: MarketplaceTransaction) -> TransactionValidation:
-        """Comprehensive transaction validation."""
-        try:
+        """Comprehensive transaction validation."""        try:
             validation = TransactionValidation()
             errors = []
             warnings = []
@@ -532,8 +504,7 @@ class TransactionProcessor:
             )
 
     async def _process_payment(self, transaction: MarketplaceTransaction) -> Dict[str, Any]:
-        """Process payment through appropriate provider."""
-        try:
+        """Process payment through appropriate provider."""        try:
             # Mock implementation - would integrate with real payment processors
             
             # Simulate processing time
@@ -564,8 +535,7 @@ class TransactionProcessor:
             return {"success": False, "error": str(e)}
 
     async def _calculate_fraud_score(self, transaction: MarketplaceTransaction) -> float:
-        """Calculate fraud risk score using AI models."""
-        try:
+        """Calculate fraud risk score using AI models."""        try:
             # Mock implementation - would use real fraud detection models
             fraud_score = 0.0
             
@@ -588,13 +558,11 @@ class TransactionProcessor:
             return 0.0
 
     async def _generate_transaction_id(self) -> int:
-        """Generate unique transaction ID."""
-        import random
+        """Generate unique transaction ID."""        import random
         return random.randint(100000, 999999)
 
     async def _store_transaction(self, transaction: MarketplaceTransaction) -> None:
-        """Store transaction in database."""
-        try:
+        """Store transaction in database."""        try:
             # Implementation would store in actual database
             self.active_transactions[transaction.id] = transaction
         except Exception as e:
@@ -602,8 +570,7 @@ class TransactionProcessor:
             raise
 
     async def shutdown(self) -> None:
-        """Gracefully shutdown transaction processor."""
-        try:
+        """Gracefully shutdown transaction processor."""        try:
             # Complete pending transactions
             # Close payment provider connections
             # Save transaction metrics

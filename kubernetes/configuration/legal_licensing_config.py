@@ -1,5 +1,4 @@
-"""
-⚖️ Legal & Licensing Configuration Manager - IA-Influencer-Agent
+"""⚖️ Legal & Licensing Configuration Manager - IA-Influencer-Agent
 ===============================================================
 Project Creator & Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
@@ -15,9 +14,7 @@ Contact: mlaiel@live.de
 
 Enterprise-grade legal and licensing configuration management system.
 ===============================================================
-"""
-
-from typing import Dict, Any, Optional, List, Union, Tuple
+"""from typing import Dict, Any, Optional, List, Union, Tuple
 from enum import Enum
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -32,8 +29,7 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class LicenseType(Enum):
-    """Types of licenses"""
-    COPYRIGHT = "copyright"
+    """Types of licenses"""    COPYRIGHT = "copyright"
     CREATIVE_COMMONS = "creative_commons"
     ROYALTY_FREE = "royalty_free"
     EXCLUSIVE = "exclusive"
@@ -50,8 +46,7 @@ class LicenseType(Enum):
     CUSTOM_LICENSE = "custom_license"
 
 class LegalJurisdiction(Enum):
-    """Legal jurisdictions"""
-    UNITED_STATES = "united_states"
+    """Legal jurisdictions"""    UNITED_STATES = "united_states"
     EUROPEAN_UNION = "european_union"
     GERMANY = "germany"
     UNITED_KINGDOM = "united_kingdom"
@@ -67,8 +62,7 @@ class LegalJurisdiction(Enum):
     INTERNATIONAL = "international"
 
 class ComplianceFramework(Enum):
-    """Compliance frameworks"""
-    GDPR = "gdpr"
+    """Compliance frameworks"""    GDPR = "gdpr"
     CCPA = "ccpa"
     PIPEDA = "pipeda"
     LGPD = "lgpd"
@@ -82,8 +76,7 @@ class ComplianceFramework(Enum):
     COPYRIGHTS_DIRECTIVE = "copyrights_directive"
 
 class ContractType(Enum):
-    """Contract types"""
-    ARTIST_AGREEMENT = "artist_agreement"
+    """Contract types"""    ARTIST_AGREEMENT = "artist_agreement"
     DISTRIBUTION_AGREEMENT = "distribution_agreement"
     LICENSING_AGREEMENT = "licensing_agreement"
     COLLABORATION_AGREEMENT = "collaboration_agreement"
@@ -98,8 +91,7 @@ class ContractType(Enum):
     TERMS_OF_SERVICE = "terms_of_service"
 
 class LegalDocumentStatus(Enum):
-    """Legal document status"""
-    DRAFT = "draft"
+    """Legal document status"""    DRAFT = "draft"
     UNDER_REVIEW = "under_review"
     APPROVED = "approved"
     ACTIVE = "active"
@@ -110,8 +102,7 @@ class LegalDocumentStatus(Enum):
 
 @dataclass
 class LicenseConfiguration:
-    """License configuration"""
-    license_type: LicenseType
+    """License configuration"""    license_type: LicenseType
     enabled: bool = True
     
     # Basic license information
@@ -182,8 +173,7 @@ class LicenseConfiguration:
 
 @dataclass
 class DMCAConfiguration:
-    """DMCA takedown configuration"""
-    enabled: bool = True
+    """DMCA takedown configuration"""    enabled: bool = True
     
     # Contact information
     designated_agent_name: str = "Fahed Mlaiel"
@@ -230,8 +220,7 @@ class DMCAConfiguration:
 
 @dataclass
 class ComplianceConfiguration:
-    """Compliance configuration"""
-    enabled: bool = True
+    """Compliance configuration"""    enabled: bool = True
     
     # Frameworks
     active_frameworks: List[ComplianceFramework] = field(default_factory=lambda: [
@@ -280,8 +269,7 @@ class ComplianceConfiguration:
 
 @dataclass
 class ContractManagementConfig:
-    """Contract management configuration"""
-    enabled: bool = True
+    """Contract management configuration"""    enabled: bool = True
     
     # Contract lifecycle
     automated_generation: bool = True
@@ -327,8 +315,7 @@ class ContractManagementConfig:
 
 @dataclass
 class IntellectualPropertyConfig:
-    """Intellectual property configuration"""
-    enabled: bool = True
+    """Intellectual property configuration"""    enabled: bool = True
     
     # IP types
     copyright_protection: bool = True
@@ -367,8 +354,7 @@ class IntellectualPropertyConfig:
 
 @dataclass
 class LegalLicensingConfiguration:
-    """Master legal and licensing configuration"""
-    # Core configurations
+    """Master legal and licensing configuration"""    # Core configurations
     license_configs: Dict[LicenseType, LicenseConfiguration] = field(default_factory=dict)
     dmca_config: DMCAConfiguration = field(default_factory=DMCAConfiguration)
     compliance_config: ComplianceConfiguration = field(default_factory=ComplianceConfiguration)
@@ -431,16 +417,13 @@ class LegalLicensingConfiguration:
     contact_email: str = "mlaiel@live.de"
 
 class LegalLicensingConfigManager:
-    """
-    Enterprise-grade legal and licensing configuration manager.
+    """    Enterprise-grade legal and licensing configuration manager.
     
     Manages comprehensive configuration for licensing, DMCA, compliance,
     contract management, and intellectual property protection.
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize legal licensing configuration manager"""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize legal licensing configuration manager"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration path
         self.config_path = config_path or os.getenv(
@@ -465,8 +448,7 @@ class LegalLicensingConfigManager:
         self.logger.info("Legal licensing configuration manager initialized")
     
     def _initialize_default_licenses(self) -> None:
-        """Initialize default license configurations"""
-        default_licenses = {
+        """Initialize default license configurations"""        default_licenses = {
             LicenseType.COPYRIGHT: LicenseConfiguration(
                 license_type=LicenseType.COPYRIGHT,
                 license_name="Standard Copyright License",
@@ -501,8 +483,7 @@ class LegalLicensingConfigManager:
             self._config.license_configs[license_type] = config
     
     def _load_configuration(self) -> bool:
-        """Load configuration from file"""
-        try:
+        """Load configuration from file"""        try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r', encoding='utf-8') as f:
                     if self.config_path.endswith('.yaml') or self.config_path.endswith('.yml'):
@@ -522,8 +503,7 @@ class LegalLicensingConfigManager:
             return False
     
     def _update_config_from_dict(self, config_data: Dict[str, Any]) -> None:
-        """Update configuration from dictionary"""
-        for key, value in config_data.items():
+        """Update configuration from dictionary"""        for key, value in config_data.items():
             if hasattr(self._config, key):
                 setattr(self._config, key, value)
         
@@ -531,8 +511,7 @@ class LegalLicensingConfigManager:
         self.last_updated = datetime.now()
     
     def add_license_configuration(self, license_type: LicenseType, config: LicenseConfiguration) -> bool:
-        """Add license configuration"""
-        try:
+        """Add license configuration"""        try:
             self._config.license_configs[license_type] = config
             self._config.updated_at = datetime.now()
             self.last_updated = datetime.now()
@@ -543,19 +522,16 @@ class LegalLicensingConfigManager:
             return False
     
     def get_license_configuration(self, license_type: LicenseType) -> Optional[LicenseConfiguration]:
-        """Get license configuration"""
-        return self._config.license_configs.get(license_type)
+        """Get license configuration"""        return self._config.license_configs.get(license_type)
     
     def get_available_licenses(self) -> List[LicenseType]:
-        """Get list of available license types"""
-        return [
+        """Get list of available license types"""        return [
             license_type for license_type, config in self._config.license_configs.items()
             if config.enabled
         ]
     
     def validate_configuration(self) -> List[str]:
-        """Validate configuration and return list of errors"""
-        errors = []
+        """Validate configuration and return list of errors"""        errors = []
         
         try:
             # Validate license configurations
@@ -595,8 +571,7 @@ class LegalLicensingConfigManager:
             return [error_msg]
     
     def get_configuration_status(self) -> Dict[str, Any]:
-        """Get configuration status and metadata"""
-        return {
+        """Get configuration status and metadata"""        return {
             "initialized": self.initialized,
             "last_updated": self.last_updated,
             "config_path": self.config_path,

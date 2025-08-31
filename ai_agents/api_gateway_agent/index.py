@@ -1,5 +1,4 @@
-"""
-API Gateway Agent Index - Central Module Access Point
+"""API Gateway Agent Index - Central Module Access Point
 
 Centralized access point for API Gateway Agent with service discovery,
 health monitoring, and management utilities.
@@ -10,9 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime
@@ -31,16 +28,13 @@ logger = logging.getLogger(__name__)
 
 
 class APIGatewayManager:
-    """
-    API Gateway Manager - Central Management Interface
+    """    API Gateway Manager - Central Management Interface
     
     Provides centralized management and monitoring of all API Gateway
     components with health checking and service coordination.
-    """
-    
+    """    
     def __init__(self, config: Optional[APIGatewayConfig] = None):
-        """Initialize API Gateway Manager"""
-        self.config = config or APIGatewayConfig()
+        """Initialize API Gateway Manager"""        self.config = config or APIGatewayConfig()
         
         # Initialize main gateway agent
         self.gateway_agent: Optional[APIGatewayAgent] = None
@@ -54,8 +48,7 @@ class APIGatewayManager:
         logger.info("API Gateway Manager initialized")
     
     async def initialize(self) -> bool:
-        """Initialize all gateway components"""
-        try:
+        """Initialize all gateway components"""        try:
             logger.info("Initializing API Gateway components...")
             
             # Initialize main gateway agent
@@ -75,8 +68,7 @@ class APIGatewayManager:
             return False
     
     async def shutdown(self):
-        """Gracefully shutdown API Gateway"""
-        try:
+        """Gracefully shutdown API Gateway"""        try:
             logger.info("Shutting down API Gateway...")
             
             if self.gateway_agent:
@@ -88,8 +80,7 @@ class APIGatewayManager:
             logger.error(f"Error during shutdown: {e}")
     
     async def get_health_status(self) -> Dict[str, Any]:
-        """Get comprehensive health status"""
-        try:
+        """Get comprehensive health status"""        try:
             if not self.gateway_agent:
                 return {"status": "not_initialized", "components": {}}
             
@@ -112,8 +103,7 @@ class APIGatewayManager:
             return {"status": "error", "error": str(e)}
     
     async def _check_component_health(self) -> Dict[str, Dict[str, Any]]:
-        """Check health of all components"""
-        component_health = {}
+        """Check health of all components"""        component_health = {}
         
         if not self.gateway_agent:
             return component_health
@@ -173,15 +163,13 @@ class APIGatewayManager:
         return component_health
     
     async def _get_services_health(self) -> Dict[str, Any]:
-        """Get health status of all registered services"""
-        if not self.gateway_agent:
+        """Get health status of all registered services"""        if not self.gateway_agent:
             return {}
         
         return await self.gateway_agent._get_services_health()
     
     async def _update_component_status(self):
-        """Update component status tracking"""
-        try:
+        """Update component status tracking"""        try:
             current_time = datetime.utcnow().isoformat()
             
             components = [
@@ -201,12 +189,10 @@ class APIGatewayManager:
             logger.error(f"Error updating component status: {e}")
     
     def get_configuration(self) -> Dict[str, Any]:
-        """Get current configuration"""
-        return self.config.dict()
+        """Get current configuration"""        return self.config.dict()
     
     async def update_configuration(self, config_updates: Dict[str, Any]) -> bool:
-        """Update configuration dynamically"""
-        try:
+        """Update configuration dynamically"""        try:
             # Update configuration
             for key, value in config_updates.items():
                 if hasattr(self.config, key):
@@ -225,14 +211,12 @@ class APIGatewayManager:
             return False
     
     async def _apply_configuration_changes(self):
-        """Apply configuration changes to running components"""
-        # This would implement dynamic reconfiguration
+        """Apply configuration changes to running components"""        # This would implement dynamic reconfiguration
         # For now, placeholder implementation
         logger.info("Applying configuration changes...")
     
     async def reload_services(self) -> bool:
-        """Reload service configurations"""
-        try:
+        """Reload service configurations"""        try:
             if not self.gateway_agent:
                 return False
             
@@ -248,15 +232,13 @@ class APIGatewayManager:
             return False
     
     def get_metrics(self) -> str:
-        """Get Prometheus metrics"""
-        if not self.gateway_agent or not hasattr(self.gateway_agent, 'metrics_collector'):
+        """Get Prometheus metrics"""        if not self.gateway_agent or not hasattr(self.gateway_agent, 'metrics_collector'):
             return ""
         
         return self.gateway_agent.metrics_collector.generate_metrics()
     
     def get_comprehensive_stats(self) -> Dict[str, Any]:
-        """Get comprehensive API Gateway statistics"""
-        try:
+        """Get comprehensive API Gateway statistics"""        try:
             stats = {
                 "timestamp": datetime.utcnow().isoformat(),
                 "version": self.config.version,
@@ -287,16 +269,14 @@ gateway_manager: Optional[APIGatewayManager] = None
 
 
 async def initialize_api_gateway(config: Optional[APIGatewayConfig] = None) -> APIGatewayManager:
-    """
-    Initialize API Gateway with configuration
+    """    Initialize API Gateway with configuration
     
     Args:
         config: Gateway configuration
         
     Returns:
         Initialized gateway manager
-    """
-    global gateway_manager
+    """    global gateway_manager
     
     try:
         gateway_manager = APIGatewayManager(config)
@@ -314,8 +294,7 @@ async def initialize_api_gateway(config: Optional[APIGatewayConfig] = None) -> A
 
 
 async def shutdown_api_gateway():
-    """Gracefully shutdown API Gateway"""
-    global gateway_manager
+    """Gracefully shutdown API Gateway"""    global gateway_manager
     
     if gateway_manager:
         await gateway_manager.shutdown()
@@ -324,14 +303,12 @@ async def shutdown_api_gateway():
 
 
 def get_gateway_manager() -> Optional[APIGatewayManager]:
-    """Get current gateway manager instance"""
-    return gateway_manager
+    """Get current gateway manager instance"""    return gateway_manager
 
 
 # Health check endpoint for external monitoring
 async def health_check() -> Dict[str, Any]:
-    """Health check endpoint"""
-    if not gateway_manager:
+    """Health check endpoint"""    if not gateway_manager:
         return {
             "status": "not_initialized",
             "timestamp": datetime.utcnow().isoformat()
@@ -342,8 +319,7 @@ async def health_check() -> Dict[str, Any]:
 
 # Metrics endpoint for Prometheus
 def get_prometheus_metrics() -> str:
-    """Get Prometheus metrics"""
-    if not gateway_manager:
+    """Get Prometheus metrics"""    if not gateway_manager:
         return ""
     
     return gateway_manager.get_metrics()
@@ -351,16 +327,14 @@ def get_prometheus_metrics() -> str:
 
 # Utility functions
 def get_service_list() -> List[str]:
-    """Get list of configured services"""
-    if not gateway_manager:
+    """Get list of configured services"""    if not gateway_manager:
         return []
     
     return list(gateway_manager.config.service_routes.keys())
 
 
 def get_gateway_stats() -> Dict[str, Any]:
-    """Get gateway statistics"""
-    if not gateway_manager:
+    """Get gateway statistics"""    if not gateway_manager:
         return {}
     
     return gateway_manager.get_comprehensive_stats()

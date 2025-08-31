@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-🐳 Docker Infrastructure Index - IA-Influencer-Agent Production Platform
+"""🐳 Docker Infrastructure Index - IA-Influencer-Agent Production Platform
 =========================================================================
 Expert: Lead Dev IA + Backend Senior + DevOps Engineer + Docker Specialist  
 Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -14,9 +13,7 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 
 Production-ready Docker infrastructure index for comprehensive platform deployment
 and management of IA-Influencer multi-format content protection system.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import sys
 from pathlib import Path
@@ -55,8 +52,7 @@ logger = logging.getLogger(__name__)
 console = Console()
 
 def display_header():
-    """Display application header"""
-    header_text = Text()
+    """Display application header"""    header_text = Text()
     header_text.append("🐳 IA-Influencer Docker Infrastructure Manager\n", style="bold blue")
     header_text.append("Production-Ready Enterprise Platform Deployment\n\n", style="bold green")
     header_text.append("Creator: ", style="bold")
@@ -66,8 +62,7 @@ def display_header():
     console.print(Panel(header_text, title="[bold]Docker Infrastructure Manager[/bold]", border_style="blue"))
 
 def display_team_specialties():
-    """Display team specialties"""
-    specialties = [
+    """Display team specialties"""    specialties = [
         "Lead Dev IA + Backend Senior",
         "DevOps Engineer + Docker Specialist", 
         "ML Engineer + AI Processing",
@@ -99,8 +94,7 @@ def display_team_specialties():
     console.print(table)
 
 def display_available_services():
-    """Display available Docker services"""
-    services = [
+    """Display available Docker services"""    services = [
         ("API Gateway", "Main entry point & routing", "FastAPI + Nginx", "8000"),
         ("Backend Services", "Core business logic", "Python + FastAPI", "8000"),
         ("AI Engines", "Machine learning processing", "PyTorch + Transformers", "8000"),
@@ -129,8 +123,7 @@ def display_available_services():
     console.print(table)
 
 def display_deployment_environments():
-    """Display deployment environment requirements"""
-    environments = [
+    """Display deployment environment requirements"""    environments = [
         ("Development", "8 cores", "16GB", "100GB", "Local testing"),
         ("Staging", "16 cores", "32GB", "250GB", "Pre-production testing"),
         ("Production", "32+ cores", "64GB+", "500GB+", "Live environment")
@@ -151,14 +144,12 @@ def display_deployment_environments():
 @click.group()
 @click.pass_context
 def cli(ctx):
-    """IA-Influencer Docker Infrastructure Manager"""
-    ctx.ensure_object(dict)
+    """IA-Influencer Docker Infrastructure Manager"""    ctx.ensure_object(dict)
     display_header()
 
 @cli.command()
 def info():
-    """Display platform information"""
-    console.print("\n")
+    """Display platform information"""    console.print("\n")
     display_team_specialties()
     console.print("\n")
     display_available_services()
@@ -181,8 +172,7 @@ def info():
 @click.option('--output-dir', '-o', default='./deployment', help='Output directory')
 @click.option('--registry', '-r', default='registry.ia-influencer.com', help='Docker registry URL')
 def generate(environment: str, output_dir: str, registry: str):
-    """Generate complete Docker deployment configuration"""
-    console.print(f"\n🚀 Generating Docker deployment configuration...")
+    """Generate complete Docker deployment configuration"""    console.print(f"\n🚀 Generating Docker deployment configuration...")
     console.print(f"Environment: [bold cyan]{environment}[/bold cyan]")
     console.print(f"Output directory: [bold green]{output_dir}[/bold green]")
     console.print(f"Registry URL: [bold yellow]{registry}[/bold yellow]\n")
@@ -238,8 +228,7 @@ def generate(environment: str, output_dir: str, registry: str):
 @click.option('--output-dir', '-o', default='./deployment', help='Deployment directory')
 @click.option('--environment', '-e', default='production', help='Environment')
 def deploy(output_dir: str, environment: str):
-    """Deploy the complete IA-Influencer platform"""
-    console.print(f"\n🚀 Deploying IA-Influencer platform...")
+    """Deploy the complete IA-Influencer platform"""    console.print(f"\n🚀 Deploying IA-Influencer platform...")
     console.print(f"Environment: [bold cyan]{environment}[/bold cyan]")
     console.print(f"Deployment directory: [bold green]{output_dir}[/bold green]\n")
     
@@ -280,8 +269,7 @@ def deploy(output_dir: str, environment: str):
 
 @cli.command()
 def validate():
-    """Validate Docker configuration and requirements"""
-    console.print("\n🔍 Validating Docker environment...")
+    """Validate Docker configuration and requirements"""    console.print("\n🔍 Validating Docker environment...")
     
     checks = [
         ("Docker Engine", "docker --version"),
@@ -312,8 +300,7 @@ def validate():
 @cli.command()
 @click.option('--service', '-s', help='Specific service to check')
 def status(service: Optional[str]):
-    """Check platform status"""
-    console.print(f"\n📊 Checking platform status...")
+    """Check platform status"""    console.print(f"\n📊 Checking platform status...")
     
     if service:
         console.print(f"Service: [bold cyan]{service}[/bold cyan]\n")

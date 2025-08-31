@@ -1,5 +1,4 @@
-"""
-Payment Processor Engine - Multi-gateway payment processing system
+"""Payment Processor Engine - Multi-gateway payment processing system
 ===================================================================
 
 Advanced payment processing with support for Stripe, PayPal, Wise and other
@@ -7,9 +6,7 @@ payment gateways, including fraud detection and automated reconciliation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
@@ -23,8 +20,7 @@ from fastapi import HTTPException
 logger = logging.getLogger(__name__)
 
 class PaymentMethod(Enum):
-    """Supported payment methods"""
-    CREDIT_CARD = "credit_card"
+    """Supported payment methods"""    CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
@@ -35,8 +31,7 @@ class PaymentMethod(Enum):
     GOOGLE_PAY = "google_pay"
 
 class PaymentStatus(Enum):
-    """Payment processing status"""
-    PENDING = "pending"
+    """Payment processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -45,8 +40,7 @@ class PaymentStatus(Enum):
     DISPUTED = "disputed"
 
 class GatewayProvider(Enum):
-    """Payment gateway providers"""
-    STRIPE = "stripe"
+    """Payment gateway providers"""    STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
     SQUARE = "square"
@@ -54,8 +48,7 @@ class GatewayProvider(Enum):
 
 @dataclass
 class PaymentData:
-    """Payment transaction data"""
-    payment_id: str
+    """Payment transaction data"""    payment_id: str
     invoice_id: str
     customer_id: str
     amount: Decimal
@@ -71,8 +64,7 @@ class PaymentData:
 
 @dataclass
 class RefundData:
-    """Refund transaction data"""
-    refund_id: str
+    """Refund transaction data"""    refund_id: str
     payment_id: str
     amount: Decimal
     reason: str
@@ -80,19 +72,16 @@ class RefundData:
     processed_at: Optional[datetime]
 
 class PaymentProcessorEngine:
-    """
-    Advanced payment processing system with multi-gateway support,
+    """    Advanced payment processing system with multi-gateway support,
     fraud detection, and automated reconciliation for content creators.
-    """
-    
+    """    
     def __init__(self, redis_client: redis.Redis, db_pool: asyncpg.Pool):
         self.redis = redis_client
         self.db_pool = db_pool
         self.gateway_configs = {}
         
     async def initialize(self) -> None:
-        """Initialize payment processor engine"""
-        try:
+        """Initialize payment processor engine"""        try:
             await self._setup_database_tables()
             await self._load_gateway_configurations()
             await self._initialize_fraud_detection()
@@ -102,10 +91,8 @@ class PaymentProcessorEngine:
             raise
 
     async def _setup_database_tables(self) -> None:
-        """Setup database tables for payment processing"""
-        async with self.db_pool.acquire() as conn:
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS payments (
+        """Setup database tables for payment processing"""        async with self.db_pool.acquire() as conn:
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS payments (
                     id SERIAL PRIMARY KEY,
                     payment_id VARCHAR(100) UNIQUE NOT NULL,
                     invoice_id VARCHAR(100),
@@ -128,8 +115,7 @@ class PaymentProcessorEngine:
                 );
             """)
             
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS payment_refunds (
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS payment_refunds (
                     id SERIAL PRIMARY KEY,
                     refund_id VARCHAR(100) UNIQUE NOT NULL,
                     payment_id VARCHAR(100) REFERENCES payments(payment_id),
@@ -142,8 +128,7 @@ class PaymentProcessorEngine:
                 );
             """)
             
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS payment_disputes (
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS payment_disputes (
                     id SERIAL PRIMARY KEY,
                     dispute_id VARCHAR(100) UNIQUE NOT NULL,
                     payment_id VARCHAR(100) REFERENCES payments(payment_id),
@@ -157,8 +142,7 @@ class PaymentProcessorEngine:
             """)
 
     async def _load_gateway_configurations(self) -> None:
-        """Load payment gateway configurations"""
-        try:
+        """Load payment gateway configurations"""        try:
             # In production, these would come from secure environment variables
             self.gateway_configs = {
                 GatewayProvider.STRIPE: {
@@ -185,8 +169,7 @@ class PaymentProcessorEngine:
             logger.error(f"Failed to load gateway configurations: {e}")
 
     async def _initialize_fraud_detection(self) -> None:
-        """Initialize fraud detection system"""
-        try:
+        """Initialize fraud detection system"""        try:
             # Load fraud detection rules and patterns
             fraud_rules = {
                 'max_transaction_amount': 10000.00,
@@ -205,8 +188,7 @@ class PaymentProcessorEngine:
     async def process_payment(self, invoice_id: str, payment_method: PaymentMethod,
                             gateway_provider: GatewayProvider, 
                             payment_data: Dict[str, Any]) -> PaymentData:
-        """Process payment transaction"""
-        try:
+        """Process payment transaction"""        try:
             # Get invoice details
             invoice = await self._get_invoice_details(invoice_id)
             if not invoice:
@@ -271,11 +253,9 @@ class PaymentProcessorEngine:
             raise HTTPException(status_code=500, detail="Payment processing failed")
 
     async def _get_invoice_details(self, invoice_id: str) -> Optional[Dict[str, Any]]:
-        """Get invoice details for payment processing"""
-        try:
+        """Get invoice details for payment processing"""        try:
             async with self.db_pool.acquire() as conn:
-                invoice = await conn.fetchrow("""
-                    SELECT invoice_id, customer_id, total_amount, currency, status
+                invoice = await conn.fetchrow("""                    SELECT invoice_id, customer_id, total_amount, currency, status
                     FROM invoices 
                     WHERE invoice_id = $1
                 """, invoice_id)
@@ -287,8 +267,7 @@ class PaymentProcessorEngine:
             return None
 
     async def _check_fraud_risk(self, invoice: Dict[str, Any], payment_data: Dict[str, Any]) -> float:
-        """Check fraud risk score for transaction"""
-        try:
+        """Check fraud risk score for transaction"""        try:
             risk_score = 0.0
             
             # Amount-based risk
@@ -323,8 +302,7 @@ class PaymentProcessorEngine:
             return 0.0
 
     def _calculate_payment_fees(self, amount: Decimal, gateway: GatewayProvider) -> tuple[Decimal, Decimal]:
-        """Calculate payment processing fees"""
-        try:
+        """Calculate payment processing fees"""        try:
             config = self.gateway_configs.get(gateway, {})
             fee_rate = Decimal(str(config.get('fee_rate', 0.029)))
             fixed_fee = Decimal(str(config.get('fixed_fee', 0.30)))
@@ -339,8 +317,7 @@ class PaymentProcessorEngine:
             return Decimal('0.00'), amount
 
     async def _process_with_gateway(self, payment: PaymentData, payment_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process payment with specific gateway"""
-        try:
+        """Process payment with specific gateway"""        try:
             if payment.gateway_provider == GatewayProvider.STRIPE:
                 return await self._process_stripe_payment(payment, payment_data)
             elif payment.gateway_provider == GatewayProvider.PAYPAL:
@@ -358,8 +335,7 @@ class PaymentProcessorEngine:
             }
 
     async def _process_stripe_payment(self, payment: PaymentData, payment_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process payment via Stripe"""
-        try:
+        """Process payment via Stripe"""        try:
             # Simulate Stripe API call
             # In production, this would use the actual Stripe SDK
             
@@ -381,8 +357,7 @@ class PaymentProcessorEngine:
             }
 
     async def _process_paypal_payment(self, payment: PaymentData, payment_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process payment via PayPal"""
-        try:
+        """Process payment via PayPal"""        try:
             # Simulate PayPal API call
             transaction_id = f"paypal_{int(datetime.now().timestamp())}"
             
@@ -401,8 +376,7 @@ class PaymentProcessorEngine:
             }
 
     async def _process_wise_payment(self, payment: PaymentData, payment_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process payment via Wise"""
-        try:
+        """Process payment via Wise"""        try:
             # Simulate Wise API call
             transaction_id = f"wise_{int(datetime.now().timestamp())}"
             
@@ -421,8 +395,7 @@ class PaymentProcessorEngine:
             }
 
     async def _process_generic_payment(self, payment: PaymentData, payment_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process payment with generic gateway"""
-        try:
+        """Process payment with generic gateway"""        try:
             transaction_id = f"generic_{int(datetime.now().timestamp())}"
             
             return {
@@ -440,11 +413,9 @@ class PaymentProcessorEngine:
             }
 
     async def _store_payment(self, payment: PaymentData) -> None:
-        """Store payment record in database"""
-        try:
+        """Store payment record in database"""        try:
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""
-                    INSERT INTO payments 
+                await conn.execute("""                    INSERT INTO payments 
                     (payment_id, invoice_id, customer_id, amount, currency,
                      payment_method, gateway_provider, status, fees, net_amount, metadata)
                     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
@@ -465,11 +436,9 @@ class PaymentProcessorEngine:
             logger.error(f"Failed to store payment: {e}")
 
     async def _update_payment_status(self, payment: PaymentData) -> None:
-        """Update payment status in database"""
-        try:
+        """Update payment status in database"""        try:
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""
-                    UPDATE payments 
+                await conn.execute("""                    UPDATE payments 
                     SET status = $1, gateway_transaction_id = $2, 
                         processed_at = $3, updated_at = NOW()
                     WHERE payment_id = $4
@@ -483,11 +452,9 @@ class PaymentProcessorEngine:
             logger.error(f"Failed to update payment status: {e}")
 
     async def _update_invoice_payment_status(self, invoice_id: str, status: str) -> None:
-        """Update invoice payment status"""
-        try:
+        """Update invoice payment status"""        try:
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""
-                    UPDATE invoices 
+                await conn.execute("""                    UPDATE invoices 
                     SET status = $1, updated_at = NOW()
                     WHERE invoice_id = $2
                 """, status, invoice_id)
@@ -495,8 +462,7 @@ class PaymentProcessorEngine:
             logger.error(f"Failed to update invoice status: {e}")
 
     async def _send_payment_notifications(self, payment: PaymentData) -> None:
-        """Send payment notifications"""
-        try:
+        """Send payment notifications"""        try:
             notification_data = {
                 'payment_id': payment.payment_id,
                 'customer_id': payment.customer_id,
@@ -511,11 +477,9 @@ class PaymentProcessorEngine:
             logger.error(f"Failed to send payment notifications: {e}")
 
     async def _get_customer_payment_history(self, customer_id: str) -> Dict[str, Any]:
-        """Get customer payment history for fraud detection"""
-        try:
+        """Get customer payment history for fraud detection"""        try:
             async with self.db_pool.acquire() as conn:
-                history = await conn.fetchrow("""
-                    SELECT 
+                history = await conn.fetchrow("""                    SELECT 
                         COUNT(*) as total_payments,
                         COUNT(CASE WHEN status = 'failed' THEN 1 END) as failed_payments,
                         COUNT(CASE WHEN status = 'disputed' THEN 1 END) as disputed_payments,
@@ -537,11 +501,9 @@ class PaymentProcessorEngine:
             return {}
 
     async def _get_recent_payments(self, customer_id: str, hours: int = 24) -> List[Dict[str, Any]]:
-        """Get recent payments for velocity checks"""
-        try:
+        """Get recent payments for velocity checks"""        try:
             async with self.db_pool.acquire() as conn:
-                payments = await conn.fetch("""
-                    SELECT payment_id, amount, created_at
+                payments = await conn.fetch("""                    SELECT payment_id, amount, created_at
                     FROM payments 
                     WHERE customer_id = $1
                     AND created_at >= NOW() - INTERVAL '%s hours'
@@ -555,8 +517,7 @@ class PaymentProcessorEngine:
             return []
 
     async def _check_ip_reputation(self, ip_address: str) -> float:
-        """Check IP address reputation for fraud detection"""
-        try:
+        """Check IP address reputation for fraud detection"""        try:
             # This would integrate with IP reputation services
             # For now, return a mock score
             
@@ -575,8 +536,7 @@ class PaymentProcessorEngine:
 
     async def process_refund(self, payment_id: str, amount: Optional[Decimal] = None, 
                            reason: str = "Customer request") -> RefundData:
-        """Process payment refund"""
-        try:
+        """Process payment refund"""        try:
             # Get original payment
             payment = await self._get_payment_by_id(payment_id)
             if not payment:
@@ -614,11 +574,9 @@ class PaymentProcessorEngine:
             raise HTTPException(status_code=500, detail="Refund processing failed")
 
     async def _get_payment_by_id(self, payment_id: str) -> Optional[Dict[str, Any]]:
-        """Get payment by ID"""
-        try:
+        """Get payment by ID"""        try:
             async with self.db_pool.acquire() as conn:
-                payment = await conn.fetchrow("""
-                    SELECT * FROM payments WHERE payment_id = $1
+                payment = await conn.fetchrow("""                    SELECT * FROM payments WHERE payment_id = $1
                 """, payment_id)
                 
                 return dict(payment) if payment else None
@@ -628,11 +586,9 @@ class PaymentProcessorEngine:
             return None
 
     async def _store_refund(self, refund: RefundData) -> None:
-        """Store refund record in database"""
-        try:
+        """Store refund record in database"""        try:
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""
-                    INSERT INTO payment_refunds 
+                await conn.execute("""                    INSERT INTO payment_refunds 
                     (refund_id, payment_id, amount, reason, status)
                     VALUES ($1, $2, $3, $4, $5)
                 """,
@@ -646,11 +602,9 @@ class PaymentProcessorEngine:
             logger.error(f"Failed to store refund: {e}")
 
     async def _update_refund_status(self, refund: RefundData) -> None:
-        """Update refund status in database"""
-        try:
+        """Update refund status in database"""        try:
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""
-                    UPDATE payment_refunds 
+                await conn.execute("""                    UPDATE payment_refunds 
                     SET status = $1, processed_at = $2
                     WHERE refund_id = $3
                 """,
@@ -662,8 +616,7 @@ class PaymentProcessorEngine:
             logger.error(f"Failed to update refund status: {e}")
 
     async def _process_gateway_refund(self, payment: Dict[str, Any], refund: RefundData) -> Dict[str, Any]:
-        """Process refund with payment gateway"""
-        try:
+        """Process refund with payment gateway"""        try:
             gateway = GatewayProvider(payment['gateway_provider'])
             
             # This would call the actual gateway refund API
@@ -677,12 +630,10 @@ class PaymentProcessorEngine:
             return {'status': 'failed', 'error': str(e)}
 
     async def get_payment_dashboard_data(self, customer_id: str) -> Dict[str, Any]:
-        """Get comprehensive payment dashboard data"""
-        try:
+        """Get comprehensive payment dashboard data"""        try:
             async with self.db_pool.acquire() as conn:
                 # Payment summary
-                summary = await conn.fetchrow("""
-                    SELECT 
+                summary = await conn.fetchrow("""                    SELECT 
                         COUNT(*) as total_payments,
                         COALESCE(SUM(CASE WHEN status = 'completed' THEN amount ELSE 0 END), 0) as successful_amount,
                         COALESCE(SUM(CASE WHEN status = 'failed' THEN amount ELSE 0 END), 0) as failed_amount,
@@ -693,8 +644,7 @@ class PaymentProcessorEngine:
                 """, customer_id)
                 
                 # Recent payments
-                recent_payments = await conn.fetch("""
-                    SELECT payment_id, amount, status, payment_method, created_at
+                recent_payments = await conn.fetch("""                    SELECT payment_id, amount, status, payment_method, created_at
                     FROM payments 
                     WHERE customer_id = $1
                     ORDER BY created_at DESC 

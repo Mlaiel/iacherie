@@ -1,13 +1,10 @@
-"""
-Smart Contract Management System for Content Protection
+"""Smart Contract Management System for Content Protection
 Professional blockchain smart contract interface and management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Any unauthorized use, reproduction, or distribution
 of this code without explicit written permission is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
 from dataclasses import dataclass, field
@@ -37,8 +34,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContractType(Enum):
-    """Types of smart contracts for content protection"""
-    COPYRIGHT_REGISTRY = "copyright_registry"
+    """Types of smart contracts for content protection"""    COPYRIGHT_REGISTRY = "copyright_registry"
     CONTENT_AUTHENTICITY = "content_authenticity"
     USAGE_LICENSE = "usage_license"
     ROYALTY_DISTRIBUTION = "royalty_distribution"
@@ -47,8 +43,7 @@ class ContractType(Enum):
 
 
 class NetworkConfig:
-    """Blockchain network configuration"""
-    
+    """Blockchain network configuration"""    
     ETHEREUM_MAINNET = {
         'name': 'Ethereum Mainnet',
         'chain_id': 1,
@@ -88,8 +83,7 @@ class NetworkConfig:
 
 @dataclass
 class ContractDeploymentConfig:
-    """Configuration for smart contract deployment"""
-    contract_type: ContractType
+    """Configuration for smart contract deployment"""    contract_type: ContractType
     network_config: Dict[str, Any]
     deployer_private_key: str
     gas_limit: int = 5000000
@@ -102,8 +96,7 @@ class ContractDeploymentConfig:
 
 
 class SmartContractManager:
-    """Professional smart contract management system"""
-    
+    """Professional smart contract management system"""    
     def __init__(self, network_config: Dict[str, Any], private_key: Optional[str] = None):
         self.network_config = network_config
         self.private_key = private_key
@@ -119,8 +112,7 @@ class SmartContractManager:
         self.gas_estimates: Dict[str, int] = {}
     
     async def initialize(self) -> bool:
-        """Initialize blockchain connection and account"""
-        try:
+        """Initialize blockchain connection and account"""        try:
             # Initialize Web3 connection
             rpc_url = self.network_config['rpc_url']
             if self.network_config.get('api_key'):
@@ -148,8 +140,7 @@ class SmartContractManager:
             return False
     
     def _load_contract_abis(self) -> Dict[ContractType, List[Dict[str, Any]]]:
-        """Load smart contract ABIs"""
-        # In production, these would be loaded from JSON files
+        """Load smart contract ABIs"""        # In production, these would be loaded from JSON files
         return {
             ContractType.COPYRIGHT_REGISTRY: self._get_copyright_registry_abi(),
             ContractType.CONTENT_AUTHENTICITY: self._get_content_authenticity_abi(),
@@ -160,8 +151,7 @@ class SmartContractManager:
         }
     
     async def _load_deployed_contracts(self):
-        """Load deployed contract addresses from configuration"""
-        try:
+        """Load deployed contract addresses from configuration"""        try:
             # In production, load from database or configuration file
             deployed_contracts = {
                 ContractType.COPYRIGHT_REGISTRY: "0x742d35Cc631C0532925a3b8D4684dE0C0090D4F9",
@@ -177,8 +167,7 @@ class SmartContractManager:
             logger.warning(f"Could not load deployed contracts: {e}")
     
     async def deploy_contract(self, config: ContractDeploymentConfig) -> Tuple[str, str]:
-        """Deploy a smart contract to the blockchain"""
-        try:
+        """Deploy a smart contract to the blockchain"""        try:
             if not self.w3 or not self.account:
                 raise ContractDeploymentError("Web3 or account not initialized")
             
@@ -232,8 +221,7 @@ class SmartContractManager:
             raise ContractDeploymentError(f"Failed to deploy contract: {e}")
     
     async def _estimate_deployment_gas(self, contract: Contract, constructor_args: List[Any]) -> int:
-        """Estimate gas for contract deployment"""
-        try:
+        """Estimate gas for contract deployment"""        try:
             gas_estimate = contract.constructor(*constructor_args).estimate_gas({
                 'from': self.account.address
             })
@@ -252,8 +240,7 @@ class SmartContractManager:
         owner_address: str,
         rights_description: str
     ) -> Tuple[str, int]:
-        """Register copyright on blockchain"""
-        try:
+        """Register copyright on blockchain"""        try:
             contract_address = self.contract_addresses.get(ContractType.COPYRIGHT_REGISTRY)
             if not contract_address:
                 raise TransactionError("Copyright registry contract not deployed")
@@ -316,8 +303,7 @@ class SmartContractManager:
         signature: str,
         creator_address: str
     ) -> bool:
-        """Verify content authenticity on blockchain"""
-        try:
+        """Verify content authenticity on blockchain"""        try:
             contract_address = self.contract_addresses.get(ContractType.CONTENT_AUTHENTICITY)
             if not contract_address:
                 logger.warning("Content authenticity contract not deployed")
@@ -353,8 +339,7 @@ class SmartContractManager:
         price_wei: int,
         duration_seconds: int
     ) -> Tuple[str, int]:
-        """Create a usage license on blockchain"""
-        try:
+        """Create a usage license on blockchain"""        try:
             contract_address = self.contract_addresses.get(ContractType.USAGE_LICENSE)
             if not contract_address:
                 raise TransactionError("Usage license contract not deployed")
@@ -407,8 +392,7 @@ class SmartContractManager:
             raise TransactionError(f"Failed to create license: {e}")
     
     def _extract_registration_id(self, receipt) -> int:
-        """Extract registration ID from transaction receipt"""
-        try:
+        """Extract registration ID from transaction receipt"""        try:
             # Parse logs to extract registration ID
             for log in receipt.logs:
                 if log.topics[0].hex() == '0x1234...':  # Event signature hash
@@ -418,8 +402,7 @@ class SmartContractManager:
             return 0
     
     def _extract_license_id(self, receipt) -> int:
-        """Extract license ID from transaction receipt"""
-        try:
+        """Extract license ID from transaction receipt"""        try:
             # Parse logs to extract license ID
             for log in receipt.logs:
                 if log.topics[0].hex() == '0x5678...':  # Event signature hash
@@ -429,8 +412,7 @@ class SmartContractManager:
             return 0
     
     def _get_contract_bytecode(self, contract_type: ContractType) -> str:
-        """Get contract bytecode for deployment"""
-        # In production, load from compiled contract artifacts
+        """Get contract bytecode for deployment"""        # In production, load from compiled contract artifacts
         bytecodes = {
             ContractType.COPYRIGHT_REGISTRY: "0x608060405234801561001057600080fd5b50...",
             ContractType.CONTENT_AUTHENTICITY: "0x608060405234801561001057600080fd5b50...",
@@ -439,8 +421,7 @@ class SmartContractManager:
         return bytecodes.get(contract_type, "")
     
     def _get_copyright_registry_abi(self) -> List[Dict[str, Any]]:
-        """Get Copyright Registry contract ABI"""
-        return [
+        """Get Copyright Registry contract ABI"""        return [
             {
                 "inputs": [
                     {"name": "contentHash", "type": "string"},
@@ -467,8 +448,7 @@ class SmartContractManager:
         ]
     
     def _get_content_authenticity_abi(self) -> List[Dict[str, Any]]:
-        """Get Content Authenticity contract ABI"""
-        return [
+        """Get Content Authenticity contract ABI"""        return [
             {
                 "inputs": [
                     {"name": "contentHash", "type": "string"},
@@ -483,8 +463,7 @@ class SmartContractManager:
         ]
     
     def _get_usage_license_abi(self) -> List[Dict[str, Any]]:
-        """Get Usage License contract ABI"""
-        return [
+        """Get Usage License contract ABI"""        return [
             {
                 "inputs": [
                     {"name": "contentId", "type": "string"},
@@ -500,25 +479,20 @@ class SmartContractManager:
         ]
     
     def _get_royalty_distribution_abi(self) -> List[Dict[str, Any]]:
-        """Get Royalty Distribution contract ABI"""
-        return []
+        """Get Royalty Distribution contract ABI"""        return []
     
     def _get_ownership_transfer_abi(self) -> List[Dict[str, Any]]:
-        """Get Ownership Transfer contract ABI"""
-        return []
+        """Get Ownership Transfer contract ABI"""        return []
     
     def _get_access_control_abi(self) -> List[Dict[str, Any]]:
-        """Get Access Control contract ABI"""
-        return []
+        """Get Access Control contract ABI"""        return []
 
 
 class GasOptimizer:
-    """Gas optimization utilities for smart contracts"""
-    
+    """Gas optimization utilities for smart contracts"""    
     @staticmethod
     def estimate_optimal_gas_price(w3: Web3, priority: str = "standard") -> int:
-        """Estimate optimal gas price based on network conditions"""
-        try:
+        """Estimate optimal gas price based on network conditions"""        try:
             # Get gas price from network
             current_gas_price = w3.eth.gas_price
             
@@ -542,8 +516,7 @@ class GasOptimizer:
     
     @staticmethod
     def batch_transactions(transactions: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Batch multiple transactions to reduce gas costs"""
-        # Implementation for transaction batching
+        """Batch multiple transactions to reduce gas costs"""        # Implementation for transaction batching
         return transactions
 
 

@@ -1,5 +1,4 @@
-"""
-Neural Voice Synthesis Module - IA Influencer Agent Conversational System
+"""Neural Voice Synthesis Module - IA Influencer Agent Conversational System
 
 Ultra-advanced enterprise-grade neural text-to-speech synthesis system with 
 emotional control, voice cloning, multi-language support, real-time streaming,
@@ -39,9 +38,7 @@ ABSOLUTELY PROHIBITED WITHOUT EXPLICIT WRITTEN AUTHORIZATION FROM FAHED MLAIEL:
 - Unauthorized access to proprietary methods
 
 For official licensing inquiries ONLY: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import uuid
@@ -92,16 +89,14 @@ from .models import VoiceSynthesisRequest, EmotionCategory, VoiceGender, Languag
 logger = logging.getLogger(__name__)
 
 class SynthesisQuality(Enum):
-    """Voice synthesis quality levels."""
-    DRAFT = "draft"
+    """Voice synthesis quality levels."""    DRAFT = "draft"
     STANDARD = "standard"
     HIGH = "high"
     PROFESSIONAL = "professional"
     STUDIO = "studio"
 
 class VoiceStyle(Enum):
-    """Voice style presets."""
-    CONVERSATIONAL = "conversational"
+    """Voice style presets."""    CONVERSATIONAL = "conversational"
     FORMAL = "formal"
     CASUAL = "casual"
     DRAMATIC = "dramatic"
@@ -112,8 +107,7 @@ class VoiceStyle(Enum):
 
 @dataclass
 class VoiceProfile:
-    """Voice profile for synthesis."""
-    profile_id: str
+    """Voice profile for synthesis."""    profile_id: str
     name: str
     gender: VoiceGender
     language: LanguageCode
@@ -126,8 +120,7 @@ class VoiceProfile:
 
 @dataclass
 class SynthesisResult:
-    """Voice synthesis result."""
-    audio_data: np.ndarray
+    """Voice synthesis result."""    audio_data: np.ndarray
     sample_rate: int
     duration: float
     quality_score: float
@@ -138,16 +131,13 @@ class SynthesisResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class NeuralVoiceSynthesizer:
-    """
-    Ultra-advanced neural voice synthesis system.
+    """    Ultra-advanced neural voice synthesis system.
     
     Manages multiple TTS engines, voice cloning, emotional control,
     and professional audio quality for content creators.
-    """
-    
+    """    
     def __init__(self, config: NeuralVoiceSynthesisConfig):
-        """Initialize the voice synthesizer."""
-        self.config = config
+        """Initialize the voice synthesizer."""        self.config = config
         self.engines = {}
         self.voice_profiles: Dict[str, VoiceProfile] = {}
         self.thread_pool = ThreadPoolExecutor(max_workers=4)
@@ -164,8 +154,7 @@ class NeuralVoiceSynthesizer:
         logger.info("NeuralVoiceSynthesizer initialized successfully")
     
     def _initialize_engines(self) -> None:
-        """Initialize all configured TTS engines."""
-        try:
+        """Initialize all configured TTS engines."""        try:
             # Initialize Coqui TTS
             if self.config.primary_engine == VoiceEngine.COQUI_TTS_XTTS and TTS_AVAILABLE:
                 self._initialize_coqui_tts()
@@ -189,8 +178,7 @@ class NeuralVoiceSynthesizer:
             raise
     
     def _initialize_coqui_tts(self) -> None:
-        """Initialize Coqui TTS engine."""
-        try:
+        """Initialize Coqui TTS engine."""        try:
             # Initialize Coqui TTS with XTTS model
             device = "cuda" if torch.cuda.is_available() and self.config.use_gpu_acceleration else "cpu"
             
@@ -215,8 +203,7 @@ class NeuralVoiceSynthesizer:
             logger.warning(f"Failed to initialize Coqui TTS: {e}")
     
     def _initialize_openai_tts(self) -> None:
-        """Initialize OpenAI TTS engine."""
-        try:
+        """Initialize OpenAI TTS engine."""        try:
             self.engines['openai_tts'] = {
                 'client': openai,
                 'type': 'api',
@@ -232,8 +219,7 @@ class NeuralVoiceSynthesizer:
             logger.warning(f"Failed to initialize OpenAI TTS: {e}")
     
     def _initialize_elevenlabs(self) -> None:
-        """Initialize ElevenLabs TTS engine."""
-        try:
+        """Initialize ElevenLabs TTS engine."""        try:
             self.engines['elevenlabs'] = {
                 'type': 'api',
                 'supports_cloning': True,
@@ -248,8 +234,7 @@ class NeuralVoiceSynthesizer:
             logger.warning(f"Failed to initialize ElevenLabs: {e}")
     
     def _initialize_tacotron2(self) -> None:
-        """Initialize Tacotron2 engine."""
-        try:
+        """Initialize Tacotron2 engine."""        try:
             # Load Tacotron2 model (simplified for demo)
             device = "cuda" if torch.cuda.is_available() else "cpu"
             
@@ -267,8 +252,7 @@ class NeuralVoiceSynthesizer:
             logger.warning(f"Failed to initialize Tacotron2: {e}")
     
     def _load_default_voices(self) -> None:
-        """Load default voice profiles."""
-        try:
+        """Load default voice profiles."""        try:
             # Create default voice profiles
             default_voices = [
                 VoiceProfile(
@@ -309,8 +293,7 @@ class NeuralVoiceSynthesizer:
             logger.error(f"Failed to load default voices: {e}")
     
     def _setup_quality_enhancement(self) -> None:
-        """Setup audio quality enhancement."""
-        try:
+        """Setup audio quality enhancement."""        try:
             # Initialize audio processing components
             self.quality_enhancer = {
                 'noise_reduction': True,
@@ -329,8 +312,7 @@ class NeuralVoiceSynthesizer:
         synthesis_request: VoiceSynthesisRequest,
         voice_profile: Optional[VoiceProfile] = None
     ) -> SynthesisResult:
-        """
-        Advanced voice synthesis with emotional control and quality optimization.
+        """        Advanced voice synthesis with emotional control and quality optimization.
         
         Args:
             synthesis_request: Synthesis request specification
@@ -338,8 +320,7 @@ class NeuralVoiceSynthesizer:
         
         Returns:
             Synthesis result with audio data
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # 1. Text preprocessing
@@ -418,8 +399,7 @@ class NeuralVoiceSynthesizer:
         text_stream: AsyncGenerator[str, None],
         synthesis_request: VoiceSynthesisRequest
     ) -> AsyncGenerator[np.ndarray, None]:
-        """
-        Real-time streaming voice synthesis.
+        """        Real-time streaming voice synthesis.
         
         Args:
             text_stream: Streaming text input
@@ -427,8 +407,7 @@ class NeuralVoiceSynthesizer:
         
         Yields:
             Audio chunks as they are synthesized
-        """
-        try:
+        """        try:
             # Select voice profile
             voice_profile = await self._select_voice_profile(synthesis_request)
             
@@ -481,8 +460,7 @@ class NeuralVoiceSynthesizer:
         speaker_name: str,
         consent_verified: bool = False
     ) -> VoiceProfile:
-        """
-        Clone a voice from audio samples with ethical safeguards.
+        """        Clone a voice from audio samples with ethical safeguards.
         
         Args:
             audio_samples: Audio samples for voice cloning
@@ -491,8 +469,7 @@ class NeuralVoiceSynthesizer:
         
         Returns:
             Cloned voice profile
-        """
-        try:
+        """        try:
             if not consent_verified:
                 raise PermissionError("Voice cloning requires explicit consent verification")
             
@@ -546,8 +523,7 @@ class NeuralVoiceSynthesizer:
             raise
     
     async def _preprocess_text(self, text: str, language: LanguageCode) -> str:
-        """Preprocess text for synthesis."""
-        try:
+        """Preprocess text for synthesis."""        try:
             # Remove extra whitespace
             text = re.sub(r'\s+', ' ', text.strip())
             
@@ -581,8 +557,7 @@ class NeuralVoiceSynthesizer:
             return text
     
     async def _select_voice_profile(self, request: VoiceSynthesisRequest) -> VoiceProfile:
-        """Select appropriate voice profile for synthesis."""
-        try:
+        """Select appropriate voice profile for synthesis."""        try:
             # Use specified voice if provided
             if request.target_voice_id and request.target_voice_id in self.voice_profiles:
                 return self.voice_profiles[request.target_voice_id]
@@ -618,8 +593,7 @@ class NeuralVoiceSynthesizer:
     async def _process_emotion_parameters(
         self, emotion: EmotionCategory, intensity: float
     ) -> Dict[str, float]:
-        """Process emotion parameters for synthesis."""
-        try:
+        """Process emotion parameters for synthesis."""        try:
             # Map emotions to prosodic parameters
             emotion_mappings = {
                 EmotionCategory.HAPPINESS: {"pitch": 1.2, "speed": 1.1, "energy": 1.3},
@@ -651,8 +625,7 @@ class NeuralVoiceSynthesizer:
     async def _plan_prosody(
         self, text: str, speaking_rate: float, pitch_scale: float
     ) -> Dict[str, Any]:
-        """Plan prosodic features for synthesis."""
-        try:
+        """Plan prosodic features for synthesis."""        try:
             # Analyze text structure
             sentences = text.split('.')
             words = text.split()
@@ -699,8 +672,7 @@ class NeuralVoiceSynthesizer:
         prosody_params: Dict[str, Any],
         request: VoiceSynthesisRequest
     ) -> np.ndarray:
-        """Perform the actual voice synthesis."""
-        try:
+        """Perform the actual voice synthesis."""        try:
             # Try primary engine first
             if self.config.primary_engine == VoiceEngine.COQUI_TTS_XTTS and 'coqui_xtts' in self.engines:
                 return await self._synthesize_with_coqui(
@@ -739,8 +711,7 @@ class NeuralVoiceSynthesizer:
         prosody_params: Dict[str, Any],
         request: VoiceSynthesisRequest
     ) -> np.ndarray:
-        """Synthesize using Coqui TTS."""
-        try:
+        """Synthesize using Coqui TTS."""        try:
             tts = self.engines['coqui_xtts']['model']
             
             # Use voice cloning if embedding available
@@ -781,8 +752,7 @@ class NeuralVoiceSynthesizer:
         voice_profile: VoiceProfile,
         request: VoiceSynthesisRequest
     ) -> np.ndarray:
-        """Synthesize using OpenAI TTS."""
-        try:
+        """Synthesize using OpenAI TTS."""        try:
             # Select voice based on profile
             voice_map = {
                 VoiceGender.FEMALE: 'nova',
@@ -813,8 +783,7 @@ class NeuralVoiceSynthesizer:
     async def _enhance_audio_quality(
         self, audio_data: np.ndarray, sample_rate: int
     ) -> np.ndarray:
-        """Enhance audio quality with professional processing."""
-        try:
+        """Enhance audio quality with professional processing."""        try:
             enhanced_audio = audio_data.copy()
             
             # Normalization
@@ -844,8 +813,7 @@ class NeuralVoiceSynthesizer:
     async def _assess_synthesis_quality(
         self, audio_data: np.ndarray, request: VoiceSynthesisRequest
     ) -> float:
-        """Assess the quality of synthesized audio."""
-        try:
+        """Assess the quality of synthesized audio."""        try:
             # Calculate quality metrics
             rms_energy = np.sqrt(np.mean(audio_data ** 2))
             zero_crossing_rate = np.mean(np.abs(np.diff(np.sign(audio_data)))) / 2
@@ -868,14 +836,12 @@ class NeuralVoiceSynthesizer:
             return 0.5
     
     def _extract_sentences(self, text: str) -> List[str]:
-        """Extract sentences from text for streaming."""
-        # Simple sentence splitting
+        """Extract sentences from text for streaming."""        # Simple sentence splitting
         sentences = re.split(r'[.!?]+', text)
         return [s.strip() for s in sentences if s.strip()]
     
     def _number_to_words(self, num: int) -> str:
-        """Convert number to words (simplified)."""
-        if num == 0:
+        """Convert number to words (simplified)."""        if num == 0:
             return "zero"
         elif num < 20:
             return ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
@@ -887,8 +853,7 @@ class NeuralVoiceSynthesizer:
     def _apply_prosodic_modifications(
         self, audio: np.ndarray, emotion_params: Dict[str, float], prosody_params: Dict[str, Any]
     ) -> np.ndarray:
-        """Apply prosodic modifications to audio."""
-        try:
+        """Apply prosodic modifications to audio."""        try:
             modified_audio = audio.copy()
             
             # Apply speed modification
@@ -909,8 +874,7 @@ class NeuralVoiceSynthesizer:
             return audio
     
     async def shutdown(self) -> None:
-        """Shutdown the voice synthesizer."""
-        logger.info("Shutting down voice synthesizer...")
+        """Shutdown the voice synthesizer."""        logger.info("Shutting down voice synthesizer...")
         
         # Cleanup resources
         self.thread_pool.shutdown(wait=True)

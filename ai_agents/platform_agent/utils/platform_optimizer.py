@@ -1,5 +1,4 @@
-"""
-Advanced Platform Optimizer - AI-Powered Content & Performance Optimization Engine
+"""Advanced Platform Optimizer - AI-Powered Content & Performance Optimization Engine
 
 Enterprise-grade optimization system providing intelligent format adaptation, 
 performance enhancement, and platform-specific content optimization.
@@ -18,9 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-
-import asyncio
+"""import asyncio
 from typing import Dict, List, Optional, Any, Union, Tuple, AsyncGenerator
 from datetime import datetime, timedelta
 from enum import Enum
@@ -64,8 +61,7 @@ from ...utils.gpu_accelerator import GPUAccelerator
 
 
 class OptimizationType(Enum):
-    """Types of content optimization"""
-    FORMAT_ADAPTATION = "format_adaptation"
+    """Types of content optimization"""    FORMAT_ADAPTATION = "format_adaptation"
     QUALITY_ENHANCEMENT = "quality_enhancement"
     COMPRESSION = "compression"
     RESOLUTION_SCALING = "resolution_scaling"
@@ -78,8 +74,7 @@ class OptimizationType(Enum):
 
 
 class QualityLevel(Enum):
-    """Quality levels for optimization"""
-    ULTRA_LOW = "ultra_low"
+    """Quality levels for optimization"""    ULTRA_LOW = "ultra_low"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -89,8 +84,7 @@ class QualityLevel(Enum):
 
 @dataclass
 class OptimizationProfile:
-    """Platform-specific optimization profile"""
-    platform: PlatformType
+    """Platform-specific optimization profile"""    platform: PlatformType
     target_quality: QualityLevel
     max_file_size: int  # in bytes
     target_resolution: Optional[Tuple[int, int]] = None
@@ -105,8 +99,7 @@ class OptimizationProfile:
 
 @dataclass
 class OptimizationMetrics:
-    """Metrics for optimization quality assessment"""
-    original_size: int
+    """Metrics for optimization quality assessment"""    original_size: int
     optimized_size: int
     compression_ratio: float
     quality_score: float
@@ -118,13 +111,11 @@ class OptimizationMetrics:
 
 
 class PlatformOptimizer:
-    """
-    Advanced Platform Optimizer - AI-Powered Content & Performance Optimization Engine
+    """    Advanced Platform Optimizer - AI-Powered Content & Performance Optimization Engine
     
     Provides comprehensive content optimization with AI-powered enhancement,
     format adaptation, and platform-specific performance optimization.
-    """
-    
+    """    
     def __init__(self):
         self.ai_model_manager = AIModelManager()
         self.vision_analyzer = VisionAnalyzer()
@@ -158,8 +149,7 @@ class PlatformOptimizer:
         self.logger = logging.getLogger(f"{__name__}.PlatformOptimizer")
 
     async def initialize(self) -> bool:
-        """Initialize platform optimizer and load AI models"""
-        try:
+        """Initialize platform optimizer and load AI models"""        try:
             # Initialize AI services
             await self.ai_model_manager.initialize()
             await self.vision_analyzer.initialize()
@@ -188,8 +178,7 @@ class PlatformOptimizer:
             return False
 
     def _initialize_platform_profiles(self) -> Dict[PlatformType, OptimizationProfile]:
-        """Initialize platform-specific optimization profiles"""
-        return {
+        """Initialize platform-specific optimization profiles"""        return {
             PlatformType.SPOTIFY: OptimizationProfile(
                 platform=PlatformType.SPOTIFY,
                 target_quality=QualityLevel.HIGH,
@@ -301,8 +290,7 @@ class PlatformOptimizer:
         optimization_types: List[OptimizationType] = None,
         custom_profile: OptimizationProfile = None
     ) -> Dict[str, Any]:
-        """
-        Optimize content for specific platform with comprehensive AI enhancement
+        """        Optimize content for specific platform with comprehensive AI enhancement
         
         Args:
             content_path: Path to content file
@@ -312,8 +300,7 @@ class PlatformOptimizer:
             
         Returns:
             Optimization results with enhanced content
-        """
-        optimization_id = hashlib.sha256(
+        """        optimization_id = hashlib.sha256(
             f"{content_path}_{platform.value}_{datetime.utcnow().isoformat()}".encode()
         ).hexdigest()
         
@@ -369,8 +356,7 @@ class PlatformOptimizer:
             raise
 
     async def _analyze_content(self, content_path: str) -> Dict[str, Any]:
-        """Comprehensive AI-powered content analysis"""
-        try:
+        """Comprehensive AI-powered content analysis"""        try:
             content_path = Path(content_path)
             file_extension = content_path.suffix.lower()
             
@@ -401,8 +387,7 @@ class PlatformOptimizer:
             raise
 
     async def _analyze_video_content(self, video_path: Path) -> Dict[str, Any]:
-        """Advanced AI-powered video analysis"""
-        try:
+        """Advanced AI-powered video analysis"""        try:
             # Use ffprobe for technical analysis
             probe = ffmpeg.probe(str(video_path))
             video_stream = next((stream for stream in probe['streams'] if stream['codec_type'] == 'video'), None)
@@ -449,8 +434,7 @@ class PlatformOptimizer:
             raise
 
     async def _analyze_audio_content(self, audio_path: Path) -> Dict[str, Any]:
-        """Advanced AI-powered audio analysis"""
-        try:
+        """Advanced AI-powered audio analysis"""        try:
             # Load audio file
             y, sr = librosa.load(str(audio_path), sr=None)
             
@@ -482,8 +466,7 @@ class PlatformOptimizer:
             raise
 
     async def _analyze_image_content(self, image_path: Path) -> Dict[str, Any]:
-        """Advanced AI-powered image analysis"""
-        try:
+        """Advanced AI-powered image analysis"""        try:
             # Load image
             with Image.open(image_path) as img:
                 analysis = {
@@ -526,8 +509,7 @@ class PlatformOptimizer:
         strategy: Dict[str, Any],
         profile: OptimizationProfile
     ) -> Dict[str, Any]:
-        """Apply comprehensive optimization suite"""
-        optimized_results = {
+        """Apply comprehensive optimization suite"""        optimized_results = {
             'original_path': content_path,
             'optimized_files': {},
             'optimization_details': {},
@@ -573,8 +555,7 @@ class PlatformOptimizer:
         strategy: Dict[str, Any],
         profile: OptimizationProfile
     ) -> Dict[str, Any]:
-        """Comprehensive video optimization"""
-        try:
+        """Comprehensive video optimization"""        try:
             optimization_results = {
                 'optimized_files': {},
                 'optimization_details': {}
@@ -649,8 +630,7 @@ class PlatformOptimizer:
         strategy: Dict[str, Any],
         profile: OptimizationProfile
     ) -> Dict[str, Any]:
-        """Comprehensive audio optimization"""
-        try:
+        """Comprehensive audio optimization"""        try:
             optimization_results = {
                 'optimized_files': {},
                 'optimization_details': {}
@@ -727,8 +707,7 @@ class PlatformOptimizer:
         strategy: Dict[str, Any],
         profile: OptimizationProfile
     ) -> Dict[str, Any]:
-        """Comprehensive image optimization"""
-        try:
+        """Comprehensive image optimization"""        try:
             optimization_results = {
                 'optimized_files': {},
                 'optimization_details': {}
@@ -810,8 +789,7 @@ class PlatformOptimizer:
         platform: PlatformType,
         optimization_config: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Batch optimization for multiple content files"""
-        try:
+        """Batch optimization for multiple content files"""        try:
             batch_id = hashlib.sha256(
                 f"{len(content_paths)}_{platform.value}_{datetime.utcnow().isoformat()}".encode()
             ).hexdigest()
@@ -867,8 +845,7 @@ class PlatformOptimizer:
         content_path: str,
         target_platforms: List[PlatformType]
     ) -> Dict[str, Any]:
-        """Get AI-powered optimization recommendations for content"""
-        try:
+        """Get AI-powered optimization recommendations for content"""        try:
             # Analyze content
             content_analysis = await self._analyze_content(content_path)
             
@@ -912,8 +889,7 @@ class PlatformOptimizer:
             raise
 
     async def shutdown(self):
-        """Graceful shutdown of platform optimizer"""
-        try:
+        """Graceful shutdown of platform optimizer"""        try:
             self.logger.info("Shutting down Platform Optimizer...")
             
             # Shutdown AI services
@@ -942,13 +918,11 @@ class PlatformOptimizer:
 
 
 class FormatAdapter:
-    """
-    Advanced Format Adapter - Intelligent Content Format Conversion
+    """    Advanced Format Adapter - Intelligent Content Format Conversion
     
     Provides intelligent format conversion and adaptation for different platforms
     with quality preservation and optimization.
-    """
-    
+    """    
     def __init__(self, platform_optimizer: PlatformOptimizer):
         self.platform_optimizer = platform_optimizer
         self.format_converter = AdvancedFormatConverter()
@@ -960,8 +934,7 @@ class FormatAdapter:
         self.logger = logging.getLogger(f"{__name__}.FormatAdapter")
 
     def _initialize_format_matrix(self) -> Dict[PlatformType, Dict[str, List[str]]]:
-        """Initialize platform format compatibility matrix"""
-        return {
+        """Initialize platform format compatibility matrix"""        return {
             PlatformType.SPOTIFY: {
                 'audio': ['mp3', 'wav', 'flac'],
                 'image': ['jpg', 'png'],
@@ -1006,8 +979,7 @@ class FormatAdapter:
         target_platforms: List[PlatformType],
         preserve_quality: bool = True
     ) -> Dict[str, Any]:
-        """Adapt content format from source platform to target platforms"""
-        try:
+        """Adapt content format from source platform to target platforms"""        try:
             adaptation_results = {
                 'source_content': content_path,
                 'source_platform': source_platform.value,
@@ -1058,8 +1030,7 @@ class FormatAdapter:
         content_path: str,
         target_platforms: List[PlatformType]
     ) -> Dict[str, Any]:
-        """Generate format compatibility report for content"""
-        try:
+        """Generate format compatibility report for content"""        try:
             content_analysis = await self.platform_optimizer._analyze_content(content_path)
             content_type = content_analysis['content_type']
             current_format = Path(content_path).suffix[1:].lower()
@@ -1106,8 +1077,7 @@ class FormatAdapter:
         content_paths: List[str],
         target_platforms: List[PlatformType]
     ) -> Dict[str, Any]:
-        """Optimize content formats for maximum cross-platform compatibility"""
-        try:
+        """Optimize content formats for maximum cross-platform compatibility"""        try:
             optimization_results = {
                 'content_items': len(content_paths),
                 'target_platforms': [p.value for p in target_platforms],

@@ -1,5 +1,4 @@
-"""
-TikTok Crawling Engine
+"""TikTok Crawling Engine
 =====================
 
 Advanced TikTok crawler for viral content discovery, user analytics, and trend monitoring.
@@ -12,9 +11,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Set
 from dataclasses import dataclass, asdict
@@ -61,8 +58,7 @@ settings = get_settings()
 
 @dataclass
 class TikTokVideoData:
-    """TikTok video data structure"""
-    video_id: str
+    """TikTok video data structure"""    video_id: str
     url: str
     description: str
     username: str
@@ -94,8 +90,7 @@ class TikTokVideoData:
 
 @dataclass
 class TikTokUserData:
-    """TikTok user data structure"""
-    user_id: str
+    """TikTok user data structure"""    user_id: str
     unique_id: str
     nickname: str
     signature: str
@@ -126,8 +121,7 @@ class TikTokUserData:
 
 @dataclass
 class TikTokChallengeData:
-    """TikTok challenge/hashtag data structure"""
-    challenge_id: str
+    """TikTok challenge/hashtag data structure"""    challenge_id: str
     title: str
     description: str
     cover_image_url: str
@@ -142,8 +136,7 @@ class TikTokChallengeData:
 
 
 class TikTokCrawlerEngine(BaseCrawlerEngine):
-    """
-    Advanced TikTok crawler engine with comprehensive data extraction.
+    """    Advanced TikTok crawler engine with comprehensive data extraction.
     
     Features:
     - Video and user analytics extraction
@@ -153,11 +146,9 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
     - Music and effect tracking
     - Rate limiting and geo-spoofing
     - Anti-detection mechanisms
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize TikTok crawler engine"""
-        super().__init__(config)
+        """Initialize TikTok crawler engine"""        super().__init__(config)
         self.session = None
         self.playwright_page = None
         self.rate_limiter = RateLimiter(
@@ -175,8 +166,7 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
         self._setup_selenium_driver()
     
     def _setup_session(self) -> None:
-        """Setup HTTP session with TikTok-specific headers"""
-        self.session = requests.Session()
+        """Setup HTTP session with TikTok-specific headers"""        self.session = requests.Session()
         
         # TikTok-specific headers
         self.session.headers.update({
@@ -195,8 +185,7 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
         logger.info("TikTok HTTP session initialized")
     
     def _setup_selenium_driver(self) -> None:
-        """Setup Selenium WebDriver with TikTok-optimized stealth"""
-        try:
+        """Setup Selenium WebDriver with TikTok-optimized stealth"""        try:
             chrome_options = webdriver.ChromeOptions()
             
             # Basic stealth options
@@ -231,8 +220,7 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
             self.driver = None
     
     async def _setup_playwright(self) -> None:
-        """Setup Playwright for advanced scraping"""
-        try:
+        """Setup Playwright for advanced scraping"""        try:
             playwright_instance = await async_playwright().start()
             browser = await playwright_instance.chromium.launch(
                 headless=True,
@@ -254,8 +242,7 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
             self.playwright_page = await context.new_page()
             
             # Add stealth scripts
-            await self.playwright_page.add_init_script("""
-                Object.defineProperty(navigator, 'webdriver', {
+            await self.playwright_page.add_init_script("""                Object.defineProperty(navigator, 'webdriver', {
                     get: () => undefined
                 });
                 
@@ -271,16 +258,14 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
             self.playwright_page = None
     
     async def get_user_profile(self, username: str) -> Optional[TikTokUserData]:
-        """
-        Get comprehensive user profile data
+        """        Get comprehensive user profile data
         
         Args:
             username: TikTok username (with or without @)
             
         Returns:
             User profile data or None if not found
-        """
-        await self.rate_limiter.wait()
+        """        await self.rate_limiter.wait()
         
         username = username.lstrip('@')  # Remove @ if present
         cache_key = f"user_{username.lower()}"
@@ -317,8 +302,7 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
         username: str, 
         max_videos: int = 50
     ) -> List[TikTokVideoData]:
-        """
-        Get recent videos from a user's profile
+        """        Get recent videos from a user's profile
         
         Args:
             username: TikTok username
@@ -326,8 +310,7 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of video data
-        """
-        await self.rate_limiter.wait()
+        """        await self.rate_limiter.wait()
         
         username = username.lstrip('@')
         
@@ -351,8 +334,7 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Failed to get videos: {e}")
     
     async def search_hashtag(self, hashtag: str, max_videos: int = 100) -> List[TikTokVideoData]:
-        """
-        Search videos by hashtag
+        """        Search videos by hashtag
         
         Args:
             hashtag: Hashtag to search for (without #)
@@ -360,8 +342,7 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of videos with the hashtag
-        """
-        await self.rate_limiter.wait()
+        """        await self.rate_limiter.wait()
         
         hashtag = hashtag.lstrip('#')  # Remove # if present
         
@@ -382,16 +363,14 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Hashtag search failed: {e}")
     
     async def get_trending_hashtags(self, country: str = 'US') -> List[TikTokChallengeData]:
-        """
-        Get trending hashtags/challenges
+        """        Get trending hashtags/challenges
         
         Args:
             country: Country code for regional trends
             
         Returns:
             List of trending challenges
-        """
-        await self.rate_limiter.wait()
+        """        await self.rate_limiter.wait()
         
         try:
             if self.driver:
@@ -414,8 +393,7 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
         hashtags: List[str], 
         min_views: int = 100000
     ) -> List[TikTokVideoData]:
-        """
-        Detect potentially viral content
+        """        Detect potentially viral content
         
         Args:
             hashtags: List of hashtags to monitor
@@ -423,8 +401,7 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of viral video candidates
-        """
-        viral_videos = []
+        """        viral_videos = []
         
         for hashtag in hashtags:
             try:
@@ -454,8 +431,7 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
         original_video: Dict, 
         search_terms: List[str]
     ) -> List[Dict]:
-        """
-        Monitor for potential content theft
+        """        Monitor for potential content theft
         
         Args:
             original_video: Original video metadata
@@ -463,8 +439,7 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of potential theft matches
-        """
-        theft_candidates = []
+        """        theft_candidates = []
         
         for term in search_terms:
             try:
@@ -496,8 +471,7 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
         return theft_candidates
     
     async def _get_user_selenium(self, username: str) -> Optional[TikTokUserData]:
-        """Get user data using Selenium"""
-        try:
+        """Get user data using Selenium"""        try:
             url = f"https://www.tiktok.com/@{username}"
             self.driver.get(url)
             
@@ -601,8 +575,7 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
             return None
     
     async def _get_user_videos_selenium(self, username: str, max_videos: int) -> List[TikTokVideoData]:
-        """Get user videos using Selenium"""
-        videos = []
+        """Get user videos using Selenium"""        videos = []
         
         try:
             url = f"https://www.tiktok.com/@{username}"
@@ -702,8 +675,7 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
         return videos
     
     def _parse_tiktok_count(self, count_str: str) -> int:
-        """Parse TikTok count strings (e.g., '1.2K', '5.6M', '123.4K')"""
-        try:
+        """Parse TikTok count strings (e.g., '1.2K', '5.6M', '123.4K')"""        try:
             count_str = count_str.replace(' ', '').upper()
             
             if 'K' in count_str:
@@ -719,8 +691,7 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
             return 0
     
     async def _calculate_virality_score(self, video: TikTokVideoData) -> float:
-        """Calculate virality score based on engagement metrics"""
-        try:
+        """Calculate virality score based on engagement metrics"""        try:
             # Basic virality factors
             total_engagements = video.likes_count + video.comments_count + video.shares_count
             
@@ -755,8 +726,7 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
             return 0.0
     
     async def _calculate_video_similarity(self, original: Dict, candidate: Dict) -> float:
-        """Calculate similarity between original and candidate videos"""
-        try:
+        """Calculate similarity between original and candidate videos"""        try:
             # Description similarity
             original_desc = original.get('description', '').lower()
             candidate_desc = candidate.get('description', '').lower()
@@ -814,8 +784,7 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
             return 0.0
     
     async def _classify_theft_type(self, original: Dict, candidate: TikTokVideoData) -> str:
-        """Classify the type of potential content theft"""
-        try:
+        """Classify the type of potential content theft"""        try:
             # Exact repost
             if original.get('description', '').strip() == candidate.description.strip():
                 return "exact_repost"
@@ -841,8 +810,7 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
             return "unknown"
     
     async def cleanup(self) -> None:
-        """Cleanup resources"""
-        try:
+        """Cleanup resources"""        try:
             if hasattr(self, 'driver') and self.driver:
                 self.driver.quit()
             if hasattr(self, 'session') and self.session:
@@ -855,8 +823,7 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
             logger.error(f"Error during cleanup: {e}")
     
     def __del__(self):
-        """Destructor to ensure cleanup"""
-        try:
+        """Destructor to ensure cleanup"""        try:
             if hasattr(self, 'driver') and self.driver:
                 self.driver.quit()
             if hasattr(self, 'session') and self.session:

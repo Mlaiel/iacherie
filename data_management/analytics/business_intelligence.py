@@ -1,5 +1,4 @@
-"""
-Business Intelligence Engine - Strategic Analytics and Insights
+"""Business Intelligence Engine - Strategic Analytics and Insights
 =============================================================
 
 Advanced business intelligence system providing strategic insights,
@@ -26,9 +25,7 @@ This business intelligence engine contains proprietary analytical frameworks,
 strategic methodologies, and competitive intelligence algorithms developed by Fahed Mlaiel.
 Unauthorized use, reproduction, or distribution is strictly prohibited.
 All business intelligence models and analytical processes are protected intellectual property.
-"""
-
-import asyncio
+"""import asyncio
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
@@ -57,8 +54,7 @@ from .storage import AnalyticsStorage
 
 
 class IntelligenceType(Enum):
-    """Types of business intelligence analysis."""
-    STRATEGIC_OVERVIEW = "strategic_overview"
+    """Types of business intelligence analysis."""    STRATEGIC_OVERVIEW = "strategic_overview"
     COMPETITIVE_ANALYSIS = "competitive_analysis"
     MARKET_ANALYSIS = "market_analysis"
     CUSTOMER_INTELLIGENCE = "customer_intelligence"
@@ -69,16 +65,14 @@ class IntelligenceType(Enum):
 
 
 class AnalysisDepth(Enum):
-    """Depth levels for business intelligence analysis."""
-    EXECUTIVE_SUMMARY = "executive_summary"
+    """Depth levels for business intelligence analysis."""    EXECUTIVE_SUMMARY = "executive_summary"
     DETAILED_ANALYSIS = "detailed_analysis"
     COMPREHENSIVE_DEEP_DIVE = "comprehensive_deep_dive"
     STRATEGIC_PLANNING = "strategic_planning"
 
 
 class InsightPriority(Enum):
-    """Priority levels for business insights."""
-    CRITICAL = "critical"
+    """Priority levels for business insights."""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -87,8 +81,7 @@ class InsightPriority(Enum):
 
 @dataclass
 class BusinessInsight:
-    """Structured business insight with actionable recommendations."""
-    insight_id: str
+    """Structured business insight with actionable recommendations."""    insight_id: str
     title: str
     description: str
     intelligence_type: IntelligenceType
@@ -105,8 +98,7 @@ class BusinessInsight:
 
 @dataclass
 class CompetitiveAnalysis:
-    """Competitive intelligence analysis results."""
-    analysis_id: str
+    """Competitive intelligence analysis results."""    analysis_id: str
     competitor_landscape: Dict[str, Any]
     market_positioning: Dict[str, Any]
     competitive_advantages: List[str]
@@ -121,8 +113,7 @@ class CompetitiveAnalysis:
 
 @dataclass
 class StrategicReport:
-    """Executive strategic report with insights and recommendations."""
-    report_id: str
+    """Executive strategic report with insights and recommendations."""    report_id: str
     title: str
     executive_summary: str
     key_insights: List[BusinessInsight]
@@ -138,13 +129,11 @@ class StrategicReport:
 
 
 class BusinessIntelligenceEngine:
-    """
-    Advanced business intelligence system for strategic decision making.
+    """    Advanced business intelligence system for strategic decision making.
     
     Provides comprehensive analytics, competitive intelligence, and
     strategic insights for executive leadership and business optimization.
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.metrics_collector = BusinessMetricsCollector()
@@ -163,8 +152,7 @@ class BusinessIntelligenceEngine:
         time_period: Dict[str, datetime],
         stakeholders: List[str] = None
     ) -> StrategicReport:
-        """
-        Generate comprehensive strategic business intelligence report.
+        """        Generate comprehensive strategic business intelligence report.
         
         Args:
             report_type: Type of intelligence analysis
@@ -174,8 +162,7 @@ class BusinessIntelligenceEngine:
             
         Returns:
             Complete strategic report with insights and recommendations
-        """
-        try:
+        """        try:
             report_id = f"bi_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
             # Collect business data
@@ -261,16 +248,14 @@ class BusinessIntelligenceEngine:
         self,
         analysis_depth: AnalysisDepth = AnalysisDepth.DETAILED_ANALYSIS
     ) -> Dict[str, Any]:
-        """
-        Perform comprehensive customer intelligence analysis.
+        """        Perform comprehensive customer intelligence analysis.
         
         Args:
             analysis_depth: Depth of customer analysis
             
         Returns:
             Complete customer intelligence insights
-        """
-        try:
+        """        try:
             # Collect customer data
             customer_data = await self._collect_customer_data()
             
@@ -320,8 +305,7 @@ class BusinessIntelligenceEngine:
         competitors: List[str] = None,
         analysis_scope: List[str] = None
     ) -> CompetitiveAnalysis:
-        """
-        Perform comprehensive competitive intelligence analysis.
+        """        Perform comprehensive competitive intelligence analysis.
         
         Args:
             competitors: List of competitor identifiers
@@ -329,8 +313,7 @@ class BusinessIntelligenceEngine:
             
         Returns:
             Detailed competitive analysis report
-        """
-        try:
+        """        try:
             analysis_id = f"comp_analysis_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
             # Collect competitive data
@@ -401,8 +384,7 @@ class BusinessIntelligenceEngine:
         market_segments: List[str] = None,
         forecast_horizon: timedelta = timedelta(days=90)
     ) -> Dict[str, Any]:
-        """
-        Analyze market trends and forecast future opportunities.
+        """        Analyze market trends and forecast future opportunities.
         
         Args:
             market_segments: Specific market segments to analyze
@@ -410,8 +392,7 @@ class BusinessIntelligenceEngine:
             
         Returns:
             Comprehensive market trend analysis
-        """
-        try:
+        """        try:
             # Collect market data
             market_data = await self._collect_market_data(market_segments)
             
@@ -468,8 +449,7 @@ class BusinessIntelligenceEngine:
         investment_scenarios: List[Dict[str, Any]],
         analysis_period: timedelta = timedelta(days=365)
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive ROI analysis for investment scenarios.
+        """        Generate comprehensive ROI analysis for investment scenarios.
         
         Args:
             investment_scenarios: List of investment scenarios to analyze
@@ -477,8 +457,7 @@ class BusinessIntelligenceEngine:
             
         Returns:
             Detailed ROI analysis with recommendations
-        """
-        try:
+        """        try:
             roi_analyses = []
             
             for scenario in investment_scenarios:
@@ -544,8 +523,7 @@ class BusinessIntelligenceEngine:
         self,
         time_period: Dict[str, datetime]
     ) -> Dict[str, Any]:
-        """Collect comprehensive business data for analysis."""
-        # Implementation would collect data from various sources
+        """Collect comprehensive business data for analysis."""        # Implementation would collect data from various sources
         return {
             'revenue_data': {},
             'user_data': {},
@@ -560,8 +538,7 @@ class BusinessIntelligenceEngine:
         business_data: Dict[str, Any],
         analysis_depth: AnalysisDepth
     ) -> List[BusinessInsight]:
-        """Generate business insights based on data analysis."""
-        insights = []
+        """Generate business insights based on data analysis."""        insights = []
         
         # Sample insight generation logic
         if intelligence_type == IntelligenceType.STRATEGIC_OVERVIEW:
@@ -577,8 +554,7 @@ class BusinessIntelligenceEngine:
         self,
         business_data: Dict[str, Any]
     ) -> List[BusinessInsight]:
-        """Generate strategic business insights."""
-        return [
+        """Generate strategic business insights."""        return [
             BusinessInsight(
                 insight_id="strategic_001",
                 title="Revenue Growth Acceleration Opportunity",
@@ -607,22 +583,19 @@ class BusinessIntelligenceEngine:
         self,
         business_data: Dict[str, Any]
     ) -> List[BusinessInsight]:
-        """Generate financial intelligence insights."""
-        return []
+        """Generate financial intelligence insights."""        return []
     
     async def _generate_operational_insights(
         self,
         business_data: Dict[str, Any]
     ) -> List[BusinessInsight]:
-        """Generate operational intelligence insights."""
-        return []
+        """Generate operational intelligence insights."""        return []
     
     async def _perform_competitive_analysis(
         self,
         business_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Perform competitive analysis."""
-        return {
+        """Perform competitive analysis."""        return {
             'market_position': 'Strong',
             'competitive_advantages': ['AI Technology', 'Content Protection'],
             'threats': ['New Entrants', 'Technology Changes']
@@ -634,8 +607,7 @@ class BusinessIntelligenceEngine:
         competitive_analysis: Dict[str, Any],
         report_type: IntelligenceType
     ) -> List[str]:
-        """Generate strategic recommendations."""
-        return [
+        """Generate strategic recommendations."""        return [
             "Invest in AI content generation capabilities",
             "Expand international market presence",
             "Develop strategic partnerships with major platforms",
@@ -647,8 +619,7 @@ class BusinessIntelligenceEngine:
         business_data: Dict[str, Any],
         time_period: Dict[str, datetime]
     ) -> Dict[str, Any]:
-        """Calculate key performance metrics."""
-        return {
+        """Calculate key performance metrics."""        return {
             'revenue_growth': 15.2,
             'user_acquisition_rate': 12.5,
             'customer_retention_rate': 85.3,
@@ -661,8 +632,7 @@ class BusinessIntelligenceEngine:
         business_data: Dict[str, Any],
         competitive_analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Perform comprehensive market analysis."""
-        return {
+        """Perform comprehensive market analysis."""        return {
             'market_size': 5000000000,
             'growth_rate': 18.5,
             'key_trends': ['AI Integration', 'Content Monetization', 'Creator Economy'],
@@ -678,8 +648,7 @@ class BusinessIntelligenceEngine:
         business_data: Dict[str, Any],
         insights: List[BusinessInsight]
     ) -> Dict[str, Any]:
-        """Perform comprehensive risk assessment."""
-        return {
+        """Perform comprehensive risk assessment."""        return {
             'operational_risks': ['Technology Dependency', 'Talent Retention'],
             'market_risks': ['Competition', 'Regulatory Changes'],
             'financial_risks': ['Cash Flow', 'Investment Requirements'],
@@ -696,8 +665,7 @@ class BusinessIntelligenceEngine:
         market_analysis: Dict[str, Any],
         competitive_analysis: Dict[str, Any]
     ) -> List[str]:
-        """Identify strategic growth opportunities."""
-        return [
+        """Identify strategic growth opportunities."""        return [
             "AI-powered content creation tools",
             "Enterprise content protection solutions",
             "International market expansion",
@@ -710,8 +678,7 @@ class BusinessIntelligenceEngine:
         insights: List[BusinessInsight],
         recommendations: List[str]
     ) -> Dict[str, Any]:
-        """Generate financial projections."""
-        return {
+        """Generate financial projections."""        return {
             'revenue_forecast': {
                 '3_months': 750000,
                 '6_months': 1600000,
@@ -735,8 +702,7 @@ class BusinessIntelligenceEngine:
         insights: List[BusinessInsight],
         stakeholders: List[str]
     ) -> List[Dict[str, Any]]:
-        """Generate actionable items from recommendations."""
-        return [
+        """Generate actionable items from recommendations."""        return [
             {
                 'action': 'Launch AI content generation pilot program',
                 'owner': 'Product Team',
@@ -761,9 +727,7 @@ class BusinessIntelligenceEngine:
         recommendations: List[str],
         performance_metrics: Dict[str, Any]
     ) -> str:
-        """Generate executive summary for strategic report."""
-        return """
-        Executive Summary:
+        """Generate executive summary for strategic report."""        return """        Executive Summary:
         
         Our strategic analysis reveals strong business performance with significant growth opportunities.
         Key metrics show 15.2% revenue growth and 85.3% customer retention rate, indicating healthy
@@ -778,11 +742,9 @@ class BusinessIntelligenceEngine:
         
         Immediate actions include launching AI content generation pilot programs and conducting
         international market research to support expansion planning.
-        """
-    
+        """    
     async def _store_strategic_report(self, report: StrategicReport):
-        """Store strategic report for future reference."""
-        try:
+        """Store strategic report for future reference."""        try:
             # Create report storage document
             report_doc = {
                 'report_id': report.report_id,
@@ -835,65 +797,56 @@ class BusinessIntelligenceEngine:
     
     # Additional helper methods for customer intelligence
     async def _collect_customer_data(self) -> Dict[str, Any]:
-        """Collect comprehensive customer data."""
-        return {}
+        """Collect comprehensive customer data."""        return {}
     
     async def _perform_customer_segmentation(
         self,
         customer_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Perform customer segmentation analysis."""
-        return {}
+        """Perform customer segmentation analysis."""        return {}
     
     async def _analyze_customer_lifetime_value(
         self,
         customer_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze customer lifetime value."""
-        return {}
+        """Analyze customer lifetime value."""        return {}
     
     async def _analyze_customer_churn(
         self,
         customer_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze customer churn patterns."""
-        return {}
+        """Analyze customer churn patterns."""        return {}
     
     async def _analyze_customer_journey(
         self,
         customer_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze customer journey and touchpoints."""
-        return {}
+        """Analyze customer journey and touchpoints."""        return {}
     
     async def _analyze_customer_satisfaction(
         self,
         customer_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze customer satisfaction and sentiment."""
-        return {}
+        """Analyze customer satisfaction and sentiment."""        return {}
     
     async def _analyze_revenue_attribution(
         self,
         customer_data: Dict[str, Any],
         segmentation: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze revenue attribution by customer segments."""
-        return {}
+        """Analyze revenue attribution by customer segments."""        return {}
     
     # Additional helper methods for competitive intelligence
     async def _collect_competitive_data(
         self,
         competitors: List[str]
     ) -> Dict[str, Any]:
-        """Collect competitive intelligence data."""
-        return {}
+        """Collect competitive intelligence data."""        return {}
     
     async def _analyze_market_positioning(
         self,
         competitive_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze market positioning relative to competitors."""
-        return {}
+        """Analyze market positioning relative to competitors."""        return {}
     
     # Additional helper methods would continue...

@@ -1,5 +1,4 @@
-"""
-Enterprise Storage Service - S3/MinIO Integration for Content Storage
+"""Enterprise Storage Service - S3/MinIO Integration for Content Storage
 
 High-performance cloud storage service supporting AWS S3, MinIO, and other
 S3-compatible storage backends for content fingerprints and media files.
@@ -20,9 +19,7 @@ LEGAL WARNING: This software and all associated intellectual property
 belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import mimetypes
@@ -86,8 +83,7 @@ from ..core.config import get_settings
 
 
 class StorageType(Enum):
-    """Types of storage backends."""
-    AWS_S3 = "aws_s3"
+    """Types of storage backends."""    AWS_S3 = "aws_s3"
     MINIO = "minio"
     LOCAL_FILE = "local_file"
     AZURE_BLOB = "azure_blob"
@@ -95,8 +91,7 @@ class StorageType(Enum):
 
 
 class FileType(Enum):
-    """Types of files stored."""
-    AUDIO = "audio"
+    """Types of files stored."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -108,8 +103,7 @@ class FileType(Enum):
 
 
 class StorageClass(Enum):
-    """Storage classes for cost optimization."""
-    STANDARD = "STANDARD"
+    """Storage classes for cost optimization."""    STANDARD = "STANDARD"
     STANDARD_IA = "STANDARD_IA"
     ONEZONE_IA = "ONEZONE_IA"
     REDUCED_REDUNDANCY = "REDUCED_REDUNDANCY"
@@ -120,8 +114,7 @@ class StorageClass(Enum):
 
 @dataclass
 class StorageConfig:
-    """Storage configuration."""
-    storage_type: StorageType
+    """Storage configuration."""    storage_type: StorageType
     endpoint_url: Optional[str] = None
     access_key: Optional[str] = None
     secret_key: Optional[str] = None
@@ -138,8 +131,7 @@ class StorageConfig:
     ])
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
-        return {
+        """Convert to dictionary."""        return {
             "storage_type": self.storage_type.value,
             "endpoint_url": self.endpoint_url,
             "bucket_name": self.bucket_name,
@@ -152,8 +144,7 @@ class StorageConfig:
 
 @dataclass
 class StoredFile:
-    """Stored file metadata."""
-    file_id: str
+    """Stored file metadata."""    file_id: str
     original_filename: str
     stored_key: str
     file_type: FileType
@@ -168,8 +159,7 @@ class StoredFile:
     encryption_enabled: bool = True
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
-        return {
+        """Convert to dictionary."""        return {
             "file_id": self.file_id,
             "original_filename": self.original_filename,
             "stored_key": self.stored_key,
@@ -188,8 +178,7 @@ class StoredFile:
 
 @dataclass
 class FileIndex:
-    """File index for search and metadata."""
-    index_id: str
+    """File index for search and metadata."""    index_id: str
     file_id: str
     filename: str
     file_type: FileType
@@ -200,8 +189,7 @@ class FileIndex:
     created_at: datetime = field(default_factory=datetime.utcnow)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
-        return {
+        """Convert to dictionary."""        return {
             "index_id": self.index_id,
             "file_id": self.file_id,
             "filename": self.filename,
@@ -215,8 +203,7 @@ class FileIndex:
 
 
 class StorageProvider:
-    """Base storage provider interface."""
-    
+    """Base storage provider interface."""    
     def __init__(self, config: StorageConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -228,8 +215,7 @@ class StorageProvider:
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Upload file to storage with basic validation and error handling.
+        """        Upload file to storage with basic validation and error handling.
         
         Args:
             content: File content as bytes
@@ -239,8 +225,7 @@ class StorageProvider:
             
         Returns:
             str: Storage URL or identifier for the uploaded file
-        """
-        # Basic implementation for providers that don't override this method
+        """        # Basic implementation for providers that don't override this method
         # Log the operation for development/debugging
         self.logger.info(f"Mock upload: {key} ({len(content)} bytes) of type {content_type}")
         
@@ -264,16 +249,14 @@ class StorageProvider:
         return mock_url
         
     async def download_file(self, key: str) -> bytes:
-        """
-        Download file from storage with error handling.
+        """        Download file from storage with error handling.
         
         Args:
             key: Storage key/path for the file
             
         Returns:
             bytes: File content
-        """
-        # Basic implementation for providers that don't override this method
+        """        # Basic implementation for providers that don't override this method
         self.logger.info(f"Mock download: {key}")
         
         if not key:
@@ -287,16 +270,14 @@ class StorageProvider:
         return mock_content
         
     async def delete_file(self, key: str) -> bool:
-        """
-        Delete file from storage with error handling.
+        """        Delete file from storage with error handling.
         
         Args:
             key: Storage key/path for the file
             
         Returns:
             bool: True if deletion was successful
-        """
-        # Basic implementation for providers that don't override this method
+        """        # Basic implementation for providers that don't override this method
         self.logger.info(f"Mock delete: {key}")
         
         if not key:
@@ -308,16 +289,14 @@ class StorageProvider:
         return True
         
     async def file_exists(self, key: str) -> bool:
-        """
-        Check if file exists in storage.
+        """        Check if file exists in storage.
         
         Args:
             key: Storage key/path for the file
             
         Returns:
             bool: True if file exists
-        """
-        # Basic implementation for providers that don't override this method
+        """        # Basic implementation for providers that don't override this method
         self.logger.info(f"Mock exists check: {key}")
         
         if not key:
@@ -329,16 +308,14 @@ class StorageProvider:
         return True
         
     async def get_file_metadata(self, key: str) -> Dict[str, Any]:
-        """
-        Get file metadata with basic implementation.
+        """        Get file metadata with basic implementation.
         
         Args:
             key: Storage key/path for the file
             
         Returns:
             Dict[str, Any]: File metadata
-        """
-        # Basic implementation for providers that don't override this method
+        """        # Basic implementation for providers that don't override this method
         self.logger.info(f"Mock metadata retrieval: {key}")
         
         if not key:
@@ -361,16 +338,14 @@ class StorageProvider:
         return mock_metadata
         
     async def list_files(self, prefix: str = "") -> List[Dict[str, Any]]:
-        """
-        List files with optional prefix.
+        """        List files with optional prefix.
         
         Args:
             prefix: Optional prefix to filter files
             
         Returns:
             List[Dict[str, Any]]: List of file information
-        """
-        # Basic implementation for providers that don't override this method
+        """        # Basic implementation for providers that don't override this method
         self.logger.info(f"Mock file listing with prefix: {prefix}")
         
         # For base implementation, return mock file list
@@ -399,8 +374,7 @@ class StorageProvider:
         expiration: int = 3600,
         method: str = "GET"
     ) -> str:
-        """
-        Generate presigned URL with basic implementation.
+        """        Generate presigned URL with basic implementation.
         
         Args:
             key: Storage key/path for the file
@@ -409,8 +383,7 @@ class StorageProvider:
             
         Returns:
             str: Presigned URL
-        """
-        # Basic implementation for providers that don't override this method
+        """        # Basic implementation for providers that don't override this method
         self.logger.info(f"Mock presigned URL generation: {key}")
         
         if not key:
@@ -427,8 +400,7 @@ class StorageProvider:
 
 
 class S3StorageProvider(StorageProvider):
-    """AWS S3 and MinIO compatible storage provider."""
-    
+    """AWS S3 and MinIO compatible storage provider."""    
     def __init__(self, config: StorageConfig):
         super().__init__(config)
         
@@ -448,14 +420,12 @@ class S3StorageProvider(StorageProvider):
         self.session = None
         
     async def _get_session(self):
-        """Get or create aioboto3 session."""
-        if self.session is None:
+        """Get or create aioboto3 session."""        if self.session is None:
             self.session = aioboto3.Session()
         return self.session
         
     async def _get_client(self):
-        """Get S3 client."""
-        session = await self._get_session()
+        """Get S3 client."""        session = await self._get_session()
         
         client_kwargs = {
             'service_name': 's3',
@@ -483,8 +453,7 @@ class S3StorageProvider(StorageProvider):
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Upload file to S3/MinIO."""
-        try:
+        """Upload file to S3/MinIO."""        try:
             async with await self._get_client() as s3_client:
                 # Prepare upload parameters
                 upload_params = {
@@ -521,8 +490,7 @@ class S3StorageProvider(StorageProvider):
             raise StorageException(f"Upload failed: {str(e)}")
             
     async def download_file(self, key: str) -> bytes:
-        """Download file from S3/MinIO."""
-        try:
+        """Download file from S3/MinIO."""        try:
             async with await self._get_client() as s3_client:
                 response = await s3_client.get_object(
                     Bucket=self.config.bucket_name,
@@ -540,8 +508,7 @@ class S3StorageProvider(StorageProvider):
             raise StorageException(f"Download failed: {str(e)}")
             
     async def delete_file(self, key: str) -> bool:
-        """Delete file from S3/MinIO."""
-        try:
+        """Delete file from S3/MinIO."""        try:
             async with await self._get_client() as s3_client:
                 await s3_client.delete_object(
                     Bucket=self.config.bucket_name,
@@ -556,8 +523,7 @@ class S3StorageProvider(StorageProvider):
             return False
             
     async def file_exists(self, key: str) -> bool:
-        """Check if file exists in S3/MinIO."""
-        try:
+        """Check if file exists in S3/MinIO."""        try:
             async with await self._get_client() as s3_client:
                 await s3_client.head_object(
                     Bucket=self.config.bucket_name,
@@ -569,8 +535,7 @@ class S3StorageProvider(StorageProvider):
             return False
             
     async def get_file_metadata(self, key: str) -> Dict[str, Any]:
-        """Get file metadata from S3/MinIO."""
-        try:
+        """Get file metadata from S3/MinIO."""        try:
             async with await self._get_client() as s3_client:
                 response = await s3_client.head_object(
                     Bucket=self.config.bucket_name,
@@ -599,8 +564,7 @@ class S3StorageProvider(StorageProvider):
             raise StorageException(f"Metadata retrieval failed: {str(e)}")
             
     async def list_files(self, prefix: str = "") -> List[Dict[str, Any]]:
-        """List files with optional prefix."""
-        try:
+        """List files with optional prefix."""        try:
             async with await self._get_client() as s3_client:
                 paginator = s3_client.get_paginator('list_objects_v2')
                 
@@ -632,8 +596,7 @@ class S3StorageProvider(StorageProvider):
         expiration: int = 3600,
         method: str = "GET"
     ) -> str:
-        """Generate presigned URL for file access."""
-        try:
+        """Generate presigned URL for file access."""        try:
             async with await self._get_client() as s3_client:
                 url = await s3_client.generate_presigned_url(
                     ClientMethod='get_object' if method == 'GET' else 'put_object',
@@ -652,8 +615,7 @@ class S3StorageProvider(StorageProvider):
 
 
 class LocalStorageProvider(StorageProvider):
-    """Local file system storage provider."""
-    
+    """Local file system storage provider."""    
     def __init__(self, config: StorageConfig):
         super().__init__(config)
         self.base_path = Path(config.bucket_name)
@@ -666,8 +628,7 @@ class LocalStorageProvider(StorageProvider):
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Upload file to local storage."""
-        try:
+        """Upload file to local storage."""        try:
             file_path = self.base_path / key
             file_path.parent.mkdir(parents=True, exist_ok=True)
             
@@ -690,8 +651,7 @@ class LocalStorageProvider(StorageProvider):
             raise StorageException(f"Upload failed: {str(e)}")
             
     async def download_file(self, key: str) -> bytes:
-        """Download file from local storage."""
-        try:
+        """Download file from local storage."""        try:
             file_path = self.base_path / key
             
             if not file_path.exists():
@@ -708,8 +668,7 @@ class LocalStorageProvider(StorageProvider):
             raise StorageException(f"Download failed: {str(e)}")
             
     async def delete_file(self, key: str) -> bool:
-        """Delete file from local storage."""
-        try:
+        """Delete file from local storage."""        try:
             file_path = self.base_path / key
             
             if file_path.exists():
@@ -730,13 +689,11 @@ class LocalStorageProvider(StorageProvider):
             return False
             
     async def file_exists(self, key: str) -> bool:
-        """Check if file exists in local storage."""
-        file_path = self.base_path / key
+        """Check if file exists in local storage."""        file_path = self.base_path / key
         return file_path.exists()
         
     async def get_file_metadata(self, key: str) -> Dict[str, Any]:
-        """Get file metadata from local storage."""
-        try:
+        """Get file metadata from local storage."""        try:
             file_path = self.base_path / key
             
             if not file_path.exists():
@@ -764,8 +721,7 @@ class LocalStorageProvider(StorageProvider):
             raise StorageException(f"Metadata retrieval failed: {str(e)}")
             
     async def list_files(self, prefix: str = "") -> List[Dict[str, Any]]:
-        """List files with optional prefix."""
-        try:
+        """List files with optional prefix."""        try:
             files = []
             search_path = self.base_path / prefix if prefix else self.base_path
             
@@ -793,26 +749,22 @@ class LocalStorageProvider(StorageProvider):
         expiration: int = 3600,
         method: str = "GET"
     ) -> str:
-        """Generate file URL (local files don't need presigning)."""
-        file_path = self.base_path / key
+        """Generate file URL (local files don't need presigning)."""        file_path = self.base_path / key
         return f"file://{file_path.absolute()}"
 
 
 class IndexManager:
-    """File index manager for search and metadata."""
-    
+    """File index manager for search and metadata."""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.indices: Dict[str, FileIndex] = {}
         
     async def add_file_index(self, file_index: FileIndex):
-        """Add file to index."""
-        self.indices[file_index.file_id] = file_index
+        """Add file to index."""        self.indices[file_index.file_id] = file_index
         self.logger.info(f"Added file index for {file_index.file_id}")
         
     async def remove_file_index(self, file_id: str) -> bool:
-        """Remove file from index."""
-        if file_id in self.indices:
+        """Remove file from index."""        if file_id in self.indices:
             del self.indices[file_id]
             self.logger.info(f"Removed file index for {file_id}")
             return True
@@ -825,8 +777,7 @@ class IndexManager:
         tags: Optional[List[str]] = None,
         limit: int = 100
     ) -> List[FileIndex]:
-        """Search files by query, type, and tags."""
-        results = []
+        """Search files by query, type, and tags."""        results = []
         
         for index in self.indices.values():
             # Filter by file type
@@ -847,12 +798,10 @@ class IndexManager:
         return results
         
     async def get_file_index(self, file_id: str) -> Optional[FileIndex]:
-        """Get file index by ID."""
-        return self.indices.get(file_id)
+        """Get file index by ID."""        return self.indices.get(file_id)
         
     async def update_file_index(self, file_id: str, updates: Dict[str, Any]) -> bool:
-        """Update file index."""
-        if file_id in self.indices:
+        """Update file index."""        if file_id in self.indices:
             index = self.indices[file_id]
             for key, value in updates.items():
                 if hasattr(index, key):
@@ -861,8 +810,7 @@ class IndexManager:
         return False
         
     async def get_index_statistics(self) -> Dict[str, Any]:
-        """Get index statistics."""
-        stats = {
+        """Get index statistics."""        stats = {
             "total_files": len(self.indices),
             "files_by_type": {},
             "total_size": 0
@@ -877,8 +825,7 @@ class IndexManager:
 
 
 class EnterpriseStorageService:
-    """Enterprise storage service with multi-backend support."""
-    
+    """Enterprise storage service with multi-backend support."""    
     def __init__(self, config: Optional[StorageConfig] = None):
         self.config = config or self._get_default_config()
         self.logger = logging.getLogger(__name__)
@@ -893,8 +840,7 @@ class EnterpriseStorageService:
         self._initialize_processors()
         
     def _get_default_config(self) -> StorageConfig:
-        """Get default storage configuration."""
-        settings = get_settings()
+        """Get default storage configuration."""        settings = get_settings()
         
         # Determine storage type from settings
         storage_type = StorageType.LOCAL_FILE
@@ -913,15 +859,13 @@ class EnterpriseStorageService:
         )
         
     def _create_provider(self) -> StorageProvider:
-        """Create storage provider based on configuration."""
-        if self.config.storage_type in [StorageType.AWS_S3, StorageType.MINIO]:
+        """Create storage provider based on configuration."""        if self.config.storage_type in [StorageType.AWS_S3, StorageType.MINIO]:
             return S3StorageProvider(self.config)
         else:
             return LocalStorageProvider(self.config)
             
     def _initialize_processors(self):
-        """Initialize file processors."""
-        self.processors = {
+        """Initialize file processors."""        self.processors = {
             FileType.IMAGE: self._process_image,
             FileType.VIDEO: self._process_video,
             FileType.AUDIO: self._process_audio,
@@ -929,8 +873,7 @@ class EnterpriseStorageService:
         }
         
     def _detect_file_type(self, filename: str, content_type: str) -> FileType:
-        """Detect file type from filename and content type."""
-        extension = Path(filename).suffix.lower()
+        """Detect file type from filename and content type."""        extension = Path(filename).suffix.lower()
         
         # Audio files
         if extension in ['.mp3', '.wav', '.flac', '.aac', '.ogg'] or content_type.startswith('audio/'):
@@ -956,8 +899,7 @@ class EnterpriseStorageService:
         return FileType.DOCUMENT
         
     async def _process_image(self, content: bytes, filename: str) -> Dict[str, Any]:
-        """Process image file to extract metadata and create thumbnails."""
-        metadata = {"type": "image"}
+        """Process image file to extract metadata and create thumbnails."""        metadata = {"type": "image"}
         
         if Image:
             try:
@@ -999,8 +941,7 @@ class EnterpriseStorageService:
         return metadata
         
     async def _process_video(self, content: bytes, filename: str) -> Dict[str, Any]:
-        """Process video file to extract metadata and create thumbnails."""
-        metadata = {"type": "video"}
+        """Process video file to extract metadata and create thumbnails."""        metadata = {"type": "video"}
         
         if cv2:
             try:
@@ -1054,8 +995,7 @@ class EnterpriseStorageService:
         return metadata
         
     async def _process_audio(self, content: bytes, filename: str) -> Dict[str, Any]:
-        """Process audio file to extract metadata and create waveforms."""
-        metadata = {"type": "audio"}
+        """Process audio file to extract metadata and create waveforms."""        metadata = {"type": "audio"}
         
         if librosa and plt and io:
             try:
@@ -1105,8 +1045,7 @@ class EnterpriseStorageService:
         return metadata
         
     async def _process_text(self, content: bytes, filename: str) -> Dict[str, Any]:
-        """Process text file to extract metadata."""
-        metadata = {"type": "text"}
+        """Process text file to extract metadata."""        metadata = {"type": "text"}
         
         try:
             # Decode text content
@@ -1127,8 +1066,7 @@ class EnterpriseStorageService:
         return metadata
         
     def _generate_file_key(self, filename: str, file_type: FileType, user_id: Optional[str] = None) -> str:
-        """Generate storage key for file."""
-        # Create timestamp-based directory structure
+        """Generate storage key for file."""        # Create timestamp-based directory structure
         now = datetime.utcnow()
         date_path = f"{now.year:04d}/{now.month:02d}/{now.day:02d}"
         
@@ -1155,8 +1093,7 @@ class EnterpriseStorageService:
         metadata: Optional[Dict[str, Any]] = None,
         tags: Optional[List[str]] = None
     ) -> StoredFile:
-        """Store file with automatic processing and indexing."""
-        try:
+        """Store file with automatic processing and indexing."""        try:
             # Validate file size
             if len(content) > self.config.max_file_size:
                 raise StorageException(f"File size {len(content)} exceeds maximum {self.config.max_file_size}")
@@ -1238,8 +1175,7 @@ class EnterpriseStorageService:
             raise StorageException(f"File storage failed: {str(e)}")
             
     async def retrieve_file(self, file_id: str) -> Tuple[bytes, StoredFile]:
-        """Retrieve file by ID."""
-        try:
+        """Retrieve file by ID."""        try:
             # Get file index
             file_index = await self.index_manager.get_file_index(file_id)
             if not file_index:
@@ -1274,8 +1210,7 @@ class EnterpriseStorageService:
             raise StorageException(f"File retrieval failed: {str(e)}")
             
     async def delete_file(self, file_id: str) -> bool:
-        """Delete file by ID."""
-        try:
+        """Delete file by ID."""        try:
             # Get file index
             file_index = await self.index_manager.get_file_index(file_id)
             if not file_index:
@@ -1313,8 +1248,7 @@ class EnterpriseStorageService:
         user_id: Optional[str] = None,
         limit: int = 100
     ) -> List[FileIndex]:
-        """Search files with filters."""
-        results = await self.index_manager.search_files(query, file_types, tags, limit)
+        """Search files with filters."""        results = await self.index_manager.search_files(query, file_types, tags, limit)
         
         # Filter by user_id if provided
         if user_id:
@@ -1327,8 +1261,7 @@ class EnterpriseStorageService:
         file_id: str, 
         expiration: int = 3600
     ) -> str:
-        """Generate temporary download URL for file."""
-        try:
+        """Generate temporary download URL for file."""        try:
             file_index = await self.index_manager.get_file_index(file_id)
             if not file_index:
                 raise StorageException(f"File not found: {file_id}")
@@ -1348,8 +1281,7 @@ class EnterpriseStorageService:
             raise StorageException(f"URL generation failed: {str(e)}")
             
     async def get_storage_statistics(self) -> Dict[str, Any]:
-        """Get storage statistics."""
-        try:
+        """Get storage statistics."""        try:
             # Get index statistics
             index_stats = await self.index_manager.get_index_statistics()
             
@@ -1375,8 +1307,7 @@ class EnterpriseStorageService:
 _storage_service = None
 
 def get_storage_service() -> EnterpriseStorageService:
-    """Get global storage service instance."""
-    global _storage_service
+    """Get global storage service instance."""    global _storage_service
     if _storage_service is None:
         _storage_service = EnterpriseStorageService()
     return _storage_service

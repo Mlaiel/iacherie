@@ -1,12 +1,9 @@
-"""
-Advanced Collaboration Models for IA Influencer Agent
+"""Advanced Collaboration Models for IA Influencer Agent
 Professional collaboration business logic models
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-
-from typing import Dict, List, Optional, Any, Set, Union
+"""from typing import Dict, List, Optional, Any, Set, Union
 from datetime import datetime, timedelta
 from enum import Enum
 from dataclasses import dataclass, field
@@ -15,8 +12,7 @@ import uuid
 
 
 class CollaborationType(Enum):
-    """Types of collaboration available in the platform"""
-    MUSIC_COLLABORATION = "music_collaboration"
+    """Types of collaboration available in the platform"""    MUSIC_COLLABORATION = "music_collaboration"
     CONTENT_CREATION = "content_creation"
     BRAND_PARTNERSHIP = "brand_partnership"
     CROSS_PROMOTION = "cross_promotion"
@@ -27,8 +23,7 @@ class CollaborationType(Enum):
 
 
 class CollaborationStatus(Enum):
-    """Status tracking for collaboration requests"""
-    DRAFT = "draft"
+    """Status tracking for collaboration requests"""    DRAFT = "draft"
     PENDING = "pending"
     ACTIVE = "active"
     NEGOTIATING = "negotiating"
@@ -40,8 +35,7 @@ class CollaborationStatus(Enum):
 
 
 class SkillLevel(Enum):
-    """Skill proficiency levels for matching"""
-    BEGINNER = "beginner"
+    """Skill proficiency levels for matching"""    BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
     EXPERT = "expert"
@@ -50,8 +44,7 @@ class SkillLevel(Enum):
 
 @dataclass
 class CollaborationSkill:
-    """Represents a skill for collaboration matching"""
-    name: str
+    """Represents a skill for collaboration matching"""    name: str
     level: SkillLevel
     category: str
     experience_years: int = 0
@@ -59,8 +52,7 @@ class CollaborationSkill:
     portfolio_items: List[str] = field(default_factory=list)
     
     def compatibility_score(self, other: 'CollaborationSkill') -> float:
-        """Calculate compatibility score with another skill"""
-        if self.name != other.name:
+        """Calculate compatibility score with another skill"""        if self.name != other.name:
             return 0.0
             
         level_scores = {
@@ -84,8 +76,7 @@ class CollaborationSkill:
 
 
 class CollaborationRequest(BaseModel):
-    """Professional collaboration request model"""
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Professional collaboration request model"""    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     title: str = Field(..., min_length=5, max_length=200)
     description: str = Field(..., min_length=20, max_length=2000)
     collaboration_type: CollaborationType
@@ -132,18 +123,15 @@ class CollaborationRequest(BaseModel):
         return v
     
     def is_expired(self) -> bool:
-        """Check if collaboration request has expired"""
-        if not self.expires_at:
+        """Check if collaboration request has expired"""        if not self.expires_at:
             return False
         return datetime.utcnow() > self.expires_at
     
     def can_accept_participant(self) -> bool:
-        """Check if more participants can be accepted"""
-        return len(self.current_participants) < self.max_participants
+        """Check if more participants can be accepted"""        return len(self.current_participants) < self.max_participants
     
     def calculate_compatibility_score(self, other_profile: Dict[str, Any]) -> float:
-        """Calculate compatibility score with another creator profile"""
-        if not other_profile.get('skills'):
+        """Calculate compatibility score with another creator profile"""        if not other_profile.get('skills'):
             return 0.0
             
         total_score = 0.0
@@ -166,8 +154,7 @@ class CollaborationRequest(BaseModel):
 
 @dataclass
 class CollaborationMatch:
-    """Represents a potential collaboration match"""
-    request_id: str
+    """Represents a potential collaboration match"""    request_id: str
     matched_creator_id: str
     compatibility_score: float
     skill_matches: List[Dict[str, Any]]
@@ -186,8 +173,7 @@ class CollaborationMatch:
     priority_score: float = field(init=False)
     
     def __post_init__(self):
-        """Calculate overall priority score"""
-        base_score = self.compatibility_score * 0.4
+        """Calculate overall priority score"""        base_score = self.compatibility_score * 0.4
         reputation_weight = self.reputation_score * 0.2
         portfolio_weight = self.portfolio_relevance * 0.2
         communication_weight = self.communication_style_match * 0.1
@@ -206,8 +192,7 @@ class CollaborationMatch:
         self.priority_score = min(self.priority_score, 1.0)
     
     def is_high_quality_match(self) -> bool:
-        """Determine if this is a high-quality match"""
-        return (
+        """Determine if this is a high-quality match"""        return (
             self.compatibility_score >= 0.7 and
             self.reputation_score >= 0.6 and
             self.priority_score >= 0.75
@@ -215,8 +200,7 @@ class CollaborationMatch:
 
 
 class CollaborationContract(BaseModel):
-    """Professional collaboration contract model"""
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Professional collaboration contract model"""    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     collaboration_request_id: str
     participants: List[str] = Field(min_items=2, max_items=10)
     
@@ -253,16 +237,13 @@ class CollaborationContract(BaseModel):
     updated_at: datetime = Field(default_factory=datetime.utcnow)
     
     def is_fully_signed(self) -> bool:
-        """Check if all participants have signed"""
-        return len(self.signatures) == len(self.participants)
+        """Check if all participants have signed"""        return len(self.signatures) == len(self.participants)
     
     def get_participant_share(self, participant_id: str) -> float:
-        """Get revenue share percentage for participant"""
-        return self.revenue_sharing.get(participant_id, 0.0)
+        """Get revenue share percentage for participant"""        return self.revenue_sharing.get(participant_id, 0.0)
     
     def calculate_estimated_completion_date(self) -> datetime:
-        """Calculate estimated completion based on current progress"""
-        if self.completion_percentage == 0:
+        """Calculate estimated completion based on current progress"""        if self.completion_percentage == 0:
             return self.end_date
             
         elapsed_time = datetime.utcnow() - self.start_date
@@ -273,8 +254,7 @@ class CollaborationContract(BaseModel):
 
 @dataclass
 class CollaborationAnalytics:
-    """Analytics data for collaboration performance"""
-    collaboration_id: str
+    """Analytics data for collaboration performance"""    collaboration_id: str
     
     # Performance metrics
     response_rate: float = 0.0
@@ -307,8 +287,7 @@ class CollaborationAnalytics:
     measured_at: datetime = field(default_factory=datetime.utcnow)
     
     def calculate_overall_success_score(self) -> float:
-        """Calculate overall collaboration success score"""
-        weights = {
+        """Calculate overall collaboration success score"""        weights = {
             'completion_rate': 0.25,
             'satisfaction_score': 0.20,
             'quality_score': 0.20,
@@ -329,8 +308,7 @@ class CollaborationAnalytics:
 
 
 class CollaborationNotification(BaseModel):
-    """Notification system for collaboration events"""
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Notification system for collaboration events"""    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     recipient_id: str
     collaboration_id: str
     
@@ -358,18 +336,15 @@ class CollaborationNotification(BaseModel):
     metadata: Dict[str, Any] = Field(default_factory=dict)
     
     def mark_as_sent(self):
-        """Mark notification as sent"""
-        self.sent = True
+        """Mark notification as sent"""        self.sent = True
         self.sent_at = datetime.utcnow()
     
     def mark_as_read(self):
-        """Mark notification as read"""
-        self.read = True
+        """Mark notification as read"""        self.read = True
         self.read_at = datetime.utcnow()
     
     def is_expired(self) -> bool:
-        """Check if notification has expired"""
-        if not self.expires_at:
+        """Check if notification has expired"""        if not self.expires_at:
             return False
         return datetime.utcnow() > self.expires_at
 

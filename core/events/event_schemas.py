@@ -1,5 +1,4 @@
-"""
-IA-Influencer-Agent - Event Schema Management System
+"""IA-Influencer-Agent - Event Schema Management System
 Module: backend/core/events/event_schemas.py
 Architecture: Enterprise Schema Validation & Versioning
 Auteur: Équipe Backend Senior + ML Engineer + Sécurité + Microservices + DBA + DevOps + IA Prompt Engineer
@@ -20,9 +19,7 @@ SPÉCIALITÉS DE L'ÉQUIPE:
 Description:
     Système de gestion des schémas d'événements avec validation, versioning,
     migration et compatibilité. Support des formats JSON Schema, Avro et Protobuf.
-"""
-
-from typing import Any, Dict, List, Optional, Union, Type, Generic, TypeVar, Set
+"""from typing import Any, Dict, List, Optional, Union, Type, Generic, TypeVar, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from enum import Enum
@@ -46,8 +43,7 @@ T = TypeVar('T')
 
 
 class SchemaFormat(Enum):
-    """Formats de schéma supportés"""
-    JSON_SCHEMA = "json_schema"
+    """Formats de schéma supportés"""    JSON_SCHEMA = "json_schema"
     AVRO = "avro"
     PROTOBUF = "protobuf"
     YAML = "yaml"
@@ -55,8 +51,7 @@ class SchemaFormat(Enum):
 
 
 class SchemaVersion(Enum):
-    """Versions de schéma"""
-    V1_0 = "1.0"
+    """Versions de schéma"""    V1_0 = "1.0"
     V1_1 = "1.1"
     V2_0 = "2.0"
     V2_1 = "2.1"
@@ -64,8 +59,7 @@ class SchemaVersion(Enum):
 
 
 class CompatibilityMode(Enum):
-    """Modes de compatibilité"""
-    BACKWARD = "backward"        # Nouveau schéma peut lire ancienne data
+    """Modes de compatibilité"""    BACKWARD = "backward"        # Nouveau schéma peut lire ancienne data
     FORWARD = "forward"          # Ancien schéma peut lire nouvelle data
     FULL = "full"               # Compatibilité bidirectionnelle
     NONE = "none"               # Aucune compatibilité requise
@@ -74,8 +68,7 @@ class CompatibilityMode(Enum):
 
 @dataclass
 class SchemaMetadata:
-    """Métadonnées de schéma"""
-    id: str
+    """Métadonnées de schéma"""    id: str
     name: str
     version: str
     format: SchemaFormat
@@ -94,8 +87,7 @@ class SchemaMetadata:
 
 @dataclass
 class SchemaValidationResult:
-    """Résultat de validation de schéma"""
-    is_valid: bool
+    """Résultat de validation de schéma"""    is_valid: bool
     errors: List[str] = field(default_factory=list)
     warnings: List[str] = field(default_factory=list)
     schema_id: Optional[str] = None
@@ -105,8 +97,7 @@ class SchemaValidationResult:
 
 @dataclass
 class SchemaMigration:
-    """Définition de migration de schéma"""
-    from_version: str
+    """Définition de migration de schéma"""    from_version: str
     to_version: str
     migration_script: str
     rollback_script: Optional[str] = None
@@ -117,28 +108,23 @@ class SchemaMigration:
 
 
 class SchemaValidator(ABC):
-    """Interface pour les validateurs de schéma"""
-    
+    """Interface pour les validateurs de schéma"""    
     @abstractmethod
     def validate(self, data: Any, schema: Dict[str, Any]) -> SchemaValidationResult:
-        """Valider des données contre un schéma"""
-        pass
+        """Valider des données contre un schéma"""        pass
     
     @abstractmethod
     def is_compatible(self, old_schema: Dict[str, Any], new_schema: Dict[str, Any]) -> bool:
-        """Vérifier la compatibilité entre schémas"""
-        pass
+        """Vérifier la compatibilité entre schémas"""        pass
 
 
 class JsonSchemaValidator(SchemaValidator):
-    """Validateur JSON Schema"""
-    
+    """Validateur JSON Schema"""    
     def __init__(self):
         self.validator_class = Draft7Validator
     
     def validate(self, data: Any, schema: Dict[str, Any]) -> SchemaValidationResult:
-        """Valider des données JSON contre un schéma"""
-        start_time = time.time()
+        """Valider des données JSON contre un schéma"""        start_time = time.time()
         result = SchemaValidationResult(is_valid=True)
         
         try:
@@ -157,8 +143,7 @@ class JsonSchemaValidator(SchemaValidator):
         return result
     
     def is_compatible(self, old_schema: Dict[str, Any], new_schema: Dict[str, Any]) -> bool:
-        """Vérifier la compatibilité JSON Schema"""
-        try:
+        """Vérifier la compatibilité JSON Schema"""        try:
             # Vérification des propriétés requises
             old_required = set(old_schema.get("required", []))
             new_required = set(new_schema.get("required", []))
@@ -189,11 +174,9 @@ class JsonSchemaValidator(SchemaValidator):
 
 
 class AvroSchemaValidator(SchemaValidator):
-    """Validateur Avro Schema"""
-    
+    """Validateur Avro Schema"""    
     def validate(self, data: Any, schema: Dict[str, Any]) -> SchemaValidationResult:
-        """Valider des données Avro"""
-        start_time = time.time()
+        """Valider des données Avro"""        start_time = time.time()
         result = SchemaValidationResult(is_valid=True)
         
         try:
@@ -208,14 +191,12 @@ class AvroSchemaValidator(SchemaValidator):
         return result
     
     def is_compatible(self, old_schema: Dict[str, Any], new_schema: Dict[str, Any]) -> bool:
-        """Vérifier la compatibilité Avro"""
-        # Implémentation de la compatibilité Avro
+        """Vérifier la compatibilité Avro"""        # Implémentation de la compatibilité Avro
         return True
 
 
 class EventSchemaRegistry:
-    """Registre centralisé des schémas d'événements"""
-    
+    """Registre centralisé des schémas d'événements"""    
     def __init__(self, storage_backend: 'SchemaStorage'):
         self.storage = storage_backend
         self.validators: Dict[SchemaFormat, SchemaValidator] = {
@@ -230,8 +211,7 @@ class EventSchemaRegistry:
         schema: Dict[str, Any],
         metadata: SchemaMetadata
     ) -> str:
-        """Enregistrer un nouveau schéma"""
-        try:
+        """Enregistrer un nouveau schéma"""        try:
             # Calcul du checksum
             schema_json = json.dumps(schema, sort_keys=True)
             metadata.checksum = hashlib.sha256(schema_json.encode()).hexdigest()
@@ -267,8 +247,7 @@ class EventSchemaRegistry:
         name: Optional[str] = None,
         version: Optional[str] = None
     ) -> Optional[Dict[str, Any]]:
-        """Récupérer un schéma"""
-        try:
+        """Récupérer un schéma"""        try:
             # Recherche par ID
             if schema_id:
                 if schema_id in self.cache:
@@ -297,8 +276,7 @@ class EventSchemaRegistry:
         data: Any,
         schema_version: Optional[str] = None
     ) -> SchemaValidationResult:
-        """Valider les données d'un événement"""
-        try:
+        """Valider les données d'un événement"""        try:
             # Récupération du schéma
             schema = await self.get_schema(
                 name=event_type.value,
@@ -337,8 +315,7 @@ class EventSchemaRegistry:
         to_version: str,
         migration: SchemaMigration
     ) -> bool:
-        """Migrer un schéma vers une nouvelle version"""
-        try:
+        """Migrer un schéma vers une nouvelle version"""        try:
             # Exécution de la migration
             success = await self.storage.execute_migration(
                 schema_name, migration
@@ -360,8 +337,7 @@ class EventSchemaRegistry:
         format_filter: Optional[SchemaFormat] = None,
         tag_filter: Optional[List[str]] = None
     ) -> List[SchemaMetadata]:
-        """Lister les schémas disponibles"""
-        try:
+        """Lister les schémas disponibles"""        try:
             schemas = await self.storage.list_all_schemas()
             
             # Filtres
@@ -385,16 +361,14 @@ class EventSchemaRegistry:
         name: str,
         version: Optional[str] = None
     ) -> Optional[SchemaMetadata]:
-        """Récupérer les métadonnées d'un schéma"""
-        try:
+        """Récupérer les métadonnées d'un schéma"""        try:
             return await self.storage.get_schema_metadata(name, version)
         except Exception as e:
             logger.error(f"Metadata retrieval failed: {e}")
             return None
     
     async def schema_exists(self, name: str, version: Optional[str] = None) -> bool:
-        """Vérifier l'existence d'un schéma"""
-        try:
+        """Vérifier l'existence d'un schéma"""        try:
             metadata = await self.get_schema_metadata(name, version)
             return metadata is not None
         except Exception:
@@ -406,8 +380,7 @@ class EventSchemaRegistry:
         version: str,
         successor_schema_id: Optional[str] = None
     ) -> bool:
-        """Marquer un schéma comme déprécié"""
-        try:
+        """Marquer un schéma comme déprécié"""        try:
             return await self.storage.deprecate_schema(
                 schema_name, version, successor_schema_id
             )
@@ -420,8 +393,7 @@ class EventSchemaRegistry:
         new_schema: Dict[str, Any],
         metadata: SchemaMetadata
     ) -> None:
-        """Vérifier la compatibilité avec la version précédente"""
-        if metadata.compatibility_mode == CompatibilityMode.NONE:
+        """Vérifier la compatibilité avec la version précédente"""        if metadata.compatibility_mode == CompatibilityMode.NONE:
             return
         
         # Récupération de la version précédente
@@ -434,8 +406,7 @@ class EventSchemaRegistry:
             raise ValueError(f"Schema not compatible with mode {metadata.compatibility_mode}")
     
     async def _invalidate_cache(self, schema_name: str) -> None:
-        """Invalider le cache pour un schéma"""
-        keys_to_remove = []
+        """Invalider le cache pour un schéma"""        keys_to_remove = []
         for key, metadata in self.metadata_cache.items():
             if metadata.name == schema_name:
                 keys_to_remove.append(key)
@@ -446,21 +417,18 @@ class EventSchemaRegistry:
 
 
 class SchemaStorage(ABC):
-    """Interface de stockage des schémas"""
-    
+    """Interface de stockage des schémas"""    
     @abstractmethod
     async def store_schema(
         self,
         schema: Dict[str, Any],
         metadata: SchemaMetadata
     ) -> str:
-        """Stocker un schéma"""
-        pass
+        """Stocker un schéma"""        pass
     
     @abstractmethod
     async def get_schema_by_id(self, schema_id: str) -> Optional[Dict[str, Any]]:
-        """Récupérer un schéma par ID"""
-        pass
+        """Récupérer un schéma par ID"""        pass
     
     @abstractmethod
     async def find_schema_id(
@@ -468,8 +436,7 @@ class SchemaStorage(ABC):
         name: str,
         version: Optional[str] = None
     ) -> Optional[str]:
-        """Trouver l'ID d'un schéma"""
-        pass
+        """Trouver l'ID d'un schéma"""        pass
     
     @abstractmethod
     async def get_schema_metadata(
@@ -477,13 +444,11 @@ class SchemaStorage(ABC):
         name: str,
         version: Optional[str] = None
     ) -> Optional[SchemaMetadata]:
-        """Récupérer les métadonnées"""
-        pass
+        """Récupérer les métadonnées"""        pass
     
     @abstractmethod
     async def list_all_schemas(self) -> List[SchemaMetadata]:
-        """Lister tous les schémas"""
-        pass
+        """Lister tous les schémas"""        pass
     
     @abstractmethod
     async def execute_migration(
@@ -491,8 +456,7 @@ class SchemaStorage(ABC):
         schema_name: str,
         migration: SchemaMigration
     ) -> bool:
-        """Exécuter une migration"""
-        pass
+        """Exécuter une migration"""        pass
     
     @abstractmethod
     async def deprecate_schema(
@@ -501,13 +465,11 @@ class SchemaStorage(ABC):
         version: str,
         successor_schema_id: Optional[str] = None
     ) -> bool:
-        """Déprécier un schéma"""
-        pass
+        """Déprécier un schéma"""        pass
 
 
 class InMemorySchemaStorage(SchemaStorage):
-    """Stockage en mémoire pour les schémas (développement/test)"""
-    
+    """Stockage en mémoire pour les schémas (développement/test)"""    
     def __init__(self):
         self.schemas: Dict[str, Dict[str, Any]] = {}
         self.metadata: Dict[str, SchemaMetadata] = {}
@@ -518,8 +480,7 @@ class InMemorySchemaStorage(SchemaStorage):
         schema: Dict[str, Any],
         metadata: SchemaMetadata
     ) -> str:
-        """Stocker un schéma en mémoire"""
-        schema_id = metadata.id or str(uuid.uuid4())
+        """Stocker un schéma en mémoire"""        schema_id = metadata.id or str(uuid.uuid4())
         
         self.schemas[schema_id] = schema
         self.metadata[schema_id] = metadata
@@ -534,16 +495,14 @@ class InMemorySchemaStorage(SchemaStorage):
         return schema_id
     
     async def get_schema_by_id(self, schema_id: str) -> Optional[Dict[str, Any]]:
-        """Récupérer un schéma par ID"""
-        return self.schemas.get(schema_id)
+        """Récupérer un schéma par ID"""        return self.schemas.get(schema_id)
     
     async def find_schema_id(
         self,
         name: str,
         version: Optional[str] = None
     ) -> Optional[str]:
-        """Trouver l'ID d'un schéma"""
-        key = f"{name}:{version or 'latest'}"
+        """Trouver l'ID d'un schéma"""        key = f"{name}:{version or 'latest'}"
         return self.name_version_index.get(key)
     
     async def get_schema_metadata(
@@ -551,23 +510,20 @@ class InMemorySchemaStorage(SchemaStorage):
         name: str,
         version: Optional[str] = None
     ) -> Optional[SchemaMetadata]:
-        """Récupérer les métadonnées"""
-        schema_id = await self.find_schema_id(name, version)
+        """Récupérer les métadonnées"""        schema_id = await self.find_schema_id(name, version)
         if schema_id:
             return self.metadata.get(schema_id)
         return None
     
     async def list_all_schemas(self) -> List[SchemaMetadata]:
-        """Lister tous les schémas"""
-        return list(self.metadata.values())
+        """Lister tous les schémas"""        return list(self.metadata.values())
     
     async def execute_migration(
         self,
         schema_name: str,
         migration: SchemaMigration
     ) -> bool:
-        """Exécuter une migration (simulé)"""
-        # Simulation de migration
+        """Exécuter une migration (simulé)"""        # Simulation de migration
         return True
     
     async def deprecate_schema(
@@ -576,8 +532,7 @@ class InMemorySchemaStorage(SchemaStorage):
         version: str,
         successor_schema_id: Optional[str] = None
     ) -> bool:
-        """Déprécier un schéma"""
-        metadata = await self.get_schema_metadata(schema_name, version)
+        """Déprécier un schéma"""        metadata = await self.get_schema_metadata(schema_name, version)
         if metadata:
             metadata.deprecated = True
             metadata.deprecation_date = datetime.now(timezone.utc)
@@ -658,15 +613,13 @@ PLATFORM_EVENT_SCHEMAS = {
 
 
 def create_default_schema_registry() -> EventSchemaRegistry:
-    """Créer un registre de schémas avec configuration par défaut"""
-    storage = InMemorySchemaStorage()
+    """Créer un registre de schémas avec configuration par défaut"""    storage = InMemorySchemaStorage()
     registry = EventSchemaRegistry(storage)
     return registry
 
 
 async def register_platform_schemas(registry: EventSchemaRegistry) -> None:
-    """Enregistrer les schémas prédéfinis de la plateforme"""
-    for event_type, schema in PLATFORM_EVENT_SCHEMAS.items():
+    """Enregistrer les schémas prédéfinis de la plateforme"""    for event_type, schema in PLATFORM_EVENT_SCHEMAS.items():
         metadata = SchemaMetadata(
             id=str(uuid.uuid4()),
             name=event_type.value,

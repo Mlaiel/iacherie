@@ -1,5 +1,4 @@
-"""
-Professional Multimedia Processing Module - Main Index
+"""Professional Multimedia Processing Module - Main Index
 Enterprise-Grade Content Processing, AI Analysis, and Distribution Platform
 
 Project Team: Lead AI Developer + Backend Senior Engineer + ML Engineer + 
@@ -15,9 +14,7 @@ distribution, or modification without written permission from Fahed Mlaiel
 extent of the law. All rights reserved.
 
 Contact: mlaiel@live.de for licensing and authorization inquiries.
-"""
-
-import logging
+"""import logging
 from typing import Dict, List, Optional, Any, Union
 from pathlib import Path
 import asyncio
@@ -38,19 +35,15 @@ from .collaboration import CreatorMatcher, CollaborationManager
 logger = logging.getLogger(__name__)
 
 class MultimediaIndex:
-    """
-    Main facade and entry point for the Multimedia Processing Module
+    """    Main facade and entry point for the Multimedia Processing Module
     Provides unified access to all multimedia processing capabilities
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize the multimedia processing index
+        """        Initialize the multimedia processing index
         
         Args:
             config: Configuration dictionary for all components
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self._components_initialized = False
         
         # Core processors
@@ -77,8 +70,7 @@ class MultimediaIndex:
         asyncio.create_task(self._initialize_components())
     
     async def _initialize_components(self):
-        """Initialize all multimedia processing components"""
-        try:
+        """Initialize all multimedia processing components"""        try:
             logger.info("Initializing multimedia processing components...")
             
             # Core processors
@@ -113,8 +105,7 @@ class MultimediaIndex:
             raise
     
     async def _preload_ai_models(self):
-        """Preload AI models for faster processing"""
-        try:
+        """Preload AI models for faster processing"""        try:
             logger.info("Preloading AI models...")
             
             # Preload content analyzer models
@@ -131,13 +122,11 @@ class MultimediaIndex:
             logger.warning(f"Failed to preload some AI models: {str(e)}")
     
     def get_supported_formats(self) -> Dict[str, List[str]]:
-        """
-        Get all supported formats across all processors
+        """        Get all supported formats across all processors
         
         Returns:
             Dictionary of format categories and their supported formats
-        """
-        return {
+        """        return {
             'audio': list(AudioFormat.__members__.keys()),
             'video': list(VideoFormat.__members__.keys()),
             'image': list(ImageFormat.__members__.keys()),
@@ -150,8 +139,7 @@ class MultimediaIndex:
         content_type: str,
         options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Main content processing entry point
+        """        Main content processing entry point
         
         Args:
             content: Content to process (bytes, file path, or URL)
@@ -160,8 +148,7 @@ class MultimediaIndex:
             
         Returns:
             Processing result with metadata and processed content
-        """
-        if not self._components_initialized:
+        """        if not self._components_initialized:
             await self._initialize_components()
         
         options = options or {}
@@ -245,8 +232,7 @@ class MultimediaIndex:
         content_format: ContentFormat,
         options: Optional[Dict[str, Any]] = None
     ) -> Optional[Dict[str, Any]]:
-        """
-        Perform AI analysis on content
+        """        Perform AI analysis on content
         
         Args:
             content: Content to analyze
@@ -255,8 +241,7 @@ class MultimediaIndex:
             
         Returns:
             Analysis results or None if failed
-        """
-        if not self.content_analyzer:
+        """        if not self.content_analyzer:
             return None
         
         try:
@@ -277,8 +262,7 @@ class MultimediaIndex:
         user_id: str,
         options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Distribute content to multiple platforms
+        """        Distribute content to multiple platforms
         
         Args:
             content: Content to distribute
@@ -288,8 +272,7 @@ class MultimediaIndex:
             
         Returns:
             Distribution results
-        """
-        if not self.content_distributor:
+        """        if not self.content_distributor:
             await self._initialize_components()
         
         try:
@@ -329,8 +312,7 @@ class MultimediaIndex:
         content_id: str,
         monitoring_config: Optional[MonitoringConfig] = None
     ) -> Dict[str, Any]:
-        """
-        Start monitoring content for violations
+        """        Start monitoring content for violations
         
         Args:
             content_id: Identifier of content to monitor
@@ -338,8 +320,7 @@ class MultimediaIndex:
             
         Returns:
             Monitoring setup result
-        """
-        if not self.content_monitor:
+        """        if not self.content_monitor:
             await self._initialize_components()
         
         try:
@@ -367,8 +348,7 @@ class MultimediaIndex:
         creator_id: str,
         preferences: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Find potential collaboration matches for a creator
+        """        Find potential collaboration matches for a creator
         
         Args:
             creator_id: Creator identifier
@@ -376,8 +356,7 @@ class MultimediaIndex:
             
         Returns:
             List of potential matches
-        """
-        if not self.creator_matcher:
+        """        if not self.creator_matcher:
             await self._initialize_components()
         
         try:
@@ -400,13 +379,11 @@ class MultimediaIndex:
             }
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """
-        Get comprehensive system status
+        """        Get comprehensive system status
         
         Returns:
             System status information
-        """
-        try:
+        """        try:
             status = {
                 'components_initialized': self._components_initialized,
                 'supported_formats': self.get_supported_formats(),
@@ -449,16 +426,14 @@ class MultimediaIndex:
 _multimedia_index = None
 
 def get_multimedia_index(config: Optional[Dict[str, Any]] = None) -> MultimediaIndex:
-    """
-    Get or create the global multimedia index instance
+    """    Get or create the global multimedia index instance
     
     Args:
         config: Configuration for the multimedia index
         
     Returns:
         MultimediaIndex instance
-    """
-    global _multimedia_index
+    """    global _multimedia_index
     
     if _multimedia_index is None:
         _multimedia_index = MultimediaIndex(config)
@@ -471,8 +446,7 @@ async def process_content(
     content_type: str,
     options: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
-    """Convenience function for content processing"""
-    index = get_multimedia_index()
+    """Convenience function for content processing"""    index = get_multimedia_index()
     return await index.process_content(content, content_type, options)
 
 async def analyze_content(
@@ -480,8 +454,7 @@ async def analyze_content(
     content_format: ContentFormat,
     options: Optional[Dict[str, Any]] = None
 ) -> Optional[Dict[str, Any]]:
-    """Convenience function for content analysis"""
-    index = get_multimedia_index()
+    """Convenience function for content analysis"""    index = get_multimedia_index()
     return await index.analyze_content(content, content_format, options)
 
 async def distribute_content(
@@ -490,34 +463,29 @@ async def distribute_content(
     user_id: str,
     options: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
-    """Convenience function for content distribution"""
-    index = get_multimedia_index()
+    """Convenience function for content distribution"""    index = get_multimedia_index()
     return await index.distribute_content(content, platforms, user_id, options)
 
 async def monitor_content(
     content_id: str,
     monitoring_config: Optional[MonitoringConfig] = None
 ) -> Dict[str, Any]:
-    """Convenience function for content monitoring"""
-    index = get_multimedia_index()
+    """Convenience function for content monitoring"""    index = get_multimedia_index()
     return await index.monitor_content(content_id, monitoring_config)
 
 async def find_collaboration_matches(
     creator_id: str,
     preferences: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
-    """Convenience function for finding collaboration matches"""
-    index = get_multimedia_index()
+    """Convenience function for finding collaboration matches"""    index = get_multimedia_index()
     return await index.find_collaboration_matches(creator_id, preferences)
 
 def get_supported_formats() -> Dict[str, List[str]]:
-    """Convenience function to get supported formats"""
-    index = get_multimedia_index()
+    """Convenience function to get supported formats"""    index = get_multimedia_index()
     return index.get_supported_formats()
 
 async def get_system_status() -> Dict[str, Any]:
-    """Convenience function to get system status"""
-    index = get_multimedia_index()
+    """Convenience function to get system status"""    index = get_multimedia_index()
     return await index.get_system_status()
 
 # Export all main components and functions

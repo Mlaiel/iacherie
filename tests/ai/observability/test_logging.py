@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Ultra-Industrial Test Suite for Structured Logging Module
+"""Ultra-Industrial Test Suite for Structured Logging Module
 
 Comprehensive testing for enterprise-grade structured logging, log aggregation,
 audit trails, compliance features, and advanced log analysis.
@@ -38,9 +34,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  STRICT LEGAL WARNING & COPYRIGHT PROTECTION ⚠️
 This entire test suite is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import pytest
 import sys
@@ -71,18 +65,14 @@ from ai.observability.logging import (
 
 
 class TestStructuredLoggingComprehensive:
-    """Ultra-comprehensive test suite for Structured Logging"""
-
-    @pytest.fixture
+    """Ultra-comprehensive test suite for Structured Logging"""    @pytest.fixture
     def temp_log_dir(self):
-        """Create temporary directory for log files"""
-        with tempfile.TemporaryDirectory() as temp_dir:
+        """Create temporary directory for log files"""        with tempfile.TemporaryDirectory() as temp_dir:
             yield Path(temp_dir)
 
     @pytest.fixture
     def logging_config(self, temp_log_dir):
-        """Sample logging configuration"""
-        return {
+        """Sample logging configuration"""        return {
             'log_level': LogLevel.INFO,
             'log_format': LogFormat.JSON,
             'output_destinations': ['file', 'console', 'remote'],
@@ -107,15 +97,13 @@ class TestStructuredLoggingComprehensive:
 
     @pytest.fixture
     async def structured_logger(self, logging_config):
-        """Create structured logger instance"""
-        logger = StructuredLogger('test_logger', logging_config)
+        """Create structured logger instance"""        logger = StructuredLogger('test_logger', logging_config)
         await logger.initialize()
         yield logger
         await logger.shutdown()
 
     def test_log_level_enum_comprehensive(self):
-        """Test LogLevel enum completeness and ordering"""
-        expected_levels = {
+        """Test LogLevel enum completeness and ordering"""        expected_levels = {
             'TRACE': 5, 'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25,
             'WARNING': 30, 'ERROR': 40, 'CRITICAL': 50,
             'SECURITY': 60, 'AUDIT': 70, 'BUSINESS': 80
@@ -131,8 +119,7 @@ class TestStructuredLoggingComprehensive:
         assert LogLevel.ERROR.value < LogLevel.CRITICAL.value < LogLevel.SECURITY.value
 
     def test_log_category_enum_comprehensive(self):
-        """Test LogCategory enum completeness"""
-        expected_categories = {
+        """Test LogCategory enum completeness"""        expected_categories = {
             'SYSTEM', 'SECURITY', 'BUSINESS', 'PERFORMANCE', 'AI_MODEL',
             'CONTENT_PROTECTION', 'USER_ACTION', 'INTEGRATION', 'ERROR',
             'AUDIT', 'COMPLIANCE'
@@ -142,14 +129,12 @@ class TestStructuredLoggingComprehensive:
         assert actual_categories == expected_categories
 
     def test_log_format_enum_comprehensive(self):
-        """Test LogFormat enum completeness"""
-        expected_formats = {'JSON', 'TEXT', 'STRUCTURED', 'SYSLOG', 'ELK'}
+        """Test LogFormat enum completeness"""        expected_formats = {'JSON', 'TEXT', 'STRUCTURED', 'SYSLOG', 'ELK'}
         actual_formats = {member.name for member in LogFormat}
         assert actual_formats == expected_formats
 
     def test_log_entry_creation_and_validation(self):
-        """Test LogEntry dataclass creation and validation"""
-        timestamp = datetime.now(timezone.utc)
+        """Test LogEntry dataclass creation and validation"""        timestamp = datetime.now(timezone.utc)
         
         log_entry = LogEntry(
             timestamp=timestamp,
@@ -188,8 +173,7 @@ class TestStructuredLoggingComprehensive:
 
     @pytest.mark.asyncio
     async def test_structured_logger_initialization_and_configuration(self, logging_config):
-        """Test structured logger initialization and configuration"""
-        logger = StructuredLogger('test_initialization', logging_config)
+        """Test structured logger initialization and configuration"""        logger = StructuredLogger('test_initialization', logging_config)
         
         # Test initialization
         result = await logger.initialize()
@@ -210,8 +194,7 @@ class TestStructuredLoggingComprehensive:
 
     @pytest.mark.asyncio
     async def test_basic_logging_operations_comprehensive(self, structured_logger):
-        """Test comprehensive basic logging operations"""
-        logger = structured_logger
+        """Test comprehensive basic logging operations"""        logger = structured_logger
         
         # Test all log levels
         log_messages = [
@@ -248,8 +231,7 @@ class TestStructuredLoggingComprehensive:
 
     @pytest.mark.asyncio
     async def test_structured_logging_with_context_comprehensive(self, structured_logger):
-        """Test structured logging with comprehensive context"""
-        logger = structured_logger
+        """Test structured logging with comprehensive context"""        logger = structured_logger
         
         # Test business context logging
         business_context = {
@@ -302,8 +284,7 @@ class TestStructuredLoggingComprehensive:
 
     @pytest.mark.asyncio
     async def test_error_logging_with_exception_details(self, structured_logger):
-        """Test comprehensive error logging with exception details"""
-        logger = structured_logger
+        """Test comprehensive error logging with exception details"""        logger = structured_logger
         
         # Simulate an exception
         try:
@@ -333,8 +314,7 @@ class TestStructuredLoggingComprehensive:
 
     @pytest.mark.asyncio
     async def test_audit_trail_logging_comprehensive(self, structured_logger):
-        """Test comprehensive audit trail logging"""
-        logger = structured_logger
+        """Test comprehensive audit trail logging"""        logger = structured_logger
         
         # Test user action audit
         user_action_audit = {
@@ -388,8 +368,7 @@ class TestStructuredLoggingComprehensive:
 
     @pytest.mark.asyncio
     async def test_log_aggregation_and_analysis(self, structured_logger, temp_log_dir):
-        """Test log aggregation and analysis functionality"""
-        logger = structured_logger
+        """Test log aggregation and analysis functionality"""        logger = structured_logger
         
         # Generate diverse log entries for analysis
         log_scenarios = [
@@ -466,8 +445,7 @@ class TestStructuredLoggingComprehensive:
 
     @pytest.mark.asyncio
     async def test_log_search_and_filtering_comprehensive(self, structured_logger, temp_log_dir):
-        """Test comprehensive log search and filtering"""
-        logger = structured_logger
+        """Test comprehensive log search and filtering"""        logger = structured_logger
         
         # Generate searchable log entries
         test_data = [
@@ -573,8 +551,7 @@ class TestStructuredLoggingComprehensive:
 
     @pytest.mark.asyncio
     async def test_log_rotation_and_archival(self, structured_logger, temp_log_dir):
-        """Test log rotation and archival functionality"""
-        logger = structured_logger
+        """Test log rotation and archival functionality"""        logger = structured_logger
         
         # Configure log rotation
         rotation_config = {
@@ -616,8 +593,7 @@ class TestStructuredLoggingComprehensive:
 
     @pytest.mark.asyncio
     async def test_compliance_logging_comprehensive(self, structured_logger):
-        """Test comprehensive compliance logging functionality"""
-        logger = structured_logger
+        """Test comprehensive compliance logging functionality"""        logger = structured_logger
         
         # Initialize compliance logger
         compliance_config = {
@@ -689,8 +665,7 @@ class TestStructuredLoggingComprehensive:
 
     @pytest.mark.asyncio
     async def test_log_performance_monitoring(self, structured_logger):
-        """Test logging performance monitoring"""
-        logger = structured_logger
+        """Test logging performance monitoring"""        logger = structured_logger
         
         # Enable performance monitoring
         await logger.enable_performance_monitoring(
@@ -732,8 +707,7 @@ class TestStructuredLoggingComprehensive:
 
     @pytest.mark.asyncio
     async def test_distributed_logging_correlation(self, structured_logger):
-        """Test distributed logging with correlation IDs"""
-        logger = structured_logger
+        """Test distributed logging with correlation IDs"""        logger = structured_logger
         
         # Test distributed trace logging
         trace_id = str(uuid4())
@@ -784,8 +758,7 @@ class TestStructuredLoggingComprehensive:
 
     @pytest.mark.asyncio
     async def test_real_time_log_streaming(self, structured_logger):
-        """Test real-time log streaming functionality"""
-        logger = structured_logger
+        """Test real-time log streaming functionality"""        logger = structured_logger
         
         # Configure streaming
         streaming_config = {
@@ -850,8 +823,7 @@ class TestStructuredLoggingComprehensive:
 
     @pytest.mark.asyncio
     async def test_log_security_and_encryption(self, structured_logger, temp_log_dir):
-        """Test log security features and encryption"""
-        logger = structured_logger
+        """Test log security features and encryption"""        logger = structured_logger
         
         # Configure security settings
         security_config = {
@@ -927,8 +899,7 @@ class TestStructuredLoggingComprehensive:
         assert 'audit_logged' in access_result
 
     def test_thread_safety_logging_operations(self, logging_config):
-        """Test thread safety of logging operations"""
-        import concurrent.futures
+        """Test thread safety of logging operations"""        import concurrent.futures
         import threading
         
         logger = StructuredLogger('thread_safety_test', logging_config)
@@ -984,8 +955,7 @@ class TestStructuredLoggingComprehensive:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_high_volume_logging_performance(self, structured_logger):
-        """Test performance with high volume logging"""
-        logger = structured_logger
+        """Test performance with high volume logging"""        logger = structured_logger
         
         # Configure for high performance
         await logger.configure_high_performance(
@@ -1042,8 +1012,7 @@ class TestStructuredLoggingComprehensive:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_end_to_end_logging_pipeline(self, structured_logger, temp_log_dir):
-        """Test end-to-end logging pipeline"""
-        logger = structured_logger
+        """Test end-to-end logging pipeline"""        logger = structured_logger
         
         # Step 1: Configure complete logging pipeline
         pipeline_config = {
@@ -1193,11 +1162,9 @@ class TestStructuredLoggingComprehensive:
 # Performance benchmarks
 @pytest.mark.benchmark
 class TestLoggingBenchmarks:
-    """Performance benchmarks for structured logging"""
-    
+    """Performance benchmarks for structured logging"""    
     def test_log_entry_creation_benchmark(self, benchmark):
-        """Benchmark log entry creation performance"""
-        def create_log_entry():
+        """Benchmark log entry creation performance"""        def create_log_entry():
             return LogEntry(
                 timestamp=datetime.now(timezone.utc),
                 level=LogLevel.INFO,
@@ -1215,8 +1182,7 @@ class TestLoggingBenchmarks:
         assert entry.extra_data['test'] == 'benchmark'
     
     def test_log_serialization_benchmark(self, benchmark):
-        """Benchmark log serialization performance"""
-        log_entry = LogEntry(
+        """Benchmark log serialization performance"""        log_entry = LogEntry(
             timestamp=datetime.now(timezone.utc),
             level=LogLevel.INFO,
             category=LogCategory.BUSINESS,

@@ -1,5 +1,4 @@
-"""
-Content Co-Creation Module - Enterprise Multi-Format Collaborative Content Creation
+"""Content Co-Creation Module - Enterprise Multi-Format Collaborative Content Creation
 
 Advanced content collaboration system enabling real-time multi-format content creation,
 collaborative editing, content merging, and creative workflow management for content creators.
@@ -22,9 +21,7 @@ Project Team Specialties:
 - Database Administrator: PostgreSQL/Redis/Vector DB
 - Security Engineer: Enterprise Security/Compliance
 - Microservices Architect: Distributed Systems
-"""
-
-import asyncio
+"""import asyncio
 import uuid
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Set, Union, Any, Tuple
@@ -50,8 +47,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Supported content types for co-creation"""
-    AUDIO = "audio"
+    """Supported content types for co-creation"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -64,8 +60,7 @@ class ContentType(Enum):
 
 
 class EditingMode(Enum):
-    """Content editing modes"""
-    REAL_TIME = "real_time"
+    """Content editing modes"""    REAL_TIME = "real_time"
     TURN_BASED = "turn_based"
     PARALLEL = "parallel"
     REVIEW_BASED = "review_based"
@@ -73,8 +68,7 @@ class EditingMode(Enum):
 
 
 class ConflictResolutionStrategy(Enum):
-    """Strategies for resolving content conflicts"""
-    MERGE = "merge"
+    """Strategies for resolving content conflicts"""    MERGE = "merge"
     OVERRIDE = "override"
     BRANCH = "branch"
     VOTE = "vote"
@@ -83,8 +77,7 @@ class ConflictResolutionStrategy(Enum):
 
 @dataclass
 class CoCreationWorkspace:
-    """
-    Advanced collaborative workspace for content creation
+    """    Advanced collaborative workspace for content creation
     
     Features:
     - Real-time collaborative editing
@@ -92,8 +85,7 @@ class CoCreationWorkspace:
     - Version control and branching
     - AI-assisted content merging
     - Permission-based access control
-    """
-    
+    """    
     workspace_id: str
     project_id: str
     participants: List[str]
@@ -107,15 +99,13 @@ class CoCreationWorkspace:
     active_sessions: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
-        """Initialize workspace resources"""
-        self.cache_manager = CacheManager()
+        """Initialize workspace resources"""        self.cache_manager = CacheManager()
         self.content_processor = ContentProcessor()
         self.notification_service = NotificationService()
 
 
 class CollaborativeEditingEngine:
-    """
-    Real-time collaborative editing engine with conflict resolution
+    """    Real-time collaborative editing engine with conflict resolution
     
     Capabilities:
     - Real-time content synchronization
@@ -123,8 +113,7 @@ class CollaborativeEditingEngine:
     - AI-powered conflict detection and resolution
     - Multi-format content support
     - Version history tracking
-    """
-    
+    """    
     def __init__(self, redis_client: redis.Redis = None):
         self.redis_client = redis_client or redis.from_url("redis://localhost:6379")
         self.cache_manager = CacheManager()
@@ -140,8 +129,7 @@ class CollaborativeEditingEngine:
         content_id: str,
         editing_mode: EditingMode = EditingMode.REAL_TIME
     ) -> Dict[str, Any]:
-        """Start a collaborative editing session"""
-        try:
+        """Start a collaborative editing session"""        try:
             session_id = f"edit_{workspace_id}_{user_id}_{uuid.uuid4().hex[:8]}"
             
             # Validate workspace access
@@ -196,8 +184,7 @@ class CollaborativeEditingEngine:
         session_id: str,
         operation: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply a content editing operation with conflict resolution"""
-        try:
+        """Apply a content editing operation with conflict resolution"""        try:
             if session_id not in self.active_sessions:
                 raise ValidationError("Invalid editing session")
             
@@ -248,8 +235,7 @@ class CollaborativeEditingEngine:
         resolution_strategy: ConflictResolutionStrategy,
         user_decision: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Resolve content editing conflicts using various strategies"""
-        try:
+        """Resolve content editing conflicts using various strategies"""        try:
             # Load conflict details
             conflict = await self._get_conflict_details(conflict_id)
             if not conflict:
@@ -292,8 +278,7 @@ class CollaborativeEditingEngine:
             raise BusinessLogicError(f"Failed to resolve conflict: {str(e)}")
     
     async def end_editing_session(self, session_id: str) -> Dict[str, Any]:
-        """End a collaborative editing session"""
-        try:
+        """End a collaborative editing session"""        try:
             if session_id not in self.active_sessions:
                 raise ValidationError("Invalid editing session")
             
@@ -333,8 +318,7 @@ class CollaborativeEditingEngine:
     
     # Private helper methods
     async def _get_workspace(self, workspace_id: str) -> Optional[CoCreationWorkspace]:
-        """Get workspace details"""
-        try:
+        """Get workspace details"""        try:
             cache_key = f"workspace:{workspace_id}"
             cached_workspace = await self.cache_manager.get(cache_key)
             
@@ -353,8 +337,7 @@ class CollaborativeEditingEngine:
             return None
     
     async def _check_edit_permission(self, workspace_id: str, user_id: str) -> bool:
-        """Check if user has edit permissions"""
-        workspace = await self._get_workspace(workspace_id)
+        """Check if user has edit permissions"""        workspace = await self._get_workspace(workspace_id)
         if not workspace:
             return False
         
@@ -362,8 +345,7 @@ class CollaborativeEditingEngine:
         return "edit" in user_permissions or "admin" in user_permissions
     
     async def _acquire_edit_lock(self, content_id: str, user_id: str) -> bool:
-        """Acquire exclusive edit lock"""
-        lock_key = f"edit_lock:{content_id}"
+        """Acquire exclusive edit lock"""        lock_key = f"edit_lock:{content_id}"
         lock_acquired = await self.redis_client.set(
             lock_key, 
             user_id, 
@@ -373,24 +355,20 @@ class CollaborativeEditingEngine:
         return bool(lock_acquired)
     
     async def _release_edit_lock(self, content_id: str, user_id: str) -> bool:
-        """Release edit lock"""
-        lock_key = f"edit_lock:{content_id}"
+        """Release edit lock"""        lock_key = f"edit_lock:{content_id}"
         
         # Use Lua script to ensure atomic check and delete
-        lua_script = """
-        if redis.call("get", KEYS[1]) == ARGV[1] then
+        lua_script = """        if redis.call("get", KEYS[1]) == ARGV[1] then
             return redis.call("del", KEYS[1])
         else
             return 0
         end
-        """
-        
+        """        
         result = await self.redis_client.eval(lua_script, 1, lock_key, user_id)
         return bool(result)
     
     async def _load_content_state(self, content_id: str) -> Dict[str, Any]:
-        """Load current content state"""
-        try:
+        """Load current content state"""        try:
             cache_key = f"content_state:{content_id}"
             cached_state = await self.cache_manager.get(cache_key)
             
@@ -441,8 +419,7 @@ class CollaborativeEditingEngine:
         operation: Dict[str, Any], 
         session: CoCreationSession
     ) -> Dict[str, Any]:
-        """Validate content operation"""
-        required_fields = ["type", "data", "position"]
+        """Validate content operation"""        required_fields = ["type", "data", "position"]
         
         for field in required_fields:
             if field not in operation:
@@ -461,8 +438,7 @@ class CollaborativeEditingEngine:
         operation: Dict[str, Any], 
         session_id: str
     ) -> Dict[str, Any]:
-        """Apply operational transformation for concurrent operations"""
-        try:
+        """Apply operational transformation for concurrent operations"""        try:
             # Get concurrent operations
             concurrent_ops = [
                 op for op in self.operation_queue.get(session_id, [])
@@ -492,8 +468,7 @@ class CollaborativeEditingEngine:
         op1: Dict[str, Any], 
         op2: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Transform two operations for concurrent editing"""
-        # Simplified operational transformation
+        """Transform two operations for concurrent editing"""        # Simplified operational transformation
         # In production, use a comprehensive OT algorithm
         
         if op1["type"] == "insert" and op2["type"] == "insert":
@@ -515,8 +490,7 @@ class CollaborativeEditingEngine:
         content_id: str, 
         operation: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply operation to content"""
-        try:
+        """Apply operation to content"""        try:
             content_state = await self._load_content_state(content_id)
             
             if operation["type"] == "insert":
@@ -576,8 +550,7 @@ class CollaborativeEditingEngine:
 
 
 class ContentMergingSystem:
-    """
-    AI-powered content merging system for collaborative content creation
+    """    AI-powered content merging system for collaborative content creation
     
     Features:
     - Intelligent content merging
@@ -585,8 +558,7 @@ class ContentMergingSystem:
     - Quality assessment
     - Format compatibility checking
     - Version reconciliation
-    """
-    
+    """    
     def __init__(self):
         self.content_processor = ContentProcessor()
         self.format_manager = ContentFormatManager()
@@ -599,8 +571,7 @@ class ContentMergingSystem:
         version_b: Dict[str, Any],
         merge_strategy: str = "ai_assisted"
     ) -> Dict[str, Any]:
-        """Merge multiple content versions intelligently"""
-        try:
+        """Merge multiple content versions intelligently"""        try:
             merge_id = str(uuid.uuid4())
             
             # Analyze content differences
@@ -647,8 +618,7 @@ class ContentMergingSystem:
         version_a: Dict[str, Any],
         version_b: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze differences between content versions"""
-        try:
+        """Analyze differences between content versions"""        try:
             # Use AI to analyze content semantically
             analysis = await self.content_processor.analyze_content_differences(
                 base, version_a, version_b
@@ -667,8 +637,7 @@ class ContentMergingSystem:
             return {}
     
     async def _detect_merge_conflicts(self, diff_analysis: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect conflicts in content merging"""
-        conflicts = []
+        """Detect conflicts in content merging"""        conflicts = []
         
         # Structural conflicts
         structural_changes = diff_analysis.get("structural_changes", [])
@@ -701,8 +670,7 @@ class ContentMergingSystem:
         version_b: Dict[str, Any],
         conflicts: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """AI-assisted intelligent content merging"""
-        try:
+        """AI-assisted intelligent content merging"""        try:
             # Use AI to suggest optimal merge strategy
             merge_suggestions = await self.content_processor.generate_merge_suggestions(
                 base, version_a, version_b, conflicts
@@ -726,8 +694,7 @@ class ContentMergingSystem:
 
 
 class CreativeWorkflowManager:
-    """
-    Advanced creative workflow management for collaborative content creation
+    """    Advanced creative workflow management for collaborative content creation
     
     Features:
     - Custom workflow templates
@@ -735,8 +702,7 @@ class CreativeWorkflowManager:
     - Progress tracking
     - Quality gates
     - Deadline management
-    """
-    
+    """    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.notification_service = NotificationService()
@@ -751,8 +717,7 @@ class CreativeWorkflowManager:
         content_goals: Dict[str, Any],
         timeline: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create a new creative workflow"""
-        try:
+        """Create a new creative workflow"""        try:
             workflow_id = f"workflow_{project_id}_{uuid.uuid4().hex[:8]}"
             
             # Load workflow template
@@ -800,8 +765,7 @@ class CreativeWorkflowManager:
             raise BusinessLogicError(f"Failed to create workflow: {str(e)}")
     
     async def _get_workflow_template(self, workflow_type: str) -> Optional[Dict[str, Any]]:
-        """Get workflow template by type"""
-        templates = {
+        """Get workflow template by type"""        templates = {
             "music_collaboration": {
                 "phases": [
                     {
@@ -852,8 +816,7 @@ class CreativeWorkflowManager:
 
 
 class MultiFormatCoCreator:
-    """
-    Multi-format content co-creation engine supporting various content types
+    """    Multi-format content co-creation engine supporting various content types
     
     Features:
     - Cross-format content adaptation
@@ -861,8 +824,7 @@ class MultiFormatCoCreator:
     - Quality optimization per format
     - Platform-specific customization
     - Automated format conversion
-    """
-    
+    """    
     def __init__(self):
         self.format_manager = ContentFormatManager()
         self.content_processor = ContentProcessor()
@@ -880,8 +842,7 @@ class MultiFormatCoCreator:
         target_formats: List[str],
         adaptation_strategy: str = "ai_optimized"
     ) -> Dict[str, Any]:
-        """Create content in multiple formats from source content"""
-        try:
+        """Create content in multiple formats from source content"""        try:
             creation_id = str(uuid.uuid4())
             results = {}
             
@@ -924,8 +885,7 @@ class MultiFormatCoCreator:
         target_format: str,
         strategy: str
     ) -> Dict[str, Any]:
-        """Adapt content to specific format requirements"""
-        try:
+        """Adapt content to specific format requirements"""        try:
             if strategy == "ai_optimized":
                 return await self.content_processor.ai_format_adaptation(
                     source_content, target_format
@@ -940,8 +900,7 @@ class MultiFormatCoCreator:
             return source_content
     
     async def _is_format_supported(self, format_type: str) -> bool:
-        """Check if format is supported"""
-        for category, formats in self.supported_formats.items():
+        """Check if format is supported"""        for category, formats in self.supported_formats.items():
             if format_type in formats:
                 return True
         return False
@@ -951,8 +910,7 @@ class MultiFormatCoCreator:
         content: Dict[str, Any],
         target_format: str
     ) -> Dict[str, Any]:
-        """Optimize content for specific format"""
-        try:
+        """Optimize content for specific format"""        try:
             return await self.format_manager.optimize_content(content, target_format)
         except Exception as e:
             logger.error(f"Error optimizing for format: {e}")
@@ -963,16 +921,14 @@ class MultiFormatCoCreator:
         content: Dict[str, Any],
         format_type: str
     ) -> float:
-        """Assess quality of content in specific format"""
-        try:
+        """Assess quality of content in specific format"""        try:
             return await self.content_processor.assess_format_quality(content, format_type)
         except Exception as e:
             logger.error(f"Error assessing format quality: {e}")
             return 0.5
     
     async def _load_from_database(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Load content state from persistent database storage"""
-        try:
+        """Load content state from persistent database storage"""        try:
             # This would interface with your database layer
             # For now, returning None to indicate not found
             # In a real implementation, this would:

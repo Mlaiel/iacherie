@@ -1,5 +1,4 @@
-"""
-Event Processor Engine - IA-Influencer-Agent
+"""Event Processor Engine - IA-Influencer-Agent
 ================================================================================
 Module: backend/crawlers/workers/event_processor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,9 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Event ingestion → Event validation → Event routing → 
 Processing pipeline → State management → Notification → Audit trail
-"""
-
-from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, Generic, TypeVar
+"""from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, Generic, TypeVar
 import logging
 import asyncio
 import json
@@ -47,8 +44,7 @@ T = TypeVar('T')
 
 
 class EventType(Enum):
-    """Types of events in the system"""
-    WORKER_STARTED = "worker_started"
+    """Types of events in the system"""    WORKER_STARTED = "worker_started"
     WORKER_STOPPED = "worker_stopped"
     WORKER_STATUS_CHANGED = "worker_status_changed"
     TASK_SUBMITTED = "task_submitted"
@@ -69,8 +65,7 @@ class EventType(Enum):
 
 
 class EventPriority(Enum):
-    """Event processing priorities"""
-    CRITICAL = 1
+    """Event processing priorities"""    CRITICAL = 1
     HIGH = 2
     NORMAL = 3
     LOW = 4
@@ -78,8 +73,7 @@ class EventPriority(Enum):
 
 
 class EventStatus(Enum):
-    """Event processing status"""
-    PENDING = "pending"
+    """Event processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -88,8 +82,7 @@ class EventStatus(Enum):
 
 
 class ProcessingMode(Enum):
-    """Event processing modes"""
-    SYNCHRONOUS = "synchronous"
+    """Event processing modes"""    SYNCHRONOUS = "synchronous"
     ASYNCHRONOUS = "asynchronous"
     BATCH = "batch"
     STREAMING = "streaming"
@@ -98,8 +91,7 @@ class ProcessingMode(Enum):
 
 @dataclass
 class WorkerEvent:
-    """Worker system event"""
-    event_id: str
+    """Worker system event"""    event_id: str
     event_type: EventType
     source: str
     target: Optional[str] = None
@@ -117,8 +109,7 @@ class WorkerEvent:
 
 @dataclass
 class EventProcessingResult:
-    """Result of event processing"""
-    event_id: str
+    """Result of event processing"""    event_id: str
     status: EventStatus
     result_data: Optional[Dict[str, Any]] = None
     error_message: Optional[str] = None
@@ -129,8 +120,7 @@ class EventProcessingResult:
 
 @dataclass
 class EventHandler:
-    """Event handler registration"""
-    handler_id: str
+    """Event handler registration"""    handler_id: str
     event_types: List[EventType]
     handler_func: Callable[[WorkerEvent], Any]
     priority: int = 100
@@ -141,8 +131,7 @@ class EventHandler:
 
 
 class EventProcessor:
-    """
-    High-performance event processor for worker system
+    """    High-performance event processor for worker system
     
     Features:
     - Real-time event processing
@@ -152,9 +141,7 @@ class EventProcessor:
     - Retry mechanisms with backoff
     - Event correlation and causation
     - Performance monitoring
-    """
-
-    def __init__(self, processor_id: str = None, max_concurrent_events: int = 100):
+    """    def __init__(self, processor_id: str = None, max_concurrent_events: int = 100):
         self.processor_id = processor_id or str(uuid.uuid4())
         self.max_concurrent_events = max_concurrent_events
         
@@ -203,8 +190,7 @@ class EventProcessor:
         )
 
     async def start(self) -> bool:
-        """Start event processor"""
-        try:
+        """Start event processor"""        try:
             logger.info(f"🚀 Starting event processor: {self.processor_id}")
             
             # Start background tasks
@@ -223,8 +209,7 @@ class EventProcessor:
             return False
 
     async def stop(self) -> None:
-        """Stop event processor gracefully"""
-        try:
+        """Stop event processor gracefully"""        try:
             logger.info(f"🛑 Stopping event processor: {self.processor_id}")
             
             self.is_running = False
@@ -253,8 +238,7 @@ class EventProcessor:
             logger.error(f"❌ Error stopping event processor {self.processor_id}: {e}")
 
     async def publish_event(self, event: WorkerEvent) -> bool:
-        """Publish an event for processing"""
-        try:
+        """Publish an event for processing"""        try:
             # Validate event
             if not await self._validate_event(event):
                 logger.warning(f"❌ Invalid event rejected: {event.event_id}")
@@ -275,8 +259,7 @@ class EventProcessor:
             return False
 
     async def register_handler(self, handler: EventHandler) -> bool:
-        """Register an event handler"""
-        try:
+        """Register an event handler"""        try:
             # Validate handler
             if not await self._validate_handler(handler):
                 logger.warning(f"❌ Invalid handler rejected: {handler.handler_id}")
@@ -297,8 +280,7 @@ class EventProcessor:
             return False
 
     async def unregister_handler(self, handler_id: str) -> bool:
-        """Unregister an event handler"""
-        try:
+        """Unregister an event handler"""        try:
             handler = self.handler_registry.get(handler_id)
             if not handler:
                 logger.warning(f"⚠️ Handler not found: {handler_id}")
@@ -320,8 +302,7 @@ class EventProcessor:
             return False
 
     async def get_processing_status(self) -> Dict[str, Any]:
-        """Get comprehensive processing status"""
-        try:
+        """Get comprehensive processing status"""        try:
             return {
                 "processor_id": self.processor_id,
                 "is_running": self.is_running,
@@ -343,8 +324,7 @@ class EventProcessor:
     async def replay_events(self, from_timestamp: datetime, 
                           to_timestamp: Optional[datetime] = None,
                           event_types: Optional[List[EventType]] = None) -> int:
-        """Replay events from event store"""
-        try:
+        """Replay events from event store"""        try:
             to_timestamp = to_timestamp or datetime.utcnow()
             
             # Filter events
@@ -384,8 +364,7 @@ class EventProcessor:
             return 0
 
     async def create_snapshot(self, entity_id: str, entity_data: Dict[str, Any]) -> bool:
-        """Create an entity snapshot for event sourcing"""
-        try:
+        """Create an entity snapshot for event sourcing"""        try:
             snapshot = {
                 "entity_id": entity_id,
                 "snapshot_data": entity_data,
@@ -403,8 +382,7 @@ class EventProcessor:
             return False
 
     async def _start_background_tasks(self) -> None:
-        """Start background processing tasks"""
-        try:
+        """Start background processing tasks"""        try:
             # Main event processor
             processor_task = asyncio.create_task(self._event_processor_loop())
             self.background_tasks.add(processor_task)
@@ -428,8 +406,7 @@ class EventProcessor:
             raise
 
     async def _event_processor_loop(self) -> None:
-        """Main event processing loop"""
-        while not self.shutdown_event.is_set():
+        """Main event processing loop"""        while not self.shutdown_event.is_set():
             try:
                 # Get next event with timeout
                 try:
@@ -448,8 +425,7 @@ class EventProcessor:
                 await asyncio.sleep(5)
 
     async def _process_event(self, event: WorkerEvent) -> None:
-        """Process a single event"""
-        async with self.processing_semaphore:
+        """Process a single event"""        async with self.processing_semaphore:
             start_time = time.time()
             
             try:
@@ -486,8 +462,7 @@ class EventProcessor:
                 self.processing_events.pop(event.event_id, None)
 
     async def _get_event_handlers(self, event: WorkerEvent) -> List[EventHandler]:
-        """Get all handlers for an event"""
-        try:
+        """Get all handlers for an event"""        try:
             handlers = []
             
             # Get specific handlers for event type
@@ -511,8 +486,7 @@ class EventProcessor:
             return []
 
     async def _should_handle_event(self, handler: EventHandler, event: WorkerEvent) -> bool:
-        """Check if handler should process event"""
-        try:
+        """Check if handler should process event"""        try:
             # Check event type
             if event.event_type not in handler.event_types:
                 return False
@@ -535,8 +509,7 @@ class EventProcessor:
             return False
 
     async def _execute_handlers(self, event: WorkerEvent, handlers: List[EventHandler]) -> List[EventProcessingResult]:
-        """Execute all handlers for an event"""
-        try:
+        """Execute all handlers for an event"""        try:
             results = []
             
             # Execute handlers based on their configuration
@@ -562,8 +535,7 @@ class EventProcessor:
             return []
 
     async def _execute_single_handler(self, event: WorkerEvent, handler: EventHandler) -> EventProcessingResult:
-        """Execute a single handler"""
-        start_time = time.time()
+        """Execute a single handler"""        start_time = time.time()
         
         try:
             if handler.is_async:
@@ -610,8 +582,7 @@ class EventProcessor:
             )
 
     async def _mark_event_completed(self, event: WorkerEvent, status: EventStatus, start_time: float) -> None:
-        """Mark event as completed"""
-        try:
+        """Mark event as completed"""        try:
             processing_time = time.time() - start_time
             
             result = EventProcessingResult(
@@ -634,8 +605,7 @@ class EventProcessor:
             logger.error(f"❌ Failed to mark event completed: {e}")
 
     async def _mark_event_failed(self, event: WorkerEvent, error_message: str, start_time: float) -> None:
-        """Mark event as failed"""
-        try:
+        """Mark event as failed"""        try:
             processing_time = time.time() - start_time
             
             result = EventProcessingResult(
@@ -654,8 +624,7 @@ class EventProcessor:
             logger.error(f"❌ Failed to mark event failed: {e}")
 
     async def _validate_event(self, event: WorkerEvent) -> bool:
-        """Validate event before processing"""
-        try:
+        """Validate event before processing"""        try:
             # Basic validation
             if not event.event_id or not event.event_type or not event.source:
                 return False
@@ -671,8 +640,7 @@ class EventProcessor:
             return False
 
     async def _validate_handler(self, handler: EventHandler) -> bool:
-        """Validate event handler before registration"""
-        try:
+        """Validate event handler before registration"""        try:
             # Basic validation
             if not handler.handler_id or not handler.event_types or not handler.handler_func:
                 return False
@@ -692,8 +660,7 @@ class EventProcessor:
             return False
 
     async def _wait_for_processing_completion(self) -> None:
-        """Wait for all processing events to complete"""
-        try:
+        """Wait for all processing events to complete"""        try:
             timeout = 60  # 1 minute timeout
             start_time = time.time()
             
@@ -707,8 +674,7 @@ class EventProcessor:
             logger.error(f"❌ Failed to wait for processing completion: {e}")
 
     async def _stats_updater_loop(self) -> None:
-        """Background stats update loop"""
-        while not self.shutdown_event.is_set():
+        """Background stats update loop"""        while not self.shutdown_event.is_set():
             try:
                 await self._update_processing_stats()
                 await asyncio.sleep(60)  # Update every minute
@@ -718,8 +684,7 @@ class EventProcessor:
                 await asyncio.sleep(120)
 
     async def _update_processing_stats(self) -> None:
-        """Update processing statistics"""
-        try:
+        """Update processing statistics"""        try:
             # Update total events
             total_events = self.processing_stats["successful_events"] + self.processing_stats["failed_events"]
             self.processing_stats["total_events"] = total_events
@@ -733,8 +698,7 @@ class EventProcessor:
             logger.error(f"❌ Failed to update processing stats: {e}")
 
     async def _cleanup_loop(self) -> None:
-        """Background cleanup loop"""
-        while not self.shutdown_event.is_set():
+        """Background cleanup loop"""        while not self.shutdown_event.is_set():
             try:
                 await self._cleanup_old_events()
                 await asyncio.sleep(3600)  # Cleanup every hour
@@ -744,8 +708,7 @@ class EventProcessor:
                 await asyncio.sleep(1800)
 
     async def _cleanup_old_events(self) -> None:
-        """Clean up old events from event store"""
-        try:
+        """Clean up old events from event store"""        try:
             # Keep events for 7 days
             cutoff_time = datetime.utcnow() - timedelta(days=7)
             
@@ -763,8 +726,7 @@ class EventProcessor:
             logger.error(f"❌ Failed to cleanup old events: {e}")
 
     async def _health_monitor_loop(self) -> None:
-        """Background health monitoring loop"""
-        while not self.shutdown_event.is_set():
+        """Background health monitoring loop"""        while not self.shutdown_event.is_set():
             try:
                 await self._check_processor_health()
                 await asyncio.sleep(300)  # Check every 5 minutes
@@ -774,8 +736,7 @@ class EventProcessor:
                 await asyncio.sleep(600)
 
     async def _check_processor_health(self) -> None:
-        """Check processor health and emit alerts if needed"""
-        try:
+        """Check processor health and emit alerts if needed"""        try:
             status = await self.get_processing_status()
             
             # Check queue size
@@ -796,8 +757,7 @@ class EventProcessor:
             logger.error(f"❌ Failed to check processor health: {e}")
 
     async def _emit_health_alert(self, alert_type: str, value: Any) -> None:
-        """Emit health alert event"""
-        try:
+        """Emit health alert event"""        try:
             alert_event = WorkerEvent(
                 event_id=str(uuid.uuid4()),
                 event_type=EventType.PERFORMANCE_ALERT,
@@ -818,12 +778,9 @@ class EventProcessor:
 
 
 class WorkerEventFactory:
-    """Factory for creating worker events"""
-
-    @staticmethod
+    """Factory for creating worker events"""    @staticmethod
     def create_worker_started_event(worker_id: str, worker_config: Dict[str, Any]) -> WorkerEvent:
-        """Create worker started event"""
-        return WorkerEvent(
+        """Create worker started event"""        return WorkerEvent(
             event_id=str(uuid.uuid4()),
             event_type=EventType.WORKER_STARTED,
             source=f"worker_{worker_id}",
@@ -837,8 +794,7 @@ class WorkerEventFactory:
 
     @staticmethod
     def create_task_completed_event(worker_id: str, task: CrawlerTask, result: TaskResult) -> WorkerEvent:
-        """Create task completed event"""
-        return WorkerEvent(
+        """Create task completed event"""        return WorkerEvent(
             event_id=str(uuid.uuid4()),
             event_type=EventType.TASK_COMPLETED,
             source=f"worker_{worker_id}",
@@ -859,8 +815,7 @@ class WorkerEventFactory:
 
     @staticmethod
     def create_content_protected_event(content_id: str, fingerprint_data: Dict[str, Any]) -> WorkerEvent:
-        """Create content protected event"""
-        return WorkerEvent(
+        """Create content protected event"""        return WorkerEvent(
             event_id=str(uuid.uuid4()),
             event_type=EventType.CONTENT_PROTECTED,
             source="fingerprint_engine",
@@ -875,8 +830,7 @@ class WorkerEventFactory:
 
     @staticmethod
     def create_violation_detected_event(content_id: str, violation_data: Dict[str, Any]) -> WorkerEvent:
-        """Create violation detected event"""
-        return WorkerEvent(
+        """Create violation detected event"""        return WorkerEvent(
             event_id=str(uuid.uuid4()),
             event_type=EventType.VIOLATION_DETECTED,
             source="content_monitor",
@@ -896,16 +850,14 @@ _event_processors: Dict[str, EventProcessor] = {}
 
 
 def get_event_processor(processor_id: str = "default") -> EventProcessor:
-    """Get or create event processor"""
-    if processor_id not in _event_processors:
+    """Get or create event processor"""    if processor_id not in _event_processors:
         _event_processors[processor_id] = EventProcessor(processor_id)
     
     return _event_processors[processor_id]
 
 
 async def initialize_event_processing() -> bool:
-    """Initialize global event processing"""
-    try:
+    """Initialize global event processing"""    try:
         processor = get_event_processor()
         return await processor.start()
         
@@ -915,8 +867,7 @@ async def initialize_event_processing() -> bool:
 
 
 async def shutdown_event_processing() -> None:
-    """Shutdown all event processors"""
-    try:
+    """Shutdown all event processors"""    try:
         for processor in _event_processors.values():
             await processor.stop()
         
@@ -929,8 +880,7 @@ async def shutdown_event_processing() -> None:
 # High-level event publishing functions
 async def publish_worker_event(event_type: EventType, source: str, payload: Dict[str, Any], 
                               priority: EventPriority = EventPriority.NORMAL) -> bool:
-    """Publish a worker event"""
-    try:
+    """Publish a worker event"""    try:
         event = WorkerEvent(
             event_id=str(uuid.uuid4()),
             event_type=event_type,
@@ -949,8 +899,7 @@ async def publish_worker_event(event_type: EventType, source: str, payload: Dict
 
 async def register_event_handler(event_types: List[EventType], handler_func: Callable,
                                 handler_id: str = None, priority: int = 100) -> bool:
-    """Register an event handler"""
-    try:
+    """Register an event handler"""    try:
         handler_id = handler_id or str(uuid.uuid4())
         
         handler = EventHandler(

@@ -1,5 +1,4 @@
-"""
-Social Media Analytics Repository
+"""Social Media Analytics Repository
 
 Enterprise-grade repository for comprehensive social media analytics,
 engagement tracking, and performance optimization across platforms.
@@ -23,9 +22,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-
-from typing import Dict, List, Optional, Union, Any, Tuple
+"""from typing import Dict, List, Optional, Union, Any, Tuple
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, desc, func, text, case
 from datetime import datetime, timedelta
@@ -40,14 +37,11 @@ from ..models.social_media_analytics import SocialMediaAnalytics
 logger = logging.getLogger(__name__)
 
 class SocialMediaAnalyticsRepository(BaseRepository[SocialMediaAnalytics]):
-    """
-    Repository for social media analytics management with enterprise-grade
+    """    Repository for social media analytics management with enterprise-grade
     features including cross-platform analytics, engagement optimization, and AI insights.
-    """
-    
+    """    
     def __init__(self, db_session: Session):
-        """Initialize Social Media Analytics Repository"""
-        super().__init__(db_session, SocialMediaAnalytics)
+        """Initialize Social Media Analytics Repository"""        super().__init__(db_session, SocialMediaAnalytics)
         
     def record_analytics_data(self, 
                             user_id: int,
@@ -57,8 +51,7 @@ class SocialMediaAnalyticsRepository(BaseRepository[SocialMediaAnalytics]):
                             metrics: Dict[str, Any],
                             engagement_data: Dict[str, Any],
                             audience_data: Optional[Dict[str, Any]] = None) -> SocialMediaAnalytics:
-        """
-        Record social media analytics data for a post
+        """        Record social media analytics data for a post
         
         Args:
             user_id: User ID
@@ -71,8 +64,7 @@ class SocialMediaAnalyticsRepository(BaseRepository[SocialMediaAnalytics]):
             
         Returns:
             Created analytics record
-        """
-        try:
+        """        try:
             analytics_data = {
                 'user_id': user_id,
                 'platform': platform,
@@ -97,8 +89,7 @@ class SocialMediaAnalyticsRepository(BaseRepository[SocialMediaAnalytics]):
                                analytics_id: int,
                                updated_metrics: Dict[str, Any],
                                updated_engagement: Optional[Dict[str, Any]] = None) -> Optional[SocialMediaAnalytics]:
-        """
-        Update existing analytics metrics with new data
+        """        Update existing analytics metrics with new data
         
         Args:
             analytics_id: Analytics record ID
@@ -107,8 +98,7 @@ class SocialMediaAnalyticsRepository(BaseRepository[SocialMediaAnalytics]):
             
         Returns:
             Updated analytics record
-        """
-        try:
+        """        try:
             analytics = self.get_by_id(analytics_id)
             if not analytics:
                 return None
@@ -143,8 +133,7 @@ class SocialMediaAnalyticsRepository(BaseRepository[SocialMediaAnalytics]):
                          days: int = 30,
                          limit: int = 100,
                          offset: int = 0) -> List[SocialMediaAnalytics]:
-        """
-        Get user's social media analytics with filtering
+        """        Get user's social media analytics with filtering
         
         Args:
             user_id: User ID
@@ -155,8 +144,7 @@ class SocialMediaAnalyticsRepository(BaseRepository[SocialMediaAnalytics]):
             
         Returns:
             List of analytics records
-        """
-        try:
+        """        try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
             filters = {
@@ -183,8 +171,7 @@ class SocialMediaAnalyticsRepository(BaseRepository[SocialMediaAnalytics]):
     def get_platform_performance_summary(self, 
                                        user_id: int,
                                        days: int = 30) -> Dict[str, Any]:
-        """
-        Get comprehensive platform performance summary
+        """        Get comprehensive platform performance summary
         
         Args:
             user_id: User ID
@@ -192,8 +179,7 @@ class SocialMediaAnalyticsRepository(BaseRepository[SocialMediaAnalytics]):
             
         Returns:
             Platform performance summary
-        """
-        try:
+        """        try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
             analytics_records = self.db_session.query(SocialMediaAnalytics).filter(
@@ -281,8 +267,7 @@ class SocialMediaAnalyticsRepository(BaseRepository[SocialMediaAnalytics]):
             raise RepositoryException(f"Failed to get platform performance summary: {str(e)}")
             
     def _aggregate_audience_data(self, target: Dict[str, Any], source: Dict[str, Any]) -> None:
-        """Aggregate audience data from multiple records"""
-        for key, value in source.items():
+        """Aggregate audience data from multiple records"""        for key, value in source.items():
             if key == 'demographics':
                 if 'demographics' not in target:
                     target['demographics'] = {}
@@ -300,8 +285,7 @@ class SocialMediaAnalyticsRepository(BaseRepository[SocialMediaAnalytics]):
                             user_id: int,
                             platform: Optional[str] = None,
                             days: int = 30) -> Dict[str, Any]:
-        """
-        Get engagement trends and patterns analysis
+        """        Get engagement trends and patterns analysis
         
         Args:
             user_id: User ID
@@ -310,8 +294,7 @@ class SocialMediaAnalyticsRepository(BaseRepository[SocialMediaAnalytics]):
             
         Returns:
             Engagement trends data
-        """
-        try:
+        """        try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
             query = self.db_session.query(SocialMediaAnalytics).filter(
@@ -413,8 +396,7 @@ class SocialMediaAnalyticsRepository(BaseRepository[SocialMediaAnalytics]):
     def _identify_best_posting_times(self, 
                                    hourly_patterns: Dict[int, Any],
                                    weekly_patterns: Dict[str, Any]) -> Dict[str, Any]:
-        """Identify best posting times based on engagement patterns"""
-        best_hours = sorted(
+        """Identify best posting times based on engagement patterns"""        best_hours = sorted(
             hourly_patterns.items(),
             key=lambda x: x[1].get('average_engagement_rate', 0),
             reverse=True
@@ -450,8 +432,7 @@ class SocialMediaAnalyticsRepository(BaseRepository[SocialMediaAnalytics]):
                               competitor_ids: List[int],
                               platform: str,
                               days: int = 30) -> Dict[str, Any]:
-        """
-        Get competitor analysis and benchmarking data
+        """        Get competitor analysis and benchmarking data
         
         Args:
             user_id: User ID
@@ -461,8 +442,7 @@ class SocialMediaAnalyticsRepository(BaseRepository[SocialMediaAnalytics]):
             
         Returns:
             Competitor analysis data
-        """
-        try:
+        """        try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
             # Get user's analytics
@@ -536,8 +516,7 @@ class SocialMediaAnalyticsRepository(BaseRepository[SocialMediaAnalytics]):
             raise RepositoryException(f"Failed to get competitor analysis: {str(e)}")
             
     def _calculate_user_metrics(self, analytics_records: List[SocialMediaAnalytics]) -> Dict[str, Any]:
-        """Calculate metrics for a user's analytics records"""
-        if not analytics_records:
+        """Calculate metrics for a user's analytics records"""        if not analytics_records:
             return {
                 'total_posts': 0,
                 'average_engagement_rate': 0,
@@ -587,8 +566,7 @@ class SocialMediaAnalyticsRepository(BaseRepository[SocialMediaAnalytics]):
                                            user_metrics: Dict[str, Any],
                                            benchmark_engagement: float,
                                            benchmark_frequency: float) -> List[str]:
-        """Generate recommendations based on competitor analysis"""
-        recommendations = []
+        """Generate recommendations based on competitor analysis"""        recommendations = []
         
         if user_metrics['average_engagement_rate'] < benchmark_engagement:
             recommendations.append(
@@ -611,8 +589,7 @@ class SocialMediaAnalyticsRepository(BaseRepository[SocialMediaAnalytics]):
                                        user_id: int,
                                        platform: Optional[str] = None,
                                        days: int = 30) -> Dict[str, Any]:
-        """
-        Get insights on content performance patterns
+        """        Get insights on content performance patterns
         
         Args:
             user_id: User ID
@@ -621,8 +598,7 @@ class SocialMediaAnalyticsRepository(BaseRepository[SocialMediaAnalytics]):
             
         Returns:
             Content performance insights
-        """
-        try:
+        """        try:
             analytics_records = self.get_user_analytics(user_id, platform, days, limit=1000)
             
             content_insights = {

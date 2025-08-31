@@ -1,21 +1,17 @@
 #!/usr/bin/env python3
-"""
-Standalone Security Audit & Compliance Validation
+"""Standalone Security Audit & Compliance Validation
 Simple validation test for the implemented security features.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import sys
+"""import sys
 import os
 import asyncio
 from datetime import datetime, timezone, timedelta
 
 
 def test_file_existence():
-    """Test that all security files were created successfully"""
-    
+    """Test that all security files were created successfully"""    
     print("🔍 Checking Security Implementation Files...")
     
     required_files = [
@@ -45,8 +41,7 @@ def test_file_existence():
 
 
 def test_file_content():
-    """Test that security files contain expected functionality"""
-    
+    """Test that security files contain expected functionality"""    
     print("\n🔍 Checking Security Implementation Content...")
     
     # Test audit_trail.py
@@ -127,8 +122,7 @@ def test_file_content():
 
 
 def test_security_features():
-    """Test key security features"""
-    
+    """Test key security features"""    
     print("\n🔍 Testing Security Feature Implementation...")
     
     # Test 1: Security Audit Trail - replace placeholders
@@ -159,8 +153,7 @@ def test_security_features():
 
 
 def test_compliance_standards():
-    """Test compliance standard coverage"""
-    
+    """Test compliance standard coverage"""    
     print("\n🔍 Checking Compliance Standards Coverage...")
     
     # Check for compliance standards in the code
@@ -180,8 +173,7 @@ def test_compliance_standards():
 
 
 def test_integration_points():
-    """Test integration between security components"""
-    
+    """Test integration between security components"""    
     print("\n🔍 Checking Security Component Integration...")
     
     integration_checks = [
@@ -204,8 +196,7 @@ def test_integration_points():
 
 
 def generate_implementation_summary():
-    """Generate a summary of what was implemented"""
-    
+    """Generate a summary of what was implemented"""    
     print("\n" + "=" * 80)
     print("🛡️  SECURITY AUDIT & COMPLIANCE IMPLEMENTATION SUMMARY")
     print("=" * 80)
@@ -260,8 +251,7 @@ def generate_implementation_summary():
 
 
 def main():
-    """Main validation function"""
-    
+    """Main validation function"""    
     print("🔒 SECURITY AUDIT & COMPLIANCE IMPLEMENTATION VALIDATION")
     print("=" * 60)
     

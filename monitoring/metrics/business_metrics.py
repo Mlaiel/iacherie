@@ -1,5 +1,4 @@
-"""
-📊 Business Metrics - Advanced KPI Tracking System
+"""📊 Business Metrics - Advanced KPI Tracking System
 =================================================
 
 Enterprise-grade business metrics collection and analysis for the Ainflue platform.
@@ -7,9 +6,7 @@ Tracks revenue, user engagement, content performance, and licensing analytics.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 from typing import Dict, List, Optional, Any, Callable, Union
@@ -25,16 +22,14 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of business metrics"""
-    COUNTER = "counter"
+    """Types of business metrics"""    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     SUMMARY = "summary"
 
 
 class MetricPeriod(Enum):
-    """Metric aggregation periods"""
-    HOUR = "hour"
+    """Metric aggregation periods"""    HOUR = "hour"
     DAY = "day"
     WEEK = "week"
     MONTH = "month"
@@ -44,8 +39,7 @@ class MetricPeriod(Enum):
 
 @dataclass
 class BusinessMetric:
-    """Individual business metric"""
-    name: str
+    """Individual business metric"""    name: str
     value: Union[int, float, Decimal]
     metric_type: MetricType
     timestamp: datetime
@@ -55,8 +49,7 @@ class BusinessMetric:
 
 @dataclass
 class MetricAggregation:
-    """Aggregated metric data"""
-    metric_name: str
+    """Aggregated metric data"""    metric_name: str
     period: MetricPeriod
     start_time: datetime
     end_time: datetime
@@ -69,8 +62,7 @@ class MetricAggregation:
 
 
 class BusinessMetricsCollector:
-    """
-    Advanced business metrics collection and analysis system
+    """    Advanced business metrics collection and analysis system
     
     Features:
     - Revenue tracking and analytics
@@ -81,11 +73,9 @@ class BusinessMetricsCollector:
     - Real-time dashboards
     - Historical trend analysis
     - Custom business rules
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize business metrics collector"""
-        self.config = config or {}
+        """Initialize business metrics collector"""        self.config = config or {}
         
         # Metric storage
         self.metrics: Dict[str, List[BusinessMetric]] = defaultdict(list)
@@ -237,16 +227,14 @@ class BusinessMetricsCollector:
         labels: Optional[Dict[str, str]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """
-        Record a business metric
+        """        Record a business metric
         
         Args:
             name: Metric name
             value: Metric value
             labels: Optional labels for categorization
             metadata: Optional metadata
-        """
-        try:
+        """        try:
             # Get metric definition
             metric_def = self.kpi_definitions.get(name, {})
             metric_type = metric_def.get("type", MetricType.GAUGE)
@@ -283,8 +271,7 @@ class BusinessMetricsCollector:
         user_id: Optional[int] = None,
         license_id: Optional[int] = None
     ) -> None:
-        """Record revenue event"""
-        try:
+        """Record revenue event"""        try:
             labels = {"source": source}
             metadata = {}
             
@@ -311,8 +298,7 @@ class BusinessMetricsCollector:
         duration: Optional[float] = None,
         content_id: Optional[int] = None
     ) -> None:
-        """Record user engagement event"""
-        try:
+        """Record user engagement event"""        try:
             labels = {
                 "user_id": str(user_id),
                 "action": action
@@ -340,8 +326,7 @@ class BusinessMetricsCollector:
         value: Union[int, float],
         content_type: Optional[str] = None
     ) -> None:
-        """Record content performance metric"""
-        try:
+        """Record content performance metric"""        try:
             labels = {"content_id": str(content_id)}
             metadata = {"content_id": content_id}
             
@@ -361,8 +346,7 @@ class BusinessMetricsCollector:
         value: Union[int, float] = 1,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Record license activity"""
-        try:
+        """Record license activity"""        try:
             labels = {
                 "license_id": str(license_id),
                 "activity": activity
@@ -382,8 +366,7 @@ class BusinessMetricsCollector:
         metric_name: str,
         period: MetricPeriod = MetricPeriod.DAY
     ) -> Optional[MetricAggregation]:
-        """
-        Compute metric aggregations for a period
+        """        Compute metric aggregations for a period
         
         Args:
             metric_name: Name of metric to aggregate
@@ -391,8 +374,7 @@ class BusinessMetricsCollector:
             
         Returns:
             MetricAggregation or None if no data
-        """
-        try:
+        """        try:
             if metric_name not in self.metrics:
                 return None
             
@@ -456,13 +438,11 @@ class BusinessMetricsCollector:
             return None
     
     async def get_kpi_dashboard(self) -> Dict[str, Any]:
-        """
-        Get comprehensive KPI dashboard data
+        """        Get comprehensive KPI dashboard data
         
         Returns:
             Dict: Dashboard data with all KPIs
-        """
-        try:
+        """        try:
             dashboard = {
                 "timestamp": datetime.utcnow().isoformat(),
                 "kpis": {},
@@ -508,8 +488,7 @@ class BusinessMetricsCollector:
         end_time: datetime,
         granularity: MetricPeriod = MetricPeriod.HOUR
     ) -> List[Dict[str, Any]]:
-        """
-        Get historical metric data
+        """        Get historical metric data
         
         Args:
             metric_name: Name of metric
@@ -519,8 +498,7 @@ class BusinessMetricsCollector:
             
         Returns:
             List of metric data points
-        """
-        try:
+        """        try:
             if metric_name not in self.metrics:
                 return []
             
@@ -567,8 +545,7 @@ class BusinessMetricsCollector:
             return []
     
     async def _calculate_kpi(self, kpi_name: str, kpi_def: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate individual KPI with status and alerts"""
-        try:
+        """Calculate individual KPI with status and alerts"""        try:
             current_aggregation = await self.compute_aggregations(kpi_name, MetricPeriod.DAY)
             
             if not current_aggregation:
@@ -644,8 +621,7 @@ class BusinessMetricsCollector:
             return {"name": kpi_name, "error": str(e)}
     
     async def _calculate_trend(self, kpi_name: str) -> Optional[Dict[str, Any]]:
-        """Calculate trend for KPI (current vs previous period)"""
-        try:
+        """Calculate trend for KPI (current vs previous period)"""        try:
             current = await self.compute_aggregations(kpi_name, MetricPeriod.DAY)
             
             # Get previous period data
@@ -687,8 +663,7 @@ class BusinessMetricsCollector:
             return None
     
     async def _check_metric_alerts(self, metric: BusinessMetric) -> None:
-        """Check if metric triggers any alerts"""
-        try:
+        """Check if metric triggers any alerts"""        try:
             if not self.alerting_config.get("enabled", True):
                 return
             
@@ -712,8 +687,7 @@ class BusinessMetricsCollector:
             logger.error(f"Error checking metric alerts: {e}")
     
     async def _trigger_alert(self, metric: BusinessMetric, level: str, message: str) -> None:
-        """Trigger alert for metric"""
-        try:
+        """Trigger alert for metric"""        try:
             alert = {
                 "metric_name": metric.name,
                 "level": level,
@@ -739,8 +713,7 @@ class BusinessMetricsCollector:
             logger.error(f"Error triggering alert: {e}")
     
     def get_collector_stats(self) -> Dict[str, Any]:
-        """Get metrics collector statistics"""
-        uptime = datetime.utcnow() - self.collector_stats["start_time"]
+        """Get metrics collector statistics"""        uptime = datetime.utcnow() - self.collector_stats["start_time"]
         
         return {
             "version": "1.0.0",

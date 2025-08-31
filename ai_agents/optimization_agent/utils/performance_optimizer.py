@@ -1,5 +1,4 @@
-"""
-Performance Optimizer - Ultra-Advanced System Performance Enhancement Engine
+"""Performance Optimizer - Ultra-Advanced System Performance Enhancement Engine
 
 Industrial-grade performance optimization system implementing cutting-edge algorithms for
 real-time performance monitoring, intelligent tuning, and predictive optimization across
@@ -27,9 +26,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import threading
@@ -93,8 +90,7 @@ from ...data.metrics_repository import MetricsRepository
 logger = logging.getLogger(__name__)
 
 class PerformanceMetric(Enum):
-    """Comprehensive performance measurement categories"""
-    RESPONSE_TIME = "response_time"
+    """Comprehensive performance measurement categories"""    RESPONSE_TIME = "response_time"
     THROUGHPUT = "throughput"
     LATENCY = "latency"
     CPU_EFFICIENCY = "cpu_efficiency"
@@ -108,8 +104,7 @@ class PerformanceMetric(Enum):
     SCALABILITY_INDEX = "scalability_index"
 
 class OptimizationTechnique(Enum):
-    """Advanced performance optimization techniques"""
-    INTELLIGENT_CACHING = "intelligent_caching"
+    """Advanced performance optimization techniques"""    INTELLIGENT_CACHING = "intelligent_caching"
     ADAPTIVE_COMPRESSION = "adaptive_compression"
     PARALLEL_PROCESSING = "parallel_processing"
     ASYNC_OPTIMIZATION = "async_optimization"
@@ -126,16 +121,14 @@ class OptimizationTechnique(Enum):
     CDN_OPTIMIZATION = "cdn_optimization"
 
 class PerformanceThreshold(Enum):
-    """Performance threshold levels"""
-    CRITICAL = "critical"
+    """Performance threshold levels"""    CRITICAL = "critical"
     WARNING = "warning"
     OPTIMAL = "optimal"
     EXCELLENT = "excellent"
 
 @dataclass
 class PerformanceProfile:
-    """Comprehensive performance analysis profile with advanced metrics"""
-    timestamp: datetime = field(default_factory=datetime.utcnow)
+    """Comprehensive performance analysis profile with advanced metrics"""    timestamp: datetime = field(default_factory=datetime.utcnow)
     
     # Response and latency metrics
     response_times: List[float] = field(default_factory=list)
@@ -180,8 +173,7 @@ class PerformanceProfile:
     compression_effectiveness: float = 0.0
     
     def calculate_performance_score(self) -> float:
-        """Calculate overall performance score (0-100)"""
-        score_components = {
+        """Calculate overall performance score (0-100)"""        score_components = {
             'response_time': min(100, max(0, 100 - (self.avg_response_time * 10))),
             'throughput': min(100, self.throughput_rps),
             'cpu_efficiency': max(0, 100 - self.cpu_utilization),
@@ -208,8 +200,7 @@ class PerformanceProfile:
 
 @dataclass
 class OptimizationResult:
-    """Comprehensive performance optimization outcome tracking"""
-    optimization_id: str = field(default_factory=lambda: f"opt_{int(time.time())}")
+    """Comprehensive performance optimization outcome tracking"""    optimization_id: str = field(default_factory=lambda: f"opt_{int(time.time())}")
     technique: OptimizationTechnique = None
     before_metrics: Optional[PerformanceProfile] = None
     after_metrics: Optional[PerformanceProfile] = None
@@ -233,8 +224,7 @@ class OptimizationResult:
     created_at: datetime = field(default_factory=datetime.utcnow)
     
     def generate_summary_report(self) -> Dict[str, Any]:
-        """Generate comprehensive optimization summary"""
-        return {
+        """Generate comprehensive optimization summary"""        return {
             "optimization_id": self.optimization_id,
             "technique": self.technique.value if self.technique else None,
             "success": self.success,
@@ -251,8 +241,7 @@ class OptimizationResult:
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert and notification system"""
-    alert_id: str = field(default_factory=lambda: f"alert_{int(time.time())}")
+    """Performance alert and notification system"""    alert_id: str = field(default_factory=lambda: f"alert_{int(time.time())}")
     threshold: PerformanceThreshold = PerformanceThreshold.WARNING
     metric: PerformanceMetric = None
     current_value: float = 0.0
@@ -265,8 +254,7 @@ class PerformanceAlert:
 
 @dataclass
 class PerformanceConfig:
-    """Performance optimizer configuration settings"""
-    # Monitoring settings
+    """Performance optimizer configuration settings"""    # Monitoring settings
     monitoring_interval: int = 30  # seconds
     metrics_retention_days: int = 30
     detailed_profiling: bool = False
@@ -301,8 +289,7 @@ class PerformanceConfig:
     anomaly_detection_sensitivity: float = 0.05
 
 class SystemMetrics:
-    """Real-time system metrics collector"""
-    
+    """Real-time system metrics collector"""    
     def __init__(self):
         self.process = psutil.Process()
         self._metrics_cache = {}
@@ -310,8 +297,7 @@ class SystemMetrics:
         self._cache_ttl = 5  # 5 seconds cache
     
     def get_current_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive current system metrics"""
-        current_time = time.time()
+        """Get comprehensive current system metrics"""        current_time = time.time()
         
         # Use cached metrics if still valid
         if (current_time - self._cache_timestamp) < self._cache_ttl and self._metrics_cache:
@@ -387,8 +373,7 @@ class SystemMetrics:
             return {}
 
 class BottleneckAnalyzer:
-    """Advanced bottleneck detection and analysis"""
-    
+    """Advanced bottleneck detection and analysis"""    
     def __init__(self):
         self.anomaly_detector = IsolationForest(contamination=0.1, random_state=42)
         self.performance_predictor = RandomForestRegressor(n_estimators=100, random_state=42)
@@ -397,8 +382,7 @@ class BottleneckAnalyzer:
         self._model_trained = False
     
     def analyze_bottlenecks(self, metrics: PerformanceProfile) -> List[Dict[str, Any]]:
-        """Identify system bottlenecks using advanced analytics"""
-        bottlenecks = []
+        """Identify system bottlenecks using advanced analytics"""        bottlenecks = []
         
         # CPU bottleneck analysis
         if metrics.cpu_utilization > 85:
@@ -478,8 +462,7 @@ class BottleneckAnalyzer:
         return bottlenecks
     
     def train_anomaly_detection(self, historical_metrics: List[PerformanceProfile]):
-        """Train ML models on historical performance data"""
-        if len(historical_metrics) < 50:  # Need minimum data
+        """Train ML models on historical performance data"""        if len(historical_metrics) < 50:  # Need minimum data
             return False
         
         try:
@@ -520,8 +503,7 @@ class BottleneckAnalyzer:
         return False
     
     def detect_anomalies(self, current_metrics: PerformanceProfile) -> List[Dict[str, Any]]:
-        """Detect performance anomalies using ML"""
-        if not self._model_trained:
+        """Detect performance anomalies using ML"""        if not self._model_trained:
             return []
         
         try:
@@ -562,8 +544,7 @@ class BottleneckAnalyzer:
         return []
 
 class PerformanceOptimizer(BaseAgent):
-    """
-    Ultra-advanced performance optimization engine with comprehensive capabilities.
+    """    Ultra-advanced performance optimization engine with comprehensive capabilities.
     
     Features:
     - Real-time performance monitoring with ML-based anomaly detection
@@ -574,9 +555,7 @@ class PerformanceOptimizer(BaseAgent):
     - Advanced caching strategies with intelligent cache warming
     - Database query optimization and connection pool management
     - Comprehensive performance analytics and reporting
-    """
-
-    def __init__(self, config: Optional[PerformanceConfig] = None):
+    """    def __init__(self, config: Optional[PerformanceConfig] = None):
         super().__init__()
         self.config = config or PerformanceConfig()
         
@@ -610,8 +589,7 @@ class PerformanceOptimizer(BaseAgent):
         logger.info("PerformanceOptimizer initialized with advanced capabilities")
 
     async def start_monitoring(self):
-        """Start continuous performance monitoring"""
-        if self._monitoring_active:
+        """Start continuous performance monitoring"""        if self._monitoring_active:
             return
         
         self._monitoring_active = True
@@ -624,8 +602,7 @@ class PerformanceOptimizer(BaseAgent):
         logger.info("Performance monitoring started")
 
     def _monitoring_loop(self):
-        """Continuous monitoring loop running in background thread"""
-        while self._monitoring_active:
+        """Continuous monitoring loop running in background thread"""        while self._monitoring_active:
             try:
                 # Collect current metrics
                 system_metrics = self.metrics_collector.get_current_metrics()
@@ -648,8 +625,7 @@ class PerformanceOptimizer(BaseAgent):
                 time.sleep(30)  # Wait before retry
 
     def _update_performance_profile(self, system_metrics: Dict[str, Any]):
-        """Update current performance profile with latest metrics"""
-        try:
+        """Update current performance profile with latest metrics"""        try:
             self.current_profile.timestamp = datetime.utcnow()
             self.current_profile.cpu_utilization = system_metrics.get('cpu_percent', 0)
             self.current_profile.memory_utilization = system_metrics.get('memory_percent', 0)
@@ -671,8 +647,7 @@ class PerformanceOptimizer(BaseAgent):
             logger.error(f"Failed to update performance profile: {e}")
 
     def _check_performance_alerts(self):
-        """Check and generate performance alerts"""
-        alerts_to_add = []
+        """Check and generate performance alerts"""        alerts_to_add = []
         
         # CPU alerts
         if self.current_profile.cpu_utilization > self.config.cpu_critical_threshold:
@@ -731,8 +706,7 @@ class PerformanceOptimizer(BaseAgent):
             self.active_alerts = self.active_alerts[-100:]
 
     async def _auto_optimize_if_needed(self):
-        """Automatically trigger optimization if performance degrades"""
-        try:
+        """Automatically trigger optimization if performance degrades"""        try:
             # Check if optimization is needed
             performance_score = self.current_profile.calculate_performance_score()
             
@@ -745,8 +719,7 @@ class PerformanceOptimizer(BaseAgent):
             logger.error(f"Auto-optimization failed: {e}")
 
     async def optimize_performance_automatic(self) -> OptimizationResult:
-        """Automatically optimize performance based on current conditions"""
-        optimization_id = f"auto_opt_{int(time.time())}"
+        """Automatically optimize performance based on current conditions"""        optimization_id = f"auto_opt_{int(time.time())}"
         
         if optimization_id in self.optimization_locks:
             return None
@@ -806,8 +779,7 @@ class PerformanceOptimizer(BaseAgent):
             self.optimization_locks.discard(optimization_id)
 
     def _select_optimization_technique(self, bottlenecks: List[Dict[str, Any]]) -> OptimizationTechnique:
-        """Intelligently select optimization technique based on bottlenecks"""
-        if not bottlenecks:
+        """Intelligently select optimization technique based on bottlenecks"""        if not bottlenecks:
             return OptimizationTechnique.INTELLIGENT_CACHING
         
         # Priority-based technique selection
@@ -827,8 +799,7 @@ class PerformanceOptimizer(BaseAgent):
             return OptimizationTechnique.INTELLIGENT_CACHING
 
     async def _apply_optimization(self, technique: OptimizationTechnique, bottlenecks: List[Dict[str, Any]]) -> bool:
-        """Apply specific optimization technique"""
-        try:
+        """Apply specific optimization technique"""        try:
             if technique == OptimizationTechnique.INTELLIGENT_CACHING:
                 return await self._optimize_caching()
             elif technique == OptimizationTechnique.MEMORY_OPTIMIZATION:
@@ -847,8 +818,7 @@ class PerformanceOptimizer(BaseAgent):
             return False
 
     async def _optimize_caching(self) -> bool:
-        """Optimize caching strategy"""
-        try:
+        """Optimize caching strategy"""        try:
             # Analyze cache performance
             cache_stats = await self.cache_manager.get_statistics()
             
@@ -870,8 +840,7 @@ class PerformanceOptimizer(BaseAgent):
         return False
 
     async def _optimize_memory(self) -> bool:
-        """Optimize memory usage"""
-        try:
+        """Optimize memory usage"""        try:
             # Force garbage collection
             gc.collect()
             
@@ -889,8 +858,7 @@ class PerformanceOptimizer(BaseAgent):
         return False
 
     async def _optimize_database(self) -> bool:
-        """Optimize database performance"""
-        try:
+        """Optimize database performance"""        try:
             # Analyze slow queries
             slow_queries = await self._analyze_slow_queries()
             
@@ -908,8 +876,7 @@ class PerformanceOptimizer(BaseAgent):
         return False
 
     async def _optimize_parallel_processing(self) -> bool:
-        """Optimize parallel processing capabilities"""
-        try:
+        """Optimize parallel processing capabilities"""        try:
             # Adjust thread pool sizes
             current_cpu_cores = psutil.cpu_count()
             optimal_threads = min(current_cpu_cores * 2, 16)
@@ -928,8 +895,7 @@ class PerformanceOptimizer(BaseAgent):
         return False
 
     async def _optimize_async_operations(self) -> bool:
-        """Optimize asynchronous operations"""
-        try:
+        """Optimize asynchronous operations"""        try:
             # Optimize async event loops
             await self._tune_event_loops()
             
@@ -948,53 +914,43 @@ class PerformanceOptimizer(BaseAgent):
 
     # Helper methods for optimization implementation
     async def _optimize_object_pools(self):
-        """Optimize object pooling strategies"""
-        # Implementation for object pool optimization
+        """Optimize object pooling strategies"""        # Implementation for object pool optimization
         pass
 
     async def _defragment_memory(self):
-        """Defragment memory to reduce fragmentation"""
-        # Implementation for memory defragmentation
+        """Defragment memory to reduce fragmentation"""        # Implementation for memory defragmentation
         pass
 
     async def _analyze_slow_queries(self):
-        """Analyze and identify slow database queries"""
-        # Implementation for slow query analysis
+        """Analyze and identify slow database queries"""        # Implementation for slow query analysis
         return []
 
     async def _optimize_connection_pool(self):
-        """Optimize database connection pool settings"""
-        # Implementation for connection pool optimization
+        """Optimize database connection pool settings"""        # Implementation for connection pool optimization
         pass
 
     async def _update_query_plans(self):
-        """Update database query execution plans"""
-        # Implementation for query plan optimization
+        """Update database query execution plans"""        # Implementation for query plan optimization
         pass
 
     async def _enable_batch_processing(self):
-        """Enable intelligent batch processing"""
-        # Implementation for batch processing
+        """Enable intelligent batch processing"""        # Implementation for batch processing
         pass
 
     async def _tune_event_loops(self):
-        """Tune async event loops for optimal performance"""
-        # Implementation for event loop tuning
+        """Tune async event loops for optimal performance"""        # Implementation for event loop tuning
         pass
 
     async def _implement_request_batching(self):
-        """Implement intelligent request batching"""
-        # Implementation for request batching
+        """Implement intelligent request batching"""        # Implementation for request batching
         pass
 
     async def _optimize_io_operations(self):
-        """Optimize I/O operations for better performance"""
-        # Implementation for I/O optimization
+        """Optimize I/O operations for better performance"""        # Implementation for I/O optimization
         pass
 
     def _calculate_improvement(self, before: PerformanceProfile, after: PerformanceProfile) -> float:
-        """Calculate performance improvement percentage"""
-        before_score = before.calculate_performance_score()
+        """Calculate performance improvement percentage"""        before_score = before.calculate_performance_score()
         after_score = after.calculate_performance_score()
         
         if before_score == 0:
@@ -1004,8 +960,7 @@ class PerformanceOptimizer(BaseAgent):
         return round(improvement, 2)
 
     def _generate_recommendations(self, bottlenecks: List[Dict[str, Any]], current_metrics: PerformanceProfile) -> List[str]:
-        """Generate performance improvement recommendations"""
-        recommendations = []
+        """Generate performance improvement recommendations"""        recommendations = []
         
         # General recommendations based on performance score
         score = current_metrics.calculate_performance_score()
@@ -1022,8 +977,7 @@ class PerformanceOptimizer(BaseAgent):
         return list(set(recommendations))  # Remove duplicates
 
     def _update_performance_profile_from_dict(self, profile: PerformanceProfile, metrics: Dict[str, Any]):
-        """Update performance profile from metrics dictionary"""
-        profile.timestamp = datetime.utcnow()
+        """Update performance profile from metrics dictionary"""        profile.timestamp = datetime.utcnow()
         profile.cpu_utilization = metrics.get('cpu_percent', 0)
         profile.memory_utilization = metrics.get('memory_percent', 0)
         
@@ -1034,8 +988,7 @@ class PerformanceOptimizer(BaseAgent):
             profile.network_io_in = metrics['network_bytes_recv']
 
     async def get_performance_dashboard(self, user_id: str) -> Dict[str, Any]:
-        """Get comprehensive performance dashboard data"""
-        return {
+        """Get comprehensive performance dashboard data"""        return {
             "current_metrics": {
                 "performance_score": self.current_profile.calculate_performance_score(),
                 "cpu_utilization": self.current_profile.cpu_utilization,
@@ -1060,12 +1013,10 @@ class PerformanceOptimizer(BaseAgent):
         }
 
     async def optimize(self, request: Dict[str, Any]) -> OptimizationResult:
-        """Main optimization entry point"""
-        return await self.optimize_performance_automatic()
+        """Main optimization entry point"""        return await self.optimize_performance_automatic()
 
     async def get_status(self) -> Dict[str, Any]:
-        """Get optimizer status"""
-        return {
+        """Get optimizer status"""        return {
             "status": "active" if self._monitoring_active else "inactive",
             "performance_score": self.current_profile.calculate_performance_score(),
             "active_optimizations": len(self.optimization_locks),
@@ -1074,8 +1025,7 @@ class PerformanceOptimizer(BaseAgent):
         }
 
     async def health_check(self) -> Dict[str, Any]:
-        """Comprehensive health check"""
-        return {
+        """Comprehensive health check"""        return {
             "overall_status": "ok",
             "monitoring_active": self._monitoring_active,
             "performance_score": self.current_profile.calculate_performance_score(),
@@ -1085,8 +1035,7 @@ class PerformanceOptimizer(BaseAgent):
         }
 
     async def shutdown(self):
-        """Shutdown performance optimizer"""
-        self._monitoring_active = False
+        """Shutdown performance optimizer"""        self._monitoring_active = False
         
         if self._monitoring_thread and self._monitoring_thread.is_alive():
             self._monitoring_thread.join(timeout=5)
@@ -1125,8 +1074,7 @@ class PerformanceOptimizer(BaseAgent):
         logger.info("PerformanceOptimizer initialized successfully")
 
     def _initialize_optimization_strategies(self):
-        """Initialize available optimization strategies"""
-        self.optimization_strategies = {
+        """Initialize available optimization strategies"""        self.optimization_strategies = {
             'caching': self._optimize_caching,
             'compression': self._optimize_compression,
             'parallel_processing': self._optimize_parallel_processing,
@@ -1138,16 +1086,14 @@ class PerformanceOptimizer(BaseAgent):
         }
 
     async def optimize_performance(self, target_metrics: Dict[str, float] = None) -> Dict[str, Any]:
-        """
-        Execute comprehensive performance optimization
+        """        Execute comprehensive performance optimization
         
         Args:
             target_metrics: Desired performance targets
             
         Returns:
             Optimization results and improvements
-        """
-        try:
+        """        try:
             optimization_id = f"perf_opt_{int(time.time())}"
             start_time = time.time()
             
@@ -1192,8 +1138,7 @@ class PerformanceOptimizer(BaseAgent):
             raise PerformanceError(f"Optimization error: {str(e)}")
 
     async def _capture_performance_profile(self) -> PerformanceProfile:
-        """Capture comprehensive current performance metrics"""
-        try:
+        """Capture comprehensive current performance metrics"""        try:
             # System metrics
             cpu_usage = psutil.cpu_percent(interval=1)
             memory_info = psutil.virtual_memory()
@@ -1233,8 +1178,7 @@ class PerformanceOptimizer(BaseAgent):
             raise
 
     async def _analyze_performance_bottlenecks(self, profile: PerformanceProfile) -> List[Dict[str, Any]]:
-        """Analyze performance profile to identify bottlenecks"""
-        bottlenecks = []
+        """Analyze performance profile to identify bottlenecks"""        bottlenecks = []
         
         # Response time bottleneck
         if profile.response_times:
@@ -1311,8 +1255,7 @@ class PerformanceOptimizer(BaseAgent):
     async def _select_optimization_strategies(self, 
                                            bottlenecks: List[Dict[str, Any]], 
                                            target_metrics: Dict[str, float] = None) -> List[str]:
-        """Select optimal optimization strategies based on bottlenecks and targets"""
-        strategy_scores = defaultdict(float)
+        """Select optimal optimization strategies based on bottlenecks and targets"""        strategy_scores = defaultdict(float)
         
         # Score strategies based on bottlenecks
         for bottleneck in bottlenecks:
@@ -1345,8 +1288,7 @@ class PerformanceOptimizer(BaseAgent):
         return selected_strategies
 
     async def _execute_optimization_strategy(self, strategy: str, baseline: PerformanceProfile) -> OptimizationResult:
-        """Execute specific optimization strategy"""
-        try:
+        """Execute specific optimization strategy"""        try:
             start_time = time.time()
             
             if strategy not in self.optimization_strategies:
@@ -1390,8 +1332,7 @@ class PerformanceOptimizer(BaseAgent):
             )
 
     async def _optimize_caching(self) -> Dict[str, Any]:
-        """Optimize caching strategies for improved performance"""
-        try:
+        """Optimize caching strategies for improved performance"""        try:
             # Analyze cache usage patterns
             cache_stats = await self.cache_manager.get_detailed_stats()
             
@@ -1426,8 +1367,7 @@ class PerformanceOptimizer(BaseAgent):
             raise
 
     async def _optimize_database(self) -> Dict[str, Any]:
-        """Optimize database performance and query execution"""
-        try:
+        """Optimize database performance and query execution"""        try:
             optimizations_applied = []
             
             # Optimize connection pool
@@ -1459,8 +1399,7 @@ class PerformanceOptimizer(BaseAgent):
             raise
 
     async def _optimize_parallel_processing(self) -> Dict[str, Any]:
-        """Optimize parallel processing and concurrency"""
-        try:
+        """Optimize parallel processing and concurrency"""        try:
             # Analyze current concurrency patterns
             concurrency_analysis = await self._analyze_concurrency_patterns()
             
@@ -1489,8 +1428,7 @@ class PerformanceOptimizer(BaseAgent):
             raise
 
     async def _continuous_performance_monitoring(self):
-        """Continuous performance monitoring with automatic optimization triggers"""
-        while self._monitoring_active:
+        """Continuous performance monitoring with automatic optimization triggers"""        while self._monitoring_active:
             try:
                 # Capture current performance
                 current_profile = await self._capture_performance_profile()
@@ -1508,13 +1446,11 @@ class PerformanceOptimizer(BaseAgent):
                 await asyncio.sleep(300)  # Wait 5 minutes on error
 
 class SpeedEnhancer:
-    """
-    Specialized speed enhancement engine for ultra-fast response times.
+    """    Specialized speed enhancement engine for ultra-fast response times.
     
     Focuses specifically on reducing latency and improving response speeds
     across all system components.
-    """
-    
+    """    
     def __init__(self, target_response_time: float = 0.5):
         self.target_response_time = target_response_time  # seconds
         self.speed_optimizations = {
@@ -1526,8 +1462,7 @@ class SpeedEnhancer:
         }
         
     async def enhance_speed(self, content_type: str = 'all') -> Dict[str, Any]:
-        """Execute comprehensive speed enhancement"""
-        try:
+        """Execute comprehensive speed enhancement"""        try:
             start_time = time.time()
             baseline_speed = await self._measure_current_speed()
             
@@ -1566,8 +1501,7 @@ class SpeedEnhancer:
             raise PerformanceError(f"Speed enhancement error: {str(e)}")
             
     async def _enhance_web_speed(self) -> Dict[str, Any]:
-        """Enhance web application speed specifically"""
-        optimizations = []
+        """Enhance web application speed specifically"""        optimizations = []
         
         # Enable compression
         await self._enable_gzip_compression()

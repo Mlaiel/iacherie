@@ -1,5 +1,4 @@
-"""
-🚀 Metadata Extractor - IA Influencer Agent Platform Enterprise
+"""🚀 Metadata Extractor - IA Influencer Agent Platform Enterprise
 ==============================================================
 Module: backend/data_management/validation/metadata_extractor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -15,9 +14,7 @@ Extraction complète de métadonnées multi-format avec IA
 - Tags audio ID3/FLAC/MP4 complets
 - Métadonnées vidéo FFprobe/MediaInfo
 - Analyse sémantique contenu avec IA
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 import asyncio
 import logging
 from pathlib import Path
@@ -67,8 +64,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class GeolocationData:
-    """Données de géolocalisation"""
-    latitude: Optional[float] = None
+    """Données de géolocalisation"""    latitude: Optional[float] = None
     longitude: Optional[float] = None
     altitude: Optional[float] = None
     timestamp: Optional[str] = None
@@ -79,8 +75,7 @@ class GeolocationData:
 
 @dataclass
 class TechnicalMetadata:
-    """Métadonnées techniques"""
-    file_size: int
+    """Métadonnées techniques"""    file_size: int
     file_format: str
     mime_type: str
     creation_date: Optional[datetime] = None
@@ -92,8 +87,7 @@ class TechnicalMetadata:
 
 @dataclass
 class MediaDimensions:
-    """Dimensions média"""
-    width: Optional[int] = None
+    """Dimensions média"""    width: Optional[int] = None
     height: Optional[int] = None
     duration: Optional[float] = None
     fps: Optional[float] = None
@@ -104,8 +98,7 @@ class MediaDimensions:
 
 @dataclass
 class CreativeMetadata:
-    """Métadonnées créatives"""
-    title: Optional[str] = None
+    """Métadonnées créatives"""    title: Optional[str] = None
     description: Optional[str] = None
     creator: Optional[str] = None
     copyright: Optional[str] = None
@@ -118,8 +111,7 @@ class CreativeMetadata:
 
 @dataclass
 class BusinessMetadata:
-    """Métadonnées business"""
-    license: Optional[str] = None
+    """Métadonnées business"""    license: Optional[str] = None
     usage_rights: Optional[str] = None
     commercial_use: Optional[bool] = None
     attribution_required: Optional[bool] = None
@@ -130,8 +122,7 @@ class BusinessMetadata:
 
 @dataclass
 class ContentMetadata:
-    """Métadonnées de contenu complètes"""
-    file_path: str
+    """Métadonnées de contenu complètes"""    file_path: str
     technical: TechnicalMetadata
     dimensions: MediaDimensions
     creative: CreativeMetadata
@@ -143,8 +134,7 @@ class ContentMetadata:
     extraction_version: str = "1.0.0"
 
 class ImageMetadataExtractor:
-    """Extracteur de métadonnées d'image avancé"""
-    
+    """Extracteur de métadonnées d'image avancé"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.ImageMetadataExtractor")
         
@@ -160,8 +150,7 @@ class ImageMetadataExtractor:
             self.image_captioning = None
     
     def extract_metadata(self, file_path: str) -> ContentMetadata:
-        """Extrait toutes les métadonnées d'une image"""
-        try:
+        """Extrait toutes les métadonnées d'une image"""        try:
             # Ouverture de l'image
             image = Image.open(file_path)
             
@@ -200,8 +189,7 @@ class ImageMetadataExtractor:
             return self._create_error_metadata(file_path, str(e))
     
     def _extract_technical_metadata(self, file_path: str, image: Image.Image) -> TechnicalMetadata:
-        """Extrait les métadonnées techniques"""
-        file_stat = os.stat(file_path)
+        """Extrait les métadonnées techniques"""        file_stat = os.stat(file_path)
         
         # Hash du fichier
         with open(file_path, 'rb') as f:
@@ -221,8 +209,7 @@ class ImageMetadataExtractor:
         )
     
     def _extract_dimensions(self, image: Image.Image) -> MediaDimensions:
-        """Extrait les dimensions"""
-        width, height = image.size
+        """Extrait les dimensions"""        width, height = image.size
         aspect_ratio = f"{width}:{height}"
         
         # Simplification du ratio
@@ -237,8 +224,7 @@ class ImageMetadataExtractor:
         )
     
     def _extract_exif_data(self, image: Image.Image) -> Dict[str, Any]:
-        """Extrait les données EXIF"""
-        exif_data = {}
+        """Extrait les données EXIF"""        exif_data = {}
         
         try:
             # Données EXIF PIL
@@ -273,8 +259,7 @@ class ImageMetadataExtractor:
         return exif_data
     
     def _extract_geolocation(self, exif_data: Dict[str, Any]) -> Optional[GeolocationData]:
-        """Extrait la géolocalisation depuis EXIF"""
-        try:
+        """Extrait la géolocalisation depuis EXIF"""        try:
             # Recherche des données GPS
             gps_latitude = None
             gps_longitude = None
@@ -303,8 +288,7 @@ class ImageMetadataExtractor:
         return None
     
     def _convert_gps_coordinate(self, coordinate: tuple, reference: str) -> float:
-        """Convertit les coordonnées GPS EXIF en degrés décimaux"""
-        try:
+        """Convertit les coordonnées GPS EXIF en degrés décimaux"""        try:
             if len(coordinate) >= 3:
                 degrees = float(coordinate[0])
                 minutes = float(coordinate[1])
@@ -322,8 +306,7 @@ class ImageMetadataExtractor:
         return 0.0
     
     def _extract_creative_metadata(self, image: Image.Image, exif_data: Dict[str, Any]) -> CreativeMetadata:
-        """Extrait les métadonnées créatives"""
-        creative = CreativeMetadata()
+        """Extrait les métadonnées créatives"""        creative = CreativeMetadata()
         
         # Titre et description depuis EXIF/IPTC
         creative.title = exif_data.get('ImageDescription', None)
@@ -345,8 +328,7 @@ class ImageMetadataExtractor:
         return creative
     
     def _perform_ai_analysis(self, image: Image.Image, file_path: str) -> Dict[str, Any]:
-        """Effectue une analyse IA de l'image"""
-        ai_analysis = {}
+        """Effectue une analyse IA de l'image"""        ai_analysis = {}
         
         try:
             # Classification d'image
@@ -375,8 +357,7 @@ class ImageMetadataExtractor:
         return ai_analysis
     
     def _extract_dominant_colors(self, image: Image.Image, num_colors: int = 5) -> List[str]:
-        """Extrait les couleurs dominantes"""
-        try:
+        """Extrait les couleurs dominantes"""        try:
             # Redimensionner pour performance
             image_small = image.resize((150, 150))
             
@@ -403,8 +384,7 @@ class ImageMetadataExtractor:
             return []
     
     def _basic_object_detection(self, image: Image.Image) -> List[str]:
-        """Détection d'objets basique (peut être étendue avec YOLO)"""
-        objects = []
+        """Détection d'objets basique (peut être étendue avec YOLO)"""        objects = []
         
         try:
             # Analyse basique de la composition
@@ -439,8 +419,7 @@ class ImageMetadataExtractor:
         return objects
     
     def _create_error_metadata(self, file_path: str, error: str) -> ContentMetadata:
-        """Crée des métadonnées d'erreur"""
-        return ContentMetadata(
+        """Crée des métadonnées d'erreur"""        return ContentMetadata(
             file_path=file_path,
             technical=TechnicalMetadata(
                 file_size=0,
@@ -454,8 +433,7 @@ class ImageMetadataExtractor:
         )
 
 class AudioMetadataExtractor:
-    """Extracteur de métadonnées audio avancé"""
-    
+    """Extracteur de métadonnées audio avancé"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.AudioMetadataExtractor")
         
@@ -468,8 +446,7 @@ class AudioMetadataExtractor:
             self.audio_classifier = None
     
     def extract_metadata(self, file_path: str) -> ContentMetadata:
-        """Extrait toutes les métadonnées d'un fichier audio"""
-        try:
+        """Extrait toutes les métadonnées d'un fichier audio"""        try:
             # Métadonnées techniques
             technical = self._extract_technical_metadata(file_path)
             
@@ -502,8 +479,7 @@ class AudioMetadataExtractor:
             return self._create_error_metadata(file_path, str(e))
     
     def _extract_technical_metadata(self, file_path: str) -> TechnicalMetadata:
-        """Extrait les métadonnées techniques audio"""
-        file_stat = os.stat(file_path)
+        """Extrait les métadonnées techniques audio"""        file_stat = os.stat(file_path)
         
         # Hash du fichier
         with open(file_path, 'rb') as f:
@@ -525,8 +501,7 @@ class AudioMetadataExtractor:
         )
     
     def _extract_audio_tags(self, file_path: str) -> Dict[str, Any]:
-        """Extrait les tags audio avec mutagen"""
-        tags = {}
+        """Extrait les tags audio avec mutagen"""        tags = {}
         
         try:
             # Tentative avec mutagen
@@ -565,8 +540,7 @@ class AudioMetadataExtractor:
         return tags
     
     def _extract_audio_dimensions(self, file_path: str) -> MediaDimensions:
-        """Extrait les dimensions audio"""
-        dimensions = MediaDimensions()
+        """Extrait les dimensions audio"""        dimensions = MediaDimensions()
         
         try:
             # Utilisation de mutagen pour les infos de base
@@ -603,8 +577,7 @@ class AudioMetadataExtractor:
         return dimensions
     
     def _extract_creative_from_tags(self, tags: Dict[str, Any]) -> CreativeMetadata:
-        """Extrait les métadonnées créatives depuis les tags"""
-        creative = CreativeMetadata()
+        """Extrait les métadonnées créatives depuis les tags"""        creative = CreativeMetadata()
         
         # Mapping des tags courants
         tag_mappings = {
@@ -644,8 +617,7 @@ class AudioMetadataExtractor:
         return creative
     
     def _extract_business_metadata(self, tags: Dict[str, Any]) -> BusinessMetadata:
-        """Extrait les métadonnées business"""
-        business = BusinessMetadata()
+        """Extrait les métadonnées business"""        business = BusinessMetadata()
         
         # Licence
         for key in ['LICENSE', 'licence', 'copyright']:
@@ -662,8 +634,7 @@ class AudioMetadataExtractor:
         return business
     
     def _perform_audio_ai_analysis(self, file_path: str) -> Dict[str, Any]:
-        """Effectue une analyse IA du fichier audio"""
-        ai_analysis = {}
+        """Effectue une analyse IA du fichier audio"""        ai_analysis = {}
         
         try:
             # Classification audio (nécessite conversion en format supporté)
@@ -760,8 +731,7 @@ class AudioMetadataExtractor:
         return ai_analysis
     
     def _classify_audio_genre(self, mfcc_mean, spectral_centroid, spectral_rolloff, zero_crossing_rate, tempo):
-        """Simple rule-based audio genre classification"""
-        try:
+        """Simple rule-based audio genre classification"""        try:
             # Genre classification based on audio features
             # These are simplified rules - in production, you'd use a trained ML model
             
@@ -802,8 +772,7 @@ class AudioMetadataExtractor:
             return "classification_failed"
     
     def _create_error_metadata(self, file_path: str, error: str) -> ContentMetadata:
-        """Crée des métadonnées d'erreur"""
-        return ContentMetadata(
+        """Crée des métadonnées d'erreur"""        return ContentMetadata(
             file_path=file_path,
             technical=TechnicalMetadata(
                 file_size=0,
@@ -817,14 +786,12 @@ class AudioMetadataExtractor:
         )
 
 class VideoMetadataExtractor:
-    """Extracteur de métadonnées vidéo avancé"""
-    
+    """Extracteur de métadonnées vidéo avancé"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.VideoMetadataExtractor")
     
     def extract_metadata(self, file_path: str) -> ContentMetadata:
-        """Extrait toutes les métadonnées d'un fichier vidéo"""
-        try:
+        """Extrait toutes les métadonnées d'un fichier vidéo"""        try:
             # Métadonnées techniques
             technical = self._extract_technical_metadata(file_path)
             
@@ -857,8 +824,7 @@ class VideoMetadataExtractor:
             return self._create_error_metadata(file_path, str(e))
     
     def _extract_technical_metadata(self, file_path: str) -> TechnicalMetadata:
-        """Extrait les métadonnées techniques vidéo"""
-        file_stat = os.stat(file_path)
+        """Extrait les métadonnées techniques vidéo"""        file_stat = os.stat(file_path)
         
         # Hash du fichier
         with open(file_path, 'rb') as f:
@@ -880,8 +846,7 @@ class VideoMetadataExtractor:
         )
     
     def _extract_video_info(self, file_path: str) -> Dict[str, Any]:
-        """Extrait les informations vidéo avec ffprobe"""
-        video_info = {}
+        """Extrait les informations vidéo avec ffprobe"""        video_info = {}
         
         try:
             probe = ffmpeg.probe(file_path)
@@ -906,8 +871,7 @@ class VideoMetadataExtractor:
         return video_info
     
     def _extract_video_dimensions(self, video_info: Dict[str, Any]) -> MediaDimensions:
-        """Extrait les dimensions vidéo"""
-        dimensions = MediaDimensions()
+        """Extrait les dimensions vidéo"""        dimensions = MediaDimensions()
         
         try:
             video_stream = video_info.get('video_stream')
@@ -940,8 +904,7 @@ class VideoMetadataExtractor:
         return dimensions
     
     def _extract_creative_from_video(self, video_info: Dict[str, Any]) -> CreativeMetadata:
-        """Extrait les métadonnées créatives depuis les tags vidéo"""
-        creative = CreativeMetadata()
+        """Extrait les métadonnées créatives depuis les tags vidéo"""        creative = CreativeMetadata()
         
         try:
             format_info = video_info.get('format', {})
@@ -971,8 +934,7 @@ class VideoMetadataExtractor:
         return creative
     
     def _perform_video_ai_analysis(self, file_path: str) -> Dict[str, Any]:
-        """Effectue une analyse IA de la vidéo"""
-        ai_analysis = {}
+        """Effectue une analyse IA de la vidéo"""        ai_analysis = {}
         
         try:
             # Analyse d'une frame représentative
@@ -1026,8 +988,7 @@ class VideoMetadataExtractor:
         return ai_analysis
     
     def _create_error_metadata(self, file_path: str, error: str) -> ContentMetadata:
-        """Crée des métadonnées d'erreur"""
-        return ContentMetadata(
+        """Crée des métadonnées d'erreur"""        return ContentMetadata(
             file_path=file_path,
             technical=TechnicalMetadata(
                 file_size=0,
@@ -1041,8 +1002,7 @@ class VideoMetadataExtractor:
         )
 
 class TextMetadataExtractor:
-    """Extracteur de métadonnées de texte avancé"""
-    
+    """Extracteur de métadonnées de texte avancé"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.TextMetadataExtractor")
         
@@ -1057,8 +1017,7 @@ class TextMetadataExtractor:
             self.summarizer = None
     
     def extract_metadata(self, file_path: str) -> ContentMetadata:
-        """Extrait toutes les métadonnées d'un fichier texte"""
-        try:
+        """Extrait toutes les métadonnées d'un fichier texte"""        try:
             # Lecture du contenu
             content = self._read_text_content(file_path)
             
@@ -1091,8 +1050,7 @@ class TextMetadataExtractor:
             return self._create_error_metadata(file_path, str(e))
     
     def _read_text_content(self, file_path: str) -> str:
-        """Lit le contenu du fichier texte avec détection d'encodage"""
-        try:
+        """Lit le contenu du fichier texte avec détection d'encodage"""        try:
             # Détection d'encodage
             with open(file_path, 'rb') as f:
                 raw_data = f.read()
@@ -1110,8 +1068,7 @@ class TextMetadataExtractor:
             return ""
     
     def _extract_technical_metadata(self, file_path: str, content: str) -> TechnicalMetadata:
-        """Extrait les métadonnées techniques texte"""
-        file_stat = os.stat(file_path)
+        """Extrait les métadonnées techniques texte"""        file_stat = os.stat(file_path)
         
         # Hash du contenu
         content_hash = hashlib.sha256(content.encode('utf-8')).hexdigest()
@@ -1133,8 +1090,7 @@ class TextMetadataExtractor:
         )
     
     def _extract_text_dimensions(self, content: str) -> MediaDimensions:
-        """Extrait les dimensions du texte"""
-        dimensions = MediaDimensions()
+        """Extrait les dimensions du texte"""        dimensions = MediaDimensions()
         
         # Statistiques basiques
         char_count = len(content)
@@ -1152,8 +1108,7 @@ class TextMetadataExtractor:
         return dimensions
     
     def _extract_creative_from_text(self, content: str) -> CreativeMetadata:
-        """Extrait les métadonnées créatives du texte"""
-        creative = CreativeMetadata()
+        """Extrait les métadonnées créatives du texte"""        creative = CreativeMetadata()
         
         # Titre depuis la première ligne
         lines = content.split('\n')
@@ -1188,8 +1143,7 @@ class TextMetadataExtractor:
         return creative
     
     def _perform_text_ai_analysis(self, content: str) -> Dict[str, Any]:
-        """Effectue une analyse IA du texte"""
-        ai_analysis = {}
+        """Effectue une analyse IA du texte"""        ai_analysis = {}
         
         try:
             # Statistiques de lisibilité
@@ -1240,8 +1194,7 @@ class TextMetadataExtractor:
         return ai_analysis
     
     def _create_error_metadata(self, file_path: str, error: str) -> ContentMetadata:
-        """Crée des métadonnées d'erreur"""
-        return ContentMetadata(
+        """Crée des métadonnées d'erreur"""        return ContentMetadata(
             file_path=file_path,
             technical=TechnicalMetadata(
                 file_size=0,
@@ -1255,8 +1208,7 @@ class TextMetadataExtractor:
         )
 
 class MetadataExtractor:
-    """Extracteur de métadonnées principal multi-format"""
-    
+    """Extracteur de métadonnées principal multi-format"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.MetadataExtractor")
         
@@ -1278,8 +1230,7 @@ class MetadataExtractor:
         }
     
     def extract_metadata(self, file_path: str, force_refresh: bool = False) -> ContentMetadata:
-        """Extrait les métadonnées selon le type de fichier"""
-        
+        """Extrait les métadonnées selon le type de fichier"""        
         # Vérification du cache
         if not force_refresh and file_path in self._metadata_cache:
             return self._metadata_cache[file_path]
@@ -1310,8 +1261,7 @@ class MetadataExtractor:
             return self._create_error_metadata(file_path, str(e))
     
     def _detect_content_type(self, file_path: str) -> str:
-        """Détecte le type de contenu du fichier"""
-        file_extension = Path(file_path).suffix.lower()
+        """Détecte le type de contenu du fichier"""        file_extension = Path(file_path).suffix.lower()
         
         for content_type, extensions in self.supported_types.items():
             if file_extension in extensions:
@@ -1335,8 +1285,7 @@ class MetadataExtractor:
         return 'unknown'
     
     def _create_unsupported_metadata(self, file_path: str, content_type: str) -> ContentMetadata:
-        """Crée des métadonnées pour fichier non supporté"""
-        file_stat = os.stat(file_path)
+        """Crée des métadonnées pour fichier non supporté"""        file_stat = os.stat(file_path)
         
         technical = TechnicalMetadata(
             file_size=file_stat.st_size,
@@ -1356,8 +1305,7 @@ class MetadataExtractor:
         )
     
     def _create_error_metadata(self, file_path: str, error: str) -> ContentMetadata:
-        """Crée des métadonnées d'erreur"""
-        return ContentMetadata(
+        """Crée des métadonnées d'erreur"""        return ContentMetadata(
             file_path=file_path,
             technical=TechnicalMetadata(
                 file_size=0,
@@ -1371,16 +1319,14 @@ class MetadataExtractor:
         )
 
 class AsyncMetadataExtractor:
-    """Version asynchrone de l'extracteur de métadonnées"""
-    
+    """Version asynchrone de l'extracteur de métadonnées"""    
     def __init__(self, max_workers: int = 4):
         self.sync_extractor = MetadataExtractor()
         self.max_workers = max_workers
         self.logger = logging.getLogger(f"{__name__}.AsyncMetadataExtractor")
     
     async def extract_metadata(self, file_path: str, force_refresh: bool = False) -> ContentMetadata:
-        """Extrait les métadonnées de manière asynchrone"""
-        loop = asyncio.get_event_loop()
+        """Extrait les métadonnées de manière asynchrone"""        loop = asyncio.get_event_loop()
         
         with ThreadPoolExecutor(max_workers=1) as executor:
             metadata = await loop.run_in_executor(
@@ -1394,8 +1340,7 @@ class AsyncMetadataExtractor:
     
     async def extract_batch_metadata(self, file_paths: List[str], 
                                    force_refresh: bool = False) -> Dict[str, ContentMetadata]:
-        """Extrait les métadonnées d'un lot de fichiers en parallèle"""
-        
+        """Extrait les métadonnées d'un lot de fichiers en parallèle"""        
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
             loop = asyncio.get_event_loop()
             

@@ -1,5 +1,4 @@
-"""
-Content Aggregator - Multi-Source Content Aggregation Engine
+"""Content Aggregator - Multi-Source Content Aggregation Engine
 ===========================================================
 
 The ContentAggregator collects, normalizes, and aggregates content
@@ -7,9 +6,7 @@ from multiple sources for unified management and distribution.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set
 from datetime import datetime, timedelta
@@ -27,8 +24,7 @@ from ..integrations.platform_apis import PlatformAPIManager
 
 @dataclass
 class AggregationSource:
-    """Content aggregation source configuration"""
-    source_id: str
+    """Content aggregation source configuration"""    source_id: str
     source_type: str  # platform, rss, api, webhook
     source_name: str
     api_config: Dict[str, Any]
@@ -39,8 +35,7 @@ class AggregationSource:
 
 @dataclass
 class AggregationRule:
-    """Content aggregation rule definition"""
-    rule_id: str
+    """Content aggregation rule definition"""    rule_id: str
     source_ids: List[str]
     content_filters: Dict[str, Any]
     transformation_rules: Dict[str, Any]
@@ -51,8 +46,7 @@ class AggregationRule:
 
 @dataclass
 class AggregationResult:
-    """Content aggregation result container"""
-    aggregation_id: str
+    """Content aggregation result container"""    aggregation_id: str
     source_id: str
     items_processed: int
     items_created: int
@@ -64,8 +58,7 @@ class AggregationResult:
 
 
 class ContentAggregator:
-    """
-    Multi-Source Content Aggregation Engine
+    """    Multi-Source Content Aggregation Engine
     
     Provides comprehensive content aggregation including:
     - Multi-platform content collection and synchronization
@@ -75,8 +68,7 @@ class ContentAggregator:
     - Content deduplication and normalization
     - Scheduled and on-demand aggregation
     - Content source quality scoring
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession):
         self.db = db_session
         self.logger = logging.getLogger(__name__)
@@ -101,8 +93,7 @@ class ContentAggregator:
         custom_filters: Dict[str, Any] = None,
         force_refresh: bool = False
     ) -> Dict[str, Any]:
-        """
-        Aggregate content from a specific source
+        """        Aggregate content from a specific source
         
         Args:
             source_id: Source identifier
@@ -111,8 +102,7 @@ class ContentAggregator:
             
         Returns:
             Aggregation result with statistics and status
-        """
-        aggregation_start = datetime.utcnow()
+        """        aggregation_start = datetime.utcnow()
         
         try:
             self.logger.info(f"Starting content aggregation from source {source_id}")
@@ -189,8 +179,7 @@ class ContentAggregator:
         source_filter: Dict[str, Any] = None,
         parallel_execution: bool = True
     ) -> Dict[str, Any]:
-        """
-        Aggregate content from all configured sources
+        """        Aggregate content from all configured sources
         
         Args:
             source_filter: Filter criteria for sources
@@ -198,8 +187,7 @@ class ContentAggregator:
             
         Returns:
             Combined aggregation results from all sources
-        """
-        try:
+        """        try:
             self.logger.info("Starting aggregation from all sources")
             
             # Get all enabled sources
@@ -280,8 +268,7 @@ class ContentAggregator:
         source_config: AggregationSource,
         custom_filters: Dict[str, Any] = None
     ) -> AggregationResult:
-        """
-        Aggregate content from social media platforms
+        """        Aggregate content from social media platforms
         
         Args:
             source_config: Source configuration
@@ -289,8 +276,7 @@ class ContentAggregator:
             
         Returns:
             Platform aggregation result
-        """
-        try:
+        """        try:
             platform_name = source_config.api_config.get("platform_name", "")
             aggregation_id = str(uuid.uuid4())
             
@@ -386,8 +372,7 @@ class ContentAggregator:
         source_config: AggregationSource,
         custom_filters: Dict[str, Any] = None
     ) -> AggregationResult:
-        """
-        Aggregate content from RSS feeds
+        """        Aggregate content from RSS feeds
         
         Args:
             source_config: Source configuration
@@ -395,8 +380,7 @@ class ContentAggregator:
             
         Returns:
             RSS aggregation result
-        """
-        try:
+        """        try:
             import feedparser
             
             aggregation_id = str(uuid.uuid4())
@@ -482,8 +466,7 @@ class ContentAggregator:
         source_config: AggregationSource,
         custom_filters: Dict[str, Any] = None
     ) -> AggregationResult:
-        """
-        Aggregate content from external APIs
+        """        Aggregate content from external APIs
         
         Args:
             source_config: Source configuration
@@ -491,8 +474,7 @@ class ContentAggregator:
             
         Returns:
             API aggregation result
-        """
-        try:
+        """        try:
             import aiohttp
             
             aggregation_id = str(uuid.uuid4())
@@ -590,8 +572,7 @@ class ContentAggregator:
     # Helper methods
 
     async def _load_aggregation_configurations(self):
-        """Load aggregation sources and rules from database"""
-        try:
+        """Load aggregation sources and rules from database"""        try:
             # Load sources
             sources_result = await self.db.execute(
                 select(ContentSource).where(ContentSource.enabled == True)
@@ -613,12 +594,10 @@ class ContentAggregator:
             self.logger.error(f"Failed to load aggregation configurations: {str(e)}")
 
     async def _get_source_config(self, source_id: str) -> Optional[AggregationSource]:
-        """Get source configuration by ID"""
-        return self.active_sources.get(source_id)
+        """Get source configuration by ID"""        return self.active_sources.get(source_id)
 
     async def _should_aggregate_source(self, source_config: AggregationSource) -> bool:
-        """Check if source should be aggregated based on frequency"""
-        if not source_config.last_sync:
+        """Check if source should be aggregated based on frequency"""        if not source_config.last_sync:
             return True
         
         time_since_sync = datetime.utcnow() - source_config.last_sync
@@ -627,8 +606,7 @@ class ContentAggregator:
         return time_since_sync >= sync_interval
 
     async def _is_duplicate_content(self, content_item: Dict[str, Any]) -> bool:
-        """Check if content is a duplicate"""
-        # Generate content fingerprint
+        """Check if content is a duplicate"""        # Generate content fingerprint
         fingerprint = await self._generate_content_fingerprint(content_item)
         
         if fingerprint in self.content_fingerprints:
@@ -647,8 +625,7 @@ class ContentAggregator:
         return False
 
     async def _generate_content_fingerprint(self, content_item: Dict[str, Any]) -> str:
-        """Generate unique fingerprint for content deduplication"""
-        import hashlib
+        """Generate unique fingerprint for content deduplication"""        import hashlib
         
         # Use title, description, and source URL for fingerprint
         fingerprint_data = {
@@ -662,8 +639,7 @@ class ContentAggregator:
         return hashlib.md5(fingerprint_string.encode()).hexdigest()
 
     def _extract_nested_value(self, data: Dict[str, Any], path: str) -> Any:
-        """Extract value from nested dictionary using dot notation"""
-        keys = path.split('.')
+        """Extract value from nested dictionary using dot notation"""        keys = path.split('.')
         value = data
         
         for key in keys:
@@ -676,56 +652,43 @@ class ContentAggregator:
 
     # Placeholder methods for actual implementations
     async def _get_enabled_sources(self, source_filter: Dict[str, Any] = None) -> List[AggregationSource]:
-        """Get all enabled aggregation sources"""
-        return list(self.active_sources.values())
+        """Get all enabled aggregation sources"""        return list(self.active_sources.values())
 
     async def _aggregate_youtube_content(self, api_client: Any, params: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Aggregate content from YouTube"""
-        return []
+        """Aggregate content from YouTube"""        return []
 
     async def _aggregate_instagram_content(self, api_client: Any, params: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Aggregate content from Instagram"""
-        return []
+        """Aggregate content from Instagram"""        return []
 
     async def _normalize_platform_content(self, item: Dict[str, Any], platform: str) -> Dict[str, Any]:
-        """Normalize platform content to standard format"""
-        return item
+        """Normalize platform content to standard format"""        return item
 
     async def _normalize_rss_content(self, entry: Any, feed: Any) -> Dict[str, Any]:
-        """Normalize RSS content to standard format"""
-        return {}
+        """Normalize RSS content to standard format"""        return {}
 
     async def _normalize_api_content(self, item: Dict[str, Any], api_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Normalize API content to standard format"""
-        return item
+        """Normalize API content to standard format"""        return item
 
     async def _passes_content_filters(self, content: Dict[str, Any], filters: Dict[str, Any]) -> bool:
-        """Check if content passes aggregation filters"""
-        return True
+        """Check if content passes aggregation filters"""        return True
 
     async def _find_existing_content(self, content: Dict[str, Any]) -> Optional[Any]:
-        """Find existing content in database"""
-        return None
+        """Find existing content in database"""        return None
 
     async def _create_new_content(self, content: Dict[str, Any], source_id: str) -> Optional[Any]:
-        """Create new content record"""
-        return None
+        """Create new content record"""        return None
 
     async def _update_existing_content(self, existing: Any, new_content: Dict[str, Any]) -> Optional[Any]:
-        """Update existing content record"""
-        return None
+        """Update existing content record"""        return None
 
     async def _update_source_sync_status(self, source_id: str, result: AggregationResult) -> None:
-        """Update source synchronization status"""
-        pass
+        """Update source synchronization status"""        pass
 
     async def _update_aggregation_stats(self, source_id: str, result: AggregationResult) -> None:
-        """Update aggregation statistics"""
-        pass
+        """Update aggregation statistics"""        pass
 
     def _serialize_aggregation_result(self, result: AggregationResult) -> Dict[str, Any]:
-        """Convert aggregation result to serializable format"""
-        return {
+        """Convert aggregation result to serializable format"""        return {
             "aggregation_id": result.aggregation_id,
             "source_id": result.source_id,
             "items_processed": result.items_processed,

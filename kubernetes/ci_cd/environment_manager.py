@@ -1,5 +1,4 @@
-"""
-🔧 Environment Manager - IA-Influencer-Agent CI/CD
+"""🔧 Environment Manager - IA-Influencer-Agent CI/CD
 ================================================================
 Expert: DEVOPS_ENGINEER + INFRASTRUCTURE_SPECIALIST
 Created: 2025-08-24
@@ -8,9 +7,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Enterprise environment management for multi-format content platform.
 Manages development, staging, and production environments with automated provisioning.
 ================================================================
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 import asyncio
 import logging
 import yaml
@@ -29,8 +26,7 @@ import docker
 logger = logging.getLogger(__name__)
 
 class EnvironmentType(Enum):
-    """Environment type enumeration"""
-    DEVELOPMENT = "development"
+    """Environment type enumeration"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
@@ -38,8 +34,7 @@ class EnvironmentType(Enum):
     DEMO = "demo"
 
 class EnvironmentStatus(Enum):
-    """Environment status enumeration"""
-    CREATING = "creating"
+    """Environment status enumeration"""    CREATING = "creating"
     ACTIVE = "active"
     UPDATING = "updating"
     DELETING = "deleting"
@@ -47,8 +42,7 @@ class EnvironmentStatus(Enum):
     SUSPENDED = "suspended"
 
 class InfrastructureProvider(Enum):
-    """Infrastructure provider enumeration"""
-    KUBERNETES = "kubernetes"
+    """Infrastructure provider enumeration"""    KUBERNETES = "kubernetes"
     DOCKER_COMPOSE = "docker_compose"
     AWS_ECS = "aws_ecs"
     AZURE_CONTAINER = "azure_container"
@@ -56,8 +50,7 @@ class InfrastructureProvider(Enum):
 
 @dataclass
 class ResourceLimits:
-    """Resource limits configuration"""
-    cpu_limit: str = "2000m"
+    """Resource limits configuration"""    cpu_limit: str = "2000m"
     memory_limit: str = "4Gi"
     storage_limit: str = "50Gi"
     replica_count: int = 2
@@ -66,8 +59,7 @@ class ResourceLimits:
 
 @dataclass
 class NetworkConfig:
-    """Network configuration"""
-    domain: str
+    """Network configuration"""    domain: str
     subdomain: str
     ssl_enabled: bool = True
     load_balancer: bool = True
@@ -80,8 +72,7 @@ class NetworkConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration"""
-    rbac_enabled: bool = True
+    """Security configuration"""    rbac_enabled: bool = True
     network_policies: bool = True
     pod_security: bool = True
     secret_encryption: bool = True
@@ -91,8 +82,7 @@ class SecurityConfig:
 
 @dataclass
 class EnvironmentConfiguration:
-    """Complete environment configuration"""
-    name: str
+    """Complete environment configuration"""    name: str
     environment_type: EnvironmentType
     namespace: str
     resource_limits: ResourceLimits
@@ -114,11 +104,9 @@ class EnvironmentConfiguration:
             self.custom_configs = {}
 
 class EnvironmentManager:
-    """Enterprise environment management system"""
-    
+    """Enterprise environment management system"""    
     def __init__(self):
-        """Initialize environment manager"""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize environment manager"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.environments: Dict[str, EnvironmentConfiguration] = {}
         self.environment_status: Dict[str, EnvironmentStatus] = {}
         self.k8s_client = None
@@ -127,8 +115,7 @@ class EnvironmentManager:
         self.initialized = False
     
     async def initialize(self) -> bool:
-        """Initialize environment manager"""
-        try:
+        """Initialize environment manager"""        try:
             # Initialize Kubernetes client
             await self._initialize_kubernetes()
             
@@ -150,8 +137,7 @@ class EnvironmentManager:
             return False
     
     async def _initialize_kubernetes(self) -> None:
-        """Initialize Kubernetes client"""
-        try:
+        """Initialize Kubernetes client"""        try:
             # Try in-cluster config first
             try:
                 config.load_incluster_config()
@@ -166,8 +152,7 @@ class EnvironmentManager:
             self.logger.warning(f"Kubernetes client initialization failed: {e}")
     
     async def _initialize_docker(self) -> None:
-        """Initialize Docker client"""
-        try:
+        """Initialize Docker client"""        try:
             self.docker_client = docker.from_env()
             self.docker_client.ping()
             self.logger.info("Docker client initialized")
@@ -176,8 +161,7 @@ class EnvironmentManager:
             self.logger.warning(f"Docker client initialization failed: {e}")
     
     async def _initialize_aws(self) -> None:
-        """Initialize AWS client"""
-        try:
+        """Initialize AWS client"""        try:
             self.aws_client = {
                 'ecs': boto3.client('ecs'),
                 'ec2': boto3.client('ec2'),
@@ -194,8 +178,7 @@ class EnvironmentManager:
         config: EnvironmentConfiguration,
         wait_for_ready: bool = True
     ) -> bool:
-        """Create new environment"""
-        try:
+        """Create new environment"""        try:
             env_name = config.name
             self.logger.info(f"Creating environment: {env_name}")
             
@@ -236,8 +219,7 @@ class EnvironmentManager:
             return False
     
     async def _create_kubernetes_environment(self, config: EnvironmentConfiguration) -> bool:
-        """Create Kubernetes environment"""
-        try:
+        """Create Kubernetes environment"""        try:
             if not self.k8s_client:
                 raise RuntimeError("Kubernetes client not initialized")
             
@@ -273,8 +255,7 @@ class EnvironmentManager:
             return False
     
     async def _create_k8s_namespace(self, config: EnvironmentConfiguration) -> None:
-        """Create Kubernetes namespace"""
-        v1 = client.CoreV1Api()
+        """Create Kubernetes namespace"""        v1 = client.CoreV1Api()
         
         namespace_manifest = {
             "apiVersion": "v1",
@@ -300,8 +281,7 @@ class EnvironmentManager:
                 raise
     
     async def _create_k8s_resource_quota(self, config: EnvironmentConfiguration) -> None:
-        """Create Kubernetes resource quota"""
-        v1 = client.CoreV1Api()
+        """Create Kubernetes resource quota"""        v1 = client.CoreV1Api()
         
         quota_manifest = {
             "apiVersion": "v1",
@@ -336,8 +316,7 @@ class EnvironmentManager:
                 raise
     
     async def _create_k8s_services(self, config: EnvironmentConfiguration) -> None:
-        """Create Kubernetes services"""
-        # Core IA Influencer services
+        """Create Kubernetes services"""        # Core IA Influencer services
         services = [
             self._get_api_service_manifest(config),
             self._get_ai_service_manifest(config),
@@ -372,8 +351,7 @@ class EnvironmentManager:
                     raise
     
     def _get_api_service_manifest(self, config: EnvironmentConfiguration) -> Dict[str, Any]:
-        """Get API service manifest"""
-        return {
+        """Get API service manifest"""        return {
             "name": "api-service",
             "deployment": {
                 "apiVersion": "apps/v1",
@@ -440,8 +418,7 @@ class EnvironmentManager:
         }
     
     def _get_ai_service_manifest(self, config: EnvironmentConfiguration) -> Dict[str, Any]:
-        """Get AI service manifest"""
-        return {
+        """Get AI service manifest"""        return {
             "name": "ai-service",
             "deployment": {
                 "apiVersion": "apps/v1",
@@ -507,8 +484,7 @@ class EnvironmentManager:
         }
     
     def _get_content_protection_service_manifest(self, config: EnvironmentConfiguration) -> Dict[str, Any]:
-        """Get content protection service manifest"""
-        return {
+        """Get content protection service manifest"""        return {
             "name": "content-protection-service",
             "deployment": {
                 "apiVersion": "apps/v1",
@@ -574,8 +550,7 @@ class EnvironmentManager:
         }
     
     def _get_database_service_manifest(self, config: EnvironmentConfiguration) -> Dict[str, Any]:
-        """Get database service manifest"""
-        return {
+        """Get database service manifest"""        return {
             "name": "database-service",
             "deployment": {
                 "apiVersion": "apps/v1",
@@ -642,8 +617,7 @@ class EnvironmentManager:
         }
     
     def _get_redis_service_manifest(self, config: EnvironmentConfiguration) -> Dict[str, Any]:
-        """Get Redis service manifest"""
-        return {
+        """Get Redis service manifest"""        return {
             "name": "redis-service",
             "deployment": {
                 "apiVersion": "apps/v1",
@@ -705,8 +679,7 @@ class EnvironmentManager:
         }
     
     async def _create_docker_compose_environment(self, config: EnvironmentConfiguration) -> bool:
-        """Create Docker Compose environment"""
-        try:
+        """Create Docker Compose environment"""        try:
             compose_file = self._generate_docker_compose(config)
             compose_path = f"/tmp/docker-compose-{config.name}.yml"
             
@@ -730,8 +703,7 @@ class EnvironmentManager:
             return False
     
     def _generate_docker_compose(self, config: EnvironmentConfiguration) -> Dict[str, Any]:
-        """Generate Docker Compose configuration"""
-        return {
+        """Generate Docker Compose configuration"""        return {
             "version": "3.8",
             "services": {
                 "api": {
@@ -778,8 +750,7 @@ class EnvironmentManager:
         }
     
     async def _create_local_environment(self, config: EnvironmentConfiguration) -> bool:
-        """Create local development environment"""
-        try:
+        """Create local development environment"""        try:
             # Create local directories
             env_dir = Path(f"/tmp/ia_influencer_env_{config.name}")
             env_dir.mkdir(parents=True, exist_ok=True)
@@ -795,8 +766,7 @@ class EnvironmentManager:
             return False
     
     async def _create_local_config_files(self, env_dir: Path, config: EnvironmentConfiguration) -> None:
-        """Create local configuration files"""
-        # Create environment config
+        """Create local configuration files"""        # Create environment config
         env_config = {
             "environment": config.environment_type.value,
             "ai_features_enabled": config.ai_features_enabled,
@@ -816,8 +786,7 @@ export MONITORING_ENABLED={config.monitoring_enabled}
 
 echo "IA Influencer {config.environment_type.value} environment ready"
 echo "Environment directory: {env_dir}"
-"""
-        
+"""        
         script_path = env_dir / "start.sh"
         with open(script_path, 'w') as f:
             f.write(startup_script)
@@ -830,8 +799,7 @@ echo "Environment directory: {env_dir}"
         env_name: str,
         updates: Dict[str, Any]
     ) -> bool:
-        """Update existing environment"""
-        try:
+        """Update existing environment"""        try:
             if env_name not in self.environments:
                 return False
             
@@ -867,8 +835,7 @@ echo "Environment directory: {env_dir}"
             return False
     
     async def delete_environment(self, env_name: str) -> bool:
-        """Delete environment"""
-        try:
+        """Delete environment"""        try:
             if env_name not in self.environments:
                 return False
             
@@ -901,12 +868,10 @@ echo "Environment directory: {env_dir}"
             return False
     
     async def get_environment_status(self, env_name: str) -> Optional[EnvironmentStatus]:
-        """Get environment status"""
-        return self.environment_status.get(env_name)
+        """Get environment status"""        return self.environment_status.get(env_name)
     
     async def get_environment_info(self, env_name: str) -> Optional[Dict[str, Any]]:
-        """Get comprehensive environment information"""
-        if env_name not in self.environments:
+        """Get comprehensive environment information"""        if env_name not in self.environments:
             return None
         
         config = self.environments[env_name]
@@ -927,8 +892,7 @@ echo "Environment directory: {env_dir}"
         }
     
     async def list_environments(self) -> List[Dict[str, Any]]:
-        """List all environments"""
-        environments = []
+        """List all environments"""        environments = []
         for env_name in self.environments:
             env_info = await self.get_environment_info(env_name)
             if env_info:
@@ -937,8 +901,7 @@ echo "Environment directory: {env_dir}"
         return environments
     
     async def _wait_for_environment_ready(self, env_name: str, timeout: int = 300) -> bool:
-        """Wait for environment to be ready"""
-        start_time = datetime.now()
+        """Wait for environment to be ready"""        start_time = datetime.now()
         
         while (datetime.now() - start_time).seconds < timeout:
             # Check environment health
@@ -950,8 +913,7 @@ echo "Environment directory: {env_dir}"
         return False
     
     async def _check_environment_health(self, env_name: str) -> bool:
-        """Check environment health"""
-        if env_name not in self.environments:
+        """Check environment health"""        if env_name not in self.environments:
             return False
         
         config = self.environments[env_name]
@@ -964,8 +926,7 @@ echo "Environment directory: {env_dir}"
             return True  # Local environments are always considered healthy
     
     async def _check_k8s_health(self, config: EnvironmentConfiguration) -> bool:
-        """Check Kubernetes environment health"""
-        try:
+        """Check Kubernetes environment health"""        try:
             if not self.k8s_client:
                 return False
             
@@ -982,13 +943,11 @@ echo "Environment directory: {env_dir}"
             return False
     
     async def _load_environments(self) -> None:
-        """Load environments from storage"""
-        # Implementation would load from persistent storage
+        """Load environments from storage"""        # Implementation would load from persistent storage
         pass
     
     async def _save_environments(self) -> None:
-        """Save environments to storage"""
-        # Implementation would save to persistent storage
+        """Save environments to storage"""        # Implementation would save to persistent storage
         pass
 
 # Global instance

@@ -1,5 +1,4 @@
-"""
-Advanced Configuration Management for IA Influencer Agent Collaboration Services
+"""Advanced Configuration Management for IA Influencer Agent Collaboration Services
 ================================================================================
 
 This module provides comprehensive configuration management for collaboration
@@ -27,9 +26,7 @@ This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any reproduction, modification, distribution or use without explicit 
 written authorization is STRICTLY PROHIBITED and will be subject to 
 legal proceedings under German and international law.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Type
 from dataclasses import dataclass, field, asdict
@@ -49,8 +46,7 @@ logger = logging.getLogger(__name__)
 
 
 class Environment(Enum):
-    """Deployment environments."""
-    DEVELOPMENT = "development"
+    """Deployment environments."""    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -58,8 +54,7 @@ class Environment(Enum):
 
 
 class ConfigScope(Enum):
-    """Configuration scope levels."""
-    GLOBAL = "global"
+    """Configuration scope levels."""    GLOBAL = "global"
     SERVICE = "service"
     INSTANCE = "instance"
     CREATOR = "creator"
@@ -67,8 +62,7 @@ class ConfigScope(Enum):
 
 
 class SecretProvider(Enum):
-    """Secret management providers."""
-    AWS_SECRETS_MANAGER = "aws_secrets_manager"
+    """Secret management providers."""    AWS_SECRETS_MANAGER = "aws_secrets_manager"
     AZURE_KEY_VAULT = "azure_key_vault"
     GOOGLE_SECRET_MANAGER = "google_secret_manager"
     HASHICORP_VAULT = "hashicorp_vault"
@@ -77,8 +71,7 @@ class SecretProvider(Enum):
 
 
 class ConfigFormat(Enum):
-    """Configuration file formats."""
-    JSON = "json"
+    """Configuration file formats."""    JSON = "json"
     YAML = "yaml"
     TOML = "toml"
     ENV = "env"
@@ -87,8 +80,7 @@ class ConfigFormat(Enum):
 
 @dataclass
 class ConfigValidationRule:
-    """Configuration validation rule."""
-    field_path: str
+    """Configuration validation rule."""    field_path: str
     rule_type: str  # required, type, range, pattern, custom
     rule_value: Any
     error_message: str
@@ -97,8 +89,7 @@ class ConfigValidationRule:
 
 @dataclass
 class ConfigurationProfile:
-    """Configuration profile for specific environment."""
-    name: str
+    """Configuration profile for specific environment."""    name: str
     environment: Environment
     base_config: Dict[str, Any]
     overrides: Dict[str, Any] = field(default_factory=dict)
@@ -110,8 +101,7 @@ class ConfigurationProfile:
 
 @dataclass
 class SecretConfiguration:
-    """Secret management configuration."""
-    provider: SecretProvider
+    """Secret management configuration."""    provider: SecretProvider
     region: Optional[str] = None
     vault_url: Optional[str] = None
     key_vault_name: Optional[str] = None
@@ -121,8 +111,7 @@ class SecretConfiguration:
 
 
 class CollaborationConfigurationManager:
-    """
-    Advanced configuration manager for IA Influencer Agent collaboration services.
+    """    Advanced configuration manager for IA Influencer Agent collaboration services.
     
     Provides comprehensive configuration management:
     - Multi-environment configuration profiles
@@ -133,11 +122,8 @@ class CollaborationConfigurationManager:
     - Configuration versioning and audit trails
     - Real-time configuration updates
     - Disaster recovery and backup
-    """
-
-    def __init__(self, config_dir: str = "./config"):
-        """Initialize the collaboration configuration manager."""
-        self.config_dir = Path(config_dir)
+    """    def __init__(self, config_dir: str = "./config"):
+        """Initialize the collaboration configuration manager."""        self.config_dir = Path(config_dir)
         
         # Configuration storage
         self.configurations: Dict[str, Dict[str, Any]] = {}
@@ -170,8 +156,7 @@ class CollaborationConfigurationManager:
         logger.info("Collaboration configuration manager initialized")
 
     async def initialize_configuration_profiles(self) -> Dict[str, Any]:
-        """Initialize configuration profiles for all environments."""
-        logger.info("Initializing configuration profiles")
+        """Initialize configuration profiles for all environments."""        logger.info("Initializing configuration profiles")
         
         try:
             # Load base configuration
@@ -207,8 +192,7 @@ class CollaborationConfigurationManager:
         config_name: str, 
         scope: ConfigScope = ConfigScope.GLOBAL
     ) -> Dict[str, Any]:
-        """Load configuration with environment-specific overrides."""
-        logger.info(f"Loading configuration: {config_name} (scope: {scope.value})")
+        """Load configuration with environment-specific overrides."""        logger.info(f"Loading configuration: {config_name} (scope: {scope.value})")
         
         try:
             # Load base configuration
@@ -252,8 +236,7 @@ class CollaborationConfigurationManager:
         scope: ConfigScope = ConfigScope.GLOBAL,
         validate: bool = True
     ) -> Dict[str, Any]:
-        """Update configuration with validation and hot reloading."""
-        logger.info(f"Updating configuration: {config_name}")
+        """Update configuration with validation and hot reloading."""        logger.info(f"Updating configuration: {config_name}")
         
         try:
             # Load current configuration
@@ -305,8 +288,7 @@ class CollaborationConfigurationManager:
         value: Optional[str] = None,
         provider: Optional[SecretProvider] = None
     ) -> Dict[str, Any]:
-        """Manage secrets across different providers."""
-        logger.info(f"Managing secret: {secret_name} (operation: {operation})")
+        """Manage secrets across different providers."""        logger.info(f"Managing secret: {secret_name} (operation: {operation})")
         
         try:
             if operation == "create":
@@ -327,8 +309,7 @@ class CollaborationConfigurationManager:
             return {"status": "failed", "error": str(e)}
 
     async def setup_hot_reloading(self, config_files: List[str]) -> Dict[str, Any]:
-        """Setup hot reloading for configuration files."""
-        logger.info("Setting up configuration hot reloading")
+        """Setup hot reloading for configuration files."""        logger.info("Setting up configuration hot reloading")
         
         try:
             # Start file watchers
@@ -356,8 +337,7 @@ class CollaborationConfigurationManager:
             return {"status": "failed", "error": str(e)}
 
     async def validate_all_configurations(self) -> Dict[str, Any]:
-        """Validate all loaded configurations."""
-        logger.info("Validating all configurations")
+        """Validate all loaded configurations."""        logger.info("Validating all configurations")
         
         try:
             validation_results = {}
@@ -392,8 +372,7 @@ class CollaborationConfigurationManager:
         format: ConfigFormat,
         include_secrets: bool = False
     ) -> Dict[str, Any]:
-        """Export configuration in specified format."""
-        logger.info(f"Exporting configuration {config_name} as {format.value}")
+        """Export configuration in specified format."""        logger.info(f"Exporting configuration {config_name} as {format.value}")
         
         try:
             # Load configuration
@@ -438,8 +417,7 @@ class CollaborationConfigurationManager:
         config_name: str, 
         version: str
     ) -> Dict[str, Any]:
-        """Rollback configuration to a previous version."""
-        logger.info(f"Rolling back configuration {config_name} to version {version}")
+        """Rollback configuration to a previous version."""        logger.info(f"Rolling back configuration {config_name} to version {version}")
         
         try:
             # Find backup for specified version
@@ -479,8 +457,7 @@ class CollaborationConfigurationManager:
     # Private implementation methods
     
     def _detect_environment(self) -> Environment:
-        """Detect current deployment environment."""
-        env_var = os.getenv("ENVIRONMENT", "development").lower()
+        """Detect current deployment environment."""        env_var = os.getenv("ENVIRONMENT", "development").lower()
         
         env_mapping = {
             "dev": Environment.DEVELOPMENT,
@@ -498,8 +475,7 @@ class CollaborationConfigurationManager:
         return env_mapping.get(env_var, Environment.DEVELOPMENT)
 
     def _initialize_configuration_system(self) -> None:
-        """Initialize the configuration management system."""
-        # Create config directory if it doesn't exist
+        """Initialize the configuration management system."""        # Create config directory if it doesn't exist
         self.config_dir.mkdir(parents=True, exist_ok=True)
         
         # Initialize encryption key
@@ -512,16 +488,14 @@ class CollaborationConfigurationManager:
         self._initialize_secret_providers()
 
     def _initialize_encryption(self) -> None:
-        """Initialize encryption for sensitive configuration data."""
-        encryption_key = os.getenv("CONFIG_ENCRYPTION_KEY")
+        """Initialize encryption for sensitive configuration data."""        encryption_key = os.getenv("CONFIG_ENCRYPTION_KEY")
         if encryption_key:
             self.encryption_key = encryption_key.encode()
         else:
             self.encryption_key = Fernet.generate_key()
 
     def _setup_default_validation_rules(self) -> None:
-        """Setup default configuration validation rules."""
-        self.validation_rules = {
+        """Setup default configuration validation rules."""        self.validation_rules = {
             "database": [
                 ConfigValidationRule(
                     field_path="host",
@@ -548,8 +522,7 @@ class CollaborationConfigurationManager:
         }
 
     async def _load_base_configuration(self) -> Dict[str, Any]:
-        """Load base configuration from files."""
-        base_config = {}
+        """Load base configuration from files."""        base_config = {}
         
         # Load from various sources
         config_files = [
@@ -572,8 +545,7 @@ class CollaborationConfigurationManager:
         environment: Environment, 
         base_config: Dict[str, Any]
     ) -> ConfigurationProfile:
-        """Create configuration profile for specific environment."""
-        
+        """Create configuration profile for specific environment."""        
         # Load environment-specific overrides
         env_file = self.config_dir / f"{environment.value}.yaml"
         overrides = {}
@@ -603,16 +575,14 @@ logger = logging.getLogger(__name__)
 
 
 class ConfigurationScope(Enum):
-    """Configuration scopes."""
-    GLOBAL = "global"
+    """Configuration scopes."""    GLOBAL = "global"
     ENVIRONMENT = "environment"
     SERVICE = "service"
     REGION = "region"
 
 
 class ConfigurationType(Enum):
-    """Types of configurations."""
-    DEPLOYMENT = "deployment"
+    """Types of configurations."""    DEPLOYMENT = "deployment"
     NETWORKING = "networking"
     SECURITY = "security"
     MONITORING = "monitoring"
@@ -622,8 +592,7 @@ class ConfigurationType(Enum):
 
 @dataclass
 class CloudCredentials:
-    """Cloud provider credentials configuration."""
-    provider: str
+    """Cloud provider credentials configuration."""    provider: str
     access_key_id: Optional[str] = None
     secret_access_key: Optional[str] = None
     region: str = "us-east-1"
@@ -636,8 +605,7 @@ class CloudCredentials:
 
 @dataclass
 class ResourceQuota:
-    """Resource quota configuration."""
-    cpu_limit: str = "100"
+    """Resource quota configuration."""    cpu_limit: str = "100"
     memory_limit: str = "200Gi"
     storage_limit: str = "1Ti"
     pods_limit: int = 1000
@@ -647,8 +615,7 @@ class ResourceQuota:
 
 @dataclass
 class EnvironmentConfig:
-    """Environment-specific configuration."""
-    name: str
+    """Environment-specific configuration."""    name: str
     cloud_provider: str
     region: str
     resource_quota: ResourceQuota
@@ -660,8 +627,7 @@ class EnvironmentConfig:
 
 
 class CollaborationConfigManager:
-    """
-    Advanced configuration manager for collaboration deployment.
+    """    Advanced configuration manager for collaboration deployment.
     
     Handles comprehensive configuration management including:
     - Environment-specific configurations
@@ -671,11 +637,9 @@ class CollaborationConfigManager:
     - Secrets management
     - Configuration validation
     - Configuration templating
-    """
-    
+    """    
     def __init__(self, deployment_config):
-        """Initialize configuration manager."""
-        self.deployment_config = deployment_config
+        """Initialize configuration manager."""        self.deployment_config = deployment_config
         self.environment_configs: Dict[str, EnvironmentConfig] = {}
         self.cloud_credentials: Dict[str, CloudCredentials] = {}
         self.global_config: Dict[str, Any] = {}
@@ -690,8 +654,7 @@ class CollaborationConfigManager:
         logger.info("CollaborationConfigManager initialized")
     
     def _initialize_global_config(self) -> None:
-        """Initialize global configuration settings."""
-        self.global_config = {
+        """Initialize global configuration settings."""        self.global_config = {
             "platform": {
                 "name": "IA Influencer Agent",
                 "version": "2.0.0",
@@ -743,8 +706,7 @@ class CollaborationConfigManager:
         }
     
     def _initialize_environment_configs(self) -> None:
-        """Initialize environment-specific configurations."""
-        # Development environment
+        """Initialize environment-specific configurations."""        # Development environment
         self.environment_configs["development"] = EnvironmentConfig(
             name="development",
             cloud_provider="aws",
@@ -856,8 +818,7 @@ class CollaborationConfigManager:
         )
     
     def _initialize_cloud_credentials(self) -> None:
-        """Initialize cloud provider credentials."""
-        self.cloud_credentials = {
+        """Initialize cloud provider credentials."""        self.cloud_credentials = {
             "aws": CloudCredentials(
                 provider="aws",
                 region="us-east-1",
@@ -883,8 +844,7 @@ class CollaborationConfigManager:
         }
     
     def _initialize_service_configs(self) -> None:
-        """Initialize service-specific configurations."""
-        self.service_configs = {
+        """Initialize service-specific configurations."""        self.service_configs = {
             "collaboration_api_gateway": {
                 "image": "collaboration/api-gateway:2.0.0",
                 "replicas": 3,
@@ -989,8 +949,7 @@ class CollaborationConfigManager:
         }
     
     async def validate_cloud_credentials(self) -> Dict[str, Any]:
-        """Validate cloud provider credentials."""
-        logger.info("Validating cloud credentials")
+        """Validate cloud provider credentials."""        logger.info("Validating cloud credentials")
         
         validation_results = {}
         
@@ -1009,8 +968,7 @@ class CollaborationConfigManager:
         return validation_results
     
     async def check_cloud_resources(self) -> Dict[str, Any]:
-        """Check cloud resource availability and quotas."""
-        logger.info("Checking cloud resource availability")
+        """Check cloud resource availability and quotas."""        logger.info("Checking cloud resource availability")
         
         current_env = self.deployment_config.environment.value
         env_config = self.environment_configs.get(current_env)
@@ -1046,8 +1004,7 @@ class CollaborationConfigManager:
         }
     
     async def get_service_configuration(self, service_name: str, environment: str) -> Dict[str, Any]:
-        """Get configuration for a specific service in an environment."""
-        base_config = self.service_configs.get(service_name, {})
+        """Get configuration for a specific service in an environment."""        base_config = self.service_configs.get(service_name, {})
         env_config = self.environment_configs.get(environment, {})
         
         # Merge configurations
@@ -1059,8 +1016,7 @@ class CollaborationConfigManager:
         return resolved_config
     
     async def generate_deployment_manifests(self, environment: str) -> Dict[str, Any]:
-        """Generate Kubernetes deployment manifests for all services."""
-        logger.info(f"Generating deployment manifests for {environment}")
+        """Generate Kubernetes deployment manifests for all services."""        logger.info(f"Generating deployment manifests for {environment}")
         
         manifests = {}
         
@@ -1073,8 +1029,7 @@ class CollaborationConfigManager:
         return manifests
     
     async def validate_configuration(self, environment: str) -> Dict[str, Any]:
-        """Validate configuration for a specific environment."""
-        logger.info(f"Validating configuration for {environment}")
+        """Validate configuration for a specific environment."""        logger.info(f"Validating configuration for {environment}")
         
         validation_results = {
             "environment_config": await self._validate_environment_config(environment),
@@ -1097,8 +1052,7 @@ class CollaborationConfigManager:
         }
     
     async def create_configuration_secrets(self, environment: str) -> Dict[str, Any]:
-        """Create Kubernetes secrets for configuration."""
-        logger.info(f"Creating configuration secrets for {environment}")
+        """Create Kubernetes secrets for configuration."""        logger.info(f"Creating configuration secrets for {environment}")
         
         secrets = {}
         
@@ -1118,16 +1072,13 @@ class CollaborationConfigManager:
         return secrets
     
     def get_environment_config(self, environment: str) -> Optional[EnvironmentConfig]:
-        """Get configuration for a specific environment."""
-        return self.environment_configs.get(environment)
+        """Get configuration for a specific environment."""        return self.environment_configs.get(environment)
     
     def get_global_config(self) -> Dict[str, Any]:
-        """Get global configuration."""
-        return self.global_config.copy()
+        """Get global configuration."""        return self.global_config.copy()
     
     def update_service_config(self, service_name: str, config_updates: Dict[str, Any]) -> None:
-        """Update configuration for a specific service."""
-        if service_name in self.service_configs:
+        """Update configuration for a specific service."""        if service_name in self.service_configs:
             self.service_configs[service_name].update(config_updates)
             logger.info(f"Updated configuration for service: {service_name}")
         else:
@@ -1136,8 +1087,7 @@ class CollaborationConfigManager:
     # Private helper methods
     
     async def _validate_cloud_provider_credentials(self, provider: str, credentials: CloudCredentials) -> Dict[str, Any]:
-        """Validate credentials for a specific cloud provider."""
-        await asyncio.sleep(1)  # Simulate credential validation
+        """Validate credentials for a specific cloud provider."""        await asyncio.sleep(1)  # Simulate credential validation
         
         if provider == "aws":
             if not credentials.access_key_id or not credentials.secret_access_key:
@@ -1156,8 +1106,7 @@ class CollaborationConfigManager:
         }
     
     async def _check_resource_quotas(self, env_config: EnvironmentConfig) -> Dict[str, Any]:
-        """Check if resource quotas are sufficient."""
-        await asyncio.sleep(0.5)  # Simulate quota check
+        """Check if resource quotas are sufficient."""        await asyncio.sleep(0.5)  # Simulate quota check
         
         # Simulate quota check (in real implementation, would call cloud APIs)
         return {
@@ -1175,8 +1124,7 @@ class CollaborationConfigManager:
         }
     
     async def _check_service_limits(self, env_config: EnvironmentConfig) -> Dict[str, Any]:
-        """Check service limits."""
-        await asyncio.sleep(0.5)  # Simulate service limit check
+        """Check service limits."""        await asyncio.sleep(0.5)  # Simulate service limit check
         
         return {
             "sufficient": True,
@@ -1185,8 +1133,7 @@ class CollaborationConfigManager:
         }
     
     async def _check_storage_availability(self, env_config: EnvironmentConfig) -> Dict[str, Any]:
-        """Check storage availability."""
-        await asyncio.sleep(0.5)  # Simulate storage check
+        """Check storage availability."""        await asyncio.sleep(0.5)  # Simulate storage check
         
         return {
             "sufficient": True,
@@ -1195,8 +1142,7 @@ class CollaborationConfigManager:
         }
     
     def _merge_configurations(self, base_config: Dict[str, Any], env_config: EnvironmentConfig, service_name: str) -> Dict[str, Any]:
-        """Merge base service configuration with environment-specific settings."""
-        merged_config = base_config.copy()
+        """Merge base service configuration with environment-specific settings."""        merged_config = base_config.copy()
         
         # Apply environment-specific overrides
         if hasattr(env_config, 'scaling_config') and env_config.scaling_config:
@@ -1221,8 +1167,7 @@ class CollaborationConfigManager:
         return merged_config
     
     async def _resolve_template_variables(self, config: Dict[str, Any], environment: str) -> Dict[str, Any]:
-        """Resolve template variables in configuration."""
-        # This would typically resolve variables like ${DATABASE_URL} from secrets or env vars
+        """Resolve template variables in configuration."""        # This would typically resolve variables like ${DATABASE_URL} from secrets or env vars
         resolved_config = config.copy()
         
         # Template variable resolution (simplified)
@@ -1258,8 +1203,7 @@ class CollaborationConfigManager:
         return replace_vars(resolved_config)
     
     async def _generate_service_manifest(self, service_name: str, config: Dict[str, Any], environment: str) -> Dict[str, Any]:
-        """Generate Kubernetes manifest for a service."""
-        await asyncio.sleep(0.2)  # Simulate manifest generation
+        """Generate Kubernetes manifest for a service."""        await asyncio.sleep(0.2)  # Simulate manifest generation
         
         return {
             "apiVersion": "apps/v1",
@@ -1307,8 +1251,7 @@ class CollaborationConfigManager:
         }
     
     def _generate_health_check_probe(self, health_check_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate health check probe configuration."""
-        return {
+        """Generate health check probe configuration."""        return {
             "httpGet": {
                 "path": health_check_config.get("path", "/health"),
                 "port": health_check_config.get("port", 8000)
@@ -1322,8 +1265,7 @@ class CollaborationConfigManager:
     # Validation methods
     
     async def _validate_environment_config(self, environment: str) -> Dict[str, Any]:
-        """Validate environment configuration."""
-        env_config = self.environment_configs.get(environment)
+        """Validate environment configuration."""        env_config = self.environment_configs.get(environment)
         
         if not env_config:
             return {"valid": False, "error": f"Environment {environment} not configured"}
@@ -1336,8 +1278,7 @@ class CollaborationConfigManager:
         }
     
     async def _validate_service_configs(self, environment: str) -> Dict[str, Any]:
-        """Validate service configurations."""
-        validation_results = {}
+        """Validate service configurations."""        validation_results = {}
         
         for service_name in self.service_configs.keys():
             config = await self.get_service_configuration(service_name, environment)
@@ -1358,8 +1299,7 @@ class CollaborationConfigManager:
         }
     
     async def _validate_resource_quotas(self, environment: str) -> Dict[str, Any]:
-        """Validate resource quotas."""
-        env_config = self.environment_configs.get(environment)
+        """Validate resource quotas."""        env_config = self.environment_configs.get(environment)
         
         if not env_config:
             return {"valid": False, "error": "Environment not configured"}
@@ -1378,8 +1318,7 @@ class CollaborationConfigManager:
         }
     
     async def _validate_networking_config(self, environment: str) -> Dict[str, Any]:
-        """Validate networking configuration."""
-        env_config = self.environment_configs.get(environment)
+        """Validate networking configuration."""        env_config = self.environment_configs.get(environment)
         
         if not env_config:
             return {"valid": False, "error": "Environment not configured"}
@@ -1387,8 +1326,7 @@ class CollaborationConfigManager:
         return {"valid": True, "networking_config": env_config.networking_config}
     
     async def _validate_security_config(self, environment: str) -> Dict[str, Any]:
-        """Validate security configuration."""
-        env_config = self.environment_configs.get(environment)
+        """Validate security configuration."""        env_config = self.environment_configs.get(environment)
         
         if not env_config:
             return {"valid": False, "error": "Environment not configured"}
@@ -1398,8 +1336,7 @@ class CollaborationConfigManager:
     # Secret creation methods
     
     async def _create_database_secret(self, environment: str) -> Dict[str, Any]:
-        """Create database secret."""
-        await asyncio.sleep(0.5)  # Simulate secret creation
+        """Create database secret."""        await asyncio.sleep(0.5)  # Simulate secret creation
         
         return {
             "name": f"database-secret-{environment}",
@@ -1414,8 +1351,7 @@ class CollaborationConfigManager:
         }
     
     async def _create_api_secret(self, environment: str) -> Dict[str, Any]:
-        """Create API secret."""
-        await asyncio.sleep(0.5)  # Simulate secret creation
+        """Create API secret."""        await asyncio.sleep(0.5)  # Simulate secret creation
         
         return {
             "name": f"api-secret-{environment}",
@@ -1428,8 +1364,7 @@ class CollaborationConfigManager:
         }
     
     async def _create_external_services_secret(self, environment: str) -> Dict[str, Any]:
-        """Create external services secret."""
-        await asyncio.sleep(0.5)  # Simulate secret creation
+        """Create external services secret."""        await asyncio.sleep(0.5)  # Simulate secret creation
         
         return {
             "name": f"external-services-secret-{environment}",
@@ -1443,8 +1378,7 @@ class CollaborationConfigManager:
         }
     
     async def _create_tls_secret(self, environment: str) -> Dict[str, Any]:
-        """Create TLS secret."""
-        await asyncio.sleep(0.5)  # Simulate secret creation
+        """Create TLS secret."""        await asyncio.sleep(0.5)  # Simulate secret creation
         
         return {
             "name": f"tls-secret-{environment}",

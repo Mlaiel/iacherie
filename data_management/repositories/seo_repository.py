@@ -1,5 +1,4 @@
-"""
-🔍 SEO Repository - IA Influencer Agent Platform Enterprise
+"""🔍 SEO Repository - IA Influencer Agent Platform Enterprise
 ===========================================================
 Module: backend/data_management/repositories/seo_repository.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -21,9 +20,7 @@ SEO REPOSITORY ARCHITECTURE:
 Keyword Analysis → Content Optimization → Meta Generation → 
 Platform-Specific SEO → Analytics Tracking → Performance Monitoring → 
 Automated A/B Testing → Ranking Optimization
-"""
-
-from typing import Dict, List, Optional, Any, Tuple, Union
+"""from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
 import hashlib
@@ -34,8 +31,7 @@ from enum import Enum
 from .base_repository import BaseRepository, AsyncBaseRepository, OperationType
 
 class SEOPlatform(Enum):
-    """SEO target platforms"""
-    GOOGLE = "google"
+    """SEO target platforms"""    GOOGLE = "google"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -45,8 +41,7 @@ class SEOPlatform(Enum):
     FACEBOOK = "facebook"
 
 class ContentType(Enum):
-    """Content types for SEO optimization"""
-    MUSIC = "music"
+    """Content types for SEO optimization"""    MUSIC = "music"
     VIDEO = "video"
     IMAGE = "image"
     BLOG_POST = "blog_post"
@@ -55,8 +50,7 @@ class ContentType(Enum):
     REEL = "reel"
 
 class SEOStrategy(Enum):
-    """SEO strategy types"""
-    VIRAL = "viral"
+    """SEO strategy types"""    VIRAL = "viral"
     ORGANIC_GROWTH = "organic_growth"
     BRAND_AWARENESS = "brand_awareness"
     ENGAGEMENT = "engagement"
@@ -65,8 +59,7 @@ class SEOStrategy(Enum):
 
 @dataclass
 class KeywordData:
-    """Keyword analysis data"""
-    keyword: str
+    """Keyword analysis data"""    keyword: str
     search_volume: int
     competition_score: float
     trending_score: float
@@ -77,8 +70,7 @@ class KeywordData:
 
 @dataclass
 class SEOMetadata:
-    """SEO metadata for content"""
-    title: str
+    """SEO metadata for content"""    title: str
     description: str
     keywords: List[str]
     hashtags: List[str]
@@ -90,8 +82,7 @@ class SEOMetadata:
 
 @dataclass
 class PlatformSEOConfig:
-    """Platform-specific SEO configuration"""
-    platform: SEOPlatform
+    """Platform-specific SEO configuration"""    platform: SEOPlatform
     title_max_length: int
     description_max_length: int
     hashtag_limit: int
@@ -102,8 +93,7 @@ class PlatformSEOConfig:
 
 @dataclass
 class SEOPerformance:
-    """SEO performance metrics"""
-    content_id: str
+    """SEO performance metrics"""    content_id: str
     platform: SEOPlatform
     ranking_position: int
     visibility_score: float
@@ -119,8 +109,7 @@ class SEOPerformance:
 
 @dataclass
 class SEOOptimizationSuggestion:
-    """SEO optimization suggestions"""
-    suggestion_id: str
+    """SEO optimization suggestions"""    suggestion_id: str
     content_id: str
     platform: SEOPlatform
     suggestion_type: str
@@ -132,8 +121,7 @@ class SEOOptimizationSuggestion:
     ai_confidence: float
 
 class SEORepository(BaseRepository):
-    """
-    Advanced SEO repository for multi-platform content optimization
+    """    Advanced SEO repository for multi-platform content optimization
     
     Features:
     - Intelligent keyword research and analysis
@@ -144,8 +132,7 @@ class SEORepository(BaseRepository):
     - Real-time trend analysis
     - Competitive analysis
     - A/B testing for SEO strategies
-    """
-    
+    """    
     def __init__(self, db_connection=None, cache_manager=None, logger=None,
                  audit_service=None, metrics_collector=None, ai_service=None,
                  keyword_service=None, trend_service=None):
@@ -171,8 +158,7 @@ class SEORepository(BaseRepository):
         }
 
     def _initialize_platform_configs(self) -> Dict[SEOPlatform, PlatformSEOConfig]:
-        """Initialize platform-specific SEO configurations"""
-        return {
+        """Initialize platform-specific SEO configurations"""        return {
             SEOPlatform.YOUTUBE: PlatformSEOConfig(
                 platform=SEOPlatform.YOUTUBE,
                 title_max_length=100,
@@ -252,8 +238,7 @@ class SEORepository(BaseRepository):
         }
 
     def create(self, entity, **kwargs):
-        """Create SEO optimization entry"""
-        self._validate_entity(entity)
+        """Create SEO optimization entry"""        self._validate_entity(entity)
         
         # Generate SEO metadata if not provided
         if hasattr(entity, 'metadata') and not entity.metadata:
@@ -277,8 +262,7 @@ class SEORepository(BaseRepository):
         return created_entity
 
     def get_by_id(self, entity_id: str, use_cache: bool = True):
-        """Get SEO optimization by ID"""
-        if use_cache and self._cache_enabled and self.cache:
+        """Get SEO optimization by ID"""        if use_cache and self._cache_enabled and self.cache:
             cache_key = self._generate_cache_key("get_seo_by_id", entity_id=entity_id)
             cached_result = self.cache.get(cache_key)
             if cached_result:
@@ -294,8 +278,7 @@ class SEORepository(BaseRepository):
         return seo_data
 
     def update(self, entity, **kwargs):
-        """Update SEO optimization"""
-        self._validate_entity(entity)
+        """Update SEO optimization"""        self._validate_entity(entity)
         
         # Get current entity for audit
         current_entity = self.get_by_id(getattr(entity, 'id', None), use_cache=False)
@@ -328,8 +311,7 @@ class SEORepository(BaseRepository):
         return updated_entity
 
     def delete(self, entity_id: str, soft_delete: bool = False):
-        """Delete SEO optimization"""
-        # Get entity for audit
+        """Delete SEO optimization"""        # Get entity for audit
         entity = self.get_by_id(entity_id, use_cache=False)
         if not entity:
             return False
@@ -355,8 +337,7 @@ class SEORepository(BaseRepository):
 
     def list(self, filters: Dict[str, Any] = None, limit: int = 100, 
              offset: int = 0, order_by: str = None):
-        """List SEO optimizations with filters"""
-        filters = filters or {}
+        """List SEO optimizations with filters"""        filters = filters or {}
         
         # Check cache for list results
         if self._cache_enabled and self.cache:
@@ -376,8 +357,7 @@ class SEORepository(BaseRepository):
 
     def analyze_keywords(self, content: str, content_type: ContentType, 
                         target_platforms: List[SEOPlatform] = None) -> List[KeywordData]:
-        """Analyze keywords for content optimization"""
-        target_platforms = target_platforms or list(SEOPlatform)
+        """Analyze keywords for content optimization"""        target_platforms = target_platforms or list(SEOPlatform)
         
         try:
             # Extract keywords using AI
@@ -403,8 +383,7 @@ class SEORepository(BaseRepository):
 
     def generate_seo_metadata(self, content_id: str, content_data: Dict[str, Any], 
                             target_platforms: List[SEOPlatform] = None) -> Dict[SEOPlatform, SEOMetadata]:
-        """Generate optimized SEO metadata for multiple platforms"""
-        target_platforms = target_platforms or list(SEOPlatform)
+        """Generate optimized SEO metadata for multiple platforms"""        target_platforms = target_platforms or list(SEOPlatform)
         
         try:
             platform_metadata = {}
@@ -428,8 +407,7 @@ class SEORepository(BaseRepository):
 
     def optimize_content_for_platform(self, content_id: str, platform: SEOPlatform, 
                                     content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize content for specific platform"""
-        try:
+        """Optimize content for specific platform"""        try:
             platform_config = self.platform_configs.get(platform)
             if not platform_config:
                 raise ValueError(f"Unsupported platform: {platform}")
@@ -462,8 +440,7 @@ class SEORepository(BaseRepository):
 
     def track_seo_performance(self, content_id: str, platform: SEOPlatform, 
                             performance_data: Dict[str, Any]) -> SEOPerformance:
-        """Track and store SEO performance metrics"""
-        try:
+        """Track and store SEO performance metrics"""        try:
             performance = SEOPerformance(
                 content_id=content_id,
                 platform=platform,
@@ -501,8 +478,7 @@ class SEORepository(BaseRepository):
 
     def get_content_performance(self, content_id: str, platform: SEOPlatform = None, 
                               time_range: str = "30d") -> Union[SEOPerformance, Dict[SEOPlatform, SEOPerformance]]:
-        """Get performance data for content"""
-        try:
+        """Get performance data for content"""        try:
             if platform:
                 # Get performance for specific platform
                 return self._fetch_content_performance(content_id, platform, time_range)
@@ -520,8 +496,7 @@ class SEORepository(BaseRepository):
             raise
 
     def get_optimization_suggestions(self, content_id: str, platform: SEOPlatform = None) -> List[SEOOptimizationSuggestion]:
-        """Get AI-powered optimization suggestions"""
-        try:
+        """Get AI-powered optimization suggestions"""        try:
             if platform:
                 platforms = [platform]
             else:
@@ -555,8 +530,7 @@ class SEORepository(BaseRepository):
 
     def run_ab_test(self, content_id: str, platform: SEOPlatform, 
                    variations: List[Dict[str, Any]], test_duration: int = 7) -> str:
-        """Run A/B test for SEO optimization"""
-        try:
+        """Run A/B test for SEO optimization"""        try:
             test_id = self._generate_ab_test_id()
             
             # Set up A/B test
@@ -586,8 +560,7 @@ class SEORepository(BaseRepository):
 
     def get_trending_keywords(self, platform: SEOPlatform = None, 
                             content_type: ContentType = None, limit: int = 50) -> List[KeywordData]:
-        """Get trending keywords for platform and content type"""
-        try:
+        """Get trending keywords for platform and content type"""        try:
             # Get trending data from trend service
             trending_data = self._fetch_trending_keywords(platform, content_type)
             
@@ -611,8 +584,7 @@ class SEORepository(BaseRepository):
     # Private helper methods
 
     def _generate_seo_metadata(self, entity, **kwargs) -> SEOMetadata:
-        """Generate SEO metadata using AI"""
-        # Implementation would use AI service to generate metadata
+        """Generate SEO metadata using AI"""        # Implementation would use AI service to generate metadata
         return SEOMetadata(
             title="",
             description="",
@@ -626,48 +598,39 @@ class SEORepository(BaseRepository):
         )
 
     def _optimize_for_platforms(self, entity, **kwargs) -> Dict[str, Any]:
-        """Optimize content for multiple platforms"""
-        # Implementation would optimize content for each platform
+        """Optimize content for multiple platforms"""        # Implementation would optimize content for each platform
         return {}
 
     def _store_seo_data(self, entity):
-        """Store SEO data in database"""
-        # Implementation would store data in database
+        """Store SEO data in database"""        # Implementation would store data in database
         return entity
 
     def _fetch_seo_by_id(self, entity_id: str):
-        """Fetch SEO data by ID from database"""
-        # Implementation would fetch from database
+        """Fetch SEO data by ID from database"""        # Implementation would fetch from database
         return None
 
     def _refresh_seo_metadata(self, entity, **kwargs) -> SEOMetadata:
-        """Refresh SEO metadata"""
-        # Implementation would refresh metadata
+        """Refresh SEO metadata"""        # Implementation would refresh metadata
         return entity.metadata if hasattr(entity, 'metadata') else None
 
     def _update_seo_data(self, entity):
-        """Update SEO data in database"""
-        # Implementation would update database
+        """Update SEO data in database"""        # Implementation would update database
         return entity
 
     def _delete_seo_data(self, entity_id: str, soft_delete: bool) -> bool:
-        """Delete SEO data from database"""
-        # Implementation would delete from database
+        """Delete SEO data from database"""        # Implementation would delete from database
         return True
 
     def _fetch_seo_list(self, filters, limit, offset, order_by):
-        """Fetch SEO data list from database"""
-        # Implementation would fetch list from database
+        """Fetch SEO data list from database"""        # Implementation would fetch list from database
         return []
 
     def _extract_keywords_from_content(self, content: str, content_type: ContentType) -> List[str]:
-        """Extract keywords from content using AI"""
-        # Implementation would use AI to extract keywords
+        """Extract keywords from content using AI"""        # Implementation would use AI to extract keywords
         return []
 
     def _analyze_single_keyword(self, keyword: str, platforms: List[SEOPlatform]) -> KeywordData:
-        """Analyze a single keyword"""
-        # Implementation would analyze keyword
+        """Analyze a single keyword"""        # Implementation would analyze keyword
         return KeywordData(
             keyword=keyword,
             search_volume=0,
@@ -681,8 +644,7 @@ class SEORepository(BaseRepository):
 
     def _generate_platform_specific_metadata(self, content_data: Dict[str, Any], 
                                            platform: SEOPlatform) -> SEOMetadata:
-        """Generate platform-specific metadata"""
-        # Implementation would generate platform-specific metadata
+        """Generate platform-specific metadata"""        # Implementation would generate platform-specific metadata
         return SEOMetadata(
             title="",
             description="",
@@ -696,8 +658,7 @@ class SEORepository(BaseRepository):
         )
 
     def _store_seo_metadata(self, content_id: str, metadata: Dict[SEOPlatform, SEOMetadata]):
-        """Store SEO metadata for content"""
-        try:
+        """Store SEO metadata for content"""        try:
             import json
             import time
             
@@ -729,20 +690,17 @@ class SEORepository(BaseRepository):
     def _generate_optimization_suggestions(self, content_data: Dict[str, Any], 
                                          config: PlatformSEOConfig, 
                                          performance: SEOPerformance) -> List[Dict[str, Any]]:
-        """Generate optimization suggestions"""
-        # Implementation would generate suggestions
+        """Generate optimization suggestions"""        # Implementation would generate suggestions
         return []
 
     def _apply_optimizations(self, content_data: Dict[str, Any], 
                            suggestions: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Apply optimization suggestions"""
-        # Implementation would apply optimizations
+        """Apply optimization suggestions"""        # Implementation would apply optimizations
         return content_data
 
     def _store_optimization_results(self, content_id: str, platform: SEOPlatform, 
                                   optimized_content: Dict[str, Any], suggestions: List[Dict[str, Any]]):
-        """Store optimization results and suggestions"""
-        try:
+        """Store optimization results and suggestions"""        try:
             import json
             import time
             import uuid
@@ -777,18 +735,15 @@ class SEORepository(BaseRepository):
             raise
 
     def _predict_performance(self, content: Dict[str, Any], platform: SEOPlatform) -> Dict[str, float]:
-        """Predict content performance"""
-        # Implementation would predict performance using AI
+        """Predict content performance"""        # Implementation would predict performance using AI
         return {}
 
     def _store_performance_data(self, performance: SEOPerformance) -> SEOPerformance:
-        """Store performance data"""
-        # Implementation would store performance data
+        """Store performance data"""        # Implementation would store performance data
         return performance
 
     def _check_performance_thresholds(self, performance: SEOPerformance) -> List[str]:
-        """Check if performance meets thresholds"""
-        issues = []
+        """Check if performance meets thresholds"""        issues = []
         for metric, threshold in self.performance_thresholds.items():
             value = getattr(performance, metric, 0)
             if value < threshold:
@@ -796,8 +751,7 @@ class SEORepository(BaseRepository):
         return issues
 
     def _trigger_performance_alerts(self, content_id: str, platform: SEOPlatform, issues: List[str]):
-        """Trigger performance alerts for content issues"""
-        try:
+        """Trigger performance alerts for content issues"""        try:
             import time
             
             if not issues:
@@ -826,8 +780,7 @@ class SEORepository(BaseRepository):
             logger.error(f"Failed to trigger performance alerts for {content_id}: {e}")
 
     def _update_trending_analysis(self, content_id: str, platform: SEOPlatform, performance: SEOPerformance):
-        """Update trending analysis with performance data"""
-        try:
+        """Update trending analysis with performance data"""        try:
             import time
             
             # Calculate trending metrics
@@ -854,28 +807,23 @@ class SEORepository(BaseRepository):
             logger.error(f"Failed to update trending analysis for {content_id}: {e}")
 
     def _fetch_content_performance(self, content_id: str, platform: SEOPlatform, time_range: str) -> SEOPerformance:
-        """Fetch content performance data"""
-        # Implementation would fetch performance data
+        """Fetch content performance data"""        # Implementation would fetch performance data
         return None
 
     def _fetch_content_data(self, content_id: str) -> Dict[str, Any]:
-        """Fetch content data"""
-        # Implementation would fetch content data
+        """Fetch content data"""        # Implementation would fetch content data
         return {}
 
     def _generate_ai_suggestions(self, content_id: str, content_data: Dict[str, Any], 
                                config: PlatformSEOConfig, performance: SEOPerformance) -> List[SEOOptimizationSuggestion]:
-        """Generate AI-powered suggestions"""
-        # Implementation would generate AI suggestions
+        """Generate AI-powered suggestions"""        # Implementation would generate AI suggestions
         return []
 
     def _generate_ab_test_id(self) -> str:
-        """Generate unique A/B test ID"""
-        return f"ab_test_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{hashlib.md5(str(datetime.now()).encode()).hexdigest()[:8]}"
+        """Generate unique A/B test ID"""        return f"ab_test_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{hashlib.md5(str(datetime.now()).encode()).hexdigest()[:8]}"
 
     def _store_ab_test_config(self, config: Dict[str, Any]):
-        """Store A/B test configuration"""
-        try:
+        """Store A/B test configuration"""        try:
             import time
             import uuid
             
@@ -904,8 +852,7 @@ class SEORepository(BaseRepository):
             raise
 
     def _initialize_ab_test_tracking(self, test_id: str, variations: List[Dict[str, Any]]):
-        """Initialize A/B test tracking and analytics"""
-        try:
+        """Initialize A/B test tracking and analytics"""        try:
             import time
             
             # Initialize tracking for each variation
@@ -937,14 +884,12 @@ class SEORepository(BaseRepository):
             raise
 
     def _fetch_trending_keywords(self, platform: SEOPlatform, content_type: ContentType) -> List[Dict[str, Any]]:
-        """Fetch trending keywords"""
-        # Implementation would fetch trending keywords
+        """Fetch trending keywords"""        # Implementation would fetch trending keywords
         return []
 
     def _analyze_trending_keyword(self, keyword_info: Dict[str, Any], 
                                 platform: SEOPlatform, content_type: ContentType) -> KeywordData:
-        """Analyze trending keyword"""
-        # Implementation would analyze trending keyword
+        """Analyze trending keyword"""        # Implementation would analyze trending keyword
         return KeywordData(
             keyword="",
             search_volume=0,
@@ -958,8 +903,7 @@ class SEORepository(BaseRepository):
 
 
 class AsyncSEORepository(AsyncBaseRepository):
-    """
-    Advanced asynchronous SEO repository for high-performance optimization
+    """    Advanced asynchronous SEO repository for high-performance optimization
     
     Features:
     - Concurrent keyword analysis
@@ -967,8 +911,7 @@ class AsyncSEORepository(AsyncBaseRepository):
     - Async performance tracking
     - Real-time trend monitoring
     - Batch processing for large datasets
-    """
-    
+    """    
     def __init__(self, db_connection=None, cache_manager=None, logger=None,
                  audit_service=None, metrics_collector=None, ai_service=None,
                  keyword_service=None, trend_service=None):
@@ -984,8 +927,7 @@ class AsyncSEORepository(AsyncBaseRepository):
         )
 
     async def create(self, entity, **kwargs):
-        """Create SEO optimization entry asynchronously"""
-        await self._validate_entity(entity)
+        """Create SEO optimization entry asynchronously"""        await self._validate_entity(entity)
         
         # Generate SEO metadata asynchronously
         if hasattr(entity, 'metadata') and not entity.metadata:
@@ -1009,8 +951,7 @@ class AsyncSEORepository(AsyncBaseRepository):
         return created_entity
 
     async def get_by_id(self, entity_id: str, use_cache: bool = True):
-        """Get SEO optimization by ID asynchronously"""
-        if use_cache and self._cache_enabled and self.cache:
+        """Get SEO optimization by ID asynchronously"""        if use_cache and self._cache_enabled and self.cache:
             cache_key = self._generate_cache_key("get_seo_by_id", entity_id=entity_id)
             cached_result = await self.cache.get_async(cache_key)
             if cached_result:
@@ -1026,8 +967,7 @@ class AsyncSEORepository(AsyncBaseRepository):
         return seo_data
 
     async def update(self, entity, **kwargs):
-        """Update SEO optimization asynchronously"""
-        await self._validate_entity(entity)
+        """Update SEO optimization asynchronously"""        await self._validate_entity(entity)
         
         # Get current entity for audit
         current_entity = await self.get_by_id(getattr(entity, 'id', None), use_cache=False)
@@ -1060,8 +1000,7 @@ class AsyncSEORepository(AsyncBaseRepository):
         return updated_entity
 
     async def delete(self, entity_id: str, soft_delete: bool = False):
-        """Delete SEO optimization asynchronously"""
-        # Get entity for audit
+        """Delete SEO optimization asynchronously"""        # Get entity for audit
         entity = await self.get_by_id(entity_id, use_cache=False)
         if not entity:
             return False
@@ -1087,8 +1026,7 @@ class AsyncSEORepository(AsyncBaseRepository):
 
     async def list(self, filters: Dict[str, Any] = None, limit: int = 100, 
                   offset: int = 0, order_by: str = None):
-        """List SEO optimizations with filters asynchronously"""
-        filters = filters or {}
+        """List SEO optimizations with filters asynchronously"""        filters = filters or {}
         
         # Check cache for list results
         if self._cache_enabled and self.cache:
@@ -1108,8 +1046,7 @@ class AsyncSEORepository(AsyncBaseRepository):
 
     async def analyze_keywords_async(self, content: str, content_type: ContentType, 
                                    target_platforms: List[SEOPlatform] = None) -> List[KeywordData]:
-        """Analyze keywords asynchronously with concurrent processing"""
-        target_platforms = target_platforms or list(SEOPlatform)
+        """Analyze keywords asynchronously with concurrent processing"""        target_platforms = target_platforms or list(SEOPlatform)
         
         try:
             # Extract keywords using AI
@@ -1138,8 +1075,7 @@ class AsyncSEORepository(AsyncBaseRepository):
 
     async def generate_seo_metadata_async(self, content_id: str, content_data: Dict[str, Any], 
                                         target_platforms: List[SEOPlatform] = None) -> Dict[SEOPlatform, SEOMetadata]:
-        """Generate optimized SEO metadata for multiple platforms asynchronously"""
-        target_platforms = target_platforms or list(SEOPlatform)
+        """Generate optimized SEO metadata for multiple platforms asynchronously"""        target_platforms = target_platforms or list(SEOPlatform)
         
         try:
             # Generate metadata for all platforms concurrently
@@ -1167,8 +1103,7 @@ class AsyncSEORepository(AsyncBaseRepository):
 
     async def batch_optimize_content(self, content_list: List[Dict[str, Any]], 
                                    platforms: List[SEOPlatform]) -> List[Dict[str, Any]]:
-        """Batch optimize multiple content items for multiple platforms"""
-        try:
+        """Batch optimize multiple content items for multiple platforms"""        try:
             semaphore = asyncio.Semaphore(self._max_concurrent_operations)
             
             async def optimize_content_with_semaphore(content_data, platform):
@@ -1198,8 +1133,7 @@ class AsyncSEORepository(AsyncBaseRepository):
     # Async versions of private methods
 
     async def _generate_seo_metadata_async(self, entity, **kwargs) -> SEOMetadata:
-        """Generate SEO metadata using AI asynchronously"""
-        # Implementation would use async AI service
+        """Generate SEO metadata using AI asynchronously"""        # Implementation would use async AI service
         return SEOMetadata(
             title="",
             description="",
@@ -1213,48 +1147,39 @@ class AsyncSEORepository(AsyncBaseRepository):
         )
 
     async def _optimize_for_platforms_async(self, entity, **kwargs) -> Dict[str, Any]:
-        """Optimize content for multiple platforms asynchronously"""
-        # Implementation would optimize content for each platform concurrently
+        """Optimize content for multiple platforms asynchronously"""        # Implementation would optimize content for each platform concurrently
         return {}
 
     async def _store_seo_data_async(self, entity):
-        """Store SEO data in database asynchronously"""
-        # Implementation would store data in database
+        """Store SEO data in database asynchronously"""        # Implementation would store data in database
         return entity
 
     async def _fetch_seo_by_id_async(self, entity_id: str):
-        """Fetch SEO data by ID from database asynchronously"""
-        # Implementation would fetch from database
+        """Fetch SEO data by ID from database asynchronously"""        # Implementation would fetch from database
         return None
 
     async def _refresh_seo_metadata_async(self, entity, **kwargs) -> SEOMetadata:
-        """Refresh SEO metadata asynchronously"""
-        # Implementation would refresh metadata
+        """Refresh SEO metadata asynchronously"""        # Implementation would refresh metadata
         return entity.metadata if hasattr(entity, 'metadata') else None
 
     async def _update_seo_data_async(self, entity):
-        """Update SEO data in database asynchronously"""
-        # Implementation would update database
+        """Update SEO data in database asynchronously"""        # Implementation would update database
         return entity
 
     async def _delete_seo_data_async(self, entity_id: str, soft_delete: bool) -> bool:
-        """Delete SEO data from database asynchronously"""
-        # Implementation would delete from database
+        """Delete SEO data from database asynchronously"""        # Implementation would delete from database
         return True
 
     async def _fetch_seo_list_async(self, filters, limit, offset, order_by):
-        """Fetch SEO data list from database asynchronously"""
-        # Implementation would fetch list from database
+        """Fetch SEO data list from database asynchronously"""        # Implementation would fetch list from database
         return []
 
     async def _extract_keywords_from_content_async(self, content: str, content_type: ContentType) -> List[str]:
-        """Extract keywords from content using AI asynchronously"""
-        # Implementation would use async AI to extract keywords
+        """Extract keywords from content using AI asynchronously"""        # Implementation would use async AI to extract keywords
         return []
 
     async def _analyze_single_keyword_async(self, keyword: str, platforms: List[SEOPlatform]) -> KeywordData:
-        """Analyze a single keyword asynchronously"""
-        # Implementation would analyze keyword
+        """Analyze a single keyword asynchronously"""        # Implementation would analyze keyword
         return KeywordData(
             keyword=keyword,
             search_volume=0,
@@ -1268,8 +1193,7 @@ class AsyncSEORepository(AsyncBaseRepository):
 
     async def _generate_platform_specific_metadata_async(self, content_data: Dict[str, Any], 
                                                        platform: SEOPlatform) -> SEOMetadata:
-        """Generate platform-specific metadata asynchronously"""
-        # Implementation would generate platform-specific metadata
+        """Generate platform-specific metadata asynchronously"""        # Implementation would generate platform-specific metadata
         return SEOMetadata(
             title="",
             description="",
@@ -1283,8 +1207,7 @@ class AsyncSEORepository(AsyncBaseRepository):
         )
 
     async def _store_seo_metadata_async(self, content_id: str, metadata: Dict[SEOPlatform, SEOMetadata]):
-        """Store SEO metadata asynchronously with validation and indexing"""
-        try:
+        """Store SEO metadata asynchronously with validation and indexing"""        try:
             self.logger.info(f"Storing SEO metadata for content {content_id}")
             
             # Validate metadata before storage
@@ -1346,8 +1269,7 @@ class AsyncSEORepository(AsyncBaseRepository):
             raise
     
     async def _validate_platform_metadata(self, platform: SEOPlatform, metadata: SEOMetadata) -> bool:
-        """Validate metadata against platform-specific requirements"""
-        try:
+        """Validate metadata against platform-specific requirements"""        try:
             # Basic validation
             if not metadata.title or len(metadata.title.strip()) == 0:
                 return False
@@ -1384,8 +1306,7 @@ class AsyncSEORepository(AsyncBaseRepository):
             return False
     
     def _calculate_metadata_checksum(self, metadata: Dict) -> str:
-        """Calculate checksum for metadata integrity verification"""
-        import hashlib
+        """Calculate checksum for metadata integrity verification"""        import hashlib
         import json
         
         try:
@@ -1402,8 +1323,7 @@ class AsyncSEORepository(AsyncBaseRepository):
             return ""
     
     async def _update_search_index(self, content_id: str, metadata: Dict) -> None:
-        """Update search index with SEO metadata for enhanced discoverability"""
-        try:
+        """Update search index with SEO metadata for enhanced discoverability"""        try:
             # Extract searchable text from metadata
             searchable_text = []
             
@@ -1436,8 +1356,7 @@ class AsyncSEORepository(AsyncBaseRepository):
 
     async def optimize_content_for_platform_async(self, content_id: str, platform: SEOPlatform, 
                                                 content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize content for specific platform asynchronously"""
-        try:
+        """Optimize content for specific platform asynchronously"""        try:
             platform_config = self.sync_repo.platform_configs.get(platform)
             if not platform_config:
                 raise ValueError(f"Unsupported platform: {platform}")
@@ -1469,30 +1388,25 @@ class AsyncSEORepository(AsyncBaseRepository):
             raise
 
     async def _fetch_content_performance_async(self, content_id: str, platform: SEOPlatform, time_range: str):
-        """Fetch content performance data asynchronously"""
-        # Implementation would fetch performance data
+        """Fetch content performance data asynchronously"""        # Implementation would fetch performance data
         return None
 
     async def _generate_optimization_suggestions_async(self, content_data: Dict[str, Any], 
                                                      config: PlatformSEOConfig, 
                                                      performance) -> List[Dict[str, Any]]:
-        """Generate optimization suggestions asynchronously"""
-        # Implementation would generate suggestions
+        """Generate optimization suggestions asynchronously"""        # Implementation would generate suggestions
         return []
 
     async def _apply_optimizations_async(self, content_data: Dict[str, Any], 
                                        suggestions: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Apply optimization suggestions asynchronously"""
-        # Implementation would apply optimizations
+        """Apply optimization suggestions asynchronously"""        # Implementation would apply optimizations
         return content_data
 
     async def _store_optimization_results_async(self, content_id: str, platform: SEOPlatform, 
                                               optimized_content: Dict[str, Any], suggestions: List[Dict[str, Any]]):
-        """Store optimization results asynchronously"""
-        # Implementation would store results
+        """Store optimization results asynchronously"""        # Implementation would store results
         pass
 
     async def _predict_performance_async(self, content: Dict[str, Any], platform: SEOPlatform) -> Dict[str, float]:
-        """Predict content performance asynchronously"""
-        # Implementation would predict performance using AI
+        """Predict content performance asynchronously"""        # Implementation would predict performance using AI
         return {}

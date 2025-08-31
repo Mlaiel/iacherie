@@ -1,5 +1,4 @@
-"""
-Task Manager
+"""Task Manager
 
 Advanced task management system for coordinating and prioritizing tasks across
 multiple AI agents with intelligent scheduling and resource optimization.
@@ -10,9 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import uuid
 from datetime import datetime, timedelta
@@ -26,8 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 class TaskPriority(Enum):
-    """Task priority levels"""
-    LOW = 1
+    """Task priority levels"""    LOW = 1
     MEDIUM = 2
     HIGH = 3
     URGENT = 4
@@ -35,8 +31,7 @@ class TaskPriority(Enum):
 
 
 class TaskStatus(Enum):
-    """Task execution status"""
-    PENDING = "pending"
+    """Task execution status"""    PENDING = "pending"
     QUEUED = "queued"
     ASSIGNED = "assigned"
     RUNNING = "running"
@@ -49,8 +44,7 @@ class TaskStatus(Enum):
 
 
 class TaskType(Enum):
-    """Categories of tasks"""
-    CONTENT_CREATION = "content_creation"
+    """Categories of tasks"""    CONTENT_CREATION = "content_creation"
     CONTENT_ANALYSIS = "content_analysis"
     SOCIAL_MEDIA = "social_media"
     ENGAGEMENT = "engagement"
@@ -65,8 +59,7 @@ class TaskType(Enum):
 
 @dataclass
 class Task:
-    """Individual task definition"""
-    task_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Individual task definition"""    task_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     task_type: TaskType = TaskType.CONTENT_CREATION
     priority: TaskPriority = TaskPriority.MEDIUM
     status: TaskStatus = TaskStatus.PENDING
@@ -108,27 +101,23 @@ class Task:
     
     @property
     def duration(self) -> Optional[timedelta]:
-        """Calculate actual execution duration"""
-        if self.started_at and self.completed_at:
+        """Calculate actual execution duration"""        if self.started_at and self.completed_at:
             return self.completed_at - self.started_at
         return None
     
     @property
     def is_overdue(self) -> bool:
-        """Check if task is overdue"""
-        if not self.deadline:
+        """Check if task is overdue"""        if not self.deadline:
             return False
         return datetime.utcnow() > self.deadline
     
     @property
     def is_ready(self) -> bool:
-        """Check if task is ready to execute (dependencies satisfied)"""
-        return self.status == TaskStatus.QUEUED and not self.depends_on
+        """Check if task is ready to execute (dependencies satisfied)"""        return self.status == TaskStatus.QUEUED and not self.depends_on
     
     @property
     def priority_score(self) -> float:
-        """Calculate priority score for scheduling"""
-        base_score = self.priority.value * 100
+        """Calculate priority score for scheduling"""        base_score = self.priority.value * 100
         
         # Urgency bonus
         if self.deadline:
@@ -145,8 +134,7 @@ class Task:
 
 @dataclass
 class TaskBatch:
-    """Batch of related tasks"""
-    batch_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Batch of related tasks"""    batch_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     description: str = ""
     tasks: List[str] = field(default_factory=list)  # Task IDs
@@ -157,15 +145,13 @@ class TaskBatch:
     
     @property
     def is_completed(self) -> bool:
-        """Check if all tasks in batch are completed"""
-        # This would need access to task manager to check actual status
+        """Check if all tasks in batch are completed"""        # This would need access to task manager to check actual status
         return False
 
 
 @dataclass
 class ResourceConstraint:
-    """Resource constraints for task execution"""
-    max_memory_mb: Optional[int] = None
+    """Resource constraints for task execution"""    max_memory_mb: Optional[int] = None
     max_cpu_percent: Optional[int] = None
     max_concurrent_tasks: Optional[int] = None
     required_disk_space_mb: Optional[int] = None
@@ -174,8 +160,7 @@ class ResourceConstraint:
 
 
 class TaskManager:
-    """
-    Advanced task management system for AI agents
+    """    Advanced task management system for AI agents
     
     Features:
     - Intelligent task prioritization
@@ -185,8 +170,7 @@ class TaskManager:
     - Retry and recovery mechanisms
     - Performance monitoring
     - Batch processing optimization
-    """
-    
+    """    
     def __init__(self, agent_registry, communication_hub):
         self.agent_registry = agent_registry
         self.communication_hub = communication_hub
@@ -224,8 +208,7 @@ class TaskManager:
         self._background_tasks: List[asyncio.Task] = []
     
     async def initialize(self) -> None:
-        """Initialize the task manager"""
-        try:
+        """Initialize the task manager"""        try:
             # Start background processing tasks
             self._background_tasks.extend([
                 asyncio.create_task(self._task_scheduler()),
@@ -242,8 +225,7 @@ class TaskManager:
             raise
     
     async def submit_task(self, task: Task) -> str:
-        """Submit a new task for execution"""
-        try:
+        """Submit a new task for execution"""        try:
             # Validate task
             if not self._validate_task(task):
                 raise ValueError(f"Invalid task: {task.task_id}")
@@ -269,8 +251,7 @@ class TaskManager:
             raise
     
     async def submit_batch(self, batch: TaskBatch) -> str:
-        """Submit a batch of related tasks"""
-        try:
+        """Submit a batch of related tasks"""        try:
             # Store batch
             self.task_batches[batch.batch_id] = batch
             
@@ -303,8 +284,7 @@ class TaskManager:
             raise
     
     async def cancel_task(self, task_id: str) -> bool:
-        """Cancel a task"""
-        try:
+        """Cancel a task"""        try:
             task = self.tasks.get(task_id)
             if not task:
                 return False
@@ -335,8 +315,7 @@ class TaskManager:
             return False
     
     async def get_task_status(self, task_id: str) -> Optional[Dict[str, Any]]:
-        """Get detailed status of a task"""
-        task = self.tasks.get(task_id)
+        """Get detailed status of a task"""        task = self.tasks.get(task_id)
         if not task:
             return None
         
@@ -366,8 +345,7 @@ class TaskManager:
         return status_info
     
     async def get_agent_workload(self, agent_id: str) -> Dict[str, Any]:
-        """Get workload information for an agent"""
-        agent_tasks = self.agent_assignments.get(agent_id, [])
+        """Get workload information for an agent"""        agent_tasks = self.agent_assignments.get(agent_id, [])
         active_tasks = [tid for tid in agent_tasks if tid in self.active_tasks]
         
         return {
@@ -381,8 +359,7 @@ class TaskManager:
         }
     
     async def _task_scheduler(self) -> None:
-        """Background task scheduler"""
-        while not self._shutdown_event.is_set():
+        """Background task scheduler"""        while not self._shutdown_event.is_set():
             try:
                 # Process task queue
                 await self._process_task_queue()
@@ -399,8 +376,7 @@ class TaskManager:
             await asyncio.sleep(10)  # Schedule every 10 seconds
     
     async def _process_task_queue(self) -> None:
-        """Process tasks from the priority queue"""
-        while self.task_queue and len(self.active_tasks) < self.max_concurrent_tasks:
+        """Process tasks from the priority queue"""        while self.task_queue and len(self.active_tasks) < self.max_concurrent_tasks:
             try:
                 # Get highest priority task
                 _, task_id = heappop(self.task_queue)
@@ -430,8 +406,7 @@ class TaskManager:
                 break
     
     async def _find_best_agent(self, task: Task) -> Optional[str]:
-        """Find the best available agent for a task"""
-        suitable_agents = []
+        """Find the best available agent for a task"""        suitable_agents = []
         
         # Check preferred agents first
         for agent_id in task.preferred_agents:
@@ -457,8 +432,7 @@ class TaskManager:
         return suitable_agents[0][0]
     
     async def _assign_and_start_task(self, task: Task, agent_id: str) -> None:
-        """Assign task to agent and start execution"""
-        try:
+        """Assign task to agent and start execution"""        try:
             # Update task status
             task.status = TaskStatus.ASSIGNED
             task.assigned_agent = agent_id
@@ -505,8 +479,7 @@ class TaskManager:
             task.error = str(e)
     
     async def _execute_task_on_agent(self, task: Task, agent, agent_task) -> None:
-        """Execute task on agent and handle result"""
-        try:
+        """Execute task on agent and handle result"""        try:
             # Execute task
             result = await agent.execute_task(agent_task)
             
@@ -548,8 +521,7 @@ class TaskManager:
                 self.agent_load[task.assigned_agent] = max(0, self.agent_load.get(task.assigned_agent, 0) - 1)
     
     async def get_system_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive system statistics"""
-        return {
+        """Get comprehensive system statistics"""        return {
             "task_statistics": self.execution_stats,
             "queue_size": len(self.task_queue),
             "active_tasks": len(self.active_tasks),

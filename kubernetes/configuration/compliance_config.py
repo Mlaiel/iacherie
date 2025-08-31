@@ -1,5 +1,4 @@
-"""
-📋 Compliance Configuration Manager - IA-Influencer-Agent
+"""📋 Compliance Configuration Manager - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Compliance Officer + Security Architect + Legal + Audit
@@ -14,9 +13,7 @@ Contact: mlaiel@live.de
 
 Enterprise-grade regulatory compliance framework implementation.
 ==================================================================
-"""
-
-import logging
+"""import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union, Set
 from dataclasses import dataclass, field
@@ -26,8 +23,7 @@ import json
 import hashlib
 
 class ComplianceFramework(Enum):
-    """Compliance frameworks"""
-    GDPR = "gdpr"  # General Data Protection Regulation
+    """Compliance frameworks"""    GDPR = "gdpr"  # General Data Protection Regulation
     SOC2 = "soc2"  # Service Organization Control 2
     HIPAA = "hipaa"  # Health Insurance Portability and Accountability Act
     PCI_DSS = "pci_dss"  # Payment Card Industry Data Security Standard
@@ -39,40 +35,35 @@ class ComplianceFramework(Enum):
     COPPA = "coppa"  # Children's Online Privacy Protection Act
 
 class ComplianceStatus(Enum):
-    """Compliance status levels"""
-    COMPLIANT = "compliant"
+    """Compliance status levels"""    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
     UNDER_REVIEW = "under_review"
     NOT_APPLICABLE = "not_applicable"
 
 class AuditType(Enum):
-    """Audit types"""
-    INTERNAL = "internal"
+    """Audit types"""    INTERNAL = "internal"
     EXTERNAL = "external"
     REGULATORY = "regulatory"
     CERTIFICATION = "certification"
     CONTINUOUS = "continuous"
 
 class DataClassification(Enum):
-    """Data classification levels"""
-    PUBLIC = "public"
+    """Data classification levels"""    PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
     RESTRICTED = "restricted"
     TOP_SECRET = "top_secret"
 
 class RiskLevel(Enum):
-    """Risk levels"""
-    LOW = "low"
+    """Risk levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 @dataclass
 class ComplianceRequirement:
-    """Individual compliance requirement"""
-    id: str
+    """Individual compliance requirement"""    id: str
     framework: ComplianceFramework
     title: str
     description: str
@@ -87,8 +78,7 @@ class ComplianceRequirement:
 
 @dataclass
 class ControlImplementation:
-    """Control implementation details"""
-    requirement_id: str
+    """Control implementation details"""    requirement_id: str
     implementation_details: str
     technical_controls: List[str] = field(default_factory=list)
     procedural_controls: List[str] = field(default_factory=list)
@@ -100,8 +90,7 @@ class ControlImplementation:
 
 @dataclass
 class DataFlowMapping:
-    """Data flow mapping for compliance"""
-    data_type: str
+    """Data flow mapping for compliance"""    data_type: str
     classification: DataClassification
     source_systems: List[str] = field(default_factory=list)
     processing_systems: List[str] = field(default_factory=list)
@@ -114,8 +103,7 @@ class DataFlowMapping:
 
 @dataclass
 class AuditEvidence:
-    """Audit evidence documentation"""
-    requirement_id: str
+    """Audit evidence documentation"""    requirement_id: str
     evidence_type: str
     description: str
     location: str
@@ -126,8 +114,7 @@ class AuditEvidence:
 
 @dataclass
 class RiskAssessment:
-    """Risk assessment for compliance"""
-    risk_id: str
+    """Risk assessment for compliance"""    risk_id: str
     framework: ComplianceFramework
     risk_description: str
     likelihood: RiskLevel
@@ -140,8 +127,7 @@ class RiskAssessment:
 
 @dataclass
 class ComplianceReport:
-    """Compliance assessment report"""
-    framework: ComplianceFramework
+    """Compliance assessment report"""    framework: ComplianceFramework
     report_date: datetime
     assessment_period: str
     overall_status: ComplianceStatus
@@ -155,8 +141,7 @@ class ComplianceReport:
 
 @dataclass
 class ComplianceConfiguration:
-    """Complete compliance configuration"""
-    enabled_frameworks: List[ComplianceFramework]
+    """Complete compliance configuration"""    enabled_frameworks: List[ComplianceFramework]
     requirements: Dict[str, ComplianceRequirement]
     implementations: Dict[str, ControlImplementation]
     data_flows: List[DataFlowMapping]
@@ -167,8 +152,7 @@ class ComplianceConfiguration:
     custom_config: Dict[str, Any] = field(default_factory=dict)
 
 class ComplianceConfigManager:
-    """
-    Enterprise regulatory compliance framework implementation.
+    """    Enterprise regulatory compliance framework implementation.
     
     Provides comprehensive compliance management:
     - Multi-framework support (GDPR, SOC2, HIPAA, etc.)
@@ -181,11 +165,9 @@ class ComplianceConfigManager:
     - Gap analysis and remediation tracking
     - Third-party assessment support
     - Compliance dashboard and metrics
-    """
-    
+    """    
     def __init__(self):
-        """Initialize compliance configuration manager"""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize compliance configuration manager"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Compliance configuration
         self.compliance_config = None
@@ -208,13 +190,11 @@ class ComplianceConfigManager:
         self.logger.info("Compliance configuration manager initialized")
     
     async def initialize(self) -> bool:
-        """
-        Initialize compliance configuration manager.
+        """        Initialize compliance configuration manager.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             # Load compliance frameworks and requirements
             await self._load_compliance_frameworks()
             
@@ -238,8 +218,7 @@ class ComplianceConfigManager:
             return False
     
     async def _load_compliance_frameworks(self) -> None:
-        """Load compliance frameworks and their requirements"""
-        
+        """Load compliance frameworks and their requirements"""        
         # GDPR Requirements
         gdpr_requirements = {
             "gdpr_001": ComplianceRequirement(
@@ -438,8 +417,7 @@ class ComplianceConfigManager:
         self.logger.info(f"Loaded compliance requirements for {len(self.framework_requirements)} frameworks")
     
     async def _initialize_default_configuration(self) -> None:
-        """Initialize default compliance configuration"""
-        
+        """Initialize default compliance configuration"""        
         # Default enabled frameworks for IA Influencer platform
         enabled_frameworks = [
             ComplianceFramework.GDPR,      # EU data protection
@@ -559,13 +537,11 @@ class ComplianceConfigManager:
         self.logger.info("Default compliance configuration initialized")
     
     async def _start_compliance_monitoring(self) -> None:
-        """Start continuous compliance monitoring"""
-        asyncio.create_task(self._compliance_monitor())
+        """Start continuous compliance monitoring"""        asyncio.create_task(self._compliance_monitor())
         self.logger.info("Compliance monitoring started")
     
     async def _compliance_monitor(self) -> None:
-        """Continuous compliance monitoring"""
-        while True:
+        """Continuous compliance monitoring"""        while True:
             try:
                 # Perform compliance checks
                 await self._perform_compliance_checks()
@@ -583,8 +559,7 @@ class ComplianceConfigManager:
                 await asyncio.sleep(3600)
     
     async def _perform_compliance_checks(self) -> None:
-        """Perform automated compliance checks"""
-        for req_id, requirement in self.compliance_config.requirements.items():
+        """Perform automated compliance checks"""        for req_id, requirement in self.compliance_config.requirements.items():
             try:
                 # Perform automated checks based on requirement type
                 check_result = await self._check_requirement_compliance(requirement)
@@ -600,8 +575,7 @@ class ComplianceConfigManager:
                 self.compliance_status[req_id] = ComplianceStatus.UNDER_REVIEW
     
     async def _check_requirement_compliance(self, requirement: ComplianceRequirement) -> bool:
-        """Check compliance for a specific requirement"""
-        # Implementation would perform actual compliance checks
+        """Check compliance for a specific requirement"""        # Implementation would perform actual compliance checks
         # For now, simulate compliance checking
         
         if requirement.framework == ComplianceFramework.GDPR:
@@ -616,28 +590,23 @@ class ComplianceConfigManager:
         return True  # Default to compliant for unknown frameworks
     
     async def _check_gdpr_compliance(self, requirement: ComplianceRequirement) -> bool:
-        """Check GDPR specific compliance"""
-        # Implementation would check GDPR specific controls
+        """Check GDPR specific compliance"""        # Implementation would check GDPR specific controls
         return True
     
     async def _check_soc2_compliance(self, requirement: ComplianceRequirement) -> bool:
-        """Check SOC2 specific compliance"""
-        # Implementation would check SOC2 specific controls
+        """Check SOC2 specific compliance"""        # Implementation would check SOC2 specific controls
         return True
     
     async def _check_iso27001_compliance(self, requirement: ComplianceRequirement) -> bool:
-        """Check ISO 27001 specific compliance"""
-        # Implementation would check ISO 27001 specific controls
+        """Check ISO 27001 specific compliance"""        # Implementation would check ISO 27001 specific controls
         return True
     
     async def _check_pci_compliance(self, requirement: ComplianceRequirement) -> bool:
-        """Check PCI DSS specific compliance"""
-        # Implementation would check PCI DSS specific controls
+        """Check PCI DSS specific compliance"""        # Implementation would check PCI DSS specific controls
         return True
     
     async def _update_compliance_status(self) -> None:
-        """Update overall compliance status"""
-        for framework in self.compliance_config.enabled_frameworks:
+        """Update overall compliance status"""        for framework in self.compliance_config.enabled_frameworks:
             framework_requirements = [
                 req_id for req_id, req in self.compliance_config.requirements.items()
                 if req.framework == framework
@@ -662,8 +631,7 @@ class ComplianceConfigManager:
             self.compliance_status[f"framework_{framework.value}"] = framework_status
     
     async def _check_compliance_violations(self) -> None:
-        """Check for compliance violations and trigger alerts"""
-        violations = []
+        """Check for compliance violations and trigger alerts"""        violations = []
         
         for req_id, status in self.compliance_status.items():
             if status == ComplianceStatus.NON_COMPLIANT and not req_id.startswith("framework_"):
@@ -680,19 +648,16 @@ class ComplianceConfigManager:
             await self._send_compliance_alerts(violations)
     
     async def _send_compliance_alerts(self, violations: List[Dict[str, Any]]) -> None:
-        """Send compliance violation alerts"""
-        if self.compliance_config.notification_settings.get("compliance_alerts", False):
+        """Send compliance violation alerts"""        if self.compliance_config.notification_settings.get("compliance_alerts", False):
             # Implementation would send actual alerts
             self.logger.warning(f"Compliance violations detected: {len(violations)} violations")
     
     async def _initialize_audit_systems(self) -> None:
-        """Initialize audit systems"""
-        asyncio.create_task(self._audit_scheduler())
+        """Initialize audit systems"""        asyncio.create_task(self._audit_scheduler())
         self.logger.info("Audit systems initialized")
     
     async def _audit_scheduler(self) -> None:
-        """Audit scheduler"""
-        while True:
+        """Audit scheduler"""        while True:
             try:
                 # Check for scheduled audits
                 await self._check_audit_schedule()
@@ -704,28 +669,24 @@ class ComplianceConfigManager:
                 await asyncio.sleep(3600)
     
     async def _check_audit_schedule(self) -> None:
-        """Check and execute scheduled audits"""
-        # Implementation would check cron schedules and execute audits
+        """Check and execute scheduled audits"""        # Implementation would check cron schedules and execute audits
         pass
     
     async def _load_risk_assessments(self) -> None:
-        """Load and process risk assessments"""
-        for risk_assessment in self.compliance_config.risk_assessments:
+        """Load and process risk assessments"""        for risk_assessment in self.compliance_config.risk_assessments:
             self.risk_register[risk_assessment.risk_id] = risk_assessment
         
         self.logger.info(f"Loaded {len(self.risk_register)} risk assessments")
     
     async def add_compliance_framework(self, framework: ComplianceFramework) -> bool:
-        """
-        Add compliance framework.
+        """        Add compliance framework.
         
         Args:
             framework: Compliance framework to add
             
         Returns:
             bool: True if successful
-        """
-        try:
+        """        try:
             if framework not in self.compliance_config.enabled_frameworks:
                 self.compliance_config.enabled_frameworks.append(framework)
                 
@@ -751,8 +712,7 @@ class ComplianceConfigManager:
         requirement_id: str,
         implementation: ControlImplementation
     ) -> bool:
-        """
-        Implement control for a requirement.
+        """        Implement control for a requirement.
         
         Args:
             requirement_id: Requirement ID
@@ -760,8 +720,7 @@ class ComplianceConfigManager:
             
         Returns:
             bool: True if successful
-        """
-        try:
+        """        try:
             if requirement_id not in self.compliance_config.requirements:
                 raise ValueError(f"Requirement not found: {requirement_id}")
             
@@ -783,8 +742,7 @@ class ComplianceConfigManager:
         requirement_id: str,
         evidence: AuditEvidence
     ) -> bool:
-        """
-        Collect audit evidence.
+        """        Collect audit evidence.
         
         Args:
             requirement_id: Requirement ID
@@ -792,8 +750,7 @@ class ComplianceConfigManager:
             
         Returns:
             bool: True if successful
-        """
-        try:
+        """        try:
             # Generate hash for evidence integrity
             evidence.hash_value = hashlib.sha256(f"{evidence.location}{evidence.collection_date}".encode()).hexdigest()
             
@@ -819,16 +776,14 @@ class ComplianceConfigManager:
             return False
     
     async def generate_compliance_report(self, framework: ComplianceFramework) -> ComplianceReport:
-        """
-        Generate compliance report for a framework.
+        """        Generate compliance report for a framework.
         
         Args:
             framework: Compliance framework
             
         Returns:
             Compliance report
-        """
-        try:
+        """        try:
             # Get requirements for framework
             framework_requirements = [
                 req for req in self.compliance_config.requirements.values()
@@ -906,8 +861,7 @@ class ComplianceConfigManager:
             raise
     
     async def get_compliance_status(self) -> Dict[str, Any]:
-        """Get comprehensive compliance status"""
-        framework_status = {}
+        """Get comprehensive compliance status"""        framework_status = {}
         
         for framework in self.compliance_config.enabled_frameworks:
             framework_requirements = [
@@ -948,8 +902,7 @@ class ComplianceConfigManager:
         }
     
     async def get_audit_trail(self, days: int = 30) -> List[Dict[str, Any]]:
-        """Get audit trail for specified days"""
-        cutoff_date = datetime.now() - timedelta(days=days)
+        """Get audit trail for specified days"""        cutoff_date = datetime.now() - timedelta(days=days)
         
         return [
             entry for entry in self.audit_trail
@@ -957,5 +910,4 @@ class ComplianceConfigManager:
         ]
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get compliance manager status"""
-        return await self.get_compliance_status()
+        """Get compliance manager status"""        return await self.get_compliance_status()

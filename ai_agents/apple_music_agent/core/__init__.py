@@ -1,7 +1,5 @@
-"""
-Core module initialization for Apple Music Agent
-"""
-from .musickit_engine import MusicKitEngine, AppleMusicTrack, AppleMusicPlaylist, AppleMusicArtist
+"""Core module initialization for Apple Music Agent
+"""from .musickit_engine import MusicKitEngine, AppleMusicTrack, AppleMusicPlaylist, AppleMusicArtist
 
 __all__ = [
     'MusicKitEngine',

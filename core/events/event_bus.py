@@ -1,5 +1,4 @@
-"""
-IA-Influencer-Agent - Event Bus System
+"""IA-Influencer-Agent - Event Bus System
 Module: backend/core/events/event_bus.py
 Architecture: Core Event Bus for Real-time Event Distribution
 Auteur: Fahed Mlaiel <mlaiel@live.de>
@@ -11,9 +10,7 @@ Description:
     Bus central d'événements pour la distribution temps réel des événements
     dans la plateforme IA-Influencer-Agent. Support pub/sub pattern avec 
     persistance et routage intelligent.
-"""
-
-from typing import Any, Dict, List, Optional, Union, Callable, Set
+"""from typing import Any, Dict, List, Optional, Union, Callable, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from enum import Enum
@@ -28,16 +25,14 @@ logger = logging.getLogger(__name__)
 
 
 class EventPriority(Enum):
-    """Priorité des événements pour le routage"""
-    LOW = "low"
+    """Priorité des événements pour le routage"""    LOW = "low"
     NORMAL = "normal"  
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class EventStatus(Enum):
-    """Statut de traitement des événements"""
-    PENDING = "pending"
+    """Statut de traitement des événements"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -46,10 +41,8 @@ class EventStatus(Enum):
 
 @dataclass
 class Event:
-    """
-    Événement système pour la plateforme IA-Influencer-Agent
-    """
-    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """    Événement système pour la plateforme IA-Influencer-Agent
+    """    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     type: str = ""
     source: str = ""
     subject: str = ""
@@ -67,8 +60,7 @@ class Event:
     max_retries: int = 3
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit l'événement en dictionnaire"""
-        return {
+        """Convertit l'événement en dictionnaire"""        return {
             "id": self.id,
             "type": self.type,
             "source": self.source,
@@ -89,8 +81,7 @@ class Event:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "Event":
-        """Crée un événement depuis un dictionnaire"""
-        event = cls()
+        """Crée un événement depuis un dictionnaire"""        event = cls()
         event.id = data.get("id", str(uuid.uuid4()))
         event.type = data.get("type", "")
         event.source = data.get("source", "")
@@ -111,8 +102,7 @@ class Event:
 
 
 class EventSubscription:
-    """Abonnement à un type d'événement"""
-    
+    """Abonnement à un type d'événement"""    
     def __init__(
         self,
         subscription_id: str,
@@ -130,8 +120,7 @@ class EventSubscription:
         self.active = True
     
     def matches(self, event: Event) -> bool:
-        """Vérifie si l'événement correspond aux filtres"""
-        if not self.active:
+        """Vérifie si l'événement correspond aux filtres"""        if not self.active:
             return False
             
         if self.event_type != "*" and not event.type.startswith(self.event_type):
@@ -149,10 +138,8 @@ class EventSubscription:
 
 
 class EventBus:
-    """
-    Bus central d'événements pour la plateforme IA-Influencer-Agent
-    """
-    
+    """    Bus central d'événements pour la plateforme IA-Influencer-Agent
+    """    
     def __init__(
         self,
         name: str = "main",
@@ -186,8 +173,7 @@ class EventBus:
         logger.info("EventBus '%s' initialized with %d workers", name, max_workers)
     
     async def start(self):
-        """Démarre le traitement des événements"""
-        if self._processing:
+        """Démarre le traitement des événements"""        if self._processing:
             return
             
         self._processing = True
@@ -195,8 +181,7 @@ class EventBus:
         logger.info("EventBus '%s' started", self.name)
     
     async def stop(self):
-        """Arrête le traitement des événements"""
-        self._processing = False
+        """Arrête le traitement des événements"""        self._processing = False
         self._executor.shutdown(wait=True)
         logger.info("EventBus '%s' stopped", self.name)
     
@@ -207,8 +192,7 @@ class EventBus:
         filters: Optional[Dict[str, Any]] = None,
         priority: EventPriority = EventPriority.NORMAL
     ) -> str:
-        """
-        S'abonne à un type d'événement
+        """        S'abonne à un type d'événement
         
         Args:
             event_type: Type d'événement (ex: "content.uploaded", "*" pour tous)
@@ -218,8 +202,7 @@ class EventBus:
             
         Returns:
             ID de l'abonnement
-        """
-        subscription_id = str(uuid.uuid4())
+        """        subscription_id = str(uuid.uuid4())
         subscription = EventSubscription(
             subscription_id, event_type, handler, filters, priority
         )
@@ -238,8 +221,7 @@ class EventBus:
         return subscription_id
     
     def unsubscribe(self, subscription_id: str):
-        """Désabonne un handler"""
-        with self._lock:
+        """Désabonne un handler"""        with self._lock:
             # Recherche dans les abonnements typés
             for event_type, subscriptions in self._subscriptions.items():
                 for i, sub in enumerate(subscriptions):
@@ -258,16 +240,14 @@ class EventBus:
                     return
     
     async def publish(self, event: Event) -> bool:
-        """
-        Publie un événement
+        """        Publie un événement
         
         Args:
             event: Événement à publier
             
         Returns:
             True si publié avec succès
-        """
-        try:
+        """        try:
             # Validation de base
             if not event.type:
                 raise ValueError("Event type is required")
@@ -284,8 +264,7 @@ class EventBus:
             return False
     
     async def _process_events(self):
-        """Traitement continu des événements"""
-        while self._processing:
+        """Traitement continu des événements"""        while self._processing:
             try:
                 # Récupération événement avec timeout
                 event = await asyncio.wait_for(
@@ -301,8 +280,7 @@ class EventBus:
                 logger.error("Error in event processing loop: %s", e)
     
     async def _handle_event(self, event: Event):
-        """Traite un événement individuel"""
-        try:
+        """Traite un événement individuel"""        try:
             event.status = EventStatus.PROCESSING
             matching_subscriptions = self._get_matching_subscriptions(event)
             
@@ -346,8 +324,7 @@ class EventBus:
             logger.error("Failed to handle event %s: %s", event.id, e)
     
     def _get_matching_subscriptions(self, event: Event) -> List[EventSubscription]:
-        """Trouve les abonnements correspondant à un événement"""
-        matching = []
+        """Trouve les abonnements correspondant à un événement"""        matching = []
         
         with self._lock:
             # Abonnements spécifiques
@@ -361,8 +338,7 @@ class EventBus:
         return matching
     
     async def _execute_handler(self, event: Event, subscription: EventSubscription):
-        """Exécute un handler d'événement"""
-        try:
+        """Exécute un handler d'événement"""        try:
             # Exécution dans l'executor si handler synchrone
             if asyncio.iscoroutinefunction(subscription.handler):
                 await subscription.handler(event)
@@ -376,8 +352,7 @@ class EventBus:
             raise
     
     def get_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques du bus"""
-        return {
+        """Retourne les statistiques du bus"""        return {
             "name": self.name,
             "stats": self._stats.copy(),
             "queue_size": self._event_queue.qsize(),

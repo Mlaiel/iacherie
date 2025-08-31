@@ -1,14 +1,11 @@
-"""
-Platform Module Index - Central Platform Operations Hub
+"""Platform Module Index - Central Platform Operations Hub
 
 This module serves as the main entry point for all platform-level operations
 including orchestration, content processing, distribution, analytics, and more.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import logging
+"""import logging
 from typing import Dict, List, Optional, Any
 
 from .platform_orchestrator import PlatformOrchestrator
@@ -25,13 +22,11 @@ from .quality_assurance import QualityAssurance
 logger = logging.getLogger(__name__)
 
 class PlatformManager:
-    """
-    Central platform manager coordinating all platform operations
+    """    Central platform manager coordinating all platform operations
     
     This class serves as the main interface for platform-level operations,
     coordinating between different components and ensuring smooth integration.
-    """
-    
+    """    
     def __init__(self):
         # Initialize all platform components
         self.orchestrator = PlatformOrchestrator()
@@ -48,13 +43,11 @@ class PlatformManager:
         self.initialized = False
     
     async def initialize(self) -> bool:
-        """
-        Initialize all platform components
+        """        Initialize all platform components
         
         Returns:
             bool: True if all components initialized successfully
-        """
-        try:
+        """        try:
             logger.info("Initializing Platform Manager...")
             
             # Initialize components in dependency order
@@ -88,16 +81,14 @@ class PlatformManager:
             return False
     
     def get_component(self, component_name: str) -> Optional[Any]:
-        """
-        Get platform component by name
+        """        Get platform component by name
         
         Args:
             component_name: Name of the component
             
         Returns:
             Component instance or None if not found
-        """
-        components = {
+        """        components = {
             'orchestrator': self.orchestrator,
             'content_processor': self.content_processor,
             'distribution_manager': self.distribution_manager,
@@ -113,13 +104,11 @@ class PlatformManager:
         return components.get(component_name.lower())
     
     async def health_check(self) -> Dict[str, Any]:
-        """
-        Perform comprehensive health check of all platform components
+        """        Perform comprehensive health check of all platform components
         
         Returns:
             Dict containing health status of all components
-        """
-        if not self.initialized:
+        """        if not self.initialized:
             return {'status': 'not_initialized', 'components': {}}
         
         health_status = {
@@ -178,52 +167,40 @@ platform_manager = PlatformManager()
 
 # Convenience functions for accessing components
 async def initialize_platform() -> bool:
-    """Initialize the platform manager and all components"""
-    return await platform_manager.initialize()
+    """Initialize the platform manager and all components"""    return await platform_manager.initialize()
 
 def get_orchestrator() -> PlatformOrchestrator:
-    """Get platform orchestrator instance"""
-    return platform_manager.orchestrator
+    """Get platform orchestrator instance"""    return platform_manager.orchestrator
 
 def get_content_processor() -> ContentProcessor:
-    """Get content processor instance"""
-    return platform_manager.content_processor
+    """Get content processor instance"""    return platform_manager.content_processor
 
 def get_distribution_manager() -> DistributionManager:
-    """Get distribution manager instance"""
-    return platform_manager.distribution_manager
+    """Get distribution manager instance"""    return platform_manager.distribution_manager
 
 def get_analytics() -> PlatformAnalytics:
-    """Get platform analytics instance"""
-    return platform_manager.analytics
+    """Get platform analytics instance"""    return platform_manager.analytics
 
 def get_integration_hub() -> IntegrationHub:
-    """Get integration hub instance"""
-    return platform_manager.integration_hub
+    """Get integration hub instance"""    return platform_manager.integration_hub
 
 def get_security() -> PlatformSecurity:
-    """Get platform security instance"""
-    return platform_manager.security
+    """Get platform security instance"""    return platform_manager.security
 
 def get_monetization() -> MonetizationController:
-    """Get monetization controller instance"""
-    return platform_manager.monetization
+    """Get monetization controller instance"""    return platform_manager.monetization
 
 def get_collaboration() -> CollaborationEngine:
-    """Get collaboration engine instance"""
-    return platform_manager.collaboration
+    """Get collaboration engine instance"""    return platform_manager.collaboration
 
 def get_notifications() -> NotificationDispatcher:
-    """Get notification dispatcher instance"""
-    return platform_manager.notifications
+    """Get notification dispatcher instance"""    return platform_manager.notifications
 
 def get_quality_assurance() -> QualityAssurance:
-    """Get quality assurance instance"""
-    return platform_manager.quality_assurance
+    """Get quality assurance instance"""    return platform_manager.quality_assurance
 
 async def platform_health_check() -> Dict[str, Any]:
-    """Perform platform health check"""
-    return await platform_manager.health_check()
+    """Perform platform health check"""    return await platform_manager.health_check()
 
 __all__ = [
     'PlatformManager',

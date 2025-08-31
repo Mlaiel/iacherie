@@ -6,8 +6,7 @@ Ce module doit être complété avec la véritable implémentation.
 
 Author: GitHub Copilot (auto-généré)
 Date: 2025-08-31
-"""
-# Classes et fonctions de base pour les tests
+"""# Classes et fonctions de base pour les tests
 class BaseClass:
     """Classe de base minimale"""    pass
 

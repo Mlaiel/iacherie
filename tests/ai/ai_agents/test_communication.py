@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive Tests for Communication Module
+"""Comprehensive Tests for Communication Module
 
 Industrial-grade testing for agent communication protocols, message routing,
 inter-agent coordination, and communication infrastructure.
@@ -26,9 +22,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -53,11 +47,9 @@ logger = logging.getLogger(__name__)
 
 
 class TestAgentMessage:
-    """Test agent message creation and serialization"""
-    
+    """Test agent message creation and serialization"""    
     def test_message_creation(self):
-        """Test creating agent messages"""
-        message = AgentMessage(
+        """Test creating agent messages"""        message = AgentMessage(
             sender_id="test_sender",
             recipient_id="test_recipient",
             message_type=MessageType.TASK_REQUEST,
@@ -75,8 +67,7 @@ class TestAgentMessage:
         assert message.correlation_id is None
     
     def test_message_serialization(self):
-        """Test message serialization and deserialization"""
-        original_message = AgentMessage(
+        """Test message serialization and deserialization"""        original_message = AgentMessage(
             sender_id="sender",
             recipient_id="recipient",
             message_type=MessageType.TASK_RESULT,
@@ -102,8 +93,7 @@ class TestAgentMessage:
         assert deserialized.correlation_id == original_message.correlation_id
     
     def test_message_validation(self):
-        """Test message validation"""
-        # Valid message
+        """Test message validation"""        # Valid message
         valid_message = AgentMessage(
             sender_id="sender",
             recipient_id="recipient",
@@ -122,8 +112,7 @@ class TestAgentMessage:
             )
     
     def test_message_expiration(self):
-        """Test message expiration logic"""
-        # Message with TTL
+        """Test message expiration logic"""        # Message with TTL
         message = AgentMessage(
             sender_id="sender",
             recipient_id="recipient",
@@ -140,8 +129,7 @@ class TestAgentMessage:
         assert message.is_expired()
     
     def test_message_priority_comparison(self):
-        """Test message priority comparison"""
-        high_priority = AgentMessage(
+        """Test message priority comparison"""        high_priority = AgentMessage(
             sender_id="sender",
             recipient_id="recipient",
             message_type=MessageType.TASK_REQUEST,
@@ -161,12 +149,10 @@ class TestAgentMessage:
 
 
 class TestMessageRouter:
-    """Test message routing functionality"""
-    
+    """Test message routing functionality"""    
     @pytest.fixture
     async def message_router(self) -> MessageRouter:
-        """Create message router for testing"""
-        config = CommunicationConfig(
+        """Create message router for testing"""        config = CommunicationConfig(
             max_queue_size=1000,
             default_timeout=30,
             retry_attempts=3,
@@ -180,8 +166,7 @@ class TestMessageRouter:
         await router.shutdown()
     
     async def test_router_initialization(self):
-        """Test message router initialization"""
-        config = CommunicationConfig()
+        """Test message router initialization"""        config = CommunicationConfig()
         router = MessageRouter(config)
         
         assert not router.initialized
@@ -193,8 +178,7 @@ class TestMessageRouter:
         assert not router.initialized
     
     async def test_agent_registration(self, message_router):
-        """Test agent registration with router"""
-        agent_id = "test_agent_001"
+        """Test agent registration with router"""        agent_id = "test_agent_001"
         
         # Register agent
         await message_router.register_agent(agent_id, "test_agent")
@@ -209,8 +193,7 @@ class TestMessageRouter:
         assert not message_router.is_agent_registered(agent_id)
     
     async def test_message_routing(self, message_router):
-        """Test basic message routing"""
-        sender_id = "sender_agent"
+        """Test basic message routing"""        sender_id = "sender_agent"
         recipient_id = "recipient_agent"
         
         # Register agents
@@ -236,8 +219,7 @@ class TestMessageRouter:
         assert delivered_messages[0].message_id == message.message_id
     
     async def test_broadcast_messaging(self, message_router):
-        """Test broadcast messaging"""
-        sender_id = "broadcast_sender"
+        """Test broadcast messaging"""        sender_id = "broadcast_sender"
         recipients = ["agent_1", "agent_2", "agent_3"]
         
         # Register agents
@@ -265,8 +247,7 @@ class TestMessageRouter:
             assert messages[0].payload["announcement"] == "System maintenance scheduled"
     
     async def test_message_filtering(self, message_router):
-        """Test message filtering by type and priority"""
-        agent_id = "filter_test_agent"
+        """Test message filtering by type and priority"""        agent_id = "filter_test_agent"
         await message_router.register_agent(agent_id, "test")
         
         # Send messages of different types and priorities
@@ -315,8 +296,7 @@ class TestMessageRouter:
         assert high_priority_messages[0].priority == Priority.HIGH
     
     async def test_message_acknowledgment(self, message_router):
-        """Test message acknowledgment system"""
-        sender_id = "ack_sender"
+        """Test message acknowledgment system"""        sender_id = "ack_sender"
         recipient_id = "ack_recipient"
         
         await message_router.register_agent(sender_id, "sender")
@@ -350,8 +330,7 @@ class TestMessageRouter:
         assert len(pending_acks) == 0
     
     async def test_message_retry_mechanism(self, message_router):
-        """Test message retry mechanism for failed deliveries"""
-        sender_id = "retry_sender"
+        """Test message retry mechanism for failed deliveries"""        sender_id = "retry_sender"
         recipient_id = "non_existent_recipient"
         
         await message_router.register_agent(sender_id, "sender")
@@ -375,8 +354,7 @@ class TestMessageRouter:
         assert len(retry_messages) >= 1
     
     async def test_priority_queue_ordering(self, message_router):
-        """Test priority-based message ordering"""
-        agent_id = "priority_test_agent"
+        """Test priority-based message ordering"""        agent_id = "priority_test_agent"
         await message_router.register_agent(agent_id, "test")
         
         # Send messages with different priorities
@@ -405,12 +383,10 @@ class TestMessageRouter:
 
 
 class TestCommunicationBus:
-    """Test communication bus functionality"""
-    
+    """Test communication bus functionality"""    
     @pytest.fixture
     async def communication_bus(self) -> CommunicationBus:
-        """Create communication bus for testing"""
-        config = CommunicationConfig(
+        """Create communication bus for testing"""        config = CommunicationConfig(
             enable_event_streaming=True,
             enable_message_persistence=True,
             enable_encryption=False  # Disabled for testing
@@ -423,8 +399,7 @@ class TestCommunicationBus:
         await bus.shutdown()
     
     async def test_bus_initialization(self):
-        """Test communication bus initialization"""
-        config = CommunicationConfig()
+        """Test communication bus initialization"""        config = CommunicationConfig()
         bus = CommunicationBus(config)
         
         assert not bus.initialized
@@ -435,8 +410,7 @@ class TestCommunicationBus:
         await bus.shutdown()
     
     async def test_event_subscription(self, communication_bus):
-        """Test event subscription and notification"""
-        events_received = []
+        """Test event subscription and notification"""        events_received = []
         
         async def event_handler(event_type: str, event_data: Dict[str, Any]):
             events_received.append({"type": event_type, "data": event_data})
@@ -472,8 +446,7 @@ class TestCommunicationBus:
         await communication_bus.unsubscribe_from_events(subscription_id)
     
     async def test_message_persistence(self, communication_bus):
-        """Test message persistence functionality"""
-        message = AgentMessage(
+        """Test message persistence functionality"""        message = AgentMessage(
             sender_id="persistent_sender",
             recipient_id="persistent_recipient",
             message_type=MessageType.TASK_REQUEST,
@@ -499,8 +472,7 @@ class TestCommunicationBus:
         assert any(msg.message_id == message.message_id for msg in query_results)
     
     async def test_communication_metrics(self, communication_bus):
-        """Test communication metrics collection"""
-        # Generate some activity
+        """Test communication metrics collection"""        # Generate some activity
         for i in range(5):
             message = AgentMessage(
                 sender_id=f"sender_{i}",
@@ -520,8 +492,7 @@ class TestCommunicationBus:
         assert metrics["total_messages"] >= 5
     
     async def test_health_monitoring(self, communication_bus):
-        """Test communication bus health monitoring"""
-        health_status = await communication_bus.get_health_status()
+        """Test communication bus health monitoring"""        health_status = await communication_bus.get_health_status()
         
         assert "status" in health_status
         assert "uptime" in health_status
@@ -533,12 +504,10 @@ class TestCommunicationBus:
 
 
 class TestAgentCommunicationProtocol:
-    """Test agent communication protocol implementation"""
-    
+    """Test agent communication protocol implementation"""    
     @pytest.fixture
     async def communication_protocol(self) -> AgentCommunicationProtocol:
-        """Create communication protocol for testing"""
-        config = CommunicationConfig(
+        """Create communication protocol for testing"""        config = CommunicationConfig(
             protocol_version="1.0",
             enable_compression=True,
             enable_encryption=False,
@@ -552,8 +521,7 @@ class TestAgentCommunicationProtocol:
         await protocol.shutdown()
     
     async def test_protocol_initialization(self):
-        """Test protocol initialization"""
-        config = CommunicationConfig()
+        """Test protocol initialization"""        config = CommunicationConfig()
         protocol = AgentCommunicationProtocol(config)
         
         assert not protocol.initialized
@@ -565,8 +533,7 @@ class TestAgentCommunicationProtocol:
         await protocol.shutdown()
     
     async def test_handshake_process(self, communication_protocol):
-        """Test agent handshake process"""
-        agent_info = {
+        """Test agent handshake process"""        agent_info = {
             "agent_id": "handshake_agent",
             "agent_type": "test_agent",
             "capabilities": ["test_capability"],
@@ -585,8 +552,7 @@ class TestAgentCommunicationProtocol:
         assert "handshake_agent" in connected_agents
     
     async def test_secure_messaging(self, communication_protocol):
-        """Test secure messaging capabilities"""
-        # Register agents for secure communication
+        """Test secure messaging capabilities"""        # Register agents for secure communication
         sender_info = {
             "agent_id": "secure_sender",
             "agent_type": "sender",
@@ -616,8 +582,7 @@ class TestAgentCommunicationProtocol:
         assert delivery_result["encrypted"] is True
     
     async def test_protocol_compliance(self, communication_protocol):
-        """Test protocol compliance validation"""
-        # Valid message according to protocol
+        """Test protocol compliance validation"""        # Valid message according to protocol
         valid_message = AgentMessage(
             sender_id="protocol_sender",
             recipient_id="protocol_recipient",
@@ -639,8 +604,7 @@ class TestAgentCommunicationProtocol:
         assert "violations" in compliance_result
     
     async def test_connection_management(self, communication_protocol):
-        """Test connection lifecycle management"""
-        agent_id = "connection_test_agent"
+        """Test connection lifecycle management"""        agent_id = "connection_test_agent"
         
         # Connect agent
         connection_result = await communication_protocol.connect_agent(
@@ -662,8 +626,7 @@ class TestAgentCommunicationProtocol:
         assert is_connected is False
     
     async def test_protocol_versioning(self, communication_protocol):
-        """Test protocol version compatibility"""
-        # Agent with compatible version
+        """Test protocol version compatibility"""        # Agent with compatible version
         compatible_agent = {
             "agent_id": "compatible_agent",
             "protocol_version": "1.0"
@@ -684,12 +647,10 @@ class TestAgentCommunicationProtocol:
 
 
 class TestCommunicationIntegration:
-    """Integration tests for communication system"""
-    
+    """Integration tests for communication system"""    
     @pytest.fixture
     async def communication_system(self):
-        """Create complete communication system for integration testing"""
-        config = CommunicationConfig(
+        """Create complete communication system for integration testing"""        config = CommunicationConfig(
             enable_persistence=True,
             enable_event_streaming=True,
             enable_metrics=True
@@ -719,8 +680,7 @@ class TestCommunicationIntegration:
         await bus.shutdown()
     
     async def test_end_to_end_communication(self, communication_system):
-        """Test end-to-end communication flow"""
-        protocol = communication_system["protocol"]
+        """Test end-to-end communication flow"""        protocol = communication_system["protocol"]
         router = communication_system["router"]
         bus = communication_system["bus"]
         
@@ -776,8 +736,7 @@ class TestCommunicationIntegration:
         assert ack_result["success"] is True
     
     async def test_system_resilience(self, communication_system):
-        """Test system resilience under load"""
-        router = communication_system["router"]
+        """Test system resilience under load"""        router = communication_system["router"]
         
         # Register multiple agents
         agents = []
@@ -811,8 +770,7 @@ class TestCommunicationIntegration:
     
     @pytest.mark.performance
     async def test_communication_performance(self, communication_system, assert_performance):
-        """Test communication system performance"""
-        router = communication_system["router"]
+        """Test communication system performance"""        router = communication_system["router"]
         
         # Register test agents
         await router.register_agent("perf_sender", "sender")
@@ -837,8 +795,7 @@ class TestCommunicationIntegration:
         assert_performance("message_routing", max_time=0.1)
     
     async def test_error_recovery(self, communication_system):
-        """Test error recovery mechanisms"""
-        router = communication_system["router"]
+        """Test error recovery mechanisms"""        router = communication_system["router"]
         bus = communication_system["bus"]
         
         # Test recovery from routing failure

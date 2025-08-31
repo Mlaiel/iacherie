@@ -1,5 +1,4 @@
-"""
-Cultural Adaptor - Advanced Cultural Context and Communication Style Adaptation
+"""Cultural Adaptor - Advanced Cultural Context and Communication Style Adaptation
 
 Enterprise-grade cultural adaptation system providing culturally-aware content
 localization, communication style adjustment, and regional customization
@@ -15,9 +14,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
@@ -41,8 +38,7 @@ logger = logging.getLogger(__name__)
 
 
 class CommunicationStyle(Enum):
-    """Communication style preferences"""
-    DIRECT = "direct"
+    """Communication style preferences"""    DIRECT = "direct"
     INDIRECT = "indirect"
     BALANCED = "balanced"
     FORMAL = "formal"
@@ -53,8 +49,7 @@ class CommunicationStyle(Enum):
 
 
 class CulturalDimension(Enum):
-    """Hofstede's cultural dimensions"""
-    POWER_DISTANCE = "power_distance"
+    """Hofstede's cultural dimensions"""    POWER_DISTANCE = "power_distance"
     INDIVIDUALISM = "individualism"
     MASCULINITY = "masculinity"
     UNCERTAINTY_AVOIDANCE = "uncertainty_avoidance"
@@ -64,8 +59,7 @@ class CulturalDimension(Enum):
 
 @dataclass
 class CulturalContext:
-    """Comprehensive cultural context information"""
-    language: SupportedLanguage
+    """Comprehensive cultural context information"""    language: SupportedLanguage
     country_code: str
     region: Optional[str] = None
     
@@ -113,8 +107,7 @@ class CulturalContext:
 
 @dataclass
 class AdaptationResult:
-    """Result of cultural adaptation process"""
-    original_content: str
+    """Result of cultural adaptation process"""    original_content: str
     adapted_content: str
     adaptations_applied: List[str] = field(default_factory=list)
     cultural_score: float = 0.0
@@ -125,8 +118,7 @@ class AdaptationResult:
 
 
 class CulturalAdaptor:
-    """Master cultural adaptation system"""
-    
+    """Master cultural adaptation system"""    
     def __init__(self):
         self.cultural_contexts = {}
         self.adaptation_rules = {}
@@ -136,8 +128,7 @@ class CulturalAdaptor:
         asyncio.create_task(self._initialize_cultural_data())
     
     async def _initialize_cultural_data(self):
-        """Initialize cultural contexts and adaptation rules"""
-        try:
+        """Initialize cultural contexts and adaptation rules"""        try:
             # Initialize cultural contexts for major regions
             await self._initialize_cultural_contexts()
             
@@ -150,8 +141,7 @@ class CulturalAdaptor:
             logger.error(f"Failed to initialize cultural data: {e}")
     
     async def _initialize_cultural_contexts(self):
-        """Initialize cultural contexts for supported languages/regions"""
-        contexts = [
+        """Initialize cultural contexts for supported languages/regions"""        contexts = [
             # Germanic cultures
             CulturalContext(
                 language=SupportedLanguage.GERMAN,
@@ -436,8 +426,7 @@ class CulturalAdaptor:
         logger.info(f"Initialized {len(contexts)} cultural contexts")
     
     async def _initialize_adaptation_rules(self):
-        """Initialize cultural adaptation rules"""
-        self.adaptation_rules = {
+        """Initialize cultural adaptation rules"""        self.adaptation_rules = {
             "directness_adjustment": {
                 "high_direct": {
                     "patterns": [
@@ -591,10 +580,8 @@ class CulturalAdaptor:
         user_preferences: Optional[Dict[str, Any]] = None,
         context_type: str = "general"
     ) -> AdaptationResult:
-        """
-        Adapt content for cultural context
-        """
-        try:
+        """        Adapt content for cultural context
+        """        try:
             # Get cultural context
             cultural_context = await self._get_cultural_context(
                 target_language, 
@@ -690,8 +677,7 @@ class CulturalAdaptor:
         language: SupportedLanguage,
         country_code: Optional[str] = None
     ) -> Optional[CulturalContext]:
-        """Get cultural context for language and country"""
-        if country_code:
+        """Get cultural context for language and country"""        if country_code:
             key = f"{language.value}_{country_code}"
             if key in self.cultural_contexts:
                 return self.cultural_contexts[key]
@@ -722,8 +708,7 @@ class CulturalAdaptor:
         content: str,
         cultural_context: CulturalContext
     ) -> Tuple[str, List[str]]:
-        """Adjust content directness level"""
-        adaptations = []
+        """Adjust content directness level"""        adaptations = []
         adapted_content = content
         
         directness_level = cultural_context.directness_level
@@ -750,8 +735,7 @@ class CulturalAdaptor:
         cultural_context: CulturalContext,
         user_preferences: Optional[Dict[str, Any]] = None
     ) -> Tuple[str, List[str]]:
-        """Adjust content formality level"""
-        adaptations = []
+        """Adjust content formality level"""        adaptations = []
         adapted_content = content
         
         # Determine target formality
@@ -780,8 +764,7 @@ class CulturalAdaptor:
         content: str,
         cultural_context: CulturalContext
     ) -> Tuple[str, List[str]]:
-        """Adjust content for hierarchy awareness"""
-        adaptations = []
+        """Adjust content for hierarchy awareness"""        adaptations = []
         adapted_content = content
         
         if cultural_context.hierarchy_awareness > 0.7:
@@ -798,8 +781,7 @@ class CulturalAdaptor:
         content: str,
         cultural_context: CulturalContext
     ) -> Tuple[str, List[str]]:
-        """Apply cultural sensitivity adjustments"""
-        adaptations = []
+        """Apply cultural sensitivity adjustments"""        adaptations = []
         adapted_content = content
         
         # Apply time/holiday sensitivity
@@ -822,8 +804,7 @@ class CulturalAdaptor:
         cultural_context: CulturalContext,
         context_type: str
     ) -> Tuple[str, List[str]]:
-        """Apply context-specific cultural adaptations"""
-        adaptations = []
+        """Apply context-specific cultural adaptations"""        adaptations = []
         adapted_content = content
         
         if context_type == "business":
@@ -854,8 +835,7 @@ class CulturalAdaptor:
         content: str,
         cultural_context: CulturalContext
     ) -> float:
-        """Calculate cultural appropriateness score"""
-        score = 1.0
+        """Calculate cultural appropriateness score"""        score = 1.0
         
         # Check directness alignment
         directness_indicators = {
@@ -899,8 +879,7 @@ class CulturalAdaptor:
         content: str,
         cultural_context: CulturalContext
     ) -> List[str]:
-        """Generate suggestions for cultural improvement"""
-        suggestions = []
+        """Generate suggestions for cultural improvement"""        suggestions = []
         
         # Directness suggestions
         if cultural_context.directness_level < 0.4:
@@ -927,8 +906,7 @@ class CulturalAdaptor:
 
 
 class LocalizationManager:
-    """Advanced localization management for dates, numbers, and formats"""
-    
+    """Advanced localization management for dates, numbers, and formats"""    
     def __init__(self):
         self.locale_cache = {}
     
@@ -938,8 +916,7 @@ class LocalizationManager:
         cultural_context: CulturalContext,
         format_type: str = "medium"
     ) -> str:
-        """Localize datetime according to cultural context"""
-        try:
+        """Localize datetime according to cultural context"""        try:
             locale = self._get_babel_locale(cultural_context)
             
             if format_type == "custom" and cultural_context.datetime_format:
@@ -957,8 +934,7 @@ class LocalizationManager:
         currency_code: str,
         cultural_context: CulturalContext
     ) -> str:
-        """Localize currency formatting"""
-        try:
+        """Localize currency formatting"""        try:
             locale = self._get_babel_locale(cultural_context)
             return format_currency(amount, currency_code, locale=locale)
             
@@ -971,8 +947,7 @@ class LocalizationManager:
         number: Union[int, float],
         cultural_context: CulturalContext
     ) -> str:
-        """Localize number formatting"""
-        try:
+        """Localize number formatting"""        try:
             locale = self._get_babel_locale(cultural_context)
             
             if isinstance(number, float):
@@ -988,8 +963,7 @@ class LocalizationManager:
             return f"{number:,.2f}"
     
     def _get_babel_locale(self, cultural_context: CulturalContext) -> str:
-        """Get Babel locale string from cultural context"""
-        locale_str = f"{cultural_context.language.value}_{cultural_context.country_code}"
+        """Get Babel locale string from cultural context"""        locale_str = f"{cultural_context.language.value}_{cultural_context.country_code}"
         
         if locale_str in self.locale_cache:
             return self.locale_cache[locale_str]
@@ -1006,14 +980,12 @@ class LocalizationManager:
 
 
 class CommunicationStyleAdapter:
-    """Specialized communication style adaptation"""
-    
+    """Specialized communication style adaptation"""    
     def __init__(self):
         self.style_patterns = self._initialize_style_patterns()
     
     def _initialize_style_patterns(self) -> Dict[str, Dict[str, List[Tuple[str, str]]]]:
-        """Initialize communication style adaptation patterns"""
-        return {
+        """Initialize communication style adaptation patterns"""        return {
             CommunicationStyle.DIRECT.value: {
                 "to_patterns": [
                     (r"Perhaps you could", "You should"),
@@ -1053,8 +1025,7 @@ class CommunicationStyleAdapter:
         target_style: CommunicationStyle,
         source_style: Optional[CommunicationStyle] = None
     ) -> Tuple[str, List[str]]:
-        """Adapt content to specific communication style"""
-        adaptations = []
+        """Adapt content to specific communication style"""        adaptations = []
         adapted_content = content
         
         style_key = target_style.value
@@ -1070,14 +1041,12 @@ class CommunicationStyleAdapter:
 
 
 class RegionalCustomizer:
-    """Regional customization for specific countries/regions"""
-    
+    """Regional customization for specific countries/regions"""    
     def __init__(self):
         self.regional_customizations = self._initialize_regional_customizations()
     
     def _initialize_regional_customizations(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize region-specific customizations"""
-        return {
+        """Initialize region-specific customizations"""        return {
             "DE": {
                 "business_hours": "09:00-17:00",
                 "holiday_greetings": ["Frohe Feiertage", "Schöne Feiertage"],
@@ -1107,8 +1076,7 @@ class RegionalCustomizer:
         country_code: str,
         context_type: str = "general"
     ) -> Tuple[str, List[str]]:
-        """Apply country-specific customizations"""
-        customizations = []
+        """Apply country-specific customizations"""        customizations = []
         adapted_content = content
         
         if country_code not in self.regional_customizations:

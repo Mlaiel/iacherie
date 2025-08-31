@@ -1,5 +1,4 @@
-"""
-AI Audio Processing Configuration Module for IA-Influencer Agent Platform
+"""AI Audio Processing Configuration Module for IA-Influencer Agent Platform
 =========================================================================
 
 Advanced AI-powered audio processing configuration for intelligent content enhancement,
@@ -18,9 +17,7 @@ explicit written permission from Fahed Mlaiel is strictly prohibited and will be
 to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import logging
+"""import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple, Callable
 from dataclasses import dataclass, field
@@ -31,8 +28,7 @@ logger = logging.getLogger(__name__)
 
 
 class AIModelType(Enum):
-    """AI model types for audio processing"""
-    NEURAL_ENHANCEMENT = "neural_enhancement"
+    """AI model types for audio processing"""    NEURAL_ENHANCEMENT = "neural_enhancement"
     NOISE_REDUCTION = "noise_reduction"
     VOCAL_ISOLATION = "vocal_isolation"
     AUTO_MASTERING = "auto_mastering"
@@ -47,16 +43,14 @@ class AIModelType(Enum):
 
 
 class ProcessingPrecision(Enum):
-    """AI model precision levels"""
-    FP32 = "fp32"       # Full precision
+    """AI model precision levels"""    FP32 = "fp32"       # Full precision
     FP16 = "fp16"       # Half precision
     INT8 = "int8"       # Quantized 8-bit
     MIXED = "mixed"     # Mixed precision
 
 
 class AccelerationType(Enum):
-    """Hardware acceleration types"""
-    CPU = "cpu"
+    """Hardware acceleration types"""    CPU = "cpu"
     GPU_CUDA = "gpu_cuda"
     GPU_OPENCL = "gpu_opencl"
     TPU = "tpu"
@@ -65,8 +59,7 @@ class AccelerationType(Enum):
 
 
 class ModelComplexity(Enum):
-    """AI model complexity levels"""
-    LIGHTWEIGHT = "lightweight"    # Mobile/edge optimized
+    """AI model complexity levels"""    LIGHTWEIGHT = "lightweight"    # Mobile/edge optimized
     STANDARD = "standard"          # Balanced performance
     PROFESSIONAL = "professional"  # High quality
     RESEARCH = "research"          # Maximum quality/accuracy
@@ -74,8 +67,7 @@ class ModelComplexity(Enum):
 
 @dataclass
 class AIModelConfig:
-    """Configuration for individual AI model"""
-    model_type: AIModelType
+    """Configuration for individual AI model"""    model_type: AIModelType
     model_name: str
     model_path: Optional[str] = None
     model_url: Optional[str] = None
@@ -107,8 +99,7 @@ class AIModelConfig:
 
 @dataclass
 class EnhancementPipeline:
-    """AI audio enhancement pipeline configuration"""
-    pipeline_name: str
+    """AI audio enhancement pipeline configuration"""    pipeline_name: str
     models: List[AIModelConfig] = field(default_factory=list)
     
     # Pipeline settings
@@ -134,8 +125,7 @@ class EnhancementPipeline:
 
 @dataclass
 class RealTimeProcessingConfig:
-    """Real-time AI audio processing configuration"""
-    enable_realtime: bool = False
+    """Real-time AI audio processing configuration"""    enable_realtime: bool = False
     
     # Latency requirements
     max_latency_ms: float = 20.0
@@ -162,8 +152,7 @@ class RealTimeProcessingConfig:
 
 @dataclass
 class TrainingConfig:
-    """Configuration for AI model training and fine-tuning"""
-    enable_training: bool = False
+    """Configuration for AI model training and fine-tuning"""    enable_training: bool = False
     enable_fine_tuning: bool = False
     
     # Training data
@@ -196,8 +185,7 @@ class TrainingConfig:
 
 
 class AIAudioProcessingConfig:
-    """AI-powered audio processing configuration manager"""
-    
+    """AI-powered audio processing configuration manager"""    
     def __init__(self):
         self.models = self._initialize_ai_models()
         self.pipelines = self._initialize_pipelines()
@@ -206,8 +194,7 @@ class AIAudioProcessingConfig:
         self.custom_models = {}
     
     def _initialize_ai_models(self) -> Dict[str, AIModelConfig]:
-        """Initialize AI model configurations"""
-        models = {}
+        """Initialize AI model configurations"""        models = {}
         
         # Neural Audio Enhancement Model
         models[AIModelType.NEURAL_ENHANCEMENT.value] = AIModelConfig(
@@ -349,8 +336,7 @@ class AIAudioProcessingConfig:
         return models
     
     def _initialize_pipelines(self) -> Dict[str, EnhancementPipeline]:
-        """Initialize processing pipelines"""
-        pipelines = {}
+        """Initialize processing pipelines"""        pipelines = {}
         
         # Music Production Pipeline
         pipelines["music_production"] = EnhancementPipeline(
@@ -411,8 +397,7 @@ class AIAudioProcessingConfig:
         return pipelines
     
     def _initialize_realtime_config(self) -> RealTimeProcessingConfig:
-        """Initialize real-time processing configuration"""
-        return RealTimeProcessingConfig(
+        """Initialize real-time processing configuration"""        return RealTimeProcessingConfig(
             enable_realtime=False,
             max_latency_ms=25.0,
             target_latency_ms=15.0,
@@ -425,8 +410,7 @@ class AIAudioProcessingConfig:
         )
     
     def _initialize_training_config(self) -> TrainingConfig:
-        """Initialize AI model training configuration"""
-        return TrainingConfig(
+        """Initialize AI model training configuration"""        return TrainingConfig(
             enable_training=False,
             enable_fine_tuning=True,
             validation_split=0.15,
@@ -441,8 +425,7 @@ class AIAudioProcessingConfig:
         )
     
     def get_model_config(self, model_type: Union[AIModelType, str]) -> AIModelConfig:
-        """Get configuration for specific AI model"""
-        model_key = model_type.value if isinstance(model_type, AIModelType) else model_type
+        """Get configuration for specific AI model"""        model_key = model_type.value if isinstance(model_type, AIModelType) else model_type
         
         if model_key in self.custom_models:
             return self.custom_models[model_key]
@@ -453,16 +436,14 @@ class AIAudioProcessingConfig:
             return self._get_default_model_config(model_type)
     
     def get_pipeline_config(self, pipeline_name: str) -> EnhancementPipeline:
-        """Get processing pipeline configuration"""
-        if pipeline_name in self.pipelines:
+        """Get processing pipeline configuration"""        if pipeline_name in self.pipelines:
             return self.pipelines[pipeline_name]
         else:
             logger.warning(f"No pipeline found: {pipeline_name}")
             return self._get_default_pipeline()
     
     def _get_default_model_config(self, model_type: Union[AIModelType, str]) -> AIModelConfig:
-        """Get default model configuration"""
-        return AIModelConfig(
+        """Get default model configuration"""        return AIModelConfig(
             model_type=model_type if isinstance(model_type, AIModelType) else AIModelType.NEURAL_ENHANCEMENT,
             model_name="default_model",
             complexity=ModelComplexity.STANDARD,
@@ -470,8 +451,7 @@ class AIAudioProcessingConfig:
         )
     
     def _get_default_pipeline(self) -> EnhancementPipeline:
-        """Get default processing pipeline"""
-        return EnhancementPipeline(
+        """Get default processing pipeline"""        return EnhancementPipeline(
             pipeline_name="default",
             processing_order=[AIModelType.NEURAL_ENHANCEMENT],
             parallel_processing=True
@@ -479,8 +459,7 @@ class AIAudioProcessingConfig:
     
     def create_custom_model(self, model_name: str, base_model: AIModelType, 
                            modifications: Dict[str, Any]) -> AIModelConfig:
-        """Create custom AI model configuration"""
-        base_config = self.get_model_config(base_model)
+        """Create custom AI model configuration"""        base_config = self.get_model_config(base_model)
         
         # Create modified configuration
         config_dict = base_config.__dict__.copy()
@@ -495,8 +474,7 @@ class AIAudioProcessingConfig:
     
     def create_custom_pipeline(self, pipeline_name: str, models: List[AIModelType], 
                               settings: Dict[str, Any]) -> EnhancementPipeline:
-        """Create custom processing pipeline"""
-        pipeline_config = EnhancementPipeline(
+        """Create custom processing pipeline"""        pipeline_config = EnhancementPipeline(
             pipeline_name=pipeline_name,
             processing_order=models,
             **settings
@@ -513,8 +491,7 @@ class AIAudioProcessingConfig:
         return pipeline_config
     
     def optimize_for_hardware(self, target_hardware: AccelerationType) -> Dict[str, Any]:
-        """Optimize AI configurations for target hardware"""
-        optimizations = {}
+        """Optimize AI configurations for target hardware"""        optimizations = {}
         
         if target_hardware == AccelerationType.GPU_CUDA:
             optimizations = {
@@ -550,8 +527,7 @@ class AIAudioProcessingConfig:
         return optimizations
     
     def get_performance_profile(self, complexity_level: str = "standard") -> Dict[str, Any]:
-        """Get performance profile for different usage scenarios"""
-        profiles = {
+        """Get performance profile for different usage scenarios"""        profiles = {
             "lightweight": {
                 "model_complexity": ModelComplexity.LIGHTWEIGHT,
                 "precision": ProcessingPrecision.INT8,
@@ -585,8 +561,7 @@ class AIAudioProcessingConfig:
         return profiles.get(complexity_level, profiles["standard"])
     
     def validate_model_requirements(self, model_type: AIModelType) -> Dict[str, Any]:
-        """Validate system requirements for AI model"""
-        model_config = self.get_model_config(model_type)
+        """Validate system requirements for AI model"""        model_config = self.get_model_config(model_type)
         
         requirements = {
             "memory_required_mb": model_config.max_memory_mb,
@@ -600,8 +575,7 @@ class AIAudioProcessingConfig:
         return requirements
     
     def _get_model_dependencies(self, model_type: AIModelType) -> List[str]:
-        """Get model-specific dependencies"""
-        dependencies = {
+        """Get model-specific dependencies"""        dependencies = {
             AIModelType.NEURAL_ENHANCEMENT: ["torch", "torchaudio", "librosa"],
             AIModelType.NOISE_REDUCTION: ["tensorflow", "scipy", "librosa"],
             AIModelType.VOCAL_ISOLATION: ["torch", "torchaudio", "mir_eval"],
@@ -616,8 +590,7 @@ class AIAudioProcessingConfig:
         return dependencies.get(model_type, ["librosa", "numpy"])
     
     def _check_hardware_compatibility(self, model_config: AIModelConfig) -> Dict[str, bool]:
-        """Check hardware compatibility for model"""
-        return {
+        """Check hardware compatibility for model"""        return {
             "cpu_compatible": True,
             "gpu_compatible": model_config.acceleration in [AccelerationType.GPU_CUDA, AccelerationType.AUTO],
             "tpu_compatible": model_config.acceleration in [AccelerationType.TPU, AccelerationType.AUTO],
@@ -631,13 +604,10 @@ ai_audio_processing_config = AIAudioProcessingConfig()
 
 # Export commonly used functions
 def get_model_config(model_type: Union[AIModelType, str]) -> AIModelConfig:
-    """Get AI model configuration"""
-    return ai_audio_processing_config.get_model_config(model_type)
+    """Get AI model configuration"""    return ai_audio_processing_config.get_model_config(model_type)
 
 def get_pipeline_config(pipeline_name: str) -> EnhancementPipeline:
-    """Get processing pipeline configuration"""
-    return ai_audio_processing_config.get_pipeline_config(pipeline_name)
+    """Get processing pipeline configuration"""    return ai_audio_processing_config.get_pipeline_config(pipeline_name)
 
 def optimize_for_hardware(target_hardware: AccelerationType) -> Dict[str, Any]:
-    """Optimize configurations for target hardware"""
-    return ai_audio_processing_config.optimize_for_hardware(target_hardware)
+    """Optimize configurations for target hardware"""    return ai_audio_processing_config.optimize_for_hardware(target_hardware)

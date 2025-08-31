@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Pipeline API Management System
+"""IA Influencer Agent - Pipeline API Management System
 Enterprise-Grade REST API for Pipeline Operations and Management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -17,9 +16,7 @@ Features:
 
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 from typing import Dict, List, Optional, Any, Union
@@ -46,8 +43,7 @@ from .security_manager import PipelineSecurityManager
 
 # Pydantic models for API requests/responses
 class PipelineConfigRequest(BaseModel):
-    """Pipeline configuration request model"""
-    name: str = Field(..., description="Pipeline name")
+    """Pipeline configuration request model"""    name: str = Field(..., description="Pipeline name")
     environment: str = Field(..., description="Target environment")
     pipeline_type: str = Field(..., description="Pipeline type")
     steps: List[str] = Field(..., description="Pipeline steps")
@@ -73,13 +69,11 @@ class PipelineConfigRequest(BaseModel):
             raise ValueError(f"Invalid pipeline type: {v}")
 
 class PipelineExecutionRequest(BaseModel):
-    """Pipeline execution request model"""
-    pipeline_id: str = Field(..., description="Pipeline identifier")
+    """Pipeline execution request model"""    pipeline_id: str = Field(..., description="Pipeline identifier")
     context: Optional[Dict[str, Any]] = Field({}, description="Execution context")
     
 class PipelineStatusResponse(BaseModel):
-    """Pipeline status response model"""
-    execution_id: str
+    """Pipeline status response model"""    execution_id: str
     pipeline_name: str
     environment: str
     status: str
@@ -88,19 +82,16 @@ class PipelineStatusResponse(BaseModel):
     duration: Optional[str] = None
     
 class PipelineListResponse(BaseModel):
-    """Pipeline list response model"""
-    pipelines: List[Dict[str, Any]]
+    """Pipeline list response model"""    pipelines: List[Dict[str, Any]]
     total_count: int
     
 class SecurityScanRequest(BaseModel):
-    """Security scan request model"""
-    project_path: str = Field(..., description="Project path to scan")
+    """Security scan request model"""    project_path: str = Field(..., description="Project path to scan")
     image_name: Optional[str] = Field(None, description="Container image name")
     policy_name: str = Field("development", description="Security policy name")
 
 class MetricsRequest(BaseModel):
-    """Metrics request model"""
-    pipeline_name: Optional[str] = None
+    """Metrics request model"""    pipeline_name: Optional[str] = None
     environment: Optional[str] = None
     hours: int = Field(24, description="Time range in hours")
 
@@ -108,15 +99,13 @@ class MetricsRequest(BaseModel):
 security = HTTPBearer() if FASTAPI_AVAILABLE else None
 
 def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
-    """Validate API authentication"""
-    # In production, implement proper JWT validation
+    """Validate API authentication"""    # In production, implement proper JWT validation
     if not credentials or not credentials.credentials:
         raise HTTPException(status_code=401, detail="Authentication required")
     return {"user_id": "api_user", "token": credentials.credentials}
 
 class PipelineAPIManager:
-    """
-    Advanced Pipeline API Management System
+    """    Advanced Pipeline API Management System
     
     Provides enterprise-grade REST API for pipeline operations with:
     - Complete CRUD operations for pipelines
@@ -124,8 +113,7 @@ class PipelineAPIManager:
     - Security scanning integration
     - Metrics and analytics endpoints
     - Webhook and notification management
-    """
-    
+    """    
     def __init__(self, 
                  pipeline_manager: AdvancedPipelineManager,
                  config_manager: PipelineConfigManager,
@@ -170,13 +158,11 @@ class PipelineAPIManager:
         self._register_routes()
         
     def _register_routes(self):
-        """Register all API routes"""
-        
+        """Register all API routes"""        
         # Health check endpoint
         @self.app.get("/health")
         async def health_check():
-            """Health check endpoint"""
-            return {
+            """Health check endpoint"""            return {
                 "status": "healthy",
                 "timestamp": datetime.utcnow().isoformat(),
                 "version": "1.0.0"
@@ -188,8 +174,7 @@ class PipelineAPIManager:
             request: PipelineConfigRequest,
             current_user: dict = Depends(get_current_user)
         ):
-            """Register a new pipeline configuration"""
-            try:
+            """Register a new pipeline configuration"""            try:
                 config = PipelineConfig(
                     name=request.name,
                     environment=Environment(request.environment),
@@ -219,8 +204,7 @@ class PipelineAPIManager:
             pipeline_type: Optional[str] = Query(None),
             current_user: dict = Depends(get_current_user)
         ) -> PipelineListResponse:
-            """List all registered pipelines"""
-            try:
+            """List all registered pipelines"""            try:
                 pipelines = []
                 for pipeline_id, config in self.pipeline_manager.registered_pipelines.items():
                     if environment and config.environment.value != environment:
@@ -253,8 +237,7 @@ class PipelineAPIManager:
             background_tasks: BackgroundTasks,
             current_user: dict = Depends(get_current_user)
         ):
-            """Execute a pipeline"""
-            try:
+            """Execute a pipeline"""            try:
                 execution_id = await self.pipeline_manager.execute_pipeline(
                     request.pipeline_id,
                     request.context
@@ -275,8 +258,7 @@ class PipelineAPIManager:
             execution_id: str = PathParam(...),
             current_user: dict = Depends(get_current_user)
         ) -> PipelineStatusResponse:
-            """Get pipeline execution status"""
-            try:
+            """Get pipeline execution status"""            try:
                 details = self.pipeline_manager.get_execution_details(execution_id)
                 if not details:
                     raise HTTPException(status_code=404, detail="Execution not found")
@@ -302,8 +284,7 @@ class PipelineAPIManager:
             execution_id: str = PathParam(...),
             current_user: dict = Depends(get_current_user)
         ):
-            """Get detailed pipeline execution information"""
-            try:
+            """Get detailed pipeline execution information"""            try:
                 details = self.pipeline_manager.get_execution_details(execution_id)
                 if not details:
                     raise HTTPException(status_code=404, detail="Execution not found")
@@ -321,8 +302,7 @@ class PipelineAPIManager:
             execution_id: str = PathParam(...),
             current_user: dict = Depends(get_current_user)
         ):
-            """Cancel a running pipeline execution"""
-            try:
+            """Cancel a running pipeline execution"""            try:
                 success = await self.pipeline_manager.cancel_pipeline(execution_id)
                 if not success:
                     raise HTTPException(status_code=404, detail="Execution not found or already completed")
@@ -343,8 +323,7 @@ class PipelineAPIManager:
         async def list_active_pipelines(
             current_user: dict = Depends(get_current_user)
         ):
-            """List all currently active pipeline executions"""
-            try:
+            """List all currently active pipeline executions"""            try:
                 active_pipelines = self.pipeline_manager.list_active_pipelines()
                 
                 pipeline_details = []
@@ -373,8 +352,7 @@ class PipelineAPIManager:
         async def list_templates(
             current_user: dict = Depends(get_current_user)
         ):
-            """List all available pipeline templates"""
-            try:
+            """List all available pipeline templates"""            try:
                 templates = self.config_manager.list_templates()
                 template_details = []
                 
@@ -396,8 +374,7 @@ class PipelineAPIManager:
         async def list_environments(
             current_user: dict = Depends(get_current_user)
         ):
-            """List all configured environments"""
-            try:
+            """List all configured environments"""            try:
                 environments = self.config_manager.list_environments()
                 environment_details = []
                 
@@ -422,8 +399,7 @@ class PipelineAPIManager:
             background_tasks: BackgroundTasks,
             current_user: dict = Depends(get_current_user)
         ):
-            """Run comprehensive security scan"""
-            try:
+            """Run comprehensive security scan"""            try:
                 project_path = Path(request.project_path)
                 if not project_path.exists():
                     raise HTTPException(status_code=400, detail="Project path does not exist")
@@ -460,8 +436,7 @@ class PipelineAPIManager:
             days: int = Query(30),
             current_user: dict = Depends(get_current_user)
         ):
-            """Get security report"""
-            try:
+            """Get security report"""            try:
                 report = self.security_manager.generate_security_report(environment, days)
                 return report
                 
@@ -475,8 +450,7 @@ class PipelineAPIManager:
             request: MetricsRequest = Depends(),
             current_user: dict = Depends(get_current_user)
         ):
-            """Get pipeline metrics and analytics"""
-            try:
+            """Get pipeline metrics and analytics"""            try:
                 if request.pipeline_name and request.environment:
                     analytics = self.monitoring_manager.get_pipeline_analytics(
                         request.pipeline_name,
@@ -498,8 +472,7 @@ class PipelineAPIManager:
         async def get_active_alerts(
             current_user: dict = Depends(get_current_user)
         ):
-            """Get active alerts"""
-            try:
+            """Get active alerts"""            try:
                 alerts = self.monitoring_manager.check_alerts()
                 return {
                     "alerts": alerts,
@@ -517,8 +490,7 @@ class PipelineAPIManager:
             execution_id: str = PathParam(...),
             current_user: dict = Depends(get_current_user)
         ):
-            """Stream real-time execution logs"""
-            async def generate_logs():
+            """Stream real-time execution logs"""            async def generate_logs():
                 while True:
                     details = self.pipeline_manager.get_execution_details(execution_id)
                     if details:
@@ -541,8 +513,7 @@ class PipelineAPIManager:
             retention_days: int = Query(30),
             current_user: dict = Depends(get_current_user)
         ):
-            """Clean up old pipeline data"""
-            try:
+            """Clean up old pipeline data"""            try:
                 self.monitoring_manager.cleanup_old_data(retention_days)
                 
                 return {
@@ -559,8 +530,7 @@ class PipelineAPIManager:
         async def get_system_stats(
             current_user: dict = Depends(get_current_user)
         ):
-            """Get system statistics"""
-            try:
+            """Get system statistics"""            try:
                 active_pipelines = len(self.pipeline_manager.list_active_pipelines())
                 registered_pipelines = len(self.pipeline_manager.registered_pipelines)
                 
@@ -577,8 +547,7 @@ class PipelineAPIManager:
                 raise HTTPException(status_code=500, detail=str(e))
                 
     def run_server(self):
-        """Run the API server"""
-        self.logger.info(f"Starting Pipeline API server on {self.host}:{self.port}")
+        """Run the API server"""        self.logger.info(f"Starting Pipeline API server on {self.host}:{self.port}")
         uvicorn.run(
             self.app,
             host=self.host,
@@ -587,8 +556,7 @@ class PipelineAPIManager:
         )
         
     def get_app(self):
-        """Get FastAPI application instance"""
-        return self.app
+        """Get FastAPI application instance"""        return self.app
 
 # API server factory function
 def create_api_server(
@@ -600,8 +568,7 @@ def create_api_server(
     host: str = "0.0.0.0",
     port: int = 8080
 ) -> PipelineAPIManager:
-    """Create and configure Pipeline API server"""
-    return PipelineAPIManager(
+    """Create and configure Pipeline API server"""    return PipelineAPIManager(
         pipeline_manager=pipeline_manager,
         config_manager=config_manager,
         notification_manager=notification_manager,

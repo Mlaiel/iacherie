@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Filters Demo & Validation
+"""IA Influencer Agent - Filters Demo & Validation
 ===============================================
 
 Professional demonstration and validation of the content filtering system.
@@ -11,9 +10,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 ⚠️ STRICT COPYRIGHT PROTECTION ⚠️
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 from pathlib import Path
@@ -31,11 +28,9 @@ from .index import (
 
 
 class FilterSystemDemo:
-    """Demonstration and validation of the filtering system."""
-    
+    """Demonstration and validation of the filtering system."""    
     def __init__(self):
-        """Initialize demo system."""
-        self.logger = logging.getLogger(__name__)
+        """Initialize demo system."""        self.logger = logging.getLogger(__name__)
         self.engine = get_filter_engine()
         
         logging.basicConfig(
@@ -44,8 +39,7 @@ class FilterSystemDemo:
         )
     
     async def run_comprehensive_demo(self):
-        """Run comprehensive demonstration of all filter capabilities."""
-        self.logger.info("🚀 Starting IA Influencer Agent Filters Demo")
+        """Run comprehensive demonstration of all filter capabilities."""        self.logger.info("🚀 Starting IA Influencer Agent Filters Demo")
         self.logger.info("=" * 60)
         
         # Show available filters
@@ -64,16 +58,14 @@ class FilterSystemDemo:
         self.logger.info("✅ Demo completed successfully!")
     
     async def _show_available_filters(self):
-        """Display all available filter types."""
-        self.logger.info("\n📋 Available Filter Types:")
+        """Display all available filter types."""        self.logger.info("\n📋 Available Filter Types:")
         filter_types = get_available_filter_types()
         
         for filter_type in filter_types:
             self.logger.info(f"  • {filter_type.value.upper()}: {filter_type.name}")
     
     async def _demo_text_filtering(self):
-        """Demonstrate text content filtering."""
-        self.logger.info("\n📝 TEXT FILTERING DEMO")
+        """Demonstrate text content filtering."""        self.logger.info("\n📝 TEXT FILTERING DEMO")
         self.logger.info("-" * 30)
         
         # Create sample text content
@@ -101,8 +93,7 @@ class FilterSystemDemo:
             self.logger.info(f"Text {i}: {result.overall_result.name} (Score: {result.overall_score:.2f})")
     
     async def _demo_security_filtering(self):
-        """Demonstrate security filtering capabilities."""
-        self.logger.info("\n🔒 SECURITY FILTERING DEMO")
+        """Demonstrate security filtering capabilities."""        self.logger.info("\n🔒 SECURITY FILTERING DEMO")
         self.logger.info("-" * 30)
         
         # Create sample content for security testing
@@ -133,8 +124,7 @@ class FilterSystemDemo:
                                f"(Confidence: {security_result.confidence:.2f})")
     
     async def _demo_performance_monitoring(self):
-        """Demonstrate performance monitoring."""
-        self.logger.info("\n⚡ PERFORMANCE MONITORING DEMO")
+        """Demonstrate performance monitoring."""        self.logger.info("\n⚡ PERFORMANCE MONITORING DEMO")
         self.logger.info("-" * 35)
         
         start_time = time.time()
@@ -165,8 +155,7 @@ class FilterSystemDemo:
         self.logger.info(f"Average time per item: {total_time/10:.3f}s")
     
     async def _demo_quality_assessment(self):
-        """Demonstrate quality assessment capabilities."""
-        self.logger.info("\n⭐ QUALITY ASSESSMENT DEMO")
+        """Demonstrate quality assessment capabilities."""        self.logger.info("\n⭐ QUALITY ASSESSMENT DEMO")
         self.logger.info("-" * 30)
         
         quality_samples = [
@@ -192,8 +181,7 @@ class FilterSystemDemo:
             self.logger.info(f"Quality ({expected_quality}): Score {result.overall_score:.2f}")
     
     async def _demo_duplicate_detection(self):
-        """Demonstrate duplicate content detection."""
-        self.logger.info("\n🔍 DUPLICATE DETECTION DEMO")
+        """Demonstrate duplicate content detection."""        self.logger.info("\n🔍 DUPLICATE DETECTION DEMO")
         self.logger.info("-" * 30)
         
         # Test with identical content
@@ -218,8 +206,7 @@ class FilterSystemDemo:
                 self.logger.info(f"Content {i+1}: {'DUPLICATE' if is_duplicate else 'UNIQUE'}")
     
     async def _show_system_stats(self):
-        """Display system statistics."""
-        self.logger.info("\n📊 SYSTEM STATISTICS")
+        """Display system statistics."""        self.logger.info("\n📊 SYSTEM STATISTICS")
         self.logger.info("-" * 25)
         
         stats = self.engine.get_statistics()
@@ -235,8 +222,7 @@ class FilterSystemDemo:
 
 
 async def run_demo():
-    """Run the complete filtering system demonstration."""
-    demo = FilterSystemDemo()
+    """Run the complete filtering system demonstration."""    demo = FilterSystemDemo()
     await demo.run_comprehensive_demo()
 
 

@@ -1,5 +1,4 @@
-"""
-🤖 Advanced AI Classifier
+"""🤖 Advanced AI Classifier
 =========================
 
 Advanced AI-powered content classification and violation categorization system.
@@ -30,9 +29,7 @@ This module provides:
 - Contextual understanding and reasoning
 - Real-time inference optimization
 - Continuous learning and adaptation
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
 from datetime import datetime, timedelta
@@ -53,8 +50,7 @@ import librosa
 logger = logging.getLogger(__name__)
 
 class ClassificationCategory(Enum):
-    """Content classification categories."""
-    ORIGINAL_CONTENT = "original_content"
+    """Content classification categories."""    ORIGINAL_CONTENT = "original_content"
     EXACT_COPY = "exact_copy"
     MODIFIED_COPY = "modified_copy"
     PARTIAL_DERIVATIVE = "partial_derivative"
@@ -68,16 +64,14 @@ class ClassificationCategory(Enum):
     UNAUTHORIZED_REMIX = "unauthorized_remix"
 
 class ConfidenceLevel(Enum):
-    """Classification confidence levels."""
-    VERY_HIGH = "very_high"  # 95-100%
+    """Classification confidence levels."""    VERY_HIGH = "very_high"  # 95-100%
     HIGH = "high"           # 85-94%
     MEDIUM = "medium"       # 70-84%
     LOW = "low"            # 50-69%
     UNCERTAIN = "uncertain" # <50%
 
 class ModelType(Enum):
-    """Types of AI models used."""
-    TRANSFORMER_BERT = "transformer_bert"
+    """Types of AI models used."""    TRANSFORMER_BERT = "transformer_bert"
     VISION_TRANSFORMER = "vision_transformer"
     AUDIO_CLASSIFIER = "audio_classifier"
     MULTIMODAL_FUSION = "multimodal_fusion"
@@ -85,8 +79,7 @@ class ModelType(Enum):
 
 @dataclass
 class ClassificationResult:
-    """Result of AI classification."""
-    classification_id: str
+    """Result of AI classification."""    classification_id: str
     content_id: str
     primary_category: ClassificationCategory
     confidence_score: float
@@ -107,8 +100,7 @@ class ClassificationResult:
 
 @dataclass 
 class TrainingMetrics:
-    """Metrics for model training and evaluation."""
-    accuracy: float
+    """Metrics for model training and evaluation."""    accuracy: float
     precision: float
     recall: float
     f1_score: float
@@ -123,8 +115,7 @@ class TrainingMetrics:
 
 @dataclass
 class TrainingData:
-    """Training data for model improvement."""
-    data_id: str
+    """Training data for model improvement."""    data_id: str
     content_features: Dict[str, Any]
     ground_truth_label: ClassificationCategory
     confidence_score: float
@@ -134,16 +125,14 @@ class TrainingData:
     timestamp: datetime
 
 class ContentFeatureExtractor:
-    """Extracts features from various content types."""
-    
+    """Extracts features from various content types."""    
     def __init__(self):
         self.text_tokenizer = None
         self.audio_sr = 22050
         self.image_size = (224, 224)
     
     async def extract_text_features(self, text: str) -> Dict[str, Any]:
-        """Extract features from text content."""
-        try:
+        """Extract features from text content."""        try:
             if not self.text_tokenizer:
                 self.text_tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
             
@@ -176,8 +165,7 @@ class ContentFeatureExtractor:
             return {}
     
     async def extract_audio_features(self, audio_data: np.ndarray) -> Dict[str, Any]:
-        """Extract features from audio content."""
-        try:
+        """Extract features from audio content."""        try:
             # Basic audio features
             features = {
                 'duration': len(audio_data) / self.audio_sr,
@@ -212,8 +200,7 @@ class ContentFeatureExtractor:
             return {}
     
     async def extract_image_features(self, image: np.ndarray) -> Dict[str, Any]:
-        """Extract features from image content."""
-        try:
+        """Extract features from image content."""        try:
             # Resize image
             image_resized = cv2.resize(image, self.image_size)
             
@@ -255,8 +242,7 @@ class ContentFeatureExtractor:
             return {}
     
     async def extract_metadata_features(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract features from content metadata."""
-        try:
+        """Extract features from content metadata."""        try:
             features = {}
             
             # File properties
@@ -295,8 +281,7 @@ class ContentFeatureExtractor:
             return {}
 
 class EnsembleClassifier(nn.Module):
-    """Ensemble classifier combining multiple specialized models."""
-    
+    """Ensemble classifier combining multiple specialized models."""    
     def __init__(self, config: Dict[str, Any]):
         super().__init__()
         self.config = config
@@ -353,8 +338,7 @@ class EnsembleClassifier(nn.Module):
         )
         
     def forward(self, features: Dict[str, torch.Tensor]) -> Dict[str, torch.Tensor]:
-        """Forward pass through ensemble."""
-        outputs = {}
+        """Forward pass through ensemble."""        outputs = {}
         
         # Individual classifier outputs
         if 'text' in features:
@@ -389,8 +373,7 @@ class EnsembleClassifier(nn.Module):
         return outputs
 
 class ModelTrainer:
-    """Handles model training and optimization."""
-    
+    """Handles model training and optimization."""    
     def __init__(self, model: nn.Module):
         self.model = model
         self.optimizer = None
@@ -398,14 +381,12 @@ class ModelTrainer:
         self.training_history = []
     
     def setup_training(self, learning_rate: float = 0.001):
-        """Setup training configuration."""
-        self.optimizer = optim.Adam(self.model.parameters(), lr=learning_rate)
+        """Setup training configuration."""        self.optimizer = optim.Adam(self.model.parameters(), lr=learning_rate)
     
     async def train_epoch(self, 
                          training_data: List[TrainingData],
                          batch_size: int = 32) -> Dict[str, float]:
-        """Train model for one epoch."""
-        self.model.train()
+        """Train model for one epoch."""        self.model.train()
         total_loss = 0.0
         correct_predictions = 0
         total_samples = 0
@@ -447,8 +428,7 @@ class ModelTrainer:
         }
     
     async def _prepare_batch(self, batch: List[TrainingData]) -> Tuple[Dict[str, torch.Tensor], torch.Tensor]:
-        """Prepare batch data for training."""
-        features = {'batch_size': len(batch)}
+        """Prepare batch data for training."""        features = {'batch_size': len(batch)}
         labels = []
         
         # Extract features for each modality
@@ -503,21 +483,17 @@ class ModelTrainer:
         return features, labels_tensor
 
 class AdvancedAIClassifier:
-    """
-    Advanced AI classifier system for content analysis.
+    """    Advanced AI classifier system for content analysis.
     
     Provides sophisticated classification capabilities using ensemble learning,
     multi-modal analysis, and continuous improvement mechanisms.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize the Advanced AI Classifier.
+        """        Initialize the Advanced AI Classifier.
         
         Args:
             config: Classifier configuration parameters
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self._initialized = False
         
         # Initialize components
@@ -554,13 +530,11 @@ class AdvancedAIClassifier:
         logger.info("Advanced AI Classifier initialized")
     
     async def initialize(self) -> bool:
-        """
-        Initialize AI classifier components.
+        """        Initialize AI classifier components.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             # Load pre-trained model if available
             model_path = self.config.get('model_path')
             if model_path and Path(model_path).exists():
@@ -580,8 +554,7 @@ class AdvancedAIClassifier:
     async def classify_content(self, 
                              content_data: Dict[str, Any],
                              content_metadata: Dict[str, Any]) -> ClassificationResult:
-        """
-        Classify content using advanced AI analysis.
+        """        Classify content using advanced AI analysis.
         
         Args:
             content_data: Content data (text, audio, image, etc.)
@@ -589,8 +562,7 @@ class AdvancedAIClassifier:
             
         Returns:
             Classification result with confidence and explanations
-        """
-        if not self._initialized:
+        """        if not self._initialized:
             await self.initialize()
         
         start_time = datetime.now()
@@ -691,8 +663,7 @@ class AdvancedAIClassifier:
                               content_metadata: Dict[str, Any],
                               ground_truth_label: ClassificationCategory,
                               human_verified: bool = True) -> str:
-        """
-        Add training data for model improvement.
+        """        Add training data for model improvement.
         
         Args:
             content_data: Content data
@@ -702,8 +673,7 @@ class AdvancedAIClassifier:
             
         Returns:
             Training data ID
-        """
-        try:
+        """        try:
             # Extract features
             features = await self._extract_all_features(content_data, content_metadata)
             
@@ -736,8 +706,7 @@ class AdvancedAIClassifier:
     async def _extract_all_features(self, 
                                   content_data: Dict[str, Any],
                                   content_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract features from all available modalities."""
-        features = {}
+        """Extract features from all available modalities."""        features = {}
         
         # Text features
         if 'text' in content_data:
@@ -765,8 +734,7 @@ class AdvancedAIClassifier:
         return features
     
     async def _prepare_model_features(self, features: Dict[str, Any]) -> Dict[str, torch.Tensor]:
-        """Prepare features for model input."""
-        model_features = {'batch_size': 1}
+        """Prepare features for model input."""        model_features = {'batch_size': 1}
         
         # Text features (use embeddings if available)
         if 'text' in features and 'token_ids' in features['text']:
@@ -819,8 +787,7 @@ class AdvancedAIClassifier:
         return model_features
     
     def _determine_confidence_level(self, confidence_score: float) -> ConfidenceLevel:
-        """Determine confidence level based on score."""
-        if confidence_score >= 0.95:
+        """Determine confidence level based on score."""        if confidence_score >= 0.95:
             return ConfidenceLevel.VERY_HIGH
         elif confidence_score >= 0.85:
             return ConfidenceLevel.HIGH
@@ -836,8 +803,7 @@ class AdvancedAIClassifier:
                                   model_outputs: Dict[str, torch.Tensor],
                                   predicted_class: int,
                                   confidence: float) -> str:
-        """Generate explanation for classification decision."""
-        category = list(ClassificationCategory)[predicted_class]
+        """Generate explanation for classification decision."""        category = list(ClassificationCategory)[predicted_class]
         
         explanation_parts = [
             f"The content has been classified as '{category.value.replace('_', ' ').title()}' with {confidence:.1%} confidence."
@@ -874,8 +840,7 @@ class AdvancedAIClassifier:
                                       predicted_class: int,
                                       confidence: float,
                                       features: Dict[str, Any]) -> List[str]:
-        """Generate recommendations based on classification."""
-        recommendations = []
+        """Generate recommendations based on classification."""        recommendations = []
         category = list(ClassificationCategory)[predicted_class]
         
         if category == ClassificationCategory.COPYRIGHT_VIOLATION:
@@ -907,8 +872,7 @@ class AdvancedAIClassifier:
         return recommendations
     
     async def _calculate_feature_importance(self, model_outputs: Dict[str, torch.Tensor]) -> Dict[str, float]:
-        """Calculate feature importance for classification decision."""
-        importance = {}
+        """Calculate feature importance for classification decision."""        importance = {}
         
         # Calculate importance based on individual classifier contributions
         if 'text' in model_outputs:
@@ -935,8 +899,7 @@ class AdvancedAIClassifier:
         return importance
     
     def _generate_cache_key(self, content_data: Dict[str, Any], content_metadata: Dict[str, Any]) -> str:
-        """Generate cache key for classification."""
-        # Create hash of content and metadata
+        """Generate cache key for classification."""        # Create hash of content and metadata
         content_str = json.dumps(content_data, sort_keys=True, default=str)
         metadata_str = json.dumps(content_metadata, sort_keys=True, default=str)
         combined = content_str + metadata_str + self.model_version
@@ -945,8 +908,7 @@ class AdvancedAIClassifier:
         return hashlib.sha256(combined.encode()).hexdigest()
     
     async def _get_cached_classification(self, cache_key: str) -> Optional[ClassificationResult]:
-        """Get cached classification result."""
-        if cache_key in self.classification_cache:
+        """Get cached classification result."""        if cache_key in self.classification_cache:
             cached_result, timestamp = self.classification_cache[cache_key]
             
             # Check if cache is still valid
@@ -960,8 +922,7 @@ class AdvancedAIClassifier:
         return None
     
     async def _cache_classification(self, cache_key: str, result: ClassificationResult):
-        """Cache classification result."""
-        self.classification_cache[cache_key] = (result, datetime.now())
+        """Cache classification result."""        self.classification_cache[cache_key] = (result, datetime.now())
         
         # Clean up old cache entries if cache gets too large
         if len(self.classification_cache) > 1000:
@@ -975,8 +936,7 @@ class AdvancedAIClassifier:
             self.classification_cache = dict(sorted_cache[-800:])
     
     async def _retrain_model(self):
-        """Retrain model with new data."""
-        if len(self.training_data) < 10:  # Need minimum data
+        """Retrain model with new data."""        if len(self.training_data) < 10:  # Need minimum data
             return
         
         try:
@@ -1000,8 +960,7 @@ class AdvancedAIClassifier:
             logger.error(f"Model retraining failed: {e}")
     
     async def _save_model(self, model_path: str):
-        """Save model state."""
-        try:
+        """Save model state."""        try:
             torch.save({
                 'model_state_dict': self.model.state_dict(),
                 'model_version': self.model_version,
@@ -1016,8 +975,7 @@ class AdvancedAIClassifier:
             logger.error(f"Model saving failed: {e}")
     
     async def _load_model(self, model_path: str):
-        """Load model state."""
-        try:
+        """Load model state."""        try:
             checkpoint = torch.load(model_path, map_location=self.device)
             
             self.model.load_state_dict(checkpoint['model_state_dict'])
@@ -1031,8 +989,7 @@ class AdvancedAIClassifier:
             logger.error(f"Model loading failed: {e}")
     
     def get_classifier_statistics(self) -> Dict[str, Any]:
-        """Get classifier statistics."""
-        return {
+        """Get classifier statistics."""        return {
             **self.classifier_stats,
             'model_version': self.model_version,
             'training_data_count': len(self.training_data),

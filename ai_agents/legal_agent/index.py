@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Legal Agent Service Index
+"""Legal Agent Service Index
 ========================
 
 Main entry point for the Legal Agent service.
@@ -13,9 +12,7 @@ WARNING: This code is the intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit 
 written permission is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime
 from typing import Dict, List, Optional, Any
@@ -65,46 +62,40 @@ legal_researcher: Optional[LegalResearcher] = None
 
 # Pydantic models for API
 class LegalAnalysisRequest(BaseModel):
-    """Request model for legal analysis"""
-    content: str = Field(..., description="Content to analyze")
+    """Request model for legal analysis"""    content: str = Field(..., description="Content to analyze")
     content_type: str = Field(..., description="Type of content (text, image, audio, video)")
     jurisdiction: str = Field(default="US", description="Legal jurisdiction")
     analysis_type: List[str] = Field(default=["copyright", "trademark"], description="Types of analysis")
 
 
 class ContractGenerationRequest(BaseModel):
-    """Request model for contract generation"""
-    contract_type: str = Field(..., description="Type of contract to generate")
+    """Request model for contract generation"""    contract_type: str = Field(..., description="Type of contract to generate")
     parties: Dict[str, Any] = Field(..., description="Contract parties information")
     terms: Dict[str, Any] = Field(..., description="Contract terms and conditions")
     jurisdiction: str = Field(default="US", description="Legal jurisdiction")
 
 
 class ComplianceCheckRequest(BaseModel):
-    """Request model for compliance checking"""
-    content_data: Dict[str, Any] = Field(..., description="Content data to check")
+    """Request model for compliance checking"""    content_data: Dict[str, Any] = Field(..., description="Content data to check")
     platform: str = Field(..., description="Target platform")
     content_type: str = Field(..., description="Type of content")
 
 
 class LegalResearchRequest(BaseModel):
-    """Request model for legal research"""
-    query: str = Field(..., description="Research query")
+    """Request model for legal research"""    query: str = Field(..., description="Research query")
     jurisdiction: str = Field(default="US", description="Legal jurisdiction")
     research_depth: str = Field(default="comprehensive", description="Research depth level")
     areas: List[str] = Field(default=["intellectual_property"], description="Legal areas to research")
 
 
 class RegulatoryUpdateRequest(BaseModel):
-    """Request model for regulatory updates"""
-    jurisdictions: List[str] = Field(default=["US"], description="Jurisdictions to monitor")
+    """Request model for regulatory updates"""    jurisdictions: List[str] = Field(default=["US"], description="Jurisdictions to monitor")
     areas: List[str] = Field(default=["intellectual_property"], description="Legal areas to monitor")
 
 
 # Service initialization
 async def initialize_services():
-    """Initialize all legal service components"""
-    global legal_agent, legal_analyzer, document_generator, regulatory_monitor, legal_researcher
+    """Initialize all legal service components"""    global legal_agent, legal_analyzer, document_generator, regulatory_monitor, legal_researcher
     
     try:
         # Initialize configuration
@@ -136,14 +127,12 @@ async def initialize_services():
 
 @app.on_event("startup")
 async def startup_event():
-    """Application startup event"""
-    await initialize_services()
+    """Application startup event"""    await initialize_services()
 
 
 @app.on_event("shutdown")
 async def shutdown_event():
-    """Application shutdown event"""
-    if regulatory_monitor:
+    """Application shutdown event"""    if regulatory_monitor:
         await regulatory_monitor.stop_monitoring()
     
     if legal_agent:
@@ -153,8 +142,7 @@ async def shutdown_event():
 # Health check endpoint
 @app.get("/legal/health")
 async def health_check():
-    """Health check endpoint"""
-    return {
+    """Health check endpoint"""    return {
         "status": "healthy",
         "timestamp": datetime.utcnow().isoformat(),
         "service": "legal_agent",
@@ -165,8 +153,7 @@ async def health_check():
 # Legal analysis endpoints
 @app.post("/legal/analyze")
 async def analyze_content(request: LegalAnalysisRequest):
-    """Analyze content for legal compliance and risks"""
-    try:
+    """Analyze content for legal compliance and risks"""    try:
         if not legal_analyzer:
             raise HTTPException(status_code=503, detail="Legal analyzer not available")
         
@@ -190,8 +177,7 @@ async def analyze_content(request: LegalAnalysisRequest):
 
 @app.post("/legal/copyright/check")
 async def check_copyright(request: LegalAnalysisRequest):
-    """Check content for copyright issues"""
-    try:
+    """Check content for copyright issues"""    try:
         if not legal_analyzer:
             raise HTTPException(status_code=503, detail="Legal analyzer not available")
         
@@ -213,8 +199,7 @@ async def check_copyright(request: LegalAnalysisRequest):
 
 @app.post("/legal/trademark/check")
 async def check_trademark(request: LegalAnalysisRequest):
-    """Check content for trademark issues"""
-    try:
+    """Check content for trademark issues"""    try:
         if not legal_analyzer:
             raise HTTPException(status_code=503, detail="Legal analyzer not available")
         
@@ -237,8 +222,7 @@ async def check_trademark(request: LegalAnalysisRequest):
 # Document generation endpoints
 @app.post("/legal/contracts/generate")
 async def generate_contract(request: ContractGenerationRequest):
-    """Generate legal contracts and agreements"""
-    try:
+    """Generate legal contracts and agreements"""    try:
         if not document_generator:
             raise HTTPException(status_code=503, detail="Document generator not available")
         
@@ -262,8 +246,7 @@ async def generate_contract(request: ContractGenerationRequest):
 
 @app.post("/legal/documents/privacy-policy")
 async def generate_privacy_policy(request: ContractGenerationRequest):
-    """Generate privacy policy document"""
-    try:
+    """Generate privacy policy document"""    try:
         if not document_generator:
             raise HTTPException(status_code=503, detail="Document generator not available")
         
@@ -286,8 +269,7 @@ async def generate_privacy_policy(request: ContractGenerationRequest):
 
 @app.post("/legal/documents/terms-of-service")
 async def generate_terms_of_service(request: ContractGenerationRequest):
-    """Generate terms of service document"""
-    try:
+    """Generate terms of service document"""    try:
         if not document_generator:
             raise HTTPException(status_code=503, detail="Document generator not available")
         
@@ -311,8 +293,7 @@ async def generate_terms_of_service(request: ContractGenerationRequest):
 # Compliance checking endpoints
 @app.post("/legal/compliance/check")
 async def check_compliance(request: ComplianceCheckRequest):
-    """Check content compliance with platform policies"""
-    try:
+    """Check content compliance with platform policies"""    try:
         if not legal_agent:
             raise HTTPException(status_code=503, detail="Legal agent not available")
         
@@ -335,8 +316,7 @@ async def check_compliance(request: ComplianceCheckRequest):
 
 @app.get("/legal/compliance/requirements/{platform}")
 async def get_compliance_requirements(platform: str):
-    """Get compliance requirements for a specific platform"""
-    try:
+    """Get compliance requirements for a specific platform"""    try:
         if not legal_agent:
             raise HTTPException(status_code=503, detail="Legal agent not available")
         
@@ -357,8 +337,7 @@ async def get_compliance_requirements(platform: str):
 # Legal research endpoints
 @app.post("/legal/research")
 async def conduct_legal_research(request: LegalResearchRequest):
-    """Conduct comprehensive legal research"""
-    try:
+    """Conduct comprehensive legal research"""    try:
         if not legal_researcher:
             raise HTTPException(status_code=503, detail="Legal researcher not available")
         
@@ -382,8 +361,7 @@ async def conduct_legal_research(request: LegalResearchRequest):
 
 @app.get("/legal/precedents/{case_type}")
 async def find_legal_precedents(case_type: str, jurisdiction: str = "US"):
-    """Find relevant legal precedents"""
-    try:
+    """Find relevant legal precedents"""    try:
         if not legal_researcher:
             raise HTTPException(status_code=503, detail="Legal researcher not available")
         
@@ -408,8 +386,7 @@ async def find_legal_precedents(case_type: str, jurisdiction: str = "US"):
 # Regulatory monitoring endpoints
 @app.post("/legal/regulatory/updates")
 async def get_regulatory_updates(request: RegulatoryUpdateRequest):
-    """Get latest regulatory updates"""
-    try:
+    """Get latest regulatory updates"""    try:
         if not regulatory_monitor:
             raise HTTPException(status_code=503, detail="Regulatory monitor not available")
         
@@ -431,8 +408,7 @@ async def get_regulatory_updates(request: RegulatoryUpdateRequest):
 
 @app.get("/legal/regulatory/alerts")
 async def get_regulatory_alerts():
-    """Get active regulatory alerts"""
-    try:
+    """Get active regulatory alerts"""    try:
         if not regulatory_monitor:
             raise HTTPException(status_code=503, detail="Regulatory monitor not available")
         
@@ -452,8 +428,7 @@ async def get_regulatory_alerts():
 # Risk assessment endpoints
 @app.post("/legal/risk/assess")
 async def assess_legal_risk(request: LegalAnalysisRequest):
-    """Assess legal risks for content or business decision"""
-    try:
+    """Assess legal risks for content or business decision"""    try:
         if not legal_agent:
             raise HTTPException(status_code=503, detail="Legal agent not available")
         
@@ -477,8 +452,7 @@ async def assess_legal_risk(request: LegalAnalysisRequest):
 # Legal advice endpoints
 @app.post("/legal/advice/request")
 async def request_legal_advice(request: LegalAnalysisRequest):
-    """Request legal advice for specific situation"""
-    try:
+    """Request legal advice for specific situation"""    try:
         if not legal_agent:
             raise HTTPException(status_code=503, detail="Legal agent not available")
         
@@ -502,8 +476,7 @@ async def request_legal_advice(request: LegalAnalysisRequest):
 # Service status endpoints
 @app.get("/legal/status")
 async def get_service_status():
-    """Get comprehensive service status"""
-    try:
+    """Get comprehensive service status"""    try:
         status = {
             "legal_agent": legal_agent is not None,
             "legal_analyzer": legal_analyzer is not None,
@@ -529,8 +502,7 @@ async def get_service_status():
 # Error handlers
 @app.exception_handler(Exception)
 async def general_exception_handler(request, exc):
-    """Handle general exceptions"""
-    logger.error(f"Unhandled exception: {exc}")
+    """Handle general exceptions"""    logger.error(f"Unhandled exception: {exc}")
     return JSONResponse(
         status_code=500,
         content={
@@ -543,8 +515,7 @@ async def general_exception_handler(request, exc):
 
 # Main execution
 def main():
-    """Main entry point for running the service"""
-    uvicorn.run(
+    """Main entry point for running the service"""    uvicorn.run(
         "legal_agent.index:app",
         host="0.0.0.0",
         port=8000,

@@ -1,5 +1,4 @@
-"""
-Brand Manager - Ultra-Advanced Enterprise Management System
+"""Brand Manager - Ultra-Advanced Enterprise Management System
 
 Unified interface for the entire brand system providing comprehensive
 control, monitoring, and optimization capabilities.
@@ -11,9 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime
@@ -39,15 +36,13 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class BrandSystemStatus:
-    """Overall brand system status"""
-    is_healthy: bool = True
+    """Overall brand system status"""    is_healthy: bool = True
     active_operations: int = 0
     system_load: float = 0.0
     last_updated: datetime = None
 
 class BrandManager(BaseAgent):
-    """
-    Master Brand Manager
+    """    Master Brand Manager
     
     Unified interface for the entire brand system providing:
     - Single point of control for all brand operations
@@ -56,8 +51,7 @@ class BrandManager(BaseAgent):
     - Performance analytics and reporting
     - Resource management and scaling
     - Error handling and recovery
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
         
@@ -70,8 +64,7 @@ class BrandManager(BaseAgent):
         logger.info("BrandManager initialized")
 
     async def start(self) -> None:
-        """Start the complete brand system"""
-        if self.is_running:
+        """Start the complete brand system"""        if self.is_running:
             logger.warning("Brand system is already running")
             return
         
@@ -86,8 +79,7 @@ class BrandManager(BaseAgent):
             raise
 
     async def get_system_status(self) -> BrandSystemStatus:
-        """Get comprehensive system status"""
-        try:
+        """Get comprehensive system status"""        try:
             return BrandSystemStatus(
                 is_healthy=self.is_running,
                 active_operations=0,  # Implementation specific
@@ -99,15 +91,13 @@ class BrandManager(BaseAgent):
             return BrandSystemStatus(is_healthy=False)
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of the entire brand system"""
-        logger.info("Shutting down Brand System...")
+        """Graceful shutdown of the entire brand system"""        logger.info("Shutting down Brand System...")
         self.is_running = False
         await self.engine.shutdown()
         logger.info("Brand System shutdown complete")
 
     async def process(self, data: Dict[str, Any]) -> AgentResponse:
-        """Base agent interface implementation"""
-        try:
+        """Base agent interface implementation"""        try:
             # Implementation specific to brand operations
             result = await self.engine.process(data)
             return AgentResponse(success=True, data=result)

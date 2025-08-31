@@ -1,5 +1,4 @@
-"""
-Platform Distribution Engine - Multi-platform content distribution and monetization.
+"""Platform Distribution Engine - Multi-platform content distribution and monetization.
 Handles content distribution across platforms with revenue optimization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -20,9 +19,7 @@ WARNING: This code, concept, and intellectual property are exclusively owned by
 Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, copying, distribution, 
 modification, or theft of this code or concept without explicit written permission 
 is strictly prohibited and will result in immediate legal action.
-"""
-
-from typing import Dict, List, Optional, Any, Union, Set, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Set, Tuple
 from dataclasses import dataclass, field
 from decimal import Decimal
 from datetime import datetime, timedelta
@@ -39,8 +36,7 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Supported platform types."""
-    SPOTIFY = "spotify"
+    """Supported platform types."""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -55,8 +51,7 @@ class PlatformType(Enum):
 
 
 class ContentFormat(Enum):
-    """Content format types."""
-    AUDIO = "audio"
+    """Content format types."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -67,8 +62,7 @@ class ContentFormat(Enum):
 
 
 class DistributionStatus(Enum):
-    """Distribution status tracking."""
-    PENDING = "pending"
+    """Distribution status tracking."""    PENDING = "pending"
     PROCESSING = "processing"
     PUBLISHED = "published"
     FAILED = "failed"
@@ -78,8 +72,7 @@ class DistributionStatus(Enum):
 
 
 class MonetizationModel(Enum):
-    """Platform monetization models."""
-    AD_REVENUE = "ad_revenue"
+    """Platform monetization models."""    AD_REVENUE = "ad_revenue"
     SUBSCRIPTION = "subscription"
     PAY_PER_VIEW = "pay_per_view"
     DONATIONS = "donations"
@@ -91,8 +84,7 @@ class MonetizationModel(Enum):
 
 @dataclass
 class PlatformConfiguration:
-    """Platform-specific configuration."""
-    platform_type: PlatformType
+    """Platform-specific configuration."""    platform_type: PlatformType
     api_credentials: Dict[str, str]
     supported_formats: List[ContentFormat]
     monetization_models: List[MonetizationModel]
@@ -105,12 +97,10 @@ class PlatformConfiguration:
     api_rate_limits: Dict[str, int]
     
     def supports_format(self, content_format: ContentFormat) -> bool:
-        """Check if platform supports given content format."""
-        return content_format in self.supported_formats
+        """Check if platform supports given content format."""        return content_format in self.supported_formats
     
     def get_optimal_settings(self, content_format: ContentFormat) -> Dict[str, Any]:
-        """Get optimal settings for content format on this platform."""
-        settings = {
+        """Get optimal settings for content format on this platform."""        settings = {
             'format': content_format.value,
             'dimensions': self.recommended_dimensions.get(content_format.value),
             'max_size': self.max_file_size,
@@ -121,8 +111,7 @@ class PlatformConfiguration:
 
 @dataclass
 class DistributionTask:
-    """Content distribution task."""
-    task_id: str
+    """Content distribution task."""    task_id: str
     content_id: str
     user_id: str
     platform: PlatformType
@@ -138,8 +127,7 @@ class DistributionTask:
     processed_at: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
-        return {
+        """Convert to dictionary."""        return {
             'task_id': self.task_id,
             'content_id': self.content_id,
             'user_id': self.user_id,
@@ -159,8 +147,7 @@ class DistributionTask:
 
 @dataclass
 class PlatformMetrics:
-    """Platform performance metrics."""
-    platform: PlatformType
+    """Platform performance metrics."""    platform: PlatformType
     content_id: str
     views: int = 0
     likes: int = 0
@@ -176,16 +163,14 @@ class PlatformMetrics:
     last_updated: datetime = field(default_factory=datetime.utcnow)
     
     def calculate_engagement_rate(self) -> float:
-        """Calculate engagement rate."""
-        if self.views == 0:
+        """Calculate engagement rate."""        if self.views == 0:
             return 0.0
         
         total_engagements = self.likes + self.shares + self.comments + self.saves
         return (total_engagements / self.views) * 100
     
     def get_performance_score(self) -> float:
-        """Calculate overall performance score."""
-        engagement_score = min(self.engagement_rate * 10, 40)
+        """Calculate overall performance score."""        engagement_score = min(self.engagement_rate * 10, 40)
         revenue_score = min(float(self.revenue_generated) / 100, 30)
         reach_score = min(self.views / 1000, 30)
         
@@ -193,8 +178,7 @@ class PlatformMetrics:
 
 
 class PlatformAdapter(ABC):
-    """Abstract base class for platform adapters."""
-    
+    """Abstract base class for platform adapters."""    
     def __init__(self, config: PlatformConfiguration):
         self.config = config
         self.session: Optional[aiohttp.ClientSession] = None
@@ -209,36 +193,29 @@ class PlatformAdapter(ABC):
     
     @abstractmethod
     async def upload_content(self, task: DistributionTask) -> bool:
-        """Upload content to platform."""
-        pass
+        """Upload content to platform."""        pass
     
     @abstractmethod
     async def get_content_metrics(self, platform_post_id: str) -> PlatformMetrics:
-        """Get content performance metrics."""
-        pass
+        """Get content performance metrics."""        pass
     
     @abstractmethod
     async def update_content(self, platform_post_id: str, updates: Dict[str, Any]) -> bool:
-        """Update existing content."""
-        pass
+        """Update existing content."""        pass
     
     @abstractmethod
     async def delete_content(self, platform_post_id: str) -> bool:
-        """Delete content from platform."""
-        pass
+        """Delete content from platform."""        pass
     
     @abstractmethod
     async def get_monetization_data(self, platform_post_id: str) -> Dict[str, Any]:
-        """Get monetization data for content."""
-        pass
+        """Get monetization data for content."""        pass
 
 
 class SpotifyAdapter(PlatformAdapter):
-    """Spotify platform adapter."""
-    
+    """Spotify platform adapter."""    
     async def upload_content(self, task: DistributionTask) -> bool:
-        """Upload audio content to Spotify."""
-        try:
+        """Upload audio content to Spotify."""        try:
             if task.content_format != ContentFormat.AUDIO:
                 raise ValueError("Spotify only supports audio content")
             
@@ -285,8 +262,7 @@ class SpotifyAdapter(PlatformAdapter):
             return False
     
     async def get_content_metrics(self, platform_post_id: str) -> PlatformMetrics:
-        """Get Spotify track metrics."""
-        try:
+        """Get Spotify track metrics."""        try:
             headers = {
                 'Authorization': f"Bearer {self.config.api_credentials.get('access_token')}"
             }
@@ -316,19 +292,16 @@ class SpotifyAdapter(PlatformAdapter):
             return PlatformMetrics(platform=PlatformType.SPOTIFY, content_id=platform_post_id)
     
     async def update_content(self, platform_post_id: str, updates: Dict[str, Any]) -> bool:
-        """Update Spotify track metadata."""
-        # Spotify doesn't allow direct updates once released
+        """Update Spotify track metadata."""        # Spotify doesn't allow direct updates once released
         # This would work through distribution service
         return False
     
     async def delete_content(self, platform_post_id: str) -> bool:
-        """Remove content from Spotify."""
-        # This would work through distribution service
+        """Remove content from Spotify."""        # This would work through distribution service
         return True
     
     async def get_monetization_data(self, platform_post_id: str) -> Dict[str, Any]:
-        """Get Spotify royalty data."""
-        try:
+        """Get Spotify royalty data."""        try:
             # This would integrate with Spotify for Artists API
             return {
                 'streams': 10000,
@@ -342,11 +315,9 @@ class SpotifyAdapter(PlatformAdapter):
 
 
 class YouTubeAdapter(PlatformAdapter):
-    """YouTube platform adapter."""
-    
+    """YouTube platform adapter."""    
     async def upload_content(self, task: DistributionTask) -> bool:
-        """Upload video content to YouTube."""
-        try:
+        """Upload video content to YouTube."""        try:
             if task.content_format not in [ContentFormat.VIDEO, ContentFormat.AUDIO]:
                 raise ValueError("YouTube supports video and audio content")
             
@@ -398,8 +369,7 @@ class YouTubeAdapter(PlatformAdapter):
             return False
     
     async def get_content_metrics(self, platform_post_id: str) -> PlatformMetrics:
-        """Get YouTube video metrics."""
-        try:
+        """Get YouTube video metrics."""        try:
             headers = {
                 'Authorization': f"Bearer {self.config.api_credentials.get('access_token')}"
             }
@@ -429,8 +399,7 @@ class YouTubeAdapter(PlatformAdapter):
             return PlatformMetrics(platform=PlatformType.YOUTUBE, content_id=platform_post_id)
     
     async def update_content(self, platform_post_id: str, updates: Dict[str, Any]) -> bool:
-        """Update YouTube video."""
-        try:
+        """Update YouTube video."""        try:
             headers = {
                 'Authorization': f"Bearer {self.config.api_credentials.get('access_token')}",
                 'Content-Type': 'application/json'
@@ -448,8 +417,7 @@ class YouTubeAdapter(PlatformAdapter):
             return False
     
     async def delete_content(self, platform_post_id: str) -> bool:
-        """Delete YouTube video."""
-        try:
+        """Delete YouTube video."""        try:
             headers = {
                 'Authorization': f"Bearer {self.config.api_credentials.get('access_token')}"
             }
@@ -465,8 +433,7 @@ class YouTubeAdapter(PlatformAdapter):
             return False
     
     async def get_monetization_data(self, platform_post_id: str) -> Dict[str, Any]:
-        """Get YouTube monetization data."""
-        try:
+        """Get YouTube monetization data."""        try:
             # This would use YouTube Analytics API
             return {
                 'estimated_revenue': 25.50,
@@ -481,8 +448,7 @@ class YouTubeAdapter(PlatformAdapter):
 
 
 class PlatformDistributionEngine:
-    """Main platform distribution engine."""
-    
+    """Main platform distribution engine."""    
     def __init__(self):
         self.platform_configs: Dict[PlatformType, PlatformConfiguration] = {}
         self.platform_adapters: Dict[PlatformType, PlatformAdapter] = {}
@@ -493,8 +459,7 @@ class PlatformDistributionEngine:
         self._initialize_platform_configs()
     
     def _initialize_platform_configs(self):
-        """Initialize default platform configurations."""
-        
+        """Initialize default platform configurations."""        
         # Spotify Configuration
         spotify_config = PlatformConfiguration(
             platform_type=PlatformType.SPOTIFY,
@@ -558,8 +523,7 @@ class PlatformDistributionEngine:
         metadata: Dict[str, Any],
         scheduling: Optional[datetime] = None
     ) -> List[DistributionTask]:
-        """Distribute content to multiple platforms."""
-        try:
+        """Distribute content to multiple platforms."""        try:
             tasks = []
             
             for platform in target_platforms:
@@ -603,8 +567,7 @@ class PlatformDistributionEngine:
             return []
     
     async def _execute_distribution(self, task: DistributionTask) -> bool:
-        """Execute a distribution task."""
-        try:
+        """Execute a distribution task."""        try:
             adapter = self.platform_adapters.get(task.platform)
             if not adapter:
                 task.status = DistributionStatus.FAILED
@@ -631,8 +594,7 @@ class PlatformDistributionEngine:
             return False
     
     async def _schedule_distribution(self, task: DistributionTask) -> None:
-        """Schedule a distribution task for future execution."""
-        delay = (task.scheduling - datetime.utcnow()).total_seconds()
+        """Schedule a distribution task for future execution."""        delay = (task.scheduling - datetime.utcnow()).total_seconds()
         
         async def delayed_execution():
             await asyncio.sleep(delay)
@@ -642,8 +604,7 @@ class PlatformDistributionEngine:
         logger.info(f"Scheduled distribution task {task.task_id} for {task.scheduling}")
     
     async def _track_content_metrics(self, task: DistributionTask) -> None:
-        """Track content performance metrics."""
-        try:
+        """Track content performance metrics."""        try:
             if not task.platform_post_id:
                 return
             
@@ -683,8 +644,7 @@ class PlatformDistributionEngine:
             logger.error(f"Error in metrics tracking: {e}")
     
     def _adapt_metadata_for_platform(self, metadata: Dict[str, Any], platform: PlatformType) -> Dict[str, Any]:
-        """Adapt metadata for specific platform requirements."""
-        adapted = metadata.copy()
+        """Adapt metadata for specific platform requirements."""        adapted = metadata.copy()
         
         if platform == PlatformType.SPOTIFY:
             # Spotify-specific metadata adaptation
@@ -710,8 +670,7 @@ class PlatformDistributionEngine:
         return adapted
     
     def _get_youtube_category(self, genre: str) -> str:
-        """Map genre to YouTube category ID."""
-        genre_mapping = {
+        """Map genre to YouTube category ID."""        genre_mapping = {
             'music': '10',
             'entertainment': '24',
             'education': '27',
@@ -721,8 +680,7 @@ class PlatformDistributionEngine:
         return genre_mapping.get(genre.lower(), '10')  # Default to Music
     
     async def get_distribution_analytics(self, content_id: str) -> Dict[str, Any]:
-        """Get comprehensive distribution analytics."""
-        try:
+        """Get comprehensive distribution analytics."""        try:
             analytics = {
                 'content_id': content_id,
                 'platforms': [],
@@ -784,8 +742,7 @@ class PlatformDistributionEngine:
             return {}
     
     async def optimize_distribution_strategy(self, user_id: str, content_format: ContentFormat) -> Dict[str, Any]:
-        """AI-powered distribution strategy optimization."""
-        try:
+        """AI-powered distribution strategy optimization."""        try:
             # Analyze historical performance
             user_content_performance = await self._analyze_user_performance(user_id, content_format)
             
@@ -824,8 +781,7 @@ class PlatformDistributionEngine:
             return {}
     
     async def _analyze_user_performance(self, user_id: str, content_format: ContentFormat) -> Dict[str, Any]:
-        """Analyze user's historical performance."""
-        # This would analyze historical data from database
+        """Analyze user's historical performance."""        # This would analyze historical data from database
         return {
             'average_engagement': 0.05,
             'best_platform': 'youtube',
@@ -840,8 +796,7 @@ class PlatformDistributionEngine:
         content_format: ContentFormat,
         performance_data: Dict[str, Any]
     ) -> float:
-        """Calculate platform suitability score."""
-        base_score = 0.7
+        """Calculate platform suitability score."""        base_score = 0.7
         
         # Adjust based on content format compatibility
         config = self.platform_configs[platform]
@@ -855,8 +810,7 @@ class PlatformDistributionEngine:
         return min(base_score, 1.0)
     
     async def _get_optimal_posting_time(self, platform: PlatformType) -> str:
-        """Get optimal posting time for platform."""
-        optimal_times = {
+        """Get optimal posting time for platform."""        optimal_times = {
             PlatformType.YOUTUBE: "14:00-16:00 UTC",
             PlatformType.SPOTIFY: "Friday 00:00 UTC",
             PlatformType.INSTAGRAM: "11:00-15:00 UTC",

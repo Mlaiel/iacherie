@@ -1,12 +1,9 @@
-"""
-Advanced Cache Manager for IA Influencer Agent Platform
+"""Advanced Cache Manager for IA Influencer Agent Platform
 Enterprise-grade cache orchestration with multi-backend support
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 from typing import Any, Dict, List, Optional, Union, Callable, TypeVar, Generic
@@ -23,16 +20,14 @@ logger = logging.getLogger(__name__)
 T = TypeVar('T')
 
 class CacheBackend(Enum):
-    """Cache backend types"""
-    REDIS = "redis"
+    """Cache backend types"""    REDIS = "redis"
     REDIS_CLUSTER = "redis_cluster"
     MEMORY = "memory"
     VECTOR = "vector"
     HYBRID = "hybrid"
 
 class CachePolicy(Enum):
-    """Cache eviction policies"""
-    LRU = "lru"
+    """Cache eviction policies"""    LRU = "lru"
     LFU = "lfu"
     TTL = "ttl"
     FIFO = "fifo"
@@ -40,8 +35,7 @@ class CachePolicy(Enum):
 
 @dataclass
 class CacheConfig:
-    """Cache configuration settings"""
-    backend: CacheBackend = CacheBackend.REDIS
+    """Cache configuration settings"""    backend: CacheBackend = CacheBackend.REDIS
     host: str = "localhost"
     port: int = 6379
     password: Optional[str] = None
@@ -69,8 +63,7 @@ class CacheConfig:
     tenant_prefix: str = "tenant"
 
 class CacheMetadata:
-    """Cache entry metadata"""
-    def __init__(self, 
+    """Cache entry metadata"""    def __init__(self, 
                  key: str,
                  size: int,
                  created_at: datetime,
@@ -88,15 +81,13 @@ class CacheMetadata:
         
     @property
     def is_expired(self) -> bool:
-        """Check if cache entry is expired"""
-        if not self.ttl:
+        """Check if cache entry is expired"""        if not self.ttl:
             return False
         expiry_time = self.created_at + timedelta(seconds=self.ttl)
         return datetime.utcnow() > expiry_time
         
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'key': self.key,
             'size': self.size,
             'created_at': self.created_at.isoformat(),
@@ -107,11 +98,9 @@ class CacheMetadata:
         }
 
 class CacheManager(Generic[T]):
-    """
-    Advanced cache manager with multi-backend support
+    """    Advanced cache manager with multi-backend support
     Handles cache operations across different storage backends
-    """
-    
+    """    
     def __init__(self, config: CacheConfig):
         self.config = config
         self._backends: Dict[str, Any] = {}
@@ -134,8 +123,7 @@ class CacheManager(Generic[T]):
         logger.info(f"CacheManager initialized with backend: {config.backend}")
     
     def _initialize_backends(self):
-        """Initialize cache backends"""
-        if self.config.backend == CacheBackend.REDIS:
+        """Initialize cache backends"""        if self.config.backend == CacheBackend.REDIS:
             self._init_redis()
         elif self.config.backend == CacheBackend.REDIS_CLUSTER:
             self._init_redis_cluster()
@@ -145,8 +133,7 @@ class CacheManager(Generic[T]):
             self._init_hybrid()
     
     def _init_redis(self):
-        """Initialize Redis backend"""
-        try:
+        """Initialize Redis backend"""        try:
             self._backends['redis'] = redis.Redis(
                 host=self.config.host,
                 port=self.config.port,
@@ -161,8 +148,7 @@ class CacheManager(Generic[T]):
             raise
     
     def _init_redis_cluster(self):
-        """Initialize Redis Cluster backend"""
-        try:
+        """Initialize Redis Cluster backend"""        try:
             startup_nodes = [
                 {"host": node["host"], "port": node["port"]}
                 for node in self.config.cluster_nodes
@@ -178,8 +164,7 @@ class CacheManager(Generic[T]):
             raise
     
     def _init_memory(self):
-        """Initialize memory backend"""
-        from .memory_cache import MemoryCache
+        """Initialize memory backend"""        from .memory_cache import MemoryCache
         self._backends['memory'] = MemoryCache(
             max_size=self.config.max_memory,
             eviction_policy=self.config.eviction_policy
@@ -187,26 +172,22 @@ class CacheManager(Generic[T]):
         logger.info("Memory backend initialized")
     
     def _init_hybrid(self):
-        """Initialize hybrid backend (Redis + Memory)"""
-        self._init_redis()
+        """Initialize hybrid backend (Redis + Memory)"""        self._init_redis()
         self._init_memory()
         logger.info("Hybrid backend initialized")
     
     def _generate_key(self, key: str, tenant_id: Optional[str] = None) -> str:
-        """Generate cache key with tenant isolation"""
-        if self.config.tenant_isolation and tenant_id:
+        """Generate cache key with tenant isolation"""        if self.config.tenant_isolation and tenant_id:
             return f"{self.config.tenant_prefix}:{tenant_id}:{key}"
         return key
     
     def _serialize_value(self, value: Any) -> str:
-        """Serialize value for storage"""
-        if self.config.serializer == "json":
+        """Serialize value for storage"""        if self.config.serializer == "json":
             return json.dumps(value, default=str)
         return str(value)
     
     def _deserialize_value(self, value: str) -> Any:
-        """Deserialize value from storage"""
-        if self.config.serializer == "json":
+        """Deserialize value from storage"""        if self.config.serializer == "json":
             try:
                 return json.loads(value)
             except json.JSONDecodeError:
@@ -217,10 +198,8 @@ class CacheManager(Generic[T]):
                   key: str, 
                   tenant_id: Optional[str] = None,
                   default: Optional[T] = None) -> Optional[T]:
-        """
-        Get value from cache with tenant isolation
-        """
-        cache_key = self._generate_key(key, tenant_id)
+        """        Get value from cache with tenant isolation
+        """        cache_key = self._generate_key(key, tenant_id)
         
         try:
             # Try Redis first for hybrid setup
@@ -252,10 +231,8 @@ class CacheManager(Generic[T]):
                   value: T, 
                   ttl: Optional[int] = None,
                   tenant_id: Optional[str] = None) -> bool:
-        """
-        Set value in cache with optional TTL
-        """
-        cache_key = self._generate_key(key, tenant_id)
+        """        Set value in cache with optional TTL
+        """        cache_key = self._generate_key(key, tenant_id)
         ttl = ttl or self.config.default_ttl
         
         try:
@@ -290,10 +267,8 @@ class CacheManager(Generic[T]):
     async def delete(self, 
                      key: str, 
                      tenant_id: Optional[str] = None) -> bool:
-        """
-        Delete key from cache
-        """
-        cache_key = self._generate_key(key, tenant_id)
+        """        Delete key from cache
+        """        cache_key = self._generate_key(key, tenant_id)
         
         try:
             deleted = False
@@ -325,10 +300,8 @@ class CacheManager(Generic[T]):
     async def exists(self, 
                      key: str, 
                      tenant_id: Optional[str] = None) -> bool:
-        """
-        Check if key exists in cache
-        """
-        cache_key = self._generate_key(key, tenant_id)
+        """        Check if key exists in cache
+        """        cache_key = self._generate_key(key, tenant_id)
         
         try:
             # Check Redis
@@ -348,10 +321,8 @@ class CacheManager(Generic[T]):
             return False
     
     async def clear(self, tenant_id: Optional[str] = None) -> bool:
-        """
-        Clear cache for tenant or all data
-        """
-        try:
+        """        Clear cache for tenant or all data
+        """        try:
             if tenant_id and self.config.tenant_isolation:
                 # Clear tenant-specific data
                 pattern = f"{self.config.tenant_prefix}:{tenant_id}:*"
@@ -393,8 +364,7 @@ class CacheManager(Generic[T]):
                               ttl: Optional[int] = None,
                               tenant_id: Optional[str] = None,
                               access: bool = False):
-        """Update cache metadata"""
-        async with self._lock:
+        """Update cache metadata"""        async with self._lock:
             now = datetime.utcnow()
             
             if key in self._metadata:
@@ -413,8 +383,7 @@ class CacheManager(Generic[T]):
                 )
     
     async def get_stats(self) -> Dict[str, Any]:
-        """Get cache statistics"""
-        total_keys = len(self._metadata)
+        """Get cache statistics"""        total_keys = len(self._metadata)
         total_size = sum(meta.size for meta in self._metadata.values())
         
         return {
@@ -426,13 +395,11 @@ class CacheManager(Generic[T]):
         }
     
     async def get_metadata(self, key: str, tenant_id: Optional[str] = None) -> Optional[CacheMetadata]:
-        """Get metadata for cache key"""
-        cache_key = self._generate_key(key, tenant_id)
+        """Get metadata for cache key"""        cache_key = self._generate_key(key, tenant_id)
         return self._metadata.get(cache_key)
     
     async def cleanup_expired(self) -> int:
-        """Cleanup expired cache entries"""
-        expired_keys = []
+        """Cleanup expired cache entries"""        expired_keys = []
         
         async with self._lock:
             for key, metadata in self._metadata.items():
@@ -452,8 +419,7 @@ class CacheManager(Generic[T]):
         return len(expired_keys)
     
     async def close(self):
-        """Close cache connections"""
-        try:
+        """Close cache connections"""        try:
             if 'redis' in self._backends:
                 await self._backends['redis'].close()
             
@@ -467,15 +433,13 @@ class CacheManager(Generic[T]):
 _cache_manager: Optional[CacheManager] = None
 
 def get_cache_manager() -> CacheManager:
-    """Get global cache manager instance"""
-    global _cache_manager
+    """Get global cache manager instance"""    global _cache_manager
     if _cache_manager is None:
         config = CacheConfig()
         _cache_manager = CacheManager(config)
     return _cache_manager
 
 async def initialize_cache(config: CacheConfig) -> CacheManager:
-    """Initialize global cache manager"""
-    global _cache_manager
+    """Initialize global cache manager"""    global _cache_manager
     _cache_manager = CacheManager(config)
     return _cache_manager

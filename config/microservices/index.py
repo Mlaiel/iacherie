@@ -1,5 +1,4 @@
-"""
-Microservices Configuration Index for IA-Influencer Agent Platform
+"""Microservices Configuration Index for IA-Influencer Agent Platform
 ==================================================================
 
 Central index and orchestration module for all microservices configurations.
@@ -14,9 +13,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
@@ -74,8 +71,7 @@ logger = logging.getLogger(__name__)
 
 
 class InitializationStatus(str, Enum):
-    """Initialization status for microservices components."""
-    NOT_STARTED = "not_started"
+    """Initialization status for microservices components."""    NOT_STARTED = "not_started"
     INITIALIZING = "initializing"
     READY = "ready"
     FAILED = "failed"
@@ -84,8 +80,7 @@ class InitializationStatus(str, Enum):
 
 @dataclass
 class ComponentStatus:
-    """Status information for a microservice component."""
-    name: str
+    """Status information for a microservice component."""    name: str
     status: InitializationStatus
     error_message: Optional[str] = None
     last_updated: Optional[float] = None
@@ -94,11 +89,9 @@ class ComponentStatus:
 
 
 class MicroservicesOrchestrator:
-    """
-    Central orchestrator for all microservices components.
+    """    Central orchestrator for all microservices components.
     Manages initialization, health checking, and lifecycle management.
-    """
-    
+    """    
     def __init__(self):
         self.components: Dict[str, ComponentStatus] = {}
         self.service_registry: Optional[ServiceRegistry] = None
@@ -111,8 +104,7 @@ class MicroservicesOrchestrator:
         self._initialize_component_status()
     
     def _initialize_component_status(self):
-        """Initialize status tracking for all components."""
-        components = [
+        """Initialize status tracking for all components."""        components = [
             "service_discovery",
             "load_balancer",
             "message_broker",
@@ -130,11 +122,9 @@ class MicroservicesOrchestrator:
             )
     
     async def initialize_all(self) -> bool:
-        """
-        Initialize all microservices components in the correct order.
+        """        Initialize all microservices components in the correct order.
         Returns True if all components initialized successfully.
-        """
-        logger.info("Starting microservices orchestrator initialization...")
+        """        logger.info("Starting microservices orchestrator initialization...")
         
         try:
             # Step 1: Initialize service discovery
@@ -168,8 +158,7 @@ class MicroservicesOrchestrator:
             return False
     
     async def _initialize_service_discovery(self):
-        """Initialize service discovery component."""
-        logger.info("Initializing service discovery...")
+        """Initialize service discovery component."""        logger.info("Initializing service discovery...")
         self.components["service_discovery"].status = InitializationStatus.INITIALIZING
         
         try:
@@ -189,8 +178,7 @@ class MicroservicesOrchestrator:
             raise
     
     async def _initialize_circuit_breakers(self):
-        """Initialize circuit breaker registry."""
-        logger.info("Initializing circuit breakers...")
+        """Initialize circuit breaker registry."""        logger.info("Initializing circuit breakers...")
         self.components["circuit_breaker"].status = InitializationStatus.INITIALIZING
         
         try:
@@ -210,8 +198,7 @@ class MicroservicesOrchestrator:
             raise
     
     async def _initialize_load_balancer(self):
-        """Initialize load balancer."""
-        logger.info("Initializing load balancer...")
+        """Initialize load balancer."""        logger.info("Initializing load balancer...")
         self.components["load_balancer"].status = InitializationStatus.INITIALIZING
         
         try:
@@ -231,8 +218,7 @@ class MicroservicesOrchestrator:
             raise
     
     async def _initialize_health_checker(self):
-        """Initialize health checker."""
-        logger.info("Initializing health checker...")
+        """Initialize health checker."""        logger.info("Initializing health checker...")
         self.components["health_checker"].status = InitializationStatus.INITIALIZING
         
         try:
@@ -252,8 +238,7 @@ class MicroservicesOrchestrator:
             raise
     
     async def _register_microservices(self):
-        """Register all microservices with service discovery."""
-        if not self.service_registry:
+        """Register all microservices with service discovery."""        if not self.service_registry:
             raise RuntimeError("Service registry not initialized")
         
         logger.info("Registering microservices...")
@@ -262,8 +247,7 @@ class MicroservicesOrchestrator:
         logger.info("Microservices registration completed")
     
     async def _start_health_monitoring(self):
-        """Start health monitoring for all services."""
-        if not self.health_checker:
+        """Start health monitoring for all services."""        if not self.health_checker:
             raise RuntimeError("Health checker not initialized")
         
         logger.info("Starting health monitoring...")
@@ -277,8 +261,7 @@ class MicroservicesOrchestrator:
         logger.info("Health monitoring started successfully")
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status."""
-        status = {
+        """Get comprehensive system status."""        status = {
             "orchestrator_initialized": self.initialized,
             "components": {},
             "services": {},
@@ -317,8 +300,7 @@ class MicroservicesOrchestrator:
         return status
     
     async def shutdown_all(self):
-        """Shutdown all microservices components."""
-        logger.info("Shutting down microservices orchestrator...")
+        """Shutdown all microservices components."""        logger.info("Shutting down microservices orchestrator...")
         
         # Update all component status to stopped
         for component in self.components.values():
@@ -334,8 +316,7 @@ class MicroservicesOrchestrator:
         logger.info("Microservices orchestrator shutdown completed")
     
     def is_ready(self) -> bool:
-        """Check if all critical components are ready."""
-        critical_components = [
+        """Check if all critical components are ready."""        critical_components = [
             "service_discovery",
             "circuit_breaker", 
             "load_balancer",
@@ -348,12 +329,10 @@ class MicroservicesOrchestrator:
         )
     
     def get_component_status(self, component_name: str) -> Optional[ComponentStatus]:
-        """Get status of a specific component."""
-        return self.components.get(component_name)
+        """Get status of a specific component."""        return self.components.get(component_name)
     
     async def _initialize_specialized_systems(self):
-        """Initialize specialized microservice systems"""
-        logger.info("Initializing specialized microservice systems...")
+        """Initialize specialized microservice systems"""        logger.info("Initializing specialized microservice systems...")
         
         # Initialize content protection system
         logger.info("Initializing content protection system...")
@@ -438,28 +417,23 @@ CONFIGURATION_SUMMARY = {
 
 # Convenience functions for easy access
 async def initialize_microservices() -> bool:
-    """Initialize all microservices components."""
-    return await orchestrator.initialize_all()
+    """Initialize all microservices components."""    return await orchestrator.initialize_all()
 
 
 async def get_system_status() -> Dict[str, Any]:
-    """Get comprehensive system status."""
-    return await orchestrator.get_system_status()
+    """Get comprehensive system status."""    return await orchestrator.get_system_status()
 
 
 async def shutdown_microservices():
-    """Shutdown all microservices components."""
-    await orchestrator.shutdown_all()
+    """Shutdown all microservices components."""    await orchestrator.shutdown_all()
 
 
 def is_system_ready() -> bool:
-    """Check if the microservices system is ready."""
-    return orchestrator.is_ready()
+    """Check if the microservices system is ready."""    return orchestrator.is_ready()
 
 
 def get_configuration_summary() -> Dict[str, Any]:
-    """Get configuration summary."""
-    return CONFIGURATION_SUMMARY.copy()
+    """Get configuration summary."""    return CONFIGURATION_SUMMARY.copy()
 
 
 # Export main components

@@ -1,12 +1,9 @@
-"""
-Content Protection API Routes
+"""Content Protection API Routes
 Content protection monitoring and violation management.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-from typing import Dict, Any, List, Optional
+"""from typing import Dict, Any, List, Optional
 from datetime import datetime
 
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -53,15 +50,13 @@ async def enable_protection(
     protection_request: ProtectionRequest,
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
-    """Enable protection monitoring for content"""
-    try:
+    """Enable protection monitoring for content"""    try:
         user_id = current_user["user_id"]
         
         # Get content and fingerprint data
         async with database_manager.get_postgres_session() as session:
             result = await session.execute(
-                """
-                SELECT content_type, fingerprint_id 
+                """                SELECT content_type, fingerprint_id 
                 FROM content 
                 WHERE id = %s AND user_id = %s AND active = true
                 """,
@@ -122,8 +117,7 @@ async def enable_protection(
 async def get_protection_status(
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
-    """Get protection monitoring status for user"""
-    try:
+    """Get protection monitoring status for user"""    try:
         user_id = current_user["user_id"]
         
         status_data = await protection_monitor.get_monitoring_status(user_id)
@@ -145,8 +139,7 @@ async def get_violations(
     status_filter: Optional[str] = None,
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
-    """Get content violations for user"""
-    try:
+    """Get content violations for user"""    try:
         user_id = current_user["user_id"]
         
         # Build query
@@ -190,8 +183,7 @@ async def disable_protection(
     content_id: str,
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
-    """Disable protection monitoring for content"""
-    try:
+    """Disable protection monitoring for content"""    try:
         user_id = current_user["user_id"]
         
         # Verify content ownership

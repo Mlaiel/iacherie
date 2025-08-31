@@ -1,5 +1,4 @@
-"""
-Risk Analyzer - Advanced Multi-Dimensional Risk Assessment System
+"""Risk Analyzer - Advanced Multi-Dimensional Risk Assessment System
 
 Enterprise-grade risk analysis system providing comprehensive risk evaluation,
 threat detection, mitigation strategies, and scenario modeling for content creators.
@@ -11,9 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This risk analysis system and its algorithms are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import pandas as pd
@@ -36,8 +33,7 @@ from ...utils.cache_manager import CacheManager
 logger = logging.getLogger(__name__)
 
 class RiskCategory(Enum):
-    """Categories of risks"""
-    CONTENT_PERFORMANCE = "content_performance"
+    """Categories of risks"""    CONTENT_PERFORMANCE = "content_performance"
     PLATFORM_DEPENDENCY = "platform_dependency"
     BRAND_REPUTATION = "brand_reputation"
     MONETIZATION = "monetization"
@@ -49,32 +45,28 @@ class RiskCategory(Enum):
     AUDIENCE_LOSS = "audience_loss"
 
 class RiskSeverity(Enum):
-    """Risk severity levels"""
-    CRITICAL = "critical"      # 0.8-1.0
+    """Risk severity levels"""    CRITICAL = "critical"      # 0.8-1.0
     HIGH = "high"             # 0.6-0.8
     MEDIUM = "medium"         # 0.4-0.6
     LOW = "low"               # 0.2-0.4
     MINIMAL = "minimal"       # 0.0-0.2
 
 class RiskImpact(Enum):
-    """Risk impact types"""
-    FINANCIAL = "financial"
+    """Risk impact types"""    FINANCIAL = "financial"
     OPERATIONAL = "operational"
     REPUTATIONAL = "reputational"
     STRATEGIC = "strategic"
     COMPLIANCE = "compliance"
 
 class RiskTimeframe(Enum):
-    """Risk timeframe horizons"""
-    IMMEDIATE = "immediate"    # 0-7 days
+    """Risk timeframe horizons"""    IMMEDIATE = "immediate"    # 0-7 days
     SHORT_TERM = "short_term"  # 1-4 weeks
     MEDIUM_TERM = "medium_term" # 1-6 months
     LONG_TERM = "long_term"    # 6+ months
 
 @dataclass
 class RiskFactor:
-    """Individual risk factor"""
-    factor_id: str = field(default_factory=lambda: f"risk_{int(datetime.now().timestamp())}")
+    """Individual risk factor"""    factor_id: str = field(default_factory=lambda: f"risk_{int(datetime.now().timestamp())}")
     name: str = ""
     category: RiskCategory = RiskCategory.CONTENT_PERFORMANCE
     severity: RiskSeverity = RiskSeverity.MEDIUM
@@ -94,8 +86,7 @@ class RiskFactor:
 
 @dataclass
 class RiskScenario:
-    """Risk scenario modeling"""
-    scenario_id: str = field(default_factory=lambda: f"scenario_{int(datetime.now().timestamp())}")
+    """Risk scenario modeling"""    scenario_id: str = field(default_factory=lambda: f"scenario_{int(datetime.now().timestamp())}")
     name: str = ""
     description: str = ""
     probability: float = 0.0
@@ -108,8 +99,7 @@ class RiskScenario:
 
 @dataclass
 class RiskProfile:
-    """Comprehensive risk profile"""
-    profile_id: str = field(default_factory=lambda: f"profile_{int(datetime.now().timestamp())}")
+    """Comprehensive risk profile"""    profile_id: str = field(default_factory=lambda: f"profile_{int(datetime.now().timestamp())}")
     creator_id: str = ""
     overall_risk_score: float = 0.0  # 0.0-1.0
     risk_level: RiskSeverity = RiskSeverity.MEDIUM
@@ -125,8 +115,7 @@ class RiskProfile:
 
 @dataclass
 class RiskAlert:
-    """Risk alert notification"""
-    alert_id: str = field(default_factory=lambda: f"alert_{int(datetime.now().timestamp())}")
+    """Risk alert notification"""    alert_id: str = field(default_factory=lambda: f"alert_{int(datetime.now().timestamp())}")
     risk_factor_id: str = ""
     alert_level: RiskSeverity = RiskSeverity.MEDIUM
     title: str = ""
@@ -138,8 +127,7 @@ class RiskAlert:
     resolved_at: Optional[datetime] = None
 
 class RiskAnalyzer:
-    """
-    Advanced Risk Analysis Engine for IA Influencer Platform
+    """    Advanced Risk Analysis Engine for IA Influencer Platform
     
     Provides comprehensive multi-dimensional risk assessment capabilities:
     
@@ -167,11 +155,9 @@ class RiskAnalyzer:
     - Risk tolerance optimization based on creator goals
     - Contingency planning with actionable response strategies
     - Risk monitoring dashboard with key performance indicators
-    """
-    
+    """    
     def __init__(self, cache_manager: CacheManager = None):
-        """Initialize the risk analyzer"""
-        self.cache_manager = cache_manager or CacheManager("risk_analyzer")
+        """Initialize the risk analyzer"""        self.cache_manager = cache_manager or CacheManager("risk_analyzer")
         
         # Risk assessment configuration
         self.risk_config = {
@@ -228,8 +214,7 @@ class RiskAnalyzer:
     async def assess_comprehensive_risk(self, 
                                       creator_data: Dict[str, Any],
                                       historical_metrics: List[Dict[str, Any]] = None) -> RiskProfile:
-        """
-        Perform comprehensive risk assessment for a creator
+        """        Perform comprehensive risk assessment for a creator
         
         Args:
             creator_data: Creator profile and current metrics
@@ -237,8 +222,7 @@ class RiskAnalyzer:
             
         Returns:
             RiskProfile: Comprehensive risk assessment results
-        """
-        try:
+        """        try:
             creator_id = creator_data.get('creator_id', '')
             
             # Analyze individual risk factors
@@ -293,8 +277,7 @@ class RiskAnalyzer:
     async def assess_content_risk(self, 
                                 content_data: Dict[str, Any],
                                 performance_predictions: Dict[str, Any] = None) -> List[RiskFactor]:
-        """
-        Assess risks specific to content performance
+        """        Assess risks specific to content performance
         
         Args:
             content_data: Content metadata and characteristics
@@ -302,8 +285,7 @@ class RiskAnalyzer:
             
         Returns:
             List[RiskFactor]: Content-specific risk factors
-        """
-        try:
+        """        try:
             content_risks = []
             
             # Content quality risk
@@ -349,8 +331,7 @@ class RiskAnalyzer:
     async def assess_platform_risk(self, 
                                  platform_data: Dict[str, Any],
                                  dependency_metrics: Dict[str, Any] = None) -> List[RiskFactor]:
-        """
-        Assess platform dependency and platform-specific risks
+        """        Assess platform dependency and platform-specific risks
         
         Args:
             platform_data: Platform configuration and metrics
@@ -358,8 +339,7 @@ class RiskAnalyzer:
             
         Returns:
             List[RiskFactor]: Platform-specific risk factors
-        """
-        try:
+        """        try:
             platform_risks = []
             platforms = platform_data.get('active_platforms', [])
             
@@ -404,8 +384,7 @@ class RiskAnalyzer:
     async def assess_market_risk(self, 
                                market_data: Dict[str, Any],
                                competitive_analysis: Dict[str, Any] = None) -> List[RiskFactor]:
-        """
-        Assess market volatility and competitive risks
+        """        Assess market volatility and competitive risks
         
         Args:
             market_data: Market conditions and trends
@@ -413,8 +392,7 @@ class RiskAnalyzer:
             
         Returns:
             List[RiskFactor]: Market and competitive risk factors
-        """
-        try:
+        """        try:
             market_risks = []
             
             # Market volatility risk
@@ -457,8 +435,7 @@ class RiskAnalyzer:
     async def generate_risk_scenarios(self, 
                                     risk_factors: List[RiskFactor],
                                     scenario_count: int = 5) -> List[RiskScenario]:
-        """
-        Generate risk scenarios using Monte Carlo simulation
+        """        Generate risk scenarios using Monte Carlo simulation
         
         Args:
             risk_factors: List of identified risk factors
@@ -466,8 +443,7 @@ class RiskAnalyzer:
             
         Returns:
             List[RiskScenario]: Generated risk scenarios
-        """
-        try:
+        """        try:
             scenarios = []
             
             # Best case scenario
@@ -501,8 +477,7 @@ class RiskAnalyzer:
     async def monitor_risk_indicators(self, 
                                     risk_profile: RiskProfile,
                                     current_metrics: Dict[str, Any]) -> List[RiskAlert]:
-        """
-        Monitor risk indicators and generate alerts
+        """        Monitor risk indicators and generate alerts
         
         Args:
             risk_profile: Current risk profile
@@ -510,8 +485,7 @@ class RiskAnalyzer:
             
         Returns:
             List[RiskAlert]: Generated risk alerts
-        """
-        try:
+        """        try:
             alerts = []
             
             for risk_factor in risk_profile.risk_factors:
@@ -545,8 +519,7 @@ class RiskAnalyzer:
     async def _analyze_all_risk_factors(self, 
                                       creator_data: Dict[str, Any], 
                                       historical_metrics: List[Dict[str, Any]]) -> List[RiskFactor]:
-        """Analyze all categories of risk factors"""
-        all_risks = []
+        """Analyze all categories of risk factors"""        all_risks = []
         
         # Content performance risks
         content_risks = await self.assess_content_risk(creator_data.get('content_data', {}))
@@ -575,8 +548,7 @@ class RiskAnalyzer:
         return all_risks
 
     async def _calculate_overall_risk_score(self, risk_factors: List[RiskFactor]) -> float:
-        """Calculate weighted overall risk score"""
-        if not risk_factors:
+        """Calculate weighted overall risk score"""        if not risk_factors:
             return 0.0
         
         category_scores = {}
@@ -612,8 +584,7 @@ class RiskAnalyzer:
         return min(max(overall_score, 0.0), 1.0)
 
     async def _determine_risk_level(self, risk_score: float) -> RiskSeverity:
-        """Determine risk level based on score"""
-        if risk_score >= self.risk_config['risk_threshold_critical']:
+        """Determine risk level based on score"""        if risk_score >= self.risk_config['risk_threshold_critical']:
             return RiskSeverity.CRITICAL
         elif risk_score >= self.risk_config['risk_threshold_high']:
             return RiskSeverity.HIGH
@@ -625,8 +596,7 @@ class RiskAnalyzer:
             return RiskSeverity.MINIMAL
 
     async def _assess_content_quality_risk(self, content_data: Dict[str, Any]) -> Optional[RiskFactor]:
-        """Assess risk related to content quality"""
-        quality_score = content_data.get('quality_score', 0.7)
+        """Assess risk related to content quality"""        quality_score = content_data.get('quality_score', 0.7)
         
         if quality_score < 0.5:
             return RiskFactor(
@@ -653,8 +623,7 @@ class RiskAnalyzer:
     async def _assess_platform_dependency_risk(self, 
                                              platform: str, 
                                              dependency_metrics: Dict[str, Any]) -> Optional[RiskFactor]:
-        """Assess risk related to platform dependency"""
-        if not dependency_metrics:
+        """Assess risk related to platform dependency"""        if not dependency_metrics:
             return None
         
         dependency_score = dependency_metrics.get(f'{platform}_dependency', 0.5)
@@ -684,8 +653,7 @@ class RiskAnalyzer:
         return None
 
     async def _assess_brand_reputation_risks(self, creator_data: Dict[str, Any]) -> List[RiskFactor]:
-        """Assess brand reputation related risks"""
-        reputation_risks = []
+        """Assess brand reputation related risks"""        reputation_risks = []
         
         # Sentiment analysis risk
         sentiment_score = creator_data.get('brand_sentiment', 0.7)
@@ -731,8 +699,7 @@ class RiskAnalyzer:
         return reputation_risks
 
     def _get_severity_priority(self, severity: RiskSeverity) -> int:
-        """Get priority number for severity sorting"""
-        priority_map = {
+        """Get priority number for severity sorting"""        priority_map = {
             RiskSeverity.CRITICAL: 5,
             RiskSeverity.HIGH: 4,
             RiskSeverity.MEDIUM: 3,
@@ -753,14 +720,12 @@ class RiskAnalyzer:
 
 
 class ContentRiskAssessor:
-    """Specialized content risk assessment component"""
-    
+    """Specialized content risk assessment component"""    
     def __init__(self, risk_analyzer: RiskAnalyzer):
         self.analyzer = risk_analyzer
     
     async def assess_viral_risk(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess risks specific to viral content attempts"""
-        return {
+        """Assess risks specific to viral content attempts"""        return {
             'algorithm_risk': 0.3,
             'audience_backlash_risk': 0.2,
             'brand_safety_risk': 0.1,
@@ -768,14 +733,12 @@ class ContentRiskAssessor:
         }
 
 class PlatformRiskAnalyzer:
-    """Specialized platform risk analysis component"""
-    
+    """Specialized platform risk analysis component"""    
     def __init__(self, risk_analyzer: RiskAnalyzer):
         self.analyzer = risk_analyzer
     
     async def analyze_policy_change_risk(self, platform: str) -> Dict[str, Any]:
-        """Analyze risk of platform policy changes"""
-        return {
+        """Analyze risk of platform policy changes"""        return {
             'monetization_policy_change_risk': 0.4,
             'content_policy_change_risk': 0.3,
             'algorithm_change_risk': 0.6,
@@ -783,14 +746,12 @@ class PlatformRiskAnalyzer:
         }
 
 class MarketRiskEvaluator:
-    """Specialized market risk evaluation component"""
-    
+    """Specialized market risk evaluation component"""    
     def __init__(self, risk_analyzer: RiskAnalyzer):
         self.analyzer = risk_analyzer
     
     async def evaluate_economic_risks(self, market_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Evaluate economic risks affecting creator economy"""
-        return {
+        """Evaluate economic risks affecting creator economy"""        return {
             'recession_risk': 0.3,
             'inflation_impact_risk': 0.4,
             'advertising_spend_reduction_risk': 0.5,
@@ -798,14 +759,12 @@ class MarketRiskEvaluator:
         }
 
 class ReputationRiskPredictor:
-    """Specialized reputation risk prediction component"""
-    
+    """Specialized reputation risk prediction component"""    
     def __init__(self, risk_analyzer: RiskAnalyzer):
         self.analyzer = risk_analyzer
     
     async def predict_reputation_threats(self, creator_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Predict potential reputation threats"""
-        return [
+        """Predict potential reputation threats"""        return [
             {
                 'threat_type': 'content_controversy',
                 'probability': 0.2,

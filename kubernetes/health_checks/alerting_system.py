@@ -1,5 +1,4 @@
-"""
-Health Alerting System for IA Influencer Agent Platform
+"""Health Alerting System for IA Influencer Agent Platform
 Advanced multi-channel alerting and notification management system
 
 This module provides comprehensive alerting capabilities for:
@@ -19,9 +18,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security +
 WARNING: This code is proprietary and confidential. Any unauthorized use,
 reproduction, or distribution without explicit written permission from
 Fahed Mlaiel is strictly prohibited and may result in legal action.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import time
 from datetime import datetime, timedelta
@@ -41,16 +38,14 @@ from .core_health import HealthStatus, HealthCheckResult
 
 
 class AlertSeverity(str, Enum):
-    """Alert severity levels"""
-    LOW = "low"
+    """Alert severity levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class AlertChannel(str, Enum):
-    """Alert notification channels"""
-    EMAIL = "email"
+    """Alert notification channels"""    EMAIL = "email"
     SMS = "sms"
     SLACK = "slack"
     WEBHOOK = "webhook"
@@ -59,8 +54,7 @@ class AlertChannel(str, Enum):
 
 
 class AlertStatus(str, Enum):
-    """Alert status enumeration"""
-    ACTIVE = "active"
+    """Alert status enumeration"""    ACTIVE = "active"
     ACKNOWLEDGED = "acknowledged"
     RESOLVED = "resolved"
     SUPPRESSED = "suppressed"
@@ -68,8 +62,7 @@ class AlertStatus(str, Enum):
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration"""
-    name: str
+    """Alert rule configuration"""    name: str
     description: str
     service_pattern: str
     health_status_threshold: HealthStatus
@@ -83,8 +76,7 @@ class AlertRule:
 
 @dataclass
 class Alert:
-    """Alert instance representation"""
-    id: str
+    """Alert instance representation"""    id: str
     rule_name: str
     service: str
     severity: AlertSeverity
@@ -103,29 +95,23 @@ class Alert:
 
 @dataclass
 class NotificationTemplate:
-    """Notification message templates"""
-    subject_template: str
+    """Notification message templates"""    subject_template: str
     body_template: str
     format_type: str = "text"  # text, html, markdown
 
 
 class HealthAlertingSystem:
-    """
-    Advanced health monitoring alerting system
+    """    Advanced health monitoring alerting system
     
     Provides real-time alerting, multi-channel notifications, and incident
     management for the IA Influencer Agent platform health monitoring.
-    """
-
-    def __init__(self, config: Dict[str, Any], redis_client: Optional[aioredis.Redis] = None):
-        """
-        Initialize health alerting system
+    """    def __init__(self, config: Dict[str, Any], redis_client: Optional[aioredis.Redis] = None):
+        """        Initialize health alerting system
         
         Args:
             config: Alerting system configuration
             redis_client: Redis client for alert storage (optional)
-        """
-        self.config = config
+        """        self.config = config
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
         
@@ -161,8 +147,7 @@ class HealthAlertingSystem:
         }
 
     def _initialize_notification_channels(self):
-        """Initialize notification channel configurations"""
-        
+        """Initialize notification channel configurations"""        
         # Email configuration
         email_config = self.notification_config.get("email", {})
         if email_config.get("enabled", False):
@@ -205,8 +190,7 @@ class HealthAlertingSystem:
             }
 
     def _initialize_default_rules(self):
-        """Initialize default alert rules"""
-        default_rules = [
+        """Initialize default alert rules"""        default_rules = [
             AlertRule(
                 name="critical_service_failure",
                 description="Critical service complete failure",
@@ -291,14 +275,12 @@ class HealthAlertingSystem:
                 self.logger.error(f"Failed to load custom alert rule {rule_config}: {str(e)}")
 
     def _initialize_notification_templates(self):
-        """Initialize notification message templates"""
-        
+        """Initialize notification message templates"""        
         # Email templates
         self._notification_templates[AlertChannel.EMAIL] = {
             AlertSeverity.CRITICAL: NotificationTemplate(
                 subject_template="🚨 CRITICAL ALERT: {{alert.title}} - IA Influencer Agent",
-                body_template="""
-                <h2 style="color: #dc3545;">🚨 CRITICAL ALERT</h2>
+                body_template="""                <h2 style="color: #dc3545;">🚨 CRITICAL ALERT</h2>
                 <p><strong>Service:</strong> {{alert.service}}</p>
                 <p><strong>Title:</strong> {{alert.title}}</p>
                 <p><strong>Description:</strong> {{alert.description}}</p>
@@ -323,8 +305,7 @@ class HealthAlertingSystem:
             ),
             AlertSeverity.HIGH: NotificationTemplate(
                 subject_template="⚠️ HIGH PRIORITY: {{alert.title}} - IA Influencer Agent",
-                body_template="""
-                <h2 style="color: #fd7e14;">⚠️ HIGH PRIORITY ALERT</h2>
+                body_template="""                <h2 style="color: #fd7e14;">⚠️ HIGH PRIORITY ALERT</h2>
                 <p><strong>Service:</strong> {{alert.service}}</p>
                 <p><strong>Title:</strong> {{alert.title}}</p>
                 <p><strong>Description:</strong> {{alert.description}}</p>
@@ -347,8 +328,7 @@ class HealthAlertingSystem:
             ),
             AlertSeverity.MEDIUM: NotificationTemplate(
                 subject_template="📊 MONITORING: {{alert.title}} - IA Influencer Agent",
-                body_template="""
-                <h2 style="color: #ffc107;">📊 MONITORING ALERT</h2>
+                body_template="""                <h2 style="color: #ffc107;">📊 MONITORING ALERT</h2>
                 <p><strong>Service:</strong> {{alert.service}}</p>
                 <p><strong>Title:</strong> {{alert.title}}</p>
                 <p><strong>Description:</strong> {{alert.description}}</p>
@@ -367,8 +347,7 @@ class HealthAlertingSystem:
         self._notification_templates[AlertChannel.SLACK] = {
             AlertSeverity.CRITICAL: NotificationTemplate(
                 subject_template="",
-                body_template="""
-                {
+                body_template="""                {
                     "text": "🚨 CRITICAL ALERT: {{alert.title}}",
                     "attachments": [
                         {
@@ -388,8 +367,7 @@ class HealthAlertingSystem:
             ),
             AlertSeverity.HIGH: NotificationTemplate(
                 subject_template="",
-                body_template="""
-                {
+                body_template="""                {
                     "text": "⚠️ HIGH PRIORITY: {{alert.title}}",
                     "attachments": [
                         {
@@ -409,13 +387,11 @@ class HealthAlertingSystem:
         }
 
     async def process_health_results(self, health_results: List[HealthCheckResult]):
-        """
-        Process health check results and trigger alerts based on configured rules
+        """        Process health check results and trigger alerts based on configured rules
         
         Args:
             health_results: List of health check results to evaluate
-        """
-        self.logger.debug(f"Processing {len(health_results)} health check results for alerting")
+        """        self.logger.debug(f"Processing {len(health_results)} health check results for alerting")
         
         for result in health_results:
             await self._evaluate_alert_rules(result)
@@ -427,8 +403,7 @@ class HealthAlertingSystem:
         await self._update_alert_metrics()
 
     async def _evaluate_alert_rules(self, result: HealthCheckResult):
-        """Evaluate health result against alert rules"""
-        
+        """Evaluate health result against alert rules"""        
         for rule in self._alert_rules:
             if not rule.enabled:
                 continue
@@ -453,8 +428,7 @@ class HealthAlertingSystem:
             await self._create_and_trigger_alert(rule, result)
 
     def _matches_pattern(self, service_name: str, pattern: str) -> bool:
-        """Check if service name matches pattern (supports wildcards)"""
-        if pattern == "*":
+        """Check if service name matches pattern (supports wildcards)"""        if pattern == "*":
             return True
         
         if "*" in pattern:
@@ -471,8 +445,7 @@ class HealthAlertingSystem:
         return service_name == pattern
 
     def _status_exceeds_threshold(self, current_status: HealthStatus, threshold: HealthStatus) -> bool:
-        """Check if current status is at or above threshold severity"""
-        status_levels = {
+        """Check if current status is at or above threshold severity"""        status_levels = {
             HealthStatus.HEALTHY: 0,
             HealthStatus.DEGRADED: 1,
             HealthStatus.UNHEALTHY: 2,
@@ -482,8 +455,7 @@ class HealthAlertingSystem:
         return status_levels[current_status] >= status_levels[threshold]
 
     def _evaluate_conditions(self, result: HealthCheckResult, conditions: Dict[str, Any]) -> bool:
-        """Evaluate additional alert conditions"""
-        try:
+        """Evaluate additional alert conditions"""        try:
             # Response time threshold
             if "max_response_time_ms" in conditions:
                 if result.response_time_ms > conditions["max_response_time_ms"]:
@@ -518,8 +490,7 @@ class HealthAlertingSystem:
             return False
 
     async def _is_in_cooldown(self, rule_name: str, service: str) -> bool:
-        """Check if alert is in cooldown period"""
-        cooldown_key = f"alert_cooldown:{rule_name}:{service}"
+        """Check if alert is in cooldown period"""        cooldown_key = f"alert_cooldown:{rule_name}:{service}"
         
         if self.redis_client:
             try:
@@ -539,8 +510,7 @@ class HealthAlertingSystem:
         return False
 
     async def _create_and_trigger_alert(self, rule: AlertRule, result: HealthCheckResult):
-        """Create new alert and trigger notifications"""
-        
+        """Create new alert and trigger notifications"""        
         # Generate unique alert ID
         alert_id = f"{rule.name}_{result.service}_{int(time.time())}"
         
@@ -585,8 +555,7 @@ class HealthAlertingSystem:
         )
 
     def _generate_alert_description(self, rule: AlertRule, result: HealthCheckResult) -> str:
-        """Generate detailed alert description"""
-        description_parts = [
+        """Generate detailed alert description"""        description_parts = [
             f"Service '{result.service}' is in {result.status.value} state.",
             f"Response time: {result.response_time_ms:.1f}ms"
         ]
@@ -604,8 +573,7 @@ class HealthAlertingSystem:
         return " | ".join(description_parts)
 
     def _extract_alert_details(self, result: HealthCheckResult) -> Dict[str, Any]:
-        """Extract relevant details for alert"""
-        details = {
+        """Extract relevant details for alert"""        details = {
             "health_status": result.status.value,
             "response_time_ms": result.response_time_ms,
             "timestamp": result.timestamp.isoformat()
@@ -629,8 +597,7 @@ class HealthAlertingSystem:
         return details
 
     async def _set_cooldown(self, rule_name: str, service: str, cooldown_minutes: int):
-        """Set cooldown period for alert rule"""
-        cooldown_key = f"alert_cooldown:{rule_name}:{service}"
+        """Set cooldown period for alert rule"""        cooldown_key = f"alert_cooldown:{rule_name}:{service}"
         
         if self.redis_client:
             try:
@@ -643,8 +610,7 @@ class HealthAlertingSystem:
                 self.logger.error(f"Error setting cooldown in Redis: {str(e)}")
 
     async def _send_notifications(self, alert: Alert, channels: List[AlertChannel]):
-        """Send alert notifications through specified channels"""
-        
+        """Send alert notifications through specified channels"""        
         notification_tasks = []
         
         for channel in channels:
@@ -662,8 +628,7 @@ class HealthAlertingSystem:
                 self._alert_metrics["notification_failures"] += 1
 
     async def _send_channel_notification(self, alert: Alert, channel: AlertChannel):
-        """Send notification through specific channel"""
-        
+        """Send notification through specific channel"""        
         try:
             if channel == AlertChannel.EMAIL:
                 await self._send_email_notification(alert)
@@ -681,8 +646,7 @@ class HealthAlertingSystem:
             self._alert_metrics["notification_failures"] += 1
 
     async def _send_email_notification(self, alert: Alert):
-        """Send email notification"""
-        email_config = self._notification_channels.get(AlertChannel.EMAIL)
+        """Send email notification"""        email_config = self._notification_channels.get(AlertChannel.EMAIL)
         if not email_config:
             return
         
@@ -730,8 +694,7 @@ class HealthAlertingSystem:
             raise Exception(f"Email sending failed: {str(e)}")
 
     async def _send_slack_notification(self, alert: Alert):
-        """Send Slack notification"""
-        slack_config = self._notification_channels.get(AlertChannel.SLACK)
+        """Send Slack notification"""        slack_config = self._notification_channels.get(AlertChannel.SLACK)
         if not slack_config:
             return
         
@@ -761,8 +724,7 @@ class HealthAlertingSystem:
                     raise Exception(f"Slack API error {response.status}: {response_text}")
 
     async def _send_webhook_notification(self, alert: Alert):
-        """Send webhook notification"""
-        webhook_config = self._notification_channels.get(AlertChannel.WEBHOOK)
+        """Send webhook notification"""        webhook_config = self._notification_channels.get(AlertChannel.WEBHOOK)
         if not webhook_config:
             return
         
@@ -790,8 +752,7 @@ class HealthAlertingSystem:
                     raise Exception(f"Webhook error {response.status}: {response_text}")
 
     async def _send_pagerduty_notification(self, alert: Alert):
-        """Send PagerDuty notification"""
-        pagerduty_config = self._notification_channels.get(AlertChannel.PAGERDUTY)
+        """Send PagerDuty notification"""        pagerduty_config = self._notification_channels.get(AlertChannel.PAGERDUTY)
         if not pagerduty_config:
             return
         
@@ -823,8 +784,7 @@ class HealthAlertingSystem:
                     raise Exception(f"PagerDuty API error {response.status}: {response_text}")
 
     async def _check_alert_escalations(self):
-        """Check for alerts that need escalation"""
-        current_time = datetime.utcnow()
+        """Check for alerts that need escalation"""        current_time = datetime.utcnow()
         
         for alert in list(self._active_alerts.values()):
             if alert.status != AlertStatus.ACTIVE or alert.escalated:
@@ -842,8 +802,7 @@ class HealthAlertingSystem:
                 await self._escalate_alert(alert, rule)
 
     async def _escalate_alert(self, alert: Alert, rule: AlertRule):
-        """Escalate alert to higher severity channels"""
-        
+        """Escalate alert to higher severity channels"""        
         # Mark as escalated
         alert.escalated = True
         alert.updated_at = datetime.utcnow()
@@ -869,8 +828,7 @@ class HealthAlertingSystem:
         self.logger.critical(f"Alert escalated: {alert.title} (ID: {alert.id})")
 
     async def acknowledge_alert(self, alert_id: str, acknowledged_by: str) -> bool:
-        """
-        Acknowledge an active alert
+        """        Acknowledge an active alert
         
         Args:
             alert_id: ID of alert to acknowledge
@@ -878,8 +836,7 @@ class HealthAlertingSystem:
             
         Returns:
             bool: True if alert was acknowledged successfully
-        """
-        if alert_id not in self._active_alerts:
+        """        if alert_id not in self._active_alerts:
             return False
         
         alert = self._active_alerts[alert_id]
@@ -903,8 +860,7 @@ class HealthAlertingSystem:
         return True
 
     async def resolve_alert(self, alert_id: str, resolved_by: str = "system") -> bool:
-        """
-        Resolve an alert
+        """        Resolve an alert
         
         Args:
             alert_id: ID of alert to resolve
@@ -912,8 +868,7 @@ class HealthAlertingSystem:
             
         Returns:
             bool: True if alert was resolved successfully
-        """
-        if alert_id not in self._active_alerts:
+        """        if alert_id not in self._active_alerts:
             return False
         
         alert = self._active_alerts[alert_id]
@@ -935,8 +890,7 @@ class HealthAlertingSystem:
         return True
 
     async def _update_alert_metrics(self):
-        """Update alert metrics"""
-        current_time = datetime.utcnow()
+        """Update alert metrics"""        current_time = datetime.utcnow()
         
         # Update basic metrics
         self._alert_metrics["active_alerts"] = len(self._active_alerts)
@@ -954,16 +908,13 @@ class HealthAlertingSystem:
         self._alert_metrics["alerts_by_service"] = service_counts
 
     async def get_active_alerts(self) -> List[Dict[str, Any]]:
-        """Get all active alerts"""
-        return [asdict(alert) for alert in self._active_alerts.values()]
+        """Get all active alerts"""        return [asdict(alert) for alert in self._active_alerts.values()]
 
     async def get_alert_metrics(self) -> Dict[str, Any]:
-        """Get alert system metrics"""
-        return self._alert_metrics.copy()
+        """Get alert system metrics"""        return self._alert_metrics.copy()
 
     async def get_alert_history(self, hours: int = 24) -> List[Dict[str, Any]]:
-        """Get alert history for specified time period"""
-        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
+        """Get alert history for specified time period"""        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
         
         filtered_alerts = [
             alert for alert in self._alert_history
@@ -973,8 +924,7 @@ class HealthAlertingSystem:
         return [asdict(alert) for alert in filtered_alerts]
 
     async def cleanup_resources(self):
-        """Clean up alerting system resources"""
-        try:
+        """Clean up alerting system resources"""        try:
             # Close any open connections
             if hasattr(self, '_smtp_connections'):
                 for connection in self._smtp_connections:
@@ -989,13 +939,11 @@ class HealthAlertingSystem:
             self.logger.error(f"Error cleaning up alerting system resources: {str(e)}")
 
     def add_custom_rule(self, rule: AlertRule):
-        """Add custom alert rule"""
-        self._alert_rules.append(rule)
+        """Add custom alert rule"""        self._alert_rules.append(rule)
         self.logger.info(f"Added custom alert rule: {rule.name}")
 
     def remove_rule(self, rule_name: str) -> bool:
-        """Remove alert rule by name"""
-        initial_count = len(self._alert_rules)
+        """Remove alert rule by name"""        initial_count = len(self._alert_rules)
         self._alert_rules = [r for r in self._alert_rules if r.name != rule_name]
         
         removed = len(self._alert_rules) < initial_count
@@ -1005,11 +953,9 @@ class HealthAlertingSystem:
         return removed
 
     def get_configured_rules(self) -> List[Dict[str, Any]]:
-        """Get all configured alert rules"""
-        return [asdict(rule) for rule in self._alert_rules]
+        """Get all configured alert rules"""        return [asdict(rule) for rule in self._alert_rules]
 
-"""
-Professional Health Alerting System Implementation Notes:
+"""Professional Health Alerting System Implementation Notes:
 
 This module provides enterprise-grade alerting capabilities including:
 

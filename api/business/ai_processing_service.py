@@ -1,5 +1,4 @@
-"""
-AI Processing service for IA Influencer Agent platform.
+"""AI Processing service for IA Influencer Agent platform.
 
 This service handles all AI-powered content analysis, processing, and enhancement
 for multi-format content including audio, video, images, and text.
@@ -7,9 +6,7 @@ for multi-format content including audio, video, images, and text.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import json
 from datetime import datetime
 from typing import Dict, Any, List, Optional, Tuple
@@ -31,16 +28,14 @@ logger = logging.getLogger(__name__)
 settings = get_settings()
 
 class AIProcessingService:
-    """
-    Comprehensive AI processing service for multi-format content analysis.
+    """    Comprehensive AI processing service for multi-format content analysis.
     
     Capabilities:
     - Audio: Genre classification, mood analysis, quality assessment
     - Video: Scene detection, object recognition, content moderation
     - Images: Style analysis, quality assessment, content recognition
     - Text: Sentiment analysis, topic modeling, SEO optimization
-    """
-    
+    """    
     def __init__(self):
         self.ai_client = AIClient()
         self.content_analyzer = ContentAnalyzer()
@@ -48,8 +43,7 @@ class AIProcessingService:
         openai.api_key = settings.ai.openai_api_key
     
     async def process_content_async(self, content_id: str, file_type: str) -> Dict[str, Any]:
-        """
-        Process content asynchronously with comprehensive AI analysis.
+        """        Process content asynchronously with comprehensive AI analysis.
         
         Args:
             content_id: Content unique identifier
@@ -57,8 +51,7 @@ class AIProcessingService:
             
         Returns:
             Processing results and analysis data
-        """
-        try:
+        """        try:
             logger.info(f"Starting AI processing for content: {content_id} - Type: {file_type}")
             
             # Get content from database
@@ -120,10 +113,8 @@ class AIProcessingService:
             raise
     
     async def _process_audio_content(self, content: Content) -> Dict[str, Any]:
-        """
-        Process audio content with specialized audio AI analysis.
-        """
-        try:
+        """        Process audio content with specialized audio AI analysis.
+        """        try:
             file_path = content.file_path
             
             # Load audio file
@@ -166,10 +157,8 @@ class AIProcessingService:
             raise
     
     async def _process_video_content(self, content: Content) -> Dict[str, Any]:
-        """
-        Process video content with computer vision and audio analysis.
-        """
-        try:
+        """        Process video content with computer vision and audio analysis.
+        """        try:
             file_path = content.file_path
             
             # Extract video metadata
@@ -215,10 +204,8 @@ class AIProcessingService:
             raise
     
     async def _process_image_content(self, content: Content) -> Dict[str, Any]:
-        """
-        Process image content with advanced computer vision analysis.
-        """
-        try:
+        """        Process image content with advanced computer vision analysis.
+        """        try:
             file_path = content.file_path
             
             # Load and analyze image
@@ -267,10 +254,8 @@ class AIProcessingService:
             raise
     
     async def _process_text_content(self, content: Content) -> Dict[str, Any]:
-        """
-        Process text content with NLP and content analysis.
-        """
-        try:
+        """        Process text content with NLP and content analysis.
+        """        try:
             # Read text content
             with open(content.file_path, 'r', encoding='utf-8') as f:
                 text_content = f.read()
@@ -317,10 +302,8 @@ class AIProcessingService:
             raise
     
     async def _process_generic_content(self, content: Content) -> Dict[str, Any]:
-        """
-        Process generic content with basic analysis.
-        """
-        try:
+        """        Process generic content with basic analysis.
+        """        try:
             # Extract basic metadata
             metadata = await self.metadata_extractor.extract_generic_metadata(content.file_path)
             
@@ -343,8 +326,7 @@ class AIProcessingService:
     # Audio-specific methods
     
     async def _extract_audio_features(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract comprehensive audio features"""
-        try:
+        """Extract comprehensive audio features"""        try:
             features = {}
             
             # Spectral features
@@ -373,11 +355,9 @@ class AIProcessingService:
             return {}
     
     async def _analyze_audio_with_ai(self, file_path: str, features: Dict[str, Any]) -> Dict[str, Any]:
-        """AI-powered audio content analysis"""
-        try:
+        """AI-powered audio content analysis"""        try:
             # Create prompt for audio analysis
-            prompt = f"""
-            Analyze this audio content with the following features:
+            prompt = f"""            Analyze this audio content with the following features:
             - Spectral centroid: {features.get('spectral_centroid', 'N/A')}
             - Tempo: {features.get('tempo', 'N/A')} BPM
             - RMS Energy: {features.get('rms_energy', 'N/A')}
@@ -391,8 +371,7 @@ class AIProcessingService:
             6. Suggested improvements
             
             Respond in JSON format.
-            """
-            
+            """            
             response = await self.ai_client.analyze_content(prompt, "audio")
             
             return response
@@ -402,8 +381,7 @@ class AIProcessingService:
             return {"error": str(e)}
     
     async def _analyze_music_content(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Specialized music analysis for musicians"""
-        try:
+        """Specialized music analysis for musicians"""        try:
             analysis = {}
             
             # Key detection
@@ -429,8 +407,7 @@ class AIProcessingService:
     # Helper methods for other content types would be implemented similarly...
     
     async def _generate_enhanced_metadata(self, content: Content, processing_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate AI-enhanced metadata and tags"""
-        try:
+        """Generate AI-enhanced metadata and tags"""        try:
             # Extract key insights from processing results
             ai_insights = processing_results.get('ai_analysis', {})
             
@@ -456,8 +433,7 @@ class AIProcessingService:
             return {}
     
     async def _calculate_quality_score(self, processing_results: Dict[str, Any], file_type: str) -> float:
-        """Calculate overall AI quality score (0-100)"""
-        try:
+        """Calculate overall AI quality score (0-100)"""        try:
             quality_metrics = processing_results.get('quality_metrics', {})
             
             if file_type == "audio":
@@ -502,8 +478,7 @@ class AIProcessingService:
             return 50.0
     
     async def _generate_smart_tags(self, processing_results: Dict[str, Any], user_role: str) -> List[str]:
-        """Generate intelligent tags based on AI analysis"""
-        try:
+        """Generate intelligent tags based on AI analysis"""        try:
             tags = []
             
             ai_analysis = processing_results.get('ai_analysis', {})
@@ -538,13 +513,11 @@ class AIProcessingService:
             return []
     
     async def _generate_seo_description(self, content: Content, processing_results: Dict[str, Any]) -> str:
-        """Generate SEO-optimized description"""
-        try:
+        """Generate SEO-optimized description"""        try:
             ai_analysis = processing_results.get('ai_analysis', {})
             
             # Create prompt for SEO description generation
-            prompt = f"""
-            Generate an SEO-optimized description for this {content.file_type} content:
+            prompt = f"""            Generate an SEO-optimized description for this {content.file_type} content:
             
             Title: {content.title}
             Original Description: {content.description}
@@ -556,8 +529,7 @@ class AIProcessingService:
             2. Appeals to the target audience
             3. Encourages engagement
             4. Accurately describes the content
-            """
-            
+            """            
             seo_description = await self.ai_client.generate_text(prompt)
             
             return seo_description[:160]  # Limit to 160 characters

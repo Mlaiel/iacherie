@@ -17,8 +17,7 @@ interdite et passible de poursuites judiciaires selon la loi allemande et intern
 Unauthorized use, copying, modification, distribution or reproduction of this code 
 or concept without explicit written authorization from Fahed Mlaiel (mlaiel@live.de) 
 is strictly prohibited and subject to legal prosecution under German and international law.
-"""
-from .controller import QualityController
+"""from .controller import QualityController
 from .validator import AudioQualityValidator
 from .monitor import QualityMonitor
 from .standards import QualityStandards, QualityProfile, QualityRule

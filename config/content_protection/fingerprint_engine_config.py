@@ -1,5 +1,4 @@
-"""
-Fingerprint Engine Configuration Module
+"""Fingerprint Engine Configuration Module
 ======================================
 
 Professional fingerprinting engine configuration for multi-format content protection.
@@ -14,25 +13,21 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, modification, or distribution of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
-"""
-
-from typing import Dict, Any, Optional, List
+"""from typing import Dict, Any, Optional, List
 from dataclasses import dataclass, field
 from enum import Enum
 import os
 
 
 class ContentType(str, Enum):
-    """Supported content types for fingerprinting."""
-    AUDIO = "audio"
+    """Supported content types for fingerprinting."""    AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
     TEXT = "text"
 
 
 class FingerprintAlgorithm(str, Enum):
-    """Available fingerprinting algorithms by content type."""
-    # Audio algorithms
+    """Available fingerprinting algorithms by content type."""    # Audio algorithms
     CHROMAPRINT = "chromaprint"
     ESSENTIA_SPECTRAL = "essentia_spectral"
     LIBROSA_MFCC = "librosa_mfcc"
@@ -55,8 +50,7 @@ class FingerprintAlgorithm(str, Enum):
 
 @dataclass
 class AudioFingerprintConfig:
-    """Audio fingerprinting configuration."""
-    algorithm: FingerprintAlgorithm = FingerprintAlgorithm.CHROMAPRINT
+    """Audio fingerprinting configuration."""    algorithm: FingerprintAlgorithm = FingerprintAlgorithm.CHROMAPRINT
     sample_rate: int = 22050
     n_fft: int = 2048
     hop_length: int = 512
@@ -72,8 +66,7 @@ class AudioFingerprintConfig:
 
 @dataclass
 class VideoFingerprintConfig:
-    """Video fingerprinting configuration."""
-    algorithm: FingerprintAlgorithm = FingerprintAlgorithm.PERCEPTUAL_HASH
+    """Video fingerprinting configuration."""    algorithm: FingerprintAlgorithm = FingerprintAlgorithm.PERCEPTUAL_HASH
     frame_sample_rate: int = 1  # frames per second
     hash_size: int = 8
     yolo_model: str = "yolov5s"
@@ -87,8 +80,7 @@ class VideoFingerprintConfig:
 
 @dataclass
 class ImageFingerprintConfig:
-    """Image fingerprinting configuration."""
-    algorithm: FingerprintAlgorithm = FingerprintAlgorithm.CLIP_EMBEDDINGS
+    """Image fingerprinting configuration."""    algorithm: FingerprintAlgorithm = FingerprintAlgorithm.CLIP_EMBEDDINGS
     clip_model: str = "ViT-B/32"
     hash_size: int = 16
     resize_dimensions: tuple = (224, 224)
@@ -101,8 +93,7 @@ class ImageFingerprintConfig:
 
 @dataclass
 class TextFingerprintConfig:
-    """Text fingerprinting configuration."""
-    algorithm: FingerprintAlgorithm = FingerprintAlgorithm.BERT_EMBEDDINGS
+    """Text fingerprinting configuration."""    algorithm: FingerprintAlgorithm = FingerprintAlgorithm.BERT_EMBEDDINGS
     bert_model: str = "bert-base-multilingual-cased"
     roberta_model: str = "roberta-base"
     max_sequence_length: int = 512
@@ -115,8 +106,7 @@ class TextFingerprintConfig:
 
 @dataclass
 class VectorStoreConfig:
-    """Vector storage configuration for similarity matching."""
-    backend: str = "faiss"  # faiss, pinecone, weaviate
+    """Vector storage configuration for similarity matching."""    backend: str = "faiss"  # faiss, pinecone, weaviate
     index_type: str = "IVF_FLAT"
     dimension_size: int = 512
     num_clusters: int = 1024
@@ -129,8 +119,7 @@ class VectorStoreConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance optimization configuration."""
-    max_workers: int = 8
+    """Performance optimization configuration."""    max_workers: int = 8
     batch_processing_size: int = 50
     memory_limit_mb: int = 2048
     timeout_seconds: int = 300
@@ -142,8 +131,7 @@ class PerformanceConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration for fingerprinting."""
-    encryption_algorithm: str = "AES-256-GCM"
+    """Security configuration for fingerprinting."""    encryption_algorithm: str = "AES-256-GCM"
     hash_algorithm: str = "SHA-256"
     secure_deletion: bool = True
     audit_logging: bool = True
@@ -153,11 +141,9 @@ class SecurityConfig:
 
 
 class FingerprintEngineConfig:
-    """
-    Professional fingerprint engine configuration manager.
+    """    Professional fingerprint engine configuration manager.
     Provides industrial-grade configuration for multi-format content fingerprinting.
-    """
-    
+    """    
     def __init__(self):
         self.audio = AudioFingerprintConfig()
         self.video = VideoFingerprintConfig()
@@ -171,8 +157,7 @@ class FingerprintEngineConfig:
         self._load_from_environment()
     
     def _load_from_environment(self) -> None:
-        """Load configuration from environment variables."""
-        # Audio configuration
+        """Load configuration from environment variables."""        # Audio configuration
         self.audio.sample_rate = int(os.getenv("FINGERPRINT_AUDIO_SAMPLE_RATE", "22050"))
         self.audio.precision_threshold = float(os.getenv("FINGERPRINT_AUDIO_PRECISION", "0.95"))
         
@@ -197,8 +182,7 @@ class FingerprintEngineConfig:
         self.performance.gpu_acceleration = os.getenv("FINGERPRINT_GPU_ENABLED", "true").lower() == "true"
     
     def get_config_for_content_type(self, content_type: ContentType) -> Dict[str, Any]:
-        """Get specific configuration for content type."""
-        config_map = {
+        """Get specific configuration for content type."""        config_map = {
             ContentType.AUDIO: self.audio,
             ContentType.VIDEO: self.video,
             ContentType.IMAGE: self.image,
@@ -217,8 +201,7 @@ class FingerprintEngineConfig:
         }
     
     def get_algorithm_config(self, algorithm: FingerprintAlgorithm) -> Dict[str, Any]:
-        """Get configuration for specific algorithm."""
-        algorithm_configs = {
+        """Get configuration for specific algorithm."""        algorithm_configs = {
             # Audio algorithms
             FingerprintAlgorithm.CHROMAPRINT: {
                 "duration": self.audio.chromaprint_duration,
@@ -272,8 +255,7 @@ class FingerprintEngineConfig:
         return algorithm_configs.get(algorithm, {})
     
     def validate_configuration(self) -> List[str]:
-        """Validate current configuration and return any issues."""
-        issues = []
+        """Validate current configuration and return any issues."""        issues = []
         
         # Validate precision thresholds
         if not 0.7 <= self.audio.precision_threshold <= 1.0:
@@ -302,8 +284,7 @@ class FingerprintEngineConfig:
         return issues
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary."""
-        return {
+        """Convert configuration to dictionary."""        return {
             "audio": self.audio.__dict__,
             "video": self.video.__dict__,
             "image": self.image.__dict__,
@@ -315,8 +296,7 @@ class FingerprintEngineConfig:
     
     @classmethod
     def from_dict(cls, config_dict: Dict[str, Any]) -> 'FingerprintEngineConfig':
-        """Create configuration from dictionary."""
-        config = cls()
+        """Create configuration from dictionary."""        config = cls()
         
         if "audio" in config_dict:
             for key, value in config_dict["audio"].items():

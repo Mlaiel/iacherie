@@ -1,5 +1,4 @@
-"""
-🔄 Stream Processing Transformer - IA Influencer Agent Platform Enterprise
+"""🔄 Stream Processing Transformer - IA Influencer Agent Platform Enterprise
 ========================================================================
 Module: backend/data_management/transformers/stream_transformer.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -21,9 +20,7 @@ poursuivie selon les lois allemandes et internationales.
 - DevOps Engineer: Fahed Mlaiel (mlaiel@live.de)
 - DBA: Fahed Mlaiel (mlaiel@live.de)
 - Sécurité Expert: Fahed Mlaiel (mlaiel@live.de)
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import json
@@ -71,8 +68,7 @@ settings = get_settings()
 logger = logging.getLogger(__name__)
 
 class StreamType(Enum):
-    """Types de flux supportés"""
-    AUDIO_REALTIME = "audio_realtime"
+    """Types de flux supportés"""    AUDIO_REALTIME = "audio_realtime"
     VIDEO_REALTIME = "video_realtime"
     WEBCAM_STREAM = "webcam_stream"
     MICROPHONE_STREAM = "microphone_stream"
@@ -82,15 +78,13 @@ class StreamType(Enum):
     KAFKA_STREAM = "kafka_stream"
 
 class ProcessingMode(Enum):
-    """Modes de traitement"""
-    REALTIME = "realtime"
+    """Modes de traitement"""    REALTIME = "realtime"
     BUFFERED = "buffered"
     BATCH = "batch"
     SLIDING_WINDOW = "sliding_window"
 
 class StreamFormat(Enum):
-    """Formats de flux"""
-    RAW_AUDIO = "raw_audio"
+    """Formats de flux"""    RAW_AUDIO = "raw_audio"
     WAV = "wav"
     MP3 = "mp3"
     FLAC = "flac"
@@ -104,8 +98,7 @@ class StreamFormat(Enum):
 
 @dataclass
 class StreamConfig:
-    """Configuration de flux"""
-    stream_type: StreamType
+    """Configuration de flux"""    stream_type: StreamType
     processing_mode: ProcessingMode
     format: StreamFormat
     buffer_size: int = 8192
@@ -122,8 +115,7 @@ class StreamConfig:
 
 @dataclass
 class StreamProcessingResult:
-    """Résultat de traitement de flux"""
-    success: bool
+    """Résultat de traitement de flux"""    success: bool
     stream_id: str
     chunk_id: str
     processed_data: Optional[Any]
@@ -135,8 +127,7 @@ class StreamProcessingResult:
     warnings: List[str]
 
 class AudioStreamProcessor:
-    """Processeur de flux audio en temps réel"""
-    
+    """Processeur de flux audio en temps réel"""    
     def __init__(self, config: StreamConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -162,8 +153,7 @@ class AudioStreamProcessor:
         }
     
     async def start_stream(self, source: Optional[str] = None) -> str:
-        """Démarre le flux audio"""
-        
+        """Démarre le flux audio"""        
         try:
             stream_id = f"audio_stream_{uuid.uuid4().hex[:8]}"
             
@@ -184,8 +174,7 @@ class AudioStreamProcessor:
             raise StreamProcessingError(f"Échec démarrage flux: {e}")
     
     async def _start_microphone_stream(self, stream_id: str):
-        """Démarre le flux depuis le microphone"""
-        
+        """Démarre le flux depuis le microphone"""        
         def audio_callback(in_data, frame_count, time_info, status):
             if status:
                 logger.warning(f"Statut audio callback: {status}")
@@ -215,8 +204,7 @@ class AudioStreamProcessor:
         self.stream.start_stream()
     
     async def _start_file_stream(self, file_path: str, stream_id: str):
-        """Démarre le flux depuis un fichier audio"""
-        
+        """Démarre le flux depuis un fichier audio"""        
         try:
             # Chargement du fichier audio
             audio_data, sr = librosa.load(file_path, sr=self.sample_rate)
@@ -244,8 +232,7 @@ class AudioStreamProcessor:
         self,
         processor_func: Callable[[np.ndarray], Dict[str, Any]]
     ) -> AsyncGenerator[StreamProcessingResult, None]:
-        """Traite le flux audio en temps réel"""
-        
+        """Traite le flux audio en temps réel"""        
         chunk_counter = 0
         
         while self.is_processing:
@@ -307,8 +294,7 @@ class AudioStreamProcessor:
                 )
     
     def _update_metrics(self, processing_time: float, latency: float, audio_data: np.ndarray):
-        """Met à jour les métriques de performance"""
-        
+        """Met à jour les métriques de performance"""        
         self.metrics['chunks_processed'] += 1
         
         # Moyenne mobile du temps de traitement
@@ -329,8 +315,7 @@ class AudioStreamProcessor:
             )
     
     def _calculate_audio_quality(self, audio_data: np.ndarray) -> Dict[str, float]:
-        """Calcule les métriques de qualité audio"""
-        
+        """Calcule les métriques de qualité audio"""        
         if len(audio_data) == 0:
             return {}
         
@@ -356,8 +341,7 @@ class AudioStreamProcessor:
         }
     
     def stop_stream(self):
-        """Arrête le flux audio"""
-        
+        """Arrête le flux audio"""        
         self.is_processing = False
         
         if self.stream:
@@ -368,12 +352,10 @@ class AudioStreamProcessor:
         logger.info("Flux audio arrêté")
     
     def get_metrics(self) -> Dict[str, float]:
-        """Retourne les métriques actuelles"""
-        return self.metrics.copy()
+        """Retourne les métriques actuelles"""        return self.metrics.copy()
 
 class VideoStreamProcessor:
-    """Processeur de flux vidéo en temps réel"""
-    
+    """Processeur de flux vidéo en temps réel"""    
     def __init__(self, config: StreamConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -398,8 +380,7 @@ class VideoStreamProcessor:
         }
     
     async def start_stream(self, source: Union[int, str] = 0) -> str:
-        """Démarre le flux vidéo"""
-        
+        """Démarre le flux vidéo"""        
         try:
             stream_id = f"video_stream_{uuid.uuid4().hex[:8]}"
             
@@ -426,8 +407,7 @@ class VideoStreamProcessor:
             raise StreamProcessingError(f"Échec démarrage flux: {e}")
     
     async def _capture_frames(self):
-        """Capture les frames en arrière-plan"""
-        
+        """Capture les frames en arrière-plan"""        
         frame_counter = 0
         last_frame_time = time.time()
         
@@ -470,8 +450,7 @@ class VideoStreamProcessor:
         self,
         processor_func: Callable[[np.ndarray], Dict[str, Any]]
     ) -> AsyncGenerator[StreamProcessingResult, None]:
-        """Traite le flux vidéo en temps réel"""
-        
+        """Traite le flux vidéo en temps réel"""        
         frame_counter = 0
         
         while self.is_processing:
@@ -533,8 +512,7 @@ class VideoStreamProcessor:
                 )
     
     def _update_metrics(self, processing_time: float, latency: float, frame: np.ndarray):
-        """Met à jour les métriques de performance"""
-        
+        """Met à jour les métriques de performance"""        
         self.metrics['frames_processed'] += 1
         
         # Moyenne mobile du temps de traitement
@@ -548,8 +526,7 @@ class VideoStreamProcessor:
         self.metrics['max_latency'] = max(self.metrics['max_latency'], latency)
     
     def _calculate_video_quality(self, frame: np.ndarray) -> Dict[str, float]:
-        """Calcule les métriques de qualité vidéo"""
-        
+        """Calcule les métriques de qualité vidéo"""        
         if frame is None or frame.size == 0:
             return {}
         
@@ -582,8 +559,7 @@ class VideoStreamProcessor:
         }
     
     def stop_stream(self):
-        """Arrête le flux vidéo"""
-        
+        """Arrête le flux vidéo"""        
         self.is_processing = False
         
         if self.capture:
@@ -592,12 +568,10 @@ class VideoStreamProcessor:
         logger.info("Flux vidéo arrêté")
     
     def get_metrics(self) -> Dict[str, float]:
-        """Retourne les métriques actuelles"""
-        return self.metrics.copy()
+        """Retourne les métriques actuelles"""        return self.metrics.copy()
 
 class WebSocketStreamProcessor:
-    """Processeur de flux WebSocket en temps réel"""
-    
+    """Processeur de flux WebSocket en temps réel"""    
     def __init__(self, config: StreamConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -613,8 +587,7 @@ class WebSocketStreamProcessor:
         }
     
     async def start_server(self, host: str = "localhost", port: int = 8765) -> str:
-        """Démarre le serveur WebSocket"""
-        
+        """Démarre le serveur WebSocket"""        
         try:
             stream_id = f"websocket_stream_{uuid.uuid4().hex[:8]}"
             
@@ -658,8 +631,7 @@ class WebSocketStreamProcessor:
         self,
         processor_func: Callable[[Any], Dict[str, Any]]
     ) -> AsyncGenerator[StreamProcessingResult, None]:
-        """Traite le flux WebSocket en temps réel"""
-        
+        """Traite le flux WebSocket en temps réel"""        
         message_counter = 0
         
         while self.is_processing:
@@ -729,8 +701,7 @@ class WebSocketStreamProcessor:
                 )
     
     def _update_metrics(self, processing_time: float, data_size: int):
-        """Met à jour les métriques de performance"""
-        
+        """Met à jour les métriques de performance"""        
         self.metrics['messages_processed'] += 1
         
         # Moyenne mobile du temps de traitement
@@ -747,8 +718,7 @@ class WebSocketStreamProcessor:
         )
     
     async def stop_server(self):
-        """Arrête le serveur WebSocket"""
-        
+        """Arrête le serveur WebSocket"""        
         self.is_processing = False
         
         if hasattr(self, 'server'):
@@ -758,12 +728,10 @@ class WebSocketStreamProcessor:
         logger.info("Serveur WebSocket arrêté")
     
     def get_metrics(self) -> Dict[str, float]:
-        """Retourne les métriques actuelles"""
-        return self.metrics.copy()
+        """Retourne les métriques actuelles"""        return self.metrics.copy()
 
 class KafkaStreamProcessor:
-    """Processeur de flux Kafka en temps réel"""
-    
+    """Processeur de flux Kafka en temps réel"""    
     def __init__(self, config: StreamConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -787,8 +755,7 @@ class KafkaStreamProcessor:
         }
     
     async def start_producer(self) -> str:
-        """Démarre le producteur Kafka"""
-        
+        """Démarre le producteur Kafka"""        
         try:
             stream_id = f"kafka_producer_{uuid.uuid4().hex[:8]}"
             
@@ -806,8 +773,7 @@ class KafkaStreamProcessor:
             raise StreamProcessingError(f"Échec démarrage producteur: {e}")
     
     async def start_consumer(self) -> str:
-        """Démarre le consommateur Kafka"""
-        
+        """Démarre le consommateur Kafka"""        
         try:
             stream_id = f"kafka_consumer_{uuid.uuid4().hex[:8]}"
             
@@ -829,8 +795,7 @@ class KafkaStreamProcessor:
             raise StreamProcessingError(f"Échec démarrage consommateur: {e}")
     
     async def produce_message(self, data: Dict[str, Any], key: Optional[str] = None) -> bool:
-        """Produit un message vers Kafka"""
-        
+        """Produit un message vers Kafka"""        
         try:
             if not self.producer:
                 raise StreamProcessingError("Producteur Kafka non initialisé")
@@ -854,8 +819,7 @@ class KafkaStreamProcessor:
         self,
         processor_func: Callable[[Dict[str, Any]], Dict[str, Any]]
     ) -> AsyncGenerator[StreamProcessingResult, None]:
-        """Consomme et traite le flux Kafka"""
-        
+        """Consomme et traite le flux Kafka"""        
         message_counter = 0
         
         try:
@@ -934,8 +898,7 @@ class KafkaStreamProcessor:
             )
     
     def _update_metrics(self, processing_time: float):
-        """Met à jour les métriques Kafka"""
-        
+        """Met à jour les métriques Kafka"""        
         self.metrics['messages_consumed'] += 1
         
         # Moyenne mobile du temps de traitement
@@ -954,8 +917,7 @@ class KafkaStreamProcessor:
             )
     
     def stop_kafka(self):
-        """Arrête les composants Kafka"""
-        
+        """Arrête les composants Kafka"""        
         self.is_processing = False
         
         if self.producer:
@@ -967,12 +929,10 @@ class KafkaStreamProcessor:
         logger.info("Flux Kafka arrêté")
     
     def get_metrics(self) -> Dict[str, float]:
-        """Retourne les métriques Kafka"""
-        return self.metrics.copy()
+        """Retourne les métriques Kafka"""        return self.metrics.copy()
 
 class StreamTransformer:
-    """Gestionnaire principal des flux en temps réel"""
-    
+    """Gestionnaire principal des flux en temps réel"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.active_streams = {}
@@ -1015,8 +975,7 @@ class StreamTransformer:
         self,
         stream_config: StreamConfig
     ) -> Union[AudioStreamProcessor, VideoStreamProcessor, WebSocketStreamProcessor, KafkaStreamProcessor]:
-        """Crée le processeur de flux approprié"""
-        
+        """Crée le processeur de flux approprié"""        
         if stream_config.stream_type in [StreamType.AUDIO_REALTIME, StreamType.MICROPHONE_STREAM]:
             return AudioStreamProcessor(stream_config)
         
@@ -1038,8 +997,7 @@ class StreamTransformer:
         processor_func: Callable[[Any], Dict[str, Any]],
         source: Optional[Union[str, int]] = None
     ) -> str:
-        """Démarre le traitement en temps réel"""
-        
+        """Démarre le traitement en temps réel"""        
         try:
             # Création du processeur
             processor = self.create_stream_processor(stream_config)
@@ -1086,8 +1044,7 @@ class StreamTransformer:
         processor: Any,
         processor_func: Callable[[Any], Dict[str, Any]]
     ):
-        """Traite le flux de manière asynchrone"""
-        
+        """Traite le flux de manière asynchrone"""        
         try:
             async for result in processor.process_stream(processor_func):
                 # Stockage du résultat dans Redis pour monitoring
@@ -1105,8 +1062,7 @@ class StreamTransformer:
                 del self.active_streams[stream_id]
     
     async def _store_result_redis(self, stream_id: str, result: StreamProcessingResult):
-        """Stocke le résultat dans Redis"""
-        
+        """Stocke le résultat dans Redis"""        
         try:
             # Conversion en dictionnaire sérialisable
             result_dict = {
@@ -1131,8 +1087,7 @@ class StreamTransformer:
             logger.warning(f"Erreur stockage Redis pour {stream_id}: {e}")
     
     def get_stream_metrics(self, stream_id: str) -> Optional[Dict[str, Any]]:
-        """Retourne les métriques d'un flux"""
-        
+        """Retourne les métriques d'un flux"""        
         if stream_id not in self.active_streams:
             return None
         
@@ -1146,8 +1101,7 @@ class StreamTransformer:
         return metrics
     
     def get_all_streams_status(self) -> Dict[str, Dict[str, Any]]:
-        """Retourne le statut de tous les flux actifs"""
-        
+        """Retourne le statut de tous les flux actifs"""        
         status = {}
         
         for stream_id in self.active_streams:
@@ -1156,8 +1110,7 @@ class StreamTransformer:
         return status
     
     async def stop_stream(self, stream_id: str) -> bool:
-        """Arrête un flux spécifique"""
-        
+        """Arrête un flux spécifique"""        
         if stream_id not in self.active_streams:
             logger.warning(f"Flux non trouvé: {stream_id}")
             return False
@@ -1186,8 +1139,7 @@ class StreamTransformer:
             return False
     
     async def stop_all_streams(self):
-        """Arrête tous les flux actifs"""
-        
+        """Arrête tous les flux actifs"""        
         stream_ids = list(self.active_streams.keys())
         
         for stream_id in stream_ids:
@@ -1201,8 +1153,7 @@ class StreamTransformer:
         stream_type: StreamType,
         processing_mode: ProcessingMode = ProcessingMode.REALTIME
     ) -> StreamConfig:
-        """Génère une configuration optimisée pour le créateur"""
-        
+        """Génère une configuration optimisée pour le créateur"""        
         creator_config = self.creator_stream_configs.get(
             creator_type,
             self.creator_stream_configs['influencer']

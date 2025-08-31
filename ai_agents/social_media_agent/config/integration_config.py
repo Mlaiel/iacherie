@@ -1,5 +1,4 @@
-"""
-Integration Configuration - Enterprise Multi-Platform Configuration Management System
+"""Integration Configuration - Enterprise Multi-Platform Configuration Management System
 
 Advanced configuration management for social media platforms, API credentials, 
 content protection services, and monetization tracking integrations with complete
@@ -20,9 +19,7 @@ Expert Development Team Specialties:
 - Database Administrator (DBA) - Configuration data modeling and encryption
 - Security & Microservices Expert - Secure credential management and API security
 - DevOps & Infrastructure Engineer - Configuration deployment and environment management
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timezone, timedelta
@@ -54,8 +51,7 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class IntegrationType(Enum):
-    """Integration type classification"""
-    SOCIAL_PLATFORM = "social_platform"
+    """Integration type classification"""    SOCIAL_PLATFORM = "social_platform"
     CONTENT_PROTECTION = "content_protection"
     MONETIZATION = "monetization"
     FINGERPRINTING = "fingerprinting"
@@ -68,16 +64,14 @@ class IntegrationType(Enum):
     PAYMENT = "payment"
 
 class ConfigurationScope(Enum):
-    """Configuration scope levels"""
-    GLOBAL = "global"
+    """Configuration scope levels"""    GLOBAL = "global"
     TENANT = "tenant"
     USER = "user"
     PLATFORM = "platform"
     SERVICE = "service"
 
 class PlatformCategory(Enum):
-    """Platform category classification"""
-    SOCIAL_MEDIA = "social_media"
+    """Platform category classification"""    SOCIAL_MEDIA = "social_media"
     PROFESSIONAL = "professional"
     MESSAGING = "messaging"
     VIDEO_STREAMING = "video_streaming"
@@ -88,8 +82,7 @@ class PlatformCategory(Enum):
 
 @dataclass
 class APICredentials:
-    """Secure API credentials with encryption"""
-    platform_name: str
+    """Secure API credentials with encryption"""    platform_name: str
     client_id: str
     client_secret: str
     access_token: Optional[str] = None
@@ -105,8 +98,7 @@ class APICredentials:
     updated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
     def encrypt_credentials(self, encryption_key: bytes) -> None:
-        """Encrypt sensitive credential data"""
-        if self.encrypted:
+        """Encrypt sensitive credential data"""        if self.encrypted:
             return
         
         cipher = Fernet(encryption_key)
@@ -126,8 +118,7 @@ class APICredentials:
         self.updated_at = datetime.now(timezone.utc)
 
     def decrypt_credentials(self, encryption_key: bytes) -> Dict[str, str]:
-        """Decrypt and return sensitive credential data"""
-        if not self.encrypted:
+        """Decrypt and return sensitive credential data"""        if not self.encrypted:
             return {
                 "client_secret": self.client_secret,
                 "access_token": self.access_token,
@@ -152,8 +143,7 @@ class APICredentials:
 
 @dataclass
 class PlatformConfig:
-    """Comprehensive platform configuration"""
-    platform_name: str
+    """Comprehensive platform configuration"""    platform_name: str
     display_name: str
     category: PlatformCategory
     enabled: bool = True
@@ -179,8 +169,7 @@ class PlatformConfig:
 
 @dataclass
 class AgentIntegrationConfig:
-    """Configuration for agent integrations"""
-    enabled_integrations: List[IntegrationType] = field(default_factory=list)
+    """Configuration for agent integrations"""    enabled_integrations: List[IntegrationType] = field(default_factory=list)
     protection_level: str = "enterprise"
     monetization_tracking: bool = True
     fingerprinting_precision: str = "high"
@@ -213,19 +202,16 @@ class AgentIntegrationConfig:
     partnership_automation: bool = False
 
 class SocialMediaAgentIntegrator:
-    """
-    Integration manager for Social Media Agent with other system agents
+    """    Integration manager for Social Media Agent with other system agents
     Ensures seamless workflow between social media management and content protection
-    """
-    
+    """    
     def __init__(self, config: AgentIntegrationConfig = None):
         self.config = config or AgentIntegrationConfig()
         self.integration_status: Dict[IntegrationType, bool] = {}
         self.agent_connections: Dict[str, Any] = {}
         
     async def initialize_integrations(self) -> Dict[str, Any]:
-        """Initialize all configured agent integrations"""
-        results = {}
+        """Initialize all configured agent integrations"""        results = {}
         
         for integration in self.config.enabled_integrations:
             try:
@@ -249,8 +235,7 @@ class SocialMediaAgentIntegrator:
         return results
     
     async def _init_protection_integration(self) -> Dict[str, Any]:
-        """Initialize protection agent integration"""
-        return {
+        """Initialize protection agent integration"""        return {
             'status': 'active',
             'features': {
                 'content_fingerprinting': self.config.content_fingerprinting,
@@ -261,8 +246,7 @@ class SocialMediaAgentIntegrator:
         }
     
     async def _init_monetization_integration(self) -> Dict[str, Any]:
-        """Initialize monetization agent integration"""
-        return {
+        """Initialize monetization agent integration"""        return {
             'status': 'active',
             'features': {
                 'revenue_tracking': self.config.revenue_tracking,
@@ -273,8 +257,7 @@ class SocialMediaAgentIntegrator:
         }
     
     async def _init_fingerprinting_integration(self) -> Dict[str, Any]:
-        """Initialize fingerprinting agent integration"""
-        return {
+        """Initialize fingerprinting agent integration"""        return {
             'status': 'active',
             'features': {
                 'multi_format_fingerprinting': self.config.multi_format_fingerprinting,
@@ -286,8 +269,7 @@ class SocialMediaAgentIntegrator:
         }
     
     async def _init_seo_integration(self) -> Dict[str, Any]:
-        """Initialize SEO agent integration"""
-        return {
+        """Initialize SEO agent integration"""        return {
             'status': 'active',
             'features': {
                 'seo_optimization': self.config.seo_optimization,
@@ -297,8 +279,7 @@ class SocialMediaAgentIntegrator:
         }
     
     async def _init_collaboration_integration(self) -> Dict[str, Any]:
-        """Initialize collaboration agent integration"""
-        return {
+        """Initialize collaboration agent integration"""        return {
             'status': 'active',
             'features': {
                 'influencer_matching': self.config.influencer_matching,
@@ -308,12 +289,10 @@ class SocialMediaAgentIntegrator:
         }
     
     def get_integration_status(self) -> Dict[IntegrationType, bool]:
-        """Get current status of all integrations"""
-        return self.integration_status.copy()
+        """Get current status of all integrations"""        return self.integration_status.copy()
     
     async def process_workflow(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process complete workflow with all integrated agents"""
-        workflow_results = {
+        """Process complete workflow with all integrated agents"""        workflow_results = {
             'content_id': content_data.get('content_id'),
             'workflow_status': 'processing',
             'integration_results': {}
@@ -357,8 +336,7 @@ class SocialMediaAgentIntegrator:
         return workflow_results
     
     async def _process_protection_workflow(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process protection workflow"""
-        return {
+        """Process protection workflow"""        return {
             'status': 'protected',
             'fingerprint_generated': True,
             'rights_registered': True,
@@ -366,8 +344,7 @@ class SocialMediaAgentIntegrator:
         }
     
     async def _process_fingerprinting_workflow(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process fingerprinting workflow"""
-        return {
+        """Process fingerprinting workflow"""        return {
             'status': 'fingerprinted',
             'fingerprint_types': ['audio', 'video', 'image', 'text'],
             'uniqueness_score': 0.92,
@@ -375,8 +352,7 @@ class SocialMediaAgentIntegrator:
         }
     
     async def _process_seo_workflow(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process SEO workflow"""
-        return {
+        """Process SEO workflow"""        return {
             'status': 'optimized',
             'keywords_added': True,
             'trending_hashtags': True,
@@ -384,8 +360,7 @@ class SocialMediaAgentIntegrator:
         }
     
     async def _process_social_media_workflow(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process social media workflow"""
-        return {
+        """Process social media workflow"""        return {
             'status': 'published',
             'platforms': content_data.get('platforms', []),
             'optimization_applied': True,
@@ -393,8 +368,7 @@ class SocialMediaAgentIntegrator:
         }
     
     async def _process_monetization_workflow(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process monetization workflow"""
-        return {
+        """Process monetization workflow"""        return {
             'status': 'tracking_active',
             'revenue_estimation': 'enabled',
             'performance_monitoring': True,
@@ -402,8 +376,7 @@ class SocialMediaAgentIntegrator:
         }
     
     async def _process_collaboration_workflow(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process collaboration workflow"""
-        return {
+        """Process collaboration workflow"""        return {
             'status': 'analyzed',
             'collaboration_matches': [],
             'partnership_suggestions': [],

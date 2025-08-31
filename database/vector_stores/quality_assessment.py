@@ -1,5 +1,4 @@
-"""
-Vector Quality Assessment Engine
+"""Vector Quality Assessment Engine
 
 This module provides comprehensive quality assessment for vector embeddings,
 including dimensionality analysis, clustering validation, and embedding quality metrics.
@@ -11,9 +10,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 WARNING: This code is proprietary to Fahed Mlaiel. Any unauthorized copying, modification, 
 or distribution without explicit written permission is strictly prohibited and will result 
 in legal action under German and international copyright law.
-"""
-
-import os
+"""import os
 import json
 import logging
 import asyncio
@@ -50,8 +47,7 @@ settings = get_settings()
 
 
 class QualityMetric(Enum):
-    """Vector quality assessment metrics"""
-    INTRINSIC_DIMENSIONALITY = "intrinsic_dimensionality"
+    """Vector quality assessment metrics"""    INTRINSIC_DIMENSIONALITY = "intrinsic_dimensionality"
     CLUSTERING_QUALITY = "clustering_quality"
     SEPARABILITY = "separability"
     UNIFORMITY = "uniformity"
@@ -62,8 +58,7 @@ class QualityMetric(Enum):
 
 
 class DimensionalityMethod(Enum):
-    """Dimensionality reduction methods"""
-    PCA = "pca"
+    """Dimensionality reduction methods"""    PCA = "pca"
     TSNE = "tsne"
     UMAP = "umap"
     ICA = "ica"
@@ -72,8 +67,7 @@ class DimensionalityMethod(Enum):
 
 @dataclass
 class QualityAssessmentConfig:
-    """Configuration for quality assessment"""
-    metrics_to_compute: List[QualityMetric]
+    """Configuration for quality assessment"""    metrics_to_compute: List[QualityMetric]
     sample_size: int = 10000
     clustering_algorithms: List[str] = field(default_factory=lambda: ["kmeans", "dbscan"])
     dimensionality_methods: List[DimensionalityMethod] = field(default_factory=lambda: [DimensionalityMethod.PCA, DimensionalityMethod.UMAP])
@@ -86,8 +80,7 @@ class QualityAssessmentConfig:
 
 @dataclass
 class DimensionalityAnalysis:
-    """Results of dimensionality analysis"""
-    original_dimension: int
+    """Results of dimensionality analysis"""    original_dimension: int
     intrinsic_dimension: int
     explained_variance_ratio: List[float]
     cumulative_variance: List[float]
@@ -98,8 +91,7 @@ class DimensionalityAnalysis:
 
 @dataclass
 class ClusteringAnalysis:
-    """Results of clustering analysis"""
-    algorithm: str
+    """Results of clustering analysis"""    algorithm: str
     n_clusters: int
     silhouette_score: float
     calinski_harabasz_score: float
@@ -112,8 +104,7 @@ class ClusteringAnalysis:
 
 @dataclass
 class SeparabilityAnalysis:
-    """Results of separability analysis"""
-    inter_cluster_distance: float
+    """Results of separability analysis"""    inter_cluster_distance: float
     intra_cluster_distance: float
     separability_index: float
     nearest_neighbor_distances: np.ndarray
@@ -123,8 +114,7 @@ class SeparabilityAnalysis:
 
 @dataclass
 class OutlierAnalysis:
-    """Results of outlier analysis"""
-    outlier_indices: List[int]
+    """Results of outlier analysis"""    outlier_indices: List[int]
     outlier_scores: np.ndarray
     isolation_scores: np.ndarray
     local_outlier_factors: np.ndarray
@@ -134,8 +124,7 @@ class OutlierAnalysis:
 
 @dataclass
 class QualityReport:
-    """Comprehensive quality assessment report"""
-    content_type: str
+    """Comprehensive quality assessment report"""    content_type: str
     total_vectors: int
     assessment_timestamp: datetime
     
@@ -155,8 +144,7 @@ class QualityReport:
 
 
 class VectorQualityAssessment:
-    """
-    Comprehensive vector quality assessment engine.
+    """    Comprehensive vector quality assessment engine.
     
     Features:
     - Intrinsic dimensionality analysis
@@ -167,11 +155,9 @@ class VectorQualityAssessment:
     - Semantic coherence validation
     - Quality scoring and recommendations
     - Interactive visualizations
-    """
-    
+    """    
     def __init__(self):
-        """Initialize quality assessment engine"""
-        self.metrics_collector = MetricsCollector()
+        """Initialize quality assessment engine"""        self.metrics_collector = MetricsCollector()
         self.visualizer = VectorVisualizer()
         
         # Analysis cache
@@ -189,8 +175,7 @@ class VectorQualityAssessment:
         logger.info("Initialized VectorQualityAssessment engine")
     
     async def initialize(self) -> None:
-        """Initialize quality assessment system"""
-        try:
+        """Initialize quality assessment system"""        try:
             await self.visualizer.initialize()
             logger.info("Vector quality assessment system initialized")
             
@@ -205,8 +190,7 @@ class VectorQualityAssessment:
         config: QualityAssessmentConfig,
         vectors: Optional[np.ndarray] = None
     ) -> QualityReport:
-        """
-        Perform comprehensive quality assessment
+        """        Perform comprehensive quality assessment
         
         Args:
             content_type: Content type to assess
@@ -215,8 +199,7 @@ class VectorQualityAssessment:
             
         Returns:
             Comprehensive quality report
-        """
-        try:
+        """        try:
             logger.info(f"Starting quality assessment for {content_type}")
             
             # Load vectors if not provided
@@ -312,8 +295,7 @@ class VectorQualityAssessment:
         config: QualityAssessmentConfig,
         output_dir: str
     ) -> DimensionalityAnalysis:
-        """Analyze vector dimensionality and intrinsic dimensions"""
-        try:
+        """Analyze vector dimensionality and intrinsic dimensions"""        try:
             original_dim = vectors.shape[1]
             
             # PCA analysis for explained variance
@@ -417,8 +399,7 @@ class VectorQualityAssessment:
         config: QualityAssessmentConfig,
         output_dir: str
     ) -> List[ClusteringAnalysis]:
-        """Analyze clustering quality with multiple algorithms"""
-        try:
+        """Analyze clustering quality with multiple algorithms"""        try:
             clustering_results = []
             
             for algorithm in config.clustering_algorithms:
@@ -510,8 +491,7 @@ class VectorQualityAssessment:
         config: QualityAssessmentConfig,
         output_dir: str
     ) -> SeparabilityAnalysis:
-        """Analyze vector space separability"""
-        try:
+        """Analyze vector space separability"""        try:
             # Calculate pairwise distances
             distances = pdist(vectors, metric='cosine')
             distance_matrix = squareform(distances)
@@ -579,8 +559,7 @@ class VectorQualityAssessment:
         config: QualityAssessmentConfig,
         output_dir: str
     ) -> OutlierAnalysis:
-        """Analyze outliers and anomalies in vector space"""
-        try:
+        """Analyze outliers and anomalies in vector space"""        try:
             from sklearn.ensemble import IsolationForest
             from sklearn.neighbors import LocalOutlierFactor
             
@@ -639,8 +618,7 @@ class VectorQualityAssessment:
             raise QualityAssessmentError(f"Outlier analysis failed: {str(e)}")
     
     def _calculate_quality_metrics(self, analyses: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate quality metrics from analyses"""
-        quality_breakdown = {}
+        """Calculate quality metrics from analyses"""        quality_breakdown = {}
         
         try:
             # Dimensionality quality
@@ -685,8 +663,7 @@ class VectorQualityAssessment:
             return {}
     
     def _calculate_overall_quality(self, quality_breakdown: Dict[str, float]) -> float:
-        """Calculate overall quality score"""
-        if not quality_breakdown:
+        """Calculate overall quality score"""        if not quality_breakdown:
             return 0.0
         
         # Weighted average of quality metrics
@@ -712,8 +689,7 @@ class VectorQualityAssessment:
         analyses: Dict[str, Any],
         quality_breakdown: Dict[str, float]
     ) -> List[str]:
-        """Generate improvement recommendations"""
-        recommendations = []
+        """Generate improvement recommendations"""        recommendations = []
         
         try:
             # Dimensionality recommendations
@@ -797,8 +773,7 @@ class VectorQualityAssessment:
             return ["Error generating recommendations"]
     
     async def _load_vectors(self, content_type: str, sample_size: int) -> np.ndarray:
-        """Load vectors from database"""
-        try:
+        """Load vectors from database"""        try:
             async with get_db_session() as session:
                 stmt = select(ContentFingerprint.vector_embedding).where(
                     and_(
@@ -826,8 +801,7 @@ class VectorQualityAssessment:
             return np.array([])
     
     async def _visualize_dimensionality(self, vectors: np.ndarray, output_dir: str) -> str:
-        """Create dimensionality visualization"""
-        try:
+        """Create dimensionality visualization"""        try:
             fig, axes = plt.subplots(2, 2, figsize=(15, 12))
             
             # PCA explained variance
@@ -880,8 +854,7 @@ class VectorQualityAssessment:
         clustering_analyses: List[ClusteringAnalysis], 
         output_dir: str
     ) -> str:
-        """Create clustering visualization"""
-        try:
+        """Create clustering visualization"""        try:
             if not clustering_analyses:
                 return ""
             
@@ -949,8 +922,7 @@ class VectorQualityAssessment:
         separability_analysis: SeparabilityAnalysis, 
         output_dir: str
     ) -> str:
-        """Create separability visualization"""
-        try:
+        """Create separability visualization"""        try:
             fig, axes = plt.subplots(2, 2, figsize=(15, 12))
             
             # Nearest neighbor distances distribution
@@ -1022,8 +994,7 @@ class VectorQualityAssessment:
         outlier_analysis: OutlierAnalysis, 
         output_dir: str
     ) -> str:
-        """Create outlier visualization"""
-        try:
+        """Create outlier visualization"""        try:
             fig, axes = plt.subplots(2, 2, figsize=(15, 12))
             
             # 2D visualization of outliers
@@ -1085,8 +1056,7 @@ class VectorQualityAssessment:
             return ""
     
     async def _save_report(self, report: QualityReport, output_dir: str) -> None:
-        """Save quality assessment report"""
-        try:
+        """Save quality assessment report"""        try:
             report_path = os.path.join(output_dir, 'quality_report.json')
             
             # Convert report to JSON-serializable format
@@ -1123,8 +1093,7 @@ class VectorQualityAssessment:
     
     # Helper methods
     def _calculate_reconstruction_error(self, original: np.ndarray, reducer) -> float:
-        """Calculate reconstruction error for dimensionality reduction"""
-        try:
+        """Calculate reconstruction error for dimensionality reduction"""        try:
             reduced = reducer.transform(original)
             reconstructed = reducer.inverse_transform(reduced)
             error = np.mean(np.square(original - reconstructed))
@@ -1133,16 +1102,14 @@ class VectorQualityAssessment:
             return 0.0
     
     def _calculate_trustworthiness(self, original: np.ndarray, reduced: np.ndarray) -> float:
-        """Calculate trustworthiness of dimensionality reduction"""
-        try:
+        """Calculate trustworthiness of dimensionality reduction"""        try:
             from sklearn.manifold import trustworthiness
             return trustworthiness(original, reduced)
         except:
             return 0.0
     
     def _calculate_independence_score(self, components: np.ndarray) -> float:
-        """Calculate independence score for ICA components"""
-        try:
+        """Calculate independence score for ICA components"""        try:
             # Measure statistical independence using mutual information
             correlations = np.corrcoef(components.T)
             off_diagonal = correlations[np.triu_indices_from(correlations, k=1)]
@@ -1152,8 +1119,7 @@ class VectorQualityAssessment:
             return 0.0
     
     def _calculate_k_distances(self, vectors: np.ndarray, k: int = 4) -> np.ndarray:
-        """Calculate k-distances for DBSCAN epsilon estimation"""
-        try:
+        """Calculate k-distances for DBSCAN epsilon estimation"""        try:
             nn = NearestNeighbors(n_neighbors=k + 1)
             nn.fit(vectors)
             distances, _ = nn.kneighbors(vectors)
@@ -1162,8 +1128,7 @@ class VectorQualityAssessment:
             return np.array([])
     
     def _calculate_overlap_coefficient(self, vectors: np.ndarray, labels: np.ndarray) -> float:
-        """Calculate overlap coefficient between clusters"""
-        try:
+        """Calculate overlap coefficient between clusters"""        try:
             unique_labels = np.unique(labels)
             if len(unique_labels) < 2:
                 return 0.0
@@ -1193,8 +1158,7 @@ class VectorQualityAssessment:
             return 0.0
     
     async def close(self) -> None:
-        """Close quality assessment system"""
-        try:
+        """Close quality assessment system"""        try:
             # Clear caches
             self.analysis_cache.clear()
             self.vector_cache.clear()

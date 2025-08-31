@@ -50,8 +50,7 @@ UNAUTHORIZED ACCESS IS FEDERAL/INTERNATIONAL CRIME:
 
 Contact mlaiel@live.de for MANDATORY legal authorization.
 Unauthorized access triggers automatic legal action protocols.
-"""
-# Import all core components
+"""# Import all core components
 from .automated_generator import AutomatedNoticeGenerator, GenerationRequest, GenerationResult
 from .compliance_tracker import ComplianceTracker, ComplianceStatus, EscalationLevel
 from .delivery_manager import DeliveryManager, DeliveryMethod, DeliveryStatus

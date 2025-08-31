@@ -24,8 +24,7 @@ IA Protection & Rights Management →
 SEO Optimization → 
 Collaboration Matching → 
 Multi-Platform Distribution
-"""
-import logging
+"""import logging
 from typing import Dict, List, Any, Optional
 
 # Import all integration modules

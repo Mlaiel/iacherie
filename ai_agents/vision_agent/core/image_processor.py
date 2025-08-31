@@ -1,5 +1,4 @@
-"""
-Image Processor - Enterprise Image Processing & Enhancement System
+"""Image Processor - Enterprise Image Processing & Enhancement System
 =================================================================
 
 Advanced image processing system with AI-powered enhancement, format conversion,
@@ -13,9 +12,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import cv2
 import numpy as np
@@ -63,24 +60,21 @@ from .config import VisionAgentConfig, ProcessingMode
 logger = logging.getLogger(__name__)
 
 class ImageQuality(Enum):
-    """Image quality assessment levels"""
-    EXCELLENT = "excellent"
+    """Image quality assessment levels"""    EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair" 
     POOR = "poor"
     UNACCEPTABLE = "unacceptable"
 
 class ProcessingLevel(Enum):
-    """Image processing complexity levels"""
-    BASIC = "basic"
+    """Image processing complexity levels"""    BASIC = "basic"
     STANDARD = "standard"
     PROFESSIONAL = "professional"
     STUDIO = "studio"
     ENTERPRISE = "enterprise"
 
 class EnhancementType(Enum):
-    """Types of image enhancement"""
-    AUTOMATIC = "automatic"
+    """Types of image enhancement"""    AUTOMATIC = "automatic"
     PORTRAIT = "portrait"
     LANDSCAPE = "landscape"
     MACRO = "macro"
@@ -91,8 +85,7 @@ class EnhancementType(Enum):
 
 @dataclass
 class ImageMetrics:
-    """Comprehensive image quality metrics"""
-    resolution: Tuple[int, int]
+    """Comprehensive image quality metrics"""    resolution: Tuple[int, int]
     file_size_bytes: int
     format: str
     color_space: str
@@ -120,8 +113,7 @@ class ImageMetrics:
 
 @dataclass
 class ProcessingResult:
-    """Image processing operation result"""
-    success: bool
+    """Image processing operation result"""    success: bool
     processed_image: Optional[np.ndarray] = None
     processing_time: float = 0.0
     operations_applied: List[str] = None
@@ -131,12 +123,10 @@ class ProcessingResult:
     errors: List[str] = None
 
 class ImageProcessor(BaseAgent):
-    """
-    Enterprise-grade image processing system providing comprehensive
+    """    Enterprise-grade image processing system providing comprehensive
     image manipulation, enhancement, quality assessment, and format conversion
     capabilities for professional content creation workflows.
-    """
-    
+    """    
     def __init__(self, config: Optional[VisionAgentConfig] = None):
         super().__init__(
             agent_id="image_processor",
@@ -241,8 +231,7 @@ class ImageProcessor(BaseAgent):
         }
 
     async def initialize(self) -> bool:
-        """Initialize image processing components with advanced ML models"""
-        try:
+        """Initialize image processing components with advanced ML models"""        try:
             logger.info("Initializing Enterprise Image Processor...")
             
             # Initialize device and GPU optimization
@@ -279,8 +268,7 @@ class ImageProcessor(BaseAgent):
             return False
     
     def _init_enhancement_models(self):
-        """Initialize AI models for image enhancement"""
-        try:
+        """Initialize AI models for image enhancement"""        try:
             # Super-resolution model (ESRGAN)
             self.sr_model = None  # Would load actual ESRGAN model
             
@@ -299,8 +287,7 @@ class ImageProcessor(BaseAgent):
             logger.warning(f"Some enhancement models could not be loaded: {e}")
     
     def _init_face_detection_models(self):
-        """Initialize face detection and landmark models"""
-        try:
+        """Initialize face detection and landmark models"""        try:
             # Initialize dlib face detector
             self.face_detector = dlib.get_frontal_face_detector()
             
@@ -321,8 +308,7 @@ class ImageProcessor(BaseAgent):
             self.landmark_predictor = None
     
     def _init_image_transforms(self):
-        """Initialize comprehensive image transform pipelines"""
-        # Standard preprocessing transforms
+        """Initialize comprehensive image transform pipelines"""        # Standard preprocessing transforms
         self.preprocess_transform = transforms.Compose([
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.485, 0.456, 0.406], 
@@ -345,8 +331,7 @@ class ImageProcessor(BaseAgent):
         ])
     
     async def _warm_up_models(self):
-        """Warm up models with sample data for optimal performance"""
-        try:
+        """Warm up models with sample data for optimal performance"""        try:
             # Create dummy image for warm-up
             dummy_image = np.random.randint(0, 255, (224, 224, 3), dtype=np.uint8)
             
@@ -359,8 +344,7 @@ class ImageProcessor(BaseAgent):
             logger.warning(f"Model warm-up failed: {e}")
     
     def _ensure_directories(self):
-        """Ensure all necessary directories exist"""
-        directories = [
+        """Ensure all necessary directories exist"""        directories = [
             self.config.storage.temp_path,
             self.config.storage.cache_path,
             self.config.storage.results_path,
@@ -377,8 +361,7 @@ class ImageProcessor(BaseAgent):
                           enhancement_type: EnhancementType = EnhancementType.AUTOMATIC,
                           custom_operations: Optional[List[str]] = None,
                           preserve_original: bool = True) -> ProcessingResult:
-        """
-        Process image with comprehensive enhancement and optimization
+        """        Process image with comprehensive enhancement and optimization
         
         Args:
             image_input: Input image (file path, bytes, array, or PIL Image)
@@ -389,8 +372,7 @@ class ImageProcessor(BaseAgent):
             
         Returns:
             ProcessingResult with processed image and metrics
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Load and validate image
@@ -474,8 +456,7 @@ class ImageProcessor(BaseAgent):
         quality_target: str = "high",
         preserve_metadata: bool = True
     ) -> Dict[str, Any]:
-        """
-        Process image with specified operations
+        """        Process image with specified operations
         
         Args:
             image_data: Image as numpy array, bytes, or file path
@@ -485,8 +466,7 @@ class ImageProcessor(BaseAgent):
             
         Returns:
             Processing results with enhanced image and metrics
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             # Load and validate image
@@ -506,8 +486,7 @@ class ImageProcessor(BaseAgent):
             operation_results = {}
             
             async def _load_image(self, image_input: Union[str, bytes, np.ndarray, Image.Image]) -> Tuple[Optional[np.ndarray], str]:
-        """Load image from various input formats with comprehensive validation"""
-        try:
+        """Load image from various input formats with comprehensive validation"""        try:
             original_format = "unknown"
             
             if isinstance(image_input, np.ndarray):
@@ -590,8 +569,7 @@ class ImageProcessor(BaseAgent):
                                        processing_level: ProcessingLevel,
                                        enhancement_type: EnhancementType,
                                        custom_operations: Optional[List[str]] = None) -> np.ndarray:
-        """Apply comprehensive processing pipeline based on level and type"""
-        
+        """Apply comprehensive processing pipeline based on level and type"""        
         processed_image = image.copy()
         
         # Define operation sets for different processing levels
@@ -631,8 +609,7 @@ class ImageProcessor(BaseAgent):
                                     image: np.ndarray,
                                     operation: str,
                                     enhancement_type: EnhancementType) -> np.ndarray:
-        """Apply a single image processing operation"""
-        
+        """Apply a single image processing operation"""        
         if operation == 'resize':
             return await self._smart_resize(image)
         elif operation == 'denoise':
@@ -668,8 +645,7 @@ class ImageProcessor(BaseAgent):
             return image
 
     async def _smart_resize(self, image: np.ndarray) -> np.ndarray:
-        """Intelligent image resizing with quality preservation"""
-        height, width = image.shape[:2]
+        """Intelligent image resizing with quality preservation"""        height, width = image.shape[:2]
         
         # Don't resize if already within acceptable range
         if width <= self.max_dimension and height <= self.max_dimension:
@@ -688,8 +664,7 @@ class ImageProcessor(BaseAgent):
         return resized
 
     async def _denoise_image(self, image: np.ndarray) -> np.ndarray:
-        """Basic image denoising"""
-        return cv2.fastNlMeansDenoisingColored(
+        """Basic image denoising"""        return cv2.fastNlMeansDenoisingColored(
             image,
             None,
             h=self.enhancement_params['denoise_h'],
@@ -699,8 +674,7 @@ class ImageProcessor(BaseAgent):
         )
 
     async def _advanced_denoise(self, image: np.ndarray) -> np.ndarray:
-        """Advanced denoising using bilateral filter and morphological operations"""
-        # Apply bilateral filter
+        """Advanced denoising using bilateral filter and morphological operations"""        # Apply bilateral filter
         bilateral = cv2.bilateralFilter(
             image,
             d=self.enhancement_params['bilateral_filter_d'],
@@ -715,8 +689,7 @@ class ImageProcessor(BaseAgent):
         return opened
 
     async def _ml_denoise(self, image: np.ndarray) -> np.ndarray:
-        """ML-based denoising (placeholder for actual ML model)"""
-        if self.denoise_model is not None:
+        """ML-based denoising (placeholder for actual ML model)"""        if self.denoise_model is not None:
             # Would apply actual ML denoising model
             pass
         
@@ -724,8 +697,7 @@ class ImageProcessor(BaseAgent):
         return await self._advanced_denoise(image)
 
     async def _adjust_brightness_contrast(self, image: np.ndarray, enhancement_type: EnhancementType) -> np.ndarray:
-        """Adjust brightness and contrast based on enhancement type"""
-        
+        """Adjust brightness and contrast based on enhancement type"""        
         # Convert to LAB color space for better control
         lab = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
         l, a, b = cv2.split(lab)
@@ -773,8 +745,7 @@ class ImageProcessor(BaseAgent):
         return enhanced_bgr
 
     async def _color_correction(self, image: np.ndarray) -> np.ndarray:
-        """Basic color correction and white balance"""
-        
+        """Basic color correction and white balance"""        
         # Simple gray world white balance
         result = image.copy().astype(np.float32)
         
@@ -787,8 +758,7 @@ class ImageProcessor(BaseAgent):
         return np.clip(result, 0, 255).astype(np.uint8)
 
     async def _advanced_color_correction(self, image: np.ndarray, enhancement_type: EnhancementType) -> np.ndarray:
-        """Advanced color correction with enhancement type specific processing"""
-        
+        """Advanced color correction with enhancement type specific processing"""        
         # Convert to different color spaces for processing
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV).astype(np.float32)
         h, s, v = cv2.split(hsv)
@@ -812,14 +782,12 @@ class ImageProcessor(BaseAgent):
         return enhanced_bgr
 
     async def _sharpen_image(self, image: np.ndarray) -> np.ndarray:
-        """Basic image sharpening"""
-        kernel = self.kernels['sharpen_light']
+        """Basic image sharpening"""        kernel = self.kernels['sharpen_light']
         sharpened = cv2.filter2D(image, -1, kernel)
         return cv2.addWeighted(image, 0.7, sharpened, 0.3, 0)
 
     async def _unsharp_mask(self, image: np.ndarray) -> np.ndarray:
-        """Unsharp masking for professional sharpening"""
-        
+        """Unsharp masking for professional sharpening"""        
         # Create Gaussian blur
         blurred = cv2.GaussianBlur(
             image, 
@@ -842,8 +810,7 @@ class ImageProcessor(BaseAgent):
         return sharpened
 
     async def _adaptive_sharpen(self, image: np.ndarray) -> np.ndarray:
-        """Adaptive sharpening based on local image characteristics"""
-        
+        """Adaptive sharpening based on local image characteristics"""        
         # Calculate local variance to identify areas needing sharpening
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         local_var = cv2.Laplacian(gray, cv2.CV_64F).var()
@@ -870,8 +837,7 @@ class ImageProcessor(BaseAgent):
         return sharpened
 
     async def _histogram_equalization(self, image: np.ndarray) -> np.ndarray:
-        """Histogram equalization for contrast enhancement"""
-        
+        """Histogram equalization for contrast enhancement"""        
         # Convert to LAB color space
         lab = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
         l, a, b = cv2.split(lab)
@@ -890,8 +856,7 @@ class ImageProcessor(BaseAgent):
         return enhanced_bgr
 
     async def _local_contrast_enhancement(self, image: np.ndarray) -> np.ndarray:
-        """Local contrast enhancement using guided filter"""
-        
+        """Local contrast enhancement using guided filter"""        
         # Convert to float for processing
         img_float = image.astype(np.float32) / 255.0
         
@@ -902,8 +867,7 @@ class ImageProcessor(BaseAgent):
         return enhanced
 
     async def _hdr_tone_mapping(self, image: np.ndarray) -> np.ndarray:
-        """HDR tone mapping for high dynamic range enhancement"""
-        
+        """HDR tone mapping for high dynamic range enhancement"""        
         # Create HDR image (single image case)
         img_float = image.astype(np.float32) / 255.0
         
@@ -917,8 +881,7 @@ class ImageProcessor(BaseAgent):
         return result
 
     async def _enhance_details(self, image: np.ndarray) -> np.ndarray:
-        """Enhance fine details in the image"""
-        
+        """Enhance fine details in the image"""        
         # Edge-preserving smoothing
         smooth = cv2.edgePreservingFilter(image, flags=1, sigma_s=50, sigma_r=0.4)
         
@@ -934,8 +897,7 @@ class ImageProcessor(BaseAgent):
         return result
 
     async def _professional_color_grading(self, image: np.ndarray, enhancement_type: EnhancementType) -> np.ndarray:
-        """Professional color grading based on enhancement type"""
-        
+        """Professional color grading based on enhancement type"""        
         if enhancement_type == EnhancementType.PORTRAIT:
             # Warm, pleasing skin tones
             return self._apply_color_matrix(image, self.color_matrices['warm_filter'])
@@ -949,8 +911,7 @@ class ImageProcessor(BaseAgent):
             return image
 
     def _apply_color_matrix(self, image: np.ndarray, color_matrix: np.ndarray) -> np.ndarray:
-        """Apply color transformation matrix"""
-        
+        """Apply color transformation matrix"""        
         # Reshape image for matrix multiplication
         img_reshaped = image.reshape(-1, 3).astype(np.float32)
         
@@ -962,8 +923,7 @@ class ImageProcessor(BaseAgent):
         return result.reshape(image.shape)
 
     def _generate_cache_key(self, image_input: Any, processing_level: ProcessingLevel, enhancement_type: EnhancementType) -> str:
-        """Generate cache key for processing results"""
-        
+        """Generate cache key for processing results"""        
         # Create hash from input
         if isinstance(image_input, str):
             input_hash = hashlib.md5(image_input.encode()).hexdigest()
@@ -975,8 +935,7 @@ class ImageProcessor(BaseAgent):
         return f"img_proc_{input_hash}_{processing_level.value}_{enhancement_type.value}"
 
     def _get_applied_operations(self, processing_level: ProcessingLevel, enhancement_type: EnhancementType) -> List[str]:
-        """Get list of operations that would be applied"""
-        
+        """Get list of operations that would be applied"""        
         operation_sets = {
             ProcessingLevel.BASIC: ['resize', 'brightness_contrast'],
             ProcessingLevel.STANDARD: ['resize', 'denoise', 'brightness_contrast', 'sharpen'],
@@ -997,8 +956,7 @@ class ImageProcessor(BaseAgent):
         return operation_sets.get(processing_level, operation_sets[ProcessingLevel.STANDARD])
 
     def _calculate_quality_improvement(self, original_metrics: ImageMetrics, processed_metrics: ImageMetrics) -> float:
-        """Calculate quality improvement score"""
-        
+        """Calculate quality improvement score"""        
         improvements = []
         
         # Compare key metrics
@@ -1017,8 +975,7 @@ class ImageProcessor(BaseAgent):
         return np.mean(improvements) if improvements else 0.0
 
     async def _load_image(self, image_data: Union[np.ndarray, bytes, str]) -> np.ndarray:
-        """Load image from various input formats"""
-        if isinstance(image_data, np.ndarray):
+        """Load image from various input formats"""        if isinstance(image_data, np.ndarray):
             return image_data
         elif isinstance(image_data, bytes):
             image = cv2.imdecode(np.frombuffer(image_data, np.uint8), cv2.IMREAD_COLOR)
@@ -1034,8 +991,7 @@ class ImageProcessor(BaseAgent):
             raise ValidationError("Unsupported image data format")
 
     async def _extract_image_metadata(self, image_path: str) -> Dict[str, Any]:
-        """Extract comprehensive image metadata"""
-        try:
+        """Extract comprehensive image metadata"""        try:
             with Image.open(image_path) as img:
                 metadata = {
                     'format': img.format,
@@ -1061,8 +1017,7 @@ class ImageProcessor(BaseAgent):
             return {}
 
     async def _assess_image_quality(self, image: np.ndarray) -> Dict[str, Any]:
-        """Comprehensive image quality assessment"""
-        try:
+        """Comprehensive image quality assessment"""        try:
             # Convert to grayscale for some calculations
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             
@@ -1122,16 +1077,14 @@ class ImageProcessor(BaseAgent):
                 'recommendations': self._generate_quality_recommendations(
                     blur_score, noise_score, brightness, contrast
     async def assess_quality(self, image: np.ndarray) -> ImageMetrics:
-        """
-        Comprehensive image quality assessment with detailed metrics
+        """        Comprehensive image quality assessment with detailed metrics
         
         Args:
             image: Input image array
             
         Returns:
             ImageMetrics object with comprehensive quality assessment
-        """
-        try:
+        """        try:
             # Basic image information
             height, width = image.shape[:2]
             channels = image.shape[2] if len(image.shape) == 3 else 1
@@ -1254,15 +1207,13 @@ class ImageProcessor(BaseAgent):
             )
 
     def _calculate_sobel_variance(self, gray_image: np.ndarray) -> float:
-        """Calculate blur using Sobel operator variance"""
-        sobel_x = cv2.Sobel(gray_image, cv2.CV_64F, 1, 0, ksize=3)
+        """Calculate blur using Sobel operator variance"""        sobel_x = cv2.Sobel(gray_image, cv2.CV_64F, 1, 0, ksize=3)
         sobel_y = cv2.Sobel(gray_image, cv2.CV_64F, 0, 1, ksize=3)
         sobel_magnitude = np.sqrt(sobel_x**2 + sobel_y**2)
         return np.var(sobel_magnitude)
 
     def _estimate_noise_level(self, gray_image: np.ndarray) -> float:
-        """Estimate noise level using multiple methods"""
-        
+        """Estimate noise level using multiple methods"""        
         # Method 1: High-frequency noise estimation
         noise_kernel = np.array([[1, -2, 1], [-2, 4, -2], [1, -2, 1]])
         noise_response = cv2.filter2D(gray_image.astype(np.float32), -1, noise_kernel)
@@ -1281,8 +1232,7 @@ class ImageProcessor(BaseAgent):
         return min(noise_estimate / 5.0, 100.0)
 
     def _evaluate_brightness_quality(self, brightness_mean: float, brightness_std: float) -> float:
-        """Evaluate brightness quality (0-1 scale)"""
-        
+        """Evaluate brightness quality (0-1 scale)"""        
         # Optimal brightness range
         optimal_min, optimal_max = 80, 170
         acceptable_min, acceptable_max = 50, 200
@@ -1312,8 +1262,7 @@ class ImageProcessor(BaseAgent):
         return (brightness_quality + distribution_quality) / 2
 
     def _calculate_michelson_contrast(self, gray_image: np.ndarray) -> float:
-        """Calculate Michelson contrast"""
-        max_luminance = np.max(gray_image)
+        """Calculate Michelson contrast"""        max_luminance = np.max(gray_image)
         min_luminance = np.min(gray_image)
         
         if max_luminance + min_luminance == 0:
@@ -1322,8 +1271,7 @@ class ImageProcessor(BaseAgent):
         return (max_luminance - min_luminance) / (max_luminance + min_luminance)
 
     def _calculate_sharpness_score(self, gray_image: np.ndarray) -> float:
-        """Calculate comprehensive sharpness score"""
-        
+        """Calculate comprehensive sharpness score"""        
         # Method 1: Laplacian variance (edge-based)
         laplacian_var = cv2.Laplacian(gray_image, cv2.CV_64F).var()
         
@@ -1343,8 +1291,7 @@ class ImageProcessor(BaseAgent):
         return min(sharpness_raw, 1.0)
 
     def _analyze_exposure(self, gray_image: np.ndarray) -> float:
-        """Analyze exposure quality"""
-        
+        """Analyze exposure quality"""        
         histogram = cv2.calcHist([gray_image], [0], None, [256], [0, 256]).flatten()
         
         # Check for clipping
@@ -1378,8 +1325,7 @@ class ImageProcessor(BaseAgent):
         return max(0.0, min(1.0, exposure_score))
 
     def _analyze_saturation(self, hsv_image: np.ndarray) -> float:
-        """Analyze color saturation quality"""
-        if hsv_image is None:
+        """Analyze color saturation quality"""        if hsv_image is None:
             return 0.0
         
         s_channel = hsv_image[:, :, 1]
@@ -1407,8 +1353,7 @@ class ImageProcessor(BaseAgent):
         return (saturation_quality + variation_quality) / 2
 
     def _estimate_color_temperature(self, image: np.ndarray) -> float:
-        """Estimate color temperature in Kelvin"""
-        
+        """Estimate color temperature in Kelvin"""        
         # Calculate average RGB values
         b_mean = np.mean(image[:, :, 0])
         g_mean = np.mean(image[:, :, 1])
@@ -1431,8 +1376,7 @@ class ImageProcessor(BaseAgent):
         return max(2000, min(10000, temp))
 
     def _evaluate_white_balance(self, image: np.ndarray) -> float:
-        """Evaluate white balance quality (0-1 scale)"""
-        
+        """Evaluate white balance quality (0-1 scale)"""        
         # Calculate channel means
         b_mean = np.mean(image[:, :, 0])
         g_mean = np.mean(image[:, :, 1])
@@ -1461,12 +1405,10 @@ class ImageProcessor(BaseAgent):
             return 0.3
 
     def _calculate_dynamic_range(self, gray_image: np.ndarray) -> float:
-        """Calculate dynamic range of the image"""
-        return float(np.max(gray_image) - np.min(gray_image))
+        """Calculate dynamic range of the image"""        return float(np.max(gray_image) - np.min(gray_image))
 
     def _analyze_histogram_uniformity(self, gray_image: np.ndarray) -> float:
-        """Analyze histogram uniformity (0-1 scale)"""
-        
+        """Analyze histogram uniformity (0-1 scale)"""        
         histogram = cv2.calcHist([gray_image], [0], None, [256], [0, 256]).flatten()
         
         # Normalize histogram
@@ -1479,8 +1421,7 @@ class ImageProcessor(BaseAgent):
         return entropy / 8.0
 
     def _calculate_edge_density(self, gray_image: np.ndarray) -> float:
-        """Calculate edge density as a texture measure"""
-        
+        """Calculate edge density as a texture measure"""        
         # Use Canny edge detection
         edges = cv2.Canny(gray_image, 50, 150)
         
@@ -1491,8 +1432,7 @@ class ImageProcessor(BaseAgent):
         return edge_pixels / total_pixels
 
     def _calculate_texture_complexity(self, gray_image: np.ndarray) -> float:
-        """Calculate texture complexity using Local Binary Pattern concept"""
-        
+        """Calculate texture complexity using Local Binary Pattern concept"""        
         # Simple texture measure using standard deviation in local windows
         kernel_size = 5
         kernel = np.ones((kernel_size, kernel_size), np.float32) / (kernel_size * kernel_size)
@@ -1513,8 +1453,7 @@ class ImageProcessor(BaseAgent):
                            target_format: str,
                            quality: int = 95,
                            optimize: bool = True) -> bytes:
-        """
-        Convert image to target format with optimization
+        """        Convert image to target format with optimization
         
         Args:
             image: Input image array
@@ -1524,8 +1463,7 @@ class ImageProcessor(BaseAgent):
             
         Returns:
             Converted image as bytes
-        """
-        try:
+        """        try:
             # Convert from BGR to RGB for PIL
             if len(image.shape) == 3:
                 image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -1593,16 +1531,14 @@ class ImageProcessor(BaseAgent):
             raise ImageProcessingError(f"Failed to convert to {target_format}: {e}")
 
     async def generate_fingerprint(self, image: np.ndarray) -> str:
-        """
-        Generate unique fingerprint for image content
+        """        Generate unique fingerprint for image content
         
         Args:
             image: Input image array
             
         Returns:
             Unique fingerprint string
-        """
-        try:
+        """        try:
             # Convert to PIL Image for hashing
             if len(image.shape) == 3:
                 image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -1634,8 +1570,7 @@ class ImageProcessor(BaseAgent):
                            processing_level: ProcessingLevel = ProcessingLevel.STANDARD,
                            enhancement_type: EnhancementType = EnhancementType.AUTOMATIC,
                            max_concurrent: Optional[int] = None) -> List[ProcessingResult]:
-        """
-        Process multiple images concurrently
+        """        Process multiple images concurrently
         
         Args:
             images: List of images to process
@@ -1645,8 +1580,7 @@ class ImageProcessor(BaseAgent):
             
         Returns:
             List of processing results
-        """
-        max_concurrent = max_concurrent or self.config.performance.max_concurrent_tasks
+        """        max_concurrent = max_concurrent or self.config.performance.max_concurrent_tasks
         
         # Create semaphore to limit concurrent processing
         semaphore = asyncio.Semaphore(max_concurrent)
@@ -1674,8 +1608,7 @@ class ImageProcessor(BaseAgent):
         return processed_results
 
     async def cleanup(self):
-        """Cleanup resources and temporary files"""
-        try:
+        """Cleanup resources and temporary files"""        try:
             # Close thread and process pools
             if hasattr(self, 'thread_pool'):
                 self.thread_pool.shutdown(wait=True)
@@ -1702,8 +1635,7 @@ class ImageProcessor(BaseAgent):
             logger.error(f"Cleanup failed: {e}")
 
     async def get_statistics(self) -> Dict[str, Any]:
-        """Get processing statistics"""
-        return {
+        """Get processing statistics"""        return {
             'status': self.status.value,
             'version': self.version,
             'device': str(self.device) if hasattr(self, 'device') else 'unknown',
@@ -1718,8 +1650,7 @@ class ImageProcessor(BaseAgent):
             return {'overall_score': 0.0, 'quality_class': ImageQuality.POOR, 'error': str(e)}
 
     def _estimate_noise(self, gray_image: np.ndarray) -> float:
-        """Estimate noise level in grayscale image"""
-        # Using Sobel operator to estimate noise
+        """Estimate noise level in grayscale image"""        # Using Sobel operator to estimate noise
         sobelx = cv2.Sobel(gray_image, cv2.CV_64F, 1, 0, ksize=3)
         sobely = cv2.Sobel(gray_image, cv2.CV_64F, 0, 1, ksize=3)
         gradient_magnitude = np.sqrt(sobelx**2 + sobely**2)
@@ -1728,8 +1659,7 @@ class ImageProcessor(BaseAgent):
         return np.std(gradient_magnitude)
 
     def _analyze_color_distribution(self, image: np.ndarray) -> float:
-        """Analyze color distribution diversity"""
-        # Convert to HSV for better color analysis
+        """Analyze color distribution diversity"""        # Convert to HSV for better color analysis
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
         
         # Calculate histogram for hue channel
@@ -1745,8 +1675,7 @@ class ImageProcessor(BaseAgent):
         return min(entropy / 8.0, 1.0)
 
     def _normalize_brightness(self, brightness: float) -> float:
-        """Normalize brightness score"""
-        optimal_brightness = 128  # Middle gray
+        """Normalize brightness score"""        optimal_brightness = 128  # Middle gray
         distance_from_optimal = abs(brightness - optimal_brightness)
         return max(0, 1.0 - distance_from_optimal / 128.0)
 
@@ -1757,8 +1686,7 @@ class ImageProcessor(BaseAgent):
         brightness: float, 
         contrast: float
     ) -> List[str]:
-        """Generate quality improvement recommendations"""
-        recommendations = []
+        """Generate quality improvement recommendations"""        recommendations = []
         
         if blur_score < self.quality_thresholds['blur_threshold']:
             recommendations.append("Apply sharpening filter to reduce blur")
@@ -1782,8 +1710,7 @@ class ImageProcessor(BaseAgent):
         operation: str, 
         quality_target: str
     ) -> Dict[str, Any]:
-        """Apply specific image operation"""
-        try:
+        """Apply specific image operation"""        try:
             operation_start = datetime.now()
             
             if operation == 'enhance':
@@ -1820,8 +1747,7 @@ class ImageProcessor(BaseAgent):
             return {'image': image, 'applied': False, 'error': str(e)}
 
     async def _enhance_image(self, image: np.ndarray, quality_target: str) -> np.ndarray:
-        """Apply comprehensive image enhancement"""
-        enhanced = image.copy()
+        """Apply comprehensive image enhancement"""        enhanced = image.copy()
         
         # Apply histogram equalization for better contrast
         if len(image.shape) == 3:
@@ -1850,8 +1776,7 @@ class ImageProcessor(BaseAgent):
         return enhanced
 
     async def _denoise_image(self, image: np.ndarray) -> np.ndarray:
-        """Apply advanced noise reduction"""
-        # Use Non-Local Means Denoising
+        """Apply advanced noise reduction"""        # Use Non-Local Means Denoising
         if len(image.shape) == 3:
             denoised = cv2.fastNlMeansDenoisingColored(
                 image,
@@ -1873,16 +1798,14 @@ class ImageProcessor(BaseAgent):
         return denoised
 
     async def _sharpen_image(self, image: np.ndarray) -> np.ndarray:
-        """Apply intelligent sharpening"""
-        # Use unsharp masking for better results
+        """Apply intelligent sharpening"""        # Use unsharp masking for better results
         gaussian_blur = cv2.GaussianBlur(image, (9, 9), 2.0)
         sharpened = cv2.addWeighted(image, 1.5, gaussian_blur, -0.5, 0)
         
         return np.clip(sharpened, 0, 255).astype(np.uint8)
 
     async def _adjust_brightness(self, image: np.ndarray) -> np.ndarray:
-        """Intelligently adjust brightness"""
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        """Intelligently adjust brightness"""        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         mean_brightness = np.mean(gray)
         
         # Calculate adjustment needed
@@ -1895,8 +1818,7 @@ class ImageProcessor(BaseAgent):
         return adjusted
 
     async def _enhance_contrast(self, image: np.ndarray) -> np.ndarray:
-        """Enhance image contrast using CLAHE"""
-        if len(image.shape) == 3:
+        """Enhance image contrast using CLAHE"""        if len(image.shape) == 3:
             lab = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
             clahe = cv2.createCLAHE(clipLimit=3.0, tileGridSize=(8,8))
             lab[:,:,0] = clahe.apply(lab[:,:,0])
@@ -1908,8 +1830,7 @@ class ImageProcessor(BaseAgent):
         return enhanced
 
     async def _color_correction(self, image: np.ndarray) -> np.ndarray:
-        """Apply automatic color correction"""
-        # Convert to LAB color space for better color correction
+        """Apply automatic color correction"""        # Convert to LAB color space for better color correction
         lab = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
         
         # Apply white balance correction
@@ -1931,8 +1852,7 @@ class ImageProcessor(BaseAgent):
         return corrected
 
     async def _intelligent_resize(self, image: np.ndarray, quality_target: str) -> np.ndarray:
-        """Intelligent resizing with quality preservation"""
-        height, width = image.shape[:2]
+        """Intelligent resizing with quality preservation"""        height, width = image.shape[:2]
         
         # Determine target size based on quality target
         if quality_target == "high":
@@ -1958,12 +1878,10 @@ class ImageProcessor(BaseAgent):
         return image
 
     async def _apply_watermark(self, image: np.ndarray) -> np.ndarray:
-        """Apply watermark for content protection"""
-        return await self.watermark_manager.apply_watermark(image)
+        """Apply watermark for content protection"""        return await self.watermark_manager.apply_watermark(image)
 
     async def _generate_image_hash(self, image: np.ndarray) -> str:
-        """Generate perceptual hash for image fingerprinting"""
-        # Convert to PIL Image for hashing
+        """Generate perceptual hash for image fingerprinting"""        # Convert to PIL Image for hashing
         pil_image = Image.fromarray(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
         
         # Generate multiple hash types for better matching
@@ -1982,8 +1900,7 @@ class ImageProcessor(BaseAgent):
         original: np.ndarray, 
         processed: np.ndarray
     ) -> Dict[str, Any]:
-        """Calculate file size reduction metrics"""
-        original_size = original.nbytes
+        """Calculate file size reduction metrics"""        original_size = original.nbytes
         processed_size = processed.nbytes
         
         reduction_bytes = original_size - processed_size
@@ -2002,8 +1919,7 @@ class ImageProcessor(BaseAgent):
         operations: List[str] = None,
         max_concurrent: int = 5
     ) -> List[Dict[str, Any]]:
-        """Process multiple images concurrently"""
-        semaphore = asyncio.Semaphore(max_concurrent)
+        """Process multiple images concurrently"""        semaphore = asyncio.Semaphore(max_concurrent)
         
         async def process_single_image(image_data):
             async with semaphore:
@@ -2022,8 +1938,7 @@ class ImageProcessor(BaseAgent):
         target_format: str,
         quality: int = 95
     ) -> bytes:
-        """Convert image to different format"""
-        try:
+        """Convert image to different format"""        try:
             # Convert to PIL Image
             pil_image = Image.fromarray(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
             
@@ -2045,12 +1960,10 @@ class ImageProcessor(BaseAgent):
             raise ImageProcessingError(f"Format conversion failed: {e}")
 
     async def assess_quality(self, image: np.ndarray) -> Dict[str, Any]:
-        """Public method for image quality assessment"""
-        return await self._assess_image_quality(image)
+        """Public method for image quality assessment"""        return await self._assess_image_quality(image)
 
     async def cleanup(self) -> None:
-        """Cleanup resources"""
-        try:
+        """Cleanup resources"""        try:
             await self.performance_monitor.close()
             await self.watermark_manager.cleanup()
             logger.info("Image Processor cleanup completed")
@@ -2058,8 +1971,7 @@ class ImageProcessor(BaseAgent):
             logger.error(f"Image Processor cleanup failed: {e}")
 
     def get_supported_operations(self) -> List[str]:
-        """Get list of supported image operations"""
-        return [
+        """Get list of supported image operations"""        return [
             'enhance', 'denoise', 'sharpen', 'brightness', 
             'contrast', 'color_correct', 'resize', 'watermark'
         ]

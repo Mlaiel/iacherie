@@ -1,5 +1,4 @@
-"""
-Device Registry Database Components
+"""Device Registry Database Components
 
 Enterprise device management with fingerprinting, trust establishment, and security
 monitoring for multi-format creator authentication across devices and platforms.
@@ -23,9 +22,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-
-import uuid
+"""import uuid
 import json
 import hashlib
 import secrets
@@ -46,8 +43,7 @@ logger = logging.getLogger(__name__)
 
 
 class DeviceType(Enum):
-    """Device type classifications"""
-    MOBILE = "mobile"
+    """Device type classifications"""    MOBILE = "mobile"
     DESKTOP = "desktop"
     TABLET = "tablet"
     SMART_TV = "smart_tv"
@@ -58,8 +54,7 @@ class DeviceType(Enum):
 
 
 class DeviceStatus(Enum):
-    """Device status states"""
-    ACTIVE = "active"
+    """Device status states"""    ACTIVE = "active"
     INACTIVE = "inactive"
     SUSPICIOUS = "suspicious"
     BLOCKED = "blocked"
@@ -68,8 +63,7 @@ class DeviceStatus(Enum):
 
 
 class TrustLevel(Enum):
-    """Device trust levels"""
-    UNKNOWN = "unknown"
+    """Device trust levels"""    UNKNOWN = "unknown"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -79,8 +73,7 @@ class TrustLevel(Enum):
 
 @dataclass
 class DeviceCapabilities:
-    """Device capabilities structure"""
-    biometric_support: List[str]
+    """Device capabilities structure"""    biometric_support: List[str]
     secure_element: bool
     hardware_encryption: bool
     trusted_execution: bool
@@ -94,8 +87,7 @@ class DeviceCapabilities:
 
 
 class DeviceFingerprint(Base):
-    """Device fingerprinting data"""
-    __tablename__ = "device_fingerprints"
+    """Device fingerprinting data"""    __tablename__ = "device_fingerprints"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -126,8 +118,7 @@ class DeviceFingerprint(Base):
 
 
 class TrustedDevice(Base):
-    """Trusted device registry"""
-    __tablename__ = "trusted_devices"
+    """Trusted device registry"""    __tablename__ = "trusted_devices"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -163,8 +154,7 @@ class TrustedDevice(Base):
 
 
 class DeviceActivity(Base):
-    """Device activity tracking"""
-    __tablename__ = "device_activity"
+    """Device activity tracking"""    __tablename__ = "device_activity"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     device_id = Column(UUID(as_uuid=True), ForeignKey('trusted_devices.id'), nullable=False, index=True)
@@ -192,8 +182,7 @@ class DeviceActivity(Base):
 
 
 class DeviceSecurityAlert(Base):
-    """Device security alerts"""
-    __tablename__ = "device_security_alerts"
+    """Device security alerts"""    __tablename__ = "device_security_alerts"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     device_id = Column(UUID(as_uuid=True), ForeignKey('trusted_devices.id'), nullable=False, index=True)
@@ -222,8 +211,7 @@ class DeviceSecurityAlert(Base):
 
 
 class DeviceRegistry:
-    """Enterprise device registry and management"""
-    
+    """Enterprise device registry and management"""    
     def __init__(self, db_session: Session, geoip_db_path: Optional[str] = None):
         self.db = db_session
         self.geoip_reader = None
@@ -239,8 +227,7 @@ class DeviceRegistry:
         ip_address: str,
         additional_headers: Dict[str, str]
     ) -> str:
-        """Generate unique device fingerprint"""
-        # Parse user agent
+        """Generate unique device fingerprint"""        # Parse user agent
         ua = parse_user_agent(user_agent)
         
         # Collect fingerprinting data
@@ -261,8 +248,7 @@ class DeviceRegistry:
         return hashlib.sha256(fingerprint_str.encode()).hexdigest()
     
     def _get_location_info(self, ip_address: str) -> Dict[str, Any]:
-        """Get location information from IP address"""
-        if not self.geoip_reader:
+        """Get location information from IP address"""        if not self.geoip_reader:
             return {}
         
         try:
@@ -283,8 +269,7 @@ class DeviceRegistry:
             return {}
     
     def _calculate_fingerprint_score(self, fingerprint_data: Dict[str, Any]) -> int:
-        """Calculate uniqueness score for device fingerprint"""
-        # Simple scoring based on available data points
+        """Calculate uniqueness score for device fingerprint"""        # Simple scoring based on available data points
         score = 0
         
         # User agent components
@@ -318,8 +303,7 @@ class DeviceRegistry:
         device_name: Optional[str] = None,
         capabilities: Optional[DeviceCapabilities] = None
     ) -> Tuple[str, bool]:
-        """Register new device or update existing"""
-        try:
+        """Register new device or update existing"""        try:
             # Generate fingerprint
             fingerprint_hash = self._generate_device_fingerprint(
                 user_agent, ip_address, request_headers
@@ -383,8 +367,7 @@ class DeviceRegistry:
             raise
     
     def _determine_device_type(self, ua) -> DeviceType:
-        """Determine device type from user agent"""
-        if ua.is_mobile:
+        """Determine device type from user agent"""        if ua.is_mobile:
             return DeviceType.MOBILE
         elif ua.is_tablet:
             return DeviceType.TABLET
@@ -402,8 +385,7 @@ class DeviceRegistry:
         ip_address: str,
         verification_token: Optional[str] = None
     ) -> str:
-        """Establish trust relationship with device"""
-        try:
+        """Establish trust relationship with device"""        try:
             # Get location info
             location_info = self._get_location_info(ip_address)
             
@@ -450,8 +432,7 @@ class DeviceRegistry:
         ip_address: str,
         activity_type: str
     ) -> Dict[str, Any]:
-        """Verify device trust and calculate risk"""
-        try:
+        """Verify device trust and calculate risk"""        try:
             # Find device fingerprint
             fingerprint = self.db.query(DeviceFingerprint).filter(
                 DeviceFingerprint.fingerprint_hash == fingerprint_hash,
@@ -543,8 +524,7 @@ class DeviceRegistry:
             }
     
     async def _calculate_device_risk(self, device: TrustedDevice, current_ip: str) -> int:
-        """Calculate device risk score"""
-        risk_score = 0
+        """Calculate device risk score"""        risk_score = 0
         
         # Base risk from device trust level
         trust_risk = {
@@ -597,8 +577,7 @@ class DeviceRegistry:
         risk_indicators: Optional[Dict[str, Any]] = None,
         anomaly_score: Optional[int] = None
     ):
-        """Log device activity"""
-        try:
+        """Log device activity"""        try:
             location_info = self._get_location_info(ip_address)
             
             activity = DeviceActivity(
@@ -632,8 +611,7 @@ class DeviceRegistry:
         risk_indicators: Dict[str, Any],
         recommended_actions: Optional[List[str]] = None
     ) -> str:
-        """Create security alert for device"""
-        try:
+        """Create security alert for device"""        try:
             alert = DeviceSecurityAlert(
                 device_id=uuid.UUID(device_id),
                 user_id=uuid.UUID(user_id),
@@ -657,8 +635,7 @@ class DeviceRegistry:
             raise
     
     async def get_user_devices(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get user's trusted devices"""
-        try:
+        """Get user's trusted devices"""        try:
             devices = self.db.query(TrustedDevice).join(DeviceFingerprint).filter(
                 TrustedDevice.user_id == uuid.UUID(user_id),
                 TrustedDevice.device_status != DeviceStatus.BLOCKED.value
@@ -690,8 +667,7 @@ class DeviceRegistry:
             return []
     
     async def revoke_device_trust(self, user_id: str, device_id: str, reason: str) -> bool:
-        """Revoke trust for a device"""
-        try:
+        """Revoke trust for a device"""        try:
             device = self.db.query(TrustedDevice).filter(
                 TrustedDevice.id == uuid.UUID(device_id),
                 TrustedDevice.user_id == uuid.UUID(user_id)

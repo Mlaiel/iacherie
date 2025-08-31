@@ -1,5 +1,4 @@
-"""
-Enterprise Cache Invalidation Strategy
+"""Enterprise Cache Invalidation Strategy
 
 Advanced intelligent cache invalidation system specifically designed for the
 IA Influencer Agent platform's multi-format content management with AI-powered
@@ -38,9 +37,7 @@ Key Invalidation Features:
 - Creator notification system for content-affecting invalidations
 - Rollback capability for accidental invalidations
 - Batch invalidation optimization for efficiency
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import hashlib
@@ -57,8 +54,7 @@ import asyncpg
 
 
 class InvalidationType(Enum):
-    """Types of cache invalidation for different business scenarios"""
-    CONTENT_UPDATE = "content_update"           # Creator updates their content
+    """Types of cache invalidation for different business scenarios"""    CONTENT_UPDATE = "content_update"           # Creator updates their content
     AI_MODEL_UPDATE = "ai_model_update"         # AI models are retrained/updated
     PROTECTION_UPDATE = "protection_update"     # New copyright/protection data
     MONETIZATION_UPDATE = "monetization_update" # Revenue data updates
@@ -71,8 +67,7 @@ class InvalidationType(Enum):
 
 
 class InvalidationScope(Enum):
-    """Scope of cache invalidation impact"""
-    SINGLE_ITEM = "single_item"                # Individual cache entry
+    """Scope of cache invalidation impact"""    SINGLE_ITEM = "single_item"                # Individual cache entry
     CREATOR_CONTENT = "creator_content"        # All content from a creator
     CONTENT_TYPE = "content_type"              # All content of specific type
     GEOGRAPHIC_REGION = "geographic_region"    # Region-specific content
@@ -83,8 +78,7 @@ class InvalidationScope(Enum):
 
 
 class InvalidationPriority(Enum):
-    """Priority levels for invalidation execution"""
-    EMERGENCY = "emergency"     # Immediate execution (copyright violations)
+    """Priority levels for invalidation execution"""    EMERGENCY = "emergency"     # Immediate execution (copyright violations)
     HIGH = "high"              # Execute within 5 seconds (revenue data)
     MEDIUM = "medium"          # Execute within 30 seconds (content updates)
     LOW = "low"                # Execute within 5 minutes (analytics)
@@ -92,8 +86,7 @@ class InvalidationPriority(Enum):
 
 
 class InvalidationStrategy(Enum):
-    """Strategies for cache invalidation execution"""
-    IMMEDIATE = "immediate"           # Invalidate immediately
+    """Strategies for cache invalidation execution"""    IMMEDIATE = "immediate"           # Invalidate immediately
     TIME_BASED = "time_based"        # Invalidate at specific time
     DEPENDENCY_DRIVEN = "dependency_driven"  # Invalidate based on dependencies
     EVENT_TRIGGERED = "event_triggered"      # Invalidate on specific events
@@ -105,8 +98,7 @@ class InvalidationStrategy(Enum):
 
 @dataclass
 class InvalidationRequest:
-    """Cache invalidation request with business context"""
-    id: str
+    """Cache invalidation request with business context"""    id: str
     type: InvalidationType
     scope: InvalidationScope
     priority: InvalidationPriority
@@ -128,8 +120,7 @@ class InvalidationRequest:
 
 @dataclass
 class InvalidationResult:
-    """Result of cache invalidation execution"""
-    request_id: str
+    """Result of cache invalidation execution"""    request_id: str
     success: bool
     invalidated_keys: List[str]
     failed_keys: List[str]
@@ -144,8 +135,7 @@ class InvalidationResult:
 
 @dataclass
 class DependencyNode:
-    """Cache dependency node for tracking relationships"""
-    key: str
+    """Cache dependency node for tracking relationships"""    key: str
     content_type: str
     creator_id: Optional[str]
     dependencies: Set[str] = field(default_factory=set)
@@ -157,8 +147,7 @@ class DependencyNode:
 
 
 class IntelligentDependencyTracker:
-    """AI-powered dependency tracking for cache invalidation"""
-    
+    """AI-powered dependency tracking for cache invalidation"""    
     def __init__(self, redis_client: redis.Redis, config: Dict[str, Any]):
         self.redis_client = redis_client
         self.config = config
@@ -181,8 +170,7 @@ class IntelligentDependencyTracker:
         dependency_type: str = "content",
         strength: float = 1.0
     ):
-        """Track dependency between cache entries"""
-        
+        """Track dependency between cache entries"""        
         try:
             # Add to dependency graph
             self.dependency_graph.add_edge(
@@ -221,8 +209,7 @@ class IntelligentDependencyTracker:
         primary_keys: List[str],
         max_depth: int = 5
     ) -> Dict[str, Set[str]]:
-        """Calculate invalidation cascade with dependency analysis"""
-        
+        """Calculate invalidation cascade with dependency analysis"""        
         try:
             invalidation_map = defaultdict(set)
             
@@ -246,8 +233,7 @@ class IntelligentDependencyTracker:
         max_depth: int,
         visited: Optional[Set[str]] = None
     ) -> Dict[str, InvalidationPriority]:
-        """Calculate dependency cascade using graph traversal"""
-        
+        """Calculate dependency cascade using graph traversal"""        
         if visited is None:
             visited = set()
         
@@ -295,8 +281,7 @@ class IntelligentDependencyTracker:
         dependency_type: str,
         strength: float
     ) -> InvalidationPriority:
-        """Calculate invalidation priority based on dependency characteristics"""
-        
+        """Calculate invalidation priority based on dependency characteristics"""        
         # Priority mapping based on dependency type
         type_priorities = {
             "content": InvalidationPriority.HIGH,
@@ -318,8 +303,7 @@ class IntelligentDependencyTracker:
             return self._reduce_priority(self._reduce_priority(base_priority))
     
     def _reduce_priority(self, priority: InvalidationPriority) -> InvalidationPriority:
-        """Reduce invalidation priority by one level"""
-        
+        """Reduce invalidation priority by one level"""        
         priority_order = [
             InvalidationPriority.EMERGENCY,
             InvalidationPriority.HIGH,
@@ -341,8 +325,7 @@ class IntelligentDependencyTracker:
         self,
         request: InvalidationRequest
     ) -> datetime:
-        """AI-powered optimization of invalidation timing"""
-        
+        """AI-powered optimization of invalidation timing"""        
         try:
             current_time = datetime.utcnow()
             
@@ -377,8 +360,7 @@ class IntelligentDependencyTracker:
             return datetime.utcnow()
     
     async def _analyze_access_patterns(self, keys: List[str]) -> Optional[datetime]:
-        """Analyze access patterns to find optimal invalidation time"""
-        
+        """Analyze access patterns to find optimal invalidation time"""        
         try:
             # Get access pattern data for the keys
             all_access_times = []
@@ -424,8 +406,7 @@ class IntelligentDependencyTracker:
             return None
     
     async def _get_creator_optimal_time(self, creator_id: str) -> Optional[datetime]:
-        """Get optimal invalidation time based on creator's activity patterns"""
-        
+        """Get optimal invalidation time based on creator's activity patterns"""        
         try:
             # This would analyze creator's typical activity patterns
             # For now, return a simple calculation
@@ -452,8 +433,7 @@ class IntelligentDependencyTracker:
 
 
 class EventDrivenInvalidationEngine:
-    """Event-driven cache invalidation with real-time processing"""
-    
+    """Event-driven cache invalidation with real-time processing"""    
     def __init__(self, redis_client: redis.Redis, dependency_tracker: IntelligentDependencyTracker):
         self.redis_client = redis_client
         self.dependency_tracker = dependency_tracker
@@ -473,8 +453,7 @@ class EventDrivenInvalidationEngine:
         }
     
     async def trigger_invalidation(self, request: InvalidationRequest) -> str:
-        """Trigger cache invalidation with intelligent processing"""
-        
+        """Trigger cache invalidation with intelligent processing"""        
         try:
             # Generate unique request ID
             request.id = f"inv_{int(time.time())}_{hashlib.md5(str(request.target_keys).encode()).hexdigest()[:8]}"
@@ -505,8 +484,7 @@ class EventDrivenInvalidationEngine:
             raise
     
     async def _process_events(self):
-        """Process invalidation events from the queue"""
-        
+        """Process invalidation events from the queue"""        
         while True:
             try:
                 # Process events continuously
@@ -520,8 +498,7 @@ class EventDrivenInvalidationEngine:
                 await asyncio.sleep(1)
     
     async def _process_invalidations(self):
-        """Process invalidation requests from the queue"""
-        
+        """Process invalidation requests from the queue"""        
         while True:
             try:
                 # Get invalidation request from queue
@@ -543,8 +520,7 @@ class EventDrivenInvalidationEngine:
                 await asyncio.sleep(1)
     
     async def _check_scheduled_invalidations(self):
-        """Check for invalidations that should be executed now"""
-        
+        """Check for invalidations that should be executed now"""        
         try:
             current_time = datetime.utcnow()
             
@@ -559,8 +535,7 @@ class EventDrivenInvalidationEngine:
             logging.error(f"Failed to check scheduled invalidations: {e}")
     
     async def _execute_invalidation(self, request: InvalidationRequest) -> InvalidationResult:
-        """Execute cache invalidation with comprehensive tracking"""
-        
+        """Execute cache invalidation with comprehensive tracking"""        
         start_time = time.time()
         invalidated_keys = []
         failed_keys = []
@@ -614,8 +589,7 @@ class EventDrivenInvalidationEngine:
             )
     
     async def _immediate_invalidation(self, request: InvalidationRequest) -> Tuple[List[str], List[str]]:
-        """Execute immediate cache invalidation"""
-        
+        """Execute immediate cache invalidation"""        
         invalidated_keys = []
         failed_keys = []
         
@@ -643,15 +617,13 @@ class EventDrivenInvalidationEngine:
             return [], request.target_keys
     
     async def _dependency_driven_invalidation(self, request: InvalidationRequest) -> Tuple[List[str], List[str]]:
-        """Execute dependency-driven invalidation"""
-        
+        """Execute dependency-driven invalidation"""        
         # For now, delegate to immediate invalidation
         # In a full implementation, this would consider dependency priorities
         return await self._immediate_invalidation(request)
     
     async def _pattern_based_invalidation(self, request: InvalidationRequest) -> Tuple[List[str], List[str]]:
-        """Execute pattern-based invalidation"""
-        
+        """Execute pattern-based invalidation"""        
         invalidated_keys = []
         failed_keys = []
         
@@ -692,8 +664,7 @@ class EventDrivenInvalidationEngine:
             return [], request.target_keys
     
     async def _send_creator_notifications(self, request: InvalidationRequest, invalidated_keys: List[str]) -> int:
-        """Send notifications to creators about cache invalidation"""
-        
+        """Send notifications to creators about cache invalidation"""        
         try:
             if not request.creator_id:
                 return 0
@@ -722,8 +693,7 @@ class EventDrivenInvalidationEngine:
             return 0
     
     async def _calculate_actual_business_impact(self, invalidated_keys: List[str]) -> Dict[str, Any]:
-        """Calculate actual business impact of invalidation"""
-        
+        """Calculate actual business impact of invalidation"""        
         try:
             impact = {
                 "affected_content_count": len(invalidated_keys),
@@ -768,8 +738,7 @@ from .configuration import CacheConfiguration
 
 
 class InvalidationType(Enum):
-    """Types of cache invalidation"""
-    TTL_EXPIRY = "ttl_expiry"
+    """Types of cache invalidation"""    TTL_EXPIRY = "ttl_expiry"
     MANUAL = "manual"
     EVENT_DRIVEN = "event_driven"
     DEPENDENCY_CASCADE = "dependency_cascade"
@@ -780,8 +749,7 @@ class InvalidationType(Enum):
 
 
 class InvalidationPriority(Enum):
-    """Invalidation priority levels"""
-    LOW = "low"
+    """Invalidation priority levels"""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     CRITICAL = "critical"
@@ -789,8 +757,7 @@ class InvalidationPriority(Enum):
 
 
 class RefreshStrategy(Enum):
-    """Cache refresh strategies"""
-    LAZY = "lazy"  # Refresh on next access
+    """Cache refresh strategies"""    LAZY = "lazy"  # Refresh on next access
     EAGER = "eager"  # Refresh immediately
     BACKGROUND = "background"  # Refresh in background
     PREDICTIVE = "predictive"  # Refresh before expiry
@@ -799,8 +766,7 @@ class RefreshStrategy(Enum):
 
 @dataclass
 class InvalidationRule:
-    """Cache invalidation rule configuration"""
-    rule_id: str
+    """Cache invalidation rule configuration"""    rule_id: str
     name: str
     content_patterns: List[str]  # Regex patterns for content IDs
     content_types: Set[ContentType]
@@ -814,8 +780,7 @@ class InvalidationRule:
 
 @dataclass
 class InvalidationEvent:
-    """Cache invalidation event record"""
-    event_id: str
+    """Cache invalidation event record"""    event_id: str
     timestamp: datetime
     content_id: str
     content_type: ContentType
@@ -831,8 +796,7 @@ class InvalidationEvent:
 
 @dataclass
 class DependencyRelation:
-    """Cache dependency relationship"""
-    parent_content_id: str
+    """Cache dependency relationship"""    parent_content_id: str
     child_content_id: str
     dependency_type: str  # 'strong', 'weak', 'conditional'
     weight: float  # 0.0-1.0, higher means stronger dependency
@@ -841,24 +805,19 @@ class DependencyRelation:
 
 
 class InvalidationStrategy:
-    """
-    Enterprise cache invalidation strategy manager with AI optimization,
+    """    Enterprise cache invalidation strategy manager with AI optimization,
     dependency tracking, and intelligent lifecycle management.
-    """
-
-    def __init__(
+    """    def __init__(
         self,
         config: CacheConfiguration,
         metrics_collector: CacheMetricsCollector
     ):
-        """
-        Initialize invalidation strategy manager.
+        """        Initialize invalidation strategy manager.
         
         Args:
             config: Cache configuration instance
             metrics_collector: Metrics collection service
-        """
-        self.config = config
+        """        self.config = config
         self.metrics = metrics_collector
         self.logger = logging.getLogger(__name__)
         
@@ -896,8 +855,7 @@ class InvalidationStrategy:
         self._initialize_default_rules()
 
     async def initialize(self) -> None:
-        """Initialize the invalidation strategy manager"""
-        try:
+        """Initialize the invalidation strategy manager"""        try:
             # Start background processing task
             self._background_task = asyncio.create_task(self._background_processor())
             
@@ -908,8 +866,7 @@ class InvalidationStrategy:
             raise
 
     async def shutdown(self) -> None:
-        """Shutdown the invalidation strategy manager"""
-        try:
+        """Shutdown the invalidation strategy manager"""        try:
             self._shutdown_event.set()
             
             if self._background_task:
@@ -929,8 +886,7 @@ class InvalidationStrategy:
         cascade: bool = True,
         refresh_strategy: RefreshStrategy = RefreshStrategy.LAZY
     ) -> bool:
-        """
-        Invalidate specific content with optional cascade and refresh.
+        """        Invalidate specific content with optional cascade and refresh.
         
         Args:
             content_id: Content to invalidate
@@ -942,8 +898,7 @@ class InvalidationStrategy:
             
         Returns:
             bool: True if invalidation successful, False otherwise
-        """
-        try:
+        """        try:
             start_time = time.time()
             
             # Check if already being processed
@@ -1032,8 +987,7 @@ class InvalidationStrategy:
         dependency_type: str = "strong",
         weight: float = 1.0
     ) -> bool:
-        """
-        Add dependency relationship between content items.
+        """        Add dependency relationship between content items.
         
         Args:
             parent_content_id: Parent content ID
@@ -1043,8 +997,7 @@ class InvalidationStrategy:
             
         Returns:
             bool: True if dependency added successfully
-        """
-        try:
+        """        try:
             # Validate inputs
             if parent_content_id == child_content_id:
                 self.logger.warning("Cannot create self-dependency")
@@ -1087,8 +1040,7 @@ class InvalidationStrategy:
         parent_content_id: str,
         child_content_id: str
     ) -> bool:
-        """
-        Remove dependency relationship between content items.
+        """        Remove dependency relationship between content items.
         
         Args:
             parent_content_id: Parent content ID
@@ -1096,8 +1048,7 @@ class InvalidationStrategy:
             
         Returns:
             bool: True if dependency removed successfully
-        """
-        try:
+        """        try:
             # Remove from dependencies map
             self._dependencies[parent_content_id] = [
                 dep for dep in self._dependencies[parent_content_id]
@@ -1122,16 +1073,14 @@ class InvalidationStrategy:
         self,
         rule: InvalidationRule
     ) -> bool:
-        """
-        Add custom invalidation rule.
+        """        Add custom invalidation rule.
         
         Args:
             rule: Invalidation rule to add
             
         Returns:
             bool: True if rule added successfully
-        """
-        try:
+        """        try:
             # Validate rule
             if not rule.rule_id or not rule.name:
                 self.logger.error("Invalid rule: missing required fields")
@@ -1149,16 +1098,14 @@ class InvalidationStrategy:
             return False
 
     async def remove_invalidation_rule(self, rule_id: str) -> bool:
-        """
-        Remove invalidation rule.
+        """        Remove invalidation rule.
         
         Args:
             rule_id: ID of rule to remove
             
         Returns:
             bool: True if rule removed successfully
-        """
-        try:
+        """        try:
             if rule_id in self._invalidation_rules:
                 del self._invalidation_rules[rule_id]
                 self.logger.info(f"Removed invalidation rule: {rule_id}")
@@ -1176,8 +1123,7 @@ class InvalidationStrategy:
         time_horizon_hours: int = 24,
         confidence_threshold: float = 0.7
     ) -> List[Dict[str, Any]]:
-        """
-        Predict future invalidation needs using AI analysis.
+        """        Predict future invalidation needs using AI analysis.
         
         Args:
             time_horizon_hours: Hours to predict into future
@@ -1185,8 +1131,7 @@ class InvalidationStrategy:
             
         Returns:
             List of predicted invalidation needs
-        """
-        try:
+        """        try:
             predictions = []
             
             # Analyze access patterns for each content
@@ -1214,13 +1159,11 @@ class InvalidationStrategy:
             return []
 
     async def optimize_invalidation_strategies(self) -> Dict[str, Any]:
-        """
-        Optimize invalidation strategies based on performance data.
+        """        Optimize invalidation strategies based on performance data.
         
         Returns:
             Dict containing optimization results and recommendations
-        """
-        try:
+        """        try:
             # Analyze invalidation effectiveness
             effectiveness_analysis = await self._analyze_invalidation_effectiveness()
             
@@ -1251,13 +1194,11 @@ class InvalidationStrategy:
             return {}
 
     async def get_invalidation_statistics(self) -> Dict[str, Any]:
-        """
-        Get comprehensive invalidation statistics.
+        """        Get comprehensive invalidation statistics.
         
         Returns:
             Dict containing invalidation statistics
-        """
-        try:
+        """        try:
             # Calculate success rate
             success_rate = (
                 self._invalidation_stats["successful_invalidations"] /
@@ -1313,8 +1254,7 @@ class InvalidationStrategy:
     # Private helper methods
     
     def _initialize_default_rules(self) -> None:
-        """Initialize default invalidation rules"""
-        # TTL-based rule for audio content
+        """Initialize default invalidation rules"""        # TTL-based rule for audio content
         audio_rule = InvalidationRule(
             rule_id="default_audio_ttl",
             name="Audio Content TTL",
@@ -1341,8 +1281,7 @@ class InvalidationStrategy:
         self._invalidation_rules[memory_rule.rule_id] = memory_rule
 
     async def _background_processor(self) -> None:
-        """Background task for processing invalidation queue and predictions"""
-        while not self._shutdown_event.is_set():
+        """Background task for processing invalidation queue and predictions"""        while not self._shutdown_event.is_set():
             try:
                 # Process queued invalidations
                 await self._process_invalidation_queue()
@@ -1367,8 +1306,7 @@ class InvalidationStrategy:
         priority: InvalidationPriority,
         reason: str
     ) -> bool:
-        """Execute the actual invalidation operation"""
-        try:
+        """Execute the actual invalidation operation"""        try:
             # This would integrate with the actual cache implementation
             # For now, we'll simulate the invalidation
             await asyncio.sleep(0.01)  # Simulate processing time
@@ -1386,8 +1324,7 @@ class InvalidationStrategy:
         invalidation_type: InvalidationType,
         priority: InvalidationPriority
     ) -> int:
-        """Handle cascade invalidation of dependent content"""
-        cascade_count = 0
+        """Handle cascade invalidation of dependent content"""        cascade_count = 0
         
         try:
             # Get dependent content
@@ -1419,8 +1356,7 @@ class InvalidationStrategy:
         dependency: DependencyRelation,
         invalidation_type: InvalidationType
     ) -> bool:
-        """Determine if invalidation should cascade to dependent content"""
-        # Strong dependencies always cascade
+        """Determine if invalidation should cascade to dependent content"""        # Strong dependencies always cascade
         if dependency.dependency_type == "strong":
             return True
         
@@ -1447,8 +1383,7 @@ class InvalidationStrategy:
         processing_time_ms: float,
         cascade_count: int
     ) -> None:
-        """Record invalidation event for analysis"""
-        event = InvalidationEvent(
+        """Record invalidation event for analysis"""        event = InvalidationEvent(
             event_id=str(time.time_ns()),
             timestamp=datetime.now(),
             content_id=content_id,
@@ -1469,8 +1404,7 @@ class InvalidationStrategy:
         parent_id: str,
         child_id: str
     ) -> bool:
-        """Check if adding dependency would create circular reference"""
-        # Simple circular dependency check
+        """Check if adding dependency would create circular reference"""        # Simple circular dependency check
         visited = set()
         
         def has_path_to_parent(current_id: str) -> bool:
@@ -1495,8 +1429,7 @@ class InvalidationStrategy:
         access_times: List[datetime],
         time_horizon_hours: int
     ) -> Dict[str, Any]:
-        """Predict invalidation needs for specific content"""
-        try:
+        """Predict invalidation needs for specific content"""        try:
             now = datetime.now()
             recent_accesses = [
                 t for t in access_times

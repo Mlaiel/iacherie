@@ -1,5 +1,4 @@
-"""
-Tracing Configuration Module for IA-Influencer Agent Platform
+"""Tracing Configuration Module for IA-Influencer Agent Platform
 =============================================================
 
 Professional distributed tracing configuration using OpenTelemetry
@@ -15,25 +14,21 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import os
+"""import os
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, field
 from enum import Enum
 
 
 class TracingBackend(Enum):
-    """Supported tracing backends"""
-    JAEGER = "jaeger"
+    """Supported tracing backends"""    JAEGER = "jaeger"
     ZIPKIN = "zipkin"
     OTLP = "otlp"
     CONSOLE = "console"
 
 
 class SamplingStrategy(Enum):
-    """Sampling strategies for trace collection"""
-    ALWAYS_ON = "always_on"
+    """Sampling strategies for trace collection"""    ALWAYS_ON = "always_on"
     ALWAYS_OFF = "always_off"
     RATIO_BASED = "ratio_based"
     RATE_LIMITING = "rate_limiting"
@@ -42,16 +37,14 @@ class SamplingStrategy(Enum):
 
 @dataclass
 class SpanAttribute:
-    """Span attribute configuration"""
-    key: str
+    """Span attribute configuration"""    key: str
     value: Any
     namespace: Optional[str] = None
 
 
 @dataclass
 class InstrumentationConfig:
-    """Service instrumentation configuration"""
-    service_name: str
+    """Service instrumentation configuration"""    service_name: str
     service_version: str
     environment: str
     attributes: List[SpanAttribute] = field(default_factory=list)
@@ -59,8 +52,7 @@ class InstrumentationConfig:
 
 
 class TracingConfig:
-    """Professional distributed tracing configuration for IA-Influencer platform"""
-    
+    """Professional distributed tracing configuration for IA-Influencer platform"""    
     def __init__(self):
         self.tracing_enabled = os.getenv("TRACING_ENABLED", "true").lower() == "true"
         self.service_name = os.getenv("SERVICE_NAME", "ia-influencer-agent")
@@ -75,8 +67,7 @@ class TracingConfig:
         self.max_attributes_per_span = int(os.getenv("MAX_ATTRIBUTES_PER_SPAN", "128"))
     
     def get_global_config(self) -> Dict[str, Any]:
-        """Get global tracing configuration"""
-        return {
+        """Get global tracing configuration"""        return {
             "enabled": self.tracing_enabled,
             "service_name": self.service_name,
             "service_version": self.service_version,
@@ -87,8 +78,7 @@ class TracingConfig:
         }
     
     def get_exporter_config(self) -> Dict[str, Any]:
-        """Get trace exporter configuration"""
-        if self.tracing_backend == TracingBackend.JAEGER:
+        """Get trace exporter configuration"""        if self.tracing_backend == TracingBackend.JAEGER:
             return {
                 "type": "jaeger",
                 "endpoint": self.jaeger_endpoint,
@@ -117,8 +107,7 @@ class TracingConfig:
             }
     
     def get_instrumentation_configs(self) -> Dict[str, InstrumentationConfig]:
-        """Get instrumentation configurations for different services"""
-        base_attributes = [
+        """Get instrumentation configurations for different services"""        base_attributes = [
             SpanAttribute("service.namespace", "ia-influencer"),
             SpanAttribute("deployment.environment", self.environment),
             SpanAttribute("service.instance.id", os.getenv("HOSTNAME", "unknown"))
@@ -201,8 +190,7 @@ class TracingConfig:
         }
     
     def get_sampling_config(self) -> Dict[str, Any]:
-        """Get sampling configuration"""
-        return {
+        """Get sampling configuration"""        return {
             "default_strategy": SamplingStrategy.PARENT_BASED.value,
             "strategies": {
                 "always_on": {
@@ -245,8 +233,7 @@ class TracingConfig:
         }
     
     def get_propagation_config(self) -> Dict[str, Any]:
-        """Get context propagation configuration"""
-        return {
+        """Get context propagation configuration"""        return {
             "propagators": [
                 "tracecontext",
                 "baggage",
@@ -259,8 +246,7 @@ class TracingConfig:
         }
     
     def get_span_processor_config(self) -> Dict[str, Any]:
-        """Get span processor configuration"""
-        return {
+        """Get span processor configuration"""        return {
             "batch_processor": {
                 "max_queue_size": 2048,
                 "max_export_batch_size": 512,
@@ -273,8 +259,7 @@ class TracingConfig:
         }
     
     def get_instrumentation_libraries(self) -> List[str]:
-        """Get list of auto-instrumentation libraries"""
-        return [
+        """Get list of auto-instrumentation libraries"""        return [
             "opentelemetry-instrumentation-fastapi",
             "opentelemetry-instrumentation-requests",
             "opentelemetry-instrumentation-sqlalchemy",
@@ -290,8 +275,7 @@ class TracingConfig:
         ]
     
     def get_custom_span_attributes(self) -> Dict[str, List[SpanAttribute]]:
-        """Get custom span attributes for different operations"""
-        return {
+        """Get custom span attributes for different operations"""        return {
             "http_requests": [
                 SpanAttribute("http.route", ""),
                 SpanAttribute("http.user_agent", ""),
@@ -344,8 +328,7 @@ class TracingConfig:
         }
     
     def get_trace_filters(self) -> Dict[str, Any]:
-        """Get trace filtering configuration"""
-        return {
+        """Get trace filtering configuration"""        return {
             "exclude_endpoints": [
                 "/health",
                 "/metrics",
@@ -376,8 +359,7 @@ class TracingConfig:
         }
     
     def get_performance_config(self) -> Dict[str, Any]:
-        """Get performance optimization configuration"""
-        return {
+        """Get performance optimization configuration"""        return {
             "memory_limits": {
                 "max_spans_in_memory": 10000,
                 "max_attributes_per_span": self.max_attributes_per_span,
@@ -398,8 +380,7 @@ class TracingConfig:
         }
     
     def get_jaeger_config(self) -> Dict[str, Any]:
-        """Get Jaeger-specific configuration"""
-        return {
+        """Get Jaeger-specific configuration"""        return {
             "collector_endpoint": self.jaeger_endpoint,
             "agent_host": os.getenv("JAEGER_AGENT_HOST", "jaeger-agent"),
             "agent_port": int(os.getenv("JAEGER_AGENT_PORT", "6831")),
@@ -418,8 +399,7 @@ class TracingConfig:
         }
     
     def get_complete_config(self) -> Dict[str, Any]:
-        """Get complete tracing configuration"""
-        return {
+        """Get complete tracing configuration"""        return {
             "global": self.get_global_config(),
             "exporter": self.get_exporter_config(),
             "sampling": self.get_sampling_config(),

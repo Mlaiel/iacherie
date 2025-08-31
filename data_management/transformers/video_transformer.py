@@ -1,5 +1,4 @@
-"""
-� Video Transformation Engine - IA Influencer Agent Platform Enterprise
+"""� Video Transformation Engine - IA Influencer Agent Platform Enterprise
 ======================================================================
 Module: backend/data_management/transformers/video_transformer.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -21,9 +20,7 @@ poursuivie selon les lois allemandes et internationales.
 - DevOps Engineer: Fahed Mlaiel
 - DBA: Fahed Mlaiel
 - Sécurité Expert: Fahed Mlaiel
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import tempfile
@@ -56,8 +53,7 @@ settings = get_settings()
 logger = logging.getLogger(__name__)
 
 class VideoFormat(Enum):
-    """Formats vidéo supportés"""
-    MP4 = "mp4"
+    """Formats vidéo supportés"""    MP4 = "mp4"
     AVI = "avi"
     MOV = "mov"
     MKV = "mkv"
@@ -67,23 +63,20 @@ class VideoFormat(Enum):
     M4V = "m4v"
 
 class VideoCodec(Enum):
-    """Codecs vidéo supportés"""
-    H264 = "libx264"
+    """Codecs vidéo supportés"""    H264 = "libx264"
     H265 = "libx265"
     VP9 = "libvpx-vp9"
     VP8 = "libvpx"
     AV1 = "libaom-av1"
 
 class VideoQuality(Enum):
-    """Niveaux de qualité vidéo"""
-    ULTRA = "ultra"      # 4K, bitrate élevé
+    """Niveaux de qualité vidéo"""    ULTRA = "ultra"      # 4K, bitrate élevé
     HIGH = "high"        # 1080p, bitrate optimisé
     STANDARD = "standard" # 720p, bitrate équilibré
     LOW = "low"          # 480p, bitrate compressé
 
 class ContentType(Enum):
-    """Types de contenu pour optimisation"""
-    MUSIC_VIDEO = "music_video"
+    """Types de contenu pour optimisation"""    MUSIC_VIDEO = "music_video"
     SOCIAL_MEDIA = "social_media"
     PODCAST = "podcast"
     TUTORIAL = "tutorial"
@@ -93,8 +86,7 @@ class ContentType(Enum):
 
 @dataclass
 class VideoProcessingResult:
-    """Résultat du traitement vidéo"""
-    success: bool
+    """Résultat du traitement vidéo"""    success: bool
     input_file: str
     output_file: Optional[str]
     original_metadata: VideoMetadata
@@ -106,8 +98,7 @@ class VideoProcessingResult:
     errors: List[str]
 
 class VideoAnalyzer:
-    """Analyseur vidéo intelligent pour créateurs de contenu"""
-    
+    """Analyseur vidéo intelligent pour créateurs de contenu"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -127,8 +118,7 @@ class VideoAnalyzer:
         ])
     
     def analyze_video_file(self, video_path: str) -> VideoMetadata:
-        """Analyse complète d'un fichier vidéo"""
-        try:
+        """Analyse complète d'un fichier vidéo"""        try:
             # Ouverture avec OpenCV pour analyse basique
             cap = cv2.VideoCapture(video_path)
             
@@ -202,8 +192,7 @@ class VideoAnalyzer:
             raise VideoProcessingError(f"Échec analyse vidéo: {str(e)}")
     
     def _detect_scene_changes(self, cap: cv2.VideoCapture) -> List[int]:
-        """Détecte les changements de scène dans la vidéo"""
-        scene_changes = []
+        """Détecte les changements de scène dans la vidéo"""        scene_changes = []
         prev_frame = None
         frame_idx = 0
         threshold = 0.3
@@ -235,8 +224,7 @@ class VideoAnalyzer:
         return scene_changes
     
     def _analyze_motion(self, cap: cv2.VideoCapture) -> float:
-        """Analyse le niveau de mouvement dans la vidéo"""
-        cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+        """Analyse le niveau de mouvement dans la vidéo"""        cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
         
         motion_scores = []
         prev_frame = None
@@ -269,8 +257,7 @@ class VideoAnalyzer:
         return np.mean(motion_scores) if motion_scores else 0.0
     
     def _analyze_faces(self, cap: cv2.VideoCapture) -> List[Dict[str, Any]]:
-        """Détecte et analyse les visages dans la vidéo"""
-        faces_info = []
+        """Détecte et analyse les visages dans la vidéo"""        faces_info = []
         
         try:
             # Analyse sur quelques frames représentatives
@@ -313,8 +300,7 @@ class VideoAnalyzer:
         return faces_info
     
     def _analyze_objects(self, cap: cv2.VideoCapture) -> List[Dict[str, Any]]:
-        """Détecte les objets dans la vidéo avec YOLO"""
-        objects_info = []
+        """Détecte les objets dans la vidéo avec YOLO"""        objects_info = []
         
         if not self.yolo_model:
             return objects_info
@@ -352,8 +338,7 @@ class VideoAnalyzer:
         return objects_info
     
     def _analyze_video_audio(self, video_path: str) -> Dict[str, Any]:
-        """Analyse la piste audio de la vidéo"""
-        try:
+        """Analyse la piste audio de la vidéo"""        try:
             # Utilisation de ffprobe pour info audio
             probe = ffmpeg.probe(video_path)
             
@@ -378,8 +363,7 @@ class VideoAnalyzer:
             return {'has_audio': False}
     
     def _detect_codec(self, video_path: str) -> str:
-        """Détecte le codec vidéo"""
-        try:
+        """Détecte le codec vidéo"""        try:
             probe = ffmpeg.probe(video_path)
             video_streams = [
                 stream for stream in probe['streams']
@@ -401,8 +385,7 @@ class VideoAnalyzer:
         faces: List[Dict],
         audio_info: Dict
     ) -> str:
-        """Classifie automatiquement le type de contenu"""
-        
+        """Classifie automatiquement le type de contenu"""        
         # Calcul des métriques
         scene_change_rate = len(scene_changes)
         face_density = len(faces)
@@ -421,8 +404,7 @@ class VideoAnalyzer:
             return ContentType.SOCIAL_MEDIA.value
     
     def _calculate_quality_score(self, width: int, height: int, fps: float, bitrate: int) -> float:
-        """Calcule un score de qualité global"""
-        
+        """Calcule un score de qualité global"""        
         # Normalisation des métriques
         resolution_score = min(1.0, (width * height) / (1920 * 1080))
         fps_score = min(1.0, fps / 60.0)
@@ -438,8 +420,7 @@ class VideoAnalyzer:
         faces: List[Dict],
         objects: List[Dict]
     ) -> List[str]:
-        """Génère des tags automatiques basés sur le contenu détecté"""
-        
+        """Génère des tags automatiques basés sur le contenu détecté"""        
         tags = []
         
         # Tags basés sur les visages
@@ -481,8 +462,7 @@ class VideoAnalyzer:
         return tags[:10]  # Limite à 10 tags
 
 class VideoEnhancer:
-    """Améliorateur vidéo IA pour créateurs de contenu"""
-    
+    """Améliorateur vidéo IA pour créateurs de contenu"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
     
@@ -492,8 +472,7 @@ class VideoEnhancer:
         enhancement_type: str = "balanced",
         intensity: float = 0.5
     ) -> str:
-        """Améliore la qualité vidéo avec traitement IA"""
-        
+        """Améliore la qualité vidéo avec traitement IA"""        
         try:
             temp_output = tempfile.mktemp(suffix='.mp4')
             
@@ -513,8 +492,7 @@ class VideoEnhancer:
             return video_path
     
     def _upscale_video(self, input_path: str, output_path: str, intensity: float) -> str:
-        """Upscale la vidéo avec algorithmes IA"""
-        
+        """Upscale la vidéo avec algorithmes IA"""        
         try:
             # Utilisation de ffmpeg avec filtres d'upscaling
             scale_factor = 1 + intensity
@@ -533,8 +511,7 @@ class VideoEnhancer:
             return input_path
     
     def _stabilize_video(self, input_path: str, output_path: str, intensity: float) -> str:
-        """Stabilise la vidéo"""
-        
+        """Stabilise la vidéo"""        
         try:
             # Stabilisation avec vidstab de ffmpeg
             smoothing = int(10 + intensity * 20)
@@ -554,8 +531,7 @@ class VideoEnhancer:
             return self._stabilize_with_moviepy(input_path, output_path)
     
     def _stabilize_with_moviepy(self, input_path: str, output_path: str) -> str:
-        """Stabilisation basique avec MoviePy"""
-        try:
+        """Stabilisation basique avec MoviePy"""        try:
             clip = VideoFileClip(input_path)
             # MoviePy n'a pas de stabilisation native, retour du fichier original
             clip.write_videofile(output_path, verbose=False, logger=None)
@@ -565,8 +541,7 @@ class VideoEnhancer:
             return input_path
     
     def _color_correct_video(self, input_path: str, output_path: str, intensity: float) -> str:
-        """Correction colorimétrique"""
-        
+        """Correction colorimétrique"""        
         try:
             # Correction avec filtres ffmpeg
             brightness = intensity * 0.1
@@ -588,8 +563,7 @@ class VideoEnhancer:
             return input_path
     
     def _denoise_video(self, input_path: str, output_path: str, intensity: float) -> str:
-        """Réduction de bruit vidéo"""
-        
+        """Réduction de bruit vidéo"""        
         try:
             # Débruitage avec filtre hqdn3d
             luma_strength = intensity * 4
@@ -608,8 +582,7 @@ class VideoEnhancer:
             return input_path
     
     def _balanced_enhancement(self, input_path: str, output_path: str, intensity: float) -> str:
-        """Amélioration équilibrée"""
-        
+        """Amélioration équilibrée"""        
         try:
             # Combinaison de plusieurs filtres
             stream = ffmpeg.input(input_path)
@@ -637,8 +610,7 @@ class VideoEnhancer:
             return input_path
 
 class VideoTransformer:
-    """Transformateur vidéo principal pour créateurs de contenu"""
-    
+    """Transformateur vidéo principal pour créateurs de contenu"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.file_manager = FileManager()
@@ -683,8 +655,7 @@ class VideoTransformer:
         config: 'TransformationConfig',
         output_path: Optional[str] = None
     ) -> 'TransformationResult':
-        """Transformation vidéo selon configuration"""
-        
+        """Transformation vidéo selon configuration"""        
         start_time = time.time()
         operations = []
         warnings = []
@@ -777,8 +748,7 @@ class VideoTransformer:
         params: Dict[str, Any],
         output_path: str
     ) -> str:
-        """Redimensionne la vidéo"""
-        
+        """Redimensionne la vidéo"""        
         target_resolution = params.get('resolution', [1920, 1080])
         maintain_aspect = params.get('maintain_aspect', True)
         platform = params.get('platform')
@@ -831,8 +801,7 @@ class VideoTransformer:
         params: Dict[str, Any],
         output_path: str
     ) -> str:
-        """Convertit le format vidéo"""
-        
+        """Convertit le format vidéo"""        
         target_format = params.get('format', 'mp4')
         codec = params.get('codec', 'libx264')
         bitrate = params.get('bitrate', '2M')
@@ -868,8 +837,7 @@ class VideoTransformer:
         params: Dict[str, Any],
         output_path: str
     ) -> str:
-        """Compresse la vidéo"""
-        
+        """Compresse la vidéo"""        
         quality = params.get('quality', 'standard')
         target_bitrate = params.get('bitrate', '2M')
         two_pass = params.get('two_pass', False)
@@ -907,8 +875,7 @@ class VideoTransformer:
             raise VideoProcessingError(f"Échec compression: {str(e)}")
     
     def _two_pass_encode(self, input_path: str, output_path: str, bitrate: str) -> str:
-        """Encodage vidéo en 2 passes"""
-        
+        """Encodage vidéo en 2 passes"""        
         try:
             # Première passe
             stream = ffmpeg.input(input_path)
@@ -952,8 +919,7 @@ class VideoTransformer:
         params: Dict[str, Any],
         output_path: str
     ) -> str:
-        """Extrait la piste audio de la vidéo"""
-        
+        """Extrait la piste audio de la vidéo"""        
         audio_format = params.get('format', 'mp3')
         audio_bitrate = params.get('bitrate', '192k')
         
@@ -979,8 +945,7 @@ class VideoTransformer:
             raise VideoProcessingError(f"Échec extraction audio: {str(e)}")
     
     def _generate_output_path(self, input_path: str, config: 'TransformationConfig') -> str:
-        """Génère le chemin de sortie automatiquement"""
-        
+        """Génère le chemin de sortie automatiquement"""        
         input_path_obj = Path(input_path)
         
         # Détermination de l'extension selon la transformation
@@ -1001,8 +966,7 @@ class VideoTransformer:
         original: VideoMetadata,
         processed: VideoMetadata
     ) -> VideoQualityMetrics:
-        """Calcule les métriques de qualité de la transformation"""
-        
+        """Calcule les métriques de qualité de la transformation"""        
         # Calcul des changements de résolution
         resolution_change = (processed.width * processed.height) / (original.width * original.height)
         
@@ -1024,8 +988,7 @@ class VideoTransformer:
         )
 
 class AsyncVideoTransformer:
-    """Version asynchrone du transformateur vidéo"""
-    
+    """Version asynchrone du transformateur vidéo"""    
     def __init__(self):
         self.sync_transformer = VideoTransformer()
         self.logger = logging.getLogger(__name__)
@@ -1036,8 +999,7 @@ class AsyncVideoTransformer:
         config: 'TransformationConfig',
         output_path: Optional[str] = None
     ) -> 'TransformationResult':
-        """Transformation vidéo asynchrone"""
-        
+        """Transformation vidéo asynchrone"""        
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             None,
@@ -1052,8 +1014,7 @@ class AsyncVideoTransformer:
         inputs: List[Tuple[str, 'TransformationConfig']],
         max_concurrent: int = 2  # Moins de concurrence pour vidéo
     ) -> List['TransformationResult']:
-        """Transformation en lot asynchrone"""
-        
+        """Transformation en lot asynchrone"""        
         semaphore = asyncio.Semaphore(max_concurrent)
         
         async def transform_single(input_config_tuple):

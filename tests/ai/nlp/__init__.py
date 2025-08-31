@@ -19,8 +19,7 @@ Team Expertise:
 ✅ Développeur Audio - Fahed Mlaiel
 ✅ DevOps Engineer - Fahed Mlaiel
 ✅ IA Prompt Engineer - Fahed Mlaiel
-"""
-__version__ = "1.0.0"
+"""__version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."

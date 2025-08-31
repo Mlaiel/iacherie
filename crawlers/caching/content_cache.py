@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Content Cache - Specialized Caching for Media and Content
+"""Content Cache - Specialized Caching for Media and Content
 ========================================================
 
 Advanced content-specific caching with media optimization,
@@ -9,9 +8,7 @@ metadata handling, and intelligent content-aware policies.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import mimetypes
@@ -30,8 +27,7 @@ from .cache_manager import CacheManager
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Content type categories for specialized caching."""
-    AUDIO = "audio"
+    """Content type categories for specialized caching."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -42,8 +38,7 @@ class ContentType(Enum):
 
 @dataclass
 class ContentMetadata:
-    """Content metadata for cache optimization."""
-    content_type: ContentType
+    """Content metadata for cache optimization."""    content_type: ContentType
     mime_type: Optional[str] = None
     size_bytes: int = 0
     duration_seconds: Optional[float] = None
@@ -55,8 +50,7 @@ class ContentMetadata:
     tags: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization."""
-        return {
+        """Convert to dictionary for serialization."""        return {
             "content_type": self.content_type.value,
             "mime_type": self.mime_type,
             "size_bytes": self.size_bytes,
@@ -71,8 +65,7 @@ class ContentMetadata:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'ContentMetadata':
-        """Create from dictionary."""
-        dimensions = None
+        """Create from dictionary."""        dimensions = None
         if data.get('dimensions'):
             dimensions = tuple(data['dimensions'])
         
@@ -91,8 +84,7 @@ class ContentMetadata:
 
 @dataclass
 class CachedContent:
-    """Cached content with metadata and optimization."""
-    key: str
+    """Cached content with metadata and optimization."""    key: str
     content: Any
     metadata: ContentMetadata
     cached_at: datetime = field(default_factory=datetime.now)
@@ -102,8 +94,7 @@ class CachedContent:
     encrypted: bool = False
 
 class ContentCache:
-    """
-    Advanced content cache for media and metadata.
+    """    Advanced content cache for media and metadata.
     
     Features:
     - Content-type aware caching
@@ -112,17 +103,14 @@ class ContentCache:
     - Metadata indexing
     - Content fingerprinting integration
     - Multi-format support
-    """
-    
+    """    
     def __init__(self, backend: str = "redis", cache_manager: Optional[CacheManager] = None):
-        """
-        Initialize content cache.
+        """        Initialize content cache.
         
         Args:
             backend: Cache backend to use
             cache_manager: Existing cache manager instance
-        """
-        self.backend = backend
+        """        self.backend = backend
         self.cache_manager = cache_manager
         self.logger = logging.getLogger(f"{__name__}.ContentCache")
         
@@ -173,15 +161,13 @@ class ContentCache:
         self.logger.info(f"Content cache initialized with {backend} backend")
     
     async def _get_cache_manager(self) -> CacheManager:
-        """Get cache manager instance."""
-        if self.cache_manager is None:
+        """Get cache manager instance."""        if self.cache_manager is None:
             from .cache_manager import get_cache_manager
             self.cache_manager = await get_cache_manager()
         return self.cache_manager
     
     def _detect_content_type(self, content: Any, mime_type: Optional[str] = None) -> ContentType:
-        """Detect content type from content and mime type."""
-        if mime_type:
+        """Detect content type from content and mime type."""        if mime_type:
             if mime_type.startswith('audio/'):
                 return ContentType.AUDIO
             elif mime_type.startswith('video/'):
@@ -204,8 +190,7 @@ class ContentCache:
     
     def _create_metadata(self, content: Any, content_type: ContentType, 
                         **kwargs) -> ContentMetadata:
-        """Create metadata for content."""
-        metadata = ContentMetadata(content_type=content_type)
+        """Create metadata for content."""        metadata = ContentMetadata(content_type=content_type)
         
         # Update with provided metadata
         for key, value in kwargs.items():
@@ -234,26 +219,22 @@ class ContentCache:
         return metadata
     
     def _make_content_key(self, key: str, content_type: ContentType) -> str:
-        """Create content-specific cache key."""
-        prefix = self.key_prefixes["content"]
+        """Create content-specific cache key."""        prefix = self.key_prefixes["content"]
         type_prefix = content_type.value[:4]  # e.g., "audi", "vide"
         return f"{prefix}{type_prefix}:{key}"
     
     def _make_metadata_key(self, content_key: str) -> str:
-        """Create metadata key for content."""
-        return f"{self.key_prefixes['metadata']}{content_key}"
+        """Create metadata key for content."""        return f"{self.key_prefixes['metadata']}{content_key}"
     
     def _make_index_key(self, index_type: str, value: str) -> str:
-        """Create index key for lookups."""
-        return f"{self.key_prefixes['index']}{index_type}:{value}"
+        """Create index key for lookups."""        return f"{self.key_prefixes['index']}{index_type}:{value}"
     
     async def store_content(self, key: str, content: Any, 
                           content_type: Optional[ContentType] = None,
                           metadata: Optional[ContentMetadata] = None,
                           ttl: Optional[int] = None,
                           **kwargs) -> bool:
-        """
-        Store content with metadata and optimization.
+        """        Store content with metadata and optimization.
         
         Args:
             key: Content key
@@ -265,8 +246,7 @@ class ContentCache:
             
         Returns:
             True if successful
-        """
-        try:
+        """        try:
             cache_manager = await self._get_cache_manager()
             
             # Detect or use provided content type
@@ -314,8 +294,7 @@ class ContentCache:
     
     async def get_content(self, key: str, 
                          content_type: Optional[ContentType] = None) -> Optional[Tuple[Any, ContentMetadata]]:
-        """
-        Get content with metadata.
+        """        Get content with metadata.
         
         Args:
             key: Content key
@@ -323,8 +302,7 @@ class ContentCache:
             
         Returns:
             Tuple of (content, metadata) or None if not found
-        """
-        try:
+        """        try:
             cache_manager = await self._get_cache_manager()
             
             # If content type is known, try direct lookup
@@ -353,8 +331,7 @@ class ContentCache:
     
     async def get_content_metadata(self, key: str, 
                                  content_type: Optional[ContentType] = None) -> Optional[ContentMetadata]:
-        """Get only content metadata."""
-        try:
+        """Get only content metadata."""        try:
             # If content type is known, try direct lookup
             if content_type:
                 content_key = self._make_content_key(key, content_type)
@@ -374,8 +351,7 @@ class ContentCache:
             return None
     
     async def _get_content_metadata(self, content_key: str) -> Optional[ContentMetadata]:
-        """Get metadata for content key."""
-        try:
+        """Get metadata for content key."""        try:
             cache_manager = await self._get_cache_manager()
             metadata_key = self._make_metadata_key(content_key)
             
@@ -391,8 +367,7 @@ class ContentCache:
     
     async def delete_content(self, key: str, 
                            content_type: Optional[ContentType] = None) -> bool:
-        """
-        Delete content and its metadata.
+        """        Delete content and its metadata.
         
         Args:
             key: Content key
@@ -400,8 +375,7 @@ class ContentCache:
             
         Returns:
             True if any content was deleted
-        """
-        try:
+        """        try:
             cache_manager = await self._get_cache_manager()
             deleted = False
             
@@ -427,8 +401,7 @@ class ContentCache:
             return False
     
     async def find_by_fingerprint(self, fingerprint_hash: str) -> List[Tuple[str, ContentMetadata]]:
-        """Find content by fingerprint hash."""
-        try:
+        """Find content by fingerprint hash."""        try:
             cache_manager = await self._get_cache_manager()
             index_key = self._make_index_key("fingerprint", fingerprint_hash)
             
@@ -452,8 +425,7 @@ class ContentCache:
     
     async def find_by_type(self, content_type: ContentType, 
                           limit: int = 100) -> List[Tuple[str, ContentMetadata]]:
-        """Find content by type."""
-        try:
+        """Find content by type."""        try:
             cache_manager = await self._get_cache_manager()
             
             # This would require implementing a type index
@@ -466,8 +438,7 @@ class ContentCache:
     
     async def _create_indexes(self, key: str, content_type: ContentType, 
                             metadata: ContentMetadata) -> None:
-        """Create indexes for efficient lookups."""
-        try:
+        """Create indexes for efficient lookups."""        try:
             cache_manager = await self._get_cache_manager()
             content_key = self._make_content_key(key, content_type)
             
@@ -493,8 +464,7 @@ class ContentCache:
             self.logger.error(f"Error creating indexes for {key}: {e}")
     
     async def _remove_indexes(self, key: str, content_type: ContentType) -> None:
-        """Remove content from indexes."""
-        try:
+        """Remove content from indexes."""        try:
             cache_manager = await self._get_cache_manager()
             content_key = self._make_content_key(key, content_type)
             
@@ -509,8 +479,7 @@ class ContentCache:
             self.logger.error(f"Error removing indexes for {key}: {e}")
     
     async def get_stats(self) -> Dict[str, Any]:
-        """Get content cache statistics."""
-        try:
+        """Get content cache statistics."""        try:
             cache_manager = await self._get_cache_manager()
             
             stats = {
@@ -548,15 +517,12 @@ class ContentCache:
             return {}
 
 class MediaCache(ContentCache):
-    """
-    Specialized cache for media content (audio, video, images).
+    """    Specialized cache for media content (audio, video, images).
     
     Enhanced with media-specific optimizations and transformations.
-    """
-    
+    """    
     def __init__(self, **kwargs):
-        """Initialize media cache."""
-        super().__init__(**kwargs)
+        """Initialize media cache."""        super().__init__(**kwargs)
         self.logger = logging.getLogger(f"{__name__}.MediaCache")
         
         # Media-specific settings
@@ -566,15 +532,12 @@ class MediaCache(ContentCache):
         self.preview_duration = 30  # seconds
 
 class MetadataCache(ContentCache):
-    """
-    Specialized cache for metadata and structured data.
+    """    Specialized cache for metadata and structured data.
     
     Optimized for fast lookups and complex queries.
-    """
-    
+    """    
     def __init__(self, **kwargs):
-        """Initialize metadata cache."""
-        super().__init__(**kwargs)
+        """Initialize metadata cache."""        super().__init__(**kwargs)
         self.logger = logging.getLogger(f"{__name__}.MetadataCache")
         
         # Focus on metadata and structured content

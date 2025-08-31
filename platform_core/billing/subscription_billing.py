@@ -1,5 +1,4 @@
-"""
-🚀 Subscription Billing - IA Influencer Agent Platform Enterprise
+"""🚀 Subscription Billing - IA Influencer Agent Platform Enterprise
 ===============================================================
 Module: backend/platform_core/billing/subscription_billing.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -15,9 +14,7 @@ Gestion complète des abonnements SaaS avec billing automatique
 - Prorata automatique et changements de plan
 - Usage-based billing et facturation à l'usage
 - Gestion des essais gratuits et coupons
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 import uuid
@@ -32,8 +29,7 @@ import calendar
 logger = logging.getLogger(__name__)
 
 class BillingPeriod(Enum):
-    """Périodes de facturation"""
-    DAILY = "daily"
+    """Périodes de facturation"""    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -41,8 +37,7 @@ class BillingPeriod(Enum):
     CUSTOM = "custom"
 
 class SubscriptionStatus(Enum):
-    """États des abonnements"""
-    TRIAL = "trial"
+    """États des abonnements"""    TRIAL = "trial"
     ACTIVE = "active"
     PAST_DUE = "past_due"
     CANCELED = "canceled"
@@ -52,8 +47,7 @@ class SubscriptionStatus(Enum):
     INCOMPLETE_EXPIRED = "incomplete_expired"
 
 class PricingModel(Enum):
-    """Modèles de tarification"""
-    FLAT_RATE = "flat_rate"
+    """Modèles de tarification"""    FLAT_RATE = "flat_rate"
     PER_UNIT = "per_unit"
     TIERED = "tiered"
     VOLUME = "volume"
@@ -61,16 +55,14 @@ class PricingModel(Enum):
     USAGE_BASED = "usage_based"
 
 class ProrationPolicy(Enum):
-    """Politiques de prorata"""
-    IMMEDIATE = "immediate"
+    """Politiques de prorata"""    IMMEDIATE = "immediate"
     END_OF_PERIOD = "end_of_period"
     CREATE_CREDIT = "create_credit"
     NO_PRORATION = "no_proration"
 
 @dataclass
 class PricingTier:
-    """Niveau de tarification"""
-    tier_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Niveau de tarification"""    tier_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     min_quantity: int = 0
     max_quantity: Optional[int] = None
@@ -78,8 +70,7 @@ class PricingTier:
     flat_fee: Decimal = Decimal("0.0")
     
     def calculate_cost(self, quantity: int) -> Decimal:
-        """Calcule le coût pour une quantité donnée"""
-        if self.max_quantity and quantity > self.max_quantity:
+        """Calcule le coût pour une quantité donnée"""        if self.max_quantity and quantity > self.max_quantity:
             quantity = self.max_quantity
         if quantity < self.min_quantity:
             return Decimal("0.0")
@@ -89,8 +80,7 @@ class PricingTier:
 
 @dataclass
 class SubscriptionFeature:
-    """Fonctionnalité d'abonnement"""
-    feature_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Fonctionnalité d'abonnement"""    feature_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     description: str = ""
     feature_type: str = "boolean"  # boolean, numeric, text
@@ -105,8 +95,7 @@ class SubscriptionFeature:
 
 @dataclass
 class SubscriptionPlan:
-    """Plan d'abonnement"""
-    plan_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Plan d'abonnement"""    plan_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     description: str = ""
     
@@ -136,8 +125,7 @@ class SubscriptionPlan:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def calculate_price(self, quantity: int = 1, usage_data: Optional[Dict[str, int]] = None) -> Decimal:
-        """Calcule le prix selon le modèle tarifaire"""
-        if self.pricing_model == PricingModel.FLAT_RATE:
+        """Calcule le prix selon le modèle tarifaire"""        if self.pricing_model == PricingModel.FLAT_RATE:
             return self.base_price
             
         elif self.pricing_model == PricingModel.PER_UNIT:
@@ -188,8 +176,7 @@ class SubscriptionPlan:
 
 @dataclass
 class Subscription:
-    """Abonnement client"""
-    subscription_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Abonnement client"""    subscription_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     customer_id: str = ""
     plan_id: str = ""
     
@@ -229,28 +216,24 @@ class Subscription:
     
     @property
     def is_active(self) -> bool:
-        """Vérifie si l'abonnement est actif"""
-        return self.status in [SubscriptionStatus.ACTIVE, SubscriptionStatus.TRIAL]
+        """Vérifie si l'abonnement est actif"""        return self.status in [SubscriptionStatus.ACTIVE, SubscriptionStatus.TRIAL]
         
     @property
     def is_in_trial(self) -> bool:
-        """Vérifie si l'abonnement est en période d'essai"""
-        if not self.trial_end:
+        """Vérifie si l'abonnement est en période d'essai"""        if not self.trial_end:
             return False
         return self.status == SubscriptionStatus.TRIAL and datetime.utcnow() <= self.trial_end
         
     @property
     def days_until_renewal(self) -> int:
-        """Nombre de jours avant le renouvellement"""
-        if self.current_period_end:
+        """Nombre de jours avant le renouvellement"""        if self.current_period_end:
             delta = self.current_period_end - datetime.utcnow()
             return max(0, delta.days)
         return 0
 
 @dataclass
 class BillingCycle:
-    """Cycle de facturation"""
-    cycle_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Cycle de facturation"""    cycle_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     subscription_id: str = ""
     
     # Période
@@ -273,8 +256,7 @@ class BillingCycle:
     created_at: datetime = field(default_factory=datetime.utcnow)
 
 class SubscriptionBilling:
-    """Gestionnaire de facturation d'abonnements"""
-    
+    """Gestionnaire de facturation d'abonnements"""    
     def __init__(self, 
                  invoice_manager: Any,
                  payment_processor: Any,
@@ -292,8 +274,7 @@ class SubscriptionBilling:
                          base_price: Decimal,
                          billing_period: BillingPeriod = BillingPeriod.MONTHLY,
                          **kwargs) -> SubscriptionPlan:
-        """Crée un nouveau plan d'abonnement"""
-        plan = SubscriptionPlan(
+        """Crée un nouveau plan d'abonnement"""        plan = SubscriptionPlan(
             name=name,
             base_price=base_price,
             billing_period=billing_period,
@@ -315,8 +296,7 @@ class SubscriptionBilling:
                                quantity: int = 1,
                                start_trial: bool = False,
                                **kwargs) -> Subscription:
-        """Abonne un client à un plan"""
-        plan = await self.get_plan(plan_id)
+        """Abonne un client à un plan"""        plan = await self.get_plan(plan_id)
         if not plan:
             raise ValueError(f"Plan non trouvé: {plan_id}")
             
@@ -353,8 +333,7 @@ class SubscriptionBilling:
                                      subscription_id: str,
                                      new_plan_id: str,
                                      proration_policy: ProrationPolicy = ProrationPolicy.IMMEDIATE) -> Subscription:
-        """Change le plan d'un abonnement"""
-        subscription = await self.get_subscription(subscription_id)
+        """Change le plan d'un abonnement"""        subscription = await self.get_subscription(subscription_id)
         if not subscription:
             raise ValueError(f"Abonnement non trouvé: {subscription_id}")
             
@@ -391,8 +370,7 @@ class SubscriptionBilling:
                                 subscription_id: str,
                                 immediate: bool = False,
                                 reason: str = "") -> Subscription:
-        """Annule un abonnement"""
-        subscription = await self.get_subscription(subscription_id)
+        """Annule un abonnement"""        subscription = await self.get_subscription(subscription_id)
         if not subscription:
             raise ValueError(f"Abonnement non trouvé: {subscription_id}")
             
@@ -416,8 +394,7 @@ class SubscriptionBilling:
     async def pause_subscription(self,
                                subscription_id: str,
                                resume_date: Optional[datetime] = None) -> Subscription:
-        """Met en pause un abonnement"""
-        subscription = await self.get_subscription(subscription_id)
+        """Met en pause un abonnement"""        subscription = await self.get_subscription(subscription_id)
         if not subscription:
             raise ValueError(f"Abonnement non trouvé: {subscription_id}")
             
@@ -435,8 +412,7 @@ class SubscriptionBilling:
                           feature_name: str,
                           quantity: int,
                           timestamp: Optional[datetime] = None):
-        """Enregistre l'utilisation d'une fonctionnalité mesurée"""
-        subscription = await self.get_subscription(subscription_id)
+        """Enregistre l'utilisation d'une fonctionnalité mesurée"""        subscription = await self.get_subscription(subscription_id)
         if not subscription:
             raise ValueError(f"Abonnement non trouvé: {subscription_id}")
             
@@ -461,8 +437,7 @@ class SubscriptionBilling:
         logger.debug(f"Usage enregistré pour {subscription_id}: {feature_name} = {quantity}")
         
     async def process_recurring_billing(self) -> List[Dict[str, Any]]:
-        """Traite la facturation récurrente pour tous les abonnements"""
-        results = []
+        """Traite la facturation récurrente pour tous les abonnements"""        results = []
         
         # Récupérer les abonnements à facturer
         due_subscriptions = await self._get_subscriptions_due_for_billing()
@@ -488,8 +463,7 @@ class SubscriptionBilling:
         return results
         
     async def _process_subscription_billing(self, subscription: Subscription) -> Dict[str, Any]:
-        """Traite la facturation d'un abonnement spécifique"""
-        plan = await self.get_plan(subscription.plan_id)
+        """Traite la facturation d'un abonnement spécifique"""        plan = await self.get_plan(subscription.plan_id)
         if not plan:
             raise ValueError(f"Plan non trouvé: {subscription.plan_id}")
             
@@ -559,8 +533,7 @@ class SubscriptionBilling:
         }
         
     def _calculate_next_billing_date(self, plan: SubscriptionPlan, from_date: Optional[datetime] = None) -> datetime:
-        """Calcule la prochaine date de facturation"""
-        start_date = from_date or datetime.utcnow()
+        """Calcule la prochaine date de facturation"""        start_date = from_date or datetime.utcnow()
         
         if plan.billing_period == BillingPeriod.DAILY:
             return start_date + timedelta(days=plan.billing_period_count)
@@ -589,8 +562,7 @@ class SubscriptionBilling:
                                           subscription: Subscription,
                                           old_plan: SubscriptionPlan,
                                           new_plan: SubscriptionPlan):
-        """Gère la prorata lors d'un changement de plan"""
-        now = datetime.utcnow()
+        """Gère la prorata lors d'un changement de plan"""        now = datetime.utcnow()
         
         # Calculer la période restante
         total_period = (subscription.current_period_end - subscription.current_period_start).total_seconds()
@@ -631,8 +603,7 @@ class SubscriptionBilling:
                 )
                 
     async def get_plan(self, plan_id: str) -> Optional[SubscriptionPlan]:
-        """Récupère un plan par ID"""
-        if plan_id in self.plans_cache:
+        """Récupère un plan par ID"""        if plan_id in self.plans_cache:
             return self.plans_cache[plan_id]
             
         if self.database_client:
@@ -644,8 +615,7 @@ class SubscriptionBilling:
         return None
         
     async def get_subscription(self, subscription_id: str) -> Optional[Subscription]:
-        """Récupère un abonnement par ID"""
-        if subscription_id in self.subscriptions_cache:
+        """Récupère un abonnement par ID"""        if subscription_id in self.subscriptions_cache:
             return self.subscriptions_cache[subscription_id]
             
         if self.database_client:
@@ -657,20 +627,17 @@ class SubscriptionBilling:
         return None
         
     async def update_subscription(self, subscription: Subscription):
-        """Met à jour un abonnement"""
-        if self.database_client:
+        """Met à jour un abonnement"""        if self.database_client:
             await self._save_subscription(subscription)
         self.subscriptions_cache[subscription.subscription_id] = subscription
         
     async def _get_subscriptions_due_for_billing(self) -> List[Subscription]:
-        """Récupère les abonnements à facturer"""
-        # Dans un vrai système, on ferait une requête en base
+        """Récupère les abonnements à facturer"""        # Dans un vrai système, on ferait une requête en base
         # pour récupérer les abonnements dont current_period_end <= maintenant
         return []
         
     async def _save_plan(self, plan: SubscriptionPlan):
-        """Sauvegarde un plan en base"""
-        try:
+        """Sauvegarde un plan en base"""        try:
             # In a real system, this would save to database
             plan_data = {
                 "plan_id": plan.plan_id,
@@ -690,8 +657,7 @@ class SubscriptionBilling:
             logger.error(f"Error saving subscription plan: {e}")
         
     async def _load_plan(self, plan_id: str) -> Optional[SubscriptionPlan]:
-        """Charge un plan depuis la base"""
-        try:
+        """Charge un plan depuis la base"""        try:
             # In a real system, this would load from database
             # For now, return a default plan if the ID matches common patterns
             if plan_id in ["basic", "premium", "pro"]:
@@ -722,8 +688,7 @@ class SubscriptionBilling:
             return None
         
     async def _save_subscription(self, subscription: Subscription):
-        """Sauvegarde un abonnement en base"""
-        try:
+        """Sauvegarde un abonnement en base"""        try:
             # In a real system, this would save to database
             subscription_data = {
                 "subscription_id": subscription.subscription_id,
@@ -744,8 +709,7 @@ class SubscriptionBilling:
             logger.error(f"Error saving subscription: {e}")
         
     async def _load_subscription(self, subscription_id: str) -> Optional[Subscription]:
-        """Charge un abonnement depuis la base"""
-        try:
+        """Charge un abonnement depuis la base"""        try:
             # In a real system, this would load from database
             # For now, simulate loading a subscription
             logger.debug(f"Loading subscription: {subscription_id}")
@@ -759,8 +723,7 @@ class SubscriptionBilling:
             return None
         
     def get_billing_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques de facturation"""
-        return {
+        """Retourne les statistiques de facturation"""        return {
             "plans_cached": len(self.plans_cache),
             "subscriptions_cached": len(self.subscriptions_cache),
             "active_subscriptions": len([s for s in self.subscriptions_cache.values() if s.is_active])

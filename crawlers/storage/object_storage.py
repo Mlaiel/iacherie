@@ -1,5 +1,4 @@
-"""
-Object Storage Provider
+"""Object Storage Provider
 =======================
 
 Professional object storage implementation for IA-Influencer-Agent platform.
@@ -22,9 +21,7 @@ Expertise combinée:
 - Audio/Vidéo: Traitement multimédia et analyse de contenu
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import pickle
@@ -50,8 +47,7 @@ from .interfaces import (
 logger = logging.getLogger(__name__)
 
 class S3ObjectStorageProvider(BaseStorageProvider):
-    """
-    Professional S3-compatible object storage provider.
+    """    Professional S3-compatible object storage provider.
     
     Features:
     - AWS S3 and MinIO compatibility
@@ -62,15 +58,13 @@ class S3ObjectStorageProvider(BaseStorageProvider):
     - Performance optimization
     - Metadata management
     - Access control
-    """
-    
+    """    
     def __init__(
         self,
         provider_id: str,
         config: Dict[str, Any]
     ):
-        """Initialize S3 object storage provider."""
-        super().__init__(provider_id, StorageBackendType.OBJECT_STORAGE, config)
+        """Initialize S3 object storage provider."""        super().__init__(provider_id, StorageBackendType.OBJECT_STORAGE, config)
         
         self.bucket_name = config['bucket_name']
         self.aws_access_key_id = config.get('aws_access_key_id')
@@ -112,8 +106,7 @@ class S3ObjectStorageProvider(BaseStorageProvider):
         logger.info(f"S3 object storage provider initialized: {provider_id}")
     
     async def connect(self) -> None:
-        """Establish S3 connection."""
-        try:
+        """Establish S3 connection."""        try:
             # Create async boto3 session
             self.session = aioboto3.Session(
                 aws_access_key_id=self.aws_access_key_id,
@@ -150,8 +143,7 @@ class S3ObjectStorageProvider(BaseStorageProvider):
             raise
     
     async def disconnect(self) -> None:
-        """Close S3 connection."""
-        try:
+        """Close S3 connection."""        try:
             if self.s3_client:
                 await self.s3_client.__aexit__(None, None, None)
                 self.s3_client = None
@@ -166,8 +158,7 @@ class S3ObjectStorageProvider(BaseStorageProvider):
             logger.error(f"Error disconnecting from S3 storage {self.provider_id}: {e}")
     
     async def health_check(self) -> bool:
-        """Check S3 storage health."""
-        try:
+        """Check S3 storage health."""        try:
             if not self.is_connected or not self.s3_client:
                 return False
             
@@ -180,8 +171,7 @@ class S3ObjectStorageProvider(BaseStorageProvider):
             return False
     
     async def _create_bucket(self) -> None:
-        """Create S3 bucket if it doesn't exist."""
-        try:
+        """Create S3 bucket if it doesn't exist."""        try:
             if self.region_name == 'us-east-1':
                 # us-east-1 doesn't require LocationConstraint
                 await self.s3_client.create_bucket(Bucket=self.bucket_name)
@@ -200,8 +190,7 @@ class S3ObjectStorageProvider(BaseStorageProvider):
                 raise e
     
     async def _configure_bucket(self) -> None:
-        """Configure S3 bucket settings."""
-        try:
+        """Configure S3 bucket settings."""        try:
             # Enable versioning if requested
             if self.enable_versioning:
                 await self.s3_client.put_bucket_versioning(
@@ -240,8 +229,7 @@ class S3ObjectStorageProvider(BaseStorageProvider):
             logger.warning(f"Failed to configure S3 bucket {self.bucket_name}: {e}")
     
     def _get_object_key(self, record_id: str) -> str:
-        """Get S3 object key for record ID."""
-        # Create hierarchical key structure
+        """Get S3 object key for record ID."""        # Create hierarchical key structure
         record_hash = hashlib.sha256(record_id.encode()).hexdigest()
         
         # Create 3-level hierarchy
@@ -252,8 +240,7 @@ class S3ObjectStorageProvider(BaseStorageProvider):
         return f"{self.key_prefix}{level1}/{level2}/{level3}/{record_id}.data"
     
     def _get_metadata_key(self, record_id: str) -> str:
-        """Get S3 metadata key for record ID."""
-        record_hash = hashlib.sha256(record_id.encode()).hexdigest()
+        """Get S3 metadata key for record ID."""        record_hash = hashlib.sha256(record_id.encode()).hexdigest()
         
         level1 = record_hash[:2]
         level2 = record_hash[2:4]
@@ -262,8 +249,7 @@ class S3ObjectStorageProvider(BaseStorageProvider):
         return f"{self.key_prefix}{level1}/{level2}/{level3}/{record_id}.meta"
     
     def _prepare_data(self, data: Any) -> Tuple[bytes, str]:
-        """Prepare data for storage and determine content type."""
-        # Serialize data
+        """Prepare data for storage and determine content type."""        # Serialize data
         if isinstance(data, (dict, list)):
             serialized_data = json.dumps(data).encode()
             content_type = 'application/json'
@@ -288,8 +274,7 @@ class S3ObjectStorageProvider(BaseStorageProvider):
         return serialized_data, content_type
     
     def _decompress_data(self, data: bytes, content_type: str) -> bytes:
-        """Decompress data if needed."""
-        if content_type == 'application/gzip':
+        """Decompress data if needed."""        if content_type == 'application/gzip':
             return gzip.decompress(data)
         return data
     
@@ -299,8 +284,7 @@ class S3ObjectStorageProvider(BaseStorageProvider):
         data: Any,
         metadata: Optional[StorageMetadata] = None
     ) -> bool:
-        """Store a record in S3."""
-        start_time = asyncio.get_event_loop().time()
+        """Store a record in S3."""        start_time = asyncio.get_event_loop().time()
         
         try:
             object_key = self._get_object_key(record_id)
@@ -388,8 +372,7 @@ class S3ObjectStorageProvider(BaseStorageProvider):
         upload_kwargs: Dict[str, Any],
         data: bytes
     ) -> None:
-        """Perform multipart upload for large files."""
-        bucket = upload_kwargs['Bucket']
+        """Perform multipart upload for large files."""        bucket = upload_kwargs['Bucket']
         key = upload_kwargs['Key']
         
         # Initiate multipart upload
@@ -454,8 +437,7 @@ class S3ObjectStorageProvider(BaseStorageProvider):
         record_id: str,
         include_metadata: bool = True
     ) -> Optional[Tuple[Any, Optional[StorageMetadata]]]:
-        """Retrieve a record from S3."""
-        start_time = asyncio.get_event_loop().time()
+        """Retrieve a record from S3."""        start_time = asyncio.get_event_loop().time()
         
         try:
             object_key = self._get_object_key(record_id)
@@ -553,8 +535,7 @@ class S3ObjectStorageProvider(BaseStorageProvider):
         self,
         records: List[Tuple[str, Any, Optional[StorageMetadata]]]
     ) -> Dict[str, bool]:
-        """Store multiple records in batch."""
-        results = {}
+        """Store multiple records in batch."""        results = {}
         
         # Process uploads with concurrency limit
         semaphore = asyncio.Semaphore(self.max_concurrency)
@@ -578,8 +559,7 @@ class S3ObjectStorageProvider(BaseStorageProvider):
         record_ids: List[str],
         include_metadata: bool = True
     ) -> Dict[str, Optional[Tuple[Any, Optional[StorageMetadata]]]]:
-        """Retrieve multiple records in batch."""
-        results = {}
+        """Retrieve multiple records in batch."""        results = {}
         
         # Process downloads with concurrency limit
         semaphore = asyncio.Semaphore(self.max_concurrency)
@@ -599,8 +579,7 @@ class S3ObjectStorageProvider(BaseStorageProvider):
         return results
     
     async def delete_record(self, record_id: str) -> bool:
-        """Delete a record from S3."""
-        try:
+        """Delete a record from S3."""        try:
             object_key = self._get_object_key(record_id)
             metadata_key = self._get_metadata_key(record_id)
             
@@ -635,8 +614,7 @@ class S3ObjectStorageProvider(BaseStorageProvider):
             return False
     
     async def delete_batch(self, record_ids: List[str]) -> Dict[str, bool]:
-        """Delete multiple records in batch."""
-        results = {}
+        """Delete multiple records in batch."""        results = {}
         
         try:
             # Prepare delete requests
@@ -687,8 +665,7 @@ class S3ObjectStorageProvider(BaseStorageProvider):
         return results
     
     async def exists(self, record_id: str) -> bool:
-        """Check if record exists in S3."""
-        try:
+        """Check if record exists in S3."""        try:
             object_key = self._get_object_key(record_id)
             
             await self.s3_client.head_object(
@@ -708,8 +685,7 @@ class S3ObjectStorageProvider(BaseStorageProvider):
         self,
         options: QueryOptions
     ) -> AsyncIterator[Tuple[str, Any, Optional[StorageMetadata]]]:
-        """Query records using S3 list operations."""
-        try:
+        """Query records using S3 list operations."""        try:
             # List objects with prefix
             paginator = self.s3_client.get_paginator('list_objects_v2')
             
@@ -778,8 +754,7 @@ class S3ObjectStorageProvider(BaseStorageProvider):
         self,
         filters: Optional[List[QueryFilter]] = None
     ) -> int:
-        """Count records in S3."""
-        try:
+        """Count records in S3."""        try:
             count = 0
             
             paginator = self.s3_client.get_paginator('list_objects_v2')
@@ -810,12 +785,10 @@ class S3ObjectStorageProvider(BaseStorageProvider):
         data: Any,
         metadata: Optional[StorageMetadata] = None
     ) -> bool:
-        """Update an existing record (same as store for object storage)."""
-        return await self.store_record(record_id, data, metadata)
+        """Update an existing record (same as store for object storage)."""        return await self.store_record(record_id, data, metadata)
     
     async def get_statistics(self) -> StorageStats:
-        """Get S3 storage statistics."""
-        try:
+        """Get S3 storage statistics."""        try:
             total_records = 0
             total_size = 0
             today = datetime.utcnow().date()
@@ -868,8 +841,7 @@ class S3ObjectStorageProvider(BaseStorageProvider):
         older_than: datetime,
         batch_size: int = 1000
     ) -> int:
-        """Remove records older than specified date."""
-        total_deleted = 0
+        """Remove records older than specified date."""        total_deleted = 0
         
         try:
             delete_keys = []
@@ -919,8 +891,7 @@ class S3ObjectStorageProvider(BaseStorageProvider):
             return total_deleted
     
     async def get_operation_statistics(self) -> Dict[str, Any]:
-        """Get detailed operation statistics."""
-        total_operations = (
+        """Get detailed operation statistics."""        total_operations = (
             self.operation_stats['uploads'] + 
             self.operation_stats['downloads'] + 
             self.operation_stats['deletes']
@@ -954,8 +925,7 @@ class S3ObjectStorageProvider(BaseStorageProvider):
         }
 
 class S3ContentStorageProvider(ContentStorageProvider, S3ObjectStorageProvider):
-    """Content-specific S3 storage provider for media files."""
-    
+    """Content-specific S3 storage provider for media files."""    
     async def store_content(
         self,
         content_id: str,
@@ -964,8 +934,7 @@ class S3ContentStorageProvider(ContentStorageProvider, S3ObjectStorageProvider):
         content_data: Dict[str, Any],
         media_files: Optional[List[Dict[str, Any]]] = None
     ) -> bool:
-        """Store content with associated media files."""
-        try:
+        """Store content with associated media files."""        try:
             # Store main content data
             content_metadata = StorageMetadata(
                 record_id=content_id,
@@ -1026,8 +995,7 @@ class S3ContentStorageProvider(ContentStorageProvider, S3ObjectStorageProvider):
         content_id: str,
         include_media: bool = True
     ) -> Optional[Dict[str, Any]]:
-        """Retrieve content with optional media files."""
-        try:
+        """Retrieve content with optional media files."""        try:
             # Get main content
             result = await self.retrieve_record(content_id, include_metadata=True)
             

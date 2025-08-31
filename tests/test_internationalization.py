@@ -1,28 +1,22 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive test suite for Ainflue AI-powered content protection platform.
+"""Comprehensive test suite for Ainflue AI-powered content protection platform.
 Tests the internationalization system including Amazigh/Berber language support.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -31,16 +25,13 @@ from core.i18n.manager import InternationalizationManager, LanguageScript, Langu
 
 @pytest.fixture
 def i18n_manager():
-    """Create an i18n manager instance for testing."""
-    return InternationalizationManager()
+    """Create an i18n manager instance for testing."""    return InternationalizationManager()
 
 class TestInternationalizationManager:
-    """Test suite for the internationalization manager."""
-    
+    """Test suite for the internationalization manager."""    
     @pytest.mark.asyncio
     async def test_initialization(self, i18n_manager):
-        """Test that the i18n manager initializes with all languages."""
-        assert len(i18n_manager.languages) > 350  # Should have 350+ languages
+        """Test that the i18n manager initializes with all languages."""        assert len(i18n_manager.languages) > 350  # Should have 350+ languages
         assert 'en' in i18n_manager.languages
         assert 'fr' in i18n_manager.languages
         assert 'de' in i18n_manager.languages
@@ -48,8 +39,7 @@ class TestInternationalizationManager:
     
     @pytest.mark.asyncio
     async def test_amazigh_berber_languages(self, i18n_manager):
-        """Test that Amazigh/Berber languages are properly supported."""
-        # Test primary Amazigh languages
+        """Test that Amazigh/Berber languages are properly supported."""        # Test primary Amazigh languages
         amazigh_codes = ['tzm', 'rif', 'shi', 'kab', 'shy', 'mzb', 'thv', 'ttq', 'taq', 'zen']
         
         for code in amazigh_codes:
@@ -60,8 +50,7 @@ class TestInternationalizationManager:
     
     @pytest.mark.asyncio
     async def test_north_african_dialects(self, i18n_manager):
-        """Test that North African Arabic dialects are supported."""
-        # Test some Tunisian dialects
+        """Test that North African Arabic dialects are supported."""        # Test some Tunisian dialects
         assert 'ar-TN-tunis' in i18n_manager.languages
         assert 'ar-TN-sfax' in i18n_manager.languages
         
@@ -78,8 +67,7 @@ class TestInternationalizationManager:
     
     @pytest.mark.asyncio
     async def test_language_detection(self, i18n_manager):
-        """Test language detection functionality."""
-        # Test Arabic text detection
+        """Test language detection functionality."""        # Test Arabic text detection
         arabic_text = "مرحبا بكم في عالم الذكاء الاصطناعي"
         detected = await i18n_manager.detect_language(arabic_text)
         assert detected == 'ar'
@@ -96,8 +84,7 @@ class TestInternationalizationManager:
     
     @pytest.mark.asyncio
     async def test_translation_fallback(self, i18n_manager):
-        """Test translation fallback mechanism."""
-        # Test getting translation for unsupported key
+        """Test translation fallback mechanism."""        # Test getting translation for unsupported key
         translation = await i18n_manager.get_translation(
             'test_key', 'tzm', default='Default text'
         )
@@ -111,8 +98,7 @@ class TestInternationalizationManager:
     
     @pytest.mark.asyncio
     async def test_rtl_language_support(self, i18n_manager):
-        """Test right-to-left language support."""
-        rtl_languages = i18n_manager.get_rtl_languages()
+        """Test right-to-left language support."""        rtl_languages = i18n_manager.get_rtl_languages()
         
         # Arabic and Hebrew should be RTL
         assert 'ar' in [lang for lang in i18n_manager.languages if i18n_manager.languages[lang].rtl]
@@ -125,8 +111,7 @@ class TestInternationalizationManager:
     
     @pytest.mark.asyncio
     async def test_currency_formatting(self, i18n_manager):
-        """Test currency formatting for different locales."""
-        # Test USD formatting
+        """Test currency formatting for different locales."""        # Test USD formatting
         formatted = await i18n_manager.format_currency(1234.56, 'USD', 'en')
         assert '1234.56' in formatted
         assert 'USD' in formatted
@@ -138,8 +123,7 @@ class TestInternationalizationManager:
     
     @pytest.mark.asyncio
     async def test_number_formatting(self, i18n_manager):
-        """Test number formatting for different locales."""
-        # Test English number formatting
+        """Test number formatting for different locales."""        # Test English number formatting
         formatted = await i18n_manager.format_number(1234567, 'en')
         assert '1,234,567' in formatted
         
@@ -148,8 +132,7 @@ class TestInternationalizationManager:
         assert '1,234.56' in formatted
     
     def test_language_statistics(self, i18n_manager):
-        """Test language statistics functionality."""
-        stats = i18n_manager.get_language_statistics()
+        """Test language statistics functionality."""        stats = i18n_manager.get_language_statistics()
         
         assert 'total_languages' in stats
         assert 'amazigh_berber_languages' in stats
@@ -166,8 +149,7 @@ class TestInternationalizationManager:
         assert stats['coverage_percentage'] > 90
     
     def test_language_by_region(self, i18n_manager):
-        """Test getting languages by region."""
-        african_languages = i18n_manager.get_languages_by_region(LanguageRegion.AFRICA)
+        """Test getting languages by region."""        african_languages = i18n_manager.get_languages_by_region(LanguageRegion.AFRICA)
         
         # Should include Amazigh languages
         amazigh_found = any(lang.code.startswith(('tzm', 'rif', 'shi', 'kab')) for lang in african_languages)
@@ -178,8 +160,7 @@ class TestInternationalizationManager:
         assert arabic_found
     
     def test_script_support(self, i18n_manager):
-        """Test different script support."""
-        # Test Tifinagh script languages
+        """Test different script support."""        # Test Tifinagh script languages
         tifinagh_languages = [
             lang for lang in i18n_manager.languages.values() 
             if lang.script == LanguageScript.TIFINAGH
@@ -195,8 +176,7 @@ class TestInternationalizationManager:
     
     @pytest.mark.asyncio
     async def test_auto_translation(self, i18n_manager):
-        """Test auto-translation functionality."""
-        # Test Spanish translation
+        """Test auto-translation functionality."""        # Test Spanish translation
         translation = await i18n_manager._auto_translate("Hello", "es")
         assert translation == "[ES] Hello"
         
@@ -209,8 +189,7 @@ class TestInternationalizationManager:
         assert translation == "[TZM] Hello"
     
     def test_language_info_access(self, i18n_manager):
-        """Test accessing language information."""
-        # Test English language info
+        """Test accessing language information."""        # Test English language info
         en_info = i18n_manager.get_language_info('en')
         assert en_info is not None
         assert en_info.name == 'English'
@@ -225,8 +204,7 @@ class TestInternationalizationManager:
         assert tzm_info.region == LanguageRegion.AFRICA
     
     def test_supported_languages_list(self, i18n_manager):
-        """Test getting list of supported languages."""
-        supported = i18n_manager.get_supported_languages()
+        """Test getting list of supported languages."""        supported = i18n_manager.get_supported_languages()
         
         # Should have many languages
         assert len(supported) > 300

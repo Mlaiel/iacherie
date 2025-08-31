@@ -1,5 +1,4 @@
-"""
-Royalty Configuration Module
+"""Royalty Configuration Module
 ===========================
 
 Professional royalty management and distribution system for content creators.
@@ -15,9 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import os
+"""import os
 from decimal import Decimal
 from typing import Dict, List, Optional, Any, Set, Union
 from dataclasses import dataclass, field
@@ -26,8 +23,7 @@ from datetime import datetime, timedelta
 
 
 class RoyaltyType(str, Enum):
-    """Types of royalties in the music and content industry."""
-    # Music Royalties
+    """Types of royalties in the music and content industry."""    # Music Royalties
     MECHANICAL = "mechanical"  # Physical/digital reproduction
     PERFORMANCE = "performance"  # Radio, streaming, live performance
     SYNCHRONIZATION = "synchronization"  # TV, film, advertising
@@ -63,8 +59,7 @@ class RoyaltyType(str, Enum):
 
 
 class RoyaltyCalculationMethod(str, Enum):
-    """Methods for calculating royalty distributions."""
-    PERCENTAGE = "percentage"  # Fixed percentage split
+    """Methods for calculating royalty distributions."""    PERCENTAGE = "percentage"  # Fixed percentage split
     FIXED_AMOUNT = "fixed_amount"  # Fixed amount per unit
     TIERED = "tiered"  # Different rates based on volume
     WATERFALL = "waterfall"  # Sequential distribution
@@ -74,8 +69,7 @@ class RoyaltyCalculationMethod(str, Enum):
 
 
 class RoyaltyRecipientType(str, Enum):
-    """Types of royalty recipients."""
-    ARTIST = "artist"  # Primary artist/creator
+    """Types of royalty recipients."""    ARTIST = "artist"  # Primary artist/creator
     SONGWRITER = "songwriter"  # Song composer
     PRODUCER = "producer"  # Music producer
     PUBLISHER = "publisher"  # Publishing company
@@ -92,8 +86,7 @@ class RoyaltyRecipientType(str, Enum):
 
 
 class RoyaltyStatus(str, Enum):
-    """Status of royalty payments."""
-    PENDING = "pending"
+    """Status of royalty payments."""    PENDING = "pending"
     CALCULATED = "calculated"
     APPROVED = "approved"
     PROCESSING = "processing"
@@ -106,8 +99,7 @@ class RoyaltyStatus(str, Enum):
 
 
 class RoyaltyPeriod(str, Enum):
-    """Reporting and distribution periods."""
-    REAL_TIME = "real_time"  # Instant distribution
+    """Reporting and distribution periods."""    REAL_TIME = "real_time"  # Instant distribution
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -118,8 +110,7 @@ class RoyaltyPeriod(str, Enum):
 
 @dataclass
 class RoyaltyRate:
-    """Royalty rate configuration for different scenarios."""
-    rate_percentage: Decimal
+    """Royalty rate configuration for different scenarios."""    rate_percentage: Decimal
     minimum_amount: Decimal = Decimal("0.00")
     maximum_amount: Optional[Decimal] = None
     currency: str = "EUR"
@@ -137,8 +128,7 @@ class RoyaltyRate:
 
 @dataclass
 class RoyaltySplit:
-    """Defines how royalties are split among recipients."""
-    recipient_id: str
+    """Defines how royalties are split among recipients."""    recipient_id: str
     recipient_type: RoyaltyRecipientType
     recipient_name: str
     split_percentage: Decimal
@@ -161,8 +151,7 @@ class RoyaltySplit:
 
 @dataclass
 class RoyaltySource:
-    """Configuration for royalty sources/platforms."""
-    source_id: str
+    """Configuration for royalty sources/platforms."""    source_id: str
     source_name: str
     source_type: str  # platform, collection_society, direct
     
@@ -188,8 +177,7 @@ class RoyaltySource:
 
 @dataclass
 class RecoupmentSchedule:
-    """Advanced recoupment configuration for advances and costs."""
-    advance_amount: Decimal
+    """Advanced recoupment configuration for advances and costs."""    advance_amount: Decimal
     recoupment_rate: Decimal  # Percentage of royalties to recoup
     recoupable_costs: List[str] = field(default_factory=list)
     non_recoupable_costs: List[str] = field(default_factory=list)
@@ -206,8 +194,7 @@ class RecoupmentSchedule:
 
 @dataclass
 class RoyaltyConfig:
-    """Professional royalty management configuration."""
-    
+    """Professional royalty management configuration."""    
     # Global Royalty Settings
     ENABLE_ROYALTY_SYSTEM: bool = True
     DEFAULT_CURRENCY: str = "EUR"
@@ -525,8 +512,7 @@ class RoyaltyConfig:
     
     def get_royalty_rate(self, royalty_type: RoyaltyType, 
                         source_id: Optional[str] = None) -> RoyaltyRate:
-        """Get royalty rate for specific type and source."""
-        if source_id and source_id in self.ROYALTY_SOURCES:
+        """Get royalty rate for specific type and source."""        if source_id and source_id in self.ROYALTY_SOURCES:
             source = self.ROYALTY_SOURCES[source_id]
             if royalty_type in source.base_rates:
                 return source.base_rates[royalty_type]
@@ -537,12 +523,10 @@ class RoyaltyConfig:
         )
     
     def get_split_template(self, template_name: str) -> List[RoyaltySplit]:
-        """Get predefined split template."""
-        return self.SPLIT_TEMPLATES.get(template_name, [])
+        """Get predefined split template."""        return self.SPLIT_TEMPLATES.get(template_name, [])
     
     def validate_splits(self, splits: List[RoyaltySplit]) -> Dict[str, Any]:
-        """Validate royalty splits for consistency."""
-        total_percentage = sum(split.split_percentage for split in splits)
+        """Validate royalty splits for consistency."""        total_percentage = sum(split.split_percentage for split in splits)
         tolerance = self.BUSINESS_RULES["split_percentage_tolerance"]
         
         validation_result = {
@@ -580,8 +564,7 @@ class RoyaltyConfig:
     def calculate_royalty_distribution(self, total_revenue: Decimal, 
                                      splits: List[RoyaltySplit],
                                      royalty_type: RoyaltyType = RoyaltyType.STREAMING) -> Dict[str, Decimal]:
-        """Calculate royalty distribution based on splits."""
-        distribution = {}
+        """Calculate royalty distribution based on splits."""        distribution = {}
         
         # Apply platform commission first
         net_revenue = total_revenue * (Decimal("100.0") - self.PLATFORM_COMMISSION_PERCENTAGE) / Decimal("100.0")
@@ -603,8 +586,7 @@ class RoyaltyConfig:
         return distribution
     
     def get_collection_society_info(self, country_code: str) -> Optional[Dict[str, Any]]:
-        """Get collection society information for a country."""
-        for society_name, info in self.COLLECTION_SOCIETIES.items():
+        """Get collection society information for a country."""        for society_name, info in self.COLLECTION_SOCIETIES.items():
             if info["country"] == country_code.upper():
                 return info
         return None
@@ -621,8 +603,7 @@ from enum import Enum
 
 
 class RoyaltyType(str, Enum):
-    """Types of royalties."""
-    MECHANICAL = "mechanical"
+    """Types of royalties."""    MECHANICAL = "mechanical"
     PERFORMANCE = "performance"
     SYNCHRONIZATION = "synchronization"
     MASTER = "master"
@@ -640,8 +621,7 @@ class RoyaltyType(str, Enum):
 
 
 class RoyaltyCalculationMethod(str, Enum):
-    """Methods for calculating royalties."""
-    PERCENTAGE = "percentage"
+    """Methods for calculating royalties."""    PERCENTAGE = "percentage"
     PER_STREAM = "per_stream"
     PER_DOWNLOAD = "per_download"
     FLAT_RATE = "flat_rate"
@@ -650,8 +630,7 @@ class RoyaltyCalculationMethod(str, Enum):
 
 
 class DistributionFrequency(str, Enum):
-    """Frequency of royalty distributions."""
-    REAL_TIME = "real_time"
+    """Frequency of royalty distributions."""    REAL_TIME = "real_time"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -661,8 +640,7 @@ class DistributionFrequency(str, Enum):
 
 
 class RoyaltyStatus(str, Enum):
-    """Status of royalty payments."""
-    PENDING = "pending"
+    """Status of royalty payments."""    PENDING = "pending"
     CALCULATED = "calculated"
     APPROVED = "approved"
     DISTRIBUTED = "distributed"
@@ -672,8 +650,7 @@ class RoyaltyStatus(str, Enum):
 
 
 class RightType(str, Enum):
-    """Types of rights for royalty collection."""
-    EXCLUSIVE = "exclusive"
+    """Types of rights for royalty collection."""    EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     SHARED = "shared"
     ADMINISTERED = "administered"
@@ -682,8 +659,7 @@ class RightType(str, Enum):
 
 @dataclass
 class RoyaltyRate:
-    """Royalty rate configuration."""
-    rate_type: RoyaltyType
+    """Royalty rate configuration."""    rate_type: RoyaltyType
     calculation_method: RoyaltyCalculationMethod
     rate_value: Decimal
     minimum_amount: Decimal
@@ -697,8 +673,7 @@ class RoyaltyRate:
 
 @dataclass
 class PlatformRoyaltyConfig:
-    """Platform-specific royalty configuration."""
-    platform_name: str
+    """Platform-specific royalty configuration."""    platform_name: str
     platform_id: str
     royalty_rates: Dict[RoyaltyType, RoyaltyRate]
     minimum_payout: Decimal
@@ -712,8 +687,7 @@ class PlatformRoyaltyConfig:
 
 @dataclass
 class CollaboratorSplit:
-    """Collaborator royalty split configuration."""
-    collaborator_id: str
+    """Collaborator royalty split configuration."""    collaborator_id: str
     name: str
     role: str  # composer, lyricist, producer, performer, etc.
     split_percentage: Decimal
@@ -725,8 +699,7 @@ class CollaboratorSplit:
 
 @dataclass
 class TerritoryRoyaltyConfig:
-    """Territory-specific royalty configuration."""
-    territory_code: str
+    """Territory-specific royalty configuration."""    territory_code: str
     territory_name: str
     collection_societies: Dict[RoyaltyType, str]
     royalty_rates: Dict[RoyaltyType, Decimal]
@@ -738,8 +711,7 @@ class TerritoryRoyaltyConfig:
 
 @dataclass
 class RoyaltyConfig:
-    """Main royalty configuration class."""
-    
+    """Main royalty configuration class."""    
     # Database Configuration
     DATABASE_URL: str = os.getenv(
         "ROYALTY_DB_URL", 
@@ -1014,20 +986,17 @@ class RoyaltyConfig:
     })
     
     def get_platform_config(self, platform_id: str) -> Optional[PlatformRoyaltyConfig]:
-        """Get platform-specific royalty configuration."""
-        return self.PLATFORM_CONFIGS.get(platform_id.lower())
+        """Get platform-specific royalty configuration."""        return self.PLATFORM_CONFIGS.get(platform_id.lower())
     
     def get_territory_config(self, territory_code: str) -> Optional[TerritoryRoyaltyConfig]:
-        """Get territory-specific royalty configuration."""
-        return self.TERRITORY_CONFIGS.get(territory_code.upper())
+        """Get territory-specific royalty configuration."""        return self.TERRITORY_CONFIGS.get(territory_code.upper())
     
     def get_royalty_rate(
         self, 
         royalty_type: RoyaltyType, 
         platform: Optional[str] = None
     ) -> Optional[RoyaltyRate]:
-        """Get royalty rate for a specific type and platform."""
-        if platform:
+        """Get royalty rate for a specific type and platform."""        if platform:
             platform_config = self.get_platform_config(platform)
             if platform_config and royalty_type in platform_config.royalty_rates:
                 return platform_config.royalty_rates[royalty_type]
@@ -1041,8 +1010,7 @@ class RoyaltyConfig:
         gross_revenue: Decimal,
         platform: Optional[str] = None
     ) -> Decimal:
-        """Calculate royalty amount based on usage and revenue."""
-        rate_config = self.get_royalty_rate(royalty_type, platform)
+        """Calculate royalty amount based on usage and revenue."""        rate_config = self.get_royalty_rate(royalty_type, platform)
         if not rate_config:
             return Decimal("0.00")
         
@@ -1069,8 +1037,7 @@ class RoyaltyConfig:
         total_amount: Decimal, 
         collaborators: List[CollaboratorSplit]
     ) -> Dict[str, Decimal]:
-        """Split royalty amount among collaborators."""
-        splits = {}
+        """Split royalty amount among collaborators."""        splits = {}
         remaining_amount = total_amount
         
         # Calculate splits
@@ -1087,8 +1054,7 @@ class RoyaltyConfig:
         return splits
     
     def get_tax_withholding_rate(self, territory_code: str) -> Decimal:
-        """Get tax withholding rate for a territory."""
-        territory_config = self.get_territory_config(territory_code)
+        """Get tax withholding rate for a territory."""        territory_config = self.get_territory_config(territory_code)
         if territory_config:
             return territory_config.tax_withholding_rate
         

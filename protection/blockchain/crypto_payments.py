@@ -1,5 +1,4 @@
-"""
-Cryptocurrency Payment Processing for Content Protection Services
+"""Cryptocurrency Payment Processing for Content Protection Services
 Professional implementation of crypto payments, staking, and DeFi integration
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -19,9 +18,7 @@ without explicit written authorization from Fahed Mlaiel is strictly
 prohibited and will result in legal action.
 
 Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union, AsyncGenerator
 from dataclasses import dataclass, field
@@ -49,8 +46,7 @@ logger = logging.getLogger(__name__)
 
 
 class SupportedCryptocurrency(Enum):
-    """Supported cryptocurrencies for payments"""
-    ETHEREUM = "ETH"
+    """Supported cryptocurrencies for payments"""    ETHEREUM = "ETH"
     BITCOIN = "BTC"
     POLYGON_MATIC = "MATIC"
     BINANCE_COIN = "BNB"
@@ -63,8 +59,7 @@ class SupportedCryptocurrency(Enum):
 
 
 class PaymentStatus(Enum):
-    """Payment transaction status"""
-    PENDING = "pending"
+    """Payment transaction status"""    PENDING = "pending"
     CONFIRMED = "confirmed"
     FAILED = "failed"
     CANCELLED = "cancelled"
@@ -73,8 +68,7 @@ class PaymentStatus(Enum):
 
 
 class ServiceTier(Enum):
-    """Service tiers for content protection"""
-    BASIC = "basic"
+    """Service tiers for content protection"""    BASIC = "basic"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
     PREMIUM = "premium"
@@ -82,8 +76,7 @@ class ServiceTier(Enum):
 
 @dataclass
 class PaymentRate:
-    """Payment rates for different services"""
-    service_type: str
+    """Payment rates for different services"""    service_type: str
     base_price_usd: Decimal
     cryptocurrency: SupportedCryptocurrency
     current_rate: Decimal  # Crypto amount per USD
@@ -91,16 +84,14 @@ class PaymentRate:
     discount_percentage: Decimal = Decimal('0')
     
     def calculate_crypto_amount(self, usd_amount: Decimal) -> Decimal:
-        """Calculate cryptocurrency amount for USD value"""
-        discounted_amount = usd_amount * (Decimal('1') - self.discount_percentage / Decimal('100'))
+        """Calculate cryptocurrency amount for USD value"""        discounted_amount = usd_amount * (Decimal('1') - self.discount_percentage / Decimal('100'))
         crypto_amount = discounted_amount * self.current_rate
         return crypto_amount.quantize(Decimal('0.000001'), rounding=ROUND_DOWN)
 
 
 @dataclass
 class PaymentRequest:
-    """Cryptocurrency payment request"""
-    request_id: str
+    """Cryptocurrency payment request"""    request_id: str
     user_id: str
     service_type: str
     service_tier: ServiceTier
@@ -147,8 +138,7 @@ class PaymentRequest:
 
 
 class PriceOracle:
-    """Cryptocurrency price oracle for real-time rates"""
-    
+    """Cryptocurrency price oracle for real-time rates"""    
     def __init__(self, api_keys: Dict[str, str]):
         self.api_keys = api_keys
         self.price_cache: Dict[str, Tuple[Decimal, datetime]] = {}
@@ -164,8 +154,7 @@ class PriceOracle:
             await self.session.close()
     
     async def get_current_price(self, cryptocurrency: SupportedCryptocurrency) -> Decimal:
-        """Get current USD price for cryptocurrency"""
-        try:
+        """Get current USD price for cryptocurrency"""        try:
             cache_key = cryptocurrency.value
             
             # Check cache first
@@ -195,8 +184,7 @@ class PriceOracle:
             raise
     
     async def _fetch_price_coingecko(self, cryptocurrency: SupportedCryptocurrency) -> Optional[Decimal]:
-        """Fetch price from CoinGecko API"""
-        try:
+        """Fetch price from CoinGecko API"""        try:
             coin_ids = {
                 SupportedCryptocurrency.ETHEREUM: 'ethereum',
                 SupportedCryptocurrency.BITCOIN: 'bitcoin',
@@ -234,8 +222,7 @@ class PriceOracle:
             return None
     
     async def _fetch_price_coinmarketcap(self, cryptocurrency: SupportedCryptocurrency) -> Optional[Decimal]:
-        """Fetch price from CoinMarketCap API"""
-        try:
+        """Fetch price from CoinMarketCap API"""        try:
             api_key = self.api_keys.get('coinmarketcap')
             if not api_key:
                 return None
@@ -265,8 +252,7 @@ class PriceOracle:
             return None
     
     async def _fetch_price_binance(self, cryptocurrency: SupportedCryptocurrency) -> Optional[Decimal]:
-        """Fetch price from Binance API"""
-        try:
+        """Fetch price from Binance API"""        try:
             symbol_mapping = {
                 SupportedCryptocurrency.ETHEREUM: 'ETHUSDT',
                 SupportedCryptocurrency.BITCOIN: 'BTCUSDT',
@@ -302,8 +288,7 @@ class PriceOracle:
         from_currency: SupportedCryptocurrency,
         to_currency: SupportedCryptocurrency
     ) -> Decimal:
-        """Get conversion rate between two cryptocurrencies"""
-        try:
+        """Get conversion rate between two cryptocurrencies"""        try:
             if from_currency == to_currency:
                 return Decimal('1')
             
@@ -318,8 +303,7 @@ class PriceOracle:
 
 
 class PaymentProcessor:
-    """Professional cryptocurrency payment processor"""
-    
+    """Professional cryptocurrency payment processor"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.price_oracle: Optional[PriceOracle] = None
@@ -331,8 +315,7 @@ class PaymentProcessor:
         self._initialize_service_rates()
     
     async def initialize(self) -> bool:
-        """Initialize payment processor"""
-        try:
+        """Initialize payment processor"""        try:
             # Initialize price oracle
             api_keys = self.config.get('api_keys', {})
             self.price_oracle = PriceOracle(api_keys)
@@ -358,8 +341,7 @@ class PaymentProcessor:
             return False
     
     def _initialize_service_rates(self):
-        """Initialize service pricing rates"""
-        self.service_rates = {
+        """Initialize service pricing rates"""        self.service_rates = {
             'content_fingerprinting': PaymentRate(
                 service_type='content_fingerprinting',
                 base_price_usd=Decimal('0.10'),
@@ -398,8 +380,7 @@ class PaymentProcessor:
         cryptocurrency: SupportedCryptocurrency,
         metadata: Optional[Dict[str, Any]] = None
     ) -> PaymentRequest:
-        """Create a new payment request"""
-        try:
+        """Create a new payment request"""        try:
             # Get current pricing
             base_rate = self.service_rates.get(service_type)
             if not base_rate:
@@ -446,20 +427,17 @@ class PaymentProcessor:
             raise
     
     def _generate_request_id(self) -> str:
-        """Generate unique payment request ID"""
-        timestamp = int(datetime.utcnow().timestamp())
+        """Generate unique payment request ID"""        timestamp = int(datetime.utcnow().timestamp())
         random_part = secrets.token_hex(8)
         return f"pay_{timestamp}_{random_part}"
     
     def _generate_payment_address(self, cryptocurrency: SupportedCryptocurrency) -> str:
-        """Generate unique payment address for request"""
-        # In production, this would generate actual addresses using HD wallets
+        """Generate unique payment address for request"""        # In production, this would generate actual addresses using HD wallets
         # For now, return the main wallet address
         return self.wallet_addresses.get(cryptocurrency, "0x" + "0" * 40)
     
     async def check_payment_status(self, request: PaymentRequest) -> PaymentRequest:
-        """Check and update payment status"""
-        try:
+        """Check and update payment status"""        try:
             if request.status in [PaymentStatus.CONFIRMED, PaymentStatus.FAILED, PaymentStatus.CANCELLED]:
                 return request
             
@@ -484,8 +462,7 @@ class PaymentProcessor:
             return request
     
     async def _check_ethereum_payment(self, request: PaymentRequest) -> PaymentRequest:
-        """Check Ethereum-based payment"""
-        try:
+        """Check Ethereum-based payment"""        try:
             web3 = self.web3_clients.get('ethereum')
             if not web3:
                 return request
@@ -527,8 +504,7 @@ class PaymentProcessor:
             return request
     
     async def _check_bitcoin_payment(self, request: PaymentRequest) -> PaymentRequest:
-        """Check Bitcoin payment"""
-        try:
+        """Check Bitcoin payment"""        try:
             # In production, would integrate with Bitcoin node or service like BlockCypher
             # For now, simplified implementation
             request.status = PaymentStatus.PENDING
@@ -539,8 +515,7 @@ class PaymentProcessor:
             return request
     
     async def _check_generic_payment(self, request: PaymentRequest) -> PaymentRequest:
-        """Check payment for other cryptocurrencies"""
-        try:
+        """Check payment for other cryptocurrencies"""        try:
             # Generic implementation for other blockchains
             request.status = PaymentStatus.PENDING
             return request
@@ -555,8 +530,7 @@ class PaymentProcessor:
         refund_amount: Optional[Decimal] = None,
         reason: str = ""
     ) -> Tuple[bool, str]:
-        """Process refund for a payment"""
-        try:
+        """Process refund for a payment"""        try:
             if request.status != PaymentStatus.CONFIRMED:
                 return False, "Can only refund confirmed payments"
             
@@ -581,8 +555,7 @@ class PaymentProcessor:
         cryptocurrency: SupportedCryptocurrency,
         transaction_type: str = "transfer"
     ) -> Dict[str, Decimal]:
-        """Calculate current gas fees for transaction"""
-        try:
+        """Calculate current gas fees for transaction"""        try:
             fees = {
                 'slow': Decimal('0'),
                 'standard': Decimal('0'),

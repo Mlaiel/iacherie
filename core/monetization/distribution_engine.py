@@ -1,12 +1,9 @@
-"""
-Advanced Distribution Engine
+"""Advanced Distribution Engine
 Automated revenue distribution and payout management system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from decimal import Decimal, ROUND_HALF_UP
@@ -24,8 +21,7 @@ from ...ai.collaboration.revenue_optimizer import RevenueOptimizer
 
 
 class PayoutStatus(Enum):
-    """Payout processing status"""
-    PENDING = "pending"
+    """Payout processing status"""    PENDING = "pending"
     CALCULATED = "calculated"
     APPROVED = "approved"
     PROCESSING = "processing"
@@ -36,8 +32,7 @@ class PayoutStatus(Enum):
 
 
 class PayoutMethod(Enum):
-    """Payout delivery methods"""
-    BANK_TRANSFER = "bank_transfer"
+    """Payout delivery methods"""    BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE = "stripe"
     WISE = "wise"
@@ -46,8 +41,7 @@ class PayoutMethod(Enum):
 
 
 class CollaborationType(Enum):
-    """Types of collaboration agreements"""
-    SPLIT_REVENUE = "split_revenue"
+    """Types of collaboration agreements"""    SPLIT_REVENUE = "split_revenue"
     PERCENTAGE_BASED = "percentage_based"
     FIXED_AMOUNT = "fixed_amount"
     MILESTONE_BASED = "milestone_based"
@@ -56,8 +50,7 @@ class CollaborationType(Enum):
 
 @dataclass
 class CollaboratorShare:
-    """Individual collaborator's revenue share"""
-    user_id: int
+    """Individual collaborator's revenue share"""    user_id: int
     name: str
     email: str
     percentage: Decimal
@@ -68,15 +61,13 @@ class CollaboratorShare:
     bank_details: Optional[Dict[str, str]] = None
     
     def __post_init__(self):
-        """Validate collaborator share"""
-        if self.percentage < 0 or self.percentage > 100:
+        """Validate collaborator share"""        if self.percentage < 0 or self.percentage > 100:
             raise ValueError("Percentage must be between 0 and 100")
 
 
 @dataclass
 class DistributionRules:
-    """Revenue distribution rules"""
-    primary_creator_percentage: Decimal
+    """Revenue distribution rules"""    primary_creator_percentage: Decimal
     platform_fee_percentage: Decimal
     collaborator_shares: List[CollaboratorShare] = field(default_factory=list)
     minimum_payout_amount: Decimal = Decimal("25.00")
@@ -86,8 +77,7 @@ class DistributionRules:
     currency: str = "EUR"
     
     def validate(self) -> bool:
-        """Validate distribution rules"""
-        total_percentage = self.primary_creator_percentage + self.platform_fee_percentage
+        """Validate distribution rules"""        total_percentage = self.primary_creator_percentage + self.platform_fee_percentage
         total_percentage += sum(share.percentage for share in self.collaborator_shares)
         
         return abs(total_percentage - 100) < Decimal("0.01")  # Allow small rounding differences
@@ -95,8 +85,7 @@ class DistributionRules:
 
 @dataclass
 class PayoutCalculation:
-    """Detailed payout calculation"""
-    user_id: int
+    """Detailed payout calculation"""    user_id: int
     total_revenue: Decimal
     platform_fees: Decimal
     collaborator_deductions: Decimal
@@ -107,8 +96,7 @@ class PayoutCalculation:
     breakdown: Dict[str, Decimal] = field(default_factory=dict)
     
     def get_summary(self) -> Dict[str, Any]:
-        """Get calculation summary"""
-        return {
+        """Get calculation summary"""        return {
             "user_id": self.user_id,
             "total_revenue": float(self.total_revenue),
             "platform_fees": float(self.platform_fees),
@@ -122,8 +110,7 @@ class PayoutCalculation:
 
 
 class PayoutRequest(BaseModel):
-    """Payout request data model"""
-    user_id: int
+    """Payout request data model"""    user_id: int
     amount: Decimal = Field(..., gt=0)
     currency: str = "EUR"
     method: PayoutMethod = PayoutMethod.BANK_TRANSFER
@@ -136,8 +123,7 @@ class PayoutRequest(BaseModel):
 
 
 class DistributionEngine:
-    """Advanced revenue distribution and payout management"""
-    
+    """Advanced revenue distribution and payout management"""    
     def __init__(
         self,
         payment_processor: PaymentProcessor,
@@ -157,8 +143,7 @@ class DistributionEngine:
         end_date: datetime,
         session: AsyncSession
     ) -> PayoutCalculation:
-        """Calculate comprehensive payout for user"""
-        try:
+        """Calculate comprehensive payout for user"""        try:
             # Get user's total revenue for period
             total_revenue = await self._get_user_revenue(
                 user_id, start_date, end_date, session
@@ -220,8 +205,7 @@ class DistributionEngine:
         session: AsyncSession,
         force_process: bool = False
     ) -> Dict[str, Any]:
-        """Process automated payouts for all eligible users"""
-        try:
+        """Process automated payouts for all eligible users"""        try:
             results = {
                 "processed": 0,
                 "failed": 0,
@@ -284,8 +268,7 @@ class DistributionEngine:
         payout_request: PayoutRequest,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Create manual payout for user"""
-        try:
+        """Create manual payout for user"""        try:
             # Fraud detection check
             fraud_score = await self.fraud_detection.analyze_payout_request(payout_request)
             if fraud_score > 0.8:  # High fraud risk
@@ -350,8 +333,7 @@ class DistributionEngine:
         total_revenue: Decimal,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Distribute revenue among collaborators"""
-        try:
+        """Distribute revenue among collaborators"""        try:
             # Get collaboration agreement
             result = await session.execute(
                 select(CollaborationAgreement).where(
@@ -409,8 +391,7 @@ class DistributionEngine:
         end_date: datetime,
         session: AsyncSession
     ) -> Decimal:
-        """Get total revenue for user in date range"""
-        from ...database.models import RevenueRecord
+        """Get total revenue for user in date range"""        from ...database.models import RevenueRecord
         
         result = await session.execute(
             select(func.sum(RevenueRecord.amount)).where(
@@ -431,8 +412,7 @@ class DistributionEngine:
         end_date: datetime,
         session: AsyncSession
     ) -> Decimal:
-        """Get streaming-specific revenue"""
-        from ...database.models import RevenueRecord
+        """Get streaming-specific revenue"""        from ...database.models import RevenueRecord
         
         result = await session.execute(
             select(func.sum(RevenueRecord.amount)).where(
@@ -454,8 +434,7 @@ class DistributionEngine:
         end_date: datetime,
         session: AsyncSession
     ) -> Decimal:
-        """Get licensing-specific revenue"""
-        from ...database.models import RevenueRecord
+        """Get licensing-specific revenue"""        from ...database.models import RevenueRecord
         
         result = await session.execute(
             select(func.sum(RevenueRecord.amount)).where(
@@ -477,8 +456,7 @@ class DistributionEngine:
         end_date: datetime,
         session: AsyncSession
     ) -> Decimal:
-        """Get sponsorship-specific revenue"""
-        from ...database.models import RevenueRecord
+        """Get sponsorship-specific revenue"""        from ...database.models import RevenueRecord
         
         result = await session.execute(
             select(func.sum(RevenueRecord.amount)).where(
@@ -498,8 +476,7 @@ class DistributionEngine:
         user_id: int,
         session: AsyncSession
     ) -> DistributionRules:
-        """Get distribution rules for user"""
-        # Check if rules are cached
+        """Get distribution rules for user"""        # Check if rules are cached
         if user_id in self.distribution_rules:
             return self.distribution_rules[user_id]
         
@@ -524,8 +501,7 @@ class DistributionEngine:
         rules: DistributionRules,
         session: AsyncSession
     ) -> Decimal:
-        """Calculate total collaborator deductions"""
-        total_deductions = Decimal("0")
+        """Calculate total collaborator deductions"""        total_deductions = Decimal("0")
         
         for collaborator in rules.collaborator_shares:
             if collaborator.fixed_amount:
@@ -543,8 +519,7 @@ class DistributionEngine:
         rules: DistributionRules,
         session: AsyncSession
     ) -> Decimal:
-        """Calculate tax withholding if applicable"""
-        if not rules.tax_withholding_enabled:
+        """Calculate tax withholding if applicable"""        if not rules.tax_withholding_enabled:
             return Decimal("0")
         
         # Get user's tax information
@@ -557,8 +532,7 @@ class DistributionEngine:
         return total_revenue * (tax_rate / 100)
     
     async def _get_tax_rate(self, country: str, revenue: Decimal) -> Decimal:
-        """Get tax withholding rate for country and revenue level"""
-        # Simplified tax rates - would integrate with tax service
+        """Get tax withholding rate for country and revenue level"""        # Simplified tax rates - would integrate with tax service
         tax_rates = {
             "US": Decimal("24.0"),    # US tax withholding
             "GB": Decimal("20.0"),    # UK basic rate
@@ -574,8 +548,7 @@ class DistributionEngine:
         session: AsyncSession,
         force_process: bool = False
     ) -> List[int]:
-        """Get users eligible for automated payout"""
-        # Get users with pending revenue above minimum threshold
+        """Get users eligible for automated payout"""        # Get users with pending revenue above minimum threshold
         thirty_days_ago = datetime.now() - timedelta(days=30)
         
         from ...database.models import RevenueRecord
@@ -595,8 +568,7 @@ class DistributionEngine:
         user_id: int,
         session: AsyncSession
     ) -> PayoutCalculation:
-        """Calculate payout for automated processing"""
-        # Get last payout date
+        """Calculate payout for automated processing"""        # Get last payout date
         last_payout_date = await self._get_last_payout_date(user_id, session)
         if not last_payout_date:
             last_payout_date = datetime.now() - timedelta(days=30)
@@ -612,8 +584,7 @@ class DistributionEngine:
         user_id: int,
         session: AsyncSession
     ) -> Optional[datetime]:
-        """Get date of last payout for user"""
-        result = await session.execute(
+        """Get date of last payout for user"""        result = await session.execute(
             select(func.max(Payout.created_at)).where(
                 Payout.user_id == user_id,
                 Payout.status.in_([PayoutStatus.COMPLETED.value, PayoutStatus.PROCESSING.value])
@@ -628,8 +599,7 @@ class DistributionEngine:
         calculation: PayoutCalculation,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Process a single automated payout"""
-        try:
+        """Process a single automated payout"""        try:
             # Create payout record
             payout = Payout(
                 user_id=user_id,
@@ -658,8 +628,7 @@ class DistributionEngine:
         payout: Payout,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Execute payout payment through payment processor"""
-        try:
+        """Execute payout payment through payment processor"""        try:
             # Get user details
             user = await session.get(User, payout.user_id)
             if not user:
@@ -707,8 +676,7 @@ class DistributionEngine:
         user_id: int,
         session: AsyncSession
     ) -> Decimal:
-        """Get user's available balance for payout"""
-        # Total revenue minus previous payouts
+        """Get user's available balance for payout"""        # Total revenue minus previous payouts
         from ...database.models import RevenueRecord
         
         # Get total confirmed revenue
@@ -741,8 +709,7 @@ class DistributionEngine:
         content_id: str,
         session: AsyncSession
     ) -> None:
-        """Queue payout for collaborator"""
-        payout = Payout(
+        """Queue payout for collaborator"""        payout = Payout(
             user_id=collaborator.user_id,
             amount=amount,
             currency="EUR",
@@ -758,8 +725,7 @@ class DistributionEngine:
 
 
 class PayoutManager:
-    """High-level payout management interface"""
-    
+    """High-level payout management interface"""    
     def __init__(self, distribution_engine: DistributionEngine):
         self.distribution_engine = distribution_engine
         self.logger = logging.getLogger(__name__)
@@ -770,8 +736,7 @@ class PayoutManager:
         session: AsyncSession,
         limit: int = 50
     ) -> List[Dict[str, Any]]:
-        """Get user's payout history"""
-        result = await session.execute(
+        """Get user's payout history"""        result = await session.execute(
             select(Payout).where(
                 Payout.user_id == user_id
             ).order_by(Payout.created_at.desc()).limit(limit)
@@ -799,8 +764,7 @@ class PayoutManager:
         user_id: int,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Get user's payout statistics"""
-        # Total payouts
+        """Get user's payout statistics"""        # Total payouts
         total_result = await session.execute(
             select(
                 func.sum(Payout.amount).label('total_amount'),
@@ -846,8 +810,7 @@ class PayoutManager:
         }
     
     async def schedule_recurring_payouts(self) -> None:
-        """Schedule and process recurring automated payouts"""
-        while True:
+        """Schedule and process recurring automated payouts"""        while True:
             try:
                 self.logger.info("Starting automated payout processing")
                 

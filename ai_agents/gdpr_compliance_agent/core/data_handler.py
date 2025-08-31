@@ -1,5 +1,4 @@
-"""
-Data Privacy Handler - Advanced Data Privacy Management
+"""Data Privacy Handler - Advanced Data Privacy Management
 Sophisticated data privacy management for GDPR compliance in content protection
 
 Project: IA-Influencer Agent
@@ -8,9 +7,7 @@ Email: mlaiel@live.de
 Company: Ultra-Industrial AI Solutions
 
 ⚠️ COPYRIGHT PROTECTION - FAHED MLAIEL ⚠️
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -40,16 +37,14 @@ from ...models.gdpr_models import DataPrivacyRecord, DataCategory, ProcessingAct
 logger = get_logger(__name__)
 
 class DataSensitivity(Enum):
-    """Data sensitivity levels for privacy management"""
-    PUBLIC = "public"
+    """Data sensitivity levels for privacy management"""    PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
     RESTRICTED = "restricted"
     HIGHLY_SENSITIVE = "highly_sensitive"
 
 class PrivacyTechnique(Enum):
-    """Privacy enhancement techniques"""
-    ENCRYPTION = "encryption"
+    """Privacy enhancement techniques"""    ENCRYPTION = "encryption"
     PSEUDONYMIZATION = "pseudonymization"
     ANONYMIZATION = "anonymization"
     DATA_MASKING = "data_masking"
@@ -58,8 +53,7 @@ class PrivacyTechnique(Enum):
 
 @dataclass
 class DataField:
-    """Data field privacy configuration"""
-    name: str
+    """Data field privacy configuration"""    name: str
     data_type: str
     sensitivity: DataSensitivity
     required_techniques: List[PrivacyTechnique]
@@ -68,8 +62,7 @@ class DataField:
 
 @dataclass
 class PrivacyProfile:
-    """User privacy profile and preferences"""
-    user_id: str
+    """User privacy profile and preferences"""    user_id: str
     privacy_level: str
     allowed_processing: List[str]
     restricted_techniques: List[str]
@@ -77,11 +70,9 @@ class PrivacyProfile:
     anonymization_threshold: float
 
 class DataPrivacyHandler:
-    """
-    Advanced Data Privacy Handler
+    """    Advanced Data Privacy Handler
     Manages data privacy, classification, and protection techniques
-    """
-    
+    """    
     def __init__(self):
         self.security_manager = SecurityManager()
         self.encryption_manager = EncryptionManager()
@@ -105,8 +96,7 @@ class DataPrivacyHandler:
         logger.info("Data Privacy Handler initialized successfully")
     
     def _initialize_classification_rules(self) -> Dict[str, DataSensitivity]:
-        """Initialize data classification rules"""
-        return {
+        """Initialize data classification rules"""        return {
             # Personal identifiers
             "user_id": DataSensitivity.CONFIDENTIAL,
             "email": DataSensitivity.CONFIDENTIAL,
@@ -144,8 +134,7 @@ class DataPrivacyHandler:
         }
     
     async def classify_data(self, data_payload: Dict[str, Any]) -> Dict[str, DataField]:
-        """Automatically classify data fields based on content and context"""
-        try:
+        """Automatically classify data fields based on content and context"""        try:
             classified_fields = {}
             
             for field_name, field_value in data_payload.items():
@@ -183,8 +172,7 @@ class DataPrivacyHandler:
         user_id: str,
         processing_context: str = "general"
     ) -> Dict[str, Any]:
-        """Apply appropriate privacy protection techniques to data"""
-        try:
+        """Apply appropriate privacy protection techniques to data"""        try:
             # Get user privacy profile
             privacy_profile = await self._get_privacy_profile(user_id)
             
@@ -247,8 +235,7 @@ class DataPrivacyHandler:
         user_id: str,
         authorized_user_id: str
     ) -> Dict[str, Any]:
-        """Remove privacy protection (decrypt/de-anonymize) for authorized access"""
-        try:
+        """Remove privacy protection (decrypt/de-anonymize) for authorized access"""        try:
             # Verify authorization
             if not await self._verify_access_authorization(user_id, authorized_user_id, privacy_metadata):
                 raise PermissionError("Unauthorized access to protected data")
@@ -295,8 +282,7 @@ class DataPrivacyHandler:
         data_payload: Dict[str, Any], 
         processing_purpose: str
     ) -> Dict[str, Any]:
-        """Validate and enforce data minimization principles"""
-        try:
+        """Validate and enforce data minimization principles"""        try:
             # Define necessary fields for each processing purpose
             purpose_field_mapping = {
                 "content_protection": [
@@ -348,8 +334,7 @@ class DataPrivacyHandler:
         processing_activity: Dict[str, Any],
         data_subjects_count: int
     ) -> Dict[str, Any]:
-        """Conduct Privacy Impact Assessment (PIA)"""
-        try:
+        """Conduct Privacy Impact Assessment (PIA)"""        try:
             assessment_id = str(uuid.uuid4())
             
             # Analyze data types and sensitivity
@@ -409,8 +394,7 @@ class DataPrivacyHandler:
     # Privacy technique implementations
     
     async def _apply_encryption(self, data: Any, field_name: str, user_id: str) -> str:
-        """Apply encryption to sensitive data"""
-        try:
+        """Apply encryption to sensitive data"""        try:
             # Use field-specific encryption key
             encryption_key = await self.encryption_manager.get_field_key(user_id, field_name)
             encrypted_data = await self.encryption_manager.encrypt_data(str(data), encryption_key)
@@ -420,8 +404,7 @@ class DataPrivacyHandler:
             raise
     
     async def _apply_pseudonymization(self, data: Any, field_name: str, user_id: str) -> str:
-        """Apply pseudonymization to identifiable data"""
-        try:
+        """Apply pseudonymization to identifiable data"""        try:
             # Generate deterministic pseudonym
             salt = f"{user_id}_{field_name}_salt"
             pseudonym = hashlib.sha256(f"{data}_{salt}".encode()).hexdigest()[:16]
@@ -435,8 +418,7 @@ class DataPrivacyHandler:
             raise
     
     async def _apply_anonymization(self, data: Any, field_name: str, user_id: str) -> str:
-        """Apply anonymization (irreversible)"""
-        try:
+        """Apply anonymization (irreversible)"""        try:
             if isinstance(data, str):
                 # For text data, replace with generic placeholder
                 if "@" in str(data):  # Email
@@ -457,8 +439,7 @@ class DataPrivacyHandler:
             return "[ANONYMIZED]"
     
     async def _apply_data_masking(self, data: Any, field_name: str, user_id: str) -> str:
-        """Apply data masking for display purposes"""
-        try:
+        """Apply data masking for display purposes"""        try:
             data_str = str(data)
             
             if "@" in data_str:  # Email masking
@@ -476,8 +457,7 @@ class DataPrivacyHandler:
             return "[MASKED]"
     
     async def _apply_differential_privacy(self, data: Any, field_name: str, user_id: str) -> float:
-        """Apply differential privacy noise"""
-        try:
+        """Apply differential privacy noise"""        try:
             if isinstance(data, (int, float)):
                 import numpy as np
                 
@@ -495,8 +475,7 @@ class DataPrivacyHandler:
             return data
     
     async def _generate_synthetic_data(self, data: Any, field_name: str, user_id: str) -> Any:
-        """Generate synthetic data replacement"""
-        try:
+        """Generate synthetic data replacement"""        try:
             # This is a simplified version - in production, use advanced ML models
             import random
             
@@ -518,8 +497,7 @@ class DataPrivacyHandler:
     # Helper methods
     
     def _classify_field_sensitivity(self, field_name: str, field_value: Any) -> DataSensitivity:
-        """Classify field sensitivity based on name and content"""
-        # Check explicit classification rules
+        """Classify field sensitivity based on name and content"""        # Check explicit classification rules
         if field_name in self._classification_rules:
             return self._classification_rules[field_name]
         
@@ -542,8 +520,7 @@ class DataPrivacyHandler:
         return DataSensitivity.INTERNAL
     
     def _determine_required_techniques(self, sensitivity: DataSensitivity, field_name: str) -> List[PrivacyTechnique]:
-        """Determine required privacy techniques based on sensitivity"""
-        techniques = []
+        """Determine required privacy techniques based on sensitivity"""        techniques = []
         
         if sensitivity == DataSensitivity.HIGHLY_SENSITIVE:
             techniques.extend([
@@ -567,8 +544,7 @@ class DataPrivacyHandler:
         return techniques
     
     def _calculate_retention_period(self, field_name: str, sensitivity: DataSensitivity) -> int:
-        """Calculate data retention period in days"""
-        base_periods = {
+        """Calculate data retention period in days"""        base_periods = {
             DataSensitivity.HIGHLY_SENSITIVE: 1095,  # 3 years
             DataSensitivity.RESTRICTED: 1825,       # 5 years
             DataSensitivity.CONFIDENTIAL: 1095,     # 3 years
@@ -579,8 +555,7 @@ class DataPrivacyHandler:
         return base_periods.get(sensitivity, 365)
     
     def _define_access_controls(self, sensitivity: DataSensitivity) -> List[str]:
-        """Define access controls based on sensitivity"""
-        controls = ["authentication_required"]
+        """Define access controls based on sensitivity"""        controls = ["authentication_required"]
         
         if sensitivity in [DataSensitivity.HIGHLY_SENSITIVE, DataSensitivity.RESTRICTED]:
             controls.extend([
@@ -601,8 +576,7 @@ class DataPrivacyHandler:
         return controls
     
     async def _get_privacy_profile(self, user_id: str) -> PrivacyProfile:
-        """Get or create user privacy profile"""
-        if user_id not in self._privacy_profiles:
+        """Get or create user privacy profile"""        if user_id not in self._privacy_profiles:
             # Load from database or create default
             self._privacy_profiles[user_id] = PrivacyProfile(
                 user_id=user_id,
@@ -621,8 +595,7 @@ class DataPrivacyHandler:
         privacy_profile: PrivacyProfile,
         context: str
     ) -> bool:
-        """Determine if privacy technique should be applied"""
-        if technique.value in privacy_profile.restricted_techniques:
+        """Determine if privacy technique should be applied"""        if technique.value in privacy_profile.restricted_techniques:
             return False
         
         # Context-based decisions
@@ -640,8 +613,7 @@ class DataPrivacyHandler:
         data_fields: List[str], 
         techniques_applied: List[str]
     ) -> None:
-        """Record privacy protection activity"""
-        try:
+        """Record privacy protection activity"""        try:
             async with get_db() as db:
                 privacy_record = DataPrivacyRecord(
                     user_id=user_id,
@@ -659,8 +631,7 @@ class DataPrivacyHandler:
             logger.error(f"Error recording privacy activity: {str(e)}")
     
     def _is_field_essential(self, field_name: str, processing_purpose: str) -> bool:
-        """Check if field is essential for processing purpose"""
-        essential_fields = {
+        """Check if field is essential for processing purpose"""        essential_fields = {
             "content_protection": ["fingerprint", "hash", "signature", "metadata"],
             "analytics": ["count", "rate", "score", "metric", "performance"],
             "security": ["access", "auth", "security", "log", "audit"],
@@ -678,14 +649,12 @@ class DataPrivacyHandler:
         requester_id: str, 
         privacy_metadata: Dict[str, Any]
     ) -> bool:
-        """Verify authorization for accessing protected data"""
-        # In production, this would check complex authorization rules
+        """Verify authorization for accessing protected data"""        # In production, this would check complex authorization rules
         # For now, simple owner check
         return data_owner_id == requester_id
     
     async def _decrypt_data(self, encrypted_data: str, field_name: str, user_id: str) -> str:
-        """Decrypt encrypted data"""
-        try:
+        """Decrypt encrypted data"""        try:
             encryption_key = await self.encryption_manager.get_field_key(user_id, field_name)
             decrypted_data = await self.encryption_manager.decrypt_data(encrypted_data, encryption_key)
             return decrypted_data
@@ -694,8 +663,7 @@ class DataPrivacyHandler:
             return "[DECRYPTION_FAILED]"
     
     async def _reverse_pseudonymization(self, pseudonym: str, field_name: str, user_id: str) -> str:
-        """Reverse pseudonymization using stored mapping"""
-        try:
+        """Reverse pseudonymization using stored mapping"""        try:
             # In production, query pseudonym mapping table
             # For now, return placeholder
             return "[ORIGINAL_VALUE_RECOVERED]"
@@ -710,8 +678,7 @@ class DataPrivacyHandler:
         original_value: str, 
         pseudonym: str
     ) -> None:
-        """Store pseudonym mapping for potential reversal"""
-        # In production, store in secure pseudonym mapping table
+        """Store pseudonym mapping for potential reversal"""        # In production, store in secure pseudonym mapping table
         pass
     
     async def _log_data_access(
@@ -721,12 +688,10 @@ class DataPrivacyHandler:
         accessed_fields: List[str], 
         access_reason: str
     ) -> None:
-        """Log data access for audit purposes"""
-        logger.info(f"Data access: User {authorized_user_id} accessed {len(accessed_fields)} fields for user {user_id}")
+        """Log data access for audit purposes"""        logger.info(f"Data access: User {authorized_user_id} accessed {len(accessed_fields)} fields for user {user_id}")
     
     async def _analyze_data_sensitivity(self, data_categories: List[str]) -> Dict[str, Any]:
-        """Analyze overall sensitivity of data categories"""
-        sensitivity_scores = {
+        """Analyze overall sensitivity of data categories"""        sensitivity_scores = {
             DataSensitivity.PUBLIC: 1,
             DataSensitivity.INTERNAL: 2,
             DataSensitivity.CONFIDENTIAL: 3,
@@ -756,8 +721,7 @@ class DataPrivacyHandler:
         }
     
     async def _assess_processing_risks(self, processing_activity: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess risks associated with processing activity"""
-        risk_factors = []
+        """Assess risks associated with processing activity"""        risk_factors = []
         risk_score = 0
         
         # Check for automated decision making
@@ -794,8 +758,7 @@ class DataPrivacyHandler:
         }
     
     async def _evaluate_protection_measures(self, processing_activity: Dict[str, Any]) -> Dict[str, Any]:
-        """Evaluate technical and organizational protection measures"""
-        measures = processing_activity.get("protection_measures", [])
+        """Evaluate technical and organizational protection measures"""        measures = processing_activity.get("protection_measures", [])
         
         technical_measures = []
         organizational_measures = []
@@ -824,8 +787,7 @@ class DataPrivacyHandler:
         protection_measures: Dict[str, Any],
         data_subjects_count: int
     ) -> float:
-        """Calculate overall privacy risk score (0-10)"""
-        # Base risk from data sensitivity
+        """Calculate overall privacy risk score (0-10)"""        # Base risk from data sensitivity
         sensitivity_risk = sensitivity_analysis["average_sensitivity_score"]
         
         # Processing risk
@@ -843,8 +805,7 @@ class DataPrivacyHandler:
         return min(10.0, max(0.0, risk_score))
     
     def _categorize_risk_level(self, risk_score: float) -> str:
-        """Categorize risk level based on score"""
-        if risk_score >= 7.0:
+        """Categorize risk level based on score"""        if risk_score >= 7.0:
             return "high"
         elif risk_score >= 4.0:
             return "medium"
@@ -857,8 +818,7 @@ class DataPrivacyHandler:
         processing_risks: Dict[str, Any],
         protection_measures: Dict[str, Any]
     ) -> List[Dict[str, str]]:
-        """Generate privacy recommendations"""
-        recommendations = []
+        """Generate privacy recommendations"""        recommendations = []
         
         if risk_score >= 7.0:
             recommendations.append({
@@ -887,8 +847,7 @@ class DataPrivacyHandler:
         return recommendations
     
     async def _is_dpia_required(self, risk_score: float, processing_activity: Dict[str, Any]) -> bool:
-        """Determine if Data Protection Impact Assessment is required"""
-        # DPIA required for high risk processing
+        """Determine if Data Protection Impact Assessment is required"""        # DPIA required for high risk processing
         if risk_score >= 7.0:
             return True
         
@@ -904,16 +863,14 @@ class DataPrivacyHandler:
         return any(dpia_triggers)
     
     async def _record_privacy_assessment(self, assessment_result: Dict[str, Any]) -> None:
-        """Record privacy impact assessment"""
-        try:
+        """Record privacy impact assessment"""        try:
             # In production, store in dedicated PIA table
             logger.info(f"Privacy assessment recorded: {assessment_result['assessment_id']}")
         except Exception as e:
             logger.error(f"Error recording privacy assessment: {str(e)}")
 
     async def get_user_data_inventory(self, user_id: str) -> Dict[str, Any]:
-        """Generate comprehensive data inventory for user"""
-        try:
+        """Generate comprehensive data inventory for user"""        try:
             async with get_db() as db:
                 # Get all data categories for user
                 privacy_records = await db.execute(

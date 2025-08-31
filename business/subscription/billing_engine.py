@@ -1,5 +1,4 @@
-"""
-Billing Engine
+"""Billing Engine
 
 Advanced billing and invoicing engine for subscription management.
 Handles automated billing cycles, prorations, tax calculations, and payment processing integration.
@@ -8,9 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use strictly prohibited.
-"""
-
-from datetime import datetime, timedelta
+"""from datetime import datetime, timedelta
 from decimal import Decimal, ROUND_HALF_UP
 from typing import Optional, Dict, Any, List, Tuple
 import calendar
@@ -36,8 +33,7 @@ settings = get_settings()
 
 
 class BillingEngine:
-    """
-    Comprehensive billing engine for subscription management.
+    """    Comprehensive billing engine for subscription management.
     
     Features:
     - Automated billing cycle processing
@@ -48,11 +44,9 @@ class BillingEngine:
     - Revenue recognition and reporting
     - Multi-currency support
     - Dunning management for failed payments
-    """
-    
+    """    
     def __init__(self):
-        """Initialize billing engine."""
-        self.payment_processor = PaymentProcessor()
+        """Initialize billing engine."""        self.payment_processor = PaymentProcessor()
         self.logger = get_logger(__name__)
         
         # Billing configuration
@@ -67,8 +61,7 @@ class BillingEngine:
         billing_date: Optional[datetime] = None,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Process billing for a subscription.
+        """        Process billing for a subscription.
         
         Args:
             subscription_id: Subscription ID
@@ -77,8 +70,7 @@ class BillingEngine:
             
         Returns:
             Billing processing result
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         if not billing_date:
@@ -182,8 +174,7 @@ class BillingEngine:
         change_date: Optional[datetime] = None,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Calculate proration for plan changes.
+        """        Calculate proration for plan changes.
         
         Args:
             subscription: Current subscription
@@ -193,8 +184,7 @@ class BillingEngine:
             
         Returns:
             Proration calculation details
-        """
-        if not change_date:
+        """        if not change_date:
             change_date = datetime.utcnow()
         
         try:
@@ -247,8 +237,7 @@ class BillingEngine:
         billing_cycle_id: int,
         db: Session = None
     ) -> Invoice:
-        """
-        Generate invoice for subscription billing.
+        """        Generate invoice for subscription billing.
         
         Args:
             subscription_id: Subscription ID
@@ -257,8 +246,7 @@ class BillingEngine:
             
         Returns:
             Generated invoice
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         try:
@@ -319,8 +307,7 @@ class BillingEngine:
         subscription_id: int,
         db: Session = None
     ) -> BillingSummary:
-        """
-        Get billing summary for subscription.
+        """        Get billing summary for subscription.
         
         Args:
             subscription_id: Subscription ID
@@ -328,8 +315,7 @@ class BillingEngine:
             
         Returns:
             Billing summary
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         try:
@@ -372,8 +358,7 @@ class BillingEngine:
         reason: Optional[str] = None,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Process refund for invoice.
+        """        Process refund for invoice.
         
         Args:
             invoice_id: Invoice ID
@@ -383,8 +368,7 @@ class BillingEngine:
             
         Returns:
             Refund processing result
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         try:
@@ -446,8 +430,7 @@ class BillingEngine:
     # Private helper methods
     
     def _is_billing_due(self, subscription: UserSubscription, billing_date: datetime) -> bool:
-        """Check if billing is due for subscription."""
-        if not subscription.next_billing_date:
+        """Check if billing is due for subscription."""        if not subscription.next_billing_date:
             return False
         
         return subscription.next_billing_date <= billing_date
@@ -458,8 +441,7 @@ class BillingEngine:
         billing_date: datetime,
         db: Session
     ) -> Decimal:
-        """Calculate billing amount for subscription."""
-        # Base amount from plan
+        """Calculate billing amount for subscription."""        # Base amount from plan
         base_amount = self._get_plan_price_for_cycle(
             subscription.plan, subscription.billing_cycle
         )
@@ -479,8 +461,7 @@ class BillingEngine:
         plan: SubscriptionPlan, 
         billing_cycle: str
     ) -> Decimal:
-        """Get plan price for specific billing cycle."""
-        if billing_cycle == BillingCycleType.MONTHLY.value:
+        """Get plan price for specific billing cycle."""        if billing_cycle == BillingCycleType.MONTHLY.value:
             return plan.monthly_price
         elif billing_cycle == BillingCycleType.YEARLY.value:
             return plan.yearly_price
@@ -490,8 +471,7 @@ class BillingEngine:
             return plan.monthly_price
     
     def _get_billing_period_days(self, billing_cycle: str) -> int:
-        """Get number of days in billing period."""
-        if billing_cycle == BillingCycleType.MONTHLY.value:
+        """Get number of days in billing period."""        if billing_cycle == BillingCycleType.MONTHLY.value:
             return 30
         elif billing_cycle == BillingCycleType.YEARLY.value:
             return 365
@@ -507,8 +487,7 @@ class BillingEngine:
         billing_date: datetime,
         db: Session
     ) -> BillingCycle:
-        """Create billing cycle record."""
-        # Calculate cycle dates
+        """Create billing cycle record."""        # Calculate cycle dates
         cycle_start = billing_date
         cycle_end = self._calculate_next_billing_date(subscription, billing_date)
         
@@ -532,8 +511,7 @@ class BillingEngine:
         subscription: UserSubscription, 
         current_date: datetime
     ) -> datetime:
-        """Calculate next billing date based on billing cycle."""
-        if subscription.billing_cycle == BillingCycleType.MONTHLY.value:
+        """Calculate next billing date based on billing cycle."""        if subscription.billing_cycle == BillingCycleType.MONTHLY.value:
             # Add one month
             if current_date.month == 12:
                 return current_date.replace(year=current_date.year + 1, month=1)
@@ -567,8 +545,7 @@ class BillingEngine:
         billing_date: datetime,
         db: Session
     ) -> Invoice:
-        """Generate invoice for billing cycle."""
-        return await self.generate_invoice(subscription.id, billing_cycle.id, db)
+        """Generate invoice for billing cycle."""        return await self.generate_invoice(subscription.id, billing_cycle.id, db)
     
     async def _process_payment(
         self,
@@ -577,8 +554,7 @@ class BillingEngine:
         amount: Decimal,
         db: Session
     ) -> Dict[str, Any]:
-        """Process payment for invoice."""
-        if not subscription.payment_method_id:
+        """Process payment for invoice."""        if not subscription.payment_method_id:
             return {
                 "success": False,
                 "error": "No payment method on file"
@@ -600,8 +576,7 @@ class BillingEngine:
         subscription: UserSubscription, 
         db: Session
     ) -> datetime:
-        """Schedule payment retry for failed billing."""
-        # Get retry count from billing cycles
+        """Schedule payment retry for failed billing."""        # Get retry count from billing cycles
         failed_attempts = db.query(BillingCycle).filter(
             BillingCycle.subscription_id == subscription.id,
             BillingCycle.payment_status == PaymentStatus.FAILED.value,
@@ -624,8 +599,7 @@ class BillingEngine:
         subscription: UserSubscription, 
         subtotal: Decimal
     ) -> Decimal:
-        """Calculate tax amount based on user location."""
-        # This would integrate with tax service or use configured rates
+        """Calculate tax amount based on user location."""        # This would integrate with tax service or use configured rates
         # For now, return 0 (implement based on business requirements)
         return Decimal('0.00')
     
@@ -634,8 +608,7 @@ class BillingEngine:
         subscription: UserSubscription,
         billing_cycle: BillingCycle
     ) -> List[Dict[str, Any]]:
-        """Create invoice line items."""
-        line_items = []
+        """Create invoice line items."""        line_items = []
         
         # Main subscription line item
         line_items.append({
@@ -670,15 +643,13 @@ class BillingEngine:
         return line_items
     
     def _generate_invoice_number(self) -> str:
-        """Generate unique invoice number."""
-        import uuid
+        """Generate unique invoice number."""        import uuid
         timestamp = datetime.utcnow().strftime("%Y%m")
         unique_id = uuid.uuid4().hex[:8].upper()
         return f"INV-{timestamp}-{unique_id}"
     
     async def _get_pending_prorations(self, subscription_id: int, db: Session) -> Decimal:
-        """Get pending proration amounts."""
-        pending_cycles = db.query(BillingCycle).filter(
+        """Get pending proration amounts."""        pending_cycles = db.query(BillingCycle).filter(
             BillingCycle.subscription_id == subscription_id,
             BillingCycle.prorated_amount != 0,
             BillingCycle.payment_status == PaymentStatus.PENDING.value
@@ -691,8 +662,7 @@ class BillingEngine:
         subscription: UserSubscription, 
         db: Session
     ) -> Decimal:
-        """Calculate applicable discounts."""
-        # This would integrate with discount/coupon system
+        """Calculate applicable discounts."""        # This would integrate with discount/coupon system
         # For now, return 0 (implement based on business requirements)
         return Decimal('0.00')
 

@@ -1,5 +1,4 @@
-"""
-Copyright Enforcement Module API Index
+"""Copyright Enforcement Module API Index
 
 Ultra-advanced central API exposure for all copyright enforcement components,
 providing unified interfaces for DMCA generation, legal automation, revenue recovery,
@@ -28,9 +27,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + DevOps + Leg
 ALL RIGHTS RESERVED. UNAUTHORIZED USE PROHIBITED.
 This code belongs exclusively to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use will result in immediate legal action.
-"""
-
-from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks, Query, Body
+"""from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks, Query, Body
 from fastapi.security import HTTPBearer
 from fastapi.responses import JSONResponse, FileResponse
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -132,13 +129,11 @@ async def generate_dmca_notice(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """
-    Generate DMCA takedown notice for copyright violation
+    """    Generate DMCA takedown notice for copyright violation
     
     Advanced DMCA generation with platform-specific templates,
     legal compliance validation, and automated submission tracking.
-    """
-    try:
+    """    try:
         # Validate request data
         validation_result = validate_request_data(request_data, DMCARequest)
         if not validation_result.is_valid:
@@ -193,8 +188,7 @@ async def submit_dmca_notice(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """Submit generated DMCA notice to platform"""
-    try:
+    """Submit generated DMCA notice to platform"""    try:
         success, message = await dmca_generator.submit_dmca_notice(
             notice_id, session, auto_submit
         )
@@ -223,8 +217,7 @@ async def track_dmca_notice(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """Track DMCA notice response status"""
-    try:
+    """Track DMCA notice response status"""    try:
         tracking_data = await dmca_generator.track_notice_response(notice_id, session)
         return tracking_data
         
@@ -244,13 +237,11 @@ async def initiate_legal_action(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """
-    Initiate comprehensive legal action for copyright violation
+    """    Initiate comprehensive legal action for copyright violation
     
     Advanced legal workflow with evidence collection, case management,
     and automated escalation procedures.
-    """
-    try:
+    """    try:
         # Validate and create legal case request
         legal_request = LegalCaseRequest(**request_data)
         
@@ -294,13 +285,11 @@ async def connect_platform(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """
-    Connect and authenticate with social media platforms
+    """    Connect and authenticate with social media platforms
     
     Advanced platform integration with OAuth2/API key management,
     permission validation, and connection health monitoring.
-    """
-    try:
+    """    try:
         platform_type = PlatformType(platform_data.get("platform_type"))
         credentials = platform_data.get("credentials", {})
         
@@ -346,8 +335,7 @@ async def start_content_monitoring(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """Start real-time content monitoring across platforms"""
-    try:
+    """Start real-time content monitoring across platforms"""    try:
         platforms = monitoring_config.get("platforms", [])
         keywords = monitoring_config.get("keywords", [])
         content_types = monitoring_config.get("content_types", ["video", "audio", "image"])
@@ -385,8 +373,7 @@ async def search_platform_content(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """Search for potentially infringing content across platforms"""
-    try:
+    """Search for potentially infringing content across platforms"""    try:
         # Convert platform names to enum
         platform_types = [PlatformType(p) for p in platforms] if platforms else None
         
@@ -419,13 +406,11 @@ async def analyze_content_similarity(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """
-    AI-powered content similarity analysis
+    """    AI-powered content similarity analysis
     
     Advanced ML models for detecting copyright infringement through
     multi-modal analysis (audio, video, image, text similarity).
-    """
-    try:
+    """    try:
         original_content = analysis_request.get("original_content")
         suspect_content = analysis_request.get("suspect_content")
         analysis_type = analysis_request.get("analysis_type", "comprehensive")
@@ -471,8 +456,7 @@ async def generate_enforcement_strategy(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """Generate intelligent enforcement strategy using AI"""
-    try:
+    """Generate intelligent enforcement strategy using AI"""    try:
         violation_data = strategy_request.get("violation_data")
         user_preferences = strategy_request.get("preferences", {})
         
@@ -503,8 +487,7 @@ async def analyze_legal_strength(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """AI-powered legal case strength analysis"""
-    try:
+    """AI-powered legal case strength analysis"""    try:
         case_data = legal_request.get("case_data")
         jurisdiction = legal_request.get("jurisdiction", "US")
         
@@ -540,13 +523,11 @@ async def get_analytics_dashboard(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """
-    Get comprehensive analytics dashboard
+    """    Get comprehensive analytics dashboard
     
     Advanced analytics with predictive modeling, trend analysis,
     and executive-level KPI tracking.
-    """
-    try:
+    """    try:
         timeframe_enum = TimeFrame(time_frame)
         
         # Get dashboard data
@@ -573,8 +554,7 @@ async def schedule_report(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """Schedule automated report generation"""
-    try:
+    """Schedule automated report generation"""    try:
         config = ReportConfig(**report_config)
         
         # Schedule report
@@ -603,8 +583,7 @@ async def download_report(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> FileResponse:
-    """Download generated report in specified format"""
-    try:
+    """Download generated report in specified format"""    try:
         # Get report file path
         file_path = await analytics_engine.get_report_file(
             report_id, format, current_user.id, session
@@ -637,13 +616,11 @@ async def send_notification(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """
-    Send advanced multi-channel notifications
+    """    Send advanced multi-channel notifications
     
     Intelligent notification routing with priority-based delivery,
     escalation management, and delivery confirmation tracking.
-    """
-    try:
+    """    try:
         notification_request = NotificationRequest(**notification_data)
         
         # Send notification
@@ -675,8 +652,7 @@ async def configure_escalation(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """Configure automated escalation workflows"""
-    try:
+    """Configure automated escalation workflows"""    try:
         # Configure escalation
         escalation_id = await escalation_manager.configure_escalation(
             escalation_config, current_user.id, session
@@ -701,8 +677,7 @@ async def get_notification_history(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """Get notification delivery history"""
-    try:
+    """Get notification delivery history"""    try:
         priority_filter = NotificationPriority(priority) if priority else None
         
         # Get notification history
@@ -735,8 +710,7 @@ async def get_case_timeline(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """Get complete timeline of legal case actions"""
-    try:
+    """Get complete timeline of legal case actions"""    try:
         timeline = await legal_manager.case_tracker.get_case_timeline(case_id, session)
         return {
             "case_id": case_id,
@@ -760,13 +734,11 @@ async def initiate_revenue_claim(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """
-    Initiate revenue claim for copyright violation
+    """    Initiate revenue claim for copyright violation
     
     Advanced revenue recovery with automated platform integration,
     payment tracking, and optimization algorithms.
-    """
-    try:
+    """    try:
         # Create revenue claim request
         claim_request = RevenueClaimRequest(**request_data)
         
@@ -800,8 +772,7 @@ async def process_revenue_sharing(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """Process platform revenue sharing for claim"""
-    try:
+    """Process platform revenue sharing for claim"""    try:
         success, results = await revenue_manager.process_platform_revenue_sharing(
             claim_id, session
         )
@@ -829,8 +800,7 @@ async def track_payment_recovery(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """Track payment recovery progress"""
-    try:
+    """Track payment recovery progress"""    try:
         tracking_data = await revenue_manager.track_payment_recovery(claim_id, session)
         return tracking_data
         
@@ -845,8 +815,7 @@ async def optimize_revenue_recovery(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """Optimize revenue recovery strategy"""
-    try:
+    """Optimize revenue recovery strategy"""    try:
         optimization_results = await revenue_manager.optimize_revenue_recovery(
             claim_id, session
         )
@@ -868,13 +837,11 @@ async def process_violation_report(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """
-    Process copyright violation report with advanced analysis
+    """    Process copyright violation report with advanced analysis
     
     Comprehensive violation processing with severity analysis,
     impact assessment, and enforcement recommendations.
-    """
-    try:
+    """    try:
         # Create violation report
         violation_report = ViolationReport(**violation_data)
         
@@ -911,8 +878,7 @@ async def batch_process_violations(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """Process multiple violations in batch"""
-    try:
+    """Process multiple violations in batch"""    try:
         # Convert to violation reports
         violation_reports = [ViolationReport(**data) for data in violations_data]
         
@@ -947,8 +913,7 @@ async def coordinate_enforcement_action(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """Coordinate comprehensive enforcement action"""
-    try:
+    """Coordinate comprehensive enforcement action"""    try:
         success, results = await enforcement_coordinator.coordinate_enforcement_action(
             violation_id, strategy, session
         )
@@ -975,8 +940,7 @@ async def monitor_enforcement_progress(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """Monitor progress of enforcement actions"""
-    try:
+    """Monitor progress of enforcement actions"""    try:
         progress_report = await enforcement_coordinator.monitor_enforcement_progress(
             violation_id, session
         )
@@ -994,8 +958,7 @@ async def escalate_enforcement(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """Escalate enforcement to higher level"""
-    try:
+    """Escalate enforcement to higher level"""    try:
         success, message = await enforcement_coordinator.escalate_enforcement(
             violation_id, escalation_reason, session
         )
@@ -1029,13 +992,11 @@ async def run_compliance_check(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """
-    Run comprehensive compliance check
+    """    Run comprehensive compliance check
     
     Advanced compliance monitoring with regulatory framework support,
     automated checks, and detailed reporting.
-    """
-    try:
+    """    try:
         compliance_results = await compliance_monitor.run_compliance_check(
             framework, rule_id, session
         )
@@ -1051,8 +1012,7 @@ async def monitor_ongoing_compliance(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """Monitor ongoing compliance across all frameworks"""
-    try:
+    """Monitor ongoing compliance across all frameworks"""    try:
         monitoring_results = await compliance_monitor.monitor_ongoing_compliance(session)
         return monitoring_results
         
@@ -1069,8 +1029,7 @@ async def generate_compliance_report(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """Generate comprehensive compliance report"""
-    try:
+    """Generate comprehensive compliance report"""    try:
         report = await compliance_monitor.generate_compliance_report(
             framework, period_start, period_end, session
         )
@@ -1089,8 +1048,7 @@ async def enforce_policy_compliance(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """Enforce policy compliance for specific entity"""
-    try:
+    """Enforce policy compliance for specific entity"""    try:
         enforcement_results = await policy_enforcer.enforce_policy_compliance(
             entity_type, entity_id, policy_framework, session
         )
@@ -1110,8 +1068,7 @@ async def generate_audit_trail(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """Generate comprehensive audit trail"""
-    try:
+    """Generate comprehensive audit trail"""    try:
         audit_trail = await audit_tracker.generate_audit_trail(
             entity_type, entity_id, start_date, end_date, session
         )
@@ -1132,8 +1089,7 @@ async def get_enforcement_dashboard(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """Get comprehensive enforcement analytics dashboard"""
-    try:
+    """Get comprehensive enforcement analytics dashboard"""    try:
         end_date = datetime.utcnow()
         start_date = end_date - timedelta(days=period_days)
         
@@ -1193,8 +1149,7 @@ async def get_performance_metrics(
     metric_type: str = "all",
     current_user = Depends(get_current_user)
 ) -> Dict[str, Any]:
-    """Get detailed performance metrics"""
-    try:
+    """Get detailed performance metrics"""    try:
         performance_data = {
             "system_performance": {
                 "average_processing_time": 1.2,  # seconds
@@ -1236,8 +1191,7 @@ async def get_performance_metrics(
 
 @router.get("/health")
 async def health_check() -> Dict[str, Any]:
-    """Health check for copyright enforcement module"""
-    try:
+    """Health check for copyright enforcement module"""    try:
         # Check all component health
         component_health = {
             "dmca_generator": {"status": "healthy", "last_check": datetime.utcnow().isoformat()},
@@ -1273,8 +1227,7 @@ async def get_status_summary(
     current_user = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session)
 ) -> Dict[str, Any]:
-    """Get overall status summary for enforcement operations"""
-    try:
+    """Get overall status summary for enforcement operations"""    try:
         status_summary = {
             "active_violations": 127,
             "pending_dmca_notices": 8,

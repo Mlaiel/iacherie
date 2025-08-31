@@ -1,12 +1,9 @@
-"""
-Content Management API Routes
+"""Content Management API Routes
 Content upload, processing, and management endpoints.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-from typing import Dict, Any, List, Optional
+"""from typing import Dict, Any, List, Optional
 from datetime import datetime
 import uuid
 
@@ -57,8 +54,7 @@ async def upload_content(
     target_platforms: Optional[str] = Form(None),  # JSON string of platforms
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
-    """Upload and process content"""
-    try:
+    """Upload and process content"""    try:
         user_id = current_user["user_id"]
         content_id = str(uuid.uuid4())
         
@@ -106,8 +102,7 @@ async def upload_content(
         # Store content metadata in database
         async with database_manager.get_postgres_session() as session:
             await session.execute(
-                """
-                INSERT INTO content 
+                """                INSERT INTO content 
                 (id, user_id, title, description, content_type, filename, 
                  file_size, fingerprint_id, status, created_at)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -156,14 +151,12 @@ async def list_user_content(
     offset: int = 0,
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
-    """List user's content"""
-    try:
+    """List user's content"""    try:
         user_id = current_user["user_id"]
         
         async with database_manager.get_postgres_session() as session:
             result = await session.execute(
-                """
-                SELECT id, user_id, title, description, content_type, 
+                """                SELECT id, user_id, title, description, content_type, 
                        file_size, fingerprint_id, status, created_at
                 FROM content 
                 WHERE user_id = %s AND active = true
@@ -202,8 +195,7 @@ async def get_content(
     content_id: str,
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
-    """Get specific content details"""
-    try:
+    """Get specific content details"""    try:
         user_id = current_user["user_id"]
         
         # Validate access
@@ -215,8 +207,7 @@ async def get_content(
         
         async with database_manager.get_postgres_session() as session:
             result = await session.execute(
-                """
-                SELECT id, user_id, title, description, content_type,
+                """                SELECT id, user_id, title, description, content_type,
                        file_size, fingerprint_id, status, created_at
                 FROM content 
                 WHERE id = %s AND user_id = %s AND active = true
@@ -269,8 +260,7 @@ async def analyze_content(
     user_goals: Optional[List[str]] = None,
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
-    """Analyze content for SEO and platform optimization"""
-    try:
+    """Analyze content for SEO and platform optimization"""    try:
         user_id = current_user["user_id"]
         
         # Get content data
@@ -318,8 +308,7 @@ async def delete_content(
     content_id: str,
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
-    """Delete content"""
-    try:
+    """Delete content"""    try:
         user_id = current_user["user_id"]
         
         # Soft delete in PostgreSQL
@@ -353,8 +342,7 @@ async def delete_content(
 
 
 def _extract_content_for_fingerprint(processing_result: Dict[str, Any], content_type: str):
-    """Extract appropriate data for fingerprinting"""
-    if content_type == "audio":
+    """Extract appropriate data for fingerprinting"""    if content_type == "audio":
         # For audio, we'd extract the actual audio array
         # For demo, return processing result
         return processing_result.get("features", {})

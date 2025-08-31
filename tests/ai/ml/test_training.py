@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Training Module Tests - Enterprise Grade Test Suite
+"""Training Module Tests - Enterprise Grade Test Suite
 
 Comprehensive tests for ML training infrastructure including distributed training,
 hyperparameter optimization, experiment tracking, and advanced training strategies.
@@ -25,9 +21,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  STRICT LEGAL WARNING ⚠️
 Contact: mlaiel@live.de - Unauthorized use STRICTLY PROHIBITED
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -51,11 +45,9 @@ from ai.ml.training import (
 
 
 class TestModelTrainer:
-    """Comprehensive tests for ModelTrainer class"""
-    
+    """Comprehensive tests for ModelTrainer class"""    
     def test_init_trainer_basic(self, sample_training_config, sample_pytorch_model):
-        """Test basic trainer initialization"""
-        trainer = ModelTrainer(
+        """Test basic trainer initialization"""        trainer = ModelTrainer(
             model=sample_pytorch_model,
             config=sample_training_config
         )
@@ -70,8 +62,7 @@ class TestModelTrainer:
         assert trainer.current_epoch == 0
 
     def test_init_trainer_with_optimizer(self, sample_training_config, sample_pytorch_model):
-        """Test trainer initialization with custom optimizer"""
-        sample_training_config.optimizer = OptimizationAlgorithm.ADAM
+        """Test trainer initialization with custom optimizer"""        sample_training_config.optimizer = OptimizationAlgorithm.ADAM
         sample_training_config.learning_rate = 0.01
         sample_training_config.weight_decay = 0.001
         
@@ -86,8 +77,7 @@ class TestModelTrainer:
         assert optimizer.param_groups[0]['weight_decay'] == 0.001
 
     def test_create_different_optimizers(self, sample_training_config, sample_pytorch_model):
-        """Test creation of different optimizer types"""
-        trainer = ModelTrainer(sample_pytorch_model, sample_training_config)
+        """Test creation of different optimizer types"""        trainer = ModelTrainer(sample_pytorch_model, sample_training_config)
         
         # Test SGD
         sample_training_config.optimizer = OptimizationAlgorithm.SGD
@@ -105,8 +95,7 @@ class TestModelTrainer:
         assert isinstance(optimizer, torch.optim.RMSprop)
 
     def test_create_lr_schedulers(self, sample_training_config, sample_pytorch_model):
-        """Test creation of different learning rate schedulers"""
-        trainer = ModelTrainer(sample_pytorch_model, sample_training_config)
+        """Test creation of different learning rate schedulers"""        trainer = ModelTrainer(sample_pytorch_model, sample_training_config)
         optimizer = trainer._create_optimizer()
         
         # Test cosine scheduler
@@ -125,8 +114,7 @@ class TestModelTrainer:
         assert scheduler is not None
 
     def test_training_data_preparation(self, sample_training_config, sample_pytorch_model, sample_dataset):
-        """Test training data preparation and validation"""
-        trainer = ModelTrainer(sample_pytorch_model, sample_training_config)
+        """Test training data preparation and validation"""        trainer = ModelTrainer(sample_pytorch_model, sample_training_config)
         X, y = sample_dataset
         
         # Test data splitting
@@ -145,23 +133,20 @@ class TestModelTrainer:
 
     @patch('torch.cuda.is_available', return_value=True)
     def test_device_selection_gpu(self, mock_cuda, sample_training_config, sample_pytorch_model):
-        """Test GPU device selection when available"""
-        trainer = ModelTrainer(sample_pytorch_model, sample_training_config)
+        """Test GPU device selection when available"""        trainer = ModelTrainer(sample_pytorch_model, sample_training_config)
         device = trainer._select_device()
         
         assert "cuda" in str(device) or device == torch.device("cpu")  # Fallback if no actual GPU
 
     @patch('torch.cuda.is_available', return_value=False)
     def test_device_selection_cpu(self, mock_cuda, sample_training_config, sample_pytorch_model):
-        """Test CPU device selection when GPU unavailable"""
-        trainer = ModelTrainer(sample_pytorch_model, sample_training_config)
+        """Test CPU device selection when GPU unavailable"""        trainer = ModelTrainer(sample_pytorch_model, sample_training_config)
         device = trainer._select_device()
         
         assert device == torch.device("cpu")
 
     def test_training_step_supervised(self, sample_training_config, sample_pytorch_model, sample_dataset):
-        """Test single training step for supervised learning"""
-        sample_training_config.training_mode = TrainingMode.SUPERVISED
+        """Test single training step for supervised learning"""        sample_training_config.training_mode = TrainingMode.SUPERVISED
         trainer = ModelTrainer(sample_pytorch_model, sample_training_config)
         
         X, y = sample_dataset
@@ -180,8 +165,7 @@ class TestModelTrainer:
         assert loss >= 0
 
     def test_validation_step(self, sample_training_config, sample_pytorch_model, sample_dataset):
-        """Test validation step"""
-        trainer = ModelTrainer(sample_pytorch_model, sample_training_config)
+        """Test validation step"""        trainer = ModelTrainer(sample_pytorch_model, sample_training_config)
         
         X, y = sample_dataset
         _, val_loader, _ = trainer.prepare_data_loaders(X, y)
@@ -197,8 +181,7 @@ class TestModelTrainer:
         assert 0 <= val_accuracy <= 1
 
     def test_model_checkpointing(self, sample_training_config, sample_pytorch_model, temp_dir):
-        """Test model checkpointing functionality"""
-        sample_training_config.output_dir = str(temp_dir)
+        """Test model checkpointing functionality"""        sample_training_config.output_dir = str(temp_dir)
         trainer = ModelTrainer(sample_pytorch_model, sample_training_config)
         
         # Create checkpoint
@@ -217,8 +200,7 @@ class TestModelTrainer:
         assert checkpoint['metrics']['accuracy'] == 0.85
 
     def test_early_stopping(self, sample_training_config, sample_pytorch_model):
-        """Test early stopping mechanism"""
-        sample_training_config.early_stopping = True
+        """Test early stopping mechanism"""        sample_training_config.early_stopping = True
         sample_training_config.patience = 3
         sample_training_config.min_delta = 0.001
         
@@ -238,8 +220,7 @@ class TestModelTrainer:
         assert should_stop or len(losses) > sample_training_config.patience
 
     def test_gradient_clipping(self, sample_training_config, sample_pytorch_model, sample_dataset):
-        """Test gradient clipping functionality"""
-        sample_training_config.gradient_clip_norm = 1.0
+        """Test gradient clipping functionality"""        sample_training_config.gradient_clip_norm = 1.0
         trainer = ModelTrainer(sample_pytorch_model, sample_training_config)
         
         X, y = sample_dataset
@@ -268,8 +249,7 @@ class TestModelTrainer:
         assert total_norm_after <= sample_training_config.gradient_clip_norm + 1e-6  # Small tolerance
 
     def test_mixed_precision_training(self, sample_training_config, sample_pytorch_model):
-        """Test mixed precision training setup"""
-        sample_training_config.mixed_precision = True
+        """Test mixed precision training setup"""        sample_training_config.mixed_precision = True
         trainer = ModelTrainer(sample_pytorch_model, sample_training_config)
         
         # Check if scaler is created for mixed precision
@@ -279,8 +259,7 @@ class TestModelTrainer:
 
     @pytest.mark.asyncio
     async def test_async_training(self, sample_training_config, sample_pytorch_model, sample_dataset):
-        """Test asynchronous training capabilities"""
-        trainer = ModelTrainer(sample_pytorch_model, sample_training_config)
+        """Test asynchronous training capabilities"""        trainer = ModelTrainer(sample_pytorch_model, sample_training_config)
         X, y = sample_dataset
         
         # Setup minimal training for async test
@@ -299,8 +278,7 @@ class TestModelTrainer:
         assert "final_accuracy" in results
 
     def test_training_history_tracking(self, sample_training_config, sample_pytorch_model):
-        """Test training history tracking"""
-        trainer = ModelTrainer(sample_pytorch_model, sample_training_config)
+        """Test training history tracking"""        trainer = ModelTrainer(sample_pytorch_model, sample_training_config)
         
         # Simulate training epochs
         for epoch in range(5):
@@ -325,11 +303,9 @@ class TestModelTrainer:
 
 
 class TestDistributedTrainingManager:
-    """Tests for distributed training management"""
-    
+    """Tests for distributed training management"""    
     def test_init_distributed_manager(self):
-        """Test distributed training manager initialization"""
-        manager = DistributedTrainingManager(
+        """Test distributed training manager initialization"""        manager = DistributedTrainingManager(
             world_size=4,
             rank=0,
             backend="nccl",
@@ -345,16 +321,14 @@ class TestDistributedTrainingManager:
 
     @patch('torch.distributed.init_process_group')
     def test_setup_distributed_training(self, mock_init_process_group):
-        """Test distributed training setup"""
-        manager = DistributedTrainingManager(world_size=2, rank=0)
+        """Test distributed training setup"""        manager = DistributedTrainingManager(world_size=2, rank=0)
         
         manager.setup_distributed_training()
         
         mock_init_process_group.assert_called_once()
 
     def test_create_distributed_sampler(self, sample_dataset):
-        """Test creation of distributed sampler"""
-        manager = DistributedTrainingManager(world_size=2, rank=0)
+        """Test creation of distributed sampler"""        manager = DistributedTrainingManager(world_size=2, rank=0)
         X, y = sample_dataset
         
         # Create a simple dataset
@@ -370,8 +344,7 @@ class TestDistributedTrainingManager:
         assert sampler.rank == 0
 
     def test_sync_metrics_across_processes(self):
-        """Test metrics synchronization across processes"""
-        manager = DistributedTrainingManager(world_size=2, rank=0)
+        """Test metrics synchronization across processes"""        manager = DistributedTrainingManager(world_size=2, rank=0)
         
         metrics = {
             "loss": torch.tensor(0.5),
@@ -387,11 +360,9 @@ class TestDistributedTrainingManager:
 
 
 class TestHyperparameterOptimizer:
-    """Tests for hyperparameter optimization"""
-    
+    """Tests for hyperparameter optimization"""    
     def test_init_optimizer(self):
-        """Test hyperparameter optimizer initialization"""
-        param_space = {
+        """Test hyperparameter optimizer initialization"""        param_space = {
             "learning_rate": (0.001, 0.1, "log"),
             "batch_size": (16, 128, "int"),
             "dropout_rate": (0.1, 0.5, "float"),
@@ -411,8 +382,7 @@ class TestHyperparameterOptimizer:
         assert optimizer.best_score is None
 
     def test_sample_parameters(self, sample_hyperparameters):
-        """Test parameter sampling from search space"""
-        optimizer = HyperparameterOptimizer(
+        """Test parameter sampling from search space"""        optimizer = HyperparameterOptimizer(
             param_space=sample_hyperparameters,
             optimization_method="random"
         )
@@ -427,8 +397,7 @@ class TestHyperparameterOptimizer:
 
     @patch('optuna.create_study')
     def test_bayesian_optimization(self, mock_create_study):
-        """Test Bayesian optimization setup"""
-        mock_study = MagicMock()
+        """Test Bayesian optimization setup"""        mock_study = MagicMock()
         mock_create_study.return_value = mock_study
         
         param_space = {"learning_rate": (0.001, 0.1, "log")}
@@ -444,8 +413,7 @@ class TestHyperparameterOptimizer:
         mock_study.optimize.assert_called_once()
 
     def test_grid_search_optimization(self):
-        """Test grid search optimization"""
-        param_space = {
+        """Test grid search optimization"""        param_space = {
             "learning_rate": [0.001, 0.01],
             "batch_size": [16, 32]
         }
@@ -464,8 +432,7 @@ class TestHyperparameterOptimizer:
         assert best_params["batch_size"] == 32      # Higher is better in our objective
 
     def test_random_search_optimization(self):
-        """Test random search optimization"""
-        param_space = {
+        """Test random search optimization"""        param_space = {
             "learning_rate": (0.001, 0.1, "log"),
             "dropout_rate": (0.1, 0.5, "float")
         }
@@ -485,11 +452,9 @@ class TestHyperparameterOptimizer:
 
 
 class TestExperimentTracker:
-    """Tests for experiment tracking"""
-    
+    """Tests for experiment tracking"""    
     def test_init_tracker(self, temp_dir):
-        """Test experiment tracker initialization"""
-        tracker = ExperimentTracker(
+        """Test experiment tracker initialization"""        tracker = ExperimentTracker(
             experiment_name="test_experiment",
             tracking_backend="local",
             save_dir=str(temp_dir)
@@ -500,8 +465,7 @@ class TestExperimentTracker:
         assert tracker.save_dir == temp_dir
 
     def test_log_parameters(self, temp_dir):
-        """Test parameter logging"""
-        tracker = ExperimentTracker("test", "local", str(temp_dir))
+        """Test parameter logging"""        tracker = ExperimentTracker("test", "local", str(temp_dir))
         
         params = {
             "learning_rate": 0.001,
@@ -514,8 +478,7 @@ class TestExperimentTracker:
         assert tracker.logged_params == params
 
     def test_log_metrics(self, temp_dir):
-        """Test metrics logging"""
-        tracker = ExperimentTracker("test", "local", str(temp_dir))
+        """Test metrics logging"""        tracker = ExperimentTracker("test", "local", str(temp_dir))
         
         metrics = {
             "train_loss": 0.3,
@@ -530,8 +493,7 @@ class TestExperimentTracker:
         assert tracker.logged_metrics[0]["metrics"]["train_loss"] == 0.3
 
     def test_log_model_artifact(self, temp_dir, sample_pytorch_model):
-        """Test model artifact logging"""
-        tracker = ExperimentTracker("test", "local", str(temp_dir))
+        """Test model artifact logging"""        tracker = ExperimentTracker("test", "local", str(temp_dir))
         
         # Save model temporarily
         model_path = temp_dir / "test_model.pt"
@@ -545,15 +507,13 @@ class TestExperimentTracker:
 
     @patch('mlflow.start_run')
     def test_mlflow_integration(self, mock_start_run):
-        """Test MLflow integration"""
-        tracker = ExperimentTracker("test", "mlflow")
+        """Test MLflow integration"""        tracker = ExperimentTracker("test", "mlflow")
         
         tracker.start_run()
         mock_start_run.assert_called_once()
 
     def test_wandb_integration(self):
-        """Test Weights & Biases integration"""
-        with patch('wandb.init') as mock_wandb_init:
+        """Test Weights & Biases integration"""        with patch('wandb.init') as mock_wandb_init:
             tracker = ExperimentTracker("test", "wandb")
             
             params = {"lr": 0.001}
@@ -566,8 +526,7 @@ class TestExperimentTracker:
             assert tracker.tracking_backend == "wandb"
 
     def test_export_experiment_data(self, temp_dir):
-        """Test experiment data export"""
-        tracker = ExperimentTracker("test", "local", str(temp_dir))
+        """Test experiment data export"""        tracker = ExperimentTracker("test", "local", str(temp_dir))
         
         # Log some data
         tracker.log_parameters({"lr": 0.001})
@@ -590,11 +549,9 @@ class TestExperimentTracker:
 
 
 class TestAdvancedTrainingFeatures:
-    """Tests for advanced training features"""
-    
+    """Tests for advanced training features"""    
     def test_curriculum_learning(self, sample_training_config, sample_pytorch_model):
-        """Test curriculum learning implementation"""
-        sample_training_config.curriculum_learning = True
+        """Test curriculum learning implementation"""        sample_training_config.curriculum_learning = True
         sample_training_config.curriculum_strategy = "difficulty_based"
         
         trainer = ModelTrainer(sample_pytorch_model, sample_training_config)
@@ -606,8 +563,7 @@ class TestAdvancedTrainingFeatures:
         assert trainer.config.curriculum_learning is True
 
     def test_knowledge_distillation(self, sample_training_config, sample_pytorch_model):
-        """Test knowledge distillation setup"""
-        # Create teacher model (larger)
+        """Test knowledge distillation setup"""        # Create teacher model (larger)
         teacher_model = nn.Sequential(
             nn.Linear(768, 512),
             nn.ReLU(),
@@ -636,8 +592,7 @@ class TestAdvancedTrainingFeatures:
         assert distillation_loss.item() >= 0
 
     def test_meta_learning_setup(self, sample_training_config, sample_pytorch_model):
-        """Test meta-learning (MAML) setup"""
-        sample_training_config.meta_learning = True
+        """Test meta-learning (MAML) setup"""        sample_training_config.meta_learning = True
         sample_training_config.meta_lr = 0.01
         sample_training_config.inner_steps = 5
         
@@ -650,8 +605,7 @@ class TestAdvancedTrainingFeatures:
         assert trainer.config.meta_learning is True
 
     def test_federated_learning_simulation(self, sample_training_config, sample_pytorch_model):
-        """Test federated learning simulation"""
-        sample_training_config.federated_learning = True
+        """Test federated learning simulation"""        sample_training_config.federated_learning = True
         sample_training_config.num_clients = 5
         sample_training_config.client_fraction = 0.6
         
@@ -668,8 +622,7 @@ class TestAdvancedTrainingFeatures:
         assert len(selected_clients) == expected_selected
 
     def test_adversarial_training(self, sample_training_config, sample_pytorch_model):
-        """Test adversarial training setup"""
-        sample_training_config.adversarial_training = True
+        """Test adversarial training setup"""        sample_training_config.adversarial_training = True
         sample_training_config.adversarial_epsilon = 0.01
         sample_training_config.adversarial_steps = 10
         
@@ -690,12 +643,10 @@ class TestAdvancedTrainingFeatures:
 
 @pytest.mark.integration
 class TestTrainingIntegration:
-    """Integration tests for training pipeline"""
-    
+    """Integration tests for training pipeline"""    
     @pytest.mark.slow
     def test_full_training_pipeline(self, sample_training_config, sample_pytorch_model, sample_dataset, temp_dir):
-        """Test complete training pipeline integration"""
-        sample_training_config.output_dir = str(temp_dir)
+        """Test complete training pipeline integration"""        sample_training_config.output_dir = str(temp_dir)
         sample_training_config.num_epochs = 3  # Reduced for testing
         
         trainer = ModelTrainer(sample_pytorch_model, sample_training_config)
@@ -720,8 +671,7 @@ class TestTrainingIntegration:
         assert len(checkpoint_files) > 0
 
     def test_distributed_training_simulation(self, sample_training_config, sample_pytorch_model, temp_dir):
-        """Test distributed training simulation"""
-        sample_training_config.output_dir = str(temp_dir)
+        """Test distributed training simulation"""        sample_training_config.output_dir = str(temp_dir)
         sample_training_config.distributed_training = True
         
         # Create multiple trainer instances to simulate different processes
@@ -737,8 +687,7 @@ class TestTrainingIntegration:
             assert str(trainer.model) == str(trainers[0].model)
 
     def test_hyperparameter_optimization_integration(self, sample_training_config, sample_pytorch_model, sample_dataset):
-        """Test integration of hyperparameter optimization with training"""
-        param_space = {
+        """Test integration of hyperparameter optimization with training"""        param_space = {
             "learning_rate": [0.001, 0.01],
             "batch_size": [16, 32]
         }

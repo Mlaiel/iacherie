@@ -1,5 +1,4 @@
-"""
-Health Validator - Deployment Automation
+"""Health Validator - Deployment Automation
 
 Comprehensive health validation system for the IA Influencer Agent platform,
 providing real-time health monitoring, validation, and diagnostics across
@@ -7,9 +6,7 @@ all system components during deployment and runtime.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Callable
@@ -30,8 +27,7 @@ from ..queue.message_queue_manager import MessageQueueManager
 
 
 class HealthStatus(Enum):
-    """Health status types"""
-    HEALTHY = "healthy"
+    """Health status types"""    HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
     UNKNOWN = "unknown"
@@ -39,8 +35,7 @@ class HealthStatus(Enum):
 
 
 class ComponentType(Enum):
-    """Component types for health checking"""
-    POD = "pod"
+    """Component types for health checking"""    POD = "pod"
     SERVICE = "service"
     ENDPOINT = "endpoint"
     DATABASE = "database"
@@ -54,8 +49,7 @@ class ComponentType(Enum):
 
 @dataclass
 class HealthCheck:
-    """Health check definition"""
-    name: str
+    """Health check definition"""    name: str
     component_type: ComponentType
     check_function: Callable
     timeout: int = 30
@@ -69,8 +63,7 @@ class HealthCheck:
 
 @dataclass
 class HealthResult:
-    """Health check result"""
-    name: str
+    """Health check result"""    name: str
     status: HealthStatus
     message: str
     response_time: float
@@ -81,15 +74,12 @@ class HealthResult:
 
 
 class HealthValidator(BaseComponent):
-    """
-    Enterprise-grade health validation system.
+    """    Enterprise-grade health validation system.
     
     Provides comprehensive health monitoring and validation for all components
     of the IA Influencer Agent platform including pods, services, databases,
     AI models, and external dependencies.
-    """
-
-    def __init__(self, config: Dict[str, Any]):
+    """    def __init__(self, config: Dict[str, Any]):
         super().__init__()
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -127,8 +117,7 @@ class HealthValidator(BaseComponent):
         self._initialize_health_checks()
 
     def _initialize_health_checks(self):
-        """Initialize built-in health checks"""
-        
+        """Initialize built-in health checks"""        
         # Pod health checks
         self.register_health_check(HealthCheck(
             name="ai_agent_pods",
@@ -429,8 +418,7 @@ class HealthValidator(BaseComponent):
         ))
 
     def register_health_check(self, health_check: HealthCheck):
-        """Register a new health check"""
-        self.health_checks[health_check.name] = health_check
+        """Register a new health check"""        self.health_checks[health_check.name] = health_check
         self.health_history[health_check.name] = []
 
     async def validate_environment_readiness(
@@ -438,8 +426,7 @@ class HealthValidator(BaseComponent):
         environment: str,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Validate that the environment is ready for deployment.
+        """        Validate that the environment is ready for deployment.
         
         Args:
             environment: Environment to validate
@@ -447,8 +434,7 @@ class HealthValidator(BaseComponent):
             
         Returns:
             Validation results
-        """
-        self.logger.info(f"Validating environment readiness: {environment}")
+        """        self.logger.info(f"Validating environment readiness: {environment}")
         
         validation_results = {
             'environment': environment,
@@ -509,8 +495,7 @@ class HealthValidator(BaseComponent):
         environment: str,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Validate health of deployed services.
+        """        Validate health of deployed services.
         
         Args:
             services: List of services to validate
@@ -519,8 +504,7 @@ class HealthValidator(BaseComponent):
             
         Returns:
             Service validation results
-        """
-        self.logger.info(f"Validating {len(services)} services in {environment}")
+        """        self.logger.info(f"Validating {len(services)} services in {environment}")
         
         validation_results = {
             'services': services,
@@ -582,8 +566,7 @@ class HealthValidator(BaseComponent):
         environment: str,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Validate performance metrics of services.
+        """        Validate performance metrics of services.
         
         Args:
             services: List of services to validate
@@ -592,8 +575,7 @@ class HealthValidator(BaseComponent):
             
         Returns:
             Performance validation results
-        """
-        self.logger.info(f"Validating performance for {len(services)} services")
+        """        self.logger.info(f"Validating performance for {len(services)} services")
         
         performance_results = {
             'services': services,
@@ -634,8 +616,7 @@ class HealthValidator(BaseComponent):
         environment: str,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Validate security configuration of services.
+        """        Validate security configuration of services.
         
         Args:
             services: List of services to validate
@@ -644,8 +625,7 @@ class HealthValidator(BaseComponent):
             
         Returns:
             Security validation results
-        """
-        self.logger.info(f"Validating security for {len(services)} services")
+        """        self.logger.info(f"Validating security for {len(services)} services")
         
         security_results = {
             'services': services,
@@ -683,8 +663,7 @@ class HealthValidator(BaseComponent):
         return security_results
 
     async def _execute_health_check(self, check_name: str) -> HealthResult:
-        """Execute a single health check"""
-        health_check = self.health_checks[check_name]
+        """Execute a single health check"""        health_check = self.health_checks[check_name]
         start_time = time.time()
         
         for attempt in range(health_check.retry_attempts):
@@ -763,8 +742,7 @@ class HealthValidator(BaseComponent):
 
     # Health check implementations
     async def _check_ai_agent_pods(self) -> Dict[str, Any]:
-        """Check AI agent pod health"""
-        pods = await self.pod_manager.get_pods_by_label("app=ia-influencer-ai-agent")
+        """Check AI agent pod health"""        pods = await self.pod_manager.get_pods_by_label("app=ia-influencer-ai-agent")
         
         if not pods:
             return {
@@ -795,8 +773,7 @@ class HealthValidator(BaseComponent):
             }
 
     async def _check_content_protection_pods(self) -> Dict[str, Any]:
-        """Check content protection pod health"""
-        pods = await self.pod_manager.get_pods_by_label("app=ia-influencer-content-protection")
+        """Check content protection pod health"""        pods = await self.pod_manager.get_pods_by_label("app=ia-influencer-content-protection")
         
         if not pods:
             return {
@@ -827,8 +804,7 @@ class HealthValidator(BaseComponent):
             }
 
     async def _check_fingerprinting_pods(self) -> Dict[str, Any]:
-        """Check fingerprinting pod health"""
-        pods = await self.pod_manager.get_pods_by_label("app=ia-influencer-fingerprinting")
+        """Check fingerprinting pod health"""        pods = await self.pod_manager.get_pods_by_label("app=ia-influencer-fingerprinting")
         
         if not pods:
             return {
@@ -859,8 +835,7 @@ class HealthValidator(BaseComponent):
             }
 
     async def _check_monetization_pods(self) -> Dict[str, Any]:
-        """Check monetization pod health"""
-        pods = await self.pod_manager.get_pods_by_label("app=ia-influencer-monetization")
+        """Check monetization pod health"""        pods = await self.pod_manager.get_pods_by_label("app=ia-influencer-monetization")
         
         if not pods:
             return {
@@ -891,8 +866,7 @@ class HealthValidator(BaseComponent):
             }
 
     async def _check_crawler_pods(self) -> Dict[str, Any]:
-        """Check crawler pod health"""
-        pods = await self.pod_manager.get_pods_by_label("app=ia-influencer-crawler")
+        """Check crawler pod health"""        pods = await self.pod_manager.get_pods_by_label("app=ia-influencer-crawler")
         
         if not pods:
             return {
@@ -923,8 +897,7 @@ class HealthValidator(BaseComponent):
             }
 
     async def _check_api_gateway_pods(self) -> Dict[str, Any]:
-        """Check API gateway pod health"""
-        pods = await self.pod_manager.get_pods_by_label("app=ia-influencer-api-gateway")
+        """Check API gateway pod health"""        pods = await self.pod_manager.get_pods_by_label("app=ia-influencer-api-gateway")
         
         if not pods:
             return {
@@ -955,8 +928,7 @@ class HealthValidator(BaseComponent):
             }
 
     async def _check_ai_agent_endpoint(self) -> Dict[str, Any]:
-        """Check AI agent endpoint health"""
-        try:
+        """Check AI agent endpoint health"""        try:
             async with self.http_session.get("http://ia-influencer-ai-agent:8000/health") as response:
                 if response.status == 200:
                     data = await response.json()
@@ -979,8 +951,7 @@ class HealthValidator(BaseComponent):
             }
 
     async def _check_content_protection_endpoint(self) -> Dict[str, Any]:
-        """Check content protection endpoint health"""
-        try:
+        """Check content protection endpoint health"""        try:
             async with self.http_session.get("http://ia-influencer-content-protection:8001/health") as response:
                 if response.status == 200:
                     data = await response.json()
@@ -1003,8 +974,7 @@ class HealthValidator(BaseComponent):
             }
 
     async def _check_api_gateway_endpoint(self) -> Dict[str, Any]:
-        """Check API gateway endpoint health"""
-        try:
+        """Check API gateway endpoint health"""        try:
             async with self.http_session.get("http://ia-influencer-api-gateway:8080/health") as response:
                 if response.status == 200:
                     data = await response.json()
@@ -1027,8 +997,7 @@ class HealthValidator(BaseComponent):
             }
 
     async def _check_postgresql_primary(self) -> Dict[str, Any]:
-        """Check PostgreSQL primary database health"""
-        try:
+        """Check PostgreSQL primary database health"""        try:
             connection_info = await self.db_manager.check_primary_connection()
             if connection_info['connected']:
                 return {
@@ -1050,8 +1019,7 @@ class HealthValidator(BaseComponent):
             }
 
     async def _check_postgresql_replicas(self) -> Dict[str, Any]:
-        """Check PostgreSQL replica health"""
-        try:
+        """Check PostgreSQL replica health"""        try:
             replica_info = await self.db_manager.check_replica_connections()
             healthy_replicas = [r for r in replica_info if r['connected']]
             
@@ -1081,8 +1049,7 @@ class HealthValidator(BaseComponent):
             }
 
     async def _check_redis_primary(self) -> Dict[str, Any]:
-        """Check Redis primary health"""
-        try:
+        """Check Redis primary health"""        try:
             redis_info = await self.redis_manager.check_primary_health()
             if redis_info['healthy']:
                 return {
@@ -1104,8 +1071,7 @@ class HealthValidator(BaseComponent):
             }
 
     async def _check_redis_cluster(self) -> Dict[str, Any]:
-        """Check Redis cluster health"""
-        try:
+        """Check Redis cluster health"""        try:
             cluster_info = await self.redis_manager.check_cluster_health()
             healthy_nodes = cluster_info.get('healthy_nodes', 0)
             total_nodes = cluster_info.get('total_nodes', 0)
@@ -1136,8 +1102,7 @@ class HealthValidator(BaseComponent):
             }
 
     async def _check_celery_broker(self) -> Dict[str, Any]:
-        """Check Celery broker health"""
-        try:
+        """Check Celery broker health"""        try:
             broker_info = await self.queue_manager.check_broker_health()
             if broker_info['healthy']:
                 return {
@@ -1159,8 +1124,7 @@ class HealthValidator(BaseComponent):
             }
 
     async def _check_celery_workers(self) -> Dict[str, Any]:
-        """Check Celery workers health"""
-        try:
+        """Check Celery workers health"""        try:
             worker_info = await self.queue_manager.check_workers_health()
             active_workers = worker_info.get('active_workers', 0)
             total_workers = worker_info.get('total_workers', 0)
@@ -1191,8 +1155,7 @@ class HealthValidator(BaseComponent):
             }
 
     async def _check_text_generation_model(self) -> Dict[str, Any]:
-        """Check text generation AI model health"""
-        try:
+        """Check text generation AI model health"""        try:
             # Test model with a simple prompt
             test_prompt = "Generate a brief test response:"
             async with self.http_session.post(
@@ -1220,8 +1183,7 @@ class HealthValidator(BaseComponent):
             }
 
     async def _check_audio_analysis_model(self) -> Dict[str, Any]:
-        """Check audio analysis AI model health"""
-        try:
+        """Check audio analysis AI model health"""        try:
             # Test model health endpoint
             async with self.http_session.get(
                 "http://ia-influencer-ai-agent:8000/api/v1/models/audio/health"
@@ -1247,8 +1209,7 @@ class HealthValidator(BaseComponent):
             }
 
     async def _check_image_analysis_model(self) -> Dict[str, Any]:
-        """Check image analysis AI model health"""
-        try:
+        """Check image analysis AI model health"""        try:
             # Test model health endpoint
             async with self.http_session.get(
                 "http://ia-influencer-ai-agent:8000/api/v1/models/image/health"
@@ -1274,8 +1235,7 @@ class HealthValidator(BaseComponent):
             }
 
     async def _check_openai_api(self) -> Dict[str, Any]:
-        """Check OpenAI API health"""
-        try:
+        """Check OpenAI API health"""        try:
             async with self.http_session.get(
                 "https://api.openai.com/v1/models",
                 headers={"Authorization": "Bearer test"}  # This will fail auth but test connectivity
@@ -1300,8 +1260,7 @@ class HealthValidator(BaseComponent):
             }
 
     async def _check_stripe_api(self) -> Dict[str, Any]:
-        """Check Stripe API health"""
-        try:
+        """Check Stripe API health"""        try:
             async with self.http_session.get("https://api.stripe.com/v1/charges") as response:
                 if response.status == 401:  # Expected auth failure
                     return {
@@ -1323,8 +1282,7 @@ class HealthValidator(BaseComponent):
             }
 
     async def _check_youtube_api(self) -> Dict[str, Any]:
-        """Check YouTube API health"""
-        try:
+        """Check YouTube API health"""        try:
             async with self.http_session.get(
                 "https://www.googleapis.com/youtube/v3/videos",
                 params={"part": "snippet", "key": "test"}  # This will fail but test connectivity
@@ -1353,8 +1311,7 @@ class HealthValidator(BaseComponent):
         service: str, 
         environment: str
     ) -> Dict[str, float]:
-        """Collect performance metrics for a service"""
-        
+        """Collect performance metrics for a service"""        
         metrics = await self.metrics_collector.collect_service_metrics(service, environment)
         
         return {
@@ -1372,8 +1329,7 @@ class HealthValidator(BaseComponent):
         service: str, 
         metrics: Dict[str, float]
     ) -> List[str]:
-        """Check performance metrics against thresholds"""
-        
+        """Check performance metrics against thresholds"""        
         violations = []
         
         for metric_name, value in metrics.items():
@@ -1398,8 +1354,7 @@ class HealthValidator(BaseComponent):
         service: str, 
         environment: str
     ) -> Dict[str, Any]:
-        """Validate security configuration for a service"""
-        
+        """Validate security configuration for a service"""        
         security_result = {
             'secure': True,
             'vulnerabilities': [],
@@ -1418,8 +1373,7 @@ class HealthValidator(BaseComponent):
         self, 
         service_results: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate overall health metrics"""
-        
+        """Calculate overall health metrics"""        
         total_services = len(service_results)
         healthy_services = sum(1 for result in service_results.values() if result['healthy'])
         
@@ -1441,8 +1395,7 @@ class HealthValidator(BaseComponent):
         }
 
     async def get_health_summary(self) -> Dict[str, Any]:
-        """Get overall health summary"""
-        summary = {
+        """Get overall health summary"""        summary = {
             'timestamp': datetime.utcnow(),
             'total_checks': len(self.health_checks),
             'check_status': {},
@@ -1468,6 +1421,5 @@ class HealthValidator(BaseComponent):
         return summary
 
     async def cleanup(self):
-        """Cleanup resources"""
-        await self.http_session.close()
+        """Cleanup resources"""        await self.http_session.close()
         self.executor.shutdown(wait=True)

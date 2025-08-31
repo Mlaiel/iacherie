@@ -1,5 +1,4 @@
-"""
-Multi-Platform Session Synchronization - IA Influencer Agent
+"""Multi-Platform Session Synchronization - IA Influencer Agent
 
 Enterprise-grade cross-platform session synchronization for content creators
 managing conversations across Instagram, TikTok, YouTube, Spotify, and other
@@ -10,9 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️  LEGAL WARNING ⚠️
 Unauthorized use prohibited. Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set, Union, Tuple
@@ -39,8 +36,7 @@ logger = get_logger(__name__)
 
 
 class SyncOperation(Enum):
-    """Platform synchronization operation types"""
-    CREATE = "create"
+    """Platform synchronization operation types"""    CREATE = "create"
     UPDATE = "update"
     DELETE = "delete"
     MERGE = "merge"
@@ -49,8 +45,7 @@ class SyncOperation(Enum):
 
 
 class ConflictStrategy(Enum):
-    """Conflict resolution strategies"""
-    LAST_WRITE_WINS = "last_write_wins"
+    """Conflict resolution strategies"""    LAST_WRITE_WINS = "last_write_wins"
     MOST_RECENT_PLATFORM = "most_recent_platform"
     USER_PREFERENCE = "user_preference"
     MERGE_INTELLIGENT = "merge_intelligent"
@@ -59,8 +54,7 @@ class ConflictStrategy(Enum):
 
 @dataclass
 class PlatformSyncConfig:
-    """Platform-specific synchronization configuration"""
-    platform_type: PlatformType
+    """Platform-specific synchronization configuration"""    platform_type: PlatformType
     sync_enabled: bool = True
     sync_interval: int = 30  # seconds
     conflict_strategy: ConflictStrategy = ConflictStrategy.LAST_WRITE_WINS
@@ -71,8 +65,7 @@ class PlatformSyncConfig:
 
 
 class SyncConflict(BaseModel):
-    """Represents a synchronization conflict"""
-    conflict_id: str = Field(default_factory=lambda: str(uuid4()))
+    """Represents a synchronization conflict"""    conflict_id: str = Field(default_factory=lambda: str(uuid4()))
     session_id: str
     platforms: List[str]
     conflict_type: str
@@ -85,8 +78,7 @@ class SyncConflict(BaseModel):
 
 
 class PlatformSessionAdapter:
-    """Adapter for platform-specific session management"""
-    
+    """Adapter for platform-specific session management"""    
     def __init__(self, platform_type: PlatformType, config: PlatformSyncConfig):
         self.platform_type = platform_type
         self.config = config
@@ -98,8 +90,7 @@ class PlatformSessionAdapter:
         self,
         session_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Serialize session state for platform-specific format"""
-        
+        """Serialize session state for platform-specific format"""        
         platform_state = {
             "session_id": session_data["session_id"],
             "user_id": session_data["user_id"],
@@ -149,8 +140,7 @@ class PlatformSessionAdapter:
         self,
         platform_state: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Deserialize platform state to universal session format"""
-        
+        """Deserialize platform state to universal session format"""        
         session_data = {
             "session_id": platform_state["session_id"],
             "user_id": platform_state["user_id"],
@@ -168,8 +158,7 @@ class PlatformSessionAdapter:
         self,
         platform_state: Dict[str, Any]
     ) -> Tuple[bool, List[str]]:
-        """Validate platform-specific state format"""
-        
+        """Validate platform-specific state format"""        
         errors = []
         
         # Common validation
@@ -193,8 +182,7 @@ class PlatformSessionAdapter:
 
 
 class CrossPlatformStateManager:
-    """Manages state consistency across multiple platforms"""
-    
+    """Manages state consistency across multiple platforms"""    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.metrics_collector = MetricsCollector()
@@ -210,8 +198,7 @@ class CrossPlatformStateManager:
         platform_type: PlatformType,
         config: PlatformSyncConfig
     ):
-        """Register platform for synchronization"""
-        
+        """Register platform for synchronization"""        
         self.sync_configs[platform_type] = config
         self.adapters[platform_type] = PlatformSessionAdapter(platform_type, config)
         
@@ -222,8 +209,7 @@ class CrossPlatformStateManager:
         session_id: str,
         platform: Optional[PlatformType] = None
     ) -> Dict[str, Any]:
-        """Get session state for specific platform or unified state"""
-        
+        """Get session state for specific platform or unified state"""        
         if platform:
             # Get platform-specific state
             cache_key = f"platform_session:{platform.value}:{session_id}"
@@ -253,8 +239,7 @@ class CrossPlatformStateManager:
         state_updates: Dict[str, Any],
         source_platform: Optional[PlatformType] = None
     ) -> bool:
-        """Update session state and propagate to other platforms"""
-        
+        """Update session state and propagate to other platforms"""        
         try:
             # Get current unified state
             current_state = await self.get_session_state(session_id)
@@ -301,8 +286,7 @@ class CrossPlatformStateManager:
         current_state: Dict[str, Any],
         updates: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Intelligently merge state updates"""
-        
+        """Intelligently merge state updates"""        
         merged_state = current_state.copy()
         
         for key, value in updates.items():
@@ -324,8 +308,7 @@ class CrossPlatformStateManager:
         updated_state: Dict[str, Any],
         source_platform: Optional[PlatformType]
     ) -> List[SyncConflict]:
-        """Detect synchronization conflicts"""
-        
+        """Detect synchronization conflicts"""        
         conflicts = []
         
         # Get states from other platforms
@@ -370,8 +353,7 @@ class CrossPlatformStateManager:
         state1: Dict[str, Any],
         state2: Dict[str, Any]
     ) -> bool:
-        """Check if two states have conflicting data"""
-        
+        """Check if two states have conflicting data"""        
         # Compare critical fields
         critical_fields = ["user_id", "state", "conversation_context"]
         
@@ -388,8 +370,7 @@ class CrossPlatformStateManager:
         conflicts: List[SyncConflict],
         proposed_state: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Resolve synchronization conflicts"""
-        
+        """Resolve synchronization conflicts"""        
         resolved_state = proposed_state.copy()
         
         for conflict in conflicts:
@@ -424,8 +405,7 @@ class CrossPlatformStateManager:
         return resolved_state
     
     def _get_latest_state(self, conflict: SyncConflict) -> Dict[str, Any]:
-        """Get state with latest timestamp"""
-        
+        """Get state with latest timestamp"""        
         latest_timestamp = None
         latest_state = conflict.local_state
         
@@ -443,15 +423,13 @@ class CrossPlatformStateManager:
         return latest_state
     
     async def _get_most_recent_platform_state(self, conflict: SyncConflict) -> Dict[str, Any]:
-        """Get state from most recently active platform"""
-        
+        """Get state from most recently active platform"""        
         # Implementation would check platform activity metrics
         # For now, return local state
         return conflict.local_state
     
     async def _intelligent_merge(self, conflict: SyncConflict) -> Dict[str, Any]:
-        """Perform intelligent merge of conflicting states"""
-        
+        """Perform intelligent merge of conflicting states"""        
         merged_state = conflict.local_state.copy()
         
         # Field priority rules
@@ -476,8 +454,7 @@ class CrossPlatformStateManager:
         return merged_state
     
     def _merge_field_data(self, local_data: Any, remote_data: Any) -> Any:
-        """Merge specific field data intelligently"""
-        
+        """Merge specific field data intelligently"""        
         if isinstance(local_data, dict) and isinstance(remote_data, dict):
             return {**local_data, **remote_data}
         elif isinstance(local_data, list) and isinstance(remote_data, list):
@@ -486,8 +463,7 @@ class CrossPlatformStateManager:
             return remote_data  # Default to remote data
     
     async def _queue_manual_resolution(self, conflict: SyncConflict):
-        """Queue conflict for manual resolution"""
-        
+        """Queue conflict for manual resolution"""        
         queue_key = f"manual_resolution_queue"
         await self.cache_manager.list_push(queue_key, conflict.dict())
         
@@ -503,8 +479,7 @@ class CrossPlatformStateManager:
         )
     
     async def _store_conflict_resolution(self, conflict: SyncConflict):
-        """Store conflict resolution for audit purposes"""
-        
+        """Store conflict resolution for audit purposes"""        
         async with get_async_session() as session:
             resolution_record = CrossPlatformSyncModel(
                 conflict_id=conflict.conflict_id,
@@ -526,8 +501,7 @@ class CrossPlatformStateManager:
         updated_state: Dict[str, Any],
         source_platform: Optional[PlatformType]
     ):
-        """Propagate state updates to all registered platforms"""
-        
+        """Propagate state updates to all registered platforms"""        
         for platform_type, adapter in self.adapters.items():
             if platform_type == source_platform:
                 continue  # Skip source platform
@@ -565,8 +539,7 @@ class CrossPlatformStateManager:
 
 
 class SessionSynchronizationEngine:
-    """Main session synchronization orchestrator"""
-    
+    """Main session synchronization orchestrator"""    
     def __init__(self):
         self.state_manager = CrossPlatformStateManager()
         self.cache_manager = CacheManager()
@@ -578,8 +551,7 @@ class SessionSynchronizationEngine:
         self.sync_tasks: Dict[str, asyncio.Task] = {}
     
     async def initialize_platforms(self):
-        """Initialize all supported platforms"""
-        
+        """Initialize all supported platforms"""        
         # Instagram configuration
         instagram_config = PlatformSyncConfig(
             platform_type=PlatformType.INSTAGRAM,
@@ -619,8 +591,7 @@ class SessionSynchronizationEngine:
         self.logger.info("All platforms initialized for synchronization")
     
     async def start_session_sync(self, session_id: str) -> bool:
-        """Start background synchronization for session"""
-        
+        """Start background synchronization for session"""        
         if session_id in self.sync_tasks:
             self.logger.warning(f"Sync already running for session: {session_id}")
             return False
@@ -643,8 +614,7 @@ class SessionSynchronizationEngine:
             return False
     
     async def stop_session_sync(self, session_id: str) -> bool:
-        """Stop background synchronization for session"""
-        
+        """Stop background synchronization for session"""        
         if session_id not in self.sync_tasks:
             return False
         
@@ -670,8 +640,7 @@ class SessionSynchronizationEngine:
             return False
     
     async def _background_sync_loop(self, session_id: str):
-        """Background synchronization loop for session"""
-        
+        """Background synchronization loop for session"""        
         try:
             while True:
                 # Get minimum sync interval from all platforms
@@ -692,8 +661,7 @@ class SessionSynchronizationEngine:
             self.logger.error(f"Sync loop error for session {session_id}: {str(e)}")
     
     async def _perform_sync_check(self, session_id: str):
-        """Perform periodic synchronization check"""
-        
+        """Perform periodic synchronization check"""        
         try:
             # Get current unified state
             unified_state = await self.state_manager.get_session_state(session_id)
@@ -731,8 +699,7 @@ class SessionSynchronizationEngine:
             self.logger.error(f"Sync check failed: {str(e)}")
     
     async def _sync_platform(self, session_id: str, platform_type: PlatformType):
-        """Synchronize specific platform"""
-        
+        """Synchronize specific platform"""        
         try:
             # Get platform state
             platform_state = await self.state_manager.get_session_state(
@@ -774,27 +741,23 @@ class SessionSynchronizationEngine:
 
 
 class MultiPlatformSessionSync:
-    """Main multi-platform session synchronization facade"""
-    
+    """Main multi-platform session synchronization facade"""    
     def __init__(self):
         self.sync_engine = SessionSynchronizationEngine()
         self.state_manager = self.sync_engine.state_manager
         self.logger = get_logger(self.__class__.__name__)
     
     async def initialize(self):
-        """Initialize the synchronization system"""
-        
+        """Initialize the synchronization system"""        
         await self.sync_engine.initialize_platforms()
         self.logger.info("Multi-platform session sync initialized")
     
     async def start_session_sync(self, session_id: str) -> bool:
-        """Start synchronization for a session"""
-        
+        """Start synchronization for a session"""        
         return await self.sync_engine.start_session_sync(session_id)
     
     async def stop_session_sync(self, session_id: str) -> bool:
-        """Stop synchronization for a session"""
-        
+        """Stop synchronization for a session"""        
         return await self.sync_engine.stop_session_sync(session_id)
     
     async def update_session_state(
@@ -803,8 +766,7 @@ class MultiPlatformSessionSync:
         updates: Dict[str, Any],
         platform: Optional[PlatformType] = None
     ) -> bool:
-        """Update session state with cross-platform sync"""
-        
+        """Update session state with cross-platform sync"""        
         return await self.state_manager.update_session_state(
             session_id,
             updates,
@@ -816,13 +778,11 @@ class MultiPlatformSessionSync:
         session_id: str,
         platform: Optional[PlatformType] = None
     ) -> Dict[str, Any]:
-        """Get session state for platform or unified view"""
-        
+        """Get session state for platform or unified view"""        
         return await self.state_manager.get_session_state(session_id, platform)
     
     async def get_sync_status(self, session_id: str) -> Dict[str, Any]:
-        """Get synchronization status for session"""
-        
+        """Get synchronization status for session"""        
         try:
             status = {
                 "session_id": session_id,
@@ -857,8 +817,7 @@ class MultiPlatformSessionSync:
             return {"error": str(e)}
     
     async def force_full_sync(self, session_id: str) -> bool:
-        """Force full synchronization across all platforms"""
-        
+        """Force full synchronization across all platforms"""        
         try:
             # Get unified state
             unified_state = await self.state_manager.get_session_state(session_id)

@@ -1,5 +1,4 @@
-"""
-Conversation Memory Index - Main Entry Point
+"""Conversation Memory Index - Main Entry Point
 ===========================================
 
 Point d'entrée principal pour le système de mémoire conversationnelle
@@ -27,9 +26,7 @@ copyright law. This includes but is not limited to code theft, concept copying,
 or unauthorized derivative works.
 
 Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Optional, Any, Type, Union, List
 from dataclasses import dataclass
@@ -91,8 +88,7 @@ logger = logging.getLogger(__name__)
 
 
 class ServiceType(Enum):
-    """Available service types"""
-    MEMORY_MANAGER = "memory_manager"
+    """Available service types"""    MEMORY_MANAGER = "memory_manager"
     HISTORY_MANAGER = "history_manager"
     INDEXER = "indexer"
     RETRIEVER = "retriever"
@@ -102,8 +98,7 @@ class ServiceType(Enum):
 
 @dataclass
 class ServiceConfig:
-    """Service configuration"""
-    service_type: ServiceType
+    """Service configuration"""    service_type: ServiceType
     enabled: bool = True
     auto_initialize: bool = True
     cache_enabled: bool = True
@@ -113,13 +108,11 @@ class ServiceConfig:
 
 
 class ConversationMemoryFactory:
-    """
-    Factory for creating and managing conversation memory services
+    """    Factory for creating and managing conversation memory services
     
     Provides centralized service creation, configuration, and lifecycle
     management for all conversation memory components.
-    """
-    
+    """    
     def __init__(self):
         self._services: Dict[ServiceType, Any] = {}
         self._configs: Dict[ServiceType, ServiceConfig] = {}
@@ -132,8 +125,7 @@ class ConversationMemoryFactory:
         logger.info("ConversationMemoryFactory initialized")
     
     def _setup_default_configs(self):
-        """Setup default service configurations"""
-        for service_type in ServiceType:
+        """Setup default service configurations"""        for service_type in ServiceType:
             self._configs[service_type] = ServiceConfig(
                 service_type=service_type,
                 enabled=True,
@@ -143,8 +135,7 @@ class ConversationMemoryFactory:
             )
     
     async def initialize(self):
-        """Initialize all enabled services"""
-        if self._initialized:
+        """Initialize all enabled services"""        if self._initialized:
             return
         
         try:
@@ -167,8 +158,7 @@ class ConversationMemoryFactory:
             raise
     
     async def _initialize_storage_services(self):
-        """Initialize storage services"""
-        if self._configs[ServiceType.STORAGE].enabled:
+        """Initialize storage services"""        if self._configs[ServiceType.STORAGE].enabled:
             try:
                 # Initialize storage components
                 long_term_memory = LongTermMemory()
@@ -198,8 +188,7 @@ class ConversationMemoryFactory:
                 raise
     
     async def _initialize_indexing_services(self):
-        """Initialize indexing services"""
-        if self._configs[ServiceType.INDEXER].enabled:
+        """Initialize indexing services"""        if self._configs[ServiceType.INDEXER].enabled:
             try:
                 # Initialize indexing components
                 conversation_indexer = ConversationIndexer()
@@ -232,8 +221,7 @@ class ConversationMemoryFactory:
                 raise
     
     async def _initialize_retrieval_services(self):
-        """Initialize retrieval services"""
-        if self._configs[ServiceType.RETRIEVER].enabled:
+        """Initialize retrieval services"""        if self._configs[ServiceType.RETRIEVER].enabled:
             try:
                 # Initialize retrieval components
                 conversation_retriever = ConversationRetriever()
@@ -263,8 +251,7 @@ class ConversationMemoryFactory:
                 raise
     
     async def _initialize_manager_services(self):
-        """Initialize manager services"""
-        if self._configs[ServiceType.MEMORY_MANAGER].enabled:
+        """Initialize manager services"""        if self._configs[ServiceType.MEMORY_MANAGER].enabled:
             try:
                 # Get dependencies
                 storage_services = self._services.get(ServiceType.STORAGE, {})
@@ -296,8 +283,7 @@ class ConversationMemoryFactory:
                 raise
     
     async def _initialize_analytics_services(self):
-        """Initialize analytics services"""
-        if self._configs[ServiceType.ANALYTICS].enabled:
+        """Initialize analytics services"""        if self._configs[ServiceType.ANALYTICS].enabled:
             try:
                 # Initialize analytics components
                 conversation_analytics = ConversationAnalytics()
@@ -326,8 +312,7 @@ class ConversationMemoryFactory:
                 raise
     
     def get_service(self, service_type: ServiceType, component_name: Optional[str] = None) -> Any:
-        """
-        Get a service instance
+        """        Get a service instance
         
         Args:
             service_type: Type of service to retrieve
@@ -335,8 +320,7 @@ class ConversationMemoryFactory:
             
         Returns:
             Service instance or service group
-        """
-        if not self._initialized:
+        """        if not self._initialized:
             raise RuntimeError("Factory not initialized. Call initialize() first.")
         
         services = self._services.get(service_type)
@@ -351,13 +335,11 @@ class ConversationMemoryFactory:
         return services
     
     def configure_service(self, service_type: ServiceType, config: ServiceConfig):
-        """Configure a service"""
-        self._configs[service_type] = config
+        """Configure a service"""        self._configs[service_type] = config
         logger.info(f"Service {service_type} configured")
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on all services"""
-        health_status = {
+        """Perform health check on all services"""        health_status = {
             "factory_initialized": self._initialized,
             "services": {},
             "overall_status": "healthy"
@@ -393,8 +375,7 @@ class ConversationMemoryFactory:
             return health_status
     
     async def shutdown(self):
-        """Shutdown all services"""
-        try:
+        """Shutdown all services"""        try:
             logger.info("Shutting down ConversationMemoryFactory services...")
             
             # Shutdown services in reverse order
@@ -422,8 +403,7 @@ _factory: Optional[ConversationMemoryFactory] = None
 
 
 async def get_conversation_memory_factory() -> ConversationMemoryFactory:
-    """Get the global conversation memory factory instance"""
-    global _factory
+    """Get the global conversation memory factory instance"""    global _factory
     
     if _factory is None:
         _factory = ConversationMemoryFactory()
@@ -433,50 +413,42 @@ async def get_conversation_memory_factory() -> ConversationMemoryFactory:
 
 
 async def get_memory_manager() -> ConversationMemoryManager:
-    """Get conversation memory manager"""
-    factory = await get_conversation_memory_factory()
+    """Get conversation memory manager"""    factory = await get_conversation_memory_factory()
     return factory.get_service(ServiceType.MEMORY_MANAGER, "memory_manager")
 
 
 async def get_history_manager() -> ConversationHistoryManager:
-    """Get conversation history manager"""
-    factory = await get_conversation_memory_factory()
+    """Get conversation history manager"""    factory = await get_conversation_memory_factory()
     return factory.get_service(ServiceType.MEMORY_MANAGER, "history_manager")
 
 
 async def get_indexer() -> MemoryIndexer:
-    """Get memory indexer"""
-    factory = await get_conversation_memory_factory()
+    """Get memory indexer"""    factory = await get_conversation_memory_factory()
     return factory.get_service(ServiceType.MEMORY_MANAGER, "memory_indexer")
 
 
 async def get_conversation_retriever() -> ConversationRetriever:
-    """Get conversation retriever"""
-    factory = await get_conversation_memory_factory()
+    """Get conversation retriever"""    factory = await get_conversation_memory_factory()
     return factory.get_service(ServiceType.RETRIEVER, "conversation_retriever")
 
 
 async def get_semantic_search() -> SemanticSearch:
-    """Get semantic search"""
-    factory = await get_conversation_memory_factory()
+    """Get semantic search"""    factory = await get_conversation_memory_factory()
     return factory.get_service(ServiceType.RETRIEVER, "semantic_search")
 
 
 async def get_conversation_analytics() -> ConversationAnalytics:
-    """Get conversation analytics"""
-    factory = await get_conversation_memory_factory()
+    """Get conversation analytics"""    factory = await get_conversation_memory_factory()
     return factory.get_service(ServiceType.ANALYTICS, "conversation_analytics")
 
 
 async def get_storage_services() -> Dict[str, Any]:
-    """Get all storage services"""
-    factory = await get_conversation_memory_factory()
+    """Get all storage services"""    factory = await get_conversation_memory_factory()
     return factory.get_service(ServiceType.STORAGE)
 
 
 async def get_indexing_services() -> Dict[str, Any]:
-    """Get all indexing services"""
-    factory = await get_conversation_memory_factory()
+    """Get all indexing services"""    factory = await get_conversation_memory_factory()
     return factory.get_service(ServiceType.INDEXER)
 
 
@@ -487,8 +459,7 @@ async def store_conversation(
     content_type: ContentType = ContentType.GENERAL,
     **kwargs
 ) -> bool:
-    """Quick conversation storage"""
-    manager = await get_memory_manager()
+    """Quick conversation storage"""    manager = await get_memory_manager()
     return await manager.store_conversation(
         user_id=user_id,
         conversation_data=conversation_data,
@@ -504,8 +475,7 @@ async def search_conversations(
     limit: int = 10,
     **kwargs
 ) -> List[ConversationRecord]:
-    """Quick conversation search"""
-    retriever = await get_conversation_retriever()
+    """Quick conversation search"""    retriever = await get_conversation_retriever()
     return await retriever.search_conversations(
         user_id=user_id,
         query=query,
@@ -516,22 +486,19 @@ async def search_conversations(
 
 
 async def get_user_insights(user_id: str) -> Dict[str, Any]:
-    """Quick user insights generation"""
-    analytics = await get_conversation_analytics()
+    """Quick user insights generation"""    analytics = await get_conversation_analytics()
     insights = await analytics.generate_user_insights(user_id)
     return insights.to_dict()
 
 
 # Service health and monitoring
 async def check_system_health() -> Dict[str, Any]:
-    """Check overall system health"""
-    factory = await get_conversation_memory_factory()
+    """Check overall system health"""    factory = await get_conversation_memory_factory()
     return await factory.health_check()
 
 
 async def get_system_metrics() -> Dict[str, Any]:
-    """Get system performance metrics"""
-    try:
+    """Get system performance metrics"""    try:
         factory = await get_conversation_memory_factory()
         metrics_service = factory.get_service(ServiceType.ANALYTICS, "memory_metrics")
         return await metrics_service.collect_storage_metrics()
@@ -542,8 +509,7 @@ async def get_system_metrics() -> Dict[str, Any]:
 
 # Module cleanup
 async def shutdown_conversation_memory():
-    """Shutdown conversation memory system"""
-    global _factory
+    """Shutdown conversation memory system"""    global _factory
     if _factory:
         await _factory.shutdown()
         _factory = None

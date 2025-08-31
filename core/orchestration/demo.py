@@ -1,5 +1,4 @@
-"""
-Orchestration Module Demo - Usage Examples
+"""Orchestration Module Demo - Usage Examples
 
 Demonstration script showing how to use the IA Influencer Agent
 orchestration module for various content processing workflows.
@@ -11,9 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import json
 from datetime import datetime
 from typing import Dict, Any
@@ -30,8 +27,7 @@ from backend.core.orchestration import (
 
 
 async def demo_content_processing():
-    """Demonstrate content processing workflow."""
-    print("\n🎵 CONTENT PROCESSING WORKFLOW DEMO")
+    """Demonstrate content processing workflow."""    print("\n🎵 CONTENT PROCESSING WORKFLOW DEMO")
     print("=" * 50)
     
     # Sample audio content data
@@ -79,8 +75,7 @@ async def demo_content_processing():
 
 
 async def demo_protection_workflow():
-    """Demonstrate content protection workflow."""
-    print("\n🛡️  CONTENT PROTECTION WORKFLOW DEMO")
+    """Demonstrate content protection workflow."""    print("\n🛡️  CONTENT PROTECTION WORKFLOW DEMO")
     print("=" * 50)
     
     # Sample content for protection
@@ -127,8 +122,7 @@ async def demo_protection_workflow():
 
 
 async def demo_monetization_workflow():
-    """Demonstrate monetization workflow."""
-    print("\n💰 MONETIZATION WORKFLOW DEMO")
+    """Demonstrate monetization workflow."""    print("\n💰 MONETIZATION WORKFLOW DEMO")
     print("=" * 50)
     
     # Sample monetization data
@@ -182,8 +176,7 @@ async def demo_monetization_workflow():
 
 
 async def demo_dynamic_pipeline():
-    """Demonstrate dynamic pipeline creation."""
-    print("\n🔧 DYNAMIC PIPELINE CREATION DEMO")
+    """Demonstrate dynamic pipeline creation."""    print("\n🔧 DYNAMIC PIPELINE CREATION DEMO")
     print("=" * 50)
     
     system = get_orchestration_system()
@@ -228,8 +221,7 @@ async def demo_dynamic_pipeline():
 
 
 async def demo_system_monitoring():
-    """Demonstrate system monitoring capabilities."""
-    print("\n📊 SYSTEM MONITORING DEMO")
+    """Demonstrate system monitoring capabilities."""    print("\n📊 SYSTEM MONITORING DEMO")
     print("=" * 50)
     
     system = get_orchestration_system()
@@ -268,8 +260,7 @@ async def demo_system_monitoring():
 
 
 async def main():
-    """Run the complete orchestration demo."""
-    print("🚀 IA INFLUENCER AGENT - ORCHESTRATION MODULE DEMO")
+    """Run the complete orchestration demo."""    print("🚀 IA INFLUENCER AGENT - ORCHESTRATION MODULE DEMO")
     print("=" * 80)
     print("Author: Fahed Mlaiel <mlaiel@live.de>")
     print("Copyright (c) 2025 Fahed Mlaiel. All rights reserved.")

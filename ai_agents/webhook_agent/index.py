@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Webhook Agent Index Module
+"""Webhook Agent Index Module
 Main entry point for the webhook agent system
 
 This module provides the primary interface for webhook operations,
@@ -16,9 +15,7 @@ Project Team Specialties:
 - Security Expert & Microservices Architect
 - Audio Processing Specialist & DevOps Engineer
 - AI Prompt Engineer & Platform Integration Expert
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable
 from datetime import datetime, timezone
@@ -38,21 +35,17 @@ logger = logging.getLogger(__name__)
 
 
 class WebhookAgentIndex(BaseAgent):
-    """
-    Main webhook agent index class providing unified access to all webhook operations.
+    """    Main webhook agent index class providing unified access to all webhook operations.
     
     This class acts as the primary interface for webhook management, routing,
     and processing within the IA Influencer platform.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize the webhook agent index.
+        """        Initialize the webhook agent index.
         
         Args:
             config: Configuration dictionary for webhook operations
-        """
-        super().__init__(agent_type="webhook", config=config)
+        """        super().__init__(agent_type="webhook", config=config)
         
         # Initialize core components
         self.webhook_manager = WebhookManager(config)
@@ -77,13 +70,11 @@ class WebhookAgentIndex(BaseAgent):
         logger.info("Webhook Agent Index initialized successfully")
     
     async def initialize(self) -> bool:
-        """
-        Initialize all webhook agent components.
+        """        Initialize all webhook agent components.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             # Initialize security manager
             await self.security_manager.initialize()
             
@@ -113,8 +104,7 @@ class WebhookAgentIndex(BaseAgent):
             return False
     
     def _initialize_webhook_routes(self) -> None:
-        """Initialize webhook routing configuration."""
-        
+        """Initialize webhook routing configuration."""        
         # Platform webhooks
         self.webhook_registry.update({
             # YouTube webhooks
@@ -163,8 +153,7 @@ class WebhookAgentIndex(BaseAgent):
         headers: Optional[Dict[str, str]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """
-        Register a new webhook endpoint.
+        """        Register a new webhook endpoint.
         
         Args:
             webhook_id: Unique identifier for the webhook
@@ -177,8 +166,7 @@ class WebhookAgentIndex(BaseAgent):
             
         Returns:
             bool: True if registration successful
-        """
-        try:
+        """        try:
             # Security validation
             if not await self.security_manager.validate_webhook_registration(
                 webhook_url, platform, event_type
@@ -223,8 +211,7 @@ class WebhookAgentIndex(BaseAgent):
         headers: Dict[str, str],
         source_ip: str
     ) -> Dict[str, Any]:
-        """
-        Process an incoming webhook request.
+        """        Process an incoming webhook request.
         
         Args:
             webhook_id: Webhook identifier
@@ -234,8 +221,7 @@ class WebhookAgentIndex(BaseAgent):
             
         Returns:
             Dict containing processing results
-        """
-        try:
+        """        try:
             # Security verification
             if not await self.security_manager.verify_webhook_signature(
                 webhook_id, payload, headers
@@ -296,16 +282,14 @@ class WebhookAgentIndex(BaseAgent):
             }
     
     async def get_webhook_stats(self, webhook_id: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Get webhook statistics.
+        """        Get webhook statistics.
         
         Args:
             webhook_id: Optional specific webhook ID
             
         Returns:
             Dict containing webhook statistics
-        """
-        try:
+        """        try:
             return await self.monitor.get_webhook_statistics(webhook_id)
             
         except Exception as e:
@@ -317,8 +301,7 @@ class WebhookAgentIndex(BaseAgent):
         webhook_id: str,
         updates: Dict[str, Any]
     ) -> bool:
-        """
-        Update webhook configuration.
+        """        Update webhook configuration.
         
         Args:
             webhook_id: Webhook identifier
@@ -326,8 +309,7 @@ class WebhookAgentIndex(BaseAgent):
             
         Returns:
             bool: True if update successful
-        """
-        try:
+        """        try:
             if webhook_id not in self.active_webhooks:
                 return False
             
@@ -350,16 +332,14 @@ class WebhookAgentIndex(BaseAgent):
             return False
     
     async def delete_webhook(self, webhook_id: str) -> bool:
-        """
-        Delete a webhook.
+        """        Delete a webhook.
         
         Args:
             webhook_id: Webhook identifier
             
         Returns:
             bool: True if deletion successful
-        """
-        try:
+        """        try:
             success = await self.webhook_manager.delete_webhook(webhook_id)
             
             if success:
@@ -381,8 +361,7 @@ class WebhookAgentIndex(BaseAgent):
         platform: Optional[str] = None,
         status: Optional[str] = None
     ) -> List[Dict[str, Any]]:
-        """
-        List registered webhooks.
+        """        List registered webhooks.
         
         Args:
             platform: Optional platform filter
@@ -390,8 +369,7 @@ class WebhookAgentIndex(BaseAgent):
             
         Returns:
             List of webhook configurations
-        """
-        try:
+        """        try:
             webhooks = list(self.active_webhooks.values())
             
             # Apply filters
@@ -408,16 +386,14 @@ class WebhookAgentIndex(BaseAgent):
             return []
     
     async def test_webhook(self, webhook_id: str) -> Dict[str, Any]:
-        """
-        Test a webhook endpoint.
+        """        Test a webhook endpoint.
         
         Args:
             webhook_id: Webhook identifier
             
         Returns:
             Dict containing test results
-        """
-        try:
+        """        try:
             webhook_config = self.active_webhooks.get(webhook_id)
             if not webhook_config:
                 return {
@@ -459,8 +435,7 @@ class WebhookAgentIndex(BaseAgent):
         limit: int = 100,
         offset: int = 0
     ) -> List[Dict[str, Any]]:
-        """
-        Get webhook logs.
+        """        Get webhook logs.
         
         Args:
             webhook_id: Webhook identifier
@@ -469,8 +444,7 @@ class WebhookAgentIndex(BaseAgent):
             
         Returns:
             List of webhook log entries
-        """
-        try:
+        """        try:
             return await self.monitor.get_webhook_logs(webhook_id, limit, offset)
             
         except Exception as e:
@@ -478,8 +452,7 @@ class WebhookAgentIndex(BaseAgent):
             return []
     
     async def shutdown(self) -> None:
-        """Shutdown the webhook agent gracefully."""
-        try:
+        """Shutdown the webhook agent gracefully."""        try:
             logger.info("Shutting down webhook agent...")
             
             # Stop monitoring
@@ -507,16 +480,14 @@ webhook_agent = None
 
 
 async def get_webhook_agent(config: Optional[Dict[str, Any]] = None) -> WebhookAgentIndex:
-    """
-    Get or create the global webhook agent instance.
+    """    Get or create the global webhook agent instance.
     
     Args:
         config: Optional configuration dictionary
         
     Returns:
         WebhookAgentIndex instance
-    """
-    global webhook_agent
+    """    global webhook_agent
     
     if webhook_agent is None:
         webhook_agent = WebhookAgentIndex(config)
@@ -531,8 +502,7 @@ async def process_webhook_request(
     headers: Dict[str, str],
     source_ip: str
 ) -> Dict[str, Any]:
-    """
-    Process a webhook request using the global agent.
+    """    Process a webhook request using the global agent.
     
     Args:
         webhook_id: Webhook identifier
@@ -542,8 +512,7 @@ async def process_webhook_request(
         
     Returns:
         Dict containing processing results
-    """
-    agent = await get_webhook_agent()
+    """    agent = await get_webhook_agent()
     return await agent.process_webhook(webhook_id, payload, headers, source_ip)
 
 
@@ -559,8 +528,7 @@ __all__ = [
 if __name__ == "__main__":
     # Example usage and testing
     async def main():
-        """Main function for testing the webhook agent."""
-        import json
+        """Main function for testing the webhook agent."""        import json
         
         # Initialize webhook agent
         agent = await get_webhook_agent()

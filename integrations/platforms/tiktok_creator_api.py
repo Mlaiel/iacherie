@@ -1,5 +1,4 @@
-"""
-TikTok Creator API Integration
+"""TikTok Creator API Integration
 =============================
 
 Complete TikTok for Developers API integration for content management and analytics.
@@ -7,9 +6,7 @@ Handles video uploads, user data, analytics, and creator tools.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import aiohttp
 import json
 import logging
@@ -28,8 +25,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TikTokVideo:
-    """TikTok video information"""
-    video_id: str
+    """TikTok video information"""    video_id: str
     title: str
     description: str
     create_time: datetime
@@ -49,8 +45,7 @@ class TikTokVideo:
 
 @dataclass
 class TikTokUser:
-    """TikTok user information"""
-    open_id: str
+    """TikTok user information"""    open_id: str
     union_id: str
     username: str
     display_name: str
@@ -67,8 +62,7 @@ class TikTokUser:
 
 @dataclass
 class TikTokAnalytics:
-    """TikTok analytics data"""
-    date_range: Dict[str, str]  # {"start": "20240101", "end": "20240131"}
+    """TikTok analytics data"""    date_range: Dict[str, str]  # {"start": "20240101", "end": "20240131"}
     profile_views: int = 0
     video_views: int = 0
     likes: int = 0
@@ -79,22 +73,19 @@ class TikTokAnalytics:
 
 
 class TikTokCreatorAPI:
-    """TikTok for Developers API integration"""
-    
+    """TikTok for Developers API integration"""    
     def __init__(self, rate_limiter: Optional[APIRateLimiter] = None):
         self.session = None
         self.rate_limiter = rate_limiter or APIRateLimiter()
         self.base_url = "https://open-api.tiktok.com"
         
     async def __aenter__(self):
-        """Async context manager entry"""
-        self.session = aiohttp.ClientSession()
+        """Async context manager entry"""        self.session = aiohttp.ClientSession()
         await self.rate_limiter.__aenter__()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
-        if self.session:
+        """Async context manager exit"""        if self.session:
             await self.session.close()
         await self.rate_limiter.__aexit__(exc_type, exc_val, exc_tb)
         
@@ -107,8 +98,7 @@ class TikTokCreatorAPI:
         data: Optional[Dict[str, Any]] = None,
         files: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Make authenticated API request with rate limiting"""
-        
+        """Make authenticated API request with rate limiting"""        
         # Check rate limit
         rate_status = await self.rate_limiter.check_rate_limit("tiktok", endpoint)
         if rate_status.is_limited:
@@ -173,8 +163,7 @@ class TikTokCreatorAPI:
             raise
             
     async def get_user_info(self, tokens: OAuthTokens, fields: Optional[List[str]] = None) -> TikTokUser:
-        """Get TikTok user information"""
-        
+        """Get TikTok user information"""        
         default_fields = [
             "open_id", "union_id", "username", "display_name", "avatar_url",
             "avatar_large_url", "bio_description", "profile_deep_link", "is_verified",
@@ -217,8 +206,7 @@ class TikTokCreatorAPI:
         max_count: int = 20,
         fields: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """Get list of user's videos"""
-        
+        """Get list of user's videos"""        
         default_fields = [
             "id", "title", "video_description", "create_time", "duration",
             "cover_image_url", "share_url", "view_count", "like_count",
@@ -246,8 +234,7 @@ class TikTokCreatorAPI:
         video_ids: Union[str, List[str]],
         fields: Optional[List[str]] = None
     ) -> List[TikTokVideo]:
-        """Get information about specific videos"""
-        
+        """Get information about specific videos"""        
         if isinstance(video_ids, str):
             video_ids = [video_ids]
             
@@ -300,8 +287,7 @@ class TikTokCreatorAPI:
         disable_stitch: bool = False,
         video_cover_timestamp_ms: Optional[int] = None
     ) -> str:
-        """Upload a video to TikTok"""
-        
+        """Upload a video to TikTok"""        
         # Step 1: Initialize upload
         init_data = {
             "post_info": {
@@ -375,8 +361,7 @@ class TikTokCreatorAPI:
         cursor: Optional[str] = None,
         count: int = 20
     ) -> Dict[str, Any]:
-        """Get comments for a specific video"""
-        
+        """Get comments for a specific video"""        
         params = {
             "video_id": video_id,
             "count": min(count, 50)
@@ -399,8 +384,7 @@ class TikTokCreatorAPI:
         comment_id: str,
         text: str
     ) -> str:
-        """Reply to a comment on a video"""
-        
+        """Reply to a comment on a video"""        
         data = {
             "video_id": video_id,
             "comment_id": comment_id,
@@ -420,8 +404,7 @@ class TikTokCreatorAPI:
         return reply_id or ""
         
     async def research_hashtag(self, tokens: OAuthTokens, hashtag_name: str) -> Dict[str, Any]:
-        """Research hashtag performance and trends"""
-        
+        """Research hashtag performance and trends"""        
         params = {"hashtag_name": hashtag_name}
         
         response = await self._make_request("GET", "research/hashtag/info", tokens, params=params)
@@ -437,8 +420,7 @@ class TikTokCreatorAPI:
         region: str = "US",
         count: int = 20
     ) -> List[Dict[str, Any]]:
-        """Get trending hashtags for a region"""
-        
+        """Get trending hashtags for a region"""        
         params = {
             "region": region,
             "count": min(count, 50)
@@ -456,8 +438,7 @@ class TikTokCreatorAPI:
         tokens: OAuthTokens,
         date_range: int = 7  # Last N days
     ) -> TikTokAnalytics:
-        """Get creator insights and analytics"""
-        
+        """Get creator insights and analytics"""        
         params = {"date_range": date_range}
         
         response = await self._make_request("GET", "creator/insights", tokens, params=params)
@@ -491,8 +472,7 @@ class TikTokCreatorAPI:
         search_id: Optional[str] = None,
         count: int = 20
     ) -> Dict[str, Any]:
-        """Search for videos by keyword"""
-        
+        """Search for videos by keyword"""        
         params = {
             "query": query,
             "count": min(count, 20)
@@ -516,8 +496,7 @@ class TikTokCreatorAPI:
         video_ids: Union[str, List[str]],
         fields: Optional[List[str]] = None
     ) -> List[Dict[str, Any]]:
-        """Get analytics for specific videos"""
-        
+        """Get analytics for specific videos"""        
         if isinstance(video_ids, str):
             video_ids = [video_ids]
             
@@ -539,8 +518,7 @@ class TikTokCreatorAPI:
         return response.get("data", {}).get("videos", [])
         
     async def delete_video(self, tokens: OAuthTokens, video_id: str) -> bool:
-        """Delete a video"""
-        
+        """Delete a video"""        
         data = {"video_id": video_id}
         
         try:
@@ -562,8 +540,7 @@ class TikTokCreatorAPI:
         tokens: OAuthTokens,
         video_id: str
     ) -> Dict[str, Any]:
-        """Get detailed sharing insights for a video"""
-        
+        """Get detailed sharing insights for a video"""        
         params = {"video_id": video_id}
         
         response = await self._make_request("GET", "video/share/insights", tokens, params=params)

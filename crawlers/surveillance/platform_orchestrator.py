@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""
-Platform Orchestration Engine - IA Influencer Agent Surveillance Module
+"""Platform Orchestration Engine - IA Influencer Agent Surveillance Module
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
@@ -22,9 +21,7 @@ legal action. Contact mlaiel@live.de for authorization.
 Professional platform orchestration engine for coordinating surveillance activities
 across multiple digital platforms with intelligent load balancing, rate limiting,
 and cross-platform correlation capabilities.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Any, Callable, Union, Tuple
 from dataclasses import dataclass, field
@@ -40,8 +37,7 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Supported platform types for orchestrated surveillance."""
-    SOCIAL_MEDIA = "social_media"
+    """Supported platform types for orchestrated surveillance."""    SOCIAL_MEDIA = "social_media"
     VIDEO_PLATFORM = "video_platform"
     MUSIC_PLATFORM = "music_platform"
     IMAGE_PLATFORM = "image_platform"
@@ -52,8 +48,7 @@ class PlatformType(Enum):
 
 
 class PlatformStatus(Enum):
-    """Platform operational status."""
-    ACTIVE = "active"
+    """Platform operational status."""    ACTIVE = "active"
     RATE_LIMITED = "rate_limited"
     MAINTENANCE = "maintenance"
     ERROR = "error"
@@ -62,8 +57,7 @@ class PlatformStatus(Enum):
 
 
 class OrchestrationPriority(Enum):
-    """Task orchestration priority levels."""
-    EMERGENCY = 1
+    """Task orchestration priority levels."""    EMERGENCY = 1
     CRITICAL = 2
     HIGH = 3
     NORMAL = 4
@@ -73,8 +67,7 @@ class OrchestrationPriority(Enum):
 
 @dataclass
 class PlatformConfiguration:
-    """Platform-specific configuration for surveillance operations."""
-    platform_id: str
+    """Platform-specific configuration for surveillance operations."""    platform_id: str
     platform_name: str
     platform_type: PlatformType
     api_endpoints: Dict[str, str]
@@ -90,8 +83,7 @@ class PlatformConfiguration:
 
 @dataclass
 class OrchestrationTask:
-    """Task for platform orchestration."""
-    task_id: str
+    """Task for platform orchestration."""    task_id: str
     platform_id: str
     endpoint: str
     method: str = "GET"
@@ -109,8 +101,7 @@ class OrchestrationTask:
 
 @dataclass
 class PlatformMetrics:
-    """Platform performance and usage metrics."""
-    platform_id: str
+    """Platform performance and usage metrics."""    platform_id: str
     requests_sent: int = 0
     successful_requests: int = 0
     failed_requests: int = 0
@@ -124,21 +115,17 @@ class PlatformMetrics:
 
 
 class RateLimitManager:
-    """Advanced rate limiting manager for platform API calls."""
-    
+    """Advanced rate limiting manager for platform API calls."""    
     def __init__(self):
-        """Initialize rate limit manager."""
-        self.platform_limits: Dict[str, Dict[str, int]] = {}
+        """Initialize rate limit manager."""        self.platform_limits: Dict[str, Dict[str, int]] = {}
         self.platform_windows: Dict[str, Dict[str, deque]] = defaultdict(lambda: defaultdict(deque))
         self.platform_penalties: Dict[str, datetime] = {}
         
     def configure_platform(self, platform_id: str, rate_limits: Dict[str, int]) -> None:
-        """Configure rate limits for a platform."""
-        self.platform_limits[platform_id] = rate_limits
+        """Configure rate limits for a platform."""        self.platform_limits[platform_id] = rate_limits
         
     async def can_make_request(self, platform_id: str, endpoint: str) -> bool:
-        """Check if a request can be made without hitting rate limits."""
-        try:
+        """Check if a request can be made without hitting rate limits."""        try:
             # Check if platform is under penalty
             if platform_id in self.platform_penalties:
                 if datetime.now() < self.platform_penalties[platform_id]:
@@ -166,8 +153,7 @@ class RateLimitManager:
             return False
     
     async def record_request(self, platform_id: str, endpoint: str, success: bool = True) -> None:
-        """Record a request for rate limiting tracking."""
-        try:
+        """Record a request for rate limiting tracking."""        try:
             window = self.platform_windows[platform_id][endpoint]
             window.append(datetime.now())
             
@@ -180,8 +166,7 @@ class RateLimitManager:
             logger.error(f"Error recording request for {platform_id}/{endpoint}: {e}")
     
     def get_rate_limit_status(self, platform_id: str) -> Dict[str, Any]:
-        """Get current rate limiting status for a platform."""
-        if platform_id not in self.platform_limits:
+        """Get current rate limiting status for a platform."""        if platform_id not in self.platform_limits:
             return {"status": "no_limits"}
         
         status = {
@@ -209,29 +194,24 @@ class RateLimitManager:
 
 
 class LoadBalancer:
-    """Intelligent load balancer for distributing requests across platforms."""
-    
+    """Intelligent load balancer for distributing requests across platforms."""    
     def __init__(self):
-        """Initialize load balancer."""
-        self.platform_weights: Dict[str, float] = {}
+        """Initialize load balancer."""        self.platform_weights: Dict[str, float] = {}
         self.platform_health: Dict[str, float] = {}
         self.request_distribution: Dict[str, int] = defaultdict(int)
         
     def update_platform_health(self, platform_id: str, health_score: float) -> None:
-        """Update platform health score (0.0 to 1.0)."""
-        self.platform_health[platform_id] = max(0.0, min(1.0, health_score))
+        """Update platform health score (0.0 to 1.0)."""        self.platform_health[platform_id] = max(0.0, min(1.0, health_score))
         
     def update_platform_weight(self, platform_id: str, weight: float) -> None:
-        """Update platform weight for load balancing."""
-        self.platform_weights[platform_id] = max(0.0, weight)
+        """Update platform weight for load balancing."""        self.platform_weights[platform_id] = max(0.0, weight)
     
     async def select_platform(
         self,
         available_platforms: List[str],
         task_requirements: Optional[Dict[str, Any]] = None
     ) -> Optional[str]:
-        """Select optimal platform for task execution."""
-        if not available_platforms:
+        """Select optimal platform for task execution."""        if not available_platforms:
             return None
         
         if len(available_platforms) == 1:
@@ -269,8 +249,7 @@ class LoadBalancer:
         return selected_platform
     
     def get_load_distribution(self) -> Dict[str, Any]:
-        """Get current load distribution across platforms."""
-        total_requests = sum(self.request_distribution.values())
+        """Get current load distribution across platforms."""        total_requests = sum(self.request_distribution.values())
         
         distribution = {}
         for platform_id, count in self.request_distribution.items():
@@ -286,11 +265,9 @@ class LoadBalancer:
 
 
 class CrossPlatformCorrelator:
-    """Advanced correlation engine for cross-platform intelligence."""
-    
+    """Advanced correlation engine for cross-platform intelligence."""    
     def __init__(self):
-        """Initialize correlation engine."""
-        self.correlation_rules: List[Dict[str, Any]] = []
+        """Initialize correlation engine."""        self.correlation_rules: List[Dict[str, Any]] = []
         self.platform_data: Dict[str, List[Dict]] = defaultdict(list)
         self.correlation_cache: Dict[str, Any] = {}
         
@@ -302,8 +279,7 @@ class CrossPlatformCorrelator:
         threshold: float = 0.8,
         time_window_minutes: int = 60
     ) -> None:
-        """Add a cross-platform correlation rule."""
-        rule = {
+        """Add a cross-platform correlation rule."""        rule = {
             "rule_id": rule_id,
             "platforms": platforms,
             "correlation_fields": correlation_fields,
@@ -314,8 +290,7 @@ class CrossPlatformCorrelator:
         self.correlation_rules.append(rule)
         
     async def add_platform_data(self, platform_id: str, data: Dict[str, Any]) -> None:
-        """Add data from a platform for correlation analysis."""
-        timestamped_data = {
+        """Add data from a platform for correlation analysis."""        timestamped_data = {
             **data,
             "platform_id": platform_id,
             "timestamp": datetime.now()
@@ -334,8 +309,7 @@ class CrossPlatformCorrelator:
         await self._analyze_correlations(platform_id, timestamped_data)
     
     async def _analyze_correlations(self, trigger_platform: str, trigger_data: Dict) -> None:
-        """Analyze correlations triggered by new data."""
-        for rule in self.correlation_rules:
+        """Analyze correlations triggered by new data."""        for rule in self.correlation_rules:
             if trigger_platform not in rule["platforms"]:
                 continue
             
@@ -356,8 +330,7 @@ class CrossPlatformCorrelator:
                 logger.info(f"Cross-platform correlation detected: {correlation_id}")
     
     async def _find_correlations(self, rule: Dict, trigger_data: Dict) -> List[Dict]:
-        """Find correlations based on rule and trigger data."""
-        correlations = []
+        """Find correlations based on rule and trigger data."""        correlations = []
         time_window = timedelta(minutes=rule["time_window_minutes"])
         trigger_time = trigger_data["timestamp"]
         
@@ -394,8 +367,7 @@ class CrossPlatformCorrelator:
         data2: Dict,
         fields: List[str]
     ) -> float:
-        """Calculate correlation score between two data points."""
-        matching_fields = 0
+        """Calculate correlation score between two data points."""        matching_fields = 0
         total_fields = len(fields)
         
         for field in fields:
@@ -406,16 +378,14 @@ class CrossPlatformCorrelator:
         return matching_fields / total_fields if total_fields > 0 else 0.0
     
     def _calculate_correlation_confidence(self, correlations: List[Dict]) -> float:
-        """Calculate overall confidence for correlation set."""
-        if not correlations:
+        """Calculate overall confidence for correlation set."""        if not correlations:
             return 0.0
         
         scores = [c["correlation_score"] for c in correlations]
         return sum(scores) / len(scores)
     
     def get_recent_correlations(self, hours: int = 24) -> List[Dict]:
-        """Get recent correlations within specified time window."""
-        cutoff_time = datetime.now() - timedelta(hours=hours)
+        """Get recent correlations within specified time window."""        cutoff_time = datetime.now() - timedelta(hours=hours)
         
         return [
             corr for corr in self.correlation_cache.values()
@@ -424,8 +394,7 @@ class CrossPlatformCorrelator:
 
 
 class PlatformOrchestrator:
-    """
-    Professional platform orchestration engine for surveillance operations.
+    """    Professional platform orchestration engine for surveillance operations.
     
     Features:
     - Multi-platform coordination
@@ -438,11 +407,9 @@ class PlatformOrchestrator:
     - Automated failover
     - Request prioritization
     - Analytics and reporting
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize platform orchestrator."""
-        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize platform orchestrator."""        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
         self.config = config or {}
@@ -475,8 +442,7 @@ class PlatformOrchestrator:
         self.running = False
         
     async def initialize(self) -> None:
-        """Initialize the platform orchestrator."""
-        try:
+        """Initialize the platform orchestrator."""        try:
             self._logger.info("Initializing Platform Orchestrator...")
             
             # Initialize HTTP sessions for each platform
@@ -495,8 +461,7 @@ class PlatformOrchestrator:
             raise
     
     async def register_platform(self, platform_config: PlatformConfiguration) -> None:
-        """Register a new platform for orchestration."""
-        try:
+        """Register a new platform for orchestration."""        try:
             platform_id = platform_config.platform_id
             
             # Store platform configuration
@@ -527,8 +492,7 @@ class PlatformOrchestrator:
             raise
     
     async def submit_task(self, task: OrchestrationTask) -> str:
-        """Submit a task for platform orchestration."""
-        try:
+        """Submit a task for platform orchestration."""        try:
             # Validate task
             if task.platform_id not in self.platforms:
                 raise ValueError(f"Unknown platform: {task.platform_id}")
@@ -547,8 +511,7 @@ class PlatformOrchestrator:
             raise
     
     async def execute_task(self, task: OrchestrationTask) -> Dict[str, Any]:
-        """Execute a single orchestration task."""
-        task_id = task.task_id
+        """Execute a single orchestration task."""        task_id = task.task_id
         platform_id = task.platform_id
         
         try:
@@ -654,8 +617,7 @@ class PlatformOrchestrator:
         tasks: List[OrchestrationTask],
         max_concurrent: Optional[int] = None
     ) -> List[Dict[str, Any]]:
-        """Execute multiple tasks concurrently with optimal platform distribution."""
-        if not tasks:
+        """Execute multiple tasks concurrently with optimal platform distribution."""        if not tasks:
             return []
         
         max_concurrent = max_concurrent or min(len(tasks), self.max_concurrent_workers)
@@ -679,8 +641,7 @@ class PlatformOrchestrator:
         return results
     
     async def get_platform_health(self, platform_id: str) -> Dict[str, Any]:
-        """Get comprehensive health information for a platform."""
-        if platform_id not in self.platforms:
+        """Get comprehensive health information for a platform."""        if platform_id not in self.platforms:
             return {"error": "Platform not found"}
         
         metrics = self.platform_metrics[platform_id]
@@ -703,8 +664,7 @@ class PlatformOrchestrator:
         }
     
     async def get_orchestration_summary(self) -> Dict[str, Any]:
-        """Get comprehensive orchestration summary."""
-        return {
+        """Get comprehensive orchestration summary."""        return {
             "platforms": {
                 platform_id: await self.get_platform_health(platform_id)
                 for platform_id in self.platforms.keys()
@@ -726,22 +686,19 @@ class PlatformOrchestrator:
         }
     
     async def _initialize_sessions(self) -> None:
-        """Initialize HTTP sessions for platforms."""
-        for platform_id in self.platforms:
+        """Initialize HTTP sessions for platforms."""        for platform_id in self.platforms:
             if platform_id not in self.http_sessions:
                 self.http_sessions[platform_id] = aiohttp.ClientSession()
     
     async def _start_workers(self) -> None:
-        """Start worker tasks for task execution."""
-        for i in range(self.max_concurrent_workers):
+        """Start worker tasks for task execution."""        for i in range(self.max_concurrent_workers):
             worker = asyncio.create_task(self._worker_task(f"worker-{i}"))
             self.workers.append(worker)
         
         self._logger.debug(f"Started {len(self.workers)} orchestration workers")
     
     async def _worker_task(self, worker_id: str) -> None:
-        """Worker task for processing orchestration tasks."""
-        self._logger.debug(f"Orchestration worker {worker_id} started")
+        """Worker task for processing orchestration tasks."""        self._logger.debug(f"Orchestration worker {worker_id} started")
         
         try:
             while True:
@@ -784,8 +741,7 @@ class PlatformOrchestrator:
         self._logger.debug(f"Orchestration worker {worker_id} stopped")
     
     async def _setup_correlation_rules(self) -> None:
-        """Setup default cross-platform correlation rules."""
-        # User correlation across platforms
+        """Setup default cross-platform correlation rules."""        # User correlation across platforms
         self.correlator.add_correlation_rule(
             rule_id="user_correlation",
             platforms=["youtube", "instagram", "tiktok", "twitter"],
@@ -813,8 +769,7 @@ class PlatformOrchestrator:
         )
     
     async def _update_metrics(self, platform_id: str, response_time: float, success: bool) -> None:
-        """Update platform metrics."""
-        metrics = self.platform_metrics[platform_id]
+        """Update platform metrics."""        metrics = self.platform_metrics[platform_id]
         
         metrics.requests_sent += 1
         metrics.last_request_time = datetime.now()
@@ -837,8 +792,7 @@ class PlatformOrchestrator:
         self.load_balancer.update_platform_health(platform_id, health_score)
     
     async def shutdown(self) -> None:
-        """Shutdown the platform orchestrator."""
-        self._logger.info("Shutting down Platform Orchestrator...")
+        """Shutdown the platform orchestrator."""        self._logger.info("Shutting down Platform Orchestrator...")
         
         try:
             # Cancel all workers
@@ -868,8 +822,7 @@ def create_platform_configuration(
     rate_limits: Dict[str, int],
     authentication: Dict[str, Any]
 ) -> PlatformConfiguration:
-    """Create a platform configuration."""
-    return PlatformConfiguration(
+    """Create a platform configuration."""    return PlatformConfiguration(
         platform_id=platform_id,
         platform_name=platform_name,
         platform_type=platform_type,
@@ -889,8 +842,7 @@ def create_orchestration_task(
     priority: OrchestrationPriority = OrchestrationPriority.NORMAL,
     callback: Optional[Callable] = None
 ) -> OrchestrationTask:
-    """Create an orchestration task."""
-    return OrchestrationTask(
+    """Create an orchestration task."""    return OrchestrationTask(
         task_id=f"task_{uuid.uuid4().hex[:8]}",
         platform_id=platform_id,
         endpoint=endpoint,

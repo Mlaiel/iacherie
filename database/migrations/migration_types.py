@@ -1,5 +1,4 @@
-"""
-🏷️ Migration Types and Enumerations - Ultra-Industrial Type System
+"""🏷️ Migration Types and Enumerations - Ultra-Industrial Type System
 =================================================================
 Module: backend/database/migrations/migration_types.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -23,16 +22,13 @@ Advanced type system supporting:
 TYPE CLASSIFICATION LOGIC:
 Migration Request → Type Analysis → Priority Assignment → 
 Category Classification → Risk Assessment → Execution Strategy Selection
-"""
-
-from enum import Enum, IntEnum
+"""from enum import Enum, IntEnum
 from typing import Optional, List, Dict, Any
 from dataclasses import dataclass
 
 
 class MigrationType(Enum):
-    """Comprehensive migration type classification for enterprise platform"""
-    
+    """Comprehensive migration type classification for enterprise platform"""    
     # Core schema migrations
     SCHEMA_CREATION = "schema_creation"
     SCHEMA_MODIFICATION = "schema_modification"
@@ -93,8 +89,7 @@ class MigrationType(Enum):
 
 
 class MigrationPriority(IntEnum):
-    """Migration priority levels with numeric ordering"""
-    
+    """Migration priority levels with numeric ordering"""    
     EMERGENCY = 1      # Critical system failures, security breaches
     CRITICAL = 2       # Production issues, data corruption
     HIGH = 3          # Important features, performance issues
@@ -104,8 +99,7 @@ class MigrationPriority(IntEnum):
 
 
 class MigrationStatus(Enum):
-    """Comprehensive migration status tracking"""
-    
+    """Comprehensive migration status tracking"""    
     # Planning phase
     DRAFT = "draft"
     PLANNED = "planned"
@@ -148,8 +142,7 @@ class MigrationStatus(Enum):
 
 
 class ExecutionMode(Enum):
-    """Migration execution modes for different environments"""
-    
+    """Migration execution modes for different environments"""    
     # Safety modes
     SAFE_ROLLBACK = "safe_rollback"        # With backup and rollback capability
     ZERO_DOWNTIME = "zero_downtime"        # No service interruption
@@ -172,8 +165,7 @@ class ExecutionMode(Enum):
 
 
 class RollbackStrategy(Enum):
-    """Rollback strategies for different scenarios"""
-    
+    """Rollback strategies for different scenarios"""    
     # Automatic strategies
     AUTO_ROLLBACK = "auto_rollback"               # Automatic on failure
     CONDITIONAL_ROLLBACK = "conditional_rollback"  # Based on conditions
@@ -196,8 +188,7 @@ class RollbackStrategy(Enum):
 
 
 class ValidationSeverity(Enum):
-    """Validation issue severity levels"""
-    
+    """Validation issue severity levels"""    
     CRITICAL = "critical"     # Blocks execution
     ERROR = "error"          # Major issues
     WARNING = "warning"      # Minor issues
@@ -206,8 +197,7 @@ class ValidationSeverity(Enum):
 
 
 class NotificationLevel(Enum):
-    """Notification levels for migration events"""
-    
+    """Notification levels for migration events"""    
     EMERGENCY = "emergency"   # Immediate attention required
     ALERT = "alert"          # Important notifications
     WARNING = "warning"      # Warning notifications
@@ -216,8 +206,7 @@ class NotificationLevel(Enum):
 
 
 class EnvironmentType(Enum):
-    """Environment types for migration targeting"""
-    
+    """Environment types for migration targeting"""    
     DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
@@ -227,8 +216,7 @@ class EnvironmentType(Enum):
 
 
 class DataClassification(Enum):
-    """Data classification levels for security and compliance"""
-    
+    """Data classification levels for security and compliance"""    
     PUBLIC = "public"                    # Public data
     INTERNAL = "internal"                # Internal use only
     CONFIDENTIAL = "confidential"        # Confidential data
@@ -239,8 +227,7 @@ class DataClassification(Enum):
 
 
 class ComplianceFramework(Enum):
-    """Compliance frameworks for migration validation"""
-    
+    """Compliance frameworks for migration validation"""    
     GDPR = "gdpr"                        # General Data Protection Regulation
     CCPA = "ccpa"                        # California Consumer Privacy Act
     HIPAA = "hipaa"                      # Health Insurance Portability and Accountability Act
@@ -251,8 +238,7 @@ class ComplianceFramework(Enum):
 
 
 class PlatformType(Enum):
-    """Platform types for content protection and monetization"""
-    
+    """Platform types for content protection and monetization"""    
     # Social media platforms
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -291,8 +277,7 @@ class PlatformType(Enum):
 
 
 class ContentType(Enum):
-    """Content types for fingerprinting and protection"""
-    
+    """Content types for fingerprinting and protection"""    
     # Audio content
     AUDIO_MUSIC = "audio_music"
     AUDIO_PODCAST = "audio_podcast"
@@ -326,8 +311,7 @@ class ContentType(Enum):
 
 
 class MonetizationModel(Enum):
-    """Monetization models for creator revenue"""
-    
+    """Monetization models for creator revenue"""    
     # Direct monetization
     SUBSCRIPTION = "subscription"
     ONE_TIME_PURCHASE = "one_time_purchase"
@@ -359,8 +343,7 @@ class MonetizationModel(Enum):
 
 @dataclass
 class MigrationConstraints:
-    """Migration execution constraints and limitations"""
-    
+    """Migration execution constraints and limitations"""    
     max_execution_time_minutes: Optional[int] = None
     max_memory_usage_mb: Optional[int] = None
     max_cpu_usage_percent: Optional[int] = None
@@ -395,8 +378,7 @@ class MigrationConstraints:
 
 @dataclass
 class MigrationMetadata:
-    """Comprehensive migration metadata"""
-    
+    """Comprehensive migration metadata"""    
     # Basic information
     title: str
     description: str
@@ -443,8 +425,7 @@ class MigrationMetadata:
 # Utility functions for type handling
 
 def get_migration_type_by_category(category: str) -> List[MigrationType]:
-    """Get migration types by category"""
-    
+    """Get migration types by category"""    
     category_mapping = {
         "schema": [
             MigrationType.SCHEMA_CREATION,
@@ -483,13 +464,11 @@ def get_migration_type_by_category(category: str) -> List[MigrationType]:
 
 
 def get_priority_weight(priority: MigrationPriority) -> int:
-    """Get numeric weight for priority comparison"""
-    return priority.value
+    """Get numeric weight for priority comparison"""    return priority.value
 
 
 def is_critical_migration(migration_type: MigrationType, priority: MigrationPriority) -> bool:
-    """Determine if migration is critical"""
-    
+    """Determine if migration is critical"""    
     critical_types = [
         MigrationType.SECURITY_ENHANCEMENT,
         MigrationType.HOTFIX,
@@ -504,8 +483,7 @@ def is_critical_migration(migration_type: MigrationType, priority: MigrationPrio
 
 
 def requires_maintenance_window(migration_type: MigrationType) -> bool:
-    """Determine if migration requires maintenance window"""
-    
+    """Determine if migration requires maintenance window"""    
     maintenance_types = [
         MigrationType.SCHEMA_DELETION,
         MigrationType.DATA_MIGRATION,
@@ -517,8 +495,7 @@ def requires_maintenance_window(migration_type: MigrationType) -> bool:
 
 
 def get_default_rollback_strategy(migration_type: MigrationType) -> RollbackStrategy:
-    """Get default rollback strategy for migration type"""
-    
+    """Get default rollback strategy for migration type"""    
     strategy_mapping = {
         MigrationType.SCHEMA_CREATION: RollbackStrategy.SAFE_ROLLBACK,
         MigrationType.SCHEMA_MODIFICATION: RollbackStrategy.BACKUP_RESTORE,

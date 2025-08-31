@@ -1,5 +1,4 @@
-"""
-Cloud Compliance Manager - Enterprise Multi-Cloud Compliance and Governance
+"""Cloud Compliance Manager - Enterprise Multi-Cloud Compliance and Governance
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -14,9 +13,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 This module provides comprehensive compliance management for the IA Influencer
 Agent platform, including GDPR, SOC2, HIPAA, ISO27001, and industry-specific
 regulations with automated compliance monitoring and reporting.
-"""
-
-import logging
+"""import logging
 import asyncio
 import json
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -32,8 +29,7 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks"""
-    GDPR = "gdpr"
+    """Supported compliance frameworks"""    GDPR = "gdpr"
     SOC2 = "soc2"
     HIPAA = "hipaa"
     ISO27001 = "iso27001"
@@ -45,8 +41,7 @@ class ComplianceFramework(Enum):
     COPPA = "coppa"
 
 class ComplianceStatus(Enum):
-    """Compliance status levels"""
-    COMPLIANT = "compliant"
+    """Compliance status levels"""    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
     UNDER_REVIEW = "under_review"
@@ -54,8 +49,7 @@ class ComplianceStatus(Enum):
     MONITORING = "monitoring"
 
 class ControlType(Enum):
-    """Types of compliance controls"""
-    PREVENTIVE = "preventive"
+    """Types of compliance controls"""    PREVENTIVE = "preventive"
     DETECTIVE = "detective"
     CORRECTIVE = "corrective"
     ADMINISTRATIVE = "administrative"
@@ -63,8 +57,7 @@ class ControlType(Enum):
     PHYSICAL = "physical"
 
 class Severity(Enum):
-    """Compliance issue severity levels"""
-    CRITICAL = "critical"
+    """Compliance issue severity levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -72,8 +65,7 @@ class Severity(Enum):
 
 @dataclass
 class ComplianceControl:
-    """Individual compliance control definition"""
-    control_id: str
+    """Individual compliance control definition"""    control_id: str
     framework: ComplianceFramework
     title: str
     description: str
@@ -88,8 +80,7 @@ class ComplianceControl:
 
 @dataclass
 class ComplianceAssessment:
-    """Compliance assessment results"""
-    assessment_id: str
+    """Compliance assessment results"""    assessment_id: str
     framework: ComplianceFramework
     scope: Dict[str, Any]
     controls_assessed: List[str]
@@ -103,8 +94,7 @@ class ComplianceAssessment:
 
 @dataclass
 class ComplianceFinding:
-    """Individual compliance finding"""
-    finding_id: str
+    """Individual compliance finding"""    finding_id: str
     control_id: str
     framework: ComplianceFramework
     severity: Severity
@@ -121,8 +111,7 @@ class ComplianceFinding:
 
 @dataclass
 class CompliancePolicy:
-    """Compliance policy definition"""
-    policy_id: str
+    """Compliance policy definition"""    policy_id: str
     name: str
     frameworks: List[ComplianceFramework]
     policy_text: str
@@ -135,11 +124,9 @@ class CompliancePolicy:
     created_at: datetime = field(default_factory=datetime.now)
 
 class CloudComplianceManager:
-    """Enterprise cloud compliance and governance manager"""
-    
+    """Enterprise cloud compliance and governance manager"""    
     def __init__(self):
-        """Initialize cloud compliance manager"""
-        self.logger = logging.getLogger(self.__class__.__name__)
+        """Initialize cloud compliance manager"""        self.logger = logging.getLogger(self.__class__.__name__)
         
         # Cloud clients for compliance monitoring
         self.aws_client = None
@@ -163,8 +150,7 @@ class CloudComplianceManager:
         self.logger.info("Cloud Compliance Manager initialized")
 
     def _initialize_compliance_frameworks(self):
-        """Initialize predefined compliance framework controls"""
-        try:
+        """Initialize predefined compliance framework controls"""        try:
             # GDPR Controls
             self._load_gdpr_controls()
             
@@ -186,8 +172,7 @@ class CloudComplianceManager:
             self.logger.error(f"Failed to initialize compliance frameworks: {e}")
 
     def _load_gdpr_controls(self):
-        """Load GDPR compliance controls"""
-        gdpr_controls = [
+        """Load GDPR compliance controls"""        gdpr_controls = [
             {
                 'control_id': 'GDPR-7.1',
                 'title': 'Lawful Basis for Processing',
@@ -253,8 +238,7 @@ class CloudComplianceManager:
             self.compliance_controls[control.control_id] = control
 
     def _load_soc2_controls(self):
-        """Load SOC2 compliance controls"""
-        soc2_controls = [
+        """Load SOC2 compliance controls"""        soc2_controls = [
             {
                 'control_id': 'SOC2-CC6.1',
                 'title': 'Logical and Physical Access Controls',
@@ -305,8 +289,7 @@ class CloudComplianceManager:
             self.compliance_controls[control.control_id] = control
 
     def _load_iso27001_controls(self):
-        """Load ISO27001 compliance controls"""
-        iso_controls = [
+        """Load ISO27001 compliance controls"""        iso_controls = [
             {
                 'control_id': 'ISO-A.8.2.3',
                 'title': 'Handling of Assets',
@@ -357,8 +340,7 @@ class CloudComplianceManager:
             self.compliance_controls[control.control_id] = control
 
     def _load_hipaa_controls(self):
-        """Load HIPAA compliance controls"""
-        hipaa_controls = [
+        """Load HIPAA compliance controls"""        hipaa_controls = [
             {
                 'control_id': 'HIPAA-164.312(a)(1)',
                 'title': 'Access Control',
@@ -409,8 +391,7 @@ class CloudComplianceManager:
             self.compliance_controls[control.control_id] = control
 
     def _load_pci_dss_controls(self):
-        """Load PCI DSS compliance controls"""
-        pci_controls = [
+        """Load PCI DSS compliance controls"""        pci_controls = [
             {
                 'control_id': 'PCI-3.4',
                 'title': 'Cryptographic Key Management',
@@ -463,8 +444,7 @@ class CloudComplianceManager:
     async def perform_compliance_assessment(self, 
                                           framework: ComplianceFramework,
                                           scope: Dict[str, Any]) -> ComplianceAssessment:
-        """Perform comprehensive compliance assessment"""
-        try:
+        """Perform comprehensive compliance assessment"""        try:
             assessment_id = f"assessment_{framework.value}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
             # Get controls for the framework
@@ -538,8 +518,7 @@ class CloudComplianceManager:
             raise
 
     async def _assess_control(self, control: ComplianceControl, scope: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess individual compliance control"""
-        try:
+        """Assess individual compliance control"""        try:
             findings = []
             compliance_score = 100.0
             
@@ -584,8 +563,7 @@ class CloudComplianceManager:
             }
 
     async def _run_automated_checks(self, control: ComplianceControl, scope: Dict[str, Any]) -> Dict[str, Any]:
-        """Run automated compliance checks for a control"""
-        findings = []
+        """Run automated compliance checks for a control"""        findings = []
         score = 100.0
         
         try:
@@ -640,8 +618,7 @@ class CloudComplianceManager:
             }
 
     async def _check_aws_compliance(self, control: ComplianceControl, aws_config: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Check AWS-specific compliance requirements"""
-        findings = []
+        """Check AWS-specific compliance requirements"""        findings = []
         
         try:
             # Example checks based on control type
@@ -669,8 +646,7 @@ class CloudComplianceManager:
         return findings
 
     async def _check_aws_encryption(self, control: ComplianceControl, aws_config: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Check AWS encryption compliance"""
-        try:
+        """Check AWS encryption compliance"""        try:
             # This would check actual AWS resources for encryption
             # For demo purposes, we'll simulate findings
             
@@ -696,8 +672,7 @@ class CloudComplianceManager:
             return None
 
     async def _check_aws_access_controls(self, control: ComplianceControl, aws_config: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Check AWS access control compliance"""
-        try:
+        """Check AWS access control compliance"""        try:
             # Simulate checking IAM policies
             if aws_config.get('overprivileged_users', 0) > 0:
                 return {
@@ -720,8 +695,7 @@ class CloudComplianceManager:
             return None
 
     async def _check_aws_monitoring(self, control: ComplianceControl, aws_config: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Check AWS monitoring compliance"""
-        try:
+        """Check AWS monitoring compliance"""        try:
             # Simulate checking CloudTrail
             if not aws_config.get('cloudtrail_enabled', True):
                 return {
@@ -744,8 +718,7 @@ class CloudComplianceManager:
             return None
 
     async def generate_compliance_report(self, framework: ComplianceFramework) -> Dict[str, Any]:
-        """Generate comprehensive compliance report"""
-        try:
+        """Generate comprehensive compliance report"""        try:
             # Get latest assessment for framework
             latest_assessment = None
             for assessment in self.assessments.values():
@@ -823,8 +796,7 @@ class CloudComplianceManager:
             raise
 
     async def _generate_remediation_summary(self, findings: List[ComplianceFinding]) -> Dict[str, Any]:
-        """Generate remediation summary from findings"""
-        try:
+        """Generate remediation summary from findings"""        try:
             remediation_summary = {
                 'high_priority_actions': [],
                 'automation_opportunities': [],
@@ -873,8 +845,7 @@ class CloudComplianceManager:
             return {}
 
     async def track_compliance_metrics(self) -> Dict[str, Any]:
-        """Track and return compliance metrics"""
-        try:
+        """Track and return compliance metrics"""        try:
             metrics = {}
             
             # Overall compliance metrics
@@ -930,8 +901,7 @@ class CloudComplianceManager:
             raise
 
     async def remediate_finding(self, finding_id: str, remediation_evidence: Dict[str, Any]) -> bool:
-        """Mark finding as remediated with evidence"""
-        try:
+        """Mark finding as remediated with evidence"""        try:
             if finding_id not in self.findings:
                 raise ValueError(f"Finding not found: {finding_id}")
             
@@ -957,8 +927,7 @@ class CloudComplianceManager:
             return False
 
     async def schedule_continuous_monitoring(self):
-        """Schedule continuous compliance monitoring"""
-        try:
+        """Schedule continuous compliance monitoring"""        try:
             # This would integrate with a job scheduler
             # For now, we'll just log the scheduling
             
@@ -972,8 +941,7 @@ class CloudComplianceManager:
             self.logger.error(f"Failed to schedule monitoring: {e}")
 
     async def export_compliance_data(self, format: str = 'json') -> Union[str, bytes]:
-        """Export compliance data in specified format"""
-        try:
+        """Export compliance data in specified format"""        try:
             data = {
                 'assessments': {k: {
                     'assessment_id': v.assessment_id,

@@ -1,14 +1,11 @@
-"""
-IA Influencer Agent - Client Module Demo
+"""IA Influencer Agent - Client Module Demo
 
 Demonstration script showing the comprehensive capabilities of the Client Business Module.
 This script showcases the enterprise-grade functionality for managing multi-format creators.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Advanced Content Protection
-"""
-
-import asyncio
+"""import asyncio
 from datetime import datetime
 from uuid import uuid4
 from typing import Dict, Any
@@ -63,8 +60,7 @@ from backend.business.client.preference import (
 
 
 class ClientModuleDemo:
-    """
-    Comprehensive demonstration of the Client Business Module capabilities.
+    """    Comprehensive demonstration of the Client Business Module capabilities.
     
     This demo showcases:
     - Complete creator onboarding workflow
@@ -73,11 +69,9 @@ class ClientModuleDemo:
     - Subscription management
     - Activity tracking and analytics
     - Preference customization
-    """
-    
+    """    
     def __init__(self):
-        """Initialize demo with mock services."""
-        print("🚀 Initializing IA Influencer Agent - Client Module Demo")
+        """Initialize demo with mock services."""        print("🚀 Initializing IA Influencer Agent - Client Module Demo")
         print("=" * 60)
         
         # Mock database and services for demo
@@ -92,8 +86,7 @@ class ClientModuleDemo:
         print()
         
     async def run_complete_demo(self):
-        """Run complete client lifecycle demonstration."""
-        try:
+        """Run complete client lifecycle demonstration."""        try:
             print("🎬 Starting Complete Client Lifecycle Demo")
             print("=" * 50)
             
@@ -125,8 +118,7 @@ class ClientModuleDemo:
             print(f"❌ Demo error: {e}")
             
     async def demo_client_registration(self) -> str:
-        """Demonstrate client registration process."""
-        print("👤 DEMO: Client Registration & Onboarding")
+        """Demonstrate client registration process."""        print("👤 DEMO: Client Registration & Onboarding")
         print("-" * 40)
         
         # Mock client manager (in real implementation, would use actual services)
@@ -170,8 +162,7 @@ class ClientModuleDemo:
         return client_id
         
     async def demo_profile_management(self, client_id: str):
-        """Demonstrate profile management capabilities."""
-        print("👨‍🎤 DEMO: Profile Management")
+        """Demonstrate profile management capabilities."""        print("👨‍🎤 DEMO: Profile Management")
         print("-" * 30)
         
         # Create profile data
@@ -217,8 +208,7 @@ class ClientModuleDemo:
         print()
         
     async def demo_content_management(self, client_id: str):
-        """Demonstrate content management capabilities."""
-        print("🎵 DEMO: Content Management")
+        """Demonstrate content management capabilities."""        print("🎵 DEMO: Content Management")
         print("-" * 27)
         
         # Create content upload data
@@ -264,8 +254,7 @@ class ClientModuleDemo:
         print()
         
     async def demo_verification_process(self, client_id: str):
-        """Demonstrate verification process."""
-        print("🔐 DEMO: Verification Process")
+        """Demonstrate verification process."""        print("🔐 DEMO: Verification Process")
         print("-" * 29)
         
         # Identity verification
@@ -298,8 +287,7 @@ class ClientModuleDemo:
         print()
         
     async def demo_subscription_management(self, client_id: str):
-        """Demonstrate subscription management."""
-        print("💳 DEMO: Subscription Management")
+        """Demonstrate subscription management."""        print("💳 DEMO: Subscription Management")
         print("-" * 31)
         
         # Create subscription
@@ -330,8 +318,7 @@ class ClientModuleDemo:
         print()
         
     async def demo_activity_tracking(self, client_id: str):
-        """Demonstrate activity tracking."""
-        print("📈 DEMO: Activity Tracking")
+        """Demonstrate activity tracking."""        print("📈 DEMO: Activity Tracking")
         print("-" * 25)
         
         # Mock session data
@@ -362,8 +349,7 @@ class ClientModuleDemo:
         print()
         
     async def demo_preference_management(self, client_id: str):
-        """Demonstrate preference management."""
-        print("⚙️ DEMO: Preference Management")
+        """Demonstrate preference management."""        print("⚙️ DEMO: Preference Management")
         print("-" * 30)
         
         # Notification preferences
@@ -420,8 +406,7 @@ class ClientModuleDemo:
 
 
 async def main():
-    """Run the complete demonstration."""
-    print("🚀 IA Influencer Agent - Client Module Demonstration")
+    """Run the complete demonstration."""    print("🚀 IA Influencer Agent - Client Module Demonstration")
     print("====================================================")
     print()
     print("🎯 This demo showcases enterprise-grade client management")

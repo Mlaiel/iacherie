@@ -1,5 +1,4 @@
-"""
-Content Fingerprinting Database Manager
+"""Content Fingerprinting Database Manager
 Advanced fingerprinting data management for IA Influencer Agent
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -103,9 +102,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Encryption des données sensibles
 - Backup strategy optimization
 - Data retention policies
-"""
-
-import asyncio
+"""import asyncio
 from typing import Dict, Any, Optional, List, Union, Tuple, Set
 from datetime import datetime, timedelta
 from enum import Enum
@@ -132,8 +129,7 @@ from backend.deployment.database.postgresql_manager import get_postgresql_manage
 
 
 class ContentType(Enum):
-    """Content types for fingerprinting"""
-    AUDIO = "audio"
+    """Content types for fingerprinting"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -142,8 +138,7 @@ class ContentType(Enum):
 
 
 class FingerprintAlgorithm(Enum):
-    """Fingerprinting algorithms"""
-    # Audio algorithms
+    """Fingerprinting algorithms"""    # Audio algorithms
     CHROMAPRINT = "chromaprint"
     ESSENTIA_SPECTRAL = "essentia_spectral"
     MFCC_FEATURES = "mfcc_features"
@@ -169,8 +164,7 @@ class FingerprintAlgorithm(Enum):
 
 
 class SimilarityMetric(Enum):
-    """Similarity metrics for matching"""
-    COSINE = "cosine"
+    """Similarity metrics for matching"""    COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     MANHATTAN = "manhattan"
     HAMMING = "hamming"
@@ -180,8 +174,7 @@ class SimilarityMetric(Enum):
 
 @dataclass
 class FingerprintMetadata:
-    """Fingerprint metadata structure"""
-    content_id: str
+    """Fingerprint metadata structure"""    content_id: str
     content_type: ContentType
     algorithm: FingerprintAlgorithm
     version: str
@@ -196,8 +189,7 @@ class FingerprintMetadata:
 
 @dataclass
 class SimilarityMatch:
-    """Similarity match result"""
-    fingerprint_id: str
+    """Similarity match result"""    fingerprint_id: str
     target_fingerprint_id: str
     similarity_score: float
     algorithm: FingerprintAlgorithm
@@ -208,14 +200,12 @@ class SimilarityMatch:
 
 
 class ContentFingerprintingManager:
-    """
-    Enterprise Content Fingerprinting Database Manager
+    """    Enterprise Content Fingerprinting Database Manager
     
     Manages all aspects of content fingerprinting data storage,
     retrieval, and similarity matching with enterprise-grade
     performance and reliability.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = get_logger(f"{__name__}.ContentFingerprintingManager")
@@ -245,8 +235,7 @@ class ContentFingerprintingManager:
         self._cache_size_limit = self.config.get('cache_size_limit', 10000)
     
     async def initialize(self) -> bool:
-        """Initialize the fingerprinting manager"""
-        try:
+        """Initialize the fingerprinting manager"""        try:
             self.logger.info("🚀 Initializing Content Fingerprinting Manager...")
             
             # Get database manager
@@ -269,11 +258,9 @@ class ContentFingerprintingManager:
             return False
     
     async def _create_fingerprinting_schema(self):
-        """Create fingerprinting database schema"""
-        self.logger.debug("Creating fingerprinting database schema...")
+        """Create fingerprinting database schema"""        self.logger.debug("Creating fingerprinting database schema...")
         
-        schema_sql = """
-        -- Content Fingerprints Main Table
+        schema_sql = """        -- Content Fingerprints Main Table
         CREATE TABLE IF NOT EXISTS content_fingerprints (
             fingerprint_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -470,8 +457,7 @@ class ContentFingerprintingManager:
         CREATE TRIGGER update_protection_alerts_updated_at
             BEFORE UPDATE ON protection_alerts
             FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-        """
-        
+        """        
         async with self._db_manager.get_session() as session:
             await session.execute(text(schema_sql))
             await session.commit()
@@ -479,8 +465,7 @@ class ContentFingerprintingManager:
         self.logger.debug("✅ Fingerprinting schema created successfully")
     
     async def _initialize_faiss_indices(self):
-        """Initialize FAISS indices for vector similarity search"""
-        self.logger.debug("Initializing FAISS indices...")
+        """Initialize FAISS indices for vector similarity search"""        self.logger.debug("Initializing FAISS indices...")
         
         try:
             # Create indices for each algorithm that uses vectors
@@ -509,17 +494,14 @@ class ContentFingerprintingManager:
             raise
     
     async def _load_existing_fingerprints(self):
-        """Load existing fingerprints into FAISS indices"""
-        self.logger.debug("Loading existing fingerprints into FAISS indices...")
+        """Load existing fingerprints into FAISS indices"""        self.logger.debug("Loading existing fingerprints into FAISS indices...")
         
         try:
-            query = """
-            SELECT fingerprint_id, algorithm, vector_embedding, vector_dimension
+            query = """            SELECT fingerprint_id, algorithm, vector_embedding, vector_dimension
             FROM content_fingerprints 
             WHERE vector_embedding IS NOT NULL AND is_active = true
             ORDER BY created_at
-            """
-            
+            """            
             async with self._db_manager.get_session() as session:
                 result = await session.execute(text(query))
                 fingerprints = result.fetchall()
@@ -582,8 +564,7 @@ class ContentFingerprintingManager:
             self.logger.error(f"❌ Failed to load existing fingerprints: {e}")
     
     async def _store_vector_mappings(self, fingerprint_ids: List[str], algorithm: str, index_key: str):
-        """Store vector index mappings"""
-        try:
+        """Store vector index mappings"""        try:
             mappings = []
             for i, fp_id in enumerate(fingerprint_ids):
                 mappings.append({
@@ -598,8 +579,7 @@ class ContentFingerprintingManager:
             if mappings:
                 async with self._db_manager.get_session() as session:
                     await session.execute(
-                        text("""
-                            INSERT INTO vector_index_mappings 
+                        text("""                            INSERT INTO vector_index_mappings 
                             (fingerprint_id, algorithm, faiss_index_id, vector_dimension, index_type)
                             VALUES (:fingerprint_id, :algorithm, :faiss_index_id, :vector_dimension, :index_type)
                             ON CONFLICT (fingerprint_id, algorithm) DO UPDATE SET
@@ -624,8 +604,7 @@ class ContentFingerprintingManager:
         metadata: Optional[FingerprintMetadata] = None,
         chunks: Optional[List[Dict[str, Any]]] = None
     ) -> str:
-        """
-        Store a content fingerprint in the database
+        """        Store a content fingerprint in the database
         
         Args:
             user_id: User ID who owns the content
@@ -639,8 +618,7 @@ class ContentFingerprintingManager:
         
         Returns:
             Fingerprint ID
-        """
-        try:
+        """        try:
             self.logger.debug(f"Storing fingerprint for content {content_id} using {algorithm.value}")
             
             # Prepare fingerprint data
@@ -674,8 +652,7 @@ class ContentFingerprintingManager:
             # Store in database
             async with self._db_manager.get_session() as session:
                 result = await session.execute(
-                    text("""
-                        INSERT INTO content_fingerprints 
+                    text("""                        INSERT INTO content_fingerprints 
                         (user_id, content_id, content_type, algorithm, fingerprint_hash, 
                          vector_embedding, vector_dimension, original_filename, file_size,
                          quality_score, processing_time, duration, dimensions, encoding_params,
@@ -706,8 +683,7 @@ class ContentFingerprintingManager:
                         }
                         
                         await session.execute(
-                            text("""
-                                INSERT INTO fingerprint_chunks
+                            text("""                                INSERT INTO fingerprint_chunks
                                 (fingerprint_id, chunk_index, start_time, end_time, chunk_hash,
                                  chunk_vector, chunk_metadata, processing_time)
                                 VALUES (:fingerprint_id, :chunk_index, :start_time, :end_time, :chunk_hash,
@@ -733,8 +709,7 @@ class ContentFingerprintingManager:
             raise
     
     async def _add_to_faiss_index(self, fingerprint_id: str, algorithm: FingerprintAlgorithm, vector: np.ndarray):
-        """Add vector to FAISS index"""
-        try:
+        """Add vector to FAISS index"""        try:
             dimension = len(vector)
             index_key = f"{algorithm.value}_{dimension}"
             index = self._faiss_indices.get(index_key)
@@ -771,8 +746,7 @@ class ContentFingerprintingManager:
         content_type: ContentType, 
         metadata: Optional[FingerprintMetadata]
     ):
-        """Update performance metrics"""
-        try:
+        """Update performance metrics"""        try:
             if not metadata:
                 return
             
@@ -780,8 +754,7 @@ class ContentFingerprintingManager:
             
             async with self._db_manager.get_session() as session:
                 await session.execute(
-                    text("""
-                        INSERT INTO fingerprint_performance_metrics 
+                    text("""                        INSERT INTO fingerprint_performance_metrics 
                         (algorithm, content_type, avg_processing_time, total_fingerprints, 
                          success_rate, avg_quality_score, measurement_date)
                         VALUES (:algorithm, :content_type, :processing_time, 1, 1.0, :quality_score, :date)
@@ -817,8 +790,7 @@ class ContentFingerprintingManager:
         max_results: Optional[int] = None,
         user_id: Optional[str] = None
     ) -> List[SimilarityMatch]:
-        """
-        Find similar content using vector similarity search
+        """        Find similar content using vector similarity search
         
         Args:
             query_vector: Query vector for similarity search
@@ -829,8 +801,7 @@ class ContentFingerprintingManager:
         
         Returns:
             List of similarity matches
-        """
-        try:
+        """        try:
             self.logger.debug(f"Searching for similar content using {algorithm.value}")
             
             threshold = similarity_threshold or self.similarity_threshold
@@ -858,8 +829,7 @@ class ContentFingerprintingManager:
                     # Get fingerprint ID from mapping
                     async with self._db_manager.get_session() as session:
                         result = await session.execute(
-                            text("""
-                                SELECT vm.fingerprint_id, cf.user_id, cf.content_id, cf.content_type
+                            text("""                                SELECT vm.fingerprint_id, cf.user_id, cf.content_id, cf.content_type
                                 FROM vector_index_mappings vm
                                 JOIN content_fingerprints cf ON vm.fingerprint_id = cf.fingerprint_id
                                 WHERE vm.algorithm = :algorithm AND vm.faiss_index_id = :index_id
@@ -898,8 +868,7 @@ class ContentFingerprintingManager:
             return []
     
     async def _store_similarity_matches(self, matches: List[SimilarityMatch]):
-        """Store similarity matches in database"""
-        try:
+        """Store similarity matches in database"""        try:
             match_data = []
             for match in matches:
                 match_data.append({
@@ -916,8 +885,7 @@ class ContentFingerprintingManager:
             if match_data:
                 async with self._db_manager.get_session() as session:
                     await session.execute(
-                        text("""
-                            INSERT INTO similarity_matches
+                        text("""                            INSERT INTO similarity_matches
                             (source_fingerprint_id, target_fingerprint_id, similarity_score,
                              similarity_metric, algorithm, confidence_level, processing_time, match_regions)
                             VALUES (:source_fingerprint_id, :target_fingerprint_id, :similarity_score,
@@ -935,12 +903,10 @@ class ContentFingerprintingManager:
             self.logger.error(f"Failed to store similarity matches: {e}")
     
     async def get_fingerprint_by_id(self, fingerprint_id: str) -> Optional[Dict[str, Any]]:
-        """Get fingerprint by ID"""
-        try:
+        """Get fingerprint by ID"""        try:
             async with self._db_manager.get_session() as session:
                 result = await session.execute(
-                    text("""
-                        SELECT * FROM content_fingerprints 
+                    text("""                        SELECT * FROM content_fingerprints 
                         WHERE fingerprint_id = :fingerprint_id AND is_active = true
                     """),
                     {'fingerprint_id': fingerprint_id}
@@ -970,16 +936,13 @@ class ContentFingerprintingManager:
         limit: int = 100,
         offset: int = 0
     ) -> List[Dict[str, Any]]:
-        """Get fingerprints for a user"""
-        try:
-            query = """
-                SELECT fingerprint_id, content_id, content_type, algorithm, 
+        """Get fingerprints for a user"""        try:
+            query = """                SELECT fingerprint_id, content_id, content_type, algorithm, 
                        fingerprint_hash, quality_score, processing_time,
                        original_filename, file_size, created_at
                 FROM content_fingerprints 
                 WHERE user_id = :user_id AND is_active = true
-            """
-            
+            """            
             params = {'user_id': user_id}
             
             if content_type:
@@ -1000,8 +963,7 @@ class ContentFingerprintingManager:
             return []
     
     async def delete_fingerprint(self, fingerprint_id: str, user_id: str) -> bool:
-        """Delete a fingerprint (soft delete)"""
-        try:
+        """Delete a fingerprint (soft delete)"""        try:
             async with self._db_manager.get_session() as session:
                 # Verify ownership
                 result = await session.execute(
@@ -1015,8 +977,7 @@ class ContentFingerprintingManager:
                 
                 # Soft delete
                 await session.execute(
-                    text("""
-                        UPDATE content_fingerprints 
+                    text("""                        UPDATE content_fingerprints 
                         SET is_active = false, updated_at = NOW() 
                         WHERE fingerprint_id = :fingerprint_id
                     """),
@@ -1033,8 +994,7 @@ class ContentFingerprintingManager:
             return False
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check"""
-        try:
+        """Perform health check"""        try:
             health = {
                 'status': 'healthy',
                 'timestamp': datetime.utcnow().isoformat(),
@@ -1074,12 +1034,10 @@ class ContentFingerprintingManager:
             }
     
     async def get_performance_stats(self) -> Dict[str, Any]:
-        """Get performance statistics"""
-        try:
+        """Get performance statistics"""        try:
             async with self._db_manager.get_session() as session:
                 # Overall stats
-                result = await session.execute(text("""
-                    SELECT 
+                result = await session.execute(text("""                    SELECT 
                         COUNT(*) as total_fingerprints,
                         COUNT(DISTINCT user_id) as unique_users,
                         COUNT(DISTINCT content_type) as content_types,
@@ -1093,8 +1051,7 @@ class ContentFingerprintingManager:
                 overall_stats = dict(result.fetchone()._mapping)
                 
                 # Performance by algorithm
-                result = await session.execute(text("""
-                    SELECT algorithm, content_type, 
+                result = await session.execute(text("""                    SELECT algorithm, content_type, 
                            AVG(processing_time) as avg_time,
                            AVG(quality_score) as avg_quality,
                            COUNT(*) as total_count
@@ -1107,8 +1064,7 @@ class ContentFingerprintingManager:
                 algorithm_stats = [dict(row._mapping) for row in result.fetchall()]
                 
                 # Recent activity
-                result = await session.execute(text("""
-                    SELECT DATE(created_at) as date, COUNT(*) as fingerprints_created
+                result = await session.execute(text("""                    SELECT DATE(created_at) as date, COUNT(*) as fingerprints_created
                     FROM content_fingerprints 
                     WHERE created_at >= NOW() - INTERVAL '30 days'
                     GROUP BY DATE(created_at)
@@ -1134,8 +1090,7 @@ class ContentFingerprintingManager:
             return {'error': str(e)}
     
     async def shutdown(self):
-        """Shutdown the fingerprinting manager"""
-        try:
+        """Shutdown the fingerprinting manager"""        try:
             self.logger.info("🚨 Shutting down Content Fingerprinting Manager...")
             
             # Clear caches
@@ -1162,8 +1117,7 @@ _content_fingerprinting_manager: Optional[ContentFingerprintingManager] = None
 
 
 def get_content_fingerprinting_manager(config: Optional[Dict[str, Any]] = None) -> ContentFingerprintingManager:
-    """Get or create content fingerprinting manager instance"""
-    global _content_fingerprinting_manager
+    """Get or create content fingerprinting manager instance"""    global _content_fingerprinting_manager
     
     if _content_fingerprinting_manager is None:
         _content_fingerprinting_manager = ContentFingerprintingManager(config)

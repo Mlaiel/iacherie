@@ -1,5 +1,4 @@
-"""
-AI Recommendation Models - Data Models for Recommendation System
+"""AI Recommendation Models - Data Models for Recommendation System
 ===============================================================
 
 Data models and structures for the Ainflue AI recommendation system.
@@ -7,17 +6,14 @@ Provides comprehensive models for creators, content, and recommendations.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-from dataclasses import dataclass, field
+"""from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Union
 from enum import Enum
 from datetime import datetime
 
 
 class Platform(Enum):
-    """Social media platforms supported."""
-    YOUTUBE = "youtube"
+    """Social media platforms supported."""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -28,8 +24,7 @@ class Platform(Enum):
 
 
 class ContentType(Enum):
-    """Types of content supported."""
-    VIDEO = "video"
+    """Types of content supported."""    VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
     TEXT = "text"
@@ -40,8 +35,7 @@ class ContentType(Enum):
 
 
 class RevenueStream(Enum):
-    """Revenue stream types."""
-    SPONSORED_CONTENT = "sponsored_content"
+    """Revenue stream types."""    SPONSORED_CONTENT = "sponsored_content"
     AFFILIATE_MARKETING = "affiliate_marketing"
     BRAND_PARTNERSHIPS = "brand_partnerships"
     PRODUCT_PLACEMENT = "product_placement"
@@ -53,8 +47,7 @@ class RevenueStream(Enum):
 
 @dataclass
 class Engagement:
-    """Engagement metrics."""
-    likes: int = 0
+    """Engagement metrics."""    likes: int = 0
     comments: int = 0
     shares: int = 0
     views: int = 0
@@ -63,14 +56,12 @@ class Engagement:
     engagement_rate: float = 0.0
     
     def calculate_total_engagement(self) -> int:
-        """Calculate total engagement."""
-        return self.likes + self.comments + self.shares + self.saves
+        """Calculate total engagement."""        return self.likes + self.comments + self.shares + self.saves
 
 
 @dataclass
 class PerformanceMetrics:
-    """Performance metrics for content or creators."""
-    reach: int = 0
+    """Performance metrics for content or creators."""    reach: int = 0
     impressions: int = 0
     engagement: Engagement = field(default_factory=Engagement)
     conversion_rate: float = 0.0
@@ -81,8 +72,7 @@ class PerformanceMetrics:
 
 @dataclass
 class ContentMetadata:
-    """Metadata for content pieces."""
-    title: str
+    """Metadata for content pieces."""    title: str
     description: str = ""
     tags: List[str] = field(default_factory=list)
     category: str = ""
@@ -96,8 +86,7 @@ class ContentMetadata:
 
 @dataclass
 class CreatorProfile:
-    """Comprehensive creator profile."""
-    creator_id: str
+    """Comprehensive creator profile."""    creator_id: str
     username: str
     display_name: str
     bio: str = ""
@@ -115,20 +104,17 @@ class CreatorProfile:
     authenticity_score: float = 0.90
     
     def get_total_followers(self) -> int:
-        """Get total followers across all platforms."""
-        return sum(self.follower_count.values())
+        """Get total followers across all platforms."""        return sum(self.follower_count.values())
     
     def get_average_engagement_rate(self) -> float:
-        """Get average engagement rate across platforms."""
-        if not self.engagement_rates:
+        """Get average engagement rate across platforms."""        if not self.engagement_rates:
             return 0.0
         return sum(self.engagement_rates.values()) / len(self.engagement_rates)
 
 
 @dataclass
 class ContentRecommendation:
-    """Content recommendation for creators."""
-    content_id: str
+    """Content recommendation for creators."""    content_id: str
     title: str
     content_type: ContentType
     platform: Platform
@@ -145,8 +131,7 @@ class ContentRecommendation:
 
 @dataclass
 class CreatorCompatibility:
-    """Compatibility metrics between creators."""
-    creator1_id: str
+    """Compatibility metrics between creators."""    creator1_id: str
     creator2_id: str
     compatibility_score: float = 0.0
     shared_audience_overlap: float = 0.0
@@ -159,8 +144,7 @@ class CreatorCompatibility:
 
 @dataclass
 class CollaborationMatch:
-    """Match between creators for collaboration."""
-    match_id: str
+    """Match between creators for collaboration."""    match_id: str
     creators: List[str] = field(default_factory=list)
     compatibility: CreatorCompatibility = field(default_factory=lambda: CreatorCompatibility("", ""))
     collaboration_type: str = ""
@@ -173,8 +157,7 @@ class CollaborationMatch:
 
 @dataclass
 class BrandMatch:
-    """Match between creator and brand."""
-    match_id: str
+    """Match between creator and brand."""    match_id: str
     creator_id: str
     brand_name: str
     brand_category: str = ""
@@ -189,8 +172,7 @@ class BrandMatch:
 
 @dataclass
 class TrendInsight:
-    """Trending content or topic insights."""
-    trend_id: str
+    """Trending content or topic insights."""    trend_id: str
     title: str
     description: str = ""
     category: str = ""
@@ -206,8 +188,7 @@ class TrendInsight:
 
 @dataclass
 class AudienceInsight:
-    """Audience analytics and insights."""
-    audience_id: str
+    """Audience analytics and insights."""    audience_id: str
     demographics: Dict[str, Any] = field(default_factory=dict)
     interests: List[str] = field(default_factory=list)
     behavior_patterns: Dict[str, Any] = field(default_factory=dict)
@@ -220,8 +201,7 @@ class AudienceInsight:
 
 @dataclass
 class RevenueStrategy:
-    """Revenue optimization strategy."""
-    strategy_id: str
+    """Revenue optimization strategy."""    strategy_id: str
     creator_id: str
     revenue_streams: List[RevenueStream] = field(default_factory=list)
     recommended_actions: List[str] = field(default_factory=list)
@@ -235,8 +215,7 @@ class RevenueStrategy:
 
 @dataclass
 class ContentOpportunity:
-    """Content creation opportunity."""
-    opportunity_id: str
+    """Content creation opportunity."""    opportunity_id: str
     title: str
     description: str = ""
     content_type: ContentType = ContentType.POST
@@ -253,8 +232,7 @@ class ContentOpportunity:
 
 @dataclass
 class RecommendationRequest:
-    """Request for recommendations from the system."""
-    user_id: str
+    """Request for recommendations from the system."""    user_id: str
     request_type: str = "content"
     parameters: Dict[str, Any] = field(default_factory=dict)
     limit: int = 10
@@ -270,8 +248,7 @@ class RecommendationRequest:
 
 @dataclass
 class RecommendationResponse:
-    """Response containing recommendations from the system."""
-    request_id: str
+    """Response containing recommendations from the system."""    request_id: str
     recommendations: List[Dict[str, Any]] = field(default_factory=list)
     metadata: Dict[str, Any] = field(default_factory=dict)
     confidence_scores: List[float] = field(default_factory=list)
@@ -279,8 +256,7 @@ class RecommendationResponse:
     total_candidates: int = 0
     
     def get_top_recommendations(self, n: int) -> List[Dict[str, Any]]:
-        """Get top N recommendations."""
-        return self.recommendations[:n]
+        """Get top N recommendations."""        return self.recommendations[:n]
 
 
 # Export all models

@@ -1,5 +1,4 @@
-"""
-Database Performance Monitor
+"""Database Performance Monitor
 
 Advanced real-time database performance monitoring with AI-powered optimization recommendations.
 Tracks query execution times, resource utilization, and provides intelligent performance insights.
@@ -11,9 +10,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 ⚠️  AVERTISSEMENT STRICT ⚠️
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Propriété intellectuelle de Fahed Mlaiel (mlaiel@live.de).
-"""
-
-import asyncio
+"""import asyncio
 import time
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Callable
@@ -36,8 +33,7 @@ from ...ai.analysis.performance_ai import PerformanceAnalysisAI
 
 
 class PerformanceLevel(Enum):
-    """Performance level classification"""
-    EXCELLENT = "excellent"
+    """Performance level classification"""    EXCELLENT = "excellent"
     GOOD = "good"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -46,8 +42,7 @@ class PerformanceLevel(Enum):
 
 @dataclass
 class PerformanceSnapshot:
-    """Single performance measurement snapshot"""
-    timestamp: datetime
+    """Single performance measurement snapshot"""    timestamp: datetime
     cpu_usage: float
     memory_usage: float
     disk_io: Dict[str, float]
@@ -61,8 +56,7 @@ class PerformanceSnapshot:
     performance_level: PerformanceLevel
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for JSON serialization"""
-        data = asdict(self)
+        """Convert to dictionary for JSON serialization"""        data = asdict(self)
         data['timestamp'] = self.timestamp.isoformat()
         data['performance_level'] = self.performance_level.value
         return data
@@ -70,8 +64,7 @@ class PerformanceSnapshot:
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert definition"""
-    alert_id: str
+    """Performance alert definition"""    alert_id: str
     severity: str
     metric: str
     threshold: float
@@ -81,15 +74,13 @@ class PerformanceAlert:
     suggested_actions: List[str]
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        data = asdict(self)
+        """Convert to dictionary"""        data = asdict(self)
         data['timestamp'] = self.timestamp.isoformat()
         return data
 
 
 class DatabasePerformanceMonitor:
-    """
-    Advanced database performance monitoring system with AI-powered insights.
+    """    Advanced database performance monitoring system with AI-powered insights.
     
     Features:
     - Real-time performance tracking
@@ -98,8 +89,7 @@ class DatabasePerformanceMonitor:
     - Performance trend analysis
     - Query optimization suggestions
     - Resource utilization monitoring
-    """
-    
+    """    
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
@@ -129,13 +119,11 @@ class DatabasePerformanceMonitor:
         self.logger.info("Database Performance Monitor initialized")
     
     async def start_monitoring(self, interval: int = 60) -> None:
-        """
-        Start continuous performance monitoring
+        """        Start continuous performance monitoring
         
         Args:
             interval: Monitoring interval in seconds
-        """
-        if self.monitoring_active:
+        """        if self.monitoring_active:
             self.logger.warning("Performance monitoring already active")
             return
         
@@ -153,13 +141,11 @@ class DatabasePerformanceMonitor:
             raise
     
     async def stop_monitoring(self) -> None:
-        """Stop performance monitoring"""
-        self.monitoring_active = False
+        """Stop performance monitoring"""        self.monitoring_active = False
         self.logger.info("Performance monitoring stopped")
     
     async def _collect_performance_snapshot(self) -> PerformanceSnapshot:
-        """Collect current performance metrics"""
-        try:
+        """Collect current performance metrics"""        try:
             # System metrics
             cpu_usage = psutil.cpu_percent(interval=1)
             memory = psutil.virtual_memory()
@@ -196,21 +182,18 @@ class DatabasePerformanceMonitor:
             raise
     
     async def _get_database_statistics(self, session: AsyncSession) -> Dict[str, Any]:
-        """Get current database statistics"""
-        stats = {}
+        """Get current database statistics"""        stats = {}
         
         try:
             # Active connections
-            result = await session.execute(text("""
-                SELECT count(*) as active_connections
+            result = await session.execute(text("""                SELECT count(*) as active_connections
                 FROM pg_stat_activity 
                 WHERE state = 'active'
             """))
             stats['active_connections'] = result.scalar() or 0
             
             # Query statistics
-            result = await session.execute(text("""
-                SELECT 
+            result = await session.execute(text("""                SELECT 
                     sum(calls) as query_count,
                     avg(mean_exec_time) as avg_query_time,
                     count(*) filter (where mean_exec_time > 1000) as slow_queries
@@ -224,16 +207,14 @@ class DatabasePerformanceMonitor:
                 stats['slow_queries'] = row.slow_queries or 0
             
             # Cache hit ratio
-            result = await session.execute(text("""
-                SELECT 
+            result = await session.execute(text("""                SELECT 
                     sum(heap_blks_hit) / nullif(sum(heap_blks_hit + heap_blks_read), 0) as cache_hit_ratio
                 FROM pg_statio_user_tables
             """))
             stats['cache_hit_ratio'] = result.scalar() or 0
             
             # Lock waits and deadlocks
-            result = await session.execute(text("""
-                SELECT 
+            result = await session.execute(text("""                SELECT 
                     count(*) filter (where wait_event_type = 'Lock') as lock_waits,
                     (SELECT sum(deadlocks) FROM pg_stat_database) as deadlocks
                 FROM pg_stat_activity
@@ -254,8 +235,7 @@ class DatabasePerformanceMonitor:
         memory_usage: float, 
         db_stats: Dict[str, Any]
     ) -> PerformanceLevel:
-        """Calculate overall performance level"""
-        
+        """Calculate overall performance level"""        
         # Critical conditions
         if (cpu_usage > 95 or memory_usage > 95 or 
             db_stats.get('avg_query_time', 0) > 5000):
@@ -282,8 +262,7 @@ class DatabasePerformanceMonitor:
             return PerformanceLevel.EXCELLENT
     
     async def _process_snapshot(self, snapshot: PerformanceSnapshot) -> None:
-        """Process performance snapshot and generate alerts"""
-        # Store snapshot
+        """Process performance snapshot and generate alerts"""        # Store snapshot
         self.performance_history.append(snapshot)
         
         # Cache recent data
@@ -308,8 +287,7 @@ class DatabasePerformanceMonitor:
         self, 
         snapshot: PerformanceSnapshot
     ) -> List[PerformanceAlert]:
-        """Check for performance alerts"""
-        alerts = []
+        """Check for performance alerts"""        alerts = []
         
         # CPU usage alert
         if snapshot.cpu_usage > self.thresholds['cpu_usage']:
@@ -382,8 +360,7 @@ class DatabasePerformanceMonitor:
         return alerts
     
     async def _send_alert(self, alert: PerformanceAlert) -> None:
-        """Send performance alert"""
-        try:
+        """Send performance alert"""        try:
             # Store alert
             await self.cache.lpush(
                 "performance:alerts",
@@ -403,8 +380,7 @@ class DatabasePerformanceMonitor:
             self.logger.error(f"Error sending alert: {e}")
     
     async def _run_ai_analysis(self) -> None:
-        """Run AI analysis on performance data"""
-        try:
+        """Run AI analysis on performance data"""        try:
             # Get recent performance data
             recent_data = list(self.performance_history)[-60:]  # Last hour
             
@@ -427,8 +403,7 @@ class DatabasePerformanceMonitor:
         self, 
         hours: int = 24
     ) -> Dict[str, Any]:
-        """Get performance summary for specified hours"""
-        try:
+        """Get performance summary for specified hours"""        try:
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             recent_snapshots = [
                 s for s in self.performance_history 
@@ -478,12 +453,10 @@ class DatabasePerformanceMonitor:
             return {"error": str(e)}
     
     def add_alert_callback(self, callback: Callable) -> None:
-        """Add alert callback function"""
-        self.alert_callbacks.append(callback)
+        """Add alert callback function"""        self.alert_callbacks.append(callback)
     
     async def get_recent_alerts(self, limit: int = 50) -> List[Dict[str, Any]]:
-        """Get recent performance alerts"""
-        try:
+        """Get recent performance alerts"""        try:
             alerts_data = await self.cache.lrange("performance:alerts", 0, limit - 1)
             return [json.loads(alert) for alert in alerts_data]
         except Exception as e:
@@ -491,8 +464,7 @@ class DatabasePerformanceMonitor:
             return []
     
     async def get_ai_recommendations(self) -> Dict[str, Any]:
-        """Get latest AI performance recommendations"""
-        try:
+        """Get latest AI performance recommendations"""        try:
             recommendations_data = await self.cache.get("performance:ai_recommendations")
             if recommendations_data:
                 return json.loads(recommendations_data)

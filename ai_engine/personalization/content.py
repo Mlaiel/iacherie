@@ -1,5 +1,4 @@
-"""
-Advanced Multi-Format Content Personalization & Recommendation Engine
+"""Advanced Multi-Format Content Personalization & Recommendation Engine
 
 Ultra-sophisticated content analysis, matching, and personalization system designed
 for multi-format content creators (musicians, bloggers, photographers, influencers, comedians).
@@ -40,9 +39,7 @@ Team Specialists:
 - Audio Processing Specialist: Advanced audio AI algorithms
 - DevOps Engineer: Production-ready infrastructure
 - IA Prompt Engineer: Optimized AI model interactions
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union, Set, Generator
 from datetime import datetime, timedelta
@@ -71,8 +68,7 @@ from .exceptions import RecommendationError, ContentFilteringError, ContentAnaly
 
 
 class RecommendationStrategy(Enum):
-    """Content recommendation strategies"""
-    SIMILAR_CONTENT = "similar_content"
+    """Content recommendation strategies"""    SIMILAR_CONTENT = "similar_content"
     TRENDING = "trending"
     COLLABORATIVE = "collaborative"
     NOVELTY = "novelty"
@@ -83,8 +79,7 @@ class RecommendationStrategy(Enum):
 
 
 class ContentMatchingType(Enum):
-    """Content matching algorithms"""
-    SEMANTIC_SIMILARITY = "semantic_similarity"
+    """Content matching algorithms"""    SEMANTIC_SIMILARITY = "semantic_similarity"
     GENRE_MATCHING = "genre_matching"
     CREATOR_SIMILARITY = "creator_similarity"
     FORMAT_MATCHING = "format_matching"
@@ -94,8 +89,7 @@ class ContentMatchingType(Enum):
 
 @dataclass
 class ContentItem:
-    """Represents a piece of content for recommendation"""
-    
+    """Represents a piece of content for recommendation"""    
     content_id: str
     title: str
     description: str
@@ -142,8 +136,7 @@ class ContentItem:
 
 @dataclass
 class RecommendationResult:
-    """Result of content recommendation"""
-    
+    """Result of content recommendation"""    
     content_item: ContentItem
     relevance_score: float
     confidence_score: float
@@ -160,8 +153,7 @@ class RecommendationResult:
 
 
 class ContentRecommender:
-    """
-    Advanced content recommendation engine with multiple strategies.
+    """    Advanced content recommendation engine with multiple strategies.
     
     Features:
     - Multi-strategy recommendations
@@ -169,8 +161,7 @@ class ContentRecommender:
     - Content diversity optimization
     - Exploration vs exploitation balance
     - Collaborative filtering integration
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -190,8 +181,7 @@ class ContentRecommender:
         }
     
     def _initialize_models(self) -> Dict[str, Any]:
-        """Initialize recommendation models"""
-        return {
+        """Initialize recommendation models"""        return {
             'content_similarity': TfidfVectorizer(max_features=5000, stop_words='english'),
             'collaborative_filtering': {'initialized': True},
             'trend_detector': {'initialized': True},
@@ -206,8 +196,7 @@ class ContentRecommender:
         content_type_filter: Optional[ContentType] = None,
         exclude_seen: bool = True
     ) -> List[RecommendationResult]:
-        """
-        Generate personalized content recommendations.
+        """        Generate personalized content recommendations.
         
         Args:
             user_profile: User profile for personalization
@@ -218,8 +207,7 @@ class ContentRecommender:
             
         Returns:
             List of personalized recommendations with scores and explanations
-        """
-        try:
+        """        try:
             # Determine optimal strategies if not specified
             if strategies is None:
                 strategies = self._select_optimal_strategies(user_profile)
@@ -275,8 +263,7 @@ class ContentRecommender:
         user_profile: UserProfile,
         candidate_content: List[ContentItem]
     ) -> List[RecommendationResult]:
-        """Apply a specific recommendation strategy"""
-        
+        """Apply a specific recommendation strategy"""        
         if strategy == RecommendationStrategy.SIMILAR_CONTENT:
             return await self._similar_content_recommendations(user_profile, candidate_content)
         elif strategy == RecommendationStrategy.COLLABORATIVE:
@@ -301,8 +288,7 @@ class ContentRecommender:
         user_profile: UserProfile,
         candidate_content: List[ContentItem]
     ) -> List[RecommendationResult]:
-        """Generate recommendations based on content similarity"""
-        
+        """Generate recommendations based on content similarity"""        
         recommendations = []
         
         # Get user's preferred content features
@@ -363,8 +349,7 @@ class ContentRecommender:
         user_profile: UserProfile,
         candidate_content: List[ContentItem]
     ) -> List[RecommendationResult]:
-        """Generate collaborative filtering recommendations"""
-        
+        """Generate collaborative filtering recommendations"""        
         recommendations = []
         
         # Find similar users (simplified - in production would use proper CF)
@@ -400,8 +385,7 @@ class ContentRecommender:
         user_profile: UserProfile,
         candidate_content: List[ContentItem]
     ) -> List[RecommendationResult]:
-        """Generate trending content recommendations"""
-        
+        """Generate trending content recommendations"""        
         recommendations = []
         
         # Sort by trending score
@@ -451,8 +435,7 @@ class ContentRecommender:
         user_profile: UserProfile,
         candidate_content: List[ContentItem]
     ) -> List[RecommendationResult]:
-        """Generate novelty-based recommendations for exploration"""
-        
+        """Generate novelty-based recommendations for exploration"""        
         recommendations = []
         
         # Get user's exploration tendency
@@ -503,8 +486,7 @@ class ContentRecommender:
         return recommendations
     
     def _select_optimal_strategies(self, user_profile: UserProfile) -> List[RecommendationStrategy]:
-        """Select optimal recommendation strategies based on user profile"""
-        
+        """Select optimal recommendation strategies based on user profile"""        
         strategies = []
         
         # Always include similar content
@@ -541,8 +523,7 @@ class ContentRecommender:
         self,
         recommendations: List[RecommendationResult]
     ) -> List[RecommendationResult]:
-        """Remove duplicate recommendations and combine scores"""
-        
+        """Remove duplicate recommendations and combine scores"""        
         seen_content = {}
         deduplicated = []
         
@@ -568,10 +549,8 @@ class ContentRecommender:
 
 
 class ContentMatcher:
-    """
-    Matches content to user preferences using various algorithms.
-    """
-    
+    """    Matches content to user preferences using various algorithms.
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.matching_algorithms = {
@@ -589,8 +568,7 @@ class ContentMatcher:
         content_items: List[ContentItem],
         matching_types: List[ContentMatchingType] = None
     ) -> List[Tuple[ContentItem, Dict[str, float]]]:
-        """
-        Match content to user profile using specified algorithms.
+        """        Match content to user profile using specified algorithms.
         
         Args:
             user_profile: User profile for matching
@@ -599,8 +577,7 @@ class ContentMatcher:
             
         Returns:
             List of (content, scores) tuples
-        """
-        try:
+        """        try:
             if matching_types is None:
                 matching_types = list(ContentMatchingType)
             
@@ -638,8 +615,7 @@ class ContentMatcher:
         user_profile: UserProfile,
         content: ContentItem
     ) -> float:
-        """Match content based on semantic similarity"""
-        
+        """Match content based on semantic similarity"""        
         # Simplified semantic matching
         # In production, this would use proper NLP models
         
@@ -672,8 +648,7 @@ class ContentMatcher:
         user_profile: UserProfile,
         content: ContentItem
     ) -> float:
-        """Match content based on genre preferences"""
-        
+        """Match content based on genre preferences"""        
         return user_profile.preferred_genres.get(content.genre, 0.0)
     
     async def _creator_matching(
@@ -681,8 +656,7 @@ class ContentMatcher:
         user_profile: UserProfile,
         content: ContentItem
     ) -> float:
-        """Match content based on creator preferences"""
-        
+        """Match content based on creator preferences"""        
         # Check if user has interacted with this creator before
         creator_interactions = [
             i for i in user_profile.interaction_history
@@ -705,8 +679,7 @@ class ContentMatcher:
         user_profile: UserProfile,
         content: ContentItem
     ) -> float:
-        """Match content based on format preferences"""
-        
+        """Match content based on format preferences"""        
         return user_profile.preferred_formats.get(content.content_type, 0.0)
     
     async def _temporal_matching(
@@ -714,8 +687,7 @@ class ContentMatcher:
         user_profile: UserProfile,
         content: ContentItem
     ) -> float:
-        """Match content based on temporal patterns"""
-        
+        """Match content based on temporal patterns"""        
         # Check if content timing matches user's active periods
         content_hour = content.created_at.hour
         user_patterns = user_profile.session_patterns
@@ -734,8 +706,7 @@ class ContentMatcher:
         user_profile: UserProfile,
         content: ContentItem
     ) -> float:
-        """Match content based on engagement patterns"""
-        
+        """Match content based on engagement patterns"""        
         # Normalize engagement metrics
         max_views = 1000000  # Simplified normalization
         max_likes = 50000
@@ -751,10 +722,8 @@ class ContentMatcher:
 
 
 class PersonalizedContentGenerator:
-    """
-    Generates personalized content adaptations and variations.
-    """
-    
+    """    Generates personalized content adaptations and variations.
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
     
@@ -763,8 +732,7 @@ class PersonalizedContentGenerator:
         content: ContentItem,
         user_profile: UserProfile
     ) -> ContentItem:
-        """
-        Generate a personalized version of content for a specific user.
+        """        Generate a personalized version of content for a specific user.
         
         Args:
             content: Original content item
@@ -772,8 +740,7 @@ class PersonalizedContentGenerator:
             
         Returns:
             Personalized content version
-        """
-        try:
+        """        try:
             personalized_content = ContentItem(
                 content_id=f"{content.content_id}_personalized_{user_profile.user_id}",
                 title=await self._personalize_title(content.title, user_profile),
@@ -814,8 +781,7 @@ class PersonalizedContentGenerator:
             return content  # Return original if personalization fails
     
     async def _personalize_title(self, title: str, user_profile: UserProfile) -> str:
-        """Personalize content title based on user preferences"""
-        
+        """Personalize content title based on user preferences"""        
         # Simple personalization - in production would use NLP models
         personalized_title = title
         
@@ -828,8 +794,7 @@ class PersonalizedContentGenerator:
         return personalized_title
     
     async def _personalize_description(self, description: str, user_profile: UserProfile) -> str:
-        """Personalize content description"""
-        
+        """Personalize content description"""        
         # Add personalized context
         personalized_desc = description
         
@@ -842,8 +807,7 @@ class PersonalizedContentGenerator:
         return personalized_desc
     
     def _adjust_complexity(self, original_complexity: float, user_profile: UserProfile) -> float:
-        """Adjust content complexity based on user sophistication"""
-        
+        """Adjust content complexity based on user sophistication"""        
         user_sophistication = user_profile.content_sophistication
         
         # Gradually adjust complexity towards user preference
@@ -856,8 +820,7 @@ class PersonalizedContentGenerator:
         return max(0.0, min(1.0, adjusted_complexity))
     
     async def _personalize_tags(self, original_tags: List[str], user_profile: UserProfile) -> List[str]:
-        """Personalize content tags based on user interests"""
-        
+        """Personalize content tags based on user interests"""        
         personalized_tags = original_tags.copy()
         
         # Add relevant tags based on user preferences
@@ -871,10 +834,8 @@ class PersonalizedContentGenerator:
 
 
 class ContentAdaptationEngine:
-    """
-    Adapts content presentation and delivery based on user context.
-    """
-    
+    """    Adapts content presentation and delivery based on user context.
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
     
@@ -884,8 +845,7 @@ class ContentAdaptationEngine:
         user_profile: UserProfile,
         delivery_context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Adapt content presentation for specific user and context.
+        """        Adapt content presentation for specific user and context.
         
         Args:
             content: Content to adapt
@@ -894,8 +854,7 @@ class ContentAdaptationEngine:
             
         Returns:
             Adapted content presentation parameters
-        """
-        try:
+        """        try:
             adaptation = {
                 'content_id': content.content_id,
                 'user_id': user_profile.user_id,
@@ -941,8 +900,7 @@ class ContentAdaptationEngine:
             return {'error': str(e)}
     
     def _adapt_for_device(self, content: ContentItem, device_type: str) -> Dict[str, Any]:
-        """Adapt content for specific device type"""
-        
+        """Adapt content for specific device type"""        
         adaptations = {}
         
         if device_type == 'mobile':
@@ -975,8 +933,7 @@ class ContentAdaptationEngine:
         user_profile: UserProfile,
         current_time: datetime
     ) -> Dict[str, Any]:
-        """Adapt content based on time of day and user patterns"""
-        
+        """Adapt content based on time of day and user patterns"""        
         adaptations = {}
         hour = current_time.hour
         
@@ -1017,8 +974,7 @@ class ContentAdaptationEngine:
         user_profile: UserProfile,
         user_context: str
     ) -> Dict[str, Any]:
-        """Adapt content based on user's current context"""
-        
+        """Adapt content based on user's current context"""        
         adaptations = {}
         
         if user_context == 'commuting':
@@ -1053,8 +1009,7 @@ class ContentAdaptationEngine:
         content: ContentItem,
         user_profile: UserProfile
     ) -> Dict[str, Any]:
-        """Adapt content for accessibility needs"""
-        
+        """Adapt content for accessibility needs"""        
         adaptations = {}
         
         # Default accessibility features
@@ -1077,10 +1032,8 @@ class ContentAdaptationEngine:
 
 
 class ContentRankingEngine:
-    """
-    Ranks content based on multiple factors and user preferences.
-    """
-    
+    """    Ranks content based on multiple factors and user preferences.
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -1099,8 +1052,7 @@ class ContentRankingEngine:
         user_profile: UserProfile,
         ranking_context: Optional[Dict[str, Any]] = None
     ) -> List[Tuple[ContentItem, float]]:
-        """
-        Rank content items based on multiple factors.
+        """        Rank content items based on multiple factors.
         
         Args:
             content_items: Content to rank
@@ -1109,8 +1061,7 @@ class ContentRankingEngine:
             
         Returns:
             List of (content, score) tuples sorted by rank
-        """
-        try:
+        """        try:
             ranked_content = []
             
             for content in content_items:
@@ -1148,8 +1099,7 @@ class ContentRankingEngine:
         content: ContentItem,
         user_profile: UserProfile
     ) -> float:
-        """Calculate content relevance to user"""
-        
+        """Calculate content relevance to user"""        
         relevance = 0.0
         
         # Genre relevance
@@ -1168,12 +1118,10 @@ class ContentRankingEngine:
         return min(relevance, 1.0)
     
     def _calculate_quality_score(self, content: ContentItem) -> float:
-        """Calculate content quality score"""
-        return content.quality_score
+        """Calculate content quality score"""        return content.quality_score
     
     def _calculate_freshness_score(self, content: ContentItem) -> float:
-        """Calculate content freshness score"""
-        
+        """Calculate content freshness score"""        
         if not content.published_at:
             return 0.5  # Default for content without publish date
         
@@ -1192,8 +1140,7 @@ class ContentRankingEngine:
             return 0.2
     
     def _calculate_engagement_score(self, content: ContentItem) -> float:
-        """Calculate content engagement score"""
-        
+        """Calculate content engagement score"""        
         # Normalize engagement metrics
         # In production, these would be based on platform statistics
         max_views = 1000000
@@ -1222,8 +1169,7 @@ class ContentRankingEngine:
         all_content: List[ContentItem],
         user_profile: UserProfile
     ) -> float:
-        """Calculate diversity score to avoid too similar content"""
-        
+        """Calculate diversity score to avoid too similar content"""        
         # Simple diversity calculation based on genre distribution
         user_genres = list(user_profile.preferred_genres.keys())
         
@@ -1240,10 +1186,8 @@ class ContentRankingEngine:
 
 
 class ContentFilteringEngine:
-    """
-    Filters content based on various criteria and user preferences.
-    """
-    
+    """    Filters content based on various criteria and user preferences.
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
     
@@ -1253,8 +1197,7 @@ class ContentFilteringEngine:
         user_profile: UserProfile,
         filter_criteria: Dict[str, Any]
     ) -> List[ContentItem]:
-        """
-        Filter content based on criteria and user preferences.
+        """        Filter content based on criteria and user preferences.
         
         Args:
             content_items: Content to filter
@@ -1263,8 +1206,7 @@ class ContentFilteringEngine:
             
         Returns:
             Filtered content list
-        """
-        try:
+        """        try:
             filtered_content = content_items.copy()
             
             # Apply each filter
@@ -1314,32 +1256,28 @@ class ContentFilteringEngine:
         content_items: List[ContentItem],
         allowed_types: List[ContentType]
     ) -> List[ContentItem]:
-        """Filter by content type"""
-        return [c for c in content_items if c.content_type in allowed_types]
+        """Filter by content type"""        return [c for c in content_items if c.content_type in allowed_types]
     
     def _filter_by_genre(
         self,
         content_items: List[ContentItem],
         allowed_genres: List[str]
     ) -> List[ContentItem]:
-        """Filter by genre"""
-        return [c for c in content_items if c.genre in allowed_genres]
+        """Filter by genre"""        return [c for c in content_items if c.genre in allowed_genres]
     
     def _filter_by_quality(
         self,
         content_items: List[ContentItem],
         quality_threshold: float
     ) -> List[ContentItem]:
-        """Filter by quality threshold"""
-        return [c for c in content_items if c.quality_score >= quality_threshold]
+        """Filter by quality threshold"""        return [c for c in content_items if c.quality_score >= quality_threshold]
     
     def _filter_by_duration(
         self,
         content_items: List[ContentItem],
         duration_range: Tuple[float, float]
     ) -> List[ContentItem]:
-        """Filter by duration range"""
-        min_duration, max_duration = duration_range
+        """Filter by duration range"""        min_duration, max_duration = duration_range
         return [
             c for c in content_items
             if c.duration is not None and min_duration <= c.duration <= max_duration
@@ -1350,8 +1288,7 @@ class ContentFilteringEngine:
         content_items: List[ContentItem],
         user_profile: UserProfile
     ) -> List[ContentItem]:
-        """Exclude previously seen content"""
-        seen_content_ids = {
+        """Exclude previously seen content"""        seen_content_ids = {
             i.get('content_id') for i in user_profile.interaction_history
             if i.get('content_id')
         }
@@ -1363,16 +1300,14 @@ class ContentFilteringEngine:
         content_items: List[ContentItem],
         preferred_language: str
     ) -> List[ContentItem]:
-        """Filter by language preference"""
-        return [c for c in content_items if c.language == preferred_language]
+        """Filter by language preference"""        return [c for c in content_items if c.language == preferred_language]
     
     async def _apply_user_filters(
         self,
         content_items: List[ContentItem],
         user_profile: UserProfile
     ) -> List[ContentItem]:
-        """Apply user-specific filtering rules"""
-        
+        """Apply user-specific filtering rules"""        
         # Filter by user's minimum quality expectations
         min_quality = user_profile.content_sophistication * 0.7
         content_items = [c for c in content_items if c.quality_score >= min_quality]

@@ -24,8 +24,7 @@ BACKUP STRATEGY:
 🔐 Encrypted: Chiffrement bout-en-bout AES-256
 ☁️ Multi-cloud: AWS S3 + Azure + Google Cloud redundancy
 🎯 Point-in-time: Récupération à n'importe quel moment
-"""
-__version__ = "3.0.0"
+"""__version__ = "3.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 __team__ = "Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices"
 
@@ -52,8 +51,7 @@ from .index import BackupIndex
 
 # Backup Types Enumeration
 class BackupType(str, Enum):
-    """Types de sauvegarde supportés"""
-    FULL = "full"                    # Sauvegarde complète
+    """Types de sauvegarde supportés"""    FULL = "full"                    # Sauvegarde complète
     INCREMENTAL = "incremental"      # Sauvegarde incrémentale
     DIFFERENTIAL = "differential"    # Sauvegarde différentielle
     REALTIME = "realtime"           # Sauvegarde temps réel

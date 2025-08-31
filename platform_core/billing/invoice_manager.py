@@ -1,5 +1,4 @@
-"""
-🚀 Invoice Manager - IA Influencer Agent Platform Enterprise
+"""🚀 Invoice Manager - IA Influencer Agent Platform Enterprise
 ==========================================================
 Module: backend/platform_core/billing/invoice_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -15,9 +14,7 @@ Génération et gestion complète des factures enterprise
 - Templates PDF personnalisables et multi-langue
 - Comptabilité analytique et réconciliation
 - Export comptable (SAP, QuickBooks, etc.)
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 import uuid
@@ -41,8 +38,7 @@ from jinja2 import Template
 logger = logging.getLogger(__name__)
 
 class InvoiceStatus(Enum):
-    """États des factures"""
-    DRAFT = "draft"
+    """États des factures"""    DRAFT = "draft"
     PENDING = "pending"
     SENT = "sent"
     VIEWED = "viewed"
@@ -53,8 +49,7 @@ class InvoiceStatus(Enum):
     REFUNDED = "refunded"
 
 class InvoiceType(Enum):
-    """Types de factures"""
-    STANDARD = "standard"
+    """Types de factures"""    STANDARD = "standard"
     RECURRING = "recurring"
     CREDIT_NOTE = "credit_note"
     DEBIT_NOTE = "debit_note"
@@ -63,8 +58,7 @@ class InvoiceType(Enum):
 
 @dataclass
 class InvoiceItem:
-    """Ligne de facture"""
-    item_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Ligne de facture"""    item_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     description: str = ""
     quantity: Decimal = Decimal("1.0")
     unit_price: Decimal = Decimal("0.0")
@@ -78,33 +72,27 @@ class InvoiceItem:
     
     @property
     def subtotal(self) -> Decimal:
-        """Sous-total avant remise"""
-        return self.quantity * self.unit_price
+        """Sous-total avant remise"""        return self.quantity * self.unit_price
         
     @property
     def discount_amount(self) -> Decimal:
-        """Montant de la remise"""
-        return self.subtotal * (self.discount_percentage / Decimal("100"))
+        """Montant de la remise"""        return self.subtotal * (self.discount_percentage / Decimal("100"))
         
     @property
     def net_amount(self) -> Decimal:
-        """Montant net après remise"""
-        return self.subtotal - self.discount_amount
+        """Montant net après remise"""        return self.subtotal - self.discount_amount
         
     @property
     def tax_amount(self) -> Decimal:
-        """Montant des taxes"""
-        return self.net_amount * (self.tax_percentage / Decimal("100"))
+        """Montant des taxes"""        return self.net_amount * (self.tax_percentage / Decimal("100"))
         
     @property
     def total(self) -> Decimal:
-        """Total TTC"""
-        return self.net_amount + self.tax_amount
+        """Total TTC"""        return self.net_amount + self.tax_amount
 
 @dataclass
 class InvoiceAddress:
-    """Adresse de facturation/livraison"""
-    name: str = ""
+    """Adresse de facturation/livraison"""    name: str = ""
     company: Optional[str] = None
     address_line1: str = ""
     address_line2: Optional[str] = None
@@ -115,8 +103,7 @@ class InvoiceAddress:
     tax_number: Optional[str] = None
     
     def format_address(self) -> str:
-        """Formate l'adresse en texte"""
-        lines = []
+        """Formate l'adresse en texte"""        lines = []
         if self.company:
             lines.append(self.company)
         lines.append(self.name)
@@ -129,8 +116,7 @@ class InvoiceAddress:
 
 @dataclass
 class Invoice:
-    """Facture complète"""
-    invoice_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Facture complète"""    invoice_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     invoice_number: str = ""
     customer_id: str = ""
     
@@ -176,13 +162,11 @@ class Invoice:
     
     @property
     def subtotal(self) -> Decimal:
-        """Sous-total de tous les items"""
-        return sum(item.subtotal for item in self.items)
+        """Sous-total de tous les items"""        return sum(item.subtotal for item in self.items)
         
     @property
     def total_discount(self) -> Decimal:
-        """Total des remises"""
-        items_discount = sum(item.discount_amount for item in self.items)
+        """Total des remises"""        items_discount = sum(item.discount_amount for item in self.items)
         global_discount = self.global_discount_amount
         if self.global_discount_percentage > 0:
             global_discount = self.subtotal * (self.global_discount_percentage / Decimal("100"))
@@ -190,39 +174,32 @@ class Invoice:
         
     @property
     def net_amount(self) -> Decimal:
-        """Montant net après toutes les remises"""
-        return self.subtotal - self.total_discount + self.shipping_cost
+        """Montant net après toutes les remises"""        return self.subtotal - self.total_discount + self.shipping_cost
         
     @property
     def total_tax(self) -> Decimal:
-        """Total des taxes"""
-        return sum(item.tax_amount for item in self.items)
+        """Total des taxes"""        return sum(item.tax_amount for item in self.items)
         
     @property
     def total_amount(self) -> Decimal:
-        """Montant total TTC"""
-        return self.net_amount + self.total_tax
+        """Montant total TTC"""        return self.net_amount + self.total_tax
         
     @property
     def amount_paid(self) -> Decimal:
-        """Montant payé"""
-        return sum(Decimal(str(payment.get("amount", 0))) for payment in self.payments)
+        """Montant payé"""        return sum(Decimal(str(payment.get("amount", 0))) for payment in self.payments)
         
     @property
     def amount_due(self) -> Decimal:
-        """Montant dû"""
-        return self.total_amount - self.amount_paid
+        """Montant dû"""        return self.total_amount - self.amount_paid
         
     @property
     def is_overdue(self) -> bool:
-        """Vérifie si la facture est en retard"""
-        if not self.due_at or self.status in [InvoiceStatus.PAID, InvoiceStatus.CANCELLED]:
+        """Vérifie si la facture est en retard"""        if not self.due_at or self.status in [InvoiceStatus.PAID, InvoiceStatus.CANCELLED]:
             return False
         return datetime.utcnow() > self.due_at
         
     def add_item(self, description: str, quantity: Decimal, unit_price: Decimal, **kwargs) -> InvoiceItem:
-        """Ajoute une ligne à la facture"""
-        item = InvoiceItem(
+        """Ajoute une ligne à la facture"""        item = InvoiceItem(
             description=description,
             quantity=quantity,
             unit_price=unit_price,
@@ -232,8 +209,7 @@ class Invoice:
         return item
         
     def add_payment(self, amount: Decimal, payment_method: str, transaction_id: str, **kwargs):
-        """Ajoute un paiement à la facture"""
-        payment = {
+        """Ajoute un paiement à la facture"""        payment = {
             "payment_id": str(uuid.uuid4()),
             "amount": float(amount),
             "payment_method": payment_method,
@@ -251,8 +227,7 @@ class Invoice:
             self.status = InvoiceStatus.PARTIAL_PAID
 
 class InvoiceTemplate:
-    """Template de facture personnalisable"""
-    
+    """Template de facture personnalisable"""    
     def __init__(self, template_id: str, name: str):
         self.template_id = template_id
         self.name = name
@@ -261,8 +236,7 @@ class InvoiceTemplate:
         self.layout_config = {}
         
     def generate_pdf(self, invoice: Invoice) -> bytes:
-        """Génère un PDF de facture"""
-        buffer = io.BytesIO()
+        """Génère un PDF de facture"""        buffer = io.BytesIO()
         
         # Créer le document PDF
         doc = SimpleDocTemplate(buffer, pagesize=A4)
@@ -366,8 +340,7 @@ class InvoiceTemplate:
         return pdf_bytes
         
     def _get_company_header(self) -> str:
-        """Génère l'en-tête société"""
-        company = self.company_info
+        """Génère l'en-tête société"""        company = self.company_info
         header = f"<b>{company.get('name', 'Votre Société')}</b><br/>"
         if company.get('address'):
             header += f"{company['address']}<br/>"
@@ -380,8 +353,7 @@ class InvoiceTemplate:
         return header
         
     def _get_invoice_header(self, invoice: Invoice) -> str:
-        """Génère l'en-tête facture"""
-        header = f"<b>FACTURE</b><br/>"
+        """Génère l'en-tête facture"""        header = f"<b>FACTURE</b><br/>"
         header += f"N°: {invoice.invoice_number}<br/>"
         if invoice.issued_at:
             header += f"Date: {invoice.issued_at.strftime('%d/%m/%Y')}<br/>"
@@ -392,8 +364,7 @@ class InvoiceTemplate:
         return header
 
 class InvoiceManager:
-    """Gestionnaire de factures enterprise"""
-    
+    """Gestionnaire de factures enterprise"""    
     def __init__(self, database_client: Optional[Any] = None):
         self.database_client = database_client
         self.templates: Dict[str, InvoiceTemplate] = {}
@@ -405,8 +376,7 @@ class InvoiceManager:
         self._load_default_templates()
         
     def _load_default_templates(self):
-        """Charge les templates par défaut"""
-        default_template = InvoiceTemplate("default", "Template Standard")
+        """Charge les templates par défaut"""        default_template = InvoiceTemplate("default", "Template Standard")
         default_template.company_info = {
             "name": "IA Influencer Agent Platform",
             "address": "123 AI Street, Tech City, TC 12345",
@@ -417,8 +387,7 @@ class InvoiceManager:
         self.templates["default"] = default_template
         
     async def create_invoice(self, customer_id: str, **kwargs) -> Invoice:
-        """Crée une nouvelle facture"""
-        invoice = Invoice(
+        """Crée une nouvelle facture"""        invoice = Invoice(
             customer_id=customer_id,
             **kwargs
         )
@@ -439,20 +408,17 @@ class InvoiceManager:
         return invoice
         
     async def get_invoice(self, invoice_id: str) -> Optional[Invoice]:
-        """Récupère une facture par ID"""
-        if self.database_client:
+        """Récupère une facture par ID"""        if self.database_client:
             return await self._load_invoice(invoice_id)
         return None
         
     async def update_invoice(self, invoice: Invoice):
-        """Met à jour une facture"""
-        if self.database_client:
+        """Met à jour une facture"""        if self.database_client:
             await self._save_invoice(invoice)
         logger.info(f"Facture mise à jour: {invoice.invoice_number}")
         
     async def send_invoice(self, invoice: Invoice, recipient_email: str) -> bool:
-        """Envoie une facture par email"""
-        try:
+        """Envoie une facture par email"""        try:
             # Générer le PDF
             template = self.templates.get(invoice.template_id or "default")
             pdf_data = template.generate_pdf(invoice)
@@ -473,15 +439,13 @@ class InvoiceManager:
             return False
             
     async def mark_as_paid(self, invoice: Invoice, amount: Decimal, payment_method: str, transaction_id: str):
-        """Marque une facture comme payée"""
-        invoice.add_payment(amount, payment_method, transaction_id)
+        """Marque une facture comme payée"""        invoice.add_payment(amount, payment_method, transaction_id)
         await self.update_invoice(invoice)
         
         logger.info(f"Paiement enregistré pour facture {invoice.invoice_number}: {amount} via {payment_method}")
         
     async def cancel_invoice(self, invoice: Invoice, reason: str = ""):
-        """Annule une facture"""
-        invoice.status = InvoiceStatus.CANCELLED
+        """Annule une facture"""        invoice.status = InvoiceStatus.CANCELLED
         if reason:
             invoice.notes += f"\nAnnulée: {reason}"
         await self.update_invoice(invoice)
@@ -489,8 +453,7 @@ class InvoiceManager:
         logger.info(f"Facture {invoice.invoice_number} annulée: {reason}")
         
     async def create_credit_note(self, original_invoice: Invoice, items: List[InvoiceItem], reason: str = "") -> Invoice:
-        """Crée une note de crédit"""
-        credit_note = Invoice(
+        """Crée une note de crédit"""        credit_note = Invoice(
             customer_id=original_invoice.customer_id,
             invoice_type=InvoiceType.CREDIT_NOTE,
             currency=original_invoice.currency,
@@ -510,8 +473,7 @@ class InvoiceManager:
         return credit_note
         
     async def get_overdue_invoices(self, days_overdue: int = 0) -> List[Invoice]:
-        """Récupère les factures en retard"""
-        if not self.database_client:
+        """Récupère les factures en retard"""        if not self.database_client:
             return []
             
         cutoff_date = datetime.utcnow() - timedelta(days=days_overdue)
@@ -520,20 +482,17 @@ class InvoiceManager:
         return []
         
     async def generate_invoice_pdf(self, invoice: Invoice) -> bytes:
-        """Génère le PDF d'une facture"""
-        template = self.templates.get(invoice.template_id or "default")
+        """Génère le PDF d'une facture"""        template = self.templates.get(invoice.template_id or "default")
         return template.generate_pdf(invoice)
         
     async def _generate_invoice_number(self) -> str:
-        """Génère un numéro de facture unique"""
-        # Dans un vrai système, on récupérerait le dernier numéro en base
+        """Génère un numéro de facture unique"""        # Dans un vrai système, on récupérerait le dernier numéro en base
         number = f"{self.numbering_prefix}-{self.numbering_sequence:06d}"
         self.numbering_sequence += 1
         return number
         
     async def _save_invoice(self, invoice: Invoice):
-        """Sauvegarde une facture en base"""
-        try:
+        """Sauvegarde une facture en base"""        try:
             # Convert invoice to dict for storage
             invoice_data = {
                 "invoice_id": invoice.invoice_id,
@@ -577,8 +536,7 @@ class InvoiceManager:
             raise
         
     async def _load_invoice(self, invoice_id: str) -> Optional[Invoice]:
-        """Charge une facture depuis la base"""
-        try:
+        """Charge une facture depuis la base"""        try:
             invoice_data = None
             
             # In production environment with database client
@@ -626,8 +584,7 @@ class InvoiceManager:
             return None
         
     def get_invoice_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques des factures"""
-        return {
+        """Retourne les statistiques des factures"""        return {
             "templates_count": len(self.templates),
             "auto_numbering": self.auto_numbering_enabled,
             "current_sequence": self.numbering_sequence,

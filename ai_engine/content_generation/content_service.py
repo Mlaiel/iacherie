@@ -1,5 +1,4 @@
-"""
-Content Service - Business logic layer for content generation
+"""Content Service - Business logic layer for content generation
 
 Professional service layer that orchestrates content generation workflows,
 manages business rules, and provides high-level API for content operations.
@@ -9,9 +8,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Union
 from datetime import datetime, timedelta
@@ -30,8 +27,7 @@ from .marketing_templates import MarketingTemplates
 
 
 class ContentService:
-    """
-    High-level content service that provides:
+    """    High-level content service that provides:
     
     - Unified content generation API
     - Business rule enforcement
@@ -41,11 +37,9 @@ class ContentService:
     - Multi-platform optimization
     - Automated content enhancement
     - Analytics and reporting
-    """
-    
+    """    
     def __init__(self):
-        """Initialize content service"""
-        self.logger = logging.getLogger(self.__class__.__name__)
+        """Initialize content service"""        self.logger = logging.getLogger(self.__class__.__name__)
         
         # Initialize core components
         manager_config = {
@@ -115,8 +109,7 @@ class ContentService:
         workflow: Optional[str] = None,
         auto_enhance: bool = True
     ) -> Dict[str, Any]:
-        """
-        Create content using specified workflow.
+        """        Create content using specified workflow.
         
         Args:
             content_type: Type of content to create
@@ -126,8 +119,7 @@ class ContentService:
             
         Returns:
             Complete content creation result
-        """
-        try:
+        """        try:
             # Generate unique content ID
             content_id = str(uuid.uuid4())
             
@@ -222,8 +214,7 @@ class ContentService:
         template_data: Dict[str, Any],
         platform: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Create content from template.
+        """        Create content from template.
         
         Args:
             template_type: Type of template (social, blog, marketing)
@@ -233,8 +224,7 @@ class ContentService:
             
         Returns:
             Template-based content result
-        """
-        try:
+        """        try:
             content_id = str(uuid.uuid4())
             
             # Get appropriate template engine
@@ -298,8 +288,7 @@ class ContentService:
         target_platform: Optional[str] = None,
         optimization_params: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Optimize existing content.
+        """        Optimize existing content.
         
         Args:
             content: Content to optimize
@@ -309,8 +298,7 @@ class ContentService:
             
         Returns:
             Optimization result
-        """
-        try:
+        """        try:
             content_id = str(uuid.uuid4())
             params = optimization_params or {}
             
@@ -381,8 +369,7 @@ class ContentService:
         content_id: str,
         platform_metrics: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Analyze content performance and generate insights.
+        """        Analyze content performance and generate insights.
         
         Args:
             content_id: Content identifier
@@ -390,8 +377,7 @@ class ContentService:
             
         Returns:
             Performance analysis with insights
-        """
-        try:
+        """        try:
             # Extract platform and content type from metrics
             platform = platform_metrics.get('platform', 'unknown')
             content_type = platform_metrics.get('content_type', 'post')
@@ -430,8 +416,7 @@ class ContentService:
         platform: Optional[str] = None,
         performance_data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Get content recommendations based on performance data and best practices.
+        """        Get content recommendations based on performance data and best practices.
         
         Args:
             content_type: Type of content
@@ -441,8 +426,7 @@ class ContentService:
             
         Returns:
             Content recommendations
-        """
-        try:
+        """        try:
             recommendations = {
                 'content_type': content_type,
                 'target_audience': target_audience,
@@ -490,8 +474,7 @@ class ContentService:
             }
     
     def _determine_workflow(self, content_type: str) -> str:
-        """Determine workflow based on content type"""
-        workflow_mapping = {
+        """Determine workflow based on content type"""        workflow_mapping = {
             'instagram_post': 'social_media',
             'twitter_post': 'social_media', 
             'linkedin_post': 'social_media',
@@ -513,8 +496,7 @@ class ContentService:
         request_data: Dict[str, Any],
         current_content: Optional[str]
     ) -> Dict[str, Any]:
-        """Execute a specific workflow step"""
-        
+        """Execute a specific workflow step"""        
         if step == 'generate':
             # Use generation manager for initial content creation
             return await self.generation_manager.generate_content(request_data)
@@ -563,8 +545,7 @@ class ContentService:
         content_type: str,
         result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate content against business rules"""
-        validation = {
+        """Validate content against business rules"""        validation = {
             'passed': True,
             'violations': [],
             'warnings': []
@@ -598,8 +579,7 @@ class ContentService:
         platform: str,
         content_type: str
     ) -> List[str]:
-        """Get platform-specific recommendations"""
-        recommendations = {
+        """Get platform-specific recommendations"""        recommendations = {
             'instagram': [
                 "Use high-quality visuals",
                 "Include relevant hashtags (5-30)",
@@ -633,8 +613,7 @@ class ContentService:
         return recommendations.get(platform, [])
     
     async def _get_content_best_practices(self, content_type: str) -> List[str]:
-        """Get content type best practices"""
-        practices = {
+        """Get content type best practices"""        practices = {
             'blog_post': [
                 "Use clear headings and subheadings",
                 "Include actionable tips",
@@ -666,8 +645,7 @@ class ContentService:
         content_type: str,
         platform: Optional[str]
     ) -> List[str]:
-        """Analyze performance data to generate optimization tips"""
-        tips = []
+        """Analyze performance data to generate optimization tips"""        tips = []
         
         # Analyze engagement rate
         engagement_rate = performance_data.get('engagement_rate', 0)

@@ -1,5 +1,4 @@
-"""
-🖼️ Image Content Migrations - Advanced Image Processing & Protection Schema Evolution
+"""🖼️ Image Content Migrations - Advanced Image Processing & Protection Schema Evolution
 ===================================================================================
 Module: backend/database/migrations/image_migrations.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -24,9 +23,7 @@ Image Content Types Supported:
 - Social Media Content: Posts, stories, covers, thumbnails
 - Brand Assets: Logos, banners, promotional materials
 - NFT Artwork: Digital collectibles, crypto art
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Tuple, Any, Union
 from datetime import datetime, timedelta
@@ -48,8 +45,7 @@ logger = logging.getLogger(__name__)
 
 
 class ImageFormat(Enum):
-    """Supported image formats with quality levels"""
-    JPEG = "jpeg"
+    """Supported image formats with quality levels"""    JPEG = "jpeg"
     PNG = "png"
     WEBP = "webp"
     TIFF = "tiff"
@@ -61,8 +57,7 @@ class ImageFormat(Enum):
 
 
 class ImageQuality(Enum):
-    """Image quality classifications"""
-    LOW_RESOLUTION = "low_resolution"    # <1MP
+    """Image quality classifications"""    LOW_RESOLUTION = "low_resolution"    # <1MP
     STANDARD_RESOLUTION = "standard_resolution"  # 1-5MP
     HIGH_RESOLUTION = "high_resolution"  # 5-20MP
     ULTRA_HIGH_RESOLUTION = "ultra_high_resolution"  # >20MP
@@ -70,8 +65,7 @@ class ImageQuality(Enum):
 
 
 class ImageContentType(Enum):
-    """Image content categorization"""
-    PHOTOGRAPHY = "photography"
+    """Image content categorization"""    PHOTOGRAPHY = "photography"
     DIGITAL_ART = "digital_art"
     STOCK_IMAGE = "stock_image"
     SOCIAL_MEDIA = "social_media"
@@ -83,8 +77,7 @@ class ImageContentType(Enum):
 
 @dataclass
 class ImageMigrationConfiguration:
-    """Migration configuration for image processing systems"""
-    enable_object_detection: bool = True
+    """Migration configuration for image processing systems"""    enable_object_detection: bool = True
     enable_face_recognition: bool = True
     enable_color_analysis: bool = True
     enable_style_classification: bool = True
@@ -94,8 +87,7 @@ class ImageMigrationConfiguration:
 
 
 class ImageMigrations:
-    """
-    Ultra-advanced image database migrations for professional image content management
+    """    Ultra-advanced image database migrations for professional image content management
     
     Handles schema evolution for:
     - Image file metadata and technical specifications
@@ -103,21 +95,17 @@ class ImageMigrations:
     - AI-powered image analysis and classification
     - Professional image quality assessment
     - Multi-resolution image processing pipelines
-    """
-    
+    """    
     def __init__(self, migration_manager: EnterpriseMigrationManager):
         self.migration_manager = migration_manager
         self.logger = logging.getLogger(__name__)
     
     async def create_image_files_table(self) -> str:
-        """
-        Create comprehensive image files table with professional metadata support
+        """        Create comprehensive image files table with professional metadata support
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        CREATE TABLE IF NOT EXISTS image_files (
+        """        migration_sql = """        CREATE TABLE IF NOT EXISTS image_files (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             content_id UUID NOT NULL REFERENCES content_items(id) ON DELETE CASCADE,
             creator_id UUID NOT NULL REFERENCES creator_profiles(id) ON DELETE CASCADE,
@@ -287,8 +275,7 @@ class ImageMigrations:
         CREATE INDEX IF NOT EXISTS idx_image_files_style ON image_files USING GIN(style_analysis);
         CREATE INDEX IF NOT EXISTS idx_image_files_tags ON image_files USING GIN(ai_tags);
         CREATE INDEX IF NOT EXISTS idx_image_files_colors_array ON image_files USING GIN(dominant_colors);
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.SCHEMA,
@@ -297,14 +284,11 @@ class ImageMigrations:
         )
     
     async def create_image_objects_table(self) -> str:
-        """
-        Create image objects table for detailed object detection results
+        """        Create image objects table for detailed object detection results
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        CREATE TABLE IF NOT EXISTS image_objects (
+        """        migration_sql = """        CREATE TABLE IF NOT EXISTS image_objects (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             image_file_id UUID NOT NULL REFERENCES image_files(id) ON DELETE CASCADE,
             
@@ -375,8 +359,7 @@ class ImageMigrations:
         -- JSONB indexes for attributes
         CREATE INDEX IF NOT EXISTS idx_image_objects_attributes ON image_objects USING GIN(object_attributes);
         CREATE INDEX IF NOT EXISTS idx_image_objects_relationships ON image_objects USING GIN(spatial_relationships);
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.SCHEMA,
@@ -385,14 +368,11 @@ class ImageMigrations:
         )
     
     async def create_image_faces_table(self) -> str:
-        """
-        Create image faces table for face detection and recognition
+        """        Create image faces table for face detection and recognition
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        CREATE TABLE IF NOT EXISTS image_faces (
+        """        migration_sql = """        CREATE TABLE IF NOT EXISTS image_faces (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             image_file_id UUID NOT NULL REFERENCES image_files(id) ON DELETE CASCADE,
             
@@ -479,8 +459,7 @@ class ImageMigrations:
         -- Face encoding similarity search (if using vector similarity)
         -- This would require pgvector extension for production use
         -- CREATE INDEX IF NOT EXISTS idx_image_faces_encoding ON image_faces USING ivfflat (face_encoding vector_cosine_ops);
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.SCHEMA,
@@ -489,14 +468,11 @@ class ImageMigrations:
         )
     
     async def create_image_fingerprints_table(self) -> str:
-        """
-        Create specialized image fingerprints table for advanced protection
+        """        Create specialized image fingerprints table for advanced protection
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        CREATE TABLE IF NOT EXISTS image_fingerprints (
+        """        migration_sql = """        CREATE TABLE IF NOT EXISTS image_fingerprints (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             image_file_id UUID NOT NULL REFERENCES image_files(id) ON DELETE CASCADE,
             
@@ -595,8 +571,7 @@ class ImageMigrations:
         CREATE INDEX IF NOT EXISTS idx_image_fingerprints_keypoints ON image_fingerprints USING GIN(keypoints);
         CREATE INDEX IF NOT EXISTS idx_image_fingerprints_params ON image_fingerprints USING GIN(algorithm_parameters);
         CREATE INDEX IF NOT EXISTS idx_image_fingerprints_preprocessing ON image_fingerprints USING GIN(preprocessing_applied);
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.SCHEMA,
@@ -605,14 +580,11 @@ class ImageMigrations:
         )
     
     async def create_image_analytics_table(self) -> str:
-        """
-        Create image-specific analytics table for performance tracking
+        """        Create image-specific analytics table for performance tracking
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        CREATE TABLE IF NOT EXISTS image_analytics (
+        """        migration_sql = """        CREATE TABLE IF NOT EXISTS image_analytics (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             image_file_id UUID NOT NULL REFERENCES image_files(id) ON DELETE CASCADE,
             
@@ -687,8 +659,7 @@ class ImageMigrations:
         CREATE INDEX IF NOT EXISTS idx_image_analytics_geo ON image_analytics USING GIN(country_breakdown);
         CREATE INDEX IF NOT EXISTS idx_image_analytics_platforms ON image_analytics USING GIN(platform_views);
         CREATE INDEX IF NOT EXISTS idx_image_analytics_tags ON image_analytics USING GIN(tag_clicks);
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.SCHEMA,
@@ -697,16 +668,14 @@ class ImageMigrations:
         )
     
     async def execute_full_image_migration(self, config: ImageMigrationConfiguration) -> List[str]:
-        """
-        Execute complete image database migration according to configuration
+        """        Execute complete image database migration according to configuration
         
         Args:
             config: ImageMigrationConfiguration with specific settings
             
         Returns:
             List[str]: Migration IDs for tracking
-        """
-        migration_ids = []
+        """        migration_ids = []
         
         try:
             self.logger.info("Starting comprehensive image database migration")
@@ -732,14 +701,11 @@ class ImageMigrations:
             raise
     
     async def add_image_performance_optimizations(self) -> str:
-        """
-        Add performance optimizations for image processing workloads
+        """        Add performance optimizations for image processing workloads
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        -- Partitioning for image analytics by date
+        """        migration_sql = """        -- Partitioning for image analytics by date
         CREATE TABLE IF NOT EXISTS image_analytics_partitioned (
             LIKE image_analytics INCLUDING DEFAULTS INCLUDING CONSTRAINTS
         ) PARTITION BY RANGE (analytics_date);
@@ -768,8 +734,7 @@ class ImageMigrations:
         CREATE INDEX IF NOT EXISTS idx_image_hash_similarity
         ON image_fingerprints USING GIN(perceptual_hash_64 gin_trgm_ops)
         WHERE perceptual_hash_64 IS NOT NULL;
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.OPTIMIZATION,

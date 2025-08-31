@@ -1,5 +1,4 @@
-"""
-Data Management Module - Enterprise Observability Data Lifecycle
+"""Data Management Module - Enterprise Observability Data Lifecycle
 
 Provides comprehensive data management for observability data including
 storage, retention, archival, purging, compression, and lifecycle policies
@@ -13,9 +12,7 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 import gzip
@@ -58,8 +55,7 @@ except ImportError:
 
 
 class DataType(Enum):
-    """Types of observability data"""
-    LOGS = "logs"
+    """Types of observability data"""    LOGS = "logs"
     METRICS = "metrics"
     TRACES = "traces"
     ANALYTICS = "analytics"
@@ -70,8 +66,7 @@ class DataType(Enum):
 
 
 class StorageTier(Enum):
-    """Storage tiers for data lifecycle"""
-    HOT = "hot"          # Recent data, fast access
+    """Storage tiers for data lifecycle"""    HOT = "hot"          # Recent data, fast access
     WARM = "warm"        # Older data, medium access speed
     COLD = "cold"        # Archived data, slow access
     FROZEN = "frozen"    # Long-term archive, very slow access
@@ -79,8 +74,7 @@ class StorageTier(Enum):
 
 
 class CompressionType(Enum):
-    """Data compression algorithms"""
-    NONE = "none"
+    """Data compression algorithms"""    NONE = "none"
     GZIP = "gzip"
     LZ4 = "lz4"
     ZSTD = "zstd"
@@ -88,8 +82,7 @@ class CompressionType(Enum):
 
 
 class DataStatus(Enum):
-    """Status of data records"""
-    ACTIVE = "active"
+    """Status of data records"""    ACTIVE = "active"
     ARCHIVED = "archived"
     COMPRESSED = "compressed"
     SCHEDULED_DELETE = "scheduled_delete"
@@ -99,8 +92,7 @@ class DataStatus(Enum):
 
 @dataclass
 class DataRecord:
-    """Represents a data record in the system"""
-    record_id: str
+    """Represents a data record in the system"""    record_id: str
     data_type: DataType
     storage_tier: StorageTier
     compression: CompressionType
@@ -117,8 +109,7 @@ class DataRecord:
     tags: Set[str] = field(default_factory=set)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        result = asdict(self)
+        """Convert to dictionary"""        result = asdict(self)
         result['data_type'] = self.data_type.value
         result['storage_tier'] = self.storage_tier.value
         result['compression'] = self.compression.value
@@ -130,24 +121,20 @@ class DataRecord:
         return result
     
     def get_age_days(self) -> int:
-        """Get age of record in days"""
-        return (datetime.utcnow() - self.created_at).days
+        """Get age of record in days"""        return (datetime.utcnow() - self.created_at).days
     
     def is_compressed(self) -> bool:
-        """Check if record is compressed"""
-        return self.compression != CompressionType.NONE
+        """Check if record is compressed"""        return self.compression != CompressionType.NONE
     
     def compression_ratio(self) -> float:
-        """Calculate compression ratio"""
-        if self.compressed_size_bytes > 0 and self.size_bytes > 0:
+        """Calculate compression ratio"""        if self.compressed_size_bytes > 0 and self.size_bytes > 0:
             return self.compressed_size_bytes / self.size_bytes
         return 1.0
 
 
 @dataclass
 class RetentionPolicy:
-    """Data retention policy configuration"""
-    policy_id: str
+    """Data retention policy configuration"""    policy_id: str
     name: str
     description: str
     data_types: List[DataType]
@@ -163,8 +150,7 @@ class RetentionPolicy:
     enabled: bool = True
     
     def applies_to_record(self, record: DataRecord) -> bool:
-        """Check if policy applies to a data record"""
-        if not self.enabled:
+        """Check if policy applies to a data record"""        if not self.enabled:
             return False
         
         # Check data type
@@ -184,8 +170,7 @@ class RetentionPolicy:
         return True
     
     def get_target_tier(self, record: DataRecord) -> StorageTier:
-        """Determine target storage tier for record"""
-        age_days = record.get_age_days()
+        """Determine target storage tier for record"""        age_days = record.get_age_days()
         
         if age_days >= self.purge_after_days:
             return StorageTier.DELETED
@@ -199,14 +184,12 @@ class RetentionPolicy:
             return StorageTier.HOT
     
     def should_compress(self, record: DataRecord) -> bool:
-        """Check if record should be compressed"""
-        return (record.get_age_days() >= self.compression_after_days and 
+        """Check if record should be compressed"""        return (record.get_age_days() >= self.compression_after_days and 
                 record.compression == CompressionType.NONE)
 
 
 class BaseStorageBackend(ABC):
-    """Abstract base class for storage backends"""
-    
+    """Abstract base class for storage backends"""    
     def __init__(self, name: str, config: Dict[str, Any]):
         self.name = name
         self.config = config
@@ -214,33 +197,27 @@ class BaseStorageBackend(ABC):
     
     @abstractmethod
     async def store_data(self, record_id: str, data: bytes, metadata: Dict[str, Any] = None) -> str:
-        """Store data and return file path"""
-        pass
+        """Store data and return file path"""        pass
     
     @abstractmethod
     async def retrieve_data(self, file_path: str) -> bytes:
-        """Retrieve data from storage"""
-        pass
+        """Retrieve data from storage"""        pass
     
     @abstractmethod
     async def delete_data(self, file_path: str) -> bool:
-        """Delete data from storage"""
-        pass
+        """Delete data from storage"""        pass
     
     @abstractmethod
     async def list_files(self, prefix: str = "") -> List[str]:
-        """List files with optional prefix"""
-        pass
+        """List files with optional prefix"""        pass
     
     @abstractmethod
     async def get_file_info(self, file_path: str) -> Dict[str, Any]:
-        """Get file information"""
-        pass
+        """Get file information"""        pass
 
 
 class FileSystemStorageBackend(BaseStorageBackend):
-    """File system storage backend"""
-    
+    """File system storage backend"""    
     def __init__(self, config: Dict[str, Any]):
         super().__init__("filesystem", config)
         self.base_path = Path(config.get("base_path", "/var/data/observability"))
@@ -253,8 +230,7 @@ class FileSystemStorageBackend(BaseStorageBackend):
                 tier_path.mkdir(exist_ok=True)
     
     async def store_data(self, record_id: str, data: bytes, metadata: Dict[str, Any] = None) -> str:
-        """Store data to filesystem"""
-        # Determine storage tier from metadata
+        """Store data to filesystem"""        # Determine storage tier from metadata
         tier = metadata.get("tier", StorageTier.HOT.value) if metadata else StorageTier.HOT.value
         data_type = metadata.get("data_type", "unknown") if metadata else "unknown"
         
@@ -274,8 +250,7 @@ class FileSystemStorageBackend(BaseStorageBackend):
         return str(relative_path)
     
     async def retrieve_data(self, file_path: str) -> bytes:
-        """Retrieve data from filesystem"""
-        full_path = self.base_path / file_path
+        """Retrieve data from filesystem"""        full_path = self.base_path / file_path
         
         if not full_path.exists():
             raise FileNotFoundError(f"Data file not found: {file_path}")
@@ -287,8 +262,7 @@ class FileSystemStorageBackend(BaseStorageBackend):
         return data
     
     async def delete_data(self, file_path: str) -> bool:
-        """Delete data from filesystem"""
-        try:
+        """Delete data from filesystem"""        try:
             full_path = self.base_path / file_path
             if full_path.exists():
                 full_path.unlink()
@@ -300,8 +274,7 @@ class FileSystemStorageBackend(BaseStorageBackend):
             return False
     
     async def list_files(self, prefix: str = "") -> List[str]:
-        """List files with optional prefix"""
-        files = []
+        """List files with optional prefix"""        files = []
         search_path = self.base_path / prefix if prefix else self.base_path
         
         if search_path.is_dir():
@@ -312,8 +285,7 @@ class FileSystemStorageBackend(BaseStorageBackend):
         return files
     
     async def get_file_info(self, file_path: str) -> Dict[str, Any]:
-        """Get file information"""
-        full_path = self.base_path / file_path
+        """Get file information"""        full_path = self.base_path / file_path
         
         if not full_path.exists():
             return {}
@@ -328,15 +300,13 @@ class FileSystemStorageBackend(BaseStorageBackend):
 
 
 class CompressionManager:
-    """Manages data compression and decompression"""
-    
+    """Manages data compression and decompression"""    
     def __init__(self):
         self.logger = logging.getLogger("data_management.compression")
         self.supported_algorithms = self._get_supported_algorithms()
     
     def _get_supported_algorithms(self) -> Set[CompressionType]:
-        """Get list of supported compression algorithms"""
-        supported = {CompressionType.NONE, CompressionType.GZIP}
+        """Get list of supported compression algorithms"""        supported = {CompressionType.NONE, CompressionType.GZIP}
         
         if HAS_LZ4:
             supported.add(CompressionType.LZ4)
@@ -346,8 +316,7 @@ class CompressionManager:
         return supported
     
     async def compress_data(self, data: bytes, algorithm: CompressionType) -> bytes:
-        """Compress data using specified algorithm"""
-        if algorithm == CompressionType.NONE:
+        """Compress data using specified algorithm"""        if algorithm == CompressionType.NONE:
             return data
         
         if algorithm not in self.supported_algorithms:
@@ -381,8 +350,7 @@ class CompressionManager:
             raise
     
     async def decompress_data(self, compressed_data: bytes, algorithm: CompressionType) -> bytes:
-        """Decompress data using specified algorithm"""
-        if algorithm == CompressionType.NONE:
+        """Decompress data using specified algorithm"""        if algorithm == CompressionType.NONE:
             return compressed_data
         
         if algorithm not in self.supported_algorithms:
@@ -414,8 +382,7 @@ class CompressionManager:
             raise
     
     def get_best_algorithm(self, data: bytes, target_ratio: float = 0.7) -> CompressionType:
-        """Get the best compression algorithm for given data"""
-        if len(data) < 1024:  # Don't compress small data
+        """Get the best compression algorithm for given data"""        if len(data) < 1024:  # Don't compress small data
             return CompressionType.NONE
         
         # Test available algorithms and pick the best one
@@ -443,8 +410,7 @@ class CompressionManager:
 
 
 class DataLifecycleManager:
-    """Manages data lifecycle policies and operations"""
-    
+    """Manages data lifecycle policies and operations"""    
     def __init__(self, storage_backend: BaseStorageBackend, 
                  compression_manager: CompressionManager,
                  metadata_db_path: str = None):
@@ -472,12 +438,10 @@ class DataLifecycleManager:
         }
     
     def _init_metadata_db(self):
-        """Initialize metadata database"""
-        os.makedirs(os.path.dirname(self.metadata_db_path), exist_ok=True)
+        """Initialize metadata database"""        os.makedirs(os.path.dirname(self.metadata_db_path), exist_ok=True)
         
         with sqlite3.connect(self.metadata_db_path) as conn:
-            conn.execute("""
-                CREATE TABLE IF NOT EXISTS data_records (
+            conn.execute("""                CREATE TABLE IF NOT EXISTS data_records (
                     record_id TEXT PRIMARY KEY,
                     data_type TEXT NOT NULL,
                     storage_tier TEXT NOT NULL,
@@ -496,28 +460,23 @@ class DataLifecycleManager:
                 )
             """)
             
-            conn.execute("""
-                CREATE INDEX IF NOT EXISTS idx_data_type ON data_records(data_type)
+            conn.execute("""                CREATE INDEX IF NOT EXISTS idx_data_type ON data_records(data_type)
             """)
             
-            conn.execute("""
-                CREATE INDEX IF NOT EXISTS idx_created_at ON data_records(created_at)
+            conn.execute("""                CREATE INDEX IF NOT EXISTS idx_created_at ON data_records(created_at)
             """)
             
-            conn.execute("""
-                CREATE INDEX IF NOT EXISTS idx_status ON data_records(status)
+            conn.execute("""                CREATE INDEX IF NOT EXISTS idx_status ON data_records(status)
             """)
             
             conn.commit()
     
     def register_retention_policy(self, policy: RetentionPolicy):
-        """Register a retention policy"""
-        self.retention_policies[policy.policy_id] = policy
+        """Register a retention policy"""        self.retention_policies[policy.policy_id] = policy
         self.logger.info(f"Registered retention policy: {policy.policy_id}")
     
     def get_default_retention_policies(self) -> List[RetentionPolicy]:
-        """Get default retention policies for different data types"""
-        policies = [
+        """Get default retention policies for different data types"""        policies = [
             RetentionPolicy(
                 policy_id="logs_standard",
                 name="Standard Log Retention",
@@ -594,8 +553,7 @@ class DataLifecycleManager:
     
     async def store_data(self, data_type: DataType, data: Union[bytes, str, Dict],
                         metadata: Dict[str, Any] = None, tags: Set[str] = None) -> str:
-        """Store observability data with proper lifecycle management"""
-        record_id = str(uuid4())
+        """Store observability data with proper lifecycle management"""        record_id = str(uuid4())
         now = datetime.utcnow()
         metadata = metadata or {}
         tags = tags or set()
@@ -656,8 +614,7 @@ class DataLifecycleManager:
         return record_id
     
     async def retrieve_data(self, record_id: str) -> Optional[bytes]:
-        """Retrieve data by record ID"""
-        record = await self._get_record_metadata(record_id)
+        """Retrieve data by record ID"""        record = await self._get_record_metadata(record_id)
         if not record:
             return None
         
@@ -678,8 +635,7 @@ class DataLifecycleManager:
         return data
     
     async def delete_data(self, record_id: str) -> bool:
-        """Delete data by record ID"""
-        record = await self._get_record_metadata(record_id)
+        """Delete data by record ID"""        record = await self._get_record_metadata(record_id)
         if not record:
             return False
         
@@ -698,10 +654,8 @@ class DataLifecycleManager:
         return success
     
     async def _save_record_metadata(self, record: DataRecord):
-        """Save record metadata to database"""
-        with sqlite3.connect(self.metadata_db_path) as conn:
-            conn.execute("""
-                INSERT OR REPLACE INTO data_records (
+        """Save record metadata to database"""        with sqlite3.connect(self.metadata_db_path) as conn:
+            conn.execute("""                INSERT OR REPLACE INTO data_records (
                     record_id, data_type, storage_tier, compression, status,
                     created_at, modified_at, accessed_at, size_bytes, compressed_size_bytes,
                     file_path, metadata, checksum, retention_policy, tags
@@ -726,11 +680,9 @@ class DataLifecycleManager:
             conn.commit()
     
     async def _get_record_metadata(self, record_id: str) -> Optional[DataRecord]:
-        """Get record metadata from database"""
-        with sqlite3.connect(self.metadata_db_path) as conn:
+        """Get record metadata from database"""        with sqlite3.connect(self.metadata_db_path) as conn:
             conn.row_factory = sqlite3.Row
-            cursor = conn.execute("""
-                SELECT * FROM data_records WHERE record_id = ?
+            cursor = conn.execute("""                SELECT * FROM data_records WHERE record_id = ?
             """, (record_id,))
             
             row = cursor.fetchone()
@@ -756,8 +708,7 @@ class DataLifecycleManager:
             )
     
     async def start_lifecycle_management(self, interval_hours: int = 1):
-        """Start background lifecycle management"""
-        if self._running:
+        """Start background lifecycle management"""        if self._running:
             return
         
         self._running = True
@@ -767,8 +718,7 @@ class DataLifecycleManager:
         self.logger.info("Started data lifecycle management")
     
     async def stop_lifecycle_management(self):
-        """Stop background lifecycle management"""
-        self._running = False
+        """Stop background lifecycle management"""        self._running = False
         if self._lifecycle_task:
             self._lifecycle_task.cancel()
             try:
@@ -778,8 +728,7 @@ class DataLifecycleManager:
         self.logger.info("Stopped data lifecycle management")
     
     async def _lifecycle_worker(self, interval_hours: int):
-        """Background worker for lifecycle management"""
-        while self._running:
+        """Background worker for lifecycle management"""        while self._running:
             try:
                 await self._process_lifecycle_policies()
                 await asyncio.sleep(interval_hours * 3600)
@@ -790,14 +739,12 @@ class DataLifecycleManager:
                 await asyncio.sleep(300)  # Wait 5 minutes before retry
     
     async def _process_lifecycle_policies(self):
-        """Process all lifecycle policies"""
-        self.logger.info("Processing data lifecycle policies")
+        """Process all lifecycle policies"""        self.logger.info("Processing data lifecycle policies")
         
         # Get all active records
         with sqlite3.connect(self.metadata_db_path) as conn:
             conn.row_factory = sqlite3.Row
-            cursor = conn.execute("""
-                SELECT record_id FROM data_records 
+            cursor = conn.execute("""                SELECT record_id FROM data_records 
                 WHERE status IN ('active', 'archived', 'compressed')
                 ORDER BY created_at
             """)
@@ -842,8 +789,7 @@ class DataLifecycleManager:
         self._last_cleanup_time = datetime.utcnow()
     
     async def _apply_policy_to_record(self, record: DataRecord, policy: RetentionPolicy):
-        """Apply lifecycle policy to a specific record"""
-        original_tier = record.storage_tier
+        """Apply lifecycle policy to a specific record"""        original_tier = record.storage_tier
         target_tier = policy.get_target_tier(record)
         
         # Handle deletion
@@ -861,8 +807,7 @@ class DataLifecycleManager:
             await self._compress_record(record, policy.preferred_compression)
     
     async def _transition_storage_tier(self, record: DataRecord, target_tier: StorageTier):
-        """Transition record to different storage tier"""
-        if target_tier == record.storage_tier:
+        """Transition record to different storage tier"""        if target_tier == record.storage_tier:
             return
         
         # This would involve moving data between storage tiers
@@ -881,8 +826,7 @@ class DataLifecycleManager:
         self.logger.debug(f"Transitioned record {record.record_id} to {target_tier.value}")
     
     async def _compress_record(self, record: DataRecord, compression: CompressionType):
-        """Compress a record"""
-        if record.compression != CompressionType.NONE:
+        """Compress a record"""        if record.compression != CompressionType.NONE:
             return  # Already compressed
         
         try:
@@ -930,11 +874,9 @@ class DataLifecycleManager:
             self.logger.error(f"Failed to compress record {record.record_id}: {str(e)}")
     
     def get_storage_statistics(self) -> Dict[str, Any]:
-        """Get storage usage statistics"""
-        with sqlite3.connect(self.metadata_db_path) as conn:
+        """Get storage usage statistics"""        with sqlite3.connect(self.metadata_db_path) as conn:
             # Total records by type
-            cursor = conn.execute("""
-                SELECT data_type, COUNT(*) as count, SUM(size_bytes) as total_bytes,
+            cursor = conn.execute("""                SELECT data_type, COUNT(*) as count, SUM(size_bytes) as total_bytes,
                        SUM(compressed_size_bytes) as compressed_bytes
                 FROM data_records 
                 WHERE status != 'deleted'
@@ -950,8 +892,7 @@ class DataLifecycleManager:
                 }
             
             # Total records by tier
-            cursor = conn.execute("""
-                SELECT storage_tier, COUNT(*) as count, SUM(size_bytes) as total_bytes
+            cursor = conn.execute("""                SELECT storage_tier, COUNT(*) as count, SUM(size_bytes) as total_bytes
                 FROM data_records 
                 WHERE status != 'deleted'
                 GROUP BY storage_tier
@@ -965,8 +906,7 @@ class DataLifecycleManager:
                 }
             
             # Total records by status
-            cursor = conn.execute("""
-                SELECT status, COUNT(*) as count
+            cursor = conn.execute("""                SELECT status, COUNT(*) as count
                 FROM data_records
                 GROUP BY status
             """)
@@ -976,8 +916,7 @@ class DataLifecycleManager:
                 by_status[row[0]] = row[1]
             
             # Overall statistics
-            cursor = conn.execute("""
-                SELECT 
+            cursor = conn.execute("""                SELECT 
                     COUNT(*) as total_records,
                     SUM(size_bytes) as total_bytes,
                     SUM(compressed_size_bytes) as total_compressed_bytes,
@@ -1006,8 +945,7 @@ class DataLifecycleManager:
             }
     
     async def cleanup_expired_data(self, dry_run: bool = True) -> Dict[str, Any]:
-        """Clean up expired data according to retention policies"""
-        cleanup_stats = {
+        """Clean up expired data according to retention policies"""        cleanup_stats = {
             "records_processed": 0,
             "records_deleted": 0,
             "bytes_freed": 0,
@@ -1017,8 +955,7 @@ class DataLifecycleManager:
         # Find records that should be deleted
         with sqlite3.connect(self.metadata_db_path) as conn:
             conn.row_factory = sqlite3.Row
-            cursor = conn.execute("""
-                SELECT record_id FROM data_records
+            cursor = conn.execute("""                SELECT record_id FROM data_records
                 WHERE status IN ('active', 'archived', 'compressed')
                 ORDER BY created_at
             """)
@@ -1062,8 +999,7 @@ class DataLifecycleManager:
 
 
 class DataManager:
-    """Main data management coordinator"""
-    
+    """Main data management coordinator"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger("data_management.manager")
@@ -1096,8 +1032,7 @@ class DataManager:
         }
     
     async def start(self):
-        """Start data management services"""
-        try:
+        """Start data management services"""        try:
             # Start lifecycle management
             cleanup_interval = self.config.get("cleanup_interval_hours", 1)
             await self.lifecycle_manager.start_lifecycle_management(cleanup_interval)
@@ -1109,8 +1044,7 @@ class DataManager:
             raise
     
     async def stop(self):
-        """Stop data management services"""
-        try:
+        """Stop data management services"""        try:
             await self.lifecycle_manager.stop_lifecycle_management()
             self.logger.info("Data management stopped successfully")
             
@@ -1120,8 +1054,7 @@ class DataManager:
     async def store_observability_data(self, data_type: DataType, data: Any,
                                      metadata: Dict[str, Any] = None, 
                                      tags: Set[str] = None) -> str:
-        """Store observability data"""
-        try:
+        """Store observability data"""        try:
             record_id = await self.lifecycle_manager.store_data(data_type, data, metadata, tags)
             self.stats["operations"]["store"] += 1
             return record_id
@@ -1132,8 +1065,7 @@ class DataManager:
             raise
     
     async def retrieve_observability_data(self, record_id: str) -> Optional[bytes]:
-        """Retrieve observability data"""
-        try:
+        """Retrieve observability data"""        try:
             data = await self.lifecycle_manager.retrieve_data(record_id)
             self.stats["operations"]["retrieve"] += 1
             return data
@@ -1144,8 +1076,7 @@ class DataManager:
             raise
     
     async def delete_observability_data(self, record_id: str) -> bool:
-        """Delete observability data"""
-        try:
+        """Delete observability data"""        try:
             success = await self.lifecycle_manager.delete_data(record_id)
             self.stats["operations"]["delete"] += 1
             return success
@@ -1156,8 +1087,7 @@ class DataManager:
             return False
     
     def get_comprehensive_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive data management statistics"""
-        storage_stats = self.lifecycle_manager.get_storage_statistics()
+        """Get comprehensive data management statistics"""        storage_stats = self.lifecycle_manager.get_storage_statistics()
         
         uptime = datetime.utcnow() - self.stats["start_time"]
         
@@ -1181,14 +1111,12 @@ class DataManager:
         }
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get basic statistics"""
-        return self.get_comprehensive_statistics()
+        """Get basic statistics"""        return self.get_comprehensive_statistics()
 
 
 # Factory function
 def create_data_manager(config: Dict[str, Any] = None) -> DataManager:
-    """Factory function to create data manager"""
-    return DataManager(config)
+    """Factory function to create data manager"""    return DataManager(config)
 
 
 # Export data management components

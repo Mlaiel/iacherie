@@ -1,5 +1,4 @@
-"""
-Advanced Reporting and Analytics System for Copyright Enforcement
+"""Advanced Reporting and Analytics System for Copyright Enforcement
 
 Ultra-sophisticated reporting and analytics engine providing comprehensive insights,
 performance metrics, revenue tracking, and predictive analytics for copyright enforcement operations.
@@ -26,9 +25,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + DevOps + Leg
 ALL RIGHTS RESERVED. UNAUTHORIZED USE PROHIBITED.
 This code belongs exclusively to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use will result in immediate legal action.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import pandas as pd
 import numpy as np
@@ -62,8 +59,7 @@ logger = logging.getLogger(__name__)
 
 
 class ReportType(Enum):
-    """Types of reports available"""
-    EXECUTIVE_SUMMARY = "executive_summary"
+    """Types of reports available"""    EXECUTIVE_SUMMARY = "executive_summary"
     VIOLATION_ANALYTICS = "violation_analytics"
     REVENUE_TRACKING = "revenue_tracking"
     PLATFORM_PERFORMANCE = "platform_performance"
@@ -76,8 +72,7 @@ class ReportType(Enum):
 
 
 class TimeFrame(Enum):
-    """Time frame options for reports"""
-    DAILY = "daily"
+    """Time frame options for reports"""    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -86,8 +81,7 @@ class TimeFrame(Enum):
 
 
 class MetricType(Enum):
-    """Available metric types"""
-    COUNT = "count"
+    """Available metric types"""    COUNT = "count"
     PERCENTAGE = "percentage"
     CURRENCY = "currency"
     DURATION = "duration"
@@ -97,8 +91,7 @@ class MetricType(Enum):
 
 @dataclass
 class ReportConfig:
-    """Report configuration settings"""
-    report_type: ReportType
+    """Report configuration settings"""    report_type: ReportType
     time_frame: TimeFrame
     start_date: datetime
     end_date: datetime
@@ -113,8 +106,7 @@ class ReportConfig:
 
 @dataclass
 class KPIMetric:
-    """Key Performance Indicator metric"""
-    name: str
+    """Key Performance Indicator metric"""    name: str
     value: Union[int, float, str]
     metric_type: MetricType
     previous_value: Optional[Union[int, float]] = None
@@ -126,8 +118,7 @@ class KPIMetric:
 
 @dataclass
 class AnalyticsInsight:
-    """Analytics insight or recommendation"""
-    title: str
+    """Analytics insight or recommendation"""    title: str
     description: str
     impact_level: str  # low, medium, high, critical
     recommended_action: str
@@ -136,8 +127,7 @@ class AnalyticsInsight:
 
 
 class AdvancedAnalyticsEngine:
-    """Ultra-advanced analytics engine for copyright enforcement"""
-    
+    """Ultra-advanced analytics engine for copyright enforcement"""    
     def __init__(self):
         self.settings = get_settings()
         self.cache_manager = CacheManager()
@@ -153,8 +143,7 @@ class AdvancedAnalyticsEngine:
         self, 
         config: ReportConfig
     ) -> Dict[str, Any]:
-        """Generate comprehensive executive summary report"""
-        try:
+        """Generate comprehensive executive summary report"""        try:
             # Collect key metrics
             kpis = await self._calculate_executive_kpis(config)
             
@@ -185,8 +174,7 @@ class AdvancedAnalyticsEngine:
             raise
     
     async def _calculate_executive_kpis(self, config: ReportConfig) -> List[KPIMetric]:
-        """Calculate key performance indicators for executive summary"""
-        try:
+        """Calculate key performance indicators for executive summary"""        try:
             async with get_async_session() as session:
                 kpis = []
                 
@@ -292,8 +280,7 @@ class AdvancedAnalyticsEngine:
             return []
     
     async def _generate_executive_insights(self, config: ReportConfig) -> List[AnalyticsInsight]:
-        """Generate AI-powered insights for executive summary"""
-        try:
+        """Generate AI-powered insights for executive summary"""        try:
             insights = []
             
             async with get_async_session() as session:
@@ -351,8 +338,7 @@ class AdvancedAnalyticsEngine:
             return []
     
     async def _create_executive_charts(self, config: ReportConfig) -> Dict[str, str]:
-        """Create executive dashboard charts"""
-        try:
+        """Create executive dashboard charts"""        try:
             charts = {}
             
             async with get_async_session() as session:
@@ -420,8 +406,7 @@ class AdvancedAnalyticsEngine:
             return {}
     
     async def generate_violation_analytics(self, config: ReportConfig) -> Dict[str, Any]:
-        """Generate detailed violation analytics report"""
-        try:
+        """Generate detailed violation analytics report"""        try:
             async with get_async_session() as session:
                 # Violation statistics
                 stats = await self._calculate_violation_statistics(session, config)
@@ -459,8 +444,7 @@ class AdvancedAnalyticsEngine:
             raise
     
     async def generate_platform_performance_report(self, config: ReportConfig) -> Dict[str, Any]:
-        """Generate platform performance comparison report"""
-        try:
+        """Generate platform performance comparison report"""        try:
             async with get_async_session() as session:
                 platforms = config.platforms or await self._get_all_platforms(session)
                 
@@ -509,8 +493,7 @@ class AdvancedAnalyticsEngine:
             raise
     
     async def generate_predictive_analysis(self, config: ReportConfig) -> Dict[str, Any]:
-        """Generate predictive analysis and forecasting report"""
-        try:
+        """Generate predictive analysis and forecasting report"""        try:
             async with get_async_session() as session:
                 # Historical trend analysis
                 historical_data = await self._get_historical_trend_data(session, config)
@@ -561,8 +544,7 @@ class AdvancedAnalyticsEngine:
         metrics: List[str],
         chart_types: List[str]
     ) -> Dict[str, Any]:
-        """Create custom dashboard with specified metrics and charts"""
-        try:
+        """Create custom dashboard with specified metrics and charts"""        try:
             dashboard_data = {}
             
             async with get_async_session() as session:
@@ -603,8 +585,7 @@ class AdvancedAnalyticsEngine:
         output_format: str,
         file_path: Optional[str] = None
     ) -> str:
-        """Export report in specified format"""
-        try:
+        """Export report in specified format"""        try:
             if output_format.lower() == "html":
                 return await self._export_html_report(report_data, file_path)
             elif output_format.lower() == "pdf":
@@ -626,8 +607,7 @@ class AdvancedAnalyticsEngine:
         schedule: str,  # cron-like schedule
         report_name: str
     ) -> bool:
-        """Schedule automated report generation"""
-        try:
+        """Schedule automated report generation"""        try:
             # This would integrate with a job scheduler like Celery
             # For now, just store the configuration
             
@@ -654,9 +634,7 @@ class AdvancedAnalyticsEngine:
     
     # Helper methods for data retrieval and calculation
     async def _get_daily_violation_data(self, session: AsyncSession, config: ReportConfig) -> List[Dict]:
-        """Get daily violation counts"""
-        query = text("""
-            SELECT DATE(detected_at) as date, COUNT(*) as count
+        """Get daily violation counts"""        query = text("""            SELECT DATE(detected_at) as date, COUNT(*) as count
             FROM violation_cases
             WHERE detected_at >= :start_date AND detected_at <= :end_date
             GROUP BY DATE(detected_at)
@@ -671,8 +649,7 @@ class AdvancedAnalyticsEngine:
         return [{"date": row.date, "count": row.count} for row in result]
     
     async def _get_platform_distribution(self, session: AsyncSession, config: ReportConfig) -> List[Dict]:
-        """Get violation distribution by platform"""
-        query = select(
+        """Get violation distribution by platform"""        query = select(
             ViolationCase.platform,
             func.count(ViolationCase.id).label('count')
         ).where(
@@ -686,8 +663,7 @@ class AdvancedAnalyticsEngine:
         return [{"platform": row.platform, "count": row.count} for row in result]
     
     async def _calculate_enforcement_efficiency(self, session: AsyncSession, config: ReportConfig) -> float:
-        """Calculate overall enforcement efficiency score"""
-        # This is a simplified calculation - would be more complex in practice
+        """Calculate overall enforcement efficiency score"""        # This is a simplified calculation - would be more complex in practice
         total_violations = await session.scalar(
             select(func.count(ViolationCase.id)).where(
                 and_(
@@ -710,8 +686,7 @@ class AdvancedAnalyticsEngine:
         return resolved_violations / max(total_violations, 1)
     
     async def _export_html_report(self, report_data: Dict[str, Any], file_path: Optional[str]) -> str:
-        """Export report as HTML"""
-        try:
+        """Export report as HTML"""        try:
             template = self.template_env.get_template('executive_summary.html')
             html_content = template.render(report=report_data)
             
@@ -727,8 +702,7 @@ class AdvancedAnalyticsEngine:
             raise
     
     async def _export_pdf_report(self, report_data: Dict[str, Any], file_path: Optional[str]) -> str:
-        """Export report as PDF"""
-        try:
+        """Export report as PDF"""        try:
             # This would use a library like WeasyPrint or ReportLab
             # For now, return a placeholder
             
@@ -750,15 +724,13 @@ class AdvancedAnalyticsEngine:
 
 
 class ReportScheduler:
-    """Automated report scheduling and delivery system"""
-    
+    """Automated report scheduling and delivery system"""    
     def __init__(self):
         self.analytics_engine = AdvancedAnalyticsEngine()
         self.email_service = EmailService()
     
     async def run_scheduled_reports(self) -> None:
-        """Run all scheduled reports"""
-        try:
+        """Run all scheduled reports"""        try:
             # This would be called by a scheduled job
             # Implementation depends on job scheduler used
             pass
@@ -771,8 +743,7 @@ class ReportScheduler:
         recipients: List[str],
         subject: str
     ) -> bool:
-        """Send report via email"""
-        try:
+        """Send report via email"""        try:
             html_content = await self.analytics_engine._export_html_report(report_data, None)
             
             success = await self.email_service.send_email(

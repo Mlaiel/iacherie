@@ -1,5 +1,4 @@
-"""
-Redis Replication Handler - IA Influencer Agent Platform
+"""Redis Replication Handler - IA Influencer Agent Platform
 
 Advanced Redis replication management for cache, session data, and real-time features.
 Supports Sentinel, Cluster, and Master-Slave configurations with automated failover
@@ -13,9 +12,7 @@ Handles:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import redis.asyncio as redis
 from redis.asyncio.sentinel import Sentinel
@@ -28,23 +25,20 @@ import json
 
 
 class RedisReplicationMode(Enum):
-    """Redis replication modes"""
-    MASTER_SLAVE = "master_slave"
+    """Redis replication modes"""    MASTER_SLAVE = "master_slave"
     SENTINEL = "sentinel"
     CLUSTER = "cluster"
 
 
 class RedisNodeRole(Enum):
-    """Redis node roles"""
-    MASTER = "master"
+    """Redis node roles"""    MASTER = "master"
     SLAVE = "slave"
     SENTINEL = "sentinel"
 
 
 @dataclass
 class RedisNode:
-    """Redis node configuration"""
-    host: str
+    """Redis node configuration"""    host: str
     port: int
     role: RedisNodeRole
     name: str
@@ -57,8 +51,7 @@ class RedisNode:
 
 @dataclass
 class RedisReplicationMetrics:
-    """Redis replication metrics"""
-    connected_slaves: int = 0
+    """Redis replication metrics"""    connected_slaves: int = 0
     master_repl_offset: int = 0
     repl_backlog_size: int = 0
     repl_backlog_first_byte_offset: int = 0
@@ -74,16 +67,13 @@ class RedisReplicationMetrics:
 
 
 class RedisReplicationHandler:
-    """
-    Advanced Redis replication handler for the IA Influencer Agent platform.
+    """    Advanced Redis replication handler for the IA Influencer Agent platform.
     
     Manages Redis replication for caching, session management, real-time features,
     and AI processing queues with high availability and performance optimization.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any], global_config: Any):
-        """Initialize Redis replication handler"""
-        self.config = config
+        """Initialize Redis replication handler"""        self.config = config
         self.global_config = global_config
         self.logger = logging.getLogger(f"{__name__}.RedisReplicationHandler")
         
@@ -111,13 +101,11 @@ class RedisReplicationHandler:
         self.logger.info(f"Redis replication handler initialized (mode: {self.replication_mode.value})")
     
     async def initialize(self) -> bool:
-        """
-        Initialize Redis replication infrastructure.
+        """        Initialize Redis replication infrastructure.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             self.logger.info("Initializing Redis replication handler...")
             
             # Parse node configurations
@@ -142,8 +130,7 @@ class RedisReplicationHandler:
             return False
     
     async def _parse_node_configurations(self) -> None:
-        """Parse Redis node configurations"""
-        # Master configuration
+        """Parse Redis node configurations"""        # Master configuration
         master_config = self.config.get("master", {})
         if master_config:
             master_node = RedisNode(
@@ -188,8 +175,7 @@ class RedisReplicationHandler:
         self.logger.debug(f"Parsed {len(self.nodes)} Redis nodes")
     
     async def _initialize_sentinel_replication(self) -> None:
-        """Initialize Redis Sentinel replication"""
-        self.logger.info("Initializing Redis Sentinel replication...")
+        """Initialize Redis Sentinel replication"""        self.logger.info("Initializing Redis Sentinel replication...")
         
         sentinel_nodes = [
             (node.host, node.port) 
@@ -237,8 +223,7 @@ class RedisReplicationHandler:
             raise
     
     async def _initialize_cluster_replication(self) -> None:
-        """Initialize Redis Cluster replication"""
-        self.logger.info("Initializing Redis Cluster replication...")
+        """Initialize Redis Cluster replication"""        self.logger.info("Initializing Redis Cluster replication...")
         
         cluster_nodes = [
             {"host": node.host, "port": node.port}
@@ -272,8 +257,7 @@ class RedisReplicationHandler:
             raise
     
     async def _initialize_master_slave_replication(self) -> None:
-        """Initialize traditional master-slave replication"""
-        self.logger.info("Initializing Redis master-slave replication...")
+        """Initialize traditional master-slave replication"""        self.logger.info("Initializing Redis master-slave replication...")
         
         # Initialize master connection
         if self.current_master:
@@ -322,8 +306,7 @@ class RedisReplicationHandler:
         self.logger.info("Redis master-slave replication initialized successfully")
     
     async def _configure_slave_replication(self, slave_client: redis.Redis, master: RedisNode) -> None:
-        """Configure slave to replicate from master"""
-        try:
+        """Configure slave to replicate from master"""        try:
             # Configure slave replication
             await slave_client.slaveof(master.host, master.port)
             
@@ -340,14 +323,12 @@ class RedisReplicationHandler:
             raise
     
     async def _start_monitoring(self) -> None:
-        """Start Redis replication monitoring"""
-        self.is_monitoring = True
+        """Start Redis replication monitoring"""        self.is_monitoring = True
         asyncio.create_task(self._monitoring_loop())
         self.logger.info("Redis replication monitoring started")
     
     async def _monitoring_loop(self) -> None:
-        """Main monitoring loop for Redis replication"""
-        while self.is_monitoring:
+        """Main monitoring loop for Redis replication"""        while self.is_monitoring:
             try:
                 await self._collect_replication_metrics()
                 await self._check_node_health()
@@ -357,8 +338,7 @@ class RedisReplicationHandler:
                 await asyncio.sleep(30)
     
     async def _collect_replication_metrics(self) -> None:
-        """Collect Redis replication metrics"""
-        # Collect master metrics
+        """Collect Redis replication metrics"""        # Collect master metrics
         if self.master_client:
             try:
                 info = await self.master_client.info("replication")
@@ -411,8 +391,7 @@ class RedisReplicationHandler:
                 self.logger.error(f"Failed to collect metrics for slave {slave_name}: {e}")
     
     async def _check_node_health(self) -> None:
-        """Check health of all Redis nodes"""
-        for node in self.nodes:
+        """Check health of all Redis nodes"""        for node in self.nodes:
             try:
                 # Create temporary client for health check
                 client = redis.Redis(
@@ -440,8 +419,7 @@ class RedisReplicationHandler:
                     await self._handle_master_failure()
     
     async def _handle_master_failure(self) -> None:
-        """Handle Redis master failure with Sentinel"""
-        try:
+        """Handle Redis master failure with Sentinel"""        try:
             self.logger.warning("Handling Redis master failure...")
             
             if self.sentinel_client:
@@ -481,8 +459,7 @@ class RedisReplicationHandler:
             self.logger.error(f"Error handling master failure: {e}")
     
     async def _reinitialize_master_client(self) -> None:
-        """Reinitialize master client after failover"""
-        try:
+        """Reinitialize master client after failover"""        try:
             if self.master_client:
                 await self.master_client.close()
             
@@ -519,8 +496,7 @@ class RedisReplicationHandler:
         target_config: Dict[str, Any], 
         mode: str
     ) -> bool:
-        """Start Redis replication"""
-        try:
+        """Start Redis replication"""        try:
             self.logger.info(f"Starting Redis replication in {mode} mode")
             
             # Update configuration and reinitialize if needed
@@ -537,8 +513,7 @@ class RedisReplicationHandler:
             return False
     
     async def stop_replication(self, graceful: bool = True) -> bool:
-        """Stop Redis replication"""
-        try:
+        """Stop Redis replication"""        try:
             self.logger.info(f"Stopping Redis replication (graceful={graceful})")
             
             # Stop monitoring
@@ -577,8 +552,7 @@ class RedisReplicationHandler:
             return False
     
     async def pause_replication(self) -> bool:
-        """Pause Redis replication"""
-        try:
+        """Pause Redis replication"""        try:
             self.logger.info("Pausing Redis replication")
             
             # Pause slave replication
@@ -593,8 +567,7 @@ class RedisReplicationHandler:
             return False
     
     async def resume_replication(self) -> bool:
-        """Resume paused Redis replication"""
-        try:
+        """Resume paused Redis replication"""        try:
             self.logger.info("Resuming Redis replication")
             
             # Resume slave replication
@@ -610,8 +583,7 @@ class RedisReplicationHandler:
             return False
     
     async def trigger_sync(self, force: bool = False) -> bool:
-        """Trigger manual Redis synchronization"""
-        try:
+        """Trigger manual Redis synchronization"""        try:
             self.logger.info(f"Triggering Redis sync (force={force})")
             
             if force:
@@ -631,8 +603,7 @@ class RedisReplicationHandler:
             return False
     
     async def prepare_maintenance(self, duration: timedelta) -> bool:
-        """Prepare Redis for maintenance mode"""
-        try:
+        """Prepare Redis for maintenance mode"""        try:
             self.logger.info(f"Preparing Redis for maintenance (duration: {duration})")
             
             # Create backup snapshot
@@ -653,8 +624,7 @@ class RedisReplicationHandler:
             return False
     
     async def exit_maintenance(self) -> bool:
-        """Exit Redis maintenance mode"""
-        try:
+        """Exit Redis maintenance mode"""        try:
             self.logger.info("Exiting Redis maintenance mode")
             
             # Re-enable automatic failover
@@ -673,8 +643,7 @@ class RedisReplicationHandler:
             return False
     
     async def check_health(self) -> Dict[str, Any]:
-        """Check Redis replication health"""
-        health = {
+        """Check Redis replication health"""        health = {
             "healthy": True,
             "issues": [],
             "metrics": {},
@@ -724,8 +693,7 @@ class RedisReplicationHandler:
         return health
     
     async def get_replication_metrics(self) -> Dict[str, Any]:
-        """Get current Redis replication metrics"""
-        metrics = {
+        """Get current Redis replication metrics"""        metrics = {
             "replication_mode": self.replication_mode.value,
             "total_nodes": len(self.nodes),
             "healthy_nodes": len([n for n in self.nodes if n.health_status == "healthy"]),
@@ -749,8 +717,7 @@ class RedisReplicationHandler:
         return metrics
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get comprehensive Redis handler status"""
-        return {
+        """Get comprehensive Redis handler status"""        return {
             "handler_type": "redis",
             "replication_mode": self.replication_mode.value,
             "initialized": self.master_client is not None,
@@ -763,8 +730,7 @@ class RedisReplicationHandler:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown Redis replication handler"""
-        try:
+        """Shutdown Redis replication handler"""        try:
             self.logger.info("Shutting down Redis replication handler")
             await self.stop_replication(graceful=True)
             self.logger.info("Redis replication handler shutdown completed")

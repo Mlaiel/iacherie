@@ -1,5 +1,4 @@
-"""
-Instagram Business API Integration
+"""Instagram Business API Integration
 =================================
 
 Complete Instagram Business API integration for content management and analytics.
@@ -7,9 +6,7 @@ Handles posts, stories, insights, and business account management.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import aiohttp
 import json
 import logging
@@ -28,8 +25,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class InstagramMedia:
-    """Instagram media information"""
-    media_id: str
+    """Instagram media information"""    media_id: str
     media_type: str  # "IMAGE", "VIDEO", "CAROUSEL_ALBUM"
     caption: str
     permalink: str
@@ -44,8 +40,7 @@ class InstagramMedia:
 
 @dataclass
 class InstagramInsights:
-    """Instagram insights data"""
-    media_id: str
+    """Instagram insights data"""    media_id: str
     period: str  # "day", "week", "days_28", "lifetime"
     impressions: int = 0
     reach: int = 0
@@ -62,8 +57,7 @@ class InstagramInsights:
 
 @dataclass
 class InstagramUser:
-    """Instagram user/business account information"""
-    user_id: str
+    """Instagram user/business account information"""    user_id: str
     username: str
     account_type: str  # "BUSINESS", "CREATOR", "PERSONAL"
     media_count: int = 0
@@ -76,8 +70,7 @@ class InstagramUser:
 
 
 class InstagramBusinessAPI:
-    """Instagram Business API integration"""
-    
+    """Instagram Business API integration"""    
     def __init__(self, rate_limiter: Optional[APIRateLimiter] = None):
         self.session = None
         self.rate_limiter = rate_limiter or APIRateLimiter()
@@ -85,14 +78,12 @@ class InstagramBusinessAPI:
         self.graph_url = "https://graph.facebook.com/v18.0"
         
     async def __aenter__(self):
-        """Async context manager entry"""
-        self.session = aiohttp.ClientSession()
+        """Async context manager entry"""        self.session = aiohttp.ClientSession()
         await self.rate_limiter.__aenter__()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
-        if self.session:
+        """Async context manager exit"""        if self.session:
             await self.session.close()
         await self.rate_limiter.__aexit__(exc_type, exc_val, exc_tb)
         
@@ -105,8 +96,7 @@ class InstagramBusinessAPI:
         data: Optional[Dict[str, Any]] = None,
         base_url: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Make authenticated API request with rate limiting"""
-        
+        """Make authenticated API request with rate limiting"""        
         # Check rate limit
         rate_status = await self.rate_limiter.check_rate_limit("instagram", endpoint)
         if rate_status.is_limited:
@@ -167,8 +157,7 @@ class InstagramBusinessAPI:
             raise
             
     async def get_user_info(self, tokens: OAuthTokens, user_id: str = "me") -> InstagramUser:
-        """Get Instagram user/business account information"""
-        fields = [
+        """Get Instagram user/business account information"""        fields = [
             "id", "username", "account_type", "media_count",
             "followers_count", "follows_count", "name", "biography",
             "website", "profile_picture_url"
@@ -201,8 +190,7 @@ class InstagramBusinessAPI:
         since: Optional[datetime] = None,
         until: Optional[datetime] = None
     ) -> List[InstagramMedia]:
-        """Get list of media posts"""
-        fields = [
+        """Get list of media posts"""        fields = [
             "id", "media_type", "caption", "permalink", "timestamp",
             "username", "like_count", "comments_count", "media_url",
             "thumbnail_url", "children"
@@ -240,8 +228,7 @@ class InstagramBusinessAPI:
         return media_list
         
     async def get_media_details(self, tokens: OAuthTokens, media_id: str) -> InstagramMedia:
-        """Get detailed information about specific media"""
-        fields = [
+        """Get detailed information about specific media"""        fields = [
             "id", "media_type", "caption", "permalink", "timestamp",
             "username", "like_count", "comments_count", "media_url",
             "thumbnail_url", "children"
@@ -273,8 +260,7 @@ class InstagramBusinessAPI:
         media_id: str,
         metric_names: Optional[List[str]] = None
     ) -> InstagramInsights:
-        """Get insights for specific media"""
-        
+        """Get insights for specific media"""        
         # Default metrics based on media type
         default_metrics = [
             "impressions", "reach", "engagement", "saves"
@@ -313,8 +299,7 @@ class InstagramBusinessAPI:
         until: Optional[datetime] = None,
         metric_names: Optional[List[str]] = None
     ) -> InstagramInsights:
-        """Get account-level insights"""
-        
+        """Get account-level insights"""        
         # Default account metrics
         default_metrics = [
             "impressions", "reach", "profile_views", "website_clicks",
@@ -369,8 +354,7 @@ class InstagramBusinessAPI:
         location_id: Optional[str] = None,
         user_tags: Optional[List[Dict[str, Any]]] = None
     ) -> str:
-        """Create a media container for publishing"""
-        
+        """Create a media container for publishing"""        
         data = {
             "media_type": media_type.upper(),
             "media_url": media_url
@@ -393,8 +377,7 @@ class InstagramBusinessAPI:
         return container_id
         
     async def publish_media(self, tokens: OAuthTokens, user_id: str, creation_id: str) -> str:
-        """Publish a media container"""
-        
+        """Publish a media container"""        
         data = {"creation_id": creation_id}
         
         response = await self._make_request("POST", f"{user_id}/media_publish", tokens, data=data)
@@ -414,8 +397,7 @@ class InstagramBusinessAPI:
         caption: Optional[str] = None,
         location_id: Optional[str] = None
     ) -> str:
-        """Create a carousel media container"""
-        
+        """Create a carousel media container"""        
         data = {
             "media_type": "CAROUSEL",
             "children": ",".join(children_containers)
@@ -441,8 +423,7 @@ class InstagramBusinessAPI:
         media_id: str,
         limit: int = 25
     ) -> List[Dict[str, Any]]:
-        """Get comments for specific media"""
-        
+        """Get comments for specific media"""        
         fields = ["id", "text", "timestamp", "username", "like_count"]
         params = {
             "fields": ",".join(fields),
@@ -459,8 +440,7 @@ class InstagramBusinessAPI:
         media_id: str,
         comment_text: str
     ) -> str:
-        """Reply to a comment on media"""
-        
+        """Reply to a comment on media"""        
         data = {"message": comment_text}
         
         response = await self._make_request("POST", f"{media_id}/comments", tokens, data=data)
@@ -473,8 +453,7 @@ class InstagramBusinessAPI:
         return comment_id
         
     async def hide_comment(self, tokens: OAuthTokens, comment_id: str) -> bool:
-        """Hide a comment"""
-        
+        """Hide a comment"""        
         data = {"hide": True}
         
         try:
@@ -486,8 +465,7 @@ class InstagramBusinessAPI:
             return False
             
     async def get_hashtag_info(self, tokens: OAuthTokens, hashtag_name: str) -> Dict[str, Any]:
-        """Get information about a hashtag"""
-        
+        """Get information about a hashtag"""        
         # First, search for the hashtag ID
         params = {"q": hashtag_name}
         
@@ -513,8 +491,7 @@ class InstagramBusinessAPI:
         hashtag_id: str,
         limit: int = 25
     ) -> List[Dict[str, Any]]:
-        """Get top media for a hashtag"""
-        
+        """Get top media for a hashtag"""        
         fields = ["id", "media_type", "caption", "permalink", "timestamp"]
         params = {
             "fields": ",".join(fields),
@@ -531,8 +508,7 @@ class InstagramBusinessAPI:
         business_account_id: str,
         target_username: str
     ) -> Dict[str, Any]:
-        """Get public information about another business account"""
-        
+        """Get public information about another business account"""        
         fields = [
             "biography", "id", "ig_id", "followers_count", "follows_count",
             "media_count", "name", "profile_picture_url", "username", "website"
@@ -552,8 +528,7 @@ class InstagramBusinessAPI:
         user_id: str = "me",
         limit: int = 25
     ) -> List[Dict[str, Any]]:
-        """Get media where the account is mentioned"""
-        
+        """Get media where the account is mentioned"""        
         fields = ["id", "media_type", "caption", "permalink", "timestamp"]
         params = {
             "fields": ",".join(fields),
@@ -569,8 +544,7 @@ class InstagramBusinessAPI:
         tokens: OAuthTokens,
         story_id: str
     ) -> InstagramInsights:
-        """Get insights for Instagram story"""
-        
+        """Get insights for Instagram story"""        
         metrics = ["impressions", "reach", "replies", "exits", "taps_forward", "taps_back"]
         params = {"metric": ",".join(metrics)}
         

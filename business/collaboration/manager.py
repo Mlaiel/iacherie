@@ -1,12 +1,9 @@
-"""
-Advanced Collaboration Manager for IA Influencer Agent
+"""Advanced Collaboration Manager for IA Influencer Agent
 Professional collaboration management and orchestration
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-
-from typing import Dict, List, Optional, Any, Tuple, Union
+"""from typing import Dict, List, Optional, Any, Tuple, Union
 from datetime import datetime, timedelta
 import asyncio
 import logging
@@ -36,8 +33,7 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationManagerResponse:
-    """Standardized response from collaboration manager operations"""
-    def __init__(
+    """Standardized response from collaboration manager operations"""    def __init__(
         self, 
         success: bool, 
         data: Any = None, 
@@ -55,8 +51,7 @@ class CollaborationManagerResponse:
 
 @dataclass
 class CollaborationManagerConfig:
-    """Configuration for collaboration manager"""
-    max_concurrent_matches: int = 50
+    """Configuration for collaboration manager"""    max_concurrent_matches: int = 50
     cache_duration_minutes: int = 30
     auto_match_threshold: float = 0.8
     notification_enabled: bool = True
@@ -67,12 +62,10 @@ class CollaborationManagerConfig:
 
 
 class CollaborationManager:
-    """
-    Advanced Collaboration Manager
+    """    Advanced Collaboration Manager
     Orchestrates all collaboration-related operations including discovery,
     matching, contract management, and analytics
-    """
-    
+    """    
     def __init__(self, config: CollaborationManagerConfig = None):
         self.config = config or CollaborationManagerConfig()
         
@@ -108,8 +101,7 @@ class CollaborationManager:
         creator_profile: Dict[str, Any],
         preferences: Dict[str, Any] = None
     ) -> CollaborationManagerResponse:
-        """Discover available collaboration opportunities"""
-        try:
+        """Discover available collaboration opportunities"""        try:
             discovery_result = await self.discovery_service.discover_opportunities(
                 creator_id, creator_profile, preferences
             )
@@ -143,8 +135,7 @@ class CollaborationManager:
         creator_id: str,
         request_data: Dict[str, Any]
     ) -> CollaborationManagerResponse:
-        """Create a new collaboration request"""
-        try:
+        """Create a new collaboration request"""        try:
             # Validate request data
             validation_result = await self._validate_collaboration_request(request_data)
             if not validation_result.success:
@@ -196,8 +187,7 @@ class CollaborationManager:
         candidate_pool: List[Dict[str, Any]],
         matching_preferences: Dict[str, Any] = None
     ) -> CollaborationManagerResponse:
-        """Find and rank potential collaboration matches"""
-        try:
+        """Find and rank potential collaboration matches"""        try:
             matching_preferences = matching_preferences or {}
             
             # Get collaboration request data (simulate database fetch)
@@ -255,8 +245,7 @@ class CollaborationManager:
         action: str,
         action_data: Dict[str, Any] = None
     ) -> CollaborationManagerResponse:
-        """Manage collaboration lifecycle (status updates, milestones, etc.)"""
-        try:
+        """Manage collaboration lifecycle (status updates, milestones, etc.)"""        try:
             action_data = action_data or {}
             
             # Validate action
@@ -332,8 +321,7 @@ class CollaborationManager:
         analytics_type: str = "comprehensive",
         time_period: Dict[str, datetime] = None
     ) -> CollaborationManagerResponse:
-        """Generate collaboration analytics and insights"""
-        try:
+        """Generate collaboration analytics and insights"""        try:
             # Default time period (last 90 days)
             if not time_period:
                 time_period = {
@@ -390,8 +378,7 @@ class CollaborationManager:
         selected_participants: List[str],
         contract_terms: Dict[str, Any]
     ) -> CollaborationManagerResponse:
-        """Create a collaboration contract"""
-        try:
+        """Create a collaboration contract"""        try:
             # Get collaboration request
             request_data = await self._get_collaboration_request_data(collaboration_request_id)
             if not request_data:
@@ -440,8 +427,7 @@ class CollaborationManager:
         report_type: str = "monthly",
         include_predictions: bool = True
     ) -> CollaborationManagerResponse:
-        """Generate comprehensive collaboration report"""
-        try:
+        """Generate comprehensive collaboration report"""        try:
             # Get collaboration data for creator
             collaboration_data = await self._get_creator_collaboration_data(creator_id)
             
@@ -480,8 +466,7 @@ class CollaborationManager:
         self, 
         request_data: Dict[str, Any]
     ) -> CollaborationManagerResponse:
-        """Validate collaboration request data"""
-        required_fields = ['title', 'description', 'collaboration_type']
+        """Validate collaboration request data"""        required_fields = ['title', 'description', 'collaboration_type']
         missing_fields = [field for field in required_fields if not request_data.get(field)]
         
         if missing_fields:
@@ -528,8 +513,7 @@ class CollaborationManager:
         self, 
         collaboration_id: str
     ) -> CollaborationManagerResponse:
-        """Get current status of a collaboration"""
-        try:
+        """Get current status of a collaboration"""        try:
             # Fetch collaboration status
             collaboration_data = await self._get_collaboration_data(collaboration_id)
             
@@ -573,8 +557,7 @@ class CollaborationManager:
             )
     
     def get_manager_health_status(self) -> Dict[str, Any]:
-        """Get health status of the collaboration manager"""
-        try:
+        """Get health status of the collaboration manager"""        try:
             # Check service health
             services_health = {
                 'discovery_service': 'healthy',
@@ -619,28 +602,23 @@ class CollaborationManager:
     
     # Helper methods for simulated database operations
     async def _get_collaboration_request_data(self, request_id: str) -> Optional[Dict[str, Any]]:
-        """Simulate database fetch for collaboration request"""
-        # In real implementation, this would query the database
+        """Simulate database fetch for collaboration request"""        # In real implementation, this would query the database
         return None  # Placeholder
     
     async def _get_collaboration_data(self, collaboration_id: str) -> Optional[Dict[str, Any]]:
-        """Simulate database fetch for collaboration data"""
-        # In real implementation, this would query the database
+        """Simulate database fetch for collaboration data"""        # In real implementation, this would query the database
         return None  # Placeholder
     
     async def _get_contract_data(self, collaboration_id: str) -> Optional[Dict[str, Any]]:
-        """Simulate database fetch for contract data"""
-        # In real implementation, this would query the database
+        """Simulate database fetch for contract data"""        # In real implementation, this would query the database
         return None  # Placeholder
     
     async def _get_creator_collaboration_data(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Simulate database fetch for creator's collaboration history"""
-        # In real implementation, this would query the database
+        """Simulate database fetch for creator's collaboration history"""        # In real implementation, this would query the database
         return []  # Placeholder
     
     def _get_next_milestones(self, contract_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Get next upcoming milestones"""
-        if not contract_data or 'milestones' not in contract_data:
+        """Get next upcoming milestones"""        if not contract_data or 'milestones' not in contract_data:
             return []
         
         milestones = contract_data['milestones']
@@ -653,8 +631,7 @@ class CollaborationManager:
         return sorted(upcoming, key=lambda x: x.get('due_date', ''))[:3]  # Next 3 milestones
     
     def _calculate_estimated_completion(self, contract_data: Dict[str, Any]) -> Optional[str]:
-        """Calculate estimated completion date"""
-        if not contract_data:
+        """Calculate estimated completion date"""        if not contract_data:
             return None
         
         try:
@@ -665,8 +642,7 @@ class CollaborationManager:
             return None
     
     def _calculate_cache_hit_rate(self) -> float:
-        """Calculate cache hit rate (simplified)"""
-        # In real implementation, this would track actual cache hits/misses
+        """Calculate cache hit rate (simplified)"""        # In real implementation, this would track actual cache hits/misses
         return 0.75  # Placeholder 75% hit rate
 
 

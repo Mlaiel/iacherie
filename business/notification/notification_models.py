@@ -1,5 +1,4 @@
-"""
-Notification Models - Data Models and DTOs for Business Notification System
+"""Notification Models - Data Models and DTOs for Business Notification System
 
 Comprehensive data models and data transfer objects for the IA Influencer Agent
 notification system. Defines structure for requests, responses, templates,
@@ -25,9 +24,7 @@ Data Models:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timezone
 from dataclasses import dataclass, field
 from enum import Enum
@@ -38,8 +35,7 @@ from uuid import uuid4
 # Enumerations
 
 class NotificationPriority(Enum):
-    """Notification priority levels."""
-    LOW = "low"
+    """Notification priority levels."""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     URGENT = "urgent"
@@ -47,8 +43,7 @@ class NotificationPriority(Enum):
 
 
 class DeliveryStatus(Enum):
-    """Notification delivery status."""
-    PENDING = "pending"
+    """Notification delivery status."""    PENDING = "pending"
     PROCESSING = "processing"
     DELIVERED = "delivered"
     PARTIALLY_DELIVERED = "partially_delivered"
@@ -58,8 +53,7 @@ class DeliveryStatus(Enum):
 
 
 class ChannelType(Enum):
-    """Supported notification channels."""
-    EMAIL = "email"
+    """Supported notification channels."""    EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
     WEBHOOK = "webhook"
@@ -70,8 +64,7 @@ class ChannelType(Enum):
 
 
 class NotificationType(Enum):
-    """Business notification types."""
-    # Content Protection
+    """Business notification types."""    # Content Protection
     CONTENT_PROTECTION = "content_protection"
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     PROTECTION_ALERT = "protection_alert"
@@ -114,8 +107,7 @@ class NotificationType(Enum):
 
 
 class ProcessingStage(Enum):
-    """Notification processing stages."""
-    VALIDATION = "validation"
+    """Notification processing stages."""    VALIDATION = "validation"
     PRIORITY_CLASSIFICATION = "priority_classification"
     TEMPLATE_PROCESSING = "template_processing"
     PERSONALIZATION = "personalization"
@@ -125,8 +117,7 @@ class ProcessingStage(Enum):
 
 
 class WorkflowStatus(Enum):
-    """Workflow execution status."""
-    CREATED = "created"
+    """Workflow execution status."""    CREATED = "created"
     ACTIVE = "active"
     PAUSED = "paused"
     COMPLETED = "completed"
@@ -138,8 +129,7 @@ class WorkflowStatus(Enum):
 
 @dataclass
 class NotificationContent:
-    """Notification content structure."""
-    subject: Optional[str] = None
+    """Notification content structure."""    subject: Optional[str] = None
     title: Optional[str] = None
     message: str = ""
     html_content: Optional[str] = None
@@ -152,8 +142,7 @@ class NotificationContent:
 
 @dataclass
 class NotificationRecipient:
-    """Notification recipient information."""
-    user_id: str
+    """Notification recipient information."""    user_id: str
     email: Optional[str] = None
     phone: Optional[str] = None
     push_tokens: Optional[List[str]] = None
@@ -167,8 +156,7 @@ class NotificationRecipient:
 
 @dataclass
 class NotificationRequest:
-    """Complete notification request with business context."""
-    notification_id: str = field(default_factory=lambda: str(uuid4()))
+    """Complete notification request with business context."""    notification_id: str = field(default_factory=lambda: str(uuid4()))
     notification_type: str = ""
     recipient: NotificationRecipient = field(default_factory=lambda: NotificationRecipient(""))
     content: NotificationContent = field(default_factory=NotificationContent)
@@ -188,8 +176,7 @@ class NotificationRequest:
     created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization."""
-        return {
+        """Convert to dictionary for serialization."""        return {
             "notification_id": self.notification_id,
             "notification_type": self.notification_type,
             "recipient": {
@@ -234,8 +221,7 @@ class NotificationRequest:
 
 @dataclass
 class NotificationResponse:
-    """Notification delivery response."""
-    notification_id: str
+    """Notification delivery response."""    notification_id: str
     status: DeliveryStatus
     message: str
     timestamp: datetime
@@ -247,8 +233,7 @@ class NotificationResponse:
     metadata: Optional[Dict[str, Any]] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization."""
-        return {
+        """Convert to dictionary for serialization."""        return {
             "notification_id": self.notification_id,
             "status": self.status.value if isinstance(self.status, DeliveryStatus) else self.status,
             "message": self.message,
@@ -264,8 +249,7 @@ class NotificationResponse:
 
 @dataclass
 class NotificationTemplate:
-    """Notification template with personalization support."""
-    template_id: str
+    """Notification template with personalization support."""    template_id: str
     template_name: str
     notification_type: str
     version: str = "1.0"
@@ -283,19 +267,16 @@ class NotificationTemplate:
     is_active: bool = True
     
     def get_template_for_channel(self, channel: str) -> Optional[Dict[str, Any]]:
-        """Get template configuration for specific channel."""
-        return self.channel_templates.get(channel)
+        """Get template configuration for specific channel."""        return self.channel_templates.get(channel)
     
     def add_channel_template(self, channel: str, template_config: Dict[str, Any]):
-        """Add template configuration for specific channel."""
-        self.channel_templates[channel] = template_config
+        """Add template configuration for specific channel."""        self.channel_templates[channel] = template_config
         self.updated_at = datetime.now(timezone.utc)
 
 
 @dataclass
 class NotificationChannel:
-    """Notification channel configuration and metrics."""
-    channel_id: str
+    """Notification channel configuration and metrics."""    channel_id: str
     channel_type: ChannelType
     name: str
     is_enabled: bool = True
@@ -309,8 +290,7 @@ class NotificationChannel:
     created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def update_performance_metrics(self, delivery_time: float, success: bool):
-        """Update channel performance metrics."""
-        if "total_sent" not in self.performance_metrics:
+        """Update channel performance metrics."""        if "total_sent" not in self.performance_metrics:
             self.performance_metrics["total_sent"] = 0
         if "successful_deliveries" not in self.performance_metrics:
             self.performance_metrics["successful_deliveries"] = 0
@@ -329,16 +309,14 @@ class NotificationChannel:
         )
     
     def get_success_rate(self) -> float:
-        """Calculate channel success rate."""
-        total = self.performance_metrics.get("total_sent", 0)
+        """Calculate channel success rate."""        total = self.performance_metrics.get("total_sent", 0)
         successful = self.performance_metrics.get("successful_deliveries", 0)
         return (successful / total * 100) if total > 0 else 0.0
 
 
 @dataclass
 class NotificationWorkflow:
-    """Complex notification workflow definition."""
-    workflow_id: str
+    """Complex notification workflow definition."""    workflow_id: str
     workflow_name: str
     workflow_type: str
     description: Optional[str] = None
@@ -357,13 +335,11 @@ class NotificationWorkflow:
     created_by: Optional[str] = None
     
     def add_step(self, step_config: Dict[str, Any]):
-        """Add step to workflow."""
-        step_config["step_id"] = len(self.steps)
+        """Add step to workflow."""        step_config["step_id"] = len(self.steps)
         self.steps.append(step_config)
     
     def mark_step_completed(self, step_id: int, execution_data: Optional[Dict[str, Any]] = None):
-        """Mark workflow step as completed."""
-        if step_id not in self.completed_steps:
+        """Mark workflow step as completed."""        if step_id not in self.completed_steps:
             self.completed_steps.append(step_id)
         
         # Record execution history
@@ -379,8 +355,7 @@ class NotificationWorkflow:
             self.current_step += 1
     
     def mark_step_failed(self, step_id: int, error: str):
-        """Mark workflow step as failed."""
-        if step_id not in self.failed_steps:
+        """Mark workflow step as failed."""        if step_id not in self.failed_steps:
             self.failed_steps.append(step_id)
         
         # Record execution history
@@ -397,8 +372,7 @@ class NotificationWorkflow:
 
 @dataclass
 class NotificationMetrics:
-    """Comprehensive notification metrics and analytics."""
-    metric_id: str = field(default_factory=lambda: str(uuid4()))
+    """Comprehensive notification metrics and analytics."""    metric_id: str = field(default_factory=lambda: str(uuid4()))
     time_period: str = "24h"
     notification_type: Optional[str] = None
     total_sent: int = 0
@@ -415,14 +389,12 @@ class NotificationMetrics:
     timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def get_success_rate(self) -> float:
-        """Calculate overall success rate."""
-        total = self.total_sent
+        """Calculate overall success rate."""        total = self.total_sent
         successful = self.successful_deliveries + self.partially_delivered
         return (successful / total * 100) if total > 0 else 0.0
     
     def get_failure_rate(self) -> float:
-        """Calculate failure rate."""
-        return 100.0 - self.get_success_rate()
+        """Calculate failure rate."""        return 100.0 - self.get_success_rate()
     
     def add_delivery_metric(
         self,
@@ -431,8 +403,7 @@ class NotificationMetrics:
         success: bool,
         cost: Optional[float] = None
     ):
-        """Add delivery metric data."""
-        # Update overall metrics
+        """Add delivery metric data."""        # Update overall metrics
         self.total_sent += 1
         if success:
             self.successful_deliveries += 1
@@ -478,8 +449,7 @@ class NotificationMetrics:
 
 @dataclass
 class UserPreferences:
-    """Comprehensive user notification preferences."""
-    user_id: str
+    """Comprehensive user notification preferences."""    user_id: str
     preferences_id: str = field(default_factory=lambda: str(uuid4()))
     global_enabled: bool = True
     quiet_hours: Optional[Dict[str, str]] = None  # {"start": "22:00", "end": "08:00"}
@@ -519,15 +489,13 @@ class UserPreferences:
     updated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def is_notification_enabled(self, notification_type: str) -> bool:
-        """Check if notification type is enabled for user."""
-        if not self.global_enabled:
+        """Check if notification type is enabled for user."""        if not self.global_enabled:
             return False
         
         return self.notification_type_preferences.get(notification_type, True)
     
     def is_channel_enabled(self, channel: str) -> bool:
-        """Check if channel is enabled for user."""
-        channel_map = {
+        """Check if channel is enabled for user."""        channel_map = {
             "email": self.email_enabled,
             "sms": self.sms_enabled,
             "push": self.push_enabled,
@@ -537,16 +505,14 @@ class UserPreferences:
         return channel_map.get(channel, False)
     
     def update_preference(self, key: str, value: Any):
-        """Update user preference."""
-        if hasattr(self, key):
+        """Update user preference."""        if hasattr(self, key):
             setattr(self, key, value)
             self.updated_at = datetime.now(timezone.utc)
 
 
 @dataclass
 class BusinessRules:
-    """Configurable business rules for notification processing."""
-    rule_id: str = field(default_factory=lambda: str(uuid4()))
+    """Configurable business rules for notification processing."""    rule_id: str = field(default_factory=lambda: str(uuid4()))
     rule_name: str = ""
     notification_type: str = ""
     conditions: Dict[str, Any] = field(default_factory=dict)
@@ -563,8 +529,7 @@ class BusinessRules:
     updated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def evaluate_conditions(self, context: Dict[str, Any]) -> bool:
-        """Evaluate rule conditions against context."""
-        try:
+        """Evaluate rule conditions against context."""        try:
             # Simple condition evaluation
             for key, expected_value in self.conditions.items():
                 if key not in context:
@@ -596,8 +561,7 @@ class BusinessRules:
             return False
     
     def apply_actions(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply rule actions to notification request."""
-        try:
+        """Apply rule actions to notification request."""        try:
             modified_request = request.copy()
             
             # Apply priority overrides
@@ -630,8 +594,7 @@ class BusinessRules:
 # Utility functions for model validation and serialization
 
 def validate_notification_request(data: Dict[str, Any]) -> bool:
-    """Validate notification request data."""
-    try:
+    """Validate notification request data."""    try:
         required_fields = ["notification_type", "recipient", "content"]
         
         for field in required_fields:
@@ -655,16 +618,14 @@ def validate_notification_request(data: Dict[str, Any]) -> bool:
 
 
 def serialize_notification_response(response: NotificationResponse) -> str:
-    """Serialize notification response to JSON."""
-    try:
+    """Serialize notification response to JSON."""    try:
         return json.dumps(response.to_dict(), indent=2)
     except Exception:
         return "{}"
 
 
 def deserialize_notification_request(data: str) -> Optional[NotificationRequest]:
-    """Deserialize JSON data to NotificationRequest."""
-    try:
+    """Deserialize JSON data to NotificationRequest."""    try:
         parsed_data = json.loads(data)
         
         if not validate_notification_request(parsed_data):

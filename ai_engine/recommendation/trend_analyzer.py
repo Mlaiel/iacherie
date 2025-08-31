@@ -1,5 +1,4 @@
-"""
-Trend Analyzer for Content Recommendations
+"""Trend Analyzer for Content Recommendations
 Advanced trend detection, analysis, and prediction system
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -19,9 +18,7 @@ Development Team Specialties:
 - DevOps Engineer
 - AI Prompt Engineer
 Email: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
@@ -44,8 +41,7 @@ from ..core.base_models import ModelStatus
 
 
 class TrendScope(Enum):
-    """Scope of trend analysis"""
-    GLOBAL = "global"
+    """Scope of trend analysis"""    GLOBAL = "global"
     REGIONAL = "regional"
     LOCAL = "local"
     PLATFORM_SPECIFIC = "platform_specific"
@@ -55,8 +51,7 @@ class TrendScope(Enum):
 
 
 class TrendPredictionModel(Enum):
-    """Trend prediction model types"""
-    TIME_SERIES = "time_series"
+    """Trend prediction model types"""    TIME_SERIES = "time_series"
     MACHINE_LEARNING = "machine_learning"
     DEEP_LEARNING = "deep_learning"
     ENSEMBLE = "ensemble"
@@ -66,8 +61,7 @@ class TrendPredictionModel(Enum):
 
 
 class TrendIndicator(Enum):
-    """Key trend indicators"""
-    SEARCH_VOLUME = "search_volume"
+    """Key trend indicators"""    SEARCH_VOLUME = "search_volume"
     SOCIAL_MENTIONS = "social_mentions"
     ENGAGEMENT_RATE = "engagement_rate"
     HASHTAG_USAGE = "hashtag_usage"
@@ -81,8 +75,7 @@ class TrendIndicator(Enum):
 
 @dataclass
 class TrendMetrics:
-    """Comprehensive trend metrics"""
-    trend_id: str
+    """Comprehensive trend metrics"""    trend_id: str
     growth_velocity: float = 0.0
     acceleration: float = 0.0
     momentum_score: float = 0.0
@@ -106,8 +99,7 @@ class TrendMetrics:
 
 @dataclass
 class TrendPrediction:
-    """Trend prediction structure"""
-    prediction_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Trend prediction structure"""    prediction_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     trend_id: str = ""
     prediction_type: str = "growth"
     time_horizon: timedelta = field(default_factory=lambda: timedelta(days=30))
@@ -124,8 +116,7 @@ class TrendPrediction:
 
 
 class TrendAnalyzer:
-    """
-    Advanced trend analysis and prediction system
+    """    Advanced trend analysis and prediction system
     
     Provides comprehensive trend analysis including:
     - Real-time trend detection and monitoring
@@ -135,11 +126,9 @@ class TrendAnalyzer:
     - Content opportunity identification
     - Revenue trend forecasting
     - Creator trend recommendations
-    """
-    
+    """    
     def __init__(self):
-        """Initialize trend analyzer"""
-        self.logger = logging.getLogger(__name__)
+        """Initialize trend analyzer"""        self.logger = logging.getLogger(__name__)
         self.status = ModelStatus.INITIALIZING
         
         # Trend analysis models
@@ -181,8 +170,7 @@ class TrendAnalyzer:
         self.logger.info("TrendAnalyzer initialized")
     
     async def initialize(self) -> bool:
-        """Initialize trend analysis models and data sources"""
-        try:
+        """Initialize trend analysis models and data sources"""        try:
             self.logger.info("Initializing trend analysis models...")
             
             # Load trend detection models
@@ -227,8 +215,7 @@ class TrendAnalyzer:
         scope: TrendScope = TrendScope.GLOBAL,
         **kwargs
     ) -> List[TrendInsight]:
-        """
-        Analyze current trends across specified parameters
+        """        Analyze current trends across specified parameters
         
         Args:
             time_window: Time period for trend analysis
@@ -240,8 +227,7 @@ class TrendAnalyzer:
             
         Returns:
             List of trend insights with analysis and predictions
-        """
-        try:
+        """        try:
             start_time = datetime.now()
             self.analysis_metrics["total_analyses"] += 1
             
@@ -303,8 +289,7 @@ class TrendAnalyzer:
         time_window: timedelta = timedelta(days=1),
         max_results: int = 50
     ) -> List[Dict[str, Any]]:
-        """
-        Get trending content for recommendations
+        """        Get trending content for recommendations
         
         Args:
             content_type: Type of content to filter
@@ -314,8 +299,7 @@ class TrendAnalyzer:
             
         Returns:
             List of trending content with metadata
-        """
-        try:
+        """        try:
             self.logger.info(f"Getting trending content for {content_type} on {platform}")
             
             # Gather trending content data
@@ -340,8 +324,7 @@ class TrendAnalyzer:
         insights: List[TrendInsight],
         prediction_horizon: timedelta = timedelta(days=7)
     ) -> List[TrendInsight]:
-        """
-        Predict viral potential for trend insights
+        """        Predict viral potential for trend insights
         
         Args:
             insights: List of trend insights to analyze
@@ -349,8 +332,7 @@ class TrendAnalyzer:
             
         Returns:
             Enhanced insights with viral predictions
-        """
-        try:
+        """        try:
             self.logger.info(f"Predicting viral potential for {len(insights)} trends")
             
             enhanced_insights = []
@@ -389,8 +371,7 @@ class TrendAnalyzer:
         forecast_horizon: timedelta = timedelta(days=30),
         scenarios: Optional[List[str]] = None
     ) -> TrendPrediction:
-        """
-        Forecast the trajectory of a specific trend
+        """        Forecast the trajectory of a specific trend
         
         Args:
             trend_id: Identifier of the trend to forecast
@@ -399,8 +380,7 @@ class TrendAnalyzer:
             
         Returns:
             Detailed trend prediction with scenarios
-        """
-        try:
+        """        try:
             self.logger.info(f"Forecasting trajectory for trend {trend_id}")
             
             # Get trend historical data
@@ -453,8 +433,7 @@ class TrendAnalyzer:
         trend_insights: List[TrendInsight],
         max_opportunities: int = 10
     ) -> List[Dict[str, Any]]:
-        """
-        Identify content opportunities based on trends for a specific creator
+        """        Identify content opportunities based on trends for a specific creator
         
         Args:
             creator_profile: Creator's profile and preferences
@@ -463,8 +442,7 @@ class TrendAnalyzer:
             
         Returns:
             List of content opportunities with recommendations
-        """
-        try:
+        """        try:
             self.logger.info(f"Identifying content opportunities for creator")
             
             opportunities = []
@@ -497,50 +475,42 @@ class TrendAnalyzer:
     # Private helper methods
     
     async def _load_trend_detection_models(self):
-        """Load trend detection models"""
-        self.logger.info("Loading trend detection models...")
+        """Load trend detection models"""        self.logger.info("Loading trend detection models...")
         # Implementation for loading trend detection models
         pass
     
     async def _load_viral_prediction_models(self):
-        """Load viral prediction models"""
-        self.logger.info("Loading viral prediction models...")
+        """Load viral prediction models"""        self.logger.info("Loading viral prediction models...")
         # Implementation for loading viral prediction models
         pass
     
     async def _load_seasonality_models(self):
-        """Load seasonality analysis models"""
-        self.logger.info("Loading seasonality models...")
+        """Load seasonality analysis models"""        self.logger.info("Loading seasonality models...")
         # Implementation for loading seasonality models
         pass
     
     async def _load_cross_platform_models(self):
-        """Load cross-platform analysis models"""
-        self.logger.info("Loading cross-platform models...")
+        """Load cross-platform analysis models"""        self.logger.info("Loading cross-platform models...")
         # Implementation for loading cross-platform models
         pass
     
     async def _load_revenue_trend_models(self):
-        """Load revenue trend models"""
-        self.logger.info("Loading revenue trend models...")
+        """Load revenue trend models"""        self.logger.info("Loading revenue trend models...")
         # Implementation for loading revenue trend models
         pass
     
     async def _initialize_data_sources(self):
-        """Initialize trend data sources"""
-        self.logger.info("Initializing trend data sources...")
+        """Initialize trend data sources"""        self.logger.info("Initializing trend data sources...")
         # Implementation for initializing data sources
         pass
     
     async def _load_historical_trends(self):
-        """Load historical trend data"""
-        self.logger.info("Loading historical trend data...")
+        """Load historical trend data"""        self.logger.info("Loading historical trend data...")
         # Implementation for loading historical data
         pass
     
     async def _start_real_time_monitoring(self):
-        """Start real-time trend monitoring"""
-        self.logger.info("Starting real-time trend monitoring...")
+        """Start real-time trend monitoring"""        self.logger.info("Starting real-time trend monitoring...")
         # Implementation for real-time monitoring
         pass
     
@@ -552,8 +522,7 @@ class TrendAnalyzer:
         geographic_filter: Optional[str], 
         scope: TrendScope
     ) -> str:
-        """Generate cache key for trend analysis"""
-        key_parts = [
+        """Generate cache key for trend analysis"""        key_parts = [
             f"tw_{int(time_window.total_seconds())}",
             f"ct_{','.join(content_types) if content_types else 'all'}",
             f"pf_{','.join([p.value for p in platforms]) if platforms else 'all'}",
@@ -570,8 +539,7 @@ class TrendAnalyzer:
         geographic_filter: Optional[str],
         scope: TrendScope
     ) -> Dict[str, Any]:
-        """Gather trend data from multiple sources"""
-        # Implementation for gathering trend data
+        """Gather trend data from multiple sources"""        # Implementation for gathering trend data
         return {
             "social_mentions": {},
             "search_trends": {},
@@ -582,8 +550,7 @@ class TrendAnalyzer:
         }
     
     async def _detect_emerging_trends(self, trend_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect emerging trends from data"""
-        # Implementation for emerging trend detection
+        """Detect emerging trends from data"""        # Implementation for emerging trend detection
         return [
             {
                 "trend_name": "AI Content Creation",
@@ -594,8 +561,7 @@ class TrendAnalyzer:
         ]
     
     async def _analyze_viral_trends(self, trend_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Analyze viral trends"""
-        # Implementation for viral trend analysis
+        """Analyze viral trends"""        # Implementation for viral trend analysis
         return [
             {
                 "trend_name": "Viral Dance Challenge",
@@ -606,8 +572,7 @@ class TrendAnalyzer:
         ]
     
     async def _identify_seasonal_trends(self, trend_data: Dict[str, Any], time_window: timedelta) -> List[Dict[str, Any]]:
-        """Identify seasonal trends"""
-        # Implementation for seasonal trend identification
+        """Identify seasonal trends"""        # Implementation for seasonal trend identification
         return [
             {
                 "trend_name": "Holiday Content",
@@ -618,8 +583,7 @@ class TrendAnalyzer:
         ]
     
     async def _analyze_declining_trends(self, trend_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Analyze declining trends"""
-        # Implementation for declining trend analysis
+        """Analyze declining trends"""        # Implementation for declining trend analysis
         return [
             {
                 "trend_name": "Outdated Format",
@@ -630,8 +594,7 @@ class TrendAnalyzer:
         ]
     
     async def _create_trend_insight(self, trend_data: Dict[str, Any], scope: TrendScope) -> TrendInsight:
-        """Create comprehensive trend insight from data"""
-        insight = TrendInsight(
+        """Create comprehensive trend insight from data"""        insight = TrendInsight(
             trend_name=trend_data.get("trend_name", "Unknown Trend"),
             trend_type=trend_data.get("trend_type", TrendType.EMERGING),
             growth_rate=trend_data.get("growth_rate", 0.0),
@@ -650,11 +613,9 @@ class TrendAnalyzer:
         return insight
     
     async def _rank_trends(self, trends: List[TrendInsight]) -> List[TrendInsight]:
-        """Rank trends by relevance and potential"""
-        
+        """Rank trends by relevance and potential"""        
         def calculate_trend_score(trend: TrendInsight) -> float:
-            """Calculate composite trend score"""
-            weights = {
+            """Calculate composite trend score"""            weights = {
                 "growth_rate": 0.25,
                 "momentum_score": 0.25,
                 "viral_coefficient": 0.20,
@@ -685,8 +646,7 @@ class TrendAnalyzer:
         platform: Optional[Platform],
         time_window: timedelta
     ) -> List[Dict[str, Any]]:
-        """Gather trending content data"""
-        # Implementation for gathering trending content
+        """Gather trending content data"""        # Implementation for gathering trending content
         return [
             {
                 "content_id": "trending_1",
@@ -699,8 +659,7 @@ class TrendAnalyzer:
         ]
     
     async def _score_trending_content(self, content_data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Score and rank trending content"""
-        for content in content_data:
+        """Score and rank trending content"""        for content in content_data:
             # Calculate trending score
             engagement = content.get("engagement_score", 0.0)
             velocity = content.get("viral_velocity", 0.0)
@@ -713,8 +672,7 @@ class TrendAnalyzer:
         return sorted(content_data, key=lambda x: x.get("trending_score", 0), reverse=True)
     
     async def _extract_viral_features(self, insight: TrendInsight) -> Dict[str, float]:
-        """Extract features for viral prediction"""
-        return {
+        """Extract features for viral prediction"""        return {
             "growth_velocity": insight.growth_rate,
             "engagement_intensity": insight.engagement_velocity,
             "social_sharing": 0.8,  # Placeholder
@@ -728,8 +686,7 @@ class TrendAnalyzer:
         viral_features: Dict[str, float], 
         prediction_horizon: timedelta
     ) -> Dict[str, Any]:
-        """Predict viral potential using features"""
-        # Implementation for viral prediction
+        """Predict viral potential using features"""        # Implementation for viral prediction
         feature_sum = sum(viral_features.values())
         viral_coefficient = min(1.0, feature_sum / len(viral_features))
         
@@ -741,13 +698,11 @@ class TrendAnalyzer:
         }
     
     async def _get_trend_history(self, trend_id: str) -> List[Dict[str, Any]]:
-        """Get historical data for a trend"""
-        # Implementation for retrieving trend history
+        """Get historical data for a trend"""        # Implementation for retrieving trend history
         return []
     
     async def _extract_trend_features(self, trend_history: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Extract features from trend history"""
-        # Implementation for feature extraction
+        """Extract features from trend history"""        # Implementation for feature extraction
         return {
             "historical_growth": 0.7,
             "volatility": 0.3,
@@ -760,8 +715,7 @@ class TrendAnalyzer:
         trend_features: Dict[str, float], 
         forecast_horizon: timedelta
     ) -> Dict[str, float]:
-        """Generate trend forecast"""
-        # Implementation for trend forecasting
+        """Generate trend forecast"""        # Implementation for trend forecasting
         return {
             "growth_prediction": 0.8,
             "peak_intensity": 0.9,
@@ -775,8 +729,7 @@ class TrendAnalyzer:
         forecast_horizon: timedelta, 
         scenario: str
     ) -> Dict[str, float]:
-        """Generate scenario-specific prediction"""
-        base_growth = trend_features.get("historical_growth", 0.5)
+        """Generate scenario-specific prediction"""        base_growth = trend_features.get("historical_growth", 0.5)
         
         scenario_multipliers = {
             "optimistic": 1.3,
@@ -797,13 +750,11 @@ class TrendAnalyzer:
         base_prediction: Dict[str, float], 
         scenario_predictions: Dict[str, Dict[str, float]]
     ) -> Tuple[float, float]:
-        """Calculate confidence interval for predictions"""
-        # Implementation for confidence interval calculation
+        """Calculate confidence interval for predictions"""        # Implementation for confidence interval calculation
         return (0.6, 0.9)  # Placeholder
     
     async def _identify_trend_risks(self, trend_features: Dict[str, float]) -> List[str]:
-        """Identify risk factors for trend"""
-        risks = []
+        """Identify risk factors for trend"""        risks = []
         
         if trend_features.get("volatility", 0) > 0.7:
             risks.append("High volatility may lead to unpredictable behavior")
@@ -814,8 +765,7 @@ class TrendAnalyzer:
         return risks
     
     async def _identify_trend_opportunities(self, trend_features: Dict[str, float]) -> List[str]:
-        """Identify opportunity factors for trend"""
-        opportunities = []
+        """Identify opportunity factors for trend"""        opportunities = []
         
         if trend_features.get("historical_growth", 0) > 0.7:
             opportunities.append("Strong historical growth pattern")
@@ -830,8 +780,7 @@ class TrendAnalyzer:
         creator_profile: Dict[str, Any], 
         insight: TrendInsight
     ) -> float:
-        """Calculate alignment between creator and trend"""
-        # Implementation for creator-trend alignment
+        """Calculate alignment between creator and trend"""        # Implementation for creator-trend alignment
         creator_genres = set(creator_profile.get("genres", []))
         trend_categories = set(insight.categories)
         
@@ -851,8 +800,7 @@ class TrendAnalyzer:
         insight: TrendInsight, 
         alignment_score: float
     ) -> Dict[str, Any]:
-        """Create content opportunity from trend and creator alignment"""
-        return {
+        """Create content opportunity from trend and creator alignment"""        return {
             "opportunity_id": str(uuid.uuid4()),
             "trend_name": insight.trend_name,
             "alignment_score": alignment_score,
@@ -867,23 +815,19 @@ class TrendAnalyzer:
         }
     
     async def _extract_trend_keywords(self, trend_data: Dict[str, Any]) -> List[str]:
-        """Extract keywords from trend data"""
-        # Implementation for keyword extraction
+        """Extract keywords from trend data"""        # Implementation for keyword extraction
         return ["AI", "content", "creative", "viral", "trending"]
     
     async def _extract_trend_hashtags(self, trend_data: Dict[str, Any]) -> List[str]:
-        """Extract hashtags from trend data"""
-        # Implementation for hashtag extraction
+        """Extract hashtags from trend data"""        # Implementation for hashtag extraction
         return ["#AI", "#ContentCreator", "#Viral", "#Trending", "#Creative"]
     
     async def _identify_monetization_opportunities(self, trend_data: Dict[str, Any]) -> List[RevenueStream]:
-        """Identify monetization opportunities for trend"""
-        # Implementation for monetization identification
+        """Identify monetization opportunities for trend"""        # Implementation for monetization identification
         return [RevenueStream.SPONSORSHIPS, RevenueStream.ADVERTISING, RevenueStream.MERCHANDISE]
     
     async def _identify_creator_opportunities(self, trend_data: Dict[str, Any]) -> List[str]:
-        """Identify creator opportunities for trend"""
-        # Implementation for creator opportunity identification
+        """Identify creator opportunities for trend"""        # Implementation for creator opportunity identification
         return [
             "Early adopter advantage",
             "Cross-platform content adaptation",
@@ -892,8 +836,7 @@ class TrendAnalyzer:
         ]
     
     async def _generate_content_suggestions(self, trend_data: Dict[str, Any]) -> List[str]:
-        """Generate content suggestions for trend"""
-        # Implementation for content suggestion generation
+        """Generate content suggestions for trend"""        # Implementation for content suggestion generation
         return [
             "Create tutorial content around trending topic",
             "Develop unique perspective on viral theme",
@@ -902,8 +845,7 @@ class TrendAnalyzer:
         ]
     
     async def _analyze_platform_optimization(self, trend_data: Dict[str, Any]) -> Dict[Platform, Dict[str, Any]]:
-        """Analyze platform-specific optimization strategies"""
-        # Implementation for platform optimization analysis
+        """Analyze platform-specific optimization strategies"""        # Implementation for platform optimization analysis
         return {
             Platform.TIKTOK: {
                 "optimal_length": "15-30 seconds",
@@ -923,8 +865,7 @@ class TrendAnalyzer:
         }
     
     def _update_analysis_metrics(self, processing_time: float, trends_count: int):
-        """Update trend analysis metrics"""
-        self.analysis_metrics["trends_detected"] += trends_count
+        """Update trend analysis metrics"""        self.analysis_metrics["trends_detected"] += trends_count
         
         # Update average processing time
         current_avg = self.analysis_metrics["processing_time"]
@@ -934,8 +875,7 @@ class TrendAnalyzer:
         )
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get trend analyzer performance metrics"""
-        return {
+        """Get trend analyzer performance metrics"""        return {
             **self.analysis_metrics,
             "status": self.status.value,
             "cache_size": len(self.trend_cache),
@@ -944,8 +884,7 @@ class TrendAnalyzer:
         }
     
     async def cleanup(self):
-        """Cleanup resources"""
-        try:
+        """Cleanup resources"""        try:
             self.trend_cache.clear()
             self.prediction_cache.clear()
             self.status = ModelStatus.MAINTENANCE
@@ -955,10 +894,8 @@ class TrendAnalyzer:
 
 
 class TrendPredictor:
-    """
-    Specialized trend predictor for specific prediction tasks
-    """
-    
+    """    Specialized trend predictor for specific prediction tasks
+    """    
     def __init__(self, prediction_model: TrendPredictionModel):
         self.prediction_model = prediction_model
         self.logger = logging.getLogger(__name__)
@@ -968,8 +905,7 @@ class TrendPredictor:
         trend_data: Dict[str, Any], 
         horizon: timedelta
     ) -> Dict[str, Any]:
-        """Predict complete trend lifecycle"""
-        
+        """Predict complete trend lifecycle"""        
         if self.prediction_model == TrendPredictionModel.TIME_SERIES:
             return await self._time_series_prediction(trend_data, horizon)
         elif self.prediction_model == TrendPredictionModel.MACHINE_LEARNING:
@@ -980,23 +916,19 @@ class TrendPredictor:
             return await self._ensemble_prediction(trend_data, horizon)
     
     async def _time_series_prediction(self, trend_data: Dict[str, Any], horizon: timedelta) -> Dict[str, Any]:
-        """Time series based prediction"""
-        # Implementation for time series prediction
+        """Time series based prediction"""        # Implementation for time series prediction
         return {"prediction_type": "time_series", "accuracy": 0.8}
     
     async def _ml_prediction(self, trend_data: Dict[str, Any], horizon: timedelta) -> Dict[str, Any]:
-        """Machine learning based prediction"""
-        # Implementation for ML prediction
+        """Machine learning based prediction"""        # Implementation for ML prediction
         return {"prediction_type": "machine_learning", "accuracy": 0.85}
     
     async def _deep_learning_prediction(self, trend_data: Dict[str, Any], horizon: timedelta) -> Dict[str, Any]:
-        """Deep learning based prediction"""
-        # Implementation for deep learning prediction
+        """Deep learning based prediction"""        # Implementation for deep learning prediction
         return {"prediction_type": "deep_learning", "accuracy": 0.9}
     
     async def _ensemble_prediction(self, trend_data: Dict[str, Any], horizon: timedelta) -> Dict[str, Any]:
-        """Ensemble prediction combining multiple models"""
-        # Implementation for ensemble prediction
+        """Ensemble prediction combining multiple models"""        # Implementation for ensemble prediction
         ts_pred = await self._time_series_prediction(trend_data, horizon)
         ml_pred = await self._ml_prediction(trend_data, horizon)
         dl_pred = await self._deep_learning_prediction(trend_data, horizon)
@@ -1012,18 +944,15 @@ class TrendPredictor:
 
 
 class TrendDetector:
-    """Advanced trend detection system for identifying emerging patterns."""
-    
+    """Advanced trend detection system for identifying emerging patterns."""    
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize trend detector with configuration."""
-        self.config = config or {}
+        """Initialize trend detector with configuration."""        self.config = config or {}
         self.detection_sensitivity = self.config.get('sensitivity', 0.7)
         self.trend_threshold = self.config.get('trend_threshold', 0.6)
         self.temporal_window = self.config.get('temporal_window', 24)  # hours
         
     async def detect_emerging_trends(self, data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect emerging trends from data patterns."""
-        try:
+        """Detect emerging trends from data patterns."""        try:
             trends = []
             
             # Content-based trend detection
@@ -1048,8 +977,7 @@ class TrendDetector:
             raise TrendAnalysisError(f"Trend detection error: {str(e)}")
             
     async def _detect_content_trends(self, data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect trends in content types and themes."""
-        return [
+        """Detect trends in content types and themes."""        return [
             {
                 'trend_type': 'content',
                 'pattern': 'video_format_preference',
@@ -1067,8 +995,7 @@ class TrendDetector:
         ]
         
     async def _detect_engagement_trends(self, data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect trends in engagement patterns."""
-        return [
+        """Detect trends in engagement patterns."""        return [
             {
                 'trend_type': 'engagement',
                 'pattern': 'peak_hours_shift',
@@ -1079,8 +1006,7 @@ class TrendDetector:
         ]
         
     async def _detect_platform_trends(self, data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect platform-specific trends."""
-        return [
+        """Detect platform-specific trends."""        return [
             {
                 'trend_type': 'platform',
                 'pattern': 'cross_platform_growth',
@@ -1091,8 +1017,7 @@ class TrendDetector:
         ]
         
     async def _filter_and_rank_trends(self, trends: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Filter and rank detected trends by confidence and relevance."""
-        # Filter by confidence threshold
+        """Filter and rank detected trends by confidence and relevance."""        # Filter by confidence threshold
         filtered = [t for t in trends if t.get('confidence', 0) >= self.trend_threshold]
         
         # Sort by confidence and growth rate
@@ -1102,18 +1027,15 @@ class TrendDetector:
 
 
 class ViralPredictor:
-    """Advanced viral content prediction system."""
-    
+    """Advanced viral content prediction system."""    
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize viral predictor with configuration."""
-        self.config = config or {}
+        """Initialize viral predictor with configuration."""        self.config = config or {}
         self.viral_threshold = self.config.get('viral_threshold', 0.8)
         self.prediction_window = self.config.get('prediction_window', 72)  # hours
         self.features_count = self.config.get('features_count', 50)
         
     async def predict_viral_potential(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Predict viral potential of content."""
-        try:
+        """Predict viral potential of content."""        try:
             # Extract viral features
             features = await self._extract_viral_features(content_data)
             
@@ -1142,8 +1064,7 @@ class ViralPredictor:
             raise TrendAnalysisError(f"Viral prediction error: {str(e)}")
             
     async def _extract_viral_features(self, content_data: Dict[str, Any]) -> Dict[str, float]:
-        """Extract features that contribute to viral potential."""
-        return {
+        """Extract features that contribute to viral potential."""        return {
             'content_quality': 0.85,
             'emotional_impact': 0.9,
             'shareability': 0.8,
@@ -1162,8 +1083,7 @@ class ViralPredictor:
         }
         
     async def _calculate_viral_score(self, features: Dict[str, float]) -> float:
-        """Calculate overall viral score from features."""
-        # Weight important viral factors
+        """Calculate overall viral score from features."""        # Weight important viral factors
         weights = {
             'emotional_impact': 0.15,
             'shareability': 0.12,
@@ -1190,8 +1110,7 @@ class ViralPredictor:
         return weighted_score / total_weight if total_weight > 0 else 0.0
         
     async def _predict_viral_timeline(self, content_data: Dict[str, Any], viral_score: float) -> Dict[str, Any]:
-        """Predict viral spread timeline."""
-        if viral_score < self.viral_threshold:
+        """Predict viral spread timeline."""        if viral_score < self.viral_threshold:
             return {'viral_likely': False, 'timeline': []}
             
         # Simulate viral timeline based on score
@@ -1218,8 +1137,7 @@ class ViralPredictor:
         }
         
     async def _generate_viral_insights(self, features: Dict[str, float], viral_score: float) -> List[str]:
-        """Generate insights about viral potential."""
-        insights = []
+        """Generate insights about viral potential."""        insights = []
         
         if viral_score >= 0.8:
             insights.append("High viral potential - optimize for maximum reach")

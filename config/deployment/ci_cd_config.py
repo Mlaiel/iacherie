@@ -1,5 +1,4 @@
-"""
-CI/CD Pipeline Configuration Module for IA-Influencer Agent Platform
+"""CI/CD Pipeline Configuration Module for IA-Influencer Agent Platform
 ===================================================================
 
 Professional continuous integration and deployment configuration
@@ -15,9 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import os
+"""import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -25,8 +22,7 @@ import yaml
 
 
 class PipelineStage(Enum):
-    """CI/CD pipeline stages"""
-    BUILD = "build"
+    """CI/CD pipeline stages"""    BUILD = "build"
     TEST = "test"
     SECURITY_SCAN = "security_scan"
     CODE_QUALITY = "code_quality"
@@ -39,8 +35,7 @@ class PipelineStage(Enum):
 
 @dataclass
 class GitHubActionsConfig:
-    """GitHub Actions workflow configuration"""
-    name: str
+    """GitHub Actions workflow configuration"""    name: str
     trigger_events: List[str] = field(default_factory=lambda: ["push", "pull_request"])
     branches: List[str] = field(default_factory=lambda: ["main", "develop"])
     python_versions: List[str] = field(default_factory=lambda: ["3.11"])
@@ -52,8 +47,7 @@ class GitHubActionsConfig:
 
 @dataclass
 class JenkinsConfig:
-    """Jenkins pipeline configuration"""
-    agent: str = "any"
+    """Jenkins pipeline configuration"""    agent: str = "any"
     stages: List[Dict[str, Any]] = field(default_factory=list)
     post_actions: Dict[str, List[str]] = field(default_factory=dict)
     environment: Dict[str, str] = field(default_factory=dict)
@@ -63,8 +57,7 @@ class JenkinsConfig:
 
 @dataclass
 class GitLabCIConfig:
-    """GitLab CI/CD configuration"""
-    image: str = "python:3.11"
+    """GitLab CI/CD configuration"""    image: str = "python:3.11"
     stages: List[str] = field(default_factory=list)
     variables: Dict[str, str] = field(default_factory=dict)
     before_script: List[str] = field(default_factory=list)
@@ -73,8 +66,7 @@ class GitLabCIConfig:
 
 
 class CICDConfig:
-    """
-    Professional CI/CD configuration manager for IA-Influencer Agent Platform.
+    """    Professional CI/CD configuration manager for IA-Influencer Agent Platform.
     
     Manages deployment pipelines for:
     - AI fingerprinting services (audio, video, image, text)
@@ -83,8 +75,7 @@ class CICDConfig:
     - Real-time monitoring and alerting systems
     - Multi-database clusters and caching layers
     - Web crawlers and content scanning services
-    """
-    
+    """    
     def __init__(self, environment: str = "development"):
         self.environment = environment
         self.project_name = "ia-influencer-agent"
@@ -92,8 +83,7 @@ class CICDConfig:
         self.kubernetes_cluster = self._get_k8s_cluster()
         
     def _get_docker_registry(self) -> str:
-        """Get Docker registry URL based on environment"""
-        registries = {
+        """Get Docker registry URL based on environment"""        registries = {
             "development": "localhost:5000",
             "staging": "registry.staging.ia-influencer.com",
             "production": "registry.ia-influencer.com"
@@ -101,8 +91,7 @@ class CICDConfig:
         return registries.get(self.environment, "localhost:5000")
     
     def _get_k8s_cluster(self) -> str:
-        """Get Kubernetes cluster endpoint"""
-        clusters = {
+        """Get Kubernetes cluster endpoint"""        clusters = {
             "development": "k8s.dev.ia-influencer.com",
             "staging": "k8s.staging.ia-influencer.com", 
             "production": "k8s.ia-influencer.com"
@@ -110,8 +99,7 @@ class CICDConfig:
         return clusters.get(self.environment, "localhost:6443")
     
     def get_github_actions_config(self) -> GitHubActionsConfig:
-        """Generate GitHub Actions workflow configuration"""
-        return GitHubActionsConfig(
+        """Generate GitHub Actions workflow configuration"""        return GitHubActionsConfig(
             name=f"IA-Influencer Agent {self.environment.title()} Pipeline",
             trigger_events=["push", "pull_request", "workflow_dispatch"],
             branches=["main", "develop", "release/*", "feature/*"],
@@ -147,8 +135,7 @@ class CICDConfig:
         )
     
     def get_jenkins_pipeline_config(self) -> JenkinsConfig:
-        """Generate Jenkins pipeline configuration"""
-        stages = [
+        """Generate Jenkins pipeline configuration"""        stages = [
             {
                 "name": "Checkout",
                 "steps": [
@@ -296,8 +283,7 @@ class CICDConfig:
         )
     
     def get_gitlab_ci_config(self) -> GitLabCIConfig:
-        """Generate GitLab CI/CD configuration"""
-        return GitLabCIConfig(
+        """Generate GitLab CI/CD configuration"""        return GitLabCIConfig(
             image="python:3.11",
             stages=[
                 "prepare",
@@ -333,8 +319,7 @@ class CICDConfig:
         )
     
     def generate_github_workflow_yaml(self) -> str:
-        """Generate complete GitHub Actions workflow YAML"""
-        config = self.get_github_actions_config()
+        """Generate complete GitHub Actions workflow YAML"""        config = self.get_github_actions_config()
         
         workflow = {
             "name": config.name,
@@ -553,8 +538,7 @@ class CICDConfig:
         return yaml.dump(workflow, default_flow_style=False, sort_keys=False)
     
     def generate_jenkins_pipeline_script(self) -> str:
-        """Generate complete Jenkinsfile pipeline script"""
-        config = self.get_jenkins_pipeline_config()
+        """Generate complete Jenkinsfile pipeline script"""        config = self.get_jenkins_pipeline_config()
         
         pipeline_script = f'''
 pipeline {{
@@ -628,8 +612,7 @@ pipeline {{
         return pipeline_script
     
     def generate_gitlab_ci_yaml(self) -> str:
-        """Generate complete GitLab CI/CD YAML configuration"""
-        config = self.get_gitlab_ci_config()
+        """Generate complete GitLab CI/CD YAML configuration"""        config = self.get_gitlab_ci_config()
         
         gitlab_ci = {
             "image": config.image,
@@ -764,8 +747,7 @@ pipeline {{
         return yaml.dump(gitlab_ci, default_flow_style=False, sort_keys=False)
     
     def get_deployment_strategies(self) -> Dict[str, Dict[str, Any]]:
-        """Get deployment strategy configurations"""
-        return {
+        """Get deployment strategy configurations"""        return {
             "blue_green": {
                 "name": "Blue-Green Deployment",
                 "description": "Zero-downtime deployment with parallel environments",
@@ -814,8 +796,7 @@ pipeline {{
         }
     
     def export_configurations(self, output_dir: str = "./ci-cd-configs") -> Dict[str, str]:
-        """Export all CI/CD configurations to files"""
-        import os
+        """Export all CI/CD configurations to files"""        import os
         os.makedirs(output_dir, exist_ok=True)
         
         configs = {}

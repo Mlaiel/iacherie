@@ -1,14 +1,11 @@
-"""
-Transformer Models for IA-Influencer-Agent
+"""Transformer Models for IA-Influencer-Agent
 
 Advanced transformer architectures for multi-modal content processing,
 understanding, and generation for content creators.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import torch
+"""import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from typing import Dict, List, Optional, Tuple, Union
@@ -21,8 +18,7 @@ from .base_networks import BaseNeuralNetwork, NetworkConfig, NetworkType
 
 
 class TransformerType(Enum):
-    """Transformer architecture variants"""
-    ENCODER_ONLY = "encoder_only"
+    """Transformer architecture variants"""    ENCODER_ONLY = "encoder_only"
     DECODER_ONLY = "decoder_only"
     ENCODER_DECODER = "encoder_decoder"
     MULTIMODAL = "multimodal"
@@ -30,8 +26,7 @@ class TransformerType(Enum):
 
 @dataclass
 class TransformerConfig(NetworkConfig):
-    """Transformer-specific configuration"""
-    
+    """Transformer-specific configuration"""    
     # Architecture
     num_heads: int = 8
     num_layers: int = 6
@@ -56,8 +51,7 @@ class TransformerConfig(NetworkConfig):
 
 
 class PositionalEncoding(nn.Module):
-    """Sinusoidal positional encoding"""
-    
+    """Sinusoidal positional encoding"""    
     def __init__(self, d_model: int, max_len: int = 5000):
         super().__init__()
         
@@ -80,8 +74,7 @@ class PositionalEncoding(nn.Module):
 
 
 class RotaryPositionalEmbedding(nn.Module):
-    """Rotary Position Embedding (RoPE)"""
-    
+    """Rotary Position Embedding (RoPE)"""    
     def __init__(self, dim: int, max_position_embeddings: int = 2048):
         super().__init__()
         self.dim = dim
@@ -98,8 +91,7 @@ class RotaryPositionalEmbedding(nn.Module):
 
 
 class MultiHeadAttention(nn.Module):
-    """Multi-head attention with optional flash attention"""
-    
+    """Multi-head attention with optional flash attention"""    
     def __init__(
         self,
         d_model: int,
@@ -163,8 +155,7 @@ class MultiHeadAttention(nn.Module):
 
 
 class FeedForward(nn.Module):
-    """Position-wise feed-forward network"""
-    
+    """Position-wise feed-forward network"""    
     def __init__(self, d_model: int, d_ff: int, dropout: float = 0.1):
         super().__init__()
         self.linear1 = nn.Linear(d_model, d_ff)
@@ -177,8 +168,7 @@ class FeedForward(nn.Module):
 
 
 class TransformerLayer(nn.Module):
-    """Single transformer layer"""
-    
+    """Single transformer layer"""    
     def __init__(
         self,
         d_model: int,
@@ -216,12 +206,10 @@ class TransformerLayer(nn.Module):
 
 
 class ContentTransformer(BaseNeuralNetwork):
-    """
-    General-purpose transformer for content processing
+    """    General-purpose transformer for content processing
     
     Supports text, audio features, image features, and mixed content.
-    """
-    
+    """    
     def __init__(self, config: TransformerConfig):
         super().__init__(config)
         self.config: TransformerConfig = config
@@ -263,8 +251,7 @@ class ContentTransformer(BaseNeuralNetwork):
         self._init_weights()
     
     def _init_weights(self):
-        """Initialize weights"""
-        for module in self.modules():
+        """Initialize weights"""        for module in self.modules():
             if isinstance(module, nn.Linear):
                 torch.nn.init.normal_(module.weight, mean=0.0, std=0.02)
                 if module.bias is not None:
@@ -310,8 +297,7 @@ class ContentTransformer(BaseNeuralNetwork):
         predictions: torch.Tensor,
         targets: torch.Tensor
     ) -> torch.Tensor:
-        """Compute appropriate loss based on task"""
-        
+        """Compute appropriate loss based on task"""        
         if self.config.output_dim == 1:
             # Regression task
             return F.mse_loss(predictions.squeeze(), targets.squeeze())
@@ -329,12 +315,10 @@ class ContentTransformer(BaseNeuralNetwork):
 
 
 class MultiModalTransformer(BaseNeuralNetwork):
-    """
-    Multi-modal transformer for processing different content types
+    """    Multi-modal transformer for processing different content types
     
     Handles audio, text, image, and video features simultaneously.
-    """
-    
+    """    
     def __init__(self, config: TransformerConfig):
         super().__init__(config)
         self.config: TransformerConfig = config
@@ -478,8 +462,7 @@ class MultiModalTransformer(BaseNeuralNetwork):
         predictions: torch.Tensor,
         targets: torch.Tensor
     ) -> torch.Tensor:
-        """Multi-task loss computation"""
-        
+        """Multi-task loss computation"""        
         if isinstance(targets, dict):
             # Multi-task learning
             total_loss = 0.0
@@ -505,8 +488,7 @@ class MultiModalTransformer(BaseNeuralNetwork):
 
 
 class AudioTransformer(ContentTransformer):
-    """Specialized transformer for audio content processing"""
-    
+    """Specialized transformer for audio content processing"""    
     def __init__(self, config: TransformerConfig):
         super().__init__(config)
         
@@ -542,8 +524,7 @@ class AudioTransformer(ContentTransformer):
 
 
 class VideoTransformer(ContentTransformer):
-    """Specialized transformer for video content processing"""
-    
+    """Specialized transformer for video content processing"""    
     def __init__(self, config: TransformerConfig):
         super().__init__(config)
         
@@ -581,8 +562,7 @@ class VideoTransformer(ContentTransformer):
 
 
 class TextTransformer(ContentTransformer):
-    """Specialized transformer for text content processing"""
-    
+    """Specialized transformer for text content processing"""    
     def __init__(self, config: TransformerConfig, vocab_size: int = 50000):
         super().__init__(config)
         
@@ -614,12 +594,10 @@ class TextTransformer(ContentTransformer):
 
 
 class CreatorPersonalityTransformer(MultiModalTransformer):
-    """
-    Transformer for understanding and modeling creator personality
+    """    Transformer for understanding and modeling creator personality
     
     Analyzes content patterns to understand creator style and preferences.
-    """
-    
+    """    
     def __init__(self, config: TransformerConfig):
         super().__init__(config)
         

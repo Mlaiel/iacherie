@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Industrial Extractors Index System
+"""IA Influencer Agent - Industrial Extractors Index System
 =======================================================
 
 Ultra-advanced professional interface for all industrial AI extractors.
@@ -43,9 +42,7 @@ Core Features:
 - Performance monitoring and analytics
 - Real-time extraction capabilities
 - Enterprise-grade security and protection
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import threading
 from typing import Dict, List, Any, Optional, Union, Type, Callable
@@ -84,8 +81,7 @@ from .surveillance_extractors import (
 
 # Configuration et énumérations
 class ExtractionMode(Enum):
-    """Modes d'extraction disponibles"""
-    SEQUENTIAL = "sequential"      # Extraction séquentielle
+    """Modes d'extraction disponibles"""    SEQUENTIAL = "sequential"      # Extraction séquentielle
     PARALLEL = "parallel"          # Extraction parallèle
     ADAPTIVE = "adaptive"          # Mode adaptatif intelligent
     REAL_TIME = "real_time"        # Extraction temps réel
@@ -93,8 +89,7 @@ class ExtractionMode(Enum):
 
 
 class PriorityLevel(Enum):
-    """Niveaux de priorité pour les extractions"""
-    LOW = 1
+    """Niveaux de priorité pour les extractions"""    LOW = 1
     NORMAL = 2
     HIGH = 3
     CRITICAL = 4
@@ -103,8 +98,7 @@ class PriorityLevel(Enum):
 
 @dataclass
 class ExtractionJob:
-    """Tâche d'extraction complète"""
-    job_id: str
+    """Tâche d'extraction complète"""    job_id: str
     extraction_type: str
     priority: PriorityLevel
     request: ExtractionRequest
@@ -131,8 +125,7 @@ class ExtractionJob:
 
 @dataclass
 class ExtractorCapability:
-    """Capacité d'un extracteur"""
-    name: str
+    """Capacité d'un extracteur"""    name: str
     description: str
     supported_formats: List[str] = field(default_factory=list)
     ai_features: List[str] = field(default_factory=list)
@@ -141,8 +134,7 @@ class ExtractorCapability:
 
 
 class ExtractionOrchestrator:
-    """Orchestrateur principal pour la gestion des extractions IA"""
-    
+    """Orchestrateur principal pour la gestion des extractions IA"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -174,8 +166,7 @@ class ExtractionOrchestrator:
         self._start_worker_pool()
     
     def _initialize_extractors(self):
-        """Initialise tous les extracteurs disponibles"""
-        try:
+        """Initialise tous les extracteurs disponibles"""        try:
             # Extracteurs de contenu
             self._content_extractors = {
                 'audio': AudioContentExtractor(),
@@ -222,8 +213,7 @@ class ExtractionOrchestrator:
             self.logger.error(f"Failed to initialize extractors: {e}")
     
     def _start_worker_pool(self):
-        """Démarre le pool de workers pour le traitement asynchrone"""
-        if not self._is_running:
+        """Démarre le pool de workers pour le traitement asynchrone"""        if not self._is_running:
             self._is_running = True
             for i in range(self._max_workers):
                 worker = asyncio.create_task(self._worker_loop(f"worker-{i}"))
@@ -232,8 +222,7 @@ class ExtractionOrchestrator:
             self.logger.info(f"Started worker pool with {self._max_workers} workers")
     
     async def _worker_loop(self, worker_id: str):
-        """Boucle principale d'un worker"""
-        while self._is_running and not self._shutdown_event.is_set():
+        """Boucle principale d'un worker"""        while self._is_running and not self._shutdown_event.is_set():
             try:
                 # Récupération d'une tâche
                 job = await asyncio.wait_for(
@@ -251,8 +240,7 @@ class ExtractionOrchestrator:
                 await asyncio.sleep(1)
     
     async def _process_job(self, job: ExtractionJob, worker_id: str):
-        """Traite une tâche d'extraction"""
-        job.started_at = datetime.now()
+        """Traite une tâche d'extraction"""        job.started_at = datetime.now()
         job.status = "running"
         
         try:
@@ -308,8 +296,7 @@ class ExtractionOrchestrator:
                 del self._active_jobs[job.job_id]
     
     def _select_extractor(self, job: ExtractionJob) -> Optional[BaseExtractor]:
-        """Sélectionne l'extracteur approprié pour une tâche"""
-        extraction_type = job.extraction_type.lower()
+        """Sélectionne l'extracteur approprié pour une tâche"""        extraction_type = job.extraction_type.lower()
         
         # Extracteurs de contenu
         if extraction_type in ['audio', 'video', 'image', 'text']:
@@ -342,8 +329,7 @@ class ExtractionOrchestrator:
         return None
     
     async def _collect_metrics(self, job: ExtractionJob, worker_id: str):
-        """Collecte les métriques de performance"""
-        try:
+        """Collecte les métriques de performance"""        try:
             metrics = {
                 'job_id': job.job_id,
                 'extraction_type': job.extraction_type,
@@ -364,8 +350,7 @@ class ExtractionOrchestrator:
     # ==================== Interface publique ====================
     
     def configure_platform_extractor(self, platform: str, **config):
-        """Configure un extracteur de plateforme avec ses paramètres"""
-        platform = platform.lower()
+        """Configure un extracteur de plateforme avec ses paramètres"""        platform = platform.lower()
         
         try:
             if platform == 'youtube':
@@ -402,8 +387,7 @@ class ExtractionOrchestrator:
     async def submit_extraction(self, extraction_type: str, request: ExtractionRequest,
                               priority: PriorityLevel = PriorityLevel.NORMAL,
                               mode: ExtractionMode = None) -> str:
-        """Soumet une tâche d'extraction et retourne l'ID du job"""
-        
+        """Soumet une tâche d'extraction et retourne l'ID du job"""        
         job_id = str(uuid.uuid4())
         mode = mode or self._default_mode
         
@@ -423,38 +407,31 @@ class ExtractionOrchestrator:
         return job_id
     
     async def extract_content(self, content_type: str, request: ExtractionRequest) -> ExtractionResult:
-        """Extraction synchrone de contenu"""
-        job_id = await self.submit_extraction(content_type, request, PriorityLevel.HIGH)
+        """Extraction synchrone de contenu"""        job_id = await self.submit_extraction(content_type, request, PriorityLevel.HIGH)
         return await self.wait_for_result(job_id)
     
     async def extract_platform_data(self, platform: str, request: ExtractionRequest) -> ExtractionResult:
-        """Extraction synchrone de données de plateforme"""
-        job_id = await self.submit_extraction(platform, request, PriorityLevel.NORMAL)
+        """Extraction synchrone de données de plateforme"""        job_id = await self.submit_extraction(platform, request, PriorityLevel.NORMAL)
         return await self.wait_for_result(job_id)
     
     async def create_fingerprint(self, content_type: str, request: ExtractionRequest) -> ExtractionResult:
-        """Création synchrone d'empreinte digitale"""
-        job_id = await self.submit_extraction(f"{content_type}_fingerprint", request, PriorityLevel.HIGH)
+        """Création synchrone d'empreinte digitale"""        job_id = await self.submit_extraction(f"{content_type}_fingerprint", request, PriorityLevel.HIGH)
         return await self.wait_for_result(job_id)
     
     async def analyze_revenue(self, platform: str, request: ExtractionRequest) -> ExtractionResult:
-        """Analyse synchrone de revenus"""
-        job_id = await self.submit_extraction(f"{platform}_revenue", request, PriorityLevel.NORMAL)
+        """Analyse synchrone de revenus"""        job_id = await self.submit_extraction(f"{platform}_revenue", request, PriorityLevel.NORMAL)
         return await self.wait_for_result(job_id)
     
     async def find_collaborations(self, platform: str, request: ExtractionRequest) -> ExtractionResult:
-        """Recherche synchrone de collaborations"""
-        job_id = await self.submit_extraction(f"{platform}_collaboration", request, PriorityLevel.NORMAL)
+        """Recherche synchrone de collaborations"""        job_id = await self.submit_extraction(f"{platform}_collaboration", request, PriorityLevel.NORMAL)
         return await self.wait_for_result(job_id)
     
     async def monitor_surveillance(self, platform: str, request: ExtractionRequest) -> ExtractionResult:
-        """Surveillance synchrone"""
-        job_id = await self.submit_extraction(f"{platform}_surveillance", request, PriorityLevel.HIGH)
+        """Surveillance synchrone"""        job_id = await self.submit_extraction(f"{platform}_surveillance", request, PriorityLevel.HIGH)
         return await self.wait_for_result(job_id)
     
     async def wait_for_result(self, job_id: str, timeout: Optional[float] = None) -> ExtractionResult:
-        """Attend le résultat d'une tâche"""
-        timeout = timeout or 300  # 5 minutes par défaut
+        """Attend le résultat d'une tâche"""        timeout = timeout or 300  # 5 minutes par défaut
         start_time = asyncio.get_event_loop().time()
         
         while asyncio.get_event_loop().time() - start_time < timeout:
@@ -475,8 +452,7 @@ class ExtractionOrchestrator:
         raise TimeoutError(f"Job {job_id} timed out")
     
     def get_job_status(self, job_id: str) -> Optional[Dict[str, Any]]:
-        """Récupère le statut d'une tâche"""
-        job = self._active_jobs.get(job_id)
+        """Récupère le statut d'une tâche"""        job = self._active_jobs.get(job_id)
         
         if not job:
             return None
@@ -495,8 +471,7 @@ class ExtractionOrchestrator:
         }
     
     def list_capabilities(self) -> Dict[str, List[ExtractorCapability]]:
-        """Liste toutes les capacités disponibles"""
-        capabilities = {
+        """Liste toutes les capacités disponibles"""        capabilities = {
             'content_extraction': [
                 ExtractorCapability(
                     name="Audio Content Analysis",
@@ -598,8 +573,7 @@ class ExtractionOrchestrator:
         return capabilities
     
     def get_system_stats(self) -> Dict[str, Any]:
-        """Récupère les statistiques système"""
-        return {
+        """Récupère les statistiques système"""        return {
             'active_jobs': len(self._active_jobs),
             'queue_size': self._job_queue.qsize(),
             'workers_active': len([w for w in self._worker_pool if not w.done()]),
@@ -616,8 +590,7 @@ class ExtractionOrchestrator:
         }
     
     async def shutdown(self):
-        """Arrêt propre du système"""
-        self.logger.info("Shutting down extraction orchestrator...")
+        """Arrêt propre du système"""        self.logger.info("Shutting down extraction orchestrator...")
         
         self._is_running = False
         self._shutdown_event.set()
@@ -637,19 +610,16 @@ orchestrator = ExtractionOrchestrator()
 
 # Interface de haut niveau simplifiée
 class ExtractionInterface:
-    """Interface simplifiée pour l'extraction de contenu"""
-    
+    """Interface simplifiée pour l'extraction de contenu"""    
     def __init__(self):
         self.orchestrator = orchestrator
     
     async def configure_apis(self, **api_configs):
-        """Configure toutes les APIs en une fois"""
-        for platform, config in api_configs.items():
+        """Configure toutes les APIs en une fois"""        for platform, config in api_configs.items():
             self.orchestrator.configure_platform_extractor(platform, **config)
     
     async def extract(self, source: str, extraction_type: str = "auto", **options) -> ExtractionResult:
-        """Interface unifiée d'extraction"""
-        request = ExtractionRequest(
+        """Interface unifiée d'extraction"""        request = ExtractionRequest(
             url=source if source.startswith('http') else None,
             content=source if not source.startswith('http') else None,
             metadata=options
@@ -686,8 +656,7 @@ class ExtractionInterface:
             raise ValueError(f"Unsupported extraction type: {extraction_type}")
     
     async def create_fingerprint(self, source: str, content_type: str = "auto") -> ExtractionResult:
-        """Création d'empreinte digitale simplifiée"""
-        request = ExtractionRequest(
+        """Création d'empreinte digitale simplifiée"""        request = ExtractionRequest(
             url=source if source.startswith('http') else None,
             content=source if not source.startswith('http') else None
         )
@@ -706,24 +675,21 @@ class ExtractionInterface:
         return await self.orchestrator.create_fingerprint(content_type, request)
     
     async def analyze_revenue(self, platform: str, creator_id: str, **options) -> ExtractionResult:
-        """Analyse de revenus simplifiée"""
-        request = ExtractionRequest(
+        """Analyse de revenus simplifiée"""        request = ExtractionRequest(
             metadata={'creator_id': creator_id, **options}
         )
         
         return await self.orchestrator.analyze_revenue(platform, request)
     
     async def find_collaborations(self, platform: str, creator_profile: Dict[str, Any]) -> ExtractionResult:
-        """Recherche de collaborations simplifiée"""
-        request = ExtractionRequest(
+        """Recherche de collaborations simplifiée"""        request = ExtractionRequest(
             metadata={'creator_profile': creator_profile}
         )
         
         return await self.orchestrator.find_collaborations(platform, request)
     
     async def monitor_content(self, platform: str, targets: List[str], **options) -> ExtractionResult:
-        """Surveillance de contenu simplifiée"""
-        request = ExtractionRequest(
+        """Surveillance de contenu simplifiée"""        request = ExtractionRequest(
             metadata={'targets': targets, **options}
         )
         
@@ -735,20 +701,16 @@ extraction_interface = ExtractionInterface()
 
 # Fonctions utilitaires de haut niveau
 async def quick_extract(source: str, **options) -> ExtractionResult:
-    """Extraction rapide avec détection automatique"""
-    return await extraction_interface.extract(source, **options)
+    """Extraction rapide avec détection automatique"""    return await extraction_interface.extract(source, **options)
 
 async def quick_fingerprint(source: str) -> ExtractionResult:
-    """Création rapide d'empreinte digitale"""
-    return await extraction_interface.create_fingerprint(source)
+    """Création rapide d'empreinte digitale"""    return await extraction_interface.create_fingerprint(source)
 
 async def quick_revenue_analysis(platform: str, creator_id: str) -> ExtractionResult:
-    """Analyse rapide de revenus"""
-    return await extraction_interface.analyze_revenue(platform, creator_id)
+    """Analyse rapide de revenus"""    return await extraction_interface.analyze_revenue(platform, creator_id)
 
 async def setup_apis(**api_configs):
-    """Configuration rapide des APIs"""
-    await extraction_interface.configure_apis(**api_configs)
+    """Configuration rapide des APIs"""    await extraction_interface.configure_apis(**api_configs)
 
 # Export des composants principaux
 __all__ = [

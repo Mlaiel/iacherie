@@ -1,5 +1,4 @@
-"""
-🔔 Intelligent Notification System - IA Influencer Agent Platform
+"""🔔 Intelligent Notification System - IA Influencer Agent Platform
 ================================================================
 
 Ultra-advanced notification engine with AI-powered personalization, multi-channel
@@ -38,9 +37,7 @@ Business Logic Flow:
 Event Detection → Context Analysis → User Behavior Analysis → Personalization Engine → 
 Timing Optimization → Channel Selection → Content Generation → Delivery Scheduling → 
 Engagement Tracking → Performance Analytics → Feedback Learning
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -85,8 +82,7 @@ settings = get_settings()
 
 
 class NotificationType(Enum):
-    """Types of notifications"""
-    COLLABORATION_REQUEST = "collaboration_request"
+    """Types of notifications"""    COLLABORATION_REQUEST = "collaboration_request"
     PROJECT_UPDATE = "project_update"
     REVENUE_MILESTONE = "revenue_milestone"
     CONTENT_PERFORMANCE = "content_performance"
@@ -104,8 +100,7 @@ class NotificationType(Enum):
 
 
 class NotificationChannel(Enum):
-    """Available notification channels"""
-    IN_APP = "in_app"
+    """Available notification channels"""    IN_APP = "in_app"
     EMAIL = "email"
     SMS = "sms"
     PUSH_NOTIFICATION = "push_notification"
@@ -117,8 +112,7 @@ class NotificationChannel(Enum):
 
 
 class Priority(Enum):
-    """Notification priority levels"""
-    LOW = "low"
+    """Notification priority levels"""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
@@ -126,8 +120,7 @@ class Priority(Enum):
 
 
 class DeliveryStatus(Enum):
-    """Notification delivery status"""
-    PENDING = "pending"
+    """Notification delivery status"""    PENDING = "pending"
     SCHEDULED = "scheduled"
     SENT = "sent"
     DELIVERED = "delivered"
@@ -140,8 +133,7 @@ class DeliveryStatus(Enum):
 
 @dataclass
 class NotificationPreferences:
-    """User notification preferences"""
-    user_id: str
+    """User notification preferences"""    user_id: str
     enabled_types: List[NotificationType] = field(default_factory=list)
     enabled_channels: List[NotificationChannel] = field(default_factory=list)
     quiet_hours: Dict[str, str] = field(default_factory=dict)  # start_time, end_time
@@ -157,8 +149,7 @@ class NotificationPreferences:
 
 @dataclass
 class NotificationTemplate:
-    """Notification message template"""
-    template_id: str
+    """Notification message template"""    template_id: str
     notification_type: NotificationType
     channel: NotificationChannel
     subject_template: str
@@ -172,8 +163,7 @@ class NotificationTemplate:
 
 @dataclass
 class NotificationContext:
-    """Context information for notification generation"""
-    context_id: str
+    """Context information for notification generation"""    context_id: str
     user_id: str
     notification_type: NotificationType
     source_event: Dict[str, Any]
@@ -188,8 +178,7 @@ class NotificationContext:
 
 @dataclass
 class IntelligentNotification:
-    """AI-generated intelligent notification"""
-    notification_id: str
+    """AI-generated intelligent notification"""    notification_id: str
     user_id: str
     notification_type: NotificationType
     priority: Priority
@@ -207,11 +196,9 @@ class IntelligentNotification:
 
 
 class IntelligentNotificationEngine:
-    """
-    Ultra-advanced notification engine with AI-powered personalization,
+    """    Ultra-advanced notification engine with AI-powered personalization,
     optimal timing, multi-channel delivery, and behavioral adaptation.
-    """
-    
+    """    
     def __init__(self, 
                  redis_client: redis.Redis,
                  db_session: AsyncSession):
@@ -254,8 +241,7 @@ class IntelligentNotificationEngine:
         }
 
     async def initialize_notification_engine(self):
-        """Initialize the notification engine with AI models and external services"""
-        
+        """Initialize the notification engine with AI models and external services"""        
         try:
             logger.info("Initializing intelligent notification engine")
             
@@ -280,8 +266,7 @@ class IntelligentNotificationEngine:
     async def send_intelligent_notification(self, 
                                           context: NotificationContext,
                                           force_immediate: bool = False) -> IntelligentNotification:
-        """
-        Send an intelligent notification with AI-powered optimization
+        """        Send an intelligent notification with AI-powered optimization
         
         Args:
             context: Notification context and event data
@@ -289,8 +274,7 @@ class IntelligentNotificationEngine:
             
         Returns:
             IntelligentNotification: Generated and scheduled notification
-        """
-        try:
+        """        try:
             logger.info(f"Generating intelligent notification for user {context.user_id}")
             
             # Get user preferences
@@ -375,8 +359,7 @@ class IntelligentNotificationEngine:
             )
 
     async def _analyze_user_behavior(self, user_id: str, notification_type: NotificationType) -> Dict[str, Any]:
-        """Analyze user behavior patterns for notification optimization"""
-        
+        """Analyze user behavior patterns for notification optimization"""        
         try:
             # Get recent engagement data
             engagement_data = await self.engagement_tracker.get_user_engagement_patterns(
@@ -424,8 +407,7 @@ class IntelligentNotificationEngine:
                                         context: NotificationContext,
                                         preferences: NotificationPreferences,
                                         behavioral_analysis: Dict[str, Any]) -> List[NotificationChannel]:
-        """Determine optimal notification channels using AI"""
-        
+        """Determine optimal notification channels using AI"""        
         # Start with user-enabled channels
         available_channels = preferences.enabled_channels
         
@@ -474,8 +456,7 @@ class IntelligentNotificationEngine:
                                            context: NotificationContext,
                                            preferences: NotificationPreferences,
                                            channels: List[NotificationChannel]) -> Dict[str, Any]:
-        """Generate personalized notification content using AI"""
-        
+        """Generate personalized notification content using AI"""        
         try:
             # Get user profile for personalization
             user_profile = await self.profile_analyzer.get_enhanced_profile(context.user_id)
@@ -546,8 +527,7 @@ class IntelligentNotificationEngine:
                                       context: NotificationContext,
                                       preferences: NotificationPreferences,
                                       behavioral_analysis: Dict[str, Any]) -> datetime:
-        """Calculate optimal notification timing using AI"""
-        
+        """Calculate optimal notification timing using AI"""        
         try:
             # Use ML model for timing optimization
             if self.timing_predictor:
@@ -589,8 +569,7 @@ class IntelligentNotificationEngine:
                                 content: Dict[str, Any],
                                 timing: datetime,
                                 channels: List[NotificationChannel]) -> float:
-        """Predict notification engagement probability using AI"""
-        
+        """Predict notification engagement probability using AI"""        
         try:
             if self.engagement_predictor:
                 # Prepare features for engagement prediction
@@ -632,8 +611,7 @@ class IntelligentNotificationEngine:
             return 0.3  # Default engagement rate
 
     async def _send_notification_immediately(self, notification: IntelligentNotification):
-        """Send notification immediately through all channels"""
-        
+        """Send notification immediately through all channels"""        
         try:
             notification.status = DeliveryStatus.SENT
             
@@ -667,8 +645,7 @@ class IntelligentNotificationEngine:
     async def _send_through_channel(self, 
                                   notification: IntelligentNotification, 
                                   channel: NotificationChannel) -> Dict[str, Any]:
-        """Send notification through specific channel"""
-        
+        """Send notification through specific channel"""        
         content = notification.content.get(channel.value, notification.content.get('default', ''))
         
         try:
@@ -698,20 +675,17 @@ class IntelligentNotificationEngine:
     # Additional helper methods for external service integration
 
     async def _initialize_service_clients(self):
-        """Initialize external service clients"""
-        # Email client initialization
+        """Initialize external service clients"""        # Email client initialization
         # SMS client initialization  
         # Push notification client initialization
         pass
 
     async def _initialize_ai_models(self):
-        """Initialize and train AI models"""
-        # Load historical data and train models
+        """Initialize and train AI models"""        # Load historical data and train models
         pass
 
     async def _start_processing_workers(self):
-        """Start background workers for notification processing"""
-        # Start async workers
+        """Start background workers for notification processing"""        # Start async workers
         pass
 
     # More helper methods would be implemented here...
@@ -719,8 +693,7 @@ class IntelligentNotificationEngine:
     async def get_user_notification_history(self, 
                                           user_id: str,
                                           limit: int = 50) -> List[Dict[str, Any]]:
-        """Get user's notification history"""
-        
+        """Get user's notification history"""        
         cache_key = f"notification_history:{user_id}"
         cached_history = await self.cache_manager.get(cache_key)
         
@@ -735,8 +708,7 @@ class IntelligentNotificationEngine:
     async def update_notification_preferences(self, 
                                             user_id: str,
                                             preferences: Dict[str, Any]) -> NotificationPreferences:
-        """Update user notification preferences"""
-        
+        """Update user notification preferences"""        
         try:
             # Validate preferences
             validated_preferences = self._validate_preferences(preferences)
@@ -757,8 +729,7 @@ class IntelligentNotificationEngine:
             )
 
     async def get_notification_analytics(self) -> Dict[str, Any]:
-        """Get notification system analytics"""
-        
+        """Get notification system analytics"""        
         analytics = self.notification_stats.copy()
         
         # Add real-time metrics
@@ -774,8 +745,7 @@ class IntelligentNotificationEngine:
     # Placeholder methods for implementation details
     
     def _get_default_behavioral_profile(self) -> Dict[str, Any]:
-        """Get default behavioral profile for new users"""
-        return {
+        """Get default behavioral profile for new users"""        return {
             'engagement_score': 0.5,
             'open_rate': 0.4,
             'click_rate': 0.1,
@@ -788,21 +758,17 @@ class IntelligentNotificationEngine:
         }
 
     async def _get_user_preferences(self, user_id: str) -> NotificationPreferences:
-        """Get user notification preferences"""
-        # Implementation to fetch from database/cache
+        """Get user notification preferences"""        # Implementation to fetch from database/cache
         return NotificationPreferences(user_id=user_id)
 
     def _prepare_channel_features(self, context, preferences, behavioral_analysis, channel) -> List[float]:
-        """Prepare features for channel effectiveness prediction"""
-        return [1.0, 0.5, 0.8]  # Simplified features
+        """Prepare features for channel effectiveness prediction"""        return [1.0, 0.5, 0.8]  # Simplified features
 
     def _prepare_timing_features(self, context, preferences, behavioral_analysis) -> List[float]:
-        """Prepare features for timing optimization"""
-        return [1.0, 0.5, 0.8]  # Simplified features
+        """Prepare features for timing optimization"""        return [1.0, 0.5, 0.8]  # Simplified features
 
     def _prepare_engagement_features(self, context, content, timing, channels) -> List[float]:
-        """Prepare features for engagement prediction"""
-        return [1.0, 0.5, 0.8]  # Simplified features
+        """Prepare features for engagement prediction"""        return [1.0, 0.5, 0.8]  # Simplified features
 
 
 # Export main classes

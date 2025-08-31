@@ -1,5 +1,4 @@
-"""
-Content Entity Analyzer - Advanced Content Analysis
+"""Content Entity Analyzer - Advanced Content Analysis
 
 Specialized content entity analysis for multi-format creative content with
 intelligent metadata extraction, content type detection, and creative industry
@@ -13,9 +12,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import mimetypes
 from typing import Dict, List, Set, Tuple, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -44,8 +41,7 @@ from .entity_extractor import ExtractedEntity, EntityCategory
 
 
 class ContentFormat(Enum):
-    """Supported content formats"""
-    # Audio formats
+    """Supported content formats"""    # Audio formats
     AUDIO_MP3 = "audio/mp3"
     AUDIO_WAV = "audio/wav"
     AUDIO_FLAC = "audio/flac"
@@ -74,8 +70,7 @@ class ContentFormat(Enum):
 
 
 class CreativeRole(Enum):
-    """Creative roles in content"""
-    ARTIST = "artist"
+    """Creative roles in content"""    ARTIST = "artist"
     PRODUCER = "producer"
     SONGWRITER = "songwriter"
     PERFORMER = "performer"
@@ -91,8 +86,7 @@ class CreativeRole(Enum):
 
 @dataclass
 class ContentEntity:
-    """Content-specific entity with creative context"""
-    entity: ExtractedEntity
+    """Content-specific entity with creative context"""    entity: ExtractedEntity
     content_role: Optional[CreativeRole]
     content_context: str
     technical_metadata: Dict[str, Any] = field(default_factory=dict)
@@ -103,8 +97,7 @@ class ContentEntity:
 
 @dataclass
 class ContentAnalysisResult:
-    """Result of content entity analysis"""
-    content_type: ContentType
+    """Result of content entity analysis"""    content_type: ContentType
     content_format: ContentFormat
     entities: List[ContentEntity]
     metadata: ContentMetadata
@@ -116,8 +109,7 @@ class ContentAnalysisResult:
 
 
 class ContentEntityAnalyzer(BaseService):
-    """
-    Advanced Content Entity Analyzer for creative industry content.
+    """    Advanced Content Entity Analyzer for creative industry content.
     
     Features:
     - Multi-format content analysis (audio, video, image, text)
@@ -128,8 +120,7 @@ class ContentEntityAnalyzer(BaseService):
     - Role-based entity classification
     - Cross-platform content correlation
     - Metadata standardization and enrichment
-    """
-    
+    """    
     def __init__(self):
         super().__init__()
         self.logger = logging.getLogger(__name__)
@@ -163,8 +154,7 @@ class ContentEntityAnalyzer(BaseService):
         }
         
     async def initialize(self):
-        """Initialize content analysis resources"""
-        try:
+        """Initialize content analysis resources"""        try:
             self.logger.info("Initializing ContentEntityAnalyzer...")
             
             # Load content classification models
@@ -186,8 +176,7 @@ class ContentEntityAnalyzer(BaseService):
             raise
     
     async def _load_content_models(self):
-        """Load comprehensive machine learning models for advanced content analysis"""
-        try:
+        """Load comprehensive machine learning models for advanced content analysis"""        try:
             # Primary content classification model with creative industry fine-tuning
             self.content_classifier = pipeline(
                 "text-classification",
@@ -257,8 +246,7 @@ class ContentEntityAnalyzer(BaseService):
             await self._load_fallback_content_models()
     
     def _initialize_technical_quality_model(self):
-        """Initialize technical quality assessment model for media content"""
-        import torch.nn as nn
+        """Initialize technical quality assessment model for media content"""        import torch.nn as nn
         
         class TechnicalQualityAssessor(nn.Module):
             def __init__(self, input_dim=100, hidden_dims=[256, 128, 64]):
@@ -312,8 +300,7 @@ class ContentEntityAnalyzer(BaseService):
         return model
     
     def _initialize_seo_optimization_model(self):
-        """Initialize SEO optimization model for content discoverability"""
-        import torch.nn as nn
+        """Initialize SEO optimization model for content discoverability"""        import torch.nn as nn
         
         class SEOOptimizer(nn.Module):
             def __init__(self, vocab_size=50000, embedding_dim=300, hidden_dim=512):
@@ -357,8 +344,7 @@ class ContentEntityAnalyzer(BaseService):
         return model
     
     def _initialize_content_recommendation_model(self):
-        """Initialize content recommendation model for similar content discovery"""
-        import torch.nn as nn
+        """Initialize content recommendation model for similar content discovery"""        import torch.nn as nn
         from sklearn.decomposition import NMF
         from sklearn.feature_extraction.text import TfidfVectorizer
         
@@ -374,8 +360,7 @@ class ContentEntityAnalyzer(BaseService):
                 self.content_embeddings = {}
                 
             def fit(self, content_corpus):
-                """Fit the recommendation model on content corpus"""
-                try:
+                """Fit the recommendation model on content corpus"""                try:
                     tfidf_matrix = self.tfidf.fit_transform(content_corpus)
                     self.nmf.fit(tfidf_matrix)
                     self.is_fitted = True
@@ -385,8 +370,7 @@ class ContentEntityAnalyzer(BaseService):
                     return False
             
             def get_recommendations(self, content_text, n_recommendations=5):
-                """Get content recommendations based on similarity"""
-                if not self.is_fitted:
+                """Get content recommendations based on similarity"""                if not self.is_fitted:
                     return []
                 
                 try:
@@ -408,8 +392,7 @@ class ContentEntityAnalyzer(BaseService):
                     return []
             
             def add_content(self, content_id, content_text):
-                """Add new content to the recommendation system"""
-                if not self.is_fitted:
+                """Add new content to the recommendation system"""                if not self.is_fitted:
                     return False
                 
                 try:
@@ -424,8 +407,7 @@ class ContentEntityAnalyzer(BaseService):
         return ContentRecommender()
     
     async def _load_fallback_content_models(self):
-        """Load simplified fallback models if advanced models fail"""
-        try:
+        """Load simplified fallback models if advanced models fail"""        try:
             # Basic content classifier
             self.content_classifier = pipeline(
                 "text-classification",
@@ -452,8 +434,7 @@ class ContentEntityAnalyzer(BaseService):
             self.logger.warning(f"Failed to load some content models: {str(e)}")
     
     async def _initialize_format_analyzers(self):
-        """Initialize format-specific analyzers"""
-        try:
+        """Initialize format-specific analyzers"""        try:
             # Audio analyzer initialization
             self.audio_analyzer = {
                 'supported_formats': ['.mp3', '.wav', '.flac', '.aac', '.ogg'],
@@ -485,8 +466,7 @@ class ContentEntityAnalyzer(BaseService):
             self.logger.warning(f"Failed to initialize some analyzers: {str(e)}")
     
     async def _load_creative_vocabularies(self):
-        """Load creative industry vocabularies"""
-        self.creative_vocabularies = {
+        """Load creative industry vocabularies"""        self.creative_vocabularies = {
             'audio_terms': {
                 'instruments': {
                     'guitar', 'piano', 'drums', 'bass', 'violin', 'trumpet', 'saxophone',
@@ -534,8 +514,7 @@ class ContentEntityAnalyzer(BaseService):
         }
     
     async def _initialize_quality_models(self):
-        """Initialize quality assessment models"""
-        try:
+        """Initialize quality assessment models"""        try:
             # Audio quality metrics
             self.quality_metrics = {
                 'audio': {
@@ -568,8 +547,7 @@ class ContentEntityAnalyzer(BaseService):
         content_data: Optional[bytes] = None,
         additional_metadata: Optional[Dict[str, Any]] = None
     ) -> ContentAnalysisResult:
-        """
-        Analyze content for entity extraction and metadata enrichment.
+        """        Analyze content for entity extraction and metadata enrichment.
         
         Args:
             content_path: Path to content file
@@ -578,8 +556,7 @@ class ContentEntityAnalyzer(BaseService):
             
         Returns:
             ContentAnalysisResult with extracted entities and analysis
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             self.logger.debug(f"Analyzing content: {content_path}")
@@ -645,8 +622,7 @@ class ContentEntityAnalyzer(BaseService):
         content_path: str,
         content_data: Optional[bytes]
     ) -> Tuple[ContentType, ContentFormat]:
-        """Detect content type and format"""
-        # Get MIME type
+        """Detect content type and format"""        # Get MIME type
         mime_type, _ = mimetypes.guess_type(content_path)
         
         if not mime_type and content_data:
@@ -660,8 +636,7 @@ class ContentEntityAnalyzer(BaseService):
         return content_type, content_format
     
     def _detect_mime_from_data(self, data: bytes) -> Optional[str]:
-        """Detect MIME type from binary data"""
-        # Simple magic number detection
+        """Detect MIME type from binary data"""        # Simple magic number detection
         if data.startswith(b'\xff\xfb') or data.startswith(b'ID3'):
             return 'audio/mp3'
         elif data.startswith(b'RIFF') and b'WAVE' in data[:12]:
@@ -678,8 +653,7 @@ class ContentEntityAnalyzer(BaseService):
         return None
     
     def _map_mime_to_content_type(self, mime_type: Optional[str]) -> ContentType:
-        """Map MIME type to ContentType enum"""
-        if not mime_type:
+        """Map MIME type to ContentType enum"""        if not mime_type:
             return ContentType.UNKNOWN
             
         if mime_type.startswith('audio/'):
@@ -694,8 +668,7 @@ class ContentEntityAnalyzer(BaseService):
             return ContentType.UNKNOWN
     
     def _map_mime_to_content_format(self, mime_type: Optional[str]) -> ContentFormat:
-        """Map MIME type to ContentFormat enum"""
-        if not mime_type:
+        """Map MIME type to ContentFormat enum"""        if not mime_type:
             return ContentFormat.TEXT_PLAIN  # Default
             
         format_mapping = {
@@ -727,8 +700,7 @@ class ContentEntityAnalyzer(BaseService):
         content_data: Optional[bytes],
         content_type: ContentType
     ) -> ContentMetadata:
-        """Extract basic content metadata"""
-        metadata = ContentMetadata()
+        """Extract basic content metadata"""        metadata = ContentMetadata()
         
         try:
             if content_type == ContentType.AUDIO:
@@ -746,8 +718,7 @@ class ContentEntityAnalyzer(BaseService):
         return metadata
     
     async def _extract_audio_metadata(self, content_path: str, content_data: Optional[bytes]) -> ContentMetadata:
-        """Extract audio file metadata"""
-        metadata = ContentMetadata()
+        """Extract audio file metadata"""        metadata = ContentMetadata()
         
         try:
             # Use mutagen to extract audio metadata
@@ -781,8 +752,7 @@ class ContentEntityAnalyzer(BaseService):
         return metadata
     
     async def _extract_video_metadata(self, content_path: str, content_data: Optional[bytes]) -> ContentMetadata:
-        """Extract video file metadata"""
-        metadata = ContentMetadata()
+        """Extract video file metadata"""        metadata = ContentMetadata()
         
         try:
             # Use OpenCV to extract video metadata
@@ -814,8 +784,7 @@ class ContentEntityAnalyzer(BaseService):
         return metadata
     
     async def _extract_image_metadata(self, content_path: str, content_data: Optional[bytes]) -> ContentMetadata:
-        """Extract image file metadata"""
-        metadata = ContentMetadata()
+        """Extract image file metadata"""        metadata = ContentMetadata()
         
         try:
             # Use PIL to extract image metadata
@@ -844,8 +813,7 @@ class ContentEntityAnalyzer(BaseService):
         return metadata
     
     async def _extract_text_metadata(self, content_path: str, content_data: Optional[bytes]) -> ContentMetadata:
-        """Extract text file metadata"""
-        metadata = ContentMetadata()
+        """Extract text file metadata"""        metadata = ContentMetadata()
         
         try:
             # Read text content
@@ -883,8 +851,7 @@ class ContentEntityAnalyzer(BaseService):
         content_data: Optional[bytes],
         metadata: ContentMetadata
     ) -> Dict[str, Any]:
-        """Analyze audio content for entities and features"""
-        result = {
+        """Analyze audio content for entities and features"""        result = {
             'entities': [],
             'technical_analysis': {},
             'creative_analysis': {},
@@ -936,8 +903,7 @@ class ContentEntityAnalyzer(BaseService):
         content_data: Optional[bytes],
         metadata: ContentMetadata
     ) -> Dict[str, Any]:
-        """Analyze video content for entities and features"""
-        result = {
+        """Analyze video content for entities and features"""        result = {
             'entities': [],
             'technical_analysis': {},
             'creative_analysis': {},
@@ -1001,8 +967,7 @@ class ContentEntityAnalyzer(BaseService):
         content_data: Optional[bytes],
         metadata: ContentMetadata
     ) -> Dict[str, Any]:
-        """Analyze image content for entities and features"""
-        result = {
+        """Analyze image content for entities and features"""        result = {
             'entities': [],
             'technical_analysis': {},
             'creative_analysis': {},
@@ -1057,8 +1022,7 @@ class ContentEntityAnalyzer(BaseService):
         content_data: Optional[bytes],
         metadata: ContentMetadata
     ) -> Dict[str, Any]:
-        """Analyze text content for entities and features"""
-        result = {
+        """Analyze text content for entities and features"""        result = {
             'entities': [],
             'technical_analysis': {},
             'creative_analysis': {},
@@ -1112,8 +1076,7 @@ class ContentEntityAnalyzer(BaseService):
         content_data: Optional[bytes],
         metadata: ContentMetadata
     ) -> Dict[str, Any]:
-        """Analyze generic content"""
-        return {
+        """Analyze generic content"""        return {
             'entities': [],
             'technical_analysis': {'format': 'unknown'},
             'creative_analysis': {},
@@ -1122,8 +1085,7 @@ class ContentEntityAnalyzer(BaseService):
     
     # Helper methods for audio analysis
     def _estimate_key_from_chroma(self, chroma: np.ndarray) -> str:
-        """Estimate musical key from chroma features"""
-        try:
+        """Estimate musical key from chroma features"""        try:
             # Simplified key estimation
             chroma_mean = np.mean(chroma, axis=1)
             key_idx = np.argmax(chroma_mean)
@@ -1133,8 +1095,7 @@ class ContentEntityAnalyzer(BaseService):
             return 'Unknown'
     
     def _calculate_energy_level(self, y: np.ndarray) -> str:
-        """Calculate energy level of audio"""
-        rms = np.sqrt(np.mean(y**2))
+        """Calculate energy level of audio"""        rms = np.sqrt(np.mean(y**2))
         if rms > 0.1:
             return 'High'
         elif rms > 0.05:
@@ -1143,8 +1104,7 @@ class ContentEntityAnalyzer(BaseService):
             return 'Low'
     
     def _analyze_rhythm_complexity(self, beats: np.ndarray) -> str:
-        """Analyze rhythm complexity"""
-        if len(beats) < 2:
+        """Analyze rhythm complexity"""        if len(beats) < 2:
             return 'Simple'
         
         # Calculate beat interval variations
@@ -1159,24 +1119,21 @@ class ContentEntityAnalyzer(BaseService):
             return 'Simple'
     
     def _analyze_tonal_characteristics(self, chroma: np.ndarray) -> Dict[str, float]:
-        """Analyze tonal characteristics"""
-        return {
+        """Analyze tonal characteristics"""        return {
             'harmonic_complexity': float(np.std(np.mean(chroma, axis=1))),
             'tonal_stability': float(1 - np.std(chroma) / np.mean(chroma)) if np.mean(chroma) > 0 else 0
         }
     
     # Helper methods for video analysis
     def _calculate_frame_stability(self, brightness_values: List[float]) -> float:
-        """Calculate frame stability score"""
-        if len(brightness_values) < 2:
+        """Calculate frame stability score"""        if len(brightness_values) < 2:
             return 1.0
         
         variations = np.std(brightness_values)
         return max(0, 1 - (variations / 100))  # Normalize
     
     def _assess_resolution_quality(self, width: int, height: int) -> str:
-        """Assess resolution quality"""
-        total_pixels = width * height
+        """Assess resolution quality"""        total_pixels = width * height
         
         if total_pixels >= 3840 * 2160:  # 4K
             return 'Ultra High'
@@ -1188,8 +1145,7 @@ class ContentEntityAnalyzer(BaseService):
             return 'Low'
     
     def _analyze_visual_complexity(self, contrast_values: List[float]) -> str:
-        """Analyze visual complexity"""
-        if not contrast_values:
+        """Analyze visual complexity"""        if not contrast_values:
             return 'Low'
         
         avg_contrast = np.mean(contrast_values)
@@ -1202,8 +1158,7 @@ class ContentEntityAnalyzer(BaseService):
             return 'Low'
     
     def _analyze_composition_style(self, metadata: ContentMetadata) -> str:
-        """Analyze composition style from metadata"""
-        aspect_ratio = metadata.width / metadata.height if metadata.height > 0 else 1
+        """Analyze composition style from metadata"""        aspect_ratio = metadata.width / metadata.height if metadata.height > 0 else 1
         
         if abs(aspect_ratio - 16/9) < 0.1:
             return 'Cinematic'
@@ -1216,8 +1171,7 @@ class ContentEntityAnalyzer(BaseService):
     
     # Helper methods for image analysis
     def _calculate_bit_depth(self, img: Image.Image) -> int:
-        """Calculate bit depth of image"""
-        mode_bits = {
+        """Calculate bit depth of image"""        mode_bits = {
             '1': 1,      # 1-bit pixels, black and white
             'L': 8,      # 8-bit pixels, grayscale
             'P': 8,      # 8-bit pixels, mapped to any other mode using a color palette
@@ -1231,8 +1185,7 @@ class ContentEntityAnalyzer(BaseService):
         return mode_bits.get(img.mode, 8)
     
     def _extract_dominant_colors(self, img_array: np.ndarray) -> List[str]:
-        """Extract dominant colors from image"""
-        try:
+        """Extract dominant colors from image"""        try:
             # Reshape image for clustering
             pixels = img_array.reshape(-1, 3)
             
@@ -1253,8 +1206,7 @@ class ContentEntityAnalyzer(BaseService):
             return ['#000000']  # Default
     
     def _analyze_color_distribution(self, img_array: np.ndarray) -> Dict[str, float]:
-        """Analyze color distribution in image"""
-        try:
+        """Analyze color distribution in image"""        try:
             # Calculate color statistics
             red_mean = float(np.mean(img_array[:, :, 0]))
             green_mean = float(np.mean(img_array[:, :, 1]))
@@ -1271,8 +1223,7 @@ class ContentEntityAnalyzer(BaseService):
     
     # Helper methods for text analysis
     def _calculate_readability_score(self, text: str) -> float:
-        """Calculate readability score (simplified Flesch score)"""
-        try:
+        """Calculate readability score (simplified Flesch score)"""        try:
             sentences = text.count('.') + text.count('!') + text.count('?')
             words = len(text.split())
             syllables = sum([self._count_syllables(word) for word in text.split()])
@@ -1287,8 +1238,7 @@ class ContentEntityAnalyzer(BaseService):
             return 0.5  # Default
     
     def _count_syllables(self, word: str) -> int:
-        """Count syllables in a word (simplified)"""
-        word = word.lower()
+        """Count syllables in a word (simplified)"""        word = word.lower()
         vowels = 'aeiouy'
         syllable_count = 0
         previous_was_vowel = False
@@ -1306,8 +1256,7 @@ class ContentEntityAnalyzer(BaseService):
         return max(1, syllable_count)
     
     def _analyze_sentiment(self, text: str) -> Dict[str, float]:
-        """Analyze sentiment of text"""
-        try:
+        """Analyze sentiment of text"""        try:
             if self.content_classifier:
                 # Use classifier for sentiment analysis
                 results = self.content_classifier(text[:1000])  # First 1000 chars
@@ -1336,8 +1285,7 @@ class ContentEntityAnalyzer(BaseService):
             return {'neutral': 1.0}
     
     def _extract_topic_keywords(self, doc) -> List[str]:
-        """Extract topic keywords from spaCy doc"""
-        try:
+        """Extract topic keywords from spaCy doc"""        try:
             # Extract important tokens
             keywords = []
             for token in doc:
@@ -1356,8 +1304,7 @@ class ContentEntityAnalyzer(BaseService):
             return []
     
     def _analyze_writing_style(self, doc) -> Dict[str, Any]:
-        """Analyze writing style from spaCy doc"""
-        try:
+        """Analyze writing style from spaCy doc"""        try:
             # Calculate style metrics
             total_tokens = len(doc)
             avg_sentence_length = total_tokens / len(list(doc.sents)) if list(doc.sents) else 0
@@ -1382,8 +1329,7 @@ class ContentEntityAnalyzer(BaseService):
         metadata: ContentMetadata,
         technical_analysis: Dict[str, Any]
     ) -> List[ContentEntity]:
-        """Extract entities from audio content"""
-        entities = []
+        """Extract entities from audio content"""        entities = []
         
         # Artist entity
         if metadata.artist:
@@ -1430,8 +1376,7 @@ class ContentEntityAnalyzer(BaseService):
         metadata: ContentMetadata,
         technical_analysis: Dict[str, Any]
     ) -> List[ContentEntity]:
-        """Extract entities from video content"""
-        entities = []
+        """Extract entities from video content"""        entities = []
         
         # Resolution entity
         if metadata.width and metadata.height:
@@ -1460,8 +1405,7 @@ class ContentEntityAnalyzer(BaseService):
         metadata: ContentMetadata,
         technical_analysis: Dict[str, Any]
     ) -> List[ContentEntity]:
-        """Extract entities from image content"""
-        entities = []
+        """Extract entities from image content"""        entities = []
         
         # Format entity
         if metadata.format:
@@ -1489,8 +1433,7 @@ class ContentEntityAnalyzer(BaseService):
         text_content: str,
         metadata: ContentMetadata
     ) -> List[ContentEntity]:
-        """Extract entities from text content"""
-        entities = []
+        """Extract entities from text content"""        entities = []
         
         if self.text_analyzer:
             doc = self.text_analyzer(text_content[:5000])  # First 5k chars
@@ -1527,8 +1470,7 @@ class ContentEntityAnalyzer(BaseService):
         sr: int,
         metadata: ContentMetadata
     ) -> Dict[str, float]:
-        """Calculate audio quality metrics"""
-        metrics = {}
+        """Calculate audio quality metrics"""        metrics = {}
         
         try:
             # Dynamic range
@@ -1556,8 +1498,7 @@ class ContentEntityAnalyzer(BaseService):
         metadata: ContentMetadata,
         technical_analysis: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Calculate video quality metrics"""
-        metrics = {}
+        """Calculate video quality metrics"""        metrics = {}
         
         # Resolution quality score
         total_pixels = metadata.width * metadata.height if metadata.width and metadata.height else 0
@@ -1577,8 +1518,7 @@ class ContentEntityAnalyzer(BaseService):
         metadata: ContentMetadata,
         technical_analysis: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Calculate image quality metrics"""
-        metrics = {}
+        """Calculate image quality metrics"""        metrics = {}
         
         # Resolution quality
         total_pixels = metadata.width * metadata.height if metadata.width and metadata.height else 0
@@ -1595,8 +1535,7 @@ class ContentEntityAnalyzer(BaseService):
         text_content: str,
         technical_analysis: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Calculate text quality metrics"""
-        metrics = {}
+        """Calculate text quality metrics"""        metrics = {}
         
         # Length quality (optimal range)
         word_count = technical_analysis.get('word_count', 0)
@@ -1609,8 +1548,7 @@ class ContentEntityAnalyzer(BaseService):
         return metrics
     
     def _calculate_overall_quality_score(self, analysis_result: Dict[str, Any]) -> float:
-        """Calculate overall quality score"""
-        quality_metrics = analysis_result.get('quality_metrics', {})
+        """Calculate overall quality score"""        quality_metrics = analysis_result.get('quality_metrics', {})
         
         if not quality_metrics:
             return 0.5  # Default
@@ -1620,8 +1558,7 @@ class ContentEntityAnalyzer(BaseService):
         return np.mean(scores) if scores else 0.5
     
     def _calculate_analysis_confidence(self, analysis_result: Dict[str, Any]) -> float:
-        """Calculate overall analysis confidence"""
-        factors = []
+        """Calculate overall analysis confidence"""        factors = []
         
         # Technical analysis completeness
         tech_analysis = analysis_result.get('technical_analysis', {})
@@ -1638,8 +1575,7 @@ class ContentEntityAnalyzer(BaseService):
         return np.mean(factors) if factors else 0.5
     
     def _update_analysis_stats(self, result: ContentAnalysisResult):
-        """Update analysis statistics"""
-        self.analysis_stats['total_analyses'] += 1
+        """Update analysis statistics"""        self.analysis_stats['total_analyses'] += 1
         self.analysis_stats['successful_analyses'] += 1
         
         # Update content type distribution
@@ -1659,8 +1595,7 @@ class ContentEntityAnalyzer(BaseService):
         self.analysis_stats['avg_processing_time'] = new_avg
     
     async def get_analysis_statistics(self) -> Dict[str, Any]:
-        """Get content analysis statistics"""
-        return {
+        """Get content analysis statistics"""        return {
             **self.analysis_stats,
             'supported_formats': {
                 'audio': [fmt.value for fmt in ContentFormat if fmt.value.startswith('audio/')],
@@ -1673,8 +1608,7 @@ class ContentEntityAnalyzer(BaseService):
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for content entity analyzer"""
-        return {
+        """Health check for content entity analyzer"""        return {
             'status': 'healthy',
             'text_analyzer_available': self.text_analyzer is not None,
             'content_classifier_available': self.content_classifier is not None,

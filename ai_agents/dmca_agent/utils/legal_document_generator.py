@@ -1,5 +1,4 @@
-"""
-Legal Document Generator - Enterprise DMCA Legal Documentation System
+"""Legal Document Generator - Enterprise DMCA Legal Documentation System
 ====================================================================
 
 Advanced legal document generation system with multi-jurisdiction support,
@@ -12,9 +11,7 @@ Copyright: 2025 - All Rights Reserved
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Tuple, Set
 from datetime import datetime, timedelta
@@ -48,16 +45,14 @@ from ...models.legal import LegalDocument, DocumentType, DocumentStatus
 logger = logging.getLogger(__name__)
 
 class DocumentFormat(Enum):
-    """Document output formats"""
-    HTML = "html"
+    """Document output formats"""    HTML = "html"
     PDF = "pdf" 
     DOCX = "docx"
     TXT = "txt"
     EMAIL = "email"
 
 class DocumentLanguage(Enum):
-    """Supported document languages"""
-    ENGLISH = "en"
+    """Supported document languages"""    ENGLISH = "en"
     GERMAN = "de"
     FRENCH = "fr"
     SPANISH = "es"
@@ -67,16 +62,14 @@ class DocumentLanguage(Enum):
     CHINESE = "zh"
 
 class UrgencyLevel(Enum):
-    """Document urgency levels"""
-    STANDARD = "standard"
+    """Document urgency levels"""    STANDARD = "standard"
     EXPEDITED = "expedited"
     URGENT = "urgent"
     EMERGENCY = "emergency"
 
 @dataclass
 class DocumentRequest:
-    """Legal document generation request"""
-    request_id: str
+    """Legal document generation request"""    request_id: str
     document_type: DocumentType
     legal_framework: LegalFramework
     language: DocumentLanguage
@@ -90,8 +83,7 @@ class DocumentRequest:
     
 @dataclass
 class GeneratedDocument:
-    """Generated legal document result"""
-    document_id: str
+    """Generated legal document result"""    document_id: str
     request_id: str
     document_type: DocumentType
     content: str
@@ -107,8 +99,7 @@ class GeneratedDocument:
     
 @dataclass
 class DocumentTemplate:
-    """Legal document template definition"""
-    template_id: str
+    """Legal document template definition"""    template_id: str
     name: str
     document_type: DocumentType
     legal_framework: LegalFramework
@@ -121,13 +112,11 @@ class DocumentTemplate:
     version: str
 
 class LegalDocumentGenerator:
-    """
-    Enterprise Legal Document Generator
+    """    Enterprise Legal Document Generator
     
     Generates professional legal documents with multi-jurisdiction compliance,
     automated validation, and digital signature integration.
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.compliance_engine = LegalComplianceEngine()
@@ -154,8 +143,7 @@ class LegalDocumentGenerator:
         self.logger.info("Legal Document Generator initialized successfully")
     
     def _load_templates(self) -> None:
-        """Load legal document templates"""
-        self.templates = {
+        """Load legal document templates"""        self.templates = {
             # US DMCA Templates
             (DocumentType.TAKEDOWN_NOTICE, LegalFramework.DMCA_US, DocumentLanguage.ENGLISH): DocumentTemplate(
                 template_id="dmca_takedown_us_en",
@@ -257,9 +245,7 @@ class LegalDocumentGenerator:
         }
     
     def _get_dmca_takedown_template(self) -> str:
-        """Get DMCA takedown notice template"""
-        return """
-<!DOCTYPE html>
+        """Get DMCA takedown notice template"""        return """<!DOCTYPE html>
 <html>
 <head>
     <title>DMCA Takedown Notice</title>
@@ -366,12 +352,9 @@ class LegalDocumentGenerator:
     </div>
 </body>
 </html>
-        """
-    
+        """    
     def _get_dmca_counter_notice_template(self) -> str:
-        """Get DMCA counter-notice template"""
-        return """
-<!DOCTYPE html>
+        """Get DMCA counter-notice template"""        return """<!DOCTYPE html>
 <html>
 <head>
     <title>DMCA Counter-Notice</title>
@@ -457,12 +440,9 @@ class LegalDocumentGenerator:
     </div>
 </body>
 </html>
-        """
-    
+        """    
     def _get_eu_copyright_template(self) -> str:
-        """Get EU Copyright Directive template"""
-        return """
-<!DOCTYPE html>
+        """Get EU Copyright Directive template"""        return """<!DOCTYPE html>
 <html>
 <head>
     <title>EU Copyright Takedown Notice</title>
@@ -576,12 +556,9 @@ class LegalDocumentGenerator:
     </div>
 </body>
 </html>
-        """
-    
+        """    
     def _get_cease_desist_template(self) -> str:
-        """Get cease and desist letter template"""
-        return """
-<!DOCTYPE html>
+        """Get cease and desist letter template"""        return """<!DOCTYPE html>
 <html>
 <head>
     <title>Cease and Desist Letter</title>
@@ -712,11 +689,9 @@ class LegalDocumentGenerator:
     </div>
 </body>
 </html>
-        """
-    
+        """    
     def _load_translations(self) -> Dict[DocumentLanguage, Dict[str, str]]:
-        """Load document translations"""
-        return {
+        """Load document translations"""        return {
             DocumentLanguage.GERMAN: {
                 "takedown_notice": "Abmahnung",
                 "copyright_infringement": "Urheberrechtsverletzung",
@@ -741,16 +716,14 @@ class LegalDocumentGenerator:
         self,
         request: DocumentRequest
     ) -> GeneratedDocument:
-        """
-        Generate professional legal document
+        """        Generate professional legal document
         
         Args:
             request: Document generation request
             
         Returns:
             GeneratedDocument with complete document content
-        """
-        try:
+        """        try:
             self.logger.info(f"Generating document {request.document_type} for request {request.request_id}")
             
             # Get appropriate template
@@ -837,8 +810,7 @@ class LegalDocumentGenerator:
         legal_framework: LegalFramework,
         language: DocumentLanguage
     ) -> Optional[DocumentTemplate]:
-        """Get appropriate template for document generation"""
-        template_key = (document_type, legal_framework, language)
+        """Get appropriate template for document generation"""        template_key = (document_type, legal_framework, language)
         
         if template_key in self.templates:
             return self.templates[template_key]
@@ -856,8 +828,7 @@ class LegalDocumentGenerator:
         request: DocumentRequest,
         template: DocumentTemplate
     ) -> Dict[str, Any]:
-        """Validate request data against template requirements"""
-        errors = []
+        """Validate request data against template requirements"""        errors = []
         warnings = []
         
         # Check required fields
@@ -884,8 +855,7 @@ class LegalDocumentGenerator:
         request: DocumentRequest,
         template: DocumentTemplate
     ) -> Dict[str, Any]:
-        """Prepare variables for template rendering"""
-        variables = {}
+        """Prepare variables for template rendering"""        variables = {}
         
         # Add case data
         variables.update(request.case_data)
@@ -916,8 +886,7 @@ class LegalDocumentGenerator:
         template: DocumentTemplate,
         variables: Dict[str, Any]
     ) -> str:
-        """Render template with variables"""
-        try:
+        """Render template with variables"""        try:
             jinja_template = self.jinja_env.from_string(template.template_content)
             rendered_content = jinja_template.render(**variables)
             
@@ -935,8 +904,7 @@ class LegalDocumentGenerator:
         content: str,
         legal_framework: LegalFramework
     ) -> float:
-        """Check document compliance with legal framework"""
-        try:
+        """Check document compliance with legal framework"""        try:
             # Use compliance engine to check generated document
             compliance_result = await self.compliance_engine.check_compliance(
                 {"generated_content": content},
@@ -954,8 +922,7 @@ class LegalDocumentGenerator:
         content: str,
         target_format: DocumentFormat
     ) -> str:
-        """Convert document to target format"""
-        try:
+        """Convert document to target format"""        try:
             if target_format == DocumentFormat.PDF:
                 return await self.pdf_generator.html_to_pdf(content)
             
@@ -981,8 +948,7 @@ class LegalDocumentGenerator:
             return content
     
     async def _apply_digital_signature(self, document: GeneratedDocument) -> str:
-        """Apply digital signature to document"""
-        try:
+        """Apply digital signature to document"""        try:
             signature = await self.digital_signer.sign_document(
                 document.content,
                 document.document_id
@@ -995,8 +961,7 @@ class LegalDocumentGenerator:
             return ""
     
     async def _apply_notarization(self, document: GeneratedDocument) -> Dict[str, Any]:
-        """Apply notarization to document"""
-        try:
+        """Apply notarization to document"""        try:
             # This would integrate with notarization services
             notarization_info = {
                 "notary_id": "digital_notary_001",
@@ -1012,8 +977,7 @@ class LegalDocumentGenerator:
             return {}
     
     async def _process_template_variables(self, variables: Dict[str, Any]) -> Dict[str, Any]:
-        """Process and clean template variables"""
-        processed = variables.copy()
+        """Process and clean template variables"""        processed = variables.copy()
         
         # Process URL lists
         for key, value in variables.items():
@@ -1035,8 +999,7 @@ class LegalDocumentGenerator:
         variables: Dict[str, Any],
         target_language: DocumentLanguage
     ) -> Dict[str, Any]:
-        """Translate template variables to target language"""
-        if target_language not in self.translations:
+        """Translate template variables to target language"""        if target_language not in self.translations:
             return variables
         
         translations = self.translations[target_language]
@@ -1052,8 +1015,7 @@ class LegalDocumentGenerator:
         return translated
     
     async def _clean_rendered_content(self, content: str) -> str:
-        """Clean up rendered template content"""
-        # Remove excessive whitespace
+        """Clean up rendered template content"""        # Remove excessive whitespace
         content = re.sub(r'\n\s*\n\s*\n', '\n\n', content)
         
         # Fix common HTML issues
@@ -1062,16 +1024,13 @@ class LegalDocumentGenerator:
         return content.strip()
     
     async def _format_for_email(self, html_content: str) -> str:
-        """Format HTML content for email delivery"""
-        # Add email-specific styling
-        email_styles = """
-        <style>
+        """Format HTML content for email delivery"""        # Add email-specific styling
+        email_styles = """        <style>
             body { max-width: 600px; margin: 0 auto; }
             .section { margin: 15px 0; }
             .warning { background-color: #fff3cd; padding: 10px; border-left: 4px solid #ffc107; }
         </style>
-        """
-        
+        """        
         # Insert email styles
         if "<head>" in html_content:
             html_content = html_content.replace("<head>", f"<head>{email_styles}")
@@ -1084,8 +1043,7 @@ class LegalDocumentGenerator:
         rule_name: str,
         rule_value: Any
     ) -> bool:
-        """Apply specific validation rule"""
-        if rule_name == "signature_required":
+        """Apply specific validation rule"""        if rule_name == "signature_required":
             return bool(
                 request.case_data.get("electronic_signature") or
                 request.case_data.get("signature")
@@ -1120,8 +1078,7 @@ class LegalDocumentGenerator:
         return True
     
     async def _cache_generated_document(self, document: GeneratedDocument) -> None:
-        """Cache generated document"""
-        cache_key = f"{document.request_id}_{document.document_type.value}"
+        """Cache generated document"""        cache_key = f"{document.request_id}_{document.document_type.value}"
         
         self.document_cache[cache_key] = {
             "document": document,
@@ -1129,8 +1086,7 @@ class LegalDocumentGenerator:
         }
     
     async def _save_document_to_database(self, document: GeneratedDocument) -> None:
-        """Save generated document to database"""
-        try:
+        """Save generated document to database"""        try:
             with get_db_session() as session:
                 db_document = LegalDocument(
                     document_id=document.document_id,
@@ -1157,8 +1113,7 @@ class LegalDocumentGenerator:
         self,
         requests: List[DocumentRequest]
     ) -> List[GeneratedDocument]:
-        """Generate multiple documents in batch"""
-        max_concurrent = 5
+        """Generate multiple documents in batch"""        max_concurrent = 5
         semaphore = asyncio.Semaphore(max_concurrent)
         
         async def generate_single(request):
@@ -1179,8 +1134,7 @@ class LegalDocumentGenerator:
         return valid_results
     
     async def get_document_by_id(self, document_id: str) -> Optional[GeneratedDocument]:
-        """Retrieve generated document by ID"""
-        try:
+        """Retrieve generated document by ID"""        try:
             # Check cache first
             for cached_data in self.document_cache.values():
                 if (cached_data["document"].document_id == document_id and 
@@ -1204,8 +1158,7 @@ class LegalDocumentGenerator:
         return None
     
     async def get_generation_statistics(self) -> Dict[str, Any]:
-        """Get document generation statistics"""
-        try:
+        """Get document generation statistics"""        try:
             with get_db_session() as session:
                 total_generated = session.query(LegalDocument).count()
                 

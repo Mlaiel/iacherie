@@ -1,5 +1,4 @@
-"""
-🏗️ License Generator - Automated License Creation Engine
+"""🏗️ License Generator - Automated License Creation Engine
 =======================================================
 
 Professional license generation system with multi-jurisdiction support:
@@ -12,9 +11,7 @@ Professional license generation system with multi-jurisdiction support:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Legal Tech Specialist + Business Analyst
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import logging
+"""import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union
 from datetime import datetime, timedelta
@@ -28,8 +25,7 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class LicenseType(Enum):
-    """Supported license types"""
-    COMMERCIAL = "commercial"
+    """Supported license types"""    COMMERCIAL = "commercial"
     CREATIVE_COMMONS = "creative_commons"
     SYNC_LICENSING = "sync_licensing"
     MECHANICAL = "mechanical"
@@ -41,8 +37,7 @@ class LicenseType(Enum):
     EDUCATIONAL = "educational"
 
 class LicenseStatus(Enum):
-    """License status types"""
-    DRAFT = "draft"
+    """License status types"""    DRAFT = "draft"
     ACTIVE = "active"
     PENDING_APPROVAL = "pending_approval"
     EXPIRED = "expired"
@@ -51,8 +46,7 @@ class LicenseStatus(Enum):
 
 @dataclass
 class LicenseTerms:
-    """Standard license terms structure"""
-    territory: str
+    """Standard license terms structure"""    territory: str
     duration: str
     exclusivity: bool
     usage_rights: List[str]
@@ -63,8 +57,7 @@ class LicenseTerms:
 
 @dataclass
 class LicenseMetadata:
-    """License metadata and tracking information"""
-    license_id: str
+    """License metadata and tracking information"""    license_id: str
     content_id: str
     licensor_id: str
     licensee_id: str
@@ -77,16 +70,13 @@ class LicenseMetadata:
     version: str
 
 class LicenseGenerator:
-    """
-    🚀 Professional license generation engine
+    """    🚀 Professional license generation engine
     
     Advanced system for creating legally compliant licenses with
     automated customization and multi-jurisdiction support.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize license generator with configuration."""
-        self.config = config
+        """Initialize license generator with configuration."""        self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Initialize template storage
@@ -109,8 +99,7 @@ class LicenseGenerator:
         self._load_jurisdiction_rules()
     
     def _load_license_templates(self):
-        """Load and cache license templates."""
-        try:
+        """Load and cache license templates."""        try:
             if not self.template_path.exists():
                 self.template_path.mkdir(parents=True, exist_ok=True)
                 self._create_default_templates()
@@ -128,8 +117,7 @@ class LicenseGenerator:
             raise
     
     def _load_jurisdiction_rules(self):
-        """Load jurisdiction-specific licensing rules."""
-        jurisdiction_data = {
+        """Load jurisdiction-specific licensing rules."""        jurisdiction_data = {
             'international': {
                 'copyright_duration': '70 years post mortem',
                 'mandatory_clauses': ['attribution', 'copyright_notice'],
@@ -164,8 +152,7 @@ class LicenseGenerator:
         self.logger.info(f"Loaded rules for {len(jurisdiction_data)} jurisdictions")
     
     def _create_default_templates(self):
-        """Create default license templates."""
-        templates = {
+        """Create default license templates."""        templates = {
             'commercial': {
                 'name': 'Commercial License Agreement',
                 'description': 'Standard commercial license for content monetization',
@@ -233,8 +220,7 @@ class LicenseGenerator:
         content_info: Dict[str, Any],
         custom_terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        🎯 Customize license template with specific content and terms
+        """        🎯 Customize license template with specific content and terms
         
         Args:
             template: Base license template
@@ -243,8 +229,7 @@ class LicenseGenerator:
             
         Returns:
             customized_license: Fully customized license document
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             self.logger.info(f"Customizing license template: {template.get('name', 'unknown')}")
@@ -324,8 +309,7 @@ class LicenseGenerator:
         terms: LicenseTerms,
         jurisdiction: str
     ) -> Dict[str, str]:
-        """Generate specific license clauses based on template and terms."""
-        clauses = {}
+        """Generate specific license clauses based on template and terms."""        clauses = {}
         
         # Get jurisdiction-specific rules
         jurisdiction_rules = self.jurisdiction_rules.get(jurisdiction, self.jurisdiction_rules['international'])
@@ -357,8 +341,7 @@ class LicenseGenerator:
         terms: LicenseTerms,
         jurisdiction_rules: Dict[str, Any]
     ) -> str:
-        """Generate specific clause text based on parameters."""
-        clause_templates = {
+        """Generate specific clause text based on parameters."""        clause_templates = {
             'grant_of_rights': (
                 f"The Licensor hereby grants to the Licensee a "
                 f"{'exclusive' if terms.exclusivity else 'non-exclusive'} license to use "
@@ -403,8 +386,7 @@ class LicenseGenerator:
         clause_name: str,
         jurisdiction_rules: Dict[str, Any]
     ) -> str:
-        """Generate mandatory jurisdiction-specific clauses."""
-        mandatory_clauses = {
+        """Generate mandatory jurisdiction-specific clauses."""        mandatory_clauses = {
             'attribution': (
                 "The Licensee must provide appropriate attribution to the original creator "
                 "in any use or distribution of the Content."
@@ -437,8 +419,7 @@ class LicenseGenerator:
         jurisdiction: str,
         license_type: LicenseType
     ) -> List[str]:
-        """Generate jurisdiction-specific legal notices."""
-        notices = [
+        """Generate jurisdiction-specific legal notices."""        notices = [
             "This license agreement is legally binding and enforceable.",
             "All parties should seek independent legal advice before signing.",
             f"This agreement is governed by the laws of {jurisdiction}."
@@ -455,8 +436,7 @@ class LicenseGenerator:
         return notices
     
     async def _generate_signature_requirements(self, jurisdiction: str) -> Dict[str, Any]:
-        """Generate signature requirements based on jurisdiction."""
-        base_requirements = {
+        """Generate signature requirements based on jurisdiction."""        base_requirements = {
             'licensor_signature': True,
             'licensee_signature': True,
             'witness_required': False,
@@ -472,8 +452,7 @@ class LicenseGenerator:
         return base_requirements
     
     def _calculate_expiration_date(self, custom_terms: Dict[str, Any]) -> Optional[datetime]:
-        """Calculate license expiration date from terms."""
-        duration = custom_terms.get('duration')
+        """Calculate license expiration date from terms."""        duration = custom_terms.get('duration')
         if not duration:
             return None
         
@@ -497,15 +476,13 @@ class LicenseGenerator:
         return None
     
     def _calculate_document_hash(self, license_document: Dict[str, Any]) -> str:
-        """Calculate SHA-256 hash of license document for integrity verification."""
-        # Create a copy without the hash field for calculation
+        """Calculate SHA-256 hash of license document for integrity verification."""        # Create a copy without the hash field for calculation
         doc_copy = {k: v for k, v in license_document.items() if k != 'document_hash'}
         doc_string = json.dumps(doc_copy, sort_keys=True, separators=(',', ':'))
         return hashlib.sha256(doc_string.encode()).hexdigest()
     
     def get_available_templates(self) -> List[Dict[str, Any]]:
-        """Get list of available license templates."""
-        return [
+        """Get list of available license templates."""        return [
             {
                 'name': template_name,
                 'description': template_data.get('description', ''),
@@ -516,12 +493,10 @@ class LicenseGenerator:
         ]
     
     def get_supported_jurisdictions(self) -> List[str]:
-        """Get list of supported legal jurisdictions."""
-        return list(self.jurisdiction_rules.keys())
+        """Get list of supported legal jurisdictions."""        return list(self.jurisdiction_rules.keys())
     
     def get_generator_metrics(self) -> Dict[str, Any]:
-        """Get license generator performance metrics."""
-        return {
+        """Get license generator performance metrics."""        return {
             **self.metrics,
             'available_templates': len(self.template_cache),
             'supported_jurisdictions': len(self.jurisdiction_rules),

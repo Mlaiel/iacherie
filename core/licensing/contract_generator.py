@@ -1,5 +1,4 @@
-"""
-Contract Generator - AI-Powered Legal Document Creation System
+"""Contract Generator - AI-Powered Legal Document Creation System
 ==============================================================
 
 Ultra-advanced automated contract generation system with jurisdiction-specific
@@ -17,9 +16,7 @@ Contact: mlaiel@live.de for licensing and usage rights.
 Business Logic Integration:
 Multi-format content creators → AI-powered contract generation → Legal compliance validation
 → Blockchain verification → Professional distribution → Automated enforcement
-"""
-
-import asyncio
+"""import asyncio
 import uuid
 import json
 import hashlib
@@ -47,8 +44,7 @@ from ..ai.compliance_ai import ComplianceAIValidator
 
 
 class ContractType(Enum):
-    """Advanced contract types supported"""
-    LICENSING_AGREEMENT = "licensing_agreement"
+    """Advanced contract types supported"""    LICENSING_AGREEMENT = "licensing_agreement"
     SYNC_LICENSE = "sync_license"
     MASTER_USE_LICENSE = "master_use_license"
     MECHANICAL_LICENSE = "mechanical_license"
@@ -71,8 +67,7 @@ class ContractType(Enum):
 
 
 class DocumentFormat(Enum):
-    """Enhanced document output formats"""
-    PDF = "pdf"
+    """Enhanced document output formats"""    PDF = "pdf"
     DOCX = "docx"
     HTML = "html"
     PLAIN_TEXT = "plain_text"
@@ -85,8 +80,7 @@ class DocumentFormat(Enum):
 
 
 class LegalJurisdiction(Enum):
-    """Supported legal jurisdictions"""
-    US_FEDERAL = "us_federal"
+    """Supported legal jurisdictions"""    US_FEDERAL = "us_federal"
     EU_GENERAL = "eu_general"
     GERMANY = "germany"
     FRANCE = "france"
@@ -98,8 +92,7 @@ class LegalJurisdiction(Enum):
 
 
 class AIOptimizationLevel(Enum):
-    """AI optimization levels for contract terms"""
-    BASIC = "basic"
+    """AI optimization levels for contract terms"""    BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
     PROFESSIONAL = "professional"
@@ -108,8 +101,7 @@ class AIOptimizationLevel(Enum):
 
 @dataclass
 class AdvancedContractClause:
-    """Enhanced contract clause with AI optimization"""
-    clause_id: str
+    """Enhanced contract clause with AI optimization"""    clause_id: str
     title: str
     content: str
     clause_type: str  # liability, payment, termination, rights, etc.
@@ -133,8 +125,7 @@ class AdvancedContractClause:
 
 @dataclass
 class EnhancedContractTemplate:
-    """Ultra-advanced contract template with AI integration"""
-    template_id: str
+    """Ultra-advanced contract template with AI integration"""    template_id: str
     name: str
     description: str
     contract_type: ContractType
@@ -163,8 +154,7 @@ class EnhancedContractTemplate:
 
 @dataclass
 class AdvancedContractGenerationRequest:
-    """Comprehensive contract generation request"""
-    license_data: Dict[str, Any]
+    """Comprehensive contract generation request"""    license_data: Dict[str, Any]
     contract_type: ContractType
     jurisdiction: LegalJurisdiction
     language: str = "en"
@@ -194,8 +184,7 @@ class AdvancedContractGenerationRequest:
 
 @dataclass
 class ContractGenerationResult:
-    """Comprehensive contract generation result"""
-    contract_id: str
+    """Comprehensive contract generation result"""    contract_id: str
     documents: Dict[DocumentFormat, str]  # format -> file_path
     smart_contract_address: Optional[str] = None
     blockchain_hash: Optional[str] = None
@@ -217,8 +206,7 @@ class ContractGenerationResult:
 
 
 class UltraAdvancedContractGenerator:
-    """
-    Ultra-advanced AI-powered contract generation system
+    """    Ultra-advanced AI-powered contract generation system
     
     Features:
     - Multi-format content licensing contracts (audio, video, image, text, multimedia)
@@ -231,8 +219,7 @@ class UltraAdvancedContractGenerator:
     - Predictive legal risk assessment and mitigation
     - Multi-language contract generation with cultural adaptation
     - Automated contract performance monitoring and optimization
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -271,8 +258,7 @@ class UltraAdvancedContractGenerator:
 
 @dataclass
 class ContractGenerationResult:
-    """Contract generation result"""
-    contract_id: str
+    """Contract generation result"""    contract_id: str
     contract_url: str
     document_hash: str
     generation_metadata: Dict[str, Any]
@@ -284,8 +270,7 @@ class ContractGenerationResult:
 
 
 class ContractGenerator:
-    """
-    AI-powered contract generation system with legal compliance and optimization
+    """    AI-powered contract generation system with legal compliance and optimization
     
     Features:
     - Multi-jurisdiction legal framework support
@@ -296,8 +281,7 @@ class ContractGenerator:
     - Professional document formatting and styling
     - Digital signature integration
     - Version control and audit trails
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -329,8 +313,7 @@ class ContractGenerator:
         self.is_initialized = False
     
     async def initialize(self) -> None:
-        """Initialize contract generator and load templates"""
-        try:
+        """Initialize contract generator and load templates"""        try:
             self.logger.info("Initializing ContractGenerator")
             
             # Initialize components
@@ -371,8 +354,7 @@ class ContractGenerator:
         language: str = "en",
         format: DocumentFormat = DocumentFormat.PDF
     ) -> ContractGenerationResult:
-        """
-        Generate legal contract from license data
+        """        Generate legal contract from license data
         
         Args:
             license: License object containing all terms and conditions
@@ -383,8 +365,7 @@ class ContractGenerator:
             
         Returns:
             Contract generation result with document URL and metadata
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             raise ContractGenerationError("ContractGenerator not initialized")
         
         start_time = datetime.now()
@@ -522,8 +503,7 @@ class ContractGenerator:
         license: Any,
         changes: Dict[str, Any]
     ) -> ContractGenerationResult:
-        """Regenerate contract with updated terms"""
-        try:
+        """Regenerate contract with updated terms"""        try:
             # Find existing contract
             existing_contract_id = None
             for contract_id, result in self.generated_contracts.items():
@@ -551,8 +531,7 @@ class ContractGenerator:
         contract_type: Optional[ContractType] = None,
         jurisdiction: Optional[str] = None
     ) -> List[ContractTemplate]:
-        """Get available contract templates with optional filtering"""
-        templates = []
+        """Get available contract templates with optional filtering"""        templates = []
         
         for template in self.contract_templates.values():
             if contract_type and template.contract_type != contract_type:
@@ -568,8 +547,7 @@ class ContractGenerator:
         contract_id: str,
         jurisdiction: str
     ) -> Dict[str, Any]:
-        """Validate contract compliance for specific jurisdiction"""
-        result = self.generated_contracts.get(contract_id)
+        """Validate contract compliance for specific jurisdiction"""        result = self.generated_contracts.get(contract_id)
         if not result:
             raise ValidationError(f"Contract not found: {contract_id}")
         
@@ -600,8 +578,7 @@ class ContractGenerator:
             raise ValidationError(f"Compliance validation failed: {str(e)}")
     
     def _extract_license_data(self, license: Any) -> Dict[str, Any]:
-        """Extract relevant data from license object"""
-        return {
+        """Extract relevant data from license object"""        return {
             'license_id': license.license_id,
             'content_id': license.content_id,
             'creator_id': license.creator_id,
@@ -619,8 +596,7 @@ class ContractGenerator:
         }
     
     def _determine_contract_type(self, template_type: str) -> ContractType:
-        """Determine contract type from template type string"""
-        type_mapping = {
+        """Determine contract type from template type string"""        type_mapping = {
             'exclusive_audio': ContractType.LICENSING_AGREEMENT,
             'non_exclusive_audio': ContractType.LICENSING_AGREEMENT,
             'sync_licensing_video': ContractType.SYNC_LICENSE,
@@ -633,8 +609,7 @@ class ContractGenerator:
         return type_mapping.get(template_type, ContractType.LICENSING_AGREEMENT)
     
     async def _validate_generation_request(self, request: ContractGenerationRequest) -> None:
-        """Validate contract generation request"""
-        if not request.license_data:
+        """Validate contract generation request"""        if not request.license_data:
             raise ValidationError("License data is required")
         
         if not request.jurisdiction:
@@ -650,8 +625,7 @@ class ContractGenerator:
         jurisdiction: str,
         language: str
     ) -> ContractTemplate:
-        """Select appropriate contract template"""
-        # Look for exact match first
+        """Select appropriate contract template"""        # Look for exact match first
         template_key = f"{contract_type.value}_{jurisdiction}_{language}"
         
         if template_key in self.contract_templates:
@@ -670,8 +644,7 @@ class ContractGenerator:
         template: ContractTemplate,
         jurisdiction: str
     ) -> Dict[str, str]:
-        """Generate contract variables from license data"""
-        variables = {}
+        """Generate contract variables from license data"""        variables = {}
         
         # Basic license information
         variables.update({
@@ -718,8 +691,7 @@ class ContractGenerator:
         license_data: Dict[str, Any],
         jurisdiction: str
     ) -> List[ContractClause]:
-        """AI-powered contract clause optimization"""
-        if not self.clause_optimization_model:
+        """AI-powered contract clause optimization"""        if not self.clause_optimization_model:
             return template.clauses
         
         try:
@@ -767,8 +739,7 @@ class ContractGenerator:
         license_data: Optional[Dict[str, Any]],
         contract_content: Optional[str] = None
     ) -> Any:  # ComplianceResult
-        """Validate contract legal compliance"""
-        # Mock compliance result - would integrate with legal compliance service
+        """Validate contract legal compliance"""        # Mock compliance result - would integrate with legal compliance service
         class ComplianceResult:
             def __init__(self):
                 self.compliant = True
@@ -784,8 +755,7 @@ class ContractGenerator:
         variables: Dict[str, str],
         language: str
     ) -> str:
-        """Generate contract content from template and variables"""
-        try:
+        """Generate contract content from template and variables"""        try:
             # Render template with variables
             content = await self.template_engine.render_template(
                 template_content=self._build_template_content(template),
@@ -800,8 +770,7 @@ class ContractGenerator:
             raise ContractGenerationError(f"Content generation failed: {str(e)}")
     
     def _build_template_content(self, template: ContractTemplate) -> str:
-        """Build template content from clauses"""
-        content_parts = [
+        """Build template content from clauses"""        content_parts = [
             f"# {template.name}",
             "",
             "## Contract Terms and Conditions",
@@ -824,8 +793,7 @@ class ContractGenerator:
         format: DocumentFormat,
         language: str
     ) -> bytes:
-        """Format contract content into specified document format"""
-        if format == DocumentFormat.PDF:
+        """Format contract content into specified document format"""        if format == DocumentFormat.PDF:
             return await self.template_engine.generate_pdf(content, language)
         elif format == DocumentFormat.DOCX:
             return await self.template_engine.generate_docx(content, language)
@@ -840,8 +808,7 @@ class ContractGenerator:
         document: bytes,
         metadata: Dict[str, Any]
     ) -> str:
-        """Store contract document and return URL"""
-        # Store document to file system or cloud storage
+        """Store contract document and return URL"""        # Store document to file system or cloud storage
         file_path = self.output_directory / f"{contract_id}.pdf"
         
         with open(file_path, 'wb') as f:
@@ -856,14 +823,12 @@ class ContractGenerator:
         document_hash: str,
         parties: List[str]
     ) -> bool:
-        """Register contract on blockchain for immutable record"""
-        # Mock blockchain registration
+        """Register contract on blockchain for immutable record"""        # Mock blockchain registration
         self.logger.info(f"Contract registered on blockchain: {contract_id}")
         return True
     
     async def _get_jurisdiction_variables(self, jurisdiction: str) -> Dict[str, str]:
-        """Get jurisdiction-specific contract variables"""
-        jurisdiction_vars = {
+        """Get jurisdiction-specific contract variables"""        jurisdiction_vars = {
             'US': {
                 'GOVERNING_LAW': 'the laws of the United States',
                 'DISPUTE_RESOLUTION': 'binding arbitration under American Arbitration Association rules'
@@ -881,17 +846,14 @@ class ContractGenerator:
         return jurisdiction_vars.get(jurisdiction, jurisdiction_vars['US'])
     
     async def _load_contract_templates(self) -> None:
-        """Load contract templates from storage"""
-        # Mock template loading - would load from database/files
+        """Load contract templates from storage"""        # Mock template loading - would load from database/files
         self.logger.info("Loading contract templates")
     
     async def _load_clause_library(self) -> None:
-        """Load clause library from storage"""
-        self.logger.info("Loading clause library")
+        """Load clause library from storage"""        self.logger.info("Loading clause library")
     
     async def _load_jurisdiction_rules(self) -> None:
-        """Load jurisdiction-specific rules"""
-        # Mock jurisdiction rules
+        """Load jurisdiction-specific rules"""        # Mock jurisdiction rules
         self.jurisdiction_rules = {
             'US': {'copyright_law': 'US_COPYRIGHT_ACT', 'min_term': 1, 'max_term': 35},
             'DE': {'copyright_law': 'GERMAN_COPYRIGHT_LAW', 'min_term': 1, 'max_term': 25},
@@ -901,12 +863,10 @@ class ContractGenerator:
         self.logger.info("Jurisdiction rules loaded")
     
     async def _initialize_ai_models(self) -> None:
-        """Initialize AI models for optimization"""
-        self.logger.info("AI models initialized")
+        """Initialize AI models for optimization"""        self.logger.info("AI models initialized")
     
     async def _version_contract(self, contract_id: str) -> None:
-        """Create version of existing contract"""
-        if contract_id not in self.contract_versions:
+        """Create version of existing contract"""        if contract_id not in self.contract_versions:
             self.contract_versions[contract_id] = []
         
         # Store current version
@@ -919,6 +879,5 @@ class ContractGenerator:
             })
     
     async def _load_contract_content(self, contract_id: str) -> str:
-        """Load contract content from storage"""
-        # Mock implementation
+        """Load contract content from storage"""        # Mock implementation
         return f"Contract content for {contract_id}"

@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Monitoring Configuration Validation Script
+"""Monitoring Configuration Validation Script
 ==========================================
 
 Validates Grafana and Prometheus configurations for Ainflue Platform.
@@ -8,9 +7,7 @@ Addresses the requirement: "Monitoring Grafana/Prometheus - vérifier configurat
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import yaml
+"""import yaml
 import json
 import os
 import sys
@@ -32,8 +29,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class MonitoringConfigValidator:
-    """Validates Prometheus and Grafana monitoring configurations"""
-    
+    """Validates Prometheus and Grafana monitoring configurations"""    
     def __init__(self, project_root: str):
         self.project_root = Path(project_root)
         self.prometheus_config_path = self.project_root / "monitoring" / "prometheus" / "prometheus.yml"
@@ -41,8 +37,7 @@ class MonitoringConfigValidator:
         self.validation_results = {}
         
     def validate_prometheus_config(self) -> Tuple[bool, List[str]]:
-        """Validate Prometheus configuration file"""
-        issues = []
+        """Validate Prometheus configuration file"""        issues = []
         
         try:
             if not self.prometheus_config_path.exists():
@@ -117,8 +112,7 @@ class MonitoringConfigValidator:
             return False, issues
     
     def validate_grafana_config(self) -> Tuple[bool, List[str]]:
-        """Validate Grafana configuration"""
-        issues = []
+        """Validate Grafana configuration"""        issues = []
         
         try:
             # Check datasources configuration
@@ -200,8 +194,7 @@ class MonitoringConfigValidator:
             return False, issues
     
     def validate_monitoring_endpoints(self) -> Tuple[bool, Dict[str, Any]]:
-        """Validate monitoring endpoints connectivity (if services are running)"""
-        endpoints = {
+        """Validate monitoring endpoints connectivity (if services are running)"""        endpoints = {
             'prometheus': 'http://localhost:9090',
             'grafana': 'http://localhost:3000',
             'alertmanager': 'http://localhost:9093'
@@ -263,8 +256,7 @@ class MonitoringConfigValidator:
         return all_healthy, results
     
     def check_monitoring_dependencies(self) -> Tuple[bool, List[str]]:
-        """Check if monitoring configuration dependencies are satisfied"""
-        issues = []
+        """Check if monitoring configuration dependencies are satisfied"""        issues = []
         
         # Check if Docker Compose monitoring file exists
         monitoring_compose = self.project_root / "docker-compose.monitoring.yml"
@@ -292,8 +284,7 @@ class MonitoringConfigValidator:
         return len(issues) == 0, issues
     
     def generate_monitoring_test_config(self) -> None:
-        """Generate basic monitoring configurations if missing"""
-        
+        """Generate basic monitoring configurations if missing"""        
         # Create basic Prometheus config if missing
         if not self.prometheus_config_path.exists():
             prometheus_config = {
@@ -381,8 +372,7 @@ class MonitoringConfigValidator:
             logger.info(f"✅ Generated basic alert rules: {alert_rules_path}")
     
     def generate_monitoring_startup_script(self) -> str:
-        """Generate a script to start monitoring services"""
-        script_content = """#!/bin/bash
+        """Generate a script to start monitoring services"""        script_content = """#!/bin/bash
 # Monitoring Services Startup Script
 set -e
 
@@ -427,12 +417,10 @@ echo "📊 Access URLs:"
 echo "   Prometheus: http://localhost:9090"
 echo "   Grafana: http://localhost:3000 (admin/admin123)"
 echo "   AlertManager: http://localhost:9093"
-"""
-        return script_content
+"""        return script_content
     
     def run_validation(self) -> Dict[str, Any]:
-        """Run complete monitoring configuration validation"""
-        logger.info("📊 Starting Monitoring Configuration Validation")
+        """Run complete monitoring configuration validation"""        logger.info("📊 Starting Monitoring Configuration Validation")
         
         # Check dependencies
         deps_valid, dep_issues = self.check_monitoring_dependencies()
@@ -496,16 +484,13 @@ echo "   AlertManager: http://localhost:9093"
         return self.validation_results
     
     def generate_report(self) -> str:
-        """Generate monitoring validation report"""
-        if not self.validation_results:
+        """Generate monitoring validation report"""        if not self.validation_results:
             return "No validation results available. Run validation first."
         
-        report = """
-Monitoring Configuration Validation Report
+        report = """Monitoring Configuration Validation Report
 ==========================================
 
-"""
-        
+"""        
         # Dependencies
         deps = self.validation_results['dependencies']
         report += f"📦 Dependencies: {'✅ VALID' if deps['valid'] else '❌ ISSUES'}\n"
@@ -567,8 +552,7 @@ Monitoring Configuration Validation Report
 
 
 def main():
-    """Main execution function"""
-    script_dir = Path(__file__).parent
+    """Main execution function"""    script_dir = Path(__file__).parent
     project_root = script_dir.parent
     
     logger.info("📊 Monitoring Configuration Validation")

@@ -1,5 +1,4 @@
-"""
-Platform Integrations Database Model
+"""Platform Integrations Database Model
 
 Enterprise-grade SQLAlchemy model for managing platform integrations, API connections,
 and cross-platform synchronization for content distribution and monetization.
@@ -23,9 +22,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-
-from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum
+"""from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID, ARRAY
@@ -38,8 +35,7 @@ Base = declarative_base()
 
 
 class PlatformType(Enum):
-    """Platform type enumeration"""
-    MUSIC_STREAMING = "music_streaming"
+    """Platform type enumeration"""    MUSIC_STREAMING = "music_streaming"
     VIDEO_PLATFORM = "video_platform"
     SOCIAL_MEDIA = "social_media"
     PODCAST_PLATFORM = "podcast_platform"
@@ -56,8 +52,7 @@ class PlatformType(Enum):
 
 
 class Platform(Enum):
-    """Supported platforms"""
-    SPOTIFY = "spotify"
+    """Supported platforms"""    SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE = "youtube"
     YOUTUBE_MUSIC = "youtube_music"
@@ -94,8 +89,7 @@ class Platform(Enum):
 
 
 class IntegrationStatus(Enum):
-    """Integration status enumeration"""
-    ACTIVE = "active"
+    """Integration status enumeration"""    ACTIVE = "active"
     INACTIVE = "inactive"
     PENDING = "pending"
     ERROR = "error"
@@ -107,8 +101,7 @@ class IntegrationStatus(Enum):
 
 
 class AuthType(Enum):
-    """Authentication type enumeration"""
-    OAUTH2 = "oauth2"
+    """Authentication type enumeration"""    OAUTH2 = "oauth2"
     API_KEY = "api_key"
     JWT = "jwt"
     BASIC_AUTH = "basic_auth"
@@ -119,8 +112,7 @@ class AuthType(Enum):
 
 
 class SyncStatus(Enum):
-    """Synchronization status"""
-    SYNCED = "synced"
+    """Synchronization status"""    SYNCED = "synced"
     PENDING = "pending"
     FAILED = "failed"
     PARTIAL = "partial"
@@ -130,8 +122,7 @@ class SyncStatus(Enum):
 
 
 class PermissionLevel(Enum):
-    """Permission levels for platform access"""
-    READ_ONLY = "read_only"
+    """Permission levels for platform access"""    READ_ONLY = "read_only"
     READ_WRITE = "read_write"
     FULL_ACCESS = "full_access"
     ADMIN = "admin"
@@ -140,13 +131,11 @@ class PermissionLevel(Enum):
 
 
 class PlatformIntegration(Base):
-    """
-    Enterprise Platform Integration Model
+    """    Enterprise Platform Integration Model
     
     Comprehensive platform integration management for content distribution,
     analytics synchronization, and revenue tracking across multiple platforms.
-    """
-    __tablename__ = "platform_integrations"
+    """    __tablename__ = "platform_integrations"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -308,8 +297,7 @@ class PlatformIntegration(Base):
         return f"<PlatformIntegration(id={self.id}, platform={self.platform.value}, user_id={self.user_id}, status={self.integration_status.value})>"
     
     def to_dict(self, include_credentials: bool = False, include_analytics: bool = True) -> Dict[str, Any]:
-        """Convert model to dictionary for API responses"""
-        base_dict = {
+        """Convert model to dictionary for API responses"""        base_dict = {
             "id": str(self.id),
             "user_id": str(self.user_id),
             "platform": self.platform.value if self.platform else None,
@@ -408,14 +396,12 @@ class PlatformIntegration(Base):
         return base_dict
     
     def is_token_expired(self) -> bool:
-        """Check if access token is expired"""
-        if not self.token_expires_at:
+        """Check if access token is expired"""        if not self.token_expires_at:
             return False
         return datetime.now(timezone.utc) >= self.token_expires_at
     
     def needs_token_refresh(self) -> bool:
-        """Check if token needs refresh based on threshold"""
-        if not self.token_expires_at or not self.auto_token_refresh:
+        """Check if token needs refresh based on threshold"""        if not self.token_expires_at or not self.auto_token_refresh:
             return False
         
         threshold_time = self.token_expires_at - timezone.utc.localize(
@@ -424,8 +410,7 @@ class PlatformIntegration(Base):
         return datetime.now(timezone.utc) >= threshold_time
     
     def is_healthy(self) -> bool:
-        """Check overall health status of integration"""
-        return (
+        """Check overall health status of integration"""        return (
             self.integration_status == IntegrationStatus.ACTIVE and
             self.health_status == "healthy" and
             self.error_count < 5 and
@@ -434,8 +419,7 @@ class PlatformIntegration(Base):
         )
     
     def get_sync_priority(self) -> int:
-        """Calculate sync priority based on various factors"""
-        priority = 5  # Base priority
+        """Calculate sync priority based on various factors"""        priority = 5  # Base priority
         
         # Platform importance
         if self.is_primary:
@@ -457,8 +441,7 @@ class PlatformIntegration(Base):
         return max(priority, 1)  # Minimum priority of 1
     
     def should_retry_sync(self) -> bool:
-        """Determine if sync should be retried"""
-        return (
+        """Determine if sync should be retried"""        return (
             self.sync_status in [SyncStatus.FAILED, SyncStatus.PARTIAL] and
             self.sync_retry_count < self.max_retry_attempts and
             self.integration_status == IntegrationStatus.ACTIVE
@@ -466,8 +449,7 @@ class PlatformIntegration(Base):
     
     @classmethod
     def create_integration(cls, platform_data: Dict[str, Any], user_id: str) -> 'PlatformIntegration':
-        """Create PlatformIntegration from platform connection data"""
-        return cls(
+        """Create PlatformIntegration from platform connection data"""        return cls(
             user_id=user_id,
             platform=Platform(platform_data.get('platform', 'other')),
             platform_type=PlatformType(platform_data.get('platform_type', 'music_streaming')),

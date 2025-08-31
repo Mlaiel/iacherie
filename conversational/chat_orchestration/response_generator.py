@@ -1,14 +1,11 @@
-"""
-Response Generator - Advanced AI response generation for multi-format creators
+"""Response Generator - Advanced AI response generation for multi-format creators
 =============================================================================
 
 Generates contextual, personalized responses with monetization insights and
 content protection guidance for different creator types.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -21,8 +18,7 @@ from backend.business.monetization import MonetizationEngine
 
 
 class ResponseType(Enum):
-    """Types of AI responses"""
-    INFORMATIONAL = "informational"
+    """Types of AI responses"""    INFORMATIONAL = "informational"
     ACTIONABLE = "actionable"
     ANALYTICAL = "analytical"
     CREATIVE = "creative"
@@ -33,8 +29,7 @@ class ResponseType(Enum):
 
 
 class ResponseTone(Enum):
-    """Response tone variations"""
-    PROFESSIONAL = "professional"
+    """Response tone variations"""    PROFESSIONAL = "professional"
     FRIENDLY = "friendly"
     ENCOURAGING = "encouraging"
     ANALYTICAL = "analytical"
@@ -44,8 +39,7 @@ class ResponseTone(Enum):
 
 @dataclass
 class ResponseComponents:
-    """Components that make up a complete response"""
-    main_content: str
+    """Components that make up a complete response"""    main_content: str
     action_items: List[str]
     suggestions: List[str]
     monetization_insights: List[str]
@@ -56,12 +50,10 @@ class ResponseComponents:
 
 
 class ResponseGenerator:
-    """
-    Advanced response generation system that creates contextual, personalized
+    """    Advanced response generation system that creates contextual, personalized
     responses for multi-format creators with integrated business intelligence
     and content protection insights.
-    """
-    
+    """    
     def __init__(
         self,
         ai_engine: ConversationalAI,
@@ -83,8 +75,7 @@ class ResponseGenerator:
         processed_message: Any,
         context_analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive AI response based on routing decision and context
+        """        Generate comprehensive AI response based on routing decision and context
         
         Args:
             routing_decision: Routing decision from conversation router
@@ -94,8 +85,7 @@ class ResponseGenerator:
             
         Returns:
             Dict containing response content and metadata
-        """
-        try:
+        """        try:
             # Extract response generation parameters
             strategy = routing_decision.strategy
             engine_type = routing_decision.engine_type
@@ -211,8 +201,7 @@ class ResponseGenerator:
         context_analysis: Dict[str, Any],
         response_params: Dict[str, Any]
     ) -> str:
-        """Generate the main response content"""
-        try:
+        """Generate the main response content"""        try:
             # Select appropriate content generator based on strategy
             content_generators = {
                 "general_chat": self._generate_general_chat_content,
@@ -258,14 +247,12 @@ class ResponseGenerator:
         context_analysis: Dict[str, Any],
         response_params: Dict[str, Any]
     ) -> str:
-        """Generate general conversational content"""
-        try:
+        """Generate general conversational content"""        try:
             user_message = processed_message.processed_content
             creator_type = session.creator_type.value if hasattr(session.creator_type, 'value') else str(session.creator_type)
             
             # Create context-aware prompt
-            prompt = f"""
-            You are an AI assistant specialized in helping {creator_type}s with their creative work.
+            prompt = f"""            You are an AI assistant specialized in helping {creator_type}s with their creative work.
             
             User message: {user_message}
             
@@ -278,8 +265,7 @@ class ResponseGenerator:
             4. Includes relevant industry knowledge
             
             Response:
-            """
-            
+            """            
             response = await self.ai_engine.generate_response(
                 prompt,
                 max_tokens=response_params.get('max_tokens', 500),
@@ -299,8 +285,7 @@ class ResponseGenerator:
         context_analysis: Dict[str, Any],
         response_params: Dict[str, Any]
     ) -> str:
-        """Generate content analysis response"""
-        try:
+        """Generate content analysis response"""        try:
             creator_type = session.creator_type.value if hasattr(session.creator_type, 'value') else str(session.creator_type)
             has_attachments = len(processed_message.attachments) > 0
             
@@ -313,8 +298,7 @@ class ResponseGenerator:
 - Quality assessment: Professional grade content detected
 
 **Key Insights:**
-"""
-                
+"""                
                 # Add creator-specific analysis
                 if creator_type == "musician":
                     content += "- Audio characteristics suggest strong commercial potential\n"
@@ -337,8 +321,7 @@ class ResponseGenerator:
 - Documents (PDF, DOC) for bloggers
 - Video files (MP4, MOV) for influencers and comedians
 
-Simply attach your files and I'll provide detailed analysis including quality assessment, optimization suggestions, and content protection setup."""
-            
+Simply attach your files and I'll provide detailed analysis including quality assessment, optimization suggestions, and content protection setup."""            
             return content
             
         except Exception as e:
@@ -352,8 +335,7 @@ Simply attach your files and I'll provide detailed analysis including quality as
         context_analysis: Dict[str, Any],
         response_params: Dict[str, Any]
     ) -> str:
-        """Generate monetization advice content"""
-        try:
+        """Generate monetization advice content"""        try:
             creator_type = session.creator_type.value if hasattr(session.creator_type, 'value') else str(session.creator_type)
             
             # Get monetization insights from engine
@@ -365,43 +347,37 @@ Simply attach your files and I'll provide detailed analysis including quality as
             content = f"""**Monetization Strategy for {creator_type.title()}s**
 
 **Current Opportunities:**
-"""
-            
+"""            
             if creator_type == "musician":
                 content += """- Spotify for Artists: Optimize your profile and pitch to playlists
 - Sync licensing: Submit tracks for TV, film, and commercial use
 - Live streaming: Monetize performances on Twitch, YouTube Live
 - Merchandise: Develop branded products for your fanbase
-- Collaboration: Partner with other artists for cross-promotion"""
-                
+- Collaboration: Partner with other artists for cross-promotion"""                
             elif creator_type == "blogger":
                 content += """- Affiliate marketing: Promote relevant products with commission
 - Sponsored content: Partner with brands in your niche
 - Digital products: Create courses, ebooks, or templates
 - Newsletter monetization: Build paid subscription tiers
-- SEO optimization: Increase organic traffic for ad revenue"""
-                
+- SEO optimization: Increase organic traffic for ad revenue"""                
             elif creator_type == "photographer":
                 content += """- Stock photography: License images on multiple platforms
 - Print sales: Offer high-quality prints and wall art
 - Photography services: Weddings, events, commercial shoots
 - Online courses: Teach photography techniques and editing
-- Licensing deals: Partner with businesses for exclusive content"""
-                
+- Licensing deals: Partner with businesses for exclusive content"""                
             elif creator_type == "influencer":
                 content += """- Brand partnerships: Collaborate with relevant companies
 - Affiliate programs: Promote products with tracking links
 - Sponsored posts: Charge for promotional content
 - Digital products: Create courses or consulting services
-- Platform monetization: YouTube ads, TikTok Creator Fund"""
-                
+- Platform monetization: YouTube ads, TikTok Creator Fund"""                
             elif creator_type == "comedian":
                 content += """- Live performances: Book gigs at clubs and events
 - Video monetization: YouTube ads, Patreon subscriptions
 - Merchandise: Comedy-themed products and apparel
 - Corporate events: Private performances and entertainment
-- Content licensing: Sell jokes and skits to other creators"""
-            
+- Content licensing: Sell jokes and skits to other creators"""            
             if monetization_data:
                 estimated_revenue = monetization_data.get("estimated_monthly_revenue", 0)
                 content += f"\n\n**Your Potential:**\nEstimated monthly revenue: ${estimated_revenue:,.2f}"
@@ -419,39 +395,32 @@ Simply attach your files and I'll provide detailed analysis including quality as
         context_analysis: Dict[str, Any],
         response_params: Dict[str, Any]
     ) -> str:
-        """Generate content protection guidance"""
-        try:
+        """Generate content protection guidance"""        try:
             creator_type = session.creator_type.value if hasattr(session.creator_type, 'value') else str(session.creator_type)
             
             content = f"""**Content Protection for {creator_type.title()}s**
 
 **Protection Strategies:**
-"""
-            
+"""            
             if creator_type == "musician":
                 content += """- Audio fingerprinting: Automatic detection across platforms
 - Copyright registration: Legal protection for original compositions
 - Distribution watermarking: Embed invisible identifiers
 - Platform monitoring: Track unauthorized use on streaming services
-- DMCA takedown: Automated removal of infringing content"""
-                
+- DMCA takedown: Automated removal of infringing content"""                
             elif creator_type == "photographer":
                 content += """- Image watermarking: Visible and invisible protection
 - Reverse image search: Monitor unauthorized usage
 - EXIF data preservation: Maintain copyright information
 - License tracking: Monitor commercial usage
-- Legal templates: Contracts for client work"""
-                
+- Legal templates: Contracts for client work"""                
             elif creator_type == "blogger":
                 content += """- Content fingerprinting: Detect article plagiarism
 - Copyright notices: Clear ownership statements
 - Syndication tracking: Monitor content republishing
 - SEO monitoring: Protect search rankings from scrapers
-- Legal framework: Terms of use and content policies"""
-            
-            content += """
-
-**Current Protection Status:**
+- Legal framework: Terms of use and content policies"""            
+            content += """**Current Protection Status:**
 ✅ Content fingerprinting active
 ✅ Monitoring systems deployed
 ✅ Legal framework in place
@@ -459,8 +428,7 @@ Simply attach your files and I'll provide detailed analysis including quality as
 **Recommended Actions:**
 1. Enable automatic monitoring for all new content
 2. Set up alert notifications for potential infringement
-3. Review and update copyright notices regularly"""
-            
+3. Review and update copyright notices regularly"""            
             return content
             
         except Exception as e:
@@ -474,8 +442,7 @@ Simply attach your files and I'll provide detailed analysis including quality as
         context_analysis: Dict[str, Any],
         session_context: Dict[str, Any]
     ) -> List[str]:
-        """Generate contextual suggestions"""
-        try:
+        """Generate contextual suggestions"""        try:
             suggestions = []
             strategy_value = strategy.value if hasattr(strategy, 'value') else str(strategy)
             creator_value = creator_type.value if hasattr(creator_type, 'value') else str(creator_type)
@@ -540,8 +507,7 @@ Simply attach your files and I'll provide detailed analysis including quality as
         processed_message: Any,
         context_analysis: Dict[str, Any]
     ) -> List[str]:
-        """Generate monetization insights"""
-        try:
+        """Generate monetization insights"""        try:
             insights = []
             creator_value = creator_type.value if hasattr(creator_type, 'value') else str(creator_type)
             
@@ -577,8 +543,7 @@ Simply attach your files and I'll provide detailed analysis including quality as
         processed_message: Any,
         context_analysis: Dict[str, Any]
     ) -> List[str]:
-        """Generate content protection recommendations"""
-        try:
+        """Generate content protection recommendations"""        try:
             recommendations = []
             
             if len(processed_message.attachments) > 0:
@@ -606,8 +571,7 @@ Simply attach your files and I'll provide detailed analysis including quality as
         creator_type: Any,
         context_analysis: Dict[str, Any]
     ) -> List[str]:
-        """Generate relevant follow-up questions"""
-        try:
+        """Generate relevant follow-up questions"""        try:
             questions = []
             strategy_value = strategy.value if hasattr(strategy, 'value') else str(strategy)
             creator_value = creator_type.value if hasattr(creator_type, 'value') else str(creator_type)
@@ -645,8 +609,7 @@ Simply attach your files and I'll provide detailed analysis including quality as
         creator_type: Any,
         context_analysis: Dict[str, Any]
     ) -> List[Dict[str, str]]:
-        """Generate relevant resources and links"""
-        try:
+        """Generate relevant resources and links"""        try:
             resources = []
             creator_value = creator_type.value if hasattr(creator_type, 'value') else str(creator_type)
             
@@ -690,8 +653,7 @@ Simply attach your files and I'll provide detailed analysis including quality as
         response_params: Dict[str, Any],
         creator_type: Any
     ) -> Dict[str, Any]:
-        """Assemble all components into final response"""
-        try:
+        """Assemble all components into final response"""        try:
             response = {
                 "content": components.main_content,
                 "suggestions": components.suggestions,
@@ -722,8 +684,7 @@ Simply attach your files and I'll provide detailed analysis including quality as
         processed_message: Any,
         session: Any
     ) -> Dict[str, Any]:
-        """Generate fallback response when main generation fails"""
-        return {
+        """Generate fallback response when main generation fails"""        return {
             "content": "I'm here to help you with your creative projects. Could you please rephrase your question or provide more details about what you'd like assistance with?",
             "suggestions": [
                 "Try uploading content for analysis",
@@ -735,8 +696,7 @@ Simply attach your files and I'll provide detailed analysis including quality as
         }
     
     def _setup_response_templates(self):
-        """Initialize response templates"""
-        self.response_templates = {
+        """Initialize response templates"""        self.response_templates = {
             "greeting": "Hello! I'm your AI assistant specialized in helping creators like you.",
             "content_uploaded": "I've analyzed your content and here are the insights:",
             "monetization_advice": "Here are some monetization strategies for your content:",
@@ -745,8 +705,7 @@ Simply attach your files and I'll provide detailed analysis including quality as
         }
     
     def _setup_creator_specializations(self):
-        """Setup creator-specific response specializations"""
-        self.creator_specializations = {
+        """Setup creator-specific response specializations"""        self.creator_specializations = {
             "musician": {
                 "focus_areas": ["audio_analysis", "spotify_optimization", "sync_licensing"],
                 "tone_adjustment": "industry_professional",
@@ -775,8 +734,7 @@ Simply attach your files and I'll provide detailed analysis including quality as
         }
     
     def _setup_monetization_integrations(self):
-        """Setup monetization engine integrations"""
-        self.monetization_integrations = {
+        """Setup monetization engine integrations"""        self.monetization_integrations = {
             "revenue_calculation": True,
             "platform_analysis": True,
             "opportunity_detection": True,
@@ -784,8 +742,7 @@ Simply attach your files and I'll provide detailed analysis including quality as
         }
     
     def _determine_response_type(self, strategy: Any) -> ResponseType:
-        """Determine response type based on strategy"""
-        strategy_value = strategy.value if hasattr(strategy, 'value') else str(strategy)
+        """Determine response type based on strategy"""        strategy_value = strategy.value if hasattr(strategy, 'value') else str(strategy)
         
         type_mapping = {
             "general_chat": ResponseType.INFORMATIONAL,
@@ -805,8 +762,7 @@ Simply attach your files and I'll provide detailed analysis including quality as
         creator_type: Any,
         response_params: Dict[str, Any]
     ) -> str:
-        """Apply creator-specific enhancements to response"""
-        try:
+        """Apply creator-specific enhancements to response"""        try:
             creator_value = creator_type.value if hasattr(creator_type, 'value') else str(creator_type)
             specialization = self.creator_specializations.get(creator_value, {})
             
@@ -831,8 +787,7 @@ Simply attach your files and I'll provide detailed analysis including quality as
         context_analysis: Dict[str, Any],
         components: ResponseComponents
     ) -> Dict[str, float]:
-        """Calculate confidence indicators for different response aspects"""
-        try:
+        """Calculate confidence indicators for different response aspects"""        try:
             indicators = {
                 "routing_confidence": routing_decision.confidence,
                 "content_relevance": 0.85,  # Base confidence

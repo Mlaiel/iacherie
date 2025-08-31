@@ -1,5 +1,4 @@
-"""
-Creator Analytics Events Module
+"""Creator Analytics Events Module
 
 Advanced analytics and insights specifically designed for multi-format content creators.
 Provides comprehensive creator performance tracking, insights generation, and growth recommendations.
@@ -12,9 +11,7 @@ Copyright: Fahed Mlaiel - All rights reserved
 
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                 Microservices + Audio + DevOps + IA Prompt Engineer
-"""
-
-import asyncio
+"""import asyncio
 import json
 import numpy as np
 from datetime import datetime, timedelta
@@ -45,8 +42,7 @@ logger = get_logger(__name__)
 
 
 class CreatorType(Enum):
-    """Types of content creators"""
-    MUSICIAN = "musician"
+    """Types of content creators"""    MUSICIAN = "musician"
     PODCASTER = "podcaster"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
@@ -61,8 +57,7 @@ class CreatorType(Enum):
 
 
 class ContentFormat(Enum):
-    """Supported content formats"""
-    AUDIO = "audio"
+    """Supported content formats"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -77,8 +72,7 @@ class ContentFormat(Enum):
 
 
 class PerformanceMetric(Enum):
-    """Creator performance metrics"""
-    REACH = "reach"
+    """Creator performance metrics"""    REACH = "reach"
     ENGAGEMENT = "engagement"
     CONVERSION = "conversion"
     REVENUE = "revenue"
@@ -91,8 +85,7 @@ class PerformanceMetric(Enum):
 
 
 class CreatorGoal(Enum):
-    """Creator goals and objectives"""
-    INCREASE_REACH = "increase_reach"
+    """Creator goals and objectives"""    INCREASE_REACH = "increase_reach"
     IMPROVE_ENGAGEMENT = "improve_engagement"
     MONETIZE_CONTENT = "monetize_content"
     BUILD_COMMUNITY = "build_community"
@@ -106,8 +99,7 @@ class CreatorGoal(Enum):
 
 @dataclass
 class CreatorAnalyticsEvent(BaseEvent):
-    """Represents a creator analytics event"""
-    creator_id: str
+    """Represents a creator analytics event"""    creator_id: str
     creator_type: CreatorType
     performance_metrics: Dict[str, float]
     content_metrics: Dict[str, Any]
@@ -124,8 +116,7 @@ class CreatorAnalyticsEvent(BaseEvent):
     collaboration_opportunities: Optional[List[Dict[str, Any]]] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert creator analytics event to dictionary"""
-        return {
+        """Convert creator analytics event to dictionary"""        return {
             **asdict(self),
             'creator_type': self.creator_type.value,
             'content_formats': [cf.value for cf in self.content_formats],
@@ -136,8 +127,7 @@ class CreatorAnalyticsEvent(BaseEvent):
 
 @dataclass
 class CreatorInsight:
-    """Represents a creator insight"""
-    insight_id: str
+    """Represents a creator insight"""    insight_id: str
     creator_id: str
     insight_type: str
     title: str
@@ -154,8 +144,7 @@ class CreatorInsight:
 
 @dataclass
 class CreatorBenchmark:
-    """Creator performance benchmark"""
-    creator_id: str
+    """Creator performance benchmark"""    creator_id: str
     creator_type: CreatorType
     follower_range: str
     percentile_scores: Dict[str, float]
@@ -167,8 +156,7 @@ class CreatorBenchmark:
 
 
 class CreatorAnalyticsEventHandler(BaseEventHandler):
-    """Handles creator analytics events with comprehensive processing"""
-    
+    """Handles creator analytics events with comprehensive processing"""    
     def __init__(self):
         super().__init__()
         self.cache_manager = CacheManager()
@@ -179,8 +167,7 @@ class CreatorAnalyticsEventHandler(BaseEventHandler):
         self.benchmarking_engine = CreatorBenchmarkingEngine()
         
     async def handle(self, event: CreatorAnalyticsEvent) -> Dict[str, Any]:
-        """Process creator analytics event with comprehensive analysis"""
-        try:
+        """Process creator analytics event with comprehensive analysis"""        try:
             # Validate event data
             await self._validate_event(event)
             
@@ -230,8 +217,7 @@ class CreatorAnalyticsEventHandler(BaseEventHandler):
             raise
     
     async def _validate_event(self, event: CreatorAnalyticsEvent) -> None:
-        """Validate creator analytics event data"""
-        required_fields = ['creator_id', 'creator_type', 'performance_metrics', 'analysis_period']
+        """Validate creator analytics event data"""        required_fields = ['creator_id', 'creator_type', 'performance_metrics', 'analysis_period']
         for field in required_fields:
             if not getattr(event, field):
                 raise ValueError(f"Missing required field: {field}")
@@ -244,11 +230,9 @@ class CreatorAnalyticsEventHandler(BaseEventHandler):
             raise ValueError(f"Invalid analysis period: {event.analysis_period}")
     
     async def _store_analytics_data(self, event: CreatorAnalyticsEvent) -> None:
-        """Store creator analytics data in database"""
-        async with self.db_manager.get_session() as session:
+        """Store creator analytics data in database"""        async with self.db_manager.get_session() as session:
             await session.execute(
-                """
-                INSERT INTO creator_analytics_events 
+                """                INSERT INTO creator_analytics_events 
                 (event_id, creator_id, creator_type, performance_metrics, content_metrics,
                  audience_metrics, revenue_metrics, platform_metrics, timestamp, 
                  analysis_period, content_formats, goals, benchmark_data, growth_trends,
@@ -269,8 +253,7 @@ class CreatorAnalyticsEventHandler(BaseEventHandler):
             )
     
     async def _calculate_creator_score(self, event: CreatorAnalyticsEvent) -> Dict[str, float]:
-        """Calculate comprehensive creator performance score"""
-        metrics = event.performance_metrics
+        """Calculate comprehensive creator performance score"""        metrics = event.performance_metrics
         
         # Base scores for different metrics (0-100 scale)
         reach_score = min(np.log(metrics.get('total_reach', 1) + 1) * 10, 100)
@@ -311,8 +294,7 @@ class CreatorAnalyticsEventHandler(BaseEventHandler):
         }
     
     def _get_score_grade(self, score: float) -> str:
-        """Convert numerical score to letter grade"""
-        if score >= 90:
+        """Convert numerical score to letter grade"""        if score >= 90:
             return 'A+'
         elif score >= 85:
             return 'A'
@@ -335,16 +317,14 @@ class CreatorAnalyticsEventHandler(BaseEventHandler):
 
 
 class CreatorPerformanceTracker:
-    """Tracks comprehensive creator performance metrics"""
-    
+    """Tracks comprehensive creator performance metrics"""    
     def __init__(self):
         self.db_manager = DatabaseManager()
         self.cache_manager = CacheManager()
         self.metrics_calculator = MetricsCalculator()
         
     async def track_performance(self, event: CreatorAnalyticsEvent) -> Dict[str, Any]:
-        """Track comprehensive creator performance"""
-        # Calculate content performance metrics
+        """Track comprehensive creator performance"""        # Calculate content performance metrics
         content_performance = await self._calculate_content_performance(event)
         
         # Calculate audience engagement metrics
@@ -377,8 +357,7 @@ class CreatorPerformanceTracker:
         }
     
     async def _calculate_content_performance(self, event: CreatorAnalyticsEvent) -> Dict[str, Any]:
-        """Calculate content-specific performance metrics"""
-        content_metrics = event.content_metrics
+        """Calculate content-specific performance metrics"""        content_metrics = event.content_metrics
         
         # Get historical content data
         historical_data = await self._get_historical_content_data(event.creator_id)
@@ -407,8 +386,7 @@ class CreatorPerformanceTracker:
         }
     
     async def _calculate_engagement_metrics(self, event: CreatorAnalyticsEvent) -> Dict[str, Any]:
-        """Calculate detailed engagement metrics"""
-        audience_metrics = event.audience_metrics
+        """Calculate detailed engagement metrics"""        audience_metrics = event.audience_metrics
         
         engagement_breakdown = {
             'likes_per_post': audience_metrics.get('avg_likes', 0),
@@ -438,16 +416,14 @@ class CreatorPerformanceTracker:
 
 
 class CreatorInsightsEngine:
-    """Generates actionable insights for creators"""
-    
+    """Generates actionable insights for creators"""    
     def __init__(self):
         self.db_manager = DatabaseManager()
         self.anomaly_detector = IsolationForest(contamination=0.1, random_state=42)
         self.insight_classifier = RandomForestRegressor(n_estimators=100, random_state=42)
         
     async def generate_insights(self, event: CreatorAnalyticsEvent) -> List[CreatorInsight]:
-        """Generate comprehensive creator insights"""
-        insights = []
+        """Generate comprehensive creator insights"""        insights = []
         
         # Performance anomaly insights
         anomaly_insights = await self._detect_performance_anomalies(event)
@@ -479,8 +455,7 @@ class CreatorInsightsEngine:
         return insights[:10]  # Return top 10 insights
     
     async def _detect_performance_anomalies(self, event: CreatorAnalyticsEvent) -> List[CreatorInsight]:
-        """Detect performance anomalies and generate insights"""
-        insights = []
+        """Detect performance anomalies and generate insights"""        insights = []
         
         # Get historical performance data
         historical_data = await self._get_historical_performance_data(event.creator_id)
@@ -567,8 +542,7 @@ class CreatorInsightsEngine:
         return insights
     
     async def _identify_growth_insights(self, event: CreatorAnalyticsEvent) -> List[CreatorInsight]:
-        """Identify growth opportunities and generate insights"""
-        insights = []
+        """Identify growth opportunities and generate insights"""        insights = []
         
         # Analyze growth patterns
         growth_metrics = event.performance_metrics
@@ -635,15 +609,13 @@ class CreatorInsightsEngine:
 
 
 class CreatorRecommendationEngine:
-    """Generates personalized recommendations for creators"""
-    
+    """Generates personalized recommendations for creators"""    
     def __init__(self):
         self.db_manager = DatabaseManager()
         self.recommendation_ai = CreatorRecommendationAI()
         
     async def generate_recommendations(self, event: CreatorAnalyticsEvent) -> Dict[str, Any]:
-        """Generate comprehensive recommendations for creator"""
-        # Content strategy recommendations
+        """Generate comprehensive recommendations for creator"""        # Content strategy recommendations
         content_recommendations = await self._generate_content_recommendations(event)
         
         # Platform optimization recommendations
@@ -674,15 +646,13 @@ class CreatorRecommendationEngine:
 
 
 class CreatorBenchmarkingEngine:
-    """Benchmarks creator performance against peers and industry standards"""
-    
+    """Benchmarks creator performance against peers and industry standards"""    
     def __init__(self):
         self.db_manager = DatabaseManager()
         self.scaler = StandardScaler()
         
     async def update_benchmarks(self, event: CreatorAnalyticsEvent) -> Dict[str, Any]:
-        """Update creator benchmarks and peer comparisons"""
-        # Get peer group data
+        """Update creator benchmarks and peer comparisons"""        # Get peer group data
         peer_data = await self._get_peer_group_data(event)
         
         # Calculate percentile rankings
@@ -710,15 +680,13 @@ class CreatorBenchmarkingEngine:
         }
     
     async def _get_peer_group_data(self, event: CreatorAnalyticsEvent) -> List[Dict[str, Any]]:
-        """Get data from peer creators for benchmarking"""
-        # Define peer criteria
+        """Get data from peer creators for benchmarking"""        # Define peer criteria
         follower_count = event.audience_metrics.get('total_followers', 0)
         follower_range = self._get_follower_range(follower_count)
         
         async with self.db_manager.get_session() as session:
             result = await session.execute(
-                """
-                SELECT creator_id, performance_metrics, audience_metrics, revenue_metrics
+                """                SELECT creator_id, performance_metrics, audience_metrics, revenue_metrics
                 FROM creator_analytics_events 
                 WHERE creator_type = %s 
                 AND JSON_EXTRACT(audience_metrics, '$.total_followers') BETWEEN %s AND %s
@@ -748,8 +716,7 @@ class CreatorBenchmarkingEngine:
             return peer_data
     
     def _get_follower_range(self, follower_count: int) -> Tuple[int, int]:
-        """Get follower range for peer grouping"""
-        if follower_count < 1000:
+        """Get follower range for peer grouping"""        if follower_count < 1000:
             return (0, 1000)
         elif follower_count < 10000:
             return (1000, 10000)

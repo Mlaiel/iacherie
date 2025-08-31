@@ -1,5 +1,4 @@
-"""
-Monitoring Engines Module
+"""Monitoring Engines Module
 ========================
 
 Advanced monitoring engines for real-time content surveillance.
@@ -7,9 +6,7 @@ Implements sophisticated detection algorithms and performance monitoring.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All Rights Reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Set
 from datetime import datetime, timedelta
@@ -23,8 +20,7 @@ logger = logging.getLogger(__name__)
 
 
 class MonitoringStatus(Enum):
-    """Monitoring status enumeration."""
-    ACTIVE = "active"
+    """Monitoring status enumeration."""    ACTIVE = "active"
     INACTIVE = "inactive"
     PAUSED = "paused"
     ERROR = "error"
@@ -32,8 +28,7 @@ class MonitoringStatus(Enum):
 
 
 class ContentType(Enum):
-    """Content type enumeration."""
-    AUDIO = "audio"
+    """Content type enumeration."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -42,8 +37,7 @@ class ContentType(Enum):
 
 @dataclass
 class MonitoringTarget:
-    """Monitoring target configuration."""
-    user_id: str
+    """Monitoring target configuration."""    user_id: str
     fingerprint_id: str
     content_type: ContentType
     fingerprint_hash: str
@@ -56,8 +50,7 @@ class MonitoringTarget:
 
 @dataclass
 class DetectionResult:
-    """Detection result data structure."""
-    target_id: str
+    """Detection result data structure."""    target_id: str
     platform: str
     detected_url: str
     similarity_score: float
@@ -68,8 +61,7 @@ class DetectionResult:
 
 
 class BaseMonitoringEngine(ABC):
-    """Base class for monitoring engines."""
-    
+    """Base class for monitoring engines."""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.active_targets: Dict[str, MonitoringTarget] = {}
@@ -79,27 +71,22 @@ class BaseMonitoringEngine(ABC):
     
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialize monitoring engine."""
-        pass
+        """Initialize monitoring engine."""        pass
     
     @abstractmethod
     async def start_monitoring(self, targets: List[MonitoringTarget]) -> bool:
-        """Start monitoring specified targets."""
-        pass
+        """Start monitoring specified targets."""        pass
     
     @abstractmethod
     async def stop_monitoring(self, target_ids: List[str]) -> bool:
-        """Stop monitoring specified targets."""
-        pass
+        """Stop monitoring specified targets."""        pass
     
     @abstractmethod
     async def scan_platforms(self, target: MonitoringTarget) -> List[DetectionResult]:
-        """Scan platforms for content violations."""
-        pass
+        """Scan platforms for content violations."""        pass
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get monitoring engine status."""
-        return {
+        """Get monitoring engine status."""        return {
             "status": self.status.value,
             "active_targets": len(self.active_targets),
             "last_update": self.last_update.isoformat(),
@@ -108,13 +95,11 @@ class BaseMonitoringEngine(ABC):
 
 
 class ContentMonitoringEngine(BaseMonitoringEngine):
-    """
-    Main content monitoring engine.
+    """    Main content monitoring engine.
     
     Orchestrates content surveillance across multiple platforms
     with sophisticated detection algorithms.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.scan_interval = config.get("scan_interval", 300)  # 5 minutes default
@@ -124,8 +109,7 @@ class ContentMonitoringEngine(BaseMonitoringEngine):
         self.monitoring_tasks: Set[asyncio.Task] = set()
         
     async def initialize(self) -> bool:
-        """Initialize content monitoring engine."""
-        try:
+        """Initialize content monitoring engine."""        try:
             # Initialize detection engines for different content types
             await self._initialize_detection_engines()
             
@@ -145,8 +129,7 @@ class ContentMonitoringEngine(BaseMonitoringEngine):
             return False
     
     async def _initialize_detection_engines(self) -> None:
-        """Initialize content-specific detection engines."""
-        detection_config = self.config.get("detection_engines", {})
+        """Initialize content-specific detection engines."""        detection_config = self.config.get("detection_engines", {})
         
         # Audio detection engine
         if detection_config.get("audio", {}).get("enabled", True):
@@ -183,8 +166,7 @@ class ContentMonitoringEngine(BaseMonitoringEngine):
         logger.info(f"Initialized {len(self.detection_engines)} detection engines")
     
     def _initialize_performance_metrics(self) -> None:
-        """Initialize performance metrics tracking."""
-        self.performance_metrics = {
+        """Initialize performance metrics tracking."""        self.performance_metrics = {
             "scans_completed": 0,
             "violations_detected": 0,
             "false_positives": 0,
@@ -195,15 +177,13 @@ class ContentMonitoringEngine(BaseMonitoringEngine):
         }
     
     async def _start_monitoring_scheduler(self) -> None:
-        """Start the monitoring scheduler task."""
-        scheduler_task = asyncio.create_task(self._monitoring_scheduler())
+        """Start the monitoring scheduler task."""        scheduler_task = asyncio.create_task(self._monitoring_scheduler())
         self.monitoring_tasks.add(scheduler_task)
         scheduler_task.add_done_callback(self.monitoring_tasks.discard)
         logger.info("Monitoring scheduler started")
     
     async def _monitoring_scheduler(self) -> None:
-        """Main monitoring scheduler loop."""
-        while self.status == MonitoringStatus.ACTIVE:
+        """Main monitoring scheduler loop."""        while self.status == MonitoringStatus.ACTIVE:
             try:
                 # Get targets ready for scanning
                 targets_to_scan = self._get_targets_for_scanning()
@@ -230,8 +210,7 @@ class ContentMonitoringEngine(BaseMonitoringEngine):
                 await asyncio.sleep(60)  # Wait 1 minute before retrying
     
     def _get_targets_for_scanning(self) -> List[MonitoringTarget]:
-        """Get targets that are due for scanning."""
-        now = datetime.utcnow()
+        """Get targets that are due for scanning."""        now = datetime.utcnow()
         targets_to_scan = []
         
         for target in self.active_targets.values():
@@ -246,13 +225,11 @@ class ContentMonitoringEngine(BaseMonitoringEngine):
         return targets_to_scan
     
     async def _scan_target_with_semaphore(self, semaphore: asyncio.Semaphore, target: MonitoringTarget) -> None:
-        """Scan target with concurrency control."""
-        async with semaphore:
+        """Scan target with concurrency control."""        async with semaphore:
             await self._scan_target(target)
     
     async def _scan_target(self, target: MonitoringTarget) -> None:
-        """Scan individual target for violations."""
-        try:
+        """Scan individual target for violations."""        try:
             start_time = datetime.utcnow()
             
             # Get appropriate detection engine
@@ -280,8 +257,7 @@ class ContentMonitoringEngine(BaseMonitoringEngine):
             logger.error(f"Error scanning target {target.fingerprint_id}: {e}")
     
     async def scan_platforms(self, target: MonitoringTarget) -> List[DetectionResult]:
-        """Scan platforms for content violations."""
-        detection_results = []
+        """Scan platforms for content violations."""        detection_results = []
         
         for platform in target.platforms:
             try:
@@ -322,8 +298,7 @@ class ContentMonitoringEngine(BaseMonitoringEngine):
         return detection_results
     
     async def _calculate_similarity(self, target: MonitoringTarget, search_result: Dict[str, Any]) -> float:
-        """Calculate similarity score between target and search result."""
-        try:
+        """Calculate similarity score between target and search result."""        try:
             # Get appropriate detection engine
             detection_engine = self.detection_engines.get(target.content_type.value)
             if not detection_engine:
@@ -342,8 +317,7 @@ class ContentMonitoringEngine(BaseMonitoringEngine):
             return 0.0
     
     async def _process_detection_results(self, target: MonitoringTarget, results: List[DetectionResult]) -> None:
-        """Process detection results and trigger alerts."""
-        try:
+        """Process detection results and trigger alerts."""        try:
             for result in results:
                 # Update performance metrics
                 self.performance_metrics["violations_detected"] += 1
@@ -368,8 +342,7 @@ class ContentMonitoringEngine(BaseMonitoringEngine):
             logger.error(f"Error processing detection results: {e}")
     
     def _update_average_scan_time(self, scan_duration: float) -> None:
-        """Update average scan time metric."""
-        current_avg = self.performance_metrics["average_scan_time"]
+        """Update average scan time metric."""        current_avg = self.performance_metrics["average_scan_time"]
         total_scans = self.performance_metrics["scans_completed"]
         
         # Calculate new average
@@ -377,8 +350,7 @@ class ContentMonitoringEngine(BaseMonitoringEngine):
         self.performance_metrics["average_scan_time"] = new_avg
     
     async def _update_performance_metrics(self) -> None:
-        """Update performance metrics."""
-        try:
+        """Update performance metrics."""        try:
             # Calculate detection accuracy
             total_detections = self.performance_metrics["violations_detected"]
             false_positives = self.performance_metrics["false_positives"]
@@ -394,8 +366,7 @@ class ContentMonitoringEngine(BaseMonitoringEngine):
             logger.error(f"Error updating performance metrics: {e}")
     
     async def start_monitoring(self, user_id: str, content_fingerprints: List[Dict[str, Any]]) -> bool:
-        """Start monitoring for user content."""
-        try:
+        """Start monitoring for user content."""        try:
             for fingerprint_data in content_fingerprints:
                 target = MonitoringTarget(
                     user_id=user_id,
@@ -417,8 +388,7 @@ class ContentMonitoringEngine(BaseMonitoringEngine):
             return False
     
     async def stop_monitoring(self, user_id: str) -> bool:
-        """Stop monitoring for user."""
-        try:
+        """Stop monitoring for user."""        try:
             targets_to_remove = [
                 target_id for target_id, target in self.active_targets.items()
                 if target.user_id == user_id
@@ -435,12 +405,10 @@ class ContentMonitoringEngine(BaseMonitoringEngine):
             return False
     
     async def is_active(self) -> bool:
-        """Check if monitoring engine is active."""
-        return self.status == MonitoringStatus.ACTIVE
+        """Check if monitoring engine is active."""        return self.status == MonitoringStatus.ACTIVE
     
     async def get_user_status(self, user_id: str) -> Dict[str, Any]:
-        """Get monitoring status for specific user."""
-        user_targets = [
+        """Get monitoring status for specific user."""        user_targets = [
             target for target in self.active_targets.values()
             if target.user_id == user_id
         ]
@@ -461,8 +429,7 @@ class ContentMonitoringEngine(BaseMonitoringEngine):
         }
     
     async def shutdown(self) -> None:
-        """Shutdown monitoring engine."""
-        logger.info("Shutting down ContentMonitoringEngine...")
+        """Shutdown monitoring engine."""        logger.info("Shutting down ContentMonitoringEngine...")
         
         self.status = MonitoringStatus.INACTIVE
         
@@ -483,21 +450,18 @@ class ContentMonitoringEngine(BaseMonitoringEngine):
 
 
 class WebCrawlingDetector(BaseMonitoringEngine):
-    """
-    Web crawling detection engine.
+    """    Web crawling detection engine.
     
     Specialized engine for detecting unauthorized web crawling
     and scraping of protected content.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.crawl_patterns: Dict[str, Any] = {}
         self.detection_rules: List[Dict[str, Any]] = []
         
     async def initialize(self) -> bool:
-        """Initialize web crawling detector."""
-        try:
+        """Initialize web crawling detector."""        try:
             # Load crawl detection patterns
             await self._load_crawl_patterns()
             
@@ -514,8 +478,7 @@ class WebCrawlingDetector(BaseMonitoringEngine):
             return False
     
     async def _load_crawl_patterns(self) -> None:
-        """Load web crawling detection patterns."""
-        patterns_config = self.config.get("crawl_patterns", {})
+        """Load web crawling detection patterns."""        patterns_config = self.config.get("crawl_patterns", {})
         
         # Bot detection patterns
         self.crawl_patterns["bot_user_agents"] = patterns_config.get("bot_user_agents", [
@@ -537,8 +500,7 @@ class WebCrawlingDetector(BaseMonitoringEngine):
         })
     
     async def _initialize_detection_rules(self) -> None:
-        """Initialize crawling detection rules."""
-        rules_config = self.config.get("detection_rules", [])
+        """Initialize crawling detection rules."""        rules_config = self.config.get("detection_rules", [])
         
         default_rules = [
             {
@@ -566,37 +528,31 @@ class WebCrawlingDetector(BaseMonitoringEngine):
         logger.info(f"Loaded {len(self.detection_rules)} detection rules")
     
     async def start_monitoring(self, targets: List[MonitoringTarget]) -> bool:
-        """Start web crawling monitoring."""
-        # Implementation for web crawling monitoring
+        """Start web crawling monitoring."""        # Implementation for web crawling monitoring
         return True
     
     async def stop_monitoring(self, target_ids: List[str]) -> bool:
-        """Stop web crawling monitoring."""
-        # Implementation for stopping web crawling monitoring
+        """Stop web crawling monitoring."""        # Implementation for stopping web crawling monitoring
         return True
     
     async def scan_platforms(self, target: MonitoringTarget) -> List[DetectionResult]:
-        """Scan for web crawling violations."""
-        # Implementation for scanning web crawling violations
+        """Scan for web crawling violations."""        # Implementation for scanning web crawling violations
         return []
 
 
 class RealTimeMonitor(BaseMonitoringEngine):
-    """
-    Real-time monitoring engine.
+    """    Real-time monitoring engine.
     
     Provides near real-time detection of content violations
     using streaming APIs and webhooks.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.webhook_endpoints: Dict[str, str] = {}
         self.streaming_connections: Dict[str, Any] = {}
         
     async def initialize(self) -> bool:
-        """Initialize real-time monitor."""
-        try:
+        """Initialize real-time monitor."""        try:
             # Initialize webhook endpoints
             await self._initialize_webhooks()
             
@@ -613,8 +569,7 @@ class RealTimeMonitor(BaseMonitoringEngine):
             return False
     
     async def _initialize_webhooks(self) -> None:
-        """Initialize webhook endpoints for real-time notifications."""
-        webhook_config = self.config.get("webhooks", {})
+        """Initialize webhook endpoints for real-time notifications."""        webhook_config = self.config.get("webhooks", {})
         
         # Platform-specific webhooks
         for platform, config in webhook_config.items():
@@ -624,8 +579,7 @@ class RealTimeMonitor(BaseMonitoringEngine):
         logger.info(f"Initialized {len(self.webhook_endpoints)} webhook endpoints")
     
     async def _initialize_streaming(self) -> None:
-        """Initialize streaming connections for real-time monitoring."""
-        streaming_config = self.config.get("streaming", {})
+        """Initialize streaming connections for real-time monitoring."""        streaming_config = self.config.get("streaming", {})
         
         # Initialize streaming connections for supported platforms
         for platform, config in streaming_config.items():
@@ -636,36 +590,30 @@ class RealTimeMonitor(BaseMonitoringEngine):
         logger.info("Streaming connections initialized")
     
     async def start_monitoring(self, targets: List[MonitoringTarget]) -> bool:
-        """Start real-time monitoring."""
-        # Implementation for real-time monitoring
+        """Start real-time monitoring."""        # Implementation for real-time monitoring
         return True
     
     async def stop_monitoring(self, target_ids: List[str]) -> bool:
-        """Stop real-time monitoring."""
-        # Implementation for stopping real-time monitoring
+        """Stop real-time monitoring."""        # Implementation for stopping real-time monitoring
         return True
     
     async def scan_platforms(self, target: MonitoringTarget) -> List[DetectionResult]:
-        """Real-time platform scanning."""
-        # Implementation for real-time scanning
+        """Real-time platform scanning."""        # Implementation for real-time scanning
         return []
 
 
 class PerformanceMonitor:
-    """
-    Performance monitoring for surveillance engines.
+    """    Performance monitoring for surveillance engines.
     
     Tracks performance metrics, system health, and optimization opportunities.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.metrics_history: List[Dict[str, Any]] = []
         self.alerts_triggered: List[Dict[str, Any]] = []
         
     async def initialize(self) -> bool:
-        """Initialize performance monitor."""
-        try:
+        """Initialize performance monitor."""        try:
             logger.info("PerformanceMonitor initialized successfully")
             return True
             
@@ -674,8 +622,7 @@ class PerformanceMonitor:
             return False
     
     async def collect_metrics(self, engines: Dict[str, BaseMonitoringEngine]) -> Dict[str, Any]:
-        """Collect performance metrics from all engines."""
-        metrics = {
+        """Collect performance metrics from all engines."""        metrics = {
             "timestamp": datetime.utcnow().isoformat(),
             "engines": {}
         }
@@ -694,8 +641,7 @@ class PerformanceMonitor:
         return metrics
     
     async def analyze_performance(self) -> Dict[str, Any]:
-        """Analyze performance trends and identify issues."""
-        if not self.metrics_history:
+        """Analyze performance trends and identify issues."""        if not self.metrics_history:
             return {"status": "no_data"}
         
         # Performance analysis implementation

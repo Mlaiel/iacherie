@@ -1,5 +1,4 @@
-"""
-RTL Language Support Engine - Ainflue Platform
+"""RTL Language Support Engine - Ainflue Platform
 ================================================================================
 Module: core/i18n/rtl_language_support.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,9 +15,7 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC:
 Text analysis → RTL detection → BiDi processing → Layout adaptation → 
 CSS generation → Direction handling → Mixed content support → UI transformation
-"""
-
-import logging
+"""import logging
 import re
 from typing import Dict, List, Any, Optional, Tuple, Union
 from datetime import datetime
@@ -30,16 +27,14 @@ logger = logging.getLogger(__name__)
 
 
 class TextDirection(Enum):
-    """Text direction types"""
-    LTR = "ltr"  # Left-to-Right
+    """Text direction types"""    LTR = "ltr"  # Left-to-Right
     RTL = "rtl"  # Right-to-Left
     AUTO = "auto"  # Automatic detection
     MIXED = "mixed"  # Mixed direction content
 
 
 class RTLLanguage(Enum):
-    """Supported RTL languages"""
-    ARABIC = "ar"
+    """Supported RTL languages"""    ARABIC = "ar"
     HEBREW = "he"
     PERSIAN = "fa"
     URDU = "ur"
@@ -51,8 +46,7 @@ class RTLLanguage(Enum):
 
 
 class BiDiType(Enum):
-    """Unicode Bidirectional Character Types"""
-    L = "L"      # Left-to-Right
+    """Unicode Bidirectional Character Types"""    L = "L"      # Left-to-Right
     R = "R"      # Right-to-Left
     AL = "AL"    # Right-to-Left Arabic
     EN = "EN"    # European Number
@@ -69,8 +63,7 @@ class BiDiType(Enum):
 
 
 class LayoutComponent(Enum):
-    """UI layout components that need RTL adaptation"""
-    TEXT = "text"
+    """UI layout components that need RTL adaptation"""    TEXT = "text"
     BUTTON = "button"
     INPUT = "input"
     MENU = "menu"
@@ -87,8 +80,7 @@ class LayoutComponent(Enum):
 
 @dataclass
 class BiDiAnalysis:
-    """Bidirectional text analysis result"""
-    text: str
+    """Bidirectional text analysis result"""    text: str
     overall_direction: TextDirection
     character_types: List[BiDiType]
     directional_runs: List[Tuple[int, int, TextDirection]]
@@ -101,8 +93,7 @@ class BiDiAnalysis:
 
 @dataclass
 class RTLAdaptation:
-    """RTL adaptation instructions"""
-    direction: TextDirection
+    """RTL adaptation instructions"""    direction: TextDirection
     css_properties: Dict[str, str]
     layout_adjustments: Dict[str, Any]
     text_alignment: str
@@ -116,8 +107,7 @@ class RTLAdaptation:
 
 @dataclass
 class RTLProcessor:
-    """RTL processing configuration"""
-    language: RTLLanguage
+    """RTL processing configuration"""    language: RTLLanguage
     script_direction: TextDirection
     number_format: str
     date_format: str
@@ -128,8 +118,7 @@ class RTLProcessor:
 
 
 class RTLLanguageSupport:
-    """Advanced RTL language support and processing engine"""
-    
+    """Advanced RTL language support and processing engine"""    
     def __init__(self):
         self.rtl_languages: Dict[str, RTLProcessor] = {}
         self.bidi_cache: Dict[str, BiDiAnalysis] = {}
@@ -144,8 +133,7 @@ class RTLLanguageSupport:
         logger.info("RTL Language Support Engine initialized")
     
     def _initialize_rtl_languages(self):
-        """Initialize RTL language configurations"""
-        
+        """Initialize RTL language configurations"""        
         # Arabic
         self.rtl_languages["ar"] = RTLProcessor(
             language=RTLLanguage.ARABIC,
@@ -209,8 +197,7 @@ class RTLLanguageSupport:
         logger.info(f"Initialized {len(self.rtl_languages)} RTL language processors")
     
     def _initialize_unicode_ranges(self):
-        """Initialize Unicode ranges for RTL scripts"""
-        self.unicode_ranges = {
+        """Initialize Unicode ranges for RTL scripts"""        self.unicode_ranges = {
             # Arabic script ranges
             "arabic_main": (0x0600, 0x06FF),
             "arabic_supplement": (0x0750, 0x077F),
@@ -231,8 +218,7 @@ class RTLLanguageSupport:
         }
     
     def _setup_bidi_algorithm(self):
-        """Setup Unicode Bidirectional Algorithm components"""
-        # Character type mappings (simplified)
+        """Setup Unicode Bidirectional Algorithm components"""        # Character type mappings (simplified)
         self.char_types = {
             # Strong types
             **{chr(i): BiDiType.L for i in range(0x41, 0x5B)},  # A-Z
@@ -264,8 +250,7 @@ class RTLLanguageSupport:
         }
     
     async def detect_text_direction(self, text: str) -> TextDirection:
-        """Detect overall text direction"""
-        try:
+        """Detect overall text direction"""        try:
             if not text.strip():
                 return TextDirection.LTR
             
@@ -300,8 +285,7 @@ class RTLLanguageSupport:
             return TextDirection.LTR
     
     def _is_rtl_character(self, char: str) -> bool:
-        """Check if character is RTL"""
-        char_code = ord(char)
+        """Check if character is RTL"""        char_code = ord(char)
         
         # Check all RTL Unicode ranges
         for range_name, (start, end) in self.unicode_ranges.items():
@@ -311,8 +295,7 @@ class RTLLanguageSupport:
         return False
     
     async def analyze_bidi_text(self, text: str) -> BiDiAnalysis:
-        """Perform bidirectional text analysis"""
-        try:
+        """Perform bidirectional text analysis"""        try:
             # Check cache
             if text in self.bidi_cache:
                 return self.bidi_cache[text]
@@ -373,8 +356,7 @@ class RTLLanguageSupport:
             )
     
     def _find_directional_runs(self, char_types: List[BiDiType]) -> List[Tuple[int, int, TextDirection]]:
-        """Find sequences of characters with the same directionality"""
-        runs = []
+        """Find sequences of characters with the same directionality"""        runs = []
         current_direction = None
         run_start = 0
         
@@ -399,8 +381,7 @@ class RTLLanguageSupport:
         return runs
     
     def _requires_bidi_processing(self, char_types: List[BiDiType], overall_direction: TextDirection) -> bool:
-        """Check if text requires bidirectional processing"""
-        if overall_direction == TextDirection.MIXED:
+        """Check if text requires bidirectional processing"""        if overall_direction == TextDirection.MIXED:
             return True
         
         # Check for mixed strong directional characters
@@ -410,8 +391,7 @@ class RTLLanguageSupport:
         return has_ltr and has_rtl
     
     def _calculate_embedding_levels(self, char_types: List[BiDiType], overall_direction: TextDirection) -> List[int]:
-        """Calculate embedding levels for characters (simplified algorithm)"""
-        base_level = 1 if overall_direction == TextDirection.RTL else 0
+        """Calculate embedding levels for characters (simplified algorithm)"""        base_level = 1 if overall_direction == TextDirection.RTL else 0
         levels = []
         
         current_level = base_level
@@ -432,8 +412,7 @@ class RTLLanguageSupport:
         return levels
     
     def _calculate_visual_order(self, text: str, embedding_levels: List[int]) -> Tuple[List[int], List[int]]:
-        """Calculate visual and logical order (simplified)"""
-        logical_order = list(range(len(text)))
+        """Calculate visual and logical order (simplified)"""        logical_order = list(range(len(text)))
         visual_order = list(range(len(text)))
         
         # Group by embedding levels and reverse RTL runs
@@ -463,8 +442,7 @@ class RTLLanguageSupport:
         content_type: LayoutComponent = LayoutComponent.TEXT,
         custom_requirements: Dict[str, Any] = None
     ) -> RTLAdaptation:
-        """Create RTL adaptation instructions"""
-        try:
+        """Create RTL adaptation instructions"""        try:
             # Get language processor
             processor = self.rtl_languages.get(language_code)
             if not processor:
@@ -539,8 +517,7 @@ class RTLLanguageSupport:
             )
     
     def _create_component_adaptations(self, component_type: LayoutComponent, direction: TextDirection) -> Dict[LayoutComponent, Dict[str, Any]]:
-        """Create component-specific adaptations"""
-        adaptations = {}
+        """Create component-specific adaptations"""        adaptations = {}
         
         if direction == TextDirection.RTL:
             if component_type == LayoutComponent.NAVIGATION:
@@ -584,8 +561,7 @@ class RTLLanguageSupport:
         return adaptations
     
     def _apply_custom_requirements(self, adaptation: RTLAdaptation, requirements: Dict[str, Any]):
-        """Apply custom requirements to adaptation"""
-        if "force_direction" in requirements:
+        """Apply custom requirements to adaptation"""        if "force_direction" in requirements:
             adaptation.direction = TextDirection(requirements["force_direction"])
         
         if "custom_css" in requirements:
@@ -602,8 +578,7 @@ class RTLLanguageSupport:
         text: str,
         base_direction: TextDirection = TextDirection.AUTO
     ) -> Dict[str, Any]:
-        """Process text with mixed LTR/RTL content"""
-        try:
+        """Process text with mixed LTR/RTL content"""        try:
             # Analyze the text
             analysis = await self.analyze_bidi_text(text)
             
@@ -648,8 +623,7 @@ class RTLLanguageSupport:
             }
     
     def _generate_bidi_html(self, text: str, runs: List[Dict[str, Any]], base_direction: TextDirection) -> str:
-        """Generate HTML with proper BiDi markup"""
-        html_parts = []
+        """Generate HTML with proper BiDi markup"""        html_parts = []
         last_end = 0
         
         for run in runs:
@@ -675,8 +649,7 @@ class RTLLanguageSupport:
         return f'<div dir="{base_direction.value}">{html}</div>'
     
     def _generate_mixed_content_css(self, analysis: BiDiAnalysis, base_direction: TextDirection) -> List[str]:
-        """Generate CSS rules for mixed content"""
-        css_rules = [
+        """Generate CSS rules for mixed content"""        css_rules = [
             f".bidi-container {{ direction: {base_direction.value}; unicode-bidi: embed; }}",
             ".bidi-rtl { direction: rtl; unicode-bidi: bidi-override; }",
             ".bidi-ltr { direction: ltr; unicode-bidi: bidi-override; }",
@@ -698,8 +671,7 @@ class RTLLanguageSupport:
         target_language: str,
         components: List[LayoutComponent] = None
     ) -> Dict[str, Any]:
-        """Adapt UI layout for RTL language"""
-        try:
+        """Adapt UI layout for RTL language"""        try:
             # Check if language requires RTL
             if target_language not in self.rtl_languages:
                 return layout_config  # No adaptation needed
@@ -737,8 +709,7 @@ class RTLLanguageSupport:
             return layout_config
     
     async def get_rtl_metrics(self) -> Dict[str, Any]:
-        """Get RTL processing metrics"""
-        return {
+        """Get RTL processing metrics"""        return {
             "supported_languages": list(self.rtl_languages.keys()),
             "cache_size": len(self.bidi_cache),
             "unicode_ranges": len(self.unicode_ranges),
@@ -748,8 +719,7 @@ class RTLLanguageSupport:
         }
     
     async def validate_rtl_text(self, text: str, language_code: str) -> Dict[str, Any]:
-        """Validate RTL text for correctness"""
-        try:
+        """Validate RTL text for correctness"""        try:
             analysis = await self.analyze_bidi_text(text)
             
             validation_result = {
@@ -787,8 +757,7 @@ class RTLLanguageSupport:
             }
     
     async def health_check(self) -> bool:
-        """Health check for RTL language support"""
-        try:
+        """Health check for RTL language support"""        try:
             # Check if RTL languages are loaded
             if not self.rtl_languages:
                 return False

@@ -37,8 +37,7 @@ Team Expertise:
 - DevOps Engineer: Kubernetes, CI/CD, monitoring, infrastructure
 - Audio Processing Expert: Digital signal processing, audio fingerprinting
 - Legal Automation Specialist: DMCA systems, legal workflow automation
-"""
-# Core DMCA Components
+"""# Core DMCA Components
 from .dmca_generator import (
     DMCAGenerator, 
     DMCATemplateManager,

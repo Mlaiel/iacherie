@@ -1,5 +1,4 @@
-"""
-YouTube Advanced API Integration
+"""YouTube Advanced API Integration
 ===============================
 
 Professional YouTube API integration for content monitoring and analytics.
@@ -13,9 +12,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, modification, or distribution is strictly prohibited.
 Violators will face immediate legal action under German and international law.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import re
 from datetime import datetime, timedelta
@@ -36,8 +33,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class YouTubeVideoData:
-    """Comprehensive YouTube video metadata structure."""
-    
+    """Comprehensive YouTube video metadata structure."""    
     video_id: str
     title: str
     description: str
@@ -70,8 +66,7 @@ class YouTubeVideoData:
 
 @dataclass
 class YouTubeChannelData:
-    """YouTube channel comprehensive information."""
-    
+    """YouTube channel comprehensive information."""    
     channel_id: str
     title: str
     description: str
@@ -89,11 +84,9 @@ class YouTubeChannelData:
     content_categories: List[str]
 
 class YouTubeAPIManager:
-    """Professional YouTube API management with advanced capabilities."""
-    
+    """Professional YouTube API management with advanced capabilities."""    
     def __init__(self, api_key: str, quota_manager: Optional[Any] = None):
-        """Initialize YouTube API service with quota management."""
-        self.api_key = api_key
+        """Initialize YouTube API service with quota management."""        self.api_key = api_key
         self.service = None
         self.quota_manager = quota_manager
         self.rate_limiter = RateLimiter(
@@ -103,8 +96,7 @@ class YouTubeAPIManager:
         self._initialize_service()
     
     def _initialize_service(self):
-        """Initialize YouTube Data API v3 service."""
-        try:
+        """Initialize YouTube Data API v3 service."""        try:
             self.service = build('youtube', 'v3', developerKey=self.api_key)
             logger.info("YouTube API service initialized successfully")
         except Exception as e:
@@ -112,8 +104,7 @@ class YouTubeAPIManager:
             raise
     
     async def get_video_details(self, video_id: str) -> Optional[YouTubeVideoData]:
-        """Fetch comprehensive video details from YouTube API."""
-        await self.rate_limiter.acquire()
+        """Fetch comprehensive video details from YouTube API."""        await self.rate_limiter.acquire()
         
         try:
             # Request video details with all available parts
@@ -172,8 +163,7 @@ class YouTubeAPIManager:
         published_after: Optional[datetime] = None,
         content_type: str = 'video'
     ) -> List[str]:
-        """Search YouTube videos with advanced filtering."""
-        await self.rate_limiter.acquire()
+        """Search YouTube videos with advanced filtering."""        await self.rate_limiter.acquire()
         
         try:
             search_params = {
@@ -210,8 +200,7 @@ class YouTubeAPIManager:
         max_results: int = 50,
         published_after: Optional[datetime] = None
     ) -> List[str]:
-        """Get all videos from a specific channel."""
-        await self.rate_limiter.acquire()
+        """Get all videos from a specific channel."""        await self.rate_limiter.acquire()
         
         try:
             # First get the uploads playlist ID
@@ -256,11 +245,9 @@ class YouTubeAPIManager:
             return []
 
 class YouTubeContentExtractor:
-    """Advanced YouTube content extraction using yt-dlp."""
-    
+    """Advanced YouTube content extraction using yt-dlp."""    
     def __init__(self):
-        """Initialize yt-dlp extractor with optimized settings."""
-        self.ydl_opts = {
+        """Initialize yt-dlp extractor with optimized settings."""        self.ydl_opts = {
             'format': 'bestaudio/best',
             'extractaudio': True,
             'audioformat': 'mp3',
@@ -273,8 +260,7 @@ class YouTubeContentExtractor:
         }
     
     async def extract_audio_metadata(self, video_url: str) -> Dict[str, Any]:
-        """Extract detailed audio metadata from YouTube video."""
-        try:
+        """Extract detailed audio metadata from YouTube video."""        try:
             with yt_dlp.YoutubeDL(self.ydl_opts) as ydl:
                 info = ydl.extract_info(video_url, download=False)
                 
@@ -306,8 +292,7 @@ class YouTubeContentExtractor:
         start_time: int = 0,
         duration: int = 30
     ) -> Optional[str]:
-        """Download audio sample for fingerprinting analysis."""
-        try:
+        """Download audio sample for fingerprinting analysis."""        try:
             import tempfile
             import os
             
@@ -337,11 +322,9 @@ class YouTubeContentExtractor:
             return None
 
 class YouTubeCrawler(BaseCrawler):
-    """Professional YouTube crawler with advanced monitoring capabilities."""
-    
+    """Professional YouTube crawler with advanced monitoring capabilities."""    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize YouTube crawler with configuration."""
-        super().__init__(config)
+        """Initialize YouTube crawler with configuration."""        super().__init__(config)
         self.api_manager = YouTubeAPIManager(
             api_key=config.get('youtube_api_key')
         )
@@ -349,8 +332,7 @@ class YouTubeCrawler(BaseCrawler):
         self.platform = 'youtube'
     
     async def crawl_video(self, video_id: str) -> Optional[CrawlResult]:
-        """Crawl comprehensive data for a specific YouTube video."""
-        try:
+        """Crawl comprehensive data for a specific YouTube video."""        try:
             # Get video metadata from API
             video_data = await self.api_manager.get_video_details(video_id)
             if not video_data:
@@ -398,8 +380,7 @@ class YouTubeCrawler(BaseCrawler):
         limit: int = 100,
         time_range: Optional[timedelta] = None
     ) -> List[CrawlResult]:
-        """Search for potentially infringing content on YouTube."""
-        try:
+        """Search for potentially infringing content on YouTube."""        try:
             published_after = None
             if time_range:
                 published_after = datetime.now() - time_range
@@ -432,8 +413,7 @@ class YouTubeCrawler(BaseCrawler):
         channel_id: str,
         check_period: timedelta = timedelta(hours=24)
     ) -> List[CrawlResult]:
-        """Monitor a specific channel for new content."""
-        try:
+        """Monitor a specific channel for new content."""        try:
             published_after = datetime.now() - check_period
             
             video_ids = await self.api_manager.get_channel_videos(
@@ -456,8 +436,7 @@ class YouTubeCrawler(BaseCrawler):
             return []
     
     def _parse_duration_to_ms(self, duration: str) -> Optional[int]:
-        """Convert ISO 8601 duration to milliseconds."""
-        try:
+        """Convert ISO 8601 duration to milliseconds."""        try:
             # Parse ISO 8601 duration format (PT4M20S)
             import re
             pattern = r'PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?'
@@ -480,8 +459,7 @@ class YouTubeCrawler(BaseCrawler):
         self,
         video_id: str
     ) -> Optional[str]:
-        """Download audio sample for fingerprinting analysis."""
-        try:
+        """Download audio sample for fingerprinting analysis."""        try:
             video_url = f"https://www.youtube.com/watch?v={video_id}"
             audio_path = await self.content_extractor.download_audio_sample(
                 video_url=video_url,

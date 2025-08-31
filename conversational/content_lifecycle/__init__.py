@@ -30,8 +30,7 @@ Multi-Platform Distribution (Spotify/YouTube/Instagram/TikTok)
 Monetization Tracking & Revenue Optimization
 
 Contact: mlaiel@live.de
-"""
-# Creator economy workflow components - Enterprise Implementation
+"""# Creator economy workflow components - Enterprise Implementation
 from .content_format_processor import (
     ContentFormatProcessor, ContentFormat, ProcessingStage, ContentFile,
     ProcessingResult, EnhancementProfile, create_content_format_processor

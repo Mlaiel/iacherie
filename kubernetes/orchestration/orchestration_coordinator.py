@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Orchestration Coordinator
+"""IA Influencer Agent - Orchestration Coordinator
 Central orchestration coordinator for multi-component deployment management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -11,9 +10,7 @@ Features:
 - Service mesh integration coordination
 - Health monitoring and status aggregation
 - Resource optimization and scaling decisions
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -29,8 +26,7 @@ from .core.base_manager import BaseDeploymentManager
 
 
 class OrchestrationPhase(Enum):
-    """Orchestration deployment phases."""
-    PLANNING = "planning"
+    """Orchestration deployment phases."""    PLANNING = "planning"
     PROVISIONING = "provisioning"
     DEPLOYING = "deploying"
     CONFIGURING = "configuring"
@@ -41,8 +37,7 @@ class OrchestrationPhase(Enum):
 
 
 class DeploymentTarget(Enum):
-    """Deployment target environments."""
-    DEVELOPMENT = "development"
+    """Deployment target environments."""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     DISASTER_RECOVERY = "disaster_recovery"
@@ -50,8 +45,7 @@ class DeploymentTarget(Enum):
 
 @dataclass
 class OrchestrationConfig:
-    """Complete orchestration configuration."""
-    name: str
+    """Complete orchestration configuration."""    name: str
     target: DeploymentTarget
     cluster_configs: List[ClusterConfig]
     service_mesh_config: ServiceMeshConfig
@@ -63,8 +57,7 @@ class OrchestrationConfig:
 
 @dataclass
 class OrchestrationStatus:
-    """Orchestration status information."""
-    name: str
+    """Orchestration status information."""    name: str
     phase: OrchestrationPhase
     target: DeploymentTarget
     started_at: datetime
@@ -79,14 +72,11 @@ class OrchestrationStatus:
 
 
 class OrchestrationCoordinator(BaseDeploymentManager):
-    """
-    Central orchestration coordinator.
+    """    Central orchestration coordinator.
     
     Coordinates deployment of the complete IA Influencer Agent platform
     across multiple clusters with service mesh, monitoring, and security.
-    """
-
-    def __init__(
+    """    def __init__(
         self,
         default_region: str = "us-west-2",
         enable_multi_cluster: bool = True,
@@ -113,8 +103,7 @@ class OrchestrationCoordinator(BaseDeploymentManager):
         self.platform_config = self._get_platform_config()
 
     def _get_platform_config(self) -> Dict[str, Any]:
-        """Get IA Influencer Agent platform configuration."""
-        return {
+        """Get IA Influencer Agent platform configuration."""        return {
             "platform_name": "IA Influencer Agent",
             "version": "2.0.0",
             "components": {
@@ -208,13 +197,11 @@ class OrchestrationCoordinator(BaseDeploymentManager):
         }
 
     async def initialize(self) -> bool:
-        """
-        Initialize orchestration coordinator.
+        """        Initialize orchestration coordinator.
         
         Returns:
             True if initialization successful, False otherwise
-        """
-        try:
+        """        try:
             # Initialize cluster manager
             cluster_init = await self.cluster_manager.initialize()
             if not cluster_init:
@@ -239,16 +226,14 @@ class OrchestrationCoordinator(BaseDeploymentManager):
             return False
 
     async def deploy_platform(self, config: OrchestrationConfig) -> bool:
-        """
-        Deploy complete IA Influencer Agent platform.
+        """        Deploy complete IA Influencer Agent platform.
         
         Args:
             config: Orchestration configuration
             
         Returns:
             True if deployment successful, False otherwise
-        """
-        try:
+        """        try:
             # Create orchestration status
             orchestration_status = OrchestrationStatus(
                 name=config.name,
@@ -319,8 +304,7 @@ class OrchestrationCoordinator(BaseDeploymentManager):
             return False
 
     async def _execute_planning_phase(self, config: OrchestrationConfig, status: OrchestrationStatus) -> bool:
-        """Execute planning phase."""
-        try:
+        """Execute planning phase."""        try:
             status.phase = OrchestrationPhase.PLANNING
             status.progress_percentage = 5
             status.last_updated = datetime.now()
@@ -361,8 +345,7 @@ class OrchestrationCoordinator(BaseDeploymentManager):
             return False
 
     async def _execute_provisioning_phase(self, config: OrchestrationConfig, status: OrchestrationStatus) -> bool:
-        """Execute provisioning phase."""
-        try:
+        """Execute provisioning phase."""        try:
             status.phase = OrchestrationPhase.PROVISIONING
             status.progress_percentage = 15
             status.last_updated = datetime.now()
@@ -400,8 +383,7 @@ class OrchestrationCoordinator(BaseDeploymentManager):
             return False
 
     async def _execute_deployment_phase(self, config: OrchestrationConfig, status: OrchestrationStatus) -> bool:
-        """Execute deployment phase."""
-        try:
+        """Execute deployment phase."""        try:
             status.phase = OrchestrationPhase.DEPLOYING
             status.progress_percentage = 35
             status.last_updated = datetime.now()
@@ -437,8 +419,7 @@ class OrchestrationCoordinator(BaseDeploymentManager):
             return False
 
     async def _execute_configuration_phase(self, config: OrchestrationConfig, status: OrchestrationStatus) -> bool:
-        """Execute configuration phase."""
-        try:
+        """Execute configuration phase."""        try:
             status.phase = OrchestrationPhase.CONFIGURING
             status.progress_percentage = 75
             status.last_updated = datetime.now()
@@ -479,8 +460,7 @@ class OrchestrationCoordinator(BaseDeploymentManager):
             return False
 
     async def _execute_validation_phase(self, config: OrchestrationConfig, status: OrchestrationStatus) -> bool:
-        """Execute validation phase."""
-        try:
+        """Execute validation phase."""        try:
             status.phase = OrchestrationPhase.VALIDATING
             status.progress_percentage = 90
             status.last_updated = datetime.now()
@@ -518,8 +498,7 @@ class OrchestrationCoordinator(BaseDeploymentManager):
             return False
 
     async def _deploy_infrastructure(self, config: OrchestrationConfig, status: OrchestrationStatus) -> bool:
-        """Deploy infrastructure components."""
-        try:
+        """Deploy infrastructure components."""        try:
             infrastructure_components = self.platform_config["databases"]
             
             for component_name, component_config in infrastructure_components.items():
@@ -553,8 +532,7 @@ class OrchestrationCoordinator(BaseDeploymentManager):
             return False
 
     async def _deploy_applications(self, config: OrchestrationConfig, status: OrchestrationStatus) -> bool:
-        """Deploy application components."""
-        try:
+        """Deploy application components."""        try:
             platform_components = self.platform_config["components"]
             
             for app_name, app_config in platform_components.items():
@@ -618,8 +596,7 @@ class OrchestrationCoordinator(BaseDeploymentManager):
             return False
 
     async def _deploy_monitoring(self, config: OrchestrationConfig, status: OrchestrationStatus) -> bool:
-        """Deploy monitoring and observability components."""
-        try:
+        """Deploy monitoring and observability components."""        try:
             monitoring_components = self.platform_config["monitoring"]
             
             for component_name, component_config in monitoring_components.items():
@@ -645,8 +622,7 @@ class OrchestrationCoordinator(BaseDeploymentManager):
             return False
 
     async def _configure_traffic_routing(self, config: OrchestrationConfig) -> bool:
-        """Configure service mesh traffic routing."""
-        try:
+        """Configure service mesh traffic routing."""        try:
             if not self.service_mesh_manager:
                 return True
             
@@ -683,8 +659,7 @@ class OrchestrationCoordinator(BaseDeploymentManager):
             return False
 
     async def _apply_network_policies(self, config: OrchestrationConfig) -> bool:
-        """Apply network policies."""
-        try:
+        """Apply network policies."""        try:
             # Apply network policies for security
             for policy in config.network_policies:
                 # Apply policy to clusters
@@ -700,8 +675,7 @@ class OrchestrationCoordinator(BaseDeploymentManager):
             return False
 
     async def _apply_security_policies(self, config: OrchestrationConfig) -> bool:
-        """Apply security policies."""
-        try:
+        """Apply security policies."""        try:
             # Apply security policies
             for policy in config.security_policies:
                 # Apply policy to clusters
@@ -717,8 +691,7 @@ class OrchestrationCoordinator(BaseDeploymentManager):
             return False
 
     async def _validate_cluster_health(self, config: OrchestrationConfig) -> bool:
-        """Validate cluster health."""
-        try:
+        """Validate cluster health."""        try:
             for cluster_config in config.cluster_configs:
                 cluster_status = await self.cluster_manager.get_cluster_status(cluster_config.name)
                 if not cluster_status or cluster_status.status.value != "active":
@@ -731,8 +704,7 @@ class OrchestrationCoordinator(BaseDeploymentManager):
             return False
 
     async def _validate_application_health(self, config: OrchestrationConfig, status: OrchestrationStatus) -> bool:
-        """Validate application health."""
-        try:
+        """Validate application health."""        try:
             platform_components = self.platform_config["components"]
             
             for app_name in platform_components.keys():
@@ -756,8 +728,7 @@ class OrchestrationCoordinator(BaseDeploymentManager):
             return False
 
     async def _validate_mesh_health(self) -> bool:
-        """Validate service mesh health."""
-        try:
+        """Validate service mesh health."""        try:
             if not self.service_mesh_manager:
                 return True
             
@@ -774,8 +745,7 @@ class OrchestrationCoordinator(BaseDeploymentManager):
             return False
 
     async def _calculate_health_score(self, config: OrchestrationConfig, status: OrchestrationStatus) -> float:
-        """Calculate overall health score."""
-        try:
+        """Calculate overall health score."""        try:
             total_components = 0
             healthy_components = 0
             
@@ -813,35 +783,29 @@ class OrchestrationCoordinator(BaseDeploymentManager):
             return 0.0
 
     async def get_orchestration_status(self, name: str) -> Optional[OrchestrationStatus]:
-        """
-        Get orchestration status.
+        """        Get orchestration status.
         
         Args:
             name: Orchestration name
             
         Returns:
             Orchestration status or None if not found
-        """
-        return self.active_orchestrations.get(name)
+        """        return self.active_orchestrations.get(name)
 
     async def list_orchestrations(self) -> List[OrchestrationStatus]:
-        """
-        List all orchestrations.
+        """        List all orchestrations.
         
         Returns:
             List of orchestration statuses
-        """
-        active = list(self.active_orchestrations.values())
+        """        active = list(self.active_orchestrations.values())
         return active + self.deployment_history
 
     async def cleanup(self) -> bool:
-        """
-        Cleanup orchestration coordinator.
+        """        Cleanup orchestration coordinator.
         
         Returns:
             True if cleanup successful, False otherwise
-        """
-        try:
+        """        try:
             # Cleanup managers
             await self.cluster_manager.cleanup()
             await self.helm_manager.cleanup()
@@ -862,36 +826,31 @@ class OrchestrationCoordinator(BaseDeploymentManager):
 
     # Helper validation methods
     def _validate_cluster_config(self, cluster_config: ClusterConfig) -> bool:
-        """Validate cluster configuration."""
-        if not cluster_config.name or not cluster_config.version:
+        """Validate cluster configuration."""        if not cluster_config.name or not cluster_config.version:
             return False
         if not cluster_config.nodes:
             return False
         return True
 
     def _validate_deployment_config(self, deployment_config: DeploymentConfig) -> bool:
-        """Validate deployment configuration."""
-        if not deployment_config.name or not deployment_config.image:
+        """Validate deployment configuration."""        if not deployment_config.name or not deployment_config.image:
             return False
         if deployment_config.replicas <= 0:
             return False
         return True
 
     def _validate_helm_chart(self, chart: HelmChart) -> bool:
-        """Validate Helm chart configuration."""
-        if not chart.name or not chart.version:
+        """Validate Helm chart configuration."""        if not chart.name or not chart.version:
             return False
         return True
 
     async def _check_resource_requirements(self, config: OrchestrationConfig) -> bool:
-        """Check if sufficient resources are available."""
-        # In a real implementation, this would check cloud quotas,
+        """Check if sufficient resources are available."""        # In a real implementation, this would check cloud quotas,
         # cluster capacity, etc.
         return True
 
     async def _wait_for_cluster_ready(self, cluster_name: str, timeout: int = 1800) -> bool:
-        """Wait for cluster to be ready."""
-        start_time = datetime.now()
+        """Wait for cluster to be ready."""        start_time = datetime.now()
         
         while (datetime.now() - start_time).total_seconds() < timeout:
             cluster_status = await self.cluster_manager.get_cluster_status(cluster_name)

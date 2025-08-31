@@ -1,5 +1,4 @@
-"""
-Quality Reporter - Analytics and Reporting System
+"""Quality Reporter - Analytics and Reporting System
 ================================================
 
 Enterprise-grade quality reporting and analytics system for comprehensive quality insights,
@@ -15,9 +14,7 @@ is STRICTLY PROHIBITED and will be prosecuted under international copyright law.
 
 Business Logic: Quality data aggregation → Analytics processing → Report generation → 
 Trend analysis → Performance insights → Business intelligence → Strategic recommendations
-"""
-
-import logging
+"""import logging
 import json
 import pandas as pd
 import numpy as np
@@ -48,8 +45,7 @@ from ..models.quality_models import QualityAssessment, QualityMetrics, QualityTr
 
 
 class ReportType(Enum):
-    """Types of quality reports"""
-    SUMMARY = "summary"
+    """Types of quality reports"""    SUMMARY = "summary"
     DETAILED = "detailed"
     TRENDS = "trends"
     COMPLIANCE = "compliance"
@@ -59,8 +55,7 @@ class ReportType(Enum):
 
 
 class ReportFormat(Enum):
-    """Report output formats"""
-    JSON = "json"
+    """Report output formats"""    JSON = "json"
     PDF = "pdf"
     HTML = "html"
     CSV = "csv"
@@ -69,8 +64,7 @@ class ReportFormat(Enum):
 
 
 class TimeRange(Enum):
-    """Time range options for reports"""
-    LAST_24H = "24h"
+    """Time range options for reports"""    LAST_24H = "24h"
     LAST_7D = "7d"
     LAST_30D = "30d"
     LAST_90D = "90d"
@@ -80,8 +74,7 @@ class TimeRange(Enum):
 
 @dataclass
 class ReportRequest:
-    """Quality report request structure"""
-    report_type: ReportType
+    """Quality report request structure"""    report_type: ReportType
     format: ReportFormat
     time_range: TimeRange
     user_id: Optional[str] = None
@@ -96,8 +89,7 @@ class ReportRequest:
 
 @dataclass
 class QualityReport:
-    """Quality report structure"""
-    report_id: str
+    """Quality report structure"""    report_id: str
     report_type: ReportType
     generated_at: datetime
     time_range: str
@@ -111,13 +103,11 @@ class QualityReport:
 
 
 class QualityReporter:
-    """
-    Enterprise quality reporting and analytics system.
+    """    Enterprise quality reporting and analytics system.
     
     Provides comprehensive quality reporting including summaries, trends,
     performance analytics, compliance reports, and business intelligence insights.
-    """
-    
+    """    
     def __init__(
         self,
         db_session: sessionmaker,
@@ -154,8 +144,7 @@ class QualityReporter:
         request: ReportRequest,
         session: Optional[AsyncSession] = None
     ) -> QualityReport:
-        """
-        Generate comprehensive quality report.
+        """        Generate comprehensive quality report.
         
         Args:
             request: Report generation request
@@ -163,8 +152,7 @@ class QualityReporter:
             
         Returns:
             QualityReport: Generated quality report
-        """
-        try:
+        """        try:
             self.logger.info(f"Generating {request.report_type.value} report")
             
             # Check cache first
@@ -191,8 +179,7 @@ class QualityReporter:
         request: ReportRequest,
         session: AsyncSession
     ) -> QualityReport:
-        """Internal report generation logic."""
-        start_time = datetime.utcnow()
+        """Internal report generation logic."""        start_time = datetime.utcnow()
         report_id = f"qr_{int(start_time.timestamp())}"
         
         # Determine time range
@@ -255,8 +242,7 @@ class QualityReporter:
         return report
     
     def _calculate_time_range(self, request: ReportRequest) -> Tuple[datetime, datetime]:
-        """Calculate start and end dates for the report."""
-        end_date = datetime.utcnow()
+        """Calculate start and end dates for the report."""        end_date = datetime.utcnow()
         
         if request.time_range == TimeRange.CUSTOM:
             start_date = request.custom_start_date or (end_date - timedelta(days=30))
@@ -285,8 +271,7 @@ class QualityReporter:
         content_type: Optional[str],
         filters: Optional[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Fetch quality assessment data from database."""
-        try:
+        """Fetch quality assessment data from database."""        try:
             # Build query
             query = session.query(QualityAssessment).filter(
                 and_(
@@ -341,8 +326,7 @@ class QualityReporter:
         quality_data: List[Dict[str, Any]],
         request: ReportRequest
     ) -> Dict[str, Any]:
-        """Generate summary quality report."""
-        if not quality_data:
+        """Generate summary quality report."""        if not quality_data:
             return {'summary': {}, 'detailed_metrics': {}, 'recommendations': []}
         
         # Calculate basic statistics
@@ -403,8 +387,7 @@ class QualityReporter:
         quality_data: List[Dict[str, Any]],
         request: ReportRequest
     ) -> Dict[str, Any]:
-        """Generate detailed quality report."""
-        summary_report = await self._generate_summary_report(quality_data, request)
+        """Generate detailed quality report."""        summary_report = await self._generate_summary_report(quality_data, request)
         
         # Add detailed analysis
         detailed_metrics = {
@@ -430,8 +413,7 @@ class QualityReporter:
         quality_data: List[Dict[str, Any]],
         request: ReportRequest
     ) -> Dict[str, Any]:
-        """Generate quality trends report."""
-        if not quality_data:
+        """Generate quality trends report."""        if not quality_data:
             return {'trends': {}, 'summary': {}, 'recommendations': []}
         
         # Sort data by date
@@ -478,8 +460,7 @@ class QualityReporter:
         quality_data: List[Dict[str, Any]],
         request: ReportRequest
     ) -> Dict[str, Any]:
-        """Generate compliance-focused quality report."""
-        # Analyze compliance-related issues
+        """Generate compliance-focused quality report."""        # Analyze compliance-related issues
         compliance_issues = []
         regulatory_violations = []
         platform_violations = []
@@ -528,8 +509,7 @@ class QualityReporter:
         quality_data: List[Dict[str, Any]],
         request: ReportRequest
     ) -> Dict[str, Any]:
-        """Generate performance-focused quality report."""
-        processing_times = [item['processing_time'] for item in quality_data if item['processing_time']]
+        """Generate performance-focused quality report."""        processing_times = [item['processing_time'] for item in quality_data if item['processing_time']]
         
         if not processing_times:
             return {'summary': {}, 'performance_metrics': {}, 'recommendations': []}
@@ -584,8 +564,7 @@ class QualityReporter:
         quality_data: List[Dict[str, Any]],
         request: ReportRequest
     ) -> Dict[str, Any]:
-        """Generate business intelligence quality report."""
-        # Business metrics
+        """Generate business intelligence quality report."""        # Business metrics
         bi_metrics = {
             'quality_impact': self._analyze_quality_business_impact(quality_data),
             'user_satisfaction': self._estimate_user_satisfaction(quality_data),
@@ -627,8 +606,7 @@ class QualityReporter:
         quality_data: List[Dict[str, Any]],
         request: ReportRequest
     ) -> Dict[str, Any]:
-        """Generate executive summary quality report."""
-        # High-level metrics
+        """Generate executive summary quality report."""        # High-level metrics
         total_assessments = len(quality_data)
         avg_score = np.mean([item['overall_score'] for item in quality_data]) if quality_data else 0
         excellence_rate = len([item for item in quality_data if item['overall_score'] >= 0.9]) / total_assessments * 100 if quality_data else 0
@@ -671,16 +649,14 @@ class QualityReporter:
         quality_data: List[Dict[str, Any]],
         request: ReportRequest
     ) -> Dict[str, Any]:
-        """Generate default quality report."""
-        return await self._generate_summary_report(quality_data, request)
+        """Generate default quality report."""        return await self._generate_summary_report(quality_data, request)
     
     async def _generate_visualizations(
         self,
         quality_data: List[Dict[str, Any]],
         request: ReportRequest
     ) -> List[str]:
-        """Generate visualizations for the report."""
-        if not HAS_VIZ_LIBS or not quality_data:
+        """Generate visualizations for the report."""        if not HAS_VIZ_LIBS or not quality_data:
             return []
         
         visualizations = []
@@ -729,8 +705,7 @@ class QualityReporter:
     
     # Helper methods for analysis
     def _calculate_detailed_metrics(self, quality_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calculate detailed quality metrics."""
-        if not quality_data:
+        """Calculate detailed quality metrics."""        if not quality_data:
             return {}
         
         # Dimension scores analysis
@@ -763,13 +738,11 @@ class QualityReporter:
         }
     
     def _analyze_quality_dimensions(self, quality_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze quality dimensions in detail."""
-        # Implementation would analyze each quality dimension
+        """Analyze quality dimensions in detail."""        # Implementation would analyze each quality dimension
         return {'dimension_analysis': 'detailed_analysis_here'}
     
     def _analyze_by_content_type(self, quality_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze quality metrics by content type."""
-        type_analysis = {}
+        """Analyze quality metrics by content type."""        type_analysis = {}
         
         for content_type in set(item['content_type'] for item in quality_data):
             type_data = [item for item in quality_data if item['content_type'] == content_type]
@@ -784,8 +757,7 @@ class QualityReporter:
         return type_analysis
     
     def _analyze_temporal_patterns(self, quality_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze temporal patterns in quality data."""
-        if not quality_data:
+        """Analyze temporal patterns in quality data."""        if not quality_data:
             return {}
         
         # Group by hour, day, week
@@ -806,8 +778,7 @@ class QualityReporter:
         }
     
     def _analyze_user_patterns(self, quality_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze user-specific quality patterns."""
-        user_analysis = defaultdict(list)
+        """Analyze user-specific quality patterns."""        user_analysis = defaultdict(list)
         
         for item in quality_data:
             user_id = item['user_id']
@@ -823,8 +794,7 @@ class QualityReporter:
         }
     
     def _analyze_correlations(self, quality_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze correlations between different metrics."""
-        # Implementation would analyze correlations between dimensions, content types, etc.
+        """Analyze correlations between different metrics."""        # Implementation would analyze correlations between dimensions, content types, etc.
         return {'correlations': 'correlation_analysis_here'}
     
     def _generate_summary_recommendations(
@@ -832,8 +802,7 @@ class QualityReporter:
         summary: Dict[str, Any],
         quality_data: List[Dict[str, Any]]
     ) -> List[str]:
-        """Generate recommendations based on summary analysis."""
-        recommendations = []
+        """Generate recommendations based on summary analysis."""        recommendations = []
         
         avg_score = summary.get('average_quality_score', 0)
         if avg_score < 0.7:
@@ -851,8 +820,7 @@ class QualityReporter:
         return recommendations
     
     def _generate_cache_key(self, request: ReportRequest) -> str:
-        """Generate cache key for report request."""
-        key_parts = [
+        """Generate cache key for report request."""        key_parts = [
             request.report_type.value,
             request.time_range.value,
             request.user_id or 'all',
@@ -865,8 +833,7 @@ class QualityReporter:
     # performance calculations, business intelligence metrics, etc.
     
     def _calculate_score_trend(self, sorted_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calculate quality score trend."""
-        if len(sorted_data) < 2:
+        """Calculate quality score trend."""        if len(sorted_data) < 2:
             return {'direction': 'insufficient_data', 'slope': 0}
         
         scores = [item['overall_score'] for item in sorted_data]
@@ -887,8 +854,7 @@ class QualityReporter:
         }
     
     def _calculate_volume_trend(self, sorted_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calculate assessment volume trend."""
-        # Group by day
+        """Calculate assessment volume trend."""        # Group by day
         daily_counts = defaultdict(int)
         for item in sorted_data:
             date = item['created_at'].date()
@@ -920,8 +886,7 @@ class QualityReporter:
         timeframe: Optional[timedelta] = None,
         session: Optional[AsyncSession] = None
     ) -> Dict[str, Any]:
-        """Generate quality profile for a specific user."""
-        if timeframe is None:
+        """Generate quality profile for a specific user."""        if timeframe is None:
             timeframe = timedelta(days=30)
         
         end_date = datetime.utcnow()
@@ -964,8 +929,7 @@ class QualityReporter:
         return profile
     
     def _calculate_user_improvement_trend(self, quality_data: List[Dict[str, Any]]) -> str:
-        """Calculate user's quality improvement trend."""
-        if len(quality_data) < 3:
+        """Calculate user's quality improvement trend."""        if len(quality_data) < 3:
             return 'insufficient_data'
         
         # Sort by date and calculate trend
@@ -993,8 +957,7 @@ class QualityReporter:
             return 'significant_decline'
     
     def _identify_user_strengths(self, quality_data: List[Dict[str, Any]]) -> List[str]:
-        """Identify user's quality strengths."""
-        strengths = []
+        """Identify user's quality strengths."""        strengths = []
         
         # Analyze dimension scores
         all_dimensions = defaultdict(list)
@@ -1024,8 +987,7 @@ class QualityReporter:
         return strengths
     
     def _identify_user_improvement_areas(self, quality_data: List[Dict[str, Any]]) -> List[str]:
-        """Identify user's areas for improvement."""
-        improvement_areas = []
+        """Identify user's areas for improvement."""        improvement_areas = []
         
         # Analyze dimension scores
         all_dimensions = defaultdict(list)
@@ -1062,8 +1024,7 @@ class QualityReporter:
         return improvement_areas
     
     def _generate_personalized_recommendations(self, quality_data: List[Dict[str, Any]]) -> List[str]:
-        """Generate personalized recommendations based on user's quality profile."""
-        recommendations = []
+        """Generate personalized recommendations based on user's quality profile."""        recommendations = []
         
         # Get current average score
         avg_score = np.mean([item['overall_score'] for item in quality_data])

@@ -1,12 +1,9 @@
-"""
-Advanced Encryption and Cryptographic Security System
+"""Advanced Encryption and Cryptographic Security System
 Military-grade encryption with key management and secure communications
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Security Expert + Cryptography Specialist + Backend Senior
-"""
-
-import os
+"""import os
 import secrets
 import hashlib
 import hmac
@@ -42,13 +39,11 @@ logger = logging.getLogger(__name__)
 
 
 class EncryptionError(Exception):
-    """Custom encryption exception"""
-    pass
+    """Custom encryption exception"""    pass
 
 
 class EncryptionAlgorithm(Enum):
-    """Supported encryption algorithms"""
-    AES_256_GCM = "aes_256_gcm"
+    """Supported encryption algorithms"""    AES_256_GCM = "aes_256_gcm"
     AES_256_CBC = "aes_256_cbc"
     RSA_4096 = "rsa_4096"
     RSA_2048 = "rsa_2048"
@@ -61,8 +56,7 @@ class EncryptionAlgorithm(Enum):
 
 
 class HashingAlgorithm(Enum):
-    """Supported hashing algorithms"""
-    SHA256 = "sha256"
+    """Supported hashing algorithms"""    SHA256 = "sha256"
     SHA384 = "sha384"
     SHA512 = "sha512"
     BLAKE2B = "blake2b"
@@ -74,8 +68,7 @@ class HashingAlgorithm(Enum):
 
 
 class KeyType(Enum):
-    """Key type enumeration"""
-    SYMMETRIC = "symmetric"
+    """Key type enumeration"""    SYMMETRIC = "symmetric"
     ASYMMETRIC_PRIVATE = "asymmetric_private"
     ASYMMETRIC_PUBLIC = "asymmetric_public"
     MASTER_KEY = "master_key"
@@ -85,8 +78,7 @@ class KeyType(Enum):
 
 @dataclass
 class EncryptionKey:
-    """Encryption key data structure"""
-    key_id: str
+    """Encryption key data structure"""    key_id: str
     key_type: KeyType
     algorithm: EncryptionAlgorithm
     key_material: bytes
@@ -96,12 +88,10 @@ class EncryptionKey:
     is_active: bool = True
     
     def is_expired(self) -> bool:
-        """Check if key has expired"""
-        return self.expires_at is not None and datetime.now(timezone.utc) > self.expires_at
+        """Check if key has expired"""        return self.expires_at is not None and datetime.now(timezone.utc) > self.expires_at
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert key to dictionary (excluding sensitive material)"""
-        return {
+        """Convert key to dictionary (excluding sensitive material)"""        return {
             'key_id': self.key_id,
             'key_type': self.key_type.value,
             'algorithm': self.algorithm.value,
@@ -114,8 +104,7 @@ class EncryptionKey:
 
 @dataclass
 class EncryptionResult:
-    """Encryption operation result"""
-    encrypted_data: bytes
+    """Encryption operation result"""    encrypted_data: bytes
     key_id: str
     algorithm: EncryptionAlgorithm
     nonce: Optional[bytes] = None
@@ -125,35 +114,29 @@ class EncryptionResult:
 
 
 class BaseEncryptor(ABC):
-    """Base encryptor interface"""
-    
+    """Base encryptor interface"""    
     @abstractmethod
     def encrypt(self, data: bytes, key: EncryptionKey, **kwargs) -> EncryptionResult:
-        """Encrypt data"""
-        pass
+        """Encrypt data"""        pass
     
     @abstractmethod
     def decrypt(self, encrypted_result: EncryptionResult, key: EncryptionKey) -> bytes:
-        """Decrypt data"""
-        pass
+        """Decrypt data"""        pass
     
     @abstractmethod
     def generate_key(self, **kwargs) -> EncryptionKey:
-        """Generate encryption key"""
-        pass
+        """Generate encryption key"""        pass
 
 
 class AESEncryption(BaseEncryptor):
-    """Advanced Encryption Standard (AES) implementation"""
-    
+    """Advanced Encryption Standard (AES) implementation"""    
     def __init__(self, mode: str = "GCM"):
         self.mode = mode.upper()
         self.key_size = 32  # 256 bits
         self.nonce_size = 12 if mode == "GCM" else 16  # GCM uses 96-bit nonce
     
     def generate_key(self, key_id: str = None, **kwargs) -> EncryptionKey:
-        """Generate AES key"""
-        if not key_id:
+        """Generate AES key"""        if not key_id:
             key_id = f"aes_{secrets.token_hex(8)}"
         
         key_material = os.urandom(self.key_size)
@@ -170,8 +153,7 @@ class AESEncryption(BaseEncryptor):
         )
     
     def encrypt(self, data: bytes, key: EncryptionKey, **kwargs) -> EncryptionResult:
-        """Encrypt data using AES"""
-        if key.key_type != KeyType.SYMMETRIC:
+        """Encrypt data using AES"""        if key.key_type != KeyType.SYMMETRIC:
             raise EncryptionError("AES requires symmetric key")
         
         if key.is_expired():
@@ -222,8 +204,7 @@ class AESEncryption(BaseEncryptor):
         )
     
     def decrypt(self, encrypted_result: EncryptionResult, key: EncryptionKey) -> bytes:
-        """Decrypt data using AES"""
-        if key.key_type != KeyType.SYMMETRIC:
+        """Decrypt data using AES"""        if key.key_type != KeyType.SYMMETRIC:
             raise EncryptionError("AES requires symmetric key")
         
         if key.is_expired():
@@ -266,16 +247,14 @@ class AESEncryption(BaseEncryptor):
 
 
 class RSAEncryption(BaseEncryptor):
-    """RSA asymmetric encryption implementation"""
-    
+    """RSA asymmetric encryption implementation"""    
     def __init__(self, key_size: int = 4096):
         self.key_size = key_size
         self.algorithm = (EncryptionAlgorithm.RSA_4096 if key_size == 4096 
                          else EncryptionAlgorithm.RSA_2048)
     
     def generate_key_pair(self, key_id: str = None, **kwargs) -> Tuple[EncryptionKey, EncryptionKey]:
-        """Generate RSA key pair"""
-        if not key_id:
+        """Generate RSA key pair"""        if not key_id:
             key_id = f"rsa_{secrets.token_hex(8)}"
         
         # Generate private key
@@ -319,13 +298,11 @@ class RSAEncryption(BaseEncryptor):
         return private_key_obj, public_key_obj
     
     def generate_key(self, key_type: str = "private", **kwargs) -> EncryptionKey:
-        """Generate single RSA key"""
-        private_key, public_key = self.generate_key_pair(**kwargs)
+        """Generate single RSA key"""        private_key, public_key = self.generate_key_pair(**kwargs)
         return private_key if key_type == "private" else public_key
     
     def encrypt(self, data: bytes, key: EncryptionKey, **kwargs) -> EncryptionResult:
-        """Encrypt data using RSA public key"""
-        if key.key_type != KeyType.ASYMMETRIC_PUBLIC:
+        """Encrypt data using RSA public key"""        if key.key_type != KeyType.ASYMMETRIC_PUBLIC:
             raise EncryptionError("RSA encryption requires public key")
         
         if key.is_expired():
@@ -361,8 +338,7 @@ class RSAEncryption(BaseEncryptor):
         )
     
     def decrypt(self, encrypted_result: EncryptionResult, key: EncryptionKey) -> bytes:
-        """Decrypt data using RSA private key"""
-        if key.key_type != KeyType.ASYMMETRIC_PRIVATE:
+        """Decrypt data using RSA private key"""        if key.key_type != KeyType.ASYMMETRIC_PRIVATE:
             raise EncryptionError("RSA decryption requires private key")
         
         if key.is_expired():
@@ -387,8 +363,7 @@ class RSAEncryption(BaseEncryptor):
         return decrypted_data
     
     def sign_data(self, data: bytes, private_key: EncryptionKey) -> bytes:
-        """Sign data using RSA private key"""
-        if private_key.key_type != KeyType.ASYMMETRIC_PRIVATE:
+        """Sign data using RSA private key"""        if private_key.key_type != KeyType.ASYMMETRIC_PRIVATE:
             raise EncryptionError("Signing requires private key")
         
         key = serialization.load_pem_private_key(
@@ -409,8 +384,7 @@ class RSAEncryption(BaseEncryptor):
         return signature
     
     def verify_signature(self, data: bytes, signature: bytes, public_key: EncryptionKey) -> bool:
-        """Verify signature using RSA public key"""
-        if public_key.key_type != KeyType.ASYMMETRIC_PUBLIC:
+        """Verify signature using RSA public key"""        if public_key.key_type != KeyType.ASYMMETRIC_PUBLIC:
             raise EncryptionError("Signature verification requires public key")
         
         try:
@@ -435,16 +409,14 @@ class RSAEncryption(BaseEncryptor):
 
 
 class EllipticCurveEncryption(BaseEncryptor):
-    """Elliptic Curve Cryptography implementation"""
-    
+    """Elliptic Curve Cryptography implementation"""    
     def __init__(self, curve_name: str = "P-256"):
         self.curve_name = curve_name
         self.curve = self._get_curve(curve_name)
         self.algorithm = self._get_algorithm_enum(curve_name)
     
     def _get_curve(self, curve_name: str):
-        """Get elliptic curve by name"""
-        curves = {
+        """Get elliptic curve by name"""        curves = {
             "P-256": ec.SECP256R1(),
             "P-384": ec.SECP384R1(),
             "P-521": ec.SECP521R1(),
@@ -456,8 +428,7 @@ class EllipticCurveEncryption(BaseEncryptor):
         return curves[curve_name]
     
     def _get_algorithm_enum(self, curve_name: str) -> EncryptionAlgorithm:
-        """Get algorithm enum for curve"""
-        mapping = {
+        """Get algorithm enum for curve"""        mapping = {
             "P-256": EncryptionAlgorithm.ECC_P256,
             "P-384": EncryptionAlgorithm.ECC_P384,
             "P-521": EncryptionAlgorithm.ECC_P521,
@@ -465,8 +436,7 @@ class EllipticCurveEncryption(BaseEncryptor):
         return mapping[curve_name]
     
     def generate_key_pair(self, key_id: str = None, **kwargs) -> Tuple[EncryptionKey, EncryptionKey]:
-        """Generate ECC key pair"""
-        if not key_id:
+        """Generate ECC key pair"""        if not key_id:
             key_id = f"ecc_{self.curve_name.lower().replace('-', '')}_{secrets.token_hex(8)}"
         
         # Generate private key
@@ -504,13 +474,11 @@ class EllipticCurveEncryption(BaseEncryptor):
         return private_key_obj, public_key_obj
     
     def generate_key(self, key_type: str = "private", **kwargs) -> EncryptionKey:
-        """Generate single ECC key"""
-        private_key, public_key = self.generate_key_pair(**kwargs)
+        """Generate single ECC key"""        private_key, public_key = self.generate_key_pair(**kwargs)
         return private_key if key_type == "private" else public_key
     
     def encrypt(self, data: bytes, key: EncryptionKey, **kwargs) -> EncryptionResult:
-        """ECC encryption using ECIES (Elliptic Curve Integrated Encryption Scheme)"""
-        try:
+        """ECC encryption using ECIES (Elliptic Curve Integrated Encryption Scheme)"""        try:
             if key.key_type != KeyType.ASYMMETRIC_PUBLIC:
                 raise EncryptionError("ECC encryption requires public key")
             
@@ -566,8 +534,7 @@ class EllipticCurveEncryption(BaseEncryptor):
             raise EncryptionError(f"ECC encryption failed: {str(e)}")
     
     def decrypt(self, encrypted_result: EncryptionResult, key: EncryptionKey) -> bytes:
-        """ECC decryption using ECIES"""
-        try:
+        """ECC decryption using ECIES"""        try:
             if key.key_type != KeyType.ASYMMETRIC_PRIVATE:
                 raise EncryptionError("ECC decryption requires private key")
             
@@ -606,8 +573,7 @@ class EllipticCurveEncryption(BaseEncryptor):
             raise EncryptionError(f"ECC decryption failed: {str(e)}")
     
     def sign_data(self, data: bytes, private_key: EncryptionKey) -> bytes:
-        """Sign data using ECDSA"""
-        if private_key.key_type != KeyType.ASYMMETRIC_PRIVATE:
+        """Sign data using ECDSA"""        if private_key.key_type != KeyType.ASYMMETRIC_PRIVATE:
             raise EncryptionError("Signing requires private key")
         
         key = serialization.load_pem_private_key(
@@ -620,8 +586,7 @@ class EllipticCurveEncryption(BaseEncryptor):
         return signature
     
     def verify_signature(self, data: bytes, signature: bytes, public_key: EncryptionKey) -> bool:
-        """Verify ECDSA signature"""
-        if public_key.key_type != KeyType.ASYMMETRIC_PUBLIC:
+        """Verify ECDSA signature"""        if public_key.key_type != KeyType.ASYMMETRIC_PUBLIC:
             raise EncryptionError("Signature verification requires public key")
         
         try:
@@ -638,15 +603,13 @@ class EllipticCurveEncryption(BaseEncryptor):
 
 
 class HybridEncryption:
-    """Hybrid encryption combining symmetric and asymmetric encryption"""
-    
+    """Hybrid encryption combining symmetric and asymmetric encryption"""    
     def __init__(self):
         self.symmetric_encryptor = AESEncryption("GCM")
         self.asymmetric_encryptor = RSAEncryption(4096)
     
     def encrypt(self, data: bytes, public_key: EncryptionKey) -> Dict[str, Any]:
-        """Encrypt data using hybrid encryption"""
-        
+        """Encrypt data using hybrid encryption"""        
         # Generate symmetric key for data encryption
         data_key = self.symmetric_encryptor.generate_key()
         
@@ -676,8 +639,7 @@ class HybridEncryption:
         }
     
     def decrypt(self, hybrid_result: Dict[str, Any], private_key: EncryptionKey) -> bytes:
-        """Decrypt data using hybrid decryption"""
-        
+        """Decrypt data using hybrid decryption"""        
         # Decrypt symmetric key
         encrypted_key_result = EncryptionResult(
             encrypted_data=hybrid_result['encrypted_key']['data'],
@@ -710,8 +672,7 @@ class HybridEncryption:
 
 
 class HashingService:
-    """Advanced hashing and key derivation service"""
-    
+    """Advanced hashing and key derivation service"""    
     def __init__(self):
         self.pwd_context = CryptContext(
             schemes=["argon2", "bcrypt", "pbkdf2_sha256"],
@@ -722,8 +683,7 @@ class HashingService:
         )
     
     def hash_password(self, password: str, algorithm: HashingAlgorithm = HashingAlgorithm.ARGON2) -> str:
-        """Hash password using specified algorithm"""
-        
+        """Hash password using specified algorithm"""        
         if algorithm == HashingAlgorithm.ARGON2:
             return self.pwd_context.hash(password)
         elif algorithm == HashingAlgorithm.BCRYPT:
@@ -734,16 +694,14 @@ class HashingService:
             raise EncryptionError(f"Unsupported password hashing algorithm: {algorithm}")
     
     def verify_password(self, password: str, password_hash: str) -> bool:
-        """Verify password against hash"""
-        try:
+        """Verify password against hash"""        try:
             return self.pwd_context.verify(password, password_hash)
         except Exception:
             return False
     
     def hash_data(self, data: bytes, algorithm: HashingAlgorithm = HashingAlgorithm.SHA256,
                   salt: bytes = None) -> Tuple[bytes, bytes]:
-        """Hash data with optional salt"""
-        
+        """Hash data with optional salt"""        
         if salt is None:
             salt = os.urandom(32)  # 256-bit salt
         
@@ -781,8 +739,7 @@ class HashingService:
     
     def verify_hash(self, data: bytes, hash_value: bytes, salt: bytes,
                     algorithm: HashingAlgorithm = HashingAlgorithm.SHA256) -> bool:
-        """Verify data against hash"""
-        try:
+        """Verify data against hash"""        try:
             computed_hash, _ = self.hash_data(data, algorithm, salt)
             return hmac.compare_digest(hash_value, computed_hash)
         except Exception:
@@ -790,8 +747,7 @@ class HashingService:
     
     def derive_key(self, password: bytes, salt: bytes, key_length: int = 32,
                    algorithm: str = "PBKDF2") -> bytes:
-        """Derive cryptographic key from password"""
-        
+        """Derive cryptographic key from password"""        
         if algorithm == "PBKDF2":
             kdf = PBKDF2HMAC(
                 algorithm=hashes.SHA256(),
@@ -829,8 +785,7 @@ class HashingService:
     
     def generate_hmac(self, data: bytes, key: bytes, 
                      algorithm: HashingAlgorithm = HashingAlgorithm.SHA256) -> bytes:
-        """Generate HMAC for data authentication"""
-        
+        """Generate HMAC for data authentication"""        
         if algorithm == HashingAlgorithm.SHA256:
             return hmac.new(key, data, hashlib.sha256).digest()
         elif algorithm == HashingAlgorithm.SHA384:
@@ -842,8 +797,7 @@ class HashingService:
     
     def verify_hmac(self, data: bytes, mac: bytes, key: bytes,
                     algorithm: HashingAlgorithm = HashingAlgorithm.SHA256) -> bool:
-        """Verify HMAC authentication"""
-        try:
+        """Verify HMAC authentication"""        try:
             expected_mac = self.generate_hmac(data, key, algorithm)
             return hmac.compare_digest(mac, expected_mac)
         except Exception:
@@ -851,8 +805,7 @@ class HashingService:
 
 
 class KeyManagementService:
-    """Comprehensive key management system"""
-    
+    """Comprehensive key management system"""    
     def __init__(self, redis_url: str = "redis://localhost:6379"):
         self.redis_url = redis_url
         self.keys: Dict[str, EncryptionKey] = {}
@@ -861,8 +814,7 @@ class KeyManagementService:
         self.key_rotation_schedule: Dict[str, datetime] = {}
     
     def _generate_master_key(self) -> EncryptionKey:
-        """Generate master encryption key"""
-        master_key_material = os.urandom(32)  # 256-bit master key
+        """Generate master encryption key"""        master_key_material = os.urandom(32)  # 256-bit master key
         
         return EncryptionKey(
             key_id="master_key",
@@ -873,8 +825,7 @@ class KeyManagementService:
         )
     
     async def store_key(self, key: EncryptionKey, encrypt_at_rest: bool = True) -> bool:
-        """Store encryption key securely"""
-        try:
+        """Store encryption key securely"""        try:
             redis_client = await aioredis.from_url(self.redis_url)
             
             key_data = key.to_dict()
@@ -914,8 +865,7 @@ class KeyManagementService:
             return False
     
     async def retrieve_key(self, key_id: str) -> Optional[EncryptionKey]:
-        """Retrieve encryption key"""
-        
+        """Retrieve encryption key"""        
         # Check memory cache first
         if key_id in self.keys:
             key = self.keys[key_id]
@@ -975,8 +925,7 @@ class KeyManagementService:
             return None
     
     async def rotate_key(self, key_id: str) -> Optional[EncryptionKey]:
-        """Rotate encryption key"""
-        old_key = await self.retrieve_key(key_id)
+        """Rotate encryption key"""        old_key = await self.retrieve_key(key_id)
         if not old_key:
             return None
         
@@ -1013,8 +962,7 @@ class KeyManagementService:
         return None
     
     async def delete_key(self, key_id: str) -> bool:
-        """Securely delete encryption key"""
-        try:
+        """Securely delete encryption key"""        try:
             redis_client = await aioredis.from_url(self.redis_url)
             
             # Remove from Redis
@@ -1035,8 +983,7 @@ class KeyManagementService:
     
     async def list_keys(self, key_type: KeyType = None, 
                        include_inactive: bool = False) -> List[Dict[str, Any]]:
-        """List stored keys"""
-        keys_info = []
+        """List stored keys"""        keys_info = []
         
         for key in self.keys.values():
             if key_type and key.key_type != key_type:
@@ -1051,8 +998,7 @@ class KeyManagementService:
 
 
 class EncryptionManager:
-    """Main encryption manager orchestrating all encryption services"""
-    
+    """Main encryption manager orchestrating all encryption services"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.key_manager = KeyManagementService(
@@ -1090,8 +1036,7 @@ class EncryptionManager:
     
     async def encrypt_data(self, data: Union[str, bytes], encryption_level: str = "high",
                           key_id: str = None, metadata: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Encrypt data based on security level"""
-        
+        """Encrypt data based on security level"""        
         if isinstance(data, str):
             data = data.encode('utf-8')
         
@@ -1133,8 +1078,7 @@ class EncryptionManager:
         }
     
     async def decrypt_data(self, encrypted_data_dict: Dict[str, Any]) -> bytes:
-        """Decrypt data using stored key"""
-        
+        """Decrypt data using stored key"""        
         # Retrieve encryption key
         key_id = encrypted_data_dict['key_id']
         encryption_key = await self.key_manager.retrieve_key(key_id)
@@ -1160,8 +1104,7 @@ class EncryptionManager:
     
     async def encrypt_classified_data(self, data: Dict[str, Any], 
                                     classification_level: str) -> Dict[str, Any]:
-        """Encrypt data based on classification level"""
-        
+        """Encrypt data based on classification level"""        
         # Classify data and apply appropriate encryption
         if classification_level in ['public', 'internal']:
             encryption_level = 'standard'
@@ -1195,8 +1138,7 @@ class EncryptionManager:
         return encrypted_fields
     
     def _is_sensitive_field(self, field_name: str) -> bool:
-        """Determine if field contains sensitive data"""
-        sensitive_patterns = [
+        """Determine if field contains sensitive data"""        sensitive_patterns = [
             'password', 'secret', 'key', 'token', 'credit_card', 'ssn',
             'email', 'phone', 'address', 'biometric', 'private', 'confidential'
         ]
@@ -1206,8 +1148,7 @@ class EncryptionManager:
     
     async def generate_key_pair(self, algorithm: EncryptionAlgorithm, 
                                key_id: str = None) -> Tuple[EncryptionKey, EncryptionKey]:
-        """Generate asymmetric key pair"""
-        
+        """Generate asymmetric key pair"""        
         if algorithm in [EncryptionAlgorithm.RSA_4096, EncryptionAlgorithm.RSA_2048]:
             key_size = 4096 if algorithm == EncryptionAlgorithm.RSA_4096 else 2048
             encryptor = RSAEncryption(key_size)

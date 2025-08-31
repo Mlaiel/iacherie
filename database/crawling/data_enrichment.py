@@ -1,5 +1,4 @@
-"""
-Enterprise Crawler Data Enrichment Database Module
+"""Enterprise Crawler Data Enrichment Database Module
 
 Advanced database layer for intelligent data enrichment, content enhancement,
 and metadata augmentation across multi-platform crawling operations.
@@ -13,9 +12,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team Specialties: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + 
                  Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: All rights reserved
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, desc, asc, func, text
@@ -36,8 +33,7 @@ from ..core.exceptions import (
 
 
 class EnrichmentType(Enum):
-    """Types of data enrichment operations."""
-    METADATA_EXTRACTION = "metadata_extraction"
+    """Types of data enrichment operations."""    METADATA_EXTRACTION = "metadata_extraction"
     CONTENT_ANALYSIS = "content_analysis"
     SENTIMENT_ANALYSIS = "sentiment_analysis"
     ENTITY_RECOGNITION = "entity_recognition"
@@ -48,8 +44,7 @@ class EnrichmentType(Enum):
 
 
 class EnrichmentSource(Enum):
-    """Sources for data enrichment."""
-    AI_MODEL = "ai_model"
+    """Sources for data enrichment."""    AI_MODEL = "ai_model"
     EXTERNAL_API = "external_api"
     DATABASE_LOOKUP = "database_lookup"
     MACHINE_LEARNING = "machine_learning"
@@ -60,8 +55,7 @@ class EnrichmentSource(Enum):
 
 
 class EnrichmentPriority(Enum):
-    """Priority levels for enrichment operations."""
-    CRITICAL = "critical"
+    """Priority levels for enrichment operations."""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -69,8 +63,7 @@ class EnrichmentPriority(Enum):
 
 
 class EnrichmentStatus(Enum):
-    """Status of enrichment operations."""
-    PENDING = "pending"
+    """Status of enrichment operations."""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -79,8 +72,7 @@ class EnrichmentStatus(Enum):
 
 
 class CrawlerDataEnrichmentManager(DatabaseManager):
-    """
-    Enterprise data enrichment manager for crawler content enhancement.
+    """    Enterprise data enrichment manager for crawler content enhancement.
     
     Manages:
     - Intelligent metadata extraction and augmentation
@@ -89,11 +81,9 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
     - Real-time content enrichment and enhancement
     - Predictive analytics and engagement scoring
     - Content quality assessment and validation
-    """
-    
+    """    
     def __init__(self, db_session: Session):
-        """Initialize data enrichment manager."""
-        super().__init__(db_session)
+        """Initialize data enrichment manager."""        super().__init__(db_session)
         self.enrichment_engines = {}
         self.active_jobs = {}
         self._initialize_enrichment_system()
@@ -107,8 +97,7 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
         configuration: Dict[str, Any],
         user_id: str
     ) -> str:
-        """
-        Create a new data enrichment job for content enhancement.
+        """        Create a new data enrichment job for content enhancement.
         
         Args:
             content_id: Content identifier to enrich
@@ -123,8 +112,7 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
             
         Raises:
             DataEnrichmentError: If job creation fails
-        """
-        try:
+        """        try:
             job_id = str(uuid4())
             
             # Validate enrichment configuration
@@ -164,8 +152,7 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
         content_type: str,
         extraction_depth: str = "comprehensive"
     ) -> Dict[str, Any]:
-        """
-        Extract comprehensive metadata from content using multiple methods.
+        """        Extract comprehensive metadata from content using multiple methods.
         
         Args:
             content_data: Raw content data
@@ -174,8 +161,7 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
             
         Returns:
             Enriched metadata dictionary
-        """
-        try:
+        """        try:
             metadata = {
                 "basic_metadata": await self._extract_basic_metadata(content_data),
                 "technical_metadata": await self._extract_technical_metadata(content_data, content_type),
@@ -207,8 +193,7 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
         content_text: str,
         context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Perform comprehensive sentiment analysis on content text.
+        """        Perform comprehensive sentiment analysis on content text.
         
         Args:
             content_text: Text content to analyze
@@ -216,8 +201,7 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
             
         Returns:
             Sentiment analysis results
-        """
-        try:
+        """        try:
             # Multi-level sentiment analysis
             sentiment_results = {
                 "overall_sentiment": await self._analyze_overall_sentiment(content_text),
@@ -244,8 +228,7 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
         entity_types: List[str],
         confidence_threshold: float = 0.8
     ) -> Dict[str, Any]:
-        """
-        Perform named entity recognition and extraction.
+        """        Perform named entity recognition and extraction.
         
         Args:
             content_text: Text content for entity recognition
@@ -254,8 +237,7 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
             
         Returns:
             Recognized entities and metadata
-        """
-        try:
+        """        try:
             entities = {
                 "persons": await self._extract_person_entities(content_text, confidence_threshold),
                 "organizations": await self._extract_organization_entities(content_text, confidence_threshold),
@@ -287,8 +269,7 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
         classification_types: List[str],
         content_type: str
     ) -> Dict[str, Any]:
-        """
-        Classify content using multiple classification methods.
+        """        Classify content using multiple classification methods.
         
         Args:
             content_data: Content data to classify
@@ -297,8 +278,7 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
             
         Returns:
             Classification results and confidence scores
-        """
-        try:
+        """        try:
             classifications = {
                 "primary_category": await self._classify_primary_category(content_data, content_type),
                 "secondary_categories": await self._classify_secondary_categories(content_data, content_type),
@@ -325,8 +305,7 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
         platform: str,
         historical_data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Predict engagement metrics for content based on analysis and historical data.
+        """        Predict engagement metrics for content based on analysis and historical data.
         
         Args:
             content_data: Content data for prediction
@@ -335,8 +314,7 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
             
         Returns:
             Predicted engagement metrics
-        """
-        try:
+        """        try:
             predictions = {
                 "view_prediction": await self._predict_view_count(content_data, platform, historical_data),
                 "engagement_prediction": await self._predict_engagement_rate(content_data, platform, historical_data),
@@ -363,8 +341,7 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
         audio_data: Dict[str, Any],
         analysis_depth: str = "comprehensive"
     ) -> Dict[str, Any]:
-        """
-        Perform comprehensive audio content analysis and enrichment.
+        """        Perform comprehensive audio content analysis and enrichment.
         
         Args:
             audio_data: Audio content data
@@ -372,8 +349,7 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
             
         Returns:
             Audio enrichment results
-        """
-        try:
+        """        try:
             audio_enrichment = {
                 "audio_features": await self._extract_audio_features(audio_data),
                 "music_analysis": await self._analyze_music_content(audio_data),
@@ -404,8 +380,7 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
         content_type: str,
         analysis_depth: str = "comprehensive"
     ) -> Dict[str, Any]:
-        """
-        Perform comprehensive visual content analysis and enrichment.
+        """        Perform comprehensive visual content analysis and enrichment.
         
         Args:
             visual_data: Visual content data (image/video)
@@ -414,8 +389,7 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
             
         Returns:
             Visual enrichment results
-        """
-        try:
+        """        try:
             visual_enrichment = {
                 "visual_features": await self._extract_visual_features(visual_data, content_type),
                 "object_detection": await self._detect_objects(visual_data),
@@ -442,16 +416,14 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
             raise ContentAnalysisError(f"Failed to enrich visual content: {str(e)}")
     
     async def get_enrichment_status(self, job_id: str) -> Dict[str, Any]:
-        """
-        Get comprehensive status information for an enrichment job.
+        """        Get comprehensive status information for an enrichment job.
         
         Args:
             job_id: Enrichment job identifier
             
         Returns:
             Job status and progress information
-        """
-        try:
+        """        try:
             job = await self.db_session.query(DataEnrichmentJob).filter(
                 DataEnrichmentJob.job_id == job_id
             ).first()
@@ -487,8 +459,7 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
         enrichment_types: List[EnrichmentType],
         configuration: Dict[str, Any]
     ) -> bool:
-        """Validate enrichment configuration."""
-        if not enrichment_types:
+        """Validate enrichment configuration."""        if not enrichment_types:
             raise DataEnrichmentError("At least one enrichment type must be specified")
         
         # Validate configuration for each enrichment type
@@ -506,8 +477,7 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
         priority: EnrichmentPriority,
         enrichment_types: List[EnrichmentType]
     ) -> None:
-        """Queue enrichment job for processing."""
-        self.active_jobs[job_id] = {
+        """Queue enrichment job for processing."""        self.active_jobs[job_id] = {
             "priority": priority.value,
             "enrichment_types": [et.value for et in enrichment_types],
             "queued_at": datetime.utcnow(),
@@ -515,8 +485,7 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
         }
     
     async def _extract_basic_metadata(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract basic metadata from content."""
-        return {
+        """Extract basic metadata from content."""        return {
             "title": content_data.get("title", ""),
             "description": content_data.get("description", ""),
             "duration": content_data.get("duration", 0),
@@ -531,8 +500,7 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
         content_data: Dict[str, Any],
         content_type: str
     ) -> Dict[str, Any]:
-        """Extract technical metadata specific to content type."""
-        base_metadata = {
+        """Extract technical metadata specific to content type."""        base_metadata = {
             "content_type": content_type,
             "format": content_data.get("format", "unknown"),
             "encoding": content_data.get("encoding", "unknown")
@@ -560,8 +528,7 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
         content_data: Dict[str, Any],
         content_type: str
     ) -> Dict[str, Any]:
-        """Extract content-specific metadata."""
-        return {
+        """Extract content-specific metadata."""        return {
             "tags": content_data.get("tags", []),
             "categories": content_data.get("categories", []),
             "keywords": content_data.get("keywords", []),
@@ -574,8 +541,7 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
         content_data: Dict[str, Any],
         content_type: str
     ) -> Dict[str, Any]:
-        """Extract advanced metadata using ML and AI techniques."""
-        return {
+        """Extract advanced metadata using ML and AI techniques."""        return {
             "content_complexity": await self._assess_content_complexity(content_data),
             "readability_score": await self._calculate_readability_score(content_data),
             "uniqueness_score": await self._calculate_uniqueness_score(content_data),
@@ -587,8 +553,7 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
         content_data: Dict[str, Any],
         content_type: str
     ) -> Dict[str, Any]:
-        """Extract AI-powered metadata and insights."""
-        return {
+        """Extract AI-powered metadata and insights."""        return {
             "ai_generated_tags": await self._generate_ai_tags(content_data),
             "content_similarity": await self._calculate_content_similarity(content_data),
             "ai_quality_score": await self._calculate_ai_quality_score(content_data),
@@ -600,8 +565,7 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
         content_data: Dict[str, Any],
         content_type: str
     ) -> Dict[str, Any]:
-        """Extract predictive metadata for future performance."""
-        return {
+        """Extract predictive metadata for future performance."""        return {
             "virality_score": await self._calculate_virality_score(content_data),
             "engagement_prediction": await self._predict_engagement(content_data),
             "optimal_posting_time": await self._predict_optimal_posting_time(content_data),
@@ -609,8 +573,7 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
         }
     
     def _initialize_enrichment_system(self) -> None:
-        """Initialize enrichment system components."""
-        self.enrichment_engines = {
+        """Initialize enrichment system components."""        self.enrichment_engines = {
             "nlp_engine": {},
             "computer_vision_engine": {},
             "audio_analysis_engine": {},
@@ -620,53 +583,40 @@ class CrawlerDataEnrichmentManager(DatabaseManager):
     
     # Placeholder methods for actual implementations
     async def _analyze_overall_sentiment(self, text: str) -> Dict[str, Any]:
-        """Placeholder for sentiment analysis implementation."""
-        return {"sentiment": "positive", "confidence": 0.85}
+        """Placeholder for sentiment analysis implementation."""        return {"sentiment": "positive", "confidence": 0.85}
     
     async def _detect_emotions(self, text: str) -> List[Dict[str, Any]]:
-        """Placeholder for emotion detection implementation."""
-        return [{"emotion": "joy", "confidence": 0.75}]
+        """Placeholder for emotion detection implementation."""        return [{"emotion": "joy", "confidence": 0.75}]
     
     async def _analyze_aspect_sentiment(self, text: str) -> Dict[str, Any]:
-        """Placeholder for aspect-based sentiment analysis."""
-        return {"aspects": []}
+        """Placeholder for aspect-based sentiment analysis."""        return {"aspects": []}
     
     async def _analyze_tone(self, text: str) -> Dict[str, Any]:
-        """Placeholder for tone analysis implementation."""
-        return {"tone": "neutral", "confidence": 0.80}
+        """Placeholder for tone analysis implementation."""        return {"tone": "neutral", "confidence": 0.80}
     
     async def _calculate_sentiment_confidence(self, text: str) -> float:
-        """Placeholder for sentiment confidence calculation."""
-        return 0.85
+        """Placeholder for sentiment confidence calculation."""        return 0.85
     
     async def _extract_person_entities(self, text: str, threshold: float) -> List[Dict]:
-        """Placeholder for person entity extraction."""
-        return []
+        """Placeholder for person entity extraction."""        return []
     
     async def _extract_organization_entities(self, text: str, threshold: float) -> List[Dict]:
-        """Placeholder for organization entity extraction."""
-        return []
+        """Placeholder for organization entity extraction."""        return []
     
     async def _extract_location_entities(self, text: str, threshold: float) -> List[Dict]:
-        """Placeholder for location entity extraction."""
-        return []
+        """Placeholder for location entity extraction."""        return []
     
     async def _extract_event_entities(self, text: str, threshold: float) -> List[Dict]:
-        """Placeholder for event entity extraction."""
-        return []
+        """Placeholder for event entity extraction."""        return []
     
     async def _extract_product_entities(self, text: str, threshold: float) -> List[Dict]:
-        """Placeholder for product entity extraction."""
-        return []
+        """Placeholder for product entity extraction."""        return []
     
     async def _extract_brand_entities(self, text: str, threshold: float) -> List[Dict]:
-        """Placeholder for brand entity extraction."""
-        return []
+        """Placeholder for brand entity extraction."""        return []
     
     async def _extract_topic_entities(self, text: str, threshold: float) -> List[Dict]:
-        """Placeholder for topic entity extraction."""
-        return []
+        """Placeholder for topic entity extraction."""        return []
     
     async def _extract_temporal_entities(self, text: str, threshold: float) -> List[Dict]:
-        """Placeholder for temporal entity extraction."""
-        return []
+        """Placeholder for temporal entity extraction."""        return []

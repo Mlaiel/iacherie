@@ -1,14 +1,11 @@
-"""
-Vimeo Platform Integration
+"""Vimeo Platform Integration
 
 Vimeo API integration for professional video hosting and analytics.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta
@@ -24,25 +21,21 @@ logger = logging.getLogger(__name__)
 
 
 class VimeoPlatform(PlatformBase):
-    """Vimeo platform integration"""
-    
+    """Vimeo platform integration"""    
     def __init__(self, config: PlatformConfig):
-        """Initialize Vimeo platform"""
-        super().__init__(config)
+        """Initialize Vimeo platform"""        super().__init__(config)
         self.api_base = "https://api.vimeo.com"
         self.session: Optional[aiohttp.ClientSession] = None
         
     async def _get_session(self) -> aiohttp.ClientSession:
-        """Get or create HTTP session"""
-        if not self.session or self.session.closed:
+        """Get or create HTTP session"""        if not self.session or self.session.closed:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=self.config.timeout)
             )
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Vimeo OAuth2"""
-        try:
+        """Authenticate with Vimeo OAuth2"""        try:
             access_token = self.config.credentials.get('access_token')
             
             if access_token:
@@ -74,12 +67,10 @@ class VimeoPlatform(PlatformBase):
             return False
     
     async def refresh_token(self) -> bool:
-        """Refresh Vimeo token"""
-        return await self.authenticate()
+        """Refresh Vimeo token"""        return await self.authenticate()
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to Vimeo API"""
-        try:
+        """Make authenticated request to Vimeo API"""        try:
             session = await self._get_session()
             
             headers = kwargs.get('headers', {})
@@ -118,8 +109,7 @@ class VimeoPlatform(PlatformBase):
             return None
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Upload video to Vimeo"""
-        try:
+        """Upload video to Vimeo"""        try:
             # Create video upload ticket
             upload_data = {
                 'upload': {
@@ -169,8 +159,7 @@ class VimeoPlatform(PlatformBase):
             )
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
-        """Get Vimeo video analytics"""
-        try:
+        """Get Vimeo video analytics"""        try:
             # Get video stats
             video_data = await self._make_request('GET', f'/videos/{content_id}')
             
@@ -205,8 +194,7 @@ class VimeoPlatform(PlatformBase):
             raise
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search videos on Vimeo"""
-        try:
+        """Search videos on Vimeo"""        try:
             params = {
                 'query': query,
                 'per_page': 25,
@@ -240,8 +228,7 @@ class VimeoPlatform(PlatformBase):
             return []
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
-        """Get user's videos from Vimeo"""
-        try:
+        """Get user's videos from Vimeo"""        try:
             endpoint = f'/users/{user_id}/videos' if user_id else '/me/videos'
             result = await self._make_request('GET', endpoint)
             
@@ -269,8 +256,7 @@ class VimeoPlatform(PlatformBase):
             return []
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete Vimeo video"""
-        try:
+        """Delete Vimeo video"""        try:
             result = await self._make_request('DELETE', f'/videos/{content_id}')
             
             if result and result.get('success'):
@@ -285,8 +271,7 @@ class VimeoPlatform(PlatformBase):
             return False
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
-        """Update Vimeo video"""
-        try:
+        """Update Vimeo video"""        try:
             update_data = {}
             
             if metadata.title:
@@ -315,8 +300,7 @@ class VimeoPlatform(PlatformBase):
             return False
     
     async def get_video_chapters(self, video_id: str) -> List[Dict[str, Any]]:
-        """Get video chapters"""
-        try:
+        """Get video chapters"""        try:
             result = await self._make_request('GET', f'/videos/{video_id}/chapters')
             
             if result and result.get('data'):
@@ -329,8 +313,7 @@ class VimeoPlatform(PlatformBase):
             return []
     
     async def add_video_to_collection(self, video_id: str, collection_id: str) -> bool:
-        """Add video to collection/showcase"""
-        try:
+        """Add video to collection/showcase"""        try:
             result = await self._make_request('PUT', f'/me/albums/{collection_id}/videos/{video_id}')
             
             if result and result.get('success'):
@@ -344,6 +327,5 @@ class VimeoPlatform(PlatformBase):
             return False
     
     async def close(self):
-        """Close HTTP session"""
-        if self.session and not self.session.closed:
+        """Close HTTP session"""        if self.session and not self.session.closed:
             await self.session.close()

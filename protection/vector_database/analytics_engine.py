@@ -1,5 +1,4 @@
-"""
-📊 Vector Database Analytics Engine
+"""📊 Vector Database Analytics Engine
 ===================================
 
 Advanced analytics and insights for vector database performance and content patterns.
@@ -16,9 +15,7 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 des droits d'auteur passible de poursuites judiciaires.
 
 Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import pandas as pd
@@ -51,8 +48,7 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics tracked"""
-    PERFORMANCE = "performance"
+    """Types of metrics tracked"""    PERFORMANCE = "performance"
     USAGE = "usage"
     QUALITY = "quality"
     DISTRIBUTION = "distribution"
@@ -61,8 +57,7 @@ class MetricType(Enum):
 
 
 class AnalyticsLevel(Enum):
-    """Analytics detail levels"""
-    BASIC = "basic"
+    """Analytics detail levels"""    BASIC = "basic"
     DETAILED = "detailed"
     COMPREHENSIVE = "comprehensive"
     EXPERT = "expert"
@@ -70,8 +65,7 @@ class AnalyticsLevel(Enum):
 
 @dataclass
 class PerformanceMetric:
-    """Individual performance measurement"""
-    metric_name: str
+    """Individual performance measurement"""    metric_name: str
     value: float
     unit: str
     timestamp: float
@@ -81,8 +75,7 @@ class PerformanceMetric:
 
 @dataclass
 class AnalyticsReport:
-    """Complete analytics report"""
-    report_id: str
+    """Complete analytics report"""    report_id: str
     generated_at: float
     period_start: float
     period_end: float
@@ -95,8 +88,7 @@ class AnalyticsReport:
 
 @dataclass
 class ContentPattern:
-    """Detected content pattern"""
-    pattern_id: str
+    """Detected content pattern"""    pattern_id: str
     pattern_type: str
     confidence: float
     frequency: int
@@ -106,8 +98,7 @@ class ContentPattern:
 
 
 class MetricsCollector:
-    """Collect and aggregate performance metrics"""
-    
+    """Collect and aggregate performance metrics"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
@@ -137,14 +128,12 @@ class MetricsCollector:
         }
     
     async def start_collection(self):
-        """Start background metrics aggregation"""
-        if self.auto_aggregate and not self.aggregation_task:
+        """Start background metrics aggregation"""        if self.auto_aggregate and not self.aggregation_task:
             self.aggregation_task = asyncio.create_task(self._aggregation_loop())
             self.logger.info("Metrics collection started")
     
     async def stop_collection(self):
-        """Stop background metrics aggregation"""
-        if self.aggregation_task:
+        """Stop background metrics aggregation"""        if self.aggregation_task:
             self.aggregation_task.cancel()
             try:
                 await self.aggregation_task
@@ -161,8 +150,7 @@ class MetricsCollector:
         tags: Optional[Dict[str, str]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ):
-        """Record a new metric value"""
-        try:
+        """Record a new metric value"""        try:
             metric = PerformanceMetric(
                 metric_name=metric_name,
                 value=value,
@@ -178,20 +166,17 @@ class MetricsCollector:
             self.logger.error(f"Failed to record metric {metric_name}: {e}")
     
     async def record_search_performance(self, latency_ms: float, result_count: int, cache_hit: bool):
-        """Record search operation performance"""
-        await self.record_metric('search_latency_ms', latency_ms, 'ms')
+        """Record search operation performance"""        await self.record_metric('search_latency_ms', latency_ms, 'ms')
         await self.record_metric('search_results', result_count, 'count')
         await self.record_metric('cache_hit_rate', 1.0 if cache_hit else 0.0, 'ratio')
     
     async def record_index_stats(self, total_vectors: int, index_size_mb: float, dimension: int):
-        """Record index statistics"""
-        await self.record_metric('vectors_total', total_vectors, 'count')
+        """Record index statistics"""        await self.record_metric('vectors_total', total_vectors, 'count')
         await self.record_metric('index_size_mb', index_size_mb, 'MB')
         await self.record_metric('vector_dimension', dimension, 'count')
     
     async def record_similarity_distribution(self, similarity_scores: List[float]):
-        """Record similarity score distribution"""
-        if not similarity_scores:
+        """Record similarity score distribution"""        if not similarity_scores:
             return
         
         scores_array = np.array(similarity_scores)
@@ -202,8 +187,7 @@ class MetricsCollector:
         await self.record_metric('similarity_max', float(np.max(scores_array)), 'score')
     
     async def get_metric_summary(self, metric_name: str, hours: int = 24) -> Dict[str, Any]:
-        """Get aggregated metric summary for time period"""
-        try:
+        """Get aggregated metric summary for time period"""        try:
             end_time = time.time()
             start_time = end_time - (hours * 3600)
             
@@ -239,8 +223,7 @@ class MetricsCollector:
             return {'error': str(e)}
     
     async def _aggregation_loop(self):
-        """Background loop for metrics aggregation"""
-        while True:
+        """Background loop for metrics aggregation"""        while True:
             try:
                 await self._aggregate_metrics()
                 await asyncio.sleep(self.aggregation_interval)
@@ -251,8 +234,7 @@ class MetricsCollector:
                 await asyncio.sleep(self.aggregation_interval)
     
     async def _aggregate_metrics(self):
-        """Aggregate collected metrics"""
-        try:
+        """Aggregate collected metrics"""        try:
             current_time = time.time()
             cutoff_time = current_time - self.aggregation_interval
             
@@ -310,8 +292,7 @@ class MetricsCollector:
 
 
 class PatternDetector:
-    """Detect patterns in vector content and usage"""
-    
+    """Detect patterns in vector content and usage"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.PatternDetector")
@@ -330,8 +311,7 @@ class PatternDetector:
         self.cluster_min_samples = config.get('cluster_min_samples', 5)
     
     async def analyze_content_patterns(self, embeddings: List[np.ndarray], metadata_list: List[Dict[str, Any]]) -> List[ContentPattern]:
-        """Analyze patterns in content embeddings"""
-        try:
+        """Analyze patterns in content embeddings"""        try:
             if not embeddings or not self.enable_clustering:
                 return []
             
@@ -401,8 +381,7 @@ class PatternDetector:
             return []
     
     async def detect_duplicate_patterns(self, similarity_matrix: np.ndarray, threshold: float = 0.95) -> List[ContentPattern]:
-        """Detect potential duplicate content patterns"""
-        try:
+        """Detect potential duplicate content patterns"""        try:
             patterns = []
             
             # Find high similarity pairs
@@ -443,8 +422,7 @@ class PatternDetector:
             return []
     
     def get_pattern_summary(self, hours: int = 24) -> Dict[str, Any]:
-        """Get summary of detected patterns"""
-        try:
+        """Get summary of detected patterns"""        try:
             end_time = time.time()
             start_time = end_time - (hours * 3600)
             
@@ -477,8 +455,7 @@ class PatternDetector:
 
 
 class AnalyticsEngine:
-    """Main analytics engine coordinating all analytics components"""
-    
+    """Main analytics engine coordinating all analytics components"""    
     def __init__(self, vector_store, config: Dict[str, Any]):
         self.vector_store = vector_store
         self.config = config
@@ -501,8 +478,7 @@ class AnalyticsEngine:
         self.reporting_task = None
     
     async def start_analytics(self):
-        """Start analytics collection and reporting"""
-        await self.metrics_collector.start_collection()
+        """Start analytics collection and reporting"""        await self.metrics_collector.start_collection()
         
         if self.auto_reporting:
             self.reporting_task = asyncio.create_task(self._reporting_loop())
@@ -510,8 +486,7 @@ class AnalyticsEngine:
         self.logger.info("Analytics engine started")
     
     async def stop_analytics(self):
-        """Stop analytics collection and reporting"""
-        await self.metrics_collector.stop_collection()
+        """Stop analytics collection and reporting"""        await self.metrics_collector.stop_collection()
         
         if self.reporting_task:
             self.reporting_task.cancel()
@@ -524,8 +499,7 @@ class AnalyticsEngine:
         self.logger.info("Analytics engine stopped")
     
     async def generate_analytics_report(self, level: AnalyticsLevel = AnalyticsLevel.DETAILED, hours: int = 24) -> AnalyticsReport:
-        """Generate comprehensive analytics report"""
-        try:
+        """Generate comprehensive analytics report"""        try:
             report_id = f"report_{int(time.time())}"
             end_time = time.time()
             start_time = end_time - (hours * 3600)
@@ -595,8 +569,7 @@ class AnalyticsEngine:
             raise
     
     async def _generate_insights(self, metrics: Dict[str, Any]) -> List[str]:
-        """Generate insights from collected metrics"""
-        insights = []
+        """Generate insights from collected metrics"""        insights = []
         
         try:
             # Performance insights
@@ -651,8 +624,7 @@ class AnalyticsEngine:
         return insights
     
     async def _generate_recommendations(self, metrics: Dict[str, Any]) -> List[str]:
-        """Generate optimization recommendations"""
-        recommendations = []
+        """Generate optimization recommendations"""        recommendations = []
         
         try:
             # Performance recommendations
@@ -689,8 +661,7 @@ class AnalyticsEngine:
         return recommendations
     
     async def _generate_charts(self, metrics: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate visualization charts"""
-        charts = {}
+        """Generate visualization charts"""        charts = {}
         
         if not self.enable_visualizations:
             return charts
@@ -727,8 +698,7 @@ class AnalyticsEngine:
         return charts
     
     async def _reporting_loop(self):
-        """Background loop for automatic report generation"""
-        while True:
+        """Background loop for automatic report generation"""        while True:
             try:
                 await self.generate_analytics_report(AnalyticsLevel.BASIC, self.report_interval_hours)
                 await asyncio.sleep(self.report_interval_hours * 3600)
@@ -739,14 +709,12 @@ class AnalyticsEngine:
                 await asyncio.sleep(3600)  # Retry in 1 hour
     
     def get_latest_report(self) -> Optional[AnalyticsReport]:
-        """Get the most recent analytics report"""
-        if self.report_history:
+        """Get the most recent analytics report"""        if self.report_history:
             return self.report_history[-1]
         return None
     
     def export_report(self, report_id: str, format: str = 'json') -> Optional[str]:
-        """Export report in specified format"""
-        try:
+        """Export report in specified format"""        try:
             if report_id not in self.reports:
                 return None
             

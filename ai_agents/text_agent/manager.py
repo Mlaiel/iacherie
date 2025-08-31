@@ -1,5 +1,4 @@
-"""
-Text Manager - Ultra-Advanced Enterprise Management System
+"""Text Manager - Ultra-Advanced Enterprise Management System
 
 Unified interface for the entire text system providing comprehensive
 control, monitoring, and optimization capabilities.
@@ -11,9 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime
@@ -39,15 +36,13 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TextSystemStatus:
-    """Overall text system status"""
-    is_healthy: bool = True
+    """Overall text system status"""    is_healthy: bool = True
     active_operations: int = 0
     system_load: float = 0.0
     last_updated: datetime = None
 
 class TextManager(BaseAgent):
-    """
-    Master Text Manager
+    """    Master Text Manager
     
     Unified interface for the entire text system providing:
     - Single point of control for all text operations
@@ -56,8 +51,7 @@ class TextManager(BaseAgent):
     - Performance analytics and reporting
     - Resource management and scaling
     - Error handling and recovery
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
         
@@ -70,8 +64,7 @@ class TextManager(BaseAgent):
         logger.info("TextManager initialized")
 
     async def start(self) -> None:
-        """Start the complete text system"""
-        if self.is_running:
+        """Start the complete text system"""        if self.is_running:
             logger.warning("Text system is already running")
             return
         
@@ -86,8 +79,7 @@ class TextManager(BaseAgent):
             raise
 
     async def get_system_status(self) -> TextSystemStatus:
-        """Get comprehensive system status"""
-        try:
+        """Get comprehensive system status"""        try:
             return TextSystemStatus(
                 is_healthy=self.is_running,
                 active_operations=0,  # Implementation specific
@@ -99,15 +91,13 @@ class TextManager(BaseAgent):
             return TextSystemStatus(is_healthy=False)
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of the entire text system"""
-        logger.info("Shutting down Text System...")
+        """Graceful shutdown of the entire text system"""        logger.info("Shutting down Text System...")
         self.is_running = False
         await self.engine.shutdown()
         logger.info("Text System shutdown complete")
 
     async def process(self, data: Dict[str, Any]) -> AgentResponse:
-        """Base agent interface implementation"""
-        try:
+        """Base agent interface implementation"""        try:
             # Implementation specific to text operations
             result = await self.engine.process(data)
             return AgentResponse(success=True, data=result)

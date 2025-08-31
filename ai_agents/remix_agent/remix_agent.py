@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-IA-Influencer-Agent Remix Agent Core
+"""IA-Influencer-Agent Remix Agent Core
 ================================================================================
 Module: ai_agents/remix_agent/remix_agent.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -18,9 +17,7 @@ Contact: mlaiel@live.de
 MISSION: Agent IA principal pour orchestration intelligente de remixes professionnels
 TECHNOLOGIES: Multi-Agent Coordination, Decision Making, Workflow Orchestration
 LOGIQUE MÉTIER: Request → Analysis → Decision → Coordination → Execution → Validation → Response
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import uuid
 from typing import Dict, List, Any, Optional, Union, Callable
@@ -33,8 +30,7 @@ import json
 logger = logging.getLogger(__name__)
 
 class AgentStatus(Enum):
-    """Status of the remix agent"""
-    INITIALIZING = "initializing"
+    """Status of the remix agent"""    INITIALIZING = "initializing"
     READY = "ready"
     PROCESSING = "processing"
     COLLABORATING = "collaborating"
@@ -44,16 +40,14 @@ class AgentStatus(Enum):
     MAINTENANCE = "maintenance"
 
 class RemixPriority(Enum):
-    """Priority levels for remix requests"""
-    LOW = "low"
+    """Priority levels for remix requests"""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
     CRITICAL = "critical"
 
 class ProcessingMode(Enum):
-    """Processing modes for different use cases"""
-    STANDARD = "standard"
+    """Processing modes for different use cases"""    STANDARD = "standard"
     CREATIVE = "creative"
     PROFESSIONAL = "professional"
     COLLABORATIVE = "collaborative"
@@ -61,8 +55,7 @@ class ProcessingMode(Enum):
 
 @dataclass
 class RemixAgentConfig:
-    """Configuration for the remix agent"""
-    agent_id: str
+    """Configuration for the remix agent"""    agent_id: str
     agent_name: str
     processing_mode: ProcessingMode = ProcessingMode.STANDARD
     max_concurrent_requests: int = 5
@@ -76,8 +69,7 @@ class RemixAgentConfig:
 
 @dataclass
 class RemixRequest:
-    """Request for remix processing"""
-    request_id: str
+    """Request for remix processing"""    request_id: str
     user_id: str
     input_audio_path: str
     target_style: Optional[str] = None
@@ -92,8 +84,7 @@ class RemixRequest:
 
 @dataclass
 class RemixResponse:
-    """Response from remix processing"""
-    request_id: str
+    """Response from remix processing"""    request_id: str
     agent_id: str
     status: AgentStatus
     output_paths: List[str] = field(default_factory=list)
@@ -107,14 +98,12 @@ class RemixResponse:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class RemixAgent:
-    """
-    Ultra-advanced AI remix agent for intelligent music production coordination.
+    """    Ultra-advanced AI remix agent for intelligent music production coordination.
     
     This agent orchestrates multiple AI systems to provide comprehensive
     remix capabilities including style analysis, creative suggestions,
     collaboration facilitation, and quality assurance.
-    """
-    
+    """    
     def __init__(self, config: RemixAgentConfig):
         self.config = config
         self.logger = logger
@@ -159,8 +148,7 @@ class RemixAgent:
         asyncio.create_task(self._initialize_agent())
     
     async def _initialize_agent(self):
-        """Initialize the remix agent and all sub-systems"""
-        try:
+        """Initialize the remix agent and all sub-systems"""        try:
             self.logger.info(f"🤖 Initializing Remix Agent: {self.config.agent_name}")
             
             # Initialize AI sub-systems
@@ -181,8 +169,7 @@ class RemixAgent:
             raise
     
     async def _initialize_ai_systems(self):
-        """Initialize all AI sub-systems"""
-        try:
+        """Initialize all AI sub-systems"""        try:
             # Import and initialize AI systems
             # These would be actual imports in production
             
@@ -229,8 +216,7 @@ class RemixAgent:
             raise
     
     async def _setup_processing_pipeline(self):
-        """Setup the remix processing pipeline"""
-        try:
+        """Setup the remix processing pipeline"""        try:
             # Define processing stages
             self.processing_stages = [
                 ("analyze_input", self._analyze_input_stage),
@@ -248,8 +234,7 @@ class RemixAgent:
             raise
     
     async def _start_background_tasks(self):
-        """Start background processing tasks"""
-        try:
+        """Start background processing tasks"""        try:
             # Start request processor
             asyncio.create_task(self._process_request_queue())
             
@@ -266,16 +251,14 @@ class RemixAgent:
             raise
     
     async def submit_remix_request(self, request: RemixRequest) -> str:
-        """
-        Submit a remix request to the agent.
+        """        Submit a remix request to the agent.
         
         Args:
             request: Remix request with specifications
             
         Returns:
             Request ID for tracking
-        """
-        try:
+        """        try:
             # Validate request
             if not await self._validate_request(request):
                 raise ValueError("Invalid remix request")
@@ -299,16 +282,14 @@ class RemixAgent:
             raise
     
     async def _process_remix_request(self, request: RemixRequest) -> RemixResponse:
-        """
-        Process a remix request through the complete pipeline.
+        """        Process a remix request through the complete pipeline.
         
         Args:
             request: Remix request to process
             
         Returns:
             Remix response with results
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         response = RemixResponse(
             request_id=request.request_id,
             agent_id=self.config.agent_id,
@@ -368,8 +349,7 @@ class RemixAgent:
         return response
     
     async def _analyze_input_stage(self, context: Dict[str, Any]):
-        """Analyze input audio and generate insights"""
-        try:
+        """Analyze input audio and generate insights"""        try:
             request = context["request"]
             response = context["response"]
             
@@ -404,8 +384,7 @@ class RemixAgent:
             raise
     
     async def _generate_suggestions_stage(self, context: Dict[str, Any]):
-        """Generate creative suggestions based on analysis"""
-        try:
+        """Generate creative suggestions based on analysis"""        try:
             request = context["request"]
             analysis = context["analysis"]
             
@@ -430,8 +409,7 @@ class RemixAgent:
             raise
     
     async def _process_collaboration_stage(self, context: Dict[str, Any]):
-        """Handle collaborative aspects if enabled"""
-        try:
+        """Handle collaborative aspects if enabled"""        try:
             request = context["request"]
             
             if self.config.collaboration_enabled and request.collaboration_users:
@@ -453,8 +431,7 @@ class RemixAgent:
             raise
     
     async def _apply_modifications_stage(self, context: Dict[str, Any]):
-        """Apply remix modifications based on decisions"""
-        try:
+        """Apply remix modifications based on decisions"""        try:
             # Decision making
             decisions = await self.decision_engine.make_decisions(context)
             
@@ -495,8 +472,7 @@ class RemixAgent:
             raise
     
     async def _optimize_output_stage(self, context: Dict[str, Any]):
-        """Optimize the final mix"""
-        try:
+        """Optimize the final mix"""        try:
             # Determine input for optimization
             optimization_input = context["request"].input_audio_path
             
@@ -521,8 +497,7 @@ class RemixAgent:
             raise
     
     async def _validate_quality_stage(self, context: Dict[str, Any]):
-        """Validate the final output quality"""
-        try:
+        """Validate the final output quality"""        try:
             self.status = AgentStatus.VALIDATING
             
             # Get the final output path
@@ -548,16 +523,14 @@ class RemixAgent:
             raise
     
     async def get_request_status(self, request_id: str) -> Dict[str, Any]:
-        """
-        Get the current status of a remix request.
+        """        Get the current status of a remix request.
         
         Args:
             request_id: ID of the request to check
             
         Returns:
             Status information
-        """
-        try:
+        """        try:
             if request_id in self.active_requests:
                 request = self.active_requests[request_id]
                 return {
@@ -585,8 +558,7 @@ class RemixAgent:
             return {"error": str(e)}
     
     async def get_agent_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive agent performance metrics"""
-        try:
+        """Get comprehensive agent performance metrics"""        try:
             current_time = datetime.utcnow()
             uptime = (current_time - self.creation_time).total_seconds()
             
@@ -612,8 +584,7 @@ class RemixAgent:
             return {"error": str(e)}
     
     async def _validate_request(self, request: RemixRequest) -> bool:
-        """Validate remix request"""
-        try:
+        """Validate remix request"""        try:
             # Check required fields
             if not request.request_id or not request.user_id or not request.input_audio_path:
                 return False
@@ -631,8 +602,7 @@ class RemixAgent:
             return False
     
     def _estimate_completion_time(self, request: RemixRequest) -> str:
-        """Estimate completion time for a request"""
-        try:
+        """Estimate completion time for a request"""        try:
             # Simple estimation based on queue and average processing time
             queue_time = self.processing_queue.qsize() * self.metrics.get("average_processing_time", 60)
             completion_time = datetime.utcnow() + timedelta(seconds=queue_time)
@@ -641,8 +611,7 @@ class RemixAgent:
             return "unknown"
     
     def _update_average_metrics(self, response: RemixResponse):
-        """Update average performance metrics"""
-        try:
+        """Update average performance metrics"""        try:
             # Update average processing time
             total_successful = self.metrics["successful_requests"]
             if total_successful > 0:
@@ -663,8 +632,7 @@ class RemixAgent:
             self.logger.error(f"❌ Failed to update metrics: {e}")
     
     async def _process_request_queue(self):
-        """Background task to process queued requests"""
-        while True:
+        """Background task to process queued requests"""        while True:
             try:
                 # Check if we can process more requests
                 if len(self.active_requests) < self.config.max_concurrent_requests:
@@ -690,8 +658,7 @@ class RemixAgent:
                 await asyncio.sleep(5)
     
     async def _update_metrics_periodically(self):
-        """Background task to update metrics"""
-        while True:
+        """Background task to update metrics"""        while True:
             try:
                 current_time = datetime.utcnow()
                 self.metrics["uptime_seconds"] = (current_time - self.creation_time).total_seconds()
@@ -704,8 +671,7 @@ class RemixAgent:
                 await asyncio.sleep(60)
     
     async def _monitor_health(self):
-        """Background task to monitor agent health"""
-        while True:
+        """Background task to monitor agent health"""        while True:
             try:
                 # Check if agent is responsive
                 time_since_activity = (datetime.utcnow() - self.last_activity).total_seconds()
@@ -721,24 +687,20 @@ class RemixAgent:
                 await asyncio.sleep(300)
 
 class RemixDecisionEngine:
-    """
-    Decision engine for determining optimal remix processing strategies.
-    """
-    
+    """    Decision engine for determining optimal remix processing strategies.
+    """    
     def __init__(self):
         self.logger = logger
     
     async def make_decisions(self, context: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Make intelligent decisions about remix processing.
+        """        Make intelligent decisions about remix processing.
         
         Args:
             context: Processing context with analysis and suggestions
             
         Returns:
             Decisions for remix processing
-        """
-        try:
+        """        try:
             request = context["request"]
             analysis = context["analysis"]
             suggestions = context.get("suggestions", {})
@@ -772,37 +734,29 @@ class RemixDecisionEngine:
             return {}
     
     def _should_modify_rhythm(self, analysis: Dict[str, Any], request: RemixRequest) -> bool:
-        """Decide if rhythm should be modified"""
-        # Simplified decision logic
+        """Decide if rhythm should be modified"""        # Simplified decision logic
         return request.target_style and request.target_style != analysis.get("style", {}).get("primary_style")
     
     def _should_harmonize_melody(self, analysis: Dict[str, Any], request: RemixRequest) -> bool:
-        """Decide if melody should be harmonized"""
-        return request.target_genre and request.target_genre != analysis.get("genre", {}).get("primary_genre")
+        """Decide if melody should be harmonized"""        return request.target_genre and request.target_genre != analysis.get("genre", {}).get("primary_genre")
     
     def _should_adjust_tempo(self, analysis: Dict[str, Any], request: RemixRequest) -> bool:
-        """Decide if tempo should be adjusted"""
-        return "tempo" in request.creative_constraints
+        """Decide if tempo should be adjusted"""        return "tempo" in request.creative_constraints
     
     def _should_change_key(self, analysis: Dict[str, Any], request: RemixRequest) -> bool:
-        """Decide if key should be changed"""
-        return "key" in request.creative_constraints
+        """Decide if key should be changed"""        return "key" in request.creative_constraints
     
     def _get_rhythm_parameters(self, analysis: Dict[str, Any], suggestions: Dict[str, Any]) -> Dict[str, Any]:
-        """Get parameters for rhythm modification"""
-        return {"style": "electronic", "intensity": 0.7}
+        """Get parameters for rhythm modification"""        return {"style": "electronic", "intensity": 0.7}
     
     def _get_harmony_parameters(self, analysis: Dict[str, Any], suggestions: Dict[str, Any]) -> Dict[str, Any]:
-        """Get parameters for harmony modification"""
-        return {"complexity": "medium", "voice_leading": "smooth"}
+        """Get parameters for harmony modification"""        return {"complexity": "medium", "voice_leading": "smooth"}
     
     def _get_tempo_parameters(self, analysis: Dict[str, Any], request: RemixRequest) -> Dict[str, Any]:
-        """Get parameters for tempo adjustment"""
-        return {"target_bpm": request.creative_constraints.get("tempo", 120)}
+        """Get parameters for tempo adjustment"""        return {"target_bpm": request.creative_constraints.get("tempo", 120)}
     
     def _get_key_parameters(self, analysis: Dict[str, Any], request: RemixRequest) -> Dict[str, Any]:
-        """Get parameters for key change"""
-        return {"target_key": request.creative_constraints.get("key", "C")}
+        """Get parameters for key change"""        return {"target_key": request.creative_constraints.get("key", "C")}
 
 # Mock AI systems for development (would be replaced with actual implementations)
 class MockStyleAnalyzer:

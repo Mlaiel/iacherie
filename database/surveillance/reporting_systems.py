@@ -1,5 +1,4 @@
-"""
-Reporting Systems Module
+"""Reporting Systems Module
 =======================
 
 Comprehensive reporting and compliance documentation system.
@@ -7,9 +6,7 @@ Generates detailed reports for various stakeholders and compliance requirements.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All Rights Reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Union
 from datetime import datetime, timedelta
@@ -24,8 +21,7 @@ logger = logging.getLogger(__name__)
 
 
 class ReportType(Enum):
-    """Report type enumeration."""
-    COMPLIANCE = "compliance"
+    """Report type enumeration."""    COMPLIANCE = "compliance"
     VIOLATION = "violation"
     PERFORMANCE = "performance"
     DASHBOARD = "dashboard"
@@ -36,8 +32,7 @@ class ReportType(Enum):
 
 
 class ReportFormat(Enum):
-    """Report format enumeration."""
-    HTML = "html"
+    """Report format enumeration."""    HTML = "html"
     PDF = "pdf"
     JSON = "json"
     CSV = "csv"
@@ -46,8 +41,7 @@ class ReportFormat(Enum):
 
 
 class ReportStatus(Enum):
-    """Report status enumeration."""
-    PENDING = "pending"
+    """Report status enumeration."""    PENDING = "pending"
     GENERATING = "generating"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -56,8 +50,7 @@ class ReportStatus(Enum):
 
 @dataclass
 class ReportTemplate:
-    """Report template configuration."""
-    template_id: str
+    """Report template configuration."""    template_id: str
     name: str
     description: str
     report_type: ReportType
@@ -70,8 +63,7 @@ class ReportTemplate:
 
 @dataclass
 class ReportRequest:
-    """Report generation request."""
-    request_id: str
+    """Report generation request."""    request_id: str
     report_type: ReportType
     report_format: ReportFormat
     user_id: Optional[str]
@@ -85,8 +77,7 @@ class ReportRequest:
 
 @dataclass
 class ReportResult:
-    """Report generation result."""
-    request_id: str
+    """Report generation result."""    request_id: str
     status: ReportStatus
     file_path: Optional[str]
     file_size: Optional[int]
@@ -97,13 +88,11 @@ class ReportResult:
 
 
 class ComplianceReporter:
-    """
-    Compliance reporting system.
+    """    Compliance reporting system.
     
     Generates compliance reports for regulatory requirements
     and internal audit purposes.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.output_dir = Path(config.get("output_dir", "/tmp/reports/compliance"))
@@ -111,8 +100,7 @@ class ComplianceReporter:
         self.retention_days = config.get("retention_days", 2555)  # 7 years default
         
     async def initialize(self) -> bool:
-        """Initialize compliance reporter."""
-        try:
+        """Initialize compliance reporter."""        try:
             # Create output directory
             self.output_dir.mkdir(parents=True, exist_ok=True)
             
@@ -127,8 +115,7 @@ class ComplianceReporter:
             return False
     
     async def _load_compliance_templates(self) -> None:
-        """Load compliance report templates."""
-        # Load GDPR compliance template
+        """Load compliance report templates."""        # Load GDPR compliance template
         self.gdpr_template = {
             "sections": [
                 "data_processing_summary",
@@ -171,8 +158,7 @@ class ComplianceReporter:
         logger.info("Compliance templates loaded")
     
     async def generate_report(self, user_id: str, analytics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate compliance report."""
-        try:
+        """Generate compliance report."""        try:
             # Determine report type based on request
             report_type = analytics_data.get("compliance_type", "general")
             
@@ -190,8 +176,7 @@ class ComplianceReporter:
             return {"error": str(e)}
     
     async def _generate_gdpr_report(self, user_id: str, analytics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate GDPR compliance report."""
-        try:
+        """Generate GDPR compliance report."""        try:
             report_data = {
                 "report_type": "gdpr_compliance",
                 "user_id": user_id,
@@ -283,8 +268,7 @@ class ComplianceReporter:
             return {"error": str(e)}
     
     async def _generate_dmca_report(self, user_id: str, analytics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate DMCA compliance report."""
-        try:
+        """Generate DMCA compliance report."""        try:
             report_data = {
                 "report_type": "dmca_compliance",
                 "user_id": user_id,
@@ -343,8 +327,7 @@ class ComplianceReporter:
             return {"error": str(e)}
     
     async def _generate_sox_report(self, user_id: str, analytics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate SOX compliance report."""
-        try:
+        """Generate SOX compliance report."""        try:
             report_data = {
                 "report_type": "sox_compliance",
                 "user_id": user_id,
@@ -400,8 +383,7 @@ class ComplianceReporter:
             return {"error": str(e)}
     
     async def _generate_general_compliance_report(self, user_id: str, analytics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate general compliance report."""
-        try:
+        """Generate general compliance report."""        try:
             report_data = {
                 "report_type": "general_compliance",
                 "user_id": user_id,
@@ -459,9 +441,7 @@ class ComplianceReporter:
             return {"error": str(e)}
     
     async def _generate_html_report(self, report_type: str, data: Dict[str, Any]) -> str:
-        """Generate HTML report from data."""
-        html_template = f"""
-        <!DOCTYPE html>
+        """Generate HTML report from data."""        html_template = f"""        <!DOCTYPE html>
         <html lang="en">
         <head>
             <meta charset="UTF-8">
@@ -504,13 +484,11 @@ class ComplianceReporter:
             </div>
         </body>
         </html>
-        """
-        
+        """        
         return html_template
     
     def _format_period(self, period: Dict[str, str]) -> str:
-        """Format reporting period for display."""
-        if not period:
+        """Format reporting period for display."""        if not period:
             return "N/A"
         
         start = period.get("start", "N/A")
@@ -518,8 +496,7 @@ class ComplianceReporter:
         return f"{start} to {end}"
     
     def _generate_html_sections(self, report_type: str, data: Dict[str, Any]) -> str:
-        """Generate HTML sections based on report type."""
-        sections_html = ""
+        """Generate HTML sections based on report type."""        sections_html = ""
         
         # Generate sections based on data keys
         for key, value in data.items():
@@ -527,18 +504,15 @@ class ComplianceReporter:
                 section_title = key.replace('_', ' ').title()
                 section_content = self._format_section_content(value)
                 
-                sections_html += f"""
-                <div class="section">
+                sections_html += f"""                <div class="section">
                     <h2>{section_title}</h2>
                     {section_content}
                 </div>
-                """
-        
+                """        
         return sections_html
     
     def _format_section_content(self, content: Any) -> str:
-        """Format section content for HTML display."""
-        if isinstance(content, dict):
+        """Format section content for HTML display."""        if isinstance(content, dict):
             html = "<table class='table'>"
             for key, value in content.items():
                 formatted_key = key.replace('_', ' ').title()
@@ -556,8 +530,7 @@ class ComplianceReporter:
             return str(content)
     
     def _format_value(self, value: Any) -> str:
-        """Format individual values for display."""
-        if isinstance(value, bool):
+        """Format individual values for display."""        if isinstance(value, bool):
             if value:
                 return "<span class='status-compliant'>✓ Yes</span>"
             else:
@@ -578,21 +551,18 @@ class ComplianceReporter:
 
 
 class ViolationReporter:
-    """
-    Violation reporting system.
+    """    Violation reporting system.
     
     Generates detailed violation reports with evidence
     for legal and enforcement purposes.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.output_dir = Path(config.get("output_dir", "/tmp/reports/violations"))
         self.include_evidence = config.get("include_evidence", True)
         
     async def initialize(self) -> bool:
-        """Initialize violation reporter."""
-        try:
+        """Initialize violation reporter."""        try:
             # Create output directory
             self.output_dir.mkdir(parents=True, exist_ok=True)
             
@@ -604,8 +574,7 @@ class ViolationReporter:
             return False
     
     async def generate_report(self, user_id: str, analytics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate violation report."""
-        try:
+        """Generate violation report."""        try:
             violations_data = analytics_data.get("violations", [])
             
             report_data = {
@@ -653,8 +622,7 @@ class ViolationReporter:
             return {"error": str(e)}
     
     def _analyze_platform_breakdown(self, violations_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze violations by platform."""
-        platform_counts = {}
+        """Analyze violations by platform."""        platform_counts = {}
         platform_confidence = {}
         
         for violation in violations_data:
@@ -679,8 +647,7 @@ class ViolationReporter:
         }
     
     def _generate_violation_recommendations(self, violations_data: List[Dict[str, Any]]) -> List[str]:
-        """Generate recommendations based on violation patterns."""
-        recommendations = []
+        """Generate recommendations based on violation patterns."""        recommendations = []
         
         if not violations_data:
             recommendations.append("Continue monitoring to establish baseline patterns")
@@ -709,9 +676,7 @@ class ViolationReporter:
         return recommendations
     
     async def _generate_violation_html_report(self, report_data: Dict[str, Any]) -> str:
-        """Generate HTML violation report."""
-        html_template = f"""
-        <!DOCTYPE html>
+        """Generate HTML violation report."""        html_template = f"""        <!DOCTYPE html>
         <html lang="en">
         <head>
             <meta charset="UTF-8">
@@ -779,13 +744,11 @@ class ViolationReporter:
             </div>
         </body>
         </html>
-        """
-        
+        """        
         return html_template
     
     def _generate_violation_summary_html(self, summary: Dict[str, Any]) -> str:
-        """Generate violation summary HTML."""
-        total = summary.get("total_violations", 0)
+        """Generate violation summary HTML."""        total = summary.get("total_violations", 0)
         high_confidence = summary.get("high_confidence_violations", 0)
         platforms = summary.get("platforms_affected", 0)
         avg_similarity = summary.get("average_similarity", 0)
@@ -800,8 +763,7 @@ class ViolationReporter:
             alert_class = "alert-info"
             alert_text = f"Low violation activity: {total} violations found"
         
-        return f"""
-        <div class="alert {alert_class}">
+        return f"""        <div class="alert {alert_class}">
             {alert_text}
         </div>
         <table class="table">
@@ -811,11 +773,9 @@ class ViolationReporter:
             <tr><td><strong>Average Similarity Score</strong></td><td>{avg_similarity:.2%}</td></tr>
             <tr><td><strong>Confidence Rate</strong></td><td>{(high_confidence/total*100):.1f}%</td></tr>
         </table>
-        """
-    
+        """    
     def _generate_platform_analysis_html(self, breakdown: Dict[str, Any]) -> str:
-        """Generate platform analysis HTML."""
-        violation_counts = breakdown.get("violation_counts", {})
+        """Generate platform analysis HTML."""        violation_counts = breakdown.get("violation_counts", {})
         avg_confidence = breakdown.get("average_confidence", {})
         
         if not violation_counts:
@@ -831,8 +791,7 @@ class ViolationReporter:
         return html
     
     def _generate_violation_details_html(self, violations: List[Dict[str, Any]]) -> str:
-        """Generate violation details HTML."""
-        if not violations:
+        """Generate violation details HTML."""        if not violations:
             return "<p>No violation details available.</p>"
         
         html = ""
@@ -854,39 +813,33 @@ class ViolationReporter:
                 confidence_class = "low-confidence"
                 confidence_label = "Low"
             
-            html += f"""
-            <div class="violation-item {confidence_class}">
+            html += f"""            <div class="violation-item {confidence_class}">
                 <h4>{platform.title()} Violation - {confidence_label} Confidence</h4>
                 <p><strong>URL:</strong> <a href="{url}" target="_blank">{url}</a></p>
                 <p><strong>Similarity:</strong> {similarity:.2%}</p>
                 <p><strong>Confidence:</strong> {confidence:.2%}</p>
                 <p><strong>Detected:</strong> {detected_at}</p>
             </div>
-            """
-        
+            """        
         if len(violations) > 20:
             html += f"<p><em>... and {len(violations) - 20} more violations</em></p>"
         
         return html
     
     def _generate_evidence_summary_html(self, evidence: Dict[str, Any]) -> str:
-        """Generate evidence summary HTML."""
-        screenshots = evidence.get("screenshots_collected", 0)
+        """Generate evidence summary HTML."""        screenshots = evidence.get("screenshots_collected", 0)
         metadata = evidence.get("metadata_extracted", 0)
         notices = evidence.get("legal_notices_sent", 0)
         
-        return f"""
-        <table class="table">
+        return f"""        <table class="table">
             <tr><td><strong>Screenshots Collected</strong></td><td>{screenshots}</td></tr>
             <tr><td><strong>Metadata Extracted</strong></td><td>{metadata}</td></tr>
             <tr><td><strong>Legal Notices Sent</strong></td><td>{notices}</td></tr>
             <tr><td><strong>Evidence Integrity</strong></td><td>✓ Verified</td></tr>
         </table>
-        """
-    
+        """    
     def _generate_recommendations_html(self, recommendations: List[str]) -> str:
-        """Generate recommendations HTML."""
-        if not recommendations:
+        """Generate recommendations HTML."""        if not recommendations:
             return "<p>No specific recommendations at this time.</p>"
         
         html = "<ul>"
@@ -898,19 +851,16 @@ class ViolationReporter:
 
 
 class PerformanceReporter:
-    """
-    Performance reporting system.
+    """    Performance reporting system.
     
     Generates performance metrics and system health reports.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.output_dir = Path(config.get("output_dir", "/tmp/reports/performance"))
         
     async def initialize(self) -> bool:
-        """Initialize performance reporter."""
-        try:
+        """Initialize performance reporter."""        try:
             self.output_dir.mkdir(parents=True, exist_ok=True)
             logger.info("PerformanceReporter initialized successfully")
             return True
@@ -919,8 +869,7 @@ class PerformanceReporter:
             return False
     
     async def generate_report(self, analytics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate performance report."""
-        try:
+        """Generate performance report."""        try:
             report_data = {
                 "report_type": "performance_summary",
                 "generated_at": datetime.utcnow().isoformat(),
@@ -946,18 +895,15 @@ class PerformanceReporter:
 
 
 class DashboardReporter:
-    """
-    Dashboard data reporter.
+    """    Dashboard data reporter.
     
     Generates real-time dashboard data and visualizations.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         
     async def initialize(self) -> bool:
-        """Initialize dashboard reporter."""
-        try:
+        """Initialize dashboard reporter."""        try:
             logger.info("DashboardReporter initialized successfully")
             return True
         except Exception as e:
@@ -965,8 +911,7 @@ class DashboardReporter:
             return False
     
     async def generate_report(self, analytics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate dashboard data."""
-        try:
+        """Generate dashboard data."""        try:
             return {
                 "report_type": "dashboard_data",
                 "generated_at": datetime.utcnow().isoformat(),

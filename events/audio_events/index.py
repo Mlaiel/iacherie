@@ -1,5 +1,4 @@
-"""
-Audio Events Module Index - Central Entry Point
+"""Audio Events Module Index - Central Entry Point
 ==============================================
 
 This module provides centralized access to all audio event classes and handlers
@@ -15,9 +14,7 @@ Usage:
         AudioFingerprintingEventHandler,
         # ... other imports
     )
-"""
-
-# Import all event classes for easy access
+"""# Import all event classes for easy access
 from .upload_events import (
     AudioUploadStartedEvent,
     AudioUploadProgressEvent,
@@ -278,13 +275,11 @@ __all__ = [
 
 
 def get_all_audio_event_types():
-    """
-    Returns a list of all audio event types for registration purposes.
+    """    Returns a list of all audio event types for registration purposes.
     
     Returns:
         List[type]: List of all audio event classes
-    """
-    return [
+    """    return [
         # Upload Events
         AudioUploadStartedEvent,
         AudioUploadProgressEvent,
@@ -378,13 +373,11 @@ def get_all_audio_event_types():
 
 
 def get_all_audio_event_handlers():
-    """
-    Returns a list of all audio event handler classes.
+    """    Returns a list of all audio event handler classes.
     
     Returns:
         List[type]: List of all audio event handler classes
-    """
-    return [
+    """    return [
         AudioUploadEventHandler,
         AudioProcessingEventHandler,
         AudioFingerprintingEventHandler,
@@ -397,8 +390,7 @@ def get_all_audio_event_handlers():
 
 
 def register_all_audio_event_handlers(event_bus, services):
-    """
-    Register all audio event handlers with the event bus.
+    """    Register all audio event handlers with the event bus.
     
     Args:
         event_bus: The event bus instance
@@ -406,8 +398,7 @@ def register_all_audio_event_handlers(event_bus, services):
         
     Returns:
         List: List of registered handler instances
-    """
-    handlers = []
+    """    handlers = []
     
     # Register upload event handler
     upload_handler = AudioUploadEventHandler(

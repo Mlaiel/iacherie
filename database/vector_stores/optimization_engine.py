@@ -1,5 +1,4 @@
-"""
-Vector Database Optimization Engine
+"""Vector Database Optimization Engine
 
 This module provides advanced optimization capabilities for vector databases,
 including index tuning, query optimization, and performance enhancement.
@@ -11,9 +10,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 WARNING: This code is proprietary to Fahed Mlaiel. Any unauthorized copying, modification, 
 or distribution without explicit written permission is strictly prohibited and will result 
 in legal action under German and international copyright law.
-"""
-
-import os
+"""import os
 import json
 import logging
 import asyncio
@@ -49,8 +46,7 @@ settings = get_settings()
 
 
 class OptimizationStrategy(Enum):
-    """Vector database optimization strategies"""
-    PERFORMANCE = "performance"      # Focus on query speed
+    """Vector database optimization strategies"""    PERFORMANCE = "performance"      # Focus on query speed
     MEMORY = "memory"               # Focus on memory efficiency
     BALANCED = "balanced"           # Balance speed and memory
     QUALITY = "quality"             # Focus on search quality
@@ -58,8 +54,7 @@ class OptimizationStrategy(Enum):
 
 
 class IndexType(Enum):
-    """FAISS index types for optimization"""
-    FLAT = "Flat"                   # Brute force, exact search
+    """FAISS index types for optimization"""    FLAT = "Flat"                   # Brute force, exact search
     IVF_FLAT = "IVFFlat"           # Inverted file with flat quantizer
     IVF_PQ = "IVFPQ"               # Inverted file with product quantization
     HNSW = "HNSW"                  # Hierarchical Navigable Small World
@@ -69,8 +64,7 @@ class IndexType(Enum):
 
 @dataclass
 class OptimizationConfig:
-    """Configuration for vector database optimization"""
-    strategy: OptimizationStrategy
+    """Configuration for vector database optimization"""    strategy: OptimizationStrategy
     target_latency_ms: float = 50.0
     target_memory_mb: float = 1024.0
     target_accuracy: float = 0.95
@@ -83,8 +77,7 @@ class OptimizationConfig:
 
 @dataclass
 class PerformanceMetrics:
-    """Performance metrics for optimization analysis"""
-    query_latency_ms: float
+    """Performance metrics for optimization analysis"""    query_latency_ms: float
     memory_usage_mb: float
     accuracy_score: float
     throughput_qps: float
@@ -96,8 +89,7 @@ class PerformanceMetrics:
 
 @dataclass
 class OptimizationResult:
-    """Result of optimization process"""
-    original_metrics: PerformanceMetrics
+    """Result of optimization process"""    original_metrics: PerformanceMetrics
     optimized_metrics: PerformanceMetrics
     improvement_ratio: float
     recommended_config: Dict[str, Any]
@@ -106,8 +98,7 @@ class OptimizationResult:
 
 
 class VectorDatabaseOptimizer:
-    """
-    Advanced vector database optimization engine.
+    """    Advanced vector database optimization engine.
     
     Features:
     - Intelligent index selection and tuning
@@ -117,11 +108,9 @@ class VectorDatabaseOptimizer:
     - Multi-objective optimization
     - Real-time performance monitoring
     - Hardware-aware optimization
-    """
-    
+    """    
     def __init__(self):
-        """Initialize vector database optimizer"""
-        self.vector_manager = VectorStoreManager()
+        """Initialize vector database optimizer"""        self.vector_manager = VectorStoreManager()
         self.metrics_collector = MetricsCollector()
         self.automl_optimizer = AutoMLOptimizer()
         
@@ -139,8 +128,7 @@ class VectorDatabaseOptimizer:
         logger.info("Initialized VectorDatabaseOptimizer")
     
     async def initialize(self) -> None:
-        """Initialize optimizer and baseline metrics"""
-        try:
+        """Initialize optimizer and baseline metrics"""        try:
             await self.vector_manager.initialize()
             
             # Collect baseline metrics for all content types
@@ -161,8 +149,7 @@ class VectorDatabaseOptimizer:
         config: OptimizationConfig,
         test_vectors: Optional[np.ndarray] = None
     ) -> OptimizationResult:
-        """
-        Optimize vector database for specific content type
+        """        Optimize vector database for specific content type
         
         Args:
             content_type: Content type to optimize
@@ -171,8 +158,7 @@ class VectorDatabaseOptimizer:
             
         Returns:
             Optimization result with recommendations
-        """
-        try:
+        """        try:
             logger.info(f"Starting optimization for {content_type} with strategy {config.strategy.value}")
             
             # Get current metrics
@@ -253,8 +239,7 @@ class VectorDatabaseOptimizer:
         config: OptimizationConfig,
         test_vectors: np.ndarray
     ) -> Tuple[Dict[str, Any], PerformanceMetrics, List[str]]:
-        """Optimize for query performance (speed)"""
-        log = []
+        """Optimize for query performance (speed)"""        log = []
         best_config = None
         best_metrics = None
         
@@ -311,8 +296,7 @@ class VectorDatabaseOptimizer:
         config: OptimizationConfig,
         test_vectors: np.ndarray
     ) -> Tuple[Dict[str, Any], PerformanceMetrics, List[str]]:
-        """Optimize for memory efficiency"""
-        log = []
+        """Optimize for memory efficiency"""        log = []
         best_config = None
         best_metrics = None
         
@@ -364,8 +348,7 @@ class VectorDatabaseOptimizer:
         config: OptimizationConfig,
         test_vectors: np.ndarray
     ) -> Tuple[Dict[str, Any], PerformanceMetrics, List[str]]:
-        """Optimize for balanced performance and efficiency"""
-        log = []
+        """Optimize for balanced performance and efficiency"""        log = []
         best_config = None
         best_metrics = None
         best_score = 0.0
@@ -419,8 +402,7 @@ class VectorDatabaseOptimizer:
         config: OptimizationConfig,
         test_vectors: np.ndarray
     ) -> Tuple[Dict[str, Any], PerformanceMetrics, List[str]]:
-        """Optimize for search quality (accuracy)"""
-        log = []
+        """Optimize for search quality (accuracy)"""        log = []
         best_config = None
         best_metrics = None
         
@@ -470,8 +452,7 @@ class VectorDatabaseOptimizer:
         config: OptimizationConfig,
         test_vectors: np.ndarray
     ) -> Tuple[Dict[str, Any], PerformanceMetrics, List[str]]:
-        """Optimize for storage efficiency"""
-        log = []
+        """Optimize for storage efficiency"""        log = []
         best_config = None
         best_metrics = None
         
@@ -519,8 +500,7 @@ class VectorDatabaseOptimizer:
         test_vectors: np.ndarray,
         config: OptimizationConfig
     ) -> PerformanceMetrics:
-        """Test specific index configuration and measure performance"""
-        try:
+        """Test specific index configuration and measure performance"""        try:
             # Create test index
             dimension = test_vectors.shape[1]
             test_index = self._create_faiss_index(index_config, dimension)
@@ -595,8 +575,7 @@ class VectorDatabaseOptimizer:
             )
     
     def _create_faiss_index(self, config: Dict[str, Any], dimension: int) -> faiss.Index:
-        """Create FAISS index based on configuration"""
-        try:
+        """Create FAISS index based on configuration"""        try:
             index_type = config["type"]
             
             if index_type == "Flat":
@@ -664,8 +643,7 @@ class VectorDatabaseOptimizer:
         query_vectors: np.ndarray,
         test_index: faiss.Index
     ) -> float:
-        """Measure search accuracy compared to exact search"""
-        try:
+        """Measure search accuracy compared to exact search"""        try:
             # Get ground truth using exact search
             exact_index = faiss.IndexFlatL2(all_vectors.shape[1])
             exact_index.add(all_vectors.astype(np.float32))
@@ -693,8 +671,7 @@ class VectorDatabaseOptimizer:
             return 0.0
     
     def _estimate_index_size(self, index: faiss.Index, num_vectors: int) -> float:
-        """Estimate index size in MB"""
-        try:
+        """Estimate index size in MB"""        try:
             # Basic estimation based on index type and vector count
             dimension = index.d
             
@@ -716,8 +693,7 @@ class VectorDatabaseOptimizer:
             return 0.0
     
     def _get_gpu_usage(self) -> float:
-        """Get GPU usage percentage"""
-        try:
+        """Get GPU usage percentage"""        try:
             import pynvml
             pynvml.nvmlInit()
             handle = pynvml.nvmlDeviceGetHandleByIndex(0)
@@ -727,8 +703,7 @@ class VectorDatabaseOptimizer:
             return 0.0
     
     async def _collect_baseline_metrics(self, content_type: str) -> PerformanceMetrics:
-        """Collect baseline performance metrics"""
-        try:
+        """Collect baseline performance metrics"""        try:
             # Generate sample data for testing
             test_vectors = await self._generate_test_vectors(content_type, 100)
             
@@ -745,8 +720,7 @@ class VectorDatabaseOptimizer:
             return PerformanceMetrics(0, 0, 0, 0, 0, 0, 0)
     
     async def _generate_test_vectors(self, content_type: str, count: int) -> np.ndarray:
-        """Generate test vectors for optimization"""
-        try:
+        """Generate test vectors for optimization"""        try:
             # Get some real vectors from database for realistic testing
             async with get_db_session() as session:
                 stmt = select(ContentFingerprint.vector_embedding).where(
@@ -785,8 +759,7 @@ class VectorDatabaseOptimizer:
         content_type: str,
         config: OptimizationConfig
     ) -> PerformanceMetrics:
-        """Measure current system performance"""
-        try:
+        """Measure current system performance"""        try:
             # Get current configuration if exists
             current_config = self.current_configs.get(content_type, {"type": "IVFFlat", "nlist": 256})
             
@@ -810,8 +783,7 @@ class VectorDatabaseOptimizer:
         optimized: PerformanceMetrics,
         strategy: OptimizationStrategy
     ) -> float:
-        """Calculate improvement ratio based on optimization strategy"""
-        try:
+        """Calculate improvement ratio based on optimization strategy"""        try:
             if strategy == OptimizationStrategy.PERFORMANCE:
                 if original.query_latency_ms == 0:
                     return 1.0
@@ -846,8 +818,7 @@ class VectorDatabaseOptimizer:
             return 1.0
     
     def _get_system_info(self) -> Dict[str, Any]:
-        """Get system hardware information"""
-        try:
+        """Get system hardware information"""        try:
             info = {
                 "cpu_count": psutil.cpu_count(),
                 "memory_gb": psutil.virtual_memory().total / (1024**3),
@@ -877,8 +848,7 @@ class VectorDatabaseOptimizer:
         content_type: str,
         optimization_result: OptimizationResult
     ) -> bool:
-        """Apply optimization result to production system"""
-        try:
+        """Apply optimization result to production system"""        try:
             if not optimization_result.success:
                 logger.warning(f"Attempting to apply failed optimization for {content_type}")
                 return False
@@ -912,8 +882,7 @@ class VectorDatabaseOptimizer:
         content_type: str,
         config: Dict[str, Any]
     ) -> None:
-        """Apply FAISS-specific optimization"""
-        try:
+        """Apply FAISS-specific optimization"""        try:
             # This would involve recreating the index with the new configuration
             # For production, this should be done carefully with backup and migration
             logger.info(f"Applying FAISS optimization for {content_type}: {config}")
@@ -929,8 +898,7 @@ class VectorDatabaseOptimizer:
             raise
     
     async def get_optimization_report(self) -> Dict[str, Any]:
-        """Get comprehensive optimization report"""
-        try:
+        """Get comprehensive optimization report"""        try:
             report = {
                 "system_info": self.system_info,
                 "optimization_history": [asdict(result) for result in self.optimization_history],
@@ -949,8 +917,7 @@ class VectorDatabaseOptimizer:
             return {}
     
     async def _generate_recommendations(self) -> List[str]:
-        """Generate optimization recommendations"""
-        recommendations = []
+        """Generate optimization recommendations"""        recommendations = []
         
         try:
             # Analyze system resources
@@ -982,8 +949,7 @@ class VectorDatabaseOptimizer:
             return ["Error generating recommendations"]
     
     async def close(self) -> None:
-        """Close optimizer and cleanup resources"""
-        try:
+        """Close optimizer and cleanup resources"""        try:
             # Shutdown thread pool
             self.thread_pool.shutdown(wait=True)
             

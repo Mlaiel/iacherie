@@ -1,5 +1,4 @@
-"""
-Content Performance Metrics Module - Advanced Analytics & KPI Tracking System
+"""Content Performance Metrics Module - Advanced Analytics & KPI Tracking System
 
 Module avancé pour le suivi des performances, analytics et KPIs du contenu
 dans la plateforme IA Influencer Agent selon la logique métier.
@@ -16,9 +15,7 @@ Contact: mlaiel@live.de
 
 🎯 LOGIQUE MÉTIER PERFORMANCE :
 Upload → IA Processing → Protection → Distribution → Performance Tracking → Revenue Optimization
-"""
-
-from typing import Dict, List, Any, Optional, Union, Tuple
+"""from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from decimal import Decimal
@@ -39,8 +36,7 @@ from .content_models import Base, ContentType
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Types of performance metrics"""
-    ENGAGEMENT = "engagement"
+    """Types of performance metrics"""    ENGAGEMENT = "engagement"
     REACH = "reach"
     IMPRESSIONS = "impressions"
     VIEWS = "views"
@@ -56,8 +52,7 @@ class MetricType(Enum):
     GROWTH = "growth"
 
 class TimeFrame(Enum):
-    """Time frame for metrics aggregation"""
-    HOURLY = "hourly"
+    """Time frame for metrics aggregation"""    HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -66,8 +61,7 @@ class TimeFrame(Enum):
     REAL_TIME = "real_time"
 
 class PlatformMetrics(Enum):
-    """Platform-specific metric types"""
-    YOUTUBE_VIEWS = "youtube_views"
+    """Platform-specific metric types"""    YOUTUBE_VIEWS = "youtube_views"
     YOUTUBE_WATCH_TIME = "youtube_watch_time"
     YOUTUBE_SUBSCRIBERS = "youtube_subscribers"
     INSTAGRAM_REACH = "instagram_reach"
@@ -80,8 +74,7 @@ class PlatformMetrics(Enum):
     TWITTER_IMPRESSIONS = "twitter_impressions"
 
 class TrendDirection(Enum):
-    """Trend direction indicators"""
-    RISING = "rising"
+    """Trend direction indicators"""    RISING = "rising"
     FALLING = "falling"
     STABLE = "stable"
     VOLATILE = "volatile"
@@ -89,8 +82,7 @@ class TrendDirection(Enum):
     TROUGH = "trough"
 
 class PerformanceLevel(Enum):
-    """Performance level classifications"""
-    POOR = "poor"
+    """Performance level classifications"""    POOR = "poor"
     BELOW_AVERAGE = "below_average"
     AVERAGE = "average"
     ABOVE_AVERAGE = "above_average"
@@ -99,8 +91,7 @@ class PerformanceLevel(Enum):
 
 @dataclass
 class MetricSnapshot:
-    """Single metric measurement at a point in time"""
-    metric_type: MetricType
+    """Single metric measurement at a point in time"""    metric_type: MetricType
     value: float
     timestamp: datetime
     platform: str
@@ -117,8 +108,7 @@ class MetricSnapshot:
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis result"""
-    direction: TrendDirection
+    """Trend analysis result"""    direction: TrendDirection
     velocity: float  # Rate of change
     confidence: float  # Confidence in trend prediction
     predicted_next_value: float
@@ -127,8 +117,7 @@ class TrendAnalysis:
     anomalies_detected: List[datetime] = field(default_factory=list)
 
 class ContentPerformanceMetrics(Base):
-    """Database model for content performance metrics"""
-    __tablename__ = "content_performance_metrics"
+    """Database model for content performance metrics"""    __tablename__ = "content_performance_metrics"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     content_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -223,14 +212,12 @@ class ContentPerformanceMetrics(Base):
         return f"<ContentPerformanceMetrics(content_id={self.content_id}, platform={self.platform}, views={self.views})>"
     
     def calculate_engagement_rate(self) -> float:
-        """Calculate engagement rate"""
-        if self.impressions == 0:
+        """Calculate engagement rate"""        if self.impressions == 0:
             return 0.0
         return ((self.likes + self.comments + self.shares) / self.impressions) * 100
     
     def calculate_viral_score(self) -> float:
-        """Calculate viral potential score"""
-        if self.views == 0:
+        """Calculate viral potential score"""        if self.views == 0:
             return 0.0
         
         # Viral indicators: high share ratio, rapid growth, high engagement
@@ -242,8 +229,7 @@ class ContentPerformanceMetrics(Base):
         return min(100.0, viral_score)
 
 class PerformanceTrend(Base):
-    """Database model for performance trend tracking"""
-    __tablename__ = "performance_trends"
+    """Database model for performance trend tracking"""    __tablename__ = "performance_trends"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     content_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -277,8 +263,7 @@ class PerformanceTrend(Base):
         return f"<PerformanceTrend(metric={self.metric_type}, direction={self.trend_direction}, change={self.percentage_change}%)>"
 
 class PerformanceBenchmark(Base):
-    """Database model for performance benchmarks"""
-    __tablename__ = "performance_benchmarks"
+    """Database model for performance benchmarks"""    __tablename__ = "performance_benchmarks"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     content_type = Column(String(20), nullable=False, index=True)
@@ -307,8 +292,7 @@ class PerformanceBenchmark(Base):
     updated_at = Column(DateTime(timezone=True), nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
     
     def get_performance_level(self, value: float) -> PerformanceLevel:
-        """Determine performance level based on benchmark"""
-        if value >= self.percentile_90:
+        """Determine performance level based on benchmark"""        if value >= self.percentile_90:
             return PerformanceLevel.VIRAL
         elif value >= self.percentile_75:
             return PerformanceLevel.EXCELLENT
@@ -322,8 +306,7 @@ class PerformanceBenchmark(Base):
             return PerformanceLevel.POOR
 
 class PerformanceAnalyzer:
-    """Advanced performance analysis engine"""
-    
+    """Advanced performance analysis engine"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -333,8 +316,7 @@ class PerformanceAnalyzer:
     async def analyze_content_performance(self, content_id: str, 
                                         start_date: datetime = None,
                                         end_date: datetime = None) -> Dict[str, Any]:
-        """Perform comprehensive performance analysis"""
-        try:
+        """Perform comprehensive performance analysis"""        try:
             if not start_date:
                 start_date = datetime.utcnow() - timedelta(days=self.trend_window_days)
             if not end_date:
@@ -376,14 +358,12 @@ class PerformanceAnalyzer:
     async def _get_metrics_for_period(self, content_id: str, 
                                     start_date: datetime, 
                                     end_date: datetime) -> List[ContentPerformanceMetrics]:
-        """Retrieve metrics for analysis period"""
-        # Placeholder - in production would query database
+        """Retrieve metrics for analysis period"""        # Placeholder - in production would query database
         # For now, return sample data structure
         return []
     
     def _generate_summary(self, metrics: List[ContentPerformanceMetrics]) -> Dict[str, Any]:
-        """Generate performance summary"""
-        if not metrics:
+        """Generate performance summary"""        if not metrics:
             return {}
         
         total_views = sum(m.views for m in metrics)
@@ -403,8 +383,7 @@ class PerformanceAnalyzer:
         }
     
     async def _analyze_trends(self, metrics: List[ContentPerformanceMetrics]) -> Dict[str, TrendAnalysis]:
-        """Analyze performance trends"""
-        trends = {}
+        """Analyze performance trends"""        trends = {}
         
         if len(metrics) < 2:
             return trends
@@ -436,8 +415,7 @@ class PerformanceAnalyzer:
         return trends
     
     def _calculate_trend(self, values: List[float], timestamps: List[datetime]) -> TrendAnalysis:
-        """Calculate trend for a metric"""
-        if len(values) < 2:
+        """Calculate trend for a metric"""        if len(values) < 2:
             return TrendAnalysis(
                 direction=TrendDirection.STABLE,
                 velocity=0.0,
@@ -477,8 +455,7 @@ class PerformanceAnalyzer:
         )
     
     def _analyze_engagement(self, metrics: List[ContentPerformanceMetrics]) -> Dict[str, Any]:
-        """Analyze engagement patterns"""
-        if not metrics:
+        """Analyze engagement patterns"""        if not metrics:
             return {}
         
         engagement_rates = [m.calculate_engagement_rate() for m in metrics]
@@ -499,8 +476,7 @@ class PerformanceAnalyzer:
         }
     
     def _analyze_revenue(self, metrics: List[ContentPerformanceMetrics]) -> Dict[str, Any]:
-        """Analyze revenue performance"""
-        if not metrics:
+        """Analyze revenue performance"""        if not metrics:
             return {}
         
         total_revenue = sum(float(m.revenue_generated) for m in metrics)
@@ -520,8 +496,7 @@ class PerformanceAnalyzer:
         }
     
     def _analyze_audience(self, metrics: List[ContentPerformanceMetrics]) -> Dict[str, Any]:
-        """Analyze audience insights"""
-        if not metrics:
+        """Analyze audience insights"""        if not metrics:
             return {}
         
         # Aggregate demographic data
@@ -552,8 +527,7 @@ class PerformanceAnalyzer:
         }
     
     def _compare_platforms(self, metrics: List[ContentPerformanceMetrics]) -> Dict[str, Any]:
-        """Compare performance across platforms"""
-        platform_data = defaultdict(list)
+        """Compare performance across platforms"""        platform_data = defaultdict(list)
         
         for metric in metrics:
             platform_data[metric.platform].append(metric)
@@ -570,8 +544,7 @@ class PerformanceAnalyzer:
         return comparison
     
     async def _benchmark_performance(self, metrics: List[ContentPerformanceMetrics]) -> Dict[str, Any]:
-        """Benchmark performance against industry standards"""
-        # In production, would query benchmark database
+        """Benchmark performance against industry standards"""        # In production, would query benchmark database
         # For now, return placeholder data
         return {
             'industry_percentile': 65,  # 65th percentile
@@ -581,8 +554,7 @@ class PerformanceAnalyzer:
         }
     
     async def _generate_predictions(self, metrics: List[ContentPerformanceMetrics]) -> Dict[str, Any]:
-        """Generate performance predictions"""
-        if len(metrics) < 3:
+        """Generate performance predictions"""        if len(metrics) < 3:
             return {'error': 'Insufficient data for predictions'}
         
         # Simple linear prediction based on recent trends
@@ -601,8 +573,7 @@ class PerformanceAnalyzer:
         }
     
     def _generate_recommendations(self, metrics: List[ContentPerformanceMetrics]) -> List[Dict[str, str]]:
-        """Generate performance improvement recommendations"""
-        recommendations = []
+        """Generate performance improvement recommendations"""        recommendations = []
         
         if not metrics:
             return recommendations
@@ -631,8 +602,7 @@ class PerformanceAnalyzer:
         return recommendations
     
     def _detect_anomalies(self, metrics: List[ContentPerformanceMetrics]) -> List[Dict[str, Any]]:
-        """Detect performance anomalies"""
-        anomalies = []
+        """Detect performance anomalies"""        anomalies = []
         
         if len(metrics) < 5:
             return anomalies
@@ -656,8 +626,7 @@ class PerformanceAnalyzer:
         return anomalies
     
     def _calculate_growth_rate(self, values: List[float]) -> float:
-        """Calculate growth rate for a series of values"""
-        if len(values) < 2:
+        """Calculate growth rate for a series of values"""        if len(values) < 2:
             return 0.0
         
         # Remove zeros to avoid division errors
@@ -672,16 +641,14 @@ class PerformanceAnalyzer:
         return growth_rate
 
 class PerformanceReportGenerator:
-    """Generate comprehensive performance reports"""
-    
+    """Generate comprehensive performance reports"""    
     def __init__(self, analyzer: PerformanceAnalyzer = None):
         self.analyzer = analyzer or PerformanceAnalyzer()
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def generate_comprehensive_report(self, content_id: str,
                                           report_type: str = 'monthly') -> Dict[str, Any]:
-        """Generate comprehensive performance report"""
-        try:
+        """Generate comprehensive performance report"""        try:
             # Determine time period based on report type
             if report_type == 'daily':
                 start_date = datetime.utcnow() - timedelta(days=1)
@@ -722,8 +689,7 @@ class PerformanceReportGenerator:
             raise
     
     def _generate_executive_summary(self, analysis: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate executive summary"""
-        summary = analysis.get('summary', {})
+        """Generate executive summary"""        summary = analysis.get('summary', {})
         trends = analysis.get('trends', {})
         
         return {
@@ -748,8 +714,7 @@ class PerformanceReportGenerator:
         }
     
     def _generate_visualization_config(self, analysis: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate configuration for data visualizations"""
-        return {
+        """Generate configuration for data visualizations"""        return {
             'charts': [
                 {
                     'type': 'line',
@@ -787,8 +752,7 @@ class PerformanceReportGenerator:
         }
     
     def _generate_action_items(self, analysis: Dict[str, Any]) -> List[Dict[str, str]]:
-        """Generate actionable items from analysis"""
-        action_items = []
+        """Generate actionable items from analysis"""        action_items = []
         recommendations = analysis.get('recommendations', [])
         
         for rec in recommendations:
@@ -814,8 +778,7 @@ class PerformanceReportGenerator:
         return action_items
     
     def _generate_next_steps(self, analysis: Dict[str, Any]) -> List[str]:
-        """Generate next steps recommendations"""
-        next_steps = []
+        """Generate next steps recommendations"""        next_steps = []
         
         summary = analysis.get('summary', {})
         

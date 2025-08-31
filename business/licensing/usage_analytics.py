@@ -1,5 +1,4 @@
-"""
-Usage Analytics Service - Advanced usage tracking and analytics
+"""Usage Analytics Service - Advanced usage tracking and analytics
 
 Tracks and analyzes content usage across platforms, territories, and licensing agreements
 with real-time monitoring and comprehensive reporting capabilities.
@@ -11,9 +10,7 @@ WARNING - COPYRIGHT PROTECTION:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 authorization from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
-"""
-
-from typing import Dict, List, Optional, Any, Tuple
+"""from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
 from dataclasses import dataclass, field
@@ -32,8 +29,7 @@ from ..ai.usage_intelligence import UsageIntelligenceEngine
 
 
 class UsageType(Enum):
-    """Types of content usage"""
-    STREAM = "stream"
+    """Types of content usage"""    STREAM = "stream"
     DOWNLOAD = "download"
     BROADCAST = "broadcast"
     SYNC_PLACEMENT = "sync_placement"
@@ -46,8 +42,7 @@ class UsageType(Enum):
 
 
 class UsageMetric(Enum):
-    """Usage measurement metrics"""
-    PLAY_COUNT = "play_count"
+    """Usage measurement metrics"""    PLAY_COUNT = "play_count"
     UNIQUE_LISTENERS = "unique_listeners"
     TOTAL_DURATION = "total_duration"
     COMPLETION_RATE = "completion_rate"
@@ -58,8 +53,7 @@ class UsageMetric(Enum):
 
 
 class ReportingPeriod(Enum):
-    """Reporting period types"""
-    REAL_TIME = "real_time"
+    """Reporting period types"""    REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -71,8 +65,7 @@ class ReportingPeriod(Enum):
 
 @dataclass
 class UsageInsights:
-    """Usage analytics insights"""
-    total_usage_count: int
+    """Usage analytics insights"""    total_usage_count: int
     unique_users: int
     peak_usage_period: str
     geographic_distribution: Dict[str, int]
@@ -83,8 +76,7 @@ class UsageInsights:
 
 
 class UsageTrackingRequest(BaseModel):
-    """Usage tracking request structure"""
-    content_id: str = Field(..., description="Content being tracked")
+    """Usage tracking request structure"""    content_id: str = Field(..., description="Content being tracked")
     usage_type: UsageType = Field(..., description="Type of usage")
     platform: str = Field(..., description="Platform where usage occurred")
     territory: str = Field(..., description="Territory of usage")
@@ -95,11 +87,9 @@ class UsageTrackingRequest(BaseModel):
 
 
 class UsageAnalyticsService:
-    """
-    Advanced usage analytics system with real-time tracking, AI-powered insights,
+    """    Advanced usage analytics system with real-time tracking, AI-powered insights,
     and comprehensive reporting for licensing optimization.
-    """
-    
+    """    
     def __init__(self, db: Session = None):
         self.db = db or next(get_db())
         self.logger = get_logger(__name__)
@@ -113,16 +103,14 @@ class UsageAnalyticsService:
         self,
         usage_requests: List[UsageTrackingRequest]
     ) -> Dict[str, Any]:
-        """
-        Track content usage events with real-time processing and validation
+        """        Track content usage events with real-time processing and validation
         
         Args:
             usage_requests: List of usage tracking requests
             
         Returns:
             Usage tracking results with immediate insights
-        """
-        try:
+        """        try:
             self.logger.info(f"Tracking {len(usage_requests)} usage events")
             
             processed_events = []
@@ -203,8 +191,7 @@ class UsageAnalyticsService:
         report_type: str = "comprehensive",
         granularity: ReportingPeriod = ReportingPeriod.DAILY
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive usage analytics report with AI insights
+        """        Generate comprehensive usage analytics report with AI insights
         
         Args:
             content_ids: Specific content to analyze
@@ -214,8 +201,7 @@ class UsageAnalyticsService:
             
         Returns:
             Detailed usage analytics report
-        """
-        try:
+        """        try:
             self.logger.info(f"Generating usage analytics report ({report_type})")
             
             # Collect usage data for analysis
@@ -310,8 +296,7 @@ class UsageAnalyticsService:
         content_ids: List[str],
         monitoring_config: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Monitor real-time usage patterns with immediate alerting
+        """        Monitor real-time usage patterns with immediate alerting
         
         Args:
             content_ids: Content to monitor
@@ -319,8 +304,7 @@ class UsageAnalyticsService:
             
         Returns:
             Real-time usage monitoring results
-        """
-        try:
+        """        try:
             if not monitoring_config:
                 monitoring_config = {
                     "alert_thresholds": {
@@ -410,16 +394,14 @@ class UsageAnalyticsService:
         self,
         optimization_criteria: List[str] = None
     ) -> Dict[str, Any]:
-        """
-        Optimize usage tracking system performance and accuracy
+        """        Optimize usage tracking system performance and accuracy
         
         Args:
             optimization_criteria: Specific optimization goals
             
         Returns:
             Usage tracking optimization results
-        """
-        try:
+        """        try:
             if not optimization_criteria:
                 optimization_criteria = [
                     "improve_accuracy",
@@ -486,8 +468,7 @@ class UsageAnalyticsService:
             raise UsageAnalyticsError(f"Usage tracking optimization failed: {str(e)}")
     
     def _initialize_analytics_configurations(self) -> Dict[str, Any]:
-        """Initialize analytics configurations"""
-        return {
+        """Initialize analytics configurations"""        return {
             "real_time_processing": {
                 "enabled": True,
                 "batch_size": 1000,
@@ -527,8 +508,7 @@ class UsageAnalyticsService:
         }
     
     def _initialize_tracking_parameters(self) -> Dict[str, Any]:
-        """Initialize tracking parameters for different usage types"""
-        return {
+        """Initialize tracking parameters for different usage types"""        return {
             "stream": {
                 "minimum_play_duration_seconds": 30,
                 "completion_threshold_percentage": 80,
@@ -560,16 +540,13 @@ class UsageAnalyticsService:
     
     # Helper methods for internal operations
     async def _validate_usage_request(self, request: UsageTrackingRequest) -> Dict[str, Any]:
-        """Validate usage tracking request"""
-        # Implementation for request validation
+        """Validate usage tracking request"""        # Implementation for request validation
         pass
     
     async def _process_usage_event(self, request: UsageTrackingRequest) -> Any:
-        """Process individual usage event"""
-        # Implementation for usage event processing
+        """Process individual usage event"""        # Implementation for usage event processing
         pass
     
     async def _analyze_usage_performance(self, usage_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze usage performance metrics"""
-        # Implementation for performance analysis
+        """Analyze usage performance metrics"""        # Implementation for performance analysis
         pass

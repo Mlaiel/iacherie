@@ -1,5 +1,4 @@
-"""
-🚀 Model Registry Module - IA Influencer Agent Platform Enterprise
+"""🚀 Model Registry Module - IA Influencer Agent Platform Enterprise
 ================================================================
 Module: backend/ml/model_registry/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -15,9 +14,7 @@ Gestion complète du cycle de vie des modèles ML
 - Model promotion et deployment tracking
 - Rollback et A/B testing support
 - Metadata et lineage management
-"""
-
-from .mlflow_registry import (
+"""from .mlflow_registry import (
     MLflowModelRegistry,
     ModelRegistryConfig,
     ModelMetadata,

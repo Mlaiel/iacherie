@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Video Fingerprinting Processor
+"""IA Influencer Agent - Video Fingerprinting Processor
 Author: Fahed Mlaiel <mlaiel@live.de>
 
 AVERTISSEMENT LÉGAL STRICT:
@@ -9,9 +8,7 @@ sans permission écrite expresse est strictement interdite et
 constituera une violation des droits d'auteur.
 
 Advanced video fingerprinting processor for multi-format content protection
-"""
-
-import cv2
+"""import cv2
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Any
 import asyncio
@@ -27,8 +24,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class VideoFingerprint:
-    """Video fingerprint data structure"""
-    content_hash: str
+    """Video fingerprint data structure"""    content_hash: str
     frame_hashes: List[str]
     histogram_features: np.ndarray
     edge_features: np.ndarray
@@ -41,19 +37,15 @@ class VideoFingerprint:
     metadata: Dict[str, Any]
 
 class VideoFingerprintProcessor:
-    """
-    Professional video fingerprinting processor with advanced computer vision algorithms
+    """    Professional video fingerprinting processor with advanced computer vision algorithms
     Handles multi-format video content protection and similarity detection
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize video fingerprinting processor"""
-        self.config = config or self._get_default_config()
+        """Initialize video fingerprinting processor"""        self.config = config or self._get_default_config()
         self.executor = ThreadPoolExecutor(max_workers=2)
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration for video processing"""
-        return {
+        """Get default configuration for video processing"""        return {
             'sample_frames': 30,
             'keyframe_threshold': 0.3,
             'resize_width': 320,
@@ -63,16 +55,14 @@ class VideoFingerprintProcessor:
         }
     
     async def process_video_file(self, file_path: Path) -> VideoFingerprint:
-        """
-        Process video file and generate comprehensive fingerprint
+        """        Process video file and generate comprehensive fingerprint
         
         Args:
             file_path: Path to video file
             
         Returns:
             VideoFingerprint object with extracted features
-        """
-        try:
+        """        try:
             # Load video file asynchronously
             loop = asyncio.get_event_loop()
             
@@ -127,8 +117,7 @@ class VideoFingerprintProcessor:
             raise
     
     def _extract_video_info(self, file_path: str) -> Dict[str, Any]:
-        """Extract basic video information"""
-        cap = cv2.VideoCapture(file_path)
+        """Extract basic video information"""        cap = cv2.VideoCapture(file_path)
         try:
             fps = cap.get(cv2.CAP_PROP_FPS)
             frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -147,8 +136,7 @@ class VideoFingerprintProcessor:
             cap.release()
     
     def _extract_frames(self, file_path: str) -> Tuple[List[np.ndarray], List[int]]:
-        """Extract sample frames and detect keyframes"""
-        cap = cv2.VideoCapture(file_path)
+        """Extract sample frames and detect keyframes"""        cap = cv2.VideoCapture(file_path)
         frames = []
         keyframes = []
         
@@ -190,8 +178,7 @@ class VideoFingerprintProcessor:
             cap.release()
     
     def _generate_content_hash(self, frames: List[np.ndarray]) -> str:
-        """Generate unique hash for video content"""
-        if not frames:
+        """Generate unique hash for video content"""        if not frames:
             return ""
         
         # Combine representative frames
@@ -202,8 +189,7 @@ class VideoFingerprintProcessor:
         return hashlib.sha256(combined_data).hexdigest()
     
     async def _extract_frame_hashes(self, frames: List[np.ndarray]) -> List[str]:
-        """Extract perceptual hashes for each frame"""
-        loop = asyncio.get_event_loop()
+        """Extract perceptual hashes for each frame"""        loop = asyncio.get_event_loop()
         
         def compute_hashes():
             hashes = []
@@ -221,8 +207,7 @@ class VideoFingerprintProcessor:
         return await loop.run_in_executor(self.executor, compute_hashes)
     
     async def _extract_histogram_features(self, frames: List[np.ndarray]) -> np.ndarray:
-        """Extract color histogram features"""
-        loop = asyncio.get_event_loop()
+        """Extract color histogram features"""        loop = asyncio.get_event_loop()
         
         def compute_histograms():
             histograms = []
@@ -246,8 +231,7 @@ class VideoFingerprintProcessor:
         return await loop.run_in_executor(self.executor, compute_histograms)
     
     async def _extract_edge_features(self, frames: List[np.ndarray]) -> np.ndarray:
-        """Extract edge detection features"""
-        loop = asyncio.get_event_loop()
+        """Extract edge detection features"""        loop = asyncio.get_event_loop()
         
         def compute_edges():
             edge_features = []
@@ -282,8 +266,7 @@ class VideoFingerprintProcessor:
         return await loop.run_in_executor(self.executor, compute_edges)
     
     async def _extract_motion_vectors(self, frames: List[np.ndarray]) -> np.ndarray:
-        """Extract motion vector features"""
-        loop = asyncio.get_event_loop()
+        """Extract motion vector features"""        loop = asyncio.get_event_loop()
         
         def compute_motion():
             if len(frames) < 2:
@@ -322,8 +305,7 @@ class VideoFingerprintProcessor:
         return await loop.run_in_executor(self.executor, compute_motion)
     
     def _extract_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract file metadata"""
-        return {
+        """Extract file metadata"""        return {
             'filename': file_path.name,
             'file_size': file_path.stat().st_size,
             'created_at': file_path.stat().st_ctime,
@@ -331,8 +313,7 @@ class VideoFingerprintProcessor:
         }
     
     def calculate_similarity(self, fp1: VideoFingerprint, fp2: VideoFingerprint) -> float:
-        """
-        Calculate similarity score between two video fingerprints
+        """        Calculate similarity score between two video fingerprints
         
         Args:
             fp1: First video fingerprint
@@ -340,8 +321,7 @@ class VideoFingerprintProcessor:
             
         Returns:
             Similarity score between 0 and 1
-        """
-        try:
+        """        try:
             # Content hash exact match
             if fp1.content_hash == fp2.content_hash:
                 return 1.0
@@ -389,8 +369,7 @@ class VideoFingerprintProcessor:
             return 0.0
     
     def _calculate_hash_similarity(self, hashes1: List[str], hashes2: List[str]) -> float:
-        """Calculate similarity between frame hash sequences"""
-        if not hashes1 or not hashes2:
+        """Calculate similarity between frame hash sequences"""        if not hashes1 or not hashes2:
             return 0.0
         
         # Dynamic time warping approach for hash sequence comparison
@@ -410,8 +389,7 @@ class VideoFingerprintProcessor:
         return max_matches / total_comparisons if total_comparisons > 0 else 0.0
     
     def _cosine_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Calculate cosine similarity between two vectors"""
-        try:
+        """Calculate cosine similarity between two vectors"""        try:
             if len(vec1) != len(vec2):
                 return 0.0
                 
@@ -427,8 +405,7 @@ class VideoFingerprintProcessor:
             return 0.0
     
     def _resolution_similarity(self, res1: Tuple[int, int], res2: Tuple[int, int]) -> float:
-        """Calculate resolution similarity"""
-        aspect_ratio_1 = res1[0] / res1[1] if res1[1] > 0 else 0
+        """Calculate resolution similarity"""        aspect_ratio_1 = res1[0] / res1[1] if res1[1] > 0 else 0
         aspect_ratio_2 = res2[0] / res2[1] if res2[1] > 0 else 0
         
         if aspect_ratio_1 == 0 or aspect_ratio_2 == 0:
@@ -438,16 +415,13 @@ class VideoFingerprintProcessor:
         return 1.0 - min(ratio_diff, 1.0)
     
     def is_duplicate(self, fp1: VideoFingerprint, fp2: VideoFingerprint) -> bool:
-        """Check if two fingerprints represent duplicate content"""
-        similarity = self.calculate_similarity(fp1, fp2)
+        """Check if two fingerprints represent duplicate content"""        similarity = self.calculate_similarity(fp1, fp2)
         return similarity >= self.config['similarity_threshold']
     
     async def batch_process(self, file_paths: List[Path]) -> List[VideoFingerprint]:
-        """Process multiple video files in parallel"""
-        tasks = [self.process_video_file(path) for path in file_paths]
+        """Process multiple video files in parallel"""        tasks = [self.process_video_file(path) for path in file_paths]
         return await asyncio.gather(*tasks, return_exceptions=True)
     
     def __del__(self):
-        """Cleanup resources"""
-        if hasattr(self, 'executor'):
+        """Cleanup resources"""        if hasattr(self, 'executor'):
             self.executor.shutdown(wait=True)

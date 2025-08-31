@@ -1,5 +1,4 @@
-"""
-Professional Multi-Platform Distribution Prompts System
+"""Professional Multi-Platform Distribution Prompts System
 Professional prompts for content distribution across multiple platforms
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
@@ -9,9 +8,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
-"""
-
-from typing import Dict, List, Optional, Tuple, Any, Union
+"""from typing import Dict, List, Optional, Tuple, Any, Union
 from enum import Enum
 from dataclasses import dataclass
 from datetime import datetime, timedelta
@@ -23,8 +20,7 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class DistributionPlatform(Enum):
-    """Supported distribution platforms"""
-    SPOTIFY = "spotify"
+    """Supported distribution platforms"""    SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE = "youtube"
     YOUTUBE_MUSIC = "youtube_music"
@@ -41,24 +37,21 @@ class DistributionPlatform(Enum):
     PINTEREST = "pinterest"
 
 class DistributionStrategy(Enum):
-    """Distribution strategies"""
-    SIMULTANEOUS = "simultaneous"
+    """Distribution strategies"""    SIMULTANEOUS = "simultaneous"
     SEQUENTIAL = "sequential"
     PLATFORM_EXCLUSIVE = "platform_exclusive"
     TIERED_RELEASE = "tiered_release"
     VIRAL_CASCADE = "viral_cascade"
 
 class ContentAdaptation(Enum):
-    """Content adaptation types"""
-    FORMAT_OPTIMIZATION = "format_optimization"
+    """Content adaptation types"""    FORMAT_OPTIMIZATION = "format_optimization"
     PLATFORM_SPECIFIC = "platform_specific"
     AUDIENCE_TAILORED = "audience_tailored"
     REGIONAL_LOCALIZATION = "regional_localization"
 
 @dataclass
 class DistributionContext:
-    """Context for distribution prompt generation"""
-    content_type: str
+    """Context for distribution prompt generation"""    content_type: str
     target_platforms: List[DistributionPlatform]
     distribution_strategy: DistributionStrategy
     content_adaptations: List[ContentAdaptation]
@@ -67,25 +60,21 @@ class DistributionContext:
     target_audience: Dict[str, Any]
 
 class MultiPlatformDistributionPrompts:
-    """Professional Multi-Platform Distribution Prompts System"""
-    
+    """Professional Multi-Platform Distribution Prompts System"""    
     def __init__(self):
-        """Initialize the distribution prompts system"""
-        self.distribution_templates = {}
+        """Initialize the distribution prompts system"""        self.distribution_templates = {}
         self.platform_specifications = {}
         self.optimization_strategies = {}
         self._load_distribution_templates()
     
     def _load_distribution_templates(self) -> None:
-        """Load distribution templates and platform specifications"""
-        
+        """Load distribution templates and platform specifications"""        
         # Distribution Templates
         self.distribution_templates = {
             "music_distribution": {
                 DistributionStrategy.SIMULTANEOUS: {
                     "id": "music_simultaneous_distribution",
-                    "template": """
-                    Create comprehensive simultaneous music distribution strategy:
+                    "template": """                    Create comprehensive simultaneous music distribution strategy:
                     
                     Release Overview:
                     - Track/Album: {release_title}
@@ -204,8 +193,7 @@ class MultiPlatformDistributionPrompts:
                 
                 DistributionStrategy.TIERED_RELEASE: {
                     "id": "music_tiered_distribution",
-                    "template": """
-                    Create strategic tiered music distribution system:
+                    "template": """                    Create strategic tiered music distribution system:
                     
                     Tiered Release Strategy:
                     - Release title: {release_title}
@@ -320,8 +308,7 @@ class MultiPlatformDistributionPrompts:
             "video_distribution": {
                 DistributionStrategy.VIRAL_CASCADE: {
                     "id": "video_viral_cascade_distribution",
-                    "template": """
-                    Create viral cascade video distribution strategy:
+                    "template": """                    Create viral cascade video distribution strategy:
                     
                     Video Content Overview:
                     - Video title: {video_title}
@@ -499,8 +486,7 @@ class MultiPlatformDistributionPrompts:
         }
     
     def generate_distribution_prompt(self, context: DistributionContext, custom_params: Optional[Dict] = None) -> Dict[str, Any]:
-        """Generate distribution prompt based on context"""
-        try:
+        """Generate distribution prompt based on context"""        try:
             # Get distribution template
             content_templates = self.distribution_templates.get(f"{context.content_type}_distribution", {})
             strategy_template = content_templates.get(context.distribution_strategy)
@@ -547,8 +533,7 @@ class MultiPlatformDistributionPrompts:
             return self._generate_fallback_distribution_prompt(context)
     
     def _customize_for_platforms(self, template: Dict, platforms: List[DistributionPlatform]) -> Dict:
-        """Customize template for specific platforms"""
-        customized = template.copy()
+        """Customize template for specific platforms"""        customized = template.copy()
         
         platform_section = "\n\nTarget Platforms Configuration:\n"
         for platform in platforms:
@@ -561,8 +546,7 @@ class MultiPlatformDistributionPrompts:
         return customized
     
     def _apply_content_adaptations(self, prompt: Dict, adaptations: List[ContentAdaptation]) -> Dict:
-        """Apply content adaptation requirements"""
-        modified_prompt = prompt.copy()
+        """Apply content adaptation requirements"""        modified_prompt = prompt.copy()
         
         adaptations_section = "\n\nContent Adaptation Requirements:\n"
         for adaptation in adaptations:
@@ -582,8 +566,7 @@ class MultiPlatformDistributionPrompts:
         return modified_prompt
     
     def _apply_timeline_constraints(self, prompt: Dict, timeline: Dict) -> Dict:
-        """Apply timeline constraints to distribution"""
-        modified_prompt = prompt.copy()
+        """Apply timeline constraints to distribution"""        modified_prompt = prompt.copy()
         
         timeline_section = "\n\nDistribution Timeline:\n"
         for timeline_key, timeline_value in timeline.items():
@@ -596,8 +579,7 @@ class MultiPlatformDistributionPrompts:
         return modified_prompt
     
     def _apply_budget_constraints(self, prompt: Dict, budget: Dict) -> Dict:
-        """Apply budget constraints to distribution"""
-        modified_prompt = prompt.copy()
+        """Apply budget constraints to distribution"""        modified_prompt = prompt.copy()
         
         budget_section = "\n\nDistribution Budget:\n"
         for budget_key, budget_value in budget.items():
@@ -610,8 +592,7 @@ class MultiPlatformDistributionPrompts:
         return modified_prompt
     
     def _apply_audience_targeting(self, prompt: Dict, audience: Dict) -> Dict:
-        """Apply audience targeting to distribution"""
-        modified_prompt = prompt.copy()
+        """Apply audience targeting to distribution"""        modified_prompt = prompt.copy()
         
         audience_section = "\n\nTarget Audience Profile:\n"
         for audience_key, audience_value in audience.items():
@@ -624,8 +605,7 @@ class MultiPlatformDistributionPrompts:
         return modified_prompt
     
     def _apply_custom_distribution_params(self, prompt: Dict, custom_params: Dict) -> Dict:
-        """Apply custom distribution parameters"""
-        modified_prompt = prompt.copy()
+        """Apply custom distribution parameters"""        modified_prompt = prompt.copy()
         
         # Replace custom parameters in template
         template = modified_prompt.get("template", "")
@@ -638,8 +618,7 @@ class MultiPlatformDistributionPrompts:
         return modified_prompt
     
     def _add_platform_specifications(self, prompt: Dict, platforms: List[DistributionPlatform]) -> Dict:
-        """Add platform-specific technical specifications"""
-        modified_prompt = prompt.copy()
+        """Add platform-specific technical specifications"""        modified_prompt = prompt.copy()
         
         specs_section = "\n\nPlatform Technical Specifications:\n"
         for platform in platforms:
@@ -665,11 +644,9 @@ class MultiPlatformDistributionPrompts:
         return modified_prompt
     
     def _generate_fallback_distribution_prompt(self, context: DistributionContext) -> Dict[str, Any]:
-        """Generate fallback distribution prompt"""
-        return {
+        """Generate fallback distribution prompt"""        return {
             "id": "fallback_distribution",
-            "template": f"""
-            Create {context.distribution_strategy.value} distribution strategy for {context.content_type}:
+            "template": f"""            Create {context.distribution_strategy.value} distribution strategy for {context.content_type}:
             
             Distribution Requirements:
             - Content type: {context.content_type}
@@ -698,8 +675,7 @@ DISTRIBUTION_REGISTRY = {
 }
 
 def get_distribution_prompts() -> MultiPlatformDistributionPrompts:
-    """Get the main distribution prompts instance"""
-    return MultiPlatformDistributionPrompts()
+    """Get the main distribution prompts instance"""    return MultiPlatformDistributionPrompts()
 
 def create_distribution_context(
     content_type: str,
@@ -710,8 +686,7 @@ def create_distribution_context(
     budget: Optional[Dict] = None,
     target_audience: Optional[Dict] = None
 ) -> DistributionContext:
-    """Create distribution context"""
-    return DistributionContext(
+    """Create distribution context"""    return DistributionContext(
         content_type=content_type,
         target_platforms=[DistributionPlatform(p) for p in target_platforms],
         distribution_strategy=DistributionStrategy(distribution_strategy),

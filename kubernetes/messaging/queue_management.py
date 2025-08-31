@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Queue Management System
+"""IA Influencer Agent - Queue Management System
 Enterprise queue orchestration and monitoring for distributed task processing
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -13,9 +12,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 from dataclasses import dataclass
@@ -34,16 +31,14 @@ settings = get_settings()
 
 
 class QueuePriority(str, Enum):
-    """Queue priority levels"""
-    LOW = "low"
+    """Queue priority levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class QueueType(str, Enum):
-    """Queue types for different processing needs"""
-    CONTENT_PROCESSING = "content_processing"
+    """Queue types for different processing needs"""    CONTENT_PROCESSING = "content_processing"
     FINGERPRINT_GENERATION = "fingerprint_generation"
     AI_ANALYSIS = "ai_analysis"
     ML_INFERENCE = "ml_inference"
@@ -60,8 +55,7 @@ class QueueType(str, Enum):
 
 
 class QueueStatus(str, Enum):
-    """Queue operational status"""
-    ACTIVE = "active"
+    """Queue operational status"""    ACTIVE = "active"
     PAUSED = "paused"
     DRAINING = "draining"
     STOPPED = "stopped"
@@ -70,8 +64,7 @@ class QueueStatus(str, Enum):
 
 @dataclass
 class QueueTask:
-    """Represents a task in a queue"""
-    id: str
+    """Represents a task in a queue"""    id: str
     queue_name: str
     task_type: str
     payload: Dict[str, Any]
@@ -87,8 +80,7 @@ class QueueTask:
 
 
 class QueueConfiguration(BaseModel):
-    """Configuration for a queue"""
-    name: str = Field(..., description="Queue name")
+    """Configuration for a queue"""    name: str = Field(..., description="Queue name")
     queue_type: QueueType = Field(..., description="Queue type")
     priority: QueuePriority = Field(default=QueuePriority.MEDIUM, description="Default priority")
     max_workers: int = Field(default=4, description="Maximum concurrent workers")
@@ -102,8 +94,7 @@ class QueueConfiguration(BaseModel):
 
 
 class QueueStats(BaseModel):
-    """Queue statistics"""
-    name: str
+    """Queue statistics"""    name: str
     status: QueueStatus
     pending_tasks: int
     active_tasks: int
@@ -118,12 +109,9 @@ class QueueStats(BaseModel):
 
 
 class QueueManager:
-    """
-    Enterprise queue management system
+    """    Enterprise queue management system
     Handles distributed task queuing, processing, and monitoring
-    """
-
-    def __init__(self):
+    """    def __init__(self):
         self.redis_client: Optional[aioredis.Redis] = None
         self.queues: Dict[str, QueueConfiguration] = {}
         self.queue_stats: Dict[str, QueueStats] = {}
@@ -135,8 +123,7 @@ class QueueManager:
         self.is_running = False
 
     async def initialize(self) -> None:
-        """Initialize queue manager"""
-        try:
+        """Initialize queue manager"""        try:
             # Setup Redis connection
             self.redis_client = aioredis.from_url(
                 settings.REDIS_URL,
@@ -158,8 +145,7 @@ class QueueManager:
             raise
 
     async def _create_default_queues(self) -> None:
-        """Create default queues for IA processing"""
-        default_queues = [
+        """Create default queues for IA processing"""        default_queues = [
             QueueConfiguration(
                 name="ia.content.processing",
                 queue_type=QueueType.CONTENT_PROCESSING,
@@ -278,8 +264,7 @@ class QueueManager:
             await self.create_queue(queue_config)
 
     async def create_queue(self, config: QueueConfiguration) -> bool:
-        """Create a new queue"""
-        try:
+        """Create a new queue"""        try:
             # Store configuration
             self.queues[config.name] = config
             
@@ -313,8 +298,7 @@ class QueueManager:
             return False
 
     async def _initialize_queue_redis_structures(self, queue_name: str) -> None:
-        """Initialize Redis structures for queue"""
-        try:
+        """Initialize Redis structures for queue"""        try:
             # Priority queues for different priority levels
             for priority in QueuePriority:
                 await self.redis_client.delete(f"queue:{queue_name}:{priority}")
@@ -342,8 +326,7 @@ class QueueManager:
         timeout: Optional[int] = None,
         max_retries: int = 3
     ) -> str:
-        """Enqueue a task for processing"""
-        try:
+        """Enqueue a task for processing"""        try:
             if queue_name not in self.queues:
                 raise ValueError(f"Queue '{queue_name}' does not exist")
             
@@ -399,8 +382,7 @@ class QueueManager:
             raise
 
     async def dequeue_task(self, queue_name: str, worker_id: str) -> Optional[QueueTask]:
-        """Dequeue next task for processing"""
-        try:
+        """Dequeue next task for processing"""        try:
             if queue_name not in self.queues:
                 return None
             
@@ -449,8 +431,7 @@ class QueueManager:
             return None
 
     async def _process_scheduled_tasks(self, queue_name: str) -> None:
-        """Move scheduled tasks to active queues when ready"""
-        try:
+        """Move scheduled tasks to active queues when ready"""        try:
             current_time = time.time()
             scheduled_key = f"queue:{queue_name}:scheduled"
             
@@ -473,8 +454,7 @@ class QueueManager:
             logger.error(f"Error processing scheduled tasks: {e}")
 
     async def complete_task(self, task_id: str, result: Dict[str, Any] = None) -> bool:
-        """Mark task as completed"""
-        try:
+        """Mark task as completed"""        try:
             # Get task data
             task_data = await self.redis_client.hgetall(f"task:{task_id}")
             if not task_data:
@@ -509,8 +489,7 @@ class QueueManager:
             return False
 
     async def fail_task(self, task_id: str, error: str, retry: bool = True) -> bool:
-        """Mark task as failed and optionally retry"""
-        try:
+        """Mark task as failed and optionally retry"""        try:
             # Get task data
             task_data = await self.redis_client.hgetall(f"task:{task_id}")
             if not task_data:
@@ -563,8 +542,7 @@ class QueueManager:
             return False
 
     async def _start_queue_workers(self, queue_name: str, worker_count: int) -> None:
-        """Start workers for a queue"""
-        try:
+        """Start workers for a queue"""        try:
             if queue_name not in self.workers:
                 self.workers[queue_name] = []
             
@@ -581,8 +559,7 @@ class QueueManager:
             logger.error(f"Failed to start workers for {queue_name}: {e}")
 
     async def _worker_loop(self, queue_name: str, worker_id: str) -> None:
-        """Main worker loop for processing tasks"""
-        logger.info(f"Worker {worker_id} started for queue {queue_name}")
+        """Main worker loop for processing tasks"""        logger.info(f"Worker {worker_id} started for queue {queue_name}")
         
         while self.is_running:
             try:
@@ -612,8 +589,7 @@ class QueueManager:
         logger.info(f"Worker {worker_id} stopped")
 
     async def _process_task(self, task: QueueTask) -> Dict[str, Any]:
-        """Process a task (placeholder - would be implemented by specific processors)"""
-        try:
+        """Process a task (placeholder - would be implemented by specific processors)"""        try:
             # This is a placeholder - actual task processing would be implemented
             # by specific task processors based on task_type
             
@@ -629,8 +605,7 @@ class QueueManager:
             raise
 
     async def _update_queue_stats(self, queue_name: str, metric: str, delta: int) -> None:
-        """Update queue statistics"""
-        try:
+        """Update queue statistics"""        try:
             if queue_name in self.queue_stats:
                 current_value = getattr(self.queue_stats[queue_name], metric, 0)
                 setattr(self.queue_stats[queue_name], metric, max(0, current_value + delta))
@@ -640,8 +615,7 @@ class QueueManager:
             logger.error(f"Failed to update stats for {queue_name}: {e}")
 
     async def _update_processing_time_stats(self, queue_name: str, processing_time: float) -> None:
-        """Update average processing time statistics"""
-        try:
+        """Update average processing time statistics"""        try:
             if queue_name in self.queue_stats:
                 stats = self.queue_stats[queue_name]
                 completed = stats.completed_tasks
@@ -657,8 +631,7 @@ class QueueManager:
             logger.error(f"Failed to update processing time stats: {e}")
 
     async def _start_monitoring(self) -> None:
-        """Start queue monitoring tasks"""
-        try:
+        """Start queue monitoring tasks"""        try:
             # Queue stats monitor
             stats_task = asyncio.create_task(self._monitor_queue_stats())
             self.monitoring_tasks.append(stats_task)
@@ -677,8 +650,7 @@ class QueueManager:
             logger.error(f"Failed to start monitoring: {e}")
 
     async def _monitor_queue_stats(self) -> None:
-        """Monitor queue statistics"""
-        while self.is_running:
+        """Monitor queue statistics"""        while self.is_running:
             try:
                 for queue_name in self.queues:
                     await self._collect_queue_metrics(queue_name)
@@ -690,8 +662,7 @@ class QueueManager:
                 await asyncio.sleep(60)
 
     async def _collect_queue_metrics(self, queue_name: str) -> None:
-        """Collect metrics for a specific queue"""
-        try:
+        """Collect metrics for a specific queue"""        try:
             # Get queue lengths
             pending_count = 0
             for priority in QueuePriority:
@@ -725,8 +696,7 @@ class QueueManager:
             logger.error(f"Error collecting metrics for {queue_name}: {e}")
 
     async def _monitor_auto_scaling(self) -> None:
-        """Monitor and perform auto-scaling of workers"""
-        while self.is_running:
+        """Monitor and perform auto-scaling of workers"""        while self.is_running:
             try:
                 for queue_name, config in self.queues.items():
                     if config.auto_scale:
@@ -739,8 +709,7 @@ class QueueManager:
                 await asyncio.sleep(120)
 
     async def _auto_scale_queue(self, queue_name: str, config: QueueConfiguration) -> None:
-        """Auto-scale workers for a queue based on demand"""
-        try:
+        """Auto-scale workers for a queue based on demand"""        try:
             stats = self.queue_stats.get(queue_name)
             if not stats:
                 return
@@ -763,8 +732,7 @@ class QueueManager:
             logger.error(f"Error auto-scaling queue {queue_name}: {e}")
 
     async def _scale_up_workers(self, queue_name: str, count: int) -> None:
-        """Scale up workers for a queue"""
-        try:
+        """Scale up workers for a queue"""        try:
             current_count = len(self.workers.get(queue_name, []))
             
             for i in range(count):
@@ -780,8 +748,7 @@ class QueueManager:
             logger.error(f"Error scaling up workers for {queue_name}: {e}")
 
     async def _scale_down_workers(self, queue_name: str, count: int) -> None:
-        """Scale down workers for a queue"""
-        try:
+        """Scale down workers for a queue"""        try:
             workers = self.workers.get(queue_name, [])
             
             for _ in range(min(count, len(workers))):
@@ -794,8 +761,7 @@ class QueueManager:
             logger.error(f"Error scaling down workers for {queue_name}: {e}")
 
     async def _monitor_dead_letter_queues(self) -> None:
-        """Monitor dead letter queues for failed tasks"""
-        while self.is_running:
+        """Monitor dead letter queues for failed tasks"""        while self.is_running:
             try:
                 for queue_name in self.queues:
                     dlq_length = await self.redis_client.llen(f"queue:{queue_name}:dlq")
@@ -810,8 +776,7 @@ class QueueManager:
                 await asyncio.sleep(600)
 
     async def get_queue_status(self, queue_name: str) -> Optional[QueueStats]:
-        """Get status for a specific queue"""
-        try:
+        """Get status for a specific queue"""        try:
             if queue_name not in self.queue_stats:
                 return None
             
@@ -825,8 +790,7 @@ class QueueManager:
             return None
 
     async def get_all_queue_status(self) -> Dict[str, QueueStats]:
-        """Get status for all queues"""
-        try:
+        """Get status for all queues"""        try:
             for queue_name in self.queues:
                 await self._collect_queue_metrics(queue_name)
             
@@ -837,8 +801,7 @@ class QueueManager:
             return {}
 
     async def pause_queue(self, queue_name: str) -> bool:
-        """Pause a queue"""
-        try:
+        """Pause a queue"""        try:
             if queue_name in self.queue_stats:
                 self.queue_stats[queue_name].status = QueueStatus.PAUSED
                 logger.info(f"Queue {queue_name} paused")
@@ -850,8 +813,7 @@ class QueueManager:
             return False
 
     async def resume_queue(self, queue_name: str) -> bool:
-        """Resume a paused queue"""
-        try:
+        """Resume a paused queue"""        try:
             if queue_name in self.queue_stats:
                 self.queue_stats[queue_name].status = QueueStatus.ACTIVE
                 logger.info(f"Queue {queue_name} resumed")
@@ -863,8 +825,7 @@ class QueueManager:
             return False
 
     async def shutdown(self) -> None:
-        """Shutdown queue manager"""
-        try:
+        """Shutdown queue manager"""        try:
             logger.info("Shutting down queue manager")
             
             self.is_running = False

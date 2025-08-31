@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
-"""
-Professional File Reorganizer for AI Agents
+"""Professional File Reorganizer for AI Agents
 Reorganizes ALL files into professional enterprise architecture
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import os
+"""import os
 import shutil
 import logging
 from pathlib import Path
@@ -18,16 +15,14 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 class ProfessionalReorganizer:
-    """Reorganizes files into professional enterprise structure"""
-    
+    """Reorganizes files into professional enterprise structure"""    
     def __init__(self, base_path: str = "/workspaces/Ainflue/ai_agents"):
         self.base_path = Path(base_path)
         self.excluded_dirs = {'.git', '__pycache__', '.pytest_cache', 'legacy_migration'}
         self.excluded_files = {'__init__.py', 'base.py', 'index.py'}
         
     def analyze_module_files(self, module_dir: Path) -> Dict[str, List[Path]]:
-        """Analyze all files in a module and categorize them"""
-        categories = {
+        """Analyze all files in a module and categorize them"""        categories = {
             'managers': [],           # *manager.py files
             'adapters': [],          # *adapter.py files  
             'processors': [],        # *processor.py files
@@ -92,8 +87,7 @@ class ProfessionalReorganizer:
         return categories
     
     def create_professional_structure(self, module_dir: Path) -> Dict[str, Path]:
-        """Create professional directory structure"""
-        directories = {}
+        """Create professional directory structure"""        directories = {}
         
         # Core directories
         for dir_name in ['core', 'intelligence', 'adapters', 'utils', 'models', 'config']:
@@ -110,8 +104,7 @@ class ProfessionalReorganizer:
         return directories
     
     def reorganize_files(self, module_dir: Path, file_categories: Dict[str, List[Path]], directories: Dict[str, Path]):
-        """Reorganize files into professional structure"""
-        
+        """Reorganize files into professional structure"""        
         # Mapping of file categories to target directories
         target_mapping = {
             'managers': 'core',
@@ -174,8 +167,7 @@ class ProfessionalReorganizer:
         return moves_performed
     
     def _generate_professional_filename(self, filename: str, category: str) -> str:
-        """Generate professional filename based on category"""
-        
+        """Generate professional filename based on category"""        
         # Remove redundant suffixes and clean up
         name = filename.replace('.py', '')
         
@@ -210,8 +202,7 @@ class ProfessionalReorganizer:
         return f"{name}.py"
     
     def update_imports_in_files(self, module_dir: Path):
-        """Update import statements to reflect new structure"""
-        # This would be a complex operation requiring AST parsing
+        """Update import statements to reflect new structure"""        # This would be a complex operation requiring AST parsing
         # For now, we'll create a mapping file for manual updates
         
         mapping_file = module_dir / "IMPORT_MAPPING.md"
@@ -255,8 +246,7 @@ from .manager import SomeModuleManager
 """)
     
     def reorganize_single_module(self, module_name: str) -> Dict[str, any]:
-        """Reorganize a single module"""
-        module_dir = self.base_path / module_name
+        """Reorganize a single module"""        module_dir = self.base_path / module_name
         
         if not module_dir.is_dir():
             return {'success': False, 'error': 'Module not found'}
@@ -292,8 +282,7 @@ from .manager import SomeModuleManager
             return {'success': False, 'error': str(e)}
     
     def reorganize_all_modules(self):
-        """Reorganize all modules"""
-        logger.info("🚀 Starting Professional File Reorganization...")
+        """Reorganize all modules"""        logger.info("🚀 Starting Professional File Reorganization...")
         
         results = []
         total_moves = 0

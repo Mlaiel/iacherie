@@ -1,5 +1,4 @@
-"""
-Content State Manager Module - Advanced Content State Management
+"""Content State Manager Module - Advanced Content State Management
 
 Enterprise-grade content state management system providing automated state transitions,
 validation, and workflow orchestration for multi-format content.
@@ -12,9 +11,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import uuid
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Set, Union, Any, Tuple
@@ -35,8 +32,7 @@ logger = logging.getLogger(__name__)
 
 
 class StateTransitionType(Enum):
-    """State transition types"""
-    MANUAL = "manual"
+    """State transition types"""    MANUAL = "manual"
     AUTOMATED = "automated"
     SCHEDULED = "scheduled"
     CONDITIONAL = "conditional"
@@ -44,8 +40,7 @@ class StateTransitionType(Enum):
 
 
 class StateValidationLevel(Enum):
-    """State validation levels"""
-    BASIC = "basic"
+    """State validation levels"""    BASIC = "basic"
     STANDARD = "standard"
     STRICT = "strict"
     ENTERPRISE = "enterprise"
@@ -53,8 +48,7 @@ class StateValidationLevel(Enum):
 
 @dataclass
 class StateTransition:
-    """State transition definition"""
-    transition_id: str
+    """State transition definition"""    transition_id: str
     from_state: ContentLifecycleState
     to_state: ContentLifecycleState
     transition_type: StateTransitionType
@@ -68,8 +62,7 @@ class StateTransition:
 
 @dataclass
 class ContentState:
-    """Content state representation"""
-    content_id: str
+    """Content state representation"""    content_id: str
     current_state: ContentLifecycleState
     previous_state: Optional[ContentLifecycleState]
     state_metadata: Dict[str, Any]
@@ -83,8 +76,7 @@ class ContentState:
 
 
 class ContentStateManager:
-    """Advanced content state management system"""
-    
+    """Advanced content state management system"""    
     def __init__(self, cache_manager: CacheManager, event_emitter: EventEmitter):
         self.cache_manager = cache_manager
         self.event_emitter = event_emitter
@@ -93,8 +85,7 @@ class ContentStateManager:
         self.state_cache_ttl = 3600  # 1 hour
         
     def _initialize_state_transitions(self) -> Dict[str, StateTransition]:
-        """Initialize valid state transitions"""
-        transitions = {}
+        """Initialize valid state transitions"""        transitions = {}
         
         # Creation workflow transitions
         transitions["draft_to_review"] = StateTransition(
@@ -203,8 +194,7 @@ class ContentStateManager:
         return transitions
     
     def _initialize_validation_rules(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize state validation rules"""
-        return {
+        """Initialize state validation rules"""        return {
             "content_completeness": {
                 "required_fields": ["title", "description", "content_type", "format"],
                 "min_content_length": 10,
@@ -239,8 +229,7 @@ class ContentStateManager:
         }
     
     async def get_content_state(self, content_id: str, user_id: str) -> Optional[ContentState]:
-        """Get current content state"""
-        try:
+        """Get current content state"""        try:
             # Check cache first
             cache_key = f"content_state:{content_id}"
             cached_state = await self.cache_manager.get(cache_key)
@@ -275,8 +264,7 @@ class ContentStateManager:
         trigger_data: Optional[Dict[str, Any]] = None,
         force: bool = False
     ) -> LifecycleEvent:
-        """Transition content to new state with validation"""
-        try:
+        """Transition content to new state with validation"""        try:
             current_state = await self.get_content_state(content_id, user_id)
             if not current_state:
                 raise ValidationError(f"Content {content_id} not found")
@@ -342,8 +330,7 @@ class ContentStateManager:
         to_state: ContentLifecycleState,
         user_id: str
     ) -> Dict[str, Any]:
-        """Validate if state transition is possible"""
-        try:
+        """Validate if state transition is possible"""        try:
             current_state = await self.get_content_state(content_id, user_id)
             if not current_state:
                 return {"valid": False, "reason": "Content not found"}
@@ -383,8 +370,7 @@ class ContentStateManager:
         reason: str,
         duration: Optional[timedelta] = None
     ) -> bool:
-        """Lock content to prevent state changes"""
-        try:
+        """Lock content to prevent state changes"""        try:
             async with get_db_session() as session:
                 # Update content lock status
                 await self._update_content_lock(
@@ -409,8 +395,7 @@ class ContentStateManager:
             return False
     
     async def unlock_content(self, content_id: str, user_id: str) -> bool:
-        """Unlock content to allow state changes"""
-        try:
+        """Unlock content to allow state changes"""        try:
             async with get_db_session() as session:
                 # Update content lock status
                 await self._update_content_lock(
@@ -433,8 +418,7 @@ class ContentStateManager:
             return False
     
     async def get_state_history(self, content_id: str, user_id: str) -> List[LifecycleEvent]:
-        """Get content state transition history"""
-        try:
+        """Get content state transition history"""        try:
             async with get_db_session() as session:
                 # Fetch state history from database
                 history = await self._fetch_state_history_from_db(session, content_id)
@@ -449,8 +433,7 @@ class ContentStateManager:
         from_state: ContentLifecycleState, 
         to_state: ContentLifecycleState
     ) -> Optional[StateTransition]:
-        """Find valid transition between states"""
-        for transition in self.state_transitions.values():
+        """Find valid transition between states"""        for transition in self.state_transitions.values():
             if (transition.from_state == from_state and 
                 transition.to_state == to_state):
                 return transition
@@ -462,8 +445,7 @@ class ContentStateManager:
         transition: StateTransition,
         trigger_data: Dict[str, Any]
     ) -> None:
-        """Validate transition conditions and requirements"""
-        # Check transition conditions
+        """Validate transition conditions and requirements"""        # Check transition conditions
         conditions_result = await self._check_transition_conditions(content_id, transition)
         if not conditions_result["valid"]:
             raise ValidationError(f"Transition conditions not met: {conditions_result['reason']}")
@@ -477,8 +459,7 @@ class ContentStateManager:
         content_id: str, 
         transition: StateTransition
     ) -> Dict[str, Any]:
-        """Check if transition conditions are met"""
-        try:
+        """Check if transition conditions are met"""        try:
             missing_conditions = []
             validation_errors = []
             
@@ -513,8 +494,7 @@ class ContentStateManager:
         condition_name: str, 
         condition_value: Any
     ) -> Dict[str, Any]:
-        """Evaluate a specific condition"""
-        # This would contain actual condition evaluation logic
+        """Evaluate a specific condition"""        # This would contain actual condition evaluation logic
         # For now, return a placeholder implementation
         return {
             "met": True,
@@ -523,8 +503,7 @@ class ContentStateManager:
         }
     
     async def _run_validation_rule(self, content_id: str, validation_name: str) -> None:
-        """Run a specific validation rule"""
-        if validation_name not in self.validation_rules:
+        """Run a specific validation rule"""        if validation_name not in self.validation_rules:
             raise ValidationError(f"Unknown validation rule: {validation_name}")
         
         rule = self.validation_rules[validation_name]
@@ -538,8 +517,7 @@ class ContentStateManager:
         transition: StateTransition,
         user_id: str
     ) -> None:
-        """Execute actions before state transition"""
-        for action in transition.actions:
+        """Execute actions before state transition"""        for action in transition.actions:
             if action.get("timing") == "pre":
                 await self._execute_action(content_id, action, user_id)
     
@@ -549,8 +527,7 @@ class ContentStateManager:
         transition: StateTransition,
         user_id: str
     ) -> None:
-        """Execute actions after state transition"""
-        for action in transition.actions:
+        """Execute actions after state transition"""        for action in transition.actions:
             if action.get("timing", "post") == "post":
                 await self._execute_action(content_id, action, user_id)
     
@@ -560,8 +537,7 @@ class ContentStateManager:
         action: Dict[str, Any], 
         user_id: str
     ) -> None:
-        """Execute a specific action"""
-        action_type = action.get("type")
+        """Execute a specific action"""        action_type = action.get("type")
         
         if action_type == "notification":
             await self._send_notification(content_id, action, user_id)
@@ -587,8 +563,7 @@ class ContentStateManager:
         trigger_type: AutomationTrigger,
         trigger_data: Dict[str, Any]
     ) -> LifecycleEvent:
-        """Perform the actual state transition"""
-        event = LifecycleEvent(
+        """Perform the actual state transition"""        event = LifecycleEvent(
             event_id=str(uuid.uuid4()),
             content_id=content_id,
             event_type=f"state_transition_{transition.transition_id}",
@@ -616,8 +591,7 @@ class ContentStateManager:
         session: AsyncSession, 
         content_id: str
     ) -> Optional[ContentState]:
-        """Fetch content state from database"""
-        # Placeholder implementation
+        """Fetch content state from database"""        # Placeholder implementation
         return None
     
     async def _update_content_state_in_db(
@@ -627,8 +601,7 @@ class ContentStateManager:
         new_state: ContentLifecycleState,
         event: LifecycleEvent
     ) -> None:
-        """Update content state in database"""
-        # Placeholder implementation
+        """Update content state in database"""        # Placeholder implementation
         pass
     
     async def _store_lifecycle_event_in_db(
@@ -636,8 +609,7 @@ class ContentStateManager:
         session: AsyncSession, 
         event: LifecycleEvent
     ) -> None:
-        """Store lifecycle event in database"""
-        # Placeholder implementation
+        """Store lifecycle event in database"""        # Placeholder implementation
         pass
     
     async def _fetch_state_history_from_db(
@@ -645,8 +617,7 @@ class ContentStateManager:
         session: AsyncSession, 
         content_id: str
     ) -> List[LifecycleEvent]:
-        """Fetch state history from database"""
-        # Placeholder implementation
+        """Fetch state history from database"""        # Placeholder implementation
         return []
     
     async def _update_content_lock(
@@ -658,31 +629,24 @@ class ContentStateManager:
         user_id: Optional[str],
         duration: Optional[timedelta]
     ) -> None:
-        """Update content lock status in database"""
-        # Placeholder implementation
+        """Update content lock status in database"""        # Placeholder implementation
         pass
     
     # Action implementation methods (placeholders)
     async def _send_notification(self, content_id: str, action: Dict[str, Any], user_id: str):
-        """Send notification action"""
-        pass
+        """Send notification action"""        pass
     
     async def _log_event(self, content_id: str, action: Dict[str, Any], user_id: str):
-        """Log event action"""
-        pass
+        """Log event action"""        pass
     
     async def _schedule_publishing(self, content_id: str, action: Dict[str, Any], user_id: str):
-        """Schedule publishing action"""
-        pass
+        """Schedule publishing action"""        pass
     
     async def _publish_content(self, content_id: str, action: Dict[str, Any], user_id: str):
-        """Publish content action"""
-        pass
+        """Publish content action"""        pass
     
     async def _start_monitoring(self, content_id: str, action: Dict[str, Any], user_id: str):
-        """Start monitoring action"""
-        pass
+        """Start monitoring action"""        pass
     
     async def _activate_protection(self, content_id: str, action: Dict[str, Any], user_id: str):
-        """Activate protection action"""
-        pass
+        """Activate protection action"""        pass

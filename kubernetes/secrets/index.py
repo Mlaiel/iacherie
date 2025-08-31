@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Secrets Management Module Index
+"""IA Influencer Agent - Secrets Management Module Index
 Main entry point for enterprise secrets management system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -26,9 +25,7 @@ PROHIBITED ACTIONS:
 ❌ Reverse engineering, decompilation, or concept extraction
 
 Any violation will result in immediate legal action under International Copyright Law.
-"""
-
-import os
+"""import os
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime
@@ -97,13 +94,11 @@ __all__ = [
 
 
 class InfluencerSecretsManager:
-    """
-    Unified secrets manager for IA Influencer Agent platform.
+    """    Unified secrets manager for IA Influencer Agent platform.
     
     Provides centralized access to all secrets management functionality
     with specialized features for influencer platform operations.
-    """
-    
+    """    
     def __init__(
         self,
         config: Optional[SecretsConfig] = None,
@@ -111,16 +106,14 @@ class InfluencerSecretsManager:
         vault_token: Optional[str] = None,
         environment: str = "production"
     ):
-        """
-        Initialize IA Influencer secrets manager.
+        """        Initialize IA Influencer secrets manager.
         
         Args:
             config: Optional secrets configuration
             vault_url: HashiCorp Vault URL
             vault_token: Vault authentication token
             environment: Environment (production, staging, development)
-        """
-        self.config = config or SecretsConfig()
+        """        self.config = config or SecretsConfig()
         self.environment = environment
         
         # Initialize core components
@@ -176,8 +169,7 @@ class InfluencerSecretsManager:
         ai_providers: List[str] = None,
         payment_processors: List[str] = None
     ) -> Dict[str, Any]:
-        """
-        Setup complete platform infrastructure for IA Influencer Agent.
+        """        Setup complete platform infrastructure for IA Influencer Agent.
         
         Args:
             platforms: Social media platforms to configure
@@ -186,8 +178,7 @@ class InfluencerSecretsManager:
             
         Returns:
             dict: Setup results
-        """
-        try:
+        """        try:
             setup_results = {
                 'timestamp': datetime.utcnow().isoformat(),
                 'environment': self.environment,
@@ -296,8 +287,7 @@ class InfluencerSecretsManager:
         platform: str,
         creator_id: Optional[str] = None
     ) -> Optional[Dict[str, Any]]:
-        """
-        Get platform credentials with proper validation and audit logging.
+        """        Get platform credentials with proper validation and audit logging.
         
         Args:
             platform: Platform name
@@ -305,8 +295,7 @@ class InfluencerSecretsManager:
             
         Returns:
             dict: Platform credentials or None if not found/invalid
-        """
-        try:
+        """        try:
             # Validate platform
             if not self.platform_utils.validate_platform_credentials(platform, {}):
                 logger.warning(f"Invalid platform requested: {platform}")
@@ -358,8 +347,7 @@ class InfluencerSecretsManager:
         user_id: str,
         content_id: str
     ) -> Dict[str, Any]:
-        """
-        Encrypt content data with specialized protection.
+        """        Encrypt content data with specialized protection.
         
         Args:
             content_data: Content data to encrypt
@@ -369,8 +357,7 @@ class InfluencerSecretsManager:
             
         Returns:
             dict: Encrypted content data
-        """
-        try:
+        """        try:
             return self.encryption_manager.encrypt_content_data(
                 content_data, content_type, user_id, content_id
             )
@@ -383,8 +370,7 @@ class InfluencerSecretsManager:
         reason: str,
         affected_systems: List[str] = None
     ) -> Dict[str, Any]:
-        """
-        Perform emergency rotation of all critical secrets.
+        """        Perform emergency rotation of all critical secrets.
         
         Args:
             reason: Reason for emergency rotation
@@ -392,8 +378,7 @@ class InfluencerSecretsManager:
             
         Returns:
             dict: Emergency rotation results
-        """
-        try:
+        """        try:
             emergency_rotator = InfluencerEmergencyRotator(
                 vault_manager=self.vault_manager,
                 config=self.config
@@ -414,8 +399,7 @@ class InfluencerSecretsManager:
         include_platforms: List[str] = None,
         include_creators: List[str] = None
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive compliance report.
+        """        Generate comprehensive compliance report.
         
         Args:
             report_type: Type of report (full, summary, specific)
@@ -424,8 +408,7 @@ class InfluencerSecretsManager:
             
         Returns:
             dict: Compliance report
-        """
-        try:
+        """        try:
             return self.compliance_auditor.generate_influencer_compliance_report(
                 include_platforms=include_platforms,
                 include_creators=include_creators
@@ -435,8 +418,7 @@ class InfluencerSecretsManager:
             raise
     
     def shutdown(self) -> None:
-        """Gracefully shutdown the secrets manager."""
-        try:
+        """Gracefully shutdown the secrets manager."""        try:
             logger.info("Shutting down InfluencerSecretsManager...")
             
             # Stop monitoring
@@ -457,8 +439,7 @@ def create_secrets_manager(
     vault_token: Optional[str] = None,
     config_path: Optional[str] = None
 ) -> VaultManager:
-    """
-    Factory function to create a basic secrets manager.
+    """    Factory function to create a basic secrets manager.
     
     Args:
         vault_url: HashiCorp Vault URL
@@ -467,8 +448,7 @@ def create_secrets_manager(
         
     Returns:
         VaultManager: Configured vault manager
-    """
-    config = SecretsConfig()
+    """    config = SecretsConfig()
     if config_path:
         config.load_from_file(config_path)
     
@@ -485,8 +465,7 @@ def create_influencer_secrets_manager(
     environment: str = "production",
     config_path: Optional[str] = None
 ) -> InfluencerSecretsManager:
-    """
-    Factory function to create IA Influencer secrets manager.
+    """    Factory function to create IA Influencer secrets manager.
     
     Args:
         vault_url: HashiCorp Vault URL
@@ -496,8 +475,7 @@ def create_influencer_secrets_manager(
         
     Returns:
         InfluencerSecretsManager: Configured influencer secrets manager
-    """
-    config = SecretsConfig()
+    """    config = SecretsConfig()
     if config_path:
         config.load_from_file(config_path)
     
@@ -515,8 +493,7 @@ def initialize_platform_secrets(
     payment_processors: List[str] = None,
     environment: str = "production"
 ) -> Dict[str, Any]:
-    """
-    Initialize complete platform secrets infrastructure.
+    """    Initialize complete platform secrets infrastructure.
     
     Args:
         platforms: Social media platforms to configure
@@ -526,8 +503,7 @@ def initialize_platform_secrets(
         
     Returns:
         dict: Initialization results
-    """
-    try:
+    """    try:
         secrets_manager = create_influencer_secrets_manager(environment=environment)
         
         return secrets_manager.setup_platform_infrastructure(
@@ -546,13 +522,11 @@ def initialize_platform_secrets(
 
 
 def get_module_info() -> Dict[str, Any]:
-    """
-    Get module information and status.
+    """    Get module information and status.
     
     Returns:
         dict: Module information
-    """
-    return {
+    """    return {
         'name': 'IA Influencer Agent - Secrets Management',
         'version': __version__,
         'author': __author__,
@@ -585,13 +559,11 @@ def get_module_info() -> Dict[str, Any]:
 
 
 def validate_environment() -> Dict[str, Any]:
-    """
-    Validate environment configuration for secrets management.
+    """    Validate environment configuration for secrets management.
     
     Returns:
         dict: Environment validation results
-    """
-    validation_results = {
+    """    validation_results = {
         'vault_configured': False,
         'kubernetes_available': False,
         'certificates_path_exists': False,
@@ -648,15 +620,13 @@ def setup_logging(
     format_string: Optional[str] = None,
     log_file: Optional[str] = None
 ) -> None:
-    """
-    Setup logging configuration for secrets management.
+    """    Setup logging configuration for secrets management.
     
     Args:
         level: Logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
         format_string: Custom log format string
         log_file: Optional log file path
-    """
-    log_level = getattr(logging, level.upper(), logging.INFO)
+    """    log_level = getattr(logging, level.upper(), logging.INFO)
     
     if not format_string:
         format_string = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'

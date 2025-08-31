@@ -1,5 +1,4 @@
-"""
-Enterprise Content Protection API Endpoints
+"""Enterprise Content Protection API Endpoints
 ===========================================
 
 Advanced API endpoints for content protection, monitoring, and compliance
@@ -16,9 +15,7 @@ Features:
 - Compliance reporting
 - Revenue protection metrics
 - Multi-platform monitoring
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 import time
@@ -40,8 +37,7 @@ security = HTTPBearer()
 
 # Pydantic Models
 class ContentSubmissionRequest(BaseModel):
-    """Request model for content submission"""
-    content_id: str = Field(..., description="Unique content identifier")
+    """Request model for content submission"""    content_id: str = Field(..., description="Unique content identifier")
     content_type: str = Field(..., description="Type of content (image, video, audio, text)")
     content_url: Optional[str] = Field(None, description="URL to content")
     content_data: Optional[str] = Field(None, description="Base64 encoded content data")
@@ -60,8 +56,7 @@ class ContentSubmissionRequest(BaseModel):
 
 
 class ContentProtectionResponse(BaseModel):
-    """Response model for content protection"""
-    protection_id: str
+    """Response model for content protection"""    protection_id: str
     content_id: str
     fingerprint_id: str
     protection_status: str
@@ -72,8 +67,7 @@ class ContentProtectionResponse(BaseModel):
 
 
 class PiracyReportRequest(BaseModel):
-    """Request model for piracy reporting"""
-    report_id: Optional[str] = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Request model for piracy reporting"""    report_id: Optional[str] = Field(default_factory=lambda: str(uuid.uuid4()))
     content_id: str = Field(..., description="Protected content identifier")
     infringing_url: str = Field(..., description="URL of infringing content")
     platform: str = Field(..., description="Platform where infringement was found")
@@ -91,14 +85,12 @@ class PiracyReportRequest(BaseModel):
 
 # Mock implementations for demonstration
 class MockJWTManager:
-    """Mock JWT manager for demonstration"""
-    def verify_token(self, token: str) -> Dict[str, Any]:
+    """Mock JWT manager for demonstration"""    def verify_token(self, token: str) -> Dict[str, Any]:
         return {"sub": "user123", "role": "content_creator"}
 
 
 class MockPrivacyManager:
-    """Mock privacy manager for demonstration"""
-    async def process_data_with_privacy_controls(self, data: Any, purpose: str, user_id: str = None, retention_days: int = None) -> Dict[str, Any]:
+    """Mock privacy manager for demonstration"""    async def process_data_with_privacy_controls(self, data: Any, purpose: str, user_id: str = None, retention_days: int = None) -> Dict[str, Any]:
         return {
             "processing_id": str(uuid.uuid4()),
             "compliance_status": "compliant",
@@ -107,8 +99,7 @@ class MockPrivacyManager:
 
 
 class MockFingerprintGenerator:
-    """Mock fingerprint generator for demonstration"""
-    async def generate_fingerprint(self, content_id: str, content_type: str, content_url: str = None, content_data: str = None, metadata: Dict[str, Any] = None) -> Dict[str, Any]:
+    """Mock fingerprint generator for demonstration"""    async def generate_fingerprint(self, content_id: str, content_type: str, content_url: str = None, content_data: str = None, metadata: Dict[str, Any] = None) -> Dict[str, Any]:
         return {
             "fingerprint_id": str(uuid.uuid4()),
             "fingerprint": f"fp_{content_id}_{int(time.time())}",
@@ -118,8 +109,7 @@ class MockFingerprintGenerator:
 
 
 class MockPiracyEngine:
-    """Mock piracy detection engine for demonstration"""
-    async def assess_content_risk(self, content_id: str, content_type: str, fingerprint: str, metadata: Dict[str, Any] = None) -> Dict[str, Any]:
+    """Mock piracy detection engine for demonstration"""    async def assess_content_risk(self, content_id: str, content_type: str, fingerprint: str, metadata: Dict[str, Any] = None) -> Dict[str, Any]:
         return {
             "risk_level": "medium",
             "risk_score": 0.6,
@@ -145,8 +135,7 @@ class MockPiracyEngine:
 
 
 class MockMetricsCollector:
-    """Mock metrics collector for demonstration"""
-    async def record_metric(self, metric_name: str, value: float, tags: Dict[str, Any] = None):
+    """Mock metrics collector for demonstration"""    async def record_metric(self, metric_name: str, value: float, tags: Dict[str, Any] = None):
         logger.info(f"Recorded metric: {metric_name} = {value}, tags: {tags}")
 
 
@@ -160,8 +149,7 @@ metrics_collector = MockMetricsCollector()
 
 # Dependency functions
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)) -> Dict[str, Any]:
-    """Get current authenticated user"""
-    try:
+    """Get current authenticated user"""    try:
         payload = jwt_manager.verify_token(credentials.credentials)
         return payload
     except Exception:
@@ -172,8 +160,7 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
 
 
 async def verify_content_access(content_id: str, user: Dict[str, Any]) -> bool:
-    """Verify user has access to content"""
-    # Mock implementation - in production, check database
+    """Verify user has access to content"""    # Mock implementation - in production, check database
     return True
 
 
@@ -184,16 +171,14 @@ async def submit_content_for_protection(
     request_data: ContentSubmissionRequest,
     current_user: Dict[str, Any] = Depends(get_current_user)
 ) -> ContentProtectionResponse:
-    """
-    Submit content for protection and monitoring
+    """    Submit content for protection and monitoring
     
     This endpoint:
     1. Generates content fingerprints
     2. Assesses piracy risk
     3. Enables monitoring
     4. Ensures compliance
-    """
-    start_time = time.time()
+    """    start_time = time.time()
     
     try:
         # Privacy processing
@@ -289,16 +274,14 @@ async def report_piracy_infringement(
     request_data: PiracyReportRequest,
     current_user: Dict[str, Any] = Depends(get_current_user)
 ) -> Dict[str, Any]:
-    """
-    Report piracy infringement
+    """    Report piracy infringement
     
     This endpoint:
     1. Validates the infringement claim
     2. Assesses severity and impact
     3. Initiates investigation
     4. Triggers automated responses if configured
-    """
-    start_time = time.time()
+    """    start_time = time.time()
     
     try:
         # Verify content access
@@ -390,8 +373,7 @@ async def get_content_protection_status(
     content_id: str,
     current_user: Dict[str, Any] = Depends(get_current_user)
 ) -> Dict[str, Any]:
-    """Get comprehensive protection status for content"""
-    try:
+    """Get comprehensive protection status for content"""    try:
         # Verify access
         has_access = await verify_content_access(content_id, current_user)
         if not has_access:
@@ -446,8 +428,7 @@ async def get_content_protection_status(
 async def get_protection_dashboard(
     current_user: Dict[str, Any] = Depends(get_current_user)
 ) -> Dict[str, Any]:
-    """Get protection dashboard metrics"""
-    try:
+    """Get protection dashboard metrics"""    try:
         dashboard_data = {
             "summary": {
                 "total_protected_content": 1250,
@@ -491,8 +472,7 @@ async def get_protection_dashboard(
 
 # Helper functions
 async def _enable_content_monitoring(content_id: str, creator_id: str, fingerprint_id: str, risk_level: str) -> Dict[str, Any]:
-    """Enable monitoring for content"""
-    return {
+    """Enable monitoring for content"""    return {
         "enabled": True,
         "monitoring_id": str(uuid.uuid4()),
         "risk_level": risk_level,
@@ -502,18 +482,15 @@ async def _enable_content_monitoring(content_id: str, creator_id: str, fingerpri
 
 
 async def _store_protection_record(record: Dict[str, Any]) -> None:
-    """Store protection record in database"""
-    logger.info(f"Stored protection record: {record['protection_id']}")
+    """Store protection record in database"""    logger.info(f"Stored protection record: {record['protection_id']}")
 
 
 async def _store_piracy_report(report: Dict[str, Any]) -> None:
-    """Store piracy report in database"""
-    logger.info(f"Stored piracy report: {report['report_id']}")
+    """Store piracy report in database"""    logger.info(f"Stored piracy report: {report['report_id']}")
 
 
 async def _trigger_automated_responses(piracy_report: Dict[str, Any], validation_result: Dict[str, Any], impact_assessment: Dict[str, Any]) -> List[str]:
-    """Trigger automated responses to piracy"""
-    actions = []
+    """Trigger automated responses to piracy"""    actions = []
     
     if validation_result.get("confidence", 0) > 0.8:
         actions.append("High-confidence violation detected - escalating to legal team")
@@ -528,8 +505,7 @@ async def _trigger_automated_responses(piracy_report: Dict[str, Any], validation
 
 
 async def _get_protection_record(content_id: str) -> Optional[Dict[str, Any]]:
-    """Get protection record for content"""
-    return {
+    """Get protection record for content"""    return {
         "content_id": content_id,
         "protection_status": "active",
         "fingerprint_id": str(uuid.uuid4())
@@ -537,8 +513,7 @@ async def _get_protection_record(content_id: str) -> Optional[Dict[str, Any]]:
 
 
 async def _get_monitoring_status(content_id: str) -> Dict[str, Any]:
-    """Get monitoring status for content"""
-    return {
+    """Get monitoring status for content"""    return {
         "active": True,
         "platforms": 4,
         "last_scan": datetime.now(timezone.utc).isoformat(),
@@ -547,13 +522,11 @@ async def _get_monitoring_status(content_id: str) -> Dict[str, Any]:
 
 
 async def _get_recent_piracy_reports(content_id: str, limit: int = 10) -> List[Dict[str, Any]]:
-    """Get recent piracy reports for content"""
-    return []
+    """Get recent piracy reports for content"""    return []
 
 
 async def _get_takedown_status(content_id: str) -> Dict[str, Any]:
-    """Get takedown status for content"""
-    return {
+    """Get takedown status for content"""    return {
         "active_count": 0,
         "resolved_count": 5,
         "success_rate": 0.85
@@ -561,8 +534,7 @@ async def _get_takedown_status(content_id: str) -> Dict[str, Any]:
 
 
 async def _calculate_protection_metrics(content_id: str) -> Dict[str, Any]:
-    """Calculate protection metrics for content"""
-    return {
+    """Calculate protection metrics for content"""    return {
         "protection_effectiveness": 0.92,
         "response_time_avg": 4.2,
         "revenue_protected": 15750.00,
@@ -573,8 +545,7 @@ async def _calculate_protection_metrics(content_id: str) -> Dict[str, Any]:
 # Health check endpoint
 @router.get("/health")
 async def health_check() -> Dict[str, Any]:
-    """Health check endpoint"""
-    return {
+    """Health check endpoint"""    return {
         "status": "healthy",
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "version": "1.0.0",
@@ -589,5 +560,4 @@ async def health_check() -> Dict[str, Any]:
 
 # Export router
 def get_router():
-    """Get the configured router"""
-    return router
+    """Get the configured router"""    return router

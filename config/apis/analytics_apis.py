@@ -1,21 +1,17 @@
-"""
-Analytics APIs Configuration - Analytics & Business Intelligence Services
+"""Analytics APIs Configuration - Analytics & Business Intelligence Services
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module configures analytics and business intelligence APIs including
 Google Analytics, Mixpanel, Segment, and other tracking services for
 comprehensive user behavior and business metrics analysis.
-"""
-
-import os
+"""import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Any, Optional
 from enum import Enum
 
 class AnalyticsServiceType(Enum):
-    """Analytics service types"""
-    WEB_ANALYTICS = "web_analytics"
+    """Analytics service types"""    WEB_ANALYTICS = "web_analytics"
     EVENT_TRACKING = "event_tracking"
     USER_ANALYTICS = "user_analytics"
     BUSINESS_INTELLIGENCE = "business_intelligence"
@@ -23,8 +19,7 @@ class AnalyticsServiceType(Enum):
     CONVERSION_TRACKING = "conversion_tracking"
 
 class DataRetentionPeriod(Enum):
-    """Data retention periods"""
-    DAYS_30 = "30_days"
+    """Data retention periods"""    DAYS_30 = "30_days"
     DAYS_90 = "90_days"
     MONTHS_6 = "6_months"
     YEAR_1 = "1_year"
@@ -33,8 +28,7 @@ class DataRetentionPeriod(Enum):
 
 @dataclass
 class AnalyticsAPIConfig:
-    """Configuration class for analytics APIs"""
-    service_name: str
+    """Configuration class for analytics APIs"""    service_name: str
     service_type: AnalyticsServiceType
     base_url: str
     api_version: str
@@ -82,8 +76,7 @@ class AnalyticsAPIConfig:
     environments: Dict[str, Dict[str, Any]] = field(default_factory=dict)
     
     def get_environment_config(self, environment: str = "production") -> Dict[str, Any]:
-        """Get configuration for specific environment"""
-        base_config = self.__dict__.copy()
+        """Get configuration for specific environment"""        base_config = self.__dict__.copy()
         env_config = self.environments.get(environment, {})
         base_config.update(env_config)
         return base_config
@@ -374,25 +367,20 @@ ANALYTICS_CONFIGS: Dict[str, AnalyticsAPIConfig] = {
 }
 
 def get_analytics_config(service: str) -> Optional[AnalyticsAPIConfig]:
-    """Get analytics service configuration by name"""
-    return ANALYTICS_CONFIGS.get(service.lower())
+    """Get analytics service configuration by name"""    return ANALYTICS_CONFIGS.get(service.lower())
 
 def get_services_by_type(service_type: AnalyticsServiceType) -> List[AnalyticsAPIConfig]:
-    """Get all analytics services of specific type"""
-    return [config for config in ANALYTICS_CONFIGS.values() 
+    """Get all analytics services of specific type"""    return [config for config in ANALYTICS_CONFIGS.values() 
             if config.service_type == service_type]
 
 def get_real_time_services() -> List[AnalyticsAPIConfig]:
-    """Get services that support real-time analytics"""
-    return [config for config in ANALYTICS_CONFIGS.values() 
+    """Get services that support real-time analytics"""    return [config for config in ANALYTICS_CONFIGS.values() 
             if config.real_time_enabled]
 
 def get_custom_event_services() -> List[AnalyticsAPIConfig]:
-    """Get services that support custom events"""
-    return [config for config in ANALYTICS_CONFIGS.values() 
+    """Get services that support custom events"""    return [config for config in ANALYTICS_CONFIGS.values() 
             if config.custom_events_enabled]
 
 def get_ecommerce_services() -> List[AnalyticsAPIConfig]:
-    """Get services that support ecommerce tracking"""
-    return [config for config in ANALYTICS_CONFIGS.values() 
+    """Get services that support ecommerce tracking"""    return [config for config in ANALYTICS_CONFIGS.values() 
             if config.supports_ecommerce]

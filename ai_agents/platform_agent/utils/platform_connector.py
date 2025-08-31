@@ -1,5 +1,4 @@
-"""
-Universal Platform Connector - Enterprise Multi-Platform API Integration System
+"""Universal Platform Connector - Enterprise Multi-Platform API Integration System
 
 Advanced connector providing seamless integration with all major content platforms.
 Handles authentication, API rate limiting, data transformation, and error recovery.
@@ -18,9 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-
-import asyncio
+"""import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any, Union, Callable, AsyncGenerator
 from datetime import datetime, timedelta
@@ -54,8 +51,7 @@ from ...utils.circuit_breaker import CircuitBreaker
 
 
 class AuthType(Enum):
-    """Authentication types supported by platforms"""
-    OAUTH2 = "oauth2"
+    """Authentication types supported by platforms"""    OAUTH2 = "oauth2"
     API_KEY = "api_key"
     JWT = "jwt"
     BASIC_AUTH = "basic_auth"
@@ -64,8 +60,7 @@ class AuthType(Enum):
 
 
 class APIMethod(Enum):
-    """HTTP methods for API calls"""
-    GET = "GET"
+    """HTTP methods for API calls"""    GET = "GET"
     POST = "POST"
     PUT = "PUT"
     DELETE = "DELETE"
@@ -76,8 +71,7 @@ class APIMethod(Enum):
 
 @dataclass
 class APIRequest:
-    """Standardized API request structure"""
-    method: APIMethod
+    """Standardized API request structure"""    method: APIMethod
     endpoint: str
     headers: Dict[str, str] = None
     params: Dict[str, Any] = None
@@ -89,8 +83,7 @@ class APIRequest:
 
 @dataclass
 class APIResponse:
-    """Standardized API response structure"""
-    status_code: int
+    """Standardized API response structure"""    status_code: int
     data: Any
     headers: Dict[str, str]
     execution_time: float
@@ -102,8 +95,7 @@ class APIResponse:
 
 
 class BasePlatformConnector(ABC):
-    """Abstract base class for platform-specific connectors"""
-    
+    """Abstract base class for platform-specific connectors"""    
     def __init__(self, platform_type: PlatformType, config: PlatformConfig):
         self.platform_type = platform_type
         self.config = config
@@ -121,27 +113,22 @@ class BasePlatformConnector(ABC):
 
     @abstractmethod
     async def authenticate(self, credentials: PlatformCredential) -> bool:
-        """Authenticate with the platform"""
-        pass
+        """Authenticate with the platform"""        pass
 
     @abstractmethod
     async def upload_content(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload content to the platform"""
-        pass
+        """Upload content to the platform"""        pass
 
     @abstractmethod
     async def get_analytics(self, content_id: str = None) -> Dict[str, Any]:
-        """Get analytics data from the platform"""
-        pass
+        """Get analytics data from the platform"""        pass
 
     @abstractmethod
     async def get_user_profile(self) -> Dict[str, Any]:
-        """Get user profile information"""
-        pass
+        """Get user profile information"""        pass
 
     async def initialize(self) -> bool:
-        """Initialize the connector"""
-        try:
+        """Initialize the connector"""        try:
             # Create HTTP session with optimized settings
             connector = aiohttp.TCPConnector(
                 limit=100,
@@ -168,8 +155,7 @@ class BasePlatformConnector(ABC):
             return False
 
     async def make_request(self, request: APIRequest) -> APIResponse:
-        """Make authenticated API request with comprehensive error handling"""
-        request_id = hashlib.sha256(
+        """Make authenticated API request with comprehensive error handling"""        request_id = hashlib.sha256(
             f"{request.method.value}_{request.endpoint}_{time.time()}".encode()
         ).hexdigest()[:16]
         
@@ -226,8 +212,7 @@ class BasePlatformConnector(ABC):
             raise
 
     async def _execute_request(self, request: APIRequest, request_id: str) -> aiohttp.ClientResponse:
-        """Execute HTTP request"""
-        if not self.session:
+        """Execute HTTP request"""        if not self.session:
             raise RuntimeError("Connector not initialized")
         
         # Prepare request parameters
@@ -264,26 +249,22 @@ class BasePlatformConnector(ABC):
             return response
 
     def _get_default_headers(self) -> Dict[str, str]:
-        """Get default headers for requests"""
-        return {
+        """Get default headers for requests"""        return {
             'User-Agent': f'IA-Influencer-Agent-Platform-Connector/{self.platform_type.value}',
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
 
     def _get_auth_headers(self) -> Dict[str, str]:
-        """Get authentication headers (to be overridden by subclasses)"""
-        return {}
+        """Get authentication headers (to be overridden by subclasses)"""        return {}
 
     def _build_url(self, endpoint: str) -> str:
-        """Build complete URL for API endpoint"""
-        base_url = self.config.base_url.rstrip('/')
+        """Build complete URL for API endpoint"""        base_url = self.config.base_url.rstrip('/')
         endpoint = endpoint.lstrip('/')
         return f"{base_url}/{endpoint}"
 
     async def _parse_response_data(self, response: aiohttp.ClientResponse) -> Any:
-        """Parse response data"""
-        content_type = response.headers.get('Content-Type', '')
+        """Parse response data"""        content_type = response.headers.get('Content-Type', '')
         
         if 'application/json' in content_type:
             return await response.json()
@@ -293,8 +274,7 @@ class BasePlatformConnector(ABC):
             return await response.read()
 
     async def _parse_error_response(self, response: aiohttp.ClientResponse) -> Dict[str, Any]:
-        """Parse error response"""
-        try:
+        """Parse error response"""        try:
             if 'application/json' in response.headers.get('Content-Type', ''):
                 return await response.json()
             else:
@@ -304,8 +284,7 @@ class BasePlatformConnector(ABC):
             return {'message': 'Unknown error', 'status_code': response.status}
 
     def _parse_rate_limit_remaining(self, headers: Dict[str, str]) -> Optional[int]:
-        """Parse rate limit remaining from headers"""
-        # Common header names for rate limit remaining
+        """Parse rate limit remaining from headers"""        # Common header names for rate limit remaining
         header_names = [
             'X-RateLimit-Remaining',
             'X-Rate-Limit-Remaining',
@@ -323,8 +302,7 @@ class BasePlatformConnector(ABC):
         return None
 
     def _parse_rate_limit_reset(self, headers: Dict[str, str]) -> Optional[datetime]:
-        """Parse rate limit reset time from headers"""
-        header_names = [
+        """Parse rate limit reset time from headers"""        header_names = [
             'X-RateLimit-Reset',
             'X-Rate-Limit-Reset',
             'RateLimit-Reset'
@@ -341,8 +319,7 @@ class BasePlatformConnector(ABC):
         return None
 
     async def close(self):
-        """Close the connector and cleanup resources"""
-        if self.session:
+        """Close the connector and cleanup resources"""        if self.session:
             await self.session.close()
             self.session = None
         
@@ -350,8 +327,7 @@ class BasePlatformConnector(ABC):
 
 
 class SpotifyConnector(BasePlatformConnector):
-    """Spotify API connector with advanced music-specific features"""
-    
+    """Spotify API connector with advanced music-specific features"""    
     def __init__(self, config: PlatformConfig):
         super().__init__(PlatformType.SPOTIFY, config)
         self.access_token: Optional[str] = None
@@ -359,8 +335,7 @@ class SpotifyConnector(BasePlatformConnector):
         self.token_expires_at: Optional[datetime] = None
 
     async def authenticate(self, credentials: PlatformCredential) -> bool:
-        """Authenticate with Spotify using OAuth2"""
-        try:
+        """Authenticate with Spotify using OAuth2"""        try:
             # Implement Spotify OAuth2 flow
             auth_url = "https://accounts.spotify.com/api/token"
             
@@ -399,14 +374,12 @@ class SpotifyConnector(BasePlatformConnector):
             return False
 
     async def upload_content(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload audio content to Spotify (requires Spotify for Artists API)"""
-        # Note: Direct upload requires special partnership with Spotify
+        """Upload audio content to Spotify (requires Spotify for Artists API)"""        # Note: Direct upload requires special partnership with Spotify
         # This would typically involve using a distribution service
         pass
 
     async def get_analytics(self, content_id: str = None) -> Dict[str, Any]:
-        """Get Spotify analytics data"""
-        try:
+        """Get Spotify analytics data"""        try:
             endpoint = f"v1/me/player/recently-played"
             if content_id:
                 endpoint += f"?after={content_id}"
@@ -424,8 +397,7 @@ class SpotifyConnector(BasePlatformConnector):
             raise
 
     async def get_user_profile(self) -> Dict[str, Any]:
-        """Get Spotify user profile"""
-        try:
+        """Get Spotify user profile"""        try:
             request = APIRequest(
                 method=APIMethod.GET,
                 endpoint="v1/me"
@@ -439,23 +411,20 @@ class SpotifyConnector(BasePlatformConnector):
             raise
 
     def _get_auth_headers(self) -> Dict[str, str]:
-        """Get Spotify authentication headers"""
-        if self.access_token:
+        """Get Spotify authentication headers"""        if self.access_token:
             return {'Authorization': f'Bearer {self.access_token}'}
         return {}
 
 
 class YouTubeConnector(BasePlatformConnector):
-    """YouTube Data/Creator API connector with advanced video features"""
-    
+    """YouTube Data/Creator API connector with advanced video features"""    
     def __init__(self, config: PlatformConfig):
         super().__init__(PlatformType.YOUTUBE, config)
         self.api_key: Optional[str] = None
         self.oauth_token: Optional[str] = None
 
     async def authenticate(self, credentials: PlatformCredential) -> bool:
-        """Authenticate with YouTube API"""
-        try:
+        """Authenticate with YouTube API"""        try:
             self.api_key = credentials.api_key
             
             # Test authentication with a simple API call
@@ -478,8 +447,7 @@ class YouTubeConnector(BasePlatformConnector):
             return False
 
     async def upload_content(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload video content to YouTube"""
-        try:
+        """Upload video content to YouTube"""        try:
             # YouTube resumable upload implementation
             endpoint = "upload/youtube/v3/videos"
             
@@ -512,8 +480,7 @@ class YouTubeConnector(BasePlatformConnector):
             raise
 
     async def get_analytics(self, content_id: str = None) -> Dict[str, Any]:
-        """Get YouTube analytics data"""
-        try:
+        """Get YouTube analytics data"""        try:
             endpoint = "youtubeAnalytics/v2/reports"
             
             params = {
@@ -541,8 +508,7 @@ class YouTubeConnector(BasePlatformConnector):
             raise
 
     async def get_user_profile(self) -> Dict[str, Any]:
-        """Get YouTube channel information"""
-        try:
+        """Get YouTube channel information"""        try:
             request = APIRequest(
                 method=APIMethod.GET,
                 endpoint="youtube/v3/channels",
@@ -557,24 +523,21 @@ class YouTubeConnector(BasePlatformConnector):
             raise
 
     def _get_auth_headers(self) -> Dict[str, str]:
-        """Get YouTube authentication headers"""
-        headers = {}
+        """Get YouTube authentication headers"""        headers = {}
         if self.oauth_token:
             headers['Authorization'] = f'Bearer {self.oauth_token}'
         return headers
 
 
 class InstagramConnector(BasePlatformConnector):
-    """Instagram Graph API connector with advanced visual content features"""
-    
+    """Instagram Graph API connector with advanced visual content features"""    
     def __init__(self, config: PlatformConfig):
         super().__init__(PlatformType.INSTAGRAM, config)
         self.access_token: Optional[str] = None
         self.page_id: Optional[str] = None
 
     async def authenticate(self, credentials: PlatformCredential) -> bool:
-        """Authenticate with Instagram Graph API"""
-        try:
+        """Authenticate with Instagram Graph API"""        try:
             self.access_token = credentials.access_token
             self.page_id = credentials.additional_data.get('page_id')
             
@@ -598,8 +561,7 @@ class InstagramConnector(BasePlatformConnector):
             return False
 
     async def upload_content(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload content to Instagram"""
-        try:
+        """Upload content to Instagram"""        try:
             content_type = content.get('type', 'image')
             
             if content_type == 'image':
@@ -616,8 +578,7 @@ class InstagramConnector(BasePlatformConnector):
             raise
 
     async def _upload_image(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Upload single image to Instagram"""
-        # Step 1: Create container
+        """Upload single image to Instagram"""        # Step 1: Create container
         container_request = APIRequest(
             method=APIMethod.POST,
             endpoint=f"{self.page_id}/media",
@@ -645,8 +606,7 @@ class InstagramConnector(BasePlatformConnector):
         return publish_response.data
 
     async def get_analytics(self, content_id: str = None) -> Dict[str, Any]:
-        """Get Instagram analytics data"""
-        try:
+        """Get Instagram analytics data"""        try:
             if content_id:
                 # Get specific post insights
                 endpoint = f"{content_id}/insights"
@@ -677,8 +637,7 @@ class InstagramConnector(BasePlatformConnector):
             raise
 
     async def get_user_profile(self) -> Dict[str, Any]:
-        """Get Instagram account information"""
-        try:
+        """Get Instagram account information"""        try:
             request = APIRequest(
                 method=APIMethod.GET,
                 endpoint=f"{self.page_id}",
@@ -696,18 +655,15 @@ class InstagramConnector(BasePlatformConnector):
             raise
 
     def _get_auth_headers(self) -> Dict[str, str]:
-        """Get Instagram authentication headers"""
-        return {}  # Instagram uses access_token in params
+        """Get Instagram authentication headers"""        return {}  # Instagram uses access_token in params
 
 
 class PlatformConnector:
-    """
-    Universal Platform Connector - Factory and Manager for All Platform Connectors
+    """    Universal Platform Connector - Factory and Manager for All Platform Connectors
     
     Provides a unified interface for managing connections to all supported platforms
     with intelligent routing, load balancing, and failover capabilities.
-    """
-    
+    """    
     def __init__(self):
         self.connectors: Dict[PlatformType, BasePlatformConnector] = {}
         self.config_manager = ConfigManager()
@@ -719,8 +675,7 @@ class PlatformConnector:
         self.logger = logging.getLogger(f"{__name__}.PlatformConnector")
 
     async def initialize(self) -> bool:
-        """Initialize all configured platform connectors"""
-        try:
+        """Initialize all configured platform connectors"""        try:
             # Load platform configurations
             platform_configs = await self._load_platform_configurations()
             
@@ -742,8 +697,7 @@ class PlatformConnector:
             return False
 
     async def _create_connector(self, platform_type: PlatformType, config: Dict[str, Any]) -> BasePlatformConnector:
-        """Create platform-specific connector"""
-        platform_config = PlatformConfig(**config)
+        """Create platform-specific connector"""        platform_config = PlatformConfig(**config)
         
         match platform_type:
             case PlatformType.SPOTIFY:
@@ -760,15 +714,13 @@ class PlatformConnector:
                 return GenericConnector(platform_type, platform_config)
 
     async def get_connector(self, platform_type: PlatformType) -> BasePlatformConnector:
-        """Get connector for specific platform"""
-        if platform_type not in self.connectors:
+        """Get connector for specific platform"""        if platform_type not in self.connectors:
             raise ValueError(f"Connector for {platform_type.value} not initialized")
         
         return self.connectors[platform_type]
 
     async def authenticate_all(self, user_id: str) -> Dict[PlatformType, bool]:
-        """Authenticate with all configured platforms for user"""
-        authentication_results = {}
+        """Authenticate with all configured platforms for user"""        authentication_results = {}
         
         # Get user credentials for all platforms
         credentials = await self._get_user_credentials(user_id)
@@ -800,8 +752,7 @@ class PlatformConnector:
         target_platforms: List[PlatformType],
         user_id: str
     ) -> Dict[PlatformType, Dict[str, Any]]:
-        """Distribute content to multiple platforms in parallel"""
-        distribution_tasks = []
+        """Distribute content to multiple platforms in parallel"""        distribution_tasks = []
         
         for platform_type in target_platforms:
             if platform_type in self.connectors:
@@ -831,8 +782,7 @@ class PlatformConnector:
         content: Dict[str, Any],
         user_id: str
     ) -> Dict[str, Any]:
-        """Distribute content to single platform"""
-        connector = self.connectors[platform_type]
+        """Distribute content to single platform"""        connector = self.connectors[platform_type]
         
         try:
             # Platform-specific content optimization
@@ -862,8 +812,7 @@ class PlatformConnector:
         user_id: str,
         platforms: List[PlatformType] = None
     ) -> Dict[str, Any]:
-        """Get aggregated analytics from multiple platforms"""
-        if platforms is None:
+        """Get aggregated analytics from multiple platforms"""        if platforms is None:
             platforms = list(self.connectors.keys())
         
         analytics_tasks = []
@@ -906,8 +855,7 @@ class PlatformConnector:
         }
 
     async def shutdown_all(self):
-        """Shutdown all platform connectors"""
-        for platform_type, connector in self.connectors.items():
+        """Shutdown all platform connectors"""        for platform_type, connector in self.connectors.items():
             try:
                 await connector.close()
                 self.logger.info(f"Closed connector for {platform_type.value}")
@@ -918,13 +866,11 @@ class PlatformConnector:
 
 
 class UniversalAPI:
-    """
-    Universal API Interface - Provides standardized access to all platform APIs
+    """    Universal API Interface - Provides standardized access to all platform APIs
     
     High-level interface that abstracts platform-specific implementations
     and provides consistent methods for all content operations.
-    """
-    
+    """    
     def __init__(self, platform_connector: PlatformConnector):
         self.platform_connector = platform_connector
         self.cache_manager = CacheManager()
@@ -936,8 +882,7 @@ class UniversalAPI:
         platforms: List[PlatformType],
         user_id: str
     ) -> Dict[str, Any]:
-        """Universal content upload across platforms"""
-        return await self.platform_connector.distribute_content_parallel(
+        """Universal content upload across platforms"""        return await self.platform_connector.distribute_content_parallel(
             content, platforms, user_id
         )
 
@@ -947,14 +892,12 @@ class UniversalAPI:
         platforms: List[PlatformType] = None,
         date_range: Tuple[datetime, datetime] = None
     ) -> Dict[str, Any]:
-        """Universal analytics aggregation"""
-        return await self.platform_connector.get_aggregated_analytics(
+        """Universal analytics aggregation"""        return await self.platform_connector.get_aggregated_analytics(
             user_id, platforms
         )
 
     async def get_user_profiles(self, user_id: str) -> Dict[str, Any]:
-        """Get user profiles from all connected platforms"""
-        profiles = {}
+        """Get user profiles from all connected platforms"""        profiles = {}
         
         for platform_type, connector in self.platform_connector.connectors.items():
             try:
@@ -975,8 +918,7 @@ class UniversalAPI:
         criteria: Dict[str, Any],
         platforms: List[PlatformType] = None
     ) -> Dict[str, Any]:
-        """Search for potential collaborators across platforms"""
-        # This would implement cross-platform collaborator discovery
+        """Search for potential collaborators across platforms"""        # This would implement cross-platform collaborator discovery
         # using AI matching algorithms based on content similarity,
         # audience overlap, engagement patterns, etc.
         pass
@@ -987,7 +929,6 @@ class UniversalAPI:
         schedule: Dict[str, datetime],
         user_id: str
     ) -> Dict[str, Any]:
-        """Schedule content for optimal posting times across platforms"""
-        # Implementation for intelligent content scheduling
+        """Schedule content for optimal posting times across platforms"""        # Implementation for intelligent content scheduling
         # based on audience activity patterns and platform algorithms
         pass

@@ -12,8 +12,7 @@ Email: mlaiel@live.de
 This package provides comprehensive audio processing, analysis, protection,
 monetization, collaboration, and distribution capabilities for the
 IA Influencer Agent platform.
-"""
-import logging
+"""import logging
 
 # Import all modules for easy access
 from .audio_manager import AudioManager, AudioProcessingStatus, ContentType, AudioUploadRequest, AudioProcessingResult

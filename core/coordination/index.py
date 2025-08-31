@@ -1,5 +1,4 @@
-"""
-Coordination Index - Unified Enterprise Coordination Service Entry Point
+"""Coordination Index - Unified Enterprise Coordination Service Entry Point
 
 This module provides the main entry point for the coordination system,
 implementing a comprehensive service that unifies all coordination components
@@ -24,9 +23,7 @@ Automated Monetization → Rights Management → Performance Analytics
 Author: Fahed Mlaiel
 Project Lead & Chief Architect
 Email: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Union
 from datetime import datetime, timedelta
@@ -57,16 +54,14 @@ logger = logging.getLogger(__name__)
 
 
 class ServiceHealthStatus(Enum):
-    """Service health status enumeration."""
-    HEALTHY = "healthy"
+    """Service health status enumeration."""    HEALTHY = "healthy"
     DEGRADED = "degraded"
     CRITICAL = "critical"
     UNKNOWN = "unknown"
 
 
 class CoordinationServiceStatus(Enum):
-    """Overall coordination service status."""
-    STARTING = "starting"
+    """Overall coordination service status."""    STARTING = "starting"
     RUNNING = "running"
     DEGRADED = "degraded"
     STOPPING = "stopping"
@@ -76,8 +71,7 @@ class CoordinationServiceStatus(Enum):
 
 @dataclass
 class ServiceMetrics:
-    """Comprehensive service metrics."""
-    service_name: str
+    """Comprehensive service metrics."""    service_name: str
     status: ServiceHealthStatus
     uptime_seconds: float
     request_count: int
@@ -92,8 +86,7 @@ class ServiceMetrics:
 
 @dataclass
 class CoordinationServiceConfig:
-    """Configuration for the coordination service."""
-    # Core Configuration
+    """Configuration for the coordination service."""    # Core Configuration
     max_workflows: int = 100
     max_processes: int = 200
     max_tasks: int = 50
@@ -121,17 +114,14 @@ class CoordinationServiceConfig:
 
 
 class CoordinationService:
-    """
-    Unified enterprise coordination service that orchestrates all coordination components.
+    """    Unified enterprise coordination service that orchestrates all coordination components.
     
     This service provides a single entry point for managing workflows, processes, tasks,
     resources, state, events, synchronization, and dependencies across the entire
     IA-Influencer-Agent platform.
-    """
-    
+    """    
     def __init__(self, config: Optional[CoordinationServiceConfig] = None):
-        """Initialize the coordination service with all components."""
-        self.config = config or CoordinationServiceConfig()
+        """Initialize the coordination service with all components."""        self.config = config or CoordinationServiceConfig()
         self.status = CoordinationServiceStatus.STARTING
         self.start_time = datetime.now()
         self.service_id = str(uuid.uuid4())
@@ -163,8 +153,7 @@ class CoordinationService:
         logger.info(f"CoordinationService initialized with ID: {self.service_id}")
     
     def _initialize_components(self):
-        """Initialize all coordination service components."""
-        try:
+        """Initialize all coordination service components."""        try:
             # Initialize workflow coordinator
             self.workflow_coordinator = WorkflowCoordinator(
                 max_concurrent_workflows=self.config.max_workflows
@@ -213,8 +202,7 @@ class CoordinationService:
             raise
     
     def _start_health_monitoring(self):
-        """Start the health monitoring background task."""
-        def health_monitor():
+        """Start the health monitoring background task."""        def health_monitor():
             while not self._shutdown_event.is_set():
                 try:
                     self._perform_health_check()
@@ -232,8 +220,7 @@ class CoordinationService:
         logger.info("Health monitoring started")
     
     def _perform_health_check(self):
-        """Perform comprehensive health check of all components."""
-        try:
+        """Perform comprehensive health check of all components."""        try:
             component_health = {
                 'workflow_coordinator': self._check_component_health(self.workflow_coordinator),
                 'process_manager': self._check_component_health(self.process_manager),
@@ -266,8 +253,7 @@ class CoordinationService:
             self.status = CoordinationServiceStatus.ERROR
     
     def _check_component_health(self, component) -> Dict[str, Any]:
-        """Check health of individual component."""
-        try:
+        """Check health of individual component."""        try:
             if hasattr(component, 'health_check'):
                 return component.health_check()
             elif hasattr(component, 'get_system_metrics'):
@@ -296,8 +282,7 @@ class CoordinationService:
         platform_targets: List[str],
         workflow_options: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Execute the complete content processing workflow for the IA-Influencer-Agent platform.
+        """        Execute the complete content processing workflow for the IA-Influencer-Agent platform.
         
         This method orchestrates the entire business logic flow:
         Content Upload → Multi-Format Analysis → AI Fingerprinting → Protection Setup → 
@@ -312,8 +297,7 @@ class CoordinationService:
             
         Returns:
             Execution ID for tracking the workflow progress
-        """
-        try:
+        """        try:
             with self._lock:
                 self.metrics['total_requests'] += 1
                 start_time = time.time()
@@ -378,8 +362,7 @@ class CoordinationService:
             raise
     
     def _create_business_workflow(self, execution_context: Dict[str, Any]) -> WorkflowDefinition:
-        """Create the comprehensive business workflow definition."""
-        from .workflow_coordinator import WorkflowStep
+        """Create the comprehensive business workflow definition."""        from .workflow_coordinator import WorkflowStep
         
         return WorkflowDefinition(
             workflow_id="ia_influencer_content_processing_enterprise",
@@ -547,8 +530,7 @@ class CoordinationService:
         )
     
     async def get_comprehensive_status(self) -> Dict[str, Any]:
-        """Get comprehensive status of the entire coordination service."""
-        try:
+        """Get comprehensive status of the entire coordination service."""        try:
             uptime = (datetime.now() - self.start_time).total_seconds()
             
             # Collect metrics from all components
@@ -591,8 +573,7 @@ class CoordinationService:
             }
     
     def _get_health_summary(self) -> Dict[str, Any]:
-        """Get summary of component health status."""
-        components = [
+        """Get summary of component health status."""        components = [
             'workflow_coordinator', 'process_manager', 'task_scheduler',
             'resource_coordinator', 'state_manager', 'event_dispatcher',
             'sync_manager', 'dependency_resolver'
@@ -631,8 +612,7 @@ class CoordinationService:
         return health_summary
     
     def _calculate_performance_indicators(self) -> Dict[str, Any]:
-        """Calculate key performance indicators."""
-        try:
+        """Calculate key performance indicators."""        try:
             total_requests = self.metrics['total_requests']
             if total_requests == 0:
                 return {'status': 'no_data'}
@@ -655,8 +635,7 @@ class CoordinationService:
             return {'error': str(e)}
     
     def _calculate_business_metrics(self) -> Dict[str, Any]:
-        """Calculate business-specific metrics for the IA-Influencer-Agent platform."""
-        try:
+        """Calculate business-specific metrics for the IA-Influencer-Agent platform."""        try:
             # This would be implemented with actual business logic
             # For now, return placeholder metrics
             return {
@@ -674,8 +653,7 @@ class CoordinationService:
             return {'error': str(e)}
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform a quick health check of the coordination service."""
-        try:
+        """Perform a quick health check of the coordination service."""        try:
             start_time = time.time()
             
             # Quick component checks
@@ -709,8 +687,7 @@ class CoordinationService:
             }
     
     async def shutdown(self):
-        """Gracefully shutdown the coordination service."""
-        logger.info("Initiating coordination service shutdown...")
+        """Gracefully shutdown the coordination service."""        logger.info("Initiating coordination service shutdown...")
         self.status = CoordinationServiceStatus.STOPPING
         
         try:
@@ -758,16 +735,14 @@ _service_lock = threading.Lock()
 
 
 def get_coordination_service(config: Optional[CoordinationServiceConfig] = None) -> CoordinationService:
-    """
-    Get the global coordination service instance (singleton pattern).
+    """    Get the global coordination service instance (singleton pattern).
     
     Args:
         config: Optional configuration for the service
         
     Returns:
         CoordinationService instance
-    """
-    global _coordination_service
+    """    global _coordination_service
     
     with _service_lock:
         if _coordination_service is None:
@@ -781,8 +756,7 @@ async def execute_content_workflow(
     platform_targets: List[str],
     workflow_options: Optional[Dict[str, Any]] = None
 ) -> str:
-    """
-    Convenience function to execute content workflow using the global service instance.
+    """    Convenience function to execute content workflow using the global service instance.
     
     Args:
         content_data: Content information including file path, type, metadata
@@ -792,8 +766,7 @@ async def execute_content_workflow(
         
     Returns:
         Execution ID for tracking the workflow progress
-    """
-    coordination_service = get_coordination_service()
+    """    coordination_service = get_coordination_service()
     return await coordination_service.execute_content_workflow(
         content_data=content_data,
         user_id=user_id,
@@ -803,27 +776,23 @@ async def execute_content_workflow(
 
 
 async def get_service_status() -> Dict[str, Any]:
-    """Get comprehensive status of the coordination service."""
-    coordination_service = get_coordination_service()
+    """Get comprehensive status of the coordination service."""    coordination_service = get_coordination_service()
     return await coordination_service.get_comprehensive_status()
 
 
 async def perform_health_check() -> Dict[str, Any]:
-    """Perform a health check of the coordination service."""
-    coordination_service = get_coordination_service()
+    """Perform a health check of the coordination service."""    coordination_service = get_coordination_service()
     return await coordination_service.health_check()
 
 
 @asynccontextmanager
 async def coordination_service_context(config: Optional[CoordinationServiceConfig] = None):
-    """
-    Async context manager for coordination service lifecycle management.
+    """    Async context manager for coordination service lifecycle management.
     
     Usage:
         async with coordination_service_context() as service:
             execution_id = await service.execute_content_workflow(...)
-    """
-    service = get_coordination_service(config)
+    """    service = get_coordination_service(config)
     try:
         yield service
     finally:
@@ -832,16 +801,13 @@ async def coordination_service_context(config: Optional[CoordinationServiceConfi
 
 # Legacy compatibility - keep existing CoordinationModule for backward compatibility
 class CoordinationModule:
-    """
-    Legacy coordination module class for backward compatibility.
+    """    Legacy coordination module class for backward compatibility.
     
     This class provides access to all coordination components through a unified interface.
     For new implementations, use CoordinationService instead.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize coordination module with all components."""
-        self.workflow_coordinator = WorkflowCoordinator()
+        """Initialize coordination module with all components."""        self.workflow_coordinator = WorkflowCoordinator()
         self.process_manager = ProcessManager()
         self.task_scheduler = TaskScheduler()
         self.resource_coordinator = ResourceCoordinator()
@@ -853,8 +819,7 @@ class CoordinationModule:
         logger.info("CoordinationModule initialized (legacy mode)")
     
     def start_all_services(self):
-        """Start all coordination services."""
-        try:
+        """Start all coordination services."""        try:
             self.process_manager.start_monitoring()
             self.resource_coordinator.start_monitoring()
             self.task_scheduler.start_scheduler()
@@ -864,8 +829,7 @@ class CoordinationModule:
             raise
     
     def stop_all_services(self):
-        """Stop all coordination services."""
-        try:
+        """Stop all coordination services."""        try:
             if hasattr(self.task_scheduler, 'stop_scheduler'):
                 self.task_scheduler.stop_scheduler()
             if hasattr(self.process_manager, 'stop_monitoring'):
@@ -905,8 +869,7 @@ __all__ = [
 if __name__ == "__main__":
     # Example usage and testing
     async def main():
-        """Example usage of the coordination service."""
-        # Initialize service with custom configuration
+        """Example usage of the coordination service."""        # Initialize service with custom configuration
         config = CoordinationServiceConfig(
             max_workflows=50,
             max_processes=100,
@@ -958,8 +921,7 @@ if __name__ == "__main__":
         logger.info("CoordinationModule instance created")
     
     async def initialize(self) -> bool:
-        """Initialize all coordination components"""
-        try:
+        """Initialize all coordination components"""        try:
             self.startup_time = datetime.now(timezone.utc)
             
             logger.info("Initializing coordination system...")
@@ -998,8 +960,7 @@ if __name__ == "__main__":
             return False
     
     async def _initialize_workflow_coordinator(self):
-        """Initialize workflow coordinator component"""
-        try:
+        """Initialize workflow coordinator component"""        try:
             workflow_coordinator = WorkflowCoordinator(
                 max_concurrent_workflows=self.config.max_concurrent_workflows
             )
@@ -1020,8 +981,7 @@ if __name__ == "__main__":
             raise
     
     async def _initialize_process_manager(self):
-        """Initialize process manager component"""
-        try:
+        """Initialize process manager component"""        try:
             process_manager = ProcessManager(
                 max_processes=self.config.max_processes,
                 monitoring_interval=self.config.monitoring_interval
@@ -1043,8 +1003,7 @@ if __name__ == "__main__":
             raise
     
     async def _initialize_task_scheduler(self):
-        """Initialize task scheduler component"""
-        try:
+        """Initialize task scheduler component"""        try:
             task_scheduler = TaskScheduler(
                 max_concurrent_tasks=self.config.max_concurrent_tasks
             )
@@ -1065,8 +1024,7 @@ if __name__ == "__main__":
             raise
     
     async def _initialize_resource_coordinator(self):
-        """Initialize resource coordinator component"""
-        try:
+        """Initialize resource coordinator component"""        try:
             resource_coordinator = ResourceCoordinator(
                 monitoring_interval=self.config.monitoring_interval
             )
@@ -1087,8 +1045,7 @@ if __name__ == "__main__":
             raise
     
     async def _initialize_state_manager(self):
-        """Initialize state manager component"""
-        try:
+        """Initialize state manager component"""        try:
             state_manager = StateManager()
             
             self.components["state_manager"] = state_manager
@@ -1107,8 +1064,7 @@ if __name__ == "__main__":
             raise
     
     async def _initialize_event_dispatcher(self):
-        """Initialize event dispatcher component"""
-        try:
+        """Initialize event dispatcher component"""        try:
             event_dispatcher = EventDispatcher()
             
             self.components["event_dispatcher"] = event_dispatcher
@@ -1127,8 +1083,7 @@ if __name__ == "__main__":
             raise
     
     async def _initialize_sync_manager(self):
-        """Initialize sync manager component"""
-        try:
+        """Initialize sync manager component"""        try:
             sync_manager = SyncManager()
             
             self.components["sync_manager"] = sync_manager
@@ -1147,8 +1102,7 @@ if __name__ == "__main__":
             raise
     
     async def _initialize_dependency_resolver(self):
-        """Initialize dependency resolver component"""
-        try:
+        """Initialize dependency resolver component"""        try:
             dependency_resolver = DependencyResolver(
                 cache_size=self.config.cache_size,
                 max_resolution_depth=self.config.max_resolution_depth
@@ -1170,8 +1124,7 @@ if __name__ == "__main__":
             raise
     
     async def _setup_component_connections(self):
-        """Setup connections and integrations between components"""
-        try:
+        """Setup connections and integrations between components"""        try:
             # Connect event dispatcher to all components
             event_dispatcher = self.components["event_dispatcher"]
             
@@ -1246,8 +1199,7 @@ if __name__ == "__main__":
             raise
     
     async def _start_system_monitoring(self):
-        """Start system-wide monitoring"""
-        try:
+        """Start system-wide monitoring"""        try:
             # Start component monitoring
             if "process_manager" in self.components:
                 self.components["process_manager"].start_monitoring()
@@ -1269,8 +1221,7 @@ if __name__ == "__main__":
             raise
     
     async def _health_check_loop(self):
-        """Continuous health check loop for all components"""
-        while self.initialized and not self.shutdown_requested:
+        """Continuous health check loop for all components"""        while self.initialized and not self.shutdown_requested:
             try:
                 await self._perform_health_checks()
                 await asyncio.sleep(self.config.monitoring_interval)
@@ -1279,8 +1230,7 @@ if __name__ == "__main__":
                 await asyncio.sleep(10)  # Wait before retrying
     
     async def _perform_health_checks(self):
-        """Perform health checks on all components"""
-        try:
+        """Perform health checks on all components"""        try:
             for component_name, component in self.components.items():
                 try:
                     # Update health check timestamp
@@ -1306,8 +1256,7 @@ if __name__ == "__main__":
             logger.error(f"Health check execution failed: {e}")
     
     async def _handle_workflow_event(self, event_data: Dict[str, Any]):
-        """Handle workflow events"""
-        try:
+        """Handle workflow events"""        try:
             logger.debug(f"Workflow event received: {event_data}")
             # Forward to event dispatcher if available
             if "event_dispatcher" in self.components:
@@ -1319,8 +1268,7 @@ if __name__ == "__main__":
             logger.error(f"Workflow event handling failed: {e}")
     
     async def _handle_process_event(self, event_data: Dict[str, Any]):
-        """Handle process events"""
-        try:
+        """Handle process events"""        try:
             logger.debug(f"Process event received: {event_data}")
             # Forward to event dispatcher if available
             if "event_dispatcher" in self.components:
@@ -1332,8 +1280,7 @@ if __name__ == "__main__":
             logger.error(f"Process event handling failed: {e}")
     
     async def _handle_task_event(self, event_data: Dict[str, Any]):
-        """Handle task events"""
-        try:
+        """Handle task events"""        try:
             logger.debug(f"Task event received: {event_data}")
             # Forward to event dispatcher if available
             if "event_dispatcher" in self.components:
@@ -1345,8 +1292,7 @@ if __name__ == "__main__":
             logger.error(f"Task event handling failed: {e}")
     
     async def _handle_resource_event(self, event_data: Dict[str, Any]):
-        """Handle resource events"""
-        try:
+        """Handle resource events"""        try:
             logger.debug(f"Resource event received: {event_data}")
             # Forward to event dispatcher if available
             if "event_dispatcher" in self.components:
@@ -1358,8 +1304,7 @@ if __name__ == "__main__":
             logger.error(f"Resource event handling failed: {e}")
     
     async def _emit_system_event(self, event_type: str, data: Dict[str, Any]):
-        """Emit system-level events"""
-        try:
+        """Emit system-level events"""        try:
             if "event_dispatcher" in self.components:
                 await self.components["event_dispatcher"].dispatch_event(
                     event_type="system_event",
@@ -1372,16 +1317,13 @@ if __name__ == "__main__":
             logger.error(f"System event emission failed: {e}")
     
     def get_component(self, component_name: str) -> Optional[Any]:
-        """Get a specific component by name"""
-        return self.components.get(component_name)
+        """Get a specific component by name"""        return self.components.get(component_name)
     
     def get_component_status(self, component_name: str) -> Optional[ComponentStatus]:
-        """Get status information for a specific component"""
-        return self.component_status.get(component_name)
+        """Get status information for a specific component"""        return self.component_status.get(component_name)
     
     def get_system_status(self) -> Dict[str, Any]:
-        """Get overall system status"""
-        total_components = len(self.components)
+        """Get overall system status"""        total_components = len(self.components)
         healthy_components = len([
             status for status in self.component_status.values()
             if status.status == "healthy"
@@ -1410,8 +1352,7 @@ if __name__ == "__main__":
         }
     
     def get_system_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive system metrics"""
-        metrics = {}
+        """Get comprehensive system metrics"""        metrics = {}
         
         for component_name, component in self.components.items():
             if hasattr(component, 'get_system_metrics'):
@@ -1429,8 +1370,7 @@ if __name__ == "__main__":
         }
     
     async def shutdown(self):
-        """Graceful shutdown of all coordination components"""
-        try:
+        """Graceful shutdown of all coordination components"""        try:
             self.shutdown_requested = True
             self.health_checks_enabled = False
             
@@ -1479,16 +1419,14 @@ if __name__ == "__main__":
 
 # Convenience function for easy initialization
 async def create_coordination_system(config: Optional[CoordinationConfig] = None) -> CoordinationModule:
-    """
-    Create and initialize a coordination system with the specified configuration.
+    """    Create and initialize a coordination system with the specified configuration.
     
     Args:
         config: Optional configuration for the coordination system
         
     Returns:
         Initialized CoordinationModule instance
-    """
-    coordination_module = CoordinationModule(config)
+    """    coordination_module = CoordinationModule(config)
     
     if await coordination_module.initialize():
         return coordination_module
@@ -1501,16 +1439,14 @@ _global_coordination_module: Optional[CoordinationModule] = None
 
 
 async def get_coordination_module(config: Optional[CoordinationConfig] = None) -> CoordinationModule:
-    """
-    Get the global coordination module instance, creating it if necessary.
+    """    Get the global coordination module instance, creating it if necessary.
     
     Args:
         config: Optional configuration for initialization (only used on first call)
         
     Returns:
         Global CoordinationModule instance
-    """
-    global _global_coordination_module
+    """    global _global_coordination_module
     
     if _global_coordination_module is None:
         _global_coordination_module = await create_coordination_system(config)
@@ -1519,8 +1455,7 @@ async def get_coordination_module(config: Optional[CoordinationConfig] = None) -
 
 
 async def shutdown_coordination_system():
-    """Shutdown the global coordination system"""
-    global _global_coordination_module
+    """Shutdown the global coordination system"""    global _global_coordination_module
     
     if _global_coordination_module is not None:
         await _global_coordination_module.shutdown()

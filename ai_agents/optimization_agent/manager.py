@@ -1,5 +1,4 @@
-"""
-Optimization Manager - Ultra-Advanced Enterprise Management System
+"""Optimization Manager - Ultra-Advanced Enterprise Management System
 
 Unified interface for the entire optimization system providing comprehensive
 control, monitoring, and optimization capabilities.
@@ -11,9 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime
@@ -39,15 +36,13 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class OptimizationSystemStatus:
-    """Overall optimization system status"""
-    is_healthy: bool = True
+    """Overall optimization system status"""    is_healthy: bool = True
     active_operations: int = 0
     system_load: float = 0.0
     last_updated: datetime = None
 
 class OptimizationManager(BaseAgent):
-    """
-    Master Optimization Manager
+    """    Master Optimization Manager
     
     Unified interface for the entire optimization system providing:
     - Single point of control for all optimization operations
@@ -56,8 +51,7 @@ class OptimizationManager(BaseAgent):
     - Performance analytics and reporting
     - Resource management and scaling
     - Error handling and recovery
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
         
@@ -70,8 +64,7 @@ class OptimizationManager(BaseAgent):
         logger.info("OptimizationManager initialized")
 
     async def start(self) -> None:
-        """Start the complete optimization system"""
-        if self.is_running:
+        """Start the complete optimization system"""        if self.is_running:
             logger.warning("Optimization system is already running")
             return
         
@@ -86,8 +79,7 @@ class OptimizationManager(BaseAgent):
             raise
 
     async def get_system_status(self) -> OptimizationSystemStatus:
-        """Get comprehensive system status"""
-        try:
+        """Get comprehensive system status"""        try:
             return OptimizationSystemStatus(
                 is_healthy=self.is_running,
                 active_operations=0,  # Implementation specific
@@ -99,15 +91,13 @@ class OptimizationManager(BaseAgent):
             return OptimizationSystemStatus(is_healthy=False)
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of the entire optimization system"""
-        logger.info("Shutting down Optimization System...")
+        """Graceful shutdown of the entire optimization system"""        logger.info("Shutting down Optimization System...")
         self.is_running = False
         await self.engine.shutdown()
         logger.info("Optimization System shutdown complete")
 
     async def process(self, data: Dict[str, Any]) -> AgentResponse:
-        """Base agent interface implementation"""
-        try:
+        """Base agent interface implementation"""        try:
             # Implementation specific to optimization operations
             result = await self.engine.process(data)
             return AgentResponse(success=True, data=result)

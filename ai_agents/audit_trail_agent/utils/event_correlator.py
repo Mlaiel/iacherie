@@ -1,5 +1,4 @@
-"""
-Event Correlator - Advanced Multi-Source Event Correlation & Pattern Analysis
+"""Event Correlator - Advanced Multi-Source Event Correlation & Pattern Analysis
 
 Industrial-grade event correlation engine for real-time pattern detection,
 anomaly identification, and intelligent event relationship mapping.
@@ -10,9 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, distribution, or commercialization is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import uuid
@@ -64,8 +61,7 @@ from ...utils.graph_analyzer import GraphAnalyzer
 logger = logging.getLogger(__name__)
 
 class CorrelationType(Enum):
-    """Event correlation type classification"""
-    TEMPORAL = "temporal"
+    """Event correlation type classification"""    TEMPORAL = "temporal"
     CAUSAL = "causal"
     STATISTICAL = "statistical"
     SEMANTIC = "semantic"
@@ -74,8 +70,7 @@ class CorrelationType(Enum):
     ANOMALY = "anomaly"
 
 class EventPattern(Enum):
-    """Detected event pattern types"""
-    SEQUENCE = "sequence"
+    """Detected event pattern types"""    SEQUENCE = "sequence"
     CLUSTER = "cluster"
     BURST = "burst"
     TREND = "trend"
@@ -85,8 +80,7 @@ class EventPattern(Enum):
     ATTACK_CHAIN = "attack_chain"
 
 class CorrelationConfidence(IntEnum):
-    """Correlation confidence levels"""
-    LOW = 1
+    """Correlation confidence levels"""    LOW = 1
     MEDIUM = 2
     HIGH = 3
     VERY_HIGH = 4
@@ -94,8 +88,7 @@ class CorrelationConfidence(IntEnum):
 
 @dataclass
 class CorrelationConfiguration:
-    """Advanced event correlation configuration"""
-    enable_real_time_correlation: bool = True
+    """Advanced event correlation configuration"""    enable_real_time_correlation: bool = True
     enable_pattern_learning: bool = True
     enable_anomaly_detection: bool = True
     time_window_minutes: int = 60
@@ -108,8 +101,7 @@ class CorrelationConfiguration:
 
 @dataclass
 class CorrelationMetrics:
-    """Comprehensive correlation analysis metrics"""
-    total_correlations_found: int = 0
+    """Comprehensive correlation analysis metrics"""    total_correlations_found: int = 0
     patterns_detected: int = 0
     anomalies_identified: int = 0
     false_positives: int = 0
@@ -118,8 +110,7 @@ class CorrelationMetrics:
     pattern_learning_efficiency: float = 0.0
 
 class EventCorrelator:
-    """
-    Enterprise Event Correlation Engine
+    """    Enterprise Event Correlation Engine
     
     Advanced multi-source event correlation system providing:
     - Real-time event pattern detection and correlation
@@ -129,9 +120,7 @@ class EventCorrelator:
     - Graph-based event relationship mapping
     - Predictive correlation modeling
     - Adaptive learning and pattern evolution
-    """
-
-    def __init__(self, config: Optional[CorrelationConfiguration] = None):
+    """    def __init__(self, config: Optional[CorrelationConfiguration] = None):
         self.config = config or CorrelationConfiguration()
         self.metrics = CorrelationMetrics()
         
@@ -166,8 +155,7 @@ class EventCorrelator:
         logger.info("EventCorrelator initialized with advanced ML capabilities")
 
     async def initialize(self) -> bool:
-        """Initialize event correlation system with ML models"""
-        try:
+        """Initialize event correlation system with ML models"""        try:
             # Load pre-trained correlation patterns
             await self._load_correlation_patterns()
             
@@ -200,8 +188,7 @@ class EventCorrelator:
         correlation_types: List[CorrelationType] = None,
         time_window: Optional[timedelta] = None
     ) -> Dict[str, Any]:
-        """
-        Perform comprehensive multi-dimensional event correlation
+        """        Perform comprehensive multi-dimensional event correlation
         
         Args:
             events: List of events to correlate
@@ -210,8 +197,7 @@ class EventCorrelator:
             
         Returns:
             Comprehensive correlation results
-        """
-        correlation_start_time = time.time()
+        """        correlation_start_time = time.time()
         
         try:
             correlation_id = str(uuid.uuid4())
@@ -310,8 +296,7 @@ class EventCorrelator:
         security_events: List[Dict[str, Any]],
         attack_signatures: Optional[List[Dict]] = None
     ) -> Dict[str, Any]:
-        """
-        Advanced attack pattern detection using correlation analysis
+        """        Advanced attack pattern detection using correlation analysis
         
         Args:
             security_events: Security-related events for analysis
@@ -319,8 +304,7 @@ class EventCorrelator:
             
         Returns:
             Detected attack patterns and indicators
-        """
-        try:
+        """        try:
             # Enrich security events with contextual information
             enriched_events = await self._enrich_security_events(security_events)
             
@@ -374,8 +358,7 @@ class EventCorrelator:
         historical_events: List[Dict[str, Any]],
         feedback_data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Machine learning-based correlation pattern discovery and learning
+        """        Machine learning-based correlation pattern discovery and learning
         
         Args:
             historical_events: Historical event data for learning
@@ -383,8 +366,7 @@ class EventCorrelator:
             
         Returns:
             Learned pattern results and model updates
-        """
-        try:
+        """        try:
             # Prepare historical data for ML analysis
             feature_matrix = await self._extract_correlation_features(historical_events)
             
@@ -438,8 +420,7 @@ class EventCorrelator:
         current_events: List[Dict[str, Any]],
         prediction_horizon: timedelta = timedelta(hours=1)
     ) -> Dict[str, Any]:
-        """
-        Predictive correlation analysis for event sequence forecasting
+        """        Predictive correlation analysis for event sequence forecasting
         
         Args:
             current_events: Current event context
@@ -447,8 +428,7 @@ class EventCorrelator:
             
         Returns:
             Predicted event sequences and probabilities
-        """
-        try:
+        """        try:
             # Extract sequence patterns from current events
             current_patterns = await self._extract_sequence_patterns(current_events)
             
@@ -491,16 +471,14 @@ class EventCorrelator:
         self,
         time_period: timedelta = timedelta(days=7)
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive correlation analysis insights and dashboard
+        """        Generate comprehensive correlation analysis insights and dashboard
         
         Args:
             time_period: Time period for insights generation
             
         Returns:
             Detailed correlation insights and analytics
-        """
-        try:
+        """        try:
             end_time = datetime.now(timezone.utc)
             start_time = end_time - time_period
             
@@ -547,8 +525,7 @@ class EventCorrelator:
         events: List[Dict[str, Any]],
         time_window: timedelta
     ) -> List[Dict[str, Any]]:
-        """Perform temporal correlation analysis"""
-        temporal_correlations = []
+        """Perform temporal correlation analysis"""        temporal_correlations = []
         
         # Sort events by timestamp
         sorted_events = sorted(events, key=lambda x: x['timestamp'])
@@ -579,8 +556,7 @@ class EventCorrelator:
         return temporal_correlations
 
     async def _perform_causal_correlation(self, events: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Perform causal correlation analysis"""
-        causal_correlations = []
+        """Perform causal correlation analysis"""        causal_correlations = []
         
         # Build causal relationship candidates
         for i, event1 in enumerate(events):
@@ -601,8 +577,7 @@ class EventCorrelator:
         return causal_correlations
 
     async def _perform_statistical_correlation(self, events: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Perform statistical correlation analysis"""
-        statistical_correlations = []
+        """Perform statistical correlation analysis"""        statistical_correlations = []
         
         # Extract numerical features for correlation
         feature_matrix = await self._extract_statistical_features(events)
@@ -628,8 +603,7 @@ class EventCorrelator:
         return statistical_correlations
 
     async def _detect_event_patterns(self, events: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Detect patterns in event sequences"""
-        detected_patterns = []
+        """Detect patterns in event sequences"""        detected_patterns = []
         
         # Sequence pattern detection
         sequence_patterns = await self._detect_sequence_patterns(events)
@@ -655,8 +629,7 @@ class EventCorrelator:
         event2: Dict[str, Any],
         time_diff: timedelta
     ) -> float:
-        """Calculate temporal correlation score between two events"""
-        score = 0.0
+        """Calculate temporal correlation score between two events"""        score = 0.0
         
         # Time proximity score
         max_time_diff = timedelta(minutes=self.config.time_window_minutes)

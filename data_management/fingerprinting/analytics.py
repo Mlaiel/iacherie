@@ -1,5 +1,4 @@
-"""
-📊 Fingerprint Analytics Module - IA Influencer Agent Platform Enterprise
+"""📊 Fingerprint Analytics Module - IA Influencer Agent Platform Enterprise
 =========================================================================
 Module: backend/data_management/fingerprinting/analytics.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,9 +15,7 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC ANALYTICS:
 Fingerprint Data → Performance Analysis → Detection Metrics → Threat Intelligence → 
 Real-time Dashboards → Predictive Analytics → Security Insights → Business Reports
-"""
-
-from typing import Dict, List, Any, Optional, Union, Tuple, Set
+"""from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from abc import ABC, abstractmethod
 from enum import Enum
 from dataclasses import dataclass, field
@@ -36,8 +33,7 @@ from prometheus_client import Counter, Histogram, Gauge, CollectorRegistry
 logger = logging.getLogger(__name__)
 
 class AnalyticsMetricType(Enum):
-    """Types de métriques d'analytics"""
-    PERFORMANCE = "performance"
+    """Types de métriques d'analytics"""    PERFORMANCE = "performance"
     DETECTION = "detection"
     THREAT = "threat"
     BUSINESS = "business"
@@ -45,8 +41,7 @@ class AnalyticsMetricType(Enum):
     SECURITY = "security"
 
 class TimeGranularity(Enum):
-    """Granularité temporelle pour les analyses"""
-    MINUTE = "minute"
+    """Granularité temporelle pour les analyses"""    MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -55,8 +50,7 @@ class TimeGranularity(Enum):
 
 @dataclass
 class AnalyticsQuery:
-    """Configuration de requête d'analytics"""
-    metric_types: List[AnalyticsMetricType]
+    """Configuration de requête d'analytics"""    metric_types: List[AnalyticsMetricType]
     start_date: datetime
     end_date: datetime
     granularity: TimeGranularity
@@ -66,8 +60,7 @@ class AnalyticsQuery:
 
 @dataclass
 class PerformanceMetrics:
-    """Métriques de performance du fingerprinting"""
-    
+    """Métriques de performance du fingerprinting"""    
     # Processing metrics
     total_fingerprints_generated: int = 0
     avg_processing_time: float = 0.0
@@ -91,8 +84,7 @@ class PerformanceMetrics:
 
 @dataclass
 class DetectionMetrics:
-    """Métriques de détection de violations"""
-    
+    """Métriques de détection de violations"""    
     # Detection stats
     total_detections: int = 0
     true_positives: int = 0
@@ -117,8 +109,7 @@ class DetectionMetrics:
 
 @dataclass
 class ThreatMetrics:
-    """Métriques d'analyse des menaces"""
-    
+    """Métriques d'analyse des menaces"""    
     # Threat landscape
     threat_sources: Dict[str, int] = field(default_factory=dict)
     threat_severity_distribution: Dict[str, int] = field(default_factory=dict)
@@ -134,8 +125,7 @@ class ThreatMetrics:
     brand_impact_score: float = 0.0
 
 class FingerprintAnalytics:
-    """
-    Engine principal d'analytics pour le système de fingerprinting
+    """    Engine principal d'analytics pour le système de fingerprinting
     
     Features:
     - Real-time performance monitoring
@@ -144,8 +134,7 @@ class FingerprintAnalytics:
     - Business impact assessment
     - Predictive analytics
     - Automated reporting
-    """
-    
+    """    
     def __init__(self, 
                  db_session: Session,
                  redis_client: Any,
@@ -164,8 +153,7 @@ class FingerprintAnalytics:
         logger.info("FingerprintAnalytics engine initialized")
     
     def _init_prometheus_metrics(self):
-        """Initialise les métriques Prometheus"""
-        self.fingerprint_counter = Counter(
+        """Initialise les métriques Prometheus"""        self.fingerprint_counter = Counter(
             'fingerprints_total',
             'Total fingerprints generated',
             ['content_type', 'status'],
@@ -195,8 +183,7 @@ class FingerprintAnalytics:
     
     async def generate_performance_analytics(self, 
                                            query: AnalyticsQuery) -> PerformanceMetrics:
-        """Génère les analytics de performance"""
-        try:
+        """Génère les analytics de performance"""        try:
             cache_key = f"perf_analytics:{hash(str(query))}"
             cached_data = await self._get_cached_data(cache_key)
             
@@ -234,8 +221,7 @@ class FingerprintAnalytics:
     
     async def generate_detection_analytics(self, 
                                          query: AnalyticsQuery) -> DetectionMetrics:
-        """Génère les analytics de détection"""
-        try:
+        """Génère les analytics de détection"""        try:
             cache_key = f"detection_analytics:{hash(str(query))}"
             cached_data = await self._get_cached_data(cache_key)
             
@@ -281,8 +267,7 @@ class FingerprintAnalytics:
     
     async def generate_threat_analytics(self, 
                                        query: AnalyticsQuery) -> ThreatMetrics:
-        """Génère l'analyse des menaces"""
-        try:
+        """Génère l'analyse des menaces"""        try:
             cache_key = f"threat_analytics:{hash(str(query))}"
             cached_data = await self._get_cached_data(cache_key)
             
@@ -318,8 +303,7 @@ class FingerprintAnalytics:
     
     async def generate_comprehensive_report(self, 
                                           query: AnalyticsQuery) -> Dict[str, Any]:
-        """Génère un rapport complet d'analytics"""
-        try:
+        """Génère un rapport complet d'analytics"""        try:
             # Generate all metric types in parallel
             performance_task = self.generate_performance_analytics(query)
             detection_task = self.generate_detection_analytics(query)
@@ -364,8 +348,7 @@ class FingerprintAnalytics:
             raise
     
     async def get_real_time_metrics(self) -> Dict[str, Any]:
-        """Récupère les métriques en temps réel"""
-        try:
+        """Récupère les métriques en temps réel"""        try:
             # Get real-time data from Redis
             metrics = {}
             
@@ -391,8 +374,7 @@ class FingerprintAnalytics:
             raise
     
     async def _query_performance_metrics(self, query: AnalyticsQuery) -> Dict[str, Any]:
-        """Requête les métriques de performance depuis la DB"""
-        # Implementation would query the database for performance metrics
+        """Requête les métriques de performance depuis la DB"""        # Implementation would query the database for performance metrics
         # This is a simplified version
         return {
             'total_fingerprints': 10000,
@@ -404,8 +386,7 @@ class FingerprintAnalytics:
         }
     
     async def _query_detection_metrics(self, query: AnalyticsQuery) -> Dict[str, Any]:
-        """Requête les métriques de détection depuis la DB"""
-        return {
+        """Requête les métriques de détection depuis la DB"""        return {
             'total_detections': 500,
             'true_positives': 450,
             'false_positives': 30,
@@ -417,8 +398,7 @@ class FingerprintAnalytics:
         }
     
     async def _query_threat_metrics(self, query: AnalyticsQuery) -> Dict[str, Any]:
-        """Requête les métriques de menaces depuis la DB"""
-        return {
+        """Requête les métriques de menaces depuis la DB"""        return {
             'threat_sources': {'youtube': 150, 'tiktok': 100, 'unknown': 50},
             'severity_distribution': {'high': 50, 'medium': 200, 'low': 250},
             'geographical_distribution': {'US': 200, 'CN': 150, 'IN': 100, 'BR': 50},
@@ -427,61 +407,49 @@ class FingerprintAnalytics:
         }
     
     def _calculate_throughput(self, metrics_data: Dict[str, Any]) -> float:
-        """Calcule le débit de traitement"""
-        total_fingerprints = metrics_data.get('total_fingerprints', 0)
+        """Calcule le débit de traitement"""        total_fingerprints = metrics_data.get('total_fingerprints', 0)
         time_period = 3600  # 1 hour in seconds
         return total_fingerprints / time_period if time_period > 0 else 0.0
     
     def _calculate_error_rate(self, metrics_data: Dict[str, Any]) -> float:
-        """Calcule le taux d'erreur"""
-        total_fingerprints = metrics_data.get('total_fingerprints', 0)
+        """Calcule le taux d'erreur"""        total_fingerprints = metrics_data.get('total_fingerprints', 0)
         error_count = metrics_data.get('error_count', 0)
         return error_count / total_fingerprints if total_fingerprints > 0 else 0.0
     
     def _calculate_quality_score(self, metrics_data: Dict[str, Any]) -> float:
-        """Calcule le score de qualité des empreintes"""
-        # Complex algorithm to calculate fingerprint quality
+        """Calcule le score de qualité des empreintes"""        # Complex algorithm to calculate fingerprint quality
         return 0.92  # Placeholder
     
     def _calculate_uniqueness_score(self, metrics_data: Dict[str, Any]) -> float:
-        """Calcule le score d'unicité des empreintes"""
-        return 0.95  # Placeholder
+        """Calcule le score d'unicité des empreintes"""        return 0.95  # Placeholder
     
     def _calculate_collision_rate(self, metrics_data: Dict[str, Any]) -> float:
-        """Calcule le taux de collision des empreintes"""
-        return 0.001  # Placeholder
+        """Calcule le taux de collision des empreintes"""        return 0.001  # Placeholder
     
     def _calculate_storage_efficiency(self, metrics_data: Dict[str, Any]) -> float:
-        """Calcule l'efficacité de stockage"""
-        return 0.85  # Placeholder
+        """Calcule l'efficacité de stockage"""        return 0.85  # Placeholder
     
     def _calculate_compression_ratio(self, metrics_data: Dict[str, Any]) -> float:
-        """Calcule le ratio de compression"""
-        return 0.3  # Placeholder
+        """Calcule le ratio de compression"""        return 0.3  # Placeholder
     
     def _calculate_search_accuracy(self, metrics_data: Dict[str, Any]) -> float:
-        """Calcule la précision de recherche"""
-        return 0.94  # Placeholder
+        """Calcule la précision de recherche"""        return 0.94  # Placeholder
     
     async def _analyze_threat_trends(self, threat_data: Dict[str, Any]) -> str:
-        """Analyse les tendances des menaces"""
-        # Complex trend analysis would go here
+        """Analyse les tendances des menaces"""        # Complex trend analysis would go here
         return "increasing"
     
     async def _identify_emerging_threats(self, threat_data: Dict[str, Any]) -> List[str]:
-        """Identifie les menaces émergentes"""
-        return ["deepfake_audio", "ai_generated_content", "cross_platform_syndication"]
+        """Identifie les menaces émergentes"""        return ["deepfake_audio", "ai_generated_content", "cross_platform_syndication"]
     
     async def _calculate_brand_impact(self, threat_data: Dict[str, Any]) -> float:
-        """Calcule l'impact sur la marque"""
-        return 0.75  # Placeholder
+        """Calcule l'impact sur la marque"""        return 0.75  # Placeholder
     
     async def _generate_insights(self, 
                                performance: PerformanceMetrics,
                                detection: DetectionMetrics,
                                threat: ThreatMetrics) -> List[str]:
-        """Génère des insights basés sur les métriques"""
-        insights = []
+        """Génère des insights basés sur les métriques"""        insights = []
         
         # Performance insights
         if performance.error_rate > 0.05:
@@ -504,8 +472,7 @@ class FingerprintAnalytics:
         return insights
     
     async def _generate_recommendations(self, insights: List[str]) -> List[str]:
-        """Génère des recommandations basées sur les insights"""
-        recommendations = []
+        """Génère des recommandations basées sur les insights"""        recommendations = []
         
         for insight in insights:
             if "error rate" in insight:
@@ -525,8 +492,7 @@ class FingerprintAnalytics:
                                         performance: PerformanceMetrics,
                                         detection: DetectionMetrics,
                                         threat: ThreatMetrics) -> Dict[str, Any]:
-        """Génère un résumé exécutif"""
-        return {
+        """Génère un résumé exécutif"""        return {
             'overall_health': 'good',  # good, warning, critical
             'key_metrics': {
                 'total_content_protected': performance.total_fingerprints_generated,
@@ -545,8 +511,7 @@ class FingerprintAnalytics:
                                     performance: PerformanceMetrics,
                                     detection: DetectionMetrics,
                                     threat: ThreatMetrics) -> List[Dict[str, Any]]:
-        """Vérifie les conditions d'alerte"""
-        alerts = []
+        """Vérifie les conditions d'alerte"""        alerts = []
         
         # Performance alerts
         if performance.error_rate > 0.10:
@@ -578,8 +543,7 @@ class FingerprintAnalytics:
         return alerts
     
     async def _get_cached_data(self, cache_key: str) -> Optional[Dict[str, Any]]:
-        """Récupère les données en cache"""
-        try:
+        """Récupère les données en cache"""        try:
             cached_data = await self.redis_client.get(cache_key)
             if cached_data:
                 return json.loads(cached_data)
@@ -588,8 +552,7 @@ class FingerprintAnalytics:
             return None
     
     async def _cache_data(self, cache_key: str, data: Dict[str, Any]):
-        """Met en cache les données"""
-        try:
+        """Met en cache les données"""        try:
             await self.redis_client.setex(
                 cache_key, 
                 self.cache_ttl, 
@@ -599,8 +562,7 @@ class FingerprintAnalytics:
             logger.warning(f"Failed to cache data: {e}")
     
     async def _store_report(self, report: Dict[str, Any]):
-        """Stocke le rapport pour référence future"""
-        try:
+        """Stocke le rapport pour référence future"""        try:
             # Store in database or file system
             report_id = f"report_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
             # Implementation would store the report
@@ -609,28 +571,22 @@ class FingerprintAnalytics:
             logger.error(f"Failed to store report: {e}")
     
     async def _get_queue_size(self) -> int:
-        """Récupère la taille de la queue actuelle"""
-        return await self.redis_client.llen('fingerprint_queue')
+        """Récupère la taille de la queue actuelle"""        return await self.redis_client.llen('fingerprint_queue')
     
     async def _get_hourly_activity(self) -> int:
-        """Récupère l'activité de la dernière heure"""
-        return 100  # Placeholder
+        """Récupère l'activité de la dernière heure"""        return 100  # Placeholder
     
     async def _get_active_detections(self) -> int:
-        """Récupère le nombre de détections actives"""
-        return 25  # Placeholder
+        """Récupère le nombre de détections actives"""        return 25  # Placeholder
     
     async def _get_system_health(self) -> str:
-        """Récupère l'état de santé du système"""
-        return "healthy"  # Placeholder
+        """Récupère l'état de santé du système"""        return "healthy"  # Placeholder
     
     async def _get_active_alerts(self) -> List[Dict[str, Any]]:
-        """Récupère les alertes actives"""
-        return []  # Placeholder
+        """Récupère les alertes actives"""        return []  # Placeholder
 
 class ReportGenerator:
-    """
-    Générateur de rapports avancé pour les analytics de fingerprinting
+    """    Générateur de rapports avancé pour les analytics de fingerprinting
     
     Features:
     - Automated report generation
@@ -638,8 +594,7 @@ class ReportGenerator:
     - Scheduled reporting
     - Custom report templates
     - Email distribution
-    """
-    
+    """    
     def __init__(self, analytics_engine: FingerprintAnalytics):
         self.analytics_engine = analytics_engine
         self.templates = {}
@@ -647,8 +602,7 @@ class ReportGenerator:
         logger.info("ReportGenerator initialized")
     
     async def generate_daily_report(self, recipient_emails: List[str]) -> str:
-        """Génère et envoie le rapport quotidien"""
-        try:
+        """Génère et envoie le rapport quotidien"""        try:
             query = AnalyticsQuery(
                 metric_types=[AnalyticsMetricType.PERFORMANCE, AnalyticsMetricType.DETECTION],
                 start_date=datetime.utcnow() - timedelta(days=1),
@@ -671,13 +625,11 @@ class ReportGenerator:
             raise
     
     async def _generate_html_report(self, report: Dict[str, Any]) -> str:
-        """Génère un rapport HTML"""
-        # HTML template generation logic would go here
+        """Génère un rapport HTML"""        # HTML template generation logic would go here
         return "<html><body>Report Content</body></html>"
     
     async def _send_email_report(self, html_content: str, recipients: List[str]):
-        """Envoie le rapport par email"""
-        # Email sending logic would go here
+        """Envoie le rapport par email"""        # Email sending logic would go here
         logger.info(f"Report sent to {len(recipients)} recipients")
 
 # Export public API

@@ -1,5 +1,4 @@
-"""
-Performance Tracker for IA Influencer Agent Platform
+"""Performance Tracker for IA Influencer Agent Platform
 ====================================================
 
 Industrial-grade performance monitoring with AI-powered bottleneck detection,
@@ -18,9 +17,7 @@ Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
-"""
-
-import asyncio
+"""import asyncio
 import time
 import threading
 import psutil
@@ -41,8 +38,7 @@ logger = logging.getLogger(__name__)
 
 
 class PerformanceCategory(Enum):
-    """Performance monitoring categories"""
-    API_ENDPOINT = "api_endpoint"
+    """Performance monitoring categories"""    API_ENDPOINT = "api_endpoint"
     DATABASE_QUERY = "database_query"
     AI_PROCESSING = "ai_processing"
     FINGERPRINT_GENERATION = "fingerprint_generation"
@@ -55,8 +51,7 @@ class PerformanceCategory(Enum):
 
 
 class PerformanceImpact(Enum):
-    """Business impact levels for performance issues"""
-    CRITICAL = "critical"  # Affects core business functions
+    """Business impact levels for performance issues"""    CRITICAL = "critical"  # Affects core business functions
     HIGH = "high"         # Affects user experience significantly
     MEDIUM = "medium"     # Noticeable but manageable
     LOW = "low"          # Minor optimization opportunity
@@ -64,8 +59,7 @@ class PerformanceImpact(Enum):
 
 @dataclass
 class PerformanceMetric:
-    """Enhanced performance metric with business context"""
-    name: str
+    """Enhanced performance metric with business context"""    name: str
     value: float
     timestamp: datetime
     category: PerformanceCategory
@@ -79,8 +73,7 @@ class PerformanceMetric:
 
 @dataclass
 class PerformanceProfile:
-    """Enhanced performance profile with statistical analysis"""
-    operation: str
+    """Enhanced performance profile with statistical analysis"""    operation: str
     category: PerformanceCategory
     total_calls: int = 0
     total_time: float = 0.0
@@ -105,8 +98,7 @@ class PerformanceProfile:
 
 @dataclass
 class ResourceUsage:
-    """Enhanced system resource usage with trend analysis"""
-    timestamp: datetime
+    """Enhanced system resource usage with trend analysis"""    timestamp: datetime
     cpu_percent: float
     memory_percent: float
     memory_used: int
@@ -131,8 +123,7 @@ class ResourceUsage:
 
 @dataclass
 class PerformanceAlert:
-    """Enhanced performance alert with intelligent thresholds"""
-    name: str
+    """Enhanced performance alert with intelligent thresholds"""    name: str
     metric: str
     threshold: float
     comparison: str  # "greater_than", "less_than", "anomaly"
@@ -147,8 +138,7 @@ class PerformanceAlert:
 
 @dataclass
 class BottleneckAnalysis:
-    """Bottleneck detection and analysis results"""
-    operation: str
+    """Bottleneck detection and analysis results"""    operation: str
     bottleneck_type: str  # "cpu", "memory", "io", "network", "database", "ai_processing"
     severity: PerformanceImpact
     confidence_score: float  # 0.0 to 1.0
@@ -161,8 +151,7 @@ class BottleneckAnalysis:
 
 @dataclass
 class PerformanceInsight:
-    """AI-generated performance insights and recommendations"""
-    insight_type: str  # "optimization", "scaling", "bottleneck", "trend"
+    """AI-generated performance insights and recommendations"""    insight_type: str  # "optimization", "scaling", "bottleneck", "trend"
     description: str
     confidence: float
     impact_score: float
@@ -173,16 +162,14 @@ class PerformanceInsight:
 
 
 class AIPerformanceAnalyzer:
-    """AI-powered performance analysis and optimization"""
-    
+    """AI-powered performance analysis and optimization"""    
     def __init__(self):
         self.historical_data: Dict[str, deque] = defaultdict(lambda: deque(maxlen=1000))
         self.baseline_performance: Dict[str, float] = {}
         self.anomaly_thresholds: Dict[str, Tuple[float, float]] = {}
         
     def analyze_bottlenecks(self, profiles: Dict[str, PerformanceProfile]) -> List[BottleneckAnalysis]:
-        """Analyze performance profiles to identify bottlenecks"""
-        bottlenecks = []
+        """Analyze performance profiles to identify bottlenecks"""        bottlenecks = []
         
         for operation, profile in profiles.items():
             if len(profile.samples) < 10:
@@ -220,8 +207,7 @@ class AIPerformanceAnalyzer:
         return sorted(bottlenecks, key=lambda x: x.confidence_score, reverse=True)
     
     def _get_time_threshold(self, category: PerformanceCategory) -> float:
-        """Get acceptable time thresholds by category"""
-        thresholds = {
+        """Get acceptable time thresholds by category"""        thresholds = {
             PerformanceCategory.API_ENDPOINT: 500.0,  # 500ms
             PerformanceCategory.DATABASE_QUERY: 100.0,  # 100ms
             PerformanceCategory.AI_PROCESSING: 5000.0,  # 5s
@@ -236,8 +222,7 @@ class AIPerformanceAnalyzer:
         return thresholds.get(category, 1000.0)
     
     def _identify_bottleneck_type(self, profile: PerformanceProfile) -> str:
-        """Identify the type of bottleneck based on performance patterns"""
-        if profile.category == PerformanceCategory.DATABASE_QUERY:
+        """Identify the type of bottleneck based on performance patterns"""        if profile.category == PerformanceCategory.DATABASE_QUERY:
             return "database"
         elif profile.category in [PerformanceCategory.AI_PROCESSING, PerformanceCategory.FINGERPRINT_GENERATION]:
             return "ai_processing"
@@ -255,8 +240,7 @@ class AIPerformanceAnalyzer:
                 return "general"
     
     def _calculate_severity(self, profile: PerformanceProfile) -> PerformanceImpact:
-        """Calculate the severity of the performance issue"""
-        threshold = self._get_time_threshold(profile.category)
+        """Calculate the severity of the performance issue"""        threshold = self._get_time_threshold(profile.category)
         ratio = profile.avg_time / threshold
         
         if ratio > 5.0:
@@ -269,8 +253,7 @@ class AIPerformanceAnalyzer:
             return PerformanceImpact.LOW
     
     def _calculate_confidence(self, profile: PerformanceProfile, *indicators: bool) -> float:
-        """Calculate confidence score for bottleneck detection"""
-        base_confidence = 0.5
+        """Calculate confidence score for bottleneck detection"""        base_confidence = 0.5
         
         # Sample size factor
         sample_factor = min(len(profile.samples) / 100.0, 1.0) * 0.2
@@ -281,8 +264,7 @@ class AIPerformanceAnalyzer:
         return min(base_confidence + sample_factor + indicator_factor, 1.0)
     
     def _determine_root_cause(self, profile: PerformanceProfile, bottleneck_type: str) -> str:
-        """Determine the root cause of the performance issue"""
-        causes = {
+        """Determine the root cause of the performance issue"""        causes = {
             "database": "Slow database queries or connection pool exhaustion",
             "ai_processing": "AI model processing overhead or insufficient GPU resources",
             "io": "Disk I/O bottleneck or large file processing",
@@ -294,8 +276,7 @@ class AIPerformanceAnalyzer:
         return causes.get(bottleneck_type, "Unknown performance bottleneck")
     
     def _find_affected_operations(self, operation: str, profiles: Dict[str, PerformanceProfile]) -> List[str]:
-        """Find operations that might be affected by this bottleneck"""
-        affected = []
+        """Find operations that might be affected by this bottleneck"""        affected = []
         current_category = profiles[operation].category
         
         for other_op, other_profile in profiles.items():
@@ -306,8 +287,7 @@ class AIPerformanceAnalyzer:
         return affected
     
     def _generate_recommendations(self, profile: PerformanceProfile, bottleneck_type: str) -> List[str]:
-        """Generate optimization recommendations"""
-        recommendations = {
+        """Generate optimization recommendations"""        recommendations = {
             "database": [
                 "Add database indexes for frequently queried columns",
                 "Implement query result caching",
@@ -348,8 +328,7 @@ class AIPerformanceAnalyzer:
         return recommendations.get(bottleneck_type, ["General performance optimization needed"])
     
     def _estimate_improvement(self, profile: PerformanceProfile) -> float:
-        """Estimate potential performance improvement percentage"""
-        threshold = self._get_time_threshold(profile.category)
+        """Estimate potential performance improvement percentage"""        threshold = self._get_time_threshold(profile.category)
         current_time = profile.avg_time
         
         if current_time <= threshold:
@@ -367,8 +346,7 @@ class AIPerformanceAnalyzer:
             return 15.0
     
     def _describe_business_impact(self, profile: PerformanceProfile) -> str:
-        """Describe the business impact of the performance issue"""
-        impacts = {
+        """Describe the business impact of the performance issue"""        impacts = {
             PerformanceCategory.API_ENDPOINT: "Affects user experience and platform responsiveness",
             PerformanceCategory.DATABASE_QUERY: "Impacts data access speed and system scalability",
             PerformanceCategory.AI_PROCESSING: "Affects content analysis speed and accuracy",
@@ -384,11 +362,9 @@ class AIPerformanceAnalyzer:
 
 
 class PerformanceTracker:
-    """
-    Industrial-grade performance tracking system with AI-powered analytics,
+    """    Industrial-grade performance tracking system with AI-powered analytics,
     specialized for content protection, fingerprinting, and revenue optimization.
-    """
-    
+    """    
     def __init__(
         self,
         redis_client: Optional[aioredis.Redis] = None,
@@ -430,8 +406,7 @@ class PerformanceTracker:
         self._optimizer = PerformanceOptimizer()
         
     async def start_tracking(self):
-        """Start performance tracking"""
-        if self._tracking:
+        """Start performance tracking"""        if self._tracking:
             logger.warning("Performance tracking already running")
             return
             
@@ -444,8 +419,7 @@ class PerformanceTracker:
         logger.info("Performance tracking started")
         
     async def stop_tracking(self):
-        """Stop performance tracking"""
-        self._tracking = False
+        """Stop performance tracking"""        self._tracking = False
         if self._tracker_task:
             self._tracker_task.cancel()
             try:
@@ -459,8 +433,7 @@ class PerformanceTracker:
         logger.info("Performance tracking stopped")
         
     async def _tracking_loop(self):
-        """Main tracking loop"""
-        while self._tracking:
+        """Main tracking loop"""        while self._tracking:
             try:
                 await self._collect_resource_metrics()
                 await self._update_profiles()
@@ -476,8 +449,7 @@ class PerformanceTracker:
                 await asyncio.sleep(5)
                 
     async def _collect_resource_metrics(self):
-        """Collect system resource metrics"""
-        try:
+        """Collect system resource metrics"""        try:
             # CPU and memory
             cpu_percent = psutil.cpu_percent(interval=0.1)
             memory = psutil.virtual_memory()
@@ -517,16 +489,14 @@ class PerformanceTracker:
             logger.error(f"Error collecting resource metrics: {e}")
             
     async def _set_baseline(self):
-        """Set performance baseline"""
-        await self._collect_resource_metrics()
+        """Set performance baseline"""        await self._collect_resource_metrics()
         if self._resource_history:
             self._baseline_resources = self._resource_history[-1]
             logger.info("Performance baseline set")
             
     @asynccontextmanager
     async def track_operation(self, operation: str, **labels):
-        """Async context manager for tracking operation performance"""
-        start_time = time.time()
+        """Async context manager for tracking operation performance"""        start_time = time.time()
         operation_id = f"{operation}_{self._operation_counter}"
         self._operation_counter += 1
         
@@ -556,8 +526,7 @@ class PerformanceTracker:
                 
     @contextmanager
     def track_sync_operation(self, operation: str, **labels):
-        """Synchronous context manager for tracking operation performance"""
-        start_time = time.time()
+        """Synchronous context manager for tracking operation performance"""        start_time = time.time()
         
         try:
             yield
@@ -575,8 +544,7 @@ class PerformanceTracker:
             self._record_performance_sync(operation, duration, labels)
             
     def track_function(self, operation: Optional[str] = None, **labels):
-        """Decorator for tracking function performance"""
-        def decorator(func):
+        """Decorator for tracking function performance"""        def decorator(func):
             op_name = operation or f"{func.__module__}.{func.__name__}"
             
             if asyncio.iscoroutinefunction(func):
@@ -595,8 +563,7 @@ class PerformanceTracker:
         return decorator
         
     async def _record_performance(self, operation: str, duration: float, labels: Dict[str, str]):
-        """Record performance metric asynchronously"""
-        # Apply sampling
+        """Record performance metric asynchronously"""        # Apply sampling
         if self.sample_rate < 1.0 and time.time() % 1 > self.sample_rate:
             return
             
@@ -634,8 +601,7 @@ class PerformanceTracker:
             await self._store_metric(metric)
             
     def _record_performance_sync(self, operation: str, duration: float, labels: Dict[str, str]):
-        """Record performance metric synchronously"""
-        # Apply sampling
+        """Record performance metric synchronously"""        # Apply sampling
         if self.sample_rate < 1.0 and time.time() % 1 > self.sample_rate:
             return
             
@@ -661,13 +627,11 @@ class PerformanceTracker:
                     profile.p99_time = sorted_samples[int(len(sorted_samples) * 0.99)]
                     
     async def _update_profiles(self):
-        """Update performance profiles with calculated metrics"""
-        # This method is called periodically to update derived metrics
+        """Update performance profiles with calculated metrics"""        # This method is called periodically to update derived metrics
         pass
         
     async def _check_performance_alerts(self):
-        """Check performance thresholds and trigger alerts"""
-        for alert_name, alert in self._performance_alerts.items():
+        """Check performance thresholds and trigger alerts"""        for alert_name, alert in self._performance_alerts.items():
             if not alert.enabled:
                 continue
                 
@@ -714,8 +678,7 @@ class PerformanceTracker:
                 logger.error(f"Error checking performance alert {alert_name}: {e}")
                 
     async def _get_current_metric_value(self, metric_name: str) -> Optional[float]:
-        """Get current value for a metric"""
-        if metric_name.startswith("operation."):
+        """Get current value for a metric"""        if metric_name.startswith("operation."):
             # Extract operation name from metric
             parts = metric_name.split(".")
             if len(parts) >= 3:
@@ -750,15 +713,13 @@ class PerformanceTracker:
         return None
         
     async def _fire_performance_alert(self, alert: PerformanceAlert, current_value: float):
-        """Fire a performance alert"""
-        logger.warning(f"Performance alert triggered: {alert.name} - {alert.metric} = {current_value}")
+        """Fire a performance alert"""        logger.warning(f"Performance alert triggered: {alert.name} - {alert.metric} = {current_value}")
         
         # Here you would integrate with the AlertManager to send notifications
         # For now, just log the alert
         
     async def _detect_bottlenecks(self):
-        """Detect performance bottlenecks"""
-        bottlenecks = self._bottleneck_detector.analyze(
+        """Detect performance bottlenecks"""        bottlenecks = self._bottleneck_detector.analyze(
             self._profiles,
             self._resource_history
         )
@@ -774,8 +735,7 @@ class PerformanceTracker:
                 )
                 
     async def _store_metric(self, metric: PerformanceMetric):
-        """Store metric in Redis"""
-        if not self.redis_client:
+        """Store metric in Redis"""        if not self.redis_client:
             return
             
         try:
@@ -802,8 +762,7 @@ class PerformanceTracker:
             logger.error(f"Error storing performance metric: {e}")
             
     async def _save_metrics(self):
-        """Save current metrics to Redis"""
-        if not self.redis_client:
+        """Save current metrics to Redis"""        if not self.redis_client:
             return
             
         try:
@@ -846,27 +805,23 @@ class PerformanceTracker:
             logger.error(f"Error saving performance metrics: {e}")
             
     async def _save_state(self):
-        """Save tracker state"""
-        # Save final performance summary
+        """Save tracker state"""        # Save final performance summary
         await self._save_metrics()
         
     # Public interface methods
     def add_performance_alert(self, alert: PerformanceAlert):
-        """Add a performance alert"""
-        self._performance_alerts[alert.name] = alert
+        """Add a performance alert"""        self._performance_alerts[alert.name] = alert
         logger.info(f"Added performance alert: {alert.name}")
         
     def remove_performance_alert(self, alert_name: str):
-        """Remove a performance alert"""
-        if alert_name in self._performance_alerts:
+        """Remove a performance alert"""        if alert_name in self._performance_alerts:
             del self._performance_alerts[alert_name]
             if alert_name in self._alert_states:
                 del self._alert_states[alert_name]
             logger.info(f"Removed performance alert: {alert_name}")
             
     def get_performance_summary(self) -> Dict[str, Any]:
-        """Get performance summary"""
-        with self._profiles_lock:
+        """Get performance summary"""        with self._profiles_lock:
             profiles_summary = {
                 operation: {
                     "total_calls": profile.total_calls,
@@ -899,8 +854,7 @@ class PerformanceTracker:
         }
         
     def get_operation_profile(self, operation: str) -> Optional[Dict[str, Any]]:
-        """Get detailed profile for a specific operation"""
-        with self._profiles_lock:
+        """Get detailed profile for a specific operation"""        with self._profiles_lock:
             if operation not in self._profiles:
                 return None
                 
@@ -922,8 +876,7 @@ class PerformanceTracker:
             }
             
     def get_resource_trends(self, hours: int = 1) -> Dict[str, List[Dict[str, Any]]]:
-        """Get resource usage trends"""
-        cutoff = datetime.utcnow() - timedelta(hours=hours)
+        """Get resource usage trends"""        cutoff = datetime.utcnow() - timedelta(hours=hours)
         
         trends = {
             "cpu": [],
@@ -955,26 +908,22 @@ class PerformanceTracker:
         return trends
         
     def get_bottlenecks(self) -> List[Dict[str, Any]]:
-        """Get current performance bottlenecks"""
-        return self._bottleneck_detector.get_current_bottlenecks()
+        """Get current performance bottlenecks"""        return self._bottleneck_detector.get_current_bottlenecks()
         
     def get_optimization_recommendations(self) -> List[Dict[str, Any]]:
-        """Get performance optimization recommendations"""
-        return self._optimizer.generate_recommendations(
+        """Get performance optimization recommendations"""        return self._optimizer.generate_recommendations(
             self._profiles,
             self._resource_history
         )
 
 
 class BottleneckDetector:
-    """Detect performance bottlenecks"""
-    
+    """Detect performance bottlenecks"""    
     def __init__(self):
         self._current_bottlenecks = []
         
     def analyze(self, profiles: Dict[str, PerformanceProfile], resource_history: deque) -> List[Dict[str, Any]]:
-        """Analyze for bottlenecks"""
-        bottlenecks = []
+        """Analyze for bottlenecks"""        bottlenecks = []
         
         # Analyze operation performance
         for operation, profile in profiles.items():
@@ -1023,20 +972,17 @@ class BottleneckDetector:
         return bottlenecks
         
     def get_current_bottlenecks(self) -> List[Dict[str, Any]]:
-        """Get current bottlenecks"""
-        return self._current_bottlenecks
+        """Get current bottlenecks"""        return self._current_bottlenecks
 
 
 class PerformanceOptimizer:
-    """Generate performance optimization recommendations"""
-    
+    """Generate performance optimization recommendations"""    
     def generate_recommendations(
         self,
         profiles: Dict[str, PerformanceProfile],
         resource_history: deque
     ) -> List[Dict[str, Any]]:
-        """Generate optimization recommendations"""
-        recommendations = []
+        """Generate optimization recommendations"""        recommendations = []
         
         # Analyze operation patterns
         for operation, profile in profiles.items():

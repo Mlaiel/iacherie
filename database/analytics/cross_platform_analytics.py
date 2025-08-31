@@ -1,5 +1,4 @@
-"""
-Cross-Platform Analytics Engine - IA Influencer Agent Platform
+"""Cross-Platform Analytics Engine - IA Influencer Agent Platform
 
 Real-time cross-platform analytics for multi-format content creators.
 Tracks performance across YouTube, TikTok, Instagram, Spotify, SoundCloud, etc.
@@ -10,9 +9,7 @@ Development Team: Lead AI Developer, Senior Backend Engineer, ML Engineer, DBA, 
 ⚠️ INTELLECTUAL PROPERTY WARNING ⚠️
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
-"""
-
-from typing import Dict, List, Optional, Tuple, Any, Union
+"""from typing import Dict, List, Optional, Tuple, Any, Union
 from datetime import datetime, timedelta
 from dataclasses import dataclass, field
 from enum import Enum
@@ -30,8 +27,7 @@ Base = declarative_base()
 
 
 class PlatformType(Enum):
-    """Supported platforms for analytics tracking"""
-    YOUTUBE = "youtube"
+    """Supported platforms for analytics tracking"""    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     SPOTIFY = "spotify"
@@ -46,8 +42,7 @@ class PlatformType(Enum):
 
 
 class ContentFormat(Enum):
-    """Multi-format content types supported"""
-    AUDIO = "audio"
+    """Multi-format content types supported"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -60,8 +55,7 @@ class ContentFormat(Enum):
 
 
 class MetricCategory(Enum):
-    """Analytics metric categories"""
-    ENGAGEMENT = "engagement"
+    """Analytics metric categories"""    ENGAGEMENT = "engagement"
     REACH = "reach"
     CONVERSION = "conversion"
     REVENUE = "revenue"
@@ -74,8 +68,7 @@ class MetricCategory(Enum):
 
 @dataclass
 class PlatformMetrics:
-    """Platform-specific metrics data structure"""
-    platform: PlatformType
+    """Platform-specific metrics data structure"""    platform: PlatformType
     content_id: str
     views: int = 0
     likes: int = 0
@@ -91,8 +84,7 @@ class PlatformMetrics:
     timestamp: datetime = field(default_factory=datetime.utcnow)
     
     def calculate_engagement_rate(self) -> float:
-        """Calculate engagement rate based on platform metrics"""
-        if self.reach == 0:
+        """Calculate engagement rate based on platform metrics"""        if self.reach == 0:
             return 0.0
         
         total_engagement = self.likes + self.shares + self.comments + self.saves
@@ -100,8 +92,7 @@ class PlatformMetrics:
 
 
 class CrossPlatformAnalytics(Base):
-    """Database model for cross-platform analytics"""
-    __tablename__ = "cross_platform_analytics"
+    """Database model for cross-platform analytics"""    __tablename__ = "cross_platform_analytics"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid4()))
     user_id = Column(String, nullable=False, index=True)
@@ -138,8 +129,7 @@ class CrossPlatformAnalytics(Base):
 
 
 class PlatformInsights(Base):
-    """Platform-specific insights and recommendations"""
-    __tablename__ = "platform_insights"
+    """Platform-specific insights and recommendations"""    __tablename__ = "platform_insights"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid4()))
     analytics_id = Column(String, ForeignKey("cross_platform_analytics.id"))
@@ -164,19 +154,16 @@ class PlatformInsights(Base):
 
 
 class CrossPlatformAnalyticsEngine:
-    """
-    Advanced cross-platform analytics engine for multi-format content creators.
+    """    Advanced cross-platform analytics engine for multi-format content creators.
     Provides unified insights across all major social media and streaming platforms.
-    """
-    
+    """    
     def __init__(self, db_session: Session):
         self.db_session = db_session
         self.platform_configs = self._load_platform_configurations()
         self.ml_models = {}
         
     def _load_platform_configurations(self) -> Dict[str, Dict]:
-        """Load platform-specific configuration and API settings"""
-        return {
+        """Load platform-specific configuration and API settings"""        return {
             PlatformType.YOUTUBE.value: {
                 "api_endpoint": "youtube.googleapis.com/youtube/v3",
                 "metrics_mapping": {
@@ -223,8 +210,7 @@ class CrossPlatformAnalyticsEngine:
         }
     
     async def collect_platform_metrics(self, user_id: str, content_id: str, platform: PlatformType) -> PlatformMetrics:
-        """Collect real-time metrics from specific platform"""
-        try:
+        """Collect real-time metrics from specific platform"""        try:
             platform_config = self.platform_configs.get(platform.value)
             if not platform_config:
                 raise ValueError(f"Platform {platform.value} not configured")
@@ -251,8 +237,7 @@ class CrossPlatformAnalyticsEngine:
             raise Exception(f"Failed to collect metrics for {platform.value}: {str(e)}")
     
     async def _fetch_platform_data(self, platform: PlatformType, content_id: str) -> Dict[str, Any]:
-        """Fetch raw data from platform APIs"""
-        # This would contain actual API calls to each platform
+        """Fetch raw data from platform APIs"""        # This would contain actual API calls to each platform
         # For now, returning mock data structure
         mock_data = {
             PlatformType.YOUTUBE: {
@@ -287,8 +272,7 @@ class CrossPlatformAnalyticsEngine:
         return mock_data.get(platform, {})
     
     def _standardize_metrics(self, raw_metrics: Dict[str, Any], platform_config: Dict) -> Dict[str, Any]:
-        """Standardize platform-specific metrics to common format"""
-        metrics_mapping = platform_config.get("metrics_mapping", {})
+        """Standardize platform-specific metrics to common format"""        metrics_mapping = platform_config.get("metrics_mapping", {})
         standardized = {}
         
         for standard_key, platform_key in metrics_mapping.items():
@@ -304,8 +288,7 @@ class CrossPlatformAnalyticsEngine:
         return standardized
     
     async def generate_cross_platform_report(self, user_id: str, time_period: timedelta) -> Dict[str, Any]:
-        """Generate comprehensive cross-platform analytics report"""
-        end_date = datetime.utcnow()
+        """Generate comprehensive cross-platform analytics report"""        end_date = datetime.utcnow()
         start_date = end_date - time_period
         
         # Fetch analytics data for time period
@@ -336,8 +319,7 @@ class CrossPlatformAnalyticsEngine:
         return report
     
     def _generate_summary_metrics(self, analytics_data: List[CrossPlatformAnalytics]) -> Dict[str, Any]:
-        """Generate summary metrics across all platforms"""
-        total_views = sum(record.views for record in analytics_data)
+        """Generate summary metrics across all platforms"""        total_views = sum(record.views for record in analytics_data)
         total_engagement = sum(record.likes + record.shares + record.comments for record in analytics_data)
         total_revenue = sum(record.revenue for record in analytics_data)
         avg_engagement_rate = np.mean([record.engagement_rate for record in analytics_data])
@@ -352,8 +334,7 @@ class CrossPlatformAnalyticsEngine:
         }
     
     def _generate_platform_breakdown(self, analytics_data: List[CrossPlatformAnalytics]) -> Dict[str, Dict]:
-        """Break down performance by platform"""
-        platform_data = {}
+        """Break down performance by platform"""        platform_data = {}
         
         for platform in PlatformType:
             platform_records = [r for r in analytics_data if r.platform == platform.value]
@@ -370,8 +351,7 @@ class CrossPlatformAnalyticsEngine:
         return platform_data
     
     def _analyze_content_formats(self, analytics_data: List[CrossPlatformAnalytics]) -> Dict[str, Dict]:
-        """Analyze performance by content format"""
-        format_analysis = {}
+        """Analyze performance by content format"""        format_analysis = {}
         
         for content_format in ContentFormat:
             format_records = [r for r in analytics_data if r.content_format == content_format.value]
@@ -387,8 +367,7 @@ class CrossPlatformAnalyticsEngine:
         return format_analysis
     
     def _calculate_growth_trends(self, analytics_data: List[CrossPlatformAnalytics]) -> Dict[str, Any]:
-        """Calculate growth trends over time"""
-        # Sort data by date
+        """Calculate growth trends over time"""        # Sort data by date
         sorted_data = sorted(analytics_data, key=lambda x: x.tracked_at)
         
         if len(sorted_data) < 2:
@@ -416,14 +395,12 @@ class CrossPlatformAnalyticsEngine:
         return growth_trends
     
     def _calculate_growth_rate(self, values: List[float]) -> float:
-        """Calculate growth rate between first and last values"""
-        if len(values) < 2 or values[0] == 0:
+        """Calculate growth rate between first and last values"""        if len(values) < 2 or values[0] == 0:
             return 0.0
         return ((values[-1] - values[0]) / values[0]) * 100
     
     def _generate_audience_insights(self, analytics_data: List[CrossPlatformAnalytics]) -> Dict[str, Any]:
-        """Generate audience insights across platforms"""
-        # Aggregate audience demographics
+        """Generate audience insights across platforms"""        # Aggregate audience demographics
         all_demographics = []
         for record in analytics_data:
             if record.audience_demographics:
@@ -440,8 +417,7 @@ class CrossPlatformAnalyticsEngine:
         }
     
     async def _generate_optimization_recommendations(self, analytics_data: List[CrossPlatformAnalytics]) -> List[Dict[str, Any]]:
-        """Generate AI-powered optimization recommendations"""
-        recommendations = []
+        """Generate AI-powered optimization recommendations"""        recommendations = []
         
         # Analyze platform performance
         platform_performance = {}
@@ -487,8 +463,7 @@ class CrossPlatformAnalyticsEngine:
         return recommendations
     
     async def track_content_performance(self, user_id: str, content_id: str, platforms: List[PlatformType]) -> Dict[str, Any]:
-        """Track content performance across multiple platforms simultaneously"""
-        tracking_results = {}
+        """Track content performance across multiple platforms simultaneously"""        tracking_results = {}
         
         for platform in platforms:
             try:
@@ -533,14 +508,12 @@ class CrossPlatformAnalyticsEngine:
         return tracking_results
     
     def _detect_content_format(self, content_id: str) -> str:
-        """Detect content format based on content ID or metadata"""
-        # This would typically analyze the content or metadata
+        """Detect content format based on content ID or metadata"""        # This would typically analyze the content or metadata
         # For now, returning default
         return ContentFormat.VIDEO.value
     
     async def get_real_time_dashboard_data(self, user_id: str) -> Dict[str, Any]:
-        """Get real-time dashboard data for immediate insights"""
-        # Get latest analytics data (last 24 hours)
+        """Get real-time dashboard data for immediate insights"""        # Get latest analytics data (last 24 hours)
         last_24h = datetime.utcnow() - timedelta(days=1)
         recent_data = self.db_session.query(CrossPlatformAnalytics).filter(
             CrossPlatformAnalytics.user_id == user_id,
@@ -562,8 +535,7 @@ class CrossPlatformAnalyticsEngine:
         return dashboard_data
     
     def _identify_trending_content(self, recent_data: List[CrossPlatformAnalytics]) -> List[Dict[str, Any]]:
-        """Identify trending content from recent data"""
-        if not recent_data:
+        """Identify trending content from recent data"""        if not recent_data:
             return []
         
         # Sort by performance score or engagement rate
@@ -578,8 +550,7 @@ class CrossPlatformAnalyticsEngine:
         } for record in trending]
     
     async def _generate_performance_alerts(self, user_id: str) -> List[Dict[str, Any]]:
-        """Generate real-time performance alerts"""
-        alerts = []
+        """Generate real-time performance alerts"""        alerts = []
         
         # Check for sudden drops or spikes in performance
         recent_data = self.db_session.query(CrossPlatformAnalytics).filter(
@@ -607,8 +578,7 @@ class CrossPlatformAnalyticsEngine:
         return alerts
     
     def _generate_quick_insights(self, recent_data: List[CrossPlatformAnalytics]) -> List[str]:
-        """Generate quick insights for dashboard"""
-        if not recent_data:
+        """Generate quick insights for dashboard"""        if not recent_data:
             return ["No recent activity to analyze"]
         
         insights = []
@@ -630,8 +600,7 @@ class CrossPlatformAnalyticsEngine:
         return insights
     
     async def _suggest_next_actions(self, user_id: str) -> List[Dict[str, Any]]:
-        """Suggest next actions based on analytics data"""
-        actions = [
+        """Suggest next actions based on analytics data"""        actions = [
             {
                 "action": "Cross-promote high-performing content",
                 "description": "Share your trending content across all platforms",

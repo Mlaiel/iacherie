@@ -1,5 +1,4 @@
-"""
-🎯 Intelligence Index - IA Influencer Agent
+"""🎯 Intelligence Index - IA Influencer Agent
 ==========================================
 
 Main entry point and orchestrator for the Intelligence Core Module.
@@ -12,9 +11,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright © 2025 Fahed Mlaiel - All rights reserved
 WARNING: Any unauthorized copying, modification, distribution or use of this code
 without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
@@ -41,8 +38,7 @@ from ..config.intelligence_config import IntelligenceConfig
 
 @dataclass
 class IntelligenceRequest:
-    """Intelligence processing request"""
-    request_id: str
+    """Intelligence processing request"""    request_id: str
     creator_id: str
     content_data: Dict[str, Any]
     intelligence_types: List[str]
@@ -53,8 +49,7 @@ class IntelligenceRequest:
 
 @dataclass
 class IntelligenceResponse:
-    """Intelligence processing response"""
-    request_id: str
+    """Intelligence processing response"""    request_id: str
     creator_id: str
     processing_time: float
     results: Dict[str, Any]
@@ -67,8 +62,7 @@ class IntelligenceResponse:
 
 @dataclass
 class IntelligenceMetrics:
-    """Intelligence system metrics"""
-    total_requests: int = 0
+    """Intelligence system metrics"""    total_requests: int = 0
     successful_requests: int = 0
     failed_requests: int = 0
     average_processing_time: float = 0.0
@@ -79,8 +73,7 @@ class IntelligenceMetrics:
 
 
 class IntelligenceOrchestrator:
-    """
-    Central orchestrator for all AI intelligence capabilities
+    """    Central orchestrator for all AI intelligence capabilities
     
     Manages and coordinates all intelligence engines to provide
     comprehensive AI-powered insights and recommendations for creators.
@@ -92,11 +85,9 @@ class IntelligenceOrchestrator:
     - Intelligent caching and optimization
     - Error handling and fallback mechanisms
     - Scalable concurrent processing
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize intelligence orchestrator"""
-        self.config = config
+        """Initialize intelligence orchestrator"""        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize core components
@@ -124,8 +115,7 @@ class IntelligenceOrchestrator:
         self._start_monitoring()
     
     def _initialize_engines(self):
-        """Initialize all intelligence engines"""
-        try:
+        """Initialize all intelligence engines"""        try:
             self.logger.info("Initializing intelligence engines...")
             
             # Content Recommendation Engine
@@ -171,13 +161,11 @@ class IntelligenceOrchestrator:
             raise
     
     def _start_monitoring(self):
-        """Start system monitoring"""
-        asyncio.create_task(self._monitor_system_health())
+        """Start system monitoring"""        asyncio.create_task(self._monitor_system_health())
         asyncio.create_task(self._process_request_queue())
     
     async def _monitor_system_health(self):
-        """Monitor system health and performance"""
-        while True:
+        """Monitor system health and performance"""        while True:
             try:
                 # Update system metrics
                 await self._update_system_metrics()
@@ -202,8 +190,7 @@ class IntelligenceOrchestrator:
         intelligence_types: List[str] = None,
         priority: str = "normal"
     ) -> IntelligenceResponse:
-        """
-        Process comprehensive intelligence request
+        """        Process comprehensive intelligence request
         
         Args:
             creator_id: ID of the content creator
@@ -213,8 +200,7 @@ class IntelligenceOrchestrator:
             
         Returns:
             Complete intelligence analysis results
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         request_id = self._generate_request_id()
         
         try:
@@ -299,8 +285,7 @@ class IntelligenceOrchestrator:
             )
     
     async def _process_intelligence_request(self, request: IntelligenceRequest) -> Dict[str, Any]:
-        """Process intelligence request using multiple engines"""
-        results = {}
+        """Process intelligence request using multiple engines"""        results = {}
         tasks = []
         
         try:
@@ -334,8 +319,7 @@ class IntelligenceOrchestrator:
             return {'error': str(e)}
     
     async def _create_intelligence_task(self, intelligence_type: str, request: IntelligenceRequest):
-        """Create intelligence processing task"""
-        try:
+        """Create intelligence processing task"""        try:
             if intelligence_type == 'content_recommendation':
                 return await self._process_content_recommendation(request)
             elif intelligence_type == 'monetization_analysis':
@@ -356,8 +340,7 @@ class IntelligenceOrchestrator:
             return None
     
     async def _process_content_recommendation(self, request: IntelligenceRequest) -> Dict[str, Any]:
-        """Process content recommendation request"""
-        try:
+        """Process content recommendation request"""        try:
             engine = self.engines.get('content_recommendation')
             if not engine:
                 raise ValueError("Content recommendation engine not available")
@@ -389,8 +372,7 @@ class IntelligenceOrchestrator:
             return {'error': str(e), 'success': False}
     
     async def _process_monetization_analysis(self, request: IntelligenceRequest) -> Dict[str, Any]:
-        """Process monetization analysis request"""
-        try:
+        """Process monetization analysis request"""        try:
             engine = self.engines.get('monetization_intelligence')
             if not engine:
                 raise ValueError("Monetization intelligence engine not available")
@@ -426,8 +408,7 @@ class IntelligenceOrchestrator:
             return {'error': str(e), 'success': False}
     
     async def _process_collaboration_matching(self, request: IntelligenceRequest) -> Dict[str, Any]:
-        """Process collaboration matching request"""
-        try:
+        """Process collaboration matching request"""        try:
             engine = self.engines.get('collaboration_matcher')
             if not engine:
                 raise ValueError("Collaboration matcher engine not available")
@@ -452,8 +433,7 @@ class IntelligenceOrchestrator:
             return {'error': str(e), 'success': False}
     
     async def _process_trend_analysis(self, request: IntelligenceRequest) -> Dict[str, Any]:
-        """Process trend analysis request"""
-        try:
+        """Process trend analysis request"""        try:
             engine = self.engines.get('trend_analyzer')
             viral_engine = self.engines.get('viral_prediction')
             market_engine = self.engines.get('market_intelligence')
@@ -499,8 +479,7 @@ class IntelligenceOrchestrator:
             return {'error': str(e), 'success': False}
     
     async def _process_sentiment_analysis(self, request: IntelligenceRequest) -> Dict[str, Any]:
-        """Process sentiment analysis request"""
-        try:
+        """Process sentiment analysis request"""        try:
             engine = self.engines.get('sentiment_analyzer')
             insights_engine = self.engines.get('audience_insights')
             
@@ -545,8 +524,7 @@ class IntelligenceOrchestrator:
             return {'error': str(e), 'success': False}
     
     async def _process_performance_prediction(self, request: IntelligenceRequest) -> Dict[str, Any]:
-        """Process performance prediction request"""
-        try:
+        """Process performance prediction request"""        try:
             engine = self.engines.get('performance_predictor')
             metrics_engine = self.engines.get('success_metrics')
             
@@ -580,8 +558,7 @@ class IntelligenceOrchestrator:
             return {'error': str(e), 'success': False}
     
     async def get_intelligence_summary(self, creator_id: str, timeframe: str = "7d") -> Dict[str, Any]:
-        """Get comprehensive intelligence summary for creator"""
-        try:
+        """Get comprehensive intelligence summary for creator"""        try:
             # Get recent intelligence results
             recent_results = await self.storage.get_recent_intelligence_results(
                 creator_id=creator_id,
@@ -616,8 +593,7 @@ class IntelligenceOrchestrator:
             return {'error': str(e), 'creator_id': creator_id}
     
     def _extract_summary_insights(self, results: Dict[str, Any], summary: Dict[str, Any]):
-        """Extract key insights from intelligence results"""
-        # Content recommendations
+        """Extract key insights from intelligence results"""        # Content recommendations
         if 'content_recommendation' in results:
             rec_data = results['content_recommendation']
             if 'recommendations' in rec_data:
@@ -636,8 +612,7 @@ class IntelligenceOrchestrator:
                 summary['collaboration_matches'].extend(col_data['collaborations'][:3])
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get current system status and health metrics"""
-        return {
+        """Get current system status and health metrics"""        return {
             'status': 'operational' if self.metrics.system_health == 'healthy' else 'degraded',
             'metrics': self.metrics.__dict__,
             'engines': {
@@ -648,25 +623,21 @@ class IntelligenceOrchestrator:
         }
     
     def _generate_request_id(self) -> str:
-        """Generate unique request ID"""
-        return f"intel_{int(time.time())}_{hashlib.md5(str(hash(self)).encode()).hexdigest()[:8]}"
+        """Generate unique request ID"""        return f"intel_{int(time.time())}_{hashlib.md5(str(hash(self)).encode()).hexdigest()[:8]}"
     
     def _is_cache_valid(self, cached_data: Dict[str, Any]) -> bool:
-        """Check if cached data is still valid"""
-        if 'created_at' not in cached_data:
+        """Check if cached data is still valid"""        if 'created_at' not in cached_data:
             return False
         
         created_at = datetime.fromisoformat(cached_data['created_at'])
         return datetime.now() - created_at < timedelta(seconds=self.cache_ttl)
     
     async def _update_system_metrics(self):
-        """Update system performance metrics"""
-        # This would update various system metrics
+        """Update system performance metrics"""        # This would update various system metrics
         self.metrics.last_updated = datetime.now()
     
     async def _check_engine_health(self):
-        """Check health of all intelligence engines"""
-        for engine_name in self.engines:
+        """Check health of all intelligence engines"""        for engine_name in self.engines:
             try:
                 # Perform health check on each engine
                 # This is a placeholder - real implementation would test engine functionality
@@ -676,15 +647,13 @@ class IntelligenceOrchestrator:
                 self.metrics.active_engines[engine_name] = False
     
     async def _cleanup_cache(self):
-        """Clean up expired cache entries"""
-        try:
+        """Clean up expired cache entries"""        try:
             await self.cache.cleanup_expired()
         except Exception as e:
             self.logger.error(f"Error cleaning up cache: {e}")
     
     async def _process_request_queue(self):
-        """Process requests from the queue"""
-        while True:
+        """Process requests from the queue"""        while True:
             try:
                 # This would process queued requests
                 await asyncio.sleep(1)
@@ -696,8 +665,7 @@ class IntelligenceOrchestrator:
 _orchestrator = None
 
 def get_intelligence_orchestrator(config: Dict[str, Any] = None) -> IntelligenceOrchestrator:
-    """Get or create intelligence orchestrator instance"""
-    global _orchestrator
+    """Get or create intelligence orchestrator instance"""    global _orchestrator
     
     if _orchestrator is None:
         if config is None:
@@ -714,8 +682,7 @@ async def process_intelligence(
     intelligence_types: List[str] = None,
     priority: str = "normal"
 ) -> IntelligenceResponse:
-    """
-    Main entry point for intelligence processing
+    """    Main entry point for intelligence processing
     
     Args:
         creator_id: ID of the content creator
@@ -725,8 +692,7 @@ async def process_intelligence(
         
     Returns:
         Complete intelligence analysis results
-    """
-    orchestrator = get_intelligence_orchestrator()
+    """    orchestrator = get_intelligence_orchestrator()
     return await orchestrator.process_intelligence_request(
         creator_id=creator_id,
         content_data=content_data,
@@ -736,8 +702,7 @@ async def process_intelligence(
 
 
 async def get_creator_intelligence_summary(creator_id: str, timeframe: str = "7d") -> Dict[str, Any]:
-    """
-    Get comprehensive intelligence summary for a creator
+    """    Get comprehensive intelligence summary for a creator
     
     Args:
         creator_id: ID of the content creator
@@ -745,19 +710,16 @@ async def get_creator_intelligence_summary(creator_id: str, timeframe: str = "7d
         
     Returns:
         Comprehensive intelligence summary
-    """
-    orchestrator = get_intelligence_orchestrator()
+    """    orchestrator = get_intelligence_orchestrator()
     return await orchestrator.get_intelligence_summary(creator_id, timeframe)
 
 
 async def get_system_health() -> Dict[str, Any]:
-    """
-    Get current system health and status
+    """    Get current system health and status
     
     Returns:
         System health metrics and status
-    """
-    orchestrator = get_intelligence_orchestrator()
+    """    orchestrator = get_intelligence_orchestrator()
     return await orchestrator.get_system_status()
 
 

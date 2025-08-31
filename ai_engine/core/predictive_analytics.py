@@ -1,5 +1,4 @@
-"""
-Predictive Analytics & Business Intelligence Module
+"""Predictive Analytics & Business Intelligence Module
 
 Advanced AI-powered analytics system providing predictive insights, trend analysis,
 and business intelligence for content creators platform.
@@ -12,9 +11,7 @@ This cutting-edge predictive analytics system is protected intellectual property
 Any unauthorized copying, distribution, or use will result in immediate legal action.
 
 Business Logic: Data Collection → Pattern Recognition → Predictive Modeling → Trend Analysis → Business Insights → Decision Support
-"""
-
-import asyncio
+"""import asyncio
 import json
 import uuid
 import numpy as np
@@ -55,8 +52,7 @@ logger = logging.getLogger(__name__)
 
 
 class PredictionType(Enum):
-    """Types of predictions"""
-    AUDIENCE_GROWTH = "audience_growth"
+    """Types of predictions"""    AUDIENCE_GROWTH = "audience_growth"
     ENGAGEMENT_RATE = "engagement_rate"
     REVENUE_FORECAST = "revenue_forecast"
     CONTENT_PERFORMANCE = "content_performance"
@@ -69,8 +65,7 @@ class PredictionType(Enum):
 
 
 class TrendDirection(Enum):
-    """Trend direction indicators"""
-    STRONGLY_RISING = "strongly_rising"
+    """Trend direction indicators"""    STRONGLY_RISING = "strongly_rising"
     RISING = "rising"
     STABLE = "stable"
     DECLINING = "declining"
@@ -80,8 +75,7 @@ class TrendDirection(Enum):
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframes"""
-    REAL_TIME = "real_time"
+    """Analytics timeframes"""    REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -91,8 +85,7 @@ class AnalyticsTimeframe(Enum):
 
 
 class BusinessMetric(Enum):
-    """Business metrics to track"""
-    TOTAL_REVENUE = "total_revenue"
+    """Business metrics to track"""    TOTAL_REVENUE = "total_revenue"
     MONTHLY_RECURRING_REVENUE = "mrr"
     CUSTOMER_ACQUISITION_COST = "cac"
     LIFETIME_VALUE = "ltv"
@@ -106,8 +99,7 @@ class BusinessMetric(Enum):
 
 @dataclass
 class DataPoint:
-    """Single data point for analytics"""
-    timestamp: datetime
+    """Single data point for analytics"""    timestamp: datetime
     metric_name: str
     value: float
     metadata: Dict[str, Any] = field(default_factory=dict)
@@ -127,8 +119,7 @@ class DataPoint:
 
 @dataclass
 class PredictionResult:
-    """Result of a prediction analysis"""
-    prediction_id: str
+    """Result of a prediction analysis"""    prediction_id: str
     prediction_type: PredictionType
     target_metric: str
     predicted_value: float
@@ -164,8 +155,7 @@ class PredictionResult:
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis result"""
-    trend_id: str
+    """Trend analysis result"""    trend_id: str
     metric_name: str
     trend_direction: TrendDirection
     strength: float
@@ -201,8 +191,7 @@ class TrendAnalysis:
 
 @dataclass
 class BusinessIntelligenceReport:
-    """Comprehensive business intelligence report"""
-    report_id: str
+    """Comprehensive business intelligence report"""    report_id: str
     report_type: str
     creator_id: str
     timeframe: AnalyticsTimeframe
@@ -241,16 +230,14 @@ class BusinessIntelligenceReport:
 
 
 class TimeSeriesAnalyzer:
-    """Advanced time series analysis and prediction"""
-    
+    """Advanced time series analysis and prediction"""    
     def __init__(self):
         self.models = {}
         self.scalers = {}
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize ML models for time series analysis"""
-        if ML_AVAILABLE:
+        """Initialize ML models for time series analysis"""        if ML_AVAILABLE:
             try:
                 # Different models for different prediction tasks
                 self.models['linear'] = LinearRegression()
@@ -268,8 +255,7 @@ class TimeSeriesAnalyzer:
     async def analyze_time_series(self, 
                                 data_points: List[DataPoint],
                                 prediction_horizons: List[int] = None) -> Dict[str, Any]:
-        """Comprehensive time series analysis"""
-        try:
+        """Comprehensive time series analysis"""        try:
             if not data_points:
                 return {"error": "No data points provided"}
             
@@ -312,8 +298,7 @@ class TimeSeriesAnalyzer:
             return {"error": f"Analysis failed: {str(e)}"}
     
     def _convert_to_dataframe(self, data_points: List[DataPoint]) -> pd.DataFrame:
-        """Convert data points to pandas DataFrame"""
-        data = []
+        """Convert data points to pandas DataFrame"""        data = []
         for point in data_points:
             data.append({
                 'timestamp': point.timestamp,
@@ -330,8 +315,7 @@ class TimeSeriesAnalyzer:
         return df
     
     def _calculate_basic_statistics(self, df: pd.DataFrame) -> Dict[str, float]:
-        """Calculate basic statistical measures"""
-        try:
+        """Calculate basic statistical measures"""        try:
             if df.empty:
                 return {}
             
@@ -353,8 +337,7 @@ class TimeSeriesAnalyzer:
             return {}
     
     async def _analyze_trends(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Analyze trends in the time series"""
-        try:
+        """Analyze trends in the time series"""        try:
             if len(df) < 2:
                 return {"error": "Insufficient data for trend analysis"}
             
@@ -403,8 +386,7 @@ class TimeSeriesAnalyzer:
             return {"error": f"Trend analysis failed: {str(e)}"}
     
     def _detect_seasonality(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Detect seasonal patterns in the data"""
-        try:
+        """Detect seasonal patterns in the data"""        try:
             if len(df) < 14:  # Need at least 2 weeks of data
                 return {"seasonal_detected": False, "reason": "Insufficient data"}
             
@@ -438,8 +420,7 @@ class TimeSeriesAnalyzer:
             return {"seasonal_detected": False, "error": str(e)}
     
     def _calculate_autocorrelation(self, values: np.ndarray, lag: int) -> float:
-        """Calculate autocorrelation at specific lag"""
-        try:
+        """Calculate autocorrelation at specific lag"""        try:
             if len(values) <= lag:
                 return 0.0
             
@@ -454,8 +435,7 @@ class TimeSeriesAnalyzer:
             return 0.0
     
     def _find_dominant_cycle(self, seasonality_results: Dict[str, Any]) -> Optional[str]:
-        """Find the dominant seasonal cycle"""
-        max_correlation = 0
+        """Find the dominant seasonal cycle"""        max_correlation = 0
         dominant_cycle = None
         
         for cycle, result in seasonality_results.items():
@@ -466,8 +446,7 @@ class TimeSeriesAnalyzer:
         return dominant_cycle
     
     def _detect_anomalies(self, df: pd.DataFrame) -> List[Dict[str, Any]]:
-        """Detect anomalies in the time series"""
-        try:
+        """Detect anomalies in the time series"""        try:
             if len(df) < 3:
                 return []
             
@@ -498,8 +477,7 @@ class TimeSeriesAnalyzer:
             return []
     
     async def _predict_future_values(self, df: pd.DataFrame, horizon: int) -> Dict[str, Any]:
-        """Predict future values using ML models"""
-        try:
+        """Predict future values using ML models"""        try:
             if len(df) < 5:
                 return {"error": "Insufficient data for prediction"}
             
@@ -554,8 +532,7 @@ class TimeSeriesAnalyzer:
             return {"error": f"Prediction failed: {str(e)}"}
     
     def _create_lag_features(self, values: np.ndarray, lags: List[int]) -> np.ndarray:
-        """Create lag features for time series prediction"""
-        try:
+        """Create lag features for time series prediction"""        try:
             max_lag = max(lags)
             if len(values) <= max_lag:
                 return np.array([])
@@ -572,8 +549,7 @@ class TimeSeriesAnalyzer:
             return np.array([])
     
     async def _select_best_model(self, X: np.ndarray, y: np.ndarray):
-        """Select the best model for prediction"""
-        try:
+        """Select the best model for prediction"""        try:
             if not ML_AVAILABLE:
                 # Fallback to simple mean prediction
                 class SimpleMeanModel:
@@ -627,8 +603,7 @@ class TimeSeriesAnalyzer:
             return SimpleMeanModel()
     
     def _detect_change_points(self, df: pd.DataFrame) -> List[Dict[str, Any]]:
-        """Detect significant change points in the time series"""
-        try:
+        """Detect significant change points in the time series"""        try:
             if len(df) < 10:
                 return []
             
@@ -666,8 +641,7 @@ class TimeSeriesAnalyzer:
             return []
     
     def _analyze_volatility(self, df: pd.DataFrame) -> Dict[str, float]:
-        """Analyze volatility in the time series"""
-        try:
+        """Analyze volatility in the time series"""        try:
             if len(df) < 2:
                 return {}
             
@@ -697,8 +671,7 @@ class TimeSeriesAnalyzer:
             return {}
     
     def _calculate_max_drawdown(self, values: np.ndarray) -> float:
-        """Calculate maximum drawdown"""
-        try:
+        """Calculate maximum drawdown"""        try:
             peak = values[0]
             max_dd = 0
             
@@ -718,8 +691,7 @@ class TimeSeriesAnalyzer:
 
 
 class PredictiveModelEngine:
-    """Advanced predictive modeling engine"""
-    
+    """Advanced predictive modeling engine"""    
     def __init__(self):
         self.time_series_analyzer = TimeSeriesAnalyzer()
         self.models = {}
@@ -727,8 +699,7 @@ class PredictiveModelEngine:
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize predictive models"""
-        logger.info("Predictive model engine initialized")
+        """Initialize predictive models"""        logger.info("Predictive model engine initialized")
     
     async def generate_prediction(self, 
                                 prediction_type: PredictionType,
@@ -736,8 +707,7 @@ class PredictiveModelEngine:
                                 target_metric: str,
                                 timeframe: str = "30_days",
                                 additional_features: Dict[str, Any] = None) -> PredictionResult:
-        """Generate comprehensive prediction"""
-        try:
+        """Generate comprehensive prediction"""        try:
             additional_features = additional_features or {}
             
             # Analyze historical data
@@ -814,8 +784,7 @@ class PredictiveModelEngine:
             raise OptimizationError(f"Prediction failed: {str(e)}")
     
     def _parse_timeframe(self, timeframe: str) -> int:
-        """Parse timeframe string to days"""
-        timeframe_map = {
+        """Parse timeframe string to days"""        timeframe_map = {
             "1_week": 7,
             "2_weeks": 14,
             "1_month": 30,
@@ -837,8 +806,7 @@ class PredictiveModelEngine:
                                   analysis_results: Dict[str, Any],
                                   data_points_count: int,
                                   prediction_type: PredictionType) -> float:
-        """Calculate confidence score for prediction"""
-        try:
+        """Calculate confidence score for prediction"""        try:
             base_confidence = 0.5
             
             # Data quantity factor
@@ -875,8 +843,7 @@ class PredictiveModelEngine:
                                      analysis_results: Dict[str, Any],
                                      additional_features: Dict[str, Any],
                                      prediction_type: PredictionType) -> List[Dict[str, Any]]:
-        """Identify factors contributing to the prediction"""
-        factors = []
+        """Identify factors contributing to the prediction"""        factors = []
         
         # Trend factor
         trend_analysis = analysis_results.get('trend_analysis', {})
@@ -924,8 +891,7 @@ class PredictiveModelEngine:
     def _assess_risk_factors(self, 
                            analysis_results: Dict[str, Any],
                            prediction_type: PredictionType) -> List[str]:
-        """Assess risk factors for the prediction"""
-        risks = []
+        """Assess risk factors for the prediction"""        risks = []
         
         # Data quality risks
         basic_stats = analysis_results.get('basic_stats', {})
@@ -974,8 +940,7 @@ class PredictiveModelEngine:
                                 analysis_results: Dict[str, Any],
                                 predicted_value: float,
                                 target_metric: str) -> List[str]:
-        """Generate actionable recommendations"""
-        recommendations = []
+        """Generate actionable recommendations"""        recommendations = []
         
         # Generic recommendations based on trend
         trend_analysis = analysis_results.get('trend_analysis', {})
@@ -1028,8 +993,7 @@ class PredictiveModelEngine:
     def _estimate_model_accuracy(self, 
                                analysis_results: Dict[str, Any],
                                prediction_type: PredictionType) -> float:
-        """Estimate model accuracy based on historical performance"""
-        try:
+        """Estimate model accuracy based on historical performance"""        try:
             base_accuracy = 0.7
             
             # Adjust based on data quality
@@ -1075,8 +1039,7 @@ class PredictiveModelEngine:
 
 
 class BusinessIntelligenceEngine:
-    """Comprehensive business intelligence and analytics engine"""
-    
+    """Comprehensive business intelligence and analytics engine"""    
     def __init__(self):
         self.predictive_engine = PredictiveModelEngine()
         self.time_series_analyzer = TimeSeriesAnalyzer()
@@ -1087,8 +1050,7 @@ class BusinessIntelligenceEngine:
                                timeframe: AnalyticsTimeframe,
                                metrics_data: Dict[str, List[DataPoint]],
                                report_type: str = "comprehensive") -> BusinessIntelligenceReport:
-        """Generate comprehensive business intelligence report"""
-        try:
+        """Generate comprehensive business intelligence report"""        try:
             # Analyze each metric
             metric_analyses = {}
             key_metrics = {}
@@ -1193,8 +1155,7 @@ class BusinessIntelligenceEngine:
     def _generate_performance_insights(self, 
                                      metric_analyses: Dict[str, Any],
                                      key_metrics: Dict[str, float]) -> Dict[str, Any]:
-        """Generate performance insights"""
-        insights = {
+        """Generate performance insights"""        insights = {
             "overall_performance": "stable",
             "top_performing_metrics": [],
             "underperforming_metrics": [],
@@ -1251,8 +1212,7 @@ class BusinessIntelligenceEngine:
     
     def _identify_optimization_opportunities(self, 
                                            metric_analyses: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Identify optimization opportunities"""
-        opportunities = []
+        """Identify optimization opportunities"""        opportunities = []
         
         try:
             for metric_name, analysis in metric_analyses.items():
@@ -1308,8 +1268,7 @@ class BusinessIntelligenceEngine:
     def _assess_business_risks(self, 
                              metric_analyses: Dict[str, Any],
                              predictions: List[PredictionResult]) -> Dict[str, float]:
-        """Assess business risks"""
-        risks = {
+        """Assess business risks"""        risks = {
             "revenue_risk": 0.3,
             "audience_risk": 0.2,
             "engagement_risk": 0.2,
@@ -1361,8 +1320,7 @@ class BusinessIntelligenceEngine:
     def _generate_competitive_analysis(self, 
                                      creator_id: str,
                                      metric_analyses: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate competitive analysis insights"""
-        return {
+        """Generate competitive analysis insights"""        return {
             "market_position": "growing",
             "competitive_advantages": [
                 "Consistent content quality",
@@ -1387,8 +1345,7 @@ class BusinessIntelligenceEngine:
         }
     
     def _generate_audience_insights(self, metric_analyses: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate audience insights"""
-        return {
+        """Generate audience insights"""        return {
             "audience_behavior": {
                 "engagement_patterns": "consistent",
                 "peak_activity_times": ["evening", "weekends"],
@@ -1412,8 +1369,7 @@ class BusinessIntelligenceEngine:
     def _generate_revenue_analysis(self, 
                                  metric_analyses: Dict[str, Any],
                                  key_metrics: Dict[str, float]) -> Dict[str, Any]:
-        """Generate revenue analysis"""
-        return {
+        """Generate revenue analysis"""        return {
             "revenue_streams": {
                 "primary_sources": ["advertising", "sponsorships", "affiliate"],
                 "growth_potential": ["merchandise", "digital_products", "subscriptions"],
@@ -1436,8 +1392,7 @@ class BusinessIntelligenceEngine:
                                        performance_insights: Dict[str, Any],
                                        opportunities: List[Dict[str, Any]],
                                        predictions: List[PredictionResult]) -> List[Dict[str, Any]]:
-        """Generate actionable recommendations"""
-        recommendations = []
+        """Generate actionable recommendations"""        recommendations = []
         
         # Performance-based recommendations
         if performance_insights.get("overall_performance") in ["needs_improvement", "stable"]:
@@ -1489,8 +1444,7 @@ class BusinessIntelligenceEngine:
                                 trend_analyses: List[TrendAnalysis],
                                 predictions: List[PredictionResult],
                                 performance_insights: Dict[str, Any]) -> str:
-        """Create executive summary"""
-        try:
+        """Create executive summary"""        try:
             summary_parts = []
             
             # Overall performance

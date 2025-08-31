@@ -28,8 +28,7 @@ Components Overview:
 
 Business Logic Flow: Content Upload → AI Protection → SEO → Collaboration → Revenue Optimization
 ==================================================================
-"""
-import logging
+"""import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from decimal import Decimal
 from datetime import datetime, timedelta

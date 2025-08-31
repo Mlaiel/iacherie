@@ -1,5 +1,4 @@
-"""
-License Agreements Database Module
+"""License Agreements Database Module
 
 Enterprise-grade license agreements management for IA Influencer Agent platform.
 Provides comprehensive contract management, legal validation, and automated agreement processing.
@@ -11,9 +10,7 @@ STRICT COPYRIGHT WARNING: This code and concept are EXCLUSIVE intellectual prope
 ANY unauthorized use, copying, or theft without explicit written authorization is STRICTLY PROHIBITED
 and subject to immediate legal prosecution under German law.
 Contact: mlaiel@live.de for ANY authorization requests.
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple, Set, Callable
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Set, Callable
 from datetime import datetime, timedelta, timezone
 from enum import Enum, IntEnum
 from dataclasses import dataclass, field
@@ -64,8 +61,7 @@ active_agreements_gauge = Gauge('active_agreements_total', 'Total active agreeme
 logger = logging.getLogger(__name__)
 
 class LicenseType(Enum):
-    """Comprehensive license types with industry standards"""
-    STANDARD = "standard"
+    """Comprehensive license types with industry standards"""    STANDARD = "standard"
     PREMIUM = "premium"
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
@@ -94,8 +90,7 @@ class LicenseType(Enum):
     CUSTOM = "custom"
 
 class LicenseStatus(Enum):
-    """Comprehensive license status tracking"""
-    DRAFT = "draft"
+    """Comprehensive license status tracking"""    DRAFT = "draft"
     TEMPLATE_GENERATED = "template_generated"
     UNDER_REVIEW = "under_review"
     LEGAL_REVIEW = "legal_review"
@@ -114,16 +109,14 @@ class LicenseStatus(Enum):
     ARCHIVED = "archived"
 
 class ContractComplexity(IntEnum):
-    """Contract complexity levels for AI processing"""
-    SIMPLE = 1
+    """Contract complexity levels for AI processing"""    SIMPLE = 1
     STANDARD = 2
     INTERMEDIATE = 3
     COMPLEX = 4
     HIGHLY_COMPLEX = 5
 
 class SignatureType(Enum):
-    """Digital signature types"""
-    ELECTRONIC = "electronic"
+    """Digital signature types"""    ELECTRONIC = "electronic"
     DIGITAL = "digital"
     BIOMETRIC = "biometric"
     BLOCKCHAIN = "blockchain"
@@ -131,8 +124,7 @@ class SignatureType(Enum):
     WET_SIGNATURE = "wet_signature"
 
 class ValidationLevel(Enum):
-    """Legal validation levels"""
-    BASIC = "basic"
+    """Legal validation levels"""    BASIC = "basic"
     STANDARD = "standard"
     COMPREHENSIVE = "comprehensive"
     EXPERT_REVIEW = "expert_review"
@@ -140,8 +132,7 @@ class ValidationLevel(Enum):
 
 @dataclass
 class ContractTerms:
-    """Comprehensive contract terms structure"""
-    grant_of_rights: Dict[str, Any] = field(default_factory=dict)
+    """Comprehensive contract terms structure"""    grant_of_rights: Dict[str, Any] = field(default_factory=dict)
     usage_restrictions: Dict[str, Any] = field(default_factory=dict)
     territory: List[str] = field(default_factory=list)
     duration: Dict[str, Any] = field(default_factory=dict)
@@ -160,8 +151,7 @@ class ContractTerms:
 
 @dataclass
 class RightsPackage:
-    """Rights package definition"""
-    reproduction_rights: bool = False
+    """Rights package definition"""    reproduction_rights: bool = False
     distribution_rights: bool = False
     public_performance_rights: bool = False
     public_display_rights: bool = False
@@ -191,11 +181,9 @@ class RightsPackage:
         }
 
 class LicenseAgreement(BaseModel, TimestampMixin, AuditMixin):
-    """
-    Enterprise-grade license agreement model with AI-powered contract generation.
+    """    Enterprise-grade license agreement model with AI-powered contract generation.
     Supports complex multi-party agreements and automated legal compliance.
-    """
-    __tablename__ = "license_agreements"
+    """    __tablename__ = "license_agreements"
     
     # Primary identifiers
     id = Column(PostgresUUID(as_uuid=True), primary_key=True, default=uuid4)
@@ -324,8 +312,7 @@ class LicenseAgreement(BaseModel, TimestampMixin, AuditMixin):
     
     @hybrid_property
     def completion_percentage(self):
-        """Calculate agreement completion percentage"""
-        total_steps = 10  # draft, review, legal, compliance, signatures, etc.
+        """Calculate agreement completion percentage"""        total_steps = 10  # draft, review, legal, compliance, signatures, etc.
         completed_steps = 0
         
         if self.status != LicenseStatus.DRAFT.value:
@@ -343,8 +330,7 @@ class LicenseAgreement(BaseModel, TimestampMixin, AuditMixin):
         return min((completed_steps / total_steps) * 100, 100)
     
     def can_execute(self) -> bool:
-        """Check if agreement can be executed"""
-        return (
+        """Check if agreement can be executed"""        return (
             self.is_fully_signed and
             self.status in [LicenseStatus.PENDING_SIGNATURE.value, LicenseStatus.PARTIALLY_SIGNED.value] and
             not self.is_expired and
@@ -352,10 +338,8 @@ class LicenseAgreement(BaseModel, TimestampMixin, AuditMixin):
         )
 
 class ContractClause(BaseModel, TimestampMixin):
-    """
-    Individual contract clauses with AI-powered generation and validation.
-    """
-    __tablename__ = "contract_clauses"
+    """    Individual contract clauses with AI-powered generation and validation.
+    """    __tablename__ = "contract_clauses"
     
     # Primary identifiers
     id = Column(PostgresUUID(as_uuid=True), primary_key=True, default=uuid4)
@@ -408,10 +392,8 @@ class ContractClause(BaseModel, TimestampMixin):
     )
 
 class AgreementAmendment(BaseModel, TimestampMixin, AuditMixin):
-    """
-    Agreement amendments and modifications tracking.
-    """
-    __tablename__ = "agreement_amendments"
+    """    Agreement amendments and modifications tracking.
+    """    __tablename__ = "agreement_amendments"
     
     # Primary identifiers
     id = Column(PostgresUUID(as_uuid=True), primary_key=True, default=uuid4)
@@ -456,10 +438,8 @@ class AgreementAmendment(BaseModel, TimestampMixin, AuditMixin):
     )
 
 class AgreementValidation(BaseModel, TimestampMixin):
-    """
-    Legal and compliance validation records for agreements.
-    """
-    __tablename__ = "agreement_validations"
+    """    Legal and compliance validation records for agreements.
+    """    __tablename__ = "agreement_validations"
     
     # Primary identifiers
     id = Column(PostgresUUID(as_uuid=True), primary_key=True, default=uuid4)
@@ -508,11 +488,9 @@ class AgreementValidation(BaseModel, TimestampMixin):
         Index('idx_validation_result_score', 'result', 'overall_score'),
         Index('idx_validation_validator_type', 'validator_type', 'completed_at'),
 class LicenseAgreementService:
-    """
-    Enterprise-grade license agreement service with AI-powered contract generation.
+    """    Enterprise-grade license agreement service with AI-powered contract generation.
     Provides comprehensive agreement lifecycle management and automated legal compliance.
-    """
-    
+    """    
     def __init__(self, db_session: Session, cache_manager: CacheManager, security_manager: SecurityManager):
         self.db = db_session
         self.cache = cache_manager
@@ -532,16 +510,14 @@ class LicenseAgreementService:
         logger.info("LicenseAgreementService initialized")
     
     async def create_license_agreement(self, agreement_data: Dict[str, Any]) -> LicenseAgreement:
-        """
-        Create new license agreement with AI-powered contract generation.
+        """        Create new license agreement with AI-powered contract generation.
         
         Args:
             agreement_data: Complete agreement information
             
         Returns:
             LicenseAgreement: Created agreement record
-        """
-        with contract_generation_time.time():
+        """        with contract_generation_time.time():
             try:
                 # Generate unique agreement number
                 agreement_number = self._generate_agreement_number()
@@ -606,8 +582,7 @@ class LicenseAgreementService:
                 raise
     
     async def validate_agreement(self, agreement_id: str, validation_type: str = "comprehensive") -> AgreementValidation:
-        """
-        Comprehensive agreement validation with AI-powered legal analysis.
+        """        Comprehensive agreement validation with AI-powered legal analysis.
         
         Args:
             agreement_id: Agreement to validate
@@ -615,8 +590,7 @@ class LicenseAgreementService:
             
         Returns:
             AgreementValidation: Validation result
-        """
-        with legal_validation_time.time():
+        """        with legal_validation_time.time():
             agreement = self.db.query(LicenseAgreement).filter(
                 LicenseAgreement.id == agreement_id
             ).first()
@@ -686,8 +660,7 @@ class LicenseAgreementService:
                 raise
     
     async def initiate_signature_process(self, agreement_id: str, signature_data: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Initiate digital signature process for agreement execution.
+        """        Initiate digital signature process for agreement execution.
         
         Args:
             agreement_id: Agreement to sign
@@ -695,8 +668,7 @@ class LicenseAgreementService:
             
         Returns:
             Dict containing signature process information
-        """
-        agreement = self.db.query(LicenseAgreement).filter(
+        """        agreement = self.db.query(LicenseAgreement).filter(
             LicenseAgreement.id == agreement_id
         ).first()
         
@@ -754,8 +726,7 @@ class LicenseAgreementService:
         return signature_result
     
     async def process_signature_completion(self, agreement_id: str, signature_event: Dict[str, Any]) -> bool:
-        """
-        Process signature completion event and update agreement status.
+        """        Process signature completion event and update agreement status.
         
         Args:
             agreement_id: Agreement being signed
@@ -763,8 +734,7 @@ class LicenseAgreementService:
             
         Returns:
             bool: True if agreement is fully executed
-        """
-        agreement = self.db.query(LicenseAgreement).filter(
+        """        agreement = self.db.query(LicenseAgreement).filter(
             LicenseAgreement.id == agreement_id
         ).first()
         
@@ -807,8 +777,7 @@ class LicenseAgreementService:
             return False
     
     async def create_amendment(self, agreement_id: str, amendment_data: Dict[str, Any]) -> AgreementAmendment:
-        """
-        Create agreement amendment with change tracking.
+        """        Create agreement amendment with change tracking.
         
         Args:
             agreement_id: Agreement to amend
@@ -816,8 +785,7 @@ class LicenseAgreementService:
             
         Returns:
             AgreementAmendment: Created amendment
-        """
-        agreement = self.db.query(LicenseAgreement).filter(
+        """        agreement = self.db.query(LicenseAgreement).filter(
             LicenseAgreement.id == agreement_id
         ).first()
         
@@ -859,8 +827,7 @@ class LicenseAgreementService:
         return amendment
     
     def _create_rights_package(self, rights_data: Dict[str, Any]) -> RightsPackage:
-        """Create standardized rights package"""
-        return RightsPackage(
+        """Create standardized rights package"""        return RightsPackage(
             reproduction_rights=rights_data.get('reproduction_rights', False),
             distribution_rights=rights_data.get('distribution_rights', False),
             public_performance_rights=rights_data.get('public_performance_rights', False),
@@ -876,8 +843,7 @@ class LicenseAgreementService:
         )
     
     def _assess_complexity(self, agreement_data: Dict[str, Any]) -> int:
-        """Assess agreement complexity for AI processing"""
-        complexity_score = 1
+        """Assess agreement complexity for AI processing"""        complexity_score = 1
         
         # Multiple parties increase complexity
         if len(agreement_data.get('additional_parties', [])) > 0:
@@ -898,8 +864,7 @@ class LicenseAgreementService:
         return min(complexity_score, 5)
     
     async def _generate_contract_content(self, agreement: LicenseAgreement, agreement_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate contract content using AI"""
-        contract_data = {
+        """Generate contract content using AI"""        contract_data = {
             'agreement': agreement,
             'template_preferences': agreement_data.get('template_preferences', {}),
             'custom_clauses': agreement_data.get('custom_clauses', []),
@@ -910,8 +875,7 @@ class LicenseAgreementService:
         return await self.contract_generator.generate_contract(contract_data)
     
     async def _create_contract_clauses(self, agreement: LicenseAgreement, clauses_data: List[Dict[str, Any]]):
-        """Create individual contract clauses"""
-        for clause_data in clauses_data:
+        """Create individual contract clauses"""        for clause_data in clauses_data:
             clause = ContractClause(
                 agreement_id=agreement.id,
                 clause_id=clause_data['clause_id'],
@@ -929,24 +893,20 @@ class LicenseAgreementService:
         self.db.commit()
     
     def _calculate_contract_hash(self, contract_content: str) -> str:
-        """Calculate SHA-256 hash of contract content"""
-        return hashlib.sha256(contract_content.encode('utf-8')).hexdigest()
+        """Calculate SHA-256 hash of contract content"""        return hashlib.sha256(contract_content.encode('utf-8')).hexdigest()
     
     def _generate_agreement_number(self) -> str:
-        """Generate unique agreement number"""
-        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+        """Generate unique agreement number"""        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
         random_suffix = str(uuid4())[:8].upper()
         return f"LA-{timestamp}-{random_suffix}"
     
     def _generate_validation_id(self) -> str:
-        """Generate unique validation ID"""
-        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+        """Generate unique validation ID"""        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
         random_suffix = str(uuid4())[:6].upper()
         return f"VAL-{timestamp}-{random_suffix}"
     
     def _generate_amendment_number(self, base_agreement_number: str) -> str:
-        """Generate amendment number based on agreement number"""
-        # Count existing amendments
+        """Generate amendment number based on agreement number"""        # Count existing amendments
         amendment_count = self.db.query(AgreementAmendment).join(LicenseAgreement).filter(
             LicenseAgreement.agreement_number == base_agreement_number
         ).count()
@@ -954,19 +914,16 @@ class LicenseAgreementService:
         return f"{base_agreement_number}-AMD-{amendment_count + 1:03d}"
     
     async def _initiate_validation_process(self, agreement: LicenseAgreement):
-        """Start automated validation process"""
-        try:
+        """Start automated validation process"""        try:
             await self.validate_agreement(str(agreement.id), "comprehensive")
         except Exception as e:
             logger.error(f"Validation process failed for agreement {agreement.agreement_number}: {e}")
     
     async def _check_compliance_requirements(self, agreement: LicenseAgreement) -> Dict[str, Any]:
-        """Check agreement against compliance requirements"""
-        return await self.legal_service.check_agreement_compliance(agreement)
+        """Check agreement against compliance requirements"""        return await self.legal_service.check_agreement_compliance(agreement)
     
     async def _validate_contract_clauses(self, agreement: LicenseAgreement) -> Dict[str, Any]:
-        """Validate individual contract clauses"""
-        clauses = self.db.query(ContractClause).filter(
+        """Validate individual contract clauses"""        clauses = self.db.query(ContractClause).filter(
             ContractClause.agreement_id == agreement.id
         ).all()
         
@@ -983,13 +940,11 @@ class LicenseAgreementService:
         }
     
     async def _assess_agreement_risks(self, agreement: LicenseAgreement) -> Dict[str, Any]:
-        """Assess legal and business risks"""
-        return await self.legal_analyzer.assess_risks(agreement)
+        """Assess legal and business risks"""        return await self.legal_analyzer.assess_risks(agreement)
     
     def _calculate_validation_score(self, legal_analysis: Dict, compliance_check: Dict, 
                                    clause_validation: Dict, risk_assessment: Dict) -> Decimal:
-        """Calculate overall validation score"""
-        legal_score = legal_analysis.get('score', 0.5)
+        """Calculate overall validation score"""        legal_score = legal_analysis.get('score', 0.5)
         compliance_score = 1.0 if compliance_check.get('compliant', False) else 0.3
         clause_score = 1.0 if clause_validation.get('overall_valid', False) else 0.5
         risk_score = 1.0 - risk_assessment.get('overall_risk_score', 0.5)
@@ -998,8 +953,7 @@ class LicenseAgreementService:
         return Decimal(str(round(overall_score, 2)))
     
     async def _activate_agreement(self, agreement: LicenseAgreement):
-        """Activate agreement and set up monitoring"""
-        agreement.status = LicenseStatus.ACTIVE.value
+        """Activate agreement and set up monitoring"""        agreement.status = LicenseStatus.ACTIVE.value
         
         # Set up performance monitoring if required
         if agreement.compliance_monitoring:
@@ -1010,18 +964,15 @@ class LicenseAgreementService:
             await self._record_agreement_on_blockchain(agreement)
     
     async def _setup_compliance_monitoring(self, agreement: LicenseAgreement):
-        """Set up automated compliance monitoring"""
-        # Implementation would set up monitoring tasks
+        """Set up automated compliance monitoring"""        # Implementation would set up monitoring tasks
         pass
     
     async def _record_agreement_on_blockchain(self, agreement: LicenseAgreement):
-        """Record agreement execution on blockchain"""
-        # Implementation would integrate with blockchain service
+        """Record agreement execution on blockchain"""        # Implementation would integrate with blockchain service
         pass
     
     async def _notify_amendment_parties(self, amendment: AgreementAmendment):
-        """Notify all parties about proposed amendment"""
-        # Implementation would send notifications
+        """Notify all parties about proposed amendment"""        # Implementation would send notifications
         pass
 
 # Export all models and services
@@ -1038,8 +989,7 @@ __all__ = [
     DISPUTED = "disputed"
 
 class TerritoryScope(Enum):
-    """Portée territoriale des licences"""
-    WORLDWIDE = "worldwide"
+    """Portée territoriale des licences"""    WORLDWIDE = "worldwide"
     NORTH_AMERICA = "north_america"
     EUROPE = "europe"
     ASIA_PACIFIC = "asia_pacific"
@@ -1048,8 +998,7 @@ class TerritoryScope(Enum):
 
 @dataclass
 class LicenseTerms:
-    """Structure des termes de licence"""
-    duration_months: int
+    """Structure des termes de licence"""    duration_months: int
     territory_scope: TerritoryScope
     usage_rights: List[str]
     restrictions: List[str]
@@ -1063,11 +1012,9 @@ class LicenseTerms:
     sublicensing_allowed: bool = False
 
 class LicenseAgreement(BaseModel):
-    """
-    Modèle de base de données pour les accords de licence.
+    """    Modèle de base de données pour les accords de licence.
     Gère tous les aspects légaux et commerciaux des licences.
-    """
-    __tablename__ = "license_agreements"
+    """    __tablename__ = "license_agreements"
 
     # Identifiants
     id = Column(Integer, primary_key=True, index=True)
@@ -1128,8 +1075,7 @@ class LicenseAgreement(BaseModel):
             self.agreement_id = f"LIC-{uuid.uuid4().hex[:8].upper()}"
 
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit l'accord en dictionnaire"""
-        data = {
+        """Convertit l'accord en dictionnaire"""        data = {
             "id": self.id,
             "agreement_id": self.agreement_id,
             "license_type": self.license_type,
@@ -1149,12 +1095,10 @@ class LicenseAgreement(BaseModel):
         return data
 
     def is_fully_signed(self) -> bool:
-        """Vérifie si l'accord est entièrement signé"""
-        return self.signed_by_licensor and self.signed_by_licensee
+        """Vérifie si l'accord est entièrement signé"""        return self.signed_by_licensor and self.signed_by_licensee
 
     def is_active(self) -> bool:
-        """Vérifie si l'accord est actuellement actif"""
-        now = datetime.utcnow()
+        """Vérifie si l'accord est actuellement actif"""        now = datetime.utcnow()
         return (
             self.status == LicenseStatus.ACTIVE.value and
             self.effective_date <= now and
@@ -1163,21 +1107,18 @@ class LicenseAgreement(BaseModel):
         )
 
     def is_expired(self) -> bool:
-        """Vérifie si l'accord a expiré"""
-        if not self.expiration_date:
+        """Vérifie si l'accord a expiré"""        if not self.expiration_date:
             return False
         return datetime.utcnow() > self.expiration_date
 
     def days_until_expiration(self) -> Optional[int]:
-        """Retourne le nombre de jours avant expiration"""
-        if not self.expiration_date:
+        """Retourne le nombre de jours avant expiration"""        if not self.expiration_date:
             return None
         delta = self.expiration_date - datetime.utcnow()
         return max(0, delta.days)
 
     def can_auto_renew(self) -> bool:
-        """Vérifie si l'accord peut être renouvelé automatiquement"""
-        return (
+        """Vérifie si l'accord peut être renouvelé automatiquement"""        return (
             self.auto_renewal and
             self.is_active() and
             self.days_until_expiration() is not None and
@@ -1185,8 +1126,7 @@ class LicenseAgreement(BaseModel):
         )
 
     def calculate_revenue_share(self, gross_revenue: Decimal) -> Decimal:
-        """Calcule la part de revenus selon les termes de la licence"""
-        if not self.terms or not isinstance(self.terms, dict):
+        """Calcule la part de revenus selon les termes de la licence"""        if not self.terms or not isinstance(self.terms, dict):
             return Decimal('0')
         
         revenue_share_pct = self.terms.get('revenue_share_percentage', 0)
@@ -1199,12 +1139,9 @@ class LicenseAgreement(BaseModel):
         return Decimal('0')
 
 class LicenseAgreementManager:
-    """
-    Gestionnaire pour les opérations sur les accords de licence.
+    """    Gestionnaire pour les opérations sur les accords de licence.
     Fournit une interface haut niveau pour la gestion des licences.
-    """
-
-    def __init__(self, db_session: Session):
+    """    def __init__(self, db_session: Session):
         self.db = db_session
         self.logger = logging.getLogger(__name__)
 
@@ -1219,8 +1156,7 @@ class LicenseAgreementManager:
         description: Optional[str] = None,
         custom_clauses: Optional[Dict] = None
     ) -> LicenseAgreement:
-        """Crée un nouvel accord de licence"""
-        
+        """Crée un nouvel accord de licence"""        
         try:
             # Validation des données
             self._validate_agreement_data(licensor_id, licensee_id, content_id)
@@ -1257,8 +1193,7 @@ class LicenseAgreementManager:
             raise
 
     def get_agreement_by_id(self, agreement_id: str) -> Optional[LicenseAgreement]:
-        """Récupère un accord par son ID"""
-        return self.db.query(LicenseAgreement).filter(
+        """Récupère un accord par son ID"""        return self.db.query(LicenseAgreement).filter(
             LicenseAgreement.agreement_id == agreement_id
         ).first()
 
@@ -1268,8 +1203,7 @@ class LicenseAgreementManager:
         as_licensor: bool = True,
         status: Optional[LicenseStatus] = None
     ) -> List[LicenseAgreement]:
-        """Récupère les accords d'un utilisateur"""
-        
+        """Récupère les accords d'un utilisateur"""        
         query = self.db.query(LicenseAgreement)
         
         if as_licensor:
@@ -1288,8 +1222,7 @@ class LicenseAgreementManager:
         user_id: int,
         digital_signature: str
     ) -> bool:
-        """Signe un accord de licence"""
-        
+        """Signe un accord de licence"""        
         try:
             agreement = self.get_agreement_by_id(agreement_id)
             if not agreement:
@@ -1325,8 +1258,7 @@ class LicenseAgreementManager:
         reason: str,
         terminating_user_id: int
     ) -> bool:
-        """Termine un accord de licence"""
-        
+        """Termine un accord de licence"""        
         try:
             agreement = self.get_agreement_by_id(agreement_id)
             if not agreement:
@@ -1349,8 +1281,7 @@ class LicenseAgreementManager:
             raise
 
     def check_expiring_agreements(self, days_ahead: int = 30) -> List[LicenseAgreement]:
-        """Trouve les accords qui expirent bientôt"""
-        
+        """Trouve les accords qui expirent bientôt"""        
         cutoff_date = datetime.utcnow() + timedelta(days=days_ahead)
         
         return self.db.query(LicenseAgreement).filter(
@@ -1360,8 +1291,7 @@ class LicenseAgreementManager:
         ).all()
 
     def auto_renew_agreements(self) -> List[str]:
-        """Renouvelle automatiquement les accords éligibles"""
-        
+        """Renouvelle automatiquement les accords éligibles"""        
         renewed_agreements = []
         expiring_agreements = self.check_expiring_agreements(30)
         
@@ -1385,8 +1315,7 @@ class LicenseAgreementManager:
         return renewed_agreements
 
     def _validate_agreement_data(self, licensor_id: int, licensee_id: int, content_id: int):
-        """Valide les données avant création d'accord"""
-        
+        """Valide les données avant création d'accord"""        
         if licensor_id == licensee_id:
             raise ValueError("Le concédant et le licencié ne peuvent pas être la même personne")
         
@@ -1401,8 +1330,7 @@ class LicenseAgreementManager:
             raise ValueError("Le concédant ne possède pas ce contenu")
 
     def generate_license_report(self, user_id: int) -> Dict[str, Any]:
-        """Génère un rapport complet des licences pour un utilisateur"""
-        
+        """Génère un rapport complet des licences pour un utilisateur"""        
         granted_licenses = self.get_user_agreements(user_id, as_licensor=True)
         acquired_licenses = self.get_user_agreements(user_id, as_licensor=False)
         

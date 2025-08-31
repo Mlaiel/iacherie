@@ -1,5 +1,4 @@
-"""
-GDPR Data Breach Detector - Advanced Data Breach Detection and Response System
+"""GDPR Data Breach Detector - Advanced Data Breach Detection and Response System
 Real-time monitoring and automated response for data security incidents
 
 Project: IA-Influencer Agent
@@ -8,9 +7,7 @@ Email: mlaiel@live.de
 Company: Ultra-Industrial AI Solutions
 
 ⚠️ COPYRIGHT PROTECTION - FAHED MLAIEL ⚠️
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import hashlib
@@ -43,37 +40,32 @@ logger = get_logger(__name__)
 settings = get_settings()
 
 class BreachSeverity(Enum):
-    """Data breach severity levels"""
-    LOW = "low"
+    """Data breach severity levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 class BreachCategory(Enum):
-    """Categories of data breaches"""
-    CONFIDENTIALITY = "confidentiality"  # Unauthorized access
+    """Categories of data breaches"""    CONFIDENTIALITY = "confidentiality"  # Unauthorized access
     INTEGRITY = "integrity"              # Data modification
     AVAILABILITY = "availability"        # Data loss/unavailability
 
 class BreachStatus(Enum):
-    """Status of breach investigation"""
-    DETECTED = "detected"
+    """Status of breach investigation"""    DETECTED = "detected"
     INVESTIGATING = "investigating"
     CONTAINED = "contained"
     RESOLVED = "resolved"
     REPORTED = "reported"
 
 class NotificationTarget(Enum):
-    """Notification targets for breaches"""
-    SUPERVISORY_AUTHORITY = "supervisory_authority"
+    """Notification targets for breaches"""    SUPERVISORY_AUTHORITY = "supervisory_authority"
     DATA_SUBJECTS = "data_subjects"
     INTERNAL_TEAM = "internal_team"
     EXTERNAL_PARTNERS = "external_partners"
 
 @dataclass
 class BreachMetrics:
-    """Metrics for breach detection and response"""
-    total_breaches: int
+    """Metrics for breach detection and response"""    total_breaches: int
     active_breaches: int
     resolved_breaches: int
     critical_breaches: int
@@ -85,8 +77,7 @@ class BreachMetrics:
 
 @dataclass
 class BreachAlert:
-    """Data breach alert structure"""
-    alert_id: str
+    """Data breach alert structure"""    alert_id: str
     breach_type: str
     severity: BreachSeverity
     affected_systems: List[str]
@@ -97,11 +88,9 @@ class BreachAlert:
     automated_containment_possible: bool
 
 class BreachDetector:
-    """
-    Advanced Data Breach Detection System
+    """    Advanced Data Breach Detection System
     Real-time monitoring, detection, and automated response for GDPR compliance
-    """
-    
+    """    
     def __init__(self):
         # Detection thresholds and patterns
         self._detection_patterns = self._initialize_detection_patterns()
@@ -137,8 +126,7 @@ class BreachDetector:
         logger.info("GDPR Breach Detector initialized with real-time monitoring")
     
     def _initialize_detection_patterns(self) -> Dict[str, Any]:
-        """Initialize breach detection patterns and signatures"""
-        return {
+        """Initialize breach detection patterns and signatures"""        return {
             "unauthorized_access": {
                 "failed_login_threshold": 10,
                 "time_window_minutes": 15,
@@ -184,8 +172,7 @@ class BreachDetector:
         }
     
     def _initialize_severity_criteria(self) -> Dict[str, Any]:
-        """Initialize severity assessment criteria"""
-        return {
+        """Initialize severity assessment criteria"""        return {
             BreachSeverity.CRITICAL: {
                 "data_subjects_affected": 10000,
                 "sensitive_data_types": [
@@ -228,8 +215,7 @@ class BreachDetector:
         }
     
     def _initialize_containment_procedures(self) -> Dict[str, List[str]]:
-        """Initialize automated containment procedures"""
-        return {
+        """Initialize automated containment procedures"""        return {
             "immediate_actions": [
                 "isolate_affected_systems",
                 "preserve_evidence",
@@ -260,8 +246,7 @@ class BreachDetector:
         self, 
         security_event: Dict[str, Any]
     ) -> Optional[BreachAlert]:
-        """Detect potential data breaches from security events"""
-        try:
+        """Detect potential data breaches from security events"""        try:
             # Analyze security event
             breach_indicators = await self._analyze_security_event(security_event)
             
@@ -305,8 +290,7 @@ class BreachDetector:
         alert: BreachAlert,
         investigation_details: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Investigate potential data breach"""
-        try:
+        """Investigate potential data breach"""        try:
             investigation_id = str(uuid.uuid4())
             
             # Create breach record
@@ -379,8 +363,7 @@ class BreachDetector:
         breach_id: str,
         containment_strategy: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Implement breach containment measures"""
-        try:
+        """Implement breach containment measures"""        try:
             # Get breach record
             async with get_db() as db:
                 breach_query = await db.execute(
@@ -444,8 +427,7 @@ class BreachDetector:
         breach_id: str,
         notification_targets: List[NotificationTarget] = None
     ) -> Dict[str, Any]:
-        """Handle GDPR-compliant breach notifications"""
-        try:
+        """Handle GDPR-compliant breach notifications"""        try:
             # Get breach record
             async with get_db() as db:
                 breach_query = await db.execute(
@@ -523,8 +505,7 @@ class BreachDetector:
         self, 
         breach_id: str
     ) -> Dict[str, Any]:
-        """Monitor breach resolution and recovery"""
-        try:
+        """Monitor breach resolution and recovery"""        try:
             # Get breach record
             async with get_db() as db:
                 breach_query = await db.execute(
@@ -568,8 +549,7 @@ class BreachDetector:
             raise HTTPException(status_code=500, detail=f"Resolution monitoring failed: {str(e)}")
     
     async def get_breach_metrics(self, time_period_days: int = 30) -> BreachMetrics:
-        """Get comprehensive breach detection and response metrics"""
-        try:
+        """Get comprehensive breach detection and response metrics"""        try:
             start_date = datetime.utcnow() - timedelta(days=time_period_days)
             
             async with get_db() as db:
@@ -640,8 +620,7 @@ class BreachDetector:
     # Helper methods for breach detection and analysis
     
     async def _analyze_security_event(self, security_event: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze security event for breach indicators"""
-        event_type = security_event.get("event_type", "unknown")
+        """Analyze security event for breach indicators"""        event_type = security_event.get("event_type", "unknown")
         event_data = security_event.get("event_data", {})
         
         breach_indicators = {
@@ -684,8 +663,7 @@ class BreachDetector:
         return breach_indicators
     
     async def _assess_breach_severity(self, breach_details: Dict[str, Any]) -> BreachSeverity:
-        """Assess severity of potential data breach"""
-        affected_subjects = breach_details.get("affected_subjects_count", 0)
+        """Assess severity of potential data breach"""        affected_subjects = breach_details.get("affected_subjects_count", 0)
         data_types = breach_details.get("affected_data_types", [])
         public_exposure = breach_details.get("public_exposure", False)
         
@@ -708,8 +686,7 @@ class BreachDetector:
             return BreachSeverity.LOW
     
     async def _assess_breach_impact(self, breach_details: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess impact of data breach"""
-        return {
+        """Assess impact of data breach"""        return {
             "affected_systems": breach_details.get("affected_systems", ["unknown"]),
             "affected_data_types": breach_details.get("affected_data_types", ["personal_data"]),
             "estimated_impact": {
@@ -722,8 +699,7 @@ class BreachDetector:
         }
     
     async def _can_auto_contain(self, breach_indicators: Dict[str, Any]) -> bool:
-        """Check if breach can be automatically contained"""
-        breach_type = breach_indicators.get("breach_type")
+        """Check if breach can be automatically contained"""        breach_type = breach_indicators.get("breach_type")
         confidence_score = breach_indicators.get("confidence_score", 0.0)
         
         # Auto-containment criteria
@@ -739,8 +715,7 @@ class BreachDetector:
         alert: BreachAlert,
         investigation_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Perform detailed breach investigation"""
-        investigation_results = {
+        """Perform detailed breach investigation"""        investigation_results = {
             "confirmed_breach": True,  # Simplified for demo
             "breach_scope": {
                 "affected_subjects_count": alert.estimated_impact.get("data_subjects_affected", 0),
@@ -769,8 +744,7 @@ class BreachDetector:
         alert: BreachAlert,
         investigation_results: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Assess GDPR implications of data breach"""
-        affected_count = investigation_results["breach_scope"]["affected_subjects_count"]
+        """Assess GDPR implications of data breach"""        affected_count = investigation_results["breach_scope"]["affected_subjects_count"]
         
         # GDPR notification requirements
         requires_authority_notification = (
@@ -799,8 +773,7 @@ class BreachDetector:
         investigation_results: Dict[str, Any],
         gdpr_assessment: Dict[str, Any]
     ) -> List[str]:
-        """Determine next actions based on investigation"""
-        actions = []
+        """Determine next actions based on investigation"""        actions = []
         
         if gdpr_assessment.get("requires_notification"):
             actions.append("prepare_regulatory_notifications")
@@ -818,18 +791,15 @@ class BreachDetector:
         return actions
     
     async def _check_unauthorized_access_pattern(self, event_data: Dict[str, Any]) -> bool:
-        """Check for unauthorized access patterns"""
-        failed_attempts = event_data.get("failed_login_attempts", 0)
+        """Check for unauthorized access patterns"""        failed_attempts = event_data.get("failed_login_attempts", 0)
         return failed_attempts >= self._detection_patterns["unauthorized_access"]["failed_login_threshold"]
     
     async def _check_data_exfiltration_pattern(self, event_data: Dict[str, Any]) -> bool:
-        """Check for data exfiltration patterns"""
-        data_volume = event_data.get("data_volume_mb", 0)
+        """Check for data exfiltration patterns"""        data_volume = event_data.get("data_volume_mb", 0)
         return data_volume >= self._detection_patterns["data_exfiltration"]["large_download_threshold_mb"]
     
     async def _check_unauthorized_modification_pattern(self, event_data: Dict[str, Any]) -> bool:
-        """Check for unauthorized modification patterns"""
-        modified_records = event_data.get("modified_records_count", 0)
+        """Check for unauthorized modification patterns"""        modified_records = event_data.get("modified_records_count", 0)
         return modified_records >= self._detection_patterns["data_modification"]["bulk_changes_threshold"]
     
     async def _determine_containment_actions(
@@ -837,8 +807,7 @@ class BreachDetector:
         breach_record: DataBreach,
         containment_strategy: Dict[str, Any]
     ) -> List[str]:
-        """Determine appropriate containment actions"""
-        actions = self._containment_procedures["immediate_actions"].copy()
+        """Determine appropriate containment actions"""        actions = self._containment_procedures["immediate_actions"].copy()
         
         if breach_record.severity in [BreachSeverity.HIGH.value, BreachSeverity.CRITICAL.value]:
             actions.extend(self._containment_procedures["containment_actions"])
@@ -850,8 +819,7 @@ class BreachDetector:
         action: str,
         breach_record: DataBreach
     ) -> Dict[str, Any]:
-        """Execute specific containment action"""
-        # Simplified implementation - in production would execute real containment
+        """Execute specific containment action"""        # Simplified implementation - in production would execute real containment
         return {
             "action": action,
             "status": "success",
@@ -863,8 +831,7 @@ class BreachDetector:
         self, 
         breach_record: DataBreach
     ) -> List[NotificationTarget]:
-        """Determine required notification targets"""
-        targets = [NotificationTarget.INTERNAL_TEAM]
+        """Determine required notification targets"""        targets = [NotificationTarget.INTERNAL_TEAM]
         
         # GDPR requirements
         if breach_record.gdpr_assessment.get("requires_authority_notification"):
@@ -884,8 +851,7 @@ class BreachDetector:
         breach_record: DataBreach,
         target: NotificationTarget
     ) -> Dict[str, Any]:
-        """Generate breach notification for specific target"""
-        notification_templates = {
+        """Generate breach notification for specific target"""        notification_templates = {
             NotificationTarget.SUPERVISORY_AUTHORITY: {
                 "method": "official_portal",
                 "content": {
@@ -924,8 +890,7 @@ class BreachDetector:
         }
     
     async def _check_resolution_status(self, breach_record: DataBreach) -> Dict[str, Any]:
-        """Check if breach is fully resolved"""
-        # Simplified resolution check
+        """Check if breach is fully resolved"""        # Simplified resolution check
         containment_complete = breach_record.status == BreachStatus.CONTAINED.value
         notifications_sent = bool(breach_record.notification_status)
         
@@ -948,8 +913,7 @@ class BreachDetector:
         }
     
     async def _generate_resolution_report(self, breach_record: DataBreach) -> Dict[str, Any]:
-        """Generate comprehensive breach resolution report"""
-        return {
+        """Generate comprehensive breach resolution report"""        return {
             "breach_summary": {
                 "breach_id": breach_record.breach_id,
                 "breach_type": breach_record.breach_type,
@@ -982,8 +946,7 @@ class BreachDetector:
         breaches: List[DataBreach],
         time_period_days: int
     ) -> List[Dict[str, Any]]:
-        """Generate monthly breach trend data"""
-        # Group breaches by month
+        """Generate monthly breach trend data"""        # Group breaches by month
         monthly_data = {}
         for breach in breaches:
             month_key = breach.detection_timestamp.strftime("%Y-%m")

@@ -1,5 +1,4 @@
-"""
-Advanced Content Manager - IA-Influencer-Agent
+"""Advanced Content Manager - IA-Influencer-Agent
 ================================================================================
 Module: backend/core/managers/content_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,9 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Upload créateur → Validation IA → Processing multi-format → 
 Optimisation automatique → Stockage sécurisé → Distribution CDN → Analytics performance
-"""
-
-from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set, IO
+"""from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set, IO
 import logging
 import asyncio
 from contextlib import asynccontextmanager
@@ -38,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Types de contenu supportés"""
-    AUDIO = "audio"
+    """Types de contenu supportés"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -52,8 +48,7 @@ class ContentType(Enum):
 
 
 class ContentFormat(Enum):
-    """Formats de fichiers supportés"""
-    # Audio formats
+    """Formats de fichiers supportés"""    # Audio formats
     MP3 = "mp3"
     WAV = "wav"
     FLAC = "flac"
@@ -83,8 +78,7 @@ class ContentFormat(Enum):
 
 
 class ContentStatus(Enum):
-    """Statuts du contenu"""
-    UPLOADED = "uploaded"
+    """Statuts du contenu"""    UPLOADED = "uploaded"
     PROCESSING = "processing"
     PROCESSED = "processed"
     OPTIMIZED = "optimized"
@@ -95,8 +89,7 @@ class ContentStatus(Enum):
 
 
 class ProcessingPriority(Enum):
-    """Priorités de traitement"""
-    LOW = "low"
+    """Priorités de traitement"""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
@@ -104,8 +97,7 @@ class ProcessingPriority(Enum):
 
 
 class QualityLevel(Enum):
-    """Niveaux de qualité"""
-    LOW = "low"
+    """Niveaux de qualité"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     ULTRA = "ultra"
@@ -114,8 +106,7 @@ class QualityLevel(Enum):
 
 @dataclass
 class ContentConfig:
-    """Configuration avancée du gestionnaire de contenu"""
-    # Upload settings
+    """Configuration avancée du gestionnaire de contenu"""    # Upload settings
     max_file_size_mb: int = 500
     allowed_formats: Set[ContentFormat] = field(
         default_factory=lambda: set(ContentFormat)
@@ -160,8 +151,7 @@ class ContentConfig:
 
 @dataclass
 class ContentMetadata:
-    """Métadonnées complètes du contenu"""
-    # Basic information
+    """Métadonnées complètes du contenu"""    # Basic information
     title: str
     description: str = ""
     tags: List[str] = field(default_factory=list)
@@ -203,8 +193,7 @@ class ContentMetadata:
 
 @dataclass
 class ContentItem:
-    """Item de contenu complet"""
-    id: str
+    """Item de contenu complet"""    id: str
     user_id: str
     
     # Content information
@@ -254,8 +243,7 @@ class ContentItem:
 
 @dataclass
 class ProcessingTask:
-    """Tâche de traitement de contenu"""
-    id: str
+    """Tâche de traitement de contenu"""    id: str
     content_id: str
     task_type: str  # enhance, convert, optimize, analyze
     priority: ProcessingPriority
@@ -286,8 +274,7 @@ class ProcessingTask:
 
 
 class ContentManager(ABC):
-    """
-    🎨 Advanced Multi-Format Content Manager - IA-Influencer-Agent
+    """    🎨 Advanced Multi-Format Content Manager - IA-Influencer-Agent
     
     Responsabilité:
     Gestionnaire industriel de contenu multi-format avec IA avancée
@@ -311,8 +298,7 @@ class ContentManager(ABC):
     - SEO optimization automatique
     - Content moderation IA
     - Watermarking et protection
-    """
-    
+    """    
     def __init__(self, config: ContentConfig = None):
         self.config = config or ContentConfig()
         self._content_items: Dict[str, ContentItem] = {}
@@ -347,13 +333,11 @@ class ContentManager(ABC):
     
     @abstractmethod
     async def initialize_pool(self) -> bool:
-        """
-        Initialize content management pool and storage connections
+        """        Initialize content management pool and storage connections
         
         Returns:
             bool: True if initialization successful
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def upload_content(
@@ -364,8 +348,7 @@ class ContentManager(ABC):
         content_type: ContentType,
         metadata: Optional[ContentMetadata] = None
     ) -> ContentItem:
-        """
-        Upload and process new content
+        """        Upload and process new content
         
         Args:
             user_id: User uploading content
@@ -376,8 +359,7 @@ class ContentManager(ABC):
             
         Returns:
             ContentItem: Created content item
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def process_content(
@@ -385,8 +367,7 @@ class ContentManager(ABC):
         content_id: str,
         processing_options: Dict[str, Any]
     ) -> ProcessingTask:
-        """
-        Process content with AI enhancement and optimization
+        """        Process content with AI enhancement and optimization
         
         Args:
             content_id: Content to process
@@ -394,8 +375,7 @@ class ContentManager(ABC):
             
         Returns:
             ProcessingTask: Created processing task
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def generate_variants(
@@ -404,8 +384,7 @@ class ContentManager(ABC):
         quality_levels: List[QualityLevel],
         formats: Optional[List[ContentFormat]] = None
     ) -> Dict[str, str]:
-        """
-        Generate quality variants and format conversions
+        """        Generate quality variants and format conversions
         
         Args:
             content_id: Content to generate variants for
@@ -414,8 +393,7 @@ class ContentManager(ABC):
             
         Returns:
             Dict: Variant URLs by quality/format
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def analyze_content_with_ai(
@@ -423,8 +401,7 @@ class ContentManager(ABC):
         content_id: str,
         analysis_types: List[str]
     ) -> Dict[str, Any]:
-        """
-        Analyze content using AI models
+        """        Analyze content using AI models
         
         Args:
             content_id: Content to analyze
@@ -432,8 +409,7 @@ class ContentManager(ABC):
             
         Returns:
             Dict: Analysis results
-        """
-        pass
+        """        pass
     
     async def create_content_item(
         self,
@@ -443,8 +419,7 @@ class ContentManager(ABC):
         file_size: int,
         metadata: Optional[ContentMetadata] = None
     ) -> ContentItem:
-        """
-        Create new content item entry
+        """        Create new content item entry
         
         Args:
             user_id: User creating content
@@ -455,8 +430,7 @@ class ContentManager(ABC):
             
         Returns:
             ContentItem: Created content item
-        """
-        try:
+        """        try:
             # Determine format from filename
             file_extension = Path(filename).suffix.lower().lstrip('.')
             content_format = self._get_format_from_extension(file_extension)
@@ -507,8 +481,7 @@ class ContentManager(ABC):
         content_type: Optional[ContentType] = None,
         time_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive content analytics
+        """        Get comprehensive content analytics
         
         Args:
             user_id: Optional user filter
@@ -517,8 +490,7 @@ class ContentManager(ABC):
             
         Returns:
             Dict: Complete content analytics
-        """
-        with self._lock:
+        """        with self._lock:
             # Filter content items
             content_items = list(self._content_items.values())
             
@@ -628,8 +600,7 @@ class ContentManager(ABC):
         platform: str,
         optimization_options: Dict[str, Any] = None
     ) -> ContentItem:
-        """
-        Optimize content for specific platform requirements
+        """        Optimize content for specific platform requirements
         
         Args:
             content_id: Content to optimize
@@ -638,8 +609,7 @@ class ContentManager(ABC):
             
         Returns:
             ContentItem: Optimized content item
-        """
-        try:
+        """        try:
             content_item = self._content_items.get(content_id)
             if not content_item:
                 raise ValueError(f"Content not found: {content_id}")
@@ -680,8 +650,7 @@ class ContentManager(ABC):
         limit: int = 50,
         offset: int = 0
     ) -> List[ContentItem]:
-        """
-        Search content with filters and text search
+        """        Search content with filters and text search
         
         Args:
             user_id: Optional user filter
@@ -693,8 +662,7 @@ class ContentManager(ABC):
             
         Returns:
             List[ContentItem]: Matching content items
-        """
-        with self._lock:
+        """        with self._lock:
             content_items = list(self._content_items.values())
             
             # Apply filters
@@ -727,8 +695,7 @@ class ContentManager(ABC):
             return content_items[offset:offset + limit]
     
     async def _get_format_from_extension(self, extension: str) -> ContentFormat:
-        """Get content format from file extension"""
-        format_mapping = {
+        """Get content format from file extension"""        format_mapping = {
             "mp3": ContentFormat.MP3,
             "wav": ContentFormat.WAV,
             "flac": ContentFormat.FLAC,
@@ -755,8 +722,7 @@ class ContentManager(ABC):
         return format_mapping.get(extension, ContentFormat.TXT)  # Default fallback
     
     async def _get_platform_specifications(self, platform: str) -> Dict[str, Any]:
-        """Get platform-specific content specifications"""
-        platform_specs = {
+        """Get platform-specific content specifications"""        platform_specs = {
             "youtube": {
                 "video": {
                     "max_resolution": "4K",
@@ -790,8 +756,7 @@ class ContentManager(ABC):
         return platform_specs.get(platform, {})
     
     async def _start_processing_workers(self) -> None:
-        """Start background processing workers"""
-        if self._processing_active:
+        """Start background processing workers"""        if self._processing_active:
             return
         
         self._processing_active = True
@@ -803,8 +768,7 @@ class ContentManager(ABC):
         logger.info(f"🎨 Started {self.config.processing_workers} processing workers")
     
     async def _processing_worker(self, worker_id: int) -> None:
-        """Background worker for content processing"""
-        while self._processing_active:
+        """Background worker for content processing"""        while self._processing_active:
             try:
                 # Get next processing task
                 task = await asyncio.wait_for(
@@ -825,8 +789,7 @@ class ContentManager(ABC):
                 await asyncio.sleep(1)
     
     async def _execute_processing_task(self, task: ProcessingTask) -> None:
-        """Execute a content processing task"""
-        try:
+        """Execute a content processing task"""        try:
             task.status = "running"
             task.started_at = datetime.utcnow()
             
@@ -865,44 +828,38 @@ class ContentManager(ABC):
                 await self._processing_queue.put(task)
     
     async def _enhance_content(self, task: ProcessingTask) -> None:
-        """Enhance content using AI"""
-        # Placeholder for AI enhancement implementation
+        """Enhance content using AI"""        # Placeholder for AI enhancement implementation
         task.progress_percent = 50.0
         await asyncio.sleep(1)  # Simulate processing
         task.result_metadata["enhanced"] = True
     
     async def _convert_content(self, task: ProcessingTask) -> None:
-        """Convert content format"""
-        # Placeholder for format conversion implementation
+        """Convert content format"""        # Placeholder for format conversion implementation
         task.progress_percent = 50.0
         await asyncio.sleep(1)  # Simulate processing
         task.result_metadata["converted"] = True
     
     async def _optimize_content(self, task: ProcessingTask) -> None:
-        """Optimize content quality and size"""
-        # Placeholder for optimization implementation
+        """Optimize content quality and size"""        # Placeholder for optimization implementation
         task.progress_percent = 50.0
         await asyncio.sleep(1)  # Simulate processing
         task.result_metadata["optimized"] = True
     
     async def _analyze_content(self, task: ProcessingTask) -> None:
-        """Analyze content with AI"""
-        # Placeholder for AI analysis implementation
+        """Analyze content with AI"""        # Placeholder for AI analysis implementation
         task.progress_percent = 50.0
         await asyncio.sleep(1)  # Simulate processing
         task.result_metadata["analyzed"] = True
     
     async def _optimize_for_platform(self, task: ProcessingTask) -> None:
-        """Optimize content for specific platform"""
-        # Placeholder for platform optimization implementation
+        """Optimize content for specific platform"""        # Placeholder for platform optimization implementation
         task.progress_percent = 50.0
         await asyncio.sleep(1)  # Simulate processing
         task.result_metadata["platform_optimized"] = True
     
     @asynccontextmanager
     async def get_content_session(self):
-        """Context manager for content operations"""
-        session_id = str(uuid.uuid4())
+        """Context manager for content operations"""        session_id = str(uuid.uuid4())
         try:
             logger.info(f"🎨 Content session started: {session_id}")
             yield session_id
@@ -910,8 +867,7 @@ class ContentManager(ABC):
             logger.info(f"🎨 Content session ended: {session_id}")
     
     async def cleanup(self) -> bool:
-        """Cleanup content management resources"""
-        try:
+        """Cleanup content management resources"""        try:
             # Stop processing workers
             self._processing_active = False
             
@@ -947,8 +903,7 @@ class ContentManager(ABC):
             return False
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get content management statistics"""
-        with self._lock:
+        """Get content management statistics"""        with self._lock:
             return {
                 "content_items_count": len(self._content_items),
                 "processing_queue_size": self._processing_queue.qsize(),
@@ -977,13 +932,11 @@ content_manager = None
 
 
 def get_content_manager() -> ContentManager:
-    """
-    Get the global content manager instance
+    """    Get the global content manager instance
     
     Returns:
         ContentManager: Global content manager
-    """
-    global content_manager
+    """    global content_manager
     if content_manager is None:
         from ..implementations.content_manager_impl import ContentManagerImpl
         content_manager = ContentManagerImpl()

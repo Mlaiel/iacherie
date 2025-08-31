@@ -1,5 +1,4 @@
-"""
-IA-Influencer Agent - Workflow Template Manager
+"""IA-Influencer Agent - Workflow Template Manager
 
 Enterprise-grade workflow template management system for content creators.
 Provides pre-built, customizable workflow templates for common use cases.
@@ -21,9 +20,7 @@ Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import json
+"""import json
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -40,8 +37,7 @@ from ..base import BaseAgent
 
 
 class TemplateType(Enum):
-    """Template type enumeration."""
-    CONTENT_CREATION = "content_creation"
+    """Template type enumeration."""    CONTENT_CREATION = "content_creation"
     CONTENT_PROTECTION = "content_protection"
     SOCIAL_MEDIA_PUBLISHING = "social_media_publishing"
     MUSIC_PRODUCTION = "music_production"
@@ -56,8 +52,7 @@ class TemplateType(Enum):
 
 
 class TemplateCategory(Enum):
-    """Template category enumeration."""
-    MUSICIAN = "musician"
+    """Template category enumeration."""    MUSICIAN = "musician"
     PODCASTER = "podcaster"
     PHOTOGRAPHER = "photographer"
     VIDEOGRAPHER = "videographer"
@@ -71,8 +66,7 @@ class TemplateCategory(Enum):
 
 @dataclass
 class TemplateMetadata:
-    """Template metadata information."""
-    id: str
+    """Template metadata information."""    id: str
     name: str
     description: str
     version: str
@@ -92,8 +86,7 @@ class TemplateMetadata:
 
 @dataclass
 class WorkflowTemplate:
-    """Complete workflow template definition."""
-    metadata: TemplateMetadata
+    """Complete workflow template definition."""    metadata: TemplateMetadata
     workflow_definition: Dict[str, Any]
     parameters: Dict[str, Any]
     validation_schema: Dict[str, Any]
@@ -104,8 +97,7 @@ class WorkflowTemplate:
 
 @dataclass
 class TemplateInstance:
-    """Template instance with user customizations."""
-    id: str
+    """Template instance with user customizations."""    id: str
     template_id: str
     user_id: str
     name: str
@@ -116,16 +108,12 @@ class TemplateInstance:
 
 
 class WorkflowTemplateManager(BaseAgent):
-    """
-    Advanced workflow template manager for content creator workflows.
+    """    Advanced workflow template manager for content creator workflows.
     
     This manager provides comprehensive template management including
     creation, customization, versioning, and optimization capabilities.
-    """
-
-    def __init__(self, template_directory: Optional[str] = None):
-        """Initialize the template manager."""
-        super().__init__()
+    """    def __init__(self, template_directory: Optional[str] = None):
+        """Initialize the template manager."""        super().__init__()
         self.logger = logging.getLogger(__name__)
         
         # Template storage
@@ -164,8 +152,7 @@ class WorkflowTemplateManager(BaseAgent):
         author: str = "System",
         **kwargs
     ) -> str:
-        """
-        Create a new workflow template.
+        """        Create a new workflow template.
         
         Args:
             name: Template name
@@ -178,8 +165,7 @@ class WorkflowTemplateManager(BaseAgent):
             
         Returns:
             str: Template ID
-        """
-        try:
+        """        try:
             template_id = str(uuid.uuid4())
             
             # Create metadata
@@ -237,8 +223,7 @@ class WorkflowTemplateManager(BaseAgent):
             raise
 
     async def get_template(self, template_id: str) -> Optional[WorkflowTemplate]:
-        """Get template by ID."""
-        try:
+        """Get template by ID."""        try:
             if template_id in self.templates:
                 return self.templates[template_id]
             
@@ -262,8 +247,7 @@ class WorkflowTemplateManager(BaseAgent):
         complexity_level: Optional[str] = None,
         query: Optional[str] = None
     ) -> List[Dict[str, Any]]:
-        """
-        Search templates based on criteria.
+        """        Search templates based on criteria.
         
         Args:
             category: Template category filter
@@ -274,8 +258,7 @@ class WorkflowTemplateManager(BaseAgent):
             
         Returns:
             List of matching template metadata
-        """
-        try:
+        """        try:
             matching_templates = []
             
             for template in self.templates.values():
@@ -338,8 +321,7 @@ class WorkflowTemplateManager(BaseAgent):
         instance_name: str,
         customizations: Dict[str, Any] = None
     ) -> str:
-        """
-        Create an instance of a template with user customizations.
+        """        Create an instance of a template with user customizations.
         
         Args:
             template_id: Template ID to instantiate
@@ -349,8 +331,7 @@ class WorkflowTemplateManager(BaseAgent):
             
         Returns:
             str: Instance ID
-        """
-        try:
+        """        try:
             # Get template
             template = await self.get_template(template_id)
             if not template:
@@ -398,8 +379,7 @@ class WorkflowTemplateManager(BaseAgent):
         template_id: str,
         customizations: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Apply customizations to a template and return the customized workflow.
+        """        Apply customizations to a template and return the customized workflow.
         
         Args:
             template_id: Template ID
@@ -407,8 +387,7 @@ class WorkflowTemplateManager(BaseAgent):
             
         Returns:
             Dict containing customized workflow definition
-        """
-        try:
+        """        try:
             # Get template
             template = await self.get_template(template_id)
             if not template:
@@ -441,8 +420,7 @@ class WorkflowTemplateManager(BaseAgent):
         user_id: str,
         user_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """
-        Get template recommendations for a user based on their profile and usage history.
+        """        Get template recommendations for a user based on their profile and usage history.
         
         Args:
             user_id: User ID
@@ -450,8 +428,7 @@ class WorkflowTemplateManager(BaseAgent):
             
         Returns:
             List of recommended templates
-        """
-        try:
+        """        try:
             recommendations = []
             
             # Get user's previous template instances
@@ -518,8 +495,7 @@ class WorkflowTemplateManager(BaseAgent):
             return []
 
     def _initialize_builtin_templates(self):
-        """Initialize built-in workflow templates."""
-        try:
+        """Initialize built-in workflow templates."""        try:
             builtin_templates = [
                 {
                     'name': 'Music Release Workflow',
@@ -581,8 +557,7 @@ class WorkflowTemplateManager(BaseAgent):
             self.logger.error(f"Error initializing builtin templates: {str(e)}")
 
     def _create_music_release_workflow(self) -> Dict[str, Any]:
-        """Create music release workflow definition."""
-        return {
+        """Create music release workflow definition."""        return {
             'id': 'music_release_workflow',
             'name': 'Music Release Workflow',
             'nodes': [
@@ -632,8 +607,7 @@ class WorkflowTemplateManager(BaseAgent):
         }
 
     def _create_social_media_workflow(self) -> Dict[str, Any]:
-        """Create social media content workflow definition."""
-        return {
+        """Create social media content workflow definition."""        return {
             'id': 'social_media_workflow',
             'name': 'Social Media Content Pipeline',
             'nodes': [
@@ -675,8 +649,7 @@ class WorkflowTemplateManager(BaseAgent):
         }
 
     def _create_video_protection_workflow(self) -> Dict[str, Any]:
-        """Create video protection workflow definition."""
-        return {
+        """Create video protection workflow definition."""        return {
             'id': 'video_protection_workflow',
             'name': 'Video Content Protection',
             'nodes': [
@@ -717,8 +690,7 @@ class WorkflowTemplateManager(BaseAgent):
         }
 
     def _create_podcast_workflow(self) -> Dict[str, Any]:
-        """Create podcast workflow definition."""
-        return {
+        """Create podcast workflow definition."""        return {
             'id': 'podcast_workflow',
             'name': 'Podcast Production Workflow',
             'nodes': [
@@ -759,8 +731,7 @@ class WorkflowTemplateManager(BaseAgent):
         }
 
     def _create_seo_workflow(self) -> Dict[str, Any]:
-        """Create SEO optimization workflow definition."""
-        return {
+        """Create SEO optimization workflow definition."""        return {
             'id': 'seo_workflow',
             'name': 'SEO Content Optimization',
             'nodes': [
@@ -801,8 +772,7 @@ class WorkflowTemplateManager(BaseAgent):
         }
 
     async def _validate_workflow_definition(self, workflow_definition: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate workflow definition structure."""
-        try:
+        """Validate workflow definition structure."""        try:
             errors = []
             
             # Check required fields
@@ -848,8 +818,7 @@ class WorkflowTemplateManager(BaseAgent):
             return {'valid': False, 'errors': [str(e)]}
 
     async def _generate_validation_schema(self, workflow_definition: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate JSON schema for workflow validation."""
-        try:
+        """Generate JSON schema for workflow validation."""        try:
             # Basic workflow schema
             schema = {
                 "type": "object",
@@ -889,8 +858,7 @@ class WorkflowTemplateManager(BaseAgent):
             return {}
 
     async def _extract_template_parameters(self, workflow_definition: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract template parameters from workflow definition."""
-        try:
+        """Extract template parameters from workflow definition."""        try:
             parameters = {}
             
             # Convert workflow to JSON string to find template variables
@@ -920,8 +888,7 @@ class WorkflowTemplateManager(BaseAgent):
         template: WorkflowTemplate,
         customizations: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate template customizations."""
-        try:
+        """Validate template customizations."""        try:
             errors = []
             
             # Check against template parameters
@@ -957,8 +924,7 @@ class WorkflowTemplateManager(BaseAgent):
         customizations: Dict[str, Any],
         parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply customizations to workflow definition."""
-        try:
+        """Apply customizations to workflow definition."""        try:
             # Convert to JSON string for template rendering
             workflow_str = json.dumps(workflow_definition)
             
@@ -976,8 +942,7 @@ class WorkflowTemplateManager(BaseAgent):
             raise
 
     def _update_usage_patterns(self, template_id: str, user_id: str):
-        """Update usage patterns for analytics."""
-        try:
+        """Update usage patterns for analytics."""        try:
             # Update popular templates
             if template_id not in self.template_analytics['popular_templates']:
                 self.template_analytics['popular_templates'][template_id] = 0
@@ -998,13 +963,11 @@ class WorkflowTemplateManager(BaseAgent):
             self.logger.warning(f"Usage pattern update error: {str(e)}")
 
     def _load_validation_schemas(self) -> Dict[str, Any]:
-        """Load validation schemas."""
-        # Placeholder - would load from files or define schemas
+        """Load validation schemas."""        # Placeholder - would load from files or define schemas
         return {}
 
     async def _save_template_to_disk(self, template: WorkflowTemplate):
-        """Save template to disk."""
-        try:
+        """Save template to disk."""        try:
             template_file = self.template_directory / f"{template.metadata.id}.json"
             
             template_data = {
@@ -1028,8 +991,7 @@ class WorkflowTemplateManager(BaseAgent):
             self.logger.error(f"Error saving template to disk: {str(e)}")
 
     async def _load_template_from_disk(self, template_id: str) -> Optional[WorkflowTemplate]:
-        """Load template from disk."""
-        try:
+        """Load template from disk."""        try:
             template_file = self.template_directory / f"{template_id}.json"
             
             if not template_file.exists():
@@ -1064,8 +1026,7 @@ class WorkflowTemplateManager(BaseAgent):
             return None
 
     async def get_template_analytics(self) -> Dict[str, Any]:
-        """Get template usage analytics."""
-        return {
+        """Get template usage analytics."""        return {
             'analytics': self.template_analytics.copy(),
             'top_templates': sorted(
                 self.template_analytics['popular_templates'].items(),

@@ -1,5 +1,4 @@
-"""
-🔧 Configuration Environments Index - IA-Influencer-Agent
+"""🔧 Configuration Environments Index - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps + Backend Senior + ML Engineer + DBA + Security
@@ -15,9 +14,7 @@ Contact: mlaiel@live.de
 Point d'entrée principal pour le système de configuration d'environnements.
 Fournit des fonctions utilitaires et des raccourcis pour l'utilisation quotidienne.
 ==================================================================
-"""
-
-import os
+"""import os
 import sys
 from typing import Dict, Any, Optional, List
 from enum import Enum
@@ -38,11 +35,9 @@ from . import (
 
 
 class ConfigurationManager:
-    """
-    Gestionnaire principal de configuration pour simplifier l'utilisation.
+    """    Gestionnaire principal de configuration pour simplifier l'utilisation.
     Fournit une interface unifiée pour toutes les opérations de configuration.
-    """
-    
+    """    
     def __init__(self):
         self._current_config: Optional[BaseEnvironmentConfigManager] = None
         self._config_cache: Dict[str, BaseEnvironmentConfigManager] = {}
@@ -54,8 +49,7 @@ class ConfigurationManager:
         cloud_provider: Optional[CloudProvider] = None,
         force_reload: bool = False
     ) -> BaseEnvironmentConfigManager:
-        """
-        Récupère ou crée une configuration avec mise en cache.
+        """        Récupère ou crée une configuration avec mise en cache.
         
         Args:
             env_type: Type d'environnement
@@ -65,8 +59,7 @@ class ConfigurationManager:
             
         Returns:
             Instance de configuration
-        """
-        # Génération clé cache
+        """        # Génération clé cache
         cache_key = f"{env_type}_{deployment_type}_{cloud_provider}"
         
         # Vérification cache
@@ -88,22 +81,19 @@ class ConfigurationManager:
         return config
         
     def get_current_config(self) -> BaseEnvironmentConfigManager:
-        """Retourne la configuration actuellement active"""
-        if self._current_config is None:
+        """Retourne la configuration actuellement active"""        if self._current_config is None:
             self._current_config = get_default_config()
         return self._current_config
         
     def switch_environment(self, env_type: EnvironmentType) -> None:
-        """Change d'environnement actuel"""
-        self._current_config = self.get_config(env_type=env_type)
+        """Change d'environnement actuel"""        self._current_config = self.get_config(env_type=env_type)
         
     def export_config(
         self, 
         format_type: str = "json",
         include_secrets: bool = False
     ) -> str:
-        """
-        Exporte la configuration actuelle.
+        """        Exporte la configuration actuelle.
         
         Args:
             format_type: Format d'export ("json", "yaml", "env")
@@ -111,8 +101,7 @@ class ConfigurationManager:
             
         Returns:
             Configuration exportée sous forme de string
-        """
-        config = self.get_current_config()
+        """        config = self.get_current_config()
         config_dict = config.export_to_dict()
         
         # Masquage des secrets si nécessaire
@@ -130,8 +119,7 @@ class ConfigurationManager:
             raise ValueError(f"Format non supporté: {format_type}")
             
     def _mask_secrets(self, config_dict: Dict[str, Any]) -> Dict[str, Any]:
-        """Masque les données sensibles dans la configuration"""
-        sensitive_keys = [
+        """Masque les données sensibles dans la configuration"""        sensitive_keys = [
             "password", "secret", "key", "token", "auth", "credential",
             "jwt_secret_key", "oauth2_secret_key", "encryption_key",
             "aws_secret_access_key", "database_password", "redis_password"
@@ -151,8 +139,7 @@ class ConfigurationManager:
         return mask_dict(config_dict)
         
     def _to_env_format(self, config_dict: Dict[str, Any]) -> str:
-        """Convertit la configuration en format .env"""
-        env_lines = []
+        """Convertit la configuration en format .env"""        env_lines = []
         
         def flatten_dict(d, prefix=""):
             for k, v in d.items():
@@ -168,8 +155,7 @@ class ConfigurationManager:
         return "\n".join(env_lines)
         
     def validate_current_config(self) -> Dict[str, Any]:
-        """Valide la configuration actuelle avec détails"""
-        config = self.get_current_config()
+        """Valide la configuration actuelle avec détails"""        config = self.get_current_config()
         
         validation_result = {
             "is_valid": False,
@@ -216,8 +202,7 @@ class ConfigurationManager:
         return validation_result
         
     def get_health_status(self) -> Dict[str, Any]:
-        """Retourne le statut de santé de la configuration"""
-        config = self.get_current_config()
+        """Retourne le statut de santé de la configuration"""        config = self.get_current_config()
         
         return {
             "status": "healthy" if config.validate_configuration() else "unhealthy",
@@ -231,8 +216,7 @@ class ConfigurationManager:
         }
         
     def clear_cache(self) -> None:
-        """Vide le cache des configurations"""
-        self._config_cache.clear()
+        """Vide le cache des configurations"""        self._config_cache.clear()
         self._current_config = None
 
 
@@ -241,21 +225,18 @@ config_manager = ConfigurationManager()
 
 
 def get_config_manager() -> ConfigurationManager:
-    """Retourne l'instance globale du gestionnaire de configuration"""
-    return config_manager
+    """Retourne l'instance globale du gestionnaire de configuration"""    return config_manager
 
 
 def quick_setup(environment: str = "auto") -> BaseEnvironmentConfigManager:
-    """
-    Configuration rapide pour démarrage.
+    """    Configuration rapide pour démarrage.
     
     Args:
         environment: "auto", "dev", "prod", "staging", "test", "docker", "k8s"
         
     Returns:
         Configuration prête à utiliser
-    """
-    if environment == "auto":
+    """    if environment == "auto":
         return get_default_config()
     
     env_mapping = {
@@ -284,8 +265,7 @@ def quick_setup(environment: str = "auto") -> BaseEnvironmentConfigManager:
 
 
 def print_config_summary() -> None:
-    """Affiche un résumé de la configuration actuelle"""
-    config = config_manager.get_current_config()
+    """Affiche un résumé de la configuration actuelle"""    config = config_manager.get_current_config()
     
     print("🔧 Configuration IA-Influencer-Agent")
     print("=" * 50)
@@ -319,8 +299,7 @@ def print_config_summary() -> None:
 
 
 def run_diagnostics() -> Dict[str, Any]:
-    """Exécute un diagnostic complet du système de configuration"""
-    print("🔍 Running IA-Influencer-Agent Configuration Diagnostics...")
+    """Exécute un diagnostic complet du système de configuration"""    print("🔍 Running IA-Influencer-Agent Configuration Diagnostics...")
     print("=" * 60)
     
     # Test de toutes les configurations
@@ -365,8 +344,7 @@ def run_diagnostics() -> Dict[str, Any]:
 
 
 def main():
-    """Fonction principale pour exécution en CLI"""
-    import argparse
+    """Fonction principale pour exécution en CLI"""    import argparse
     
     parser = argparse.ArgumentParser(description="IA-Influencer-Agent Configuration Manager")
     parser.add_argument("--env", default="auto", help="Environment to use")

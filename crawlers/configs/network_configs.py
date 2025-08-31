@@ -1,5 +1,4 @@
-"""
-Network and Performance Configurations
+"""Network and Performance Configurations
 ======================================
 
 Advanced network configuration system for crawlers with performance optimization,
@@ -15,9 +14,7 @@ Contact: mlaiel@live.de | www.fahed-mlaiel.de
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, modification, or distribution is strictly prohibited.
 Legal action will be taken against violators.
-"""
-
-import os
+"""import os
 from typing import Dict, List, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -26,8 +23,7 @@ import json
 from pathlib import Path
 
 class ProxyType(Enum):
-    """Types of proxy connections."""
-    HTTP = "http"
+    """Types of proxy connections."""    HTTP = "http"
     HTTPS = "https"
     SOCKS4 = "socks4"
     SOCKS5 = "socks5"
@@ -36,8 +32,7 @@ class ProxyType(Enum):
     MOBILE = "mobile"
 
 class UserAgentType(Enum):
-    """Types of user agents."""
-    CHROME = "chrome"
+    """Types of user agents."""    CHROME = "chrome"
     FIREFOX = "firefox"
     SAFARI = "safari"
     EDGE = "edge"
@@ -47,8 +42,7 @@ class UserAgentType(Enum):
     MOBILE_FIREFOX = "mobile_firefox"
 
 class RateLimitStrategy(Enum):
-    """Rate limiting strategies."""
-    FIXED = "fixed"
+    """Rate limiting strategies."""    FIXED = "fixed"
     EXPONENTIAL_BACKOFF = "exponential_backoff"
     LINEAR_BACKOFF = "linear_backoff"
     ADAPTIVE = "adaptive"
@@ -56,8 +50,7 @@ class RateLimitStrategy(Enum):
     RESPECTFUL = "respectful"
 
 class LoadBalancingStrategy(Enum):
-    """Load balancing strategies."""
-    ROUND_ROBIN = "round_robin"
+    """Load balancing strategies."""    ROUND_ROBIN = "round_robin"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
     LEAST_CONNECTIONS = "least_connections"
     LEAST_RESPONSE_TIME = "least_response_time"
@@ -65,8 +58,7 @@ class LoadBalancingStrategy(Enum):
     HASH_BASED = "hash_based"
 
 class CacheStrategy(Enum):
-    """Caching strategies."""
-    NO_CACHE = "no_cache"
+    """Caching strategies."""    NO_CACHE = "no_cache"
     MEMORY_ONLY = "memory_only"
     DISK_ONLY = "disk_only"
     HYBRID = "hybrid"
@@ -75,8 +67,7 @@ class CacheStrategy(Enum):
 
 @dataclass
 class ProxyServerConfig:
-    """Configuration for individual proxy server."""
-    host: str
+    """Configuration for individual proxy server."""    host: str
     port: int
     proxy_type: ProxyType
     username: Optional[str] = None
@@ -94,8 +85,7 @@ class ProxyServerConfig:
 
 @dataclass
 class ProxyRotationConfig:
-    """Configuration for proxy rotation."""
-    enabled: bool = True
+    """Configuration for proxy rotation."""    enabled: bool = True
     rotation_strategy: str = "round_robin"  # round_robin, random, least_used
     rotation_interval_requests: int = 100
     rotation_interval_minutes: int = 60
@@ -119,8 +109,7 @@ class ProxyRotationConfig:
 
 @dataclass
 class UserAgentRotationConfig:
-    """Configuration for user agent rotation."""
-    enabled: bool = True
+    """Configuration for user agent rotation."""    enabled: bool = True
     rotation_strategy: str = "random"  # random, sequential, weighted
     rotation_interval_requests: int = 50
     
@@ -147,8 +136,7 @@ class UserAgentRotationConfig:
 
 @dataclass
 class RateLimitConfig:
-    """Configuration for rate limiting."""
-    strategy: RateLimitStrategy = RateLimitStrategy.ADAPTIVE
+    """Configuration for rate limiting."""    strategy: RateLimitStrategy = RateLimitStrategy.ADAPTIVE
     
     # Basic limits
     requests_per_second: float = 1.0
@@ -182,8 +170,7 @@ class RateLimitConfig:
 
 @dataclass
 class ConnectionConfig:
-    """Configuration for network connections."""
-    # Timeouts
+    """Configuration for network connections."""    # Timeouts
     connect_timeout_seconds: int = 30
     read_timeout_seconds: int = 60
     total_timeout_seconds: int = 300
@@ -226,8 +213,7 @@ class ConnectionConfig:
 
 @dataclass
 class LoadBalancingConfig:
-    """Configuration for load balancing."""
-    enabled: bool = True
+    """Configuration for load balancing."""    enabled: bool = True
     strategy: LoadBalancingStrategy = LoadBalancingStrategy.LEAST_CONNECTIONS
     
     # Health checking
@@ -250,8 +236,7 @@ class LoadBalancingConfig:
 
 @dataclass
 class CachingConfig:
-    """Configuration for response caching."""
-    enabled: bool = True
+    """Configuration for response caching."""    enabled: bool = True
     strategy: CacheStrategy = CacheStrategy.HYBRID
     
     # Memory cache
@@ -288,8 +273,7 @@ class CachingConfig:
 
 @dataclass
 class SecurityConfig:
-    """Configuration for security features."""
-    # Anti-detection
+    """Configuration for security features."""    # Anti-detection
     anti_detection_enabled: bool = True
     randomize_request_order: bool = True
     simulate_human_behavior: bool = True
@@ -322,8 +306,7 @@ class SecurityConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Configuration for performance optimization."""
-    # Concurrency
+    """Configuration for performance optimization."""    # Concurrency
     max_concurrent_requests: int = 50
     max_concurrent_requests_per_domain: int = 5
     concurrent_crawlers: int = 10
@@ -355,8 +338,7 @@ class PerformanceConfig:
 
 @dataclass
 class NetworkConfig:
-    """Complete network configuration."""
-    # Core configurations
+    """Complete network configuration."""    # Core configurations
     proxy_rotation: ProxyRotationConfig = field(default_factory=ProxyRotationConfig)
     user_agent_rotation: UserAgentRotationConfig = field(default_factory=UserAgentRotationConfig)
     rate_limiting: RateLimitConfig = field(default_factory=RateLimitConfig)
@@ -380,17 +362,14 @@ class NetworkConfig:
     testing_mode: bool = False
 
 class NetworkConfigManager:
-    """Manager for network configurations."""
-    
+    """Manager for network configurations."""    
     def __init__(self, config_dir: Optional[str] = None):
-        """Initialize network config manager."""
-        self.config_dir = Path(config_dir or os.getenv("NETWORK_CONFIG_DIR", "./configs"))
+        """Initialize network config manager."""        self.config_dir = Path(config_dir or os.getenv("NETWORK_CONFIG_DIR", "./configs"))
         self.config_dir.mkdir(parents=True, exist_ok=True)
         self.config = self._load_default_config()
     
     def _load_default_config(self) -> NetworkConfig:
-        """Load default network configuration."""
-        return NetworkConfig(
+        """Load default network configuration."""        return NetworkConfig(
             proxy_rotation=ProxyRotationConfig(
                 enabled=True,
                 rotation_strategy="round_robin",
@@ -437,25 +416,21 @@ class NetworkConfigManager:
         )
     
     def add_proxy_server(self, proxy: ProxyServerConfig) -> None:
-        """Add proxy server to configuration."""
-        self.config.proxy_servers.append(proxy)
+        """Add proxy server to configuration."""        self.config.proxy_servers.append(proxy)
         self.save_config()
     
     def remove_proxy_server(self, host: str, port: int) -> None:
-        """Remove proxy server from configuration."""
-        self.config.proxy_servers = [
+        """Remove proxy server from configuration."""        self.config.proxy_servers = [
             proxy for proxy in self.config.proxy_servers
             if not (proxy.host == host and proxy.port == port)
         ]
         self.save_config()
     
     def get_active_proxies(self) -> List[ProxyServerConfig]:
-        """Get list of active proxy servers."""
-        return [proxy for proxy in self.config.proxy_servers if proxy.enabled]
+        """Get list of active proxy servers."""        return [proxy for proxy in self.config.proxy_servers if proxy.enabled]
     
     def update_proxy_stats(self, host: str, port: int, success: bool, response_time_ms: float) -> None:
-        """Update proxy statistics."""
-        for proxy in self.config.proxy_servers:
+        """Update proxy statistics."""        for proxy in self.config.proxy_servers:
             if proxy.host == host and proxy.port == port:
                 if success:
                     proxy.success_count += 1
@@ -479,44 +454,37 @@ class NetworkConfigManager:
                 break
     
     def get_config(self) -> NetworkConfig:
-        """Get current network configuration."""
-        return self.config
+        """Get current network configuration."""        return self.config
     
     def update_config(self, config: NetworkConfig) -> None:
-        """Update network configuration."""
-        self.config = config
+        """Update network configuration."""        self.config = config
         self.save_config()
     
     def save_config(self) -> None:
-        """Save configuration to file."""
-        config_file = self.config_dir / "network_config.json"
+        """Save configuration to file."""        config_file = self.config_dir / "network_config.json"
         # Convert dataclass to dict, handling datetime objects
         config_dict = self._serialize_config(self.config)
         with open(config_file, 'w') as f:
             json.dump(config_dict, f, indent=2, default=str)
     
     def load_config(self) -> None:
-        """Load configuration from file."""
-        config_file = self.config_dir / "network_config.json"
+        """Load configuration from file."""        config_file = self.config_dir / "network_config.json"
         if config_file.exists():
             with open(config_file, 'r') as f:
                 data = json.load(f)
                 self.config = self._deserialize_config(data)
     
     def _serialize_config(self, config: NetworkConfig) -> dict:
-        """Serialize configuration to dictionary."""
-        # Implementation for converting dataclass to dict
+        """Serialize configuration to dictionary."""        # Implementation for converting dataclass to dict
         # Handle datetime and enum serialization
         pass
     
     def _deserialize_config(self, data: dict) -> NetworkConfig:
-        """Deserialize configuration from dictionary."""
-        # Implementation for converting dict back to NetworkConfig
+        """Deserialize configuration from dictionary."""        # Implementation for converting dict back to NetworkConfig
         pass
     
     def validate_config(self) -> List[str]:
-        """Validate network configuration."""
-        errors = []
+        """Validate network configuration."""        errors = []
         
         # Validate rate limiting
         if self.config.rate_limiting.requests_per_second <= 0:
@@ -540,8 +508,7 @@ class NetworkConfigManager:
         return errors
     
     def get_optimal_settings_for_platform(self, platform: str) -> dict:
-        """Get optimal network settings for specific platform."""
-        platform_settings = {
+        """Get optimal network settings for specific platform."""        platform_settings = {
             "youtube": {
                 "rate_limit": {"requests_per_second": 0.5},
                 "user_agent": {"prefer_desktop": True},
@@ -561,8 +528,7 @@ class NetworkConfigManager:
         return platform_settings.get(platform, {})
     
     def export_config(self, file_path: str) -> None:
-        """Export configuration to file."""
-        config_dict = self._serialize_config(self.config)
+        """Export configuration to file."""        config_dict = self._serialize_config(self.config)
         with open(file_path, 'w') as f:
             json.dump(config_dict, f, indent=2, default=str)
 

@@ -1,13 +1,10 @@
-"""
-Advanced Protection Agent for IA Influencer Agent
+"""Advanced Protection Agent for IA Influencer Agent
 Handles copyright protection, content fingerprinting, watermarking, and rights management
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: Proprietary - All rights reserved
 WARNING: Unauthorized use, copying, or distribution prohibited
-"""
-
-from typing import Dict, List, Any, Optional, Union
+"""from typing import Dict, List, Any, Optional, Union
 from datetime import datetime, timedelta
 import asyncio
 import uuid
@@ -22,11 +19,9 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionAgent:
-    """
-    Ultra-advanced protection agent for content creators
+    """    Ultra-advanced protection agent for content creators
     Integrates all protection technologies: fingerprinting, copyright, rights, watermarking
-    """
-    
+    """    
     def __init__(self, config: Dict = None):
         self.config = config or {}
         
@@ -45,8 +40,7 @@ class ProtectionAgent:
         }
         
     async def protect_content(self, content_data: bytes, content_metadata: Dict) -> Dict:
-        """
-        Complete content protection workflow
+        """        Complete content protection workflow
         
         Args:
             content_data: Raw content bytes
@@ -54,8 +48,7 @@ class ProtectionAgent:
             
         Returns:
             Comprehensive protection result
-        """
-        try:
+        """        try:
             protection_id = f"PROTECT_{uuid.uuid4().hex[:16].upper()}"
             owner_id = content_metadata.get('owner_id')
             content_type = content_metadata.get('content_type', 'application/octet-stream')
@@ -186,8 +179,7 @@ class ProtectionAgent:
             
     async def detect_infringement(self, suspected_content: bytes, content_type: str,
                                 source_info: Dict = None) -> Dict:
-        """
-        Detect copyright infringement using advanced analysis
+        """        Detect copyright infringement using advanced analysis
         
         Args:
             suspected_content: Content suspected of infringement
@@ -196,8 +188,7 @@ class ProtectionAgent:
             
         Returns:
             Infringement detection results
-        """
-        try:
+        """        try:
             detection_id = f"DETECT_{uuid.uuid4().hex[:16].upper()}"
             
             # Analyze suspected content
@@ -253,8 +244,7 @@ class ProtectionAgent:
             return {'error': str(e)}
             
     async def process_dmca_takedown(self, claim_id: str, platform_info: Dict) -> Dict:
-        """
-        Process DMCA takedown notice for copyright violation
+        """        Process DMCA takedown notice for copyright violation
         
         Args:
             claim_id: Copyright claim identifier
@@ -262,8 +252,7 @@ class ProtectionAgent:
             
         Returns:
             DMCA processing result
-        """
-        try:
+        """        try:
             # Get copyright claim
             if claim_id not in self.copyright_manager.active_claims:
                 return {'success': False, 'error': 'Claim not found'}
@@ -291,8 +280,7 @@ class ProtectionAgent:
             
     def grant_content_license(self, content_id: str, licensee_info: Dict, 
                             license_terms: Dict) -> Dict:
-        """
-        Grant license for protected content
+        """        Grant license for protected content
         
         Args:
             content_id: Content identifier
@@ -301,8 +289,7 @@ class ProtectionAgent:
             
         Returns:
             License granting result
-        """
-        try:
+        """        try:
             # Find rights bundle for content
             rights_bundle = None
             for bundle in self.rights_manager.rights_bundles.values():
@@ -335,8 +322,7 @@ class ProtectionAgent:
             return {'success': False, 'error': str(e)}
             
     def track_usage_and_revenue(self, content_id: str, usage_data: Dict) -> Dict:
-        """
-        Track content usage and calculate revenue
+        """        Track content usage and calculate revenue
         
         Args:
             content_id: Content identifier
@@ -344,8 +330,7 @@ class ProtectionAgent:
             
         Returns:
             Usage tracking and revenue result
-        """
-        try:
+        """        try:
             # Track usage
             usage_record = self.rights_manager.track_content_usage(content_id, usage_data)
             
@@ -363,8 +348,7 @@ class ProtectionAgent:
             return {'success': False, 'error': str(e)}
             
     def generate_protection_report(self, owner_id: str, period_days: int = 30) -> Dict:
-        """
-        Generate comprehensive protection and revenue report
+        """        Generate comprehensive protection and revenue report
         
         Args:
             owner_id: Content owner identifier
@@ -372,8 +356,7 @@ class ProtectionAgent:
             
         Returns:
             Detailed protection report
-        """
-        try:
+        """        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=period_days)
             
@@ -420,8 +403,7 @@ class ProtectionAgent:
             
     def verify_content_authenticity(self, content_data: bytes, 
                                   signature_info: Dict) -> Dict:
-        """
-        Verify content authenticity using digital signatures
+        """        Verify content authenticity using digital signatures
         
         Args:
             content_data: Content to verify
@@ -429,8 +411,7 @@ class ProtectionAgent:
             
         Returns:
             Authenticity verification result
-        """
-        try:
+        """        try:
             # Create DigitalSignature object from info
             signature = DigitalSignature(
                 signature_id=signature_info['signature_id'],
@@ -454,16 +435,14 @@ class ProtectionAgent:
             return {'error': str(e)}
             
     async def optimize_monetization(self, content_id: str) -> Dict:
-        """
-        AI-powered monetization optimization
+        """        AI-powered monetization optimization
         
         Args:
             content_id: Content identifier
             
         Returns:
             Optimization recommendations
-        """
-        try:
+        """        try:
             optimization_result = self.rights_manager.optimize_pricing_strategy(content_id)
             return optimization_result
             
@@ -472,16 +451,14 @@ class ProtectionAgent:
             return {'error': str(e)}
             
     def get_protection_status(self, content_id: str) -> Dict:
-        """
-        Get comprehensive protection status for content
+        """        Get comprehensive protection status for content
         
         Args:
             content_id: Content identifier
             
         Returns:
             Protection status summary
-        """
-        try:
+        """        try:
             status = {
                 'content_id': content_id,
                 'protection_active': False,
@@ -559,15 +536,13 @@ from ...security.encryption import ContentEncryption
 logger = logging.getLogger(__name__)
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
-    BASIC = "basic"
+    """Content protection levels"""    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
 
 class ViolationType(Enum):
-    """Types of content violations"""
-    UNAUTHORIZED_USE = "unauthorized_use"
+    """Types of content violations"""    UNAUTHORIZED_USE = "unauthorized_use"
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     PLAGIARISM = "plagiarism"
     DISTRIBUTION_VIOLATION = "distribution_violation"
@@ -576,8 +551,7 @@ class ViolationType(Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint data structure"""
-    content_id: str
+    """Content fingerprint data structure"""    content_id: str
     content_type: str
     fingerprint_hash: str
     fingerprint_data: Dict[str, Any]
@@ -588,8 +562,7 @@ class ContentFingerprint:
 
 @dataclass
 class ViolationAlert:
-    """Content violation alert"""
-    violation_id: str
+    """Content violation alert"""    violation_id: str
     content_id: str
     violation_type: ViolationType
     platform: str
@@ -600,8 +573,7 @@ class ViolationAlert:
     status: str = "pending"
 
 class ProtectionAgent(BaseAgent):
-    """
-    Advanced content protection agent with multi-format fingerprinting and monitoring.
+    """    Advanced content protection agent with multi-format fingerprinting and monitoring.
     
     Capabilities:
     - Multi-format content fingerprinting (audio, video, image, text)
@@ -611,8 +583,7 @@ class ProtectionAgent(BaseAgent):
     - Rights management and licensing
     - Performance tracking and analytics
     - Cross-platform monitoring integration
-    """
-    
+    """    
     def __init__(self, agent_id: str = "protection_agent", config: Dict[str, Any] = None):
         super().__init__(agent_id, config)
         
@@ -648,8 +619,7 @@ class ProtectionAgent(BaseAgent):
         }
     
     async def initialize(self):
-        """Initialize protection models and components"""
-        try:
+        """Initialize protection models and components"""        try:
             # Initialize fingerprinting models
             self.audio_fingerprinter = AudioFingerprintModel()
             await self.audio_fingerprinter.load_model()
@@ -682,8 +652,7 @@ class ProtectionAgent(BaseAgent):
             raise ProtectionError(f"Initialization failed: {e}")
     
     async def process(self, request: Dict[str, Any]) -> AgentResponse:
-        """
-        Process protection requests.
+        """        Process protection requests.
         
         Args:
             request: Dictionary containing:
@@ -695,8 +664,7 @@ class ProtectionAgent(BaseAgent):
         
         Returns:
             AgentResponse with protection results
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             action = request.get('action', 'protect_content')
@@ -742,8 +710,7 @@ class ProtectionAgent(BaseAgent):
             )
     
     async def _protect_content(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Protect content with fingerprinting and monitoring setup"""
-        
+        """Protect content with fingerprinting and monitoring setup"""        
         content_path = Path(request.get('content_path', ''))
         if not content_path.exists():
             raise ValidationError(f"Content file not found: {content_path}")
@@ -784,8 +751,7 @@ class ProtectionAgent(BaseAgent):
         }
     
     async def _check_content_violations(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Check for content violations across monitored platforms"""
-        
+        """Check for content violations across monitored platforms"""        
         content_id = request.get('content_id')
         if not content_id:
             raise ValidationError("Content ID is required")
@@ -820,8 +786,7 @@ class ProtectionAgent(BaseAgent):
         }
     
     async def _monitor_content(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Set up or update content monitoring"""
-        
+        """Set up or update content monitoring"""        
         content_id = request.get('content_id')
         monitoring_options = request.get('monitoring_options', {})
         
@@ -850,8 +815,7 @@ class ProtectionAgent(BaseAgent):
         }
     
     async def _enforce_content_rights(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Enforce content rights through takedown requests and legal actions"""
-        
+        """Enforce content rights through takedown requests and legal actions"""        
         violation_id = request.get('violation_id')
         enforcement_action = request.get('enforcement_action', 'takedown_request')
         
@@ -887,8 +851,7 @@ class ProtectionAgent(BaseAgent):
         }
     
     async def _generate_content_fingerprint(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate fingerprint for content without full protection setup"""
-        
+        """Generate fingerprint for content without full protection setup"""        
         content_path = Path(request.get('content_path', ''))
         if not content_path.exists():
             raise ValidationError(f"Content file not found: {content_path}")
@@ -925,8 +888,7 @@ class ProtectionAgent(BaseAgent):
         user_id: str,
         metadata: Dict[str, Any]
     ) -> ContentFingerprint:
-        """Create comprehensive content fingerprint"""
-        
+        """Create comprehensive content fingerprint"""        
         content_type = self._detect_content_type(content_path)
         content_id = self._generate_content_id(content_path, user_id)
         
@@ -970,8 +932,7 @@ class ProtectionAgent(BaseAgent):
         return fingerprint
     
     def _detect_content_type(self, content_path: Path) -> str:
-        """Detect content type from file"""
-        import mimetypes
+        """Detect content type from file"""        import mimetypes
         
         mime_type, _ = mimetypes.guess_type(content_path)
         if mime_type:
@@ -998,8 +959,7 @@ class ProtectionAgent(BaseAgent):
         return 'unknown'
     
     def _generate_content_id(self, content_path: Path, user_id: str) -> str:
-        """Generate unique content ID"""
-        content_string = f"{user_id}:{content_path.name}:{content_path.stat().st_mtime}"
+        """Generate unique content ID"""        content_string = f"{user_id}:{content_path.name}:{content_path.stat().st_mtime}"
         return hashlib.sha256(content_string.encode()).hexdigest()[:16]
     
     async def _setup_content_monitoring(
@@ -1007,8 +967,7 @@ class ProtectionAgent(BaseAgent):
         fingerprint: ContentFingerprint,
         monitoring_options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Setup monitoring configuration for content"""
-        
+        """Setup monitoring configuration for content"""        
         config = {
             'enabled': True,
             'platforms': monitoring_options.get('platforms', ['youtube', 'instagram', 'tiktok', 'twitter']),
@@ -1033,8 +992,7 @@ class ProtectionAgent(BaseAgent):
         fingerprint: ContentFingerprint,
         enforcement_options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Configure enforcement settings"""
-        
+        """Configure enforcement settings"""        
         config = {
             'enabled': enforcement_options.get('enabled', True),
             'auto_takedown': enforcement_options.get('auto_takedown', False),
@@ -1054,8 +1012,7 @@ class ProtectionAgent(BaseAgent):
         platforms: List[str],
         deep_scan: bool = False
     ) -> List[ViolationAlert]:
-        """Scan platforms for content violations"""
-        
+        """Scan platforms for content violations"""        
         violations = []
         
         # Platform-specific scanning
@@ -1082,8 +1039,7 @@ class ProtectionAgent(BaseAgent):
         platform: str,
         deep_scan: bool
     ) -> List[ViolationAlert]:
-        """Scan specific platform for violations"""
-        
+        """Scan specific platform for violations"""        
         try:
             # Use platform monitor to search for similar content
             search_results = await self.platform_monitor.search_similar_content(
@@ -1128,8 +1084,7 @@ class ProtectionAgent(BaseAgent):
         search_result: Dict[str, Any],
         platform: str
     ) -> float:
-        """Calculate similarity between fingerprint and found content"""
-        
+        """Calculate similarity between fingerprint and found content"""        
         try:
             result_fingerprint = search_result.get('fingerprint_data', {})
             if not result_fingerprint:
@@ -1163,13 +1118,11 @@ class ProtectionAgent(BaseAgent):
             return 0.0
     
     def _generate_violation_id(self, content_id: str, search_result: Dict[str, Any]) -> str:
-        """Generate unique violation ID"""
-        violation_string = f"{content_id}:{search_result.get('url', '')}:{datetime.utcnow().isoformat()}"
+        """Generate unique violation ID"""        violation_string = f"{content_id}:{search_result.get('url', '')}:{datetime.utcnow().isoformat()}"
         return hashlib.md5(violation_string.encode()).hexdigest()[:12]
     
     async def _start_monitoring_services(self):
-        """Start background monitoring services"""
-        try:
+        """Start background monitoring services"""        try:
             # Start web crawler
             asyncio.create_task(self.web_crawler.start_monitoring())
             
@@ -1185,8 +1138,7 @@ class ProtectionAgent(BaseAgent):
             logger.error(f"Failed to start monitoring services: {e}")
     
     async def _process_monitoring_queue(self):
-        """Process monitoring queue for violations"""
-        while True:
+        """Process monitoring queue for violations"""        while True:
             try:
                 # Get next monitoring task from queue
                 task = await self.monitoring_queue.get()
@@ -1203,69 +1155,53 @@ class ProtectionAgent(BaseAgent):
 
 
 class WebContentCrawler:
-    """Web crawler for content monitoring"""
-    
+    """Web crawler for content monitoring"""    
     async def initialize(self):
-        """Initialize web crawler"""
-        pass
+        """Initialize web crawler"""        pass
     
     async def start_monitoring(self):
-        """Start web monitoring process"""
-        pass
+        """Start web monitoring process"""        pass
 
 
 class PlatformMonitor:
-    """Platform-specific content monitoring"""
-    
+    """Platform-specific content monitoring"""    
     async def initialize(self):
-        """Initialize platform monitors"""
-        pass
+        """Initialize platform monitors"""        pass
     
     async def start_monitoring(self):
-        """Start platform monitoring"""
-        pass
+        """Start platform monitoring"""        pass
     
     async def search_similar_content(
         self, 
         fingerprint: ContentFingerprint,
         platform: str
     ) -> List[Dict[str, Any]]:
-        """Search for similar content on platform"""
-        # Platform-specific search implementation
+        """Search for similar content on platform"""        # Platform-specific search implementation
         return []
 
 
 class ViolationDetector:
-    """AI-powered violation detection"""
-    
+    """AI-powered violation detection"""    
     async def initialize(self):
-        """Initialize violation detection models"""
-        pass
+        """Initialize violation detection models"""        pass
 
 
 class TakedownManager:
-    """Manages takedown requests and legal enforcement"""
-    
+    """Manages takedown requests and legal enforcement"""    
     async def initialize(self):
-        """Initialize takedown management"""
-        pass
+        """Initialize takedown management"""        pass
     
     async def generate_takedown_request(self, violation: ViolationAlert) -> Dict[str, Any]:
-        """Generate takedown request"""
-        return {'status': 'generated', 'request_id': 'takedown_123'}
+        """Generate takedown request"""        return {'status': 'generated', 'request_id': 'takedown_123'}
     
     async def generate_dmca_notice(self, violation: ViolationAlert) -> Dict[str, Any]:
-        """Generate DMCA notice"""
-        return {'status': 'generated', 'notice_id': 'dmca_123'}
+        """Generate DMCA notice"""        return {'status': 'generated', 'notice_id': 'dmca_123'}
     
     async def generate_cease_desist(self, violation: ViolationAlert) -> Dict[str, Any]:
-        """Generate cease and desist letter"""
-        return {'status': 'generated', 'letter_id': 'cd_123'}
+        """Generate cease and desist letter"""        return {'status': 'generated', 'letter_id': 'cd_123'}
 
 
 class LicenseManager:
-    """Manages content licensing and permissions"""
-    
+    """Manages content licensing and permissions"""    
     async def initialize(self):
-        """Initialize license management"""
-        pass
+        """Initialize license management"""        pass

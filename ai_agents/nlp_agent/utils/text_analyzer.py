@@ -1,5 +1,4 @@
-"""
-Text Analyzer - Core Text Processing Engine
+"""Text Analyzer - Core Text Processing Engine
 ==========================================
 
 Advanced text analysis engine providing comprehensive text preprocessing,
@@ -7,9 +6,7 @@ analysis, and feature extraction capabilities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import re
+"""import re
 import string
 import logging
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -42,8 +39,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TextStatistics:
-    """Text statistics and metrics"""
-    character_count: int = 0
+    """Text statistics and metrics"""    character_count: int = 0
     word_count: int = 0
     sentence_count: int = 0
     paragraph_count: int = 0
@@ -61,8 +57,7 @@ class TextStatistics:
 
 @dataclass
 class TextFeatures:
-    """Extracted text features"""
-    tokens: List[str] = field(default_factory=list)
+    """Extracted text features"""    tokens: List[str] = field(default_factory=list)
     sentences: List[str] = field(default_factory=list)
     words: List[str] = field(default_factory=list)
     pos_tags: List[Tuple[str, str]] = field(default_factory=list)
@@ -77,8 +72,7 @@ class TextFeatures:
 
 @dataclass
 class TextAnalysisResult:
-    """Complete text analysis result"""
-    text: str
+    """Complete text analysis result"""    text: str
     cleaned_text: str
     language: Optional[str] = None
     statistics: TextStatistics = field(default_factory=TextStatistics)
@@ -88,14 +82,11 @@ class TextAnalysisResult:
     timestamp: str = field(default_factory=lambda: datetime.now().isoformat())
 
 class TextAnalyzer:
-    """
-    Advanced text analysis engine providing comprehensive text preprocessing,
+    """    Advanced text analysis engine providing comprehensive text preprocessing,
     analysis, and feature extraction capabilities.
-    """
-    
+    """    
     def __init__(self, config: Optional[NLPAgentConfig] = None):
-        """Initialize Text Analyzer"""
-        self.config = config or default_config
+        """Initialize Text Analyzer"""        self.config = config or default_config
         self.executor = ThreadPoolExecutor(max_workers=self.config.performance.max_workers)
         self._nlp_models = {}
         self._initialize_models()
@@ -104,8 +95,7 @@ class TextAnalyzer:
         self._compile_patterns()
     
     def _initialize_models(self):
-        """Initialize NLP models"""
-        try:
+        """Initialize NLP models"""        try:
             # Initialize spaCy model for advanced features
             spacy_models = ["en_core_web_sm", "en_core_web_md"]
             for model_name in spacy_models:
@@ -123,8 +113,7 @@ class TextAnalyzer:
             logger.error(f"Failed to initialize NLP models: {e}")
     
     def _compile_patterns(self):
-        """Compile regex patterns for text analysis"""
-        self.patterns = {
+        """Compile regex patterns for text analysis"""        self.patterns = {
             "url": re.compile(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'),
             "hashtag": re.compile(r'#\w+'),
             "mention": re.compile(r'@\w+'),
@@ -138,8 +127,7 @@ class TextAnalyzer:
         }
     
     async def analyze(self, text: str, **kwargs) -> TextAnalysisResult:
-        """
-        Perform comprehensive text analysis
+        """        Perform comprehensive text analysis
         
         Args:
             text: Input text to analyze
@@ -147,8 +135,7 @@ class TextAnalyzer:
         
         Returns:
             TextAnalysisResult with comprehensive analysis
-        """
-        if not text or not isinstance(text, str):
+        """        if not text or not isinstance(text, str):
             raise ValueError("Input text must be a non-empty string")
         
         start_time = asyncio.get_event_loop().time()
@@ -184,8 +171,7 @@ class TextAnalyzer:
             raise
     
     async def _preprocess_text(self, text: str) -> str:
-        """Preprocess text based on configuration"""
-        processed_text = text
+        """Preprocess text based on configuration"""        processed_text = text
         
         if self.config.processing.enable_preprocessing:
             # Remove HTML tags
@@ -217,8 +203,7 @@ class TextAnalyzer:
         return processed_text
     
     async def _extract_statistics(self, original_text: str, cleaned_text: str) -> TextStatistics:
-        """Extract comprehensive text statistics"""
-        stats = TextStatistics()
+        """Extract comprehensive text statistics"""        stats = TextStatistics()
         
         # Basic counts
         stats.character_count = len(original_text)
@@ -268,8 +253,7 @@ class TextAnalyzer:
         return stats
     
     async def _extract_features(self, original_text: str, cleaned_text: str) -> TextFeatures:
-        """Extract comprehensive text features"""
-        features = TextFeatures()
+        """Extract comprehensive text features"""        features = TextFeatures()
         
         try:
             # Basic tokenization
@@ -309,8 +293,7 @@ class TextAnalyzer:
         return features
     
     async def _extract_spacy_features(self, text: str, features: TextFeatures):
-        """Extract features using spaCy"""
-        try:
+        """Extract features using spaCy"""        try:
             nlp = self._nlp_models["spacy_en"]
             doc = nlp(text)
             
@@ -330,8 +313,7 @@ class TextAnalyzer:
             logger.error(f"spaCy feature extraction failed: {e}")
     
     async def _extract_keywords(self, text: str, max_keywords: int = 10) -> List[str]:
-        """Extract keywords using TF-IDF approach"""
-        try:
+        """Extract keywords using TF-IDF approach"""        try:
             from sklearn.feature_extraction.text import TfidfVectorizer
             from nltk.corpus import stopwords
             
@@ -362,8 +344,7 @@ class TextAnalyzer:
             return []
     
     async def batch_analyze(self, texts: List[str], **kwargs) -> List[TextAnalysisResult]:
-        """Analyze multiple texts concurrently"""
-        if not texts:
+        """Analyze multiple texts concurrently"""        if not texts:
             return []
         
         tasks = [self.analyze(text, **kwargs) for text in texts]
@@ -387,8 +368,7 @@ class TextAnalyzer:
         return processed_results
     
     def clean_text(self, text: str, **options) -> str:
-        """Clean text with specific options"""
-        cleaned = text
+        """Clean text with specific options"""        cleaned = text
         
         # Remove HTML tags
         if options.get("remove_html", True):
@@ -429,8 +409,7 @@ class TextAnalyzer:
         return cleaned.strip()
     
     def get_word_frequency(self, text: str, top_n: int = 20) -> List[Tuple[str, int]]:
-        """Get word frequency distribution"""
-        from collections import Counter
+        """Get word frequency distribution"""        from collections import Counter
         
         words = self.clean_text(text, lowercase=True, remove_punctuation=True).split()
         
@@ -449,8 +428,7 @@ class TextAnalyzer:
         return Counter(filtered_words).most_common(top_n)
     
     def generate_wordcloud(self, text: str, **kwargs) -> WordCloud:
-        """Generate word cloud from text"""
-        cleaned_text = self.clean_text(
+        """Generate word cloud from text"""        cleaned_text = self.clean_text(
             text,
             lowercase=True,
             remove_punctuation=True,
@@ -468,8 +446,7 @@ class TextAnalyzer:
         return WordCloud(**wordcloud_config).generate(cleaned_text)
     
     def health_check(self) -> Dict[str, Any]:
-        """Perform health check"""
-        return {
+        """Perform health check"""        return {
             "status": "healthy",
             "models_loaded": len(self._nlp_models),
             "spacy_available": "spacy_en" in self._nlp_models,
@@ -478,19 +455,16 @@ class TextAnalyzer:
         }
     
     def shutdown(self):
-        """Shutdown the text analyzer"""
-        logger.info("Shutting down Text Analyzer")
+        """Shutdown the text analyzer"""        logger.info("Shutting down Text Analyzer")
         self.executor.shutdown(wait=True)
 
 # Utility functions
 def calculate_similarity(text1: str, text2: str) -> float:
-    """Calculate text similarity using simple overlap"""
-    from difflib import SequenceMatcher
+    """Calculate text similarity using simple overlap"""    from difflib import SequenceMatcher
     return SequenceMatcher(None, text1.lower(), text2.lower()).ratio()
 
 def extract_social_media_metrics(text: str) -> Dict[str, int]:
-    """Extract social media specific metrics"""
-    patterns = {
+    """Extract social media specific metrics"""    patterns = {
         "hashtags": re.compile(r'#\w+'),
         "mentions": re.compile(r'@\w+'),
         "urls": re.compile(r'http[s]?://\S+'),

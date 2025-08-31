@@ -1,14 +1,11 @@
-"""
-Moteur de traitement haute performance
+"""Moteur de traitement haute performance
 ================================================================================
 Module: backend/core/engines/personalization_engine.py
 Type: Engine Core - IA-Influencer-Agent
 Responsabilité: Fonctionnalité spécialisée IA-Influencer-Agent
 Technologies: Python, FastAPI, AsyncIO
 ================================================================================
-"""
-
-from abc import ABC, abstractmethod
+"""from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Optional, Union, Tuple
 import logging
 import asyncio
@@ -19,8 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 class PersonalizationEngineStatus(Enum):
-    """États du moteur PersonalizationEngine"""
-    IDLE = "idle"
+    """États du moteur PersonalizationEngine"""    IDLE = "idle"
     PROCESSING = "processing"
     ERROR = "error"
     READY = "ready"
@@ -28,8 +24,7 @@ class PersonalizationEngineStatus(Enum):
 
 @dataclass
 class PersonalizationEngineConfig:
-    """Configuration du moteur PersonalizationEngine"""
-    enabled: bool = True
+    """Configuration du moteur PersonalizationEngine"""    enabled: bool = True
     max_workers: int = 4
     timeout_seconds: int = 30
     retry_attempts: int = 3
@@ -37,8 +32,7 @@ class PersonalizationEngineConfig:
 
 
 class PersonalizationEngine(ABC):
-    """
-    🚀 Moteur PersonalizationEngine - IA-Influencer-Agent
+    """    🚀 Moteur PersonalizationEngine - IA-Influencer-Agent
     
     Responsabilité:
     Fonctionnalité spécialisée IA-Influencer-Agent
@@ -52,8 +46,7 @@ class PersonalizationEngine(ABC):
     - Monitoring intégré des performances
     - Configuration flexible par environnement
     - Logging structuré pour observabilité
-    """
-    
+    """    
     def __init__(self, config: PersonalizationEngineConfig = None):
         self.config = config or PersonalizationEngineConfig()
         self.status = PersonalizationEngineStatus.IDLE
@@ -62,45 +55,37 @@ class PersonalizationEngine(ABC):
     
     @abstractmethod
     async def initialize(self) -> bool:
-        """
-        Initialise le moteur avec ses dépendances
+        """        Initialise le moteur avec ses dépendances
         
         Returns:
             bool: True si initialisation réussie
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def process(self, data: Any) -> Any:
-        """
-        Traite les données selon la logique métier du moteur
+        """        Traite les données selon la logique métier du moteur
         
         Args:
             data: Données à traiter
             
         Returns:
             Any: Résultat du traitement
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def shutdown(self) -> bool:
-        """
-        Arrêt propre du moteur
+        """        Arrêt propre du moteur
         
         Returns:
             bool: True si arrêt réussi
-        """
-        pass
+        """        pass
     
     async def health_check(self) -> Dict[str, Any]:
-        """
-        Vérifie l'état de santé du moteur
+        """        Vérifie l'état de santé du moteur
         
         Returns:
             Dict: Métriques de santé
-        """
-        return {
+        """        return {
             "status": self.status.value,
             "config": self.config.__dict__,
             "metrics": self._performance_metrics,
@@ -108,13 +93,11 @@ class PersonalizationEngine(ABC):
         }
     
     def get_metrics(self) -> Dict[str, Any]:
-        """
-        Retourne les métriques de performance
+        """        Retourne les métriques de performance
         
         Returns:
             Dict: Métriques actuelles
-        """
-        return self._performance_metrics.copy()
+        """        return self._performance_metrics.copy()
 
 
 # Instance globale pour l'injection de dépendances
@@ -122,13 +105,11 @@ personalization_engine = None
 
 
 def get_personalization_engine() -> PersonalizationEngine:
-    """
-    Factory function pour obtenir l'instance du moteur
+    """    Factory function pour obtenir l'instance du moteur
     
     Returns:
         PersonalizationEngine: Instance du moteur
-    """
-    global personalization_engine
+    """    global personalization_engine
     if personalization_engine is None:
         # Ici vous devrez implémenter la logique d'instanciation
         # selon vos besoins spécifiques

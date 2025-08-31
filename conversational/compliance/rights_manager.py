@@ -1,5 +1,4 @@
-"""
-Rights Manager - Intellectual Property Rights Management System
+"""Rights Manager - Intellectual Property Rights Management System
 
 This module provides comprehensive rights management for conversational AI content,
 including intellectual property protection, copyright compliance, and usage rights verification.
@@ -7,9 +6,7 @@ including intellectual property protection, copyright compliance, and usage righ
 Author: Fahed Mlaiel
 Contact: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import re
+"""import re
 import hashlib
 import logging
 from datetime import datetime, timedelta
@@ -24,8 +21,7 @@ from ..content_protection.fingerprinting import ContentFingerprinter
 
 
 class RightsViolationType(Enum):
-    """Types of rights violations"""
-    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
+    """Types of rights violations"""    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     TRADEMARK_VIOLATION = "trademark_violation"
     PATENT_INFRINGEMENT = "patent_infringement"
     TRADE_SECRET_EXPOSURE = "trade_secret_exposure"
@@ -36,8 +32,7 @@ class RightsViolationType(Enum):
 
 
 class RightsStatus(Enum):
-    """Rights compliance status"""
-    COMPLIANT = "compliant"
+    """Rights compliance status"""    COMPLIANT = "compliant"
     VIOLATION_DETECTED = "violation_detected"
     REVIEW_REQUIRED = "review_required"
     FAIR_USE_CLAIMED = "fair_use_claimed"
@@ -46,8 +41,7 @@ class RightsStatus(Enum):
 
 
 class ContentType(Enum):
-    """Types of content for rights management"""
-    TEXT = "text"
+    """Types of content for rights management"""    TEXT = "text"
     AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
@@ -57,8 +51,7 @@ class ContentType(Enum):
 
 @dataclass
 class RightsViolation:
-    """Rights violation structure"""
-    violation_type: RightsViolationType
+    """Rights violation structure"""    violation_type: RightsViolationType
     description: str
     evidence: List[str]
     confidence_score: float
@@ -72,8 +65,7 @@ class RightsViolation:
 
 @dataclass
 class RightsAssessment:
-    """Rights assessment result structure"""
-    content_id: str
+    """Rights assessment result structure"""    content_id: str
     content_type: ContentType
     rights_status: RightsStatus
     violations: List[RightsViolation]
@@ -88,8 +80,7 @@ class RightsAssessment:
 
 @dataclass
 class ContentLicense:
-    """Content license information"""
-    license_id: str
+    """Content license information"""    license_id: str
     content_reference: str
     license_type: str
     licensor: str
@@ -103,13 +94,11 @@ class ContentLicense:
 
 
 class RightsManager:
-    """
-    Advanced intellectual property rights management system.
+    """    Advanced intellectual property rights management system.
     
     Provides comprehensive rights assessment, violation detection, and compliance
     management for conversational AI content across multiple content types.
-    """
-    
+    """    
     def __init__(
         self,
         db_manager: DatabaseManager,
@@ -139,8 +128,7 @@ class RightsManager:
         self.logger.info("RightsManager initialized with rights protection systems")
     
     def _load_copyright_patterns(self) -> List[Dict[str, Any]]:
-        """Load copyright detection patterns"""
-        return [
+        """Load copyright detection patterns"""        return [
             {
                 "pattern": r"©\s*\d{4}",
                 "description": "Copyright notice with year",
@@ -169,8 +157,7 @@ class RightsManager:
         ]
     
     def _load_trademark_patterns(self) -> List[Dict[str, Any]]:
-        """Load trademark detection patterns"""
-        return [
+        """Load trademark detection patterns"""        return [
             {
                 "pattern": r"\b(Apple|Microsoft|Google|Amazon|Facebook|Meta|Tesla|Nike|Coca-Cola)\b",
                 "description": "Major brand names",
@@ -184,8 +171,7 @@ class RightsManager:
         ]
     
     def _load_fair_use_factors(self) -> Dict[str, Any]:
-        """Load fair use assessment factors"""
-        return {
+        """Load fair use assessment factors"""        return {
             "purpose_and_character": {
                 "educational": 0.8,
                 "commentary": 0.7,
@@ -216,8 +202,7 @@ class RightsManager:
         }
     
     async def _initialize_rights_databases(self) -> None:
-        """Initialize rights databases from various sources"""
-        try:
+        """Initialize rights databases from various sources"""        try:
             # Load known copyrighted works from database
             copyrighted_works = await self.db_manager.fetch_all(
                 "SELECT * FROM copyrighted_works WHERE active = true"
@@ -270,8 +255,7 @@ class RightsManager:
         ai_response: str,
         context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Validate rights compliance for conversational content.
+        """        Validate rights compliance for conversational content.
         
         Args:
             user_input: User's input text
@@ -280,8 +264,7 @@ class RightsManager:
             
         Returns:
             Dict containing rights compliance assessment
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             self.logger.debug("Starting rights compliance validation")
@@ -374,8 +357,7 @@ class RightsManager:
         ai_response: str,
         context: Optional[Dict[str, Any]]
     ) -> RightsAssessment:
-        """Assess content for rights compliance"""
-        content_type = self._determine_content_type(user_input + ai_response)
+        """Assess content for rights compliance"""        content_type = self._determine_content_type(user_input + ai_response)
         
         assessment = RightsAssessment(
             content_id=content_hash,
@@ -399,8 +381,7 @@ class RightsManager:
         ai_response: str,
         context: Optional[Dict[str, Any]]
     ) -> List[RightsViolation]:
-        """Detect potential copyright violations"""
-        violations = []
+        """Detect potential copyright violations"""        violations = []
         combined_content = user_input + " " + ai_response
         
         # Pattern-based detection
@@ -434,8 +415,7 @@ class RightsManager:
         ai_response: str,
         context: Optional[Dict[str, Any]]
     ) -> List[RightsViolation]:
-        """Detect potential trademark violations"""
-        violations = []
+        """Detect potential trademark violations"""        violations = []
         combined_content = user_input + " " + ai_response
         
         # Check against registered trademarks
@@ -461,8 +441,7 @@ class RightsManager:
         return violations
     
     async def _check_content_similarity(self, content: str) -> List[RightsViolation]:
-        """Check content similarity against known copyrighted works"""
-        violations = []
+        """Check content similarity against known copyrighted works"""        violations = []
         
         try:
             # Generate content fingerprint
@@ -496,8 +475,7 @@ class RightsManager:
         return violations
     
     def _assess_trademark_context(self, content: str, trademark: str) -> Dict[str, Any]:
-        """Assess context of trademark usage"""
-        content_lower = content.lower()
+        """Assess context of trademark usage"""        content_lower = content.lower()
         
         # Check for commercial usage indicators
         commercial_indicators = [
@@ -542,8 +520,7 @@ class RightsManager:
         ai_response: str,
         context: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Assess fair use factors for content usage"""
-        combined_content = user_input + " " + ai_response
+        """Assess fair use factors for content usage"""        combined_content = user_input + " " + ai_response
         
         # Purpose and character assessment
         purpose_score = self._assess_purpose_character(combined_content, context)
@@ -571,8 +548,7 @@ class RightsManager:
         }
     
     def _assess_purpose_character(self, content: str, context: Optional[Dict[str, Any]]) -> float:
-        """Assess purpose and character factor for fair use"""
-        content_lower = content.lower()
+        """Assess purpose and character factor for fair use"""        content_lower = content.lower()
         
         educational_indicators = ["learn", "teach", "study", "education", "academic", "research"]
         commentary_indicators = ["review", "analysis", "critique", "opinion", "comment"]
@@ -600,18 +576,15 @@ class RightsManager:
         return max(scores) if scores else 0.5
     
     def _assess_nature_of_work(self, content: str) -> float:
-        """Assess nature of work factor for fair use"""
-        # Default to creative work (conservative approach)
+        """Assess nature of work factor for fair use"""        # Default to creative work (conservative approach)
         return self.fair_use_factors["nature_of_work"]["creative"]
     
     def _assess_amount_used(self, content: str, context: Optional[Dict[str, Any]]) -> float:
-        """Assess amount used factor for fair use"""
-        # For conversational AI, typically minimal amounts
+        """Assess amount used factor for fair use"""        # For conversational AI, typically minimal amounts
         return self.fair_use_factors["amount_used"]["minimal"]
     
     def _assess_market_effect(self, content: str, context: Optional[Dict[str, Any]]) -> float:
-        """Assess market effect factor for fair use"""
-        content_lower = content.lower()
+        """Assess market effect factor for fair use"""        content_lower = content.lower()
         
         commercial_indicators = ["buy", "sell", "purchase", "order", "alternative", "substitute"]
         
@@ -626,8 +599,7 @@ class RightsManager:
         user_input: str,
         ai_response: str
     ) -> Dict[str, Any]:
-        """Check if content is covered by existing licenses"""
-        coverage = {
+        """Check if content is covered by existing licenses"""        coverage = {
             "has_valid_license": False,
             "applicable_licenses": [],
             "attribution_requirements": [],
@@ -664,8 +636,7 @@ class RightsManager:
         return coverage
     
     def _check_usage_permissions(self, content: str, license_info: ContentLicense) -> bool:
-        """Check if content usage is allowed under license"""
-        # Check restrictions
+        """Check if content usage is allowed under license"""        # Check restrictions
         for restriction in license_info.restrictions:
             if restriction.lower() in content.lower():
                 return False
@@ -679,8 +650,7 @@ class RightsManager:
         return True
     
     def _generate_rights_recommendations(self, assessment: RightsAssessment) -> List[str]:
-        """Generate rights compliance recommendations"""
-        recommendations = []
+        """Generate rights compliance recommendations"""        recommendations = []
         
         if assessment.violations:
             recommendations.extend([
@@ -705,8 +675,7 @@ class RightsManager:
         return recommendations
     
     def _generate_legal_warnings(self, assessment: RightsAssessment) -> List[str]:
-        """Generate legal warnings for rights issues"""
-        warnings = []
+        """Generate legal warnings for rights issues"""        warnings = []
         
         high_risk_violations = [
             v for v in assessment.violations 
@@ -725,24 +694,19 @@ class RightsManager:
         return warnings
     
     def _generate_content_hash(self, content: str) -> str:
-        """Generate hash for content identification"""
-        return hashlib.sha256(content.encode('utf-8')).hexdigest()
+        """Generate hash for content identification"""        return hashlib.sha256(content.encode('utf-8')).hexdigest()
     
     def _determine_content_type(self, content: str) -> ContentType:
-        """Determine content type from content analysis"""
-        # For conversational AI, primarily text content
+        """Determine content type from content analysis"""        # For conversational AI, primarily text content
         return ContentType.TEXT
     
     async def _store_rights_assessment(self, assessment: RightsAssessment) -> None:
-        """Store rights assessment results"""
-        try:
-            query = """
-                INSERT INTO rights_assessments 
+        """Store rights assessment results"""        try:
+            query = """                INSERT INTO rights_assessments 
                 (content_id, content_type, rights_status, violations_count, 
                  confidence_score, processing_time_ms, created_at)
                 VALUES ($1, $2, $3, $4, $5, $6, $7)
-            """
-            
+            """            
             await self.db_manager.execute(
                 query,
                 assessment.content_id,
@@ -765,8 +729,7 @@ class RightsManager:
         fingerprint: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Add copyrighted work to database"""
-        try:
+        """Add copyrighted work to database"""        try:
             work_data = {
                 "content_hash": content_hash,
                 "title": title,
@@ -778,8 +741,7 @@ class RightsManager:
             }
             
             await self.db_manager.execute(
-                """
-                INSERT INTO copyrighted_works 
+                """                INSERT INTO copyrighted_works 
                 (content_hash, title, owner, fingerprint, metadata, active, created_at)
                 VALUES ($1, $2, $3, $4, $5, $6, $7)
                 """,
@@ -793,11 +755,9 @@ class RightsManager:
             self.logger.error(f"Error adding copyrighted work: {str(e)}")
     
     async def register_content_license(self, license_info: ContentLicense) -> None:
-        """Register a content license"""
-        try:
+        """Register a content license"""        try:
             await self.db_manager.execute(
-                """
-                INSERT INTO content_licenses 
+                """                INSERT INTO content_licenses 
                 (license_id, content_reference, license_type, licensor, licensee,
                  permissions, restrictions, attribution_requirements, expiry_date,
                  territory, usage_limits, created_at)
@@ -824,18 +784,15 @@ class RightsManager:
             self.logger.error(f"Error registering license: {str(e)}")
     
     async def get_rights_statistics(self, days: int = 30) -> Dict[str, Any]:
-        """Get rights management statistics"""
-        try:
-            stats_query = """
-                SELECT 
+        """Get rights management statistics"""        try:
+            stats_query = """                SELECT 
                     rights_status,
                     COUNT(*) as count,
                     AVG(confidence_score) as avg_confidence
                 FROM rights_assessments 
                 WHERE created_at >= $1
                 GROUP BY rights_status
-            """
-            
+            """            
             stats = await self.db_manager.fetch_all(
                 stats_query,
                 datetime.now() - timedelta(days=days)

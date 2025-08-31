@@ -1,14 +1,11 @@
-"""
-Business Logic Utilities for IA Influencer Agent Platform
+"""Business Logic Utilities for IA Influencer Agent Platform
 Core business processing, monetization, and influencer management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent Platform with Multi-Content Protection
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
-"""
-
-from typing import Dict, List, Optional, Any, Tuple
+"""from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -22,8 +19,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Content type enumeration"""
-    AUDIO = "audio"
+    """Content type enumeration"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -31,8 +27,7 @@ class ContentType(Enum):
 
 
 class PlatformType(Enum):
-    """Platform type enumeration"""
-    SPOTIFY = "spotify"
+    """Platform type enumeration"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -42,8 +37,7 @@ class PlatformType(Enum):
 
 
 class RevenueSource(Enum):
-    """Revenue source enumeration"""
-    STREAMING = "streaming"
+    """Revenue source enumeration"""    STREAMING = "streaming"
     LICENSING = "licensing"
     COLLABORATION = "collaboration"
     SPONSORSHIP = "sponsorship"
@@ -53,8 +47,7 @@ class RevenueSource(Enum):
 
 @dataclass
 class ContentMetrics:
-    """Content performance metrics"""
-    views: int = 0
+    """Content performance metrics"""    views: int = 0
     likes: int = 0
     shares: int = 0
     comments: int = 0
@@ -68,8 +61,7 @@ class ContentMetrics:
 
 @dataclass
 class InfluencerProfile:
-    """Comprehensive influencer profile"""
-    user_id: str
+    """Comprehensive influencer profile"""    user_id: str
     username: str
     display_name: str
     content_types: List[ContentType]
@@ -85,8 +77,7 @@ class InfluencerProfile:
 
 @dataclass
 class RevenueData:
-    """Revenue tracking data"""
-    source: RevenueSource
+    """Revenue tracking data"""    source: RevenueSource
     platform: PlatformType
     amount: Decimal
     currency: str = "EUR"
@@ -96,8 +87,7 @@ class RevenueData:
 
 
 class ContentProcessor:
-    """Advanced content processing and optimization engine"""
-    
+    """Advanced content processing and optimization engine"""    
     def __init__(self):
         self.supported_formats = {
             ContentType.AUDIO: ['.mp3', '.wav', '.flac', '.m4a', '.ogg'],
@@ -107,8 +97,7 @@ class ContentProcessor:
         }
         
     async def process_content_upload(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process uploaded content with optimization and analysis"""
-        try:
+        """Process uploaded content with optimization and analysis"""        try:
             content_type = self._detect_content_type(content_data.get('filename', ''))
             
             processing_result = {
@@ -144,8 +133,7 @@ class ContentProcessor:
             }
     
     def _detect_content_type(self, filename: str) -> ContentType:
-        """Detect content type from filename"""
-        file_ext = '.' + filename.lower().split('.')[-1] if '.' in filename else ''
+        """Detect content type from filename"""        file_ext = '.' + filename.lower().split('.')[-1] if '.' in filename else ''
         
         for content_type, extensions in self.supported_formats.items():
             if file_ext in extensions:
@@ -154,8 +142,7 @@ class ContentProcessor:
         return ContentType.MIXED
     
     async def _process_audio_content(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process audio content specifically"""
-        return {
+        """Process audio content specifically"""        return {
             'optimization_applied': ['audio_normalization', 'format_conversion'],
             'metadata_extracted': {
                 'duration': content_data.get('duration', 0),
@@ -166,8 +153,7 @@ class ContentProcessor:
         }
     
     async def _process_video_content(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process video content specifically"""
-        return {
+        """Process video content specifically"""        return {
             'optimization_applied': ['video_compression', 'thumbnail_generation'],
             'metadata_extracted': {
                 'duration': content_data.get('duration', 0),
@@ -178,8 +164,7 @@ class ContentProcessor:
         }
     
     async def _process_image_content(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process image content specifically"""
-        return {
+        """Process image content specifically"""        return {
             'optimization_applied': ['image_compression', 'format_optimization'],
             'metadata_extracted': {
                 'dimensions': content_data.get('dimensions', '1920x1080'),
@@ -189,8 +174,7 @@ class ContentProcessor:
         }
     
     async def _process_text_content(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process text content specifically"""
-        return {
+        """Process text content specifically"""        return {
             'optimization_applied': ['text_analysis', 'keyword_extraction'],
             'metadata_extracted': {
                 'word_count': content_data.get('word_count', 0),
@@ -200,8 +184,7 @@ class ContentProcessor:
         }
     
     async def _apply_universal_optimizations(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply optimizations common to all content types"""
-        return {
+        """Apply optimizations common to all content types"""        return {
             'seo_optimized': True,
             'protection_enabled': True,
             'tags_generated': content_data.get('auto_tags', []),
@@ -210,8 +193,7 @@ class ContentProcessor:
 
 
 class RevenueCalculator:
-    """Advanced revenue calculation and forecasting engine"""
-    
+    """Advanced revenue calculation and forecasting engine"""    
     def __init__(self):
         self.platform_rates = {
             PlatformType.SPOTIFY: Decimal('0.004'),  # Per stream
@@ -222,8 +204,7 @@ class RevenueCalculator:
         self.commission_rate = Decimal('0.15')  # 15% platform commission
     
     def calculate_content_revenue(self, metrics: ContentMetrics, platform: PlatformType) -> Decimal:
-        """Calculate revenue for specific content"""
-        base_rate = self.platform_rates.get(platform, Decimal('0.001'))
+        """Calculate revenue for specific content"""        base_rate = self.platform_rates.get(platform, Decimal('0.001'))
         
         # Calculate base revenue
         if platform == PlatformType.SPOTIFY:
@@ -245,8 +226,7 @@ class RevenueCalculator:
         return net_revenue.quantize(Decimal('0.01'))
     
     def forecast_revenue(self, historical_data: List[RevenueData], days_ahead: int = 30) -> Dict[str, Any]:
-        """Forecast revenue based on historical data"""
-        if not historical_data:
+        """Forecast revenue based on historical data"""        if not historical_data:
             return {'forecast': Decimal('0.00'), 'confidence': 0.0}
         
         # Sort data by timestamp
@@ -292,8 +272,7 @@ class RevenueCalculator:
         }
     
     def calculate_platform_performance(self, revenue_data: List[RevenueData]) -> Dict[str, Dict[str, Any]]:
-        """Calculate performance metrics by platform"""
-        platform_stats = defaultdict(lambda: {
+        """Calculate performance metrics by platform"""        platform_stats = defaultdict(lambda: {
             'total_revenue': Decimal('0.00'),
             'transaction_count': 0,
             'average_per_transaction': Decimal('0.00'),
@@ -323,8 +302,7 @@ class RevenueCalculator:
         return dict(platform_stats)
     
     def _calculate_growth_rate(self, records: List[RevenueData]) -> float:
-        """Calculate growth rate for revenue records"""
-        if len(records) < 2:
+        """Calculate growth rate for revenue records"""        if len(records) < 2:
             return 0.0
         
         # Sort by timestamp
@@ -342,8 +320,7 @@ class RevenueCalculator:
 
 
 class InfluencerMetrics:
-    """Comprehensive influencer metrics calculation and analysis"""
-    
+    """Comprehensive influencer metrics calculation and analysis"""    
     def __init__(self):
         self.weight_factors = {
             'engagement_rate': 0.3,
@@ -354,8 +331,7 @@ class InfluencerMetrics:
         }
     
     def calculate_influencer_score(self, profile: InfluencerProfile) -> float:
-        """Calculate comprehensive influencer score"""
-        scores = {}
+        """Calculate comprehensive influencer score"""        scores = {}
         
         # Engagement rate score
         avg_engagement = np.mean(list(profile.engagement_rates.values())) if profile.engagement_rates else 0
@@ -385,8 +361,7 @@ class InfluencerMetrics:
         return min(total_score * 100, 100.0)  # Scale to 100
     
     def _calculate_average_metrics(self, content_metrics: Dict[str, ContentMetrics]) -> float:
-        """Calculate average content performance metrics"""
-        if not content_metrics:
+        """Calculate average content performance metrics"""        if not content_metrics:
             return 0.0
         
         total_score = 0
@@ -402,8 +377,7 @@ class InfluencerMetrics:
         return total_score / len(content_metrics)
     
     def _calculate_revenue_score(self, profile: InfluencerProfile) -> float:
-        """Calculate monetization success score"""
-        # This would typically integrate with revenue data
+        """Calculate monetization success score"""        # This would typically integrate with revenue data
         # For now, use tier-based scoring
         tier_scores = {
             'basic': 0.2,
@@ -415,8 +389,7 @@ class InfluencerMetrics:
         return tier_scores.get(profile.monetization_tier, 0.2)
     
     def analyze_content_performance(self, metrics: Dict[str, ContentMetrics]) -> Dict[str, Any]:
-        """Analyze content performance across all content"""
-        if not metrics:
+        """Analyze content performance across all content"""        if not metrics:
             return {'status': 'no_data'}
         
         analysis = {
@@ -431,8 +404,7 @@ class InfluencerMetrics:
         return analysis
     
     def _find_top_performing_content(self, metrics: Dict[str, ContentMetrics]) -> List[Dict[str, Any]]:
-        """Find top performing content"""
-        content_scores = []
+        """Find top performing content"""        content_scores = []
         
         for content_id, metric in metrics.items():
             score = (
@@ -452,8 +424,7 @@ class InfluencerMetrics:
         return content_scores[:5]
     
     def _generate_improvement_suggestions(self, metrics: Dict[str, ContentMetrics]) -> List[str]:
-        """Generate improvement suggestions based on metrics"""
-        suggestions = []
+        """Generate improvement suggestions based on metrics"""        suggestions = []
         
         avg_engagement = np.mean([m.engagement_rate for m in metrics.values()])
         if avg_engagement < 0.03:  # Less than 3%
@@ -471,8 +442,7 @@ class InfluencerMetrics:
 
 
 class CollaborationMatcher:
-    """AI-powered collaboration matching engine"""
-    
+    """AI-powered collaboration matching engine"""    
     def __init__(self):
         self.matching_weights = {
             'content_type_similarity': 0.25,
@@ -489,8 +459,7 @@ class CollaborationMatcher:
         potential_partners: List[InfluencerProfile],
         min_score: float = 0.6
     ) -> List[Dict[str, Any]]:
-        """Find best collaboration matches for an influencer"""
-        matches = []
+        """Find best collaboration matches for an influencer"""        matches = []
         
         for partner in potential_partners:
             if partner.user_id == influencer.user_id:
@@ -511,8 +480,7 @@ class CollaborationMatcher:
         return matches
     
     def _calculate_match_score(self, influencer1: InfluencerProfile, influencer2: InfluencerProfile) -> float:
-        """Calculate collaboration match score between two influencers"""
-        scores = {}
+        """Calculate collaboration match score between two influencers"""        scores = {}
         
         # Content type similarity
         common_types = set(influencer1.content_types) & set(influencer2.content_types)
@@ -547,8 +515,7 @@ class CollaborationMatcher:
         return min(total_score, 1.0)
     
     def _assess_collaboration_potential(self, influencer1: InfluencerProfile, influencer2: InfluencerProfile) -> str:
-        """Assess the potential success of collaboration"""
-        combined_followers = (
+        """Assess the potential success of collaboration"""        combined_followers = (
             sum(influencer1.follower_count.values()) + 
             sum(influencer2.follower_count.values())
         )
@@ -561,8 +528,7 @@ class CollaborationMatcher:
             return "low"
     
     def _suggest_collaboration_content(self, influencer1: InfluencerProfile, influencer2: InfluencerProfile) -> List[str]:
-        """Suggest collaboration content types"""
-        common_types = set(influencer1.content_types) & set(influencer2.content_types)
+        """Suggest collaboration content types"""        common_types = set(influencer1.content_types) & set(influencer2.content_types)
         
         suggestions = []
         if ContentType.AUDIO in common_types:
@@ -576,8 +542,7 @@ class CollaborationMatcher:
 
 
 class MonetizationEngine:
-    """Advanced monetization optimization and management"""
-    
+    """Advanced monetization optimization and management"""    
     def __init__(self):
         self.revenue_sources = [
             RevenueSource.STREAMING,
@@ -587,8 +552,7 @@ class MonetizationEngine:
         ]
     
     async def optimize_monetization(self, profile: InfluencerProfile) -> Dict[str, Any]:
-        """Optimize monetization strategy for influencer"""
-        try:
+        """Optimize monetization strategy for influencer"""        try:
             optimization_plan = {
                 'current_tier': profile.monetization_tier,
                 'recommended_tier': self._recommend_tier(profile),
@@ -604,8 +568,7 @@ class MonetizationEngine:
             return {'error': str(e)}
     
     def _recommend_tier(self, profile: InfluencerProfile) -> str:
-        """Recommend appropriate monetization tier"""
-        total_followers = sum(profile.follower_count.values())
+        """Recommend appropriate monetization tier"""        total_followers = sum(profile.follower_count.values())
         avg_engagement = np.mean(list(profile.engagement_rates.values())) if profile.engagement_rates else 0
         
         if total_followers > 500000 and avg_engagement > 0.05:
@@ -616,8 +579,7 @@ class MonetizationEngine:
             return "basic"
     
     async def _identify_revenue_opportunities(self, profile: InfluencerProfile) -> List[Dict[str, Any]]:
-        """Identify revenue opportunities"""
-        opportunities = []
+        """Identify revenue opportunities"""        opportunities = []
         
         # Streaming optimization
         if ContentType.AUDIO in profile.content_types:
@@ -649,8 +611,7 @@ class MonetizationEngine:
         return opportunities
     
     def _generate_optimization_actions(self, profile: InfluencerProfile) -> List[str]:
-        """Generate actionable optimization recommendations"""
-        actions = []
+        """Generate actionable optimization recommendations"""        actions = []
         
         # Platform-specific actions
         for platform in profile.primary_platforms:
@@ -672,8 +633,7 @@ class MonetizationEngine:
         return actions
     
     def _calculate_revenue_projection(self, profile: InfluencerProfile) -> Dict[str, Decimal]:
-        """Calculate projected revenue increase"""
-        current_estimated = self._estimate_current_revenue(profile)
+        """Calculate projected revenue increase"""        current_estimated = self._estimate_current_revenue(profile)
         optimized_estimated = current_estimated * Decimal('1.35')  # 35% increase potential
         
         return {
@@ -684,8 +644,7 @@ class MonetizationEngine:
         }
     
     def _estimate_current_revenue(self, profile: InfluencerProfile) -> Decimal:
-        """Estimate current revenue based on profile metrics"""
-        total_followers = sum(profile.follower_count.values())
+        """Estimate current revenue based on profile metrics"""        total_followers = sum(profile.follower_count.values())
         avg_engagement = np.mean(list(profile.engagement_rates.values())) if profile.engagement_rates else 0
         
         # Simplified revenue estimation
@@ -697,5 +656,4 @@ class MonetizationEngine:
 
 
 class BusinessLogicError(Exception):
-    """Custom exception for business logic errors"""
-    pass
+    """Custom exception for business logic errors"""    pass

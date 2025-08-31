@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Monetization Filters
+"""IA Influencer Agent - Monetization Filters
 =========================================
 
 Ultra-advanced professional monetization assessment system for content validation.
@@ -28,9 +27,7 @@ Technical Team Expertise:
 - IA Prompt Engineer: Prompt optimization and AI interaction
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import json
@@ -45,8 +42,7 @@ from .filter_engine import FilterResponse, FilterResult, FilterType, ContentItem
 
 
 class MonetizationTier(Enum):
-    """Monetization tier levels."""
-    PREMIUM = "premium"        # 80-100% potential
+    """Monetization tier levels."""    PREMIUM = "premium"        # 80-100% potential
     STANDARD = "standard"      # 60-79% potential  
     BASIC = "basic"           # 40-59% potential
     LIMITED = "limited"       # 20-39% potential
@@ -54,8 +50,7 @@ class MonetizationTier(Enum):
 
 
 class RevenueModel(Enum):
-    """Revenue generation models."""
-    STREAMING = "streaming"
+    """Revenue generation models."""    STREAMING = "streaming"
     LICENSING = "licensing"
     SYNC_RIGHTS = "sync_rights"
     MERCHANDISING = "merchandising"
@@ -68,8 +63,7 @@ class RevenueModel(Enum):
 
 
 class Platform(Enum):
-    """Monetization platforms."""
-    SPOTIFY = "spotify"
+    """Monetization platforms."""    SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE = "youtube"
     YOUTUBE_MUSIC = "youtube_music"
@@ -85,8 +79,7 @@ class Platform(Enum):
 
 @dataclass
 class MonetizationMetrics:
-    """Monetization assessment metrics."""
-    overall_potential: float = 0.0
+    """Monetization assessment metrics."""    overall_potential: float = 0.0
     tier: MonetizationTier = MonetizationTier.MINIMAL
     recommended_models: List[RevenueModel] = None
     platform_suitability: Dict[str, float] = None
@@ -111,11 +104,9 @@ class MonetizationMetrics:
 
 
 class MarketAnalyzer:
-    """Analyzes market potential and trends."""
-    
+    """Analyzes market potential and trends."""    
     def __init__(self):
-        """Initialize market analyzer."""
-        self.logger = logging.getLogger(__name__)
+        """Initialize market analyzer."""        self.logger = logging.getLogger(__name__)
         
         # Market data for different content types and genres
         self.genre_multipliers = {
@@ -147,8 +138,7 @@ class MarketAnalyzer:
         }
     
     async def analyze_market_potential(self, content_item: ContentItem) -> Dict[str, Any]:
-        """Analyze market potential for content."""
-        try:
+        """Analyze market potential for content."""        try:
             market_analysis = {
                 "genre_appeal": await self._analyze_genre_appeal(content_item),
                 "demographic_reach": await self._analyze_demographic_reach(content_item),
@@ -175,8 +165,7 @@ class MarketAnalyzer:
             return {"overall_score": 0.5, "error": str(e)}
     
     async def _analyze_genre_appeal(self, content_item: ContentItem) -> float:
-        """Analyze genre market appeal."""
-        try:
+        """Analyze genre market appeal."""        try:
             base_score = 0.6
             
             if content_item.metadata:
@@ -194,8 +183,7 @@ class MarketAnalyzer:
             return 0.5
     
     async def _analyze_demographic_reach(self, content_item: ContentItem) -> float:
-        """Analyze demographic reach potential."""
-        try:
+        """Analyze demographic reach potential."""        try:
             # Base demographic score
             score = 0.6
             
@@ -223,8 +211,7 @@ class MarketAnalyzer:
             return 0.5
     
     async def _analyze_seasonal_trends(self, content_item: ContentItem) -> Dict[str, float]:
-        """Analyze seasonal monetization trends."""
-        try:
+        """Analyze seasonal monetization trends."""        try:
             # Default seasonal distribution
             seasonal_scores = {
                 "spring": 0.7,
@@ -254,8 +241,7 @@ class MarketAnalyzer:
             return {"spring": 0.6, "summer": 0.6, "autumn": 0.6, "winter": 0.6}
     
     async def _analyze_competition_level(self, content_item: ContentItem) -> float:
-        """Analyze competition level in the market."""
-        try:
+        """Analyze competition level in the market."""        try:
             # Base competition level (higher = more competition)
             competition_score = 0.7
             
@@ -282,8 +268,7 @@ class MarketAnalyzer:
             return 0.5
     
     async def _analyze_viral_potential(self, content_item: ContentItem) -> float:
-        """Analyze viral potential of content."""
-        try:
+        """Analyze viral potential of content."""        try:
             viral_score = 0.5
             
             # Duration factor for viral content
@@ -311,8 +296,7 @@ class MarketAnalyzer:
             return 0.5
     
     async def _analyze_content_longevity(self, content_item: ContentItem) -> float:
-        """Analyze content longevity for sustained revenue."""
-        try:
+        """Analyze content longevity for sustained revenue."""        try:
             longevity_score = 0.6
             
             if content_item.metadata:
@@ -341,8 +325,7 @@ class MarketAnalyzer:
             return 0.6
     
     async def _analyze_cross_platform_appeal(self, content_item: ContentItem) -> float:
-        """Analyze cross-platform monetization appeal."""
-        try:
+        """Analyze cross-platform monetization appeal."""        try:
             cross_platform_score = 0.5
             
             content_type = self._get_content_type(content_item)
@@ -371,8 +354,7 @@ class MarketAnalyzer:
             return 0.5
     
     def _get_content_type(self, content_item: ContentItem) -> str:
-        """Determine content type from item."""
-        if content_item.mime_type:
+        """Determine content type from item."""        if content_item.mime_type:
             if content_item.mime_type.startswith("video/"):
                 return "video"
             elif content_item.mime_type.startswith("audio/"):
@@ -386,17 +368,14 @@ class MarketAnalyzer:
 
 
 class RevenueEstimator:
-    """Estimates potential revenue from content."""
-    
+    """Estimates potential revenue from content."""    
     def __init__(self, market_analyzer: MarketAnalyzer):
-        """Initialize revenue estimator."""
-        self.logger = logging.getLogger(__name__)
+        """Initialize revenue estimator."""        self.logger = logging.getLogger(__name__)
         self.market_analyzer = market_analyzer
     
     async def estimate_revenue_potential(self, content_item: ContentItem, 
                                        market_analysis: Dict[str, Any]) -> Dict[str, Decimal]:
-        """Estimate revenue potential across different models."""
-        try:
+        """Estimate revenue potential across different models."""        try:
             revenue_estimates = {}
             
             # Streaming revenue estimates
@@ -423,8 +402,7 @@ class RevenueEstimator:
     
     async def _estimate_streaming_revenue(self, content_item: ContentItem, 
                                         market_analysis: Dict[str, Any]) -> Dict[str, Decimal]:
-        """Estimate streaming platform revenue."""
-        estimates = {}
+        """Estimate streaming platform revenue."""        estimates = {}
         
         try:
             base_streams = 1000  # Conservative base estimate
@@ -453,8 +431,7 @@ class RevenueEstimator:
     
     async def _estimate_licensing_revenue(self, content_item: ContentItem, 
                                         market_analysis: Dict[str, Any]) -> Dict[str, Decimal]:
-        """Estimate licensing revenue potential."""
-        estimates = {}
+        """Estimate licensing revenue potential."""        estimates = {}
         
         try:
             content_type = self.market_analyzer._get_content_type(content_item)
@@ -484,8 +461,7 @@ class RevenueEstimator:
     
     async def _estimate_sync_revenue(self, content_item: ContentItem, 
                                    market_analysis: Dict[str, Any]) -> Dict[str, Decimal]:
-        """Estimate synchronization rights revenue."""
-        estimates = {}
+        """Estimate synchronization rights revenue."""        estimates = {}
         
         try:
             content_type = self.market_analyzer._get_content_type(content_item)
@@ -507,8 +483,7 @@ class RevenueEstimator:
     
     async def _estimate_social_media_revenue(self, content_item: ContentItem, 
                                            market_analysis: Dict[str, Any]) -> Dict[str, Decimal]:
-        """Estimate social media monetization revenue."""
-        estimates = {}
+        """Estimate social media monetization revenue."""        estimates = {}
         
         try:
             viral_potential = market_analysis.get("viral_potential", 0.5)
@@ -535,18 +510,15 @@ class RevenueEstimator:
 
 
 class MonetizationEngine:
-    """Main monetization assessment engine."""
-    
+    """Main monetization assessment engine."""    
     def __init__(self, config_manager: FilterConfigManager):
-        """Initialize monetization engine."""
-        self.config_manager = config_manager
+        """Initialize monetization engine."""        self.config_manager = config_manager
         self.logger = logging.getLogger(__name__)
         self.market_analyzer = MarketAnalyzer()
         self.revenue_estimator = RevenueEstimator(self.market_analyzer)
     
     async def assess_monetization_potential(self, content_item: ContentItem) -> MonetizationMetrics:
-        """Assess comprehensive monetization potential."""
-        try:
+        """Assess comprehensive monetization potential."""        try:
             start_time = time.time()
             
             # Market analysis
@@ -597,8 +569,7 @@ class MonetizationEngine:
             )
     
     def _determine_monetization_tier(self, potential_score: float) -> MonetizationTier:
-        """Determine monetization tier from potential score."""
-        if potential_score >= 0.8:
+        """Determine monetization tier from potential score."""        if potential_score >= 0.8:
             return MonetizationTier.PREMIUM
         elif potential_score >= 0.6:
             return MonetizationTier.STANDARD
@@ -611,8 +582,7 @@ class MonetizationEngine:
     
     async def _recommend_revenue_models(self, content_item: ContentItem, 
                                       market_analysis: Dict[str, Any]) -> List[RevenueModel]:
-        """Recommend optimal revenue models."""
-        models = []
+        """Recommend optimal revenue models."""        models = []
         
         try:
             content_type = self.market_analyzer._get_content_type(content_item)
@@ -646,8 +616,7 @@ class MonetizationEngine:
     
     async def _analyze_platform_suitability(self, content_item: ContentItem, 
                                           market_analysis: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze suitability for different platforms."""
-        suitability = {}
+        """Analyze suitability for different platforms."""        suitability = {}
         
         try:
             content_type = self.market_analyzer._get_content_type(content_item)
@@ -682,8 +651,7 @@ class MonetizationEngine:
     async def _generate_optimization_suggestions(self, content_item: ContentItem, 
                                                market_analysis: Dict[str, Any],
                                                overall_potential: float) -> List[str]:
-        """Generate monetization optimization suggestions."""
-        suggestions = []
+        """Generate monetization optimization suggestions."""        suggestions = []
         
         try:
             # General optimization
@@ -720,8 +688,7 @@ class MonetizationEngine:
     
     async def _assess_monetization_risks(self, content_item: ContentItem, 
                                        market_analysis: Dict[str, Any]) -> Dict[str, float]:
-        """Assess monetization risks."""
-        risks = {}
+        """Assess monetization risks."""        risks = {}
         
         try:
             # Copyright risk

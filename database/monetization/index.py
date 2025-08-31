@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Monetization Module Index - IA Influencer Agent + Content Protection Platform
+"""Monetization Module Index - IA Influencer Agent + Content Protection Platform
 
 Ultra-advanced monetization system entry point for multi-format content creators
 including revenue tracking, optimization, compliance, and financial management.
@@ -26,9 +25,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -36,8 +33,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 def main():
-    """Main entry point for monetization module"""
-    
+    """Main entry point for monetization module"""    
     print("🚀 IA Influencer Agent + Content Protection Platform")
     print("💰 Ultra-Advanced Monetization Database Module")
     print("=" * 60)
@@ -89,8 +85,7 @@ def main():
     return 0
 
 def test_imports():
-    """Test all module imports"""
-    
+    """Test all module imports"""    
     print("\n🔍 Testing module imports...")
     
     try:
@@ -128,8 +123,7 @@ def test_imports():
         return False
 
 def show_module_info(module_name: str):
-    """Show detailed information about a specific module"""
-    
+    """Show detailed information about a specific module"""    
     module_descriptions = {
         "revenue_models": {
             "description": "Core revenue tracking models with advanced analytics",

@@ -1,5 +1,4 @@
-"""
-Quality Assessment Performance Monitor
+"""Quality Assessment Performance Monitor
 
 Advanced performance monitoring and metrics collection for quality assessment operations.
 Provides real-time monitoring, performance analytics, and resource optimization.
@@ -13,9 +12,7 @@ intellectual property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, re
 distribution, modification, or appropriation of this code, in whole or in part, without 
 explicit written permission from Fahed Mlaiel is strictly prohibited and will be prosecuted 
 to the full extent of the law.
-"""
-
-import asyncio
+"""import asyncio
 import time
 import logging
 import psutil
@@ -33,8 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics to collect"""
-    PROCESSING_TIME = "processing_time"
+    """Types of metrics to collect"""    PROCESSING_TIME = "processing_time"
     MEMORY_USAGE = "memory_usage"
     CPU_USAGE = "cpu_usage"
     DISK_IO = "disk_io"
@@ -47,8 +43,7 @@ class MetricType(Enum):
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
-    INFO = "info"
+    """Alert severity levels"""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
@@ -56,8 +51,7 @@ class AlertSeverity(Enum):
 
 @dataclass
 class PerformanceMetric:
-    """Individual performance metric"""
-    name: str
+    """Individual performance metric"""    name: str
     value: float
     unit: str
     timestamp: datetime
@@ -65,8 +59,7 @@ class PerformanceMetric:
     context: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert metric to dictionary"""
-        return {
+        """Convert metric to dictionary"""        return {
             'name': self.name,
             'value': self.value,
             'unit': self.unit,
@@ -78,8 +71,7 @@ class PerformanceMetric:
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert"""
-    message: str
+    """Performance alert"""    message: str
     severity: AlertSeverity
     metric_name: str
     threshold_value: float
@@ -88,8 +80,7 @@ class PerformanceAlert:
     context: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert alert to dictionary"""
-        return {
+        """Convert alert to dictionary"""        return {
             'message': self.message,
             'severity': self.severity.value,
             'metric_name': self.metric_name,
@@ -102,8 +93,7 @@ class PerformanceAlert:
 
 @dataclass
 class SystemResourceInfo:
-    """System resource information"""
-    cpu_percent: float
+    """System resource information"""    cpu_percent: float
     memory_percent: float
     memory_available_mb: float
     disk_usage_percent: float
@@ -113,8 +103,7 @@ class SystemResourceInfo:
     timestamp: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'cpu_percent': self.cpu_percent,
             'memory_percent': self.memory_percent,
             'memory_available_mb': self.memory_available_mb,
@@ -127,21 +116,17 @@ class SystemResourceInfo:
 
 
 class PerformanceTracker:
-    """
-    Performance tracking and monitoring system
+    """    Performance tracking and monitoring system
     
     Tracks performance metrics, system resources, and generates alerts
     for quality assessment operations.
-    """
-    
+    """    
     def __init__(self, max_history_size: int = 10000):
-        """
-        Initialize performance tracker
+        """        Initialize performance tracker
         
         Args:
             max_history_size: Maximum number of metrics to keep in history
-        """
-        self.max_history_size = max_history_size
+        """        self.max_history_size = max_history_size
         self.metrics_history: Dict[str, deque] = defaultdict(lambda: deque(maxlen=max_history_size))
         self.alerts: List[PerformanceAlert] = []
         self.thresholds: Dict[str, Dict[str, float]] = {}
@@ -158,8 +143,7 @@ class PerformanceTracker:
         self._set_default_thresholds()
     
     def _set_default_thresholds(self):
-        """Set default performance thresholds"""
-        self.thresholds = {
+        """Set default performance thresholds"""        self.thresholds = {
             'processing_time': {
                 'warning': 30.0,    # 30 seconds
                 'critical': 60.0    # 60 seconds
@@ -187,13 +171,11 @@ class PerformanceTracker:
         }
     
     def start_monitoring(self, interval: float = 5.0):
-        """
-        Start system resource monitoring
+        """        Start system resource monitoring
         
         Args:
             interval: Monitoring interval in seconds
-        """
-        if self.monitoring_active:
+        """        if self.monitoring_active:
             logger.warning("Performance monitoring already active")
             return
         
@@ -207,8 +189,7 @@ class PerformanceTracker:
         logger.info("Performance monitoring started")
     
     def stop_monitoring(self):
-        """Stop system resource monitoring"""
-        if not self.monitoring_active:
+        """Stop system resource monitoring"""        if not self.monitoring_active:
             return
         
         self.monitoring_active = False
@@ -217,8 +198,7 @@ class PerformanceTracker:
         logger.info("Performance monitoring stopped")
     
     def _monitor_system_resources(self, interval: float):
-        """Monitor system resources continuously"""
-        logger.info(f"System resource monitoring started with {interval}s interval")
+        """Monitor system resources continuously"""        logger.info(f"System resource monitoring started with {interval}s interval")
         
         while self.monitoring_active:
             try:
@@ -236,8 +216,7 @@ class PerformanceTracker:
                 time.sleep(interval)
     
     def _collect_system_resources(self) -> SystemResourceInfo:
-        """Collect current system resource information"""
-        # CPU usage
+        """Collect current system resource information"""        # CPU usage
         cpu_percent = psutil.cpu_percent(interval=1)
         
         # Memory usage
@@ -267,8 +246,7 @@ class PerformanceTracker:
         )
     
     def _check_resource_thresholds(self, resource_info: SystemResourceInfo):
-        """Check resource metrics against thresholds"""
-        checks = [
+        """Check resource metrics against thresholds"""        checks = [
             ('cpu_usage', resource_info.cpu_percent, '%'),
             ('memory_usage', resource_info.memory_percent, '%'),
             ('disk_usage', resource_info.disk_usage_percent, '%')
@@ -285,8 +263,7 @@ class PerformanceTracker:
         metric_type: MetricType = MetricType.PROCESSING_TIME,
         context: Optional[Dict[str, Any]] = None
     ):
-        """
-        Record a performance metric
+        """        Record a performance metric
         
         Args:
             name: Metric name
@@ -294,8 +271,7 @@ class PerformanceTracker:
             unit: Unit of measurement
             metric_type: Type of metric
             context: Additional context information
-        """
-        metric = PerformanceMetric(
+        """        metric = PerformanceMetric(
             name=name,
             value=value,
             unit=unit,
@@ -312,8 +288,7 @@ class PerformanceTracker:
         logger.debug(f"Recorded metric: {name} = {value} {unit}")
     
     def _check_threshold(self, metric_name: str, value: float, unit: str):
-        """Check if metric value exceeds thresholds"""
-        if metric_name not in self.thresholds:
+        """Check if metric value exceeds thresholds"""        if metric_name not in self.thresholds:
             return
         
         thresholds = self.thresholds[metric_name]
@@ -340,29 +315,25 @@ class PerformanceTracker:
         logger.warning(f"Performance alert: {alert.message}")
     
     def record_operation(self, operation_name: str, success: bool = True):
-        """
-        Record operation execution
+        """        Record operation execution
         
         Args:
             operation_name: Name of the operation
             success: Whether operation was successful
-        """
-        self.operation_counters[operation_name] += 1
+        """        self.operation_counters[operation_name] += 1
         
         if not success:
             self.error_counters[operation_name] += 1
     
     def get_metric_statistics(self, metric_name: str) -> Dict[str, float]:
-        """
-        Get statistical summary of a metric
+        """        Get statistical summary of a metric
         
         Args:
             metric_name: Name of the metric
             
         Returns:
             Dictionary with statistical summary
-        """
-        if metric_name not in self.metrics_history:
+        """        if metric_name not in self.metrics_history:
             return {}
         
         values = [m.value for m in self.metrics_history[metric_name]]
@@ -380,16 +351,14 @@ class PerformanceTracker:
         }
     
     def get_error_rate(self, operation_name: str) -> float:
-        """
-        Calculate error rate for an operation
+        """        Calculate error rate for an operation
         
         Args:
             operation_name: Name of the operation
             
         Returns:
             Error rate as percentage
-        """
-        total = self.operation_counters.get(operation_name, 0)
+        """        total = self.operation_counters.get(operation_name, 0)
         errors = self.error_counters.get(operation_name, 0)
         
         if total == 0:
@@ -398,8 +367,7 @@ class PerformanceTracker:
         return (errors / total) * 100
     
     def get_throughput(self, operation_name: str, time_window_minutes: int = 60) -> float:
-        """
-        Calculate throughput for an operation
+        """        Calculate throughput for an operation
         
         Args:
             operation_name: Name of the operation
@@ -407,8 +375,7 @@ class PerformanceTracker:
             
         Returns:
             Operations per minute
-        """
-        cutoff_time = datetime.now() - timedelta(minutes=time_window_minutes)
+        """        cutoff_time = datetime.now() - timedelta(minutes=time_window_minutes)
         
         # Count operations in time window
         count = 0
@@ -420,13 +387,11 @@ class PerformanceTracker:
         return count / time_window_minutes if time_window_minutes > 0 else 0.0
     
     def get_performance_summary(self) -> Dict[str, Any]:
-        """
-        Get comprehensive performance summary
+        """        Get comprehensive performance summary
         
         Returns:
             Dictionary with performance summary
-        """
-        uptime = datetime.now() - self.start_time
+        """        uptime = datetime.now() - self.start_time
         
         # Calculate overall statistics
         total_operations = sum(self.operation_counters.values())
@@ -461,16 +426,14 @@ class PerformanceTracker:
         }
     
     def export_metrics(self, format: str = 'json') -> str:
-        """
-        Export metrics to specified format
+        """        Export metrics to specified format
         
         Args:
             format: Export format ('json', 'csv')
             
         Returns:
             Exported metrics as string
-        """
-        if format.lower() == 'json':
+        """        if format.lower() == 'json':
             return json.dumps(self.get_performance_summary(), indent=2, default=str)
         elif format.lower() == 'csv':
             # Simple CSV export for metrics
@@ -485,8 +448,7 @@ class PerformanceTracker:
             raise ValueError(f"Unsupported export format: {format}")
     
     def reset_metrics(self):
-        """Reset all metrics and counters"""
-        self.metrics_history.clear()
+        """Reset all metrics and counters"""        self.metrics_history.clear()
         self.alerts.clear()
         self.operation_counters.clear()
         self.error_counters.clear()
@@ -504,15 +466,13 @@ def monitor_performance(
     track_memory: bool = True,
     track_cpu: bool = False
 ):
-    """
-    Decorator to monitor function performance
+    """    Decorator to monitor function performance
     
     Args:
         operation_name: Name of the operation (defaults to function name)
         track_memory: Whether to track memory usage
         track_cpu: Whether to track CPU usage
-    """
-    def decorator(func: Callable) -> Callable:
+    """    def decorator(func: Callable) -> Callable:
         @wraps(func)
         async def async_wrapper(*args, **kwargs):
             op_name = operation_name or func.__name__
@@ -600,23 +560,19 @@ def monitor_performance(
 
 # Utility functions
 def get_performance_summary() -> Dict[str, Any]:
-    """Get current performance summary"""
-    return performance_tracker.get_performance_summary()
+    """Get current performance summary"""    return performance_tracker.get_performance_summary()
 
 
 def start_performance_monitoring(interval: float = 5.0):
-    """Start performance monitoring"""
-    performance_tracker.start_monitoring(interval)
+    """Start performance monitoring"""    performance_tracker.start_monitoring(interval)
 
 
 def stop_performance_monitoring():
-    """Stop performance monitoring"""
-    performance_tracker.stop_monitoring()
+    """Stop performance monitoring"""    performance_tracker.stop_monitoring()
 
 
 def record_custom_metric(name: str, value: float, unit: str = ""):
-    """Record a custom performance metric"""
-    performance_tracker.record_metric(name, value, unit)
+    """Record a custom performance metric"""    performance_tracker.record_metric(name, value, unit)
 
 
 # Export performance monitoring components

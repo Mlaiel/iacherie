@@ -1,5 +1,4 @@
-"""
-API Connectors - External Services Integration Hub
+"""API Connectors - External Services Integration Hub
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -14,9 +13,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 This module provides comprehensive API integration capabilities for external services
 including streaming platforms, payment processors, analytics services, and content
 distribution networks.
-"""
-
-import logging
+"""import logging
 import asyncio
 import aiohttp
 import jwt
@@ -39,8 +36,7 @@ logger = logging.getLogger(__name__)
 T = TypeVar('T')
 
 class APIProvider(Enum):
-    """Supported API providers"""
-    SPOTIFY = "spotify"
+    """Supported API providers"""    SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     SOUNDCLOUD = "soundcloud"
     YOUTUBE_MUSIC = "youtube_music"
@@ -62,8 +58,7 @@ class APIProvider(Enum):
     FASTLY = "fastly"
 
 class APIConnectionStatus(Enum):
-    """API connection status"""
-    CONNECTED = auto()
+    """API connection status"""    CONNECTED = auto()
     DISCONNECTED = auto()
     AUTHENTICATING = auto()
     ERROR = auto()
@@ -73,8 +68,7 @@ class APIConnectionStatus(Enum):
     INVALID_CREDENTIALS = auto()
 
 class APIAuthType(Enum):
-    """Authentication types"""
-    OAUTH2 = "oauth2"
+    """Authentication types"""    OAUTH2 = "oauth2"
     API_KEY = "api_key"
     JWT = "jwt"
     BASIC_AUTH = "basic_auth"
@@ -84,8 +78,7 @@ class APIAuthType(Enum):
 
 @dataclass
 class APICredentials:
-    """API authentication credentials"""
-    provider: APIProvider
+    """API authentication credentials"""    provider: APIProvider
     auth_type: APIAuthType
     api_key: Optional[str] = None
     secret_key: Optional[str] = None
@@ -104,8 +97,7 @@ class APICredentials:
 
 @dataclass 
 class APIRequestConfig:
-    """API request configuration"""
-    method: str = "GET"
+    """API request configuration"""    method: str = "GET"
     endpoint: str = ""
     params: Dict[str, Any] = field(default_factory=dict)
     headers: Dict[str, str] = field(default_factory=dict)
@@ -120,8 +112,7 @@ class APIRequestConfig:
 
 @dataclass
 class APIResponse(Generic[T]):
-    """API response wrapper"""
-    success: bool
+    """API response wrapper"""    success: bool
     status_code: Optional[int] = None
     data: Optional[T] = None
     error_message: Optional[str] = None
@@ -132,8 +123,7 @@ class APIResponse(Generic[T]):
     provider: Optional[APIProvider] = None
 
 class APIConnectorError(Exception):
-    """Custom exception for API connector errors"""
-    def __init__(self, message: str, error_code: Optional[str] = None, 
+    """Custom exception for API connector errors"""    def __init__(self, message: str, error_code: Optional[str] = None, 
                  provider: Optional[APIProvider] = None):
         super().__init__(message)
         self.error_code = error_code
@@ -141,8 +131,7 @@ class APIConnectorError(Exception):
         self.timestamp = datetime.utcnow()
 
 class RateLimiter:
-    """Advanced rate limiter with multiple strategies"""
-    
+    """Advanced rate limiter with multiple strategies"""    
     def __init__(self, requests_per_minute: int = 60, 
                  requests_per_hour: int = 3600, 
                  burst_limit: int = 10):
@@ -155,8 +144,7 @@ class RateLimiter:
         self.lock = asyncio.Lock()
     
     async def acquire(self) -> bool:
-        """Acquire rate limit permission"""
-        async with self.lock:
+        """Acquire rate limit permission"""        async with self.lock:
             now = datetime.utcnow()
             
             # Clean old entries
@@ -182,8 +170,7 @@ class RateLimiter:
             return True
     
     def get_wait_time(self) -> float:
-        """Get time to wait before next request"""
-        now = datetime.utcnow()
+        """Get time to wait before next request"""        now = datetime.utcnow()
         
         if self.minute_window and len(self.minute_window) >= self.requests_per_minute:
             oldest = min(self.minute_window)
@@ -196,8 +183,7 @@ class RateLimiter:
         return 0.0
 
 class BaseAPIConnector(ABC, Generic[T]):
-    """Base class for all API connectors"""
-    
+    """Base class for all API connectors"""    
     def __init__(self, credentials: APICredentials, provider: APIProvider):
         self.credentials = credentials
         self.provider = provider
@@ -216,17 +202,14 @@ class BaseAPIConnector(ABC, Generic[T]):
             self.cipher = None
     
     async def __aenter__(self):
-        """Async context manager entry"""
-        await self._create_session()
+        """Async context manager entry"""        await self._create_session()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
-        await self._close_session()
+        """Async context manager exit"""        await self._close_session()
     
     async def _create_session(self):
-        """Create HTTP session"""
-        if not self.session:
+        """Create HTTP session"""        if not self.session:
             timeout = aiohttp.ClientTimeout(total=30, connect=10)
             connector = aiohttp.TCPConnector(
                 ssl=ssl.create_default_context() if self.credentials.base_url and 
@@ -242,14 +225,12 @@ class BaseAPIConnector(ABC, Generic[T]):
             )
     
     async def _close_session(self):
-        """Close HTTP session"""
-        if self.session:
+        """Close HTTP session"""        if self.session:
             await self.session.close()
             self.session = None
     
     def _get_default_headers(self) -> Dict[str, str]:
-        """Get default headers for requests"""
-        headers = {
+        """Get default headers for requests"""        headers = {
             'User-Agent': 'IA-Influencer-Agent/1.0',
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -258,35 +239,29 @@ class BaseAPIConnector(ABC, Generic[T]):
         return headers
     
     def _encrypt_sensitive_data(self, data: str) -> str:
-        """Encrypt sensitive data"""
-        if self.cipher:
+        """Encrypt sensitive data"""        if self.cipher:
             return self.cipher.encrypt(data.encode()).decode()
         return data
     
     def _decrypt_sensitive_data(self, encrypted_data: str) -> str:
-        """Decrypt sensitive data"""
-        if self.cipher:
+        """Decrypt sensitive data"""        if self.cipher:
             return self.cipher.decrypt(encrypted_data.encode()).decode()
         return encrypted_data
     
     @abstractmethod
     async def authenticate(self) -> bool:
-        """Authenticate with the API"""
-        pass
+        """Authenticate with the API"""        pass
     
     @abstractmethod
     async def refresh_credentials(self) -> bool:
-        """Refresh authentication credentials"""
-        pass
+        """Refresh authentication credentials"""        pass
     
     @abstractmethod
     def _prepare_auth_headers(self) -> Dict[str, str]:
-        """Prepare authentication headers"""
-        pass
+        """Prepare authentication headers"""        pass
     
     async def _make_request(self, config: APIRequestConfig) -> APIResponse[T]:
-        """Make HTTP request with comprehensive error handling"""
-        if not self.session:
+        """Make HTTP request with comprehensive error handling"""        if not self.session:
             await self._create_session()
         
         # Rate limiting
@@ -425,8 +400,7 @@ class BaseAPIConnector(ABC, Generic[T]):
         )
     
     def _parse_rate_limit_headers(self, headers: Dict[str, str]) -> Optional[Dict[str, Any]]:
-        """Parse rate limit information from response headers"""
-        rate_limit = {}
+        """Parse rate limit information from response headers"""        rate_limit = {}
         
         # Common rate limit header patterns
         patterns = [
@@ -448,8 +422,7 @@ class BaseAPIConnector(ABC, Generic[T]):
         return rate_limit if rate_limit else None
     
     async def test_connection(self) -> APIResponse[Dict[str, Any]]:
-        """Test API connection"""
-        test_config = APIRequestConfig(
+        """Test API connection"""        test_config = APIRequestConfig(
             method="GET",
             endpoint="/health" if hasattr(self, '_health_endpoint') else "/",
             timeout=10
@@ -465,22 +438,18 @@ class BaseAPIConnector(ABC, Generic[T]):
         return response
     
     def get_status(self) -> APIConnectionStatus:
-        """Get current connection status"""
-        return self.status
+        """Get current connection status"""        return self.status
     
     def get_error_count(self) -> int:
-        """Get current error count"""
-        return self.error_count
+        """Get current error count"""        return self.error_count
     
     def reset_error_count(self):
-        """Reset error count"""
-        self.error_count = 0
+        """Reset error count"""        self.error_count = 0
         if self.error_count == 0:
             self.status = APIConnectionStatus.DISCONNECTED
 
 class StreamingPlatformConnector(BaseAPIConnector[Dict[str, Any]]):
-    """Specialized connector for streaming platforms"""
-    
+    """Specialized connector for streaming platforms"""    
     def __init__(self, credentials: APICredentials, provider: APIProvider):
         super().__init__(credentials, provider)
         self.track_cache = {}
@@ -488,8 +457,7 @@ class StreamingPlatformConnector(BaseAPIConnector[Dict[str, Any]]):
         self.playlist_cache = {}
     
     async def authenticate(self) -> bool:
-        """Authenticate with streaming platform"""
-        try:
+        """Authenticate with streaming platform"""        try:
             if self.credentials.auth_type == APIAuthType.OAUTH2:
                 return await self._oauth2_authenticate()
             elif self.credentials.auth_type == APIAuthType.API_KEY:
@@ -503,8 +471,7 @@ class StreamingPlatformConnector(BaseAPIConnector[Dict[str, Any]]):
             return False
     
     async def _oauth2_authenticate(self) -> bool:
-        """OAuth2 authentication flow"""
-        auth_config = APIRequestConfig(
+        """OAuth2 authentication flow"""        auth_config = APIRequestConfig(
             method="POST",
             endpoint="/api/token",
             data={
@@ -528,14 +495,12 @@ class StreamingPlatformConnector(BaseAPIConnector[Dict[str, Any]]):
         return False
     
     async def _api_key_authenticate(self) -> bool:
-        """API key authentication"""
-        # Simple test request to verify API key
+        """API key authentication"""        # Simple test request to verify API key
         test_response = await self.test_connection()
         return test_response.success
     
     async def refresh_credentials(self) -> bool:
-        """Refresh OAuth2 credentials"""
-        if not self.credentials.refresh_token:
+        """Refresh OAuth2 credentials"""        if not self.credentials.refresh_token:
             return await self.authenticate()
         
         refresh_config = APIRequestConfig(
@@ -566,16 +531,14 @@ class StreamingPlatformConnector(BaseAPIConnector[Dict[str, Any]]):
         return False
     
     def _prepare_auth_headers(self) -> Dict[str, str]:
-        """Prepare authentication headers"""
-        if self.credentials.auth_type == APIAuthType.OAUTH2 and self.credentials.access_token:
+        """Prepare authentication headers"""        if self.credentials.auth_type == APIAuthType.OAUTH2 and self.credentials.access_token:
             return {'Authorization': f'Bearer {self.credentials.access_token}'}
         elif self.credentials.auth_type == APIAuthType.API_KEY and self.credentials.api_key:
             return {'X-API-Key': self.credentials.api_key}
         return {}
     
     async def search_tracks(self, query: str, limit: int = 50) -> APIResponse[List[Dict[str, Any]]]:
-        """Search for tracks"""
-        search_config = APIRequestConfig(
+        """Search for tracks"""        search_config = APIRequestConfig(
             method="GET",
             endpoint="/search",
             params={
@@ -588,8 +551,7 @@ class StreamingPlatformConnector(BaseAPIConnector[Dict[str, Any]]):
         return await self._make_request(search_config)
     
     async def get_track(self, track_id: str, use_cache: bool = True) -> APIResponse[Dict[str, Any]]:
-        """Get track details"""
-        if use_cache and track_id in self.track_cache:
+        """Get track details"""        if use_cache and track_id in self.track_cache:
             return APIResponse(
                 success=True,
                 data=self.track_cache[track_id],
@@ -609,8 +571,7 @@ class StreamingPlatformConnector(BaseAPIConnector[Dict[str, Any]]):
         return response
     
     async def get_artist(self, artist_id: str, use_cache: bool = True) -> APIResponse[Dict[str, Any]]:
-        """Get artist details"""
-        if use_cache and artist_id in self.artist_cache:
+        """Get artist details"""        if use_cache and artist_id in self.artist_cache:
             return APIResponse(
                 success=True,
                 data=self.artist_cache[artist_id],
@@ -630,8 +591,7 @@ class StreamingPlatformConnector(BaseAPIConnector[Dict[str, Any]]):
         return response
     
     async def get_playlist(self, playlist_id: str, use_cache: bool = True) -> APIResponse[Dict[str, Any]]:
-        """Get playlist details"""
-        if use_cache and playlist_id in self.playlist_cache:
+        """Get playlist details"""        if use_cache and playlist_id in self.playlist_cache:
             return APIResponse(
                 success=True,
                 data=self.playlist_cache[playlist_id],
@@ -651,21 +611,18 @@ class StreamingPlatformConnector(BaseAPIConnector[Dict[str, Any]]):
         return response
     
     def clear_cache(self):
-        """Clear all cached data"""
-        self.track_cache.clear()
+        """Clear all cached data"""        self.track_cache.clear()
         self.artist_cache.clear()
         self.playlist_cache.clear()
 
 class PaymentGatewayConnector(BaseAPIConnector[Dict[str, Any]]):
-    """Specialized connector for payment gateways"""
-    
+    """Specialized connector for payment gateways"""    
     def __init__(self, credentials: APICredentials, provider: APIProvider):
         super().__init__(credentials, provider)
         self.webhook_validators = {}
     
     async def authenticate(self) -> bool:
-        """Authenticate with payment gateway"""
-        try:
+        """Authenticate with payment gateway"""        try:
             test_response = await self.test_connection()
             if test_response.success:
                 self.status = APIConnectionStatus.CONNECTED
@@ -677,12 +634,10 @@ class PaymentGatewayConnector(BaseAPIConnector[Dict[str, Any]]):
             return False
     
     async def refresh_credentials(self) -> bool:
-        """Refresh credentials (mostly not needed for payment gateways)"""
-        return await self.authenticate()
+        """Refresh credentials (mostly not needed for payment gateways)"""        return await self.authenticate()
     
     def _prepare_auth_headers(self) -> Dict[str, str]:
-        """Prepare authentication headers"""
-        if self.provider == APIProvider.STRIPE and self.credentials.secret_key:
+        """Prepare authentication headers"""        if self.provider == APIProvider.STRIPE and self.credentials.secret_key:
             return {'Authorization': f'Bearer {self.credentials.secret_key}'}
         elif self.credentials.api_key:
             return {'Authorization': f'Bearer {self.credentials.api_key}'}
@@ -690,8 +645,7 @@ class PaymentGatewayConnector(BaseAPIConnector[Dict[str, Any]]):
     
     async def create_payment_intent(self, amount: int, currency: str = 'usd', 
                                   metadata: Optional[Dict[str, str]] = None) -> APIResponse[Dict[str, Any]]:
-        """Create payment intent"""
-        payment_config = APIRequestConfig(
+        """Create payment intent"""        payment_config = APIRequestConfig(
             method="POST",
             endpoint="/payment_intents",
             json_data={
@@ -705,8 +659,7 @@ class PaymentGatewayConnector(BaseAPIConnector[Dict[str, Any]]):
     
     async def process_payment(self, payment_method: str, amount: int, 
                             currency: str = 'usd') -> APIResponse[Dict[str, Any]]:
-        """Process payment"""
-        process_config = APIRequestConfig(
+        """Process payment"""        process_config = APIRequestConfig(
             method="POST",
             endpoint="/charges",
             json_data={
@@ -719,8 +672,7 @@ class PaymentGatewayConnector(BaseAPIConnector[Dict[str, Any]]):
         return await self._make_request(process_config)
     
     async def refund_payment(self, charge_id: str, amount: Optional[int] = None) -> APIResponse[Dict[str, Any]]:
-        """Refund payment"""
-        refund_data = {'charge': charge_id}
+        """Refund payment"""        refund_data = {'charge': charge_id}
         if amount:
             refund_data['amount'] = amount
         
@@ -733,8 +685,7 @@ class PaymentGatewayConnector(BaseAPIConnector[Dict[str, Any]]):
         return await self._make_request(refund_config)
     
     def validate_webhook(self, payload: str, signature: str, endpoint_secret: str) -> bool:
-        """Validate webhook signature"""
-        try:
+        """Validate webhook signature"""        try:
             if self.provider == APIProvider.STRIPE:
                 # Stripe webhook validation
                 expected_sig = hmac.new(
@@ -757,8 +708,7 @@ class PaymentGatewayConnector(BaseAPIConnector[Dict[str, Any]]):
             return False
 
 class APIConnectorManager:
-    """Central manager for all API connections"""
-    
+    """Central manager for all API connections"""    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.connectors: Dict[APIProvider, BaseAPIConnector] = {}
@@ -777,8 +727,7 @@ class APIConnectorManager:
         }
     
     async def add_connector(self, credentials: APICredentials) -> bool:
-        """Add new API connector"""
-        try:
+        """Add new API connector"""        try:
             provider = credentials.provider
             
             # Get appropriate connector class
@@ -804,12 +753,10 @@ class APIConnectorManager:
             return False
     
     def get_connector(self, provider: APIProvider) -> Optional[BaseAPIConnector]:
-        """Get connector for specific provider"""
-        return self.connectors.get(provider)
+        """Get connector for specific provider"""        return self.connectors.get(provider)
     
     async def remove_connector(self, provider: APIProvider) -> bool:
-        """Remove connector"""
-        if provider in self.connectors:
+        """Remove connector"""        if provider in self.connectors:
             connector = self.connectors[provider]
             if hasattr(connector, '_close_session'):
                 await connector._close_session()
@@ -821,8 +768,7 @@ class APIConnectorManager:
         return False
     
     async def health_check_all(self) -> Dict[APIProvider, bool]:
-        """Health check for all connectors"""
-        results = {}
+        """Health check for all connectors"""        results = {}
         
         for provider, connector in self.connectors.items():
             try:
@@ -837,8 +783,7 @@ class APIConnectorManager:
         return results
     
     async def refresh_all_credentials(self) -> Dict[APIProvider, bool]:
-        """Refresh credentials for all connectors"""
-        results = {}
+        """Refresh credentials for all connectors"""        results = {}
         
         for provider, connector in self.connectors.items():
             try:
@@ -850,13 +795,11 @@ class APIConnectorManager:
         return results
     
     def get_all_statuses(self) -> Dict[APIProvider, APIConnectionStatus]:
-        """Get status of all connectors"""
-        return {provider: connector.get_status() 
+        """Get status of all connectors"""        return {provider: connector.get_status() 
                 for provider, connector in self.connectors.items()}
     
     async def cleanup(self):
-        """Cleanup all connections"""
-        for provider, connector in list(self.connectors.items()):
+        """Cleanup all connections"""        for provider, connector in list(self.connectors.items()):
             await self.remove_connector(provider)
         
         self.logger.info("All API connections cleaned up")

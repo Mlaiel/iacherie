@@ -1,5 +1,4 @@
-"""
-Language Detector - Advanced Multi-language Detection and Translation Engine
+"""Language Detector - Advanced Multi-language Detection and Translation Engine
 
 Industrial-grade language detection and translation system for global content creators
 with enterprise-level accuracy and comprehensive language support.
@@ -18,9 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -47,24 +44,21 @@ DetectorFactory.seed = 0
 logger = logging.getLogger(__name__)
 
 class LanguageConfidence(Enum):
-    """Language detection confidence levels"""
-    VERY_HIGH = "very_high"    # > 0.95
+    """Language detection confidence levels"""    VERY_HIGH = "very_high"    # > 0.95
     HIGH = "high"              # > 0.85
     MEDIUM = "medium"          # > 0.70
     LOW = "low"                # > 0.50
     VERY_LOW = "very_low"      # <= 0.50
 
 class TranslationQuality(Enum):
-    """Translation quality levels"""
-    EXCELLENT = "excellent"
+    """Translation quality levels"""    EXCELLENT = "excellent"
     GOOD = "good"
     ACCEPTABLE = "acceptable"
     POOR = "poor"
 
 @dataclass
 class LanguageDetectionResult:
-    """Language detection result with confidence and alternatives"""
-    language: str
+    """Language detection result with confidence and alternatives"""    language: str
     language_name: str
     confidence: float
     confidence_level: LanguageConfidence
@@ -76,8 +70,7 @@ class LanguageDetectionResult:
 
 @dataclass
 class TranslationResult:
-    """Translation result with quality assessment"""
-    source_text: str
+    """Translation result with quality assessment"""    source_text: str
     translated_text: str
     source_language: str
     target_language: str
@@ -89,10 +82,8 @@ class TranslationResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class LanguageDetector:
-    """
-    Advanced multi-language detection system with ensemble methods
-    """
-    
+    """    Advanced multi-language detection system with ensemble methods
+    """    
     def __init__(self):
         self.supported_languages = {
             'en': 'English', 'es': 'Spanish', 'fr': 'French', 'de': 'German',
@@ -124,8 +115,7 @@ class LanguageDetector:
         logger.info(f"LanguageDetector initialized with {len(self.supported_languages)} supported languages")
     
     def _init_detection_models(self):
-        """Initialize language detection models"""
-        try:
+        """Initialize language detection models"""        try:
             # Initialize Google Translator (includes detection)
             self.google_translator = Translator()
             
@@ -148,8 +138,7 @@ class LanguageDetector:
         method: str = "ensemble",
         min_length: int = 10
     ) -> LanguageDetectionResult:
-        """
-        Detect language of input text using specified or ensemble method
+        """        Detect language of input text using specified or ensemble method
         
         Args:
             text: Input text for language detection
@@ -158,8 +147,7 @@ class LanguageDetector:
             
         Returns:
             LanguageDetectionResult: Comprehensive detection results
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Validate input
@@ -204,8 +192,7 @@ class LanguageDetector:
         text: str,
         threshold: float = 0.3
     ) -> List[LanguageDetectionResult]:
-        """
-        Detect multiple languages in mixed-language text
+        """        Detect multiple languages in mixed-language text
         
         Args:
             text: Input text potentially containing multiple languages
@@ -213,8 +200,7 @@ class LanguageDetector:
             
         Returns:
             List of LanguageDetectionResult for detected languages
-        """
-        try:
+        """        try:
             # Split text into segments
             segments = await self._segment_text_for_multilang_detection(text)
             
@@ -238,8 +224,7 @@ class LanguageDetector:
             return []
     
     async def _preprocess_text_for_detection(self, text: str) -> str:
-        """Preprocess text to improve detection accuracy"""
-        # Remove URLs, emails, and social media handles
+        """Preprocess text to improve detection accuracy"""        # Remove URLs, emails, and social media handles
         text = re.sub(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', '', text)
         text = re.sub(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', '', text)
         text = re.sub(r'@\w+', '', text)
@@ -255,8 +240,7 @@ class LanguageDetector:
         return text.strip()
     
     async def _ensemble_detection(self, text: str) -> LanguageDetectionResult:
-        """Use ensemble of multiple detection methods"""
-        detections = {}
+        """Use ensemble of multiple detection methods"""        detections = {}
         
         # LangDetect
         try:
@@ -291,8 +275,7 @@ class LanguageDetector:
         return await self._combine_detection_results(detections, text)
     
     async def _single_method_detection(self, text: str, method: str) -> LanguageDetectionResult:
-        """Use single detection method"""
-        if method == "langdetect":
+        """Use single detection method"""        if method == "langdetect":
             return await self._langdetect_detection(text)
         elif method == "polyglot":
             return await self._polyglot_detection(text)
@@ -305,8 +288,7 @@ class LanguageDetector:
             return await self._langdetect_detection(text)
     
     async def _langdetect_detection(self, text: str) -> LanguageDetectionResult:
-        """Detect language using langdetect library"""
-        try:
+        """Detect language using langdetect library"""        try:
             # Get top language
             detected_lang = detect(text)
             
@@ -338,8 +320,7 @@ class LanguageDetector:
             raise
     
     async def _polyglot_detection(self, text: str) -> LanguageDetectionResult:
-        """Detect language using polyglot library"""
-        try:
+        """Detect language using polyglot library"""        try:
             detector = PolyglotDetector(text)
             
             confidence = detector.confidence
@@ -364,8 +345,7 @@ class LanguageDetector:
             raise
     
     async def _fasttext_detection(self, text: str) -> LanguageDetectionResult:
-        """Detect language using FastText model"""
-        try:
+        """Detect language using FastText model"""        try:
             # Predict language
             predictions = self.fasttext_model.predict(text, k=5)  # Top 5 predictions
             
@@ -404,8 +384,7 @@ class LanguageDetector:
             raise
     
     async def _google_detection(self, text: str) -> LanguageDetectionResult:
-        """Detect language using Google Translate"""
-        try:
+        """Detect language using Google Translate"""        try:
             detection = self.google_translator.detect(text)
             
             detected_lang = detection.lang
@@ -433,8 +412,7 @@ class LanguageDetector:
         detections: Dict[str, LanguageDetectionResult],
         text: str
     ) -> LanguageDetectionResult:
-        """Combine multiple detection results using weighted voting"""
-        if not detections:
+        """Combine multiple detection results using weighted voting"""        if not detections:
             raise ValueError("No detection results to combine")
         
         # Weights for different detectors
@@ -491,8 +469,7 @@ class LanguageDetector:
         )
     
     def _determine_confidence_level(self, confidence: float) -> LanguageConfidence:
-        """Determine confidence level based on score"""
-        if confidence > 0.95:
+        """Determine confidence level based on score"""        if confidence > 0.95:
             return LanguageConfidence.VERY_HIGH
         elif confidence > 0.85:
             return LanguageConfidence.HIGH
@@ -504,8 +481,7 @@ class LanguageDetector:
             return LanguageConfidence.VERY_LOW
     
     async def _segment_text_for_multilang_detection(self, text: str) -> List[str]:
-        """Segment text for multi-language detection"""
-        # Simple segmentation by sentences and paragraphs
+        """Segment text for multi-language detection"""        # Simple segmentation by sentences and paragraphs
         segments = []
         
         # Split by paragraphs
@@ -530,8 +506,7 @@ class LanguageDetector:
         return segments
     
     async def _update_detection_stats(self, result: LanguageDetectionResult):
-        """Update detection statistics"""
-        self.detection_stats["total_detections"] += 1
+        """Update detection statistics"""        self.detection_stats["total_detections"] += 1
         
         if result.confidence > 0.5:
             self.detection_stats["successful_detections"] += 1
@@ -557,8 +532,7 @@ class LanguageDetector:
         )
     
     def get_detection_stats(self) -> Dict[str, Any]:
-        """Get detection statistics"""
-        return {
+        """Get detection statistics"""        return {
             **self.detection_stats,
             "supported_languages_count": len(self.supported_languages),
             "success_rate": (
@@ -569,10 +543,8 @@ class LanguageDetector:
 
 
 class TranslationEngine:
-    """
-    Advanced multi-service translation engine with quality assessment
-    """
-    
+    """    Advanced multi-service translation engine with quality assessment
+    """    
     def __init__(self):
         self.language_detector = LanguageDetector()
         self.translators = {}
@@ -592,8 +564,7 @@ class TranslationEngine:
         logger.info("TranslationEngine initialized with multiple services")
     
     def _init_translation_services(self):
-        """Initialize translation services"""
-        try:
+        """Initialize translation services"""        try:
             # Google Translate
             self.translators['google'] = Translator()
             
@@ -620,8 +591,7 @@ class TranslationEngine:
         service: str = "auto",
         assess_quality: bool = True
     ) -> TranslationResult:
-        """
-        Translate text with quality assessment and multiple service support
+        """        Translate text with quality assessment and multiple service support
         
         Args:
             text: Text to translate
@@ -632,8 +602,7 @@ class TranslationEngine:
             
         Returns:
             TranslationResult: Comprehensive translation results
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Detect source language if not provided
@@ -709,8 +678,7 @@ class TranslationEngine:
             )
     
     async def _select_best_service(self, source_lang: str, target_lang: str) -> str:
-        """Select best translation service for language pair"""
-        # Simple heuristic: prefer Google for most language pairs
+        """Select best translation service for language pair"""        # Simple heuristic: prefer Google for most language pairs
         # In production, this could be based on historical quality scores
         
         if 'google' in self.translators:
@@ -727,8 +695,7 @@ class TranslationEngine:
         target_lang: str,
         service: str
     ) -> Tuple[str, float]:
-        """Translate text using specified service"""
-        if service == 'google' and 'google' in self.translators:
+        """Translate text using specified service"""        if service == 'google' and 'google' in self.translators:
             return await self._google_translate(text, source_lang, target_lang)
         elif service == 'marian' and 'marian' in self.translators:
             return await self._marian_translate(text, source_lang, target_lang)
@@ -741,8 +708,7 @@ class TranslationEngine:
         source_lang: str,
         target_lang: str
     ) -> Tuple[str, float]:
-        """Translate using Google Translate"""
-        try:
+        """Translate using Google Translate"""        try:
             result = self.translators['google'].translate(
                 text,
                 src=source_lang,
@@ -765,8 +731,7 @@ class TranslationEngine:
         source_lang: str,
         target_lang: str
     ) -> Tuple[str, float]:
-        """Translate using Marian transformer model"""
-        try:
+        """Translate using Marian transformer model"""        try:
             # Note: This is simplified - in practice you'd need specific models for each language pair
             result = self.translators['marian'](text)
             
@@ -788,8 +753,7 @@ class TranslationEngine:
         source_lang: str,
         target_lang: str
     ) -> TranslationQuality:
-        """Assess quality of translation"""
-        try:
+        """Assess quality of translation"""        try:
             # Basic quality metrics
             length_ratio = len(translated_text) / len(source_text) if source_text else 0
             
@@ -823,8 +787,7 @@ class TranslationEngine:
         exclude_service: str,
         max_alternatives: int = 2
     ) -> List[str]:
-        """Generate alternative translations using different services"""
-        alternatives = []
+        """Generate alternative translations using different services"""        alternatives = []
         
         for service_name, service in self.translators.items():
             if service_name != exclude_service and len(alternatives) < max_alternatives:
@@ -840,8 +803,7 @@ class TranslationEngine:
         return alternatives
     
     async def _update_translation_stats(self, result: TranslationResult):
-        """Update translation statistics"""
-        self.translation_stats["total_translations"] += 1
+        """Update translation statistics"""        self.translation_stats["total_translations"] += 1
         
         if result.quality_assessment != TranslationQuality.POOR:
             self.translation_stats["successful_translations"] += 1
@@ -859,8 +821,7 @@ class TranslationEngine:
         )
     
     def get_translation_stats(self) -> Dict[str, Any]:
-        """Get translation statistics"""
-        return {
+        """Get translation statistics"""        return {
             **self.translation_stats,
             "available_services": list(self.translators.keys()),
             "success_rate": (

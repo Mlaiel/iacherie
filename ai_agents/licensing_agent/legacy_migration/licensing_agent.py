@@ -1,5 +1,4 @@
-"""
-Licensing Agent - Advanced Content Licensing & Rights Management System
+"""Licensing Agent - Advanced Content Licensing & Rights Management System
 
 Core agent responsible for automated content licensing, contract generation, royalty distribution,
 and comprehensive digital rights management across multiple content formats and platforms.
@@ -18,9 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import hashlib
@@ -58,8 +55,7 @@ from ...utils.email_service import EmailService
 logger = logging.getLogger(__name__)
 
 class LicenseType(Enum):
-    """Types of content licenses"""
-    EXCLUSIVE = "exclusive"
+    """Types of content licenses"""    EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive" 
     ROYALTY_FREE = "royalty_free"
     CREATIVE_COMMONS = "creative_commons"
@@ -75,8 +71,7 @@ class LicenseType(Enum):
     DIGITAL_DISTRIBUTION = "digital_distribution"
 
 class LicenseStatus(Enum):
-    """License status states"""
-    PENDING = "pending"
+    """License status states"""    PENDING = "pending"
     ACTIVE = "active"
     EXPIRED = "expired"
     SUSPENDED = "suspended"
@@ -85,8 +80,7 @@ class LicenseStatus(Enum):
     REJECTED = "rejected"
 
 class RoyaltyType(Enum):
-    """Types of royalty calculations"""
-    PERCENTAGE = "percentage"
+    """Types of royalty calculations"""    PERCENTAGE = "percentage"
     FIXED_AMOUNT = "fixed_amount"
     TIERED = "tiered"
     REVENUE_SHARE = "revenue_share"
@@ -94,8 +88,7 @@ class RoyaltyType(Enum):
 
 @dataclass
 class LicenseTerms:
-    """License terms and conditions"""
-    license_type: LicenseType
+    """License terms and conditions"""    license_type: LicenseType
     duration_months: int
     territory: List[str]
     usage_rights: List[str]
@@ -114,8 +107,7 @@ class LicenseTerms:
     
 @dataclass
 class LicenseRequest:
-    """Licensing request structure"""
-    content_id: str
+    """Licensing request structure"""    content_id: str
     licensee_id: str
     licensor_id: str
     requested_terms: LicenseTerms
@@ -128,8 +120,7 @@ class LicenseRequest:
     
 @dataclass
 class LicensingMetrics:
-    """Licensing performance metrics"""
-    total_licenses: int = 0
+    """Licensing performance metrics"""    total_licenses: int = 0
     active_licenses: int = 0
     total_revenue: Decimal = Decimal('0')
     average_royalty_rate: Decimal = Decimal('0')
@@ -148,8 +139,7 @@ class LicensingMetrics:
     CUSTOM = "custom"
 
 class LicenseStatus(Enum):
-    """Status of licenses"""
-    PENDING = "pending"
+    """Status of licenses"""    PENDING = "pending"
     ACTIVE = "active"
     EXPIRED = "expired"
     REVOKED = "revoked"
@@ -157,16 +147,14 @@ class LicenseStatus(Enum):
     TERMINATED = "terminated"
 
 class RoyaltyType(Enum):
-    """Types of royalty payments"""
-    PERCENTAGE = "percentage"
+    """Types of royalty payments"""    PERCENTAGE = "percentage"
     FIXED_AMOUNT = "fixed_amount"
     PER_USE = "per_use"
     SUBSCRIPTION = "subscription"
     HYBRID = "hybrid"
 
 class ContractTemplate(Enum):
-    """Contract templates"""
-    MUSIC_LICENSING = "music_licensing"
+    """Contract templates"""    MUSIC_LICENSING = "music_licensing"
     VIDEO_LICENSING = "video_licensing"
     IMAGE_LICENSING = "image_licensing"
     TEXT_LICENSING = "text_licensing"
@@ -177,8 +165,7 @@ class ContractTemplate(Enum):
 
 @dataclass
 class LicenseRequest:
-    """License request data structure"""
-    content_id: str
+    """License request data structure"""    content_id: str
     licensee_id: str
     license_type: LicenseType
     usage_terms: Dict[str, Any]
@@ -197,8 +184,7 @@ class LicenseRequest:
 
 @dataclass
 class LicenseAgreement:
-    """Complete license agreement structure"""
-    license_id: str
+    """Complete license agreement structure"""    license_id: str
     content_id: str
     licensor_id: str
     licensee_id: str
@@ -218,8 +204,7 @@ class LicenseAgreement:
 
 @dataclass
 class RoyaltyCalculation:
-    """Royalty calculation result"""
-    content_id: str
+    """Royalty calculation result"""    content_id: str
     license_id: str
     period_start: datetime
     period_end: datetime
@@ -233,13 +218,11 @@ class RoyaltyCalculation:
     calculation_details: Dict[str, Any] = field(default_factory=dict)
 
 class LicensingAgent(BaseAgent):
-    """
-    Advanced Content Licensing & Rights Management Agent
+    """    Advanced Content Licensing & Rights Management Agent
     
     Handles automated licensing workflows, contract generation, royalty calculations,
     and comprehensive digital rights management for multi-format content.
-    """
-    
+    """    
     def __init__(self):
         super().__init__()
         self.agent_type = "licensing"
@@ -281,8 +264,7 @@ class LicensingAgent(BaseAgent):
         request: LicenseRequest,
         auto_approve: bool = False
     ) -> AgentResponse:
-        """
-        Process a licensing request with comprehensive validation and approval workflow
+        """        Process a licensing request with comprehensive validation and approval workflow
         
         Args:
             request: License request details
@@ -290,8 +272,7 @@ class LicensingAgent(BaseAgent):
             
         Returns:
             AgentResponse with license agreement or approval workflow
-        """
-        try:
+        """        try:
             start_time = time.time()
             
             # Validate request
@@ -386,8 +367,7 @@ class LicensingAgent(BaseAgent):
         period_end: datetime,
         usage_data: Dict[str, Any]
     ) -> AgentResponse:
-        """
-        Calculate royalties for content usage in specified period
+        """        Calculate royalties for content usage in specified period
         
         Args:
             content_id: Content identifier
@@ -397,8 +377,7 @@ class LicensingAgent(BaseAgent):
             
         Returns:
             AgentResponse with detailed royalty calculations
-        """
-        try:
+        """        try:
             # Get active licenses for content
             active_licenses = await self._get_active_licenses(content_id, period_start, period_end)
             
@@ -462,8 +441,7 @@ class LicensingAgent(BaseAgent):
         action: str,
         parameters: Dict[str, Any] = None
     ) -> AgentResponse:
-        """
-        Manage license lifecycle (renewal, modification, termination, etc.)
+        """        Manage license lifecycle (renewal, modification, termination, etc.)
         
         Args:
             license_id: License identifier
@@ -472,8 +450,7 @@ class LicensingAgent(BaseAgent):
             
         Returns:
             AgentResponse with action result
-        """
-        try:
+        """        try:
             license_data = await self._get_license_by_id(license_id)
             if not license_data:
                 return AgentResponse(
@@ -531,8 +508,7 @@ class LicensingAgent(BaseAgent):
         period_end: datetime,
         content_ids: Optional[List[str]] = None
     ) -> AgentResponse:
-        """
-        Generate comprehensive compliance report for licensing activities
+        """        Generate comprehensive compliance report for licensing activities
         
         Args:
             period_start: Report period start
@@ -541,8 +517,7 @@ class LicensingAgent(BaseAgent):
             
         Returns:
             AgentResponse with detailed compliance report
-        """
-        try:
+        """        try:
             # Collect compliance data
             licenses_data = await self._get_licenses_in_period(
                 period_start, period_end, content_ids
@@ -599,8 +574,7 @@ class LicensingAgent(BaseAgent):
             )
 
     async def _validate_license_request(self, request: LicenseRequest) -> Dict[str, Any]:
-        """Validate license request parameters"""
-        errors = []
+        """Validate license request parameters"""        errors = []
         
         # Basic validation
         if not request.content_id:
@@ -624,8 +598,7 @@ class LicensingAgent(BaseAgent):
         return {"valid": len(errors) == 0, "errors": errors}
 
     async def _verify_content_rights(self, content_id: str) -> Dict[str, Any]:
-        """Verify content ownership and licensing rights with blockchain verification"""
-        try:
+        """Verify content ownership and licensing rights with blockchain verification"""        try:
             # Fetch content from database
             content = await self._get_content_by_id(content_id)
             if not content:
@@ -694,8 +667,7 @@ class LicensingAgent(BaseAgent):
             }
 
     async def _generate_license_terms(self, request: LicenseRequest) -> Dict[str, Any]:
-        """Generate comprehensive license terms"""
-        base_terms = self.license_templates[request.license_type.value].copy()
+        """Generate comprehensive license terms"""        base_terms = self.license_templates[request.license_type.value].copy()
         
         # Customize based on request
         terms = {
@@ -719,8 +691,7 @@ class LicensingAgent(BaseAgent):
         request: LicenseRequest,
         terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate license pricing based on usage and terms"""
-        base_price = self.pricing_rules.get(request.license_type.value, {}).get("base_price", 100.00)
+        """Calculate license pricing based on usage and terms"""        base_price = self.pricing_rules.get(request.license_type.value, {}).get("base_price", 100.00)
         
         # Apply multipliers
         multipliers = {
@@ -747,13 +718,11 @@ class LicensingAgent(BaseAgent):
         }
 
     def _generate_contract_hash(self, terms: Dict[str, Any], pricing: Dict[str, Any]) -> str:
-        """Generate cryptographic hash of contract terms"""
-        contract_data = json.dumps({"terms": terms, "pricing": pricing}, sort_keys=True, default=str)
+        """Generate cryptographic hash of contract terms"""        contract_data = json.dumps({"terms": terms, "pricing": pricing}, sort_keys=True, default=str)
         return hashlib.sha256(contract_data.encode()).hexdigest()
 
     async def _generate_contract_document(self, agreement: LicenseAgreement) -> Dict[str, Any]:
-        """Generate PDF contract document"""
-        template_name = f"{agreement.license_type.value}_contract_template"
+        """Generate PDF contract document"""        template_name = f"{agreement.license_type.value}_contract_template"
         
         contract_data = {
             "agreement": agreement,
@@ -771,8 +740,7 @@ class LicensingAgent(BaseAgent):
         }
 
     async def _execute_license(self, agreement: LicenseAgreement) -> Dict[str, Any]:
-        """Execute license on blockchain and process payments"""
-        # Deploy smart contract
+        """Execute license on blockchain and process payments"""        # Deploy smart contract
         contract_result = await self.smart_contract_manager.deploy_license_contract(agreement)
         
         # Generate digital signature
@@ -786,8 +754,7 @@ class LicensingAgent(BaseAgent):
         }
 
     def _load_license_templates(self) -> Dict[str, Dict[str, Any]]:
-        """Load license templates configuration"""
-        return {
+        """Load license templates configuration"""        return {
             "personal": {
                 "usage_type": "personal_only",
                 "commercial_allowed": False,
@@ -812,8 +779,7 @@ class LicensingAgent(BaseAgent):
         }
 
     def _load_pricing_rules(self) -> Dict[str, Dict[str, Any]]:
-        """Load pricing rules configuration"""
-        return {
+        """Load pricing rules configuration"""        return {
             "personal": {"base_price": 50.00, "royalty_rate": 0.05},
             "commercial": {"base_price": 200.00, "royalty_rate": 0.10},
             "exclusive": {"base_price": 1000.00, "royalty_rate": 0.15},
@@ -821,16 +787,14 @@ class LicensingAgent(BaseAgent):
         }
 
     def _load_territory_rules(self) -> Dict[str, Dict[str, Any]]:
-        """Load territory-specific licensing rules"""
-        return {
+        """Load territory-specific licensing rules"""        return {
             "EU": {"multiplier": 1.0, "compliance_requirements": ["GDPR"]},
             "US": {"multiplier": 1.2, "compliance_requirements": ["DMCA"]},
             "GLOBAL": {"multiplier": 2.0, "compliance_requirements": ["WIPO"]}
         }
 
     async def get_agent_status(self) -> Dict[str, Any]:
-        """Get current agent status and metrics"""
-        return {
+        """Get current agent status and metrics"""        return {
             "agent_type": self.agent_type,
             "version": self.version,
             "status": "active",
@@ -841,18 +805,15 @@ class LicensingAgent(BaseAgent):
 
 
 class LicensingAgentManager:
-    """
-    Manager class for coordinating multiple licensing agents and workflows
-    """
-    
+    """    Manager class for coordinating multiple licensing agents and workflows
+    """    
     def __init__(self):
         self.agents = {}
         self.workflow_queue = asyncio.Queue()
         self.active_workflows = {}
         
     async def initialize(self):
-        """Initialize licensing agent manager"""
-        # Create main licensing agent
+        """Initialize licensing agent manager"""        # Create main licensing agent
         self.agents["primary"] = LicensingAgent()
         
         # Start workflow processor
@@ -862,8 +823,7 @@ class LicensingAgentManager:
         self,
         requests: List[LicenseRequest]
     ) -> List[AgentResponse]:
-        """Process multiple licensing requests in parallel"""
-        tasks = []
+        """Process multiple licensing requests in parallel"""        tasks = []
         for request in requests:
             task = self.agents["primary"].process_license_request(request)
             tasks.append(task)
@@ -877,8 +837,7 @@ class LicensingAgentManager:
         ) for r in results]
         
     async def _process_workflows(self):
-        """Background workflow processor"""
-        while True:
+        """Background workflow processor"""        while True:
             try:
                 workflow = await self.workflow_queue.get()
                 await self._execute_workflow(workflow)
@@ -888,8 +847,7 @@ class LicensingAgentManager:
                 await asyncio.sleep(1)
                 
     async def _execute_workflow(self, workflow: Dict[str, Any]):
-        """Execute licensing workflow"""
-        workflow_id = workflow["id"]
+        """Execute licensing workflow"""        workflow_id = workflow["id"]
         self.active_workflows[workflow_id] = workflow
         
         try:
@@ -910,8 +868,7 @@ class LicensingAgentManager:
             del self.active_workflows[workflow_id]
             
     async def _execute_workflow_step(self, step: Dict[str, Any]):
-        """Execute individual workflow step"""
-        step_type = step["type"]
+        """Execute individual workflow step"""        step_type = step["type"]
         agent = self.agents["primary"]
         
         if step_type == "license_request":

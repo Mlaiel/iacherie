@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-🚀 ENTERPRISE CRAWLER SERVICE - MAIN LAUNCHER
+"""🚀 ENTERPRISE CRAWLER SERVICE - MAIN LAUNCHER
 =============================================
 
 Simple launcher and CLI interface for the Enterprise Multi-Platform Crawler Service.
@@ -31,9 +30,7 @@ Any violation will result in IMMEDIATE LEGAL ACTION under:
 - Criminal prosecution for commercial theft
 
 WE MONITOR FOR UNAUTHORIZED USE - YOU WILL BE CAUGHT AND PROSECUTED
-"""
-
-import asyncio
+"""import asyncio
 import argparse
 import json
 import sys
@@ -53,21 +50,18 @@ from .index import (
 
 
 class CrawlerCLI:
-    """
-    🖥️ COMMAND LINE INTERFACE
+    """    🖥️ COMMAND LINE INTERFACE
     =========================
     
     Easy-to-use command line interface for the crawler service.
     Provides access to all major functionalities through simple commands.
-    """
-    
+    """    
     def __init__(self):
         self.logger = self._setup_logging()
         self.api: Optional[CrawlerServiceAPI] = None
     
     def _setup_logging(self) -> logging.Logger:
-        """Setup logging configuration."""
-        logging.basicConfig(
+        """Setup logging configuration."""        logging.basicConfig(
             level=logging.INFO,
             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
             handlers=[
@@ -78,8 +72,7 @@ class CrawlerCLI:
         return logging.getLogger("crawler_cli")
     
     async def start_service(self, config_path: Optional[str] = None) -> bool:
-        """Start the crawler service."""
-        try:
+        """Start the crawler service."""        try:
             self.logger.info("🚀 Starting Enterprise Crawler Service...")
             self.api = await create_crawler_service(config_path)
             self.logger.info("✅ Service started successfully")
@@ -89,8 +82,7 @@ class CrawlerCLI:
             return False
     
     async def stop_service(self) -> bool:
-        """Stop the crawler service."""
-        try:
+        """Stop the crawler service."""        try:
             if self.api:
                 await self.api.stop()
                 self.logger.info("✅ Service stopped successfully")
@@ -101,8 +93,7 @@ class CrawlerCLI:
             return False
     
     async def search_youtube(self, query: str, max_results: int = 10) -> List[Dict[str, Any]]:
-        """Search YouTube content."""
-        try:
+        """Search YouTube content."""        try:
             if not self.api:
                 raise ValueError("Service not started")
             
@@ -121,8 +112,7 @@ class CrawlerCLI:
         platforms: List[str], 
         days: int = 30
     ) -> Dict[str, Any]:
-        """Monitor creator revenue."""
-        try:
+        """Monitor creator revenue."""        try:
             if not self.api:
                 raise ValueError("Service not started")
             
@@ -140,8 +130,7 @@ class CrawlerCLI:
         fingerprints: List[str], 
         platforms: Optional[List[str]] = None
     ) -> List[Dict[str, Any]]:
-        """Check for content violations."""
-        try:
+        """Check for content violations."""        try:
             if not self.api:
                 raise ValueError("Service not started")
             
@@ -159,8 +148,7 @@ class CrawlerCLI:
         creator_data: Dict[str, Any], 
         collaboration_types: List[str]
     ) -> List[Dict[str, Any]]:
-        """Find collaboration opportunities."""
-        try:
+        """Find collaboration opportunities."""        try:
             if not self.api:
                 raise ValueError("Service not started")
             
@@ -181,8 +169,7 @@ class CrawlerCLI:
         platforms: List[str], 
         days: int = 7
     ) -> List[Dict[str, Any]]:
-        """Analyze market trends."""
-        try:
+        """Analyze market trends."""        try:
             if not self.api:
                 raise ValueError("Service not started")
             
@@ -196,8 +183,7 @@ class CrawlerCLI:
             return []
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get service status."""
-        try:
+        """Get service status."""        try:
             if not self.api:
                 return {"error": "Service not started"}
             
@@ -209,8 +195,7 @@ class CrawlerCLI:
             return {"error": str(e)}
     
     def print_results(self, results: Any, title: str = "Results"):
-        """Pretty print results."""
-        print(f"\n{'='*50}")
+        """Pretty print results."""        print(f"\n{'='*50}")
         print(f"📋 {title}")
         print(f"{'='*50}")
         
@@ -226,18 +211,15 @@ class CrawlerCLI:
 
 
 async def main():
-    """
-    🎯 MAIN CLI ENTRY POINT
+    """    🎯 MAIN CLI ENTRY POINT
     =======================
     
     Command line interface for the Enterprise Crawler Service.
     Supports various commands for different crawler operations.
-    """
-    parser = argparse.ArgumentParser(
+    """    parser = argparse.ArgumentParser(
         description="🕷️ Enterprise Multi-Platform Crawler Service CLI",
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
-Examples:
+        epilog="""Examples:
   python main.py youtube --query "AI music generation" --max-results 20
   python main.py revenue --creator-id "UC123" --platforms youtube spotify --days 30
   python main.py violations --fingerprints "fp1,fp2,fp3" --platforms youtube tiktok
@@ -245,8 +227,7 @@ Examples:
   python main.py trends --categories music,entertainment --platforms youtube,tiktok
   python main.py status
   python main.py service --start --config config.json
-        """
-    )
+        """    )
     
     # Global options
     parser.add_argument('--config', type=str, help='Configuration file path')
@@ -398,16 +379,14 @@ Examples:
 
 # Quick utility functions for common operations
 async def quick_search(query: str, platform: str = "youtube", max_results: int = 10):
-    """Quick search utility function."""
-    if platform == "youtube":
+    """Quick search utility function."""    if platform == "youtube":
         return await quick_youtube_search(query, max_results)
     else:
         raise ValueError(f"Platform {platform} not supported in quick search")
 
 
 async def quick_status_check(config_path: Optional[str] = None):
-    """Quick status check utility."""
-    api = await create_crawler_service(config_path)
+    """Quick status check utility."""    api = await create_crawler_service(config_path)
     try:
         status = await api.get_status()
         return status
@@ -425,14 +404,11 @@ __all__ = [
 
 
 if __name__ == "__main__":
-    """
-    🎯 DIRECT EXECUTION ENTRY POINT
+    """    🎯 DIRECT EXECUTION ENTRY POINT
     ===============================
     
     Run the CLI directly when script is executed.
-    """
-    print("""
-🕷️ Enterprise Multi-Platform Crawler Service
+    """    print("""🕷️ Enterprise Multi-Platform Crawler Service
 ===========================================
 📧 Contact: mlaiel@live.de
 👨‍💻 Developer: Fahed Mlaiel

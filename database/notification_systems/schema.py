@@ -1,5 +1,4 @@
-"""
-Notification Systems Database Schema
+"""Notification Systems Database Schema
 
 Schémas de base de données pour les systèmes de notifications.
 Tables pour emails, push, alertes, queues et communications temps réel.
@@ -13,11 +12,8 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et constitue une violation des droits d'auteur.
 Les contrevenants s'exposent à des poursuites judiciaires.
-"""
-
-# Email Tables
-EMAIL_MESSAGES_TABLE = """
-CREATE TABLE IF NOT EXISTS email_messages (
+"""# Email Tables
+EMAIL_MESSAGES_TABLE = """CREATE TABLE IF NOT EXISTS email_messages (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     to_email VARCHAR(255) NOT NULL,
     to_name VARCHAR(255),
@@ -42,10 +38,7 @@ CREATE TABLE IF NOT EXISTS email_messages (
     INDEX idx_email_messages_created (created_at),
     INDEX idx_email_messages_template (template_id)
 );
-"""
-
-EMAIL_DELIVERIES_TABLE = """
-CREATE TABLE IF NOT EXISTS email_deliveries (
+"""EMAIL_DELIVERIES_TABLE = """CREATE TABLE IF NOT EXISTS email_deliveries (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     message_id UUID NOT NULL REFERENCES email_messages(id) ON DELETE CASCADE,
     delivery_status VARCHAR(50) DEFAULT 'pending',
@@ -64,11 +57,8 @@ CREATE TABLE IF NOT EXISTS email_deliveries (
     INDEX idx_email_deliveries_delivered (delivered_at),
     INDEX idx_email_deliveries_message (message_id)
 );
-"""
-
-# Fingerprint Integration Tables
-FINGERPRINT_NOTIFICATIONS_TABLE = """
-CREATE TABLE IF NOT EXISTS fingerprint_notifications (
+"""# Fingerprint Integration Tables
+FINGERPRINT_NOTIFICATIONS_TABLE = """CREATE TABLE IF NOT EXISTS fingerprint_notifications (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL,
     content_id UUID NOT NULL,
@@ -92,10 +82,7 @@ CREATE TABLE IF NOT EXISTS fingerprint_notifications (
     INDEX idx_fingerprint_notifications_quality (quality_score),
     INDEX idx_fingerprint_notifications_priority (priority)
 );
-"""
-
-CONTENT_VIOLATION_EVIDENCE_TABLE = """
-CREATE TABLE IF NOT EXISTS content_violation_evidence (
+"""CONTENT_VIOLATION_EVIDENCE_TABLE = """CREATE TABLE IF NOT EXISTS content_violation_evidence (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     content_id UUID NOT NULL,
     fingerprint_id UUID,
@@ -112,11 +99,8 @@ CREATE TABLE IF NOT EXISTS content_violation_evidence (
     INDEX idx_violation_evidence_status (legal_status),
     INDEX idx_violation_evidence_created (created_at)
 );
-"""
-
-# Crawler Surveillance Tables
-CRAWLER_SURVEILLANCE_NOTIFICATIONS_TABLE = """
-CREATE TABLE IF NOT EXISTS crawler_surveillance_notifications (
+"""# Crawler Surveillance Tables
+CRAWLER_SURVEILLANCE_NOTIFICATIONS_TABLE = """CREATE TABLE IF NOT EXISTS crawler_surveillance_notifications (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL,
     content_id UUID NOT NULL,
@@ -146,10 +130,7 @@ CREATE TABLE IF NOT EXISTS crawler_surveillance_notifications (
     INDEX idx_surveillance_notifications_created (created_at),
     INDEX idx_surveillance_notifications_action (action_required)
 );
-"""
-
-PLATFORM_MONITORING_SESSIONS_TABLE = """
-CREATE TABLE IF NOT EXISTS platform_monitoring_sessions (
+"""PLATFORM_MONITORING_SESSIONS_TABLE = """CREATE TABLE IF NOT EXISTS platform_monitoring_sessions (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL,
     content_id UUID NOT NULL,
@@ -170,11 +151,8 @@ CREATE TABLE IF NOT EXISTS platform_monitoring_sessions (
     INDEX idx_monitoring_sessions_next_scan (next_scan_at),
     UNIQUE(user_id, content_id, platform)
 );
-"""
-
-# Licensing Monetization Tables
-LICENSING_MONETIZATION_NOTIFICATIONS_TABLE = """
-CREATE TABLE IF NOT EXISTS licensing_monetization_notifications (
+"""# Licensing Monetization Tables
+LICENSING_MONETIZATION_NOTIFICATIONS_TABLE = """CREATE TABLE IF NOT EXISTS licensing_monetization_notifications (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL,
     content_id UUID NOT NULL,
@@ -208,10 +186,7 @@ CREATE TABLE IF NOT EXISTS licensing_monetization_notifications (
     INDEX idx_licensing_notifications_created (created_at),
     INDEX idx_licensing_notifications_payment_status (payment_status)
 );
-"""
-
-REVENUE_MILESTONES_TABLE = """
-CREATE TABLE IF NOT EXISTS revenue_milestones (
+"""REVENUE_MILESTONES_TABLE = """CREATE TABLE IF NOT EXISTS revenue_milestones (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL,
     milestone_amount DECIMAL(12,2) NOT NULL,
@@ -228,10 +203,7 @@ CREATE TABLE IF NOT EXISTS revenue_milestones (
     INDEX idx_revenue_milestones_achieved (achieved_at),
     UNIQUE(user_id, milestone_amount, currency)
 );
-"""
-
-LICENSING_CONTRACTS_TABLE = """
-CREATE TABLE IF NOT EXISTS licensing_contracts (
+"""LICENSING_CONTRACTS_TABLE = """CREATE TABLE IF NOT EXISTS licensing_contracts (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL,
     content_id UUID NOT NULL,
@@ -263,11 +235,8 @@ CREATE TABLE IF NOT EXISTS licensing_contracts (
     INDEX idx_licensing_contracts_dates (license_start_date, license_end_date),
     INDEX idx_licensing_contracts_revenue_source (revenue_source)
 );
-"""
-
-# Tables pour les nouveaux gestionnaires SEO et Collaboration
-SEO_OPTIMIZATION_NOTIFICATIONS_TABLE = """
-CREATE TABLE IF NOT EXISTS seo_optimization_notifications (
+"""# Tables pour les nouveaux gestionnaires SEO et Collaboration
+SEO_OPTIMIZATION_NOTIFICATIONS_TABLE = """CREATE TABLE IF NOT EXISTS seo_optimization_notifications (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id VARCHAR(255) NOT NULL,
     content_id VARCHAR(255) NOT NULL,
@@ -297,10 +266,7 @@ CREATE TABLE IF NOT EXISTS seo_optimization_notifications (
     INDEX idx_seo_optimization_engine (search_engine),
     INDEX idx_seo_optimization_created (created_at)
 );
-"""
-
-COLLABORATION_MATCHING_NOTIFICATIONS_TABLE = """
-CREATE TABLE IF NOT EXISTS collaboration_matching_notifications (
+"""COLLABORATION_MATCHING_NOTIFICATIONS_TABLE = """CREATE TABLE IF NOT EXISTS collaboration_matching_notifications (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id VARCHAR(255) NOT NULL,
     event_type VARCHAR(100) NOT NULL,
@@ -327,11 +293,8 @@ CREATE TABLE IF NOT EXISTS collaboration_matching_notifications (
     INDEX idx_collaboration_matching_project (project_id),
     INDEX idx_collaboration_matching_created (created_at)
 );
-"""
-
-# Advanced Analytics Tables
-NOTIFICATION_ANALYTICS_TABLE = """
-CREATE TABLE IF NOT EXISTS notification_analytics (
+"""# Advanced Analytics Tables
+NOTIFICATION_ANALYTICS_TABLE = """CREATE TABLE IF NOT EXISTS notification_analytics (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     notification_id UUID NOT NULL,
     user_id UUID NOT NULL,
@@ -357,10 +320,7 @@ CREATE TABLE IF NOT EXISTS notification_analytics (
     INDEX idx_notification_analytics_delivered (delivered_at),
     INDEX idx_notification_analytics_engagement (engagement_score)
 );
-"""
-
-USER_NOTIFICATION_PREFERENCES_TABLE = """
-CREATE TABLE IF NOT EXISTS user_notification_preferences (
+"""USER_NOTIFICATION_PREFERENCES_TABLE = """CREATE TABLE IF NOT EXISTS user_notification_preferences (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL,
     notification_category VARCHAR(50) NOT NULL,
@@ -382,10 +342,7 @@ CREATE TABLE IF NOT EXISTS user_notification_preferences (
     INDEX idx_user_notification_prefs_category (notification_category),
     UNIQUE(user_id, notification_category)
 );
-"""
-
-NOTIFICATION_QUEUE_MANAGEMENT_TABLE = """
-CREATE TABLE IF NOT EXISTS notification_queue_management (
+"""NOTIFICATION_QUEUE_MANAGEMENT_TABLE = """CREATE TABLE IF NOT EXISTS notification_queue_management (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     queue_name VARCHAR(100) NOT NULL,
     notification_type VARCHAR(50) NOT NULL,
@@ -406,11 +363,8 @@ CREATE TABLE IF NOT EXISTS notification_queue_management (
     INDEX idx_queue_management_status (queue_status),
     UNIQUE(queue_name, notification_type)
 );
-"""
-
-# AI-Powered Insights Tables
-NOTIFICATION_AI_INSIGHTS_TABLE = """
-CREATE TABLE IF NOT EXISTS notification_ai_insights (
+"""# AI-Powered Insights Tables
+NOTIFICATION_AI_INSIGHTS_TABLE = """CREATE TABLE IF NOT EXISTS notification_ai_insights (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL,
     content_id UUID,
@@ -435,10 +389,7 @@ CREATE TABLE IF NOT EXISTS notification_ai_insights (
     INDEX idx_ai_insights_generated (generated_at),
     INDEX idx_ai_insights_expires (expires_at)
 );
-"""
-
-CROSS_PLATFORM_SYNC_TABLE = """
-CREATE TABLE IF NOT EXISTS cross_platform_sync (
+"""CROSS_PLATFORM_SYNC_TABLE = """CREATE TABLE IF NOT EXISTS cross_platform_sync (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL,
     content_id UUID NOT NULL,
@@ -460,8 +411,7 @@ CREATE TABLE IF NOT EXISTS cross_platform_sync (
     INDEX idx_cross_platform_sync_status (sync_status),
     INDEX idx_cross_platform_sync_next (next_sync_at)
 );
-"""
-    similarity_score FLOAT NOT NULL,
+"""    similarity_score FLOAT NOT NULL,
     content_segment JSONB DEFAULT '{}',
     evidence_data JSONB DEFAULT '{}',
     legal_action_required BOOLEAN DEFAULT false,
@@ -475,10 +425,7 @@ CREATE TABLE IF NOT EXISTS cross_platform_sync (
     INDEX idx_violations_severity (severity),
     INDEX idx_violations_detected (detected_at)
 );
-"""
-
-ESCALATION_JOBS_TABLE = """
-CREATE TABLE IF NOT EXISTS escalation_jobs (
+"""ESCALATION_JOBS_TABLE = """CREATE TABLE IF NOT EXISTS escalation_jobs (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     violation_id UUID NOT NULL REFERENCES content_protection_violations(id),
     rule_id VARCHAR(100) NOT NULL,
@@ -493,11 +440,8 @@ CREATE TABLE IF NOT EXISTS escalation_jobs (
     INDEX idx_escalation_scheduled (scheduled_time),
     INDEX idx_escalation_violation (violation_id)
 );
-"""
-
-# Revenue Tables
-REVENUE_TRANSACTIONS_TABLE = """
-CREATE TABLE IF NOT EXISTS revenue_transactions (
+"""# Revenue Tables
+REVENUE_TRANSACTIONS_TABLE = """CREATE TABLE IF NOT EXISTS revenue_transactions (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL,
     content_id UUID,
@@ -520,10 +464,7 @@ CREATE TABLE IF NOT EXISTS revenue_transactions (
     INDEX idx_revenue_date (transaction_date),
     INDEX idx_revenue_platform (platform)
 );
-"""
-
-REVENUE_GOALS_TABLE = """
-CREATE TABLE IF NOT EXISTS revenue_goals (
+"""REVENUE_GOALS_TABLE = """CREATE TABLE IF NOT EXISTS revenue_goals (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL,
     target_amount DECIMAL(12,2) NOT NULL,
@@ -542,10 +483,7 @@ CREATE TABLE IF NOT EXISTS revenue_goals (
     INDEX idx_revenue_goals_active (is_active),
     INDEX idx_revenue_goals_period (period_type, end_date)
 );
-"""
-
-REVENUE_NOTIFICATIONS_TABLE = """
-CREATE TABLE IF NOT EXISTS revenue_notifications (
+"""REVENUE_NOTIFICATIONS_TABLE = """CREATE TABLE IF NOT EXISTS revenue_notifications (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL,
     trigger VARCHAR(50) NOT NULL,
@@ -560,11 +498,8 @@ CREATE TABLE IF NOT EXISTS revenue_notifications (
     INDEX idx_revenue_notifications_user (user_id),
     INDEX idx_revenue_notifications_trigger (trigger)
 );
-"""
-
-# Collaboration Tables
-ARTIST_PROFILES_TABLE = """
-CREATE TABLE IF NOT EXISTS artist_profiles (
+"""# Collaboration Tables
+ARTIST_PROFILES_TABLE = """CREATE TABLE IF NOT EXISTS artist_profiles (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL UNIQUE,
     artist_name VARCHAR(255) NOT NULL,
@@ -586,10 +521,7 @@ CREATE TABLE IF NOT EXISTS artist_profiles (
     INDEX idx_artist_profiles_location (location),
     INDEX idx_artist_profiles_reputation (reputation_score)
 );
-"""
-
-COLLABORATION_OPPORTUNITIES_TABLE = """
-CREATE TABLE IF NOT EXISTS collaboration_opportunities (
+"""COLLABORATION_OPPORTUNITIES_TABLE = """CREATE TABLE IF NOT EXISTS collaboration_opportunities (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     initiator_id UUID NOT NULL,
     target_id UUID NOT NULL,
@@ -611,10 +543,7 @@ CREATE TABLE IF NOT EXISTS collaboration_opportunities (
     INDEX idx_collab_ops_type (collaboration_type),
     INDEX idx_collab_ops_status (status)
 );
-"""
-
-COLLABORATION_PROJECTS_TABLE = """
-CREATE TABLE IF NOT EXISTS collaboration_projects (
+"""COLLABORATION_PROJECTS_TABLE = """CREATE TABLE IF NOT EXISTS collaboration_projects (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     title VARCHAR(255) NOT NULL,
     participants JSONB NOT NULL,
@@ -634,11 +563,8 @@ CREATE TABLE IF NOT EXISTS collaboration_projects (
     INDEX idx_collab_projects_type (collaboration_type),
     INDEX idx_collab_projects_created (created_at)
 );
-"""
-
-# Performance Analytics Tables
-PERFORMANCE_DATA_POINTS_TABLE = """
-CREATE TABLE IF NOT EXISTS performance_data_points (
+"""# Performance Analytics Tables
+PERFORMANCE_DATA_POINTS_TABLE = """CREATE TABLE IF NOT EXISTS performance_data_points (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL,
     content_id UUID,
@@ -654,10 +580,7 @@ CREATE TABLE IF NOT EXISTS performance_data_points (
     INDEX idx_performance_timestamp (timestamp),
     INDEX idx_performance_composite (user_id, platform, metric, timestamp)
 );
-"""
-
-PERFORMANCE_INSIGHTS_TABLE = """
-CREATE TABLE IF NOT EXISTS performance_insights (
+"""PERFORMANCE_INSIGHTS_TABLE = """CREATE TABLE IF NOT EXISTS performance_insights (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL,
     insight_type VARCHAR(50) NOT NULL,
@@ -678,10 +601,7 @@ CREATE TABLE IF NOT EXISTS performance_insights (
     INDEX idx_insights_priority (priority),
     INDEX idx_insights_generated (generated_at)
 );
-"""
-
-PERFORMANCE_GOALS_TABLE = """
-CREATE TABLE IF NOT EXISTS performance_goals (
+"""PERFORMANCE_GOALS_TABLE = """CREATE TABLE IF NOT EXISTS performance_goals (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL,
     metric VARCHAR(50) NOT NULL,
@@ -699,11 +619,8 @@ CREATE TABLE IF NOT EXISTS performance_goals (
     INDEX idx_perf_goals_metric (metric),
     INDEX idx_perf_goals_active (is_active)
 );
-"""
-
-# Distribution Tables
-DISTRIBUTION_JOBS_TABLE = """
-CREATE TABLE IF NOT EXISTS distribution_jobs (
+"""# Distribution Tables
+DISTRIBUTION_JOBS_TABLE = """CREATE TABLE IF NOT EXISTS distribution_jobs (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL,
     content_id UUID,
@@ -725,10 +642,7 @@ CREATE TABLE IF NOT EXISTS distribution_jobs (
     INDEX idx_dist_jobs_status (status),
     INDEX idx_dist_jobs_created (created_at)
 );
-"""
-
-PLATFORM_PUBLICATIONS_TABLE = """
-CREATE TABLE IF NOT EXISTS platform_publications (
+"""PLATFORM_PUBLICATIONS_TABLE = """CREATE TABLE IF NOT EXISTS platform_publications (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     distribution_job_id UUID NOT NULL REFERENCES distribution_jobs(id),
     platform VARCHAR(50) NOT NULL,
@@ -750,11 +664,8 @@ CREATE TABLE IF NOT EXISTS platform_publications (
     INDEX idx_platform_pubs_status (status),
     INDEX idx_platform_pubs_published (published_at)
 );
-"""
-
-# Notification System Core Tables
-NOTIFICATION_QUEUE_TABLE = """
-CREATE TABLE IF NOT EXISTS notification_queue (
+"""# Notification System Core Tables
+NOTIFICATION_QUEUE_TABLE = """CREATE TABLE IF NOT EXISTS notification_queue (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL,
     notification_type VARCHAR(50) NOT NULL,
@@ -776,10 +687,7 @@ CREATE TABLE IF NOT EXISTS notification_queue (
     INDEX idx_notification_queue_scheduled (scheduled_at),
     INDEX idx_notification_queue_priority (priority)
 );
-"""
-
-NOTIFICATION_PREFERENCES_TABLE = """
-CREATE TABLE IF NOT EXISTS notification_preferences (
+"""NOTIFICATION_PREFERENCES_TABLE = """CREATE TABLE IF NOT EXISTS notification_preferences (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL,
     notification_type VARCHAR(50) NOT NULL,
@@ -796,11 +704,8 @@ CREATE TABLE IF NOT EXISTS notification_preferences (
     INDEX idx_notification_prefs_user (user_id),
     INDEX idx_notification_prefs_type (notification_type)
 );
-"""
-
-# Analytics and Metrics Tables
-NOTIFICATION_METRICS_TABLE = """
-CREATE TABLE IF NOT EXISTS notification_metrics (
+"""# Analytics and Metrics Tables
+NOTIFICATION_METRICS_TABLE = """CREATE TABLE IF NOT EXISTS notification_metrics (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID,
     notification_type VARCHAR(50) NOT NULL,
@@ -822,11 +727,8 @@ CREATE TABLE IF NOT EXISTS notification_metrics (
     INDEX idx_notification_metrics_user (user_id),
     INDEX idx_notification_metrics_type (notification_type)
 );
-"""
-
-# WebSocket and Real-time Tables
-REALTIME_CONNECTIONS_TABLE = """
-CREATE TABLE IF NOT EXISTS realtime_connections (
+"""# WebSocket and Real-time Tables
+REALTIME_CONNECTIONS_TABLE = """CREATE TABLE IF NOT EXISTS realtime_connections (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL,
     connection_id VARCHAR(255) NOT NULL UNIQUE,
@@ -844,10 +746,7 @@ CREATE TABLE IF NOT EXISTS realtime_connections (
     INDEX idx_realtime_status (status),
     INDEX idx_realtime_activity (last_activity)
 );
-"""
-
-REALTIME_MESSAGES_TABLE = """
-CREATE TABLE IF NOT EXISTS realtime_messages (
+"""REALTIME_MESSAGES_TABLE = """CREATE TABLE IF NOT EXISTS realtime_messages (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     sender_id UUID NOT NULL,
     room_id VARCHAR(255) NOT NULL,
@@ -863,11 +762,8 @@ CREATE TABLE IF NOT EXISTS realtime_messages (
     INDEX idx_realtime_messages_sender (sender_id),
     INDEX idx_realtime_messages_sent (sent_at)
 );
-"""
-
-# Push Notification Tables
-PUSH_DEVICES_TABLE = """
-CREATE TABLE IF NOT EXISTS push_devices (
+"""# Push Notification Tables
+PUSH_DEVICES_TABLE = """CREATE TABLE IF NOT EXISTS push_devices (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL,
     device_token VARCHAR(500) NOT NULL UNIQUE,
@@ -884,10 +780,7 @@ CREATE TABLE IF NOT EXISTS push_devices (
     INDEX idx_push_devices_type (device_type),
     INDEX idx_push_devices_active (is_active)
 );
-"""
-
-PUSH_MESSAGES_TABLE = """
-CREATE TABLE IF NOT EXISTS push_messages (
+"""PUSH_MESSAGES_TABLE = """CREATE TABLE IF NOT EXISTS push_messages (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL,
     device_token VARCHAR(500) NOT NULL,
@@ -910,9 +803,7 @@ CREATE TABLE IF NOT EXISTS push_messages (
     INDEX idx_push_messages_status (status),
     INDEX idx_push_messages_sent (sent_at)
 );
-"""
-
-# Complete schema creation script
+"""# Complete schema creation script
 ALL_NOTIFICATION_TABLES = [
     EMAIL_MESSAGES_TABLE,
     EMAIL_DELIVERIES_TABLE,
@@ -939,8 +830,7 @@ ALL_NOTIFICATION_TABLES = [
 ]
 
 def create_notification_schema_sql() -> str:
-    """Génère le script SQL complet pour créer le schéma de notifications"""
-    sql_parts = [
+    """Génère le script SQL complet pour créer le schéma de notifications"""    sql_parts = [
         "-- Enterprise Notification Systems Database Schema",
         "-- Auteur: Fahed Mlaiel <mlaiel@live.de>",
         "-- Copyright © 2025 Fahed Mlaiel. Tous droits réservés.",
@@ -955,8 +845,7 @@ def create_notification_schema_sql() -> str:
     
     # Triggers et fonctions
     sql_parts.extend([
-        """
--- Update timestamp trigger function
+        """-- Update timestamp trigger function
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -966,8 +855,7 @@ END;
 $$ language 'plpgsql';
 """,
         
-        """
--- Apply update triggers
+        """-- Apply update triggers
 CREATE TRIGGER update_artist_profiles_updated_at 
     BEFORE UPDATE ON artist_profiles 
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
@@ -977,8 +865,7 @@ CREATE TRIGGER update_notification_preferences_updated_at
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 """,
         
-        """
--- Performance optimization views
+        """-- Performance optimization views
 CREATE OR REPLACE VIEW notification_dashboard_summary AS
 SELECT 
     user_id,
@@ -993,8 +880,7 @@ WHERE created_at >= CURRENT_DATE - INTERVAL '7 days'
 GROUP BY user_id;
 """,
         
-        """
--- Revenue performance view
+        """-- Revenue performance view
 CREATE OR REPLACE VIEW revenue_dashboard_summary AS
 SELECT 
     user_id,
@@ -1005,8 +891,7 @@ SELECT
 FROM revenue_transactions 
 WHERE transaction_date >= CURRENT_DATE - INTERVAL '30 days'
 GROUP BY user_id;
-"""
-    ])
+"""    ])
     
     return "\n".join(sql_parts)
     provider_message_id VARCHAR(255),
@@ -1029,10 +914,7 @@ GROUP BY user_id;
     INDEX idx_email_deliveries_provider (provider),
     INDEX idx_email_deliveries_sent (sent_at)
 );
-"""
-
-EMAIL_TEMPLATES_TABLE = """
-CREATE TABLE IF NOT EXISTS email_templates (
+"""EMAIL_TEMPLATES_TABLE = """CREATE TABLE IF NOT EXISTS email_templates (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(255) NOT NULL UNIQUE,
     subject TEXT NOT NULL,
@@ -1049,11 +931,8 @@ CREATE TABLE IF NOT EXISTS email_templates (
     INDEX idx_email_templates_category (category),
     INDEX idx_email_templates_active (is_active)
 );
-"""
-
-# Push Notification Tables
-PUSH_DEVICES_TABLE = """
-CREATE TABLE IF NOT EXISTS push_devices (
+"""# Push Notification Tables
+PUSH_DEVICES_TABLE = """CREATE TABLE IF NOT EXISTS push_devices (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL,
     platform VARCHAR(50) NOT NULL,
@@ -1077,10 +956,7 @@ CREATE TABLE IF NOT EXISTS push_devices (
     INDEX idx_push_devices_active (is_active),
     UNIQUE(user_id, platform, token)
 );
-"""
-
-PUSH_NOTIFICATIONS_TABLE = """
-CREATE TABLE IF NOT EXISTS push_notifications (
+"""PUSH_NOTIFICATIONS_TABLE = """CREATE TABLE IF NOT EXISTS push_notifications (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL,
     device_id UUID,
@@ -1111,10 +987,7 @@ CREATE TABLE IF NOT EXISTS push_notifications (
     INDEX idx_push_notifications_scheduled (scheduled_at),
     INDEX idx_push_notifications_created (created_at)
 );
-"""
-
-PUSH_DELIVERIES_TABLE = """
-CREATE TABLE IF NOT EXISTS push_deliveries (
+"""PUSH_DELIVERIES_TABLE = """CREATE TABLE IF NOT EXISTS push_deliveries (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     notification_id UUID NOT NULL REFERENCES push_notifications(id) ON DELETE CASCADE,
     device_id UUID NOT NULL REFERENCES push_devices(id) ON DELETE CASCADE,
@@ -1138,11 +1011,8 @@ CREATE TABLE IF NOT EXISTS push_deliveries (
     INDEX idx_push_deliveries_status (status),
     INDEX idx_push_deliveries_platform (platform)
 );
-"""
-
-# Real-time Communication Tables
-REALTIME_MESSAGES_TABLE = """
-CREATE TABLE IF NOT EXISTS realtime_messages (
+"""# Real-time Communication Tables
+REALTIME_MESSAGES_TABLE = """CREATE TABLE IF NOT EXISTS realtime_messages (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     type VARCHAR(100) NOT NULL,
     sender_id UUID NOT NULL,
@@ -1162,10 +1032,7 @@ CREATE TABLE IF NOT EXISTS realtime_messages (
     INDEX idx_realtime_messages_type (type),
     INDEX idx_realtime_messages_created (created_at)
 );
-"""
-
-COMMUNICATION_ROOMS_TABLE = """
-CREATE TABLE IF NOT EXISTS communication_rooms (
+"""COMMUNICATION_ROOMS_TABLE = """CREATE TABLE IF NOT EXISTS communication_rooms (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(255) NOT NULL,
     type VARCHAR(100) DEFAULT 'general',
@@ -1180,11 +1047,8 @@ CREATE TABLE IF NOT EXISTS communication_rooms (
     INDEX idx_communication_rooms_type (type),
     INDEX idx_communication_rooms_active (is_active)
 );
-"""
-
-# Alert Management Tables
-ALERT_RULES_TABLE = """
-CREATE TABLE IF NOT EXISTS alert_rules (
+"""# Alert Management Tables
+ALERT_RULES_TABLE = """CREATE TABLE IF NOT EXISTS alert_rules (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(255) NOT NULL,
     description TEXT,
@@ -1208,10 +1072,7 @@ CREATE TABLE IF NOT EXISTS alert_rules (
     INDEX idx_alert_rules_active (is_active),
     INDEX idx_alert_rules_name (name)
 );
-"""
-
-ALERTS_TABLE = """
-CREATE TABLE IF NOT EXISTS alerts (
+"""ALERTS_TABLE = """CREATE TABLE IF NOT EXISTS alerts (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     rule_id UUID NOT NULL REFERENCES alert_rules(id) ON DELETE CASCADE,
     alert_type VARCHAR(100) NOT NULL,
@@ -1249,10 +1110,7 @@ CREATE TABLE IF NOT EXISTS alerts (
     INDEX idx_alerts_escalation (next_escalation_at),
     INDEX idx_alerts_created (created_at)
 );
-"""
-
-ESCALATION_POLICIES_TABLE = """
-CREATE TABLE IF NOT EXISTS escalation_policies (
+"""ESCALATION_POLICIES_TABLE = """CREATE TABLE IF NOT EXISTS escalation_policies (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(255) NOT NULL,
     description TEXT,
@@ -1266,10 +1124,7 @@ CREATE TABLE IF NOT EXISTS escalation_policies (
     INDEX idx_escalation_policies_name (name),
     INDEX idx_escalation_policies_active (is_active)
 );
-"""
-
-ALERT_NOTIFICATIONS_TABLE = """
-CREATE TABLE IF NOT EXISTS alert_notifications (
+"""ALERT_NOTIFICATIONS_TABLE = """CREATE TABLE IF NOT EXISTS alert_notifications (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     alert_id UUID NOT NULL REFERENCES alerts(id) ON DELETE CASCADE,
     escalation_step INTEGER DEFAULT 0,
@@ -1291,11 +1146,8 @@ CREATE TABLE IF NOT EXISTS alert_notifications (
     INDEX idx_alert_notifications_status (status),
     INDEX idx_alert_notifications_recipient (recipient)
 );
-"""
-
-# Queue Management Tables
-NOTIFICATION_QUEUE_AUDIT_TABLE = """
-CREATE TABLE IF NOT EXISTS notification_queue_audit (
+"""# Queue Management Tables
+NOTIFICATION_QUEUE_AUDIT_TABLE = """CREATE TABLE IF NOT EXISTS notification_queue_audit (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     message_id UUID NOT NULL,
     queue_type VARCHAR(100) NOT NULL,
@@ -1314,10 +1166,7 @@ CREATE TABLE IF NOT EXISTS notification_queue_audit (
     INDEX idx_notification_queue_audit_queue (queue_type),
     INDEX idx_notification_queue_audit_created (created_at)
 );
-"""
-
-NOTIFICATION_QUEUE_STATS_TABLE = """
-CREATE TABLE IF NOT EXISTS notification_queue_stats (
+"""NOTIFICATION_QUEUE_STATS_TABLE = """CREATE TABLE IF NOT EXISTS notification_queue_stats (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     queue_name VARCHAR(100) NOT NULL,
     total_messages BIGINT DEFAULT 0,
@@ -1334,9 +1183,7 @@ CREATE TABLE IF NOT EXISTS notification_queue_stats (
     INDEX idx_notification_queue_stats_queue (queue_name),
     INDEX idx_notification_queue_stats_snapshot (snapshot_at)
 );
-"""
-
-# Create all tables
+"""# Create all tables
 ALL_TABLES = [
     # Email tables
     EMAIL_MESSAGES_TABLE,
@@ -1364,8 +1211,7 @@ ALL_TABLES = [
 ]
 
 # Database functions and triggers
-DATABASE_FUNCTIONS = """
--- Function to update updated_at timestamp
+DATABASE_FUNCTIONS = """-- Function to update updated_at timestamp
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -1436,11 +1282,8 @@ BEGIN
     GROUP BY nqa.queue_type;
 END;
 $$ LANGUAGE 'plpgsql';
-"""
-
-# Initial data and configurations
-INITIAL_EMAIL_TEMPLATES = """
--- Welcome email template
+"""# Initial data and configurations
+INITIAL_EMAIL_TEMPLATES = """-- Welcome email template
 INSERT INTO email_templates (name, subject, html_content, text_content, category, variables) VALUES
 ('welcome_user', 'Bienvenue sur IA Influencer Agent !', 
 '<h1>Bienvenue {{user_name}} !</h1><p>Votre compte a été créé avec succès. Vous pouvez maintenant commencer à protéger et monétiser votre contenu créatif.</p>',
@@ -1461,10 +1304,7 @@ INSERT INTO email_templates (name, subject, html_content, text_content, category
 '<h2>Demande de Collaboration</h2><p>{{requester_name}} souhaite collaborer avec vous sur le projet "{{project_title}}".</p><p>Type: {{collaboration_type}}</p><p><a href="{{collaboration_link}}">Voir les détails</a></p>',
 'Nouvelle Demande de Collaboration: {{requester_name}} souhaite collaborer avec vous sur "{{project_title}}". Type: {{collaboration_type}}. Lien: {{collaboration_link}}',
 'collaboration', '["requester_name", "project_title", "collaboration_type", "collaboration_link"]');
-"""
-
-INITIAL_ESCALATION_POLICIES = """
--- Security escalation policy
+"""INITIAL_ESCALATION_POLICIES = """-- Security escalation policy
 INSERT INTO escalation_policies (name, description, alert_types, severity_levels, steps) VALUES
 ('security_escalation', 'Politique d''escalade pour les alertes de sécurité',
 '["security_breach", "copyright_infringement", "user_suspicious_activity"]',
@@ -1523,12 +1363,9 @@ INSERT INTO escalation_policies (name, description, alert_types, severity_levels
         ]
     }
 ]');
-"""
-
-# Database initialization script
+"""# Database initialization script
 async def initialize_notification_database(db_pool):
-    """Initialize the notification systems database"""
-    async with db_pool.acquire() as conn:
+    """Initialize the notification systems database"""    async with db_pool.acquire() as conn:
         try:
             # Create tables
             for table_sql in ALL_TABLES:

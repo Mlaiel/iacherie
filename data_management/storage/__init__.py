@@ -31,8 +31,7 @@ LOGIQUE MÉTIER STORAGE:
 Upload Multi-Format → Analyse Intelligente → Stockage Multi-Tier → 
 Réplication Cross-Cloud → CDN Distribution → Cache Optimisé → 
 Protection Avancée → Analytics Real-time → Lifecycle Management
-"""
-from typing import Dict, List, Optional, Any, Union, AsyncGenerator, Protocol
+"""from typing import Dict, List, Optional, Any, Union, AsyncGenerator, Protocol
 import logging
 from pathlib import Path
 from datetime import datetime
@@ -278,8 +277,7 @@ class StorageFactory:
     def create_enterprise_manager(
         config: Optional[Dict[str, Any]] = None
     ) -> StorageManager:
-        """Create enterprise storage manager with full feature set"""
-        final_config = {**ENTERPRISE_STORAGE_CONFIG, **(config or {})}
+        """Create enterprise storage manager with full feature set"""        final_config = {**ENTERPRISE_STORAGE_CONFIG, **(config or {})}
         return StorageManager(final_config)
     
     @staticmethod

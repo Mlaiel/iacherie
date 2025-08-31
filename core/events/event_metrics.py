@@ -1,5 +1,4 @@
-"""
-IA-Influencer-Agent - Event Metrics and Analytics System
+"""IA-Influencer-Agent - Event Metrics and Analytics System
 Module: backend/core/events/event_metrics.py
 Architecture: Advanced Event Analytics and Performance Monitoring
 Auteur: Fahed Mlaiel <mlaiel@live.de>
@@ -14,9 +13,7 @@ Contact autorisations : mlaiel@live.de
 Description:
     Système avancé de métriques et analytics pour les événements de la plateforme
     IA-Influencer-Agent. Monitoring temps réel, KPIs business et alertes intelligentes.
-"""
-
-from typing import Any, Dict, List, Optional, Union, Tuple, Callable
+"""from typing import Any, Dict, List, Optional, Union, Tuple, Callable
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from enum import Enum
@@ -39,8 +36,7 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types de métriques"""
-    COUNTER = "counter"
+    """Types de métriques"""    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     SUMMARY = "summary"
@@ -48,16 +44,14 @@ class MetricType(Enum):
 
 
 class AlertSeverity(Enum):
-    """Niveaux de sévérité des alertes"""
-    INFO = "info"
+    """Niveaux de sévérité des alertes"""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
 
 
 class AggregationPeriod(Enum):
-    """Périodes d'agrégation"""
-    MINUTE = "1m"
+    """Périodes d'agrégation"""    MINUTE = "1m"
     FIVE_MINUTES = "5m"
     HOUR = "1h"
     DAY = "1d"
@@ -67,8 +61,7 @@ class AggregationPeriod(Enum):
 
 @dataclass
 class MetricValue:
-    """Valeur de métrique avec timestamp"""
-    value: Union[int, float]
+    """Valeur de métrique avec timestamp"""    value: Union[int, float]
     timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     labels: Dict[str, str] = field(default_factory=dict)
     metadata: Dict[str, Any] = field(default_factory=dict)
@@ -76,8 +69,7 @@ class MetricValue:
 
 @dataclass
 class MetricDefinition:
-    """Définition d'une métrique"""
-    name: str
+    """Définition d'une métrique"""    name: str
     metric_type: MetricType
     description: str
     labels: List[str] = field(default_factory=list)
@@ -89,8 +81,7 @@ class MetricDefinition:
 
 @dataclass
 class AlertRule:
-    """Règle d'alerte"""
-    rule_id: str
+    """Règle d'alerte"""    rule_id: str
     metric_name: str
     condition: str  # ex: "> 100", "< 0.95", "rate > 10/min"
     severity: AlertSeverity
@@ -104,8 +95,7 @@ class AlertRule:
 
 @dataclass
 class Alert:
-    """Alerte générée"""
-    alert_id: str
+    """Alerte générée"""    alert_id: str
     rule_id: str
     metric_name: str
     current_value: Union[int, float]
@@ -119,22 +109,18 @@ class Alert:
 
 
 class MetricCollector(ABC):
-    """Interface pour collecteurs de métriques"""
-    
+    """Interface pour collecteurs de métriques"""    
     @abstractmethod
     async def collect(self) -> Dict[str, MetricValue]:
-        """Collecte les métriques"""
-        pass
+        """Collecte les métriques"""        pass
     
     @abstractmethod
     def get_definitions(self) -> List[MetricDefinition]:
-        """Retourne les définitions de métriques"""
-        pass
+        """Retourne les définitions de métriques"""        pass
 
 
 class EventMetricsCollector(MetricCollector):
-    """Collecteur de métriques pour les événements"""
-    
+    """Collecteur de métriques pour les événements"""    
     def __init__(self):
         self.event_counts = defaultdict(int)
         self.event_durations = defaultdict(list)
@@ -143,8 +129,7 @@ class EventMetricsCollector(MetricCollector):
         self.processing_times = deque(maxlen=1000)
         
     async def collect(self) -> Dict[str, MetricValue]:
-        """Collecte les métriques d'événements"""
-        now = datetime.now(timezone.utc)
+        """Collecte les métriques d'événements"""        now = datetime.now(timezone.utc)
         metrics = {}
         
         # Compteurs d'événements par type
@@ -190,8 +175,7 @@ class EventMetricsCollector(MetricCollector):
         return metrics
     
     def get_definitions(self) -> List[MetricDefinition]:
-        """Définitions des métriques d'événements"""
-        return [
+        """Définitions des métriques d'événements"""        return [
             MetricDefinition(
                 name="events_total",
                 metric_type=MetricType.COUNTER,
@@ -228,8 +212,7 @@ class EventMetricsCollector(MetricCollector):
         ]
     
     def record_event(self, event: Event, duration: Optional[float] = None):
-        """Enregistre une métrique d'événement"""
-        self.event_counts[event.type] += 1
+        """Enregistre une métrique d'événement"""        self.event_counts[event.type] += 1
         
         if duration:
             self.event_durations[event.type].append(duration)
@@ -240,11 +223,9 @@ class EventMetricsCollector(MetricCollector):
 
 
 class SystemMetricsCollector(MetricCollector):
-    """Collecteur de métriques système"""
-    
+    """Collecteur de métriques système"""    
     async def collect(self) -> Dict[str, MetricValue]:
-        """Collecte les métriques système"""
-        metrics = {}
+        """Collecte les métriques système"""        metrics = {}
         
         # CPU
         cpu_percent = psutil.cpu_percent(interval=1)
@@ -272,8 +253,7 @@ class SystemMetricsCollector(MetricCollector):
         return metrics
     
     def get_definitions(self) -> List[MetricDefinition]:
-        """Définitions des métriques système"""
-        return [
+        """Définitions des métriques système"""        return [
             MetricDefinition(
                 name="system_cpu_usage",
                 metric_type=MetricType.GAUGE,
@@ -302,8 +282,7 @@ class SystemMetricsCollector(MetricCollector):
 
 
 class BusinessMetricsCollector(MetricCollector):
-    """Collecteur de métriques business pour IA-Influencer-Agent"""
-    
+    """Collecteur de métriques business pour IA-Influencer-Agent"""    
     def __init__(self):
         self.content_uploads = defaultdict(int)
         self.protection_violations = defaultdict(int)
@@ -312,8 +291,7 @@ class BusinessMetricsCollector(MetricCollector):
         self.user_activities = defaultdict(int)
         
     async def collect(self) -> Dict[str, MetricValue]:
-        """Collecte les métriques business"""
-        metrics = {}
+        """Collecte les métriques business"""        metrics = {}
         
         # Métriques de contenu
         total_uploads = sum(self.content_uploads.values())
@@ -356,8 +334,7 @@ class BusinessMetricsCollector(MetricCollector):
         return metrics
     
     def get_definitions(self) -> List[MetricDefinition]:
-        """Définitions des métriques business"""
-        return [
+        """Définitions des métriques business"""        return [
             MetricDefinition(
                 name="business_content_uploads_total",
                 metric_type=MetricType.COUNTER,
@@ -396,29 +373,23 @@ class BusinessMetricsCollector(MetricCollector):
         ]
     
     def record_content_upload(self, content_type: str):
-        """Enregistre un upload de contenu"""
-        self.content_uploads[content_type] += 1
+        """Enregistre un upload de contenu"""        self.content_uploads[content_type] += 1
     
     def record_protection_violation(self, platform: str):
-        """Enregistre une violation de protection"""
-        self.protection_violations[platform] += 1
+        """Enregistre une violation de protection"""        self.protection_violations[platform] += 1
     
     def record_revenue(self, amount: float, currency: str):
-        """Enregistre des revenus"""
-        self.revenue_amounts[currency] += amount
+        """Enregistre des revenus"""        self.revenue_amounts[currency] += amount
     
     def record_collaboration_match(self, match_type: str):
-        """Enregistre un match de collaboration"""
-        self.collaboration_matches[match_type] += 1
+        """Enregistre un match de collaboration"""        self.collaboration_matches[match_type] += 1
     
     def record_user_activity(self, user_id: str):
-        """Enregistre une activité utilisateur"""
-        self.user_activities[user_id] = int(time.time())
+        """Enregistre une activité utilisateur"""        self.user_activities[user_id] = int(time.time())
 
 
 class AlertManager:
-    """Gestionnaire d'alertes"""
-    
+    """Gestionnaire d'alertes"""    
     def __init__(self):
         self.rules: Dict[str, AlertRule] = {}
         self.active_alerts: Dict[str, Alert] = {}
@@ -426,23 +397,19 @@ class AlertManager:
         self.callbacks: List[Callable[[Alert], None]] = []
         
     def add_rule(self, rule: AlertRule):
-        """Ajoute une règle d'alerte"""
-        self.rules[rule.rule_id] = rule
+        """Ajoute une règle d'alerte"""        self.rules[rule.rule_id] = rule
         logger.info("Alert rule added: %s", rule.rule_id)
     
     def remove_rule(self, rule_id: str):
-        """Supprime une règle d'alerte"""
-        if rule_id in self.rules:
+        """Supprime une règle d'alerte"""        if rule_id in self.rules:
             del self.rules[rule_id]
             logger.info("Alert rule removed: %s", rule_id)
     
     def add_callback(self, callback: Callable[[Alert], None]):
-        """Ajoute un callback pour les alertes"""
-        self.callbacks.append(callback)
+        """Ajoute un callback pour les alertes"""        self.callbacks.append(callback)
     
     async def evaluate_metrics(self, metrics: Dict[str, MetricValue]):
-        """Évalue les métriques contre les règles d'alerte"""
-        for rule in self.rules.values():
+        """Évalue les métriques contre les règles d'alerte"""        for rule in self.rules.values():
             if not rule.enabled:
                 continue
                 
@@ -460,8 +427,7 @@ class AlertManager:
                 await self._resolve_alert(rule.rule_id)
     
     def _evaluate_condition(self, value: Union[int, float], condition: str) -> bool:
-        """Évalue une condition d'alerte"""
-        try:
+        """Évalue une condition d'alerte"""        try:
             # Parse simple conditions like "> 100", "< 0.5", "== 0"
             if condition.startswith("> "):
                 threshold = float(condition[2:])
@@ -489,8 +455,7 @@ class AlertManager:
             return False
     
     async def _trigger_alert(self, rule: AlertRule, metric: MetricValue):
-        """Déclenche une alerte"""
-        now = datetime.now(timezone.utc)
+        """Déclenche une alerte"""        now = datetime.now(timezone.utc)
         
         # Vérification cooldown
         if (rule.last_triggered and 
@@ -527,8 +492,7 @@ class AlertManager:
                 logger.error("Alert callback failed: %s", e)
     
     async def _resolve_alert(self, rule_id: str):
-        """Résout une alerte"""
-        alerts_to_resolve = [
+        """Résout une alerte"""        alerts_to_resolve = [
             alert for alert in self.active_alerts.values()
             if alert.rule_id == rule_id and alert.resolved_at is None
         ]
@@ -540,8 +504,7 @@ class AlertManager:
 
 
 class EventMetricsManager:
-    """Gestionnaire principal des métriques d'événements"""
-    
+    """Gestionnaire principal des métriques d'événements"""    
     def __init__(
         self,
         redis_client: Optional[redis.Redis] = None,
@@ -576,8 +539,7 @@ class EventMetricsManager:
         logger.info("EventMetricsManager initialized")
     
     async def start(self):
-        """Démarre la collecte de métriques"""
-        if self._collecting:
+        """Démarre la collecte de métriques"""        if self._collecting:
             return
         
         # Enregistrement des collecteurs par défaut
@@ -595,8 +557,7 @@ class EventMetricsManager:
         logger.info("EventMetricsManager started")
     
     async def stop(self):
-        """Arrête la collecte de métriques"""
-        self._collecting = False
+        """Arrête la collecte de métriques"""        self._collecting = False
         
         if self._collection_task:
             self._collection_task.cancel()
@@ -608,8 +569,7 @@ class EventMetricsManager:
         logger.info("EventMetricsManager stopped")
     
     def register_collector(self, name: str, collector: MetricCollector):
-        """Enregistre un collecteur de métriques"""
-        self.collectors[name] = collector
+        """Enregistre un collecteur de métriques"""        self.collectors[name] = collector
         
         # Enregistrement des métriques Prometheus
         for definition in collector.get_definitions():
@@ -618,8 +578,7 @@ class EventMetricsManager:
         logger.info("Metric collector registered: %s", name)
     
     def _register_prometheus_metric(self, definition: MetricDefinition):
-        """Enregistre une métrique Prometheus"""
-        metric_name = f"ia_influencer_{definition.name}"
+        """Enregistre une métrique Prometheus"""        metric_name = f"ia_influencer_{definition.name}"
         
         if definition.metric_type == MetricType.COUNTER:
             metric = Counter(
@@ -656,8 +615,7 @@ class EventMetricsManager:
         self.prometheus_metrics[definition.name] = metric
     
     def _setup_default_alerts(self):
-        """Configure les alertes par défaut"""
-        default_rules = [
+        """Configure les alertes par défaut"""        default_rules = [
             AlertRule(
                 rule_id="high_error_rate",
                 metric_name="event_error_rate",
@@ -699,8 +657,7 @@ class EventMetricsManager:
             self.alert_manager.add_rule(rule)
     
     async def _collection_loop(self):
-        """Boucle principale de collecte"""
-        while self._collecting:
+        """Boucle principale de collecte"""        while self._collecting:
             try:
                 await self._collect_all_metrics()
                 await asyncio.sleep(self.collection_interval)
@@ -711,8 +668,7 @@ class EventMetricsManager:
                 await asyncio.sleep(5)  # Retry delay
     
     async def _collect_all_metrics(self):
-        """Collecte toutes les métriques"""
-        all_metrics = {}
+        """Collecte toutes les métriques"""        all_metrics = {}
         
         # Collecte depuis tous les collecteurs
         for name, collector in self.collectors.items():
@@ -748,8 +704,7 @@ class EventMetricsManager:
             await self._persist_metrics(all_metrics)
     
     def _update_prometheus_metrics(self, metrics: Dict[str, MetricValue]):
-        """Met à jour les métriques Prometheus"""
-        for metric_name, metric_value in metrics.items():
+        """Met à jour les métriques Prometheus"""        for metric_name, metric_value in metrics.items():
             prometheus_metric = self.prometheus_metrics.get(metric_name)
             if not prometheus_metric:
                 continue
@@ -768,8 +723,7 @@ class EventMetricsManager:
                 logger.error("Failed to update Prometheus metric %s: %s", metric_name, e)
     
     async def _persist_metrics(self, metrics: Dict[str, MetricValue]):
-        """Persiste les métriques dans Redis"""
-        try:
+        """Persiste les métriques dans Redis"""        try:
             pipe = self.redis_client.pipeline()
             timestamp = int(time.time())
             
@@ -789,8 +743,7 @@ class EventMetricsManager:
             logger.error("Failed to persist metrics to Redis: %s", e)
     
     def record_event_metric(self, event: Event, duration: Optional[float] = None):
-        """Enregistre une métrique d'événement"""
-        self.event_collector.record_event(event, duration)
+        """Enregistre une métrique d'événement"""        self.event_collector.record_event(event, duration)
         
         # Métriques business selon le type d'événement
         if event.type.startswith("content.uploaded"):
@@ -811,8 +764,7 @@ class EventMetricsManager:
             self.business_collector.record_user_activity(event.user_id)
     
     def get_current_metrics(self) -> Dict[str, MetricValue]:
-        """Retourne les métriques courantes"""
-        return self.current_metrics.copy()
+        """Retourne les métriques courantes"""        return self.current_metrics.copy()
     
     def get_historical_metrics(
         self,
@@ -820,8 +772,7 @@ class EventMetricsManager:
         start_time: Optional[datetime] = None,
         end_time: Optional[datetime] = None
     ) -> List[MetricValue]:
-        """Retourne les métriques historiques"""
-        metrics = self.historical_metrics.get(metric_name, [])
+        """Retourne les métriques historiques"""        metrics = self.historical_metrics.get(metric_name, [])
         
         if start_time:
             metrics = [m for m in metrics if m.timestamp >= start_time]
@@ -831,16 +782,14 @@ class EventMetricsManager:
         return metrics
     
     def get_active_alerts(self) -> List[Alert]:
-        """Retourne les alertes actives"""
-        return list(self.alert_manager.active_alerts.values())
+        """Retourne les alertes actives"""        return list(self.alert_manager.active_alerts.values())
     
     def get_alert_history(
         self,
         limit: int = 100,
         severity: Optional[AlertSeverity] = None
     ) -> List[Alert]:
-        """Retourne l'historique des alertes"""
-        alerts = self.alert_manager.alert_history
+        """Retourne l'historique des alertes"""        alerts = self.alert_manager.alert_history
         
         if severity:
             alerts = [a for a in alerts if a.severity == severity]
@@ -848,12 +797,10 @@ class EventMetricsManager:
         return sorted(alerts, key=lambda a: a.triggered_at, reverse=True)[:limit]
     
     def add_alert_rule(self, rule: AlertRule):
-        """Ajoute une règle d'alerte"""
-        self.alert_manager.add_rule(rule)
+        """Ajoute une règle d'alerte"""        self.alert_manager.add_rule(rule)
     
     def add_alert_callback(self, callback: Callable[[Alert], None]):
-        """Ajoute un callback d'alerte"""
-        self.alert_manager.add_callback(callback)
+        """Ajoute un callback d'alerte"""        self.alert_manager.add_callback(callback)
 
 
 # Instance globale

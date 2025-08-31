@@ -1,5 +1,4 @@
-"""
-Cross-Platform Monitoring Database Model
+"""Cross-Platform Monitoring Database Model
 
 Enterprise-grade SQLAlchemy model for real-time cross-platform content monitoring,
 violation detection, and automated response systems across multiple content platforms.
@@ -23,9 +22,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-
-from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric
+"""from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID, ARRAY
@@ -39,8 +36,7 @@ Base = declarative_base()
 
 
 class MonitoringPlatform(Enum):
-    """Monitored content platforms"""
-    YOUTUBE = "youtube"
+    """Monitored content platforms"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     FACEBOOK = "facebook"
@@ -63,8 +59,7 @@ class MonitoringPlatform(Enum):
 
 
 class MonitoringStatus(Enum):
-    """Monitoring job status"""
-    ACTIVE = "active"
+    """Monitoring job status"""    ACTIVE = "active"
     PAUSED = "paused"
     STOPPED = "stopped"
     ERROR = "error"
@@ -74,8 +69,7 @@ class MonitoringStatus(Enum):
 
 
 class DetectionMethod(Enum):
-    """Content detection methods"""
-    FINGERPRINT_MATCHING = "fingerprint_matching"
+    """Content detection methods"""    FINGERPRINT_MATCHING = "fingerprint_matching"
     VISUAL_RECOGNITION = "visual_recognition"
     AUDIO_ANALYSIS = "audio_analysis"
     TEXT_SIMILARITY = "text_similarity"
@@ -87,8 +81,7 @@ class DetectionMethod(Enum):
 
 
 class ResponseAction(Enum):
-    """Automated response actions"""
-    NOTIFY_OWNER = "notify_owner"
+    """Automated response actions"""    NOTIFY_OWNER = "notify_owner"
     SEND_TAKEDOWN_REQUEST = "send_takedown_request"
     FILE_DMCA_COMPLAINT = "file_dmca_complaint"
     INITIATE_LEGAL_ACTION = "initiate_legal_action"
@@ -100,13 +93,11 @@ class ResponseAction(Enum):
 
 
 class PlatformMonitoring(Base):
-    """
-    Cross-Platform Monitoring Configuration Model
+    """    Cross-Platform Monitoring Configuration Model
     
     Manages real-time monitoring configurations for content protection across
     multiple platforms with automated detection and response systems.
-    """
-    __tablename__ = "platform_monitoring"
+    """    __tablename__ = "platform_monitoring"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -197,8 +188,7 @@ class PlatformMonitoring(Base):
         return f"<PlatformMonitoring(id={self.id}, platform={self.platform.value}, status={self.monitoring_status.value})>"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert model to dictionary for API responses"""
-        return {
+        """Convert model to dictionary for API responses"""        return {
             "id": str(self.id),
             "content_fingerprint_id": str(self.content_fingerprint_id),
             "user_id": str(self.user_id),
@@ -247,12 +237,10 @@ class PlatformMonitoring(Base):
 
 
 class ScanResult(Base):
-    """
-    Platform Scan Result Model
+    """    Platform Scan Result Model
     
     Stores detailed results from platform scans including matches and potential violations.
-    """
-    __tablename__ = "scan_results"
+    """    __tablename__ = "scan_results"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -292,12 +280,10 @@ class ScanResult(Base):
 
 
 class ViolationDetection(Base):
-    """
-    Violation Detection Model
+    """    Violation Detection Model
     
     Records specific content violations detected during platform monitoring.
-    """
-    __tablename__ = "violation_detections"
+    """    __tablename__ = "violation_detections"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -369,8 +355,7 @@ class ViolationDetection(Base):
         return f"<ViolationDetection(id={self.id}, score={self.similarity_score}, status={self.violation_status})>"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert model to dictionary for API responses"""
-        return {
+        """Convert model to dictionary for API responses"""        return {
             "id": str(self.id),
             "platform_monitoring_id": str(self.platform_monitoring_id),
             "scan_result_id": str(self.scan_result_id) if self.scan_result_id else None,

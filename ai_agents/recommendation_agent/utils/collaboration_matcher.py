@@ -1,5 +1,4 @@
-"""
-Enterprise Collaboration Matching Engine for IA Influencer Platform
+"""Enterprise Collaboration Matching Engine for IA Influencer Platform
 
 Advanced collaboration system providing intelligent creator matching,
 opportunity discovery, and partnership optimization for multi-modal content creators.
@@ -10,9 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -30,11 +27,9 @@ from .models import (
 
 
 class CollaborationMatcher(ICollaborationMatcher):
-    """
-    Enterprise-grade collaboration matching engine providing intelligent
+    """    Enterprise-grade collaboration matching engine providing intelligent
     creator pairing, opportunity discovery, and partnership optimization.
-    """
-    
+    """    
     def __init__(
         self,
         redis_client: redis.Redis,
@@ -98,11 +93,9 @@ class CollaborationMatcher(ICollaborationMatcher):
         request: CollaborationRequest,
         max_matches: int = 20
     ) -> List[Tuple[CreatorProfile, float]]:
-        """
-        Find optimal creator matches for collaboration request using
+        """        Find optimal creator matches for collaboration request using
         multi-dimensional compatibility analysis.
-        """
-        try:
+        """        try:
             self.logger.info(f"Finding collaboration matches for request {request.request_id}")
             
             # Get eligible creators
@@ -154,11 +147,9 @@ class CollaborationMatcher(ICollaborationMatcher):
         creator_id: str,
         collaboration_types: Optional[List[str]] = None
     ) -> List[CollaborationRequest]:
-        """
-        Suggest relevant collaboration opportunities for a creator based on
+        """        Suggest relevant collaboration opportunities for a creator based on
         their profile, skills, and market demand.
-        """
-        try:
+        """        try:
             creator = await self._get_creator_profile(creator_id)
             if not creator:
                 return []
@@ -206,11 +197,9 @@ class CollaborationMatcher(ICollaborationMatcher):
         creator_a_id: str,
         creator_b_id: str
     ) -> Dict[str, float]:
-        """
-        Evaluate collaboration potential between two creators across
+        """        Evaluate collaboration potential between two creators across
         multiple dimensions and provide detailed analysis.
-        """
-        try:
+        """        try:
             creator_a = await self._get_creator_profile(creator_a_id)
             creator_b = await self._get_creator_profile(creator_b_id)
             
@@ -265,8 +254,7 @@ class CollaborationMatcher(ICollaborationMatcher):
         request: CollaborationRequest,
         creator: CreatorProfile
     ) -> float:
-        """Calculate comprehensive compatibility score between request and creator"""
-        try:
+        """Calculate comprehensive compatibility score between request and creator"""        try:
             compatibility_scores = {}
             
             # Skill compatibility
@@ -326,8 +314,7 @@ class CollaborationMatcher(ICollaborationMatcher):
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> Dict[str, float]:
-        """Analyze audience compatibility between creators"""
-        try:
+        """Analyze audience compatibility between creators"""        try:
             metrics = {}
             
             # Audience size compatibility
@@ -367,8 +354,7 @@ class CollaborationMatcher(ICollaborationMatcher):
         creator: CreatorProfile,
         compatibility_score: float
     ) -> float:
-        """Predict success probability of collaboration"""
-        try:
+        """Predict success probability of collaboration"""        try:
             success_factors = {}
             
             # Base compatibility contributes 40%
@@ -403,8 +389,7 @@ class CollaborationMatcher(ICollaborationMatcher):
         self,
         creator: CreatorProfile
     ) -> List[CollaborationRequest]:
-        """Generate proactive collaboration suggestions based on creator analysis"""
-        try:
+        """Generate proactive collaboration suggestions based on creator analysis"""        try:
             suggestions = []
             
             # Analyze creator's content gaps
@@ -447,8 +432,7 @@ class CollaborationMatcher(ICollaborationMatcher):
         required_skills: List[str],
         creator_skills: List[str]
     ) -> float:
-        """Calculate skill match score between required and available skills"""
-        if not required_skills:
+        """Calculate skill match score between required and available skills"""        if not required_skills:
             return 1.0
         
         if not creator_skills:
@@ -468,8 +452,7 @@ class CollaborationMatcher(ICollaborationMatcher):
         return min(match_ratio + skill_abundance_bonus, 1.0)
     
     def _calculate_opportunity_value(self, request: CollaborationRequest) -> float:
-        """Calculate the potential value of a collaboration opportunity"""
-        value_score = 0.0
+        """Calculate the potential value of a collaboration opportunity"""        value_score = 0.0
         
         # Budget-based value
         if request.budget_range:
@@ -491,12 +474,10 @@ class CollaborationMatcher(ICollaborationMatcher):
         self,
         request: CollaborationRequest
     ) -> List[CreatorProfile]:
-        """Get creators eligible for the collaboration request"""
-        # In real implementation, this would query the creator database
+        """Get creators eligible for the collaboration request"""        # In real implementation, this would query the creator database
         # with filters for skills, tier, availability, etc.
         return []  # Mock return
     
     async def _get_creator_profile(self, creator_id: str) -> Optional[CreatorProfile]:
-        """Retrieve creator profile from storage"""
-        # In real implementation, would fetch from database
+        """Retrieve creator profile from storage"""        # In real implementation, would fetch from database
         return None  # Mock return

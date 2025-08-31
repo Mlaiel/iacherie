@@ -1,19 +1,15 @@
-"""
-Enterprise-grade exception handling system for IA Influencer Agent.
+"""Enterprise-grade exception handling system for IA Influencer Agent.
 Professional error hierarchy with comprehensive business logic coverage.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
-"""
-
-from typing import Any, Dict, Optional, Union
+"""from typing import Any, Dict, Optional, Union
 from fastapi import HTTPException, status
 from enum import Enum
 
 
 class ErrorCode(str, Enum):
-    """Professional error codes for business logic categorization."""
-    
+    """Professional error codes for business logic categorization."""    
     # Authentication & Authorization
     AUTHENTICATION_FAILED = "AUTH_001"
     INVALID_CREDENTIALS = "AUTH_002"
@@ -49,8 +45,7 @@ class ErrorCode(str, Enum):
 
 
 class BaseApplicationException(Exception):
-    """Base exception class for all application-specific errors."""
-    
+    """Base exception class for all application-specific errors."""    
     def __init__(
         self,
         message: str,
@@ -65,8 +60,7 @@ class BaseApplicationException(Exception):
         super().__init__(self.message)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert exception to dictionary for API responses."""
-        return {
+        """Convert exception to dictionary for API responses."""        return {
             "error": {
                 "code": self.error_code.value,
                 "message": self.message,
@@ -76,8 +70,7 @@ class BaseApplicationException(Exception):
 
 
 class AuthenticationException(BaseApplicationException):
-    """Authentication and authorization related errors."""
-    
+    """Authentication and authorization related errors."""    
     def __init__(
         self,
         message: str = "Authentication failed",
@@ -93,8 +86,7 @@ class AuthenticationException(BaseApplicationException):
 
 
 class AuthorizationException(BaseApplicationException):
-    """Authorization related errors."""
-    
+    """Authorization related errors."""    
     def __init__(
         self,
         message: str = "Insufficient privileges",
@@ -110,8 +102,7 @@ class AuthorizationException(BaseApplicationException):
 
 
 class BusinessLogicException(BaseApplicationException):
-    """Business logic and validation errors."""
-    
+    """Business logic and validation errors."""    
     def __init__(
         self,
         message: str,
@@ -127,8 +118,7 @@ class BusinessLogicException(BaseApplicationException):
 
 
 class ContentNotFoundException(BusinessLogicException):
-    """Content not found error."""
-    
+    """Content not found error."""    
     def __init__(
         self,
         content_id: Union[str, int],
@@ -142,8 +132,7 @@ class ContentNotFoundException(BusinessLogicException):
 
 
 class ExternalServiceException(BaseApplicationException):
-    """External service integration errors."""
-    
+    """External service integration errors."""    
     def __init__(
         self,
         service_name: str,
@@ -160,8 +149,7 @@ class ExternalServiceException(BaseApplicationException):
 
 
 class DatabaseException(BaseApplicationException):
-    """Database operation errors."""
-    
+    """Database operation errors."""    
     def __init__(
         self,
         message: str,
@@ -177,8 +165,7 @@ class DatabaseException(BaseApplicationException):
 
 
 class ValidationException(BusinessLogicException):
-    """Input validation errors."""
-    
+    """Input validation errors."""    
     def __init__(
         self,
         field: str,
@@ -197,8 +184,7 @@ class ValidationException(BusinessLogicException):
 
 
 class RateLimitException(BaseApplicationException):
-    """Rate limiting errors."""
-    
+    """Rate limiting errors."""    
     def __init__(
         self,
         limit: int,
@@ -221,8 +207,7 @@ class RateLimitException(BaseApplicationException):
 
 
 class ContentProtectionException(BusinessLogicException):
-    """Content protection specific errors."""
-    
+    """Content protection specific errors."""    
     def __init__(
         self,
         message: str,
@@ -243,8 +228,7 @@ class ContentProtectionException(BusinessLogicException):
 
 
 class FingerprintException(BaseApplicationException):
-    """Fingerprint generation and matching errors."""
-    
+    """Fingerprint generation and matching errors."""    
     def __init__(
         self,
         message: str,
@@ -264,16 +248,14 @@ class FingerprintException(BaseApplicationException):
 
 
 def convert_to_http_exception(exc: BaseApplicationException) -> HTTPException:
-    """Convert application exception to FastAPI HTTPException."""
-    return HTTPException(
+    """Convert application exception to FastAPI HTTPException."""    return HTTPException(
         status_code=exc.status_code,
         detail=exc.to_dict()
     )
 
 
 def get_error_message(error_code: ErrorCode, default_message: str = "An error occurred") -> str:
-    """Get user-friendly error message based on error code."""
-    error_messages = {
+    """Get user-friendly error message based on error code."""    error_messages = {
         ErrorCode.AUTHENTICATION_FAILED: "Authentication credentials are invalid or missing",
         ErrorCode.INVALID_CREDENTIALS: "The provided credentials are incorrect",
         ErrorCode.TOKEN_EXPIRED: "Your session has expired, please log in again",

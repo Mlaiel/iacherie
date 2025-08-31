@@ -1,5 +1,4 @@
-"""
-Configuration Management for Cross-Platform Distribution System
+"""Configuration Management for Cross-Platform Distribution System
 
 Centralized configuration management for all distribution components.
 Provides environment-specific settings, platform credentials, and system parameters.
@@ -12,9 +11,7 @@ Architecture: Enterprise-grade, microservices-ready, production-optimized
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 Violations will be prosecuted under international copyright law.
-"""
-
-import os
+"""import os
 from typing import Dict, Any, Optional
 from dataclasses import dataclass, field
 from enum import Enum
@@ -24,16 +21,14 @@ import logging
 logger = logging.getLogger(__name__)
 
 class Environment(str, Enum):
-    """Deployment environments"""
-    DEVELOPMENT = "development"
+    """Deployment environments"""    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
 
 @dataclass
 class DatabaseConfig:
-    """Database configuration"""
-    host: str = "localhost"
+    """Database configuration"""    host: str = "localhost"
     port: int = 5432
     database: str = "ia_influencer"
     username: str = "postgres"
@@ -45,8 +40,7 @@ class DatabaseConfig:
 
 @dataclass
 class RedisConfig:
-    """Redis configuration"""
-    host: str = "localhost"
+    """Redis configuration"""    host: str = "localhost"
     port: int = 6379
     database: int = 0
     password: Optional[str] = None
@@ -55,8 +49,7 @@ class RedisConfig:
 
 @dataclass
 class PlatformApiConfig:
-    """Platform API configuration"""
-    rate_limit_requests: int = 100
+    """Platform API configuration"""    rate_limit_requests: int = 100
     rate_limit_window: int = 3600  # seconds
     timeout: int = 30
     retry_attempts: int = 3
@@ -66,8 +59,7 @@ class PlatformApiConfig:
 
 @dataclass
 class AnalyticsConfig:
-    """Analytics configuration"""
-    collection_interval: int = 3600  # seconds
+    """Analytics configuration"""    collection_interval: int = 3600  # seconds
     batch_size: int = 1000
     retention_days: int = 365
     enable_real_time: bool = True
@@ -75,8 +67,7 @@ class AnalyticsConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration"""
-    encryption_key: Optional[str] = None
+    """Security configuration"""    encryption_key: Optional[str] = None
     jwt_secret: Optional[str] = None
     api_key_length: int = 32
     session_timeout: int = 3600
@@ -84,10 +75,8 @@ class SecurityConfig:
     lockout_duration: int = 900  # seconds
 
 class DistributionConfig:
-    """
-    Main configuration class for cross-platform distribution system
-    """
-    
+    """    Main configuration class for cross-platform distribution system
+    """    
     def __init__(self, environment: Environment = Environment.DEVELOPMENT):
         self.environment = environment
         self.logger = logging.getLogger(__name__)
@@ -96,8 +85,7 @@ class DistributionConfig:
         self._load_config()
     
     def _load_config(self):
-        """Load configuration from environment variables"""
-        
+        """Load configuration from environment variables"""        
         # Database configuration
         self.database = DatabaseConfig(
             host=os.getenv("DB_HOST", "localhost"),
@@ -157,8 +145,7 @@ class DistributionConfig:
         }
     
     def _load_platform_credentials(self) -> Dict[str, Dict[str, str]]:
-        """Load platform credentials from environment"""
-        
+        """Load platform credentials from environment"""        
         credentials = {}
         
         # YouTube credentials
@@ -203,33 +190,27 @@ class DistributionConfig:
         return credentials
     
     def get_database_url(self) -> str:
-        """Get database connection URL"""
-        return (
+        """Get database connection URL"""        return (
             f"postgresql://{self.database.username}:{self.database.password}@"
             f"{self.database.host}:{self.database.port}/{self.database.database}"
         )
     
     def get_redis_url(self) -> str:
-        """Get Redis connection URL"""
-        auth = f":{self.redis.password}@" if self.redis.password else ""
+        """Get Redis connection URL"""        auth = f":{self.redis.password}@" if self.redis.password else ""
         protocol = "rediss" if self.redis.ssl else "redis"
         return f"{protocol}://{auth}{self.redis.host}:{self.redis.port}/{self.redis.database}"
     
     def get_platform_config(self, platform: str) -> Optional[Dict[str, str]]:
-        """Get configuration for specific platform"""
-        return self.platform_credentials.get(platform.lower())
+        """Get configuration for specific platform"""        return self.platform_credentials.get(platform.lower())
     
     def is_platform_configured(self, platform: str) -> bool:
-        """Check if platform is properly configured"""
-        return platform.lower() in self.platform_credentials
+        """Check if platform is properly configured"""        return platform.lower() in self.platform_credentials
     
     def get_configured_platforms(self) -> list:
-        """Get list of configured platforms"""
-        return list(self.platform_credentials.keys())
+        """Get list of configured platforms"""        return list(self.platform_credentials.keys())
     
     def validate_config(self) -> Dict[str, Any]:
-        """Validate configuration and return status"""
-        
+        """Validate configuration and return status"""        
         validation_result = {
             "valid": True,
             "errors": [],
@@ -281,8 +262,7 @@ class DistributionConfig:
         return validation_result
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary (excluding sensitive data)"""
-        
+        """Convert configuration to dictionary (excluding sensitive data)"""        
         return {
             "environment": self.environment.value,
             "database": {
@@ -321,26 +301,21 @@ config = DistributionConfig()
 
 # Convenience functions
 def get_config() -> DistributionConfig:
-    """Get global configuration instance"""
-    return config
+    """Get global configuration instance"""    return config
 
 def load_config(environment: Environment = Environment.DEVELOPMENT) -> DistributionConfig:
-    """Load configuration for specific environment"""
-    global config
+    """Load configuration for specific environment"""    global config
     config = DistributionConfig(environment)
     return config
 
 def get_database_url() -> str:
-    """Get database connection URL"""
-    return config.get_database_url()
+    """Get database connection URL"""    return config.get_database_url()
 
 def get_redis_url() -> str:
-    """Get Redis connection URL"""
-    return config.get_redis_url()
+    """Get Redis connection URL"""    return config.get_redis_url()
 
 def is_platform_configured(platform: str) -> bool:
-    """Check if platform is configured"""
-    return config.is_platform_configured(platform)
+    """Check if platform is configured"""    return config.is_platform_configured(platform)
 
 # Export all configuration classes and functions
 __all__ = [

@@ -1,5 +1,4 @@
-"""
-Monitoring Module Index - IA Influencer Agent Platform
+"""Monitoring Module Index - IA Influencer Agent Platform
 ======================================================
 
 Centralized access point for all monitoring components with intelligent
@@ -38,9 +37,7 @@ Contact: mlaiel@live.de for licensing and authorization inquiries.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -155,8 +152,7 @@ logger = logging.getLogger(__name__)
 
 
 class MonitoringStackMode(Enum):
-    """Monitoring stack operation modes"""
-    MINIMAL = "minimal"           # Essential monitoring only
+    """Monitoring stack operation modes"""    MINIMAL = "minimal"           # Essential monitoring only
     STANDARD = "standard"         # Core + business metrics
     ADVANCED = "advanced"         # Full stack with AI analytics
     ENTERPRISE = "enterprise"     # Complete with security & compliance
@@ -165,8 +161,7 @@ class MonitoringStackMode(Enum):
 
 @dataclass
 class MonitoringStackConfig:
-    """Complete monitoring stack configuration"""
-    mode: MonitoringStackMode = MonitoringStackMode.STANDARD
+    """Complete monitoring stack configuration"""    mode: MonitoringStackMode = MonitoringStackMode.STANDARD
     
     # Core settings
     collection_interval: int = 30
@@ -201,13 +196,11 @@ class MonitoringStackConfig:
 
 
 class MonitoringStack:
-    """
-    Complete monitoring stack for IA Influencer Agent Platform.
+    """    Complete monitoring stack for IA Influencer Agent Platform.
     
     Provides unified access to all monitoring components with intelligent
     orchestration, business analytics, and enterprise-grade observability.
-    """
-    
+    """    
     def __init__(self, config: MonitoringStackConfig = None):
         self.config = config or MonitoringStackConfig()
         self.orchestrator: Optional[MonitoringOrchestrator] = None
@@ -222,8 +215,7 @@ class MonitoringStack:
         db_engine=None,
         external_config: Dict[str, Any] = None
     ):
-        """Initialize the complete monitoring stack"""
-        try:
+        """Initialize the complete monitoring stack"""        try:
             # Merge external configuration
             if external_config:
                 self._merge_external_config(external_config)
@@ -245,14 +237,12 @@ class MonitoringStack:
             raise
     
     def _merge_external_config(self, external_config: Dict[str, Any]):
-        """Merge external configuration with stack config"""
-        for key, value in external_config.items():
+        """Merge external configuration with stack config"""        for key, value in external_config.items():
             if hasattr(self.config, key):
                 setattr(self.config, key, value)
     
     def _build_orchestrator_config(self) -> Dict[str, Any]:
-        """Build orchestrator configuration from stack config"""
-        mode_mapping = {
+        """Build orchestrator configuration from stack config"""        mode_mapping = {
             MonitoringStackMode.MINIMAL: MonitoringMode.LIGHTWEIGHT,
             MonitoringStackMode.STANDARD: MonitoringMode.ESSENTIAL,
             MonitoringStackMode.ADVANCED: MonitoringMode.FULL,
@@ -274,8 +264,7 @@ class MonitoringStack:
         }
     
     def _store_component_references(self):
-        """Store references to monitoring components for direct access"""
-        if self.orchestrator:
+        """Store references to monitoring components for direct access"""        if self.orchestrator:
             self._components = {
                 "metrics_collector": self.orchestrator.metrics_collector,
                 "health_monitor": self.orchestrator.health_monitor,
@@ -291,8 +280,7 @@ class MonitoringStack:
             }
     
     async def start(self):
-        """Start the complete monitoring stack"""
-        if not self.orchestrator:
+        """Start the complete monitoring stack"""        if not self.orchestrator:
             raise RuntimeError("Monitoring stack not initialized. Call initialize() first.")
         
         try:
@@ -305,62 +293,49 @@ class MonitoringStack:
             raise
     
     async def stop(self):
-        """Stop the monitoring stack gracefully"""
-        if self.orchestrator:
+        """Stop the monitoring stack gracefully"""        if self.orchestrator:
             await self.orchestrator.stop()
             self._running = False
             logger.info("Monitoring stack stopped")
     
     def get_component(self, name: str) -> Optional[Any]:
-        """Get direct access to a monitoring component"""
-        return self._components.get(name)
+        """Get direct access to a monitoring component"""        return self._components.get(name)
     
     def get_metrics_collector(self) -> Optional[MetricsCollector]:
-        """Get the metrics collector component"""
-        return self.get_component("metrics_collector")
+        """Get the metrics collector component"""        return self.get_component("metrics_collector")
     
     def get_health_monitor(self) -> Optional[HealthMonitor]:
-        """Get the health monitor component"""
-        return self.get_component("health_monitor")
+        """Get the health monitor component"""        return self.get_component("health_monitor")
     
     def get_alert_manager(self) -> Optional[AlertManager]:
-        """Get the alert manager component"""
-        return self.get_component("alert_manager")
+        """Get the alert manager component"""        return self.get_component("alert_manager")
     
     def get_performance_tracker(self) -> Optional[PerformanceTracker]:
-        """Get the performance tracker component"""
-        return self.get_component("performance_tracker")
+        """Get the performance tracker component"""        return self.get_component("performance_tracker")
     
     def get_business_metrics(self) -> Optional[BusinessMetricsCollector]:
-        """Get the business metrics collector"""
-        return self.get_component("business_metrics")
+        """Get the business metrics collector"""        return self.get_component("business_metrics")
     
     def get_ai_analytics_engine(self) -> Optional[AIAnalyticsEngine]:
-        """Get the AI analytics engine"""
-        return self.get_component("ai_analytics_engine")
+        """Get the AI analytics engine"""        return self.get_component("ai_analytics_engine")
     
     def get_security_monitor(self) -> Optional[SecurityMonitor]:
-        """Get the security monitor"""
-        return self.get_component("security_monitor")
+        """Get the security monitor"""        return self.get_component("security_monitor")
     
     def get_compliance_tracker(self) -> Optional[ComplianceTracker]:
-        """Get the compliance tracker"""
-        return self.get_component("compliance_tracker")
+        """Get the compliance tracker"""        return self.get_component("compliance_tracker")
     
     def get_status_dashboard(self) -> Optional[StatusDashboard]:
-        """Get the status dashboard"""
-        return self.get_component("status_dashboard")
+        """Get the status dashboard"""        return self.get_component("status_dashboard")
     
     async def get_system_overview(self) -> Dict[str, Any]:
-        """Get comprehensive system monitoring overview"""
-        if not self.orchestrator:
+        """Get comprehensive system monitoring overview"""        if not self.orchestrator:
             return {"error": "Monitoring stack not initialized"}
         
         return await self.orchestrator.get_business_overview()
     
     async def get_health_status(self) -> Dict[str, Any]:
-        """Get overall system health status"""
-        if not self.orchestrator:
+        """Get overall system health status"""        if not self.orchestrator:
             return {"status": "unknown", "message": "Monitoring stack not initialized"}
         
         health = self.orchestrator.get_monitoring_health()
@@ -381,8 +356,7 @@ class MonitoringStack:
         source: str = "manual",
         labels: Dict[str, str] = None
     ):
-        """Manually trigger an alert"""
-        alert_manager = self.get_alert_manager()
+        """Manually trigger an alert"""        alert_manager = self.get_alert_manager()
         if alert_manager:
             await alert_manager.create_alert(
                 name=name,
@@ -400,8 +374,7 @@ class MonitoringStack:
         domain: str = "custom",
         dimensions: Dict[str, str] = None
     ):
-        """Add a custom business metric"""
-        business_metrics = self.get_business_metrics()
+        """Add a custom business metric"""        business_metrics = self.get_business_metrics()
         if business_metrics:
             await business_metrics.track_custom_metric(
                 name=name,
@@ -412,21 +385,17 @@ class MonitoringStack:
             )
     
     def is_running(self) -> bool:
-        """Check if monitoring stack is running"""
-        return self._running
+        """Check if monitoring stack is running"""        return self._running
     
     def get_configuration(self) -> MonitoringStackConfig:
-        """Get current monitoring stack configuration"""
-        return self.config
+        """Get current monitoring stack configuration"""        return self.config
 
 
 class MonitoringFactory:
-    """Factory for creating monitoring stack configurations"""
-    
+    """Factory for creating monitoring stack configurations"""    
     @staticmethod
     def create_development_stack() -> MonitoringStack:
-        """Create monitoring stack optimized for development"""
-        config = MonitoringStackConfig(
+        """Create monitoring stack optimized for development"""        config = MonitoringStackConfig(
             mode=MonitoringStackMode.DEVELOPMENT,
             collection_interval=60,
             retention_days=7,
@@ -439,8 +408,7 @@ class MonitoringFactory:
     
     @staticmethod
     def create_production_stack() -> MonitoringStack:
-        """Create monitoring stack optimized for production"""
-        config = MonitoringStackConfig(
+        """Create monitoring stack optimized for production"""        config = MonitoringStackConfig(
             mode=MonitoringStackMode.ENTERPRISE,
             collection_interval=30,
             retention_days=90,
@@ -454,8 +422,7 @@ class MonitoringFactory:
     
     @staticmethod
     def create_minimal_stack() -> MonitoringStack:
-        """Create minimal monitoring stack for resource-constrained environments"""
-        config = MonitoringStackConfig(
+        """Create minimal monitoring stack for resource-constrained environments"""        config = MonitoringStackConfig(
             mode=MonitoringStackMode.MINIMAL,
             collection_interval=120,
             retention_days=14,
@@ -472,8 +439,7 @@ class MonitoringFactory:
         mode: MonitoringStackMode,
         **kwargs
     ) -> MonitoringStack:
-        """Create custom monitoring stack with specific configuration"""
-        config = MonitoringStackConfig(mode=mode, **kwargs)
+        """Create custom monitoring stack with specific configuration"""        config = MonitoringStackConfig(mode=mode, **kwargs)
         return MonitoringStack(config)
 
 
@@ -484,8 +450,7 @@ async def setup_monitoring_stack(
     db_engine=None,
     config: Dict[str, Any] = None
 ) -> MonitoringStack:
-    """Quick setup of monitoring stack"""
-    
+    """Quick setup of monitoring stack"""    
     mode_enum = MonitoringStackMode(mode)
     
     if mode_enum == MonitoringStackMode.DEVELOPMENT:
@@ -504,8 +469,7 @@ async def setup_monitoring_stack(
 
 
 async def quick_monitoring_setup(redis_client=None, db_engine=None) -> MonitoringStack:
-    """Ultra-quick monitoring setup with sensible defaults"""
-    return await setup_monitoring_stack("standard", redis_client, db_engine)
+    """Ultra-quick monitoring setup with sensible defaults"""    return await setup_monitoring_stack("standard", redis_client, db_engine)
 
 
 # Module exports
@@ -595,8 +559,7 @@ __business_domains__ = [
 
 
 def get_module_info() -> Dict[str, Any]:
-    """Get comprehensive module information"""
-    return {
+    """Get comprehensive module information"""    return {
         "version": __version__,
         "author": __author__,
         "email": __email__,

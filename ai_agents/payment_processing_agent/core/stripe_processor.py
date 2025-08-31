@@ -1,5 +1,4 @@
-"""
-Stripe Payment Processor - Industrial Stripe Integration
+"""Stripe Payment Processor - Industrial Stripe Integration
 
 Complete Stripe payment processor implementation with advanced features,
 error handling, webhook processing, and comprehensive payment method support.
@@ -11,9 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import hashlib
 import hmac
 import json
@@ -30,13 +27,11 @@ logger = logging.getLogger(__name__)
 
 
 class StripeProcessor(BaseProcessor):
-    """
-    Advanced Stripe payment processor for creators and influencers.
+    """    Advanced Stripe payment processor for creators and influencers.
     
     Supports payments, payouts, Connect accounts, marketplace functionality,
     and comprehensive webhook handling for the IA Influencer platform.
-    """
-    
+    """    
     def __init__(
         self,
         api_key: str,
@@ -45,16 +40,14 @@ class StripeProcessor(BaseProcessor):
         connect_enabled: bool = True,
         **kwargs
     ):
-        """
-        Initialize Stripe processor with advanced configuration.
+        """        Initialize Stripe processor with advanced configuration.
         
         Args:
             api_key: Stripe secret key
             webhook_secret: Webhook endpoint secret
             environment: Environment (production, test)
             connect_enabled: Enable Stripe Connect for payouts
-        """
-        super().__init__(
+        """        super().__init__(
             name="stripe",
             api_key=api_key,
             environment=environment,
@@ -72,8 +65,7 @@ class StripeProcessor(BaseProcessor):
         self.session = None
         
     def _initialize(self):
-        """Initialize Stripe-specific configuration."""
-        self.headers = {
+        """Initialize Stripe-specific configuration."""        self.headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Stripe-Version": self.api_version,
             "Content-Type": "application/x-www-form-urlencoded",
@@ -81,8 +73,7 @@ class StripeProcessor(BaseProcessor):
         }
     
     async def _get_session(self) -> aiohttp.ClientSession:
-        """Get or create HTTP session."""
-        if self.session is None or self.session.closed:
+        """Get or create HTTP session."""        if self.session is None or self.session.closed:
             timeout = aiohttp.ClientTimeout(total=self.timeout)
             self.session = aiohttp.ClientSession(
                 headers=self.headers,
@@ -97,8 +88,7 @@ class StripeProcessor(BaseProcessor):
         data: Optional[Dict[str, Any]] = None,
         params: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Make authenticated request to Stripe API."""
-        session = await self._get_session()
+        """Make authenticated request to Stripe API."""        session = await self._get_session()
         url = f"{self.base_url}/{endpoint}"
         
         try:
@@ -127,8 +117,7 @@ class StripeProcessor(BaseProcessor):
             raise PaymentProcessingError(f"Stripe request failed: {str(e)}")
     
     def _flatten_data(self, form_data: aiohttp.FormData, data: Dict[str, Any], prefix: str = ""):
-        """Flatten nested data for Stripe API form encoding."""
-        for key, value in data.items():
+        """Flatten nested data for Stripe API form encoding."""        for key, value in data.items():
             full_key = f"{prefix}[{key}]" if prefix else key
             
             if isinstance(value, dict):
@@ -151,8 +140,7 @@ class StripeProcessor(BaseProcessor):
         description: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> PaymentResult:
-        """
-        Process payment through Stripe.
+        """        Process payment through Stripe.
         
         Args:
             amount: Payment amount
@@ -164,8 +152,7 @@ class StripeProcessor(BaseProcessor):
             
         Returns:
             PaymentResult with Stripe payment details
-        """
-        try:
+        """        try:
             # Convert amount to cents (Stripe requirement)
             amount_cents = int(Decimal(str(amount)) * 100)
             
@@ -224,8 +211,7 @@ class StripeProcessor(BaseProcessor):
         description: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> PayoutResult:
-        """
-        Execute payout through Stripe Connect.
+        """        Execute payout through Stripe Connect.
         
         Args:
             amount: Payout amount
@@ -237,8 +223,7 @@ class StripeProcessor(BaseProcessor):
             
         Returns:
             PayoutResult with payout details
-        """
-        try:
+        """        try:
             if not self.connect_enabled:
                 raise PaymentProcessingError("Stripe Connect not enabled for payouts")
             
@@ -305,16 +290,14 @@ class StripeProcessor(BaseProcessor):
             )
     
     async def get_balance(self, currency: str = "eur") -> BalanceResult:
-        """
-        Get Stripe account balance.
+        """        Get Stripe account balance.
         
         Args:
             currency: Currency code
             
         Returns:
             BalanceResult with balance information
-        """
-        try:
+        """        try:
             result = await self._make_request("GET", "balance")
             
             # Find balance for specified currency
@@ -352,8 +335,7 @@ class StripeProcessor(BaseProcessor):
         signature: str,
         secret: Optional[str] = None
     ) -> bool:
-        """
-        Verify Stripe webhook signature.
+        """        Verify Stripe webhook signature.
         
         Args:
             payload: Raw webhook payload
@@ -362,8 +344,7 @@ class StripeProcessor(BaseProcessor):
             
         Returns:
             True if signature is valid
-        """
-        try:
+        """        try:
             webhook_secret = secret or self.webhook_secret
             if not webhook_secret:
                 raise ValueError("Webhook secret not configured")
@@ -392,16 +373,14 @@ class StripeProcessor(BaseProcessor):
             return False
     
     async def parse_webhook(self, payload: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Parse Stripe webhook into standard format.
+        """        Parse Stripe webhook into standard format.
         
         Args:
             payload: Stripe webhook payload
             
         Returns:
             Standardized webhook data
-        """
-        event_type = payload.get("type", "")
+        """        event_type = payload.get("type", "")
         event_data = payload.get("data", {}).get("object", {})
         
         # Map Stripe events to standard events
@@ -438,8 +417,7 @@ class StripeProcessor(BaseProcessor):
         account_type: str = "express",
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Create Stripe Connect account for creator payouts.
+        """        Create Stripe Connect account for creator payouts.
         
         Args:
             email: Creator email address
@@ -449,8 +427,7 @@ class StripeProcessor(BaseProcessor):
             
         Returns:
             Created account details
-        """
-        try:
+        """        try:
             account_data = {
                 "type": account_type,
                 "email": email,
@@ -487,8 +464,7 @@ class StripeProcessor(BaseProcessor):
         return_url: str,
         link_type: str = "account_onboarding"
     ) -> str:
-        """
-        Create account link for Connect onboarding.
+        """        Create account link for Connect onboarding.
         
         Args:
             account_id: Connect account ID
@@ -498,8 +474,7 @@ class StripeProcessor(BaseProcessor):
             
         Returns:
             Account link URL
-        """
-        try:
+        """        try:
             link_data = {
                 "account": account_id,
                 "refresh_url": refresh_url,
@@ -516,28 +491,24 @@ class StripeProcessor(BaseProcessor):
             raise PaymentProcessingError(f"Failed to create account link: {str(e)}")
     
     def _calculate_stripe_fees(self, amount_cents: int, currency: str) -> Decimal:
-        """Calculate Stripe processing fees."""
-        # Standard Stripe fees: 2.9% + €0.30 for European cards
+        """Calculate Stripe processing fees."""        # Standard Stripe fees: 2.9% + €0.30 for European cards
         percentage_fee = Decimal(str(amount_cents)) * Decimal("0.029") / 100
         fixed_fee = Decimal("0.30")
         
         return (percentage_fee + fixed_fee).quantize(Decimal("0.01"))
     
     def _calculate_payout_fees(self, amount_cents: int, currency: str) -> Decimal:
-        """Calculate Stripe payout fees."""
-        # Instant payouts: 1% for debit cards, standard payouts are free
+        """Calculate Stripe payout fees."""        # Instant payouts: 1% for debit cards, standard payouts are free
         return Decimal("0.00")  # Assuming standard payouts
     
     async def get_supported_currencies(self) -> List[str]:
-        """Get Stripe supported currencies."""
-        return [
+        """Get Stripe supported currencies."""        return [
             "EUR", "USD", "GBP", "CHF", "SEK", "NOK", "DKK",
             "CAD", "AUD", "JPY", "PLN", "CZK", "HUF"
         ]
     
     async def get_supported_countries(self) -> List[str]:
-        """Get Stripe supported countries."""
-        return [
+        """Get Stripe supported countries."""        return [
             "AD", "AE", "AT", "AU", "BE", "BG", "BR", "CA", "CH", "CY",
             "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GB", "GR", "HK",
             "HR", "HU", "IE", "IN", "IT", "JP", "LI", "LT", "LU", "LV",
@@ -546,6 +517,5 @@ class StripeProcessor(BaseProcessor):
         ]
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Close HTTP session on exit."""
-        if self.session and not self.session.closed:
+        """Close HTTP session on exit."""        if self.session and not self.session.closed:
             await self.session.close()

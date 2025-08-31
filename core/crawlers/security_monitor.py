@@ -1,12 +1,9 @@
-"""
-Advanced Security Monitor - Ultra-Advanced Implementation
+"""Advanced Security Monitor - Ultra-Advanced Implementation
 AI-Powered Security Monitoring and Threat Detection System
 
 This module provides comprehensive security monitoring with real-time threat detection,
 behavioral analysis, vulnerability scanning, and automated incident response.
-"""
-
-import asyncio
+"""import asyncio
 import aiohttp
 import json
 import logging
@@ -40,8 +37,7 @@ logger = logging.getLogger(__name__)
 
 
 class ThreatLevel(str, Enum):
-    """Threat severity levels"""
-    LOW = "low"
+    """Threat severity levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -49,8 +45,7 @@ class ThreatLevel(str, Enum):
 
 
 class ThreatType(str, Enum):
-    """Types of security threats"""
-    BRUTE_FORCE = "brute_force"
+    """Types of security threats"""    BRUTE_FORCE = "brute_force"
     DDoS = "ddos"
     SQL_INJECTION = "sql_injection"
     XSS = "xss"
@@ -68,8 +63,7 @@ class ThreatType(str, Enum):
 
 
 class SecurityEventType(str, Enum):
-    """Types of security events"""
-    LOGIN_ATTEMPT = "login_attempt"
+    """Types of security events"""    LOGIN_ATTEMPT = "login_attempt"
     ACCESS_DENIED = "access_denied"
     PERMISSION_VIOLATION = "permission_violation"
     DATA_ACCESS = "data_access"
@@ -82,8 +76,7 @@ class SecurityEventType(str, Enum):
 
 
 class IncidentStatus(str, Enum):
-    """Security incident status"""
-    OPEN = "open"
+    """Security incident status"""    OPEN = "open"
     INVESTIGATING = "investigating"
     CONTAINED = "contained"
     RESOLVED = "resolved"
@@ -92,8 +85,7 @@ class IncidentStatus(str, Enum):
 
 
 class SecurityAlert(BaseModel):
-    """Security alert"""
-    alert_id: str
+    """Security alert"""    alert_id: str
     alert_type: str = "security_threat"
     threat_type: ThreatType
     threat_level: ThreatLevel
@@ -139,8 +131,7 @@ class SecurityAlert(BaseModel):
 
 
 class SecurityEvent(BaseModel):
-    """Security event record"""
-    event_id: str
+    """Security event record"""    event_id: str
     event_type: SecurityEventType
     timestamp: datetime
     
@@ -175,8 +166,7 @@ class SecurityEvent(BaseModel):
 
 
 class SecurityIncident(BaseModel):
-    """Security incident"""
-    incident_id: str
+    """Security incident"""    incident_id: str
     title: str
     description: str
     
@@ -224,8 +214,7 @@ class SecurityIncident(BaseModel):
 
 
 class ThreatIntelligence(BaseModel):
-    """Threat intelligence data"""
-    intel_id: str
+    """Threat intelligence data"""    intel_id: str
     source: str
     
     # Threat information
@@ -260,8 +249,7 @@ class ThreatIntelligence(BaseModel):
 
 
 class UserBehaviorProfile(BaseModel):
-    """User behavior profile for anomaly detection"""
-    user_id: str
+    """User behavior profile for anomaly detection"""    user_id: str
     profile_id: str
     
     # Baseline behavior patterns
@@ -291,8 +279,7 @@ class UserBehaviorProfile(BaseModel):
 
 
 class SecurityMetrics(BaseModel):
-    """Security monitoring metrics"""
-    period_start: datetime
+    """Security monitoring metrics"""    period_start: datetime
     period_end: datetime
     
     # Alert metrics
@@ -323,13 +310,11 @@ class SecurityMetrics(BaseModel):
 
 
 class AdvancedSecurityMonitor(BaseCrawler):
-    """
-    Ultra-Advanced Security Monitor
+    """    Ultra-Advanced Security Monitor
     
     Provides comprehensive security monitoring with AI-powered threat detection,
     behavioral analysis, real-time alerting, and automated incident response.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         
@@ -416,8 +401,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
         logger.info("Advanced Security Monitor initialized with AI-powered threat detection")
 
     async def start_security_monitoring(self):
-        """Start security monitoring"""
-        try:
+        """Start security monitoring"""        try:
             if not self.monitoring_enabled:
                 return
             
@@ -453,8 +437,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
             logger.error(f"Error starting security monitoring: {str(e)}")
 
     async def stop_security_monitoring(self):
-        """Stop security monitoring"""
-        try:
+        """Stop security monitoring"""        try:
             self.monitor_active = False
             
             # Cancel monitoring tasks
@@ -475,8 +458,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
         event_type: SecurityEventType,
         event_data: Dict[str, Any]
     ) -> SecurityEvent:
-        """
-        Log a security event
+        """        Log a security event
         
         Args:
             event_type: Type of security event
@@ -484,8 +466,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
             
         Returns:
             SecurityEvent: Created security event
-        """
-        try:
+        """        try:
             event = SecurityEvent(
                 event_id=str(uuid.uuid4()),
                 event_type=event_type,
@@ -526,8 +507,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
         threat_level: ThreatLevel,
         alert_data: Dict[str, Any]
     ) -> SecurityAlert:
-        """
-        Create a security alert
+        """        Create a security alert
         
         Args:
             threat_type: Type of threat
@@ -536,8 +516,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
             
         Returns:
             SecurityAlert: Created security alert
-        """
-        try:
+        """        try:
             alert = SecurityAlert(
                 alert_id=str(uuid.uuid4()),
                 threat_type=threat_type,
@@ -578,8 +557,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
         user_id: str,
         activity_data: Dict[str, Any]
     ) -> Optional[SecurityAlert]:
-        """
-        Detect anomalous user behavior
+        """        Detect anomalous user behavior
         
         Args:
             user_id: User ID
@@ -587,8 +565,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
             
         Returns:
             SecurityAlert: Alert if anomaly detected
-        """
-        try:
+        """        try:
             if user_id not in self.user_profiles:
                 await self._create_user_profile(user_id, activity_data)
                 return None
@@ -632,16 +609,14 @@ class AdvancedSecurityMonitor(BaseCrawler):
         self,
         target_systems: List[str] = None
     ) -> Dict[str, Any]:
-        """
-        Scan for security vulnerabilities
+        """        Scan for security vulnerabilities
         
         Args:
             target_systems: Systems to scan
             
         Returns:
             Dict[str, Any]: Vulnerability scan results
-        """
-        try:
+        """        try:
             scan_results = {
                 'scan_id': str(uuid.uuid4()),
                 'scan_timestamp': datetime.utcnow().isoformat(),
@@ -689,16 +664,14 @@ class AdvancedSecurityMonitor(BaseCrawler):
         self,
         traffic_data: Dict[str, Any]
     ) -> List[SecurityAlert]:
-        """
-        Analyze network traffic for threats
+        """        Analyze network traffic for threats
         
         Args:
             traffic_data: Network traffic data
             
         Returns:
             List[SecurityAlert]: Generated alerts
-        """
-        try:
+        """        try:
             alerts = []
             
             # Check for DDoS patterns
@@ -731,8 +704,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
         incident_data: Dict[str, Any],
         related_alerts: List[str] = None
     ) -> SecurityIncident:
-        """
-        Create a security incident
+        """        Create a security incident
         
         Args:
             incident_data: Incident data
@@ -740,8 +712,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
             
         Returns:
             SecurityIncident: Created incident
-        """
-        try:
+        """        try:
             incident = SecurityIncident(
                 incident_id=str(uuid.uuid4()),
                 created_at=datetime.utcnow(),
@@ -773,13 +744,11 @@ class AdvancedSecurityMonitor(BaseCrawler):
             return None
 
     async def get_security_dashboard(self) -> Dict[str, Any]:
-        """
-        Get security monitoring dashboard data
+        """        Get security monitoring dashboard data
         
         Returns:
             Dict[str, Any]: Dashboard data
-        """
-        try:
+        """        try:
             now = datetime.utcnow()
             last_24h = now - timedelta(hours=24)
             
@@ -865,8 +834,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
     # Background monitoring loops
     
     async def _event_processor_loop(self):
-        """Process security events in real-time"""
-        while self.monitor_active:
+        """Process security events in real-time"""        while self.monitor_active:
             try:
                 if self.event_stream:
                     # Process batch of events
@@ -885,8 +853,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
                 await asyncio.sleep(1)
 
     async def _threat_detector_loop(self):
-        """Main threat detection loop"""
-        while self.monitor_active:
+        """Main threat detection loop"""        while self.monitor_active:
             try:
                 # Run threat detection on recent events
                 recent_events = list(self.event_stream)[-1000:]  # Last 1000 events
@@ -901,8 +868,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
                 await asyncio.sleep(10)
 
     async def _behavioral_analyzer_loop(self):
-        """Behavioral analysis loop"""
-        while self.monitor_active:
+        """Behavioral analysis loop"""        while self.monitor_active:
             try:
                 if self.behavioral_analysis:
                     # Analyze user behavior patterns
@@ -915,8 +881,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
                 await asyncio.sleep(60)
 
     async def _incident_correlator_loop(self):
-        """Incident correlation loop"""
-        while self.monitor_active:
+        """Incident correlation loop"""        while self.monitor_active:
             try:
                 # Correlate alerts into incidents
                 await self._correlate_alerts_to_incidents()
@@ -928,8 +893,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
                 await asyncio.sleep(30)
 
     async def _threat_intel_updater_loop(self):
-        """Threat intelligence update loop"""
-        while self.monitor_active:
+        """Threat intelligence update loop"""        while self.monitor_active:
             try:
                 # Update threat intelligence feeds
                 await self._update_threat_intelligence()
@@ -943,8 +907,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
     # Detection and analysis methods
     
     async def _process_event_batch(self, events: List[SecurityEvent]):
-        """Process batch of security events"""
-        try:
+        """Process batch of security events"""        try:
             for event in events:
                 # Run immediate threat checks
                 await self._check_event_against_signatures(event)
@@ -959,8 +922,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
             logger.error(f"Error processing event batch: {str(e)}")
 
     async def _run_threat_detection(self, events: List[SecurityEvent]):
-        """Run comprehensive threat detection"""
-        try:
+        """Run comprehensive threat detection"""        try:
             # Group events by type and source
             events_by_source = defaultdict(list)
             for event in events:
@@ -982,8 +944,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
             logger.error(f"Error running threat detection: {str(e)}")
 
     async def _detect_brute_force(self, events: List[SecurityEvent]):
-        """Detect brute force attacks"""
-        try:
+        """Detect brute force attacks"""        try:
             # Count failed login attempts
             failed_logins = [
                 e for e in events
@@ -1014,8 +975,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
             logger.error(f"Error detecting brute force: {str(e)}")
 
     async def _detect_privilege_escalation(self, events: List[SecurityEvent]):
-        """Detect privilege escalation attempts"""
-        try:
+        """Detect privilege escalation attempts"""        try:
             # Look for rapid changes in authorization levels
             auth_events = [
                 e for e in events
@@ -1041,8 +1001,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
             logger.error(f"Error detecting privilege escalation: {str(e)}")
 
     async def _detect_data_access_anomalies(self, events: List[SecurityEvent]):
-        """Detect anomalous data access patterns"""
-        try:
+        """Detect anomalous data access patterns"""        try:
             data_events = [
                 e for e in events
                 if e.event_type == SecurityEventType.DATA_ACCESS
@@ -1066,8 +1025,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
     # Network traffic analysis methods
     
     async def _detect_ddos_patterns(self, traffic_data: Dict[str, Any]) -> Optional[SecurityAlert]:
-        """Detect DDoS attack patterns"""
-        try:
+        """Detect DDoS attack patterns"""        try:
             request_rate = traffic_data.get('request_rate', 0)
             unique_sources = traffic_data.get('unique_sources', 0)
             
@@ -1091,8 +1049,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
             return None
 
     async def _detect_port_scanning(self, traffic_data: Dict[str, Any]) -> Optional[SecurityAlert]:
-        """Detect port scanning activities"""
-        try:
+        """Detect port scanning activities"""        try:
             connections = traffic_data.get('connections', [])
             
             # Group by source IP
@@ -1127,8 +1084,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
             return None
 
     async def _check_malicious_ips(self, traffic_data: Dict[str, Any]) -> List[SecurityAlert]:
-        """Check traffic against known malicious IPs"""
-        try:
+        """Check traffic against known malicious IPs"""        try:
             alerts = []
             connections = traffic_data.get('connections', [])
             
@@ -1158,8 +1114,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
             return []
 
     async def _detect_data_exfiltration(self, traffic_data: Dict[str, Any]) -> Optional[SecurityAlert]:
-        """Detect potential data exfiltration"""
-        try:
+        """Detect potential data exfiltration"""        try:
             outbound_data = traffic_data.get('outbound_bytes', 0)
             inbound_data = traffic_data.get('inbound_bytes', 0)
             
@@ -1189,8 +1144,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
     # User behavior analysis methods
     
     async def _create_user_profile(self, user_id: str, activity_data: Dict[str, Any]):
-        """Create new user behavior profile"""
-        try:
+        """Create new user behavior profile"""        try:
             profile = UserBehaviorProfile(
                 user_id=user_id,
                 profile_id=str(uuid.uuid4()),
@@ -1207,8 +1161,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
             logger.error(f"Error creating user profile: {str(e)}")
 
     async def _update_user_behavior_profile(self, event: SecurityEvent):
-        """Update user behavior profile based on event"""
-        try:
+        """Update user behavior profile based on event"""        try:
             if not event.user_id:
                 return
             
@@ -1236,8 +1189,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
         profile: UserBehaviorProfile,
         activity_data: Dict[str, Any]
     ):
-        """Update user profile with activity data"""
-        try:
+        """Update user profile with activity data"""        try:
             # Update login hours
             if 'timestamp' in activity_data:
                 hour = activity_data['timestamp'].hour
@@ -1268,8 +1220,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
         profile: UserBehaviorProfile,
         activity_data: Dict[str, Any]
     ) -> float:
-        """Calculate behavior deviation score"""
-        try:
+        """Calculate behavior deviation score"""        try:
             deviation_score = 0.0
             factors = 0
             
@@ -1308,8 +1259,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
     # Utility and helper methods
     
     async def _initialize_detection_engines(self):
-        """Initialize threat detection engines"""
-        self.threat_detectors = {
+        """Initialize threat detection engines"""        self.threat_detectors = {
             ThreatType.BRUTE_FORCE: self._detect_brute_force,
             ThreatType.SQL_INJECTION: self._detect_sql_injection,
             ThreatType.XSS: self._detect_xss,
@@ -1317,8 +1267,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
         }
 
     async def _load_threat_intelligence(self):
-        """Load threat intelligence from feeds"""
-        try:
+        """Load threat intelligence from feeds"""        try:
             # Load from configured threat feeds
             for feed_url in self.threat_feeds:
                 await self._load_threat_feed(feed_url)
@@ -1327,8 +1276,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
             logger.error(f"Error loading threat intelligence: {str(e)}")
 
     async def _load_threat_feed(self, feed_url: str):
-        """Load specific threat intelligence feed"""
-        try:
+        """Load specific threat intelligence feed"""        try:
             # Load threat intelligence from URL
             # This would implement actual feed parsing
             pass
@@ -1337,8 +1285,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
             logger.error(f"Error loading threat feed {feed_url}: {str(e)}")
 
     def _initialize_attack_signatures(self) -> Dict[str, List[str]]:
-        """Initialize attack signature patterns"""
-        return {
+        """Initialize attack signature patterns"""        return {
             'sql_injection': [
                 r"(\'|\")[^\'\"]*(\s|;|\\\\|)(or|OR|and|AND)(\s|\\\\|)[^\'\"]*(\\'|\\\")",
                 r"(union|UNION)\s+(select|SELECT)",
@@ -1358,13 +1305,11 @@ class AdvancedSecurityMonitor(BaseCrawler):
         }
 
     async def _initialize_user_profiles(self):
-        """Initialize user behavior profiles"""
-        # Load existing profiles from storage
+        """Initialize user behavior profiles"""        # Load existing profiles from storage
         pass
 
     async def _calculate_event_risk_score(self, event: SecurityEvent) -> float:
-        """Calculate risk score for security event"""
-        try:
+        """Calculate risk score for security event"""        try:
             risk_score = 0.0
             
             # Base score by event type
@@ -1399,8 +1344,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
             return 0.0
 
     async def _calculate_anomaly_score(self, event: SecurityEvent) -> float:
-        """Calculate anomaly score for event"""
-        try:
+        """Calculate anomaly score for event"""        try:
             if not event.user_id or event.user_id not in self.user_profiles:
                 return 0.0
             
@@ -1419,8 +1363,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
             return 0.0
 
     async def _get_ip_risk_score(self, ip_address: str) -> float:
-        """Get risk score for IP address"""
-        try:
+        """Get risk score for IP address"""        try:
             # Check against threat intelligence
             if await self._check_ip_against_intel(ip_address):
                 return 5.0
@@ -1437,8 +1380,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
             return 0.0
 
     async def _check_ip_against_intel(self, ip_address: str) -> bool:
-        """Check IP against threat intelligence"""
-        try:
+        """Check IP against threat intelligence"""        try:
             for intel in self.threat_intelligence.values():
                 if ip_address in intel.ip_addresses:
                     return True
@@ -1449,8 +1391,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
             return False
 
     async def _get_ip_geolocation(self, ip_address: str) -> Optional[Dict[str, str]]:
-        """Get geolocation information for IP"""
-        try:
+        """Get geolocation information for IP"""        try:
             if not self.geoip_db:
                 return None
             
@@ -1467,8 +1408,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
             return None
 
     async def _enrich_with_geolocation(self, alert: SecurityAlert):
-        """Enrich alert with geolocation data"""
-        try:
+        """Enrich alert with geolocation data"""        try:
             if alert.source_ip:
                 geo_info = await self._get_ip_geolocation(alert.source_ip)
                 if geo_info:
@@ -1480,8 +1420,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
             logger.error(f"Error enriching with geolocation: {str(e)}")
 
     async def _calculate_alert_confidence(self, alert: SecurityAlert) -> float:
-        """Calculate confidence score for alert"""
-        try:
+        """Calculate confidence score for alert"""        try:
             confidence = 0.5  # Base confidence
             
             # Increase confidence based on threat level
@@ -1507,8 +1446,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
             return 0.5
 
     def _determine_anomaly_severity(self, deviation_score: float) -> ThreatLevel:
-        """Determine threat level based on anomaly deviation"""
-        if deviation_score >= 0.9:
+        """Determine threat level based on anomaly deviation"""        if deviation_score >= 0.9:
             return ThreatLevel.CRITICAL
         elif deviation_score >= 0.7:
             return ThreatLevel.HIGH
@@ -1518,8 +1456,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
             return ThreatLevel.LOW
 
     async def _calculate_security_score(self) -> float:
-        """Calculate overall security score"""
-        try:
+        """Calculate overall security score"""        try:
             base_score = 100.0
             
             # Deduct points for active alerts
@@ -1556,8 +1493,7 @@ class AdvancedSecurityMonitor(BaseCrawler):
     # Including methods for vulnerability scanning, incident response, etc.
 
     async def close(self):
-        """Close security monitor and cleanup resources"""
-        try:
+        """Close security monitor and cleanup resources"""        try:
             await self.stop_security_monitoring()
             await self.cache_manager.close()
             await super().close()

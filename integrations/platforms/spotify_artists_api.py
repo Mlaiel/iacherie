@@ -1,5 +1,4 @@
-"""
-Spotify for Artists API Integration
+"""Spotify for Artists API Integration
 ===================================
 
 Complete Spotify for Artists API integration for music analytics and management.
@@ -7,9 +6,7 @@ Handles artist data, track analytics, playlist management, and fan insights.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import aiohttp
 import json
 import logging
@@ -27,8 +24,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SpotifyTrack:
-    """Spotify track information"""
-    track_id: str
+    """Spotify track information"""    track_id: str
     name: str
     artists: List[str]
     album: str
@@ -43,8 +39,7 @@ class SpotifyTrack:
 
 @dataclass
 class SpotifyArtist:
-    """Spotify artist information"""
-    artist_id: str
+    """Spotify artist information"""    artist_id: str
     name: str
     genres: List[str]
     popularity: int
@@ -56,8 +51,7 @@ class SpotifyArtist:
 
 @dataclass
 class SpotifyAlbum:
-    """Spotify album information"""
-    album_id: str
+    """Spotify album information"""    album_id: str
     name: str
     album_type: str  # "album", "single", "compilation"
     artists: List[str]
@@ -70,8 +64,7 @@ class SpotifyAlbum:
 
 @dataclass
 class SpotifyAnalytics:
-    """Spotify analytics data"""
-    artist_id: str
+    """Spotify analytics data"""    artist_id: str
     date_range: Dict[str, str]  # {"start": "2024-01-01", "end": "2024-01-31"}
     streams: int = 0
     listeners: int = 0
@@ -85,8 +78,7 @@ class SpotifyAnalytics:
 
 
 class SpotifyArtistsAPI:
-    """Spotify for Artists API integration"""
-    
+    """Spotify for Artists API integration"""    
     def __init__(self, rate_limiter: Optional[APIRateLimiter] = None):
         self.session = None
         self.rate_limiter = rate_limiter or APIRateLimiter()
@@ -94,14 +86,12 @@ class SpotifyArtistsAPI:
         self.artists_url = "https://generic.wg.spotify.com/s4x-insights-esa/v0"
         
     async def __aenter__(self):
-        """Async context manager entry"""
-        self.session = aiohttp.ClientSession()
+        """Async context manager entry"""        self.session = aiohttp.ClientSession()
         await self.rate_limiter.__aenter__()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
-        if self.session:
+        """Async context manager exit"""        if self.session:
             await self.session.close()
         await self.rate_limiter.__aexit__(exc_type, exc_val, exc_tb)
         
@@ -114,8 +104,7 @@ class SpotifyArtistsAPI:
         data: Optional[Dict[str, Any]] = None,
         base_url: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Make authenticated API request with rate limiting"""
-        
+        """Make authenticated API request with rate limiting"""        
         # Check rate limit
         rate_status = await self.rate_limiter.check_rate_limit("spotify", endpoint)
         if rate_status.is_limited:
@@ -178,12 +167,10 @@ class SpotifyArtistsAPI:
             raise
             
     async def get_current_user_profile(self, tokens: OAuthTokens) -> Dict[str, Any]:
-        """Get current user's Spotify profile"""
-        return await self._make_request("GET", "me", tokens)
+        """Get current user's Spotify profile"""        return await self._make_request("GET", "me", tokens)
         
     async def get_artist_info(self, tokens: OAuthTokens, artist_id: str) -> SpotifyArtist:
-        """Get artist information"""
-        response = await self._make_request("GET", f"artists/{artist_id}", tokens)
+        """Get artist information"""        response = await self._make_request("GET", f"artists/{artist_id}", tokens)
         
         artist = SpotifyArtist(
             artist_id=response["id"],
@@ -206,8 +193,7 @@ class SpotifyArtistsAPI:
         limit: int = 20,
         offset: int = 0
     ) -> List[SpotifyAlbum]:
-        """Get artist's albums"""
-        
+        """Get artist's albums"""        
         params = {
             "market": market,
             "limit": min(limit, 50),
@@ -244,8 +230,7 @@ class SpotifyArtistsAPI:
         artist_id: str,
         market: str = "US"
     ) -> List[SpotifyTrack]:
-        """Get artist's top tracks"""
-        
+        """Get artist's top tracks"""        
         params = {"market": market}
         response = await self._make_request("GET", f"artists/{artist_id}/top-tracks", tokens, params=params)
         
@@ -276,8 +261,7 @@ class SpotifyArtistsAPI:
         limit: int = 20,
         offset: int = 0
     ) -> List[SpotifyTrack]:
-        """Get tracks from an album"""
-        
+        """Get tracks from an album"""        
         params = {
             "market": market,
             "limit": min(limit, 50),
@@ -313,8 +297,7 @@ class SpotifyArtistsAPI:
         limit: int = 20,
         offset: int = 0
     ) -> Dict[str, Any]:
-        """Search Spotify catalog"""
-        
+        """Search Spotify catalog"""        
         if isinstance(search_type, list):
             search_type = ",".join(search_type)
             
@@ -333,8 +316,7 @@ class SpotifyArtistsAPI:
         tokens: OAuthTokens,
         track_ids: Union[str, List[str]]
     ) -> List[Dict[str, Any]]:
-        """Get audio features for tracks"""
-        
+        """Get audio features for tracks"""        
         if isinstance(track_ids, str):
             track_ids = [track_ids]
             
@@ -346,8 +328,7 @@ class SpotifyArtistsAPI:
         return response.get("audio_features", [])
         
     async def get_track_analysis(self, tokens: OAuthTokens, track_id: str) -> Dict[str, Any]:
-        """Get detailed audio analysis for a track"""
-        return await self._make_request("GET", f"audio-analysis/{track_id}", tokens)
+        """Get detailed audio analysis for a track"""        return await self._make_request("GET", f"audio-analysis/{track_id}", tokens)
         
     async def get_user_playlists(
         self,
@@ -356,8 +337,7 @@ class SpotifyArtistsAPI:
         limit: int = 20,
         offset: int = 0
     ) -> List[Dict[str, Any]]:
-        """Get user's playlists"""
-        
+        """Get user's playlists"""        
         params = {
             "limit": min(limit, 50),
             "offset": offset
@@ -381,8 +361,7 @@ class SpotifyArtistsAPI:
         public: bool = True,
         collaborative: bool = False
     ) -> Dict[str, Any]:
-        """Create a new playlist"""
-        
+        """Create a new playlist"""        
         data = {
             "name": name,
             "public": public,
@@ -401,8 +380,7 @@ class SpotifyArtistsAPI:
         track_uris: List[str],
         position: Optional[int] = None
     ) -> Dict[str, Any]:
-        """Add tracks to a playlist"""
-        
+        """Add tracks to a playlist"""        
         data = {"uris": track_uris}
         
         if position is not None:
@@ -418,8 +396,7 @@ class SpotifyArtistsAPI:
         limit: int = 20,
         offset: int = 0
     ) -> List[Dict[str, Any]]:
-        """Get tracks from a playlist"""
-        
+        """Get tracks from a playlist"""        
         params = {
             "market": market,
             "limit": min(limit, 50),
@@ -437,8 +414,7 @@ class SpotifyArtistsAPI:
         artist_id: str,
         time_filter: str = "medium_term"  # "short_term", "medium_term", "long_term"
     ) -> SpotifyAnalytics:
-        """Get artist insights (requires Spotify for Artists access)"""
-        
+        """Get artist insights (requires Spotify for Artists access)"""        
         # Note: This endpoint requires special Spotify for Artists API access
         # This is a placeholder implementation based on available Web API data
         
@@ -466,8 +442,7 @@ class SpotifyArtistsAPI:
         market: str = "US",
         **audio_features
     ) -> List[SpotifyTrack]:
-        """Get track recommendations"""
-        
+        """Get track recommendations"""        
         params = {
             "limit": min(limit, 100),
             "market": market
@@ -506,8 +481,7 @@ class SpotifyArtistsAPI:
         return tracks
         
     async def get_available_genre_seeds(self, tokens: OAuthTokens) -> List[str]:
-        """Get available genre seeds for recommendations"""
-        response = await self._make_request("GET", "recommendations/available-genre-seeds", tokens)
+        """Get available genre seeds for recommendations"""        response = await self._make_request("GET", "recommendations/available-genre-seeds", tokens)
         return response.get("genres", [])
         
     async def get_user_top_items(
@@ -518,8 +492,7 @@ class SpotifyArtistsAPI:
         limit: int = 20,
         offset: int = 0
     ) -> List[Dict[str, Any]]:
-        """Get user's top artists or tracks"""
-        
+        """Get user's top artists or tracks"""        
         params = {
             "time_range": time_range,
             "limit": min(limit, 50),
@@ -537,8 +510,7 @@ class SpotifyArtistsAPI:
         after: Optional[int] = None,
         before: Optional[int] = None
     ) -> List[Dict[str, Any]]:
-        """Get user's recently played tracks"""
-        
+        """Get user's recently played tracks"""        
         params = {"limit": min(limit, 50)}
         
         if after:
@@ -551,8 +523,7 @@ class SpotifyArtistsAPI:
         return response.get("items", [])
         
     async def follow_artist(self, tokens: OAuthTokens, artist_ids: Union[str, List[str]]) -> bool:
-        """Follow artists"""
-        
+        """Follow artists"""        
         if isinstance(artist_ids, str):
             artist_ids = [artist_ids]
             
@@ -567,8 +538,7 @@ class SpotifyArtistsAPI:
             return False
             
     async def unfollow_artist(self, tokens: OAuthTokens, artist_ids: Union[str, List[str]]) -> bool:
-        """Unfollow artists"""
-        
+        """Unfollow artists"""        
         if isinstance(artist_ids, str):
             artist_ids = [artist_ids]
             
@@ -587,8 +557,7 @@ class SpotifyArtistsAPI:
         tokens: OAuthTokens,
         artist_ids: Union[str, List[str]]
     ) -> List[bool]:
-        """Check if user follows artists"""
-        
+        """Check if user follows artists"""        
         if isinstance(artist_ids, str):
             artist_ids = [artist_ids]
             

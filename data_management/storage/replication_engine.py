@@ -1,5 +1,4 @@
-"""
-🔁 Storage Replication Engine - IA Influencer Agent Platform Enterprise
+"""🔁 Storage Replication Engine - IA Influencer Agent Platform Enterprise
 ========================================================================
 Module: backend/data_management/storage/replication_engine.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -27,9 +26,7 @@ interdite et fera l'objet de poursuites judiciaires.
 - Audio Engineer: Fahed Mlaiel
 - DevOps: Fahed Mlaiel
 - IA Prompt Engineer: Fahed Mlaiel
-"""
-
-from typing import Dict, List, Optional, Any, Set, Tuple, Union
+"""from typing import Dict, List, Optional, Any, Set, Tuple, Union
 import logging
 import asyncio
 from datetime import datetime, timedelta
@@ -45,22 +42,19 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class ReplicationStrategy(Enum):
-    """Replication strategies"""
-    SYNCHRONOUS = "sync"
+    """Replication strategies"""    SYNCHRONOUS = "sync"
     ASYNCHRONOUS = "async"
     EVENTUAL_CONSISTENCY = "eventual"
     IMMEDIATE_CONSISTENCY = "immediate"
 
 class ReplicationTier(Enum):
-    """Replication tiers based on importance"""
-    CRITICAL = "critical"      # 3+ replicas, immediate sync
+    """Replication tiers based on importance"""    CRITICAL = "critical"      # 3+ replicas, immediate sync
     HIGH = "high"             # 2-3 replicas, fast async
     STANDARD = "standard"     # 2 replicas, standard async
     LOW = "low"              # 1-2 replicas, eventual consistency
 
 class ReplicationStatus(Enum):
-    """Replication status"""
-    PENDING = "pending"
+    """Replication status"""    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -68,16 +62,14 @@ class ReplicationStatus(Enum):
     INCONSISTENT = "inconsistent"
 
 class ConflictResolution(Enum):
-    """Conflict resolution strategies"""
-    LAST_WRITE_WINS = "last_write_wins"
+    """Conflict resolution strategies"""    LAST_WRITE_WINS = "last_write_wins"
     FIRST_WRITE_WINS = "first_write_wins"
     MANUAL_REVIEW = "manual_review"
     CUSTOM_LOGIC = "custom_logic"
 
 @dataclass
 class ReplicationRule:
-    """Replication rule configuration"""
-    rule_id: str
+    """Replication rule configuration"""    rule_id: str
     name: str
     strategy: ReplicationStrategy
     tier: ReplicationTier
@@ -90,8 +82,7 @@ class ReplicationRule:
     created_at: datetime = field(default_factory=datetime.now)
     
 class ReplicationJob:
-    """Replication job tracking"""
-    
+    """Replication job tracking"""    
     def __init__(
         self,
         job_id: str,
@@ -117,8 +108,7 @@ class ReplicationJob:
 
 @dataclass
 class ReplicationNode:
-    """Replication node information"""
-    node_id: str
+    """Replication node information"""    node_id: str
     provider: str
     region: str
     availability_zone: str
@@ -131,8 +121,7 @@ class ReplicationNode:
     performance_score: float = 1.0
 
 class StorageReplicationEngine:
-    """
-    Advanced storage replication engine for multi-cloud content distribution.
+    """    Advanced storage replication engine for multi-cloud content distribution.
     
     Features:
     - Multi-cloud replication across providers
@@ -143,11 +132,9 @@ class StorageReplicationEngine:
     - Automated failover and recovery
     - Bandwidth optimization
     - Cost-aware replication strategies
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize replication engine"""
-        self.config = config
+        """Initialize replication engine"""        self.config = config
         
         # Storage managers for different providers
         self.storage_managers: Dict[str, Any] = {}
@@ -190,8 +177,7 @@ class StorageReplicationEngine:
         logger.info("StorageReplicationEngine initialized")
     
     async def start(self) -> None:
-        """Start the replication engine"""
-        
+        """Start the replication engine"""        
         try:
             # Initialize storage managers
             await self._initialize_storage_managers()
@@ -212,8 +198,7 @@ class StorageReplicationEngine:
             raise
     
     async def stop(self) -> None:
-        """Stop the replication engine"""
-        
+        """Stop the replication engine"""        
         try:
             # Cancel background tasks
             for task in self.background_tasks:
@@ -231,8 +216,7 @@ class StorageReplicationEngine:
             logger.error(f"Error stopping replication engine: {str(e)}")
     
     async def add_replication_rule(self, rule: ReplicationRule) -> None:
-        """Add a replication rule"""
-        
+        """Add a replication rule"""        
         try:
             # Validate rule
             await self._validate_replication_rule(rule)
@@ -250,8 +234,7 @@ class StorageReplicationEngine:
             raise
     
     async def remove_replication_rule(self, rule_id: str) -> None:
-        """Remove a replication rule"""
-        
+        """Remove a replication rule"""        
         try:
             if rule_id in self.rules:
                 del self.rules[rule_id]
@@ -270,8 +253,7 @@ class StorageReplicationEngine:
         metadata: Optional[Dict[str, Any]] = None,
         force_rules: Optional[List[str]] = None
     ) -> List[str]:
-        """Replicate content according to rules"""
-        
+        """Replicate content according to rules"""        
         try:
             job_ids = []
             
@@ -314,8 +296,7 @@ class StorageReplicationEngine:
             raise
     
     async def get_replication_status(self, job_id: str) -> Optional[Dict[str, Any]]:
-        """Get replication job status"""
-        
+        """Get replication job status"""        
         try:
             if job_id in self.active_jobs:
                 job = self.active_jobs[job_id]
@@ -357,8 +338,7 @@ class StorageReplicationEngine:
             return None
     
     async def verify_consistency(self, content_id: str) -> Dict[str, Any]:
-        """Verify content consistency across replicas"""
-        
+        """Verify content consistency across replicas"""        
         try:
             # Find all replicas of the content
             replicas = await self._find_content_replicas(content_id)
@@ -427,8 +407,7 @@ class StorageReplicationEngine:
         content_id: str,
         resolution_strategy: Optional[ConflictResolution] = None
     ) -> Dict[str, Any]:
-        """Resolve conflicts between replicas"""
-        
+        """Resolve conflicts between replicas"""        
         try:
             strategy = resolution_strategy or self.conflict_resolver
             
@@ -488,8 +467,7 @@ class StorageReplicationEngine:
             }
     
     async def get_replication_metrics(self) -> Dict[str, Any]:
-        """Get replication engine metrics"""
-        
+        """Get replication engine metrics"""        
         try:
             return {
                 'total_rules': len(self.rules),
@@ -513,8 +491,7 @@ class StorageReplicationEngine:
     # Private implementation methods
     
     async def _initialize_storage_managers(self) -> None:
-        """Initialize storage managers for different providers"""
-        
+        """Initialize storage managers for different providers"""        
         try:
             provider_configs = self.config.get('providers', {})
             
@@ -534,8 +511,7 @@ class StorageReplicationEngine:
             raise
     
     async def _discover_nodes(self) -> None:
-        """Discover available replication nodes"""
-        
+        """Discover available replication nodes"""        
         try:
             # This would discover actual nodes from providers
             # For demonstration, we'll create some example nodes
@@ -583,8 +559,7 @@ class StorageReplicationEngine:
             raise
     
     async def _start_background_workers(self) -> None:
-        """Start background worker tasks"""
-        
+        """Start background worker tasks"""        
         try:
             # Start replication worker
             replication_task = asyncio.create_task(self._replication_worker())
@@ -609,8 +584,7 @@ class StorageReplicationEngine:
             raise
     
     async def _load_replication_rules(self) -> None:
-        """Load replication rules from configuration"""
-        
+        """Load replication rules from configuration"""        
         try:
             rules_config = self.config.get('replication_rules', [])
             
@@ -636,8 +610,7 @@ class StorageReplicationEngine:
             logger.error(f"Failed to load replication rules: {str(e)}")
     
     async def _validate_replication_rule(self, rule: ReplicationRule) -> None:
-        """Validate a replication rule"""
-        
+        """Validate a replication rule"""        
         # Check that source and target providers exist
         all_providers = set(self.storage_managers.keys())
         
@@ -657,8 +630,7 @@ class StorageReplicationEngine:
             raise ValueError("High tier requires at least 2 target providers")
     
     async def _apply_rule_to_existing_content(self, rule: ReplicationRule) -> None:
-        """Apply new rule to existing content"""
-        
+        """Apply new rule to existing content"""        
         try:
             # This would scan existing content and apply the new rule
             # Implementation would depend on content discovery mechanisms
@@ -672,8 +644,7 @@ class StorageReplicationEngine:
         content_id: str,
         metadata: Optional[Dict[str, Any]]
     ) -> List[str]:
-        """Get applicable replication rules for content"""
-        
+        """Get applicable replication rules for content"""        
         applicable_rules = []
         
         for rule_id, rule in self.rules.items():
@@ -693,8 +664,7 @@ class StorageReplicationEngine:
         return applicable_rules
     
     def _matches_filters(self, metadata: Dict[str, Any], filters: Dict[str, Any]) -> bool:
-        """Check if metadata matches content filters"""
-        
+        """Check if metadata matches content filters"""        
         for filter_key, filter_value in filters.items():
             if filter_key not in metadata:
                 return False
@@ -715,8 +685,7 @@ class StorageReplicationEngine:
         rule: ReplicationRule,
         content_id: str
     ) -> List[str]:
-        """Select optimal target locations for replication"""
-        
+        """Select optimal target locations for replication"""        
         target_locations = []
         
         try:
@@ -754,8 +723,7 @@ class StorageReplicationEngine:
         return target_locations
     
     def _get_required_replicas(self, tier: ReplicationTier) -> int:
-        """Get required number of replicas for tier"""
-        
+        """Get required number of replicas for tier"""        
         if tier == ReplicationTier.CRITICAL:
             return 3
         elif tier == ReplicationTier.HIGH:
@@ -766,8 +734,7 @@ class StorageReplicationEngine:
             return 1
     
     async def _replication_worker(self) -> None:
-        """Background worker for processing replication jobs"""
-        
+        """Background worker for processing replication jobs"""        
         while True:
             try:
                 # Get job from queue
@@ -785,8 +752,7 @@ class StorageReplicationEngine:
                 await asyncio.sleep(1)  # Brief pause before retry
     
     async def _process_replication_job(self, job: ReplicationJob) -> None:
-        """Process a single replication job"""
-        
+        """Process a single replication job"""        
         try:
             job.status = ReplicationStatus.IN_PROGRESS
             job.started_at = datetime.now()
@@ -861,8 +827,7 @@ class StorageReplicationEngine:
             logger.error(f"Replication job failed: {job.job_id} - {str(e)}")
     
     async def _read_source_content(self, source_location: str) -> bytes:
-        """Read content from source location"""
-        
+        """Read content from source location"""        
         try:
             # Parse source location
             if source_location.startswith('file://'):
@@ -886,8 +851,7 @@ class StorageReplicationEngine:
         target_location: str,
         job: ReplicationJob
     ) -> None:
-        """Replicate content to target location"""
-        
+        """Replicate content to target location"""        
         try:
             # Parse target location
             provider, endpoint = target_location.split('://', 1)
@@ -908,8 +872,7 @@ class StorageReplicationEngine:
             raise
     
     async def _consistency_checker(self) -> None:
-        """Background worker for consistency checking"""
-        
+        """Background worker for consistency checking"""        
         while True:
             try:
                 # Get content ID from verification queue
@@ -935,8 +898,7 @@ class StorageReplicationEngine:
                 await asyncio.sleep(5)
     
     async def _health_monitor(self) -> None:
-        """Background worker for monitoring node health"""
-        
+        """Background worker for monitoring node health"""        
         while True:
             try:
                 for node_id, node in self.nodes.items():
@@ -964,8 +926,7 @@ class StorageReplicationEngine:
                 await asyncio.sleep(60)
     
     async def _check_node_health(self, node: ReplicationNode) -> bool:
-        """Check health of a replication node"""
-        
+        """Check health of a replication node"""        
         try:
             # Simulate health check
             # In real implementation, would ping the endpoint
@@ -976,8 +937,7 @@ class StorageReplicationEngine:
             return False
     
     async def _metrics_collector(self) -> None:
-        """Background worker for collecting metrics"""
-        
+        """Background worker for collecting metrics"""        
         while True:
             try:
                 # Calculate average replication time
@@ -1005,8 +965,7 @@ class StorageReplicationEngine:
                 await asyncio.sleep(300)
     
     async def _find_content_replicas(self, content_id: str) -> Dict[str, Dict[str, Any]]:
-        """Find all replicas of content"""
-        
+        """Find all replicas of content"""        
         # This would query all storage managers to find replicas
         # For demonstration, return placeholder data
         return {
@@ -1029,15 +988,13 @@ class StorageReplicationEngine:
         location: str,
         replica_info: Dict[str, Any]
     ) -> str:
-        """Calculate checksum for content at location"""
-        
+        """Calculate checksum for content at location"""        
         # In real implementation, would download and hash content
         # For demonstration, return the stored checksum
         return replica_info.get('checksum', 'unknown')
     
     async def _calculate_metadata_hash(self, metadata: Dict[str, Any]) -> str:
-        """Calculate hash of metadata"""
-        
+        """Calculate hash of metadata"""        
         metadata_str = json.dumps(metadata, sort_keys=True)
         return hashlib.sha256(metadata_str.encode()).hexdigest()
     
@@ -1046,8 +1003,7 @@ class StorageReplicationEngine:
         content_id: str,
         verification_result: Dict[str, Any]
     ) -> None:
-        """Handle consistency violation"""
-        
+        """Handle consistency violation"""        
         logger.warning(f"Consistency violation for {content_id}: {verification_result}")
         
         # Add to pending conflicts for resolution
@@ -1064,8 +1020,7 @@ class StorageReplicationEngine:
         self,
         replica_groups: Dict[str, List[Tuple[str, Dict[str, Any]]]]
     ) -> Tuple[str, str]:
-        """Resolve conflict using last write wins strategy"""
-        
+        """Resolve conflict using last write wins strategy"""        
         latest_write = None
         latest_checksum = None
         
@@ -1086,8 +1041,7 @@ class StorageReplicationEngine:
         self,
         replica_groups: Dict[str, List[Tuple[str, Dict[str, Any]]]]
     ) -> Tuple[str, str]:
-        """Resolve conflict using first write wins strategy"""
-        
+        """Resolve conflict using first write wins strategy"""        
         earliest_write = None
         earliest_checksum = None
         
@@ -1108,8 +1062,7 @@ class StorageReplicationEngine:
         content_id: str,
         replica_groups: Dict[str, List[Tuple[str, Dict[str, Any]]]]
     ) -> Dict[str, Any]:
-        """Queue conflict for manual review"""
-        
+        """Queue conflict for manual review"""        
         conflict = {
             'content_id': content_id,
             'conflict_type': 'manual_review',
@@ -1130,8 +1083,7 @@ class StorageReplicationEngine:
         self,
         replica_groups: Dict[str, List[Tuple[str, Dict[str, Any]]]]
     ) -> Tuple[str, str]:
-        """Resolve conflict using custom logic"""
-        
+        """Resolve conflict using custom logic"""        
         # Default to largest replica
         largest_size = 0
         largest_location = None
@@ -1153,8 +1105,7 @@ class StorageReplicationEngine:
         winner: Tuple[str, str],
         replica_groups: Dict[str, List[Tuple[str, Dict[str, Any]]]]
     ) -> None:
-        """Propagate winning version to all replicas"""
-        
+        """Propagate winning version to all replicas"""        
         winner_location, winner_checksum = winner
         
         # Read winning version
@@ -1179,8 +1130,7 @@ class StorageReplicationEngine:
                     logger.error(f"Failed to update replica at {location}: {str(e)}")
     
     async def _calculate_bandwidth_utilization(self) -> Dict[str, float]:
-        """Calculate bandwidth utilization by provider"""
-        
+        """Calculate bandwidth utilization by provider"""        
         # Placeholder implementation
         return {
             'aws': 0.65,
@@ -1189,8 +1139,7 @@ class StorageReplicationEngine:
         }
     
     async def _calculate_avg_node_latency(self) -> float:
-        """Calculate average node latency"""
-        
+        """Calculate average node latency"""        
         if not self.nodes:
             return 0.0
         
@@ -1198,8 +1147,7 @@ class StorageReplicationEngine:
         return total_latency / len(self.nodes)
     
     def _calculate_success_rate(self) -> float:
-        """Calculate replication success rate"""
-        
+        """Calculate replication success rate"""        
         total = self.metrics['total_replications']
         if total == 0:
             return 1.0

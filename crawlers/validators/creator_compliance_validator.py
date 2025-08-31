@@ -1,5 +1,4 @@
-"""
-Creator Content Compliance Validator for IA Influencer Agent Platform
+"""Creator Content Compliance Validator for IA Influencer Agent Platform
 ====================================================================
 
 Advanced compliance validation system providing comprehensive content moderation,
@@ -21,9 +20,7 @@ Features:
 - Copyright and licensing compliance verification
 - Brand safety and advertiser-friendly content validation
 - Age restriction and content rating assessment
-"""
-
-import re
+"""import re
 import json
 from enum import Enum
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
@@ -52,8 +49,7 @@ logger = logging.getLogger(__name__)
 
 
 class Platform(Enum):
-    """Supported platforms for compliance validation"""
-    YOUTUBE = "youtube"
+    """Supported platforms for compliance validation"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -66,8 +62,7 @@ class Platform(Enum):
 
 
 class ContentType(Enum):
-    """Content types for compliance validation"""
-    VIDEO = "video"
+    """Content types for compliance validation"""    VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
     TEXT = "text"
@@ -80,16 +75,14 @@ class ContentType(Enum):
 
 
 class ComplianceLevel(Enum):
-    """Compliance validation levels"""
-    BASIC = "basic"
+    """Compliance validation levels"""    BASIC = "basic"
     STANDARD = "standard"
     STRICT = "strict"
     ENTERPRISE = "enterprise"
 
 
 class ViolationType(Enum):
-    """Types of policy violations"""
-    HATE_SPEECH = "hate_speech"
+    """Types of policy violations"""    HATE_SPEECH = "hate_speech"
     HARASSMENT = "harassment"
     VIOLENCE = "violence"
     SEXUAL_CONTENT = "sexual_content"
@@ -107,8 +100,7 @@ class ViolationType(Enum):
 
 
 class SeverityLevel(Enum):
-    """Violation severity levels"""
-    LOW = "low"
+    """Violation severity levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -116,8 +108,7 @@ class SeverityLevel(Enum):
 
 
 class AgeRating(Enum):
-    """Content age rating categories"""
-    ALL_AGES = "all_ages"
+    """Content age rating categories"""    ALL_AGES = "all_ages"
     TEENS_13_PLUS = "teens_13_plus"
     MATURE_17_PLUS = "mature_17_plus"
     ADULTS_18_PLUS = "adults_18_plus"
@@ -126,8 +117,7 @@ class AgeRating(Enum):
 
 @dataclass
 class ComplianceViolation:
-    """Represents a compliance policy violation"""
-    violation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Represents a compliance policy violation"""    violation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     violation_type: ViolationType
     severity: SeverityLevel
     platform: Platform
@@ -144,8 +134,7 @@ class ComplianceViolation:
 
 @dataclass
 class ContentMetadata:
-    """Content metadata for compliance analysis"""
-    content_id: str
+    """Content metadata for compliance analysis"""    content_id: str
     creator_id: str
     platform: Platform
     content_type: ContentType
@@ -164,8 +153,7 @@ class ContentMetadata:
 
 @dataclass
 class CreatorProfile:
-    """Creator profile for compliance context"""
-    creator_id: str
+    """Creator profile for compliance context"""    creator_id: str
     username: str
     platform_accounts: Dict[Platform, str] = field(default_factory=dict)
     subscriber_counts: Dict[Platform, int] = field(default_factory=dict)
@@ -180,8 +168,7 @@ class CreatorProfile:
 
 @dataclass
 class ComplianceValidationResult:
-    """Result of compliance validation"""
-    validation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Result of compliance validation"""    validation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_metadata: ContentMetadata
     creator_profile: CreatorProfile
     validation_timestamp: datetime = field(default_factory=datetime.utcnow)
@@ -201,13 +188,11 @@ class ComplianceValidationResult:
 
 
 class CreatorContentComplianceValidator:
-    """
-    Advanced creator content compliance validator.
+    """    Advanced creator content compliance validator.
     
     Provides comprehensive compliance validation for creator content across
     multiple platforms with AI-powered analysis and policy enforcement.
-    """
-    
+    """    
     def __init__(
         self,
         compliance_level: ComplianceLevel = ComplianceLevel.STANDARD,
@@ -215,16 +200,14 @@ class CreatorContentComplianceValidator:
         supported_platforms: Optional[List[Platform]] = None,
         cache_size: int = 1000
     ):
-        """
-        Initialize creator content compliance validator.
+        """        Initialize creator content compliance validator.
         
         Args:
             compliance_level: Level of compliance validation
             enable_ai_analysis: Enable AI-powered content analysis
             supported_platforms: List of supported platforms
             cache_size: Size of validation cache
-        """
-        self.compliance_level = compliance_level
+        """        self.compliance_level = compliance_level
         self.enable_ai_analysis = enable_ai_analysis and HAS_AI_DEPENDENCIES
         self.supported_platforms = supported_platforms or list(Platform)
         self.cache_size = cache_size
@@ -254,8 +237,7 @@ class CreatorContentComplianceValidator:
         logger.info(f"CreatorContentComplianceValidator initialized with level: {compliance_level.value}")
     
     def _initialize_ai_models(self) -> None:
-        """Initialize AI models for content analysis"""
-        try:
+        """Initialize AI models for content analysis"""        try:
             if HAS_AI_DEPENDENCIES:
                 # Text classification models
                 self.hate_speech_classifier = pipeline(
@@ -285,8 +267,7 @@ class CreatorContentComplianceValidator:
             self.enable_ai_analysis = False
     
     def _load_platform_policies(self) -> Dict[Platform, Dict[str, Any]]:
-        """Load platform-specific content policies"""
-        return {
+        """Load platform-specific content policies"""        return {
             Platform.YOUTUBE: {
                 "community_guidelines": {
                     "hate_speech": {"prohibited": True, "severity": "high"},
@@ -364,8 +345,7 @@ class CreatorContentComplianceValidator:
         }
     
     def _initialize_content_analyzers(self) -> Dict[ContentType, Any]:
-        """Initialize content type specific analyzers"""
-        analyzers = {}
+        """Initialize content type specific analyzers"""        analyzers = {}
         
         # Text analyzer
         analyzers[ContentType.TEXT] = {
@@ -404,8 +384,7 @@ class CreatorContentComplianceValidator:
         creator_profile: CreatorProfile,
         target_platforms: Optional[List[Platform]] = None
     ) -> ComplianceValidationResult:
-        """
-        Validate content compliance across specified platforms.
+        """        Validate content compliance across specified platforms.
         
         Args:
             content_data: Content data to validate
@@ -415,8 +394,7 @@ class CreatorContentComplianceValidator:
             
         Returns:
             ComplianceValidationResult with detailed analysis
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         
         try:
             # Check cache first
@@ -506,8 +484,7 @@ class CreatorContentComplianceValidator:
         creator_profile: CreatorProfile,
         platform: Platform
     ) -> Dict[str, Any]:
-        """Validate compliance for specific platform"""
-        platform_result = {
+        """Validate compliance for specific platform"""        platform_result = {
             "platform": platform.value,
             "is_compliant": True,
             "violations": [],
@@ -559,8 +536,7 @@ class CreatorContentComplianceValidator:
         content_metadata: ContentMetadata,
         guidelines: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Check content against community guidelines"""
-        result = {
+        """Check content against community guidelines"""        result = {
             "compliant": True,
             "violations": [],
             "confidence_scores": {}
@@ -644,8 +620,7 @@ class CreatorContentComplianceValidator:
         content_metadata: ContentMetadata,
         restrictions: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Check content against platform-specific restrictions"""
-        result = {
+        """Check content against platform-specific restrictions"""        result = {
             "compliant": True,
             "issues": []
         }
@@ -693,8 +668,7 @@ class CreatorContentComplianceValidator:
         creator_profile: CreatorProfile,
         monetization_policies: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Check creator eligibility for monetization"""
-        result = {
+        """Check creator eligibility for monetization"""        result = {
             "eligible": True,
             "requirements_met": [],
             "requirements_missing": []
@@ -749,8 +723,7 @@ class CreatorContentComplianceValidator:
         content_data: Union[str, bytes],
         content_type: ContentType
     ) -> Dict[str, Any]:
-        """Perform content-type specific analysis"""
-        analysis = {}
+        """Perform content-type specific analysis"""        analysis = {}
         
         try:
             if content_type == ContentType.TEXT:
@@ -773,8 +746,7 @@ class CreatorContentComplianceValidator:
         content_data: Union[str, bytes],
         content_metadata: ContentMetadata
     ) -> Dict[str, Any]:
-        """Perform AI-powered content analysis"""
-        ai_analysis = {
+        """Perform AI-powered content analysis"""        ai_analysis = {
             "ai_analysis_performed": True,
             "models_used": [],
             "confidence_scores": {}
@@ -823,8 +795,7 @@ class CreatorContentComplianceValidator:
     
     # Content analysis helper methods
     def _analyze_text_content(self, text: str) -> Dict[str, Any]:
-        """Analyze text content for compliance issues"""
-        analysis = {
+        """Analyze text content for compliance issues"""        analysis = {
             "word_count": len(text.split()),
             "character_count": len(text),
             "language_detected": "en",  # Would use language detection
@@ -847,8 +818,7 @@ class CreatorContentComplianceValidator:
         return analysis
     
     def _analyze_image_content(self, content_data: bytes) -> Dict[str, Any]:
-        """Analyze image content for compliance issues"""
-        analysis = {
+        """Analyze image content for compliance issues"""        analysis = {
             "analysis_type": "image",
             "processing_successful": True
         }
@@ -867,8 +837,7 @@ class CreatorContentComplianceValidator:
             return analysis
     
     def _analyze_video_content(self, content_data: bytes) -> Dict[str, Any]:
-        """Analyze video content for compliance issues"""
-        analysis = {
+        """Analyze video content for compliance issues"""        analysis = {
             "analysis_type": "video",
             "processing_successful": True
         }
@@ -887,8 +856,7 @@ class CreatorContentComplianceValidator:
             return analysis
     
     def _analyze_audio_content(self, content_data: bytes) -> Dict[str, Any]:
-        """Analyze audio content for compliance issues"""
-        analysis = {
+        """Analyze audio content for compliance issues"""        analysis = {
             "analysis_type": "audio",
             "processing_successful": True
         }
@@ -908,8 +876,7 @@ class CreatorContentComplianceValidator:
     
     # AI detection helper methods
     def _detect_hate_speech(self, text: str) -> float:
-        """Detect hate speech in text"""
-        if self.enable_ai_analysis and hasattr(self, 'hate_speech_classifier'):
+        """Detect hate speech in text"""        if self.enable_ai_analysis and hasattr(self, 'hate_speech_classifier'):
             try:
                 result = self.hate_speech_classifier(text)
                 return result[0]["score"] if result[0]["label"] == "TOXIC" else 1 - result[0]["score"]
@@ -922,8 +889,7 @@ class CreatorContentComplianceValidator:
         return min(hate_count * 0.3, 1.0)
     
     def _detect_harassment(self, text: str) -> float:
-        """Detect harassment in text"""
-        # Rule-based harassment detection
+        """Detect harassment in text"""        # Rule-based harassment detection
         harassment_patterns = [
             r"\b(kill yourself|kys)\b",
             r"\b(you suck|you're stupid|idiot)\b",
@@ -938,14 +904,12 @@ class CreatorContentComplianceValidator:
         return min(harassment_score, 1.0)
     
     def _detect_nsfw_content(self, content_data: bytes) -> float:
-        """Detect NSFW content in images/videos"""
-        # Placeholder for NSFW detection
+        """Detect NSFW content in images/videos"""        # Placeholder for NSFW detection
         # In production, would use specialized models like NSFW detection APIs
         return 0.1  # Low default score
     
     def _detect_profanity(self, text: str) -> float:
-        """Detect profanity in text"""
-        profanity_words = [
+        """Detect profanity in text"""        profanity_words = [
             "damn", "hell", "shit", "fuck", "bitch", "ass", "crap"
         ]
         
@@ -955,8 +919,7 @@ class CreatorContentComplianceValidator:
         return min(profanity_count / max(len(words), 1) * 5, 1.0)
     
     def _detect_spam_indicators(self, text: str) -> float:
-        """Detect spam indicators in text"""
-        spam_indicators = [
+        """Detect spam indicators in text"""        spam_indicators = [
             r"click here",
             r"buy now",
             r"limited time",
@@ -981,8 +944,7 @@ class CreatorContentComplianceValidator:
         return min(spam_score, 1.0)
     
     def _detect_personal_information(self, text: str) -> List[str]:
-        """Detect personal information in text"""
-        pii_detected = []
+        """Detect personal information in text"""        pii_detected = []
         
         # Email detection
         email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
@@ -1002,8 +964,7 @@ class CreatorContentComplianceValidator:
         return pii_detected
     
     def _extract_text_from_image(self, image_data: bytes) -> str:
-        """Extract text from image using OCR"""
-        if not hasattr(self, 'ocr_reader'):
+        """Extract text from image using OCR"""        if not hasattr(self, 'ocr_reader'):
             return ""
         
         try:
@@ -1017,57 +978,44 @@ class CreatorContentComplianceValidator:
     
     # Helper methods for content analyzers
     def _create_profanity_filter(self):
-        """Create profanity filter"""
-        return lambda text: self._detect_profanity(text)
+        """Create profanity filter"""        return lambda text: self._detect_profanity(text)
     
     def _create_hate_speech_detector(self):
-        """Create hate speech detector"""
-        return lambda text: self._detect_hate_speech(text)
+        """Create hate speech detector"""        return lambda text: self._detect_hate_speech(text)
     
     def _create_spam_detector(self):
-        """Create spam detector"""
-        return lambda text: self._detect_spam_indicators(text)
+        """Create spam detector"""        return lambda text: self._detect_spam_indicators(text)
     
     def _create_nsfw_detector(self):
-        """Create NSFW detector"""
-        return lambda content: self._detect_nsfw_content(content)
+        """Create NSFW detector"""        return lambda content: self._detect_nsfw_content(content)
     
     def _create_text_extractor(self):
-        """Create text extractor"""
-        return lambda image: self._extract_text_from_image(image)
+        """Create text extractor"""        return lambda image: self._extract_text_from_image(image)
     
     def _create_face_detector(self):
-        """Create face detector"""
-        return lambda image: 0  # Placeholder
+        """Create face detector"""        return lambda image: 0  # Placeholder
     
     def _create_frame_analyzer(self):
-        """Create video frame analyzer"""
-        return lambda video: {}  # Placeholder
+        """Create video frame analyzer"""        return lambda video: {}  # Placeholder
     
     def _create_audio_analyzer(self):
-        """Create audio analyzer"""
-        return lambda audio: {}  # Placeholder
+        """Create audio analyzer"""        return lambda audio: {}  # Placeholder
     
     def _create_motion_detector(self):
-        """Create motion detector"""
-        return lambda video: {}  # Placeholder
+        """Create motion detector"""        return lambda video: {}  # Placeholder
     
     def _create_audio_classifier(self):
-        """Create audio classifier"""
-        return lambda audio: {}  # Placeholder
+        """Create audio classifier"""        return lambda audio: {}  # Placeholder
     
     def _create_copyright_detector(self):
-        """Create copyright detector"""
-        return lambda audio: 0.2  # Placeholder
+        """Create copyright detector"""        return lambda audio: 0.2  # Placeholder
     
     def _create_quality_analyzer(self):
-        """Create quality analyzer"""
-        return lambda audio: 0.8  # Placeholder
+        """Create quality analyzer"""        return lambda audio: 0.8  # Placeholder
     
     # Result processing methods
     def _calculate_compliance_score(self, result: ComplianceValidationResult) -> float:
-        """Calculate overall compliance score"""
-        if not result.violations:
+        """Calculate overall compliance score"""        if not result.violations:
             return 1.0
         
         # Weight violations by severity
@@ -1089,8 +1037,7 @@ class CreatorContentComplianceValidator:
         return round(compliance_score, 3)
     
     def _determine_age_rating(self, result: ComplianceValidationResult) -> AgeRating:
-        """Determine appropriate age rating"""
-        has_mature_content = any(
+        """Determine appropriate age rating"""        has_mature_content = any(
             violation.violation_type in [
                 ViolationType.SEXUAL_CONTENT,
                 ViolationType.VIOLENCE,
@@ -1117,8 +1064,7 @@ class CreatorContentComplianceValidator:
             return AgeRating.ALL_AGES
     
     def _check_monetization_safety(self, result: ComplianceValidationResult) -> bool:
-        """Check if content is safe for monetization"""
-        blocking_violations = [
+        """Check if content is safe for monetization"""        blocking_violations = [
             ViolationType.HATE_SPEECH,
             ViolationType.HARASSMENT,
             ViolationType.COPYRIGHT,
@@ -1132,8 +1078,7 @@ class CreatorContentComplianceValidator:
         )
     
     def _check_brand_safety(self, result: ComplianceValidationResult) -> bool:
-        """Check if content is brand safe"""
-        brand_unsafe_violations = [
+        """Check if content is brand safe"""        brand_unsafe_violations = [
             ViolationType.HATE_SPEECH,
             ViolationType.HARASSMENT,
             ViolationType.VIOLENCE,
@@ -1148,8 +1093,7 @@ class CreatorContentComplianceValidator:
         )
     
     def _generate_compliance_recommendations(self, result: ComplianceValidationResult) -> List[str]:
-        """Generate compliance improvement recommendations"""
-        recommendations = []
+        """Generate compliance improvement recommendations"""        recommendations = []
         
         if not result.is_compliant:
             recommendations.append("Address policy violations before publishing")
@@ -1178,16 +1122,14 @@ class CreatorContentComplianceValidator:
         return recommendations[:5]  # Limit to top 5 recommendations
     
     def _requires_manual_review(self, result: ComplianceValidationResult) -> bool:
-        """Determine if manual review is required"""
-        return any(
+        """Determine if manual review is required"""        return any(
             violation.severity == SeverityLevel.CRITICAL or
             violation.confidence_score < 0.8  # Low confidence requires human review
             for violation in result.violations
         )
     
     def _get_appeal_options(self, result: ComplianceValidationResult) -> List[str]:
-        """Get available appeal options"""
-        appeal_options = []
+        """Get available appeal options"""        appeal_options = []
         
         if result.violations:
             appeal_options.append("Request human review")
@@ -1206,13 +1148,11 @@ class CreatorContentComplianceValidator:
         content_metadata: ContentMetadata,
         creator_profile: CreatorProfile
     ) -> str:
-        """Generate cache key for validation result"""
-        key_data = f"{content_metadata.content_id}_{creator_profile.creator_id}_{content_metadata.upload_timestamp}"
+        """Generate cache key for validation result"""        key_data = f"{content_metadata.content_id}_{creator_profile.creator_id}_{content_metadata.upload_timestamp}"
         return hashlib.md5(key_data.encode()).hexdigest()
     
     def get_validator_metrics(self) -> Dict[str, Any]:
-        """Get validator performance metrics"""
-        return {
+        """Get validator performance metrics"""        return {
             "total_validations": self.validation_metrics["total_validations"],
             "violations_detected": self.validation_metrics["violations_detected"],
             "false_positives": self.validation_metrics["false_positives"],
@@ -1231,8 +1171,7 @@ def create_creator_compliance_validator(
     enable_ai_analysis: bool = True,
     supported_platforms: Optional[List[Platform]] = None
 ) -> CreatorContentComplianceValidator:
-    """Create configured creator compliance validator"""
-    return CreatorContentComplianceValidator(
+    """Create configured creator compliance validator"""    return CreatorContentComplianceValidator(
         compliance_level=compliance_level,
         enable_ai_analysis=enable_ai_analysis,
         supported_platforms=supported_platforms or [
@@ -1249,8 +1188,7 @@ def validate_creator_content_batch(
     creator_profile: CreatorProfile,
     target_platforms: List[Platform]
 ) -> List[ComplianceValidationResult]:
-    """Validate multiple content items in batch"""
-    validator = create_creator_compliance_validator()
+    """Validate multiple content items in batch"""    validator = create_creator_compliance_validator()
     results = []
     
     for content_data, content_metadata in content_items:
@@ -1282,5 +1220,4 @@ def validate_creator_content_batch(
 
 # Custom exceptions
 class ComplianceException(ValidationException):
-    """Compliance validation specific exception"""
-    pass
+    """Compliance validation specific exception"""    pass

@@ -1,5 +1,4 @@
-"""
-Enterprise Data Models for Recommendation System
+"""Enterprise Data Models for Recommendation System
 
 Ultra-advanced data models providing type-safe, performance-optimized
 data structures for the recommendation system.
@@ -10,9 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""
-
-from dataclasses import dataclass, field
+"""from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union, Set
 from datetime import datetime, timezone
 from enum import Enum
@@ -22,8 +19,7 @@ import uuid
 
 
 class ContentType(Enum):
-    """Content type enumeration for multi-modal support"""
-    AUDIO = "audio"
+    """Content type enumeration for multi-modal support"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -36,8 +32,7 @@ class ContentType(Enum):
 
 
 class InteractionType(Enum):
-    """User interaction type enumeration"""
-    PLAY = "play"
+    """User interaction type enumeration"""    PLAY = "play"
     LIKE = "like"
     SHARE = "share"
     COMMENT = "comment"
@@ -53,8 +48,7 @@ class InteractionType(Enum):
 
 
 class RecommendationType(Enum):
-    """Recommendation algorithm type enumeration"""
-    COLLABORATIVE = "collaborative"
+    """Recommendation algorithm type enumeration"""    COLLABORATIVE = "collaborative"
     CONTENT_BASED = "content_based"
     HYBRID = "hybrid"
     TRENDING = "trending"
@@ -67,8 +61,7 @@ class RecommendationType(Enum):
 
 
 class CreatorTier(Enum):
-    """Creator tier classification"""
-    EMERGING = "emerging"
+    """Creator tier classification"""    EMERGING = "emerging"
     ESTABLISHED = "established"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
@@ -77,8 +70,7 @@ class CreatorTier(Enum):
 
 
 class MonetizationStrategy(Enum):
-    """Revenue generation strategies"""
-    ADVERTISING = "advertising"
+    """Revenue generation strategies"""    ADVERTISING = "advertising"
     SUBSCRIPTION = "subscription"
     PAY_PER_VIEW = "pay_per_view"
     MERCHANDISE = "merchandise"
@@ -90,8 +82,7 @@ class MonetizationStrategy(Enum):
 
 @dataclass
 class UserProfile:
-    """Comprehensive user profile for personalization"""
-    user_id: str
+    """Comprehensive user profile for personalization"""    user_id: str
     username: str
     email: str
     preferences: Dict[str, Any] = field(default_factory=dict)
@@ -109,8 +100,7 @@ class UserProfile:
     monetization_preferences: Dict[str, Any] = field(default_factory=dict)
     
     def to_vector(self) -> np.ndarray:
-        """Convert user profile to numerical vector for ML processing"""
-        vector_components = []
+        """Convert user profile to numerical vector for ML processing"""        vector_components = []
         
         # Content preferences
         for content_type in ContentType:
@@ -125,8 +115,7 @@ class UserProfile:
 
 @dataclass
 class CreatorProfile:
-    """Comprehensive creator profile and analytics"""
-    creator_id: str
+    """Comprehensive creator profile and analytics"""    creator_id: str
     username: str
     display_name: str
     creator_type: str
@@ -148,8 +137,7 @@ class CreatorProfile:
     last_active: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def calculate_influence_score(self) -> float:
-        """Calculate overall influence score based on metrics"""
-        base_score = min(self.follower_count / 1000.0, 100.0)  # Cap at 100
+        """Calculate overall influence score based on metrics"""        base_score = min(self.follower_count / 1000.0, 100.0)  # Cap at 100
         engagement_boost = self.engagement_metrics.get('avg_engagement_rate', 0.0) * 50
         quality_boost = self.quality_score * 30
         collaboration_boost = self.collaboration_score * 20
@@ -159,8 +147,7 @@ class CreatorProfile:
 
 @dataclass
 class ContentItem:
-    """Comprehensive content item representation"""
-    content_id: str
+    """Comprehensive content item representation"""    content_id: str
     title: str
     description: str
     creator_id: str
@@ -184,8 +171,7 @@ class ContentItem:
     published_at: Optional[datetime] = None
     
     def calculate_relevance_score(self, user_profile: UserProfile) -> float:
-        """Calculate content relevance score for specific user"""
-        score = 0.0
+        """Calculate content relevance score for specific user"""        score = 0.0
         
         # Content type preference
         content_pref = user_profile.content_preferences.get(self.content_type, 0.0)
@@ -211,8 +197,7 @@ class ContentItem:
 
 @dataclass
 class InteractionEvent:
-    """User interaction event tracking"""
-    event_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """User interaction event tracking"""    event_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = ""
     content_id: str = ""
     creator_id: str = ""
@@ -226,8 +211,7 @@ class InteractionEvent:
     revenue_impact: float = 0.0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert interaction event to dictionary for storage"""
-        return {
+        """Convert interaction event to dictionary for storage"""        return {
             'event_id': self.event_id,
             'user_id': self.user_id,
             'content_id': self.content_id,
@@ -245,8 +229,7 @@ class InteractionEvent:
 
 @dataclass
 class RecommendationContext:
-    """Context information for generating recommendations"""
-    session_id: str
+    """Context information for generating recommendations"""    session_id: str
     device_type: str
     location: Optional[Dict[str, Any]] = None
     time_of_day: str = ""
@@ -260,8 +243,7 @@ class RecommendationContext:
     content_discovery_mode: str = "balanced"  # conservative, balanced, exploratory
     
     def get_contextual_weight(self, content_type: ContentType) -> float:
-        """Get contextual weight for content type based on current context"""
-        weights = {
+        """Get contextual weight for content type based on current context"""        weights = {
             'morning': {ContentType.PODCAST: 1.2, ContentType.AUDIO: 1.1},
             'afternoon': {ContentType.VIDEO: 1.1, ContentType.IMAGE: 1.2},
             'evening': {ContentType.AUDIO: 1.3, ContentType.VIDEO: 1.2},
@@ -274,8 +256,7 @@ class RecommendationContext:
 
 @dataclass
 class CollaborationRequest:
-    """Collaboration opportunity representation"""
-    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Collaboration opportunity representation"""    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     initiator_id: str = ""
     target_creator_id: str = ""
     collaboration_type: str = ""
@@ -291,8 +272,7 @@ class CollaborationRequest:
     expires_at: Optional[datetime] = None
     
     def calculate_compatibility(self, creator: CreatorProfile) -> float:
-        """Calculate collaboration compatibility score"""
-        score = 0.0
+        """Calculate collaboration compatibility score"""        score = 0.0
         
         # Skills matching
         creator_skills = set(creator.specialties)
@@ -317,8 +297,7 @@ class CollaborationRequest:
 
 @dataclass
 class TrendData:
-    """Trending content and creator analytics"""
-    trend_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Trending content and creator analytics"""    trend_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_id: Optional[str] = None
     creator_id: Optional[str] = None
     trend_type: str = ""  # content, creator, category, hashtag
@@ -334,16 +313,14 @@ class TrendData:
     expires_at: Optional[datetime] = None
     
     def is_trending_now(self) -> bool:
-        """Check if trend is currently active"""
-        if self.expires_at and datetime.now(timezone.utc) > self.expires_at:
+        """Check if trend is currently active"""        if self.expires_at and datetime.now(timezone.utc) > self.expires_at:
             return False
         return self.trend_score > 0.7 and self.velocity > 0.0
 
 
 @dataclass
 class RevenueMetrics:
-    """Revenue and monetization analytics"""
-    content_id: str
+    """Revenue and monetization analytics"""    content_id: str
     creator_id: str
     total_revenue: float = 0.0
     revenue_streams: Dict[str, float] = field(default_factory=dict)
@@ -358,8 +335,7 @@ class RevenueMetrics:
     period_end: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def calculate_efficiency_score(self) -> float:
-        """Calculate revenue efficiency score"""
-        if self.audience_value == 0:
+        """Calculate revenue efficiency score"""        if self.audience_value == 0:
             return 0.0
         
         efficiency = self.total_revenue / self.audience_value
@@ -368,8 +344,7 @@ class RevenueMetrics:
 
 @dataclass
 class SimilarityScore:
-    """Similarity calculation result between entities"""
-    entity_a_id: str
+    """Similarity calculation result between entities"""    entity_a_id: str
     entity_b_id: str
     similarity_type: str  # user-user, content-content, creator-creator
     score: float
@@ -378,14 +353,12 @@ class SimilarityScore:
     calculated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def is_significant(self, threshold: float = 0.7) -> bool:
-        """Check if similarity score is significant"""
-        return self.score >= threshold and self.confidence >= 0.8
+        """Check if similarity score is significant"""        return self.score >= threshold and self.confidence >= 0.8
 
 
 @dataclass
 class PersonalizationVector:
-    """User personalization vector for ML models"""
-    user_id: str
+    """User personalization vector for ML models"""    user_id: str
     vector_data: np.ndarray
     feature_names: List[str] = field(default_factory=list)
     last_updated: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
@@ -393,14 +366,12 @@ class PersonalizationVector:
     confidence_scores: Dict[str, float] = field(default_factory=dict)
     
     def update_vector(self, new_interactions: List[InteractionEvent]) -> None:
-        """Update personalization vector with new interaction data"""
-        # This would contain the actual ML logic for updating vectors
+        """Update personalization vector with new interaction data"""        # This would contain the actual ML logic for updating vectors
         # Implementation would depend on the specific ML framework used
         self.last_updated = datetime.now(timezone.utc)
     
     def get_similarity(self, other_vector: 'PersonalizationVector') -> float:
-        """Calculate cosine similarity with another personalization vector"""
-        if len(self.vector_data) != len(other_vector.vector_data):
+        """Calculate cosine similarity with another personalization vector"""        if len(self.vector_data) != len(other_vector.vector_data):
             return 0.0
         
         dot_product = np.dot(self.vector_data, other_vector.vector_data)
@@ -415,8 +386,7 @@ class PersonalizationVector:
 
 @dataclass
 class RecommendationResult:
-    """Final recommendation result with metadata"""
-    recommendations: List[ContentItem]
+    """Final recommendation result with metadata"""    recommendations: List[ContentItem]
     algorithm_used: str
     confidence_score: float
     diversity_score: float
@@ -427,8 +397,7 @@ class RecommendationResult:
     generated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def get_top_recommendations(self, count: int) -> List[ContentItem]:
-        """Get top N recommendations sorted by score"""
-        sorted_recs = sorted(
+        """Get top N recommendations sorted by score"""        sorted_recs = sorted(
             self.recommendations, 
             key=lambda x: x.recommendation_score, 
             reverse=True

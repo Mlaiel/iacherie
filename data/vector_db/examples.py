@@ -1,5 +1,4 @@
-"""
-Vector Database Usage Examples and Demonstrations
+"""Vector Database Usage Examples and Demonstrations
 ================================================
 
 Comprehensive examples demonstrating all capabilities of the vector database system
@@ -23,9 +22,7 @@ TEAM SPECIALTIES:
 - Audio Processing Specialist: Audio fingerprinting & analysis
 - Computer Vision Engineer: Image/video processing & recognition
 - Microservices Architect: Distributed systems & API design
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import json
@@ -113,8 +110,7 @@ SAMPLE_CREATOR_PROFILES = [
 
 
 class VectorDatabaseExamples:
-    """
-    Comprehensive examples demonstrating vector database capabilities.
+    """    Comprehensive examples demonstrating vector database capabilities.
     
     This class provides practical examples for:
     - System initialization and configuration
@@ -125,8 +121,7 @@ class VectorDatabaseExamples:
     - Content recommendations
     - System monitoring and maintenance
     - Backup and restore operations
-    """
-    
+    """    
     def __init__(self):
         self.db_manager = None
         self.temp_dir = tempfile.mkdtemp()
@@ -162,8 +157,7 @@ class VectorDatabaseExamples:
         }
     
     async def run_all_examples(self):
-        """Run all demonstration examples."""
-        print("=" * 80)
+        """Run all demonstration examples."""        print("=" * 80)
         print("VECTOR DATABASE SYSTEM - COMPREHENSIVE EXAMPLES")
         print("=" * 80)
         print(f"Author: Fahed Mlaiel (mlaiel@live.de)")
@@ -212,8 +206,7 @@ class VectorDatabaseExamples:
             await self.cleanup()
     
     async def example_system_initialization(self):
-        """Example 1: System initialization and configuration."""
-        print("
+        """Example 1: System initialization and configuration."""        print("
 " + "="*50)
         print("EXAMPLE 1: SYSTEM INITIALIZATION")
         print("="*50)
@@ -239,8 +232,7 @@ class VectorDatabaseExamples:
             print(f"✓ {content_type}: {dim} dimensions")
     
     async def example_content_indexing(self):
-        """Example 2: Content indexing for multiple content types."""
-        print("
+        """Example 2: Content indexing for multiple content types."""        print("
 " + "="*50)
         print("EXAMPLE 2: CONTENT INDEXING")
         print("="*50)
@@ -312,8 +304,7 @@ class VectorDatabaseExamples:
                   f"health score: {metrics.health_score:.2f}")
     
     async def example_similarity_search(self):
-        """Example 3: Similarity search with different configurations."""
-        print("
+        """Example 3: Similarity search with different configurations."""        print("
 " + "="*50)
         print("EXAMPLE 3: SIMILARITY SEARCH")
         print("="*50)
@@ -372,8 +363,7 @@ class VectorDatabaseExamples:
         print(f"✓ Found {len(image_results)} similar images")
     
     async def example_duplicate_detection(self):
-        """Example 4: Duplicate content detection and analysis."""
-        print("
+        """Example 4: Duplicate content detection and analysis."""        print("
 " + "="*50)
         print("EXAMPLE 4: DUPLICATE DETECTION")
         print("="*50)
@@ -429,8 +419,7 @@ class VectorDatabaseExamples:
         print(f"✓ Found {len(image_duplicates)} potential image duplicates")
     
     async def example_collaboration_matching(self):
-        """Example 5: Collaboration opportunity matching."""
-        print("
+        """Example 5: Collaboration opportunity matching."""        print("
 " + "="*50)
         print("EXAMPLE 5: COLLABORATION MATCHING")
         print("="*50)
@@ -475,8 +464,7 @@ class VectorDatabaseExamples:
             print()
     
     async def example_content_recommendations(self):
-        """Example 6: Content recommendations for creators."""
-        print("
+        """Example 6: Content recommendations for creators."""        print("
 " + "="*50)
         print("EXAMPLE 6: CONTENT RECOMMENDATIONS")
         print("="*50)
@@ -513,8 +501,7 @@ class VectorDatabaseExamples:
             print()
     
     async def example_system_monitoring(self):
-        """Example 7: System monitoring and performance tracking."""
-        print("
+        """Example 7: System monitoring and performance tracking."""        print("
 " + "="*50)
         print("EXAMPLE 7: SYSTEM MONITORING")
         print("="*50)
@@ -562,8 +549,7 @@ class VectorDatabaseExamples:
                 print(f"  - {rec}")
     
     async def example_backup_restore(self):
-        """Example 8: Backup and restore operations."""
-        print("
+        """Example 8: Backup and restore operations."""        print("
 " + "="*50)
         print("EXAMPLE 8: BACKUP AND RESTORE")
         print("="*50)
@@ -604,8 +590,7 @@ class VectorDatabaseExamples:
         print("✓ All backups validated successfully")
     
     async def example_advanced_features(self):
-        """Example 9: Advanced features and optimizations."""
-        print("
+        """Example 9: Advanced features and optimizations."""        print("
 " + "="*50)
         print("EXAMPLE 9: ADVANCED FEATURES")
         print("="*50)
@@ -666,8 +651,7 @@ class VectorDatabaseExamples:
         print(f"  - Total queries processed: {performance['total_queries']}")
     
     async def cleanup(self):
-        """Clean up resources and temporary files."""
-        try:
+        """Clean up resources and temporary files."""        try:
             import shutil
             shutil.rmtree(self.temp_dir, ignore_errors=True)
             print(f"
@@ -679,11 +663,9 @@ class VectorDatabaseExamples:
 # Standalone example functions for specific use cases
 
 async def example_content_protection_workflow():
-    """
-    Example workflow for content protection using the vector database.
+    """    Example workflow for content protection using the vector database.
     Demonstrates the complete process from content upload to duplicate detection.
-    """
-    print("
+    """    print("
 " + "="*60)
     print("CONTENT PROTECTION WORKFLOW EXAMPLE")
     print("="*60)
@@ -763,11 +745,9 @@ async def example_content_protection_workflow():
 
 
 async def example_collaboration_platform():
-    """
-    Example of using the vector database for a collaboration platform.
+    """    Example of using the vector database for a collaboration platform.
     Shows how creators can find compatible partners based on content similarity.
-    """
-    print("
+    """    print("
 " + "="*60)
     print("COLLABORATION PLATFORM EXAMPLE")
     print("="*60)
@@ -848,11 +828,9 @@ async def example_collaboration_platform():
 
 
 async def example_recommendation_engine():
-    """
-    Example of using the vector database as a content recommendation engine.
+    """    Example of using the vector database as a content recommendation engine.
     Shows personalized content discovery based on user preferences and behavior.
-    """
-    print("
+    """    print("
 " + "="*60)
     print("RECOMMENDATION ENGINE EXAMPLE")
     print("="*60)
@@ -946,8 +924,7 @@ async def example_recommendation_engine():
 
 # Main execution function
 async def main():
-    """Main function to run all examples."""
-    print("🚀 Starting Vector Database Examples...")
+    """Main function to run all examples."""    print("🚀 Starting Vector Database Examples...")
     print("Author: Fahed Mlaiel (mlaiel@live.de)")
     print("Copyright: © 2025 Fahed Mlaiel - All Rights Reserved")
     
@@ -997,21 +974,18 @@ logger = logging.getLogger(__name__)
 
 
 class VectorDBExamples:
-    """
-    Comprehensive examples for vector database operations.
+    """    Comprehensive examples for vector database operations.
     
     Demonstrates real-world usage patterns for content similarity,
     duplicate detection, collaboration matching, and recommendations.
-    """
-    
+    """    
     def __init__(self):
         self.vector_db = None
         self.config = self._get_example_config()
         self.sample_data = self._generate_sample_data()
     
     def _get_example_config(self) -> Dict[str, Any]:
-        """Get configuration for examples."""
-        return {
+        """Get configuration for examples."""        return {
             'backend': 'faiss',
             'data_directory': './data/vector_db_examples',
             'embedding': {
@@ -1040,8 +1014,7 @@ class VectorDBExamples:
         }
     
     def _generate_sample_data(self) -> Dict[str, List[Dict[str, Any]]]:
-        """Generate sample data for demonstrations."""
-        return {
+        """Generate sample data for demonstrations."""        return {
             'audio_tracks': [
                 {
                     'id': 'track_001',
@@ -1130,8 +1103,7 @@ class VectorDBExamples:
         }
     
     async def initialize_database(self) -> bool:
-        """Initialize the vector database for examples."""
-        try:
+        """Initialize the vector database for examples."""        try:
             print("🚀 Initializing Vector Database for Examples...")
             
             self.vector_db = await create_vector_database(self.config)
@@ -1148,8 +1120,7 @@ class VectorDBExamples:
             return False
     
     async def example_1_basic_content_addition(self):
-        """Example 1: Basic content addition and indexing."""
-        print("
+        """Example 1: Basic content addition and indexing."""        print("
 " + "="*60)
         print("📝 EXAMPLE 1: Basic Content Addition and Indexing")
         print("="*60)
@@ -1208,8 +1179,7 @@ class VectorDBExamples:
             print(f"❌ Error in basic content addition: {str(e)}")
     
     async def example_2_similarity_search(self):
-        """Example 2: Similarity search across content types."""
-        print("
+        """Example 2: Similarity search across content types."""        print("
 " + "="*60)
         print("🔍 EXAMPLE 2: Similarity Search Across Content Types")
         print("="*60)
@@ -1257,8 +1227,7 @@ class VectorDBExamples:
             print(f"❌ Error in similarity search: {str(e)}")
     
     async def example_3_duplicate_detection(self):
-        """Example 3: Advanced duplicate detection."""
-        print("
+        """Example 3: Advanced duplicate detection."""        print("
 " + "="*60)
         print("🔍 EXAMPLE 3: Advanced Duplicate Detection")
         print("="*60)
@@ -1309,8 +1278,7 @@ class VectorDBExamples:
             print(f"❌ Error in duplicate detection: {str(e)}")
     
     async def example_4_collaboration_matching(self):
-        """Example 4: Collaboration matching between creators."""
-        print("
+        """Example 4: Collaboration matching between creators."""        print("
 " + "="*60)
         print("🤝 EXAMPLE 4: Collaboration Matching Between Creators")
         print("="*60)
@@ -1368,8 +1336,7 @@ class VectorDBExamples:
             print(f"❌ Error in collaboration matching: {str(e)}")
     
     async def example_5_content_recommendations(self):
-        """Example 5: Content recommendations and inspiration."""
-        print("
+        """Example 5: Content recommendations and inspiration."""        print("
 " + "="*60)
         print("💡 EXAMPLE 5: Content Recommendations and Inspiration")
         print("="*60)
@@ -1436,8 +1403,7 @@ class VectorDBExamples:
             print(f"❌ Error in content recommendations: {str(e)}")
     
     async def example_6_performance_monitoring(self):
-        """Example 6: Performance monitoring and optimization."""
-        print("
+        """Example 6: Performance monitoring and optimization."""        print("
 " + "="*60)
         print("📊 EXAMPLE 6: Performance Monitoring and Optimization")
         print("="*60)
@@ -1507,8 +1473,7 @@ class VectorDBExamples:
             print(f"❌ Error in performance monitoring: {str(e)}")
     
     async def example_7_backup_and_restore(self):
-        """Example 7: Backup and restore operations."""
-        print("
+        """Example 7: Backup and restore operations."""        print("
 " + "="*60)
         print("💾 EXAMPLE 7: Backup and Restore Operations")
         print("="*60)
@@ -1560,8 +1525,7 @@ class VectorDBExamples:
             print(f"❌ Error in backup operations: {str(e)}")
     
     async def example_8_advanced_search_configurations(self):
-        """Example 8: Advanced search configurations and filters."""
-        print("
+        """Example 8: Advanced search configurations and filters."""        print("
 " + "="*60)
         print("⚙️ EXAMPLE 8: Advanced Search Configurations and Filters")
         print("="*60)
@@ -1660,8 +1624,7 @@ class VectorDBExamples:
             print(f"❌ Error in advanced search configurations: {str(e)}")
     
     async def run_all_examples(self):
-        """Run all examples in sequence."""
-        print("🎬 Starting Vector Database Examples Demonstration")
+        """Run all examples in sequence."""        print("🎬 Starting Vector Database Examples Demonstration")
         print("=" * 80)
         
         start_time = time.time()
@@ -1731,8 +1694,7 @@ class VectorDBExamples:
 
 # Convenience functions for quick testing
 async def run_quick_demo():
-    """Run a quick demonstration of key features."""
-    print("🚀 Quick Vector Database Demo")
+    """Run a quick demonstration of key features."""    print("🚀 Quick Vector Database Demo")
     print("-" * 40)
     
     examples = VectorDBExamples()
@@ -1748,8 +1710,7 @@ async def run_quick_demo():
 
 
 async def run_full_demonstration():
-    """Run the complete demonstration suite."""
-    examples = VectorDBExamples()
+    """Run the complete demonstration suite."""    examples = VectorDBExamples()
     await examples.run_all_examples()
 
 
@@ -1793,20 +1754,16 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class VectorDBExamples:
-    """
-    Comprehensive examples for vector database operations.
-    """
-    
+    """    Comprehensive examples for vector database operations.
+    """    
     def __init__(self):
-        """Initialize with default configuration."""
-        self.config_manager = ConfigManager()
+        """Initialize with default configuration."""        self.config_manager = ConfigManager()
         self.vector_db = None
         self.similarity_engine = None
         self.embedding_engine = None
         
     async def setup_basic_vector_db(self):
-        """Setup basic vector database with default configuration."""
-        logger.info("Setting up basic vector database...")
+        """Setup basic vector database with default configuration."""        logger.info("Setting up basic vector database...")
         
         # Initialize vector database manager
         self.vector_db = VectorDatabaseManager(
@@ -1833,8 +1790,7 @@ class VectorDBExamples:
         logger.info("Basic vector database setup completed")
     
     async def example_text_processing(self):
-        """Example: Text content processing and similarity search."""
-        logger.info("=== Text Processing Example ===")
+        """Example: Text content processing and similarity search."""        logger.info("=== Text Processing Example ===")
         
         # Sample text documents
         documents = [
@@ -1894,8 +1850,7 @@ class VectorDBExamples:
             logger.info(f"  {i+1}. ID: {result.id}, Score: {result.score:.3f}")
     
     async def example_audio_processing(self):
-        """Example: Audio content processing and duplicate detection."""
-        logger.info("=== Audio Processing Example ===")
+        """Example: Audio content processing and duplicate detection."""        logger.info("=== Audio Processing Example ===")
         
         # Simulate audio file processing
         audio_files = [
@@ -1949,8 +1904,7 @@ class VectorDBExamples:
             logger.info(f"Processed audio: {audio_file['id']}")
     
     async def example_collaboration_matching(self):
-        """Example: Content creator collaboration matching."""
-        logger.info("=== Collaboration Matching Example ===")
+        """Example: Content creator collaboration matching."""        logger.info("=== Collaboration Matching Example ===")
         
         # Sample creator profiles
         creators = [
@@ -2021,8 +1975,7 @@ class VectorDBExamples:
             logger.info(f"  - {match.id}: Score {match.score:.3f}")
     
     async def example_performance_monitoring(self):
-        """Example: Performance monitoring and optimization."""
-        logger.info("=== Performance Monitoring Example ===")
+        """Example: Performance monitoring and optimization."""        logger.info("=== Performance Monitoring Example ===")
         
         # Initialize operations manager
         operations = VectorDBOperations(
@@ -2044,8 +1997,7 @@ class VectorDBExamples:
             logger.info(f"  - {index_name}: {result['status']}")
     
     async def example_backup_restore(self):
-        """Example: Backup and restore operations."""
-        logger.info("=== Backup and Restore Example ===")
+        """Example: Backup and restore operations."""        logger.info("=== Backup and Restore Example ===")
         
         operations = VectorDBOperations(
             config=self.config_manager.config
@@ -2070,8 +2022,7 @@ class VectorDBExamples:
             logger.error("Failed to create backup")
     
     async def example_advanced_search(self):
-        """Example: Advanced search with filters and ranking."""
-        logger.info("=== Advanced Search Example ===")
+        """Example: Advanced search with filters and ranking."""        logger.info("=== Advanced Search Example ===")
         
         # Complex search query
         search_query = {
@@ -2106,8 +2057,7 @@ class VectorDBExamples:
             logger.info(f"  {i+1}. ID: {result.id}, Score: {result.score:.3f}")
     
     async def run_all_examples(self):
-        """Run all examples in sequence."""
-        logger.info("Starting Vector Database Examples...")
+        """Run all examples in sequence."""        logger.info("Starting Vector Database Examples...")
         
         try:
             # Setup
@@ -2128,8 +2078,7 @@ class VectorDBExamples:
             raise
 
 async def main():
-    """Main function to run examples."""
-    
+    """Main function to run examples."""    
     # Configuration examples
     logger.info("=== Configuration Examples ===")
     

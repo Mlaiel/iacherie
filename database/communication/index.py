@@ -1,5 +1,4 @@
-"""
-Communication Database Module Index
+"""Communication Database Module Index
 
 Enterprise communication infrastructure index for centralized access
 to all real-time communication components and services.
@@ -23,9 +22,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, Optional
 from contextlib import asynccontextmanager
@@ -46,11 +43,9 @@ logger = logging.getLogger(__name__)
 
 
 class CommunicationService:
-    """
-    Unified communication service that orchestrates all real-time
+    """    Unified communication service that orchestrates all real-time
     communication components for multi-format creator collaboration.
-    """
-    
+    """    
     def __init__(self, redis_client: redis.Redis, db_session: Session):
         self.redis = redis_client
         self.db = db_session
@@ -69,8 +64,7 @@ class CommunicationService:
         self.running = False
     
     async def initialize(self):
-        """Initialize all communication components"""
-        try:
+        """Initialize all communication components"""        try:
             logger.info("Initializing communication service...")
             
             # Initialize WebSocket manager
@@ -113,8 +107,7 @@ class CommunicationService:
             raise
     
     async def shutdown(self):
-        """Graceful shutdown of all components"""
-        self.running = False
+        """Graceful shutdown of all components"""        self.running = False
         
         logger.info("Shutting down communication service...")
         
@@ -152,8 +145,7 @@ class CommunicationService:
         logger.info("Communication service shutdown completed")
     
     async def health_check(self) -> Dict[str, Any]:
-        """Check health of all communication components"""
-        if not self.initialized:
+        """Check health of all communication components"""        if not self.initialized:
             return {"status": "not_initialized", "components": {}}
         
         health_status = {
@@ -244,8 +236,7 @@ class CommunicationService:
         return health_status
     
     async def get_service_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive service metrics"""
-        if not self.initialized:
+        """Get comprehensive service metrics"""        if not self.initialized:
             return {}
         
         metrics = {
@@ -308,8 +299,7 @@ class CommunicationService:
 
 @asynccontextmanager
 async def get_communication_service(redis_client: redis.Redis, db_session: Session):
-    """Context manager for communication service"""
-    service = CommunicationService(redis_client, db_session)
+    """Context manager for communication service"""    service = CommunicationService(redis_client, db_session)
     try:
         await service.initialize()
         yield service
@@ -319,34 +309,29 @@ async def get_communication_service(redis_client: redis.Redis, db_session: Sessi
 
 # Service factory functions
 async def create_websocket_manager(redis_client: redis.Redis, db_session: Session) -> WebSocketManager:
-    """Create and initialize WebSocket manager"""
-    manager = WebSocketManager(redis_client, db_session)
+    """Create and initialize WebSocket manager"""    manager = WebSocketManager(redis_client, db_session)
     await manager.initialize()
     return manager
 
 
 async def create_message_broker(redis_client: redis.Redis, db_session: Session) -> MessageBroker:
-    """Create and initialize message broker"""
-    async with get_message_broker(redis_client, db_session) as broker:
+    """Create and initialize message broker"""    async with get_message_broker(redis_client, db_session) as broker:
         return broker
 
 
 async def create_notification_engine(redis_client: redis.Redis, db_session: Session) -> NotificationEngine:
-    """Create and initialize notification engine"""
-    engine = NotificationEngine(redis_client, db_session)
+    """Create and initialize notification engine"""    engine = NotificationEngine(redis_client, db_session)
     await engine.initialize()
     return engine
 
 
 async def create_live_collaboration(redis_client: redis.Redis, db_session: Session) -> LiveCollaboration:
-    """Create and initialize live collaboration"""
-    async with get_live_collaboration(redis_client, db_session) as collaboration:
+    """Create and initialize live collaboration"""    async with get_live_collaboration(redis_client, db_session) as collaboration:
         return collaboration
 
 
 async def create_streaming_coordinator(redis_client: redis.Redis, db_session: Session) -> StreamingCoordinator:
-    """Create and initialize streaming coordinator"""
-    async with get_streaming_coordinator(redis_client, db_session) as coordinator:
+    """Create and initialize streaming coordinator"""    async with get_streaming_coordinator(redis_client, db_session) as coordinator:
         return coordinator
 
 
@@ -358,8 +343,7 @@ async def send_notification_to_creators(
     variables: Dict[str, Any],
     creator_type_filter: Optional[str] = None
 ) -> list:
-    """Send notification to multiple creators"""
-    if creator_type_filter:
+    """Send notification to multiple creators"""    if creator_type_filter:
         from .notification_engine import ContentCreatorType
         filter_enum = ContentCreatorType(creator_type_filter)
     else:
@@ -380,8 +364,7 @@ async def create_collaboration_room_for_creators(
     collaboration_type: str,
     creator_types: list
 ) -> str:
-    """Create collaboration room for specific creator types"""
-    from .live_collaboration import CollaborationType
+    """Create collaboration room for specific creator types"""    from .live_collaboration import CollaborationType
     
     collab_type = CollaborationType(collaboration_type)
     
@@ -400,8 +383,7 @@ async def start_multi_platform_stream(
     stream_type: str,
     platforms: list
 ) -> str:
-    """Start stream on multiple platforms"""
-    from .streaming_coordinator import StreamType, StreamSettings, PlatformType, PlatformConfig
+    """Start stream on multiple platforms"""    from .streaming_coordinator import StreamType, StreamSettings, PlatformType, PlatformConfig
     
     # Convert parameters
     stream_type_enum = StreamType(stream_type)
@@ -487,24 +469,21 @@ async def create_realtime_sync_manager(
     db_session: Session, 
     redis_client: redis.Redis
 ) -> RealtimeSyncManager:
-    """Create and initialize real-time sync manager"""
-    return await get_realtime_sync_manager(db_session, redis_client)
+    """Create and initialize real-time sync manager"""    return await get_realtime_sync_manager(db_session, redis_client)
 
 
 async def create_cross_platform_bridge(
     db_session: Session,
     redis_client: redis.Redis
 ) -> CrossPlatformBridge:
-    """Create and initialize cross-platform bridge"""
-    return await get_cross_platform_bridge(db_session, redis_client)
+    """Create and initialize cross-platform bridge"""    return await get_cross_platform_bridge(db_session, redis_client)
 
 
 async def create_communication_analytics_engine(
     db_session: Session,
     redis_client: redis.Redis
 ) -> CommunicationAnalyticsEngine:
-    """Create and initialize communication analytics engine"""
-    return await get_communication_analytics_engine(db_session, redis_client)
+    """Create and initialize communication analytics engine"""    return await get_communication_analytics_engine(db_session, redis_client)
 
 
 # Additional utility functions
@@ -515,8 +494,7 @@ async def sync_content_across_platforms(
     content_data: Dict[str, Any],
     service: CommunicationService
 ) -> Dict[str, Any]:
-    """Sync content across multiple platforms"""
-    try:
+    """Sync content across multiple platforms"""    try:
         if not service.realtime_sync or not service.cross_platform_bridge:
             return {'success': False, 'error': 'Services not initialized'}
         
@@ -557,8 +535,7 @@ async def track_communication_analytics(
     event_data: Dict[str, Any],
     service: CommunicationService
 ) -> bool:
-    """Track communication analytics event"""
-    try:
+    """Track communication analytics event"""    try:
         if not service.analytics_engine:
             return False
         

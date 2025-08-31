@@ -1,5 +1,4 @@
-"""
-Distribution Intelligence Engine - AI-Powered Content Distribution Optimization
+"""Distribution Intelligence Engine - AI-Powered Content Distribution Optimization
 
 Ultra-advanced machine learning system for intelligent content distribution,
 audience analysis, trend prediction, and performance optimization.
@@ -11,9 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 import pandas as pd
@@ -51,8 +48,7 @@ from ....ml.models import (
 logger = logging.getLogger(__name__)
 
 class PredictionType(Enum):
-    """Types of predictions available"""
-    ENGAGEMENT = "engagement"
+    """Types of predictions available"""    ENGAGEMENT = "engagement"
     REACH = "reach"
     REVENUE = "revenue"
     VIRAL_POTENTIAL = "viral_potential"
@@ -64,16 +60,14 @@ class PredictionType(Enum):
     TREND_ALIGNMENT = "trend_alignment"
 
 class AnalysisDepth(Enum):
-    """Depth of analysis to perform"""
-    BASIC = "basic"              # Basic metrics and simple predictions
+    """Depth of analysis to perform"""    BASIC = "basic"              # Basic metrics and simple predictions
     STANDARD = "standard"        # Standard ML analysis
     ADVANCED = "advanced"        # Deep learning and complex models
     COMPREHENSIVE = "comprehensive"  # Full AI suite with real-time updates
 
 @dataclass
 class ContentFeatures:
-    """Extracted features from content for ML analysis"""
-    content_id: str
+    """Extracted features from content for ML analysis"""    content_id: str
     
     # Basic Features
     duration: Optional[float] = None
@@ -117,8 +111,7 @@ class ContentFeatures:
 
 @dataclass
 class AudienceProfile:
-    """Comprehensive audience profile for targeting"""
-    profile_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive audience profile for targeting"""    profile_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = ""
     platform: Optional[PlatformType] = None
     
@@ -153,8 +146,7 @@ class AudienceProfile:
 
 @dataclass
 class TrendInsight:
-    """Trend analysis insight"""
-    trend_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Trend analysis insight"""    trend_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     
     # Trend Identification
     trend_name: str = ""
@@ -188,8 +180,7 @@ class TrendInsight:
 
 @dataclass
 class IntelligenceReport:
-    """Comprehensive intelligence analysis report"""
-    report_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive intelligence analysis report"""    report_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_id: str = ""
     user_id: str = ""
     generated_at: datetime = field(default_factory=datetime.now)
@@ -235,8 +226,7 @@ class IntelligenceReport:
     confidence_interval: Tuple[float, float] = (0.0, 0.0)
 
 class DistributionIntelligence:
-    """
-    Advanced AI-powered distribution intelligence system
+    """    Advanced AI-powered distribution intelligence system
     
     Features:
     - Deep content analysis using multi-modal AI
@@ -247,8 +237,7 @@ class DistributionIntelligence:
     - Cross-platform analytics integration
     - Collaborative filtering for recommendations
     - Reinforcement learning for continuous improvement
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         
@@ -292,8 +281,7 @@ class DistributionIntelligence:
         logger.info("DistributionIntelligence initialized")
 
     async def _initialize_models(self) -> None:
-        """Initialize and load pre-trained models"""
-        try:
+        """Initialize and load pre-trained models"""        try:
             # Load pre-trained models if available
             await self._load_pretrained_models()
             
@@ -310,8 +298,7 @@ class DistributionIntelligence:
             logger.error(f"Model initialization failed: {e}")
 
     async def _load_pretrained_models(self) -> None:
-        """Load pre-trained models from storage"""
-        try:
+        """Load pre-trained models from storage"""        try:
             # Check cache for saved models
             model_cache_key = "ml_models_state"
             cached_models = await self.cache.get(model_cache_key)
@@ -332,8 +319,7 @@ class DistributionIntelligence:
             logger.error(f"Failed to load pre-trained models: {e}")
 
     async def _initialize_neural_networks(self) -> None:
-        """Initialize deep learning models"""
-        try:
+        """Initialize deep learning models"""        try:
             # Neural network for engagement prediction
             self.neural_predictor = tf.keras.Sequential([
                 tf.keras.layers.Dense(128, activation='relu', input_shape=(50,)),
@@ -368,8 +354,7 @@ class DistributionIntelligence:
             logger.error(f"Neural network initialization failed: {e}")
 
     async def _train_initial_models(self) -> None:
-        """Train models with initial historical data"""
-        try:
+        """Train models with initial historical data"""        try:
             # Fetch historical data
             historical_data = await self._fetch_historical_training_data()
             
@@ -395,8 +380,7 @@ class DistributionIntelligence:
             logger.error(f"Initial model training failed: {e}")
 
     async def analyze_content(self, content_metadata: ContentMetadata, analysis_depth: AnalysisDepth = AnalysisDepth.STANDARD) -> IntelligenceReport:
-        """
-        Comprehensive content analysis with AI-powered insights
+        """        Comprehensive content analysis with AI-powered insights
         
         Args:
             content_metadata: Content to analyze
@@ -404,8 +388,7 @@ class DistributionIntelligence:
             
         Returns:
             Comprehensive intelligence report
-        """
-        try:
+        """        try:
             report = IntelligenceReport(
                 content_id=content_metadata.content_id,
                 analysis_depth=analysis_depth
@@ -443,8 +426,7 @@ class DistributionIntelligence:
             raise IntelligenceError(f"Failed to analyze content: {e}")
 
     async def _extract_content_features(self, content_metadata: ContentMetadata) -> ContentFeatures:
-        """Extract comprehensive features from content"""
-        features = ContentFeatures(content_id=content_metadata.content_id)
+        """Extract comprehensive features from content"""        features = ContentFeatures(content_id=content_metadata.content_id)
         
         # Basic metadata features
         features.duration = content_metadata.duration
@@ -491,8 +473,7 @@ class DistributionIntelligence:
         return features
 
     async def _analyze_content_quality(self, features: ContentFeatures) -> float:
-        """Analyze overall content quality score"""
-        quality_factors = []
+        """Analyze overall content quality score"""        quality_factors = []
         
         # Technical quality factors
         if features.duration:
@@ -529,8 +510,7 @@ class DistributionIntelligence:
         return 0.5  # Default neutral score
 
     async def predict_platform_performance(self, content_metadata: ContentMetadata, platforms: List[PlatformType]) -> Dict[PlatformType, Dict[str, float]]:
-        """
-        Predict performance across multiple platforms
+        """        Predict performance across multiple platforms
         
         Args:
             content_metadata: Content to analyze
@@ -538,8 +518,7 @@ class DistributionIntelligence:
             
         Returns:
             Performance predictions for each platform
-        """
-        try:
+        """        try:
             predictions = {}
             
             # Extract content features
@@ -583,8 +562,7 @@ class DistributionIntelligence:
             raise IntelligenceError(f"Failed to predict platform performance: {e}")
 
     async def _predict_engagement(self, features: ContentFeatures, platform: PlatformType) -> float:
-        """Predict engagement rate for specific platform"""
-        try:
+        """Predict engagement rate for specific platform"""        try:
             if not self.models_trained:
                 return 0.05  # Default 5% engagement rate
             
@@ -604,8 +582,7 @@ class DistributionIntelligence:
             return 0.05
 
     async def _predict_reach(self, features: ContentFeatures, platform: PlatformType) -> int:
-        """Predict estimated reach for specific platform"""
-        try:
+        """Predict estimated reach for specific platform"""        try:
             # Base reach depends on platform and content quality
             base_reach = {
                 PlatformType.YOUTUBE: 5000,
@@ -636,8 +613,7 @@ class DistributionIntelligence:
             return 1000  # Default fallback
 
     async def _predict_revenue(self, features: ContentFeatures, platform: PlatformType) -> Decimal:
-        """Predict estimated revenue for specific platform"""
-        try:
+        """Predict estimated revenue for specific platform"""        try:
             # Base revenue rates per platform (per 1000 views/plays)
             base_rates = {
                 PlatformType.YOUTUBE: Decimal('2.00'),
@@ -669,8 +645,7 @@ class DistributionIntelligence:
             return Decimal('1.00')
 
     async def _predict_viral_potential(self, features: ContentFeatures) -> float:
-        """Predict viral potential score"""
-        try:
+        """Predict viral potential score"""        try:
             if not self.models_trained:
                 return 0.1  # Default low viral potential
             
@@ -710,8 +685,7 @@ class DistributionIntelligence:
             return 0.1
 
     async def optimize_timing(self, user_id: str, platforms: List[PlatformType], content_metadata: ContentMetadata) -> Dict[PlatformType, List[datetime]]:
-        """
-        Optimize posting timing for maximum engagement
+        """        Optimize posting timing for maximum engagement
         
         Args:
             user_id: User ID for audience analysis
@@ -720,8 +694,7 @@ class DistributionIntelligence:
             
         Returns:
             Optimal posting times for each platform
-        """
-        try:
+        """        try:
             optimal_times = {}
             
             # Get user's audience data
@@ -765,8 +738,7 @@ class DistributionIntelligence:
             raise IntelligenceError(f"Failed to optimize timing: {e}")
 
     async def find_collaboration_opportunities(self, user_id: str, content_metadata: ContentMetadata, platforms: List[PlatformType]) -> List[Dict[str, Any]]:
-        """
-        Find intelligent collaboration opportunities
+        """        Find intelligent collaboration opportunities
         
         Args:
             user_id: User ID to find collaborations for
@@ -775,8 +747,7 @@ class DistributionIntelligence:
             
         Returns:
             List of collaboration opportunities with match scores
-        """
-        try:
+        """        try:
             opportunities = []
             
             # Extract content features
@@ -842,8 +813,7 @@ class DistributionIntelligence:
             raise IntelligenceError(f"Failed to find collaboration opportunities: {e}")
 
     async def analyze_trends(self, content_type: ContentType, platforms: List[PlatformType], timeframe: timedelta = timedelta(days=7)) -> List[TrendInsight]:
-        """
-        Analyze current trends relevant to content and platforms
+        """        Analyze current trends relevant to content and platforms
         
         Args:
             content_type: Type of content to analyze trends for
@@ -852,8 +822,7 @@ class DistributionIntelligence:
             
         Returns:
             List of relevant trend insights
-        """
-        try:
+        """        try:
             trends = []
             
             # Collect trend data from each platform
@@ -883,16 +852,14 @@ class DistributionIntelligence:
             raise IntelligenceError(f"Failed to analyze trends: {e}")
 
     async def generate_optimization_recommendations(self, intelligence_report: IntelligenceReport) -> List[Dict[str, Any]]:
-        """
-        Generate actionable optimization recommendations
+        """        Generate actionable optimization recommendations
         
         Args:
             intelligence_report: Comprehensive intelligence report
             
         Returns:
             List of optimization recommendations
-        """
-        try:
+        """        try:
             recommendations = []
             
             # Content optimization recommendations
@@ -939,18 +906,15 @@ class DistributionIntelligence:
     # In a real implementation, these would contain the actual logic
 
     async def _fetch_historical_training_data(self) -> pd.DataFrame:
-        """Fetch historical data for model training"""
-        # Implementation would fetch from database
+        """Fetch historical data for model training"""        # Implementation would fetch from database
         return pd.DataFrame()
 
     async def _prepare_training_data(self, data: pd.DataFrame) -> Tuple[np.ndarray, Dict[str, np.ndarray]]:
-        """Prepare training data for ML models"""
-        # Implementation would process data for training
+        """Prepare training data for ML models"""        # Implementation would process data for training
         return np.array([]), {'engagement': np.array([]), 'viral': np.array([])}
 
     async def _train_engagement_model(self, features: np.ndarray, targets: np.ndarray) -> None:
-        """Train engagement prediction model"""
-        if len(features) > 0 and len(targets) > 0:
+        """Train engagement prediction model"""        if len(features) > 0 and len(targets) > 0:
             X_train, X_test, y_train, y_test = train_test_split(features, targets, test_size=0.2, random_state=42)
             self.engagement_model.fit(X_train, y_train)
             
@@ -961,8 +925,7 @@ class DistributionIntelligence:
             logger.info(f"Engagement model trained with MSE: {mse}")
 
     async def _train_viral_classifier(self, features: np.ndarray, targets: np.ndarray) -> None:
-        """Train viral content classifier"""
-        if len(features) > 0 and len(targets) > 0:
+        """Train viral content classifier"""        if len(features) > 0 and len(targets) > 0:
             X_train, X_test, y_train, y_test = train_test_split(features, targets, test_size=0.2, random_state=42)
             self.viral_classifier.fit(X_train, y_train)
             
@@ -973,14 +936,12 @@ class DistributionIntelligence:
             logger.info(f"Viral classifier trained with accuracy: {accuracy}")
 
     async def _train_audience_clusterer(self, features: np.ndarray) -> None:
-        """Train audience clustering model"""
-        if len(features) > 0:
+        """Train audience clustering model"""        if len(features) > 0:
             self.audience_clusterer.fit(features)
             logger.info("Audience clustering model trained")
 
     async def _cache_trained_models(self) -> None:
-        """Cache trained models for persistence"""
-        try:
+        """Cache trained models for persistence"""        try:
             model_data = {
                 'engagement_model': self.engagement_model,
                 'viral_classifier': self.viral_classifier,
@@ -1037,8 +998,7 @@ class DistributionIntelligence:
     async def _prioritize_recommendations(self, recommendations: List[Dict[str, Any]], report: IntelligenceReport) -> List[Dict[str, Any]]: return recommendations
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of intelligence system"""
-        logger.info("Shutting down DistributionIntelligence...")
+        """Graceful shutdown of intelligence system"""        logger.info("Shutting down DistributionIntelligence...")
         
         # Save models before shutdown
         if self.models_trained:

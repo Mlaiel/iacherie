@@ -1,11 +1,8 @@
-"""
-Bandcamp Music Crawler
+"""Bandcamp Music Crawler
 Advanced industrial-grade Bandcamp crawler for independent music content protection and analytics
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 - All rights reserved
-"""
-
-import asyncio
+"""import asyncio
 import json
 import re
 from datetime import datetime, timedelta
@@ -29,8 +26,7 @@ settings = get_settings()
 
 
 class BandcampTrack(BaseModel):
-    """Bandcamp Track data model"""
-    track_id: str
+    """Bandcamp Track data model"""    track_id: str
     title: str
     artist_name: str
     album_title: str
@@ -54,8 +50,7 @@ class BandcampTrack(BaseModel):
 
 
 class BandcampArtist(BaseModel):
-    """Bandcamp Artist/Band data model"""
-    artist_id: str
+    """Bandcamp Artist/Band data model"""    artist_id: str
     name: str
     location: Optional[str] = None
     bio: Optional[str] = None
@@ -74,8 +69,7 @@ class BandcampArtist(BaseModel):
 
 
 class BandcampAlbum(BaseModel):
-    """Bandcamp Album data model"""
-    album_id: str
+    """Bandcamp Album data model"""    album_id: str
     title: str
     artist_name: str
     artist_url: str
@@ -101,8 +95,7 @@ class BandcampAlbum(BaseModel):
 
 
 class BandcampLabel(BaseModel):
-    """Bandcamp Record Label data model"""
-    label_id: str
+    """Bandcamp Record Label data model"""    label_id: str
     name: str
     location: Optional[str] = None
     description: Optional[str] = None
@@ -116,8 +109,7 @@ class BandcampLabel(BaseModel):
 
 
 class BandcampCrawler(BaseCrawler):
-    """
-    Advanced Bandcamp crawler for comprehensive independent music monitoring
+    """    Advanced Bandcamp crawler for comprehensive independent music monitoring
     
     Features:
     - Independent music discovery and analysis
@@ -128,8 +120,7 @@ class BandcampCrawler(BaseCrawler):
     - Genre and tag trend analysis
     - Fan engagement metrics collection
     - Physical and digital format availability tracking
-    """
-    
+    """    
     def __init__(self):
         super().__init__()
         self.platform = "bandcamp"
@@ -148,11 +139,9 @@ class BandcampCrawler(BaseCrawler):
         }
         
     async def authenticate(self, username: str = None, password: str = None) -> bool:
-        """
-        Authenticate with Bandcamp (optional for enhanced access)
+        """        Authenticate with Bandcamp (optional for enhanced access)
         Note: Bandcamp doesn't have a traditional API, this is for web scraping enhancement
-        """
-        try:
+        """        try:
             if username and password:
                 # Implement login session for enhanced access
                 login_url = "https://bandcamp.com/login"
@@ -208,8 +197,7 @@ class BandcampCrawler(BaseCrawler):
         format_filter: str = None,
         limit: int = 100
     ) -> List[Dict]:
-        """
-        Search Bandcamp music content
+        """        Search Bandcamp music content
         
         Args:
             query: Search query
@@ -221,8 +209,7 @@ class BandcampCrawler(BaseCrawler):
             
         Returns:
             List of matching content
-        """
-        await self.rate_limiter.wait()
+        """        await self.rate_limiter.wait()
         
         try:
             search_params = {
@@ -272,8 +259,7 @@ class BandcampCrawler(BaseCrawler):
             return []
     
     async def get_album_details(self, album_url: str) -> Optional[BandcampAlbum]:
-        """Get detailed information about a specific album"""
-        await self.rate_limiter.wait()
+        """Get detailed information about a specific album"""        await self.rate_limiter.wait()
         
         try:
             async with aiohttp.ClientSession(headers=self.session_headers) as session:
@@ -290,8 +276,7 @@ class BandcampCrawler(BaseCrawler):
             return None
     
     async def get_artist_details(self, artist_url: str) -> Optional[BandcampArtist]:
-        """Get detailed information about a specific artist"""
-        await self.rate_limiter.wait()
+        """Get detailed information about a specific artist"""        await self.rate_limiter.wait()
         
         try:
             async with aiohttp.ClientSession(headers=self.session_headers) as session:
@@ -308,8 +293,7 @@ class BandcampCrawler(BaseCrawler):
             return None
     
     async def get_track_details(self, track_url: str) -> Optional[BandcampTrack]:
-        """Get detailed information about a specific track"""
-        await self.rate_limiter.wait()
+        """Get detailed information about a specific track"""        await self.rate_limiter.wait()
         
         try:
             async with aiohttp.ClientSession(headers=self.session_headers) as session:
@@ -326,8 +310,7 @@ class BandcampCrawler(BaseCrawler):
             return None
     
     async def get_album_tracks(self, album_url: str) -> List[BandcampTrack]:
-        """Get all tracks from a specific album"""
-        try:
+        """Get all tracks from a specific album"""        try:
             album = await self.get_album_details(album_url)
             if not album:
                 return []
@@ -354,8 +337,7 @@ class BandcampCrawler(BaseCrawler):
         format_type: str = "digital",
         time_period: str = "today"
     ) -> List[Dict]:
-        """
-        Get trending music on Bandcamp
+        """        Get trending music on Bandcamp
         
         Args:
             genre: Specific genre filter
@@ -364,8 +346,7 @@ class BandcampCrawler(BaseCrawler):
             
         Returns:
             List of trending items
-        """
-        await self.rate_limiter.wait()
+        """        await self.rate_limiter.wait()
         
         try:
             discover_url = f"{self.base_url}/discover"
@@ -395,8 +376,7 @@ class BandcampCrawler(BaseCrawler):
             return []
     
     async def get_label_details(self, label_url: str) -> Optional[BandcampLabel]:
-        """Get detailed information about a record label"""
-        await self.rate_limiter.wait()
+        """Get detailed information about a record label"""        await self.rate_limiter.wait()
         
         try:
             async with aiohttp.ClientSession(headers=self.session_headers) as session:
@@ -417,8 +397,7 @@ class BandcampCrawler(BaseCrawler):
         protected_content: Dict,
         similarity_threshold: float = 0.8
     ) -> List[ContentMatch]:
-        """
-        Monitor Bandcamp for potential copyright infringement
+        """        Monitor Bandcamp for potential copyright infringement
         
         Args:
             protected_content: Content to protect
@@ -426,8 +405,7 @@ class BandcampCrawler(BaseCrawler):
             
         Returns:
             List of potential copyright matches
-        """
-        matches = []
+        """        matches = []
         
         try:
             # Generate search queries from protected content
@@ -477,16 +455,14 @@ class BandcampCrawler(BaseCrawler):
             return []
     
     async def analyze_artist_performance(self, artist_url: str) -> Dict[str, Any]:
-        """
-        Analyze artist performance on Bandcamp
+        """        Analyze artist performance on Bandcamp
         
         Args:
             artist_url: Bandcamp artist URL
             
         Returns:
             Comprehensive artist performance analysis
-        """
-        try:
+        """        try:
             artist = await self.get_artist_details(artist_url)
             if not artist:
                 return {}
@@ -531,8 +507,7 @@ class BandcampCrawler(BaseCrawler):
         time_period: str = "month",
         limit: int = 100
     ) -> Dict[str, Any]:
-        """
-        Analyze independent music trends on Bandcamp
+        """        Analyze independent music trends on Bandcamp
         
         Args:
             genre: Specific genre to analyze
@@ -541,8 +516,7 @@ class BandcampCrawler(BaseCrawler):
             
         Returns:
             Comprehensive indie trend analysis
-        """
-        try:
+        """        try:
             # Get trending data from different categories
             trending_digital = await self.get_trending_music(genre, "digital", time_period)
             trending_vinyl = await self.get_trending_music(genre, "vinyl", time_period)
@@ -574,8 +548,7 @@ class BandcampCrawler(BaseCrawler):
             return {}
     
     async def _parse_search_results(self, html: str, search_type: str) -> List[Dict]:
-        """Parse search results from Bandcamp search page"""
-        results = []
+        """Parse search results from Bandcamp search page"""        results = []
         
         try:
             soup = BeautifulSoup(html, 'html.parser')
@@ -630,8 +603,7 @@ class BandcampCrawler(BaseCrawler):
             return []
     
     async def _parse_album_page(self, html: str, album_url: str) -> Optional[BandcampAlbum]:
-        """Parse album page to extract detailed information"""
-        try:
+        """Parse album page to extract detailed information"""        try:
             soup = BeautifulSoup(html, 'html.parser')
             
             # Extract JSON data from page
@@ -715,8 +687,7 @@ class BandcampCrawler(BaseCrawler):
             return None
     
     async def _parse_artist_page(self, html: str, artist_url: str) -> Optional[BandcampArtist]:
-        """Parse artist page to extract detailed information"""
-        try:
+        """Parse artist page to extract detailed information"""        try:
             soup = BeautifulSoup(html, 'html.parser')
             
             # Extract artist name
@@ -776,8 +747,7 @@ class BandcampCrawler(BaseCrawler):
             return None
     
     async def _parse_track_page(self, html: str, track_url: str) -> Optional[BandcampTrack]:
-        """Parse track page to extract detailed information"""
-        try:
+        """Parse track page to extract detailed information"""        try:
             soup = BeautifulSoup(html, 'html.parser')
             
             # Extract JSON data
@@ -840,8 +810,7 @@ class BandcampCrawler(BaseCrawler):
             return None
     
     async def _parse_album_tracks(self, html: str, album_url: str) -> List[BandcampTrack]:
-        """Parse album tracks from album page"""
-        tracks = []
+        """Parse album tracks from album page"""        tracks = []
         
         try:
             soup = BeautifulSoup(html, 'html.parser')
@@ -888,8 +857,7 @@ class BandcampCrawler(BaseCrawler):
             return []
     
     async def _parse_discover_page(self, html: str) -> List[Dict]:
-        """Parse discover page to extract trending items"""
-        trending_items = []
+        """Parse discover page to extract trending items"""        trending_items = []
         
         try:
             soup = BeautifulSoup(html, 'html.parser')
@@ -931,8 +899,7 @@ class BandcampCrawler(BaseCrawler):
             return []
     
     async def _parse_label_page(self, html: str, label_url: str) -> Optional[BandcampLabel]:
-        """Parse label page to extract detailed information"""
-        try:
+        """Parse label page to extract detailed information"""        try:
             soup = BeautifulSoup(html, 'html.parser')
             
             # Extract label name
@@ -964,8 +931,7 @@ class BandcampCrawler(BaseCrawler):
             return None
     
     def _generate_search_queries(self, protected_content: Dict) -> List[str]:
-        """Generate search queries for content protection"""
-        queries = []
+        """Generate search queries for content protection"""        queries = []
         
         if 'title' in protected_content:
             queries.append(protected_content['title'])
@@ -985,8 +951,7 @@ class BandcampCrawler(BaseCrawler):
         protected_content: Dict,
         bandcamp_content: Any
     ) -> float:
-        """Calculate similarity between protected content and Bandcamp content"""
-        from difflib import SequenceMatcher
+        """Calculate similarity between protected content and Bandcamp content"""        from difflib import SequenceMatcher
         
         similarity_scores = []
         
@@ -1020,8 +985,7 @@ class BandcampCrawler(BaseCrawler):
         return sum(similarity_scores) if similarity_scores else 0.0
     
     def _calculate_fan_engagement(self, artist: BandcampArtist) -> str:
-        """Calculate artist fan engagement level"""
-        engagement_score = 0
+        """Calculate artist fan engagement level"""        engagement_score = 0
         
         if artist.follower_count > 1000:
             engagement_score += 3
@@ -1048,14 +1012,12 @@ class BandcampCrawler(BaseCrawler):
             return "low"
     
     async def _get_artist_discography(self, artist_url: str) -> List[Dict]:
-        """Get artist's discography for analysis"""
-        # This would involve parsing the artist's music grid
+        """Get artist's discography for analysis"""        # This would involve parsing the artist's music grid
         # For now, return empty list
         return []
     
     async def _analyze_release_frequency(self, discography: List[Dict]) -> str:
-        """Analyze artist's release frequency"""
-        if len(discography) < 2:
+        """Analyze artist's release frequency"""        if len(discography) < 2:
             return "insufficient_data"
         
         # Calculate average time between releases
@@ -1063,16 +1025,14 @@ class BandcampCrawler(BaseCrawler):
         return "moderate"  # Placeholder
     
     async def _analyze_pricing_strategy(self, discography: List[Dict]) -> Dict[str, Any]:
-        """Analyze artist's pricing strategy"""
-        return {
+        """Analyze artist's pricing strategy"""        return {
             "strategy": "varied",
             "avg_price": 0.0,
             "free_releases_percentage": 0.0
         }  # Placeholder
     
     async def _analyze_format_diversity(self, discography: List[Dict]) -> Dict[str, Any]:
-        """Analyze format diversity in artist's releases"""
-        return {
+        """Analyze format diversity in artist's releases"""        return {
             "digital_count": 0,
             "vinyl_count": 0,
             "cd_count": 0,
@@ -1080,8 +1040,7 @@ class BandcampCrawler(BaseCrawler):
         }  # Placeholder
     
     def _assess_indie_presence(self, artist: BandcampArtist) -> str:
-        """Assess artist's presence in indie market"""
-        if artist.follower_count > 5000:
+        """Assess artist's presence in indie market"""        if artist.follower_count > 5000:
             return "established"
         elif artist.follower_count > 500:
             return "growing"
@@ -1091,13 +1050,11 @@ class BandcampCrawler(BaseCrawler):
             return "new"
     
     async def _identify_genre_focus(self, discography: List[Dict]) -> List[str]:
-        """Identify artist's primary genres"""
-        # Would analyze genres across releases
+        """Identify artist's primary genres"""        # Would analyze genres across releases
         return []  # Placeholder
     
     async def _analyze_genre_trends(self, items: List[Dict]) -> Dict[str, int]:
-        """Analyze genre trends from trending items"""
-        genre_counts = {}
+        """Analyze genre trends from trending items"""        genre_counts = {}
         
         for item in items:
             genre = item.get('genre', 'Unknown')
@@ -1106,13 +1063,11 @@ class BandcampCrawler(BaseCrawler):
         return dict(sorted(genre_counts.items(), key=lambda x: x[1], reverse=True)[:10])
     
     async def _analyze_pricing_trends(self, items: List[Dict]) -> Dict[str, Any]:
-        """Analyze pricing trends from items"""
-        # Would require detailed price data
+        """Analyze pricing trends from items"""        # Would require detailed price data
         return {"avg_price": 0.0, "free_percentage": 0.0}
     
     async def _analyze_geographic_trends(self, items: List[Dict]) -> Dict[str, int]:
-        """Analyze geographic trends from items"""
-        location_counts = {}
+        """Analyze geographic trends from items"""        location_counts = {}
         
         for item in items:
             location = item.get('location', 'Unknown')
@@ -1121,8 +1076,7 @@ class BandcampCrawler(BaseCrawler):
         return dict(sorted(location_counts.items(), key=lambda x: x[1], reverse=True)[:10])
     
     async def _identify_emerging_indie_artists(self, items: List[Dict]) -> List[str]:
-        """Identify emerging independent artists"""
-        emerging_artists = []
+        """Identify emerging independent artists"""        emerging_artists = []
         
         for item in items:
             artist = item.get('artist', '')
@@ -1132,15 +1086,13 @@ class BandcampCrawler(BaseCrawler):
         return emerging_artists[:10]
     
     async def _analyze_label_diversity(self, items: List[Dict]) -> Dict[str, Any]:
-        """Analyze label diversity in trending items"""
-        return {
+        """Analyze label diversity in trending items"""        return {
             "independent_percentage": 85.0,  # Bandcamp is primarily independent
             "label_count": len(set(item.get('label', 'Independent') for item in items))
         }
     
     async def _analyze_fan_activity(self, items: List[Dict]) -> Dict[str, Any]:
-        """Analyze fan-to-fan activity metrics"""
-        return {
+        """Analyze fan-to-fan activity metrics"""        return {
             "community_engagement": "high",
             "discovery_rate": "active",
             "support_level": "strong"

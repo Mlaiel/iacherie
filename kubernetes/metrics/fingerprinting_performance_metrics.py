@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Fingerprinting Performance Metrics Collector
+"""IA Influencer Agent - Fingerprinting Performance Metrics Collector
 Enterprise metrics for AI fingerprinting algorithms and content matching
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -29,9 +28,7 @@ Features:
 - Real-time processing performance
 - Multi-modal content analysis metrics
 - AI model performance optimization
-"""
-
-import time
+"""import time
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -48,8 +45,7 @@ logger = get_logger(__name__)
 
 
 class FingerprintAlgorithm(Enum):
-    """Supported fingerprinting algorithms"""
-    CHROMAPRINT = "chromaprint"
+    """Supported fingerprinting algorithms"""    CHROMAPRINT = "chromaprint"
     ESSENTIA = "essentia"
     CLIP_IMAGE = "clip_image"
     CLIP_TEXT = "clip_text"
@@ -63,8 +59,7 @@ class FingerprintAlgorithm(Enum):
 
 
 class ContentType(Enum):
-    """Content types for fingerprinting"""
-    AUDIO = "audio"
+    """Content types for fingerprinting"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -74,8 +69,7 @@ class ContentType(Enum):
 
 
 class ProcessingStage(Enum):
-    """Fingerprinting processing stages"""
-    PREPROCESSING = "preprocessing"
+    """Fingerprinting processing stages"""    PREPROCESSING = "preprocessing"
     FEATURE_EXTRACTION = "feature_extraction"
     VECTORIZATION = "vectorization"
     SIMILARITY_SEARCH = "similarity_search"
@@ -83,8 +77,7 @@ class ProcessingStage(Enum):
 
 
 class MatchQuality(Enum):
-    """Quality of content matches"""
-    EXACT = "exact"
+    """Quality of content matches"""    EXACT = "exact"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -93,8 +86,7 @@ class MatchQuality(Enum):
 
 @dataclass
 class FingerprintingJob:
-    """Fingerprinting job details"""
-    job_id: str
+    """Fingerprinting job details"""    job_id: str
     content_id: str
     content_type: ContentType
     algorithm: FingerprintAlgorithm
@@ -106,8 +98,7 @@ class FingerprintingJob:
 
 @dataclass
 class MatchResult:
-    """Content matching result"""
-    match_id: str
+    """Content matching result"""    match_id: str
     original_fingerprint_id: str
     candidate_fingerprint_id: str
     similarity_score: float
@@ -118,8 +109,7 @@ class MatchResult:
 
 
 class FingerprintingPerformanceMetricsCollector:
-    """
-    Advanced metrics collector for fingerprinting performance
+    """    Advanced metrics collector for fingerprinting performance
     
     Tracks:
     - Algorithm performance and accuracy
@@ -128,8 +118,7 @@ class FingerprintingPerformanceMetricsCollector:
     - Content matching effectiveness
     - Resource utilization optimization
     - Real-time performance analytics
-    """
-    
+    """    
     def __init__(self, prometheus_manager=None):
         self.prometheus_manager = prometheus_manager
         self.redis_manager = RedisManager()
@@ -139,8 +128,7 @@ class FingerprintingPerformanceMetricsCollector:
         self._initialize_metrics()
     
     def _initialize_metrics(self) -> None:
-        """Initialize comprehensive fingerprinting metrics"""
-        
+        """Initialize comprehensive fingerprinting metrics"""        
         if not self.prometheus_manager:
             self.logger.warning("No Prometheus manager provided, metrics disabled")
             return
@@ -309,8 +297,7 @@ class FingerprintingPerformanceMetricsCollector:
         self.logger.info("Fingerprinting performance metrics initialized")
     
     def _register_metrics(self) -> None:
-        """Register all metrics with Prometheus manager"""
-        
+        """Register all metrics with Prometheus manager"""        
         metrics_to_register = [
             self.fingerprints_created_total,
             self.fingerprint_processing_duration,
@@ -346,8 +333,7 @@ class FingerprintingPerformanceMetricsCollector:
         job: FingerprintingJob,
         tenant_id: str = "default"
     ) -> None:
-        """Start tracking a fingerprinting job"""
-        
+        """Start tracking a fingerprinting job"""        
         self._active_jobs[job.job_id] = job
         
         # Record file size metrics
@@ -375,8 +361,7 @@ class FingerprintingPerformanceMetricsCollector:
         duration_seconds: float,
         success: bool = True
     ) -> None:
-        """Record processing stage completion"""
-        
+        """Record processing stage completion"""        
         if job_id not in self._active_jobs:
             self.logger.warning(f"Job {job_id} not found in active jobs")
             return
@@ -401,8 +386,7 @@ class FingerprintingPerformanceMetricsCollector:
         total_duration_seconds: float = None,
         tenant_id: str = "default"
     ) -> None:
-        """Complete a fingerprinting job"""
-        
+        """Complete a fingerprinting job"""        
         if job_id not in self._active_jobs:
             self.logger.warning(f"Job {job_id} not found in active jobs")
             return
@@ -464,8 +448,7 @@ class FingerprintingPerformanceMetricsCollector:
         results_count: int,
         success: bool = True
     ) -> None:
-        """Record similarity search performance"""
-        
+        """Record similarity search performance"""        
         # Determine index size range for grouping
         if index_size < 1000:
             size_range = "small"
@@ -500,8 +483,7 @@ class FingerprintingPerformanceMetricsCollector:
         match: MatchResult,
         user_id: str
     ) -> None:
-        """Record detected content match"""
-        
+        """Record detected content match"""        
         self.content_matches_found_total.labels(
             algorithm=match.algorithm_used.value,
             content_type="unknown",  # Could be extracted from fingerprint
@@ -541,8 +523,7 @@ class FingerprintingPerformanceMetricsCollector:
         recall: float,
         time_window: str = "1h"
     ) -> None:
-        """Update algorithm performance metrics"""
-        
+        """Update algorithm performance metrics"""        
         self.algorithm_accuracy_score.labels(
             algorithm=algorithm.value,
             content_type=content_type.value,
@@ -583,8 +564,7 @@ class FingerprintingPerformanceMetricsCollector:
         size: int,
         memory_usage_mb: float
     ) -> None:
-        """Update vector index metrics"""
-        
+        """Update vector index metrics"""        
         self.vector_index_size.labels(
             content_type=content_type.value,
             algorithm=algorithm.value,
@@ -607,8 +587,7 @@ class FingerprintingPerformanceMetricsCollector:
         gpu_percent: Optional[float] = None,
         gpu_id: Optional[str] = None
     ) -> None:
-        """Update resource utilization metrics"""
-        
+        """Update resource utilization metrics"""        
         self.fingerprinting_cpu_usage.labels(
             algorithm=algorithm.value,
             content_type=content_type.value,
@@ -635,8 +614,7 @@ class FingerprintingPerformanceMetricsCollector:
         throughput_per_second: float,
         worker_count: int
     ) -> None:
-        """Update throughput metrics"""
-        
+        """Update throughput metrics"""        
         self.fingerprinting_throughput.labels(
             algorithm=algorithm.value,
             content_type=content_type.value,
@@ -648,8 +626,7 @@ class FingerprintingPerformanceMetricsCollector:
         job: FingerprintingJob,
         duration: float
     ) -> None:
-        """Update performance cache for trend analysis"""
-        
+        """Update performance cache for trend analysis"""        
         cache_key = f"{job.algorithm.value}:{job.content_type.value}"
         
         if cache_key not in self._performance_cache:
@@ -666,8 +643,7 @@ class FingerprintingPerformanceMetricsCollector:
         algorithm: Optional[FingerprintAlgorithm] = None,
         content_type: Optional[ContentType] = None
     ) -> Dict[str, Any]:
-        """Get comprehensive performance summary"""
-        
+        """Get comprehensive performance summary"""        
         summary = {
             "timestamp": datetime.utcnow().isoformat(),
             "active_jobs": len(self._active_jobs),
@@ -694,8 +670,7 @@ class FingerprintingPerformanceMetricsCollector:
         return summary
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Get health status of the fingerprinting metrics collector"""
-        
+        """Get health status of the fingerprinting metrics collector"""        
         return {
             "status": "healthy",
             "active_jobs": len(self._active_jobs),

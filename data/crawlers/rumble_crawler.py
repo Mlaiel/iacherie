@@ -1,5 +1,4 @@
-"""
-Rumble Crawler Implementation
+"""Rumble Crawler Implementation
 =============================
 
 Advanced Rumble platform crawler for video content and alternative media monitoring.
@@ -22,9 +21,7 @@ will be prosecuted to the FULL EXTENT OF THE LAW under German and
 International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -41,8 +38,7 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class RumbleVideo:
-    """Rumble video information"""
-    video_id: str
+    """Rumble video information"""    video_id: str
     title: str
     description: str
     url: str
@@ -93,8 +89,7 @@ class RumbleVideo:
 
 @dataclass
 class RumbleChannel:
-    """Rumble channel information"""
-    channel_id: str
+    """Rumble channel information"""    channel_id: str
     name: str
     display_name: str
     description: str
@@ -137,8 +132,7 @@ class RumbleChannel:
 
 @dataclass
 class RumbleUser:
-    """Rumble user information"""
-    user_id: str
+    """Rumble user information"""    user_id: str
     username: str
     display_name: str
     bio: str
@@ -170,8 +164,7 @@ class RumbleUser:
 
 @dataclass
 class RumbleComment:
-    """Rumble comment information"""
-    comment_id: str
+    """Rumble comment information"""    comment_id: str
     video_id: str
     user_id: str
     username: str
@@ -201,8 +194,7 @@ class RumbleComment:
 
 @dataclass
 class RumbleLiveStream:
-    """Rumble live stream information"""
-    stream_id: str
+    """Rumble live stream information"""    stream_id: str
     video_id: str
     channel_id: str
     title: str
@@ -240,8 +232,7 @@ class RumbleLiveStream:
 
 
 class RumbleCrawler(PlatformCrawler):
-    """
-    Advanced Rumble crawler for video content and alternative media monitoring.
+    """    Advanced Rumble crawler for video content and alternative media monitoring.
     
     Features:
     - Video content tracking
@@ -254,8 +245,7 @@ class RumbleCrawler(PlatformCrawler):
     - Monetization tracking
     - Community engagement metrics
     - Content moderation analysis
-    """
-    
+    """    
     def __init__(self, config: CrawlerConfig, vector_matcher=None):
         super().__init__(config, vector_matcher)
         self.platform_name = "rumble"
@@ -287,8 +277,7 @@ class RumbleCrawler(PlatformCrawler):
         self._setup_session_headers()
     
     def _setup_session_headers(self):
-        """Setup Rumble-specific headers"""
-        self.session_headers.update({
+        """Setup Rumble-specific headers"""        self.session_headers.update({
             'Accept': 'application/json, text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
             'Accept-Encoding': 'gzip, deflate, br',
             'Accept-Language': 'en-US,en;q=0.9',
@@ -300,8 +289,7 @@ class RumbleCrawler(PlatformCrawler):
     
     async def search_content(self, query: str, content_type: str = "videos", 
                            max_results: int = 50, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """
-        Search for content on Rumble.
+        """        Search for content on Rumble.
         
         Args:
             query: Search query
@@ -311,8 +299,7 @@ class RumbleCrawler(PlatformCrawler):
             
         Returns:
             List of crawler results
-        """
-        try:
+        """        try:
             await self._check_rate_limit()
             
             if content_type not in self.content_types:
@@ -330,8 +317,7 @@ class RumbleCrawler(PlatformCrawler):
             return []
     
     async def _crawl_videos(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl Rumble videos"""
-        try:
+        """Crawl Rumble videos"""        try:
             results = []
             
             # Mock video data
@@ -384,8 +370,7 @@ class RumbleCrawler(PlatformCrawler):
             return []
     
     async def _crawl_channels(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl Rumble channels"""
-        try:
+        """Crawl Rumble channels"""        try:
             results = []
             
             # Mock channel data
@@ -434,8 +419,7 @@ class RumbleCrawler(PlatformCrawler):
             return []
     
     async def _crawl_users(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl Rumble users"""
-        try:
+        """Crawl Rumble users"""        try:
             results = []
             
             # Mock user data
@@ -481,8 +465,7 @@ class RumbleCrawler(PlatformCrawler):
             return []
     
     async def _crawl_comments(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl Rumble comments"""
-        try:
+        """Crawl Rumble comments"""        try:
             results = []
             
             # Mock comment data
@@ -530,8 +513,7 @@ class RumbleCrawler(PlatformCrawler):
             return []
     
     async def _crawl_live_streams(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl Rumble live streams"""
-        try:
+        """Crawl Rumble live streams"""        try:
             results = []
             
             # Mock live stream data
@@ -582,8 +564,7 @@ class RumbleCrawler(PlatformCrawler):
             return []
     
     async def _crawl_trending(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl trending Rumble content"""
-        try:
+        """Crawl trending Rumble content"""        try:
             results = []
             
             # Get trending content
@@ -614,8 +595,7 @@ class RumbleCrawler(PlatformCrawler):
             return []
     
     async def _crawl_featured(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl featured Rumble content"""
-        try:
+        """Crawl featured Rumble content"""        try:
             results = []
             
             # Get featured content
@@ -646,8 +626,7 @@ class RumbleCrawler(PlatformCrawler):
             return []
     
     async def _crawl_search(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """General Rumble search"""
-        try:
+        """General Rumble search"""        try:
             results = []
             
             # Search across different content types
@@ -668,8 +647,7 @@ class RumbleCrawler(PlatformCrawler):
     # Mock data generators
     
     async def _get_mock_videos(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock video data"""
-        videos = []
+        """Generate mock video data"""        videos = []
         
         for i in range(min(max_results, 25)):
             uploaded_at = datetime.utcnow() - timedelta(hours=random.randint(1, 168))
@@ -706,8 +684,7 @@ class RumbleCrawler(PlatformCrawler):
         return videos
     
     async def _get_mock_channels(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock channel data"""
-        channels = []
+        """Generate mock channel data"""        channels = []
         
         for i in range(min(max_results, 15)):
             created_at = datetime.utcnow() - timedelta(days=random.randint(30, 1095))
@@ -736,8 +713,7 @@ class RumbleCrawler(PlatformCrawler):
         return channels
     
     async def _get_mock_users(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock user data"""
-        users = []
+        """Generate mock user data"""        users = []
         
         for i in range(min(max_results, 20)):
             joined_at = datetime.utcnow() - timedelta(days=random.randint(30, 1095))
@@ -762,8 +738,7 @@ class RumbleCrawler(PlatformCrawler):
         return users
     
     async def _get_mock_comments(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock comment data"""
-        comments = []
+        """Generate mock comment data"""        comments = []
         
         for i in range(min(max_results, 50)):
             posted_at = datetime.utcnow() - timedelta(hours=random.randint(1, 48))
@@ -791,8 +766,7 @@ class RumbleCrawler(PlatformCrawler):
         return comments
     
     async def _get_mock_live_streams(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock live stream data"""
-        streams = []
+        """Generate mock live stream data"""        streams = []
         
         for i in range(min(max_results, 15)):
             started_at = datetime.utcnow() - timedelta(hours=random.randint(0, 12))
@@ -825,8 +799,7 @@ class RumbleCrawler(PlatformCrawler):
         return streams
     
     async def _get_trending_content(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Get trending content"""
-        content = []
+        """Get trending content"""        content = []
         
         for i in range(min(max_results, 10)):
             content.append({
@@ -840,8 +813,7 @@ class RumbleCrawler(PlatformCrawler):
         return content
     
     async def _get_featured_content(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Get featured content"""
-        content = []
+        """Get featured content"""        content = []
         
         for i in range(min(max_results, 10)):
             content.append({
@@ -857,8 +829,7 @@ class RumbleCrawler(PlatformCrawler):
     # Parser methods
     
     async def _parse_video_data(self, video_data: Dict[str, Any]) -> Optional[RumbleVideo]:
-        """Parse video data"""
-        try:
+        """Parse video data"""        try:
             uploaded_at = datetime.fromisoformat(video_data.get('uploaded_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             published_at = datetime.fromisoformat(video_data.get('published_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
@@ -919,8 +890,7 @@ class RumbleCrawler(PlatformCrawler):
             return None
     
     async def _parse_channel_data(self, channel_data: Dict[str, Any]) -> Optional[RumbleChannel]:
-        """Parse channel data"""
-        try:
+        """Parse channel data"""        try:
             created_at = datetime.fromisoformat(channel_data.get('created_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
             channel = RumbleChannel(
@@ -972,8 +942,7 @@ class RumbleCrawler(PlatformCrawler):
             return None
     
     async def _parse_user_data(self, user_data: Dict[str, Any]) -> Optional[RumbleUser]:
-        """Parse user data"""
-        try:
+        """Parse user data"""        try:
             joined_at = datetime.fromisoformat(user_data.get('joined_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
             user = RumbleUser(
@@ -1014,8 +983,7 @@ class RumbleCrawler(PlatformCrawler):
             return None
     
     async def _parse_comment_data(self, comment_data: Dict[str, Any]) -> Optional[RumbleComment]:
-        """Parse comment data"""
-        try:
+        """Parse comment data"""        try:
             posted_at = datetime.fromisoformat(comment_data.get('posted_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
             comment = RumbleComment(
@@ -1054,8 +1022,7 @@ class RumbleCrawler(PlatformCrawler):
             return None
     
     async def _parse_live_stream_data(self, stream_data: Dict[str, Any]) -> Optional[RumbleLiveStream]:
-        """Parse live stream data"""
-        try:
+        """Parse live stream data"""        try:
             started_at = datetime.fromisoformat(stream_data.get('started_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             ended_at = None
             if stream_data.get('ended_at'):
@@ -1106,8 +1073,7 @@ class RumbleCrawler(PlatformCrawler):
             return None
     
     async def _check_rate_limit(self):
-        """Check and enforce rate limiting"""
-        try:
+        """Check and enforce rate limiting"""        try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
             
@@ -1123,8 +1089,7 @@ class RumbleCrawler(PlatformCrawler):
             self.logger.error(f"Error in rate limiting: {str(e)}")
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
-        """Extract metadata from Rumble content"""
-        try:
+        """Extract metadata from Rumble content"""        try:
             # Parse Rumble URL
             parsed_url = urlparse(url)
             
@@ -1179,8 +1144,7 @@ class RumbleCrawler(PlatformCrawler):
             return {'error': str(e)}
     
     def get_platform_info(self) -> Dict[str, Any]:
-        """Get Rumble platform information"""
-        return {
+        """Get Rumble platform information"""        return {
             'platform_name': 'Rumble',
             'base_url': self.base_url,
             'api_base_url': self.api_base_url,

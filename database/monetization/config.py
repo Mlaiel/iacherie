@@ -1,5 +1,4 @@
-"""
-Monetization Configuration - IA Influencer Agent + Content Protection Platform
+"""Monetization Configuration - IA Influencer Agent + Content Protection Platform
 
 Ultra-advanced configuration management for enterprise monetization system
 including payment gateways, revenue optimization, compliance, and financial settings.
@@ -25,9 +24,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
-"""
-
-import os
+"""import os
 from typing import Dict, Any, List, Optional
 from dataclasses import dataclass, field
 from decimal import Decimal
@@ -36,8 +33,7 @@ import yaml
 import json
 
 class CurrencyCode(str, Enum):
-    """Supported currency codes"""
-    USD = "USD"  # US Dollar
+    """Supported currency codes"""    USD = "USD"  # US Dollar
     EUR = "EUR"  # Euro
     GBP = "GBP"  # British Pound
     JPY = "JPY"  # Japanese Yen
@@ -49,8 +45,7 @@ class CurrencyCode(str, Enum):
     ETH = "ETH"  # Ethereum
 
 class PaymentGateway(str, Enum):
-    """Supported payment gateways"""
-    STRIPE = "stripe"
+    """Supported payment gateways"""    STRIPE = "stripe"
     PAYPAL = "paypal"
     SQUARE = "square"
     BRAINTREE = "braintree"
@@ -61,8 +56,7 @@ class PaymentGateway(str, Enum):
     BINANCE = "binance"
 
 class TaxJurisdiction(str, Enum):
-    """Supported tax jurisdictions"""
-    US = "US"        # United States
+    """Supported tax jurisdictions"""    US = "US"        # United States
     EU = "EU"        # European Union
     UK = "UK"        # United Kingdom
     CA = "CA"        # Canada
@@ -76,8 +70,7 @@ class TaxJurisdiction(str, Enum):
 
 @dataclass
 class PaymentGatewayConfig:
-    """Payment gateway configuration"""
-    enabled: bool = True
+    """Payment gateway configuration"""    enabled: bool = True
     api_key: str = ""
     secret_key: str = ""
     webhook_secret: str = ""
@@ -89,8 +82,7 @@ class PaymentGatewayConfig:
 
 @dataclass
 class RevenueOptimizationConfig:
-    """Revenue optimization configuration"""
-    enabled: bool = True
+    """Revenue optimization configuration"""    enabled: bool = True
     ai_optimization: bool = True
     dynamic_pricing: bool = True
     market_analysis: bool = True
@@ -104,8 +96,7 @@ class RevenueOptimizationConfig:
 
 @dataclass
 class TaxConfig:
-    """Tax configuration"""
-    enabled: bool = True
+    """Tax configuration"""    enabled: bool = True
     auto_calculation: bool = True
     jurisdiction: TaxJurisdiction = TaxJurisdiction.US
     vat_rate: Decimal = Decimal("0.0")
@@ -117,8 +108,7 @@ class TaxConfig:
 
 @dataclass
 class ComplianceConfig:
-    """Regulatory compliance configuration"""
-    enabled: bool = True
+    """Regulatory compliance configuration"""    enabled: bool = True
     gdpr_compliance: bool = True
     ccpa_compliance: bool = True
     pci_dss_compliance: bool = True
@@ -131,8 +121,7 @@ class ComplianceConfig:
 
 @dataclass
 class SubscriptionConfig:
-    """Subscription management configuration"""
-    enabled: bool = True
+    """Subscription management configuration"""    enabled: bool = True
     trial_period_days: int = 14
     grace_period_days: int = 3
     dunning_management: bool = True
@@ -145,8 +134,7 @@ class SubscriptionConfig:
 
 @dataclass
 class AnalyticsConfig:
-    """Analytics and reporting configuration"""
-    enabled: bool = True
+    """Analytics and reporting configuration"""    enabled: bool = True
     real_time_analytics: bool = True
     predictive_analytics: bool = True
     cohort_analysis: bool = True
@@ -159,8 +147,7 @@ class AnalyticsConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration"""
-    enabled: bool = True
+    """Security configuration"""    enabled: bool = True
     encryption_at_rest: bool = True
     encryption_in_transit: bool = True
     api_rate_limiting: bool = True
@@ -172,11 +159,9 @@ class SecurityConfig:
     vulnerability_scanning: bool = True
 
 class MonetizationConfig:
-    """Main monetization configuration class"""
-    
+    """Main monetization configuration class"""    
     def __init__(self, config_file: Optional[str] = None):
-        """Initialize configuration"""
-        self.config_file = config_file or os.getenv("MONETIZATION_CONFIG_FILE", "monetization_config.yml")
+        """Initialize configuration"""        self.config_file = config_file or os.getenv("MONETIZATION_CONFIG_FILE", "monetization_config.yml")
         
         # Default configurations
         self.payment_gateways: Dict[PaymentGateway, PaymentGatewayConfig] = {}
@@ -193,8 +178,7 @@ class MonetizationConfig:
         self._load_environment_variables()
     
     def _load_default_config(self) -> None:
-        """Load default payment gateway configurations"""
-        
+        """Load default payment gateway configurations"""        
         # Stripe configuration
         self.payment_gateways[PaymentGateway.STRIPE] = PaymentGatewayConfig(
             enabled=True,
@@ -238,8 +222,7 @@ class MonetizationConfig:
         )
     
     def _load_config_file(self) -> None:
-        """Load configuration from YAML file"""
-        
+        """Load configuration from YAML file"""        
         if os.path.exists(self.config_file):
             try:
                 with open(self.config_file, 'r') as f:
@@ -264,8 +247,7 @@ class MonetizationConfig:
                 print(f"Warning: Could not load config file {self.config_file}: {e}")
     
     def _load_environment_variables(self) -> None:
-        """Load configuration from environment variables"""
-        
+        """Load configuration from environment variables"""        
         # Revenue optimization
         if os.getenv("REVENUE_OPTIMIZATION_ENABLED"):
             self.revenue_optimization.enabled = os.getenv("REVENUE_OPTIMIZATION_ENABLED").lower() == "true"
@@ -285,15 +267,13 @@ class MonetizationConfig:
             self.security_config.encryption_at_rest = os.getenv("ENCRYPTION_ENABLED").lower() == "true"
     
     def _update_config_from_dict(self, config_obj: Any, config_dict: Dict[str, Any]) -> None:
-        """Update configuration object from dictionary"""
-        
+        """Update configuration object from dictionary"""        
         for key, value in config_dict.items():
             if hasattr(config_obj, key):
                 setattr(config_obj, key, value)
     
     def save_config(self, file_path: Optional[str] = None) -> None:
-        """Save current configuration to file"""
-        
+        """Save current configuration to file"""        
         output_file = file_path or self.config_file
         
         config_data = {
@@ -309,8 +289,7 @@ class MonetizationConfig:
             yaml.dump(config_data, f, default_flow_style=False)
     
     def _dataclass_to_dict(self, obj: Any) -> Dict[str, Any]:
-        """Convert dataclass to dictionary"""
-        
+        """Convert dataclass to dictionary"""        
         result = {}
         for key, value in obj.__dict__.items():
             if isinstance(value, Decimal):
@@ -323,17 +302,14 @@ class MonetizationConfig:
         return result
     
     def get_payment_gateway_config(self, gateway: PaymentGateway) -> Optional[PaymentGatewayConfig]:
-        """Get configuration for specific payment gateway"""
-        return self.payment_gateways.get(gateway)
+        """Get configuration for specific payment gateway"""        return self.payment_gateways.get(gateway)
     
     def is_gateway_enabled(self, gateway: PaymentGateway) -> bool:
-        """Check if payment gateway is enabled"""
-        config = self.get_payment_gateway_config(gateway)
+        """Check if payment gateway is enabled"""        config = self.get_payment_gateway_config(gateway)
         return config is not None and config.enabled
     
     def get_supported_currencies(self) -> List[CurrencyCode]:
-        """Get all supported currencies across enabled gateways"""
-        
+        """Get all supported currencies across enabled gateways"""        
         currencies = set()
         for gateway, config in self.payment_gateways.items():
             if config.enabled:
@@ -342,8 +318,7 @@ class MonetizationConfig:
         return list(currencies)
     
     def validate_config(self) -> bool:
-        """Validate configuration settings"""
-        
+        """Validate configuration settings"""        
         errors = []
         
         # Check if at least one payment gateway is enabled
@@ -371,11 +346,9 @@ class MonetizationConfig:
 monetization_config = MonetizationConfig()
 
 def get_config() -> MonetizationConfig:
-    """Get global monetization configuration"""
-    return monetization_config
+    """Get global monetization configuration"""    return monetization_config
 
 def reload_config() -> MonetizationConfig:
-    """Reload configuration from files"""
-    global monetization_config
+    """Reload configuration from files"""    global monetization_config
     monetization_config = MonetizationConfig()
     return monetization_config

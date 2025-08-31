@@ -1,5 +1,4 @@
-"""
-Distributed Tracing System
+"""Distributed Tracing System
 
 Advanced distributed tracing and request tracking system for the IA Influencer
 platform, providing end-to-end visibility across microservices and AI operations.
@@ -12,9 +11,7 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import time
 import uuid
 from datetime import datetime, timezone, timedelta
@@ -32,8 +29,7 @@ logger = logging.getLogger(__name__)
 
 
 class SpanKind(Enum):
-    """Span kinds following OpenTelemetry specification"""
-    INTERNAL = "internal"       # Internal operation
+    """Span kinds following OpenTelemetry specification"""    INTERNAL = "internal"       # Internal operation
     SERVER = "server"          # Server-side HTTP request
     CLIENT = "client"          # Client-side HTTP request  
     PRODUCER = "producer"      # Message producer
@@ -41,22 +37,19 @@ class SpanKind(Enum):
 
 
 class SpanStatus(Enum):
-    """Span status codes"""
-    UNSET = "unset"           # Default status
+    """Span status codes"""    UNSET = "unset"           # Default status
     OK = "ok"                 # Operation completed successfully
     ERROR = "error"           # Operation failed
 
 
 @dataclass
 class SpanEvent:
-    """Individual event within a span"""
-    name: str
+    """Individual event within a span"""    name: str
     timestamp: datetime
     attributes: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert span event to dictionary"""
-        return {
+        """Convert span event to dictionary"""        return {
             'name': self.name,
             'timestamp': self.timestamp.isoformat(),
             'attributes': self.attributes
@@ -65,14 +58,12 @@ class SpanEvent:
 
 @dataclass
 class SpanLink:
-    """Link to another span"""
-    trace_id: str
+    """Link to another span"""    trace_id: str
     span_id: str
     attributes: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert span link to dictionary"""
-        return {
+        """Convert span link to dictionary"""        return {
             'trace_id': self.trace_id,
             'span_id': self.span_id,
             'attributes': self.attributes
@@ -81,13 +72,11 @@ class SpanLink:
 
 @dataclass
 class Span:
-    """
-    Distributed trace span representing a single operation
+    """    Distributed trace span representing a single operation
     
     A span represents a single operation within a trace. Spans can be nested
     to form a tree structure, representing the execution of the operation.
-    """
-    trace_id: str
+    """    trace_id: str
     span_id: str
     parent_span_id: Optional[str]
     operation_name: str
@@ -113,8 +102,7 @@ class Span:
     resource: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
-        """Post-initialization processing"""
-        if self.start_time.tzinfo is None:
+        """Post-initialization processing"""        if self.start_time.tzinfo is None:
             self.start_time = self.start_time.replace(tzinfo=timezone.utc)
         
         # Set default resource attributes
@@ -126,8 +114,7 @@ class Span:
             }
     
     def finish(self, status: SpanStatus = SpanStatus.OK, status_message: Optional[str] = None):
-        """Finish the span"""
-        if self.end_time is None:
+        """Finish the span"""        if self.end_time is None:
             self.end_time = datetime.now(timezone.utc)
             self.duration_ms = (self.end_time - self.start_time).total_seconds() * 1000
         
@@ -136,8 +123,7 @@ class Span:
             self.status_message = status_message
     
     def add_event(self, name: str, attributes: Optional[Dict[str, Any]] = None):
-        """Add an event to the span"""
-        event = SpanEvent(
+        """Add an event to the span"""        event = SpanEvent(
             name=name,
             timestamp=datetime.now(timezone.utc),
             attributes=attributes or {}
@@ -145,8 +131,7 @@ class Span:
         self.events.append(event)
     
     def add_link(self, trace_id: str, span_id: str, attributes: Optional[Dict[str, Any]] = None):
-        """Add a link to another span"""
-        link = SpanLink(
+        """Add a link to another span"""        link = SpanLink(
             trace_id=trace_id,
             span_id=span_id,
             attributes=attributes or {}
@@ -154,16 +139,13 @@ class Span:
         self.links.append(link)
     
     def set_attribute(self, key: str, value: Any):
-        """Set a span attribute"""
-        self.attributes[key] = value
+        """Set a span attribute"""        self.attributes[key] = value
     
     def set_attributes(self, attributes: Dict[str, Any]):
-        """Set multiple span attributes"""
-        self.attributes.update(attributes)
+        """Set multiple span attributes"""        self.attributes.update(attributes)
     
     def record_exception(self, exception: Exception):
-        """Record an exception in the span"""
-        self.status = SpanStatus.ERROR
+        """Record an exception in the span"""        self.status = SpanStatus.ERROR
         self.status_message = str(exception)
         
         self.add_event(
@@ -176,13 +158,11 @@ class Span:
         )
     
     def _format_exception(self, exception: Exception) -> str:
-        """Format exception for logging"""
-        import traceback
+        """Format exception for logging"""        import traceback
         return ''.join(traceback.format_exception(type(exception), exception, exception.__traceback__))
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert span to dictionary"""
-        return {
+        """Convert span to dictionary"""        return {
             'trace_id': self.trace_id,
             'span_id': self.span_id,
             'parent_span_id': self.parent_span_id,
@@ -202,22 +182,19 @@ class Span:
         }
     
     def to_json(self) -> str:
-        """Convert span to JSON string"""
-        return json.dumps(self.to_dict(), default=str, ensure_ascii=False)
+        """Convert span to JSON string"""        return json.dumps(self.to_dict(), default=str, ensure_ascii=False)
 
 
 @dataclass
 class Trace:
-    """Collection of spans forming a complete trace"""
-    trace_id: str
+    """Collection of spans forming a complete trace"""    trace_id: str
     spans: List[Span] = field(default_factory=list)
     start_time: Optional[datetime] = None
     end_time: Optional[datetime] = None
     duration_ms: Optional[float] = None
     
     def add_span(self, span: Span):
-        """Add a span to the trace"""
-        self.spans.append(span)
+        """Add a span to the trace"""        self.spans.append(span)
         
         # Update trace timing
         if self.start_time is None or span.start_time < self.start_time:
@@ -232,16 +209,13 @@ class Trace:
             self.duration_ms = (self.end_time - self.start_time).total_seconds() * 1000
     
     def get_root_spans(self) -> List[Span]:
-        """Get root spans (spans without parents)"""
-        return [span for span in self.spans if span.parent_span_id is None]
+        """Get root spans (spans without parents)"""        return [span for span in self.spans if span.parent_span_id is None]
     
     def get_span_children(self, span_id: str) -> List[Span]:
-        """Get child spans of a given span"""
-        return [span for span in self.spans if span.parent_span_id == span_id]
+        """Get child spans of a given span"""        return [span for span in self.spans if span.parent_span_id == span_id]
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert trace to dictionary"""
-        return {
+        """Convert trace to dictionary"""        return {
             'trace_id': self.trace_id,
             'spans': [span.to_dict() for span in self.spans],
             'start_time': self.start_time.isoformat() if self.start_time else None,
@@ -252,29 +226,23 @@ class Trace:
 
 
 class SpanContext:
-    """
-    Thread-local storage for current span context
-    """
-    
+    """    Thread-local storage for current span context
+    """    
     def __init__(self):
         self._local = threading.local()
     
     def get_current_span(self) -> Optional[Span]:
-        """Get the current active span"""
-        return getattr(self._local, 'current_span', None)
+        """Get the current active span"""        return getattr(self._local, 'current_span', None)
     
     def set_current_span(self, span: Optional[Span]):
-        """Set the current active span"""
-        self._local.current_span = span
+        """Set the current active span"""        self._local.current_span = span
     
     def get_trace_id(self) -> Optional[str]:
-        """Get the current trace ID"""
-        span = self.get_current_span()
+        """Get the current trace ID"""        span = self.get_current_span()
         return span.trace_id if span else None
     
     def get_span_id(self) -> Optional[str]:
-        """Get the current span ID"""
-        span = self.get_current_span()
+        """Get the current span ID"""        span = self.get_current_span()
         return span.span_id if span else None
 
 
@@ -283,8 +251,7 @@ _span_context = SpanContext()
 
 
 class SpanManager:
-    """
-    Manager for creating and managing spans
+    """    Manager for creating and managing spans
     
     Features:
     - Span lifecycle management
@@ -292,11 +259,9 @@ class SpanManager:
     - Automatic parent-child relationships
     - Span sampling
     - Export to tracing backends
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize span manager"""
-        self.config = config or {}
+        """Initialize span manager"""        self.config = config or {}
         
         # Sampling configuration
         self.sampling_rate = self.config.get('sampling_rate', 1.0)  # 100% by default
@@ -327,8 +292,7 @@ class SpanManager:
                    kind: SpanKind = SpanKind.INTERNAL,
                    parent_span: Optional[Span] = None,
                    attributes: Optional[Dict[str, Any]] = None) -> Span:
-        """Create a new span"""
-        
+        """Create a new span"""        
         # Get parent context
         if parent_span is None:
             parent_span = _span_context.get_current_span()
@@ -371,16 +335,13 @@ class SpanManager:
         return span
     
     def _generate_trace_id(self) -> str:
-        """Generate a new trace ID"""
-        return uuid.uuid4().hex
+        """Generate a new trace ID"""        return uuid.uuid4().hex
     
     def _generate_span_id(self) -> str:
-        """Generate a new span ID"""
-        return uuid.uuid4().hex[:16]
+        """Generate a new span ID"""        return uuid.uuid4().hex[:16]
     
     def _should_sample(self, trace_id: str) -> bool:
-        """Determine if trace should be sampled"""
-        if self.sampling_rate >= 1.0:
+        """Determine if trace should be sampled"""        if self.sampling_rate >= 1.0:
             return True
         
         if self.sampling_rate <= 0.0:
@@ -392,8 +353,7 @@ class SpanManager:
         return hash_value < threshold
     
     def _add_span_to_trace(self, span: Span):
-        """Add span to its trace"""
-        trace_id = span.trace_id
+        """Add span to its trace"""        trace_id = span.trace_id
         
         if trace_id not in self.active_traces:
             self.active_traces[trace_id] = Trace(trace_id=trace_id)
@@ -409,8 +369,7 @@ class SpanManager:
     
     def finish_span(self, span: Span, status: SpanStatus = SpanStatus.OK, 
                    status_message: Optional[str] = None):
-        """Finish a span"""
-        if isinstance(span, NoOpSpan):
+        """Finish a span"""        if isinstance(span, NoOpSpan):
             return
         
         span.finish(status, status_message)
@@ -421,15 +380,13 @@ class SpanManager:
             self._complete_trace(trace)
     
     def _is_trace_complete(self, trace: Trace) -> bool:
-        """Check if all spans in trace are completed"""
-        for span in trace.spans:
+        """Check if all spans in trace are completed"""        for span in trace.spans:
             if span.end_time is None:
                 return False
         return True
     
     def _complete_trace(self, trace: Trace):
-        """Mark trace as complete and move to completed traces"""
-        trace_id = trace.trace_id
+        """Mark trace as complete and move to completed traces"""        trace_id = trace.trace_id
         
         if trace_id in self.active_traces:
             del self.active_traces[trace_id]
@@ -442,8 +399,7 @@ class SpanManager:
             asyncio.create_task(self._export_traces())
     
     async def _export_traces(self):
-        """Export completed traces to backends"""
-        if self.is_exporting:
+        """Export completed traces to backends"""        if self.is_exporting:
             return
         
         self.is_exporting = True
@@ -470,18 +426,15 @@ class SpanManager:
             self.is_exporting = False
     
     async def _export_to_backend(self, exporter: Any, traces: List[Trace]):
-        """Export traces to a specific backend"""
-        # This would be implemented based on the specific exporter
+        """Export traces to a specific backend"""        # This would be implemented based on the specific exporter
         # (Jaeger, Zipkin, OpenTelemetry Collector, etc.)
         pass
     
     def add_exporter(self, exporter: Any):
-        """Add a trace exporter"""
-        self.exporters.append(exporter)
+        """Add a trace exporter"""        self.exporters.append(exporter)
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Get tracing metrics"""
-        return {
+        """Get tracing metrics"""        return {
             **self.metrics,
             'active_traces': len(self.active_traces),
             'completed_traces': len(self.completed_traces),
@@ -490,8 +443,7 @@ class SpanManager:
 
 
 class NoOpSpan(Span):
-    """No-operation span for when sampling is disabled"""
-    
+    """No-operation span for when sampling is disabled"""    
     def __init__(self):
         # Initialize with minimal data
         super().__init__(
@@ -504,29 +456,23 @@ class NoOpSpan(Span):
         )
     
     def finish(self, status: SpanStatus = SpanStatus.OK, status_message: Optional[str] = None):
-        """No-op finish"""
-        pass
+        """No-op finish"""        pass
     
     def add_event(self, name: str, attributes: Optional[Dict[str, Any]] = None):
-        """No-op add event"""
-        pass
+        """No-op add event"""        pass
     
     def set_attribute(self, key: str, value: Any):
-        """No-op set attribute"""
-        pass
+        """No-op set attribute"""        pass
     
     def set_attributes(self, attributes: Dict[str, Any]):
-        """No-op set attributes"""
-        pass
+        """No-op set attributes"""        pass
     
     def record_exception(self, exception: Exception):
-        """No-op record exception"""
-        pass
+        """No-op record exception"""        pass
 
 
 class DistributedTracer:
-    """
-    Main distributed tracer class providing high-level tracing API
+    """    Main distributed tracer class providing high-level tracing API
     
     Features:
     - Automatic trace context management
@@ -534,11 +480,9 @@ class DistributedTracer:
     - Cross-service trace propagation
     - Performance monitoring integration
     - Business logic tracing
-    """
-    
+    """    
     def __init__(self, service_name: str, config: Optional[Dict[str, Any]] = None):
-        """Initialize distributed tracer"""
-        self.service_name = service_name
+        """Initialize distributed tracer"""        self.service_name = service_name
         self.config = config or {}
         
         # Initialize span manager
@@ -561,8 +505,7 @@ class DistributedTracer:
                    kind: SpanKind = SpanKind.INTERNAL,
                    parent: Optional[Span] = None,
                    attributes: Optional[Dict[str, Any]] = None) -> Span:
-        """Start a new span"""
-        
+        """Start a new span"""        
         # Add service attributes
         span_attributes = {
             'service.name': self.service_name,
@@ -586,25 +529,21 @@ class DistributedTracer:
                          operation_name: str,
                          kind: SpanKind = SpanKind.INTERNAL,
                          attributes: Optional[Dict[str, Any]] = None):
-        """Start a new active span (sets as current span)"""
-        
+        """Start a new active span (sets as current span)"""        
         span = self.start_span(operation_name, kind, attributes=attributes)
         _span_context.set_current_span(span)
         
         return span
     
     def get_current_span(self) -> Optional[Span]:
-        """Get the current active span"""
-        return _span_context.get_current_span()
+        """Get the current active span"""        return _span_context.get_current_span()
     
     def get_current_trace_id(self) -> Optional[str]:
-        """Get the current trace ID"""
-        return _span_context.get_trace_id()
+        """Get the current trace ID"""        return _span_context.get_trace_id()
     
     def finish_span(self, span: Span, status: SpanStatus = SpanStatus.OK, 
                    status_message: Optional[str] = None):
-        """Finish a span"""
-        self.span_manager.finish_span(span, status, status_message)
+        """Finish a span"""        self.span_manager.finish_span(span, status, status_message)
         
         # Clear current span if it's this one
         current_span = _span_context.get_current_span()
@@ -614,8 +553,7 @@ class DistributedTracer:
             _span_context.set_current_span(parent_span)
     
     def _find_parent_span(self, span: Span) -> Optional[Span]:
-        """Find parent span of given span"""
-        if not span.parent_span_id:
+        """Find parent span of given span"""        if not span.parent_span_id:
             return None
         
         # Look for parent in active traces
@@ -634,8 +572,7 @@ class DistributedTracer:
              operation_name: str,
              kind: SpanKind = SpanKind.INTERNAL,
              attributes: Optional[Dict[str, Any]] = None):
-        """Context manager for span lifecycle"""
-        
+        """Context manager for span lifecycle"""        
         span = self.start_active_span(operation_name, kind, attributes)
         
         try:
@@ -651,8 +588,7 @@ class DistributedTracer:
                         operation_name: str,
                         kind: SpanKind = SpanKind.INTERNAL,
                         attributes: Optional[Dict[str, Any]] = None):
-        """Async context manager for span lifecycle"""
-        
+        """Async context manager for span lifecycle"""        
         span = self.start_active_span(operation_name, kind, attributes)
         
         try:
@@ -667,8 +603,7 @@ class DistributedTracer:
                       operation_name: Optional[str] = None,
                       kind: SpanKind = SpanKind.INTERNAL,
                       attributes: Optional[Dict[str, Any]] = None):
-        """Decorator for tracing functions"""
-        
+        """Decorator for tracing functions"""        
         def decorator(func):
             func_name = operation_name or f"{func.__module__}.{func.__name__}"
             
@@ -724,8 +659,7 @@ class DistributedTracer:
                           operation_type: str,
                           input_size: Optional[int] = None,
                           attributes: Optional[Dict[str, Any]] = None):
-        """Trace AI/ML operations"""
-        
+        """Trace AI/ML operations"""        
         operation_name = f"ai.{operation_type}"
         ai_attributes = {
             'ai.model.name': model_name,
@@ -746,8 +680,7 @@ class DistributedTracer:
                                protection_method: str,
                                content_id: Optional[str] = None,
                                attributes: Optional[Dict[str, Any]] = None):
-        """Trace content protection operations"""
-        
+        """Trace content protection operations"""        
         operation_name = f"content_protection.{protection_method}"
         protection_attributes = {
             'content.type': content_type,
@@ -768,8 +701,7 @@ class DistributedTracer:
                          action: str,
                          resource: Optional[str] = None,
                          attributes: Optional[Dict[str, Any]] = None):
-        """Trace user actions"""
-        
+        """Trace user actions"""        
         operation_name = f"user.{action}"
         user_attributes = {
             'user.id': user_id,
@@ -786,8 +718,7 @@ class DistributedTracer:
         return self.span(operation_name, SpanKind.SERVER, user_attributes)
     
     def inject_trace_context(self, carrier: Dict[str, str]):
-        """Inject trace context into carrier for cross-service propagation"""
-        
+        """Inject trace context into carrier for cross-service propagation"""        
         current_span = self.get_current_span()
         if not current_span:
             return
@@ -801,8 +732,7 @@ class DistributedTracer:
         carrier['x-service-name'] = self.service_name
     
     def extract_trace_context(self, carrier: Dict[str, str]) -> Optional[Span]:
-        """Extract trace context from carrier"""
-        
+        """Extract trace context from carrier"""        
         # Try W3C Trace Context first
         traceparent = carrier.get('traceparent')
         if traceparent:
@@ -827,8 +757,7 @@ class DistributedTracer:
         return None
     
     def _create_span_context(self, trace_id: str, parent_span_id: str) -> Span:
-        """Create a span context for remote parent"""
-        
+        """Create a span context for remote parent"""        
         # Create a minimal span representing remote parent
         remote_span = Span(
             trace_id=trace_id,
@@ -845,19 +774,15 @@ class DistributedTracer:
         return remote_span
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Get tracing metrics"""
-        return self.span_manager.get_metrics()
+        """Get tracing metrics"""        return self.span_manager.get_metrics()
 
 
 class TraceAnalyzer:
-    """
-    Advanced trace analysis system for performance insights
+    """    Advanced trace analysis system for performance insights
     and anomaly detection in distributed traces.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize trace analyzer"""
-        self.config = config or {}
+        """Initialize trace analyzer"""        self.config = config or {}
         
         # Analysis configuration
         self.analysis_window = self.config.get('analysis_window', 3600)  # 1 hour
@@ -880,8 +805,7 @@ class TraceAnalyzer:
         self.anomalies: List[Dict[str, Any]] = []
     
     async def analyze_traces(self, traces: List[Trace]) -> Dict[str, Any]:
-        """Analyze a batch of traces"""
-        
+        """Analyze a batch of traces"""        
         try:
             analysis_results = {
                 'timestamp': datetime.now(timezone.utc).isoformat(),
@@ -919,8 +843,7 @@ class TraceAnalyzer:
             return {}
     
     def _update_operation_stats(self, traces: List[Trace]):
-        """Update operation statistics with new traces"""
-        
+        """Update operation statistics with new traces"""        
         for trace in traces:
             for span in trace.spans:
                 operation = span.operation_name
@@ -941,8 +864,7 @@ class TraceAnalyzer:
                     stats['error_count'] += 1
     
     async def _analyze_performance(self, traces: List[Trace]) -> List[Dict[str, Any]]:
-        """Analyze performance characteristics of traces"""
-        
+        """Analyze performance characteristics of traces"""        
         insights = []
         
         try:
@@ -1007,8 +929,7 @@ class TraceAnalyzer:
             return []
     
     async def _detect_trace_anomalies(self, traces: List[Trace]) -> List[Dict[str, Any]]:
-        """Detect anomalies in traces"""
-        
+        """Detect anomalies in traces"""        
         anomalies = []
         
         try:
@@ -1063,8 +984,7 @@ class TraceAnalyzer:
             return []
     
     def _generate_operation_stats(self) -> Dict[str, Any]:
-        """Generate operation statistics summary"""
-        
+        """Generate operation statistics summary"""        
         stats_summary = {}
         
         for operation, stats in self.operation_stats.items():
@@ -1096,16 +1016,14 @@ class TraceAnalyzer:
         return stats_summary
     
     def _calculate_percentile(self, sorted_values: List[float], percentile: float) -> float:
-        """Calculate percentile from sorted values"""
-        if not sorted_values:
+        """Calculate percentile from sorted values"""        if not sorted_values:
             return 0.0
         
         index = int(len(sorted_values) * percentile)
         return sorted_values[min(index, len(sorted_values) - 1)]
     
     async def _generate_recommendations(self, analysis_results: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate recommendations based on trace analysis"""
-        
+        """Generate recommendations based on trace analysis"""        
         recommendations = []
         
         try:
@@ -1150,13 +1068,10 @@ class TraceAnalyzer:
 
 
 class RequestTracker:
-    """
-    HTTP request tracking and correlation system
-    """
-    
+    """    HTTP request tracking and correlation system
+    """    
     def __init__(self, tracer: DistributedTracer):
-        """Initialize request tracker"""
-        self.tracer = tracer
+        """Initialize request tracker"""        self.tracer = tracer
         self.active_requests: Dict[str, Dict[str, Any]] = {}
     
     def start_request_tracking(self, 
@@ -1164,8 +1079,7 @@ class RequestTracker:
                               method: str,
                               url: str,
                               headers: Optional[Dict[str, str]] = None) -> Span:
-        """Start tracking an HTTP request"""
-        
+        """Start tracking an HTTP request"""        
         # Extract trace context from headers if present
         parent_span = None
         if headers:
@@ -1200,8 +1114,7 @@ class RequestTracker:
                                request_id: str,
                                status_code: int,
                                response_size: Optional[int] = None):
-        """Finish tracking an HTTP request"""
-        
+        """Finish tracking an HTTP request"""        
         request_info = self.active_requests.get(request_id)
         if not request_info:
             return
@@ -1233,20 +1146,16 @@ class RequestTracker:
 
 
 class PerformanceTracer:
-    """
-    Performance-focused tracing for detailed performance analysis
-    """
-    
+    """    Performance-focused tracing for detailed performance analysis
+    """    
     def __init__(self, tracer: DistributedTracer):
-        """Initialize performance tracer"""
-        self.tracer = tracer
+        """Initialize performance tracer"""        self.tracer = tracer
         self.performance_data: Dict[str, List[float]] = defaultdict(list)
     
     def trace_performance_critical_operation(self, 
                                            operation_name: str,
                                            threshold_ms: float = 100):
-        """Trace performance-critical operations with detailed metrics"""
-        
+        """Trace performance-critical operations with detailed metrics"""        
         @contextmanager
         def performance_span():
             span = self.tracer.start_active_span(
@@ -1293,8 +1202,7 @@ class PerformanceTracer:
         return performance_span()
     
     def get_performance_summary(self, operation_name: str) -> Dict[str, Any]:
-        """Get performance summary for an operation"""
-        
+        """Get performance summary for an operation"""        
         durations = self.performance_data.get(operation_name, [])
         if not durations:
             return {}
@@ -1312,13 +1220,10 @@ class PerformanceTracer:
 
 
 class AIOperationTracer:
-    """
-    Specialized tracer for AI/ML operations with model-specific tracking
-    """
-    
+    """    Specialized tracer for AI/ML operations with model-specific tracking
+    """    
     def __init__(self, tracer: DistributedTracer):
-        """Initialize AI operation tracer"""
-        self.tracer = tracer
+        """Initialize AI operation tracer"""        self.tracer = tracer
         self.model_metrics: Dict[str, Dict[str, Any]] = defaultdict(lambda: {
             'inference_count': 0,
             'total_inference_time': 0,
@@ -1332,8 +1237,7 @@ class AIOperationTracer:
                              model_version: str,
                              input_shape: Optional[tuple] = None,
                              batch_size: int = 1):
-        """Trace AI model inference operations"""
-        
+        """Trace AI model inference operations"""        
         @contextmanager
         def inference_span():
             span = self.tracer.start_active_span(
@@ -1399,8 +1303,7 @@ class AIOperationTracer:
                            model_name: str,
                            epoch: int,
                            batch_count: int):
-        """Trace model training operations"""
-        
+        """Trace model training operations"""        
         return self.tracer.span(
             f"ai.training.{model_name}",
             attributes={
@@ -1415,8 +1318,7 @@ class AIOperationTracer:
                                dataset_name: str,
                                operation: str,
                                record_count: int):
-        """Trace data preprocessing operations"""
-        
+        """Trace data preprocessing operations"""        
         return self.tracer.span(
             f"ai.preprocessing.{operation}",
             attributes={
@@ -1428,8 +1330,7 @@ class AIOperationTracer:
         )
     
     def get_model_performance_summary(self, model_name: str) -> Dict[str, Any]:
-        """Get performance summary for a specific model"""
-        
+        """Get performance summary for a specific model"""        
         metrics = self.model_metrics.get(model_name, {})
         if not metrics or metrics['inference_count'] == 0:
             return {}
@@ -1450,23 +1351,19 @@ class AIOperationTracer:
 
 # Factory functions for creating tracers
 def create_tracer(service_name: str, config: Optional[Dict[str, Any]] = None) -> DistributedTracer:
-    """Factory function for creating distributed tracers"""
-    return DistributedTracer(service_name, config)
+    """Factory function for creating distributed tracers"""    return DistributedTracer(service_name, config)
 
 
 def create_request_tracker(tracer: DistributedTracer) -> RequestTracker:
-    """Factory function for creating request trackers"""
-    return RequestTracker(tracer)
+    """Factory function for creating request trackers"""    return RequestTracker(tracer)
 
 
 def create_performance_tracer(tracer: DistributedTracer) -> PerformanceTracer:
-    """Factory function for creating performance tracers"""
-    return PerformanceTracer(tracer)
+    """Factory function for creating performance tracers"""    return PerformanceTracer(tracer)
 
 
 def create_ai_operation_tracer(tracer: DistributedTracer) -> AIOperationTracer:
-    """Factory function for creating AI operation tracers"""
-    return AIOperationTracer(tracer)
+    """Factory function for creating AI operation tracers"""    return AIOperationTracer(tracer)
 
 
 # Global tracer instance
@@ -1474,19 +1371,16 @@ _global_tracer: Optional[DistributedTracer] = None
 
 
 def get_global_tracer() -> Optional[DistributedTracer]:
-    """Get the global tracer instance"""
-    return _global_tracer
+    """Get the global tracer instance"""    return _global_tracer
 
 
 def set_global_tracer(tracer: DistributedTracer):
-    """Set the global tracer instance"""
-    global _global_tracer
+    """Set the global tracer instance"""    global _global_tracer
     _global_tracer = tracer
 
 
 def trace(operation_name: str, **kwargs):
-    """Convenient function for tracing with global tracer"""
-    tracer = get_global_tracer()
+    """Convenient function for tracing with global tracer"""    tracer = get_global_tracer()
     if not tracer:
         # Return a no-op context manager if no tracer is set
         @contextmanager

@@ -1,5 +1,4 @@
-"""
-YouTube Video Content Crawling Engine
+"""YouTube Video Content Crawling Engine
 
 Ultra-advanced industry-grade engine for YouTube content analysis with AI-powered
 video understanding, monetization analytics, and viral trend prediction.
@@ -10,9 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code is proprietary and confidential. 
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action under German and international law.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Tuple
 from datetime import datetime, timedelta
@@ -39,8 +36,7 @@ from ...ml.sentiment_analyzer import SentimentAnalyzer
 
 
 class VideoCategory(Enum):
-    """YouTube video categories"""
-    ENTERTAINMENT = "entertainment"
+    """YouTube video categories"""    ENTERTAINMENT = "entertainment"
     EDUCATION = "education"
     MUSIC = "music"
     GAMING = "gaming"
@@ -53,8 +49,7 @@ class VideoCategory(Enum):
 
 
 class VideoQuality(Enum):
-    """Video content quality levels"""
-    EXCEPTIONAL = "exceptional"
+    """Video content quality levels"""    EXCEPTIONAL = "exceptional"
     HIGH_QUALITY = "high_quality"
     PROFESSIONAL = "professional"
     GOOD = "good"
@@ -64,8 +59,7 @@ class VideoQuality(Enum):
 
 
 class MonetizationStatus(Enum):
-    """Video monetization status"""
-    MONETIZED = "monetized"
+    """Video monetization status"""    MONETIZED = "monetized"
     DEMONETIZED = "demonetized"
     LIMITED = "limited"
     NOT_ELIGIBLE = "not_eligible"
@@ -74,8 +68,7 @@ class MonetizationStatus(Enum):
 
 @dataclass
 class YouTubeVideo:
-    """YouTube video data structure"""
-    video_id: str
+    """YouTube video data structure"""    video_id: str
     title: str
     description: str
     channel_id: str
@@ -117,8 +110,7 @@ class YouTubeVideo:
 
 @dataclass 
 class YouTubeChannel:
-    """YouTube channel data structure"""
-    channel_id: str
+    """YouTube channel data structure"""    channel_id: str
     title: str
     description: str
     published_at: datetime
@@ -148,11 +140,9 @@ class YouTubeChannel:
 
 
 class YouTubeEngine(BaseCrawlerEngine):
-    """
-    Professional YouTube crawling engine with advanced video analytics,
+    """    Professional YouTube crawling engine with advanced video analytics,
     monetization tracking, and AI-powered content optimization.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.platform = YouTubePlatform(config.get('youtube', {}))
@@ -188,8 +178,7 @@ class YouTubeEngine(BaseCrawlerEngine):
         category_id: Optional[str] = None,
         max_results: int = 50
     ) -> AsyncGenerator[YouTubeVideo, None]:
-        """
-        Crawl trending YouTube videos with comprehensive analysis
+        """        Crawl trending YouTube videos with comprehensive analysis
         
         Args:
             region_code: Country code for trending videos
@@ -198,8 +187,7 @@ class YouTubeEngine(BaseCrawlerEngine):
             
         Yields:
             YouTubeVideo: Processed YouTube video objects
-        """
-        self.logger.info(f"Crawling trending videos for region: {region_code}")
+        """        self.logger.info(f"Crawling trending videos for region: {region_code}")
         
         try:
             if not self.youtube_service:
@@ -235,8 +223,7 @@ class YouTubeEngine(BaseCrawlerEngine):
         max_results: int = 100,
         order: str = 'date'
     ) -> AsyncGenerator[YouTubeVideo, None]:
-        """
-        Crawl videos from a specific YouTube channel
+        """        Crawl videos from a specific YouTube channel
         
         Args:
             channel_id: YouTube channel ID
@@ -245,8 +232,7 @@ class YouTubeEngine(BaseCrawlerEngine):
             
         Yields:
             YouTubeVideo: Processed YouTube video objects
-        """
-        self.logger.info(f"Crawling videos from channel: {channel_id}")
+        """        self.logger.info(f"Crawling videos from channel: {channel_id}")
         
         try:
             if not self.youtube_service:
@@ -313,8 +299,7 @@ class YouTubeEngine(BaseCrawlerEngine):
             raise
             
     async def _process_youtube_video(self, video_item: Dict[str, Any]) -> Optional[YouTubeVideo]:
-        """Process and analyze YouTube video with comprehensive metrics"""
-        
+        """Process and analyze YouTube video with comprehensive metrics"""        
         try:
             # Extract basic video information
             video_id = video_item['id']
@@ -469,8 +454,7 @@ class YouTubeEngine(BaseCrawlerEngine):
 
 @dataclass
 class YouTubeVideoData:
-    """YouTube video data structure"""
-    video_id: str
+    """YouTube video data structure"""    video_id: str
     title: str
     description: str
     channel_id: str
@@ -493,8 +477,7 @@ class YouTubeVideoData:
 
 @dataclass
 class YouTubeChannelData:
-    """YouTube channel data structure"""
-    channel_id: str
+    """YouTube channel data structure"""    channel_id: str
     title: str
     description: str
     custom_url: str
@@ -512,8 +495,7 @@ class YouTubeChannelData:
 
 
 class YouTubeCrawlerEngine(BaseCrawlerEngine):
-    """
-    Advanced YouTube crawler engine with comprehensive API integration.
+    """    Advanced YouTube crawler engine with comprehensive API integration.
     
     Features:
     - YouTube Data API v3 integration
@@ -522,11 +504,9 @@ class YouTubeCrawlerEngine(BaseCrawlerEngine):
     - Content protection monitoring
     - Rate limiting and caching
     - Selenium-based scraping for restricted data
-    """
-    
+    """    
     def __init__(self, api_key: str, config: Optional[Dict] = None):
-        """Initialize YouTube crawler engine"""
-        super().__init__(config)
+        """Initialize YouTube crawler engine"""        super().__init__(config)
         self.api_key = api_key
         self.youtube_service = None
         self.rate_limiter = RateLimiter(
@@ -541,8 +521,7 @@ class YouTubeCrawlerEngine(BaseCrawlerEngine):
         self._setup_selenium_driver()
     
     def _setup_youtube_service(self) -> None:
-        """Setup YouTube Data API service"""
-        try:
+        """Setup YouTube Data API service"""        try:
             self.youtube_service = googleapiclient.discovery.build(
                 'youtube', 'v3', 
                 developerKey=self.api_key,
@@ -554,8 +533,7 @@ class YouTubeCrawlerEngine(BaseCrawlerEngine):
             raise AuthenticationError(f"YouTube API initialization failed: {e}")
     
     def _setup_selenium_driver(self) -> None:
-        """Setup Selenium WebDriver for advanced scraping"""
-        try:
+        """Setup Selenium WebDriver for advanced scraping"""        try:
             chrome_options = webdriver.ChromeOptions()
             chrome_options.add_argument('--headless')
             chrome_options.add_argument('--no-sandbox')
@@ -580,8 +558,7 @@ class YouTubeCrawlerEngine(BaseCrawlerEngine):
         max_results: int = 50,
         filters: Optional[Dict] = None
     ) -> List[YouTubeVideoData]:
-        """
-        Search for videos using YouTube Data API
+        """        Search for videos using YouTube Data API
         
         Args:
             query: Search query
@@ -590,8 +567,7 @@ class YouTubeCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of video data
-        """
-        await self.rate_limiter.wait()
+        """        await self.rate_limiter.wait()
         
         cache_key = hashlib.md5(f"{query}_{max_results}_{filters}".encode()).hexdigest()
         cached_result = await self.cache_manager.get(cache_key)
@@ -633,16 +609,14 @@ class YouTubeCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Video search failed: {e}")
     
     async def get_videos_details(self, video_ids: List[str]) -> List[YouTubeVideoData]:
-        """
-        Get detailed information for multiple videos
+        """        Get detailed information for multiple videos
         
         Args:
             video_ids: List of YouTube video IDs
             
         Returns:
             List of detailed video data
-        """
-        videos_data = []
+        """        videos_data = []
         
         # Process videos in batches of 50 (API limit)
         for i in range(0, len(video_ids), 50):
@@ -667,16 +641,14 @@ class YouTubeCrawlerEngine(BaseCrawlerEngine):
         return videos_data
     
     async def get_channel_details(self, channel_id: str) -> Optional[YouTubeChannelData]:
-        """
-        Get detailed channel information
+        """        Get detailed channel information
         
         Args:
             channel_id: YouTube channel ID
             
         Returns:
             Channel data or None if not found
-        """
-        await self.rate_limiter.wait()
+        """        await self.rate_limiter.wait()
         
         cache_key = f"channel_{channel_id}"
         cached_result = await self.cache_manager.get(cache_key)
@@ -707,8 +679,7 @@ class YouTubeCrawlerEngine(BaseCrawlerEngine):
         channel_id: str, 
         max_results: int = 50
     ) -> List[YouTubeVideoData]:
-        """
-        Get videos from a specific channel
+        """        Get videos from a specific channel
         
         Args:
             channel_id: YouTube channel ID
@@ -716,8 +687,7 @@ class YouTubeCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of video data from the channel
-        """
-        videos_data = []
+        """        videos_data = []
         next_page_token = None
         
         while len(videos_data) < max_results:
@@ -756,8 +726,7 @@ class YouTubeCrawlerEngine(BaseCrawlerEngine):
         original_content: Dict, 
         search_terms: List[str]
     ) -> List[Dict]:
-        """
-        Monitor for potential content theft using fingerprinting
+        """        Monitor for potential content theft using fingerprinting
         
         Args:
             original_content: Original content metadata
@@ -765,8 +734,7 @@ class YouTubeCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of potentially stolen content matches
-        """
-        theft_candidates = []
+        """        theft_candidates = []
         
         for search_term in search_terms:
             try:
@@ -797,16 +765,14 @@ class YouTubeCrawlerEngine(BaseCrawlerEngine):
         return theft_candidates
     
     async def extract_monetization_data(self, video_id: str) -> Optional[Dict]:
-        """
-        Extract monetization data using Selenium scraping
+        """        Extract monetization data using Selenium scraping
         
         Args:
             video_id: YouTube video ID
             
         Returns:
             Monetization data or None if unavailable
-        """
-        if not self.driver:
+        """        if not self.driver:
             logger.warning("Selenium driver not available for monetization data extraction")
             return None
             
@@ -858,8 +824,7 @@ class YouTubeCrawlerEngine(BaseCrawlerEngine):
             return None
     
     async def _parse_video_item(self, item: Dict) -> Optional[YouTubeVideoData]:
-        """Parse YouTube API video item into structured data"""
-        try:
+        """Parse YouTube API video item into structured data"""        try:
             snippet = item['snippet']
             statistics = item.get('statistics', {})
             content_details = item.get('contentDetails', {})
@@ -900,8 +865,7 @@ class YouTubeCrawlerEngine(BaseCrawlerEngine):
             return None
     
     async def _parse_channel_item(self, item: Dict) -> YouTubeChannelData:
-        """Parse YouTube API channel item into structured data"""
-        snippet = item['snippet']
+        """Parse YouTube API channel item into structured data"""        snippet = item['snippet']
         statistics = item.get('statistics', {})
         content_details = item.get('contentDetails', {})
         branding_settings = item.get('brandingSettings', {})
@@ -928,8 +892,7 @@ class YouTubeCrawlerEngine(BaseCrawlerEngine):
         original: Dict, 
         candidate: Dict
     ) -> float:
-        """
-        Calculate similarity score between original and candidate content
+        """        Calculate similarity score between original and candidate content
         
         Args:
             original: Original content metadata
@@ -937,8 +900,7 @@ class YouTubeCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             Similarity score between 0 and 1
-        """
-        try:
+        """        try:
             # Title similarity (using simple word overlap)
             original_title_words = set(original.get('title', '').lower().split())
             candidate_title_words = set(candidate.get('title', '').lower().split())
@@ -984,8 +946,7 @@ class YouTubeCrawlerEngine(BaseCrawlerEngine):
             return 0.0
     
     async def cleanup(self) -> None:
-        """Cleanup resources"""
-        try:
+        """Cleanup resources"""        try:
             if hasattr(self, 'driver') and self.driver:
                 self.driver.quit()
             await self.cache_manager.cleanup()
@@ -994,8 +955,7 @@ class YouTubeCrawlerEngine(BaseCrawlerEngine):
             logger.error(f"Error during cleanup: {e}")
     
     def __del__(self):
-        """Destructor to ensure cleanup"""
-        try:
+        """Destructor to ensure cleanup"""        try:
             if hasattr(self, 'driver') and self.driver:
                 self.driver.quit()
         except:

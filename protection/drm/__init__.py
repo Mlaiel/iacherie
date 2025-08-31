@@ -50,8 +50,7 @@ UNAUTHORIZED ACCESS IS NATIONAL SECURITY THREAT:
 
 Contact mlaiel@live.de for MANDATORY national security authorization.
 Unauthorized access triggers automatic homeland security response.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass

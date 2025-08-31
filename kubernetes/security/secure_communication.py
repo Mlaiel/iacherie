@@ -1,5 +1,4 @@
-"""
-Secure Communication Management for Deployment Security
+"""Secure Communication Management for Deployment Security
 
 Provides secure communication channels, message encryption, and protocol
 validation for the IA Influencer Agent platform deployment infrastructure.
@@ -12,9 +11,7 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and
 will result in legal action.
-"""
-
-import asyncio
+"""import asyncio
 import ssl
 import json
 import hmac
@@ -37,8 +34,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SecureMessage:
-    """Secure message container"""
-    id: str
+    """Secure message container"""    id: str
     sender: str
     recipient: str
     content: Dict[str, Any]
@@ -50,8 +46,7 @@ class SecureMessage:
 
 @dataclass
 class ChannelConfig:
-    """Secure channel configuration"""
-    channel_id: str
+    """Secure channel configuration"""    channel_id: str
     encryption_key: bytes
     signing_key: bytes
     allowed_participants: List[str]
@@ -62,10 +57,8 @@ class ChannelConfig:
 
 
 class MessageEncryption:
-    """
-    Advanced message encryption and signing system
-    """
-    
+    """    Advanced message encryption and signing system
+    """    
     def __init__(self, master_key: Optional[bytes] = None):
         self.master_key = master_key or Fernet.generate_key()
         self._fernet = Fernet(self.master_key)
@@ -80,8 +73,7 @@ class MessageEncryption:
         logger.info("Message encryption system initialized")
     
     def encrypt_symmetric(self, message: str, key: Optional[bytes] = None) -> str:
-        """
-        Encrypt message using symmetric encryption
+        """        Encrypt message using symmetric encryption
         
         Args:
             message: Message to encrypt
@@ -89,8 +81,7 @@ class MessageEncryption:
             
         Returns:
             Encrypted message
-        """
-        try:
+        """        try:
             if key:
                 fernet = Fernet(key)
                 encrypted = fernet.encrypt(message.encode())
@@ -104,8 +95,7 @@ class MessageEncryption:
             raise
     
     def decrypt_symmetric(self, encrypted_message: str, key: Optional[bytes] = None) -> str:
-        """
-        Decrypt message using symmetric encryption
+        """        Decrypt message using symmetric encryption
         
         Args:
             encrypted_message: Encrypted message
@@ -113,8 +103,7 @@ class MessageEncryption:
             
         Returns:
             Decrypted message
-        """
-        try:
+        """        try:
             if key:
                 fernet = Fernet(key)
                 decrypted = fernet.decrypt(encrypted_message.encode())
@@ -128,8 +117,7 @@ class MessageEncryption:
             raise
     
     def encrypt_asymmetric(self, message: str, public_key: Optional[Any] = None) -> bytes:
-        """
-        Encrypt message using asymmetric encryption
+        """        Encrypt message using asymmetric encryption
         
         Args:
             message: Message to encrypt
@@ -137,8 +125,7 @@ class MessageEncryption:
             
         Returns:
             Encrypted message bytes
-        """
-        try:
+        """        try:
             key = public_key or self._public_key
             
             encrypted = key.encrypt(
@@ -157,8 +144,7 @@ class MessageEncryption:
             raise
     
     def decrypt_asymmetric(self, encrypted_message: bytes, private_key: Optional[Any] = None) -> str:
-        """
-        Decrypt message using asymmetric encryption
+        """        Decrypt message using asymmetric encryption
         
         Args:
             encrypted_message: Encrypted message bytes
@@ -166,8 +152,7 @@ class MessageEncryption:
             
         Returns:
             Decrypted message
-        """
-        try:
+        """        try:
             key = private_key or self._private_key
             
             decrypted = key.decrypt(
@@ -186,8 +171,7 @@ class MessageEncryption:
             raise
     
     def sign_message(self, message: str, private_key: Optional[Any] = None) -> bytes:
-        """
-        Sign message with digital signature
+        """        Sign message with digital signature
         
         Args:
             message: Message to sign
@@ -195,8 +179,7 @@ class MessageEncryption:
             
         Returns:
             Digital signature
-        """
-        try:
+        """        try:
             key = private_key or self._private_key
             
             signature = key.sign(
@@ -220,8 +203,7 @@ class MessageEncryption:
         signature: bytes,
         public_key: Optional[Any] = None
     ) -> bool:
-        """
-        Verify message digital signature
+        """        Verify message digital signature
         
         Args:
             message: Original message
@@ -230,8 +212,7 @@ class MessageEncryption:
             
         Returns:
             True if signature is valid
-        """
-        try:
+        """        try:
             key = public_key or self._public_key
             
             key.verify(
@@ -250,8 +231,7 @@ class MessageEncryption:
             return False
     
     def create_hmac_signature(self, message: str, secret_key: bytes) -> str:
-        """
-        Create HMAC signature for message
+        """        Create HMAC signature for message
         
         Args:
             message: Message to sign
@@ -259,8 +239,7 @@ class MessageEncryption:
             
         Returns:
             HMAC signature
-        """
-        try:
+        """        try:
             signature = hmac.new(
                 secret_key,
                 message.encode(),
@@ -274,8 +253,7 @@ class MessageEncryption:
             raise
     
     def verify_hmac_signature(self, message: str, signature: str, secret_key: bytes) -> bool:
-        """
-        Verify HMAC signature
+        """        Verify HMAC signature
         
         Args:
             message: Original message
@@ -284,8 +262,7 @@ class MessageEncryption:
             
         Returns:
             True if signature is valid
-        """
-        try:
+        """        try:
             expected_signature = hmac.new(
                 secret_key,
                 message.encode(),
@@ -300,10 +277,8 @@ class MessageEncryption:
 
 
 class ProtocolValidator:
-    """
-    Protocol validation and security enforcement
-    """
-    
+    """    Protocol validation and security enforcement
+    """    
     ALLOWED_PROTOCOLS = ["https", "wss", "grpc", "amqp"]
     SECURE_CIPHER_SUITES = [
         "TLS_AES_256_GCM_SHA384",
@@ -322,27 +297,23 @@ class ProtocolValidator:
         protocol: str,
         validator: Callable[[Dict[str, Any]], bool]
     ):
-        """
-        Register custom validation rule for protocol
+        """        Register custom validation rule for protocol
         
         Args:
             protocol: Protocol name
             validator: Validation function
-        """
-        self.validation_rules[protocol] = validator
+        """        self.validation_rules[protocol] = validator
         logger.info(f"Registered validation rule for protocol: {protocol}")
     
     def validate_tls_config(self, tls_config: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Validate TLS configuration security
+        """        Validate TLS configuration security
         
         Args:
             tls_config: TLS configuration
             
         Returns:
             Validation results
-        """
-        results = {
+        """        results = {
             'is_valid': True,
             'errors': [],
             'warnings': [],
@@ -392,16 +363,14 @@ class ProtocolValidator:
             }
     
     def validate_websocket_config(self, ws_config: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Validate WebSocket configuration
+        """        Validate WebSocket configuration
         
         Args:
             ws_config: WebSocket configuration
             
         Returns:
             Validation results
-        """
-        results = {
+        """        results = {
             'is_valid': True,
             'errors': [],
             'warnings': [],
@@ -446,16 +415,14 @@ class ProtocolValidator:
             }
     
     def validate_protocol_url(self, url: str) -> bool:
-        """
-        Validate if URL uses secure protocol
+        """        Validate if URL uses secure protocol
         
         Args:
             url: URL to validate
             
         Returns:
             True if protocol is secure
-        """
-        try:
+        """        try:
             protocol = url.split('://')[0].lower()
             is_secure = protocol in self.ALLOWED_PROTOCOLS
             
@@ -470,10 +437,8 @@ class ProtocolValidator:
 
 
 class SecureChannelManager:
-    """
-    Secure communication channel management system
-    """
-    
+    """    Secure communication channel management system
+    """    
     def __init__(
         self,
         redis_url: str = "redis://localhost:6379",
@@ -497,8 +462,7 @@ class SecureChannelManager:
         logger.info("Secure channel manager initialized")
     
     async def initialize_redis_pool(self):
-        """Initialize Redis connection pool"""
-        try:
+        """Initialize Redis connection pool"""        try:
             self._redis_pool = aioredis.ConnectionPool.from_url(self.redis_url)
             logger.info("Redis connection pool initialized")
         except Exception as e:
@@ -513,8 +477,7 @@ class SecureChannelManager:
         message_ttl: int = 3600,
         max_message_size: int = 1024 * 1024  # 1MB
     ) -> ChannelConfig:
-        """
-        Create secure communication channel
+        """        Create secure communication channel
         
         Args:
             channel_id: Unique channel identifier
@@ -525,8 +488,7 @@ class SecureChannelManager:
             
         Returns:
             Channel configuration
-        """
-        try:
+        """        try:
             # Generate channel keys
             encryption_key = Fernet.generate_key()
             signing_key = Fernet.generate_key()
@@ -557,8 +519,7 @@ class SecureChannelManager:
         content: Dict[str, Any],
         recipient: Optional[str] = None
     ) -> str:
-        """
-        Send encrypted message through secure channel
+        """        Send encrypted message through secure channel
         
         Args:
             channel_id: Channel identifier
@@ -568,8 +529,7 @@ class SecureChannelManager:
             
         Returns:
             Message ID
-        """
-        try:
+        """        try:
             if channel_id not in self.channels:
                 raise ValueError(f"Channel not found: {channel_id}")
             
@@ -644,8 +604,7 @@ class SecureChannelManager:
         message_id: str,
         recipient: str
     ) -> Optional[SecureMessage]:
-        """
-        Receive and decrypt message from secure channel
+        """        Receive and decrypt message from secure channel
         
         Args:
             channel_id: Channel identifier
@@ -654,8 +613,7 @@ class SecureChannelManager:
             
         Returns:
             Decrypted message or None
-        """
-        try:
+        """        try:
             if channel_id not in self.channels:
                 raise ValueError(f"Channel not found: {channel_id}")
             
@@ -715,18 +673,15 @@ class SecureChannelManager:
         port: int = 8765,
         ssl_context: Optional[ssl.SSLContext] = None
     ):
-        """
-        Start secure WebSocket server
+        """        Start secure WebSocket server
         
         Args:
             host: Server host
             port: Server port
             ssl_context: SSL context for secure connections
-        """
-        try:
+        """        try:
             async def handle_websocket(websocket, path):
-                """Handle WebSocket connection"""
-                try:
+                """Handle WebSocket connection"""                try:
                     # Authenticate connection
                     auth_message = await websocket.recv()
                     auth_data = json.loads(auth_message)
@@ -772,13 +727,11 @@ class SecureChannelManager:
             raise
     
     def _validate_auth_token(self, token: str) -> bool:
-        """Validate authentication token"""
-        # Implement token validation logic
+        """Validate authentication token"""        # Implement token validation logic
         return token is not None and len(token) > 10
     
     async def _handle_websocket_message(self, client_id: str, message: str):
-        """Handle incoming WebSocket message"""
-        try:
+        """Handle incoming WebSocket message"""        try:
             data = json.loads(message)
             message_type = data.get('type')
             
@@ -797,8 +750,7 @@ class SecureChannelManager:
             logger.error(f"Failed to handle WebSocket message: {e}")
     
     async def cleanup_expired_messages(self):
-        """Cleanup expired messages from Redis"""
-        try:
+        """Cleanup expired messages from Redis"""        try:
             if self._redis_pool is None:
                 await self.initialize_redis_pool()
             
@@ -822,16 +774,14 @@ class SecureChannelManager:
             logger.error(f"Failed to cleanup expired messages: {e}")
     
     async def get_channel_statistics(self, channel_id: str) -> Dict[str, Any]:
-        """
-        Get channel statistics
+        """        Get channel statistics
         
         Args:
             channel_id: Channel identifier
             
         Returns:
             Channel statistics
-        """
-        try:
+        """        try:
             if channel_id not in self.channels:
                 raise ValueError(f"Channel not found: {channel_id}")
             

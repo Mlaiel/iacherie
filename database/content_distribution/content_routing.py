@@ -1,5 +1,4 @@
-"""
-Content Routing Database Module - Enterprise Intelligent Content Routing System
+"""Content Routing Database Module - Enterprise Intelligent Content Routing System
 
 Advanced database architecture for intelligent content routing, traffic management,
 and distribution optimization within the IA Influencer Agent ecosystem.
@@ -15,9 +14,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Team Specialties: Lead AI Developer + Senior Backend Engineer + Database Administrator + 
 Network Engineer + Traffic Management Expert + Load Balancing Specialist
-"""
-
-import asyncio
+"""import asyncio
 import json
 import uuid
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -44,8 +41,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class RoutingStrategy(str, Enum):
-    """Content routing strategies"""
-    ROUND_ROBIN = "round_robin"
+    """Content routing strategies"""    ROUND_ROBIN = "round_robin"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
     LEAST_CONNECTIONS = "least_connections"
     FASTEST_RESPONSE = "fastest_response"
@@ -55,8 +51,7 @@ class RoutingStrategy(str, Enum):
     CUSTOM_RULES = "custom_rules"
 
 class RoutingMethod(str, Enum):
-    """Content routing methods"""
-    DIRECT = "direct"
+    """Content routing methods"""    DIRECT = "direct"
     CDN = "cdn"
     PROXY = "proxy"
     LOAD_BALANCER = "load_balancer"
@@ -64,8 +59,7 @@ class RoutingMethod(str, Enum):
     HYBRID = "hybrid"
 
 class RouteStatus(str, Enum):
-    """Route operational status"""
-    ACTIVE = "active"
+    """Route operational status"""    ACTIVE = "active"
     INACTIVE = "inactive"
     DEGRADED = "degraded"
     MAINTENANCE = "maintenance"
@@ -73,8 +67,7 @@ class RouteStatus(str, Enum):
     OVERLOADED = "overloaded"
 
 class TrafficType(str, Enum):
-    """Traffic type classification"""
-    UPLOAD = "upload"
+    """Traffic type classification"""    UPLOAD = "upload"
     DOWNLOAD = "download"
     STREAMING = "streaming"
     API_CALLS = "api_calls"
@@ -83,8 +76,7 @@ class TrafficType(str, Enum):
 
 @dataclass
 class RoutingMetrics:
-    """Route performance metrics"""
-    latency_ms: float = 0.0
+    """Route performance metrics"""    latency_ms: float = 0.0
     throughput_mbps: float = 0.0
     success_rate: float = 100.0
     error_rate: float = 0.0
@@ -95,8 +87,7 @@ class RoutingMetrics:
 
 @dataclass
 class GeographicInfo:
-    """Geographic routing information"""
-    country_code: str = ""
+    """Geographic routing information"""    country_code: str = ""
     region: str = ""
     city: str = ""
     latitude: float = 0.0
@@ -106,8 +97,7 @@ class GeographicInfo:
     asn: int = 0
 
 class ContentRoute(Base):
-    """Content routing database model"""
-    __tablename__ = "content_routes"
+    """Content routing database model"""    __tablename__ = "content_routes"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     route_name = Column(String(100), nullable=False, unique=True)
@@ -176,8 +166,7 @@ class ContentRoute(Base):
     is_active = Column(Boolean, nullable=False, default=True)
 
 class RoutingDecision(Base):
-    """Routing decision tracking database model"""
-    __tablename__ = "routing_decisions"
+    """Routing decision tracking database model"""    __tablename__ = "routing_decisions"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     content_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -232,8 +221,7 @@ class RoutingDecision(Base):
     trace_id = Column(String(100), nullable=True)
 
 class TrafficPattern(Base):
-    """Traffic pattern analysis database model"""
-    __tablename__ = "traffic_patterns"
+    """Traffic pattern analysis database model"""    __tablename__ = "traffic_patterns"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     route_id = Column(UUID(as_uuid=True), ForeignKey('content_routes.id'), nullable=False)
@@ -283,8 +271,7 @@ class TrafficPattern(Base):
     scaling_recommendations = Column(JSONB, nullable=True)
 
 class LoadBalancerPool(Base):
-    """Load balancer pool database model"""
-    __tablename__ = "load_balancer_pools"
+    """Load balancer pool database model"""    __tablename__ = "load_balancer_pools"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     pool_name = Column(String(100), nullable=False, unique=True)
@@ -331,8 +318,7 @@ class LoadBalancerPool(Base):
     created_by = Column(String(100), nullable=True)
 
 class RoutingRule(Base):
-    """Routing rules database model"""
-    __tablename__ = "routing_rules"
+    """Routing rules database model"""    __tablename__ = "routing_rules"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     rule_name = Column(String(100), nullable=False)
@@ -380,8 +366,7 @@ class RoutingRule(Base):
 
 # Pydantic Models for API
 class RouteConfigurationRequest(BaseModel):
-    """Request model for route configuration"""
-    route_name: str
+    """Request model for route configuration"""    route_name: str
     source_platform: str
     target_platform: str
     routing_strategy: RoutingStrategy = RoutingStrategy.INTELLIGENT_AI
@@ -396,8 +381,7 @@ class RouteConfigurationRequest(BaseModel):
     routing_rules: Optional[Dict[str, Any]] = None
 
 class RoutingDecisionRequest(BaseModel):
-    """Request model for routing decisions"""
-    content_id: str
+    """Request model for routing decisions"""    content_id: str
     content_type: str
     request_size_bytes: int
     source_ip: Optional[str] = None
@@ -407,8 +391,7 @@ class RoutingDecisionRequest(BaseModel):
     cost_constraints: Optional[Dict[str, Any]] = None
 
 class LoadBalancerPoolRequest(BaseModel):
-    """Request model for load balancer pools"""
-    pool_name: str
+    """Request model for load balancer pools"""    pool_name: str
     platform_name: str
     balancing_algorithm: str = "weighted_round_robin"
     pool_members: List[Dict[str, Any]]
@@ -419,8 +402,7 @@ class LoadBalancerPoolRequest(BaseModel):
     max_pool_size: int = 10
 
 class RoutingRuleRequest(BaseModel):
-    """Request model for routing rules"""
-    rule_name: str
+    """Request model for routing rules"""    rule_name: str
     rule_type: str
     conditions: Dict[str, Any]
     actions: Dict[str, Any]
@@ -430,8 +412,7 @@ class RoutingRuleRequest(BaseModel):
     applies_to_regions: Optional[List[str]] = None
 
 class RoutingResponse(BaseModel):
-    """Response model for routing decisions"""
-    decision_id: str
+    """Response model for routing decisions"""    decision_id: str
     selected_route_id: str
     selected_endpoint: str
     predicted_latency_ms: float
@@ -441,8 +422,7 @@ class RoutingResponse(BaseModel):
     alternative_routes: List[Dict[str, Any]]
 
 class ContentRoutingManager:
-    """Enterprise content routing management system"""
-    
+    """Enterprise content routing management system"""    
     def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -454,8 +434,7 @@ class ContentRoutingManager:
         user_id: str,
         route_request: RouteConfigurationRequest
     ) -> ContentRoute:
-        """Create new content route configuration"""
-        try:
+        """Create new content route configuration"""        try:
             # Validate route configuration
             await self._validate_route_configuration(route_request)
             
@@ -511,8 +490,7 @@ class ContentRoutingManager:
         user_id: str,
         decision_request: RoutingDecisionRequest
     ) -> RoutingDecision:
-        """Make intelligent routing decision"""
-        try:
+        """Make intelligent routing decision"""        try:
             # Get available routes for target platforms
             available_routes = await self._get_available_routes(
                 decision_request.target_platforms,
@@ -588,8 +566,7 @@ class ContentRoutingManager:
         user_id: str,
         pool_request: LoadBalancerPoolRequest
     ) -> LoadBalancerPool:
-        """Create load balancer pool"""
-        try:
+        """Create load balancer pool"""        try:
             # Validate pool configuration
             await self._validate_pool_configuration(pool_request)
             
@@ -649,8 +626,7 @@ class ContentRoutingManager:
         user_id: str,
         rule_request: RoutingRuleRequest
     ) -> RoutingRule:
-        """Create routing rule"""
-        try:
+        """Create routing rule"""        try:
             # Validate rule configuration
             await self._validate_routing_rule(rule_request)
             
@@ -688,8 +664,7 @@ class ContentRoutingManager:
         route_id: str,
         analysis_period_hours: int = 168  # 1 week
     ) -> TrafficPattern:
-        """Analyze traffic patterns for a route"""
-        try:
+        """Analyze traffic patterns for a route"""        try:
             route = await self._get_route_by_id(route_id)
             if not route:
                 raise ValueError(f"Route {route_id} not found")
@@ -761,8 +736,7 @@ class ContentRoutingManager:
         target_platforms: List[str],
         performance_requirements: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Get AI-powered routing recommendations"""
-        try:
+        """Get AI-powered routing recommendations"""        try:
             # Analyze current routing performance
             current_performance = await self._analyze_current_routing_performance(
                 user_id, target_platforms
@@ -793,8 +767,7 @@ class ContentRoutingManager:
             return {'error': str(e)}
     
     async def _validate_route_configuration(self, request: RouteConfigurationRequest):
-        """Validate route configuration"""
-        if not request.source_endpoints or not request.target_endpoints:
+        """Validate route configuration"""        if not request.source_endpoints or not request.target_endpoints:
             raise ValueError("Source and target endpoints are required")
         
         if request.max_bandwidth_mbps and request.max_bandwidth_mbps <= 0:
@@ -804,8 +777,7 @@ class ContentRoutingManager:
             raise ValueError("Max concurrent connections must be positive")
     
     async def _cache_route_config(self, route: ContentRoute):
-        """Cache route configuration in Redis"""
-        try:
+        """Cache route configuration in Redis"""        try:
             cache_key = f"route_config:{route.id}"
             route_data = {
                 'id': str(route.id),
@@ -829,8 +801,7 @@ class ContentRoutingManager:
             logger.warning(f"Error caching route config: {str(e)}")
     
     async def _get_route_by_id(self, route_id: str) -> Optional[ContentRoute]:
-        """Get route by ID with caching"""
-        try:
+        """Get route by ID with caching"""        try:
             route_uuid = uuid.UUID(route_id)
             route = await self.db_session.query(ContentRoute).filter(
                 ContentRoute.id == route_uuid

@@ -1,14 +1,11 @@
-"""
-🧠 Advanced ML Models for Audio Processing - Deep Learning Engine
+"""🧠 Advanced ML Models for Audio Processing - Deep Learning Engine
 
 State-of-the-art machine learning models for comprehensive audio analysis.
 Includes pre-trained and custom models for various audio processing tasks.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Union, Any, Callable
 from pathlib import Path
@@ -37,8 +34,7 @@ logger = logging.getLogger(__name__)
 
 
 class ModelType(Enum):
-    """Types of ML models available"""
-    GENRE_CLASSIFIER = "genre_classifier"
+    """Types of ML models available"""    GENRE_CLASSIFIER = "genre_classifier"
     MOOD_DETECTOR = "mood_detector"
     TEMPO_ESTIMATOR = "tempo_estimator"
     KEY_DETECTOR = "key_detector"
@@ -51,8 +47,7 @@ class ModelType(Enum):
 
 
 class ModelArchitecture(Enum):
-    """Neural network architectures"""
-    CNN_1D = "cnn_1d"
+    """Neural network architectures"""    CNN_1D = "cnn_1d"
     CNN_2D = "cnn_2d"
     LSTM = "lstm"
     TRANSFORMER = "transformer"
@@ -63,8 +58,7 @@ class ModelArchitecture(Enum):
 
 @dataclass
 class ModelConfig:
-    """Configuration for ML models"""
-    model_type: ModelType
+    """Configuration for ML models"""    model_type: ModelType
     architecture: ModelArchitecture
     input_features: List[str]
     output_classes: List[str]
@@ -82,8 +76,7 @@ class ModelConfig:
 
 @dataclass
 class PredictionResult:
-    """Result from model prediction"""
-    model_type: ModelType
+    """Result from model prediction"""    model_type: ModelType
     predictions: Dict[str, float]
     confidence: float
     features_used: List[str]
@@ -92,15 +85,13 @@ class PredictionResult:
 
 
 class AudioCNN1D(nn.Module):
-    """
-    🏗️ 1D Convolutional Neural Network for Audio Features
+    """    🏗️ 1D Convolutional Neural Network for Audio Features
     
     Optimized for processing audio feature sequences:
     - Temporal pattern recognition
     - Feature extraction from time-series data
     - Classification and regression tasks
-    """
-    
+    """    
     def __init__(self, 
                  input_size: int,
                  num_classes: int,
@@ -158,15 +149,13 @@ class AudioCNN1D(nn.Module):
 
 
 class AudioCNN2D(nn.Module):
-    """
-    🖼️ 2D Convolutional Neural Network for Spectrograms
+    """    🖼️ 2D Convolutional Neural Network for Spectrograms
     
     Specialized for processing audio spectrograms:
     - Frequency-time pattern recognition
     - Image-like audio representations
     - Advanced feature extraction
-    """
-    
+    """    
     def __init__(self, 
                  num_classes: int,
                  input_channels: int = 1,
@@ -223,15 +212,13 @@ class AudioCNN2D(nn.Module):
 
 
 class AudioLSTM(nn.Module):
-    """
-    🔄 LSTM Network for Sequential Audio Analysis
+    """    🔄 LSTM Network for Sequential Audio Analysis
     
     Optimized for temporal dependencies:
     - Long-term pattern recognition
     - Sequential audio analysis
     - Time-series prediction
-    """
-    
+    """    
     def __init__(self,
                  input_size: int,
                  num_classes: int,
@@ -287,15 +274,13 @@ class AudioLSTM(nn.Module):
 
 
 class AudioTransformer(nn.Module):
-    """
-    🎯 Transformer Network for Audio Analysis
+    """    🎯 Transformer Network for Audio Analysis
     
     State-of-the-art attention-based architecture:
     - Self-attention mechanisms
     - Parallel processing
     - Long-range dependencies
-    """
-    
+    """    
     def __init__(self,
                  input_size: int,
                  num_classes: int,
@@ -330,8 +315,7 @@ class AudioTransformer(nn.Module):
         )
     
     def _create_positional_encoding(self, max_len: int, d_model: int) -> torch.Tensor:
-        """Create positional encoding for transformer"""
-        pe = torch.zeros(max_len, d_model)
+        """Create positional encoding for transformer"""        pe = torch.zeros(max_len, d_model)
         position = torch.arange(0, max_len, dtype=torch.float).unsqueeze(1)
         
         div_term = torch.exp(torch.arange(0, d_model, 2).float() * 
@@ -366,8 +350,7 @@ class AudioTransformer(nn.Module):
 
 
 class MLModelManager:
-    """
-    🤖 Advanced Machine Learning Model Manager
+    """    🤖 Advanced Machine Learning Model Manager
     
     Comprehensive ML pipeline for audio processing:
     - Multi-model ensemble
@@ -375,8 +358,7 @@ class MLModelManager:
     - Model training and inference
     - Performance optimization
     - Model persistence and loading
-    """
-    
+    """    
     def __init__(self, 
                  config: Optional[AudioProcessingConfig] = None,
                  models_directory: Optional[Path] = None):
@@ -400,8 +382,7 @@ class MLModelManager:
         logger.info("MLModelManager initialized")
     
     def _init_feature_extractors(self) -> Dict[str, Callable]:
-        """Initialize feature extraction functions"""
-        return {
+        """Initialize feature extraction functions"""        return {
             'mfcc': self._extract_mfcc,
             'chroma': self._extract_chroma,
             'spectral_contrast': self._extract_spectral_contrast,
@@ -418,8 +399,7 @@ class MLModelManager:
         }
     
     def _init_default_configs(self):
-        """Initialize default model configurations"""
-        self.model_configs = {
+        """Initialize default model configurations"""        self.model_configs = {
             ModelType.GENRE_CLASSIFIER: ModelConfig(
                 model_type=ModelType.GENRE_CLASSIFIER,
                 architecture=ModelArchitecture.CNN_2D,
@@ -470,8 +450,7 @@ class MLModelManager:
                              audio_data: np.ndarray,
                              sample_rate: int,
                              feature_names: List[str]) -> Dict[str, np.ndarray]:
-        """Extract specified features from audio data"""
-        try:
+        """Extract specified features from audio data"""        try:
             features = {}
             
             for feature_name in feature_names:
@@ -489,8 +468,7 @@ class MLModelManager:
             return {}
     
     async def _extract_mfcc(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract MFCC features"""
-        return librosa.feature.mfcc(
+        """Extract MFCC features"""        return librosa.feature.mfcc(
             y=audio_data, 
             sr=sample_rate, 
             n_mfcc=13,
@@ -498,74 +476,64 @@ class MLModelManager:
         )
     
     async def _extract_chroma(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract chroma features"""
-        return librosa.feature.chroma_stft(
+        """Extract chroma features"""        return librosa.feature.chroma_stft(
             y=audio_data, 
             sr=sample_rate,
             hop_length=512
         )
     
     async def _extract_spectral_contrast(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract spectral contrast features"""
-        return librosa.feature.spectral_contrast(
+        """Extract spectral contrast features"""        return librosa.feature.spectral_contrast(
             y=audio_data, 
             sr=sample_rate,
             hop_length=512
         )
     
     async def _extract_tonnetz(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract tonnetz (tonal centroid) features"""
-        chroma = librosa.feature.chroma_cqt(y=audio_data, sr=sample_rate)
+        """Extract tonnetz (tonal centroid) features"""        chroma = librosa.feature.chroma_cqt(y=audio_data, sr=sample_rate)
         return librosa.feature.tonnetz(chroma=chroma)
     
     async def _extract_zcr(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract zero crossing rate"""
-        return librosa.feature.zero_crossing_rate(
+        """Extract zero crossing rate"""        return librosa.feature.zero_crossing_rate(
             audio_data, 
             hop_length=512
         )
     
     async def _extract_spectral_centroid(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract spectral centroid"""
-        return librosa.feature.spectral_centroid(
+        """Extract spectral centroid"""        return librosa.feature.spectral_centroid(
             y=audio_data, 
             sr=sample_rate,
             hop_length=512
         )
     
     async def _extract_spectral_bandwidth(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract spectral bandwidth"""
-        return librosa.feature.spectral_bandwidth(
+        """Extract spectral bandwidth"""        return librosa.feature.spectral_bandwidth(
             y=audio_data, 
             sr=sample_rate,
             hop_length=512
         )
     
     async def _extract_spectral_rolloff(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract spectral rolloff"""
-        return librosa.feature.spectral_rolloff(
+        """Extract spectral rolloff"""        return librosa.feature.spectral_rolloff(
             y=audio_data, 
             sr=sample_rate,
             hop_length=512
         )
     
     async def _extract_tempo(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract tempo information"""
-        tempo, beats = librosa.beat.beat_track(y=audio_data, sr=sample_rate)
+        """Extract tempo information"""        tempo, beats = librosa.beat.beat_track(y=audio_data, sr=sample_rate)
         onset_env = librosa.onset.onset_strength(y=audio_data, sr=sample_rate)
         return np.array([tempo, len(beats), np.mean(onset_env)])
     
     async def _extract_onset_strength(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract onset strength"""
-        return librosa.onset.onset_strength(
+        """Extract onset strength"""        return librosa.onset.onset_strength(
             y=audio_data, 
             sr=sample_rate,
             hop_length=512
         )
     
     async def _extract_harmonic_percussive(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract harmonic and percussive components"""
-        y_harmonic, y_percussive = librosa.effects.hpss(audio_data)
+        """Extract harmonic and percussive components"""        y_harmonic, y_percussive = librosa.effects.hpss(audio_data)
         
         # Calculate energy ratios
         harmonic_energy = np.mean(y_harmonic ** 2)
@@ -581,8 +549,7 @@ class MLModelManager:
         return np.array([harmonic_ratio, percussive_ratio])
     
     async def _extract_mel_spectrogram(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract mel spectrogram"""
-        return librosa.feature.melspectrogram(
+        """Extract mel spectrogram"""        return librosa.feature.melspectrogram(
             y=audio_data, 
             sr=sample_rate,
             n_mels=128,
@@ -590,15 +557,13 @@ class MLModelManager:
         )
     
     async def _extract_rms_energy(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract RMS energy"""
-        return librosa.feature.rms(
+        """Extract RMS energy"""        return librosa.feature.rms(
             y=audio_data,
             hop_length=512
         )
     
     async def create_model(self, model_config: ModelConfig) -> nn.Module:
-        """Create a neural network model based on configuration"""
-        try:
+        """Create a neural network model based on configuration"""        try:
             architecture = model_config.architecture
             num_classes = len(model_config.output_classes)
             
@@ -649,8 +614,7 @@ class MLModelManager:
             raise
     
     def _calculate_feature_size(self, feature_names: List[str], dimension: str) -> int:
-        """Calculate total feature size based on feature names"""
-        # This is a simplified calculation - in practice, you'd calculate 
+        """Calculate total feature size based on feature names"""        # This is a simplified calculation - in practice, you'd calculate 
         # based on actual feature dimensions
         feature_sizes = {
             'mfcc': 13,
@@ -673,8 +637,7 @@ class MLModelManager:
                         model_type: ModelType,
                         training_data: List[Tuple[np.ndarray, int, Any]],
                         validation_split: float = 0.2) -> Dict[str, Any]:
-        """
-        Train a machine learning model
+        """        Train a machine learning model
         
         Args:
             model_type: Type of model to train
@@ -683,8 +646,7 @@ class MLModelManager:
             
         Returns:
             Training results and metrics
-        """
-        try:
+        """        try:
             if model_type not in self.model_configs:
                 raise ValueError(f"No configuration found for {model_type}")
             
@@ -746,8 +708,7 @@ class MLModelManager:
             raise
     
     def _combine_features(self, feature_dict: Dict[str, np.ndarray], config: ModelConfig) -> np.ndarray:
-        """Combine multiple features into a single vector"""
-        combined = []
+        """Combine multiple features into a single vector"""        combined = []
         
         for feature_name in config.input_features:
             if feature_name in feature_dict:
@@ -772,8 +733,7 @@ class MLModelManager:
                                   X_val: np.ndarray,
                                   y_train: np.ndarray,
                                   y_val: np.ndarray) -> Dict[str, Any]:
-        """Train neural network models"""
-        try:
+        """Train neural network models"""        try:
             # Create model
             model = await self.create_model(config)
             
@@ -868,8 +828,7 @@ class MLModelManager:
                                   X_val: np.ndarray,
                                   y_train: np.ndarray,
                                   y_val: np.ndarray) -> Dict[str, Any]:
-        """Train traditional ML models (Random Forest, SVM, etc.)"""
-        try:
+        """Train traditional ML models (Random Forest, SVM, etc.)"""        try:
             # Determine if classification or regression
             is_regression = len(config.output_classes) == 1 and 'score' in config.output_classes[0]
             
@@ -948,8 +907,7 @@ class MLModelManager:
                     audio_data: np.ndarray,
                     sample_rate: int,
                     model_type: ModelType) -> PredictionResult:
-        """Make prediction using trained model"""
-        import time
+        """Make prediction using trained model"""        import time
         start_time = time.time()
         
         try:
@@ -1038,8 +996,7 @@ class MLModelManager:
                         model: Any,
                         scaler: StandardScaler,
                         config: ModelConfig):
-        """Save trained model to disk"""
-        try:
+        """Save trained model to disk"""        try:
             model_dir = self.models_directory / model_type.value
             model_dir.mkdir(parents=True, exist_ok=True)
             
@@ -1076,8 +1033,7 @@ class MLModelManager:
             logger.error(f"Failed to save model {model_type}: {e}")
     
     async def _load_model(self, model_type: ModelType):
-        """Load trained model from disk"""
-        try:
+        """Load trained model from disk"""        try:
             model_dir = self.models_directory / model_type.value
             
             if not model_dir.exists():
@@ -1133,8 +1089,7 @@ class MLModelManager:
                              sample_rate: int,
                              model_types: List[ModelType],
                              weights: Optional[List[float]] = None) -> Dict[str, PredictionResult]:
-        """Make ensemble predictions using multiple models"""
-        try:
+        """Make ensemble predictions using multiple models"""        try:
             if weights is None:
                 weights = [1.0] * len(model_types)
             
@@ -1158,12 +1113,10 @@ class MLModelManager:
             return {}
     
     def get_available_models(self) -> List[ModelType]:
-        """Get list of available model types"""
-        return list(self.model_configs.keys())
+        """Get list of available model types"""        return list(self.model_configs.keys())
     
     def get_model_info(self, model_type: ModelType) -> Dict[str, Any]:
-        """Get information about a specific model"""
-        if model_type not in self.model_configs:
+        """Get information about a specific model"""        if model_type not in self.model_configs:
             return {}
         
         config = self.model_configs[model_type]

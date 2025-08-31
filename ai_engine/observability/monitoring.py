@@ -1,14 +1,11 @@
-"""
-System Monitoring
+"""System Monitoring
 
 Real-time monitoring system for the IA Influencer platform infrastructure,
 AI models, and business operations.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import psutil
 import time
 from datetime import datetime, timedelta
@@ -21,24 +18,21 @@ logger = logging.getLogger(__name__)
 
 
 class MonitoringLevel(Enum):
-    """Monitoring intensity levels"""
-    MINIMAL = "minimal"      # Basic health checks
+    """Monitoring intensity levels"""    MINIMAL = "minimal"      # Basic health checks
     STANDARD = "standard"    # Regular monitoring
     DETAILED = "detailed"    # Comprehensive monitoring
     DEBUG = "debug"          # Extensive debugging info
 
 
 class MetricType(Enum):
-    """Types of metrics"""
-    COUNTER = "counter"      # Always increasing value
+    """Types of metrics"""    COUNTER = "counter"      # Always increasing value
     GAUGE = "gauge"          # Current value that can go up/down
     HISTOGRAM = "histogram"  # Distribution of values
     SUMMARY = "summary"      # Sample observations
 
 
 class HealthStatus(Enum):
-    """Health status levels"""
-    HEALTHY = "healthy"
+    """Health status levels"""    HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
     UNKNOWN = "unknown"
@@ -47,8 +41,7 @@ class HealthStatus(Enum):
 
 @dataclass
 class Metric:
-    """Individual metric definition"""
-    name: str
+    """Individual metric definition"""    name: str
     metric_type: MetricType
     value: Union[int, float]
     unit: str
@@ -63,8 +56,7 @@ class Metric:
 
 @dataclass
 class SystemHealth:
-    """Overall system health status"""
-    status: HealthStatus
+    """Overall system health status"""    status: HealthStatus
     components: Dict[str, HealthStatus]
     metrics: Dict[str, Metric]
     issues: List[str]
@@ -80,8 +72,7 @@ class SystemHealth:
 
 
 class SystemMonitor:
-    """
-    Comprehensive system monitoring
+    """    Comprehensive system monitoring
     
     Features:
     - Real-time system metrics collection
@@ -91,11 +82,9 @@ class SystemMonitor:
     - Automatic anomaly detection
     - Alert generation
     - Historical data storage
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize system monitor"""
-        self.config = config or {}
+        """Initialize system monitor"""        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
         # Monitoring configuration
@@ -132,8 +121,7 @@ class SystemMonitor:
         self.alert_callbacks: List[Callable] = []
     
     async def start_monitoring(self) -> bool:
-        """Start the monitoring system"""
-        try:
+        """Start the monitoring system"""        try:
             self.logger.info("Starting system monitoring...")
             
             # Initialize monitoring components
@@ -151,8 +139,7 @@ class SystemMonitor:
             return False
     
     async def stop_monitoring(self):
-        """Stop the monitoring system"""
-        try:
+        """Stop the monitoring system"""        try:
             self.logger.info("Stopping system monitoring...")
             
             self.is_monitoring = False
@@ -170,8 +157,7 @@ class SystemMonitor:
             self.logger.error(f"Error stopping monitoring: {str(e)}")
     
     async def get_current_metrics(self) -> Dict[str, Metric]:
-        """Get current system metrics"""
-        try:
+        """Get current system metrics"""        try:
             metrics = {}
             
             # System metrics
@@ -201,8 +187,7 @@ class SystemMonitor:
             return {}
     
     async def get_system_health(self) -> SystemHealth:
-        """Get current system health status"""
-        try:
+        """Get current system health status"""        try:
             # Collect current metrics
             metrics = await self.get_current_metrics()
             
@@ -255,8 +240,7 @@ class SystemMonitor:
         metric_name: str,
         time_range_minutes: int = 60
     ) -> List[Metric]:
-        """Get historical data for a specific metric"""
-        try:
+        """Get historical data for a specific metric"""        try:
             if metric_name not in self.metrics_history:
                 return []
             
@@ -272,12 +256,10 @@ class SystemMonitor:
             return []
     
     async def add_alert_callback(self, callback: Callable):
-        """Add callback for alert notifications"""
-        self.alert_callbacks.append(callback)
+        """Add callback for alert notifications"""        self.alert_callbacks.append(callback)
     
     async def get_performance_summary(self) -> Dict[str, Any]:
-        """Get performance summary and statistics"""
-        try:
+        """Get performance summary and statistics"""        try:
             current_metrics = self.current_metrics
             
             if not current_metrics:
@@ -315,8 +297,7 @@ class SystemMonitor:
     # Private helper methods
     
     async def _initialize_monitoring(self):
-        """Initialize monitoring components"""
-        # Set up initial component health
+        """Initialize monitoring components"""        # Set up initial component health
         self.component_health = {
             "cpu": HealthStatus.HEALTHY,
             "memory": HealthStatus.HEALTHY,
@@ -326,8 +307,7 @@ class SystemMonitor:
         }
     
     async def _monitoring_loop(self):
-        """Main monitoring loop"""
-        while self.is_monitoring:
+        """Main monitoring loop"""        while self.is_monitoring:
             try:
                 # Collect metrics
                 metrics = await self.get_current_metrics()
@@ -349,8 +329,7 @@ class SystemMonitor:
                 await asyncio.sleep(self.collection_interval)
     
     async def _collect_system_metrics(self) -> Dict[str, Metric]:
-        """Collect basic system metrics"""
-        metrics = {}
+        """Collect basic system metrics"""        metrics = {}
         now = datetime.utcnow()
         
         try:
@@ -406,8 +385,7 @@ class SystemMonitor:
         return metrics
     
     async def _collect_process_metrics(self) -> Dict[str, Metric]:
-        """Collect process-specific metrics"""
-        metrics = {}
+        """Collect process-specific metrics"""        metrics = {}
         now = datetime.utcnow()
         
         try:
@@ -464,8 +442,7 @@ class SystemMonitor:
         return metrics
     
     async def _collect_network_metrics(self) -> Dict[str, Metric]:
-        """Collect network metrics"""
-        metrics = {}
+        """Collect network metrics"""        metrics = {}
         now = datetime.utcnow()
         
         try:
@@ -507,8 +484,7 @@ class SystemMonitor:
         return metrics
     
     async def _collect_disk_metrics(self) -> Dict[str, Metric]:
-        """Collect disk metrics"""
-        metrics = {}
+        """Collect disk metrics"""        metrics = {}
         now = datetime.utcnow()
         
         try:
@@ -560,8 +536,7 @@ class SystemMonitor:
         return metrics
     
     async def _store_metrics_history(self, metrics: Dict[str, Metric]):
-        """Store metrics in history"""
-        for metric_name, metric in metrics.items():
+        """Store metrics in history"""        for metric_name, metric in metrics.items():
             if metric_name not in self.metrics_history:
                 self.metrics_history[metric_name] = []
             
@@ -573,8 +548,7 @@ class SystemMonitor:
                 self.metrics_history[metric_name] = self.metrics_history[metric_name][-max_history_size:]
     
     async def _assess_component_health(self, metrics: Dict[str, Metric]) -> Dict[str, HealthStatus]:
-        """Assess health of individual components"""
-        component_health = {}
+        """Assess health of individual components"""        component_health = {}
         
         # CPU health
         if "cpu_usage" in metrics:
@@ -612,8 +586,7 @@ class SystemMonitor:
         return component_health
     
     def _determine_overall_health(self, component_health: Dict[str, HealthStatus]) -> HealthStatus:
-        """Determine overall system health"""
-        if not component_health:
+        """Determine overall system health"""        if not component_health:
             return HealthStatus.UNKNOWN
         
         health_values = list(component_health.values())
@@ -632,8 +605,7 @@ class SystemMonitor:
         metrics: Dict[str, Metric],
         component_health: Dict[str, HealthStatus]
     ) -> List[str]:
-        """Identify current system issues"""
-        issues = []
+        """Identify current system issues"""        issues = []
         
         for component, health in component_health.items():
             if health == HealthStatus.CRITICAL:
@@ -648,8 +620,7 @@ class SystemMonitor:
         issues: List[str],
         metrics: Dict[str, Metric]
     ) -> List[str]:
-        """Generate recommendations based on issues"""
-        recommendations = []
+        """Generate recommendations based on issues"""        recommendations = []
         
         # CPU recommendations
         if "cpu_usage" in metrics and metrics["cpu_usage"].value > 80:
@@ -669,8 +640,7 @@ class SystemMonitor:
         return recommendations
     
     async def _check_alerts(self, metrics: Dict[str, Metric]):
-        """Check for alert conditions and trigger notifications"""
-        alerts = []
+        """Check for alert conditions and trigger notifications"""        alerts = []
         
         # Check each metric against thresholds
         for metric_name, metric in metrics.items():
@@ -698,8 +668,7 @@ class SystemMonitor:
                     self.logger.error(f"Alert callback failed: {str(e)}")
     
     async def _cleanup_old_data(self):
-        """Clean up old metrics data"""
-        cutoff_time = datetime.utcnow() - timedelta(seconds=self.retention_period)
+        """Clean up old metrics data"""        cutoff_time = datetime.utcnow() - timedelta(seconds=self.retention_period)
         
         for metric_name in list(self.metrics_history.keys()):
             self.metrics_history[metric_name] = [
@@ -713,8 +682,7 @@ class SystemMonitor:
 
 
 class PerformanceMonitor:
-    """Monitor application performance metrics"""
-    
+    """Monitor application performance metrics"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -723,8 +691,7 @@ class PerformanceMonitor:
         self.request_counts: Dict[str, int] = {}
     
     async def record_request(self, endpoint: str, response_time_ms: float, status_code: int):
-        """Record a request for performance tracking"""
-        # Record response time
+        """Record a request for performance tracking"""        # Record response time
         self.response_times.append(response_time_ms)
         
         # Maintain response time history size
@@ -743,8 +710,7 @@ class PerformanceMonitor:
             self.error_counts[endpoint] += 1
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get current performance metrics"""
-        if not self.response_times:
+        """Get current performance metrics"""        if not self.response_times:
             return {"error": "No performance data available"}
         
         return {
@@ -759,15 +725,13 @@ class PerformanceMonitor:
 
 
 class ResourceMonitor:
-    """Monitor resource usage and allocation"""
-    
+    """Monitor resource usage and allocation"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
     
     async def get_resource_usage(self) -> Dict[str, Any]:
-        """Get current resource usage"""
-        try:
+        """Get current resource usage"""        try:
             return {
                 "cpu_count": psutil.cpu_count(),
                 "cpu_usage_per_core": psutil.cpu_percent(percpu=True),

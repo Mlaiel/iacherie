@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Content Module Maintenance & Management Utilities
+"""Content Module Maintenance & Management Utilities
 ===============================================
 
 Professional maintenance toolkit for the IA Influencer Agent content management system
@@ -16,9 +15,7 @@ Expert Team Specialties:
 Any unauthorized copying, modification, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
-"""
-
-import os
+"""import os
 import sys
 import shutil
 import logging
@@ -41,8 +38,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentModuleMaintenance:
-    """Comprehensive maintenance toolkit for content management system."""
-    
+    """Comprehensive maintenance toolkit for content management system."""    
     def __init__(self):
         self.base_path = Path.cwd()
         self.backup_path = Path("backups")
@@ -55,8 +51,7 @@ class ContentModuleMaintenance:
             path.mkdir(exist_ok=True)
     
     async def create_system_backup(self, backup_name: Optional[str] = None) -> Path:
-        """Create comprehensive system backup."""
-        logger.info("📦 Creating System Backup...")
+        """Create comprehensive system backup."""        logger.info("📦 Creating System Backup...")
         
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         backup_name = backup_name or f"content_module_backup_{timestamp}"
@@ -110,8 +105,7 @@ class ContentModuleMaintenance:
         return backup_file
     
     async def cleanup_system(self, aggressive: bool = False) -> Dict[str, Any]:
-        """Perform system cleanup operations."""
-        logger.info("🧹 Performing System Cleanup...")
+        """Perform system cleanup operations."""        logger.info("🧹 Performing System Cleanup...")
         
         cleanup_results = {
             'temp_files_removed': 0,
@@ -181,15 +175,13 @@ class ContentModuleMaintenance:
         return cleanup_results
     
     def _get_disk_usage(self) -> float:
-        """Get current disk usage in MB."""
-        try:
+        """Get current disk usage in MB."""        try:
             return psutil.disk_usage(str(self.base_path)).used / 1024 / 1024
         except Exception:
             return 0.0
     
     async def optimize_performance(self) -> Dict[str, Any]:
-        """Optimize system performance."""
-        logger.info("⚡ Optimizing System Performance...")
+        """Optimize system performance."""        logger.info("⚡ Optimizing System Performance...")
         
         optimization_results = {
             'python_cache_cleared': False,
@@ -235,8 +227,7 @@ class ContentModuleMaintenance:
         return optimization_results
     
     async def generate_system_report(self) -> Dict[str, Any]:
-        """Generate comprehensive system status report."""
-        logger.info("📊 Generating System Report...")
+        """Generate comprehensive system status report."""        logger.info("📊 Generating System Report...")
         
         # System information
         process = psutil.Process()
@@ -287,8 +278,7 @@ class ContentModuleMaintenance:
         return report
     
     async def monitor_system(self, duration_seconds: int = 60) -> Dict[str, Any]:
-        """Monitor system resources for specified duration."""
-        logger.info(f"👁️ Monitoring system for {duration_seconds} seconds...")
+        """Monitor system resources for specified duration."""        logger.info(f"👁️ Monitoring system for {duration_seconds} seconds...")
         
         monitoring_data = {
             'duration_seconds': duration_seconds,
@@ -341,8 +331,7 @@ class ContentModuleMaintenance:
         return monitoring_data
     
     def list_backups(self) -> List[Dict[str, Any]]:
-        """List all available backups."""
-        backups = []
+        """List all available backups."""        backups = []
         
         for backup_file in self.backup_path.glob("*.tar.gz"):
             manifest_file = backup_file.with_suffix('.json')
@@ -370,8 +359,7 @@ class ContentModuleMaintenance:
         return sorted(backups, key=lambda x: x['created'], reverse=True)
     
     async def restore_backup(self, backup_filename: str, target_dir: Optional[str] = None) -> bool:
-        """Restore from backup."""
-        logger.info(f"🔄 Restoring from backup: {backup_filename}")
+        """Restore from backup."""        logger.info(f"🔄 Restoring from backup: {backup_filename}")
         
         backup_file = self.backup_path / backup_filename
         if not backup_file.exists():
@@ -394,12 +382,10 @@ class ContentModuleMaintenance:
 
 
 def main():
-    """Main CLI interface for maintenance utilities."""
-    parser = argparse.ArgumentParser(
+    """Main CLI interface for maintenance utilities."""    parser = argparse.ArgumentParser(
         description="IA Influencer Agent - Content Module Maintenance Utilities",
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
-Examples:
+        epilog="""Examples:
   python maintenance.py backup --name daily_backup
   python maintenance.py cleanup --aggressive
   python maintenance.py optimize
@@ -407,8 +393,7 @@ Examples:
   python maintenance.py monitor --duration 300
   python maintenance.py list-backups
   python maintenance.py restore --backup backup_file.tar.gz
-        """
-    )
+        """    )
     
     subparsers = parser.add_subparsers(dest='command', help='Available commands')
     

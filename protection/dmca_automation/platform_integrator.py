@@ -1,5 +1,4 @@
-"""
-Platform Integrator
+"""Platform Integrator
 
 Advanced integration system for platform-specific DMCA takedown procedures,
 API integrations, and automated submission workflows.
@@ -9,9 +8,7 @@ Email: mlaiel@live.de
 
 ⚠️ COPYRIGHT WARNING ⚠️
 Unauthorized copying or distribution prohibited. All rights reserved © 2025 Fahed Mlaiel
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import uuid
 import aiohttp
@@ -31,8 +28,7 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Platform categories"""
-    SOCIAL_MEDIA = "social_media"
+    """Platform categories"""    SOCIAL_MEDIA = "social_media"
     VIDEO_HOSTING = "video_hosting"
     AUDIO_STREAMING = "audio_streaming"
     IMAGE_SHARING = "image_sharing"
@@ -43,8 +39,7 @@ class PlatformType(Enum):
 
 
 class SubmissionMethod(Enum):
-    """Submission methods"""
-    WEB_FORM = "web_form"
+    """Submission methods"""    WEB_FORM = "web_form"
     API_ENDPOINT = "api_endpoint"
     EMAIL = "email"
     PORTAL = "portal"
@@ -52,8 +47,7 @@ class SubmissionMethod(Enum):
 
 
 class PlatformStatus(Enum):
-    """Platform cooperation status"""
-    EXCELLENT = "excellent"
+    """Platform cooperation status"""    EXCELLENT = "excellent"
     GOOD = "good"
     MODERATE = "moderate"
     POOR = "poor"
@@ -62,8 +56,7 @@ class PlatformStatus(Enum):
 
 @dataclass
 class PlatformConfig:
-    """Platform-specific configuration"""
-    platform_id: str
+    """Platform-specific configuration"""    platform_id: str
     name: str
     platform_type: PlatformType
     submission_methods: List[SubmissionMethod]
@@ -82,8 +75,7 @@ class PlatformConfig:
 
 @dataclass
 class SubmissionRequest:
-    """Platform submission request"""
-    request_id: str
+    """Platform submission request"""    request_id: str
     notice_id: str
     platform_id: str
     submission_method: SubmissionMethod
@@ -95,8 +87,7 @@ class SubmissionRequest:
 
 @dataclass
 class SubmissionResult:
-    """Platform submission result"""
-    success: bool
+    """Platform submission result"""    success: bool
     submission_id: str
     platform_response: Optional[Dict[str, Any]]
     tracking_number: Optional[str]
@@ -106,8 +97,7 @@ class SubmissionResult:
 
 
 class PlatformIntegrator:
-    """
-    Advanced platform integration system for DMCA submissions
+    """    Advanced platform integration system for DMCA submissions
     
     Features:
     - Multi-platform support
@@ -116,11 +106,9 @@ class PlatformIntegrator:
     - Response tracking
     - Rate limit management
     - Success pattern recognition
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize platform integrator"""
-        self.config = config or {}
+        """Initialize platform integrator"""        self.config = config or {}
         self.db = get_database()
         self.web_automation = WebAutomationManager(config)
         self.api_client = APIClientManager(config)
@@ -151,8 +139,7 @@ class PlatformIntegrator:
                                 notice_id: str,
                                 platform_id: str,
                                 submission_options: Optional[Dict[str, Any]] = None) -> SubmissionResult:
-        """
-        Submit DMCA notice to specific platform
+        """        Submit DMCA notice to specific platform
         
         Args:
             notice_id: ID of the notice to submit
@@ -161,8 +148,7 @@ class PlatformIntegrator:
             
         Returns:
             SubmissionResult with submission details
-        """
-        try:
+        """        try:
             self.logger.info(f"Submitting notice {notice_id} to platform {platform_id}")
             
             # Validate platform
@@ -232,8 +218,7 @@ class PlatformIntegrator:
                                       notice_id: str,
                                       platform_ids: List[str],
                                       submission_options: Optional[Dict[str, Any]] = None) -> List[SubmissionResult]:
-        """
-        Submit notice to multiple platforms in batch
+        """        Submit notice to multiple platforms in batch
         
         Args:
             notice_id: ID of the notice to submit
@@ -242,8 +227,7 @@ class PlatformIntegrator:
             
         Returns:
             List of submission results
-        """
-        self.logger.info(f"Batch submitting notice {notice_id} to {len(platform_ids)} platforms")
+        """        self.logger.info(f"Batch submitting notice {notice_id} to {len(platform_ids)} platforms")
         
         # Group platforms by submission method for optimization
         platform_groups = await self._group_platforms_by_method(platform_ids)
@@ -286,16 +270,14 @@ class PlatformIntegrator:
     
     async def track_platform_response(self, 
                                     submission_id: str) -> Dict[str, Any]:
-        """
-        Track response from platform for submitted notice
+        """        Track response from platform for submitted notice
         
         Args:
             submission_id: ID of the submission to track
             
         Returns:
             Platform response tracking information
-        """
-        try:
+        """        try:
             # Retrieve submission record
             submission_record = await self._get_submission_record(submission_id)
             if not submission_record:
@@ -331,8 +313,7 @@ class PlatformIntegrator:
     async def get_platform_analytics(self, 
                                    platform_ids: Optional[List[str]] = None,
                                    time_range: Optional[Dict[str, datetime]] = None) -> Dict[str, Any]:
-        """
-        Get comprehensive platform analytics and performance metrics
+        """        Get comprehensive platform analytics and performance metrics
         
         Args:
             platform_ids: Optional specific platforms to analyze
@@ -340,8 +321,7 @@ class PlatformIntegrator:
             
         Returns:
             Platform analytics data
-        """
-        try:
+        """        try:
             # Set defaults
             if not platform_ids:
                 platform_ids = list(self.platforms.keys())
@@ -395,8 +375,7 @@ class PlatformIntegrator:
     # Private helper methods
     
     def _initialize_platform_configs(self) -> None:
-        """Initialize platform-specific configurations"""
-        # YouTube configuration
+        """Initialize platform-specific configurations"""        # YouTube configuration
         self.platforms['youtube.com'] = PlatformConfig(
             platform_id='youtube.com',
             name='YouTube',
@@ -606,8 +585,7 @@ class PlatformIntegrator:
         )
     
     async def _get_notice_content(self, notice_id: str) -> Optional[TakedownNotice]:
-        """Retrieve notice content from database"""
-        try:
+        """Retrieve notice content from database"""        try:
             query = "SELECT * FROM dmca_notices WHERE notice_id = %s"
             result = await self.db.fetch_one(query, [notice_id])
             
@@ -632,8 +610,7 @@ class PlatformIntegrator:
             return None
     
     async def _check_rate_limits(self, platform_id: str) -> None:
-        """Check and enforce rate limits for platform"""
-        platform_config = self.platforms[platform_id]
+        """Check and enforce rate limits for platform"""        platform_config = self.platforms[platform_id]
         
         # Initialize rate limiter if not exists
         if platform_id not in self.rate_limiters:
@@ -673,8 +650,7 @@ class PlatformIntegrator:
     async def _select_submission_method(self, 
                                       platform_config: PlatformConfig,
                                       submission_options: Optional[Dict[str, Any]]) -> SubmissionMethod:
-        """Select optimal submission method for platform"""
-        # Check if method is explicitly specified
+        """Select optimal submission method for platform"""        # Check if method is explicitly specified
         if submission_options and 'method' in submission_options:
             requested_method = SubmissionMethod(submission_options['method'])
             if requested_method in platform_config.submission_methods:
@@ -699,14 +675,12 @@ class PlatformIntegrator:
                                          notice: TakedownNotice,
                                          platform_config: PlatformConfig,
                                          method: SubmissionMethod) -> str:
-        """Format notice content for specific platform and method"""
-        base_content = notice.notice_content
+        """Format notice content for specific platform and method"""        base_content = notice.notice_content
         
         # Apply platform-specific formatting
         if platform_config.platform_id == 'youtube.com':
             # YouTube prefers structured format
-            formatted_content = f"""
-COPYRIGHT INFRINGEMENT NOTICE
+            formatted_content = f"""COPYRIGHT INFRINGEMENT NOTICE
 
 Copyright Owner: {notice.copyright_owner}
 Contact Email: {notice.copyright_owner_contact.get('email', '')}
@@ -729,8 +703,7 @@ Date: {datetime.now(timezone.utc).strftime('%Y-%m-%d')}
             
         elif platform_config.platform_id == 'tiktok.com':
             # TikTok prefers concise format
-            formatted_content = f"""
-DMCA Takedown Notice
+            formatted_content = f"""DMCA Takedown Notice
 
 I am {notice.copyright_owner}, the copyright owner of original content being infringed.
 
@@ -751,8 +724,7 @@ Date: {datetime.now(timezone.utc).strftime('%Y-%m-%d')}
     async def _execute_platform_submission(self, 
                                          request: SubmissionRequest,
                                          platform_config: PlatformConfig) -> SubmissionResult:
-        """Execute the actual platform submission"""
-        try:
+        """Execute the actual platform submission"""        try:
             if request.submission_method == SubmissionMethod.WEB_FORM:
                 return await self._submit_via_web_form(request, platform_config)
             elif request.submission_method == SubmissionMethod.API_ENDPOINT:
@@ -777,8 +749,7 @@ Date: {datetime.now(timezone.utc).strftime('%Y-%m-%d')}
     async def _submit_via_web_form(self, 
                                  request: SubmissionRequest,
                                  platform_config: PlatformConfig) -> SubmissionResult:
-        """Submit via web form automation"""
-        try:
+        """Submit via web form automation"""        try:
             web_form_config = platform_config.web_form_config
             
             # Use web automation to fill and submit form
@@ -824,8 +795,7 @@ Date: {datetime.now(timezone.utc).strftime('%Y-%m-%d')}
     async def _submit_via_api(self, 
                             request: SubmissionRequest,
                             platform_config: PlatformConfig) -> SubmissionResult:
-        """Submit via API endpoint"""
-        try:
+        """Submit via API endpoint"""        try:
             api_config = platform_config.api_endpoints
             auth_config = platform_config.authentication_config
             
@@ -872,8 +842,7 @@ Date: {datetime.now(timezone.utc).strftime('%Y-%m-%d')}
     async def _submit_via_email(self, 
                               request: SubmissionRequest,
                               platform_config: PlatformConfig) -> SubmissionResult:
-        """Submit via email"""
-        # Simulate email submission (would use actual SMTP)
+        """Submit via email"""        # Simulate email submission (would use actual SMTP)
         self.logger.info(f"Submitting via email to {platform_config.name}")
         
         return SubmissionResult(
@@ -888,8 +857,7 @@ Date: {datetime.now(timezone.utc).strftime('%Y-%m-%d')}
     async def _extract_tracking_number(self, 
                                      response_text: str,
                                      platform_config: PlatformConfig) -> Optional[str]:
-        """Extract tracking number from platform response"""
-        import re
+        """Extract tracking number from platform response"""        import re
         
         tracking_patterns = self.success_patterns['tracking_patterns']
         

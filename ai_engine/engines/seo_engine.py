@@ -1,5 +1,4 @@
-"""
-SEO Engine - AI-Powered Search Engine Optimization
+"""SEO Engine - AI-Powered Search Engine Optimization
 
 Advanced SEO optimization specifically designed for content creators:
 - Musicians: Optimize for music discovery, streaming platforms
@@ -13,9 +12,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ WARNING: This code is the intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import re
 from typing import Dict, Any, List, Optional, Set, Tuple
@@ -59,8 +56,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SEOMetadata:
-    """SEO metadata for content"""
-    title: str
+    """SEO metadata for content"""    title: str
     description: str
     keywords: List[str]
     tags: List[str]
@@ -74,8 +70,7 @@ class SEOMetadata:
 
 @dataclass
 class PlatformOptimization:
-    """Platform-specific SEO optimization"""
-    platform: str
+    """Platform-specific SEO optimization"""    platform: str
     title: str
     description: str
     tags: List[str]
@@ -86,19 +81,16 @@ class PlatformOptimization:
 
 
 class SEOEngine:
-    """
-    AI-powered SEO engine for content creator optimization.
+    """    AI-powered SEO engine for content creator optimization.
     
     Provides comprehensive SEO strategies for different creator types:
     - Content analysis and keyword extraction
     - Platform-specific optimization
     - Technical SEO recommendations
     - Performance tracking and improvement suggestions
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize SEO engine with configuration"""
-        self.config = config or {}
+        """Initialize SEO engine with configuration"""        self.config = config or {}
         
         # Initialize NLP tools
         try:
@@ -163,8 +155,7 @@ class SEOEngine:
         content_type: str,
         metadata: Dict[str, Any]
     ) -> SEOMetadata:
-        """Generate SEO-optimized metadata for content"""
-        
+        """Generate SEO-optimized metadata for content"""        
         logger.info(f"Optimizing metadata for {content_type} content")
         
         try:
@@ -227,8 +218,7 @@ class SEOEngine:
         keywords: List[str],
         content_type: str
     ) -> Dict[str, PlatformOptimization]:
-        """Generate platform-specific optimizations"""
-        
+        """Generate platform-specific optimizations"""        
         logger.info("Generating platform-specific optimizations")
         
         optimizations = {}
@@ -254,8 +244,7 @@ class SEOEngine:
         metadata: Dict[str, Any],
         sentiment: str
     ) -> str:
-        """Generate SEO-optimized title"""
-        
+        """Generate SEO-optimized title"""        
         # Base title from metadata or themes
         base_title = metadata.get('title', '')
         if not base_title and themes:
@@ -315,8 +304,7 @@ class SEOEngine:
         content_type: str,
         metadata: Dict[str, Any]
     ) -> str:
-        """Generate SEO-optimized description"""
-        
+        """Generate SEO-optimized description"""        
         base_description = metadata.get('description', '')
         themes = analysis_result.get('themes', [])
         keywords = analysis_result.get('keywords', [])
@@ -369,8 +357,7 @@ class SEOEngine:
         content_type: str,
         metadata: Dict[str, Any]
     ) -> List[str]:
-        """Extract and optimize keywords for SEO"""
-        
+        """Extract and optimize keywords for SEO"""        
         keywords = set()
         
         # Add keywords from analysis
@@ -415,8 +402,7 @@ class SEOEngine:
         themes: List[str],
         content_type: str
     ) -> List[str]:
-        """Generate content tags for categorization"""
-        
+        """Generate content tags for categorization"""        
         tags = set()
         
         # Add keywords as tags
@@ -447,8 +433,7 @@ class SEOEngine:
         content_type: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate structured data markup"""
-        
+        """Generate structured data markup"""        
         base_structured_data = {
             "@context": "https://schema.org",
             "name": metadata.get('title', 'Content'),
@@ -507,8 +492,7 @@ class SEOEngine:
         description: str,
         content_type: str
     ) -> Dict[str, str]:
-        """Generate social media meta tags"""
-        
+        """Generate social media meta tags"""        
         social_tags = {
             # Open Graph tags
             'og:title': title,
@@ -524,8 +508,7 @@ class SEOEngine:
         return social_tags
     
     def _get_og_type(self, content_type: str) -> str:
-        """Get Open Graph type for content"""
-        
+        """Get Open Graph type for content"""        
         og_types = {
             'audio': 'music.song',
             'video': 'video.other',
@@ -536,13 +519,11 @@ class SEOEngine:
         return og_types.get(content_type, 'article')
     
     async def _generate_meta_title(self, title: str) -> str:
-        """Generate meta title tag"""
-        # Meta title should be slightly different from H1 title
+        """Generate meta title tag"""        # Meta title should be slightly different from H1 title
         return f"{title} | IA-Influencer-Agent"
     
     async def _generate_meta_description(self, description: str) -> str:
-        """Generate meta description tag"""
-        # Ensure meta description is within limits
+        """Generate meta description tag"""        # Ensure meta description is within limits
         if len(description) > 160:
             return description[:157] + "..."
         return description
@@ -555,8 +536,7 @@ class SEOEngine:
         content_type: str,
         config: Dict[str, Any]
     ) -> PlatformOptimization:
-        """Optimize content for specific platform"""
-        
+        """Optimize content for specific platform"""        
         # Platform-specific title optimization
         platform_title = await self._optimize_platform_title(
             platform, seo_metadata.title, config
@@ -600,8 +580,7 @@ class SEOEngine:
         title: str,
         config: Dict[str, Any]
     ) -> str:
-        """Optimize title for specific platform"""
-        
+        """Optimize title for specific platform"""        
         max_length = config.get('title_max_length', 100)
         
         if len(title) > max_length:
@@ -626,8 +605,7 @@ class SEOEngine:
         description: str,
         config: Dict[str, Any]
     ) -> str:
-        """Optimize description for specific platform"""
-        
+        """Optimize description for specific platform"""        
         max_length = config.get('description_max_length', 2000)
         
         if len(description) > max_length:
@@ -653,8 +631,7 @@ class SEOEngine:
         content_type: str,
         config: Dict[str, Any]
     ) -> List[str]:
-        """Generate platform-specific hashtags"""
-        
+        """Generate platform-specific hashtags"""        
         hashtags = []
         max_hashtags = config.get('hashtags_max_count', 30)
         
@@ -696,8 +673,7 @@ class SEOEngine:
         tags: List[str],
         config: Dict[str, Any]
     ) -> List[str]:
-        """Generate platform-specific tags"""
-        
+        """Generate platform-specific tags"""        
         max_tags = config.get('tags_max_count', 50)
         
         # Platform-specific tag optimization
@@ -713,8 +689,7 @@ class SEOEngine:
         return platform_tags[:max_tags]
     
     async def _get_optimal_posting_time(self, platform: str, content_type: str) -> str:
-        """Get optimal posting time for platform"""
-        
+        """Get optimal posting time for platform"""        
         # General optimal posting times based on research
         optimal_times = {
             'instagram': {
@@ -742,8 +717,7 @@ class SEOEngine:
         return optimal_times.get(platform, {}).get('weekdays', '19:00-21:00')
     
     async def _get_optimal_content_format(self, platform: str, content_type: str) -> str:
-        """Get optimal content format for platform"""
-        
+        """Get optimal content format for platform"""        
         format_recommendations = {
             'youtube': {
                 'video': '16:9 aspect ratio, 1080p minimum',
@@ -768,8 +742,7 @@ class SEOEngine:
         return format_recommendations.get(platform, {}).get(content_type, 'Standard format')
     
     async def _generate_engagement_tips(self, platform: str, content_type: str) -> List[str]:
-        """Generate platform-specific engagement tips"""
-        
+        """Generate platform-specific engagement tips"""        
         general_tips = [
             "Post consistently at optimal times",
             "Engage with your audience in comments",

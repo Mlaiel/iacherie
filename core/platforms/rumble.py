@@ -1,14 +1,11 @@
-"""
-Rumble Platform Integration
+"""Rumble Platform Integration
 
 Rumble video platform integration.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta
@@ -25,25 +22,21 @@ logger = logging.getLogger(__name__)
 
 
 class RumblePlatform(PlatformBase):
-    """Rumble video platform integration"""
-    
+    """Rumble video platform integration"""    
     def __init__(self, config: PlatformConfig):
-        """Initialize Rumble platform"""
-        super().__init__(config)
+        """Initialize Rumble platform"""        super().__init__(config)
         self.api_base = "https://rumble.com/api"
         self.session: Optional[aiohttp.ClientSession] = None
         
     async def _get_session(self) -> aiohttp.ClientSession:
-        """Get or create HTTP session"""
-        if not self.session or self.session.closed:
+        """Get or create HTTP session"""        if not self.session or self.session.closed:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=self.config.timeout)
             )
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Rumble"""
-        try:
+        """Authenticate with Rumble"""        try:
             # Rumble uses cookie-based authentication
             username = self.config.credentials.get('username')
             password = self.config.credentials.get('password')
@@ -93,8 +86,7 @@ class RumblePlatform(PlatformBase):
             return False
     
     async def _login_with_credentials(self, username: str, password: str) -> bool:
-        """Login with username and password"""
-        try:
+        """Login with username and password"""        try:
             session = await self._get_session()
             
             login_data = {
@@ -133,8 +125,7 @@ class RumblePlatform(PlatformBase):
             return False
     
     async def _get_user_info(self) -> Optional[Dict[str, Any]]:
-        """Get current user information"""
-        try:
+        """Get current user information"""        try:
             result = await self._make_request('GET', '/user/profile')
             return result
         except Exception as e:
@@ -142,12 +133,10 @@ class RumblePlatform(PlatformBase):
             return None
     
     async def refresh_token(self) -> bool:
-        """Refresh Rumble session"""
-        return await self.authenticate()
+        """Refresh Rumble session"""        return await self.authenticate()
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to Rumble API"""
-        try:
+        """Make authenticated request to Rumble API"""        try:
             session = await self._get_session()
             
             headers = kwargs.get('headers', {})
@@ -189,8 +178,7 @@ class RumblePlatform(PlatformBase):
             return None
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Upload video to Rumble"""
-        try:
+        """Upload video to Rumble"""        try:
             if not os.path.exists(content_path):
                 return UploadResult(
                     success=False,
@@ -262,8 +250,7 @@ class RumblePlatform(PlatformBase):
             )
     
     async def _get_upload_params(self) -> Optional[Dict[str, Any]]:
-        """Get upload parameters"""
-        try:
+        """Get upload parameters"""        try:
             result = await self._make_request('GET', '/upload/params')
             return result
         except Exception as e:
@@ -271,8 +258,7 @@ class RumblePlatform(PlatformBase):
             return None
     
     async def _upload_video_file(self, file_path: str, upload_params: Dict[str, Any]) -> Optional[str]:
-        """Upload video file"""
-        try:
+        """Upload video file"""        try:
             session = await self._get_session()
             
             data = aiohttp.FormData()
@@ -307,8 +293,7 @@ class RumblePlatform(PlatformBase):
             return None
     
     async def _set_video_metadata(self, video_id: str, video_data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Set video metadata"""
-        try:
+        """Set video metadata"""        try:
             result = await self._make_request('POST', f'/videos/{video_id}/metadata', json=video_data)
             return result
         except Exception as e:
@@ -317,8 +302,7 @@ class RumblePlatform(PlatformBase):
     
     async def get_analytics(self, content_id: str, start_date: datetime, 
                            end_date: datetime) -> AnalyticsData:
-        """Get Rumble video analytics"""
-        try:
+        """Get Rumble video analytics"""        try:
             result = await self._make_request('GET', f'/videos/{content_id}/stats')
             
             if result:
@@ -350,8 +334,7 @@ class RumblePlatform(PlatformBase):
             raise
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search content on Rumble"""
-        try:
+        """Search content on Rumble"""        try:
             params = {
                 'q': query,
                 'sort': 'views',  # views, date, relevance
@@ -389,8 +372,7 @@ class RumblePlatform(PlatformBase):
             return []
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
-        """Get user's Rumble videos"""
-        try:
+        """Get user's Rumble videos"""        try:
             target_user_id = user_id or self.config.credentials.get('user_id')
             if not target_user_id:
                 return []
@@ -430,8 +412,7 @@ class RumblePlatform(PlatformBase):
             return []
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete Rumble video"""
-        try:
+        """Delete Rumble video"""        try:
             result = await self._make_request('DELETE', f'/videos/{content_id}')
             return result is not None
                 
@@ -440,8 +421,7 @@ class RumblePlatform(PlatformBase):
             return False
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
-        """Update Rumble video metadata"""
-        try:
+        """Update Rumble video metadata"""        try:
             update_data = {
                 'title': metadata.title,
                 'description': metadata.description or '',
@@ -456,8 +436,7 @@ class RumblePlatform(PlatformBase):
             return False
     
     async def get_channel_info(self, username: str = None) -> Optional[Dict[str, Any]]:
-        """Get channel information"""
-        try:
+        """Get channel information"""        try:
             target_username = username or self.config.credentials.get('username')
             if not target_username:
                 return None
@@ -487,8 +466,7 @@ class RumblePlatform(PlatformBase):
             return None
     
     async def subscribe_to_channel(self, username: str) -> bool:
-        """Subscribe to a channel"""
-        try:
+        """Subscribe to a channel"""        try:
             result = await self._make_request('POST', f'/channels/{username}/subscribe')
             return result is not None
             
@@ -497,8 +475,7 @@ class RumblePlatform(PlatformBase):
             return False
     
     async def unsubscribe_from_channel(self, username: str) -> bool:
-        """Unsubscribe from a channel"""
-        try:
+        """Unsubscribe from a channel"""        try:
             result = await self._make_request('DELETE', f'/channels/{username}/subscribe')
             return result is not None
             
@@ -507,8 +484,7 @@ class RumblePlatform(PlatformBase):
             return False
     
     async def like_video(self, video_id: str) -> bool:
-        """Like a video"""
-        try:
+        """Like a video"""        try:
             result = await self._make_request('POST', f'/videos/{video_id}/like')
             return result is not None
             
@@ -517,8 +493,7 @@ class RumblePlatform(PlatformBase):
             return False
     
     async def dislike_video(self, video_id: str) -> bool:
-        """Dislike a video"""
-        try:
+        """Dislike a video"""        try:
             result = await self._make_request('POST', f'/videos/{video_id}/dislike')
             return result is not None
             
@@ -527,8 +502,7 @@ class RumblePlatform(PlatformBase):
             return False
     
     async def get_trending_videos(self, category: str = None, limit: int = 20) -> List[Dict[str, Any]]:
-        """Get trending videos"""
-        try:
+        """Get trending videos"""        try:
             params = {
                 'limit': limit,
                 'category': category
@@ -562,6 +536,5 @@ class RumblePlatform(PlatformBase):
             return []
     
     async def close(self):
-        """Close HTTP session"""
-        if self.session and not self.session.closed:
+        """Close HTTP session"""        if self.session and not self.session.closed:
             await self.session.close()

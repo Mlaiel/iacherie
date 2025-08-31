@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive Tests for AudioSpecialistAgent
+"""Comprehensive Tests for AudioSpecialistAgent
 
 Industrial-grade testing for audio processing, voice synthesis, music generation,
 audio enhancement, and podcast production capabilities.
@@ -26,9 +22,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -50,18 +44,15 @@ logger = logging.getLogger(__name__)
 
 
 class TestableAudioSpecialistAgent(AudioSpecialistAgent):
-    """Extended audio specialist agent for testing"""
-    
+    """Extended audio specialist agent for testing"""    
     async def generate_synthetic_audio(self, duration: float, format: str = "wav") -> bytes:
-        """Generate synthetic audio for testing"""
-        sample_rate = 44100
+        """Generate synthetic audio for testing"""        sample_rate = 44100
         samples = int(duration * sample_rate)
         audio_data = np.sin(2 * np.pi * 440 * np.linspace(0, duration, samples))
         return audio_data.astype(np.float32).tobytes()
     
     async def create_test_voice_sample(self, text: str, voice_type: str = "natural") -> Dict[str, Any]:
-        """Create test voice sample"""
-        audio_data = await self.generate_synthetic_audio(len(text) * 0.1)
+        """Create test voice sample"""        audio_data = await self.generate_synthetic_audio(len(text) * 0.1)
         return {
             "audio_data": audio_data,
             "format": "wav",
@@ -77,12 +68,10 @@ class TestableAudioSpecialistAgent(AudioSpecialistAgent):
 
 
 class TestAudioSpecialistAgent:
-    """Comprehensive test suite for AudioSpecialistAgent"""
-    
+    """Comprehensive test suite for AudioSpecialistAgent"""    
     @pytest.fixture
     def audio_config(self) -> AgentConfiguration:
-        """Audio specialist agent configuration"""
-        return AgentConfiguration(
+        """Audio specialist agent configuration"""        return AgentConfiguration(
             agent_id="audio_specialist_test",
             agent_name="Test Audio Specialist Agent",
             capabilities={
@@ -112,8 +101,7 @@ class TestAudioSpecialistAgent:
     
     @pytest.fixture
     async def audio_agent(self, audio_config) -> TestableAudioSpecialistAgent:
-        """Initialized audio specialist agent"""
-        agent = TestableAudioSpecialistAgent(audio_config)
+        """Initialized audio specialist agent"""        agent = TestableAudioSpecialistAgent(audio_config)
         await agent.initialize()
         
         yield agent
@@ -121,8 +109,7 @@ class TestAudioSpecialistAgent:
         await agent.shutdown()
     
     async def test_agent_initialization(self, audio_config):
-        """Test audio specialist agent initialization"""
-        agent = TestableAudioSpecialistAgent(audio_config)
+        """Test audio specialist agent initialization"""        agent = TestableAudioSpecialistAgent(audio_config)
         
         # Before initialization
         assert not agent.initialized
@@ -150,8 +137,7 @@ class TestAudioSpecialistAgent:
         await agent.shutdown()
     
     async def test_voice_synthesis(self, audio_agent):
-        """Test AI voice synthesis capabilities"""
-        synthesis_request = {
+        """Test AI voice synthesis capabilities"""        synthesis_request = {
             "task_type": "voice_synthesis",
             "text": "Welcome to our AI influencer platform. This is a test of our voice synthesis technology.",
             "voice_settings": {
@@ -208,8 +194,7 @@ class TestAudioSpecialistAgent:
         assert voice_chars["emotion"] == "enthusiastic"
     
     async def test_voice_cloning(self, audio_agent):
-        """Test voice cloning capabilities"""
-        cloning_request = {
+        """Test voice cloning capabilities"""        cloning_request = {
             "task_type": "voice_cloning",
             "target_voice_samples": [
                 {
@@ -252,8 +237,7 @@ class TestAudioSpecialistAgent:
         assert cloned_audio["similarity_score"] >= 0.8
     
     async def test_music_generation(self, audio_agent):
-        """Test AI music generation capabilities"""
-        music_request = {
+        """Test AI music generation capabilities"""        music_request = {
             "task_type": "music_generation",
             "music_style": "electronic_ambient",
             "duration": 30.0,  # 30 seconds
@@ -315,8 +299,7 @@ class TestAudioSpecialistAgent:
         assert "mood_analysis" in analysis
     
     async def test_podcast_production(self, audio_agent):
-        """Test podcast production capabilities"""
-        podcast_request = {
+        """Test podcast production capabilities"""        podcast_request = {
             "task_type": "podcast_production",
             "segments": [
                 {
@@ -398,8 +381,7 @@ class TestAudioSpecialistAgent:
             assert "duration" in chapter
     
     async def test_audio_enhancement(self, audio_agent):
-        """Test audio enhancement and restoration"""
-        enhancement_request = {
+        """Test audio enhancement and restoration"""        enhancement_request = {
             "task_type": "audio_enhancement",
             "input_audio": await audio_agent.generate_synthetic_audio(10.0),
             "enhancement_types": [
@@ -448,8 +430,7 @@ class TestAudioSpecialistAgent:
         assert len(improvements) >= 3  # Multiple enhancements applied
     
     async def test_sound_design(self, audio_agent):
-        """Test sound design and effects creation"""
-        sound_design_request = {
+        """Test sound design and effects creation"""        sound_design_request = {
             "task_type": "sound_design",
             "sound_type": "ambient_atmosphere",
             "description": "Futuristic tech environment with subtle AI processing sounds",
@@ -495,8 +476,7 @@ class TestAudioSpecialistAgent:
         assert "evolution_timeline" in breakdown
     
     async def test_audio_transcription(self, audio_agent):
-        """Test audio transcription capabilities"""
-        transcription_request = {
+        """Test audio transcription capabilities"""        transcription_request = {
             "task_type": "audio_transcription",
             "audio_data": await audio_agent.generate_synthetic_audio(15.0),
             "transcription_settings": {
@@ -542,8 +522,7 @@ class TestAudioSpecialistAgent:
         assert "speaker_count" in metadata
     
     async def test_spatial_audio_processing(self, audio_agent):
-        """Test spatial audio and 3D audio processing"""
-        spatial_request = {
+        """Test spatial audio and 3D audio processing"""        spatial_request = {
             "task_type": "spatial_audio_processing",
             "input_audio": await audio_agent.generate_synthetic_audio(8.0),
             "spatial_config": {
@@ -589,8 +568,7 @@ class TestAudioSpecialistAgent:
         assert "processing_applied" in metadata
     
     async def test_real_time_audio_processing(self, audio_agent):
-        """Test real-time audio processing capabilities"""
-        realtime_request = {
+        """Test real-time audio processing capabilities"""        realtime_request = {
             "task_type": "real_time_processing",
             "processing_chain": [
                 {"effect": "noise_gate", "threshold": -40},
@@ -625,8 +603,7 @@ class TestAudioSpecialistAgent:
         assert "throughput" in metrics
     
     async def test_audio_analysis(self, audio_agent):
-        """Test comprehensive audio analysis"""
-        analysis_request = {
+        """Test comprehensive audio analysis"""        analysis_request = {
             "task_type": "audio_analysis",
             "audio_data": await audio_agent.generate_synthetic_audio(12.0),
             "analysis_types": [
@@ -677,8 +654,7 @@ class TestAudioSpecialistAgent:
         assert "naturalness_score" in quality
     
     async def test_batch_audio_processing(self, audio_agent):
-        """Test batch processing of multiple audio files"""
-        batch_request = {
+        """Test batch processing of multiple audio files"""        batch_request = {
             "task_type": "batch_processing",
             "audio_files": [
                 {
@@ -718,8 +694,7 @@ class TestAudioSpecialistAgent:
             assert file_result["success"] is True
     
     async def test_concurrent_audio_tasks(self, audio_agent):
-        """Test concurrent audio processing"""
-        tasks = [
+        """Test concurrent audio processing"""        tasks = [
             {
                 "task_type": "voice_synthesis",
                 "text": "Test voice synthesis",
@@ -749,8 +724,7 @@ class TestAudioSpecialistAgent:
     
     @pytest.mark.performance
     async def test_audio_performance(self, audio_agent, assert_performance):
-        """Test audio processing performance"""
-        # Test voice synthesis speed
+        """Test audio processing performance"""        # Test voice synthesis speed
         voice_task = {
             "task_type": "voice_synthesis",
             "text": "Performance test for voice synthesis functionality",
@@ -773,8 +747,7 @@ class TestAudioSpecialistAgent:
         assert result["success"] is True
     
     async def test_error_handling(self, audio_agent):
-        """Test error handling in audio processing"""
-        # Test invalid audio format
+        """Test error handling in audio processing"""        # Test invalid audio format
         invalid_format_task = {
             "task_type": "voice_synthesis",
             "text": "Test",

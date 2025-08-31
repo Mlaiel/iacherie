@@ -1,5 +1,4 @@
-"""
-Distribution Pipeline
+"""Distribution Pipeline
 
 Ultra-advanced content distribution pipeline for multi-platform deployment
 with AI-powered optimization and real-time performance tracking.
@@ -8,9 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: Content Preparation → Platform Adaptation → Distribution Scheduling → Delivery Execution → Performance Monitoring → Optimization
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 from typing import Dict, List, Any, Optional, Union, Callable, Tuple
@@ -24,8 +21,7 @@ logger = logging.getLogger(__name__)
 
 
 class DistributionStage(Enum):
-    """Distribution pipeline stages"""
-    CONTENT_PREPARATION = "content_preparation"
+    """Distribution pipeline stages"""    CONTENT_PREPARATION = "content_preparation"
     PLATFORM_ADAPTATION = "platform_adaptation"
     METADATA_OPTIMIZATION = "metadata_optimization"
     SCHEDULING_OPTIMIZATION = "scheduling_optimization"
@@ -38,8 +34,7 @@ class DistributionStage(Enum):
 
 
 class PlatformCategory(Enum):
-    """Platform categories"""
-    MUSIC_STREAMING = "music_streaming"
+    """Platform categories"""    MUSIC_STREAMING = "music_streaming"
     VIDEO_PLATFORM = "video_platform"
     SOCIAL_MEDIA = "social_media"
     CONTENT_MARKETPLACE = "content_marketplace"
@@ -48,8 +43,7 @@ class PlatformCategory(Enum):
 
 
 class DistributionStatus(Enum):
-    """Distribution status"""
-    PENDING = "pending"
+    """Distribution status"""    PENDING = "pending"
     PREPARING = "preparing"
     SCHEDULED = "scheduled"
     DISTRIBUTING = "distributing"
@@ -60,8 +54,7 @@ class DistributionStatus(Enum):
 
 @dataclass
 class PlatformConfig:
-    """Platform configuration"""
-    platform_id: str = ""
+    """Platform configuration"""    platform_id: str = ""
     platform_name: str = ""
     category: PlatformCategory = PlatformCategory.SOCIAL_MEDIA
     api_config: Dict[str, Any] = field(default_factory=dict)
@@ -73,8 +66,7 @@ class PlatformConfig:
 
 @dataclass
 class DistributionTarget:
-    """Distribution target definition"""
-    target_id: str = ""
+    """Distribution target definition"""    target_id: str = ""
     platform_config: PlatformConfig = field(default_factory=PlatformConfig)
     content_adaptations: Dict[str, Any] = field(default_factory=dict)
     scheduling: Dict[str, Any] = field(default_factory=dict)
@@ -85,8 +77,7 @@ class DistributionTarget:
 
 @dataclass
 class DistributionResult:
-    """Distribution processing result"""
-    distribution_id: str = ""
+    """Distribution processing result"""    distribution_id: str = ""
     content_id: str = ""
     targets: List[DistributionTarget] = field(default_factory=list)
     overall_status: DistributionStatus = DistributionStatus.PENDING
@@ -105,15 +96,13 @@ class DistributionResult:
 
 
 class PlatformAdapter:
-    """Platform-specific content adapter"""
-    
+    """Platform-specific content adapter"""    
     def __init__(self, platform_config: PlatformConfig):
         self.platform_config = platform_config
         self.logger = logging.getLogger(f"{__name__}.PlatformAdapter.{platform_config.platform_name}")
     
     async def adapt_content(self, content_data: Dict[str, Any], target_specs: Dict[str, Any]) -> Dict[str, Any]:
-        """Adapt content for specific platform"""
-        self.logger.info(f"Adapting content for {self.platform_config.platform_name}")
+        """Adapt content for specific platform"""        self.logger.info(f"Adapting content for {self.platform_config.platform_name}")
         
         # Platform-specific adaptations
         adaptations = {}
@@ -135,8 +124,7 @@ class PlatformAdapter:
         }
     
     async def _adapt_for_music_platform(self, content_data: Dict[str, Any], target_specs: Dict[str, Any]) -> Dict[str, Any]:
-        """Adapt content for music streaming platforms"""
-        await asyncio.sleep(0.1)
+        """Adapt content for music streaming platforms"""        await asyncio.sleep(0.1)
         
         return {
             "audio_format": "FLAC",
@@ -149,8 +137,7 @@ class PlatformAdapter:
         }
     
     async def _adapt_for_video_platform(self, content_data: Dict[str, Any], target_specs: Dict[str, Any]) -> Dict[str, Any]:
-        """Adapt content for video platforms"""
-        await asyncio.sleep(0.15)
+        """Adapt content for video platforms"""        await asyncio.sleep(0.15)
         
         return {
             "video_format": "MP4",
@@ -164,8 +151,7 @@ class PlatformAdapter:
         }
     
     async def _adapt_for_social_media(self, content_data: Dict[str, Any], target_specs: Dict[str, Any]) -> Dict[str, Any]:
-        """Adapt content for social media platforms"""
-        await asyncio.sleep(0.08)
+        """Adapt content for social media platforms"""        await asyncio.sleep(0.08)
         
         return {
             "format_optimized": True,
@@ -178,8 +164,7 @@ class PlatformAdapter:
         }
     
     async def _adapt_generic(self, content_data: Dict[str, Any], target_specs: Dict[str, Any]) -> Dict[str, Any]:
-        """Generic content adaptation"""
-        await asyncio.sleep(0.05)
+        """Generic content adaptation"""        await asyncio.sleep(0.05)
         
         return {
             "format_standardized": True,
@@ -190,8 +175,7 @@ class PlatformAdapter:
 
 
 class DistributionOptimizer:
-    """AI-powered distribution optimizer"""
-    
+    """AI-powered distribution optimizer"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.DistributionOptimizer")
@@ -202,8 +186,7 @@ class DistributionOptimizer:
         targets: List[DistributionTarget],
         performance_goals: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize distribution strategy using AI"""
-        self.logger.info("Optimizing distribution strategy")
+        """Optimize distribution strategy using AI"""        self.logger.info("Optimizing distribution strategy")
         
         # Analyze target platforms
         platform_analysis = await self._analyze_platforms(targets)
@@ -229,8 +212,7 @@ class DistributionOptimizer:
         }
     
     async def _analyze_platforms(self, targets: List[DistributionTarget]) -> Dict[str, Any]:
-        """Analyze platform performance potential"""
-        platform_scores = {}
+        """Analyze platform performance potential"""        platform_scores = {}
         
         for target in targets:
             platform_name = target.platform_config.platform_name
@@ -261,8 +243,7 @@ class DistributionOptimizer:
         }
     
     async def _optimize_scheduling(self, targets: List[DistributionTarget], performance_goals: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize content scheduling"""
-        optimal_schedule = {}
+        """Optimize content scheduling"""        optimal_schedule = {}
         
         for target in targets:
             platform_name = target.platform_config.platform_name
@@ -286,8 +267,7 @@ class DistributionOptimizer:
         }
     
     async def _optimize_content_strategy(self, content_data: Dict[str, Any], targets: List[DistributionTarget]) -> Dict[str, Any]:
-        """Optimize content strategy"""
-        return {
+        """Optimize content strategy"""        return {
             "content_variations": len(targets),
             "personalization_level": "high",
             "cross_platform_synergy": True,
@@ -301,8 +281,7 @@ class DistributionOptimizer:
         }
     
     async def _optimize_audience_targeting(self, targets: List[DistributionTarget], performance_goals: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize audience targeting"""
-        return {
+        """Optimize audience targeting"""        return {
             "primary_demographics": {"age": "25-34", "interests": ["music", "technology"]},
             "geographic_focus": ["Europe", "North_America"],
             "behavioral_targeting": ["content_creators", "music_enthusiasts"],
@@ -312,21 +291,18 @@ class DistributionOptimizer:
         }
     
     async def _calculate_platform_score(self, target: DistributionTarget) -> float:
-        """Calculate platform performance score"""
-        # Simulate AI scoring
+        """Calculate platform performance score"""        # Simulate AI scoring
         base_score = 0.75
         category_bonus = 0.1 if target.platform_config.category in [PlatformCategory.MUSIC_STREAMING, PlatformCategory.VIDEO_PLATFORM] else 0.05
         return min(base_score + category_bonus, 1.0)
     
     async def _calculate_optimal_times(self, target: DistributionTarget, performance_goals: Dict[str, Any]) -> List[str]:
-        """Calculate optimal posting times"""
-        # Simulate AI time optimization
+        """Calculate optimal posting times"""        # Simulate AI time optimization
         optimal_times = ["18:00", "20:00", "12:00", "14:00"]
         return optimal_times[:2]
     
     def _calculate_expected_improvement(self, optimization_results: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calculate expected improvement from optimizations"""
-        return {
+        """Calculate expected improvement from optimizations"""        return {
             "reach_improvement": "35%",
             "engagement_improvement": "28%",
             "conversion_improvement": "22%",
@@ -336,15 +312,13 @@ class DistributionOptimizer:
 
 
 class DeliveryValidator:
-    """Content delivery validator"""
-    
+    """Content delivery validator"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.DeliveryValidator")
     
     async def validate_delivery(self, target: DistributionTarget, delivery_result: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate content delivery"""
-        self.logger.info(f"Validating delivery to {target.platform_config.platform_name}")
+        """Validate content delivery"""        self.logger.info(f"Validating delivery to {target.platform_config.platform_name}")
         
         validation_results = {
             "delivery_success": True,
@@ -372,8 +346,7 @@ class DeliveryValidator:
         }
     
     async def _validate_music_delivery(self, delivery_result: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate music content delivery"""
-        return {
+        """Validate music content delivery"""        return {
             "audio_quality_verified": True,
             "metadata_complete": True,
             "isrc_registered": True,
@@ -381,8 +354,7 @@ class DeliveryValidator:
         }
     
     async def _validate_video_delivery(self, delivery_result: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate video content delivery"""
-        return {
+        """Validate video content delivery"""        return {
             "video_quality_verified": True,
             "thumbnail_uploaded": True,
             "captions_processed": True,
@@ -390,8 +362,7 @@ class DeliveryValidator:
         }
     
     async def _generate_validation_recommendations(self, validation_results: Dict[str, Any]) -> List[str]:
-        """Generate validation recommendations"""
-        recommendations = []
+        """Generate validation recommendations"""        recommendations = []
         
         for check, passed in validation_results.items():
             if not passed:
@@ -404,16 +375,14 @@ class DeliveryValidator:
 
 
 class PerformanceTracker:
-    """Real-time performance tracker"""
-    
+    """Real-time performance tracker"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.PerformanceTracker")
         self.active_tracking: Dict[str, Dict[str, Any]] = {}
     
     async def start_tracking(self, distribution_id: str, targets: List[DistributionTarget]) -> str:
-        """Start performance tracking"""
-        tracking_id = f"track_{distribution_id}_{int(time.time())}"
+        """Start performance tracking"""        tracking_id = f"track_{distribution_id}_{int(time.time())}"
         
         tracking_config = {
             "tracking_id": tracking_id,
@@ -434,8 +403,7 @@ class PerformanceTracker:
         return tracking_id
     
     async def _track_performance(self, tracking_id: str):
-        """Background performance tracking"""
-        tracking_config = self.active_tracking.get(tracking_id)
+        """Background performance tracking"""        tracking_config = self.active_tracking.get(tracking_id)
         if not tracking_config:
             return
         
@@ -460,8 +428,7 @@ class PerformanceTracker:
                 await asyncio.sleep(300)  # Wait 5 minutes on error
     
     async def _collect_platform_metrics(self, target_ids: List[str]) -> Dict[str, Any]:
-        """Collect metrics from all platforms"""
-        # Simulate metric collection
+        """Collect metrics from all platforms"""        # Simulate metric collection
         await asyncio.sleep(0.1)
         
         return {
@@ -478,8 +445,7 @@ class PerformanceTracker:
         }
     
     async def _check_performance_alerts(self, metrics: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Check for performance alerts"""
-        alerts = []
+        """Check for performance alerts"""        alerts = []
         
         # Example alert conditions
         if metrics["conversion_rate"] < 0.05:
@@ -501,12 +467,10 @@ class PerformanceTracker:
         return alerts
     
     def get_tracking_data(self, tracking_id: str) -> Optional[Dict[str, Any]]:
-        """Get current tracking data"""
-        return self.active_tracking.get(tracking_id)
+        """Get current tracking data"""        return self.active_tracking.get(tracking_id)
     
     def stop_tracking(self, tracking_id: str) -> bool:
-        """Stop performance tracking"""
-        if tracking_id in self.active_tracking:
+        """Stop performance tracking"""        if tracking_id in self.active_tracking:
             self.active_tracking[tracking_id]["status"] = "stopped"
             self.active_tracking[tracking_id]["stopped_at"] = datetime.now()
             self.logger.info(f"Stopped performance tracking: {tracking_id}")
@@ -515,8 +479,7 @@ class PerformanceTracker:
 
 
 class PlatformDistributor:
-    """Main platform distributor"""
-    
+    """Main platform distributor"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.PlatformDistributor")
@@ -531,8 +494,7 @@ class PlatformDistributor:
         content_data: Dict[str, Any],
         adapted_content: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Distribute content to specific platform"""
-        platform_name = target.platform_config.platform_name
+        """Distribute content to specific platform"""        platform_name = target.platform_config.platform_name
         self.logger.info(f"Distributing to platform: {platform_name}")
         
         try:
@@ -568,8 +530,7 @@ class PlatformDistributor:
             }
     
     async def _get_platform_connection(self, platform_config: PlatformConfig) -> Dict[str, Any]:
-        """Get or create platform connection"""
-        platform_name = platform_config.platform_name
+        """Get or create platform connection"""        platform_name = platform_config.platform_name
         
         if platform_name not in self.platform_connections:
             # Establish new connection
@@ -579,8 +540,7 @@ class PlatformDistributor:
         return self.platform_connections[platform_name]
     
     async def _establish_platform_connection(self, platform_config: PlatformConfig) -> Dict[str, Any]:
-        """Establish connection to platform"""
-        # Simulate platform connection
+        """Establish connection to platform"""        # Simulate platform connection
         await asyncio.sleep(0.1)
         
         return {
@@ -598,8 +558,7 @@ class PlatformDistributor:
         content_data: Dict[str, Any],
         adapted_content: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute content distribution"""
-        # Simulate content distribution
+        """Execute content distribution"""        # Simulate content distribution
         await asyncio.sleep(0.2)
         
         return {
@@ -615,8 +574,7 @@ class PlatformDistributor:
 
 
 class DistributionPipeline:
-    """
-    Ultra-advanced content distribution pipeline for multi-platform deployment.
+    """    Ultra-advanced content distribution pipeline for multi-platform deployment.
     
     Features:
     - Multi-platform content adaptation
@@ -625,8 +583,7 @@ class DistributionPipeline:
     - Automated scheduling and delivery
     - Performance analytics and reporting
     - Delivery validation and monitoring
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or self._get_default_config()
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -652,8 +609,7 @@ class DistributionPipeline:
         self.logger.info("Distribution Pipeline initialized successfully")
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration"""
-        return {
+        """Get default configuration"""        return {
             "supported_platforms": {
                 "music": ["spotify", "apple_music", "youtube_music", "soundcloud"],
                 "video": ["youtube", "vimeo", "twitch", "dailymotion"],
@@ -684,8 +640,7 @@ class DistributionPipeline:
         }
     
     def _initialize_platform_configs(self) -> Dict[str, PlatformConfig]:
-        """Initialize platform configurations"""
-        configs = {}
+        """Initialize platform configurations"""        configs = {}
         
         # Music streaming platforms
         configs["spotify"] = PlatformConfig(
@@ -720,8 +675,7 @@ class DistributionPipeline:
         return configs
     
     def _initialize_stage_processors(self):
-        """Initialize stage processors"""
-        self.stage_processors = {
+        """Initialize stage processors"""        self.stage_processors = {
             DistributionStage.CONTENT_PREPARATION: self._process_content_preparation,
             DistributionStage.PLATFORM_ADAPTATION: self._process_platform_adaptation,
             DistributionStage.METADATA_OPTIMIZATION: self._process_metadata_optimization,
@@ -741,8 +695,7 @@ class DistributionPipeline:
         target_platforms: List[str],
         distribution_config: Optional[Dict[str, Any]] = None
     ) -> DistributionResult:
-        """
-        Distribute content across multiple platforms
+        """        Distribute content across multiple platforms
         
         Args:
             content_id: Unique content identifier
@@ -752,8 +705,7 @@ class DistributionPipeline:
             
         Returns:
             DistributionResult with complete distribution information
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         distribution_id = f"dist_{uuid.uuid4().hex[:16]}"
         
         # Initialize result
@@ -840,8 +792,7 @@ class DistributionPipeline:
         content_data: Dict[str, Any],
         distribution_config: Dict[str, Any]
     ):
-        """Process content preparation stage"""
-        self.logger.info("Processing content preparation")
+        """Process content preparation stage"""        self.logger.info("Processing content preparation")
         
         # Prepare content for distribution
         preparation_result = {
@@ -862,8 +813,7 @@ class DistributionPipeline:
         content_data: Dict[str, Any],
         distribution_config: Dict[str, Any]
     ):
-        """Process platform adaptation stage"""
-        self.logger.info("Processing platform adaptation")
+        """Process platform adaptation stage"""        self.logger.info("Processing platform adaptation")
         
         # Adapt content for each target platform
         for target in result.targets:
@@ -884,8 +834,7 @@ class DistributionPipeline:
         content_data: Dict[str, Any],
         distribution_config: Dict[str, Any]
     ):
-        """Process metadata optimization stage"""
-        self.logger.info("Processing metadata optimization")
+        """Process metadata optimization stage"""        self.logger.info("Processing metadata optimization")
         
         # Optimize metadata for each platform
         for target in result.targets:
@@ -905,8 +854,7 @@ class DistributionPipeline:
         content_data: Dict[str, Any],
         distribution_config: Dict[str, Any]
     ):
-        """Process scheduling optimization stage"""
-        self.logger.info("Processing scheduling optimization")
+        """Process scheduling optimization stage"""        self.logger.info("Processing scheduling optimization")
         
         if not self.config["optimization"]["scheduling_optimization"]:
             result.warnings.append("Scheduling optimization disabled")
@@ -931,8 +879,7 @@ class DistributionPipeline:
         content_data: Dict[str, Any],
         distribution_config: Dict[str, Any]
     ):
-        """Process delivery execution stage"""
-        self.logger.info("Processing delivery execution")
+        """Process delivery execution stage"""        self.logger.info("Processing delivery execution")
         
         # Execute delivery to each platform
         delivery_tasks = []
@@ -962,8 +909,7 @@ class DistributionPipeline:
                 target.delivery_result = delivery_result
     
     async def _execute_target_delivery(self, target: DistributionTarget, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute delivery to specific target"""
-        target.status = DistributionStatus.DISTRIBUTING
+        """Execute delivery to specific target"""        target.status = DistributionStatus.DISTRIBUTING
         
         return await self.platform_distributor.distribute_to_platform(
             target, content_data, target.content_adaptations
@@ -975,8 +921,7 @@ class DistributionPipeline:
         content_data: Dict[str, Any],
         distribution_config: Dict[str, Any]
     ):
-        """Process performance monitoring stage"""
-        self.logger.info("Processing performance monitoring")
+        """Process performance monitoring stage"""        self.logger.info("Processing performance monitoring")
         
         if not self.config["performance_tracking"]["real_time_tracking"]:
             result.warnings.append("Real-time tracking disabled")
@@ -996,8 +941,7 @@ class DistributionPipeline:
         content_data: Dict[str, Any],
         distribution_config: Dict[str, Any]
     ):
-        """Process audience engagement stage"""
-        self.logger.info("Processing audience engagement")
+        """Process audience engagement stage"""        self.logger.info("Processing audience engagement")
         
         # Setup engagement monitoring
         engagement_config = {
@@ -1015,8 +959,7 @@ class DistributionPipeline:
         content_data: Dict[str, Any],
         distribution_config: Dict[str, Any]
     ):
-        """Process analytics collection stage"""
-        self.logger.info("Processing analytics collection")
+        """Process analytics collection stage"""        self.logger.info("Processing analytics collection")
         
         # Setup analytics collection
         analytics_config = {
@@ -1034,8 +977,7 @@ class DistributionPipeline:
         content_data: Dict[str, Any],
         distribution_config: Dict[str, Any]
     ):
-        """Process optimization feedback stage"""
-        self.logger.info("Processing optimization feedback")
+        """Process optimization feedback stage"""        self.logger.info("Processing optimization feedback")
         
         # Collect performance data for optimization
         if result.performance_metrics.get("tracking_id"):
@@ -1053,8 +995,7 @@ class DistributionPipeline:
         content_data: Dict[str, Any],
         distribution_config: Dict[str, Any]
     ):
-        """Process completion reporting stage"""
-        self.logger.info("Processing completion reporting")
+        """Process completion reporting stage"""        self.logger.info("Processing completion reporting")
         
         # Generate completion report
         completion_report = {
@@ -1074,16 +1015,13 @@ class DistributionPipeline:
     
     # Public API Methods
     def get_distribution_status(self, distribution_id: str) -> Optional[DistributionResult]:
-        """Get distribution status"""
-        return self.active_distributions.get(distribution_id) or self.completed_distributions.get(distribution_id)
+        """Get distribution status"""        return self.active_distributions.get(distribution_id) or self.completed_distributions.get(distribution_id)
     
     def get_active_distributions(self) -> Dict[str, DistributionResult]:
-        """Get all active distributions"""
-        return self.active_distributions.copy()
+        """Get all active distributions"""        return self.active_distributions.copy()
     
     def get_distribution_metrics(self) -> Dict[str, Any]:
-        """Get distribution metrics"""
-        completed_distributions = list(self.completed_distributions.values())
+        """Get distribution metrics"""        completed_distributions = list(self.completed_distributions.values())
         
         return {
             "active_distributions": len(self.active_distributions),
@@ -1095,8 +1033,7 @@ class DistributionPipeline:
         }
     
     async def cancel_distribution(self, distribution_id: str) -> bool:
-        """Cancel distribution"""
-        if distribution_id in self.active_distributions:
+        """Cancel distribution"""        if distribution_id in self.active_distributions:
             result = self.active_distributions[distribution_id]
             result.success = False
             result.overall_status = DistributionStatus.FAILED

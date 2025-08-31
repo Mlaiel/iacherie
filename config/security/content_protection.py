@@ -1,5 +1,4 @@
-"""
-Content Protection Security Configuration Module
+"""Content Protection Security Configuration Module
 ==============================================
 
 Advanced content protection security settings for IA Influencer Agent platform.
@@ -20,9 +19,7 @@ This code is proprietary and belongs to Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit 
 written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import os
+"""import os
 from typing import Dict, List, Optional, Any, Set
 from dataclasses import dataclass, field
 from datetime import timedelta
@@ -30,8 +27,7 @@ from enum import Enum
 
 
 class ContentType(Enum):
-    """Supported content types for protection."""
-    AUDIO = "audio"
+    """Supported content types for protection."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -41,16 +37,14 @@ class ContentType(Enum):
 
 
 class ProtectionLevel(Enum):
-    """Content protection security levels."""
-    BASIC = "basic"
+    """Content protection security levels."""    BASIC = "basic"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
     ULTRA_SECURE = "ultra_secure"
 
 
 class FingerprintAlgorithm(Enum):
-    """Fingerprinting algorithms by content type."""
-    # Audio algorithms
+    """Fingerprinting algorithms by content type."""    # Audio algorithms
     CHROMAPRINT = "chromaprint"
     ESSENTIA = "essentia"
     SPECTRAL_HASH = "spectral_hash"
@@ -72,8 +66,7 @@ class FingerprintAlgorithm(Enum):
 
 
 class ThreatLevel(Enum):
-    """Content threat assessment levels."""
-    LOW = "low"
+    """Content threat assessment levels."""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -81,8 +74,7 @@ class ThreatLevel(Enum):
 
 @dataclass
 class FingerprintConfig:
-    """Fingerprinting algorithm configuration."""
-    enabled_algorithms: Dict[ContentType, List[FingerprintAlgorithm]] = field(default_factory=lambda: {
+    """Fingerprinting algorithm configuration."""    enabled_algorithms: Dict[ContentType, List[FingerprintAlgorithm]] = field(default_factory=lambda: {
         ContentType.AUDIO: [
             FingerprintAlgorithm.CHROMAPRINT,
             FingerprintAlgorithm.ESSENTIA,
@@ -138,8 +130,7 @@ class FingerprintConfig:
 
 @dataclass
 class ContentValidationConfig:
-    """Content validation and scanning configuration."""
-    # Malware scanning
+    """Content validation and scanning configuration."""    # Malware scanning
     malware_scanning_enabled: bool = True
     scan_engines: List[str] = field(default_factory=lambda: [
         "clamav",
@@ -183,8 +174,7 @@ class ContentValidationConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Content monitoring and surveillance configuration."""
-    # Real-time monitoring
+    """Content monitoring and surveillance configuration."""    # Real-time monitoring
     real_time_monitoring: bool = True
     monitoring_interval_minutes: int = 15
     
@@ -226,8 +216,7 @@ class MonitoringConfig:
 
 @dataclass
 class EncryptionConfig:
-    """Content encryption and security configuration."""
-    # Encryption algorithms
+    """Content encryption and security configuration."""    # Encryption algorithms
     default_algorithm: str = "AES-256-GCM"
     key_derivation: str = "PBKDF2-SHA256"
     key_length: int = 256
@@ -254,8 +243,7 @@ class EncryptionConfig:
 
 @dataclass
 class ComplianceConfig:
-    """Legal compliance and regulatory configuration."""
-    # Privacy regulations
+    """Legal compliance and regulatory configuration."""    # Privacy regulations
     gdpr_compliance: bool = True
     ccpa_compliance: bool = True
     data_retention_days: int = 2555  # 7 years
@@ -284,8 +272,7 @@ class ComplianceConfig:
 
 @dataclass
 class AccessControlConfig:
-    """Content access control configuration."""
-    # Role-based access
+    """Content access control configuration."""    # Role-based access
     rbac_enabled: bool = True
     creator_ownership_strict: bool = True
     
@@ -315,8 +302,7 @@ class AccessControlConfig:
 
 @dataclass
 class ThreatDetectionConfig:
-    """Advanced threat detection configuration."""
-    # AI-powered threat detection
+    """Advanced threat detection configuration."""    # AI-powered threat detection
     ml_threat_detection: bool = True
     behavioral_analysis: bool = True
     anomaly_detection: bool = True
@@ -363,8 +349,7 @@ class ThreatDetectionConfig:
 
 @dataclass
 class ContentProtectionConfig:
-    """Main content protection configuration container."""
-    fingerprint: FingerprintConfig = field(default_factory=FingerprintConfig)
+    """Main content protection configuration container."""    fingerprint: FingerprintConfig = field(default_factory=FingerprintConfig)
     validation: ContentValidationConfig = field(default_factory=ContentValidationConfig)
     monitoring: MonitoringConfig = field(default_factory=MonitoringConfig)
     encryption: EncryptionConfig = field(default_factory=EncryptionConfig)
@@ -398,13 +383,11 @@ content_protection_config = ContentProtectionConfig()
 
 
 def get_content_protection_config() -> ContentProtectionConfig:
-    """Get the content protection configuration instance."""
-    return content_protection_config
+    """Get the content protection configuration instance."""    return content_protection_config
 
 
 def validate_content_protection_config(config: ContentProtectionConfig) -> bool:
-    """Validate content protection configuration settings."""
-    # Validate similarity thresholds
+    """Validate content protection configuration settings."""    # Validate similarity thresholds
     for content_type, threshold in config.fingerprint.similarity_thresholds.items():
         if not 0.0 <= threshold <= 1.0:
             raise ValueError(f"Invalid similarity threshold for {content_type}: {threshold}")
@@ -422,8 +405,7 @@ def validate_content_protection_config(config: ContentProtectionConfig) -> bool:
 
 
 def get_protection_level_config(level: ProtectionLevel) -> Dict[str, Any]:
-    """Get configuration overrides for specific protection levels."""
-    protection_overrides = {
+    """Get configuration overrides for specific protection levels."""    protection_overrides = {
         ProtectionLevel.BASIC: {
             "fingerprint.enabled_algorithms": {
                 ContentType.AUDIO: [FingerprintAlgorithm.CHROMAPRINT],

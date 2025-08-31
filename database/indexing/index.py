@@ -1,5 +1,4 @@
-"""
-Index Entry Point for Database Indexing Module - IA-Influencer-Agent Platform
+"""Index Entry Point for Database Indexing Module - IA-Influencer-Agent Platform
 
 Ultra-advanced database indexing system entry point providing centralized access
 to all indexing capabilities for the IA-Influencer multi-content protection platform.
@@ -23,9 +22,7 @@ This software is proprietary and confidential.
 Unauthorized use, modification, or distribution by any individual or entity 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime
@@ -62,16 +59,13 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class DatabaseIndexingPlatform:
-    """
-    Central platform for database indexing operations in IA-Influencer-Agent
+    """    Central platform for database indexing operations in IA-Influencer-Agent
     
     Provides a unified interface for all indexing operations, performance monitoring,
     and optimization across the multi-content protection platform.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the database indexing platform"""
-        self.indexing_manager = IndexingManager()
+        """Initialize the database indexing platform"""        self.indexing_manager = IndexingManager()
         self.is_initialized = False
         self.performance_metrics = {}
         self.active_operations = {}
@@ -79,13 +73,11 @@ class DatabaseIndexingPlatform:
         logger.info("DatabaseIndexingPlatform initialized")
     
     async def initialize(self) -> bool:
-        """
-        Initialize the complete indexing platform
+        """        Initialize the complete indexing platform
         
         Returns:
             bool: Success status of initialization
-        """
-        try:
+        """        try:
             logger.info("Initializing Database Indexing Platform...")
             
             # Initialize the main indexing manager
@@ -105,8 +97,7 @@ class DatabaseIndexingPlatform:
     
     async def create_content_index(self, table_name: str, content_type: str, 
                                  strategy: str = "performance_optimized") -> bool:
-        """
-        Create optimized content index for specific content type
+        """        Create optimized content index for specific content type
         
         Args:
             table_name: Target table for index creation
@@ -115,8 +106,7 @@ class DatabaseIndexingPlatform:
             
         Returns:
             bool: Success status of index creation
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             logger.error("Platform not initialized. Call initialize() first.")
             return False
         
@@ -131,8 +121,7 @@ class DatabaseIndexingPlatform:
     async def search_similar_content(self, fingerprint_data: Dict[str, Any],
                                    similarity_threshold: float = 0.8,
                                    max_results: int = 50) -> List[Dict[str, Any]]:
-        """
-        Search for similar content using advanced similarity algorithms
+        """        Search for similar content using advanced similarity algorithms
         
         Args:
             fingerprint_data: Content fingerprint data
@@ -141,8 +130,7 @@ class DatabaseIndexingPlatform:
             
         Returns:
             List of similar content with similarity scores
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             logger.error("Platform not initialized. Call initialize() first.")
             return []
         
@@ -172,8 +160,7 @@ class DatabaseIndexingPlatform:
     
     def _combine_search_results(self, es_results: List[Dict[str, Any]], 
                                faiss_results: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Combine and rank results from multiple search engines"""
-        try:
+        """Combine and rank results from multiple search engines"""        try:
             combined_scores = {}
             
             # Process Elasticsearch results
@@ -225,16 +212,14 @@ class DatabaseIndexingPlatform:
             return es_results  # Fallback to Elasticsearch results
     
     async def add_content_fingerprint(self, content_data: Dict[str, Any]) -> bool:
-        """
-        Add content fingerprint to the indexing system
+        """        Add content fingerprint to the indexing system
         
         Args:
             content_data: Complete content fingerprint data
             
         Returns:
             bool: Success status of fingerprint addition
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             logger.error("Platform not initialized. Call initialize() first.")
             return False
         
@@ -268,16 +253,14 @@ class DatabaseIndexingPlatform:
             return False
     
     async def find_collaboration_matches(self, user_profile: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """
-        Find potential collaboration matches for a user
+        """        Find potential collaboration matches for a user
         
         Args:
             user_profile: User profile data including preferences and vectors
             
         Returns:
             List of potential collaboration partners
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             logger.error("Platform not initialized. Call initialize() first.")
             return []
         
@@ -301,16 +284,14 @@ class DatabaseIndexingPlatform:
             return []
     
     async def multimodal_content_search(self, search_query: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """
-        Perform advanced multimodal content search
+        """        Perform advanced multimodal content search
         
         Args:
             search_query: Multimodal search query with different feature types
             
         Returns:
             Ranked multimodal search results
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             logger.error("Platform not initialized. Call initialize() first.")
             return []
         
@@ -347,13 +328,11 @@ class DatabaseIndexingPlatform:
             return []
     
     async def optimize_all_indexes(self) -> Dict[str, Any]:
-        """
-        Optimize all indexes for maximum performance
+        """        Optimize all indexes for maximum performance
         
         Returns:
             Optimization results and performance improvements
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             logger.error("Platform not initialized. Call initialize() first.")
             return {'error': 'Platform not initialized'}
         
@@ -371,13 +350,11 @@ class DatabaseIndexingPlatform:
             return {'error': str(e)}
     
     async def get_platform_statistics(self) -> Dict[str, Any]:
-        """
-        Get comprehensive platform statistics and metrics
+        """        Get comprehensive platform statistics and metrics
         
         Returns:
             Complete platform statistics
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             logger.error("Platform not initialized. Call initialize() first.")
             return {'error': 'Platform not initialized'}
         
@@ -410,8 +387,7 @@ class DatabaseIndexingPlatform:
             return {'error': str(e)}
     
     async def cleanup(self):
-        """Cleanup platform resources and connections"""
-        try:
+        """Cleanup platform resources and connections"""        try:
             if self.is_initialized:
                 await self.indexing_manager.cleanup()
                 self.is_initialized = False
@@ -423,13 +399,11 @@ class DatabaseIndexingPlatform:
 _platform_instance: Optional[DatabaseIndexingPlatform] = None
 
 async def get_indexing_platform() -> DatabaseIndexingPlatform:
-    """
-    Get or create the global indexing platform instance
+    """    Get or create the global indexing platform instance
     
     Returns:
         DatabaseIndexingPlatform: The global platform instance
-    """
-    global _platform_instance
+    """    global _platform_instance
     
     if _platform_instance is None:
         _platform_instance = DatabaseIndexingPlatform()
@@ -438,55 +412,45 @@ async def get_indexing_platform() -> DatabaseIndexingPlatform:
     return _platform_instance
 
 async def initialize_platform() -> bool:
-    """
-    Initialize the global indexing platform
+    """    Initialize the global indexing platform
     
     Returns:
         bool: Success status of initialization
-    """
-    platform = await get_indexing_platform()
+    """    platform = await get_indexing_platform()
     return platform.is_initialized
 
 # Convenience functions for direct access
 async def create_content_index(table_name: str, content_type: str, strategy: str = "performance_optimized") -> bool:
-    """Convenience function for creating content indexes"""
-    platform = await get_indexing_platform()
+    """Convenience function for creating content indexes"""    platform = await get_indexing_platform()
     return await platform.create_content_index(table_name, content_type, strategy)
 
 async def search_similar_content(fingerprint_data: Dict[str, Any], similarity_threshold: float = 0.8, max_results: int = 50) -> List[Dict[str, Any]]:
-    """Convenience function for searching similar content"""
-    platform = await get_indexing_platform()
+    """Convenience function for searching similar content"""    platform = await get_indexing_platform()
     return await platform.search_similar_content(fingerprint_data, similarity_threshold, max_results)
 
 async def add_content_fingerprint(content_data: Dict[str, Any]) -> bool:
-    """Convenience function for adding content fingerprints"""
-    platform = await get_indexing_platform()
+    """Convenience function for adding content fingerprints"""    platform = await get_indexing_platform()
     return await platform.add_content_fingerprint(content_data)
 
 async def find_collaboration_matches(user_profile: Dict[str, Any]) -> List[Dict[str, Any]]:
-    """Convenience function for finding collaboration matches"""
-    platform = await get_indexing_platform()
+    """Convenience function for finding collaboration matches"""    platform = await get_indexing_platform()
     return await platform.find_collaboration_matches(user_profile)
 
 async def multimodal_content_search(search_query: Dict[str, Any]) -> List[Dict[str, Any]]:
-    """Convenience function for multimodal content search"""
-    platform = await get_indexing_platform()
+    """Convenience function for multimodal content search"""    platform = await get_indexing_platform()
     return await platform.multimodal_content_search(search_query)
 
 async def optimize_all_indexes() -> Dict[str, Any]:
-    """Convenience function for optimizing all indexes"""
-    platform = await get_indexing_platform()
+    """Convenience function for optimizing all indexes"""    platform = await get_indexing_platform()
     return await platform.optimize_all_indexes()
 
 async def get_platform_statistics() -> Dict[str, Any]:
-    """Convenience function for getting platform statistics"""
-    platform = await get_indexing_platform()
+    """Convenience function for getting platform statistics"""    platform = await get_indexing_platform()
     return await platform.get_platform_statistics()
 
 # Main execution for testing and demonstration
 async def main():
-    """Main function for testing the indexing platform"""
-    try:
+    """Main function for testing the indexing platform"""    try:
         logger.info("Starting Database Indexing Platform demonstration...")
         
         # Initialize platform

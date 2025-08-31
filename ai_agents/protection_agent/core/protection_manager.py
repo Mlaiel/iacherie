@@ -1,13 +1,10 @@
-"""
-Advanced Protection Manager for IA Influencer Agent
+"""Advanced Protection Manager for IA Influencer Agent
 Orchestrates all protection services and provides high-level API
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: Proprietary - All rights reserved
 WARNING: Unauthorized use, copying, or distribution prohibited
-"""
-
-from typing import Dict, List, Any, Optional, Union
+"""from typing import Dict, List, Any, Optional, Union
 from datetime import datetime, timedelta
 import asyncio
 import uuid
@@ -21,8 +18,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ProtectionRequest:
-    """Protection request structure"""
-    request_id: str
+    """Protection request structure"""    request_id: str
     owner_id: str
     content_data: bytes
     content_type: str
@@ -39,8 +35,7 @@ class ProtectionRequest:
 
 @dataclass
 class MonitoringAlert:
-    """Content monitoring alert structure"""
-    alert_id: str
+    """Content monitoring alert structure"""    alert_id: str
     content_id: str
     alert_type: str  # violation_detected, usage_spike, revenue_drop
     severity: str  # low, medium, high, critical
@@ -54,11 +49,9 @@ class MonitoringAlert:
 
 
 class ProtectionManager:
-    """
-    High-level protection manager that orchestrates all protection services
+    """    High-level protection manager that orchestrates all protection services
     Provides batch processing, monitoring, and management capabilities
-    """
-    
+    """    
     def __init__(self, config: Dict = None):
         self.config = config or {}
         self.protection_agent = ProtectionAgent(config)
@@ -89,8 +82,7 @@ class ProtectionManager:
         self.monitoring_interval = config.get('monitoring_interval', 3600)  # 1 hour
         
     async def start_services(self):
-        """Start all protection services and background tasks"""
-        try:
+        """Start all protection services and background tasks"""        try:
             # Start monitoring service
             if not self.monitoring_active:
                 asyncio.create_task(self._monitoring_service())
@@ -106,8 +98,7 @@ class ProtectionManager:
             raise
             
     async def stop_services(self):
-        """Stop all protection services gracefully"""
-        try:
+        """Stop all protection services gracefully"""        try:
             self.monitoring_active = False
             
             # Wait for active requests to complete
@@ -122,8 +113,7 @@ class ProtectionManager:
     async def submit_protection_request(self, content_data: bytes, content_metadata: Dict,
                                       protection_level: str = "standard", 
                                       priority: str = "normal") -> str:
-        """
-        Submit content protection request for processing
+        """        Submit content protection request for processing
         
         Args:
             content_data: Raw content bytes
@@ -133,8 +123,7 @@ class ProtectionManager:
             
         Returns:
             Request ID for tracking
-        """
-        try:
+        """        try:
             request_id = f"REQ_{uuid.uuid4().hex[:16].upper()}"
             
             protection_request = ProtectionRequest(
@@ -161,16 +150,14 @@ class ProtectionManager:
             raise
             
     async def batch_protect_content(self, content_batch: List[Dict]) -> Dict:
-        """
-        Batch processing of multiple content protection requests
+        """        Batch processing of multiple content protection requests
         
         Args:
             content_batch: List of content items with data and metadata
             
         Returns:
             Batch processing results
-        """
-        try:
+        """        try:
             batch_id = f"BATCH_{uuid.uuid4().hex[:12].upper()}"
             batch_results = {
                 'batch_id': batch_id,
@@ -211,8 +198,7 @@ class ProtectionManager:
             return {'error': str(e)}
             
     def get_request_status(self, request_id: str) -> Dict:
-        """Get status of protection request"""
-        try:
+        """Get status of protection request"""        try:
             if request_id in self.active_requests:
                 request = self.active_requests[request_id]
                 return {
@@ -244,8 +230,7 @@ class ProtectionManager:
             return {'error': str(e)}
             
     def get_dashboard_metrics(self) -> Dict:
-        """Get comprehensive dashboard metrics"""
-        try:
+        """Get comprehensive dashboard metrics"""        try:
             # Calculate processing statistics
             total_requests = self.metrics['requests_processed']
             success_rate = (self.metrics['successful_protections'] / total_requests * 100) if total_requests > 0 else 0
@@ -288,8 +273,7 @@ class ProtectionManager:
             return {'error': str(e)}
             
     def get_owner_protection_summary(self, owner_id: str) -> Dict:
-        """Get protection summary for specific owner"""
-        try:
+        """Get protection summary for specific owner"""        try:
             # Get owner's requests
             owner_requests = [req for req in list(self.active_requests.values()) + list(self.completed_requests.values()) if req.owner_id == owner_id]
             
@@ -330,8 +314,7 @@ class ProtectionManager:
             return {'error': str(e)}
             
     async def handle_monitoring_alert(self, alert_data: Dict) -> str:
-        """Handle monitoring alert and take appropriate actions"""
-        try:
+        """Handle monitoring alert and take appropriate actions"""        try:
             alert_id = f"ALERT_{uuid.uuid4().hex[:12].upper()}"
             
             alert = MonitoringAlert(
@@ -365,8 +348,7 @@ class ProtectionManager:
             return ""
             
     async def _request_processor(self):
-        """Background request processor"""
-        while True:
+        """Background request processor"""        while True:
             try:
                 # Get request from queue
                 request = await self.processing_queue.get()
@@ -417,8 +399,7 @@ class ProtectionManager:
                 await asyncio.sleep(1)  # Prevent tight error loop
                 
     async def _monitoring_service(self):
-        """Background monitoring service"""
-        while self.monitoring_active:
+        """Background monitoring service"""        while self.monitoring_active:
             try:
                 # Monitor all protected content
                 await self._monitor_protected_content()
@@ -434,8 +415,7 @@ class ProtectionManager:
                 await asyncio.sleep(60)  # Wait 1 minute before retry
                 
     async def _monitor_protected_content(self):
-        """Monitor all protected content for violations and usage"""
-        try:
+        """Monitor all protected content for violations and usage"""        try:
             # Get all protected content IDs
             protected_content = []
             
@@ -473,8 +453,7 @@ class ProtectionManager:
             logger.error(f"Content monitoring failed: {str(e)}")
             
     async def _handle_alert_actions(self, alert: MonitoringAlert, alert_data: Dict) -> List[str]:
-        """Handle automated actions for monitoring alerts"""
-        actions_taken = []
+        """Handle automated actions for monitoring alerts"""        actions_taken = []
         
         try:
             if alert.alert_type == 'violation_detected' and alert.severity in ['high', 'critical']:
@@ -517,8 +496,7 @@ class ProtectionManager:
         return actions_taken
         
     async def _cleanup_old_records(self):
-        """Clean up old completed requests and resolved alerts"""
-        try:
+        """Clean up old completed requests and resolved alerts"""        try:
             cutoff_date = datetime.utcnow() - timedelta(days=30)
             
             # Clean up old completed requests
@@ -542,8 +520,7 @@ class ProtectionManager:
             logger.error(f"Cleanup failed: {str(e)}")
 
 class BatchOperationType(Enum):
-    """Batch operation types"""
-    PROTECT_CONTENT = "protect_content"
+    """Batch operation types"""    PROTECT_CONTENT = "protect_content"
     SCAN_VIOLATIONS = "scan_violations"
     ENFORCE_RIGHTS = "enforce_rights"
     UPDATE_PROTECTION = "update_protection"
@@ -551,8 +528,7 @@ class BatchOperationType(Enum):
 
 @dataclass
 class ProtectionMetrics:
-    """Protection performance metrics"""
-    total_protected: int = 0
+    """Protection performance metrics"""    total_protected: int = 0
     active_monitoring: int = 0
     violations_detected: int = 0
     violations_resolved: int = 0
@@ -563,8 +539,7 @@ class ProtectionMetrics:
 
 @dataclass
 class BatchOperationResult:
-    """Batch operation result"""
-    operation_id: str
+    """Batch operation result"""    operation_id: str
     operation_type: BatchOperationType
     total_items: int
     successful_items: int
@@ -575,8 +550,7 @@ class BatchOperationResult:
     completed_at: datetime
 
 class ProtectionAgentManager(BaseAgent):
-    """
-    Enterprise-level protection agent manager for advanced content protection operations.
+    """    Enterprise-level protection agent manager for advanced content protection operations.
     
     Features:
     - Batch processing capabilities for large-scale operations
@@ -587,8 +561,7 @@ class ProtectionAgentManager(BaseAgent):
     - High-availability protection services
     - Advanced violation trend analysis
     - Automated protection renewal and lifecycle management
-    """
-    
+    """    
     def __init__(self, manager_id: str = "protection_manager", config: Dict[str, Any] = None):
         super().__init__(manager_id, config)
         
@@ -623,8 +596,7 @@ class ProtectionAgentManager(BaseAgent):
         self.metrics_update_interval = self.config.get('metrics_update_interval', 300)   # 5 minutes
         
     async def initialize(self):
-        """Initialize protection manager and all components"""
-        try:
+        """Initialize protection manager and all components"""        try:
             # Initialize core protection agent
             await self.protection_agent.initialize()
             
@@ -652,8 +624,7 @@ class ProtectionAgentManager(BaseAgent):
             raise ProtectionError(f"Manager initialization failed: {e}")
     
     async def process(self, request: Dict[str, Any]) -> AgentResponse:
-        """
-        Process high-level protection management requests.
+        """        Process high-level protection management requests.
         
         Args:
             request: Dictionary containing:
@@ -664,8 +635,7 @@ class ProtectionAgentManager(BaseAgent):
         
         Returns:
             AgentResponse with management results
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             action = request.get('action', 'manage_protection')
@@ -725,8 +695,7 @@ class ProtectionAgentManager(BaseAgent):
             )
     
     async def _batch_protect_content(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Batch protect multiple content files"""
-        
+        """Batch protect multiple content files"""        
         content_paths = request.get('content_paths', [])
         protection_level = ProtectionLevel(request.get('protection_level', 'standard'))
         user_id = request.get('user_id')
@@ -809,8 +778,7 @@ class ProtectionAgentManager(BaseAgent):
         }
     
     async def _batch_scan_violations(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Batch scan for violations across multiple content"""
-        
+        """Batch scan for violations across multiple content"""        
         content_ids = request.get('content_ids', [])
         scan_config = request.get('scan_config', {})
         user_id = request.get('user_id')
@@ -887,8 +855,7 @@ class ProtectionAgentManager(BaseAgent):
         }
     
     async def _batch_enforce_rights(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Batch enforce rights for multiple violations"""
-        
+        """Batch enforce rights for multiple violations"""        
         violation_ids = request.get('violation_ids', [])
         enforcement_action = request.get('enforcement_action', 'takedown_request')
         enforcement_config = request.get('enforcement_config', {})
@@ -961,8 +928,7 @@ class ProtectionAgentManager(BaseAgent):
         }
     
     async def _get_protection_analytics(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Get comprehensive protection analytics"""
-        
+        """Get comprehensive protection analytics"""        
         user_id = request.get('user_id')
         tenant_id = request.get('tenant_id')
         time_range = request.get('time_range', '30d')  # 7d, 30d, 90d, 1y
@@ -998,8 +964,7 @@ class ProtectionAgentManager(BaseAgent):
         }
     
     async def _manage_protection_lifecycle(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Manage protection lifecycle operations"""
-        
+        """Manage protection lifecycle operations"""        
         operation = request.get('operation', 'check_renewals')
         user_id = request.get('user_id')
         tenant_id = request.get('tenant_id')
@@ -1016,8 +981,7 @@ class ProtectionAgentManager(BaseAgent):
             raise ValidationError(f"Unknown lifecycle operation: {operation}")
     
     async def _check_protection_renewals(self, user_id: str, tenant_id: str) -> Dict[str, Any]:
-        """Check protections that need renewal"""
-        
+        """Check protections that need renewal"""        
         # Get protections expiring in next 30 days
         expiring_soon = []
         expired = []
@@ -1042,8 +1006,7 @@ class ProtectionAgentManager(BaseAgent):
         }
     
     async def _optimize_protection_settings(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize protection settings based on performance data"""
-        
+        """Optimize protection settings based on performance data"""        
         user_id = request.get('user_id')
         optimization_type = request.get('optimization_type', 'performance')
         
@@ -1069,8 +1032,7 @@ class ProtectionAgentManager(BaseAgent):
         }
     
     async def _generate_protection_report(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate comprehensive protection report"""
-        
+        """Generate comprehensive protection report"""        
         report_type = request.get('report_type', 'summary')
         user_id = request.get('user_id')
         tenant_id = request.get('tenant_id')
@@ -1109,8 +1071,7 @@ class ProtectionAgentManager(BaseAgent):
         }
     
     async def _monitor_system_health(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Monitor protection system health"""
-        
+        """Monitor protection system health"""        
         # Collect system health metrics
         health_metrics = {
             'protection_agent_status': await self._check_protection_agent_health(),
@@ -1136,8 +1097,7 @@ class ProtectionAgentManager(BaseAgent):
         }
     
     async def _start_monitoring_services(self):
-        """Start background monitoring services"""
-        try:
+        """Start background monitoring services"""        try:
             # Start violation monitoring
             asyncio.create_task(self._continuous_violation_monitoring())
             
@@ -1153,8 +1113,7 @@ class ProtectionAgentManager(BaseAgent):
             logger.error(f"Failed to start monitoring services: {e}")
     
     async def _start_metrics_collection(self):
-        """Start metrics collection service"""
-        while True:
+        """Start metrics collection service"""        while True:
             try:
                 await self._update_metrics()
                 await asyncio.sleep(self.metrics_update_interval)
@@ -1163,8 +1122,7 @@ class ProtectionAgentManager(BaseAgent):
                 await asyncio.sleep(60)  # Wait 1 minute before retry
     
     async def _start_maintenance_tasks(self):
-        """Start maintenance tasks"""
-        while True:
+        """Start maintenance tasks"""        while True:
             try:
                 # Run maintenance every hour
                 await asyncio.sleep(3600)
@@ -1173,8 +1131,7 @@ class ProtectionAgentManager(BaseAgent):
                 logger.error(f"Maintenance task error: {e}")
     
     async def _continuous_violation_monitoring(self):
-        """Continuously monitor for violations"""
-        while True:
+        """Continuously monitor for violations"""        while True:
             try:
                 # This would monitor active protections for violations
                 await self._scan_active_protections_for_violations()
@@ -1184,8 +1141,7 @@ class ProtectionAgentManager(BaseAgent):
                 await asyncio.sleep(60)
     
     async def _analyze_batch_violations(self, violations: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze batch violations for insights"""
-        
+        """Analyze batch violations for insights"""        
         if not violations:
             return {'total': 0, 'by_platform': {}, 'by_type': {}, 'severity_distribution': {}}
         
@@ -1225,30 +1181,23 @@ class ProtectionAgentManager(BaseAgent):
     
     # Additional helper methods would be implemented here
     async def _collect_analytics_data(self, user_id, tenant_id, start_date, end_date, include_trends):
-        """Collect analytics data for the specified period"""
-        # Implementation would query database and collect metrics
+        """Collect analytics data for the specified period"""        # Implementation would query database and collect metrics
         return {}
     
     async def _check_protection_agent_health(self):
-        """Check protection agent health"""
-        return {'status': 'healthy', 'response_time': 0.1}
+        """Check protection agent health"""        return {'status': 'healthy', 'response_time': 0.1}
     
     async def _check_batch_processor_health(self):
-        """Check batch processor health"""
-        return {'status': 'healthy', 'queue_size': 0}
+        """Check batch processor health"""        return {'status': 'healthy', 'queue_size': 0}
     
     async def _check_monitoring_services_health(self):
-        """Check monitoring services health"""
-        return {'status': 'healthy', 'active_monitors': 5}
+        """Check monitoring services health"""        return {'status': 'healthy', 'active_monitors': 5}
     
     async def _check_database_health(self):
-        """Check database health"""
-        return {'status': 'healthy', 'connection_pool': '10/10'}
+        """Check database health"""        return {'status': 'healthy', 'connection_pool': '10/10'}
     
     async def _check_queue_health(self):
-        """Check queue health"""
-        return {'status': 'healthy', 'pending_jobs': 0}
+        """Check queue health"""        return {'status': 'healthy', 'pending_jobs': 0}
     
     async def _get_system_uptime(self):
-        """Get system uptime"""
-        return "99.9%"
+        """Get system uptime"""        return "99.9%"

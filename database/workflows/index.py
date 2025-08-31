@@ -1,5 +1,4 @@
-"""
-Database Workflows Module - Central Index
+"""Database Workflows Module - Central Index
 
 Enterprise workflow automation and orchestration system for multi-format content creators.
 This index provides centralized access to all workflow components and services.
@@ -23,9 +22,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 from datetime import datetime
 from sqlalchemy.orm import Session
 import logging
@@ -166,11 +163,9 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowsOrchestrator:
-    """
-    Central orchestrator for all workflow operations
+    """    Central orchestrator for all workflow operations
     Provides unified access to all workflow subsystems with business logic implementation
-    """
-    
+    """    
     def __init__(self, db_session: Session):
         self.db_session = db_session
         
@@ -195,8 +190,7 @@ class WorkflowsOrchestrator:
         collaboration_settings: Optional[Dict[str, Any]] = None,
         monetization_config: Optional[Dict[str, Any]] = None
     ) -> Dict[str, str]:
-        """
-        Create complete content creator workflow following business logic:
+        """        Create complete content creator workflow following business logic:
         Upload → AI Processing → Protection → SEO → Collaboration → Distribution
         
         Args:
@@ -209,8 +203,7 @@ class WorkflowsOrchestrator:
             
         Returns:
             Dictionary with created workflow IDs
-        """
-        try:
+        """        try:
             # Step 1: Create main content processing workflow
             content_workflow_definition = {
                 "tasks": [
@@ -326,8 +319,7 @@ class WorkflowsOrchestrator:
         influencer_data: Dict[str, Any],
         monetization_config: Dict[str, Any]
     ) -> str:
-        """
-        Create specialized workflow for influencer monetization and brand collaboration
+        """        Create specialized workflow for influencer monetization and brand collaboration
         
         Args:
             user_id: Influencer user ID
@@ -336,8 +328,7 @@ class WorkflowsOrchestrator:
             
         Returns:
             Workflow ID for monetization pipeline
-        """
-        monetization_workflow_definition = {
+        """        monetization_workflow_definition = {
             "tasks": [
                 {
                     "name": "audience_analysis",
@@ -398,8 +389,7 @@ class WorkflowsOrchestrator:
         user_id: str,
         time_period: str = "30d"
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive dashboard data for content creator
+        """        Get comprehensive dashboard data for content creator
         
         Args:
             user_id: Creator user ID
@@ -407,8 +397,7 @@ class WorkflowsOrchestrator:
             
         Returns:
             Complete dashboard data
-        """
-        # Get workflow performance
+        """        # Get workflow performance
         workflow_metrics = await self.performance_analytics.get_user_workflow_metrics(
             user_id=user_id,
             time_period=time_period
@@ -444,8 +433,7 @@ class WorkflowsOrchestrator:
         }
     
     def _get_validation_rules(self, creator_type: str) -> Dict[str, Any]:
-        """Get content validation rules based on creator type"""
-        base_rules = {
+        """Get content validation rules based on creator type"""        base_rules = {
             "file_size_limit": "500MB",
             "duration_limit": "60min",
             "format_validation": True,
@@ -488,8 +476,7 @@ class WorkflowsOrchestrator:
         return base_rules
     
     def _get_fingerprint_types(self, content_type: str) -> List[str]:
-        """Get appropriate fingerprint types based on content type"""
-        fingerprint_mapping = {
+        """Get appropriate fingerprint types based on content type"""        fingerprint_mapping = {
             "audio": ["audio_chromaprint", "spectral_hash", "audio_vector"],
             "video": ["video_hash", "frame_analysis", "audio_chromaprint"],
             "image": ["perceptual_hash", "clip_embedding", "visual_features"],
@@ -504,8 +491,7 @@ class WorkflowsOrchestrator:
         creator_type: str,
         content_data: Dict[str, Any]
     ):
-        """Set up automation rules specific to creator type and content"""
-        # High engagement auto-boost rule
+        """Set up automation rules specific to creator type and content"""        # High engagement auto-boost rule
         await self.automation_engine.create_automation_rule(
             rule_name=f"Auto-Boost High Performance - {creator_type}",
             user_id=user_id,
@@ -558,8 +544,7 @@ class WorkflowsOrchestrator:
         workflow_id: str,
         pipeline_id: str
     ):
-        """Set up comprehensive performance monitoring"""
-        await self.performance_analytics.create_performance_dashboard(
+        """Set up comprehensive performance monitoring"""        await self.performance_analytics.create_performance_dashboard(
             dashboard_name=f"{creator_type.title()} Performance Dashboard",
             user_id=user_id,
             tracked_workflows=[workflow_id],

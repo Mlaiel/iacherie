@@ -1,5 +1,4 @@
-"""
-Crawlers Module Index - Easy Access Point
+"""Crawlers Module Index - Easy Access Point
 ========================================
 
 Simplified access point for the professional web crawling system.
@@ -11,9 +10,7 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 WARNING: This code is proprietary and confidential. Any unauthorized use, 
 reproduction, or distribution is strictly prohibited and may result in 
 severe legal consequences.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any
 
@@ -25,35 +22,29 @@ from . import (
 
 
 class CrawlerFactory:
-    """
-    Factory class for easy crawler initialization and management.
+    """    Factory class for easy crawler initialization and management.
     Simplifies the process of setting up and using crawlers.
-    """
-    
+    """    
     def __init__(self, vector_matcher, logger: Optional[logging.Logger] = None):
-        """
-        Initialize crawler factory.
+        """        Initialize crawler factory.
         
         Args:
             vector_matcher: Vector matching service instance
             logger: Optional logger instance
-        """
-        self.vector_matcher = vector_matcher
+        """        self.vector_matcher = vector_matcher
         self.logger = logger or logging.getLogger(__name__)
         self.manager = None
         self.default_configs = self._get_default_configs()
     
     async def initialize_manager(self, max_concurrent_crawlers: int = 5) -> CrawlerManager:
-        """
-        Initialize and return crawler manager.
+        """        Initialize and return crawler manager.
         
         Args:
             max_concurrent_crawlers: Maximum number of concurrent crawlers
             
         Returns:
             Initialized CrawlerManager instance
-        """
-        if not self.manager:
+        """        if not self.manager:
             self.manager = CrawlerManager(self.vector_matcher, max_concurrent_crawlers)
             await self.manager.initialize()
             
@@ -70,8 +61,7 @@ class CrawlerFactory:
                           platforms: List[str] = None,
                           similarity_threshold: float = 0.8,
                           max_results_per_platform: int = 50) -> Dict[str, List[Dict[str, Any]]]:
-        """
-        Quick search across platforms with minimal configuration.
+        """        Quick search across platforms with minimal configuration.
         
         Args:
             search_terms: Terms to search for
@@ -81,8 +71,7 @@ class CrawlerFactory:
             
         Returns:
             Dictionary of results per platform
-        """
-        try:
+        """        try:
             # Initialize manager if needed
             if not self.manager:
                 await self.initialize_manager()
@@ -117,8 +106,7 @@ class CrawlerFactory:
                              interval_minutes: int = 60,
                              similarity_threshold: float = 0.85,
                              callback_url: Optional[str] = None) -> List[str]:
-        """
-        Set up continuous monitoring for content across platforms.
+        """        Set up continuous monitoring for content across platforms.
         
         Args:
             fingerprint_data: Fingerprint data to monitor for
@@ -129,8 +117,7 @@ class CrawlerFactory:
             
         Returns:
             List of created task IDs
-        """
-        try:
+        """        try:
             # Initialize manager if needed
             if not self.manager:
                 await self.initialize_manager()
@@ -168,8 +155,7 @@ class CrawlerFactory:
     async def create_single_crawler(self, 
                                   crawler_type: str,
                                   config_overrides: Dict[str, Any] = None) -> PlatformCrawler:
-        """
-        Create a single crawler instance with custom configuration.
+        """        Create a single crawler instance with custom configuration.
         
         Args:
             crawler_type: Type of crawler (youtube, instagram, tiktok, web)
@@ -177,8 +163,7 @@ class CrawlerFactory:
             
         Returns:
             Configured crawler instance
-        """
-        try:
+        """        try:
             # Merge default config with overrides
             base_config = self.default_configs.get(crawler_type, {})
             if config_overrides:
@@ -224,8 +209,7 @@ class CrawlerFactory:
             raise
     
     def _get_default_configs(self) -> Dict[str, Dict[str, Any]]:
-        """Get default configurations for all crawler types"""
-        return {
+        """Get default configurations for all crawler types"""        return {
             'youtube': {
                 'api_key': None,  # Must be provided
                 'quota_limit': 10000,
@@ -263,8 +247,7 @@ class CrawlerFactory:
         }
     
     async def get_manager_status(self) -> Dict[str, Any]:
-        """Get current status of crawler manager"""
-        if not self.manager:
+        """Get current status of crawler manager"""        if not self.manager:
             return {'status': 'not_initialized'}
         
         return {
@@ -274,8 +257,7 @@ class CrawlerFactory:
         }
     
     async def cleanup(self):
-        """Cleanup resources"""
-        if self.manager:
+        """Cleanup resources"""        if self.manager:
             await self.manager.shutdown()
             self.manager = None
             self.logger.info("Crawler factory cleaned up")
@@ -286,8 +268,7 @@ async def quick_search(search_terms: List[str],
                       vector_matcher,
                       platforms: List[str] = None,
                       max_results_per_platform: int = 50) -> Dict[str, List[Dict[str, Any]]]:
-    """
-    Quick convenience function for simple searches.
+    """    Quick convenience function for simple searches.
     
     Args:
         search_terms: Terms to search for
@@ -297,8 +278,7 @@ async def quick_search(search_terms: List[str],
         
     Returns:
         Search results dictionary
-    """
-    factory = CrawlerFactory(vector_matcher)
+    """    factory = CrawlerFactory(vector_matcher)
     try:
         return await factory.quick_search(search_terms, platforms, max_results_per_platform=max_results_per_platform)
     finally:
@@ -310,8 +290,7 @@ async def setup_content_monitoring(fingerprint_data: Dict[str, Any],
                                  platforms: List[str],
                                  interval_minutes: int = 60,
                                  callback_url: Optional[str] = None) -> List[str]:
-    """
-    Quick convenience function for setting up monitoring.
+    """    Quick convenience function for setting up monitoring.
     
     Args:
         fingerprint_data: Content fingerprint data
@@ -322,8 +301,7 @@ async def setup_content_monitoring(fingerprint_data: Dict[str, Any],
         
     Returns:
         List of created monitoring task IDs
-    """
-    factory = CrawlerFactory(vector_matcher)
+    """    factory = CrawlerFactory(vector_matcher)
     try:
         return await factory.setup_monitoring(
             fingerprint_data=fingerprint_data,

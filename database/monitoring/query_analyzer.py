@@ -1,5 +1,4 @@
-"""
-Advanced Query Analyzer
+"""Advanced Query Analyzer
 
 Intelligent SQL query analysis system with AI-powered optimization recommendations.
 Analyzes query patterns, performance bottlenecks, and provides actionable insights.
@@ -11,9 +10,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 ⚠️  AVERTISSEMENT STRICT ⚠️
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Propriété intellectuelle de Fahed Mlaiel (mlaiel@live.de).
-"""
-
-import re
+"""import re
 import hashlib
 import time
 from datetime import datetime, timedelta
@@ -36,8 +33,7 @@ from ...ai.analysis.query_optimization_ai import QueryOptimizationAI
 
 
 class QueryType(Enum):
-    """SQL query type classification"""
-    SELECT = "select"
+    """SQL query type classification"""    SELECT = "select"
     INSERT = "insert"
     UPDATE = "update"
     DELETE = "delete"
@@ -50,8 +46,7 @@ class QueryType(Enum):
 
 
 class OptimizationPriority(Enum):
-    """Query optimization priority levels"""
-    CRITICAL = "critical"
+    """Query optimization priority levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -60,8 +55,7 @@ class OptimizationPriority(Enum):
 
 @dataclass
 class QueryPattern:
-    """SQL query pattern analysis"""
-    pattern_id: str
+    """SQL query pattern analysis"""    pattern_id: str
     normalized_query: str
     query_type: QueryType
     table_names: List[str]
@@ -75,16 +69,14 @@ class QueryPattern:
     complexity_score: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        data = asdict(self)
+        """Convert to dictionary"""        data = asdict(self)
         data['query_type'] = self.query_type.value
         return data
 
 
 @dataclass
 class QueryPerformanceMetrics:
-    """Query performance metrics"""
-    query_hash: str
+    """Query performance metrics"""    query_hash: str
     execution_count: int
     total_time_ms: float
     avg_time_ms: float
@@ -102,8 +94,7 @@ class QueryPerformanceMetrics:
     last_seen: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        data = asdict(self)
+        """Convert to dictionary"""        data = asdict(self)
         data['first_seen'] = self.first_seen.isoformat()
         data['last_seen'] = self.last_seen.isoformat()
         return data
@@ -111,8 +102,7 @@ class QueryPerformanceMetrics:
 
 @dataclass
 class OptimizationRecommendation:
-    """Query optimization recommendation"""
-    recommendation_id: str
+    """Query optimization recommendation"""    recommendation_id: str
     query_hash: str
     priority: OptimizationPriority
     category: str
@@ -126,16 +116,14 @@ class OptimizationRecommendation:
     created_at: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        data = asdict(self)
+        """Convert to dictionary"""        data = asdict(self)
         data['priority'] = self.priority.value
         data['created_at'] = self.created_at.isoformat()
         return data
 
 
 class QueryAnalyzer:
-    """
-    Advanced SQL query analyzer with AI-powered optimization.
+    """    Advanced SQL query analyzer with AI-powered optimization.
     
     Features:
     - Real-time query pattern recognition
@@ -144,8 +132,7 @@ class QueryAnalyzer:
     - Execution plan analysis
     - Index usage optimization
     - Query complexity scoring
-    """
-    
+    """    
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
@@ -179,8 +166,7 @@ class QueryAnalyzer:
         rows_examined: int = None,
         rows_returned: int = None
     ) -> Dict[str, Any]:
-        """
-        Analyze a single SQL query
+        """        Analyze a single SQL query
         
         Args:
             query: SQL query to analyze
@@ -190,8 +176,7 @@ class QueryAnalyzer:
             
         Returns:
             Analysis results
-        """
-        try:
+        """        try:
             # Parse and normalize query
             pattern = self._analyze_query_pattern(query)
             query_hash = self._get_query_hash(pattern.normalized_query)
@@ -237,8 +222,7 @@ class QueryAnalyzer:
             return {"error": str(e)}
     
     def _analyze_query_pattern(self, query: str) -> QueryPattern:
-        """Analyze SQL query pattern"""
-        try:
+        """Analyze SQL query pattern"""        try:
             # Parse SQL
             parsed = sqlparse.parse(query)[0]
             normalized = self._normalize_query(query)
@@ -298,8 +282,7 @@ class QueryAnalyzer:
             )
     
     def _normalize_query(self, query: str) -> str:
-        """Normalize SQL query for pattern matching"""
-        normalized = query.strip().upper()
+        """Normalize SQL query for pattern matching"""        normalized = query.strip().upper()
         
         # Apply normalization patterns
         for pattern, replacement in self.normalization_patterns:
@@ -308,8 +291,7 @@ class QueryAnalyzer:
         return normalized
     
     def _get_query_type(self, query: str) -> QueryType:
-        """Determine SQL query type"""
-        query_upper = query.strip().upper()
+        """Determine SQL query type"""        query_upper = query.strip().upper()
         
         if query_upper.startswith('SELECT'):
             return QueryType.SELECT
@@ -333,8 +315,7 @@ class QueryAnalyzer:
             return QueryType.UNKNOWN
     
     def _extract_table_names(self, parsed) -> List[str]:
-        """Extract table names from parsed SQL"""
-        table_names = []
+        """Extract table names from parsed SQL"""        table_names = []
         
         def extract_from_token(token):
             if token.ttype is None and hasattr(token, 'tokens'):
@@ -354,8 +335,7 @@ class QueryAnalyzer:
         return list(set(table_names))  # Remove duplicates
     
     def _extract_column_names(self, parsed) -> List[str]:
-        """Extract column names from parsed SQL"""
-        # Simplified column extraction
+        """Extract column names from parsed SQL"""        # Simplified column extraction
         column_names = []
         try:
             query_str = str(parsed)
@@ -379,19 +359,16 @@ class QueryAnalyzer:
         return list(set(column_names))
     
     def _count_joins(self, query: str) -> int:
-        """Count JOIN operations in query"""
-        join_pattern = r'\b(?:INNER\s+|LEFT\s+|RIGHT\s+|FULL\s+)?JOIN\b'
+        """Count JOIN operations in query"""        join_pattern = r'\b(?:INNER\s+|LEFT\s+|RIGHT\s+|FULL\s+)?JOIN\b'
         return len(re.findall(join_pattern, query, re.IGNORECASE))
     
     def _count_subqueries(self, query: str) -> int:
-        """Count subqueries in query"""
-        # Count SELECT statements (main query + subqueries)
+        """Count subqueries in query"""        # Count SELECT statements (main query + subqueries)
         select_count = len(re.findall(r'\bSELECT\b', query, re.IGNORECASE))
         return max(0, select_count - 1)  # Subtract main query
     
     def _count_where_conditions(self, query: str) -> int:
-        """Count WHERE conditions"""
-        where_match = re.search(r'\bWHERE\s+(.*?)(?:\s+ORDER\s+BY|\s+GROUP\s+BY|\s+LIMIT|$)', 
+        """Count WHERE conditions"""        where_match = re.search(r'\bWHERE\s+(.*?)(?:\s+ORDER\s+BY|\s+GROUP\s+BY|\s+LIMIT|$)', 
                                query, re.IGNORECASE | re.DOTALL)
         if where_match:
             where_clause = where_match.group(1)
@@ -402,8 +379,7 @@ class QueryAnalyzer:
         return 0
     
     def _extract_order_by_columns(self, parsed) -> List[str]:
-        """Extract ORDER BY columns"""
-        try:
+        """Extract ORDER BY columns"""        try:
             query_str = str(parsed)
             order_match = re.search(r'\bORDER\s+BY\s+(.*?)(?:\s+LIMIT|$)', 
                                    query_str, re.IGNORECASE)
@@ -416,8 +392,7 @@ class QueryAnalyzer:
         return []
     
     def _extract_group_by_columns(self, parsed) -> List[str]:
-        """Extract GROUP BY columns"""
-        try:
+        """Extract GROUP BY columns"""        try:
             query_str = str(parsed)
             group_match = re.search(r'\bGROUP\s+BY\s+(.*?)(?:\s+ORDER\s+BY|\s+LIMIT|$)', 
                                    query_str, re.IGNORECASE)
@@ -430,8 +405,7 @@ class QueryAnalyzer:
         return []
     
     def _has_aggregation_functions(self, query: str) -> bool:
-        """Check if query has aggregation functions"""
-        agg_functions = ['COUNT', 'SUM', 'AVG', 'MAX', 'MIN', 'GROUP_CONCAT']
+        """Check if query has aggregation functions"""        agg_functions = ['COUNT', 'SUM', 'AVG', 'MAX', 'MIN', 'GROUP_CONCAT']
         pattern = r'\b(?:' + '|'.join(agg_functions) + r')\s*\('
         return bool(re.search(pattern, query, re.IGNORECASE))
     
@@ -443,8 +417,7 @@ class QueryAnalyzer:
         table_count: int,
         has_aggregation: bool
     ) -> float:
-        """Calculate query complexity score (0-10)"""
-        score = 1.0  # Base score
+        """Calculate query complexity score (0-10)"""        score = 1.0  # Base score
         
         # Add complexity factors
         score += join_count * 0.5
@@ -458,8 +431,7 @@ class QueryAnalyzer:
         return min(score, 10.0)  # Cap at 10
     
     def _get_query_hash(self, query: str) -> str:
-        """Generate hash for query"""
-        return hashlib.md5(query.encode()).hexdigest()
+        """Generate hash for query"""        return hashlib.md5(query.encode()).hexdigest()
     
     async def _update_performance_metrics(
         self,
@@ -468,8 +440,7 @@ class QueryAnalyzer:
         rows_examined: int = None,
         rows_returned: int = None
     ) -> None:
-        """Update performance metrics for query"""
-        try:
+        """Update performance metrics for query"""        try:
             now = datetime.utcnow()
             
             if query_hash in self.performance_metrics:
@@ -518,8 +489,7 @@ class QueryAnalyzer:
             self.logger.error(f"Error updating performance metrics: {e}")
     
     async def _generate_optimization_recommendations(self, query_hash: str) -> None:
-        """Generate optimization recommendations for query"""
-        try:
+        """Generate optimization recommendations for query"""        try:
             if query_hash not in self.query_patterns:
                 return
             
@@ -594,8 +564,7 @@ class QueryAnalyzer:
             self.logger.error(f"Error generating recommendations: {e}")
     
     async def get_slow_queries(self, limit: int = 20) -> List[Dict[str, Any]]:
-        """Get slowest queries"""
-        try:
+        """Get slowest queries"""        try:
             # Sort by average execution time
             sorted_queries = sorted(
                 self.performance_metrics.items(),
@@ -622,8 +591,7 @@ class QueryAnalyzer:
             return []
     
     async def get_frequent_queries(self, limit: int = 20) -> List[Dict[str, Any]]:
-        """Get most frequently executed queries"""
-        try:
+        """Get most frequently executed queries"""        try:
             # Sort by execution count
             sorted_queries = sorted(
                 self.performance_metrics.items(),
@@ -653,8 +621,7 @@ class QueryAnalyzer:
         self, 
         priority: OptimizationPriority = None
     ) -> List[Dict[str, Any]]:
-        """Get optimization recommendations"""
-        try:
+        """Get optimization recommendations"""        try:
             all_recommendations = []
             
             for query_hash, recommendations in self.recommendations.items():
@@ -690,8 +657,7 @@ class QueryAnalyzer:
         query: str, 
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Analyze query execution plan"""
-        try:
+        """Analyze query execution plan"""        try:
             # Get execution plan
             plan_query = f"EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON) {query}"
             result = await session.execute(text(plan_query))
@@ -718,8 +684,7 @@ class QueryAnalyzer:
             return {"error": str(e)}
     
     def _extract_total_cost(self, plan_data: List[Dict]) -> float:
-        """Extract total cost from execution plan"""
-        try:
+        """Extract total cost from execution plan"""        try:
             if plan_data and len(plan_data) > 0:
                 return plan_data[0].get("Plan", {}).get("Total Cost", 0.0)
         except Exception:
@@ -727,8 +692,7 @@ class QueryAnalyzer:
         return 0.0
     
     def _analyze_scan_types(self, plan_data: List[Dict]) -> Dict[str, int]:
-        """Analyze scan types in execution plan"""
-        scan_types = defaultdict(int)
+        """Analyze scan types in execution plan"""        scan_types = defaultdict(int)
         
         def analyze_node(node):
             if isinstance(node, dict):
@@ -749,8 +713,7 @@ class QueryAnalyzer:
         return dict(scan_types)
     
     def _analyze_index_usage(self, plan_data: List[Dict]) -> Dict[str, Any]:
-        """Analyze index usage in execution plan"""
-        index_info = {
+        """Analyze index usage in execution plan"""        index_info = {
             "indexes_used": [],
             "sequential_scans": 0,
             "index_scans": 0
@@ -781,8 +744,7 @@ class QueryAnalyzer:
         return index_info
     
     def _analyze_join_methods(self, plan_data: List[Dict]) -> Dict[str, int]:
-        """Analyze join methods in execution plan"""
-        join_methods = defaultdict(int)
+        """Analyze join methods in execution plan"""        join_methods = defaultdict(int)
         
         def analyze_node(node):
             if isinstance(node, dict):
@@ -803,8 +765,7 @@ class QueryAnalyzer:
         return dict(join_methods)
     
     def _identify_bottlenecks(self, plan_data: List[Dict]) -> List[Dict[str, Any]]:
-        """Identify performance bottlenecks in execution plan"""
-        bottlenecks = []
+        """Identify performance bottlenecks in execution plan"""        bottlenecks = []
         
         def analyze_node(node, path=""):
             if isinstance(node, dict):
@@ -844,8 +805,7 @@ class QueryAnalyzer:
         return bottlenecks
     
     def _suggest_plan_optimizations(self, plan_data: List[Dict]) -> List[str]:
-        """Suggest optimizations based on execution plan"""
-        suggestions = []
+        """Suggest optimizations based on execution plan"""        suggestions = []
         
         try:
             if plan_data and len(plan_data) > 0:

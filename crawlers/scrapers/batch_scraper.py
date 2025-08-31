@@ -1,5 +1,4 @@
-"""
-Batch Scraper - IA-Influencer-Agent
+"""Batch Scraper - IA-Influencer-Agent
 ===================================
 
 High-performance batch scraping for large-scale operations.
@@ -11,9 +10,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 ⚠️ CRITICAL LEGAL WARNING ⚠️
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
-"""
-
-import asyncio
+"""import asyncio
 import aiohttp
 import time
 import logging
@@ -32,8 +29,7 @@ from pathlib import Path
 
 @dataclass
 class BatchJob:
-    """Batch scraping job definition."""
-    job_id: str
+    """Batch scraping job definition."""    job_id: str
     urls: List[str]
     callback: Optional[Callable] = None
     priority: int = 1
@@ -50,8 +46,7 @@ class BatchJob:
 
 @dataclass
 class BatchConfig:
-    """Batch scraping configuration."""
-    concurrent_jobs: int = 5
+    """Batch scraping configuration."""    concurrent_jobs: int = 5
     concurrent_urls_per_job: int = 10
     max_retries: int = 3
     timeout: int = 30
@@ -64,8 +59,7 @@ class BatchConfig:
     progress_callback: Optional[Callable] = None
 
 class BatchScraper:
-    """
-    High-performance batch web scraper.
+    """    High-performance batch web scraper.
     
     Features:
     - Concurrent processing
@@ -76,8 +70,7 @@ class BatchScraper:
     - Error handling and retries
     - Resource management
     - Caching
-    """
-    
+    """    
     def __init__(self, config: Optional[BatchConfig] = None):
         self.config = config or BatchConfig()
         self.logger = logging.getLogger(__name__)
@@ -114,17 +107,14 @@ class BatchScraper:
         Path(self.config.output_dir).mkdir(parents=True, exist_ok=True)
         
     async def __aenter__(self):
-        """Async context manager entry."""
-        await self._initialize_session()
+        """Async context manager entry."""        await self._initialize_session()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
-        await self.stop()
+        """Async context manager exit."""        await self.stop()
         
     async def _initialize_session(self):
-        """Initialize HTTP session."""
-        connector = aiohttp.TCPConnector(
+        """Initialize HTTP session."""        connector = aiohttp.TCPConnector(
             limit=100,
             limit_per_host=20,
             ttl_dns_cache=300,
@@ -140,8 +130,7 @@ class BatchScraper:
         )
         
     def submit_job(self, job: BatchJob) -> str:
-        """Submit batch job to queue."""
-        job.job_id = job.job_id or self._generate_job_id()
+        """Submit batch job to queue."""        job.job_id = job.job_id or self._generate_job_id()
         job.status = 'pending'
         
         # Add to queue with priority (lower number = higher priority)
@@ -156,8 +145,7 @@ class BatchScraper:
         
     def create_job(self, urls: List[str], job_id: Optional[str] = None, 
                   priority: int = 1, **kwargs) -> BatchJob:
-        """Create batch job from URLs."""
-        return BatchJob(
+        """Create batch job from URLs."""        return BatchJob(
             job_id=job_id or self._generate_job_id(),
             urls=urls,
             priority=priority,
@@ -165,14 +153,12 @@ class BatchScraper:
         )
         
     def _generate_job_id(self) -> str:
-        """Generate unique job ID."""
-        timestamp = str(int(time.time() * 1000))
+        """Generate unique job ID."""        timestamp = str(int(time.time() * 1000))
         random_part = hashlib.md5(f"{timestamp}{time.time()}".encode()).hexdigest()[:8]
         return f"job_{timestamp}_{random_part}"
         
     async def start(self):
-        """Start batch processing."""
-        if self.running:
+        """Start batch processing."""        if self.running:
             self.logger.warning("Batch scraper is already running")
             return
             
@@ -192,8 +178,7 @@ class BatchScraper:
             self.worker_threads.append(thread)
             
     async def stop(self):
-        """Stop batch processing."""
-        if not self.running:
+        """Stop batch processing."""        if not self.running:
             return
             
         self.logger.info("Stopping batch scraper")
@@ -210,8 +195,7 @@ class BatchScraper:
         self.logger.info("Batch scraper stopped")
         
     def _worker_thread(self, worker_id: int):
-        """Worker thread for processing jobs."""
-        self.logger.info(f"Worker {worker_id} started")
+        """Worker thread for processing jobs."""        self.logger.info(f"Worker {worker_id} started")
         
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
@@ -235,8 +219,7 @@ class BatchScraper:
             self.logger.info(f"Worker {worker_id} stopped")
             
     async def _process_job(self, job: BatchJob, worker_id: int):
-        """Process single batch job."""
-        job.status = 'running'
+        """Process single batch job."""        job.status = 'running'
         job.started_at = datetime.now()
         self.active_jobs[job.job_id] = job
         
@@ -308,8 +291,7 @@ class BatchScraper:
                     self.logger.error(f"Progress callback error: {e}")
                     
     async def _process_url(self, url: str, job: BatchJob) -> Dict[str, Any]:
-        """Process single URL."""
-        start_time = time.time()
+        """Process single URL."""        start_time = time.time()
         
         # Check cache first
         if self.config.enable_caching:
@@ -371,8 +353,7 @@ class BatchScraper:
                     await asyncio.sleep(2 ** attempt)  # Exponential backoff
                     
     def _get_cached_result(self, url: str) -> Optional[Dict[str, Any]]:
-        """Get cached result for URL."""
-        url_hash = hashlib.md5(url.encode()).hexdigest()
+        """Get cached result for URL."""        url_hash = hashlib.md5(url.encode()).hexdigest()
         
         if url_hash in self.cache:
             cached_data = self.cache[url_hash]
@@ -387,8 +368,7 @@ class BatchScraper:
         return None
         
     def _cache_result(self, url: str, result: Dict[str, Any]):
-        """Cache result for URL."""
-        url_hash = hashlib.md5(url.encode()).hexdigest()
+        """Cache result for URL."""        url_hash = hashlib.md5(url.encode()).hexdigest()
         
         self.cache[url_hash] = {
             'result': result,
@@ -396,8 +376,7 @@ class BatchScraper:
         }
         
     async def _save_job_results(self, job: BatchJob):
-        """Save job results to file."""
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        """Save job results to file."""        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         
         if self.config.result_format == 'json':
             filename = f"{self.config.output_dir}/job_{job.job_id}_{timestamp}.json"
@@ -498,8 +477,7 @@ class BatchScraper:
         self.logger.info(f"Saved results for job {job.job_id} to {filename}")
         
     def get_job_status(self, job_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of specific job."""
-        # Check active jobs
+        """Get status of specific job."""        # Check active jobs
         if job_id in self.active_jobs:
             job = self.active_jobs[job_id]
         elif job_id in self.completed_jobs:
@@ -520,8 +498,7 @@ class BatchScraper:
         }
         
     def get_all_jobs(self) -> List[Dict[str, Any]]:
-        """Get status of all jobs."""
-        all_jobs = []
+        """Get status of all jobs."""        all_jobs = []
         
         # Active jobs
         for job in self.active_jobs.values():
@@ -534,8 +511,7 @@ class BatchScraper:
         return sorted(all_jobs, key=lambda x: x['created_at'], reverse=True)
         
     def get_stats(self) -> Dict[str, Any]:
-        """Get batch scraper statistics."""
-        current_stats = self.stats.copy()
+        """Get batch scraper statistics."""        current_stats = self.stats.copy()
         
         if current_stats['start_time']:
             current_stats['uptime'] = (datetime.now() - current_stats['start_time']).total_seconds()
@@ -554,16 +530,13 @@ class BatchScraper:
         return current_stats
         
     async def wait_for_completion(self):
-        """Wait for all jobs to complete."""
-        while self.active_jobs or not self.job_queue.empty():
+        """Wait for all jobs to complete."""        while self.active_jobs or not self.job_queue.empty():
             await asyncio.sleep(1)
             
     def clear_completed_jobs(self):
-        """Clear completed jobs from memory."""
-        self.completed_jobs.clear()
+        """Clear completed jobs from memory."""        self.completed_jobs.clear()
         self.logger.info("Cleared completed jobs from memory")
         
     def clear_cache(self):
-        """Clear result cache."""
-        self.cache.clear()
+        """Clear result cache."""        self.cache.clear()
         self.logger.info("Cleared result cache")

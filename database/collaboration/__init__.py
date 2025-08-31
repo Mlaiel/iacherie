@@ -9,8 +9,7 @@ Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Micros
 
 Copyright © 2024 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use is strictly prohibited.
-"""
-from .collaboration_projects import (
+"""from .collaboration_projects import (
     CollaborationProject,
     ProjectStatus,
     ProjectType,

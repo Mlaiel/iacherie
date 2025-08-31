@@ -1,5 +1,4 @@
-"""
-Content Analytics Module - Advanced Content Performance Analysis System
+"""Content Analytics Module - Advanced Content Performance Analysis System
 
 Enterprise-grade content analytics for multi-format content creators
 providing deep content insights, performance tracking, and optimization recommendations.
@@ -12,9 +11,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import uuid
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Set, Union, Any, Tuple
@@ -40,8 +37,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Professional content types for analysis"""
-    MUSIC = "music"
+    """Professional content types for analysis"""    MUSIC = "music"
     VIDEO = "video"
     BLOG_POST = "blog_post"
     PODCAST = "podcast"
@@ -56,8 +52,7 @@ class ContentType(Enum):
 
 
 class ContentFormat(Enum):
-    """Content format classifications"""
-    SHORT_FORM = "short_form"  # < 60 seconds
+    """Content format classifications"""    SHORT_FORM = "short_form"  # < 60 seconds
     MEDIUM_FORM = "medium_form"  # 1-15 minutes
     LONG_FORM = "long_form"  # > 15 minutes
     EPISODIC = "episodic"  # Series content
@@ -66,8 +61,7 @@ class ContentFormat(Enum):
 
 
 class ContentQuality(Enum):
-    """Content quality assessment levels"""
-    EXCEPTIONAL = "exceptional"
+    """Content quality assessment levels"""    EXCEPTIONAL = "exceptional"
     HIGH = "high"
     GOOD = "good"
     AVERAGE = "average"
@@ -77,8 +71,7 @@ class ContentQuality(Enum):
 
 @dataclass
 class ContentMetrics:
-    """Comprehensive content metrics structure"""
-    content_id: str
+    """Comprehensive content metrics structure"""    content_id: str
     title: str
     content_type: str
     format_type: str
@@ -106,8 +99,7 @@ class ContentMetrics:
 
 @dataclass
 class ContentInsight:
-    """Content analysis insights"""
-    insight_id: str
+    """Content analysis insights"""    insight_id: str
     content_id: str
     insight_type: str
     category: str
@@ -124,8 +116,7 @@ class ContentInsight:
 
 @dataclass
 class ContentOptimization:
-    """Content optimization recommendations"""
-    optimization_id: str
+    """Content optimization recommendations"""    optimization_id: str
     content_id: str
     optimization_type: str
     current_score: float
@@ -141,8 +132,7 @@ class ContentOptimization:
 
 
 class ContentAnalytics:
-    """
-    Enterprise-grade content analytics engine for multi-format content analysis
+    """    Enterprise-grade content analytics engine for multi-format content analysis
     
     Features:
     - Multi-format content analysis (audio, video, text, images)
@@ -153,8 +143,7 @@ class ContentAnalytics:
     - Content optimization recommendations
     - Audience matching analysis
     - Platform-specific optimization
-    """
-    
+    """    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.content_analyzer = ContentAnalyzer()
@@ -168,8 +157,7 @@ class ContentAnalytics:
         include_predictions: bool = True,
         deep_analysis: bool = False
     ) -> ContentMetrics:
-        """
-        Analyze comprehensive content performance metrics
+        """        Analyze comprehensive content performance metrics
         
         Args:
             content_id: Unique content identifier
@@ -178,8 +166,7 @@ class ContentAnalytics:
             
         Returns:
             ContentMetrics: Comprehensive content analysis
-        """
-        try:
+        """        try:
             cache_key = f"content_metrics:{content_id}:{deep_analysis}"
             cached_result = await self.cache_manager.get(cache_key)
             
@@ -252,8 +239,7 @@ class ContentAnalytics:
         period: timedelta = timedelta(days=30),
         include_trends: bool = True
     ) -> Dict[str, Any]:
-        """
-        Analyze entire content portfolio performance
+        """        Analyze entire content portfolio performance
         
         Args:
             user_id: User identifier
@@ -262,8 +248,7 @@ class ContentAnalytics:
             
         Returns:
             Dict containing portfolio analysis
-        """
-        try:
+        """        try:
             async with get_db_session() as session:
                 # Get user's content portfolio
                 portfolio_data = await self._fetch_user_content_portfolio(
@@ -319,8 +304,7 @@ class ContentAnalytics:
         target_metrics: Dict[str, float],
         content_goals: List[str]
     ) -> List[ContentOptimization]:
-        """
-        Generate content optimization strategies
+        """        Generate content optimization strategies
         
         Args:
             user_id: User identifier
@@ -329,8 +313,7 @@ class ContentAnalytics:
             
         Returns:
             List of content optimization recommendations
-        """
-        try:
+        """        try:
             # Analyze current portfolio
             portfolio_analysis = await self.analyze_content_portfolio(user_id)
             
@@ -365,8 +348,7 @@ class ContentAnalytics:
         target_platforms: List[str],
         target_audience: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Predict content success before creation/publishing
+        """        Predict content success before creation/publishing
         
         Args:
             content_metadata: Content characteristics and metadata
@@ -375,8 +357,7 @@ class ContentAnalytics:
             
         Returns:
             Dict containing success predictions
-        """
-        try:
+        """        try:
             # Prepare features for prediction
             features = await self._prepare_prediction_features(
                 content_metadata, target_platforms, target_audience
@@ -422,8 +403,7 @@ class ContentAnalytics:
         platform: Optional[str] = None,
         timeframe: timedelta = timedelta(days=7)
     ) -> Dict[str, Any]:
-        """
-        Analyze trending content patterns and characteristics
+        """        Analyze trending content patterns and characteristics
         
         Args:
             category: Content category to analyze
@@ -432,8 +412,7 @@ class ContentAnalytics:
             
         Returns:
             Dict containing trending content analysis
-        """
-        try:
+        """        try:
             async with get_db_session() as session:
                 # Get trending content data
                 trending_data = await self._fetch_trending_content_data(
@@ -475,8 +454,7 @@ class ContentAnalytics:
         content_ids: List[str],
         analysis_type: str = "comprehensive"
     ) -> List[ContentInsight]:
-        """
-        Generate actionable content insights
+        """        Generate actionable content insights
         
         Args:
             content_ids: List of content identifiers
@@ -484,8 +462,7 @@ class ContentAnalytics:
             
         Returns:
             List of content insights
-        """
-        try:
+        """        try:
             insights = []
             
             for content_id in content_ids:
@@ -522,56 +499,48 @@ class ContentAnalytics:
         session: AsyncSession,
         content_id: str
     ) -> Dict[str, Any]:
-        """Fetch content data from database"""
-        # Implementation for fetching content data
+        """Fetch content data from database"""        # Implementation for fetching content data
         pass
     
     async def _analyze_content_quality(
         self,
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze content quality metrics"""
-        # Implementation for quality analysis
+        """Analyze content quality metrics"""        # Implementation for quality analysis
         pass
     
     async def _analyze_engagement_potential(
         self,
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze engagement potential"""
-        # Implementation for engagement analysis
+        """Analyze engagement potential"""        # Implementation for engagement analysis
         pass
     
     async def _analyze_seo_performance(
         self,
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze SEO performance"""
-        # Implementation for SEO analysis
+        """Analyze SEO performance"""        # Implementation for SEO analysis
         pass
     
     async def _analyze_platform_optimization(
         self,
         content_data: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Analyze platform optimization scores"""
-        # Implementation for platform optimization analysis
+        """Analyze platform optimization scores"""        # Implementation for platform optimization analysis
         pass
 
 
 # Content Analytics Factory
 class ContentAnalyticsFactory:
-    """Factory for creating content analytics instances"""
-    
+    """Factory for creating content analytics instances"""    
     @staticmethod
     def create_analytics_engine() -> ContentAnalytics:
-        """Create a new content analytics engine"""
-        return ContentAnalytics()
+        """Create a new content analytics engine"""        return ContentAnalytics()
     
     @staticmethod
     def create_ai_enhanced_engine() -> 'AIEnhancedContentAnalytics':
-        """Create AI-enhanced content analytics engine"""
-        from .ai_enhanced_content_analytics import AIEnhancedContentAnalytics
+        """Create AI-enhanced content analytics engine"""        from .ai_enhanced_content_analytics import AIEnhancedContentAnalytics
         return AIEnhancedContentAnalytics()
 
 

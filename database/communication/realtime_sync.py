@@ -1,5 +1,4 @@
-"""
-Real-Time Content Synchronization Database
+"""Real-Time Content Synchronization Database
 
 Enterprise real-time content synchronization system for multi-format creator collaboration
 with intelligent conflict resolution, version control, and cross-platform distribution.
@@ -23,9 +22,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-
-import uuid
+"""import uuid
 import json
 import asyncio
 from datetime import datetime, timezone, timedelta
@@ -47,8 +44,7 @@ logger = logging.getLogger(__name__)
 
 
 class SyncStatus(Enum):
-    """Real-time synchronization status"""
-    PENDING = "pending"
+    """Real-time synchronization status"""    PENDING = "pending"
     IN_PROGRESS = "in_progress" 
     SYNCHRONIZED = "synchronized"
     CONFLICT = "conflict"
@@ -58,8 +54,7 @@ class SyncStatus(Enum):
 
 
 class ContentType(Enum):
-    """Content types for synchronization"""
-    AUDIO = "audio"
+    """Content types for synchronization"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -70,8 +65,7 @@ class ContentType(Enum):
 
 
 class ConflictResolutionStrategy(Enum):
-    """Conflict resolution strategies"""
-    MERGE_INTELLIGENT = "merge_intelligent"
+    """Conflict resolution strategies"""    MERGE_INTELLIGENT = "merge_intelligent"
     LATEST_WINS = "latest_wins"
     MANUAL_RESOLVE = "manual_resolve"
     AI_ASSISTED = "ai_assisted"
@@ -80,8 +74,7 @@ class ConflictResolutionStrategy(Enum):
 
 
 class ReplicationMode(Enum):
-    """Content replication modes"""
-    REAL_TIME = "real_time"
+    """Content replication modes"""    REAL_TIME = "real_time"
     SCHEDULED = "scheduled" 
     ON_DEMAND = "on_demand"
     CONFLICT_AWARE = "conflict_aware"
@@ -90,8 +83,7 @@ class ReplicationMode(Enum):
 
 @dataclass
 class SyncOperation:
-    """Real-time synchronization operation"""
-    operation_id: str
+    """Real-time synchronization operation"""    operation_id: str
     content_id: str
     content_type: ContentType
     operation_type: str  # create, update, delete, merge
@@ -106,8 +98,7 @@ class SyncOperation:
 
 
 class ContentSyncLog(Base):
-    """Database model for content synchronization logs"""
-    __tablename__ = "content_sync_logs"
+    """Database model for content synchronization logs"""    __tablename__ = "content_sync_logs"
     __table_args__ = (
         Index('idx_sync_content_id', 'content_id'),
         Index('idx_sync_user_id', 'user_id'),
@@ -132,8 +123,7 @@ class ContentSyncLog(Base):
 
 
 class ContentVersionControl(Base):
-    """Database model for content version control"""
-    __tablename__ = "content_version_control"
+    """Database model for content version control"""    __tablename__ = "content_version_control"
     __table_args__ = (
         Index('idx_version_content_id', 'content_id'),
         Index('idx_version_number', 'version_number'),
@@ -155,11 +145,9 @@ class ContentVersionControl(Base):
 
 
 class RealtimeSyncManager:
-    """
-    Enterprise real-time content synchronization manager with intelligent 
+    """    Enterprise real-time content synchronization manager with intelligent 
     conflict resolution, version control, and cross-platform distribution.
-    """
-    
+    """    
     def __init__(self, db_session: Session, redis_client: redis.Redis):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -176,8 +164,7 @@ class RealtimeSyncManager:
         self.version_trees = {}
         
     async def initialize_sync_infrastructure(self) -> bool:
-        """Initialize synchronization infrastructure"""
-        try:
+        """Initialize synchronization infrastructure"""        try:
             # Setup Redis pub/sub channels
             await self._setup_sync_channels()
             
@@ -207,8 +194,7 @@ class RealtimeSyncManager:
         data_payload: Dict[str, Any],
         replication_mode: ReplicationMode = ReplicationMode.REAL_TIME
     ) -> str:
-        """Create new synchronization operation"""
-        try:
+        """Create new synchronization operation"""        try:
             operation_id = str(uuid.uuid4())
             
             # Create sync operation
@@ -248,8 +234,7 @@ class RealtimeSyncManager:
             raise
     
     async def _execute_realtime_sync(self, sync_op: SyncOperation) -> bool:
-        """Execute real-time synchronization"""
-        try:
+        """Execute real-time synchronization"""        try:
             sync_op.status = SyncStatus.IN_PROGRESS
             
             # Detect potential conflicts
@@ -295,8 +280,7 @@ class RealtimeSyncManager:
             return False
     
     async def _detect_conflicts(self, sync_op: SyncOperation) -> Optional[Dict[str, Any]]:
-        """Detect synchronization conflicts using AI analysis"""
-        try:
+        """Detect synchronization conflicts using AI analysis"""        try:
             # Get current content state for all targets
             current_states = await self._get_current_content_states(
                 sync_op.content_id, sync_op.target_users
@@ -332,8 +316,7 @@ class RealtimeSyncManager:
             return None
     
     async def _resolve_conflicts(self, sync_op: SyncOperation) -> bool:
-        """Resolve synchronization conflicts using configured strategies"""
-        try:
+        """Resolve synchronization conflicts using configured strategies"""        try:
             if not sync_op.conflict_data:
                 return True
             
@@ -367,8 +350,7 @@ class RealtimeSyncManager:
             return False
     
     async def _intelligent_merge(self, sync_op: SyncOperation) -> Dict[str, Any]:
-        """AI-powered intelligent conflict resolution"""
-        try:
+        """AI-powered intelligent conflict resolution"""        try:
             # Use AI to analyze conflicts and generate optimal merge
             merge_analysis = await self._ai_analyze_conflicts(sync_op)
             
@@ -401,8 +383,7 @@ class RealtimeSyncManager:
             return {'success': False, 'reason': 'merge_error', 'error': str(e)}
     
     async def _latest_wins_resolve(self, sync_op: SyncOperation) -> Dict[str, Any]:
-        """Latest timestamp wins conflict resolution"""
-        try:
+        """Latest timestamp wins conflict resolution"""        try:
             # Simply use the latest data payload
             return {
                 'success': True,
@@ -416,8 +397,7 @@ class RealtimeSyncManager:
             return {'success': False, 'reason': 'resolution_error', 'error': str(e)}
     
     async def _ai_assisted_resolve(self, sync_op: SyncOperation) -> Dict[str, Any]:
-        """AI-assisted conflict resolution with user guidance"""
-        try:
+        """AI-assisted conflict resolution with user guidance"""        try:
             # Analyze conflicts and provide AI recommendations
             ai_recommendations = await self._generate_ai_recommendations(sync_op)
             
@@ -450,8 +430,7 @@ class RealtimeSyncManager:
             return {'success': False, 'reason': 'ai_resolution_error', 'error': str(e)}
     
     async def _weighted_merge_resolve(self, sync_op: SyncOperation) -> Dict[str, Any]:
-        """Weighted merge based on user contributions and permissions"""
-        try:
+        """Weighted merge based on user contributions and permissions"""        try:
             # Calculate user weights based on contribution history
             user_weights = await self._calculate_user_weights(
                 sync_op.content_id, sync_op.target_users
@@ -476,8 +455,7 @@ class RealtimeSyncManager:
             return {'success': False, 'reason': 'weighted_merge_error', 'error': str(e)}
     
     async def get_sync_status(self, operation_id: str) -> Optional[Dict[str, Any]]:
-        """Get synchronization operation status"""
-        try:
+        """Get synchronization operation status"""        try:
             if operation_id in self.active_syncs:
                 sync_op = self.active_syncs[operation_id]
                 return {
@@ -515,8 +493,7 @@ class RealtimeSyncManager:
             return None
     
     async def _setup_sync_channels(self) -> None:
-        """Setup Redis pub/sub channels for real-time sync"""
-        try:
+        """Setup Redis pub/sub channels for real-time sync"""        try:
             # Main sync channel
             self.sync_channels['main'] = await self.redis_client.pubsub()
             await self.sync_channels['main'].subscribe('sync:operations')
@@ -541,8 +518,7 @@ class RealtimeSyncManager:
         author_id: str, 
         content_data: Dict[str, Any]
     ) -> str:
-        """Create version control checkpoint"""
-        try:
+        """Create version control checkpoint"""        try:
             # Generate content hash
             content_hash = hashlib.sha256(
                 json.dumps(content_data, sort_keys=True).encode()
@@ -575,8 +551,7 @@ class RealtimeSyncManager:
         content_id: str, 
         limit: int = 50
     ) -> List[Dict[str, Any]]:
-        """Get content version history"""
-        try:
+        """Get content version history"""        try:
             versions = self.db_session.query(ContentVersionControl).filter(
                 ContentVersionControl.content_id == content_id
             ).order_by(ContentVersionControl.version_number.desc()).limit(limit).all()
@@ -600,8 +575,7 @@ class RealtimeSyncManager:
             return []
     
     async def cleanup_old_sync_logs(self, days_to_keep: int = 30) -> int:
-        """Cleanup old synchronization logs"""
-        try:
+        """Cleanup old synchronization logs"""        try:
             cutoff_date = datetime.utcnow() - timedelta(days=days_to_keep)
             
             deleted_count = self.db_session.query(ContentSyncLog).filter(
@@ -622,7 +596,6 @@ async def get_realtime_sync_manager(
     db_session: Session, 
     redis_client: redis.Redis
 ) -> RealtimeSyncManager:
-    """Get configured real-time sync manager instance"""
-    manager = RealtimeSyncManager(db_session, redis_client)
+    """Get configured real-time sync manager instance"""    manager = RealtimeSyncManager(db_session, redis_client)
     await manager.initialize_sync_infrastructure()
     return manager

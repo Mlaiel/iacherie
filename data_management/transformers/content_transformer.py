@@ -1,5 +1,4 @@
-"""
-Advanced Multi-Format Data Transformers
+"""Advanced Multi-Format Data Transformers
 Professional Industrial Content Processing Engine
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -9,9 +8,7 @@ License: Proprietary - All Rights Reserved
 WARNING: This code is proprietary and confidential. Any unauthorized copying,
 distribution, or use without explicit written permission from Fahed Mlaiel
 is strictly prohibited and may result in legal action.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 import numpy as np
@@ -43,8 +40,7 @@ logger = logging.getLogger(__name__)
 
 
 class TransformationType(Enum):
-    """Content transformation types"""
-    AUDIO_FORMAT = "audio_format"
+    """Content transformation types"""    AUDIO_FORMAT = "audio_format"
     AUDIO_QUALITY = "audio_quality"
     AUDIO_EFFECTS = "audio_effects"
     IMAGE_FORMAT = "image_format"
@@ -62,8 +58,7 @@ class TransformationType(Enum):
 
 
 class QualityLevel(Enum):
-    """Content quality levels"""
-    LOW = "low"
+    """Content quality levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     ULTRA = "ultra"
@@ -71,8 +66,7 @@ class QualityLevel(Enum):
 
 
 class ContentTransformer(ABC):
-    """Abstract base class for content transformers"""
-    
+    """Abstract base class for content transformers"""    
     @abstractmethod
     async def transform(
         self,
@@ -81,8 +75,7 @@ class ContentTransformer(ABC):
         target_format: str,
         options: Dict[str, Any]
     ) -> bytes:
-        """Transform content from source to target format"""
-        pass
+        """Transform content from source to target format"""        pass
     
     @abstractmethod
     def supports_transformation(
@@ -90,13 +83,11 @@ class ContentTransformer(ABC):
         source_format: str,
         target_format: str
     ) -> bool:
-        """Check if transformation is supported"""
-        pass
+        """Check if transformation is supported"""        pass
 
 
 class MultiFormatTransformer:
-    """Advanced multi-format content transformation engine"""
-    
+    """Advanced multi-format content transformation engine"""    
     def __init__(self):
         self.db = get_database()
         self.security = SecurityManager()
@@ -146,8 +137,7 @@ class MultiFormatTransformer:
         source_data: Union[bytes, str, Dict],
         target_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Transform content with specified configuration"""
-        try:
+        """Transform content with specified configuration"""        try:
             logger.info(f"Transforming content {content_id} with type {transformation_type.value}")
             
             # Validate transformation request
@@ -200,8 +190,7 @@ class MultiFormatTransformer:
         target_config: Dict[str, Any],
         user_id: str
     ) -> None:
-        """Validate transformation request"""
-        if not source_data:
+        """Validate transformation request"""        if not source_data:
             raise ValidationError("Source data cannot be empty")
         
         if not target_config:
@@ -232,8 +221,7 @@ class MultiFormatTransformer:
             await self._validate_video_config(target_config)
 
     async def _validate_audio_config(self, config: Dict[str, Any]) -> None:
-        """Validate audio transformation configuration"""
-        required_fields = ['target_format']
+        """Validate audio transformation configuration"""        required_fields = ['target_format']
         for field in required_fields:
             if field not in config:
                 raise ValidationError(f"Required field '{field}' missing from audio config")
@@ -248,8 +236,7 @@ class MultiFormatTransformer:
                 raise ValidationError(f"Invalid quality for {target_format}: {config['quality']}")
 
     async def _validate_image_config(self, config: Dict[str, Any]) -> None:
-        """Validate image transformation configuration"""
-        required_fields = ['target_format']
+        """Validate image transformation configuration"""        required_fields = ['target_format']
         for field in required_fields:
             if field not in config:
                 raise ValidationError(f"Required field '{field}' missing from image config")
@@ -259,8 +246,7 @@ class MultiFormatTransformer:
             raise ValidationError(f"Unsupported image format: {target_format}")
 
     async def _validate_video_config(self, config: Dict[str, Any]) -> None:
-        """Validate video transformation configuration"""
-        required_fields = ['target_format']
+        """Validate video transformation configuration"""        required_fields = ['target_format']
         for field in required_fields:
             if field not in config:
                 raise ValidationError(f"Required field '{field}' missing from video config")
@@ -270,8 +256,7 @@ class MultiFormatTransformer:
             raise ValidationError(f"Unsupported video format: {target_format}")
 
     def _determine_content_type(self, transformation_type: TransformationType) -> str:
-        """Determine content type from transformation type"""
-        type_mapping = {
+        """Determine content type from transformation type"""        type_mapping = {
             TransformationType.AUDIO_FORMAT: 'audio',
             TransformationType.AUDIO_QUALITY: 'audio',
             TransformationType.AUDIO_EFFECTS: 'audio',
@@ -298,8 +283,7 @@ class MultiFormatTransformer:
         source_data: Union[bytes, str, Dict],
         target_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute the actual transformation"""
-        start_time = datetime.now(timezone.utc)
+        """Execute the actual transformation"""        start_time = datetime.now(timezone.utc)
         
         try:
             # Prepare transformation parameters
@@ -344,18 +328,15 @@ class MultiFormatTransformer:
         config: Dict[str, Any],
         result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create transformation record in database"""
-        try:
-            query = """
-            INSERT INTO content_transformations (
+        """Create transformation record in database"""        try:
+            query = """            INSERT INTO content_transformations (
                 id, content_id, user_id, transformation_type,
                 source_config, target_config, result_metadata,
                 status, created_at, updated_at
             ) VALUES (
                 gen_random_uuid(), $1, $2, $3, $4, $5, $6, $7, NOW(), NOW()
             ) RETURNING id, created_at
-            """
-            
+            """            
             row = await self.db.fetchrow(
                 query,
                 content_id,
@@ -381,8 +362,7 @@ class MultiFormatTransformer:
         transformations: List[Dict[str, Any]],
         user_id: str
     ) -> List[Dict[str, Any]]:
-        """Execute multiple transformations in batch"""
-        try:
+        """Execute multiple transformations in batch"""        try:
             logger.info(f"Executing batch transformation for user {user_id}")
             
             results = []
@@ -427,8 +407,7 @@ class MultiFormatTransformer:
         user_id: Optional[str] = None,
         limit: int = 100
     ) -> List[Dict[str, Any]]:
-        """Get transformation history"""
-        try:
+        """Get transformation history"""        try:
             conditions = []
             params = []
             param_count = 0
@@ -448,16 +427,14 @@ class MultiFormatTransformer:
             
             where_clause = " AND ".join(conditions) if conditions else "1=1"
             
-            query = f"""
-            SELECT id, content_id, user_id, transformation_type,
+            query = f"""            SELECT id, content_id, user_id, transformation_type,
                    target_config, result_metadata, status,
                    created_at, updated_at
             FROM content_transformations
             WHERE {where_clause}
             ORDER BY created_at DESC
             LIMIT ${param_count}
-            """
-            
+            """            
             rows = await self.db.fetch(query, *params)
             
             transformations = []
@@ -482,15 +459,13 @@ class MultiFormatTransformer:
 
 
 class AudioTransformer(ContentTransformer):
-    """Advanced audio content transformer"""
-    
+    """Advanced audio content transformer"""    
     async def transform_audio(
         self,
         source_data: bytes,
         params: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Transform audio content"""
-        try:
+        """Transform audio content"""        try:
             config = params['config']
             transformation_type = params['transformation_type']
             
@@ -528,8 +503,7 @@ class AudioTransformer(ContentTransformer):
         sr: int,
         config: Dict[str, Any]
     ) -> bytes:
-        """Convert audio to different format"""
-        # This would use libraries like pydub or ffmpeg
+        """Convert audio to different format"""        # This would use libraries like pydub or ffmpeg
         # For now, return a placeholder
         return b"converted_audio_data"
 
@@ -539,8 +513,7 @@ class AudioTransformer(ContentTransformer):
         sr: int,
         config: Dict[str, Any]
     ) -> bytes:
-        """Adjust audio quality/bitrate"""
-        # Implementation for quality adjustment
+        """Adjust audio quality/bitrate"""        # Implementation for quality adjustment
         return b"quality_adjusted_audio_data"
 
     async def _apply_audio_effects(
@@ -549,8 +522,7 @@ class AudioTransformer(ContentTransformer):
         sr: int,
         config: Dict[str, Any]
     ) -> bytes:
-        """Apply audio effects"""
-        effects = config.get('effects', [])
+        """Apply audio effects"""        effects = config.get('effects', [])
         
         for effect in effects:
             if effect['type'] == 'normalize':
@@ -591,8 +563,7 @@ class AudioTransformer(ContentTransformer):
         target_format: str,
         options: Dict[str, Any]
     ) -> bytes:
-        """Transform audio content from source to target format"""
-        try:
+        """Transform audio content from source to target format"""        try:
             # Load audio data
             audio_buffer = io.BytesIO(input_data)
             y, sr = librosa.load(audio_buffer, sr=None)
@@ -628,21 +599,18 @@ class AudioTransformer(ContentTransformer):
             raise ProcessingError(f"Failed to transform audio from {source_format} to {target_format}: {e}")
 
     def supports_transformation(self, source_format: str, target_format: str) -> bool:
-        """Check if audio transformation is supported"""
-        supported_formats = ['mp3', 'wav', 'flac', 'aac', 'ogg', 'm4a']
+        """Check if audio transformation is supported"""        supported_formats = ['mp3', 'wav', 'flac', 'aac', 'ogg', 'm4a']
         return source_format.lower() in supported_formats and target_format.lower() in supported_formats
 
 
 class ImageTransformer(ContentTransformer):
-    """Advanced image content transformer"""
-    
+    """Advanced image content transformer"""    
     async def transform_image(
         self,
         source_data: bytes,
         params: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Transform image content"""
-        try:
+        """Transform image content"""        try:
             config = params['config']
             transformation_type = params['transformation_type']
             
@@ -679,8 +647,7 @@ class ImageTransformer(ContentTransformer):
         image: Image.Image,
         config: Dict[str, Any]
     ) -> bytes:
-        """Convert image to different format"""
-        target_format = config['target_format'].upper()
+        """Convert image to different format"""        target_format = config['target_format'].upper()
         quality = config.get('quality', 90)
         
         output_buffer = io.BytesIO()
@@ -704,8 +671,7 @@ class ImageTransformer(ContentTransformer):
         image: Image.Image,
         config: Dict[str, Any]
     ) -> bytes:
-        """Resize image"""
-        if 'width' in config and 'height' in config:
+        """Resize image"""        if 'width' in config and 'height' in config:
             new_size = (config['width'], config['height'])
         elif 'scale' in config:
             scale = config['scale']
@@ -727,8 +693,7 @@ class ImageTransformer(ContentTransformer):
         image: Image.Image,
         config: Dict[str, Any]
     ) -> bytes:
-        """Enhance image quality"""
-        from PIL import ImageEnhance
+        """Enhance image quality"""        from PIL import ImageEnhance
         
         enhanced_image = image.copy()
         
@@ -756,8 +721,7 @@ class ImageTransformer(ContentTransformer):
         return output_buffer.getvalue()
 
     def supports_transformation(self, source_format: str, target_format: str) -> bool:
-        """Check if image transformation is supported"""
-        supported_formats = ['jpeg', 'jpg', 'png', 'webp', 'tiff', 'bmp', 'gif']
+        """Check if image transformation is supported"""        supported_formats = ['jpeg', 'jpg', 'png', 'webp', 'tiff', 'bmp', 'gif']
         return source_format.lower() in supported_formats and target_format.lower() in supported_formats
 
     async def transform(
@@ -767,8 +731,7 @@ class ImageTransformer(ContentTransformer):
         target_format: str,
         options: Dict[str, Any]
     ) -> bytes:
-        """Transform image content from source to target format"""
-        try:
+        """Transform image content from source to target format"""        try:
             # Load image data
             image = Image.open(io.BytesIO(input_data))
             
@@ -827,15 +790,13 @@ class ImageTransformer(ContentTransformer):
 
 
 class VideoTransformer(ContentTransformer):
-    """Advanced video content transformer"""
-    
+    """Advanced video content transformer"""    
     async def transform_video(
         self,
         source_data: bytes,
         params: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Transform video content"""
-        try:
+        """Transform video content"""        try:
             config = params['config']
             transformation_type = params['transformation_type']
             
@@ -864,21 +825,17 @@ class VideoTransformer(ContentTransformer):
             raise ProcessingError(f"Video transformation failed: {str(e)}")
 
     async def _convert_video_format(self, source_data: bytes, config: Dict) -> bytes:
-        """Convert video format"""
-        # This would use ffmpeg via subprocess or python-ffmpeg
+        """Convert video format"""        # This would use ffmpeg via subprocess or python-ffmpeg
         return b"converted_video_data"
 
     async def _compress_video(self, source_data: bytes, config: Dict) -> bytes:
-        """Compress video"""
-        return b"compressed_video_data"
+        """Compress video"""        return b"compressed_video_data"
 
     async def _extract_video_frames(self, source_data: bytes, config: Dict) -> bytes:
-        """Extract frames from video"""
-        return b"extracted_frames_data"
+        """Extract frames from video"""        return b"extracted_frames_data"
 
     def supports_transformation(self, source_format: str, target_format: str) -> bool:
-        """Check if video transformation is supported"""
-        supported_formats = ['mp4', 'avi', 'mov', 'webm', 'mkv', 'flv']
+        """Check if video transformation is supported"""        supported_formats = ['mp4', 'avi', 'mov', 'webm', 'mkv', 'flv']
         return source_format.lower() in supported_formats and target_format.lower() in supported_formats
 
     async def transform(
@@ -888,8 +845,7 @@ class VideoTransformer(ContentTransformer):
         target_format: str,
         options: Dict[str, Any]
     ) -> bytes:
-        """Transform video content from source to target format"""
-        try:
+        """Transform video content from source to target format"""        try:
             # For video transformation, we would typically use FFmpeg
             # This is a simplified implementation for demonstration
             
@@ -966,15 +922,13 @@ class VideoTransformer(ContentTransformer):
 
 
 class TextTransformer(ContentTransformer):
-    """Advanced text content transformer"""
-    
+    """Advanced text content transformer"""    
     async def transform_text(
         self,
         source_data: Union[str, bytes],
         params: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Transform text content"""
-        try:
+        """Transform text content"""        try:
             config = params['config']
             transformation_type = params['transformation_type']
             
@@ -1008,8 +962,7 @@ class TextTransformer(ContentTransformer):
             raise ProcessingError(f"Text transformation failed: {str(e)}")
 
     async def _cleanup_text(self, text: str, config: Dict) -> str:
-        """Clean up text content"""
-        import re
+        """Clean up text content"""        import re
         
         cleaned_text = text
         
@@ -1028,16 +981,14 @@ class TextTransformer(ContentTransformer):
         return cleaned_text.strip()
 
     async def _translate_text(self, text: str, config: Dict) -> str:
-        """Translate text to target language"""
-        # This would integrate with translation service
+        """Translate text to target language"""        # This would integrate with translation service
         target_language = config.get('target_language', 'en')
         
         # Placeholder implementation
         return f"[TRANSLATED TO {target_language.upper()}] {text}"
 
     async def _summarize_text(self, text: str, config: Dict) -> str:
-        """Summarize text content"""
-        max_length = config.get('max_length', 200)
+        """Summarize text content"""        max_length = config.get('max_length', 200)
         
         # Simple extractive summarization
         sentences = text.split('.')
@@ -1053,8 +1004,7 @@ class TextTransformer(ContentTransformer):
         return summary
 
     def supports_transformation(self, source_format: str, target_format: str) -> bool:
-        """Check if text transformation is supported"""
-        return True  # Text transformations are generally format-agnostic
+        """Check if text transformation is supported"""        return True  # Text transformations are generally format-agnostic
 
     async def transform(
         self,
@@ -1063,8 +1013,7 @@ class TextTransformer(ContentTransformer):
         target_format: str,
         options: Dict[str, Any]
     ) -> bytes:
-        """Transform text content from source to target format"""
-        try:
+        """Transform text content from source to target format"""        try:
             # Decode input text
             text = input_data.decode('utf-8', errors='ignore')
             
@@ -1137,15 +1086,13 @@ class TextTransformer(ContentTransformer):
 
 
 class MetadataTransformer(ContentTransformer):
-    """Advanced metadata content transformer"""
-    
+    """Advanced metadata content transformer"""    
     async def transform_metadata(
         self,
         source_data: Union[Dict, str, bytes],
         params: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Transform metadata content"""
-        try:
+        """Transform metadata content"""        try:
             config = params['config']
             transformation_type = params['transformation_type']
             
@@ -1181,8 +1128,7 @@ class MetadataTransformer(ContentTransformer):
             raise ProcessingError(f"Metadata transformation failed: {str(e)}")
 
     async def _extract_metadata(self, metadata: Dict, config: Dict) -> Dict:
-        """Extract specific metadata fields"""
-        fields_to_extract = config.get('fields', [])
+        """Extract specific metadata fields"""        fields_to_extract = config.get('fields', [])
         
         if not fields_to_extract:
             return metadata
@@ -1195,8 +1141,7 @@ class MetadataTransformer(ContentTransformer):
         return extracted
 
     async def _enrich_metadata(self, metadata: Dict, config: Dict) -> Dict:
-        """Enrich metadata with additional information"""
-        enriched = metadata.copy()
+        """Enrich metadata with additional information"""        enriched = metadata.copy()
         
         # Add timestamp if not present
         if 'enriched_at' not in enriched:
@@ -1210,8 +1155,7 @@ class MetadataTransformer(ContentTransformer):
         return enriched
 
     async def _normalize_metadata(self, metadata: Dict, config: Dict) -> Dict:
-        """Normalize metadata structure and values"""
-        normalized = {}
+        """Normalize metadata structure and values"""        normalized = {}
         
         # Apply field mappings
         field_mappings = config.get('field_mappings', {})
@@ -1236,8 +1180,7 @@ class MetadataTransformer(ContentTransformer):
         return normalized
 
     async def _compute_field_value(self, metadata: Dict, field_config: Dict) -> Any:
-        """Compute value for a metadata field"""
-        computation_type = field_config.get('type', 'static')
+        """Compute value for a metadata field"""        computation_type = field_config.get('type', 'static')
         
         if computation_type == 'static':
             return field_config.get('value')
@@ -1253,8 +1196,7 @@ class MetadataTransformer(ContentTransformer):
             return None
 
     async def _transform_field_value(self, value: Any, transformation: Dict) -> Any:
-        """Transform a field value"""
-        transform_type = transformation.get('type', 'identity')
+        """Transform a field value"""        transform_type = transformation.get('type', 'identity')
         
         if transform_type == 'identity':
             return value
@@ -1272,8 +1214,7 @@ class MetadataTransformer(ContentTransformer):
             return value
 
     def supports_transformation(self, source_format: str, target_format: str) -> bool:
-        """Check if metadata transformation is supported"""
-        return True  # Metadata transformations are generally format-agnostic
+        """Check if metadata transformation is supported"""        return True  # Metadata transformations are generally format-agnostic
 
     async def transform(
         self,
@@ -1282,8 +1223,7 @@ class MetadataTransformer(ContentTransformer):
         target_format: str,
         options: Dict[str, Any]
     ) -> bytes:
-        """Transform metadata from source to target format"""
-        try:
+        """Transform metadata from source to target format"""        try:
             # Parse input metadata
             if source_format.lower() == 'json':
                 import json

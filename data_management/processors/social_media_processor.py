@@ -1,5 +1,4 @@
-"""
-📱 Social Media Processor - IA Influencer Agent Platform Enterprise
+"""📱 Social Media Processor - IA Influencer Agent Platform Enterprise
 ===================================================================
 Module: backend/data_management/processors/social_media_processor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,9 +16,7 @@ Contact obligatoire: mlaiel@live.de
 LOGIQUE MÉTIER SOCIAL MEDIA:
 Content Planning → Multi-Platform Publishing → Audience Engagement → Performance Analytics → 
 Community Management → Trend Analysis → Influencer Collaboration → Brand Monitoring
-"""
-
-import json
+"""import json
 import logging
 import asyncio
 import time
@@ -41,8 +38,7 @@ from .base_processor import BaseProcessor, AsyncBaseProcessor
 
 @dataclass
 class SocialMediaPost:
-    """Modèle de post pour réseaux sociaux"""
-    platform: str
+    """Modèle de post pour réseaux sociaux"""    platform: str
     content: str
     media_urls: List[str]
     hashtags: List[str]
@@ -54,8 +50,7 @@ class SocialMediaPost:
 
 @dataclass
 class EngagementMetrics:
-    """Métriques d'engagement"""
-    likes: int
+    """Métriques d'engagement"""    likes: int
     comments: int
     shares: int
     views: int
@@ -67,8 +62,7 @@ class EngagementMetrics:
 
 @dataclass
 class AudienceInsights:
-    """Insights d'audience"""
-    total_followers: int
+    """Insights d'audience"""    total_followers: int
     demographics: Dict[str, Any]
     interests: List[str]
     active_hours: List[int]
@@ -77,8 +71,7 @@ class AudienceInsights:
 
 
 class SocialMediaProcessor(BaseProcessor):
-    """Processeur gestion réseaux sociaux - Production Enterprise"""
-    
+    """Processeur gestion réseaux sociaux - Production Enterprise"""    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.logger = logging.getLogger(__name__)
@@ -198,8 +191,7 @@ class SocialMediaProcessor(BaseProcessor):
         self.trend_analysis = {}
         
     def _init_database(self):
-        """Initialise la base de données SQLite"""
-        try:
+        """Initialise la base de données SQLite"""        try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
             
@@ -249,8 +241,7 @@ class SocialMediaProcessor(BaseProcessor):
             self.logger.error(f"Database initialization failed: {e}")
     
     def process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traite les opérations de gestion des réseaux sociaux"""
-        operation = input_data.get('operation', 'schedule_post')
+        """Traite les opérations de gestion des réseaux sociaux"""        operation = input_data.get('operation', 'schedule_post')
         
         result = {
             'operation': operation,
@@ -296,8 +287,7 @@ class SocialMediaProcessor(BaseProcessor):
         return result
     
     def _schedule_post(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Programme un post sur les réseaux sociaux"""
-        platforms = input_data.get('platforms', ['instagram'])
+        """Programme un post sur les réseaux sociaux"""        platforms = input_data.get('platforms', ['instagram'])
         content = input_data.get('content', '')
         media_urls = input_data.get('media_urls', [])
         hashtags = input_data.get('hashtags', [])
@@ -392,8 +382,7 @@ class SocialMediaProcessor(BaseProcessor):
         return result
     
     def _optimize_content_for_platform(self, content: str, platform: str, hashtags: List[str], platform_config: Dict) -> Dict[str, Any]:
-        """Optimise le contenu pour une plateforme spécifique"""
-        optimized = {
+        """Optimise le contenu pour une plateforme spécifique"""        optimized = {
             'content': content,
             'hashtags': hashtags.copy(),
             'modifications': []
@@ -447,8 +436,7 @@ class SocialMediaProcessor(BaseProcessor):
         return optimized
     
     def _suggest_hashtags(self, content: str, platform: str) -> List[str]:
-        """Suggère des hashtags basés sur le contenu"""
-        suggested = []
+        """Suggère des hashtags basés sur le contenu"""        suggested = []
         
         try:
             # Extract keywords from content
@@ -484,8 +472,7 @@ class SocialMediaProcessor(BaseProcessor):
         return suggested[:5]
     
     def _is_professional_tone(self, content: str) -> bool:
-        """Vérifie si le ton est professionnel"""
-        professional_indicators = [
+        """Vérifie si le ton est professionnel"""        professional_indicators = [
             'professional', 'business', 'career', 'industry', 'experience',
             'skill', 'development', 'growth', 'strategy', 'innovation'
         ]
@@ -501,8 +488,7 @@ class SocialMediaProcessor(BaseProcessor):
         return professional_count > casual_count
     
     def _validate_post_content(self, content_data: Dict, media_urls: List[str], platform: str, platform_config: Dict) -> Dict[str, Any]:
-        """Valide le contenu du post"""
-        validation = {
+        """Valide le contenu du post"""        validation = {
             'valid': True,
             'errors': [],
             'warnings': []
@@ -548,8 +534,7 @@ class SocialMediaProcessor(BaseProcessor):
         return validation
     
     def _store_post_in_db(self, post: SocialMediaPost) -> str:
-        """Stocke le post dans la base de données"""
-        try:
+        """Stocke le post dans la base de données"""        try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
             
@@ -577,8 +562,7 @@ class SocialMediaProcessor(BaseProcessor):
             return f"temp_{int(time.time())}"
     
     def _estimate_reach(self, platform: str, post: SocialMediaPost) -> Dict[str, Any]:
-        """Estime la portée du post"""
-        # Simulated reach estimation based on various factors
+        """Estime la portée du post"""        # Simulated reach estimation based on various factors
         base_reach = {
             'instagram': 1000,
             'facebook': 800,
@@ -619,8 +603,7 @@ class SocialMediaProcessor(BaseProcessor):
         }
     
     def _generate_content_suggestions(self, platform: str, post: SocialMediaPost) -> List[Dict[str, Any]]:
-        """Génère des suggestions d'optimisation du contenu"""
-        suggestions = []
+        """Génère des suggestions d'optimisation du contenu"""        suggestions = []
         
         try:
             platform_config = self.social_config['platforms'][platform]
@@ -672,8 +655,7 @@ class SocialMediaProcessor(BaseProcessor):
         return suggestions
     
     def _classify_content_type(self, content: str) -> str:
-        """Classifie le type de contenu"""
-        content_lower = content.lower()
+        """Classifie le type de contenu"""        content_lower = content.lower()
         
         # Educational indicators
         educational_keywords = ['learn', 'tutorial', 'guide', 'how to', 'tips', 'advice', 'education']
@@ -698,8 +680,7 @@ class SocialMediaProcessor(BaseProcessor):
         return 'general'
     
     def _start_content_scheduler(self):
-        """Démarre le planificateur de contenu"""
-        def scheduler_worker():
+        """Démarre le planificateur de contenu"""        def scheduler_worker():
             self.scheduler_active = True
             
             while self.scheduler_active and any(self.content_queue.values()):
@@ -736,8 +717,7 @@ class SocialMediaProcessor(BaseProcessor):
         scheduler_thread.start()
     
     def _publish_post(self, platform: str, post_data: Dict[str, Any]):
-        """Publie un post sur la plateforme"""
-        try:
+        """Publie un post sur la plateforme"""        try:
             post_id = post_data['post_id']
             post_info = post_data['post_data']
             
@@ -756,15 +736,13 @@ class SocialMediaProcessor(BaseProcessor):
             self.logger.error(f"Post publication failed: {e}")
     
     def _simulate_platform_api_call(self, platform: str, post_data: Dict[str, Any]) -> bool:
-        """Simule un appel API vers la plateforme (remplacer par vraie API)"""
-        # In real implementation, this would make actual API calls
+        """Simule un appel API vers la plateforme (remplacer par vraie API)"""        # In real implementation, this would make actual API calls
         # For now, simulate success/failure
         import random
         return random.random() > 0.1  # 90% success rate
     
     def _update_post_status(self, post_id: str, status: str, timestamp: datetime):
-        """Met à jour le statut du post dans la base de données"""
-        try:
+        """Met à jour le statut du post dans la base de données"""        try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
             
@@ -781,8 +759,7 @@ class SocialMediaProcessor(BaseProcessor):
             self.logger.error(f"Failed to update post status: {e}")
     
     def _publish_now(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Publie immédiatement sur les réseaux sociaux"""
-        # Reuse schedule_post logic but with immediate scheduling
+        """Publie immédiatement sur les réseaux sociaux"""        # Reuse schedule_post logic but with immediate scheduling
         input_data['scheduled_time'] = datetime.now(timezone.utc).isoformat()
         
         result = self._schedule_post(input_data)
@@ -802,8 +779,7 @@ class SocialMediaProcessor(BaseProcessor):
         return result
     
     def _bulk_schedule(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Programme plusieurs posts en lot"""
-        posts_data = input_data.get('posts', [])
+        """Programme plusieurs posts en lot"""        posts_data = input_data.get('posts', [])
         
         result = {
             'total_posts': len(posts_data),
@@ -843,8 +819,7 @@ class SocialMediaProcessor(BaseProcessor):
         return result
     
     def _get_analytics(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Récupère les analyses des performances"""
-        platforms = input_data.get('platforms', ['instagram'])
+        """Récupère les analyses des performances"""        platforms = input_data.get('platforms', ['instagram'])
         date_range = input_data.get('date_range', {})
         metrics = input_data.get('metrics', ['engagement', 'reach', 'impressions'])
         
@@ -876,8 +851,7 @@ class SocialMediaProcessor(BaseProcessor):
         return result
     
     def _get_platform_analytics(self, platform: str, date_range: Dict, metrics: List[str]) -> Dict[str, Any]:
-        """Récupère les analyses pour une plateforme spécifique"""
-        # Simulate analytics data (would come from real APIs)
+        """Récupère les analyses pour une plateforme spécifique"""        # Simulate analytics data (would come from real APIs)
         analytics = {
             'posts_count': np.random.randint(10, 50),
             'followers_growth': np.random.randint(-50, 200),
@@ -926,8 +900,7 @@ class SocialMediaProcessor(BaseProcessor):
         return analytics
     
     def _generate_analytics_summary(self, analytics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Génère un résumé des analyses"""
-        summary = {
+        """Génère un résumé des analyses"""        summary = {
             'total_platforms': len(analytics_data),
             'total_posts': 0,
             'total_engagement': 0,
@@ -967,8 +940,7 @@ class SocialMediaProcessor(BaseProcessor):
         return summary
     
     def _analyze_performance_trends(self, analytics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyse les tendances de performance"""
-        trends = {
+        """Analyse les tendances de performance"""        trends = {
             'engagement_trend': 'stable',
             'growth_trend': 'positive',
             'content_performance': {},
@@ -1013,8 +985,7 @@ class SocialMediaProcessor(BaseProcessor):
         return trends
     
     def _generate_analytics_recommendations(self, analytics_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Génère des recommandations basées sur les analyses"""
-        recommendations = []
+        """Génère des recommandations basées sur les analyses"""        recommendations = []
         
         try:
             # Analyze overall performance
@@ -1070,8 +1041,7 @@ class SocialMediaProcessor(BaseProcessor):
         return recommendations[:5]  # Return top 5 recommendations
     
     def validate_input(self, input_data: Any) -> bool:
-        """Valide les données d'entrée pour le social media"""
-        if not isinstance(input_data, dict):
+        """Valide les données d'entrée pour le social media"""        if not isinstance(input_data, dict):
             return False
         
         operation = input_data.get('operation')
@@ -1092,16 +1062,14 @@ class SocialMediaProcessor(BaseProcessor):
 
 
 class AsyncSocialMediaProcessor(AsyncBaseProcessor):
-    """Version asynchrone du processeur social media"""
-    
+    """Version asynchrone du processeur social media"""    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.sync_processor = SocialMediaProcessor(config)
         self.executor = ThreadPoolExecutor(max_workers=6)
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Traitement asynchrone des réseaux sociaux"""
-        loop = asyncio.get_event_loop()
+        """Traitement asynchrone des réseaux sociaux"""        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
             self.sync_processor.process_with_stats, 
@@ -1109,5 +1077,4 @@ class AsyncSocialMediaProcessor(AsyncBaseProcessor):
         )
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Validation asynchrone"""
-        return self.sync_processor.validate_input(input_data)
+        """Validation asynchrone"""        return self.sync_processor.validate_input(input_data)

@@ -1,26 +1,21 @@
-"""
-AI Processing Models - IA Influencer Agent Platform Enterprise
+"""AI Processing Models - IA Influencer Agent Platform Enterprise
 © 2025 Fahed Mlaiel. All Rights Reserved.
 
 Advanced AI processing models for content analysis and ML workflows.
-"""
-
-from typing import Dict, Any, List, Optional
+"""from typing import Dict, Any, List, Optional
 from datetime import datetime
 from enum import Enum
 from dataclasses import dataclass
 
 class ProcessingStatus(str, Enum):
-    """AI processing status tracking."""
-    PENDING = "pending"
+    """AI processing status tracking."""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
     CANCELLED = "cancelled"
 
 class AIModelType(str, Enum):
-    """AI model types for content processing."""
-    FINGERPRINT = "fingerprint"
+    """AI model types for content processing."""    FINGERPRINT = "fingerprint"
     CLASSIFICATION = "classification"
     TRANSCRIPTION = "transcription"
     GENERATION = "generation"
@@ -28,8 +23,7 @@ class AIModelType(str, Enum):
 
 @dataclass
 class AIProcessingJobModel:
-    """AI processing job model."""
-    job_id: str
+    """AI processing job model."""    job_id: str
     creator_id: str
     content_id: str
     model_type: AIModelType
@@ -47,8 +41,7 @@ ModelType = AIModelType
 
 @dataclass
 class ProcessingResult:
-    """Processing result model."""
-    result_id: str
+    """Processing result model."""    result_id: str
     job_id: str
     status: ProcessingStatus
     output_data: Dict[str, Any]
@@ -58,8 +51,7 @@ class ProcessingResult:
 
 @dataclass
 class ModelMetrics:
-    """Model performance metrics."""
-    model_name: str
+    """Model performance metrics."""    model_name: str
     accuracy: float
     precision: float
     recall: float
@@ -70,8 +62,7 @@ class ModelMetrics:
 
 @dataclass
 class ProcessingPipeline:
-    """Processing pipeline configuration."""
-    pipeline_id: str
+    """Processing pipeline configuration."""    pipeline_id: str
     name: str
     model_types: List[AIModelType]
     configuration: Dict[str, Any]
@@ -80,8 +71,7 @@ class ProcessingPipeline:
 
 @dataclass
 class QualityAssessment:
-    """Quality assessment for processed content."""
-    assessment_id: str
+    """Quality assessment for processed content."""    assessment_id: str
     job_id: str
     quality_score: float
     quality_metrics: Dict[str, float]
@@ -90,8 +80,7 @@ class QualityAssessment:
 
 @dataclass
 class MLModelVersionModel:
-    """ML model version tracking."""
-    version_id: str
+    """ML model version tracking."""    version_id: str
     model_name: str
     version: str
     model_type: AIModelType

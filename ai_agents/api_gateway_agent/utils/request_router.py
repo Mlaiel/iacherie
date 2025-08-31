@@ -1,5 +1,4 @@
-"""
-Request Router - Intelligent Request Routing System
+"""Request Router - Intelligent Request Routing System
 
 Advanced request routing with pattern matching, service discovery integration,
 and dynamic routing rules for the API Gateway.
@@ -10,9 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
-"""
-
-import re
+"""import re
 import logging
 from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass
@@ -25,8 +22,7 @@ logger = logging.getLogger(__name__)
 
 
 class RoutingStrategy(str, Enum):
-    """Request routing strategies"""
-    PREFIX_MATCH = "prefix_match"
+    """Request routing strategies"""    PREFIX_MATCH = "prefix_match"
     EXACT_MATCH = "exact_match"
     REGEX_MATCH = "regex_match"
     WILDCARD_MATCH = "wildcard_match"
@@ -34,8 +30,7 @@ class RoutingStrategy(str, Enum):
 
 @dataclass
 class RoutingRule:
-    """Individual routing rule configuration"""
-    pattern: str
+    """Individual routing rule configuration"""    pattern: str
     service: str
     strategy: RoutingStrategy
     priority: int = 0
@@ -45,8 +40,7 @@ class RoutingRule:
 
 
 class RequestRouter:
-    """
-    Enterprise Request Router
+    """    Enterprise Request Router
     
     Provides intelligent request routing based on:
     - URL path patterns
@@ -54,11 +48,9 @@ class RequestRouter:
     - Service availability and health
     - Dynamic routing rules
     - Load balancing integration
-    """
-    
+    """    
     def __init__(self, config: APIGatewayConfig):
-        """Initialize request router"""
-        self.config = config
+        """Initialize request router"""        self.config = config
         self.routing_rules: List[RoutingRule] = []
         
         # Initialize routing rules from configuration
@@ -70,8 +62,7 @@ class RequestRouter:
         logger.info(f"Request router initialized with {len(self.routing_rules)} rules")
     
     def _initialize_routing_rules(self):
-        """Initialize routing rules from configuration"""
-        try:
+        """Initialize routing rules from configuration"""        try:
             # Create routing rules from service configuration
             for service_name, service_config in self.config.service_routes.items():
                 rule = RoutingRule(
@@ -95,8 +86,7 @@ class RequestRouter:
             raise
     
     def _compile_regex_patterns(self):
-        """Compile regex patterns for regex-based rules"""
-        for rule in self.routing_rules:
+        """Compile regex patterns for regex-based rules"""        for rule in self.routing_rules:
             if rule.strategy == RoutingStrategy.REGEX_MATCH:
                 try:
                     rule.compiled_regex = re.compile(rule.pattern)
@@ -106,8 +96,7 @@ class RequestRouter:
                     rule.strategy = RoutingStrategy.PREFIX_MATCH
     
     def route_request(self, path: str, method: str = "GET", headers: Optional[Dict[str, str]] = None) -> Optional[str]:
-        """
-        Route request to appropriate service
+        """        Route request to appropriate service
         
         Args:
             path: Request path
@@ -116,8 +105,7 @@ class RequestRouter:
             
         Returns:
             Service name or None if no match found
-        """
-        try:
+        """        try:
             headers = headers or {}
             
             # Normalize path
@@ -142,8 +130,7 @@ class RequestRouter:
             return None
     
     def _normalize_path(self, path: str) -> str:
-        """Normalize request path"""
-        # Remove query parameters
+        """Normalize request path"""        # Remove query parameters
         if "?" in path:
             path = path.split("?")[0]
         
@@ -164,8 +151,7 @@ class RequestRouter:
         method: str, 
         headers: Dict[str, str]
     ) -> bool:
-        """Check if routing rule matches the request"""
-        try:
+        """Check if routing rule matches the request"""        try:
             # Match based on strategy
             path_match = False
             
@@ -192,8 +178,7 @@ class RequestRouter:
             return False
     
     def _wildcard_match(self, pattern: str, path: str) -> bool:
-        """Perform wildcard matching (* and ? supported)"""
-        try:
+        """Perform wildcard matching (* and ? supported)"""        try:
             # Convert wildcard pattern to regex
             regex_pattern = pattern.replace("*", ".*").replace("?", ".")
             regex = re.compile(f"^{regex_pattern}$")
@@ -208,8 +193,7 @@ class RequestRouter:
         method: str, 
         headers: Dict[str, str]
     ) -> bool:
-        """Check additional routing conditions"""
-        try:
+        """Check additional routing conditions"""        try:
             # Method conditions
             if "methods" in conditions:
                 allowed_methods = conditions["methods"]
@@ -240,14 +224,12 @@ class RequestRouter:
             return False
     
     def _is_service_healthy(self, service_name: str) -> bool:
-        """Check if service is healthy and available"""
-        # This would integrate with service discovery and health checking
+        """Check if service is healthy and available"""        # This would integrate with service discovery and health checking
         # For now, assume all configured services are healthy
         return service_name in self.config.service_routes
     
     def add_routing_rule(self, rule: RoutingRule) -> bool:
-        """Add new routing rule dynamically"""
-        try:
+        """Add new routing rule dynamically"""        try:
             # Compile regex if needed
             if rule.strategy == RoutingStrategy.REGEX_MATCH:
                 try:
@@ -268,8 +250,7 @@ class RequestRouter:
             return False
     
     def remove_routing_rule(self, pattern: str, service: str) -> bool:
-        """Remove routing rule"""
-        try:
+        """Remove routing rule"""        try:
             initial_count = len(self.routing_rules)
             
             self.routing_rules = [
@@ -291,8 +272,7 @@ class RequestRouter:
             return False
     
     def update_service_registry(self, services: Dict[str, Dict[str, Any]]):
-        """Update service registry from service discovery"""
-        try:
+        """Update service registry from service discovery"""        try:
             self.service_registry = services.copy()
             
             # Update routing rules based on discovered services
@@ -304,8 +284,7 @@ class RequestRouter:
             logger.error(f"Error updating service registry: {e}")
     
     def _update_rules_from_registry(self):
-        """Update routing rules based on service registry"""
-        try:
+        """Update routing rules based on service registry"""        try:
             # Add rules for newly discovered services
             for service_name, service_info in self.service_registry.items():
                 # Check if we already have a rule for this service
@@ -331,8 +310,7 @@ class RequestRouter:
             logger.error(f"Error updating rules from registry: {e}")
     
     def get_routing_stats(self) -> Dict[str, Any]:
-        """Get routing statistics"""
-        try:
+        """Get routing statistics"""        try:
             service_counts = {}
             strategy_counts = {}
             
@@ -355,8 +333,7 @@ class RequestRouter:
             return {}
     
     def list_routing_rules(self) -> List[Dict[str, Any]]:
-        """List all routing rules"""
-        try:
+        """List all routing rules"""        try:
             rules_list = []
             
             for rule in self.routing_rules:

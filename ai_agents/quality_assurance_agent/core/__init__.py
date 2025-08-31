@@ -1,9 +1,7 @@
 """Quality Assurance Core Components
 
 Core engine and processing components for quality assurance operations.
-"""
-
-from .quality_assurance_engine import (
+"""from .quality_assurance_engine import (
     QualityAssuranceEngine,
     QualityAssuranceJob,
     QualityAssuranceResult

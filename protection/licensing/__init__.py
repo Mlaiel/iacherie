@@ -50,8 +50,7 @@ UNAUTHORIZED ACCESS IS INTERNATIONAL TREATY VIOLATION:
 
 Contact mlaiel@live.de for MANDATORY international licensing authorization.
 Unauthorized access triggers automatic diplomatic and trade sanction protocols.
-"""
-import logging
+"""import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union
 from datetime import datetime, timedelta

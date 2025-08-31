@@ -1,5 +1,4 @@
-"""
-Topic Modeler - Advanced Topic Discovery and Modeling System
+"""Topic Modeler - Advanced Topic Discovery and Modeling System
 ============================================================
 
 Advanced AI-powered topic modeling system for discovering latent topics,
@@ -7,9 +6,7 @@ themes, and subject matter in text content with high accuracy and interpretabili
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import logging
+"""import logging
 import asyncio
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -63,23 +60,20 @@ from .config import NLPAgentConfig, default_config
 logger = logging.getLogger(__name__)
 
 class ModelType(Enum):
-    """Topic modeling algorithm types"""
-    LDA = "lda"  # Latent Dirichlet Allocation
+    """Topic modeling algorithm types"""    LDA = "lda"  # Latent Dirichlet Allocation
     NMF = "nmf"  # Non-negative Matrix Factorization
     LSA = "lsa"  # Latent Semantic Analysis
     KMEANS = "kmeans"  # K-Means Clustering
     TRANSFORMER = "transformer"  # Transformer-based
 
 class VectorizerType(Enum):
-    """Text vectorization types"""
-    TFIDF = "tfidf"
+    """Text vectorization types"""    TFIDF = "tfidf"
     COUNT = "count"
     TRANSFORMER_EMBEDDINGS = "transformer_embeddings"
 
 @dataclass
 class Topic:
-    """Individual topic with detailed information"""
-    id: int
+    """Individual topic with detailed information"""    id: int
     name: str
     keywords: List[str]
     keyword_weights: List[float]
@@ -92,16 +86,14 @@ class Topic:
 
 @dataclass
 class DocumentTopic:
-    """Document-topic assignment with probabilities"""
-    document_index: int
+    """Document-topic assignment with probabilities"""    document_index: int
     topic_id: int
     probability: float
     topic_name: str = ""
 
 @dataclass
 class TopicModelResult:
-    """Complete topic modeling result"""
-    texts: List[str]
+    """Complete topic modeling result"""    texts: List[str]
     topics: List[Topic] = field(default_factory=list)
     document_topics: List[List[DocumentTopic]] = field(default_factory=list)
     model_type: str = ""
@@ -118,14 +110,11 @@ class TopicModelResult:
     timestamp: str = field(default_factory=lambda: datetime.now().isoformat())
 
 class TopicModeler:
-    """
-    Advanced AI-powered topic modeling system for discovering latent topics
+    """    Advanced AI-powered topic modeling system for discovering latent topics
     and themes in text content with comprehensive analysis capabilities.
-    """
-    
+    """    
     def __init__(self, config: Optional[NLPAgentConfig] = None):
-        """Initialize Topic Modeler"""
-        self.config = config or default_config
+        """Initialize Topic Modeler"""        self.config = config or default_config
         self.models = {}
         self.vectorizers = {}
         self.pipelines = {}
@@ -141,8 +130,7 @@ class TopicModeler:
         self._initialize_models()
     
     def _load_stop_words(self) -> set:
-        """Load stop words for text preprocessing"""
-        stop_words = set()
+        """Load stop words for text preprocessing"""        stop_words = set()
         
         try:
             if NLTK_AVAILABLE:
@@ -165,8 +153,7 @@ class TopicModeler:
         return stop_words
     
     def _initialize_models(self):
-        """Initialize topic modeling components"""
-        try:
+        """Initialize topic modeling components"""        try:
             # Initialize scikit-learn models if available
             if SKLEARN_AVAILABLE:
                 # Vectorizers
@@ -233,13 +220,11 @@ class TopicModeler:
             self._setup_fallback_methods()
     
     def _setup_fallback_methods(self):
-        """Setup fallback methods for topic modeling"""
-        logger.info("Setting up topic modeling fallback methods")
+        """Setup fallback methods for topic modeling"""        logger.info("Setting up topic modeling fallback methods")
         self.fallback_mode = True
     
     def _get_device(self) -> int:
-        """Get optimal device for model execution"""
-        if self.config.performance.enable_gpu and TRANSFORMERS_AVAILABLE:
+        """Get optimal device for model execution"""        if self.config.performance.enable_gpu and TRANSFORMERS_AVAILABLE:
             try:
                 if torch.cuda.is_available():
                     return 0  # Use first GPU
@@ -248,8 +233,7 @@ class TopicModeler:
         return -1  # Use CPU
     
     def _preprocess_texts(self, texts: List[str]) -> List[str]:
-        """Preprocess texts for topic modeling"""
-        processed_texts = []
+        """Preprocess texts for topic modeling"""        processed_texts = []
         
         for text in texts:
             if not isinstance(text, str):
@@ -298,8 +282,7 @@ class TopicModeler:
         preprocess_texts: bool = True,
         min_topic_size: int = 2
     ) -> TopicModelResult:
-        """
-        Discover topics in a collection of texts
+        """        Discover topics in a collection of texts
         
         Args:
             texts: List of texts to analyze
@@ -311,8 +294,7 @@ class TopicModeler:
         
         Returns:
             TopicModelResult with discovered topics
-        """
-        start_time = asyncio.get_event_loop().time()
+        """        start_time = asyncio.get_event_loop().time()
         
         if not texts or not isinstance(texts, list):
             raise ValueError("Input must be a non-empty list of texts")
@@ -371,8 +353,7 @@ class TopicModeler:
         vectorizer_type: VectorizerType,
         result: TopicModelResult
     ):
-        """Discover topics using scikit-learn models"""
-        try:
+        """Discover topics using scikit-learn models"""        try:
             # Get vectorizer
             if vectorizer_type == VectorizerType.TFIDF:
                 vectorizer = self.vectorizers["tfidf"]
@@ -433,8 +414,7 @@ class TopicModeler:
         num_topics: int,
         result: TopicModelResult
     ):
-        """Discover topics using transformer models"""
-        try:
+        """Discover topics using transformer models"""        try:
             # Get embeddings for all texts
             embeddings_pipeline = self.pipelines.get("embeddings")
             if not embeddings_pipeline:
@@ -478,8 +458,7 @@ class TopicModeler:
         num_topics: int,
         result: TopicModelResult
     ):
-        """Discover topics using fallback methods"""
-        try:
+        """Discover topics using fallback methods"""        try:
             # Simple keyword-based topic discovery
             all_words = []
             for text in texts:
@@ -529,8 +508,7 @@ class TopicModeler:
         doc_term_matrix,
         result: TopicModelResult
     ):
-        """Extract topics from sklearn model results"""
-        topics = []
+        """Extract topics from sklearn model results"""        topics = []
         
         for topic_idx, topic_weights in enumerate(topic_word_matrix):
             # Get top words for this topic
@@ -567,8 +545,7 @@ class TopicModeler:
         kmeans_model,
         result: TopicModelResult
     ):
-        """Extract topics from transformer-based clustering"""
-        topics = []
+        """Extract topics from transformer-based clustering"""        topics = []
         unique_labels = np.unique(cluster_labels)
         
         for cluster_id in unique_labels:
@@ -609,8 +586,7 @@ class TopicModeler:
         doc_term_matrix,
         result: TopicModelResult
     ):
-        """Calculate document-topic assignments"""
-        document_topics = []
+        """Calculate document-topic assignments"""        document_topics = []
         
         try:
             if hasattr(model, 'transform'):
@@ -656,8 +632,7 @@ class TopicModeler:
             logger.error(f"Document-topic calculation failed: {e}")
     
     def _calculate_topic_coherence(self, keywords: List[str]) -> float:
-        """Calculate topic coherence score (simplified implementation)"""
-        if len(keywords) < 2:
+        """Calculate topic coherence score (simplified implementation)"""        if len(keywords) < 2:
             return 0.0
         
         # Simple coherence based on word co-occurrence patterns
@@ -667,8 +642,7 @@ class TopicModeler:
         return min(coherence_score, 1.0)
     
     async def _post_process_results(self, result: TopicModelResult, min_topic_size: int):
-        """Post-process topic modeling results"""
-        try:
+        """Post-process topic modeling results"""        try:
             # Filter topics by size
             if min_topic_size > 0:
                 filtered_topics = [
@@ -714,8 +688,7 @@ class TopicModeler:
             logger.error(f"Post-processing failed: {e}")
     
     async def get_topic_keywords(self, topic_id: int, result: TopicModelResult) -> List[str]:
-        """Get keywords for a specific topic"""
-        for topic in result.topics:
+        """Get keywords for a specific topic"""        for topic in result.topics:
             if topic.id == topic_id:
                 return topic.keywords
         return []
@@ -726,8 +699,7 @@ class TopicModeler:
         result: TopicModelResult,
         min_probability: float = 0.1
     ) -> List[Tuple[int, str, float]]:
-        """Get documents assigned to a specific topic"""
-        documents = []
+        """Get documents assigned to a specific topic"""        documents = []
         
         for doc_idx, doc_topics in enumerate(result.document_topics):
             for doc_topic in doc_topics:
@@ -749,8 +721,7 @@ class TopicModeler:
         result: TopicModelResult,
         similarity_threshold: float = 0.3
     ) -> List[Tuple[int, int, float]]:
-        """Find similar topics based on keyword overlap"""
-        similar_pairs = []
+        """Find similar topics based on keyword overlap"""        similar_pairs = []
         
         for i, topic1 in enumerate(result.topics):
             for j, topic2 in enumerate(result.topics[i+1:], i+1):
@@ -773,8 +744,7 @@ class TopicModeler:
         text_batches: List[List[str]],
         num_topics: int = 10
     ) -> List[TopicModelResult]:
-        """Track topic evolution over time periods"""
-        results = []
+        """Track topic evolution over time periods"""        results = []
         
         for i, batch in enumerate(text_batches):
             if batch:
@@ -788,8 +758,7 @@ class TopicModeler:
         return results
     
     def health_check(self) -> Dict[str, Any]:
-        """Perform health check"""
-        status = {
+        """Perform health check"""        status = {
             "status": "healthy",
             "sklearn_available": SKLEARN_AVAILABLE,
             "transformers_available": TRANSFORMERS_AVAILABLE,
@@ -816,8 +785,7 @@ class TopicModeler:
         return status
     
     def shutdown(self):
-        """Shutdown the topic modeler"""
-        logger.info("Shutting down Topic Modeler")
+        """Shutdown the topic modeler"""        logger.info("Shutting down Topic Modeler")
         
         # Clear models
         self.models.clear()
@@ -830,8 +798,7 @@ class TopicModeler:
 
 # Utility functions
 def calculate_topic_similarity(topic1: Topic, topic2: Topic) -> float:
-    """Calculate similarity between two topics"""
-    keywords1 = set(topic1.keywords)
+    """Calculate similarity between two topics"""    keywords1 = set(topic1.keywords)
     keywords2 = set(topic2.keywords)
     
     if not keywords1 and not keywords2:
@@ -846,8 +813,7 @@ def calculate_topic_similarity(topic1: Topic, topic2: Topic) -> float:
     return intersection / union if union > 0 else 0.0
 
 def merge_topic_results(results: List[TopicModelResult]) -> TopicModelResult:
-    """Merge multiple topic modeling results"""
-    if not results:
+    """Merge multiple topic modeling results"""    if not results:
         return TopicModelResult(texts=[])
     
     merged_texts = []

@@ -1,12 +1,9 @@
-"""
-Comprehensive metrics collection and monitoring for workflow system.
+"""Comprehensive metrics collection and monitoring for workflow system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
-"""
-
-from typing import Dict, Any, List, Optional, Union
+"""from typing import Dict, Any, List, Optional, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
@@ -19,8 +16,7 @@ import logging
 
 
 class MetricType(Enum):
-    """Types of metrics collected."""
-    COUNTER = "counter"
+    """Types of metrics collected."""    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     TIMER = "timer"
@@ -28,8 +24,7 @@ class MetricType(Enum):
 
 
 class MetricLevel(Enum):
-    """Metric importance levels."""
-    DEBUG = "debug"
+    """Metric importance levels."""    DEBUG = "debug"
     INFO = "info" 
     WARNING = "warning"
     ERROR = "error"
@@ -38,8 +33,7 @@ class MetricLevel(Enum):
 
 @dataclass
 class Metric:
-    """Individual metric data point."""
-    name: str
+    """Individual metric data point."""    name: str
     value: Union[int, float]
     metric_type: MetricType
     timestamp: datetime = field(default_factory=datetime.utcnow)
@@ -50,8 +44,7 @@ class Metric:
 
 @dataclass
 class TimerContext:
-    """Context manager for timing operations."""
-    name: str
+    """Context manager for timing operations."""    name: str
     start_time: float = field(default_factory=time.time)
     end_time: Optional[float] = None
     tags: Dict[str, str] = field(default_factory=dict)
@@ -74,8 +67,7 @@ class TimerContext:
 
 
 class WorkflowMetrics:
-    """Comprehensive metrics collection for workflow operations."""
-    
+    """Comprehensive metrics collection for workflow operations."""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -107,8 +99,7 @@ class WorkflowMetrics:
         self.logger = logging.getLogger("workflow.metrics")
     
     def increment(self, metric_name: str, value: int = 1, tags: Dict[str, str] = None):
-        """Increment a counter metric."""
-        with self._lock:
+        """Increment a counter metric."""        with self._lock:
             key = self._build_metric_key(metric_name, tags)
             self.counters[key] += value
             
@@ -120,12 +111,10 @@ class WorkflowMetrics:
             ))
     
     def decrement(self, metric_name: str, value: int = 1, tags: Dict[str, str] = None):
-        """Decrement a counter metric."""
-        self.increment(metric_name, -value, tags)
+        """Decrement a counter metric."""        self.increment(metric_name, -value, tags)
     
     def set_gauge(self, metric_name: str, value: Union[int, float], tags: Dict[str, str] = None):
-        """Set a gauge metric value."""
-        with self._lock:
+        """Set a gauge metric value."""        with self._lock:
             key = self._build_metric_key(metric_name, tags)
             self.gauges[key] = value
             
@@ -137,8 +126,7 @@ class WorkflowMetrics:
             ))
     
     def record_histogram(self, metric_name: str, value: Union[int, float], tags: Dict[str, str] = None):
-        """Record a value in a histogram."""
-        with self._lock:
+        """Record a value in a histogram."""        with self._lock:
             key = self._build_metric_key(metric_name, tags)
             self.histograms[key].append(value)
             
@@ -154,8 +142,7 @@ class WorkflowMetrics:
             ))
     
     def record_timer(self, metric_name: str, duration: float, tags: Dict[str, str] = None):
-        """Record a timer metric."""
-        with self._lock:
+        """Record a timer metric."""        with self._lock:
             key = self._build_metric_key(metric_name, tags)
             self.timers[key].append(duration)
             
@@ -171,16 +158,14 @@ class WorkflowMetrics:
             ))
     
     def timer(self, metric_name: str, tags: Dict[str, str] = None) -> TimerContext:
-        """Create a timer context manager."""
-        return TimerContext(
+        """Create a timer context manager."""        return TimerContext(
             name=metric_name,
             tags=tags or {},
             metrics_collector=self
         )
     
     def record_workflow_execution(self, workflow_id: str, success: bool, duration: float, **kwargs):
-        """Record workflow execution metrics."""
-        tags = {
+        """Record workflow execution metrics."""        tags = {
             "workflow_id": workflow_id,
             "success": str(success).lower()
         }
@@ -195,8 +180,7 @@ class WorkflowMetrics:
             self.increment("workflow.executions.failure", tags=tags)
     
     def record_pipeline_execution(self, pipeline_id: str, success: bool, duration: float, **kwargs):
-        """Record pipeline execution metrics."""
-        tags = {
+        """Record pipeline execution metrics."""        tags = {
             "pipeline_id": pipeline_id,
             "success": str(success).lower()
         }
@@ -218,8 +202,7 @@ class WorkflowMetrics:
         self.record_histogram("pipeline.steps.failed", steps_failed, tags=tags)
     
     def record_step_execution(self, pipeline_id: str, step_name: str, success: bool, duration: float, **kwargs):
-        """Record pipeline step execution metrics."""
-        tags = {
+        """Record pipeline step execution metrics."""        tags = {
             "pipeline_id": pipeline_id,
             "step_name": step_name,
             "success": str(success).lower()
@@ -241,8 +224,7 @@ class WorkflowMetrics:
                 self.increment("pipeline.step.errors", tags=error_tags)
     
     def record_scheduler_activity(self, task_id: str, activity: str, **kwargs):
-        """Record scheduler activity metrics."""
-        tags = {
+        """Record scheduler activity metrics."""        tags = {
             "task_id": task_id,
             "activity": activity
         }
@@ -262,8 +244,7 @@ class WorkflowMetrics:
                 self.increment("scheduler.task.executions.failure", tags=tags)
     
     def record_automation_trigger(self, rule_id: str, trigger_type: str, success: bool, **kwargs):
-        """Record automation trigger metrics."""
-        tags = {
+        """Record automation trigger metrics."""        tags = {
             "rule_id": rule_id,
             "trigger_type": trigger_type,
             "success": str(success).lower()
@@ -278,8 +259,7 @@ class WorkflowMetrics:
             self.increment("automation.triggers.failure", tags=tags)
     
     def record_state_operation(self, state_id: str, operation: str, duration: float, **kwargs):
-        """Record state management operation metrics."""
-        tags = {
+        """Record state management operation metrics."""        tags = {
             "state_id": state_id,
             "operation": operation
         }
@@ -295,8 +275,7 @@ class WorkflowMetrics:
             self.increment(f"state.{operation}.failure", tags=tags)
     
     def record_resource_usage(self, resource_type: str, usage: Union[int, float], **kwargs):
-        """Record resource usage metrics."""
-        tags = {
+        """Record resource usage metrics."""        tags = {
             "resource_type": resource_type
         }
         tags.update(kwargs.get("tags", {}))
@@ -310,8 +289,7 @@ class WorkflowMetrics:
             self.set_gauge(f"resource.{resource_type}.utilization", utilization, tags=tags)
     
     def get_metric_summary(self, metric_name: str, tags: Dict[str, str] = None) -> Dict[str, Any]:
-        """Get summary statistics for a metric."""
-        with self._lock:
+        """Get summary statistics for a metric."""        with self._lock:
             key = self._build_metric_key(metric_name, tags)
             summary = {}
             
@@ -354,8 +332,7 @@ class WorkflowMetrics:
             return summary
     
     def get_all_metrics(self) -> Dict[str, Any]:
-        """Get all collected metrics."""
-        with self._lock:
+        """Get all collected metrics."""        with self._lock:
             return {
                 "counters": dict(self.counters),
                 "gauges": dict(self.gauges),
@@ -365,8 +342,7 @@ class WorkflowMetrics:
             }
     
     def get_workflow_metrics(self) -> Dict[str, Any]:
-        """Get workflow-specific metrics."""
-        workflow_metrics = {}
+        """Get workflow-specific metrics."""        workflow_metrics = {}
         
         for key, value in self.counters.items():
             if "workflow" in key:
@@ -379,8 +355,7 @@ class WorkflowMetrics:
         return workflow_metrics
     
     def get_pipeline_metrics(self) -> Dict[str, Any]:
-        """Get pipeline-specific metrics."""
-        pipeline_metrics = {}
+        """Get pipeline-specific metrics."""        pipeline_metrics = {}
         
         for key, value in self.counters.items():
             if "pipeline" in key:
@@ -393,8 +368,7 @@ class WorkflowMetrics:
         return pipeline_metrics
     
     def export_metrics(self, format_type: str = "json") -> str:
-        """Export metrics in specified format."""
-        metrics_data = self.get_all_metrics()
+        """Export metrics in specified format."""        metrics_data = self.get_all_metrics()
         
         if format_type == "json":
             return json.dumps(metrics_data, indent=2, default=str)
@@ -404,8 +378,7 @@ class WorkflowMetrics:
             raise ValueError(f"Unsupported export format: {format_type}")
     
     def clear_metrics(self, metric_type: str = None):
-        """Clear metrics data."""
-        with self._lock:
+        """Clear metrics data."""        with self._lock:
             if metric_type is None or metric_type == "all":
                 self.counters.clear()
                 self.gauges.clear()
@@ -422,8 +395,7 @@ class WorkflowMetrics:
                 self.timers.clear()
     
     def cleanup_old_metrics(self):
-        """Remove old metrics beyond retention period."""
-        with self._lock:
+        """Remove old metrics beyond retention period."""        with self._lock:
             cutoff_time = datetime.utcnow() - self.retention_period
             
             for metric_name, metrics_list in self.metrics_storage.items():
@@ -433,15 +405,13 @@ class WorkflowMetrics:
                 ]
     
     async def start_background_tasks(self):
-        """Start background metric aggregation and cleanup tasks."""
-        if self.enable_aggregation:
+        """Start background metric aggregation and cleanup tasks."""        if self.enable_aggregation:
             asyncio.create_task(self._aggregation_task())
         
         asyncio.create_task(self._cleanup_task())
     
     async def _aggregation_task(self):
-        """Background task for metric aggregation."""
-        while True:
+        """Background task for metric aggregation."""        while True:
             try:
                 await asyncio.sleep(self.aggregation_window.total_seconds())
                 self._aggregate_metrics()
@@ -449,8 +419,7 @@ class WorkflowMetrics:
                 self.logger.error(f"Error in metric aggregation task: {e}")
     
     async def _cleanup_task(self):
-        """Background task for metric cleanup."""
-        while True:
+        """Background task for metric cleanup."""        while True:
             try:
                 await asyncio.sleep(3600)  # Run every hour
                 self.cleanup_old_metrics()
@@ -458,8 +427,7 @@ class WorkflowMetrics:
                 self.logger.error(f"Error in metric cleanup task: {e}")
     
     def _aggregate_metrics(self):
-        """Aggregate metrics over time window."""
-        with self._lock:
+        """Aggregate metrics over time window."""        with self._lock:
             now = datetime.utcnow()
             
             if now - self.last_aggregation < self.aggregation_window:
@@ -478,8 +446,7 @@ class WorkflowMetrics:
             self.last_aggregation = now
     
     def _calculate_aggregates(self, metrics: List[Metric]) -> Dict[str, Any]:
-        """Calculate aggregate statistics for metrics."""
-        if not metrics:
+        """Calculate aggregate statistics for metrics."""        if not metrics:
             return {}
         
         values = [m.value for m in metrics]
@@ -494,8 +461,7 @@ class WorkflowMetrics:
         }
     
     def _store_metric(self, metric: Metric):
-        """Store individual metric."""
-        self.metrics_storage[metric.name].append(metric)
+        """Store individual metric."""        self.metrics_storage[metric.name].append(metric)
         
         # Maintain storage limits
         if len(self.metrics_storage[metric.name]) > self.max_metrics_per_type:
@@ -504,16 +470,14 @@ class WorkflowMetrics:
             )
     
     def _build_metric_key(self, metric_name: str, tags: Dict[str, str] = None) -> str:
-        """Build unique key for metric with tags."""
-        if not tags:
+        """Build unique key for metric with tags."""        if not tags:
             return metric_name
         
         tag_string = ",".join(f"{k}={v}" for k, v in sorted(tags.items()))
         return f"{metric_name}#{tag_string}"
     
     def _percentile(self, values: List[float], percentile: float) -> float:
-        """Calculate percentile of values."""
-        if not values:
+        """Calculate percentile of values."""        if not values:
             return 0.0
         
         sorted_values = sorted(values)
@@ -532,8 +496,7 @@ class WorkflowMetrics:
             return sorted_values[lower] * (1 - weight) + sorted_values[upper] * weight
     
     def _histogram_summary(self, values: List[float]) -> Dict[str, Any]:
-        """Generate summary for histogram values."""
-        if not values:
+        """Generate summary for histogram values."""        if not values:
             return {}
         
         return {
@@ -548,8 +511,7 @@ class WorkflowMetrics:
         }
     
     def _timer_summary(self, values: List[float]) -> Dict[str, Any]:
-        """Generate summary for timer values."""
-        if not values:
+        """Generate summary for timer values."""        if not values:
             return {}
         
         return {
@@ -564,8 +526,7 @@ class WorkflowMetrics:
         }
     
     def _export_prometheus_format(self, metrics_data: Dict[str, Any]) -> str:
-        """Export metrics in Prometheus format."""
-        prometheus_lines = []
+        """Export metrics in Prometheus format."""        prometheus_lines = []
         
         # Add help and type information
         prometheus_lines.append("# HELP workflow_metrics Workflow system metrics")

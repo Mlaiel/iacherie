@@ -1,5 +1,4 @@
-"""
-Semantic Processor - Advanced Semantic Understanding Engine
+"""Semantic Processor - Advanced Semantic Understanding Engine
 ==========================================================
 
 Advanced semantic processing system for deep text understanding,
@@ -7,9 +6,7 @@ meaning extraction, and contextual analysis using state-of-the-art NLP models.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
@@ -43,8 +40,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SemanticEntity:
-    """Semantic entity with meaning and relationships"""
-    text: str
+    """Semantic entity with meaning and relationships"""    text: str
     semantic_type: str
     confidence: float
     context: str
@@ -53,8 +49,7 @@ class SemanticEntity:
 
 @dataclass
 class SemanticRelation:
-    """Semantic relationship between entities"""
-    subject: str
+    """Semantic relationship between entities"""    subject: str
     predicate: str
     object: str
     confidence: float
@@ -62,16 +57,14 @@ class SemanticRelation:
 
 @dataclass
 class ConceptualTheme:
-    """High-level conceptual theme"""
-    theme: str
+    """High-level conceptual theme"""    theme: str
     relevance_score: float
     supporting_evidence: List[str] = field(default_factory=list)
     related_concepts: List[str] = field(default_factory=list)
 
 @dataclass
 class SemanticResult:
-    """Complete semantic processing result"""
-    text: str
+    """Complete semantic processing result"""    text: str
     main_concepts: List[str] = field(default_factory=list)
     semantic_entities: List[SemanticEntity] = field(default_factory=list)
     semantic_relations: List[SemanticRelation] = field(default_factory=list)
@@ -88,14 +81,11 @@ class SemanticResult:
     timestamp: str = field(default_factory=lambda: datetime.now().isoformat())
 
 class SemanticProcessor:
-    """
-    Advanced semantic processing system for deep text understanding,
+    """    Advanced semantic processing system for deep text understanding,
     meaning extraction, and contextual analysis.
-    """
-    
+    """    
     def __init__(self, config: Optional[NLPAgentConfig] = None):
-        """Initialize Semantic Processor"""
-        self.config = config or default_config
+        """Initialize Semantic Processor"""        self.config = config or default_config
         self.models = {}
         self.embeddings_model = None
         self.semantic_patterns = self._load_semantic_patterns()
@@ -104,8 +94,7 @@ class SemanticProcessor:
         self._initialize_models()
     
     def _load_semantic_patterns(self) -> Dict[str, List[str]]:
-        """Load patterns for semantic analysis"""
-        return {
+        """Load patterns for semantic analysis"""        return {
             "causal": [
                 r"\bbecause\b", r"\bsince\b", r"\bas\b", r"\bdue to\b",
                 r"\btherefore\b", r"\bthus\b", r"\bhence\b", r"\bso\b"
@@ -129,8 +118,7 @@ class SemanticProcessor:
         }
     
     def _load_concept_ontology(self) -> Dict[str, Dict[str, Any]]:
-        """Load conceptual ontology for semantic understanding"""
-        return {
+        """Load conceptual ontology for semantic understanding"""        return {
             "emotions": {
                 "subconcepts": ["joy", "sadness", "anger", "fear", "surprise", "disgust"],
                 "related": ["feelings", "mood", "sentiment", "psychology"],
@@ -164,8 +152,7 @@ class SemanticProcessor:
         }
     
     def _initialize_models(self):
-        """Initialize semantic processing models"""
-        try:
+        """Initialize semantic processing models"""        try:
             if TRANSFORMERS_AVAILABLE:
                 # Sentence transformer for embeddings
                 embedding_model = self.config.embeddings.model_name
@@ -205,13 +192,11 @@ class SemanticProcessor:
             self._setup_fallback_methods()
     
     def _setup_fallback_methods(self):
-        """Setup fallback methods for semantic processing"""
-        logger.info("Setting up semantic processing fallback methods")
+        """Setup fallback methods for semantic processing"""        logger.info("Setting up semantic processing fallback methods")
         self.fallback_mode = True
     
     def _get_device(self) -> int:
-        """Get optimal device for model execution"""
-        if self.config.performance.enable_gpu and TRANSFORMERS_AVAILABLE:
+        """Get optimal device for model execution"""        if self.config.performance.enable_gpu and TRANSFORMERS_AVAILABLE:
             try:
                 if torch.cuda.is_available():
                     return 0  # Use first GPU
@@ -227,8 +212,7 @@ class SemanticProcessor:
         include_themes: bool = True,
         analyze_coherence: bool = True
     ) -> Union[SemanticResult, List[SemanticResult]]:
-        """
-        Process text for semantic understanding
+        """        Process text for semantic understanding
         
         Args:
             text: Text or list of texts to process
@@ -239,8 +223,7 @@ class SemanticProcessor:
         
         Returns:
             SemanticResult or list of results
-        """
-        start_time = asyncio.get_event_loop().time()
+        """        start_time = asyncio.get_event_loop().time()
         
         # Handle batch processing
         is_batch = isinstance(text, list)
@@ -278,8 +261,7 @@ class SemanticProcessor:
         include_themes: bool,
         analyze_coherence: bool
     ) -> SemanticResult:
-        """Process semantic understanding for a single text"""
-        if not text or not isinstance(text, str):
+        """Process semantic understanding for a single text"""        if not text or not isinstance(text, str):
             raise ValueError("Input text must be a non-empty string")
         
         result = SemanticResult(text=text)
@@ -337,8 +319,7 @@ class SemanticProcessor:
             return result
     
     async def _extract_main_concepts(self, text: str) -> List[str]:
-        """Extract main conceptual themes from text"""
-        concepts = []
+        """Extract main conceptual themes from text"""        concepts = []
         
         # Use embeddings-based approach if available
         if self.embeddings_model and not hasattr(self, 'fallback_mode'):
@@ -372,8 +353,7 @@ class SemanticProcessor:
         return concepts[:5]  # Limit to top 5 concepts
     
     async def _extract_concept_from_sentences(self, sentences: List[str]) -> Optional[str]:
-        """Extract a concept from a group of sentences"""
-        if not sentences:
+        """Extract a concept from a group of sentences"""        if not sentences:
             return None
         
         # Simple approach: find most common important words
@@ -399,8 +379,7 @@ class SemanticProcessor:
         return None
     
     async def _extract_concepts_rule_based(self, text: str) -> List[str]:
-        """Extract concepts using rule-based approach"""
-        concepts = []
+        """Extract concepts using rule-based approach"""        concepts = []
         
         # Check against concept ontology
         text_lower = text.lower()
@@ -428,8 +407,7 @@ class SemanticProcessor:
         return [concept for concept, score in concepts[:5]]
     
     async def _extract_semantic_entities(self, text: str) -> List[SemanticEntity]:
-        """Extract semantic entities with meaning and context"""
-        entities = []
+        """Extract semantic entities with meaning and context"""        entities = []
         
         # Rule-based entity extraction with semantic types
         entity_patterns = {
@@ -457,8 +435,7 @@ class SemanticProcessor:
         return entities
     
     async def _identify_semantic_relations(self, text: str) -> List[SemanticRelation]:
-        """Identify semantic relationships between entities"""
-        relations = []
+        """Identify semantic relationships between entities"""        relations = []
         
         # Simple pattern-based relation extraction
         relation_patterns = {
@@ -490,8 +467,7 @@ class SemanticProcessor:
         return relations
     
     async def _detect_conceptual_themes(self, text: str) -> List[ConceptualTheme]:
-        """Detect high-level conceptual themes"""
-        themes = []
+        """Detect high-level conceptual themes"""        themes = []
         
         # Analyze text for thematic content
         theme_indicators = {
@@ -523,8 +499,7 @@ class SemanticProcessor:
         return themes[:3]  # Top 3 themes
     
     async def _generate_abstract_meaning(self, text: str, result: SemanticResult) -> str:
-        """Generate abstract meaning summary"""
-        # Create abstract meaning based on extracted information
+        """Generate abstract meaning summary"""        # Create abstract meaning based on extracted information
         concepts = result.main_concepts[:3]
         themes = [t.theme for t in result.conceptual_themes[:2]]
         
@@ -542,8 +517,7 @@ class SemanticProcessor:
         return "The text contains general content without specific dominant themes."
     
     async def _analyze_contextual_understanding(self, text: str) -> Dict[str, Any]:
-        """Analyze contextual understanding of the text"""
-        return {
+        """Analyze contextual understanding of the text"""        return {
             "formality_level": await self._assess_formality(text),
             "subjectivity": await self._assess_subjectivity(text),
             "complexity": await self._assess_complexity(text),
@@ -552,8 +526,7 @@ class SemanticProcessor:
         }
     
     async def _assess_formality(self, text: str) -> str:
-        """Assess formality level of text"""
-        formal_indicators = ["therefore", "furthermore", "consequently", "nevertheless"]
+        """Assess formality level of text"""        formal_indicators = ["therefore", "furthermore", "consequently", "nevertheless"]
         informal_indicators = ["anyway", "basically", "kinda", "sorta", "gonna"]
         
         text_lower = text.lower()
@@ -568,8 +541,7 @@ class SemanticProcessor:
             return "neutral"
     
     async def _assess_subjectivity(self, text: str) -> float:
-        """Assess subjectivity level (0=objective, 1=subjective)"""
-        subjective_indicators = ["I think", "I believe", "in my opinion", "personally", "feel"]
+        """Assess subjectivity level (0=objective, 1=subjective)"""        subjective_indicators = ["I think", "I believe", "in my opinion", "personally", "feel"]
         objective_indicators = ["data shows", "research indicates", "studies reveal", "according to"]
         
         text_lower = text.lower()
@@ -583,8 +555,7 @@ class SemanticProcessor:
         return subjective_count / total
     
     async def _assess_complexity(self, text: str) -> str:
-        """Assess complexity level of text"""
-        words = text.split()
+        """Assess complexity level of text"""        words = text.split()
         avg_word_length = sum(len(word) for word in words) / len(words) if words else 0
         
         sentences = [s for s in text.split('.') if s.strip()]
@@ -598,8 +569,7 @@ class SemanticProcessor:
             return "medium"
     
     async def _assess_temporal_focus(self, text: str) -> str:
-        """Assess temporal focus of text"""
-        past_indicators = ["was", "were", "had", "did", "yesterday", "ago"]
+        """Assess temporal focus of text"""        past_indicators = ["was", "were", "had", "did", "yesterday", "ago"]
         present_indicators = ["is", "are", "am", "do", "does", "now", "today"]
         future_indicators = ["will", "shall", "going to", "tomorrow", "next"]
         
@@ -617,8 +587,7 @@ class SemanticProcessor:
             return "present"
     
     async def _assess_perspective(self, text: str) -> str:
-        """Assess narrative perspective"""
-        first_person = len(re.findall(r'\b(I|we|my|our|me|us)\b', text, re.IGNORECASE))
+        """Assess narrative perspective"""        first_person = len(re.findall(r'\b(I|we|my|our|me|us)\b', text, re.IGNORECASE))
         second_person = len(re.findall(r'\b(you|your)\b', text, re.IGNORECASE))
         third_person = len(re.findall(r'\b(he|she|it|they|his|her|their)\b', text, re.IGNORECASE))
         
@@ -633,8 +602,7 @@ class SemanticProcessor:
             return "neutral"
     
     async def _extract_discourse_markers(self, text: str) -> List[str]:
-        """Extract discourse markers that indicate text structure"""
-        discourse_markers = []
+        """Extract discourse markers that indicate text structure"""        discourse_markers = []
         
         marker_patterns = {
             "addition": ["also", "furthermore", "moreover", "additionally"],
@@ -653,8 +621,7 @@ class SemanticProcessor:
         return discourse_markers
     
     async def _analyze_logical_structure(self, text: str) -> Dict[str, Any]:
-        """Analyze logical structure of text"""
-        sentences = [s.strip() for s in text.split('.') if s.strip()]
+        """Analyze logical structure of text"""        sentences = [s.strip() for s in text.split('.') if s.strip()]
         
         structure = {
             "total_sentences": len(sentences),
@@ -686,8 +653,7 @@ class SemanticProcessor:
         return structure
     
     async def _calculate_semantic_density(self, text: str, result: SemanticResult) -> float:
-        """Calculate semantic density of text"""
-        word_count = len(text.split())
+        """Calculate semantic density of text"""        word_count = len(text.split())
         if word_count == 0:
             return 0.0
         
@@ -704,8 +670,7 @@ class SemanticProcessor:
         return min(density, 1.0)  # Cap at 1.0
     
     async def _analyze_coherence(self, text: str) -> float:
-        """Analyze text coherence using embeddings similarity"""
-        if hasattr(self, 'fallback_mode') or not self.embeddings_model:
+        """Analyze text coherence using embeddings similarity"""        if hasattr(self, 'fallback_mode') or not self.embeddings_model:
             # Fallback coherence analysis
             return await self._analyze_coherence_fallback(text)
         
@@ -732,8 +697,7 @@ class SemanticProcessor:
             return await self._analyze_coherence_fallback(text)
     
     async def _analyze_coherence_fallback(self, text: str) -> float:
-        """Fallback coherence analysis using word overlap"""
-        sentences = [s.strip() for s in text.split('.') if s.strip()]
+        """Fallback coherence analysis using word overlap"""        sentences = [s.strip() for s in text.split('.') if s.strip()]
         if len(sentences) < 2:
             return 1.0
         
@@ -757,8 +721,7 @@ class SemanticProcessor:
         text1: str,
         text2: str
     ) -> float:
-        """Compare semantic similarity between two texts"""
-        if hasattr(self, 'fallback_mode') or not self.embeddings_model:
+        """Compare semantic similarity between two texts"""        if hasattr(self, 'fallback_mode') or not self.embeddings_model:
             # Fallback: simple word overlap
             words1 = set(text1.lower().split())
             words2 = set(text2.lower().split())
@@ -782,8 +745,7 @@ class SemanticProcessor:
             return 0.0
     
     def health_check(self) -> Dict[str, Any]:
-        """Perform health check"""
-        status = {
+        """Perform health check"""        status = {
             "status": "healthy",
             "embeddings_model_loaded": self.embeddings_model is not None,
             "models_loaded": len(self.models),
@@ -808,8 +770,7 @@ class SemanticProcessor:
         return status
     
     def shutdown(self):
-        """Shutdown the semantic processor"""
-        logger.info("Shutting down Semantic Processor")
+        """Shutdown the semantic processor"""        logger.info("Shutting down Semantic Processor")
         
         # Clear models
         self.models.clear()
@@ -823,8 +784,7 @@ class SemanticProcessor:
 
 # Utility functions
 def calculate_semantic_overlap(result1: SemanticResult, result2: SemanticResult) -> float:
-    """Calculate semantic overlap between two results"""
-    # Compare main concepts
+    """Calculate semantic overlap between two results"""    # Compare main concepts
     concepts1 = set(result1.main_concepts)
     concepts2 = set(result2.main_concepts)
     concept_overlap = len(concepts1.intersection(concepts2)) / max(len(concepts1.union(concepts2)), 1)
@@ -838,8 +798,7 @@ def calculate_semantic_overlap(result1: SemanticResult, result2: SemanticResult)
     return (concept_overlap + theme_overlap) / 2
 
 def extract_semantic_keywords(result: SemanticResult) -> List[str]:
-    """Extract semantic keywords from processing result"""
-    keywords = []
+    """Extract semantic keywords from processing result"""    keywords = []
     
     # Add main concepts
     keywords.extend(result.main_concepts)

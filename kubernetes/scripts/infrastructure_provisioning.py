@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
-"""
-Infrastructure Provisioning Manager
+"""Infrastructure Provisioning Manager
 Handles automated infrastructure provisioning using Infrastructure as Code
-"""
-
-import os
+"""import os
 import sys
 import time
 import json
@@ -30,8 +27,7 @@ logger = logging.getLogger(__name__)
 
 
 class ProvisioningStatus(Enum):
-    """Provisioning status enumeration"""
-    PENDING = "pending"
+    """Provisioning status enumeration"""    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -40,8 +36,7 @@ class ProvisioningStatus(Enum):
 
 
 class InfrastructureProvider(Enum):
-    """Infrastructure provider enumeration"""
-    AWS = "aws"
+    """Infrastructure provider enumeration"""    AWS = "aws"
     GOOGLE_CLOUD = "google_cloud"
     AZURE = "azure"
     KUBERNETES = "kubernetes"
@@ -50,8 +45,7 @@ class InfrastructureProvider(Enum):
 
 @dataclass
 class InfrastructureStack:
-    """Infrastructure stack data class"""
-    name: str
+    """Infrastructure stack data class"""    name: str
     provider: InfrastructureProvider
     environment: str
     status: ProvisioningStatus
@@ -64,14 +58,11 @@ class InfrastructureStack:
 
 
 class InfrastructureProvisioner:
-    """
-    Enterprise-grade infrastructure provisioning manager
+    """    Enterprise-grade infrastructure provisioning manager
     Handles Infrastructure as Code using Terraform, CloudFormation, and Kubernetes
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize infrastructure provisioner"""
-        self.config_path = config_path or "/etc/provisioning/config.yaml"
+        """Initialize infrastructure provisioner"""        self.config_path = config_path or "/etc/provisioning/config.yaml"
         self.terraform_dir = "/opt/ia-influencer/terraform"
         self.cloudformation_dir = "/opt/ia-influencer/cloudformation"
         self.kubernetes_dir = "/opt/ia-influencer/kubernetes"
@@ -82,8 +73,7 @@ class InfrastructureProvisioner:
         self._setup_directories()
     
     def _load_configuration(self) -> None:
-        """Load provisioning configuration"""
-        try:
+        """Load provisioning configuration"""        try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r') as f:
                     self.config = yaml.safe_load(f)
@@ -96,8 +86,7 @@ class InfrastructureProvisioner:
             self.config = self._get_default_config()
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default provisioning configuration"""
-        return {
+        """Get default provisioning configuration"""        return {
             "providers": {
                 "aws": {
                     "region": "eu-central-1",
@@ -144,8 +133,7 @@ class InfrastructureProvisioner:
         }
     
     def _initialize_providers(self) -> None:
-        """Initialize cloud provider clients"""
-        try:
+        """Initialize cloud provider clients"""        try:
             # AWS
             aws_config = self.config.get("providers", {}).get("aws", {})
             if aws_config:
@@ -171,8 +159,7 @@ class InfrastructureProvisioner:
             logger.error(f"Provider initialization error: {e}")
     
     def _setup_directories(self) -> None:
-        """Setup infrastructure directories"""
-        directories = [
+        """Setup infrastructure directories"""        directories = [
             self.terraform_dir,
             self.cloudformation_dir,
             self.kubernetes_dir,
@@ -190,8 +177,7 @@ class InfrastructureProvisioner:
     def provision_stack(self, stack_name: str, provider: InfrastructureProvider, 
                        environment: str, template_path: str, 
                        variables: Dict[str, Any] = None) -> bool:
-        """
-        Provision infrastructure stack
+        """        Provision infrastructure stack
         
         Args:
             stack_name: Name of the stack
@@ -202,8 +188,7 @@ class InfrastructureProvisioner:
             
         Returns:
             bool: True if successful, False otherwise
-        """
-        try:
+        """        try:
             logger.info(f"Provisioning stack: {stack_name}")
             
             # Create stack object
@@ -268,8 +253,7 @@ class InfrastructureProvisioner:
             return False
     
     def _validate_template(self, stack: InfrastructureStack) -> bool:
-        """Validate infrastructure template"""
-        try:
+        """Validate infrastructure template"""        try:
             template_path = stack.template_path
             
             if not os.path.exists(template_path):
@@ -290,8 +274,7 @@ class InfrastructureProvisioner:
             return False
     
     def _validate_terraform_template(self, template_path: str) -> bool:
-        """Validate Terraform template"""
-        try:
+        """Validate Terraform template"""        try:
             # Change to template directory
             template_dir = os.path.dirname(template_path)
             
@@ -315,8 +298,7 @@ class InfrastructureProvisioner:
             return False
     
     def _validate_kubernetes_manifests(self, manifest_path: str) -> bool:
-        """Validate Kubernetes manifests"""
-        try:
+        """Validate Kubernetes manifests"""        try:
             # Run kubectl dry-run
             result = subprocess.run(
                 ["kubectl", "apply", "--dry-run=client", "-f", manifest_path],
@@ -336,8 +318,7 @@ class InfrastructureProvisioner:
             return False
     
     def _check_environment_requirements(self, stack: InfrastructureStack) -> bool:
-        """Check environment-specific requirements"""
-        try:
+        """Check environment-specific requirements"""        try:
             env_config = self.config.get("environments", {}).get(stack.environment, {})
             
             # Check if approval is required for production
@@ -358,8 +339,7 @@ class InfrastructureProvisioner:
             return False
     
     def _check_resource_quotas(self, stack: InfrastructureStack) -> bool:
-        """Check resource quotas and limits"""
-        try:
+        """Check resource quotas and limits"""        try:
             # This would check actual resource quotas in the target environment
             # For now, we'll simulate the check
             logger.info(f"Resource quotas check passed for {stack.name}")
@@ -370,8 +350,7 @@ class InfrastructureProvisioner:
             return False
     
     def _provision_aws_stack(self, stack: InfrastructureStack) -> bool:
-        """Provision AWS infrastructure using Terraform"""
-        try:
+        """Provision AWS infrastructure using Terraform"""        try:
             logger.info(f"Provisioning AWS stack: {stack.name}")
             
             template_dir = os.path.dirname(stack.template_path)
@@ -426,8 +405,7 @@ class InfrastructureProvisioner:
             return False
     
     def _provision_gcp_stack(self, stack: InfrastructureStack) -> bool:
-        """Provision Google Cloud infrastructure"""
-        try:
+        """Provision Google Cloud infrastructure"""        try:
             logger.info(f"Provisioning GCP stack: {stack.name}")
             
             # Similar to AWS but using GCP-specific tools
@@ -441,8 +419,7 @@ class InfrastructureProvisioner:
             return False
     
     def _provision_azure_stack(self, stack: InfrastructureStack) -> bool:
-        """Provision Azure infrastructure"""
-        try:
+        """Provision Azure infrastructure"""        try:
             logger.info(f"Provisioning Azure stack: {stack.name}")
             
             # Similar to AWS but using Azure-specific tools
@@ -456,8 +433,7 @@ class InfrastructureProvisioner:
             return False
     
     def _provision_kubernetes_stack(self, stack: InfrastructureStack) -> bool:
-        """Provision Kubernetes resources"""
-        try:
+        """Provision Kubernetes resources"""        try:
             logger.info(f"Provisioning Kubernetes stack: {stack.name}")
             
             # Apply Kubernetes manifests
@@ -484,8 +460,7 @@ class InfrastructureProvisioner:
             return False
     
     def _provision_local_stack(self, stack: InfrastructureStack) -> bool:
-        """Provision local infrastructure (Docker Compose, etc.)"""
-        try:
+        """Provision local infrastructure (Docker Compose, etc.)"""        try:
             logger.info(f"Provisioning local stack: {stack.name}")
             
             # This would handle Docker Compose or local development setup
@@ -509,8 +484,7 @@ class InfrastructureProvisioner:
             return False
     
     def _create_terraform_vars_file(self, stack: InfrastructureStack) -> str:
-        """Create Terraform variables file"""
-        try:
+        """Create Terraform variables file"""        try:
             var_file_path = f"/tmp/{stack.name}.tfvars"
             
             with open(var_file_path, 'w') as f:
@@ -529,8 +503,7 @@ class InfrastructureProvisioner:
             return ""
     
     def _get_terraform_outputs(self, terraform_dir: str) -> Dict[str, Any]:
-        """Get Terraform outputs"""
-        try:
+        """Get Terraform outputs"""        try:
             output_result = subprocess.run(
                 ["terraform", "output", "-json"],
                 cwd=terraform_dir,
@@ -549,8 +522,7 @@ class InfrastructureProvisioner:
             return {}
     
     def _wait_for_kubernetes_resources(self, stack: InfrastructureStack) -> bool:
-        """Wait for Kubernetes resources to be ready"""
-        try:
+        """Wait for Kubernetes resources to be ready"""        try:
             # Wait for deployments to be ready
             wait_result = subprocess.run(
                 ["kubectl", "wait", "--for=condition=ready", "pod", "-l", f"stack={stack.name}", "--timeout=300s"],
@@ -565,16 +537,14 @@ class InfrastructureProvisioner:
             return False
     
     def destroy_stack(self, stack_name: str) -> bool:
-        """
-        Destroy infrastructure stack
+        """        Destroy infrastructure stack
         
         Args:
             stack_name: Name of the stack to destroy
             
         Returns:
             bool: True if successful, False otherwise
-        """
-        try:
+        """        try:
             if stack_name not in self.stacks:
                 logger.error(f"Stack not found: {stack_name}")
                 return False
@@ -619,8 +589,7 @@ class InfrastructureProvisioner:
             return False
     
     def _destroy_aws_stack(self, stack: InfrastructureStack) -> bool:
-        """Destroy AWS infrastructure using Terraform"""
-        try:
+        """Destroy AWS infrastructure using Terraform"""        try:
             template_dir = os.path.dirname(stack.template_path)
             
             # Create variable file
@@ -646,8 +615,7 @@ class InfrastructureProvisioner:
             return False
     
     def _destroy_gcp_stack(self, stack: InfrastructureStack) -> bool:
-        """Destroy Google Cloud infrastructure"""
-        try:
+        """Destroy Google Cloud infrastructure"""        try:
             # Similar to AWS destruction
             return True
             
@@ -656,8 +624,7 @@ class InfrastructureProvisioner:
             return False
     
     def _destroy_azure_stack(self, stack: InfrastructureStack) -> bool:
-        """Destroy Azure infrastructure"""
-        try:
+        """Destroy Azure infrastructure"""        try:
             # Similar to AWS destruction
             return True
             
@@ -666,8 +633,7 @@ class InfrastructureProvisioner:
             return False
     
     def _destroy_kubernetes_stack(self, stack: InfrastructureStack) -> bool:
-        """Destroy Kubernetes resources"""
-        try:
+        """Destroy Kubernetes resources"""        try:
             delete_result = subprocess.run(
                 ["kubectl", "delete", "-f", stack.template_path],
                 capture_output=True,
@@ -681,8 +647,7 @@ class InfrastructureProvisioner:
             return False
     
     def _destroy_local_stack(self, stack: InfrastructureStack) -> bool:
-        """Destroy local infrastructure"""
-        try:
+        """Destroy local infrastructure"""        try:
             # This would handle Docker Compose down, etc.
             return True
             
@@ -691,8 +656,7 @@ class InfrastructureProvisioner:
             return False
     
     def _send_provisioning_notification(self, stack: InfrastructureStack, success: bool) -> None:
-        """Send provisioning notification"""
-        try:
+        """Send provisioning notification"""        try:
             slack_webhook = self.config.get("monitoring", {}).get("slack_webhook")
             if not slack_webhook:
                 return
@@ -707,8 +671,7 @@ class InfrastructureProvisioner:
             logger.error(f"Notification error: {e}")
     
     def get_stack_status(self, stack_name: str) -> Optional[Dict[str, Any]]:
-        """Get stack status"""
-        try:
+        """Get stack status"""        try:
             if stack_name not in self.stacks:
                 return None
             
@@ -729,8 +692,7 @@ class InfrastructureProvisioner:
             return None
     
     def list_stacks(self, environment: Optional[str] = None) -> List[Dict[str, Any]]:
-        """List infrastructure stacks"""
-        try:
+        """List infrastructure stacks"""        try:
             stacks = list(self.stacks.values())
             
             if environment:
@@ -753,8 +715,7 @@ class InfrastructureProvisioner:
             return []
     
     def create_template(self, template_type: str, template_name: str, provider: str) -> str:
-        """Create infrastructure template"""
-        try:
+        """Create infrastructure template"""        try:
             if provider == "aws":
                 template_dir = self.terraform_dir
                 template_ext = ".tf"
@@ -779,8 +740,7 @@ class InfrastructureProvisioner:
             return ""
     
     def _get_aws_template_content(self, template_type: str) -> str:
-        """Get AWS Terraform template content"""
-        if template_type == "vpc":
+        """Get AWS Terraform template content"""        if template_type == "vpc":
             return '''
 # VPC Configuration
 resource "aws_vpc" "main" {
@@ -876,8 +836,7 @@ output "cluster_endpoint" {
             return f'# {template_type.upper()} Template\n# Add your resources here\n'
     
     def _get_kubernetes_template_content(self, template_type: str) -> str:
-        """Get Kubernetes manifest template content"""
-        if template_type == "deployment":
+        """Get Kubernetes manifest template content"""        if template_type == "deployment":
             return '''
 apiVersion: apps/v1
 kind: Deployment
@@ -948,8 +907,7 @@ spec:
 
 
 def main():
-    """Main function for standalone execution"""
-    import argparse
+    """Main function for standalone execution"""    import argparse
     
     parser = argparse.ArgumentParser(description="Infrastructure Provisioning Manager")
     parser.add_argument("--action", required=True, 

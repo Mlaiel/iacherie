@@ -1,5 +1,4 @@
-"""
-Regulatory Monitor - Advanced Legal Compliance Monitoring System
+"""Regulatory Monitor - Advanced Legal Compliance Monitoring System
 
 Real-time regulatory tracking, law change monitoring, and automated compliance
 updates for content creators and legal professionals.
@@ -18,9 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import hashlib
@@ -54,8 +51,7 @@ from ...models.legal_models import RegulatoryUpdate, LawChange, ComplianceAlert
 logger = logging.getLogger(__name__)
 
 class RegulatorySource(Enum):
-    """Regulatory information sources"""
-    FEDERAL_REGISTER = "federal_register"
+    """Regulatory information sources"""    FEDERAL_REGISTER = "federal_register"
     SEC_FILINGS = "sec_filings"
     FTC_UPDATES = "ftc_updates"
     COPYRIGHT_OFFICE = "copyright_office"
@@ -70,8 +66,7 @@ class RegulatorySource(Enum):
 
 
 class MonitoringPriority(Enum):
-    """Priority levels for regulatory monitoring"""
-    CRITICAL = "critical"      # Immediate action required
+    """Priority levels for regulatory monitoring"""    CRITICAL = "critical"      # Immediate action required
     HIGH = "high"             # Important changes affecting operations
     MEDIUM = "medium"         # Relevant changes for awareness
     LOW = "low"              # General industry information
@@ -79,8 +74,7 @@ class MonitoringPriority(Enum):
 
 
 class ComplianceCategory(Enum):
-    """Categories of compliance requirements"""
-    CONTENT_PROTECTION = "content_protection"
+    """Categories of compliance requirements"""    CONTENT_PROTECTION = "content_protection"
     DATA_PRIVACY = "data_privacy"
     PLATFORM_COMPLIANCE = "platform_compliance"
     INTELLECTUAL_PROPERTY = "intellectual_property"
@@ -94,8 +88,7 @@ class ComplianceCategory(Enum):
 
 @dataclass
 class RegulatoryUpdate:
-    """Regulatory update information"""
-    update_id: str
+    """Regulatory update information"""    update_id: str
     source: RegulatorySource
     title: str
     description: str
@@ -114,8 +107,7 @@ class RegulatoryUpdate:
 
 @dataclass 
 class ComplianceAlert:
-    """Compliance alert for immediate attention"""
-    alert_id: str
+    """Compliance alert for immediate attention"""    alert_id: str
     regulatory_update: RegulatoryUpdate
     affected_users: List[str]
     recommended_actions: List[str]
@@ -126,13 +118,11 @@ class ComplianceAlert:
 
 
 class RegulatoryMonitor:
-    """
-    Advanced Legal Compliance Monitoring System
+    """    Advanced Legal Compliance Monitoring System
     
     Provides real-time monitoring of regulatory changes, law updates,
     and compliance requirements across multiple jurisdictions and platforms.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.ai_processor = AIProcessor(config.get('ai_config', {}))
@@ -154,8 +144,7 @@ class RegulatoryMonitor:
         logger.info("Regulatory Monitor initialized successfully")
     
     def _initialize_monitoring_systems(self):
-        """Initialize regulatory monitoring systems"""
-        try:
+        """Initialize regulatory monitoring systems"""        try:
             # Setup monitoring sources
             self.monitoring_sources = self._setup_monitoring_sources()
             
@@ -178,8 +167,7 @@ class RegulatoryMonitor:
             raise RegulatoryError(f"Monitoring initialization error: {e}")
     
     def _setup_monitoring_sources(self) -> Dict[str, Dict[str, Any]]:
-        """Setup regulatory information monitoring sources"""
-        return {
+        """Setup regulatory information monitoring sources"""        return {
             RegulatorySource.FEDERAL_REGISTER.value: {
                 "url": "https://www.federalregister.gov/api/v1/articles.json",
                 "method": "api",
@@ -244,8 +232,7 @@ class RegulatoryMonitor:
         }
     
     def _load_compliance_rules(self) -> Dict[str, List[Dict[str, Any]]]:
-        """Load compliance rules for different categories"""
-        return {
+        """Load compliance rules for different categories"""        return {
             ComplianceCategory.CONTENT_PROTECTION.value: [
                 {
                     "rule_id": "dmca_compliance",
@@ -320,8 +307,7 @@ class RegulatoryMonitor:
         }
     
     def _configure_alert_thresholds(self) -> Dict[str, Dict[str, Any]]:
-        """Configure thresholds for compliance alerts"""
-        return {
+        """Configure thresholds for compliance alerts"""        return {
             "priority_thresholds": {
                 MonitoringPriority.CRITICAL.value: {
                     "immediate_notification": True,
@@ -355,8 +341,7 @@ class RegulatoryMonitor:
         }
     
     def _setup_ai_classification(self):
-        """Setup AI models for regulatory content classification"""
-        try:
+        """Setup AI models for regulatory content classification"""        try:
             # Legal document classifier
             self.regulation_classifier = self.ai_processor.load_model(
                 "regulation_classifier",
@@ -384,8 +369,7 @@ class RegulatoryMonitor:
             self.priority_classifier = None
     
     def _setup_monitoring_schedules(self):
-        """Setup automated monitoring schedules"""
-        self.monitoring_tasks = {}
+        """Setup automated monitoring schedules"""        self.monitoring_tasks = {}
         
         # Create monitoring tasks for each active source
         for source_key, source_config in self.monitoring_sources.items():
@@ -397,13 +381,11 @@ class RegulatoryMonitor:
                 }
     
     async def start_monitoring(self, categories: List[ComplianceCategory] = None):
-        """
-        Start regulatory monitoring for specified categories
+        """        Start regulatory monitoring for specified categories
         
         Args:
             categories: List of compliance categories to monitor (None for all)
-        """
-        try:
+        """        try:
             if categories is None:
                 categories = list(ComplianceCategory)
             
@@ -424,8 +406,7 @@ class RegulatoryMonitor:
             raise MonitoringError(f"Monitoring startup error: {e}")
     
     async def _monitor_category(self, category: ComplianceCategory):
-        """Monitor regulatory changes for specific category"""
-        try:
+        """Monitor regulatory changes for specific category"""        try:
             while category.value in self.active_monitors:
                 # Get relevant sources for this category
                 relevant_sources = self._get_relevant_sources(category)
@@ -447,8 +428,7 @@ class RegulatoryMonitor:
             logger.error(f"Category monitoring failed for {category.value}: {e}")
     
     def _get_relevant_sources(self, category: ComplianceCategory) -> List[RegulatorySource]:
-        """Get monitoring sources relevant to compliance category"""
-        category_source_mapping = {
+        """Get monitoring sources relevant to compliance category"""        category_source_mapping = {
             ComplianceCategory.CONTENT_PROTECTION: [
                 RegulatorySource.COPYRIGHT_OFFICE,
                 RegulatorySource.FEDERAL_REGISTER,
@@ -473,8 +453,7 @@ class RegulatoryMonitor:
         return category_source_mapping.get(category, [])
     
     def _should_check_source(self, source: RegulatorySource) -> bool:
-        """Determine if source should be checked for updates"""
-        if source.value not in self.monitoring_sources:
+        """Determine if source should be checked for updates"""        if source.value not in self.monitoring_sources:
             return False
         
         source_config = self.monitoring_sources[source.value]
@@ -491,8 +470,7 @@ class RegulatoryMonitor:
         return time_since_check >= frequency
     
     async def _check_source_updates(self, source: RegulatorySource, category: ComplianceCategory) -> List[RegulatoryUpdate]:
-        """Check specific source for regulatory updates"""
-        try:
+        """Check specific source for regulatory updates"""        try:
             source_config = self.monitoring_sources[source.value]
             method = source_config.get("method", "api")
             
@@ -513,8 +491,7 @@ class RegulatoryMonitor:
             return []
     
     async def _check_api_source(self, source: RegulatorySource, config: Dict[str, Any], category: ComplianceCategory) -> List[RegulatoryUpdate]:
-        """Check API-based regulatory source"""
-        updates = []
+        """Check API-based regulatory source"""        updates = []
         
         try:
             async with aiohttp.ClientSession() as session:
@@ -542,8 +519,7 @@ class RegulatoryMonitor:
         return updates
     
     async def _check_rss_source(self, source: RegulatorySource, config: Dict[str, Any], category: ComplianceCategory) -> List[RegulatoryUpdate]:
-        """Check RSS-based regulatory source"""
-        updates = []
+        """Check RSS-based regulatory source"""        updates = []
         
         try:
             url = config["url"]
@@ -570,8 +546,7 @@ class RegulatoryMonitor:
         return updates
     
     async def _check_scrape_source(self, source: RegulatorySource, config: Dict[str, Any], category: ComplianceCategory) -> List[RegulatoryUpdate]:
-        """Check web scraping-based regulatory source"""
-        updates = []
+        """Check web scraping-based regulatory source"""        updates = []
         
         try:
             async with aiohttp.ClientSession() as session:
@@ -590,8 +565,7 @@ class RegulatoryMonitor:
         return updates
     
     async def _check_hash_source(self, source: RegulatorySource, config: Dict[str, Any], category: ComplianceCategory) -> List[RegulatoryUpdate]:
-        """Check platform terms using hash comparison"""
-        updates = []
+        """Check platform terms using hash comparison"""        updates = []
         
         try:
             if "urls" in config:
@@ -632,8 +606,7 @@ class RegulatoryMonitor:
         return updates
     
     async def _get_content_hash(self, url: str) -> str:
-        """Get SHA-256 hash of web page content"""
-        try:
+        """Get SHA-256 hash of web page content"""        try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
                     if response.status == 200:
@@ -645,8 +618,7 @@ class RegulatoryMonitor:
         return ""
     
     def _is_entry_relevant(self, entry: Any, category: ComplianceCategory, source_categories: List[str]) -> bool:
-        """Check if RSS entry is relevant to compliance category"""
-        # Basic keyword matching
+        """Check if RSS entry is relevant to compliance category"""        # Basic keyword matching
         category_keywords = {
             ComplianceCategory.CONTENT_PROTECTION: ["copyright", "dmca", "intellectual property", "piracy"],
             ComplianceCategory.DATA_PRIVACY: ["privacy", "data protection", "gdpr", "ccpa", "personal data"],
@@ -660,8 +632,7 @@ class RegulatoryMonitor:
         return any(keyword.lower() in entry_text for keyword in keywords)
     
     async def _parse_api_response(self, data: Dict[str, Any], source: RegulatorySource, category: ComplianceCategory) -> List[RegulatoryUpdate]:
-        """Parse API response into regulatory updates"""
-        updates = []
+        """Parse API response into regulatory updates"""        updates = []
         
         # Handle Federal Register API response format
         if "results" in data:
@@ -691,8 +662,7 @@ class RegulatoryMonitor:
         return updates
     
     async def _parse_rss_entry(self, entry: Any, source: RegulatorySource, category: ComplianceCategory) -> Optional[RegulatoryUpdate]:
-        """Parse RSS entry into regulatory update"""
-        try:
+        """Parse RSS entry into regulatory update"""        try:
             update = RegulatoryUpdate(
                 update_id=getattr(entry, 'id', str(uuid.uuid4())),
                 source=source,
@@ -716,8 +686,7 @@ class RegulatoryMonitor:
             return None
     
     async def _parse_scraped_content(self, html_content: str, source: RegulatorySource, category: ComplianceCategory) -> List[RegulatoryUpdate]:
-        """Parse scraped HTML content for regulatory updates"""
-        updates = []
+        """Parse scraped HTML content for regulatory updates"""        updates = []
         
         try:
             soup = BeautifulSoup(html_content, 'html.parser')
@@ -738,8 +707,7 @@ class RegulatoryMonitor:
         return updates
     
     async def _process_regulatory_updates(self, updates: List[RegulatoryUpdate], category: ComplianceCategory):
-        """Process and store regulatory updates"""
-        try:
+        """Process and store regulatory updates"""        try:
             for update in updates:
                 # Store update in database
                 await self._store_regulatory_update(update)
@@ -761,8 +729,7 @@ class RegulatoryMonitor:
             logger.error(f"Regulatory update processing failed: {e}")
     
     async def _store_regulatory_update(self, update: RegulatoryUpdate):
-        """Store regulatory update in database"""
-        try:
+        """Store regulatory update in database"""        try:
             with get_db_session() as db:
                 # Create database record
                 db_update = {
@@ -786,8 +753,7 @@ class RegulatoryMonitor:
             logger.error(f"Database storage failed for update {update.update_id}: {e}")
     
     def _get_monitoring_interval(self, category: ComplianceCategory) -> int:
-        """Get monitoring interval for category"""
-        category_intervals = {
+        """Get monitoring interval for category"""        category_intervals = {
             ComplianceCategory.CONTENT_PROTECTION: 3600,     # 1 hour
             ComplianceCategory.DATA_PRIVACY: 1800,          # 30 minutes
             ComplianceCategory.PLATFORM_COMPLIANCE: 7200,    # 2 hours
@@ -797,13 +763,11 @@ class RegulatoryMonitor:
         return category_intervals.get(category, 3600)  # Default 1 hour
     
     async def stop_monitoring(self, category: ComplianceCategory = None):
-        """
-        Stop regulatory monitoring for specified category or all
+        """        Stop regulatory monitoring for specified category or all
         
         Args:
             category: Category to stop monitoring (None for all)
-        """
-        if category is None:
+        """        if category is None:
             self.active_monitors.clear()
             logger.info("Stopped all regulatory monitoring")
         else:
@@ -812,10 +776,8 @@ class RegulatoryMonitor:
 
 
 class LawTracker:
-    """
-    Specialized system for tracking specific laws and regulations
-    """
-    
+    """    Specialized system for tracking specific laws and regulations
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.tracked_laws = {}
@@ -823,8 +785,7 @@ class LawTracker:
         self._initialize_law_tracking()
     
     def _initialize_law_tracking(self):
-        """Initialize law tracking system"""
-        try:
+        """Initialize law tracking system"""        try:
             # Define laws to track
             self.tracked_laws = {
                 "dmca": {
@@ -856,16 +817,14 @@ class LawTracker:
             logger.error(f"Law tracking initialization failed: {e}")
     
     async def track_law_changes(self, law_key: str) -> List[Dict[str, Any]]:
-        """
-        Track changes to specific law
+        """        Track changes to specific law
         
         Args:
             law_key: Key identifying the law to track
             
         Returns:
             List of detected changes
-        """
-        try:
+        """        try:
             if law_key not in self.tracked_laws:
                 raise ValueError(f"Unknown law key: {law_key}")
             
@@ -891,33 +850,28 @@ class LawTracker:
             return []
     
     async def _check_legislative_updates(self, law_config: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Check for legislative updates to tracked law"""
-        # Implementation for checking legislative databases
+        """Check for legislative updates to tracked law"""        # Implementation for checking legislative databases
         return []
     
     async def _check_enforcement_updates(self, law_config: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Check for enforcement guidance updates"""
-        # Implementation for checking regulatory agency updates
+        """Check for enforcement guidance updates"""        # Implementation for checking regulatory agency updates
         return []
     
     async def _check_judicial_interpretations(self, law_config: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Check for new court interpretations"""
-        # Implementation for checking court decisions
+        """Check for new court interpretations"""        # Implementation for checking court decisions
         return []
     PLATFORM_POLICIES = "platform_policies"
     CASE_LAW_UPDATES = "case_law_updates"
     TRADE_ASSOCIATIONS = "trade_associations"
 
 class MonitoringPriority(Enum):
-    """Monitoring priority levels"""
-    CRITICAL = "critical"    # Immediate attention required
+    """Monitoring priority levels"""    CRITICAL = "critical"    # Immediate attention required
     HIGH = "high"           # High priority updates
     MEDIUM = "medium"       # Standard monitoring
     LOW = "low"            # Background monitoring
 
 class LegalArea(Enum):
-    """Legal areas to monitor"""
-    INTELLECTUAL_PROPERTY = "intellectual_property"
+    """Legal areas to monitor"""    INTELLECTUAL_PROPERTY = "intellectual_property"
     DATA_PRIVACY = "data_privacy"
     CONTENT_REGULATION = "content_regulation"
     PLATFORM_LAW = "platform_law"
@@ -928,8 +882,7 @@ class LegalArea(Enum):
 
 @dataclass
 class MonitoringConfig:
-    """Regulatory monitoring configuration"""
-    user_id: str
+    """Regulatory monitoring configuration"""    user_id: str
     legal_areas: List[LegalArea]
     jurisdictions: List[str]
     priority_level: MonitoringPriority
@@ -939,8 +892,7 @@ class MonitoringConfig:
 
 @dataclass
 class RegulatoryAlert:
-    """Regulatory alert structure"""
-    alert_id: str
+    """Regulatory alert structure"""    alert_id: str
     source: RegulatorySource
     legal_area: LegalArea
     jurisdiction: str
@@ -954,16 +906,14 @@ class RegulatoryAlert:
     timestamp: datetime
 
 class RegulatoryMonitor:
-    """
-    Advanced Regulatory Monitoring System
+    """    Advanced Regulatory Monitoring System
     
     Provides comprehensive regulatory monitoring capabilities:
     - Real-time law change tracking
     - Automated compliance alerts
     - Impact assessment and recommendations
     - Multi-jurisdiction coverage
-    """
-    
+    """    
     def __init__(self):
         self.ai_processor = AIProcessor()
         self.notification_service = NotificationService()
@@ -984,16 +934,14 @@ class RegulatoryMonitor:
         self,
         config: MonitoringConfig
     ) -> str:
-        """
-        Start regulatory monitoring for user
+        """        Start regulatory monitoring for user
         
         Args:
             config: Monitoring configuration
             
         Returns:
             Monitoring session ID
-        """
-        try:
+        """        try:
             # Validate monitoring configuration
             await self._validate_monitoring_config(config)
             
@@ -1027,8 +975,7 @@ class RegulatoryMonitor:
         source: RegulatorySource,
         jurisdiction: str
     ) -> List[RegulatoryAlert]:
-        """
-        Process regulatory updates from specific source
+        """        Process regulatory updates from specific source
         
         Args:
             source: Regulatory information source
@@ -1036,8 +983,7 @@ class RegulatoryMonitor:
             
         Returns:
             List of processed regulatory alerts
-        """
-        try:
+        """        try:
             # Fetch updates from source
             raw_updates = await self._fetch_source_updates(source, jurisdiction)
             
@@ -1079,8 +1025,7 @@ class RegulatoryMonitor:
         legal_areas: List[LegalArea],
         jurisdictions: List[str]
     ) -> Dict[str, List[RegulatoryAlert]]:
-        """
-        Monitor law changes across multiple areas and jurisdictions
+        """        Monitor law changes across multiple areas and jurisdictions
         
         Args:
             legal_areas: Legal areas to monitor
@@ -1088,8 +1033,7 @@ class RegulatoryMonitor:
             
         Returns:
             Categorized law change alerts
-        """
-        try:
+        """        try:
             law_change_alerts = {}
             
             for legal_area in legal_areas:
@@ -1128,8 +1072,7 @@ class RegulatoryMonitor:
         user_id: str,
         content_portfolio: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """
-        Track compliance deadlines for content portfolio
+        """        Track compliance deadlines for content portfolio
         
         Args:
             user_id: User identifier
@@ -1137,8 +1080,7 @@ class RegulatoryMonitor:
             
         Returns:
             List of compliance deadlines and requirements
-        """
-        try:
+        """        try:
             # Analyze content portfolio for compliance requirements
             compliance_requirements = await self._analyze_compliance_requirements(
                 content_portfolio
@@ -1180,8 +1122,7 @@ class RegulatoryMonitor:
         jurisdiction: str,
         forecast_period: int = 365  # days
     ) -> Dict[str, Any]:
-        """
-        Generate compliance forecast for legal areas
+        """        Generate compliance forecast for legal areas
         
         Args:
             legal_areas: Legal areas for forecasting
@@ -1190,8 +1131,7 @@ class RegulatoryMonitor:
             
         Returns:
             Compliance forecast analysis
-        """
-        try:
+        """        try:
             # Analyze historical regulatory trends
             historical_trends = await self._analyze_historical_trends(
                 legal_areas, jurisdiction, forecast_period * 2
@@ -1244,8 +1184,7 @@ class RegulatoryMonitor:
 
     # Private helper methods
     def _initialize_monitoring_sources(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize regulatory monitoring sources"""
-        return {
+        """Initialize regulatory monitoring sources"""        return {
             RegulatorySource.FEDERAL_REGISTER.value: {
                 'url': 'https://www.federalregister.gov/api/v1/documents.json',
                 'method': 'api',
@@ -1274,8 +1213,7 @@ class RegulatoryMonitor:
         }
 
     async def _validate_monitoring_config(self, config: MonitoringConfig):
-        """Validate monitoring configuration"""
-        if not config.user_id:
+        """Validate monitoring configuration"""        if not config.user_id:
             raise MonitoringError("User ID required for monitoring")
         if not config.legal_areas:
             raise MonitoringError("At least one legal area required")
@@ -1287,8 +1225,7 @@ class RegulatoryMonitor:
         source: RegulatorySource,
         jurisdiction: str
     ) -> List[Dict[str, Any]]:
-        """Fetch updates from regulatory source"""
-        source_config = self.monitoring_sources.get(source.value)
+        """Fetch updates from regulatory source"""        source_config = self.monitoring_sources.get(source.value)
         if not source_config:
             return []
         
@@ -1314,8 +1251,7 @@ class RegulatoryMonitor:
         source: RegulatorySource,
         jurisdiction: str
     ) -> Optional[RegulatoryAlert]:
-        """Process single regulatory update"""
-        try:
+        """Process single regulatory update"""        try:
             # Extract update content
             title = update.get('title', '')
             content = update.get('content', update.get('summary', ''))
@@ -1361,9 +1297,7 @@ class RegulatoryMonitor:
         jurisdiction: str,
         forecast_period: int
     ) -> str:
-        """Build AI prompt for compliance forecasting"""
-        return f"""
-        Generate a compliance forecast for the following parameters:
+        """Build AI prompt for compliance forecasting"""        return f"""        Generate a compliance forecast for the following parameters:
         
         Legal Areas: {[area.value for area in legal_areas]}
         Jurisdiction: {jurisdiction}
@@ -1378,11 +1312,8 @@ class RegulatoryMonitor:
         - Impact assessments
         - Preparation recommendations
         - Confidence levels for predictions
-        """
-
-    def _extract_compliance_deadline(self, content: str) -> Optional[datetime]:
-        """Extract compliance deadline from regulatory content"""
-        import re
+        """    def _extract_compliance_deadline(self, content: str) -> Optional[datetime]:
+        """Extract compliance deadline from regulatory content"""        import re
         
         # Common deadline patterns
         deadline_patterns = [
@@ -1404,12 +1335,10 @@ class RegulatoryMonitor:
         return None
 
 class LawTracker:
-    """
-    Specialized Law Tracking System
+    """    Specialized Law Tracking System
     
     Advanced tracking of legal changes, court decisions, and regulatory updates
-    """
-    
+    """    
     def __init__(self):
         self.regulatory_monitor = RegulatoryMonitor()
         self.tracked_laws = {}
@@ -1420,8 +1349,7 @@ class LawTracker:
         law_identifier: str,
         jurisdiction: str
     ) -> Dict[str, Any]:
-        """Track evolution of specific law or regulation"""
-        
+        """Track evolution of specific law or regulation"""        
         try:
             # Initialize law tracking
             tracking_id = f"track_{hashlib.md5(f'{law_identifier}{jurisdiction}'.encode()).hexdigest()[:8]}"
@@ -1466,8 +1394,7 @@ class LawTracker:
         law_identifier: str,
         jurisdiction: str
     ) -> Dict[str, Any]:
-        """Collect historical information about law"""
-        
+        """Collect historical information about law"""        
         # This would integrate with legal databases and archives
         # For now, return structured placeholder
         return {

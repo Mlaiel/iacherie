@@ -1,5 +1,4 @@
-"""
-Collaboration Database Module - Index and Registry
+"""Collaboration Database Module - Index and Registry
 
 Central index for the enterprise collaboration system providing unified access
 to all collaboration components, database models, and management engines.
@@ -9,9 +8,7 @@ Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Micros
 
 Copyright © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use is strictly prohibited.
-"""
-
-from typing import Dict, List, Any, Optional, Type, Union
+"""from typing import Dict, List, Any, Optional, Type, Union
 import logging
 from datetime import datetime
 import asyncio
@@ -40,11 +37,9 @@ from . import (
 logger = logging.getLogger(__name__)
 
 class CollaborationModuleRegistry:
-    """
-    Central registry for all collaboration module components.
+    """    Central registry for all collaboration module components.
     Provides unified access and management of collaboration features.
-    """
-    
+    """    
     def __init__(self, db_session: Session, redis_client: Optional[redis.Redis] = None):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -61,8 +56,7 @@ class CollaborationModuleRegistry:
         self.logger.info("Collaboration Module Registry initialized successfully")
     
     def _initialize_engines(self):
-        """Initialize all collaboration engines"""
-        try:
+        """Initialize all collaboration engines"""        try:
             # Core engines
             self._engines = {
                 'project_manager': ProjectDatabaseManager(self.db_session, self.redis_client),
@@ -88,37 +82,31 @@ class CollaborationModuleRegistry:
             raise
     
     def get_engine(self, engine_name: str) -> Any:
-        """
-        Get a specific collaboration engine.
+        """        Get a specific collaboration engine.
         
         Args:
             engine_name: Name of the engine to retrieve
             
         Returns:
             Engine instance
-        """
-        if engine_name not in self._engines:
+        """        if engine_name not in self._engines:
             raise ValueError(f"Engine not found: {engine_name}")
         
         return self._engines[engine_name]
     
     def get_available_engines(self) -> List[str]:
-        """
-        Get list of available collaboration engines.
+        """        Get list of available collaboration engines.
         
         Returns:
             List of engine names
-        """
-        return list(self._engines.keys())
+        """        return list(self._engines.keys())
     
     def get_module_capabilities(self) -> Dict[str, Any]:
-        """
-        Get comprehensive module capabilities overview.
+        """        Get comprehensive module capabilities overview.
         
         Returns:
             Module capabilities dictionary
-        """
-        return {
+        """        return {
             'module_info': self._module_info,
             'statistics': self._statistics,
             'features': COLLABORATION_FEATURES,
@@ -131,13 +119,11 @@ class CollaborationModuleRegistry:
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """
-        Perform comprehensive health check of all collaboration components.
+        """        Perform comprehensive health check of all collaboration components.
         
         Returns:
             Health check results
-        """
-        try:
+        """        try:
             health_status = {
                 'overall_status': 'healthy',
                 'timestamp': datetime.utcnow().isoformat(),
@@ -200,13 +186,11 @@ class CollaborationModuleRegistry:
             }
     
     async def performance_benchmark(self) -> Dict[str, Any]:
-        """
-        Run performance benchmarks on collaboration components.
+        """        Run performance benchmarks on collaboration components.
         
         Returns:
             Performance benchmark results
-        """
-        try:
+        """        try:
             benchmark_results = {
                 'timestamp': datetime.utcnow().isoformat(),
                 'overall_performance': 'optimal',
@@ -267,26 +251,22 @@ class CollaborationModuleRegistry:
             }
 
 class CollaborationModuleManager:
-    """
-    High-level manager for the entire collaboration module.
+    """    High-level manager for the entire collaboration module.
     Provides simplified interface for common collaboration operations.
-    """
-    
+    """    
     def __init__(self, db_session: Session, redis_client: Optional[redis.Redis] = None):
         self.registry = CollaborationModuleRegistry(db_session, redis_client)
         self.logger = logging.getLogger(__name__)
     
     async def create_collaboration_project(self, project_data: Dict[str, Any]) -> Any:
-        """
-        Create a new collaboration project with full setup.
+        """        Create a new collaboration project with full setup.
         
         Args:
             project_data: Project configuration data
             
         Returns:
             Created project instance
-        """
-        try:
+        """        try:
             # Get project manager engine
             project_manager = self.registry.get_engine('project_manager')
             
@@ -309,8 +289,7 @@ class CollaborationModuleManager:
             raise
     
     async def find_and_invite_collaborators(self, project_id: str, matching_criteria: Dict[str, Any]) -> List[Any]:
-        """
-        Find and invite suitable collaborators for a project.
+        """        Find and invite suitable collaborators for a project.
         
         Args:
             project_id: Project ID
@@ -318,8 +297,7 @@ class CollaborationModuleManager:
             
         Returns:
             List of invitation results
-        """
-        try:
+        """        try:
             # Find potential collaborators
             matching_engine = self.registry.get_engine('creator_matching')
             matches = await matching_engine.find_matches(matching_criteria)
@@ -343,8 +321,7 @@ class CollaborationModuleManager:
             raise
     
     async def setup_content_workflow(self, project_id: str, workflow_config: Dict[str, Any]) -> Any:
-        """
-        Setup automated content workflow for a project.
+        """        Setup automated content workflow for a project.
         
         Args:
             project_id: Project ID
@@ -352,8 +329,7 @@ class CollaborationModuleManager:
             
         Returns:
             Created workflow instance
-        """
-        try:
+        """        try:
             workflow_engine = self.registry.get_engine('workflow')
             
             # Create content workflow
@@ -374,16 +350,14 @@ class CollaborationModuleManager:
             raise
     
     async def get_project_insights(self, project_id: str) -> Dict[str, Any]:
-        """
-        Get comprehensive project insights and recommendations.
+        """        Get comprehensive project insights and recommendations.
         
         Args:
             project_id: Project ID
             
         Returns:
             Project insights data
-        """
-        try:
+        """        try:
             insights = {}
             
             # Performance analytics
@@ -410,8 +384,7 @@ class CollaborationModuleManager:
 
 # Convenience functions for easy module access
 def get_collaboration_registry(db_session: Session, redis_client: Optional[redis.Redis] = None) -> CollaborationModuleRegistry:
-    """
-    Get collaboration module registry instance.
+    """    Get collaboration module registry instance.
     
     Args:
         db_session: Database session
@@ -419,12 +392,10 @@ def get_collaboration_registry(db_session: Session, redis_client: Optional[redis
         
     Returns:
         Collaboration module registry
-    """
-    return CollaborationModuleRegistry(db_session, redis_client)
+    """    return CollaborationModuleRegistry(db_session, redis_client)
 
 def get_collaboration_manager(db_session: Session, redis_client: Optional[redis.Redis] = None) -> CollaborationModuleManager:
-    """
-    Get collaboration module manager instance.
+    """    Get collaboration module manager instance.
     
     Args:
         db_session: Database session
@@ -432,8 +403,7 @@ def get_collaboration_manager(db_session: Session, redis_client: Optional[redis.
         
     Returns:
         Collaboration module manager
-    """
-    return CollaborationModuleManager(db_session, redis_client)
+    """    return CollaborationModuleManager(db_session, redis_client)
 
 # Module exports
 __all__ = [

@@ -1,5 +1,4 @@
-"""
-Interaction Analytics Engine for IA Influencer Agent Platform
+"""Interaction Analytics Engine for IA Influencer Agent Platform
 Advanced user interaction tracking, pattern analysis, and behavioral insights.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,9 +9,7 @@ copying, distribution, or reproduction is strictly prohibited and will be
 prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -31,8 +28,7 @@ from sklearn.preprocessing import StandardScaler
 
 
 class InteractionType(Enum):
-    """Types of user interactions to track."""
-    MESSAGE_SENT = "message_sent"
+    """Types of user interactions to track."""    MESSAGE_SENT = "message_sent"
     MESSAGE_RECEIVED = "message_received"
     VOICE_INPUT = "voice_input"
     BUTTON_CLICK = "button_click"
@@ -50,8 +46,7 @@ class InteractionType(Enum):
 
 
 class UserSegment(Enum):
-    """User behavior segments."""
-    POWER_USER = "power_user"
+    """User behavior segments."""    POWER_USER = "power_user"
     CASUAL_USER = "casual_user"
     NEW_USER = "new_user"
     CHURNING_USER = "churning_user"
@@ -63,8 +58,7 @@ class UserSegment(Enum):
 
 @dataclass
 class InteractionEvent:
-    """Individual interaction event data structure."""
-    event_id: str
+    """Individual interaction event data structure."""    event_id: str
     user_id: str
     session_id: str
     interaction_type: InteractionType
@@ -80,8 +74,7 @@ class InteractionEvent:
 
 @dataclass
 class UserInteractionProfile:
-    """Comprehensive user interaction profile."""
-    user_id: str
+    """Comprehensive user interaction profile."""    user_id: str
     total_interactions: int
     interaction_frequency: float
     preferred_interaction_types: List[InteractionType]
@@ -97,8 +90,7 @@ class UserInteractionProfile:
 
 @dataclass
 class InteractionFlow:
-    """User interaction flow analysis."""
-    flow_id: str
+    """User interaction flow analysis."""    flow_id: str
     user_id: str
     interaction_sequence: List[InteractionType]
     flow_duration: float
@@ -109,11 +101,9 @@ class InteractionFlow:
 
 
 class InteractionAnalytics:
-    """
-    Enterprise-grade interaction analytics engine for comprehensive
+    """    Enterprise-grade interaction analytics engine for comprehensive
     user behavior analysis, pattern recognition, and UX optimization.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession):
         self.db_session = db_session
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -152,8 +142,7 @@ class InteractionAnalytics:
         self.behavior_clusters = None
     
     async def track_interaction(self, interaction_event: InteractionEvent) -> bool:
-        """Track a user interaction event."""
-        try:
+        """Track a user interaction event."""        try:
             # Validate interaction event
             if not await self._validate_interaction_event(interaction_event):
                 return False
@@ -180,8 +169,7 @@ class InteractionAnalytics:
             return False
     
     async def analyze_user_behavior_patterns(self, user_id: str, time_period: int = 30) -> Dict[str, Any]:
-        """Analyze comprehensive user behavior patterns."""
-        try:
+        """Analyze comprehensive user behavior patterns."""        try:
             # Get user interactions for the period
             user_interactions = await self._get_user_interactions(user_id, time_period)
             
@@ -232,8 +220,7 @@ class InteractionAnalytics:
             return {}
     
     async def analyze_interaction_flows(self, time_period: int = 7) -> Dict[str, Any]:
-        """Analyze user interaction flows and identify optimization opportunities."""
-        try:
+        """Analyze user interaction flows and identify optimization opportunities."""        try:
             # Get interaction data for the period
             interactions = await self._get_interactions_by_period(time_period)
             
@@ -273,8 +260,7 @@ class InteractionAnalytics:
             return {}
     
     async def segment_users_by_behavior(self) -> Dict[str, Any]:
-        """Segment users based on behavioral patterns using machine learning."""
-        try:
+        """Segment users based on behavioral patterns using machine learning."""        try:
             # Get user behavior data
             users_data = await self._get_all_users_behavior_data()
             
@@ -315,8 +301,7 @@ class InteractionAnalytics:
             return {}
     
     async def generate_ux_optimization_report(self) -> Dict[str, Any]:
-        """Generate comprehensive UX optimization report based on interaction analytics."""
-        try:
+        """Generate comprehensive UX optimization report based on interaction analytics."""        try:
             # Analyze interaction efficiency
             efficiency_analysis = await self._analyze_interaction_efficiency()
             
@@ -358,8 +343,7 @@ class InteractionAnalytics:
             return {}
     
     async def analyze_engagement_drivers(self, time_period: int = 30) -> Dict[str, Any]:
-        """Analyze factors that drive user engagement."""
-        try:
+        """Analyze factors that drive user engagement."""        try:
             # Get engagement data
             engagement_data = await self._get_engagement_data(time_period)
             
@@ -402,8 +386,7 @@ class InteractionAnalytics:
     # Private helper methods
     
     async def _validate_interaction_event(self, event: InteractionEvent) -> bool:
-        """Validate interaction event data."""
-        try:
+        """Validate interaction event data."""        try:
             # Check required fields
             if not all([event.event_id, event.user_id, event.session_id, event.interaction_type]):
                 return False
@@ -423,8 +406,7 @@ class InteractionAnalytics:
             return False
     
     async def _update_session_data(self, interaction_event: InteractionEvent):
-        """Update session data with new interaction."""
-        try:
+        """Update session data with new interaction."""        try:
             session_id = interaction_event.session_id
             
             if session_id not in self.session_data:
@@ -448,8 +430,7 @@ class InteractionAnalytics:
             self.logger.error(f"Error updating session data: {str(e)}")
     
     async def _analyze_interaction_patterns(self, interactions: List[InteractionEvent]) -> Dict[str, Any]:
-        """Analyze patterns in user interactions."""
-        try:
+        """Analyze patterns in user interactions."""        try:
             # Count interaction types
             interaction_counts = Counter([i.interaction_type for i in interactions])
             
@@ -483,8 +464,7 @@ class InteractionAnalytics:
             return {}
     
     async def _analyze_temporal_patterns(self, interactions: List[InteractionEvent]) -> Dict[str, Any]:
-        """Analyze temporal patterns in user interactions."""
-        try:
+        """Analyze temporal patterns in user interactions."""        try:
             # Group interactions by hour of day
             hourly_distribution = defaultdict(int)
             daily_distribution = defaultdict(int)
@@ -516,8 +496,7 @@ class InteractionAnalytics:
             return {}
     
     async def _calculate_engagement_metrics(self, interactions: List[InteractionEvent]) -> Dict[str, float]:
-        """Calculate user engagement metrics."""
-        try:
+        """Calculate user engagement metrics."""        try:
             if not interactions:
                 return {}
             
@@ -553,8 +532,7 @@ class InteractionAnalytics:
             return {}
     
     def _categorize_engagement_level(self, engagement_score: float) -> str:
-        """Categorize engagement level based on score."""
-        if engagement_score >= self.engagement_thresholds['high']:
+        """Categorize engagement level based on score."""        if engagement_score >= self.engagement_thresholds['high']:
             return "high"
         elif engagement_score >= self.engagement_thresholds['medium']:
             return "medium"
@@ -562,8 +540,7 @@ class InteractionAnalytics:
             return "low"
     
     async def _classify_user_segment(self, interactions: List[InteractionEvent]) -> UserSegment:
-        """Classify user into behavioral segment."""
-        try:
+        """Classify user into behavioral segment."""        try:
             if not interactions:
                 return UserSegment.NEW_USER
             

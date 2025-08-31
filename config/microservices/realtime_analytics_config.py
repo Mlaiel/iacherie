@@ -1,5 +1,4 @@
-"""
-Real-time Analytics Configuration for IA-Influencer Agent Platform
+"""Real-time Analytics Configuration for IA-Influencer Agent Platform
 ================================================================
 
 Professional real-time analytics and metrics collection configuration
@@ -15,9 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-from dataclasses import dataclass, field
+"""from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union
 from enum import Enum
 import asyncio
@@ -28,8 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics collected"""
-    COUNTER = "counter"
+    """Types of metrics collected"""    COUNTER = "counter"
     GAUGE = "gauge" 
     HISTOGRAM = "histogram"
     SUMMARY = "summary"
@@ -37,8 +33,7 @@ class MetricType(Enum):
 
 
 class AnalyticsScope(Enum):
-    """Analytics data scope"""
-    USER = "user"
+    """Analytics data scope"""    USER = "user"
     CONTENT = "content"
     PLATFORM = "platform"
     SYSTEM = "system"
@@ -47,8 +42,7 @@ class AnalyticsScope(Enum):
 
 
 class DataRetentionPeriod(Enum):
-    """Data retention periods"""
-    REAL_TIME = "1h"      # 1 hour
+    """Data retention periods"""    REAL_TIME = "1h"      # 1 hour
     SHORT_TERM = "24h"    # 24 hours  
     MEDIUM_TERM = "7d"    # 7 days
     LONG_TERM = "30d"     # 30 days
@@ -57,8 +51,7 @@ class DataRetentionPeriod(Enum):
 
 @dataclass
 class MetricDefinition:
-    """Metric definition configuration"""
-    
+    """Metric definition configuration"""    
     name: str
     metric_type: MetricType
     scope: AnalyticsScope
@@ -83,8 +76,7 @@ class MetricDefinition:
 
 @dataclass
 class AnalyticsEngineConfig:
-    """Real-time analytics engine configuration"""
-    
+    """Real-time analytics engine configuration"""    
     # Service identification
     service_name: str = "analytics-engine"
     service_version: str = "2.2.0"
@@ -285,18 +277,15 @@ CORE_METRICS = {
 
 
 class AnalyticsEventProcessor:
-    """Real-time analytics event processor"""
-    
+    """Real-time analytics event processor"""    
     def __init__(self, config: AnalyticsEngineConfig):
-        """Initialize event processor"""
-        self.config = config
+        """Initialize event processor"""        self.config = config
         self.metrics_definitions = CORE_METRICS
         self.event_buffer = []
         self.logger = logging.getLogger(__name__)
     
     async def process_event(self, event: Dict[str, Any]) -> bool:
-        """Process analytics event"""
-        try:
+        """Process analytics event"""        try:
             # Validate event structure
             if not self._validate_event(event):
                 return False
@@ -322,13 +311,11 @@ class AnalyticsEventProcessor:
             return False
     
     def _validate_event(self, event: Dict[str, Any]) -> bool:
-        """Validate analytics event structure"""
-        required_fields = ["metric_name", "value", "timestamp"]
+        """Validate analytics event structure"""        required_fields = ["metric_name", "value", "timestamp"]
         return all(field in event for field in required_fields)
     
     async def _anonymize_event(self, event: Dict[str, Any]) -> Dict[str, Any]:
-        """Anonymize event data for privacy compliance"""
-        # Implementation would include PII removal/hashing
+        """Anonymize event data for privacy compliance"""        # Implementation would include PII removal/hashing
         if "user_id" in event:
             # Hash user ID for privacy
             event["user_id_hash"] = hash(event["user_id"])
@@ -341,8 +328,7 @@ class AnalyticsEventProcessor:
         return event
     
     async def _process_batch(self) -> None:
-        """Process buffered events in batch"""
-        if not self.event_buffer:
+        """Process buffered events in batch"""        if not self.event_buffer:
             return
         
         batch = self.event_buffer.copy()
@@ -363,8 +349,7 @@ class AnalyticsEventProcessor:
             await self._process_metric_batch(metric_name, events)
     
     async def _process_metric_batch(self, metric_name: str, events: List[Dict]) -> None:
-        """Process batch of events for specific metric"""
-        if metric_name not in self.metrics_definitions:
+        """Process batch of events for specific metric"""        if metric_name not in self.metrics_definitions:
             self.logger.warning(f"Unknown metric: {metric_name}")
             return
         
@@ -386,13 +371,11 @@ class AnalyticsEventProcessor:
             await self._store_histogram(metric_name, values, metric_def)
     
     async def _store_metric(self, metric_name: str, value: float, metric_def: MetricDefinition) -> None:
-        """Store processed metric to backend storage"""
-        # This would integrate with InfluxDB, Prometheus, or other time-series DB
+        """Store processed metric to backend storage"""        # This would integrate with InfluxDB, Prometheus, or other time-series DB
         self.logger.info(f"Storing metric {metric_name}: {value}")
     
     async def _store_histogram(self, metric_name: str, values: List[float], metric_def: MetricDefinition) -> None:
-        """Store histogram data"""
-        # Calculate percentiles and statistics
+        """Store histogram data"""        # Calculate percentiles and statistics
         if values:
             import statistics
             avg_value = statistics.mean(values)
@@ -402,18 +385,15 @@ class AnalyticsEventProcessor:
 
 
 class RealTimeAnalyticsOrchestrator:
-    """Real-time analytics orchestrator"""
-    
+    """Real-time analytics orchestrator"""    
     def __init__(self, config: AnalyticsEngineConfig = None):
-        """Initialize analytics orchestrator"""
-        self.config = config or AnalyticsEngineConfig()
+        """Initialize analytics orchestrator"""        self.config = config or AnalyticsEngineConfig()
         self.event_processor = AnalyticsEventProcessor(self.config)
         self.active_streams = {}
         self.logger = logging.getLogger(__name__)
     
     async def initialize_analytics(self) -> bool:
-        """Initialize analytics engine"""
-        try:
+        """Initialize analytics engine"""        try:
             self.logger.info("Initializing real-time analytics engine...")
             
             # Test database connections
@@ -435,8 +415,7 @@ class RealTimeAnalyticsOrchestrator:
             return False
     
     async def _test_connections(self) -> None:
-        """Test connections to analytics backends"""
-        # InfluxDB connection test
+        """Test connections to analytics backends"""        # InfluxDB connection test
         self.logger.info(f"Testing InfluxDB connection: {self.config.influxdb_host}:{self.config.influxdb_port}")
         
         # Redis connection test
@@ -446,15 +425,13 @@ class RealTimeAnalyticsOrchestrator:
         self.logger.info(f"Testing Elasticsearch connection: {self.config.elasticsearch_host}:{self.config.elasticsearch_port}")
     
     async def _start_streaming(self) -> None:
-        """Start real-time event streaming"""
-        self.logger.info("Starting real-time analytics streaming...")
+        """Start real-time event streaming"""        self.logger.info("Starting real-time analytics streaming...")
         
         # Start background processing task
         asyncio.create_task(self._background_processing())
     
     async def _background_processing(self) -> None:
-        """Background processing task for analytics"""
-        while True:
+        """Background processing task for analytics"""        while True:
             try:
                 # Process events every interval
                 await asyncio.sleep(self.config.processing_interval)
@@ -467,8 +444,7 @@ class RealTimeAnalyticsOrchestrator:
                 self.logger.error(f"Background processing error: {e}")
     
     async def _initialize_dashboards(self) -> None:
-        """Initialize live analytics dashboards"""
-        self.logger.info("Initializing live analytics dashboards...")
+        """Initialize live analytics dashboards"""        self.logger.info("Initializing live analytics dashboards...")
         
         # Dashboard configuration would be set up here
         dashboard_configs = [
@@ -482,8 +458,7 @@ class RealTimeAnalyticsOrchestrator:
             self.logger.info(f"Setting up {dashboard} dashboard")
     
     async def collect_metric(self, metric_name: str, value: float, dimensions: Dict[str, str] = None) -> bool:
-        """Collect a metric value"""
-        event = {
+        """Collect a metric value"""        event = {
             "metric_name": metric_name,
             "value": value,
             "timestamp": datetime.utcnow().isoformat(),
@@ -493,8 +468,7 @@ class RealTimeAnalyticsOrchestrator:
         return await self.event_processor.process_event(event)
     
     async def get_analytics_health(self) -> Dict[str, Any]:
-        """Get analytics system health"""
-        return {
+        """Get analytics system health"""        return {
             "service_status": "running",
             "event_buffer_size": len(self.event_processor.event_buffer),
             "active_streams": len(self.active_streams),
@@ -509,8 +483,7 @@ class RealTimeAnalyticsOrchestrator:
         }
     
     def get_configuration_summary(self) -> Dict[str, Any]:
-        """Get analytics configuration summary"""
-        return {
+        """Get analytics configuration summary"""        return {
             "service_info": {
                 "name": self.config.service_name,
                 "version": self.config.service_version,
@@ -548,23 +521,19 @@ analytics_orchestrator = RealTimeAnalyticsOrchestrator()
 
 # Convenience functions
 async def initialize_analytics_engine() -> bool:
-    """Initialize analytics engine"""
-    return await analytics_orchestrator.initialize_analytics()
+    """Initialize analytics engine"""    return await analytics_orchestrator.initialize_analytics()
 
 
 async def collect_analytics_metric(metric_name: str, value: float, dimensions: Dict[str, str] = None) -> bool:
-    """Collect analytics metric"""
-    return await analytics_orchestrator.collect_metric(metric_name, value, dimensions)
+    """Collect analytics metric"""    return await analytics_orchestrator.collect_metric(metric_name, value, dimensions)
 
 
 async def get_analytics_health() -> Dict[str, Any]:
-    """Get analytics health status"""
-    return await analytics_orchestrator.get_analytics_health()
+    """Get analytics health status"""    return await analytics_orchestrator.get_analytics_health()
 
 
 def get_analytics_summary() -> Dict[str, Any]:
-    """Get analytics configuration summary"""
-    return analytics_orchestrator.get_configuration_summary()
+    """Get analytics configuration summary"""    return analytics_orchestrator.get_configuration_summary()
 
 
 # Export main configuration instance

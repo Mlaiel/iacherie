@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Advanced Real-Time Alerts Tests - Industrial Grade
+"""Advanced Real-Time Alerts Tests - Industrial Grade
 
 Comprehensive, enterprise-level test suite for real-time alerting system.
 Tests alert generation, notification delivery, escalation chains, and alert management.
@@ -27,9 +23,7 @@ WARNING: This code is the intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use of this code without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted to the full
 extent of the law.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -68,12 +62,10 @@ from .fixtures import (
 
 
 class TestRealTimeAlertsCore:
-    """Core functionality tests for real-time alerting system."""
-    
+    """Core functionality tests for real-time alerting system."""    
     @pytest.fixture
     async def alerts_system(self):
-        """Create and initialize real-time alerts system."""
-        system = RealTimeAlerts(
+        """Create and initialize real-time alerts system."""        system = RealTimeAlerts(
             config={
                 "alert_processing_enabled": True,
                 "notification_delivery_enabled": True,
@@ -91,12 +83,10 @@ class TestRealTimeAlertsCore:
     
     @pytest.fixture
     def sample_alert_rules(self, alert_rules):
-        """Get sample alert rules for testing."""
-        return alert_rules["production_rules"]
+        """Get sample alert rules for testing."""        return alert_rules["production_rules"]
     
     async def test_alerts_system_initialization(self, alerts_system):
-        """Test comprehensive initialization of alerting system."""
-        # Verify core components
+        """Test comprehensive initialization of alerting system."""        # Verify core components
         assert alerts_system is not None
         assert alerts_system.is_initialized
         assert alerts_system.alert_manager is not None
@@ -137,8 +127,7 @@ class TestRealTimeAlertsCore:
         assert all(channel in available_channels for channel in expected_channels)
     
     async def test_alert_rule_management(self, alerts_system, sample_alert_rules):
-        """Test alert rule creation, management, and validation."""
-        # Test alert rule creation
+        """Test alert rule creation, management, and validation."""        # Test alert rule creation
         rule_creation_scenarios = [
             {
                 "rule_name": "high_cpu_usage",
@@ -239,8 +228,7 @@ class TestRealTimeAlertsCore:
         assert deleted_rule is None or deleted_rule.is_active is False
     
     async def test_alert_generation_and_processing(self, alerts_system):
-        """Test alert generation, processing, and lifecycle management."""
-        # Create test alert rules
+        """Test alert generation, processing, and lifecycle management."""        # Create test alert rules
         test_rules = [
             {
                 "rule_name": "test_performance_alert",
@@ -353,12 +341,10 @@ class TestRealTimeAlertsCore:
 
 @pytest.mark.performance
 class TestAlertingPerformance:
-    """Performance tests for real-time alerting system."""
-    
+    """Performance tests for real-time alerting system."""    
     @pytest.fixture
     async def performance_alerts_system(self):
-        """Create high-performance alerting system."""
-        system = RealTimeAlerts(
+        """Create high-performance alerting system."""        system = RealTimeAlerts(
             config={
                 "high_performance_mode": True,
                 "parallel_processing": True,
@@ -372,8 +358,7 @@ class TestAlertingPerformance:
         await system.shutdown()
     
     async def test_high_volume_alert_processing(self, performance_alerts_system):
-        """Test alert processing under high volume conditions."""
-        # Generate large number of alerts
+        """Test alert processing under high volume conditions."""        # Generate large number of alerts
         alert_count = 1000
         alerts = []
         
@@ -457,20 +442,17 @@ from ai.monitoring.real_time_alerts import (
 from .utils import TestDataGenerator, PerformanceValidator
 
 class TestRealTimeAlerts:
-    """Test suite for Real-Time Alerts system."""
-    
+    """Test suite for Real-Time Alerts system."""    
     @pytest.fixture
     async def alert_system(self):
-        """Create Real-Time Alerts instance."""
-        alerts = RealTimeAlerts()
+        """Create Real-Time Alerts instance."""        alerts = RealTimeAlerts()
         await alerts.initialize()
         yield alerts
         await alerts.shutdown()
     
     @pytest.fixture
     def alert_test_config(self):
-        """Alert system configuration for testing."""
-        return {
+        """Alert system configuration for testing."""        return {
             "notification_channels": {
                 "email": {
                     "smtp_server": "smtp.test.com",
@@ -551,8 +533,7 @@ class TestRealTimeAlerts:
         }
     
     async def test_alert_system_initialization(self, alert_system):
-        """Test proper initialization of alert system."""
-        assert alert_system is not None
+        """Test proper initialization of alert system."""        assert alert_system is not None
         assert alert_system.is_initialized
         assert alert_system.rule_engine is not None
         assert alert_system.notification_manager is not None
@@ -560,8 +541,7 @@ class TestRealTimeAlerts:
         assert alert_system.suppression_manager is not None
     
     async def test_alert_rule_configuration(self, alert_system, alert_test_config):
-        """Test alert rule configuration and validation."""
-        # Configure alert rules
+        """Test alert rule configuration and validation."""        # Configure alert rules
         for rule_config in alert_test_config["alert_rules"]:
             rule = AlertRule(
                 name=rule_config["name"],
@@ -615,8 +595,7 @@ class TestRealTimeAlerts:
         assert len(validation_result["errors"]) > 0
     
     async def test_alert_triggering_and_evaluation(self, alert_system, alert_test_config):
-        """Test alert triggering based on metric evaluation."""
-        # Configure alert rules
+        """Test alert triggering based on metric evaluation."""        # Configure alert rules
         await alert_system.configure_alert_rules(alert_test_config["alert_rules"])
         
         # Track triggered alerts
@@ -684,8 +663,7 @@ class TestRealTimeAlerts:
         assert len(error_alerts) >= 1  # AI model error rate
     
     async def test_notification_delivery(self, alert_system, alert_test_config):
-        """Test alert notification delivery through various channels."""
-        # Configure notification channels
+        """Test alert notification delivery through various channels."""        # Configure notification channels
         await alert_system.configure_notification_channels(
             alert_test_config["notification_channels"]
         )
@@ -786,8 +764,7 @@ class TestRealTimeAlerts:
         assert len(sent_notifications) >= 3
     
     async def test_alert_escalation(self, alert_system, alert_test_config):
-        """Test alert escalation procedures."""
-        # Configure escalation rules
+        """Test alert escalation procedures."""        # Configure escalation rules
         await alert_system.configure_escalation_rules(
             alert_test_config["escalation_rules"]
         )
@@ -883,8 +860,7 @@ class TestRealTimeAlerts:
         assert escalation_needed == False  # Should not escalate acknowledged alerts
     
     async def test_alert_suppression_and_filtering(self, alert_system, alert_test_config):
-        """Test alert suppression and intelligent filtering."""
-        # Configure suppression rules
+        """Test alert suppression and intelligent filtering."""        # Configure suppression rules
         await alert_system.configure_suppression_rules(
             alert_test_config["suppression_rules"]
         )
@@ -984,8 +960,7 @@ class TestRealTimeAlerts:
         assert sent_frequency_count <= 3
     
     async def test_intelligent_alert_correlation(self, alert_system):
-        """Test intelligent alert correlation and root cause analysis."""
-        # Configure correlation rules
+        """Test intelligent alert correlation and root cause analysis."""        # Configure correlation rules
         correlation_config = {
             "correlation_rules": [
                 {
@@ -1078,8 +1053,7 @@ class TestRealTimeAlerts:
         assert primary_root_cause["rule_name"] == "database_connection_failure"
     
     async def test_alert_analytics_and_reporting(self, alert_system):
-        """Test alert analytics and reporting capabilities."""
-        # Generate historical alert data
+        """Test alert analytics and reporting capabilities."""        # Generate historical alert data
         historical_alerts = TestDataGenerator.generate_alert_scenarios()
         
         # Record historical alerts
@@ -1144,8 +1118,7 @@ class TestRealTimeAlerts:
         assert "recommendations" in report
     
     async def test_alert_system_performance(self, alert_system):
-        """Test alert system performance and scalability."""
-        # Performance test with high alert volume
+        """Test alert system performance and scalability."""        # Performance test with high alert volume
         start_time = datetime.utcnow()
         
         # Generate high volume of alerts

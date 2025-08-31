@@ -1,14 +1,11 @@
-"""
-Content SEO Optimizer - AI-Powered Content Optimization
+"""Content SEO Optimizer - AI-Powered Content Optimization
 
 This module provides intelligent content optimization for SEO including
 readability analysis, keyword density optimization, and content structure enhancement.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import re
+"""import re
 import logging
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
@@ -18,16 +15,14 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationLevel(Enum):
-    """SEO optimization levels"""
-    BASIC = "basic"
+    """SEO optimization levels"""    BASIC = "basic"
     ADVANCED = "advanced"
     EXPERT = "expert"
 
 
 @dataclass
 class ContentAnalysis:
-    """Content analysis results"""
-    readability_score: float
+    """Content analysis results"""    readability_score: float
     keyword_density: Dict[str, float]
     content_structure: Dict[str, Any]
     seo_recommendations: List[str]
@@ -36,8 +31,7 @@ class ContentAnalysis:
 
 @dataclass
 class SEOOptimizationResult:
-    """SEO optimization result"""
-    original_content: str
+    """SEO optimization result"""    original_content: str
     optimized_content: str
     analysis: ContentAnalysis
     improvements: List[str]
@@ -45,19 +39,14 @@ class SEOOptimizationResult:
 
 
 class ContentSEOOptimizer:
-    """
-    AI-powered content SEO optimizer that analyzes and improves content
+    """    AI-powered content SEO optimizer that analyzes and improves content
     for better search engine optimization.
-    """
-
-    def __init__(self, optimization_level: OptimizationLevel = OptimizationLevel.ADVANCED):
-        """
-        Initialize the content SEO optimizer.
+    """    def __init__(self, optimization_level: OptimizationLevel = OptimizationLevel.ADVANCED):
+        """        Initialize the content SEO optimizer.
         
         Args:
             optimization_level: Level of optimization to apply
-        """
-        self.optimization_level = optimization_level
+        """        self.optimization_level = optimization_level
         self.min_keyword_density = 0.5
         self.max_keyword_density = 3.0
         self.target_readability_score = 60.0
@@ -69,8 +58,7 @@ class ContentSEOOptimizer:
         platform_type: str = "general",
         language: str = "en"
     ) -> SEOOptimizationResult:
-        """
-        Optimize content for SEO.
+        """        Optimize content for SEO.
         
         Args:
             content: Original content to optimize
@@ -80,8 +68,7 @@ class ContentSEOOptimizer:
             
         Returns:
             SEOOptimizationResult with optimized content and analysis
-        """
-        try:
+        """        try:
             logger.info(f"Starting SEO optimization for {platform_type} content")
             
             # Analyze original content
@@ -118,8 +105,7 @@ class ContentSEOOptimizer:
         target_keywords: List[str], 
         language: str
     ) -> ContentAnalysis:
-        """Analyze content for SEO metrics."""
-        
+        """Analyze content for SEO metrics."""        
         # Calculate readability score (simplified Flesch reading ease)
         readability_score = self._calculate_readability(content)
         
@@ -148,8 +134,7 @@ class ContentSEOOptimizer:
         )
 
     def _calculate_readability(self, content: str) -> float:
-        """Calculate readability score using simplified Flesch reading ease."""
-        sentences = len(re.findall(r'[.!?]+', content))
+        """Calculate readability score using simplified Flesch reading ease."""        sentences = len(re.findall(r'[.!?]+', content))
         words = len(content.split())
         syllables = self._count_syllables(content)
         
@@ -164,8 +149,7 @@ class ContentSEOOptimizer:
         return max(0.0, min(100.0, score))
 
     def _count_syllables(self, text: str) -> int:
-        """Count syllables in text (simplified approach)."""
-        text = text.lower()
+        """Count syllables in text (simplified approach)."""        text = text.lower()
         syllables = 0
         vowels = 'aeiouy'
         
@@ -194,8 +178,7 @@ class ContentSEOOptimizer:
         content: str, 
         keywords: List[str]
     ) -> Dict[str, float]:
-        """Calculate keyword density for each target keyword."""
-        content_lower = content.lower()
+        """Calculate keyword density for each target keyword."""        content_lower = content.lower()
         total_words = len(content.split())
         
         if total_words == 0:
@@ -212,8 +195,7 @@ class ContentSEOOptimizer:
         return keyword_density
 
     def _analyze_structure(self, content: str) -> Dict[str, Any]:
-        """Analyze content structure for SEO."""
-        return {
+        """Analyze content structure for SEO."""        return {
             "word_count": len(content.split()),
             "paragraph_count": len(content.split('\n\n')),
             "has_headings": bool(re.search(r'^#+\s', content, re.MULTILINE)),
@@ -223,8 +205,7 @@ class ContentSEOOptimizer:
         }
 
     def _calculate_avg_paragraph_length(self, content: str) -> float:
-        """Calculate average paragraph length."""
-        paragraphs = [p.strip() for p in content.split('\n\n') if p.strip()]
+        """Calculate average paragraph length."""        paragraphs = [p.strip() for p in content.split('\n\n') if p.strip()]
         if not paragraphs:
             return 0.0
         
@@ -232,8 +213,7 @@ class ContentSEOOptimizer:
         return total_words / len(paragraphs)
 
     def _analyze_sentence_variety(self, content: str) -> Dict[str, int]:
-        """Analyze sentence variety for better readability."""
-        sentences = re.findall(r'[.!?]+', content)
+        """Analyze sentence variety for better readability."""        sentences = re.findall(r'[.!?]+', content)
         return {
             "total_sentences": len(sentences),
             "declarative": len([s for s in sentences if s == '.']),
@@ -247,8 +227,7 @@ class ContentSEOOptimizer:
         keyword_density: Dict[str, float], 
         content_structure: Dict[str, Any]
     ) -> List[str]:
-        """Generate SEO recommendations based on analysis."""
-        recommendations = []
+        """Generate SEO recommendations based on analysis."""        recommendations = []
         
         # Readability recommendations
         if readability_score < 40:
@@ -281,8 +260,7 @@ class ContentSEOOptimizer:
         keyword_density: Dict[str, float], 
         content_structure: Dict[str, Any]
     ) -> float:
-        """Calculate overall optimization score."""
-        scores = []
+        """Calculate overall optimization score."""        scores = []
         
         # Readability score (0-100, target around 60)
         readability_normalized = 100 - abs(readability_score - self.target_readability_score)
@@ -325,8 +303,7 @@ class ContentSEOOptimizer:
         analysis: ContentAnalysis, 
         platform_type: str
     ) -> str:
-        """Apply optimizations to content based on analysis."""
-        optimized = content
+        """Apply optimizations to content based on analysis."""        optimized = content
         
         # Apply keyword optimization
         optimized = self._optimize_keywords(optimized, target_keywords, analysis.keyword_density)
@@ -349,8 +326,7 @@ class ContentSEOOptimizer:
         target_keywords: List[str], 
         current_density: Dict[str, float]
     ) -> str:
-        """Optimize keyword distribution in content."""
-        optimized = content
+        """Optimize keyword distribution in content."""        optimized = content
         
         for keyword in target_keywords:
             current_freq = current_density.get(keyword, 0)
@@ -362,8 +338,7 @@ class ContentSEOOptimizer:
         return optimized
 
     def _add_keyword_naturally(self, content: str, keyword: str) -> str:
-        """Add keyword naturally to content."""
-        sentences = content.split('.')
+        """Add keyword naturally to content."""        sentences = content.split('.')
         if len(sentences) > 1:
             # Add keyword to a random sentence
             import random
@@ -373,8 +348,7 @@ class ContentSEOOptimizer:
         return content
 
     def _improve_readability(self, content: str) -> str:
-        """Improve content readability."""
-        # Split long sentences
+        """Improve content readability."""        # Split long sentences
         sentences = re.split(r'[.!?]', content)
         improved_sentences = []
         
@@ -392,8 +366,7 @@ class ContentSEOOptimizer:
         return '. '.join(improved_sentences).strip()
 
     def _improve_structure(self, content: str, structure: Dict[str, Any]) -> str:
-        """Improve content structure."""
-        improved = content
+        """Improve content structure."""        improved = content
         
         # Add paragraph breaks for long content
         if structure["avg_paragraph_length"] > 100:
@@ -415,8 +388,7 @@ class ContentSEOOptimizer:
         return improved
 
     def _apply_platform_optimizations(self, content: str, platform_type: str) -> str:
-        """Apply platform-specific optimizations."""
-        if platform_type == "instagram":
+        """Apply platform-specific optimizations."""        if platform_type == "instagram":
             # Add line breaks for better mobile readability
             return re.sub(r'([.!?])\s+', r'\1\n\n', content)
         elif platform_type == "twitter":
@@ -435,8 +407,7 @@ class ContentSEOOptimizer:
         optimized: str, 
         analysis: ContentAnalysis
     ) -> List[str]:
-        """Track improvements made during optimization."""
-        improvements = []
+        """Track improvements made during optimization."""        improvements = []
         
         if len(optimized.split()) > len(original.split()):
             improvements.append("Added content for better keyword density")
@@ -455,8 +426,7 @@ class ContentSEOOptimizer:
         optimized_content: str, 
         target_keywords: List[str]
     ) -> Dict[str, float]:
-        """Calculate performance metrics for optimization."""
-        return {
+        """Calculate performance metrics for optimization."""        return {
             "optimization_score": analysis.optimization_score,
             "readability_improvement": max(0, self.target_readability_score - abs(analysis.readability_score - self.target_readability_score)),
             "keyword_coverage": len([k for k, d in analysis.keyword_density.items() if self.min_keyword_density <= d <= self.max_keyword_density]) / len(target_keywords) * 100 if target_keywords else 0,

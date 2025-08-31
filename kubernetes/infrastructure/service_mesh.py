@@ -1,5 +1,4 @@
-"""
-Service Mesh Management System
+"""Service Mesh Management System
 
 Provides comprehensive service mesh capabilities including Istio, Linkerd,
 traffic management, security policies, and observability.
@@ -8,9 +7,7 @@ Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import yaml
@@ -23,29 +20,25 @@ from kubernetes import client, config
 logger = logging.getLogger(__name__)
 
 class ServiceMeshType(Enum):
-    """Service mesh types"""
-    ISTIO = "istio"
+    """Service mesh types"""    ISTIO = "istio"
     LINKERD = "linkerd"
     CONSUL_CONNECT = "consul_connect"
     ENVOY = "envoy"
 
 class TrafficPolicy(Enum):
-    """Traffic management policies"""
-    ROUND_ROBIN = "round_robin"
+    """Traffic management policies"""    ROUND_ROBIN = "round_robin"
     LEAST_CONN = "least_conn"
     RANDOM = "random"
     PASS_THROUGH = "pass_through"
 
 class SecurityPolicy(Enum):
-    """Security policies"""
-    MTLS_STRICT = "mtls_strict"
+    """Security policies"""    MTLS_STRICT = "mtls_strict"
     MTLS_PERMISSIVE = "mtls_permissive"
     PLAINTEXT = "plaintext"
 
 @dataclass
 class ServiceMeshConfig:
-    """Service mesh configuration"""
-    name: str
+    """Service mesh configuration"""    name: str
     mesh_type: ServiceMeshType
     namespace: str = "istio-system"
     enable_mtls: bool = True
@@ -57,8 +50,7 @@ class ServiceMeshConfig:
 
 @dataclass
 class VirtualServiceSpec:
-    """Virtual Service specification"""
-    name: str
+    """Virtual Service specification"""    name: str
     namespace: str
     hosts: List[str]
     gateways: List[str]
@@ -67,8 +59,7 @@ class VirtualServiceSpec:
 
 @dataclass
 class DestinationRuleSpec:
-    """Destination Rule specification"""
-    name: str
+    """Destination Rule specification"""    name: str
     namespace: str
     host: str
     traffic_policy: Optional[Dict[str, Any]] = None
@@ -76,16 +67,14 @@ class DestinationRuleSpec:
 
 @dataclass
 class GatewaySpec:
-    """Gateway specification"""
-    name: str
+    """Gateway specification"""    name: str
     namespace: str
     selector: Dict[str, str]
     servers: List[Dict[str, Any]]
 
 @dataclass
 class ServiceEntrySpec:
-    """Service Entry specification"""
-    name: str
+    """Service Entry specification"""    name: str
     namespace: str
     hosts: List[str]
     ports: List[Dict[str, Any]]
@@ -94,15 +83,13 @@ class ServiceEntrySpec:
 
 @dataclass
 class AuthorizationPolicySpec:
-    """Authorization Policy specification"""
-    name: str
+    """Authorization Policy specification"""    name: str
     namespace: str
     selector: Dict[str, str]
     rules: List[Dict[str, Any]]
 
 class ServiceMeshManager:
-    """Main service mesh manager"""
-    
+    """Main service mesh manager"""    
     def __init__(self, k8s_client=None):
         self.k8s_client = k8s_client
         self.apps_v1 = client.AppsV1Api() if k8s_client else None
@@ -111,8 +98,7 @@ class ServiceMeshManager:
         self.networking_v1 = client.NetworkingV1Api() if k8s_client else None
         
     async def deploy_service_mesh(self, config: ServiceMeshConfig) -> Dict[str, Any]:
-        """Deploy service mesh infrastructure"""
-        try:
+        """Deploy service mesh infrastructure"""        try:
             if config.mesh_type == ServiceMeshType.ISTIO:
                 return await self._deploy_istio(config)
             elif config.mesh_type == ServiceMeshType.LINKERD:
@@ -125,8 +111,7 @@ class ServiceMeshManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_istio(self, config: ServiceMeshConfig) -> Dict[str, Any]:
-        """Deploy Istio service mesh"""
-        try:
+        """Deploy Istio service mesh"""        try:
             results = {}
             
             # Create Istio namespace
@@ -171,8 +156,7 @@ class ServiceMeshManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _create_istio_namespace(self, namespace: str) -> Dict[str, Any]:
-        """Create Istio namespace with proper labels"""
-        try:
+        """Create Istio namespace with proper labels"""        try:
             namespace_obj = client.V1Namespace(
                 metadata=client.V1ObjectMeta(
                     name=namespace,
@@ -198,8 +182,7 @@ class ServiceMeshManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_istio_control_plane(self, config: ServiceMeshConfig) -> Dict[str, Any]:
-        """Deploy Istio control plane (istiod)"""
-        try:
+        """Deploy Istio control plane (istiod)"""        try:
             # Istiod deployment
             istiod_deployment = client.V1Deployment(
                 metadata=client.V1ObjectMeta(
@@ -349,8 +332,7 @@ class ServiceMeshManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_istio_data_plane(self, config: ServiceMeshConfig) -> Dict[str, Any]:
-        """Deploy Istio data plane components"""
-        try:
+        """Deploy Istio data plane components"""        try:
             # Istio proxy (Envoy) is injected as sidecar automatically
             # Configure istio-proxy injection for namespaces
             
@@ -365,8 +347,7 @@ class ServiceMeshManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_istio_gateways(self, config: ServiceMeshConfig, gateway_type: str) -> Dict[str, Any]:
-        """Deploy Istio ingress/egress gateways"""
-        try:
+        """Deploy Istio ingress/egress gateways"""        try:
             gateway_name = f"istio-{gateway_type}gateway"
             
             # Gateway deployment
@@ -578,8 +559,7 @@ class ServiceMeshManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _create_istio_rbac(self, namespace: str) -> Dict[str, Any]:
-        """Create RBAC for Istio components"""
-        try:
+        """Create RBAC for Istio components"""        try:
             # Service accounts
             service_accounts = ['istiod', 'istio-ingressgateway', 'istio-egressgateway']
             
@@ -608,8 +588,7 @@ class ServiceMeshManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _create_istio_configmap(self, config: ServiceMeshConfig) -> Dict[str, Any]:
-        """Create Istio configuration ConfigMap"""
-        try:
+        """Create Istio configuration ConfigMap"""        try:
             istio_config = {
                 'mesh': yaml.dump({
                     'defaultConfig': {
@@ -663,8 +642,7 @@ class ServiceMeshManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _create_gateway_service_account(self, gateway_name: str, namespace: str) -> Dict[str, Any]:
-        """Create service account for gateway"""
-        try:
+        """Create service account for gateway"""        try:
             service_account = client.V1ServiceAccount(
                 metadata=client.V1ObjectMeta(
                     name=gateway_name,
@@ -688,8 +666,7 @@ class ServiceMeshManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _configure_istio_mtls(self, config: ServiceMeshConfig) -> Dict[str, Any]:
-        """Configure mTLS for Istio"""
-        try:
+        """Configure mTLS for Istio"""        try:
             # Create PeerAuthentication for strict mTLS
             peer_auth_resource = {
                 'apiVersion': 'security.istio.io/v1beta1',
@@ -725,8 +702,7 @@ class ServiceMeshManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _configure_istio_observability(self, config: ServiceMeshConfig) -> Dict[str, Any]:
-        """Configure observability for Istio"""
-        try:
+        """Configure observability for Istio"""        try:
             observability_components = []
             
             if config.enable_tracing:
@@ -752,8 +728,7 @@ class ServiceMeshManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_linkerd(self, config: ServiceMeshConfig) -> Dict[str, Any]:
-        """Deploy Linkerd service mesh"""
-        try:
+        """Deploy Linkerd service mesh"""        try:
             # Implementation for Linkerd deployment
             logger.info(f"Deploying Linkerd service mesh: {config.name}")
             return {
@@ -766,8 +741,7 @@ class ServiceMeshManager:
             return {'status': 'error', 'message': str(e)}
     
     async def create_virtual_service(self, vs_spec: VirtualServiceSpec) -> Dict[str, Any]:
-        """Create Istio Virtual Service"""
-        try:
+        """Create Istio Virtual Service"""        try:
             virtual_service = {
                 'apiVersion': 'networking.istio.io/v1beta1',
                 'kind': 'VirtualService',
@@ -808,8 +782,7 @@ class ServiceMeshManager:
             return {'status': 'error', 'message': str(e)}
     
     async def create_destination_rule(self, dr_spec: DestinationRuleSpec) -> Dict[str, Any]:
-        """Create Istio Destination Rule"""
-        try:
+        """Create Istio Destination Rule"""        try:
             destination_rule = {
                 'apiVersion': 'networking.istio.io/v1beta1',
                 'kind': 'DestinationRule',
@@ -849,8 +822,7 @@ class ServiceMeshManager:
             return {'status': 'error', 'message': str(e)}
     
     async def create_ia_influencer_service_mesh(self, namespace: str = "ia-influencer") -> Dict[str, Any]:
-        """Create complete service mesh setup for IA Influencer platform"""
-        try:
+        """Create complete service mesh setup for IA Influencer platform"""        try:
             results = {}
             
             # Deploy Istio service mesh
@@ -962,8 +934,7 @@ class ServiceMeshManager:
             return {'status': 'error', 'message': str(e)}
     
     async def create_gateway(self, gateway_spec: GatewaySpec) -> Dict[str, Any]:
-        """Create Istio Gateway"""
-        try:
+        """Create Istio Gateway"""        try:
             gateway = {
                 'apiVersion': 'networking.istio.io/v1beta1',
                 'kind': 'Gateway',
@@ -997,8 +968,7 @@ class ServiceMeshManager:
             return {'status': 'error', 'message': str(e)}
     
     async def get_service_mesh_status(self, namespace: str = "istio-system") -> Dict[str, Any]:
-        """Get service mesh status"""
-        try:
+        """Get service mesh status"""        try:
             status = {
                 'control_plane': {'status': 'running'},
                 'data_plane': {'sidecar_injection': 'enabled'},

@@ -1,5 +1,4 @@
-"""
-Connection Pool Manager - IA Influencer Agent Platform
+"""Connection Pool Manager - IA Influencer Agent Platform
 
 Manages connection pooling across all database systems:
 - Dynamic pool sizing based on load
@@ -11,9 +10,7 @@ Manages connection pooling across all database systems:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Tuple
 from dataclasses import dataclass
@@ -25,8 +22,7 @@ from .metrics import ConnectionMetrics
 
 
 class PoolType(Enum):
-    """Connection pool types"""
-    POSTGRESQL = "postgresql"
+    """Connection pool types"""    POSTGRESQL = "postgresql"
     REDIS = "redis"
     MONGODB = "mongodb"
     ELASTICSEARCH = "elasticsearch"
@@ -36,8 +32,7 @@ class PoolType(Enum):
 
 @dataclass
 class PoolConfig:
-    """Connection pool configuration"""
-    min_size: int = 5
+    """Connection pool configuration"""    min_size: int = 5
     max_size: int = 50
     idle_timeout: int = 300  # seconds
     max_lifetime: int = 3600  # seconds
@@ -49,8 +44,7 @@ class PoolConfig:
 
 
 class ConnectionPoolManager:
-    """
-    Central connection pool manager for all database systems.
+    """    Central connection pool manager for all database systems.
     
     Provides:
     - Dynamic pool sizing based on load patterns
@@ -59,8 +53,7 @@ class ConnectionPoolManager:
     - Performance optimization and tuning
     - Resource utilization tracking
     - Automatic failover support
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -81,8 +74,7 @@ class ConnectionPoolManager:
         self.history_window = timedelta(minutes=15)
     
     async def initialize(self, handlers: Dict[str, Any]) -> None:
-        """Initialize pool manager with database handlers"""
-        self.handlers = handlers
+        """Initialize pool manager with database handlers"""        self.handlers = handlers
         
         # Initialize default configurations
         for db_type in handlers.keys():
@@ -105,8 +97,7 @@ class ConnectionPoolManager:
         self.logger.info("Connection pool manager initialized")
     
     async def start_monitoring(self) -> None:
-        """Start pool monitoring and auto-scaling"""
-        if self.monitoring_active:
+        """Start pool monitoring and auto-scaling"""        if self.monitoring_active:
             return
         
         self.monitoring_active = True
@@ -114,8 +105,7 @@ class ConnectionPoolManager:
         self.logger.info("Started connection pool monitoring")
     
     async def stop_monitoring(self) -> None:
-        """Stop pool monitoring"""
-        self.monitoring_active = False
+        """Stop pool monitoring"""        self.monitoring_active = False
         
         if self.monitoring_task:
             self.monitoring_task.cancel()
@@ -127,8 +117,7 @@ class ConnectionPoolManager:
         self.logger.info("Stopped connection pool monitoring")
     
     async def _monitoring_loop(self) -> None:
-        """Main monitoring loop for pool management"""
-        while self.monitoring_active:
+        """Main monitoring loop for pool management"""        while self.monitoring_active:
             try:
                 # Update pool statistics
                 await self._update_pool_stats()
@@ -152,8 +141,7 @@ class ConnectionPoolManager:
                 await asyncio.sleep(30)
     
     async def _update_pool_stats(self) -> None:
-        """Update statistics for all connection pools"""
-        for db_type, handler in self.handlers.items():
+        """Update statistics for all connection pools"""        for db_type, handler in self.handlers.items():
             try:
                 # Get pool metrics from handler
                 if hasattr(handler, 'get_pool_stats'):
@@ -185,8 +173,7 @@ class ConnectionPoolManager:
                 self.logger.error(f"Failed to update pool stats for {db_type}: {e}")
     
     async def _auto_scale_pools(self) -> None:
-        """Automatically scale connection pools based on usage"""
-        for db_type, config in self.pool_configs.items():
+        """Automatically scale connection pools based on usage"""        for db_type, config in self.pool_configs.items():
             if not config.auto_scaling:
                 continue
             
@@ -210,8 +197,7 @@ class ConnectionPoolManager:
                 self.logger.error(f"Auto-scaling failed for {db_type}: {e}")
     
     async def _scale_pool_up(self, db_type: str, config: PoolConfig) -> None:
-        """Scale up connection pool"""
-        try:
+        """Scale up connection pool"""        try:
             handler = self.handlers[db_type]
             stats = self.pool_stats[db_type]
             
@@ -230,8 +216,7 @@ class ConnectionPoolManager:
             self.logger.error(f"Failed to scale up {db_type} pool: {e}")
     
     async def _scale_pool_down(self, db_type: str, config: PoolConfig) -> None:
-        """Scale down connection pool"""
-        try:
+        """Scale down connection pool"""        try:
             handler = self.handlers[db_type]
             stats = self.pool_stats[db_type]
             
@@ -250,8 +235,7 @@ class ConnectionPoolManager:
             self.logger.error(f"Failed to scale down {db_type} pool: {e}")
     
     async def _cleanup_idle_connections(self) -> None:
-        """Clean up idle connections that exceed timeout"""
-        for db_type, config in self.pool_configs.items():
+        """Clean up idle connections that exceed timeout"""        for db_type, config in self.pool_configs.items():
             try:
                 handler = self.handlers[db_type]
                 
@@ -265,8 +249,7 @@ class ConnectionPoolManager:
                 self.logger.error(f"Failed to cleanup idle connections for {db_type}: {e}")
     
     async def _update_load_history(self) -> None:
-        """Update load history for trend analysis"""
-        current_time = datetime.utcnow()
+        """Update load history for trend analysis"""        current_time = datetime.utcnow()
         cutoff_time = current_time - self.history_window
         
         for db_type, stats in self.pool_stats.items():
@@ -281,23 +264,19 @@ class ConnectionPoolManager:
             ]
     
     def get_pool_config(self, db_type: str) -> Optional[PoolConfig]:
-        """Get pool configuration for database type"""
-        return self.pool_configs.get(db_type)
+        """Get pool configuration for database type"""        return self.pool_configs.get(db_type)
     
     def set_pool_config(self, db_type: str, config: PoolConfig) -> None:
-        """Set pool configuration for database type"""
-        self.pool_configs[db_type] = config
+        """Set pool configuration for database type"""        self.pool_configs[db_type] = config
         self.logger.info(f"Updated pool configuration for {db_type}")
     
     def get_pool_stats(self, db_type: Optional[str] = None) -> Dict[str, Any]:
-        """Get pool statistics"""
-        if db_type:
+        """Get pool statistics"""        if db_type:
             return self.pool_stats.get(db_type, {})
         return self.pool_stats.copy()
     
     def get_load_trends(self, db_type: str, hours: int = 1) -> Dict[str, Any]:
-        """Get load trends for a database type"""
-        if db_type not in self.load_history:
+        """Get load trends for a database type"""        if db_type not in self.load_history:
             return {}
         
         cutoff_time = datetime.utcnow() - timedelta(hours=hours)
@@ -324,8 +303,7 @@ class ConnectionPoolManager:
         }
     
     async def optimize_pool_sizes(self) -> Dict[str, Dict[str, Any]]:
-        """Analyze and recommend optimal pool sizes"""
-        recommendations = {}
+        """Analyze and recommend optimal pool sizes"""        recommendations = {}
         
         for db_type in self.pool_stats.keys():
             try:
@@ -369,8 +347,7 @@ class ConnectionPoolManager:
         return recommendations
     
     def _calculate_efficiency_score(self, stats: Dict[str, Any], trends: Dict[str, Any]) -> float:
-        """Calculate pool efficiency score (0-100)"""
-        try:
+        """Calculate pool efficiency score (0-100)"""        try:
             avg_usage = trends.get("average_load", 0.0)
             peak_usage = trends.get("peak_load", 0.0)
             
@@ -388,8 +365,7 @@ class ConnectionPoolManager:
             return 0.0
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive pool manager metrics"""
-        total_connections = sum(
+        """Get comprehensive pool manager metrics"""        total_connections = sum(
             stats.get("current_size", 0) 
             for stats in self.pool_stats.values()
         )
@@ -419,8 +395,7 @@ class ConnectionPoolManager:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown connection pool manager"""
-        self.logger.info("Shutting down connection pool manager...")
+        """Shutdown connection pool manager"""        self.logger.info("Shutting down connection pool manager...")
         
         await self.stop_monitoring()
         

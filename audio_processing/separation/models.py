@@ -1,5 +1,4 @@
-"""
-Advanced AI separation models for professional audio source separation.
+"""Advanced AI separation models for professional audio source separation.
 
 This module implements state-of-the-art neural network models for separating
 different audio sources (vocals, instruments, drums, bass) using deep learning.
@@ -12,9 +11,7 @@ License: Proprietary - Contact for licensing
 Any unauthorized use, copying, distribution, or modification is strictly
 prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import math
 from abc import ABC, abstractmethod
@@ -39,8 +36,7 @@ logger = get_logger(__name__)
 
 @dataclass
 class SeparationResult:
-    """Result container for audio separation operations."""
-    source_stems: Dict[str, np.ndarray]
+    """Result container for audio separation operations."""    source_stems: Dict[str, np.ndarray]
     quality_scores: Dict[str, float]
     processing_time: float
     model_used: str
@@ -49,8 +45,7 @@ class SeparationResult:
 
 
 class BaseSeparator(ABC):
-    """Abstract base class for all audio separation models."""
-    
+    """Abstract base class for all audio separation models."""    
     def __init__(self, model_path: Optional[str] = None, device: str = "auto"):
         self.model_path = model_path
         self.device = self._setup_device(device)
@@ -61,24 +56,20 @@ class BaseSeparator(ABC):
         self.n_fft = 2048
         
     def _setup_device(self, device: str) -> str:
-        """Setup computation device."""
-        if device == "auto":
+        """Setup computation device."""        if device == "auto":
             return "cuda" if torch.cuda.is_available() else "cpu"
         return device
     
     @abstractmethod
     async def load_model(self) -> None:
-        """Load the separation model."""
-        pass
+        """Load the separation model."""        pass
     
     @abstractmethod
     async def separate(self, audio: np.ndarray, sample_rate: int) -> SeparationResult:
-        """Separate audio into stems."""
-        pass
+        """Separate audio into stems."""        pass
     
     def validate_audio(self, audio: np.ndarray) -> None:
-        """Validate input audio format."""
-        if not isinstance(audio, np.ndarray):
+        """Validate input audio format."""        if not isinstance(audio, np.ndarray):
             raise AudioProcessingError("Audio must be numpy array")
         
         if audio.ndim > 2:
@@ -89,16 +80,14 @@ class BaseSeparator(ABC):
 
 
 class VocalSeparator(BaseSeparator):
-    """Advanced vocal separation using transformer-based models."""
-    
+    """Advanced vocal separation using transformer-based models."""    
     def __init__(self, model_path: Optional[str] = None, device: str = "auto"):
         super().__init__(model_path, device)
         self.model_name = "facebook/demucs-6s"
         self.confidence_threshold = 0.7
         
     async def load_model(self) -> None:
-        """Load vocal separation model."""
-        try:
+        """Load vocal separation model."""        try:
             logger.info(f"Loading vocal separation model: {self.model_name}")
             
             # Load pre-trained Demucs model for vocal separation
@@ -115,8 +104,7 @@ class VocalSeparator(BaseSeparator):
             raise ModelLoadError(f"Cannot load vocal separator: {str(e)}")
     
     async def separate(self, audio: np.ndarray, sample_rate: int) -> SeparationResult:
-        """Separate vocals from instrumental."""
-        self.validate_audio(audio)
+        """Separate vocals from instrumental."""        self.validate_audio(audio)
         
         if not self.is_loaded:
             await self.load_model()
@@ -175,8 +163,7 @@ class VocalSeparator(BaseSeparator):
     
     def _calculate_quality_scores(self, stems: Dict[str, np.ndarray], 
                                  original: np.ndarray) -> Dict[str, float]:
-        """Calculate separation quality scores."""
-        scores = {}
+        """Calculate separation quality scores."""        scores = {}
         
         for stem_name, stem_audio in stems.items():
             if stem_audio is not None and len(stem_audio) > 0:
@@ -189,8 +176,7 @@ class VocalSeparator(BaseSeparator):
         return scores
     
     def _calculate_sdr(self, reference: np.ndarray, separated: np.ndarray) -> float:
-        """Calculate Signal-to-Distortion Ratio."""
-        if len(reference.shape) == 2:
+        """Calculate Signal-to-Distortion Ratio."""        if len(reference.shape) == 2:
             reference = reference.mean(axis=0)
         if len(separated.shape) == 2:
             separated = separated.mean(axis=0)
@@ -212,16 +198,14 @@ class VocalSeparator(BaseSeparator):
 
 
 class InstrumentSeparator(BaseSeparator):
-    """Professional instrument separation for music production."""
-    
+    """Professional instrument separation for music production."""    
     def __init__(self, model_path: Optional[str] = None, device: str = "auto"):
         super().__init__(model_path, device)
         self.model_name = "open-unmix"
         self.instruments = ["piano", "guitar", "strings", "brass", "woodwind"]
         
     async def load_model(self) -> None:
-        """Load instrument separation model."""
-        try:
+        """Load instrument separation model."""        try:
             logger.info("Loading instrument separation model")
             
             # Load OpenUnmix model for instrument separation
@@ -254,8 +238,7 @@ class InstrumentSeparator(BaseSeparator):
             raise ModelLoadError(f"Cannot load instrument separator: {str(e)}")
     
     async def separate(self, audio: np.ndarray, sample_rate: int) -> SeparationResult:
-        """Separate different instruments."""
-        self.validate_audio(audio)
+        """Separate different instruments."""        self.validate_audio(audio)
         
         if not self.is_loaded:
             await self.load_model()
@@ -316,8 +299,7 @@ class InstrumentSeparator(BaseSeparator):
             raise AudioProcessingError(f"Instrument separation error: {str(e)}")
     
     def _preprocess_audio(self, audio: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Preprocess audio for separation."""
-        # Resample if necessary
+        """Preprocess audio for separation."""        # Resample if necessary
         if sample_rate != self.sample_rate:
             audio = librosa.resample(audio, orig_sr=sample_rate, target_sr=self.sample_rate)
         
@@ -332,8 +314,7 @@ class InstrumentSeparator(BaseSeparator):
     
     def _evaluate_separation_quality(self, stems: Dict[str, np.ndarray], 
                                    original: np.ndarray) -> Dict[str, float]:
-        """Evaluate separation quality using multiple metrics."""
-        scores = {}
+        """Evaluate separation quality using multiple metrics."""        scores = {}
         
         for instrument, stem in stems.items():
             if stem is not None and len(stem) > 0:
@@ -350,8 +331,7 @@ class InstrumentSeparator(BaseSeparator):
         return scores
     
     def _calculate_spectral_similarity(self, reference: np.ndarray, separated: np.ndarray) -> float:
-        """Calculate spectral similarity between reference and separated audio."""
-        # Compute spectrograms
+        """Calculate spectral similarity between reference and separated audio."""        # Compute spectrograms
         ref_spec = np.abs(librosa.stft(reference))
         sep_spec = np.abs(librosa.stft(separated))
         
@@ -376,16 +356,14 @@ class InstrumentSeparator(BaseSeparator):
 
 
 class DrumSeparator(BaseSeparator):
-    """Specialized drum separation with rhythm analysis."""
-    
+    """Specialized drum separation with rhythm analysis."""    
     def __init__(self, model_path: Optional[str] = None, device: str = "auto"):
         super().__init__(model_path, device)
         self.model_name = "drum-separator-v2"
         self.drum_components = ["kick", "snare", "hihat", "crash", "tom", "overhead"]
         
     async def load_model(self) -> None:
-        """Load drum separation model."""
-        try:
+        """Load drum separation model."""        try:
             logger.info("Loading drum separation model")
             
             # Custom drum separation architecture
@@ -411,8 +389,7 @@ class DrumSeparator(BaseSeparator):
             raise ModelLoadError(f"Cannot load drum separator: {str(e)}")
     
     async def separate(self, audio: np.ndarray, sample_rate: int) -> SeparationResult:
-        """Separate drum components."""
-        self.validate_audio(audio)
+        """Separate drum components."""        self.validate_audio(audio)
         
         if not self.is_loaded:
             await self.load_model()
@@ -487,8 +464,7 @@ class DrumSeparator(BaseSeparator):
             raise AudioProcessingError(f"Drum separation error: {str(e)}")
     
     def _preprocess_drums(self, audio: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Preprocess audio specifically for drum separation."""
-        # Resample if necessary
+        """Preprocess audio specifically for drum separation."""        # Resample if necessary
         if sample_rate != self.sample_rate:
             audio = librosa.resample(audio, orig_sr=sample_rate, target_sr=self.sample_rate)
         
@@ -508,8 +484,7 @@ class DrumSeparator(BaseSeparator):
         return enhanced_audio
     
     def _analyze_rhythm(self, audio: np.ndarray) -> Tuple[float, np.ndarray]:
-        """Analyze rhythm and tempo."""
-        # Extract tempo and beats
+        """Analyze rhythm and tempo."""        # Extract tempo and beats
         tempo, beats = librosa.beat.beat_track(
             y=audio,
             sr=self.sample_rate,
@@ -520,8 +495,7 @@ class DrumSeparator(BaseSeparator):
     
     def _evaluate_drum_quality(self, stems: Dict[str, np.ndarray], 
                               original: np.ndarray, tempo: float) -> Dict[str, float]:
-        """Evaluate drum separation quality with rhythm awareness."""
-        scores = {}
+        """Evaluate drum separation quality with rhythm awareness."""        scores = {}
         
         for component, stem in stems.items():
             if stem is not None and len(stem) > 0:
@@ -540,8 +514,7 @@ class DrumSeparator(BaseSeparator):
         return scores
     
     def _calculate_rhythm_consistency(self, audio: np.ndarray, expected_tempo: float) -> float:
-        """Calculate rhythm consistency score."""
-        try:
+        """Calculate rhythm consistency score."""        try:
             detected_tempo, _ = librosa.beat.beat_track(y=audio, sr=self.sample_rate)
             
             # Compare with expected tempo
@@ -553,8 +526,7 @@ class DrumSeparator(BaseSeparator):
             return 0.5  # Default score if analysis fails
     
     def _calculate_percussive_clarity(self, audio: np.ndarray) -> float:
-        """Calculate percussive clarity score."""
-        try:
+        """Calculate percussive clarity score."""        try:
             # Separate harmonic and percussive components
             _, percussive = librosa.effects.hpss(audio)
             
@@ -572,16 +544,14 @@ class DrumSeparator(BaseSeparator):
 
 
 class BassSeparator(BaseSeparator):
-    """Advanced bass separation with frequency analysis."""
-    
+    """Advanced bass separation with frequency analysis."""    
     def __init__(self, model_path: Optional[str] = None, device: str = "auto"):
         super().__init__(model_path, device)
         self.model_name = "bass-separator-pro"
         self.bass_range = (20, 250)  # Bass frequency range in Hz
         
     async def load_model(self) -> None:
-        """Load bass separation model."""
-        try:
+        """Load bass separation model."""        try:
             logger.info("Loading bass separation model")
             
             # Bass-specific separation model
@@ -607,8 +577,7 @@ class BassSeparator(BaseSeparator):
             raise ModelLoadError(f"Cannot load bass separator: {str(e)}")
     
     async def separate(self, audio: np.ndarray, sample_rate: int) -> SeparationResult:
-        """Separate bass from other frequencies."""
-        self.validate_audio(audio)
+        """Separate bass from other frequencies."""        self.validate_audio(audio)
         
         if not self.is_loaded:
             await self.load_model()
@@ -677,8 +646,7 @@ class BassSeparator(BaseSeparator):
             raise AudioProcessingError(f"Bass separation error: {str(e)}")
     
     def _preprocess_bass(self, audio: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Preprocess audio for bass separation."""
-        # Resample if necessary
+        """Preprocess audio for bass separation."""        # Resample if necessary
         if sample_rate != self.sample_rate:
             audio = librosa.resample(audio, orig_sr=sample_rate, target_sr=self.sample_rate)
         
@@ -695,8 +663,7 @@ class BassSeparator(BaseSeparator):
         return audio
     
     def _create_bass_mask(self, n_bins: int) -> np.ndarray:
-        """Create frequency mask for bass range."""
-        freqs = librosa.fft_frequencies(sr=self.sample_rate, n_fft=self.n_fft)
+        """Create frequency mask for bass range."""        freqs = librosa.fft_frequencies(sr=self.sample_rate, n_fft=self.n_fft)
         bass_mask = np.zeros(n_bins)
         
         # Find frequency bins within bass range
@@ -716,8 +683,7 @@ class BassSeparator(BaseSeparator):
         return bass_mask
     
     def _extract_sub_bass(self, bass_audio: np.ndarray) -> np.ndarray:
-        """Extract sub-bass frequencies (20-60 Hz)."""
-        # Apply low-pass filter for sub-bass
+        """Extract sub-bass frequencies (20-60 Hz)."""        # Apply low-pass filter for sub-bass
         sub_bass = librosa.effects.preemphasis(bass_audio, coef=-0.97)
         
         # Additional frequency filtering
@@ -731,8 +697,7 @@ class BassSeparator(BaseSeparator):
         return librosa.istft(stft, hop_length=self.hop_length)
     
     def _extract_mid_bass(self, bass_audio: np.ndarray) -> np.ndarray:
-        """Extract mid-bass frequencies (60-250 Hz)."""
-        stft = librosa.stft(bass_audio, n_fft=self.n_fft, hop_length=self.hop_length)
+        """Extract mid-bass frequencies (60-250 Hz)."""        stft = librosa.stft(bass_audio, n_fft=self.n_fft, hop_length=self.hop_length)
         freqs = librosa.fft_frequencies(sr=self.sample_rate, n_fft=self.n_fft)
         
         # Keep only mid-bass frequencies
@@ -743,8 +708,7 @@ class BassSeparator(BaseSeparator):
     
     def _evaluate_bass_quality(self, stems: Dict[str, np.ndarray], 
                               original: np.ndarray) -> Dict[str, float]:
-        """Evaluate bass separation quality."""
-        scores = {}
+        """Evaluate bass separation quality."""        scores = {}
         
         for component, stem in stems.items():
             if stem is not None and len(stem) > 0:
@@ -763,8 +727,7 @@ class BassSeparator(BaseSeparator):
         return scores
     
     def _calculate_frequency_fidelity(self, audio: np.ndarray, component: str) -> float:
-        """Calculate frequency domain fidelity."""
-        try:
+        """Calculate frequency domain fidelity."""        try:
             # Compute power spectral density
             freqs, psd = librosa.core.spectrum._spectrogram(
                 y=audio,
@@ -793,8 +756,7 @@ class BassSeparator(BaseSeparator):
             return 0.5
     
     def _calculate_temporal_consistency(self, audio: np.ndarray, reference: np.ndarray) -> float:
-        """Calculate temporal consistency."""
-        try:
+        """Calculate temporal consistency."""        try:
             # Align lengths
             min_len = min(len(audio), len(reference))
             audio = audio[:min_len]
@@ -814,8 +776,7 @@ class BassSeparator(BaseSeparator):
 # Neural Network Architectures
 
 class DrumSeparationNet(nn.Module):
-    """Neural network for drum separation."""
-    
+    """Neural network for drum separation."""    
     def __init__(self, input_channels: int, output_channels: int, hidden_size: int = 256):
         super().__init__()
         
@@ -849,8 +810,7 @@ class DrumSeparationNet(nn.Module):
 
 
 class BassSeparationNet(nn.Module):
-    """Neural network for bass separation."""
-    
+    """Neural network for bass separation."""    
     def __init__(self, input_size: int, hidden_size: int, num_layers: int):
         super().__init__()
         
@@ -879,8 +839,7 @@ class BassSeparationNet(nn.Module):
 
 # Factory function for creating separators
 def create_separator(separator_type: str, **kwargs) -> BaseSeparator:
-    """Factory function to create separation models."""
-    separators = {
+    """Factory function to create separation models."""    separators = {
         "vocal": VocalSeparator,
         "instrument": InstrumentSeparator,
         "drum": DrumSeparator,

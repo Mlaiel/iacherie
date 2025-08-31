@@ -1,5 +1,4 @@
-"""
-AI Agent Orchestration Manager - IA-Influencer-Agent
+"""AI Agent Orchestration Manager - IA-Influencer-Agent
 ================================================================================
 Module: backend/core/managers/ai_agent_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,9 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Requête utilisateur → Analyse intention → Routing intelligent → 
 Orchestration agents → Coordination tâches → Agrégation résultats → Réponse optimisée
-"""
-
-from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set
+"""from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set
 import logging
 import asyncio
 from contextlib import asynccontextmanager
@@ -35,8 +32,7 @@ logger = logging.getLogger(__name__)
 
 
 class AgentType(Enum):
-    """Types d'agents IA disponibles"""
-    # Content agents
+    """Types d'agents IA disponibles"""    # Content agents
     CONTENT_AGENT = "content_agent"
     AUDIO_AGENT = "audio_agent"
     VIDEO_AGENT = "video_agent"
@@ -69,8 +65,7 @@ class AgentType(Enum):
 
 
 class TaskPriority(Enum):
-    """Priorités des tâches"""
-    LOW = "low"
+    """Priorités des tâches"""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
@@ -78,8 +73,7 @@ class TaskPriority(Enum):
 
 
 class AgentStatus(Enum):
-    """Statuts des agents"""
-    IDLE = "idle"
+    """Statuts des agents"""    IDLE = "idle"
     BUSY = "busy"
     PROCESSING = "processing"
     ERROR = "error"
@@ -88,8 +82,7 @@ class AgentStatus(Enum):
 
 
 class TaskStatus(Enum):
-    """Statuts des tâches"""
-    PENDING = "pending"
+    """Statuts des tâches"""    PENDING = "pending"
     ASSIGNED = "assigned"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -99,8 +92,7 @@ class TaskStatus(Enum):
 
 @dataclass
 class AiAgentConfig:
-    """Configuration du gestionnaire d'agents IA"""
-    # Agent management
+    """Configuration du gestionnaire d'agents IA"""    # Agent management
     max_agents_per_type: int = 10
     agent_timeout_seconds: int = 300
     agent_retry_attempts: int = 3
@@ -133,8 +125,7 @@ class AiAgentConfig:
 
 @dataclass
 class AgentInfo:
-    """Informations d'un agent IA"""
-    id: str
+    """Informations d'un agent IA"""    id: str
     agent_type: AgentType
     name: str
     version: str
@@ -173,8 +164,7 @@ class AgentInfo:
 
 @dataclass
 class AgentTask:
-    """Tâche pour un agent IA"""
-    id: str
+    """Tâche pour un agent IA"""    id: str
     user_id: str
     task_type: str
     priority: TaskPriority
@@ -213,8 +203,7 @@ class AgentTask:
 
 @dataclass
 class OrchestrationPlan:
-    """Plan d'orchestration multi-agents"""
-    id: str
+    """Plan d'orchestration multi-agents"""    id: str
     user_id: str
     objective: str
     
@@ -238,8 +227,7 @@ class OrchestrationPlan:
 
 
 class AiAgentManager(ABC):
-    """
-    🤖 Advanced AI Agent Orchestration Manager - IA-Influencer-Agent
+    """    🤖 Advanced AI Agent Orchestration Manager - IA-Influencer-Agent
     
     Responsabilité:
     Orchestrateur industriel de 53+ agents IA avec coordination intelligente
@@ -263,8 +251,7 @@ class AiAgentManager(ABC):
     - Scaling automatique des agents
     - Analytics performance avancées
     - Coordination inter-agents optimisée
-    """
-    
+    """    
     def __init__(self, config: AiAgentConfig = None):
         self.config = config or AiAgentConfig()
         self._agents: Dict[str, AgentInfo] = {}
@@ -303,13 +290,11 @@ class AiAgentManager(ABC):
     
     @abstractmethod
     async def initialize_pool(self) -> bool:
-        """
-        Initialize AI agent pool and orchestration system
+        """        Initialize AI agent pool and orchestration system
         
         Returns:
             bool: True if initialization successful
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def register_agent(
@@ -317,8 +302,7 @@ class AiAgentManager(ABC):
         agent_type: AgentType,
         agent_config: Dict[str, Any]
     ) -> AgentInfo:
-        """
-        Register new AI agent in the system
+        """        Register new AI agent in the system
         
         Args:
             agent_type: Type of agent to register
@@ -326,8 +310,7 @@ class AiAgentManager(ABC):
             
         Returns:
             AgentInfo: Registered agent information
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def execute_agent_task(
@@ -335,8 +318,7 @@ class AiAgentManager(ABC):
         agent_id: str,
         task: AgentTask
     ) -> Dict[str, Any]:
-        """
-        Execute task on specific AI agent
+        """        Execute task on specific AI agent
         
         Args:
             agent_id: Agent to execute task on
@@ -344,24 +326,21 @@ class AiAgentManager(ABC):
             
         Returns:
             Dict: Task execution results
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def route_task_to_best_agent(
         self,
         task: AgentTask
     ) -> Optional[str]:
-        """
-        Intelligently route task to best available agent
+        """        Intelligently route task to best available agent
         
         Args:
             task: Task to route
             
         Returns:
             Optional[str]: Best agent ID or None if no suitable agent
-        """
-        pass
+        """        pass
     
     async def submit_task(
         self,
@@ -372,8 +351,7 @@ class AiAgentManager(ABC):
         agent_type: Optional[AgentType] = None,
         requirements: Dict[str, Any] = None
     ) -> AgentTask:
-        """
-        Submit task for AI agent processing
+        """        Submit task for AI agent processing
         
         Args:
             user_id: User submitting task
@@ -385,8 +363,7 @@ class AiAgentManager(ABC):
             
         Returns:
             AgentTask: Created task
-        """
-        try:
+        """        try:
             # Create task
             task = AgentTask(
                 id=str(uuid.uuid4()),
@@ -423,8 +400,7 @@ class AiAgentManager(ABC):
         objective: str,
         workflow_config: Dict[str, Any]
     ) -> OrchestrationPlan:
-        """
-        Orchestrate complex multi-agent workflow
+        """        Orchestrate complex multi-agent workflow
         
         Args:
             user_id: User requesting orchestration
@@ -433,8 +409,7 @@ class AiAgentManager(ABC):
             
         Returns:
             OrchestrationPlan: Created orchestration plan
-        """
-        try:
+        """        try:
             # Create orchestration plan
             plan = OrchestrationPlan(
                 id=str(uuid.uuid4()),
@@ -474,8 +449,7 @@ class AiAgentManager(ABC):
         agent_type: Optional[AgentType] = None,
         time_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive agent performance analytics
+        """        Get comprehensive agent performance analytics
         
         Args:
             agent_type: Optional agent type filter
@@ -483,8 +457,7 @@ class AiAgentManager(ABC):
             
         Returns:
             Dict: Complete performance analytics
-        """
-        with self._lock:
+        """        with self._lock:
             # Filter agents
             agents = list(self._agents.values())
             
@@ -593,8 +566,7 @@ class AiAgentManager(ABC):
             }
     
     async def _start_task_processing(self) -> None:
-        """Start background task processing"""
-        if self._monitoring_active:
+        """Start background task processing"""        if self._monitoring_active:
             return
         
         self._monitoring_active = True
@@ -609,8 +581,7 @@ class AiAgentManager(ABC):
         logger.info("🤖 Task processing and monitoring started")
     
     async def _task_processor(self) -> None:
-        """Background task processor"""
-        while self._monitoring_active:
+        """Background task processor"""        while self._monitoring_active:
             try:
                 # Get next task from queue
                 priority, timestamp, task = await asyncio.wait_for(
@@ -631,8 +602,7 @@ class AiAgentManager(ABC):
                 await asyncio.sleep(1)
     
     async def _process_task(self, task: AgentTask) -> None:
-        """Process individual task"""
-        try:
+        """Process individual task"""        try:
             # Find best agent for task
             agent_id = await self.route_task_to_best_agent(task)
             
@@ -715,8 +685,7 @@ class AiAgentManager(ABC):
                 await self._task_queue.put((priority_value, time.time(), task))
     
     async def _health_monitor(self) -> None:
-        """Background health monitoring"""
-        while self._monitoring_active:
+        """Background health monitoring"""        while self._monitoring_active:
             try:
                 await asyncio.sleep(self.config.health_check_interval)
                 await self._check_agent_health()
@@ -724,8 +693,7 @@ class AiAgentManager(ABC):
                 logger.error(f"❌ Health monitor error: {e}")
     
     async def _check_agent_health(self) -> None:
-        """Check health of all agents"""
-        with self._lock:
+        """Check health of all agents"""        with self._lock:
             current_time = datetime.utcnow()
             
             for agent in self._agents.values():
@@ -745,8 +713,7 @@ class AiAgentManager(ABC):
                     agent.load_factor = max(agent.load_factor - 0.1, 0.0)
     
     def _get_priority_value(self, priority: TaskPriority) -> int:
-        """Get numeric priority value for queue ordering"""
-        priority_values = {
+        """Get numeric priority value for queue ordering"""        priority_values = {
             TaskPriority.CRITICAL: 0,
             TaskPriority.URGENT: 1,
             TaskPriority.HIGH: 2,
@@ -760,8 +727,7 @@ class AiAgentManager(ABC):
         objective: str,
         workflow_config: Dict[str, Any]
     ) -> List[AgentTask]:
-        """Generate task breakdown from high-level objective"""
-        # Placeholder for AI-powered task breakdown
+        """Generate task breakdown from high-level objective"""        # Placeholder for AI-powered task breakdown
         # Real implementation would use NLP to analyze objective and create tasks
         tasks = []
         
@@ -790,8 +756,7 @@ class AiAgentManager(ABC):
         self,
         tasks: List[AgentTask]
     ) -> Dict[str, List[str]]:
-        """Analyze dependencies between tasks"""
-        # Simplified dependency analysis
+        """Analyze dependencies between tasks"""        # Simplified dependency analysis
         dependencies = {}
         
         for i, task in enumerate(tasks):
@@ -808,8 +773,7 @@ class AiAgentManager(ABC):
         tasks: List[AgentTask],
         dependencies: Dict[str, List[str]]
     ) -> List[List[str]]:
-        """Create parallel execution groups"""
-        # Group tasks that can run in parallel
+        """Create parallel execution groups"""        # Group tasks that can run in parallel
         parallel_groups = []
         
         # Find tasks with no dependencies for first group
@@ -825,8 +789,7 @@ class AiAgentManager(ABC):
         return parallel_groups
     
     async def _execute_orchestration_plan(self, plan_id: str) -> None:
-        """Execute orchestration plan"""
-        try:
+        """Execute orchestration plan"""        try:
             plan = self._orchestration_plans.get(plan_id)
             if not plan:
                 return
@@ -861,8 +824,7 @@ class AiAgentManager(ABC):
             logger.error(f"❌ Orchestration failed: {plan_id} - {e}")
     
     async def _submit_orchestration_task(self, task_id: str, plan_id: str) -> None:
-        """Submit task from orchestration plan"""
-        plan = self._orchestration_plans.get(plan_id)
+        """Submit task from orchestration plan"""        plan = self._orchestration_plans.get(plan_id)
         if not plan:
             return
         
@@ -875,8 +837,7 @@ class AiAgentManager(ABC):
         await self._task_queue.put((priority_value, time.time(), task))
     
     async def _aggregate_orchestration_results(self, plan: OrchestrationPlan) -> Dict[str, Any]:
-        """Aggregate results from orchestration tasks"""
-        results = {}
+        """Aggregate results from orchestration tasks"""        results = {}
         
         for task in plan.tasks:
             if task.status == TaskStatus.COMPLETED:
@@ -885,8 +846,7 @@ class AiAgentManager(ABC):
         return results
     
     def _calculate_routing_accuracy(self) -> float:
-        """Calculate routing accuracy based on historical data"""
-        # Simplified routing accuracy calculation
+        """Calculate routing accuracy based on historical data"""        # Simplified routing accuracy calculation
         if not self._routing_history:
             return 0.0
         
@@ -899,8 +859,7 @@ class AiAgentManager(ABC):
     
     @asynccontextmanager
     async def get_orchestration_session(self):
-        """Context manager for orchestration operations"""
-        session_id = str(uuid.uuid4())
+        """Context manager for orchestration operations"""        session_id = str(uuid.uuid4())
         try:
             logger.info(f"🤖 Orchestration session started: {session_id}")
             yield session_id
@@ -908,8 +867,7 @@ class AiAgentManager(ABC):
             logger.info(f"🤖 Orchestration session ended: {session_id}")
     
     async def cleanup(self) -> bool:
-        """Cleanup AI agent management resources"""
-        try:
+        """Cleanup AI agent management resources"""        try:
             # Stop monitoring
             self._monitoring_active = False
             
@@ -953,8 +911,7 @@ class AiAgentManager(ABC):
             return False
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get AI agent management statistics"""
-        with self._lock:
+        """Get AI agent management statistics"""        with self._lock:
             return {
                 "agents_count": len(self._agents),
                 "active_agents": len([a for a in self._agents.values() if a.status != AgentStatus.OFFLINE]),
@@ -984,13 +941,11 @@ ai_agent_manager = None
 
 
 def get_ai_agent_manager() -> AiAgentManager:
-    """
-    Get the global AI agent manager instance
+    """    Get the global AI agent manager instance
     
     Returns:
         AiAgentManager: Global AI agent manager
-    """
-    global ai_agent_manager
+    """    global ai_agent_manager
     if ai_agent_manager is None:
         from ..implementations.ai_agent_manager_impl import AiAgentManagerImpl
         ai_agent_manager = AiAgentManagerImpl()

@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
@@ -15,25 +12,21 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 #!/usr/bin/env python3
-"""
-Simple validation test for Advanced Metrics Module
+"""Simple validation test for Advanced Metrics Module
 =================================================
 
 Basic validation without external dependencies to ensure module structure and concepts are correct.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import os
+"""import os
 import sys
 import asyncio
 from datetime import datetime, timedelta
 import unittest
 
 def test_module_structure():
-    """Test that all required module files exist"""
-    print("🔍 Testing Advanced Metrics Module Structure...")
+    """Test that all required module files exist"""    print("🔍 Testing Advanced Metrics Module Structure...")
     
     base_path = "monitoring/advanced_metrics"
     required_files = [
@@ -66,8 +59,7 @@ def test_module_structure():
     return all_files_exist
 
 def test_documentation_content():
-    """Test documentation files contain required content"""
-    print("\n📚 Testing Documentation Content...")
+    """Test documentation files contain required content"""    print("\n📚 Testing Documentation Content...")
     
     base_path = "monitoring/advanced_metrics"
     
@@ -124,8 +116,7 @@ def test_documentation_content():
     return True
 
 def test_business_logic_concepts():
-    """Test business logic concepts and data structures"""
-    print("\n💼 Testing Business Logic Concepts...")
+    """Test business logic concepts and data structures"""    print("\n💼 Testing Business Logic Concepts...")
     
     # Test business KPI structure
     business_kpi = {
@@ -188,8 +179,7 @@ def test_business_logic_concepts():
     return kpi_valid and event_valid and content_valid
 
 def test_integration_concepts():
-    """Test integration and workflow concepts"""
-    print("\n🔗 Testing Integration Concepts...")
+    """Test integration and workflow concepts"""    print("\n🔗 Testing Integration Concepts...")
     
     # Test metrics aggregation workflow
     metrics_workflow = [
@@ -241,8 +231,7 @@ def test_integration_concepts():
     return True
 
 def test_security_and_compliance():
-    """Test security and compliance concepts"""
-    print("\n🔐 Testing Security & Compliance Concepts...")
+    """Test security and compliance concepts"""    print("\n🔐 Testing Security & Compliance Concepts...")
     
     # Test data anonymization concept
     sensitive_data = {
@@ -288,8 +277,7 @@ def test_security_and_compliance():
     return pii_removed and admin_can_read
 
 def test_performance_concepts():
-    """Test performance and scalability concepts"""
-    print("\n⚡ Testing Performance Concepts...")
+    """Test performance and scalability concepts"""    print("\n⚡ Testing Performance Concepts...")
     
     # Test large dataset handling concept
     large_dataset = {
@@ -324,8 +312,7 @@ def test_performance_concepts():
     return dataset_size_ok and aggregation_works
 
 def run_all_tests():
-    """Run all validation tests"""
-    print("🎯 Advanced Metrics Module Validation")
+    """Run all validation tests"""    print("🎯 Advanced Metrics Module Validation")
     print("=" * 50)
     print(f"Author: Fahed Mlaiel (mlaiel@live.de)")
     print(f"Timestamp: {datetime.now().isoformat()}")

@@ -1,5 +1,4 @@
-"""
-Dependency Resolver - Enterprise Dependency Management & Resolution Engine
+"""Dependency Resolver - Enterprise Dependency Management & Resolution Engine
 
 Advanced dependency resolution system managing complex inter-service dependencies,
 circular dependency detection, and automatic resolution strategies for the
@@ -16,9 +15,7 @@ Contact: mlaiel@live.de for authorization.
 🎯 BUSINESS LOGIC:
 Service Registration → Dependency Analysis → Resolution Strategy → 
 Execution Order → Monitoring → Health Checks
-"""
-
-import asyncio
+"""import asyncio
 import uuid
 from datetime import datetime, timezone, timedelta
 from enum import Enum
@@ -34,8 +31,7 @@ logger = logging.getLogger(__name__)
 
 
 class DependencyType(Enum):
-    """Types of dependencies in the system"""
-    SERVICE_DEPENDENCY = "service_dependency"
+    """Types of dependencies in the system"""    SERVICE_DEPENDENCY = "service_dependency"
     DATA_DEPENDENCY = "data_dependency"
     RESOURCE_DEPENDENCY = "resource_dependency"
     EXECUTION_DEPENDENCY = "execution_dependency"
@@ -46,8 +42,7 @@ class DependencyType(Enum):
 
 
 class ResolutionStrategy(Enum):
-    """Dependency resolution strategies"""
-    LAZY_LOADING = "lazy_loading"
+    """Dependency resolution strategies"""    LAZY_LOADING = "lazy_loading"
     EAGER_LOADING = "eager_loading"
     PARALLEL_RESOLUTION = "parallel_resolution"
     SEQUENTIAL_RESOLUTION = "sequential_resolution"
@@ -57,8 +52,7 @@ class ResolutionStrategy(Enum):
 
 
 class DependencyStatus(Enum):
-    """Dependency resolution status"""
-    UNRESOLVED = "unresolved"
+    """Dependency resolution status"""    UNRESOLVED = "unresolved"
     RESOLVING = "resolving"
     RESOLVED = "resolved"
     FAILED = "failed"
@@ -68,8 +62,7 @@ class DependencyStatus(Enum):
 
 
 class DependencyPriority(Enum):
-    """Dependency resolution priority"""
-    CRITICAL = 1
+    """Dependency resolution priority"""    CRITICAL = 1
     HIGH = 2
     NORMAL = 3
     LOW = 4
@@ -78,8 +71,7 @@ class DependencyPriority(Enum):
 
 @dataclass
 class DependencyDefinition:
-    """Individual dependency definition"""
-    dependency_id: str
+    """Individual dependency definition"""    dependency_id: str
     name: str
     dependency_type: DependencyType
     source_service: str
@@ -96,8 +88,7 @@ class DependencyDefinition:
 
 @dataclass
 class ServiceDefinition:
-    """Service definition with dependencies"""
-    service_id: str
+    """Service definition with dependencies"""    service_id: str
     name: str
     service_type: str
     endpoint: str
@@ -111,8 +102,7 @@ class ServiceDefinition:
 
 @dataclass
 class ResolutionResult:
-    """Dependency resolution result"""
-    dependency_id: str
+    """Dependency resolution result"""    dependency_id: str
     status: DependencyStatus
     resolved_at: datetime
     resolution_time: float
@@ -124,8 +114,7 @@ class ResolutionResult:
 
 @dataclass
 class ResolutionContext:
-    """Context for dependency resolution"""
-    context_id: str
+    """Context for dependency resolution"""    context_id: str
     requested_service: str
     resolution_strategy: ResolutionStrategy
     timeout_seconds: int
@@ -138,8 +127,7 @@ class ResolutionContext:
 
 
 class DependencyResolver:
-    """Enterprise dependency management and resolution engine"""
-    
+    """Enterprise dependency management and resolution engine"""    
     def __init__(self, cache_size: int = 1000, max_resolution_depth: int = 20):
         self.cache_size = cache_size
         self.max_resolution_depth = max_resolution_depth
@@ -176,8 +164,7 @@ class DependencyResolver:
         logger.info("DependencyResolver initialized successfully")
     
     def _initialize_standard_dependencies(self):
-        """Initialize standard platform dependencies"""
-        # Content Processing Dependencies
+        """Initialize standard platform dependencies"""        # Content Processing Dependencies
         content_deps = [
             DependencyDefinition(
                 dependency_id="content_analysis_fingerprinting",
@@ -269,8 +256,7 @@ class DependencyResolver:
         self._initialize_standard_services()
     
     def _initialize_standard_services(self):
-        """Initialize standard service definitions"""
-        services = [
+        """Initialize standard service definitions"""        services = [
             ServiceDefinition(
                 service_id="content_analysis",
                 name="Content Analysis Service",
@@ -373,8 +359,7 @@ class DependencyResolver:
             self.register_service(service)
     
     def register_dependency(self, dependency: DependencyDefinition) -> bool:
-        """Register a new dependency definition"""
-        try:
+        """Register a new dependency definition"""        try:
             # Validate dependency
             if not self._validate_dependency(dependency):
                 return False
@@ -403,8 +388,7 @@ class DependencyResolver:
             return False
     
     def register_service(self, service: ServiceDefinition) -> bool:
-        """Register a new service definition"""
-        try:
+        """Register a new service definition"""        try:
             # Validate service
             if not self._validate_service(service):
                 return False
@@ -423,8 +407,7 @@ class DependencyResolver:
             return False
     
     def _validate_dependency(self, dependency: DependencyDefinition) -> bool:
-        """Validate dependency definition"""
-        try:
+        """Validate dependency definition"""        try:
             # Required fields validation
             if not all([dependency.dependency_id, dependency.source_service, dependency.target_service]):
                 logger.error("Missing required dependency fields")
@@ -447,8 +430,7 @@ class DependencyResolver:
             return False
     
     def _validate_service(self, service: ServiceDefinition) -> bool:
-        """Validate service definition"""
-        try:
+        """Validate service definition"""        try:
             # Required fields validation
             if not all([service.service_id, service.name, service.endpoint]):
                 logger.error("Missing required service fields")
@@ -466,8 +448,7 @@ class DependencyResolver:
             return False
     
     def _detect_circular_dependencies(self) -> bool:
-        """Detect circular dependencies in the dependency graph"""
-        try:
+        """Detect circular dependencies in the dependency graph"""        try:
             return not nx.is_directed_acyclic_graph(self.dependency_graph)
         except Exception as e:
             logger.error(f"Circular dependency detection failed: {e}")
@@ -478,8 +459,7 @@ class DependencyResolver:
         service_id: str,
         context: Optional[ResolutionContext] = None
     ) -> Dict[str, ResolutionResult]:
-        """Resolve all dependencies for a given service"""
-        try:
+        """Resolve all dependencies for a given service"""        try:
             if not context:
                 context = ResolutionContext(
                     context_id=str(uuid.uuid4()),
@@ -555,8 +535,7 @@ class DependencyResolver:
         dependencies: List[str],
         context: ResolutionContext
     ) -> Dict[str, ResolutionResult]:
-        """Resolve dependencies in parallel"""
-        try:
+        """Resolve dependencies in parallel"""        try:
             tasks = []
             for dep_service in dependencies:
                 task = self._resolve_single_dependency(dep_service, context)
@@ -589,8 +568,7 @@ class DependencyResolver:
         dependencies: List[str],
         context: ResolutionContext
     ) -> Dict[str, ResolutionResult]:
-        """Resolve dependencies sequentially"""
-        try:
+        """Resolve dependencies sequentially"""        try:
             results = {}
             
             for dep_service in dependencies:
@@ -624,8 +602,7 @@ class DependencyResolver:
         service_id: str,
         context: ResolutionContext
     ) -> Dict[str, ResolutionResult]:
-        """Resolve dependencies in hierarchical order based on initialization order"""
-        try:
+        """Resolve dependencies in hierarchical order based on initialization order"""        try:
             # Get all dependencies in topological order
             dependency_order = self._get_topological_order(service_id)
             
@@ -646,16 +623,14 @@ class DependencyResolver:
         dependencies: List[str],
         context: ResolutionContext
     ) -> Dict[str, ResolutionResult]:
-        """Default dependency resolution strategy"""
-        return await self._resolve_parallel(dependencies, context)
+        """Default dependency resolution strategy"""        return await self._resolve_parallel(dependencies, context)
     
     async def _resolve_single_dependency(
         self,
         service_id: str,
         context: ResolutionContext
     ) -> ResolutionResult:
-        """Resolve a single dependency"""
-        try:
+        """Resolve a single dependency"""        try:
             start_time = datetime.now(timezone.utc)
             
             # Check cache first
@@ -726,8 +701,7 @@ class DependencyResolver:
         service_id: str,
         context: ResolutionContext
     ) -> Any:
-        """Perform actual service resolution logic"""
-        try:
+        """Perform actual service resolution logic"""        try:
             if service_id not in self.service_definitions:
                 raise ValueError(f"Service {service_id} not registered")
             
@@ -762,8 +736,7 @@ class DependencyResolver:
             raise
     
     def _get_cached_result(self, service_id: str) -> Optional[ResolutionResult]:
-        """Get cached resolution result if valid"""
-        try:
+        """Get cached resolution result if valid"""        try:
             if service_id not in self.resolution_cache:
                 return None
             
@@ -796,8 +769,7 @@ class DependencyResolver:
             return None
     
     def _cache_result(self, service_id: str, result: ResolutionResult):
-        """Cache resolution result"""
-        try:
+        """Cache resolution result"""        try:
             # Implement LRU cache behavior
             if len(self.resolution_cache) >= self.cache_size:
                 # Remove oldest entry
@@ -813,8 +785,7 @@ class DependencyResolver:
             logger.error(f"Cache storage failed: {e}")
     
     def _update_cache_hit_rate(self, hit: bool):
-        """Update cache hit rate statistics"""
-        # Simple exponential moving average
+        """Update cache hit rate statistics"""        # Simple exponential moving average
         if self.total_resolutions == 0:
             self.cache_hit_rate = 1.0 if hit else 0.0
         else:
@@ -823,8 +794,7 @@ class DependencyResolver:
             self.cache_hit_rate = alpha * hit_value + (1 - alpha) * self.cache_hit_rate
     
     def _is_critical_dependency(self, service_id: str) -> bool:
-        """Check if dependency is critical"""
-        for dep in self.dependency_definitions.values():
+        """Check if dependency is critical"""        for dep in self.dependency_definitions.values():
             if (dep.target_service == service_id and 
                 dep.priority in [DependencyPriority.CRITICAL, DependencyPriority.HIGH] and
                 dep.required):
@@ -832,8 +802,7 @@ class DependencyResolver:
         return False
     
     def _get_topological_order(self, service_id: str) -> List[List[str]]:
-        """Get topological order of dependencies for hierarchical resolution"""
-        try:
+        """Get topological order of dependencies for hierarchical resolution"""        try:
             # Create subgraph with only dependencies of the service
             service_deps = self._get_all_dependencies(service_id)
             subgraph = self.dependency_graph.subgraph(service_deps)
@@ -857,8 +826,7 @@ class DependencyResolver:
             return [[service_id]]
     
     def _get_all_dependencies(self, service_id: str) -> Set[str]:
-        """Get all dependencies (direct and transitive) of a service"""
-        try:
+        """Get all dependencies (direct and transitive) of a service"""        try:
             if service_id not in self.dependency_graph:
                 return set()
             
@@ -886,8 +854,7 @@ class DependencyResolver:
             return set()
     
     async def _emit_resolution_event(self, event_type: str, data: Dict[str, Any]):
-        """Emit resolution events to registered handlers"""
-        try:
+        """Emit resolution events to registered handlers"""        try:
             event_data = {
                 "event_type": event_type,
                 "timestamp": datetime.now(timezone.utc).isoformat(),
@@ -904,8 +871,7 @@ class DependencyResolver:
             logger.error(f"Event emission failed: {e}")
     
     def get_dependency_graph_info(self) -> Dict[str, Any]:
-        """Get dependency graph information and analysis"""
-        try:
+        """Get dependency graph information and analysis"""        try:
             graph_info = {
                 "total_services": len(self.service_definitions),
                 "total_dependencies": len(self.dependency_definitions),
@@ -927,8 +893,7 @@ class DependencyResolver:
             return {}
     
     def get_service_dependencies(self, service_id: str) -> Dict[str, Any]:
-        """Get detailed dependency information for a service"""
-        try:
+        """Get detailed dependency information for a service"""        try:
             if service_id not in self.service_definitions:
                 return {}
             
@@ -954,8 +919,7 @@ class DependencyResolver:
             return {}
     
     def clear_cache(self, service_id: Optional[str] = None):
-        """Clear resolution cache"""
-        try:
+        """Clear resolution cache"""        try:
             if service_id:
                 if service_id in self.resolution_cache:
                     del self.resolution_cache[service_id]
@@ -971,12 +935,10 @@ class DependencyResolver:
             logger.error(f"Cache clearing failed: {e}")
     
     def register_event_handler(self, event_type: str, handler: Callable):
-        """Register event handler for resolution events"""
-        self.event_handlers[event_type].append(handler)
+        """Register event handler for resolution events"""        self.event_handlers[event_type].append(handler)
     
     def get_resolution_metrics(self) -> Dict[str, Any]:
-        """Get resolution performance metrics"""
-        try:
+        """Get resolution performance metrics"""        try:
             avg_resolution_times = {}
             for service_id, times in self.resolution_metrics.items():
                 if times:
@@ -998,8 +960,7 @@ class DependencyResolver:
             return {}
     
     def shutdown(self):
-        """Shutdown dependency resolver and cleanup"""
-        try:
+        """Shutdown dependency resolver and cleanup"""        try:
             # Clear all caches
             self.clear_cache()
             

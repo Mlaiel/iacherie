@@ -1,5 +1,4 @@
-"""
-Image AI Models for IA Influencer Agent Platform
+"""Image AI Models for IA Influencer Agent Platform
 Enterprise-grade image processing, analysis and protection models
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -12,9 +11,7 @@ Development Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Security
 - Microservices + Audio + DevOps + IA Prompt Engineer
 Email: mlaiel@live.de
-"""
-
-import cv2
+"""import cv2
 import numpy as np
 import torch
 import torch.nn as nn
@@ -36,8 +33,7 @@ from ..core.exceptions import ModelError, ValidationError
 
 
 class ImageQuality(Enum):
-    """Image quality levels for content analysis"""
-    LOW_QUALITY = "low_quality"
+    """Image quality levels for content analysis"""    LOW_QUALITY = "low_quality"
     STANDARD = "standard"
     HIGH_QUALITY = "high_quality"
     PROFESSIONAL = "professional"
@@ -46,8 +42,7 @@ class ImageQuality(Enum):
 
 
 class ImageStyle(Enum):
-    """Image style classification"""
-    PHOTOGRAPHY = "photography"
+    """Image style classification"""    PHOTOGRAPHY = "photography"
     ARTWORK = "artwork"
     DIGITAL_ART = "digital_art"
     ILLUSTRATION = "illustration"
@@ -60,8 +55,7 @@ class ImageStyle(Enum):
 
 
 class ImageContentType(Enum):
-    """Image content type classification"""
-    PORTRAIT = "portrait"
+    """Image content type classification"""    PORTRAIT = "portrait"
     LANDSCAPE = "landscape"
     PRODUCT = "product"
     LIFESTYLE = "lifestyle"
@@ -75,8 +69,7 @@ class ImageContentType(Enum):
 
 @dataclass
 class ImageFeatures:
-    """Comprehensive image feature extraction results"""
-    width: int
+    """Comprehensive image feature extraction results"""    width: int
     height: int
     channels: int
     format: str
@@ -112,8 +105,7 @@ class ImageFeatures:
 
 @dataclass
 class ImageProtectionResult:
-    """Image content protection analysis results"""
-    is_original: bool
+    """Image content protection analysis results"""    is_original: bool
     confidence_score: float
     copyright_matches: List[Dict]
     reverse_search_results: List[Dict]
@@ -127,8 +119,7 @@ class ImageProtectionResult:
 
 
 class ImageFeatureExtractor(BaseAIModel):
-    """Advanced image feature extraction using multiple computer vision techniques"""
-    
+    """Advanced image feature extraction using multiple computer vision techniques"""    
     def __init__(self, config: ModelConfig):
         super().__init__(config)
         self.face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
@@ -140,8 +131,7 @@ class ImageFeatureExtractor(BaseAIModel):
         self.text_detector = self._load_text_detector()
         
     def _load_feature_extractor(self):
-        """Load pre-trained feature extraction model"""
-        try:
+        """Load pre-trained feature extraction model"""        try:
             # Use ResNet-50 for feature extraction
             import torchvision.models as models
             model = models.resnet50(pretrained=True)
@@ -152,8 +142,7 @@ class ImageFeatureExtractor(BaseAIModel):
             return None
     
     def _load_object_detector(self):
-        """Load object detection model"""
-        try:
+        """Load object detection model"""        try:
             # YOLO or similar object detection model
             return cv2.dnn.readNet('yolo.weights', 'yolo.cfg') if Path('yolo.weights').exists() else None
         except Exception as e:
@@ -161,8 +150,7 @@ class ImageFeatureExtractor(BaseAIModel):
             return None
     
     def _load_text_detector(self):
-        """Load text detection model"""
-        try:
+        """Load text detection model"""        try:
             # EAST text detector or similar
             return cv2.dnn.readNet('frozen_east_text_detection.pb') if Path('frozen_east_text_detection.pb').exists() else None
         except Exception as e:
@@ -170,8 +158,7 @@ class ImageFeatureExtractor(BaseAIModel):
             return None
     
     async def process(self, image_path: str, **kwargs) -> ProcessingResult:
-        """Process image and extract comprehensive features"""
-        try:
+        """Process image and extract comprehensive features"""        try:
             start_time = datetime.now()
             
             # Load and validate image
@@ -221,8 +208,7 @@ class ImageFeatureExtractor(BaseAIModel):
             )
     
     def _load_image(self, image_path: str) -> Optional[np.ndarray]:
-        """Load image from path"""
-        try:
+        """Load image from path"""        try:
             if isinstance(image_path, str):
                 image = cv2.imread(image_path)
             else:
@@ -235,8 +221,7 @@ class ImageFeatureExtractor(BaseAIModel):
             return None
     
     def _extract_basic_features(self, image: np.ndarray, image_path: str) -> Dict:
-        """Extract basic image properties"""
-        height, width, channels = image.shape
+        """Extract basic image properties"""        height, width, channels = image.shape
         file_size = Path(image_path).stat().st_size if isinstance(image_path, str) else 0
         
         # Determine format
@@ -262,8 +247,7 @@ class ImageFeatureExtractor(BaseAIModel):
         }
     
     def _classify_quality(self, width: int, height: int, file_size: int) -> ImageQuality:
-        """Classify image quality based on resolution and file size"""
-        total_pixels = width * height
+        """Classify image quality based on resolution and file size"""        total_pixels = width * height
         
         if total_pixels > 8000000:  # 8MP+
             return ImageQuality.ULTRA_HIGH
@@ -279,8 +263,7 @@ class ImageFeatureExtractor(BaseAIModel):
             return ImageQuality.LOW_QUALITY
     
     def _classify_style(self, image: np.ndarray) -> ImageStyle:
-        """Classify image style using basic computer vision"""
-        # Simple heuristics for style classification
+        """Classify image style using basic computer vision"""        # Simple heuristics for style classification
         # In production, use trained CNN model
         
         # Detect if image has high contrast (could be artwork/graphic design)
@@ -299,8 +282,7 @@ class ImageFeatureExtractor(BaseAIModel):
             return ImageStyle.PHOTOGRAPHY
     
     def _classify_content_type(self, image: np.ndarray) -> ImageContentType:
-        """Classify image content type"""
-        # Use face detection to identify portraits
+        """Classify image content type"""        # Use face detection to identify portraits
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         faces = self.face_cascade.detectMultiScale(gray, 1.1, 4)
         
@@ -323,8 +305,7 @@ class ImageFeatureExtractor(BaseAIModel):
             return ImageContentType.LIFESTYLE
     
     def _extract_color_features(self, image: np.ndarray) -> Dict:
-        """Extract color-related features"""
-        # Convert to different color spaces for analysis
+        """Extract color-related features"""        # Convert to different color spaces for analysis
         hsv = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
         lab = cv2.cvtColor(image, cv2.COLOR_RGB2LAB)
         
@@ -348,8 +329,7 @@ class ImageFeatureExtractor(BaseAIModel):
         }
     
     def _get_dominant_colors(self, image: np.ndarray, k: int = 5) -> List[Tuple[int, int, int]]:
-        """Extract dominant colors using k-means clustering"""
-        try:
+        """Extract dominant colors using k-means clustering"""        try:
             from sklearn.cluster import KMeans
             
             # Reshape image for clustering
@@ -368,8 +348,7 @@ class ImageFeatureExtractor(BaseAIModel):
             return [(128, 128, 128)] * k
     
     def _calculate_color_harmony(self, colors: List[Tuple[int, int, int]]) -> Dict[str, float]:
-        """Calculate color harmony metrics"""
-        if len(colors) < 2:
+        """Calculate color harmony metrics"""        if len(colors) < 2:
             return {"harmony_score": 0.0}
         
         # Simple color harmony calculation
@@ -384,8 +363,7 @@ class ImageFeatureExtractor(BaseAIModel):
         }
     
     def _extract_quality_features(self, image: np.ndarray) -> Dict:
-        """Extract technical quality features"""
-        gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+        """Extract technical quality features"""        gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         
         # Calculate sharpness using Laplacian variance
         sharpness = cv2.Laplacian(gray, cv2.CV_64F).var()
@@ -407,16 +385,14 @@ class ImageFeatureExtractor(BaseAIModel):
         }
     
     def _estimate_noise(self, image: np.ndarray) -> float:
-        """Estimate noise level in image"""
-        # Use local standard deviation to estimate noise
+        """Estimate noise level in image"""        # Use local standard deviation to estimate noise
         kernel = np.ones((3, 3), np.float32) / 9
         smooth = cv2.filter2D(image.astype(np.float32), -1, kernel)
         noise = np.std(image.astype(np.float32) - smooth)
         return float(noise)
     
     def _extract_composition_features(self, image: np.ndarray) -> Dict:
-        """Extract composition and aesthetic features"""
-        height, width = image.shape[:2]
+        """Extract composition and aesthetic features"""        height, width = image.shape[:2]
         
         # Rule of thirds analysis
         rule_of_thirds = self._analyze_rule_of_thirds(image)
@@ -442,8 +418,7 @@ class ImageFeatureExtractor(BaseAIModel):
         }
     
     def _analyze_rule_of_thirds(self, image: np.ndarray) -> float:
-        """Analyze adherence to rule of thirds"""
-        height, width = image.shape[:2]
+        """Analyze adherence to rule of thirds"""        height, width = image.shape[:2]
         
         # Define rule of thirds lines
         third_h = height // 3
@@ -470,8 +445,7 @@ class ImageFeatureExtractor(BaseAIModel):
         return total_score / len(intersections)
     
     def _analyze_symmetry(self, image: np.ndarray) -> float:
-        """Analyze image symmetry"""
-        gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+        """Analyze image symmetry"""        gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         height, width = gray.shape
         
         # Vertical symmetry
@@ -490,8 +464,7 @@ class ImageFeatureExtractor(BaseAIModel):
         return max(0.0, symmetry)
     
     def _detect_leading_lines(self, image: np.ndarray) -> List[Dict]:
-        """Detect leading lines in image"""
-        gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+        """Detect leading lines in image"""        gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         edges = cv2.Canny(gray, 50, 150)
         
         # Use Hough transform to detect lines
@@ -515,8 +488,7 @@ class ImageFeatureExtractor(BaseAIModel):
         return leading_lines
     
     def _calculate_aesthetic_score(self, image: np.ndarray) -> float:
-        """Calculate overall aesthetic score"""
-        # Simplified aesthetic scoring
+        """Calculate overall aesthetic score"""        # Simplified aesthetic scoring
         # In production, use trained neural network
         
         # Factors: color harmony, composition, quality
@@ -536,8 +508,7 @@ class ImageFeatureExtractor(BaseAIModel):
         return min(max(aesthetic_score, 0.0), 1.0)
     
     async def _extract_detection_features(self, image: np.ndarray) -> Dict:
-        """Extract object, face, and text detection features"""
-        gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+        """Extract object, face, and text detection features"""        gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         
         # Face detection
         faces = self.face_cascade.detectMultiScale(gray, 1.1, 4)
@@ -574,8 +545,7 @@ class ImageFeatureExtractor(BaseAIModel):
         }
     
     def _generate_fingerprints(self, image: np.ndarray) -> Dict:
-        """Generate various fingerprints for image"""
-        # Convert to PIL for hashing
+        """Generate various fingerprints for image"""        # Convert to PIL for hashing
         pil_image = Image.fromarray(image)
         
         # Generate different hash types
@@ -610,8 +580,7 @@ class ImageFeatureExtractor(BaseAIModel):
         }
     
     async def validate_connection(self) -> bool:
-        """Validate image processing capabilities"""
-        try:
+        """Validate image processing capabilities"""        try:
             # Test with a simple image
             test_image = np.zeros((100, 100, 3), dtype=np.uint8)
             result = await self.process(test_image)
@@ -622,14 +591,12 @@ class ImageFeatureExtractor(BaseAIModel):
 
 
 class ImageEnhancer(BaseAIModel):
-    """Advanced image enhancement and optimization"""
-    
+    """Advanced image enhancement and optimization"""    
     def __init__(self, config: ModelConfig):
         super().__init__(config)
         
     async def process(self, image_data: Any, enhancement_type: str = "auto", **kwargs) -> ProcessingResult:
-        """Enhance image with specified enhancement type"""
-        try:
+        """Enhance image with specified enhancement type"""        try:
             start_time = datetime.now()
             
             # Load image
@@ -661,8 +628,7 @@ class ImageEnhancer(BaseAIModel):
             )
     
     async def _apply_enhancement(self, image: Image.Image, enhancement_type: str, **kwargs) -> Image.Image:
-        """Apply specific enhancement to image"""
-        if enhancement_type == "auto":
+        """Apply specific enhancement to image"""        if enhancement_type == "auto":
             return self._auto_enhance(image)
         elif enhancement_type == "brightness":
             return self._adjust_brightness(image, kwargs.get("factor", 1.2))
@@ -680,8 +646,7 @@ class ImageEnhancer(BaseAIModel):
             return image
     
     def _auto_enhance(self, image: Image.Image) -> Image.Image:
-        """Automatically enhance image based on analysis"""
-        # Convert to numpy for analysis
+        """Automatically enhance image based on analysis"""        # Convert to numpy for analysis
         np_image = np.array(image)
         
         # Analyze image characteristics
@@ -707,41 +672,34 @@ class ImageEnhancer(BaseAIModel):
         return enhanced
     
     def _adjust_brightness(self, image: Image.Image, factor: float) -> Image.Image:
-        """Adjust image brightness"""
-        enhancer = ImageEnhance.Brightness(image)
+        """Adjust image brightness"""        enhancer = ImageEnhance.Brightness(image)
         return enhancer.enhance(factor)
     
     def _adjust_contrast(self, image: Image.Image, factor: float) -> Image.Image:
-        """Adjust image contrast"""
-        enhancer = ImageEnhance.Contrast(image)
+        """Adjust image contrast"""        enhancer = ImageEnhance.Contrast(image)
         return enhancer.enhance(factor)
     
     def _adjust_sharpness(self, image: Image.Image, factor: float) -> Image.Image:
-        """Adjust image sharpness"""
-        enhancer = ImageEnhance.Sharpness(image)
+        """Adjust image sharpness"""        enhancer = ImageEnhance.Sharpness(image)
         return enhancer.enhance(factor)
     
     def _adjust_color(self, image: Image.Image, factor: float) -> Image.Image:
-        """Adjust color saturation"""
-        enhancer = ImageEnhance.Color(image)
+        """Adjust color saturation"""        enhancer = ImageEnhance.Color(image)
         return enhancer.enhance(factor)
     
     async def _super_resolution(self, image: Image.Image, scale: int) -> Image.Image:
-        """Apply super-resolution enhancement"""
-        # Placeholder for AI super-resolution
+        """Apply super-resolution enhancement"""        # Placeholder for AI super-resolution
         # In production, use ESRGAN or similar model
         width, height = image.size
         new_size = (width * scale, height * scale)
         return image.resize(new_size, Image.LANCZOS)
     
     def _reduce_noise(self, image: Image.Image) -> Image.Image:
-        """Reduce noise in image"""
-        # Apply mild blur to reduce noise
+        """Reduce noise in image"""        # Apply mild blur to reduce noise
         return image.filter(ImageFilter.BLUR)
     
     async def validate_connection(self) -> bool:
-        """Validate image enhancement capabilities"""
-        try:
+        """Validate image enhancement capabilities"""        try:
             test_image = Image.new('RGB', (100, 100), color='red')
             result = await self.process(test_image, "auto")
             return result.success
@@ -751,14 +709,12 @@ class ImageEnhancer(BaseAIModel):
 
 
 class ImageProtector(BaseAIModel):
-    """Advanced image protection and copyright detection"""
-    
+    """Advanced image protection and copyright detection"""    
     def __init__(self, config: ModelConfig):
         super().__init__(config)
         
     async def process(self, image_data: Any, **kwargs) -> ProcessingResult:
-        """Analyze image for protection and copyright status"""
-        try:
+        """Analyze image for protection and copyright status"""        try:
             start_time = datetime.now()
             
             # Extract comprehensive protection features
@@ -784,8 +740,7 @@ class ImageProtector(BaseAIModel):
             )
     
     async def _analyze_protection(self, image_data: Any) -> ImageProtectionResult:
-        """Comprehensive protection analysis"""
-        # Load image
+        """Comprehensive protection analysis"""        # Load image
         if isinstance(image_data, str):
             image = Image.open(image_data)
         else:
@@ -831,8 +786,7 @@ class ImageProtector(BaseAIModel):
         )
     
     def _generate_protection_fingerprints(self, image: Image.Image) -> Dict[str, str]:
-        """Generate fingerprints for protection purposes"""
-        # Multiple hash types for robust matching
+        """Generate fingerprints for protection purposes"""        # Multiple hash types for robust matching
         phash = str(imagehash.phash(image))
         dhash = str(imagehash.dhash(image))
         whash = str(imagehash.whash(image))
@@ -846,8 +800,7 @@ class ImageProtector(BaseAIModel):
         }
     
     def _detect_watermarks(self, image: Image.Image) -> bool:
-        """Detect watermarks in image"""
-        # Convert to numpy for analysis
+        """Detect watermarks in image"""        # Convert to numpy for analysis
         np_image = np.array(image.convert('L'))  # Grayscale
         
         # Look for repetitive patterns that might indicate watermarks
@@ -866,8 +819,7 @@ class ImageProtector(BaseAIModel):
         return peaks > 100  # Arbitrary threshold
     
     def _detect_manipulation(self, image: Image.Image) -> bool:
-        """Detect if image has been manipulated"""
-        # Convert to numpy for analysis
+        """Detect if image has been manipulated"""        # Convert to numpy for analysis
         np_image = np.array(image)
         
         # ELA (Error Level Analysis) for JPEG manipulation detection
@@ -880,20 +832,17 @@ class ImageProtector(BaseAIModel):
         return False
     
     async def _reverse_image_search(self, image: Image.Image) -> List[Dict]:
-        """Perform reverse image search"""
-        # Placeholder for reverse image search
+        """Perform reverse image search"""        # Placeholder for reverse image search
         # In production, integrate with Google Images API or similar
         return []
     
     async def _check_copyright_database(self, fingerprints: Dict[str, str]) -> List[Dict]:
-        """Check fingerprints against copyright database"""
-        # Placeholder for copyright database check
+        """Check fingerprints against copyright database"""        # Placeholder for copyright database check
         # In production, query internal and external copyright databases
         return []
     
     def _calculate_protection_level(self, watermark: bool, manipulation: bool, copyright_matches: int) -> str:
-        """Calculate overall protection level"""
-        if copyright_matches > 0:
+        """Calculate overall protection level"""        if copyright_matches > 0:
             return "high_risk"
         elif manipulation:
             return "medium_risk"
@@ -904,8 +853,7 @@ class ImageProtector(BaseAIModel):
     
     def _generate_protection_recommendations(self, watermark: bool, manipulation: bool, 
                                            copyright_matches: List[Dict]) -> List[str]:
-        """Generate protection recommendations"""
-        recommendations = []
+        """Generate protection recommendations"""        recommendations = []
         
         if not watermark:
             recommendations.append("Add watermark for protection")
@@ -921,8 +869,7 @@ class ImageProtector(BaseAIModel):
         return recommendations
     
     async def validate_connection(self) -> bool:
-        """Validate image protection capabilities"""
-        try:
+        """Validate image protection capabilities"""        try:
             test_image = Image.new('RGB', (100, 100), color='blue')
             result = await self.process(test_image)
             return result.success

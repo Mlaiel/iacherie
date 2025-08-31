@@ -1,5 +1,4 @@
-"""
-GDPR Reporting Engine - Comprehensive Regulatory Reporting System
+"""GDPR Reporting Engine - Comprehensive Regulatory Reporting System
 Automated compliance reporting, analytics, and regulatory submissions
 
 Project: IA-Influencer Agent
@@ -8,9 +7,7 @@ Email: mlaiel@live.de
 Company: Ultra-Industrial AI Solutions
 
 ⚠️ COPYRIGHT PROTECTION - FAHED MLAIEL ⚠️
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import pandas as pd
@@ -53,8 +50,7 @@ logger = get_logger(__name__)
 settings = get_settings()
 
 class ReportType(Enum):
-    """Types of compliance reports"""
-    MONTHLY_COMPLIANCE = "monthly_compliance"
+    """Types of compliance reports"""    MONTHLY_COMPLIANCE = "monthly_compliance"
     QUARTERLY_COMPLIANCE = "quarterly_compliance"
     ANNUAL_COMPLIANCE = "annual_compliance"
     BREACH_SUMMARY = "breach_summary"
@@ -65,16 +61,14 @@ class ReportType(Enum):
     EXECUTIVE_DASHBOARD = "executive_dashboard"
 
 class ReportFormat(Enum):
-    """Report output formats"""
-    PDF = "pdf"
+    """Report output formats"""    PDF = "pdf"
     HTML = "html"
     JSON = "json"
     XLSX = "xlsx"
     CSV = "csv"
 
 class ComplianceStatus(Enum):
-    """Overall compliance status levels"""
-    EXCELLENT = "excellent"      # 95-100%
+    """Overall compliance status levels"""    EXCELLENT = "excellent"      # 95-100%
     GOOD = "good"               # 85-94%
     SATISFACTORY = "satisfactory" # 75-84%
     NEEDS_IMPROVEMENT = "needs_improvement" # 60-74%
@@ -82,8 +76,7 @@ class ComplianceStatus(Enum):
 
 @dataclass
 class ComplianceMetrics:
-    """Comprehensive compliance metrics"""
-    overall_compliance_score: float
+    """Comprehensive compliance metrics"""    overall_compliance_score: float
     compliance_status: ComplianceStatus
     total_processing_activities: int
     compliant_processing_activities: int
@@ -99,8 +92,7 @@ class ComplianceMetrics:
 
 @dataclass
 class ReportMetadata:
-    """Report metadata and generation info"""
-    report_id: str
+    """Report metadata and generation info"""    report_id: str
     report_type: ReportType
     report_format: ReportFormat
     generation_timestamp: datetime
@@ -111,11 +103,9 @@ class ReportMetadata:
     generation_time_seconds: float
 
 class ReportingEngine:
-    """
-    Advanced GDPR Compliance Reporting Engine
+    """    Advanced GDPR Compliance Reporting Engine
     Comprehensive reporting system for regulatory compliance and analytics
-    """
-    
+    """    
     def __init__(self):
         # Report templates and configurations
         self._report_templates = self._initialize_report_templates()
@@ -137,8 +127,7 @@ class ReportingEngine:
         logger.info("GDPR Reporting Engine initialized with comprehensive analytics")
     
     def _initialize_report_templates(self) -> Dict[str, Any]:
-        """Initialize report templates and structures"""
-        return {
+        """Initialize report templates and structures"""        return {
             ReportType.MONTHLY_COMPLIANCE.value: {
                 "sections": [
                     "executive_summary",
@@ -193,8 +182,7 @@ class ReportingEngine:
         }
     
     def _initialize_metric_definitions(self) -> Dict[str, Any]:
-        """Initialize metric calculation definitions"""
-        return {
+        """Initialize metric calculation definitions"""        return {
             "overall_compliance_score": {
                 "calculation": "weighted_average",
                 "components": {
@@ -229,8 +217,7 @@ class ReportingEngine:
         }
     
     def _initialize_visualization_config(self) -> Dict[str, Any]:
-        """Initialize visualization configurations"""
-        return {
+        """Initialize visualization configurations"""        return {
             "color_scheme": {
                 "primary": "#2E86AB",
                 "secondary": "#A23B72",
@@ -259,8 +246,7 @@ class ReportingEngine:
         }
     
     def _initialize_gdpr_tracking(self) -> Dict[str, Any]:
-        """Initialize GDPR articles tracking"""
-        return {
+        """Initialize GDPR articles tracking"""        return {
             "article_6": {
                 "title": "Lawfulness of Processing",
                 "requirements": ["legal_basis_identification", "basis_documentation"],
@@ -304,8 +290,7 @@ class ReportingEngine:
         }
     
     def _initialize_reporting_schedules(self) -> Dict[str, Any]:
-        """Initialize automated reporting schedules"""
-        return {
+        """Initialize automated reporting schedules"""        return {
             "daily": [
                 "security_monitoring",
                 "consent_tracking",
@@ -338,8 +323,7 @@ class ReportingEngine:
         output_format: ReportFormat = ReportFormat.JSON,
         include_visualizations: bool = True
     ) -> Dict[str, Any]:
-        """Generate comprehensive compliance report"""
-        try:
+        """Generate comprehensive compliance report"""        try:
             start_time = datetime.utcnow()
             report_id = str(uuid.uuid4())
             
@@ -433,8 +417,7 @@ class ReportingEngine:
         submission_type: str = "annual_report",
         include_attachments: bool = True
     ) -> Dict[str, Any]:
-        """Generate regulatory submission ready for data protection authorities"""
-        try:
+        """Generate regulatory submission ready for data protection authorities"""        try:
             # Determine submission requirements
             submission_config = await self._get_submission_requirements(authority, submission_type)
             
@@ -475,8 +458,7 @@ class ReportingEngine:
             raise HTTPException(status_code=500, detail=f"Regulatory submission failed: {str(e)}")
     
     async def get_compliance_dashboard(self, time_period_days: int = 30) -> Dict[str, Any]:
-        """Get real-time compliance dashboard data"""
-        try:
+        """Get real-time compliance dashboard data"""        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=time_period_days)
             
@@ -527,8 +509,7 @@ class ReportingEngine:
         self, 
         report_period: Dict[str, str]
     ) -> Dict[str, Any]:
-        """Generate executive summary for leadership"""
-        try:
+        """Generate executive summary for leadership"""        try:
             start_date = datetime.fromisoformat(report_period.get("start_date"))
             end_date = datetime.fromisoformat(report_period.get("end_date"))
             
@@ -580,8 +561,7 @@ class ReportingEngine:
         start_date: datetime, 
         end_date: datetime
     ) -> ComplianceMetrics:
-        """Collect comprehensive compliance metrics"""
-        try:
+        """Collect comprehensive compliance metrics"""        try:
             async with get_db() as db:
                 # Consent compliance metrics
                 consent_query = await db.execute(
@@ -739,8 +719,7 @@ class ReportingEngine:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Generate report content based on type"""
-        template = self._report_templates.get(report_type.value, {})
+        """Generate report content based on type"""        template = self._report_templates.get(report_type.value, {})
         sections = template.get("sections", [])
         
         content = {
@@ -769,8 +748,7 @@ class ReportingEngine:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Generate content for specific report section"""
-        section_generators = {
+        """Generate content for specific report section"""        section_generators = {
             "executive_summary": self._generate_executive_summary_section,
             "compliance_overview": self._generate_compliance_overview_section,
             "consent_management": self._generate_consent_section,
@@ -789,8 +767,7 @@ class ReportingEngine:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Generate executive summary section"""
-        return {
+        """Generate executive summary section"""        return {
             "overall_status": compliance_metrics.compliance_status.value.title(),
             "compliance_score": f"{compliance_metrics.overall_compliance_score:.1%}",
             "key_metrics": {
@@ -813,8 +790,7 @@ class ReportingEngine:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Generate compliance overview section"""
-        return {
+        """Generate compliance overview section"""        return {
             "compliance_scorecard": {
                 "Overall Compliance": compliance_metrics.overall_compliance_score,
                 "Consent Management": compliance_metrics.consent_compliance_rate,
@@ -839,8 +815,7 @@ class ReportingEngine:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Generate visualizations for report"""
-        visualizations = {}
+        """Generate visualizations for report"""        visualizations = {}
         
         # Compliance score chart
         compliance_chart = await self._create_compliance_chart(compliance_metrics)
@@ -857,8 +832,7 @@ class ReportingEngine:
         return visualizations
     
     async def _create_compliance_chart(self, compliance_metrics: ComplianceMetrics) -> str:
-        """Create compliance scorecard visualization"""
-        try:
+        """Create compliance scorecard visualization"""        try:
             # Create figure and axis
             fig, ax = plt.subplots(figsize=(10, 6))
             
@@ -904,8 +878,7 @@ class ReportingEngine:
             return ""
     
     async def _format_report(self, report_content: Dict[str, Any], output_format: ReportFormat) -> Any:
-        """Format report according to specified output format"""
-        if output_format == ReportFormat.JSON:
+        """Format report according to specified output format"""        if output_format == ReportFormat.JSON:
             return report_content
         elif output_format == ReportFormat.HTML:
             return await self._generate_html_report(report_content)
@@ -915,9 +888,7 @@ class ReportingEngine:
             return report_content
     
     async def _generate_html_report(self, report_content: Dict[str, Any]) -> str:
-        """Generate HTML format report"""
-        html_template = f"""
-        <!DOCTYPE html>
+        """Generate HTML format report"""        html_template = f"""        <!DOCTYPE html>
         <html>
         <head>
             <title>{report_content.get('report_header', {}).get('title', 'Compliance Report')}</title>
@@ -963,14 +934,12 @@ class ReportingEngine:
             </div>
         </body>
         </html>
-        """
-        return html_template
+        """        return html_template
     
     # Additional helper methods (placeholder implementations)
     
     async def _get_data_sources(self) -> List[str]:
-        """Get list of data sources used in report"""
-        return [
+        """Get list of data sources used in report"""        return [
             "Consent Management System",
             "Rights Request Database",
             "Audit Log Database",
@@ -979,8 +948,7 @@ class ReportingEngine:
         ]
     
     async def _get_report_title(self, report_type: ReportType) -> str:
-        """Get formatted report title"""
-        titles = {
+        """Get formatted report title"""        titles = {
             ReportType.MONTHLY_COMPLIANCE: "Monthly GDPR Compliance Report",
             ReportType.QUARTERLY_COMPLIANCE: "Quarterly GDPR Compliance Report",
             ReportType.ANNUAL_COMPLIANCE: "Annual GDPR Compliance Report",
@@ -990,8 +958,7 @@ class ReportingEngine:
         return titles.get(report_type, "GDPR Compliance Report")
     
     async def _collect_trend_data(self, time_period_days: int) -> List[Dict[str, Any]]:
-        """Collect compliance trend data"""
-        # Placeholder implementation
+        """Collect compliance trend data"""        # Placeholder implementation
         return [
             {"period": "Month 1", "compliance_score": 0.82},
             {"period": "Month 2", "compliance_score": 0.85},
@@ -999,8 +966,7 @@ class ReportingEngine:
         ]
     
     async def _get_compliance_alerts(self) -> List[Dict[str, Any]]:
-        """Get current compliance alerts"""
-        return [
+        """Get current compliance alerts"""        return [
             {
                 "alert_type": "consent_expiration",
                 "severity": "medium",
@@ -1010,8 +976,7 @@ class ReportingEngine:
         ]
     
     async def _get_upcoming_deadlines(self) -> List[Dict[str, Any]]:
-        """Get upcoming compliance deadlines"""
-        return [
+        """Get upcoming compliance deadlines"""        return [
             {
                 "deadline_type": "policy_review",
                 "due_date": (datetime.utcnow() + timedelta(days=15)).isoformat(),
@@ -1021,8 +986,7 @@ class ReportingEngine:
         ]
     
     async def _calculate_kpis(self, compliance_metrics: ComplianceMetrics) -> Dict[str, Any]:
-        """Calculate key performance indicators"""
-        return {
+        """Calculate key performance indicators"""        return {
             "compliance_velocity": "Improving",
             "risk_trend": "Stable",
             "operational_efficiency": "Good",
@@ -1030,8 +994,7 @@ class ReportingEngine:
         }
     
     async def _get_status_color(self, status: ComplianceStatus) -> str:
-        """Get color code for compliance status"""
-        colors = {
+        """Get color code for compliance status"""        colors = {
             ComplianceStatus.EXCELLENT: "#28a745",
             ComplianceStatus.GOOD: "#17a2b8", 
             ComplianceStatus.SATISFACTORY: "#ffc107",
@@ -1041,8 +1004,7 @@ class ReportingEngine:
         return colors.get(status, "#6c757d")
     
     async def _calculate_compliance_trend(self, trend_data: List[Dict[str, Any]]) -> str:
-        """Calculate compliance trend direction"""
-        if len(trend_data) < 2:
+        """Calculate compliance trend direction"""        if len(trend_data) < 2:
             return "Stable"
         
         latest_score = trend_data[-1]["compliance_score"]

@@ -1,5 +1,4 @@
-"""
-Regional Compliance Engine - Ainflue Platform
+"""Regional Compliance Engine - Ainflue Platform
 ================================================================================
 Module: core/i18n/regional_compliance.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,9 +15,7 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC:
 Content analysis → Regional detection → Legal framework mapping → Compliance validation → 
 Regulatory adherence → Data protection → Content filtering → Audit trail generation
-"""
-
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Tuple, Union, Set
 from datetime import datetime, timedelta
@@ -31,8 +28,7 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceFramework(Enum):
-    """Major compliance frameworks"""
-    GDPR = "gdpr"                    # General Data Protection Regulation (EU)
+    """Major compliance frameworks"""    GDPR = "gdpr"                    # General Data Protection Regulation (EU)
     CCPA = "ccpa"                    # California Consumer Privacy Act (US)
     PIPEDA = "pipeda"                # Personal Information Protection (Canada)
     LGPD = "lgpd"                    # Lei Geral de Proteção de Dados (Brazil)
@@ -46,8 +42,7 @@ class ComplianceFramework(Enum):
 
 
 class ContentCategory(Enum):
-    """Content categories for compliance"""
-    PERSONAL_DATA = "personal_data"
+    """Content categories for compliance"""    PERSONAL_DATA = "personal_data"
     FINANCIAL_DATA = "financial_data"
     HEALTH_DATA = "health_data"
     BIOMETRIC_DATA = "biometric_data"
@@ -62,16 +57,14 @@ class ContentCategory(Enum):
 
 
 class ComplianceLevel(Enum):
-    """Compliance requirement levels"""
-    MANDATORY = "mandatory"          # Must comply - legal requirement
+    """Compliance requirement levels"""    MANDATORY = "mandatory"          # Must comply - legal requirement
     RECOMMENDED = "recommended"      # Should comply - best practice
     OPTIONAL = "optional"            # May comply - nice to have
     FORBIDDEN = "forbidden"          # Must not do - prohibited
 
 
 class RegulatoryAction(Enum):
-    """Required regulatory actions"""
-    CONSENT_REQUIRED = "consent_required"
+    """Required regulatory actions"""    CONSENT_REQUIRED = "consent_required"
     NOTICE_REQUIRED = "notice_required"
     OPT_IN_REQUIRED = "opt_in_required"
     OPT_OUT_AVAILABLE = "opt_out_available"
@@ -86,8 +79,7 @@ class RegulatoryAction(Enum):
 
 
 class GeographicScope(Enum):
-    """Geographic scope of regulations"""
-    GLOBAL = "global"
+    """Geographic scope of regulations"""    GLOBAL = "global"
     REGIONAL = "regional"
     NATIONAL = "national"
     STATE_PROVINCIAL = "state_provincial"
@@ -97,8 +89,7 @@ class GeographicScope(Enum):
 
 @dataclass
 class ComplianceRule:
-    """Individual compliance rule"""
-    rule_id: str
+    """Individual compliance rule"""    rule_id: str
     framework: ComplianceFramework
     title: str
     description: str
@@ -116,8 +107,7 @@ class ComplianceRule:
 
 @dataclass
 class RegionalRegulation:
-    """Regional regulatory framework"""
-    region_code: str
+    """Regional regulatory framework"""    region_code: str
     country_codes: List[str]
     regulatory_name: str
     governing_body: str
@@ -134,8 +124,7 @@ class RegionalRegulation:
 
 @dataclass
 class ComplianceAssessment:
-    """Compliance assessment result"""
-    content_id: str
+    """Compliance assessment result"""    content_id: str
     content_type: ContentCategory
     assessed_regions: List[str]
     compliance_status: Dict[str, str]  # region -> status
@@ -151,8 +140,7 @@ class ComplianceAssessment:
 
 @dataclass
 class DataProcessingRecord:
-    """Data processing activity record"""
-    activity_id: str
+    """Data processing activity record"""    activity_id: str
     controller_name: str
     processor_name: Optional[str]
     data_categories: List[ContentCategory]
@@ -168,8 +156,7 @@ class DataProcessingRecord:
 
 
 class RegionalCompliance:
-    """Advanced regional compliance and regulatory adherence engine"""
-    
+    """Advanced regional compliance and regulatory adherence engine"""    
     def __init__(self):
         self.regional_regulations: Dict[str, RegionalRegulation] = {}
         self.compliance_rules: Dict[str, ComplianceRule] = {}
@@ -185,8 +172,7 @@ class RegionalCompliance:
         logger.info("Regional Compliance Engine initialized")
     
     def _initialize_regional_regulations(self):
-        """Initialize regional regulatory frameworks"""
-        
+        """Initialize regional regulatory frameworks"""        
         # European Union - GDPR
         self.regional_regulations["EU"] = RegionalRegulation(
             region_code="EU",
@@ -389,8 +375,7 @@ class RegionalCompliance:
         logger.info(f"Initialized {len(self.regional_regulations)} regional regulations")
     
     def _initialize_compliance_rules(self):
-        """Initialize specific compliance rules"""
-        
+        """Initialize specific compliance rules"""        
         # GDPR Rules
         gdpr_rules = [
             ComplianceRule(
@@ -499,8 +484,7 @@ class RegionalCompliance:
         logger.info(f"Initialized {len(self.compliance_rules)} compliance rules")
     
     def _initialize_compliance_templates(self):
-        """Initialize compliance document templates"""
-        
+        """Initialize compliance document templates"""        
         self.compliance_templates = {
             "privacy_policy": {
                 "gdpr": {
@@ -539,8 +523,7 @@ class RegionalCompliance:
         regions: List[str],
         data_processing_purposes: List[str] = None
     ) -> ComplianceAssessment:
-        """Assess content compliance across multiple regions"""
-        try:
+        """Assess content compliance across multiple regions"""        try:
             content_id = f"content_{hash(content) % 10000}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
             # Check cache
@@ -650,8 +633,7 @@ class RegionalCompliance:
         rule: ComplianceRule,
         processing_purposes: List[str]
     ) -> Optional[Dict[str, Any]]:
-        """Check if content violates a specific compliance rule"""
-        violation = None
+        """Check if content violates a specific compliance rule"""        violation = None
         
         # Check specific rule types
         if rule.rule_id == "GDPR_001":  # Consent requirements
@@ -708,8 +690,7 @@ class RegionalCompliance:
         required_actions: List[RegulatoryAction],
         regions: List[str]
     ) -> List[str]:
-        """Generate compliance recommendations"""
-        recommendations = []
+        """Generate compliance recommendations"""        recommendations = []
         
         # Address violations
         high_severity_violations = [v for v in violations if v.get("severity") == "high"]
@@ -750,8 +731,7 @@ class RegionalCompliance:
         organization_info: Dict[str, Any],
         custom_clauses: List[str] = None
     ) -> Dict[str, Any]:
-        """Generate compliance document from template"""
-        try:
+        """Generate compliance document from template"""        try:
             if template_type not in self.compliance_templates:
                 raise ValueError(f"Unknown template type: {template_type}")
             
@@ -804,8 +784,7 @@ class RegionalCompliance:
         framework: ComplianceFramework,
         organization_info: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate content for document section"""
-        org_name = organization_info.get("name", "[Organization Name]")
+        """Generate content for document section"""        org_name = organization_info.get("name", "[Organization Name]")
         contact_email = organization_info.get("email", "[Contact Email]")
         
         section_content = {
@@ -816,31 +795,26 @@ class RegionalCompliance:
         }
         
         if section == "data_collection":
-            section_content["content"] = f"""
-            {org_name} collects the following categories of personal data:
+            section_content["content"] = f"""            {org_name} collects the following categories of personal data:
             [CUSTOMIZE: List specific data categories]
             
             This data is collected through:
             [CUSTOMIZE: List collection methods]
-            """
-            section_content["placeholders"] = ["data_categories", "collection_methods"]
+            """            section_content["placeholders"] = ["data_categories", "collection_methods"]
         
         elif section == "legal_basis":
             if framework == ComplianceFramework.GDPR:
-                section_content["content"] = f"""
-                {org_name} processes personal data based on the following legal grounds:
+                section_content["content"] = f"""                {org_name} processes personal data based on the following legal grounds:
                 - Consent (Article 6(1)(a) GDPR)
                 - Contract performance (Article 6(1)(b) GDPR)
                 - Legal obligation (Article 6(1)(c) GDPR)
                 - Legitimate interests (Article 6(1)(f) GDPR)
                 
                 [CUSTOMIZE: Specify which legal basis applies to which processing activities]
-                """
-        
+                """        
         elif section == "rights":
             if framework == ComplianceFramework.GDPR:
-                section_content["content"] = f"""
-                Under GDPR, you have the following rights:
+                section_content["content"] = f"""                Under GDPR, you have the following rights:
                 - Right of access (Article 15)
                 - Right to rectification (Article 16)
                 - Right to erasure (Article 17)
@@ -849,16 +823,13 @@ class RegionalCompliance:
                 - Right to object (Article 21)
                 
                 To exercise these rights, contact us at {contact_email}
-                """
-        
+                """        
         elif section == "contact":
-            section_content["content"] = f"""
-            Data Controller: {org_name}
+            section_content["content"] = f"""            Data Controller: {org_name}
             Contact Email: {contact_email}
             
             [CUSTOMIZE: Add full contact details and DPO information if applicable]
-            """
-            section_content["required_customization"] = ["full_address", "dpo_details"]
+            """            section_content["required_customization"] = ["full_address", "dpo_details"]
         
         return section_content
     
@@ -869,8 +840,7 @@ class RegionalCompliance:
         data_categories: List[ContentCategory],
         transfer_mechanism: str
     ) -> Dict[str, Any]:
-        """Validate cross-border data transfer compliance"""
-        try:
+        """Validate cross-border data transfer compliance"""        try:
             validation_result = {
                 "is_permitted": False,
                 "requirements": [],
@@ -940,8 +910,7 @@ class RegionalCompliance:
             }
     
     async def get_compliance_statistics(self) -> Dict[str, Any]:
-        """Get compliance engine statistics"""
-        return {
+        """Get compliance engine statistics"""        return {
             "regional_regulations": len(self.regional_regulations),
             "compliance_rules": len(self.compliance_rules),
             "assessed_content": len(self.assessment_cache),
@@ -953,8 +922,7 @@ class RegionalCompliance:
         }
     
     def _get_assessment_distribution(self) -> Dict[str, int]:
-        """Get distribution of compliance assessments"""
-        distribution = {"compliant": 0, "non_compliant": 0, "partially_compliant": 0, "unknown": 0}
+        """Get distribution of compliance assessments"""        distribution = {"compliant": 0, "non_compliant": 0, "partially_compliant": 0, "unknown": 0}
         
         for assessment in self.assessment_cache.values():
             for status in assessment.compliance_status.values():
@@ -966,8 +934,7 @@ class RegionalCompliance:
         return distribution
     
     async def health_check(self) -> bool:
-        """Health check for regional compliance service"""
-        try:
+        """Health check for regional compliance service"""        try:
             # Check if regulations are loaded
             if not self.regional_regulations:
                 return False

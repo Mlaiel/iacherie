@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Real-Time Monitoring System
+"""IA Influencer Agent - Real-Time Monitoring System
 ===============================================
 
 Advanced real-time monitoring system for fingerprinting and content protection.
@@ -22,9 +21,7 @@ will be prosecuted to the FULL EXTENT OF THE LAW under German and
 International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import time
@@ -56,24 +53,21 @@ logger = logging.getLogger(__name__)
 
 
 class MonitoringMode(Enum):
-    """Real-time monitoring modes"""
-    PASSIVE = "passive"  # Monitor only
+    """Real-time monitoring modes"""    PASSIVE = "passive"  # Monitor only
     ACTIVE = "active"    # Monitor and respond
     AGGRESSIVE = "aggressive"  # Proactive monitoring with prediction
     STEALTH = "stealth"  # Low-profile monitoring
 
 
 class AlertLevel(Enum):
-    """Alert severity levels"""
-    INFO = "info"
+    """Alert severity levels"""    INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
 
 
 class MetricType(Enum):
-    """Types of monitoring metrics"""
-    FINGERPRINT_CREATED = "fingerprint_created"
+    """Types of monitoring metrics"""    FINGERPRINT_CREATED = "fingerprint_created"
     SIMILARITY_MATCH = "similarity_match"
     VIOLATION_DETECTED = "violation_detected"
     PERFORMANCE_METRIC = "performance_metric"
@@ -84,8 +78,7 @@ class MetricType(Enum):
 
 @dataclass
 class RealTimeMetric:
-    """Real-time monitoring metric"""
-    metric_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Real-time monitoring metric"""    metric_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     metric_type: MetricType = MetricType.SYSTEM_HEALTH
     value: float = 0.0
     unit: str = ""
@@ -99,8 +92,7 @@ class RealTimeMetric:
 
 @dataclass
 class AlertEvent:
-    """Real-time alert event"""
-    alert_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Real-time alert event"""    alert_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     level: AlertLevel = AlertLevel.INFO
     title: str = ""
     message: str = ""
@@ -116,8 +108,7 @@ class AlertEvent:
 
 @dataclass
 class MonitoringSubscription:
-    """Real-time monitoring subscription"""
-    subscription_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Real-time monitoring subscription"""    subscription_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     client_id: str = ""
     websocket: Optional[Any] = None
     metric_filters: List[MetricType] = field(default_factory=list)
@@ -130,15 +121,13 @@ class MonitoringSubscription:
 
 @dataclass
 class StreamingWindow:
-    """Sliding window for streaming analytics"""
-    window_size: int = 100
+    """Sliding window for streaming analytics"""    window_size: int = 100
     time_window: int = 60  # seconds
     values: deque = field(default_factory=deque)
     timestamps: deque = field(default_factory=deque)
     
     def add_value(self, value: float, timestamp: Optional[datetime] = None):
-        """Add value to streaming window"""
-        if timestamp is None:
+        """Add value to streaming window"""        if timestamp is None:
             timestamp = datetime.utcnow()
         
         self.values.append(value)
@@ -156,8 +145,7 @@ class StreamingWindow:
             self.values.popleft()
     
     def get_statistics(self) -> Dict[str, float]:
-        """Get window statistics"""
-        if not self.values:
+        """Get window statistics"""        if not self.values:
             return {}
         
         values_array = np.array(list(self.values))
@@ -174,8 +162,7 @@ class StreamingWindow:
 
 
 class RealTimeMonitor:
-    """Advanced real-time monitoring system"""
-    
+    """Advanced real-time monitoring system"""    
     def __init__(self, config: FingerprintingSystemConfig):
         self.config = config
         self.mode = MonitoringMode.ACTIVE
@@ -212,8 +199,7 @@ class RealTimeMonitor:
         logger.info("Real-time monitor initialized")
     
     def _initialize_streaming_windows(self):
-        """Initialize streaming analytics windows"""
-        window_configs = {
+        """Initialize streaming analytics windows"""        window_configs = {
             'fingerprint_rate': StreamingWindow(window_size=100, time_window=300),  # 5 minutes
             'similarity_scores': StreamingWindow(window_size=200, time_window=600),  # 10 minutes
             'violation_rate': StreamingWindow(window_size=50, time_window=3600),   # 1 hour
@@ -226,8 +212,7 @@ class RealTimeMonitor:
             self.streaming_windows[name] = window
     
     def _setup_alert_thresholds(self):
-        """Setup alert thresholds for different metrics"""
-        self.alert_thresholds = {
+        """Setup alert thresholds for different metrics"""        self.alert_thresholds = {
             MetricType.SIMILARITY_MATCH: {
                 'warning': 0.8,
                 'critical': 0.9,
@@ -251,8 +236,7 @@ class RealTimeMonitor:
         }
     
     async def start(self):
-        """Start real-time monitoring system"""
-        if self.running:
+        """Start real-time monitoring system"""        if self.running:
             logger.warning("Real-time monitor already running")
             return
         
@@ -280,8 +264,7 @@ class RealTimeMonitor:
             raise
     
     async def stop(self):
-        """Stop real-time monitoring system"""
-        if not self.running:
+        """Stop real-time monitoring system"""        if not self.running:
             return
         
         self.running = False
@@ -306,8 +289,7 @@ class RealTimeMonitor:
         logger.info("Real-time monitoring system stopped")
     
     async def _start_websocket_server(self):
-        """Start WebSocket server for real-time updates"""
-        async def handle_websocket(websocket, path):
+        """Start WebSocket server for real-time updates"""        async def handle_websocket(websocket, path):
             client_id = str(uuid.uuid4())
             logger.info(f"WebSocket client connected: {client_id}")
             
@@ -370,8 +352,7 @@ class RealTimeMonitor:
         subscription: MonitoringSubscription, 
         message: Dict[str, Any]
     ):
-        """Handle incoming WebSocket message"""
-        message_type = message.get('type')
+        """Handle incoming WebSocket message"""        message_type = message.get('type')
         
         if message_type == 'subscribe':
             # Update subscription filters
@@ -409,8 +390,7 @@ class RealTimeMonitor:
                 await self._acknowledge_alert(alert_id)
     
     async def _start_monitoring_tasks(self):
-        """Start background monitoring tasks"""
-        # System metrics monitoring
+        """Start background monitoring tasks"""        # System metrics monitoring
         async def monitor_system_metrics():
             while self.running:
                 try:
@@ -463,8 +443,7 @@ class RealTimeMonitor:
             self.monitoring_tasks.append(task)
     
     async def record_metric(self, metric: RealTimeMetric):
-        """Record a real-time metric"""
-        try:
+        """Record a real-time metric"""        try:
             # Add to buffer
             self.metrics_buffer.append(metric)
             self.total_metrics_processed += 1
@@ -502,8 +481,7 @@ class RealTimeMonitor:
             logger.error(f"Failed to record metric: {str(e)}")
     
     async def generate_alert(self, alert: AlertEvent):
-        """Generate a real-time alert"""
-        try:
+        """Generate a real-time alert"""        try:
             # Add to buffer
             self.alerts_buffer.append(alert)
             self.total_alerts_generated += 1
@@ -556,8 +534,7 @@ class RealTimeMonitor:
             logger.error(f"Failed to generate alert: {str(e)}")
     
     async def _collect_system_metrics(self):
-        """Collect system performance metrics"""
-        try:
+        """Collect system performance metrics"""        try:
             # CPU usage
             cpu_percent = psutil.cpu_percent(interval=1)
             await self.record_metric(RealTimeMetric(
@@ -602,8 +579,7 @@ class RealTimeMonitor:
             logger.error(f"Failed to collect system metrics: {str(e)}")
     
     async def _update_streaming_windows(self, metric: RealTimeMetric):
-        """Update streaming analytics windows"""
-        try:
+        """Update streaming analytics windows"""        try:
             # Map metrics to windows
             if metric.metric_type == MetricType.FINGERPRINT_CREATED:
                 self.streaming_windows['fingerprint_rate'].add_value(1.0, metric.timestamp)
@@ -627,8 +603,7 @@ class RealTimeMonitor:
             logger.error(f"Failed to update streaming windows: {str(e)}")
     
     async def _check_metric_alerts(self, metric: RealTimeMetric):
-        """Check if metric triggers any alerts"""
-        try:
+        """Check if metric triggers any alerts"""        try:
             thresholds = self.alert_thresholds.get(metric.metric_type, {})
             
             if not thresholds:
@@ -677,8 +652,7 @@ class RealTimeMonitor:
             logger.error(f"Failed to check metric alerts: {str(e)}")
     
     async def _process_pending_alerts(self):
-        """Process pending alerts and handle escalation"""
-        try:
+        """Process pending alerts and handle escalation"""        try:
             current_time = datetime.utcnow()
             
             # Check for unacknowledged critical/emergency alerts
@@ -699,8 +673,7 @@ class RealTimeMonitor:
             logger.error(f"Failed to process pending alerts: {str(e)}")
     
     async def _escalate_alert(self, alert: AlertEvent):
-        """Escalate unacknowledged alert"""
-        try:
+        """Escalate unacknowledged alert"""        try:
             escalated_alert = AlertEvent(
                 level=AlertLevel.EMERGENCY,
                 title=f"ESCALATED: {alert.title}",
@@ -719,8 +692,7 @@ class RealTimeMonitor:
             logger.error(f"Failed to escalate alert: {str(e)}")
     
     async def _send_websocket_updates(self):
-        """Send real-time updates to WebSocket clients"""
-        try:
+        """Send real-time updates to WebSocket clients"""        try:
             if not self.subscriptions:
                 return
             
@@ -811,8 +783,7 @@ class RealTimeMonitor:
             logger.error(f"Failed to send WebSocket updates: {str(e)}")
     
     async def _cleanup_old_data(self):
-        """Clean up old metrics and alerts"""
-        try:
+        """Clean up old metrics and alerts"""        try:
             current_time = datetime.utcnow()
             cutoff_time = current_time - timedelta(hours=24)
             
@@ -834,8 +805,7 @@ class RealTimeMonitor:
             logger.error(f"Failed to cleanup old data: {str(e)}")
     
     async def _acknowledge_alert(self, alert_id: str):
-        """Acknowledge an alert"""
-        try:
+        """Acknowledge an alert"""        try:
             for alert in self.alerts_buffer:
                 if alert.alert_id == alert_id:
                     alert.acknowledged = True
@@ -852,8 +822,7 @@ class RealTimeMonitor:
             logger.error(f"Failed to acknowledge alert: {str(e)}")
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get current system monitoring status"""
-        try:
+        """Get current system monitoring status"""        try:
             current_time = datetime.utcnow()
             uptime = (current_time - self.start_time).total_seconds()
             
@@ -891,8 +860,7 @@ class RealTimeMonitor:
             return {'error': str(e)}
     
     def set_mode(self, mode: MonitoringMode):
-        """Set monitoring mode"""
-        self.mode = mode
+        """Set monitoring mode"""        self.mode = mode
         logger.info(f"Monitoring mode set to: {mode.value}")
     
     def get_recent_metrics(
@@ -900,8 +868,7 @@ class RealTimeMonitor:
         metric_type: Optional[MetricType] = None,
         limit: int = 100
     ) -> List[Dict[str, Any]]:
-        """Get recent metrics"""
-        metrics = list(self.metrics_buffer)
+        """Get recent metrics"""        metrics = list(self.metrics_buffer)
         
         if metric_type:
             metrics = [m for m in metrics if m.metric_type == metric_type]
@@ -931,8 +898,7 @@ class RealTimeMonitor:
         level: Optional[AlertLevel] = None,
         limit: int = 50
     ) -> List[Dict[str, Any]]:
-        """Get recent alerts"""
-        alerts = list(self.alerts_buffer)
+        """Get recent alerts"""        alerts = list(self.alerts_buffer)
         
         if level:
             alerts = [a for a in alerts if a.level == level]
@@ -965,8 +931,7 @@ _realtime_monitor: Optional[RealTimeMonitor] = None
 
 
 def get_realtime_monitor(config: Optional[FingerprintingSystemConfig] = None) -> RealTimeMonitor:
-    """Get or create real-time monitor instance"""
-    global _realtime_monitor
+    """Get or create real-time monitor instance"""    global _realtime_monitor
     
     if _realtime_monitor is None:
         if config is None:
@@ -978,8 +943,7 @@ def get_realtime_monitor(config: Optional[FingerprintingSystemConfig] = None) ->
 
 
 def reset_realtime_monitor():
-    """Reset real-time monitor (for testing)"""
-    global _realtime_monitor
+    """Reset real-time monitor (for testing)"""    global _realtime_monitor
     if _realtime_monitor:
         asyncio.create_task(_realtime_monitor.stop())
     _realtime_monitor = None
@@ -987,8 +951,7 @@ def reset_realtime_monitor():
 
 # Convenience functions
 async def record_fingerprint_metric(fingerprint_id: str, metric_type: MetricType, value: float, **kwargs):
-    """Record fingerprint-related metric"""
-    monitor = get_realtime_monitor()
+    """Record fingerprint-related metric"""    monitor = get_realtime_monitor()
     
     metric = RealTimeMetric(
         metric_type=metric_type,
@@ -1004,8 +967,7 @@ async def record_fingerprint_metric(fingerprint_id: str, metric_type: MetricType
 
 
 async def record_performance_metric(operation: str, duration: float, **kwargs):
-    """Record performance metric"""
-    monitor = get_realtime_monitor()
+    """Record performance metric"""    monitor = get_realtime_monitor()
     
     metric = RealTimeMetric(
         metric_type=MetricType.PERFORMANCE_METRIC,
@@ -1026,8 +988,7 @@ async def generate_violation_alert(
     evidence: Dict[str, Any],
     **kwargs
 ):
-    """Generate violation alert"""
-    monitor = get_realtime_monitor()
+    """Generate violation alert"""    monitor = get_realtime_monitor()
     
     # Determine alert level based on similarity score
     if similarity_score >= 0.95:

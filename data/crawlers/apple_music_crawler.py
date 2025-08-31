@@ -1,5 +1,4 @@
-"""
-Apple Music Crawler Implementation
+"""Apple Music Crawler Implementation
 ==================================
 
 Advanced Apple Music platform crawler for music content monitoring.
@@ -22,9 +21,7 @@ will be prosecuted to the FULL EXTENT OF THE LAW under German and
 International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 from datetime import datetime, timedelta
@@ -41,8 +38,7 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class AppleMusicTrack:
-    """Apple Music track information"""
-    track_id: str
+    """Apple Music track information"""    track_id: str
     name: str
     artist_name: str
     artist_id: str
@@ -76,8 +72,7 @@ class AppleMusicTrack:
 
 @dataclass
 class AppleMusicAlbum:
-    """Apple Music album information"""
-    album_id: str
+    """Apple Music album information"""    album_id: str
     name: str
     artist_name: str
     artist_id: str
@@ -103,8 +98,7 @@ class AppleMusicAlbum:
 
 @dataclass
 class AppleMusicArtist:
-    """Apple Music artist information"""
-    artist_id: str
+    """Apple Music artist information"""    artist_id: str
     name: str
     genres: List[str]
     origin: Optional[str]
@@ -123,8 +117,7 @@ class AppleMusicArtist:
 
 @dataclass
 class AppleMusicPlaylist:
-    """Apple Music playlist information"""
-    playlist_id: str
+    """Apple Music playlist information"""    playlist_id: str
     name: str
     description: Optional[str]
     curator_name: str
@@ -141,8 +134,7 @@ class AppleMusicPlaylist:
 
 @dataclass
 class AppleMusicStation:
-    """Apple Music radio station information"""
-    station_id: str
+    """Apple Music radio station information"""    station_id: str
     name: str
     description: Optional[str]
     artwork_url: str
@@ -155,8 +147,7 @@ class AppleMusicStation:
 
 
 class AppleMusicCrawler(PlatformCrawler):
-    """
-    Advanced Apple Music crawler for music content monitoring.
+    """    Advanced Apple Music crawler for music content monitoring.
     
     Features:
     - Track content tracking
@@ -169,8 +160,7 @@ class AppleMusicCrawler(PlatformCrawler):
     - Editorial content tracking
     - Music video monitoring
     - Podcast content tracking
-    """
-    
+    """    
     def __init__(self, config: CrawlerConfig, vector_matcher=None, 
                  developer_token: str = None, user_token: str = None):
         super().__init__(config, vector_matcher)
@@ -207,8 +197,7 @@ class AppleMusicCrawler(PlatformCrawler):
         self._setup_session_headers()
     
     def _setup_session_headers(self):
-        """Setup Apple Music-specific headers"""
-        self.session_headers.update({
+        """Setup Apple Music-specific headers"""        self.session_headers.update({
             'Accept': 'application/json',
             'Accept-Encoding': 'gzip, deflate, br',
             'Accept-Language': 'en-US,en;q=0.9',
@@ -224,8 +213,7 @@ class AppleMusicCrawler(PlatformCrawler):
     
     async def search_content(self, query: str, content_type: str = "tracks", 
                            max_results: int = 50, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """
-        Search for content on Apple Music.
+        """        Search for content on Apple Music.
         
         Args:
             query: Search query
@@ -235,8 +223,7 @@ class AppleMusicCrawler(PlatformCrawler):
             
         Returns:
             List of crawler results
-        """
-        try:
+        """        try:
             await self._check_rate_limit()
             
             if content_type not in self.content_types:
@@ -254,8 +241,7 @@ class AppleMusicCrawler(PlatformCrawler):
             return []
     
     async def _crawl_tracks(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl Apple Music tracks"""
-        try:
+        """Crawl Apple Music tracks"""        try:
             results = []
             
             # Apple Music API search endpoint
@@ -310,8 +296,7 @@ class AppleMusicCrawler(PlatformCrawler):
             return []
     
     async def _crawl_albums(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl Apple Music albums"""
-        try:
+        """Crawl Apple Music albums"""        try:
             results = []
             
             # Apple Music API search endpoint
@@ -366,8 +351,7 @@ class AppleMusicCrawler(PlatformCrawler):
             return []
     
     async def _crawl_artists(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl Apple Music artists"""
-        try:
+        """Crawl Apple Music artists"""        try:
             results = []
             
             # Apple Music API search endpoint
@@ -414,8 +398,7 @@ class AppleMusicCrawler(PlatformCrawler):
             return []
     
     async def _crawl_playlists(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl Apple Music playlists"""
-        try:
+        """Crawl Apple Music playlists"""        try:
             results = []
             
             # Apple Music API search endpoint
@@ -460,8 +443,7 @@ class AppleMusicCrawler(PlatformCrawler):
             return []
     
     async def _crawl_stations(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl Apple Music radio stations"""
-        try:
+        """Crawl Apple Music radio stations"""        try:
             results = []
             
             # Get radio stations
@@ -498,8 +480,7 @@ class AppleMusicCrawler(PlatformCrawler):
             return []
     
     async def _crawl_charts(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl Apple Music charts"""
-        try:
+        """Crawl Apple Music charts"""        try:
             results = []
             
             # Get chart data
@@ -536,8 +517,7 @@ class AppleMusicCrawler(PlatformCrawler):
             return []
     
     async def _crawl_search(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """General Apple Music search"""
-        try:
+        """General Apple Music search"""        try:
             results = []
             
             # Search across different content types
@@ -556,8 +536,7 @@ class AppleMusicCrawler(PlatformCrawler):
             return []
     
     async def _crawl_genres(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl Apple Music by genres"""
-        try:
+        """Crawl Apple Music by genres"""        try:
             results = []
             
             # Get genre-specific content
@@ -598,8 +577,7 @@ class AppleMusicCrawler(PlatformCrawler):
     # Mock data generators (for demonstration)
     
     async def _get_mock_tracks(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock track data"""
-        tracks = []
+        """Generate mock track data"""        tracks = []
         
         for i in range(min(max_results, 25)):
             tracks.append({
@@ -623,8 +601,7 @@ class AppleMusicCrawler(PlatformCrawler):
         return tracks
     
     async def _get_mock_albums(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock album data"""
-        albums = []
+        """Generate mock album data"""        albums = []
         
         for i in range(min(max_results, 25)):
             albums.append({
@@ -647,8 +624,7 @@ class AppleMusicCrawler(PlatformCrawler):
         return albums
     
     async def _get_mock_artists(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock artist data"""
-        artists = []
+        """Generate mock artist data"""        artists = []
         
         for i in range(min(max_results, 25)):
             artists.append({
@@ -664,8 +640,7 @@ class AppleMusicCrawler(PlatformCrawler):
         return artists
     
     async def _get_mock_playlists(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock playlist data"""
-        playlists = []
+        """Generate mock playlist data"""        playlists = []
         
         for i in range(min(max_results, 25)):
             playlists.append({
@@ -683,8 +658,7 @@ class AppleMusicCrawler(PlatformCrawler):
         return playlists
     
     async def _get_mock_stations(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock station data"""
-        stations = []
+        """Generate mock station data"""        stations = []
         
         for i in range(min(max_results, 10)):
             stations.append({
@@ -700,8 +674,7 @@ class AppleMusicCrawler(PlatformCrawler):
         return stations
     
     async def _get_chart_data(self, chart_type: str, max_results: int, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Get chart data"""
-        chart_data = []
+        """Get chart data"""        chart_data = []
         
         for i in range(min(max_results, 50)):
             chart_data.append({
@@ -714,8 +687,7 @@ class AppleMusicCrawler(PlatformCrawler):
         return chart_data
     
     async def _get_genres(self) -> List[Dict[str, Any]]:
-        """Get available genres"""
-        return [
+        """Get available genres"""        return [
             {'id': 'pop', 'name': 'Pop'},
             {'id': 'rock', 'name': 'Rock'},
             {'id': 'hip-hop', 'name': 'Hip-Hop'},
@@ -729,8 +701,7 @@ class AppleMusicCrawler(PlatformCrawler):
         ]
     
     async def _get_genre_content(self, genre_id: str, max_results: int) -> List[Dict[str, Any]]:
-        """Get content for specific genre"""
-        content = []
+        """Get content for specific genre"""        content = []
         
         for i in range(min(max_results, 10)):
             content.append({
@@ -744,8 +715,7 @@ class AppleMusicCrawler(PlatformCrawler):
     # Parser methods
     
     async def _parse_track_data(self, track_data: Dict[str, Any]) -> Optional[AppleMusicTrack]:
-        """Parse track data"""
-        try:
+        """Parse track data"""        try:
             release_date = datetime.fromisoformat(track_data.get('releaseDate', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
             track = AppleMusicTrack(
@@ -788,8 +758,7 @@ class AppleMusicCrawler(PlatformCrawler):
             return None
     
     async def _parse_album_data(self, album_data: Dict[str, Any]) -> Optional[AppleMusicAlbum]:
-        """Parse album data"""
-        try:
+        """Parse album data"""        try:
             release_date = datetime.fromisoformat(album_data.get('releaseDate', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
             album = AppleMusicAlbum(
@@ -824,8 +793,7 @@ class AppleMusicCrawler(PlatformCrawler):
             return None
     
     async def _parse_artist_data(self, artist_data: Dict[str, Any]) -> Optional[AppleMusicArtist]:
-        """Parse artist data"""
-        try:
+        """Parse artist data"""        try:
             artist = AppleMusicArtist(
                 artist_id=artist_data.get('id', ''),
                 name=artist_data.get('name', ''),
@@ -851,8 +819,7 @@ class AppleMusicCrawler(PlatformCrawler):
             return None
     
     async def _parse_playlist_data(self, playlist_data: Dict[str, Any]) -> Optional[AppleMusicPlaylist]:
-        """Parse playlist data"""
-        try:
+        """Parse playlist data"""        try:
             last_modified = datetime.fromisoformat(playlist_data.get('lastModifiedDate', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
             playlist = AppleMusicPlaylist(
@@ -878,8 +845,7 @@ class AppleMusicCrawler(PlatformCrawler):
             return None
     
     async def _parse_station_data(self, station_data: Dict[str, Any]) -> Optional[AppleMusicStation]:
-        """Parse station data"""
-        try:
+        """Parse station data"""        try:
             station = AppleMusicStation(
                 station_id=station_data.get('id', ''),
                 name=station_data.get('name', ''),
@@ -900,8 +866,7 @@ class AppleMusicCrawler(PlatformCrawler):
             return None
     
     async def _check_rate_limit(self):
-        """Check and enforce rate limiting"""
-        try:
+        """Check and enforce rate limiting"""        try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
             
@@ -917,8 +882,7 @@ class AppleMusicCrawler(PlatformCrawler):
             self.logger.error(f"Error in rate limiting: {str(e)}")
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
-        """Extract metadata from Apple Music content"""
-        try:
+        """Extract metadata from Apple Music content"""        try:
             # Parse Apple Music URL
             parsed_url = urlparse(url)
             path_parts = parsed_url.path.strip('/').split('/')
@@ -952,8 +916,7 @@ class AppleMusicCrawler(PlatformCrawler):
             return {'error': str(e)}
     
     def get_platform_info(self) -> Dict[str, Any]:
-        """Get Apple Music platform information"""
-        return {
+        """Get Apple Music platform information"""        return {
             'platform_name': 'Apple Music',
             'base_url': self.base_url,
             'api_base_url': self.api_base_url,

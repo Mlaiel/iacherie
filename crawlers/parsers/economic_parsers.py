@@ -1,5 +1,4 @@
-"""
-Economic Intelligence Parsers Module
+"""Economic Intelligence Parsers Module
 ===================================
 
 Ultra-advanced parsers for economic data, revenue tracking, financial analytics,
@@ -22,9 +21,7 @@ Development Team Specialties:
 - Database Administrator: Performance optimization
 - Security Expert: Content protection and compliance
 - Microservices Architect: Scalable system design
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 import re
@@ -46,8 +43,7 @@ from .parser_config import ParserConfig
 
 
 class RevenueSource(Enum):
-    """Revenue source types"""
-    YOUTUBE_AD_REVENUE = "youtube_ads"
+    """Revenue source types"""    YOUTUBE_AD_REVENUE = "youtube_ads"
     YOUTUBE_PREMIUM = "youtube_premium"
     SPOTIFY_ROYALTIES = "spotify_royalties"
     APPLE_MUSIC = "apple_music"
@@ -68,8 +64,7 @@ class RevenueSource(Enum):
 
 
 class Currency(Enum):
-    """Supported currencies"""
-    USD = "USD"
+    """Supported currencies"""    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     CAD = "CAD"
@@ -79,8 +74,7 @@ class Currency(Enum):
 
 @dataclass
 class RevenueRecord:
-    """Individual revenue record"""
-    source: RevenueSource
+    """Individual revenue record"""    source: RevenueSource
     amount: Decimal
     currency: Currency
     date: datetime
@@ -95,8 +89,7 @@ class RevenueRecord:
 
 @dataclass
 class FinancialMetrics:
-    """Comprehensive financial metrics"""
-    total_revenue: Decimal = Decimal('0.00')
+    """Comprehensive financial metrics"""    total_revenue: Decimal = Decimal('0.00')
     revenue_by_source: Dict[RevenueSource, Decimal] = field(default_factory=dict)
     revenue_by_currency: Dict[Currency, Decimal] = field(default_factory=dict)
     growth_rate: float = 0.0
@@ -109,8 +102,7 @@ class FinancialMetrics:
 
 @dataclass
 class EconomicIntelligence:
-    """Complete economic intelligence analysis"""
-    financial_metrics: FinancialMetrics = field(default_factory=FinancialMetrics)
+    """Complete economic intelligence analysis"""    financial_metrics: FinancialMetrics = field(default_factory=FinancialMetrics)
     revenue_forecast: Dict[str, Any] = field(default_factory=dict)
     market_analysis: Dict[str, Any] = field(default_factory=dict)
     competitor_insights: Dict[str, Any] = field(default_factory=dict)
@@ -119,16 +111,14 @@ class EconomicIntelligence:
 
 
 class YouTubeRevenueParser:
-    """Advanced YouTube revenue and analytics parser"""
-    
+    """Advanced YouTube revenue and analytics parser"""    
     def __init__(self, config: ParserConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.api_key = config.get_platform_config("youtube").api_key
     
     async def parse_analytics_data(self, channel_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Parse YouTube Analytics API data"""
-        try:
+        """Parse YouTube Analytics API data"""        try:
             analytics_data = await self._fetch_youtube_analytics(channel_id, start_date, end_date)
             
             revenue_data = {
@@ -148,8 +138,7 @@ class YouTubeRevenueParser:
             raise EconomicParsingError(f"Failed to parse YouTube analytics: {e}")
     
     async def _fetch_youtube_analytics(self, channel_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Fetch data from YouTube Analytics API"""
-        # Implementation would integrate with YouTube Analytics API
+        """Fetch data from YouTube Analytics API"""        # Implementation would integrate with YouTube Analytics API
         # This is a placeholder for the actual API integration
         return {
             'estimatedRevenue': 1250.75,
@@ -163,15 +152,13 @@ class YouTubeRevenueParser:
 
 
 class SpotifyRoyaltyParser:
-    """Advanced Spotify royalty and streaming data parser"""
-    
+    """Advanced Spotify royalty and streaming data parser"""    
     def __init__(self, config: ParserConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
     
     async def parse_royalty_report(self, report_data: str) -> List[RevenueRecord]:
-        """Parse Spotify royalty CSV report"""
-        try:
+        """Parse Spotify royalty CSV report"""        try:
             records = []
             csv_reader = csv.DictReader(StringIO(report_data))
             
@@ -199,8 +186,7 @@ class SpotifyRoyaltyParser:
             raise EconomicParsingError(f"Failed to parse Spotify royalties: {e}")
     
     async def analyze_streaming_performance(self, records: List[RevenueRecord]) -> Dict[str, Any]:
-        """Analyze streaming performance metrics"""
-        try:
+        """Analyze streaming performance metrics"""        try:
             total_streams = sum(record.metadata.get('streams', 0) for record in records)
             total_royalties = sum(record.amount for record in records)
             
@@ -240,8 +226,7 @@ class SpotifyRoyaltyParser:
             return {}
     
     async def _get_top_tracks(self, records: List[RevenueRecord]) -> List[Dict[str, Any]]:
-        """Get top performing tracks"""
-        track_performance = {}
+        """Get top performing tracks"""        track_performance = {}
         
         for record in records:
             track_name = record.metadata.get('track_name', 'Unknown')
@@ -275,16 +260,14 @@ class SpotifyRoyaltyParser:
 
 
 class StripePaymentsParser:
-    """Advanced Stripe payments and transaction parser"""
-    
+    """Advanced Stripe payments and transaction parser"""    
     def __init__(self, config: ParserConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
         self.stripe_config = config.get_platform_config("stripe")
     
     async def parse_payment_data(self, payment_data: Dict[str, Any]) -> RevenueRecord:
-        """Parse Stripe payment data"""
-        try:
+        """Parse Stripe payment data"""        try:
             # Calculate net amount after fees
             gross_amount = Decimal(str(payment_data.get('amount', 0))) / 100  # Stripe amounts are in cents
             stripe_fee = Decimal(str(payment_data.get('application_fee_amount', 0))) / 100
@@ -316,8 +299,7 @@ class StripePaymentsParser:
             raise EconomicParsingError(f"Failed to parse Stripe payment: {e}")
     
     async def analyze_payment_patterns(self, records: List[RevenueRecord]) -> Dict[str, Any]:
-        """Analyze payment patterns and trends"""
-        try:
+        """Analyze payment patterns and trends"""        try:
             # Group by payment method
             payment_methods = {}
             for record in records:
@@ -377,8 +359,7 @@ class StripePaymentsParser:
 
 
 class EconomicIntelligenceEngine:
-    """Advanced economic intelligence and analytics engine"""
-    
+    """Advanced economic intelligence and analytics engine"""    
     def __init__(self, config: ParserConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -391,8 +372,7 @@ class EconomicIntelligenceEngine:
         revenue_records: List[RevenueRecord],
         period_days: int = 30
     ) -> EconomicIntelligence:
-        """Generate comprehensive economic intelligence report"""
-        try:
+        """Generate comprehensive economic intelligence report"""        try:
             # Calculate financial metrics
             financial_metrics = await self._calculate_financial_metrics(revenue_records)
             
@@ -423,8 +403,7 @@ class EconomicIntelligenceEngine:
             raise EconomicParsingError(f"Failed to generate economic intelligence: {e}")
     
     async def _calculate_financial_metrics(self, records: List[RevenueRecord]) -> FinancialMetrics:
-        """Calculate comprehensive financial metrics"""
-        metrics = FinancialMetrics()
+        """Calculate comprehensive financial metrics"""        metrics = FinancialMetrics()
         
         # Total revenue
         metrics.total_revenue = sum(record.amount for record in records)
@@ -466,8 +445,7 @@ class EconomicIntelligenceEngine:
         return metrics
     
     async def _calculate_growth_rate(self, records: List[RevenueRecord]) -> float:
-        """Calculate revenue growth rate"""
-        try:
+        """Calculate revenue growth rate"""        try:
             # Group by month
             monthly_revenue = {}
             for record in records:
@@ -501,8 +479,7 @@ class EconomicIntelligenceEngine:
         records: List[RevenueRecord], 
         forecast_days: int
     ) -> Dict[str, Any]:
-        """Generate revenue forecast using trend analysis"""
-        try:
+        """Generate revenue forecast using trend analysis"""        try:
             # Simple linear trend analysis
             daily_revenue = {}
             for record in records:
@@ -538,8 +515,7 @@ class EconomicIntelligenceEngine:
             return {'forecast': 'error', 'error': str(e)}
     
     async def _analyze_market_trends(self, records: List[RevenueRecord]) -> Dict[str, Any]:
-        """Analyze market trends and patterns"""
-        try:
+        """Analyze market trends and patterns"""        try:
             # Analyze seasonal patterns
             monthly_patterns = {}
             for record in records:
@@ -580,8 +556,7 @@ class EconomicIntelligenceEngine:
         records: List[RevenueRecord],
         metrics: FinancialMetrics
     ) -> List[str]:
-        """Generate revenue optimization recommendations"""
-        recommendations = []
+        """Generate revenue optimization recommendations"""        recommendations = []
         
         try:
             # Diversification recommendations
@@ -627,8 +602,7 @@ class EconomicIntelligenceEngine:
         return recommendations
     
     async def _assess_financial_risks(self, records: List[RevenueRecord]) -> Dict[str, Any]:
-        """Assess financial risks and volatility"""
-        try:
+        """Assess financial risks and volatility"""        try:
             # Calculate revenue volatility
             daily_revenues = {}
             for record in records:

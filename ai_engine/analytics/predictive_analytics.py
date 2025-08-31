@@ -1,5 +1,4 @@
-"""
-Predictive Analytics - Advanced Machine Learning Predictions and Forecasting
+"""Predictive Analytics - Advanced Machine Learning Predictions and Forecasting
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -10,9 +9,7 @@ prohibited and will result in severe legal consequences.
 
 This module provides advanced predictive analytics, machine learning forecasting,
 and AI-driven insights for content creators on the IA Influencer Agent platform.
-"""
-
-import logging
+"""import logging
 import numpy as np
 import pandas as pd
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -35,8 +32,7 @@ warnings.filterwarnings('ignore')
 logger = logging.getLogger(__name__)
 
 class PredictionType(Enum):
-    """Types of predictions available"""
-    ENGAGEMENT_RATE = "engagement_rate"
+    """Types of predictions available"""    ENGAGEMENT_RATE = "engagement_rate"
     VIEW_COUNT = "view_count"
     REVENUE = "revenue"
     VIRALITY_SCORE = "virality_score"
@@ -50,8 +46,7 @@ class PredictionType(Enum):
     PLATFORM_GROWTH = "platform_growth"
 
 class ModelType(Enum):
-    """Types of ML models used"""
-    LINEAR_REGRESSION = "linear_regression"
+    """Types of ML models used"""    LINEAR_REGRESSION = "linear_regression"
     RANDOM_FOREST = "random_forest"
     NEURAL_NETWORK = "neural_network"
     TIME_SERIES = "time_series"
@@ -59,23 +54,20 @@ class ModelType(Enum):
     DEEP_LEARNING = "deep_learning"
 
 class PredictionAccuracy(Enum):
-    """Prediction accuracy levels"""
-    LOW = "low"          # < 60% accuracy
+    """Prediction accuracy levels"""    LOW = "low"          # < 60% accuracy
     MEDIUM = "medium"    # 60-75% accuracy
     HIGH = "high"        # 75-85% accuracy
     VERY_HIGH = "very_high"  # > 85% accuracy
 
 class TimeHorizon(Enum):
-    """Prediction time horizons"""
-    SHORT_TERM = "short_term"      # 1-7 days
+    """Prediction time horizons"""    SHORT_TERM = "short_term"      # 1-7 days
     MEDIUM_TERM = "medium_term"    # 1-4 weeks
     LONG_TERM = "long_term"        # 1-6 months
     STRATEGIC = "strategic"        # 6+ months
 
 @dataclass
 class PredictionInput:
-    """Input data for predictions"""
-    creator_id: str
+    """Input data for predictions"""    creator_id: str
     content_id: Optional[str] = None
     historical_data: Dict[str, Any] = field(default_factory=dict)
     external_factors: Dict[str, Any] = field(default_factory=dict)
@@ -86,8 +78,7 @@ class PredictionInput:
 
 @dataclass
 class PredictionResult:
-    """Result of a prediction analysis"""
-    prediction_id: str
+    """Result of a prediction analysis"""    prediction_id: str
     creator_id: str
     prediction_type: PredictionType
     predicted_value: Union[float, int, str]
@@ -112,8 +103,7 @@ class PredictionResult:
 
 @dataclass
 class ModelPerformance:
-    """Model performance metrics"""
-    model_id: str
+    """Model performance metrics"""    model_id: str
     model_type: ModelType
     prediction_type: PredictionType
     accuracy_score: float
@@ -130,8 +120,7 @@ class ModelPerformance:
 
 @dataclass
 class ForecastingReport:
-    """Comprehensive forecasting report"""
-    report_id: str
+    """Comprehensive forecasting report"""    report_id: str
     creator_id: str
     report_period: Dict[str, datetime]
     generated_at: datetime = field(default_factory=datetime.utcnow)
@@ -155,11 +144,9 @@ class ForecastingReport:
     data_quality_assessment: Dict[str, float] = field(default_factory=dict)
 
 class PredictiveAnalyticsEngine:
-    """Advanced predictive analytics engine using machine learning"""
-    
+    """Advanced predictive analytics engine using machine learning"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize predictive analytics engine"""
-        self.config = config or {}
+        """Initialize predictive analytics engine"""        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
         # Model storage and management
@@ -196,8 +183,7 @@ class PredictiveAnalyticsEngine:
         self.logger.info("PredictiveAnalyticsEngine initialized successfully")
     
     def _initialize_models(self):
-        """Initialize ML models for different prediction types"""
-        try:
+        """Initialize ML models for different prediction types"""        try:
             # Engagement prediction models
             self.models[f"{PredictionType.ENGAGEMENT_RATE.value}_rf"] = RandomForestRegressor(
                 n_estimators=100, random_state=42, max_depth=10
@@ -234,8 +220,7 @@ class PredictiveAnalyticsEngine:
         prediction_input: PredictionInput,
         time_horizon: TimeHorizon = TimeHorizon.SHORT_TERM
     ) -> PredictionResult:
-        """Predict content engagement rate"""
-        try:
+        """Predict content engagement rate"""        try:
             self.logger.info(f"Predicting engagement rate for creator: {prediction_input.creator_id}")
             
             # Check cache first
@@ -326,8 +311,7 @@ class PredictiveAnalyticsEngine:
         prediction_input: PredictionInput,
         time_horizon: TimeHorizon = TimeHorizon.MEDIUM_TERM
     ) -> PredictionResult:
-        """Predict revenue for a creator"""
-        try:
+        """Predict revenue for a creator"""        try:
             self.logger.info(f"Predicting revenue for creator: {prediction_input.creator_id}")
             
             # Extract revenue-specific features
@@ -403,8 +387,7 @@ class PredictiveAnalyticsEngine:
         self,
         prediction_input: PredictionInput
     ) -> PredictionResult:
-        """Predict virality potential of content"""
-        try:
+        """Predict virality potential of content"""        try:
             self.logger.info(f"Predicting virality for content: {prediction_input.content_id}")
             
             # Extract virality features
@@ -467,8 +450,7 @@ class PredictiveAnalyticsEngine:
         self,
         prediction_input: PredictionInput
     ) -> PredictionResult:
-        """Predict optimal posting times for maximum engagement"""
-        try:
+        """Predict optimal posting times for maximum engagement"""        try:
             self.logger.info(f"Predicting optimal posting time for: {prediction_input.creator_id}")
             
             # Analyze historical posting patterns
@@ -541,8 +523,7 @@ class PredictiveAnalyticsEngine:
         creator_id: str,
         timeframe: Optional[timedelta] = None
     ) -> ForecastingReport:
-        """Generate comprehensive forecasting report"""
-        try:
+        """Generate comprehensive forecasting report"""        try:
             if not timeframe:
                 timeframe = timedelta(days=90)  # 3-month forecast
             
@@ -618,8 +599,7 @@ class PredictiveAnalyticsEngine:
         training_data: pd.DataFrame,
         model_type: ModelType = ModelType.RANDOM_FOREST
     ) -> ModelPerformance:
-        """Train a prediction model with historical data"""
-        try:
+        """Train a prediction model with historical data"""        try:
             self.logger.info(f"Training {prediction_type.value} model with {len(training_data)} samples")
             
             if len(training_data) < self.min_training_samples:
@@ -697,8 +677,7 @@ class PredictiveAnalyticsEngine:
     # Feature extraction methods
     
     async def _extract_engagement_features(self, prediction_input: PredictionInput) -> Dict[str, float]:
-        """Extract features for engagement prediction"""
-        features = {}
+        """Extract features for engagement prediction"""        features = {}
         
         try:
             # Historical performance features
@@ -744,8 +723,7 @@ class PredictiveAnalyticsEngine:
             return {}
     
     async def _extract_revenue_features(self, prediction_input: PredictionInput) -> Dict[str, float]:
-        """Extract features for revenue prediction"""
-        features = {}
+        """Extract features for revenue prediction"""        features = {}
         
         try:
             # Revenue history
@@ -790,8 +768,7 @@ class PredictiveAnalyticsEngine:
             return {}
     
     async def _extract_virality_features(self, prediction_input: PredictionInput) -> Dict[str, float]:
-        """Extract features for virality prediction"""
-        features = {}
+        """Extract features for virality prediction"""        features = {}
         
         try:
             # Content characteristics
@@ -836,8 +813,7 @@ class PredictiveAnalyticsEngine:
             return {}
     
     async def _extract_timing_features(self, prediction_input: PredictionInput) -> Dict[str, float]:
-        """Extract features for optimal timing prediction"""
-        features = {}
+        """Extract features for optimal timing prediction"""        features = {}
         
         try:
             # Audience activity patterns
@@ -879,8 +855,7 @@ class PredictiveAnalyticsEngine:
         features: Dict[str, float],
         prediction_type: PredictionType
     ) -> float:
-        """Calculate confidence score for a prediction"""
-        try:
+        """Calculate confidence score for a prediction"""        try:
             # Base confidence on model performance
             model_key = f"{prediction_type.value}_rf"  # Assuming random forest
             performance = self.model_performance.get(model_key)
@@ -907,8 +882,7 @@ class PredictiveAnalyticsEngine:
             return 0.7
     
     def _determine_accuracy_level(self, confidence: float) -> PredictionAccuracy:
-        """Determine accuracy level from confidence score"""
-        if confidence >= 0.85:
+        """Determine accuracy level from confidence score"""        if confidence >= 0.85:
             return PredictionAccuracy.VERY_HIGH
         elif confidence >= 0.75:
             return PredictionAccuracy.HIGH
@@ -923,8 +897,7 @@ class PredictiveAnalyticsEngine:
         prediction_type: PredictionType,
         fallback_value: Union[float, str]
     ) -> PredictionResult:
-        """Create a fallback prediction when models fail"""
-        return PredictionResult(
+        """Create a fallback prediction when models fail"""        return PredictionResult(
             prediction_id=f"fallback_{prediction_type.value}_{prediction_input.creator_id}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}",
             creator_id=prediction_input.creator_id,
             prediction_type=prediction_type,
@@ -941,8 +914,7 @@ class PredictiveAnalyticsEngine:
         result: PredictionResult,
         features: Dict[str, float]
     ) -> List[str]:
-        """Generate recommendations for improving engagement"""
-        recommendations = []
+        """Generate recommendations for improving engagement"""        recommendations = []
         
         try:
             predicted_rate = float(result.predicted_value)
@@ -973,8 +945,7 @@ class PredictiveAnalyticsEngine:
         result: PredictionResult,
         features: Dict[str, float]
     ) -> List[str]:
-        """Generate recommendations for improving revenue"""
-        recommendations = []
+        """Generate recommendations for improving revenue"""        recommendations = []
         
         try:
             predicted_revenue = float(result.predicted_value)
@@ -1005,8 +976,7 @@ class PredictiveAnalyticsEngine:
         result: PredictionResult,
         features: Dict[str, float]
     ) -> List[str]:
-        """Generate recommendations for improving virality potential"""
-        recommendations = []
+        """Generate recommendations for improving virality potential"""        recommendations = []
         
         try:
             virality_score = float(result.predicted_value)
@@ -1035,8 +1005,7 @@ class PredictiveAnalyticsEngine:
     # Additional prediction methods and utilities would continue here...
     
     async def predict_audience_growth(self, prediction_input: PredictionInput) -> PredictionResult:
-        """Predict audience growth for a creator"""
-        try:
+        """Predict audience growth for a creator"""        try:
             # Extract growth-related features
             features = await self._extract_growth_features(prediction_input)
             
@@ -1071,8 +1040,7 @@ class PredictiveAnalyticsEngine:
             )
     
     async def _extract_growth_features(self, prediction_input: PredictionInput) -> Dict[str, float]:
-        """Extract features for audience growth prediction"""
-        features = {}
+        """Extract features for audience growth prediction"""        features = {}
         
         historical = prediction_input.historical_data
         features['total_followers'] = historical.get('total_followers', 1000)
@@ -1091,8 +1059,7 @@ class PredictiveAnalyticsEngine:
         predicted_revenue: float,
         confidence: float
     ) -> Dict[str, float]:
-        """Calculate confidence intervals for revenue prediction"""
-        uncertainty = (1 - confidence) * 0.5  # Convert confidence to uncertainty
+        """Calculate confidence intervals for revenue prediction"""        uncertainty = (1 - confidence) * 0.5  # Convert confidence to uncertainty
         
         return {
             'lower_bound': predicted_revenue * (1 - uncertainty),
@@ -1105,8 +1072,7 @@ class PredictiveAnalyticsEngine:
         result: PredictionResult,
         features: Dict[str, float]
     ) -> List[str]:
-        """Identify risks that could affect engagement"""
-        risks = []
+        """Identify risks that could affect engagement"""        risks = []
         
         if features.get('audience_activity_score', 0.5) < 0.3:
             risks.append("Low audience activity may limit engagement potential")
@@ -1120,8 +1086,7 @@ class PredictiveAnalyticsEngine:
         return risks
     
     def _identify_virality_risks(self, features: Dict[str, float]) -> List[str]:
-        """Identify risks that could prevent virality"""
-        risks = []
+        """Identify risks that could prevent virality"""        risks = []
         
         if features.get('content_novelty', 0.5) < 0.3:
             risks.append("Low content novelty may limit viral potential")
@@ -1135,8 +1100,7 @@ class PredictiveAnalyticsEngine:
         return risks
     
     async def _gather_prediction_data(self, creator_id: str) -> PredictionInput:
-        """Gather comprehensive data for predictions"""
-        # Simulate data gathering (in production, integrate with actual data sources)
+        """Gather comprehensive data for predictions"""        # Simulate data gathering (in production, integrate with actual data sources)
         return PredictionInput(
             creator_id=creator_id,
             historical_data={
@@ -1167,8 +1131,7 @@ class PredictiveAnalyticsEngine:
         )
     
     def _update_average_accuracy(self, new_accuracy: float):
-        """Update running average accuracy"""
-        current_avg = self.engine_stats['average_accuracy']
+        """Update running average accuracy"""        current_avg = self.engine_stats['average_accuracy']
         count = self.engine_stats['model_training_count']
         
         if count > 1:
@@ -1179,8 +1142,7 @@ class PredictiveAnalyticsEngine:
             self.engine_stats['average_accuracy'] = new_accuracy
     
     def get_engine_statistics(self) -> Dict[str, Any]:
-        """Get predictive analytics engine statistics"""
-        stats = self.engine_stats.copy()
+        """Get predictive analytics engine statistics"""        stats = self.engine_stats.copy()
         stats['active_models'] = len(self.models)
         stats['cached_predictions'] = len(self.predictions_cache)
         stats['model_performance_records'] = len(self.model_performance)
@@ -1191,8 +1153,7 @@ class PredictiveAnalyticsEngine:
         creator_id: str,
         predictions: List[PredictionResult]
     ) -> List[Dict[str, Any]]:
-        """Identify opportunities based on predictions"""
-        opportunities = []
+        """Identify opportunities based on predictions"""        opportunities = []
         
         # High engagement opportunity
         engagement_pred = next((p for p in predictions if p.prediction_type == PredictionType.ENGAGEMENT_RATE), None)
@@ -1221,8 +1182,7 @@ class PredictiveAnalyticsEngine:
         creator_id: str,
         predictions: List[PredictionResult]
     ) -> List[Dict[str, Any]]:
-        """Identify threats based on predictions"""
-        threats = []
+        """Identify threats based on predictions"""        threats = []
         
         # Low confidence predictions
         low_confidence_preds = [p for p in predictions if p.confidence_score < 0.6]
@@ -1240,8 +1200,7 @@ class PredictiveAnalyticsEngine:
         self,
         predictions: List[PredictionResult]
     ) -> List[str]:
-        """Generate strategic recommendations based on all predictions"""
-        recommendations = []
+        """Generate strategic recommendations based on all predictions"""        recommendations = []
         
         # Analyze prediction patterns
         avg_confidence = statistics.mean([p.confidence_score for p in predictions])
@@ -1258,8 +1217,7 @@ class PredictiveAnalyticsEngine:
         self,
         predictions: List[PredictionResult]
     ) -> Dict[str, float]:
-        """Assess risks associated with predictions"""
-        return {
+        """Assess risks associated with predictions"""        return {
             'data_quality_risk': 0.3,    # Risk from poor data quality
             'model_uncertainty': 0.2,    # Risk from model limitations
             'external_factors': 0.4,     # Risk from unpredictable external factors
@@ -1267,8 +1225,7 @@ class PredictiveAnalyticsEngine:
         }
     
     async def _generate_scenario_analysis(self, creator_id: str) -> Dict[str, Dict[str, Any]]:
-        """Generate scenario planning analysis"""
-        return {
+        """Generate scenario planning analysis"""        return {
             'optimistic': {
                 'description': 'Best-case scenario with optimal execution',
                 'probability': 0.3,
@@ -1290,8 +1247,7 @@ class PredictiveAnalyticsEngine:
         }
     
     async def _assess_data_quality(self, prediction_input: PredictionInput) -> Dict[str, float]:
-        """Assess quality of data used for predictions"""
-        return {
+        """Assess quality of data used for predictions"""        return {
             'completeness': 0.8,      # How complete is the data
             'accuracy': 0.85,         # How accurate is the data
             'freshness': 0.9,         # How recent is the data

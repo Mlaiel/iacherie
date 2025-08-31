@@ -1,5 +1,4 @@
-"""
-Monetization and Revenue Schemas
+"""Monetization and Revenue Schemas
 
 Comprehensive Pydantic schemas for revenue tracking, payment processing,
 and monetization management in the IA Influencer Agent platform.
@@ -7,9 +6,7 @@ and monetization management in the IA Influencer Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-
-from datetime import datetime, date
+"""from datetime import datetime, date
 from decimal import Decimal
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any
@@ -20,8 +17,7 @@ from pydantic.types import PositiveInt, PositiveFloat
 
 
 class CurrencyEnum(str, Enum):
-    """Supported currencies"""
-    USD = "USD"
+    """Supported currencies"""    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     CAD = "CAD"
@@ -37,8 +33,7 @@ class CurrencyEnum(str, Enum):
 
 
 class RevenueSourceEnum(str, Enum):
-    """Sources of revenue"""
-    STREAMING = "streaming"
+    """Sources of revenue"""    STREAMING = "streaming"
     LICENSING = "licensing"
     ADVERTISING = "advertising"
     MERCHANDISE = "merchandise"
@@ -58,8 +53,7 @@ class RevenueSourceEnum(str, Enum):
 
 
 class PaymentStatusEnum(str, Enum):
-    """Payment processing status"""
-    PENDING = "pending"
+    """Payment processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -71,8 +65,7 @@ class PaymentStatusEnum(str, Enum):
 
 
 class PaymentMethodEnum(str, Enum):
-    """Payment methods"""
-    BANK_TRANSFER = "bank_transfer"
+    """Payment methods"""    BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE = "stripe"
     WISE = "wise"
@@ -84,8 +77,7 @@ class PaymentMethodEnum(str, Enum):
 
 
 class MonetizationRuleTypeEnum(str, Enum):
-    """Types of monetization rules"""
-    PERCENTAGE_SPLIT = "percentage_split"
+    """Types of monetization rules"""    PERCENTAGE_SPLIT = "percentage_split"
     FIXED_AMOUNT = "fixed_amount"
     TIERED_COMMISSION = "tiered_commission"
     REVENUE_THRESHOLD = "revenue_threshold"
@@ -96,8 +88,7 @@ class MonetizationRuleTypeEnum(str, Enum):
 
 
 class TaxStatusEnum(str, Enum):
-    """Tax status categories"""
-    INDIVIDUAL = "individual"
+    """Tax status categories"""    INDIVIDUAL = "individual"
     BUSINESS = "business"
     NON_PROFIT = "non_profit"
     INTERNATIONAL = "international"
@@ -105,8 +96,7 @@ class TaxStatusEnum(str, Enum):
 
 
 class RevenueMetricsSchema(BaseModel):
-    """Schema for revenue metrics and analytics"""
-    total_streams: int = Field(0, description="Total number of streams")
+    """Schema for revenue metrics and analytics"""    total_streams: int = Field(0, description="Total number of streams")
     total_downloads: int = Field(0, description="Total number of downloads")
     total_views: int = Field(0, description="Total number of views")
     unique_listeners: int = Field(0, description="Number of unique listeners")
@@ -131,8 +121,7 @@ class RevenueMetricsSchema(BaseModel):
 
 
 class PlatformRevenueSchema(BaseModel):
-    """Schema for platform-specific revenue data"""
-    platform: str = Field(..., description="Platform name")
+    """Schema for platform-specific revenue data"""    platform: str = Field(..., description="Platform name")
     revenue_amount: Decimal = Field(..., description="Revenue amount")
     currency: CurrencyEnum = Field(..., description="Currency code")
     streams_count: Optional[int] = Field(None, description="Number of streams")
@@ -158,8 +147,7 @@ class PlatformRevenueSchema(BaseModel):
 
 
 class RevenueTrackingBaseSchema(BaseModel):
-    """Base schema for revenue tracking"""
-    user_id: PositiveInt = Field(..., description="User ID")
+    """Base schema for revenue tracking"""    user_id: PositiveInt = Field(..., description="User ID")
     content_id: Optional[PositiveInt] = Field(None, description="Associated content ID")
     fingerprint_id: Optional[PositiveInt] = Field(None, description="Associated fingerprint ID")
     
@@ -187,8 +175,7 @@ class RevenueTrackingBaseSchema(BaseModel):
     @field_validator('net_amount')
     @classmethod
     def calculate_net_amount(cls, v, values):
-        """Calculate net amount from gross minus all fees"""
-        gross = values.get('gross_amount', Decimal('0.00'))
+        """Calculate net amount from gross minus all fees"""        gross = values.get('gross_amount', Decimal('0.00'))
         commission = values.get('platform_commission', Decimal('0.00'))
         service_fee = values.get('service_fee', Decimal('0.00'))
         processing_fee = values.get('processing_fee', Decimal('0.00'))
@@ -199,8 +186,7 @@ class RevenueTrackingBaseSchema(BaseModel):
 
 
 class RevenueTrackingCreateSchema(RevenueTrackingBaseSchema):
-    """Schema for creating revenue tracking entries"""
-    # Additional metadata
+    """Schema for creating revenue tracking entries"""    # Additional metadata
     transaction_id: Optional[str] = Field(None, description="External transaction ID")
     reference_id: Optional[str] = Field(None, description="Platform reference ID")
     payment_reference: Optional[str] = Field(None, description="Payment reference")
@@ -232,8 +218,7 @@ class RevenueTrackingCreateSchema(RevenueTrackingBaseSchema):
 
 
 class RevenueTrackingUpdateSchema(BaseModel):
-    """Schema for updating revenue tracking entries"""
-    gross_amount: Optional[Decimal] = Field(None, description="Updated gross amount")
+    """Schema for updating revenue tracking entries"""    gross_amount: Optional[Decimal] = Field(None, description="Updated gross amount")
     platform_commission: Optional[Decimal] = Field(None, description="Updated commission")
     service_fee: Optional[Decimal] = Field(None, description="Updated service fee")
     processing_fee: Optional[Decimal] = Field(None, description="Updated processing fee")
@@ -254,8 +239,7 @@ class RevenueTrackingUpdateSchema(BaseModel):
 
 
 class PaymentProcessingSchema(BaseModel):
-    """Schema for payment processing information"""
-    payment_id: str = Field(..., description="Unique payment ID")
+    """Schema for payment processing information"""    payment_id: str = Field(..., description="Unique payment ID")
     payment_method: PaymentMethodEnum = Field(..., description="Payment method used")
     payment_gateway: str = Field(..., description="Payment gateway provider")
     gateway_transaction_id: Optional[str] = Field(None, description="Gateway transaction ID")
@@ -295,8 +279,7 @@ class PaymentProcessingSchema(BaseModel):
 
 
 class RevenueTrackingResponseSchema(RevenueTrackingBaseSchema):
-    """Schema for revenue tracking responses"""
-    id: PositiveInt = Field(..., description="Unique revenue tracking ID")
+    """Schema for revenue tracking responses"""    id: PositiveInt = Field(..., description="Unique revenue tracking ID")
     
     # Status and verification
     status: str = Field(..., description="Revenue tracking status")
@@ -343,8 +326,7 @@ class RevenueTrackingResponseSchema(RevenueTrackingBaseSchema):
 
 
 class MonetizationRuleSchema(BaseModel):
-    """Schema for monetization rules and configurations"""
-    rule_id: str = Field(..., description="Unique rule identifier")
+    """Schema for monetization rules and configurations"""    rule_id: str = Field(..., description="Unique rule identifier")
     user_id: PositiveInt = Field(..., description="User ID")
     rule_name: str = Field(..., description="Rule name")
     rule_type: MonetizationRuleTypeEnum = Field(..., description="Type of monetization rule")
@@ -380,8 +362,7 @@ class MonetizationRuleSchema(BaseModel):
 
 
 class RevenueDashboardSchema(BaseModel):
-    """Schema for revenue dashboard metrics"""
-    # Summary metrics
+    """Schema for revenue dashboard metrics"""    # Summary metrics
     total_revenue: Decimal = Field(..., description="Total revenue")
     revenue_this_month: Decimal = Field(..., description="Revenue this month")
     revenue_last_month: Decimal = Field(..., description="Revenue last month")
@@ -420,8 +401,7 @@ class RevenueDashboardSchema(BaseModel):
 
 
 class TaxReportingSchema(BaseModel):
-    """Schema for tax reporting information"""
-    user_id: PositiveInt = Field(..., description="User ID")
+    """Schema for tax reporting information"""    user_id: PositiveInt = Field(..., description="User ID")
     tax_year: int = Field(..., description="Tax year")
     tax_status: TaxStatusEnum = Field(..., description="Tax status")
     country: str = Field(..., description="Tax country")

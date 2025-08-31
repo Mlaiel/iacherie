@@ -1,12 +1,9 @@
-"""
-Commission Calculator System
+"""Commission Calculator System
 Advanced commission structure management and calculation engine
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import logging
+"""import logging
 from datetime import datetime
 from decimal import Decimal, ROUND_HALF_UP
 from typing import Dict, List, Optional, Any
@@ -17,8 +14,7 @@ from pydantic import BaseModel, Field
 
 
 class CommissionType(Enum):
-    """Types of commission structures"""
-    PERCENTAGE = "percentage"
+    """Types of commission structures"""    PERCENTAGE = "percentage"
     FLAT_RATE = "flat_rate"
     TIERED = "tiered"
     PERFORMANCE_BASED = "performance_based"
@@ -26,8 +22,7 @@ class CommissionType(Enum):
 
 
 class TierCriteria(Enum):
-    """Criteria for tiered commissions"""
-    REVENUE_AMOUNT = "revenue_amount"
+    """Criteria for tiered commissions"""    REVENUE_AMOUNT = "revenue_amount"
     TRANSACTION_COUNT = "transaction_count"
     USER_LEVEL = "user_level"
     PLATFORM_PERFORMANCE = "platform_performance"
@@ -36,8 +31,7 @@ class TierCriteria(Enum):
 
 @dataclass
 class CommissionTier:
-    """Individual commission tier definition"""
-    tier_name: str
+    """Individual commission tier definition"""    tier_name: str
     min_threshold: Decimal
     max_threshold: Optional[Decimal]
     commission_rate: Decimal
@@ -45,8 +39,7 @@ class CommissionTier:
     bonus_rate: Optional[Decimal] = None
     
     def applies_to_amount(self, amount: Decimal) -> bool:
-        """Check if tier applies to given amount"""
-        if amount < self.min_threshold:
+        """Check if tier applies to given amount"""        if amount < self.min_threshold:
             return False
         if self.max_threshold and amount > self.max_threshold:
             return False
@@ -55,8 +48,7 @@ class CommissionTier:
 
 @dataclass 
 class CommissionStructure:
-    """Complete commission structure definition"""
-    structure_id: str
+    """Complete commission structure definition"""    structure_id: str
     name: str
     description: str
     commission_type: CommissionType
@@ -70,8 +62,7 @@ class CommissionStructure:
     expiry_date: Optional[datetime] = None
     
     def is_active(self) -> bool:
-        """Check if commission structure is currently active"""
-        now = datetime.now()
+        """Check if commission structure is currently active"""        now = datetime.now()
         if now < self.effective_date:
             return False
         if self.expiry_date and now > self.expiry_date:
@@ -80,8 +71,7 @@ class CommissionStructure:
 
 
 class CommissionCalculationRequest(BaseModel):
-    """Request for commission calculation"""
-    user_id: int
+    """Request for commission calculation"""    user_id: int
     revenue_amount: Decimal = Field(..., gt=0)
     platform: str
     content_type: str
@@ -92,8 +82,7 @@ class CommissionCalculationRequest(BaseModel):
 
 
 class CommissionResult(BaseModel):
-    """Commission calculation result"""
-    gross_revenue: Decimal
+    """Commission calculation result"""    gross_revenue: Decimal
     commission_amount: Decimal
     commission_rate: Decimal
     net_revenue: Decimal
@@ -102,8 +91,7 @@ class CommissionResult(BaseModel):
     bonuses_applied: List[Dict[str, Any]] = Field(default_factory=list)
     
     def get_summary(self) -> Dict[str, Any]:
-        """Get calculation summary"""
-        return {
+        """Get calculation summary"""        return {
             "gross_revenue": float(self.gross_revenue),
             "commission_amount": float(self.commission_amount),
             "commission_rate": float(self.commission_rate),
@@ -114,16 +102,14 @@ class CommissionResult(BaseModel):
 
 
 class CommissionCalculator:
-    """Advanced commission calculation engine"""
-    
+    """Advanced commission calculation engine"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.commission_structures: Dict[str, CommissionStructure] = {}
         self._initialize_default_structures()
         
     def _initialize_default_structures(self) -> None:
-        """Initialize default commission structures"""
-        
+        """Initialize default commission structures"""        
         # Standard percentage structure
         standard = CommissionStructure(
             structure_id="standard",
@@ -192,8 +178,7 @@ class CommissionCalculator:
         structure_id: str = "standard",
         session: Optional[AsyncSession] = None
     ) -> CommissionResult:
-        """Calculate commission based on structure and request parameters"""
-        try:
+        """Calculate commission based on structure and request parameters"""        try:
             # Get commission structure
             structure = self.commission_structures.get(structure_id)
             if not structure or not structure.is_active():
@@ -278,16 +263,14 @@ class CommissionCalculator:
         request: CommissionCalculationRequest,
         structure: CommissionStructure
     ) -> Decimal:
-        """Calculate simple percentage-based commission"""
-        return request.revenue_amount * (structure.base_percentage / 100)
+        """Calculate simple percentage-based commission"""        return request.revenue_amount * (structure.base_percentage / 100)
     
     async def _calculate_tiered_commission(
         self,
         request: CommissionCalculationRequest,
         structure: CommissionStructure
     ) -> tuple[Decimal, Decimal, str]:
-        """Calculate tiered commission based on revenue amount"""
-        total_commission = Decimal("0")
+        """Calculate tiered commission based on revenue amount"""        total_commission = Decimal("0")
         remaining_amount = request.revenue_amount
         applied_tier = None
         weighted_rate = Decimal("0")
@@ -323,8 +306,7 @@ class CommissionCalculator:
         request: CommissionCalculationRequest,
         structure: CommissionStructure
     ) -> tuple[Decimal, Decimal]:
-        """Calculate performance-based commission with multipliers"""
-        base_commission = request.revenue_amount * (structure.base_percentage / 100)
+        """Calculate performance-based commission with multipliers"""        base_commission = request.revenue_amount * (structure.base_percentage / 100)
         performance_factor = Decimal("1.0")
         
         # Apply performance multipliers
@@ -368,8 +350,7 @@ class CommissionCalculator:
         request: CommissionCalculationRequest,
         structure: CommissionStructure
     ) -> List[Dict[str, Any]]:
-        """Calculate bonus reductions to commission"""
-        bonuses = []
+        """Calculate bonus reductions to commission"""        bonuses = []
         
         # Volume bonus (for high transaction counts)
         if request.transaction_count > 100:
@@ -409,8 +390,7 @@ class CommissionCalculator:
         request: CommissionCalculationRequest,
         structure: CommissionStructure
     ) -> Dict[str, Any]:
-        """Get detailed performance adjustments applied"""
-        adjustments = {}
+        """Get detailed performance adjustments applied"""        adjustments = {}
         
         for metric, value in request.performance_metrics.items():
             if metric in structure.performance_multipliers:
@@ -428,8 +408,7 @@ class CommissionCalculator:
         month: datetime,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Calculate comprehensive monthly commission summary"""
-        try:
+        """Calculate comprehensive monthly commission summary"""        try:
             from ...database.models import RevenueRecord
             from sqlalchemy import select, func
             
@@ -509,13 +488,11 @@ class CommissionCalculator:
             return {}
     
     def add_commission_structure(self, structure: CommissionStructure) -> None:
-        """Add new commission structure"""
-        self.commission_structures[structure.structure_id] = structure
+        """Add new commission structure"""        self.commission_structures[structure.structure_id] = structure
         self.logger.info(f"Added commission structure: {structure.name}")
     
     def get_available_structures(self) -> List[Dict[str, Any]]:
-        """Get list of available commission structures"""
-        return [
+        """Get list of available commission structures"""        return [
             {
                 "structure_id": structure.structure_id,
                 "name": structure.name,
@@ -533,8 +510,7 @@ class CommissionCalculator:
         revenue_amounts: List[Decimal],
         structure_ids: List[str]
     ) -> Dict[str, Any]:
-        """Simulate commission calculations for different scenarios"""
-        scenarios = {}
+        """Simulate commission calculations for different scenarios"""        scenarios = {}
         
         for structure_id in structure_ids:
             structure_scenarios = []

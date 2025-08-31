@@ -1,5 +1,4 @@
-"""
-Emotion Detection Module - IA Influencer Agent
+"""Emotion Detection Module - IA Influencer Agent
 
 Advanced emotion detection and sentiment analysis from voice for content creators,
 enabling emotional intelligence in conversational AI and content optimization.
@@ -14,9 +13,7 @@ Features:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import logging
+"""import logging
 import asyncio
 import numpy as np
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -31,16 +28,14 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class EmotionFeatures:
-    """Voice emotion features"""
-    prosodic_features: Dict[str, float]
+    """Voice emotion features"""    prosodic_features: Dict[str, float]
     spectral_features: Dict[str, float]
     temporal_features: Dict[str, float]
     linguistic_features: Dict[str, float]
 
 @dataclass
 class EmotionFrame:
-    """Single frame emotion analysis"""
-    timestamp: float
+    """Single frame emotion analysis"""    timestamp: float
     emotion: EmotionType
     confidence: float
     arousal: float
@@ -48,8 +43,7 @@ class EmotionFrame:
     intensity: float
 
 class EmotionDetector:
-    """
-    Advanced emotion detection and analysis system for voice content
+    """    Advanced emotion detection and analysis system for voice content
     
     Capabilities:
     - Real-time emotion detection from voice samples
@@ -58,11 +52,9 @@ class EmotionDetector:
     - Emotion intensity and stability measurement
     - Cultural and contextual emotion adaptation
     - Professional emotion analytics for content optimization
-    """
-    
+    """    
     def __init__(self, config: EmotionConfig):
-        """Initialize emotion detector"""
-        self.config = config
+        """Initialize emotion detector"""        self.config = config
         self.is_initialized = False
         
         # Models and processors
@@ -85,8 +77,7 @@ class EmotionDetector:
         logger.info("EmotionDetector initialized")
     
     async def initialize(self) -> bool:
-        """Initialize emotion detection components"""
-        try:
+        """Initialize emotion detection components"""        try:
             logger.info("Initializing emotion detection system...")
             
             # Initialize emotion model
@@ -110,8 +101,7 @@ class EmotionDetector:
             return False
     
     async def _initialize_emotion_model(self) -> None:
-        """Initialize emotion detection model"""
-        try:
+        """Initialize emotion detection model"""        try:
             # Mock implementation - in real system would load actual model
             self.emotion_model = {
                 "provider": self.config.emotion_model.provider.value,
@@ -132,8 +122,7 @@ class EmotionDetector:
             raise
     
     async def _initialize_feature_extractor(self) -> None:
-        """Initialize voice feature extractor for emotion analysis"""
-        try:
+        """Initialize voice feature extractor for emotion analysis"""        try:
             # Mock implementation
             self.feature_extractor = {
                 "prosodic_features": ["pitch", "intensity", "tempo", "rhythm"],
@@ -150,8 +139,7 @@ class EmotionDetector:
             raise
     
     async def _initialize_temporal_analyzer(self) -> None:
-        """Initialize temporal emotion analysis"""
-        try:
+        """Initialize temporal emotion analysis"""        try:
             # Mock implementation
             self.temporal_analyzer = {
                 "smoothing_window": self.config.smoothing_window,
@@ -165,8 +153,7 @@ class EmotionDetector:
             logger.warning(f"Failed to initialize temporal analyzer: {e}")
     
     async def _warm_up_models(self) -> None:
-        """Warm up emotion detection models"""
-        try:
+        """Warm up emotion detection models"""        try:
             # Generate dummy audio for warm-up
             dummy_audio = np.random.randn(8000).astype(np.float32)  # 0.5 second at 16kHz
             
@@ -179,8 +166,7 @@ class EmotionDetector:
             logger.warning(f"Model warm-up failed: {e}")
     
     async def warm_up(self, audio_data: np.ndarray) -> None:
-        """Public warm-up method"""
-        await self._warm_up_models()
+        """Public warm-up method"""        await self._warm_up_models()
     
     async def detect_emotion(self,
                            audio_data: np.ndarray,
@@ -188,8 +174,7 @@ class EmotionDetector:
                            granularity: str = "basic",
                            include_confidence: bool = True,
                            enable_temporal: bool = True) -> EmotionAnalysisResult:
-        """
-        Detect emotions from voice audio
+        """        Detect emotions from voice audio
         
         Args:
             audio_data: Audio samples for emotion detection
@@ -200,8 +185,7 @@ class EmotionDetector:
             
         Returns:
             EmotionAnalysisResult with comprehensive emotion analysis
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             raise RuntimeError("Emotion detector not initialized")
         
         start_time = time.time()
@@ -269,8 +253,7 @@ class EmotionDetector:
                                      audio_data: np.ndarray,
                                      sample_rate: int,
                                      is_warmup: bool = False) -> Tuple[EmotionType, float]:
-        """Internal emotion detection implementation"""
-        try:
+        """Internal emotion detection implementation"""        try:
             if is_warmup:
                 # Return minimal result for warm-up
                 return EmotionType.NEUTRAL, 0.8
@@ -288,8 +271,7 @@ class EmotionDetector:
     async def _extract_emotion_features(self,
                                       audio_data: np.ndarray,
                                       sample_rate: int) -> EmotionFeatures:
-        """Extract emotion-relevant features from audio"""
-        try:
+        """Extract emotion-relevant features from audio"""        try:
             # Prosodic features
             prosodic_features = self._extract_prosodic_features(audio_data, sample_rate)
             
@@ -314,8 +296,7 @@ class EmotionDetector:
             raise
     
     def _extract_prosodic_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """Extract prosodic features (pitch, intensity, rhythm)"""
-        try:
+        """Extract prosodic features (pitch, intensity, rhythm)"""        try:
             features = {}
             
             # Fundamental frequency (pitch) analysis
@@ -351,8 +332,7 @@ class EmotionDetector:
             return {}
     
     def _extract_spectral_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """Extract spectral features"""
-        try:
+        """Extract spectral features"""        try:
             features = {}
             
             # FFT analysis
@@ -393,8 +373,7 @@ class EmotionDetector:
             return {}
     
     def _extract_temporal_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """Extract temporal features"""
-        try:
+        """Extract temporal features"""        try:
             features = {}
             
             # Audio duration
@@ -430,8 +409,7 @@ class EmotionDetector:
             return {}
     
     def _estimate_f0_contour(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Estimate fundamental frequency contour"""
-        try:
+        """Estimate fundamental frequency contour"""        try:
             # Simple autocorrelation-based pitch detection
             frame_size = int(0.025 * sample_rate)  # 25ms
             hop_size = int(0.010 * sample_rate)    # 10ms
@@ -467,8 +445,7 @@ class EmotionDetector:
             return np.array([])
     
     async def _classify_emotion(self, features: EmotionFeatures) -> Tuple[EmotionType, float]:
-        """Classify emotion from features"""
-        try:
+        """Classify emotion from features"""        try:
             # Mock emotion classification - in real system would use trained model
             # Combine all features for classification
             all_features = {**features.prosodic_features, 
@@ -520,8 +497,7 @@ class EmotionDetector:
             return EmotionType.NEUTRAL, 0.0
     
     async def _get_emotion_scores(self, features: EmotionFeatures) -> Dict[EmotionType, float]:
-        """Get confidence scores for all emotion categories"""
-        try:
+        """Get confidence scores for all emotion categories"""        try:
             # Mock implementation - in real system would use model predictions
             primary_emotion, primary_confidence = await self._classify_emotion(features)
             
@@ -540,8 +516,7 @@ class EmotionDetector:
             return {}
     
     async def _calculate_arousal_valence(self, features: EmotionFeatures) -> Tuple[float, float]:
-        """Calculate arousal and valence dimensions"""
-        try:
+        """Calculate arousal and valence dimensions"""        try:
             # Mock calculation - in real system would use dimensional emotion model
             all_features = {**features.prosodic_features, 
                           **features.spectral_features}
@@ -568,8 +543,7 @@ class EmotionDetector:
             return 0.0, 0.0
     
     async def _calculate_emotion_intensity(self, features: EmotionFeatures) -> float:
-        """Calculate emotion intensity"""
-        try:
+        """Calculate emotion intensity"""        try:
             # Combine multiple indicators of emotional intensity
             all_features = {**features.prosodic_features, 
                           **features.spectral_features, 
@@ -608,8 +582,7 @@ class EmotionDetector:
                                        audio_data: np.ndarray,
                                        sample_rate: int,
                                        global_features: EmotionFeatures) -> Dict[str, Any]:
-        """Analyze emotions over time"""
-        try:
+        """Analyze emotions over time"""        try:
             frame_duration = self.config.frame_duration
             overlap_duration = self.config.overlap_duration
             
@@ -684,8 +657,7 @@ class EmotionDetector:
             return {"timeline": [], "stability": 0.0, "transitions": []}
     
     def _validate_audio_input(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Validate audio input for emotion detection"""
-        if not isinstance(audio_data, np.ndarray):
+        """Validate audio input for emotion detection"""        if not isinstance(audio_data, np.ndarray):
             raise ValueError("Audio data must be numpy array")
         
         if len(audio_data) == 0:
@@ -704,8 +676,7 @@ class EmotionDetector:
         return audio_data.astype(np.float32)
     
     def _update_detection_stats(self, result: EmotionAnalysisResult, processing_time: float) -> None:
-        """Update emotion detection statistics"""
-        try:
+        """Update emotion detection statistics"""        try:
             self.detection_stats["total_detections"] += 1
             self.detection_stats["processing_times"].append(processing_time)
             self.detection_stats["confidence_scores"].append(result.confidence_score)
@@ -725,8 +696,7 @@ class EmotionDetector:
             logger.warning(f"Failed to update detection stats: {e}")
     
     def get_detection_statistics(self) -> Dict[str, Any]:
-        """Get emotion detection performance statistics"""
-        stats = {}
+        """Get emotion detection performance statistics"""        stats = {}
         
         # Basic counts
         stats["total_detections"] = self.detection_stats["total_detections"]
@@ -754,8 +724,7 @@ class EmotionDetector:
         return stats
     
     async def shutdown(self) -> None:
-        """Shutdown emotion detector"""
-        try:
+        """Shutdown emotion detector"""        try:
             logger.info("Shutting down emotion detector...")
             
             # Clear caches and history
@@ -772,13 +741,11 @@ class EmotionDetector:
 
 # Support classes
 class VoiceEmotionAnalyzer:
-    """Voice emotion analysis utilities"""
-    def __init__(self, detector: EmotionDetector):
+    """Voice emotion analysis utilities"""    def __init__(self, detector: EmotionDetector):
         self.detector = detector
     
     async def analyze_emotional_profile(self, audio_samples: List[np.ndarray]) -> Dict[str, float]:
-        """Analyze emotional profile across multiple samples"""
-        results = []
+        """Analyze emotional profile across multiple samples"""        results = []
         for audio in audio_samples:
             result = await self.detector.detect_emotion(audio)
             results.append(result)
@@ -791,23 +758,19 @@ class VoiceEmotionAnalyzer:
         return {emotion: count/total_count for emotion, count in emotion_counts.items()}
 
 class SentimentProcessor:
-    """Sentiment processing utilities"""
-    def __init__(self, detector: EmotionDetector):
+    """Sentiment processing utilities"""    def __init__(self, detector: EmotionDetector):
         self.detector = detector
     
     async def calculate_sentiment_score(self, audio_data: np.ndarray) -> float:
-        """Calculate overall sentiment score (-1 to 1)"""
-        result = await self.detector.detect_emotion(audio_data)
+        """Calculate overall sentiment score (-1 to 1)"""        result = await self.detector.detect_emotion(audio_data)
         return result.valence_level
 
 class EmotionalStateClassifier:
-    """Emotional state classification utilities"""
-    def __init__(self, detector: EmotionDetector):
+    """Emotional state classification utilities"""    def __init__(self, detector: EmotionDetector):
         self.detector = detector
     
     async def classify_emotional_state(self, audio_data: np.ndarray) -> Dict[str, Any]:
-        """Classify comprehensive emotional state"""
-        result = await self.detector.detect_emotion(audio_data)
+        """Classify comprehensive emotional state"""        result = await self.detector.detect_emotion(audio_data)
         
         return {
             "primary_emotion": result.primary_emotion.value,
@@ -819,13 +782,11 @@ class EmotionalStateClassifier:
         }
 
 class MoodExtractor:
-    """Mood extraction and analysis utilities"""
-    def __init__(self, detector: EmotionDetector):
+    """Mood extraction and analysis utilities"""    def __init__(self, detector: EmotionDetector):
         self.detector = detector
     
     async def extract_mood_profile(self, audio_data: np.ndarray) -> Dict[str, float]:
-        """Extract detailed mood profile"""
-        result = await self.detector.detect_emotion(audio_data)
+        """Extract detailed mood profile"""        result = await self.detector.detect_emotion(audio_data)
         
         # Map emotions to mood categories
         mood_mapping = {

@@ -1,5 +1,4 @@
-"""
-Audio Compression Configuration Module for IA-Influencer Agent Platform
+"""Audio Compression Configuration Module for IA-Influencer Agent Platform
 ======================================================================
 
 Professional audio compression and dynamics processing configuration.
@@ -18,9 +17,7 @@ explicit written permission from Fahed Mlaiel is strictly prohibited and will be
 to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import logging
+"""import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple, NamedTuple
 from dataclasses import dataclass, field
@@ -31,8 +28,7 @@ logger = logging.getLogger(__name__)
 
 
 class CompressorType(Enum):
-    """Types of audio compressors"""
-    VCA = "vca"                                # Voltage Controlled Amplifier
+    """Types of audio compressors"""    VCA = "vca"                                # Voltage Controlled Amplifier
     FET = "fet"                                # Field Effect Transistor
     OPTICAL = "optical"                        # Optical/Opto compressor
     VARIABLE_MU = "variable_mu"                # Variable-mu tube compressor
@@ -43,16 +39,14 @@ class CompressorType(Enum):
 
 
 class CompressorKneeType(Enum):
-    """Compressor knee characteristics"""
-    HARD = "hard"                              # Hard knee
+    """Compressor knee characteristics"""    HARD = "hard"                              # Hard knee
     SOFT = "soft"                              # Soft knee
     ADAPTIVE = "adaptive"                      # Adaptive knee
     ROUNDED = "rounded"                        # Rounded knee
 
 
 class DetectionMode(Enum):
-    """Signal detection modes"""
-    PEAK = "peak"                              # Peak detection
+    """Signal detection modes"""    PEAK = "peak"                              # Peak detection
     RMS = "rms"                                # RMS detection
     PROGRAM = "program"                        # Program dependent
     TRUE_PEAK = "true_peak"                    # True peak detection
@@ -60,8 +54,7 @@ class DetectionMode(Enum):
 
 
 class SideChainSource(Enum):
-    """Side-chain signal sources"""
-    INTERNAL = "internal"                      # Internal signal
+    """Side-chain signal sources"""    INTERNAL = "internal"                      # Internal signal
     EXTERNAL = "external"                      # External sidechain input
     MID = "mid"                               # Mid channel for M/S processing
     SIDE = "side"                             # Side channel for M/S processing
@@ -69,8 +62,7 @@ class SideChainSource(Enum):
 
 
 class CompressionStyle(Enum):
-    """Compression style characteristics"""
-    TRANSPARENT = "transparent"                # Transparent/clean compression
+    """Compression style characteristics"""    TRANSPARENT = "transparent"                # Transparent/clean compression
     VINTAGE = "vintage"                        # Vintage hardware emulation
     AGGRESSIVE = "aggressive"                  # Aggressive/pumping style
     MUSICAL = "musical"                        # Musical/smooth style
@@ -79,8 +71,7 @@ class CompressionStyle(Enum):
 
 
 class LimiterType(Enum):
-    """Types of audio limiters"""
-    PEAK_LIMITER = "peak_limiter"              # Peak limiting
+    """Types of audio limiters"""    PEAK_LIMITER = "peak_limiter"              # Peak limiting
     TRUE_PEAK_LIMITER = "true_peak_limiter"    # True peak limiting
     LOUDNESS_LIMITER = "loudness_limiter"      # Loudness-based limiting
     MULTIBAND_LIMITER = "multiband_limiter"    # Multiband limiting
@@ -90,8 +81,7 @@ class LimiterType(Enum):
 
 @dataclass
 class CompressorBand:
-    """Individual compressor band configuration for multiband processing"""
-    name: str
+    """Individual compressor band configuration for multiband processing"""    name: str
     frequency_range: Tuple[float, float]       # (low_freq, high_freq) in Hz
     threshold_db: float = -20.0
     ratio: float = 4.0
@@ -106,8 +96,7 @@ class CompressorBand:
 
 @dataclass
 class CompressorConfig:
-    """Main compressor configuration"""
-    enabled: bool = True
+    """Main compressor configuration"""    enabled: bool = True
     compressor_type: CompressorType = CompressorType.DIGITAL
     compression_style: CompressionStyle = CompressionStyle.TRANSPARENT
     
@@ -150,8 +139,7 @@ class CompressorConfig:
 
 @dataclass
 class LimiterConfig:
-    """Audio limiter configuration"""
-    enabled: bool = True
+    """Audio limiter configuration"""    enabled: bool = True
     limiter_type: LimiterType = LimiterType.PEAK_LIMITER
     
     # Core parameters
@@ -181,8 +169,7 @@ class LimiterConfig:
 
 @dataclass
 class GateConfig:
-    """Noise gate/expander configuration"""
-    enabled: bool = False
+    """Noise gate/expander configuration"""    enabled: bool = False
     
     # Core parameters
     threshold_db: float = -40.0
@@ -206,8 +193,7 @@ class GateConfig:
 
 @dataclass
 class DeEsserConfig:
-    """De-esser configuration"""
-    enabled: bool = False
+    """De-esser configuration"""    enabled: bool = False
     
     # Core parameters
     threshold_db: float = -15.0
@@ -226,16 +212,13 @@ class DeEsserConfig:
 
 
 class AudioCompressionConfig:
-    """
-    Comprehensive audio compression configuration manager
+    """    Comprehensive audio compression configuration manager
     
     Manages all aspects of audio dynamics processing including compression,
     limiting, gating, de-essing, and multiband dynamics processing.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize audio compression configuration"""
-        self.logger = logging.getLogger(self.__class__.__name__)
+        """Initialize audio compression configuration"""        self.logger = logging.getLogger(self.__class__.__name__)
         
         # Core processors
         self.compressor = CompressorConfig()
@@ -272,8 +255,7 @@ class AudioCompressionConfig:
         self.logger.info("AudioCompressionConfig initialized successfully")
     
     def _initialize_compression_presets(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize compression presets"""
-        return {
+        """Initialize compression presets"""        return {
             "vocal_compression": {
                 "name": "Vocal Compression",
                 "description": "Optimized for vocal recording and processing",
@@ -465,8 +447,7 @@ class AudioCompressionConfig:
         }
     
     def _initialize_hardware_emulations(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize hardware emulation models"""
-        return {
+        """Initialize hardware emulation models"""        return {
             "la2a_optical": {
                 "name": "LA-2A Optical Leveling Amplifier",
                 "type": "optical",
@@ -532,8 +513,7 @@ class AudioCompressionConfig:
         }
     
     def _initialize_platform_profiles(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize platform-specific compression profiles"""
-        return {
+        """Initialize platform-specific compression profiles"""        return {
             "spotify": {
                 "name": "Spotify Optimization",
                 "loudness_target": -14.0,  # LUFS
@@ -603,8 +583,7 @@ class AudioCompressionConfig:
         }
     
     def _initialize_broadcast_standards(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize broadcast standards compliance"""
-        return {
+        """Initialize broadcast standards compliance"""        return {
             "ebu_r128": {
                 "name": "EBU R128",
                 "region": "Europe",
@@ -645,8 +624,7 @@ class AudioCompressionConfig:
         }
     
     def _initialize_realtime_optimizations(self) -> Dict[str, Any]:
-        """Initialize real-time processing optimizations"""
-        return {
+        """Initialize real-time processing optimizations"""        return {
             "latency_optimized": {
                 "lookahead_ms": 0.0,
                 "oversampling": 1,
@@ -675,8 +653,7 @@ class AudioCompressionConfig:
         }
     
     def _initialize_multiband_setup(self):
-        """Initialize default multiband compressor setup"""
-        if not self.compressor.bands:
+        """Initialize default multiband compressor setup"""        if not self.compressor.bands:
             self.compressor.bands = [
                 CompressorBand(
                     name="Low Band",
@@ -707,28 +684,24 @@ class AudioCompressionConfig:
             self.compressor.crossover_frequencies = [200.0, 2000.0]
     
     def get_compression_preset(self, preset_name: str) -> Optional[Dict[str, Any]]:
-        """
-        Get compression preset by name
+        """        Get compression preset by name
         
         Args:
             preset_name: Name of the preset
             
         Returns:
             Preset configuration or None if not found
-        """
-        return self._compression_presets.get(preset_name)
+        """        return self._compression_presets.get(preset_name)
     
     def apply_compression_preset(self, preset_name: str) -> bool:
-        """
-        Apply compression preset to current configuration
+        """        Apply compression preset to current configuration
         
         Args:
             preset_name: Name of the preset to apply
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             preset = self.get_compression_preset(preset_name)
             if not preset:
                 self.logger.error(f"Preset '{preset_name}' not found")
@@ -814,16 +787,14 @@ class AudioCompressionConfig:
             return False
     
     def optimize_for_platform(self, platform: str) -> bool:
-        """
-        Optimize compression settings for specific platform
+        """        Optimize compression settings for specific platform
         
         Args:
             platform: Target platform name
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             profile = self._platform_profiles.get(platform.lower())
             if not profile:
                 self.logger.warning(f"No profile found for platform: {platform}")
@@ -880,16 +851,14 @@ class AudioCompressionConfig:
             return False
     
     def apply_hardware_emulation(self, emulation_name: str) -> bool:
-        """
-        Apply hardware emulation characteristics
+        """        Apply hardware emulation characteristics
         
         Args:
             emulation_name: Name of hardware emulation
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             emulation = self._hardware_emulations.get(emulation_name)
             if not emulation:
                 self.logger.error(f"Hardware emulation '{emulation_name}' not found")
@@ -961,8 +930,7 @@ class AudioCompressionConfig:
                                        input_level_db: float,
                                        target_level_db: float,
                                        dynamic_range_db: float) -> Dict[str, float]:
-        """
-        Calculate optimal compression parameters for target levels
+        """        Calculate optimal compression parameters for target levels
         
         Args:
             input_level_db: Average input level in dB
@@ -971,8 +939,7 @@ class AudioCompressionConfig:
             
         Returns:
             Calculated compression parameters
-        """
-        try:
+        """        try:
             # Calculate required gain reduction
             gain_reduction_db = input_level_db - target_level_db
             
@@ -1021,8 +988,7 @@ class AudioCompressionConfig:
     def estimate_processing_latency(self, 
                                   real_time: bool = False,
                                   quality_level: str = "balanced") -> Dict[str, Any]:
-        """
-        Estimate processing latency for current configuration
+        """        Estimate processing latency for current configuration
         
         Args:
             real_time: Whether real-time processing is required
@@ -1030,8 +996,7 @@ class AudioCompressionConfig:
             
         Returns:
             Latency estimation breakdown
-        """
-        try:
+        """        try:
             # Get optimization settings
             optimization = self._realtime_optimizations.get(quality_level, 
                                                           self._realtime_optimizations["balanced"])
@@ -1097,16 +1062,14 @@ class AudioCompressionConfig:
             return {"error": str(e)}
     
     def validate_compression_config(self, config: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        """
-        Validate compression configuration
+        """        Validate compression configuration
         
         Args:
             config: Compression configuration to validate
             
         Returns:
             Tuple of (is_valid, error_messages)
-        """
-        errors = []
+        """        errors = []
         is_valid = True
         
         try:
@@ -1178,8 +1141,7 @@ class AudioCompressionConfig:
         return is_valid, errors
     
     def export_config(self) -> Dict[str, Any]:
-        """Export complete compression configuration"""
-        try:
+        """Export complete compression configuration"""        try:
             return {
                 "compressor": {
                     "enabled": self.compressor.enabled,

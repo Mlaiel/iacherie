@@ -1,5 +1,4 @@
-"""
-Kick Crawling Engine
+"""Kick Crawling Engine
 ====================
 
 Advanced Kick.com crawler for live streaming content discovery and analytics.
@@ -12,9 +11,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator
 from dataclasses import dataclass, asdict
@@ -51,8 +48,7 @@ settings = get_settings()
 
 @dataclass
 class KickStream:
-    """Kick stream data structure"""
-    id: str
+    """Kick stream data structure"""    id: str
     slug: str
     channel_id: str
     channel_username: str
@@ -74,8 +70,7 @@ class KickStream:
 
 @dataclass
 class KickChannel:
-    """Kick channel data structure"""
-    id: str
+    """Kick channel data structure"""    id: str
     username: str
     display_name: str
     bio: Optional[str]
@@ -96,8 +91,7 @@ class KickChannel:
 
 @dataclass
 class KickChatMessage:
-    """Kick chat message data structure"""
-    id: str
+    """Kick chat message data structure"""    id: str
     channel_id: str
     user_id: str
     username: str
@@ -112,8 +106,7 @@ class KickChatMessage:
 
 @dataclass
 class KickClip:
-    """Kick clip data structure"""
-    id: str
+    """Kick clip data structure"""    id: str
     title: str
     channel_id: str
     channel_username: str
@@ -129,8 +122,7 @@ class KickClip:
 
 
 class KickCrawlerEngine(BaseCrawlerEngine):
-    """
-    Professional Kick.com crawler engine for live streaming content analysis.
+    """    Professional Kick.com crawler engine for live streaming content analysis.
     
     Features:
     - Live stream monitoring
@@ -139,11 +131,9 @@ class KickCrawlerEngine(BaseCrawlerEngine):
     - Clip discovery and analysis
     - Streamer engagement metrics
     - Content protection monitoring
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Kick crawler engine"""
-        super().__init__(platform="kick", config=config)
+        """Initialize Kick crawler engine"""        super().__init__(platform="kick", config=config)
         
         # Rate limiting
         self.rate_limiter = RateLimiter(
@@ -172,8 +162,7 @@ class KickCrawlerEngine(BaseCrawlerEngine):
         logger.info("Kick crawler engine initialized")
     
     async def initialize(self) -> None:
-        """Initialize the crawler engine"""
-        try:
+        """Initialize the crawler engine"""        try:
             await self._create_session()
             self._setup_selenium()
             logger.info("Kick engine initialized successfully")
@@ -182,8 +171,7 @@ class KickCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Initialization failed: {e}")
     
     async def _create_session(self) -> None:
-        """Create HTTP session with proper headers"""
-        headers = {
+        """Create HTTP session with proper headers"""        headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
             'Accept': 'application/json, text/plain, */*',
             'Accept-Language': 'en-US,en;q=0.9',
@@ -201,8 +189,7 @@ class KickCrawlerEngine(BaseCrawlerEngine):
         )
     
     def _setup_selenium(self) -> None:
-        """Setup Selenium WebDriver"""
-        try:
+        """Setup Selenium WebDriver"""        try:
             options = webdriver.ChromeOptions()
             options.add_argument('--headless')
             options.add_argument('--no-sandbox')
@@ -221,8 +208,7 @@ class KickCrawlerEngine(BaseCrawlerEngine):
         language: Optional[str] = None,
         limit: int = 50
     ) -> List[KickStream]:
-        """
-        Get currently live streams
+        """        Get currently live streams
         
         Args:
             category: Filter by category
@@ -231,8 +217,7 @@ class KickCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of live streams
-        """
-        try:
+        """        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -277,16 +262,14 @@ class KickCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Live streams retrieval failed: {e}")
     
     async def get_channel_info(self, username: str) -> Optional[KickChannel]:
-        """
-        Get channel information
+        """        Get channel information
         
         Args:
             username: Channel username
             
         Returns:
             Channel information or None if not found
-        """
-        try:
+        """        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -322,16 +305,14 @@ class KickCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Channel info retrieval failed: {e}")
     
     async def get_stream_details(self, channel_username: str) -> Optional[KickStream]:
-        """
-        Get current stream details for a channel
+        """        Get current stream details for a channel
         
         Args:
             channel_username: Channel username
             
         Returns:
             Stream details or None if not live
-        """
-        try:
+        """        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -371,8 +352,7 @@ class KickCrawlerEngine(BaseCrawlerEngine):
         channel_username: str,
         limit: int = 20
     ) -> List[KickClip]:
-        """
-        Get clips from a channel
+        """        Get clips from a channel
         
         Args:
             channel_username: Channel username
@@ -380,8 +360,7 @@ class KickCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of channel clips
-        """
-        try:
+        """        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -424,8 +403,7 @@ class KickCrawlerEngine(BaseCrawlerEngine):
         query: str,
         limit: int = 20
     ) -> List[KickChannel]:
-        """
-        Search for channels
+        """        Search for channels
         
         Args:
             query: Search query
@@ -433,8 +411,7 @@ class KickCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of matching channels
-        """
-        try:
+        """        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -478,8 +455,7 @@ class KickCrawlerEngine(BaseCrawlerEngine):
         channel_username: str,
         duration_minutes: int = 60
     ) -> AsyncGenerator[KickChatMessage, None]:
-        """
-        Monitor chat messages for a channel
+        """        Monitor chat messages for a channel
         
         Args:
             channel_username: Channel to monitor
@@ -487,8 +463,7 @@ class KickCrawlerEngine(BaseCrawlerEngine):
             
         Yields:
             Chat messages as they arrive
-        """
-        try:
+        """        try:
             # Get channel info to get chatroom ID
             channel = await self.get_channel_info(channel_username)
             if not channel:
@@ -507,8 +482,7 @@ class KickCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Chat monitoring failed: {e}")
     
     def _parse_stream_data(self, stream_data: Dict[str, Any]) -> KickStream:
-        """Parse stream data from API response"""
-        try:
+        """Parse stream data from API response"""        try:
             return KickStream(
                 id=str(stream_data.get('id', '')),
                 slug=stream_data.get('slug', ''),
@@ -534,8 +508,7 @@ class KickCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Stream data parsing failed: {e}")
     
     def _parse_channel_data(self, channel_data: Dict[str, Any]) -> KickChannel:
-        """Parse channel data from API response"""
-        try:
+        """Parse channel data from API response"""        try:
             user_data = channel_data.get('user', {})
             
             return KickChannel(
@@ -562,8 +535,7 @@ class KickCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Channel data parsing failed: {e}")
     
     def _parse_clip_data(self, clip_data: Dict[str, Any]) -> KickClip:
-        """Parse clip data from API response"""
-        try:
+        """Parse clip data from API response"""        try:
             return KickClip(
                 id=str(clip_data.get('id', '')),
                 title=clip_data.get('title', ''),
@@ -588,8 +560,7 @@ class KickCrawlerEngine(BaseCrawlerEngine):
         channel_username: str,
         days: int = 30
     ) -> Dict[str, Any]:
-        """
-        Analyze streamer performance metrics
+        """        Analyze streamer performance metrics
         
         Args:
             channel_username: Channel to analyze
@@ -597,8 +568,7 @@ class KickCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             Performance analytics data
-        """
-        try:
+        """        try:
             # Get channel info
             channel = await self.get_channel_info(channel_username)
             if not channel:
@@ -658,8 +628,7 @@ class KickCrawlerEngine(BaseCrawlerEngine):
         content_keywords: List[str],
         monitoring_duration_hours: int = 24
     ) -> Dict[str, Any]:
-        """
-        Monitor for potential content violations
+        """        Monitor for potential content violations
         
         Args:
             content_keywords: Keywords to monitor for
@@ -667,8 +636,7 @@ class KickCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             Content violation monitoring results
-        """
-        try:
+        """        try:
             violations = {
                 'keywords': content_keywords,
                 'monitoring_duration_hours': monitoring_duration_hours,
@@ -702,8 +670,7 @@ class KickCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Content violation monitoring failed: {e}")
     
     async def cleanup(self) -> None:
-        """Clean up resources"""
-        try:
+        """Clean up resources"""        try:
             if self.session:
                 await self.session.close()
             if self.ws_connection:

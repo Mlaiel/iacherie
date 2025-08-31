@@ -1,5 +1,4 @@
-"""
-Configuration management for audio fingerprinting system.
+"""Configuration management for audio fingerprinting system.
 Professional configuration handling with environment-specific settings.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -9,9 +8,7 @@ License: Proprietary - All rights reserved
 WARNING: This code is proprietary and protected by copyright.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Contact: Fahed Mlaiel (mlaiel@live.de) for licensing agreements.
-"""
-
-import os
+"""import os
 import json
 import logging
 from typing import Dict, Any, Optional, List
@@ -24,16 +21,14 @@ logger = logging.getLogger(__name__)
 
 
 class Environment(Enum):
-    """Environment types."""
-    DEVELOPMENT = "development"
+    """Environment types."""    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
 
 
 class ProtectionLevel(Enum):
-    """Content protection levels."""
-    BASIC = "basic"
+    """Content protection levels."""    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
@@ -41,8 +36,7 @@ class ProtectionLevel(Enum):
 
 @dataclass
 class AudioProcessingConfig:
-    """Configuration for audio processing parameters."""
-    
+    """Configuration for audio processing parameters."""    
     sample_rate: int = 22050
     hop_length: int = 512
     n_fft: int = 2048
@@ -60,8 +54,7 @@ class AudioProcessingConfig:
 
 @dataclass
 class FingerprintingConfig:
-    """Configuration for fingerprinting algorithms."""
-    
+    """Configuration for fingerprinting algorithms."""    
     hash_size: int = 64
     chromaprint_algorithm: int = 1  # ALGORITHM_DEFAULT
     use_spectral_features: bool = True
@@ -78,8 +71,7 @@ class FingerprintingConfig:
 
 @dataclass
 class MatchingConfig:
-    """Configuration for fingerprint matching."""
-    
+    """Configuration for fingerprint matching."""    
     max_candidates_per_query: int = 10000
     max_results_per_query: int = 100
     default_similarity_threshold: float = 0.80
@@ -94,8 +86,7 @@ class MatchingConfig:
 
 @dataclass
 class DatabaseConfig:
-    """Configuration for database connections."""
-    
+    """Configuration for database connections."""    
     url: str = "postgresql://user:pass@localhost/fingerprints"
     pool_size: int = 20
     max_overflow: int = 30
@@ -110,8 +101,7 @@ class DatabaseConfig:
 
 @dataclass
 class SecurityConfig:
-    """Configuration for security settings."""
-    
+    """Configuration for security settings."""    
     enable_user_isolation: bool = True
     require_authentication: bool = True
     rate_limit_per_minute: int = 60
@@ -127,8 +117,7 @@ class SecurityConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Configuration for performance optimization."""
-    
+    """Configuration for performance optimization."""    
     enable_caching: bool = True
     cache_size_limit: int = 1000
     enable_async_processing: bool = True
@@ -142,8 +131,7 @@ class PerformanceConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Configuration for monitoring and metrics."""
-    
+    """Configuration for monitoring and metrics."""    
     enable_metrics_collection: bool = True
     metrics_interval_seconds: int = 60
     enable_performance_profiling: bool = False
@@ -156,14 +144,11 @@ class MonitoringConfig:
 
 
 class FingerprintingConfigManager:
-    """
-    Comprehensive configuration manager for the fingerprinting system.
+    """    Comprehensive configuration manager for the fingerprinting system.
     Handles environment-specific settings and runtime configuration updates.
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None, environment: Optional[str] = None):
-        """Initialize the configuration manager."""
-        self.config_path = config_path
+        """Initialize the configuration manager."""        self.config_path = config_path
         self.environment = Environment(environment or os.getenv('ENVIRONMENT', 'development'))
         
         # Configuration components
@@ -186,8 +171,7 @@ class FingerprintingConfigManager:
                    self.environment.value)
     
     def _load_configuration(self):
-        """Load configuration from various sources."""
-        # Load from environment variables
+        """Load configuration from various sources."""        # Load from environment variables
         self._load_from_environment()
         
         # Load from configuration file if provided
@@ -201,8 +185,7 @@ class FingerprintingConfigManager:
         self._validate_configuration()
     
     def _load_from_environment(self):
-        """Load configuration from environment variables."""
-        # Audio processing settings
+        """Load configuration from environment variables."""        # Audio processing settings
         if os.getenv('AUDIO_SAMPLE_RATE'):
             self.audio_processing.sample_rate = int(os.getenv('AUDIO_SAMPLE_RATE'))
         
@@ -237,8 +220,7 @@ class FingerprintingConfigManager:
         logger.debug("Configuration loaded from environment variables")
     
     def _load_from_file(self, config_path: str):
-        """Load configuration from YAML or JSON file."""
-        try:
+        """Load configuration from YAML or JSON file."""        try:
             config_file = Path(config_path)
             
             if not config_file.exists():
@@ -260,8 +242,7 @@ class FingerprintingConfigManager:
             logger.error("Error loading configuration file %s: %s", config_path, str(e))
     
     def _apply_config_data(self, config_data: Dict[str, Any]):
-        """Apply configuration data to configuration objects."""
-        try:
+        """Apply configuration data to configuration objects."""        try:
             # Audio processing configuration
             if 'audio_processing' in config_data:
                 audio_config = config_data['audio_processing']
@@ -315,8 +296,7 @@ class FingerprintingConfigManager:
             logger.error("Error applying configuration data: %s", str(e))
     
     def _apply_environment_overrides(self):
-        """Apply environment-specific configuration overrides."""
-        if self.environment == Environment.PRODUCTION:
+        """Apply environment-specific configuration overrides."""        if self.environment == Environment.PRODUCTION:
             # Production optimizations
             self.security.encrypt_stored_data = True
             self.security.audit_all_operations = True
@@ -340,8 +320,7 @@ class FingerprintingConfigManager:
         logger.debug("Applied %s environment overrides", self.environment.value)
     
     def _validate_configuration(self):
-        """Validate configuration settings."""
-        errors = []
+        """Validate configuration settings."""        errors = []
         
         # Validate audio processing
         if self.audio_processing.sample_rate <= 0:
@@ -377,8 +356,7 @@ class FingerprintingConfigManager:
         logger.debug("Configuration validation passed")
     
     def get_config_dict(self) -> Dict[str, Any]:
-        """Get complete configuration as dictionary."""
-        return {
+        """Get complete configuration as dictionary."""        return {
             'environment': self.environment.value,
             'audio_processing': self.audio_processing.__dict__,
             'fingerprinting': self.fingerprinting.__dict__,
@@ -390,8 +368,7 @@ class FingerprintingConfigManager:
         }
     
     def update_runtime_setting(self, section: str, key: str, value: Any):
-        """Update a runtime configuration setting."""
-        try:
+        """Update a runtime configuration setting."""        try:
             config_section = getattr(self, section)
             if hasattr(config_section, key):
                 setattr(config_section, key, value)
@@ -408,8 +385,7 @@ class FingerprintingConfigManager:
             logger.error("Error updating runtime setting %s.%s: %s", section, key, str(e))
     
     def get_protection_level_config(self, level: ProtectionLevel) -> Dict[str, Any]:
-        """Get configuration optimized for specific protection level."""
-        base_config = self.get_config_dict()
+        """Get configuration optimized for specific protection level."""        base_config = self.get_config_dict()
         
         if level == ProtectionLevel.BASIC:
             # Optimize for speed over accuracy
@@ -434,8 +410,7 @@ class FingerprintingConfigManager:
         return base_config
     
     def export_config(self, output_path: str, format: str = 'yaml'):
-        """Export current configuration to file."""
-        try:
+        """Export current configuration to file."""        try:
             config_dict = self.get_config_dict()
             output_file = Path(output_path)
             
@@ -451,12 +426,10 @@ class FingerprintingConfigManager:
             logger.error("Error exporting configuration: %s", str(e))
     
     def get_runtime_overrides(self) -> Dict[str, Any]:
-        """Get current runtime configuration overrides."""
-        return self._runtime_overrides.copy()
+        """Get current runtime configuration overrides."""        return self._runtime_overrides.copy()
     
     def reset_to_defaults(self):
-        """Reset configuration to default values."""
-        self.audio_processing = AudioProcessingConfig()
+        """Reset configuration to default values."""        self.audio_processing = AudioProcessingConfig()
         self.fingerprinting = FingerprintingConfig()
         self.matching = MatchingConfig()
         self.database = DatabaseConfig()
@@ -478,40 +451,32 @@ config_manager = FingerprintingConfigManager()
 
 
 def get_config() -> FingerprintingConfigManager:
-    """Get the global configuration manager instance."""
-    return config_manager
+    """Get the global configuration manager instance."""    return config_manager
 
 
 def get_audio_config() -> AudioProcessingConfig:
-    """Get audio processing configuration."""
-    return config_manager.audio_processing
+    """Get audio processing configuration."""    return config_manager.audio_processing
 
 
 def get_fingerprinting_config() -> FingerprintingConfig:
-    """Get fingerprinting configuration."""
-    return config_manager.fingerprinting
+    """Get fingerprinting configuration."""    return config_manager.fingerprinting
 
 
 def get_matching_config() -> MatchingConfig:
-    """Get matching configuration."""
-    return config_manager.matching
+    """Get matching configuration."""    return config_manager.matching
 
 
 def get_database_config() -> DatabaseConfig:
-    """Get database configuration."""
-    return config_manager.database
+    """Get database configuration."""    return config_manager.database
 
 
 def get_security_config() -> SecurityConfig:
-    """Get security configuration."""
-    return config_manager.security
+    """Get security configuration."""    return config_manager.security
 
 
 def get_performance_config() -> PerformanceConfig:
-    """Get performance configuration."""
-    return config_manager.performance
+    """Get performance configuration."""    return config_manager.performance
 
 
 def get_monitoring_config() -> MonitoringConfig:
-    """Get monitoring configuration."""
-    return config_manager.monitoring
+    """Get monitoring configuration."""    return config_manager.monitoring

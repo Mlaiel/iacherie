@@ -23,8 +23,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-# Core workflow components
+"""# Core workflow components
 from .workflow_engine import (
     Workflow,
     WorkflowExecution,

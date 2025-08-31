@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Specialized Creator Services
+"""IA Influencer Agent - Specialized Creator Services
 ==================================================
 
 Specialized indexing services for different creator types:
@@ -14,9 +13,7 @@ This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from dataclasses import dataclass
@@ -33,8 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorType(Enum):
-    """Types of content creators"""
-    MUSICIAN = "musician"
+    """Types of content creators"""    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -45,8 +41,7 @@ class CreatorType(Enum):
 
 
 class ContentCategory(Enum):
-    """Content categories by creator type"""
-    # Music
+    """Content categories by creator type"""    # Music
     SONG = "song"
     ALBUM = "album"
     LIVE_PERFORMANCE = "live_performance"
@@ -79,8 +74,7 @@ class ContentCategory(Enum):
 
 @dataclass
 class CreatorProfile:
-    """Creator profile with specialized metadata"""
-    creator_id: str
+    """Creator profile with specialized metadata"""    creator_id: str
     creator_type: CreatorType
     stage_name: str
     real_name: Optional[str]
@@ -96,8 +90,7 @@ class CreatorProfile:
 
 @dataclass
 class ContentMetadata:
-    """Enhanced content metadata for creators"""
-    title: str
+    """Enhanced content metadata for creators"""    title: str
     description: str
     category: ContentCategory
     genres: List[str]
@@ -111,16 +104,14 @@ class ContentMetadata:
 
 
 class SpecializedIndexingService:
-    """Base class for specialized creator indexing services"""
-    
+    """Base class for specialized creator indexing services"""    
     def __init__(self, indexing_service: IndexingService, search_service: SearchService):
         self.indexing_service = indexing_service
         self.search_service = search_service
         self.logger = logging.getLogger(self.__class__.__name__)
     
     async def create_creator_profile(self, profile: CreatorProfile) -> bool:
-        """Create or update creator profile"""
-        try:
+        """Create or update creator profile"""        try:
             profile_data = {
                 "creator_id": profile.creator_id,
                 "creator_type": profile.creator_type.value,
@@ -157,8 +148,7 @@ class SpecializedIndexingService:
         file_path: str,
         content_type: str
     ) -> Dict[str, Any]:
-        """Index content with creator-specific optimizations"""
-        try:
+        """Index content with creator-specific optimizations"""        try:
             # Enhanced metadata with creator context
             enhanced_metadata = {
                 "creator_id": creator_id,
@@ -206,8 +196,7 @@ class SpecializedIndexingService:
         content_id: str, 
         metadata: ContentMetadata
     ) -> None:
-        """Add creator-specific enhancements to indexed content"""
-        # Auto-generate SEO tags if not provided
+        """Add creator-specific enhancements to indexed content"""        # Auto-generate SEO tags if not provided
         if not metadata.seo_keywords:
             seo_tags = await self._generate_seo_tags(metadata)
             metadata.seo_keywords = seo_tags
@@ -221,8 +210,7 @@ class SpecializedIndexingService:
             await self._setup_monetization_tracking(creator_id, content_id, metadata)
     
     async def _generate_seo_tags(self, metadata: ContentMetadata) -> List[str]:
-        """Generate SEO-optimized tags"""
-        seo_tags = []
+        """Generate SEO-optimized tags"""        seo_tags = []
         
         # Add category-based tags
         seo_tags.append(metadata.category.value)
@@ -249,8 +237,7 @@ class SpecializedIndexingService:
         content_id: str, 
         metadata: ContentMetadata
     ) -> None:
-        """Index content for collaboration matching"""
-        collab_data = {
+        """Index content for collaboration matching"""        collab_data = {
             "creator_id": creator_id,
             "content_id": content_id,
             "genres": metadata.genres,
@@ -274,8 +261,7 @@ class SpecializedIndexingService:
         content_id: str, 
         metadata: ContentMetadata
     ) -> None:
-        """Setup monetization tracking for content"""
-        monetization_data = {
+        """Setup monetization tracking for content"""        monetization_data = {
             "creator_id": creator_id,
             "content_id": content_id,
             "platforms": metadata.distribution_platforms,
@@ -293,16 +279,14 @@ class SpecializedIndexingService:
 
 
 class MusicianIndexingService(SpecializedIndexingService):
-    """Specialized indexing service for musicians"""
-    
+    """Specialized indexing service for musicians"""    
     async def index_music_content(
         self,
         creator_id: str,
         audio_file: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Index music content with specialized features"""
-        
+        """Index music content with specialized features"""        
         # Enhanced music metadata
         music_metadata = ContentMetadata(
             title=metadata.get("title", ""),
@@ -331,8 +315,7 @@ class MusicianIndexingService(SpecializedIndexingService):
         creator_id: str, 
         preferences: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Find collaboration matches for musicians"""
-        
+        """Find collaboration matches for musicians"""        
         search_request = SearchRequest(
             filters={
                 "type": "collaboration_opportunity",
@@ -364,8 +347,7 @@ class MusicianIndexingService(SpecializedIndexingService):
         preferences: Dict[str, Any], 
         opportunity: Dict[str, Any]
     ) -> float:
-        """Calculate collaboration compatibility score"""
-        score = 0.0
+        """Calculate collaboration compatibility score"""        score = 0.0
         
         # Genre compatibility
         pref_genres = set(preferences.get("genres", []))
@@ -389,16 +371,14 @@ class MusicianIndexingService(SpecializedIndexingService):
 
 
 class BloggerIndexingService(SpecializedIndexingService):
-    """Specialized indexing service for bloggers and content writers"""
-    
+    """Specialized indexing service for bloggers and content writers"""    
     async def index_article(
         self,
         creator_id: str,
         content_text: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Index blog article with SEO optimization"""
-        
+        """Index blog article with SEO optimization"""        
         # Enhanced article metadata
         article_metadata = ContentMetadata(
             title=metadata.get("title", ""),
@@ -432,13 +412,11 @@ class BloggerIndexingService(SpecializedIndexingService):
             os.unlink(temp_file)
     
     def _calculate_reading_time(self, text: str) -> int:
-        """Calculate estimated reading time in minutes"""
-        words = len(text.split())
+        """Calculate estimated reading time in minutes"""        words = len(text.split())
         return max(1, words // 200)  # Assuming 200 words per minute
     
     def _calculate_readability(self, text: str) -> float:
-        """Calculate readability score (simplified)"""
-        sentences = text.count('.') + text.count('!') + text.count('?')
+        """Calculate readability score (simplified)"""        sentences = text.count('.') + text.count('!') + text.count('?')
         words = len(text.split())
         if sentences == 0:
             return 0.0
@@ -446,16 +424,14 @@ class BloggerIndexingService(SpecializedIndexingService):
 
 
 class PhotographerIndexingService(SpecializedIndexingService):
-    """Specialized indexing service for photographers and visual artists"""
-    
+    """Specialized indexing service for photographers and visual artists"""    
     async def index_photo(
         self,
         creator_id: str,
         image_file: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Index photograph with visual analysis"""
-        
+        """Index photograph with visual analysis"""        
         # Enhanced photo metadata
         photo_metadata = ContentMetadata(
             title=metadata.get("title", ""),
@@ -483,8 +459,7 @@ class PhotographerIndexingService(SpecializedIndexingService):
 
 
 class InfluencerIndexingService(SpecializedIndexingService):
-    """Specialized indexing service for influencers and social media creators"""
-    
+    """Specialized indexing service for influencers and social media creators"""    
     async def index_social_content(
         self,
         creator_id: str,
@@ -492,8 +467,7 @@ class InfluencerIndexingService(SpecializedIndexingService):
         content_type: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Index social media content with engagement optimization"""
-        
+        """Index social media content with engagement optimization"""        
         # Enhanced social metadata
         social_metadata = ContentMetadata(
             title=metadata.get("title", ""),
@@ -516,8 +490,7 @@ class InfluencerIndexingService(SpecializedIndexingService):
 
 
 class ComedianIndexingService(SpecializedIndexingService):
-    """Specialized indexing service for comedians and entertainment creators"""
-    
+    """Specialized indexing service for comedians and entertainment creators"""    
     async def index_comedy_content(
         self,
         creator_id: str,
@@ -525,8 +498,7 @@ class ComedianIndexingService(SpecializedIndexingService):
         content_type: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Index comedy content with humor analysis"""
-        
+        """Index comedy content with humor analysis"""        
         # Enhanced comedy metadata
         comedy_metadata = ContentMetadata(
             title=metadata.get("title", ""),
@@ -549,16 +521,14 @@ class ComedianIndexingService(SpecializedIndexingService):
 
 
 class CreatorServiceFactory:
-    """Factory for creating specialized creator services"""
-    
+    """Factory for creating specialized creator services"""    
     @staticmethod
     def create_service(
         creator_type: CreatorType,
         indexing_service: IndexingService,
         search_service: SearchService
     ) -> SpecializedIndexingService:
-        """Create appropriate specialized service for creator type"""
-        
+        """Create appropriate specialized service for creator type"""        
         services = {
             CreatorType.MUSICIAN: MusicianIndexingService,
             CreatorType.BLOGGER: BloggerIndexingService,

@@ -1,14 +1,11 @@
-"""
-Platform Agent Module Index - Navigation Hub
+"""Platform Agent Module Index - Navigation Hub
 
 This module provides comprehensive multi-platform integration and management capabilities
 for the IA-Influencer-Agent system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-from .platform_agent import (
+"""from .platform_agent import (
     PlatformAgent,
     PlatformAgentManager,
     PlatformAgentConfig,
@@ -139,8 +136,7 @@ DOCUMENTATION = {
 }
 
 # Quick start example
-QUICK_START_EXAMPLE = """
-# Quick Start Example - Platform Agent Module
+QUICK_START_EXAMPLE = """# Quick Start Example - Platform Agent Module
 
 from backend.ai_agents.platform_agent import (
     PlatformAgent,
@@ -202,11 +198,8 @@ collaborations = await agent.manage_collaborations(
 print(f"Distribution completed: {result['success']}")
 print(f"Platforms reached: {len(result['platform_results'])}")
 print(f"Total engagement: {analytics['total_engagement']}")
-"""
-
-def get_module_info():
-    """Get comprehensive module information"""
-    return {
+"""def get_module_info():
+    """Get comprehensive module information"""    return {
         'name': 'Platform Agent Module',
         'version': __version__,
         'author': __author__,
@@ -229,8 +222,7 @@ def get_module_info():
     }
 
 def print_module_summary():
-    """Print module summary information"""
-    info = get_module_info()
+    """Print module summary information"""    info = get_module_info()
     
     print("="*80)
     print(f"{info['name']} v{info['version']}")

@@ -1,12 +1,9 @@
-"""
-Audio Enhancer
+"""Audio Enhancer
 AI-powered audio processing and enhancement system.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime
 from dataclasses import dataclass
@@ -18,8 +15,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioEnhancementParams:
-    """Audio enhancement parameters"""
-    noise_reduction: bool = True
+    """Audio enhancement parameters"""    noise_reduction: bool = True
     audio_upscaling: bool = False
     auto_mastering: bool = True
     voice_enhancement: bool = False
@@ -30,8 +26,7 @@ class AudioEnhancementParams:
 
 @dataclass
 class EnhancementResult:
-    """Audio enhancement result"""
-    enhanced_file_path: str
+    """Audio enhancement result"""    enhanced_file_path: str
     original_file_path: str
     enhancement_params: AudioEnhancementParams
     quality_improvement: float
@@ -41,8 +36,7 @@ class EnhancementResult:
 
 
 class AudioEnhancer:
-    """AI-powered audio processing and enhancement engine"""
-    
+    """AI-powered audio processing and enhancement engine"""    
     def __init__(self):
         self.enhancement_history = {}
         self.quality_models = {}
@@ -54,8 +48,7 @@ class AudioEnhancer:
         params: AudioEnhancementParams,
         user_id: str
     ) -> EnhancementResult:
-        """Enhance audio file with AI processing"""
-        try:
+        """Enhance audio file with AI processing"""        try:
             start_time = datetime.now()
             
             logger.info(f"Enhancing audio file: {file_path}")
@@ -115,8 +108,7 @@ class AudioEnhancer:
         noise_profile: Optional[str] = None,
         strength: float = 0.8
     ) -> str:
-        """Apply AI-powered noise reduction"""
-        try:
+        """Apply AI-powered noise reduction"""        try:
             logger.info(f"Applying AI noise reduction (strength: {strength})")
             
             # Simulate AI noise reduction processing
@@ -143,8 +135,7 @@ class AudioEnhancer:
         target_sample_rate: int = 48000,
         target_bit_depth: int = 24
     ) -> str:
-        """Upscale audio quality using AI"""
-        try:
+        """Upscale audio quality using AI"""        try:
             logger.info(f"Upscaling audio to {target_sample_rate}Hz/{target_bit_depth}bit")
             
             # Simulate AI upscaling processing
@@ -171,8 +162,7 @@ class AudioEnhancer:
         target_loudness: float = -14.0,  # LUFS
         genre: str = "general"
     ) -> str:
-        """Apply AI-powered automatic mastering"""
-        try:
+        """Apply AI-powered automatic mastering"""        try:
             logger.info(f"Applying auto-mastering for {genre} genre")
             
             # Simulate mastering processing
@@ -201,8 +191,7 @@ class AudioEnhancer:
         file_path: str,
         enhancement_type: str = "clarity"  # clarity, warmth, presence
     ) -> str:
-        """Enhance vocal recordings with AI"""
-        try:
+        """Enhance vocal recordings with AI"""        try:
             logger.info(f"Applying voice enhancement: {enhancement_type}")
             
             # Simulate voice enhancement processing
@@ -232,8 +221,7 @@ class AudioEnhancer:
         file_path: str,
         target_instruments: List[str] = None
     ) -> Dict[str, str]:
-        """Separate instruments using AI source separation"""
-        try:
+        """Separate instruments using AI source separation"""        try:
             if target_instruments is None:
                 target_instruments = ["vocals", "drums", "bass", "other"]
             
@@ -267,8 +255,7 @@ class AudioEnhancer:
         params: AudioEnhancementParams,
         user_id: str
     ) -> List[EnhancementResult]:
-        """Enhance multiple audio files in batch"""
-        try:
+        """Enhance multiple audio files in batch"""        try:
             logger.info(f"Starting batch enhancement of {len(file_paths)} files")
             
             results = []
@@ -297,8 +284,7 @@ class AudioEnhancer:
         self,
         file_path: str
     ) -> Dict[str, Any]:
-        """Analyze audio quality metrics"""
-        try:
+        """Analyze audio quality metrics"""        try:
             return await self._analyze_audio_quality(file_path)
             
         except Exception as e:
@@ -310,8 +296,7 @@ class AudioEnhancer:
         file_path: str,
         content_type: str = "music"
     ) -> Dict[str, Any]:
-        """Get AI recommendations for audio enhancement"""
-        try:
+        """Get AI recommendations for audio enhancement"""        try:
             # Analyze current audio
             metrics = await self._analyze_audio_quality(file_path)
             
@@ -348,8 +333,7 @@ class AudioEnhancer:
             return {}
     
     def _initialize_quality_models(self):
-        """Initialize quality assessment models"""
-        try:
+        """Initialize quality assessment models"""        try:
             self.quality_models = {
                 "noise_detection": {
                     "threshold": 0.3,
@@ -371,8 +355,7 @@ class AudioEnhancer:
             logger.error(f"Error initializing quality models: {str(e)}")
     
     async def _analyze_audio_quality(self, file_path: str) -> Dict[str, Any]:
-        """Analyze audio quality metrics"""
-        try:
+        """Analyze audio quality metrics"""        try:
             # Simulate audio analysis
             await asyncio.sleep(0.5)
             
@@ -408,8 +391,7 @@ class AudioEnhancer:
             return {}
     
     async def _apply_noise_reduction(self, input_path: str, output_path: str) -> str:
-        """Apply noise reduction processing"""
-        try:
+        """Apply noise reduction processing"""        try:
             await asyncio.sleep(1.0)
             logger.info("Applied noise reduction")
             return output_path
@@ -419,8 +401,7 @@ class AudioEnhancer:
             return input_path
     
     async def _apply_audio_upscaling(self, file_path: str) -> str:
-        """Apply audio upscaling"""
-        try:
+        """Apply audio upscaling"""        try:
             await asyncio.sleep(1.5)
             logger.info("Applied audio upscaling")
             return file_path.replace(".wav", "_upscaled.wav")
@@ -430,8 +411,7 @@ class AudioEnhancer:
             return file_path
     
     async def _apply_auto_mastering(self, file_path: str, target_quality: str) -> str:
-        """Apply automatic mastering"""
-        try:
+        """Apply automatic mastering"""        try:
             await asyncio.sleep(2.0)
             logger.info(f"Applied auto-mastering (quality: {target_quality})")
             return file_path.replace(".wav", "_mastered.wav")
@@ -441,8 +421,7 @@ class AudioEnhancer:
             return file_path
     
     async def _apply_voice_enhancement(self, file_path: str) -> str:
-        """Apply voice enhancement"""
-        try:
+        """Apply voice enhancement"""        try:
             await asyncio.sleep(1.2)
             logger.info("Applied voice enhancement")
             return file_path.replace(".wav", "_voice_enhanced.wav")
@@ -452,8 +431,7 @@ class AudioEnhancer:
             return file_path
     
     async def _apply_instrument_separation(self, file_path: str) -> str:
-        """Apply instrument separation"""
-        try:
+        """Apply instrument separation"""        try:
             await asyncio.sleep(2.5)
             logger.info("Applied instrument separation")
             return file_path.replace(".wav", "_separated.wav")
@@ -467,8 +445,7 @@ class AudioEnhancer:
         original_metrics: Dict[str, Any],
         enhanced_metrics: Dict[str, Any]
     ) -> float:
-        """Calculate quality improvement percentage"""
-        try:
+        """Calculate quality improvement percentage"""        try:
             # Simplified quality improvement calculation
             original_score = self._calculate_quality_score(original_metrics)
             enhanced_score = self._calculate_quality_score(enhanced_metrics)
@@ -484,8 +461,7 @@ class AudioEnhancer:
             return 0.0
     
     def _calculate_quality_score(self, metrics: Dict[str, Any]) -> float:
-        """Calculate overall quality score from metrics"""
-        try:
+        """Calculate overall quality score from metrics"""        try:
             score = 0.0
             
             # Dynamic range factor (30%)
@@ -515,8 +491,7 @@ class AudioEnhancer:
             return 0.0
     
     def _calculate_frequency_balance_score(self, freq_balance: Dict[str, float]) -> float:
-        """Calculate frequency balance quality score"""
-        try:
+        """Calculate frequency balance quality score"""        try:
             # Ideal balance: bass=0.3, mid=0.5, treble=0.2
             ideal = {"bass": 0.3, "midrange": 0.5, "treble": 0.2}
             
@@ -540,8 +515,7 @@ class AudioEnhancer:
             return 0.5
     
     def _estimate_improvement_potential(self, metrics: Dict[str, Any]) -> float:
-        """Estimate potential improvement from enhancement"""
-        try:
+        """Estimate potential improvement from enhancement"""        try:
             current_score = self._calculate_quality_score(metrics)
             
             # Maximum possible improvement depends on current quality

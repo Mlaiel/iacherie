@@ -1,5 +1,4 @@
-"""
-📄 Contract Manager - Digital Contract Management System
+"""📄 Contract Manager - Digital Contract Management System
 ======================================================
 
 Professional contract lifecycle management system:
@@ -12,9 +11,7 @@ Professional contract lifecycle management system:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Legal Tech Specialist + Contract Specialist + Blockchain Engineer
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import logging
+"""import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union
 from datetime import datetime, timedelta
@@ -28,8 +25,7 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class ContractStatus(Enum):
-    """Contract lifecycle status"""
-    DRAFT = "draft"
+    """Contract lifecycle status"""    DRAFT = "draft"
     PENDING_SIGNATURE = "pending_signature"
     ACTIVE = "active"
     SUSPENDED = "suspended"
@@ -38,8 +34,7 @@ class ContractStatus(Enum):
     BREACHED = "breached"
 
 class ContractType(Enum):
-    """Types of contracts"""
-    LICENSING_AGREEMENT = "licensing_agreement"
+    """Types of contracts"""    LICENSING_AGREEMENT = "licensing_agreement"
     DISTRIBUTION_AGREEMENT = "distribution_agreement"
     MANAGEMENT_AGREEMENT = "management_agreement"
     PUBLISHING_AGREEMENT = "publishing_agreement"
@@ -47,8 +42,7 @@ class ContractType(Enum):
     SYNC_AGREEMENT = "sync_agreement"
 
 class AmendmentType(Enum):
-    """Types of contract amendments"""
-    TERM_EXTENSION = "term_extension"
+    """Types of contract amendments"""    TERM_EXTENSION = "term_extension"
     REVENUE_MODIFICATION = "revenue_modification"
     TERRITORY_CHANGE = "territory_change"
     RIGHTS_MODIFICATION = "rights_modification"
@@ -56,8 +50,7 @@ class AmendmentType(Enum):
 
 @dataclass
 class ContractParty:
-    """Contract party information"""
-    party_id: str
+    """Contract party information"""    party_id: str
     name: str
     role: str  # licensor, licensee, manager, etc.
     contact_info: Dict[str, Any]
@@ -68,8 +61,7 @@ class ContractParty:
 
 @dataclass
 class ContractTerms:
-    """Contract terms and conditions"""
-    effective_date: datetime
+    """Contract terms and conditions"""    effective_date: datetime
     expiration_date: Optional[datetime]
     territory: str
     exclusivity: bool
@@ -80,8 +72,7 @@ class ContractTerms:
 
 @dataclass
 class ContractRecord:
-    """Complete contract record"""
-    contract_id: str
+    """Complete contract record"""    contract_id: str
     license_id: str
     contract_type: ContractType
     status: ContractStatus
@@ -95,16 +86,13 @@ class ContractRecord:
     performance_metrics: Dict[str, Any]
 
 class ContractManager:
-    """
-    🚀 Professional contract management system
+    """    🚀 Professional contract management system
     
     Advanced system for managing digital contracts with automated
     lifecycle management and compliance monitoring.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize contract manager with configuration."""
-        self.config = config
+        """Initialize contract manager with configuration."""        self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Contract storage
@@ -131,8 +119,7 @@ class ContractManager:
         self._load_contract_templates()
     
     def _initialize_signature_providers(self):
-        """Initialize digital signature service integrations."""
-        try:
+        """Initialize digital signature service integrations."""        try:
             # DocuSign integration
             if self.config.get('docusign_enabled', False):
                 from .integrations.docusign_provider import DocuSignProvider
@@ -162,8 +149,7 @@ class ContractManager:
             self.logger.error(f"Failed to initialize signature providers: {e}")
     
     def _load_contract_templates(self):
-        """Load contract templates."""
-        template_path = Path(self.config.get('template_path', 'templates/contracts'))
+        """Load contract templates."""        template_path = Path(self.config.get('template_path', 'templates/contracts'))
         
         if not template_path.exists():
             template_path.mkdir(parents=True, exist_ok=True)
@@ -177,8 +163,7 @@ class ContractManager:
         self.logger.info(f"Loaded {len(self.contract_templates)} contract templates")
     
     def _create_default_contract_templates(self, template_path: Path):
-        """Create default contract templates."""
-        templates = {
+        """Create default contract templates."""        templates = {
             'licensing_agreement': {
                 'name': 'Music Licensing Agreement',
                 'required_parties': ['licensor', 'licensee'],
@@ -225,8 +210,7 @@ class ContractManager:
         royalty_structure: Dict[str, Any],
         smart_contract_address: Optional[str] = None
     ) -> str:
-        """
-        📝 Register a new license as a digital contract
+        """        📝 Register a new license as a digital contract
         
         Args:
             license_data: Complete license information
@@ -235,8 +219,7 @@ class ContractManager:
             
         Returns:
             contract_id: Unique contract identifier
-        """
-        try:
+        """        try:
             contract_id = str(uuid.uuid4())
             license_id = license_data.get('metadata', {}).get('license_id', str(uuid.uuid4()))
             
@@ -287,8 +270,7 @@ class ContractManager:
             raise
     
     async def _extract_contract_parties(self, license_data: Dict[str, Any]) -> List[ContractParty]:
-        """Extract contract parties from license data."""
-        parties = []
+        """Extract contract parties from license data."""        parties = []
         
         # Licensor (content creator)
         licensor_info = license_data.get('content_info', {})
@@ -326,8 +308,7 @@ class ContractManager:
         license_data: Dict[str, Any],
         royalty_structure: Dict[str, Any]
     ) -> ContractTerms:
-        """Create contract terms from license and royalty data."""
-        license_terms = license_data.get('terms', {})
+        """Create contract terms from license and royalty data."""        license_terms = license_data.get('terms', {})
         license_metadata = license_data.get('metadata', {})
         
         return ContractTerms(
@@ -346,13 +327,11 @@ class ContractManager:
         )
     
     def _calculate_contract_hash(self, contract_data: Dict[str, Any]) -> str:
-        """Calculate SHA-256 hash of contract for integrity verification."""
-        contract_string = json.dumps(contract_data, sort_keys=True, separators=(',', ':'))
+        """Calculate SHA-256 hash of contract for integrity verification."""        contract_string = json.dumps(contract_data, sort_keys=True, separators=(',', ':'))
         return hashlib.sha256(contract_string.encode()).hexdigest()
     
     async def _store_on_blockchain(self, contract: ContractRecord, smart_contract_address: str):
-        """Store contract hash on blockchain for immutability."""
-        try:
+        """Store contract hash on blockchain for immutability."""        try:
             # This would integrate with actual blockchain
             blockchain_record = {
                 'contract_id': contract.contract_id,
@@ -369,8 +348,7 @@ class ContractManager:
             # Don't fail the entire registration for blockchain issues
     
     async def _initiate_signature_workflow(self, contract: ContractRecord):
-        """Initiate digital signature workflow."""
-        try:
+        """Initiate digital signature workflow."""        try:
             # Get preferred signature provider
             provider_name = self.config.get('default_signature_provider', 'docusign')
             provider = self.signature_providers.get(provider_name)
@@ -400,8 +378,7 @@ class ContractManager:
         license_id: str,
         updates: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        🔄 Update an existing license contract
+        """        🔄 Update an existing license contract
         
         Args:
             license_id: License identifier to update
@@ -409,8 +386,7 @@ class ContractManager:
             
         Returns:
             updated_contract: Updated contract information
-        """
-        try:
+        """        try:
             # Find contract by license_id
             contract = None
             for c in self.contracts.values():
@@ -466,8 +442,7 @@ class ContractManager:
             raise
     
     async def _update_blockchain_record(self, contract: ContractRecord):
-        """Update blockchain record with new contract hash."""
-        try:
+        """Update blockchain record with new contract hash."""        try:
             blockchain_record = self.blockchain_contracts.get(contract.contract_id)
             if blockchain_record:
                 blockchain_record.update({
@@ -486,8 +461,7 @@ class ContractManager:
         license_id: str,
         new_owner: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        🔄 Transfer license ownership
+        """        🔄 Transfer license ownership
         
         Args:
             license_id: License identifier to transfer
@@ -495,8 +469,7 @@ class ContractManager:
             
         Returns:
             transfer_result: Transfer operation result
-        """
-        try:
+        """        try:
             # Find contract
             contract = None
             for c in self.contracts.values():
@@ -559,8 +532,7 @@ class ContractManager:
             raise
     
     def get_license_info(self, license_id: str) -> Optional[Dict[str, Any]]:
-        """Get license information by license ID."""
-        for contract in self.contracts.values():
+        """Get license information by license ID."""        for contract in self.contracts.values():
             if contract.license_id == license_id:
                 return asdict(contract)
         return None
@@ -570,8 +542,7 @@ class ContractManager:
         current_expiration: str,
         renewal_period: str
     ) -> str:
-        """Calculate new expiration date for license renewal."""
-        try:
+        """Calculate new expiration date for license renewal."""        try:
             current_date = datetime.fromisoformat(current_expiration)
             
             # Parse renewal period
@@ -594,12 +565,10 @@ class ContractManager:
             raise
     
     def get_active_license_count(self) -> int:
-        """Get count of active licenses."""
-        return len([c for c in self.contracts.values() if c.status == ContractStatus.ACTIVE])
+        """Get count of active licenses."""        return len([c for c in self.contracts.values() if c.status == ContractStatus.ACTIVE])
     
     async def monitor_contract_performance(self, contract_id: str) -> Dict[str, Any]:
-        """Monitor contract performance and compliance."""
-        contract = self.contracts.get(contract_id)
+        """Monitor contract performance and compliance."""        contract = self.contracts.get(contract_id)
         if not contract:
             raise ValueError(f"Contract {contract_id} not found")
         
@@ -621,8 +590,7 @@ class ContractManager:
         return performance_data
     
     def get_contract_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive contract management metrics."""
-        active_contracts = [c for c in self.contracts.values() if c.status == ContractStatus.ACTIVE]
+        """Get comprehensive contract management metrics."""        active_contracts = [c for c in self.contracts.values() if c.status == ContractStatus.ACTIVE]
         expired_contracts = [c for c in self.contracts.values() if c.status == ContractStatus.EXPIRED]
         
         return {
@@ -638,8 +606,7 @@ class ContractManager:
         }
     
     def _calculate_average_duration(self, contracts: List[ContractRecord]) -> float:
-        """Calculate average contract duration in days."""
-        if not contracts:
+        """Calculate average contract duration in days."""        if not contracts:
             return 0.0
         
         durations = []

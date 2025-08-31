@@ -1,14 +1,11 @@
-"""
-Enhanced Read Replicas Configuration System
+"""Enhanced Read Replicas Configuration System
 
 Advanced read replica management with intelligent load balancing, automatic failover,
 and performance optimization for high-availability database operations.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import time
 import random
 from datetime import datetime, timedelta
@@ -28,8 +25,7 @@ logger = get_logger(__name__)
 
 
 class ReplicaStatus(Enum):
-    """Read replica status states"""
-    ACTIVE = "active"
+    """Read replica status states"""    ACTIVE = "active"
     SYNCING = "syncing"
     LAGGING = "lagging"
     FAILED = "failed"
@@ -38,8 +34,7 @@ class ReplicaStatus(Enum):
 
 
 class LoadBalancingStrategy(Enum):
-    """Load balancing strategies for read replicas"""
-    ROUND_ROBIN = "round_robin"
+    """Load balancing strategies for read replicas"""    ROUND_ROBIN = "round_robin"
     LEAST_CONNECTIONS = "least_connections"
     RESPONSE_TIME = "response_time"
     GEOGRAPHIC = "geographic"
@@ -48,16 +43,14 @@ class LoadBalancingStrategy(Enum):
 
 
 class FailoverMode(Enum):
-    """Failover modes"""
-    MANUAL = "manual"
+    """Failover modes"""    MANUAL = "manual"
     AUTOMATIC = "automatic"
     SEMI_AUTOMATIC = "semi_automatic"
 
 
 @dataclass
 class ReplicaConfig:
-    """Read replica configuration"""
-    replica_id: str
+    """Read replica configuration"""    replica_id: str
     host: str
     port: int
     database: str
@@ -74,8 +67,7 @@ class ReplicaConfig:
 
 @dataclass
 class ReplicaMetrics:
-    """Read replica performance metrics"""
-    replica_id: str
+    """Read replica performance metrics"""    replica_id: str
     lag_seconds: float = 0.0
     active_connections: int = 0
     queries_per_second: float = 0.0
@@ -86,8 +78,7 @@ class ReplicaMetrics:
     last_updated: datetime = field(default_factory=datetime.now)
     
     def health_score(self) -> float:
-        """Calculate overall health score (0-100)"""
-        score = 100.0
+        """Calculate overall health score (0-100)"""        score = 100.0
         
         # Penalize lag
         if self.lag_seconds > 5:
@@ -110,8 +101,7 @@ class ReplicaMetrics:
 
 
 class IntelligentLoadBalancer:
-    """Intelligent load balancer for read replicas"""
-    
+    """Intelligent load balancer for read replicas"""    
     def __init__(self, strategy: LoadBalancingStrategy):
         self.strategy = strategy
         self.replica_metrics: Dict[str, ReplicaMetrics] = {}
@@ -123,8 +113,7 @@ class IntelligentLoadBalancer:
     async def select_replica(self, available_replicas: List[str], 
                            client_region: Optional[str] = None,
                            query_type: str = "read") -> Optional[str]:
-        """Select optimal replica based on strategy and current conditions"""
-        async with self._lock:
+        """Select optimal replica based on strategy and current conditions"""        async with self._lock:
             if not available_replicas:
                 return None
             
@@ -153,8 +142,7 @@ class IntelligentLoadBalancer:
                 return healthy_replicas[0]
     
     def _filter_healthy_replicas(self, replicas: List[str]) -> List[str]:
-        """Filter out unhealthy replicas"""
-        healthy = []
+        """Filter out unhealthy replicas"""        healthy = []
         
         for replica_id in replicas:
             metrics = self.replica_metrics.get(replica_id)
@@ -164,26 +152,22 @@ class IntelligentLoadBalancer:
         return healthy if healthy else replicas  # Return all if none healthy
     
     def _round_robin_select(self, replicas: List[str]) -> str:
-        """Round-robin selection"""
-        selected = replicas[self.round_robin_index % len(replicas)]
+        """Round-robin selection"""        selected = replicas[self.round_robin_index % len(replicas)]
         self.round_robin_index += 1
         return selected
     
     def _least_connections_select(self, replicas: List[str]) -> str:
-        """Select replica with least connections"""
-        return min(replicas, key=lambda r: self.connection_counts.get(r, 0))
+        """Select replica with least connections"""        return min(replicas, key=lambda r: self.connection_counts.get(r, 0))
     
     def _response_time_select(self, replicas: List[str]) -> str:
-        """Select replica with best response time"""
-        def get_response_time(replica_id):
+        """Select replica with best response time"""        def get_response_time(replica_id):
             metrics = self.replica_metrics.get(replica_id)
             return metrics.avg_response_time if metrics else float('inf')
         
         return min(replicas, key=get_response_time)
     
     def _geographic_select(self, replicas: List[str], client_region: Optional[str]) -> str:
-        """Select replica based on geographic proximity"""
-        if not client_region:
+        """Select replica based on geographic proximity"""        if not client_region:
             return self._round_robin_select(replicas)
         
         # Get preferred replicas for this region
@@ -198,8 +182,7 @@ class IntelligentLoadBalancer:
             return self._response_time_select(replicas)
     
     def _capacity_based_select(self, replicas: List[str]) -> str:
-        """Select replica based on current capacity"""
-        def get_capacity_score(replica_id):
+        """Select replica based on current capacity"""        def get_capacity_score(replica_id):
             metrics = self.replica_metrics.get(replica_id)
             if not metrics:
                 return 0.0
@@ -216,8 +199,7 @@ class IntelligentLoadBalancer:
     
     def _intelligent_select(self, replicas: List[str], client_region: Optional[str], 
                           query_type: str) -> str:
-        """Intelligent selection combining multiple factors"""
-        scores = {}
+        """Intelligent selection combining multiple factors"""        scores = {}
         
         for replica_id in replicas:
             metrics = self.replica_metrics.get(replica_id)
@@ -250,21 +232,17 @@ class IntelligentLoadBalancer:
         return max(scores.keys(), key=lambda k: scores[k])
     
     def update_metrics(self, replica_id: str, metrics: ReplicaMetrics):
-        """Update replica metrics for load balancing decisions"""
-        self.replica_metrics[replica_id] = metrics
+        """Update replica metrics for load balancing decisions"""        self.replica_metrics[replica_id] = metrics
     
     def update_connection_count(self, replica_id: str, delta: int):
-        """Update connection count for replica"""
-        self.connection_counts[replica_id] = max(0, self.connection_counts[replica_id] + delta)
+        """Update connection count for replica"""        self.connection_counts[replica_id] = max(0, self.connection_counts[replica_id] + delta)
     
     def set_geographic_preferences(self, preferences: Dict[str, List[str]]):
-        """Set geographic preferences for regions"""
-        self.geographic_preferences = preferences
+        """Set geographic preferences for regions"""        self.geographic_preferences = preferences
 
 
 class ReadReplicaMonitor:
-    """Monitor for read replica health and performance"""
-    
+    """Monitor for read replica health and performance"""    
     def __init__(self, replica_configs: Dict[str, ReplicaConfig]):
         self.replica_configs = replica_configs
         self.replica_engines: Dict[str, AsyncEngine] = {}
@@ -273,8 +251,7 @@ class ReadReplicaMonitor:
         self.is_monitoring = False
         
     async def start_monitoring(self):
-        """Start replica monitoring"""
-        if self.is_monitoring:
+        """Start replica monitoring"""        if self.is_monitoring:
             return
         
         self.is_monitoring = True
@@ -293,8 +270,7 @@ class ReadReplicaMonitor:
         logger.info("Read replica monitoring started")
     
     async def stop_monitoring(self):
-        """Stop replica monitoring"""
-        self.is_monitoring = False
+        """Stop replica monitoring"""        self.is_monitoring = False
         
         if self.monitoring_task:
             self.monitoring_task.cancel()
@@ -310,8 +286,7 @@ class ReadReplicaMonitor:
         logger.info("Read replica monitoring stopped")
     
     async def _create_replica_engine(self, config: ReplicaConfig) -> AsyncEngine:
-        """Create async engine for replica"""
-        dsn = f"postgresql+asyncpg://{config.username}:{config.password}@{config.host}:{config.port}/{config.database}"
+        """Create async engine for replica"""        dsn = f"postgresql+asyncpg://{config.username}:{config.password}@{config.host}:{config.port}/{config.database}"
         
         return create_async_engine(
             dsn,
@@ -323,8 +298,7 @@ class ReadReplicaMonitor:
         )
     
     async def _monitoring_loop(self):
-        """Main monitoring loop"""
-        while self.is_monitoring:
+        """Main monitoring loop"""        while self.is_monitoring:
             try:
                 # Check all replicas
                 for replica_id in self.replica_configs:
@@ -339,8 +313,7 @@ class ReadReplicaMonitor:
                 await asyncio.sleep(10)
     
     async def _check_replica_health(self, replica_id: str):
-        """Check health of a specific replica"""
-        try:
+        """Check health of a specific replica"""        try:
             engine = self.replica_engines.get(replica_id)
             if not engine:
                 return
@@ -353,15 +326,13 @@ class ReadReplicaMonitor:
                 await conn.execute(text("SELECT 1"))
                 
                 # Get replication lag
-                lag_result = await conn.execute(text("""
-                    SELECT EXTRACT(EPOCH FROM (now() - pg_last_xact_replay_timestamp())) as lag_seconds
+                lag_result = await conn.execute(text("""                    SELECT EXTRACT(EPOCH FROM (now() - pg_last_xact_replay_timestamp())) as lag_seconds
                 """))
                 lag_row = lag_result.fetchone()
                 lag_seconds = lag_row.lag_seconds if lag_row and lag_row.lag_seconds else 0.0
                 
                 # Get connection count
-                conn_result = await conn.execute(text("""
-                    SELECT count(*) as active_connections 
+                conn_result = await conn.execute(text("""                    SELECT count(*) as active_connections 
                     FROM pg_stat_activity 
                     WHERE state = 'active'
                 """))
@@ -397,16 +368,13 @@ class ReadReplicaMonitor:
             metrics.last_updated = datetime.now()
     
     def get_replica_metrics(self, replica_id: str) -> Optional[ReplicaMetrics]:
-        """Get metrics for specific replica"""
-        return self.replica_metrics.get(replica_id)
+        """Get metrics for specific replica"""        return self.replica_metrics.get(replica_id)
     
     def get_all_metrics(self) -> Dict[str, ReplicaMetrics]:
-        """Get metrics for all replicas"""
-        return self.replica_metrics.copy()
+        """Get metrics for all replicas"""        return self.replica_metrics.copy()
     
     async def test_replica_connectivity(self, replica_id: str) -> bool:
-        """Test connectivity to specific replica"""
-        try:
+        """Test connectivity to specific replica"""        try:
             engine = self.replica_engines.get(replica_id)
             if not engine:
                 return False
@@ -422,8 +390,7 @@ class ReadReplicaMonitor:
 
 
 class ReadReplicaManager:
-    """Enhanced read replica manager with intelligent load balancing"""
-    
+    """Enhanced read replica manager with intelligent load balancing"""    
     def __init__(self, primary_engine: AsyncEngine, 
                  replica_configs: Dict[str, ReplicaConfig],
                  strategy: LoadBalancingStrategy = LoadBalancingStrategy.INTELLIGENT):
@@ -445,8 +412,7 @@ class ReadReplicaManager:
         self.failover_history: List[Dict[str, Any]] = []
     
     async def initialize(self) -> bool:
-        """Initialize read replica manager"""
-        try:
+        """Initialize read replica manager"""        try:
             logger.info("Initializing read replica manager")
             
             # Initialize replica engines
@@ -487,8 +453,7 @@ class ReadReplicaManager:
             return False
     
     async def _create_replica_engine(self, config: ReplicaConfig) -> AsyncEngine:
-        """Create async engine for replica"""
-        dsn = f"postgresql+asyncpg://{config.username}:{config.password}@{config.host}:{config.port}/{config.database}"
+        """Create async engine for replica"""        dsn = f"postgresql+asyncpg://{config.username}:{config.password}@{config.host}:{config.port}/{config.database}"
         
         return create_async_engine(
             dsn,
@@ -500,8 +465,7 @@ class ReadReplicaManager:
         )
     
     async def _test_replica(self, replica_id: str) -> bool:
-        """Test replica connectivity"""
-        try:
+        """Test replica connectivity"""        try:
             engine = self.replica_engines.get(replica_id)
             if not engine:
                 return False
@@ -515,8 +479,7 @@ class ReadReplicaManager:
             return False
     
     def _setup_geographic_preferences(self):
-        """Setup geographic preferences for load balancing"""
-        preferences = {}
+        """Setup geographic preferences for load balancing"""        preferences = {}
         
         for region in ["us-east", "us-west", "eu-central", "asia-pacific"]:
             # Find replicas in this region
@@ -534,8 +497,7 @@ class ReadReplicaManager:
                                 client_region: Optional[str] = None,
                                 query_type: str = "read",
                                 timeout: Optional[float] = None) -> Any:
-        """Execute read query on optimal replica"""
-        try:
+        """Execute read query on optimal replica"""        try:
             # Get available replicas
             available_replicas = [
                 replica_id for replica_id, status in self.replica_status.items()
@@ -583,8 +545,7 @@ class ReadReplicaManager:
     
     async def _execute_on_replica(self, replica_id: str, query: str, *args, 
                                 timeout: Optional[float] = None) -> Any:
-        """Execute query on specific replica"""
-        engine = self.replica_engines.get(replica_id)
+        """Execute query on specific replica"""        engine = self.replica_engines.get(replica_id)
         if not engine:
             raise Exception(f"Replica {replica_id} not available")
         
@@ -601,8 +562,7 @@ class ReadReplicaManager:
     
     async def _execute_on_primary(self, query: str, *args, 
                                 timeout: Optional[float] = None) -> Any:
-        """Execute query on primary database"""
-        async with self.primary_engine.begin() as conn:
+        """Execute query on primary database"""        async with self.primary_engine.begin() as conn:
             if timeout:
                 result = await asyncio.wait_for(
                     conn.execute(text(query), *args),
@@ -614,8 +574,7 @@ class ReadReplicaManager:
             return result.fetchall()
     
     async def _handle_replica_error(self, replica_id: str, error: Exception):
-        """Handle replica error"""
-        try:
+        """Handle replica error"""        try:
             # Update replica status based on error
             if "connection" in str(error).lower():
                 self.replica_status[replica_id] = ReplicaStatus.FAILED
@@ -637,8 +596,7 @@ class ReadReplicaManager:
             logger.error(f"Error handling replica error: {e}")
     
     async def _attempt_replica_recovery(self, replica_id: str):
-        """Attempt to recover failed replica"""
-        try:
+        """Attempt to recover failed replica"""        try:
             logger.info(f"Attempting recovery for replica {replica_id}")
             
             # Wait before retry
@@ -662,8 +620,7 @@ class ReadReplicaManager:
             logger.error(f"Replica recovery error for {replica_id}: {e}")
     
     async def get_replica_stats(self) -> Dict[str, Any]:
-        """Get comprehensive replica statistics"""
-        try:
+        """Get comprehensive replica statistics"""        try:
             stats = {
                 'total_replicas': len(self.replica_configs),
                 'active_replicas': len([s for s in self.replica_status.values() if s == ReplicaStatus.ACTIVE]),
@@ -707,8 +664,7 @@ class ReadReplicaManager:
             return {}
     
     async def shutdown(self):
-        """Shutdown read replica manager"""
-        try:
+        """Shutdown read replica manager"""        try:
             # Stop monitoring
             await self.monitor.stop_monitoring()
             

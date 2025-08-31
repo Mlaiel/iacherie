@@ -1,5 +1,4 @@
-"""
-🔧 Cloud Environment Configuration - IA-Influencer-Agent
+"""🔧 Cloud Environment Configuration - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps + Backend Senior + ML Engineer + Cloud Architect
@@ -14,9 +13,7 @@ Contact: mlaiel@live.de
 
 Configuration environnement cloud multi-provider (AWS, GCP, Azure).
 ==================================================================
-"""
-
-import os
+"""import os
 from typing import Dict, Any, List, Optional, Union
 from enum import Enum
 from .base import (
@@ -33,19 +30,16 @@ from .base import (
 
 
 class CloudProvider(str, Enum):
-    """Providers cloud supportés"""
-    AWS = "aws"
+    """Providers cloud supportés"""    AWS = "aws"
     AZURE = "azure"
     GCP = "gcp"
     MULTI_CLOUD = "multi_cloud"
 
 
 class CloudConfigManager(BaseEnvironmentConfigManager):
-    """
-    Configuration manager pour environnements cloud.
+    """    Configuration manager pour environnements cloud.
     Support multi-cloud avec provider-specific optimizations.
-    """
-    
+    """    
     def __init__(self, provider: CloudProvider = CloudProvider.AWS):
         self.cloud_provider = provider
         super().__init__(
@@ -58,8 +52,7 @@ class CloudConfigManager(BaseEnvironmentConfigManager):
         )
         
     def _get_cloud_cors_origins(self) -> List[str]:
-        """Définit les origins CORS pour cloud"""
-        origins_env = os.getenv("CLOUD_CORS_ORIGINS", "")
+        """Définit les origins CORS pour cloud"""        origins_env = os.getenv("CLOUD_CORS_ORIGINS", "")
         if origins_env:
             return [origin.strip() for origin in origins_env.split(",")]
         return [
@@ -70,8 +63,7 @@ class CloudConfigManager(BaseEnvironmentConfigManager):
         ]
         
     def load_environment_specific_config(self) -> None:
-        """Charge la configuration spécifique au cloud"""
-        
+        """Charge la configuration spécifique au cloud"""        
         # Configuration selon le provider cloud
         if self.cloud_provider == CloudProvider.AWS:
             self._configure_aws()
@@ -83,8 +75,7 @@ class CloudConfigManager(BaseEnvironmentConfigManager):
             self._configure_multi_cloud()
             
     def _configure_aws(self) -> None:
-        """Configuration AWS spécifique"""
-        
+        """Configuration AWS spécifique"""        
         # RDS PostgreSQL
         self.database_config = DatabaseConfig(
             host=os.getenv("AWS_RDS_ENDPOINT"),
@@ -147,8 +138,7 @@ class CloudConfigManager(BaseEnvironmentConfigManager):
         )
         
     def _configure_azure(self) -> None:
-        """Configuration Azure spécifique"""
-        
+        """Configuration Azure spécifique"""        
         # Azure Database for PostgreSQL
         self.database_config = DatabaseConfig(
             host=os.getenv("AZURE_DB_HOST"),
@@ -181,8 +171,7 @@ class CloudConfigManager(BaseEnvironmentConfigManager):
         )
         
     def _configure_gcp(self) -> None:
-        """Configuration Google Cloud spécifique"""
-        
+        """Configuration Google Cloud spécifique"""        
         # Cloud SQL PostgreSQL
         self.database_config = DatabaseConfig(
             host=os.getenv("GCP_SQL_HOST"),
@@ -215,8 +204,7 @@ class CloudConfigManager(BaseEnvironmentConfigManager):
         )
         
     def _configure_multi_cloud(self) -> None:
-        """Configuration multi-cloud avec failover"""
-        primary_provider = os.getenv("PRIMARY_CLOUD_PROVIDER", "aws").lower()
+        """Configuration multi-cloud avec failover"""        primary_provider = os.getenv("PRIMARY_CLOUD_PROVIDER", "aws").lower()
         
         if primary_provider == "aws":
             self._configure_aws()
@@ -229,8 +217,7 @@ class CloudConfigManager(BaseEnvironmentConfigManager):
         self._setup_failover_configuration()
         
     def _get_aws_secret(self, secret_name: str) -> str:
-        """Récupère un secret depuis AWS Secrets Manager"""
-        try:
+        """Récupère un secret depuis AWS Secrets Manager"""        try:
             import boto3
             client = boto3.client('secretsmanager', region_name=self.storage_config.aws_region if self.storage_config else 'eu-central-1')
             response = client.get_secret_value(SecretId=secret_name)
@@ -239,8 +226,7 @@ class CloudConfigManager(BaseEnvironmentConfigManager):
             return os.getenv(secret_name.upper().replace('-', '_'), f"fallback-{secret_name}")
             
     def _get_azure_secret(self, secret_name: str) -> str:
-        """Récupère un secret depuis Azure Key Vault"""
-        try:
+        """Récupère un secret depuis Azure Key Vault"""        try:
             from azure.keyvault.secrets import SecretClient
             from azure.identity import DefaultAzureCredential
             
@@ -253,8 +239,7 @@ class CloudConfigManager(BaseEnvironmentConfigManager):
             return os.getenv(secret_name.upper().replace('-', '_'), f"fallback-{secret_name}")
             
     def _get_gcp_secret(self, secret_name: str) -> str:
-        """Récupère un secret depuis GCP Secret Manager"""
-        try:
+        """Récupère un secret depuis GCP Secret Manager"""        try:
             from google.cloud import secretmanager
             client = secretmanager.SecretManagerServiceClient()
             project_id = os.getenv("GCP_PROJECT_ID")
@@ -265,8 +250,7 @@ class CloudConfigManager(BaseEnvironmentConfigManager):
             return os.getenv(secret_name.upper().replace('-', '_'), f"fallback-{secret_name}")
             
     def _setup_failover_configuration(self) -> None:
-        """Configure le failover multi-cloud"""
-        self.failover_config = {
+        """Configure le failover multi-cloud"""        self.failover_config = {
             "enabled": True,
             "primary_provider": self.cloud_provider.value,
             "secondary_providers": self._get_secondary_providers(),
@@ -276,13 +260,11 @@ class CloudConfigManager(BaseEnvironmentConfigManager):
         }
         
     def _get_secondary_providers(self) -> List[str]:
-        """Retourne les providers de failover"""
-        secondary = os.getenv("SECONDARY_CLOUD_PROVIDERS", "").split(",")
+        """Retourne les providers de failover"""        secondary = os.getenv("SECONDARY_CLOUD_PROVIDERS", "").split(",")
         return [p.strip() for p in secondary if p.strip()]
         
     def validate_configuration(self) -> bool:
-        """Valide la configuration cloud"""
-        try:
+        """Valide la configuration cloud"""        try:
             # Vérifications cloud génériques
             assert self.database_config is not None, "Configuration base de données requise"
             assert self.redis_config is not None, "Configuration Redis requise"
@@ -305,8 +287,7 @@ class CloudConfigManager(BaseEnvironmentConfigManager):
             return False
             
     def get_cloud_features(self) -> Dict[str, Any]:
-        """Fonctionnalités spécifiques cloud"""
-        return {
+        """Fonctionnalités spécifiques cloud"""        return {
             "cloud_native": True,
             "auto_scaling": True,
             "load_balancing": True,
@@ -322,8 +303,7 @@ class CloudConfigManager(BaseEnvironmentConfigManager):
         }
         
     def get_aws_specific_config(self) -> Dict[str, Any]:
-        """Configuration spécifique AWS"""
-        if self.cloud_provider != CloudProvider.AWS:
+        """Configuration spécifique AWS"""        if self.cloud_provider != CloudProvider.AWS:
             return {}
             
         return {
@@ -354,8 +334,7 @@ class CloudConfigManager(BaseEnvironmentConfigManager):
         }
         
     def get_azure_specific_config(self) -> Dict[str, Any]:
-        """Configuration spécifique Azure"""
-        if self.cloud_provider != CloudProvider.AZURE:
+        """Configuration spécifique Azure"""        if self.cloud_provider != CloudProvider.AZURE:
             return {}
             
         return {
@@ -381,8 +360,7 @@ class CloudConfigManager(BaseEnvironmentConfigManager):
         }
         
     def get_gcp_specific_config(self) -> Dict[str, Any]:
-        """Configuration spécifique GCP"""
-        if self.cloud_provider != CloudProvider.GCP:
+        """Configuration spécifique GCP"""        if self.cloud_provider != CloudProvider.GCP:
             return {}
             
         return {
@@ -407,8 +385,7 @@ class CloudConfigManager(BaseEnvironmentConfigManager):
         }
         
     def get_cost_optimization_config(self) -> Dict[str, Any]:
-        """Configuration optimisation coûts"""
-        return {
+        """Configuration optimisation coûts"""        return {
             "auto_shutdown": {
                 "enabled": bool(os.getenv("COST_AUTO_SHUTDOWN", True)),
                 "schedule": os.getenv("SHUTDOWN_SCHEDULE", "0 2 * * *"),  # 2 AM daily
@@ -428,8 +405,7 @@ class CloudConfigManager(BaseEnvironmentConfigManager):
         }
         
     def export_to_dict(self) -> Dict[str, Any]:
-        """Exporte la configuration cloud complète"""
-        base_config = super().export_to_dict()
+        """Exporte la configuration cloud complète"""        base_config = super().export_to_dict()
         base_config.update({
             "cloud_provider": self.cloud_provider.value,
             "cloud_features": self.get_cloud_features(),
@@ -448,15 +424,13 @@ class CloudConfigManager(BaseEnvironmentConfigManager):
 
 
 def create_cloud_config(provider: CloudProvider = CloudProvider.AWS) -> CloudConfigManager:
-    """Crée et initialise la configuration cloud"""
-    config = CloudConfigManager(provider)
+    """Crée et initialise la configuration cloud"""    config = CloudConfigManager(provider)
     config.initialize_configuration()
     return config
 
 
 def auto_detect_cloud_provider() -> CloudProvider:
-    """Détecte automatiquement le provider cloud"""
-    # Détection AWS
+    """Détecte automatiquement le provider cloud"""    # Détection AWS
     if os.getenv("AWS_REGION") or os.getenv("AWS_EXECUTION_ENV"):
         return CloudProvider.AWS
     

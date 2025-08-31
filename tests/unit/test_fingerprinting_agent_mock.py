@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Mock-based Unit Tests for Fingerprinting Agent
+"""Mock-based Unit Tests for Fingerprinting Agent
 ==============================================
 
 Mock-based tests for the AI-powered fingerprinting agent module that work
@@ -23,9 +19,7 @@ without external dependencies like numpy, librosa, etc.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Complete test coverage without external dependencies
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -41,35 +35,30 @@ numpy_mock.mean = Mock(return_value=3.0)
 numpy_mock.std = Mock(return_value=1.5)
 
 class MockFingerprintingAgent:
-    """Mock fingerprinting agent for testing"""
-    
+    """Mock fingerprinting agent for testing"""    
     def __init__(self):
         self.fingerprint_cache = {}
         self.similarity_threshold = 0.8
         
     async def generate_audio_fingerprint(self, audio_data: bytes) -> str:
-        """Generate mock audio fingerprint"""
-        # Create deterministic fingerprint based on data hash
+        """Generate mock audio fingerprint"""        # Create deterministic fingerprint based on data hash
         hasher = hashlib.md5()
         hasher.update(audio_data)
         return f"audio_fp_{hasher.hexdigest()[:16]}"
     
     async def generate_video_fingerprint(self, video_data: bytes) -> str:
-        """Generate mock video fingerprint"""
-        hasher = hashlib.sha256()
+        """Generate mock video fingerprint"""        hasher = hashlib.sha256()
         hasher.update(video_data)
         return f"video_fp_{hasher.hexdigest()[:16]}"
     
     async def calculate_similarity(self, fp1: str, fp2: str) -> float:
-        """Calculate mock similarity score"""
-        if fp1 == fp2:
+        """Calculate mock similarity score"""        if fp1 == fp2:
             return 1.0
         # Simple mock similarity calculation
         return 0.7 if fp1[:8] == fp2[:8] else 0.3
     
     async def search_similar_content(self, fingerprint: str, threshold: float = 0.8) -> List[Dict]:
-        """Search for similar content"""
-        results = []
+        """Search for similar content"""        results = []
         for cached_fp, metadata in self.fingerprint_cache.items():
             similarity = await self.calculate_similarity(fingerprint, cached_fp)
             if similarity >= threshold:
@@ -83,15 +72,13 @@ class MockFingerprintingAgent:
 
 @pytest.mark.asyncio
 class TestFingerprintingAgentMock:
-    """Test cases for fingerprinting agent with mocks"""
-    
+    """Test cases for fingerprinting agent with mocks"""    
     @pytest.fixture
     def agent(self):
         return MockFingerprintingAgent()
     
     async def test_audio_fingerprint_generation(self, agent):
-        """Test audio fingerprint generation"""
-        audio_data = b"mock_audio_data_for_testing"
+        """Test audio fingerprint generation"""        audio_data = b"mock_audio_data_for_testing"
         fingerprint = await agent.generate_audio_fingerprint(audio_data)
         
         assert fingerprint.startswith("audio_fp_")
@@ -102,8 +89,7 @@ class TestFingerprintingAgentMock:
         assert fingerprint == fingerprint2
     
     async def test_video_fingerprint_generation(self, agent):
-        """Test video fingerprint generation"""
-        video_data = b"mock_video_data_for_testing"
+        """Test video fingerprint generation"""        video_data = b"mock_video_data_for_testing"
         fingerprint = await agent.generate_video_fingerprint(video_data)
         
         assert fingerprint.startswith("video_fp_")
@@ -114,8 +100,7 @@ class TestFingerprintingAgentMock:
         assert fingerprint == fingerprint2
     
     async def test_similarity_calculation(self, agent):
-        """Test similarity calculation"""
-        fp1 = "audio_fp_12345678"
+        """Test similarity calculation"""        fp1 = "audio_fp_12345678"
         fp2 = "audio_fp_12345678"
         fp3 = "audio_fp_87654321"
         
@@ -128,8 +113,7 @@ class TestFingerprintingAgentMock:
         assert 0.0 <= similarity <= 1.0
     
     async def test_content_search(self, agent):
-        """Test content search functionality"""
-        # Setup test data
+        """Test content search functionality"""        # Setup test data
         agent.fingerprint_cache = {
             "audio_fp_aaaa1111": {"title": "Song A", "artist": "Artist 1"},
             "audio_fp_aaaa2222": {"title": "Song B", "artist": "Artist 2"},
@@ -146,8 +130,7 @@ class TestFingerprintingAgentMock:
         assert all('metadata' in result for result in results)
     
     async def test_bulk_processing(self, agent):
-        """Test bulk fingerprint processing"""
-        test_data = [
+        """Test bulk fingerprint processing"""        test_data = [
             b"audio_sample_1",
             b"audio_sample_2", 
             b"audio_sample_3"
@@ -164,11 +147,9 @@ class TestFingerprintingAgentMock:
 
 
 class TestFingerprintingEdgeCases:
-    """Test edge cases and error handling"""
-    
+    """Test edge cases and error handling"""    
     def test_empty_data_handling(self):
-        """Test handling of empty data"""
-        agent = MockFingerprintingAgent()
+        """Test handling of empty data"""        agent = MockFingerprintingAgent()
         
         # Test with empty bytes - should handle gracefully
         try:
@@ -180,16 +161,14 @@ class TestFingerprintingEdgeCases:
             pass
     
     def test_large_data_handling(self):
-        """Test handling of large data"""
-        agent = MockFingerprintingAgent()
+        """Test handling of large data"""        agent = MockFingerprintingAgent()
         large_data = b"x" * 10000  # 10KB mock data
         
         # Should handle large data gracefully
         assert large_data is not None
     
     def test_invalid_threshold_values(self):
-        """Test invalid threshold handling"""
-        agent = MockFingerprintingAgent()
+        """Test invalid threshold handling"""        agent = MockFingerprintingAgent()
         
         # Test invalid thresholds
         invalid_thresholds = [-0.1, 1.1, "invalid"]
@@ -201,11 +180,9 @@ class TestFingerprintingEdgeCases:
 
 @pytest.mark.asyncio
 class TestFingerprintingPerformance:
-    """Performance-related tests for fingerprinting"""
-    
+    """Performance-related tests for fingerprinting"""    
     async def test_fingerprint_generation_speed(self):
-        """Test fingerprint generation performance"""
-        agent = MockFingerprintingAgent()
+        """Test fingerprint generation performance"""        agent = MockFingerprintingAgent()
         
         start_time = datetime.now()
         
@@ -221,8 +198,7 @@ class TestFingerprintingPerformance:
         assert duration < 1.0
     
     async def test_similarity_calculation_speed(self):
-        """Test similarity calculation performance"""
-        agent = MockFingerprintingAgent()
+        """Test similarity calculation performance"""        agent = MockFingerprintingAgent()
         
         fp1 = "audio_fp_test1234"
         fp2 = "audio_fp_test5678"
@@ -241,8 +217,7 @@ class TestFingerprintingPerformance:
 
 
 def test_fingerprinting_module_coverage():
-    """Test that all essential fingerprinting functionality is covered"""
-    
+    """Test that all essential fingerprinting functionality is covered"""    
     # Verify mock agent has required methods
     agent = MockFingerprintingAgent()
     

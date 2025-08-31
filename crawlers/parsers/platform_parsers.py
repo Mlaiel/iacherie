@@ -1,5 +1,4 @@
-"""
-Platform Parsers Module
+"""Platform Parsers Module
 =======================
 
 Platform-specific content parsers for major social media and content platforms.
@@ -12,9 +11,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import json
 import re
 from abc import ABC, abstractmethod
@@ -33,8 +30,7 @@ from .parser_config import ParserConfig, PlatformType
 
 
 class BasePlatformParser(ABC):
-    """Abstract base class for platform-specific parsers"""
-    
+    """Abstract base class for platform-specific parsers"""    
     def __init__(self, config: ParserConfig, platform: PlatformType):
         self.config = config
         self.platform = platform
@@ -42,52 +38,43 @@ class BasePlatformParser(ABC):
         self.session = None
     
     async def __aenter__(self):
-        """Async context manager entry"""
-        self.session = aiohttp.ClientSession(
+        """Async context manager entry"""        self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=self.platform_config.timeout),
             headers=self.platform_config.headers
         )
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
-        if self.session:
+        """Async context manager exit"""        if self.session:
             await self.session.close()
     
     @abstractmethod
     async def parse_content(self, url: str, **kwargs) -> Dict[str, Any]:
-        """Parse content from platform URL"""
-        pass
+        """Parse content from platform URL"""        pass
     
     @abstractmethod
     async def parse_user_profile(self, username: str, **kwargs) -> Dict[str, Any]:
-        """Parse user profile information"""
-        pass
+        """Parse user profile information"""        pass
     
     @abstractmethod
     async def parse_post(self, post_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse individual post/content"""
-        pass
+        """Parse individual post/content"""        pass
     
     def _validate_url(self, url: str) -> bool:
-        """Validate if URL belongs to this platform"""
-        parsed = urlparse(url)
+        """Validate if URL belongs to this platform"""        parsed = urlparse(url)
         platform_domains = self._get_platform_domains()
         return any(domain in parsed.netloc for domain in platform_domains)
     
     @abstractmethod
     def _get_platform_domains(self) -> List[str]:
-        """Get list of domains for this platform"""
-        pass
+        """Get list of domains for this platform"""        pass
     
     def _extract_id_from_url(self, url: str) -> Optional[str]:
-        """Extract content ID from URL"""
-        # Platform-specific implementation
+        """Extract content ID from URL"""        # Platform-specific implementation
         pass
     
     async def _make_api_request(self, endpoint: str, params: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Make authenticated API request"""
-        if not self.session:
+        """Make authenticated API request"""        if not self.session:
             raise RuntimeError("Session not initialized. Use async context manager.")
         
         url = f"{self.platform_config.base_url}/{endpoint.lstrip('/')}"
@@ -121,8 +108,7 @@ class BasePlatformParser(ABC):
 
 
 class YouTubeParser(BasePlatformParser):
-    """YouTube content parser"""
-    
+    """YouTube content parser"""    
     def __init__(self, config: ParserConfig):
         super().__init__(config, PlatformType.YOUTUBE)
     
@@ -130,8 +116,7 @@ class YouTubeParser(BasePlatformParser):
         return ["youtube.com", "youtu.be", "www.youtube.com", "m.youtube.com"]
     
     def _extract_video_id(self, url: str) -> Optional[str]:
-        """Extract YouTube video ID from URL"""
-        patterns = [
+        """Extract YouTube video ID from URL"""        patterns = [
             r'(?:youtube\.com/watch\?v=|youtu\.be/)([a-zA-Z0-9_-]{11})',
             r'youtube\.com/embed/([a-zA-Z0-9_-]{11})',
             r'youtube\.com/v/([a-zA-Z0-9_-]{11})'
@@ -144,8 +129,7 @@ class YouTubeParser(BasePlatformParser):
         return None
     
     async def parse_content(self, url: str, **kwargs) -> Dict[str, Any]:
-        """Parse YouTube video content"""
-        if not self._validate_url(url):
+        """Parse YouTube video content"""        if not self._validate_url(url):
             raise ValidationError("Invalid YouTube URL", parser_type="YouTubeParser")
         
         video_id = self._extract_video_id(url)
@@ -159,8 +143,7 @@ class YouTubeParser(BasePlatformParser):
             return await self._parse_via_scraping(url)
     
     async def _parse_via_api(self, video_id: str) -> Dict[str, Any]:
-        """Parse video using YouTube Data API"""
-        params = {
+        """Parse video using YouTube Data API"""        params = {
             'part': 'snippet,statistics,contentDetails,status',
             'id': video_id,
             'key': self.platform_config.api_key
@@ -197,8 +180,7 @@ class YouTubeParser(BasePlatformParser):
         }
     
     async def _parse_via_scraping(self, url: str) -> Dict[str, Any]:
-        """Parse video using web scraping"""
-        async with self.session.get(url) as response:
+        """Parse video using web scraping"""        async with self.session.get(url) as response:
             html = await response.text()
         
         soup = BeautifulSoup(html, 'html.parser')
@@ -219,18 +201,15 @@ class YouTubeParser(BasePlatformParser):
         }
     
     def _extract_title(self, soup: BeautifulSoup) -> Optional[str]:
-        """Extract video title from HTML"""
-        title_tag = soup.find('meta', {'property': 'og:title'})
+        """Extract video title from HTML"""        title_tag = soup.find('meta', {'property': 'og:title'})
         return title_tag.get('content') if title_tag else None
     
     def _extract_description(self, soup: BeautifulSoup) -> Optional[str]:
-        """Extract video description from HTML"""
-        desc_tag = soup.find('meta', {'property': 'og:description'})
+        """Extract video description from HTML"""        desc_tag = soup.find('meta', {'property': 'og:description'})
         return desc_tag.get('content') if desc_tag else None
     
     def _extract_view_count(self, soup: BeautifulSoup) -> int:
-        """Extract view count from HTML"""
-        # Look for view count in various possible locations
+        """Extract view count from HTML"""        # Look for view count in various possible locations
         view_patterns = [
             r'(\d+(?:,\d{3})*)\s+views',
             r'"viewCount":"(\d+)"',
@@ -246,18 +225,15 @@ class YouTubeParser(BasePlatformParser):
         return 0
     
     async def parse_user_profile(self, username: str, **kwargs) -> Dict[str, Any]:
-        """Parse YouTube channel profile"""
-        # Implementation for channel parsing
+        """Parse YouTube channel profile"""        # Implementation for channel parsing
         pass
     
     async def parse_post(self, post_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse individual YouTube video"""
-        return await self.parse_content(f"https://www.youtube.com/watch?v={post_id}")
+        """Parse individual YouTube video"""        return await self.parse_content(f"https://www.youtube.com/watch?v={post_id}")
 
 
 class InstagramParser(BasePlatformParser):
-    """Instagram content parser"""
-    
+    """Instagram content parser"""    
     def __init__(self, config: ParserConfig):
         super().__init__(config, PlatformType.INSTAGRAM)
     
@@ -265,16 +241,14 @@ class InstagramParser(BasePlatformParser):
         return ["instagram.com", "www.instagram.com", "instagr.am"]
     
     async def parse_content(self, url: str, **kwargs) -> Dict[str, Any]:
-        """Parse Instagram post content"""
-        if not self._validate_url(url):
+        """Parse Instagram post content"""        if not self._validate_url(url):
             raise ValidationError("Invalid Instagram URL", parser_type="InstagramParser")
         
         # Instagram requires special handling due to login requirements
         return await self._parse_via_scraping(url)
     
     async def _parse_via_scraping(self, url: str) -> Dict[str, Any]:
-        """Parse Instagram post using web scraping"""
-        # Add Instagram-specific headers
+        """Parse Instagram post using web scraping"""        # Add Instagram-specific headers
         headers = {
             'User-Agent': 'Mozilla/5.0 (compatible; IA-Influencer-Agent/1.0)',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -296,8 +270,7 @@ class InstagramParser(BasePlatformParser):
             return self._parse_from_html(soup, url)
     
     def _extract_json_data(self, soup: BeautifulSoup) -> Optional[Dict[str, Any]]:
-        """Extract JSON data from Instagram page"""
-        script_tags = soup.find_all('script', type='text/javascript')
+        """Extract JSON data from Instagram page"""        script_tags = soup.find_all('script', type='text/javascript')
         
         for script in script_tags:
             content = script.string
@@ -311,8 +284,7 @@ class InstagramParser(BasePlatformParser):
         return None
     
     def _parse_from_json(self, json_data: Dict[str, Any], url: str) -> Dict[str, Any]:
-        """Parse Instagram data from JSON"""
-        try:
+        """Parse Instagram data from JSON"""        try:
             entry_data = json_data.get('entry_data', {})
             post_page = entry_data.get('PostPage', [{}])[0]
             media = post_page.get('graphql', {}).get('shortcode_media', {})
@@ -335,8 +307,7 @@ class InstagramParser(BasePlatformParser):
             raise ContentExtractionError(f"Failed to parse Instagram JSON: {e}", parser_type="InstagramParser")
     
     def _parse_from_html(self, soup: BeautifulSoup, url: str) -> Dict[str, Any]:
-        """Parse Instagram data from HTML meta tags"""
-        return {
+        """Parse Instagram data from HTML meta tags"""        return {
             'platform': 'instagram',
             'url': url,
             'title': self._get_meta_content(soup, 'og:title'),
@@ -347,24 +318,20 @@ class InstagramParser(BasePlatformParser):
         }
     
     def _get_meta_content(self, soup: BeautifulSoup, property_name: str) -> Optional[str]:
-        """Extract content from meta tag"""
-        meta_tag = soup.find('meta', {'property': property_name})
+        """Extract content from meta tag"""        meta_tag = soup.find('meta', {'property': property_name})
         return meta_tag.get('content') if meta_tag else None
     
     async def parse_user_profile(self, username: str, **kwargs) -> Dict[str, Any]:
-        """Parse Instagram user profile"""
-        url = f"https://www.instagram.com/{username}/"
+        """Parse Instagram user profile"""        url = f"https://www.instagram.com/{username}/"
         return await self.parse_content(url)
     
     async def parse_post(self, post_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse individual Instagram post"""
-        url = f"https://www.instagram.com/p/{post_id}/"
+        """Parse individual Instagram post"""        url = f"https://www.instagram.com/p/{post_id}/"
         return await self.parse_content(url)
 
 
 class TikTokParser(BasePlatformParser):
-    """TikTok content parser"""
-    
+    """TikTok content parser"""    
     def __init__(self, config: ParserConfig):
         super().__init__(config, PlatformType.TIKTOK)
     
@@ -372,15 +339,13 @@ class TikTokParser(BasePlatformParser):
         return ["tiktok.com", "www.tiktok.com", "vm.tiktok.com"]
     
     async def parse_content(self, url: str, **kwargs) -> Dict[str, Any]:
-        """Parse TikTok video content"""
-        if not self._validate_url(url):
+        """Parse TikTok video content"""        if not self._validate_url(url):
             raise ValidationError("Invalid TikTok URL", parser_type="TikTokParser")
         
         return await self._parse_via_scraping(url)
     
     async def _parse_via_scraping(self, url: str) -> Dict[str, Any]:
-        """Parse TikTok video using web scraping"""
-        headers = {
+        """Parse TikTok video using web scraping"""        headers = {
             'User-Agent': 'Mozilla/5.0 (compatible; IA-Influencer-Agent/1.0)',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
         }
@@ -406,8 +371,7 @@ class TikTokParser(BasePlatformParser):
         }
     
     def _extract_script_data(self, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Extract data from script tags"""
-        # Implementation for extracting TikTok JSON data
+        """Extract data from script tags"""        # Implementation for extracting TikTok JSON data
         script_tags = soup.find_all('script', id='__NEXT_DATA__')
         
         for script in script_tags:
@@ -420,29 +384,24 @@ class TikTokParser(BasePlatformParser):
         return {}
     
     def _extract_author(self, soup: BeautifulSoup) -> Optional[str]:
-        """Extract author username"""
-        author_meta = soup.find('meta', {'name': 'author'})
+        """Extract author username"""        author_meta = soup.find('meta', {'name': 'author'})
         return author_meta.get('content') if author_meta else None
     
     def _get_meta_content(self, soup: BeautifulSoup, property_name: str) -> Optional[str]:
-        """Extract content from meta tag"""
-        meta_tag = soup.find('meta', {'property': property_name})
+        """Extract content from meta tag"""        meta_tag = soup.find('meta', {'property': property_name})
         return meta_tag.get('content') if meta_tag else None
     
     async def parse_user_profile(self, username: str, **kwargs) -> Dict[str, Any]:
-        """Parse TikTok user profile"""
-        url = f"https://www.tiktok.com/@{username}"
+        """Parse TikTok user profile"""        url = f"https://www.tiktok.com/@{username}"
         return await self.parse_content(url)
     
     async def parse_post(self, post_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse individual TikTok video"""
-        # TikTok URLs are more complex, would need specific implementation
+        """Parse individual TikTok video"""        # TikTok URLs are more complex, would need specific implementation
         pass
 
 
 class TwitterParser(BasePlatformParser):
-    """Twitter/X content parser"""
-    
+    """Twitter/X content parser"""    
     def __init__(self, config: ParserConfig):
         super().__init__(config, PlatformType.TWITTER)
     
@@ -450,8 +409,7 @@ class TwitterParser(BasePlatformParser):
         return ["twitter.com", "x.com", "www.twitter.com", "www.x.com"]
     
     async def parse_content(self, url: str, **kwargs) -> Dict[str, Any]:
-        """Parse Twitter post content"""
-        if not self._validate_url(url):
+        """Parse Twitter post content"""        if not self._validate_url(url):
             raise ValidationError("Invalid Twitter URL", parser_type="TwitterParser")
         
         tweet_id = self._extract_tweet_id(url)
@@ -464,14 +422,12 @@ class TwitterParser(BasePlatformParser):
             return await self._parse_via_scraping(url)
     
     def _extract_tweet_id(self, url: str) -> Optional[str]:
-        """Extract tweet ID from URL"""
-        pattern = r'/status/(\d+)'
+        """Extract tweet ID from URL"""        pattern = r'/status/(\d+)'
         match = re.search(pattern, url)
         return match.group(1) if match else None
     
     async def _parse_via_api(self, tweet_id: str) -> Dict[str, Any]:
-        """Parse tweet using Twitter API v2"""
-        params = {
+        """Parse tweet using Twitter API v2"""        params = {
             'tweet.fields': 'created_at,author_id,public_metrics,context_annotations,lang',
             'user.fields': 'username,name,verified',
             'expansions': 'author_id'
@@ -505,23 +461,19 @@ class TwitterParser(BasePlatformParser):
         }
     
     async def _parse_via_scraping(self, url: str) -> Dict[str, Any]:
-        """Parse tweet using web scraping"""
-        # Twitter scraping implementation
+        """Parse tweet using web scraping"""        # Twitter scraping implementation
         pass
     
     async def parse_user_profile(self, username: str, **kwargs) -> Dict[str, Any]:
-        """Parse Twitter user profile"""
-        # Implementation for Twitter user profile
+        """Parse Twitter user profile"""        # Implementation for Twitter user profile
         pass
     
     async def parse_post(self, post_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse individual tweet"""
-        return await self.parse_content(f"https://twitter.com/i/status/{post_id}")
+        """Parse individual tweet"""        return await self.parse_content(f"https://twitter.com/i/status/{post_id}")
 
 
 class SpotifyParser(BasePlatformParser):
-    """Spotify content parser"""
-    
+    """Spotify content parser"""    
     def __init__(self, config: ParserConfig):
         super().__init__(config, PlatformType.SPOTIFY)
     
@@ -529,16 +481,14 @@ class SpotifyParser(BasePlatformParser):
         return ["open.spotify.com", "spotify.com"]
     
     async def parse_content(self, url: str, **kwargs) -> Dict[str, Any]:
-        """Parse Spotify track/album/playlist content"""
-        if not self._validate_url(url):
+        """Parse Spotify track/album/playlist content"""        if not self._validate_url(url):
             raise ValidationError("Invalid Spotify URL", parser_type="SpotifyParser")
         
         content_type, content_id = self._parse_spotify_url(url)
         return await self._parse_via_api(content_type, content_id)
     
     def _parse_spotify_url(self, url: str) -> tuple:
-        """Parse Spotify URL to extract content type and ID"""
-        patterns = {
+        """Parse Spotify URL to extract content type and ID"""        patterns = {
             'track': r'/track/([a-zA-Z0-9]+)',
             'album': r'/album/([a-zA-Z0-9]+)',
             'playlist': r'/playlist/([a-zA-Z0-9]+)',
@@ -553,8 +503,7 @@ class SpotifyParser(BasePlatformParser):
         raise ContentExtractionError("Could not parse Spotify URL", parser_type="SpotifyParser")
     
     async def _parse_via_api(self, content_type: str, content_id: str) -> Dict[str, Any]:
-        """Parse content using Spotify Web API"""
-        data = await self._make_api_request(f'{content_type}s/{content_id}')
+        """Parse content using Spotify Web API"""        data = await self._make_api_request(f'{content_type}s/{content_id}')
         
         if content_type == 'track':
             return self._parse_track_data(data)
@@ -568,8 +517,7 @@ class SpotifyParser(BasePlatformParser):
         return data
     
     def _parse_track_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse Spotify track data"""
-        return {
+        """Parse Spotify track data"""        return {
             'platform': 'spotify',
             'type': 'track',
             'id': data.get('id'),
@@ -587,8 +535,7 @@ class SpotifyParser(BasePlatformParser):
         }
     
     def _parse_album_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse Spotify album data"""
-        return {
+        """Parse Spotify album data"""        return {
             'platform': 'spotify',
             'type': 'album',
             'id': data.get('id'),
@@ -604,8 +551,7 @@ class SpotifyParser(BasePlatformParser):
         }
     
     def _parse_playlist_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse Spotify playlist data"""
-        return {
+        """Parse Spotify playlist data"""        return {
             'platform': 'spotify',
             'type': 'playlist',
             'id': data.get('id'),
@@ -621,8 +567,7 @@ class SpotifyParser(BasePlatformParser):
         }
     
     def _parse_artist_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse Spotify artist data"""
-        return {
+        """Parse Spotify artist data"""        return {
             'platform': 'spotify',
             'type': 'artist',
             'id': data.get('id'),
@@ -636,8 +581,7 @@ class SpotifyParser(BasePlatformParser):
         }
     
     async def parse_user_profile(self, username: str, **kwargs) -> Dict[str, Any]:
-        """Parse Spotify user profile"""
-        data = await self._make_api_request(f'users/{username}')
+        """Parse Spotify user profile"""        data = await self._make_api_request(f'users/{username}')
         return {
             'platform': 'spotify',
             'type': 'user',
@@ -650,16 +594,14 @@ class SpotifyParser(BasePlatformParser):
         }
     
     async def parse_post(self, post_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse individual Spotify track"""
-        return await self._parse_via_api('track', post_id)
+        """Parse individual Spotify track"""        return await self._parse_via_api('track', post_id)
 
 
 # Additional parsers (SoundCloud, Twitch, LinkedIn, Facebook, Reddit)
 # would follow similar patterns with platform-specific implementations
 
 class SoundCloudParser(BasePlatformParser):
-    """SoundCloud content parser"""
-    
+    """SoundCloud content parser"""    
     def __init__(self, config: ParserConfig):
         super().__init__(config, PlatformType.SOUNDCLOUD)
     
@@ -667,22 +609,18 @@ class SoundCloudParser(BasePlatformParser):
         return ["soundcloud.com", "www.soundcloud.com"]
     
     async def parse_content(self, url: str, **kwargs) -> Dict[str, Any]:
-        """Parse SoundCloud track content"""
-        # Implementation for SoundCloud parsing
+        """Parse SoundCloud track content"""        # Implementation for SoundCloud parsing
         pass
     
     async def parse_user_profile(self, username: str, **kwargs) -> Dict[str, Any]:
-        """Parse SoundCloud user profile"""
-        pass
+        """Parse SoundCloud user profile"""        pass
     
     async def parse_post(self, post_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse individual SoundCloud track"""
-        pass
+        """Parse individual SoundCloud track"""        pass
 
 
 class TwitchParser(BasePlatformParser):
-    """Twitch content parser"""
-    
+    """Twitch content parser"""    
     def __init__(self, config: ParserConfig):
         super().__init__(config, PlatformType.TWITCH)
     
@@ -690,21 +628,17 @@ class TwitchParser(BasePlatformParser):
         return ["twitch.tv", "www.twitch.tv"]
     
     async def parse_content(self, url: str, **kwargs) -> Dict[str, Any]:
-        """Parse Twitch stream/video content"""
-        pass
+        """Parse Twitch stream/video content"""        pass
     
     async def parse_user_profile(self, username: str, **kwargs) -> Dict[str, Any]:
-        """Parse Twitch channel profile"""
-        pass
+        """Parse Twitch channel profile"""        pass
     
     async def parse_post(self, post_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse individual Twitch video"""
-        pass
+        """Parse individual Twitch video"""        pass
 
 
 class LinkedInParser(BasePlatformParser):
-    """LinkedIn content parser"""
-    
+    """LinkedIn content parser"""    
     def __init__(self, config: ParserConfig):
         super().__init__(config, PlatformType.LINKEDIN)
     
@@ -712,21 +646,17 @@ class LinkedInParser(BasePlatformParser):
         return ["linkedin.com", "www.linkedin.com"]
     
     async def parse_content(self, url: str, **kwargs) -> Dict[str, Any]:
-        """Parse LinkedIn post content"""
-        pass
+        """Parse LinkedIn post content"""        pass
     
     async def parse_user_profile(self, username: str, **kwargs) -> Dict[str, Any]:
-        """Parse LinkedIn profile"""
-        pass
+        """Parse LinkedIn profile"""        pass
     
     async def parse_post(self, post_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse individual LinkedIn post"""
-        pass
+        """Parse individual LinkedIn post"""        pass
 
 
 class FacebookParser(BasePlatformParser):
-    """Facebook content parser"""
-    
+    """Facebook content parser"""    
     def __init__(self, config: ParserConfig):
         super().__init__(config, PlatformType.FACEBOOK)
     
@@ -734,21 +664,17 @@ class FacebookParser(BasePlatformParser):
         return ["facebook.com", "www.facebook.com", "fb.com"]
     
     async def parse_content(self, url: str, **kwargs) -> Dict[str, Any]:
-        """Parse Facebook post content"""
-        pass
+        """Parse Facebook post content"""        pass
     
     async def parse_user_profile(self, username: str, **kwargs) -> Dict[str, Any]:
-        """Parse Facebook profile/page"""
-        pass
+        """Parse Facebook profile/page"""        pass
     
     async def parse_post(self, post_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse individual Facebook post"""
-        pass
+        """Parse individual Facebook post"""        pass
 
 
 class RedditParser(BasePlatformParser):
-    """Reddit content parser"""
-    
+    """Reddit content parser"""    
     def __init__(self, config: ParserConfig):
         super().__init__(config, PlatformType.REDDIT)
     
@@ -756,13 +682,10 @@ class RedditParser(BasePlatformParser):
         return ["reddit.com", "www.reddit.com", "old.reddit.com"]
     
     async def parse_content(self, url: str, **kwargs) -> Dict[str, Any]:
-        """Parse Reddit post content"""
-        pass
+        """Parse Reddit post content"""        pass
     
     async def parse_user_profile(self, username: str, **kwargs) -> Dict[str, Any]:
-        """Parse Reddit user profile"""
-        pass
+        """Parse Reddit user profile"""        pass
     
     async def parse_post(self, post_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse individual Reddit post"""
-        pass
+        """Parse individual Reddit post"""        pass

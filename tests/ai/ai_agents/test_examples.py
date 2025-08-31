@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive Tests for Example Implementations
+"""Comprehensive Tests for Example Implementations
 
 Industrial-grade testing for example implementations, usage patterns,
 best practices, and integration examples for AI agents.
@@ -26,9 +22,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -56,12 +50,10 @@ logger = logging.getLogger(__name__)
 
 
 class TestBasicExamples:
-    """Test basic usage examples for AI agents"""
-    
+    """Test basic usage examples for AI agents"""    
     @pytest.fixture
     async def example_runner(self) -> ExampleRunner:
-        """Create example runner for testing"""
-        runner = ExampleRunner()
+        """Create example runner for testing"""        runner = ExampleRunner()
         await runner.initialize()
         
         yield runner
@@ -69,15 +61,13 @@ class TestBasicExamples:
         await runner.shutdown()
     
     async def test_content_creator_basic_example(self, example_runner):
-        """Test basic content creator agent example"""
-        # Define basic content creation example
+        """Test basic content creator agent example"""        # Define basic content creation example
         content_example = {
             "name": "basic_content_creation",
             "description": "Create simple text content using ContentCreatorAgent",
             "category": ExampleCategory.BASIC,
             "difficulty": DifficultyLevel.BEGINNER,
-            "code": """
-# Basic Content Creation Example
+            "code": """# Basic Content Creation Example
 from ai.ai_agents.content_creator import ContentCreatorAgent
 
 async def create_basic_content():
@@ -129,14 +119,12 @@ if __name__ == "__main__":
         assert "content" in execution_result["output"]
     
     async def test_social_media_manager_example(self, example_runner):
-        """Test social media manager basic example"""
-        social_example = {
+        """Test social media manager basic example"""        social_example = {
             "name": "basic_social_posting",
             "description": "Schedule and post content using SocialMediaManagerAgent",
             "category": ExampleCategory.BASIC,
             "difficulty": DifficultyLevel.BEGINNER,
-            "code": """
-# Basic Social Media Management Example
+            "code": """# Basic Social Media Management Example
 from ai.ai_agents.social_media_manager import SocialMediaManagerAgent
 
 async def schedule_social_post():
@@ -185,14 +173,12 @@ if __name__ == "__main__":
         assert execution_result["output"]["status"] == "completed"
     
     async def test_analytics_agent_example(self, example_runner):
-        """Test analytics agent basic example"""
-        analytics_example = {
+        """Test analytics agent basic example"""        analytics_example = {
             "name": "basic_analytics_report",
             "description": "Generate analytics report using AnalyticsAgent",
             "category": ExampleCategory.BASIC,
             "difficulty": DifficultyLevel.INTERMEDIATE,
-            "code": """
-# Basic Analytics Example
+            "code": """# Basic Analytics Example
 from ai.ai_agents.analytics_agent import AnalyticsAgent
 
 async def generate_analytics_report():
@@ -247,16 +233,13 @@ if __name__ == "__main__":
 
 
 class TestIntermediateExamples:
-    """Test intermediate complexity examples"""
-    
+    """Test intermediate complexity examples"""    
     @pytest.fixture
     def usage_demonstrator(self):
-        """Create usage demonstrator for testing"""
-        return UsageDemonstrator()
+        """Create usage demonstrator for testing"""        return UsageDemonstrator()
     
     async def test_multi_agent_workflow_example(self, usage_demonstrator):
-        """Test multi-agent workflow example"""
-        workflow_example = {
+        """Test multi-agent workflow example"""        workflow_example = {
             "name": "content_to_social_workflow",
             "description": "Complete workflow from content creation to social media posting",
             "category": ExampleCategory.INTERMEDIATE,
@@ -268,8 +251,7 @@ class TestIntermediateExamples:
                 "Schedule posts",
                 "Track performance"
             ],
-            "code": """
-# Multi-Agent Workflow Example
+            "code": """# Multi-Agent Workflow Example
 from ai.ai_agents.content_creator import ContentCreatorAgent
 from ai.ai_agents.social_media_manager import SocialMediaManagerAgent
 from ai.ai_agents.analytics_agent import AnalyticsAgent
@@ -347,14 +329,12 @@ if __name__ == "__main__":
         assert len(demonstration_result["step_results"]) == 3
     
     async def test_error_handling_example(self, usage_demonstrator):
-        """Test error handling and recovery example"""
-        error_handling_example = {
+        """Test error handling and recovery example"""        error_handling_example = {
             "name": "robust_error_handling",
             "description": "Demonstrate proper error handling and recovery in agent workflows",
             "category": ExampleCategory.INTERMEDIATE,
             "difficulty": DifficultyLevel.ADVANCED,
-            "code": """
-# Error Handling and Recovery Example
+            "code": """# Error Handling and Recovery Example
 from ai.ai_agents.base_agent import BaseAgent
 from ai.ai_agents.exceptions import AgentException, TaskException
 
@@ -434,14 +414,12 @@ if __name__ == "__main__":
         assert demonstration_result["error_scenarios_tested"] > 0
     
     async def test_performance_optimization_example(self, usage_demonstrator):
-        """Test performance optimization example"""
-        performance_example = {
+        """Test performance optimization example"""        performance_example = {
             "name": "performance_optimization",
             "description": "Optimize agent performance through caching, batching, and parallelization",
             "category": ExampleCategory.ADVANCED,
             "difficulty": DifficultyLevel.ADVANCED,
-            "code": """
-# Performance Optimization Example
+            "code": """# Performance Optimization Example
 import asyncio
 from ai.ai_agents.content_creator import ContentCreatorAgent
 from ai.ai_agents.optimization import PerformanceOptimizer
@@ -546,12 +524,10 @@ if __name__ == "__main__":
 
 
 class TestAdvancedExamples:
-    """Test advanced integration examples"""
-    
+    """Test advanced integration examples"""    
     @pytest.fixture
     async def integration_examples(self) -> IntegrationExamples:
-        """Create integration examples for testing"""
-        examples = IntegrationExamples()
+        """Create integration examples for testing"""        examples = IntegrationExamples()
         await examples.initialize()
         
         yield examples
@@ -559,8 +535,7 @@ class TestAdvancedExamples:
         await examples.shutdown()
     
     async def test_enterprise_integration_example(self, integration_examples):
-        """Test enterprise-level integration example"""
-        enterprise_example = {
+        """Test enterprise-level integration example"""        enterprise_example = {
             "name": "enterprise_ai_pipeline",
             "description": "Complete enterprise AI pipeline with multiple agents and external integrations",
             "category": ExampleCategory.ADVANCED,
@@ -572,8 +547,7 @@ class TestAdvancedExamples:
                 "analytics_platform",
                 "content_management_system"
             ],
-            "code": """
-# Enterprise AI Pipeline Example
+            "code": """# Enterprise AI Pipeline Example
 from ai.ai_agents import *
 from integrations.enterprise import *
 
@@ -725,8 +699,7 @@ if __name__ == "__main__":
         assert execution_result["performance_met"] is True
     
     async def test_ai_agent_ecosystem_example(self, integration_examples):
-        """Test complete AI agent ecosystem example"""
-        ecosystem_example = {
+        """Test complete AI agent ecosystem example"""        ecosystem_example = {
             "name": "ai_agent_ecosystem",
             "description": "Comprehensive ecosystem with agent communication, learning, and adaptation",
             "category": ExampleCategory.ADVANCED,
@@ -738,8 +711,7 @@ if __name__ == "__main__":
                 "distributed_intelligence",
                 "autonomous_optimization"
             ],
-            "code": """
-# AI Agent Ecosystem Example
+            "code": """# AI Agent Ecosystem Example
 from ai.ai_agents.ecosystem import AgentEcosystem
 from ai.ai_agents.communication import AgentCommunicationHub
 from ai.ai_agents.learning import CollaborativeLearningEngine
@@ -943,18 +915,14 @@ if __name__ == "__main__":
 
 
 class TestBestPracticesValidation:
-    """Test best practices validation for examples"""
-    
+    """Test best practices validation for examples"""    
     @pytest.fixture
     def best_practices_validator(self):
-        """Create best practices validator for testing"""
-        return BestPracticesValidator()
+        """Create best practices validator for testing"""        return BestPracticesValidator()
     
     def test_code_quality_validation(self, best_practices_validator):
-        """Test code quality validation for examples"""
-        # Good example code
-        good_example = """
-# Well-structured example with proper error handling
+        """Test code quality validation for examples"""        # Good example code
+        good_example = """# Well-structured example with proper error handling
 import asyncio
 import logging
 from typing import Dict, Any
@@ -999,8 +967,7 @@ async def well_structured_example():
 
 if __name__ == "__main__":
     asyncio.run(well_structured_example())
-"""
-        
+"""        
         validation_result = best_practices_validator.validate_code_quality(good_example)
         
         assert validation_result["quality_score"] >= 0.8
@@ -1010,14 +977,12 @@ if __name__ == "__main__":
         assert validation_result["follows_naming_conventions"] is True
         
         # Poor example code
-        poor_example = """
-# Poor example without error handling or documentation
+        poor_example = """# Poor example without error handling or documentation
 def bad_example():
     agent = ContentCreatorAgent("agent")
     result = agent.execute_task({"type": "create"})
     return result
-"""
-        
+"""        
         poor_validation = best_practices_validator.validate_code_quality(poor_example)
         
         assert poor_validation["quality_score"] < 0.5
@@ -1026,10 +991,8 @@ def bad_example():
         assert poor_validation["issues"] is not None
     
     def test_security_practices_validation(self, best_practices_validator):
-        """Test security practices validation"""
-        # Secure example
-        secure_example = """
-import os
+        """Test security practices validation"""        # Secure example
+        secure_example = """import os
 from cryptography.fernet import Fernet
 
 async def secure_api_example():
@@ -1069,8 +1032,7 @@ async def secure_api_example():
     logger.info("Content creation completed successfully")
     
     return result
-"""
-        
+"""        
         security_validation = best_practices_validator.validate_security_practices(secure_example)
         
         assert security_validation["security_score"] >= 0.8
@@ -1079,8 +1041,7 @@ async def secure_api_example():
         assert security_validation["no_hardcoded_secrets"] is True
         
         # Insecure example
-        insecure_example = """
-# Insecure example with hardcoded secrets and no validation
+        insecure_example = """# Insecure example with hardcoded secrets and no validation
 def insecure_example():
     api_key = "sk-1234567890abcdef"  # Hardcoded secret
     
@@ -1094,8 +1055,7 @@ def insecure_example():
     print(f"API key: {api_key}")  # Logging sensitive data
     
     return result
-"""
-        
+"""        
         insecure_validation = best_practices_validator.validate_security_practices(insecure_example)
         
         assert insecure_validation["security_score"] < 0.5
@@ -1103,10 +1063,8 @@ def insecure_example():
         assert insecure_validation["security_issues"] is not None
     
     def test_performance_practices_validation(self, best_practices_validator):
-        """Test performance practices validation"""
-        # Optimized example
-        optimized_example = """
-import asyncio
+        """Test performance practices validation"""        # Optimized example
+        optimized_example = """import asyncio
 from concurrent.futures import ThreadPoolExecutor
 
 async def performance_optimized_example():
@@ -1154,8 +1112,7 @@ async def cpu_intensive_processing():
         )
         
         return result
-"""
-        
+"""        
         performance_validation = best_practices_validator.validate_performance_practices(optimized_example)
         
         assert performance_validation["performance_score"] >= 0.8
@@ -1164,8 +1121,7 @@ async def cpu_intensive_processing():
         assert performance_validation["uses_parallel_processing"] is True
         
         # Unoptimized example
-        unoptimized_example = """
-# Unoptimized example with blocking operations
+        unoptimized_example = """# Unoptimized example with blocking operations
 def slow_example():
     agent = ContentCreatorAgent("slow_agent")
     
@@ -1179,8 +1135,7 @@ def slow_example():
         processed = process_data_inefficiently(result)
         
     return results
-"""
-        
+"""        
         poor_performance_validation = best_practices_validator.validate_performance_practices(unoptimized_example)
         
         assert poor_performance_validation["performance_score"] < 0.5
@@ -1189,12 +1144,10 @@ def slow_example():
 
 
 class TestTutorialGeneration:
-    """Test tutorial generation functionality"""
-    
+    """Test tutorial generation functionality"""    
     @pytest.fixture
     async def tutorial_generator(self) -> TutorialGenerator:
-        """Create tutorial generator for testing"""
-        generator = TutorialGenerator()
+        """Create tutorial generator for testing"""        generator = TutorialGenerator()
         await generator.initialize()
         
         yield generator
@@ -1202,8 +1155,7 @@ class TestTutorialGeneration:
         await generator.shutdown()
     
     async def test_beginner_tutorial_generation(self, tutorial_generator):
-        """Test generation of beginner-level tutorials"""
-        tutorial_request = {
+        """Test generation of beginner-level tutorials"""        tutorial_request = {
             "target_audience": "beginners",
             "topic": "getting_started_with_ai_agents",
             "duration": "30_minutes",
@@ -1233,8 +1185,7 @@ class TestTutorialGeneration:
         assert all(req_section in " ".join(tutorial_sections) for req_section in required_sections)
     
     async def test_intermediate_tutorial_generation(self, tutorial_generator):
-        """Test generation of intermediate-level tutorials"""
-        tutorial_request = {
+        """Test generation of intermediate-level tutorials"""        tutorial_request = {
             "target_audience": "intermediate",
             "topic": "multi_agent_workflows",
             "duration": "60_minutes",
@@ -1260,8 +1211,7 @@ class TestTutorialGeneration:
         assert tutorial["best_practices_included"] is True
     
     async def test_advanced_tutorial_generation(self, tutorial_generator):
-        """Test generation of advanced-level tutorials"""
-        tutorial_request = {
+        """Test generation of advanced-level tutorials"""        tutorial_request = {
             "target_audience": "advanced",
             "topic": "enterprise_ai_agent_architecture",
             "duration": "120_minutes",
@@ -1286,8 +1236,7 @@ class TestTutorialGeneration:
         assert tutorial["performance_benchmarks_included"] is True
     
     async def test_interactive_tutorial_features(self, tutorial_generator):
-        """Test interactive tutorial features"""
-        interactive_request = {
+        """Test interactive tutorial features"""        interactive_request = {
             "target_audience": "intermediate",
             "topic": "agent_debugging_and_testing",
             "format": "interactive",
@@ -1314,12 +1263,10 @@ class TestTutorialGeneration:
 
 @pytest.mark.integration
 class TestExamplesIntegration:
-    """Integration tests for complete examples system"""
-    
+    """Integration tests for complete examples system"""    
     @pytest.fixture
     async def examples_system(self):
-        """Create complete examples system for integration testing"""
-        from ai.ai_agents.examples import ExamplesSystem
+        """Create complete examples system for integration testing"""        from ai.ai_agents.examples import ExamplesSystem
         
         system = ExamplesSystem()
         await system.initialize()
@@ -1329,8 +1276,7 @@ class TestExamplesIntegration:
         await system.shutdown()
     
     async def test_complete_examples_lifecycle(self, examples_system):
-        """Test complete lifecycle of examples system"""
-        # 1. Create new example
+        """Test complete lifecycle of examples system"""        # 1. Create new example
         new_example = {
             "name": "integration_test_example",
             "description": "Example for integration testing",
@@ -1381,8 +1327,7 @@ class TestExamplesIntegration:
         assert archive_result["success"] is True
     
     async def test_examples_catalog_management(self, examples_system):
-        """Test examples catalog management functionality"""
-        # Get catalog overview
+        """Test examples catalog management functionality"""        # Get catalog overview
         catalog_overview = await examples_system.get_catalog_overview()
         
         assert "total_examples" in catalog_overview
@@ -1414,8 +1359,7 @@ class TestExamplesIntegration:
     
     @pytest.mark.performance
     async def test_examples_system_performance(self, examples_system, assert_performance):
-        """Test examples system performance"""
-        # Measure example search performance
+        """Test examples system performance"""        # Measure example search performance
         start_time = datetime.now(timezone.utc)
         
         # Perform multiple searches

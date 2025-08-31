@@ -1,5 +1,4 @@
-"""
-Database Optimizations Module
+"""Database Optimizations Module
 
 This module provides enterprise-level database optimization capabilities for the IA Influencer Agent platform.
 Includes query optimization, connection management, intelligent caching, and performance monitoring with
@@ -7,9 +6,7 @@ specialized support for content protection, monetization, and multimedia process
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-
-from .cache_manager import CacheManager, CacheStrategy, CacheConfig
+"""from .cache_manager import CacheManager, CacheStrategy, CacheConfig
 from .connection_optimizer import (
     ConnectionOptimizer, 
     ConnectionPoolConfig,

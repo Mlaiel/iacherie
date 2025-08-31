@@ -1,24 +1,19 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-API Endpoint Tests for Complete Coverage
+"""API Endpoint Tests for Complete Coverage
 Ensures all API endpoints are properly tested
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -29,11 +24,9 @@ from fastapi import status
 
 
 class TestAuthenticationAPI:
-    """Test authentication API endpoints"""
-    
+    """Test authentication API endpoints"""    
     def test_login_endpoint(self):
-        """Test user login endpoint"""
-        login_data = {
+        """Test user login endpoint"""        login_data = {
             "email": "test@example.com",
             "password": "secure_password_123"
         }
@@ -57,8 +50,7 @@ class TestAuthenticationAPI:
         assert expected_response["expires_in"] > 0
     
     def test_register_endpoint(self):
-        """Test user registration endpoint"""
-        register_data = {
+        """Test user registration endpoint"""        register_data = {
             "email": "newuser@example.com",
             "password": "secure_password_123",
             "username": "newcreator",
@@ -76,8 +68,7 @@ class TestAuthenticationAPI:
         assert expected_response["verification_required"] is True
     
     def test_refresh_token_endpoint(self):
-        """Test token refresh endpoint"""
-        refresh_data = {"refresh_token": "valid_refresh_token"}
+        """Test token refresh endpoint"""        refresh_data = {"refresh_token": "valid_refresh_token"}
         
         expected_response = {
             "access_token": "new_jwt_token",
@@ -88,19 +79,16 @@ class TestAuthenticationAPI:
         assert expected_response["expires_in"] > 0
     
     def test_logout_endpoint(self):
-        """Test user logout endpoint"""
-        expected_response = {"message": "Logged out successfully"}
+        """Test user logout endpoint"""        expected_response = {"message": "Logged out successfully"}
         
         assert expected_response["message"] == "Logged out successfully"
 
 
 class TestContentManagementAPI:
-    """Test content management API endpoints"""
-    
+    """Test content management API endpoints"""    
     @pytest.mark.asyncio
     async def test_content_upload_endpoint(self):
-        """Test content upload endpoint"""
-        upload_data = {
+        """Test content upload endpoint"""        upload_data = {
             "title": "Test Video Content",
             "description": "Test video description",
             "tags": ["entertainment", "music"],
@@ -119,8 +107,7 @@ class TestContentManagementAPI:
         assert expected_response["processing_status"] == "queued"
     
     def test_get_content_endpoint(self):
-        """Test get content details endpoint"""
-        content_id = "content_789"
+        """Test get content details endpoint"""        content_id = "content_789"
         
         expected_response = {
             "content_id": content_id,
@@ -140,8 +127,7 @@ class TestContentManagementAPI:
         assert "analytics" in expected_response
     
     def test_update_content_endpoint(self):
-        """Test update content metadata endpoint"""
-        content_id = "content_789"
+        """Test update content metadata endpoint"""        content_id = "content_789"
         update_data = {
             "title": "Updated Title",
             "tags": ["updated", "tags"]
@@ -157,18 +143,15 @@ class TestContentManagementAPI:
         assert "title" in expected_response["updated_fields"]
     
     def test_delete_content_endpoint(self):
-        """Test delete content endpoint"""
-        expected_response = {"message": "Content deleted successfully"}
+        """Test delete content endpoint"""        expected_response = {"message": "Content deleted successfully"}
         
         assert expected_response["message"] == "Content deleted successfully"
 
 
 class TestCollaborationAPI:
-    """Test collaboration API endpoints"""
-    
+    """Test collaboration API endpoints"""    
     def test_get_collaboration_matches_endpoint(self):
-        """Test get collaboration matches endpoint"""
-        query_params = {
+        """Test get collaboration matches endpoint"""        query_params = {
             "content_type": "video",
             "audience_size": "macro",
             "budget_range": "1000-5000"
@@ -198,8 +181,7 @@ class TestCollaborationAPI:
         assert all(match["compatibility_score"] > 0.8 for match in expected_response["matches"])
     
     def test_create_collaboration_proposal_endpoint(self):
-        """Test create collaboration proposal endpoint"""
-        proposal_data = {
+        """Test create collaboration proposal endpoint"""        proposal_data = {
             "partner_id": "brand_123",
             "campaign_type": "sponsored",
             "budget": 2500.00,
@@ -220,8 +202,7 @@ class TestCollaborationAPI:
         assert expected_response["status"] == "sent"
     
     def test_get_proposal_details_endpoint(self):
-        """Test get proposal details endpoint"""
-        proposal_id = "proposal_abc123"
+        """Test get proposal details endpoint"""        proposal_id = "proposal_abc123"
         
         expected_response = {
             "proposal_id": proposal_id,
@@ -243,12 +224,10 @@ class TestCollaborationAPI:
 
 
 class TestFingerprintingAPI:
-    """Test AI fingerprinting API endpoints"""
-    
+    """Test AI fingerprinting API endpoints"""    
     @pytest.mark.asyncio
     async def test_generate_fingerprint_endpoint(self):
-        """Test generate content fingerprint endpoint"""
-        fingerprint_data = {
+        """Test generate content fingerprint endpoint"""        fingerprint_data = {
             "content_id": "content_789",
             "fingerprint_type": "video",
             "sensitivity": "high"
@@ -267,8 +246,7 @@ class TestFingerprintingAPI:
     
     @pytest.mark.asyncio
     async def test_match_fingerprint_endpoint(self):
-        """Test match content fingerprint endpoint"""
-        match_data = {
+        """Test match content fingerprint endpoint"""        match_data = {
             "fingerprint": "a1b2c3d4e5f6g7h8i9j0",
             "threshold": 0.85,
             "search_scope": "global"
@@ -297,11 +275,9 @@ class TestFingerprintingAPI:
 
 
 class TestContentProtectionAPI:
-    """Test content protection API endpoints"""
-    
+    """Test content protection API endpoints"""    
     def test_enable_monitoring_endpoint(self):
-        """Test enable content monitoring endpoint"""
-        monitoring_data = {
+        """Test enable content monitoring endpoint"""        monitoring_data = {
             "content_id": "content_789",
             "platforms": ["youtube", "instagram", "tiktok"],
             "alert_threshold": 0.85
@@ -318,8 +294,7 @@ class TestContentProtectionAPI:
         assert len(expected_response["coverage"]) == len(monitoring_data["platforms"])
     
     def test_get_violations_endpoint(self):
-        """Test get protection violations endpoint"""
-        query_params = {
+        """Test get protection violations endpoint"""        query_params = {
             "content_id": "content_789",
             "platform": "youtube",
             "status": "pending"
@@ -344,8 +319,7 @@ class TestContentProtectionAPI:
             assert violation["similarity"] > 0.8
     
     def test_request_takedown_endpoint(self):
-        """Test request content takedown endpoint"""
-        takedown_data = {
+        """Test request content takedown endpoint"""        takedown_data = {
             "violation_id": "violation_ghi789",
             "takedown_type": "dmca",
             "evidence": ["original_upload_proof", "copyright_certificate"]
@@ -362,11 +336,9 @@ class TestContentProtectionAPI:
 
 
 class TestMonetizationAPI:
-    """Test monetization API endpoints"""
-    
+    """Test monetization API endpoints"""    
     def test_get_revenue_analytics_endpoint(self):
-        """Test get revenue analytics endpoint"""
-        query_params = {
+        """Test get revenue analytics endpoint"""        query_params = {
             "period": "monthly",
             "start_date": "2024-01-01",
             "end_date": "2024-01-31"
@@ -391,8 +363,7 @@ class TestMonetizationAPI:
         assert expected_response["growth_rate"] >= 0
     
     def test_create_licensing_agreement_endpoint(self):
-        """Test create licensing agreement endpoint"""
-        licensing_data = {
+        """Test create licensing agreement endpoint"""        licensing_data = {
             "content_id": "content_789",
             "license_type": "non_exclusive",
             "price": 500.00,
@@ -412,8 +383,7 @@ class TestMonetizationAPI:
         assert "contract_url" in expected_response
     
     def test_get_payouts_endpoint(self):
-        """Test get payout information endpoint"""
-        query_params = {
+        """Test get payout information endpoint"""        query_params = {
             "status": "completed",
             "method": "bank"
         }
@@ -438,11 +408,9 @@ class TestMonetizationAPI:
 
 
 class TestAnalyticsAPI:
-    """Test analytics API endpoints"""
-    
+    """Test analytics API endpoints"""    
     def test_get_performance_analytics_endpoint(self):
-        """Test get performance analytics endpoint"""
-        query_params = {
+        """Test get performance analytics endpoint"""        query_params = {
             "content_id": "content_789",
             "platform": "youtube",
             "metric": "engagement"
@@ -474,8 +442,7 @@ class TestAnalyticsAPI:
         assert "comparisons" in expected_response
     
     def test_get_audience_analytics_endpoint(self):
-        """Test get audience analytics endpoint"""
-        query_params = {
+        """Test get audience analytics endpoint"""        query_params = {
             "content_id": "content_789",
             "platform": "instagram"
         }
@@ -521,11 +488,9 @@ class TestAnalyticsAPI:
 
 
 class TestCampaignManagementAPI:
-    """Test campaign management API endpoints"""
-    
+    """Test campaign management API endpoints"""    
     def test_create_campaign_endpoint(self):
-        """Test create marketing campaign endpoint"""
-        campaign_data = {
+        """Test create marketing campaign endpoint"""        campaign_data = {
             "name": "Summer Music Campaign",
             "objective": "engagement",
             "budget": 5000.00,
@@ -555,8 +520,7 @@ class TestCampaignManagementAPI:
         assert expected_response["estimated_reach"] > 0
     
     def test_get_campaign_performance_endpoint(self):
-        """Test get campaign performance endpoint"""
-        campaign_id = "campaign_stu901"
+        """Test get campaign performance endpoint"""        campaign_id = "campaign_stu901"
         
         expected_response = {
             "performance": {
@@ -579,11 +543,9 @@ class TestCampaignManagementAPI:
 
 
 class TestErrorHandling:
-    """Test API error handling"""
-    
+    """Test API error handling"""    
     def test_authentication_error_response(self):
-        """Test authentication error responses"""
-        error_response = {
+        """Test authentication error responses"""        error_response = {
             "status": "error",
             "error": {
                 "code": 401,
@@ -601,8 +563,7 @@ class TestErrorHandling:
         assert "authentication" in error_response["error"]["message"].lower()
     
     def test_validation_error_response(self):
-        """Test validation error responses"""
-        error_response = {
+        """Test validation error responses"""        error_response = {
             "status": "error",
             "error": {
                 "code": 400,
@@ -619,8 +580,7 @@ class TestErrorHandling:
         assert "details" in error_response["error"]
     
     def test_rate_limit_error_response(self):
-        """Test rate limit error responses"""
-        error_response = {
+        """Test rate limit error responses"""        error_response = {
             "status": "error",
             "error": {
                 "code": 429,

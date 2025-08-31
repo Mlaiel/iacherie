@@ -1,5 +1,4 @@
-"""
-Vector Stores Module Index - IA Influencer Agent
+"""Vector Stores Module Index - IA Influencer Agent
 
 Central entry point for the vector stores module providing unified access to all
 vector database operations, real-time streaming, and content protection features.
@@ -11,9 +10,7 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 WARNING: This code is proprietary to Fahed Mlaiel. Any unauthorized copying, modification, 
 or distribution without explicit written permission is strictly prohibited and will result 
 in legal action under German and international copyright law.
-"""
-
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime
@@ -42,16 +39,13 @@ settings = get_settings()
 
 
 class VectorStoreService:
-    """
-    Unified service interface for all vector store operations.
+    """    Unified service interface for all vector store operations.
     
     This class provides a high-level API that orchestrates all vector store
     components for the IA Influencer Agent platform.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the unified vector store service"""
-        self.vector_manager = VectorStoreManager()
+        """Initialize the unified vector store service"""        self.vector_manager = VectorStoreManager()
         self.streaming_service = RealTimeVectorStreaming()
         self.optimizer = VectorDatabaseOptimizer()
         self.quality_assessor = VectorQualityAssessment()
@@ -65,8 +59,7 @@ class VectorStoreService:
         logger.info("VectorStoreService initialized")
     
     async def initialize(self) -> None:
-        """Initialize all vector store components"""
-        try:
+        """Initialize all vector store components"""        try:
             if self.is_initialized:
                 return
             
@@ -93,8 +86,7 @@ class VectorStoreService:
         user_id: int,
         metadata: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """
-        Store content fingerprint with embedding generation
+        """        Store content fingerprint with embedding generation
         
         Args:
             content_type: Type of content (audio, video, image, text)
@@ -104,8 +96,7 @@ class VectorStoreService:
             
         Returns:
             Storage result with fingerprint ID and embedding info
-        """
-        try:
+        """        try:
             if not self.is_initialized:
                 await self.initialize()
             
@@ -143,8 +134,7 @@ class VectorStoreService:
         similarity_threshold: float = 0.8,
         limit: int = 10
     ) -> List[Dict[str, Any]]:
-        """
-        Search for similar content across all vector stores
+        """        Search for similar content across all vector stores
         
         Args:
             content_type: Type of content to search
@@ -154,8 +144,7 @@ class VectorStoreService:
             
         Returns:
             List of similar content matches
-        """
-        try:
+        """        try:
             if not self.is_initialized:
                 await self.initialize()
             
@@ -202,8 +191,7 @@ class VectorStoreService:
         streaming_mode: StreamingMode,
         websocket=None
     ) -> str:
-        """
-        Start real-time content protection streaming
+        """        Start real-time content protection streaming
         
         Args:
             user_id: User identifier
@@ -213,8 +201,7 @@ class VectorStoreService:
             
         Returns:
             Stream ID for the session
-        """
-        try:
+        """        try:
             if not self.is_initialized:
                 await self.initialize()
             
@@ -251,8 +238,7 @@ class VectorStoreService:
         content_type: str,
         strategy: OptimizationStrategy = OptimizationStrategy.BALANCED
     ) -> Dict[str, Any]:
-        """
-        Optimize vector database performance for content type
+        """        Optimize vector database performance for content type
         
         Args:
             content_type: Content type to optimize
@@ -260,8 +246,7 @@ class VectorStoreService:
             
         Returns:
             Optimization results and recommendations
-        """
-        try:
+        """        try:
             if not self.is_initialized:
                 await self.initialize()
             
@@ -297,8 +282,7 @@ class VectorStoreService:
         content_type: str,
         metrics: List[QualityMetric] = None
     ) -> Dict[str, Any]:
-        """
-        Assess vector embedding quality for content type
+        """        Assess vector embedding quality for content type
         
         Args:
             content_type: Content type to assess
@@ -306,8 +290,7 @@ class VectorStoreService:
             
         Returns:
             Quality assessment report
-        """
-        try:
+        """        try:
             if not self.is_initialized:
                 await self.initialize()
             
@@ -350,8 +333,7 @@ class VectorStoreService:
         content_type: str,
         clustering_algorithm: str = "kmeans"
     ) -> Dict[str, Any]:
-        """
-        Detect content clusters and patterns
+        """        Detect content clusters and patterns
         
         Args:
             content_type: Content type to analyze
@@ -359,8 +341,7 @@ class VectorStoreService:
             
         Returns:
             Clustering analysis results
-        """
-        try:
+        """        try:
             if not self.is_initialized:
                 await self.initialize()
             
@@ -382,8 +363,7 @@ class VectorStoreService:
             raise VectorStoreError(f"Cluster detection failed: {str(e)}")
     
     async def get_system_health(self) -> Dict[str, Any]:
-        """Get comprehensive system health status"""
-        try:
+        """Get comprehensive system health status"""        try:
             health_status = {}
             
             if self.is_initialized:
@@ -413,8 +393,7 @@ class VectorStoreService:
             return {"overall_status": "unhealthy", "error": str(e)}
     
     async def close(self) -> None:
-        """Close all vector store services"""
-        try:
+        """Close all vector store services"""        try:
             if self.is_initialized:
                 await self.vector_manager.close()
                 await self.streaming_service.close()
@@ -436,8 +415,7 @@ _vector_service_instance: Optional[VectorStoreService] = None
 
 
 async def get_vector_service() -> VectorStoreService:
-    """Get or create the global vector service instance"""
-    global _vector_service_instance
+    """Get or create the global vector service instance"""    global _vector_service_instance
     
     if _vector_service_instance is None:
         _vector_service_instance = VectorStoreService()
@@ -447,8 +425,7 @@ async def get_vector_service() -> VectorStoreService:
 
 
 async def close_vector_service() -> None:
-    """Close the global vector service instance"""
-    global _vector_service_instance
+    """Close the global vector service instance"""    global _vector_service_instance
     
     if _vector_service_instance is not None:
         await _vector_service_instance.close()
@@ -462,8 +439,7 @@ async def store_fingerprint(
     user_id: int,
     metadata: Dict[str, Any] = None
 ) -> Dict[str, Any]:
-    """Convenience function to store content fingerprint"""
-    service = await get_vector_service()
+    """Convenience function to store content fingerprint"""    service = await get_vector_service()
     return await service.store_content_fingerprint(content_type, content_data, user_id, metadata)
 
 
@@ -473,8 +449,7 @@ async def search_similar(
     similarity_threshold: float = 0.8,
     limit: int = 10
 ) -> List[Dict[str, Any]]:
-    """Convenience function to search similar content"""
-    service = await get_vector_service()
+    """Convenience function to search similar content"""    service = await get_vector_service()
     return await service.search_similar_content(content_type, query_data, similarity_threshold, limit)
 
 
@@ -483,8 +458,7 @@ async def start_protection(
     content_type: str,
     streaming_mode: StreamingMode = StreamingMode.CONTINUOUS_MONITORING
 ) -> str:
-    """Convenience function to start real-time protection"""
-    service = await get_vector_service()
+    """Convenience function to start real-time protection"""    service = await get_vector_service()
     return await service.start_real_time_protection(user_id, content_type, streaming_mode)
 
 

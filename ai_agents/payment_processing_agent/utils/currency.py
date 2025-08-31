@@ -1,5 +1,4 @@
-"""
-Currency Exchange & Conversion Utilities - Industrial Financial Engine
+"""Currency Exchange & Conversion Utilities - Industrial Financial Engine
 
 Advanced currency conversion system with real-time exchange rates, 
 historical data, multi-provider support, and caching for performance.
@@ -11,9 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import logging
+"""import logging
 import asyncio
 import aiohttp
 from datetime import datetime, timedelta, timezone
@@ -30,8 +27,7 @@ logger = logging.getLogger(__name__)
 
 
 class CurrencyProvider(str, Enum):
-    """Currency exchange rate providers"""
-    FIXER_IO = "fixer_io"
+    """Currency exchange rate providers"""    FIXER_IO = "fixer_io"
     EXCHANGE_RATES_API = "exchange_rates_api"
     OPENEXCHANGERATES = "openexchangerates"
     CURRENCYLAYER = "currencylayer"
@@ -39,8 +35,7 @@ class CurrencyProvider(str, Enum):
 
 
 class CurrencyCode(str, Enum):
-    """Supported currency codes (ISO 4217)"""
-    # Major currencies
+    """Supported currency codes (ISO 4217)"""    # Major currencies
     USD = "USD"  # US Dollar
     EUR = "EUR"  # Euro
     GBP = "GBP"  # British Pound
@@ -74,8 +69,7 @@ class CurrencyCode(str, Enum):
 
 
 class ExchangeRate:
-    """Exchange rate data model"""
-    
+    """Exchange rate data model"""    
     def __init__(
         self,
         from_currency: str,
@@ -95,13 +89,11 @@ class ExchangeRate:
         self.ask = Decimal(str(ask)) if ask else None
     
     def is_expired(self, max_age_minutes: int = 15) -> bool:
-        """Check if exchange rate is expired"""
-        age = datetime.utcnow() - self.timestamp
+        """Check if exchange rate is expired"""        age = datetime.utcnow() - self.timestamp
         return age > timedelta(minutes=max_age_minutes)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             "from_currency": self.from_currency,
             "to_currency": self.to_currency,
             "rate": str(self.rate),
@@ -113,11 +105,9 @@ class ExchangeRate:
 
 
 class CurrencyConverter:
-    """
-    Industrial currency conversion engine with multiple providers,
+    """    Industrial currency conversion engine with multiple providers,
     caching, and fallback mechanisms for high availability.
-    """
-    
+    """    
     def __init__(
         self,
         config: Optional[PaymentConfig] = None,
@@ -165,8 +155,7 @@ class CurrencyConverter:
         self.max_retries = 3
 
     async def initialize(self):
-        """Initialize currency converter"""
-        if not self.session:
+        """Initialize currency converter"""        if not self.session:
             connector = aiohttp.TCPConnector(limit=100, limit_per_host=10)
             timeout = aiohttp.ClientTimeout(total=self.request_timeout)
             self.session = aiohttp.ClientSession(
@@ -178,8 +167,7 @@ class CurrencyConverter:
         logger.info("Currency converter initialized")
 
     async def shutdown(self):
-        """Shutdown currency converter"""
-        if self.session:
+        """Shutdown currency converter"""        if self.session:
             await self.session.close()
             self.session = None
         
@@ -192,8 +180,7 @@ class CurrencyConverter:
         to_currency: str,
         use_cache: bool = True
     ) -> Tuple[Decimal, ExchangeRate]:
-        """
-        Convert amount from one currency to another.
+        """        Convert amount from one currency to another.
         
         Args:
             amount: Amount to convert
@@ -203,8 +190,7 @@ class CurrencyConverter:
             
         Returns:
             Tuple of (converted_amount, exchange_rate)
-        """
-        from_currency = from_currency.upper()
+        """        from_currency = from_currency.upper()
         to_currency = to_currency.upper()
         
         # Validate currencies
@@ -250,8 +236,7 @@ class CurrencyConverter:
         to_currency: str,
         use_cache: bool = True
     ) -> ExchangeRate:
-        """
-        Get exchange rate between two currencies.
+        """        Get exchange rate between two currencies.
         
         Args:
             from_currency: Source currency code
@@ -260,8 +245,7 @@ class CurrencyConverter:
             
         Returns:
             ExchangeRate object
-        """
-        from_currency = from_currency.upper()
+        """        from_currency = from_currency.upper()
         to_currency = to_currency.upper()
         
         # Try cache first
@@ -325,8 +309,7 @@ class CurrencyConverter:
         target_currencies: List[str],
         use_cache: bool = True
     ) -> Dict[str, ExchangeRate]:
-        """
-        Get exchange rates for multiple currency pairs.
+        """        Get exchange rates for multiple currency pairs.
         
         Args:
             base_currency: Base currency code
@@ -335,8 +318,7 @@ class CurrencyConverter:
             
         Returns:
             Dictionary mapping currency codes to exchange rates
-        """
-        rates = {}
+        """        rates = {}
         
         # Create tasks for concurrent rate fetching
         tasks = []
@@ -366,8 +348,7 @@ class CurrencyConverter:
         amounts: Dict[str, Decimal],
         base_currency: str = "USD"
     ) -> Dict[str, Decimal]:
-        """
-        Convert amounts in multiple currencies to base currency.
+        """        Convert amounts in multiple currencies to base currency.
         
         Args:
             amounts: Dictionary mapping currency codes to amounts
@@ -375,8 +356,7 @@ class CurrencyConverter:
             
         Returns:
             Dictionary mapping currency codes to converted amounts
-        """
-        converted_amounts = {}
+        """        converted_amounts = {}
         
         # Get all required exchange rates
         source_currencies = [curr for curr in amounts.keys() if curr != base_currency]
@@ -405,8 +385,7 @@ class CurrencyConverter:
         from_currency: str,
         to_currency: str
     ) -> Optional[ExchangeRate]:
-        """Fetch exchange rate from specific provider"""
-        if provider == CurrencyProvider.MOCK:
+        """Fetch exchange rate from specific provider"""        if provider == CurrencyProvider.MOCK:
             return await self._fetch_mock_rate(from_currency, to_currency)
         
         if not self.session:
@@ -476,8 +455,7 @@ class CurrencyConverter:
         from_currency: str,
         to_currency: str
     ) -> Optional[ExchangeRate]:
-        """Parse provider response into ExchangeRate object"""
-        try:
+        """Parse provider response into ExchangeRate object"""        try:
             if provider == CurrencyProvider.EXCHANGE_RATES_API:
                 if "rates" in data and to_currency in data["rates"]:
                     rate = Decimal(str(data["rates"][to_currency]))
@@ -538,8 +516,7 @@ class CurrencyConverter:
             return None
 
     async def _fetch_mock_rate(self, from_currency: str, to_currency: str) -> ExchangeRate:
-        """Fetch mock exchange rate for testing"""
-        # Mock exchange rates (not for production use)
+        """Fetch mock exchange rate for testing"""        # Mock exchange rates (not for production use)
         mock_rates = {
             ("USD", "EUR"): Decimal("0.85"),
             ("EUR", "USD"): Decimal("1.18"),
@@ -570,12 +547,10 @@ class CurrencyConverter:
         )
 
     def get_supported_currencies(self) -> List[str]:
-        """Get list of supported currency codes"""
-        return sorted(list(self.supported_currencies))
+        """Get list of supported currency codes"""        return sorted(list(self.supported_currencies))
 
     async def validate_currency_pair(self, from_currency: str, to_currency: str) -> bool:
-        """Validate if currency pair is supported"""
-        try:
+        """Validate if currency pair is supported"""        try:
             await self.get_exchange_rate(from_currency, to_currency, use_cache=False)
             return True
         except Exception:
@@ -584,8 +559,7 @@ class CurrencyConverter:
 
 # Utility functions
 def format_currency(amount: Decimal, currency: str, locale: str = "en_US") -> str:
-    """Format amount with currency symbol"""
-    # Simplified formatting (in production, use babel or locale-specific formatting)
+    """Format amount with currency symbol"""    # Simplified formatting (in production, use babel or locale-specific formatting)
     currency_symbols = {
         "USD": "$",
         "EUR": "€",
@@ -609,8 +583,7 @@ def format_currency(amount: Decimal, currency: str, locale: str = "en_US") -> st
 
 
 def parse_currency_amount(amount_str: str) -> Tuple[Decimal, Optional[str]]:
-    """Parse currency amount string into amount and currency"""
-    # This is a simplified parser
+    """Parse currency amount string into amount and currency"""    # This is a simplified parser
     import re
     
     # Remove whitespace

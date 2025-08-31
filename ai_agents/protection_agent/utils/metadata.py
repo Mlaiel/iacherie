@@ -1,13 +1,10 @@
-"""
-Module Metadata for Advanced Protection Agent
+"""Module Metadata for Advanced Protection Agent
 Comprehensive metadata and versioning information
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: Proprietary - All rights reserved
 WARNING: Unauthorized use, copying, or distribution prohibited
-"""
-
-from datetime import datetime
+"""from datetime import datetime
 from typing import Dict, List
 
 # Core module information
@@ -220,8 +217,7 @@ WEBHOOK_EVENTS = [
 
 # Module health check
 def get_module_health() -> Dict[str, any]:
-    """Get comprehensive module health information"""
-    return {
+    """Get comprehensive module health information"""    return {
         "name": MODULE_NAME,
         "version": MODULE_VERSION,
         "status": "healthy",
@@ -235,8 +231,7 @@ def get_module_health() -> Dict[str, any]:
     }
 
 def get_feature_matrix() -> Dict[str, List[str]]:
-    """Get complete feature matrix"""
-    return {
+    """Get complete feature matrix"""    return {
         "content_formats": SUPPORTED_CONTENT_FORMATS,
         "protection_capabilities": PROTECTION_CAPABILITIES,
         "supported_platforms": SUPPORTED_PLATFORMS,
@@ -246,8 +241,7 @@ def get_feature_matrix() -> Dict[str, List[str]]:
     }
 
 def get_technical_specifications() -> Dict[str, any]:
-    """Get detailed technical specifications"""
-    return {
+    """Get detailed technical specifications"""    return {
         "python_versions": SUPPORTED_PYTHON_VERSIONS,
         "required_dependencies": REQUIRED_DEPENDENCIES,
         "optional_dependencies": OPTIONAL_DEPENDENCIES,

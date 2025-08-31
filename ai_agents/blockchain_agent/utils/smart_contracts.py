@@ -1,5 +1,4 @@
-"""
-IA-Influencer Agent - Smart Contracts Manager
+"""IA-Influencer Agent - Smart Contracts Manager
 
 Enterprise smart contracts deployment and management system providing:
 - Multi-network contract deployment automation
@@ -15,9 +14,7 @@ Copyright: 2025 - All Rights Reserved
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -42,8 +39,7 @@ from .blockchain_agent import BlockchainNetwork, ContractType, TransactionStatus
 
 
 class ContractStatus(Enum):
-    """Smart contract deployment and execution statuses."""
-    DRAFT = "draft"
+    """Smart contract deployment and execution statuses."""    DRAFT = "draft"
     COMPILING = "compiling"
     COMPILED = "compiled"
     DEPLOYING = "deploying"
@@ -55,8 +51,7 @@ class ContractStatus(Enum):
 
 
 class SecurityLevel(Enum):
-    """Contract security audit levels."""
-    BASIC = "basic"
+    """Contract security audit levels."""    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
@@ -64,8 +59,7 @@ class SecurityLevel(Enum):
 
 @dataclass
 class ContractTemplate:
-    """Smart contract template with compilation info."""
-    name: str
+    """Smart contract template with compilation info."""    name: str
     contract_type: ContractType
     solidity_version: str
     source_code: str
@@ -79,8 +73,7 @@ class ContractTemplate:
 
 @dataclass
 class DeploymentConfig:
-    """Smart contract deployment configuration."""
-    network: BlockchainNetwork
+    """Smart contract deployment configuration."""    network: BlockchainNetwork
     gas_limit: int
     gas_price: Decimal
     constructor_args: List[Any] = field(default_factory=list)
@@ -91,8 +84,7 @@ class DeploymentConfig:
 
 
 class SmartContractsManager:
-    """
-    Advanced Smart Contracts Management System.
+    """    Advanced Smart Contracts Management System.
     
     Provides comprehensive blockchain smart contract services:
     - Multi-network contract deployment
@@ -101,11 +93,9 @@ class SmartContractsManager:
     - Security auditing and validation
     - Upgradeable contract patterns
     - Real-time monitoring and alerts
-    """
-    
+    """    
     def __init__(self, blockchain_agent, config: Optional[Dict] = None):
-        """Initialize the Smart Contracts Manager."""
-        self.blockchain_agent = blockchain_agent
+        """Initialize the Smart Contracts Manager."""        self.blockchain_agent = blockchain_agent
         self.config = config or {}
         
         # Logging setup
@@ -134,8 +124,7 @@ class SmartContractsManager:
         self.logger.info("Smart Contracts Manager initialized")
     
     def _load_standard_templates(self):
-        """Load standard smart contract templates."""
-        
+        """Load standard smart contract templates."""        
         # Copyright Registry Contract
         copyright_registry_source = '''
         pragma solidity ^0.8.19;
@@ -493,16 +482,14 @@ class SmartContractsManager:
         self.logger.info(f"Loaded {len(self.templates)} contract templates")
     
     async def compile_contract(self, template_name: str) -> Dict[str, Any]:
-        """
-        Compile a smart contract template with optimization.
+        """        Compile a smart contract template with optimization.
         
         Args:
             template_name: Name of the contract template
             
         Returns:
             Dict containing compilation results
-        """
-        try:
+        """        try:
             if template_name not in self.templates:
                 raise ValueError(f"Template not found: {template_name}")
             
@@ -559,8 +546,7 @@ class SmartContractsManager:
         config: DeploymentConfig,
         constructor_args: Optional[List[Any]] = None
     ) -> str:
-        """
-        Deploy a smart contract to the specified network.
+        """        Deploy a smart contract to the specified network.
         
         Args:
             template_name: Name of the contract template
@@ -569,8 +555,7 @@ class SmartContractsManager:
             
         Returns:
             str: Deployment transaction ID
-        """
-        try:
+        """        try:
             if template_name not in self.templates:
                 raise ValueError(f"Template not found: {template_name}")
             
@@ -637,8 +622,7 @@ class SmartContractsManager:
         network: BlockchainNetwork,
         sender_address: Optional[str] = None
     ) -> str:
-        """
-        Interact with a deployed smart contract function.
+        """        Interact with a deployed smart contract function.
         
         Args:
             contract_address: Deployed contract address
@@ -649,8 +633,7 @@ class SmartContractsManager:
             
         Returns:
             str: Transaction ID
-        """
-        try:
+        """        try:
             if network not in self.blockchain_agent.web3_connections:
                 raise ValueError(f"Network {network.value} not available")
             
@@ -702,8 +685,7 @@ class SmartContractsManager:
         new_template_name: str,
         upgrade_config: DeploymentConfig
     ) -> str:
-        """
-        Upgrade a deployed contract using proxy pattern.
+        """        Upgrade a deployed contract using proxy pattern.
         
         Args:
             deployment_id: Original deployment ID
@@ -712,8 +694,7 @@ class SmartContractsManager:
             
         Returns:
             str: Upgrade transaction ID
-        """
-        try:
+        """        try:
             if deployment_id not in self.deployed_contracts:
                 raise ValueError(f"Deployment not found: {deployment_id}")
             
@@ -762,8 +743,7 @@ class SmartContractsManager:
             raise
     
     def _estimate_contract_gas(self, template: ContractTemplate) -> Dict[str, int]:
-        """Estimate gas costs for contract deployment and functions."""
-        # Base gas estimates (would be more sophisticated in real implementation)
+        """Estimate gas costs for contract deployment and functions."""        # Base gas estimates (would be more sophisticated in real implementation)
         base_estimates = {
             'deployment': 2000000,
             'transfer': 21000,
@@ -782,8 +762,7 @@ class SmartContractsManager:
         }
     
     async def _perform_security_audit(self, template: ContractTemplate) -> Dict[str, Any]:
-        """Perform automated security audit of smart contract."""
-        audit_issues = []
+        """Perform automated security audit of smart contract."""        audit_issues = []
         passed = True
         
         # Basic security checks
@@ -819,8 +798,7 @@ class SmartContractsManager:
         config: DeploymentConfig,
         template: ContractTemplate
     ) -> DeploymentConfig:
-        """Optimize gas settings for contract deployment."""
-        if config.network not in self.blockchain_agent.web3_connections:
+        """Optimize gas settings for contract deployment."""        if config.network not in self.blockchain_agent.web3_connections:
             return config
         
         # Get current network gas prices
@@ -854,8 +832,7 @@ class SmartContractsManager:
         from_block: int = 0,
         to_block: str = 'latest'
     ) -> List[Dict[str, Any]]:
-        """Get events emitted by a smart contract."""
-        try:
+        """Get events emitted by a smart contract."""        try:
             # Find contract network and ABI
             contract_info = None
             for deployment_id, contract in self.deployed_contracts.items():
@@ -890,8 +867,7 @@ class SmartContractsManager:
             return []
     
     async def get_deployment_status(self, deployment_id: str) -> Dict[str, Any]:
-        """Get detailed status of a contract deployment."""
-        if deployment_id not in self.deployed_contracts:
+        """Get detailed status of a contract deployment."""        if deployment_id not in self.deployed_contracts:
             raise ValueError(f"Deployment not found: {deployment_id}")
         
         deployment = self.deployed_contracts[deployment_id]
@@ -911,8 +887,7 @@ class SmartContractsManager:
         }
     
     async def get_contracts_analytics(self) -> Dict[str, Any]:
-        """Get comprehensive analytics about deployed contracts."""
-        total_deployments = len(self.deployed_contracts)
+        """Get comprehensive analytics about deployed contracts."""        total_deployments = len(self.deployed_contracts)
         successful_deployments = sum(
             1 for c in self.deployed_contracts.values()
             if c['status'] == ContractStatus.DEPLOYED.value

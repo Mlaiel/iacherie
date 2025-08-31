@@ -1,5 +1,4 @@
-"""
-🔄 Transformers Index - IA Influencer Agent Platform Enterprise
+"""🔄 Transformers Index - IA Influencer Agent Platform Enterprise
 ============================================================
 Module: backend/data_management/transformers/index.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -21,9 +20,7 @@ poursuivie selon les lois allemandes et internationales.
 - DevOps Engineer: Fahed Mlaiel (mlaiel@live.de)
 - DBA: Fahed Mlaiel (mlaiel@live.de)
 - Sécurité Expert: Fahed Mlaiel (mlaiel@live.de)
-"""
-
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Optional, Union, Any
 from pathlib import Path
@@ -76,8 +73,7 @@ except ImportError as e:
 
 
 class CreatorType(Enum):
-    """Types de créateurs supportés"""
-    MUSICIAN = "musician"
+    """Types de créateurs supportés"""    MUSICIAN = "musician"
     PHOTOGRAPHER = "photographer" 
     VIDEOGRAPHER = "videographer"
     BLOGGER = "blogger"
@@ -90,8 +86,7 @@ class CreatorType(Enum):
 
 @dataclass
 class TransformationRequest:
-    """Requête de transformation unifiée"""
-    transformation_type: TransformationType
+    """Requête de transformation unifiée"""    transformation_type: TransformationType
     input_path: Union[str, Path]
     output_path: Optional[Union[str, Path]] = None
     creator_type: CreatorType = CreatorType.GENERAL
@@ -100,8 +95,7 @@ class TransformationRequest:
     async_mode: bool = False
     
     def __post_init__(self):
-        """Validation et normalisation des paramètres"""
-        if isinstance(self.input_path, str):
+        """Validation et normalisation des paramètres"""        if isinstance(self.input_path, str):
             self.input_path = Path(self.input_path)
         if self.output_path and isinstance(self.output_path, str):
             self.output_path = Path(self.output_path)
@@ -109,8 +103,7 @@ class TransformationRequest:
 
 @dataclass
 class TransformationResult:
-    """Résultat de transformation unifié"""
-    success: bool
+    """Résultat de transformation unifié"""    success: bool
     transformation_type: TransformationType
     input_path: Path
     output_path: Optional[Path]
@@ -121,8 +114,7 @@ class TransformationResult:
     error_message: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Conversion en dictionnaire pour sérialisation"""
-        return {
+        """Conversion en dictionnaire pour sérialisation"""        return {
             'success': self.success,
             'transformation_type': self.transformation_type.value,
             'input_path': str(self.input_path),
@@ -136,8 +128,7 @@ class TransformationResult:
 
 
 class TransformersRegistry:
-    """Registre central des transformateurs disponibles"""
-    
+    """Registre central des transformateurs disponibles"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -344,8 +335,7 @@ class TransformersRegistry:
         }
     
     def get_transformers_for_creator(self, creator_type: str) -> List[str]:
-        """Retourne les transformateurs optimisés pour un type de créateur"""
-        
+        """Retourne les transformateurs optimisés pour un type de créateur"""        
         optimized_transformers = []
         
         for transformer_name, info in self.transformers_catalog.items():
@@ -356,8 +346,7 @@ class TransformersRegistry:
         return optimized_transformers
     
     def get_workflow_for_creator(self, creator_type: str, workflow_type: str) -> List[TransformationType]:
-        """Retourne un workflow pré-configuré pour un créateur"""
-        
+        """Retourne un workflow pré-configuré pour un créateur"""        
         creator_workflows = self.creator_workflows.get(creator_type, {})
         return creator_workflows.get(workflow_type, [])
     
@@ -367,8 +356,7 @@ class TransformersRegistry:
         creator_type: str,
         target_use_case: str
     ) -> List[TransformationType]:
-        """Suggère des transformations appropriées"""
-        
+        """Suggère des transformations appropriées"""        
         file_ext = Path(file_path).suffix.lower().lstrip('.')
         suggestions = []
         
@@ -424,8 +412,7 @@ class TransformersRegistry:
         return unique_suggestions
     
     def _detect_content_type(self, file_ext: str) -> str:
-        """Détecte le type de contenu basé sur l'extension"""
-        
+        """Détecte le type de contenu basé sur l'extension"""        
         audio_exts = {'mp3', 'wav', 'flac', 'ogg', 'm4a', 'aac'}
         video_exts = {'mp4', 'avi', 'mov', 'mkv', 'webm', 'flv'}
         image_exts = {'jpg', 'jpeg', 'png', 'tiff', 'bmp', 'webp', 'gif'}
@@ -443,24 +430,20 @@ class TransformersRegistry:
             return 'unknown'
     
     def get_transformer_capabilities(self, transformer_name: str) -> Dict[str, Any]:
-        """Retourne les capacités d'un transformateur"""
-        
+        """Retourne les capacités d'un transformateur"""        
         return self.transformers_catalog.get(transformer_name, {})
     
     def list_all_transformers(self) -> Dict[str, Dict[str, Any]]:
-        """Liste tous les transformateurs disponibles"""
-        
+        """Liste tous les transformateurs disponibles"""        
         return self.transformers_catalog
     
     def get_transformation_route(self, transformation_type: TransformationType) -> Optional[str]:
-        """Retourne le transformateur approprié pour une transformation"""
-        
+        """Retourne le transformateur approprié pour une transformation"""        
         return self.transformation_routes.get(transformation_type)
 
 
 class TransformersFactory:
-    """Factory pour créer et configurer les transformateurs"""
-    
+    """Factory pour créer et configurer les transformateurs"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.registry = TransformersRegistry()
@@ -471,8 +454,7 @@ class TransformersFactory:
         workflow_type: str,
         custom_transformations: Optional[List[TransformationType]] = None
     ) -> 'TransformationPipeline':
-        """Crée un pipeline de transformation configuré"""
-        
+        """Crée un pipeline de transformation configuré"""        
         if custom_transformations:
             transformations = custom_transformations
         else:
@@ -492,8 +474,7 @@ class TransformersFactory:
         transformation_type: TransformationType,
         creator_type: str
     ) -> TransformationConfig:
-        """Crée une configuration de transformation optimisée"""
-        
+        """Crée une configuration de transformation optimisée"""        
         # Paramètres par défaut selon le type de transformation
         default_params = self._get_default_params(transformation_type)
         
@@ -511,8 +492,7 @@ class TransformersFactory:
         )
     
     def _get_default_params(self, transformation_type: TransformationType) -> Dict[str, Any]:
-        """Retourne les paramètres par défaut pour une transformation"""
-        
+        """Retourne les paramètres par défaut pour une transformation"""        
         defaults = {
             TransformationType.AUDIO_NORMALIZE: {'target_lufs': -16.0, 'peak_limit': -1.0},
             TransformationType.AUDIO_CONVERT: {'format': 'mp3', 'bitrate': 192},
@@ -531,8 +511,7 @@ class TransformersFactory:
         creator_type: str,
         transformation_type: TransformationType
     ) -> Dict[str, Any]:
-        """Retourne les paramètres spécifiques au créateur"""
-        
+        """Retourne les paramètres spécifiques au créateur"""        
         creator_specific = {
             'musician': {
                 TransformationType.AUDIO_NORMALIZE: {'quality': 'high', 'dynamic_range': True},
@@ -570,8 +549,7 @@ class TransformersFactory:
         target_use_case: str,
         protection_level: str = 'standard'
     ) -> 'TransformationPipeline':
-        """Crée un workflow intelligent basé sur l'analyse du contenu"""
-        
+        """Crée un workflow intelligent basé sur l'analyse du contenu"""        
         # Suggestions automatiques
         suggested_transformations = self.registry.suggest_transformations(
             file_path, creator_type, target_use_case
@@ -598,8 +576,7 @@ class TransformersFactory:
 
 
 class TransformersManager:
-    """Gestionnaire principal pour l'orchestration des transformateurs"""
-    
+    """Gestionnaire principal pour l'orchestration des transformateurs"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.registry = TransformersRegistry()
@@ -620,8 +597,7 @@ class TransformersManager:
         workflow_type: str = 'content_upload',
         custom_config: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Traite un contenu avec le workflow approprié"""
-        
+        """Traite un contenu avec le workflow approprié"""        
         try:
             # Création du pipeline approprié
             if custom_config and 'transformations' in custom_config:
@@ -667,8 +643,7 @@ class TransformersManager:
         creator_type: str,
         workflow_type: str = 'content_upload'
     ) -> List[Dict[str, Any]]:
-        """Traite plusieurs contenus en lot"""
-        
+        """Traite plusieurs contenus en lot"""        
         tasks = []
         for file_path in file_paths:
             task = asyncio.create_task(
@@ -699,8 +674,7 @@ class TransformersManager:
         creator_type: str,
         target_use_case: str
     ) -> Dict[str, Any]:
-        """Retourne des recommandations de transformation"""
-        
+        """Retourne des recommandations de transformation"""        
         suggestions = self.registry.suggest_transformations(
             file_path, creator_type, target_use_case
         )
@@ -715,8 +689,7 @@ class TransformersManager:
         }
     
     def _update_stats(self, creator_type: str, results: List[Any]):
-        """Met à jour les statistiques d'utilisation"""
-        
+        """Met à jour les statistiques d'utilisation"""        
         self.usage_stats['total_transformations'] += len(results)
         
         # Stats par créateur
@@ -737,8 +710,7 @@ class TransformersManager:
             )
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Retourne les statistiques d'utilisation"""
-        
+        """Retourne les statistiques d'utilisation"""        
         return {
             'usage_stats': self.usage_stats,
             'available_transformers': len(self.registry.transformers_catalog),
@@ -747,8 +719,7 @@ class TransformersManager:
         }
     
     def health_check(self) -> Dict[str, Any]:
-        """Vérifie l'état de santé des transformateurs"""
-        
+        """Vérifie l'état de santé des transformateurs"""        
         health_status = {
             'overall_status': 'healthy',
             'transformers_status': {},
@@ -809,15 +780,13 @@ transformers_manager = TransformersManager()
 
 
 class TransformationManager:
-    """Manager for coordinating data transformations"""
-    
+    """Manager for coordinating data transformations"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.transformers = {}
     
     async def transform_data(self, data: Any, transformation_type: str) -> Any:
-        """Transform data using specified transformation type"""
-        try:
+        """Transform data using specified transformation type"""        try:
             if transformation_type not in self.transformers:
                 raise TransformationError(f"Unknown transformation type: {transformation_type}")
             
@@ -876,10 +845,8 @@ __all__ = [
 
 
 if __name__ == "__main__":
-    """
-    Tests et démonstrations du module de transformation
-    """
-    print("🔄 Transformers Index - IA Influencer Agent Platform Enterprise")
+    """    Tests et démonstrations du module de transformation
+    """    print("🔄 Transformers Index - IA Influencer Agent Platform Enterprise")
     print("=" * 70)
     
     # Test de santé du système

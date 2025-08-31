@@ -1,5 +1,4 @@
-"""
-Ultra-Advanced Usage Examples for Audit Logs Module
+"""Ultra-Advanced Usage Examples for Audit Logs Module
 
 Comprehensive demonstration of the revolutionary enterprise-grade audit logging system
 for the IA Influencer Agent platform. Showcases real-world implementations for multi-format
@@ -22,9 +21,7 @@ This revolutionary audit usage examples collection is the EXCLUSIVE property of 
 Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
-"""
-
-import asyncio
+"""import asyncio
 from datetime import datetime, timezone, timedelta
 from typing import Dict, Any, List
 
@@ -50,23 +47,18 @@ from . import (
 
 
 class AuditLogsDemo:
-    """
-    Comprehensive demonstration of audit logging capabilities.
-    """
-    
+    """    Comprehensive demonstration of audit logging capabilities.
+    """    
     def __init__(self, db_session):
-        """Initialize the audit logs demo."""
-        self.audit_manager = create_audit_logs_manager(
+        """Initialize the audit logs demo."""        self.audit_manager = create_audit_logs_manager(
             db_session=db_session,
             service_name="ia_influencer_agent_demo",
             environment="production"
         )
     
     async def demo_comprehensive_logging_workflow(self):
-        """
-        Demonstrate a comprehensive logging workflow covering all audit types.
-        """
-        print("🔍 Starting Comprehensive Audit Logging Demonstration...")
+        """        Demonstrate a comprehensive logging workflow covering all audit types.
+        """        print("🔍 Starting Comprehensive Audit Logging Demonstration...")
         
         # 1. System Event Logging
         await self._demo_system_events()
@@ -89,8 +81,7 @@ class AuditLogsDemo:
         print("✅ Comprehensive Audit Logging Demonstration Completed!")
     
     async def _demo_system_events(self):
-        """Demonstrate system event logging."""
-        print("\n📊 System Event Logging Demo")
+        """Demonstrate system event logging."""        print("\n📊 System Event Logging Demo")
         print("-" * 50)
         
         # Create system context
@@ -139,8 +130,7 @@ class AuditLogsDemo:
         print(f"📊 System Health Score: {health.get('health_score', 0)}/100")
     
     async def _demo_user_activities(self):
-        """Demonstrate user activity logging."""
-        print("\n👤 User Activity Logging Demo")
+        """Demonstrate user activity logging."""        print("\n👤 User Activity Logging Demo")
         print("-" * 50)
         
         # Create user context
@@ -214,8 +204,7 @@ class AuditLogsDemo:
         print(f"📊 User Activities (30 days): {summary.get('total_activities', 0)}")
     
     async def _demo_security_events(self):
-        """Demonstrate security event logging."""
-        print("\n🔒 Security Event Logging Demo")
+        """Demonstrate security event logging."""        print("\n🔒 Security Event Logging Demo")
         print("-" * 50)
         
         # Create security context
@@ -283,8 +272,7 @@ class AuditLogsDemo:
         print(f"🚨 Critical Events: {threats.get('critical_events', 0)}")
     
     async def _demo_compliance_tracking(self):
-        """Demonstrate compliance tracking."""
-        print("\n📋 Compliance Tracking Demo")
+        """Demonstrate compliance tracking."""        print("\n📋 Compliance Tracking Demo")
         print("-" * 50)
         
         # Track GDPR data subject request
@@ -334,8 +322,7 @@ class AuditLogsDemo:
         print(f"⏰ Overdue Events: {dashboard.get('overdue_events', 0)}")
     
     async def _demo_forensic_investigation(self):
-        """Demonstrate forensic investigation capabilities."""
-        print("\n🔬 Forensic Investigation Demo")
+        """Demonstrate forensic investigation capabilities."""        print("\n🔬 Forensic Investigation Demo")
         print("-" * 50)
         
         # Initiate forensic investigation
@@ -445,8 +432,7 @@ class AuditLogsDemo:
         print(f"🔬 Active forensic cases: {len(active_cases)}")
     
     async def _demo_analytics_dashboard(self):
-        """Demonstrate comprehensive analytics dashboard."""
-        print("\n📊 Analytics Dashboard Demo")
+        """Demonstrate comprehensive analytics dashboard."""        print("\n📊 Analytics Dashboard Demo")
         print("-" * 50)
         
         # Get comprehensive audit summary
@@ -523,10 +509,8 @@ class AuditLogsDemo:
 
 # Example usage
 async def run_demo():
-    """
-    Run the comprehensive audit logs demonstration.
-    """
-    print("🚀 IA Influencer Agent - Audit Logs Module Demonstration")
+    """    Run the comprehensive audit logs demonstration.
+    """    print("🚀 IA Influencer Agent - Audit Logs Module Demonstration")
     print("=" * 80)
     print("Author: Fahed Mlaiel <mlaiel@live.de>")
     print("⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - Unauthorized use prohibited")

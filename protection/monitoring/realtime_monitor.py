@@ -1,5 +1,4 @@
-"""
-🔍 Real-time Content Monitoring Engine
+"""🔍 Real-time Content Monitoring Engine
 =====================================
 
 Advanced real-time monitoring system for instant content violation detection
@@ -20,9 +19,7 @@ License: Proprietary - Unauthorized use strictly prohibited
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 import time
@@ -41,23 +38,20 @@ from sqlalchemy.ext.asyncio import AsyncSession
 logger = logging.getLogger(__name__)
 
 class MonitoringPriority(str, Enum):
-    """Priority levels for monitoring tasks."""
-    CRITICAL = "critical"  # VIP content, high-value assets
+    """Priority levels for monitoring tasks."""    CRITICAL = "critical"  # VIP content, high-value assets
     HIGH = "high"         # Premium content, verified artists
     MEDIUM = "medium"     # Standard content
     LOW = "low"          # Basic monitoring
 
 class ThreatLevel(str, Enum):
-    """Threat severity levels."""
-    CRITICAL = "critical"  # Immediate action required
+    """Threat severity levels."""    CRITICAL = "critical"  # Immediate action required
     HIGH = "high"         # Priority enforcement
     MEDIUM = "medium"     # Standard response
     LOW = "low"          # Monitor only
     NOISE = "noise"      # False positive filtering
 
 class MonitoringEventType(str, Enum):
-    """Types of monitoring events."""
-    VIOLATION_DETECTED = "violation_detected"
+    """Types of monitoring events."""    VIOLATION_DETECTED = "violation_detected"
     CONTENT_PUBLISHED = "content_published"
     PLATFORM_SCAN_COMPLETE = "platform_scan_complete"
     THREAT_ESCALATED = "threat_escalated"
@@ -66,8 +60,7 @@ class MonitoringEventType(str, Enum):
 
 @dataclass
 class RealTimeEvent:
-    """Real-time monitoring event."""
-    event_id: str
+    """Real-time monitoring event."""    event_id: str
     event_type: MonitoringEventType
     timestamp: datetime
     fingerprint_id: str
@@ -79,8 +72,7 @@ class RealTimeEvent:
     processed: bool = False
 
 class MonitoringMetrics(BaseModel):
-    """Real-time monitoring metrics."""
-    total_scans: int = 0
+    """Real-time monitoring metrics."""    total_scans: int = 0
     violations_detected: int = 0
     false_positives: int = 0
     response_time_ms: float = 0.0
@@ -91,8 +83,7 @@ class MonitoringMetrics(BaseModel):
     last_updated: datetime = Field(default_factory=datetime.utcnow)
 
 class LiveDetectionResult(BaseModel):
-    """Live detection result from monitoring."""
-    detection_id: str
+    """Live detection result from monitoring."""    detection_id: str
     fingerprint_id: str
     platform: str
     detected_url: str
@@ -106,14 +97,12 @@ class LiveDetectionResult(BaseModel):
 
     @validator('similarity_score', 'confidence_score')
     def validate_scores(cls, v):
-        """Validate score ranges."""
-        if not 0.0 <= v <= 1.0:
+        """Validate score ranges."""        if not 0.0 <= v <= 1.0:
             raise ValueError('Score must be between 0.0 and 1.0')
         return v
 
 class PlatformMonitorConfig(BaseModel):
-    """Configuration for platform-specific monitoring."""
-    platform_name: str
+    """Configuration for platform-specific monitoring."""    platform_name: str
     enabled: bool = True
     scan_interval_seconds: int = 30
     max_concurrent_scans: int = 10
@@ -125,8 +114,7 @@ class PlatformMonitorConfig(BaseModel):
     custom_headers: Dict[str, str] = Field(default_factory=dict)
 
 class RealTimeMonitor:
-    """
-    Advanced real-time content monitoring engine.
+    """    Advanced real-time content monitoring engine.
     
     Features:
     - Sub-second violation detection
@@ -135,16 +123,14 @@ class RealTimeMonitor:
     - Real-time WebSocket notifications
     - Auto-scaling monitoring capacity
     - Machine learning-based filtering
-    """
-    
+    """    
     def __init__(
         self,
         config: Dict[str, Any],
         redis_client: Optional[aioredis.Redis] = None,
         db_session: Optional[AsyncSession] = None
     ):
-        """Initialize real-time monitor."""
-        self.config = config
+        """Initialize real-time monitor."""        self.config = config
         self.redis_client = redis_client
         self.db_session = db_session
         
@@ -184,8 +170,7 @@ class RealTimeMonitor:
         logger.info("Real-time Monitor initialized")
 
     async def initialize(self) -> bool:
-        """Initialize the real-time monitoring system."""
-        try:
+        """Initialize the real-time monitoring system."""        try:
             logger.info("Initializing Real-time Monitor...")
             
             # Initialize Redis connection if not provided
@@ -223,8 +208,7 @@ class RealTimeMonitor:
         priority: MonitoringPriority = MonitoringPriority.MEDIUM,
         custom_config: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Start real-time monitoring for a content fingerprint.
+        """        Start real-time monitoring for a content fingerprint.
         
         Args:
             fingerprint_id: Content fingerprint to monitor
@@ -235,8 +219,7 @@ class RealTimeMonitor:
             
         Returns:
             str: Monitoring session ID
-        """
-        if not self._running:
+        """        if not self._running:
             raise RuntimeError("Real-time monitor not running")
         
         session_id = f"rt_monitor_{fingerprint_id}_{int(time.time())}"
@@ -293,8 +276,7 @@ class RealTimeMonitor:
         return session_id
 
     async def stop_realtime_monitoring(self, session_id: str) -> bool:
-        """Stop real-time monitoring session."""
-        try:
+        """Stop real-time monitoring session."""        try:
             # Get session data
             session_data = await self.redis_client.hgetall(f"rt_session:{session_id}")
             if not session_data:
@@ -352,8 +334,7 @@ class RealTimeMonitor:
         platform: str,
         priority: MonitoringPriority
     ) -> None:
-        """Monitor a specific platform in real-time."""
-        platform_config = self.platform_configs[platform]
+        """Monitor a specific platform in real-time."""        platform_config = self.platform_configs[platform]
         scan_interval = platform_config.scan_interval_seconds
         
         # Adjust scan interval based on priority
@@ -425,8 +406,7 @@ class RealTimeMonitor:
         platform: str,
         config: PlatformMonitorConfig
     ) -> List[Dict[str, Any]]:
-        """Scan a platform for content violations."""
-        try:
+        """Scan a platform for content violations."""        try:
             # This would integrate with actual platform crawlers
             # For now, return mock data for demonstration
             
@@ -461,8 +441,7 @@ class RealTimeMonitor:
         detection: Dict[str, Any],
         priority: MonitoringPriority
     ) -> ThreatLevel:
-        """Calculate threat level for a detection."""
-        similarity = detection.get('similarity', 0.0)
+        """Calculate threat level for a detection."""        similarity = detection.get('similarity', 0.0)
         confidence = detection.get('confidence', 0.0)
         
         # Base threat calculation
@@ -487,15 +466,13 @@ class RealTimeMonitor:
             return ThreatLevel.NOISE
 
     async def _queue_event(self, event: RealTimeEvent) -> None:
-        """Queue an event for processing."""
-        try:
+        """Queue an event for processing."""        try:
             await self._event_queue.put(event)
         except asyncio.QueueFull:
             logger.warning("Event queue full, dropping event")
 
     async def _start_event_processors(self) -> None:
-        """Start event processing workers."""
-        self._event_processors = []
+        """Start event processing workers."""        self._event_processors = []
         for i in range(self.event_processing_workers):
             task = asyncio.create_task(self._process_events_worker(f"worker_{i}"))
             self._event_processors.append(task)
@@ -503,8 +480,7 @@ class RealTimeMonitor:
         logger.info(f"Started {self.event_processing_workers} event processing workers")
 
     async def _process_events_worker(self, worker_id: str) -> None:
-        """Event processing worker."""
-        logger.debug(f"Event processor {worker_id} started")
+        """Event processing worker."""        logger.debug(f"Event processor {worker_id} started")
         
         try:
             while self._running:
@@ -530,8 +506,7 @@ class RealTimeMonitor:
             logger.debug(f"Event processor {worker_id} cancelled")
 
     async def _process_event(self, event: RealTimeEvent) -> None:
-        """Process a monitoring event."""
-        try:
+        """Process a monitoring event."""        try:
             # Store event in Redis for history
             event_data = {
                 'event_id': event.event_id,
@@ -577,10 +552,8 @@ class RealTimeMonitor:
             logger.error(f"Failed to process event {event.event_id}: {e}")
 
     async def _start_websocket_server(self) -> None:
-        """Start WebSocket server for real-time notifications."""
-        async def handle_websocket(websocket, path):
-            """Handle WebSocket connections."""
-            self._websocket_clients.add(websocket)
+        """Start WebSocket server for real-time notifications."""        async def handle_websocket(websocket, path):
+            """Handle WebSocket connections."""            self._websocket_clients.add(websocket)
             logger.info(f"WebSocket client connected: {websocket.remote_address}")
             
             try:
@@ -599,8 +572,7 @@ class RealTimeMonitor:
         logger.info(f"WebSocket server started on port {self.websocket_port}")
 
     async def _broadcast_event_to_websockets(self, event: RealTimeEvent) -> None:
-        """Broadcast event to all connected WebSocket clients."""
-        if not self._websocket_clients:
+        """Broadcast event to all connected WebSocket clients."""        if not self._websocket_clients:
             return
         
         message = {
@@ -631,8 +603,7 @@ class RealTimeMonitor:
         self._websocket_clients -= disconnected_clients
 
     async def _update_metrics_loop(self) -> None:
-        """Update monitoring metrics periodically."""
-        try:
+        """Update monitoring metrics periodically."""        try:
             while self._running:
                 await self._update_metrics()
                 await asyncio.sleep(self.metrics_update_interval)
@@ -640,8 +611,7 @@ class RealTimeMonitor:
             logger.debug("Metrics update loop cancelled")
 
     async def _update_metrics(self) -> None:
-        """Update monitoring metrics."""
-        try:
+        """Update monitoring metrics."""        try:
             # Calculate uptime
             uptime = (datetime.utcnow() - self._start_time).total_seconds()
             self._metrics.uptime_percentage = min(100.0, (uptime / (uptime + 1)) * 100)
@@ -678,8 +648,7 @@ class RealTimeMonitor:
             logger.error(f"Failed to update metrics: {e}")
 
     async def _load_monitoring_configurations(self) -> None:
-        """Load existing monitoring configurations."""
-        try:
+        """Load existing monitoring configurations."""        try:
             # Load from Redis or database
             # This would restore active monitoring sessions after restart
             pass
@@ -691,19 +660,16 @@ class RealTimeMonitor:
         event_type: MonitoringEventType,
         handler: Callable[[RealTimeEvent], None]
     ) -> None:
-        """Register an event handler."""
-        if event_type not in self._event_handlers:
+        """Register an event handler."""        if event_type not in self._event_handlers:
             self._event_handlers[event_type] = []
         self._event_handlers[event_type].append(handler)
 
     async def get_realtime_metrics(self) -> MonitoringMetrics:
-        """Get current real-time monitoring metrics."""
-        await self._update_metrics()
+        """Get current real-time monitoring metrics."""        await self._update_metrics()
         return self._metrics
 
     async def get_active_sessions(self) -> List[Dict[str, Any]]:
-        """Get all active monitoring sessions."""
-        try:
+        """Get all active monitoring sessions."""        try:
             # Scan for active sessions in Redis
             sessions = []
             async for key in self.redis_client.scan_iter(match="rt_session:*"):
@@ -718,8 +684,7 @@ class RealTimeMonitor:
             return []
 
     async def shutdown(self) -> None:
-        """Shutdown the real-time monitor."""
-        logger.info("Shutting down Real-time Monitor...")
+        """Shutdown the real-time monitor."""        logger.info("Shutting down Real-time Monitor...")
         
         self._running = False
         

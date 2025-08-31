@@ -1,5 +1,4 @@
-"""
-Model Optimizer - Advanced ML Model Performance & Resource Optimization System
+"""Model Optimizer - Advanced ML Model Performance & Resource Optimization System
 
 Industrial-grade model optimization providing performance tuning, resource optimization,
 model compression, and deployment optimization for the IA-Influencer-Agent ML platform.
@@ -13,9 +12,7 @@ Any unauthorized use, copying, distribution, or commercialization without explic
 is strictly PROHIBITED and will result in legal action.
 
 ALL RIGHTS RESERVED - FAHED MLAIEL ©2025
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import uuid
@@ -99,8 +96,7 @@ from prometheus_client import Counter, Histogram, Gauge
 logger = logging.getLogger(__name__)
 
 class OptimizationType(Enum):
-    """Model optimization strategies"""
-    PERFORMANCE = "performance"
+    """Model optimization strategies"""    PERFORMANCE = "performance"
     MEMORY = "memory"
     SPEED = "speed"
     SIZE = "size"
@@ -110,8 +106,7 @@ class OptimizationType(Enum):
     RESOURCE = "resource"
 
 class CompressionMethod(Enum):
-    """Model compression techniques"""
-    QUANTIZATION = "quantization"
+    """Model compression techniques"""    QUANTIZATION = "quantization"
     PRUNING = "pruning"
     DISTILLATION = "distillation"
     LOW_RANK_APPROXIMATION = "low_rank_approximation"
@@ -119,16 +114,14 @@ class CompressionMethod(Enum):
     HUFFMAN_CODING = "huffman_coding"
 
 class OptimizationPriority(Enum):
-    """Optimization priority levels"""
-    LOW = "low"
+    """Optimization priority levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 @dataclass
 class OptimizationConfig:
-    """Comprehensive optimization configuration"""
-    optimization_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive optimization configuration"""    optimization_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     model_name: str = ""
     optimization_type: OptimizationType = OptimizationType.PERFORMANCE
     priority: OptimizationPriority = OptimizationPriority.MEDIUM
@@ -178,8 +171,7 @@ class OptimizationConfig:
 
 @dataclass
 class OptimizationMetrics:
-    """Comprehensive optimization performance metrics"""
-    # Original model metrics
+    """Comprehensive optimization performance metrics"""    # Original model metrics
     original_accuracy: float = 0.0
     original_inference_latency_ms: float = 0.0
     original_memory_usage_mb: float = 0.0
@@ -214,8 +206,7 @@ class OptimizationMetrics:
 
 @dataclass
 class OptimizationResult:
-    """Complete optimization result"""
-    optimization_id: str
+    """Complete optimization result"""    optimization_id: str
     model_name: str
     status: str  # success, failed, partial
     
@@ -246,8 +237,7 @@ class OptimizationResult:
     created_at: datetime = field(default_factory=datetime.utcnow)
 
 class ModelOptimizer:
-    """
-    Ultra-Advanced Model Optimization Engine
+    """    Ultra-Advanced Model Optimization Engine
     
     Comprehensive optimization system providing:
     - Multi-framework model optimization (TensorFlow, PyTorch, ONNX, scikit-learn)
@@ -257,8 +247,7 @@ class ModelOptimizer:
     - Hardware-specific optimization (CPU, GPU, TPU, Edge devices)
     - Deployment optimization for production environments
     - Comprehensive benchmarking and validation
-    """
-    
+    """    
     # Prometheus metrics
     OPTIMIZATION_JOBS = Counter('model_optimizer_jobs_total', 'Total optimization jobs', ['status', 'type'])
     OPTIMIZATION_DURATION = Histogram('model_optimizer_duration_seconds', 'Optimization duration', ['optimization_type'])
@@ -302,8 +291,7 @@ class ModelOptimizer:
         logger.info(f"Available devices: {self.available_devices}")
         
     async def initialize(self) -> bool:
-        """Initialize model optimizer"""
-        try:
+        """Initialize model optimizer"""        try:
             # Start background optimization processor
             task = asyncio.create_task(self._process_optimization_queue())
             self.background_tasks.add(task)
@@ -327,8 +315,7 @@ class ModelOptimizer:
                            model_format: str,
                            config: OptimizationConfig,
                            async_execution: bool = False) -> Union[OptimizationResult, str]:
-        """
-        Comprehensive model optimization with multiple techniques
+        """        Comprehensive model optimization with multiple techniques
         
         Args:
             model: Model to optimize
@@ -339,8 +326,7 @@ class ModelOptimizer:
             
         Returns:
             OptimizationResult: Complete optimization results or job_id if async
-        """
-        optimization_id = config.optimization_id
+        """        optimization_id = config.optimization_id
         
         try:
             logger.info(f"Starting model optimization: {optimization_id} ({model_name})")
@@ -408,10 +394,8 @@ class ModelOptimizer:
                             model: Any, 
                             model_format: str,
                             benchmark_config: Dict[str, Any] = None) -> Dict[str, Any]:
-        """
-        Comprehensive model benchmarking and performance analysis
-        """
-        try:
+        """        Comprehensive model benchmarking and performance analysis
+        """        try:
             logger.info(f"Starting model benchmarking ({model_format})")
             
             benchmark_config = benchmark_config or {}
@@ -460,10 +444,8 @@ class ModelOptimizer:
                           model_name: str,
                           model_format: str,
                           optimization_goals: Dict[str, Any] = None) -> OptimizationResult:
-        """
-        Automated model optimization with intelligent technique selection
-        """
-        try:
+        """        Automated model optimization with intelligent technique selection
+        """        try:
             logger.info(f"Starting auto-optimization for {model_name}")
             
             optimization_goals = optimization_goals or {}
@@ -500,10 +482,8 @@ class ModelOptimizer:
                            model_format: str,
                            compression_methods: List[CompressionMethod],
                            target_size_mb: Optional[float] = None) -> OptimizationResult:
-        """
-        Advanced model compression with multiple techniques
-        """
-        try:
+        """        Advanced model compression with multiple techniques
+        """        try:
             logger.info(f"Starting model compression: {model_name}")
             
             # Create compression configuration
@@ -532,10 +512,8 @@ class ModelOptimizer:
                                     model_format: str,
                                     deployment_target: str,
                                     constraints: Dict[str, Any] = None) -> OptimizationResult:
-        """
-        Deployment-specific model optimization
-        """
-        try:
+        """        Deployment-specific model optimization
+        """        try:
             logger.info(f"Optimizing for deployment: {deployment_target}")
             
             constraints = constraints or {}
@@ -591,8 +569,7 @@ class ModelOptimizer:
             raise OptimizationError(f"Deployment optimization failed: {str(e)}")
 
     async def get_optimization_status(self, optimization_id: str) -> Dict[str, Any]:
-        """Get comprehensive optimization status"""
-        if optimization_id in self.active_optimizations:
+        """Get comprehensive optimization status"""        if optimization_id in self.active_optimizations:
             config = self.active_optimizations[optimization_id]
             return {
                 "optimization_id": optimization_id,
@@ -623,8 +600,7 @@ class ModelOptimizer:
                                   model_name: str,
                                   model_format: str,
                                   config: OptimizationConfig) -> OptimizationResult:
-        """Execute complete optimization pipeline"""
-        start_time = datetime.utcnow()
+        """Execute complete optimization pipeline"""        start_time = datetime.utcnow()
         optimization_id = config.optimization_id
         
         try:
@@ -768,8 +744,7 @@ class ModelOptimizer:
             raise
 
     def _initialize_optimization_techniques(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize optimization techniques registry"""
-        return {
+        """Initialize optimization techniques registry"""        return {
             "quantization": {
                 "supported_frameworks": ["tensorflow", "pytorch", "onnx"],
                 "methods": ["dynamic", "static", "qat"],
@@ -803,8 +778,7 @@ class ModelOptimizer:
         }
 
     def _detect_available_devices(self) -> Dict[str, bool]:
-        """Detect available hardware devices"""
-        devices = {
+        """Detect available hardware devices"""        devices = {
             "cpu": True,
             "gpu": False,
             "tensorrt": False,
@@ -826,8 +800,7 @@ class ModelOptimizer:
         return devices
 
     async def _validate_optimization_config(self, config: OptimizationConfig, model_format: str) -> Dict[str, Any]:
-        """Validate optimization configuration"""
-        errors = []
+        """Validate optimization configuration"""        errors = []
         
         if not config.model_name:
             errors.append("Model name is required")
@@ -844,8 +817,7 @@ class ModelOptimizer:
         return {"valid": len(errors) == 0, "errors": errors}
 
     async def _optimize_tensorflow_model(self, model: Any, config: OptimizationConfig) -> Any:
-        """TensorFlow-specific optimization"""
-        try:
+        """TensorFlow-specific optimization"""        try:
             # Graph optimization
             if config.graph_optimization:
                 # Apply TensorFlow graph optimizations
@@ -868,8 +840,7 @@ class ModelOptimizer:
             return model
 
     async def _optimize_pytorch_model(self, model: Any, config: OptimizationConfig) -> Any:
-        """PyTorch-specific optimization"""
-        try:
+        """PyTorch-specific optimization"""        try:
             if hasattr(model, 'eval'):
                 model.eval()
             
@@ -890,8 +861,7 @@ class ModelOptimizer:
             return model
 
     async def _optimize_sklearn_model(self, model: Any, config: OptimizationConfig) -> Any:
-        """scikit-learn specific optimization"""
-        try:
+        """scikit-learn specific optimization"""        try:
             # Model-specific optimizations can be added here
             return model
             
@@ -900,8 +870,7 @@ class ModelOptimizer:
             return model
 
     async def _optimize_onnx_model(self, model: Any, config: OptimizationConfig) -> Any:
-        """ONNX-specific optimization"""
-        try:
+        """ONNX-specific optimization"""        try:
             if ONNX_AVAILABLE:
                 # ONNX Runtime optimization
                 session_options = ort.SessionOptions()
@@ -926,8 +895,7 @@ class ModelOptimizer:
             return model
 
     async def _apply_quantization(self, model: Any, model_format: str, config: OptimizationConfig) -> Any:
-        """Apply model quantization"""
-        try:
+        """Apply model quantization"""        try:
             if model_format == "pytorch":
                 # PyTorch quantization
                 if config.quantization_method == "dynamic":
@@ -963,8 +931,7 @@ class ModelOptimizer:
             return model
 
     async def _apply_pruning(self, model: Any, model_format: str, config: OptimizationConfig) -> Any:
-        """Apply model pruning"""
-        try:
+        """Apply model pruning"""        try:
             if model_format == "pytorch":
                 import torch.nn.utils.prune as prune
                 
@@ -997,8 +964,7 @@ class ModelOptimizer:
             return model
 
     async def _apply_distillation(self, student_model: Any, teacher_model: Any, model_format: str, config: OptimizationConfig) -> Any:
-        """Apply knowledge distillation"""
-        try:
+        """Apply knowledge distillation"""        try:
             # Knowledge distillation implementation would go here
             # This is a placeholder for the actual distillation process
             logger.info("Knowledge distillation applied (placeholder)")
@@ -1012,8 +978,7 @@ class ModelOptimizer:
     # For brevity, including the essential structure and main optimization methods
 
     async def _process_optimization_queue(self):
-        """Background optimization job processor"""
-        while True:
+        """Background optimization job processor"""        while True:
             try:
                 job_data = await self.optimization_queue.get()
                 
@@ -1062,8 +1027,7 @@ class ModelOptimizer:
                 await asyncio.sleep(5)
 
     async def _monitor_system_resources(self):
-        """Background system resource monitoring"""
-        while True:
+        """Background system resource monitoring"""        while True:
             try:
                 # Monitor CPU and memory usage
                 cpu_percent = psutil.cpu_percent(interval=1)
@@ -1084,10 +1048,8 @@ class ModelOptimizer:
 
 
 class PerformanceTuner:
-    """
-    Advanced Performance Tuning Engine for ML Models
-    """
-    
+    """    Advanced Performance Tuning Engine for ML Models
+    """    
     def __init__(self, optimizer: ModelOptimizer):
         self.optimizer = optimizer
         self.tuner_id = f"tuner_{uuid.uuid4().hex[:8]}"
@@ -1099,8 +1061,7 @@ class PerformanceTuner:
                                   model_name: str,
                                   model_format: str,
                                   performance_targets: Dict[str, Any]) -> OptimizationResult:
-        """Automatically tune model performance to meet targets"""
-        try:
+        """Automatically tune model performance to meet targets"""        try:
             logger.info(f"Starting auto-tuning for {model_name}")
             
             # Analyze current performance
@@ -1121,8 +1082,7 @@ class PerformanceTuner:
             raise OptimizationError(f"Auto-tuning failed: {str(e)}")
     
     def _create_optimization_plan(self, baseline: Dict[str, Any], targets: Dict[str, Any]) -> OptimizationConfig:
-        """Create optimization plan based on performance analysis"""
-        config = OptimizationConfig()
+        """Create optimization plan based on performance analysis"""        config = OptimizationConfig()
         
         # Analyze targets and create appropriate configuration
         if targets.get("latency_ms"):

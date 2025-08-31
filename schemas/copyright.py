@@ -1,5 +1,4 @@
-"""
-Copyright & Licensing Schemas for IA Influencer Agent Platform
+"""Copyright & Licensing Schemas for IA Influencer Agent Platform
 Professional intellectual property, copyright management, and licensing schemas
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -7,9 +6,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
-"""
-
-from datetime import datetime
+"""from datetime import datetime
 from decimal import Decimal
 from typing import Any, Dict, List, Optional, Set
 from uuid import UUID
@@ -20,8 +17,7 @@ from .base import BaseSchema, TimestampSchema, UUIDSchema, AuditSchema
 
 
 class CopyrightCreate(BaseSchema):
-    """Copyright registration request schema."""
-    
+    """Copyright registration request schema."""    
     content_id: UUID = Field(description="Content to register for copyright")
     copyright_holder_id: UUID = Field(description="Primary copyright holder")
     work_title: str = Field(min_length=1, max_length=300, description="Official work title")
@@ -50,8 +46,7 @@ class CopyrightCreate(BaseSchema):
     
     @validator('work_type')
     def validate_work_type(cls, v):
-        """Validate work type."""
-        allowed_types = {
+        """Validate work type."""        allowed_types = {
             "literary_work", "musical_work", "dramatic_work", "choreographic_work",
             "pictorial_graphic_sculptural", "motion_picture", "sound_recording",
             "architectural_work", "computer_program", "compilation", "derivative_work"
@@ -62,8 +57,7 @@ class CopyrightCreate(BaseSchema):
 
 
 class CopyrightOut(UUIDSchema, TimestampSchema):
-    """Copyright information schema."""
-    
+    """Copyright information schema."""    
     content_id: UUID
     copyright_holder_id: UUID
     work_title: str
@@ -105,8 +99,7 @@ class CopyrightOut(UUIDSchema, TimestampSchema):
 
 
 class CopyrightClaim(UUIDSchema, TimestampSchema, AuditSchema):
-    """Copyright claim schema."""
-    
+    """Copyright claim schema."""    
     copyright_id: UUID = Field(description="Associated copyright registration")
     claimant_id: UUID = Field(description="Person or entity making the claim")
     claim_type: str = Field(description="Type of copyright claim")
@@ -145,8 +138,7 @@ class CopyrightClaim(UUIDSchema, TimestampSchema, AuditSchema):
     
     @validator('claim_type')
     def validate_claim_type(cls, v):
-        """Validate claim type."""
-        allowed_types = {
+        """Validate claim type."""        allowed_types = {
             "direct_infringement", "contributory_infringement", "vicarious_infringement",
             "digital_piracy", "unauthorized_distribution", "derivative_work_violation",
             "public_performance_violation", "synchronization_violation"
@@ -157,8 +149,7 @@ class CopyrightClaim(UUIDSchema, TimestampSchema, AuditSchema):
 
 
 class CopyrightTransfer(UUIDSchema, TimestampSchema, AuditSchema):
-    """Copyright transfer/assignment schema."""
-    
+    """Copyright transfer/assignment schema."""    
     copyright_id: UUID
     transferor_id: UUID = Field(description="Current copyright holder transferring rights")
     transferee_id: UUID = Field(description="New copyright holder receiving rights")
@@ -194,8 +185,7 @@ class CopyrightTransfer(UUIDSchema, TimestampSchema, AuditSchema):
     
     @validator('transfer_type')
     def validate_transfer_type(cls, v):
-        """Validate transfer type."""
-        allowed_types = {
+        """Validate transfer type."""        allowed_types = {
             "assignment", "exclusive_license", "non_exclusive_license",
             "work_for_hire_assignment", "testamentary_transfer", "involuntary_transfer"
         }
@@ -205,8 +195,7 @@ class CopyrightTransfer(UUIDSchema, TimestampSchema, AuditSchema):
 
 
 class LicenseAgreement(UUIDSchema, TimestampSchema, AuditSchema):
-    """License agreement schema."""
-    
+    """License agreement schema."""    
     copyright_id: UUID = Field(description="Licensed copyrighted work")
     licensor_id: UUID = Field(description="License grantor")
     licensee_id: UUID = Field(description="License recipient")
@@ -257,8 +246,7 @@ class LicenseAgreement(UUIDSchema, TimestampSchema, AuditSchema):
     
     @validator('license_type')
     def validate_license_type(cls, v):
-        """Validate license type."""
-        allowed_types = {
+        """Validate license type."""        allowed_types = {
             "exclusive", "non_exclusive", "sole", "compulsory", "statutory",
             "creative_commons", "royalty_free", "rights_managed", "microstock",
             "synchronization", "mechanical", "performance", "broadcast"
@@ -269,8 +257,7 @@ class LicenseAgreement(UUIDSchema, TimestampSchema, AuditSchema):
 
 
 class LicenseUsage(UUIDSchema, TimestampSchema):
-    """License usage tracking schema."""
-    
+    """License usage tracking schema."""    
     license_agreement_id: UUID
     licensee_id: UUID
     usage_period_start: datetime
@@ -307,8 +294,7 @@ class LicenseUsage(UUIDSchema, TimestampSchema):
 
 
 class RightsManagement(UUIDSchema, TimestampSchema):
-    """Comprehensive rights management schema."""
-    
+    """Comprehensive rights management schema."""    
     content_id: UUID
     rights_holder_id: UUID
     rights_portfolio_name: str = Field(description="Name of rights portfolio")
@@ -349,8 +335,7 @@ class RightsManagement(UUIDSchema, TimestampSchema):
 
 
 class IntellectualProperty(UUIDSchema, TimestampSchema, AuditSchema):
-    """Comprehensive intellectual property portfolio schema."""
-    
+    """Comprehensive intellectual property portfolio schema."""    
     owner_id: UUID = Field(description="IP portfolio owner")
     portfolio_name: str = Field(description="IP portfolio name")
     portfolio_type: str = Field(description="Type of IP portfolio")
@@ -395,8 +380,7 @@ class IntellectualProperty(UUIDSchema, TimestampSchema, AuditSchema):
     
     @validator('portfolio_type')
     def validate_portfolio_type(cls, v):
-        """Validate portfolio type."""
-        allowed_types = {
+        """Validate portfolio type."""        allowed_types = {
             "creative_works", "brand_assets", "technology_patents", "mixed_portfolio",
             "entertainment_rights", "digital_assets", "content_library"
         }

@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Unit Tests for Database Modules
+"""Unit Tests for Database Modules
 ==============================
 
 Comprehensive unit tests for all database modules including:
@@ -28,9 +24,7 @@ Comprehensive unit tests for all database modules including:
 
 Author: Copilot Assistant for Fahed Mlaiel
 Purpose: Ensure database reliability and data integrity
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -48,12 +42,10 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 
 class TestDatabaseConnection:
-    """Unit tests for database connection management"""
-    
+    """Unit tests for database connection management"""    
     @pytest.fixture
     def mock_db_manager(self):
-        """Mock database manager"""
-        return Mock(
+        """Mock database manager"""        return Mock(
             create_connection=AsyncMock(return_value={
                 'connection_id': 'conn_123',
                 'status': 'connected',
@@ -77,8 +69,7 @@ class TestDatabaseConnection:
     
     @pytest.mark.asyncio
     async def test_database_connection_creation(self, mock_db_manager):
-        """Test database connection creation"""
-        connection_params = {
+        """Test database connection creation"""        connection_params = {
             'host': 'localhost',
             'port': 5432,
             'database': 'ainflue_test',
@@ -93,8 +84,7 @@ class TestDatabaseConnection:
         
     @pytest.mark.asyncio
     async def test_database_health_check(self, mock_db_manager):
-        """Test database health monitoring"""
-        result = await mock_db_manager.check_health()
+        """Test database health monitoring"""        result = await mock_db_manager.check_health()
         
         assert result['healthy'] is True
         assert result['response_time'] == 15.5
@@ -102,8 +92,7 @@ class TestDatabaseConnection:
         
     @pytest.mark.asyncio
     async def test_query_execution(self, mock_db_manager):
-        """Test database query execution"""
-        query = "SELECT * FROM test_table WHERE status = 'active'"
+        """Test database query execution"""        query = "SELECT * FROM test_table WHERE status = 'active'"
         params = {'status': 'active'}
         
         result = await mock_db_manager.execute_query(query, params)
@@ -114,8 +103,7 @@ class TestDatabaseConnection:
         
     @pytest.mark.asyncio
     async def test_transaction_management(self, mock_db_manager):
-        """Test database transaction handling"""
-        # Begin transaction
+        """Test database transaction handling"""        # Begin transaction
         tx_result = await mock_db_manager.begin_transaction()
         assert tx_result['transaction_id'] == 'tx_123'
         
@@ -129,12 +117,10 @@ class TestDatabaseConnection:
 
 
 class TestDataModels:
-    """Unit tests for data models and validation"""
-    
+    """Unit tests for data models and validation"""    
     @pytest.fixture
     def mock_model_manager(self):
-        """Mock model management system"""
-        return Mock(
+        """Mock model management system"""        return Mock(
             validate_model=Mock(return_value={
                 'valid': True,
                 'errors': [],
@@ -159,8 +145,7 @@ class TestDataModels:
         )
     
     def test_model_validation(self, mock_model_manager):
-        """Test data model validation"""
-        model_data = {
+        """Test data model validation"""        model_data = {
             'name': 'Test Creator',
             'email': 'creator@test.com',
             'type': 'musician',
@@ -174,8 +159,7 @@ class TestDataModels:
         assert 'field_deprecated' in result['warnings']
         
     def test_record_creation(self, mock_model_manager):
-        """Test database record creation"""
-        record_data = {
+        """Test database record creation"""        record_data = {
             'name': 'New Record',
             'type': 'content',
             'creator_id': 'cr_123'
@@ -188,8 +172,7 @@ class TestDataModels:
         assert result['status'] == 'created'
         
     def test_record_updating(self, mock_model_manager):
-        """Test database record updating"""
-        record_id = 'rec_123'
+        """Test database record updating"""        record_id = 'rec_123'
         update_data = {
             'name': 'Updated Record',
             'description': 'Updated description'
@@ -203,8 +186,7 @@ class TestDataModels:
         assert 'description' in result['changes']
         
     def test_model_serialization(self, mock_model_manager):
-        """Test model serialization for API responses"""
-        record_id = 'rec_123'
+        """Test model serialization for API responses"""        record_id = 'rec_123'
         
         result = mock_model_manager.serialize_model(record_id)
         
@@ -215,12 +197,10 @@ class TestDataModels:
 
 
 class TestRepositoryPattern:
-    """Unit tests for repository pattern implementation"""
-    
+    """Unit tests for repository pattern implementation"""    
     @pytest.fixture
     def mock_repository(self):
-        """Mock repository implementation"""
-        return Mock(
+        """Mock repository implementation"""        return Mock(
             find_by_id=AsyncMock(return_value={
                 'id': 'rec_123',
                 'name': 'Test Record',
@@ -241,8 +221,7 @@ class TestRepositoryPattern:
     
     @pytest.mark.asyncio
     async def test_find_by_id(self, mock_repository):
-        """Test finding record by ID"""
-        record_id = 'rec_123'
+        """Test finding record by ID"""        record_id = 'rec_123'
         
         result = await mock_repository.find_by_id(record_id)
         
@@ -252,8 +231,7 @@ class TestRepositoryPattern:
         
     @pytest.mark.asyncio
     async def test_find_all_records(self, mock_repository):
-        """Test finding all records with pagination"""
-        pagination = {'limit': 10, 'offset': 0}
+        """Test finding all records with pagination"""        pagination = {'limit': 10, 'offset': 0}
         
         result = await mock_repository.find_all(pagination)
         
@@ -263,8 +241,7 @@ class TestRepositoryPattern:
         
     @pytest.mark.asyncio
     async def test_find_by_criteria(self, mock_repository):
-        """Test finding records by specific criteria"""
-        criteria = {
+        """Test finding records by specific criteria"""        criteria = {
             'status': 'active',
             'type': 'content',
             'creator_id': 'cr_123'
@@ -278,8 +255,7 @@ class TestRepositoryPattern:
         
     @pytest.mark.asyncio
     async def test_record_saving(self, mock_repository):
-        """Test saving records through repository"""
-        record_data = {
+        """Test saving records through repository"""        record_data = {
             'name': 'New Record',
             'type': 'content',
             'metadata': {'version': 1}
@@ -291,8 +267,7 @@ class TestRepositoryPattern:
         
     @pytest.mark.asyncio
     async def test_record_existence_check(self, mock_repository):
-        """Test checking if record exists"""
-        record_id = 'rec_123'
+        """Test checking if record exists"""        record_id = 'rec_123'
         
         exists = await mock_repository.exists(record_id)
         
@@ -300,8 +275,7 @@ class TestRepositoryPattern:
         
     @pytest.mark.asyncio
     async def test_record_count(self, mock_repository):
-        """Test counting records"""
-        filters = {'status': 'active'}
+        """Test counting records"""        filters = {'status': 'active'}
         
         count = await mock_repository.count(filters)
         
@@ -309,12 +283,10 @@ class TestRepositoryPattern:
 
 
 class TestDatabaseSecurity:
-    """Unit tests for database security features"""
-    
+    """Unit tests for database security features"""    
     @pytest.fixture
     def mock_security_manager(self):
-        """Mock database security manager"""
-        return Mock(
+        """Mock database security manager"""        return Mock(
             encrypt_sensitive_data=Mock(return_value={
                 'encrypted_data': 'encrypted_content_abc123',
                 'encryption_key_id': 'key_456',
@@ -343,8 +315,7 @@ class TestDatabaseSecurity:
         )
     
     def test_data_encryption(self, mock_security_manager):
-        """Test sensitive data encryption"""
-        sensitive_data = {
+        """Test sensitive data encryption"""        sensitive_data = {
             'credit_card': '4111-1111-1111-1111',
             'ssn': '123-45-6789',
             'email': 'user@example.com'
@@ -357,8 +328,7 @@ class TestDatabaseSecurity:
         assert result['algorithm'] == 'AES-256-GCM'
         
     def test_data_decryption(self, mock_security_manager):
-        """Test sensitive data decryption"""
-        encrypted_data = {
+        """Test sensitive data decryption"""        encrypted_data = {
             'encrypted_content': 'encrypted_content_abc123',
             'key_id': 'key_456'
         }
@@ -369,8 +339,7 @@ class TestDatabaseSecurity:
         assert result['integrity_verified'] is True
         
     def test_access_auditing(self, mock_security_manager):
-        """Test database access auditing"""
-        access_data = {
+        """Test database access auditing"""        access_data = {
             'user_id': 'user_123',
             'operation': 'SELECT',
             'table': 'users',
@@ -384,8 +353,7 @@ class TestDatabaseSecurity:
         assert result['operation'] == 'SELECT'
         
     def test_permission_validation(self, mock_security_manager):
-        """Test access permission validation"""
-        permission_request = {
+        """Test access permission validation"""        permission_request = {
             'user_id': 'user_123',
             'resource': 'content_table',
             'operation': 'read_write'
@@ -398,8 +366,7 @@ class TestDatabaseSecurity:
         assert len(result['restrictions']) == 0
         
     def test_injection_detection(self, mock_security_manager):
-        """Test SQL injection attempt detection"""
-        query_data = {
+        """Test SQL injection attempt detection"""        query_data = {
             'query': "SELECT * FROM users WHERE id = ?",
             'parameters': ['user_123'],
             'user_input': "user_123"
@@ -413,12 +380,10 @@ class TestDatabaseSecurity:
 
 
 class TestDatabasePerformance:
-    """Unit tests for database performance optimization"""
-    
+    """Unit tests for database performance optimization"""    
     @pytest.fixture
     def mock_performance_manager(self):
-        """Mock database performance manager"""
-        return Mock(
+        """Mock database performance manager"""        return Mock(
             analyze_query_performance=Mock(return_value={
                 'execution_time': 45.5,
                 'rows_examined': 1000,
@@ -450,8 +415,7 @@ class TestDatabasePerformance:
         )
     
     def test_query_performance_analysis(self, mock_performance_manager):
-        """Test query performance analysis"""
-        query_data = {
+        """Test query performance analysis"""        query_data = {
             'query': 'SELECT * FROM content WHERE creator_id = ? AND status = ?',
             'parameters': ['cr_123', 'active'],
             'execution_context': 'production'
@@ -466,8 +430,7 @@ class TestDatabasePerformance:
         assert 'add_index_on_status' in result['suggestions']
         
     def test_query_optimization(self, mock_performance_manager):
-        """Test automatic query optimization"""
-        query = 'SELECT * FROM content WHERE status = active'
+        """Test automatic query optimization"""        query = 'SELECT * FROM content WHERE status = active'
         
         result = mock_performance_manager.optimize_query(query)
         
@@ -475,8 +438,7 @@ class TestDatabasePerformance:
         assert result['performance_gain'] == '35%'
         
     def test_index_management(self, mock_performance_manager):
-        """Test database index management"""
-        index_operations = {
+        """Test database index management"""        index_operations = {
             'create_indexes': [
                 {'table': 'content', 'columns': ['creator_id', 'status']},
                 {'table': 'users', 'columns': ['email']}
@@ -491,8 +453,7 @@ class TestDatabasePerformance:
         assert result['performance_impact'] == 'positive'
         
     def test_connection_pool_monitoring(self, mock_performance_manager):
-        """Test connection pool health monitoring"""
-        result = mock_performance_manager.monitor_connection_pool()
+        """Test connection pool health monitoring"""        result = mock_performance_manager.monitor_connection_pool()
         
         assert result['pool_size'] == 20
         assert result['active_connections'] == 8
@@ -500,8 +461,7 @@ class TestDatabasePerformance:
         assert result['health_status'] == 'optimal'
         
     def test_query_result_caching(self, mock_performance_manager):
-        """Test query result caching system"""
-        cache_params = {
+        """Test query result caching system"""        cache_params = {
             'query': 'SELECT * FROM content WHERE featured = true',
             'ttl': 300,
             'cache_key_prefix': 'featured_content'
@@ -515,12 +475,10 @@ class TestDatabasePerformance:
 
 
 class TestDataMigration:
-    """Unit tests for database migration and schema management"""
-    
+    """Unit tests for database migration and schema management"""    
     @pytest.fixture
     def mock_migration_manager(self):
-        """Mock database migration manager"""
-        return Mock(
+        """Mock database migration manager"""        return Mock(
             create_migration=Mock(return_value={
                 'migration_id': 'mig_123',
                 'version': '2024_01_15_001',
@@ -550,8 +508,7 @@ class TestDataMigration:
         )
     
     def test_migration_creation(self, mock_migration_manager):
-        """Test database migration creation"""
-        migration_data = {
+        """Test database migration creation"""        migration_data = {
             'name': 'add_content_metadata_table',
             'description': 'Add table for content metadata storage',
             'operations': ['create_table', 'add_indexes']
@@ -565,8 +522,7 @@ class TestDataMigration:
         
     @pytest.mark.asyncio
     async def test_migration_execution(self, mock_migration_manager):
-        """Test database migration execution"""
-        migration_id = 'mig_123'
+        """Test database migration execution"""        migration_id = 'mig_123'
         execution_params = {
             'dry_run': False,
             'backup_before': True
@@ -581,8 +537,7 @@ class TestDataMigration:
         
     @pytest.mark.asyncio
     async def test_migration_rollback(self, mock_migration_manager):
-        """Test database migration rollback"""
-        migration_id = 'mig_123'
+        """Test database migration rollback"""        migration_id = 'mig_123'
         
         result = await mock_migration_manager.rollback_migration(migration_id)
         
@@ -591,8 +546,7 @@ class TestDataMigration:
         assert result['rollback_time'] == 45.2
         
     def test_schema_validation(self, mock_migration_manager):
-        """Test database schema validation"""
-        validation_params = {
+        """Test database schema validation"""        validation_params = {
             'check_constraints': True,
             'check_indexes': True,
             'check_foreign_keys': True
@@ -606,12 +560,10 @@ class TestDataMigration:
 
 
 class TestDatabaseIntegration:
-    """Integration tests for database modules working together"""
-    
+    """Integration tests for database modules working together"""    
     @pytest.fixture
     def mock_integrated_database(self):
-        """Mock integrated database system"""
-        return Mock(
+        """Mock integrated database system"""        return Mock(
             handle_complete_transaction=AsyncMock(return_value={
                 'transaction_id': 'tx_123',
                 'operations_completed': 5,
@@ -633,8 +585,7 @@ class TestDatabaseIntegration:
     
     @pytest.mark.asyncio
     async def test_complex_transaction_handling(self, mock_integrated_database):
-        """Test complex multi-operation transaction"""
-        transaction_data = {
+        """Test complex multi-operation transaction"""        transaction_data = {
             'operations': [
                 {'type': 'create', 'table': 'users', 'data': {'name': 'New User'}},
                 {'type': 'update', 'table': 'content', 'id': 'ct_123'},
@@ -651,8 +602,7 @@ class TestDatabaseIntegration:
         
     @pytest.mark.asyncio
     async def test_multi_table_operation(self, mock_integrated_database):
-        """Test operations spanning multiple tables"""
-        operation_data = {
+        """Test operations spanning multiple tables"""        operation_data = {
             'creator_update': {
                 'creator_id': 'cr_123',
                 'profile_changes': {'verified': True},
@@ -670,8 +620,7 @@ class TestDatabaseIntegration:
         
     @pytest.mark.asyncio
     async def test_data_consistency_verification(self, mock_integrated_database):
-        """Test database consistency checking"""
-        consistency_params = {
+        """Test database consistency checking"""        consistency_params = {
             'check_referential_integrity': True,
             'check_data_constraints': True,
             'check_business_rules': True

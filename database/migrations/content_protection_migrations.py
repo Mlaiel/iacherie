@@ -1,5 +1,4 @@
-"""
-🎯 Content Protection Migrations - Ultra-Industrial Content Security Engine
+"""🎯 Content Protection Migrations - Ultra-Industrial Content Security Engine
 ===========================================================================
 Module: backend/database/migrations/content_protection_migrations.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -23,9 +22,7 @@ Content protection migrations for:
 MIGRATION STRATEGY:
 Schema Creation → Fingerprint Tables → Detection Algorithms → 
 Protection Rules → Enforcement Mechanisms → Analytics Systems
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass
@@ -43,8 +40,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentProtectionMigrationSuite:
-    """
-    Ultra-advanced content protection migration suite
+    """    Ultra-advanced content protection migration suite
     
     Provides comprehensive migrations for:
     - Multi-format content fingerprinting
@@ -52,8 +48,7 @@ class ContentProtectionMigrationSuite:
     - Copyright detection and enforcement
     - Content authenticity verification
     - Plagiarism detection systems
-    """
-    
+    """    
     def __init__(self):
         self.metadata = MetaData()
         self.migration_history: List[Dict[str, Any]] = []
@@ -61,8 +56,7 @@ class ContentProtectionMigrationSuite:
         logger.info("✅ Content Protection Migration Suite initialized")
     
     async def create_core_protection_schema(self, engine: sa.Engine) -> Dict[str, Any]:
-        """Create core content protection schema"""
-        
+        """Create core content protection schema"""        
         migration_id = f"cp_core_schema_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
         logger.info("🛡️ Creating core content protection schema")
@@ -70,8 +64,7 @@ class ContentProtectionMigrationSuite:
         try:
             async with engine.begin() as conn:
                 # 1. Content Creators Table
-                await conn.execute(text("""
-                    CREATE TABLE IF NOT EXISTS content_creators (
+                await conn.execute(text("""                    CREATE TABLE IF NOT EXISTS content_creators (
                         creator_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         user_id UUID NOT NULL,
                         display_name VARCHAR(255) NOT NULL,
@@ -90,8 +83,7 @@ class ContentProtectionMigrationSuite:
                 """))
                 
                 # 2. Content Items Table
-                await conn.execute(text("""
-                    CREATE TABLE IF NOT EXISTS content_items (
+                await conn.execute(text("""                    CREATE TABLE IF NOT EXISTS content_items (
                         content_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         creator_id UUID NOT NULL REFERENCES content_creators(creator_id) ON DELETE CASCADE,
                         title VARCHAR(500) NOT NULL,
@@ -124,8 +116,7 @@ class ContentProtectionMigrationSuite:
                 """))
                 
                 # 3. Content Fingerprints Table
-                await conn.execute(text("""
-                    CREATE TABLE IF NOT EXISTS content_fingerprints (
+                await conn.execute(text("""                    CREATE TABLE IF NOT EXISTS content_fingerprints (
                         fingerprint_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         content_id UUID NOT NULL REFERENCES content_items(content_id) ON DELETE CASCADE,
                         fingerprint_type VARCHAR(50) NOT NULL CHECK (fingerprint_type IN ('perceptual_hash', 'audio_chromaprint', 'video_signature', 'text_shingle', 'combined')),
@@ -147,8 +138,7 @@ class ContentProtectionMigrationSuite:
                 """))
                 
                 # 4. Detection Rules Table
-                await conn.execute(text("""
-                    CREATE TABLE IF NOT EXISTS content_detection_rules (
+                await conn.execute(text("""                    CREATE TABLE IF NOT EXISTS content_detection_rules (
                         rule_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         creator_id UUID NOT NULL REFERENCES content_creators(creator_id) ON DELETE CASCADE,
                         rule_name VARCHAR(255) NOT NULL,
@@ -170,8 +160,7 @@ class ContentProtectionMigrationSuite:
                 """))
                 
                 # 5. Detection Matches Table
-                await conn.execute(text("""
-                    CREATE TABLE IF NOT EXISTS content_detection_matches (
+                await conn.execute(text("""                    CREATE TABLE IF NOT EXISTS content_detection_matches (
                         match_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         original_content_id UUID NOT NULL REFERENCES content_items(content_id),
                         matched_content_url TEXT NOT NULL,
@@ -226,8 +215,7 @@ class ContentProtectionMigrationSuite:
             }
     
     async def create_fingerprinting_schema(self, engine: sa.Engine) -> Dict[str, Any]:
-        """Create advanced fingerprinting schema for multi-format content"""
-        
+        """Create advanced fingerprinting schema for multi-format content"""        
         migration_id = f"cp_fingerprint_schema_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
         logger.info("🔍 Creating advanced fingerprinting schema")
@@ -235,8 +223,7 @@ class ContentProtectionMigrationSuite:
         try:
             async with engine.begin() as conn:
                 # 1. Audio Fingerprints Table
-                await conn.execute(text("""
-                    CREATE TABLE IF NOT EXISTS audio_fingerprints (
+                await conn.execute(text("""                    CREATE TABLE IF NOT EXISTS audio_fingerprints (
                         audio_fingerprint_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         content_id UUID NOT NULL REFERENCES content_items(content_id) ON DELETE CASCADE,
                         chromaprint_fingerprint BYTEA NOT NULL,
@@ -259,8 +246,7 @@ class ContentProtectionMigrationSuite:
                 """))
                 
                 # 2. Video Fingerprints Table
-                await conn.execute(text("""
-                    CREATE TABLE IF NOT EXISTS video_fingerprints (
+                await conn.execute(text("""                    CREATE TABLE IF NOT EXISTS video_fingerprints (
                         video_fingerprint_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         content_id UUID NOT NULL REFERENCES content_items(content_id) ON DELETE CASCADE,
                         visual_signature BYTEA NOT NULL,
@@ -285,8 +271,7 @@ class ContentProtectionMigrationSuite:
                 """))
                 
                 # 3. Image Fingerprints Table
-                await conn.execute(text("""
-                    CREATE TABLE IF NOT EXISTS image_fingerprints (
+                await conn.execute(text("""                    CREATE TABLE IF NOT EXISTS image_fingerprints (
                         image_fingerprint_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         content_id UUID NOT NULL REFERENCES content_items(content_id) ON DELETE CASCADE,
                         perceptual_hash BYTEA NOT NULL,
@@ -314,8 +299,7 @@ class ContentProtectionMigrationSuite:
                 """))
                 
                 # 4. Text Fingerprints Table
-                await conn.execute(text("""
-                    CREATE TABLE IF NOT EXISTS text_fingerprints (
+                await conn.execute(text("""                    CREATE TABLE IF NOT EXISTS text_fingerprints (
                         text_fingerprint_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         content_id UUID NOT NULL REFERENCES content_items(content_id) ON DELETE CASCADE,
                         text_hash VARCHAR(128) NOT NULL,
@@ -342,8 +326,7 @@ class ContentProtectionMigrationSuite:
                 """))
                 
                 # 5. Fingerprint Similarities Table
-                await conn.execute(text("""
-                    CREATE TABLE IF NOT EXISTS fingerprint_similarities (
+                await conn.execute(text("""                    CREATE TABLE IF NOT EXISTS fingerprint_similarities (
                         similarity_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         fingerprint_1_id UUID NOT NULL,
                         fingerprint_2_id UUID NOT NULL,
@@ -387,8 +370,7 @@ class ContentProtectionMigrationSuite:
             }
     
     async def create_enforcement_schema(self, engine: sa.Engine) -> Dict[str, Any]:
-        """Create content protection enforcement schema"""
-        
+        """Create content protection enforcement schema"""        
         migration_id = f"cp_enforcement_schema_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
         logger.info("⚖️ Creating content protection enforcement schema")
@@ -396,8 +378,7 @@ class ContentProtectionMigrationSuite:
         try:
             async with engine.begin() as conn:
                 # 1. Protection Policies Table
-                await conn.execute(text("""
-                    CREATE TABLE IF NOT EXISTS protection_policies (
+                await conn.execute(text("""                    CREATE TABLE IF NOT EXISTS protection_policies (
                         policy_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         creator_id UUID NOT NULL REFERENCES content_creators(creator_id),
                         policy_name VARCHAR(255) NOT NULL,
@@ -421,8 +402,7 @@ class ContentProtectionMigrationSuite:
                 """))
                 
                 # 2. Enforcement Actions Table
-                await conn.execute(text("""
-                    CREATE TABLE IF NOT EXISTS enforcement_actions (
+                await conn.execute(text("""                    CREATE TABLE IF NOT EXISTS enforcement_actions (
                         action_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         match_id UUID NOT NULL REFERENCES content_detection_matches(match_id),
                         policy_id UUID REFERENCES protection_policies(policy_id),
@@ -453,8 +433,7 @@ class ContentProtectionMigrationSuite:
                 """))
                 
                 # 3. Platform Integrations Table
-                await conn.execute(text("""
-                    CREATE TABLE IF NOT EXISTS platform_integrations (
+                await conn.execute(text("""                    CREATE TABLE IF NOT EXISTS platform_integrations (
                         integration_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         platform_name VARCHAR(100) NOT NULL UNIQUE,
                         platform_display_name VARCHAR(255),
@@ -485,8 +464,7 @@ class ContentProtectionMigrationSuite:
                 """))
                 
                 # 4. Enforcement Appeals Table
-                await conn.execute(text("""
-                    CREATE TABLE IF NOT EXISTS enforcement_appeals (
+                await conn.execute(text("""                    CREATE TABLE IF NOT EXISTS enforcement_appeals (
                         appeal_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         action_id UUID NOT NULL REFERENCES enforcement_actions(action_id),
                         appellant_type VARCHAR(50) NOT NULL CHECK (appellant_type IN ('content_owner', 'platform_user', 'third_party')),
@@ -516,8 +494,7 @@ class ContentProtectionMigrationSuite:
                 """))
                 
                 # 5. Protection Analytics Table
-                await conn.execute(text("""
-                    CREATE TABLE IF NOT EXISTS protection_analytics (
+                await conn.execute(text("""                    CREATE TABLE IF NOT EXISTS protection_analytics (
                         analytics_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         creator_id UUID NOT NULL REFERENCES content_creators(creator_id),
                         content_id UUID REFERENCES content_items(content_id),
@@ -576,8 +553,7 @@ class ContentProtectionMigrationSuite:
             }
     
     async def create_ml_protection_schema(self, engine: sa.Engine) -> Dict[str, Any]:
-        """Create machine learning-based protection schema"""
-        
+        """Create machine learning-based protection schema"""        
         migration_id = f"cp_ml_schema_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
         logger.info("🤖 Creating ML-based protection schema")
@@ -585,8 +561,7 @@ class ContentProtectionMigrationSuite:
         try:
             async with engine.begin() as conn:
                 # 1. ML Models Table
-                await conn.execute(text("""
-                    CREATE TABLE IF NOT EXISTS ml_protection_models (
+                await conn.execute(text("""                    CREATE TABLE IF NOT EXISTS ml_protection_models (
                         model_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         model_name VARCHAR(255) NOT NULL,
                         model_type VARCHAR(50) NOT NULL CHECK (model_type IN ('fingerprint_extractor', 'similarity_detector', 'classification', 'anomaly_detection', 'deepfake_detection')),
@@ -620,8 +595,7 @@ class ContentProtectionMigrationSuite:
                 """))
                 
                 # 2. ML Predictions Table
-                await conn.execute(text("""
-                    CREATE TABLE IF NOT EXISTS ml_protection_predictions (
+                await conn.execute(text("""                    CREATE TABLE IF NOT EXISTS ml_protection_predictions (
                         prediction_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         model_id UUID NOT NULL REFERENCES ml_protection_models(model_id),
                         content_id UUID REFERENCES content_items(content_id),
@@ -650,8 +624,7 @@ class ContentProtectionMigrationSuite:
                 """))
                 
                 # 3. Training Data Table
-                await conn.execute(text("""
-                    CREATE TABLE IF NOT EXISTS ml_training_data (
+                await conn.execute(text("""                    CREATE TABLE IF NOT EXISTS ml_training_data (
                         training_record_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         content_id UUID REFERENCES content_items(content_id),
                         model_type VARCHAR(50) NOT NULL,
@@ -680,8 +653,7 @@ class ContentProtectionMigrationSuite:
                 """))
                 
                 # 4. Model Performance Monitoring Table
-                await conn.execute(text("""
-                    CREATE TABLE IF NOT EXISTS ml_model_monitoring (
+                await conn.execute(text("""                    CREATE TABLE IF NOT EXISTS ml_model_monitoring (
                         monitoring_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                         model_id UUID NOT NULL REFERENCES ml_protection_models(model_id),
                         monitoring_date DATE NOT NULL,
@@ -744,8 +716,7 @@ class ContentProtectionMigrationSuite:
     # Private helper methods for creating indexes and triggers
     
     async def _create_protection_indexes(self, conn):
-        """Create performance indexes for protection tables"""
-        
+        """Create performance indexes for protection tables"""        
         indexes = [
             # Content creators indexes
             "CREATE INDEX IF NOT EXISTS idx_content_creators_user_id ON content_creators(user_id)",
@@ -782,8 +753,7 @@ class ContentProtectionMigrationSuite:
             await conn.execute(text(index_sql))
     
     async def _create_fingerprint_indexes(self, conn):
-        """Create specialized indexes for fingerprint tables"""
-        
+        """Create specialized indexes for fingerprint tables"""        
         indexes = [
             # Audio fingerprint indexes
             "CREATE INDEX IF NOT EXISTS idx_audio_fingerprints_content_id ON audio_fingerprints(content_id)",
@@ -815,8 +785,7 @@ class ContentProtectionMigrationSuite:
             await conn.execute(text(index_sql))
     
     async def _create_enforcement_indexes(self, conn):
-        """Create indexes for enforcement tables"""
-        
+        """Create indexes for enforcement tables"""        
         indexes = [
             # Protection policies indexes
             "CREATE INDEX IF NOT EXISTS idx_protection_policies_creator_id ON protection_policies(creator_id)",
@@ -848,8 +817,7 @@ class ContentProtectionMigrationSuite:
             await conn.execute(text(index_sql))
     
     async def _create_ml_indexes(self, conn):
-        """Create indexes for ML tables"""
-        
+        """Create indexes for ML tables"""        
         indexes = [
             # ML models indexes
             "CREATE INDEX IF NOT EXISTS idx_ml_models_type ON ml_protection_models(model_type)",
@@ -876,11 +844,9 @@ class ContentProtectionMigrationSuite:
             await conn.execute(text(index_sql))
     
     async def _create_protection_triggers(self, conn):
-        """Create triggers for updated_at fields"""
-        
+        """Create triggers for updated_at fields"""        
         # Create updated_at trigger function
-        await conn.execute(text("""
-            CREATE OR REPLACE FUNCTION update_updated_at_column()
+        await conn.execute(text("""            CREATE OR REPLACE FUNCTION update_updated_at_column()
             RETURNS TRIGGER AS $$
             BEGIN
                 NEW.updated_at = CURRENT_TIMESTAMP;
@@ -904,8 +870,7 @@ class ContentProtectionMigrationSuite:
         ]
         
         for table in tables_with_updated_at:
-            await conn.execute(text(f"""
-                CREATE TRIGGER update_{table}_updated_at 
+            await conn.execute(text(f"""                CREATE TRIGGER update_{table}_updated_at 
                 BEFORE UPDATE ON {table}
                 FOR EACH ROW EXECUTE FUNCTION update_updated_at_column()
             """))

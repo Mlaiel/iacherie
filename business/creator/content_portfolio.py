@@ -1,5 +1,4 @@
-"""
-Content Portfolio - Advanced Content Management & Organization
+"""Content Portfolio - Advanced Content Management & Organization
 
 Sophisticated content portfolio system enabling creators to organize, showcase,
 and optimize their content across all platforms with intelligent categorization and analytics.
@@ -13,9 +12,7 @@ This code, concept, and intellectual property are exclusively owned by Fahed Mla
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
 and will result in immediate legal action under German and International copyright laws.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
@@ -30,8 +27,7 @@ logger = get_logger(__name__)
 
 
 class ContentType(Enum):
-    """Content types"""
-    VIDEO = "video"
+    """Content types"""    VIDEO = "video"
     IMAGE = "image"
     AUDIO = "audio"
     TEXT = "text"
@@ -42,8 +38,7 @@ class ContentType(Enum):
 
 
 class ContentStatus(Enum):
-    """Content status"""
-    DRAFT = "draft"
+    """Content status"""    DRAFT = "draft"
     PUBLISHED = "published"
     SCHEDULED = "scheduled"
     ARCHIVED = "archived"
@@ -52,8 +47,7 @@ class ContentStatus(Enum):
 
 @dataclass
 class ContentItem:
-    """Content item"""
-    content_id: str
+    """Content item"""    content_id: str
     creator_id: str
     title: str
     content_type: ContentType
@@ -69,15 +63,13 @@ class ContentItem:
 
 
 class ContentOrganizer:
-    """Content organization and categorization"""
-    
+    """Content organization and categorization"""    
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
         self.logger = get_logger(self.__class__.__name__)
     
     async def organize_content(self, creator_id: str, organization_rules: Dict[str, Any]) -> Dict[str, Any]:
-        """Organize content based on rules"""
-        # Get all content for creator
+        """Organize content based on rules"""        # Get all content for creator
         content_items = await self._get_creator_content(creator_id)
         
         # Organize by categories
@@ -105,8 +97,7 @@ class ContentOrganizer:
         return organized_content
     
     async def _get_creator_content(self, creator_id: str) -> List[ContentItem]:
-        """Get all content for creator"""
-        # Mock content items
+        """Get all content for creator"""        # Mock content items
         return [
             ContentItem(
                 content_id="content_001",
@@ -134,15 +125,13 @@ class ContentOrganizer:
 
 
 class ContentAnalyzer:
-    """Content performance analysis"""
-    
+    """Content performance analysis"""    
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
         self.logger = get_logger(self.__class__.__name__)
     
     async def analyze_content_performance(self, creator_id: str) -> Dict[str, Any]:
-        """Analyze content performance metrics"""
-        content_items = await self._get_creator_content_analytics(creator_id)
+        """Analyze content performance metrics"""        content_items = await self._get_creator_content_analytics(creator_id)
         
         # Calculate performance metrics
         total_views = sum(item['view_count'] for item in content_items)
@@ -178,8 +167,7 @@ class ContentAnalyzer:
         }
     
     async def _get_creator_content_analytics(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Get content analytics data"""
-        return [
+        """Get content analytics data"""        return [
             {
                 'content_id': 'content_001',
                 'title': 'Tech Review: Latest Smartphone',
@@ -200,15 +188,13 @@ class ContentAnalyzer:
 
 
 class ContentScheduler:
-    """Content scheduling and publishing automation"""
-    
+    """Content scheduling and publishing automation"""    
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
         self.logger = get_logger(self.__class__.__name__)
     
     async def schedule_content(self, content_id: str, schedule_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Schedule content for publishing"""
-        schedule_id = f"schedule_{content_id}_{datetime.utcnow().timestamp()}"
+        """Schedule content for publishing"""        schedule_id = f"schedule_{content_id}_{datetime.utcnow().timestamp()}"
         
         schedule = {
             'schedule_id': schedule_id,
@@ -226,8 +212,7 @@ class ContentScheduler:
         return schedule
     
     async def get_scheduled_content(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Get scheduled content for creator"""
-        # Mock scheduled content
+        """Get scheduled content for creator"""        # Mock scheduled content
         return [
             {
                 'schedule_id': 'schedule_001',
@@ -241,15 +226,13 @@ class ContentScheduler:
 
 
 class ContentOptimizer:
-    """AI-powered content optimization"""
-    
+    """AI-powered content optimization"""    
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
         self.logger = get_logger(self.__class__.__name__)
     
     async def optimize_content(self, content_id: str) -> Dict[str, Any]:
-        """Optimize content for better performance"""
-        # Mock optimization suggestions
+        """Optimize content for better performance"""        # Mock optimization suggestions
         return {
             'content_id': content_id,
             'optimization_suggestions': [
@@ -278,13 +261,11 @@ class ContentOptimizer:
 
 
 class ContentPortfolio:
-    """
-    Main content portfolio system
+    """    Main content portfolio system
     
     Orchestrates content organization, analysis, scheduling, and optimization
     to provide creators with comprehensive content management capabilities.
-    """
-    
+    """    
     def __init__(self, profile_manager: CreatorProfileManager, cache_manager: CacheManager):
         self.profile_manager = profile_manager
         self.cache = cache_manager
@@ -297,16 +278,14 @@ class ContentPortfolio:
         self.content_optimizer = ContentOptimizer(cache_manager)
     
     async def get_portfolio_overview(self, creator_id: str) -> Dict[str, Any]:
-        """
-        Get complete portfolio overview for creator
+        """        Get complete portfolio overview for creator
         
         Args:
             creator_id: Creator identifier
             
         Returns:
             Complete portfolio data
-        """
-        try:
+        """        try:
             # Get creator profile
             profile = await self.profile_manager.get_creator_profile(creator_id)
             if not profile:
@@ -342,8 +321,7 @@ class ContentPortfolio:
             raise
     
     async def _get_optimization_opportunities(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Get content optimization opportunities"""
-        return [
+        """Get content optimization opportunities"""        return [
             {
                 'type': 'underperforming_content',
                 'title': 'Optimize Low-Engagement Videos',
@@ -361,8 +339,7 @@ class ContentPortfolio:
         ]
     
     async def create_content_item(self, creator_id: str, content_data: Dict[str, Any]) -> ContentItem:
-        """Create new content item in portfolio"""
-        try:
+        """Create new content item in portfolio"""        try:
             content_id = f"content_{creator_id}_{datetime.utcnow().timestamp()}"
             
             content_item = ContentItem(

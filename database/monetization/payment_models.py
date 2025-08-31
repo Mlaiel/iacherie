@@ -1,5 +1,4 @@
-"""
-Payment Models - Enterprise Database Models for Payment Processing
+"""Payment Models - Enterprise Database Models for Payment Processing
 
 Ultra-advanced SQLAlchemy models for comprehensive payment processing across multiple
 gateways including Stripe, Wise, PayPal with advanced financial tracking and security.
@@ -25,9 +24,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
-"""
-
-from sqlalchemy import (
+"""from sqlalchemy import (
     Column, String, Text, DateTime, Float, Integer, Boolean, JSON, 
     ForeignKey, Index, Enum as SQLEnum, Numeric, UniqueConstraint,
     CheckConstraint, event
@@ -45,8 +42,7 @@ Base = declarative_base()
 
 
 class PaymentGateway(Enum):
-    """Supported payment gateway providers"""
-    STRIPE = "stripe"
+    """Supported payment gateway providers"""    STRIPE = "stripe"
     WISE = "wise"
     PAYPAL = "paypal"
     BANK_TRANSFER = "bank_transfer"
@@ -58,8 +54,7 @@ class PaymentGateway(Enum):
 
 
 class PaymentStatus(Enum):
-    """Payment processing status tracking"""
-    PENDING = "pending"
+    """Payment processing status tracking"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -72,8 +67,7 @@ class PaymentStatus(Enum):
 
 
 class PaymentType(Enum):
-    """Types of payments in the system"""
-    REVENUE_PAYOUT = "revenue_payout"
+    """Types of payments in the system"""    REVENUE_PAYOUT = "revenue_payout"
     LICENSING_FEE = "licensing_fee"
     SUBSCRIPTION_PAYMENT = "subscription_payment"
     ONE_TIME_PURCHASE = "one_time_purchase"
@@ -86,8 +80,7 @@ class PaymentType(Enum):
 
 
 class Currency(Enum):
-    """Supported currencies for international operations"""
-    USD = "USD"
+    """Supported currencies for international operations"""    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     CAD = "CAD"
@@ -112,8 +105,7 @@ class Currency(Enum):
 
 
 class PaymentAccount(Base):
-    """User payment accounts for different gateways and currencies"""
-    __tablename__ = "payment_accounts"
+    """User payment accounts for different gateways and currencies"""    __tablename__ = "payment_accounts"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
@@ -174,8 +166,7 @@ class PaymentAccount(Base):
 
 
 class PaymentTransaction(Base):
-    """Comprehensive payment transaction tracking"""
-    __tablename__ = "payment_transactions"
+    """Comprehensive payment transaction tracking"""    __tablename__ = "payment_transactions"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     
@@ -264,8 +255,7 @@ class PaymentTransaction(Base):
 
 
 class RevenuePayout(Base):
-    """Revenue distribution and payout tracking"""
-    __tablename__ = "revenue_payouts"
+    """Revenue distribution and payout tracking"""    __tablename__ = "revenue_payouts"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     
@@ -346,8 +336,7 @@ class RevenuePayout(Base):
 
 
 class PayoutItem(Base):
-    """Individual revenue items within a payout"""
-    __tablename__ = "payout_items"
+    """Individual revenue items within a payout"""    __tablename__ = "payout_items"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     
@@ -397,8 +386,7 @@ class PayoutItem(Base):
 
 
 class PaymentMethodConfiguration(Base):
-    """Configuration for different payment methods and gateways"""
-    __tablename__ = "payment_method_configurations"
+    """Configuration for different payment methods and gateways"""    __tablename__ = "payment_method_configurations"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     
@@ -455,8 +443,7 @@ class PaymentMethodConfiguration(Base):
 # SQLAlchemy event listeners for audit trail and validation
 @event.listens_for(PaymentTransaction, 'before_insert')
 def payment_transaction_before_insert(mapper, connection, target):
-    """Validate payment transaction before insert"""
-    if not target.transaction_id:
+    """Validate payment transaction before insert"""    if not target.transaction_id:
         target.transaction_id = f"{target.gateway.value}_{uuid.uuid4().hex[:12]}"
     
     # Calculate net amount if not provided
@@ -467,8 +454,7 @@ def payment_transaction_before_insert(mapper, connection, target):
 
 @event.listens_for(RevenuePayout, 'before_insert')
 def revenue_payout_before_insert(mapper, connection, target):
-    """Generate payout ID and validate amounts"""
-    if not target.payout_id:
+    """Generate payout ID and validate amounts"""    if not target.payout_id:
         target.payout_id = f"PAYOUT_{datetime.now().strftime('%Y%m%d')}_{uuid.uuid4().hex[:8].upper()}"
     
     # Validate net payout calculation

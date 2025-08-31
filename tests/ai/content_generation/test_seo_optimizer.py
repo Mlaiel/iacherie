@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-SEO Optimizer Tests
+"""SEO Optimizer Tests
 
 Comprehensive tests for the SEOOptimizer class that handles
 search engine optimization for content.
@@ -25,9 +21,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -48,18 +42,14 @@ from ai.content_generation.content_models import ContentType, Platform
 
 
 class TestSEOOptimizer:
-    """Test suite for SEOOptimizer"""
-    
+    """Test suite for SEOOptimizer"""    
     @pytest.fixture
     def optimizer(self):
-        """Create an SEO optimizer instance"""
-        return SEOOptimizer()
+        """Create an SEO optimizer instance"""        return SEOOptimizer()
     
     @pytest.fixture
     def sample_content(self):
-        """Create sample content for SEO analysis"""
-        return """
-        # The Future of Artificial Intelligence in 2025
+        """Create sample content for SEO analysis"""        return """        # The Future of Artificial Intelligence in 2025
         
         Artificial intelligence (AI) is rapidly transforming industries across the globe. 
         From machine learning algorithms to natural language processing, AI technology 
@@ -80,12 +70,10 @@ class TestSEOOptimizer:
         - Robotics
         
         The future of AI looks promising with continued advancements in these technologies.
-        """
-    
+        """    
     @pytest.fixture
     def target_keywords(self):
-        """Create sample target keywords"""
-        return [
+        """Create sample target keywords"""        return [
             "artificial intelligence",
             "AI technology",
             "machine learning",
@@ -94,8 +82,7 @@ class TestSEOOptimizer:
         ]
     
     def test_optimizer_initialization(self, optimizer):
-        """Test SEO optimizer initialization"""
-        assert optimizer is not None
+        """Test SEO optimizer initialization"""        assert optimizer is not None
         assert hasattr(optimizer, 'keyword_analyzer')
         assert hasattr(optimizer, 'content_analyzer')
         assert hasattr(optimizer, 'competitor_analyzer')
@@ -104,8 +91,7 @@ class TestSEOOptimizer:
     
     @pytest.mark.asyncio
     async def test_keyword_analysis(self, optimizer, target_keywords):
-        """Test keyword analysis functionality"""
-        with patch.object(optimizer, '_analyze_keywords') as mock_analysis:
+        """Test keyword analysis functionality"""        with patch.object(optimizer, '_analyze_keywords') as mock_analysis:
             mock_analysis.return_value = {
                 "success": True,
                 "keywords": [
@@ -145,8 +131,7 @@ class TestSEOOptimizer:
     
     @pytest.mark.asyncio
     async def test_content_optimization(self, optimizer, sample_content, target_keywords):
-        """Test content optimization for SEO"""
-        with patch.object(optimizer, '_optimize_content') as mock_optimize:
+        """Test content optimization for SEO"""        with patch.object(optimizer, '_optimize_content') as mock_optimize:
             mock_optimize.return_value = {
                 "success": True,
                 "optimized_content": sample_content + "\n\n## Conclusion\nAI technology will continue to shape our future.",
@@ -176,8 +161,7 @@ class TestSEOOptimizer:
     
     @pytest.mark.asyncio
     async def test_seo_score_calculation(self, optimizer, sample_content):
-        """Test SEO score calculation"""
-        with patch.object(optimizer, '_calculate_seo_score') as mock_score:
+        """Test SEO score calculation"""        with patch.object(optimizer, '_calculate_seo_score') as mock_score:
             mock_score.return_value = {
                 "overall_score": 78,
                 "components": {
@@ -207,8 +191,7 @@ class TestSEOOptimizer:
     
     @pytest.mark.asyncio
     async def test_competitor_analysis(self, optimizer):
-        """Test competitor analysis functionality"""
-        competitor_urls = [
+        """Test competitor analysis functionality"""        competitor_urls = [
             "https://competitor1.com/ai-article",
             "https://competitor2.com/ai-guide",
             "https://competitor3.com/ai-trends"
@@ -254,8 +237,7 @@ class TestSEOOptimizer:
     
     @pytest.mark.asyncio
     async def test_meta_tag_optimization(self, optimizer, sample_content):
-        """Test meta tag optimization"""
-        with patch.object(optimizer, '_optimize_meta_tags') as mock_meta:
+        """Test meta tag optimization"""        with patch.object(optimizer, '_optimize_meta_tags') as mock_meta:
             mock_meta.return_value = {
                 "success": True,
                 "meta_tags": {
@@ -287,8 +269,7 @@ class TestSEOOptimizer:
     
     @pytest.mark.asyncio
     async def test_internal_linking_suggestions(self, optimizer, sample_content):
-        """Test internal linking suggestions"""
-        existing_pages = [
+        """Test internal linking suggestions"""        existing_pages = [
             {"url": "/machine-learning-guide", "title": "Machine Learning Complete Guide", "keywords": ["machine learning", "ML algorithms"]},
             {"url": "/deep-learning-basics", "title": "Deep Learning Fundamentals", "keywords": ["deep learning", "neural networks"]},
             {"url": "/ai-applications", "title": "AI Applications in Business", "keywords": ["AI applications", "business AI"]}
@@ -328,8 +309,7 @@ class TestSEOOptimizer:
     
     @pytest.mark.asyncio
     async def test_readability_optimization(self, optimizer, sample_content):
-        """Test content readability optimization"""
-        with patch.object(optimizer, '_optimize_readability') as mock_readability:
+        """Test content readability optimization"""        with patch.object(optimizer, '_optimize_readability') as mock_readability:
             mock_readability.return_value = {
                 "success": True,
                 "readability_scores": {
@@ -360,8 +340,7 @@ class TestSEOOptimizer:
     
     @pytest.mark.asyncio
     async def test_schema_markup_generation(self, optimizer, sample_content):
-        """Test schema markup generation"""
-        article_info = {
+        """Test schema markup generation"""        article_info = {
             "title": "The Future of Artificial Intelligence in 2025",
             "author": "Fahed Mlaiel",
             "publish_date": "2025-01-15",
@@ -396,8 +375,7 @@ class TestSEOOptimizer:
     
     @pytest.mark.asyncio
     async def test_featured_snippet_optimization(self, optimizer, sample_content):
-        """Test featured snippet optimization"""
-        target_questions = [
+        """Test featured snippet optimization"""        target_questions = [
             "What is artificial intelligence?",
             "How does AI work?",
             "What are the benefits of AI?"
@@ -434,8 +412,7 @@ class TestSEOOptimizer:
     
     @pytest.mark.asyncio
     async def test_local_seo_optimization(self, optimizer):
-        """Test local SEO optimization"""
-        business_info = {
+        """Test local SEO optimization"""        business_info = {
             "name": "AI Tech Solutions",
             "address": "123 Tech Street, San Francisco, CA 94102",
             "phone": "+1-555-0123",
@@ -476,8 +453,7 @@ class TestSEOOptimizer:
     
     @pytest.mark.asyncio
     async def test_technical_seo_audit(self, optimizer):
-        """Test technical SEO audit"""
-        url = "https://example.com/ai-article"
+        """Test technical SEO audit"""        url = "https://example.com/ai-article"
         
         with patch.object(optimizer, '_audit_technical_seo') as mock_audit:
             mock_audit.return_value = {
@@ -524,8 +500,7 @@ class TestSEOOptimizer:
     
     @pytest.mark.asyncio
     async def test_content_gap_analysis(self, optimizer, target_keywords):
-        """Test content gap analysis"""
-        competitor_urls = [
+        """Test content gap analysis"""        competitor_urls = [
             "https://competitor1.com",
             "https://competitor2.com"
         ]
@@ -565,8 +540,7 @@ class TestSEOOptimizer:
     
     @pytest.mark.asyncio
     async def test_multilingual_seo(self, optimizer, sample_content):
-        """Test multilingual SEO optimization"""
-        target_languages = ["es", "fr", "de"]
+        """Test multilingual SEO optimization"""        target_languages = ["es", "fr", "de"]
         
         with patch.object(optimizer, '_optimize_multilingual') as mock_multilingual:
             mock_multilingual.return_value = {
@@ -601,8 +575,7 @@ class TestSEOOptimizer:
     
     @pytest.mark.asyncio
     async def test_seo_monitoring_and_tracking(self, optimizer):
-        """Test SEO monitoring and tracking"""
-        tracking_keywords = ["artificial intelligence", "AI technology", "machine learning"]
+        """Test SEO monitoring and tracking"""        tracking_keywords = ["artificial intelligence", "AI technology", "machine learning"]
         
         with patch.object(optimizer, '_track_seo_performance') as mock_tracking:
             mock_tracking.return_value = {
@@ -643,11 +616,9 @@ class TestSEOOptimizer:
 
 
 class TestKeywordAnalysis:
-    """Test suite for KeywordAnalysis model"""
-    
+    """Test suite for KeywordAnalysis model"""    
     def test_keyword_analysis_creation(self):
-        """Test keyword analysis creation"""
-        analysis = KeywordAnalysis(
+        """Test keyword analysis creation"""        analysis = KeywordAnalysis(
             keyword="artificial intelligence",
             search_volume=165000,
             competition="high",
@@ -665,11 +636,9 @@ class TestKeywordAnalysis:
 
 
 class TestSEOScore:
-    """Test suite for SEOScore model"""
-    
+    """Test suite for SEOScore model"""    
     def test_seo_score_creation(self):
-        """Test SEO score creation"""
-        score = SEOScore(
+        """Test SEO score creation"""        score = SEOScore(
             overall_score=78,
             keyword_optimization=82,
             content_structure=75,
@@ -684,8 +653,7 @@ class TestSEOScore:
         assert score.readability == 88
     
     def test_seo_score_validation(self):
-        """Test SEO score validation"""
-        # Test scores outside valid range
+        """Test SEO score validation"""        # Test scores outside valid range
         with pytest.raises(Exception):  # Adjust based on actual validation
             SEOScore(
                 overall_score=150,  # Too high

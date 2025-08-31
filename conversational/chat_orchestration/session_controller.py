@@ -1,14 +1,11 @@
-"""
-Session Controller - Advanced session management for chat orchestration
+"""Session Controller - Advanced session management for chat orchestration
 ======================================================================
 
 Manages chat session lifecycle, persistence, and state management with
 high-performance caching and database integration.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import json
 from typing import Dict, List, Optional, Any, Union
@@ -22,12 +19,10 @@ from backend.core.config import settings
 
 
 class SessionController:
-    """
-    Advanced session controller managing chat session persistence,
+    """    Advanced session controller managing chat session persistence,
     state management, and performance optimization through intelligent
     caching strategies.
-    """
-    
+    """    
     def __init__(self, db_manager: DatabaseManager, cache_manager: CacheManager):
         self.db = db_manager
         self.cache = cache_manager
@@ -49,16 +44,14 @@ class SessionController:
         }
         
     async def save_session(self, session: Any) -> bool:
-        """
-        Save chat session to database and cache
+        """        Save chat session to database and cache
         
         Args:
             session: ChatSession object to save
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             # Convert session to dictionary for storage
             session_data = self._serialize_session(session)
             
@@ -87,16 +80,14 @@ class SessionController:
             return False
     
     async def get_session(self, session_id: str) -> Optional[Any]:
-        """
-        Retrieve chat session from cache or database
+        """        Retrieve chat session from cache or database
         
         Args:
             session_id: Session identifier
             
         Returns:
             ChatSession object or None if not found
-        """
-        try:
+        """        try:
             # Try cache first
             session_data = await self._get_from_cache(session_id)
             
@@ -125,16 +116,14 @@ class SessionController:
             return None
     
     async def update_session(self, session: Any) -> bool:
-        """
-        Update existing session in database and cache
+        """        Update existing session in database and cache
         
         Args:
             session: Updated ChatSession object
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             # Update timestamp
             session.updated_at = datetime.utcnow()
             
@@ -146,16 +135,14 @@ class SessionController:
             return False
     
     async def delete_session(self, session_id: str) -> bool:
-        """
-        Delete session from database and cache
+        """        Delete session from database and cache
         
         Args:
             session_id: Session to delete
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             # Get session first to get user_id
             session_data = await self._get_from_database(session_id)
             user_id = None
@@ -189,8 +176,7 @@ class SessionController:
         limit: int = 50,
         offset: int = 0
     ) -> List[Dict[str, Any]]:
-        """
-        Get all sessions for a specific user
+        """        Get all sessions for a specific user
         
         Args:
             user_id: User identifier
@@ -200,8 +186,7 @@ class SessionController:
             
         Returns:
             List of session summaries
-        """
-        try:
+        """        try:
             # Get session IDs from user index
             session_ids = await self._get_user_session_ids(user_id)
             
@@ -242,13 +227,11 @@ class SessionController:
             return []
     
     async def cleanup_expired_sessions(self) -> int:
-        """
-        Clean up expired sessions from database and cache
+        """        Clean up expired sessions from database and cache
         
         Returns:
             int: Number of sessions cleaned up
-        """
-        try:
+        """        try:
             current_time = datetime.utcnow()
             cleanup_count = 0
             
@@ -275,13 +258,11 @@ class SessionController:
             return 0
     
     async def get_session_statistics(self) -> Dict[str, Any]:
-        """
-        Get session management statistics
+        """        Get session management statistics
         
         Returns:
             Dict with various statistics
-        """
-        try:
+        """        try:
             stats = {
                 "total_active_sessions": await self._count_active_sessions(),
                 "sessions_by_creator_type": await self._count_sessions_by_creator_type(),
@@ -301,8 +282,7 @@ class SessionController:
         session_id: str,
         user_id: str
     ) -> bool:
-        """
-        Validate that user has access to specific session
+        """        Validate that user has access to specific session
         
         Args:
             session_id: Session to validate
@@ -310,8 +290,7 @@ class SessionController:
             
         Returns:
             bool: Access granted status
-        """
-        try:
+        """        try:
             session_data = await self._get_from_cache(session_id)
             if not session_data:
                 session_data = await self._get_from_database(session_id)
@@ -327,8 +306,7 @@ class SessionController:
             return False
     
     def _serialize_session(self, session: Any) -> Dict[str, Any]:
-        """Convert session object to dictionary for storage"""
-        try:
+        """Convert session object to dictionary for storage"""        try:
             # Convert session object to dictionary
             if hasattr(session, '__dict__'):
                 session_dict = {}
@@ -348,8 +326,7 @@ class SessionController:
             return {}
     
     def _deserialize_session(self, session_data: Dict[str, Any]) -> Any:
-        """Convert dictionary back to session object"""
-        try:
+        """Convert dictionary back to session object"""        try:
             # Import here to avoid circular imports
             from .chat_manager import ChatSession, ChatStatus, CreatorType
             
@@ -376,10 +353,8 @@ class SessionController:
             return None
     
     async def _save_to_database(self, session_id: str, session_data: Dict[str, Any]) -> bool:
-        """Save session to database"""
-        try:
-            query = """
-                INSERT INTO chat_sessions (
+        """Save session to database"""        try:
+            query = """                INSERT INTO chat_sessions (
                     session_id, user_id, creator_type, status, context,
                     messages, metadata, created_at, updated_at, expires_at
                 ) VALUES (
@@ -393,8 +368,7 @@ class SessionController:
                     metadata = %(metadata)s,
                     updated_at = %(updated_at)s,
                     expires_at = %(expires_at)s
-            """
-            
+            """            
             params = {
                 "session_id": session_id,
                 "user_id": session_data.get("user_id"),
@@ -416,15 +390,12 @@ class SessionController:
             return False
     
     async def _get_from_database(self, session_id: str) -> Optional[Dict[str, Any]]:
-        """Retrieve session from database"""
-        try:
-            query = """
-                SELECT session_id, user_id, creator_type, status, context,
+        """Retrieve session from database"""        try:
+            query = """                SELECT session_id, user_id, creator_type, status, context,
                        messages, metadata, created_at, updated_at, expires_at
                 FROM chat_sessions
                 WHERE session_id = %(session_id)s
-            """
-            
+            """            
             result = await self.db.fetch_one(query, {"session_id": session_id})
             
             if result:
@@ -443,8 +414,7 @@ class SessionController:
             return None
     
     async def _delete_from_database(self, session_id: str) -> bool:
-        """Delete session from database"""
-        try:
+        """Delete session from database"""        try:
             query = "DELETE FROM chat_sessions WHERE session_id = %(session_id)s"
             await self.db.execute_query(query, {"session_id": session_id})
             return True
@@ -454,8 +424,7 @@ class SessionController:
             return False
     
     async def _save_to_cache(self, session_id: str, session_data: Dict[str, Any]) -> bool:
-        """Save session to cache"""
-        try:
+        """Save session to cache"""        try:
             cache_key = f"chat_session:{session_id}"
             serialized_data = pickle.dumps(session_data)
             await self.cache.set(cache_key, serialized_data, expire=self.cache_ttl)
@@ -466,8 +435,7 @@ class SessionController:
             return False
     
     async def _get_from_cache(self, session_id: str) -> Optional[Dict[str, Any]]:
-        """Retrieve session from cache"""
-        try:
+        """Retrieve session from cache"""        try:
             cache_key = f"chat_session:{session_id}"
             cached_data = await self.cache.get(cache_key)
             
@@ -481,8 +449,7 @@ class SessionController:
             return None
     
     async def _delete_from_cache(self, session_id: str) -> bool:
-        """Delete session from cache"""
-        try:
+        """Delete session from cache"""        try:
             cache_key = f"chat_session:{session_id}"
             await self.cache.delete(cache_key)
             return True
@@ -492,8 +459,7 @@ class SessionController:
             return False
     
     async def _update_user_session_index(self, user_id: str, session_id: str):
-        """Update user session index for quick lookup"""
-        try:
+        """Update user session index for quick lookup"""        try:
             cache_key = f"user_sessions:{user_id}"
             existing_sessions = await self.cache.get(cache_key) or []
             
@@ -512,8 +478,7 @@ class SessionController:
             self.logger.error(f"Failed to update user session index: {str(e)}")
     
     async def _remove_from_user_session_index(self, user_id: str, session_id: str):
-        """Remove session from user index"""
-        try:
+        """Remove session from user index"""        try:
             cache_key = f"user_sessions:{user_id}"
             existing_sessions = await self.cache.get(cache_key) or []
             
@@ -529,8 +494,7 @@ class SessionController:
             self.logger.error(f"Failed to remove from user session index: {str(e)}")
     
     async def _get_user_session_ids(self, user_id: str) -> List[str]:
-        """Get session IDs for user"""
-        try:
+        """Get session IDs for user"""        try:
             cache_key = f"user_sessions:{user_id}"
             cached_sessions = await self.cache.get(cache_key)
             
@@ -540,13 +504,11 @@ class SessionController:
                 return cached_sessions
             
             # Fallback to database query
-            query = """
-                SELECT session_id FROM chat_sessions 
+            query = """                SELECT session_id FROM chat_sessions 
                 WHERE user_id = %(user_id)s 
                 ORDER BY updated_at DESC
                 LIMIT 50
-            """
-            
+            """            
             results = await self.db.fetch_all(query, {"user_id": user_id})
             session_ids = [row["session_id"] for row in results]
             
@@ -561,15 +523,12 @@ class SessionController:
             return []
     
     async def _get_expired_sessions(self, current_time: datetime) -> List[Dict[str, Any]]:
-        """Get expired sessions from database"""
-        try:
-            query = """
-                SELECT session_id, user_id FROM chat_sessions
+        """Get expired sessions from database"""        try:
+            query = """                SELECT session_id, user_id FROM chat_sessions
                 WHERE expires_at < %(current_time)s
                 ORDER BY expires_at ASC
                 LIMIT 1000
-            """
-            
+            """            
             results = await self.db.fetch_all(query, {"current_time": current_time})
             return [dict(row) for row in results]
             
@@ -578,8 +537,7 @@ class SessionController:
             return []
     
     async def _count_active_sessions(self) -> int:
-        """Count active sessions"""
-        try:
+        """Count active sessions"""        try:
             query = "SELECT COUNT(*) as count FROM chat_sessions WHERE status = 'active'"
             result = await self.db.fetch_one(query)
             return result["count"] if result else 0
@@ -589,15 +547,12 @@ class SessionController:
             return 0
     
     async def _count_sessions_by_creator_type(self) -> Dict[str, int]:
-        """Count sessions by creator type"""
-        try:
-            query = """
-                SELECT creator_type, COUNT(*) as count 
+        """Count sessions by creator type"""        try:
+            query = """                SELECT creator_type, COUNT(*) as count 
                 FROM chat_sessions 
                 WHERE status = 'active'
                 GROUP BY creator_type
-            """
-            
+            """            
             results = await self.db.fetch_all(query)
             return {row["creator_type"]: row["count"] for row in results}
             
@@ -606,15 +561,12 @@ class SessionController:
             return {}
     
     async def _calculate_average_session_duration(self) -> float:
-        """Calculate average session duration in minutes"""
-        try:
-            query = """
-                SELECT AVG(EXTRACT(EPOCH FROM (updated_at - created_at))/60) as avg_duration
+        """Calculate average session duration in minutes"""        try:
+            query = """                SELECT AVG(EXTRACT(EPOCH FROM (updated_at - created_at))/60) as avg_duration
                 FROM chat_sessions
                 WHERE status IN ('ended', 'active')
                 AND updated_at > created_at
-            """
-            
+            """            
             result = await self.db.fetch_one(query)
             return float(result["avg_duration"]) if result and result["avg_duration"] else 0.0
             
@@ -623,8 +575,7 @@ class SessionController:
             return 0.0
     
     def _calculate_cache_hit_rate(self) -> float:
-        """Calculate cache hit rate percentage"""
-        total_requests = self.metrics["cache_hits"] + self.metrics["cache_misses"]
+        """Calculate cache hit rate percentage"""        total_requests = self.metrics["cache_hits"] + self.metrics["cache_misses"]
         if total_requests == 0:
             return 0.0
         

@@ -1,12 +1,9 @@
-"""
-Mobile Backend Core Infrastructure
+"""Mobile Backend Core Infrastructure
 Enterprise-grade mobile backend services with FastAPI integration
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Business Logic: creators → upload multi-format → AI processing → protection → monetization → collaboration
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import uuid
 from datetime import datetime, timedelta
@@ -50,8 +47,7 @@ except ImportError:
 
 @dataclass
 class MobileDevice:
-    """Mobile device registration and management."""
-    device_id: str
+    """Mobile device registration and management."""    device_id: str
     platform: str  # android, ios, react_native
     model: str
     os_version: str
@@ -72,8 +68,7 @@ class MobileDevice:
 
 @dataclass
 class MobileSession:
-    """Mobile user session management."""
-    session_id: str
+    """Mobile user session management."""    session_id: str
     user_id: str
     device_id: str
     created_at: datetime
@@ -88,17 +83,14 @@ class MobileSession:
             self.last_activity = datetime.utcnow()
     
     def is_expired(self) -> bool:
-        """Check if session is expired."""
-        return datetime.utcnow() > self.expires_at
+        """Check if session is expired."""        return datetime.utcnow() > self.expires_at
     
     def refresh_activity(self):
-        """Update last activity timestamp."""
-        self.last_activity = datetime.utcnow()
+        """Update last activity timestamp."""        self.last_activity = datetime.utcnow()
 
 
 class MobileDeviceManager:
-    """Professional mobile device management system."""
-    
+    """Professional mobile device management system."""    
     def __init__(self):
         self.logger = get_logger("mobile.device_manager")
         self.devices: Dict[str, MobileDevice] = {}
@@ -114,8 +106,7 @@ class MobileDeviceManager:
         user_id: Optional[str] = None,
         push_token: Optional[str] = None
     ) -> MobileDevice:
-        """Register new mobile device."""
-        
+        """Register new mobile device."""        
         # Validate platform
         if platform not in ["android", "ios", "react_native"]:
             raise ValueError(f"Unsupported platform: {platform}")
@@ -149,8 +140,7 @@ class MobileDeviceManager:
         device_id: str,
         **updates
     ) -> Optional[MobileDevice]:
-        """Update device information."""
-        
+        """Update device information."""        
         if device_id not in self.devices:
             return None
         
@@ -167,19 +157,16 @@ class MobileDeviceManager:
         return device
     
     async def get_device(self, device_id: str) -> Optional[MobileDevice]:
-        """Get device by ID."""
-        return self.devices.get(device_id)
+        """Get device by ID."""        return self.devices.get(device_id)
     
     async def get_user_devices(self, user_id: str) -> List[MobileDevice]:
-        """Get all devices for a user."""
-        return [
+        """Get all devices for a user."""        return [
             device for device in self.devices.values()
             if device.user_id == user_id and device.is_active
         ]
     
     async def deactivate_device(self, device_id: str) -> bool:
-        """Deactivate a device."""
-        if device_id in self.devices:
+        """Deactivate a device."""        if device_id in self.devices:
             self.devices[device_id].is_active = False
             self.logger.info(f"Device deactivated: {device_id}")
             return True
@@ -192,14 +179,12 @@ class MobileDeviceManager:
         model: str,
         os_version: str
     ) -> str:
-        """Generate unique device fingerprint."""
-        fingerprint_data = f"{device_id}:{platform}:{model}:{os_version}"
+        """Generate unique device fingerprint."""        fingerprint_data = f"{device_id}:{platform}:{model}:{os_version}"
         return str(hash(fingerprint_data))
 
 
 class MobileAuthManager:
-    """Professional mobile authentication system."""
-    
+    """Professional mobile authentication system."""    
     def __init__(self, device_manager: MobileDeviceManager):
         self.logger = get_logger("mobile.auth_manager")
         self.device_manager = device_manager
@@ -211,8 +196,7 @@ class MobileAuthManager:
         user_credentials: Dict[str, Any],
         request: Request
     ) -> Dict[str, Any]:
-        """Authenticate device and create session."""
-        
+        """Authenticate device and create session."""        
         # Verify device exists
         device = await self.device_manager.get_device(device_id)
         if not device or not device.is_active:
@@ -262,8 +246,7 @@ class MobileAuthManager:
         token: str,
         device_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Verify mobile JWT token."""
-        
+        """Verify mobile JWT token."""        
         try:
             payload = verify_token(token)
             
@@ -301,8 +284,7 @@ class MobileAuthManager:
         session_id: str,
         device_id: str
     ) -> Dict[str, Any]:
-        """Refresh mobile session token."""
-        
+        """Refresh mobile session token."""        
         if session_id not in self.device_manager.sessions:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
@@ -340,8 +322,7 @@ class MobileAuthManager:
         }
     
     async def logout_device(self, session_id: str) -> bool:
-        """Logout device and invalidate session."""
-        
+        """Logout device and invalidate session."""        
         if session_id in self.device_manager.sessions:
             self.device_manager.sessions[session_id].is_active = False
             self.logger.info(f"Device logged out: session {session_id}")
@@ -350,8 +331,7 @@ class MobileAuthManager:
         return False
     
     async def _authenticate_user(self, credentials: Dict[str, Any]) -> str:
-        """Authenticate user with existing auth system."""
-        # This would integrate with the existing user authentication
+        """Authenticate user with existing auth system."""        # This would integrate with the existing user authentication
         # For now, return a mock user ID
         return credentials.get("user_id", "mobile_user_123")
     
@@ -361,8 +341,7 @@ class MobileAuthManager:
         device_id: str,
         request: Request
     ) -> MobileSession:
-        """Create new mobile session."""
-        
+        """Create new mobile session."""        
         session_id = str(uuid.uuid4())
         session = MobileSession(
             session_id=session_id,
@@ -380,8 +359,7 @@ class MobileAuthManager:
 
 
 class MobileAPIServer:
-    """Enterprise mobile API server."""
-    
+    """Enterprise mobile API server."""    
     def __init__(self):
         self.logger = get_logger("mobile.api_server")
         self.device_manager = MobileDeviceManager()
@@ -389,8 +367,7 @@ class MobileAPIServer:
         self.app = self._create_app()
     
     def _create_app(self) -> FastAPI:
-        """Create FastAPI application with mobile-specific configuration."""
-        
+        """Create FastAPI application with mobile-specific configuration."""        
         @asynccontextmanager
         async def lifespan(app: FastAPI):
             # Startup
@@ -424,12 +401,10 @@ class MobileAPIServer:
         return app
     
     def _add_mobile_routes(self, app: FastAPI):
-        """Add mobile-specific API routes."""
-        
+        """Add mobile-specific API routes."""        
         @app.post("/mobile/register-device")
         async def register_device(request: Dict[str, Any]):
-            """Register a new mobile device."""
-            device = await self.device_manager.register_device(**request)
+            """Register a new mobile device."""            device = await self.device_manager.register_device(**request)
             return {"status": "success", "device": asdict(device)}
         
         @app.post("/mobile/authenticate")
@@ -437,8 +412,7 @@ class MobileAPIServer:
             request_data: Dict[str, Any],
             request: Request
         ):
-            """Authenticate device and user."""
-            auth_result = await self.auth_manager.authenticate_device(
+            """Authenticate device and user."""            auth_result = await self.auth_manager.authenticate_device(
                 device_id=request_data["device_id"],
                 user_credentials=request_data["credentials"],
                 request=request
@@ -447,8 +421,7 @@ class MobileAPIServer:
         
         @app.post("/mobile/refresh-token")
         async def refresh_token(request_data: Dict[str, Any]):
-            """Refresh mobile session token."""
-            result = await self.auth_manager.refresh_mobile_token(
+            """Refresh mobile session token."""            result = await self.auth_manager.refresh_mobile_token(
                 session_id=request_data["session_id"],
                 device_id=request_data["device_id"]
             )
@@ -456,16 +429,14 @@ class MobileAPIServer:
         
         @app.post("/mobile/logout")
         async def logout_device(request_data: Dict[str, Any]):
-            """Logout device and invalidate session."""
-            success = await self.auth_manager.logout_device(
+            """Logout device and invalidate session."""            success = await self.auth_manager.logout_device(
                 session_id=request_data["session_id"]
             )
             return {"status": "success" if success else "failed"}
         
         @app.get("/mobile/device/{device_id}")
         async def get_device_info(device_id: str):
-            """Get device information."""
-            device = await self.device_manager.get_device(device_id)
+            """Get device information."""            device = await self.device_manager.get_device(device_id)
             if not device:
                 raise HTTPException(
                     status_code=status.HTTP_404_NOT_FOUND,
@@ -475,8 +446,7 @@ class MobileAPIServer:
         
         @app.get("/mobile/health")
         async def health_check():
-            """Mobile API health check."""
-            return {
+            """Mobile API health check."""            return {
                 "status": "healthy",
                 "timestamp": datetime.utcnow().isoformat(),
                 "service": "mobile_backend",
@@ -485,30 +455,26 @@ class MobileAPIServer:
 
 
 def create_mobile_app() -> FastAPI:
-    """Create and configure mobile FastAPI application."""
-    server = MobileAPIServer()
+    """Create and configure mobile FastAPI application."""    server = MobileAPIServer()
     return server.app
 
 
 # Dependency injection functions
 def get_device_manager() -> MobileDeviceManager:
-    """Get device manager instance."""
-    return MobileDeviceManager()
+    """Get device manager instance."""    return MobileDeviceManager()
 
 
 def get_auth_manager(
     device_manager: MobileDeviceManager = Depends(get_device_manager)
 ) -> MobileAuthManager:
-    """Get auth manager instance."""
-    return MobileAuthManager(device_manager)
+    """Get auth manager instance."""    return MobileAuthManager(device_manager)
 
 
 async def get_mobile_user(
     credentials: HTTPAuthorizationCredentials = Depends(HTTPBearer()),
     auth_manager: MobileAuthManager = Depends(get_auth_manager)
 ) -> Dict[str, Any]:
-    """Dependency to get authenticated mobile user."""
-    return await auth_manager.verify_mobile_token(credentials.credentials)
+    """Dependency to get authenticated mobile user."""    return await auth_manager.verify_mobile_token(credentials.credentials)
 
 
 # Main execution

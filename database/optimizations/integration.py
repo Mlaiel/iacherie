@@ -1,14 +1,11 @@
-"""
-Database Optimization Integration Module
+"""Database Optimization Integration Module
 
 Comprehensive integration of all database optimization components for the Ainflue platform.
 Provides unified interface and orchestration for all optimization strategies.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 from datetime import datetime
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -34,8 +31,7 @@ logger = get_logger(__name__)
 
 @dataclass
 class OptimizationConfig:
-    """Complete optimization configuration"""
-    # Index optimization
+    """Complete optimization configuration"""    # Index optimization
     enable_index_optimization: bool = True
     index_strategy: AdvancedIndexStrategy = AdvancedIndexStrategy.ADAPTIVE
     
@@ -71,8 +67,7 @@ class OptimizationConfig:
 
 
 class DatabaseOptimizationOrchestrator:
-    """Main orchestrator for all database optimization components"""
-    
+    """Main orchestrator for all database optimization components"""    
     def __init__(self, engines: Dict[str, AsyncEngine], config: OptimizationConfig):
         self.engines = engines
         self.config = config
@@ -97,8 +92,7 @@ class DatabaseOptimizationOrchestrator:
         self.running_components: List[str] = []
         
     async def initialize(self) -> bool:
-        """Initialize all optimization components"""
-        try:
+        """Initialize all optimization components"""        try:
             logger.info("Initializing database optimization orchestrator")
             
             # Initialize core components first
@@ -141,8 +135,7 @@ class DatabaseOptimizationOrchestrator:
             return False
     
     async def _initialize_core_components(self):
-        """Initialize core database components"""
-        try:
+        """Initialize core database components"""        try:
             # Initialize base index optimizer
             index_config = IndexConfig()
             self.base_index_optimizer = IndexOptimizer(index_config)
@@ -157,8 +150,7 @@ class DatabaseOptimizationOrchestrator:
             raise
     
     async def _initialize_index_optimization(self):
-        """Initialize advanced index optimization"""
-        try:
+        """Initialize advanced index optimization"""        try:
             if not self.base_index_optimizer:
                 raise Exception("Base index optimizer not initialized")
             
@@ -172,8 +164,7 @@ class DatabaseOptimizationOrchestrator:
             raise
     
     async def _initialize_query_optimization(self):
-        """Initialize advanced query optimization"""
-        try:
+        """Initialize advanced query optimization"""        try:
             if not self.base_query_optimizer:
                 raise Exception("Base query optimizer not initialized")
             
@@ -187,8 +178,7 @@ class DatabaseOptimizationOrchestrator:
             raise
     
     async def _initialize_pool_optimization(self):
-        """Initialize connection pool optimization"""
-        try:
+        """Initialize connection pool optimization"""        try:
             # Create pool manager if not exists
             if not self.pool_manager:
                 from ..pools.manager import get_pool_manager
@@ -208,8 +198,7 @@ class DatabaseOptimizationOrchestrator:
             raise
     
     async def _initialize_partitioning(self):
-        """Initialize intelligent partitioning"""
-        try:
+        """Initialize intelligent partitioning"""        try:
             primary_engine = list(self.engines.values())[0] if self.engines else None
             if not primary_engine:
                 raise Exception("No database engine available for partitioning")
@@ -229,8 +218,7 @@ class DatabaseOptimizationOrchestrator:
             raise
     
     async def _initialize_read_replicas(self):
-        """Initialize read replica management"""
-        try:
+        """Initialize read replica management"""        try:
             primary_engine = list(self.engines.values())[0] if self.engines else None
             if not primary_engine:
                 raise Exception("No database engine available for replicas")
@@ -257,8 +245,7 @@ class DatabaseOptimizationOrchestrator:
             raise
     
     async def _initialize_sharding(self):
-        """Initialize database sharding"""
-        try:
+        """Initialize database sharding"""        try:
             if not self.config.shard_configs or not self.config.sharding_rules:
                 logger.info("No sharding configurations provided, skipping sharding initialization")
                 return
@@ -280,8 +267,7 @@ class DatabaseOptimizationOrchestrator:
             raise
     
     async def _initialize_monitoring(self):
-        """Initialize performance monitoring"""
-        try:
+        """Initialize performance monitoring"""        try:
             self.performance_monitor = DatabasePerformanceMonitor(self.engines)
             
             await self.performance_monitor.start_monitoring(self.config.monitoring_interval)
@@ -294,8 +280,7 @@ class DatabaseOptimizationOrchestrator:
             raise
     
     async def _initialize_backup_optimization(self):
-        """Initialize backup optimization"""
-        try:
+        """Initialize backup optimization"""        try:
             self.backup_scheduler = BackupScheduler(self.engines)
             
             # Add backup configurations
@@ -312,8 +297,7 @@ class DatabaseOptimizationOrchestrator:
             raise
     
     async def _setup_component_integration(self):
-        """Setup integration between components"""
-        try:
+        """Setup integration between components"""        try:
             # Integrate performance monitor with other components
             if self.performance_monitor:
                 self.performance_monitor.index_manager = self.index_manager
@@ -330,8 +314,7 @@ class DatabaseOptimizationOrchestrator:
             raise
     
     async def execute_optimization_cycle(self) -> Dict[str, Any]:
-        """Execute a complete optimization cycle"""
-        try:
+        """Execute a complete optimization cycle"""        try:
             results = {
                 'timestamp': datetime.now().isoformat(),
                 'cycle_results': {},
@@ -386,8 +369,7 @@ class DatabaseOptimizationOrchestrator:
             return {'error': str(e), 'timestamp': datetime.now().isoformat()}
     
     async def get_comprehensive_status(self) -> Dict[str, Any]:
-        """Get comprehensive status of all optimization components"""
-        try:
+        """Get comprehensive status of all optimization components"""        try:
             status = {
                 'orchestrator': {
                     'initialized': self.initialized,
@@ -436,8 +418,7 @@ class DatabaseOptimizationOrchestrator:
             return {'error': str(e)}
     
     async def shutdown(self):
-        """Shutdown all optimization components"""
-        try:
+        """Shutdown all optimization components"""        try:
             logger.info("Shutting down database optimization orchestrator")
             
             # Stop monitoring first
@@ -476,8 +457,7 @@ class DatabaseOptimizationOrchestrator:
 # Convenience function to create orchestrator with default configurations
 def create_optimization_orchestrator(engines: Dict[str, AsyncEngine],
                                    custom_config: Optional[OptimizationConfig] = None) -> DatabaseOptimizationOrchestrator:
-    """Create orchestrator with default or custom configuration"""
-    
+    """Create orchestrator with default or custom configuration"""    
     if custom_config:
         config = custom_config
     else:

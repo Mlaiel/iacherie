@@ -1,5 +1,4 @@
-"""
-Analytics Events Configuration Module
+"""Analytics Events Configuration Module
 
 Ultra-advanced configuration management for analytics events with
 ML model parameters, performance thresholds, and optimization settings.
@@ -12,25 +11,21 @@ Copyright: Fahed Mlaiel - All rights reserved
 
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                 Microservices + Audio + DevOps + IA Prompt Engineer
-"""
-
-from dataclasses import dataclass, field
+"""from dataclasses import dataclass, field
 from typing import Dict, List, Any, Optional
 from enum import Enum
 import os
 
 
 class AnalyticsEnvironment(Enum):
-    """Analytics environment types"""
-    DEVELOPMENT = "development"
+    """Analytics environment types"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
 
 
 class MLModelType(Enum):
-    """Machine learning model types"""
-    ENGAGEMENT_PREDICTOR = "engagement_predictor"
+    """Machine learning model types"""    ENGAGEMENT_PREDICTOR = "engagement_predictor"
     REVENUE_FORECASTER = "revenue_forecaster"
     COLLABORATION_MATCHER = "collaboration_matcher"
     CONTENT_OPTIMIZER = "content_optimizer"
@@ -40,8 +35,7 @@ class MLModelType(Enum):
 
 @dataclass
 class DatabaseConfig:
-    """Database configuration for analytics"""
-    host: str = "localhost"
+    """Database configuration for analytics"""    host: str = "localhost"
     port: int = 5432
     database: str = "ia_influencer_analytics"
     username: str = "analytics_user"
@@ -56,8 +50,7 @@ class DatabaseConfig:
 
 @dataclass
 class CacheConfig:
-    """Cache configuration for analytics"""
-    redis_host: str = "localhost"
+    """Cache configuration for analytics"""    redis_host: str = "localhost"
     redis_port: int = 6379
     redis_db: int = 0
     redis_password: Optional[str] = None
@@ -71,8 +64,7 @@ class CacheConfig:
 
 @dataclass
 class MLModelConfig:
-    """Machine learning model configuration"""
-    model_type: MLModelType
+    """Machine learning model configuration"""    model_type: MLModelType
     model_path: str
     input_features: List[str]
     output_features: List[str]
@@ -90,8 +82,7 @@ class MLModelConfig:
 
 @dataclass
 class PerformanceThresholds:
-    """Performance thresholds for analytics alerts"""
-    # Engagement thresholds
+    """Performance thresholds for analytics alerts"""    # Engagement thresholds
     engagement_rate_low: float = 0.02
     engagement_rate_high: float = 0.15
     engagement_growth_alert: float = 0.50  # 50% growth trigger
@@ -120,8 +111,7 @@ class PerformanceThresholds:
 
 @dataclass
 class StreamingConfig:
-    """Real-time streaming configuration"""
-    kafka_brokers: List[str] = field(default_factory=lambda: ["localhost:9092"])
+    """Real-time streaming configuration"""    kafka_brokers: List[str] = field(default_factory=lambda: ["localhost:9092"])
     kafka_topics: Dict[str, str] = field(default_factory=lambda: {
         "engagement_events": "analytics.engagement",
         "revenue_events": "analytics.revenue",
@@ -142,8 +132,7 @@ class StreamingConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration for analytics"""
-    encryption_key: str = "analytics_encryption_key_2025"
+    """Security configuration for analytics"""    encryption_key: str = "analytics_encryption_key_2025"
     jwt_secret: str = "analytics_jwt_secret_secure"
     jwt_expiration_hours: int = 24
     api_rate_limit_per_minute: int = 1000
@@ -160,8 +149,7 @@ class SecurityConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring and observability configuration"""
-    prometheus_enabled: bool = True
+    """Monitoring and observability configuration"""    prometheus_enabled: bool = True
     prometheus_port: int = 8000
     metrics_collection_interval: int = 30  # seconds
     log_level: str = "INFO"
@@ -176,8 +164,7 @@ class MonitoringConfig:
 
 @dataclass
 class OptimizationConfig:
-    """Optimization configuration for analytics"""
-    auto_scaling_enabled: bool = True
+    """Optimization configuration for analytics"""    auto_scaling_enabled: bool = True
     min_replicas: int = 2
     max_replicas: int = 20
     target_cpu_utilization: float = 0.70
@@ -203,8 +190,7 @@ class OptimizationConfig:
 
 @dataclass
 class IntegrationConfig:
-    """Third-party integration configuration"""
-    # Payment processors
+    """Third-party integration configuration"""    # Payment processors
     stripe_api_key: str = "sk_test_..."
     stripe_webhook_secret: str = "whsec_..."
     paypal_client_id: str = "paypal_client_id"
@@ -237,8 +223,7 @@ class IntegrationConfig:
 
 
 class AnalyticsConfig:
-    """Main analytics configuration class"""
-    
+    """Main analytics configuration class"""    
     def __init__(self, environment: AnalyticsEnvironment = AnalyticsEnvironment.DEVELOPMENT):
         self.environment = environment
         self.database = DatabaseConfig()
@@ -324,8 +309,7 @@ class AnalyticsConfig:
         self._load_environment_config()
     
     def _load_environment_config(self) -> None:
-        """Load environment-specific configuration overrides"""
-        if self.environment == AnalyticsEnvironment.PRODUCTION:
+        """Load environment-specific configuration overrides"""        if self.environment == AnalyticsEnvironment.PRODUCTION:
             self._load_production_config()
         elif self.environment == AnalyticsEnvironment.STAGING:
             self._load_staging_config()
@@ -333,8 +317,7 @@ class AnalyticsConfig:
             self._load_testing_config()
     
     def _load_production_config(self) -> None:
-        """Load production environment configuration"""
-        # Database configuration
+        """Load production environment configuration"""        # Database configuration
         self.database.host = os.getenv("PROD_DB_HOST", "prod-analytics-db.cluster-xyz.eu-central-1.rds.amazonaws.com")
         self.database.port = int(os.getenv("PROD_DB_PORT", "5432"))
         self.database.database = os.getenv("PROD_DB_NAME", "ia_influencer_analytics_prod")
@@ -367,8 +350,7 @@ class AnalyticsConfig:
         self.optimization.gpu_acceleration = True
     
     def _load_staging_config(self) -> None:
-        """Load staging environment configuration"""
-        # Similar to production but with reduced resources
+        """Load staging environment configuration"""        # Similar to production but with reduced resources
         self.database.pool_size = 20
         self.cache.max_connections = 50
         self.optimization.min_replicas = 2
@@ -376,8 +358,7 @@ class AnalyticsConfig:
         self.monitoring.log_level = "DEBUG"
     
     def _load_testing_config(self) -> None:
-        """Load testing environment configuration"""
-        # Minimal configuration for testing
+        """Load testing environment configuration"""        # Minimal configuration for testing
         self.database.database = "ia_influencer_analytics_test"
         self.database.pool_size = 5
         self.cache.redis_db = 15  # Use different Redis DB for testing
@@ -386,20 +367,16 @@ class AnalyticsConfig:
         self.security.audit_logging = False
     
     def get_model_config(self, model_type: MLModelType) -> MLModelConfig:
-        """Get configuration for specific ML model"""
-        return self.ml_models.get(model_type)
+        """Get configuration for specific ML model"""        return self.ml_models.get(model_type)
     
     def update_model_config(self, model_type: MLModelType, config: MLModelConfig) -> None:
-        """Update configuration for specific ML model"""
-        self.ml_models[model_type] = config
+        """Update configuration for specific ML model"""        self.ml_models[model_type] = config
     
     def get_threshold(self, threshold_name: str) -> Any:
-        """Get specific performance threshold"""
-        return getattr(self.thresholds, threshold_name, None)
+        """Get specific performance threshold"""        return getattr(self.thresholds, threshold_name, None)
     
     def validate_config(self) -> bool:
-        """Validate configuration completeness and correctness"""
-        try:
+        """Validate configuration completeness and correctness"""        try:
             # Validate database configuration
             if not all([self.database.host, self.database.database, 
                        self.database.username, self.database.password]):
@@ -424,8 +401,7 @@ class AnalyticsConfig:
             return False
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""
-        return {
+        """Convert configuration to dictionary"""        return {
             "environment": self.environment.value,
             "database": self.database.__dict__,
             "cache": self.cache.__dict__,

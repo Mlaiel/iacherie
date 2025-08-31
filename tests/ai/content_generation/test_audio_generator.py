@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Audio Generator Tests
+"""Audio Generator Tests
 
 Comprehensive tests for the AudioGenerator class that handles
 AI-powered audio content creation and voice synthesis.
@@ -25,9 +21,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -54,12 +48,10 @@ from ai.content_generation.content_models import ContentType, Platform
 
 
 class TestAudioGenerator:
-    """Test suite for AudioGenerator"""
-    
+    """Test suite for AudioGenerator"""    
     @pytest.fixture
     def generator(self):
-        """Create an audio generator instance"""
-        config = {
+        """Create an audio generator instance"""        config = {
             "model_name": "test_model",
             "max_tokens": 1000,
             "temperature": 0.7
@@ -68,9 +60,7 @@ class TestAudioGenerator:
     
     @pytest.fixture
     def sample_script(self):
-        """Create sample script for audio generation"""
-        return """
-        Welcome to our AI technology podcast. Today we'll explore the fascinating world
+        """Create sample script for audio generation"""        return """        Welcome to our AI technology podcast. Today we'll explore the fascinating world
         of artificial intelligence and its impact on modern society. 
         
         [PAUSE]
@@ -81,12 +71,10 @@ class TestAudioGenerator:
         [EMPHASIS] This transformation is just beginning. [/EMPHASIS]
         
         Join us as we dive deep into the latest AI trends and innovations.
-        """
-    
+        """    
     @pytest.fixture
     def voice_config(self):
-        """Create sample voice configuration"""
-        return VoiceConfig(
+        """Create sample voice configuration"""        return VoiceConfig(
             voice_id="neural_voice_01",
             language="en-US",
             gender="female",
@@ -98,8 +86,7 @@ class TestAudioGenerator:
         )
     
     def test_generator_initialization(self, generator):
-        """Test audio generator initialization"""
-        assert generator is not None
+        """Test audio generator initialization"""        assert generator is not None
         assert hasattr(generator, 'sample_rate')
         assert hasattr(generator, 'supported_formats')
         assert hasattr(generator, 'quality_presets')
@@ -114,8 +101,7 @@ class TestAudioGenerator:
     
     @pytest.mark.asyncio
     async def test_text_to_speech_basic(self, generator, voice_config):
-        """Test basic text-to-speech generation"""
-        text = "Hello, this is a test of our audio generation system."
+        """Test basic text-to-speech generation"""        text = "Hello, this is a test of our audio generation system."
         
         with patch.object(generator, '_synthesize_speech') as mock_synthesis:
             mock_synthesis.return_value = {
@@ -139,8 +125,7 @@ class TestAudioGenerator:
     
     @pytest.mark.asyncio
     async def test_script_parsing_and_processing(self, generator, sample_script, voice_config):
-        """Test script parsing with SSML tags and audio cues"""
-        with patch.object(generator, '_synthesize_speech') as mock_synthesis:
+        """Test script parsing with SSML tags and audio cues"""        with patch.object(generator, '_synthesize_speech') as mock_synthesis:
             mock_synthesis.return_value = {
                 "success": True,
                 "audio_data": b"mock_processed_audio",
@@ -164,8 +149,7 @@ class TestAudioGenerator:
     
     @pytest.mark.asyncio
     async def test_multi_voice_generation(self, generator):
-        """Test generation with multiple voices"""
-        dialogue_script = [
+        """Test generation with multiple voices"""        dialogue_script = [
             {"speaker": "narrator", "text": "Welcome to our story", "voice": "neural_voice_narrator"},
             {"speaker": "character1", "text": "Hello there!", "voice": "neural_voice_young_male"},
             {"speaker": "character2", "text": "How are you doing?", "voice": "neural_voice_young_female"}
@@ -190,8 +174,7 @@ class TestAudioGenerator:
     
     @pytest.mark.asyncio
     async def test_voice_cloning(self, generator):
-        """Test voice cloning functionality"""
-        sample_audio_path = "/tmp/sample_voice.wav"
+        """Test voice cloning functionality"""        sample_audio_path = "/tmp/sample_voice.wav"
         target_text = "This is a test of voice cloning technology."
         
         with patch.object(generator, '_clone_voice') as mock_clone:
@@ -219,8 +202,7 @@ class TestAudioGenerator:
     
     @pytest.mark.asyncio
     async def test_audio_format_conversion(self, generator):
-        """Test audio format conversion"""
-        input_audio = b"mock_wav_audio_data"
+        """Test audio format conversion"""        input_audio = b"mock_wav_audio_data"
         
         with patch.object(generator, '_convert_audio_format') as mock_convert:
             mock_convert.return_value = {
@@ -244,8 +226,7 @@ class TestAudioGenerator:
     
     @pytest.mark.asyncio
     async def test_audio_enhancement(self, generator):
-        """Test audio quality enhancement"""
-        raw_audio = b"mock_raw_audio_data"
+        """Test audio quality enhancement"""        raw_audio = b"mock_raw_audio_data"
         
         with patch.object(generator, '_enhance_audio') as mock_enhance:
             mock_enhance.return_value = {
@@ -271,8 +252,7 @@ class TestAudioGenerator:
     
     @pytest.mark.asyncio
     async def test_batch_audio_generation(self, generator, voice_config):
-        """Test batch audio generation"""
-        texts = [
+        """Test batch audio generation"""        texts = [
             "First audio sample for batch processing.",
             "Second audio sample with different content.",
             "Third audio sample to complete the batch."
@@ -299,8 +279,7 @@ class TestAudioGenerator:
     
     @pytest.mark.asyncio
     async def test_real_time_streaming(self, generator, voice_config):
-        """Test real-time audio streaming"""
-        text_stream = [
+        """Test real-time audio streaming"""        text_stream = [
             "This is the first chunk of text.",
             "Here comes the second chunk.",
             "And finally the third chunk."
@@ -329,8 +308,7 @@ class TestAudioGenerator:
     
     @pytest.mark.asyncio
     async def test_emotion_and_style_control(self, generator):
-        """Test emotion and style control in voice synthesis"""
-        text = "I'm so excited about this new technology!"
+        """Test emotion and style control in voice synthesis"""        text = "I'm so excited about this new technology!"
         
         emotion_configs = [
             {"emotion": "excited", "intensity": 0.8},
@@ -366,8 +344,7 @@ class TestAudioGenerator:
     
     @pytest.mark.asyncio
     async def test_pronunciation_customization(self, generator, voice_config):
-        """Test custom pronunciation handling"""
-        text_with_custom_words = "Welcome to Fahed Mlaiel's AI platform presentation."
+        """Test custom pronunciation handling"""        text_with_custom_words = "Welcome to Fahed Mlaiel's AI platform presentation."
         
         pronunciation_dict = {
             "Fahed": "fa-HED",
@@ -396,8 +373,7 @@ class TestAudioGenerator:
     
     @pytest.mark.asyncio
     async def test_background_music_integration(self, generator, voice_config):
-        """Test background music integration"""
-        text = "Welcome to our podcast about AI technology."
+        """Test background music integration"""        text = "Welcome to our podcast about AI technology."
         music_track = "/tmp/background_music.mp3"
         
         with patch.object(generator, '_mix_with_background') as mock_mix:
@@ -424,8 +400,7 @@ class TestAudioGenerator:
     
     @pytest.mark.asyncio
     async def test_audio_effects_processing(self, generator):
-        """Test audio effects and post-processing"""
-        audio_data = b"mock_original_audio"
+        """Test audio effects and post-processing"""        audio_data = b"mock_original_audio"
         
         effects = {
             "reverb": {"room_size": 0.3, "damping": 0.5},
@@ -453,8 +428,7 @@ class TestAudioGenerator:
     
     @pytest.mark.asyncio
     async def test_voice_library_management(self, generator):
-        """Test voice library management"""
-        # Test adding custom voice
+        """Test voice library management"""        # Test adding custom voice
         voice_data = {
             "voice_id": "custom_voice_001",
             "name": "Professional Narrator",
@@ -490,8 +464,7 @@ class TestAudioGenerator:
     
     @pytest.mark.asyncio
     async def test_error_handling_and_fallbacks(self, generator, voice_config):
-        """Test error handling and fallback mechanisms"""
-        text = "Test audio generation with error scenarios."
+        """Test error handling and fallback mechanisms"""        text = "Test audio generation with error scenarios."
         
         # Test provider failure with fallback
         with patch.object(generator, '_synthesize_speech') as mock_synthesis:
@@ -517,8 +490,7 @@ class TestAudioGenerator:
     
     @pytest.mark.asyncio
     async def test_audio_caching(self, generator, voice_config):
-        """Test audio caching functionality"""
-        text = "This is cached audio content."
+        """Test audio caching functionality"""        text = "This is cached audio content."
         cache_key = generator._generate_cache_key(text, voice_config)
         
         with patch.object(generator, '_synthesize_speech') as mock_synthesis:
@@ -553,8 +525,7 @@ class TestAudioGenerator:
     
     @pytest.mark.asyncio
     async def test_multilingual_support(self, generator):
-        """Test multilingual audio generation"""
-        multilingual_content = [
+        """Test multilingual audio generation"""        multilingual_content = [
             {"text": "Hello, welcome to our platform.", "language": "en-US"},
             {"text": "Hola, bienvenido a nuestra plataforma.", "language": "es-ES"},
             {"text": "Bonjour, bienvenue sur notre plateforme.", "language": "fr-FR"},
@@ -587,8 +558,7 @@ class TestAudioGenerator:
     
     @pytest.mark.asyncio
     async def test_performance_monitoring(self, generator, voice_config):
-        """Test performance monitoring and metrics"""
-        text = "Performance monitoring test audio."
+        """Test performance monitoring and metrics"""        text = "Performance monitoring test audio."
         
         with patch.object(generator, '_synthesize_speech') as mock_synthesis:
             mock_synthesis.return_value = {
@@ -617,23 +587,18 @@ class TestAudioGenerator:
 
 
 class TestVoiceConfig:
-    """Test suite for VoiceConfig model"""
-    
+    """Test suite for VoiceConfig model"""    
     def test_voice_config_creation(self):
-        """Test voice configuration creation - skipped until VoiceConfig is implemented"""
-        pytest.skip("VoiceConfig class not yet implemented in source code")
+        """Test voice configuration creation - skipped until VoiceConfig is implemented"""        pytest.skip("VoiceConfig class not yet implemented in source code")
     
     def test_voice_config_validation(self):
-        """Test voice configuration validation - skipped until VoiceConfig is implemented"""
-        pytest.skip("VoiceConfig class not yet implemented in source code")
+        """Test voice configuration validation - skipped until VoiceConfig is implemented"""        pytest.skip("VoiceConfig class not yet implemented in source code")
 
 
 class TestAudioFormat:
-    """Test suite for AudioFormat enum"""
-    
+    """Test suite for AudioFormat enum"""    
     def test_audio_format_values(self):
-        """Test audio format enum values - skipped until AudioFormat is implemented"""
-        pytest.skip("AudioFormat enum not yet implemented in source code")
+        """Test audio format enum values - skipped until AudioFormat is implemented"""        pytest.skip("AudioFormat enum not yet implemented in source code")
 
 
 if __name__ == "__main__":

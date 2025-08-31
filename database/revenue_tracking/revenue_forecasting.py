@@ -1,5 +1,4 @@
-"""
-Revenue Forecasting & Predictive Analytics
+"""Revenue Forecasting & Predictive Analytics
 
 Système avancé de prévision des revenus avec intelligence artificielle,
 machine learning et analytics prédictifs pour la plateforme IA Influencer Agent.
@@ -12,9 +11,7 @@ Auteur: Fahed Mlaiel <mlaiel@live.de>
 Ce code et concept sont la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Violation = Poursuites judiciaires selon le droit allemand et international.
-"""
-
-from typing import Dict, List, Optional, Any, Tuple, Union
+"""from typing import Dict, List, Optional, Any, Tuple, Union
 from datetime import datetime, timedelta
 from decimal import Decimal
 from enum import Enum
@@ -52,8 +49,7 @@ Base = declarative_base()
 
 
 class ForecastHorizon(Enum):
-    """Horizons de prévision"""
-    DAILY = "daily"
+    """Horizons de prévision"""    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -61,8 +57,7 @@ class ForecastHorizon(Enum):
 
 
 class ForecastModel(Enum):
-    """Modèles de prévision disponibles"""
-    LINEAR_REGRESSION = "linear_regression"
+    """Modèles de prévision disponibles"""    LINEAR_REGRESSION = "linear_regression"
     RANDOM_FOREST = "random_forest"
     GRADIENT_BOOSTING = "gradient_boosting"
     XGBOOST = "xgboost"
@@ -75,8 +70,7 @@ class ForecastModel(Enum):
 
 
 class ForecastAccuracy(Enum):
-    """Niveaux de précision des prévisions"""
-    EXCELLENT = "excellent"  # > 95%
+    """Niveaux de précision des prévisions"""    EXCELLENT = "excellent"  # > 95%
     VERY_GOOD = "very_good"  # 90-95%
     GOOD = "good"           # 80-90%
     FAIR = "fair"           # 70-80%
@@ -85,10 +79,8 @@ class ForecastAccuracy(Enum):
 
 @dataclass
 class RevenueForecastModel(BaseModel, TimestampMixin):
-    """
-    Modèle des prévisions de revenus
-    """
-    __tablename__ = "revenue_forecasts"
+    """    Modèle des prévisions de revenus
+    """    __tablename__ = "revenue_forecasts"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     forecast_id = Column(String(255), unique=True, nullable=False, index=True)
@@ -143,10 +135,8 @@ class RevenueForecastModel(BaseModel, TimestampMixin):
 
 @dataclass
 class ForecastAccuracyTrackingModel(BaseModel, TimestampMixin):
-    """
-    Modèle de suivi de la précision des prévisions
-    """
-    __tablename__ = "forecast_accuracy_tracking"
+    """    Modèle de suivi de la précision des prévisions
+    """    __tablename__ = "forecast_accuracy_tracking"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     tracking_id = Column(String(255), unique=True, nullable=False, index=True)
@@ -175,10 +165,8 @@ class ForecastAccuracyTrackingModel(BaseModel, TimestampMixin):
 
 @dataclass
 class MarketTrendAnalysisModel(BaseModel, TimestampMixin):
-    """
-    Modèle d'analyse des tendances de marché
-    """
-    __tablename__ = "market_trend_analysis"
+    """    Modèle d'analyse des tendances de marché
+    """    __tablename__ = "market_trend_analysis"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     analysis_id = Column(String(255), unique=True, nullable=False, index=True)
@@ -214,10 +202,8 @@ class MarketTrendAnalysisModel(BaseModel, TimestampMixin):
 
 
 class RevenueForecastingEngine:
-    """
-    Moteur principal de prévision des revenus par IA
-    """
-    
+    """    Moteur principal de prévision des revenus par IA
+    """    
     def __init__(self, db_session: Session, cache_manager: CacheManager):
         self.db_session = db_session
         self.cache_manager = cache_manager
@@ -231,10 +217,8 @@ class RevenueForecastingEngine:
         self._initialize_models()
     
     def _initialize_models(self):
-        """
-        Initialise les modèles de machine learning
-        """
-        self.models = {
+        """        Initialise les modèles de machine learning
+        """        self.models = {
             'linear_regression': LinearRegression(),
             'random_forest': RandomForestRegressor(
                 n_estimators=200,
@@ -271,10 +255,8 @@ class RevenueForecastingEngine:
         model_type: ForecastModel = ForecastModel.ENSEMBLE,
         content_id: Optional[uuid.UUID] = None
     ) -> RevenueForecastModel:
-        """
-        Génère une prévision de revenus complète
-        """
-        try:
+        """        Génère une prévision de revenus complète
+        """        try:
             # Préparation des données
             training_data = await self._prepare_training_data(user_id, content_id)
             
@@ -355,10 +337,8 @@ class RevenueForecastingEngine:
         user_id: uuid.UUID,
         content_id: Optional[uuid.UUID] = None
     ) -> pd.DataFrame:
-        """
-        Prépare les données d'entraînement
-        """
-        # Récupération des données historiques
+        """        Prépare les données d'entraînement
+        """        # Récupération des données historiques
         query_filters = {'user_id': user_id}
         if content_id:
             query_filters['content_id'] = content_id
@@ -390,10 +370,8 @@ class RevenueForecastingEngine:
         data: pd.DataFrame,
         forecast_horizon: ForecastHorizon
     ) -> Tuple[np.ndarray, np.ndarray]:
-        """
-        Ingénierie des caractéristiques pour le ML
-        """
-        # Caractéristiques de base
+        """        Ingénierie des caractéristiques pour le ML
+        """        # Caractéristiques de base
         features = []
         targets = []
         
@@ -457,10 +435,8 @@ class RevenueForecastingEngine:
         targets: np.ndarray,
         forecast_periods: int
     ) -> Dict[str, Any]:
-        """
-        Génère une prévision d'ensemble (combinaison de modèles)
-        """
-        # Division des données
+        """        Génère une prévision d'ensemble (combinaison de modèles)
+        """        # Division des données
         split_point = int(len(features) * 0.8)
         X_train, X_test = features[:split_point], features[split_point:]
         y_train, y_test = targets[:split_point], targets[split_point:]
@@ -569,10 +545,8 @@ class RevenueForecastingEngine:
         }
     
     async def _analyze_trends(self, data: pd.DataFrame) -> Dict[str, Any]:
-        """
-        Analyse les tendances dans les données historiques
-        """
-        revenue_series = data['amount_net'].values
+        """        Analyse les tendances dans les données historiques
+        """        revenue_series = data['amount_net'].values
         
         # Décomposition de série temporelle
         if len(revenue_series) >= 14:  # Minimum pour décomposition
@@ -638,10 +612,8 @@ class RevenueForecastingEngine:
         data: pd.DataFrame,
         forecast_horizon: ForecastHorizon
     ) -> Dict[str, Any]:
-        """
-        Analyse la saisonnalité dans les données
-        """
-        data_copy = data.copy()
+        """        Analyse la saisonnalité dans les données
+        """        data_copy = data.copy()
         data_copy['date'] = pd.to_datetime(data_copy['date'])
         
         seasonal_analysis = {
@@ -694,10 +666,8 @@ class RevenueForecastingEngine:
         return seasonal_analysis
     
     def _get_accuracy_rating(self, accuracy_score: float) -> str:
-        """
-        Convertit le score de précision en rating
-        """
-        if accuracy_score >= 0.95:
+        """        Convertit le score de précision en rating
+        """        if accuracy_score >= 0.95:
             return ForecastAccuracy.EXCELLENT.value
         elif accuracy_score >= 0.90:
             return ForecastAccuracy.VERY_GOOD.value
@@ -710,10 +680,8 @@ class RevenueForecastingEngine:
 
 
 class ForecastAccuracyTracker:
-    """
-    Suivi de la précision des prévisions
-    """
-    
+    """    Suivi de la précision des prévisions
+    """    
     def __init__(self, db_session: Session):
         self.db_session = db_session
         self.event_emitter = EventEmitter()
@@ -724,10 +692,8 @@ class ForecastAccuracyTracker:
         actual_revenue: Decimal,
         validation_date: datetime
     ) -> ForecastAccuracyTrackingModel:
-        """
-        Valide la précision d'une prévision contre les résultats réels
-        """
-        # Récupération de la prévision
+        """        Valide la précision d'une prévision contre les résultats réels
+        """        # Récupération de la prévision
         forecast = await self._get_forecast(forecast_id)
         
         if not forecast:
@@ -774,10 +740,8 @@ class ForecastAccuracyTracker:
 
 
 class MarketTrendAnalyzer:
-    """
-    Analyseur de tendances de marché
-    """
-    
+    """    Analyseur de tendances de marché
+    """    
     def __init__(self, db_session: Session):
         self.db_session = db_session
     
@@ -786,10 +750,8 @@ class MarketTrendAnalyzer:
         market_segment: str,
         analysis_period_days: int = 90
     ) -> MarketTrendAnalysisModel:
-        """
-        Analyse les tendances du marché pour un segment donné
-        """
-        end_date = datetime.utcnow()
+        """        Analyse les tendances du marché pour un segment donné
+        """        end_date = datetime.utcnow()
         start_date = end_date - timedelta(days=analysis_period_days)
         
         # Récupération des données de marché
@@ -831,10 +793,8 @@ class MarketTrendAnalyzer:
 
 
 class RevenueForecastManager:
-    """
-    Gestionnaire principal des prévisions de revenus
-    """
-    
+    """    Gestionnaire principal des prévisions de revenus
+    """    
     def __init__(self, db_manager: DatabaseManager):
         self.db_manager = db_manager
         self.cache_manager = CacheManager()
@@ -850,10 +810,8 @@ class RevenueForecastManager:
         user_id: uuid.UUID,
         forecast_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Crée une prévision complète avec analyse de marché
-        """
-        # Prévision des revenus
+        """        Crée une prévision complète avec analyse de marché
+        """        # Prévision des revenus
         revenue_forecast = await self.forecasting_engine.generate_revenue_forecast(
             user_id=user_id,
             forecast_horizon=ForecastHorizon(forecast_config.get('horizon', 'monthly')),
@@ -898,10 +856,8 @@ class RevenueForecastManager:
         user_id: uuid.UUID,
         forecasting_schedule: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Configure la prévision automatisée pour un utilisateur
-        """
-        # Configuration de tâches périodiques
+        """        Configure la prévision automatisée pour un utilisateur
+        """        # Configuration de tâches périodiques
         schedule_config = {
             'user_id': str(user_id),
             'frequency': forecasting_schedule.get('frequency', 'weekly'),
@@ -924,10 +880,8 @@ class RevenueForecastManager:
         self,
         user_id: uuid.UUID
     ) -> Dict[str, Any]:
-        """
-        Valide et améliore les prévisions existantes
-        """
-        # Récupération des prévisions à valider
+        """        Valide et améliore les prévisions existantes
+        """        # Récupération des prévisions à valider
         forecasts_to_validate = await self._get_forecasts_for_validation(user_id)
         
         validation_results = []

@@ -1,5 +1,4 @@
-"""
-Database Migrations - IA Influencer Agent Platform
+"""Database Migrations - IA Influencer Agent Platform
 Enterprise-grade migration management with schema versioning and rollback
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,9 +9,7 @@ DevOps Engineer, AI Prompt Engineer
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
-"""
-
-import os
+"""import os
 import json
 import hashlib
 import asyncio
@@ -36,8 +33,7 @@ settings = get_settings()
 
 
 class MigrationStatus(Enum):
-    """Migration status enumeration"""
-    PENDING = "pending"
+    """Migration status enumeration"""    PENDING = "pending"
     RUNNING = "running"
     SUCCESS = "success"
     FAILED = "failed"
@@ -45,8 +41,7 @@ class MigrationStatus(Enum):
 
 
 class MigrationType(Enum):
-    """Migration type enumeration"""
-    SCHEMA = "schema"
+    """Migration type enumeration"""    SCHEMA = "schema"
     DATA = "data"
     INDEX = "index"
     CONSTRAINT = "constraint"
@@ -56,8 +51,7 @@ class MigrationType(Enum):
 
 @dataclass
 class MigrationInfo:
-    """Migration information structure"""
-    id: str
+    """Migration information structure"""    id: str
     name: str
     description: str
     type: MigrationType
@@ -73,8 +67,7 @@ class MigrationInfo:
 
 @dataclass
 class MigrationResult:
-    """Migration execution result"""
-    success: bool
+    """Migration execution result"""    success: bool
     migration_id: str
     execution_time: float
     error_message: Optional[str] = None
@@ -82,8 +75,7 @@ class MigrationResult:
 
 
 class Migration:
-    """Base migration class"""
-    
+    """Base migration class"""    
     def __init__(self, migration_id: str, name: str, description: str):
         self.id = migration_id
         self.name = name
@@ -92,16 +84,14 @@ class Migration:
         self.type = MigrationType.SCHEMA
     
     async def up(self, session: AsyncSession) -> None:
-        """
-        Execute migration with default implementation and error handling.
+        """        Execute migration with default implementation and error handling.
         
         This method can be implemented by concrete migration classes.
         Default implementation provides basic schema operation for development and testing.
         
         Args:
             session: Database session for executing migration
-        """
-        # Default implementation for migrations that don't override this method
+        """        # Default implementation for migrations that don't override this method
         migration_name = self.__class__.__name__
         logger.info(f"Executing migration {self.id}: {self.name} using {migration_name}")
         
@@ -121,16 +111,14 @@ class Migration:
             raise ValueError(f"Migration execution failed: {str(e)}")
     
     async def down(self, session: AsyncSession) -> None:
-        """
-        Rollback migration with default implementation and error handling.
+        """        Rollback migration with default implementation and error handling.
         
         This method can be implemented by concrete migration classes.
         Default implementation provides basic rollback for development and testing.
         
         Args:
             session: Database session for executing rollback
-        """
-        # Default implementation for migrations that don't override this method
+        """        # Default implementation for migrations that don't override this method
         migration_name = self.__class__.__name__
         logger.info(f"Rolling back migration {self.id}: {self.name} using {migration_name}")
         
@@ -150,11 +138,9 @@ class Migration:
             raise ValueError(f"Migration rollback failed: {str(e)}")
     
     async def _execute_schema_migration(self, session: AsyncSession) -> None:
-        """Execute schema migration"""
-        try:
+        """Execute schema migration"""        try:
             # Example schema operation - create a migration tracking table if not exists
-            await session.execute(text(f"""
-                CREATE TABLE IF NOT EXISTS migration_log_{self.id.replace('-', '_')} (
+            await session.execute(text(f"""                CREATE TABLE IF NOT EXISTS migration_log_{self.id.replace('-', '_')} (
                     id SERIAL PRIMARY KEY,
                     operation VARCHAR(255),
                     executed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -162,8 +148,7 @@ class Migration:
                 )
             """))
             
-            await session.execute(text(f"""
-                INSERT INTO migration_log_{self.id.replace('-', '_')} (operation, details)
+            await session.execute(text(f"""                INSERT INTO migration_log_{self.id.replace('-', '_')} (operation, details)
                 VALUES ('schema_migration_executed', :details)
             """), {
                 "details": json.dumps({
@@ -181,11 +166,9 @@ class Migration:
             raise e
     
     async def _execute_data_migration(self, session: AsyncSession) -> None:
-        """Execute data migration"""
-        try:
+        """Execute data migration"""        try:
             # Example data operation - log the migration execution
-            await session.execute(text(f"""
-                INSERT INTO migration_log_{self.id.replace('-', '_')} (operation, details)
+            await session.execute(text(f"""                INSERT INTO migration_log_{self.id.replace('-', '_')} (operation, details)
                 VALUES ('data_migration_executed', :details)
             """), {
                 "details": json.dumps({
@@ -204,8 +187,7 @@ class Migration:
             raise e
     
     async def _execute_generic_migration(self, session: AsyncSession) -> None:
-        """Execute generic migration"""
-        try:
+        """Execute generic migration"""        try:
             # Generic migration operation
             logger.info(f"Executing generic migration {self.id}")
             
@@ -213,11 +195,9 @@ class Migration:
             raise e
     
     async def _rollback_schema_migration(self, session: AsyncSession) -> None:
-        """Rollback schema migration"""
-        try:
+        """Rollback schema migration"""        try:
             # Example schema rollback - remove the migration tracking table
-            await session.execute(text(f"""
-                DROP TABLE IF EXISTS migration_log_{self.id.replace('-', '_')}
+            await session.execute(text(f"""                DROP TABLE IF EXISTS migration_log_{self.id.replace('-', '_')}
             """))
             
             await session.commit()
@@ -227,11 +207,9 @@ class Migration:
             raise e
     
     async def _rollback_data_migration(self, session: AsyncSession) -> None:
-        """Rollback data migration"""
-        try:
+        """Rollback data migration"""        try:
             # Example data rollback - remove migration log entries
-            await session.execute(text(f"""
-                DELETE FROM migration_log_{self.id.replace('-', '_')}
+            await session.execute(text(f"""                DELETE FROM migration_log_{self.id.replace('-', '_')}
                 WHERE operation = 'data_migration_executed'
             """))
             
@@ -242,8 +220,7 @@ class Migration:
             raise e
     
     async def _rollback_generic_migration(self, session: AsyncSession) -> None:
-        """Rollback generic migration"""
-        try:
+        """Rollback generic migration"""        try:
             # Generic migration rollback
             logger.info(f"Rolling back generic migration {self.id}")
             
@@ -251,21 +228,18 @@ class Migration:
             raise e
     
     def get_checksum(self) -> str:
-        """Generate checksum for migration verification"""
-        content = f"{self.id}_{self.name}_{self.description}"
+        """Generate checksum for migration verification"""        content = f"{self.id}_{self.name}_{self.description}"
         return hashlib.sha256(content.encode()).hexdigest()
 
 
 class MigrationManager:
-    """
-    Enterprise migration manager with:
+    """    Enterprise migration manager with:
     - Dependency resolution
     - Rollback support
     - Parallel execution
     - Integrity verification
     - Backup integration
-    """
-    
+    """    
     def __init__(self):
         self.db_connection: Optional[DatabaseConnection] = None
         self.session_manager = SessionManager()
@@ -277,22 +251,19 @@ class MigrationManager:
         self._migration_table_created = False
     
     async def initialize(self):
-        """Initialize migration manager"""
-        self.db_connection = await DatabaseConnection.get_instance()
+        """Initialize migration manager"""        self.db_connection = await DatabaseConnection.get_instance()
         await self.session_manager.initialize()
         await self._ensure_migration_table()
         await self._load_migrations()
         await self._load_migration_history()
     
     async def _ensure_migration_table(self):
-        """Create migration tracking table if it doesn't exist"""
-        if self._migration_table_created:
+        """Create migration tracking table if it doesn't exist"""        if self._migration_table_created:
             return
         
         try:
             async with self.session_manager.get_async_session() as session:
-                create_table_sql = """
-                CREATE TABLE IF NOT EXISTS migration_history (
+                create_table_sql = """                CREATE TABLE IF NOT EXISTS migration_history (
                     id VARCHAR(255) PRIMARY KEY,
                     name VARCHAR(255) NOT NULL,
                     description TEXT,
@@ -313,8 +284,7 @@ class MigrationManager:
                 
                 CREATE INDEX IF NOT EXISTS idx_migration_history_executed_at 
                 ON migration_history(executed_at);
-                """
-                
+                """                
                 await session.execute(text(create_table_sql))
                 await session.commit()
                 
@@ -326,8 +296,7 @@ class MigrationManager:
             raise
     
     async def _load_migrations(self):
-        """Load migration files from filesystem"""
-        if not self.migrations_path.exists():
+        """Load migration files from filesystem"""        if not self.migrations_path.exists():
             logger.warning(f"Migrations directory not found: {self.migrations_path}")
             return
         
@@ -356,11 +325,9 @@ class MigrationManager:
                 logger.error(f"Error loading migration {file_path}: {e}")
     
     async def _load_migration_history(self):
-        """Load migration history from database"""
-        try:
+        """Load migration history from database"""        try:
             async with self.session_manager.get_async_session() as session:
-                query = text("""
-                    SELECT id, name, description, type, version, dependencies, 
+                query = text("""                    SELECT id, name, description, type, version, dependencies, 
                            checksum, created_at, executed_at, execution_time, 
                            status, error_message
                     FROM migration_history
@@ -396,8 +363,7 @@ class MigrationManager:
             self.migration_history = []
     
     async def get_pending_migrations(self) -> List[str]:
-        """Get list of pending migrations"""
-        executed_migrations = {
+        """Get list of pending migrations"""        executed_migrations = {
             m.id for m in self.migration_history 
             if m.status == MigrationStatus.SUCCESS
         }
@@ -410,8 +376,7 @@ class MigrationManager:
         return self._resolve_dependencies(pending)
     
     def _resolve_dependencies(self, migration_ids: List[str]) -> List[str]:
-        """Resolve migration dependencies and return ordered list"""
-        resolved = []
+        """Resolve migration dependencies and return ordered list"""        resolved = []
         unresolved = set(migration_ids)
         
         while unresolved:
@@ -436,8 +401,7 @@ class MigrationManager:
     async def run_migrations(self, 
                            target_migration: Optional[str] = None,
                            dry_run: bool = False) -> List[MigrationResult]:
-        """Run pending migrations"""
-        pending_migrations = await self.get_pending_migrations()
+        """Run pending migrations"""        pending_migrations = await self.get_pending_migrations()
         
         if target_migration:
             # Run only up to target migration
@@ -465,8 +429,7 @@ class MigrationManager:
         return results
     
     async def _execute_migration(self, migration_id: str, dry_run: bool = False) -> MigrationResult:
-        """Execute a single migration"""
-        migration = self.migrations.get(migration_id)
+        """Execute a single migration"""        migration = self.migrations.get(migration_id)
         if not migration:
             return MigrationResult(
                 success=False,
@@ -519,8 +482,7 @@ class MigrationManager:
             )
     
     async def rollback_migration(self, migration_id: str) -> MigrationResult:
-        """Rollback a specific migration"""
-        migration = self.migrations.get(migration_id)
+        """Rollback a specific migration"""        migration = self.migrations.get(migration_id)
         if not migration:
             return MigrationResult(
                 success=False,
@@ -577,8 +539,7 @@ class MigrationManager:
             )
     
     async def _record_migration_start(self, migration: Migration):
-        """Record migration start in database"""
-        migration_info = MigrationInfo(
+        """Record migration start in database"""        migration_info = MigrationInfo(
             id=migration.id,
             name=migration.name,
             description=migration.description,
@@ -593,11 +554,9 @@ class MigrationManager:
         await self._save_migration_record(migration_info)
     
     async def _record_migration_success(self, migration: Migration, execution_time: float):
-        """Record migration success"""
-        # Update existing record
+        """Record migration success"""        # Update existing record
         async with self.session_manager.get_async_session() as session:
-            query = text("""
-                UPDATE migration_history 
+            query = text("""                UPDATE migration_history 
                 SET status = :status, executed_at = :executed_at, execution_time = :execution_time
                 WHERE id = :migration_id
             """)
@@ -620,10 +579,8 @@ class MigrationManager:
                 break
     
     async def _record_migration_failure(self, migration: Migration, error_message: str, execution_time: float):
-        """Record migration failure"""
-        async with self.session_manager.get_async_session() as session:
-            query = text("""
-                UPDATE migration_history 
+        """Record migration failure"""        async with self.session_manager.get_async_session() as session:
+            query = text("""                UPDATE migration_history 
                 SET status = :status, error_message = :error_message, execution_time = :execution_time
                 WHERE id = :migration_id
             """)
@@ -646,10 +603,8 @@ class MigrationManager:
                 break
     
     async def _record_migration_rollback(self, migration: Migration, execution_time: float):
-        """Record migration rollback"""
-        async with self.session_manager.get_async_session() as session:
-            query = text("""
-                UPDATE migration_history 
+        """Record migration rollback"""        async with self.session_manager.get_async_session() as session:
+            query = text("""                UPDATE migration_history 
                 SET status = :status, executed_at = NULL, execution_time = :execution_time
                 WHERE id = :migration_id
             """)
@@ -671,10 +626,8 @@ class MigrationManager:
                 break
     
     async def _save_migration_record(self, migration_info: MigrationInfo):
-        """Save migration record to database"""
-        async with self.session_manager.get_async_session() as session:
-            query = text("""
-                INSERT INTO migration_history 
+        """Save migration record to database"""        async with self.session_manager.get_async_session() as session:
+            query = text("""                INSERT INTO migration_history 
                 (id, name, description, type, version, dependencies, checksum, 
                  created_at, executed_at, execution_time, status, error_message)
                 VALUES 
@@ -717,8 +670,7 @@ class MigrationManager:
             self.migration_history.append(migration_info)
     
     def get_migration_status(self) -> Dict[str, Any]:
-        """Get comprehensive migration status"""
-        total_migrations = len(self.migrations)
+        """Get comprehensive migration status"""        total_migrations = len(self.migrations)
         executed_migrations = len([m for m in self.migration_history if m.status == MigrationStatus.SUCCESS])
         failed_migrations = len([m for m in self.migration_history if m.status == MigrationStatus.FAILED])
         pending_migrations = len([m for m in self.migrations.keys() if m not in [h.id for h in self.migration_history]])
@@ -734,35 +686,29 @@ class MigrationManager:
 
 
 class SchemaManager:
-    """
-    Database schema management with version control and integrity checking
-    """
-    
+    """    Database schema management with version control and integrity checking
+    """    
     def __init__(self):
         self.db_connection: Optional[DatabaseConnection] = None
         self.session_manager = SessionManager()
         self.schema_versions: Dict[str, str] = {}
         
     async def initialize(self):
-        """Initialize schema manager"""
-        self.db_connection = await DatabaseConnection.get_instance()
+        """Initialize schema manager"""        self.db_connection = await DatabaseConnection.get_instance()
         await self.session_manager.initialize()
         await self._load_schema_versions()
     
     async def _load_schema_versions(self):
-        """Load current schema versions from database"""
-        try:
+        """Load current schema versions from database"""        try:
             async with self.session_manager.get_async_session() as session:
                 # Create schema_versions table if it doesn't exist
-                create_table_sql = """
-                CREATE TABLE IF NOT EXISTS schema_versions (
+                create_table_sql = """                CREATE TABLE IF NOT EXISTS schema_versions (
                     schema_name VARCHAR(255) PRIMARY KEY,
                     version VARCHAR(50) NOT NULL,
                     checksum VARCHAR(64) NOT NULL,
                     updated_at TIMESTAMP NOT NULL DEFAULT NOW()
                 );
-                """
-                
+                """                
                 await session.execute(text(create_table_sql))
                 await session.commit()
                 
@@ -777,11 +723,9 @@ class SchemaManager:
             logger.error(f"Error loading schema versions: {e}")
     
     async def get_table_schema(self, table_name: str) -> Dict[str, Any]:
-        """Get current table schema"""
-        try:
+        """Get current table schema"""        try:
             async with self.session_manager.get_async_session() as session:
-                query = text("""
-                    SELECT 
+                query = text("""                    SELECT 
                         column_name,
                         data_type,
                         is_nullable,
@@ -819,8 +763,7 @@ class SchemaManager:
             return {}
     
     async def compare_schemas(self, table_name: str, expected_schema: Dict[str, Any]) -> List[str]:
-        """Compare current schema with expected schema"""
-        current_schema = await self.get_table_schema(table_name)
+        """Compare current schema with expected schema"""        current_schema = await self.get_table_schema(table_name)
         differences = []
         
         if not current_schema:
@@ -850,14 +793,12 @@ class SchemaManager:
         return differences
     
     async def validate_constraints(self, table_name: str) -> List[str]:
-        """Validate table constraints"""
-        issues = []
+        """Validate table constraints"""        issues = []
         
         try:
             async with self.session_manager.get_async_session() as session:
                 # Check foreign key constraints
-                fk_query = text("""
-                    SELECT 
+                fk_query = text("""                    SELECT 
                         tc.constraint_name,
                         tc.table_name,
                         kcu.column_name,
@@ -878,8 +819,7 @@ class SchemaManager:
                 
                 for row in fk_result.fetchall():
                     # Validate that referenced table and column exist
-                    ref_check_query = text("""
-                        SELECT COUNT(*) FROM information_schema.columns
+                    ref_check_query = text("""                        SELECT COUNT(*) FROM information_schema.columns
                         WHERE table_name = :ref_table AND column_name = :ref_column
                     """)
                     
@@ -892,8 +832,7 @@ class SchemaManager:
                         issues.append(f"Foreign key {row.constraint_name} references non-existent column {row.foreign_table_name}.{row.foreign_column_name}")
                 
                 # Check unique constraints
-                unique_query = text("""
-                    SELECT constraint_name, column_name
+                unique_query = text("""                    SELECT constraint_name, column_name
                     FROM information_schema.constraint_column_usage
                     WHERE table_name = :table_name
                     AND constraint_name IN (
@@ -914,10 +853,8 @@ class SchemaManager:
 
 
 class DatabaseSeeder:
-    """
-    Database seeding with environment-specific data
-    """
-    
+    """    Database seeding with environment-specific data
+    """    
     def __init__(self):
         self.db_connection: Optional[DatabaseConnection] = None
         self.session_manager = SessionManager()
@@ -925,13 +862,11 @@ class DatabaseSeeder:
         self.environment = getattr(settings, 'ENVIRONMENT', 'development')
         
     async def initialize(self):
-        """Initialize database seeder"""
-        self.db_connection = await DatabaseConnection.get_instance()
+        """Initialize database seeder"""        self.db_connection = await DatabaseConnection.get_instance()
         await self.session_manager.initialize()
     
     async def seed_database(self, environment: Optional[str] = None) -> Dict[str, Any]:
-        """Seed database with environment-specific data"""
-        env = environment or self.environment
+        """Seed database with environment-specific data"""        env = environment or self.environment
         seed_results = {}
         
         # Load seed configuration
@@ -955,8 +890,7 @@ class DatabaseSeeder:
         return seed_results
     
     async def _seed_table(self, table_name: str, seed_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Seed individual table"""
-        async with self.session_manager.get_async_session() as session:
+        """Seed individual table"""        async with self.session_manager.get_async_session() as session:
             # Check if data already exists (avoid duplicates)
             existing_count_query = text(f"SELECT COUNT(*) FROM {table_name}")
             existing_count = await session.execute(existing_count_query)
@@ -972,11 +906,9 @@ class DatabaseSeeder:
                 columns = list(record.keys())
                 placeholders = [f":{col}" for col in columns]
                 
-                insert_sql = f"""
-                INSERT INTO {table_name} ({', '.join(columns)})
+                insert_sql = f"""                INSERT INTO {table_name} ({', '.join(columns)})
                 VALUES ({', '.join(placeholders)})
-                """
-                
+                """                
                 await session.execute(text(insert_sql), record)
                 inserted_count += 1
             
@@ -987,18 +919,15 @@ class DatabaseSeeder:
 
 
 class DataMigrator:
-    """
-    Data migration utilities for transforming existing data
-    """
-    
+    """    Data migration utilities for transforming existing data
+    """    
     def __init__(self):
         self.db_connection: Optional[DatabaseConnection] = None
         self.session_manager = SessionManager()
         self.transaction_manager = TransactionManager()
         
     async def initialize(self):
-        """Initialize data migrator"""
-        self.db_connection = await DatabaseConnection.get_instance()
+        """Initialize data migrator"""        self.db_connection = await DatabaseConnection.get_instance()
         await self.session_manager.initialize()
     
     async def migrate_data(self, 
@@ -1006,16 +935,14 @@ class DataMigrator:
                           target_table: str,
                           transformation_func: Callable[[Dict[str, Any]], Dict[str, Any]],
                           batch_size: int = 1000) -> Dict[str, Any]:
-        """
-        Migrate data from source to target with transformation
+        """        Migrate data from source to target with transformation
         
         Args:
             source_query: SQL query to fetch source data
             target_table: Target table name
             transformation_func: Function to transform each record
             batch_size: Number of records to process per batch
-        """
-        try:
+        """        try:
             async with self.session_manager.get_async_session() as session:
                 # Get source data
                 source_result = await session.execute(text(source_query))
@@ -1048,11 +975,9 @@ class DataMigrator:
                                     columns = list(transformed_record.keys())
                                     placeholders = [f":{col}" for col in columns]
                                     
-                                    insert_sql = f"""
-                                    INSERT INTO {target_table} ({', '.join(columns)})
+                                    insert_sql = f"""                                    INSERT INTO {target_table} ({', '.join(columns)})
                                     VALUES ({', '.join(placeholders)})
-                                    """
-                                    
+                                    """                                    
                                     await batch_session.execute(text(insert_sql), transformed_record)
                                     migrated_count += 1
                                 
@@ -1073,23 +998,19 @@ class DataMigrator:
 
 
 class BackupManager:
-    """
-    Database backup and restore manager
-    """
-    
+    """    Database backup and restore manager
+    """    
     def __init__(self):
         self.db_connection: Optional[DatabaseConnection] = None
         self.backup_path = Path(getattr(settings, 'BACKUP_PATH', 'backups'))
         self.backup_retention_days = getattr(settings, 'BACKUP_RETENTION_DAYS', 30)
         
     async def initialize(self):
-        """Initialize backup manager"""
-        self.db_connection = await DatabaseConnection.get_instance()
+        """Initialize backup manager"""        self.db_connection = await DatabaseConnection.get_instance()
         self.backup_path.mkdir(exist_ok=True)
     
     async def create_backup(self, backup_type: str = "full") -> Dict[str, Any]:
-        """Create database backup"""
-        timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+        """Create database backup"""        timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
         backup_filename = f"backup_{backup_type}_{timestamp}.sql"
         backup_filepath = self.backup_path / backup_filename
         
@@ -1149,8 +1070,7 @@ class BackupManager:
             return {'success': False, 'error': str(e)}
     
     async def restore_backup(self, backup_id: str) -> Dict[str, Any]:
-        """Restore database from backup"""
-        # Find backup file
+        """Restore database from backup"""        # Find backup file
         backup_files = list(self.backup_path.glob(f"backup_*{backup_id}*.sql"))
         
         if not backup_files:
@@ -1199,8 +1119,7 @@ class BackupManager:
             return {'success': False, 'error': str(e)}
     
     async def cleanup_old_backups(self) -> Dict[str, Any]:
-        """Remove backups older than retention period"""
-        cutoff_date = datetime.utcnow() - timedelta(days=self.backup_retention_days)
+        """Remove backups older than retention period"""        cutoff_date = datetime.utcnow() - timedelta(days=self.backup_retention_days)
         removed_count = 0
         total_size_freed = 0
         
@@ -1227,8 +1146,7 @@ class BackupManager:
             return {'success': False, 'error': str(e)}
     
     def list_backups(self) -> List[Dict[str, Any]]:
-        """List available backups"""
-        backups = []
+        """List available backups"""        backups = []
         
         for backup_file in self.backup_path.glob("backup_*.sql"):
             stat = backup_file.stat()

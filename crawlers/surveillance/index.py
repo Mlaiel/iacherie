@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""
-Surveillance Module Entry Point - IA Influencer Agent
+"""Surveillance Module Entry Point - IA Influencer Agent
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
@@ -20,9 +19,7 @@ legal action. Contact mlaiel@live.de for licensing.
 
 This module provides centralized access to all surveillance system components
 for the IA Influencer Agent platform.
-"""
-
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
 
@@ -95,8 +92,7 @@ logger = logging.getLogger(__name__)
 
 
 class SurveillanceSystemManager:
-    """
-    Central manager for all surveillance system components.
+    """    Central manager for all surveillance system components.
     
     This class provides a unified interface for managing and coordinating
     all surveillance operations including:
@@ -114,16 +110,13 @@ class SurveillanceSystemManager:
     - Comedians and entertainment creators
     - Educational content creators
     - Lifestyle and business influencers
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize the surveillance system manager.
+        """        Initialize the surveillance system manager.
         
         Args:
             config: System configuration
-        """
-        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
         self.config = config or {}
@@ -152,16 +145,14 @@ class SurveillanceSystemManager:
         violation_detector=None,
         platform_manager=None
     ) -> None:
-        """
-        Initialize all surveillance system components.
+        """        Initialize all surveillance system components.
         
         Args:
             storage_provider: Storage backend
             content_fingerprinter: Content fingerprinting service
             violation_detector: Violation detection service
             platform_manager: Platform integration manager
-        """
-        try:
+        """        try:
             self._logger.info("Initializing Surveillance System Manager...")
             
             # Initialize monitoring system
@@ -213,8 +204,7 @@ class SurveillanceSystemManager:
             raise
     
     async def start_surveillance(self) -> None:
-        """Start all surveillance operations."""
-        if not self.initialized:
+        """Start all surveillance operations."""        if not self.initialized:
             raise RuntimeError("Surveillance system not initialized")
         
         try:
@@ -231,8 +221,7 @@ class SurveillanceSystemManager:
             raise
     
     async def stop_surveillance(self) -> None:
-        """Stop all surveillance operations."""
-        try:
+        """Stop all surveillance operations."""        try:
             self._logger.info("Stopping surveillance operations...")
             
             # Stop core surveillance engine
@@ -253,8 +242,7 @@ class SurveillanceSystemManager:
         content_samples: Optional[Dict[str, Any]] = None,
         preferences: Optional[Dict[str, Any]] = None
     ) -> CreatorProfile:
-        """
-        Register a new creator for surveillance.
+        """        Register a new creator for surveillance.
         
         Args:
             creator_id: Unique creator identifier
@@ -265,8 +253,7 @@ class SurveillanceSystemManager:
             
         Returns:
             Creator profile
-        """
-        if not self.monitoring_system:
+        """        if not self.monitoring_system:
             raise RuntimeError("Monitoring system not initialized")
         
         return await self.monitoring_system.register_creator(
@@ -284,8 +271,7 @@ class SurveillanceSystemManager:
         strategy: MonitoringStrategy = MonitoringStrategy.CONTINUOUS,
         custom_config: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Create a monitoring target for a creator.
+        """        Create a monitoring target for a creator.
         
         Args:
             creator_id: Creator to monitor
@@ -295,8 +281,7 @@ class SurveillanceSystemManager:
             
         Returns:
             Target ID
-        """
-        if not self.monitoring_system:
+        """        if not self.monitoring_system:
             raise RuntimeError("Monitoring system not initialized")
         
         target_id = await self.monitoring_system.create_monitoring_target(
@@ -317,8 +302,7 @@ class SurveillanceSystemManager:
         timeframe: AnalyticsTimeframe,
         target_id: Optional[str] = None
     ) -> AnalyticsReport:
-        """
-        Generate comprehensive analytics report.
+        """        Generate comprehensive analytics report.
         
         Args:
             report_type: Type of report (creator, platform, summary)
@@ -327,8 +311,7 @@ class SurveillanceSystemManager:
             
         Returns:
             Analytics report
-        """
-        if not self.analytics_engine:
+        """        if not self.analytics_engine:
             raise RuntimeError("Analytics engine not initialized")
         
         return await self.analytics_engine.generate_analytics_report(
@@ -338,16 +321,14 @@ class SurveillanceSystemManager:
         )
     
     async def investigate_threat(self, threat_id: str) -> Dict[str, Any]:
-        """
-        Perform detailed investigation of a specific threat.
+        """        Perform detailed investigation of a specific threat.
         
         Args:
             threat_id: Threat event ID
             
         Returns:
             Investigation results
-        """
-        if not self.threat_detection:
+        """        if not self.threat_detection:
             raise RuntimeError("Threat detection not initialized")
         
         return await self.threat_detection.investigate_threat(threat_id)
@@ -357,8 +338,7 @@ class SurveillanceSystemManager:
         framework: Optional[ComplianceFramework] = None,
         period_days: int = 30
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive compliance report.
+        """        Generate comprehensive compliance report.
         
         Args:
             framework: Specific framework to report on
@@ -366,8 +346,7 @@ class SurveillanceSystemManager:
             
         Returns:
             Compliance report
-        """
-        if not self.compliance_monitor:
+        """        if not self.compliance_monitor:
             raise RuntimeError("Compliance monitor not initialized")
         
         return await self.compliance_monitor.generate_compliance_report(
@@ -376,8 +355,7 @@ class SurveillanceSystemManager:
         )
     
     def get_system_status(self) -> Dict[str, Any]:
-        """Get overall system status and metrics."""
-        status = {
+        """Get overall system status and metrics."""        status = {
             'initialized': self.initialized,
             'running': self.running,
             'components': {},
@@ -427,13 +405,11 @@ class SurveillanceSystemManager:
         return status
     
     def _setup_component_integration(self) -> None:
-        """Setup integration between components."""
-        # Component integration will be configured in _setup_callbacks
+        """Setup integration between components."""        # Component integration will be configured in _setup_callbacks
         pass
     
     async def _setup_callbacks(self) -> None:
-        """Setup callbacks between components for integration."""
-        try:
+        """Setup callbacks between components for integration."""        try:
             # Connect monitoring system to other components
             if self.monitoring_system and self.analytics_engine:
                 self.monitoring_system.add_violation_callback(
@@ -472,8 +448,7 @@ class SurveillanceSystemManager:
             raise
     
     async def _process_violation_for_threats(self, violation: ViolationAlert) -> None:
-        """Process violation for threat detection."""
-        if self.threat_detection:
+        """Process violation for threat detection."""        if self.threat_detection:
             try:
                 threats = await self.threat_detection.analyze_violation_for_threats(violation)
                 
@@ -486,8 +461,7 @@ class SurveillanceSystemManager:
                 self._logger.error(f"Error processing violation for threats: {e}")
     
     async def _process_violation_for_compliance(self, violation: ViolationAlert) -> None:
-        """Process violation for compliance assessment."""
-        if self.compliance_monitor:
+        """Process violation for compliance assessment."""        if self.compliance_monitor:
             try:
                 compliance_violations = await self.compliance_monitor.assess_violation_compliance(violation)
                 
@@ -518,8 +492,7 @@ class SurveillanceSystemManager:
         severity: Optional[AlertSeverity] = None,
         limit: int = 100
     ) -> List[ViolationAlert]:
-        """Get violation alerts with filtering."""
-        if not self.monitoring_system:
+        """Get violation alerts with filtering."""        if not self.monitoring_system:
             return []
         
         # This would be implemented in the monitoring system
@@ -532,8 +505,7 @@ class SurveillanceSystemManager:
         threat_level: Optional[ThreatLevel] = None,
         limit: int = 100
     ) -> List[ThreatEvent]:
-        """Get threat events with filtering."""
-        if not self.threat_detection:
+        """Get threat events with filtering."""        if not self.threat_detection:
             return []
         
         return self.threat_detection.get_threat_events(
@@ -550,8 +522,7 @@ class SurveillanceSystemManager:
         creator_id: Optional[str] = None,
         limit: int = 100
     ) -> List[UnifiedAlert]:
-        """Get unified alerts with filtering."""
-        if not self.alert_manager:
+        """Get unified alerts with filtering."""        if not self.alert_manager:
             return []
         
         return self.alert_manager.get_alerts(
@@ -568,8 +539,7 @@ class SurveillanceSystemManager:
         status: Optional[ComplianceStatus] = None,
         limit: int = 100
     ) -> List[ComplianceViolation]:
-        """Get compliance violations with filtering."""
-        if not self.compliance_monitor:
+        """Get compliance violations with filtering."""        if not self.compliance_monitor:
             return []
         
         return self.compliance_monitor.get_violations(
@@ -582,15 +552,13 @@ class SurveillanceSystemManager:
         self,
         insight_type: Optional[InsightType] = None
     ) -> List[BusinessInsight]:
-        """Get business insights with filtering."""
-        if not self.analytics_engine:
+        """Get business insights with filtering."""        if not self.analytics_engine:
             return []
         
         return self.analytics_engine.get_insights(insight_type=insight_type)
     
     async def shutdown(self) -> None:
-        """Shutdown all surveillance system components."""
-        self._logger.info("Shutting down Surveillance System Manager...")
+        """Shutdown all surveillance system components."""        self._logger.info("Shutting down Surveillance System Manager...")
         
         try:
             # Stop surveillance operations
@@ -632,8 +600,7 @@ async def create_surveillance_system(
     violation_detector=None,
     platform_manager=None
 ) -> SurveillanceSystemManager:
-    """
-    Create and initialize a complete surveillance system.
+    """    Create and initialize a complete surveillance system.
     
     Args:
         config: System configuration
@@ -644,8 +611,7 @@ async def create_surveillance_system(
         
     Returns:
         Initialized surveillance system manager
-    """
-    manager = SurveillanceSystemManager(config)
+    """    manager = SurveillanceSystemManager(config)
     
     await manager.initialize(
         storage_provider=storage_provider,

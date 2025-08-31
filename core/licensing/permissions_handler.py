@@ -1,5 +1,4 @@
-"""
-Ultra-Advanced Permissions Handler - Enterprise Access Control & Usage Rights Administration Engine
+"""Ultra-Advanced Permissions Handler - Enterprise Access Control & Usage Rights Administration Engine
 ===================================================================================================
 
 Advanced permissions management system providing fine-grained access control,
@@ -19,9 +18,7 @@ Business Logic Flow:
 User (musician/blogger/photographer/influencer/comedian) → Upload multi-format content
 → AI protection rights analysis → Professional SEO optimization → Collaboration matching
 → Multi-platform distribution → Automated licensing & royalty management
-"""
-
-import asyncio
+"""import asyncio
 import uuid
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set, Union
@@ -44,8 +41,7 @@ from ..security.access_control import AccessController
 
 
 class PermissionType(Enum):
-    """Comprehensive permission types"""
-    READ = "read"
+    """Comprehensive permission types"""    READ = "read"
     WRITE = "write"
     DELETE = "delete"
     MODIFY = "modify"
@@ -66,8 +62,7 @@ class PermissionType(Enum):
 
 
 class AccessLevel(Enum):
-    """Access levels for permissions"""
-    NONE = "none"
+    """Access levels for permissions"""    NONE = "none"
     LIMITED = "limited"
     STANDARD = "standard"
     EXTENDED = "extended"
@@ -76,8 +71,7 @@ class AccessLevel(Enum):
 
 
 class UsageRight(Enum):
-    """Specific usage rights"""
-    STREAMING = "streaming"
+    """Specific usage rights"""    STREAMING = "streaming"
     DOWNLOAD = "download"
     BROADCAST = "broadcast"
     PERFORMANCE = "performance"
@@ -96,8 +90,7 @@ class UsageRight(Enum):
 
 
 class RestrictionType(Enum):
-    """Types of usage restrictions"""
-    TERRITORY = "territory"
+    """Types of usage restrictions"""    TERRITORY = "territory"
     TIME_LIMIT = "time_limit"
     PLATFORM = "platform"
     AUDIENCE = "audience"
@@ -112,8 +105,7 @@ class RestrictionType(Enum):
 
 
 class PermissionScope(Enum):
-    """Scope of permissions"""
-    GLOBAL = "global"
+    """Scope of permissions"""    GLOBAL = "global"
     REGIONAL = "regional"
     TERRITORIAL = "territorial"
     PLATFORM_SPECIFIC = "platform_specific"
@@ -126,8 +118,7 @@ class PermissionScope(Enum):
 
 @dataclass
 class EnhancedPermission:
-    """Enhanced permission data structure"""
-    permission_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Enhanced permission data structure"""    permission_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     
     # Permission details
     permission_type: PermissionType = PermissionType.READ
@@ -188,8 +179,7 @@ class EnhancedPermission:
 
 @dataclass
 class PermissionRequest:
-    """Permission request data structure"""
-    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Permission request data structure"""    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     
     # Request details
     requested_permission_type: PermissionType = PermissionType.READ
@@ -232,8 +222,7 @@ class PermissionRequest:
 
 @dataclass
 class PermissionGrant:
-    """Permission grant result"""
-    grant_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Permission grant result"""    grant_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     request_id: str = ""
     
     # Grant details
@@ -272,11 +261,9 @@ class PermissionGrant:
 
 
 class UltraAdvancedPermissionsHandler:
-    """
-    Ultra-advanced permissions management engine with comprehensive access control,
+    """    Ultra-advanced permissions management engine with comprehensive access control,
     AI-powered authorization decisions, blockchain verification, and global compliance
-    """
-    
+    """    
     def __init__(
         self,
         security_manager: SecurityManager,
@@ -306,8 +293,7 @@ class UltraAdvancedPermissionsHandler:
         self._validate_business_logic()
     
     def _validate_business_logic(self) -> None:
-        """Validate business logic flow requirements"""
-        required_components = [
+        """Validate business logic flow requirements"""        required_components = [
             self.security_manager,
             self.blockchain_verifier,
             self.ai_optimizer,
@@ -324,10 +310,8 @@ class UltraAdvancedPermissionsHandler:
         request: PermissionRequest,
         session: Optional[AsyncSession] = None
     ) -> PermissionGrant:
-        """
-        Process permission request with AI-powered decision making and compliance validation
-        """
-        try:
+        """        Process permission request with AI-powered decision making and compliance validation
+        """        try:
             # Validate request
             await self._validate_permission_request(request)
             
@@ -434,10 +418,8 @@ class UltraAdvancedPermissionsHandler:
         usage_context: Optional[Dict[str, Any]] = None,
         session: Optional[AsyncSession] = None
     ) -> bool:
-        """
-        Check if subject has specific permission for object with context validation
-        """
-        try:
+        """        Check if subject has specific permission for object with context validation
+        """        try:
             # Check cache first
             cache_key = f"permission_check:{subject_id}:{object_id}:{permission_type.value}"
             cached_result = await self._get_cached_permission_check(cache_key)
@@ -479,10 +461,8 @@ class UltraAdvancedPermissionsHandler:
         object_id: Optional[str] = None,
         session: Optional[AsyncSession] = None
     ) -> List[EnhancedPermission]:
-        """
-        Get all permissions for a user, optionally filtered by object
-        """
-        try:
+        """        Get all permissions for a user, optionally filtered by object
+        """        try:
             # Check cache first
             cache_key = f"user_permissions:{user_id}:{object_id or 'all'}"
             cached_permissions = await self._get_cached_user_permissions(cache_key)
@@ -528,10 +508,8 @@ class UltraAdvancedPermissionsHandler:
         expires_at: Optional[datetime] = None,
         session: Optional[AsyncSession] = None
     ) -> EnhancedPermission:
-        """
-        Grant permission directly (for administrative use)
-        """
-        try:
+        """        Grant permission directly (for administrative use)
+        """        try:
             # Security validation - check if granter has authority
             await self.security_manager.validate_permission_operation(
                 granted_by, object_id, "grant_permission"
@@ -602,10 +580,8 @@ class UltraAdvancedPermissionsHandler:
         reason: str = "",
         session: Optional[AsyncSession] = None
     ) -> bool:
-        """
-        Revoke an existing permission
-        """
-        try:
+        """        Revoke an existing permission
+        """        try:
             # Get permission
             permission = await self._get_permission_by_id(permission_id, session)
             if not permission:
@@ -662,8 +638,7 @@ class UltraAdvancedPermissionsHandler:
             return False
     
     async def _validate_permission_request(self, request: PermissionRequest) -> None:
-        """Validate permission request"""
-        if not request.requester_id:
+        """Validate permission request"""        if not request.requester_id:
             raise ValidationError("Requester ID is required")
         
         if not request.target_object_id:
@@ -686,8 +661,7 @@ class UltraAdvancedPermissionsHandler:
         authority_check: Dict[str, Any],
         existing_permissions: List[EnhancedPermission]
     ) -> bool:
-        """Determine if permission should be granted"""
-        
+        """Determine if permission should be granted"""        
         # Check AI recommendation
         ai_approval = ai_recommendation.get("recommend_approval", False)
         ai_risk_score = ai_recommendation.get("risk_score", 0.5)
@@ -718,8 +692,7 @@ class UltraAdvancedPermissionsHandler:
         requested_type: PermissionType,
         context: Optional[Dict[str, Any]]
     ) -> bool:
-        """Check if permission grants access for requested type and context"""
-        
+        """Check if permission grants access for requested type and context"""        
         # Check permission type hierarchy
         if not self._permission_type_allows(permission.permission_type, requested_type):
             return False
@@ -762,8 +735,7 @@ class UltraAdvancedPermissionsHandler:
         granted_type: PermissionType,
         requested_type: PermissionType
     ) -> bool:
-        """Check if granted permission type allows requested type"""
-        
+        """Check if granted permission type allows requested type"""        
         # Permission hierarchy
         hierarchy = {
             PermissionType.OWNER: [  # Owner can do everything
@@ -800,8 +772,7 @@ class UltraAdvancedPermissionsHandler:
         return requested_type in allowed_types
     
     def _requires_blockchain_verification(self, permission: EnhancedPermission) -> bool:
-        """Determine if permission requires blockchain verification"""
-        high_value_types = [
+        """Determine if permission requires blockchain verification"""        high_value_types = [
             PermissionType.OWNER,
             PermissionType.MONETIZE,
             PermissionType.DISTRIBUTE,
@@ -816,8 +787,7 @@ class UltraAdvancedPermissionsHandler:
         )
     
     async def _cache_permission_check(self, cache_key: str, result: bool) -> None:
-        """Cache permission check result"""
-        if self.redis_client:
+        """Cache permission check result"""        if self.redis_client:
             try:
                 await self.redis_client.setex(
                     cache_key,
@@ -828,8 +798,7 @@ class UltraAdvancedPermissionsHandler:
                 self.logger.warning(f"Failed to cache permission check: {str(e)}")
     
     async def _get_cached_permission_check(self, cache_key: str) -> Optional[bool]:
-        """Get cached permission check result"""
-        if self.redis_client:
+        """Get cached permission check result"""        if self.redis_client:
             try:
                 cached = await self.redis_client.get(cache_key)
                 if cached:
@@ -840,8 +809,7 @@ class UltraAdvancedPermissionsHandler:
 
 
 class ActionType(Enum):
-    """Types of actions that can be performed"""
-    VIEW = "view"
+    """Types of actions that can be performed"""    VIEW = "view"
     EDIT = "edit"
     DELETE = "delete"
     CREATE = "create"
@@ -859,8 +827,7 @@ class ActionType(Enum):
 
 
 class UsageRight(Enum):
-    """Specific usage rights for content"""
-    MECHANICAL_REPRODUCTION = "mechanical_reproduction"
+    """Specific usage rights for content"""    MECHANICAL_REPRODUCTION = "mechanical_reproduction"
     PUBLIC_PERFORMANCE = "public_performance"
     SYNCHRONIZATION = "synchronization"
     DIGITAL_TRANSMISSION = "digital_transmission"
@@ -876,8 +843,7 @@ class UsageRight(Enum):
 
 @dataclass
 class Permission:
-    """Individual permission entry"""
-    permission_id: str
+    """Individual permission entry"""    permission_id: str
     resource_type: ResourceType
     resource_id: str
     subject_id: str  # User, role, or group ID
@@ -895,8 +861,7 @@ class Permission:
 
 @dataclass
 class AccessRequest:
-    """Access request for validation"""
-    request_id: str
+    """Access request for validation"""    request_id: str
     subject_id: str
     subject_type: str
     resource_type: ResourceType
@@ -909,8 +874,7 @@ class AccessRequest:
 
 @dataclass
 class PermissionGrant:
-    """Permission grant result"""
-    granted: bool
+    """Permission grant result"""    granted: bool
     permission_id: Optional[str]
     access_level: PermissionLevel
     allowed_actions: Set[ActionType]
@@ -922,8 +886,7 @@ class PermissionGrant:
 
 @dataclass
 class Role:
-    """User role definition"""
-    role_id: str
+    """User role definition"""    role_id: str
     role_name: str
     description: str
     permissions: Set[str]  # Permission IDs
@@ -936,8 +899,7 @@ class Role:
 
 @dataclass
 class PermissionPolicy:
-    """Permission policy definition"""
-    policy_id: str
+    """Permission policy definition"""    policy_id: str
     policy_name: str
     resource_type: ResourceType
     default_permissions: Dict[str, PermissionLevel]
@@ -950,8 +912,7 @@ class PermissionPolicy:
 
 
 class PermissionsHandler:
-    """
-    Granular access control and usage rights administration system
+    """    Granular access control and usage rights administration system
     
     Features:
     - Role-based access control (RBAC)
@@ -963,8 +924,7 @@ class PermissionsHandler:
     - Comprehensive audit trails
     - Policy-driven authorization
     - Multi-tenant permission isolation
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -997,8 +957,7 @@ class PermissionsHandler:
         self.is_initialized = False
     
     async def initialize(self) -> None:
-        """Initialize permissions handler and security systems"""
-        try:
+        """Initialize permissions handler and security systems"""        try:
             self.logger.info("Initializing PermissionsHandler")
             
             # Initialize components
@@ -1033,8 +992,7 @@ class PermissionsHandler:
         expires_at: Optional[datetime] = None,
         conditions: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Grant permission to a subject for a specific resource
+        """        Grant permission to a subject for a specific resource
         
         Args:
             resource_type: Type of resource
@@ -1050,8 +1008,7 @@ class PermissionsHandler:
             
         Returns:
             Permission ID
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             raise PermissionError("PermissionsHandler not initialized")
         
         permission_id = str(uuid.uuid4())
@@ -1126,8 +1083,7 @@ class PermissionsHandler:
         usage_right: Optional[UsageRight] = None,
         context: Optional[Dict[str, Any]] = None
     ) -> PermissionGrant:
-        """
-        Check if a subject has permission to perform an action
+        """        Check if a subject has permission to perform an action
         
         Args:
             subject_id: Subject identifier
@@ -1139,8 +1095,7 @@ class PermissionsHandler:
             
         Returns:
             Permission grant result
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             raise PermissionError("PermissionsHandler not initialized")
         
         try:
@@ -1193,15 +1148,13 @@ class PermissionsHandler:
         revoked_by: str,
         reason: str = ""
     ) -> None:
-        """
-        Revoke a specific permission
+        """        Revoke a specific permission
         
         Args:
             permission_id: Permission identifier
             revoked_by: ID of user revoking permission
             reason: Reason for revocation
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             raise PermissionError("PermissionsHandler not initialized")
         
         try:
@@ -1257,8 +1210,7 @@ class PermissionsHandler:
         default_permission_level: PermissionLevel,
         created_by: str
     ) -> str:
-        """
-        Create a new role with specific permissions
+        """        Create a new role with specific permissions
         
         Args:
             role_name: Name of the role
@@ -1269,8 +1221,7 @@ class PermissionsHandler:
             
         Returns:
             Role ID
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             raise PermissionError("PermissionsHandler not initialized")
         
         role_id = str(uuid.uuid4())
@@ -1313,15 +1264,13 @@ class PermissionsHandler:
         role_id: str,
         assigned_by: str
     ) -> None:
-        """
-        Assign a role to a user
+        """        Assign a role to a user
         
         Args:
             user_id: User identifier
             role_id: Role identifier
             assigned_by: ID of user assigning role
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             raise PermissionError("PermissionsHandler not initialized")
         
         try:
@@ -1357,8 +1306,7 @@ class PermissionsHandler:
         user_id: str,
         resource_type: Optional[ResourceType] = None
     ) -> List[Permission]:
-        """
-        Get all permissions for a user (direct and role-based)
+        """        Get all permissions for a user (direct and role-based)
         
         Args:
             user_id: User identifier
@@ -1366,8 +1314,7 @@ class PermissionsHandler:
             
         Returns:
             List of user permissions
-        """
-        try:
+        """        try:
             permissions = []
             
             # Get direct permissions
@@ -1405,8 +1352,7 @@ class PermissionsHandler:
             raise PermissionError(f"Failed to get user permissions: {str(e)}")
     
     async def _evaluate_permission(self, request: AccessRequest) -> PermissionGrant:
-        """Evaluate permission request against all applicable permissions"""
-        try:
+        """Evaluate permission request against all applicable permissions"""        try:
             # Get user permissions for the resource
             user_permissions = await self.get_user_permissions(
                 user_id=request.subject_id,
@@ -1491,8 +1437,7 @@ class PermissionsHandler:
         permissions: List[Permission],
         request: AccessRequest
     ) -> Optional[Permission]:
-        """Find the best matching permission for a request"""
-        if not permissions:
+        """Find the best matching permission for a request"""        if not permissions:
             return None
         
         # Sort by permission level (highest first)
@@ -1523,8 +1468,7 @@ class PermissionsHandler:
         conditions: Dict[str, Any],
         context: Dict[str, Any]
     ) -> bool:
-        """Evaluate permission conditions against request context"""
-        if not conditions:
+        """Evaluate permission conditions against request context"""        if not conditions:
             return True
         
         try:
@@ -1571,8 +1515,7 @@ class PermissionsHandler:
             return False
     
     async def _create_default_roles(self) -> None:
-        """Create default system roles"""
-        default_roles = [
+        """Create default system roles"""        default_roles = [
             {
                 'role_name': 'Content Creator',
                 'description': 'Can create and manage own content',
@@ -1608,8 +1551,7 @@ class PermissionsHandler:
             self.roles[role_id] = role
     
     async def _create_default_policies(self) -> None:
-        """Create default permission policies"""
-        # Implementation would create default policies for different resource types
+        """Create default permission policies"""        # Implementation would create default policies for different resource types
         pass
     
     async def _get_default_actions(
@@ -1617,8 +1559,7 @@ class PermissionsHandler:
         permission_level: PermissionLevel,
         resource_type: ResourceType
     ) -> Set[ActionType]:
-        """Get default actions for a permission level and resource type"""
-        action_mappings = {
+        """Get default actions for a permission level and resource type"""        action_mappings = {
             PermissionLevel.READ: {ActionType.VIEW},
             PermissionLevel.WRITE: {ActionType.VIEW, ActionType.EDIT, ActionType.CREATE},
             PermissionLevel.ADMIN: {
@@ -1635,8 +1576,7 @@ class PermissionsHandler:
         permission_level: PermissionLevel,
         resource_type: ResourceType
     ) -> Set[UsageRight]:
-        """Get default usage rights for a permission level and resource type"""
-        if permission_level == PermissionLevel.OWNER:
+        """Get default usage rights for a permission level and resource type"""        if permission_level == PermissionLevel.OWNER:
             return set(UsageRight)  # All usage rights
         elif permission_level == PermissionLevel.ADMIN:
             return {
@@ -1655,8 +1595,7 @@ class PermissionsHandler:
         resource_id: str,
         permission_level: PermissionLevel
     ) -> None:
-        """Validate that the user has authority to grant the permission"""
-        # Check if granter has admin or owner rights on the resource
+        """Validate that the user has authority to grant the permission"""        # Check if granter has admin or owner rights on the resource
         granter_grant = await self.check_permission(
             subject_id=granted_by,
             resource_type=resource_type,
@@ -1677,8 +1616,7 @@ class PermissionsHandler:
         revoked_by: str,
         permission: Permission
     ) -> None:
-        """Validate that the user has authority to revoke the permission"""
-        # Check if revoker granted the permission originally
+        """Validate that the user has authority to revoke the permission"""        # Check if revoker granted the permission originally
         if permission.granted_by == revoked_by:
             return  # Can always revoke own grants
         
@@ -1694,13 +1632,11 @@ class PermissionsHandler:
             raise AuthorizationError("Insufficient authority to revoke permission")
     
     async def _validate_role_management_authority(self, user_id: str) -> None:
-        """Validate user has authority to manage roles"""
-        # This would check system admin permissions
+        """Validate user has authority to manage roles"""        # This would check system admin permissions
         pass
     
     async def _validate_role_assignment_authority(self, assigned_by: str, role: Role) -> None:
-        """Validate user has authority to assign specific role"""
-        # This would check role assignment permissions
+        """Validate user has authority to assign specific role"""        # This would check role assignment permissions
         pass
     
     async def _log_permission_change(
@@ -1710,8 +1646,7 @@ class PermissionsHandler:
         changed_by: str,
         reason: str = ""
     ) -> None:
-        """Log permission changes for audit trail"""
-        log_entry = {
+        """Log permission changes for audit trail"""        log_entry = {
             'timestamp': datetime.now().isoformat(),
             'action': action,
             'permission_id': permission.permission_id,
@@ -1724,8 +1659,7 @@ class PermissionsHandler:
         self.permission_changes.append(log_entry)
     
     async def _log_access_attempt(self, request: AccessRequest, grant: PermissionGrant) -> None:
-        """Log access attempts for audit trail"""
-        log_entry = {
+        """Log access attempts for audit trail"""        log_entry = {
             'timestamp': request.timestamp.isoformat(),
             'request_id': request.request_id,
             'subject_id': request.subject_id,
@@ -1739,18 +1673,15 @@ class PermissionsHandler:
         self.access_log.append(log_entry)
     
     async def _log_role_change(self, action: str, role: Role, changed_by: str) -> None:
-        """Log role changes for audit trail"""
-        # Implementation for role change logging
+        """Log role changes for audit trail"""        # Implementation for role change logging
         pass
     
     async def _log_role_assignment(self, user_id: str, role_id: str, assigned_by: str) -> None:
-        """Log role assignments for audit trail"""
-        # Implementation for role assignment logging
+        """Log role assignments for audit trail"""        # Implementation for role assignment logging
         pass
     
     async def _clear_permission_cache(self, subject_id: str, resource_id: str) -> None:
-        """Clear permission cache for subject and resource"""
-        if not self.enable_caching:
+        """Clear permission cache for subject and resource"""        if not self.enable_caching:
             return
         
         # Clear specific cache entries
@@ -1764,8 +1695,7 @@ class PermissionsHandler:
             del self.cache_timestamps[key]
     
     async def _clear_user_permission_cache(self, user_id: str) -> None:
-        """Clear all permission cache entries for a user"""
-        if not self.enable_caching:
+        """Clear all permission cache entries for a user"""        if not self.enable_caching:
             return
         
         # Clear all cache entries for the user
@@ -1779,8 +1709,7 @@ class PermissionsHandler:
             del self.cache_timestamps[key]
     
     async def _get_cached_permission(self, request: AccessRequest) -> Optional[PermissionGrant]:
-        """Get cached permission result if available and valid"""
-        if not self.enable_caching:
+        """Get cached permission result if available and valid"""        if not self.enable_caching:
             return None
         
         cache_key = f"{request.subject_id}:{request.resource_type.value}:{request.resource_id}:{request.action.value}"
@@ -1797,8 +1726,7 @@ class PermissionsHandler:
         return None
     
     async def _cache_permission_result(self, request: AccessRequest, grant: PermissionGrant) -> None:
-        """Cache permission result"""
-        if not self.enable_caching:
+        """Cache permission result"""        if not self.enable_caching:
             return
         
         cache_key = f"{request.subject_id}:{request.resource_type.value}:{request.resource_id}:{request.action.value}"
@@ -1810,8 +1738,7 @@ class PermissionsHandler:
         time_restrictions: Dict[str, Any],
         context: Dict[str, Any]
     ) -> bool:
-        """Check if current time meets time restrictions"""
-        # Implementation for time-based access control
+        """Check if current time meets time restrictions"""        # Implementation for time-based access control
         return True
     
     async def _check_location_restrictions(
@@ -1819,8 +1746,7 @@ class PermissionsHandler:
         location_restrictions: Dict[str, Any],
         context: Dict[str, Any]
     ) -> bool:
-        """Check if location meets restrictions"""
-        # Implementation for location-based access control
+        """Check if location meets restrictions"""        # Implementation for location-based access control
         return True
     
     async def _check_usage_quota(
@@ -1828,8 +1754,7 @@ class PermissionsHandler:
         usage_quota: Dict[str, Any],
         context: Dict[str, Any]
     ) -> bool:
-        """Check if usage quota is available"""
-        # Implementation for usage quota checking
+        """Check if usage quota is available"""        # Implementation for usage quota checking
         return True
     
     async def _evaluate_custom_conditions(
@@ -1837,6 +1762,5 @@ class PermissionsHandler:
         custom_conditions: Dict[str, Any],
         context: Dict[str, Any]
     ) -> bool:
-        """Evaluate custom permission conditions"""
-        # Implementation for custom condition evaluation
+        """Evaluate custom permission conditions"""        # Implementation for custom condition evaluation
         return True

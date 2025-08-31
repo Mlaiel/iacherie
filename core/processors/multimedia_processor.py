@@ -1,5 +1,4 @@
-"""
-Multimedia Processor Module - IA-Influencer-Agent Platform
+"""Multimedia Processor Module - IA-Influencer-Agent Platform
 
 Industrial-grade multimedia processing engine for content creators and influencers.
 Handles combined audio, video, image, and text content with advanced AI analysis.
@@ -13,9 +12,7 @@ distribution, or commercialization without explicit written permission is
 strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import json
@@ -65,8 +62,7 @@ logger = logging.getLogger(__name__)
 
 
 class MultimediaType(str, Enum):
-    """Types of multimedia content"""
-    VIDEO_WITH_AUDIO = "video_with_audio"
+    """Types of multimedia content"""    VIDEO_WITH_AUDIO = "video_with_audio"
     IMAGE_GALLERY = "image_gallery"
     AUDIO_SLIDESHOW = "audio_slideshow"
     INTERACTIVE_PRESENTATION = "interactive_presentation"
@@ -81,8 +77,7 @@ class MultimediaType(str, Enum):
 
 
 class ProcessingMode(str, Enum):
-    """Multimedia processing modes"""
-    BASIC_ANALYSIS = "basic_analysis"
+    """Multimedia processing modes"""    BASIC_ANALYSIS = "basic_analysis"
     DEEP_ANALYSIS = "deep_analysis"
     CROSS_MODAL = "cross_modal"
     SYNCHRONIZED = "synchronized"
@@ -91,8 +86,7 @@ class ProcessingMode(str, Enum):
 
 
 class ContentQuality(str, Enum):
-    """Content quality levels"""
-    LOW = "low"
+    """Content quality levels"""    LOW = "low"
     STANDARD = "standard"
     HIGH = "high"
     PREMIUM = "premium"
@@ -101,8 +95,7 @@ class ContentQuality(str, Enum):
 
 @dataclass
 class MultimediaProcessingConfig:
-    """Configuration for multimedia processing"""
-    processing_mode: ProcessingMode = ProcessingMode.DEEP_ANALYSIS
+    """Configuration for multimedia processing"""    processing_mode: ProcessingMode = ProcessingMode.DEEP_ANALYSIS
     enable_cross_modal_analysis: bool = True
     enable_sync_analysis: bool = True
     enable_sentiment_correlation: bool = True
@@ -126,8 +119,7 @@ class MultimediaProcessingConfig:
 
 @dataclass
 class MultimediaMetadata:
-    """Comprehensive multimedia metadata"""
-    content_type: Optional[MultimediaType] = None
+    """Comprehensive multimedia metadata"""    content_type: Optional[MultimediaType] = None
     total_duration: Optional[float] = None
     total_size: Optional[int] = None
     component_count: int = 0
@@ -154,8 +146,7 @@ class MultimediaMetadata:
 
 @dataclass
 class CrossModalAnalysis:
-    """Cross-modal analysis results"""
-    audio_visual_sync: Optional[float] = None  # Synchronization score
+    """Cross-modal analysis results"""    audio_visual_sync: Optional[float] = None  # Synchronization score
     content_coherence: Optional[float] = None  # How well content matches across modalities
     emotion_consistency: Optional[float] = None  # Emotional consistency across modalities
     semantic_alignment: Optional[float] = None  # Semantic alignment score
@@ -168,8 +159,7 @@ class CrossModalAnalysis:
 
 @dataclass
 class ContentSynchronization:
-    """Content synchronization analysis"""
-    audio_video_offset: Optional[float] = None
+    """Content synchronization analysis"""    audio_video_offset: Optional[float] = None
     subtitle_sync: Optional[float] = None
     scene_audio_correlation: List[Dict[str, Any]] = field(default_factory=list)
     beat_visual_sync: Optional[float] = None
@@ -180,8 +170,7 @@ class ContentSynchronization:
 
 @dataclass
 class QualityAssessment:
-    """Multimedia quality assessment"""
-    overall_quality: Optional[float] = None
+    """Multimedia quality assessment"""    overall_quality: Optional[float] = None
     technical_quality: Optional[float] = None
     content_quality: Optional[float] = None
     production_quality: Optional[float] = None
@@ -195,8 +184,7 @@ class QualityAssessment:
 
 @dataclass
 class MultimediaFeatures:
-    """Advanced multimedia features"""
-    audio_analysis: Optional[AudioAnalysisResult] = None
+    """Advanced multimedia features"""    audio_analysis: Optional[AudioAnalysisResult] = None
     video_analysis: Optional[VideoAnalysisResult] = None
     image_analysis: List[ImageAnalysisResult] = field(default_factory=list)
     text_analysis: Optional[TextAnalysisResult] = None
@@ -216,8 +204,7 @@ class MultimediaFeatures:
 
 @dataclass
 class MultimediaAnalysisResult:
-    """Result of multimedia analysis"""
-    success: bool
+    """Result of multimedia analysis"""    success: bool
     metadata: Optional[MultimediaMetadata] = None
     features: Optional[MultimediaFeatures] = None
     processed_components: Dict[str, Any] = field(default_factory=dict)
@@ -233,13 +220,11 @@ class MultimediaAnalysisResult:
 
 
 class MultimediaProcessor:
-    """
-    🎬 ENTERPRISE MULTIMEDIA PROCESSOR
+    """    🎬 ENTERPRISE MULTIMEDIA PROCESSOR
     
     Industrial-grade multimedia processing engine with advanced cross-modal analysis,
     synchronization detection, and AI-powered insights for content creators.
-    """
-    
+    """    
     def __init__(
         self,
         db_session,
@@ -272,8 +257,7 @@ class MultimediaProcessor:
             self.logger.warning("AI libraries not available")
     
     async def initialize(self) -> bool:
-        """Initialize the multimedia processor"""
-        try:
+        """Initialize the multimedia processor"""        try:
             # Setup temporary directory
             if self.config.temp_directory:
                 self._temp_dir = Path(self.config.temp_directory)
@@ -333,8 +317,7 @@ class MultimediaProcessor:
         options: Optional[Dict[str, Any]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Process multimedia content with comprehensive analysis
+        """        Process multimedia content with comprehensive analysis
         
         Args:
             content: Multimedia content (file path, bytes, file object, or component dict)
@@ -343,8 +326,7 @@ class MultimediaProcessor:
             
         Returns:
             Processing result dictionary
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         options = options or {}
         metadata = metadata or {}
         
@@ -526,8 +508,7 @@ class MultimediaProcessor:
         content: Union[str, bytes, BinaryIO, Path, Dict[str, Any]],
         metadata: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
-        """Decompose multimedia content into individual components"""
-        try:
+        """Decompose multimedia content into individual components"""        try:
             components = {}
             
             # Handle different input types
@@ -585,8 +566,7 @@ class MultimediaProcessor:
             return None
     
     async def _extract_video_components(self, video_path: Path) -> Dict[str, Any]:
-        """Extract components from video file"""
-        try:
+        """Extract components from video file"""        try:
             components = {}
             
             if not MULTIMEDIA_LIBS_AVAILABLE:
@@ -631,8 +611,7 @@ class MultimediaProcessor:
             return {"video": video_path}
     
     async def _extract_multimedia_metadata(self, components: Dict[str, Any]) -> MultimediaMetadata:
-        """Extract comprehensive multimedia metadata"""
-        try:
+        """Extract comprehensive multimedia metadata"""        try:
             metadata = MultimediaMetadata()
             
             # Count components
@@ -686,8 +665,7 @@ class MultimediaProcessor:
             return MultimediaMetadata()
     
     async def _validate_multimedia_content(self, metadata: MultimediaMetadata) -> Dict[str, Any]:
-        """Validate multimedia content against configuration constraints"""
-        if metadata.total_size and metadata.total_size > self.config.max_file_size:
+        """Validate multimedia content against configuration constraints"""        if metadata.total_size and metadata.total_size > self.config.max_file_size:
             return {
                 "valid": False,
                 "reason": f"Total size ({metadata.total_size}) exceeds maximum ({self.config.max_file_size})"
@@ -708,8 +686,7 @@ class MultimediaProcessor:
         return {"valid": True}
     
     async def _process_audio_component(self, audio_path: Path) -> Optional[AudioAnalysisResult]:
-        """Process audio component"""
-        try:
+        """Process audio component"""        try:
             if not self.audio_processor:
                 return None
             
@@ -726,8 +703,7 @@ class MultimediaProcessor:
             return None
     
     async def _process_video_component(self, video_path: Path) -> Optional[VideoAnalysisResult]:
-        """Process video component"""
-        try:
+        """Process video component"""        try:
             if not self.video_processor:
                 return None
             
@@ -744,8 +720,7 @@ class MultimediaProcessor:
             return None
     
     async def _process_image_components(self, image_paths: List[Path]) -> List[ImageAnalysisResult]:
-        """Process image components"""
-        try:
+        """Process image components"""        try:
             if not self.image_processor:
                 return []
             
@@ -770,8 +745,7 @@ class MultimediaProcessor:
             return []
     
     async def _process_text_component(self, text_path: Path) -> Optional[TextAnalysisResult]:
-        """Process text component"""
-        try:
+        """Process text component"""        try:
             if not self.text_processor:
                 return None
             
@@ -788,8 +762,7 @@ class MultimediaProcessor:
             return None
     
     async def _perform_cross_modal_analysis(self, processed_components: Dict[str, Any]) -> Optional[CrossModalAnalysis]:
-        """Perform cross-modal analysis between different media types"""
-        try:
+        """Perform cross-modal analysis between different media types"""        try:
             analysis = CrossModalAnalysis()
             
             # Calculate modality contributions
@@ -827,8 +800,7 @@ class MultimediaProcessor:
             return CrossModalAnalysis()
     
     async def _analyze_audio_visual_sync(self, audio_result, video_result) -> float:
-        """Analyze audio-visual synchronization"""
-        try:
+        """Analyze audio-visual synchronization"""        try:
             # Simplified sync analysis
             # In a full implementation, this would analyze audio beats vs visual cuts
             
@@ -850,8 +822,7 @@ class MultimediaProcessor:
             return 0.5
     
     async def _analyze_content_coherence(self, processed_components: Dict[str, Any]) -> float:
-        """Analyze content coherence across modalities"""
-        try:
+        """Analyze content coherence across modalities"""        try:
             # Extract keywords/topics from each modality
             modality_keywords = {}
             
@@ -891,8 +862,7 @@ class MultimediaProcessor:
             return 0.5
     
     async def _analyze_emotion_consistency(self, processed_components: Dict[str, Any]) -> float:
-        """Analyze emotion consistency across modalities"""
-        try:
+        """Analyze emotion consistency across modalities"""        try:
             emotions = []
             
             # Extract emotions from each modality
@@ -923,8 +893,7 @@ class MultimediaProcessor:
             return 0.5
     
     async def _analyze_semantic_alignment(self, processed_components: Dict[str, Any]) -> float:
-        """Analyze semantic alignment using CLIP model"""
-        try:
+        """Analyze semantic alignment using CLIP model"""        try:
             if not self._clip_model or not self._clip_processor:
                 return 0.5
             
@@ -937,8 +906,7 @@ class MultimediaProcessor:
             return 0.5
     
     async def _analyze_narrative_flow(self, processed_components: Dict[str, Any]) -> float:
-        """Analyze narrative flow consistency"""
-        try:
+        """Analyze narrative flow consistency"""        try:
             # Simplified narrative flow analysis
             # In a full implementation, this would analyze story structure
             
@@ -970,8 +938,7 @@ class MultimediaProcessor:
         processed_components: Dict[str, Any],
         raw_components: Dict[str, Any]
     ) -> Optional[ContentSynchronization]:
-        """Analyze content synchronization"""
-        try:
+        """Analyze content synchronization"""        try:
             sync = ContentSynchronization()
             
             # Audio-video offset analysis
@@ -993,8 +960,7 @@ class MultimediaProcessor:
             return ContentSynchronization()
     
     async def _calculate_av_offset(self, audio_path, video_path) -> float:
-        """Calculate audio-video offset"""
-        try:
+        """Calculate audio-video offset"""        try:
             # Simplified offset calculation
             # In a full implementation, this would use cross-correlation
             return 0.0  # Assuming perfect sync
@@ -1004,8 +970,7 @@ class MultimediaProcessor:
             return 0.0
     
     async def _analyze_scene_audio_correlation(self, video_result, audio_result) -> List[Dict[str, Any]]:
-        """Analyze scene-audio correlation"""
-        try:
+        """Analyze scene-audio correlation"""        try:
             correlations = []
             
             # Placeholder implementation
@@ -1022,8 +987,7 @@ class MultimediaProcessor:
         processed_components: Dict[str, Any],
         metadata: MultimediaMetadata
     ) -> Optional[QualityAssessment]:
-        """Assess overall multimedia quality"""
-        try:
+        """Assess overall multimedia quality"""        try:
             assessment = QualityAssessment()
             
             quality_scores = []
@@ -1068,8 +1032,7 @@ class MultimediaProcessor:
             return QualityAssessment()
     
     async def _assess_content_quality(self, processed_components: Dict[str, Any]) -> float:
-        """Assess content quality"""
-        try:
+        """Assess content quality"""        try:
             scores = []
             
             # Check for diverse content
@@ -1092,8 +1055,7 @@ class MultimediaProcessor:
             return 0.5
     
     async def _assess_production_quality(self, metadata: MultimediaMetadata) -> float:
-        """Assess production quality"""
-        try:
+        """Assess production quality"""        try:
             score = 0.5
             
             # Resolution quality
@@ -1124,8 +1086,7 @@ class MultimediaProcessor:
             return 0.5
     
     async def _assess_engagement_potential(self, processed_components: Dict[str, Any]) -> float:
-        """Assess engagement potential"""
-        try:
+        """Assess engagement potential"""        try:
             score = 0.3  # Base score
             
             # Multimedia content has higher engagement potential
@@ -1151,8 +1112,7 @@ class MultimediaProcessor:
             return 0.5
     
     async def _analyze_scenes(self, processed_components: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Analyze scenes in multimedia content"""
-        try:
+        """Analyze scenes in multimedia content"""        try:
             scenes = []
             
             # Extract scenes from video if available
@@ -1179,8 +1139,7 @@ class MultimediaProcessor:
         processed_components: Dict[str, Any],
         cross_modal_analysis: Optional[CrossModalAnalysis]
     ) -> List[Dict[str, Any]]:
-        """Extract highlights from multimedia content"""
-        try:
+        """Extract highlights from multimedia content"""        try:
             highlights = []
             
             # Extract highlights based on different criteria
@@ -1215,8 +1174,7 @@ class MultimediaProcessor:
             return []
     
     async def _generate_multimedia_summary(self, processed_components: Dict[str, Any]) -> Optional[str]:
-        """Generate summary of multimedia content"""
-        try:
+        """Generate summary of multimedia content"""        try:
             summary_parts = []
             
             # Summarize each component
@@ -1246,8 +1204,7 @@ class MultimediaProcessor:
             return None
     
     async def _extract_multimedia_keywords(self, processed_components: Dict[str, Any]) -> List[str]:
-        """Extract keywords from all multimedia components"""
-        try:
+        """Extract keywords from all multimedia components"""        try:
             all_keywords = set()
             
             # Extract keywords from each component
@@ -1269,8 +1226,7 @@ class MultimediaProcessor:
             return []
     
     async def _extract_multimedia_entities(self, processed_components: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Extract entities from all multimedia components"""
-        try:
+        """Extract entities from all multimedia components"""        try:
             all_entities = []
             
             # Extract entities from text components
@@ -1287,8 +1243,7 @@ class MultimediaProcessor:
             return []
     
     async def _analyze_multimedia_emotions(self, processed_components: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze emotions across all multimedia components"""
-        try:
+        """Analyze emotions across all multimedia components"""        try:
             emotion_scores = {}
             component_count = 0
             
@@ -1316,8 +1271,7 @@ class MultimediaProcessor:
             return {}
     
     async def _extract_multimedia_topics(self, processed_components: Dict[str, Any]) -> List[str]:
-        """Extract topics from all multimedia components"""
-        try:
+        """Extract topics from all multimedia components"""        try:
             all_topics = set()
             
             # Extract topics from each component
@@ -1337,8 +1291,7 @@ class MultimediaProcessor:
             return []
     
     async def _generate_multimedia_fingerprint(self, components: Dict[str, Any]) -> str:
-        """Generate multimedia fingerprint"""
-        try:
+        """Generate multimedia fingerprint"""        try:
             # Create combined hash of all components
             hash_data = []
             
@@ -1363,8 +1316,7 @@ class MultimediaProcessor:
             return ""
     
     async def _generate_content_hash(self, processed_components: Dict[str, Any]) -> str:
-        """Generate content hash from processed components"""
-        try:
+        """Generate content hash from processed components"""        try:
             # Create hash from extracted content
             content_data = []
             
@@ -1382,8 +1334,7 @@ class MultimediaProcessor:
             return ""
     
     async def _generate_similarity_hash(self, features: MultimediaFeatures) -> str:
-        """Generate similarity hash for content matching"""
-        try:
+        """Generate similarity hash for content matching"""        try:
             # Create hash from semantic features
             feature_data = []
             
@@ -1411,8 +1362,7 @@ class MultimediaProcessor:
         metadata: MultimediaMetadata,
         features: MultimediaFeatures
     ) -> List[str]:
-        """Generate comprehensive tags for multimedia content"""
-        try:
+        """Generate comprehensive tags for multimedia content"""        try:
             tags = []
             
             # Content type tags
@@ -1476,8 +1426,7 @@ class MultimediaProcessor:
             return []
     
     async def _cleanup_temp_files(self):
-        """Clean up temporary files"""
-        try:
+        """Clean up temporary files"""        try:
             if self._temp_dir and self._temp_dir.exists():
                 import shutil
                 for temp_file in self._temp_dir.glob("*"):
@@ -1490,8 +1439,7 @@ class MultimediaProcessor:
             self.logger.warning(f"Temp file cleanup failed: {e}")
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on the multimedia processor"""
-        health_status = {
+        """Perform health check on the multimedia processor"""        health_status = {
             "status": "healthy" if self._initialized else "not_initialized",
             "multimedia_libs_available": MULTIMEDIA_LIBS_AVAILABLE,
             "ai_libs_available": AI_LIBS_AVAILABLE,
@@ -1519,8 +1467,7 @@ async def create_multimedia_processor(
     redis_client,
     config: Optional[Dict[str, Any]] = None
 ) -> MultimediaProcessor:
-    """
-    Factory function to create and initialize a multimedia processor
+    """    Factory function to create and initialize a multimedia processor
     
     Args:
         db_session: Database session
@@ -1529,8 +1476,7 @@ async def create_multimedia_processor(
         
     Returns:
         Initialized MultimediaProcessor instance
-    """
-    # Create config from dict if provided
+    """    # Create config from dict if provided
     processor_config = None
     if config:
         processor_config = MultimediaProcessingConfig(**{

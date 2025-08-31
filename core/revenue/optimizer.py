@@ -1,5 +1,4 @@
-"""
-Revenue Optimization Engine - Core revenue optimization and strategic management
+"""Revenue Optimization Engine - Core revenue optimization and strategic management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -10,9 +9,7 @@ Unauthorized use, reproduction, modification, or distribution without explicit
 written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -38,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationStrategy(Enum):
-    """Revenue optimization strategy types"""
-    MAXIMIZE_TOTAL = "maximize_total"
+    """Revenue optimization strategy types"""    MAXIMIZE_TOTAL = "maximize_total"
     MAXIMIZE_PER_PLATFORM = "maximize_per_platform"
     MINIMIZE_RISK = "minimize_risk"
     BALANCED_APPROACH = "balanced_approach"
@@ -50,8 +46,7 @@ class OptimizationStrategy(Enum):
 
 
 class OptimizationObjective(Enum):
-    """Optimization objectives"""
-    REVENUE = "revenue"
+    """Optimization objectives"""    REVENUE = "revenue"
     ENGAGEMENT = "engagement"
     REACH = "reach"
     CONVERSION = "conversion"
@@ -63,8 +58,7 @@ class OptimizationObjective(Enum):
 
 @dataclass
 class OptimizationMetrics:
-    """Optimization performance metrics"""
-    current_revenue: Decimal
+    """Optimization performance metrics"""    current_revenue: Decimal
     optimized_revenue: Decimal
     improvement_percentage: float
     confidence_score: float
@@ -78,8 +72,7 @@ class OptimizationMetrics:
 
 @dataclass
 class OptimizationRecommendation:
-    """Revenue optimization recommendation"""
-    strategy: OptimizationStrategy
+    """Revenue optimization recommendation"""    strategy: OptimizationStrategy
     objective: OptimizationObjective
     expected_impact: Decimal
     confidence_level: float
@@ -92,22 +85,18 @@ class OptimizationRecommendation:
 
 
 class RevenueOptimizerBase(ABC):
-    """Abstract base class for revenue optimizers"""
-    
+    """Abstract base class for revenue optimizers"""    
     @abstractmethod
     async def optimize(self, data: Dict[str, Any]) -> OptimizationMetrics:
-        """Optimize revenue based on provided data"""
-        pass
+        """Optimize revenue based on provided data"""        pass
     
     @abstractmethod
     async def generate_recommendations(self, data: Dict[str, Any]) -> List[OptimizationRecommendation]:
-        """Generate optimization recommendations"""
-        pass
+        """Generate optimization recommendations"""        pass
 
 
 class MLRevenueOptimizer:
-    """Machine Learning-based revenue optimizer"""
-    
+    """Machine Learning-based revenue optimizer"""    
     def __init__(self):
         self.model = None
         self.scaler = StandardScaler()
@@ -115,8 +104,7 @@ class MLRevenueOptimizer:
         self.feature_importance = {}
         
     async def train_model(self, training_data: pd.DataFrame) -> None:
-        """Train the ML optimization model"""
-        try:
+        """Train the ML optimization model"""        try:
             # Prepare features and target
             features = training_data.drop(['revenue', 'timestamp'], axis=1)
             target = training_data['revenue']
@@ -148,8 +136,7 @@ class MLRevenueOptimizer:
             raise RevenueOptimizationError(f"Model training failed: {e}")
     
     async def predict_optimized_revenue(self, current_data: Dict[str, Any]) -> Tuple[Decimal, float]:
-        """Predict optimized revenue and confidence"""
-        if not self.is_trained:
+        """Predict optimized revenue and confidence"""        if not self.is_trained:
             raise RevenueOptimizationError("Model not trained")
         
         try:
@@ -171,8 +158,7 @@ class MLRevenueOptimizer:
 
 
 class RevenueOptimizer(RevenueOptimizerBase):
-    """Advanced revenue optimization engine"""
-    
+    """Advanced revenue optimization engine"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.ml_optimizer = MLRevenueOptimizer()
@@ -181,8 +167,7 @@ class RevenueOptimizer(RevenueOptimizerBase):
         self.optimization_history = []
         
     async def initialize(self) -> None:
-        """Initialize the revenue optimizer"""
-        try:
+        """Initialize the revenue optimizer"""        try:
             # Load or train ML model
             await self._load_or_train_model()
             logger.info("Revenue optimizer initialized successfully")
@@ -191,8 +176,7 @@ class RevenueOptimizer(RevenueOptimizerBase):
             raise
     
     async def _load_or_train_model(self) -> None:
-        """Load existing model or train new one"""
-        try:
+        """Load existing model or train new one"""        try:
             # Try to load existing model
             model_path = self.config.get('model_path', 'revenue_optimization_model.pkl')
             self.ml_optimizer.model = joblib.load(model_path)
@@ -203,8 +187,7 @@ class RevenueOptimizer(RevenueOptimizerBase):
             await self._train_with_sample_data()
     
     async def _train_with_sample_data(self) -> None:
-        """Train model with sample/historical data"""
-        # Generate sample training data (in production, use real historical data)
+        """Train model with sample/historical data"""        # Generate sample training data (in production, use real historical data)
         sample_data = pd.DataFrame({
             'platform_count': np.random.randint(1, 6, 1000),
             'content_count': np.random.randint(10, 1000, 1000),
@@ -220,8 +203,7 @@ class RevenueOptimizer(RevenueOptimizerBase):
     
     @cache_revenue_optimization
     async def optimize(self, data: Dict[str, Any]) -> OptimizationMetrics:
-        """Optimize revenue based on current data and strategy"""
-        try:
+        """Optimize revenue based on current data and strategy"""        try:
             validate_revenue_data(data)
             
             current_revenue = Decimal(str(data.get('current_revenue', 0)))
@@ -282,8 +264,7 @@ class RevenueOptimizer(RevenueOptimizerBase):
         strategy: OptimizationStrategy,
         data: Dict[str, Any]
     ) -> Decimal:
-        """Apply strategy-specific adjustments to predicted revenue"""
-        
+        """Apply strategy-specific adjustments to predicted revenue"""        
         adjustment_factors = {
             OptimizationStrategy.MAXIMIZE_TOTAL: 1.2,
             OptimizationStrategy.MAXIMIZE_PER_PLATFORM: 1.15,
@@ -306,8 +287,7 @@ class RevenueOptimizer(RevenueOptimizerBase):
         return base_revenue * Decimal(str(factor))
     
     async def _calculate_risk_score(self, data: Dict[str, Any], strategy: OptimizationStrategy) -> float:
-        """Calculate risk score for optimization strategy"""
-        base_risk = {
+        """Calculate risk score for optimization strategy"""        base_risk = {
             OptimizationStrategy.MAXIMIZE_TOTAL: 0.7,
             OptimizationStrategy.MAXIMIZE_PER_PLATFORM: 0.6,
             OptimizationStrategy.MINIMIZE_RISK: 0.2,
@@ -328,8 +308,7 @@ class RevenueOptimizer(RevenueOptimizerBase):
         return min(1.0, max(0.0, base_risk))
     
     async def _calculate_expected_roi(self, data: Dict[str, Any], optimized_revenue: Decimal) -> Decimal:
-        """Calculate expected ROI"""
-        current_revenue = Decimal(str(data.get('current_revenue', 0)))
+        """Calculate expected ROI"""        current_revenue = Decimal(str(data.get('current_revenue', 0)))
         implementation_cost = await self._estimate_implementation_cost(
             OptimizationStrategy(data.get('strategy', OptimizationStrategy.BALANCED_APPROACH.value))
         )
@@ -343,8 +322,7 @@ class RevenueOptimizer(RevenueOptimizerBase):
         return roi
     
     async def _estimate_implementation_cost(self, strategy: OptimizationStrategy) -> Decimal:
-        """Estimate implementation cost for strategy"""
-        base_costs = {
+        """Estimate implementation cost for strategy"""        base_costs = {
             OptimizationStrategy.MAXIMIZE_TOTAL: Decimal('5000'),
             OptimizationStrategy.MAXIMIZE_PER_PLATFORM: Decimal('3000'),
             OptimizationStrategy.MINIMIZE_RISK: Decimal('1000'),
@@ -358,8 +336,7 @@ class RevenueOptimizer(RevenueOptimizerBase):
         return base_costs.get(strategy, Decimal('2500'))
     
     def _estimate_time_to_impact(self, strategy: OptimizationStrategy) -> int:
-        """Estimate time to see impact in days"""
-        time_estimates = {
+        """Estimate time to see impact in days"""        time_estimates = {
             OptimizationStrategy.MAXIMIZE_TOTAL: 30,
             OptimizationStrategy.MAXIMIZE_PER_PLATFORM: 21,
             OptimizationStrategy.MINIMIZE_RISK: 7,
@@ -373,8 +350,7 @@ class RevenueOptimizer(RevenueOptimizerBase):
         return time_estimates.get(strategy, 21)
     
     async def _calculate_sustainability_score(self, data: Dict[str, Any], strategy: OptimizationStrategy) -> float:
-        """Calculate sustainability score"""
-        base_sustainability = {
+        """Calculate sustainability score"""        base_sustainability = {
             OptimizationStrategy.MAXIMIZE_TOTAL: 0.6,
             OptimizationStrategy.MAXIMIZE_PER_PLATFORM: 0.7,
             OptimizationStrategy.MINIMIZE_RISK: 0.9,
@@ -392,8 +368,7 @@ class RevenueOptimizer(RevenueOptimizerBase):
         return min(1.0, max(0.0, base_sustainability))
     
     async def generate_recommendations(self, data: Dict[str, Any]) -> List[OptimizationRecommendation]:
-        """Generate optimization recommendations"""
-        try:
+        """Generate optimization recommendations"""        try:
             recommendations = []
             
             # Analyze all strategies
@@ -415,8 +390,7 @@ class RevenueOptimizer(RevenueOptimizerBase):
         strategy: OptimizationStrategy, 
         data: Dict[str, Any]
     ) -> OptimizationRecommendation:
-        """Create optimization recommendation for strategy"""
-        
+        """Create optimization recommendation for strategy"""        
         # Simulate optimization for this strategy
         strategy_data = data.copy()
         strategy_data['strategy'] = strategy.value
@@ -439,8 +413,7 @@ class RevenueOptimizer(RevenueOptimizerBase):
         return recommendation
     
     def _get_primary_objective(self, strategy: OptimizationStrategy) -> OptimizationObjective:
-        """Get primary objective for strategy"""
-        objective_mapping = {
+        """Get primary objective for strategy"""        objective_mapping = {
             OptimizationStrategy.MAXIMIZE_TOTAL: OptimizationObjective.REVENUE,
             OptimizationStrategy.MAXIMIZE_PER_PLATFORM: OptimizationObjective.REVENUE,
             OptimizationStrategy.MINIMIZE_RISK: OptimizationObjective.PROFIT_MARGIN,
@@ -454,8 +427,7 @@ class RevenueOptimizer(RevenueOptimizerBase):
         return objective_mapping.get(strategy, OptimizationObjective.REVENUE)
     
     def _get_implementation_steps(self, strategy: OptimizationStrategy) -> List[str]:
-        """Get implementation steps for strategy"""
-        steps_mapping = {
+        """Get implementation steps for strategy"""        steps_mapping = {
             OptimizationStrategy.MAXIMIZE_TOTAL: [
                 "Analyze all revenue streams",
                 "Identify top-performing content",
@@ -482,8 +454,7 @@ class RevenueOptimizer(RevenueOptimizerBase):
         return steps_mapping.get(strategy, ["Analyze current performance", "Implement optimization", "Monitor results"])
     
     def _get_resource_requirements(self, strategy: OptimizationStrategy) -> Dict[str, Any]:
-        """Get resource requirements for strategy"""
-        return {
+        """Get resource requirements for strategy"""        return {
             "budget": str(self._estimate_implementation_cost(strategy)),
             "time_investment": f"{self._estimate_time_to_impact(strategy)} days",
             "team_size": 2 if strategy in [OptimizationStrategy.GROWTH_FOCUSED, OptimizationStrategy.DIVERSIFICATION] else 1,
@@ -492,8 +463,7 @@ class RevenueOptimizer(RevenueOptimizerBase):
         }
     
     def _get_timeline(self, strategy: OptimizationStrategy) -> Dict[str, datetime]:
-        """Get timeline for strategy implementation"""
-        now = datetime.utcnow()
+        """Get timeline for strategy implementation"""        now = datetime.utcnow()
         time_to_impact = self._estimate_time_to_impact(strategy)
         
         return {
@@ -505,8 +475,7 @@ class RevenueOptimizer(RevenueOptimizerBase):
         }
     
     def _get_risk_factors(self, strategy: OptimizationStrategy) -> List[str]:
-        """Get risk factors for strategy"""
-        risk_mapping = {
+        """Get risk factors for strategy"""        risk_mapping = {
             OptimizationStrategy.MAXIMIZE_TOTAL: [
                 "High resource investment",
                 "Platform dependency risk",
@@ -528,8 +497,7 @@ class RevenueOptimizer(RevenueOptimizerBase):
         return risk_mapping.get(strategy, ["Implementation challenges", "Market changes", "Resource constraints"])
     
     def _get_success_metrics(self, strategy: OptimizationStrategy) -> List[str]:
-        """Get success metrics for strategy"""
-        return [
+        """Get success metrics for strategy"""        return [
             "Revenue increase %",
             "ROI improvement",
             "Engagement rate growth",
@@ -544,8 +512,7 @@ class RevenueOptimizer(RevenueOptimizerBase):
         strategy: OptimizationStrategy, 
         data: Dict[str, Any]
     ) -> float:
-        """Calculate priority score for recommendation"""
-        
+        """Calculate priority score for recommendation"""        
         # Weighted scoring based on multiple factors
         roi_weight = 0.3
         confidence_weight = 0.25
@@ -571,12 +538,10 @@ class RevenueOptimizer(RevenueOptimizerBase):
         return min(1.0, max(0.0, priority_score))
     
     async def get_optimization_history(self, limit: int = 10) -> List[Dict[str, Any]]:
-        """Get optimization history"""
-        return self.optimization_history[-limit:]
+        """Get optimization history"""        return self.optimization_history[-limit:]
     
     async def export_optimization_report(self, format: str = 'json') -> Dict[str, Any]:
-        """Export optimization report"""
-        try:
+        """Export optimization report"""        try:
             report = {
                 'timestamp': datetime.utcnow().isoformat(),
                 'total_optimizations': len(self.optimization_history),

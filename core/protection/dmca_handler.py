@@ -1,5 +1,4 @@
-"""
-DMCA Takedown Handler for Automated Copyright Protection
+"""DMCA Takedown Handler for Automated Copyright Protection
 
 This module provides automated DMCA takedown request generation and submission:
 - Automated DMCA notice generation with legal templates
@@ -10,9 +9,7 @@ This module provides automated DMCA takedown request generation and submission:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import aiohttp
 from typing import Dict, List, Optional, Any, Set
@@ -41,8 +38,7 @@ settings = get_settings()
 
 
 class TakedownStatus(Enum):
-    """Status of DMCA takedown requests"""
-    DRAFT = "draft"
+    """Status of DMCA takedown requests"""    DRAFT = "draft"
     PENDING_REVIEW = "pending_review"
     SUBMITTED = "submitted"
     ACKNOWLEDGED = "acknowledged"
@@ -54,8 +50,7 @@ class TakedownStatus(Enum):
 
 
 class PlatformType(Enum):
-    """Supported platforms for DMCA submissions"""
-    YOUTUBE = "youtube"
+    """Supported platforms for DMCA submissions"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -67,8 +62,7 @@ class PlatformType(Enum):
 
 @dataclass
 class ContactInformation:
-    """Contact information for DMCA notices"""
-    name: str
+    """Contact information for DMCA notices"""    name: str
     company: Optional[str] = None
     address: str = ""
     city: str = ""
@@ -79,8 +73,7 @@ class ContactInformation:
     phone: str = ""
     
     def to_formatted_string(self) -> str:
-        """Format contact info for legal documents"""
-        lines = [self.name]
+        """Format contact info for legal documents"""        lines = [self.name]
         if self.company:
             lines.append(self.company)
         if self.address:
@@ -99,8 +92,7 @@ class ContactInformation:
 
 @dataclass
 class DMCANotice:
-    """DMCA takedown notice data structure"""
-    notice_id: str
+    """DMCA takedown notice data structure"""    notice_id: str
     violation_evidence: ViolationEvidence
     
     # Legal information
@@ -135,8 +127,7 @@ class DMCANotice:
 
 @dataclass
 class PlatformConfig:
-    """Configuration for platform-specific DMCA submission"""
-    platform: PlatformType
+    """Configuration for platform-specific DMCA submission"""    platform: PlatformType
     submission_url: str
     api_endpoint: Optional[str] = None
     api_key: Optional[str] = None
@@ -157,8 +148,7 @@ class PlatformConfig:
 
 
 class DMCATemplateEngine:
-    """Template engine for generating DMCA notices"""
-    
+    """Template engine for generating DMCA notices"""    
     def __init__(self):
         template_dir = Path(__file__).parent / "templates" / "dmca"
         self.template_env = Environment(loader=FileSystemLoader(template_dir))
@@ -167,8 +157,7 @@ class DMCATemplateEngine:
         self._ensure_templates_exist()
     
     def _ensure_templates_exist(self):
-        """Ensure DMCA templates exist"""
-        template_dir = Path(__file__).parent / "templates" / "dmca"
+        """Ensure DMCA templates exist"""        template_dir = Path(__file__).parent / "templates" / "dmca"
         template_dir.mkdir(parents=True, exist_ok=True)
         
         # Create basic DMCA template if it doesn't exist
@@ -177,9 +166,7 @@ class DMCATemplateEngine:
             self._create_basic_template(basic_template_path)
     
     def _create_basic_template(self, template_path: Path):
-        """Create basic DMCA notice template"""
-        template_content = """
-<!DOCTYPE html>
+        """Create basic DMCA notice template"""        template_content = """<!DOCTYPE html>
 <html>
 <head>
     <title>DMCA Takedown Notice</title>
@@ -258,8 +245,7 @@ class DMCATemplateEngine:
         template_path.write_text(template_content)
     
     def generate_notice_html(self, dmca_notice: DMCANotice) -> str:
-        """Generate HTML DMCA notice"""
-        try:
+        """Generate HTML DMCA notice"""        try:
             template = self.template_env.get_template("basic_dmca_notice.html")
             
             # Prepare template variables
@@ -287,8 +273,7 @@ class DMCATemplateEngine:
             raise
     
     def generate_notice_pdf(self, dmca_notice: DMCANotice) -> Path:
-        """Generate PDF DMCA notice"""
-        try:
+        """Generate PDF DMCA notice"""        try:
             # Generate HTML first
             html_content = self.generate_notice_html(dmca_notice)
             
@@ -311,8 +296,7 @@ class DMCATemplateEngine:
             raise
     
     def _get_platform_name(self, platform: PlatformType) -> str:
-        """Get formatted platform name"""
-        platform_names = {
+        """Get formatted platform name"""        platform_names = {
             PlatformType.YOUTUBE: "YouTube (Google LLC)",
             PlatformType.INSTAGRAM: "Instagram (Meta Platforms, Inc.)",
             PlatformType.TIKTOK: "TikTok (ByteDance Ltd.)",
@@ -326,14 +310,12 @@ class DMCATemplateEngine:
 
 
 class PlatformSubmitter:
-    """Handle platform-specific DMCA submission"""
-    
+    """Handle platform-specific DMCA submission"""    
     def __init__(self):
         self.platform_configs = self._load_platform_configs()
     
     def _load_platform_configs(self) -> Dict[PlatformType, PlatformConfig]:
-        """Load platform-specific configurations"""
-        configs = {}
+        """Load platform-specific configurations"""        configs = {}
         
         # YouTube configuration
         configs[PlatformType.YOUTUBE] = PlatformConfig(
@@ -377,8 +359,7 @@ class PlatformSubmitter:
         return configs
     
     async def submit_dmca_notice(self, dmca_notice: DMCANotice) -> bool:
-        """Submit DMCA notice to platform"""
-        try:
+        """Submit DMCA notice to platform"""        try:
             config = self.platform_configs.get(dmca_notice.platform)
             if not config:
                 logger.error(f"No configuration for platform {dmca_notice.platform}")
@@ -394,8 +375,7 @@ class PlatformSubmitter:
             return False
     
     async def _submit_via_api(self, dmca_notice: DMCANotice, config: PlatformConfig) -> bool:
-        """Submit via platform API"""
-        try:
+        """Submit via platform API"""        try:
             # Prepare API payload
             payload = {
                 'notice_id': dmca_notice.notice_id,
@@ -445,8 +425,7 @@ class PlatformSubmitter:
             return False
     
     async def _submit_via_web_form(self, dmca_notice: DMCANotice, config: PlatformConfig) -> bool:
-        """Submit via web form (using Selenium)"""
-        try:
+        """Submit via web form (using Selenium)"""        try:
             from selenium import webdriver
             from selenium.webdriver.common.by import By
             from selenium.webdriver.support.ui import WebDriverWait
@@ -536,8 +515,7 @@ class PlatformSubmitter:
 
 
 class DMCAHandler:
-    """Main DMCA takedown handler"""
-    
+    """Main DMCA takedown handler"""    
     def __init__(self):
         self.template_engine = DMCATemplateEngine()
         self.platform_submitter = PlatformSubmitter()
@@ -555,8 +533,7 @@ class DMCAHandler:
         )
     
     async def submit_takedown_request(self, violation_evidence: ViolationEvidence, evidence_data: Any = None) -> str:
-        """Submit automated DMCA takedown request"""
-        try:
+        """Submit automated DMCA takedown request"""        try:
             # Generate notice ID
             notice_id = f"dmca_{violation_evidence.violation_id}_{int(datetime.utcnow().timestamp())}"
             
@@ -592,8 +569,7 @@ class DMCAHandler:
             raise
     
     def _detect_platform(self, url: str) -> PlatformType:
-        """Detect platform from URL"""
-        try:
+        """Detect platform from URL"""        try:
             domain = urlparse(url).netloc.lower()
             
             if 'youtube.com' in domain or 'youtu.be' in domain:
@@ -617,8 +593,7 @@ class DMCAHandler:
             return PlatformType.GENERIC_HOST
     
     def _create_dmca_notice(self, violation: ViolationEvidence, notice_id: str, platform: PlatformType) -> DMCANotice:
-        """Create DMCA notice from violation evidence"""
-        dmca_notice = DMCANotice(
+        """Create DMCA notice from violation evidence"""        dmca_notice = DMCANotice(
             notice_id=notice_id,
             violation_evidence=violation,
             copyright_owner=self.default_copyright_owner,
@@ -633,8 +608,7 @@ class DMCAHandler:
         return dmca_notice
     
     def _generate_work_description(self, violation: ViolationEvidence) -> str:
-        """Generate original work description"""
-        violation_type = violation.violation_type
+        """Generate original work description"""        violation_type = violation.violation_type
         
         if violation_type in [ViolationType.EXACT_DUPLICATE, ViolationType.MODIFIED_CONTENT]:
             return f"Original copyrighted content owned by {self.default_copyright_owner.name}, created and published with all rights reserved."
@@ -646,8 +620,7 @@ class DMCAHandler:
             return f"Original copyrighted content protected under copyright law."
     
     def _generate_infringement_description(self, violation: ViolationEvidence) -> str:
-        """Generate infringement description"""
-        max_similarity = max(s.similarity_score for s in violation.similarity_scores) if violation.similarity_scores else 0
+        """Generate infringement description"""        max_similarity = max(s.similarity_score for s in violation.similarity_scores) if violation.similarity_scores else 0
         
         description = f"The content located at the specified URL contains copyrighted material that infringes upon the rights of {self.default_copyright_owner.name}. "
         description += f"Analysis shows {max_similarity:.1%} similarity to the original work. "
@@ -657,8 +630,7 @@ class DMCAHandler:
         return description
     
     def _generate_legal_statements(self, dmca_notice: DMCANotice):
-        """Generate required legal statements"""
-        # Good faith statement
+        """Generate required legal statements"""        # Good faith statement
         dmca_notice.good_faith_statement = (
             "I have a good faith belief that use of the copyrighted material described above is not authorized "
             "by the copyright owner, its agent, or the law, and therefore infringes the copyright owner's rights."
@@ -678,8 +650,7 @@ class DMCAHandler:
         )
     
     def get_takedown_status(self, notice_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of DMCA takedown request"""
-        if notice_id not in self.dmca_notices:
+        """Get status of DMCA takedown request"""        if notice_id not in self.dmca_notices:
             return None
         
         notice = self.dmca_notices[notice_id]
@@ -696,8 +667,7 @@ class DMCAHandler:
         }
     
     def get_dmca_statistics(self) -> Dict[str, Any]:
-        """Get DMCA system statistics"""
-        total_notices = len(self.dmca_notices)
+        """Get DMCA system statistics"""        total_notices = len(self.dmca_notices)
         
         if total_notices == 0:
             return {'total_notices': 0}

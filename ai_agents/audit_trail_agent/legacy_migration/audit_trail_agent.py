@@ -1,5 +1,4 @@
-"""
-Audit Trail Agent - Industrial-Grade Security & Compliance Engine
+"""Audit Trail Agent - Industrial-Grade Security & Compliance Engine
 
 Main audit trail agent orchestrating comprehensive platform activity tracking,
 security monitoring, compliance verification, and forensic investigation capabilities.
@@ -10,9 +9,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  CRITICAL LEGAL NOTICE:
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, distribution, or commercialization is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import uuid
@@ -62,8 +59,7 @@ from ...utils.circuit_breaker import CircuitBreaker
 logger = logging.getLogger(__name__)
 
 class AuditEventType(Enum):
-    """Comprehensive audit event type classification"""
-    USER_LOGIN = "user_login"
+    """Comprehensive audit event type classification"""    USER_LOGIN = "user_login"
     USER_LOGOUT = "user_logout"
     USER_REGISTRATION = "user_registration"
     USER_PROFILE_UPDATE = "user_profile_update"
@@ -83,16 +79,14 @@ class AuditEventType(Enum):
     REVENUE_DISTRIBUTION = "revenue_distribution"
 
 class AuditSeverityLevel(IntEnum):
-    """Audit event severity classification"""
-    INFO = 1
+    """Audit event severity classification"""    INFO = 1
     WARNING = 2
     ERROR = 3
     CRITICAL = 4
     SECURITY_BREACH = 5
 
 class ComplianceStandard(Enum):
-    """Supported compliance frameworks"""
-    GDPR = "gdpr"
+    """Supported compliance frameworks"""    GDPR = "gdpr"
     SOX = "sox"
     HIPAA = "hipaa"
     PCI_DSS = "pci_dss"
@@ -102,8 +96,7 @@ class ComplianceStandard(Enum):
 
 @dataclass
 class AuditConfiguration:
-    """Advanced audit trail configuration"""
-    retention_period_days: int = 2555  # 7 years default
+    """Advanced audit trail configuration"""    retention_period_days: int = 2555  # 7 years default
     encryption_enabled: bool = True
     real_time_alerts: bool = True
     compliance_monitoring: bool = True
@@ -115,8 +108,7 @@ class AuditConfiguration:
 
 @dataclass 
 class AuditMetrics:
-    """Comprehensive audit metrics tracking"""
-    total_events_processed: int = 0
+    """Comprehensive audit metrics tracking"""    total_events_processed: int = 0
     events_by_type: Dict[str, int] = field(default_factory=dict)
     security_incidents: int = 0
     compliance_violations: int = 0
@@ -125,8 +117,7 @@ class AuditMetrics:
     alert_response_time: float = 0.0
 
 class AuditTrailAgent(BaseAgent):
-    """
-    Enterprise-Grade Audit Trail Agent
+    """    Enterprise-Grade Audit Trail Agent
     
     Comprehensive audit trail management system providing:
     - Real-time activity tracking
@@ -135,9 +126,7 @@ class AuditTrailAgent(BaseAgent):
     - Forensic investigation capabilities
     - Data integrity verification
     - Automated alerting and reporting
-    """
-
-    def __init__(self, config: Optional[AuditConfiguration] = None):
+    """    def __init__(self, config: Optional[AuditConfiguration] = None):
         super().__init__(
             name="audit_trail_agent",
             version="1.0.0",
@@ -169,8 +158,7 @@ class AuditTrailAgent(BaseAgent):
         logger.info("AuditTrailAgent initialized with enterprise configuration")
 
     async def initialize(self) -> bool:
-        """Initialize audit trail agent with full enterprise capabilities"""
-        try:
+        """Initialize audit trail agent with full enterprise capabilities"""        try:
             await super().initialize()
             
             # Initialize database connections
@@ -205,8 +193,7 @@ class AuditTrailAgent(BaseAgent):
         severity: AuditSeverityLevel = AuditSeverityLevel.INFO,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Log comprehensive audit event with full traceability
+        """        Log comprehensive audit event with full traceability
         
         Args:
             event_type: Type of audit event
@@ -218,8 +205,7 @@ class AuditTrailAgent(BaseAgent):
             
         Returns:
             Unique audit event ID
-        """
-        with self.processing_time.time():
+        """        with self.processing_time.time():
             try:
                 # Rate limiting check
                 if not await self.rate_limiter.acquire():
@@ -286,8 +272,7 @@ class AuditTrailAgent(BaseAgent):
         limit: int = 100,
         offset: int = 0
     ) -> Dict[str, Any]:
-        """
-        Advanced audit trail search with forensic capabilities
+        """        Advanced audit trail search with forensic capabilities
         
         Args:
             filters: Search filters (event_type, user_id, severity, etc.)
@@ -298,8 +283,7 @@ class AuditTrailAgent(BaseAgent):
             
         Returns:
             Search results with metadata
-        """
-        try:
+        """        try:
             async with get_db_session() as session:
                 # Build dynamic query
                 query = session.query(AuditEvent)
@@ -359,8 +343,7 @@ class AuditTrailAgent(BaseAgent):
         end_date: datetime,
         include_recommendations: bool = True
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive compliance report for specified standard
+        """        Generate comprehensive compliance report for specified standard
         
         Args:
             standard: Compliance standard to report on
@@ -370,8 +353,7 @@ class AuditTrailAgent(BaseAgent):
             
         Returns:
             Detailed compliance report
-        """
-        try:
+        """        try:
             report_id = str(uuid.uuid4())
             
             # Gather compliance data
@@ -429,8 +411,7 @@ class AuditTrailAgent(BaseAgent):
         time_window: timedelta = timedelta(hours=24),
         sensitivity: float = 0.8
     ) -> List[Dict[str, Any]]:
-        """
-        Advanced anomaly detection for security and compliance monitoring
+        """        Advanced anomaly detection for security and compliance monitoring
         
         Args:
             time_window: Time window for analysis
@@ -438,8 +419,7 @@ class AuditTrailAgent(BaseAgent):
             
         Returns:
             List of detected anomalies
-        """
-        try:
+        """        try:
             start_time = datetime.now(timezone.utc) - time_window
             
             # Gather recent audit events
@@ -485,8 +465,7 @@ class AuditTrailAgent(BaseAgent):
         filters: Optional[Dict[str, Any]] = None,
         encryption: bool = True
     ) -> Dict[str, Any]:
-        """
-        Secure audit data export with encryption and integrity verification
+        """        Secure audit data export with encryption and integrity verification
         
         Args:
             export_format: Export format (json, csv, xml)
@@ -495,8 +474,7 @@ class AuditTrailAgent(BaseAgent):
             
         Returns:
             Export operation results
-        """
-        try:
+        """        try:
             export_id = str(uuid.uuid4())
             
             # Log export request for audit
@@ -537,13 +515,11 @@ class AuditTrailAgent(BaseAgent):
             raise AuditError(f"Data export failed: {str(e)}")
 
     async def cleanup_expired_records(self) -> Dict[str, int]:
-        """
-        Automated cleanup of expired audit records according to retention policies
+        """        Automated cleanup of expired audit records according to retention policies
         
         Returns:
             Cleanup statistics
-        """
-        try:
+        """        try:
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=self.config.retention_period_days)
             
             # Log cleanup operation
@@ -589,16 +565,14 @@ class AuditTrailAgent(BaseAgent):
             raise AuditError(f"Cleanup operation failed: {str(e)}")
 
     async def get_audit_statistics(self, time_period: timedelta = timedelta(days=30)) -> Dict[str, Any]:
-        """
-        Generate comprehensive audit trail statistics and insights
+        """        Generate comprehensive audit trail statistics and insights
         
         Args:
             time_period: Time period for statistics
             
         Returns:
             Detailed audit statistics
-        """
-        try:
+        """        try:
             start_time = datetime.now(timezone.utc) - time_period
             
             async with get_db_session() as session:
@@ -667,14 +641,12 @@ class AuditTrailAgent(BaseAgent):
 
     # Private helper methods
     async def _setup_audit_database(self) -> None:
-        """Initialize audit database schema and indexes"""
-        try:
+        """Initialize audit database schema and indexes"""        try:
             logger.info("Setting up audit database schema and indexes")
             
             # Database schema definitions
             audit_tables_schema = {
-                'audit_logs': """
-                    CREATE TABLE IF NOT EXISTS audit_logs (
+                'audit_logs': """                    CREATE TABLE IF NOT EXISTS audit_logs (
                         id SERIAL PRIMARY KEY,
                         event_id VARCHAR(255) UNIQUE NOT NULL,
                         event_type VARCHAR(100) NOT NULL,
@@ -696,8 +668,7 @@ class AuditTrailAgent(BaseAgent):
                     )
                 """,
                 
-                'compliance_events': """
-                    CREATE TABLE IF NOT EXISTS compliance_events (
+                'compliance_events': """                    CREATE TABLE IF NOT EXISTS compliance_events (
                         id SERIAL PRIMARY KEY,
                         event_id VARCHAR(255) UNIQUE NOT NULL,
                         framework VARCHAR(50) NOT NULL,
@@ -713,8 +684,7 @@ class AuditTrailAgent(BaseAgent):
                     )
                 """,
                 
-                'audit_sessions': """
-                    CREATE TABLE IF NOT EXISTS audit_sessions (
+                'audit_sessions': """                    CREATE TABLE IF NOT EXISTS audit_sessions (
                         id SERIAL PRIMARY KEY,
                         session_id VARCHAR(255) UNIQUE NOT NULL,
                         user_id VARCHAR(255) NOT NULL,
@@ -727,8 +697,7 @@ class AuditTrailAgent(BaseAgent):
                         last_activity TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
                         status VARCHAR(20) DEFAULT 'ACTIVE'
                     )
-                """
-            }
+                """            }
             
             # Performance indexes
             performance_indexes = [
@@ -820,8 +789,7 @@ class AuditTrailAgent(BaseAgent):
             raise AuditError(f"Database setup failed: {str(e)}")
 
     async def _start_real_time_monitoring(self) -> None:
-        """Start background real-time monitoring service"""
-        while self.status == AgentStatus.READY:
+        """Start background real-time monitoring service"""        while self.status == AgentStatus.READY:
             try:
                 await self._monitor_real_time_events()
                 await asyncio.sleep(1)  # Monitor every second
@@ -830,8 +798,7 @@ class AuditTrailAgent(BaseAgent):
                 await asyncio.sleep(5)
 
     async def _start_compliance_scanner(self) -> None:
-        """Start background compliance scanning service"""
-        while self.status == AgentStatus.READY:
+        """Start background compliance scanning service"""        while self.status == AgentStatus.READY:
             try:
                 await self._scan_compliance_violations()
                 await asyncio.sleep(300)  # Scan every 5 minutes
@@ -840,8 +807,7 @@ class AuditTrailAgent(BaseAgent):
                 await asyncio.sleep(60)
 
     async def _start_data_integrity_checker(self) -> None:
-        """Start background data integrity verification service"""
-        while self.status == AgentStatus.READY:
+        """Start background data integrity verification service"""        while self.status == AgentStatus.READY:
             try:
                 await self._verify_data_integrity()
                 await asyncio.sleep(3600)  # Check every hour
@@ -851,8 +817,7 @@ class AuditTrailAgent(BaseAgent):
 
     def _calculate_event_checksum(self, event_type: AuditEventType, user_id: Optional[str], 
                                   resource_id: Optional[str], timestamp: datetime) -> str:
-        """Calculate tamper-proof checksum for audit event"""
-        data = f"{event_type.value}{user_id or ''}{resource_id or ''}{timestamp.isoformat()}"
+        """Calculate tamper-proof checksum for audit event"""        data = f"{event_type.value}{user_id or ''}{resource_id or ''}{timestamp.isoformat()}"
         return hmac.new(
             settings.AUDIT_SECRET_KEY.encode(), 
             data.encode(), 
@@ -860,23 +825,19 @@ class AuditTrailAgent(BaseAgent):
         ).hexdigest()
 
     def _get_client_ip(self) -> str:
-        """Extract client IP address from request context"""
-        # Implementation depends on web framework
+        """Extract client IP address from request context"""        # Implementation depends on web framework
         return "127.0.0.1"  # Placeholder
 
     def _get_user_agent(self) -> str:
-        """Extract user agent from request context"""
-        # Implementation depends on web framework
+        """Extract user agent from request context"""        # Implementation depends on web framework
         return "Unknown"  # Placeholder
 
     def _get_session_id(self) -> str:
-        """Extract session ID from request context"""
-        # Implementation depends on session management
+        """Extract session ID from request context"""        # Implementation depends on session management
         return str(uuid.uuid4())  # Placeholder
 
     async def _encrypt_sensitive_data(self, audit_record: Dict[str, Any]) -> Dict[str, Any]:
-        """Encrypt sensitive fields in audit record"""
-        sensitive_fields = ['user_id', 'ip_address', 'details']
+        """Encrypt sensitive fields in audit record"""        sensitive_fields = ['user_id', 'ip_address', 'details']
         encrypted_record = audit_record.copy()
         
         for field in sensitive_fields:
@@ -886,8 +847,7 @@ class AuditTrailAgent(BaseAgent):
         return encrypted_record
 
     async def _decrypt_sensitive_data(self, audit_record: Dict[str, Any]) -> Dict[str, Any]:
-        """Decrypt sensitive fields in audit record"""
-        sensitive_fields = ['user_id', 'ip_address', 'details']
+        """Decrypt sensitive fields in audit record"""        sensitive_fields = ['user_id', 'ip_address', 'details']
         decrypted_record = audit_record.copy()
         
         for field in sensitive_fields:
@@ -900,8 +860,7 @@ class AuditTrailAgent(BaseAgent):
         return decrypted_record
 
     async def _store_audit_record(self, audit_record: Dict[str, Any]) -> None:
-        """Store audit record in database with integrity verification"""
-        try:
+        """Store audit record in database with integrity verification"""        try:
             async with get_db_session() as session:
                 audit_event = AuditEvent(
                     audit_id=audit_record['audit_id'],

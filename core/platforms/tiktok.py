@@ -1,14 +1,11 @@
-"""
-TikTok Platform Integration
+"""TikTok Platform Integration
 
 TikTok API integration for content sharing and analytics.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import aiohttp
 import aiofiles
 from typing import Dict, List, Optional, Any
@@ -29,26 +26,22 @@ logger = logging.getLogger(__name__)
 
 
 class TikTokPlatform(PlatformBase):
-    """TikTok platform integration"""
-    
+    """TikTok platform integration"""    
     def __init__(self, config: PlatformConfig):
-        """Initialize TikTok platform"""
-        super().__init__(config)
+        """Initialize TikTok platform"""        super().__init__(config)
         self.api_base = "https://open-api.tiktok.com"
         self.auth_base = "https://www.tiktok.com"
         self.session: Optional[aiohttp.ClientSession] = None
         
     async def _get_session(self) -> aiohttp.ClientSession:
-        """Get or create HTTP session"""
-        if not self.session or self.session.closed:
+        """Get or create HTTP session"""        if not self.session or self.session.closed:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=self.config.timeout)
             )
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with TikTok using OAuth2"""
-        try:
+        """Authenticate with TikTok using OAuth2"""        try:
             # If we have an access token, validate it
             if self.config.credentials.access_token:
                 if await self._validate_token():
@@ -66,8 +59,7 @@ class TikTokPlatform(PlatformBase):
             return False
     
     async def refresh_token(self) -> bool:
-        """Refresh TikTok access token"""
-        if not self.config.credentials.refresh_token:
+        """Refresh TikTok access token"""        if not self.config.credentials.refresh_token:
             logger.error("No refresh token available for TikTok")
             return False
         
@@ -112,8 +104,7 @@ class TikTokPlatform(PlatformBase):
             return False
     
     async def _validate_token(self) -> bool:
-        """Validate TikTok access token"""
-        try:
+        """Validate TikTok access token"""        try:
             result = await self._make_request('POST', '/user/info/')
             return result is not None and result.get('data') is not None
             
@@ -122,8 +113,7 @@ class TikTokPlatform(PlatformBase):
             return False
     
     def _generate_signature(self, params: Dict[str, Any], body: str = "") -> str:
-        """Generate signature for TikTok API request"""
-        # Sort parameters
+        """Generate signature for TikTok API request"""        # Sort parameters
         sorted_params = sorted(params.items())
         query_string = urllib.parse.urlencode(sorted_params)
         
@@ -140,8 +130,7 @@ class TikTokPlatform(PlatformBase):
         return signature
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to TikTok API"""
-        if not self.is_authenticated:
+        """Make authenticated request to TikTok API"""        if not self.is_authenticated:
             if not await self.authenticate():
                 return None
         
@@ -186,8 +175,7 @@ class TikTokPlatform(PlatformBase):
             return None
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Upload video content to TikTok"""
-        try:
+        """Upload video content to TikTok"""        try:
             if not os.path.exists(content_path):
                 return UploadResult(
                     success=False,
@@ -286,8 +274,7 @@ class TikTokPlatform(PlatformBase):
             )
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
-        """Get TikTok analytics for a video"""
-        try:
+        """Get TikTok analytics for a video"""        try:
             # Get video info
             video_data = {
                 'fields': ['id', 'create_time', 'cover_image_url', 'share_url', 'view_count', 'like_count', 'comment_count', 'share_count']
@@ -325,8 +312,7 @@ class TikTokPlatform(PlatformBase):
             raise
     
     def _calculate_engagement_rate(self, video_data: Dict[str, Any]) -> float:
-        """Calculate engagement rate"""
-        views = video_data.get('view_count', 0)
+        """Calculate engagement rate"""        views = video_data.get('view_count', 0)
         likes = video_data.get('like_count', 0)
         comments = video_data.get('comment_count', 0)
         shares = video_data.get('share_count', 0)
@@ -337,8 +323,7 @@ class TikTokPlatform(PlatformBase):
         return ((likes + comments + shares) / views) * 100
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search content on TikTok"""
-        try:
+        """Search content on TikTok"""        try:
             search_data = {
                 'query': query,
                 'search_id': str(int(time.time())),
@@ -377,8 +362,7 @@ class TikTokPlatform(PlatformBase):
             return []
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
-        """Get user's videos from TikTok"""
-        try:
+        """Get user's videos from TikTok"""        try:
             video_data = {
                 'fields': ['id', 'create_time', 'cover_image_url', 'share_url', 'view_count', 'like_count', 'comment_count', 'share_count']
             }
@@ -412,8 +396,7 @@ class TikTokPlatform(PlatformBase):
             return []
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete video from TikTok"""
-        try:
+        """Delete video from TikTok"""        try:
             delete_data = {
                 'video_id': content_id
             }
@@ -431,14 +414,12 @@ class TikTokPlatform(PlatformBase):
             return False
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
-        """Update video metadata on TikTok (limited support)"""
-        # TikTok API has limited support for updating video metadata
+        """Update video metadata on TikTok (limited support)"""        # TikTok API has limited support for updating video metadata
         logger.warning("TikTok API has limited support for updating video metadata")
         return False
     
     async def get_user_info(self, user_id: str = None) -> Optional[Dict[str, Any]]:
-        """Get user information"""
-        try:
+        """Get user information"""        try:
             user_data = {
                 'fields': ['open_id', 'union_id', 'avatar_url', 'display_name', 'bio_description', 'profile_deep_link', 'is_verified', 'follower_count', 'following_count', 'likes_count', 'video_count']
             }
@@ -450,8 +431,7 @@ class TikTokPlatform(PlatformBase):
             return None
     
     async def get_video_comments(self, video_id: str, cursor: int = 0, count: int = 20) -> List[Dict[str, Any]]:
-        """Get comments for a video"""
-        try:
+        """Get comments for a video"""        try:
             comment_data = {
                 'video_id': video_id,
                 'cursor': cursor,
@@ -474,8 +454,7 @@ class TikTokPlatform(PlatformBase):
             return []
     
     async def get_trending_videos(self, cursor: int = 0, count: int = 20) -> List[Dict[str, Any]]:
-        """Get trending videos"""
-        try:
+        """Get trending videos"""        try:
             trending_data = {
                 'cursor': cursor,
                 'count': count
@@ -497,6 +476,5 @@ class TikTokPlatform(PlatformBase):
             return []
     
     async def close(self):
-        """Close HTTP session"""
-        if self.session and not self.session.closed:
+        """Close HTTP session"""        if self.session and not self.session.closed:
             await self.session.close()

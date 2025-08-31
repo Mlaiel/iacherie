@@ -1,5 +1,4 @@
-"""
-Ultra-Advanced Utilities for Enterprise Recommendation System
+"""Ultra-Advanced Utilities for Enterprise Recommendation System
 Production-ready utilities, helpers, and infrastructure components
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -19,9 +18,7 @@ Development Team Specialties:
 - DevOps Engineer
 - AI Prompt Engineer
 Email: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import hashlib
 import pickle
@@ -56,8 +53,7 @@ logger = structlog.get_logger(__name__)
 
 # Performance monitoring decorators
 def measure_performance(operation_name: str):
-    """Decorator to measure operation performance"""
-    def decorator(func):
+    """Decorator to measure operation performance"""    def decorator(func):
         @wraps(func)
         async def wrapper(*args, **kwargs):
             start_time = time.time()
@@ -84,8 +80,7 @@ def measure_performance(operation_name: str):
 
 
 def cache_result(ttl_seconds: int = 3600, cache_key_prefix: str = "rec"):
-    """Advanced caching decorator with intelligent cache management"""
-    def decorator(func):
+    """Advanced caching decorator with intelligent cache management"""    def decorator(func):
         @wraps(func)
         async def wrapper(*args, **kwargs):
             # Generate cache key based on function args
@@ -115,8 +110,7 @@ def cache_result(ttl_seconds: int = 3600, cache_key_prefix: str = "rec"):
 
 
 def validate_request(validation_schema: Dict[str, Any]):
-    """Advanced request validation decorator"""
-    def decorator(func):
+    """Advanced request validation decorator"""    def decorator(func):
         @wraps(func)
         async def wrapper(*args, **kwargs):
             # Validate request parameters
@@ -133,8 +127,7 @@ def validate_request(validation_schema: Dict[str, Any]):
 
 
 class ModelManager:
-    """Enterprise-grade model management and lifecycle"""
-    
+    """Enterprise-grade model management and lifecycle"""    
     def __init__(self, model_cache_size: int = 10):
         self.model_cache = {}
         self.model_metadata = {}
@@ -144,8 +137,7 @@ class ModelManager:
         self.logger = structlog.get_logger(__name__)
         
     async def load_model(self, model_name: str, model_path: str, force_reload: bool = False) -> Any:
-        """Load and cache AI models with intelligent management"""
-        if model_name in self.model_cache and not force_reload:
+        """Load and cache AI models with intelligent management"""        if model_name in self.model_cache and not force_reload:
             self.usage_stats[model_name] = self.usage_stats.get(model_name, 0) + 1
             return self.model_cache[model_name]
         
@@ -195,8 +187,7 @@ class ModelManager:
             raise RecommendationError(f"Model loading failed: {str(e)}")
     
     async def _evict_least_used_model(self):
-        """Evict the least used model from cache"""
-        if not self.model_cache:
+        """Evict the least used model from cache"""        if not self.model_cache:
             return
             
         least_used_model = min(self.usage_stats.items(), key=lambda x: x[1])
@@ -210,8 +201,7 @@ class ModelManager:
         self.logger.info("Evicted least used model", model_name=model_name)
     
     def _estimate_model_size(self, model: Any) -> float:
-        """Estimate model memory usage in MB"""
-        try:
+        """Estimate model memory usage in MB"""        try:
             if hasattr(model, 'num_parameters'):
                 # For transformers models
                 return model.num_parameters() * 4 / (1024 * 1024)  # Assume float32
@@ -223,8 +213,7 @@ class ModelManager:
             return 0.0
     
     def get_model_stats(self) -> Dict[str, Any]:
-        """Get comprehensive model statistics"""
-        return {
+        """Get comprehensive model statistics"""        return {
             'cached_models': list(self.model_cache.keys()),
             'cache_size': len(self.model_cache),
             'usage_stats': self.usage_stats.copy(),
@@ -238,8 +227,7 @@ class ModelManager:
 
 
 class PerformanceMonitor:
-    """Advanced performance monitoring and alerting system"""
-    
+    """Advanced performance monitoring and alerting system"""    
     def __init__(self):
         self.metrics = {}
         self.alerts = {}
@@ -253,8 +241,7 @@ class PerformanceMonitor:
         self.logger = structlog.get_logger(__name__)
     
     def record_metric(self, metric_name: str, value: float, tags: Dict[str, str] = None):
-        """Record a performance metric"""
-        timestamp = datetime.now()
+        """Record a performance metric"""        timestamp = datetime.now()
         
         if metric_name not in self.metrics:
             self.metrics[metric_name] = []
@@ -276,8 +263,7 @@ class PerformanceMonitor:
         self._check_alerts(metric_name, value)
     
     def _check_alerts(self, metric_name: str, value: float):
-        """Check if metric value triggers alerts"""
-        if metric_name in self.thresholds:
+        """Check if metric value triggers alerts"""        if metric_name in self.thresholds:
             threshold = self.thresholds[metric_name]
             
             # Different alert logic for different metrics
@@ -287,8 +273,7 @@ class PerformanceMonitor:
                 self._trigger_alert(metric_name, value, threshold, "above")
     
     def _trigger_alert(self, metric_name: str, value: float, threshold: float, condition: str):
-        """Trigger performance alert"""
-        alert_key = f"{metric_name}_{condition}_threshold"
+        """Trigger performance alert"""        alert_key = f"{metric_name}_{condition}_threshold"
         
         # Rate limit alerts (max 1 per 5 minutes per metric)
         now = datetime.now()
@@ -309,8 +294,7 @@ class PerformanceMonitor:
         )
     
     def get_metrics_summary(self, time_window: timedelta = timedelta(hours=1)) -> Dict[str, Any]:
-        """Get comprehensive metrics summary"""
-        cutoff = datetime.now() - time_window
+        """Get comprehensive metrics summary"""        cutoff = datetime.now() - time_window
         summary = {}
         
         for metric_name, values in self.metrics.items():
@@ -347,12 +331,10 @@ class PerformanceMonitor:
 
 
 class DataValidator:
-    """Enterprise-grade data validation and sanitization"""
-    
+    """Enterprise-grade data validation and sanitization"""    
     @staticmethod
     def validate_user_profile(profile: UserProfile) -> List[str]:
-        """Validate user profile data"""
-        errors = []
+        """Validate user profile data"""        errors = []
         
         if not profile.user_id:
             errors.append("user_id is required")
@@ -370,8 +352,7 @@ class DataValidator:
     
     @staticmethod
     def validate_recommendation_request(request: RecommendationRequest) -> List[str]:
-        """Validate recommendation request data"""
-        errors = []
+        """Validate recommendation request data"""        errors = []
         
         if not request.user_id:
             errors.append("user_id is required")
@@ -392,8 +373,7 @@ class DataValidator:
     
     @staticmethod
     def sanitize_text_input(text: str) -> str:
-        """Sanitize text input for security"""
-        if not text:
+        """Sanitize text input for security"""        if not text:
             return ""
         
         # Remove potential XSS/injection attempts
@@ -406,8 +386,7 @@ class DataValidator:
 
 
 class CacheManager:
-    """Enterprise-grade caching management system"""
-    
+    """Enterprise-grade caching management system"""    
     def __init__(self, redis_url: str = "redis://localhost:6379"):
         self.redis_url = redis_url
         self.redis_client = None
@@ -420,8 +399,7 @@ class CacheManager:
         self.logger = structlog.get_logger(__name__)
     
     async def initialize(self):
-        """Initialize cache connection"""
-        try:
+        """Initialize cache connection"""        try:
             import aioredis
             self.redis_client = await aioredis.from_url(self.redis_url)
             await self.redis_client.ping()
@@ -431,8 +409,7 @@ class CacheManager:
             raise CacheError(f"Cache initialization failed: {str(e)}")
     
     async def get(self, key: str) -> Optional[Any]:
-        """Get value from cache"""
-        try:
+        """Get value from cache"""        try:
             if not self.redis_client:
                 return None
                 
@@ -453,8 +430,7 @@ class CacheManager:
             return None
     
     async def set(self, key: str, value: Any, ttl: int = 3600) -> bool:
-        """Set value in cache with compression"""
-        try:
+        """Set value in cache with compression"""        try:
             if not self.redis_client:
                 return False
             
@@ -472,8 +448,7 @@ class CacheManager:
             return False
     
     async def delete(self, key: str) -> bool:
-        """Delete key from cache"""
-        try:
+        """Delete key from cache"""        try:
             if not self.redis_client:
                 return False
             
@@ -485,8 +460,7 @@ class CacheManager:
             return False
     
     async def clear_pattern(self, pattern: str) -> int:
-        """Clear all keys matching pattern"""
-        try:
+        """Clear all keys matching pattern"""        try:
             if not self.redis_client:
                 return 0
             
@@ -500,8 +474,7 @@ class CacheManager:
             return 0
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get cache statistics"""
-        total_requests = self.cache_stats['hits'] + self.cache_stats['misses']
+        """Get cache statistics"""        total_requests = self.cache_stats['hits'] + self.cache_stats['misses']
         hit_ratio = self.cache_stats['hits'] / total_requests if total_requests > 0 else 0
         
         return {
@@ -512,8 +485,7 @@ class CacheManager:
         }
     
     async def health_check(self) -> HealthCheck:
-        """Check cache health"""
-        try:
+        """Check cache health"""        try:
             if not self.redis_client:
                 return HealthCheck(
                     healthy=False,
@@ -554,8 +526,7 @@ class CacheManager:
 
 # Utility Functions
 def generate_cache_key(*args, **kwargs) -> str:
-    """Generate deterministic cache key from arguments"""
-    key_data = {
+    """Generate deterministic cache key from arguments"""    key_data = {
         'args': str(args),
         'kwargs': sorted(kwargs.items())
     }
@@ -564,8 +535,7 @@ def generate_cache_key(*args, **kwargs) -> str:
 
 
 def calculate_similarity(vector1: np.ndarray, vector2: np.ndarray) -> float:
-    """Calculate cosine similarity between two vectors"""
-    try:
+    """Calculate cosine similarity between two vectors"""    try:
         # Handle zero vectors
         if np.linalg.norm(vector1) == 0 or np.linalg.norm(vector2) == 0:
             return 0.0
@@ -579,8 +549,7 @@ def calculate_similarity(vector1: np.ndarray, vector2: np.ndarray) -> float:
 
 
 def normalize_scores(scores: List[float]) -> List[float]:
-    """Normalize scores to [0, 1] range"""
-    if not scores:
+    """Normalize scores to [0, 1] range"""    if not scores:
         return []
     
     scores = np.array(scores)
@@ -595,8 +564,7 @@ def normalize_scores(scores: List[float]) -> List[float]:
 
 
 def weighted_score(scores: Dict[str, float], weights: Dict[str, float]) -> float:
-    """Calculate weighted average score"""
-    if not scores or not weights:
+    """Calculate weighted average score"""    if not scores or not weights:
         return 0.0
     
     total_weighted_score = 0.0
@@ -611,8 +579,7 @@ def weighted_score(scores: Dict[str, float], weights: Dict[str, float]) -> float
 
 
 async def initialize_models() -> bool:
-    """Initialize all recommendation models"""
-    try:
+    """Initialize all recommendation models"""    try:
         logger.info("Starting model initialization process")
         
         # Initialize model manager
@@ -660,8 +627,7 @@ async def initialize_models() -> bool:
 
 
 async def health_check() -> Dict[str, Any]:
-    """Comprehensive system health check"""
-    health_status = {
+    """Comprehensive system health check"""    health_status = {
         'overall_healthy': True,
         'timestamp': datetime.now().isoformat(),
         'components': {}
@@ -713,14 +679,12 @@ async def health_check() -> Dict[str, Any]:
 
 
 def performance_metrics() -> Dict[str, Any]:
-    """Get comprehensive performance metrics"""
-    perf_monitor = PerformanceMonitor()
+    """Get comprehensive performance metrics"""    perf_monitor = PerformanceMonitor()
     return perf_monitor.get_metrics_summary()
 
 
 async def recommendation_validator(recommendations: List[ContentRecommendation]) -> List[str]:
-    """Validate recommendation quality and consistency"""
-    errors = []
+    """Validate recommendation quality and consistency"""    errors = []
     
     if not recommendations:
         errors.append("No recommendations provided")
@@ -750,27 +714,23 @@ async def recommendation_validator(recommendations: List[ContentRecommendation])
 
 # Helper functions for internal use
 async def _validate_data(data: Any, schema: Dict[str, Any]) -> List[str]:
-    """Internal data validation helper"""
-    errors = []
+    """Internal data validation helper"""    errors = []
     # Implementation would depend on specific validation schema format
     return errors
 
 
 async def _get_from_cache(cache_key: str) -> Optional[Any]:
-    """Internal cache retrieval helper"""
-    # This would use the global cache manager instance
+    """Internal cache retrieval helper"""    # This would use the global cache manager instance
     return None
 
 
 async def _set_to_cache(cache_key: str, value: Any, ttl: int) -> bool:
-    """Internal cache storage helper"""
-    # This would use the global cache manager instance
+    """Internal cache storage helper"""    # This would use the global cache manager instance
     return True
 
 
 def _generate_cache_key(func_name: str, prefix: str, args: tuple, kwargs: dict) -> str:
-    """Internal cache key generation helper"""
-    return generate_cache_key(func_name, prefix, args, kwargs)
+    """Internal cache key generation helper"""    return generate_cache_key(func_name, prefix, args, kwargs)
 
 import asyncio
 import logging
@@ -811,8 +771,7 @@ from ..core.base_models import ModelStatus
 
 @dataclass
 class SystemHealth:
-    """System health status"""
-    status: str = "unknown"
+    """System health status"""    status: str = "unknown"
     cpu_usage: float = 0.0
     memory_usage: float = 0.0
     disk_usage: float = 0.0
@@ -827,8 +786,7 @@ class SystemHealth:
 
 @dataclass
 class PerformanceMetrics:
-    """Performance metrics tracking"""
-    total_requests: int = 0
+    """Performance metrics tracking"""    total_requests: int = 0
     successful_requests: int = 0
     failed_requests: int = 0
     average_response_time: float = 0.0
@@ -843,10 +801,8 @@ class PerformanceMetrics:
 
 
 class ModelManager:
-    """
-    Model lifecycle management and initialization
-    """
-    
+    """    Model lifecycle management and initialization
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.models = {}
@@ -854,16 +810,14 @@ class ModelManager:
         self.initialization_lock = asyncio.Lock()
     
     async def initialize_models(self, config: Dict[str, Any]) -> bool:
-        """
-        Initialize all AI models for the recommendation system
+        """        Initialize all AI models for the recommendation system
         
         Args:
             config: Configuration dictionary with model settings
             
         Returns:
             True if all models initialized successfully
-        """
-        async with self.initialization_lock:
+        """        async with self.initialization_lock:
             try:
                 self.logger.info("Starting model initialization...")
                 
@@ -898,8 +852,7 @@ class ModelManager:
                 raise RecommendationError(f"Model initialization failed: {str(e)}")
     
     async def _initialize_content_models(self, config: Dict[str, Any]):
-        """Initialize content analysis models"""
-        self.logger.info("Initializing content analysis models...")
+        """Initialize content analysis models"""        self.logger.info("Initializing content analysis models...")
         
         # NLP models for text analysis
         self.models["text_analyzer"] = await self._load_text_analysis_model(config)
@@ -918,8 +871,7 @@ class ModelManager:
         self.model_status["video_analyzer"] = ModelStatus.READY
     
     async def _initialize_collaboration_models(self, config: Dict[str, Any]):
-        """Initialize collaboration matching models"""
-        self.logger.info("Initializing collaboration models...")
+        """Initialize collaboration matching models"""        self.logger.info("Initializing collaboration models...")
         
         # Creator similarity models
         self.models["creator_similarity"] = await self._load_creator_similarity_model(config)
@@ -930,8 +882,7 @@ class ModelManager:
         self.model_status["audience_overlap"] = ModelStatus.READY
     
     async def _initialize_trend_models(self, config: Dict[str, Any]):
-        """Initialize trend analysis models"""
-        self.logger.info("Initializing trend analysis models...")
+        """Initialize trend analysis models"""        self.logger.info("Initializing trend analysis models...")
         
         # Trend detection models
         self.models["trend_detector"] = await self._load_trend_detection_model(config)
@@ -942,74 +893,61 @@ class ModelManager:
         self.model_status["viral_predictor"] = ModelStatus.READY
     
     async def _initialize_revenue_models(self, config: Dict[str, Any]):
-        """Initialize revenue optimization models"""
-        self.logger.info("Initializing revenue optimization models...")
+        """Initialize revenue optimization models"""        self.logger.info("Initializing revenue optimization models...")
         
         # Revenue prediction models
         self.models["revenue_predictor"] = await self._load_revenue_prediction_model(config)
         self.model_status["revenue_predictor"] = ModelStatus.READY
     
     async def _initialize_protection_models(self, config: Dict[str, Any]):
-        """Initialize content protection models"""
-        self.logger.info("Initializing protection models...")
+        """Initialize content protection models"""        self.logger.info("Initializing protection models...")
         
         # Content fingerprinting models
         self.models["fingerprinter"] = await self._load_fingerprinting_model(config)
         self.model_status["fingerprinter"] = ModelStatus.READY
     
     async def _load_text_analysis_model(self, config: Dict[str, Any]):
-        """Load text analysis model"""
-        # Placeholder for actual model loading
+        """Load text analysis model"""        # Placeholder for actual model loading
         return {"model": "text_analyzer", "status": "loaded"}
     
     async def _load_image_analysis_model(self, config: Dict[str, Any]):
-        """Load image analysis model"""
-        # Placeholder for actual model loading
+        """Load image analysis model"""        # Placeholder for actual model loading
         return {"model": "image_analyzer", "status": "loaded"}
     
     async def _load_audio_analysis_model(self, config: Dict[str, Any]):
-        """Load audio analysis model"""
-        # Placeholder for actual model loading
+        """Load audio analysis model"""        # Placeholder for actual model loading
         return {"model": "audio_analyzer", "status": "loaded"}
     
     async def _load_video_analysis_model(self, config: Dict[str, Any]):
-        """Load video analysis model"""
-        # Placeholder for actual model loading
+        """Load video analysis model"""        # Placeholder for actual model loading
         return {"model": "video_analyzer", "status": "loaded"}
     
     async def _load_creator_similarity_model(self, config: Dict[str, Any]):
-        """Load creator similarity model"""
-        # Placeholder for actual model loading
+        """Load creator similarity model"""        # Placeholder for actual model loading
         return {"model": "creator_similarity", "status": "loaded"}
     
     async def _load_audience_overlap_model(self, config: Dict[str, Any]):
-        """Load audience overlap model"""
-        # Placeholder for actual model loading
+        """Load audience overlap model"""        # Placeholder for actual model loading
         return {"model": "audience_overlap", "status": "loaded"}
     
     async def _load_trend_detection_model(self, config: Dict[str, Any]):
-        """Load trend detection model"""
-        # Placeholder for actual model loading
+        """Load trend detection model"""        # Placeholder for actual model loading
         return {"model": "trend_detector", "status": "loaded"}
     
     async def _load_viral_prediction_model(self, config: Dict[str, Any]):
-        """Load viral prediction model"""
-        # Placeholder for actual model loading
+        """Load viral prediction model"""        # Placeholder for actual model loading
         return {"model": "viral_predictor", "status": "loaded"}
     
     async def _load_revenue_prediction_model(self, config: Dict[str, Any]):
-        """Load revenue prediction model"""
-        # Placeholder for actual model loading
+        """Load revenue prediction model"""        # Placeholder for actual model loading
         return {"model": "revenue_predictor", "status": "loaded"}
     
     async def _load_fingerprinting_model(self, config: Dict[str, Any]):
-        """Load content fingerprinting model"""
-        # Placeholder for actual model loading
+        """Load content fingerprinting model"""        # Placeholder for actual model loading
         return {"model": "fingerprinter", "status": "loaded"}
     
     async def _validate_all_models(self) -> Dict[str, bool]:
-        """Validate all loaded models"""
-        validation_results = {}
+        """Validate all loaded models"""        validation_results = {}
         
         for model_name, model in self.models.items():
             try:
@@ -1029,15 +967,12 @@ class ModelManager:
         return validation_results
     
     def get_model_status(self) -> Dict[str, str]:
-        """Get status of all models"""
-        return {name: status.value for name, status in self.model_status.items()}
+        """Get status of all models"""        return {name: status.value for name, status in self.model_status.items()}
 
 
 class HealthChecker:
-    """
-    System health monitoring and diagnostics
-    """
-    
+    """    System health monitoring and diagnostics
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.health_history = []
@@ -1050,16 +985,14 @@ class HealthChecker:
         }
     
     async def health_check(self, components: Optional[List[str]] = None) -> SystemHealth:
-        """
-        Perform comprehensive system health check
+        """        Perform comprehensive system health check
         
         Args:
             components: Specific components to check, or None for all
             
         Returns:
             SystemHealth object with current system status
-        """
-        try:
+        """        try:
             self.logger.info("Performing system health check...")
             
             health = SystemHealth()
@@ -1095,8 +1028,7 @@ class HealthChecker:
             return SystemHealth(status="error", last_check=datetime.now())
     
     def _calculate_health_status(self, health: SystemHealth) -> str:
-        """Calculate overall health status based on metrics"""
-        critical_issues = 0
+        """Calculate overall health status based on metrics"""        critical_issues = 0
         warning_issues = 0
         
         # Check CPU usage
@@ -1126,8 +1058,7 @@ class HealthChecker:
             return "healthy"
     
     async def get_health_trend(self, hours: int = 24) -> Dict[str, Any]:
-        """Get health trends over specified time period"""
-        cutoff_time = datetime.now() - timedelta(hours=hours)
+        """Get health trends over specified time period"""        cutoff_time = datetime.now() - timedelta(hours=hours)
         recent_health = [h for h in self.health_history if h.last_check >= cutoff_time]
         
         if not recent_health:
@@ -1157,10 +1088,8 @@ class HealthChecker:
 
 
 class PerformanceTracker:
-    """
-    Performance metrics tracking and analysis
-    """
-    
+    """    Performance metrics tracking and analysis
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.metrics = PerformanceMetrics(system_errors=[])
@@ -1168,8 +1097,7 @@ class PerformanceTracker:
         self.start_time = datetime.now()
     
     def track_request(self, success: bool, response_time: float):
-        """Track a request and its performance"""
-        self.metrics.total_requests += 1
+        """Track a request and its performance"""        self.metrics.total_requests += 1
         
         if success:
             self.metrics.successful_requests += 1
@@ -1191,23 +1119,19 @@ class PerformanceTracker:
             self.response_times = self.response_times[-1000:]
     
     def track_cache_hit(self):
-        """Track cache hit"""
-        self.metrics.cache_hits += 1
+        """Track cache hit"""        self.metrics.cache_hits += 1
     
     def track_cache_miss(self):
-        """Track cache miss"""
-        self.metrics.cache_misses += 1
+        """Track cache miss"""        self.metrics.cache_misses += 1
     
     def get_cache_hit_ratio(self) -> float:
-        """Calculate cache hit ratio"""
-        total_cache_requests = self.metrics.cache_hits + self.metrics.cache_misses
+        """Calculate cache hit ratio"""        total_cache_requests = self.metrics.cache_hits + self.metrics.cache_misses
         if total_cache_requests == 0:
             return 0.0
         return self.metrics.cache_hits / total_cache_requests
     
     def get_metrics(self) -> PerformanceMetrics:
-        """Get current performance metrics"""
-        # Update cache hit ratio
+        """Get current performance metrics"""        # Update cache hit ratio
         if hasattr(self.metrics, 'cache_hit_ratio'):
             self.metrics.cache_hit_ratio = self.get_cache_hit_ratio()
         
@@ -1215,24 +1139,20 @@ class PerformanceTracker:
 
 
 class RecommendationValidator:
-    """
-    Validation utilities for recommendation system
-    """
-    
+    """    Validation utilities for recommendation system
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
     
     async def validate_creator_profile(self, profile: CreatorProfile) -> Dict[str, Any]:
-        """
-        Validate creator profile for completeness and correctness
+        """        Validate creator profile for completeness and correctness
         
         Args:
             profile: Creator profile to validate
             
         Returns:
             Validation result with errors and warnings
-        """
-        validation_result = {
+        """        validation_result = {
             "is_valid": True,
             "errors": [],
             "warnings": [],
@@ -1293,16 +1213,14 @@ class RecommendationValidator:
         return validation_result
     
     async def validate_recommendation(self, recommendation: ContentRecommendation) -> Dict[str, Any]:
-        """
-        Validate content recommendation for quality and completeness
+        """        Validate content recommendation for quality and completeness
         
         Args:
             recommendation: Content recommendation to validate
             
         Returns:
             Validation result
-        """
-        validation_result = {
+        """        validation_result = {
             "is_valid": True,
             "errors": [],
             "warnings": [],
@@ -1354,8 +1272,7 @@ class RecommendationValidator:
 # Utility functions
 
 def timing_decorator(func):
-    """Decorator to time function execution"""
-    @functools.wraps(func)
+    """Decorator to time function execution"""    @functools.wraps(func)
     async def wrapper(*args, **kwargs):
         start_time = time.time()
         try:
@@ -1370,8 +1287,7 @@ def timing_decorator(func):
 
 
 def cache_result(ttl_seconds: int = 300):
-    """Decorator to cache function results with TTL"""
-    def decorator(func):
+    """Decorator to cache function results with TTL"""    def decorator(func):
         cache = {}
         
         @functools.wraps(func)
@@ -1402,8 +1318,7 @@ def cache_result(ttl_seconds: int = 300):
 
 
 async def safe_json_load(file_path: str) -> Optional[Dict[str, Any]]:
-    """Safely load JSON file with error handling"""
-    try:
+    """Safely load JSON file with error handling"""    try:
         async with aiofiles.open(file_path, 'r') as f:
             content = await f.read()
             return json.loads(content)
@@ -1419,8 +1334,7 @@ async def safe_json_load(file_path: str) -> Optional[Dict[str, Any]]:
 
 
 async def safe_json_save(data: Any, file_path: str) -> bool:
-    """Safely save data to JSON file"""
-    try:
+    """Safely save data to JSON file"""    try:
         # Ensure directory exists
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
         
@@ -1433,8 +1347,7 @@ async def safe_json_save(data: Any, file_path: str) -> bool:
 
 
 def sanitize_input(text: str, max_length: int = 1000) -> str:
-    """Sanitize user input text"""
-    if not isinstance(text, str):
+    """Sanitize user input text"""    if not isinstance(text, str):
         return ""
     
     # Remove potentially harmful characters
@@ -1448,8 +1361,7 @@ def sanitize_input(text: str, max_length: int = 1000) -> str:
 
 
 def calculate_similarity(vector1: List[float], vector2: List[float]) -> float:
-    """Calculate cosine similarity between two vectors"""
-    try:
+    """Calculate cosine similarity between two vectors"""    try:
         v1 = np.array(vector1)
         v2 = np.array(vector2)
         
@@ -1467,8 +1379,7 @@ def calculate_similarity(vector1: List[float], vector2: List[float]) -> float:
 
 
 def generate_content_hash(content: Dict[str, Any]) -> str:
-    """Generate consistent hash for content"""
-    # Create a normalized string representation
+    """Generate consistent hash for content"""    # Create a normalized string representation
     content_str = json.dumps(content, sort_keys=True, default=str)
     return hashlib.sha256(content_str.encode()).hexdigest()
 
@@ -1479,8 +1390,7 @@ async def batch_process(
     batch_size: int = 10,
     max_workers: int = 4
 ) -> List[Any]:
-    """Process items in batches with concurrency control"""
-    results = []
+    """Process items in batches with concurrency control"""    results = []
     
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         for i in range(0, len(items), batch_size):
@@ -1502,8 +1412,7 @@ async def batch_process(
 
 
 def format_duration(seconds: float) -> str:
-    """Format duration in seconds to human-readable string"""
-    if seconds < 60:
+    """Format duration in seconds to human-readable string"""    if seconds < 60:
         return f"{seconds:.2f} seconds"
     elif seconds < 3600:
         minutes = seconds / 60
@@ -1514,8 +1423,7 @@ def format_duration(seconds: float) -> str:
 
 
 def format_number(number: Union[int, float], precision: int = 2) -> str:
-    """Format number with appropriate units (K, M, B)"""
-    if number < 1000:
+    """Format number with appropriate units (K, M, B)"""    if number < 1000:
         return str(number)
     elif number < 1000000:
         return f"{number/1000:.{precision}f}K"
@@ -1526,8 +1434,7 @@ def format_number(number: Union[int, float], precision: int = 2) -> str:
 
 
 async def validate_url(url: str) -> bool:
-    """Validate if URL is accessible"""
-    try:
+    """Validate if URL is accessible"""    try:
         import aiohttp
         async with aiohttp.ClientSession() as session:
             async with session.head(url, timeout=10) as response:
@@ -1537,24 +1444,21 @@ async def validate_url(url: str) -> bool:
 
 
 def extract_hashtags(text: str) -> List[str]:
-    """Extract hashtags from text"""
-    import re
+    """Extract hashtags from text"""    import re
     hashtag_pattern = r'#\w+'
     hashtags = re.findall(hashtag_pattern, text)
     return [tag.lower() for tag in hashtags]
 
 
 def extract_mentions(text: str) -> List[str]:
-    """Extract mentions from text"""
-    import re
+    """Extract mentions from text"""    import re
     mention_pattern = r'@\w+'
     mentions = re.findall(mention_pattern, text)
     return [mention.lower() for mention in mentions]
 
 
 def normalize_platform_name(platform_name: str) -> Optional[Platform]:
-    """Normalize platform name to Platform enum"""
-    platform_mapping = {
+    """Normalize platform name to Platform enum"""    platform_mapping = {
         "youtube": Platform.YOUTUBE,
         "yt": Platform.YOUTUBE,
         "tiktok": Platform.TIKTOK,
@@ -1588,16 +1492,14 @@ recommendation_validator = RecommendationValidator()
 # Public API functions
 
 async def initialize_models(config: Optional[Dict[str, Any]] = None) -> bool:
-    """
-    Initialize all AI models for the recommendation system
+    """    Initialize all AI models for the recommendation system
     
     Args:
         config: Optional configuration for model initialization
         
     Returns:
         True if initialization successful
-    """
-    if config is None:
+    """    if config is None:
         config = {
             "content_models": {},
             "collaboration_models": {},
@@ -1610,36 +1512,30 @@ async def initialize_models(config: Optional[Dict[str, Any]] = None) -> bool:
 
 
 async def health_check(components: Optional[List[str]] = None) -> SystemHealth:
-    """
-    Perform system health check
+    """    Perform system health check
     
     Args:
         components: Specific components to check
         
     Returns:
         SystemHealth object
-    """
-    return await health_checker.health_check(components)
+    """    return await health_checker.health_check(components)
 
 
 async def performance_metrics() -> PerformanceMetrics:
-    """
-    Get current performance metrics
+    """    Get current performance metrics
     
     Returns:
         PerformanceMetrics object
-    """
-    return performance_tracker.get_metrics()
+    """    return performance_tracker.get_metrics()
 
 
 async def recommendation_validator_check(recommendation: ContentRecommendation) -> Dict[str, Any]:
-    """
-    Validate a content recommendation
+    """    Validate a content recommendation
     
     Args:
         recommendation: Recommendation to validate
         
     Returns:
         Validation result
-    """
-    return await recommendation_validator.validate_recommendation(recommendation)
+    """    return await recommendation_validator.validate_recommendation(recommendation)

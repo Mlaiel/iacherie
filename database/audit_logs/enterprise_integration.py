@@ -1,5 +1,4 @@
-"""
-Ultra-Advanced Enterprise Integration Engine
+"""Ultra-Advanced Enterprise Integration Engine
 
 Revolutionary enterprise integration and API management system specifically
 designed for the IA Influencer Agent platform. Provides comprehensive third-party
@@ -19,9 +18,7 @@ This revolutionary enterprise integration engine is the EXCLUSIVE property of Fa
 Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
-"""
-
-from typing import List, Dict, Any, Optional, Union, Tuple, Set, Callable
+"""from typing import List, Dict, Any, Optional, Union, Tuple, Set, Callable
 import logging
 from datetime import datetime, timezone, timedelta
 from enum import Enum
@@ -65,8 +62,7 @@ Base = declarative_base()
 
 
 class IntegrationType(Enum):
-    """Comprehensive integration types for enterprise connectivity."""
-    
+    """Comprehensive integration types for enterprise connectivity."""    
     # Social Media Platforms
     YOUTUBE_API = "youtube_api"
     INSTAGRAM_API = "instagram_api"
@@ -145,8 +141,7 @@ class IntegrationType(Enum):
 
 
 class IntegrationStatus(Enum):
-    """Integration operational status tracking."""
-    
+    """Integration operational status tracking."""    
     ACTIVE = "active"
     INACTIVE = "inactive"
     PENDING = "pending"
@@ -158,8 +153,7 @@ class IntegrationStatus(Enum):
 
 
 class WebhookEventType(Enum):
-    """Webhook event types for real-time notifications."""
-    
+    """Webhook event types for real-time notifications."""    
     # Content events
     CONTENT_UPLOADED = "content_uploaded"
     CONTENT_PROTECTED = "content_protected"
@@ -189,8 +183,7 @@ class WebhookEventType(Enum):
 
 @dataclass
 class IntegrationConfig:
-    """Comprehensive integration configuration."""
-    
+    """Comprehensive integration configuration."""    
     config_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     integration_name: str = ""
     integration_type: IntegrationType = IntegrationType.YOUTUBE_API
@@ -235,8 +228,7 @@ class IntegrationConfig:
 
 @dataclass
 class APIRequest:
-    """API request tracking and logging."""
-    
+    """API request tracking and logging."""    
     request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     integration_type: IntegrationType = IntegrationType.YOUTUBE_API
     endpoint: str = ""
@@ -260,8 +252,7 @@ class APIRequest:
 
 
 class EnterpriseIntegrationLog(Base):
-    """Ultra-comprehensive enterprise integration operations log."""
-    
+    """Ultra-comprehensive enterprise integration operations log."""    
     __tablename__ = "enterprise_integration_logs"
     
     # Primary identifiers
@@ -370,11 +361,9 @@ class EnterpriseIntegrationLog(Base):
 
 
 class EnterpriseIntegrationEngine:
-    """Ultra-advanced enterprise integration and API management engine."""
-    
+    """Ultra-advanced enterprise integration and API management engine."""    
     def __init__(self, db_session: Session):
-        """Initialize the enterprise integration engine."""
-        self.db_session = db_session
+        """Initialize the enterprise integration engine."""        self.db_session = db_session
         self.logger = logging.getLogger(__name__)
         
         # Integration configurations
@@ -399,8 +388,7 @@ class EnterpriseIntegrationEngine:
             self.celery_app = Celery('integration_engine')
         
     async def register_integration(self, integration_config: IntegrationConfig) -> str:
-        """Register a new enterprise integration."""
-        try:
+        """Register a new enterprise integration."""        try:
             # Validate integration configuration
             await self._validate_integration_config(integration_config)
             
@@ -446,8 +434,7 @@ class EnterpriseIntegrationEngine:
             raise
     
     async def _validate_integration_config(self, config: IntegrationConfig):
-        """Validate integration configuration."""
-        if not config.integration_name:
+        """Validate integration configuration."""        if not config.integration_name:
             raise ValueError("Integration name is required")
         
         if not config.base_url:
@@ -460,8 +447,7 @@ class EnterpriseIntegrationEngine:
             raise ValueError("API key authentication requires api_key")
     
     async def _test_integration_connectivity(self, config: IntegrationConfig) -> Dict[str, Any]:
-        """Test connectivity to the integration endpoint."""
-        try:
+        """Test connectivity to the integration endpoint."""        try:
             if not HAS_REQUESTS:
                 return {"success": False, "error": "HTTP client not available"}
             
@@ -496,8 +482,7 @@ class EnterpriseIntegrationEngine:
                              method: str = "GET",
                              parameters: Optional[Dict[str, Any]] = None,
                              payload: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Execute API call to integrated service."""
-        try:
+        """Execute API call to integrated service."""        try:
             integration_config = self.integrations.get(integration_id)
             if not integration_config:
                 raise ValueError(f"Integration not found: {integration_id}")
@@ -552,8 +537,7 @@ class EnterpriseIntegrationEngine:
     async def _execute_http_request(self, 
                                   config: IntegrationConfig,
                                   request: APIRequest) -> Dict[str, Any]:
-        """Execute the actual HTTP request."""
-        if not HAS_REQUESTS:
+        """Execute the actual HTTP request."""        if not HAS_REQUESTS:
             raise Exception("HTTP client not available")
         
         # Prepare URL
@@ -624,8 +608,7 @@ class EnterpriseIntegrationEngine:
                                   integration_id: str,
                                   webhook_url: str,
                                   events: List[WebhookEventType]) -> Dict[str, Any]:
-        """Setup webhook handler for real-time event notifications."""
-        try:
+        """Setup webhook handler for real-time event notifications."""        try:
             integration_config = self.integrations.get(integration_id)
             if not integration_config:
                 raise ValueError(f"Integration not found: {integration_id}")
@@ -668,8 +651,7 @@ class EnterpriseIntegrationEngine:
                                   integration_id: str,
                                   event_data: Dict[str, Any],
                                   signature: str) -> Dict[str, Any]:
-        """Process incoming webhook event."""
-        try:
+        """Process incoming webhook event."""        try:
             # Verify webhook signature
             if not await self._verify_webhook_signature(integration_id, event_data, signature):
                 raise Exception("Invalid webhook signature")
@@ -708,8 +690,7 @@ class EnterpriseIntegrationEngine:
     async def sync_integration_data(self, 
                                   integration_id: str,
                                   sync_type: str = "incremental") -> Dict[str, Any]:
-        """Synchronize data with integrated service."""
-        try:
+        """Synchronize data with integrated service."""        try:
             integration_config = self.integrations.get(integration_id)
             if not integration_config:
                 raise ValueError(f"Integration not found: {integration_id}")
@@ -757,8 +738,7 @@ class EnterpriseIntegrationEngine:
     
     async def generate_integration_analytics(self, 
                                            time_period: str = "monthly") -> Dict[str, Any]:
-        """Generate comprehensive integration analytics and performance report."""
-        try:
+        """Generate comprehensive integration analytics and performance report."""        try:
             end_date = datetime.now(timezone.utc)
             if time_period == "daily":
                 start_date = end_date - timedelta(days=1)

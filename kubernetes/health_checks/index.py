@@ -1,5 +1,4 @@
-"""
-Health Checks Module Index - IA Influencer Agent Platform
+"""Health Checks Module Index - IA Influencer Agent Platform
 Main entry point for comprehensive health monitoring system
 
 This module serves as the central orchestrator for all health monitoring
@@ -23,9 +22,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security +
 WARNING: This code is proprietary and confidential. Any unauthorized use,
 reproduction, or distribution without explicit written permission from
 Fahed Mlaiel is strictly prohibited and may result in legal action.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime
 from typing import Dict, List, Optional, Any, Union
@@ -57,8 +54,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class HealthMonitoringConfig:
-    """Configuration for health monitoring system"""
-    enabled: bool = True
+    """Configuration for health monitoring system"""    enabled: bool = True
     check_interval_seconds: int = 300  # 5 minutes
     comprehensive_check_interval_seconds: int = 900  # 15 minutes
     metrics_collection_enabled: bool = True
@@ -89,24 +85,19 @@ class HealthMonitoringConfig:
 
 
 class HealthMonitoringOrchestrator:
-    """
-    Central orchestrator for IA Influencer Agent health monitoring
+    """    Central orchestrator for IA Influencer Agent health monitoring
     
     This class provides the main interface for health monitoring across
     the entire platform, coordinating all subsystem health checkers and
     providing unified health status reporting.
-    """
-
-    def __init__(self, config: Dict[str, Any], app=None, redis_client=None):
-        """
-        Initialize health monitoring orchestrator
+    """    def __init__(self, config: Dict[str, Any], app=None, redis_client=None):
+        """        Initialize health monitoring orchestrator
         
         Args:
             config: Platform configuration dictionary
             app: FastAPI application instance (optional)
             redis_client: Redis client for distributed state (optional)
-        """
-        self.config = config
+        """        self.config = config
         self.app = app
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
@@ -124,8 +115,7 @@ class HealthMonitoringOrchestrator:
         self._monitoring_task = None
 
     def _initialize_health_checkers(self):
-        """Initialize all health checking components"""
-        try:
+        """Initialize all health checking components"""        try:
             # Core health checker
             if self.monitoring_config.core_health_enabled and self.app:
                 self.core_checker = CoreHealthChecker(self.app, self.config)
@@ -207,8 +197,7 @@ class HealthMonitoringOrchestrator:
             raise
 
     async def start_monitoring(self):
-        """Start continuous health monitoring"""
-        if self._is_running:
+        """Start continuous health monitoring"""        if self._is_running:
             self.logger.warning("Health monitoring is already running")
             return
         
@@ -224,8 +213,7 @@ class HealthMonitoringOrchestrator:
         )
 
     async def stop_monitoring(self):
-        """Stop continuous health monitoring"""
-        if not self._is_running:
+        """Stop continuous health monitoring"""        if not self._is_running:
             self.logger.warning("Health monitoring is not running")
             return
         
@@ -244,8 +232,7 @@ class HealthMonitoringOrchestrator:
         self.logger.info("Health monitoring stopped")
 
     async def _monitoring_loop(self):
-        """Main health monitoring loop"""
-        last_comprehensive_check = datetime.utcnow()
+        """Main health monitoring loop"""        last_comprehensive_check = datetime.utcnow()
         
         while self._is_running:
             try:
@@ -276,8 +263,7 @@ class HealthMonitoringOrchestrator:
                 await asyncio.sleep(30)  # Wait 30 seconds before retrying
 
     async def _perform_comprehensive_health_check(self):
-        """Perform comprehensive health check across all subsystems"""
-        try:
+        """Perform comprehensive health check across all subsystems"""        try:
             self.logger.info("Performing comprehensive health check")
             
             # Execute comprehensive health check
@@ -314,8 +300,7 @@ class HealthMonitoringOrchestrator:
             self.logger.error(f"Comprehensive health check failed: {str(e)}")
 
     async def _perform_quick_health_check(self):
-        """Perform quick health check of critical services"""
-        try:
+        """Perform quick health check of critical services"""        try:
             # Quick readiness check
             readiness_status = await self.comprehensive_checker.check_service_readiness()
             
@@ -340,13 +325,11 @@ class HealthMonitoringOrchestrator:
             self.logger.error(f"Quick health check failed: {str(e)}")
 
     async def get_current_health_status(self) -> Dict[str, Any]:
-        """
-        Get current platform health status
+        """        Get current platform health status
         
         Returns:
             Dict[str, Any]: Current health status and metrics
-        """
-        try:
+        """        try:
             if self._last_comprehensive_check:
                 # Return last comprehensive check results
                 health_data = asdict(self._last_comprehensive_check)
@@ -370,16 +353,14 @@ class HealthMonitoringOrchestrator:
             }
 
     async def get_subsystem_health(self, subsystem_name: str) -> Dict[str, Any]:
-        """
-        Get detailed health information for specific subsystem
+        """        Get detailed health information for specific subsystem
         
         Args:
             subsystem_name: Name of subsystem to check
             
         Returns:
             Dict[str, Any]: Detailed subsystem health information
-        """
-        try:
+        """        try:
             return await self.comprehensive_checker.get_subsystem_health(subsystem_name)
         except Exception as e:
             self.logger.error(f"Failed to get {subsystem_name} health: {str(e)}")
@@ -390,16 +371,14 @@ class HealthMonitoringOrchestrator:
             }
 
     async def get_health_metrics(self, time_range_hours: int = 1) -> Dict[str, Any]:
-        """
-        Get health metrics summary
+        """        Get health metrics summary
         
         Args:
             time_range_hours: Time range for metrics in hours
             
         Returns:
             Dict[str, Any]: Health metrics summary
-        """
-        try:
+        """        try:
             if self.metrics_collector:
                 return await self.metrics_collector.get_metrics_summary(time_range_hours)
             else:
@@ -415,8 +394,7 @@ class HealthMonitoringOrchestrator:
             }
 
     async def get_health_trends(self, service_name: str, metric_name: str, hours: int = 24) -> Dict[str, Any]:
-        """
-        Get health trends for specific service and metric
+        """        Get health trends for specific service and metric
         
         Args:
             service_name: Name of service
@@ -425,8 +403,7 @@ class HealthMonitoringOrchestrator:
             
         Returns:
             Dict[str, Any]: Health trend analysis
-        """
-        try:
+        """        try:
             if self.metrics_collector:
                 trend = await self.metrics_collector.analyze_health_trends(
                     service_name, metric_name, hours
@@ -445,13 +422,11 @@ class HealthMonitoringOrchestrator:
             }
 
     async def get_active_alerts(self) -> List[Dict[str, Any]]:
-        """
-        Get all active health alerts
+        """        Get all active health alerts
         
         Returns:
             List[Dict[str, Any]]: List of active alerts
-        """
-        try:
+        """        try:
             if self.alerting_system:
                 return await self.alerting_system.get_active_alerts()
             else:
@@ -461,8 +436,7 @@ class HealthMonitoringOrchestrator:
             return []
 
     async def acknowledge_alert(self, alert_id: str, acknowledged_by: str) -> bool:
-        """
-        Acknowledge a health alert
+        """        Acknowledge a health alert
         
         Args:
             alert_id: ID of alert to acknowledge
@@ -470,8 +444,7 @@ class HealthMonitoringOrchestrator:
             
         Returns:
             bool: True if alert was acknowledged successfully
-        """
-        try:
+        """        try:
             if self.alerting_system:
                 return await self.alerting_system.acknowledge_alert(alert_id, acknowledged_by)
             else:
@@ -481,8 +454,7 @@ class HealthMonitoringOrchestrator:
             return False
 
     async def resolve_alert(self, alert_id: str, resolved_by: str = "system") -> bool:
-        """
-        Resolve a health alert
+        """        Resolve a health alert
         
         Args:
             alert_id: ID of alert to resolve
@@ -490,8 +462,7 @@ class HealthMonitoringOrchestrator:
             
         Returns:
             bool: True if alert was resolved successfully
-        """
-        try:
+        """        try:
             if self.alerting_system:
                 return await self.alerting_system.resolve_alert(alert_id, resolved_by)
             else:
@@ -501,13 +472,11 @@ class HealthMonitoringOrchestrator:
             return False
 
     async def export_prometheus_metrics(self) -> str:
-        """
-        Export health metrics in Prometheus format
+        """        Export health metrics in Prometheus format
         
         Returns:
             str: Prometheus-formatted metrics
-        """
-        try:
+        """        try:
             if self.metrics_collector:
                 return await self.metrics_collector.export_prometheus_metrics()
             else:
@@ -517,8 +486,7 @@ class HealthMonitoringOrchestrator:
             return f"# Error exporting metrics: {str(e)}\n"
 
     async def _cleanup_resources(self):
-        """Clean up health monitoring resources"""
-        try:
+        """Clean up health monitoring resources"""        try:
             # Cleanup database connections
             if self.database_checker:
                 await self.database_checker.cleanup_connections()
@@ -537,8 +505,7 @@ class HealthMonitoringOrchestrator:
             self.logger.error(f"Error cleaning up health monitoring resources: {str(e)}")
 
     def get_monitoring_status(self) -> Dict[str, Any]:
-        """Get health monitoring system status"""
-        return {
+        """Get health monitoring system status"""        return {
             "monitoring_active": self._is_running,
             "monitoring_config": asdict(self.monitoring_config),
             "components_initialized": {
@@ -564,8 +531,7 @@ class HealthMonitoringOrchestrator:
 
 # Convenience functions for direct module usage
 def create_health_monitor(config: Dict[str, Any], app=None, redis_client=None) -> HealthMonitoringOrchestrator:
-    """
-    Create health monitoring orchestrator with configuration
+    """    Create health monitoring orchestrator with configuration
     
     Args:
         config: Platform configuration
@@ -574,13 +540,11 @@ def create_health_monitor(config: Dict[str, Any], app=None, redis_client=None) -
         
     Returns:
         HealthMonitoringOrchestrator: Configured health monitor
-    """
-    return HealthMonitoringOrchestrator(config, app, redis_client)
+    """    return HealthMonitoringOrchestrator(config, app, redis_client)
 
 
 async def quick_health_check(config: Dict[str, Any], app=None) -> Dict[str, Any]:
-    """
-    Perform quick health check without full monitoring setup
+    """    Perform quick health check without full monitoring setup
     
     Args:
         config: Platform configuration
@@ -588,8 +552,7 @@ async def quick_health_check(config: Dict[str, Any], app=None) -> Dict[str, Any]
         
     Returns:
         Dict[str, Any]: Quick health check results
-    """
-    try:
+    """    try:
         checker = ComprehensiveHealthChecker(config, app)
         return await checker.check_service_readiness()
     except Exception as e:
@@ -602,8 +565,7 @@ async def quick_health_check(config: Dict[str, Any], app=None) -> Dict[str, Any]
 
 
 async def comprehensive_health_check(config: Dict[str, Any], app=None) -> Dict[str, Any]:
-    """
-    Perform comprehensive health check without full monitoring setup
+    """    Perform comprehensive health check without full monitoring setup
     
     Args:
         config: Platform configuration
@@ -611,8 +573,7 @@ async def comprehensive_health_check(config: Dict[str, Any], app=None) -> Dict[s
         
     Returns:
         Dict[str, Any]: Comprehensive health check results
-    """
-    try:
+    """    try:
         checker = ComprehensiveHealthChecker(config, app)
         summary = await checker.perform_comprehensive_health_check()
         return asdict(summary)
@@ -661,8 +622,7 @@ __all__ = [
 ]
 
 
-"""
-Professional Health Monitoring System Implementation Notes:
+"""Professional Health Monitoring System Implementation Notes:
 
 This index module serves as the central orchestrator for the IA Influencer Agent
 health monitoring system, providing:

@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Geo Distribution Manager
+"""IA Influencer Agent - Geo Distribution Manager
 Enterprise geographic content distribution and optimization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -12,9 +11,7 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, field
@@ -42,8 +39,7 @@ logger = logging.getLogger(__name__)
 
 
 class GeographicRegion(Enum):
-    """Geographic regions for content distribution"""
-    NORTH_AMERICA_EAST = "na-east"
+    """Geographic regions for content distribution"""    NORTH_AMERICA_EAST = "na-east"
     NORTH_AMERICA_WEST = "na-west"
     NORTH_AMERICA_CENTRAL = "na-central"
     EUROPE_WEST = "eu-west"
@@ -61,8 +57,7 @@ class GeographicRegion(Enum):
 
 
 class ContentDistributionStrategy(Enum):
-    """Content distribution strategies"""
-    GLOBAL = "global"           # Distribute to all regions
+    """Content distribution strategies"""    GLOBAL = "global"           # Distribute to all regions
     SELECTIVE = "selective"     # Distribute to specific regions based on demand
     PROXIMITY = "proximity"     # Distribute based on user proximity
     LEGAL = "legal"            # Distribute based on legal restrictions
@@ -71,8 +66,7 @@ class ContentDistributionStrategy(Enum):
 
 
 class RegionPriority(Enum):
-    """Region priority levels"""
-    CRITICAL = "critical"    # Must have content immediately
+    """Region priority levels"""    CRITICAL = "critical"    # Must have content immediately
     HIGH = "high"           # Should have content quickly
     MEDIUM = "medium"       # Can wait for content
     LOW = "low"            # Content optional
@@ -81,8 +75,7 @@ class RegionPriority(Enum):
 
 @dataclass
 class GeographicPoint:
-    """Geographic coordinate point"""
-    latitude: float
+    """Geographic coordinate point"""    latitude: float
     longitude: float
     country_code: str
     region_code: Optional[str] = None
@@ -92,8 +85,7 @@ class GeographicPoint:
 
 @dataclass
 class RegionMetrics:
-    """Regional performance metrics"""
-    region: GeographicRegion
+    """Regional performance metrics"""    region: GeographicRegion
     user_count: int
     request_count: int
     bandwidth_usage: int
@@ -107,8 +99,7 @@ class RegionMetrics:
 
 @dataclass
 class ContentGeoDistribution:
-    """Content geographic distribution configuration"""
-    content_id: str
+    """Content geographic distribution configuration"""    content_id: str
     content_type: str
     strategy: ContentDistributionStrategy
     primary_regions: List[GeographicRegion]
@@ -121,8 +112,7 @@ class ContentGeoDistribution:
 
 @dataclass
 class GeoOptimizationRule:
-    """Geographic optimization rule"""
-    name: str
+    """Geographic optimization rule"""    name: str
     condition: str
     action: str
     priority: int
@@ -133,11 +123,9 @@ class GeoOptimizationRule:
 
 
 class GeographicDistributionManager:
-    """
-    Geographic Distribution Manager for IA Influencer Agent Platform
+    """    Geographic Distribution Manager for IA Influencer Agent Platform
     Optimizes content delivery based on geographic location and performance
-    """
-    
+    """    
     def __init__(
         self,
         database_url: str,
@@ -171,8 +159,7 @@ class GeographicDistributionManager:
         self.bandwidth_costs: Dict[GeographicRegion, float] = {}
     
     async def initialize(self) -> bool:
-        """Initialize geographic distribution manager"""
-        try:
+        """Initialize geographic distribution manager"""        try:
             logger.info("Initializing Geographic Distribution Manager...")
             
             # Initialize database connection
@@ -217,8 +204,7 @@ class GeographicDistributionManager:
         content_id: str,
         request_type: str = "download"
     ) -> Optional[GeographicRegion]:
-        """Determine optimal region for content delivery"""
-        try:
+        """Determine optimal region for content delivery"""        try:
             # Get client location
             client_location = await self._get_client_location(client_ip)
             if not client_location:
@@ -264,8 +250,7 @@ class GeographicDistributionManager:
         content_id: str,
         content_metadata: Dict[str, Any]
     ) -> ContentGeoDistribution:
-        """Optimize content distribution based on analytics and performance"""
-        try:
+        """Optimize content distribution based on analytics and performance"""        try:
             # Analyze content performance by region
             regional_performance = await self._analyze_regional_performance(content_id)
             
@@ -340,8 +325,7 @@ class GeographicDistributionManager:
         region: Optional[GeographicRegion] = None,
         time_range: timedelta = timedelta(hours=24)
     ) -> Dict[str, RegionMetrics]:
-        """Get comprehensive regional performance metrics"""
-        try:
+        """Get comprehensive regional performance metrics"""        try:
             regions_to_analyze = [region] if region else list(GeographicRegion)
             regional_metrics = {}
             
@@ -385,8 +369,7 @@ class GeographicDistributionManager:
         source_region: GeographicRegion,
         target_region: GeographicRegion
     ) -> float:
-        """Calculate latency between geographic regions"""
-        try:
+        """Calculate latency between geographic regions"""        try:
             # Check cache first
             cache_key = (source_region, target_region)
             if cache_key in self.latency_matrix:
@@ -415,8 +398,7 @@ class GeographicDistributionManager:
         content_id: str,
         restrictions: Dict[str, List[str]]
     ) -> bool:
-        """Apply legal restrictions to content distribution"""
-        try:
+        """Apply legal restrictions to content distribution"""        try:
             # Get current distribution
             distribution = self.content_distributions.get(content_id)
             if not distribution:
@@ -471,8 +453,7 @@ class GeographicDistributionManager:
         self,
         time_range: timedelta = timedelta(days=7)
     ) -> Dict[str, Any]:
-        """Get comprehensive geographic analytics"""
-        try:
+        """Get comprehensive geographic analytics"""        try:
             end_time = datetime.now()
             start_time = end_time - time_range
             
@@ -514,8 +495,7 @@ class GeographicDistributionManager:
         content_type: str,
         user_growth_predictions: Dict[str, float]
     ) -> List[GeographicRegion]:
-        """Predict optimal regions for content expansion"""
-        try:
+        """Predict optimal regions for content expansion"""        try:
             # Analyze current regional performance
             current_performance = await self.get_regional_metrics()
             
@@ -564,8 +544,7 @@ class GeographicDistributionManager:
     # Private methods
     
     async def _initialize_geoip(self) -> None:
-        """Initialize GeoIP database"""
-        try:
+        """Initialize GeoIP database"""        try:
             self.geoip_reader = geoip2.database.Reader(self.geoip_database_path)
             logger.info("GeoIP database initialized")
         except Exception as e:
@@ -573,8 +552,7 @@ class GeographicDistributionManager:
             self.geoip_reader = None
     
     async def _get_client_location(self, client_ip: str) -> Optional[GeographicPoint]:
-        """Get client geographic location from IP"""
-        try:
+        """Get client geographic location from IP"""        try:
             if not self.geoip_reader:
                 return None
             
@@ -597,8 +575,7 @@ class GeographicDistributionManager:
             return None
     
     async def _load_regional_configurations(self) -> None:
-        """Load regional endpoint configurations"""
-        try:
+        """Load regional endpoint configurations"""        try:
             # Default regional endpoints for content delivery
             default_endpoints = {
                 GeographicRegion.NORTH_AMERICA_EAST: {
@@ -626,8 +603,7 @@ class GeographicDistributionManager:
             logger.error(f"Failed to load regional configurations: {e}")
     
     async def _metrics_collection_loop(self) -> None:
-        """Background metrics collection loop"""
-        while True:
+        """Background metrics collection loop"""        while True:
             try:
                 # Collect regional metrics every 5 minutes
                 await asyncio.sleep(300)
@@ -638,8 +614,7 @@ class GeographicDistributionManager:
                 await asyncio.sleep(300)
     
     async def _optimization_loop(self) -> None:
-        """Geographic optimization loop"""
-        while True:
+        """Geographic optimization loop"""        while True:
             try:
                 # Run optimization every hour
                 await asyncio.sleep(3600)

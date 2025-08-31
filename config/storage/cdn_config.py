@@ -1,5 +1,4 @@
-"""
-CDN Configuration for IA-Influencer Agent Platform
+"""CDN Configuration for IA-Influencer Agent Platform
 ==================================================
 
 Professional Content Delivery Network configuration for global content distribution.
@@ -14,16 +13,13 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import os
+"""import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
 from enum import Enum
 
 class CDNProvider(Enum):
-    """Supported CDN providers."""
-    CLOUDFLARE = "cloudflare"
+    """Supported CDN providers."""    CLOUDFLARE = "cloudflare"
     AWS_CLOUDFRONT = "aws_cloudfront"
     AZURE_CDN = "azure_cdn"
     GOOGLE_CDN = "google_cdn"
@@ -32,8 +28,7 @@ class CDNProvider(Enum):
 
 @dataclass
 class CDNEndpointConfig:
-    """CDN endpoint configuration for specific content types."""
-    
+    """CDN endpoint configuration for specific content types."""    
     name: str
     provider: CDNProvider
     domain: str
@@ -46,8 +41,7 @@ class CDNEndpointConfig:
 
 @dataclass
 class CloudflareCDNConfig:
-    """Cloudflare CDN specific configuration."""
-    
+    """Cloudflare CDN specific configuration."""    
     zone_id: str = os.getenv('CLOUDFLARE_ZONE_ID', '')
     api_token: str = os.getenv('CLOUDFLARE_API_TOKEN', '')
     email: str = os.getenv('CLOUDFLARE_EMAIL', '')
@@ -73,8 +67,7 @@ class CloudflareCDNConfig:
 
 @dataclass
 class AWSCloudFrontConfig:
-    """AWS CloudFront CDN specific configuration."""
-    
+    """AWS CloudFront CDN specific configuration."""    
     access_key_id: str = os.getenv('AWS_ACCESS_KEY_ID', '')
     secret_access_key: str = os.getenv('AWS_SECRET_ACCESS_KEY', '')
     region: str = os.getenv('AWS_DEFAULT_REGION', 'us-east-1')
@@ -110,11 +103,9 @@ class AWSCloudFrontConfig:
 
 @dataclass
 class CDNConfig:
-    """
-    Comprehensive CDN configuration for IA-Influencer Agent platform.
+    """    Comprehensive CDN configuration for IA-Influencer Agent platform.
     Provides enterprise-grade content delivery with multiple provider support.
-    """
-    
+    """    
     # Primary CDN provider
     primary_provider: CDNProvider = CDNProvider.CLOUDFLARE
     
@@ -149,8 +140,7 @@ class CDNConfig:
     enable_real_user_monitoring: bool = True
     
     def __post_init__(self):
-        """Initialize configurations if not provided."""
-        if self.endpoints is None:
+        """Initialize configurations if not provided."""        if self.endpoints is None:
             self.endpoints = self._get_default_endpoints()
         
         if self.cloudflare_config is None:
@@ -160,8 +150,7 @@ class CDNConfig:
             self.aws_cloudfront_config = AWSCloudFrontConfig()
     
     def _get_default_endpoints(self) -> Dict[str, CDNEndpointConfig]:
-        """Default CDN endpoint configuration for different content types."""
-        env = os.getenv('ENVIRONMENT', 'development')
+        """Default CDN endpoint configuration for different content types."""        env = os.getenv('ENVIRONMENT', 'development')
         base_domain = os.getenv('CDN_BASE_DOMAIN', 'cdn.ia-influencer.com')
         origin_domain = os.getenv('ORIGIN_DOMAIN', 'api.ia-influencer.com')
         
@@ -284,8 +273,7 @@ class CDNConfig:
         }
     
     def get_endpoint_url(self, content_type: str, file_path: str = '') -> str:
-        """Get CDN URL for specific content type and file."""
-        if content_type not in self.endpoints:
+        """Get CDN URL for specific content type and file."""        if content_type not in self.endpoints:
             content_type = 'static'  # Fallback
         
         endpoint = self.endpoints[content_type]
@@ -296,12 +284,10 @@ class CDNConfig:
         return base_url
     
     def get_content_types(self) -> List[str]:
-        """Get list of supported content types."""
-        return list(self.endpoints.keys())
+        """Get list of supported content types."""        return list(self.endpoints.keys())
     
     def validate_configuration(self) -> bool:
-        """Validate CDN configuration."""
-        try:
+        """Validate CDN configuration."""        try:
             # Validate primary provider configuration
             if self.primary_provider == CDNProvider.CLOUDFLARE:
                 if not self.cloudflare_config.zone_id or not self.cloudflare_config.api_token:
@@ -325,8 +311,7 @@ class CDNConfig:
             return False
     
     def get_cache_control_headers(self, content_type: str) -> Dict[str, str]:
-        """Get appropriate cache control headers for content type."""
-        if content_type not in self.endpoints:
+        """Get appropriate cache control headers for content type."""        if content_type not in self.endpoints:
             content_type = 'static'
         
         endpoint = self.endpoints[content_type]
@@ -347,16 +332,14 @@ class CDNConfig:
         return headers
     
     def get_purge_urls(self, content_type: str, file_paths: List[str]) -> List[str]:
-        """Get URLs to purge from CDN cache."""
-        urls = []
+        """Get URLs to purge from CDN cache."""        urls = []
         for file_path in file_paths:
             url = self.get_endpoint_url(content_type, file_path)
             urls.append(url)
         return urls
     
     def get_provider_specific_config(self, provider: CDNProvider) -> Dict[str, Any]:
-        """Get provider-specific configuration."""
-        if provider == CDNProvider.CLOUDFLARE:
+        """Get provider-specific configuration."""        if provider == CDNProvider.CLOUDFLARE:
             return {
                 'zone_id': self.cloudflare_config.zone_id,
                 'api_token': self.cloudflare_config.api_token,
@@ -376,8 +359,7 @@ class CDNConfig:
         return {}
     
     def export_configuration(self) -> Dict[str, Any]:
-        """Export CDN configuration to JSON-serializable format."""
-        return {
+        """Export CDN configuration to JSON-serializable format."""        return {
             'primary_provider': self.primary_provider.value,
             'fallback_provider': self.fallback_provider.value if self.fallback_provider else None,
             'enable_compression': self.enable_compression,

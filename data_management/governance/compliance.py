@@ -1,5 +1,4 @@
-"""
-Compliance Management System
+"""Compliance Management System
 
 Advanced compliance monitoring and enforcement for regulatory standards
 including GDPR, CCPA, DMCA and industry-specific regulations.
@@ -12,9 +11,7 @@ WARNING: This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
-"""
-
-import logging
+"""import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
 from enum import Enum
@@ -31,8 +28,7 @@ from ...ai.models import PersonalDataDetector, ContentClassifier
 
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks"""
-    GDPR = "gdpr"
+    """Supported compliance frameworks"""    GDPR = "gdpr"
     CCPA = "ccpa"
     DMCA = "dmca"
     COPPA = "coppa"
@@ -43,8 +39,7 @@ class ComplianceFramework(Enum):
 
 
 class ComplianceStatus(Enum):
-    """Compliance assessment status"""
-    COMPLIANT = "compliant"
+    """Compliance assessment status"""    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PENDING_REVIEW = "pending_review"
     REQUIRES_ACTION = "requires_action"
@@ -52,8 +47,7 @@ class ComplianceStatus(Enum):
 
 
 class RiskLevel(Enum):
-    """Risk assessment levels"""
-    LOW = "low"
+    """Risk assessment levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -61,8 +55,7 @@ class RiskLevel(Enum):
 
 @dataclass
 class ComplianceIssue:
-    """Compliance issue record"""
-    issue_id: str
+    """Compliance issue record"""    issue_id: str
     framework: ComplianceFramework
     content_id: str
     issue_type: str
@@ -76,8 +69,7 @@ class ComplianceIssue:
 
 @dataclass
 class ComplianceReport:
-    """Compliance assessment report"""
-    report_id: str
+    """Compliance assessment report"""    report_id: str
     content_id: str
     framework: ComplianceFramework
     status: ComplianceStatus
@@ -89,8 +81,7 @@ class ComplianceReport:
 
 
 class BaseComplianceChecker(ABC):
-    """Base class for compliance framework checkers"""
-    
+    """Base class for compliance framework checkers"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -101,8 +92,7 @@ class BaseComplianceChecker(ABC):
         content_type: str,
         metadata: Dict[str, Any]
     ) -> ComplianceReport:
-        """Assess compliance for given content - base implementation"""
-        try:
+        """Assess compliance for given content - base implementation"""        try:
             self.logger.info(f"Assessing compliance for content: {content_id}")
             
             # Base implementation with generic compliance assessment
@@ -148,8 +138,7 @@ class BaseComplianceChecker(ABC):
             )
     
     def get_requirements(self) -> List[str]:
-        """Get list of compliance requirements - base implementation"""
-        try:
+        """Get list of compliance requirements - base implementation"""        try:
             # Base implementation with generic requirements
             # Subclasses should override with specific framework requirements
             return [
@@ -164,8 +153,7 @@ class BaseComplianceChecker(ABC):
             return []
     
     def get_framework_info(self) -> Dict[str, Any]:
-        """Get information about the compliance framework - base implementation"""
-        try:
+        """Get information about the compliance framework - base implementation"""        try:
             # Base implementation with generic framework info
             # Subclasses should override with specific framework information
             return {
@@ -186,13 +174,11 @@ class BaseComplianceChecker(ABC):
 
 
 class GDPRCompliance(BaseComplianceChecker):
-    """
-    GDPR Compliance Checker
+    """    GDPR Compliance Checker
     
     Implements General Data Protection Regulation compliance checking
     for personal data processing and protection.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
         self.framework = ComplianceFramework.GDPR
@@ -218,8 +204,7 @@ class GDPRCompliance(BaseComplianceChecker):
         content_type: str,
         metadata: Dict[str, Any]
     ) -> ComplianceReport:
-        """
-        Assess GDPR compliance for content
+        """        Assess GDPR compliance for content
         
         Args:
             content_id: ID of content to assess
@@ -228,8 +213,7 @@ class GDPRCompliance(BaseComplianceChecker):
             
         Returns:
             ComplianceReport: Detailed compliance assessment
-        """
-        issues = []
+        """        issues = []
         score = 100.0
         
         try:
@@ -287,8 +271,7 @@ class GDPRCompliance(BaseComplianceChecker):
             raise ComplianceError(f"GDPR assessment failed: {e}")
     
     async def _check_personal_data(self, content_id: str, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
-        """Check for personal data and processing compliance"""
-        issues = []
+        """Check for personal data and processing compliance"""        issues = []
         
         # Detect PII in content
         pii_results = await self.pii_detector.detect_pii(metadata.get("content", ""))
@@ -322,8 +305,7 @@ class GDPRCompliance(BaseComplianceChecker):
         return issues
     
     async def _check_consent(self, content_id: str, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
-        """Check consent requirements"""
-        issues = []
+        """Check consent requirements"""        issues = []
         processing = metadata.get("processing", {})
         
         # If processing relies on consent
@@ -369,8 +351,7 @@ class GDPRCompliance(BaseComplianceChecker):
         return issues
     
     async def _check_data_minimization(self, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
-        """Check data minimization principle"""
-        issues = []
+        """Check data minimization principle"""        issues = []
         
         # Check if data collection is justified
         collected_fields = metadata.get("collected_fields", [])
@@ -392,8 +373,7 @@ class GDPRCompliance(BaseComplianceChecker):
         return issues
     
     async def _check_purpose_limitation(self, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
-        """Check purpose limitation principle"""
-        issues = []
+        """Check purpose limitation principle"""        issues = []
         
         stated_purposes = metadata.get("processing", {}).get("purposes", [])
         actual_usage = metadata.get("usage", {}).get("purposes", [])
@@ -415,8 +395,7 @@ class GDPRCompliance(BaseComplianceChecker):
         return issues
     
     async def _check_retention_limits(self, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
-        """Check data retention limits"""
-        issues = []
+        """Check data retention limits"""        issues = []
         
         retention_policy = metadata.get("retention", {})
         created_at = metadata.get("created_at")
@@ -443,8 +422,7 @@ class GDPRCompliance(BaseComplianceChecker):
         return issues
     
     async def _check_security_measures(self, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
-        """Check security measures implementation"""
-        issues = []
+        """Check security measures implementation"""        issues = []
         
         security = metadata.get("security", {})
         
@@ -475,8 +453,7 @@ class GDPRCompliance(BaseComplianceChecker):
         return issues
     
     def _calculate_gdpr_score(self, issues: List[ComplianceIssue]) -> float:
-        """Calculate GDPR compliance score"""
-        if not issues:
+        """Calculate GDPR compliance score"""        if not issues:
             return 100.0
         
         # Deduct points based on risk level
@@ -494,8 +471,7 @@ class GDPRCompliance(BaseComplianceChecker):
         return max(0.0, score)
     
     def _determine_status(self, score: float, issues: List[ComplianceIssue]) -> ComplianceStatus:
-        """Determine overall compliance status"""
-        critical_issues = [i for i in issues if i.risk_level == RiskLevel.CRITICAL]
+        """Determine overall compliance status"""        critical_issues = [i for i in issues if i.risk_level == RiskLevel.CRITICAL]
         high_issues = [i for i in issues if i.risk_level == RiskLevel.HIGH]
         
         if critical_issues:
@@ -508,8 +484,7 @@ class GDPRCompliance(BaseComplianceChecker):
             return ComplianceStatus.COMPLIANT
     
     def _generate_gdpr_recommendations(self, issues: List[ComplianceIssue]) -> List[str]:
-        """Generate GDPR compliance recommendations"""
-        recommendations = []
+        """Generate GDPR compliance recommendations"""        recommendations = []
         
         issue_types = {issue.issue_type for issue in issues}
         
@@ -534,12 +509,10 @@ class GDPRCompliance(BaseComplianceChecker):
         return recommendations
     
     def get_requirements(self) -> List[str]:
-        """Get GDPR requirements"""
-        return list(self.requirements.values())
+        """Get GDPR requirements"""        return list(self.requirements.values())
     
     def get_framework_info(self) -> Dict[str, Any]:
-        """Get GDPR framework information"""
-        return {
+        """Get GDPR framework information"""        return {
             "name": "General Data Protection Regulation",
             "jurisdiction": "European Union",
             "effective_date": "2018-05-25",
@@ -559,13 +532,11 @@ class GDPRCompliance(BaseComplianceChecker):
 
 
 class CCPACompliance(BaseComplianceChecker):
-    """
-    CCPA Compliance Checker
+    """    CCPA Compliance Checker
     
     Implements California Consumer Privacy Act compliance checking
     for consumer rights and business obligations.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
         self.framework = ComplianceFramework.CCPA
@@ -576,8 +547,7 @@ class CCPACompliance(BaseComplianceChecker):
         content_type: str,
         metadata: Dict[str, Any]
     ) -> ComplianceReport:
-        """Assess CCPA compliance for content"""
-        issues = []
+        """Assess CCPA compliance for content"""        issues = []
         score = 100.0
         
         try:
@@ -615,8 +585,7 @@ class CCPACompliance(BaseComplianceChecker):
             raise ComplianceError(f"CCPA assessment failed: {e}")
     
     async def _check_consumer_rights(self, content_id: str, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
-        """Check consumer rights implementation"""
-        issues = []
+        """Check consumer rights implementation"""        issues = []
         
         consumer_rights = metadata.get("consumer_rights", {})
         
@@ -647,8 +616,7 @@ class CCPACompliance(BaseComplianceChecker):
         return issues
     
     async def _check_disclosure_requirements(self, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
-        """Check data disclosure requirements"""
-        issues = []
+        """Check data disclosure requirements"""        issues = []
         
         disclosure = metadata.get("disclosure", {})
         
@@ -666,8 +634,7 @@ class CCPACompliance(BaseComplianceChecker):
         return issues
     
     async def _check_optout_mechanisms(self, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
-        """Check opt-out mechanisms"""
-        issues = []
+        """Check opt-out mechanisms"""        issues = []
         
         optout = metadata.get("optout", {})
         
@@ -685,8 +652,7 @@ class CCPACompliance(BaseComplianceChecker):
         return issues
     
     def _calculate_ccpa_score(self, issues: List[ComplianceIssue]) -> float:
-        """Calculate CCPA compliance score"""
-        if not issues:
+        """Calculate CCPA compliance score"""        if not issues:
             return 100.0
         
         score = 100.0
@@ -701,8 +667,7 @@ class CCPACompliance(BaseComplianceChecker):
         return max(0.0, score)
     
     def _generate_ccpa_recommendations(self, issues: List[ComplianceIssue]) -> List[str]:
-        """Generate CCPA recommendations"""
-        recommendations = []
+        """Generate CCPA recommendations"""        recommendations = []
         
         issue_types = {issue.issue_type for issue in issues}
         
@@ -718,8 +683,7 @@ class CCPACompliance(BaseComplianceChecker):
         return recommendations
     
     def get_requirements(self) -> List[str]:
-        """Get CCPA requirements"""
-        return [
+        """Get CCPA requirements"""        return [
             "Consumer right to know",
             "Consumer right to delete",
             "Consumer right to opt-out",
@@ -728,8 +692,7 @@ class CCPACompliance(BaseComplianceChecker):
         ]
     
     def get_framework_info(self) -> Dict[str, Any]:
-        """Get CCPA framework information"""
-        return {
+        """Get CCPA framework information"""        return {
             "name": "California Consumer Privacy Act",
             "jurisdiction": "California, USA",
             "effective_date": "2020-01-01",
@@ -744,13 +707,11 @@ class CCPACompliance(BaseComplianceChecker):
 
 
 class DMCACompliance(BaseComplianceChecker):
-    """
-    DMCA Compliance Checker
+    """    DMCA Compliance Checker
     
     Implements Digital Millennium Copyright Act compliance checking
     for copyright protection and safe harbor provisions.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
         self.framework = ComplianceFramework.DMCA
@@ -761,8 +722,7 @@ class DMCACompliance(BaseComplianceChecker):
         content_type: str,
         metadata: Dict[str, Any]
     ) -> ComplianceReport:
-        """Assess DMCA compliance for content"""
-        issues = []
+        """Assess DMCA compliance for content"""        issues = []
         score = 100.0
         
         try:
@@ -799,8 +759,7 @@ class DMCACompliance(BaseComplianceChecker):
             raise ComplianceError(f"DMCA assessment failed: {e}")
     
     async def _check_copyright_ownership(self, content_id: str, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
-        """Check copyright ownership documentation"""
-        issues = []
+        """Check copyright ownership documentation"""        issues = []
         
         copyright_info = metadata.get("copyright", {})
         
@@ -829,8 +788,7 @@ class DMCACompliance(BaseComplianceChecker):
         return issues
     
     async def _check_takedown_procedures(self, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
-        """Check DMCA takedown procedures"""
-        issues = []
+        """Check DMCA takedown procedures"""        issues = []
         
         takedown = metadata.get("takedown", {})
         
@@ -848,8 +806,7 @@ class DMCACompliance(BaseComplianceChecker):
         return issues
     
     async def _check_safe_harbor(self, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
-        """Check safe harbor compliance"""
-        issues = []
+        """Check safe harbor compliance"""        issues = []
         
         safe_harbor = metadata.get("safe_harbor", {})
         
@@ -867,8 +824,7 @@ class DMCACompliance(BaseComplianceChecker):
         return issues
     
     def _calculate_dmca_score(self, issues: List[ComplianceIssue]) -> float:
-        """Calculate DMCA compliance score"""
-        if not issues:
+        """Calculate DMCA compliance score"""        if not issues:
             return 100.0
         
         score = 100.0
@@ -883,8 +839,7 @@ class DMCACompliance(BaseComplianceChecker):
         return max(0.0, score)
     
     def _generate_dmca_recommendations(self, issues: List[ComplianceIssue]) -> List[str]:
-        """Generate DMCA recommendations"""
-        recommendations = []
+        """Generate DMCA recommendations"""        recommendations = []
         
         issue_types = {issue.issue_type for issue in issues}
         
@@ -900,8 +855,7 @@ class DMCACompliance(BaseComplianceChecker):
         return recommendations
     
     def get_requirements(self) -> List[str]:
-        """Get DMCA requirements"""
-        return [
+        """Get DMCA requirements"""        return [
             "Copyright ownership documentation",
             "DMCA takedown procedures",
             "Safe harbor compliance",
@@ -909,8 +863,7 @@ class DMCACompliance(BaseComplianceChecker):
         ]
     
     def get_framework_info(self) -> Dict[str, Any]:
-        """Get DMCA framework information"""
-        return {
+        """Get DMCA framework information"""        return {
             "name": "Digital Millennium Copyright Act",
             "jurisdiction": "United States",
             "effective_date": "1998-10-28",
@@ -923,16 +876,13 @@ class DMCACompliance(BaseComplianceChecker):
 
 
 class ComplianceManager(BaseManager):
-    """
-    Central compliance management system
+    """    Central compliance management system
     
     Orchestrates compliance checking across multiple regulatory frameworks
     and provides unified compliance reporting and monitoring.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the compliance manager"""
-        super().__init__(config)
+        """Initialize the compliance manager"""        super().__init__(config)
         self.logger = logging.getLogger(__name__)
         
         # Initialize compliance checkers
@@ -961,8 +911,7 @@ class ComplianceManager(BaseManager):
         metadata: Dict[str, Any],
         frameworks: Optional[List[ComplianceFramework]] = None
     ) -> Dict[ComplianceFramework, ComplianceReport]:
-        """
-        Assess compliance across multiple frameworks
+        """        Assess compliance across multiple frameworks
         
         Args:
             content_id: ID of content to assess
@@ -972,8 +921,7 @@ class ComplianceManager(BaseManager):
             
         Returns:
             Dict mapping frameworks to compliance reports
-        """
-        if frameworks is None:
+        """        if frameworks is None:
             frameworks = list(self.checkers.keys())
         
         reports = {}
@@ -1006,8 +954,7 @@ class ComplianceManager(BaseManager):
         content_id: Optional[str] = None,
         framework: Optional[ComplianceFramework] = None
     ) -> Dict[str, Any]:
-        """
-        Get compliance summary with optional filtering
+        """        Get compliance summary with optional filtering
         
         Args:
             content_id: Filter by content ID
@@ -1015,8 +962,7 @@ class ComplianceManager(BaseManager):
             
         Returns:
             Dict with compliance summary statistics
-        """
-        filtered_reports = list(self.reports.values())
+        """        filtered_reports = list(self.reports.values())
         
         if content_id:
             filtered_reports = [r for r in filtered_reports if r.content_id == content_id]
@@ -1056,8 +1002,7 @@ class ComplianceManager(BaseManager):
         risk_level: Optional[RiskLevel] = None,
         resolved: Optional[bool] = None
     ) -> List[ComplianceIssue]:
-        """
-        Get compliance issues with optional filtering
+        """        Get compliance issues with optional filtering
         
         Args:
             framework: Filter by compliance framework
@@ -1066,8 +1011,7 @@ class ComplianceManager(BaseManager):
             
         Returns:
             List of filtered compliance issues
-        """
-        filtered_issues = self.issues.copy()
+        """        filtered_issues = self.issues.copy()
         
         if framework:
             filtered_issues = [i for i in filtered_issues if i.framework == framework]
@@ -1088,8 +1032,7 @@ class ComplianceManager(BaseManager):
         issue_id: str,
         resolution_action: Optional[str] = None
     ) -> bool:
-        """
-        Mark a compliance issue as resolved
+        """        Mark a compliance issue as resolved
         
         Args:
             issue_id: ID of issue to resolve
@@ -1097,8 +1040,7 @@ class ComplianceManager(BaseManager):
             
         Returns:
             bool: True if issue resolved successfully
-        """
-        for issue in self.issues:
+        """        for issue in self.issues:
             if issue.issue_id == issue_id:
                 issue.resolved_at = datetime.utcnow()
                 issue.resolution_action = resolution_action
@@ -1112,8 +1054,7 @@ class ComplianceManager(BaseManager):
         return False
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get compliance metrics"""
-        return {
+        """Get compliance metrics"""        return {
             **self.metrics,
             "framework_coverage": len(self.checkers),
             "issue_breakdown": {
@@ -1126,8 +1067,7 @@ class ComplianceManager(BaseManager):
         }
     
     def _update_compliance_metrics(self) -> None:
-        """Update compliance metrics"""
-        total_reports = len(self.reports)
+        """Update compliance metrics"""        total_reports = len(self.reports)
         if total_reports > 0:
             compliant_reports = len([
                 r for r in self.reports.values() 

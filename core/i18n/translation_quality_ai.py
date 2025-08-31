@@ -1,5 +1,4 @@
-"""
-Translation Quality AI Engine - Ainflue Platform
+"""Translation Quality AI Engine - Ainflue Platform
 ================================================================================
 Module: core/i18n/translation_quality_ai.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,9 +15,7 @@ Contact: mlaiel@live.de
 BUSINESS LOGIC:
 Translation input → AI analysis → Quality scoring → Error detection → 
 Improvement suggestions → Cultural accuracy → Fluency assessment → Final rating
-"""
-
-import logging
+"""import logging
 import asyncio
 import re
 from typing import Dict, List, Any, Optional, Tuple, Union
@@ -33,8 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 class QualityMetric(Enum):
-    """Translation quality metrics"""
-    FLUENCY = "fluency"                    # Natural flow and readability
+    """Translation quality metrics"""    FLUENCY = "fluency"                    # Natural flow and readability
     ACCURACY = "accuracy"                  # Semantic correctness
     CONSISTENCY = "consistency"            # Terminology consistency
     COMPLETENESS = "completeness"          # No missing content
@@ -47,8 +43,7 @@ class QualityMetric(Enum):
 
 
 class ErrorType(Enum):
-    """Types of translation errors"""
-    MISTRANSLATION = "mistranslation"      # Incorrect meaning
+    """Types of translation errors"""    MISTRANSLATION = "mistranslation"      # Incorrect meaning
     OMISSION = "omission"                  # Missing content
     ADDITION = "addition"                  # Unnecessary content
     GRAMMAR_ERROR = "grammar_error"        # Grammatical mistakes
@@ -61,16 +56,14 @@ class ErrorType(Enum):
 
 
 class Severity(Enum):
-    """Error severity levels"""
-    CRITICAL = "critical"    # Major meaning change
+    """Error severity levels"""    CRITICAL = "critical"    # Major meaning change
     MAJOR = "major"         # Significant quality impact
     MINOR = "minor"         # Small quality impact
     COSMETIC = "cosmetic"   # Minimal impact
 
 
 class AIModel(Enum):
-    """AI models for quality assessment"""
-    BERT_MULTILINGUAL = "bert_multilingual"
+    """AI models for quality assessment"""    BERT_MULTILINGUAL = "bert_multilingual"
     XLMR_LARGE = "xlm_roberta_large"
     MBART = "mbart_large"
     OPUS_MT = "opus_mt"
@@ -80,8 +73,7 @@ class AIModel(Enum):
 
 @dataclass
 class QualityError:
-    """Translation quality error"""
-    error_id: str
+    """Translation quality error"""    error_id: str
     error_type: ErrorType
     severity: Severity
     source_text: str
@@ -96,8 +88,7 @@ class QualityError:
 
 @dataclass
 class QualityMetrics:
-    """Comprehensive quality metrics"""
-    overall_score: float  # 0.0 - 1.0
+    """Comprehensive quality metrics"""    overall_score: float  # 0.0 - 1.0
     fluency_score: float
     accuracy_score: float
     consistency_score: float
@@ -115,8 +106,7 @@ class QualityMetrics:
 
 @dataclass
 class AIQualityAssessment:
-    """AI-powered quality assessment result"""
-    assessment_id: str
+    """AI-powered quality assessment result"""    assessment_id: str
     source_text: str
     target_text: str
     source_language: str
@@ -134,8 +124,7 @@ class AIQualityAssessment:
 
 
 class TranslationQualityAI:
-    """Advanced AI-powered translation quality assessment engine"""
-    
+    """Advanced AI-powered translation quality assessment engine"""    
     def __init__(self):
         self.ai_models: Dict[AIModel, Dict[str, Any]] = {}
         self.quality_cache: Dict[str, AIQualityAssessment] = {}
@@ -157,8 +146,7 @@ class TranslationQualityAI:
         logger.info("Translation Quality AI Engine initialized")
     
     def _initialize_ai_models(self):
-        """Initialize AI models for quality assessment"""
-        
+        """Initialize AI models for quality assessment"""        
         # BERT Multilingual
         self.ai_models[AIModel.BERT_MULTILINGUAL] = {
             "name": "BERT Multilingual",
@@ -217,8 +205,7 @@ class TranslationQualityAI:
         logger.info(f"Initialized {len(self.ai_models)} AI models for quality assessment")
     
     def _initialize_error_patterns(self):
-        """Initialize common error patterns by language"""
-        
+        """Initialize common error patterns by language"""        
         # English error patterns
         self.error_patterns["en"] = [
             {
@@ -298,8 +285,7 @@ class TranslationQualityAI:
         logger.info(f"Initialized error patterns for {len(self.error_patterns)} languages")
     
     def _initialize_quality_thresholds(self):
-        """Initialize quality thresholds for different use cases"""
-        self.quality_thresholds = {
+        """Initialize quality thresholds for different use cases"""        self.quality_thresholds = {
             "draft": 0.6,           # Draft quality
             "review": 0.75,         # Review ready
             "professional": 0.85,   # Professional quality
@@ -308,8 +294,7 @@ class TranslationQualityAI:
         }
     
     def _setup_language_models(self):
-        """Setup language-specific models and resources"""
-        
+        """Setup language-specific models and resources"""        
         # Language-specific configurations
         self.language_models = {
             "en": {
@@ -365,8 +350,7 @@ class TranslationQualityAI:
         ai_model: AIModel = AIModel.ENSEMBLE_MODEL,
         quality_level: str = "professional"
     ) -> AIQualityAssessment:
-        """Comprehensive AI-powered translation quality assessment"""
-        try:
+        """Comprehensive AI-powered translation quality assessment"""        try:
             assessment_id = f"qa_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{hash(target_text) % 10000}"
             
             # Check cache
@@ -476,8 +460,7 @@ class TranslationQualityAI:
         target_lang: str,
         ai_model: AIModel
     ) -> QualityMetrics:
-        """Analyze comprehensive quality metrics"""
-        try:
+        """Analyze comprehensive quality metrics"""        try:
             # Mock AI analysis - in production, this would use actual ML models
             model_info = self.ai_models[ai_model]
             base_accuracy = model_info["accuracy"]
@@ -563,8 +546,7 @@ class TranslationQualityAI:
             )
     
     async def _assess_fluency(self, text: str, language: str) -> float:
-        """Assess text fluency"""
-        # Simplified fluency assessment
+        """Assess text fluency"""        # Simplified fluency assessment
         base_score = 0.8
         
         # Penalize for obvious issues
@@ -581,8 +563,7 @@ class TranslationQualityAI:
         return max(0.0, min(1.0, base_score))
     
     async def _assess_accuracy(self, source: str, target: str, source_lang: str, target_lang: str) -> float:
-        """Assess semantic accuracy"""
-        # Simplified accuracy assessment based on length and structure similarity
+        """Assess semantic accuracy"""        # Simplified accuracy assessment based on length and structure similarity
         source_len = len(source.split())
         target_len = len(target.split())
         
@@ -600,8 +581,7 @@ class TranslationQualityAI:
         return max(0.0, min(1.0, accuracy_score))
     
     async def _assess_consistency(self, source: str, target: str) -> float:
-        """Assess terminology consistency"""
-        # Simplified consistency check
+        """Assess terminology consistency"""        # Simplified consistency check
         base_score = 0.85
         
         # Check for inconsistent capitalization patterns
@@ -611,8 +591,7 @@ class TranslationQualityAI:
         return max(0.0, min(1.0, base_score))
     
     async def _assess_completeness(self, source: str, target: str) -> float:
-        """Assess translation completeness"""
-        # Simplified completeness check based on content preservation
+        """Assess translation completeness"""        # Simplified completeness check based on content preservation
         source_words = len(source.split())
         target_words = len(target.split())
         
@@ -630,8 +609,7 @@ class TranslationQualityAI:
             return 0.6
     
     async def _assess_cultural_appropriateness(self, source: str, target: str, target_lang: str) -> float:
-        """Assess cultural appropriateness"""
-        # Simplified cultural assessment
+        """Assess cultural appropriateness"""        # Simplified cultural assessment
         base_score = 0.85
         
         # Check for potential cultural issues (very basic)
@@ -649,8 +627,7 @@ class TranslationQualityAI:
         return max(0.0, min(1.0, base_score))
     
     async def _assess_grammar(self, text: str, language: str) -> float:
-        """Assess grammatical correctness"""
-        # Simplified grammar assessment
+        """Assess grammatical correctness"""        # Simplified grammar assessment
         base_score = 0.8
         
         # Check for basic grammar patterns
@@ -670,8 +647,7 @@ class TranslationQualityAI:
         return max(0.0, min(1.0, base_score))
     
     async def _assess_style(self, text: str, language: str) -> float:
-        """Assess writing style appropriateness"""
-        # Simplified style assessment
+        """Assess writing style appropriateness"""        # Simplified style assessment
         base_score = 0.8
         
         # Check for style consistency
@@ -685,8 +661,7 @@ class TranslationQualityAI:
         return max(0.0, min(1.0, base_score))
     
     async def _assess_tone_consistency(self, source: str, target: str) -> float:
-        """Assess tone consistency between source and target"""
-        # Simplified tone assessment
+        """Assess tone consistency between source and target"""        # Simplified tone assessment
         base_score = 0.85
         
         # Check for tone indicators
@@ -705,8 +680,7 @@ class TranslationQualityAI:
         return max(0.0, min(1.0, base_score))
     
     async def _assess_terminology(self, source: str, target: str, source_lang: str, target_lang: str) -> float:
-        """Assess terminology accuracy"""
-        # Simplified terminology assessment
+        """Assess terminology accuracy"""        # Simplified terminology assessment
         base_score = 0.82
         
         # Check for technical terms preservation
@@ -727,8 +701,7 @@ class TranslationQualityAI:
         return max(0.0, min(1.0, base_score))
     
     async def _assess_localization(self, text: str, target_lang: str) -> float:
-        """Assess localization quality"""
-        # Simplified localization assessment
+        """Assess localization quality"""        # Simplified localization assessment
         base_score = 0.8
         
         # Check for proper localization elements
@@ -752,8 +725,7 @@ class TranslationQualityAI:
         source_lang: str,
         target_lang: str
     ) -> List[QualityError]:
-        """Detect specific translation errors"""
-        errors = []
+        """Detect specific translation errors"""        errors = []
         
         # Check language-specific error patterns
         if target_lang in self.error_patterns:
@@ -806,8 +778,7 @@ class TranslationQualityAI:
         errors: List[QualityError],
         metrics: QualityMetrics
     ) -> List[str]:
-        """Generate improvement suggestions"""
-        suggestions = []
+        """Generate improvement suggestions"""        suggestions = []
         
         # Error-based suggestions
         for error in errors:
@@ -846,8 +817,7 @@ class TranslationQualityAI:
         target_lang: str,
         current_translation: str
     ) -> List[str]:
-        """Generate alternative translations"""
-        # Mock alternative generation - in production, use multiple translation engines
+        """Generate alternative translations"""        # Mock alternative generation - in production, use multiple translation engines
         alternatives = []
         
         # Simple variations based on current translation
@@ -870,8 +840,7 @@ class TranslationQualityAI:
         source_lang: str,
         target_lang: str
     ) -> List[str]:
-        """Analyze cultural appropriateness"""
-        cultural_notes = []
+        """Analyze cultural appropriateness"""        cultural_notes = []
         
         # Language-specific cultural considerations
         if target_lang == "ar":
@@ -897,8 +866,7 @@ class TranslationQualityAI:
         return cultural_notes
     
     def _assess_risk_level(self, metrics: QualityMetrics, errors: List[QualityError]) -> str:
-        """Assess overall risk level"""
-        critical_errors = sum(1 for error in errors if error.severity == Severity.CRITICAL)
+        """Assess overall risk level"""        critical_errors = sum(1 for error in errors if error.severity == Severity.CRITICAL)
         major_errors = sum(1 for error in errors if error.severity == Severity.MAJOR)
         
         if critical_errors > 0 or metrics.overall_score < 0.6:
@@ -916,13 +884,11 @@ class TranslationQualityAI:
         target_lang: str,
         ai_model: AIModel
     ) -> str:
-        """Generate cache key for quality assessment"""
-        content = f"{source_text}_{target_text}_{source_lang}_{target_lang}_{ai_model.value}"
+        """Generate cache key for quality assessment"""        content = f"{source_text}_{target_text}_{source_lang}_{target_lang}_{ai_model.value}"
         return hashlib.md5(content.encode()).hexdigest()
     
     async def get_quality_statistics(self) -> Dict[str, Any]:
-        """Get translation quality statistics"""
-        if not self.quality_cache:
+        """Get translation quality statistics"""        if not self.quality_cache:
             return {"message": "No assessments cached yet"}
         
         assessments = list(self.quality_cache.values())
@@ -953,8 +919,7 @@ class TranslationQualityAI:
         }
     
     async def health_check(self) -> bool:
-        """Health check for translation quality AI service"""
-        try:
+        """Health check for translation quality AI service"""        try:
             # Check if models are loaded
             if not self.ai_models:
                 return False

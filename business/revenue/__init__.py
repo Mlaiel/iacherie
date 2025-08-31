@@ -18,8 +18,7 @@ from Fahed Mlaiel (mlaiel@live.de) will result in immediate legal action.
 
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Revenue Distribution
 =============================================================================================
-"""
-from .revenue_calculator import RevenueCalculator
+"""from .revenue_calculator import RevenueCalculator
 from .revenue_tracker import RevenueTracker
 from .revenue_distributor import RevenueDistributor
 from .revenue_analytics import RevenueAnalytics

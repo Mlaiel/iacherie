@@ -1,5 +1,4 @@
-"""
-🔗 Webhook Integration Manager - IA-Influencer-Agent CI/CD Enterprise Platform
+"""🔗 Webhook Integration Manager - IA-Influencer-Agent CI/CD Enterprise Platform
 ================================================================
 Team Expertise: Integration Engineer + DevOps Engineer + Security Expert + Backend Developer
 Created: 2025-08-24
@@ -22,9 +21,7 @@ Business Logic Integration:
 - Multi-platform synchronization events
 - AI processing completion notifications
 ================================================================
-"""
-
-from typing import Dict, List, Optional, Any, Union, Callable, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Callable, Tuple
 import asyncio
 import logging
 import json
@@ -47,8 +44,7 @@ import certifi
 logger = logging.getLogger(__name__)
 
 class WebhookEvent(Enum):
-    """Webhook event types for IA Influencer platform"""
-    # Deployment events
+    """Webhook event types for IA Influencer platform"""    # Deployment events
     DEPLOYMENT_STARTED = "deployment.started"
     DEPLOYMENT_COMPLETED = "deployment.completed"
     DEPLOYMENT_FAILED = "deployment.failed"
@@ -86,8 +82,7 @@ class WebhookEvent(Enum):
     CONTENT_MONETIZED = "business.content_monetized"
 
 class WebhookStatus(Enum):
-    """Webhook delivery status"""
-    PENDING = "pending"
+    """Webhook delivery status"""    PENDING = "pending"
     SENDING = "sending"
     SUCCESS = "success"
     FAILED = "failed"
@@ -95,8 +90,7 @@ class WebhookStatus(Enum):
     EXPIRED = "expired"
 
 class IntegrationType(Enum):
-    """External integration types"""
-    SLACK = "slack"
+    """External integration types"""    SLACK = "slack"
     TEAMS = "teams"
     DISCORD = "discord"
     EMAIL = "email"
@@ -121,8 +115,7 @@ class IntegrationType(Enum):
 
 @dataclass
 class WebhookEndpoint:
-    """Webhook endpoint configuration"""
-    id: str
+    """Webhook endpoint configuration"""    id: str
     name: str
     url: str
     secret: str
@@ -151,8 +144,7 @@ class WebhookEndpoint:
 
 @dataclass
 class WebhookPayload:
-    """Webhook payload structure"""
-    event: WebhookEvent
+    """Webhook payload structure"""    event: WebhookEvent
     timestamp: datetime
     data: Dict[str, Any]
     environment: str
@@ -173,8 +165,7 @@ class WebhookPayload:
 
 @dataclass
 class WebhookDelivery:
-    """Webhook delivery record"""
-    delivery_id: str
+    """Webhook delivery record"""    delivery_id: str
     endpoint_id: str
     payload: WebhookPayload
     status: WebhookStatus
@@ -193,19 +184,16 @@ class WebhookDelivery:
     response_time_ms: Optional[float] = None
 
 class WebhookSecurityManager:
-    """Security manager for webhook operations"""
-    
+    """Security manager for webhook operations"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.encryption_key = self._generate_encryption_key()
         
     def _generate_encryption_key(self) -> bytes:
-        """Generate encryption key for webhook secrets"""
-        return Fernet.generate_key()
+        """Generate encryption key for webhook secrets"""        return Fernet.generate_key()
     
     def encrypt_secret(self, secret: str) -> str:
-        """Encrypt webhook secret"""
-        try:
+        """Encrypt webhook secret"""        try:
             fernet = Fernet(self.encryption_key)
             encrypted_secret = fernet.encrypt(secret.encode())
             return base64.b64encode(encrypted_secret).decode()
@@ -214,8 +202,7 @@ class WebhookSecurityManager:
             raise
     
     def decrypt_secret(self, encrypted_secret: str) -> str:
-        """Decrypt webhook secret"""
-        try:
+        """Decrypt webhook secret"""        try:
             fernet = Fernet(self.encryption_key)
             encrypted_bytes = base64.b64decode(encrypted_secret.encode())
             decrypted_secret = fernet.decrypt(encrypted_bytes)
@@ -225,12 +212,10 @@ class WebhookSecurityManager:
             raise
     
     def generate_webhook_secret(self) -> str:
-        """Generate secure webhook secret"""
-        return secrets.token_urlsafe(32)
+        """Generate secure webhook secret"""        return secrets.token_urlsafe(32)
     
     def create_signature(self, payload: str, secret: str, algorithm: str = "sha256") -> str:
-        """Create webhook signature for payload verification"""
-        try:
+        """Create webhook signature for payload verification"""        try:
             signature = hmac.new(
                 secret.encode(),
                 payload.encode(),
@@ -242,8 +227,7 @@ class WebhookSecurityManager:
             raise
     
     def verify_signature(self, payload: str, signature: str, secret: str) -> bool:
-        """Verify webhook signature"""
-        try:
+        """Verify webhook signature"""        try:
             # Extract algorithm and signature
             if "=" not in signature:
                 return False
@@ -265,8 +249,7 @@ class WebhookSecurityManager:
             return False
     
     def validate_url(self, url: str) -> bool:
-        """Validate webhook URL security"""
-        try:
+        """Validate webhook URL security"""        try:
             parsed = urlparse(url)
             
             # Check for HTTPS in production
@@ -286,8 +269,7 @@ class WebhookSecurityManager:
             return False
 
 class ExternalIntegrationManager:
-    """Manager for external service integrations"""
-    
+    """Manager for external service integrations"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.integrations: Dict[IntegrationType, Dict[str, Any]] = {}
@@ -297,8 +279,7 @@ class ExternalIntegrationManager:
         integration_type: IntegrationType,
         config: Dict[str, Any]
     ) -> bool:
-        """Register external service integration"""
-        try:
+        """Register external service integration"""        try:
             # Validate integration configuration
             if not await self._validate_integration_config(integration_type, config):
                 return False
@@ -321,8 +302,7 @@ class ExternalIntegrationManager:
         username: str = "IA-Influencer CI/CD",
         icon_emoji: str = ":robot_face:"
     ) -> bool:
-        """Send Slack notification"""
-        try:
+        """Send Slack notification"""        try:
             payload = {
                 "text": message,
                 "username": username,
@@ -347,8 +327,7 @@ class ExternalIntegrationManager:
         message: str,
         color: str = "0078D4"
     ) -> bool:
-        """Send Microsoft Teams notification"""
-        try:
+        """Send Microsoft Teams notification"""        try:
             payload = {
                 "@type": "MessageCard",
                 "@context": "http://schema.org/extensions",
@@ -381,8 +360,7 @@ class ExternalIntegrationManager:
         target_url: str = None,
         token: str = None
     ) -> bool:
-        """Update GitHub commit status"""
-        try:
+        """Update GitHub commit status"""        try:
             if not token:
                 token = self.integrations.get(IntegrationType.GITHUB, {}).get("token")
             
@@ -422,8 +400,7 @@ class ExternalIntegrationManager:
         tags: List[str] = None,
         api_key: str = None
     ) -> bool:
-        """Send event to Datadog"""
-        try:
+        """Send event to Datadog"""        try:
             if not api_key:
                 api_key = self.integrations.get(IntegrationType.DATADOG, {}).get("api_key")
             
@@ -461,8 +438,7 @@ class ExternalIntegrationManager:
         integration_type: IntegrationType,
         config: Dict[str, Any]
     ) -> bool:
-        """Validate integration configuration"""
-        required_fields = {
+        """Validate integration configuration"""        required_fields = {
             IntegrationType.SLACK: ["webhook_url"],
             IntegrationType.TEAMS: ["webhook_url"],
             IntegrationType.GITHUB: ["token"],
@@ -480,8 +456,7 @@ class ExternalIntegrationManager:
         return True
 
 class WebhookIntegrationManager:
-    """Enterprise webhook integration manager for IA Influencer CI/CD"""
-    
+    """Enterprise webhook integration manager for IA Influencer CI/CD"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.endpoints: Dict[str, WebhookEndpoint] = {}
@@ -493,8 +468,7 @@ class WebhookIntegrationManager:
         self.initialized = False
         
     async def initialize(self):
-        """Initialize webhook integration manager"""
-        try:
+        """Initialize webhook integration manager"""        try:
             self.logger.info("Initializing Webhook Integration Manager...")
             
             # Start delivery workers
@@ -520,8 +494,7 @@ class WebhookIntegrationManager:
         events: List[WebhookEvent],
         secret: str = None
     ) -> str:
-        """Register a new webhook endpoint"""
-        if not self.initialized:
+        """Register a new webhook endpoint"""        if not self.initialized:
             await self.initialize()
         
         try:
@@ -565,8 +538,7 @@ class WebhookIntegrationManager:
         content_id: str = None,
         correlation_id: str = None
     ) -> List[str]:
-        """Send webhook event to all matching endpoints"""
-        if not self.initialized:
+        """Send webhook event to all matching endpoints"""        if not self.initialized:
             await self.initialize()
         
         try:
@@ -600,12 +572,10 @@ class WebhookIntegrationManager:
             return []
     
     async def get_delivery_status(self, delivery_id: str) -> Optional[WebhookDelivery]:
-        """Get webhook delivery status"""
-        return self.deliveries.get(delivery_id)
+        """Get webhook delivery status"""        return self.deliveries.get(delivery_id)
     
     async def retry_failed_delivery(self, delivery_id: str) -> bool:
-        """Retry a failed webhook delivery"""
-        try:
+        """Retry a failed webhook delivery"""        try:
             delivery = self.deliveries.get(delivery_id)
             if not delivery:
                 self.logger.error(f"Delivery not found: {delivery_id}")
@@ -630,8 +600,7 @@ class WebhookIntegrationManager:
             return False
     
     async def _find_matching_endpoints(self, payload: WebhookPayload) -> List[WebhookEndpoint]:
-        """Find webhook endpoints that match the payload"""
-        matching_endpoints = []
+        """Find webhook endpoints that match the payload"""        matching_endpoints = []
         
         for endpoint in self.endpoints.values():
             if not endpoint.active:
@@ -666,8 +635,7 @@ class WebhookIntegrationManager:
         endpoint: WebhookEndpoint,
         payload: WebhookPayload
     ) -> str:
-        """Queue webhook delivery for processing"""
-        delivery_id = str(uuid.uuid4())
+        """Queue webhook delivery for processing"""        delivery_id = str(uuid.uuid4())
         
         delivery = WebhookDelivery(
             delivery_id=delivery_id,
@@ -686,16 +654,14 @@ class WebhookIntegrationManager:
         return delivery_id
     
     async def _start_delivery_workers(self, worker_count: int = 3):
-        """Start webhook delivery worker tasks"""
-        for i in range(worker_count):
+        """Start webhook delivery worker tasks"""        for i in range(worker_count):
             worker_task = asyncio.create_task(self._webhook_delivery_worker(f"worker-{i}"))
             self.worker_tasks.append(worker_task)
         
         self.logger.info(f"Started {worker_count} webhook delivery workers")
     
     async def _webhook_delivery_worker(self, worker_name: str):
-        """Webhook delivery worker process"""
-        self.logger.info(f"Started webhook delivery worker: {worker_name}")
+        """Webhook delivery worker process"""        self.logger.info(f"Started webhook delivery worker: {worker_name}")
         
         while True:
             try:
@@ -716,8 +682,7 @@ class WebhookIntegrationManager:
                 await asyncio.sleep(1)
     
     async def _process_webhook_delivery(self, delivery: WebhookDelivery):
-        """Process individual webhook delivery"""
-        try:
+        """Process individual webhook delivery"""        try:
             delivery.status = WebhookStatus.SENDING
             delivery.attempts += 1
             delivery.last_attempt_at = datetime.now()
@@ -784,8 +749,7 @@ class WebhookIntegrationManager:
             await self._schedule_retry(delivery, endpoint)
     
     async def _schedule_retry(self, delivery: WebhookDelivery, endpoint: WebhookEndpoint):
-        """Schedule webhook delivery retry"""
-        if delivery.attempts >= endpoint.max_retries:
+        """Schedule webhook delivery retry"""        if delivery.attempts >= endpoint.max_retries:
             delivery.status = WebhookStatus.EXPIRED
             self.logger.warning(f"Webhook delivery expired after {delivery.attempts} attempts: {delivery.delivery_id}")
             return
@@ -805,19 +769,16 @@ class WebhookIntegrationManager:
         self.logger.info(f"Scheduled retry for delivery {delivery.delivery_id} in {delay} seconds")
     
     async def _delayed_retry(self, delivery: WebhookDelivery, delay_seconds: float):
-        """Execute delayed retry"""
-        await asyncio.sleep(delay_seconds)
+        """Execute delayed retry"""        await asyncio.sleep(delay_seconds)
         delivery.status = WebhookStatus.PENDING
         await self.delivery_queue.put(delivery)
     
     async def _setup_default_endpoints(self):
-        """Setup default webhook endpoints"""
-        # This would be configured based on environment and requirements
+        """Setup default webhook endpoints"""        # This would be configured based on environment and requirements
         pass
     
     async def _initialize_external_integrations(self):
-        """Initialize external service integrations"""
-        # This would load integration configurations from settings
+        """Initialize external service integrations"""        # This would load integration configurations from settings
         pass
 
 # Export main classes

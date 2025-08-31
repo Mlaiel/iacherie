@@ -34,8 +34,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 This revolutionary revenue intelligence platform is the EXCLUSIVE intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution
 under German and International Law. Contact: mlaiel@live.de for legal authorization.
-"""
-from .revenue_optimizer import (
+"""from .revenue_optimizer import (
     RevenueIntelligenceOptimizer,
     RevenueDataPoint,
     RevenueForecast,

@@ -1,5 +1,4 @@
-"""
-Advanced Image Fingerprinting Engine
+"""Advanced Image Fingerprinting Engine
 Uses CLIP, ImageHash, and perceptual analysis for image content identification
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -9,9 +8,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + Computer Vision Expert
 WARNING: This code is proprietary and confidential. Any unauthorized copying,
 distribution, modification or use is strictly prohibited and will be prosecuted
 to the full extent of the law.
-"""
-
-import numpy as np
+"""import numpy as np
 from typing import Dict, List, Tuple, Optional
 import hashlib
 import imagehash
@@ -30,8 +27,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ImageFingerprint:
-    """Image fingerprint data structure"""
-    perceptual_hash: str
+    """Image fingerprint data structure"""    perceptual_hash: str
     average_hash: str
     difference_hash: str
     wavelet_hash: str
@@ -45,11 +41,9 @@ class ImageFingerprint:
 
 
 class ImageFingerprintEngine:
-    """
-    Enterprise-grade image fingerprinting using multiple algorithms
+    """    Enterprise-grade image fingerprinting using multiple algorithms
     Combines perceptual hashing, CLIP embeddings, and computer vision features
-    """
-    
+    """    
     def __init__(self, clip_model_name: str = "openai/clip-vit-base-patch32"):
         self.clip_model = None
         self.clip_processor = None
@@ -65,8 +59,7 @@ class ImageFingerprintEngine:
             logger.warning(f"Failed to load CLIP model: {e}")
             
     def extract_fingerprint(self, image_file_path: str) -> ImageFingerprint:
-        """Extract comprehensive image fingerprint from file"""
-        try:
+        """Extract comprehensive image fingerprint from file"""        try:
             # Load image
             image = Image.open(image_file_path)
             original_size = image.size
@@ -116,8 +109,7 @@ class ImageFingerprintEngine:
             raise
             
     def _extract_clip_embedding(self, image: Image.Image) -> np.ndarray:
-        """Extract CLIP semantic embedding"""
-        try:
+        """Extract CLIP semantic embedding"""        try:
             if not self.clip_model or not self.clip_processor:
                 return np.array([])
                 
@@ -140,8 +132,7 @@ class ImageFingerprintEngine:
             return np.array([])
             
     def _extract_color_histogram(self, image: Image.Image, bins: int = 64) -> np.ndarray:
-        """Extract color histogram features"""
-        try:
+        """Extract color histogram features"""        try:
             # Convert to numpy array
             img_array = np.array(image)
             
@@ -163,8 +154,7 @@ class ImageFingerprintEngine:
             return np.array([])
             
     def _extract_texture_features(self, image: Image.Image) -> np.ndarray:
-        """Extract texture features using Gray Level Co-occurrence Matrix (GLCM)"""
-        try:
+        """Extract texture features using Gray Level Co-occurrence Matrix (GLCM)"""        try:
             # Convert to grayscale
             gray_image = image.convert('L')
             img_array = np.array(gray_image)
@@ -201,8 +191,7 @@ class ImageFingerprintEngine:
             return np.array([])
             
     def _extract_edge_features(self, image: Image.Image) -> np.ndarray:
-        """Extract edge-based features"""
-        try:
+        """Extract edge-based features"""        try:
             # Convert to grayscale
             gray_image = image.convert('L')
             img_array = np.array(gray_image)
@@ -236,8 +225,7 @@ class ImageFingerprintEngine:
             return np.array([])
             
     def _calculate_confidence(self, image: Image.Image, file_size: int) -> float:
-        """Calculate confidence score based on image quality metrics"""
-        try:
+        """Calculate confidence score based on image quality metrics"""        try:
             # Image size factor
             width, height = image.size
             pixel_count = width * height
@@ -264,8 +252,7 @@ class ImageFingerprintEngine:
             
     def compare_fingerprints(self, fp1: ImageFingerprint, 
                            fp2: ImageFingerprint) -> float:
-        """Compare two image fingerprints and return similarity score (0-1)"""
-        try:
+        """Compare two image fingerprints and return similarity score (0-1)"""        try:
             scores = []
             
             # 1. Perceptual hash similarity
@@ -308,8 +295,7 @@ class ImageFingerprintEngine:
             return 0.0
             
     def _compare_hashes(self, fp1: ImageFingerprint, fp2: ImageFingerprint) -> float:
-        """Compare perceptual hashes"""
-        try:
+        """Compare perceptual hashes"""        try:
             # Convert hashes back to imagehash objects for comparison
             ph1 = imagehash.hex_to_hash(fp1.perceptual_hash)
             ph2 = imagehash.hex_to_hash(fp2.perceptual_hash)
@@ -347,8 +333,7 @@ class ImageFingerprintEngine:
             return 0.0
             
     def _histogram_intersection(self, hist1: np.ndarray, hist2: np.ndarray) -> float:
-        """Calculate histogram intersection similarity"""
-        try:
+        """Calculate histogram intersection similarity"""        try:
             if len(hist1) == 0 or len(hist2) == 0:
                 return 0.0
                 
@@ -362,8 +347,7 @@ class ImageFingerprintEngine:
             return 0.0
             
     def batch_extract_fingerprints(self, image_files: List[str]) -> Dict[str, ImageFingerprint]:
-        """Extract fingerprints from multiple image files"""
-        fingerprints = {}
+        """Extract fingerprints from multiple image files"""        fingerprints = {}
         
         for image_file in image_files:
             try:
@@ -378,8 +362,7 @@ class ImageFingerprintEngine:
     def find_similar_images(self, target_fingerprint: ImageFingerprint,
                           candidate_fingerprints: Dict[str, ImageFingerprint],
                           threshold: float = 0.8) -> List[Tuple[str, float]]:
-        """Find similar image files above threshold"""
-        similar_files = []
+        """Find similar image files above threshold"""        similar_files = []
         
         for file_path, candidate_fp in candidate_fingerprints.items():
             similarity = self.compare_fingerprints(target_fingerprint, candidate_fp)
@@ -394,8 +377,7 @@ class ImageFingerprintEngine:
         
     def detect_modifications(self, original_fp: ImageFingerprint,
                            modified_fp: ImageFingerprint) -> Dict[str, bool]:
-        """Detect types of modifications made to an image"""
-        try:
+        """Detect types of modifications made to an image"""        try:
             modifications = {
                 'resized': False,
                 'cropped': False,

@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Tests Ultra-Industriels pour le Module Models Content Protection
+"""Tests Ultra-Industriels pour le Module Models Content Protection
 
 🚨 AVERTISSEMENT : Ce code, concept et architecture sont la propriété intellectuelle exclusive de Fahed Mlaiel (mlaiel@live.de). 
 Toute utilisation, copie, distribution ou exploitation sans autorisation écrite explicite est STRICTEMENT INTERDITE et poursuivie.
@@ -32,9 +28,7 @@ Toute utilisation, copie, distribution ou exploitation sans autorisation écrite
 ✅ IA Prompt Engineer
 
 Contact : Fahed Mlaiel <mlaiel@live.de>
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -67,11 +61,8 @@ from ai.content_protection.models import (
 
 
 class TestContentProtectionModelsUltraIndustrial:
-    """Suite de tests ultra-industriels pour tous les modèles de données"""
-
-    def test_content_type_enum_comprehensive(self):
-        """Test complet de l'énumération ContentType"""
-        # Verify all content types
+    """Suite de tests ultra-industriels pour tous les modèles de données"""    def test_content_type_enum_comprehensive(self):
+        """Test complet de l'énumération ContentType"""        # Verify all content types
         assert ContentType.AUDIO.value == "audio"
         assert ContentType.VIDEO.value == "video"
         assert ContentType.IMAGE.value == "image"
@@ -87,8 +78,7 @@ class TestContentProtectionModelsUltraIndustrial:
         assert str(ContentType.AUDIO) == "ContentType.AUDIO"
 
     def test_protection_level_enum_hierarchy(self):
-        """Test de la hiérarchie des niveaux de protection"""
-        levels = [
+        """Test de la hiérarchie des niveaux de protection"""        levels = [
             ProtectionLevel.BASIC,
             ProtectionLevel.STANDARD,
             ProtectionLevel.PREMIUM,
@@ -112,8 +102,7 @@ class TestContentProtectionModelsUltraIndustrial:
         assert level_hierarchy[ProtectionLevel.ULTRA_SECURITY] > level_hierarchy[ProtectionLevel.BASIC]
 
     def test_threat_severity_enum_criticality(self):
-        """Test des niveaux de sévérité des menaces"""
-        assert ThreatSeverity.LOW.value == "low"
+        """Test des niveaux de sévérité des menaces"""        assert ThreatSeverity.LOW.value == "low"
         assert ThreatSeverity.MEDIUM.value == "medium"
         
         # Test that all severities are properly defined
@@ -122,8 +111,7 @@ class TestContentProtectionModelsUltraIndustrial:
         assert "medium" in severities
 
     def test_content_metadata_creation_and_validation(self):
-        """Test ultra-avancé de création et validation ContentMetadata"""
-        # Create comprehensive metadata
+        """Test ultra-avancé de création et validation ContentMetadata"""        # Create comprehensive metadata
         metadata = ContentMetadata(
             content_id="test_content_123",
             content_type=ContentType.AUDIO,
@@ -164,8 +152,7 @@ class TestContentProtectionModelsUltraIndustrial:
         assert metadata_dict["format"] == "wav"
 
     def test_protection_result_comprehensive_analysis(self):
-        """Test ultra-complet du modèle ProtectionResult"""
-        result = ProtectionResult(
+        """Test ultra-complet du modèle ProtectionResult"""        result = ProtectionResult(
             content_id="protected_content_456",
             protection_applied=True,
             protection_methods=["watermarking", "encryption", "fingerprinting"],
@@ -204,8 +191,7 @@ class TestContentProtectionModelsUltraIndustrial:
         assert result.risk_assessment["vulnerability_score"] == 0.05
 
     def test_threat_detection_ultra_advanced(self):
-        """Test ultra-avancé de détection de menaces"""
-        detection = ThreatDetection(
+        """Test ultra-avancé de détection de menaces"""        detection = ThreatDetection(
             detection_id=str(uuid.uuid4()),
             content_id="monitored_content_789",
             threat_type="UNAUTHORIZED_COPY",
@@ -248,8 +234,7 @@ class TestContentProtectionModelsUltraIndustrial:
         assert detection.investigation_status == "PENDING_REVIEW"
 
     def test_analytics_report_enterprise_grade(self):
-        """Test de rapport d'analytics de niveau entreprise"""
-        report = AnalyticsReport(
+        """Test de rapport d'analytics de niveau entreprise"""        report = AnalyticsReport(
             report_id=str(uuid.uuid4()),
             generated_at=datetime.now(timezone.utc),
             period_start=datetime.now(timezone.utc) - timedelta(days=30),
@@ -306,8 +291,7 @@ class TestContentProtectionModelsUltraIndustrial:
         assert "ISO27001" in report.compliance_summary["industry_standards"]
 
     def test_user_permission_access_control(self):
-        """Test ultra-sécurisé de gestion des permissions utilisateur"""
-        permission = UserPermission(
+        """Test ultra-sécurisé de gestion des permissions utilisateur"""        permission = UserPermission(
             user_id="user_fahed_mlaiel",
             permission_level="ADMIN",
             granted_at=datetime.now(timezone.utc),
@@ -351,8 +335,7 @@ class TestContentProtectionModelsUltraIndustrial:
         assert permission.session_timeout == 3600
 
     def test_security_alert_critical_monitoring(self):
-        """Test de surveillance critique des alertes de sécurité"""
-        alert = SecurityAlert(
+        """Test de surveillance critique des alertes de sécurité"""        alert = SecurityAlert(
             alert_id=str(uuid.uuid4()),
             alert_type="SUSPICIOUS_ACTIVITY",
             severity="HIGH",
@@ -390,8 +373,7 @@ class TestContentProtectionModelsUltraIndustrial:
         assert alert.auto_resolved is False
 
     def test_watermark_data_advanced_embedding(self):
-        """Test ultra-avancé de données de watermarking"""
-        watermark = WatermarkData(
+        """Test ultra-avancé de données de watermarking"""        watermark = WatermarkData(
             watermark_id=str(uuid.uuid4()),
             content_id="watermarked_content_999",
             watermark_type="INVISIBLE_DIGITAL",
@@ -429,8 +411,7 @@ class TestContentProtectionModelsUltraIndustrial:
         assert watermark.verification_count == 1
 
     def test_content_item_comprehensive_model(self):
-        """Test complet du modèle ContentItem"""
-        content = ContentItem(
+        """Test complet du modèle ContentItem"""        content = ContentItem(
             item_id=str(uuid.uuid4()),
             metadata=ContentMetadata(
                 content_id="comprehensive_test_content",
@@ -485,8 +466,7 @@ class TestContentProtectionModelsUltraIndustrial:
         assert content.compliance_flags["enterprise_ready"] is True
 
     def test_model_serialization_and_deserialization(self):
-        """Test ultra-avancé de sérialisation/désérialisation des modèles"""
-        # Create complex nested model
+        """Test ultra-avancé de sérialisation/désérialisation des modèles"""        # Create complex nested model
         original_metadata = ContentMetadata(
             content_id="serialization_test",
             content_type=ContentType.MULTIMEDIA,
@@ -518,8 +498,7 @@ class TestContentProtectionModelsUltraIndustrial:
         assert serialized["custom_properties"]["array_data"] == [1, 2, 3, 4, 5]
 
     def test_model_edge_cases_and_limits(self):
-        """Test des cas limites et de validation robuste"""
-        # Test with minimal valid data
+        """Test des cas limites et de validation robuste"""        # Test with minimal valid data
         minimal_metadata = ContentMetadata(
             content_id="minimal_test",
             content_type=ContentType.TEXT,
@@ -544,8 +523,7 @@ class TestContentProtectionModelsUltraIndustrial:
         assert minimal_metadata.custom_properties == {}
 
     def test_model_performance_large_data(self):
-        """Test de performance avec de grandes quantités de données"""
-        # Create model with large data structures
+        """Test de performance avec de grandes quantités de données"""        # Create model with large data structures
         large_custom_properties = {
             f"property_{i}": f"value_{i}" for i in range(1000)
         }
@@ -576,8 +554,7 @@ class TestContentProtectionModelsUltraIndustrial:
         assert "tag_99" in large_metadata.tags
 
     def test_datetime_timezone_handling(self):
-        """Test ultra-strict de gestion des fuseaux horaires"""
-        utc_now = datetime.now(timezone.utc)
+        """Test ultra-strict de gestion des fuseaux horaires"""        utc_now = datetime.now(timezone.utc)
         
         metadata = ContentMetadata(
             content_id="timezone_test",
@@ -604,8 +581,7 @@ class TestContentProtectionModelsUltraIndustrial:
         assert time_diff.total_seconds() < 1.0  # Should be very recent
 
     def test_model_validation_business_rules(self):
-        """Test des règles métier et validation avancée"""
-        # Test valid quality score range
+        """Test des règles métier et validation avancée"""        # Test valid quality score range
         valid_metadata = ContentMetadata(
             content_id="business_rules_test",
             content_type=ContentType.IMAGE,

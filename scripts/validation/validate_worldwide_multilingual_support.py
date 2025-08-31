@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Worldwide Multilingual Support Validation Script
+"""Worldwide Multilingual Support Validation Script
 ===============================================
 
 Validates the enhanced multilingual support for "parler et comprendre 
@@ -8,16 +7,13 @@ tous les langues et dialecte locale du monde entier"
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import os
+"""import os
 import sys
 import re
 from typing import List, Dict, Set
 
 def extract_languages_from_file(file_path: str) -> List[str]:
-    """Extract language entries from language_manager.py"""
-    try:
+    """Extract language entries from language_manager.py"""    try:
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
         
@@ -31,8 +27,7 @@ def extract_languages_from_file(file_path: str) -> List[str]:
         return []
 
 def extract_localizations_from_file(file_path: str) -> List[str]:
-    """Extract localization entries from dialect_localization.py"""
-    try:
+    """Extract localization entries from dialect_localization.py"""    try:
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
         
@@ -46,8 +41,7 @@ def extract_localizations_from_file(file_path: str) -> List[str]:
         return []
 
 def analyze_language_coverage(languages: List[tuple]) -> Dict[str, List[str]]:
-    """Analyze language coverage by region/family"""
-    
+    """Analyze language coverage by region/family"""    
     # Regional language samples for coverage analysis
     regional_mapping = {
         'North America': ['en', 'en_US', 'en_CA', 'fr_CA', 'es_MX'],
@@ -76,8 +70,7 @@ def analyze_language_coverage(languages: List[tuple]) -> Dict[str, List[str]]:
     return coverage_report
 
 def main():
-    """Main validation function"""
-    
+    """Main validation function"""    
     print("🌍 VALIDATION: Enhanced Worldwide Multilingual Support")
     print("=" * 60)
     

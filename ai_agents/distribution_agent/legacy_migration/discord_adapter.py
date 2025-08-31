@@ -1,12 +1,9 @@
-"""
-Discord Platform Adapter for IA Influencer Agent Distribution System.
+"""Discord Platform Adapter for IA Influencer Agent Distribution System.
 Handles community content distribution, server management, and engagement.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
@@ -25,19 +22,16 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class DiscordCredentials:
-    """Discord API credentials configuration."""
-    bot_token: str
+    """Discord API credentials configuration."""    bot_token: str
     client_id: str
     client_secret: str
     guild_id: Optional[str] = None
     channel_id: Optional[str] = None
 
 class DiscordAdapter(BasePlatformAdapter):
-    """
-    Advanced Discord platform adapter for community content distribution.
+    """    Advanced Discord platform adapter for community content distribution.
     Supports messages, embeds, file uploads, and server management.
-    """
-    
+    """    
     PLATFORM_NAME = "discord"
     API_BASE_URL = "https://discord.com/api/v10"
     CDN_BASE_URL = "https://cdn.discordapp.com"
@@ -60,8 +54,7 @@ class DiscordAdapter(BasePlatformAdapter):
         self._verify_credentials()
     
     def _verify_credentials(self):
-        """Verify Discord API credentials."""
-        try:
+        """Verify Discord API credentials."""        try:
             # Test bot connection
             response = self.session.get(f"{self.API_BASE_URL}/users/@me")
             
@@ -76,8 +69,7 @@ class DiscordAdapter(BasePlatformAdapter):
             raise AuthenticationError(f"Discord authentication failed: {e}")
     
     async def authenticate_user(self, user_id: str) -> Dict[str, Any]:
-        """Generate Discord OAuth URL for user authentication."""
-        try:
+        """Generate Discord OAuth URL for user authentication."""        try:
             auth_params = {
                 "response_type": "code",
                 "client_id": self.credentials.client_id,
@@ -102,8 +94,7 @@ class DiscordAdapter(BasePlatformAdapter):
             raise AuthenticationError(f"Failed to authenticate user: {e}")
     
     async def validate_content(self, content_metadata: ContentMetadata) -> Dict[str, Any]:
-        """Validate content meets Discord requirements."""
-        validation_results = {
+        """Validate content meets Discord requirements."""        validation_results = {
             "is_valid": True,
             "errors": [],
             "warnings": []
@@ -134,8 +125,7 @@ class DiscordAdapter(BasePlatformAdapter):
         return validation_results
     
     async def upload_content(self, distribution_request: DistributionRequest) -> DistributionResult:
-        """Upload content to Discord channel."""
-        try:
+        """Upload content to Discord channel."""        try:
             # Validate content first
             validation = await self.validate_content(distribution_request.content_metadata)
             if not validation["is_valid"]:
@@ -187,8 +177,7 @@ class DiscordAdapter(BasePlatformAdapter):
             )
     
     async def _get_default_channel(self) -> str:
-        """Get default channel for posting."""
-        try:
+        """Get default channel for posting."""        try:
             if not self.credentials.guild_id:
                 raise DistributionError("No guild ID configured for Discord")
             
@@ -210,8 +199,7 @@ class DiscordAdapter(BasePlatformAdapter):
             raise DistributionError("Failed to find Discord channel")
     
     async def _prepare_message_data(self, content_metadata: ContentMetadata) -> Dict:
-        """Prepare message data for Discord."""
-        # Check if we need to use embed for longer content
+        """Prepare message data for Discord."""        # Check if we need to use embed for longer content
         message_text = ""
         embed = None
         
@@ -266,8 +254,7 @@ class DiscordAdapter(BasePlatformAdapter):
         return message_data
     
     async def _prepare_file_upload(self, file_path: str, content_metadata: ContentMetadata) -> Dict:
-        """Prepare file for Discord upload."""
-        try:
+        """Prepare file for Discord upload."""        try:
             import os
             filename = os.path.basename(file_path)
             
@@ -283,8 +270,7 @@ class DiscordAdapter(BasePlatformAdapter):
             return {}
     
     async def _send_message(self, channel_id: str, message_data: Dict, files: Optional[Dict] = None) -> Dict:
-        """Send message to Discord channel."""
-        try:
+        """Send message to Discord channel."""        try:
             url = f"{self.API_BASE_URL}/channels/{channel_id}/messages"
             
             if files:
@@ -310,8 +296,7 @@ class DiscordAdapter(BasePlatformAdapter):
             return {"error": str(e)}
     
     async def get_analytics(self, content_id: str, date_range: tuple = None) -> PlatformAnalytics:
-        """Retrieve analytics data for Discord message."""
-        try:
+        """Retrieve analytics data for Discord message."""        try:
             message_id = content_id.replace("discord_", "")
             channel_id = self.credentials.channel_id or await self._get_default_channel()
             
@@ -361,8 +346,7 @@ class DiscordAdapter(BasePlatformAdapter):
             raise DistributionError(f"Analytics retrieval failed: {e}")
     
     async def _get_server_member_count(self) -> int:
-        """Get server member count."""
-        try:
+        """Get server member count."""        try:
             if not self.credentials.guild_id:
                 return 0
             
@@ -379,8 +363,7 @@ class DiscordAdapter(BasePlatformAdapter):
             return 0
     
     async def get_revenue_data(self, content_id: str, date_range: tuple = None) -> RevenueData:
-        """Estimate revenue from Discord content (server boosts, premium features)."""
-        try:
+        """Estimate revenue from Discord content (server boosts, premium features)."""        try:
             analytics = await self.get_analytics(content_id, date_range)
             
             # Discord doesn't have direct monetization for content
@@ -413,8 +396,7 @@ class DiscordAdapter(BasePlatformAdapter):
             raise DistributionError(f"Revenue calculation failed: {e}")
     
     async def update_content_metadata(self, content_id: str, metadata: Dict[str, Any]) -> bool:
-        """Update Discord message (limited editing available)."""
-        try:
+        """Update Discord message (limited editing available)."""        try:
             message_id = content_id.replace("discord_", "")
             channel_id = self.credentials.channel_id or await self._get_default_channel()
             
@@ -443,8 +425,7 @@ class DiscordAdapter(BasePlatformAdapter):
             return False
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete Discord message."""
-        try:
+        """Delete Discord message."""        try:
             message_id = content_id.replace("discord_", "")
             channel_id = self.credentials.channel_id or await self._get_default_channel()
             
@@ -462,8 +443,7 @@ class DiscordAdapter(BasePlatformAdapter):
             return False
     
     def get_platform_limits(self) -> Dict[str, Any]:
-        """Return platform-specific limits and requirements."""
-        return {
+        """Return platform-specific limits and requirements."""        return {
             "max_message_length": self.MAX_MESSAGE_LENGTH,
             "max_embed_title_length": self.MAX_EMBED_TITLE_LENGTH,
             "max_embed_description_length": self.MAX_EMBED_DESCRIPTION_LENGTH,

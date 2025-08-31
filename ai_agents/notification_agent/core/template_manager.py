@@ -1,5 +1,4 @@
-"""
-Advanced Template Manager - Intelligent Notification Template Management System
+"""Advanced Template Manager - Intelligent Notification Template Management System
 
 This module provides sophisticated notification template management for the IA Influencer Agent platform,
 handling AI-driven template generation, personalization, multi-language support, and dynamic content adaptation.
@@ -18,9 +17,7 @@ Team Specialties:
 - Database Administrator & Security Expert
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Set
@@ -44,8 +41,7 @@ from ...monitoring.template_monitoring import TemplateMonitoringService
 
 
 class TemplateType(Enum):
-    """Comprehensive template types for IA Influencer platform"""
-    CONTENT_UPLOAD_CONFIRMATION = "content_upload_confirmation"
+    """Comprehensive template types for IA Influencer platform"""    CONTENT_UPLOAD_CONFIRMATION = "content_upload_confirmation"
     AI_PROTECTION_ALERT = "ai_protection_alert"
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     COLLABORATION_INVITATION = "collaboration_invitation"
@@ -63,8 +59,7 @@ class TemplateType(Enum):
 
 
 class TemplateFormat(Enum):
-    """Template output formats"""
-    HTML = "html"
+    """Template output formats"""    HTML = "html"
     PLAIN_TEXT = "plain_text"
     MARKDOWN = "markdown"
     JSON = "json"
@@ -72,8 +67,7 @@ class TemplateFormat(Enum):
 
 
 class TemplateLanguage(Enum):
-    """Supported template languages"""
-    ENGLISH = "en"
+    """Supported template languages"""    ENGLISH = "en"
     FRENCH = "fr"
     GERMAN = "de"
     SPANISH = "es"
@@ -87,8 +81,7 @@ class TemplateLanguage(Enum):
 
 @dataclass
 class TemplateContext:
-    """Rich context for template rendering"""
-    user_id: str
+    """Rich context for template rendering"""    user_id: str
     user_profile: Dict[str, Any] = field(default_factory=dict)
     content_data: Dict[str, Any] = field(default_factory=dict)
     business_context: Dict[str, Any] = field(default_factory=dict)
@@ -101,8 +94,7 @@ class TemplateContext:
 
 @dataclass
 class TemplateConfiguration:
-    """Advanced template configuration"""
-    template_id: str
+    """Advanced template configuration"""    template_id: str
     template_type: TemplateType
     supported_formats: List[TemplateFormat]
     supported_languages: List[TemplateLanguage]
@@ -119,8 +111,7 @@ class TemplateConfiguration:
 
 @dataclass
 class RenderedTemplate:
-    """Rendered template with metadata"""
-    template_id: str
+    """Rendered template with metadata"""    template_id: str
     rendered_content: Dict[str, str]  # Format -> content mapping
     metadata: Dict[str, Any]
     personalization_applied: bool
@@ -132,8 +123,7 @@ class RenderedTemplate:
 
 
 class TemplateManager:
-    """
-    Advanced notification template management system
+    """    Advanced notification template management system
     
     Features:
     - AI-driven template generation and personalization
@@ -143,8 +133,7 @@ class TemplateManager:
     - Channel-specific template optimization
     - Real-time template performance analytics
     - Business logic integration for content creators
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -177,8 +166,7 @@ class TemplateManager:
         self.channel_templates: Dict[NotificationChannel, Dict[str, str]] = defaultdict(dict)
         
     def _initialize_jinja_environment(self) -> Environment:
-        """Initialize Jinja2 template environment with custom filters and functions"""
-        try:
+        """Initialize Jinja2 template environment with custom filters and functions"""        try:
             env = Environment(
                 loader=BaseLoader(),
                 autoescape=select_autoescape(['html', 'xml']),
@@ -205,18 +193,15 @@ class TemplateManager:
             return Environment(loader=BaseLoader())
             
     def _initialize_ab_testing(self):
-        """Initialize A/B testing framework"""
-        from ...analytics.ab_testing import ABTestManager
+        """Initialize A/B testing framework"""        from ...analytics.ab_testing import ABTestManager
         return ABTestManager(self.config.get('ab_testing', {}))
         
     def _initialize_translation_service(self):
-        """Initialize translation service for multi-language support"""
-        from ...ai.translation.translation_service import TranslationService
+        """Initialize translation service for multi-language support"""        from ...ai.translation.translation_service import TranslationService
         return TranslationService(self.config.get('translation', {}))
         
     async def start_manager(self):
-        """Start template manager with all background services"""
-        try:
+        """Start template manager with all background services"""        try:
             self.logger.info("Starting TemplateManager")
             
             # Load templates from repository
@@ -241,8 +226,7 @@ class TemplateManager:
             return False
             
     async def stop_manager(self):
-        """Stop template manager gracefully"""
-        try:
+        """Stop template manager gracefully"""        try:
             self.logger.info("Stopping TemplateManager")
             
             # Cancel background tasks
@@ -268,8 +252,7 @@ class TemplateManager:
         base_content: Dict[str, str],
         configuration: TemplateConfiguration
     ) -> str:
-        """Create new template with AI enhancement"""
-        try:
+        """Create new template with AI enhancement"""        try:
             template_id = str(uuid.uuid4())
             
             # Generate AI-enhanced content
@@ -327,8 +310,7 @@ class TemplateManager:
         target_language: TemplateLanguage = TemplateLanguage.ENGLISH,
         target_channel: Optional[NotificationChannel] = None
     ) -> RenderedTemplate:
-        """Render template with advanced personalization and optimization"""
-        try:
+        """Render template with advanced personalization and optimization"""        try:
             start_time = datetime.utcnow()
             
             # Get template
@@ -402,8 +384,7 @@ class TemplateManager:
             raise
             
     async def get_template_performance(self, template_id: str) -> Dict[str, Any]:
-        """Get comprehensive template performance analytics"""
-        try:
+        """Get comprehensive template performance analytics"""        try:
             metrics = self.template_metrics.get(template_id)
             if not metrics:
                 return {"error": "Template metrics not found"}
@@ -440,8 +421,7 @@ class TemplateManager:
         template_id: str,
         optimization_goals: List[str]
     ) -> bool:
-        """AI-driven template optimization based on performance data"""
-        try:
+        """AI-driven template optimization based on performance data"""        try:
             # Get current template and performance data
             template = await self._get_template(template_id)
             if not template:
@@ -481,8 +461,7 @@ class TemplateManager:
             return False
             
     async def _get_template(self, template_id: str) -> Optional[NotificationTemplate]:
-        """Get template from cache or repository"""
-        try:
+        """Get template from cache or repository"""        try:
             # Check cache first
             if template_id in self.template_cache:
                 return self.template_cache[template_id]
@@ -503,8 +482,7 @@ class TemplateManager:
         content: Dict[str, str],
         configuration: TemplateConfiguration
     ) -> Dict[str, Dict[str, str]]:
-        """Create channel-specific template variants"""
-        try:
+        """Create channel-specific template variants"""        try:
             variants = {}
             
             # Email variant
@@ -526,11 +504,9 @@ class TemplateManager:
             return {}
             
     async def _create_email_variant(self, content: Dict[str, str]) -> Dict[str, str]:
-        """Create email-optimized template variant"""
-        return {
+        """Create email-optimized template variant"""        return {
             'subject': content.get('title', 'Notification'),
-            'html_body': f"""
-            <html>
+            'html_body': f"""            <html>
                 <body>
                     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
                         <h1 style="color: #333;">{content.get('title', '')}</h1>
@@ -545,8 +521,7 @@ class TemplateManager:
                 </body>
             </html>
             """,
-            'text_body': f"""
-            {content.get('title', '')}
+            'text_body': f"""            {content.get('title', '')}
             
             {content.get('message', '')}
             
@@ -554,12 +529,10 @@ class TemplateManager:
             
             ---
             This message was sent by IA Influencer Agent.
-            """
-        }
+            """        }
         
     async def _create_sms_variant(self, content: Dict[str, str]) -> Dict[str, str]:
-        """Create SMS-optimized template variant"""
-        message = content.get('title', '') + ': ' + content.get('message', '')
+        """Create SMS-optimized template variant"""        message = content.get('title', '') + ': ' + content.get('message', '')
         
         # Truncate to SMS limits
         if len(message) > 160:
@@ -571,8 +544,7 @@ class TemplateManager:
         }
         
     async def _create_push_variant(self, content: Dict[str, str]) -> Dict[str, str]:
-        """Create push notification optimized template variant"""
-        return {
+        """Create push notification optimized template variant"""        return {
             'title': content.get('title', '')[:50],  # Push title limit
             'body': content.get('message', '')[:200],  # Push body limit
             'icon': content.get('icon', '/default-icon.png'),
@@ -581,8 +553,7 @@ class TemplateManager:
         }
         
     async def _create_in_app_variant(self, content: Dict[str, str]) -> Dict[str, str]:
-        """Create in-app notification optimized template variant"""
-        return {
+        """Create in-app notification optimized template variant"""        return {
             'title': content.get('title', ''),
             'message': content.get('message', ''),
             'rich_content': content.get('rich_content', {}),
@@ -595,8 +566,7 @@ class TemplateManager:
         content: Dict[str, str],
         languages: List[TemplateLanguage]
     ) -> Dict[str, Dict[str, str]]:
-        """Create multi-language template variants"""
-        try:
+        """Create multi-language template variants"""        try:
             variants = {}
             
             for language in languages:
@@ -621,8 +591,7 @@ class TemplateManager:
         template: NotificationTemplate,
         context: TemplateContext
     ) -> Dict[str, str]:
-        """Apply AI-driven personalization to template content"""
-        try:
+        """Apply AI-driven personalization to template content"""        try:
             if not template.configuration.personalization_enabled:
                 return template.content
                 
@@ -646,8 +615,7 @@ class TemplateManager:
         target_language: TemplateLanguage,
         context: TemplateContext
     ) -> Dict[str, str]:
-        """Apply localization and cultural adaptation"""
-        try:
+        """Apply localization and cultural adaptation"""        try:
             if target_language == TemplateLanguage.ENGLISH:
                 return content
                 
@@ -670,8 +638,7 @@ class TemplateManager:
         channel: NotificationChannel,
         template: NotificationTemplate
     ) -> Dict[str, str]:
-        """Apply channel-specific content optimization"""
-        try:
+        """Apply channel-specific content optimization"""        try:
             # Get channel-specific variant
             channel_variant = template.channel_variants.get(channel.value, content)
             
@@ -690,8 +657,7 @@ class TemplateManager:
             return content
             
     async def _optimize_for_email(self, content: Dict[str, str]) -> Dict[str, str]:
-        """Optimize content specifically for email delivery"""
-        optimized = content.copy()
+        """Optimize content specifically for email delivery"""        optimized = content.copy()
         
         # Ensure proper email structure
         if 'html_body' not in optimized and 'message' in optimized:
@@ -707,8 +673,7 @@ class TemplateManager:
         return optimized
         
     async def _optimize_for_sms(self, content: Dict[str, str]) -> Dict[str, str]:
-        """Optimize content specifically for SMS delivery"""
-        optimized = content.copy()
+        """Optimize content specifically for SMS delivery"""        optimized = content.copy()
         
         # Ensure message fits SMS constraints
         if 'message' in optimized and len(optimized['message']) > 160:
@@ -717,8 +682,7 @@ class TemplateManager:
         return optimized
         
     async def _optimize_for_push(self, content: Dict[str, str]) -> Dict[str, str]:
-        """Optimize content specifically for push notifications"""
-        optimized = content.copy()
+        """Optimize content specifically for push notifications"""        optimized = content.copy()
         
         # Ensure push notification constraints
         if 'title' in optimized and len(optimized['title']) > 50:
@@ -735,8 +699,7 @@ class TemplateManager:
         context: TemplateContext,
         target_format: TemplateFormat
     ) -> str:
-        """Render final content using Jinja2 template engine"""
-        try:
+        """Render final content using Jinja2 template engine"""        try:
             # Get content for target format
             template_content = content.get(target_format.value, content.get('message', ''))
             
@@ -775,8 +738,7 @@ class TemplateManager:
         template: NotificationTemplate,
         context: TemplateContext
     ) -> Dict[NotificationChannel, Dict[str, str]]:
-        """Generate optimized versions for all supported channels"""
-        try:
+        """Generate optimized versions for all supported channels"""        try:
             optimizations = {}
             
             # Generate optimization for each channel
@@ -801,8 +763,7 @@ class TemplateManager:
         template: NotificationTemplate,
         context: TemplateContext
     ) -> Dict[str, Any]:
-        """Generate performance optimization hints"""
-        try:
+        """Generate performance optimization hints"""        try:
             hints = {
                 'recommended_channels': [],
                 'optimal_send_time': None,
@@ -843,8 +804,7 @@ class TemplateManager:
             return {}
             
     async def _update_template_usage_metrics(self, template_id: str):
-        """Update template usage metrics"""
-        try:
+        """Update template usage metrics"""        try:
             if template_id in self.template_metrics:
                 self.template_metrics[template_id].usage_count += 1
                 self.template_metrics[template_id].last_updated = datetime.utcnow()
@@ -857,8 +817,7 @@ class TemplateManager:
             
     # Jinja2 custom filters and functions
     def _format_currency_filter(self, amount: float, currency: str = 'USD') -> str:
-        """Format currency values"""
-        try:
+        """Format currency values"""        try:
             if currency == 'USD':
                 return f"${amount:,.2f}"
             elif currency == 'EUR':
@@ -869,8 +828,7 @@ class TemplateManager:
             return str(amount)
             
     def _format_date_filter(self, date: datetime, format_str: str = '%Y-%m-%d') -> str:
-        """Format date values"""
-        try:
+        """Format date values"""        try:
             if isinstance(date, str):
                 date = datetime.fromisoformat(date)
             return date.strftime(format_str)
@@ -878,8 +836,7 @@ class TemplateManager:
             return str(date)
             
     def _truncate_smart_filter(self, text: str, length: int = 100) -> str:
-        """Smart truncation that preserves word boundaries"""
-        try:
+        """Smart truncation that preserves word boundaries"""        try:
             if len(text) <= length:
                 return text
             
@@ -895,8 +852,7 @@ class TemplateManager:
             return text
             
     def _capitalize_smart_filter(self, text: str) -> str:
-        """Smart capitalization that handles various cases"""
-        try:
+        """Smart capitalization that handles various cases"""        try:
             # Split by common delimiters and capitalize each part
             words = re.split(r'([\s\-_]+)', text)
             capitalized = [word.capitalize() if word.isalpha() else word for word in words]
@@ -905,8 +861,7 @@ class TemplateManager:
             return text
             
     def _sanitize_html_filter(self, text: str) -> str:
-        """Sanitize HTML content"""
-        try:
+        """Sanitize HTML content"""        try:
             # Remove potentially dangerous HTML tags
             import html
             sanitized = html.escape(text)
@@ -915,8 +870,7 @@ class TemplateManager:
             return text
             
     async def _get_user_preference(self, user_id: str, preference_key: str, default=None):
-        """Get user preference value"""
-        try:
+        """Get user preference value"""        try:
             # This would typically query a user preferences service
             # For now, return default
             return default
@@ -924,8 +878,7 @@ class TemplateManager:
             return default
             
     async def _get_localized_string(self, key: str, language: str = 'en', **kwargs):
-        """Get localized string"""
-        try:
+        """Get localized string"""        try:
             # This would typically query a localization service
             # For now, return the key
             return key
@@ -933,8 +886,7 @@ class TemplateManager:
             return key
             
     def _generate_tracking_url(self, base_url: str, campaign: str, user_id: str) -> str:
-        """Generate tracking URL for analytics"""
-        try:
+        """Generate tracking URL for analytics"""        try:
             import urllib.parse
             
             tracking_params = {
@@ -952,8 +904,7 @@ class TemplateManager:
             return base_url
             
     async def _get_ai_recommendation(self, context_type: str, user_data: Dict[str, Any]):
-        """Get AI-driven recommendation"""
-        try:
+        """Get AI-driven recommendation"""        try:
             # This would typically call an AI recommendation service
             # For now, return a placeholder
             return f"AI recommendation for {context_type}"
@@ -962,8 +913,7 @@ class TemplateManager:
             
     # Background task methods
     async def _optimize_template_performance(self):
-        """Background task to optimize template performance"""
-        while True:
+        """Background task to optimize template performance"""        while True:
             try:
                 # Analyze template performance and optimize underperforming templates
                 for template_id, metrics in self.template_metrics.items():
@@ -981,8 +931,7 @@ class TemplateManager:
                 await asyncio.sleep(3600)
                 
     async def _cleanup_expired_cache(self):
-        """Background task to cleanup expired cache entries"""
-        while True:
+        """Background task to cleanup expired cache entries"""        while True:
             try:
                 current_time = datetime.utcnow()
                 expired_keys = []
@@ -1011,8 +960,7 @@ class TemplateManager:
                 await asyncio.sleep(1800)
                 
     async def _update_template_metrics(self):
-        """Background task to update template metrics"""
-        while True:
+        """Background task to update template metrics"""        while True:
             try:
                 # Update metrics for all templates
                 for template_id in self.template_metrics.keys():
@@ -1031,8 +979,7 @@ class TemplateManager:
                 await asyncio.sleep(900)
                 
     async def _generate_template_insights(self):
-        """Background task to generate template insights"""
-        while True:
+        """Background task to generate template insights"""        while True:
             try:
                 # Generate insights for template performance
                 insights = {
@@ -1078,8 +1025,7 @@ class TemplateManager:
                 await asyncio.sleep(21600)
                 
     async def _load_templates_from_repository(self):
-        """Load all templates from repository into cache"""
-        try:
+        """Load all templates from repository into cache"""        try:
             templates = await self.repository.get_all_templates()
             
             for template in templates:
@@ -1101,8 +1047,7 @@ class TemplateManager:
             self.logger.error(f"Failed to load templates from repository: {str(e)}")
             
     async def _save_templates_to_repository(self):
-        """Save all cached templates to repository"""
-        try:
+        """Save all cached templates to repository"""        try:
             save_count = 0
             
             for template in self.template_cache.values():
@@ -1119,8 +1064,7 @@ class TemplateManager:
         template_id: str,
         historical_data: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate performance trends for a template"""
-        try:
+        """Calculate performance trends for a template"""        try:
             if not historical_data:
                 return {}
                 
@@ -1159,8 +1103,7 @@ class TemplateManager:
         self,
         template_id: str
     ) -> List[str]:
-        """Generate optimization recommendations for a template"""
-        try:
+        """Generate optimization recommendations for a template"""        try:
             recommendations = []
             
             metrics = self.template_metrics.get(template_id)
@@ -1205,10 +1148,8 @@ class TemplateManager:
 
 
 class MessageGenerator:
-    """
-    Advanced message generation system with AI-powered content creation
-    """
-    
+    """    Advanced message generation system with AI-powered content creation
+    """    
     def __init__(self, template_manager: TemplateManager):
         self.template_manager = template_manager
         self.logger = logging.getLogger(__name__)
@@ -1219,8 +1160,7 @@ class MessageGenerator:
         context: TemplateContext,
         preferences: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Generate complete message from template with full optimization"""
-        try:
+        """Generate complete message from template with full optimization"""        try:
             # Set defaults from preferences
             target_format = TemplateFormat(preferences.get('format', 'html')) if preferences else TemplateFormat.HTML
             target_language = TemplateLanguage(preferences.get('language', 'en')) if preferences else TemplateLanguage.ENGLISH
@@ -1255,8 +1195,7 @@ class MessageGenerator:
         context: TemplateContext,
         preferences: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Generate dynamic message without predefined template"""
-        try:
+        """Generate dynamic message without predefined template"""        try:
             # Create dynamic template based on message type
             dynamic_template_id = await self._create_dynamic_template(message_type, context)
             
@@ -1278,8 +1217,7 @@ class MessageGenerator:
         message_type: str,
         context: TemplateContext
     ) -> str:
-        """Create dynamic template based on message type and context"""
-        try:
+        """Create dynamic template based on message type and context"""        try:
             # Map message type to template type
             template_type_mapping = {
                 'welcome': TemplateType.WELCOME_SERIES,
@@ -1320,8 +1258,7 @@ class MessageGenerator:
         message_type: str,
         context: TemplateContext
     ) -> Dict[str, str]:
-        """Generate base content for dynamic templates"""
-        content_templates = {
+        """Generate base content for dynamic templates"""        content_templates = {
             'welcome': {
                 'title': 'Welcome to IA Influencer Agent!',
                 'message': 'Hello {{ user.name | default("Creator") }}! Welcome to our platform. We\'re excited to help you protect and monetize your content.',
@@ -1358,8 +1295,7 @@ class MessageGenerator:
 
 @dataclass
 class TemplateConfiguration:
-    """Advanced template configuration"""
-    id: str
+    """Advanced template configuration"""    id: str
     name: str
     description: str
     template_type: TemplateType
@@ -1379,8 +1315,7 @@ class TemplateConfiguration:
 
 @dataclass
 class RenderedTemplate:
-    """Result of template rendering"""
-    template_id: str
+    """Result of template rendering"""    template_id: str
     rendered_content: Dict[str, str]  # format -> content
     used_variables: Dict[str, Any]
     personalization_applied: List[str]
@@ -1392,8 +1327,7 @@ class RenderedTemplate:
 
 
 class TemplateLoader(BaseLoader):
-    """Custom Jinja2 template loader for notification templates"""
-    
+    """Custom Jinja2 template loader for notification templates"""    
     def __init__(self, templates: Dict[str, str]):
         self.templates = templates
         
@@ -1406,8 +1340,7 @@ class TemplateLoader(BaseLoader):
 
 
 class TemplateManager:
-    """
-    Advanced notification template management system
+    """    Advanced notification template management system
     
     Features:
     - AI-driven template generation and optimization
@@ -1416,8 +1349,7 @@ class TemplateManager:
     - A/B testing for template effectiveness
     - Business logic integration for content creators
     - Real-time template performance monitoring
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -1459,8 +1391,7 @@ class TemplateManager:
         self.translation_cache = {}
         
     async def initialize_manager(self):
-        """Initialize the template manager with all components"""
-        try:
+        """Initialize the template manager with all components"""        try:
             self.logger.info("Initializing TemplateManager with AI-driven capabilities")
             
             # Initialize repository
@@ -1503,8 +1434,7 @@ class TemplateManager:
         personalization_rules: Optional[Dict[str, Any]] = None,
         ai_generated: bool = True
     ) -> str:
-        """
-        Create new notification template with AI assistance
+        """        Create new notification template with AI assistance
         
         Args:
             name: Template name
@@ -1516,8 +1446,7 @@ class TemplateManager:
             
         Returns:
             template_id: Unique template identifier
-        """
-        try:
+        """        try:
             template_id = str(uuid.uuid4())
             
             # Generate template content using AI if not provided
@@ -1569,8 +1498,7 @@ class TemplateManager:
         format_type: TemplateFormat = TemplateFormat.HTML,
         language: TemplateLanguage = TemplateLanguage.ENGLISH
     ) -> RenderedTemplate:
-        """
-        Render template with advanced personalization and localization
+        """        Render template with advanced personalization and localization
         
         Args:
             template_id: Template to render
@@ -1581,8 +1509,7 @@ class TemplateManager:
             
         Returns:
             Rendered template with metadata
-        """
-        try:
+        """        try:
             start_time = datetime.utcnow()
             
             # Check cache first
@@ -1674,8 +1601,7 @@ class TemplateManager:
         user_profile: Dict[str, Any],
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Apply advanced personalization to template content
+        """        Apply advanced personalization to template content
         
         Args:
             template_id: Template to personalize
@@ -1684,8 +1610,7 @@ class TemplateManager:
             
         Returns:
             Personalized content variations
-        """
-        try:
+        """        try:
             template_config = self.templates.get(template_id)
             if not template_config:
                 raise ValueError(f"Template not found: {template_id}")
@@ -1712,8 +1637,7 @@ class TemplateManager:
         template_variants: List[str],
         test_config: Dict[str, Any]
     ) -> str:
-        """
-        Create A/B test for template effectiveness
+        """        Create A/B test for template effectiveness
         
         Args:
             test_name: Name of the A/B test
@@ -1722,8 +1646,7 @@ class TemplateManager:
             
         Returns:
             test_id: Unique test identifier
-        """
-        try:
+        """        try:
             test_id = str(uuid.uuid4())
             
             # Validate template variants
@@ -1760,8 +1683,7 @@ class TemplateManager:
         test_id: str,
         user_id: str
     ) -> Optional[str]:
-        """
-        Get template variant for A/B test participant
+        """        Get template variant for A/B test participant
         
         Args:
             test_id: A/B test ID
@@ -1769,8 +1691,7 @@ class TemplateManager:
             
         Returns:
             template_id: Template variant for this user
-        """
-        try:
+        """        try:
             ab_test = self.ab_tests.get(test_id)
             if not ab_test or ab_test['status'] != 'active':
                 return None
@@ -1796,8 +1717,7 @@ class TemplateManager:
         action: str,
         value: float = 1.0
     ) -> bool:
-        """
-        Record A/B test result for analysis
+        """        Record A/B test result for analysis
         
         Args:
             test_id: A/B test ID
@@ -1808,8 +1728,7 @@ class TemplateManager:
             
         Returns:
             success: Whether result was recorded
-        """
-        try:
+        """        try:
             ab_test = self.ab_tests.get(test_id)
             if not ab_test:
                 return False
@@ -1848,16 +1767,14 @@ class TemplateManager:
         self,
         test_id: str
     ) -> Dict[str, Any]:
-        """
-        Analyze A/B test results and determine winner
+        """        Analyze A/B test results and determine winner
         
         Args:
             test_id: A/B test ID
             
         Returns:
             Analysis results with winner determination
-        """
-        try:
+        """        try:
             ab_test = self.ab_tests.get(test_id)
             if not ab_test:
                 return {"error": "A/B test not found"}
@@ -1923,16 +1840,14 @@ class TemplateManager:
         self,
         template_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive template analytics
+        """        Get comprehensive template analytics
         
         Args:
             template_id: Specific template ID (all templates if None)
             
         Returns:
             Template analytics data
-        """
-        try:
+        """        try:
             if template_id:
                 # Single template analytics
                 template_config = self.templates.get(template_id)
@@ -1977,8 +1892,7 @@ class TemplateManager:
         template_type: TemplateType,
         supported_channels: List[NotificationChannel]
     ) -> Dict[str, str]:
-        """Generate template content using AI"""
-        try:
+        """Generate template content using AI"""        try:
             # Define generation parameters based on template type and channels
             generation_params = {
                 'template_type': template_type.value,
@@ -2014,8 +1928,7 @@ class TemplateManager:
             return {}
             
     async def _determine_template_tone(self, template_type: TemplateType) -> str:
-        """Determine appropriate tone for template type"""
-        tone_mapping = {
+        """Determine appropriate tone for template type"""        tone_mapping = {
             TemplateType.SECURITY_ALERT: 'urgent_professional',
             TemplateType.COPYRIGHT_INFRINGEMENT: 'formal_legal',
             TemplateType.COLLABORATION_INVITATION: 'friendly_professional',
@@ -2031,8 +1944,7 @@ class TemplateManager:
         self,
         template_content: Dict[str, str]
     ) -> List[TemplateVariable]:
-        """Extract variables from template content"""
-        try:
+        """Extract variables from template content"""        try:
             variables = set()
             
             # Pattern to match Jinja2 variables: {{ variable_name }}
@@ -2068,8 +1980,7 @@ class TemplateManager:
             return []
             
     def _infer_variable_type(self, var_name: str) -> str:
-        """Infer variable type from name"""
-        if any(keyword in var_name.lower() for keyword in ['name', 'title', 'subject']):
+        """Infer variable type from name"""        if any(keyword in var_name.lower() for keyword in ['name', 'title', 'subject']):
             return 'string'
         elif any(keyword in var_name.lower() for keyword in ['count', 'number', 'amount']):
             return 'integer'
@@ -2083,16 +1994,13 @@ class TemplateManager:
             return 'string'  # Default type
             
     def _is_variable_required(self, var_name: str) -> bool:
-        """Determine if variable is required based on name"""
-        required_keywords = ['name', 'id', 'user', 'title', 'subject']
+        """Determine if variable is required based on name"""        required_keywords = ['name', 'id', 'user', 'title', 'subject']
         return any(keyword in var_name.lower() for keyword in required_keywords)
 
 
 class MessageGenerator:
-    """
-    Advanced message generator with AI-powered content creation
-    """
-    
+    """    Advanced message generator with AI-powered content creation
+    """    
     def __init__(self, template_manager: TemplateManager):
         self.template_manager = template_manager
         self.logger = logging.getLogger(__name__)
@@ -2106,8 +2014,7 @@ class MessageGenerator:
         channel: NotificationChannel,
         language: TemplateLanguage = TemplateLanguage.ENGLISH
     ) -> Dict[str, Any]:
-        """
-        Generate fully personalized message using AI and templates
+        """        Generate fully personalized message using AI and templates
         
         Args:
             template_type: Type of message to generate
@@ -2118,8 +2025,7 @@ class MessageGenerator:
             
         Returns:
             Generated personalized message
-        """
-        try:
+        """        try:
             # Find appropriate template
             template_id = await self._find_best_template(
                 template_type, channel, user_profile
@@ -2182,8 +2088,7 @@ class MessageGenerator:
         channel: NotificationChannel,
         user_profile: Dict[str, Any]
     ) -> Optional[str]:
-        """Find the best template for given criteria"""
-        try:
+        """Find the best template for given criteria"""        try:
             # Get all templates of the specified type
             matching_templates = [
                 template_id for template_id, config in self.template_manager.templates.items()
@@ -2213,8 +2118,7 @@ class MessageGenerator:
         user_profile: Dict[str, Any],
         context: Dict[str, Any]
     ) -> List[Dict[str, str]]:
-        """Generate message variants for testing"""
-        try:
+        """Generate message variants for testing"""        try:
             variants = []
             
             # Generate tone variations
@@ -2244,8 +2148,7 @@ class MessageGenerator:
         template_type: TemplateType,
         channel: NotificationChannel
     ) -> Dict[str, str]:
-        """Generate simple fallback message"""
-        fallback_messages = {
+        """Generate simple fallback message"""        fallback_messages = {
             TemplateType.CONTENT_UPLOAD_CONFIRMATION: {
                 'subject': 'Content Upload Successful',
                 'message': 'Your content has been successfully uploaded to the IA Influencer platform.'

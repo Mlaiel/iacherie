@@ -1,5 +1,4 @@
-"""
-Report Exporters Module
+"""Report Exporters Module
 =======================
 
 Ultra-advanced, enterprise-grade export systems for sophisticated report distribution
@@ -52,9 +51,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 Legal Warning: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use without explicit written permission will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import warnings
 import smtplib
@@ -177,8 +174,7 @@ logger = logging.getLogger(__name__)
 
 
 class ExportFormat(Enum):
-    """Export format enumeration."""
-    PDF = "pdf"
+    """Export format enumeration."""    PDF = "pdf"
     EXCEL = "excel"
     CSV = "csv"
     JSON = "json"
@@ -190,8 +186,7 @@ class ExportFormat(Enum):
 
 
 class ExportDestination(Enum):
-    """Export destination enumeration."""
-    EMAIL = "email"
+    """Export destination enumeration."""    EMAIL = "email"
     S3 = "s3"
     AZURE_BLOB = "azure_blob"
     GCP_STORAGE = "gcp_storage"
@@ -204,8 +199,7 @@ class ExportDestination(Enum):
 
 
 class ExportStatus(Enum):
-    """Export status enumeration."""
-    PENDING = "pending"
+    """Export status enumeration."""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -214,8 +208,7 @@ class ExportStatus(Enum):
 
 
 class ExportPriority(Enum):
-    """Export priority enumeration."""
-    LOW = 1
+    """Export priority enumeration."""    LOW = 1
     NORMAL = 2
     HIGH = 3
     URGENT = 4
@@ -224,8 +217,7 @@ class ExportPriority(Enum):
 
 @dataclass
 class ExportConfiguration:
-    """Export configuration dataclass."""
-    export_id: str = field(default_factory=lambda: str(__import__('uuid').uuid4()))
+    """Export configuration dataclass."""    export_id: str = field(default_factory=lambda: str(__import__('uuid').uuid4()))
     name: str = ""
     description: str = ""
     
@@ -269,8 +261,7 @@ class ExportConfiguration:
 
 
 class ExportResult:
-    """Export result container."""
-    
+    """Export result container."""    
     def __init__(self, export_id: str):
         self.export_id = export_id
         self.status: ExportStatus = ExportStatus.PENDING
@@ -289,8 +280,7 @@ class ExportResult:
 
 
 class ReportExporter(ABC):
-    """
-    Abstract base class for report exporters.
+    """    Abstract base class for report exporters.
     
     Provides common functionality for all exporters including:
     - Data preparation and formatting
@@ -298,8 +288,7 @@ class ReportExporter(ABC):
     - Logging and auditing
     - Security and access control
     - Performance monitoring
-    """
-    
+    """    
     def __init__(self, config: ExportConfiguration):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -307,12 +296,10 @@ class ReportExporter(ABC):
     
     @abstractmethod
     async def export(self, data: Union[pd.DataFrame, Dict[str, Any], bytes], metadata: Optional[Dict[str, Any]] = None) -> ExportResult:
-        """Export data to the configured destination."""
-        pass
+        """Export data to the configured destination."""        pass
     
     async def prepare_data(self, data: Union[pd.DataFrame, Dict[str, Any], bytes]) -> bytes:
-        """Prepare and format data for export."""
-        try:
+        """Prepare and format data for export."""        try:
             start_time = datetime.utcnow()
             
             if isinstance(data, pd.DataFrame):
@@ -344,8 +331,7 @@ class ReportExporter(ABC):
             raise
     
     async def _format_dataframe(self, df: pd.DataFrame) -> bytes:
-        """Format DataFrame based on export format."""
-        try:
+        """Format DataFrame based on export format."""        try:
             if self.config.format == ExportFormat.CSV:
                 return df.to_csv(index=False).encode('utf-8')
             elif self.config.format == ExportFormat.JSON:
@@ -374,8 +360,7 @@ class ReportExporter(ABC):
             raise
     
     async def _format_dict_data(self, data: Dict[str, Any]) -> bytes:
-        """Format dictionary data based on export format."""
-        try:
+        """Format dictionary data based on export format."""        try:
             if self.config.format == ExportFormat.JSON:
                 return json.dumps(data, indent=2, default=str).encode('utf-8')
             elif self.config.format == ExportFormat.XML:
@@ -390,8 +375,7 @@ class ReportExporter(ABC):
             raise
     
     def _dict_to_xml(self, data: Dict[str, Any], root_name: str = "report") -> str:
-        """Convert dictionary to XML format."""
-        try:
+        """Convert dictionary to XML format."""        try:
             def dict_to_xml_recursive(d, parent_name="item"):
                 xml_str = f"<{parent_name}>"
                 for key, value in d.items():
@@ -415,8 +399,7 @@ class ReportExporter(ABC):
             return f'<?xml version="1.0" encoding="UTF-8"?>\n<{root_name}>Error converting data</{root_name}>'
     
     async def _compress_data(self, data: bytes) -> bytes:
-        """Compress data using ZIP compression."""
-        try:
+        """Compress data using ZIP compression."""        try:
             import gzip
             return gzip.compress(data)
         except Exception as e:
@@ -424,8 +407,7 @@ class ReportExporter(ABC):
             return data
     
     async def _encrypt_data(self, data: bytes) -> bytes:
-        """Encrypt data using configured encryption."""
-        try:
+        """Encrypt data using configured encryption."""        try:
             if self.config.encryption_key:
                 # Simple base64 encoding for demo (use proper encryption in production)
                 return base64.b64encode(data)
@@ -435,8 +417,7 @@ class ReportExporter(ABC):
             return data
     
     def _generate_filename(self) -> str:
-        """Generate filename based on template."""
-        try:
+        """Generate filename based on template."""        try:
             timestamp = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
             
             filename = self.config.filename_template.format(
@@ -470,8 +451,7 @@ class ReportExporter(ABC):
             return f"report_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.txt"
     
     def _calculate_checksum(self, data: bytes) -> str:
-        """Calculate MD5 checksum for data integrity."""
-        try:
+        """Calculate MD5 checksum for data integrity."""        try:
             import hashlib
             return hashlib.md5(data).hexdigest()
         except Exception as e:
@@ -479,8 +459,7 @@ class ReportExporter(ABC):
             return ""
     
     async def _log_export_attempt(self, result: ExportResult):
-        """Log export attempt for auditing."""
-        try:
+        """Log export attempt for auditing."""        try:
             if self.config.audit_enabled:
                 audit_entry = {
                     "export_id": result.export_id,
@@ -500,8 +479,7 @@ class ReportExporter(ABC):
 
 
 class EmailExporter(ReportExporter):
-    """
-    Email distribution exporter with template support and attachment handling.
+    """    Email distribution exporter with template support and attachment handling.
     
     Specializes in:
     - SMTP email delivery
@@ -509,11 +487,9 @@ class EmailExporter(ReportExporter):
     - Multiple attachment support
     - Delivery confirmation
     - Bounce handling
-    """
-    
+    """    
     async def export(self, data: Union[pd.DataFrame, Dict[str, Any], bytes], metadata: Optional[Dict[str, Any]] = None) -> ExportResult:
-        """Export data via email."""
-        try:
+        """Export data via email."""        try:
             result = ExportResult(self.config.export_id)
             result.status = ExportStatus.PROCESSING
             start_time = datetime.utcnow()
@@ -549,8 +525,7 @@ class EmailExporter(ReportExporter):
             return result
     
     async def _send_email(self, data: bytes, filename: str, metadata: Dict[str, Any]):
-        """Send email with attachment."""
-        try:
+        """Send email with attachment."""        try:
             # Get email configuration
             email_config = self.config.destination_config
             
@@ -608,9 +583,7 @@ class EmailExporter(ReportExporter):
             raise
     
     def _get_default_email_template(self) -> str:
-        """Get default HTML email template."""
-        return """
-        <html>
+        """Get default HTML email template."""        return """        <html>
         <body>
             <h2>Report Export Notification</h2>
             <p>Dear Recipient,</p>
@@ -630,11 +603,8 @@ class EmailExporter(ReportExporter):
         </body>
         </html>
         """
-
-
 class CloudStorageExporter(ReportExporter):
-    """
-    Cloud storage exporter supporting multiple cloud providers.
+    """    Cloud storage exporter supporting multiple cloud providers.
     
     Specializes in:
     - AWS S3 integration
@@ -642,11 +612,9 @@ class CloudStorageExporter(ReportExporter):
     - Google Cloud Storage
     - Secure uploads with encryption
     - Metadata and tagging support
-    """
-    
+    """    
     async def export(self, data: Union[pd.DataFrame, Dict[str, Any], bytes], metadata: Optional[Dict[str, Any]] = None) -> ExportResult:
-        """Export data to cloud storage."""
-        try:
+        """Export data to cloud storage."""        try:
             result = ExportResult(self.config.export_id)
             result.status = ExportStatus.PROCESSING
             start_time = datetime.utcnow()
@@ -690,8 +658,7 @@ class CloudStorageExporter(ReportExporter):
             return result
     
     async def _upload_to_s3(self, data: bytes, filename: str, metadata: Dict[str, Any]) -> str:
-        """Upload file to AWS S3."""
-        try:
+        """Upload file to AWS S3."""        try:
             s3_config = self.config.destination_config
             
             # Initialize S3 client
@@ -734,8 +701,7 @@ class CloudStorageExporter(ReportExporter):
             raise
     
     async def _upload_to_azure(self, data: bytes, filename: str, metadata: Dict[str, Any]) -> str:
-        """Upload file to Azure Blob Storage."""
-        try:
+        """Upload file to Azure Blob Storage."""        try:
             # This would require azure-storage-blob package
             # Placeholder implementation
             azure_config = self.config.destination_config
@@ -754,8 +720,7 @@ class CloudStorageExporter(ReportExporter):
             raise
     
     async def _upload_to_gcp(self, data: bytes, filename: str, metadata: Dict[str, Any]) -> str:
-        """Upload file to Google Cloud Storage."""
-        try:
+        """Upload file to Google Cloud Storage."""        try:
             # This would require google-cloud-storage package
             # Placeholder implementation
             gcp_config = self.config.destination_config
@@ -775,8 +740,7 @@ class CloudStorageExporter(ReportExporter):
 
 
 class APIExporter(ReportExporter):
-    """
-    API and webhook exporter for real-time data delivery.
+    """    API and webhook exporter for real-time data delivery.
     
     Specializes in:
     - REST API endpoints
@@ -784,11 +748,9 @@ class APIExporter(ReportExporter):
     - Authentication handling
     - Rate limiting compliance
     - Response validation
-    """
-    
+    """    
     async def export(self, data: Union[pd.DataFrame, Dict[str, Any], bytes], metadata: Optional[Dict[str, Any]] = None) -> ExportResult:
-        """Export data via API or webhook."""
-        try:
+        """Export data via API or webhook."""        try:
             result = ExportResult(self.config.export_id)
             result.status = ExportStatus.PROCESSING
             start_time = datetime.utcnow()
@@ -840,8 +802,7 @@ class APIExporter(ReportExporter):
             return result
     
     async def _send_to_api(self, data: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Send data to REST API endpoint."""
-        try:
+        """Send data to REST API endpoint."""        try:
             api_config = self.config.destination_config
             
             url = api_config.get('url')
@@ -897,8 +858,7 @@ class APIExporter(ReportExporter):
             raise
     
     async def _send_to_webhook(self, data: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Send data to webhook endpoint."""
-        try:
+        """Send data to webhook endpoint."""        try:
             webhook_config = self.config.destination_config
             
             url = webhook_config.get('url')
@@ -964,8 +924,7 @@ class APIExporter(ReportExporter):
 
 
 class DatabaseExporter(ReportExporter):
-    """
-    Database exporter for data archiving and storage.
+    """    Database exporter for data archiving and storage.
     
     Specializes in:
     - SQL database exports
@@ -973,11 +932,9 @@ class DatabaseExporter(ReportExporter):
     - Data archiving
     - Incremental updates
     - Transaction management
-    """
-    
+    """    
     async def export(self, data: Union[pd.DataFrame, Dict[str, Any], bytes], metadata: Optional[Dict[str, Any]] = None) -> ExportResult:
-        """Export data to database."""
-        try:
+        """Export data to database."""        try:
             result = ExportResult(self.config.export_id)
             result.status = ExportStatus.PROCESSING
             start_time = datetime.utcnow()
@@ -1011,8 +968,7 @@ class DatabaseExporter(ReportExporter):
             return result
     
     async def _export_dataframe_to_db(self, df: pd.DataFrame, metadata: Dict[str, Any]) -> int:
-        """Export DataFrame to database table."""
-        try:
+        """Export DataFrame to database table."""        try:
             db_config = self.config.destination_config
             
             table_name = db_config.get('table_name', 'exported_reports')
@@ -1039,8 +995,7 @@ class DatabaseExporter(ReportExporter):
             raise
     
     async def _export_dict_to_db(self, data: Dict[str, Any], metadata: Dict[str, Any]) -> int:
-        """Export dictionary data to database."""
-        try:
+        """Export dictionary data to database."""        try:
             db_config = self.config.destination_config
             
             # Convert dict to records format
@@ -1067,8 +1022,7 @@ class DatabaseExporter(ReportExporter):
             raise
     
     async def _export_binary_to_db(self, data: bytes, metadata: Dict[str, Any]) -> int:
-        """Export binary data to database."""
-        try:
+        """Export binary data to database."""        try:
             # Store binary data as BLOB or base64 encoded text
             record = {
                 'export_id': self.config.export_id,
@@ -1091,8 +1045,7 @@ class DatabaseExporter(ReportExporter):
 
 
 class FileSystemExporter(ReportExporter):
-    """
-    File system exporter for local and network storage.
+    """    File system exporter for local and network storage.
     
     Specializes in:
     - Local file system storage
@@ -1100,11 +1053,9 @@ class FileSystemExporter(ReportExporter):
     - FTP/SFTP transfers
     - Directory organization
     - File permissions and security
-    """
-    
+    """    
     async def export(self, data: Union[pd.DataFrame, Dict[str, Any], bytes], metadata: Optional[Dict[str, Any]] = None) -> ExportResult:
-        """Export data to file system."""
-        try:
+        """Export data to file system."""        try:
             result = ExportResult(self.config.export_id)
             result.status = ExportStatus.PROCESSING
             start_time = datetime.utcnow()
@@ -1139,8 +1090,7 @@ class FileSystemExporter(ReportExporter):
             return result
     
     async def _save_to_filesystem(self, data: bytes, filename: str, metadata: Dict[str, Any]) -> str:
-        """Save data to file system."""
-        try:
+        """Save data to file system."""        try:
             fs_config = self.config.destination_config
             
             base_path = Path(fs_config.get('base_path', './exports'))
@@ -1193,8 +1143,7 @@ class FileSystemExporter(ReportExporter):
 
 
 class ExportManager:
-    """
-    Manager class for coordinating export operations and managing export workflows.
+    """    Manager class for coordinating export operations and managing export workflows.
     
     Provides:
     - Export orchestration
@@ -1202,8 +1151,7 @@ class ExportManager:
     - Batch export processing
     - Export scheduling
     - Performance monitoring
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self._exporters = {}
@@ -1213,16 +1161,14 @@ class ExportManager:
         self._performance_tracker = {}
     
     def register_exporter(self, name: str, exporter: ReportExporter):
-        """Register an exporter."""
-        try:
+        """Register an exporter."""        try:
             self._exporters[name] = exporter
             self.logger.info(f"Registered exporter: {name}")
         except Exception as e:
             self.logger.error(f"Failed to register exporter {name}: {e}")
     
     async def export_data(self, exporter_name: str, data: Union[pd.DataFrame, Dict[str, Any], bytes], metadata: Optional[Dict[str, Any]] = None) -> ExportResult:
-        """Export data using specified exporter."""
-        try:
+        """Export data using specified exporter."""        try:
             if exporter_name not in self._exporters:
                 raise ValueError(f"Exporter {exporter_name} not found")
             
@@ -1272,8 +1218,7 @@ class ExportManager:
             return failed_result
     
     async def _export_with_retry(self, exporter: ReportExporter, data: Union[pd.DataFrame, Dict[str, Any], bytes], metadata: Optional[Dict[str, Any]]) -> ExportResult:
-        """Export data with retry logic."""
-        max_retries = exporter.config.max_retries if exporter.config.retry_enabled else 0
+        """Export data with retry logic."""        max_retries = exporter.config.max_retries if exporter.config.retry_enabled else 0
         retry_delay = exporter.config.retry_delay_seconds
         
         last_exception = None
@@ -1314,8 +1259,7 @@ class ExportManager:
         return failed_result
     
     async def export_multiple(self, export_configs: List[Tuple[str, Union[pd.DataFrame, Dict[str, Any], bytes], Optional[Dict[str, Any]]]]) -> Dict[str, ExportResult]:
-        """Export data to multiple destinations in parallel."""
-        try:
+        """Export data to multiple destinations in parallel."""        try:
             tasks = []
             
             for exporter_name, data, metadata in export_configs:
@@ -1348,8 +1292,7 @@ class ExportManager:
             return {}
     
     async def queue_export(self, exporter_name: str, data: Union[pd.DataFrame, Dict[str, Any], bytes], metadata: Optional[Dict[str, Any]] = None, priority: ExportPriority = ExportPriority.NORMAL):
-        """Queue an export for asynchronous processing."""
-        try:
+        """Queue an export for asynchronous processing."""        try:
             export_item = {
                 'exporter_name': exporter_name,
                 'data': data,
@@ -1365,8 +1308,7 @@ class ExportManager:
             self.logger.error(f"Failed to queue export: {e}")
     
     async def process_export_queue(self):
-        """Process queued exports."""
-        try:
+        """Process queued exports."""        try:
             while True:
                 try:
                     # Get next export from queue
@@ -1394,8 +1336,7 @@ class ExportManager:
             self.logger.error(f"Export queue processing failed: {e}")
     
     def get_export_status(self, export_id: str) -> Dict[str, Any]:
-        """Get the status of an export."""
-        try:
+        """Get the status of an export."""        try:
             if export_id in self._active_exports:
                 return self._active_exports[export_id]
             elif export_id in self._export_history:
@@ -1414,8 +1355,7 @@ class ExportManager:
             return {"status": "error", "error": str(e)}
     
     def get_exporter_performance(self, exporter_name: Optional[str] = None) -> Dict[str, Any]:
-        """Get performance metrics for exporters."""
-        try:
+        """Get performance metrics for exporters."""        try:
             if exporter_name:
                 return self._performance_tracker.get(exporter_name, {"status": "not_found"})
             else:
@@ -1429,8 +1369,7 @@ class ExportManager:
             return {}
     
     async def cleanup_export_history(self, retention_days: int = 30):
-        """Clean up old export history entries."""
-        try:
+        """Clean up old export history entries."""        try:
             cutoff_time = datetime.utcnow() - timedelta(days=retention_days)
             
             # Remove old history entries
@@ -1457,12 +1396,10 @@ class ExportManager:
             self.logger.error(f"Cleanup failed: {e}")
     
     def get_available_exporters(self) -> List[str]:
-        """Get list of available exporters."""
-        return list(self._exporters.keys())
+        """Get list of available exporters."""        return list(self._exporters.keys())
     
     def get_queue_status(self) -> Dict[str, Any]:
-        """Get export queue status."""
-        return {
+        """Get export queue status."""        return {
             "queue_size": self._export_queue.qsize(),
             "active_exports": len(self._active_exports),
             "total_history_entries": len(self._export_history)
@@ -1471,8 +1408,7 @@ class ExportManager:
 
 # Factory function for creating exporters
 def create_exporter(exporter_type: str, config: ExportConfiguration) -> ReportExporter:
-    """
-    Factory function to create exporters based on type.
+    """    Factory function to create exporters based on type.
     
     Args:
         exporter_type: Type of exporter to create
@@ -1480,8 +1416,7 @@ def create_exporter(exporter_type: str, config: ExportConfiguration) -> ReportEx
         
     Returns:
         ReportExporter: The created exporter instance
-    """
-    try:
+    """    try:
         exporter_classes = {
             'email': EmailExporter,
             'cloud_storage': CloudStorageExporter,
@@ -1527,8 +1462,7 @@ def create_exporter(exporter_type: str, config: ExportConfiguration) -> ReportEx
 
 # Usage example and initialization
 async def initialize_export_system() -> ExportManager:
-    """Initialize the export system with default exporters."""
-    try:
+    """Initialize the export system with default exporters."""    try:
         manager = ExportManager()
         
         # Email exporter configuration
@@ -1632,8 +1566,7 @@ async def initialize_export_system() -> ExportManager:
 
 
 async def start_export_queue_processor(manager: ExportManager):
-    """Start the export queue processor as a background task."""
-    try:
+    """Start the export queue processor as a background task."""    try:
         task = asyncio.create_task(manager.process_export_queue())
         logger.info("Export queue processor started")
         return task
@@ -1647,8 +1580,7 @@ if __name__ == "__main__":
     import asyncio
     
     async def main():
-        """Example usage of the export system."""
-        try:
+        """Example usage of the export system."""        try:
             # Initialize system
             manager = await initialize_export_system()
             

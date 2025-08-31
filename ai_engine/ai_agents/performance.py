@@ -1,5 +1,4 @@
-"""
-AI Agents Performance Tracking System
+"""AI Agents Performance Tracking System
 
 Advanced performance monitoring and optimization system for AI agents.
 
@@ -11,9 +10,7 @@ WARNING: This code and concept are the intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import logging
+"""import logging
 import time
 import psutil
 import threading
@@ -30,8 +27,7 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of performance metrics."""
-    LATENCY = "latency"
+    """Types of performance metrics."""    LATENCY = "latency"
     THROUGHPUT = "throughput"
     ERROR_RATE = "error_rate"
     CPU_USAGE = "cpu_usage"
@@ -43,8 +39,7 @@ class MetricType(Enum):
 
 @dataclass
 class AgentMetrics:
-    """Metrics for an AI agent."""
-    agent_id: str
+    """Metrics for an AI agent."""    agent_id: str
     timestamp: datetime = field(default_factory=datetime.now)
     latency_ms: float = 0.0
     throughput: float = 0.0
@@ -62,8 +57,7 @@ class AgentMetrics:
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert configuration."""
-    metric_type: MetricType
+    """Performance alert configuration."""    metric_type: MetricType
     threshold: float
     comparison: str  # "greater", "less", "equal"
     severity: str  # "low", "medium", "high", "critical"
@@ -72,14 +66,12 @@ class PerformanceAlert:
 
 
 class PerformanceTracker:
-    """Advanced performance tracking for AI agents."""
-    
+    """Advanced performance tracking for AI agents."""    
     def __init__(self, 
                  agent_id: str,
                  history_size: int = 1000,
                  sampling_interval: float = 1.0):
-        """Initialize performance tracker."""
-        self.agent_id = agent_id
+        """Initialize performance tracker."""        self.agent_id = agent_id
         self.history_size = history_size
         self.sampling_interval = sampling_interval
         
@@ -104,8 +96,7 @@ class PerformanceTracker:
         logger.info(f"Performance tracker initialized for agent {agent_id}")
     
     def start_monitoring(self):
-        """Start continuous performance monitoring."""
-        if self._monitoring:
+        """Start continuous performance monitoring."""        if self._monitoring:
             return
         
         self._monitoring = True
@@ -114,15 +105,13 @@ class PerformanceTracker:
         logger.info(f"Started performance monitoring for agent {self.agent_id}")
     
     def stop_monitoring(self):
-        """Stop performance monitoring."""
-        self._monitoring = False
+        """Stop performance monitoring."""        self._monitoring = False
         if self._monitor_thread:
             self._monitor_thread.join(timeout=5)
         logger.info(f"Stopped performance monitoring for agent {self.agent_id}")
     
     def _monitor_loop(self):
-        """Main monitoring loop."""
-        while self._monitoring:
+        """Main monitoring loop."""        while self._monitoring:
             try:
                 self._collect_system_metrics()
                 self._update_aggregated_metrics()
@@ -132,8 +121,7 @@ class PerformanceTracker:
                 logger.error(f"Error in monitoring loop: {e}")
     
     def _collect_system_metrics(self):
-        """Collect system performance metrics."""
-        try:
+        """Collect system performance metrics."""        try:
             # CPU and Memory usage
             process = psutil.Process()
             cpu_percent = process.cpu_percent()
@@ -152,8 +140,7 @@ class PerformanceTracker:
                       start_time: float,
                       success: bool = True,
                       error_type: Optional[str] = None):
-        """Record a request for performance tracking."""
-        try:
+        """Record a request for performance tracking."""        try:
             end_time = time.time()
             response_time_ms = (end_time - start_time) * 1000
             
@@ -194,8 +181,7 @@ class PerformanceTracker:
             logger.error(f"Failed to record request: {e}")
     
     def _calculate_derived_metrics(self):
-        """Calculate derived performance metrics."""
-        try:
+        """Calculate derived performance metrics."""        try:
             # Throughput (requests per second)
             if self.request_times:
                 current_time = time.time()
@@ -225,8 +211,7 @@ class PerformanceTracker:
             logger.error(f"Failed to calculate derived metrics: {e}")
     
     def _calculate_quality_score(self) -> float:
-        """Calculate composite quality score."""
-        try:
+        """Calculate composite quality score."""        try:
             # Weighted combination of different metrics
             accuracy_weight = 0.3
             latency_weight = 0.2
@@ -262,8 +247,7 @@ class PerformanceTracker:
             return 0.5
     
     def _update_aggregated_metrics(self):
-        """Update aggregated metrics over time periods."""
-        try:
+        """Update aggregated metrics over time periods."""        try:
             current_time = datetime.now()
             
             # Get metrics from last hour
@@ -291,17 +275,14 @@ class PerformanceTracker:
             logger.error(f"Failed to update aggregated metrics: {e}")
     
     def add_alert(self, alert: PerformanceAlert):
-        """Add performance alert."""
-        self.alerts.append(alert)
+        """Add performance alert."""        self.alerts.append(alert)
         logger.info(f"Added performance alert: {alert.message}")
     
     def add_alert_callback(self, callback: Callable):
-        """Add callback for alert notifications."""
-        self.alert_callbacks.append(callback)
+        """Add callback for alert notifications."""        self.alert_callbacks.append(callback)
     
     def _check_alerts(self):
-        """Check performance alerts."""
-        try:
+        """Check performance alerts."""        try:
             for alert in self.alerts:
                 if not alert.enabled:
                     continue
@@ -325,8 +306,7 @@ class PerformanceTracker:
             logger.error(f"Failed to check alerts: {e}")
     
     def _get_metric_value(self, metric_type: MetricType) -> Optional[float]:
-        """Get current value for a metric type."""
-        try:
+        """Get current value for a metric type."""        try:
             if metric_type == MetricType.LATENCY:
                 return self.current_metrics.latency_ms
             elif metric_type == MetricType.THROUGHPUT:
@@ -348,8 +328,7 @@ class PerformanceTracker:
             return None
     
     def _trigger_alert(self, alert: PerformanceAlert, current_value: float):
-        """Trigger performance alert."""
-        try:
+        """Trigger performance alert."""        try:
             alert_data = {
                 'agent_id': self.agent_id,
                 'alert': alert,
@@ -371,20 +350,16 @@ class PerformanceTracker:
             logger.error(f"Failed to trigger alert: {e}")
     
     def get_current_metrics(self) -> AgentMetrics:
-        """Get current performance metrics."""
-        return self.current_metrics
+        """Get current performance metrics."""        return self.current_metrics
     
     def get_metrics_history(self, limit: int = 100) -> List[AgentMetrics]:
-        """Get metrics history."""
-        return list(self.metrics_history)[-limit:]
+        """Get metrics history."""        return list(self.metrics_history)[-limit:]
     
     def get_aggregated_metrics(self) -> Dict[str, Any]:
-        """Get aggregated metrics."""
-        return self.aggregated_metrics
+        """Get aggregated metrics."""        return self.aggregated_metrics
     
     def export_metrics(self) -> Dict[str, Any]:
-        """Export all metrics for analysis."""
-        return {
+        """Export all metrics for analysis."""        return {
             'agent_id': self.agent_id,
             'current_metrics': {
                 'timestamp': self.current_metrics.timestamp.isoformat(),
@@ -407,11 +382,9 @@ class PerformanceTracker:
 
 
 class OptimizationEngine:
-    """AI agent optimization engine."""
-    
+    """AI agent optimization engine."""    
     def __init__(self, performance_tracker: PerformanceTracker):
-        """Initialize optimization engine."""
-        self.performance_tracker = performance_tracker
+        """Initialize optimization engine."""        self.performance_tracker = performance_tracker
         self.optimization_history: List[Dict] = []
         self.optimization_strategies: Dict[str, Callable] = {}
         
@@ -421,8 +394,7 @@ class OptimizationEngine:
         logger.info("Optimization engine initialized")
     
     def _register_default_strategies(self):
-        """Register default optimization strategies."""
-        self.optimization_strategies = {
+        """Register default optimization strategies."""        self.optimization_strategies = {
             'reduce_latency': self._reduce_latency_strategy,
             'improve_throughput': self._improve_throughput_strategy,
             'reduce_memory_usage': self._reduce_memory_strategy,
@@ -430,8 +402,7 @@ class OptimizationEngine:
         }
     
     def analyze_performance(self) -> Dict[str, Any]:
-        """Analyze current performance and suggest optimizations."""
-        try:
+        """Analyze current performance and suggest optimizations."""        try:
             current_metrics = self.performance_tracker.get_current_metrics()
             aggregated_metrics = self.performance_tracker.get_aggregated_metrics()
             
@@ -466,8 +437,7 @@ class OptimizationEngine:
             return {'error': str(e)}
     
     def optimize(self, strategy: str, parameters: Dict[str, Any] = None) -> bool:
-        """Apply optimization strategy."""
-        try:
+        """Apply optimization strategy."""        try:
             if strategy not in self.optimization_strategies:
                 logger.error(f"Unknown optimization strategy: {strategy}")
                 return False
@@ -494,8 +464,7 @@ class OptimizationEngine:
             return False
     
     def _reduce_latency_strategy(self, parameters: Dict) -> bool:
-        """Strategy to reduce response latency using advanced optimization techniques."""
-        try:
+        """Strategy to reduce response latency using advanced optimization techniques."""        try:
             logger.info("Applying comprehensive latency reduction optimizations")
             
             # Implement connection pooling optimization
@@ -525,8 +494,7 @@ class OptimizationEngine:
             return False
     
     def _improve_throughput_strategy(self, parameters: Dict) -> bool:
-        """Strategy to improve throughput using parallel processing and optimization."""
-        try:
+        """Strategy to improve throughput using parallel processing and optimization."""        try:
             logger.info("Applying comprehensive throughput improvement optimizations")
             
             # Configure async processing
@@ -557,8 +525,7 @@ class OptimizationEngine:
             return False
     
     def _reduce_memory_strategy(self, parameters: Dict) -> bool:
-        """Strategy to reduce memory usage using advanced memory management."""
-        try:
+        """Strategy to reduce memory usage using advanced memory management."""        try:
             logger.info("Applying comprehensive memory reduction optimizations")
             
             # Configure garbage collection optimization
@@ -590,81 +557,63 @@ class OptimizationEngine:
     # Helper methods for optimization strategies
     
     def _optimize_connection_pool(self, pool_size: int):
-        """Optimize database connection pooling."""
-        # Implementation would configure actual connection pool
+        """Optimize database connection pooling."""        # Implementation would configure actual connection pool
         logger.debug(f"Configuring connection pool with size: {pool_size}")
     
     def _configure_response_cache(self, ttl: int):
-        """Configure response caching system."""
-        logger.debug(f"Configuring response cache with TTL: {ttl} seconds")
+        """Configure response caching system."""        logger.debug(f"Configuring response cache with TTL: {ttl} seconds")
     
     def _optimize_database_queries(self):
-        """Optimize database queries for better performance."""
-        logger.debug("Optimizing database queries and indexes")
+        """Optimize database queries for better performance."""        logger.debug("Optimizing database queries and indexes")
     
     def _enable_response_compression(self, level: int):
-        """Enable response compression."""
-        logger.debug(f"Enabling response compression at level: {level}")
+        """Enable response compression."""        logger.debug(f"Enabling response compression at level: {level}")
     
     def _configure_request_batching(self, batch_size: int):
-        """Configure request batching for better throughput."""
-        logger.debug(f"Configuring request batching with size: {batch_size}")
+        """Configure request batching for better throughput."""        logger.debug(f"Configuring request batching with size: {batch_size}")
     
     def _configure_async_workers(self, worker_count: int):
-        """Configure async worker processes."""
-        logger.debug(f"Configuring {worker_count} async workers")
+        """Configure async worker processes."""        logger.debug(f"Configuring {worker_count} async workers")
     
     def _configure_load_balancing(self, strategy: str):
-        """Configure load balancing strategy."""
-        logger.debug(f"Configuring load balancing strategy: {strategy}")
+        """Configure load balancing strategy."""        logger.debug(f"Configuring load balancing strategy: {strategy}")
     
     def _optimize_thread_pool(self, pool_size: int):
-        """Optimize thread pool configuration."""
-        logger.debug(f"Optimizing thread pool with size: {pool_size}")
+        """Optimize thread pool configuration."""        logger.debug(f"Optimizing thread pool with size: {pool_size}")
     
     def _configure_request_pipelining(self, depth: int):
-        """Configure request pipelining."""
-        logger.debug(f"Configuring request pipelining with depth: {depth}")
+        """Configure request pipelining."""        logger.debug(f"Configuring request pipelining with depth: {depth}")
     
     def _configure_circuit_breaker(self, threshold: int):
-        """Configure circuit breaker pattern."""
-        logger.debug(f"Configuring circuit breaker with failure threshold: {threshold}")
+        """Configure circuit breaker pattern."""        logger.debug(f"Configuring circuit breaker with failure threshold: {threshold}")
     
     def _optimize_garbage_collection(self, threshold: int):
-        """Optimize garbage collection settings."""
-        import gc
+        """Optimize garbage collection settings."""        import gc
         gc.set_threshold(threshold)
         logger.debug(f"Optimizing garbage collection with threshold: {threshold}")
     
     def _configure_object_pooling(self, pool_sizes: Dict[str, int]):
-        """Configure object pooling for memory efficiency."""
-        logger.debug(f"Configuring object pools: {pool_sizes}")
+        """Configure object pooling for memory efficiency."""        logger.debug(f"Configuring object pools: {pool_sizes}")
     
     def _configure_memory_mapping(self, threshold: int):
-        """Configure memory-mapped file usage."""
-        logger.debug(f"Configuring memory mapping for files > {threshold} bytes")
+        """Configure memory-mapped file usage."""        logger.debug(f"Configuring memory mapping for files > {threshold} bytes")
     
     def _optimize_data_structures(self):
-        """Optimize data structures for memory efficiency."""
-        logger.debug("Optimizing data structures for memory efficiency")
+        """Optimize data structures for memory efficiency."""        logger.debug("Optimizing data structures for memory efficiency")
     
     def _set_memory_limits(self, limit_mb: int):
-        """Set memory usage limits."""
-        logger.debug(f"Setting memory limit to {limit_mb} MB")
+        """Set memory usage limits."""        logger.debug(f"Setting memory limit to {limit_mb} MB")
         return True
     
     def _improve_accuracy_strategy(self, parameters: Dict) -> bool:
-        """Strategy to improve accuracy."""
-        logger.info("Applying accuracy improvement optimizations")
+        """Strategy to improve accuracy."""        logger.info("Applying accuracy improvement optimizations")
         return True
     
     def get_optimization_history(self) -> List[Dict]:
-        """Get optimization history."""
-        return self.optimization_history
+        """Get optimization history."""        return self.optimization_history
     
     def register_strategy(self, name: str, strategy_func: Callable):
-        """Register custom optimization strategy."""
-        self.optimization_strategies[name] = strategy_func
+        """Register custom optimization strategy."""        self.optimization_strategies[name] = strategy_func
         logger.info(f"Registered optimization strategy: {name}")
 
 

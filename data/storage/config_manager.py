@@ -1,5 +1,4 @@
-"""
-Professional Storage Configuration Manager - IA Influencer Agent Platform
+"""Professional Storage Configuration Manager - IA Influencer Agent Platform
 =========================================================================
 Module: backend/data/storage/config_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -23,9 +22,7 @@ LOGIQUE MÉTIER INTÉGRÉE:
 Configuration Loading → Validation → Environment Detection → 
 Provider Setup → Security Configuration → Performance Tuning → 
 Hot Reload → Health Monitoring → Disaster Recovery Settings
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import os
 import json
@@ -54,16 +51,14 @@ logger = logging.getLogger(__name__)
 
 
 class EnvironmentType(Enum):
-    """Environment types for configuration"""
-    DEVELOPMENT = "development"
+    """Environment types for configuration"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
 
 
 class ConfigurationSource(Enum):
-    """Configuration data sources"""
-    FILE_YAML = "file_yaml"
+    """Configuration data sources"""    FILE_YAML = "file_yaml"
     FILE_JSON = "file_json"
     ENVIRONMENT_VARS = "environment_vars"
     DATABASE = "database"
@@ -73,8 +68,7 @@ class ConfigurationSource(Enum):
 
 @dataclass
 class StorageProviderConfig:
-    """Storage provider configuration"""
-    provider_type: str
+    """Storage provider configuration"""    provider_type: str
     enabled: bool = True
     primary: bool = False
     region: str = ""
@@ -96,8 +90,7 @@ class StorageProviderConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration"""
-    encryption_key: str = ""
+    """Security configuration"""    encryption_key: str = ""
     master_key_rotation_days: int = 365
     file_encryption_enabled: bool = True
     transit_encryption_enabled: bool = True
@@ -118,8 +111,7 @@ class SecurityConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance configuration"""
-    max_concurrent_uploads: int = 100
+    """Performance configuration"""    max_concurrent_uploads: int = 100
     max_concurrent_downloads: int = 200
     chunk_size_mb: int = 8
     multipart_threshold_mb: int = 64
@@ -137,8 +129,7 @@ class PerformanceConfig:
 
 @dataclass
 class BackupConfig:
-    """Backup configuration"""
-    enabled: bool = True
+    """Backup configuration"""    enabled: bool = True
     real_time_backup: bool = True
     scheduled_backup_enabled: bool = True
     backup_intervals: Dict[str, str] = field(default_factory=lambda: {
@@ -164,8 +155,7 @@ class BackupConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring and alerting configuration"""
-    enabled: bool = True
+    """Monitoring and alerting configuration"""    enabled: bool = True
     metrics_collection_interval: int = 30  # seconds
     prometheus_enabled: bool = True
     prometheus_port: int = 8080
@@ -186,8 +176,7 @@ class MonitoringConfig:
 
 @dataclass
 class StorageConfiguration:
-    """Complete storage system configuration"""
-    environment: EnvironmentType = EnvironmentType.DEVELOPMENT
+    """Complete storage system configuration"""    environment: EnvironmentType = EnvironmentType.DEVELOPMENT
     version: str = "1.0.0"
     created_at: datetime = field(default_factory=datetime.utcnow)
     updated_at: datetime = field(default_factory=datetime.utcnow)
@@ -219,22 +208,18 @@ class StorageConfiguration:
 
 
 class ConfigurationManager:
-    """
-    Professional configuration manager for IA Influencer Agent storage platform.
+    """    Professional configuration manager for IA Influencer Agent storage platform.
     
     Provides centralized configuration management with dynamic loading,
     validation, encryption, and hot-reload capabilities.
-    """
-    
+    """    
     def __init__(self, config_path: str = None, environment: EnvironmentType = None):
-        """
-        Initialize ConfigurationManager.
+        """        Initialize ConfigurationManager.
         
         Args:
             config_path: Path to configuration file
             environment: Environment type (auto-detected if None)
-        """
-        self.logger = logging.getLogger(__name__)
+        """        self.logger = logging.getLogger(__name__)
         
         # Configuration state
         self.config_path = config_path or self._detect_config_path()
@@ -268,8 +253,7 @@ class ConfigurationManager:
         self._initialize_configuration()
     
     def _detect_config_path(self) -> str:
-        """Detect configuration file path"""
-        possible_paths = [
+        """Detect configuration file path"""        possible_paths = [
             os.getenv("STORAGE_CONFIG_PATH"),
             "./config/storage.yml",
             "./storage.yml",
@@ -288,8 +272,7 @@ class ConfigurationManager:
         return default_path
     
     def _detect_environment(self) -> EnvironmentType:
-        """Detect current environment"""
-        env_var = os.getenv("STORAGE_ENVIRONMENT", "development").lower()
+        """Detect current environment"""        env_var = os.getenv("STORAGE_ENVIRONMENT", "development").lower()
         
         env_mapping = {
             "dev": EnvironmentType.DEVELOPMENT,
@@ -305,8 +288,7 @@ class ConfigurationManager:
         return env_mapping.get(env_var, EnvironmentType.DEVELOPMENT)
     
     def _get_or_create_encryption_key(self) -> bytes:
-        """Get or create encryption key for sensitive configuration"""
-        key_file = Path("./config/.storage_key")
+        """Get or create encryption key for sensitive configuration"""        key_file = Path("./config/.storage_key")
         
         if key_file.exists():
             with open(key_file, 'rb') as f:
@@ -324,8 +306,7 @@ class ConfigurationManager:
             return key
     
     def _initialize_configuration(self):
-        """Initialize configuration system"""
-        try:
+        """Initialize configuration system"""        try:
             # Load configuration
             self.load_configuration()
             
@@ -344,16 +325,14 @@ class ConfigurationManager:
             raise
     
     def load_configuration(self, config_path: str = None) -> StorageConfiguration:
-        """
-        Load configuration from file.
+        """        Load configuration from file.
         
         Args:
             config_path: Path to configuration file (uses default if None)
             
         Returns:
             Loaded storage configuration
-        """
-        try:
+        """        try:
             with self.config_lock:
                 target_path = config_path or self.config_path
                 
@@ -404,8 +383,7 @@ class ConfigurationManager:
     
     def save_configuration(self, config: StorageConfiguration = None, 
                           config_path: str = None) -> bool:
-        """
-        Save configuration to file.
+        """        Save configuration to file.
         
         Args:
             config: Configuration to save (uses current if None)
@@ -413,8 +391,7 @@ class ConfigurationManager:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             with self.config_lock:
                 target_config = config or self.current_config
                 target_path = config_path or self.config_path
@@ -457,16 +434,14 @@ class ConfigurationManager:
             return False
     
     def get_provider_config(self, provider_name: str) -> Optional[StorageProviderConfig]:
-        """
-        Get configuration for specific storage provider.
+        """        Get configuration for specific storage provider.
         
         Args:
             provider_name: Name of the storage provider
             
         Returns:
             Provider configuration or None if not found
-        """
-        if not self.current_config:
+        """        if not self.current_config:
             return None
         
         for provider in self.current_config.providers:
@@ -476,13 +451,11 @@ class ConfigurationManager:
         return None
     
     def get_primary_provider(self) -> Optional[StorageProviderConfig]:
-        """
-        Get primary storage provider configuration.
+        """        Get primary storage provider configuration.
         
         Returns:
             Primary provider configuration or None
-        """
-        if not self.current_config:
+        """        if not self.current_config:
             return None
         
         # Find explicitly marked primary provider
@@ -498,28 +471,24 @@ class ConfigurationManager:
         return None
     
     def get_enabled_providers(self) -> List[StorageProviderConfig]:
-        """
-        Get all enabled storage providers.
+        """        Get all enabled storage providers.
         
         Returns:
             List of enabled provider configurations
-        """
-        if not self.current_config:
+        """        if not self.current_config:
             return []
         
         return [p for p in self.current_config.providers if p.enabled]
     
     def add_provider(self, provider_config: StorageProviderConfig) -> bool:
-        """
-        Add a new storage provider configuration.
+        """        Add a new storage provider configuration.
         
         Args:
             provider_config: Provider configuration to add
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             with self.config_lock:
                 if not self.current_config:
                     self.current_config = self._create_default_configuration()
@@ -542,8 +511,7 @@ class ConfigurationManager:
     
     def update_provider(self, provider_name: str, 
                        updates: Dict[str, Any]) -> bool:
-        """
-        Update storage provider configuration.
+        """        Update storage provider configuration.
         
         Args:
             provider_name: Name of provider to update
@@ -551,8 +519,7 @@ class ConfigurationManager:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             with self.config_lock:
                 provider = self.get_provider_config(provider_name)
                 if not provider:
@@ -574,16 +541,14 @@ class ConfigurationManager:
             return False
     
     def remove_provider(self, provider_name: str) -> bool:
-        """
-        Remove storage provider configuration.
+        """        Remove storage provider configuration.
         
         Args:
             provider_name: Name of provider to remove
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             with self.config_lock:
                 if not self.current_config:
                     return False
@@ -607,13 +572,11 @@ class ConfigurationManager:
             return False
     
     def reload_configuration(self) -> bool:
-        """
-        Reload configuration from file.
+        """        Reload configuration from file.
         
         Returns:
             Success status
-        """
-        try:
+        """        try:
             old_config = self.current_config
             
             # Load new configuration
@@ -632,16 +595,14 @@ class ConfigurationManager:
             return False
     
     def validate_configuration(self, config: StorageConfiguration = None) -> bool:
-        """
-        Validate configuration.
+        """        Validate configuration.
         
         Args:
             config: Configuration to validate (uses current if None)
             
         Returns:
             Validation result
-        """
-        try:
+        """        try:
             target_config = config or self.current_config
             if not target_config:
                 return False
@@ -657,13 +618,11 @@ class ConfigurationManager:
             return False
     
     def get_configuration_summary(self) -> Dict[str, Any]:
-        """
-        Get configuration summary for monitoring.
+        """        Get configuration summary for monitoring.
         
         Returns:
             Configuration summary
-        """
-        if not self.current_config:
+        """        if not self.current_config:
             return {"status": "no_configuration"}
         
         return {
@@ -685,8 +644,7 @@ class ConfigurationManager:
     # Private helper methods
     
     def _create_default_configuration(self, save_path: str = None) -> StorageConfiguration:
-        """Create default configuration"""
-        config = StorageConfiguration(
+        """Create default configuration"""        config = StorageConfiguration(
             environment=self.environment,
             version="1.0.0"
         )
@@ -712,8 +670,7 @@ class ConfigurationManager:
         return config
     
     def _apply_environment_overrides(self, config_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply environment-specific configuration overrides"""
-        env_overrides = {
+        """Apply environment-specific configuration overrides"""        env_overrides = {
             EnvironmentType.DEVELOPMENT: {
                 "security.compliance_mode": "relaxed",
                 "performance.cache_enabled": True,
@@ -734,8 +691,7 @@ class ConfigurationManager:
         return config_data
     
     def _set_nested_value(self, data: Dict, key_path: str, value: Any):
-        """Set nested dictionary value using dot notation"""
-        keys = key_path.split('.')
+        """Set nested dictionary value using dot notation"""        keys = key_path.split('.')
         current = data
         
         for key in keys[:-1]:
@@ -746,18 +702,15 @@ class ConfigurationManager:
         current[keys[-1]] = value
     
     def _encrypt_sensitive_data(self, config_dict: Dict[str, Any]) -> Dict[str, Any]:
-        """Encrypt sensitive configuration data"""
-        # Implementation would encrypt sensitive fields like API keys
+        """Encrypt sensitive configuration data"""        # Implementation would encrypt sensitive fields like API keys
         return config_dict
     
     def _decrypt_sensitive_data(self, config_dict: Dict[str, Any]) -> Dict[str, Any]:
-        """Decrypt sensitive configuration data"""
-        # Implementation would decrypt sensitive fields
+        """Decrypt sensitive configuration data"""        # Implementation would decrypt sensitive fields
         return config_dict
     
     def _dict_to_config(self, config_dict: Dict[str, Any]) -> StorageConfiguration:
-        """Convert dictionary to configuration object"""
-        # Convert dictionary to StorageConfiguration object
+        """Convert dictionary to configuration object"""        # Convert dictionary to StorageConfiguration object
         # This is a simplified implementation
         config = StorageConfiguration()
         
@@ -770,8 +723,7 @@ class ConfigurationManager:
     
     def _compare_configurations(self, old_config: StorageConfiguration, 
                               new_config: StorageConfiguration) -> List[str]:
-        """Compare two configurations and return list of changes"""
-        changes = []
+        """Compare two configurations and return list of changes"""        changes = []
         
         # Compare provider counts
         if len(old_config.providers) != len(new_config.providers):
@@ -786,8 +738,7 @@ class ConfigurationManager:
         return changes
     
     def _validate_configuration(self, config_dict: Dict[str, Any]) -> bool:
-        """Validate configuration dictionary"""
-        # Implement JSON schema validation
+        """Validate configuration dictionary"""        # Implement JSON schema validation
         try:
             # Basic validation
             required_fields = ['environment', 'providers', 'security']
@@ -802,13 +753,11 @@ class ConfigurationManager:
             return False
     
     def _initialize_schema_validator(self):
-        """Initialize JSON schema validator"""
-        # Implementation would load and initialize JSON schema
+        """Initialize JSON schema validator"""        # Implementation would load and initialize JSON schema
         pass
     
     def _cache_configuration(self):
-        """Cache current configuration"""
-        if self.current_config:
+        """Cache current configuration"""        if self.current_config:
             cache_key = f"config_{self.environment.value}"
             self.config_cache[cache_key] = {
                 'config': self.current_config,
@@ -816,8 +765,7 @@ class ConfigurationManager:
             }
     
     def _backup_configuration(self):
-        """Backup current configuration"""
-        if not self.backup_enabled or not self.current_config:
+        """Backup current configuration"""        if not self.backup_enabled or not self.current_config:
             return
         
         try:
@@ -842,8 +790,7 @@ class ConfigurationManager:
             self.logger.error(f"Failed to backup configuration: {str(e)}")
     
     async def _start_config_watcher(self):
-        """Start configuration file watcher for hot reload"""
-        while self.hot_reload_enabled:
+        """Start configuration file watcher for hot reload"""        while self.hot_reload_enabled:
             try:
                 if Path(self.config_path).exists():
                     stat = Path(self.config_path).stat()

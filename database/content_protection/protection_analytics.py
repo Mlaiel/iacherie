@@ -1,5 +1,4 @@
-"""
-Protection Analytics Engine
+"""Protection Analytics Engine
 
 Ultra-advanced analytics and intelligence system for content protection
 with ML-powered insights, predictive modeling, and comprehensive reporting.
@@ -16,9 +15,7 @@ explicit written permission is STRICTLY PROHIBITED and will result in immediate 
 
 Contact: mlaiel@live.de for licensing inquiries.
 Legal violations will be prosecuted to the full extent of international law.
-"""
-
-import asyncio
+"""import asyncio
 import json
 import logging
 import statistics
@@ -50,8 +47,7 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframe options"""
-    HOUR = "hour"
+    """Analytics timeframe options"""    HOUR = "hour"
     DAY = "day"
     WEEK = "week"
     MONTH = "month"
@@ -60,8 +56,7 @@ class AnalyticsTimeframe(Enum):
 
 
 class MetricType(Enum):
-    """Types of protection metrics"""
-    VIOLATION_COUNT = "violation_count"
+    """Types of protection metrics"""    VIOLATION_COUNT = "violation_count"
     DETECTION_ACCURACY = "detection_accuracy"
     RESPONSE_TIME = "response_time"
     RESOLUTION_RATE = "resolution_rate"
@@ -71,21 +66,18 @@ class MetricType(Enum):
 
 
 class ProtectionAnalyticsEngineError(Exception):
-    """Custom exception for analytics engine operations"""
-    pass
+    """Custom exception for analytics engine operations"""    pass
 
 
 class ProtectionAnalyticsEngine:
-    """
-    Ultra-advanced protection analytics engine with enterprise features:
+    """    Ultra-advanced protection analytics engine with enterprise features:
     - Real-time analytics and dashboard metrics
     - ML-powered trend analysis and prediction
     - Advanced risk assessment and threat modeling
     - Comprehensive reporting and visualization
     - Performance optimization and anomaly detection
     - Executive and technical reporting capabilities
-    """
-    
+    """    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -125,8 +117,7 @@ class ProtectionAnalyticsEngine:
         timeframe: AnalyticsTimeframe = AnalyticsTimeframe.DAY,
         include_predictions: bool = True
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive dashboard metrics for real-time monitoring
+        """        Generate comprehensive dashboard metrics for real-time monitoring
         
         Args:
             timeframe: Time period for metrics calculation
@@ -134,8 +125,7 @@ class ProtectionAnalyticsEngine:
             
         Returns:
             Dictionary with dashboard metrics and KPIs
-        """
-        try:
+        """        try:
             start_time = datetime.now()
             end_date = datetime.now(timezone.utc)
             
@@ -214,8 +204,7 @@ class ProtectionAnalyticsEngine:
         analysis_period_days: int = 90,
         min_pattern_occurrences: int = 3
     ) -> Dict[str, Any]:
-        """
-        Analyze violation patterns using advanced ML techniques
+        """        Analyze violation patterns using advanced ML techniques
         
         Args:
             analysis_period_days: Days to analyze for patterns
@@ -223,8 +212,7 @@ class ProtectionAnalyticsEngine:
             
         Returns:
             Comprehensive pattern analysis results
-        """
-        try:
+        """        try:
             start_date = datetime.now(timezone.utc) - timedelta(days=analysis_period_days)
             
             # Get violation data
@@ -284,8 +272,7 @@ class ProtectionAnalyticsEngine:
         intelligence_period_days: int = 30,
         include_ml_insights: bool = True
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive threat intelligence report
+        """        Generate comprehensive threat intelligence report
         
         Args:
             intelligence_period_days: Days to analyze for threat intelligence
@@ -293,8 +280,7 @@ class ProtectionAnalyticsEngine:
             
         Returns:
             Threat intelligence report with actionable intelligence
-        """
-        try:
+        """        try:
             start_date = datetime.now(timezone.utc) - timedelta(days=intelligence_period_days)
             
             # Threat landscape analysis
@@ -356,8 +342,7 @@ class ProtectionAnalyticsEngine:
         calculation_period_days: int = 365,
         include_projections: bool = True
     ) -> Dict[str, Any]:
-        """
-        Calculate return on investment for protection measures
+        """        Calculate return on investment for protection measures
         
         Args:
             calculation_period_days: Period for ROI calculation
@@ -365,8 +350,7 @@ class ProtectionAnalyticsEngine:
             
         Returns:
             Comprehensive ROI analysis
-        """
-        try:
+        """        try:
             start_date = datetime.now(timezone.utc) - timedelta(days=calculation_period_days)
             
             # Cost analysis
@@ -426,8 +410,7 @@ class ProtectionAnalyticsEngine:
         compliance_framework: str = "gdpr",
         reporting_period_days: int = 30
     ) -> Dict[str, Any]:
-        """
-        Generate compliance report for regulatory frameworks
+        """        Generate compliance report for regulatory frameworks
         
         Args:
             compliance_framework: Framework to report on (gdpr, ccpa, dmca, etc.)
@@ -435,8 +418,7 @@ class ProtectionAnalyticsEngine:
             
         Returns:
             Comprehensive compliance report
-        """
-        try:
+        """        try:
             start_date = datetime.now(timezone.utc) - timedelta(days=reporting_period_days)
             
             # Framework-specific analysis
@@ -486,8 +468,7 @@ class ProtectionAnalyticsEngine:
     # Private helper methods for core metrics
     
     async def _calculate_core_metrics(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Calculate core protection metrics"""
-        try:
+        """Calculate core protection metrics"""        try:
             # Violation counts
             total_violations = await self.db_session.query(ViolationReport).filter(
                 ViolationReport.created_at.between(start_date, end_date)
@@ -545,8 +526,7 @@ class ProtectionAnalyticsEngine:
             return {}
     
     async def _calculate_performance_metrics(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Calculate performance metrics"""
-        try:
+        """Calculate performance metrics"""        try:
             # Response time analysis
             alerts_with_response = await self.db_session.query(ProtectionAlert).filter(
                 and_(
@@ -585,8 +565,7 @@ class ProtectionAnalyticsEngine:
             return {}
     
     async def _calculate_platform_metrics(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Calculate platform-specific metrics"""
-        try:
+        """Calculate platform-specific metrics"""        try:
             # Platform distribution
             platform_violations = await self.db_session.query(
                 ViolationReport.platform,
@@ -622,8 +601,7 @@ class ProtectionAnalyticsEngine:
         end_date: datetime,
         group_by: str
     ) -> List[Dict[str, Any]]:
-        """Generate time series metrics data"""
-        try:
+        """Generate time series metrics data"""        try:
             # Time series for violations
             violation_series = await self.db_session.query(
                 func.date_trunc(group_by, ViolationReport.created_at).label('time_period'),
@@ -668,8 +646,7 @@ class ProtectionAnalyticsEngine:
             return []
     
     async def _calculate_risk_indicators(self) -> Dict[str, Any]:
-        """Calculate current risk indicators"""
-        try:
+        """Calculate current risk indicators"""        try:
             # Recent high-severity violations
             recent_critical = await self.db_session.query(ViolationReport).filter(
                 and_(
@@ -713,8 +690,7 @@ class ProtectionAnalyticsEngine:
             return {"overall_risk_level": "unknown"}
     
     async def _analyze_trends(self, time_series: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze trends in time series data"""
-        try:
+        """Analyze trends in time series data"""        try:
             if len(time_series) < 2:
                 return {"trend": "insufficient_data"}
             
@@ -743,8 +719,7 @@ class ProtectionAnalyticsEngine:
             return {"trend": "error"}
     
     def _calculate_trend_direction(self, values: List[float]) -> str:
-        """Calculate trend direction from time series values"""
-        if len(values) < 2:
+        """Calculate trend direction from time series values"""        if len(values) < 2:
             return "insufficient_data"
         
         # Simple linear trend calculation
@@ -762,8 +737,7 @@ class ProtectionAnalyticsEngine:
     # For brevity, I'm including placeholders for the remaining methods
     
     async def _generate_predictions(self, dashboard_metrics: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate ML-based predictions"""
-        # Placeholder for ML prediction logic
+        """Generate ML-based predictions"""        # Placeholder for ML prediction logic
         return {
             "predicted_violations_next_week": 10,
             "predicted_alert_volume": 25,
@@ -771,128 +745,101 @@ class ProtectionAnalyticsEngine:
         }
     
     async def _analyze_temporal_patterns(self, violations: List) -> Dict[str, Any]:
-        """Analyze temporal patterns in violations"""
-        # Implementation for temporal pattern analysis
+        """Analyze temporal patterns in violations"""        # Implementation for temporal pattern analysis
         return {"pattern_type": "temporal", "insights": []}
     
     async def _analyze_platform_patterns(self, violations: List) -> Dict[str, Any]:
-        """Analyze platform-specific patterns"""
-        # Implementation for platform pattern analysis
+        """Analyze platform-specific patterns"""        # Implementation for platform pattern analysis
         return {"pattern_type": "platform", "insights": []}
     
     async def _analyze_content_patterns(self, violations: List) -> Dict[str, Any]:
-        """Analyze content-based patterns"""
-        # Implementation for content pattern analysis
+        """Analyze content-based patterns"""        # Implementation for content pattern analysis
         return {"pattern_type": "content", "insights": []}
     
     async def _analyze_geographic_patterns(self, violations: List) -> Dict[str, Any]:
-        """Analyze geographic patterns"""
-        # Implementation for geographic pattern analysis
+        """Analyze geographic patterns"""        # Implementation for geographic pattern analysis
         return {"pattern_type": "geographic", "insights": []}
     
     async def _analyze_severity_patterns(self, violations: List) -> Dict[str, Any]:
-        """Analyze severity patterns"""
-        # Implementation for severity pattern analysis
+        """Analyze severity patterns"""        # Implementation for severity pattern analysis
         return {"pattern_type": "severity", "insights": []}
     
     async def _analyze_offender_patterns(self, violations: List) -> Dict[str, Any]:
-        """Analyze offender behavior patterns"""
-        # Implementation for offender pattern analysis
+        """Analyze offender behavior patterns"""        # Implementation for offender pattern analysis
         return {"pattern_type": "offender", "insights": []}
     
     async def _analyze_pattern_correlations(self, violations: List, patterns: Dict) -> Dict[str, Any]:
-        """Analyze correlations between different patterns"""
-        # Implementation for pattern correlation analysis
+        """Analyze correlations between different patterns"""        # Implementation for pattern correlation analysis
         return {"correlations": []}
     
     async def _assess_pattern_risks(self, patterns: Dict) -> Dict[str, Any]:
-        """Assess risks based on identified patterns"""
-        # Implementation for pattern risk assessment
+        """Assess risks based on identified patterns"""        # Implementation for pattern risk assessment
         return {"risk_level": "medium", "risk_factors": []}
     
     async def _generate_pattern_insights(self, patterns: Dict, correlations: Dict, risk_assessment: Dict) -> List[str]:
-        """Generate actionable insights from pattern analysis"""
-        # Implementation for insight generation
+        """Generate actionable insights from pattern analysis"""        # Implementation for insight generation
         return ["Pattern insight 1", "Pattern insight 2"]
     
     async def _detect_pattern_anomalies(self, violations: List) -> List[Dict[str, Any]]:
-        """Detect anomalies in violation patterns"""
-        # Implementation for anomaly detection
+        """Detect anomalies in violation patterns"""        # Implementation for anomaly detection
         return []
     
     async def _generate_pattern_recommendations(self, patterns: Dict) -> List[str]:
-        """Generate recommendations based on patterns"""
-        # Implementation for recommendation generation
+        """Generate recommendations based on patterns"""        # Implementation for recommendation generation
         return ["Recommendation 1", "Recommendation 2"]
     
     # Threat intelligence methods (placeholders)
     
     async def _analyze_threat_landscape(self, start_date: datetime) -> Dict[str, Any]:
-        """Analyze current threat landscape"""
-        return {"threat_level": "medium", "active_threats": []}
+        """Analyze current threat landscape"""        return {"threat_level": "medium", "active_threats": []}
     
     async def _detect_emerging_threats(self, start_date: datetime) -> List[Dict[str, Any]]:
-        """Detect emerging threats"""
-        return []
+        """Detect emerging threats"""        return []
     
     async def _analyze_attack_vectors(self, start_date: datetime) -> Dict[str, Any]:
-        """Analyze attack vectors"""
-        return {"vectors": []}
+        """Analyze attack vectors"""        return {"vectors": []}
     
     async def _profile_threat_actors(self, start_date: datetime) -> List[Dict[str, Any]]:
-        """Profile threat actors"""
-        return []
+        """Profile threat actors"""        return []
     
     async def _analyze_threat_infrastructure(self, start_date: datetime) -> Dict[str, Any]:
-        """Analyze threat infrastructure"""
-        return {"infrastructure": []}
+        """Analyze threat infrastructure"""        return {"infrastructure": []}
     
     async def _analyze_countermeasure_effectiveness(self, start_date: datetime) -> Dict[str, Any]:
-        """Analyze countermeasure effectiveness"""
-        return {"effectiveness": 85}
+        """Analyze countermeasure effectiveness"""        return {"effectiveness": 85}
     
     # ROI calculation methods (placeholders)
     
     async def _calculate_protection_costs(self, start_date: datetime) -> Dict[str, Any]:
-        """Calculate protection costs"""
-        return {"total_cost": 10000, "breakdown": {}}
+        """Calculate protection costs"""        return {"total_cost": 10000, "breakdown": {}}
     
     async def _calculate_protection_benefits(self, start_date: datetime) -> Dict[str, Any]:
-        """Calculate protection benefits"""
-        return {"total_benefits": 15000, "breakdown": {}}
+        """Calculate protection benefits"""        return {"total_benefits": 15000, "breakdown": {}}
     
     async def _estimate_prevented_losses(self, start_date: datetime) -> Dict[str, Any]:
-        """Estimate prevented losses"""
-        return {"total_prevented": 25000, "breakdown": {}}
+        """Estimate prevented losses"""        return {"total_prevented": 25000, "breakdown": {}}
     
     async def _calculate_time_savings(self, start_date: datetime) -> Dict[str, Any]:
-        """Calculate time savings"""
-        return {"hours_saved": 100, "value": 5000}
+        """Calculate time savings"""        return {"hours_saved": 100, "value": 5000}
     
     # Compliance methods (placeholders)
     
     async def _analyze_gdpr_compliance(self, start_date: datetime) -> Dict[str, Any]:
-        """Analyze GDPR compliance"""
-        return {"compliance_items": [], "score": 85}
+        """Analyze GDPR compliance"""        return {"compliance_items": [], "score": 85}
     
     async def _analyze_ccpa_compliance(self, start_date: datetime) -> Dict[str, Any]:
-        """Analyze CCPA compliance"""
-        return {"compliance_items": [], "score": 90}
+        """Analyze CCPA compliance"""        return {"compliance_items": [], "score": 90}
     
     async def _analyze_dmca_compliance(self, start_date: datetime) -> Dict[str, Any]:
-        """Analyze DMCA compliance"""
-        return {"compliance_items": [], "score": 95}
+        """Analyze DMCA compliance"""        return {"compliance_items": [], "score": 95}
     
     async def _analyze_general_compliance(self, start_date: datetime, framework: str) -> Dict[str, Any]:
-        """Analyze general compliance framework"""
-        return {"compliance_items": [], "score": 80}
+        """Analyze general compliance framework"""        return {"compliance_items": [], "score": 80}
     
     # Storage methods (placeholders)
     
     async def _store_intelligence_report(self, report: Dict[str, Any]) -> None:
-        """Store intelligence report"""
-        pass
+        """Store intelligence report"""        pass
     
     async def _store_compliance_report(self, report: Dict[str, Any]) -> None:
-        """Store compliance report"""
-        pass
+        """Store compliance report"""        pass

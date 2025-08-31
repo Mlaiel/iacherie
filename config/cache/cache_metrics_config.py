@@ -1,5 +1,4 @@
-"""
-Cache Metrics Configuration for IA-Influencer Agent Platform
+"""Cache Metrics Configuration for IA-Influencer Agent Platform
 ============================================================
 
 Advanced cache metrics collection, monitoring, and analytics
@@ -15,9 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-from typing import Dict, List, Optional, Any, Callable, Union
+"""from typing import Dict, List, Optional, Any, Callable, Union
 from dataclasses import dataclass, field
 from enum import Enum
 import time
@@ -29,8 +26,7 @@ from pydantic import BaseModel, validator
 
 
 class MetricType(str, Enum):
-    """Types of cache metrics"""
-    COUNTER = "counter"  # Cumulative count
+    """Types of cache metrics"""    COUNTER = "counter"  # Cumulative count
     GAUGE = "gauge"  # Current value
     HISTOGRAM = "histogram"  # Distribution of values
     TIMER = "timer"  # Time-based measurements
@@ -38,8 +34,7 @@ class MetricType(str, Enum):
 
 
 class AggregationMethod(str, Enum):
-    """Aggregation methods for metrics"""
-    SUM = "sum"
+    """Aggregation methods for metrics"""    SUM = "sum"
     AVERAGE = "average"
     MIN = "min"
     MAX = "max"
@@ -50,8 +45,7 @@ class AggregationMethod(str, Enum):
 
 
 class AlertSeverity(str, Enum):
-    """Alert severity levels"""
-    CRITICAL = "critical"
+    """Alert severity levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -60,8 +54,7 @@ class AlertSeverity(str, Enum):
 
 @dataclass
 class MetricValue:
-    """Individual metric value with metadata"""
-    value: Union[int, float]
+    """Individual metric value with metadata"""    value: Union[int, float]
     timestamp: datetime
     labels: Dict[str, str] = field(default_factory=dict)
     tenant_id: Optional[str] = None
@@ -70,8 +63,7 @@ class MetricValue:
 
 @dataclass
 class MetricDefinition:
-    """Cache metric definition"""
-    name: str
+    """Cache metric definition"""    name: str
     metric_type: MetricType
     description: str
     unit: str = ""
@@ -84,8 +76,7 @@ class MetricDefinition:
 
 @dataclass
 class AlertRule:
-    """Alert rule for cache metrics"""
-    name: str
+    """Alert rule for cache metrics"""    name: str
     metric_name: str
     condition: str  # e.g., "> 0.9", "< 0.1", "== 0"
     threshold_value: float
@@ -96,8 +87,7 @@ class AlertRule:
     enabled: bool = True
     
     def evaluate_condition(self, value: float) -> bool:
-        """Evaluate alert condition"""
-        condition = self.condition.strip()
+        """Evaluate alert condition"""        condition = self.condition.strip()
         
         if condition.startswith(">="):
             return value >= self.threshold_value
@@ -116,10 +106,8 @@ class AlertRule:
 
 
 class CacheMetricsConfig(BaseModel):
-    """
-    Comprehensive cache metrics configuration
-    """
-    
+    """    Comprehensive cache metrics configuration
+    """    
     # General settings
     enabled: bool = True
     collection_enabled: bool = True
@@ -202,16 +190,14 @@ class CacheMetricsConfig(BaseModel):
         return v
     
     def add_metric_definition(self, metric_def: MetricDefinition):
-        """Add metric definition"""
-        # Check for duplicate names
+        """Add metric definition"""        # Check for duplicate names
         if any(m.name == metric_def.name for m in self.metric_definitions):
             raise ValueError(f"Metric definition with name '{metric_def.name}' already exists")
         
         self.metric_definitions.append(metric_def)
     
     def add_alert_rule(self, alert_rule: AlertRule):
-        """Add alert rule"""
-        # Check if metric exists
+        """Add alert rule"""        # Check if metric exists
         if not any(m.name == alert_rule.metric_name for m in self.metric_definitions):
             raise ValueError(f"Metric '{alert_rule.metric_name}' not found in definitions")
         
@@ -222,23 +208,19 @@ class CacheMetricsConfig(BaseModel):
         self.alert_rules.append(alert_rule)
     
     def get_metric_definition(self, name: str) -> Optional[MetricDefinition]:
-        """Get metric definition by name"""
-        for metric_def in self.metric_definitions:
+        """Get metric definition by name"""        for metric_def in self.metric_definitions:
             if metric_def.name == name:
                 return metric_def
         return None
     
     def get_enabled_metrics(self) -> List[MetricDefinition]:
-        """Get list of enabled metrics"""
-        return [m for m in self.metric_definitions if m.enabled]
+        """Get list of enabled metrics"""        return [m for m in self.metric_definitions if m.enabled]
     
     def get_enabled_alerts(self) -> List[AlertRule]:
-        """Get list of enabled alert rules"""
-        return [a for a in self.alert_rules if a.enabled]
+        """Get list of enabled alert rules"""        return [a for a in self.alert_rules if a.enabled]
     
     def should_collect_metric(self, metric_name: str, labels: Dict[str, str] = None) -> bool:
-        """Check if metric should be collected based on filters"""
-        if not self.collection_enabled:
+        """Check if metric should be collected based on filters"""        if not self.collection_enabled:
             return False
         
         # Check metric filters
@@ -259,10 +241,8 @@ class CacheMetricsConfig(BaseModel):
 
 
 class MetricsCollector:
-    """
-    Cache metrics collector and processor
-    """
-    
+    """    Cache metrics collector and processor
+    """    
     def __init__(self, config: CacheMetricsConfig):
         self.config = config
         self.metrics_buffer: Dict[str, deque] = defaultdict(lambda: deque(maxlen=10000))
@@ -274,8 +254,7 @@ class MetricsCollector:
         self.running = False
     
     async def start(self):
-        """Start metrics collection"""
-        if self.running:
+        """Start metrics collection"""        if self.running:
             return
         
         self.running = True
@@ -290,8 +269,7 @@ class MetricsCollector:
             self.alert_task = asyncio.create_task(self._alert_evaluation_loop())
     
     async def stop(self):
-        """Stop metrics collection"""
-        if not self.running:
+        """Stop metrics collection"""        if not self.running:
             return
         
         self.running = False
@@ -307,8 +285,7 @@ class MetricsCollector:
     
     def record_metric(self, metric_name: str, value: Union[int, float], 
                      labels: Dict[str, str] = None, tenant_id: Optional[str] = None):
-        """Record a metric value"""
-        if not self.config.should_collect_metric(metric_name, labels):
+        """Record a metric value"""        if not self.config.should_collect_metric(metric_name, labels):
             return
         
         metric_value = MetricValue(
@@ -321,32 +298,28 @@ class MetricsCollector:
         self.metrics_buffer[metric_name].append(metric_value)
     
     def record_cache_hit(self, tenant_id: Optional[str] = None, region: Optional[str] = None):
-        """Record cache hit"""
-        labels = {}
+        """Record cache hit"""        labels = {}
         if region:
             labels["region"] = region
         
         self.record_metric("cache_hits_total", 1, labels, tenant_id)
     
     def record_cache_miss(self, tenant_id: Optional[str] = None, region: Optional[str] = None):
-        """Record cache miss"""
-        labels = {}
+        """Record cache miss"""        labels = {}
         if region:
             labels["region"] = region
         
         self.record_metric("cache_misses_total", 1, labels, tenant_id)
     
     def record_cache_set(self, tenant_id: Optional[str] = None, region: Optional[str] = None):
-        """Record cache set operation"""
-        labels = {}
+        """Record cache set operation"""        labels = {}
         if region:
             labels["region"] = region
         
         self.record_metric("cache_sets_total", 1, labels, tenant_id)
     
     def record_cache_delete(self, tenant_id: Optional[str] = None, region: Optional[str] = None):
-        """Record cache delete operation"""
-        labels = {}
+        """Record cache delete operation"""        labels = {}
         if region:
             labels["region"] = region
         
@@ -354,34 +327,29 @@ class MetricsCollector:
     
     def record_response_time(self, operation: str, duration_ms: float, 
                            tenant_id: Optional[str] = None, region: Optional[str] = None):
-        """Record operation response time"""
-        labels = {"operation": operation}
+        """Record operation response time"""        labels = {"operation": operation}
         if region:
             labels["region"] = region
         
         self.record_metric("cache_operation_duration_ms", duration_ms, labels, tenant_id)
     
     def record_memory_usage(self, memory_mb: float, node_id: Optional[str] = None):
-        """Record memory usage"""
-        labels = {}
+        """Record memory usage"""        labels = {}
         if node_id:
             labels["node"] = node_id
         
         self.record_metric("cache_memory_usage_mb", memory_mb, labels)
     
     def record_connection_count(self, connection_count: int, pool_name: str = "default"):
-        """Record connection pool metrics"""
-        labels = {"pool": pool_name}
+        """Record connection pool metrics"""        labels = {"pool": pool_name}
         self.record_metric("cache_connections_active", connection_count, labels)
     
     def record_error(self, error_type: str, tenant_id: Optional[str] = None):
-        """Record cache error"""
-        labels = {"error_type": error_type}
+        """Record cache error"""        labels = {"error_type": error_type}
         self.record_metric("cache_errors_total", 1, labels, tenant_id)
     
     def get_hit_ratio(self, window_minutes: int = 5, tenant_id: Optional[str] = None) -> float:
-        """Calculate cache hit ratio for time window"""
-        end_time = datetime.utcnow()
+        """Calculate cache hit ratio for time window"""        end_time = datetime.utcnow()
         start_time = end_time - timedelta(minutes=window_minutes)
         
         hits = self._get_metric_count("cache_hits_total", start_time, end_time, tenant_id)
@@ -392,8 +360,7 @@ class MetricsCollector:
     
     def get_average_response_time(self, operation: str, window_minutes: int = 5, 
                                 tenant_id: Optional[str] = None) -> float:
-        """Get average response time for operation"""
-        end_time = datetime.utcnow()
+        """Get average response time for operation"""        end_time = datetime.utcnow()
         start_time = end_time - timedelta(minutes=window_minutes)
         
         values = self._get_metric_values("cache_operation_duration_ms", start_time, end_time, 
@@ -403,8 +370,7 @@ class MetricsCollector:
     
     def get_percentile_response_time(self, operation: str, percentile: float, 
                                    window_minutes: int = 5, tenant_id: Optional[str] = None) -> float:
-        """Get percentile response time for operation"""
-        end_time = datetime.utcnow()
+        """Get percentile response time for operation"""        end_time = datetime.utcnow()
         start_time = end_time - timedelta(minutes=window_minutes)
         
         values = self._get_metric_values("cache_operation_duration_ms", start_time, end_time, 
@@ -418,8 +384,7 @@ class MetricsCollector:
         return sorted_values[min(index, len(sorted_values) - 1)]
     
     def get_metrics_summary(self, tenant_id: Optional[str] = None) -> Dict[str, Any]:
-        """Get comprehensive metrics summary"""
-        window_minutes = 5
+        """Get comprehensive metrics summary"""        window_minutes = 5
         
         return {
             "hit_ratio": self.get_hit_ratio(window_minutes, tenant_id),
@@ -433,8 +398,7 @@ class MetricsCollector:
         }
     
     async def _collection_loop(self):
-        """Main collection loop"""
-        while self.running:
+        """Main collection loop"""        while self.running:
             try:
                 await self._process_metrics_buffer()
                 await asyncio.sleep(self.config.default_collection_interval)
@@ -443,8 +407,7 @@ class MetricsCollector:
                 await asyncio.sleep(self.config.default_collection_interval)
     
     async def _aggregation_loop(self):
-        """Metrics aggregation loop"""
-        while self.running:
+        """Metrics aggregation loop"""        while self.running:
             try:
                 await self._aggregate_metrics()
                 await asyncio.sleep(300)  # Aggregate every 5 minutes
@@ -453,8 +416,7 @@ class MetricsCollector:
                 await asyncio.sleep(300)
     
     async def _alert_evaluation_loop(self):
-        """Alert evaluation loop"""
-        while self.running:
+        """Alert evaluation loop"""        while self.running:
             try:
                 await self._evaluate_alerts()
                 await asyncio.sleep(self.config.alert_evaluation_interval)
@@ -463,8 +425,7 @@ class MetricsCollector:
                 await asyncio.sleep(self.config.alert_evaluation_interval)
     
     async def _process_metrics_buffer(self):
-        """Process buffered metrics"""
-        for metric_name, buffer in self.metrics_buffer.items():
+        """Process buffered metrics"""        for metric_name, buffer in self.metrics_buffer.items():
             if not buffer:
                 continue
             
@@ -477,20 +438,17 @@ class MetricsCollector:
                 buffer.popleft()
     
     async def _export_metrics(self, metric_name: str, values: List[MetricValue]):
-        """Export metrics to configured backend"""
-        # Implementation would depend on the selected storage backend
+        """Export metrics to configured backend"""        # Implementation would depend on the selected storage backend
         # This is a placeholder for the export logic
         pass
     
     async def _aggregate_metrics(self):
-        """Aggregate metrics for different time intervals"""
-        for interval in self.config.aggregation_intervals:
+        """Aggregate metrics for different time intervals"""        for interval in self.config.aggregation_intervals:
             for metric_name in self.metrics_buffer.keys():
                 await self._aggregate_metric_for_interval(metric_name, interval)
     
     async def _aggregate_metric_for_interval(self, metric_name: str, interval_seconds: int):
-        """Aggregate specific metric for time interval"""
-        end_time = datetime.utcnow()
+        """Aggregate specific metric for time interval"""        end_time = datetime.utcnow()
         start_time = end_time - timedelta(seconds=interval_seconds)
         
         values = self._get_metric_values(metric_name, start_time, end_time)
@@ -513,13 +471,11 @@ class MetricsCollector:
         }
     
     async def _evaluate_alerts(self):
-        """Evaluate all alert rules"""
-        for alert_rule in self.config.get_enabled_alerts():
+        """Evaluate all alert rules"""        for alert_rule in self.config.get_enabled_alerts():
             await self._evaluate_single_alert(alert_rule)
     
     async def _evaluate_single_alert(self, alert_rule: AlertRule):
-        """Evaluate single alert rule"""
-        # Get current metric value
+        """Evaluate single alert rule"""        # Get current metric value
         current_value = self._get_current_metric_value(alert_rule.metric_name)
         
         if current_value is None:
@@ -567,21 +523,18 @@ class MetricsCollector:
                 alert_state["active"] = False
     
     async def _trigger_alert(self, alert_rule: AlertRule, current_value: float):
-        """Trigger alert notification"""
-        # Implementation would send actual alerts (email, Slack, webhook, etc.)
+        """Trigger alert notification"""        # Implementation would send actual alerts (email, Slack, webhook, etc.)
         # This is a placeholder for the alerting logic
         pass
     
     async def _resolve_alert(self, alert_rule: AlertRule, current_value: float):
-        """Resolve alert notification"""
-        # Implementation would send alert resolution notifications
+        """Resolve alert notification"""        # Implementation would send alert resolution notifications
         # This is a placeholder for the alert resolution logic
         pass
     
     def _get_metric_count(self, metric_name: str, start_time: datetime, end_time: datetime, 
                          tenant_id: Optional[str] = None) -> int:
-        """Get count of metric occurrences in time window"""
-        if metric_name not in self.metrics_buffer:
+        """Get count of metric occurrences in time window"""        if metric_name not in self.metrics_buffer:
             return 0
         
         count = 0
@@ -595,8 +548,7 @@ class MetricsCollector:
     def _get_metric_values(self, metric_name: str, start_time: datetime, end_time: datetime, 
                           tenant_id: Optional[str] = None, 
                           labels_filter: Dict[str, str] = None) -> List[float]:
-        """Get metric values in time window"""
-        if metric_name not in self.metrics_buffer:
+        """Get metric values in time window"""        if metric_name not in self.metrics_buffer:
             return []
         
         values = []
@@ -614,8 +566,7 @@ class MetricsCollector:
         return values
     
     def _get_current_metric_value(self, metric_name: str) -> Optional[float]:
-        """Get current value for metric"""
-        if metric_name not in self.metrics_buffer:
+        """Get current value for metric"""        if metric_name not in self.metrics_buffer:
             return None
         
         buffer = self.metrics_buffer[metric_name]
@@ -626,8 +577,7 @@ class MetricsCollector:
         return buffer[-1].value
     
     def _get_error_rate(self, window_minutes: int, tenant_id: Optional[str] = None) -> float:
-        """Calculate error rate for time window"""
-        end_time = datetime.utcnow()
+        """Calculate error rate for time window"""        end_time = datetime.utcnow()
         start_time = end_time - timedelta(minutes=window_minutes)
         
         errors = self._get_metric_count("cache_errors_total", start_time, end_time, tenant_id)
@@ -638,8 +588,7 @@ class MetricsCollector:
         return errors / total_ops if total_ops > 0 else 0.0
     
     def _get_operations_per_second(self, window_minutes: int, tenant_id: Optional[str] = None) -> float:
-        """Calculate operations per second for time window"""
-        end_time = datetime.utcnow()
+        """Calculate operations per second for time window"""        end_time = datetime.utcnow()
         start_time = end_time - timedelta(minutes=window_minutes)
         
         total_ops = (self._get_metric_count("cache_hits_total", start_time, end_time, tenant_id) +
@@ -651,12 +600,10 @@ class MetricsCollector:
         return total_ops / window_seconds if window_seconds > 0 else 0.0
     
     def _get_current_memory_usage(self) -> float:
-        """Get current memory usage"""
-        return self._get_current_metric_value("cache_memory_usage_mb") or 0.0
+        """Get current memory usage"""        return self._get_current_metric_value("cache_memory_usage_mb") or 0.0
     
     def _get_current_connection_count(self) -> int:
-        """Get current connection count"""
-        return int(self._get_current_metric_value("cache_connections_active") or 0)
+        """Get current connection count"""        return int(self._get_current_metric_value("cache_connections_active") or 0)
 
 
 # Standard metric definitions for cache systems

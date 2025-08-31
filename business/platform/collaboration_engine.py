@@ -1,14 +1,11 @@
-"""
-Collaboration Engine - Advanced Creator Collaboration System
+"""Collaboration Engine - Advanced Creator Collaboration System
 
 Intelligent matching and management system for creator collaborations
 including skill-based matching, project management, and revenue sharing.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
@@ -29,8 +26,7 @@ from ...services.notification.notification_service import NotificationService
 logger = get_logger(__name__)
 
 class CollaborationType(Enum):
-    """Collaboration types"""
-    MUSIC_COLLABORATION = "music_collaboration"
+    """Collaboration types"""    MUSIC_COLLABORATION = "music_collaboration"
     VIDEO_COLLABORATION = "video_collaboration"
     CONTENT_CREATION = "content_creation"
     CROSS_PROMOTION = "cross_promotion"
@@ -39,8 +35,7 @@ class CollaborationType(Enum):
     LIVE_PERFORMANCE = "live_performance"
 
 class SkillCategory(Enum):
-    """Skill categories"""
-    MUSIC_PRODUCTION = "music_production"
+    """Skill categories"""    MUSIC_PRODUCTION = "music_production"
     VOCAL_PERFORMANCE = "vocal_performance"
     VIDEO_EDITING = "video_editing"
     PHOTOGRAPHY = "photography"
@@ -51,8 +46,7 @@ class SkillCategory(Enum):
 
 @dataclass
 class CollaborationRequest:
-    """Collaboration request structure"""
-    requester_id: int
+    """Collaboration request structure"""    requester_id: int
     collaboration_type: CollaborationType
     title: str
     description: str
@@ -64,8 +58,7 @@ class CollaborationRequest:
     remote_friendly: bool = True
 
 class CollaborationEngine:
-    """
-    Advanced creator collaboration system
+    """    Advanced creator collaboration system
     
     Features:
     - AI-powered creator matching
@@ -74,8 +67,7 @@ class CollaborationEngine:
     - Revenue sharing automation
     - Communication facilitation
     - Performance analytics
-    """
-    
+    """    
     def __init__(self):
         self.matching_service = MatchingAlgorithmService()
         self.content_analysis = ContentAnalysisService()
@@ -92,13 +84,11 @@ class CollaborationEngine:
         }
     
     async def initialize(self) -> bool:
-        """
-        Initialize collaboration engine
+        """        Initialize collaboration engine
         
         Returns:
             bool: Initialization success status
-        """
-        try:
+        """        try:
             logger.info("Initializing Collaboration Engine...")
             
             # Initialize services
@@ -119,8 +109,7 @@ class CollaborationEngine:
         collaboration_request: CollaborationRequest,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """
-        Find potential collaboration matches using AI
+        """        Find potential collaboration matches using AI
         
         Args:
             user_id: Requesting user ID
@@ -129,8 +118,7 @@ class CollaborationEngine:
             
         Returns:
             Dict containing matching results
-        """
-        try:
+        """        try:
             logger.info(f"Finding collaboration matches for user {user_id}")
             
             # Get user profile
@@ -187,8 +175,7 @@ class CollaborationEngine:
         collaboration_details: Dict[str, Any],
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """
-        Create collaboration proposal
+        """        Create collaboration proposal
         
         Args:
             requester_id: Requesting creator ID
@@ -198,8 +185,7 @@ class CollaborationEngine:
             
         Returns:
             Dict containing proposal information
-        """
-        try:
+        """        try:
             # Create collaboration record
             collaboration = Collaboration(
                 requester_id=requester_id,
@@ -253,8 +239,7 @@ class CollaborationEngine:
         message: Optional[str] = None,
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """
-        Respond to collaboration proposal
+        """        Respond to collaboration proposal
         
         Args:
             collaboration_id: Collaboration ID
@@ -265,8 +250,7 @@ class CollaborationEngine:
             
         Returns:
             Dict containing response results
-        """
-        try:
+        """        try:
             # Get collaboration
             result = await session.execute(
                 select(Collaboration).where(Collaboration.id == collaboration_id)
@@ -328,8 +312,7 @@ class CollaborationEngine:
         content_type: Optional[str] = None,
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """
-        Get personalized collaboration recommendations
+        """        Get personalized collaboration recommendations
         
         Args:
             user_id: User ID
@@ -338,8 +321,7 @@ class CollaborationEngine:
             
         Returns:
             Dict containing recommendations
-        """
-        try:
+        """        try:
             # Get user profile and content
             user_profile = await self._get_creator_profile(user_id, session)
             user_content = await self._get_user_content_analysis(user_id, content_type, session)
@@ -394,8 +376,7 @@ class CollaborationEngine:
         user_id: int,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """
-        Track collaboration progress and milestones
+        """        Track collaboration progress and milestones
         
         Args:
             collaboration_id: Collaboration ID
@@ -404,8 +385,7 @@ class CollaborationEngine:
             
         Returns:
             Dict containing progress information
-        """
-        try:
+        """        try:
             # Get collaboration
             result = await session.execute(
                 select(Collaboration).where(Collaboration.id == collaboration_id)
@@ -447,8 +427,7 @@ class CollaborationEngine:
             raise HTTPException(status_code=500, detail=f"Progress tracking failed: {str(e)}")
     
     async def _get_creator_profile(self, user_id: int, session: AsyncSession) -> Optional[CreatorProfile]:
-        """Get creator profile"""
-        result = await session.execute(
+        """Get creator profile"""        result = await session.execute(
             select(CreatorProfile).where(CreatorProfile.user_id == user_id)
         )
         return result.scalar_one_or_none()
@@ -459,8 +438,7 @@ class CollaborationEngine:
         requester_profile: CreatorProfile,
         session: AsyncSession
     ) -> List[CreatorProfile]:
-        """Find potential collaborators"""
-        # Implementation for finding potential collaborators
+        """Find potential collaborators"""        # Implementation for finding potential collaborators
         result = await session.execute(
             select(CreatorProfile).where(
                 and_(
@@ -478,8 +456,7 @@ class CollaborationEngine:
         candidate: CreatorProfile,
         request: CollaborationRequest
     ) -> float:
-        """Calculate collaboration compatibility score"""
-        score = 0.0
+        """Calculate collaboration compatibility score"""        score = 0.0
         
         # Skill match score
         skill_score = await self._calculate_skill_match_score(
@@ -507,8 +484,7 @@ class CollaborationEngine:
         candidate: CreatorProfile,
         request: CollaborationRequest
     ) -> List[str]:
-        """Generate reasons why this is a good match"""
-        reasons = []
+        """Generate reasons why this is a good match"""        reasons = []
         
         # Skill complementarity
         if await self._has_complementary_skills(requester, candidate, request.required_skills):
@@ -529,8 +505,7 @@ class CollaborationEngine:
         collaboration: Collaboration,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Initialize collaboration workspace"""
-        # Implementation for workspace creation
+        """Initialize collaboration workspace"""        # Implementation for workspace creation
         return {
             'workspace_id': f"workspace_{collaboration.id}",
             'chat_channel': f"collab_chat_{collaboration.id}",
@@ -544,8 +519,7 @@ class CollaborationEngine:
         candidate: CreatorProfile,
         required_skills: List[SkillCategory]
     ) -> float:
-        """Calculate skill match score"""
-        # Implementation for skill matching
+        """Calculate skill match score"""        # Implementation for skill matching
         return 80.0  # Placeholder
     
     async def _calculate_style_compatibility(
@@ -553,8 +527,7 @@ class CollaborationEngine:
         requester: CreatorProfile,
         candidate: CreatorProfile
     ) -> float:
-        """Calculate content style compatibility"""
-        # Implementation for style analysis
+        """Calculate content style compatibility"""        # Implementation for style analysis
         return 75.0  # Placeholder
     
     async def _calculate_audience_compatibility(
@@ -562,8 +535,7 @@ class CollaborationEngine:
         requester: CreatorProfile,
         candidate: CreatorProfile
     ) -> float:
-        """Calculate audience compatibility score"""
-        # Implementation for audience analysis
+        """Calculate audience compatibility score"""        # Implementation for audience analysis
         return 70.0  # Placeholder
     
     async def _calculate_engagement_compatibility(
@@ -571,6 +543,5 @@ class CollaborationEngine:
         requester: CreatorProfile,
         candidate: CreatorProfile
     ) -> float:
-        """Calculate engagement compatibility score"""
-        # Implementation for engagement analysis
+        """Calculate engagement compatibility score"""        # Implementation for engagement analysis
         return 65.0  # Placeholder

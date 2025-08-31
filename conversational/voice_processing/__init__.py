@@ -45,8 +45,7 @@ LEGAL CONSEQUENCES FOR VIOLATIONS:
 
 For official licensing inquiries ONLY: mlaiel@live.de
 Subject: "IA-Influencer Voice Processing Licensing Request"
-"""
-import logging
+"""import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
 from dataclasses import dataclass
 from enum import Enum

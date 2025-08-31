@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Commission Models - Professional Data Models for Commission System
+"""Commission Models - Professional Data Models for Commission System
 ================================================================
 
 Enterprise-grade data models and schemas for commission management,
@@ -15,9 +14,7 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert 
 © 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
-"""
-
-from typing import Dict, List, Optional, Union, Any
+"""from typing import Dict, List, Optional, Union, Any
 from datetime import datetime, timedelta
 from enum import Enum, auto
 from decimal import Decimal
@@ -31,8 +28,7 @@ from sqlalchemy.dialects.postgresql import UUID, JSONB
 Base = declarative_base()
 
 class CommissionType(str, Enum):
-    """Commission type enumeration"""
-    PLATFORM_FEE = "platform_fee"
+    """Commission type enumeration"""    PLATFORM_FEE = "platform_fee"
     PROCESSING_FEE = "processing_fee"
     PERFORMANCE_BONUS = "performance_bonus"
     REFERRAL_COMMISSION = "referral_commission"
@@ -44,8 +40,7 @@ class CommissionType(str, Enum):
     MERCHANDISE_SALES = "merchandise_sales"
 
 class CommissionStatus(str, Enum):
-    """Commission status enumeration"""
-    PENDING = "pending"
+    """Commission status enumeration"""    PENDING = "pending"
     CALCULATING = "calculating"
     CALCULATED = "calculated"
     APPROVED = "approved"
@@ -58,8 +53,7 @@ class CommissionStatus(str, Enum):
     DISPUTED = "disputed"
 
 class CommissionTier(str, Enum):
-    """Creator tier enumeration for commission rates"""
-    STARTER = "starter"
+    """Creator tier enumeration for commission rates"""    STARTER = "starter"
     STANDARD = "standard" 
     PREMIUM = "premium"
     PROFESSIONAL = "professional"
@@ -67,8 +61,7 @@ class CommissionTier(str, Enum):
     PLATINUM = "platinum"
 
 class PaymentMethod(str, Enum):
-    """Payment method enumeration"""
-    BANK_TRANSFER = "bank_transfer"
+    """Payment method enumeration"""    BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     STRIPE = "stripe"
     WISE = "wise"
@@ -77,8 +70,7 @@ class PaymentMethod(str, Enum):
     ESCROW = "escrow"
 
 class Currency(str, Enum):
-    """Supported currency enumeration"""
-    EUR = "EUR"
+    """Supported currency enumeration"""    EUR = "EUR"
     USD = "USD"
     GBP = "GBP"
     JPY = "JPY"
@@ -89,8 +81,7 @@ class Currency(str, Enum):
     ETH = "ETH"
 
 class CommissionRate(BaseModel):
-    """Commission rate configuration model"""
-    
+    """Commission rate configuration model"""    
     rate_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     commission_type: CommissionType
     platform: str = Field(..., min_length=1, max_length=100)
@@ -137,8 +128,7 @@ class CommissionRate(BaseModel):
         }
 
 class CommissionStructure(BaseModel):
-    """Commission structure for a specific platform/tier combination"""
-    
+    """Commission structure for a specific platform/tier combination"""    
     structure_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     platform: str = Field(..., min_length=1, max_length=100)
     tier: CommissionTier
@@ -177,8 +167,7 @@ class CommissionStructure(BaseModel):
         }
 
 class CommissionCalculation(BaseModel):
-    """Commission calculation result model"""
-    
+    """Commission calculation result model"""    
     calculation_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = Field(..., min_length=1)
     platform: str = Field(..., min_length=1)
@@ -240,8 +229,7 @@ class CommissionCalculation(BaseModel):
         }
 
 class CommissionTransaction(BaseModel):
-    """Commission transaction record model"""
-    
+    """Commission transaction record model"""    
     transaction_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     commission_calculation_id: str = Field(..., min_length=1)
     creator_id: str = Field(..., min_length=1)
@@ -299,8 +287,7 @@ class CommissionTransaction(BaseModel):
         }
 
 class CommissionReport(BaseModel):
-    """Commission report model"""
-    
+    """Commission report model"""    
     report_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     report_type: str = Field(..., min_length=1)
     report_period: str = Field(..., min_length=1)
@@ -339,8 +326,7 @@ class CommissionReport(BaseModel):
         }
 
 class PlatformCommission(BaseModel):
-    """Platform-specific commission configuration"""
-    
+    """Platform-specific commission configuration"""    
     platform_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     platform_name: str = Field(..., min_length=1, max_length=100)
     platform_type: str = Field(..., min_length=1)  # "music", "video", "social", "marketplace"
@@ -377,8 +363,7 @@ class PlatformCommission(BaseModel):
         }
 
 class CreatorCommission(BaseModel):
-    """Creator-specific commission profile"""
-    
+    """Creator-specific commission profile"""    
     profile_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = Field(..., min_length=1)
     
@@ -428,8 +413,7 @@ class CreatorCommission(BaseModel):
         }
 
 class PartnerCommission(BaseModel):
-    """Partner/referral commission model"""
-    
+    """Partner/referral commission model"""    
     partner_commission_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     partner_id: str = Field(..., min_length=1)
     referred_creator_id: str = Field(..., min_length=1)
@@ -463,8 +447,7 @@ class PartnerCommission(BaseModel):
         }
 
 class BrandCommission(BaseModel):
-    """Brand partnership commission model"""
-    
+    """Brand partnership commission model"""    
     brand_commission_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     brand_id: str = Field(..., min_length=1)
     creator_id: str = Field(..., min_length=1)
@@ -513,8 +496,7 @@ class BrandCommission(BaseModel):
 
 # SQLAlchemy database models
 class CommissionCalculationDB(Base):
-    """SQLAlchemy model for commission calculations"""
-    __tablename__ = "commission_calculations"
+    """SQLAlchemy model for commission calculations"""    __tablename__ = "commission_calculations"
     
     id = Column(String, primary_key=True)
     creator_id = Column(String, nullable=False, index=True)
@@ -554,8 +536,7 @@ class CommissionCalculationDB(Base):
         return f"<CommissionCalculation(id={self.id}, creator_id={self.creator_id}, amount={self.commission_amount})>"
 
 class CommissionTransactionDB(Base):
-    """SQLAlchemy model for commission transactions"""
-    __tablename__ = "commission_transactions"
+    """SQLAlchemy model for commission transactions"""    __tablename__ = "commission_transactions"
     
     id = Column(String, primary_key=True)
     commission_calculation_id = Column(String, ForeignKey("commission_calculations.id"), nullable=False)
@@ -591,8 +572,7 @@ class CommissionTransactionDB(Base):
     def __repr__(self):
         return f"<CommissionTransaction(id={self.id}, creator_id={self.creator_id}, amount={self.amount})>"
 
-"""
-Professional Commission Data Models
+"""Professional Commission Data Models
 © 2025 Fahed Mlaiel - Enterprise-Grade Solution
 
 These models provide comprehensive data structures for commission management,

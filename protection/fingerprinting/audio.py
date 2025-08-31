@@ -1,5 +1,4 @@
-"""
-🎵 Audio Content Fingerprinting Service
+"""🎵 Audio Content Fingerprinting Service
 =======================================
 
 Enterprise-grade audio fingerprinting with multiple algorithms:
@@ -15,9 +14,7 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission from Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -47,8 +44,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioMetadata:
-    """Comprehensive audio metadata extraction."""
-    duration: float
+    """Comprehensive audio metadata extraction."""    duration: float
     sample_rate: int
     channels: int
     bitrate: Optional[int]
@@ -63,23 +59,20 @@ class AudioMetadata:
     chroma_features: Optional[np.ndarray]
 
 class ChromaprintExtractor:
-    """Advanced Chromaprint fingerprinting with extended features."""
-    
+    """Advanced Chromaprint fingerprinting with extended features."""    
     def __init__(self, algorithm: int = chromaprint.ALGORITHM_DEFAULT):
         self.algorithm = algorithm
         self.duration_threshold = 30.0  # Minimum 30 seconds for reliable fingerprint
         
     def extract_fingerprint(self, audio_path: str) -> Dict[str, Any]:
-        """
-        Extract Chromaprint fingerprint with enhanced features.
+        """        Extract Chromaprint fingerprint with enhanced features.
         
         Args:
             audio_path: Path to audio file
             
         Returns:
             Dictionary containing fingerprint data and metadata
-        """
-        try:
+        """        try:
             # Load audio with librosa
             y, sr = librosa.load(audio_path, sr=None, mono=True)
             
@@ -111,8 +104,7 @@ class ChromaprintExtractor:
             return {"error": str(e)}
     
     def _extract_segment_fingerprints(self, audio_data: np.ndarray, sr: int) -> List[str]:
-        """Extract fingerprints from multiple audio segments."""
-        segment_duration = 10  # 10 seconds per segment
+        """Extract fingerprints from multiple audio segments."""        segment_duration = 10  # 10 seconds per segment
         segment_samples = segment_duration * sr
         fingerprints = []
         
@@ -132,8 +124,7 @@ class ChromaprintExtractor:
         return fingerprints
     
     def _calculate_confidence(self, audio_data: np.ndarray, sr: int) -> float:
-        """Calculate fingerprint confidence based on audio quality."""
-        # Signal-to-noise ratio estimation
+        """Calculate fingerprint confidence based on audio quality."""        # Signal-to-noise ratio estimation
         signal_power = np.mean(audio_data.astype(float) ** 2)
         noise_floor = np.percentile(np.abs(audio_data), 10) ** 2
         
@@ -146,14 +137,12 @@ class ChromaprintExtractor:
         return confidence
 
 class EssentiaAnalyzer:
-    """Advanced Essentia-based audio analysis and fingerprinting."""
-    
+    """Advanced Essentia-based audio analysis and fingerprinting."""    
     def __init__(self):
         self.algorithms = self._initialize_algorithms()
         
     def _initialize_algorithms(self) -> Dict[str, Any]:
-        """Initialize Essentia algorithms."""
-        try:
+        """Initialize Essentia algorithms."""        try:
             return {
                 'windowing': es.Windowing(type='hann'),
                 'spectrum': es.Spectrum(),
@@ -171,16 +160,14 @@ class EssentiaAnalyzer:
             return {}
     
     def extract_features(self, audio_path: str) -> Dict[str, Any]:
-        """
-        Extract comprehensive audio features using Essentia.
+        """        Extract comprehensive audio features using Essentia.
         
         Args:
             audio_path: Path to audio file
             
         Returns:
             Dictionary containing extracted features
-        """
-        try:
+        """        try:
             # Load audio
             loader = es.MonoLoader(filename=audio_path)
             audio = loader()
@@ -201,8 +188,7 @@ class EssentiaAnalyzer:
             return {"error": str(e)}
     
     def _extract_basic_features(self, audio: np.ndarray) -> Dict[str, Any]:
-        """Extract basic audio features."""
-        try:
+        """Extract basic audio features."""        try:
             duration = len(audio) / 44100.0  # Assuming 44.1kHz
             rms_energy = es.RMS()(audio)
             zcr = es.ZeroCrossingRate()(audio)
@@ -218,8 +204,7 @@ class EssentiaAnalyzer:
             return {}
     
     def _extract_spectral_features(self, audio: np.ndarray) -> Dict[str, Any]:
-        """Extract spectral domain features."""
-        try:
+        """Extract spectral domain features."""        try:
             # Frame-based analysis
             frame_size = 2048
             hop_size = 1024
@@ -255,8 +240,7 @@ class EssentiaAnalyzer:
             return {}
     
     def _extract_rhythmic_features(self, audio: np.ndarray) -> Dict[str, Any]:
-        """Extract rhythm and tempo features."""
-        try:
+        """Extract rhythm and tempo features."""        try:
             tempo_estimator = es.PercivalBpmEstimator()
             onset_rate = es.OnsetRate()
             
@@ -272,8 +256,7 @@ class EssentiaAnalyzer:
             return {}
     
     def _extract_harmonic_features(self, audio: np.ndarray) -> Dict[str, Any]:
-        """Extract harmonic and tonal features."""
-        try:
+        """Extract harmonic and tonal features."""        try:
             key_extractor = es.KeyExtractor()
             key, scale, strength = key_extractor(audio)
             
@@ -287,8 +270,7 @@ class EssentiaAnalyzer:
             return {}
     
     def _extract_perceptual_features(self, audio: np.ndarray) -> Dict[str, Any]:
-        """Extract perceptual audio features."""
-        try:
+        """Extract perceptual audio features."""        try:
             loudness = es.LoudnessEBUR128()
             loudness_value = loudness(audio)
             
@@ -300,24 +282,21 @@ class EssentiaAnalyzer:
             return {}
 
 class SpectralHashGenerator:
-    """Generate spectral-based audio hashes for similarity detection."""
-    
+    """Generate spectral-based audio hashes for similarity detection."""    
     def __init__(self, n_fft: int = 2048, hop_length: int = 512):
         self.n_fft = n_fft
         self.hop_length = hop_length
         self.frequency_bins = 32  # Reduced dimensionality
         
     def generate_hash(self, audio_path: str) -> Dict[str, Any]:
-        """
-        Generate spectral hash from audio file.
+        """        Generate spectral hash from audio file.
         
         Args:
             audio_path: Path to audio file
             
         Returns:
             Dictionary containing hash and metadata
-        """
-        try:
+        """        try:
             # Load audio
             y, sr = librosa.load(audio_path, sr=22050, mono=True)
             
@@ -348,8 +327,7 @@ class SpectralHashGenerator:
             return {"error": str(e)}
     
     def _compute_spectral_hash(self, mel_spec: np.ndarray) -> str:
-        """Compute hash based on spectral characteristics."""
-        # Average over time axis
+        """Compute hash based on spectral characteristics."""        # Average over time axis
         spectral_profile = np.mean(mel_spec, axis=1)
         
         # Normalize and quantize
@@ -361,8 +339,7 @@ class SpectralHashGenerator:
         return hashlib.md5(hash_string.encode()).hexdigest()
     
     def _compute_temporal_hash(self, mel_spec: np.ndarray) -> str:
-        """Compute hash based on temporal evolution."""
-        # Compute differences between consecutive frames
+        """Compute hash based on temporal evolution."""        # Compute differences between consecutive frames
         temporal_diff = np.diff(mel_spec, axis=1)
         
         # Average over frequency axis
@@ -378,8 +355,7 @@ class SpectralHashGenerator:
         return ""
 
 class NeuralAudioEmbedding:
-    """Neural network-based audio embeddings using pre-trained models."""
-    
+    """Neural network-based audio embeddings using pre-trained models."""    
     def __init__(self, model_name: str = "facebook/wav2vec2-base"):
         self.model_name = model_name
         self.model = None
@@ -387,8 +363,7 @@ class NeuralAudioEmbedding:
         self._initialize_model()
         
     def _initialize_model(self):
-        """Initialize the pre-trained model."""
-        try:
+        """Initialize the pre-trained model."""        try:
             self.processor = Wav2Vec2Processor.from_pretrained(self.model_name)
             self.model = Wav2Vec2Model.from_pretrained(self.model_name)
             self.model.eval()
@@ -396,16 +371,14 @@ class NeuralAudioEmbedding:
             logger.warning(f"Neural model initialization failed: {e}")
     
     def extract_embedding(self, audio_path: str) -> Dict[str, Any]:
-        """
-        Extract neural embeddings from audio.
+        """        Extract neural embeddings from audio.
         
         Args:
             audio_path: Path to audio file
             
         Returns:
             Dictionary containing embeddings and metadata
-        """
-        if not self.model or not self.processor:
+        """        if not self.model or not self.processor:
             return {"error": "Model not initialized"}
             
         try:
@@ -438,8 +411,7 @@ class NeuralAudioEmbedding:
             return {"error": str(e)}
     
     def _compute_embedding_hash(self, embeddings: np.ndarray) -> str:
-        """Compute hash from neural embeddings."""
-        # Normalize embeddings
+        """Compute hash from neural embeddings."""        # Normalize embeddings
         normalized_embeddings = embeddings / (np.linalg.norm(embeddings) + 1e-8)
         
         # Quantize to binary
@@ -450,8 +422,7 @@ class NeuralAudioEmbedding:
         return hashlib.md5(hash_string.encode()).hexdigest()
 
 class AudioFingerprintingService:
-    """
-    Comprehensive audio fingerprinting service combining multiple algorithms.
+    """    Comprehensive audio fingerprinting service combining multiple algorithms.
     
     Features:
     - Chromaprint acoustic fingerprinting
@@ -459,8 +430,7 @@ class AudioFingerprintingService:
     - Spectral hashing
     - Neural audio embeddings
     - Multi-level similarity matching
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.chromaprint_extractor = ChromaprintExtractor()
@@ -477,8 +447,7 @@ class AudioFingerprintingService:
         }
         
     async def process_audio(self, audio_path: str, user_id: int) -> FingerprintResult:
-        """
-        Process audio file and generate comprehensive fingerprint.
+        """        Process audio file and generate comprehensive fingerprint.
         
         Args:
             audio_path: Path to audio file
@@ -486,8 +455,7 @@ class AudioFingerprintingService:
             
         Returns:
             FingerprintResult containing all fingerprint data
-        """
-        try:
+        """        try:
             logger.info(f"Processing audio fingerprint for: {audio_path}")
             
             # Extract metadata
@@ -536,8 +504,7 @@ class AudioFingerprintingService:
             raise
     
     async def _extract_metadata(self, audio_path: str) -> AudioMetadata:
-        """Extract comprehensive audio metadata."""
-        try:
+        """Extract comprehensive audio metadata."""        try:
             y, sr = librosa.load(audio_path, sr=None, mono=True)
             
             # Basic metadata
@@ -586,32 +553,27 @@ class AudioFingerprintingService:
             )
     
     async def _run_chromaprint(self, audio_path: str) -> Dict[str, Any]:
-        """Run Chromaprint fingerprinting."""
-        return await asyncio.get_event_loop().run_in_executor(
+        """Run Chromaprint fingerprinting."""        return await asyncio.get_event_loop().run_in_executor(
             None, self.chromaprint_extractor.extract_fingerprint, audio_path
         )
     
     async def _run_essentia(self, audio_path: str) -> Dict[str, Any]:
-        """Run Essentia analysis."""
-        return await asyncio.get_event_loop().run_in_executor(
+        """Run Essentia analysis."""        return await asyncio.get_event_loop().run_in_executor(
             None, self.essentia_analyzer.extract_features, audio_path
         )
     
     async def _run_spectral_hash(self, audio_path: str) -> Dict[str, Any]:
-        """Run spectral hash generation."""
-        return await asyncio.get_event_loop().run_in_executor(
+        """Run spectral hash generation."""        return await asyncio.get_event_loop().run_in_executor(
             None, self.spectral_hasher.generate_hash, audio_path
         )
     
     async def _run_neural_embedding(self, audio_path: str) -> Dict[str, Any]:
-        """Run neural embedding extraction."""
-        return await asyncio.get_event_loop().run_in_executor(
+        """Run neural embedding extraction."""        return await asyncio.get_event_loop().run_in_executor(
             None, self.neural_embedder.extract_embedding, audio_path
         )
     
     def _generate_combined_hash(self, fingerprint_data: Dict[str, Any]) -> str:
-        """Generate combined hash from all fingerprint components."""
-        hash_components = []
+        """Generate combined hash from all fingerprint components."""        hash_components = []
         
         # Extract key hash components
         if "chromaprint" in fingerprint_data and "raw_fingerprint" in fingerprint_data["chromaprint"]:
@@ -628,8 +590,7 @@ class AudioFingerprintingService:
         return hashlib.sha256(combined_string.encode()).hexdigest()
     
     async def find_similar(self, fingerprint_data: Dict[str, Any], threshold: float = 0.8) -> List[SimilarityMatch]:
-        """
-        Find similar audio content based on fingerprint data.
+        """        Find similar audio content based on fingerprint data.
         
         Args:
             fingerprint_data: Fingerprint data to match against
@@ -637,15 +598,13 @@ class AudioFingerprintingService:
             
         Returns:
             List of similarity matches
-        """
-        # This would typically interface with a vector database
+        """        # This would typically interface with a vector database
         # For now, return empty list (implementation depends on storage backend)
         logger.info(f"Searching for similar audio with threshold {threshold}")
         return []
     
     def calculate_similarity(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
-        """
-        Calculate similarity score between two audio fingerprints.
+        """        Calculate similarity score between two audio fingerprints.
         
         Args:
             fp1: First fingerprint data
@@ -653,8 +612,7 @@ class AudioFingerprintingService:
             
         Returns:
             Similarity score (0.0 to 1.0)
-        """
-        similarity_scores = []
+        """        similarity_scores = []
         
         # Chromaprint similarity
         if ("chromaprint" in fp1 and "chromaprint" in fp2 and
@@ -686,21 +644,18 @@ class AudioFingerprintingService:
         return sum(similarity_scores) if similarity_scores else 0.0
     
     def _chromaprint_similarity(self, fp1: str, fp2: str) -> float:
-        """Calculate Chromaprint similarity."""
-        # Simple hash comparison (could be enhanced with Hamming distance)
+        """Calculate Chromaprint similarity."""        # Simple hash comparison (could be enhanced with Hamming distance)
         return 1.0 if fp1 == fp2 else 0.0
     
     def _hash_similarity(self, hash1: str, hash2: str) -> float:
-        """Calculate hash similarity using Hamming distance."""
-        if len(hash1) != len(hash2):
+        """Calculate hash similarity using Hamming distance."""        if len(hash1) != len(hash2):
             return 0.0
         
         matches = sum(c1 == c2 for c1, c2 in zip(hash1, hash2))
         return matches / len(hash1)
     
     def _neural_similarity(self, emb1: List[float], emb2: List[float]) -> float:
-        """Calculate neural embedding similarity using cosine similarity."""
-        try:
+        """Calculate neural embedding similarity using cosine similarity."""        try:
             emb1_array = np.array(emb1)
             emb2_array = np.array(emb2)
             

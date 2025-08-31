@@ -24,8 +24,7 @@ Project Team Specializations:
 LEGAL NOTICE: Any attempt to steal, copy, reverse engineer, or use this intellectual 
 property without explicit written authorization from Fahed Mlaiel (mlaiel@live.de) 
 will result in immediate legal action under German and international copyright law.
-"""
-# Core Monetization Components
+"""# Core Monetization Components
 from .revenue_calculator import (
     RevenueCalculator, RevenueMetrics, RevenueProjection, RevenueReport,
     PlatformType, RevenueType, Currency

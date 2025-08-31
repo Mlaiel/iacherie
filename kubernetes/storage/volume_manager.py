@@ -1,5 +1,4 @@
-"""
-Volume Storage Manager - IA-Influencer-Agent Deployment  
+"""Volume Storage Manager - IA-Influencer-Agent Deployment  
 ================================================================================
 Module: backend/deployment/storage/volume_manager.py
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -25,9 +24,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Content upload → Volume allocation → Performance optimization → 
 Backup scheduling → Scaling management → Monitoring alerts → Recovery procedures
-"""
-
-import logging
+"""import logging
 import asyncio
 import json
 import yaml
@@ -48,8 +45,7 @@ logger = logging.getLogger(__name__)
 
 
 class VolumeType(Enum):
-    """Volume types for different use cases"""
-    LOCAL_DISK = "local-disk"
+    """Volume types for different use cases"""    LOCAL_DISK = "local-disk"
     NETWORK_STORAGE = "network-storage"
     KUBERNETES_PV = "kubernetes-pv"
     DOCKER_VOLUME = "docker-volume"
@@ -59,8 +55,7 @@ class VolumeType(Enum):
 
 
 class StorageClass(Enum):
-    """Storage classes for performance optimization"""
-    HIGH_PERFORMANCE = "high-performance"  # SSD, high IOPS
+    """Storage classes for performance optimization"""    HIGH_PERFORMANCE = "high-performance"  # SSD, high IOPS
     STANDARD = "standard"  # Balanced performance/cost
     COLD_STORAGE = "cold-storage"  # HDD, archival
     NETWORK_SHARED = "network-shared"  # NFS, shared access
@@ -68,16 +63,14 @@ class StorageClass(Enum):
 
 
 class VolumeAccessMode(Enum):
-    """Volume access modes"""
-    READ_WRITE_ONCE = "ReadWriteOnce"  # Single node
+    """Volume access modes"""    READ_WRITE_ONCE = "ReadWriteOnce"  # Single node
     READ_ONLY_MANY = "ReadOnlyMany"  # Multiple nodes read-only
     READ_WRITE_MANY = "ReadWriteMany"  # Multiple nodes read-write
     READ_WRITE_ONCE_POD = "ReadWriteOncePod"  # Single pod
 
 
 class VolumeStatus(Enum):
-    """Volume status tracking"""
-    CREATING = "creating"
+    """Volume status tracking"""    CREATING = "creating"
     AVAILABLE = "available"
     BOUND = "bound"
     RELEASED = "released"
@@ -88,8 +81,7 @@ class VolumeStatus(Enum):
 
 @dataclass
 class VolumeConfig:
-    """Volume configuration settings"""
-    name: str
+    """Volume configuration settings"""    name: str
     volume_type: VolumeType
     storage_class: StorageClass
     size_gb: int
@@ -125,8 +117,7 @@ class VolumeConfig:
 
 @dataclass
 class VolumeMetrics:
-    """Volume performance and usage metrics"""
-    volume_name: str
+    """Volume performance and usage metrics"""    volume_name: str
     total_size_gb: float = 0.0
     used_size_gb: float = 0.0
     available_size_gb: float = 0.0
@@ -147,8 +138,7 @@ class VolumeMetrics:
 
 
 class VolumeManager:
-    """
-    🎯 Industrial Volume Storage Manager - IA-Influencer-Agent
+    """    🎯 Industrial Volume Storage Manager - IA-Influencer-Agent
     
     Production-grade volume storage deployment and management with:
     - Multi-platform volume orchestration (K8s, Docker, Local)
@@ -159,8 +149,7 @@ class VolumeManager:
     - Dynamic scaling and capacity management
     - Advanced analytics and cost optimization
     - Compliance management (GDPR, SOX, PCI-DSS)
-    """
-    
+    """    
     def __init__(self, config: VolumeConfig):
         self.config = config
         self.metrics = VolumeMetrics(volume_name=config.name)
@@ -173,8 +162,7 @@ class VolumeManager:
         logger.info(f"🚀 VolumeManager initialized for volume: {config.name}")
     
     def _initialize_clients(self):
-        """Initialize appropriate clients based on volume type"""
-        try:
+        """Initialize appropriate clients based on volume type"""        try:
             if self.config.volume_type == VolumeType.KUBERNETES_PV:
                 # Initialize Kubernetes client
                 try:
@@ -197,8 +185,7 @@ class VolumeManager:
             raise
     
     async def deploy_volume(self) -> Dict[str, Any]:
-        """Deploy volume based on configuration"""
-        try:
+        """Deploy volume based on configuration"""        try:
             logger.info(f"🚀 Starting volume deployment: {self.config.name}")
             
             deployment_result = {}
@@ -238,8 +225,7 @@ class VolumeManager:
             return {"success": False, "error": str(e)}
     
     async def _deploy_kubernetes_volume(self) -> Dict[str, Any]:
-        """Deploy Kubernetes Persistent Volume and Claim"""
-        try:
+        """Deploy Kubernetes Persistent Volume and Claim"""        try:
             # Generate PV manifest
             pv_manifest = self._generate_kubernetes_pv_manifest()
             
@@ -287,8 +273,7 @@ class VolumeManager:
             raise
     
     def _generate_kubernetes_pv_manifest(self) -> Dict[str, Any]:
-        """Generate Kubernetes PV manifest"""
-        pv_manifest = {
+        """Generate Kubernetes PV manifest"""        pv_manifest = {
             "apiVersion": "v1",
             "kind": "PersistentVolume",
             "metadata": {
@@ -348,8 +333,7 @@ class VolumeManager:
         return pv_manifest
     
     def _generate_kubernetes_pvc_manifest(self) -> Dict[str, Any]:
-        """Generate Kubernetes PVC manifest"""
-        return {
+        """Generate Kubernetes PVC manifest"""        return {
             "apiVersion": "v1",
             "kind": "PersistentVolumeClaim",
             "metadata": {
@@ -378,8 +362,7 @@ class VolumeManager:
         }
     
     async def _wait_for_pvc_bound(self, timeout_seconds: int = 300):
-        """Wait for PVC to be bound"""
-        start_time = datetime.now()
+        """Wait for PVC to be bound"""        start_time = datetime.now()
         
         while (datetime.now() - start_time).seconds < timeout_seconds:
             try:
@@ -402,8 +385,7 @@ class VolumeManager:
         raise TimeoutError(f"PVC {self.config.name}-pvc did not bind within {timeout_seconds} seconds")
     
     async def _deploy_docker_volume(self) -> Dict[str, Any]:
-        """Deploy Docker volume"""
-        try:
+        """Deploy Docker volume"""        try:
             volume_config = {
                 "Name": self.config.name,
                 "Driver": "local",
@@ -448,8 +430,7 @@ class VolumeManager:
             raise
     
     async def _deploy_local_volume(self) -> Dict[str, Any]:
-        """Deploy local disk volume"""
-        try:
+        """Deploy local disk volume"""        try:
             volume_path = Path(f"/mnt/volumes/{self.config.name}")
             
             # Create directory if it doesn't exist
@@ -491,8 +472,7 @@ class VolumeManager:
             raise
     
     async def _deploy_nfs_volume(self) -> Dict[str, Any]:
-        """Deploy NFS volume mount"""
-        try:
+        """Deploy NFS volume mount"""        try:
             nfs_server = os.getenv("NFS_SERVER", "nfs-server.local")
             nfs_path = f"/exports/{self.config.name}"
             mount_point = Path(f"/mnt/nfs/{self.config.name}")
@@ -531,8 +511,7 @@ class VolumeManager:
             raise
     
     async def _format_filesystem(self, volume_path: Path):
-        """Format filesystem for local volume"""
-        try:
+        """Format filesystem for local volume"""        try:
             if self.config.filesystem == "xfs":
                 format_command = ["mkfs.xfs", "-f", str(volume_path)]
             elif self.config.filesystem == "btrfs":
@@ -552,8 +531,7 @@ class VolumeManager:
             logger.warning(f"⚠️ Filesystem formatting error: {e}")
     
     async def _setup_volume_monitoring(self) -> Dict[str, Any]:
-        """Setup volume monitoring and alerting"""
-        try:
+        """Setup volume monitoring and alerting"""        try:
             if not self.config.monitoring_enabled:
                 return {"monitoring": "disabled"}
             
@@ -586,8 +564,7 @@ class VolumeManager:
             return {"error": str(e)}
     
     async def _setup_backup_schedule(self) -> Dict[str, Any]:
-        """Setup automated backup schedule"""
-        try:
+        """Setup automated backup schedule"""        try:
             if not self.config.backup_enabled:
                 return {"backup": "disabled"}
             
@@ -623,8 +600,7 @@ tar -czf "$BACKUP_FILE" "/mnt/volumes/$VOLUME_NAME"
 find "$BACKUP_DIR" -name "$VOLUME_NAME_*.tar.gz" -mtime +{self.config.retention_days} -delete
 
 echo "Backup completed: $BACKUP_FILE"
-"""
-            
+"""            
             with open(backup_script_path, 'w') as f:
                 f.write(backup_script)
             
@@ -642,8 +618,7 @@ echo "Backup completed: $BACKUP_FILE"
             return {"error": str(e)}
     
     async def get_volume_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive volume metrics"""
-        try:
+        """Get comprehensive volume metrics"""        try:
             volume_path = await self._get_volume_path()
             
             if not volume_path or not Path(volume_path).exists():
@@ -693,8 +668,7 @@ echo "Backup completed: $BACKUP_FILE"
             return {"error": str(e)}
     
     async def _get_volume_path(self) -> Optional[str]:
-        """Get the actual volume path based on volume type"""
-        try:
+        """Get the actual volume path based on volume type"""        try:
             if self.config.volume_type == VolumeType.LOCAL_DISK:
                 return f"/mnt/volumes/{self.config.name}"
             elif self.config.volume_type == VolumeType.NFS_MOUNT:
@@ -713,8 +687,7 @@ echo "Backup completed: $BACKUP_FILE"
             return None
     
     async def _get_performance_metrics(self, volume_path: str) -> Dict[str, Any]:
-        """Get volume performance metrics"""
-        try:
+        """Get volume performance metrics"""        try:
             # Use psutil to get disk IO statistics
             disk_io = psutil.disk_io_counters(perdisk=True)
             
@@ -751,8 +724,7 @@ echo "Backup completed: $BACKUP_FILE"
             return {}
     
     async def resize_volume(self, new_size_gb: int) -> Dict[str, Any]:
-        """Resize volume to new size"""
-        try:
+        """Resize volume to new size"""        try:
             logger.info(f"🔄 Resizing volume {self.config.name} to {new_size_gb}GB")
             
             if new_size_gb <= self.config.size_gb:
@@ -772,8 +744,7 @@ echo "Backup completed: $BACKUP_FILE"
             return {"success": False, "error": str(e)}
     
     async def _resize_kubernetes_volume(self, new_size_gb: int) -> Dict[str, Any]:
-        """Resize Kubernetes PVC"""
-        try:
+        """Resize Kubernetes PVC"""        try:
             # Update PVC size
             pvc_name = f"{self.config.name}-pvc"
             
@@ -807,8 +778,7 @@ echo "Backup completed: $BACKUP_FILE"
             raise
     
     async def _resize_docker_volume(self, new_size_gb: int) -> Dict[str, Any]:
-        """Resize Docker volume (limited support)"""
-        # Docker volumes don't have built-in resize capability
+        """Resize Docker volume (limited support)"""        # Docker volumes don't have built-in resize capability
         # This would require creating a new volume and migrating data
         logger.warning("⚠️ Docker volume resize requires manual migration")
         return {
@@ -818,8 +788,7 @@ echo "Backup completed: $BACKUP_FILE"
         }
     
     async def _resize_local_volume(self, new_size_gb: int) -> Dict[str, Any]:
-        """Resize local volume filesystem"""
-        try:
+        """Resize local volume filesystem"""        try:
             volume_path = f"/mnt/volumes/{self.config.name}"
             
             # For local volumes, we can only expand if using LVM or similar
@@ -838,8 +807,7 @@ echo "Backup completed: $BACKUP_FILE"
             raise
     
     async def cleanup_volume(self) -> Dict[str, Any]:
-        """Cleanup and delete volume resources"""
-        try:
+        """Cleanup and delete volume resources"""        try:
             logger.info(f"🗑️ Starting cleanup of volume: {self.config.name}")
             
             cleanup_results = []
@@ -919,12 +887,10 @@ echo "Backup completed: $BACKUP_FILE"
 
 # Industrial Configuration Manager
 class VolumeConfigurationManager:
-    """Advanced volume configuration management"""
-    
+    """Advanced volume configuration management"""    
     @staticmethod
     def load_config_from_file(config_path: Path) -> VolumeConfig:
-        """Load volume configuration from YAML file"""
-        try:
+        """Load volume configuration from YAML file"""        try:
             with open(config_path, 'r') as file:
                 config_data = yaml.safe_load(file)
             
@@ -947,8 +913,7 @@ class VolumeConfigurationManager:
     
     @staticmethod
     def save_config_to_file(config: VolumeConfig, config_path: Path):
-        """Save volume configuration to YAML file"""
-        try:
+        """Save volume configuration to YAML file"""        try:
             config_data = {
                 'name': config.name,
                 'volume_type': config.volume_type.value,
@@ -984,8 +949,7 @@ def create_volume_manager(
     size_gb: int,
     namespace: str = "default"
 ) -> VolumeManager:
-    """Factory function to create VolumeManager instance"""
-    
+    """Factory function to create VolumeManager instance"""    
     config = VolumeConfig(
         name=name,
         volume_type=volume_type,
@@ -999,8 +963,7 @@ def create_volume_manager(
 
 # Usage Example
 async def main():
-    """Example usage of VolumeManager"""
-    try:
+    """Example usage of VolumeManager"""    try:
         # Create volume manager for content storage
         volume_manager = create_volume_manager(
             name="ia-influencer-content-volume",

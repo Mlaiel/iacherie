@@ -1,5 +1,4 @@
-"""
-Quality Monitoring Service - Real-time Quality Monitoring System
+"""Quality Monitoring Service - Real-time Quality Monitoring System
 ================================================================
 
 Enterprise-grade real-time quality monitoring service for continuous quality oversight.
@@ -7,9 +6,7 @@ Provides real-time alerts, trend analysis, and automated quality monitoring.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-"""
-
-from typing import Dict, Any, List, Optional, Callable, Set
+"""from typing import Dict, Any, List, Optional, Callable, Set
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -21,16 +18,14 @@ from collections import deque
 logger = logging.getLogger(__name__)
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
-    CRITICAL = "critical"
+    """Alert severity levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
     INFO = "info"
 
 class MonitoringMetric(Enum):
-    """Monitoring metrics"""
-    QUALITY_SCORE = "quality_score"
+    """Monitoring metrics"""    QUALITY_SCORE = "quality_score"
     ERROR_RATE = "error_rate"
     PROCESSING_TIME = "processing_time"
     THROUGHPUT = "throughput"
@@ -39,8 +34,7 @@ class MonitoringMetric(Enum):
 
 @dataclass
 class QualityAlert:
-    """Quality alert container"""
-    id: str
+    """Quality alert container"""    id: str
     timestamp: datetime
     severity: AlertSeverity
     metric: MonitoringMetric
@@ -55,8 +49,7 @@ class QualityAlert:
 
 @dataclass
 class MonitoringRule:
-    """Monitoring rule configuration"""
-    name: str
+    """Monitoring rule configuration"""    name: str
     metric: MonitoringMetric
     threshold: float
     comparison: str  # 'lt', 'gt', 'eq'
@@ -66,21 +59,17 @@ class MonitoringRule:
     cooldown_minutes: int = 5
 
 class QualityMonitoringService:
-    """
-    Real-time quality monitoring service.
+    """    Real-time quality monitoring service.
     
     Provides continuous monitoring of quality metrics, automated alerting,
     trend analysis, and quality dashboard support.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize the quality monitoring service.
+        """        Initialize the quality monitoring service.
         
         Args:
             config: Monitoring service configuration
-        """
-        self.config = config
+        """        self.config = config
         self.logger = logger
         
         # Monitoring state
@@ -115,8 +104,7 @@ class QualityMonitoringService:
         self.logger.info("QualityMonitoringService initialized")
     
     def _initialize_default_rules(self):
-        """Initialize default monitoring rules"""
-        
+        """Initialize default monitoring rules"""        
         default_rules = [
             MonitoringRule(
                 name="critical_quality_drop",
@@ -172,8 +160,7 @@ class QualityMonitoringService:
         self.logger.info(f"Initialized {len(default_rules)} default monitoring rules")
     
     async def start_monitoring(self):
-        """Start the monitoring service"""
-        
+        """Start the monitoring service"""        
         if self.is_monitoring:
             self.logger.warning("Monitoring service is already running")
             return
@@ -184,8 +171,7 @@ class QualityMonitoringService:
         self.logger.info("Quality monitoring service started")
     
     async def stop_monitoring(self):
-        """Stop the monitoring service"""
-        
+        """Stop the monitoring service"""        
         self.is_monitoring = False
         
         if self.monitoring_task:
@@ -198,8 +184,7 @@ class QualityMonitoringService:
         self.logger.info("Quality monitoring service stopped")
     
     async def _monitoring_loop(self):
-        """Main monitoring loop"""
-        
+        """Main monitoring loop"""        
         check_interval = self.config.get('check_interval', 60)  # seconds
         
         while self.is_monitoring:
@@ -217,8 +202,7 @@ class QualityMonitoringService:
                 await asyncio.sleep(check_interval)
     
     async def record_assessment(self, assessment: Dict[str, Any]):
-        """Record a quality assessment for monitoring"""
-        
+        """Record a quality assessment for monitoring"""        
         try:
             # Store the assessment
             assessment_record = {
@@ -242,8 +226,7 @@ class QualityMonitoringService:
             self.logger.error(f"Error recording assessment: {str(e)}")
     
     def _update_metrics_from_assessment(self, assessment: Dict[str, Any]):
-        """Update metrics from a quality assessment"""
-        
+        """Update metrics from a quality assessment"""        
         timestamp = datetime.utcnow()
         
         # Quality score
@@ -287,8 +270,7 @@ class QualityMonitoringService:
         })
     
     async def _check_monitoring_rules(self):
-        """Check all monitoring rules against current metrics"""
-        
+        """Check all monitoring rules against current metrics"""        
         for rule in self.monitoring_rules:
             if not rule.enabled:
                 continue
@@ -299,8 +281,7 @@ class QualityMonitoringService:
                 self.logger.error(f"Error evaluating rule {rule.name}: {str(e)}")
     
     async def _evaluate_rule(self, rule: MonitoringRule):
-        """Evaluate a single monitoring rule"""
-        
+        """Evaluate a single monitoring rule"""        
         # Get recent metric values
         metric_data = self.metrics_buffer.get(rule.metric, deque())
         
@@ -324,8 +305,7 @@ class QualityMonitoringService:
         data: deque,
         content_types: Optional[List[str]] = None
     ) -> float:
-        """Calculate current value for a metric"""
-        
+        """Calculate current value for a metric"""        
         # Filter by content types if specified
         filtered_data = []
         cutoff_time = datetime.utcnow() - timedelta(minutes=5)  # Last 5 minutes
@@ -353,8 +333,7 @@ class QualityMonitoringService:
             return 0.0
     
     def _check_rule_condition(self, rule: MonitoringRule, current_value: float) -> bool:
-        """Check if rule condition is met"""
-        
+        """Check if rule condition is met"""        
         if rule.comparison == 'lt':
             return current_value < rule.threshold
         elif rule.comparison == 'gt':
@@ -365,8 +344,7 @@ class QualityMonitoringService:
             return False
     
     def _is_in_cooldown(self, rule: MonitoringRule) -> bool:
-        """Check if rule is in cooldown period"""
-        
+        """Check if rule is in cooldown period"""        
         cooldown_key = f"rule_{rule.name}"
         
         # Check for recent alerts from this rule
@@ -380,8 +358,7 @@ class QualityMonitoringService:
         return False
     
     async def _trigger_alert(self, rule: MonitoringRule, current_value: float):
-        """Trigger an alert for a rule violation"""
-        
+        """Trigger an alert for a rule violation"""        
         alert_id = f"alert_{rule.name}_{int(datetime.utcnow().timestamp())}"
         
         alert = QualityAlert(
@@ -412,8 +389,7 @@ class QualityMonitoringService:
         self.logger.warning(f"Quality alert triggered: {alert.message}")
     
     async def _notify_alert_callbacks(self, alert: QualityAlert):
-        """Notify all registered alert callbacks"""
-        
+        """Notify all registered alert callbacks"""        
         for callback in self.alert_callbacks:
             try:
                 if asyncio.iscoroutinefunction(callback):
@@ -424,8 +400,7 @@ class QualityMonitoringService:
                 self.logger.error(f"Error in alert callback: {str(e)}")
     
     async def _update_performance_metrics(self):
-        """Update performance metrics"""
-        
+        """Update performance metrics"""        
         # Calculate average quality score
         quality_scores = [
             record['value'] for record in self.metrics_buffer[MonitoringMetric.QUALITY_SCORE]
@@ -444,8 +419,7 @@ class QualityMonitoringService:
         self.performance_metrics['current_throughput'] = len(recent_assessments) / 5.0  # per minute
     
     async def _cleanup_old_data(self):
-        """Clean up old monitoring data"""
-        
+        """Clean up old monitoring data"""        
         retention_hours = self.config.get('retention_hours', 24)
         cutoff_time = datetime.utcnow() - timedelta(hours=retention_hours)
         
@@ -465,17 +439,14 @@ class QualityMonitoringService:
             del self.active_alerts[alert_id]
     
     def add_alert_callback(self, callback: Callable):
-        """Add a callback for alert notifications"""
-        self.alert_callbacks.append(callback)
+        """Add a callback for alert notifications"""        self.alert_callbacks.append(callback)
     
     def remove_alert_callback(self, callback: Callable):
-        """Remove an alert callback"""
-        if callback in self.alert_callbacks:
+        """Remove an alert callback"""        if callback in self.alert_callbacks:
             self.alert_callbacks.remove(callback)
     
     def acknowledge_alert(self, alert_id: str, user: str = "system") -> bool:
-        """Acknowledge an alert"""
-        
+        """Acknowledge an alert"""        
         if alert_id in self.active_alerts:
             self.active_alerts[alert_id].acknowledged = True
             self.active_alerts[alert_id].details['acknowledged_by'] = user
@@ -487,8 +458,7 @@ class QualityMonitoringService:
         return False
     
     def resolve_alert(self, alert_id: str, user: str = "system", resolution: str = "") -> bool:
-        """Resolve an alert"""
-        
+        """Resolve an alert"""        
         if alert_id in self.active_alerts:
             self.active_alerts[alert_id].resolved = True
             self.active_alerts[alert_id].resolution_time = datetime.utcnow()
@@ -501,8 +471,7 @@ class QualityMonitoringService:
         return False
     
     def get_monitoring_status(self) -> Dict[str, Any]:
-        """Get current monitoring status"""
-        
+        """Get current monitoring status"""        
         active_alert_count = len([a for a in self.active_alerts.values() if not a.resolved])
         
         return {
@@ -522,8 +491,7 @@ class QualityMonitoringService:
         severity: Optional[AlertSeverity] = None,
         limit: Optional[int] = None
     ) -> List[Dict[str, Any]]:
-        """Get alerts with optional filtering"""
-        
+        """Get alerts with optional filtering"""        
         alerts = list(self.active_alerts.values()) if active_only else self.alert_history
         
         # Filter by severity
@@ -561,13 +529,11 @@ class QualityMonitoringService:
         ]
     
     def add_monitoring_rule(self, rule: MonitoringRule):
-        """Add a custom monitoring rule"""
-        self.monitoring_rules.append(rule)
+        """Add a custom monitoring rule"""        self.monitoring_rules.append(rule)
         self.logger.info(f"Added monitoring rule: {rule.name}")
     
     def remove_monitoring_rule(self, rule_name: str) -> bool:
-        """Remove a monitoring rule"""
-        
+        """Remove a monitoring rule"""        
         for i, rule in enumerate(self.monitoring_rules):
             if rule.name == rule_name:
                 del self.monitoring_rules[i]
@@ -577,8 +543,7 @@ class QualityMonitoringService:
         return False
     
     def enable_rule(self, rule_name: str) -> bool:
-        """Enable a monitoring rule"""
-        
+        """Enable a monitoring rule"""        
         for rule in self.monitoring_rules:
             if rule.name == rule_name:
                 rule.enabled = True
@@ -588,8 +553,7 @@ class QualityMonitoringService:
         return False
     
     def disable_rule(self, rule_name: str) -> bool:
-        """Disable a monitoring rule"""
-        
+        """Disable a monitoring rule"""        
         for rule in self.monitoring_rules:
             if rule.name == rule_name:
                 rule.enabled = False

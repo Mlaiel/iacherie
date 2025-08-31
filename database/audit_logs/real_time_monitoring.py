@@ -1,5 +1,4 @@
-"""
-Ultra-Advanced Real-Time Monitoring and Observability System
+"""Ultra-Advanced Real-Time Monitoring and Observability System
 
 Revolutionary real-time monitoring, observability, and alerting system specifically
 designed for the IA Influencer Agent platform. Provides comprehensive system health
@@ -19,9 +18,7 @@ This revolutionary monitoring and observability system is the EXCLUSIVE property
 Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
-"""
-
-from typing import List, Dict, Any, Optional, Union, Tuple, Set, Callable
+"""from typing import List, Dict, Any, Optional, Union, Tuple, Set, Callable
 import logging
 from datetime import datetime, timezone, timedelta
 from enum import Enum
@@ -65,8 +62,7 @@ Base = declarative_base()
 
 
 class MonitoringMetricType(Enum):
-    """Comprehensive monitoring metric types for platform observability."""
-    
+    """Comprehensive monitoring metric types for platform observability."""    
     # System Performance Metrics
     CPU_UTILIZATION = "cpu_utilization"
     MEMORY_USAGE = "memory_usage"
@@ -115,8 +111,7 @@ class MonitoringMetricType(Enum):
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels for intelligent alerting."""
-    
+    """Alert severity levels for intelligent alerting."""    
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -125,8 +120,7 @@ class AlertSeverity(Enum):
 
 
 class AlertStatus(Enum):
-    """Alert status for tracking and resolution."""
-    
+    """Alert status for tracking and resolution."""    
     TRIGGERED = "triggered"
     ACKNOWLEDGED = "acknowledged"
     INVESTIGATING = "investigating"
@@ -138,8 +132,7 @@ class AlertStatus(Enum):
 
 @dataclass
 class MetricDataPoint:
-    """Individual metric data point for time series data."""
-    
+    """Individual metric data point for time series data."""    
     timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     value: float = 0.0
     labels: Dict[str, str] = field(default_factory=dict)
@@ -148,8 +141,7 @@ class MetricDataPoint:
 
 @dataclass
 class AlertRule:
-    """Comprehensive alert rule definition."""
-    
+    """Comprehensive alert rule definition."""    
     rule_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     rule_name: str = ""
     metric_type: MonitoringMetricType = MonitoringMetricType.CPU_UTILIZATION
@@ -171,8 +163,7 @@ class AlertRule:
 
 @dataclass
 class Alert:
-    """Alert instance with full context and lifecycle tracking."""
-    
+    """Alert instance with full context and lifecycle tracking."""    
     alert_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     rule_id: str = ""
     fingerprint: str = ""  # Unique identifier for deduplication
@@ -212,8 +203,7 @@ class Alert:
 
 
 class RealTimeMonitoringLog(Base):
-    """Ultra-comprehensive real-time monitoring and observability log."""
-    
+    """Ultra-comprehensive real-time monitoring and observability log."""    
     __tablename__ = "realtime_monitoring_logs"
     
     # Primary identifiers
@@ -310,11 +300,9 @@ class RealTimeMonitoringLog(Base):
 
 
 class RealTimeMonitoringEngine:
-    """Ultra-advanced real-time monitoring and observability engine."""
-    
+    """Ultra-advanced real-time monitoring and observability engine."""    
     def __init__(self, db_session: Session, redis_client=None):
-        """Initialize the real-time monitoring engine."""
-        self.db_session = db_session
+        """Initialize the real-time monitoring engine."""        self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
         
@@ -345,8 +333,7 @@ class RealTimeMonitoringEngine:
         self.monitoring_thread = None
         
     def start_monitoring(self):
-        """Start real-time monitoring collection."""
-        if self.monitoring_active:
+        """Start real-time monitoring collection."""        if self.monitoring_active:
             self.logger.warning("Monitoring already active")
             return
         
@@ -357,16 +344,14 @@ class RealTimeMonitoringEngine:
         self.logger.info("Real-time monitoring started")
     
     def stop_monitoring(self):
-        """Stop real-time monitoring collection."""
-        self.monitoring_active = False
+        """Stop real-time monitoring collection."""        self.monitoring_active = False
         if self.monitoring_thread:
             self.monitoring_thread.join(timeout=10)
         
         self.logger.info("Real-time monitoring stopped")
     
     def _monitoring_loop(self):
-        """Main monitoring collection loop."""
-        while self.monitoring_active:
+        """Main monitoring collection loop."""        while self.monitoring_active:
             try:
                 # Collect all configured metrics
                 monitoring_session_id = str(uuid.uuid4())
@@ -393,8 +378,7 @@ class RealTimeMonitoringEngine:
     
     def _store_metric_data(self, session_id: str, metric_type: MonitoringMetricType, 
                           metric_data: Dict[str, Any]):
-        """Store collected metric data in the database."""
-        try:
+        """Store collected metric data in the database."""        try:
             monitoring_log = RealTimeMonitoringLog(
                 monitoring_session_id=session_id,
                 metric_type=metric_type.value,
@@ -434,8 +418,7 @@ class RealTimeMonitoringEngine:
             self.logger.error(f"Failed to store metric data: {str(e)}")
     
     def _collect_cpu_metrics(self) -> Dict[str, Any]:
-        """Collect CPU utilization metrics."""
-        try:
+        """Collect CPU utilization metrics."""        try:
             cpu_percent = psutil.cpu_percent(interval=1)
             cpu_count = psutil.cpu_count()
             load_avg = psutil.getloadavg() if hasattr(psutil, 'getloadavg') else (0, 0, 0)
@@ -461,8 +444,7 @@ class RealTimeMonitoringEngine:
             return {"name": "cpu_utilization", "value": 0.0}
     
     def _collect_memory_metrics(self) -> Dict[str, Any]:
-        """Collect memory usage metrics."""
-        try:
+        """Collect memory usage metrics."""        try:
             memory = psutil.virtual_memory()
             swap = psutil.swap_memory()
             
@@ -489,8 +471,7 @@ class RealTimeMonitoringEngine:
             return {"name": "memory_usage", "value": 0.0}
     
     def _collect_disk_metrics(self) -> Dict[str, Any]:
-        """Collect disk I/O metrics."""
-        try:
+        """Collect disk I/O metrics."""        try:
             disk_usage = psutil.disk_usage('/')
             disk_io = psutil.disk_io_counters()
             
@@ -518,8 +499,7 @@ class RealTimeMonitoringEngine:
             return {"name": "disk_usage", "value": 0.0}
     
     def _collect_network_metrics(self) -> Dict[str, Any]:
-        """Collect network throughput metrics."""
-        try:
+        """Collect network throughput metrics."""        try:
             net_io = psutil.net_io_counters()
             net_connections = len(psutil.net_connections())
             
@@ -544,8 +524,7 @@ class RealTimeMonitoringEngine:
             return {"name": "network_throughput", "value": 0.0}
     
     def _collect_content_metrics(self) -> Dict[str, Any]:
-        """Collect content upload rate metrics."""
-        try:
+        """Collect content upload rate metrics."""        try:
             # This would query the database for recent content uploads
             # For now, return mock data
             return {
@@ -570,8 +549,7 @@ class RealTimeMonitoringEngine:
             return {"name": "content_upload_rate", "value": 0.0}
     
     def _collect_ai_metrics(self) -> Dict[str, Any]:
-        """Collect AI protection efficiency metrics."""
-        try:
+        """Collect AI protection efficiency metrics."""        try:
             # This would query AI processing systems
             return {
                 "name": "ai_protection_efficiency",
@@ -595,8 +573,7 @@ class RealTimeMonitoringEngine:
             return {"name": "ai_protection_efficiency", "value": 0.0}
     
     def _collect_collaboration_metrics(self) -> Dict[str, Any]:
-        """Collect collaboration success rate metrics."""
-        try:
+        """Collect collaboration success rate metrics."""        try:
             # This would query collaboration systems
             return {
                 "name": "collaboration_success_rate",
@@ -619,8 +596,7 @@ class RealTimeMonitoringEngine:
             return {"name": "collaboration_success_rate", "value": 0.0}
     
     def _initialize_prometheus_metrics(self):
-        """Initialize Prometheus metrics for export."""
-        self.prometheus_metrics = {
+        """Initialize Prometheus metrics for export."""        self.prometheus_metrics = {
             "cpu_usage": Gauge('cpu_usage_percent', 'CPU usage percentage'),
             "memory_usage": Gauge('memory_usage_percent', 'Memory usage percentage'),
             "disk_usage": Gauge('disk_usage_percent', 'Disk usage percentage'),
@@ -630,8 +606,7 @@ class RealTimeMonitoringEngine:
         }
     
     async def get_real_time_dashboard_data(self) -> Dict[str, Any]:
-        """Get real-time dashboard data for monitoring interface."""
-        try:
+        """Get real-time dashboard data for monitoring interface."""        try:
             # Get latest metrics from Redis or database
             dashboard_data = {
                 "system_health": await self._get_system_health(),
@@ -650,8 +625,7 @@ class RealTimeMonitoringEngine:
             return {"error": str(e)}
     
     async def _get_system_health(self) -> Dict[str, Any]:
-        """Get overall system health indicators."""
-        return {
+        """Get overall system health indicators."""        return {
             "overall_score": 95.2,
             "cpu_health": 92.1,
             "memory_health": 96.8,
@@ -662,8 +636,7 @@ class RealTimeMonitoringEngine:
         }
     
     async def _get_performance_metrics(self) -> Dict[str, Any]:
-        """Get current performance metrics."""
-        return {
+        """Get current performance metrics."""        return {
             "response_time_p50": 45.2,
             "response_time_p95": 156.8,
             "response_time_p99": 287.3,
@@ -673,8 +646,7 @@ class RealTimeMonitoringEngine:
         }
     
     async def _get_business_metrics(self) -> Dict[str, Any]:
-        """Get business-specific metrics."""
-        return {
+        """Get business-specific metrics."""        return {
             "active_creators": 456,
             "content_uploads_today": 2340,
             "ai_protections_applied": 1890,

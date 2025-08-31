@@ -1,5 +1,4 @@
-"""
-Collaboration - Advanced Artist Collaboration and Matching Engine
+"""Collaboration - Advanced Artist Collaboration and Matching Engine
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -12,9 +11,7 @@ Email: mlaiel@live.de
 
 This module provides intelligent artist collaboration matching, project management,
 and collaborative content creation capabilities for the IA Influencer Agent platform.
-"""
-
-import logging
+"""import logging
 import uuid
 from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
@@ -28,8 +25,7 @@ from .music_analysis import MusicAnalysisResult, MusicGenre, MusicKey
 logger = logging.getLogger(__name__)
 
 class CollaborationType(Enum):
-    """Types of collaboration"""
-    REMIX = "remix"
+    """Types of collaboration"""    REMIX = "remix"
     FEATURE = "feature"
     CO_WRITE = "co_write"
     PRODUCER = "producer"
@@ -43,16 +39,14 @@ class CollaborationType(Enum):
     LABEL_SIGNING = "label_signing"
 
 class SkillLevel(Enum):
-    """Skill level categories"""
-    BEGINNER = "beginner"
+    """Skill level categories"""    BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
     PROFESSIONAL = "professional"
     EXPERT = "expert"
 
 class CollaborationStatus(Enum):
-    """Collaboration status"""
-    PROPOSED = "proposed"
+    """Collaboration status"""    PROPOSED = "proposed"
     PENDING = "pending"
     ACCEPTED = "accepted"
     IN_PROGRESS = "in_progress"
@@ -61,8 +55,7 @@ class CollaborationStatus(Enum):
     REJECTED = "rejected"
 
 class MatchQuality(Enum):
-    """Quality of collaboration match"""
-    PERFECT = "perfect"
+    """Quality of collaboration match"""    PERFECT = "perfect"
     EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair"
@@ -70,8 +63,7 @@ class MatchQuality(Enum):
 
 @dataclass
 class ArtistProfile:
-    """Artist profile for collaboration matching"""
-    artist_id: str
+    """Artist profile for collaboration matching"""    artist_id: str
     name: str
     email: str
     genres: List[MusicGenre]
@@ -96,8 +88,7 @@ class ArtistProfile:
 
 @dataclass
 class MatchingCriteria:
-    """Criteria for collaboration matching"""
-    collaboration_type: Optional[CollaborationType] = None
+    """Criteria for collaboration matching"""    collaboration_type: Optional[CollaborationType] = None
     genre: Optional[MusicGenre] = None
     key: Optional[MusicKey] = None
     tempo_range: Optional[Tuple[int, int]] = None
@@ -116,8 +107,7 @@ class MatchingCriteria:
 
 @dataclass
 class CollaborationMatch:
-    """Potential collaboration match"""
-    match_id: str
+    """Potential collaboration match"""    match_id: str
     requester_id: str
     matched_artist: ArtistProfile
     collaboration_type: CollaborationType
@@ -135,8 +125,7 @@ class CollaborationMatch:
 
 @dataclass
 class CollaborationProject:
-    """Active collaboration project"""
-    project_id: str
+    """Active collaboration project"""    project_id: str
     title: str
     description: str
     initiator_id: str
@@ -162,8 +151,7 @@ class CollaborationProject:
 
 @dataclass
 class CollaborationInvite:
-    """Collaboration invitation"""
-    invite_id: str
+    """Collaboration invitation"""    invite_id: str
     project_id: str
     sender_id: str
     recipient_id: str
@@ -180,8 +168,7 @@ class CollaborationInvite:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class CollaborationMatcher:
-    """
-    Advanced Artist Collaboration and Matching Engine
+    """    Advanced Artist Collaboration and Matching Engine
     
     Provides intelligent collaboration matching including:
     - AI-powered artist compatibility analysis
@@ -189,8 +176,7 @@ class CollaborationMatcher:
     - Project management and workflow
     - Rights and revenue splitting
     - Communication and file sharing
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.config = config or {}
@@ -229,8 +215,7 @@ class CollaborationMatcher:
         artist_id: str,
         profile_data: Dict[str, Any]
     ) -> ArtistProfile:
-        """Register artist profile for collaboration matching"""
-        try:
+        """Register artist profile for collaboration matching"""        try:
             # Parse genres from strings to enums
             genres = []
             for genre_str in profile_data.get('genres', []):
@@ -295,8 +280,7 @@ class CollaborationMatcher:
         criteria: MatchingCriteria,
         limit: int = 10
     ) -> List[CollaborationMatch]:
-        """
-        Find collaboration matches based on criteria
+        """        Find collaboration matches based on criteria
         
         Args:
             user_id: Requesting user ID
@@ -305,8 +289,7 @@ class CollaborationMatcher:
             
         Returns:
             List of potential collaboration matches
-        """
-        try:
+        """        try:
             requester_profile = self.artist_profiles.get(user_id)
             if not requester_profile:
                 raise ValueError("User profile not found")
@@ -387,8 +370,7 @@ class CollaborationMatcher:
         candidate: ArtistProfile,
         criteria: MatchingCriteria
     ) -> bool:
-        """Check if candidate meets basic matching criteria"""
-        # Verification requirements
+        """Check if candidate meets basic matching criteria"""        # Verification requirements
         if criteria.verified_only and not candidate.verified:
             return False
         
@@ -425,8 +407,7 @@ class CollaborationMatcher:
         candidate: ArtistProfile,
         criteria: MatchingCriteria
     ) -> float:
-        """Calculate overall compatibility score"""
-        total_score = 0.0
+        """Calculate overall compatibility score"""        total_score = 0.0
         
         # Genre compatibility
         genre_score = self._calculate_genre_compatibility(requester, candidate)
@@ -459,8 +440,7 @@ class CollaborationMatcher:
         requester: ArtistProfile,
         candidate: ArtistProfile
     ) -> float:
-        """Calculate genre compatibility score"""
-        if not requester.genres or not candidate.genres:
+        """Calculate genre compatibility score"""        if not requester.genres or not candidate.genres:
             return 0.0
         
         # Count overlapping genres
@@ -494,8 +474,7 @@ class CollaborationMatcher:
         requester: ArtistProfile,
         candidate: ArtistProfile
     ) -> float:
-        """Calculate skill complementarity score"""
-        # Perfect complementarity is when skills don't overlap but complement
+        """Calculate skill complementarity score"""        # Perfect complementarity is when skills don't overlap but complement
         requester_skills = set(requester.skills.keys())
         candidate_skills = set(candidate.skills.keys())
         
@@ -536,8 +515,7 @@ class CollaborationMatcher:
         requester: ArtistProfile,
         candidate: ArtistProfile
     ) -> float:
-        """Calculate musical harmony compatibility"""
-        harmony_score = 0.0
+        """Calculate musical harmony compatibility"""        harmony_score = 0.0
         
         # Key compatibility
         if requester.preferred_keys and candidate.preferred_keys:
@@ -571,8 +549,7 @@ class CollaborationMatcher:
         requester: ArtistProfile,
         candidate: ArtistProfile
     ) -> float:
-        """Calculate location proximity score"""
-        if not requester.location or not candidate.location:
+        """Calculate location proximity score"""        if not requester.location or not candidate.location:
             return 0.5  # Neutral score if location unknown
         
         # Simple location matching (in production, use geolocation)
@@ -594,8 +571,7 @@ class CollaborationMatcher:
         requester: ArtistProfile,
         candidate: ArtistProfile
     ) -> float:
-        """Calculate experience level compatibility"""
-        # Get average skill levels
+        """Calculate experience level compatibility"""        # Get average skill levels
         req_levels = [skill.value for skill in requester.skills.values()]
         cand_levels = [skill.value for skill in candidate.skills.values()]
         
@@ -620,8 +596,7 @@ class CollaborationMatcher:
         requester: ArtistProfile,
         candidate: ArtistProfile
     ) -> float:
-        """Calculate availability overlap score"""
-        # Simplified availability check
+        """Calculate availability overlap score"""        # Simplified availability check
         req_avail = requester.availability
         cand_avail = candidate.availability
         
@@ -642,8 +617,7 @@ class CollaborationMatcher:
         return 0.5
     
     def _determine_match_quality(self, compatibility_score: float) -> MatchQuality:
-        """Determine match quality based on compatibility score"""
-        if compatibility_score >= 0.9:
+        """Determine match quality based on compatibility score"""        if compatibility_score >= 0.9:
             return MatchQuality.PERFECT
         elif compatibility_score >= 0.75:
             return MatchQuality.EXCELLENT
@@ -660,8 +634,7 @@ class CollaborationMatcher:
         candidate: ArtistProfile,
         criteria: MatchingCriteria
     ) -> Dict[str, float]:
-        """Analyze specific matching factors"""
-        return {
+        """Analyze specific matching factors"""        return {
             'genre_compatibility': self._calculate_genre_compatibility(requester, candidate),
             'skill_complementarity': self._calculate_skill_complementarity(requester, candidate),
             'musical_harmony': self._calculate_musical_harmony(requester, candidate),
@@ -676,8 +649,7 @@ class CollaborationMatcher:
         candidate: ArtistProfile,
         criteria: MatchingCriteria
     ) -> Dict[str, str]:
-        """Suggest roles for collaboration"""
-        roles = {}
+        """Suggest roles for collaboration"""        roles = {}
         
         # Analyze skills to suggest roles
         req_strongest_skill = max(requester.skills.items(), key=lambda x: x[1].value) if requester.skills else ('unknown', SkillLevel.BEGINNER)
@@ -702,8 +674,7 @@ class CollaborationMatcher:
         return roles
     
     def _estimate_timeline(self, criteria: MatchingCriteria) -> Optional[int]:
-        """Estimate collaboration timeline in days"""
-        if criteria.timeline_days:
+        """Estimate collaboration timeline in days"""        if criteria.timeline_days:
             return criteria.timeline_days
         
         # Default timelines by collaboration type
@@ -723,8 +694,7 @@ class CollaborationMatcher:
         criteria: MatchingCriteria,
         candidate: ArtistProfile
     ) -> Optional[Tuple[float, float]]:
-        """Estimate collaboration budget range"""
-        if criteria.budget_range:
+        """Estimate collaboration budget range"""        if criteria.budget_range:
             return criteria.budget_range
         
         # Base estimates by collaboration type and skill level
@@ -754,8 +724,7 @@ class CollaborationMatcher:
         candidate: ArtistProfile,
         criteria: MatchingCriteria
     ) -> List[str]:
-        """Generate collaboration recommendations"""
-        recommendations = []
+        """Generate collaboration recommendations"""        recommendations = []
         
         # Skill-based recommendations
         req_skills = set(requester.skills.keys())
@@ -795,8 +764,7 @@ class CollaborationMatcher:
         project_data: Dict[str, Any],
         invited_artists: List[str] = None
     ) -> CollaborationProject:
-        """Create new collaboration project"""
-        project_id = str(uuid.uuid4())
+        """Create new collaboration project"""        project_id = str(uuid.uuid4())
         
         try:
             initiator_profile = self.artist_profiles.get(initiator_id)
@@ -860,8 +828,7 @@ class CollaborationMatcher:
         proposed_budget: Optional[float] = None,
         deadline: Optional[datetime] = None
     ) -> CollaborationInvite:
-        """Send collaboration invitation"""
-        invite_id = str(uuid.uuid4())
+        """Send collaboration invitation"""        invite_id = str(uuid.uuid4())
         
         try:
             invite = CollaborationInvite(
@@ -896,8 +863,7 @@ class CollaborationMatcher:
         response: str,  # "accepted" or "rejected"
         message: str = ""
     ) -> bool:
-        """Respond to collaboration invitation"""
-        try:
+        """Respond to collaboration invitation"""        try:
             invite = self.collaboration_invites.get(invite_id)
             if not invite:
                 raise ValueError("Invitation not found")
@@ -933,16 +899,14 @@ class CollaborationMatcher:
             return False
     
     def get_user_matches(self, user_id: str) -> List[CollaborationMatch]:
-        """Get collaboration matches for user"""
-        return self.collaboration_matches.get(user_id, [])
+        """Get collaboration matches for user"""        return self.collaboration_matches.get(user_id, [])
     
     def get_user_projects(
         self,
         user_id: str,
         status_filter: Optional[CollaborationStatus] = None
     ) -> List[CollaborationProject]:
-        """Get user's collaboration projects"""
-        user_projects = []
+        """Get user's collaboration projects"""        user_projects = []
         
         for project in self.active_projects.values():
             # Check if user is involved in project
@@ -956,8 +920,7 @@ class CollaborationMatcher:
         return user_projects
     
     def get_pending_invites(self, user_id: str) -> List[CollaborationInvite]:
-        """Get pending invitations for user"""
-        return [
+        """Get pending invitations for user"""        return [
             invite for invite in self.collaboration_invites.values()
             if invite.recipient_id == user_id and invite.status == "pending"
         ]
@@ -968,8 +931,7 @@ class CollaborationMatcher:
         user_id: str,
         progress_data: Dict[str, Any]
     ) -> bool:
-        """Update project progress"""
-        try:
+        """Update project progress"""        try:
             project = self.active_projects.get(project_id)
             if not project:
                 return False

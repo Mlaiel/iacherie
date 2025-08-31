@@ -1,5 +1,4 @@
-"""
-Crawler Manager
+"""Crawler Manager
 ===============
 
 Central manager for web crawlers and surveillance operations.
@@ -7,9 +6,7 @@ Coordinates multiple platform crawlers for comprehensive content monitoring.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
-"""
-
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Optional, Union
 from datetime import datetime, timedelta
@@ -30,23 +27,20 @@ from ..utils.rate_limiter import RateLimiter
 logger = logging.getLogger(__name__)
 
 class CrawlerStatus(Enum):
-    """Crawler status types."""
-    IDLE = "idle"
+    """Crawler status types."""    IDLE = "idle"
     RUNNING = "running"
     PAUSED = "paused"
     ERROR = "error"
     MAINTENANCE = "maintenance"
 
 class SurveillanceMode(Enum):
-    """Surveillance mode types."""
-    REAL_TIME = "real_time"
+    """Surveillance mode types."""    REAL_TIME = "real_time"
     SCHEDULED = "scheduled"
     ON_DEMAND = "on_demand"
 
 @dataclass
 class CrawlResult:
-    """Crawl result data structure."""
-    platform: str
+    """Crawl result data structure."""    platform: str
     query: str
     results: List[Dict]
     total_found: int
@@ -56,8 +50,7 @@ class CrawlResult:
 
 @dataclass
 class SurveillanceTask:
-    """Surveillance task data structure."""
-    id: str
+    """Surveillance task data structure."""    id: str
     content_id: int
     platforms: List[str]
     mode: SurveillanceMode
@@ -67,8 +60,7 @@ class SurveillanceTask:
     next_scan: Optional[datetime]
 
 class CrawlerManager:
-    """
-    Professional web crawler manager.
+    """    Professional web crawler manager.
     
     Features:
     - Multi-platform crawler coordination
@@ -78,11 +70,9 @@ class CrawlerManager:
     - Violation detection integration
     - Performance monitoring
     - Error handling and recovery
-    """
-    
+    """    
     def __init__(self):
-        """Initialize crawler manager."""
-        # Initialize platform crawlers
+        """Initialize crawler manager."""        # Initialize platform crawlers
         self.crawlers = {
             "youtube": YouTubeCrawler(),
             "instagram": InstagramCrawler(),
@@ -127,8 +117,7 @@ class CrawlerManager:
                                      platform: str,
                                      query: str,
                                      max_results: int = 50) -> CrawlResult:
-        """
-        Search for content on specific platform.
+        """        Search for content on specific platform.
         
         Args:
             platform: Platform name (youtube, instagram, etc.)
@@ -137,8 +126,7 @@ class CrawlerManager:
             
         Returns:
             CrawlResult object with search results
-        """
-        try:
+        """        try:
             start_time = datetime.utcnow()
             
             logger.info(f"Searching {platform} for: {query}")
@@ -199,8 +187,7 @@ class CrawlerManager:
                                 content_id: int,
                                 platforms: List[str] = None,
                                 mode: SurveillanceMode = SurveillanceMode.REAL_TIME) -> str:
-        """
-        Start surveillance for content.
+        """        Start surveillance for content.
         
         Args:
             content_id: ID of content to monitor
@@ -209,8 +196,7 @@ class CrawlerManager:
             
         Returns:
             Surveillance task ID
-        """
-        try:
+        """        try:
             logger.info(f"Starting surveillance for content {content_id}")
             
             # Use all platforms if none specified
@@ -255,8 +241,7 @@ class CrawlerManager:
             raise CrawlerError(f"Failed to start surveillance: {str(e)}")
     
     async def stop_surveillance(self, task_id: str) -> bool:
-        """Stop surveillance task."""
-        try:
+        """Stop surveillance task."""        try:
             if task_id in self.surveillance_tasks:
                 task_info = self.surveillance_tasks[task_id]
                 task_info["coroutine"].cancel()
@@ -274,15 +259,13 @@ class CrawlerManager:
             return False
     
     async def get_crawler(self, platform: str):
-        """Get specific platform crawler."""
-        if platform not in self.crawlers:
+        """Get specific platform crawler."""        if platform not in self.crawlers:
             raise CrawlerError(f"Crawler not found for platform: {platform}")
         
         return self.crawlers[platform]
     
     async def get_platform_status(self, platform: str) -> Dict:
-        """Get platform crawler status and statistics."""
-        try:
+        """Get platform crawler status and statistics."""        try:
             if platform not in self.crawlers:
                 return {"error": f"Platform not found: {platform}"}
             
@@ -313,8 +296,7 @@ class CrawlerManager:
             return {"error": str(e)}
     
     async def get_surveillance_status(self) -> Dict:
-        """Get overall surveillance status."""
-        try:
+        """Get overall surveillance status."""        try:
             active_tasks = []
             
             for task_id, task_info in self.surveillance_tasks.items():
@@ -350,8 +332,7 @@ class CrawlerManager:
             return {"error": str(e)}
     
     async def _surveillance_loop(self, task: SurveillanceTask):
-        """Main surveillance loop for a task."""
-        try:
+        """Main surveillance loop for a task."""        try:
             while task.status == CrawlerStatus.RUNNING:
                 logger.debug(f"Surveillance scan for task {task.id}")
                 
@@ -392,8 +373,7 @@ class CrawlerManager:
                                      task: SurveillanceTask,
                                      platform: str,
                                      search_terms: List[str]):
-        """Scan specific platform for surveillance task."""
-        try:
+        """Scan specific platform for surveillance task."""        try:
             # Check rate limit
             if not await self.rate_limiters[platform].acquire():
                 logger.warning(f"Rate limit exceeded for {platform}, skipping scan")
@@ -421,8 +401,7 @@ class CrawlerManager:
             logger.error(f"Error scanning platform {platform} for task {task.id}: {str(e)}")
     
     async def _get_content_info(self, content_id: int) -> Dict:
-        """Get content information for surveillance."""
-        # This would typically fetch from content repository
+        """Get content information for surveillance."""        # This would typically fetch from content repository
         # For now, return mock data
         return {
             "id": content_id,
@@ -433,8 +412,7 @@ class CrawlerManager:
         }
     
     def _generate_search_terms(self, content_info: Dict) -> List[str]:
-        """Generate search terms from content information."""
-        terms = []
+        """Generate search terms from content information."""        terms = []
         
         # Add title
         if "title" in content_info:
@@ -460,8 +438,7 @@ class CrawlerManager:
     async def batch_search(self, 
                           searches: List[Dict],
                           max_concurrent: int = None) -> List[CrawlResult]:
-        """Perform batch searches across platforms."""
-        try:
+        """Perform batch searches across platforms."""        try:
             if max_concurrent is None:
                 max_concurrent = self.config["max_concurrent_crawls"]
             
@@ -490,8 +467,7 @@ class CrawlerManager:
             raise CrawlerError(f"Batch search failed: {str(e)}")
     
     def get_manager_stats(self) -> Dict:
-        """Get crawler manager statistics."""
-        return {
+        """Get crawler manager statistics."""        return {
             "version": "1.0.0",
             "supported_platforms": list(self.crawlers.keys()),
             "active_surveillance_tasks": len(self.surveillance_tasks),

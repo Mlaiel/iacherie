@@ -1,5 +1,4 @@
-"""
-CDN Manager - IA-Influencer-Agent Deployment
+"""CDN Manager - IA-Influencer-Agent Deployment
 ================================================================================
 Module: backend/deployment/storage/cdn_manager.py
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -25,9 +24,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Content upload → Origin storage → CDN distribution → Edge caching → 
 Global delivery → Performance optimization → Analytics tracking → Cost optimization
-"""
-
-import logging
+"""import logging
 import asyncio
 import json
 import boto3
@@ -48,8 +45,7 @@ logger = logging.getLogger(__name__)
 
 
 class CDNProvider(Enum):
-    """CDN providers supported"""
-    CLOUDFLARE = "cloudflare"
+    """CDN providers supported"""    CLOUDFLARE = "cloudflare"
     AWS_CLOUDFRONT = "aws-cloudfront"
     AZURE_CDN = "azure-cdn"
     GOOGLE_CDN = "google-cdn"
@@ -59,8 +55,7 @@ class CDNProvider(Enum):
 
 
 class CachePolicy(Enum):
-    """Cache policies for different content types"""
-    NO_CACHE = "no-cache"
+    """Cache policies for different content types"""    NO_CACHE = "no-cache"
     SHORT_CACHE = "short-cache"  # 1 hour
     MEDIUM_CACHE = "medium-cache"  # 24 hours
     LONG_CACHE = "long-cache"  # 7 days
@@ -69,8 +64,7 @@ class CachePolicy(Enum):
 
 
 class ContentType(Enum):
-    """Content types for CDN optimization"""
-    AUDIO = "audio"
+    """Content types for CDN optimization"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     DOCUMENT = "document"
@@ -80,8 +74,7 @@ class ContentType(Enum):
 
 
 class DistributionStatus(Enum):
-    """CDN distribution status"""
-    DEPLOYING = "deploying"
+    """CDN distribution status"""    DEPLOYING = "deploying"
     DEPLOYED = "deployed"
     UPDATING = "updating"
     DISABLED = "disabled"
@@ -91,8 +84,7 @@ class DistributionStatus(Enum):
 
 @dataclass
 class CDNConfig:
-    """CDN configuration settings"""
-    name: str
+    """CDN configuration settings"""    name: str
     provider: CDNProvider
     origin_domain: str
     custom_domain: Optional[str] = None
@@ -148,8 +140,7 @@ class CDNConfig:
 
 @dataclass
 class CDNMetrics:
-    """CDN performance and analytics metrics"""
-    distribution_id: str
+    """CDN performance and analytics metrics"""    distribution_id: str
     status: DistributionStatus = DistributionStatus.DEPLOYED
     
     # Traffic metrics
@@ -181,8 +172,7 @@ class CDNMetrics:
 
 
 class CDNManager:
-    """
-    🎯 Industrial CDN Manager - IA-Influencer-Agent
+    """    🎯 Industrial CDN Manager - IA-Influencer-Agent
     
     Production-grade CDN and global content distribution with:
     - Multi-provider CDN orchestration (CloudFlare, CloudFront, Azure)
@@ -193,8 +183,7 @@ class CDNManager:
     - Advanced image/video optimization and compression
     - Custom domains and SSL certificate management
     - Comprehensive analytics and user experience monitoring
-    """
-    
+    """    
     def __init__(self, config: CDNConfig):
         self.config = config
         self.metrics = CDNMetrics(distribution_id=f"cdn-{config.name}")
@@ -209,8 +198,7 @@ class CDNManager:
         logger.info(f"🚀 CDNManager initialized: {config.name} ({config.provider.value})")
     
     def _initialize_clients(self):
-        """Initialize CDN provider clients"""
-        try:
+        """Initialize CDN provider clients"""        try:
             if self.config.provider == CDNProvider.AWS_CLOUDFRONT:
                 self._cloudfront_client = boto3.client('cloudfront')
                 logger.info("✅ AWS CloudFront client initialized")
@@ -230,8 +218,7 @@ class CDNManager:
             raise
     
     async def deploy_cdn_distribution(self) -> Dict[str, Any]:
-        """Deploy CDN distribution with complete configuration"""
-        try:
+        """Deploy CDN distribution with complete configuration"""        try:
             logger.info(f"🚀 Starting CDN distribution deployment...")
             
             # Deploy based on provider
@@ -288,8 +275,7 @@ class CDNManager:
             return {"success": False, "error": str(e)}
     
     async def _deploy_cloudfront_distribution(self) -> Dict[str, Any]:
-        """Deploy AWS CloudFront distribution"""
-        try:
+        """Deploy AWS CloudFront distribution"""        try:
             # Generate CloudFront distribution configuration
             distribution_config = self._generate_cloudfront_config()
             
@@ -317,8 +303,7 @@ class CDNManager:
             raise
     
     def _generate_cloudfront_config(self) -> Dict[str, Any]:
-        """Generate CloudFront distribution configuration"""
-        config = {
+        """Generate CloudFront distribution configuration"""        config = {
             "CallerReference": f"{self.config.name}-{int(time.time())}",
             "Comment": f"IA-Influencer-Agent CDN Distribution - {self.config.name}",
             "DefaultRootObject": "index.html",
@@ -431,8 +416,7 @@ class CDNManager:
         return config
     
     def _get_cache_ttl(self, cache_policy: CachePolicy) -> int:
-        """Get cache TTL in seconds based on policy"""
-        ttl_mapping = {
+        """Get cache TTL in seconds based on policy"""        ttl_mapping = {
             CachePolicy.NO_CACHE: 0,
             CachePolicy.SHORT_CACHE: 3600,  # 1 hour
             CachePolicy.MEDIUM_CACHE: 86400,  # 24 hours
@@ -443,8 +427,7 @@ class CDNManager:
         return ttl_mapping.get(cache_policy, 3600)
     
     def _get_path_pattern(self, content_type: ContentType) -> str:
-        """Get path pattern for content type"""
-        patterns = {
+        """Get path pattern for content type"""        patterns = {
             ContentType.AUDIO: "*.mp3,*.wav,*.flac,*.aac,*.ogg",
             ContentType.VIDEO: "*.mp4,*.avi,*.mov,*.webm,*.mkv",
             ContentType.IMAGE: "*.jpg,*.jpeg,*.png,*.gif,*.webp,*.svg",
@@ -456,8 +439,7 @@ class CDNManager:
         return patterns.get(content_type, "*")
     
     async def _wait_for_cloudfront_deployment(self, distribution_id: str):
-        """Wait for CloudFront distribution deployment to complete"""
-        try:
+        """Wait for CloudFront distribution deployment to complete"""        try:
             logger.info(f"⏳ Waiting for CloudFront deployment: {distribution_id}")
             
             waiter = self._cloudfront_client.get_waiter('distribution_deployed')
@@ -477,8 +459,7 @@ class CDNManager:
             self.metrics.status = DistributionStatus.FAILED
     
     async def _deploy_cloudflare_distribution(self) -> Dict[str, Any]:
-        """Deploy CloudFlare CDN distribution"""
-        try:
+        """Deploy CloudFlare CDN distribution"""        try:
             if not self._cloudflare_client or not self._cloudflare_client['api_token']:
                 raise ValueError("CloudFlare API token not configured")
             
@@ -520,8 +501,7 @@ class CDNManager:
             raise
     
     async def _create_cloudflare_page_rules(self, headers: Dict[str, str]):
-        """Create CloudFlare page rules for cache optimization"""
-        try:
+        """Create CloudFlare page rules for cache optimization"""        try:
             url = f"{self._cloudflare_client['base_url']}/zones/{self._cloudflare_client['zone_id']}/pagerules"
             
             # Cache rules for different content types
@@ -551,8 +531,7 @@ class CDNManager:
             logger.warning(f"⚠️ Failed to create CloudFlare page rules: {e}")
     
     async def _deploy_azure_cdn_distribution(self) -> Dict[str, Any]:
-        """Deploy Azure CDN distribution"""
-        try:
+        """Deploy Azure CDN distribution"""        try:
             # This would integrate with Azure SDK
             logger.info("ℹ️ Azure CDN deployment requires Azure SDK integration")
             
@@ -567,8 +546,7 @@ class CDNManager:
             raise
     
     async def _configure_ssl_certificates(self) -> Dict[str, Any]:
-        """Configure SSL certificates for CDN"""
-        try:
+        """Configure SSL certificates for CDN"""        try:
             if not self.config.ssl_enabled:
                 return {"ssl": "disabled"}
             
@@ -594,8 +572,7 @@ class CDNManager:
             return {"ssl": "failed", "error": str(e)}
     
     async def _configure_custom_domain(self) -> Dict[str, Any]:
-        """Configure custom domain for CDN"""
-        try:
+        """Configure custom domain for CDN"""        try:
             if not self.config.custom_domain:
                 return {"custom_domain": "not_configured"}
             
@@ -614,8 +591,7 @@ class CDNManager:
             return {"custom_domain": "failed", "error": str(e)}
     
     async def _configure_cache_policies(self) -> Dict[str, Any]:
-        """Configure cache policies for different content types"""
-        try:
+        """Configure cache policies for different content types"""        try:
             cache_config = {
                 "default_policy": self.config.default_cache_policy.value,
                 "content_policies": {},
@@ -638,8 +614,7 @@ class CDNManager:
             return {"cache_policies": "failed", "error": str(e)}
     
     async def _configure_security_policies(self) -> Dict[str, Any]:
-        """Configure WAF and security policies"""
-        try:
+        """Configure WAF and security policies"""        try:
             security_config = {
                 "waf_enabled": self.config.waf_enabled,
                 "ddos_protection": self.config.ddos_protection,
@@ -669,8 +644,7 @@ class CDNManager:
             return {"security_policies": "failed", "error": str(e)}
     
     async def _configure_analytics(self) -> Dict[str, Any]:
-        """Configure CDN analytics and monitoring"""
-        try:
+        """Configure CDN analytics and monitoring"""        try:
             analytics_config = {
                 "analytics_enabled": self.config.analytics_enabled,
                 "real_user_monitoring": self.config.real_user_monitoring,
@@ -702,8 +676,7 @@ class CDNManager:
             return {"analytics": "failed", "error": str(e)}
     
     async def _setup_cloudwatch_alarms(self):
-        """Setup CloudWatch alarms for CloudFront monitoring"""
-        try:
+        """Setup CloudWatch alarms for CloudFront monitoring"""        try:
             cloudwatch = boto3.client('cloudwatch')
             
             alarms = [
@@ -747,8 +720,7 @@ class CDNManager:
             logger.warning(f"⚠️ Failed to setup CloudWatch alarms: {e}")
     
     async def get_cdn_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive CDN metrics and analytics"""
-        try:
+        """Get comprehensive CDN metrics and analytics"""        try:
             if self.config.provider == CDNProvider.AWS_CLOUDFRONT:
                 metrics_data = await self._get_cloudfront_metrics()
             elif self.config.provider == CDNProvider.CLOUDFLARE:
@@ -806,8 +778,7 @@ class CDNManager:
             return {"error": str(e)}
     
     async def _get_cloudfront_metrics(self) -> Dict[str, Any]:
-        """Get CloudFront-specific metrics"""
-        try:
+        """Get CloudFront-specific metrics"""        try:
             cloudwatch = boto3.client('cloudwatch')
             
             end_time = datetime.utcnow()
@@ -874,8 +845,7 @@ class CDNManager:
             return {}
     
     async def _get_cloudflare_metrics(self) -> Dict[str, Any]:
-        """Get CloudFlare-specific metrics"""
-        try:
+        """Get CloudFlare-specific metrics"""        try:
             if not self._cloudflare_client:
                 return {}
             
@@ -913,8 +883,7 @@ class CDNManager:
             return {}
     
     async def _get_generic_metrics(self) -> Dict[str, Any]:
-        """Get generic metrics for unsupported providers"""
-        return {
+        """Get generic metrics for unsupported providers"""        return {
             "requests_24h": 0,
             "bandwidth_gb_24h": 0.0,
             "cache_hit_ratio": 0.0,
@@ -923,8 +892,7 @@ class CDNManager:
         }
     
     async def purge_cache(self, paths: Optional[List[str]] = None) -> Dict[str, Any]:
-        """Purge CDN cache for specified paths or entire distribution"""
-        try:
+        """Purge CDN cache for specified paths or entire distribution"""        try:
             logger.info(f"🔄 Purging CDN cache: {self.config.name}")
             
             if self.config.provider == CDNProvider.AWS_CLOUDFRONT:
@@ -939,8 +907,7 @@ class CDNManager:
             return {"success": False, "error": str(e)}
     
     async def _purge_cloudfront_cache(self, paths: Optional[List[str]]) -> Dict[str, Any]:
-        """Purge CloudFront cache"""
-        try:
+        """Purge CloudFront cache"""        try:
             invalidation_paths = paths or ["/*"]
             
             response = self._cloudfront_client.create_invalidation(
@@ -968,8 +935,7 @@ class CDNManager:
             raise
     
     async def _purge_cloudflare_cache(self, paths: Optional[List[str]]) -> Dict[str, Any]:
-        """Purge CloudFlare cache"""
-        try:
+        """Purge CloudFlare cache"""        try:
             headers = {
                 'Authorization': f"Bearer {self._cloudflare_client['api_token']}",
                 'Content-Type': 'application/json'
@@ -998,8 +964,7 @@ class CDNManager:
             raise
     
     async def cleanup_cdn_distribution(self) -> Dict[str, Any]:
-        """Cleanup and delete CDN distribution"""
-        try:
+        """Cleanup and delete CDN distribution"""        try:
             logger.info(f"🗑️ Starting CDN distribution cleanup: {self.config.name}")
             
             if self.config.provider == CDNProvider.AWS_CLOUDFRONT:
@@ -1023,8 +988,7 @@ class CDNManager:
             return {"success": False, "error": str(e)}
     
     async def _cleanup_cloudfront_distribution(self) -> Dict[str, Any]:
-        """Cleanup CloudFront distribution"""
-        try:
+        """Cleanup CloudFront distribution"""        try:
             # First disable the distribution
             distribution = self._cloudfront_client.get_distribution(Id=self.metrics.distribution_id)
             
@@ -1051,8 +1015,7 @@ class CDNManager:
             raise
     
     async def _cleanup_cloudflare_distribution(self) -> Dict[str, Any]:
-        """Cleanup CloudFlare distribution (reset zone settings)"""
-        try:
+        """Cleanup CloudFlare distribution (reset zone settings)"""        try:
             # Reset zone settings to defaults
             # This is a simplified cleanup - actual implementation would be more comprehensive
             
@@ -1069,12 +1032,10 @@ class CDNManager:
 
 # Industrial Configuration Manager
 class CDNConfigurationManager:
-    """Advanced CDN configuration management"""
-    
+    """Advanced CDN configuration management"""    
     @staticmethod
     def load_config_from_file(config_path: Path) -> CDNConfig:
-        """Load CDN configuration from YAML file"""
-        try:
+        """Load CDN configuration from YAML file"""        try:
             with open(config_path, 'r') as file:
                 config_data = yaml.safe_load(file)
             
@@ -1098,8 +1059,7 @@ class CDNConfigurationManager:
     
     @staticmethod
     def save_config_to_file(config: CDNConfig, config_path: Path):
-        """Save CDN configuration to YAML file"""
-        try:
+        """Save CDN configuration to YAML file"""        try:
             config_data = {
                 'name': config.name,
                 'provider': config.provider.value,
@@ -1134,8 +1094,7 @@ def create_cdn_manager(
     origin_domain: str,
     custom_domain: Optional[str] = None
 ) -> CDNManager:
-    """Factory function to create CDNManager instance"""
-    
+    """Factory function to create CDNManager instance"""    
     config = CDNConfig(
         name=name,
         provider=provider,
@@ -1148,8 +1107,7 @@ def create_cdn_manager(
 
 # Usage Example
 async def main():
-    """Example usage of CDNManager"""
-    try:
+    """Example usage of CDNManager"""    try:
         # Create CDN manager for global content distribution
         cdn_manager = create_cdn_manager(
             name="ia-influencer-global-cdn",

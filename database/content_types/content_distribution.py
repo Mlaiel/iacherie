@@ -1,5 +1,4 @@
-"""
-Content Distribution Module - Advanced Multi-Platform Distribution System
+"""Content Distribution Module - Advanced Multi-Platform Distribution System
 
 Module gérant la distribution automatisée du contenu sur les plateformes,
 l'optimisation SEO, et la synchronisation cross-platform.
@@ -13,9 +12,7 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""
-
-from typing import Dict, List, Any, Optional, Union, Tuple, Set
+"""from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from enum import Enum
@@ -37,8 +34,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class Platform(Enum):
-    """Supported distribution platforms"""
-    SPOTIFY = "spotify"
+    """Supported distribution platforms"""    SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE = "youtube"
     YOUTUBE_MUSIC = "youtube_music"
@@ -60,8 +56,7 @@ class Platform(Enum):
     TELEGRAM = "telegram"
 
 class DistributionStatus(Enum):
-    """Distribution status on platforms"""
-    NOT_DISTRIBUTED = "not_distributed"
+    """Distribution status on platforms"""    NOT_DISTRIBUTED = "not_distributed"
     QUEUED = "queued"
     UPLOADING = "uploading"
     PROCESSING = "processing"
@@ -75,8 +70,7 @@ class DistributionStatus(Enum):
     SCHEDULED = "scheduled"
 
 class ContentFormat(Enum):
-    """Content format specifications for platforms"""
-    AUDIO_ORIGINAL = "audio_original"
+    """Content format specifications for platforms"""    AUDIO_ORIGINAL = "audio_original"
     AUDIO_COMPRESSED = "audio_compressed"
     VIDEO_HD = "video_hd"
     VIDEO_4K = "video_4k"
@@ -90,8 +84,7 @@ class ContentFormat(Enum):
     REEL_FORMAT = "reel_format"
 
 class OptimizationType(Enum):
-    """Content optimization types"""
-    SEO = "seo"
+    """Content optimization types"""    SEO = "seo"
     ALGORITHM = "algorithm"
     ENGAGEMENT = "engagement"
     ACCESSIBILITY = "accessibility"
@@ -100,8 +93,7 @@ class OptimizationType(Enum):
     QUALITY = "quality"
 
 class SchedulingStrategy(Enum):
-    """Content scheduling strategies"""
-    IMMEDIATE = "immediate"
+    """Content scheduling strategies"""    IMMEDIATE = "immediate"
     OPTIMAL_TIME = "optimal_time"
     CUSTOM_SCHEDULE = "custom_schedule"
     COORDINATED_RELEASE = "coordinated_release"
@@ -110,8 +102,7 @@ class SchedulingStrategy(Enum):
 
 @dataclass
 class PlatformRequirements:
-    """Platform-specific content requirements"""
-    platform: Platform
+    """Platform-specific content requirements"""    platform: Platform
     supported_formats: List[str]
     max_file_size: int  # in bytes
     max_duration: Optional[int]  # in seconds
@@ -122,8 +113,7 @@ class PlatformRequirements:
     monetization_requirements: Dict[str, Any]
 
 class DistributionChannel(Base):
-    """Distribution channel configuration"""
-    __tablename__ = "distribution_channels"
+    """Distribution channel configuration"""    __tablename__ = "distribution_channels"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -176,8 +166,7 @@ class DistributionChannel(Base):
     distributions = relationship("ContentDistribution", back_populates="channel")
 
 class ContentDistribution(Base):
-    """Content distribution tracking"""
-    __tablename__ = "content_distributions"
+    """Content distribution tracking"""    __tablename__ = "content_distributions"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     content_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -241,8 +230,7 @@ class ContentDistribution(Base):
     optimizations = relationship("ContentOptimization", back_populates="distribution")
 
 class ContentOptimization(Base):
-    """Content optimization tracking"""
-    __tablename__ = "content_optimizations"
+    """Content optimization tracking"""    __tablename__ = "content_optimizations"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     distribution_id = Column(UUID(as_uuid=True), ForeignKey('content_distributions.id'), nullable=False)
@@ -262,8 +250,7 @@ class ContentOptimization(Base):
     distribution = relationship("ContentDistribution", back_populates="optimizations")
 
 class DistributionEngine:
-    """Core distribution processing engine"""
-    
+    """Core distribution processing engine"""    
     def __init__(self):
         self.platform_apis = {}
         self.content_processors = {}
@@ -271,8 +258,7 @@ class DistributionEngine:
         self.platform_requirements = self._initialize_platform_requirements()
     
     def _initialize_platform_requirements(self) -> Dict[Platform, PlatformRequirements]:
-        """Initialize platform-specific requirements"""
-        return {
+        """Initialize platform-specific requirements"""        return {
             Platform.SPOTIFY: PlatformRequirements(
                 platform=Platform.SPOTIFY,
                 supported_formats=["audio/mp3", "audio/wav", "audio/flac"],
@@ -325,8 +311,7 @@ class DistributionEngine:
         target_platforms: List[Platform],
         distribution_settings: Dict[str, Any]
     ) -> Dict[Platform, str]:
-        """Distribute content to multiple platforms"""
-        try:
+        """Distribute content to multiple platforms"""        try:
             distribution_results = {}
             
             for platform in target_platforms:
@@ -374,8 +359,7 @@ class DistributionEngine:
         platform: Platform,
         settings: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Prepare and optimize content for specific platform"""
-        try:
+        """Prepare and optimize content for specific platform"""        try:
             # Get platform requirements
             requirements = self.platform_requirements[platform]
             
@@ -423,8 +407,7 @@ class DistributionEngine:
         platform: Platform,
         settings: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize metadata for platform-specific algorithms"""
-        try:
+        """Optimize metadata for platform-specific algorithms"""        try:
             optimized = original_metadata.copy()
             
             # SEO optimization
@@ -466,8 +449,7 @@ class DistributionEngine:
         metadata: Dict[str, Any],
         platform: Platform
     ) -> Dict[str, Any]:
-        """Apply SEO optimization strategies"""
-        seo_strategies = {
+        """Apply SEO optimization strategies"""        seo_strategies = {
             Platform.YOUTUBE: {
                 'title_keywords': 3,
                 'description_keywords': 5,
@@ -511,8 +493,7 @@ class DistributionEngine:
         genre: Optional[str] = None,
         mood: Optional[str] = None
     ) -> List[str]:
-        """Optimize hashtags for better discoverability"""
-        try:
+        """Optimize hashtags for better discoverability"""        try:
             optimized_hashtags = current_hashtags.copy()
             
             # Add genre-specific hashtags
@@ -553,8 +534,7 @@ class DistributionEngine:
         optimized_content: Dict[str, Any],
         settings: Dict[str, Any]
     ) -> str:
-        """Execute the actual distribution to platform"""
-        try:
+        """Execute the actual distribution to platform"""        try:
             # Create distribution record
             distribution = ContentDistribution(
                 content_id=content_id,
@@ -598,8 +578,7 @@ class DistributionEngine:
         distribution: ContentDistribution,
         content: Dict[str, Any]
     ):
-        """Publish content immediately to platform"""
-        try:
+        """Publish content immediately to platform"""        try:
             platform_api = self.platform_apis.get(distribution.platform)
             if not platform_api:
                 raise ValueError(f"No API configured for {distribution.platform}")
@@ -635,8 +614,7 @@ class DistributionEngine:
         channel: DistributionChannel,
         target_audience: Optional[Dict[str, Any]] = None
     ) -> datetime:
-        """Calculate optimal posting time based on audience data"""
-        try:
+        """Calculate optimal posting time based on audience data"""        try:
             # Get historical performance data
             performance_data = await self._get_channel_performance_data(channel.id)
             
@@ -681,8 +659,7 @@ class DistributionEngine:
     # Additional helper methods would be implemented here...
     
     async def sync_platform_analytics(self, distribution_id: str) -> Dict[str, Any]:
-        """Sync analytics data from platform"""
-        try:
+        """Sync analytics data from platform"""        try:
             distribution = await self._get_distribution(distribution_id)
             platform_api = self.platform_apis.get(distribution.platform)
             
@@ -709,20 +686,16 @@ class DistributionEngine:
 
     # Placeholder methods for data retrieval (would be implemented with actual database queries)
     async def _get_user_channel(self, user_id: str, platform: Platform):
-        """Get user's channel configuration for platform"""
-        pass
+        """Get user's channel configuration for platform"""        pass
     
     async def _get_content_data(self, content_id: str):
-        """Get content data from database"""
-        pass
+        """Get content data from database"""        pass
     
     async def _convert_content_format(self, content_data, target_format, requirements):
-        """Convert content to target format"""
-        pass
+        """Convert content to target format"""        pass
     
     async def _generate_platform_assets(self, content_data, platform, requirements):
-        """Generate platform-specific assets (thumbnails, etc.)"""
-        pass
+        """Generate platform-specific assets (thumbnails, etc.)"""        pass
 
 # Export classes and functions
 __all__ = [

@@ -1,5 +1,4 @@
-"""
-Advanced Multi-Platform Analytics & Performance Intelligence
+"""Advanced Multi-Platform Analytics & Performance Intelligence
 
 Ultra-sophisticated analytics engine for measuring, optimizing, and predicting
 personalization performance across multi-format content creator ecosystem.
@@ -42,9 +41,7 @@ Team Specialists:
 - Audio Processing Specialist: Advanced audio AI algorithms
 - DevOps Engineer: Production-ready infrastructure
 - IA Prompt Engineer: Optimized AI model interactions
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union, Callable, Generator
 from datetime import datetime, timedelta
@@ -73,8 +70,7 @@ from .exceptions import PersonalizationError, AnalyticsError, DataValidationErro
 
 
 class MetricType(Enum):
-    """Types of personalization metrics"""
-    ENGAGEMENT = "engagement"
+    """Types of personalization metrics"""    ENGAGEMENT = "engagement"
     CONVERSION = "conversion"
     RETENTION = "retention"
     SATISFACTION = "satisfaction"
@@ -86,8 +82,7 @@ class MetricType(Enum):
 
 
 class AnalyticsPeriod(Enum):
-    """Analytics time periods"""
-    REAL_TIME = "real_time"
+    """Analytics time periods"""    REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -97,8 +92,7 @@ class AnalyticsPeriod(Enum):
 
 @dataclass
 class PersonalizationMetric:
-    """Represents a personalization metric"""
-    
+    """Represents a personalization metric"""    
     metric_type: MetricType
     value: float
     timestamp: datetime
@@ -119,8 +113,7 @@ class PersonalizationMetric:
 
 @dataclass
 class UserJourneyEvent:
-    """Represents an event in a user's journey"""
-    
+    """Represents an event in a user's journey"""    
     user_id: str
     event_type: str
     timestamp: datetime
@@ -146,8 +139,7 @@ class UserJourneyEvent:
 
 @dataclass
 class EngagementPrediction:
-    """Prediction of user engagement"""
-    
+    """Prediction of user engagement"""    
     user_id: str
     content_id: str
     predicted_engagement: float
@@ -164,10 +156,8 @@ class EngagementPrediction:
 
 
 class PersonalizationAnalytics:
-    """
-    Core analytics engine for personalization performance measurement.
-    """
-    
+    """    Core analytics engine for personalization performance measurement.
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -191,8 +181,7 @@ class PersonalizationAnalytics:
         }
     
     async def record_metric(self, metric: PersonalizationMetric) -> None:
-        """Record a new personalization metric"""
-        
+        """Record a new personalization metric"""        
         try:
             # Store in history
             metric_key = f"{metric.metric_type.value}_{metric.user_id or 'global'}"
@@ -212,8 +201,7 @@ class PersonalizationAnalytics:
             raise AnalyticsError(f"Failed to record metric: {e}")
     
     async def _update_aggregated_stats(self, metric: PersonalizationMetric) -> None:
-        """Update aggregated statistics with new metric"""
-        
+        """Update aggregated statistics with new metric"""        
         today = metric.timestamp.date()
         week = metric.timestamp.isocalendar()[1]
         month = metric.timestamp.month
@@ -236,8 +224,7 @@ class PersonalizationAnalytics:
         self.monthly_stats[month][metric_type].append(metric.value)
     
     async def _check_metric_anomalies(self, metric: PersonalizationMetric) -> None:
-        """Check for metric anomalies and trigger alerts"""
-        
+        """Check for metric anomalies and trigger alerts"""        
         metric_key = f"{metric.metric_type.value}_{metric.user_id or 'global'}"
         historical_metrics = self.metrics_history[metric_key]
         
@@ -259,8 +246,7 @@ class PersonalizationAnalytics:
         expected_mean: float,
         std_dev: float
     ) -> None:
-        """Trigger an anomaly alert"""
-        
+        """Trigger an anomaly alert"""        
         alert_data = {
             'metric_type': metric.metric_type.value,
             'actual_value': metric.value,
@@ -280,8 +266,7 @@ class PersonalizationAnalytics:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """Get performance summary for specified period"""
-        
+        """Get performance summary for specified period"""        
         try:
             if not start_date:
                 start_date = datetime.utcnow() - timedelta(days=7)
@@ -340,8 +325,7 @@ class PersonalizationAnalytics:
         start_date: datetime,
         end_date: datetime
     ) -> List[float]:
-        """Get metric values for specified period"""
-        
+        """Get metric values for specified period"""        
         values = []
         
         for metric_key, metrics in self.metrics_history.items():
@@ -353,8 +337,7 @@ class PersonalizationAnalytics:
         return values
     
     def _calculate_trend(self, values: List[float]) -> Dict[str, Any]:
-        """Calculate trend for metric values"""
-        
+        """Calculate trend for metric values"""        
         if len(values) < 2:
             return {'direction': 'insufficient_data', 'slope': 0.0}
         
@@ -377,8 +360,7 @@ class PersonalizationAnalytics:
         user_id: str,
         metric_types: Optional[List[MetricType]] = None
     ) -> Dict[str, Any]:
-        """Get metrics for a specific user"""
-        
+        """Get metrics for a specific user"""        
         if not metric_types:
             metric_types = list(MetricType)
         
@@ -403,10 +385,8 @@ class PersonalizationAnalytics:
 
 
 class UserJourneyAnalyzer:
-    """
-    Analyzes user journeys to identify optimization opportunities.
-    """
-    
+    """    Analyzes user journeys to identify optimization opportunities.
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -421,8 +401,7 @@ class UserJourneyAnalyzer:
         ]
     
     async def record_journey_event(self, event: UserJourneyEvent) -> None:
-        """Record a user journey event"""
-        
+        """Record a user journey event"""        
         try:
             self.user_journeys[event.user_id].append(event)
             
@@ -438,8 +417,7 @@ class UserJourneyAnalyzer:
             self.logger.error(f"Error recording journey event: {e}")
     
     async def _analyze_journey_real_time(self, user_id: str) -> None:
-        """Perform real-time journey analysis"""
-        
+        """Perform real-time journey analysis"""        
         events = self.user_journeys[user_id]
         if len(events) < 2:
             return
@@ -458,8 +436,7 @@ class UserJourneyAnalyzer:
                 await self._trigger_journey_optimization(user_id, current_stage, issues)
     
     def _get_recent_session_events(self, events: List[UserJourneyEvent]) -> List[UserJourneyEvent]:
-        """Get events from the most recent session"""
-        
+        """Get events from the most recent session"""        
         if not events:
             return []
         
@@ -477,8 +454,7 @@ class UserJourneyAnalyzer:
         return recent_events
     
     def _detect_journey_stage(self, events: List[UserJourneyEvent]) -> str:
-        """Detect current journey stage based on events"""
-        
+        """Detect current journey stage based on events"""        
         if not events:
             return 'unknown'
         
@@ -497,8 +473,7 @@ class UserJourneyAnalyzer:
             return 'unknown'
     
     async def _identify_journey_issues(self, events: List[UserJourneyEvent]) -> List[str]:
-        """Identify potential issues in user journey"""
-        
+        """Identify potential issues in user journey"""        
         issues = []
         
         if not events:
@@ -532,8 +507,7 @@ class UserJourneyAnalyzer:
         current_stage: str,
         issues: List[str]
     ) -> None:
-        """Trigger journey optimization actions"""
-        
+        """Trigger journey optimization actions"""        
         optimization_actions = {
             'rapid_exit': 'improve_onboarding',
             'repetitive_behavior': 'increase_content_diversity',
@@ -554,8 +528,7 @@ class UserJourneyAnalyzer:
         funnel_stages: List[str],
         time_window: timedelta = timedelta(days=7)
     ) -> Dict[str, Any]:
-        """Analyze conversion funnels across user journeys"""
-        
+        """Analyze conversion funnels across user journeys"""        
         try:
             end_time = datetime.utcnow()
             start_time = end_time - time_window
@@ -615,8 +588,7 @@ class UserJourneyAnalyzer:
         events: List[UserJourneyEvent],
         funnel_stages: List[str]
     ) -> List[Dict[str, Any]]:
-        """Track user progression through funnel stages"""
-        
+        """Track user progression through funnel stages"""        
         progression = []
         stage_mapping = {
             'discovery': ['view', 'visit', 'land'],
@@ -646,10 +618,8 @@ class UserJourneyAnalyzer:
 
 
 class EngagementPredictor:
-    """
-    Predicts user engagement for content recommendations.
-    """
-    
+    """    Predicts user engagement for content recommendations.
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -673,8 +643,7 @@ class EngagementPredictor:
         content_item: Dict[str, Any],
         context: Dict[str, Any] = None
     ) -> EngagementPrediction:
-        """
-        Predict user engagement for a content item.
+        """        Predict user engagement for a content item.
         
         Args:
             user_profile: User profile data
@@ -683,8 +652,7 @@ class EngagementPredictor:
             
         Returns:
             Engagement prediction with confidence score
-        """
-        
+        """        
         try:
             # Extract features
             features = await self._extract_prediction_features(
@@ -732,8 +700,7 @@ class EngagementPredictor:
         content_item: Dict[str, Any],
         context: Dict[str, Any] = None
     ) -> Dict[str, float]:
-        """Extract features for engagement prediction"""
-        
+        """Extract features for engagement prediction"""        
         features = {}
         
         # User history alignment
@@ -764,8 +731,7 @@ class EngagementPredictor:
         user_profile: UserProfile,
         content_item: Dict[str, Any]
     ) -> float:
-        """Calculate how well content aligns with user history"""
-        
+        """Calculate how well content aligns with user history"""        
         user_preferences = user_profile.content_preferences
         content_categories = content_item.get('categories', [])
         
@@ -789,8 +755,7 @@ class EngagementPredictor:
         content_item: Dict[str, Any],
         context: Dict[str, Any] = None
     ) -> float:
-        """Calculate temporal relevance of content"""
-        
+        """Calculate temporal relevance of content"""        
         # Time since content creation
         created_at = content_item.get('created_at')
         if created_at:
@@ -823,8 +788,7 @@ class EngagementPredictor:
         return (freshness_score + context_relevance) / 2
     
     def _calculate_social_signals(self, content_item: Dict[str, Any]) -> float:
-        """Calculate social signals strength"""
-        
+        """Calculate social signals strength"""        
         likes = content_item.get('likes', 0)
         shares = content_item.get('shares', 0)
         comments = content_item.get('comments', 0)
@@ -844,8 +808,7 @@ class EngagementPredictor:
         user_profile: UserProfile,
         content_item: Dict[str, Any]
     ) -> float:
-        """Calculate personalization alignment score"""
-        
+        """Calculate personalization alignment score"""        
         score = 0.5  # Base score
         
         # Demographics alignment
@@ -869,8 +832,7 @@ class EngagementPredictor:
         return min(1.0, score)
     
     def _calculate_prediction_confidence(self, features: Dict[str, float]) -> float:
-        """Calculate confidence in prediction based on feature quality"""
-        
+        """Calculate confidence in prediction based on feature quality"""        
         # Base confidence
         confidence = 0.5
         
@@ -889,8 +851,7 @@ class EngagementPredictor:
         prediction: EngagementPrediction,
         actual_engagement: float
     ) -> None:
-        """Validate a prediction against actual engagement"""
-        
+        """Validate a prediction against actual engagement"""        
         try:
             prediction.actual_engagement = actual_engagement
             prediction.prediction_error = abs(prediction.predicted_engagement - actual_engagement)
@@ -908,8 +869,7 @@ class EngagementPredictor:
             self.logger.error(f"Error validating prediction: {e}")
     
     async def _update_model_accuracy(self) -> None:
-        """Update overall model accuracy"""
-        
+        """Update overall model accuracy"""        
         if len(self.prediction_history) < 10:
             return
         
@@ -921,8 +881,7 @@ class EngagementPredictor:
             self.model_accuracy = max(0.1, 1.0 - mean_error)
     
     async def _adjust_feature_weights(self, prediction: EngagementPrediction) -> None:
-        """Adjust feature weights based on prediction accuracy"""
-        
+        """Adjust feature weights based on prediction accuracy"""        
         if prediction.prediction_error is None:
             return
         
@@ -946,10 +905,8 @@ class EngagementPredictor:
 
 
 class PersonalizationMetrics:
-    """
-    Comprehensive metrics collection and analysis for personalization systems.
-    """
-    
+    """    Comprehensive metrics collection and analysis for personalization systems.
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -977,8 +934,7 @@ class PersonalizationMetrics:
         recommended_items: List[str],
         relevant_items: List[str]
     ) -> Dict[str, float]:
-        """Calculate precision and recall metrics"""
-        
+        """Calculate precision and recall metrics"""        
         if not recommended_items or not relevant_items:
             return {'precision': 0.0, 'recall': 0.0, 'f1_score': 0.0}
         
@@ -1006,8 +962,7 @@ class PersonalizationMetrics:
         relevance_scores: Dict[str, float],
         k: int = 10
     ) -> float:
-        """Calculate Normalized Discounted Cumulative Gain"""
-        
+        """Calculate Normalized Discounted Cumulative Gain"""        
         if not recommended_items or not relevance_scores:
             return 0.0
         
@@ -1032,8 +987,7 @@ class PersonalizationMetrics:
         recommended_items: List[Dict[str, Any]],
         similarity_function: Optional[Callable] = None
     ) -> float:
-        """Calculate diversity of recommendations"""
-        
+        """Calculate diversity of recommendations"""        
         if len(recommended_items) <= 1:
             return 1.0
         
@@ -1055,8 +1009,7 @@ class PersonalizationMetrics:
         return 1.0 - average_similarity
     
     def _default_similarity(self, item1: Dict[str, Any], item2: Dict[str, Any]) -> float:
-        """Default similarity function based on categories and tags"""
-        
+        """Default similarity function based on categories and tags"""        
         categories1 = set(item1.get('categories', []))
         categories2 = set(item2.get('categories', []))
         
@@ -1080,8 +1033,7 @@ class PersonalizationMetrics:
         recommended_items: List[Dict[str, Any]],
         user_history: List[str]
     ) -> float:
-        """Calculate novelty of recommendations"""
-        
+        """Calculate novelty of recommendations"""        
         if not recommended_items:
             return 0.0
         
@@ -1107,8 +1059,7 @@ class PersonalizationMetrics:
         all_items: List[str],
         recommendable_items: List[str]
     ) -> float:
-        """Calculate catalog coverage"""
-        
+        """Calculate catalog coverage"""        
         if not all_items:
             return 0.0
         
@@ -1118,8 +1069,7 @@ class PersonalizationMetrics:
         self,
         evaluation_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate comprehensive personalization metrics report"""
-        
+        """Generate comprehensive personalization metrics report"""        
         try:
             report = {
                 'timestamp': datetime.utcnow().isoformat(),
@@ -1223,8 +1173,7 @@ class PersonalizationMetrics:
             return {'error': str(e)}
     
     async def _generate_insights(self, metrics: Dict[str, Any]) -> List[str]:
-        """Generate insights from metrics"""
-        
+        """Generate insights from metrics"""        
         insights = []
         
         # Precision insights
@@ -1254,8 +1203,7 @@ class PersonalizationMetrics:
         return insights
     
     async def _generate_recommendations(self, metrics: Dict[str, Any]) -> List[str]:
-        """Generate optimization recommendations from metrics"""
-        
+        """Generate optimization recommendations from metrics"""        
         recommendations = []
         
         precision_mean = metrics.get('precision', {}).get('mean', 0)
@@ -1282,10 +1230,8 @@ class PersonalizationMetrics:
 
 
 class ABTestingEngine:
-    """
-    A/B testing framework for personalization experiments.
-    """
-    
+    """    A/B testing framework for personalization experiments.
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -1307,8 +1253,7 @@ class ABTestingEngine:
         traffic_split: float = 0.5,
         metrics: List[str] = None
     ) -> Dict[str, Any]:
-        """Create a new A/B test experiment"""
-        
+        """Create a new A/B test experiment"""        
         if not metrics:
             metrics = ['engagement', 'conversion', 'satisfaction']
         
@@ -1341,8 +1286,7 @@ class ABTestingEngine:
         experiment_id: str,
         user_id: str
     ) -> str:
-        """Assign user to control or treatment group"""
-        
+        """Assign user to control or treatment group"""        
         if experiment_id not in self.active_experiments:
             return 'control'  # Default to control if experiment doesn't exist
         
@@ -1374,8 +1318,7 @@ class ABTestingEngine:
         metric_name: str,
         metric_value: float
     ) -> None:
-        """Record a metric value for an experiment"""
-        
+        """Record a metric value for an experiment"""        
         if experiment_id not in self.active_experiments:
             return
         
@@ -1391,8 +1334,7 @@ class ABTestingEngine:
         self,
         experiment_id: str
     ) -> Dict[str, Any]:
-        """Analyze A/B test results for statistical significance"""
-        
+        """Analyze A/B test results for statistical significance"""        
         if experiment_id not in self.active_experiments:
             return {'error': 'Experiment not found'}
         
@@ -1451,8 +1393,7 @@ class ABTestingEngine:
         treatment_values: List[float],
         metric_name: str
     ) -> Dict[str, Any]:
-        """Analyze statistical difference between control and treatment"""
-        
+        """Analyze statistical difference between control and treatment"""        
         try:
             control_mean = np.mean(control_values)
             treatment_mean = np.mean(treatment_values)
@@ -1512,8 +1453,7 @@ class ABTestingEngine:
         n_treatment: int,
         effect_size: float
     ) -> float:
-        """Calculate statistical power of the test"""
-        
+        """Calculate statistical power of the test"""        
         # Simplified power calculation
         # In practice, you'd use more sophisticated methods
         
@@ -1532,8 +1472,7 @@ class ABTestingEngine:
         self,
         analysis: Dict[str, Any]
     ) -> List[str]:
-        """Generate recommendations based on experiment results"""
-        
+        """Generate recommendations based on experiment results"""        
         recommendations = []
         
         # Check sample sizes
@@ -1568,10 +1507,8 @@ class ABTestingEngine:
 
 
 class PersonalizationReporter:
-    """
-    Generates comprehensive reports for personalization system performance.
-    """
-    
+    """    Generates comprehensive reports for personalization system performance.
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -1589,8 +1526,7 @@ class PersonalizationReporter:
         report_type: str,
         data_sources: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate a comprehensive personalization report"""
-        
+        """Generate a comprehensive personalization report"""        
         try:
             if report_type not in self.report_templates:
                 raise ValueError(f"Unknown report type: {report_type}")
@@ -1613,8 +1549,7 @@ class PersonalizationReporter:
             return {'error': str(e)}
     
     async def _generate_daily_report(self, data_sources: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate daily performance report"""
-        
+        """Generate daily performance report"""        
         analytics = data_sources.get('analytics')
         metrics = data_sources.get('metrics')
         
@@ -1642,8 +1577,7 @@ class PersonalizationReporter:
         return report
     
     async def _generate_weekly_report(self, data_sources: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate weekly performance report"""
-        
+        """Generate weekly performance report"""        
         report = {
             'title': 'Weekly Personalization Performance Report',
             'week_ending': datetime.utcnow().date().isoformat(),
@@ -1658,8 +1592,7 @@ class PersonalizationReporter:
         return report
     
     async def _generate_monthly_report(self, data_sources: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate monthly performance report"""
-        
+        """Generate monthly performance report"""        
         report = {
             'title': 'Monthly Personalization Performance Report',
             'month': datetime.utcnow().strftime('%Y-%m'),
@@ -1674,8 +1607,7 @@ class PersonalizationReporter:
         return report
     
     async def _generate_experiment_report(self, data_sources: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate A/B test experiment report"""
-        
+        """Generate A/B test experiment report"""        
         ab_testing = data_sources.get('ab_testing')
         experiment_id = data_sources.get('experiment_id')
         

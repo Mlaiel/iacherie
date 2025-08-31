@@ -1,5 +1,4 @@
-"""
-SEO Metrics Module - Advanced SEO Performance Tracking
+"""SEO Metrics Module - Advanced SEO Performance Tracking
 
 Comprehensive metrics collection, analysis, and reporting system for SEO performance
 monitoring, campaign tracking, and optimization effectiveness measurement.
@@ -11,9 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -27,16 +24,14 @@ import statistics
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Types of SEO metrics"""
-    COUNTER = "counter"
+    """Types of SEO metrics"""    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     TIMER = "timer"
     RATE = "rate"
 
 class MetricCategory(Enum):
-    """Categories of SEO metrics"""
-    CONTENT = "content"
+    """Categories of SEO metrics"""    CONTENT = "content"
     KEYWORDS = "keywords"
     TECHNICAL = "technical"
     PERFORMANCE = "performance"
@@ -47,16 +42,14 @@ class MetricCategory(Enum):
 
 @dataclass
 class MetricPoint:
-    """Single metric data point"""
-    timestamp: datetime
+    """Single metric data point"""    timestamp: datetime
     value: float
     labels: Dict[str, str] = field(default_factory=dict)
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 @dataclass
 class MetricSeries:
-    """Time series of metric points"""
-    name: str
+    """Time series of metric points"""    name: str
     metric_type: MetricType
     category: MetricCategory
     points: List[MetricPoint] = field(default_factory=list)
@@ -64,8 +57,7 @@ class MetricSeries:
     unit: str = ""
 
 class SEOMetricsCollector:
-    """
-    Advanced SEO metrics collection and analysis system.
+    """    Advanced SEO metrics collection and analysis system.
     
     Features:
     - Real-time metrics collection
@@ -76,8 +68,7 @@ class SEOMetricsCollector:
     - Custom metric definitions
     - Data aggregation and rollups
     - Export and reporting
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -116,8 +107,7 @@ class SEOMetricsCollector:
         }
         
     async def initialize(self):
-        """Initialize metrics collector"""
-        try:
+        """Initialize metrics collector"""        try:
             # Initialize core SEO metrics
             await self._initialize_core_metrics()
             
@@ -133,8 +123,7 @@ class SEOMetricsCollector:
             raise
     
     async def _initialize_core_metrics(self):
-        """Initialize core SEO metrics"""
-        
+        """Initialize core SEO metrics"""        
         core_metrics = [
             # Content Metrics
             MetricSeries(
@@ -224,8 +213,7 @@ class SEOMetricsCollector:
         metadata: Dict[str, Any] = None,
         timestamp: Optional[datetime] = None
     ):
-        """Record a single metric point"""
-        try:
+        """Record a single metric point"""        try:
             if metric_name not in self.metrics:
                 logger.warning(f"Unknown metric: {metric_name}")
                 return
@@ -247,8 +235,7 @@ class SEOMetricsCollector:
             logger.error(f"Error recording metric {metric_name}: {e}")
     
     def record_seo_analysis_metrics(self, analysis_results: Dict[str, Any]):
-        """Record metrics from SEO analysis results"""
-        try:
+        """Record metrics from SEO analysis results"""        try:
             content_id = analysis_results.get('content_id', 'unknown')
             labels = {'content_id': content_id}
             
@@ -314,8 +301,7 @@ class SEOMetricsCollector:
             logger.error(f"Error recording SEO analysis metrics: {e}")
     
     def record_campaign_metrics(self, campaign_data: Dict[str, Any]):
-        """Record metrics from campaign execution"""
-        try:
+        """Record metrics from campaign execution"""        try:
             campaign_id = campaign_data.get('campaign_id', 'unknown')
             labels = {'campaign_id': campaign_id}
             
@@ -341,8 +327,7 @@ class SEOMetricsCollector:
             logger.error(f"Error recording campaign metrics: {e}")
     
     def record_ranking_metrics(self, ranking_data: Dict[str, Any]):
-        """Record keyword ranking metrics"""
-        try:
+        """Record keyword ranking metrics"""        try:
             for keyword, ranking_info in ranking_data.items():
                 if isinstance(ranking_info, dict) and 'position' in ranking_info:
                     labels = {
@@ -369,8 +354,7 @@ class SEOMetricsCollector:
             logger.error(f"Error recording ranking metrics: {e}")
     
     def record_traffic_metrics(self, traffic_data: Dict[str, Any]):
-        """Record traffic and performance metrics"""
-        try:
+        """Record traffic and performance metrics"""        try:
             labels = {
                 'source': traffic_data.get('source', 'organic'),
                 'page': traffic_data.get('page', 'unknown')
@@ -419,8 +403,7 @@ class SEOMetricsCollector:
             logger.error(f"Error recording traffic metrics: {e}")
     
     def get_metric_summary(self, metric_name: str, time_window: timedelta = None) -> Dict[str, Any]:
-        """Get statistical summary of a metric"""
-        try:
+        """Get statistical summary of a metric"""        try:
             if metric_name not in self.metrics:
                 return {'error': f'Metric {metric_name} not found'}
             
@@ -463,8 +446,7 @@ class SEOMetricsCollector:
             return {'error': str(e)}
     
     def get_performance_dashboard(self) -> Dict[str, Any]:
-        """Get comprehensive performance dashboard data"""
-        try:
+        """Get comprehensive performance dashboard data"""        try:
             dashboard = {
                 'timestamp': datetime.utcnow().isoformat(),
                 'overview': {},
@@ -519,8 +501,7 @@ class SEOMetricsCollector:
             return {'error': str(e)}
     
     def _get_recent_average(self, metric_name: str, window_minutes: int = 60) -> float:
-        """Get average value for metric in recent time window"""
-        try:
+        """Get average value for metric in recent time window"""        try:
             if metric_name not in self.metric_buffers:
                 return 0.0
             
@@ -539,8 +520,7 @@ class SEOMetricsCollector:
             return 0.0
     
     def _calculate_trend(self, values: List[float]) -> str:
-        """Calculate trend direction for values"""
-        if len(values) < 2:
+        """Calculate trend direction for values"""        if len(values) < 2:
             return 'stable'
         
         # Simple linear trend calculation
@@ -555,8 +535,7 @@ class SEOMetricsCollector:
             return 'stable'
     
     def _check_alerts(self) -> List[Dict[str, Any]]:
-        """Check for metric-based alerts"""
-        alerts = []
+        """Check for metric-based alerts"""        alerts = []
         
         try:
             # SEO score drop alert
@@ -603,8 +582,7 @@ class SEOMetricsCollector:
         return alerts
     
     async def _metrics_aggregation_loop(self):
-        """Background task for metrics aggregation"""
-        while True:
+        """Background task for metrics aggregation"""        while True:
             try:
                 # Perform hourly aggregation
                 await self._aggregate_metrics('1h')
@@ -617,8 +595,7 @@ class SEOMetricsCollector:
                 await asyncio.sleep(300)  # Retry after 5 minutes
     
     async def _alert_monitoring_loop(self):
-        """Background task for alert monitoring"""
-        while True:
+        """Background task for alert monitoring"""        while True:
             try:
                 alerts = self._check_alerts()
                 
@@ -634,8 +611,7 @@ class SEOMetricsCollector:
                 await asyncio.sleep(300)
     
     async def _data_cleanup_loop(self):
-        """Background task for data cleanup based on retention policies"""
-        while True:
+        """Background task for data cleanup based on retention policies"""        while True:
             try:
                 await self._cleanup_old_data()
                 
@@ -647,19 +623,16 @@ class SEOMetricsCollector:
                 await asyncio.sleep(3600)  # Retry after 1 hour
     
     async def _aggregate_metrics(self, interval: str):
-        """Aggregate metrics for specified interval"""
-        # Implementation would aggregate raw metrics into time buckets
+        """Aggregate metrics for specified interval"""        # Implementation would aggregate raw metrics into time buckets
         logger.debug(f"Aggregating metrics for interval: {interval}")
     
     async def _process_alerts(self, alerts: List[Dict[str, Any]]):
-        """Process and send alerts"""
-        for alert in alerts:
+        """Process and send alerts"""        for alert in alerts:
             logger.warning(f"SEO Alert: {alert['message']}")
             # Implementation would send notifications via email, Slack, etc.
     
     async def _cleanup_old_data(self):
-        """Clean up old metric data based on retention policies"""
-        current_time = datetime.utcnow()
+        """Clean up old metric data based on retention policies"""        current_time = datetime.utcnow()
         
         for metric_name, metric in self.metrics.items():
             # Remove old points based on retention policy

@@ -1,12 +1,9 @@
-"""
-IA Influencer Agent - Enterprise Vault Manager
+"""IA Influencer Agent - Enterprise Vault Manager
 Secure HashiCorp Vault integration for secrets management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""
-
-import os
+"""import os
 import logging
 import hvac
 from typing import Dict, List, Optional, Any, Union
@@ -26,8 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 class VaultManager:
-    """
-    Enterprise-grade HashiCorp Vault manager for secure secrets operations.
+    """    Enterprise-grade HashiCorp Vault manager for secure secrets operations.
     
     Provides comprehensive vault operations including:
     - Multi-environment secret management
@@ -35,8 +31,7 @@ class VaultManager:
     - Policy management
     - Audit logging
     - High availability support
-    """
-    
+    """    
     def __init__(
         self,
         vault_url: str = None,
@@ -50,8 +45,7 @@ class VaultManager:
         timeout: int = 30,
         max_retries: int = 3
     ):
-        """
-        Initialize Vault manager with enterprise configuration.
+        """        Initialize Vault manager with enterprise configuration.
         
         Args:
             vault_url: Vault server URL
@@ -64,8 +58,7 @@ class VaultManager:
             client_key: Client private key for mutual TLS
             timeout: Request timeout in seconds
             max_retries: Maximum retry attempts for failed requests
-        """
-        self.config = SecretsConfig()
+        """        self.config = SecretsConfig()
         self.vault_url = vault_url or self.config.vault_url
         self.namespace = namespace or self.config.vault_namespace
         self.auth_method = auth_method or self.config.vault_auth_method
@@ -94,8 +87,7 @@ class VaultManager:
         client_cert: str,
         client_key: str
     ) -> hvac.Client:
-        """Initialize HashiCorp Vault client with security configuration."""
-        try:
+        """Initialize HashiCorp Vault client with security configuration."""        try:
             # Configure SSL/TLS
             ssl_context = ssl.create_default_context(cafile=certifi.where())
             if ca_cert:
@@ -119,8 +111,7 @@ class VaultManager:
             raise
     
     def _authenticate(self) -> bool:
-        """Authenticate with Vault using configured method."""
-        try:
+        """Authenticate with Vault using configured method."""        try:
             if self.auth_method == "kubernetes":
                 return self._authenticate_kubernetes()
             elif self.auth_method == "aws":
@@ -137,8 +128,7 @@ class VaultManager:
             raise
     
     def _authenticate_kubernetes(self) -> bool:
-        """Authenticate using Kubernetes service account."""
-        try:
+        """Authenticate using Kubernetes service account."""        try:
             # Load Kubernetes configuration
             if os.path.exists('/var/run/secrets/kubernetes.io/serviceaccount'):
                 config.load_incluster_config()
@@ -168,8 +158,7 @@ class VaultManager:
             return False
     
     def _authenticate_aws(self) -> bool:
-        """Authenticate using AWS IAM."""
-        try:
+        """Authenticate using AWS IAM."""        try:
             import boto3
             
             # Get AWS credentials
@@ -193,8 +182,7 @@ class VaultManager:
             return False
     
     def _authenticate_ldap(self) -> bool:
-        """Authenticate using LDAP credentials."""
-        try:
+        """Authenticate using LDAP credentials."""        try:
             result = self.client.auth.ldap.login(
                 username=self.config.ldap_username,
                 password=self.config.ldap_password
@@ -209,8 +197,7 @@ class VaultManager:
             return False
     
     def _authenticate_token(self) -> bool:
-        """Authenticate using token method."""
-        try:
+        """Authenticate using token method."""        try:
             if self.client.is_authenticated():
                 logger.info("Token authentication successful")
                 return True
@@ -229,8 +216,7 @@ class VaultManager:
         metadata: Dict[str, Any] = None,
         version: int = None
     ) -> bool:
-        """
-        Store secret in Vault with metadata and versioning.
+        """        Store secret in Vault with metadata and versioning.
         
         Args:
             path: Secret path in Vault
@@ -240,8 +226,7 @@ class VaultManager:
             
         Returns:
             bool: True if successful, False otherwise
-        """
-        try:
+        """        try:
             # Validate inputs
             if not self.validator.validate_secret_path(path):
                 raise ValueError(f"Invalid secret path: {path}")
@@ -293,8 +278,7 @@ class VaultManager:
         version: int = None,
         decrypt: bool = True
     ) -> Optional[Dict[str, Any]]:
-        """
-        Retrieve secret from Vault with automatic decryption.
+        """        Retrieve secret from Vault with automatic decryption.
         
         Args:
             path: Secret path in Vault
@@ -303,8 +287,7 @@ class VaultManager:
             
         Returns:
             dict: Secret data or None if not found
-        """
-        try:
+        """        try:
             # Validate path
             if not self.validator.validate_secret_path(path):
                 raise ValueError(f"Invalid secret path: {path}")
@@ -347,8 +330,7 @@ class VaultManager:
         versions: List[int] = None,
         permanent: bool = False
     ) -> bool:
-        """
-        Delete secret from Vault with optional version control.
+        """        Delete secret from Vault with optional version control.
         
         Args:
             path: Secret path in Vault
@@ -357,8 +339,7 @@ class VaultManager:
             
         Returns:
             bool: True if successful, False otherwise
-        """
-        try:
+        """        try:
             # Validate path
             if not self.validator.validate_secret_path(path):
                 raise ValueError(f"Invalid secret path: {path}")
@@ -396,8 +377,7 @@ class VaultManager:
         path: str = "",
         recursive: bool = True
     ) -> List[str]:
-        """
-        List secrets at specified path.
+        """        List secrets at specified path.
         
         Args:
             path: Base path to list secrets from
@@ -405,8 +385,7 @@ class VaultManager:
             
         Returns:
             list: List of secret paths
-        """
-        try:
+        """        try:
             # List secrets
             if self.config.vault_kv_version == 2:
                 response = self.client.secrets.kv.v2.list_secrets(path=path)
@@ -447,8 +426,7 @@ class VaultManager:
         policy_rules: str,
         description: str = None
     ) -> bool:
-        """
-        Create or update Vault policy.
+        """        Create or update Vault policy.
         
         Args:
             policy_name: Name of the policy
@@ -457,8 +435,7 @@ class VaultManager:
             
         Returns:
             bool: True if successful, False otherwise
-        """
-        try:
+        """        try:
             # Validate policy
             if not self.validator.validate_policy_name(policy_name):
                 raise ValueError(f"Invalid policy name: {policy_name}")
@@ -485,8 +462,7 @@ class VaultManager:
         db_role: str,
         ttl: str = "1h"
     ) -> Optional[Dict[str, str]]:
-        """
-        Generate dynamic database credentials.
+        """        Generate dynamic database credentials.
         
         Args:
             db_role: Database role name
@@ -494,8 +470,7 @@ class VaultManager:
             
         Returns:
             dict: Generated credentials or None if failed
-        """
-        try:
+        """        try:
             # Generate dynamic credentials
             response = self.client.secrets.database.generate_credentials(
                 name=db_role,
@@ -525,8 +500,7 @@ class VaultManager:
         lease_id: str,
         increment: int = None
     ) -> bool:
-        """
-        Renew a lease for dynamic secrets.
+        """        Renew a lease for dynamic secrets.
         
         Args:
             lease_id: Lease ID to renew
@@ -534,8 +508,7 @@ class VaultManager:
             
         Returns:
             bool: True if successful, False otherwise
-        """
-        try:
+        """        try:
             response = self.client.sys.renew_lease(
                 lease_id=lease_id,
                 increment=increment
@@ -556,16 +529,14 @@ class VaultManager:
         self,
         lease_id: str
     ) -> bool:
-        """
-        Revoke a lease for dynamic secrets.
+        """        Revoke a lease for dynamic secrets.
         
         Args:
             lease_id: Lease ID to revoke
             
         Returns:
             bool: True if successful, False otherwise
-        """
-        try:
+        """        try:
             self.client.sys.revoke_lease(lease_id=lease_id)
             
             # Log audit trail
@@ -580,13 +551,11 @@ class VaultManager:
             return False
     
     def get_vault_status(self) -> Dict[str, Any]:
-        """
-        Get Vault cluster status and health information.
+        """        Get Vault cluster status and health information.
         
         Returns:
             dict: Vault status information
-        """
-        try:
+        """        try:
             status = {
                 'initialized': self.client.sys.is_initialized(),
                 'sealed': self.client.sys.is_sealed(),
@@ -606,8 +575,7 @@ class VaultManager:
         backup_path: str,
         encryption_key: str = None
     ) -> bool:
-        """
-        Backup all secrets to encrypted file.
+        """        Backup all secrets to encrypted file.
         
         Args:
             backup_path: Path to store backup file
@@ -615,8 +583,7 @@ class VaultManager:
             
         Returns:
             bool: True if successful, False otherwise
-        """
-        try:
+        """        try:
             # Get all secrets
             all_secrets = {}
             secret_paths = self.list_secrets("", recursive=True)
@@ -666,8 +633,7 @@ class VaultManager:
         error: str = None,
         metadata: Dict[str, Any] = None
     ) -> None:
-        """Log audit events for compliance and security monitoring."""
-        audit_entry = {
+        """Log audit events for compliance and security monitoring."""        audit_entry = {
             'timestamp': datetime.utcnow().isoformat(),
             'action': action,
             'resource': resource,
@@ -689,14 +655,12 @@ class VaultManager:
 
 
 class VaultHealthChecker:
-    """Health checker for Vault cluster monitoring."""
-    
+    """Health checker for Vault cluster monitoring."""    
     def __init__(self, vault_manager: VaultManager):
         self.vault = vault_manager
         
     def check_health(self) -> Dict[str, Any]:
-        """Comprehensive Vault health check."""
-        health_status = {
+        """Comprehensive Vault health check."""        health_status = {
             'timestamp': datetime.utcnow().isoformat(),
             'overall_status': 'healthy',
             'checks': {}
@@ -736,8 +700,7 @@ class VaultHealthChecker:
 
 
 class InfluencerVaultManager(VaultManager):
-    """
-    Specialized Vault manager for IA Influencer Agent platform.
+    """    Specialized Vault manager for IA Influencer Agent platform.
     
     Handles secrets for:
     - AI processing engines
@@ -745,8 +708,7 @@ class InfluencerVaultManager(VaultManager):
     - Multi-platform API credentials  
     - Monetization payment systems
     - Content fingerprinting services
-    """
-    
+    """    
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.influencer_secrets_path = "ia-influencer"
@@ -764,8 +726,7 @@ class InfluencerVaultManager(VaultManager):
         credentials: Dict[str, str],
         permissions: List[str] = None
     ) -> bool:
-        """
-        Store API credentials for social media platforms.
+        """        Store API credentials for social media platforms.
         
         Args:
             platform: Platform name (youtube, instagram, tiktok, spotify, etc.)
@@ -774,8 +735,7 @@ class InfluencerVaultManager(VaultManager):
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             path = f"{self.api_credentials_path}/{platform}"
             
             # Validate platform-specific credentials
@@ -809,8 +769,7 @@ class InfluencerVaultManager(VaultManager):
         platform: str,
         validate_permissions: bool = True
     ) -> Optional[Dict[str, Any]]:
-        """
-        Retrieve and validate platform API credentials.
+        """        Retrieve and validate platform API credentials.
         
         Args:
             platform: Platform name
@@ -818,8 +777,7 @@ class InfluencerVaultManager(VaultManager):
             
         Returns:
             Validated credentials or None
-        """
-        try:
+        """        try:
             path = f"{self.api_credentials_path}/{platform}"
             credentials = self.get_secret(path)
             
@@ -844,8 +802,7 @@ class InfluencerVaultManager(VaultManager):
         api_keys: Dict[str, str],
         model_config: Dict[str, Any] = None
     ) -> bool:
-        """
-        Store AI model API keys and configurations.
+        """        Store AI model API keys and configurations.
         
         Args:
             model_name: AI model identifier (openai, anthropic, huggingface, etc.)
@@ -854,8 +811,7 @@ class InfluencerVaultManager(VaultManager):
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             path = f"{self.ai_models_path}/{model_name}"
             
             enhanced_data = {
@@ -886,8 +842,7 @@ class InfluencerVaultManager(VaultManager):
         encryption_keys: Dict[str, str],
         algorithm_config: Dict[str, Any] = None
     ) -> bool:
-        """
-        Store content protection encryption keys and fingerprint secrets.
+        """        Store content protection encryption keys and fingerprint secrets.
         
         Args:
             protection_type: Type of protection (audio, video, image, text)
@@ -896,8 +851,7 @@ class InfluencerVaultManager(VaultManager):
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             path = f"{self.protection_keys_path}/{protection_type}"
             
             enhanced_data = {
@@ -927,8 +881,7 @@ class InfluencerVaultManager(VaultManager):
         payment_secrets: Dict[str, str],
         webhook_config: Dict[str, Any] = None
     ) -> bool:
-        """
-        Store payment processor secrets and webhook configurations.
+        """        Store payment processor secrets and webhook configurations.
         
         Args:
             processor: Payment processor (stripe, paypal, wise, etc.)
@@ -937,8 +890,7 @@ class InfluencerVaultManager(VaultManager):
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             path = f"{self.payment_secrets_path}/{processor}"
             
             enhanced_data = {
@@ -969,8 +921,7 @@ class InfluencerVaultManager(VaultManager):
         algorithm_keys: Dict[str, str],
         vector_config: Dict[str, Any] = None
     ) -> bool:
-        """
-        Store fingerprinting algorithm secrets and vector database keys.
+        """        Store fingerprinting algorithm secrets and vector database keys.
         
         Args:
             fingerprint_engine: Fingerprinting engine (chromaprint, opencv, clip, etc.)
@@ -979,8 +930,7 @@ class InfluencerVaultManager(VaultManager):
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             path = f"{self.fingerprint_keys_path}/{fingerprint_engine}"
             
             enhanced_data = {
@@ -1006,8 +956,7 @@ class InfluencerVaultManager(VaultManager):
             return False
     
     def get_all_platform_credentials(self) -> Dict[str, Dict[str, Any]]:
-        """Get all platform API credentials."""
-        try:
+        """Get all platform API credentials."""        try:
             credentials = {}
             platforms = self.list_secrets(self.api_credentials_path)
             
@@ -1027,8 +976,7 @@ class InfluencerVaultManager(VaultManager):
         platform: str,
         new_credentials: Dict[str, str]
     ) -> bool:
-        """
-        Rotate platform API credentials with validation.
+        """        Rotate platform API credentials with validation.
         
         Args:
             platform: Platform name
@@ -1036,8 +984,7 @@ class InfluencerVaultManager(VaultManager):
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             # Validate new credentials
             if not self._validate_platform_credentials(platform, new_credentials):
                 raise ValueError(f"Invalid new credentials for {platform}")
@@ -1078,8 +1025,7 @@ class InfluencerVaultManager(VaultManager):
     
     # Platform-specific validation methods
     def _validate_platform_credentials(self, platform: str, credentials: Dict[str, str]) -> bool:
-        """Validate platform-specific credential format."""
-        required_fields = {
+        """Validate platform-specific credential format."""        required_fields = {
             'youtube': ['api_key', 'client_id', 'client_secret'],
             'instagram': ['access_token', 'app_id', 'app_secret'],
             'tiktok': ['access_token', 'client_key', 'client_secret'],
@@ -1094,20 +1040,17 @@ class InfluencerVaultManager(VaultManager):
         return all(field in credentials for field in platform_fields)
     
     def _validate_credential_permissions(self, platform: str, credentials: Dict[str, Any]) -> bool:
-        """Validate that credentials have required permissions."""
-        # Implementation would test actual API calls
+        """Validate that credentials have required permissions."""        # Implementation would test actual API calls
         # For now, return True if credentials exist
         return bool(credentials)
     
     def _test_platform_credentials(self, platform: str, credentials: Dict[str, str]) -> bool:
-        """Test platform credentials with actual API calls."""
-        # Implementation would make test API calls
+        """Test platform credentials with actual API calls."""        # Implementation would make test API calls
         # For now, return True if credentials are properly formatted
         return self._validate_platform_credentials(platform, credentials)
     
     def _get_platform_rotation_interval(self, platform: str) -> str:
-        """Get recommended rotation interval for platform."""
-        intervals = {
+        """Get recommended rotation interval for platform."""        intervals = {
             'youtube': '90d',
             'instagram': '60d',
             'tiktok': '60d',
@@ -1120,8 +1063,7 @@ class InfluencerVaultManager(VaultManager):
         return intervals.get(platform.lower(), '60d')
     
     def _get_platform_compliance_level(self, platform: str) -> str:
-        """Get compliance level required for platform."""
-        levels = {
+        """Get compliance level required for platform."""        levels = {
             'youtube': 'high',
             'instagram': 'high',
             'tiktok': 'medium',
@@ -1134,8 +1076,7 @@ class InfluencerVaultManager(VaultManager):
         return levels.get(platform.lower(), 'medium')
     
     def _get_model_rate_limits(self, model_name: str) -> Dict[str, int]:
-        """Get rate limits for AI model."""
-        limits = {
+        """Get rate limits for AI model."""        limits = {
             'openai': {'requests_per_minute': 3000, 'tokens_per_minute': 250000},
             'anthropic': {'requests_per_minute': 1000, 'tokens_per_minute': 100000},
             'huggingface': {'requests_per_minute': 1000, 'tokens_per_minute': 50000},
@@ -1144,8 +1085,7 @@ class InfluencerVaultManager(VaultManager):
         return limits.get(model_name.lower(), {'requests_per_minute': 500, 'tokens_per_minute': 25000})
     
     def _get_model_provider(self, model_name: str) -> str:
-        """Get model provider."""
-        providers = {
+        """Get model provider."""        providers = {
             'openai': 'OpenAI',
             'anthropic': 'Anthropic',
             'huggingface': 'Hugging Face',
@@ -1154,8 +1094,7 @@ class InfluencerVaultManager(VaultManager):
         return providers.get(model_name.lower(), 'Unknown')
     
     def _get_model_capabilities(self, model_name: str) -> List[str]:
-        """Get model capabilities."""
-        capabilities = {
+        """Get model capabilities."""        capabilities = {
             'openai': ['text_generation', 'embeddings', 'fine_tuning', 'moderation'],
             'anthropic': ['text_generation', 'analysis', 'reasoning'],
             'huggingface': ['text_generation', 'embeddings', 'classification', 'translation'],
@@ -1164,8 +1103,7 @@ class InfluencerVaultManager(VaultManager):
         return capabilities.get(model_name.lower(), ['text_generation'])
     
     def _get_model_cost_tier(self, model_name: str) -> str:
-        """Get model cost tier."""
-        tiers = {
+        """Get model cost tier."""        tiers = {
             'openai': 'premium',
             'anthropic': 'premium',
             'huggingface': 'standard',
@@ -1174,8 +1112,7 @@ class InfluencerVaultManager(VaultManager):
         return tiers.get(model_name.lower(), 'standard')
     
     def _get_protection_key_strength(self, protection_type: str) -> int:
-        """Get encryption key strength for protection type."""
-        strengths = {
+        """Get encryption key strength for protection type."""        strengths = {
             'audio': 256,
             'video': 256,
             'image': 256,
@@ -1184,8 +1121,7 @@ class InfluencerVaultManager(VaultManager):
         return strengths.get(protection_type.lower(), 256)
     
     def _get_protection_rotation_schedule(self, protection_type: str) -> str:
-        """Get rotation schedule for protection keys."""
-        schedules = {
+        """Get rotation schedule for protection keys."""        schedules = {
             'audio': '30d',
             'video': '30d',
             'image': '30d',
@@ -1194,8 +1130,7 @@ class InfluencerVaultManager(VaultManager):
         return schedules.get(protection_type.lower(), '30d')
     
     def _get_processor_currencies(self, processor: str) -> List[str]:
-        """Get supported currencies for payment processor."""
-        currencies = {
+        """Get supported currencies for payment processor."""        currencies = {
             'stripe': ['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY'],
             'paypal': ['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY', 'CHF'],
             'wise': ['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY', 'CHF', 'SEK', 'DKK'],
@@ -1204,8 +1139,7 @@ class InfluencerVaultManager(VaultManager):
         return currencies.get(processor.lower(), ['USD', 'EUR'])
     
     def _get_processor_limits(self, processor: str) -> Dict[str, Any]:
-        """Get transaction limits for payment processor."""
-        limits = {
+        """Get transaction limits for payment processor."""        limits = {
             'stripe': {'daily_limit': 1000000, 'transaction_limit': 99999},
             'paypal': {'daily_limit': 10000, 'transaction_limit': 10000},
             'wise': {'daily_limit': 500000, 'transaction_limit': 100000},
@@ -1214,8 +1148,7 @@ class InfluencerVaultManager(VaultManager):
         return limits.get(processor.lower(), {'daily_limit': 10000, 'transaction_limit': 1000})
     
     def _get_processor_regions(self, processor: str) -> List[str]:
-        """Get supported regions for payment processor."""
-        regions = {
+        """Get supported regions for payment processor."""        regions = {
             'stripe': ['US', 'EU', 'UK', 'CA', 'AU', 'JP', 'SG'],
             'paypal': ['US', 'EU', 'UK', 'CA', 'AU', 'JP', 'SG', 'IN', 'BR'],
             'wise': ['US', 'EU', 'UK', 'CA', 'AU', 'JP', 'SG', 'IN', 'BR', 'MX'],
@@ -1224,8 +1157,7 @@ class InfluencerVaultManager(VaultManager):
         return regions.get(processor.lower(), ['US', 'EU'])
     
     def _get_similarity_threshold(self, fingerprint_engine: str) -> float:
-        """Get similarity threshold for fingerprinting engine."""
-        thresholds = {
+        """Get similarity threshold for fingerprinting engine."""        thresholds = {
             'chromaprint': 0.85,
             'opencv': 0.90,
             'clip': 0.88,
@@ -1235,8 +1167,7 @@ class InfluencerVaultManager(VaultManager):
         return thresholds.get(fingerprint_engine.lower(), 0.85)
     
     def _get_fingerprint_accuracy(self, fingerprint_engine: str) -> str:
-        """Get accuracy level for fingerprinting engine."""
-        accuracies = {
+        """Get accuracy level for fingerprinting engine."""        accuracies = {
             'chromaprint': 'high',
             'opencv': 'very_high',
             'clip': 'high',
@@ -1246,8 +1177,7 @@ class InfluencerVaultManager(VaultManager):
         return accuracies.get(fingerprint_engine.lower(), 'medium')
     
     def _get_fingerprint_speed(self, fingerprint_engine: str) -> str:
-        """Get processing speed for fingerprinting engine."""
-        speeds = {
+        """Get processing speed for fingerprinting engine."""        speeds = {
             'chromaprint': 'fast',
             'opencv': 'medium',
             'clip': 'medium',
@@ -1257,8 +1187,7 @@ class InfluencerVaultManager(VaultManager):
         return speeds.get(fingerprint_engine.lower(), 'medium')
     
     def _get_supported_formats(self, fingerprint_engine: str) -> List[str]:
-        """Get supported formats for fingerprinting engine."""
-        formats = {
+        """Get supported formats for fingerprinting engine."""        formats = {
             'chromaprint': ['mp3', 'wav', 'flac', 'aac', 'm4a'],
             'opencv': ['mp4', 'avi', 'mov', 'mkv', 'webm'],
             'clip': ['jpg', 'png', 'gif', 'bmp', 'webp'],

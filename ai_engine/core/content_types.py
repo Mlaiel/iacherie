@@ -1,13 +1,10 @@
-"""
-Content Types - Core Content Type Definitions and Enumerations
+"""Content Types - Core Content Type Definitions and Enumerations
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive content type definitions, format specifications,
 and quality metrics for the IA Influencer Agent platform.
-"""
-
-import logging
+"""import logging
 from enum import Enum, IntEnum
 from typing import Dict, List, Any, Optional, Set
 from dataclasses import dataclass
@@ -15,8 +12,7 @@ from dataclasses import dataclass
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Core content types supported by the platform"""
-    # Media Types
+    """Core content types supported by the platform"""    # Media Types
     IMAGE = "image"
     VIDEO = "video"
     AUDIO = "audio"
@@ -67,8 +63,7 @@ class ContentType(Enum):
     TUTORIAL = "tutorial"
 
 class ContentFormat(Enum):
-    """Supported content formats"""
-    # Image Formats
+    """Supported content formats"""    # Image Formats
     JPEG = "jpeg"
     PNG = "png"
     GIF = "gif"
@@ -130,8 +125,7 @@ class ContentFormat(Enum):
     UNKNOWN = "unknown"
 
 class ContentQuality(IntEnum):
-    """Content quality levels"""
-    VERY_LOW = 1
+    """Content quality levels"""    VERY_LOW = 1
     LOW = 2
     BELOW_AVERAGE = 3
     AVERAGE = 4
@@ -143,8 +137,7 @@ class ContentQuality(IntEnum):
     PERFECT = 10
 
 class ContentStatus(Enum):
-    """Content processing and publication status"""
-    DRAFT = "draft"
+    """Content processing and publication status"""    DRAFT = "draft"
     IN_REVIEW = "in_review"
     NEEDS_REVISION = "needs_revision"
     APPROVED = "approved"
@@ -157,8 +150,7 @@ class ContentStatus(Enum):
     PENDING = "pending"
 
 class ContentCategory(Enum):
-    """Content categories for organization"""
-    ENTERTAINMENT = "entertainment"
+    """Content categories for organization"""    ENTERTAINMENT = "entertainment"
     EDUCATION = "education"
     NEWS = "news"
     LIFESTYLE = "lifestyle"
@@ -189,8 +181,7 @@ class ContentCategory(Enum):
     OTHER = "other"
 
 class ContentPlatform(Enum):
-    """Target platforms for content"""
-    YOUTUBE = "youtube"
+    """Target platforms for content"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
     TWITTER = "twitter"
@@ -215,8 +206,7 @@ class ContentPlatform(Enum):
     OTHER_PLATFORM = "other_platform"
 
 class ContentRights(Enum):
-    """Content rights and licensing"""
-    ORIGINAL = "original"
+    """Content rights and licensing"""    ORIGINAL = "original"
     LICENSED = "licensed"
     CREATIVE_COMMONS = "creative_commons"
     FAIR_USE = "fair_use"
@@ -226,8 +216,7 @@ class ContentRights(Enum):
     UNKNOWN_RIGHTS = "unknown_rights"
 
 class ContentModerationLevel(Enum):
-    """Content moderation levels"""
-    NONE = "none"
+    """Content moderation levels"""    NONE = "none"
     BASIC = "basic"
     STANDARD = "standard"
     STRICT = "strict"
@@ -235,8 +224,7 @@ class ContentModerationLevel(Enum):
 
 @dataclass
 class ContentSpecs:
-    """Technical specifications for content"""
-    # Size specifications
+    """Technical specifications for content"""    # Size specifications
     max_file_size: Optional[int] = None  # bytes
     min_file_size: Optional[int] = None  # bytes
     
@@ -267,8 +255,7 @@ class ContentSpecs:
 
 @dataclass
 class ContentMetadata:
-    """Metadata associated with content"""
-    title: Optional[str] = None
+    """Metadata associated with content"""    title: Optional[str] = None
     description: Optional[str] = None
     tags: Optional[List[str]] = None
     category: Optional[ContentCategory] = None
@@ -286,8 +273,7 @@ class ContentMetadata:
     custom_fields: Optional[Dict[str, Any]] = None
 
 class PlatformSpecs:
-    """Platform-specific content specifications"""
-    
+    """Platform-specific content specifications"""    
     # YouTube specifications
     YOUTUBE_SPECS = {
         ContentType.VIDEO: ContentSpecs(
@@ -391,8 +377,7 @@ class PlatformSpecs:
     
     @classmethod
     def get_platform_specs(cls, platform: ContentPlatform, content_type: ContentType) -> Optional[ContentSpecs]:
-        """Get specifications for a specific platform and content type"""
-        platform_specs_map = {
+        """Get specifications for a specific platform and content type"""        platform_specs_map = {
             ContentPlatform.YOUTUBE: cls.YOUTUBE_SPECS,
             ContentPlatform.INSTAGRAM: cls.INSTAGRAM_SPECS,
             ContentPlatform.TWITTER: cls.TWITTER_SPECS,
@@ -406,8 +391,7 @@ class PlatformSpecs:
     @classmethod
     def validate_content_for_platform(cls, platform: ContentPlatform, content_type: ContentType, 
                                     content_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate content against platform specifications"""
-        specs = cls.get_platform_specs(platform, content_type)
+        """Validate content against platform specifications"""        specs = cls.get_platform_specs(platform, content_type)
         
         if not specs:
             return {"valid": True, "warnings": [f"No specifications found for {platform.value} {content_type.value}"]}
@@ -462,12 +446,10 @@ class PlatformSpecs:
         return validation_result
 
 class ContentTypeUtils:
-    """Utility functions for content types"""
-    
+    """Utility functions for content types"""    
     @staticmethod
     def get_content_type_from_filename(filename: str) -> ContentType:
-        """Determine content type from filename extension"""
-        extension = filename.lower().split('.')[-1] if '.' in filename else ''
+        """Determine content type from filename extension"""        extension = filename.lower().split('.')[-1] if '.' in filename else ''
         
         image_extensions = {'jpg', 'jpeg', 'png', 'gif', 'svg', 'webp', 'tiff', 'bmp'}
         video_extensions = {'mp4', 'avi', 'mov', 'mkv', 'webm', 'flv', 'wmv'}
@@ -490,8 +472,7 @@ class ContentTypeUtils:
     
     @staticmethod
     def get_content_format_from_filename(filename: str) -> ContentFormat:
-        """Determine content format from filename extension"""
-        extension = filename.lower().split('.')[-1] if '.' in filename else ''
+        """Determine content format from filename extension"""        extension = filename.lower().split('.')[-1] if '.' in filename else ''
         
         format_mapping = {
             'jpg': ContentFormat.JPEG,
@@ -539,13 +520,11 @@ class ContentTypeUtils:
     
     @staticmethod
     def is_media_content(content_type: ContentType) -> bool:
-        """Check if content type is media (image, video, audio)"""
-        return content_type in {ContentType.IMAGE, ContentType.VIDEO, ContentType.AUDIO, ContentType.MUSIC}
+        """Check if content type is media (image, video, audio)"""        return content_type in {ContentType.IMAGE, ContentType.VIDEO, ContentType.AUDIO, ContentType.MUSIC}
     
     @staticmethod
     def is_text_content(content_type: ContentType) -> bool:
-        """Check if content type is text-based"""
-        return content_type in {
+        """Check if content type is text-based"""        return content_type in {
             ContentType.TEXT, ContentType.BLOG_POST, ContentType.ARTICLE,
             ContentType.CAPTION, ContentType.DESCRIPTION, ContentType.SOCIAL_POST,
             ContentType.TWEET
@@ -553,8 +532,7 @@ class ContentTypeUtils:
     
     @staticmethod
     def requires_processing(content_type: ContentType) -> bool:
-        """Check if content type typically requires AI processing"""
-        processing_types = {
+        """Check if content type typically requires AI processing"""        processing_types = {
             ContentType.IMAGE, ContentType.VIDEO, ContentType.AUDIO, ContentType.MUSIC,
             ContentType.TEXT, ContentType.BLOG_POST, ContentType.ARTICLE, ContentType.SOCIAL_POST
         }
@@ -562,8 +540,7 @@ class ContentTypeUtils:
     
     @staticmethod
     def get_recommended_platforms(content_type: ContentType, category: ContentCategory = None) -> List[ContentPlatform]:
-        """Get recommended platforms for content type and category"""
-        recommendations = {
+        """Get recommended platforms for content type and category"""        recommendations = {
             ContentType.IMAGE: [ContentPlatform.INSTAGRAM, ContentPlatform.PINTEREST, ContentPlatform.FACEBOOK],
             ContentType.VIDEO: [ContentPlatform.YOUTUBE, ContentPlatform.TIKTOK, ContentPlatform.INSTAGRAM],
             ContentType.AUDIO: [ContentPlatform.SPOTIFY, ContentPlatform.SOUNDCLOUD, ContentPlatform.YOUTUBE],

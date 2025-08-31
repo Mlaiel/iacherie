@@ -1,5 +1,4 @@
-"""
-Analytics Index Module - IA Influencer Agent + Content Protection Platform
+"""Analytics Index Module - IA Influencer Agent + Content Protection Platform
 
 Central analytics factory and management system for multi-format content creators
 (musicians, bloggers, photographers, influencers, comedians).
@@ -12,9 +11,7 @@ Architecture: Enterprise-grade, microservices-ready, production-optimized
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 Violations will be prosecuted under international copyright law.
-"""
-
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 from enum import Enum
 import logging
 from datetime import datetime
@@ -28,29 +25,24 @@ from .performance_tracker import PerformanceTracker
 logger = logging.getLogger(__name__)
 
 class AnalyticsType(str, Enum):
-    """Available analytics types"""
-    REVENUE = "revenue"
+    """Available analytics types"""    REVENUE = "revenue"
     CONTENT_PERFORMANCE = "content_performance"
     AUDIENCE_INTELLIGENCE = "audience_intelligence"
     PERFORMANCE_TRACKING = "performance_tracking"
     COMPREHENSIVE = "comprehensive"
 
 class AnalyticsFactory:
-    """
-    Enterprise-grade analytics factory
+    """    Enterprise-grade analytics factory
     
     Provides centralized access to all analytics services with
     standardized interfaces and cross-analytics insights.
-    """
-    
+    """    
     def __init__(self, db_session):
-        """
-        Initialize analytics factory with database session
+        """        Initialize analytics factory with database session
         
         Args:
             db_session: Database session for all analytics operations
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.logger = logging.getLogger(__name__)
         
         # Initialize all analytics managers
@@ -60,16 +52,14 @@ class AnalyticsFactory:
         self.performance_tracker = PerformanceTracker(db_session)
     
     def get_analytics_manager(self, analytics_type: AnalyticsType):
-        """
-        Get specific analytics manager by type
+        """        Get specific analytics manager by type
         
         Args:
             analytics_type: Type of analytics manager to retrieve
             
         Returns:
             Analytics manager instance
-        """
-        manager_map = {
+        """        manager_map = {
             AnalyticsType.REVENUE: self.revenue_manager,
             AnalyticsType.CONTENT_PERFORMANCE: self.content_manager,
             AnalyticsType.AUDIENCE_INTELLIGENCE: self.audience_manager,
@@ -88,8 +78,7 @@ class AnalyticsFactory:
         analysis_period_days: int = 30,
         include_predictions: bool = True
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive analytics across all categories
+        """        Generate comprehensive analytics across all categories
         
         Args:
             user_id: User identifier
@@ -98,8 +87,7 @@ class AnalyticsFactory:
             
         Returns:
             Dict containing all analytics results
-        """
-        try:
+        """        try:
             self.logger.info(f"Generating comprehensive analytics for user {user_id}")
             
             # Define analysis period
@@ -183,8 +171,7 @@ class AnalyticsFactory:
         audience_intelligence, 
         content_analytics: List
     ) -> List[Dict[str, Any]]:
-        """Generate insights that span multiple analytics categories"""
-        
+        """Generate insights that span multiple analytics categories"""        
         insights = []
         
         # Revenue vs Audience Growth correlation
@@ -237,8 +224,7 @@ class AnalyticsFactory:
         return insights
     
     def _calculate_average_engagement(self, content_analytics: List) -> float:
-        """Calculate average engagement rate across content"""
-        if not content_analytics:
+        """Calculate average engagement rate across content"""        if not content_analytics:
             return 0.0
         
         total_engagement = sum(
@@ -248,8 +234,7 @@ class AnalyticsFactory:
         return total_engagement / len(content_analytics)
     
     def _get_top_content_summary(self, content_analytics: List) -> List[Dict[str, Any]]:
-        """Get summary of top performing content"""
-        if not content_analytics:
+        """Get summary of top performing content"""        if not content_analytics:
             return []
         
         # Sort by engagement rate and take top 3
@@ -272,8 +257,7 @@ class AnalyticsFactory:
         ]
     
     def _extract_content_insights(self, content_analytics: List) -> List[Dict[str, Any]]:
-        """Extract key insights from content analytics"""
-        if not content_analytics:
+        """Extract key insights from content analytics"""        if not content_analytics:
             return []
         
         insights = []
@@ -311,8 +295,7 @@ class AnalyticsFactory:
         audience_intelligence,
         content_analytics: List
     ) -> List[Dict[str, Any]]:
-        """Generate comprehensive recommendations across all analytics"""
-        
+        """Generate comprehensive recommendations across all analytics"""        
         recommendations = []
         
         # Revenue optimization recommendations
@@ -368,8 +351,7 @@ class AnalyticsFactory:
         user_id: int,
         timeframe: str = "monthly"
     ) -> Dict[str, Any]:
-        """
-        Get analytics data formatted for dashboard display
+        """        Get analytics data formatted for dashboard display
         
         Args:
             user_id: User identifier
@@ -377,8 +359,7 @@ class AnalyticsFactory:
             
         Returns:
             Dashboard-ready analytics data
-        """
-        try:
+        """        try:
             # Get latest analytics data
             recent_revenue = await self.revenue_manager.get_user_revenue_insights(
                 user_id=user_id,
@@ -421,8 +402,7 @@ class AnalyticsFactory:
             raise
     
     async def _generate_quick_recommendations(self, user_id: int) -> List[Dict[str, str]]:
-        """Generate quick actionable recommendations for dashboard"""
-        
+        """Generate quick actionable recommendations for dashboard"""        
         # This would analyze recent performance and generate quick wins
         # For now, returning sample recommendations
         return [
@@ -448,8 +428,7 @@ class AnalyticsFactory:
         user_id: int,
         analysis_period_days: int = 30
     ) -> Dict[str, Any]:
-        """
-        Generate AI-powered content protection analytics
+        """        Generate AI-powered content protection analytics
         
         Args:
             user_id: User identifier
@@ -457,8 +436,7 @@ class AnalyticsFactory:
             
         Returns:
             Dict containing protection analytics results
-        """
-        try:
+        """        try:
             self.logger.info(f"Generating AI protection analytics for user {user_id}")
             
             # Define analysis period
@@ -535,8 +513,7 @@ class AnalyticsFactory:
         user_id: int,
         analysis_period_days: int = 90
     ) -> Dict[str, Any]:
-        """
-        Generate collaboration performance analytics
+        """        Generate collaboration performance analytics
         
         Args:
             user_id: User identifier
@@ -544,8 +521,7 @@ class AnalyticsFactory:
             
         Returns:
             Dict containing collaboration analytics
-        """
-        try:
+        """        try:
             self.logger.info(f"Generating collaboration analytics for user {user_id}")
             
             # Get collaboration data
@@ -607,8 +583,7 @@ class AnalyticsFactory:
         user_id: int,
         analysis_period_days: int = 30
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive monetization analytics
+        """        Generate comprehensive monetization analytics
         
         Args:
             user_id: User identifier
@@ -616,8 +591,7 @@ class AnalyticsFactory:
             
         Returns:
             Dict containing monetization analytics
-        """
-        try:
+        """        try:
             self.logger.info(f"Generating monetization analytics for user {user_id}")
             
             # Get monetization data
@@ -688,8 +662,7 @@ class AnalyticsFactory:
     
     # Helper methods for new analytics functions
     async def _get_content_protection_data(self, user_id: int, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get content protection data for analytics"""
-        # This would integrate with the content protection module
+        """Get content protection data for analytics"""        # This would integrate with the content protection module
         # For now, returning simulated data
         return {
             "fingerprints_count": 150,
@@ -715,8 +688,7 @@ class AnalyticsFactory:
         }
     
     async def _analyze_copyright_claims(self, protection_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze copyright claims performance"""
-        claims_data = protection_data.get("claims_data", {})
+        """Analyze copyright claims performance"""        claims_data = protection_data.get("claims_data", {})
         return {
             "total_claims": claims_data.get("total_claims", 0),
             "successful_claims": claims_data.get("successful_claims", 0),
@@ -727,8 +699,7 @@ class AnalyticsFactory:
         }
     
     async def _calculate_protection_effectiveness(self, protection_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate protection effectiveness metrics"""
-        violations_data = protection_data.get("violations_data", {})
+        """Calculate protection effectiveness metrics"""        violations_data = protection_data.get("violations_data", {})
         return {
             "monitored_content": violations_data.get("monitored_content", 0),
             "violations_detected": violations_data.get("violations_detected", 0),
@@ -739,8 +710,7 @@ class AnalyticsFactory:
         }
     
     async def _analyze_revenue_recovery(self, protection_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze revenue recovery from protection efforts"""
-        # Simulated revenue recovery calculations
+        """Analyze revenue recovery from protection efforts"""        # Simulated revenue recovery calculations
         return {
             "total_recovered": 1250.50,
             "losses_prevented": 3500.75,
@@ -750,8 +720,7 @@ class AnalyticsFactory:
         }
     
     async def _generate_protection_insights(self, copyright_analytics: Dict, protection_effectiveness: Dict, revenue_recovery: Dict) -> List[Dict[str, Any]]:
-        """Generate protection insights"""
-        insights = []
+        """Generate protection insights"""        insights = []
         
         # High success rate insight
         success_rate = copyright_analytics.get("success_rate", 0)
@@ -776,8 +745,7 @@ class AnalyticsFactory:
         return insights
     
     async def _generate_protection_recommendations(self, copyright_analytics: Dict, protection_effectiveness: Dict, revenue_recovery: Dict) -> List[Dict[str, Any]]:
-        """Generate protection recommendations"""
-        recommendations = []
+        """Generate protection recommendations"""        recommendations = []
         
         success_rate = copyright_analytics.get("success_rate", 0)
         if success_rate < 0.7:
@@ -796,8 +764,7 @@ class AnalyticsFactory:
         return recommendations
     
     async def _get_collaboration_data(self, user_id: int, analysis_period_days: int) -> Dict[str, Any]:
-        """Get collaboration data for analytics"""
-        # This would query collaboration tables
+        """Get collaboration data for analytics"""        # This would query collaboration tables
         return {
             "total_collaborations": 8,
             "active_partnerships": 3,
@@ -814,8 +781,7 @@ class AnalyticsFactory:
         }
     
     async def _analyze_collaboration_performance(self, collaboration_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze collaboration performance"""
-        return {
+        """Analyze collaboration performance"""        return {
             "total_collaborations": collaboration_data.get("total_collaborations", 0),
             "active_partnerships": collaboration_data.get("active_partnerships", 0),
             "success_rate": 0.85,
@@ -828,8 +794,7 @@ class AnalyticsFactory:
         }
     
     async def _calculate_collaboration_roi(self, collaboration_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate collaboration ROI"""
-        roi_data = collaboration_data.get("roi_data", {})
+        """Calculate collaboration ROI"""        roi_data = collaboration_data.get("roi_data", {})
         return {
             "revenue_generated": roi_data.get("revenue_generated", 0),
             "investment_cost": roi_data.get("investment_cost", 0),
@@ -839,8 +804,7 @@ class AnalyticsFactory:
         }
     
     async def _generate_collaboration_insights(self, collaboration_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate collaboration insights"""
-        return {
+        """Generate collaboration insights"""        return {
             "top_partners": ["@partner1", "@partner2", "@partner3"],
             "compatibility_scores": {"@partner1": 0.92, "@partner2": 0.88},
             "audience_overlap": {"@partner1": 0.15, "@partner2": 0.22},
@@ -855,8 +819,7 @@ class AnalyticsFactory:
         }
     
     async def _generate_collaboration_recommendations(self, collaboration_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate collaboration recommendations"""
-        return [
+        """Generate collaboration recommendations"""        return [
             {
                 "category": "partnership_expansion",
                 "priority": "medium",
@@ -871,8 +834,7 @@ class AnalyticsFactory:
         ]
     
     async def _get_monetization_data(self, user_id: int, analysis_period_days: int) -> Dict[str, Any]:
-        """Get monetization data for analytics"""
-        # This would query monetization tables
+        """Get monetization data for analytics"""        # This would query monetization tables
         return {
             "revenue_streams": {
                 "total_revenue": 3500.0,
@@ -890,8 +852,7 @@ class AnalyticsFactory:
         }
     
     async def _analyze_revenue_streams(self, monetization_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze revenue streams"""
-        streams = monetization_data.get("revenue_streams", {})
+        """Analyze revenue streams"""        streams = monetization_data.get("revenue_streams", {})
         total = streams.get("total_revenue", 0)
         
         return {
@@ -909,8 +870,7 @@ class AnalyticsFactory:
         }
     
     async def _calculate_monetization_efficiency(self, monetization_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate monetization efficiency"""
-        efficiency = monetization_data.get("efficiency_metrics", {})
+        """Calculate monetization efficiency"""        efficiency = monetization_data.get("efficiency_metrics", {})
         return {
             "revenue_per_follower": efficiency.get("revenue_per_follower", 0),
             "revenue_per_engagement": 0.15,
@@ -920,8 +880,7 @@ class AnalyticsFactory:
         }
     
     async def _analyze_market_opportunities(self, user_id: int, monetization_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze market opportunities"""
-        return {
+        """Analyze market opportunities"""        return {
             "untapped_potential": 2500.0,
             "market_position": "growing",
             "competitive_advantage": ["unique_content", "engaged_audience"],
@@ -930,8 +889,7 @@ class AnalyticsFactory:
         }
     
     async def _generate_monetization_insights(self, monetization_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate monetization insights"""
-        return {
+        """Generate monetization insights"""        return {
             "predicted_revenue": 4200.0,
             "growth_trajectory": "accelerating",
             "milestones": ["5K monthly revenue", "10 revenue streams"],
@@ -946,8 +904,7 @@ class AnalyticsFactory:
         }
     
     async def _generate_monetization_recommendations(self, monetization_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate monetization recommendations"""
-        return [
+        """Generate monetization recommendations"""        return [
             {
                 "category": "revenue_optimization",
                 "priority": "high",

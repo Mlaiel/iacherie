@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Advanced Content Monitoring Tests - Industrial Grade
+"""Advanced Content Monitoring Tests - Industrial Grade
 
 Comprehensive, enterprise-level test suite for content processing and monitoring system.
 Tests multi-format content processing, protection validation, and quality assurance with real scenarios.
@@ -27,9 +23,7 @@ WARNING: This code is the intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use of this code without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted to the full
 extent of the law.
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -72,12 +66,10 @@ from .fixtures import (
 
 
 class TestContentProcessingMonitorCore:
-    """Core functionality tests for content processing monitor."""
-    
+    """Core functionality tests for content processing monitor."""    
     @pytest.fixture
     async def content_monitor(self):
-        """Create and initialize content processing monitor."""
-        monitor = ContentProcessingMonitor(
+        """Create and initialize content processing monitor."""        monitor = ContentProcessingMonitor(
             config={
                 "supported_formats": ["video", "audio", "image", "text", "document"],
                 "max_file_size_mb": 500,
@@ -95,12 +87,10 @@ class TestContentProcessingMonitorCore:
     
     @pytest.fixture
     def content_samples(self, content_test_data):
-        """Generate realistic content samples for testing."""
-        return content_test_data["production_samples"]
+        """Generate realistic content samples for testing."""        return content_test_data["production_samples"]
     
     async def test_monitor_initialization_comprehensive(self, content_monitor):
-        """Test comprehensive initialization of content processing monitor."""
-        # Verify core components
+        """Test comprehensive initialization of content processing monitor."""        # Verify core components
         assert content_monitor is not None
         assert content_monitor.is_initialized
         assert content_monitor.quality_analyzer is not None
@@ -140,8 +130,7 @@ class TestContentProcessingMonitorCore:
         assert all(stage in pipeline_stages for stage in expected_stages)
     
     async def test_content_upload_processing(self, content_monitor, content_samples):
-        """Test comprehensive content upload and initial processing."""
-        upload_results = []
+        """Test comprehensive content upload and initial processing."""        upload_results = []
         
         for sample in content_samples:
             content_id = sample["content_id"]
@@ -181,8 +170,7 @@ class TestContentProcessingMonitorCore:
         assert "average_file_size" in upload_stats
     
     async def test_content_validation_comprehensive(self, content_monitor):
-        """Test comprehensive content validation including format, size, and compliance."""
-        validation_scenarios = [
+        """Test comprehensive content validation including format, size, and compliance."""        validation_scenarios = [
             {
                 "content_id": "valid_video_001",
                 "content_type": ContentType.VIDEO,
@@ -261,8 +249,7 @@ class TestContentProcessingMonitorCore:
         assert "common_errors" in validation_stats
     
     async def test_content_quality_analysis(self, content_monitor):
-        """Test comprehensive content quality analysis and scoring."""
-        quality_test_cases = [
+        """Test comprehensive content quality analysis and scoring."""        quality_test_cases = [
             {
                 "content_id": "high_quality_video",
                 "content_type": ContentType.VIDEO,
@@ -348,8 +335,7 @@ class TestContentProcessingMonitorCore:
                 assert len(suggestions) > 0
     
     async def test_content_protection_validation(self, content_monitor, protection_test_cases):
-        """Test content protection mechanisms and validation."""
-        protection_results = []
+        """Test content protection mechanisms and validation."""        protection_results = []
         
         for test_case in protection_test_cases:
             content_id = test_case["content_id"]
@@ -405,8 +391,7 @@ class TestContentProcessingMonitorCore:
         assert "protection_types_used" in protection_stats
     
     async def test_content_processing_pipeline(self, content_monitor):
-        """Test complete content processing pipeline from upload to distribution."""
-        pipeline_test_content = {
+        """Test complete content processing pipeline from upload to distribution."""        pipeline_test_content = {
             "content_id": "pipeline_test_001",
             "user_id": "test_user_001",
             "content_type": ContentType.VIDEO,
@@ -501,8 +486,7 @@ class TestContentProcessingMonitorCore:
         assert pipeline_summary["completed_stages"] == pipeline_summary["total_stages"]
     
     async def test_content_compliance_checking(self, content_monitor):
-        """Test content compliance checking for legal and platform requirements."""
-        compliance_test_cases = [
+        """Test content compliance checking for legal and platform requirements."""        compliance_test_cases = [
             {
                 "content_id": "compliant_content_001",
                 "content_metadata": {
@@ -590,12 +574,10 @@ class TestContentProcessingMonitorCore:
 
 
 class TestContentAnalyticsAndInsights:
-    """Tests for content analytics and business insights generation."""
-    
+    """Tests for content analytics and business insights generation."""    
     @pytest.fixture
     async def analytics_monitor(self):
-        """Create analytics-focused content monitor."""
-        monitor = ContentProcessingMonitor(
+        """Create analytics-focused content monitor."""        monitor = ContentProcessingMonitor(
             config={
                 "analytics_enabled": True,
                 "insights_generation": True,
@@ -609,8 +591,7 @@ class TestContentAnalyticsAndInsights:
         await monitor.shutdown()
     
     async def test_content_performance_analytics(self, analytics_monitor):
-        """Test comprehensive content performance analytics."""
-        # Generate content performance data
+        """Test comprehensive content performance analytics."""        # Generate content performance data
         performance_scenarios = [
             {
                 "content_id": "viral_video_001",
@@ -689,8 +670,7 @@ class TestContentAnalyticsAndInsights:
         assert video_metrics["avg_revenue"] > audio_metrics["avg_revenue"]
     
     async def test_user_content_behavior_analysis(self, analytics_monitor):
-        """Test user behavior analysis related to content."""
-        # Simulate user content interactions
+        """Test user behavior analysis related to content."""        # Simulate user content interactions
         user_interactions = [
             {
                 "user_id": "power_user_001",
@@ -752,8 +732,7 @@ class TestContentAnalyticsAndInsights:
         assert quality_correlation > 0.5  # Positive correlation
     
     async def test_content_trend_analysis(self, analytics_monitor):
-        """Test content trend analysis and prediction."""
-        # Generate trending content data over time
+        """Test content trend analysis and prediction."""        # Generate trending content data over time
         trend_data = []
         base_date = datetime.utcnow() - timedelta(days=30)
         
@@ -819,12 +798,10 @@ class TestContentAnalyticsAndInsights:
 
 
 class TestContentDistributionMonitoring:
-    """Tests for content distribution and delivery monitoring."""
-    
+    """Tests for content distribution and delivery monitoring."""    
     @pytest.fixture
     async def distribution_monitor(self):
-        """Create distribution-focused content monitor."""
-        monitor = ContentProcessingMonitor(
+        """Create distribution-focused content monitor."""        monitor = ContentProcessingMonitor(
             config={
                 "distribution_tracking": True,
                 "delivery_monitoring": True,
@@ -838,8 +815,7 @@ class TestContentDistributionMonitoring:
         await monitor.shutdown()
     
     async def test_distribution_channel_monitoring(self, distribution_monitor, distribution_scenarios):
-        """Test monitoring of content distribution across different channels."""
-        distribution_results = []
+        """Test monitoring of content distribution across different channels."""        distribution_results = []
         
         for scenario in distribution_scenarios:
             content_id = scenario["content_id"]
@@ -898,8 +874,7 @@ class TestContentDistributionMonitoring:
         assert "average_distribution_time" in distribution_analysis
     
     async def test_cdn_performance_monitoring(self, distribution_monitor):
-        """Test CDN performance monitoring and optimization."""
-        # Simulate CDN performance data
+        """Test CDN performance monitoring and optimization."""        # Simulate CDN performance data
         cdn_regions = ["us-east", "us-west", "eu-central", "asia-pacific"]
         performance_data = []
         
@@ -963,8 +938,7 @@ class TestContentDistributionMonitoring:
             assert "implementation_priority" in recommendation
     
     async def test_global_delivery_optimization(self, distribution_monitor):
-        """Test global content delivery optimization."""
-        # Simulate global user access patterns
+        """Test global content delivery optimization."""        # Simulate global user access patterns
         global_access_data = [
             {"region": "North America", "users": 45000, "peak_hours": [19, 20, 21]},
             {"region": "Europe", "users": 32000, "peak_hours": [20, 21, 22]},
@@ -1018,12 +992,10 @@ class TestContentDistributionMonitoring:
 
 @pytest.mark.performance
 class TestContentMonitoringPerformance:
-    """Performance tests for content monitoring system."""
-    
+    """Performance tests for content monitoring system."""    
     @pytest.fixture
     async def performance_monitor(self):
-        """Create high-performance content monitor."""
-        monitor = ContentProcessingMonitor(
+        """Create high-performance content monitor."""        monitor = ContentProcessingMonitor(
             config={
                 "high_performance_mode": True,
                 "batch_processing": True,
@@ -1037,8 +1009,7 @@ class TestContentMonitoringPerformance:
         await monitor.shutdown()
     
     async def test_high_volume_content_processing(self, performance_monitor):
-        """Test content processing under high volume load."""
-        # Generate large number of content items
+        """Test content processing under high volume load."""        # Generate large number of content items
         content_count = 10000
         
         async def process_content_batch(batch_id, batch_size):
@@ -1088,8 +1059,7 @@ class TestContentMonitoringPerformance:
         assert throughput >= 150  # At least 150 items per second
     
     async def test_concurrent_quality_analysis(self, performance_monitor):
-        """Test concurrent quality analysis performance."""
-        # Setup concurrent quality analysis tasks
+        """Test concurrent quality analysis performance."""        # Setup concurrent quality analysis tasks
         analysis_tasks = []
         
         for i in range(100):
@@ -1161,25 +1131,21 @@ from ai.monitoring.content_monitoring import (
 from .utils import TestDataGenerator, PerformanceValidator
 
 class TestContentProcessingMonitor:
-    """Test suite for Content Processing Monitor."""
-    
+    """Test suite for Content Processing Monitor."""    
     @pytest.fixture
     async def content_monitor(self):
-        """Create Content Processing Monitor instance."""
-        monitor = ContentProcessingMonitor()
+        """Create Content Processing Monitor instance."""        monitor = ContentProcessingMonitor()
         await monitor.initialize()
         yield monitor
         await monitor.shutdown()
     
     @pytest.fixture
     def content_test_data(self):
-        """Generate comprehensive content test data."""
-        return TestDataGenerator.generate_content_processing_data(num_contents=50)
+        """Generate comprehensive content test data."""        return TestDataGenerator.generate_content_processing_data(num_contents=50)
     
     @pytest.fixture
     def temp_content_files(self):
-        """Create temporary content files for testing."""
-        temp_dir = Path(tempfile.mkdtemp())
+        """Create temporary content files for testing."""        temp_dir = Path(tempfile.mkdtemp())
         
         # Create sample content files
         files = {
@@ -1207,16 +1173,14 @@ class TestContentProcessingMonitor:
         shutil.rmtree(temp_dir, ignore_errors=True)
     
     async def test_monitor_initialization(self, content_monitor):
-        """Test proper initialization of content processing monitor."""
-        assert content_monitor is not None
+        """Test proper initialization of content processing monitor."""        assert content_monitor is not None
         assert content_monitor.is_initialized
         assert content_monitor.pipeline_tracker is not None
         assert content_monitor.quality_assessor is not None
         assert content_monitor.performance_metrics is not None
     
     async def test_content_upload_monitoring(self, content_monitor, temp_content_files):
-        """Test content upload process monitoring."""
-        # Test different content types
+        """Test content upload process monitoring."""        # Test different content types
         for content_type, file_path in temp_content_files.items():
             upload_start_time = datetime.utcnow()
             
@@ -1273,8 +1237,7 @@ class TestContentProcessingMonitor:
             assert upload_metrics.status == ContentStatus.UPLOADED
     
     async def test_processing_pipeline_monitoring(self, content_monitor):
-        """Test comprehensive processing pipeline monitoring."""
-        content_id = "test_pipeline_content_001"
+        """Test comprehensive processing pipeline monitoring."""        content_id = "test_pipeline_content_001"
         content_type = ContentType.AUDIO
         
         # Initialize content for processing
@@ -1394,8 +1357,7 @@ class TestContentProcessingMonitor:
             assert stage_metrics.success == True
     
     async def test_quality_assessment_monitoring(self, content_monitor, temp_content_files):
-        """Test content quality assessment monitoring."""
-        # Test quality assessment for different content types
+        """Test content quality assessment monitoring."""        # Test quality assessment for different content types
         for content_type, file_path in temp_content_files.items():
             content_id = f"quality_test_{content_type}_{datetime.utcnow().timestamp()}"
             
@@ -1488,8 +1450,7 @@ class TestContentProcessingMonitor:
                 assert len(recommendations) > 0
     
     async def test_real_time_processing_monitoring(self, content_monitor):
-        """Test real-time processing monitoring and alerting."""
-        # Set up real-time monitoring
+        """Test real-time processing monitoring and alerting."""        # Set up real-time monitoring
         processing_events = []
         alerts_triggered = []
         
@@ -1571,8 +1532,7 @@ class TestContentProcessingMonitor:
         assert "processing_delay" in alert_types or "processing_error" in alert_types
     
     async def test_performance_optimization_monitoring(self, content_monitor):
-        """Test processing performance optimization monitoring."""
-        # Initialize performance optimization tracking
+        """Test processing performance optimization monitoring."""        # Initialize performance optimization tracking
         optimization_config = {
             "enable_auto_optimization": True,
             "performance_targets": {
@@ -1665,8 +1625,7 @@ class TestContentProcessingMonitor:
         assert "performance_improvement" in auto_optimizations
     
     async def test_content_analytics_and_insights(self, content_monitor, content_test_data):
-        """Test content analytics and insights generation."""
-        # Record comprehensive content processing data
+        """Test content analytics and insights generation."""        # Record comprehensive content processing data
         for content_data in content_test_data:
             content_id = content_data["content_id"]
             
@@ -1758,8 +1717,7 @@ class TestContentProcessingMonitor:
             assert "actionable_recommendations" in insight
     
     async def test_pipeline_bottleneck_detection(self, content_monitor):
-        """Test processing pipeline bottleneck detection and analysis."""
-        # Simulate processing pipeline with bottlenecks
+        """Test processing pipeline bottleneck detection and analysis."""        # Simulate processing pipeline with bottlenecks
         bottleneck_scenarios = [
             {
                 "scenario": "protection_bottleneck",

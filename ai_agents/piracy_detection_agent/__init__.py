@@ -17,9 +17,7 @@ Features:
 - Streaming site detection
 - File sharing platform monitoring
 - AI-powered content matching
-"""
-
-from .manager import PiracyDetectionManager
+"""from .manager import PiracyDetectionManager
 from .core.deep_web_scanner import DeepWebScanner
 from .core.torrent_monitor import TorrentMonitor
 from .core.streaming_detector import StreamingDetector

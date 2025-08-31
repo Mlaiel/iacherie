@@ -1,12 +1,9 @@
-"""
-IA Influencer Agent - Secrets Configuration Management
+"""IA Influencer Agent - Secrets Configuration Management
 Enterprise configuration for secrets deployment and management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
-"""
-
-import os
+"""import os
 import logging
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -17,16 +14,14 @@ from enum import Enum
 
 
 class Environment(Enum):
-    """Deployment environments."""
-    DEVELOPMENT = "development"
+    """Deployment environments."""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
 
 
 class SecretProvider(Enum):
-    """Secret provider types."""
-    HASHICORP_VAULT = "hashicorp_vault"
+    """Secret provider types."""    HASHICORP_VAULT = "hashicorp_vault"
     KUBERNETES_SECRETS = "kubernetes_secrets"
     AWS_SECRETS_MANAGER = "aws_secrets_manager"
     AZURE_KEY_VAULT = "azure_key_vault"
@@ -34,8 +29,7 @@ class SecretProvider(Enum):
 
 
 class EncryptionAlgorithm(Enum):
-    """Encryption algorithms."""
-    AES_256_GCM = "aes_256_gcm"
+    """Encryption algorithms."""    AES_256_GCM = "aes_256_gcm"
     FERNET = "fernet"
     RSA_OAEP = "rsa_oaep"
     CHACHA20_POLY1305 = "chacha20_poly1305"
@@ -43,8 +37,7 @@ class EncryptionAlgorithm(Enum):
 
 @dataclass
 class VaultConfig:
-    """HashiCorp Vault configuration."""
-    url: str = "https://vault.ia-influencer.com"
+    """HashiCorp Vault configuration."""    url: str = "https://vault.ia-influencer.com"
     token: Optional[str] = None
     auth_method: str = "kubernetes"
     namespace: Optional[str] = "ia-influencer"
@@ -62,8 +55,7 @@ class VaultConfig:
 
 @dataclass
 class KubernetesConfig:
-    """Kubernetes secrets configuration."""
-    namespace: str = "ia-influencer"
+    """Kubernetes secrets configuration."""    namespace: str = "ia-influencer"
     service_account: str = "secrets-manager"
     token_path: str = "/var/run/secrets/kubernetes.io/serviceaccount/token"
     ca_cert_path: str = "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
@@ -73,8 +65,7 @@ class KubernetesConfig:
 
 @dataclass
 class AWSConfig:
-    """AWS Secrets Manager configuration."""
-    region: str = "eu-central-1"
+    """AWS Secrets Manager configuration."""    region: str = "eu-central-1"
     access_key_id: Optional[str] = None
     secret_access_key: Optional[str] = None
     session_token: Optional[str] = None
@@ -85,8 +76,7 @@ class AWSConfig:
 
 @dataclass
 class AzureConfig:
-    """Azure Key Vault configuration."""
-    vault_url: str = "https://ia-influencer-kv.vault.azure.net/"
+    """Azure Key Vault configuration."""    vault_url: str = "https://ia-influencer-kv.vault.azure.net/"
     tenant_id: Optional[str] = None
     client_id: Optional[str] = None
     client_secret: Optional[str] = None
@@ -96,8 +86,7 @@ class AzureConfig:
 
 @dataclass
 class GCPConfig:
-    """Google Cloud Secret Manager configuration."""
-    project_id: str = "ia-influencer-platform"
+    """Google Cloud Secret Manager configuration."""    project_id: str = "ia-influencer-platform"
     credentials_path: Optional[str] = None
     location: str = "global"
     endpoint: str = "secretmanager.googleapis.com"
@@ -105,8 +94,7 @@ class GCPConfig:
 
 @dataclass
 class EncryptionConfig:
-    """Encryption configuration."""
-    algorithm: EncryptionAlgorithm = EncryptionAlgorithm.AES_256_GCM
+    """Encryption configuration."""    algorithm: EncryptionAlgorithm = EncryptionAlgorithm.AES_256_GCM
     key_size: int = 256
     key_derivation_iterations: int = 100000
     master_key_path: Optional[str] = None
@@ -116,8 +104,7 @@ class EncryptionConfig:
 
 @dataclass
 class RotationConfig:
-    """Secret rotation configuration."""
-    enabled: bool = True
+    """Secret rotation configuration."""    enabled: bool = True
     default_interval: str = "30d"
     max_retries: int = 3
     retry_delay: int = 300
@@ -129,8 +116,7 @@ class RotationConfig:
 
 @dataclass
 class ComplianceConfig:
-    """Compliance and audit configuration."""
-    audit_enabled: bool = True
+    """Compliance and audit configuration."""    audit_enabled: bool = True
     audit_file: str = "/var/log/secrets/audit.log"
     audit_webhook_url: Optional[str] = None
     pci_compliance: bool = True
@@ -142,8 +128,7 @@ class ComplianceConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring and alerting configuration."""
-    metrics_enabled: bool = True
+    """Monitoring and alerting configuration."""    metrics_enabled: bool = True
     prometheus_port: int = 9090
     health_check_interval: int = 60
     alert_thresholds: Dict[str, Any] = field(default_factory=lambda: {
@@ -157,8 +142,7 @@ class MonitoringConfig:
 
 @dataclass
 class BackupConfig:
-    """Backup and recovery configuration."""
-    enabled: bool = True
+    """Backup and recovery configuration."""    enabled: bool = True
     schedule: str = "0 2 * * *"  # Daily at 2 AM
     retention_days: int = 30
     encryption_enabled: bool = True
@@ -169,26 +153,22 @@ class BackupConfig:
 
 
 class SecretsConfig:
-    """
-    Comprehensive secrets configuration management for IA Influencer Agent.
+    """    Comprehensive secrets configuration management for IA Influencer Agent.
     
     Handles configuration for all secret providers, encryption, rotation,
     compliance, monitoring, and backup systems.
-    """
-    
+    """    
     def __init__(
         self,
         config_file: Optional[str] = None,
         environment: Union[str, Environment] = Environment.PRODUCTION
     ):
-        """
-        Initialize secrets configuration.
+        """        Initialize secrets configuration.
         
         Args:
             config_file: Path to configuration file
             environment: Deployment environment
-        """
-        self.environment = Environment(environment) if isinstance(environment, str) else environment
+        """        self.environment = Environment(environment) if isinstance(environment, str) else environment
         self.config_file = config_file or self._get_default_config_file()
         
         # Initialize default configurations
@@ -207,8 +187,7 @@ class SecretsConfig:
         logger.info(f"SecretsConfig initialized for {self.environment.value}")
     
     def _init_default_configs(self) -> None:
-        """Initialize default configuration objects."""
-        # Core settings
+        """Initialize default configuration objects."""        # Core settings
         self.service_account = "ia-influencer-secrets"
         self.log_level = "INFO"
         self.debug_mode = self.environment == Environment.DEVELOPMENT
@@ -259,8 +238,7 @@ class SecretsConfig:
         self.certificate_monitor_interval = 3600  # 1 hour
     
     def _get_default_config_file(self) -> str:
-        """Get default configuration file path."""
-        base_paths = [
+        """Get default configuration file path."""        base_paths = [
             "/etc/ia-influencer/secrets.yml",
             "/opt/ia-influencer/config/secrets.yml",
             os.path.expanduser("~/.ia-influencer/secrets.yml"),
@@ -274,8 +252,7 @@ class SecretsConfig:
         return base_paths[0]  # Return first path as default
     
     def _load_config(self) -> None:
-        """Load configuration from file."""
-        try:
+        """Load configuration from file."""        try:
             if not os.path.exists(self.config_file):
                 self._create_default_config_file()
                 return
@@ -301,8 +278,7 @@ class SecretsConfig:
             logger.warning(f"Failed to load config file {self.config_file}: {e}")
     
     def _create_default_config_file(self) -> None:
-        """Create default configuration file."""
-        try:
+        """Create default configuration file."""        try:
             config_data = {
                 'global': {
                     'service_account': self.service_account,
@@ -352,8 +328,7 @@ class SecretsConfig:
             logger.error(f"Failed to create default config file: {e}")
     
     def _update_from_dict(self, config_dict: Dict[str, Any]) -> None:
-        """Update configuration from dictionary."""
-        # Update basic settings
+        """Update configuration from dictionary."""        # Update basic settings
         if 'service_account' in config_dict:
             self.service_account = config_dict['service_account']
         if 'log_level' in config_dict:
@@ -400,8 +375,7 @@ class SecretsConfig:
             self.ip_whitelist = config_dict['ip_whitelist']
     
     def _update_dataclass(self, instance: Any, data: Dict[str, Any]) -> None:
-        """Update dataclass instance with dictionary data."""
-        for key, value in data.items():
+        """Update dataclass instance with dictionary data."""        for key, value in data.items():
             if hasattr(instance, key):
                 # Handle enum fields
                 field_type = type(getattr(instance, key))
@@ -411,8 +385,7 @@ class SecretsConfig:
                 setattr(instance, key, value)
     
     def _load_env_variables(self) -> None:
-        """Load configuration from environment variables."""
-        # Vault configuration
+        """Load configuration from environment variables."""        # Vault configuration
         if os.getenv('VAULT_ADDR'):
             self.vault.url = os.getenv('VAULT_ADDR')
         if os.getenv('VAULT_TOKEN'):
@@ -463,8 +436,7 @@ class SecretsConfig:
             self.debug_mode = os.getenv('SECRET_DEBUG_MODE').lower() == 'true'
     
     def _validate_config(self) -> None:
-        """Validate configuration settings."""
-        logger = logging.getLogger(__name__)
+        """Validate configuration settings."""        logger = logging.getLogger(__name__)
         
         # Validate primary provider configuration
         if self.primary_provider == SecretProvider.HASHICORP_VAULT:
@@ -497,16 +469,14 @@ class SecretsConfig:
                 logger.warning("TLS is disabled in production environment")
     
     def get_provider_config(self, provider: SecretProvider) -> Any:
-        """
-        Get configuration for specific provider.
+        """        Get configuration for specific provider.
         
         Args:
             provider: Secret provider to get config for
             
         Returns:
             Provider configuration object
-        """
-        provider_configs = {
+        """        provider_configs = {
             SecretProvider.HASHICORP_VAULT: self.vault,
             SecretProvider.KUBERNETES_SECRETS: self.kubernetes,
             SecretProvider.AWS_SECRETS_MANAGER: self.aws,
@@ -517,8 +487,7 @@ class SecretsConfig:
         return provider_configs.get(provider)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary."""
-        return {
+        """Convert configuration to dictionary."""        return {
             'environment': self.environment.value,
             'service_account': self.service_account,
             'log_level': self.log_level,
@@ -541,8 +510,7 @@ class SecretsConfig:
         }
     
     def _dataclass_to_dict(self, instance: Any) -> Dict[str, Any]:
-        """Convert dataclass instance to dictionary."""
-        result = {}
+        """Convert dataclass instance to dictionary."""        result = {}
         for field_name in instance.__dataclass_fields__:
             value = getattr(instance, field_name)
             if hasattr(value, '__dataclass_fields__'):
@@ -555,16 +523,14 @@ class SecretsConfig:
         return result
     
     def save_config(self, file_path: Optional[str] = None) -> bool:
-        """
-        Save current configuration to file.
+        """        Save current configuration to file.
         
         Args:
             file_path: Optional path to save config to
             
         Returns:
             bool: True if successful
-        """
-        try:
+        """        try:
             save_path = file_path or self.config_file
             config_data = {
                 self.environment.value: self.to_dict()
@@ -592,43 +558,35 @@ class SecretsConfig:
     # Convenience properties for common configurations
     @property
     def vault_url(self) -> str:
-        """Get Vault URL."""
-        return self.vault.url
+        """Get Vault URL."""        return self.vault.url
     
     @property
     def vault_token(self) -> Optional[str]:
-        """Get Vault token."""
-        return self.vault.token
+        """Get Vault token."""        return self.vault.token
     
     @property
     def vault_namespace(self) -> Optional[str]:
-        """Get Vault namespace."""
-        return self.vault.namespace
+        """Get Vault namespace."""        return self.vault.namespace
     
     @property
     def vault_auth_method(self) -> str:
-        """Get Vault auth method."""
-        return self.vault.auth_method
+        """Get Vault auth method."""        return self.vault.auth_method
     
     @property
     def vault_role(self) -> str:
-        """Get Vault role."""
-        return self.vault.role
+        """Get Vault role."""        return self.vault.role
     
     @property
     def vault_kv_version(self) -> int:
-        """Get Vault KV version."""
-        return self.vault.kv_version
+        """Get Vault KV version."""        return self.vault.kv_version
     
     @property
     def kubernetes_namespace(self) -> str:
-        """Get Kubernetes namespace."""
-        return self.kubernetes.namespace
+        """Get Kubernetes namespace."""        return self.kubernetes.namespace
     
     @property
     def kubernetes_token(self) -> str:
-        """Get Kubernetes service account token."""
-        try:
+        """Get Kubernetes service account token."""        try:
             with open(self.kubernetes.token_path, 'r') as f:
                 return f.read().strip()
         except Exception:
@@ -636,33 +594,27 @@ class SecretsConfig:
     
     @property
     def ldap_username(self) -> Optional[str]:
-        """Get LDAP username from environment."""
-        return os.getenv('LDAP_USERNAME')
+        """Get LDAP username from environment."""        return os.getenv('LDAP_USERNAME')
     
     @property
     def ldap_password(self) -> Optional[str]:
-        """Get LDAP password from environment."""
-        return os.getenv('LDAP_PASSWORD')
+        """Get LDAP password from environment."""        return os.getenv('LDAP_PASSWORD')
     
     @property
     def rotation_jobs_file(self) -> str:
-        """Get rotation jobs file path."""
-        return self.rotation.jobs_file
+        """Get rotation jobs file path."""        return self.rotation.jobs_file
     
     @property
     def audit_webhook_url(self) -> Optional[str]:
-        """Get audit webhook URL."""
-        return self.compliance.audit_webhook_url
+        """Get audit webhook URL."""        return self.compliance.audit_webhook_url
     
     @property
     def is_production(self) -> bool:
-        """Check if running in production."""
-        return self.environment == Environment.PRODUCTION
+        """Check if running in production."""        return self.environment == Environment.PRODUCTION
     
     @property
     def is_development(self) -> bool:
-        """Check if running in development."""
-        return self.environment == Environment.DEVELOPMENT
+        """Check if running in development."""        return self.environment == Environment.DEVELOPMENT
 
 
 # Global configuration instance
@@ -670,35 +622,29 @@ _config_instance: Optional[SecretsConfig] = None
 
 
 def get_config() -> SecretsConfig:
-    """Get global configuration instance."""
-    global _config_instance
+    """Get global configuration instance."""    global _config_instance
     if _config_instance is None:
         _config_instance = SecretsConfig()
     return _config_instance
 
 
 def set_config(config: SecretsConfig) -> None:
-    """Set global configuration instance."""
-    global _config_instance
+    """Set global configuration instance."""    global _config_instance
     _config_instance = config
 
 
 # Environment-specific configuration helpers
 def load_development_config() -> SecretsConfig:
-    """Load development configuration."""
-    return SecretsConfig(environment=Environment.DEVELOPMENT)
+    """Load development configuration."""    return SecretsConfig(environment=Environment.DEVELOPMENT)
 
 
 def load_staging_config() -> SecretsConfig:
-    """Load staging configuration."""
-    return SecretsConfig(environment=Environment.STAGING)
+    """Load staging configuration."""    return SecretsConfig(environment=Environment.STAGING)
 
 
 def load_production_config() -> SecretsConfig:
-    """Load production configuration."""
-    return SecretsConfig(environment=Environment.PRODUCTION)
+    """Load production configuration."""    return SecretsConfig(environment=Environment.PRODUCTION)
 
 
 def load_testing_config() -> SecretsConfig:
-    """Load testing configuration."""
-    return SecretsConfig(environment=Environment.TESTING)
+    """Load testing configuration."""    return SecretsConfig(environment=Environment.TESTING)

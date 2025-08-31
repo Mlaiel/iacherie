@@ -1,5 +1,4 @@
-"""
-Content Protection and Violation Detection Configurations
+"""Content Protection and Violation Detection Configurations
 =========================================================
 
 Advanced configuration system for content protection, fingerprinting, and violation detection.
@@ -15,9 +14,7 @@ Contact: mlaiel@live.de | www.fahed-mlaiel.de
 WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, modification, or distribution is strictly prohibited.
 Legal action will be taken against violators.
-"""
-
-import os
+"""import os
 from typing import Dict, List, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -26,16 +23,14 @@ import json
 from pathlib import Path
 
 class ProtectionLevel(Enum):
-    """Content protection levels."""
-    BASIC = "basic"
+    """Content protection levels."""    BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
     ENTERPRISE = "enterprise"
     ULTRA = "ultra"
 
 class ContentFormat(Enum):
-    """Supported content formats for protection."""
-    # Audio formats
+    """Supported content formats for protection."""    # Audio formats
     MP3 = "mp3"
     WAV = "wav"
     FLAC = "flac"
@@ -69,8 +64,7 @@ class ContentFormat(Enum):
     MD = "md"
 
 class ViolationType(Enum):
-    """Types of content violations."""
-    EXACT_COPY = "exact_copy"
+    """Types of content violations."""    EXACT_COPY = "exact_copy"
     PARTIAL_COPY = "partial_copy"
     REMIX = "remix"
     COVER = "cover"
@@ -83,8 +77,7 @@ class ViolationType(Enum):
     METADATA_THEFT = "metadata_theft"
 
 class ProtectionMethod(Enum):
-    """Protection methods for content."""
-    FINGERPRINTING = "fingerprinting"
+    """Protection methods for content."""    FINGERPRINTING = "fingerprinting"
     WATERMARKING = "watermarking"
     BLOCKCHAIN = "blockchain"
     METADATA_EMBEDDING = "metadata_embedding"
@@ -94,8 +87,7 @@ class ProtectionMethod(Enum):
     COPYRIGHT_NOTICE = "copyright_notice"
 
 class MatchingAlgorithm(Enum):
-    """Algorithms for content matching."""
-    CHROMAPRINT = "chromaprint"
+    """Algorithms for content matching."""    CHROMAPRINT = "chromaprint"
     ESSENTIA = "essentia"
     LIBROSA = "librosa"
     OPENCV_SIFT = "opencv_sift"
@@ -111,8 +103,7 @@ class MatchingAlgorithm(Enum):
 
 @dataclass
 class AudioProtectionConfig:
-    """Configuration for audio content protection."""
-    enabled: bool = True
+    """Configuration for audio content protection."""    enabled: bool = True
     protection_level: ProtectionLevel = ProtectionLevel.ADVANCED
     supported_formats: List[ContentFormat] = field(default_factory=lambda: [
         ContentFormat.MP3, ContentFormat.WAV, ContentFormat.FLAC, 
@@ -160,8 +151,7 @@ class AudioProtectionConfig:
 
 @dataclass
 class VideoProtectionConfig:
-    """Configuration for video content protection."""
-    enabled: bool = True
+    """Configuration for video content protection."""    enabled: bool = True
     protection_level: ProtectionLevel = ProtectionLevel.ADVANCED
     supported_formats: List[ContentFormat] = field(default_factory=lambda: [
         ContentFormat.MP4, ContentFormat.AVI, ContentFormat.MOV,
@@ -207,8 +197,7 @@ class VideoProtectionConfig:
 
 @dataclass
 class ImageProtectionConfig:
-    """Configuration for image content protection."""
-    enabled: bool = True
+    """Configuration for image content protection."""    enabled: bool = True
     protection_level: ProtectionLevel = ProtectionLevel.ADVANCED
     supported_formats: List[ContentFormat] = field(default_factory=lambda: [
         ContentFormat.JPG, ContentFormat.JPEG, ContentFormat.PNG,
@@ -250,8 +239,7 @@ class ImageProtectionConfig:
 
 @dataclass
 class TextProtectionConfig:
-    """Configuration for text content protection."""
-    enabled: bool = True
+    """Configuration for text content protection."""    enabled: bool = True
     protection_level: ProtectionLevel = ProtectionLevel.ADVANCED
     supported_formats: List[ContentFormat] = field(default_factory=lambda: [
         ContentFormat.TXT, ContentFormat.PDF, ContentFormat.DOC,
@@ -295,8 +283,7 @@ class TextProtectionConfig:
 
 @dataclass
 class WatermarkingConfig:
-    """Configuration for digital watermarking."""
-    enabled: bool = True
+    """Configuration for digital watermarking."""    enabled: bool = True
     watermark_types: List[ProtectionMethod] = field(default_factory=lambda: [
         ProtectionMethod.WATERMARKING,
         ProtectionMethod.METADATA_EMBEDDING,
@@ -332,8 +319,7 @@ class WatermarkingConfig:
 
 @dataclass
 class BlockchainConfig:
-    """Configuration for blockchain-based protection."""
-    enabled: bool = False  # Optional feature
+    """Configuration for blockchain-based protection."""    enabled: bool = False  # Optional feature
     blockchain_network: str = "ethereum"  # ethereum, polygon, bsc
     smart_contract_address: Optional[str] = None
     
@@ -355,8 +341,7 @@ class BlockchainConfig:
 
 @dataclass
 class LegalConfig:
-    """Configuration for legal protection features."""
-    enabled: bool = True
+    """Configuration for legal protection features."""    enabled: bool = True
     
     # DMCA settings
     dmca_enabled: bool = True
@@ -382,8 +367,7 @@ class LegalConfig:
 
 @dataclass
 class ProtectionConfig:
-    """Complete content protection configuration."""
-    enabled: bool = True
+    """Complete content protection configuration."""    enabled: bool = True
     protection_level: ProtectionLevel = ProtectionLevel.ADVANCED
     
     # Content type configurations
@@ -426,17 +410,14 @@ class ProtectionConfig:
     batch_processing: bool = True
 
 class ProtectionConfigManager:
-    """Manager for content protection configurations."""
-    
+    """Manager for content protection configurations."""    
     def __init__(self, config_dir: Optional[str] = None):
-        """Initialize protection config manager."""
-        self.config_dir = Path(config_dir or os.getenv("PROTECTION_CONFIG_DIR", "./configs"))
+        """Initialize protection config manager."""        self.config_dir = Path(config_dir or os.getenv("PROTECTION_CONFIG_DIR", "./configs"))
         self.config_dir.mkdir(parents=True, exist_ok=True)
         self.config = self._load_default_config()
     
     def _load_default_config(self) -> ProtectionConfig:
-        """Load default protection configuration."""
-        return ProtectionConfig(
+        """Load default protection configuration."""        return ProtectionConfig(
             enabled=True,
             protection_level=ProtectionLevel.ENTERPRISE,
             audio=AudioProtectionConfig(
@@ -480,52 +461,42 @@ class ProtectionConfigManager:
         )
     
     def get_config(self) -> ProtectionConfig:
-        """Get current protection configuration."""
-        return self.config
+        """Get current protection configuration."""        return self.config
     
     def get_audio_config(self) -> AudioProtectionConfig:
-        """Get audio protection configuration."""
-        return self.config.audio
+        """Get audio protection configuration."""        return self.config.audio
     
     def get_video_config(self) -> VideoProtectionConfig:
-        """Get video protection configuration."""
-        return self.config.video
+        """Get video protection configuration."""        return self.config.video
     
     def get_image_config(self) -> ImageProtectionConfig:
-        """Get image protection configuration."""
-        return self.config.image
+        """Get image protection configuration."""        return self.config.image
     
     def get_text_config(self) -> TextProtectionConfig:
-        """Get text protection configuration."""
-        return self.config.text
+        """Get text protection configuration."""        return self.config.text
     
     def update_config(self, config: ProtectionConfig) -> None:
-        """Update protection configuration."""
-        self.config = config
+        """Update protection configuration."""        self.config = config
         self.save_config()
     
     def save_config(self) -> None:
-        """Save configuration to file."""
-        config_file = self.config_dir / "protection_config.json"
+        """Save configuration to file."""        config_file = self.config_dir / "protection_config.json"
         with open(config_file, 'w') as f:
             json.dump(self.config.__dict__, f, indent=2, default=str)
     
     def load_config(self) -> None:
-        """Load configuration from file."""
-        config_file = self.config_dir / "protection_config.json"
+        """Load configuration from file."""        config_file = self.config_dir / "protection_config.json"
         if config_file.exists():
             with open(config_file, 'r') as f:
                 data = json.load(f)
                 self.config = self._deserialize_config(data)
     
     def _deserialize_config(self, data: dict) -> ProtectionConfig:
-        """Deserialize configuration data."""
-        # Implementation for converting dict back to ProtectionConfig
+        """Deserialize configuration data."""        # Implementation for converting dict back to ProtectionConfig
         pass
     
     def validate_config(self) -> List[str]:
-        """Validate protection configuration."""
-        errors = []
+        """Validate protection configuration."""        errors = []
         
         if not self.config.enabled:
             return errors
@@ -547,8 +518,7 @@ class ProtectionConfigManager:
         return errors
     
     def get_threshold_for_violation_type(self, content_type: str, violation_type: ViolationType) -> float:
-        """Get threshold for specific violation type."""
-        if content_type == "audio":
+        """Get threshold for specific violation type."""        if content_type == "audio":
             config = self.config.audio
             thresholds = {
                 ViolationType.EXACT_COPY: config.exact_match_threshold,
@@ -570,8 +540,7 @@ class ProtectionConfigManager:
         return thresholds.get(violation_type, 0.85)
     
     def export_config(self, file_path: str) -> None:
-        """Export configuration to file."""
-        with open(file_path, 'w') as f:
+        """Export configuration to file."""        with open(file_path, 'w') as f:
             json.dump(self.config.__dict__, f, indent=2, default=str)
 
 # Global protection config manager instance

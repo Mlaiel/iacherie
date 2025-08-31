@@ -1,5 +1,4 @@
-"""
-Data Validators Module - Industrial-Grade Validation System
+"""Data Validators Module - Industrial-Grade Validation System
 ===========================================================
 
 Comprehensive validation framework for the IA Influencer Agent Platform
@@ -18,9 +17,7 @@ Validation Capabilities:
 - Platform compliance checking
 - Performance validation
 - Metadata validation
-"""
-
-from .content_validator import (
+"""from .content_validator import (
     ContentValidator,
     ContentType,
     ValidationLevel,
@@ -211,24 +208,20 @@ DEFAULT_CONFIG = {
 }
 
 def configure_validators(config: dict = None) -> None:
-    """
-    Configure global validator settings.
+    """    Configure global validator settings.
     
     Args:
         config: Configuration dictionary
-    """
-    global validation_engine
+    """    global validation_engine
     if config:
         validation_engine.update_config(config)
 
 def get_validator_info() -> dict:
-    """
-    Get information about available validators.
+    """    Get information about available validators.
     
     Returns:
         Dictionary with validator information
-    """
-    return {
+    """    return {
         "version": __version__,
         "author": __author__,
         "validators": list(validation_engine.registry.get_available_validators()),

@@ -1,5 +1,4 @@
-"""
-Backup Storage Manager - IA-Influencer-Agent Deployment
+"""Backup Storage Manager - IA-Influencer-Agent Deployment
 ================================================================================
 Module: backend/deployment/storage/backup_storage.py
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -25,9 +24,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Content creation → Backup scheduling → Multi-cloud replication → 
 Encryption & compression → Recovery testing → Compliance reporting → Disaster recovery
-"""
-
-import logging
+"""import logging
 import asyncio
 import json
 import yaml
@@ -53,8 +50,7 @@ logger = logging.getLogger(__name__)
 
 
 class BackupType(Enum):
-    """Backup types and strategies"""
-    FULL = "full"
+    """Backup types and strategies"""    FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
     SNAPSHOT = "snapshot"
@@ -63,8 +59,7 @@ class BackupType(Enum):
 
 
 class BackupDestination(Enum):
-    """Backup destination types"""
-    AWS_S3 = "aws-s3"
+    """Backup destination types"""    AWS_S3 = "aws-s3"
     GOOGLE_CLOUD = "google-cloud"
     AZURE_BLOB = "azure-blob"
     LOCAL_STORAGE = "local-storage"
@@ -74,8 +69,7 @@ class BackupDestination(Enum):
 
 
 class BackupStatus(Enum):
-    """Backup operation status"""
-    PENDING = "pending"
+    """Backup operation status"""    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -85,8 +79,7 @@ class BackupStatus(Enum):
 
 
 class CompressionType(Enum):
-    """Compression algorithms"""
-    NONE = "none"
+    """Compression algorithms"""    NONE = "none"
     GZIP = "gzip"
     BZIP2 = "bzip2"
     LZMA = "lzma"
@@ -95,8 +88,7 @@ class CompressionType(Enum):
 
 
 class EncryptionType(Enum):
-    """Encryption methods"""
-    NONE = "none"
+    """Encryption methods"""    NONE = "none"
     AES_256 = "aes-256"
     AES_256_GCM = "aes-256-gcm"
     CHACHA20_POLY1305 = "chacha20-poly1305"
@@ -105,8 +97,7 @@ class EncryptionType(Enum):
 
 @dataclass
 class BackupConfig:
-    """Backup configuration settings"""
-    name: str
+    """Backup configuration settings"""    name: str
     backup_type: BackupType
     destination: BackupDestination
     source_paths: List[str]
@@ -151,8 +142,7 @@ class BackupConfig:
 
 @dataclass
 class BackupJob:
-    """Backup job tracking"""
-    job_id: str
+    """Backup job tracking"""    job_id: str
     config_name: str
     backup_type: BackupType
     status: BackupStatus
@@ -180,8 +170,7 @@ class BackupJob:
 
 @dataclass
 class BackupMetrics:
-    """Backup system metrics"""
-    total_backups: int = 0
+    """Backup system metrics"""    total_backups: int = 0
     successful_backups: int = 0
     failed_backups: int = 0
     success_rate_percent: float = 100.0
@@ -205,8 +194,7 @@ class BackupMetrics:
 
 
 class BackupStorageManager:
-    """
-    🎯 Industrial Backup Storage Manager - IA-Influencer-Agent
+    """    🎯 Industrial Backup Storage Manager - IA-Influencer-Agent
     
     Production-grade backup and disaster recovery management with:
     - Multi-cloud backup orchestration and redundancy
@@ -217,8 +205,7 @@ class BackupStorageManager:
     - Automated disaster recovery procedures
     - Advanced analytics and cost optimization
     - Point-in-time recovery and versioning
-    """
-    
+    """    
     def __init__(self, config: BackupConfig):
         self.config = config
         self.metrics = BackupMetrics()
@@ -234,8 +221,7 @@ class BackupStorageManager:
         logger.info(f"🚀 BackupStorageManager initialized: {config.name}")
     
     def _initialize_clients(self):
-        """Initialize backup destination clients"""
-        try:
+        """Initialize backup destination clients"""        try:
             if self.config.destination == BackupDestination.AWS_S3:
                 self._s3_client = boto3.client('s3')
                 logger.info("✅ AWS S3 client initialized")
@@ -256,8 +242,7 @@ class BackupStorageManager:
             raise
     
     async def deploy_backup_infrastructure(self) -> Dict[str, Any]:
-        """Deploy complete backup infrastructure"""
-        try:
+        """Deploy complete backup infrastructure"""        try:
             logger.info(f"🚀 Starting backup infrastructure deployment...")
             
             deployment_results = {}
@@ -302,8 +287,7 @@ class BackupStorageManager:
             return {"success": False, "error": str(e)}
     
     async def _deploy_s3_backup_infrastructure(self) -> Dict[str, Any]:
-        """Deploy S3-based backup infrastructure"""
-        try:
+        """Deploy S3-based backup infrastructure"""        try:
             bucket_name = f"ia-influencer-backups-{self.config.name}"
             
             # Create S3 bucket if it doesn't exist
@@ -337,8 +321,7 @@ class BackupStorageManager:
             raise
     
     async def _configure_s3_backup_policies(self, bucket_name: str):
-        """Configure S3 bucket policies for backup security"""
-        try:
+        """Configure S3 bucket policies for backup security"""        try:
             # Enable versioning
             self._s3_client.put_bucket_versioning(
                 Bucket=bucket_name,
@@ -389,8 +372,7 @@ class BackupStorageManager:
             raise
     
     async def _configure_s3_lifecycle_policies(self, bucket_name: str):
-        """Configure S3 lifecycle policies for backup retention"""
-        try:
+        """Configure S3 lifecycle policies for backup retention"""        try:
             lifecycle_rules = [
                 {
                     "ID": "BackupRetentionRule",
@@ -442,8 +424,7 @@ class BackupStorageManager:
             raise
     
     async def _deploy_velero_backup_infrastructure(self) -> Dict[str, Any]:
-        """Deploy Velero-based Kubernetes backup infrastructure"""
-        try:
+        """Deploy Velero-based Kubernetes backup infrastructure"""        try:
             # Generate Velero installation manifest
             velero_config = await self._generate_velero_config()
             
@@ -466,8 +447,7 @@ class BackupStorageManager:
             raise
     
     async def _generate_velero_config(self) -> Dict[str, Any]:
-        """Generate Velero configuration"""
-        return {
+        """Generate Velero configuration"""        return {
             "provider": "aws",
             "bucket": f"ia-influencer-velero-{self.config.name}",
             "region": "eu-west-1",
@@ -480,8 +460,7 @@ class BackupStorageManager:
         }
     
     async def _generate_velero_schedule(self) -> Dict[str, Any]:
-        """Generate Velero backup schedule manifest"""
-        return {
+        """Generate Velero backup schedule manifest"""        return {
             "apiVersion": "velero.io/v1",
             "kind": "Schedule",
             "metadata": {
@@ -505,8 +484,7 @@ class BackupStorageManager:
         }
     
     async def _deploy_restic_backup_infrastructure(self) -> Dict[str, Any]:
-        """Deploy Restic-based backup infrastructure"""
-        try:
+        """Deploy Restic-based backup infrastructure"""        try:
             # Initialize Restic repository
             repo_path = f"/backup-repos/{self.config.name}"
             
@@ -543,8 +521,7 @@ class BackupStorageManager:
             raise
     
     async def _generate_restic_backup_script(self, repo_path: str) -> str:
-        """Generate Restic backup script"""
-        script_content = f"""#!/bin/bash
+        """Generate Restic backup script"""        script_content = f"""#!/bin/bash
 # Restic backup script for {self.config.name}
 # Generated by BackupStorageManager
 
@@ -574,8 +551,7 @@ restic forget \\
 restic check
 
 echo "Backup completed: $(date)"
-"""
-        
+"""        
         script_path = Path(f"/etc/backup-scripts/{self.config.name}-restic.sh")
         script_path.parent.mkdir(parents=True, exist_ok=True)
         
@@ -587,8 +563,7 @@ echo "Backup completed: $(date)"
         return str(script_path)
     
     async def _deploy_local_backup_infrastructure(self) -> Dict[str, Any]:
-        """Deploy local storage backup infrastructure"""
-        try:
+        """Deploy local storage backup infrastructure"""        try:
             backup_base_dir = Path(f"/backups/{self.config.name}")
             backup_base_dir.mkdir(parents=True, exist_ok=True)
             
@@ -612,8 +587,7 @@ echo "Backup completed: $(date)"
             raise
     
     async def _generate_local_backup_script(self, backup_dir: Path) -> str:
-        """Generate local backup script"""
-        script_content = f"""#!/bin/bash
+        """Generate local backup script"""        script_content = f"""#!/bin/bash
 # Local backup script for {self.config.name}
 # Generated by BackupStorageManager
 
@@ -654,8 +628,7 @@ fi
 find "$BACKUP_DIR" -name "{self.config.name}_*.tar.gz" -mtime +{self.config.retention_days} -delete
 
 echo "Backup completed: $(date)"
-"""
-        
+"""        
         script_path = Path(f"/etc/backup-scripts/{self.config.name}-local.sh")
         script_path.parent.mkdir(parents=True, exist_ok=True)
         
@@ -667,8 +640,7 @@ echo "Backup completed: $(date)"
         return str(script_path)
     
     async def _setup_backup_monitoring(self) -> Dict[str, Any]:
-        """Setup backup monitoring and alerting"""
-        try:
+        """Setup backup monitoring and alerting"""        try:
             monitoring_config = {
                 "metrics_collection": {
                     "enabled": True,
@@ -713,8 +685,7 @@ echo "Backup completed: $(date)"
             return {"error": str(e)}
     
     async def _setup_backup_testing(self) -> Dict[str, Any]:
-        """Setup automated backup testing"""
-        try:
+        """Setup automated backup testing"""        try:
             if not self.config.test_restore:
                 return {"testing": "disabled"}
             
@@ -745,8 +716,7 @@ echo "Backup completed: $(date)"
             return {"error": str(e)}
     
     async def _generate_backup_test_script(self) -> str:
-        """Generate backup testing script"""
-        script_content = f"""#!/bin/bash
+        """Generate backup testing script"""        script_content = f"""#!/bin/bash
 # Backup testing script for {self.config.name}
 # Generated by BackupStorageManager
 
@@ -792,8 +762,7 @@ else
     echo "❌ Backup test failed: $(date)"
     exit 1
 fi
-"""
-        
+"""        
         script_path = Path(f"/etc/backup-scripts/{self.config.name}-test.sh")
         script_path.parent.mkdir(parents=True, exist_ok=True)
         
@@ -805,8 +774,7 @@ fi
         return str(script_path)
     
     async def _setup_backup_schedules(self) -> Dict[str, Any]:
-        """Setup automated backup schedules"""
-        try:
+        """Setup automated backup schedules"""        try:
             if not self.config.schedule_enabled:
                 return {"scheduling": "disabled"}
             
@@ -831,8 +799,7 @@ fi
             return {"error": str(e)}
     
     async def execute_backup(self, backup_type: Optional[BackupType] = None) -> BackupJob:
-        """Execute a backup job"""
-        try:
+        """Execute a backup job"""        try:
             job_id = f"{self.config.name}-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
             backup_type = backup_type or self.config.backup_type
             
@@ -901,8 +868,7 @@ fi
             return job
     
     async def _execute_s3_backup(self, job: BackupJob):
-        """Execute S3 backup"""
-        bucket_name = f"ia-influencer-backups-{self.config.name}"
+        """Execute S3 backup"""        bucket_name = f"ia-influencer-backups-{self.config.name}"
         
         for source_path in self.config.source_paths:
             source = Path(source_path)
@@ -939,8 +905,7 @@ fi
             Path(archive_path).unlink()
     
     async def _execute_local_backup(self, job: BackupJob):
-        """Execute local backup"""
-        backup_dir = Path(f"/backups/{self.config.name}/{job.backup_type.value}")
+        """Execute local backup"""        backup_dir = Path(f"/backups/{self.config.name}/{job.backup_type.value}")
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         
         for source_path in self.config.source_paths:
@@ -957,8 +922,7 @@ fi
             job.backup_location = str(backup_file)
     
     async def _execute_restic_backup(self, job: BackupJob):
-        """Execute Restic backup"""
-        env = os.environ.copy()
+        """Execute Restic backup"""        env = os.environ.copy()
         env['RESTIC_REPOSITORY'] = f"/backup-repos/{self.config.name}"
         env['RESTIC_PASSWORD'] = self.config.encryption_key or "default-password"
         
@@ -978,8 +942,7 @@ fi
         job.backup_location = f"restic://{env['RESTIC_REPOSITORY']}"
     
     async def get_backup_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive backup metrics"""
-        try:
+        """Get comprehensive backup metrics"""        try:
             metrics_result = {
                 "backup_name": self.config.name,
                 "destination": self.config.destination.value,
@@ -1017,8 +980,7 @@ fi
             return {"error": str(e)}
     
     async def cleanup_backups(self) -> Dict[str, Any]:
-        """Cleanup old backups according to retention policy"""
-        try:
+        """Cleanup old backups according to retention policy"""        try:
             logger.info(f"🗑️ Starting backup cleanup: {self.config.name}")
             
             cleanup_results = []
@@ -1081,12 +1043,10 @@ fi
 
 # Industrial Configuration Manager
 class BackupConfigurationManager:
-    """Advanced backup configuration management"""
-    
+    """Advanced backup configuration management"""    
     @staticmethod
     def load_config_from_file(config_path: Path) -> BackupConfig:
-        """Load backup configuration from YAML file"""
-        try:
+        """Load backup configuration from YAML file"""        try:
             with open(config_path, 'r') as file:
                 config_data = yaml.safe_load(file)
             
@@ -1110,8 +1070,7 @@ class BackupConfigurationManager:
     
     @staticmethod
     def save_config_to_file(config: BackupConfig, config_path: Path):
-        """Save backup configuration to YAML file"""
-        try:
+        """Save backup configuration to YAML file"""        try:
             config_data = {
                 'name': config.name,
                 'backup_type': config.backup_type.value,
@@ -1148,8 +1107,7 @@ def create_backup_manager(
     source_paths: List[str],
     schedule_cron: str = "0 2 * * *"
 ) -> BackupStorageManager:
-    """Factory function to create BackupStorageManager instance"""
-    
+    """Factory function to create BackupStorageManager instance"""    
     config = BackupConfig(
         name=name,
         backup_type=backup_type,
@@ -1163,8 +1121,7 @@ def create_backup_manager(
 
 # Usage Example
 async def main():
-    """Example usage of BackupStorageManager"""
-    try:
+    """Example usage of BackupStorageManager"""    try:
         # Create backup manager for content protection
         backup_manager = create_backup_manager(
             name="ia-influencer-content-backup",

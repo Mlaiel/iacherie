@@ -1,5 +1,4 @@
-"""
-🚀 Security Validation System - IA Influencer Agent Platform Enterprise
+"""🚀 Security Validation System - IA Influencer Agent Platform Enterprise
 =====================================================================
 Module: backend/data_management/validation/security_validator.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -15,9 +14,7 @@ Validation sécuritaire complète pour protection du contenu
 - Analyse de vulnérabilités
 - Validation signatures numériques
 - Contrôle d'intégrité et authenticité
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple, Set
+"""from typing import Dict, List, Optional, Any, Union, Tuple, Set
 import asyncio
 import logging
 from pathlib import Path
@@ -57,16 +54,14 @@ from PIL import Image
 logger = logging.getLogger(__name__)
 
 class SecurityThreatLevel(Enum):
-    """Niveaux de menace sécuritaire"""
-    SAFE = "safe"
+    """Niveaux de menace sécuritaire"""    SAFE = "safe"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 class SecurityViolationType(Enum):
-    """Types de violations sécuritaires"""
-    MALWARE = "malware"
+    """Types de violations sécuritaires"""    MALWARE = "malware"
     VIRUS = "virus"
     SUSPICIOUS_CONTENT = "suspicious_content"
     INTEGRITY_VIOLATION = "integrity_violation"
@@ -77,8 +72,7 @@ class SecurityViolationType(Enum):
 
 @dataclass
 class SecurityValidationResult:
-    """Résultat de validation sécuritaire"""
-    is_secure: bool
+    """Résultat de validation sécuritaire"""    is_secure: bool
     threat_level: SecurityThreatLevel
     security_score: float  # 0.0 - 1.0
     violations: List[SecurityViolationType]
@@ -89,8 +83,7 @@ class SecurityValidationResult:
     scan_details: Dict[str, Any]
 
 class MalwareScanner:
-    """Scanner de malwares et virus"""
-    
+    """Scanner de malwares et virus"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.MalwareScanner")
         
@@ -111,8 +104,7 @@ class MalwareScanner:
             self.logger.warning("YARA rules non disponibles")
     
     def scan_file(self, file_path: str) -> Dict[str, Any]:
-        """Scanne un fichier pour détecter malwares et virus"""
-        scan_result = {
+        """Scanne un fichier pour détecter malwares et virus"""        scan_result = {
             'is_infected': False,
             'threats_detected': [],
             'scan_engines': [],
@@ -174,8 +166,7 @@ class MalwareScanner:
             return scan_result
     
     def _scan_with_clamav(self, file_path: str) -> Dict[str, Any]:
-        """Scan avec ClamAV"""
-        result = {'infected': False, 'threats': []}
+        """Scan avec ClamAV"""        result = {'infected': False, 'threats': []}
         
         try:
             scan_result = self.clamd_client.scan(file_path)
@@ -193,8 +184,7 @@ class MalwareScanner:
         return result
     
     def _scan_with_yara(self, file_path: str) -> Dict[str, Any]:
-        """Scan avec YARA"""
-        result = {'matches': []}
+        """Scan avec YARA"""        result = {'matches': []}
         
         try:
             matches = self.yara_rules.match(file_path)
@@ -214,8 +204,7 @@ class MalwareScanner:
         return result
     
     def _heuristic_scan(self, file_path: str) -> Dict[str, Any]:
-        """Scan heuristique personnalisé"""
-        result = {'suspicious': False, 'indicators': []}
+        """Scan heuristique personnalisé"""        result = {'suspicious': False, 'indicators': []}
         
         try:
             file_size = os.path.getsize(file_path)
@@ -277,8 +266,7 @@ class MalwareScanner:
             return result
     
     def _analyze_exif_security(self, file_path: str) -> Dict[str, Any]:
-        """Analyse les métadonnées EXIF pour détecter des anomalies"""
-        result = {'suspicious': False, 'indicators': []}
+        """Analyse les métadonnées EXIF pour détecter des anomalies"""        result = {'suspicious': False, 'indicators': []}
         
         try:
             with open(file_path, 'rb') as f:
@@ -309,8 +297,7 @@ class MalwareScanner:
         return result
     
     def _calculate_file_hash(self, file_path: str) -> str:
-        """Calcule le hash SHA-256 du fichier"""
-        try:
+        """Calcule le hash SHA-256 du fichier"""        try:
             hasher = hashlib.sha256()
             with open(file_path, 'rb') as f:
                 for chunk in iter(lambda: f.read(4096), b""):
@@ -320,8 +307,7 @@ class MalwareScanner:
             return ''
     
     def _check_file_reputation(self, file_hash: str) -> Dict[str, Any]:
-        """Vérifie la réputation du fichier via APIs externes"""
-        reputation = {'malicious': False, 'sources': []}
+        """Vérifie la réputation du fichier via APIs externes"""        reputation = {'malicious': False, 'sources': []}
         
         try:
             # Simulation de vérification de réputation
@@ -342,8 +328,7 @@ class MalwareScanner:
         return reputation
     
     def _load_yara_rules(self) -> Optional[yara.Rules]:
-        """Charge les règles YARA"""
-        try:
+        """Charge les règles YARA"""        try:
             # Règles YARA basiques pour la détection
             yara_rules_text = '''
             rule SuspiciousExecutable {
@@ -377,14 +362,12 @@ class MalwareScanner:
             return None
 
 class IntegrityValidator:
-    """Validateur d'intégrité des fichiers"""
-    
+    """Validateur d'intégrité des fichiers"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.IntegrityValidator")
     
     def validate_file_integrity(self, file_path: str) -> Dict[str, Any]:
-        """Valide l'intégrité d'un fichier"""
-        integrity_result = {
+        """Valide l'intégrité d'un fichier"""        integrity_result = {
             'is_intact': True,
             'corruption_indicators': [],
             'structure_valid': True,
@@ -419,8 +402,7 @@ class IntegrityValidator:
             return integrity_result
     
     def _validate_file_structure(self, file_path: str, file_ext: str) -> Dict[str, Any]:
-        """Valide la structure du fichier selon son type"""
-        result = {'structure_valid': True, 'structure_errors': []}
+        """Valide la structure du fichier selon son type"""        result = {'structure_valid': True, 'structure_errors': []}
         
         try:
             if file_ext in ['.jpg', '.jpeg']:
@@ -443,8 +425,7 @@ class IntegrityValidator:
         return result
     
     def _validate_jpeg_structure(self, file_path: str) -> Dict[str, Any]:
-        """Valide la structure JPEG"""
-        result = {'structure_valid': True, 'structure_errors': []}
+        """Valide la structure JPEG"""        result = {'structure_valid': True, 'structure_errors': []}
         
         try:
             with open(file_path, 'rb') as f:
@@ -477,8 +458,7 @@ class IntegrityValidator:
         return result
     
     def _validate_png_structure(self, file_path: str) -> Dict[str, Any]:
-        """Valide la structure PNG"""
-        result = {'structure_valid': True, 'structure_errors': []}
+        """Valide la structure PNG"""        result = {'structure_valid': True, 'structure_errors': []}
         
         try:
             with open(file_path, 'rb') as f:
@@ -504,8 +484,7 @@ class IntegrityValidator:
         return result
     
     def _validate_pdf_structure(self, file_path: str) -> Dict[str, Any]:
-        """Valide la structure PDF"""
-        result = {'structure_valid': True, 'structure_errors': []}
+        """Valide la structure PDF"""        result = {'structure_valid': True, 'structure_errors': []}
         
         try:
             with open(file_path, 'rb') as f:
@@ -534,8 +513,7 @@ class IntegrityValidator:
         return result
     
     def _validate_video_structure(self, file_path: str) -> Dict[str, Any]:
-        """Valide la structure vidéo"""
-        result = {'structure_valid': True, 'structure_errors': []}
+        """Valide la structure vidéo"""        result = {'structure_valid': True, 'structure_errors': []}
         
         try:
             # Validation avec OpenCV
@@ -579,8 +557,7 @@ class IntegrityValidator:
         return result
     
     def _validate_audio_structure(self, file_path: str) -> Dict[str, Any]:
-        """Valide la structure audio"""
-        result = {'structure_valid': True, 'structure_errors': []}
+        """Valide la structure audio"""        result = {'structure_valid': True, 'structure_errors': []}
         
         try:
             import soundfile as sf
@@ -611,8 +588,7 @@ class IntegrityValidator:
         return result
     
     def _validate_archive_structure(self, file_path: str) -> Dict[str, Any]:
-        """Valide la structure d'archive"""
-        result = {'structure_valid': True, 'structure_errors': []}
+        """Valide la structure d'archive"""        result = {'structure_valid': True, 'structure_errors': []}
         
         try:
             file_ext = Path(file_path).suffix.lower()
@@ -645,8 +621,7 @@ class IntegrityValidator:
         return result
     
     def _validate_file_size_consistency(self, file_path: str) -> Dict[str, Any]:
-        """Valide la cohérence de la taille du fichier"""
-        result = {'size_consistent': True, 'size_warnings': []}
+        """Valide la cohérence de la taille du fichier"""        result = {'size_consistent': True, 'size_warnings': []}
         
         try:
             file_size = os.path.getsize(file_path)
@@ -679,8 +654,7 @@ class IntegrityValidator:
         return result
     
     def _validate_metadata_integrity(self, file_path: str) -> Dict[str, Any]:
-        """Valide l'intégrité des métadonnées"""
-        result = {'metadata_consistent': True, 'metadata_warnings': []}
+        """Valide l'intégrité des métadonnées"""        result = {'metadata_consistent': True, 'metadata_warnings': []}
         
         try:
             # Comparaison entre différentes sources de métadonnées
@@ -722,8 +696,7 @@ class IntegrityValidator:
         return result
     
     def _calculate_integrity_score(self, integrity_result: Dict[str, Any]) -> float:
-        """Calcule le score d'intégrité global"""
-        scores = []
+        """Calcule le score d'intégrité global"""        scores = []
         
         # Structure (40%)
         if integrity_result.get('structure_valid', True):
@@ -746,14 +719,12 @@ class IntegrityValidator:
         return sum(scores)
 
 class AccessControlValidator:
-    """Validateur de contrôle d'accès"""
-    
+    """Validateur de contrôle d'accès"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.AccessControlValidator")
     
     def validate_access_permissions(self, file_path: str, user_context: Dict[str, Any]) -> Dict[str, Any]:
-        """Valide les permissions d'accès au fichier"""
-        access_result = {
+        """Valide les permissions d'accès au fichier"""        access_result = {
             'access_granted': True,
             'permission_violations': [],
             'access_level': 'read',
@@ -787,8 +758,7 @@ class AccessControlValidator:
             return access_result
     
     def _extract_security_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extrait les métadonnées de sécurité"""
-        metadata = {
+        """Extrait les métadonnées de sécurité"""        metadata = {
             'file_owner': None,
             'creation_time': None,
             'modification_time': None,
@@ -828,8 +798,7 @@ class AccessControlValidator:
         return metadata
     
     def _validate_user_context(self, user_context: Dict[str, Any], security_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Valide le contexte utilisateur par rapport aux métadonnées de sécurité"""
-        validation = {
+        """Valide le contexte utilisateur par rapport aux métadonnées de sécurité"""        validation = {
             'context_valid': True,
             'context_warnings': []
         }
@@ -855,8 +824,7 @@ class AccessControlValidator:
         return validation
 
 class SecurityValidator:
-    """Validateur principal de sécurité"""
-    
+    """Validateur principal de sécurité"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.SecurityValidator")
         
@@ -866,8 +834,7 @@ class SecurityValidator:
         self.access_validator = AccessControlValidator()
     
     def validate_security(self, file_path: str, user_context: Optional[Dict[str, Any]] = None) -> SecurityValidationResult:
-        """Valide la sécurité d'un fichier de manière complète"""
-        
+        """Valide la sécurité d'un fichier de manière complète"""        
         if not os.path.exists(file_path):
             return SecurityValidationResult(
                 is_secure=False,
@@ -974,8 +941,7 @@ class SecurityValidator:
             )
     
     def _analyze_suspicious_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Analyse les métadonnées pour détecter du contenu suspect"""
-        analysis = {'suspicious': False, 'indicators': []}
+        """Analyse les métadonnées pour détecter du contenu suspect"""        analysis = {'suspicious': False, 'indicators': []}
         
         try:
             file_ext = Path(file_path).suffix.lower()
@@ -1021,8 +987,7 @@ class SecurityValidator:
         return analysis
     
     def _calculate_threat_level(self, violations: List[SecurityViolationType], errors: List[str], warnings: List[str]) -> SecurityThreatLevel:
-        """Calcule le niveau de menace"""
-        
+        """Calcule le niveau de menace"""        
         # Menaces critiques
         critical_violations = [SecurityViolationType.MALWARE, SecurityViolationType.VIRUS]
         if any(v in violations for v in critical_violations):
@@ -1045,8 +1010,7 @@ class SecurityValidator:
         return SecurityThreatLevel.SAFE
     
     def _calculate_security_score(self, scan_details: Dict[str, Any], violations: List[SecurityViolationType]) -> float:
-        """Calcule le score de sécurité global"""
-        scores = []
+        """Calcule le score de sécurité global"""        scores = []
         
         # Score malware (40%)
         malware_scan = scan_details.get('malware_scan', {})
@@ -1081,8 +1045,7 @@ class SecurityValidator:
         return min(1.0, final_score)
     
     def _generate_security_recommendations(self, violations: List[SecurityViolationType], threat_level: SecurityThreatLevel) -> List[str]:
-        """Génère des recommandations de sécurité"""
-        recommendations = []
+        """Génère des recommandations de sécurité"""        recommendations = []
         
         if SecurityViolationType.MALWARE in violations or SecurityViolationType.VIRUS in violations:
             recommendations.extend([
@@ -1115,15 +1078,13 @@ class SecurityValidator:
         return recommendations
 
 class AsyncSecurityValidator:
-    """Version asynchrone du validateur de sécurité"""
-    
+    """Version asynchrone du validateur de sécurité"""    
     def __init__(self):
         self.sync_validator = SecurityValidator()
         self.logger = logging.getLogger(f"{__name__}.AsyncSecurityValidator")
     
     async def validate_security(self, file_path: str, user_context: Optional[Dict[str, Any]] = None) -> SecurityValidationResult:
-        """Valide la sécurité de manière asynchrone"""
-        loop = asyncio.get_event_loop()
+        """Valide la sécurité de manière asynchrone"""        loop = asyncio.get_event_loop()
         
         result = await loop.run_in_executor(
             None,

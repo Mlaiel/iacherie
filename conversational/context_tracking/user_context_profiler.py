@@ -1,5 +1,4 @@
-"""
-User Context Profiler - IA Influencer Agent
+"""User Context Profiler - IA Influencer Agent
 
 Advanced user context profiling for multi-format content creators with
 behavioral analysis, preference learning, and personalization optimization.
@@ -10,9 +9,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING ⚠️
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited. Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -29,8 +26,7 @@ from ...utils.nlp import TextProcessor
 
 
 class CreatorType(Enum):
-    """Content creator types"""
-    MUSICIAN = "musician"
+    """Content creator types"""    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -42,8 +38,7 @@ class CreatorType(Enum):
 
 
 class ExpertiseLevel(Enum):
-    """User expertise levels"""
-    BEGINNER = "beginner"
+    """User expertise levels"""    BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
     EXPERT = "expert"
@@ -51,8 +46,7 @@ class ExpertiseLevel(Enum):
 
 
 class ContentPreference(Enum):
-    """Content format preferences"""
-    AUDIO = "audio"
+    """Content format preferences"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -64,8 +58,7 @@ class ContentPreference(Enum):
 
 @dataclass
 class UserBehaviorPattern:
-    """User behavior pattern analysis"""
-    pattern_id: str
+    """User behavior pattern analysis"""    pattern_id: str
     pattern_type: str
     frequency: float
     confidence: float
@@ -89,8 +82,7 @@ class UserBehaviorPattern:
 
 @dataclass
 class PersonalizationInsights:
-    """Personalization insights for user experience optimization"""
-    user_id: str
+    """Personalization insights for user experience optimization"""    user_id: str
     generated_at: datetime
     
     # Content recommendations
@@ -130,8 +122,7 @@ class PersonalizationInsights:
 
 @dataclass
 class UserContextProfile:
-    """Comprehensive user context profile"""
-    user_id: str
+    """Comprehensive user context profile"""    user_id: str
     created_at: datetime
     last_updated: datetime
     
@@ -167,8 +158,7 @@ class UserContextProfile:
     last_insights: Optional[PersonalizationInsights] = None
     
     def calculate_completeness(self) -> float:
-        """Calculate profile completeness score"""
-        total_fields = 10
+        """Calculate profile completeness score"""        total_fields = 10
         completed_fields = 0
         
         if self.creator_type != CreatorType.MULTI_FORMAT:
@@ -223,8 +213,7 @@ class UserContextProfile:
 
 
 class UserContextProfiler:
-    """
-    Advanced user context profiler providing comprehensive behavioral analysis,
+    """    Advanced user context profiler providing comprehensive behavioral analysis,
     preference learning, and personalization optimization for content creators.
     
     Features:
@@ -234,8 +223,7 @@ class UserContextProfiler:
     - Personalization insights generation
     - Creator journey optimization
     - Cross-platform analytics
-    """
-    
+    """    
     def __init__(
         self,
         cache_manager: CacheManager,
@@ -265,8 +253,7 @@ class UserContextProfiler:
         self.logger.info("UserContextProfiler initialized")
     
     async def start(self):
-        """Start the user context profiler"""
-        try:
+        """Start the user context profiler"""        try:
             # Load existing profiles
             await self._load_profiles()
             
@@ -283,8 +270,7 @@ class UserContextProfiler:
             raise ProfilerError(f"Startup failed: {e}")
     
     async def stop(self):
-        """Stop the user context profiler"""
-        try:
+        """Stop the user context profiler"""        try:
             # Cancel background tasks
             if self.update_task:
                 self.update_task.cancel()
@@ -309,8 +295,7 @@ class UserContextProfiler:
         primary_language: str = "en",
         initial_preferences: Optional[Dict[str, Any]] = None
     ) -> UserContextProfile:
-        """
-        Create new user profile
+        """        Create new user profile
         
         Args:
             user_id: User identifier
@@ -321,8 +306,7 @@ class UserContextProfiler:
             
         Returns:
             UserContextProfile: Created profile
-        """
-        try:
+        """        try:
             # Create profile
             profile = UserContextProfile(
                 user_id=user_id,
@@ -362,8 +346,7 @@ class UserContextProfiler:
         create_if_missing: bool = False,
         creator_type: Optional[CreatorType] = None
     ) -> Optional[UserContextProfile]:
-        """
-        Get user profile
+        """        Get user profile
         
         Args:
             user_id: User identifier
@@ -372,8 +355,7 @@ class UserContextProfiler:
             
         Returns:
             UserContextProfile or None
-        """
-        try:
+        """        try:
             # Check in-memory storage
             if user_id in self.user_profiles:
                 return self.user_profiles[user_id]
@@ -399,8 +381,7 @@ class UserContextProfiler:
         user_id: str,
         interaction_data: Dict[str, Any]
     ) -> bool:
-        """
-        Update profile with new interaction data
+        """        Update profile with new interaction data
         
         Args:
             user_id: User identifier
@@ -408,8 +389,7 @@ class UserContextProfiler:
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             profile = await self.get_profile(user_id)
             if not profile:
                 return False
@@ -452,8 +432,7 @@ class UserContextProfiler:
         user_id: str,
         analysis_type: str = "comprehensive"
     ) -> Dict[str, Any]:
-        """
-        Analyze user behavior patterns
+        """        Analyze user behavior patterns
         
         Args:
             user_id: User identifier
@@ -461,8 +440,7 @@ class UserContextProfiler:
             
         Returns:
             Dict containing behavior analysis
-        """
-        try:
+        """        try:
             profile = await self.get_profile(user_id)
             if not profile:
                 return {"error": "Profile not found"}
@@ -505,8 +483,7 @@ class UserContextProfiler:
         user_id: str,
         force_refresh: bool = False
     ) -> Optional[PersonalizationInsights]:
-        """
-        Generate personalization insights for user
+        """        Generate personalization insights for user
         
         Args:
             user_id: User identifier
@@ -514,8 +491,7 @@ class UserContextProfiler:
             
         Returns:
             PersonalizationInsights or None
-        """
-        try:
+        """        try:
             profile = await self.get_profile(user_id)
             if not profile:
                 return None
@@ -586,8 +562,7 @@ class UserContextProfiler:
         user_id: str,
         **updates
     ) -> bool:
-        """
-        Update profile attributes
+        """        Update profile attributes
         
         Args:
             user_id: User identifier
@@ -595,8 +570,7 @@ class UserContextProfiler:
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             profile = await self.get_profile(user_id)
             if not profile:
                 return False
@@ -632,8 +606,7 @@ class UserContextProfiler:
         user_ids: Optional[List[str]] = None,
         creator_type: Optional[CreatorType] = None
     ) -> Dict[str, Any]:
-        """
-        Get analytics across profiles
+        """        Get analytics across profiles
         
         Args:
             user_ids: Specific users to analyze
@@ -641,8 +614,7 @@ class UserContextProfiler:
             
         Returns:
             Dict containing analytics
-        """
-        try:
+        """        try:
             profiles_to_analyze = []
             
             if user_ids:
@@ -721,8 +693,7 @@ class UserContextProfiler:
         profile: UserContextProfile,
         preferences: Dict[str, Any]
     ):
-        """Apply initial preferences to profile"""
-        for key, value in preferences.items():
+        """Apply initial preferences to profile"""        for key, value in preferences.items():
             if key == "content_preferences" and isinstance(value, dict):
                 for pref_str, score in value.items():
                     try:
@@ -738,8 +709,7 @@ class UserContextProfiler:
                 setattr(profile, key, value)
     
     async def _analyze_behavior_patterns(self, profile: UserContextProfile):
-        """Analyze and update behavior patterns"""
-        interactions = profile.interaction_history[-100:]  # Recent interactions
+        """Analyze and update behavior patterns"""        interactions = profile.interaction_history[-100:]  # Recent interactions
         
         # Time-based patterns
         hour_activity = defaultdict(int)
@@ -810,8 +780,7 @@ class UserContextProfiler:
         profile: UserContextProfile,
         interaction_data: Dict[str, Any]
     ):
-        """Update user preferences based on interaction"""
-        # Update content preferences
+        """Update user preferences based on interaction"""        # Update content preferences
         content_type = interaction_data.get("content_type")
         if content_type:
             try:
@@ -836,8 +805,7 @@ class UserContextProfiler:
         profile: UserContextProfile,
         interaction_data: Dict[str, Any]
     ):
-        """Update engagement metrics"""
-        engagement_score = interaction_data.get("engagement_score", 0.5)
+        """Update engagement metrics"""        engagement_score = interaction_data.get("engagement_score", 0.5)
         duration = interaction_data.get("duration", 0)
         
         # Update overall engagement
@@ -853,8 +821,7 @@ class UserContextProfiler:
         self,
         profile: UserContextProfile
     ) -> Dict[str, Any]:
-        """Comprehensive pattern analysis"""
-        patterns = {}
+        """Comprehensive pattern analysis"""        patterns = {}
         
         # Temporal patterns
         temporal_patterns = [p for p in profile.behavior_patterns if p.pattern_type == "temporal"]
@@ -883,8 +850,7 @@ class UserContextProfiler:
         self,
         profile: UserContextProfile
     ) -> Dict[str, Any]:
-        """Analyze user engagement"""
-        return {
+        """Analyze user engagement"""        return {
             "overall_engagement": profile.engagement_metrics.get("overall_engagement", 0.5),
             "avg_session_duration": profile.engagement_metrics.get("avg_session_duration", 0),
             "interaction_frequency": len(profile.interaction_history) / max((datetime.utcnow() - profile.created_at).days, 1),
@@ -895,8 +861,7 @@ class UserContextProfiler:
         self,
         profile: UserContextProfile
     ) -> Dict[str, Any]:
-        """Analyze user preferences"""
-        return {
+        """Analyze user preferences"""        return {
             "content_preferences": {pref.value: score for pref, score in profile.content_preferences.items()},
             "platform_preferences": profile.platform_usage,
             "genre_preferences": profile.genre_preferences,
@@ -907,8 +872,7 @@ class UserContextProfiler:
         self,
         profile: UserContextProfile
     ) -> Dict[str, Any]:
-        """Analyze collaboration potential"""
-        collaboration_score = 0.5
+        """Analyze collaboration potential"""        collaboration_score = 0.5
         
         # Factor in creator type
         if profile.creator_type in [CreatorType.MULTI_FORMAT, CreatorType.INFLUENCER]:
@@ -932,8 +896,7 @@ class UserContextProfiler:
         self,
         profile: UserContextProfile
     ) -> List[ContentPreference]:
-        """Recommend content types for user"""
-        # Sort by preference scores
+        """Recommend content types for user"""        # Sort by preference scores
         sorted_prefs = sorted(
             profile.content_preferences.items(),
             key=lambda x: x[1],
@@ -954,8 +917,7 @@ class UserContextProfiler:
         return recommendations[:3]
     
     async def _find_optimal_times(self, profile: UserContextProfile) -> List[int]:
-        """Find optimal engagement times"""
-        temporal_patterns = [p for p in profile.behavior_patterns if p.pattern_type == "temporal"]
+        """Find optimal engagement times"""        temporal_patterns = [p for p in profile.behavior_patterns if p.pattern_type == "temporal"]
         
         optimal_hours = []
         for pattern in temporal_patterns:
@@ -973,8 +935,7 @@ class UserContextProfiler:
         return sorted(optimal_hours)
     
     async def _determine_interaction_style(self, profile: UserContextProfile) -> str:
-        """Determine preferred interaction style"""
-        engagement = profile.engagement_metrics.get("overall_engagement", 0.5)
+        """Determine preferred interaction style"""        engagement = profile.engagement_metrics.get("overall_engagement", 0.5)
         
         if engagement > 0.7:
             return "interactive"
@@ -987,8 +948,7 @@ class UserContextProfiler:
         self,
         profile: UserContextProfile
     ) -> List[str]:
-        """Identify collaboration opportunities"""
-        opportunities = []
+        """Identify collaboration opportunities"""        opportunities = []
         
         if profile.creator_type in [CreatorType.MUSICIAN, CreatorType.ARTIST]:
             opportunities.extend(["music_collaboration", "creative_partnership"])
@@ -1002,8 +962,7 @@ class UserContextProfiler:
         return opportunities
     
     async def _calculate_monetization_potential(self, profile: UserContextProfile) -> float:
-        """Calculate monetization potential"""
-        score = 0.0
+        """Calculate monetization potential"""        score = 0.0
         
         # Platform diversity factor
         score += len(profile.platform_usage) * 0.1
@@ -1027,8 +986,7 @@ class UserContextProfiler:
         return min(score, 1.0)
     
     async def _determine_protection_priorities(self, profile: UserContextProfile) -> List[str]:
-        """Determine content protection priorities"""
-        priorities = []
+        """Determine content protection priorities"""        priorities = []
         
         # High-value content types
         for pref, score in profile.content_preferences.items():
@@ -1049,8 +1007,7 @@ class UserContextProfiler:
         return list(set(priorities))
     
     async def _identify_primary_platforms(self, profile: UserContextProfile) -> List[str]:
-        """Identify primary platforms"""
-        sorted_platforms = sorted(
+        """Identify primary platforms"""        sorted_platforms = sorted(
             profile.platform_usage.items(),
             key=lambda x: x[1],
             reverse=True
@@ -1059,8 +1016,7 @@ class UserContextProfiler:
         return [platform for platform, usage in sorted_platforms[:3] if usage > 0.3]
     
     async def _suggest_platform_strategy(self, profile: UserContextProfile) -> Dict[str, str]:
-        """Suggest cross-platform strategy"""
-        strategy = {}
+        """Suggest cross-platform strategy"""        strategy = {}
         
         primary_platforms = await self._identify_primary_platforms(profile)
         
@@ -1075,8 +1031,7 @@ class UserContextProfiler:
         return strategy
     
     async def _identify_skill_gaps(self, profile: UserContextProfile) -> List[str]:
-        """Identify areas for skill development"""
-        gaps = []
+        """Identify areas for skill development"""        gaps = []
         
         # Low platform usage suggests growth opportunity
         if len(profile.platform_usage) < 3:
@@ -1093,8 +1048,7 @@ class UserContextProfiler:
         return gaps
     
     async def _recommend_features(self, profile: UserContextProfile) -> List[str]:
-        """Recommend platform features"""
-        features = []
+        """Recommend platform features"""        features = []
         
         # Based on creator type
         if profile.creator_type == CreatorType.MUSICIAN:
@@ -1113,8 +1067,7 @@ class UserContextProfiler:
         return features
     
     async def _background_updates(self):
-        """Background task for profile updates"""
-        while True:
+        """Background task for profile updates"""        while True:
             try:
                 await asyncio.sleep(self.profile_update_interval)
                 
@@ -1139,13 +1092,11 @@ class UserContextProfiler:
                 await asyncio.sleep(300)  # Wait before retrying
     
     async def _initialize_analyzers(self):
-        """Initialize pattern analyzers"""
-        # Placeholder for ML model initialization
+        """Initialize pattern analyzers"""        # Placeholder for ML model initialization
         pass
     
     async def _load_profiles(self):
-        """Load profiles from persistent storage"""
-        try:
+        """Load profiles from persistent storage"""        try:
             profiles_data = await self.cache_manager.get("user_context_profiles")
             if profiles_data:
                 for user_id, profile_data in profiles_data.items():
@@ -1156,8 +1107,7 @@ class UserContextProfiler:
             self.logger.error(f"Error loading profiles: {e}")
     
     async def _save_profiles(self):
-        """Save profiles to persistent storage"""
-        try:
+        """Save profiles to persistent storage"""        try:
             profiles_data = {}
             for user_id, profile in self.user_profiles.items():
                 profiles_data[user_id] = profile.to_dict()
@@ -1172,8 +1122,7 @@ class UserContextProfiler:
             self.logger.error(f"Error saving profiles: {e}")
     
     async def _load_profile(self, user_id: str) -> Optional[UserContextProfile]:
-        """Load specific profile"""
-        try:
+        """Load specific profile"""        try:
             profile_data = await self.cache_manager.get(f"user_context_profile:{user_id}")
             if profile_data:
                 return self._profile_from_dict(profile_data)
@@ -1184,8 +1133,7 @@ class UserContextProfiler:
             return None
     
     async def _save_profile(self, user_id: str):
-        """Save specific profile"""
-        try:
+        """Save specific profile"""        try:
             if user_id in self.user_profiles:
                 profile_data = self.user_profiles[user_id].to_dict()
                 await self.cache_manager.set(
@@ -1198,8 +1146,7 @@ class UserContextProfiler:
             self.logger.error(f"Error saving profile {user_id}: {e}")
     
     def _profile_from_dict(self, data: Dict[str, Any]) -> UserContextProfile:
-        """Reconstruct profile from dictionary"""
-        # Reconstruct enums and complex types
+        """Reconstruct profile from dictionary"""        # Reconstruct enums and complex types
         creator_type = CreatorType(data["creator_type"])
         expertise_level = ExpertiseLevel(data["expertise_level"])
         

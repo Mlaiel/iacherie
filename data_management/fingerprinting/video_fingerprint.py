@@ -1,5 +1,4 @@
-"""
-🎬 Video Fingerprinting Engine - IA Influencer Agent Platform Enterprise
+"""🎬 Video Fingerprinting Engine - IA Influencer Agent Platform Enterprise
 ========================================================================
 Module: backend/data_management/fingerprinting/video_fingerprint.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -28,9 +27,7 @@ VIDEO FINGERPRINTING TECHNOLOGIES:
 ├── 🧠 Deep Features (CNN + ResNet + EfficientNet)
 ├── 📊 Temporal Analysis (Frame Sequences + Patterns)
 └── 🛡️ Protection System (Monitoring + Takedown)
-"""
-
-from typing import Dict, List, Optional, Any, Union, Tuple
+"""from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
 import numpy as np
@@ -68,8 +65,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class VideoFingerprintConfig:
-    """Configuration avancée pour le fingerprinting vidéo"""
-    
+    """Configuration avancée pour le fingerprinting vidéo"""    
     # Paramètres vidéo de base
     frame_extraction_rate: int = 1  # 1 frame per second
     max_duration: int = 3600  # 1 hour max
@@ -114,12 +110,10 @@ class VideoFingerprintConfig:
     max_workers: int = 4
 
 class VideoProcessor(ABC):
-    """Classe abstraite pour les processeurs vidéo"""
-    
+    """Classe abstraite pour les processeurs vidéo"""    
     @abstractmethod
     async def process(self, video_path: str, config: VideoFingerprintConfig) -> Dict[str, Any]:
-        """Process video file and generate fingerprint"""
-        logger.warning(f"process method not implemented in {self.__class__.__name__}")
+        """Process video file and generate fingerprint"""        logger.warning(f"process method not implemented in {self.__class__.__name__}")
         
         # Return basic fingerprint data structure
         return {
@@ -137,21 +131,17 @@ class VideoProcessor(ABC):
     
     @abstractmethod
     def get_name(self) -> str:
-        """Get processor name"""
-        return f"default_{self.__class__.__name__.lower()}"
+        """Get processor name"""        return f"default_{self.__class__.__name__.lower()}"
 
 class OpenCVProcessor(VideoProcessor):
-    """Processeur OpenCV pour l'analyse vidéo de base"""
-    
+    """Processeur OpenCV pour l'analyse vidéo de base"""    
     def __init__(self):
-        """Initialise le processeur OpenCV"""
-        if not CV2_AVAILABLE:
+        """Initialise le processeur OpenCV"""        if not CV2_AVAILABLE:
             raise ImportError("OpenCV library not available for video processing")
         self.name = "opencv"
     
     async def process(self, video_path: str, config: VideoFingerprintConfig) -> Dict[str, Any]:
-        """Traite la vidéo avec OpenCV"""
-        try:
+        """Traite la vidéo avec OpenCV"""        try:
             start_time = time.time()
             
             # Ouverture de la vidéo
@@ -235,8 +225,7 @@ class OpenCVProcessor(VideoProcessor):
         return "opencv"
     
     def _calculate_quality_metrics(self, frames_data: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Calcule les métriques de qualité vidéo"""
-        try:
+        """Calcule les métriques de qualité vidéo"""        try:
             if not frames_data:
                 return {}
             
@@ -258,8 +247,7 @@ class OpenCVProcessor(VideoProcessor):
             return {}
     
     def _calculate_frame_consistency(self, frames_data: List[Dict[str, Any]]) -> float:
-        """Calcule la consistance entre les frames"""
-        try:
+        """Calcule la consistance entre les frames"""        try:
             if len(frames_data) < 2:
                 return 1.0
             
@@ -279,15 +267,13 @@ class OpenCVProcessor(VideoProcessor):
             return 0.5
 
 class PerceptualHashProcessor(VideoProcessor):
-    """Processeur pour les hash perceptuels de frames"""
-    
+    """Processeur pour les hash perceptuels de frames"""    
     def __init__(self):
         if not IMAGEHASH_AVAILABLE:
             raise ImportError("imagehash library not available")
     
     async def process(self, video_path: str, config: VideoFingerprintConfig) -> Dict[str, Any]:
-        """Génère des hash perceptuels pour les frames"""
-        try:
+        """Génère des hash perceptuels pour les frames"""        try:
             start_time = time.time()
             
             # Extraction des frames avec OpenCV
@@ -345,8 +331,7 @@ class PerceptualHashProcessor(VideoProcessor):
         return "perceptual_hash"
     
     def _generate_video_hash(self, frame_hashes: List[Dict[str, Any]]) -> Dict[str, str]:
-        """Génère un hash global de la vidéo"""
-        try:
+        """Génère un hash global de la vidéo"""        try:
             video_hash = {}
             
             for hash_type in ["phash", "dhash", "ahash", "whash"]:
@@ -368,8 +353,7 @@ class PerceptualHashProcessor(VideoProcessor):
             return {}
     
     def _calculate_hash_statistics(self, frame_hashes: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calcule des statistiques sur les hash"""
-        try:
+        """Calcule des statistiques sur les hash"""        try:
             stats = {
                 "unique_hashes": {},
                 "hash_stability": {},
@@ -404,8 +388,7 @@ class PerceptualHashProcessor(VideoProcessor):
             return {}
 
 class YOLOFrameProcessor(VideoProcessor):
-    """Processeur YOLO pour la détection d'objets dans les frames"""
-    
+    """Processeur YOLO pour la détection d'objets dans les frames"""    
     def __init__(self):
         # Chargement du modèle YOLO (simulation)
         self.model_loaded = False
@@ -417,8 +400,7 @@ class YOLOFrameProcessor(VideoProcessor):
             logger.warning(f"YOLO model loading failed: {e}")
     
     async def process(self, video_path: str, config: VideoFingerprintConfig) -> Dict[str, Any]:
-        """Détecte les objets dans les frames vidéo"""
-        try:
+        """Détecte les objets dans les frames vidéo"""        try:
             start_time = time.time()
             
             if not self.model_loaded:
@@ -468,8 +450,7 @@ class YOLOFrameProcessor(VideoProcessor):
         return "yolo"
     
     async def _simulate_yolo_processing(self, video_path: str, config: VideoFingerprintConfig) -> Dict[str, Any]:
-        """Simulation du traitement YOLO pour la démo"""
-        try:
+        """Simulation du traitement YOLO pour la démo"""        try:
             # Classes d'objets communes
             common_objects = [
                 "person", "car", "bicycle", "dog", "cat", "chair", "table",
@@ -521,16 +502,14 @@ class YOLOFrameProcessor(VideoProcessor):
             raise
     
     def _detect_objects_in_frame(self, frame: np.ndarray, config: VideoFingerprintConfig) -> List[Dict[str, Any]]:
-        """Détecte les objets dans un frame (simulation)"""
-        # En production, utiliser le vrai modèle YOLO
+        """Détecte les objets dans un frame (simulation)"""        # En production, utiliser le vrai modèle YOLO
         # results = self.model(frame, conf=config.object_confidence)
         
         # Simulation
         return []
     
     def _analyze_detected_objects(self, detections: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyse les objets détectés dans toute la vidéo"""
-        try:
+        """Analyse les objets détectés dans toute la vidéo"""        try:
             analysis = {
                 "total_detections": 0,
                 "unique_classes": set(),
@@ -585,17 +564,14 @@ class YOLOFrameProcessor(VideoProcessor):
             return {}
 
 class MotionVectorProcessor(VideoProcessor):
-    """Processeur pour l'analyse des vecteurs de mouvement"""
-    
+    """Processeur pour l'analyse des vecteurs de mouvement"""    
     def __init__(self):
-        """Initialise le processeur de vecteurs de mouvement"""
-        if not CV2_AVAILABLE:
+        """Initialise le processeur de vecteurs de mouvement"""        if not CV2_AVAILABLE:
             raise ImportError("OpenCV library not available for motion vector analysis")
         self.name = "motion_vector"
     
     async def process(self, video_path: str, config: VideoFingerprintConfig) -> Dict[str, Any]:
-        """Analyse les vecteurs de mouvement dans la vidéo"""
-        try:
+        """Analyse les vecteurs de mouvement dans la vidéo"""        try:
             start_time = time.time()
             
             # Ouverture de la vidéo
@@ -700,8 +676,7 @@ class MotionVectorProcessor(VideoProcessor):
         return "motion_vector"
     
     def _analyze_motion_patterns(self, motion_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyse les patterns de mouvement globaux"""
-        try:
+        """Analyse les patterns de mouvement globaux"""        try:
             if not motion_data:
                 return {}
             
@@ -774,13 +749,11 @@ class MotionVectorProcessor(VideoProcessor):
             return {}
 
 class VideoFingerprintEngine:
-    """
-    Moteur principal de fingerprinting vidéo entreprise
+    """    Moteur principal de fingerprinting vidéo entreprise
     
     Combine OpenCV, hash perceptuels, YOLO et analyse de mouvement
     pour créer des empreintes vidéo robustes et précises
-    """
-    
+    """    
     def __init__(self, config: Optional[VideoFingerprintConfig] = None):
         self.config = config or VideoFingerprintConfig()
         
@@ -802,16 +775,14 @@ class VideoFingerprintEngine:
         logger.info(f"VideoFingerprintEngine initialized with {len(self.processors)} processors")
     
     async def generate_fingerprint(self, video_path: str) -> Dict[str, Any]:
-        """
-        Génère une empreinte vidéo complète
+        """        Génère une empreinte vidéo complète
         
         Args:
             video_path: Chemin vers le fichier vidéo
             
         Returns:
             Dictionnaire contenant toutes les empreintes générées
-        """
-        try:
+        """        try:
             start_time = datetime.now()
             
             # Validation du fichier
@@ -868,8 +839,7 @@ class VideoFingerprintEngine:
             raise
     
     def _validate_video_file(self, video_path: str) -> None:
-        """Valide le fichier vidéo"""
-        path = Path(video_path)
+        """Valide le fichier vidéo"""        path = Path(video_path)
         
         if not path.exists():
             raise FileNotFoundError(f"Video file not found: {video_path}")
@@ -883,8 +853,7 @@ class VideoFingerprintEngine:
             raise ValueError(f"Unsupported video format: {path.suffix}")
     
     def _combine_features(self, processors_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Combine les caractéristiques de tous les processeurs"""
-        try:
+        """Combine les caractéristiques de tous les processeurs"""        try:
             combined = {
                 "video_hashes": {},
                 "temporal_features": {},
@@ -931,12 +900,10 @@ class VideoFingerprintEngine:
             return {}
     
     def get_supported_formats(self) -> List[str]:
-        """Retourne les formats vidéo supportés"""
-        return [".mp4", ".avi", ".mov", ".mkv", ".webm", ".flv"]
+        """Retourne les formats vidéo supportés"""        return [".mp4", ".avi", ".mov", ".mkv", ".webm", ".flv"]
     
     def get_processor_status(self) -> Dict[str, bool]:
-        """Retourne le statut des processeurs"""
-        return {
+        """Retourne le statut des processeurs"""        return {
             "opencv": "opencv" in self.processors,
             "perceptual_hash": "perceptual_hash" in self.processors,
             "yolo": "yolo" in self.processors,

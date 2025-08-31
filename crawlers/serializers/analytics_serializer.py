@@ -1,5 +1,4 @@
-"""
-Analytics Serializer Module
+"""Analytics Serializer Module
 ===========================
 
 Specialized serialization for analytics data and business intelligence.
@@ -29,9 +28,7 @@ Expertise combinée:
 - Audio/Vidéo: Analytics multimédia avancées
 - DevOps: Pipelines de données et monitoring analytics
 - IA Prompt Engineer: Génération de rapports automatisés
-"""
-
-import logging
+"""import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta, timezone
 from dataclasses import dataclass, field
@@ -45,8 +42,7 @@ from pydantic import BaseModel, Field, validator
 logger = logging.getLogger(__name__)
 
 class AnalyticsType(Enum):
-    """Types of analytics data."""
-    ENGAGEMENT = "engagement"
+    """Types of analytics data."""    ENGAGEMENT = "engagement"
     PERFORMANCE = "performance"
     AUDIENCE = "audience"
     REVENUE = "revenue"
@@ -58,8 +54,7 @@ class AnalyticsType(Enum):
     PREDICTIVE = "predictive"
 
 class MetricType(Enum):
-    """Types of metrics."""
-    COUNTER = "counter"
+    """Types of metrics."""    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     PERCENTAGE = "percentage"
@@ -69,8 +64,7 @@ class MetricType(Enum):
     INDEX = "index"
 
 class TimeGranularity(Enum):
-    """Time granularity for analytics."""
-    MINUTE = "minute"
+    """Time granularity for analytics."""    MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -79,8 +73,7 @@ class TimeGranularity(Enum):
     YEAR = "year"
 
 class AggregationType(Enum):
-    """Aggregation methods."""
-    SUM = "sum"
+    """Aggregation methods."""    SUM = "sum"
     AVERAGE = "average"
     COUNT = "count"
     MIN = "min"
@@ -92,8 +85,7 @@ class AggregationType(Enum):
 
 @dataclass
 class MetricValue:
-    """Individual metric value with metadata."""
-    value: Union[int, float]
+    """Individual metric value with metadata."""    value: Union[int, float]
     timestamp: datetime
     confidence: float = 1.0
     source: str = "system"
@@ -102,8 +94,7 @@ class MetricValue:
 
 @dataclass
 class MetricSeries:
-    """Time series of metric values."""
-    metric_name: str
+    """Time series of metric values."""    metric_name: str
     metric_type: MetricType
     values: List[MetricValue] = field(default_factory=list)
     unit: str = ""
@@ -112,8 +103,7 @@ class MetricSeries:
 
 @dataclass
 class AnalyticsSnapshot:
-    """Point-in-time analytics snapshot."""
-    snapshot_id: str
+    """Point-in-time analytics snapshot."""    snapshot_id: str
     timestamp: datetime
     platform: str
     content_id: str
@@ -123,8 +113,7 @@ class AnalyticsSnapshot:
 
 @dataclass
 class PerformanceBenchmark:
-    """Performance benchmark data."""
-    benchmark_id: str
+    """Performance benchmark data."""    benchmark_id: str
     category: str
     metric_name: str
     baseline_value: float
@@ -135,13 +124,11 @@ class PerformanceBenchmark:
     improvement_rate: Optional[float] = None
 
 class AnalyticsData(BaseModel):
-    """
-    Comprehensive analytics data model.
+    """    Comprehensive analytics data model.
     
     Represents analytics metrics, performance data, and business intelligence
     for content optimization in the IA-Influencer-Agent platform.
-    """
-    
+    """    
     # Basic identification
     analytics_id: str = Field(..., description="Unique analytics identifier")
     report_id: str = Field(..., description="Analytics report identifier")
@@ -261,16 +248,13 @@ class AnalyticsData(BaseModel):
         return v
 
 class AnalyticsSerializer:
-    """
-    Advanced analytics data serialization system.
+    """    Advanced analytics data serialization system.
     
     Handles efficient serialization and deserialization of analytics data,
     performance metrics, and business intelligence for content optimization.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize analytics serializer."""
-        self.time_series_compression_threshold = 1000  # Compress if > 1000 data points
+        """Initialize analytics serializer."""        self.time_series_compression_threshold = 1000  # Compress if > 1000 data points
         self.decimal_precision = 6  # Precision for floating point values
         
         logger.info("Analytics serializer initialized")
@@ -282,8 +266,7 @@ class AnalyticsSerializer:
         include_snapshots: bool = True,
         compress_time_series: bool = True
     ) -> Dict[str, Any]:
-        """
-        Serialize analytics data to dictionary format.
+        """        Serialize analytics data to dictionary format.
         
         Args:
             analytics: Analytics data to serialize
@@ -293,8 +276,7 @@ class AnalyticsSerializer:
             
         Returns:
             Serialized analytics dictionary
-        """
-        try:
+        """        try:
             # Convert to dictionary
             data = analytics.dict()
             
@@ -357,16 +339,14 @@ class AnalyticsSerializer:
         self,
         data: Dict[str, Any]
     ) -> AnalyticsData:
-        """
-        Deserialize analytics data from dictionary format.
+        """        Deserialize analytics data from dictionary format.
         
         Args:
             data: Serialized analytics dictionary
             
         Returns:
             Deserialized AnalyticsData object
-        """
-        try:
+        """        try:
             # Handle datetime conversions
             datetime_fields = ['period_start', 'period_end', 'calculated_at']
             
@@ -413,8 +393,7 @@ class AnalyticsSerializer:
         analytics_list: List[AnalyticsData],
         compact_mode: bool = True
     ) -> List[Dict[str, Any]]:
-        """Serialize multiple analytics records efficiently."""
-        try:
+        """Serialize multiple analytics records efficiently."""        try:
             serialized_list = []
             
             for analytics in analytics_list:
@@ -437,8 +416,7 @@ class AnalyticsSerializer:
         self,
         data_list: List[Dict[str, Any]]
     ) -> List[AnalyticsData]:
-        """Deserialize multiple analytics records efficiently."""
-        try:
+        """Deserialize multiple analytics records efficiently."""        try:
             analytics_list = []
             
             for data in data_list:
@@ -457,8 +435,7 @@ class AnalyticsSerializer:
         series: MetricSeries,
         compress: bool = True
     ) -> Dict[str, Any]:
-        """Serialize metric series."""
-        try:
+        """Serialize metric series."""        try:
             data = {
                 'metric_name': series.metric_name,
                 'metric_type': series.metric_type.value,
@@ -488,8 +465,7 @@ class AnalyticsSerializer:
         self,
         data: Dict[str, Any]
     ) -> MetricSeries:
-        """Deserialize metric series."""
-        try:
+        """Deserialize metric series."""        try:
             # Handle compressed values
             if data.get('_values_compressed', False):
                 values = self._decompress_metric_values(data['values'])
@@ -520,8 +496,7 @@ class AnalyticsSerializer:
             raise
     
     def _serialize_metric_value(self, value: MetricValue) -> Dict[str, Any]:
-        """Serialize metric value."""
-        return {
+        """Serialize metric value."""        return {
             'value': round(value.value, self.decimal_precision),
             'timestamp': value.timestamp.isoformat(),
             'confidence': round(value.confidence, self.decimal_precision),
@@ -531,15 +506,13 @@ class AnalyticsSerializer:
         }
     
     def _deserialize_metric_value(self, data: Dict[str, Any]) -> MetricValue:
-        """Deserialize metric value."""
-        if isinstance(data.get('timestamp'), str):
+        """Deserialize metric value."""        if isinstance(data.get('timestamp'), str):
             data['timestamp'] = datetime.fromisoformat(data['timestamp'])
         
         return MetricValue(**data)
     
     def _serialize_analytics_snapshot(self, snapshot: AnalyticsSnapshot) -> Dict[str, Any]:
-        """Serialize analytics snapshot."""
-        data = {
+        """Serialize analytics snapshot."""        data = {
             'snapshot_id': snapshot.snapshot_id,
             'timestamp': snapshot.timestamp.isoformat(),
             'platform': snapshot.platform,
@@ -557,15 +530,13 @@ class AnalyticsSerializer:
         return data
     
     def _deserialize_analytics_snapshot(self, data: Dict[str, Any]) -> AnalyticsSnapshot:
-        """Deserialize analytics snapshot."""
-        if isinstance(data.get('timestamp'), str):
+        """Deserialize analytics snapshot."""        if isinstance(data.get('timestamp'), str):
             data['timestamp'] = datetime.fromisoformat(data['timestamp'])
         
         return AnalyticsSnapshot(**data)
     
     def _serialize_performance_benchmark(self, benchmark: PerformanceBenchmark) -> Dict[str, Any]:
-        """Serialize performance benchmark."""
-        return {
+        """Serialize performance benchmark."""        return {
             'benchmark_id': benchmark.benchmark_id,
             'category': benchmark.category,
             'metric_name': benchmark.metric_name,
@@ -578,12 +549,10 @@ class AnalyticsSerializer:
         }
     
     def _deserialize_performance_benchmark(self, data: Dict[str, Any]) -> PerformanceBenchmark:
-        """Deserialize performance benchmark."""
-        return PerformanceBenchmark(**data)
+        """Deserialize performance benchmark."""        return PerformanceBenchmark(**data)
     
     def _compress_metric_values(self, values: List[MetricValue]) -> str:
-        """Compress metric values using sampling and encoding."""
-        try:
+        """Compress metric values using sampling and encoding."""        try:
             # Sample data points if too many
             if len(values) > self.time_series_compression_threshold:
                 step = len(values) // self.time_series_compression_threshold
@@ -611,8 +580,7 @@ class AnalyticsSerializer:
             return [self._serialize_metric_value(v) for v in values]
     
     def _decompress_metric_values(self, compressed_data: str) -> List[MetricValue]:
-        """Decompress metric values."""
-        try:
+        """Decompress metric values."""        try:
             import json
             
             if isinstance(compressed_data, str):
@@ -642,8 +610,7 @@ class AnalyticsSerializer:
             return []
     
     def _round_numeric_values(self, data: Dict[str, Any], max_depth: int = 3) -> None:
-        """Round numeric values in nested dictionary."""
-        if max_depth <= 0:
+        """Round numeric values in nested dictionary."""        if max_depth <= 0:
             return
         
         for key, value in data.items():
@@ -660,8 +627,7 @@ class AnalyticsSerializer:
         self,
         analytics: AnalyticsData
     ) -> Dict[str, Any]:
-        """Calculate summary statistics for analytics data."""
-        try:
+        """Calculate summary statistics for analytics data."""        try:
             period_duration = (analytics.period_end - analytics.period_start).days + 1
             
             summary = {
@@ -720,8 +686,7 @@ class AnalyticsSerializer:
         analytics_list: List[AnalyticsData],
         groupby: str = "platform_name"
     ) -> Dict[str, Any]:
-        """Aggregate metrics across multiple analytics records."""
-        try:
+        """Aggregate metrics across multiple analytics records."""        try:
             if not analytics_list:
                 return {}
             
@@ -789,9 +754,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 WARNING: This code is protected by copyright law. Any unauthorized copying, 
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
-"""
-
-import logging
+"""import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
 from dataclasses import dataclass, field
@@ -803,8 +766,7 @@ from pydantic import BaseModel, Field, validator
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Types of analytics metrics."""
-    PERFORMANCE = "performance"
+    """Types of analytics metrics."""    PERFORMANCE = "performance"
     ENGAGEMENT = "engagement"
     TRAFFIC = "traffic"
     CONVERSION = "conversion"
@@ -814,8 +776,7 @@ class MetricType(Enum):
     SYSTEM = "system"
 
 class AggregationType(Enum):
-    """Data aggregation types."""
-    SUM = "sum"
+    """Data aggregation types."""    SUM = "sum"
     AVERAGE = "average"
     COUNT = "count"
     MAX = "max"
@@ -825,8 +786,7 @@ class AggregationType(Enum):
     TREND = "trend"
 
 class TimeInterval(Enum):
-    """Time interval for analytics."""
-    MINUTE = "minute"
+    """Time interval for analytics."""    MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -836,8 +796,7 @@ class TimeInterval(Enum):
 
 @dataclass
 class MetricValue:
-    """Individual metric value with timestamp."""
-    timestamp: datetime
+    """Individual metric value with timestamp."""    timestamp: datetime
     value: Union[int, float, str]
     metadata: Dict[str, Any] = field(default_factory=dict)
     confidence: float = 1.0
@@ -845,8 +804,7 @@ class MetricValue:
 
 @dataclass
 class MetricSeries:
-    """Time series of metric values."""
-    metric_name: str
+    """Time series of metric values."""    metric_name: str
     metric_type: MetricType
     values: List[MetricValue] = field(default_factory=list)
     unit: str = ""
@@ -855,8 +813,7 @@ class MetricSeries:
 
 @dataclass
 class PerformanceMetrics:
-    """System performance metrics."""
-    cpu_usage: float = 0.0
+    """System performance metrics."""    cpu_usage: float = 0.0
     memory_usage: float = 0.0
     disk_usage: float = 0.0
     network_io: float = 0.0
@@ -867,8 +824,7 @@ class PerformanceMetrics:
 
 @dataclass
 class CrawlerMetrics:
-    """Crawler-specific metrics."""
-    pages_crawled: int = 0
+    """Crawler-specific metrics."""    pages_crawled: int = 0
     content_discovered: int = 0
     violations_detected: int = 0
     crawl_speed: float = 0.0
@@ -879,8 +835,7 @@ class CrawlerMetrics:
 
 @dataclass
 class ProtectionMetrics:
-    """Content protection metrics."""
-    content_protected: int = 0
+    """Content protection metrics."""    content_protected: int = 0
     fingerprints_generated: int = 0
     matches_found: int = 0
     takedowns_issued: int = 0
@@ -890,13 +845,11 @@ class ProtectionMetrics:
     false_negatives: int = 0
 
 class AnalyticsData(BaseModel):
-    """
-    Comprehensive analytics data model.
+    """    Comprehensive analytics data model.
     
     Represents analytics metrics, performance data, and reporting
     for the IA-Influencer-Agent crawler and protection platform.
-    """
-    
+    """    
     # Basic information
     analytics_id: str = Field(..., description="Unique analytics identifier")
     report_name: str = Field(..., description="Analytics report name")
@@ -959,16 +912,13 @@ class AnalyticsData(BaseModel):
         return v
 
 class AnalyticsSerializer:
-    """
-    Advanced analytics data serialization system.
+    """    Advanced analytics data serialization system.
     
     Handles efficient serialization and deserialization of analytics
     metrics, performance data, and reporting with optimization for large datasets.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize analytics serializer."""
-        self.max_series_points = 10000  # Maximum points per metric series
+        """Initialize analytics serializer."""        self.max_series_points = 10000  # Maximum points per metric series
         self.compression_threshold = 1000  # Compress series with more than 1000 points
         
         logger.info("Analytics serializer initialized")
@@ -979,8 +929,7 @@ class AnalyticsSerializer:
         compress_series: bool = True,
         include_raw_data: bool = True
     ) -> Dict[str, Any]:
-        """
-        Serialize analytics data to dictionary format.
+        """        Serialize analytics data to dictionary format.
         
         Args:
             analytics: Analytics data to serialize
@@ -989,8 +938,7 @@ class AnalyticsSerializer:
             
         Returns:
             Serialized analytics dictionary
-        """
-        try:
+        """        try:
             # Convert to dictionary
             data = analytics.dict()
             
@@ -1042,16 +990,14 @@ class AnalyticsSerializer:
         self,
         data: Dict[str, Any]
     ) -> AnalyticsData:
-        """
-        Deserialize analytics data from dictionary format.
+        """        Deserialize analytics data from dictionary format.
         
         Args:
             data: Serialized analytics dictionary
             
         Returns:
             Deserialized AnalyticsData object
-        """
-        try:
+        """        try:
             # Handle datetime conversions
             if isinstance(data.get('start_time'), str):
                 data['start_time'] = datetime.fromisoformat(data['start_time'])
@@ -1097,8 +1043,7 @@ class AnalyticsSerializer:
         analytics_list: List[AnalyticsData],
         compact_mode: bool = True
     ) -> List[Dict[str, Any]]:
-        """Serialize multiple analytics reports efficiently."""
-        try:
+        """Serialize multiple analytics reports efficiently."""        try:
             serialized_list = []
             
             for analytics in analytics_list:
@@ -1120,8 +1065,7 @@ class AnalyticsSerializer:
         self,
         data_list: List[Dict[str, Any]]
     ) -> List[AnalyticsData]:
-        """Deserialize multiple analytics reports efficiently."""
-        try:
+        """Deserialize multiple analytics reports efficiently."""        try:
             analytics_list = []
             
             for data in data_list:
@@ -1140,8 +1084,7 @@ class AnalyticsSerializer:
         series: MetricSeries,
         compress: bool = True
     ) -> Dict[str, Any]:
-        """Serialize metric series."""
-        data = {
+        """Serialize metric series."""        data = {
             'metric_name': series.metric_name,
             'metric_type': series.metric_type.value,
             'unit': series.unit,
@@ -1173,8 +1116,7 @@ class AnalyticsSerializer:
         return data
     
     def _deserialize_metric_series(self, data: Dict[str, Any]) -> MetricSeries:
-        """Deserialize metric series."""
-        # Handle metric type enum
+        """Deserialize metric series."""        # Handle metric type enum
         if isinstance(data.get('metric_type'), str):
             data['metric_type'] = MetricType(data['metric_type'])
         
@@ -1196,8 +1138,7 @@ class AnalyticsSerializer:
         return MetricSeries(**data)
     
     def _compress_metric_values(self, values: List[MetricValue]) -> str:
-        """Compress metric values for storage efficiency."""
-        try:
+        """Compress metric values for storage efficiency."""        try:
             import gzip
             import pickle
             import base64
@@ -1234,8 +1175,7 @@ class AnalyticsSerializer:
             ])
     
     def _decompress_metric_values(self, compressed_data: str) -> List[MetricValue]:
-        """Decompress metric values."""
-        try:
+        """Decompress metric values."""        try:
             if compressed_data.startswith('gzip_pickle:'):
                 import gzip
                 import pickle
@@ -1269,8 +1209,7 @@ class AnalyticsSerializer:
             return []
     
     def _serialize_performance_metrics(self, perf: PerformanceMetrics) -> Dict[str, Any]:
-        """Serialize performance metrics."""
-        return {
+        """Serialize performance metrics."""        return {
             'cpu_usage': perf.cpu_usage,
             'memory_usage': perf.memory_usage,
             'disk_usage': perf.disk_usage,
@@ -1282,12 +1221,10 @@ class AnalyticsSerializer:
         }
     
     def _deserialize_performance_metrics(self, data: Dict[str, Any]) -> PerformanceMetrics:
-        """Deserialize performance metrics."""
-        return PerformanceMetrics(**data)
+        """Deserialize performance metrics."""        return PerformanceMetrics(**data)
     
     def _serialize_crawler_metrics(self, crawler: CrawlerMetrics) -> Dict[str, Any]:
-        """Serialize crawler metrics."""
-        return {
+        """Serialize crawler metrics."""        return {
             'pages_crawled': crawler.pages_crawled,
             'content_discovered': crawler.content_discovered,
             'violations_detected': crawler.violations_detected,
@@ -1299,12 +1236,10 @@ class AnalyticsSerializer:
         }
     
     def _deserialize_crawler_metrics(self, data: Dict[str, Any]) -> CrawlerMetrics:
-        """Deserialize crawler metrics."""
-        return CrawlerMetrics(**data)
+        """Deserialize crawler metrics."""        return CrawlerMetrics(**data)
     
     def _serialize_protection_metrics(self, protection: ProtectionMetrics) -> Dict[str, Any]:
-        """Serialize protection metrics."""
-        return {
+        """Serialize protection metrics."""        return {
             'content_protected': protection.content_protected,
             'fingerprints_generated': protection.fingerprints_generated,
             'matches_found': protection.matches_found,
@@ -1316,15 +1251,13 @@ class AnalyticsSerializer:
         }
     
     def _deserialize_protection_metrics(self, data: Dict[str, Any]) -> ProtectionMetrics:
-        """Deserialize protection metrics."""
-        return ProtectionMetrics(**data)
+        """Deserialize protection metrics."""        return ProtectionMetrics(**data)
     
     def calculate_metric_statistics(
         self,
         series: MetricSeries
     ) -> Dict[str, Any]:
-        """Calculate statistical summary for metric series."""
-        try:
+        """Calculate statistical summary for metric series."""        try:
             if not series.values:
                 return {}
             
@@ -1369,8 +1302,7 @@ class AnalyticsSerializer:
         series: MetricSeries,
         threshold_multiplier: float = 2.0
     ) -> List[Dict[str, Any]]:
-        """Detect anomalies in metric series using statistical methods."""
-        try:
+        """Detect anomalies in metric series using statistical methods."""        try:
             anomalies = []
             
             if len(series.values) < 10:  # Need minimum data points
@@ -1417,8 +1349,7 @@ class AnalyticsSerializer:
         self,
         analytics: AnalyticsData
     ) -> Dict[str, Any]:
-        """Create compact summary of analytics report."""
-        try:
+        """Create compact summary of analytics report."""        try:
             period_duration = analytics.end_time - analytics.start_time
             
             summary = {

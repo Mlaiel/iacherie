@@ -1,5 +1,4 @@
-"""
-Performance Monitor - ML Model Performance Tracking
+"""Performance Monitor - ML Model Performance Tracking
 
 Advanced performance monitoring system for ML models in the IA Influencer platform.
 Tracks real-time performance, resource usage, business metrics, and system health.
@@ -11,9 +10,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import time
 import logging
 import json
@@ -53,8 +50,7 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of performance metrics"""
-    LATENCY = "latency"
+    """Types of performance metrics"""    LATENCY = "latency"
     THROUGHPUT = "throughput"
     ACCURACY = "accuracy"
     RESOURCE_USAGE = "resource_usage"
@@ -63,8 +59,7 @@ class MetricType(Enum):
 
 
 class AlertLevel(Enum):
-    """Alert severity levels"""
-    INFO = "info"
+    """Alert severity levels"""    INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
@@ -72,8 +67,7 @@ class AlertLevel(Enum):
 
 @dataclass
 class PerformanceMetric:
-    """Performance metric data structure"""
-    name: str
+    """Performance metric data structure"""    name: str
     value: float
     metric_type: MetricType
     timestamp: datetime = field(default_factory=datetime.utcnow)
@@ -84,8 +78,7 @@ class PerformanceMetric:
 
 @dataclass
 class Alert:
-    """Performance alert data structure"""
-    id: str
+    """Performance alert data structure"""    id: str
     level: AlertLevel
     message: str
     metric_name: str
@@ -98,8 +91,7 @@ class Alert:
 
 @dataclass
 class ModelPerformanceReport:
-    """Comprehensive model performance report"""
-    model_id: str
+    """Comprehensive model performance report"""    model_id: str
     model_name: str
     report_period_start: datetime
     report_period_end: datetime
@@ -147,10 +139,8 @@ class ModelPerformanceReport:
 
 
 class MLPerformanceMonitor:
-    """
-    Advanced ML model performance monitoring system
-    """
-    
+    """    Advanced ML model performance monitoring system
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.metrics_storage: Dict[str, deque] = defaultdict(lambda: deque(maxlen=10000))
@@ -192,8 +182,7 @@ class MLPerformanceMonitor:
         self.alert_callbacks: List[Callable[[Alert], None]] = []
     
     def _setup_prometheus_metrics(self):
-        """Setup Prometheus metrics if available"""
-        if not PROMETHEUS_AVAILABLE:
+        """Setup Prometheus metrics if available"""        if not PROMETHEUS_AVAILABLE:
             return
         
         self.prom_latency = Histogram(
@@ -227,8 +216,7 @@ class MLPerformanceMonitor:
         )
     
     async def start_monitoring(self, models: List[Dict[str, Any]]):
-        """Start performance monitoring for specified models"""
-        self.monitoring_active = True
+        """Start performance monitoring for specified models"""        self.monitoring_active = True
         
         # Start background monitoring thread
         if not self.monitoring_thread or not self.monitoring_thread.is_alive():
@@ -250,8 +238,7 @@ class MLPerformanceMonitor:
         logger.info(f"Performance monitoring started for {len(models)} models")
     
     async def stop_monitoring(self):
-        """Stop performance monitoring"""
-        self.monitoring_active = False
+        """Stop performance monitoring"""        self.monitoring_active = False
         
         if self.monitoring_thread and self.monitoring_thread.is_alive():
             self.monitoring_thread.join(timeout=5)
@@ -261,8 +248,7 @@ class MLPerformanceMonitor:
     async def record_inference_metrics(self, model_id: str, model_name: str, 
                                      latency_ms: float, success: bool = True,
                                      custom_metrics: Optional[Dict[str, float]] = None):
-        """Record inference performance metrics"""
-        timestamp = datetime.utcnow()
+        """Record inference performance metrics"""        timestamp = datetime.utcnow()
         
         # Store latency metric
         latency_metric = PerformanceMetric(
@@ -329,8 +315,7 @@ class MLPerformanceMonitor:
     async def record_resource_metrics(self, model_id: str, model_name: str,
                                     memory_usage_mb: float, cpu_usage: float,
                                     gpu_usage: Optional[float] = None):
-        """Record resource usage metrics"""
-        timestamp = datetime.utcnow()
+        """Record resource usage metrics"""        timestamp = datetime.utcnow()
         
         # Memory usage metric
         memory_metric = PerformanceMetric(
@@ -386,8 +371,7 @@ class MLPerformanceMonitor:
                                     creator_satisfaction: float = 0.0,
                                     seo_improvements: int = 0,
                                     revenue_impact: float = 0.0):
-        """Record business-specific metrics for IA Influencer platform"""
-        timestamp = datetime.utcnow()
+        """Record business-specific metrics for IA Influencer platform"""        timestamp = datetime.utcnow()
         
         business_metrics = {
             'content_processed': content_processed,
@@ -419,8 +403,7 @@ class MLPerformanceMonitor:
     
     async def get_model_performance_report(self, model_id: str, 
                                          hours_back: int = 24) -> ModelPerformanceReport:
-        """Generate comprehensive performance report for a model"""
-        end_time = datetime.utcnow()
+        """Generate comprehensive performance report for a model"""        end_time = datetime.utcnow()
         start_time = end_time - timedelta(hours=hours_back)
         
         # Initialize report
@@ -500,8 +483,7 @@ class MLPerformanceMonitor:
         return report
     
     def _background_monitoring_loop(self, models: List[Dict[str, Any]]):
-        """Background monitoring loop"""
-        while self.monitoring_active:
+        """Background monitoring loop"""        while self.monitoring_active:
             try:
                 for model_info in models:
                     model_id = model_info['id']
@@ -527,8 +509,7 @@ class MLPerformanceMonitor:
     
     def _get_metrics_in_timeframe(self, metric_key: str, 
                                  start_time: datetime, end_time: datetime) -> List[PerformanceMetric]:
-        """Get metrics within specified timeframe"""
-        metrics = self.metrics_storage.get(metric_key, [])
+        """Get metrics within specified timeframe"""        metrics = self.metrics_storage.get(metric_key, [])
         return [
             m for m in metrics 
             if start_time <= m.timestamp <= end_time
@@ -536,8 +517,7 @@ class MLPerformanceMonitor:
     
     async def _check_thresholds(self, model_id: str, model_name: str,
                                latency_ms: float, success: bool):
-        """Check performance thresholds and create alerts"""
-        if latency_ms > self.thresholds['max_latency_ms']:
+        """Check performance thresholds and create alerts"""        if latency_ms > self.thresholds['max_latency_ms']:
             await self._create_alert(
                 model_id, model_name,
                 AlertLevel.WARNING,
@@ -556,8 +536,7 @@ class MLPerformanceMonitor:
     async def _create_alert(self, model_id: str, model_name: str,
                            level: AlertLevel, message: str,
                            metric_name: str, threshold: float, actual: float):
-        """Create and handle performance alert"""
-        alert_id = f"{model_id}_{metric_name}_{int(time.time())}"
+        """Create and handle performance alert"""        alert_id = f"{model_id}_{metric_name}_{int(time.time())}"
         
         alert = Alert(
             id=alert_id,
@@ -580,8 +559,7 @@ class MLPerformanceMonitor:
         logger.warning(f"Alert created: {alert.level.value} - {alert.message}")
     
     def _get_model_type(self, model_id: str) -> str:
-        """Get model type from model ID (simplified)"""
-        # This would normally lookup model type from registry
+        """Get model type from model ID (simplified)"""        # This would normally lookup model type from registry
         if 'content' in model_id.lower():
             return 'content_analysis'
         elif 'recommendation' in model_id.lower():
@@ -592,21 +570,17 @@ class MLPerformanceMonitor:
             return 'unknown'
     
     def _get_model_name(self, model_id: str) -> str:
-        """Get model name from model ID (simplified)"""
-        # This would normally lookup model name from registry
+        """Get model name from model ID (simplified)"""        # This would normally lookup model name from registry
         return model_id.replace('_', ' ').title()
     
     def add_alert_callback(self, callback: Callable[[Alert], None]):
-        """Add callback function for alerts"""
-        self.alert_callbacks.append(callback)
+        """Add callback function for alerts"""        self.alert_callbacks.append(callback)
     
     def get_active_alerts(self) -> List[Alert]:
-        """Get all active (unresolved) alerts"""
-        return [alert for alert in self.alerts if not alert.resolved]
+        """Get all active (unresolved) alerts"""        return [alert for alert in self.alerts if not alert.resolved]
     
     def resolve_alert(self, alert_id: str):
-        """Mark alert as resolved"""
-        for alert in self.alerts:
+        """Mark alert as resolved"""        for alert in self.alerts:
             if alert.id == alert_id:
                 alert.resolved = True
                 alert.resolved_at = datetime.utcnow()
@@ -614,18 +588,15 @@ class MLPerformanceMonitor:
 
 
 class InferenceProfiler:
-    """
-    Detailed profiling of model inference performance
-    """
-    
+    """    Detailed profiling of model inference performance
+    """    
     def __init__(self):
         self.profiling_enabled = False
         self.profile_data: Dict[str, List[Dict[str, Any]]] = defaultdict(list)
     
     async def profile_inference(self, model_id: str, model: torch.nn.Module,
                                input_data: torch.Tensor) -> Dict[str, Any]:
-        """Profile model inference with detailed timing"""
-        if not self.profiling_enabled:
+        """Profile model inference with detailed timing"""        if not self.profiling_enabled:
             return {}
         
         profile_result = {
@@ -681,18 +652,15 @@ class InferenceProfiler:
         return profile_result
     
     def enable_profiling(self):
-        """Enable inference profiling"""
-        self.profiling_enabled = True
+        """Enable inference profiling"""        self.profiling_enabled = True
         logger.info("Inference profiling enabled")
     
     def disable_profiling(self):
-        """Disable inference profiling"""
-        self.profiling_enabled = False
+        """Disable inference profiling"""        self.profiling_enabled = False
         logger.info("Inference profiling disabled")
     
     def get_profiling_summary(self, model_id: str) -> Dict[str, Any]:
-        """Get profiling summary for a model"""
-        if model_id not in self.profile_data:
+        """Get profiling summary for a model"""        if model_id not in self.profile_data:
             return {}
         
         data = self.profile_data[model_id]
@@ -721,17 +689,14 @@ class InferenceProfiler:
 
 
 class ResourceMonitor:
-    """
-    System resource monitoring for ML workloads
-    """
-    
+    """    System resource monitoring for ML workloads
+    """    
     def __init__(self):
         self.monitoring_active = False
         self.resource_data: List[Dict[str, Any]] = []
     
     async def start_resource_monitoring(self, interval: int = 30):
-        """Start continuous resource monitoring"""
-        if not PSUTIL_AVAILABLE:
+        """Start continuous resource monitoring"""        if not PSUTIL_AVAILABLE:
             logger.warning("psutil not available - resource monitoring disabled")
             return
         
@@ -753,8 +718,7 @@ class ResourceMonitor:
                 await asyncio.sleep(interval)
     
     async def _collect_resource_snapshot(self) -> Dict[str, Any]:
-        """Collect current resource usage snapshot"""
-        snapshot = {
+        """Collect current resource usage snapshot"""        snapshot = {
             'timestamp': datetime.utcnow().isoformat()
         }
         
@@ -788,12 +752,10 @@ class ResourceMonitor:
         return snapshot
     
     def stop_resource_monitoring(self):
-        """Stop resource monitoring"""
-        self.monitoring_active = False
+        """Stop resource monitoring"""        self.monitoring_active = False
     
     def get_resource_summary(self, hours_back: int = 1) -> Dict[str, Any]:
-        """Get resource usage summary for specified time period"""
-        if not self.resource_data:
+        """Get resource usage summary for specified time period"""        if not self.resource_data:
             return {}
         
         # Filter data for time period

@@ -1,5 +1,4 @@
-"""
-Media Parsers Module
+"""Media Parsers Module
 ===================
 
 Advanced media file parsers for audio, video, image, and document processing.
@@ -12,9 +11,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import io
 import mimetypes
 import zipfile
@@ -62,25 +59,21 @@ from .parser_config import ParserConfig, MediaFormat
 
 
 class BaseMediaParser(ABC):
-    """Abstract base class for media parsers"""
-    
+    """Abstract base class for media parsers"""    
     def __init__(self, config: ParserConfig):
         self.config = config
         self.media_config = config.media
     
     @abstractmethod
     async def parse(self, file_path: Union[str, Path, BinaryIO], **kwargs) -> Dict[str, Any]:
-        """Parse media file and extract metadata/content"""
-        pass
+        """Parse media file and extract metadata/content"""        pass
     
     @abstractmethod
     def get_supported_formats(self) -> List[MediaFormat]:
-        """Get list of supported media formats"""
-        pass
+        """Get list of supported media formats"""        pass
     
     def _validate_file_size(self, file_path: Union[str, Path, BinaryIO]) -> bool:
-        """Validate file size against configuration limits"""
-        try:
+        """Validate file size against configuration limits"""        try:
             if isinstance(file_path, (str, Path)):
                 file_size = Path(file_path).stat().st_size
             else:
@@ -95,8 +88,7 @@ class BaseMediaParser(ABC):
             return False
     
     def _detect_format(self, file_path: Union[str, Path, BinaryIO]) -> Optional[str]:
-        """Detect file format from extension or MIME type"""
-        if isinstance(file_path, (str, Path)):
+        """Detect file format from extension or MIME type"""        if isinstance(file_path, (str, Path)):
             mime_type, _ = mimetypes.guess_type(str(file_path))
             extension = Path(file_path).suffix.lower().lstrip('.')
             return extension or (mime_type.split('/')[-1] if mime_type else None)
@@ -105,8 +97,7 @@ class BaseMediaParser(ABC):
         return None
     
     def _extract_basic_metadata(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
-        """Extract basic file metadata"""
-        metadata = {
+        """Extract basic file metadata"""        metadata = {
             'parsed_at': datetime.now(timezone.utc).isoformat(),
             'parser_type': self.__class__.__name__
         }
@@ -127,8 +118,7 @@ class BaseMediaParser(ABC):
 
 
 class AudioParser(BaseMediaParser):
-    """Audio file parser with advanced analysis capabilities"""
-    
+    """Audio file parser with advanced analysis capabilities"""    
     def __init__(self, config: ParserConfig):
         super().__init__(config)
         if not AUDIO_AVAILABLE:
@@ -141,8 +131,7 @@ class AudioParser(BaseMediaParser):
         ]
     
     async def parse(self, file_path: Union[str, Path, BinaryIO], **kwargs) -> Dict[str, Any]:
-        """Parse audio file and extract comprehensive metadata"""
-        if not self._validate_file_size(file_path):
+        """Parse audio file and extract comprehensive metadata"""        if not self._validate_file_size(file_path):
             raise MediaParsingError(
                 "File size exceeds maximum limit",
                 media_type="audio",
@@ -183,8 +172,7 @@ class AudioParser(BaseMediaParser):
             )
     
     async def _extract_audio_metadata(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
-        """Extract audio metadata using mutagen"""
-        try:
+        """Extract audio metadata using mutagen"""        try:
             if isinstance(file_path, (str, Path)):
                 audio_file = MutagenFile(str(file_path))
             else:
@@ -228,8 +216,7 @@ class AudioParser(BaseMediaParser):
             return {'metadata_error': str(e)}
     
     async def _analyze_audio_content(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
-        """Analyze audio content using librosa"""
-        try:
+        """Analyze audio content using librosa"""        try:
             # Load audio file
             if isinstance(file_path, (str, Path)):
                 y, sr = librosa.load(str(file_path), sr=self.media_config.audio_sample_rate)
@@ -276,8 +263,7 @@ class AudioParser(BaseMediaParser):
             return {'analysis_error': str(e)}
     
     async def _generate_audio_fingerprint(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
-        """Generate audio fingerprint for content identification"""
-        try:
+        """Generate audio fingerprint for content identification"""        try:
             # Load audio for fingerprinting
             if isinstance(file_path, (str, Path)):
                 y, sr = librosa.load(str(file_path), sr=self.config.fingerprint.audio_sample_rate)
@@ -306,8 +292,7 @@ class AudioParser(BaseMediaParser):
 
 
 class VideoParser(BaseMediaParser):
-    """Video file parser with frame analysis capabilities"""
-    
+    """Video file parser with frame analysis capabilities"""    
     def __init__(self, config: ParserConfig):
         super().__init__(config)
         if not VIDEO_AVAILABLE:
@@ -320,8 +305,7 @@ class VideoParser(BaseMediaParser):
         ]
     
     async def parse(self, file_path: Union[str, Path, BinaryIO], **kwargs) -> Dict[str, Any]:
-        """Parse video file and extract metadata"""
-        if not self._validate_file_size(file_path):
+        """Parse video file and extract metadata"""        if not self._validate_file_size(file_path):
             raise MediaParsingError(
                 "File size exceeds maximum limit",
                 media_type="video",
@@ -348,8 +332,7 @@ class VideoParser(BaseMediaParser):
             )
     
     async def _extract_video_metadata(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
-        """Extract video metadata using OpenCV"""
-        try:
+        """Extract video metadata using OpenCV"""        try:
             if isinstance(file_path, (str, Path)):
                 cap = cv2.VideoCapture(str(file_path))
             else:
@@ -389,8 +372,7 @@ class VideoParser(BaseMediaParser):
             return {'metadata_error': str(e)}
     
     async def _analyze_video_frames(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
-        """Analyze video frames for content insights"""
-        try:
+        """Analyze video frames for content insights"""        try:
             if isinstance(file_path, (str, Path)):
                 cap = cv2.VideoCapture(str(file_path))
             else:
@@ -450,8 +432,7 @@ class VideoParser(BaseMediaParser):
             return {'analysis_error': str(e)}
     
     async def _generate_video_fingerprint(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
-        """Generate video fingerprint for content identification"""
-        try:
+        """Generate video fingerprint for content identification"""        try:
             if isinstance(file_path, (str, Path)):
                 cap = cv2.VideoCapture(str(file_path))
             else:
@@ -497,8 +478,7 @@ class VideoParser(BaseMediaParser):
 
 
 class ImageParser(BaseMediaParser):
-    """Image file parser with computer vision analysis"""
-    
+    """Image file parser with computer vision analysis"""    
     def __init__(self, config: ParserConfig):
         super().__init__(config)
         if not IMAGE_AVAILABLE:
@@ -511,8 +491,7 @@ class ImageParser(BaseMediaParser):
         ]
     
     async def parse(self, file_path: Union[str, Path, BinaryIO], **kwargs) -> Dict[str, Any]:
-        """Parse image file and extract metadata"""
-        if not self._validate_file_size(file_path):
+        """Parse image file and extract metadata"""        if not self._validate_file_size(file_path):
             raise MediaParsingError(
                 "File size exceeds maximum limit",
                 media_type="image",
@@ -539,8 +518,7 @@ class ImageParser(BaseMediaParser):
             )
     
     async def _extract_image_metadata(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
-        """Extract image metadata including EXIF data"""
-        try:
+        """Extract image metadata including EXIF data"""        try:
             if isinstance(file_path, (str, Path)):
                 image = Image.open(file_path)
             else:
@@ -569,8 +547,7 @@ class ImageParser(BaseMediaParser):
             return {'metadata_error': str(e)}
     
     async def _analyze_image_content(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
-        """Analyze image content for visual properties"""
-        try:
+        """Analyze image content for visual properties"""        try:
             if isinstance(file_path, (str, Path)):
                 image = Image.open(file_path)
             else:
@@ -614,8 +591,7 @@ class ImageParser(BaseMediaParser):
             return {'analysis_error': str(e)}
     
     async def _generate_image_fingerprint(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
-        """Generate image fingerprint for content identification"""
-        try:
+        """Generate image fingerprint for content identification"""        try:
             if isinstance(file_path, (str, Path)):
                 image = Image.open(file_path)
             else:
@@ -649,8 +625,7 @@ class ImageParser(BaseMediaParser):
 
 
 class TextParser(BaseMediaParser):
-    """Text file parser with content analysis"""
-    
+    """Text file parser with content analysis"""    
     def get_supported_formats(self) -> List[MediaFormat]:
         return [
             MediaFormat.TXT, MediaFormat.MD, MediaFormat.HTML,
@@ -658,8 +633,7 @@ class TextParser(BaseMediaParser):
         ]
     
     async def parse(self, file_path: Union[str, Path, BinaryIO], **kwargs) -> Dict[str, Any]:
-        """Parse text file and extract content"""
-        try:
+        """Parse text file and extract content"""        try:
             metadata = self._extract_basic_metadata(file_path)
             
             # Read text content
@@ -686,8 +660,7 @@ class TextParser(BaseMediaParser):
             )
     
     async def _analyze_text_content(self, content: str) -> Dict[str, Any]:
-        """Analyze text content"""
-        analysis = {
+        """Analyze text content"""        analysis = {
             'character_count': len(content),
             'word_count': len(content.split()),
             'line_count': len(content.splitlines()),
@@ -704,8 +677,7 @@ class TextParser(BaseMediaParser):
         return {'text_analysis': analysis}
     
     async def _generate_text_fingerprint(self, content: str) -> Dict[str, Any]:
-        """Generate text fingerprint"""
-        # Simple hash-based fingerprint
+        """Generate text fingerprint"""        # Simple hash-based fingerprint
         fingerprint_hash = hash(content)
         
         # Character frequency fingerprint
@@ -724,8 +696,7 @@ class TextParser(BaseMediaParser):
 
 
 class DocumentParser(BaseMediaParser):
-    """Document file parser (PDF, DOCX, etc.)"""
-    
+    """Document file parser (PDF, DOCX, etc.)"""    
     def __init__(self, config: ParserConfig):
         super().__init__(config)
         if not DOCUMENT_AVAILABLE:
@@ -735,8 +706,7 @@ class DocumentParser(BaseMediaParser):
         return ['pdf', 'docx', 'doc']
     
     async def parse(self, file_path: Union[str, Path, BinaryIO], **kwargs) -> Dict[str, Any]:
-        """Parse document file"""
-        format_type = self._detect_format(file_path)
+        """Parse document file"""        format_type = self._detect_format(file_path)
         
         if format_type == 'pdf':
             return await self._parse_pdf(file_path)
@@ -746,8 +716,7 @@ class DocumentParser(BaseMediaParser):
             raise UnsupportedFormatError(format_type, self.get_supported_formats())
     
     async def _parse_pdf(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
-        """Parse PDF document"""
-        try:
+        """Parse PDF document"""        try:
             if isinstance(file_path, (str, Path)):
                 with open(file_path, 'rb') as f:
                     reader = PyPDF2.PdfReader(f)
@@ -776,8 +745,7 @@ class DocumentParser(BaseMediaParser):
             raise MediaParsingError(f"PDF parsing failed: {str(e)}", parser_type="DocumentParser")
     
     async def _parse_docx(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
-        """Parse DOCX document"""
-        try:
+        """Parse DOCX document"""        try:
             if isinstance(file_path, (str, Path)):
                 doc = python_docx.Document(file_path)
             else:
@@ -802,14 +770,12 @@ class DocumentParser(BaseMediaParser):
 
 
 class ArchiveParser(BaseMediaParser):
-    """Archive file parser (ZIP, TAR, etc.)"""
-    
+    """Archive file parser (ZIP, TAR, etc.)"""    
     def get_supported_formats(self) -> List[str]:
         return ['zip', 'tar', 'tar.gz', 'tar.bz2']
     
     async def parse(self, file_path: Union[str, Path, BinaryIO], **kwargs) -> Dict[str, Any]:
-        """Parse archive file"""
-        format_type = self._detect_format(file_path)
+        """Parse archive file"""        format_type = self._detect_format(file_path)
         
         try:
             metadata = self._extract_basic_metadata(file_path)
@@ -825,8 +791,7 @@ class ArchiveParser(BaseMediaParser):
             raise MediaParsingError(f"Archive parsing failed: {str(e)}", parser_type="ArchiveParser")
     
     async def _parse_zip(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
-        """Parse ZIP archive"""
-        if isinstance(file_path, (str, Path)):
+        """Parse ZIP archive"""        if isinstance(file_path, (str, Path)):
             with zipfile.ZipFile(file_path, 'r') as zip_file:
                 file_list = zip_file.namelist()
                 total_size = sum(zip_file.getinfo(name).file_size for name in file_list)
@@ -842,8 +807,7 @@ class ArchiveParser(BaseMediaParser):
         }
     
     async def _parse_tar(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
-        """Parse TAR archive"""
-        if isinstance(file_path, (str, Path)):
+        """Parse TAR archive"""        if isinstance(file_path, (str, Path)):
             with tarfile.open(file_path, 'r') as tar_file:
                 file_list = tar_file.getnames()
                 total_size = sum(member.size for member in tar_file.getmembers() if member.isfile())
@@ -860,14 +824,12 @@ class ArchiveParser(BaseMediaParser):
 
 
 class StreamParser(BaseMediaParser):
-    """Stream parser for real-time content"""
-    
+    """Stream parser for real-time content"""    
     def get_supported_formats(self) -> List[str]:
         return ['m3u8', 'mpd', 'stream']
     
     async def parse(self, file_path: Union[str, Path, BinaryIO], **kwargs) -> Dict[str, Any]:
-        """Parse streaming manifest or live stream"""
-        # Implementation for streaming content parsing
+        """Parse streaming manifest or live stream"""        # Implementation for streaming content parsing
         # This would handle HLS, DASH, and other streaming formats
         return {
             'stream_type': 'live',

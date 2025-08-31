@@ -1,14 +1,11 @@
-"""
-Platform Analytics - Advanced Multi-Platform Analytics Engine
+"""Platform Analytics - Advanced Multi-Platform Analytics Engine
 
 Provides comprehensive analytics and insights across all connected platforms
 including performance tracking, audience analysis, and revenue analytics.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import logging
+"""import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
@@ -36,8 +33,7 @@ from ...utils.analytics_utils import calculate_growth_rate, calculate_engagement
 logger = get_logger(__name__)
 
 class MetricType(Enum):
-    """Analytics metric types"""
-    VIEWS = "views"
+    """Analytics metric types"""    VIEWS = "views"
     LIKES = "likes"
     COMMENTS = "comments"
     SHARES = "shares"
@@ -52,8 +48,7 @@ class MetricType(Enum):
     CLICK_THROUGH_RATE = "click_through_rate"
 
 class TimeFrame(Enum):
-    """Analytics time frames"""
-    LAST_24H = "last_24h"
+    """Analytics time frames"""    LAST_24H = "last_24h"
     LAST_7D = "last_7d"
     LAST_30D = "last_30d"
     LAST_90D = "last_90d"
@@ -62,8 +57,7 @@ class TimeFrame(Enum):
 
 @dataclass
 class MetricData:
-    """Individual metric data point"""
-    metric_type: MetricType
+    """Individual metric data point"""    metric_type: MetricType
     value: Union[int, float]
     timestamp: datetime
     platform: str
@@ -72,8 +66,7 @@ class MetricData:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report"""
-    user_id: int
+    """Comprehensive analytics report"""    user_id: int
     time_frame: TimeFrame
     platforms: List[str]
     metrics: Dict[str, List[MetricData]]
@@ -83,16 +76,14 @@ class AnalyticsReport:
 
 @dataclass
 class CompetitorAnalysis:
-    """Competitor analysis data"""
-    competitor_name: str
+    """Competitor analysis data"""    competitor_name: str
     platform: str
     metrics: Dict[str, Union[int, float]]
     comparison_score: float
     insights: List[str]
 
 class PlatformAnalytics:
-    """
-    Advanced multi-platform analytics engine
+    """    Advanced multi-platform analytics engine
     
     Features:
     - Real-time performance tracking
@@ -102,8 +93,7 @@ class PlatformAnalytics:
     - Competitor benchmarking
     - Revenue and monetization tracking
     - AI-powered insights generation
-    """
-    
+    """    
     def __init__(self):
         self.predictive_service = PredictiveAnalyticsService()
         
@@ -120,13 +110,11 @@ class PlatformAnalytics:
         self.cache_ttl = timedelta(minutes=15)
     
     async def initialize(self) -> bool:
-        """
-        Initialize analytics engine
+        """        Initialize analytics engine
         
         Returns:
             bool: Initialization success status
-        """
-        try:
+        """        try:
             logger.info("Initializing Platform Analytics...")
             
             # Initialize platform services
@@ -154,8 +142,7 @@ class PlatformAnalytics:
         platforms: Optional[List[str]] = None,
         session: AsyncSession = None
     ) -> AnalyticsReport:
-        """
-        Generate comprehensive analytics report
+        """        Generate comprehensive analytics report
         
         Args:
             user_id: User ID
@@ -165,8 +152,7 @@ class PlatformAnalytics:
             
         Returns:
             Comprehensive analytics report
-        """
-        try:
+        """        try:
             logger.info(f"Generating analytics report for user {user_id}")
             
             # Get user's connected platforms
@@ -220,8 +206,7 @@ class PlatformAnalytics:
         time_frame: TimeFrame = TimeFrame.LAST_7D,
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """
-        Get detailed performance analytics for specific content
+        """        Get detailed performance analytics for specific content
         
         Args:
             content_id: Content item ID
@@ -231,8 +216,7 @@ class PlatformAnalytics:
             
         Returns:
             Dict containing content performance data
-        """
-        try:
+        """        try:
             # Get content item
             result = await session.execute(
                 select(ContentItem).where(
@@ -288,8 +272,7 @@ class PlatformAnalytics:
         platform: Optional[str] = None,
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """
-        Get audience demographics across platforms
+        """        Get audience demographics across platforms
         
         Args:
             user_id: User ID
@@ -298,8 +281,7 @@ class PlatformAnalytics:
             
         Returns:
             Dict containing audience demographics data
-        """
-        try:
+        """        try:
             demographics_data = {}
             
             # Get demographics from specific platform or all platforms
@@ -333,8 +315,7 @@ class PlatformAnalytics:
         breakdown_by: str = "platform",
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """
-        Get detailed revenue analytics
+        """        Get detailed revenue analytics
         
         Args:
             user_id: User ID
@@ -344,8 +325,7 @@ class PlatformAnalytics:
             
         Returns:
             Dict containing revenue analytics data
-        """
-        try:
+        """        try:
             # Get revenue data from all monetized platforms
             revenue_data = {}
             
@@ -399,8 +379,7 @@ class PlatformAnalytics:
         platforms: List[str],
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """
-        Perform competitor analysis
+        """        Perform competitor analysis
         
         Args:
             user_id: User ID
@@ -410,8 +389,7 @@ class PlatformAnalytics:
             
         Returns:
             Dict containing competitor analysis data
-        """
-        try:
+        """        try:
             analysis_results = []
             
             for competitor in competitors:
@@ -454,8 +432,7 @@ class PlatformAnalytics:
         platforms: Optional[List[str]] = None,
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """
-        Get trending content analysis and opportunities
+        """        Get trending content analysis and opportunities
         
         Args:
             user_id: User ID
@@ -465,8 +442,7 @@ class PlatformAnalytics:
             
         Returns:
             Dict containing trending analysis data
-        """
-        try:
+        """        try:
             # Get trending data from platforms
             trending_data = {}
             
@@ -510,8 +486,7 @@ class PlatformAnalytics:
         time_frame: TimeFrame,
         session: AsyncSession
     ) -> List[MetricData]:
-        """Collect metrics from specific platform"""
-        try:
+        """Collect metrics from specific platform"""        try:
             if platform not in self.platform_services:
                 logger.warning(f"Unsupported platform for analytics: {platform}")
                 return []
@@ -544,8 +519,7 @@ class PlatformAnalytics:
         metrics: Dict[str, List[MetricData]],
         time_frame: TimeFrame
     ) -> List[Dict[str, Any]]:
-        """Generate AI-powered insights from metrics"""
-        insights = []
+        """Generate AI-powered insights from metrics"""        insights = []
         
         try:
             # Performance insights
@@ -594,8 +568,7 @@ class PlatformAnalytics:
         metrics: Dict[str, List[MetricData]],
         user_id: int
     ) -> Dict[str, Any]:
-        """Generate predictive analytics"""
-        try:
+        """Generate predictive analytics"""        try:
             predictions = {}
             
             # Growth predictions
@@ -620,8 +593,7 @@ class PlatformAnalytics:
             return {}
     
     async def _start_analytics_collection(self):
-        """Start background analytics collection"""
-        while True:
+        """Start background analytics collection"""        while True:
             try:
                 # Collect analytics for all active users
                 await self._collect_analytics_batch()
@@ -634,34 +606,28 @@ class PlatformAnalytics:
                 await asyncio.sleep(3600)
     
     async def _collect_analytics_batch(self):
-        """Collect analytics for batch of users"""
-        # Implementation for batch analytics collection
+        """Collect analytics for batch of users"""        # Implementation for batch analytics collection
         logger.info("Running batch analytics collection")
     
     async def _get_user_platforms(self, user_id: int, session: AsyncSession) -> List[str]:
-        """Get list of platforms connected for user"""
-        # Implementation to get user's connected platforms
+        """Get list of platforms connected for user"""        # Implementation to get user's connected platforms
         return ['youtube', 'instagram', 'tiktok']  # Placeholder
     
     async def _get_user_monetized_platforms(self, user_id: int, session: AsyncSession) -> List[str]:
-        """Get list of monetized platforms for user"""
-        # Implementation to get user's monetized platforms
+        """Get list of monetized platforms for user"""        # Implementation to get user's monetized platforms
         return ['youtube', 'spotify']  # Placeholder
     
     async def _identify_best_platform(self, metrics: Dict[str, List[MetricData]]) -> Optional[str]:
-        """Identify best performing platform"""
-        # Implementation for platform performance analysis
+        """Identify best performing platform"""        # Implementation for platform performance analysis
         return 'youtube'  # Placeholder
     
     async def _analyze_growth_trends(self, metrics: Dict[str, List[MetricData]]) -> Dict[str, Any]:
-        """Analyze growth trends across platforms"""
-        # Implementation for growth trend analysis
+        """Analyze growth trends across platforms"""        # Implementation for growth trend analysis
         return {'declining_platforms': [], 'growing_platforms': []}  # Placeholder
     
     async def _identify_optimization_opportunities(
         self, 
         metrics: Dict[str, List[MetricData]]
     ) -> List[Dict[str, Any]]:
-        """Identify optimization opportunities"""
-        # Implementation for optimization opportunity identification
+        """Identify optimization opportunities"""        # Implementation for optimization opportunity identification
         return []  # Placeholder

@@ -1,5 +1,4 @@
-"""
-Performance Monitor - Enterprise Performance Tracking System
+"""Performance Monitor - Enterprise Performance Tracking System
 
 Advanced performance monitoring and optimization system for comprehensive
 performance tracking, bottleneck detection, and system optimization.
@@ -10,9 +9,7 @@ Optimization recommendations → Automated scaling → Performance reporting
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import psutil
@@ -30,8 +27,7 @@ logger = logging.getLogger(__name__)
 
 
 class PerformanceLevel(Enum):
-    """Performance assessment levels"""
-    EXCELLENT = "excellent"
+    """Performance assessment levels"""    EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair"
     POOR = "poor"
@@ -39,8 +35,7 @@ class PerformanceLevel(Enum):
 
 
 class MetricType(Enum):
-    """Types of performance metrics"""
-    RESPONSE_TIME = "response_time"
+    """Types of performance metrics"""    RESPONSE_TIME = "response_time"
     THROUGHPUT = "throughput"
     RESOURCE_USAGE = "resource_usage"
     ERROR_RATE = "error_rate"
@@ -50,8 +45,7 @@ class MetricType(Enum):
 
 @dataclass
 class PerformanceMetric:
-    """Individual performance metric"""
-    name: str
+    """Individual performance metric"""    name: str
     value: float
     unit: str
     timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
@@ -61,16 +55,14 @@ class PerformanceMetric:
 
 @dataclass
 class PerformanceThresholds:
-    """Performance threshold configuration"""
-    excellent: float
+    """Performance threshold configuration"""    excellent: float
     good: float
     fair: float
     poor: float
     # Values below 'poor' are considered critical
     
     def assess_level(self, value: float) -> PerformanceLevel:
-        """Assess performance level based on value"""
-        if value <= self.excellent:
+        """Assess performance level based on value"""        if value <= self.excellent:
             return PerformanceLevel.EXCELLENT
         elif value <= self.good:
             return PerformanceLevel.GOOD
@@ -84,8 +76,7 @@ class PerformanceThresholds:
 
 @dataclass
 class PerformanceReport:
-    """Comprehensive performance assessment report"""
-    timestamp: datetime
+    """Comprehensive performance assessment report"""    timestamp: datetime
     overall_score: float  # 0-100
     performance_level: PerformanceLevel
     metrics: Dict[str, PerformanceMetric]
@@ -117,14 +108,12 @@ class PerformanceReport:
 
 
 class SystemResourceMonitor:
-    """System resource monitoring and analysis"""
-    
+    """System resource monitoring and analysis"""    
     def __init__(self):
         self.process = psutil.Process()
         
     def get_cpu_metrics(self) -> Dict[str, float]:
-        """Get CPU usage metrics"""
-        return {
+        """Get CPU usage metrics"""        return {
             'cpu_percent': psutil.cpu_percent(interval=1),
             'cpu_count_logical': psutil.cpu_count(logical=True),
             'cpu_count_physical': psutil.cpu_count(logical=False),
@@ -134,8 +123,7 @@ class SystemResourceMonitor:
         }
     
     def get_memory_metrics(self) -> Dict[str, float]:
-        """Get memory usage metrics"""
-        virtual_memory = psutil.virtual_memory()
+        """Get memory usage metrics"""        virtual_memory = psutil.virtual_memory()
         swap_memory = psutil.swap_memory()
         process_memory = self.process.memory_info()
         
@@ -151,8 +139,7 @@ class SystemResourceMonitor:
         }
     
     def get_disk_metrics(self) -> Dict[str, float]:
-        """Get disk usage metrics"""
-        disk_usage = psutil.disk_usage('/')
+        """Get disk usage metrics"""        disk_usage = psutil.disk_usage('/')
         disk_io = psutil.disk_io_counters()
         
         metrics = {
@@ -173,8 +160,7 @@ class SystemResourceMonitor:
         return metrics
     
     def get_network_metrics(self) -> Dict[str, float]:
-        """Get network usage metrics"""
-        network_io = psutil.net_io_counters()
+        """Get network usage metrics"""        network_io = psutil.net_io_counters()
         
         if not network_io:
             return {}
@@ -191,8 +177,7 @@ class SystemResourceMonitor:
         }
     
     def get_all_system_metrics(self) -> Dict[str, float]:
-        """Get comprehensive system metrics"""
-        all_metrics = {}
+        """Get comprehensive system metrics"""        all_metrics = {}
         
         try:
             all_metrics.update(self.get_cpu_metrics())
@@ -218,8 +203,7 @@ class SystemResourceMonitor:
 
 
 class PerformanceTimer:
-    """High-precision performance timing context manager"""
-    
+    """High-precision performance timing context manager"""    
     def __init__(self, name: str, metadata: Optional[Dict[str, Any]] = None):
         self.name = name
         self.metadata = metadata or {}
@@ -236,25 +220,21 @@ class PerformanceTimer:
         self.duration_ms = (self.end_time - self.start_time) * 1000
     
     def get_duration_ms(self) -> float:
-        """Get duration in milliseconds"""
-        return self.duration_ms or 0.0
+        """Get duration in milliseconds"""        return self.duration_ms or 0.0
     
     def get_duration_seconds(self) -> float:
-        """Get duration in seconds"""
-        return (self.duration_ms or 0.0) / 1000.0
+        """Get duration in seconds"""        return (self.duration_ms or 0.0) / 1000.0
 
 
 class PerformanceAnalyzer:
-    """Advanced performance analysis and trend detection"""
-    
+    """Advanced performance analysis and trend detection"""    
     def __init__(self, history_size: int = 1000):
         self.history_size = history_size
         self.metric_history: Dict[str, deque] = defaultdict(lambda: deque(maxlen=history_size))
         self.lock = threading.RLock()
     
     def add_measurement(self, metric_name: str, value: float, timestamp: Optional[datetime] = None):
-        """Add a performance measurement"""
-        with self.lock:
+        """Add a performance measurement"""        with self.lock:
             measurement = {
                 'value': value,
                 'timestamp': timestamp or datetime.now(timezone.utc)
@@ -262,8 +242,7 @@ class PerformanceAnalyzer:
             self.metric_history[metric_name].append(measurement)
     
     def get_trend(self, metric_name: str, time_window_minutes: int = 30) -> str:
-        """Analyze trend for a specific metric"""
-        with self.lock:
+        """Analyze trend for a specific metric"""        with self.lock:
             if metric_name not in self.metric_history:
                 return "unknown"
             
@@ -300,8 +279,7 @@ class PerformanceAnalyzer:
             return "stable"
     
     def get_statistics(self, metric_name: str, time_window_minutes: int = 60) -> Dict[str, float]:
-        """Get statistical analysis for a metric"""
-        with self.lock:
+        """Get statistical analysis for a metric"""        with self.lock:
             if metric_name not in self.metric_history:
                 return {}
             
@@ -330,8 +308,7 @@ class PerformanceAnalyzer:
                 return {}
     
     def _percentile(self, values: List[float], percentile: int) -> float:
-        """Calculate percentile"""
-        if not values:
+        """Calculate percentile"""        if not values:
             return 0.0
         
         sorted_values = sorted(values)
@@ -353,8 +330,7 @@ class PerformanceAnalyzer:
 
 
 class PerformanceMonitor:
-    """Enterprise performance monitoring system"""
-    
+    """Enterprise performance monitoring system"""    
     def __init__(self):
         self.system_monitor = SystemResourceMonitor()
         self.analyzer = PerformanceAnalyzer()
@@ -364,8 +340,7 @@ class PerformanceMonitor:
         self.monitoring_interval = 30  # seconds
         
     def _initialize_thresholds(self) -> Dict[str, PerformanceThresholds]:
-        """Initialize performance thresholds"""
-        return {
+        """Initialize performance thresholds"""        return {
             'response_time_ms': PerformanceThresholds(
                 excellent=100.0, good=300.0, fair=800.0, poor=2000.0
             ),
@@ -389,8 +364,7 @@ class PerformanceMonitor:
     @contextmanager
     def measure_performance(self, operation_name: str, 
                            metadata: Optional[Dict[str, Any]] = None):
-        """Context manager for measuring operation performance"""
-        timer = PerformanceTimer(operation_name, metadata)
+        """Context manager for measuring operation performance"""        timer = PerformanceTimer(operation_name, metadata)
         try:
             with timer:
                 yield timer
@@ -406,8 +380,7 @@ class PerformanceMonitor:
     def record_performance_metric(self, name: str, value: float, unit: str,
                                  tags: Optional[Dict[str, str]] = None,
                                  metadata: Optional[Dict[str, Any]] = None):
-        """Record a performance metric"""
-        metric = PerformanceMetric(
+        """Record a performance metric"""        metric = PerformanceMetric(
             name=name,
             value=value,
             unit=unit,
@@ -422,8 +395,7 @@ class PerformanceMonitor:
         self._check_performance_thresholds(metric)
     
     def _check_performance_thresholds(self, metric: PerformanceMetric):
-        """Check if metric exceeds performance thresholds"""
-        # Map metric names to threshold keys
+        """Check if metric exceeds performance thresholds"""        # Map metric names to threshold keys
         threshold_key = None
         if 'response_time' in metric.name:
             threshold_key = 'response_time_ms'
@@ -448,8 +420,7 @@ class PerformanceMonitor:
                 logger.warning(f"POOR performance: {metric.name} = {metric.value} {metric.unit}")
     
     def get_current_performance_snapshot(self) -> PerformanceReport:
-        """Get current comprehensive performance snapshot"""
-        timestamp = datetime.now(timezone.utc)
+        """Get current comprehensive performance snapshot"""        timestamp = datetime.now(timezone.utc)
         
         # Get system metrics
         system_metrics = self.system_monitor.get_all_system_metrics()
@@ -496,8 +467,7 @@ class PerformanceMonitor:
         )
     
     def _get_metric_unit(self, metric_name: str) -> str:
-        """Get appropriate unit for metric"""
-        if 'percent' in metric_name:
+        """Get appropriate unit for metric"""        if 'percent' in metric_name:
             return 'percent'
         elif '_gb' in metric_name:
             return 'gigabytes'
@@ -511,8 +481,7 @@ class PerformanceMonitor:
             return 'units'
     
     def _identify_bottlenecks(self, metrics: Dict[str, float]) -> List[str]:
-        """Identify system bottlenecks"""
-        bottlenecks = []
+        """Identify system bottlenecks"""        bottlenecks = []
         
         # CPU bottleneck
         if metrics.get('cpu_percent', 0) > 80:
@@ -534,8 +503,7 @@ class PerformanceMonitor:
     
     def _generate_recommendations(self, metrics: Dict[str, float], 
                                  bottlenecks: List[str]) -> List[str]:
-        """Generate performance improvement recommendations"""
-        recommendations = []
+        """Generate performance improvement recommendations"""        recommendations = []
         
         if any('CPU' in bottleneck for bottleneck in bottlenecks):
             recommendations.extend([
@@ -571,8 +539,7 @@ class PerformanceMonitor:
         return recommendations
     
     def _calculate_overall_score(self, metrics: Dict[str, float]) -> float:
-        """Calculate overall performance score (0-100)"""
-        scores = []
+        """Calculate overall performance score (0-100)"""        scores = []
         
         # CPU score
         cpu_percent = metrics.get('cpu_percent', 0)
@@ -593,8 +560,7 @@ class PerformanceMonitor:
         return statistics.mean(scores) if scores else 0.0
     
     def _assess_overall_performance_level(self, score: float) -> PerformanceLevel:
-        """Assess overall performance level"""
-        if score >= 90:
+        """Assess overall performance level"""        if score >= 90:
             return PerformanceLevel.EXCELLENT
         elif score >= 75:
             return PerformanceLevel.GOOD
@@ -606,8 +572,7 @@ class PerformanceMonitor:
             return PerformanceLevel.CRITICAL
     
     def _generate_alerts(self, metrics: Dict[str, float]) -> List[Dict[str, Any]]:
-        """Generate performance alerts"""
-        alerts = []
+        """Generate performance alerts"""        alerts = []
         
         # Critical alerts
         if metrics.get('cpu_percent', 0) > 95:
@@ -637,8 +602,7 @@ class PerformanceMonitor:
         return alerts
     
     def start_monitoring(self, interval_seconds: int = 30):
-        """Start continuous performance monitoring"""
-        if self.monitoring_active:
+        """Start continuous performance monitoring"""        if self.monitoring_active:
             logger.warning("Performance monitoring already active")
             return
         
@@ -649,15 +613,13 @@ class PerformanceMonitor:
         logger.info(f"Performance monitoring started with {interval_seconds}s interval")
     
     def stop_monitoring(self):
-        """Stop continuous performance monitoring"""
-        self.monitoring_active = False
+        """Stop continuous performance monitoring"""        self.monitoring_active = False
         if self.monitoring_thread:
             self.monitoring_thread.join(timeout=5)
         logger.info("Performance monitoring stopped")
     
     def _monitoring_loop(self):
-        """Main monitoring loop"""
-        while self.monitoring_active:
+        """Main monitoring loop"""        while self.monitoring_active:
             try:
                 # Get performance snapshot
                 snapshot = self.get_current_performance_snapshot()
@@ -680,13 +642,11 @@ class PerformanceMonitor:
             time.sleep(self.monitoring_interval)
     
     async def get_performance_report_async(self) -> PerformanceReport:
-        """Get performance report asynchronously"""
-        loop = asyncio.get_event_loop()
+        """Get performance report asynchronously"""        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(None, self.get_current_performance_snapshot)
     
     def export_performance_data(self, time_range_hours: int = 24) -> Dict[str, Any]:
-        """Export performance data for analysis"""
-        export_data = {
+        """Export performance data for analysis"""        export_data = {
             'export_timestamp': datetime.now(timezone.utc).isoformat(),
             'time_range_hours': time_range_hours,
             'current_snapshot': self.get_current_performance_snapshot().to_dict(),

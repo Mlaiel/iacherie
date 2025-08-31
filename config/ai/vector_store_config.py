@@ -1,5 +1,4 @@
-"""
-Vector Store Configuration for IA-Influencer Agent Platform
+"""Vector Store Configuration for IA-Influencer Agent Platform
 ==========================================================
 
 Professional Vector Database and Similarity Search configuration.
@@ -15,9 +14,7 @@ without explicit written permission is STRICTLY PROHIBITED and will be
 prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-from typing import Dict, List, Optional, Union, Any, Tuple
+"""from typing import Dict, List, Optional, Union, Any, Tuple
 from pydantic import BaseSettings, validator
 from enum import Enum
 from dataclasses import dataclass, field
@@ -25,8 +22,7 @@ import os
 
 
 class VectorDatabase(str, Enum):
-    """Supported vector database engines."""
-    
+    """Supported vector database engines."""    
     FAISS = "faiss"
     PINECONE = "pinecone"
     WEAVIATE = "weaviate"
@@ -39,8 +35,7 @@ class VectorDatabase(str, Enum):
 
 
 class IndexType(str, Enum):
-    """Vector index types for different use cases."""
-    
+    """Vector index types for different use cases."""    
     FLAT = "flat"
     IVF = "ivf"
     HNSW = "hnsw"
@@ -52,8 +47,7 @@ class IndexType(str, Enum):
 
 
 class DistanceMetric(str, Enum):
-    """Distance metrics for similarity calculations."""
-    
+    """Distance metrics for similarity calculations."""    
     COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     MANHATTAN = "manhattan"
@@ -64,8 +58,7 @@ class DistanceMetric(str, Enum):
 
 @dataclass
 class VectorCollection:
-    """Configuration for a vector collection/index."""
-    
+    """Configuration for a vector collection/index."""    
     name: str
     dimension: int
     index_type: IndexType
@@ -81,8 +74,7 @@ class VectorCollection:
 
 @dataclass
 class VectorStoreConnection:
-    """Connection configuration for vector database."""
-    
+    """Connection configuration for vector database."""    
     database: VectorDatabase
     host: str = "localhost"
     port: int = 6333
@@ -97,13 +89,11 @@ class VectorStoreConnection:
 
 
 class VectorStoreConfig(BaseSettings):
-    """
-    Professional Vector Store Configuration for IA-Influencer Agent Platform.
+    """    Professional Vector Store Configuration for IA-Influencer Agent Platform.
     
     Manages vector databases, similarity search, embeddings storage, and
     high-performance retrieval systems for content protection and matching.
-    """
-    
+    """    
     # Core Vector Store Configuration
     DEFAULT_VECTOR_DB: VectorDatabase = VectorDatabase.FAISS
     VECTOR_DIMENSION: int = 512
@@ -174,13 +164,11 @@ class VectorStoreConfig(BaseSettings):
     
     @validator("VECTOR_STORAGE_PATH", "INDEX_STORAGE_PATH", "BACKUP_STORAGE_PATH")
     def create_storage_directories(cls, v):
-        """Ensure vector storage directories exist."""
-        os.makedirs(v, exist_ok=True)
+        """Ensure vector storage directories exist."""        os.makedirs(v, exist_ok=True)
         return v
     
     def get_vector_collection_config(self, collection_name: str) -> VectorCollection:
-        """Get vector collection configuration by name."""
-        
+        """Get vector collection configuration by name."""        
         collections = {
             self.AUDIO_FINGERPRINT_COLLECTION: VectorCollection(
                 name=self.AUDIO_FINGERPRINT_COLLECTION,
@@ -303,8 +291,7 @@ class VectorStoreConfig(BaseSettings):
         return collections.get(collection_name, self._get_default_collection(collection_name))
     
     def _get_default_collection(self, name: str) -> VectorCollection:
-        """Get default vector collection configuration."""
-        return VectorCollection(
+        """Get default vector collection configuration."""        return VectorCollection(
             name=name,
             dimension=self.VECTOR_DIMENSION,
             index_type=self.DEFAULT_INDEX_TYPE,
@@ -313,8 +300,7 @@ class VectorStoreConfig(BaseSettings):
         )
     
     def get_connection_config(self, database: Optional[VectorDatabase] = None) -> VectorStoreConnection:
-        """Get vector database connection configuration."""
-        db = database or self.DEFAULT_VECTOR_DB
+        """Get vector database connection configuration."""        db = database or self.DEFAULT_VECTOR_DB
         
         connections = {
             VectorDatabase.FAISS: VectorStoreConnection(
@@ -377,8 +363,7 @@ class VectorStoreConfig(BaseSettings):
         return connections.get(db, connections[VectorDatabase.FAISS])
     
     def get_search_config(self) -> Dict[str, Any]:
-        """Get vector search configuration."""
-        return {
+        """Get vector search configuration."""        return {
             "default_top_k": self.DEFAULT_TOP_K,
             "max_top_k": self.MAX_TOP_K,
             "similarity_threshold": self.SIMILARITY_THRESHOLD,
@@ -402,8 +387,7 @@ class VectorStoreConfig(BaseSettings):
         }
     
     def get_indexing_config(self) -> Dict[str, Any]:
-        """Get vector indexing configuration."""
-        return {
+        """Get vector indexing configuration."""        return {
             "batch_size": self.BATCH_SIZE,
             "build_timeout": self.INDEX_BUILD_TIMEOUT,
             "parallel_build": True,
@@ -433,8 +417,7 @@ class VectorStoreConfig(BaseSettings):
         }
     
     def get_storage_config(self) -> Dict[str, Any]:
-        """Get vector storage configuration."""
-        return {
+        """Get vector storage configuration."""        return {
             "storage_path": self.VECTOR_STORAGE_PATH,
             "index_path": self.INDEX_STORAGE_PATH,
             "backup_path": self.BACKUP_STORAGE_PATH,
@@ -456,8 +439,7 @@ class VectorStoreConfig(BaseSettings):
         }
     
     def get_backup_config(self) -> Dict[str, Any]:
-        """Get backup and recovery configuration."""
-        return {
+        """Get backup and recovery configuration."""        return {
             "auto_backup": self.AUTO_BACKUP_ENABLED,
             "backup_interval_hours": self.BACKUP_INTERVAL_HOURS,
             "retention_days": self.BACKUP_RETENTION_DAYS,
@@ -474,8 +456,7 @@ class VectorStoreConfig(BaseSettings):
         }
     
     def get_performance_config(self) -> Dict[str, Any]:
-        """Get performance optimization configuration."""
-        return {
+        """Get performance optimization configuration."""        return {
             "connection_pooling": {
                 "pool_size": self.CONNECTION_POOL_SIZE,
                 "max_overflow": 5,
@@ -500,8 +481,7 @@ class VectorStoreConfig(BaseSettings):
         }
     
     def get_monitoring_config(self) -> Dict[str, Any]:
-        """Get monitoring and observability configuration."""
-        return {
+        """Get monitoring and observability configuration."""        return {
             "metrics": {
                 "enabled": self.METRICS_ENABLED,
                 "performance_monitoring": self.PERFORMANCE_MONITORING,
@@ -528,8 +508,7 @@ class VectorStoreConfig(BaseSettings):
         }
     
     def estimate_storage_requirements(self, num_vectors: int, dimension: int) -> Dict[str, Any]:
-        """Estimate storage requirements for vector collection."""
-        # Base storage per vector (in bytes)
+        """Estimate storage requirements for vector collection."""        # Base storage per vector (in bytes)
         vector_size = dimension * 4  # float32 = 4 bytes
         metadata_size = 200  # Average metadata size
         index_overhead = 0.3  # 30% overhead for indexing

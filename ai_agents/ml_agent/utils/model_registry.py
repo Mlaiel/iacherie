@@ -1,5 +1,4 @@
-"""
-Model Registry - Advanced ML Model Management & Version Control System
+"""Model Registry - Advanced ML Model Management & Version Control System
 
 Industrial-grade model registry providing comprehensive model lifecycle management,
 version control, metadata tracking, model deployment management, and governance
@@ -14,9 +13,7 @@ Any unauthorized use, copying, distribution, or commercialization without explic
 is strictly PROHIBITED and will result in legal action.
 
 ALL RIGHTS RESERVED - FAHED MLAIEL ©2025
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 import uuid
@@ -85,8 +82,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class ModelStatus(Enum):
-    """Model lifecycle status"""
-    DEVELOPMENT = "development"
+    """Model lifecycle status"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     ARCHIVED = "archived"
@@ -94,8 +90,7 @@ class ModelStatus(Enum):
     FAILED = "failed"
 
 class ModelType(Enum):
-    """Model types"""
-    CLASSIFICATION = "classification"
+    """Model types"""    CLASSIFICATION = "classification"
     REGRESSION = "regression"
     CLUSTERING = "clustering"
     GENERATIVE = "generative"
@@ -106,8 +101,7 @@ class ModelType(Enum):
     REINFORCEMENT_LEARNING = "reinforcement_learning"
 
 class ModelFramework(Enum):
-    """Supported ML frameworks"""
-    TENSORFLOW = "tensorflow"
+    """Supported ML frameworks"""    TENSORFLOW = "tensorflow"
     PYTORCH = "pytorch"
     SKLEARN = "sklearn"
     ONNX = "onnx"
@@ -116,8 +110,7 @@ class ModelFramework(Enum):
     CUSTOM = "custom"
 
 class DeploymentTarget(Enum):
-    """Deployment targets"""
-    CLOUD = "cloud"
+    """Deployment targets"""    CLOUD = "cloud"
     EDGE = "edge"
     MOBILE = "mobile"
     WEB = "web"
@@ -126,8 +119,7 @@ class DeploymentTarget(Enum):
 
 @dataclass
 class ModelMetadata:
-    """Comprehensive model metadata"""
-    model_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive model metadata"""    model_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     version: str = "1.0.0"
     description: str = ""
@@ -211,8 +203,7 @@ class ModelMetadata:
 
 @dataclass
 class ModelVersion:
-    """Model version information"""
-    version_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Model version information"""    version_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     model_id: str = ""
     version: str = "1.0.0"
     parent_version: Optional[str] = None
@@ -240,8 +231,7 @@ class ModelVersion:
 
 @dataclass
 class DeploymentConfig:
-    """Model deployment configuration"""
-    deployment_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Model deployment configuration"""    deployment_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     model_id: str = ""
     model_version: str = ""
     
@@ -286,8 +276,7 @@ class DeploymentConfig:
     created_at: datetime = field(default_factory=datetime.utcnow)
 
 class ModelRegistryDB(Base):
-    """Database model for model registry"""
-    __tablename__ = 'model_registry'
+    """Database model for model registry"""    __tablename__ = 'model_registry'
     
     model_id = Column(String(36), primary_key=True)
     name = Column(String(255), nullable=False)
@@ -300,8 +289,7 @@ class ModelRegistryDB(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class ModelRegistry:
-    """
-    Ultra-Advanced Model Registry & Management System
+    """    Ultra-Advanced Model Registry & Management System
     
     Comprehensive model lifecycle management providing:
     - Model versioning and lineage tracking
@@ -314,8 +302,7 @@ class ModelRegistry:
     - Monitoring and alerting integration
     - Multi-framework support
     - Automated model lifecycle workflows
-    """
-    
+    """    
     # Prometheus metrics
     REGISTERED_MODELS = Counter('model_registry_models_total', 'Total registered models', ['framework', 'type'])
     MODEL_OPERATIONS = Counter('model_registry_operations_total', 'Model registry operations', ['operation', 'status'])
@@ -368,8 +355,7 @@ class ModelRegistry:
         logger.info(f"ModelRegistry initialized: {self.registry_id}")
     
     async def initialize(self) -> bool:
-        """Initialize model registry"""
-        try:
+        """Initialize model registry"""        try:
             # Test database connection
             with self.Session() as session:
                 session.execute("SELECT 1")
@@ -403,8 +389,7 @@ class ModelRegistry:
                            metadata: ModelMetadata,
                            artifacts: Optional[Dict[str, Any]] = None,
                            upload_to_cloud: bool = False) -> str:
-        """
-        Register a new model or new version of existing model
+        """        Register a new model or new version of existing model
         
         Args:
             model: Model object to register
@@ -414,8 +399,7 @@ class ModelRegistry:
             
         Returns:
             str: Model ID of registered model
-        """
-        try:
+        """        try:
             logger.info(f"Registering model: {metadata.name} v{metadata.version}")
             
             with self.performance_monitor.monitor_context():
@@ -509,8 +493,7 @@ class ModelRegistry:
                        model_id: str,
                        version: Optional[str] = None,
                        load_artifacts: bool = True) -> Dict[str, Any]:
-        """
-        Retrieve model and metadata
+        """        Retrieve model and metadata
         
         Args:
             model_id: Model identifier
@@ -519,8 +502,7 @@ class ModelRegistry:
             
         Returns:
             Dict containing model, metadata, and artifacts
-        """
-        try:
+        """        try:
             logger.info(f"Retrieving model: {model_id} v{version or 'latest'}")
             
             # Check in-memory cache first
@@ -589,8 +571,7 @@ class ModelRegistry:
                                 model_id: str,
                                 status: ModelStatus,
                                 notes: str = "") -> bool:
-        """Update model status"""
-        try:
+        """Update model status"""        try:
             logger.info(f"Updating model status: {model_id} -> {status.value}")
             
             # Load current metadata
@@ -640,8 +621,7 @@ class ModelRegistry:
                                  version: str,
                                  changes: List[str],
                                  parent_version: Optional[str] = None) -> str:
-        """Create new version of existing model"""
-        try:
+        """Create new version of existing model"""        try:
             logger.info(f"Creating model version: {model_id} v{version}")
             
             # Load parent model metadata
@@ -684,8 +664,7 @@ class ModelRegistry:
                            model_id_1: str,
                            model_id_2: str,
                            comparison_metrics: List[str] = None) -> Dict[str, Any]:
-        """Compare two models across various metrics"""
-        try:
+        """Compare two models across various metrics"""        try:
             logger.info(f"Comparing models: {model_id_1} vs {model_id_2}")
             
             # Load models
@@ -775,8 +754,7 @@ class ModelRegistry:
                          model_type: Optional[ModelType] = None,
                          limit: int = 100,
                          offset: int = 0) -> List[ModelMetadata]:
-        """List models with filtering"""
-        try:
+        """List models with filtering"""        try:
             logger.info("Listing models with filters")
             
             with self.Session() as session:
@@ -809,8 +787,7 @@ class ModelRegistry:
     async def delete_model(self,
                          model_id: str,
                          force: bool = False) -> bool:
-        """Delete model and all associated data"""
-        try:
+        """Delete model and all associated data"""        try:
             logger.info(f"Deleting model: {model_id} (force={force})")
             
             # Load model metadata
@@ -860,8 +837,7 @@ class ModelRegistry:
 
     # Private helper methods
     async def _validate_model_metadata(self, metadata: ModelMetadata) -> Dict[str, Any]:
-        """Validate model metadata"""
-        errors = []
+        """Validate model metadata"""        errors = []
         
         if not metadata.name:
             errors.append("Model name is required")
@@ -880,8 +856,7 @@ class ModelRegistry:
         return {"valid": len(errors) == 0, "errors": errors}
 
     async def _generate_model_signature(self, model: Any, framework: ModelFramework) -> str:
-        """Generate unique model signature"""
-        try:
+        """Generate unique model signature"""        try:
             if framework == ModelFramework.SKLEARN:
                 model_str = str(model.get_params()) if hasattr(model, 'get_params') else str(model)
             elif framework == ModelFramework.TENSORFLOW:
@@ -898,8 +873,7 @@ class ModelRegistry:
             return hashlib.md5(str(uuid.uuid4()).encode()).hexdigest()
 
     async def _analyze_model_structure(self, model: Any, framework: ModelFramework) -> Dict[str, Any]:
-        """Analyze model structure and calculate size/parameters"""
-        try:
+        """Analyze model structure and calculate size/parameters"""        try:
             info = {"size_mb": 0.0, "parameter_count": 0}
             
             if framework == ModelFramework.SKLEARN:
@@ -942,8 +916,7 @@ class ModelRegistry:
             return {"size_mb": 0.0, "parameter_count": 0}
 
     async def _save_model(self, model: Any, model_dir: Path, framework: ModelFramework) -> Path:
-        """Save model to storage"""
-        try:
+        """Save model to storage"""        try:
             if framework == ModelFramework.SKLEARN:
                 model_path = model_dir / "model.pkl"
                 joblib.dump(model, model_path)
@@ -973,8 +946,7 @@ class ModelRegistry:
             raise ModelRegistryError(f"Failed to save model: {e}")
 
     async def _load_model(self, model_path: Path, framework: ModelFramework) -> Any:
-        """Load model from storage"""
-        try:
+        """Load model from storage"""        try:
             if framework == ModelFramework.SKLEARN:
                 return joblib.load(model_path)
                 
@@ -997,8 +969,7 @@ class ModelRegistry:
             raise ModelRegistryError(f"Failed to load model: {e}")
 
     async def _save_model_to_db(self, metadata: ModelMetadata):
-        """Save model metadata to database"""
-        try:
+        """Save model metadata to database"""        try:
             with self.Session() as session:
                 existing = session.query(ModelRegistryDB).filter(
                     ModelRegistryDB.model_id == metadata.model_id
@@ -1031,8 +1002,7 @@ class ModelRegistry:
             raise ModelRegistryError(f"Failed to save model to database: {e}")
 
     async def _load_model_from_db(self, model_id: str, version: Optional[str] = None) -> Optional[ModelMetadata]:
-        """Load model metadata from database"""
-        try:
+        """Load model metadata from database"""        try:
             with self.Session() as session:
                 query = session.query(ModelRegistryDB).filter(
                     ModelRegistryDB.model_id == model_id
@@ -1055,8 +1025,7 @@ class ModelRegistry:
             return None
 
     async def _register_with_mlflow(self, model: Any, metadata: ModelMetadata, artifacts: Optional[Dict[str, Any]]):
-        """Register model with MLflow"""
-        try:
+        """Register model with MLflow"""        try:
             if not self.config.get("enable_mlflow", True):
                 return
             
@@ -1096,8 +1065,7 @@ class ModelRegistry:
             logger.warning(f"MLflow registration failed: {e}")
 
     async def _upload_model_to_cloud(self, model_dir: Path, metadata: ModelMetadata):
-        """Upload model to cloud storage"""
-        try:
+        """Upload model to cloud storage"""        try:
             if not self.s3_client:
                 return
             
@@ -1121,8 +1089,7 @@ class ModelRegistry:
             logger.warning(f"Cloud upload failed: {e}")
 
     async def _download_model_from_cloud(self, model_id: str, version: Optional[str] = None):
-        """Download model from cloud storage"""
-        try:
+        """Download model from cloud storage"""        try:
             if not self.s3_client:
                 return
             
@@ -1133,8 +1100,7 @@ class ModelRegistry:
             logger.warning(f"Cloud download failed: {e}")
 
     async def _delete_model_from_cloud(self, model_id: str):
-        """Delete model from cloud storage"""
-        try:
+        """Delete model from cloud storage"""        try:
             if not self.s3_client:
                 return
             
@@ -1145,8 +1111,7 @@ class ModelRegistry:
             logger.warning(f"Cloud deletion failed: {e}")
 
     async def _cleanup_old_models(self):
-        """Background task to cleanup old/unused models"""
-        while True:
+        """Background task to cleanup old/unused models"""        while True:
             try:
                 logger.info("Running model cleanup")
                 
@@ -1162,10 +1127,8 @@ class ModelRegistry:
                 await asyncio.sleep(3600)  # Retry in 1 hour
 
 class ModelDeploymentManager:
-    """
-    Advanced Model Deployment Management System
-    """
-    
+    """    Advanced Model Deployment Management System
+    """    
     def __init__(self, registry: ModelRegistry):
         self.registry = registry
         self.deployment_id = f"deployment_{uuid.uuid4().hex[:8]}"
@@ -1175,8 +1138,7 @@ class ModelDeploymentManager:
     async def deploy_model(self,
                          model_id: str,
                          deployment_config: DeploymentConfig) -> str:
-        """Deploy model to specified target"""
-        try:
+        """Deploy model to specified target"""        try:
             logger.info(f"Deploying model: {model_id}")
             
             # Load model
@@ -1209,20 +1171,17 @@ class ModelDeploymentManager:
             raise ModelRegistryError(f"Model deployment failed: {str(e)}")
     
     async def _deploy_to_api(self, model_data: Dict[str, Any], config: DeploymentConfig) -> str:
-        """Deploy model as API service"""
-        # Implementation would create API service (e.g., FastAPI, Flask)
+        """Deploy model as API service"""        # Implementation would create API service (e.g., FastAPI, Flask)
         # with proper scaling, monitoring, etc.
         logger.info("Deploying model as API service")
         return f"api_deployment_{uuid.uuid4().hex[:8]}"
     
     async def _deploy_to_batch(self, model_data: Dict[str, Any], config: DeploymentConfig) -> str:
-        """Deploy model for batch processing"""
-        # Implementation would create batch processing job
+        """Deploy model for batch processing"""        # Implementation would create batch processing job
         logger.info("Deploying model for batch processing")
         return f"batch_deployment_{uuid.uuid4().hex[:8]}"
     
     async def _deploy_to_edge(self, model_data: Dict[str, Any], config: DeploymentConfig) -> str:
-        """Deploy model to edge devices"""
-        # Implementation would prepare model for edge deployment
+        """Deploy model to edge devices"""        # Implementation would prepare model for edge deployment
         logger.info("Deploying model to edge")
         return f"edge_deployment_{uuid.uuid4().hex[:8]}"

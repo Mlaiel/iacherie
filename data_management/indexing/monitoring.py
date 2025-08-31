@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Advanced Indexing Monitoring
+"""IA Influencer Agent - Advanced Indexing Monitoring
 ==================================================
 
 Enterprise-grade monitoring and analytics system for indexing operations
@@ -13,9 +12,7 @@ This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de
-"""
-
-import asyncio
+"""import asyncio
 import logging
 import time
 from typing import Dict, List, Optional, Union, Any, Callable
@@ -35,16 +32,14 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics collected"""
-    COUNTER = "counter"
+    """Types of metrics collected"""    COUNTER = "counter"
     HISTOGRAM = "histogram" 
     GAUGE = "gauge"
     TIMER = "timer"
 
 
 class AlertLevel(Enum):
-    """Alert severity levels"""
-    INFO = "info"
+    """Alert severity levels"""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
@@ -52,8 +47,7 @@ class AlertLevel(Enum):
 
 @dataclass
 class PerformanceMetrics:
-    """Performance metrics structure"""
-    operation_type: str
+    """Performance metrics structure"""    operation_type: str
     processing_time_ms: float
     cpu_usage_percent: float
     memory_usage_mb: float
@@ -66,8 +60,7 @@ class PerformanceMetrics:
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration"""
-    name: str
+    """Alert rule configuration"""    name: str
     metric_name: str
     threshold: float
     comparison: str  # >, <, ==, >=, <=
@@ -79,8 +72,7 @@ class AlertRule:
 
 @dataclass
 class IndexingMetrics:
-    """Indexing operation metrics"""
-    content_indexed_total: int
+    """Indexing operation metrics"""    content_indexed_total: int
     indexing_rate_per_minute: float
     average_processing_time_ms: float
     success_rate_percent: float
@@ -91,8 +83,7 @@ class IndexingMetrics:
 
 
 class MetricsCollector:
-    """Collects and aggregates metrics from indexing operations"""
-    
+    """Collects and aggregates metrics from indexing operations"""    
     def __init__(self, redis_url: str, collection_interval: int = 60):
         self.redis_url = redis_url
         self.collection_interval = collection_interval
@@ -104,8 +95,7 @@ class MetricsCollector:
         self._setup_prometheus_metrics()
         
     def _setup_prometheus_metrics(self):
-        """Initialize Prometheus metrics"""
-        self.processing_time = Histogram(
+        """Initialize Prometheus metrics"""        self.processing_time = Histogram(
             'indexing_processing_time_seconds',
             'Time spent processing content for indexing',
             ['content_type', 'operation'],
@@ -140,8 +130,7 @@ class MetricsCollector:
         )
     
     async def initialize(self):
-        """Initialize metrics collector"""
-        try:
+        """Initialize metrics collector"""        try:
             self.redis_client = Redis.from_url(self.redis_url)
             await self.redis_client.ping()
             logger.info("MetricsCollector initialized successfully")
@@ -159,8 +148,7 @@ class MetricsCollector:
         creator_id: str = None,
         metadata: Dict[str, Any] = None
     ):
-        """Record metrics for an indexing operation"""
-        try:
+        """Record metrics for an indexing operation"""        try:
             # Record in Prometheus
             self.processing_time.labels(
                 content_type=content_type,
@@ -230,8 +218,7 @@ class MetricsCollector:
             logger.error(f"Failed to record operation metrics: {e}")
     
     async def _get_queue_depth(self) -> int:
-        """Get current queue depth"""
-        try:
+        """Get current queue depth"""        try:
             depth = await self.redis_client.llen("indexing_queue")
             self.queue_depth.set(depth)
             return depth
@@ -239,8 +226,7 @@ class MetricsCollector:
             return 0
     
     async def get_current_metrics(self) -> IndexingMetrics:
-        """Get current aggregated metrics"""
-        try:
+        """Get current aggregated metrics"""        try:
             now = datetime.now(timezone.utc)
             last_hour = now - timedelta(hours=1)
             last_day = now - timedelta(days=1)
@@ -310,8 +296,7 @@ class MetricsCollector:
             )
     
     async def _calculate_storage_usage(self) -> float:
-        """Calculate total storage usage in GB"""
-        try:
+        """Calculate total storage usage in GB"""        try:
             # This would typically query your storage backend
             # For now, return a placeholder value
             return 0.0
@@ -320,8 +305,7 @@ class MetricsCollector:
 
 
 class AlertManager:
-    """Manages alerting for indexing operations"""
-    
+    """Manages alerting for indexing operations"""    
     def __init__(self, redis_url: str, notification_config: Dict[str, Any]):
         self.redis_url = redis_url
         self.notification_config = notification_config
@@ -330,8 +314,7 @@ class AlertManager:
         self.active_alerts = {}
         
     async def initialize(self):
-        """Initialize alert manager"""
-        try:
+        """Initialize alert manager"""        try:
             self.redis_client = Redis.from_url(self.redis_url)
             await self.redis_client.ping()
             await self._load_alert_rules()
@@ -342,8 +325,7 @@ class AlertManager:
             raise
     
     async def add_alert_rule(self, rule: AlertRule):
-        """Add a new alert rule"""
-        try:
+        """Add a new alert rule"""        try:
             self.alert_rules[rule.name] = rule
             
             # Store in Redis
@@ -360,8 +342,7 @@ class AlertManager:
             raise
     
     async def _load_alert_rules(self):
-        """Load alert rules from Redis"""
-        try:
+        """Load alert rules from Redis"""        try:
             rules_data = await self.redis_client.hgetall("alert_rules")
             
             for rule_name, rule_json in rules_data.items():
@@ -375,8 +356,7 @@ class AlertManager:
             logger.error(f"Failed to load alert rules: {e}")
     
     async def check_alerts(self, metrics: IndexingMetrics):
-        """Check all alert rules against current metrics"""
-        try:
+        """Check all alert rules against current metrics"""        try:
             for rule_name, rule in self.alert_rules.items():
                 if not rule.enabled:
                     continue
@@ -402,8 +382,7 @@ class AlertManager:
     def _evaluate_condition(
         self, value: float, threshold: float, comparison: str
     ) -> bool:
-        """Evaluate alert condition"""
-        if comparison == ">":
+        """Evaluate alert condition"""        if comparison == ">":
             return value > threshold
         elif comparison == "<":
             return value < threshold
@@ -417,8 +396,7 @@ class AlertManager:
             return False
     
     async def _trigger_alert(self, rule: AlertRule, metric_value: float):
-        """Trigger an alert"""
-        try:
+        """Trigger an alert"""        try:
             alert_key = f"alert:{rule.name}"
             
             # Check if alert is already active
@@ -453,8 +431,7 @@ class AlertManager:
             logger.error(f"Failed to trigger alert {rule.name}: {e}")
     
     async def _resolve_alert(self, rule_name: str):
-        """Resolve an active alert"""
-        try:
+        """Resolve an active alert"""        try:
             alert_key = f"alert:{rule_name}"
             
             if alert_key in self.active_alerts:
@@ -471,8 +448,7 @@ class AlertManager:
     async def _send_notifications(
         self, alert_data: Dict[str, Any], channels: List[str]
     ):
-        """Send alert notifications"""
-        try:
+        """Send alert notifications"""        try:
             for channel in channels:
                 if channel == "email":
                     await self._send_email_notification(alert_data)
@@ -485,24 +461,20 @@ class AlertManager:
             logger.error(f"Failed to send notifications: {e}")
     
     async def _send_email_notification(self, alert_data: Dict[str, Any]):
-        """Send email notification (placeholder)"""
-        # Implementation would depend on your email service
+        """Send email notification (placeholder)"""        # Implementation would depend on your email service
         logger.info(f"Email notification sent for alert: {alert_data['rule_name']}")
     
     async def _send_slack_notification(self, alert_data: Dict[str, Any]):
-        """Send Slack notification (placeholder)"""
-        # Implementation would depend on Slack API
+        """Send Slack notification (placeholder)"""        # Implementation would depend on Slack API
         logger.info(f"Slack notification sent for alert: {alert_data['rule_name']}")
     
     async def _send_webhook_notification(self, alert_data: Dict[str, Any]):
-        """Send webhook notification (placeholder)"""
-        # Implementation would depend on webhook configuration
+        """Send webhook notification (placeholder)"""        # Implementation would depend on webhook configuration
         logger.info(f"Webhook notification sent for alert: {alert_data['rule_name']}")
 
 
 class PerformanceAnalyzer:
-    """Analyzes performance trends and provides optimization recommendations"""
-    
+    """Analyzes performance trends and provides optimization recommendations"""    
     def __init__(self, metrics_collector: MetricsCollector):
         self.metrics_collector = metrics_collector
         self.analysis_cache = {}
@@ -510,8 +482,7 @@ class PerformanceAnalyzer:
     async def analyze_performance_trends(
         self, time_window_hours: int = 24
     ) -> Dict[str, Any]:
-        """Analyze performance trends over specified time window"""
-        try:
+        """Analyze performance trends over specified time window"""        try:
             cutoff_time = datetime.now(timezone.utc) - timedelta(hours=time_window_hours)
             
             relevant_metrics = [
@@ -565,8 +536,7 @@ class PerformanceAnalyzer:
             return {"status": "error", "message": str(e)}
     
     def _calculate_trend(self, values: List[float]) -> str:
-        """Calculate trend direction for a series of values"""
-        if len(values) < 2:
+        """Calculate trend direction for a series of values"""        if len(values) < 2:
             return "stable"
         
         # Simple linear trend calculation
@@ -583,8 +553,7 @@ class PerformanceAnalyzer:
     def _generate_recommendations(
         self, metrics: List[PerformanceMetrics]
     ) -> List[str]:
-        """Generate optimization recommendations based on metrics"""
-        recommendations = []
+        """Generate optimization recommendations based on metrics"""        recommendations = []
         
         # Analyze processing time
         processing_times = [m.processing_time_ms for m in metrics]

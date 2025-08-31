@@ -1,5 +1,4 @@
-"""
-Takedown Configuration Module
+"""Takedown Configuration Module
 ============================
 
 Professional takedown configuration for automated content removal and legal compliance.
@@ -14,9 +13,7 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, modification, or distribution of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
-"""
-
-from typing import Dict, Any, List, Optional, Set, Tuple
+"""from typing import Dict, Any, List, Optional, Set, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 import os
@@ -24,8 +21,7 @@ from datetime import datetime, timedelta
 
 
 class TakedownType(str, Enum):
-    """Types of takedown procedures."""
-    DMCA = "dmca"
+    """Types of takedown procedures."""    DMCA = "dmca"
     EU_COPYRIGHT = "eu_copyright"
     PLATFORM_SPECIFIC = "platform_specific"
     CEASE_DESIST = "cease_desist"
@@ -34,8 +30,7 @@ class TakedownType(str, Enum):
 
 
 class TakedownStatus(str, Enum):
-    """Status of takedown requests."""
-    PENDING = "pending"
+    """Status of takedown requests."""    PENDING = "pending"
     SUBMITTED = "submitted"
     ACKNOWLEDGED = "acknowledged"
     UNDER_REVIEW = "under_review"
@@ -48,8 +43,7 @@ class TakedownStatus(str, Enum):
 
 
 class PlatformType(str, Enum):
-    """Supported platforms for takedown procedures."""
-    YOUTUBE = "youtube"
+    """Supported platforms for takedown procedures."""    YOUTUBE = "youtube"
     FACEBOOK = "facebook"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -64,8 +58,7 @@ class PlatformType(str, Enum):
 
 
 class LegalJurisdiction(str, Enum):
-    """Legal jurisdictions for takedown procedures."""
-    US = "us"
+    """Legal jurisdictions for takedown procedures."""    US = "us"
     EU = "eu"
     UK = "uk"
     GERMANY = "germany"
@@ -78,8 +71,7 @@ class LegalJurisdiction(str, Enum):
 
 @dataclass
 class TakedownTemplate:
-    """Template for takedown notices."""
-    template_id: str
+    """Template for takedown notices."""    template_id: str
     template_name: str
     takedown_type: TakedownType
     platform: PlatformType
@@ -95,8 +87,7 @@ class TakedownTemplate:
 
 @dataclass
 class DMCAConfig:
-    """DMCA takedown configuration."""
-    enable_dmca: bool = True
+    """DMCA takedown configuration."""    enable_dmca: bool = True
     copyright_holder_name: str = ""
     copyright_holder_address: str = ""
     copyright_holder_email: str = ""
@@ -116,8 +107,7 @@ class DMCAConfig:
 
 @dataclass
 class PlatformTakedownConfig:
-    """Platform-specific takedown configuration."""
-    platform: PlatformType
+    """Platform-specific takedown configuration."""    platform: PlatformType
     enabled: bool = True
     api_endpoint: Optional[str] = None
     api_key: Optional[str] = None
@@ -138,8 +128,7 @@ class PlatformTakedownConfig:
 
 @dataclass
 class LegalComplianceConfig:
-    """Legal compliance configuration."""
-    primary_jurisdiction: LegalJurisdiction = LegalJurisdiction.EU
+    """Legal compliance configuration."""    primary_jurisdiction: LegalJurisdiction = LegalJurisdiction.EU
     secondary_jurisdictions: List[LegalJurisdiction] = field(default_factory=list)
     legal_counsel_contact: str = ""
     legal_entity_name: str = ""
@@ -157,8 +146,7 @@ class LegalComplianceConfig:
 
 @dataclass
 class EscalationConfig:
-    """Escalation configuration for failed takedowns."""
-    enable_escalation: bool = True
+    """Escalation configuration for failed takedowns."""    enable_escalation: bool = True
     auto_escalation: bool = True
     escalation_levels: List[str] = field(default_factory=lambda: [
         "platform_resubmission", "legal_letter", "court_filing"
@@ -179,8 +167,7 @@ class EscalationConfig:
 
 @dataclass
 class NotificationConfig:
-    """Notification configuration for takedown processes."""
-    enable_notifications: bool = True
+    """Notification configuration for takedown processes."""    enable_notifications: bool = True
     email_notifications: bool = True
     webhook_notifications: bool = True
     dashboard_notifications: bool = True
@@ -197,8 +184,7 @@ class NotificationConfig:
 
 @dataclass
 class DocumentationConfig:
-    """Documentation and evidence configuration."""
-    enable_documentation: bool = True
+    """Documentation and evidence configuration."""    enable_documentation: bool = True
     screenshot_evidence: bool = True
     video_evidence: bool = True
     metadata_collection: bool = True
@@ -219,11 +205,9 @@ class DocumentationConfig:
 
 
 class TakedownConfig:
-    """
-    Professional takedown configuration manager.
+    """    Professional takedown configuration manager.
     Provides industrial-grade configuration for automated content takedown procedures.
-    """
-    
+    """    
     def __init__(self):
         # General takedown settings
         self.enable_takedown_system: bool = True
@@ -257,8 +241,7 @@ class TakedownConfig:
         self._load_from_environment()
     
     def _initialize_platform_configs(self) -> None:
-        """Initialize default platform configurations."""
-        platform_defaults = {
+        """Initialize default platform configurations."""        platform_defaults = {
             PlatformType.YOUTUBE: {
                 "processing_time_hours": 24,
                 "rate_limit_requests_per_day": 100,
@@ -303,8 +286,7 @@ class TakedownConfig:
             self.platforms[platform] = config
     
     def _initialize_templates(self) -> None:
-        """Initialize default takedown templates."""
-        # DMCA template
+        """Initialize default takedown templates."""        # DMCA template
         dmca_template = TakedownTemplate(
             template_id="dmca_standard",
             template_name="Standard DMCA Takedown Notice",
@@ -312,8 +294,7 @@ class TakedownConfig:
             platform=PlatformType.GENERIC_WEB,
             jurisdiction=LegalJurisdiction.US,
             subject_line="DMCA Takedown Notice - Copyright Infringement",
-            body_template="""
-To Whom It May Concern:
+            body_template="""To Whom It May Concern:
 
 I am writing to notify you of copyright infringement occurring on your platform.
 
@@ -348,8 +329,7 @@ Sincerely,
         self.templates["dmca_standard"] = dmca_template
     
     def _load_from_environment(self) -> None:
-        """Load configuration from environment variables."""
-        # General settings
+        """Load configuration from environment variables."""        # General settings
         self.enable_takedown_system = os.getenv("TAKEDOWN_ENABLED", "true").lower() == "true"
         self.auto_takedown_enabled = os.getenv("TAKEDOWN_AUTO_ENABLED", "false").lower() == "true"
         self.manual_approval_required = os.getenv("TAKEDOWN_MANUAL_APPROVAL", "true").lower() == "true"
@@ -379,41 +359,34 @@ Sincerely,
             platform_config.api_endpoint = os.getenv(f"{platform_prefix}API_ENDPOINT")
     
     def get_platform_config(self, platform: PlatformType) -> PlatformTakedownConfig:
-        """Get configuration for specific platform."""
-        if platform not in self.platforms:
+        """Get configuration for specific platform."""        if platform not in self.platforms:
             raise ValueError(f"Unsupported platform: {platform}")
         return self.platforms[platform]
     
     def get_template(self, template_id: str) -> TakedownTemplate:
-        """Get takedown template by ID."""
-        if template_id not in self.templates:
+        """Get takedown template by ID."""        if template_id not in self.templates:
             raise ValueError(f"Template not found: {template_id}")
         return self.templates[template_id]
     
     def add_template(self, template: TakedownTemplate) -> None:
-        """Add custom takedown template."""
-        self.templates[template.template_id] = template
+        """Add custom takedown template."""        self.templates[template.template_id] = template
     
     def enable_platform(self, platform: PlatformType) -> None:
-        """Enable takedown for specific platform."""
-        if platform in self.platforms:
+        """Enable takedown for specific platform."""        if platform in self.platforms:
             self.platforms[platform].enabled = True
         else:
             config = PlatformTakedownConfig(platform=platform, enabled=True)
             self.platforms[platform] = config
     
     def disable_platform(self, platform: PlatformType) -> None:
-        """Disable takedown for specific platform."""
-        if platform in self.platforms:
+        """Disable takedown for specific platform."""        if platform in self.platforms:
             self.platforms[platform].enabled = False
     
     def get_enabled_platforms(self) -> List[PlatformType]:
-        """Get list of enabled platforms."""
-        return [platform for platform, config in self.platforms.items() if config.enabled]
+        """Get list of enabled platforms."""        return [platform for platform, config in self.platforms.items() if config.enabled]
     
     def should_auto_takedown(self, similarity_score: float, content_value: float = 0.0) -> bool:
-        """Determine if content should be automatically taken down."""
-        if not self.auto_takedown_enabled:
+        """Determine if content should be automatically taken down."""        if not self.auto_takedown_enabled:
             return False
         
         if similarity_score < self.confidence_threshold:
@@ -427,8 +400,7 @@ Sincerely,
     
     def should_escalate(self, status: TakedownStatus, days_elapsed: int, 
                        rejection_count: int = 0) -> bool:
-        """Determine if takedown should be escalated."""
-        if not self.escalation.enable_escalation:
+        """Determine if takedown should be escalated."""        if not self.escalation.enable_escalation:
             return False
         
         if status == TakedownStatus.REJECTED and rejection_count >= 1:
@@ -443,8 +415,7 @@ Sincerely,
         return False
     
     def get_next_escalation_level(self, current_level: str) -> Optional[str]:
-        """Get next escalation level."""
-        levels = self.escalation.escalation_levels
+        """Get next escalation level."""        levels = self.escalation.escalation_levels
         try:
             current_index = levels.index(current_level)
             if current_index + 1 < len(levels):
@@ -454,8 +425,7 @@ Sincerely,
         return None
     
     def validate_configuration(self) -> List[str]:
-        """Validate current configuration and return any issues."""
-        issues = []
+        """Validate current configuration and return any issues."""        issues = []
         
         # Validate general settings
         if not 0.0 <= self.confidence_threshold <= 1.0:
@@ -503,8 +473,7 @@ Sincerely,
         return issues
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary."""
-        return {
+        """Convert configuration to dictionary."""        return {
             "enable_takedown_system": self.enable_takedown_system,
             "default_takedown_type": self.default_takedown_type,
             "auto_takedown_enabled": self.auto_takedown_enabled,
@@ -525,8 +494,7 @@ Sincerely,
     
     @classmethod
     def from_dict(cls, config_dict: Dict[str, Any]) -> 'TakedownConfig':
-        """Create configuration from dictionary."""
-        config = cls()
+        """Create configuration from dictionary."""        config = cls()
         
         # Load basic settings
         basic_fields = [

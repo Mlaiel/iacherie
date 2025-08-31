@@ -1,5 +1,4 @@
-"""
-User Content Database Model
+"""User Content Database Model
 
 Enterprise-grade SQLAlchemy model for managing user-generated content across
 multiple platforms with comprehensive metadata and lifecycle management.
@@ -23,9 +22,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-
-from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric
+"""from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID, ARRAY
@@ -38,8 +35,7 @@ Base = declarative_base()
 
 
 class ContentType(Enum):
-    """Content type enumeration"""
-    AUDIO = "audio"
+    """Content type enumeration"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -60,8 +56,7 @@ class ContentType(Enum):
 
 
 class ContentStatus(Enum):
-    """Content lifecycle status"""
-    DRAFT = "draft"
+    """Content lifecycle status"""    DRAFT = "draft"
     PROCESSING = "processing"
     READY = "ready"
     PUBLISHED = "published"
@@ -74,8 +69,7 @@ class ContentStatus(Enum):
 
 
 class ContentGenre(Enum):
-    """Music and content genres"""
-    POP = "pop"
+    """Music and content genres"""    POP = "pop"
     ROCK = "rock"
     HIP_HOP = "hip_hop"
     ELECTRONIC = "electronic"
@@ -112,8 +106,7 @@ class ContentGenre(Enum):
 
 
 class LicenseType(Enum):
-    """Content licensing types"""
-    ALL_RIGHTS_RESERVED = "all_rights_reserved"
+    """Content licensing types"""    ALL_RIGHTS_RESERVED = "all_rights_reserved"
     CREATIVE_COMMONS_BY = "creative_commons_by"
     CREATIVE_COMMONS_BY_SA = "creative_commons_by_sa"
     CREATIVE_COMMONS_BY_NC = "creative_commons_by_nc"
@@ -130,8 +123,7 @@ class LicenseType(Enum):
 
 
 class VisibilityLevel(Enum):
-    """Content visibility levels"""
-    PUBLIC = "public"
+    """Content visibility levels"""    PUBLIC = "public"
     PRIVATE = "private"
     UNLISTED = "unlisted"
     FOLLOWERS_ONLY = "followers_only"
@@ -141,8 +133,7 @@ class VisibilityLevel(Enum):
 
 
 class ProcessingStatus(Enum):
-    """Content processing status"""
-    PENDING = "pending"
+    """Content processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -151,8 +142,7 @@ class ProcessingStatus(Enum):
 
 
 class QualityLevel(Enum):
-    """Content quality levels"""
-    ULTRA = "ultra"  # 4K, 320kbps+, lossless
+    """Content quality levels"""    ULTRA = "ultra"  # 4K, 320kbps+, lossless
     HIGH = "high"    # 1080p, 256kbps, high quality
     MEDIUM = "medium"  # 720p, 192kbps, standard quality
     LOW = "low"      # 480p, 128kbps, basic quality
@@ -160,13 +150,11 @@ class QualityLevel(Enum):
 
 
 class UserContent(Base):
-    """
-    Enterprise User Content Model
+    """    Enterprise User Content Model
     
     Comprehensive content management system for creators supporting multi-format content,
     advanced metadata, collaboration features, and monetization capabilities.
-    """
-    __tablename__ = "user_content"
+    """    __tablename__ = "user_content"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -365,8 +353,7 @@ class UserContent(Base):
         return f"<UserContent(id={self.id}, title='{self.title}', type={self.content_type.value}, status={self.content_status.value})>"
     
     def to_dict(self, include_analytics: bool = True, include_technical: bool = False) -> Dict[str, Any]:
-        """Convert model to dictionary for API responses"""
-        base_dict = {
+        """Convert model to dictionary for API responses"""        base_dict = {
             "id": str(self.id),
             "user_id": str(self.user_id),
             "content_fingerprint_id": str(self.content_fingerprint_id) if self.content_fingerprint_id else None,
@@ -456,20 +443,17 @@ class UserContent(Base):
         return base_dict
     
     def get_engagement_rate(self) -> float:
-        """Calculate engagement rate based on interactions"""
-        if self.view_count == 0:
+        """Calculate engagement rate based on interactions"""        if self.view_count == 0:
             return 0.0
         
         total_interactions = (self.like_count + self.share_count + self.comment_count)
         return (total_interactions / self.view_count) * 100
     
     def get_completion_rate(self) -> float:
-        """Get content completion rate"""
-        return self.average_completion_rate or 0.0
+        """Get content completion rate"""        return self.average_completion_rate or 0.0
     
     def is_monetizable(self) -> bool:
-        """Check if content can be monetized"""
-        return (
+        """Check if content can be monetized"""        return (
             self.monetization_enabled and
             self.content_status == ContentStatus.PUBLISHED and
             not self.is_explicit and
@@ -478,8 +462,7 @@ class UserContent(Base):
         )
     
     def get_revenue_potential(self) -> float:
-        """Estimate revenue potential based on metrics"""
-        base_score = 0.0
+        """Estimate revenue potential based on metrics"""        base_score = 0.0
         
         # Engagement factor
         engagement_rate = self.get_engagement_rate()
@@ -511,8 +494,7 @@ class UserContent(Base):
     
     @classmethod
     def create_from_upload(cls, upload_data: Dict[str, Any], user_id: str) -> 'UserContent':
-        """Create UserContent from upload data"""
-        return cls(
+        """Create UserContent from upload data"""        return cls(
             user_id=user_id,
             content_type=ContentType(upload_data.get('content_type', 'audio')),
             title=upload_data.get('title', 'Untitled'),

@@ -1,5 +1,4 @@
-"""
-🛡️ Protection Models - IA Influencer Agent Platform Enterprise
+"""🛡️ Protection Models - IA Influencer Agent Platform Enterprise
 =============================================================
 Module: backend/data_management/models/protection_model.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -11,9 +10,7 @@ Type: Industrial Protection Data Models - Production-Ready
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
-"""
-
-from typing import Dict, List, Optional, Any
+"""from typing import Dict, List, Optional, Any
 from datetime import datetime, timezone
 from enum import Enum
 from dataclasses import dataclass, field

@@ -1,13 +1,10 @@
-"""
-Anomaly Detection Module - Advanced anomaly detection, fraud detection, and content moderation
+"""Anomaly Detection Module - Advanced anomaly detection, fraud detection, and content moderation
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive anomaly detection capabilities for content protection,
 fraud detection, and automated content moderation using advanced ML algorithms.
-"""
-
-import logging
+"""import logging
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from dataclasses import dataclass
@@ -30,8 +27,7 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class AnomalyType(Enum):
-    """Types of anomalies that can be detected"""
-    CONTENT_ANOMALY = "content_anomaly"
+    """Types of anomalies that can be detected"""    CONTENT_ANOMALY = "content_anomaly"
     BEHAVIORAL_ANOMALY = "behavioral_anomaly" 
     FRAUD_PATTERN = "fraud_pattern"
     SPAM_CONTENT = "spam_content"
@@ -40,16 +36,14 @@ class AnomalyType(Enum):
     POLICY_VIOLATION = "policy_violation"
 
 class SeverityLevel(Enum):
-    """Severity levels for detected anomalies"""
-    LOW = "low"
+    """Severity levels for detected anomalies"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 @dataclass
 class AnomalyAlert:
-    """Data structure for anomaly alerts"""
-    anomaly_type: AnomalyType
+    """Data structure for anomaly alerts"""    anomaly_type: AnomalyType
     severity: SeverityLevel
     confidence_score: float
     timestamp: datetime
@@ -59,16 +53,14 @@ class AnomalyAlert:
 
 @dataclass
 class DetectionConfig:
-    """Configuration for anomaly detection"""
-    sensitivity: float = 0.8
+    """Configuration for anomaly detection"""    sensitivity: float = 0.8
     min_confidence: float = 0.7
     lookback_hours: int = 24
     enable_real_time: bool = True
     custom_rules: List[Dict[str, Any]] = None
 
 class BaseDetector(ABC):
-    """Base class for all anomaly detectors"""
-    
+    """Base class for all anomaly detectors"""    
     def __init__(self, config: DetectionConfig):
         self.config = config
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -76,17 +68,14 @@ class BaseDetector(ABC):
     
     @abstractmethod
     def _initialize_models(self):
-        """Initialize detection models"""
-        pass
+        """Initialize detection models"""        pass
     
     @abstractmethod
     def detect(self, data: Dict[str, Any]) -> List[AnomalyAlert]:
-        """Detect anomalies in the provided data"""
-        pass
+        """Detect anomalies in the provided data"""        pass
 
 class AnomalyDetector(BaseDetector):
-    """General purpose anomaly detector"""
-    
+    """General purpose anomaly detector"""    
     def __init__(self, config: Optional[DetectionConfig] = None):
         if config is None:
             config = DetectionConfig()
@@ -94,8 +83,7 @@ class AnomalyDetector(BaseDetector):
         self.logger.info("AnomalyDetector initialized successfully")
     
     def _initialize_models(self):
-        """Initialize anomaly detection models"""
-        try:
+        """Initialize anomaly detection models"""        try:
             if SKLEARN_AVAILABLE:
                 self.isolation_forest = IsolationForest(
                     contamination=0.1,
@@ -116,8 +104,7 @@ class AnomalyDetector(BaseDetector):
             self.logger.error(f"Model initialization failed: {e}")
     
     def detect(self, data: Dict[str, Any]) -> List[AnomalyAlert]:
-        """Detect general anomalies in content and behavior"""
-        alerts = []
+        """Detect general anomalies in content and behavior"""        alerts = []
         
         try:
             # Content-based anomaly detection
@@ -141,8 +128,7 @@ class AnomalyDetector(BaseDetector):
             return []
     
     def _detect_content_anomalies(self, data: Dict[str, Any]) -> List[AnomalyAlert]:
-        """Detect anomalies in content patterns"""
-        alerts = []
+        """Detect anomalies in content patterns"""        alerts = []
         
         content = data.get('content', {})
         if not content:
@@ -176,8 +162,7 @@ class AnomalyDetector(BaseDetector):
         return alerts
     
     def _detect_behavioral_anomalies(self, data: Dict[str, Any]) -> List[AnomalyAlert]:
-        """Detect anomalies in user behavior"""
-        alerts = []
+        """Detect anomalies in user behavior"""        alerts = []
         
         behavior = data.get('behavior', {})
         if not behavior:
@@ -212,8 +197,7 @@ class AnomalyDetector(BaseDetector):
         return alerts
     
     def _detect_statistical_anomalies(self, metrics: Dict[str, float]) -> List[AnomalyAlert]:
-        """Detect statistical anomalies using ML models"""
-        alerts = []
+        """Detect statistical anomalies using ML models"""        alerts = []
         
         if not SKLEARN_AVAILABLE:
             return alerts
@@ -251,8 +235,7 @@ class AnomalyDetector(BaseDetector):
         return alerts
     
     def _detect_repetitive_content(self, text: str) -> bool:
-        """Check for repetitive content patterns"""
-        if len(text) < 10:
+        """Check for repetitive content patterns"""        if len(text) < 10:
             return False
         
         # Simple repetition check
@@ -273,8 +256,7 @@ class AnomalyDetector(BaseDetector):
         return False
 
 class FraudDetector(BaseDetector):
-    """Specialized fraud detection system"""
-    
+    """Specialized fraud detection system"""    
     def __init__(self, config: Optional[DetectionConfig] = None):
         if config is None:
             config = DetectionConfig(sensitivity=0.9, min_confidence=0.8)
@@ -284,8 +266,7 @@ class FraudDetector(BaseDetector):
         self.logger.info("FraudDetector initialized successfully")
     
     def _initialize_models(self):
-        """Initialize fraud detection models"""
-        try:
+        """Initialize fraud detection models"""        try:
             # Load known fraud patterns
             self.fraud_signatures = {
                 'fake_accounts': [
@@ -315,8 +296,7 @@ class FraudDetector(BaseDetector):
             self.logger.error(f"Fraud model initialization failed: {e}")
     
     def detect(self, data: Dict[str, Any]) -> List[AnomalyAlert]:
-        """Detect fraud patterns"""
-        alerts = []
+        """Detect fraud patterns"""        alerts = []
         
         try:
             # Account fraud detection
@@ -339,8 +319,7 @@ class FraudDetector(BaseDetector):
             return []
     
     def _detect_account_fraud(self, data: Dict[str, Any]) -> List[AnomalyAlert]:
-        """Detect fraudulent account activities"""
-        alerts = []
+        """Detect fraudulent account activities"""        alerts = []
         
         account = data.get('account', {})
         if not account:
@@ -379,8 +358,7 @@ class FraudDetector(BaseDetector):
         return alerts
     
     def _detect_payment_fraud(self, data: Dict[str, Any]) -> List[AnomalyAlert]:
-        """Detect payment-related fraud"""
-        alerts = []
+        """Detect payment-related fraud"""        alerts = []
         
         payment = data.get('payment', {})
         if not payment:
@@ -415,8 +393,7 @@ class FraudDetector(BaseDetector):
         return alerts
     
     def _detect_content_fraud(self, data: Dict[str, Any]) -> List[AnomalyAlert]:
-        """Detect fraudulent content patterns"""
-        alerts = []
+        """Detect fraudulent content patterns"""        alerts = []
         
         content = data.get('content', {})
         if not content:
@@ -442,13 +419,11 @@ class FraudDetector(BaseDetector):
         return alerts
     
     def _is_suspicious_ip(self, ip_address: str) -> bool:
-        """Check if an IP address is suspicious"""
-        # Simple check - in production, this would use threat intelligence feeds
+        """Check if an IP address is suspicious"""        # Simple check - in production, this would use threat intelligence feeds
         return ip_address in self.suspicious_ips
 
 class ContentModerator(BaseDetector):
-    """Automated content moderation system"""
-    
+    """Automated content moderation system"""    
     def __init__(self, config: Optional[DetectionConfig] = None):
         if config is None:
             config = DetectionConfig(sensitivity=0.85, min_confidence=0.75)
@@ -456,8 +431,7 @@ class ContentModerator(BaseDetector):
         self.logger.info("ContentModerator initialized successfully")
     
     def _initialize_models(self):
-        """Initialize content moderation models"""
-        try:
+        """Initialize content moderation models"""        try:
             # Define moderation categories and keywords
             self.moderation_rules = {
                 'hate_speech': {
@@ -488,8 +462,7 @@ class ContentModerator(BaseDetector):
             self.logger.error(f"Content moderation initialization failed: {e}")
     
     def detect(self, data: Dict[str, Any]) -> List[AnomalyAlert]:
-        """Detect policy violations and inappropriate content"""
-        alerts = []
+        """Detect policy violations and inappropriate content"""        alerts = []
         
         try:
             content = data.get('content', {})
@@ -520,8 +493,7 @@ class ContentModerator(BaseDetector):
             return []
     
     def _moderate_text_content(self, text: str) -> List[AnomalyAlert]:
-        """Moderate text content for policy violations"""
-        alerts = []
+        """Moderate text content for policy violations"""        alerts = []
         
         if not text:
             return alerts
@@ -553,8 +525,7 @@ class ContentModerator(BaseDetector):
         return alerts
     
     def _moderate_media_content(self, images: List[str], videos: List[str]) -> List[AnomalyAlert]:
-        """Moderate image and video content"""
-        alerts = []
+        """Moderate image and video content"""        alerts = []
         
         # Placeholder for media content analysis
         # In production, this would use computer vision models
@@ -574,8 +545,7 @@ class ContentModerator(BaseDetector):
         return alerts
     
     def _check_policy_compliance(self, content: Dict[str, Any]) -> List[AnomalyAlert]:
-        """Check content for policy compliance"""
-        alerts = []
+        """Check content for policy compliance"""        alerts = []
         
         # Check for potential copyright violations
         if self._check_copyright_risk(content):
@@ -604,16 +574,14 @@ class ContentModerator(BaseDetector):
         return alerts
     
     def _check_copyright_risk(self, content: Dict[str, Any]) -> bool:
-        """Check for potential copyright violations"""
-        # Simplified copyright check
+        """Check for potential copyright violations"""        # Simplified copyright check
         text = content.get('text', '')
         if 'copyright' in text.lower() or '©' in text:
             return True
         return False
     
     def _check_privacy_risk(self, content: Dict[str, Any]) -> bool:
-        """Check for potential privacy violations"""
-        # Simplified privacy check
+        """Check for potential privacy violations"""        # Simplified privacy check
         text = content.get('text', '')
         privacy_indicators = ['phone number', 'email', 'address', 'ssn']
         return any(indicator in text.lower() for indicator in privacy_indicators)

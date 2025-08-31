@@ -1,14 +1,11 @@
-"""
-Telegram Platform Integration
+"""Telegram Platform Integration
 
 Telegram Bot API integration for messaging and content sharing.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta
@@ -24,26 +21,22 @@ logger = logging.getLogger(__name__)
 
 
 class TelegramPlatform(PlatformBase):
-    """Telegram platform integration"""
-    
+    """Telegram platform integration"""    
     def __init__(self, config: PlatformConfig):
-        """Initialize Telegram platform"""
-        super().__init__(config)
+        """Initialize Telegram platform"""        super().__init__(config)
         self.bot_token = self.config.credentials.get('bot_token')
         self.api_base = f"https://api.telegram.org/bot{self.bot_token}" if self.bot_token else None
         self.session: Optional[aiohttp.ClientSession] = None
         
     async def _get_session(self) -> aiohttp.ClientSession:
-        """Get or create HTTP session"""
-        if not self.session or self.session.closed:
+        """Get or create HTTP session"""        if not self.session or self.session.closed:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=self.config.timeout)
             )
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Telegram Bot Token"""
-        try:
+        """Authenticate with Telegram Bot Token"""        try:
             if not self.bot_token:
                 logger.error("Telegram requires bot_token")
                 return False
@@ -76,12 +69,10 @@ class TelegramPlatform(PlatformBase):
             return False
     
     async def refresh_token(self) -> bool:
-        """Refresh Telegram token (not applicable for bot tokens)"""
-        return await self.authenticate()
+        """Refresh Telegram token (not applicable for bot tokens)"""        return await self.authenticate()
     
     async def _make_request(self, method: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make request to Telegram Bot API"""
-        try:
+        """Make request to Telegram Bot API"""        try:
             session = await self._get_session()
             
             url = f"{self.api_base}/{method}"
@@ -115,8 +106,7 @@ class TelegramPlatform(PlatformBase):
             return None
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Send message/media to Telegram chat"""
-        try:
+        """Send message/media to Telegram chat"""        try:
             chat_id = metadata.tags[0] if metadata.tags else None
             if not chat_id:
                 return UploadResult(
@@ -179,8 +169,7 @@ class TelegramPlatform(PlatformBase):
             )
     
     async def _send_message(self, chat_id: str, text: str) -> Optional[Dict[str, Any]]:
-        """Send text message"""
-        data = {
+        """Send text message"""        data = {
             'chat_id': chat_id,
             'text': text,
             'parse_mode': 'Markdown'
@@ -188,8 +177,7 @@ class TelegramPlatform(PlatformBase):
         return await self._make_request('sendMessage', json=data)
     
     async def _send_photo(self, chat_id: str, photo_path: str, metadata: ContentMetadata) -> Optional[Dict[str, Any]]:
-        """Send photo message"""
-        caption = f"{metadata.title}\n{metadata.description or ''}".strip()[:1024]  # Telegram caption limit
+        """Send photo message"""        caption = f"{metadata.title}\n{metadata.description or ''}".strip()[:1024]  # Telegram caption limit
         
         data = {
             'chat_id': chat_id,
@@ -200,8 +188,7 @@ class TelegramPlatform(PlatformBase):
         return await self._make_request('sendPhoto', json=data)
     
     async def _send_video(self, chat_id: str, video_path: str, metadata: ContentMetadata) -> Optional[Dict[str, Any]]:
-        """Send video message"""
-        caption = f"{metadata.title}\n{metadata.description or ''}".strip()[:1024]
+        """Send video message"""        caption = f"{metadata.title}\n{metadata.description or ''}".strip()[:1024]
         
         data = {
             'chat_id': chat_id,
@@ -212,8 +199,7 @@ class TelegramPlatform(PlatformBase):
         return await self._make_request('sendVideo', json=data)
     
     async def _send_audio(self, chat_id: str, audio_path: str, metadata: ContentMetadata) -> Optional[Dict[str, Any]]:
-        """Send audio message"""
-        data = {
+        """Send audio message"""        data = {
             'chat_id': chat_id,
             'audio': audio_path,
             'title': metadata.title,
@@ -223,8 +209,7 @@ class TelegramPlatform(PlatformBase):
         return await self._make_request('sendAudio', json=data)
     
     async def _send_document(self, chat_id: str, document_path: str, metadata: ContentMetadata) -> Optional[Dict[str, Any]]:
-        """Send document message"""
-        caption = f"{metadata.title}\n{metadata.description or ''}".strip()[:1024]
+        """Send document message"""        caption = f"{metadata.title}\n{metadata.description or ''}".strip()[:1024]
         
         data = {
             'chat_id': chat_id,
@@ -235,8 +220,7 @@ class TelegramPlatform(PlatformBase):
         return await self._make_request('sendDocument', json=data)
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
-        """Get Telegram message analytics (limited)"""
-        try:
+        """Get Telegram message analytics (limited)"""        try:
             # Telegram doesn't provide built-in analytics for messages
             # We can only get basic message info
             
@@ -259,8 +243,7 @@ class TelegramPlatform(PlatformBase):
             raise
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search content in Telegram (not available via Bot API)"""
-        try:
+        """Search content in Telegram (not available via Bot API)"""        try:
             # Telegram Bot API doesn't provide search functionality
             logger.warning("Telegram Bot API doesn't support content search")
             return []
@@ -270,8 +253,7 @@ class TelegramPlatform(PlatformBase):
             return []
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
-        """Get user's messages from Telegram (limited by Bot API)"""
-        try:
+        """Get user's messages from Telegram (limited by Bot API)"""        try:
             # Telegram Bot API doesn't provide access to user's message history
             logger.warning("Telegram Bot API doesn't provide access to user message history")
             return []
@@ -281,8 +263,7 @@ class TelegramPlatform(PlatformBase):
             return []
     
     async def delete_content(self, content_id: str, chat_id: str = None) -> bool:
-        """Delete Telegram message"""
-        try:
+        """Delete Telegram message"""        try:
             if not chat_id:
                 logger.error("Telegram message deletion requires chat_id")
                 return False
@@ -306,8 +287,7 @@ class TelegramPlatform(PlatformBase):
             return False
     
     async def update_content(self, content_id: str, metadata: ContentMetadata, chat_id: str = None) -> bool:
-        """Update Telegram message"""
-        try:
+        """Update Telegram message"""        try:
             if not chat_id:
                 logger.error("Telegram message update requires chat_id")
                 return False
@@ -336,8 +316,7 @@ class TelegramPlatform(PlatformBase):
             return False
     
     async def get_chat_info(self, chat_id: str) -> Optional[Dict[str, Any]]:
-        """Get Telegram chat information"""
-        try:
+        """Get Telegram chat information"""        try:
             data = {'chat_id': chat_id}
             result = await self._make_request('getChat', json=data)
             
@@ -361,8 +340,7 @@ class TelegramPlatform(PlatformBase):
             return None
     
     async def _get_chat_member_count(self, chat_id: str) -> int:
-        """Get chat member count"""
-        try:
+        """Get chat member count"""        try:
             data = {'chat_id': chat_id}
             result = await self._make_request('getChatMemberCount', json=data)
             
@@ -376,8 +354,7 @@ class TelegramPlatform(PlatformBase):
             return 0
     
     async def get_updates(self, offset: int = None) -> List[Dict[str, Any]]:
-        """Get bot updates"""
-        try:
+        """Get bot updates"""        try:
             data = {}
             if offset:
                 data['offset'] = offset
@@ -395,8 +372,7 @@ class TelegramPlatform(PlatformBase):
     
     async def send_poll(self, chat_id: str, question: str, options: List[str], 
                        is_anonymous: bool = True) -> Optional[str]:
-        """Send poll to Telegram chat"""
-        try:
+        """Send poll to Telegram chat"""        try:
             data = {
                 'chat_id': chat_id,
                 'question': question,
@@ -419,8 +395,7 @@ class TelegramPlatform(PlatformBase):
             return None
     
     async def forward_message(self, from_chat_id: str, to_chat_id: str, message_id: int) -> Optional[str]:
-        """Forward message between chats"""
-        try:
+        """Forward message between chats"""        try:
             data = {
                 'chat_id': to_chat_id,
                 'from_chat_id': from_chat_id,
@@ -442,8 +417,7 @@ class TelegramPlatform(PlatformBase):
             return None
     
     async def set_webhook(self, webhook_url: str) -> bool:
-        """Set webhook for bot updates"""
-        try:
+        """Set webhook for bot updates"""        try:
             data = {'url': webhook_url}
             result = await self._make_request('setWebhook', json=data)
             
@@ -459,8 +433,7 @@ class TelegramPlatform(PlatformBase):
             return False
     
     async def delete_webhook(self) -> bool:
-        """Delete webhook"""
-        try:
+        """Delete webhook"""        try:
             result = await self._make_request('deleteWebhook')
             
             if result and result.get('ok'):
@@ -475,8 +448,7 @@ class TelegramPlatform(PlatformBase):
             return False
     
     async def get_bot_commands(self) -> List[Dict[str, Any]]:
-        """Get bot commands"""
-        try:
+        """Get bot commands"""        try:
             result = await self._make_request('getMyCommands')
             
             if result and result.get('result'):
@@ -489,8 +461,7 @@ class TelegramPlatform(PlatformBase):
             return []
     
     async def set_bot_commands(self, commands: List[Dict[str, str]]) -> bool:
-        """Set bot commands"""
-        try:
+        """Set bot commands"""        try:
             data = {'commands': json.dumps(commands)}
             result = await self._make_request('setMyCommands', json=data)
             
@@ -506,6 +477,5 @@ class TelegramPlatform(PlatformBase):
             return False
     
     async def close(self):
-        """Close HTTP session"""
-        if self.session and not self.session.closed:
+        """Close HTTP session"""        if self.session and not self.session.closed:
             await self.session.close()

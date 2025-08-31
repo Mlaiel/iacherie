@@ -1,5 +1,4 @@
-"""
-🔗 Platform Integration Migrations - Multi-Platform Content Distribution Schema Evolution
+"""🔗 Platform Integration Migrations - Multi-Platform Content Distribution Schema Evolution
 ========================================================================================
 Module: backend/database/migrations/integration_migrations.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -24,9 +23,7 @@ Supported Platforms:
 - Text/Blog: Medium, Substack, WordPress, Ghost, Notion
 - Stock: Shutterstock, Getty Images, Adobe Stock, Unsplash
 - NFT: OpenSea, Foundation, SuperRare, Async Art
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Tuple, Any, Union
 from datetime import datetime, timedelta
@@ -48,8 +45,7 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Platform categorization by content type"""
-    MUSIC_STREAMING = "music_streaming"
+    """Platform categorization by content type"""    MUSIC_STREAMING = "music_streaming"
     VIDEO_HOSTING = "video_hosting"
     SOCIAL_MEDIA = "social_media"
     BLOGGING = "blogging"
@@ -60,8 +56,7 @@ class PlatformType(Enum):
 
 
 class PlatformName(Enum):
-    """Supported platform names"""
-    # Music Streaming
+    """Supported platform names"""    # Music Streaming
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE_MUSIC = "youtube_music"
@@ -102,8 +97,7 @@ class PlatformName(Enum):
 
 
 class IntegrationStatus(Enum):
-    """Integration connection status"""
-    DISCONNECTED = "disconnected"
+    """Integration connection status"""    DISCONNECTED = "disconnected"
     CONNECTING = "connecting"
     CONNECTED = "connected"
     AUTHENTICATED = "authenticated"
@@ -114,8 +108,7 @@ class IntegrationStatus(Enum):
 
 @dataclass
 class IntegrationMigrationConfiguration:
-    """Migration configuration for platform integration systems"""
-    enable_real_time_sync: bool = True
+    """Migration configuration for platform integration systems"""    enable_real_time_sync: bool = True
     enable_analytics_collection: bool = True
     enable_revenue_tracking: bool = True
     enable_automated_distribution: bool = True
@@ -124,8 +117,7 @@ class IntegrationMigrationConfiguration:
 
 
 class IntegrationMigrations:
-    """
-    Ultra-advanced platform integration database migrations for multi-platform content distribution
+    """    Ultra-advanced platform integration database migrations for multi-platform content distribution
     
     Handles schema evolution for:
     - Platform connection and authentication management
@@ -133,21 +125,17 @@ class IntegrationMigrations:
     - Cross-platform analytics and performance tracking
     - Revenue collection and attribution
     - Multi-platform SEO and optimization
-    """
-    
+    """    
     def __init__(self, migration_manager: EnterpriseMigrationManager):
         self.migration_manager = migration_manager
         self.logger = logging.getLogger(__name__)
     
     async def create_platform_integrations_table(self) -> str:
-        """
-        Create platform integrations table for managing multi-platform connections
+        """        Create platform integrations table for managing multi-platform connections
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        CREATE TABLE IF NOT EXISTS platform_integrations (
+        """        migration_sql = """        CREATE TABLE IF NOT EXISTS platform_integrations (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             creator_id UUID NOT NULL REFERENCES creator_profiles(id) ON DELETE CASCADE,
             
@@ -267,8 +255,7 @@ class IntegrationMigrations:
         CREATE INDEX IF NOT EXISTS idx_platform_integrations_content_types ON platform_integrations USING GIN(supported_content_types);
         CREATE INDEX IF NOT EXISTS idx_platform_integrations_features ON platform_integrations USING GIN(features_available);
         CREATE INDEX IF NOT EXISTS idx_platform_integrations_mapping ON platform_integrations USING GIN(content_mapping_rules);
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.SCHEMA,
@@ -277,14 +264,11 @@ class IntegrationMigrations:
         )
     
     async def create_content_distributions_table(self) -> str:
-        """
-        Create content distributions table for tracking cross-platform content publishing
+        """        Create content distributions table for tracking cross-platform content publishing
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        CREATE TABLE IF NOT EXISTS content_distributions (
+        """        migration_sql = """        CREATE TABLE IF NOT EXISTS content_distributions (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             content_id UUID NOT NULL REFERENCES content_items(id) ON DELETE CASCADE,
             platform_integration_id UUID NOT NULL REFERENCES platform_integrations(id) ON DELETE CASCADE,
@@ -406,8 +390,7 @@ class IntegrationMigrations:
         CREATE INDEX IF NOT EXISTS idx_content_distributions_tags ON content_distributions USING GIN(platform_tags);
         CREATE INDEX IF NOT EXISTS idx_content_distributions_analytics ON content_distributions USING GIN(analytics_data);
         CREATE INDEX IF NOT EXISTS idx_content_distributions_metrics ON content_distributions USING GIN(performance_metrics);
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.SCHEMA,
@@ -416,14 +399,11 @@ class IntegrationMigrations:
         )
     
     async def create_platform_analytics_table(self) -> str:
-        """
-        Create platform analytics table for aggregating cross-platform performance data
+        """        Create platform analytics table for aggregating cross-platform performance data
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        CREATE TABLE IF NOT EXISTS platform_analytics (
+        """        migration_sql = """        CREATE TABLE IF NOT EXISTS platform_analytics (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             content_distribution_id UUID NOT NULL REFERENCES content_distributions(id) ON DELETE CASCADE,
             platform_integration_id UUID NOT NULL REFERENCES platform_integrations(id) ON DELETE CASCADE,
@@ -529,8 +509,7 @@ class IntegrationMigrations:
         CREATE INDEX IF NOT EXISTS idx_platform_analytics_geographic ON platform_analytics USING GIN(geographic_distribution);
         CREATE INDEX IF NOT EXISTS idx_platform_analytics_traffic ON platform_analytics USING GIN(traffic_sources);
         CREATE INDEX IF NOT EXISTS idx_platform_analytics_platform_metrics ON platform_analytics USING GIN(platform_specific_metrics);
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.SCHEMA,
@@ -539,14 +518,11 @@ class IntegrationMigrations:
         )
     
     async def create_sync_operations_table(self) -> str:
-        """
-        Create sync operations table for tracking synchronization processes
+        """        Create sync operations table for tracking synchronization processes
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        CREATE TABLE IF NOT EXISTS sync_operations (
+        """        migration_sql = """        CREATE TABLE IF NOT EXISTS sync_operations (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             platform_integration_id UUID NOT NULL REFERENCES platform_integrations(id) ON DELETE CASCADE,
             
@@ -643,8 +619,7 @@ class IntegrationMigrations:
         CREATE INDEX IF NOT EXISTS idx_sync_operations_config ON sync_operations USING GIN(sync_configuration);
         CREATE INDEX IF NOT EXISTS idx_sync_operations_errors_detail ON sync_operations USING GIN(error_details);
         CREATE INDEX IF NOT EXISTS idx_sync_operations_debug ON sync_operations USING GIN(debug_information);
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.SCHEMA,
@@ -653,16 +628,14 @@ class IntegrationMigrations:
         )
     
     async def execute_full_integration_migration(self, config: IntegrationMigrationConfiguration) -> List[str]:
-        """
-        Execute complete platform integration database migration according to configuration
+        """        Execute complete platform integration database migration according to configuration
         
         Args:
             config: IntegrationMigrationConfiguration with specific settings
             
         Returns:
             List[str]: Migration IDs for tracking
-        """
-        migration_ids = []
+        """        migration_ids = []
         
         try:
             self.logger.info("Starting comprehensive integration database migration")
@@ -686,14 +659,11 @@ class IntegrationMigrations:
             raise
     
     async def add_integration_performance_optimizations(self) -> str:
-        """
-        Add performance optimizations for platform integration workloads
+        """        Add performance optimizations for platform integration workloads
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        -- Partitioning for platform analytics by date
+        """        migration_sql = """        -- Partitioning for platform analytics by date
         CREATE TABLE IF NOT EXISTS platform_analytics_partitioned (
             LIKE platform_analytics INCLUDING DEFAULTS INCLUDING CONSTRAINTS
         ) PARTITION BY RANGE (analytics_date);
@@ -733,8 +703,7 @@ class IntegrationMigrations:
         
         CREATE UNIQUE INDEX IF NOT EXISTS idx_cross_platform_performance 
         ON cross_platform_performance(content_id, platform_name);
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.OPTIMIZATION,

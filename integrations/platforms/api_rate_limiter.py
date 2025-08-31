@@ -1,5 +1,4 @@
-"""
-API Rate Limiter for Platform Integrations
+"""API Rate Limiter for Platform Integrations
 ==========================================
 
 Intelligent rate limiting system for multiple platform APIs with different rate limits.
@@ -7,9 +6,7 @@ Implements various algorithms including token bucket, sliding window, and adapti
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import asyncio
+"""import asyncio
 import time
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -24,8 +21,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class RateLimitRule:
-    """Rate limit rule configuration"""
-    platform: str
+    """Rate limit rule configuration"""    platform: str
     endpoint: str = "*"
     max_requests: int = 100
     time_window: int = 3600  # seconds
@@ -36,8 +32,7 @@ class RateLimitRule:
 
 @dataclass
 class RateLimitStatus:
-    """Rate limit status information"""
-    platform: str
+    """Rate limit status information"""    platform: str
     endpoint: str
     remaining_requests: int
     reset_time: datetime
@@ -46,8 +41,7 @@ class RateLimitStatus:
 
 
 class APIRateLimiter:
-    """Intelligent rate limiting for platform APIs"""
-    
+    """Intelligent rate limiting for platform APIs"""    
     def __init__(self, redis_url: Optional[str] = None):
         self.redis_url = redis_url
         self.redis_client = None
@@ -87,8 +81,7 @@ class APIRateLimiter:
         }
         
     async def __aenter__(self):
-        """Async context manager entry"""
-        if self.redis_url and REDIS_AVAILABLE:
+        """Async context manager entry"""        if self.redis_url and REDIS_AVAILABLE:
             try:
                 import aioredis  # Import here to avoid module-level issues
                 self.redis_client = await aioredis.from_url(self.redis_url)
@@ -98,8 +91,7 @@ class APIRateLimiter:
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
-        if self.redis_client:
+        """Async context manager exit"""        if self.redis_client:
             await self.redis_client.close()
             
     async def check_rate_limit(
@@ -108,8 +100,7 @@ class APIRateLimiter:
         endpoint: str = "*",
         user_id: Optional[str] = None
     ) -> RateLimitStatus:
-        """
-        Check if request can be made within rate limits
+        """        Check if request can be made within rate limits
         
         Args:
             platform: Platform name (youtube, instagram, etc.)
@@ -118,8 +109,7 @@ class APIRateLimiter:
             
         Returns:
             RateLimitStatus with current limit status
-        """
-        key = f"{platform}:{endpoint}"
+        """        key = f"{platform}:{endpoint}"
         if user_id:
             key = f"{key}:{user_id}"
             
@@ -137,16 +127,14 @@ class APIRateLimiter:
         user_id: Optional[str] = None,
         status_code: int = 200
     ):
-        """
-        Record a request for rate limiting tracking
+        """        Record a request for rate limiting tracking
         
         Args:
             platform: Platform name
             endpoint: Specific endpoint
             user_id: Optional user identifier
             status_code: HTTP status code of the request
-        """
-        key = f"{platform}:{endpoint}"
+        """        key = f"{platform}:{endpoint}"
         if user_id:
             key = f"{key}:{user_id}"
             
@@ -165,13 +153,11 @@ class APIRateLimiter:
         endpoint: str = "*",
         user_id: Optional[str] = None
     ) -> float:
-        """
-        Get recommended wait time before next request
+        """        Get recommended wait time before next request
         
         Returns:
             Wait time in seconds
-        """
-        key = f"{platform}:{endpoint}"
+        """        key = f"{platform}:{endpoint}"
         if user_id:
             key = f"{key}:{user_id}"
             
@@ -193,13 +179,11 @@ class APIRateLimiter:
         return 0
         
     async def add_platform_limits(self, platform: str, limits: Dict[str, RateLimitRule]):
-        """Add custom rate limits for a platform"""
-        self.platform_limits[platform] = limits
+        """Add custom rate limits for a platform"""        self.platform_limits[platform] = limits
         logger.info(f"Added rate limits for platform: {platform}")
         
     def _get_rate_limit_rule(self, platform: str, endpoint: str) -> RateLimitRule:
-        """Get rate limit rule for platform and endpoint"""
-        platform_rules = self.platform_limits.get(platform, {})
+        """Get rate limit rule for platform and endpoint"""        platform_rules = self.platform_limits.get(platform, {})
         
         # Try specific endpoint first, then fallback to general
         if endpoint in platform_rules:
@@ -211,8 +195,7 @@ class APIRateLimiter:
             return RateLimitRule(platform, endpoint, 100, 3600, 10)
             
     async def _check_redis_rate_limit(self, key: str, rule: RateLimitRule) -> RateLimitStatus:
-        """Check rate limit using Redis backend"""
-        try:
+        """Check rate limit using Redis backend"""        try:
             if not REDIS_AVAILABLE:
                 return await self._check_memory_rate_limit(key, rule)
                 
@@ -258,8 +241,7 @@ class APIRateLimiter:
             return await self._check_memory_rate_limit(key, rule)
             
     async def _check_memory_rate_limit(self, key: str, rule: RateLimitRule) -> RateLimitStatus:
-        """Check rate limit using memory cache"""
-        now = time.time()
+        """Check rate limit using memory cache"""        now = time.time()
         window_start = now - rule.time_window
         
         # Clean old entries
@@ -290,8 +272,7 @@ class APIRateLimiter:
         endpoint: str,
         user_id: Optional[str] = None
     ):
-        """Handle rate limit exceeded response"""
-        key = f"{platform}:{endpoint}"
+        """Handle rate limit exceeded response"""        key = f"{platform}:{endpoint}"
         if user_id:
             key = f"{key}:{user_id}"
             
@@ -313,8 +294,7 @@ class APIRateLimiter:
         endpoint: str,
         user_id: Optional[str] = None
     ):
-        """Handle server error response"""
-        key = f"{platform}:{endpoint}"
+        """Handle server error response"""        key = f"{platform}:{endpoint}"
         if user_id:
             key = f"{key}:{user_id}"
             
@@ -329,8 +309,7 @@ class APIRateLimiter:
         )
         
     async def get_platform_status(self, platform: str) -> Dict[str, Any]:
-        """Get overall status for a platform"""
-        platform_rules = self.platform_limits.get(platform, {})
+        """Get overall status for a platform"""        platform_rules = self.platform_limits.get(platform, {})
         status = {}
         
         for endpoint, rule in platform_rules.items():
@@ -344,8 +323,7 @@ class APIRateLimiter:
         return status
         
     async def reset_platform_limits(self, platform: str):
-        """Reset all rate limits for a platform (admin function)"""
-        if self.redis_client:
+        """Reset all rate limits for a platform (admin function)"""        if self.redis_client:
             # Find and delete all keys for this platform
             pattern = f"rate_limit:{platform}:*"
             keys = await self.redis_client.keys(pattern)

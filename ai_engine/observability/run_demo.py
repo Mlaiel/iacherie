@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Observability Module Demonstration Script
+"""Observability Module Demonstration Script
 
 Complete demonstration of all observability capabilities for the IA Influencer Agent platform.
 This script showcases real-world usage scenarios and validates all components.
@@ -13,9 +12,7 @@ Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
-"""
-
-import asyncio
+"""import asyncio
 import sys
 import os
 import time
@@ -39,31 +36,25 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 def print_section_header(title: str, emoji: str = "📊"):
-    """Print formatted section header"""
-    print(f"\n{emoji} " + "="*60)
+    """Print formatted section header"""    print(f"\n{emoji} " + "="*60)
     print(f"{emoji} {title}")
     print(f"{emoji} " + "="*60)
 
 def print_subsection(title: str, emoji: str = "📋"):
-    """Print formatted subsection header"""
-    print(f"\n{emoji} {title}")
+    """Print formatted subsection header"""    print(f"\n{emoji} {title}")
     print("-" * 50)
 
 def print_success(message: str):
-    """Print success message"""
-    print(f"✅ {message}")
+    """Print success message"""    print(f"✅ {message}")
 
 def print_error(message: str):
-    """Print error message"""
-    print(f"❌ {message}")
+    """Print error message"""    print(f"❌ {message}")
 
 def print_info(message: str):
-    """Print info message"""
-    print(f"ℹ️  {message}")
+    """Print info message"""    print(f"ℹ️  {message}")
 
 async def demo_initialization():
-    """Demonstrate observability initialization"""
-    print_section_header("Observability Suite Initialization", "🚀")
+    """Demonstrate observability initialization"""    print_section_header("Observability Suite Initialization", "🚀")
     
     try:
         # Import observability components
@@ -114,8 +105,7 @@ async def demo_initialization():
         return None
 
 async def demo_content_analytics(obs_index):
-    """Demonstrate content performance analytics"""
-    print_section_header("Content Performance Analytics", "📈")
+    """Demonstrate content performance analytics"""    print_section_header("Content Performance Analytics", "📈")
     
     if not obs_index:
         print_error("Observability index not available")
@@ -290,8 +280,7 @@ async def demo_content_analytics(obs_index):
         print_error(f"Content analysis failed: {e}")
 
 async def demo_user_behavior_analytics(obs_index):
-    """Demonstrate user behavior analytics"""
-    print_section_header("User Behavior Analytics", "👥")
+    """Demonstrate user behavior analytics"""    print_section_header("User Behavior Analytics", "👥")
     
     if not obs_index:
         print_error("Observability index not available")
@@ -504,8 +493,7 @@ async def demo_user_behavior_analytics(obs_index):
         print_error(f"User behavior analysis failed: {e}")
 
 async def demo_roi_analysis(obs_index):
-    """Demonstrate ROI analysis and optimization"""
-    print_section_header("ROI Analysis & Financial Optimization", "💰")
+    """Demonstrate ROI analysis and optimization"""    print_section_header("ROI Analysis & Financial Optimization", "💰")
     
     if not obs_index:
         print_error("Observability index not available")
@@ -765,8 +753,7 @@ async def demo_roi_analysis(obs_index):
         print_error(f"ROI analysis failed: {e}")
 
 async def demo_intelligent_monitoring(obs_index):
-    """Demonstrate intelligent monitoring capabilities"""
-    print_section_header("Intelligent Monitoring & Predictive Analytics", "🤖")
+    """Demonstrate intelligent monitoring capabilities"""    print_section_header("Intelligent Monitoring & Predictive Analytics", "🤖")
     
     if not obs_index:
         print_error("Observability index not available")
@@ -907,8 +894,7 @@ async def demo_intelligent_monitoring(obs_index):
         print_error(f"Intelligent monitoring failed: {e}")
 
 async def demo_automated_reporting(obs_index):
-    """Demonstrate automated reporting system"""
-    print_section_header("Automated Reporting & Dashboard Generation", "📊")
+    """Demonstrate automated reporting system"""    print_section_header("Automated Reporting & Dashboard Generation", "📊")
     
     if not obs_index:
         print_error("Observability index not available")
@@ -1170,8 +1156,7 @@ async def demo_automated_reporting(obs_index):
         print_error(f"Automated reporting demonstration failed: {e}")
 
 async def run_comprehensive_demo():
-    """Run complete observability suite demonstration"""
-    print_section_header("IA Influencer Agent - Complete Observability Suite Demo", "🚀")
+    """Run complete observability suite demonstration"""    print_section_header("IA Influencer Agent - Complete Observability Suite Demo", "🚀")
     
     start_time = time.time()
     

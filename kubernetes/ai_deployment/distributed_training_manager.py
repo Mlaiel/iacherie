@@ -1,5 +1,4 @@
-"""
-Distributed Training Manager
+"""Distributed Training Manager
 Enterprise distributed training orchestration and management
 
 This module provides comprehensive distributed training capabilities including
@@ -12,9 +11,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass
@@ -43,8 +40,7 @@ logger = logging.getLogger(__name__)
 
 
 class TrainingBackend(Enum):
-    """Distributed training backends"""
-    PYTORCH_DDP = "pytorch_ddp"
+    """Distributed training backends"""    PYTORCH_DDP = "pytorch_ddp"
     PYTORCH_FSDP = "pytorch_fsdp"
     HOROVOD = "horovod"
     RAY_TRAIN = "ray_train"
@@ -55,8 +51,7 @@ class TrainingBackend(Enum):
 
 
 class ScalingStrategy(Enum):
-    """Training scaling strategies"""
-    STATIC = "static"
+    """Training scaling strategies"""    STATIC = "static"
     DYNAMIC = "dynamic"
     ELASTIC = "elastic"
     ADAPTIVE = "adaptive"
@@ -64,8 +59,7 @@ class ScalingStrategy(Enum):
 
 
 class FaultToleranceMode(Enum):
-    """Fault tolerance modes"""
-    CHECKPOINT_RESTART = "checkpoint_restart"
+    """Fault tolerance modes"""    CHECKPOINT_RESTART = "checkpoint_restart"
     ELASTIC_RECOVERY = "elastic_recovery"
     PREEMPTION_HANDLING = "preemption_handling"
     NODE_REPLACEMENT = "node_replacement"
@@ -73,8 +67,7 @@ class FaultToleranceMode(Enum):
 
 
 class OptimizationStrategy(Enum):
-    """Training optimization strategies"""
-    GRADIENT_COMPRESSION = "gradient_compression"
+    """Training optimization strategies"""    GRADIENT_COMPRESSION = "gradient_compression"
     MIXED_PRECISION = "mixed_precision"
     GRADIENT_ACCUMULATION = "gradient_accumulation"
     PIPELINE_PARALLELISM = "pipeline_parallelism"
@@ -86,8 +79,7 @@ class OptimizationStrategy(Enum):
 
 @dataclass
 class DistributedTrainingConfig:
-    """Distributed training configuration"""
-    training_name: str = "distributed-ai-training"
+    """Distributed training configuration"""    training_name: str = "distributed-ai-training"
     backend: TrainingBackend = TrainingBackend.RAY_TRAIN
     scaling_strategy: ScalingStrategy = ScalingStrategy.ELASTIC
     fault_tolerance: FaultToleranceMode = FaultToleranceMode.ELASTIC_RECOVERY
@@ -123,8 +115,7 @@ class DistributedTrainingConfig:
 
 
 class DistributedTrainingManager:
-    """
-    Enterprise distributed training management system
+    """    Enterprise distributed training management system
     
     Provides comprehensive distributed training with:
     - Multi-backend support (PyTorch DDP/FSDP, Horovod, Ray Train)
@@ -135,16 +126,13 @@ class DistributedTrainingManager:
     - Performance monitoring and profiling
     - Automated hyperparameter tuning
     - Cloud-native deployment
-    """
-    
+    """    
     def __init__(self, namespace: str = "ia-influencer-training"):
-        """
-        Initialize distributed training manager
+        """        Initialize distributed training manager
         
         Args:
             namespace: Kubernetes namespace for training infrastructure
-        """
-        self.namespace = namespace
+        """        self.namespace = namespace
         self.config = DistributedTrainingConfig()
         self.training_jobs = {}
         self.training_clusters = {}
@@ -157,8 +145,7 @@ class DistributedTrainingManager:
         self._initialize_training_frameworks()
     
     def _initialize_clients(self) -> None:
-        """Initialize Kubernetes, Docker, and training clients"""
-        try:
+        """Initialize Kubernetes, Docker, and training clients"""        try:
             # Kubernetes client
             config.load_incluster_config()
             self.k8s_apps_v1 = client.AppsV1Api()
@@ -184,8 +171,7 @@ class DistributedTrainingManager:
             raise
     
     def _initialize_training_frameworks(self) -> None:
-        """Initialize training frameworks and backends"""
-        try:
+        """Initialize training frameworks and backends"""        try:
             # Initialize Ray for distributed training
             if not ray.is_initialized():
                 ray.init(address="auto", ignore_reinit_error=True)
@@ -213,13 +199,11 @@ class DistributedTrainingManager:
             logger.warning(f"Some training frameworks failed to initialize: {e}")
     
     async def deploy_training_infrastructure(self) -> Dict[str, Any]:
-        """
-        Deploy complete distributed training infrastructure
+        """        Deploy complete distributed training infrastructure
         
         Returns:
             Infrastructure deployment summary
-        """
-        try:
+        """        try:
             self.status = "deploying_infrastructure"
             logger.info("Deploying distributed training infrastructure")
             
@@ -291,16 +275,14 @@ class DistributedTrainingManager:
             raise
     
     async def start_distributed_training(self, training_request: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Start distributed training job
+        """        Start distributed training job
         
         Args:
             training_request: Training job configuration
             
         Returns:
             Training job details and status
-        """
-        try:
+        """        try:
             training_id = f"train_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
             logger.info(f"Starting distributed training job: {training_id}")
             
@@ -376,8 +358,7 @@ class DistributedTrainingManager:
             raise
     
     async def scale_training_cluster(self, training_id: str, target_nodes: int) -> Dict[str, Any]:
-        """
-        Scale training cluster dynamically
+        """        Scale training cluster dynamically
         
         Args:
             training_id: Training job identifier
@@ -385,8 +366,7 @@ class DistributedTrainingManager:
             
         Returns:
             Scaling result
-        """
-        try:
+        """        try:
             logger.info(f"Scaling training cluster {training_id} to {target_nodes} nodes")
             
             # Get current training job
@@ -430,8 +410,7 @@ class DistributedTrainingManager:
             raise
     
     async def handle_training_failure(self, training_id: str, failure_info: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Handle training job failure with recovery
+        """        Handle training job failure with recovery
         
         Args:
             training_id: Training job identifier
@@ -439,8 +418,7 @@ class DistributedTrainingManager:
             
         Returns:
             Recovery result
-        """
-        try:
+        """        try:
             logger.warning(f"Handling training failure for job {training_id}")
             
             # Get training job details
@@ -492,8 +470,7 @@ class DistributedTrainingManager:
             raise
     
     async def _deploy_ray_cluster(self) -> Dict[str, Any]:
-        """Deploy Ray cluster for distributed training"""
-        ray_cluster = {
+        """Deploy Ray cluster for distributed training"""        ray_cluster = {
             "apiVersion": "ray.io/v1alpha1",
             "kind": "RayCluster",
             "metadata": {
@@ -605,8 +582,7 @@ class DistributedTrainingManager:
         }
     
     async def _deploy_training_coordinator(self) -> Dict[str, Any]:
-        """Deploy training coordinator service"""
-        coordinator = {
+        """Deploy training coordinator service"""        coordinator = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -660,8 +636,7 @@ class DistributedTrainingManager:
         }
     
     async def _start_ray_training(self, training_id: str, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Start Ray-based distributed training"""
-        try:
+        """Start Ray-based distributed training"""        try:
             # Create Ray Train configuration
             scaling_config = ScalingConfig(
                 num_workers=config.get("num_workers", 4),
@@ -729,8 +704,7 @@ class DistributedTrainingManager:
             raise
     
     async def _start_pytorch_ddp_training(self, training_id: str, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Start PyTorch DDP training"""
-        try:
+        """Start PyTorch DDP training"""        try:
             # Create DDP training job specification
             ddp_job = {
                 "apiVersion": "kubeflow.org/v1",
@@ -814,8 +788,7 @@ class DistributedTrainingManager:
             raise
     
     async def _validate_training_request(self, request: Dict[str, Any]) -> None:
-        """Validate training request parameters"""
-        required_fields = ["model_config", "dataset_config"]
+        """Validate training request parameters"""        required_fields = ["model_config", "dataset_config"]
         for field in required_fields:
             if field not in request:
                 raise ValueError(f"Required field '{field}' missing from training request")
@@ -827,8 +800,7 @@ class DistributedTrainingManager:
                 raise ValueError(f"Requested nodes exceed maximum: {self.config.max_nodes}")
     
     async def _create_training_configuration(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Create comprehensive training configuration"""
-        config = {
+        """Create comprehensive training configuration"""        config = {
             "training_id": request.get("training_id"),
             "model_config": request.get("model_config", {}),
             "dataset_config": request.get("dataset_config", {}),
@@ -849,8 +821,7 @@ class DistributedTrainingManager:
         return config
     
     async def _determine_cluster_configuration(self, training_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Determine optimal cluster configuration"""
-        model_size = training_config.get("model_config", {}).get("parameters", 1e6)
+        """Determine optimal cluster configuration"""        model_size = training_config.get("model_config", {}).get("parameters", 1e6)
         dataset_size = training_config.get("dataset_config", {}).get("size_gb", 1)
         
         # Calculate optimal number of nodes based on model and data size
@@ -874,8 +845,7 @@ class DistributedTrainingManager:
         return cluster_config
     
     async def _create_training_cluster(self, training_id: str, cluster_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Create dedicated training cluster"""
-        cluster_id = f"cluster-{training_id}"
+        """Create dedicated training cluster"""        cluster_id = f"cluster-{training_id}"
         
         # Store cluster configuration
         self.training_clusters[cluster_id] = {
@@ -896,8 +866,7 @@ class DistributedTrainingManager:
         }
     
     async def get_training_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive training metrics"""
-        try:
+        """Get comprehensive training metrics"""        try:
             active_jobs = [job for job in self.training_jobs.values() if job.get("status") == "running"]
             
             metrics = {
@@ -927,8 +896,7 @@ class DistributedTrainingManager:
             return {"error": str(e)}
     
     async def _ensure_training_namespace(self) -> None:
-        """Create training namespace"""
-        try:
+        """Create training namespace"""        try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
             if e.status == 404:
@@ -947,8 +915,7 @@ class DistributedTrainingManager:
                 logger.info(f"Created training namespace: {self.namespace}")
     
     async def _configure_training_networking(self) -> None:
-        """Configure networking for training infrastructure"""
-        # Training network policy
+        """Configure networking for training infrastructure"""        # Training network policy
         network_policy = {
             "apiVersion": "networking.k8s.io/v1",
             "kind": "NetworkPolicy",
@@ -984,8 +951,7 @@ class DistributedTrainingManager:
         logger.info("Configured training networking policies")
     
     async def _validate_training_infrastructure(self) -> bool:
-        """Validate training infrastructure deployment"""
-        try:
+        """Validate training infrastructure deployment"""        try:
             # Check essential services
             essential_services = [
                 "training-coordinator"
@@ -1012,8 +978,7 @@ class DistributedTrainingManager:
             return False
     
     async def _cleanup_failed_infrastructure(self) -> None:
-        """Clean up failed training infrastructure"""
-        try:
+        """Clean up failed training infrastructure"""        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
             logger.info("Cleaned up failed training infrastructure")
@@ -1021,8 +986,7 @@ class DistributedTrainingManager:
             logger.error(f"Training infrastructure cleanup failed: {e}")
     
     async def _cleanup_failed_training_job(self, training_id: str) -> None:
-        """Clean up failed training job"""
-        try:
+        """Clean up failed training job"""        try:
             # Remove from tracking
             if training_id in self.training_jobs:
                 del self.training_jobs[training_id]
@@ -1037,8 +1001,7 @@ class DistributedTrainingManager:
             logger.error(f"Training job cleanup failed: {e}")
     
     async def cleanup(self) -> None:
-        """Clean up entire distributed training infrastructure"""
-        try:
+        """Clean up entire distributed training infrastructure"""        try:
             # Stop Ray if initialized
             if ray.is_initialized():
                 ray.shutdown()

@@ -1,5 +1,4 @@
-"""
-Enterprise User Preferences Manager for Creator Collaboration Matching
+"""Enterprise User Preferences Manager for Creator Collaboration Matching
 
 This module implements an advanced AI-driven preference learning and management system
 for content creators, providing personalized matching experiences through machine learning,
@@ -37,9 +36,7 @@ Copyright: 2025 Fahed Mlaiel. All rights reserved.
 This preference management system contains proprietary AI algorithms and business logic
 developed by Fahed Mlaiel. Unauthorized use, reverse engineering, or distribution
 is strictly prohibited and subject to legal prosecution.
-"""
-
-import logging
+"""import logging
 import json
 import numpy as np
 from typing import Dict, List, Optional, Any, Set, Union, Tuple
@@ -63,8 +60,7 @@ from backend.core.ml.embeddings import UserEmbeddingService
 
 
 class PreferenceType(Enum):
-    """Advanced preference type classification"""
-    # Core Collaboration Preferences
+    """Advanced preference type classification"""    # Core Collaboration Preferences
     COLLABORATION_FORMATS = "collaboration_formats"
     CONTENT_TYPES = "content_types"
     AUDIENCE_TARGETING = "audience_targeting"
@@ -102,8 +98,7 @@ class PreferenceType(Enum):
 
 
 class CollaborationFormat(Enum):
-    """Detailed collaboration format preferences"""
-    # Music Collaborations
+    """Detailed collaboration format preferences"""    # Music Collaborations
     DUET_SONG = "duet_song"
     REMIX_COLLABORATION = "remix_collaboration"
     JOINT_ALBUM = "joint_album"
@@ -137,8 +132,7 @@ class CollaborationFormat(Enum):
 
 
 class LearningStrategy(Enum):
-    """AI learning strategies for preference optimization"""
-    COLLABORATIVE_FILTERING = "collaborative_filtering"
+    """AI learning strategies for preference optimization"""    COLLABORATIVE_FILTERING = "collaborative_filtering"
     CONTENT_BASED_FILTERING = "content_based_filtering"
     HYBRID_RECOMMENDATION = "hybrid_recommendation"
     REINFORCEMENT_LEARNING = "reinforcement_learning"
@@ -150,8 +144,7 @@ class LearningStrategy(Enum):
 
 @dataclass
 class PreferenceProfile:
-    """Comprehensive user preference profile with AI insights"""
-    user_id: int
+    """Comprehensive user preference profile with AI insights"""    user_id: int
     
     # Core Preferences
     collaboration_formats: Set[CollaborationFormat] = field(default_factory=set)
@@ -207,8 +200,7 @@ class PreferenceProfile:
 
 @dataclass
 class CollaborationPreferences:
-    """Collaboration type preferences"""
-    preferred_types: List[CollaborationType]
+    """Collaboration type preferences"""    preferred_types: List[CollaborationType]
     avoided_types: List[CollaborationType]
     openness_to_new_types: float  # 0.0 to 1.0
     collaboration_frequency: str  # "weekly", "monthly", "quarterly"
@@ -218,8 +210,7 @@ class CollaborationPreferences:
 
 @dataclass
 class ContentFormatPreferences:
-    """Content format preferences"""
-    preferred_formats: List[str]
+    """Content format preferences"""    preferred_formats: List[str]
     format_weights: Dict[str, float]
     quality_requirements: Dict[str, float]
     production_complexity_tolerance: str  # "low", "medium", "high"
@@ -228,8 +219,7 @@ class ContentFormatPreferences:
 
 @dataclass
 class AudienceTargetingPreferences:
-    """Audience targeting preferences"""
-    target_demographics: Dict[str, Any]
+    """Audience targeting preferences"""    target_demographics: Dict[str, Any]
     audience_size_preferences: Dict[str, int]  # min/max audience sizes
     engagement_rate_requirements: Dict[str, float]
     geographic_targeting: List[str]
@@ -239,8 +229,7 @@ class AudienceTargetingPreferences:
 
 @dataclass
 class QualityStandardPreferences:
-    """Quality standard preferences"""
-    minimum_content_quality: float
+    """Quality standard preferences"""    minimum_content_quality: float
     production_value_importance: float
     consistency_importance: float
     originality_importance: float
@@ -250,8 +239,7 @@ class QualityStandardPreferences:
 
 @dataclass
 class CommunicationPreferences:
-    """Communication style preferences"""
-    preferred_communication_channels: List[str]
+    """Communication style preferences"""    preferred_communication_channels: List[str]
     response_time_expectations: str
     meeting_preferences: Dict[str, Any]
     language_preferences: List[str]
@@ -261,8 +249,7 @@ class CommunicationPreferences:
 
 @dataclass
 class TimelinePreferences:
-    """Timeline and scheduling preferences"""
-    preferred_project_duration: Dict[str, int]  # in days/weeks
+    """Timeline and scheduling preferences"""    preferred_project_duration: Dict[str, int]  # in days/weeks
     availability_schedule: Dict[str, List[str]]  # day -> time slots
     advance_notice_requirements: int  # days
     deadline_flexibility: float
@@ -272,8 +259,7 @@ class TimelinePreferences:
 
 @dataclass
 class EffortLevelPreferences:
-    """Effort level preferences"""
-    preferred_effort_level: str  # "low", "medium", "high"
+    """Effort level preferences"""    preferred_effort_level: str  # "low", "medium", "high"
     time_commitment_limits: Dict[str, int]  # hours per week/month
     complexity_tolerance: float
     learning_curve_tolerance: float
@@ -282,8 +268,7 @@ class EffortLevelPreferences:
 
 @dataclass
 class RevenueSharingPreferences:
-    """Revenue sharing preferences"""
-    revenue_sharing_models: List[str]
+    """Revenue sharing preferences"""    revenue_sharing_models: List[str]
     minimum_revenue_threshold: float
     preferred_payment_methods: List[str]
     payment_timeline_preferences: str
@@ -293,8 +278,7 @@ class RevenueSharingPreferences:
 
 @dataclass
 class PlatformPreferences:
-    """Platform preferences"""
-    preferred_platforms: List[str]
+    """Platform preferences"""    preferred_platforms: List[str]
     platform_priorities: Dict[str, float]
     cross_platform_willingness: float
     new_platform_openness: float
@@ -303,8 +287,7 @@ class PlatformPreferences:
 
 @dataclass
 class GeographicPreferences:
-    """Geographic preferences"""
-    preferred_regions: List[str]
+    """Geographic preferences"""    preferred_regions: List[str]
     time_zone_preferences: List[str]
     in_person_meeting_willingness: float
     travel_willingness: Dict[str, float]
@@ -314,8 +297,7 @@ class GeographicPreferences:
 
 @dataclass
 class UserPreferences:
-    """Complete user preferences profile"""
-    user_id: int
+    """Complete user preferences profile"""    user_id: int
     collaboration_preferences: CollaborationPreferences
     content_format_preferences: ContentFormatPreferences
     audience_targeting_preferences: AudienceTargetingPreferences
@@ -331,8 +313,7 @@ class UserPreferences:
 
 
 class UserPreferencesManager:
-    """
-    Enterprise-Grade AI-Powered User Preferences Management System
+    """    Enterprise-Grade AI-Powered User Preferences Management System
     
     This class implements advanced machine learning algorithms for dynamic preference
     learning, behavioral analysis, and intelligent recommendation personalization
@@ -347,8 +328,7 @@ class UserPreferencesManager:
     - Temporal preference pattern analysis
     - Cross-platform preference synchronization
     - Business intelligence integration
-    """
-    
+    """    
     def __init__(
         self,
         db_session: Session,
@@ -380,8 +360,7 @@ class UserPreferencesManager:
         self.executor = ThreadPoolExecutor(max_workers=3)
     
     def _initialize_ml_models(self) -> None:
-        """Initialize machine learning models for preference learning"""
-        try:
+        """Initialize machine learning models for preference learning"""        try:
             # Neural network for preference prediction
             self.preference_predictor = MLPClassifier(
                 hidden_layer_sizes=(128, 64, 32),
@@ -415,8 +394,7 @@ class UserPreferencesManager:
             raise
     
     def _initialize_enterprise_defaults(self) -> None:
-        """Initialize enterprise-grade default preferences and configurations"""
-        
+        """Initialize enterprise-grade default preferences and configurations"""        
         # Advanced default preference profiles
         self.preference_templates = {
             "premium_creator": PreferenceProfile(
@@ -599,8 +577,7 @@ class UserPreferencesManager:
         include_predictions: bool = True,
         real_time_update: bool = False
     ) -> PreferenceProfile:
-        """
-        Get comprehensive user preferences with AI predictions
+        """        Get comprehensive user preferences with AI predictions
         
         Args:
             user_id: User identifier
@@ -609,8 +586,7 @@ class UserPreferencesManager:
             
         Returns:
             Complete preference profile with AI insights
-        """
-        try:
+        """        try:
             # Check cache first
             cache_key = f"preferences:{user_id}:v2"
             
@@ -667,8 +643,7 @@ class UserPreferencesManager:
         preference_updates: Dict[str, Any],
         learning_context: Optional[Dict[str, Any]] = None
     ) -> PreferenceProfile:
-        """
-        Update user preferences with intelligent learning integration
+        """        Update user preferences with intelligent learning integration
         
         Args:
             user_id: User identifier
@@ -677,8 +652,7 @@ class UserPreferencesManager:
             
         Returns:
             Updated preference profile
-        """
-        try:
+        """        try:
             # Get current preferences
             current_preferences = await self.get_user_preferences(
                 user_id, include_predictions=False
@@ -731,16 +705,14 @@ class UserPreferencesManager:
         outcome: str,
         feedback_score: Optional[float] = None
     ) -> None:
-        """
-        Learn from user interactions to improve preference predictions
+        """        Learn from user interactions to improve preference predictions
         
         Args:
             user_id: User identifier
             interaction_data: Data about the interaction (match viewed, collaboration started, etc.)
             outcome: Outcome of the interaction ('positive', 'negative', 'neutral')
             feedback_score: Optional explicit feedback score (0.0 to 1.0)
-        """
-        try:
+        """        try:
             # Extract learning signals from interaction
             learning_signals = await self._extract_learning_signals(
                 interaction_data, outcome, feedback_score
@@ -784,8 +756,7 @@ class UserPreferencesManager:
         user_id: int,
         collaboration_opportunity: Dict[str, Any]
     ) -> Dict[str, float]:
-        """
-        Predict user preference for a specific collaboration opportunity
+        """        Predict user preference for a specific collaboration opportunity
         
         Args:
             user_id: User identifier
@@ -793,8 +764,7 @@ class UserPreferencesManager:
             
         Returns:
             Dictionary with preference scores and confidence levels
-        """
-        try:
+        """        try:
             # Get user preferences
             user_preferences = await self.get_user_preferences(user_id)
             
@@ -854,8 +824,7 @@ class UserPreferencesManager:
         user_id: int,
         time_window: timedelta = timedelta(days=90)
     ) -> Dict[str, Any]:
-        """
-        Analyze user preference trends and evolution over time
+        """        Analyze user preference trends and evolution over time
         
         Args:
             user_id: User identifier
@@ -863,8 +832,7 @@ class UserPreferencesManager:
             
         Returns:
             Comprehensive trend analysis report
-        """
-        try:
+        """        try:
             # Fetch historical preference data
             historical_data = await self._fetch_historical_preferences(
                 user_id, time_window
@@ -911,16 +879,14 @@ class UserPreferencesManager:
         self,
         include_inactive: bool = False
     ) -> Dict[str, List[int]]:
-        """
-        Segment users based on preference similarity using ML clustering
+        """        Segment users based on preference similarity using ML clustering
         
         Args:
             include_inactive: Whether to include inactive users
             
         Returns:
             Dictionary mapping segment names to user IDs
-        """
-        try:
+        """        try:
             # Fetch all user preferences
             all_preferences = await self._fetch_all_user_preferences(include_inactive)
             
@@ -968,14 +934,12 @@ class UserPreferencesManager:
     # Helper methods for internal processing
     
     async def _fetch_base_preferences(self, user_id: int) -> Optional[PreferenceProfile]:
-        """Fetch base preferences from database"""
-        # Implementation to fetch from database
+        """Fetch base preferences from database"""        # Implementation to fetch from database
         # This would query the user_preferences table
         return None
     
     async def _create_initial_preferences(self, user_id: int) -> PreferenceProfile:
-        """Create initial preferences from template"""
-        # Determine appropriate template based on user profile
+        """Create initial preferences from template"""        # Determine appropriate template based on user profile
         template_name = await self._determine_preference_template(user_id)
         template = self.preference_templates.get(template_name, self.preference_templates['emerging_creator'])
         
@@ -989,8 +953,7 @@ class UserPreferencesManager:
         base_preferences: PreferenceProfile,
         user_id: int
     ) -> PreferenceProfile:
-        """Enhance preferences with AI predictions"""
-        enhanced = base_preferences
+        """Enhance preferences with AI predictions"""        enhanced = base_preferences
         
         # Add AI-predicted preferences based on similar users
         similar_user_preferences = await self._find_similar_user_preferences(user_id)
@@ -1065,8 +1028,7 @@ class UserPreferencesManager:
         user_id: int,
         use_cache: bool = True
     ) -> Optional[UserPreferences]:
-        """
-        Retrieve user preferences
+        """        Retrieve user preferences
         
         Args:
             user_id: User ID
@@ -1074,8 +1036,7 @@ class UserPreferencesManager:
             
         Returns:
             User preferences or None if not found
-        """
-        cache_key = f"user_preferences:{user_id}"
+        """        cache_key = f"user_preferences:{user_id}"
         
         if use_cache:
             cached_preferences = await self.cache_manager.get(cache_key)
@@ -1116,8 +1077,7 @@ class UserPreferencesManager:
         preferences: UserPreferences,
         partial_update: bool = False
     ) -> bool:
-        """
-        Update user preferences
+        """        Update user preferences
         
         Args:
             user_id: User ID
@@ -1126,8 +1086,7 @@ class UserPreferencesManager:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             # Validate preferences
             validation_result = self._validate_preferences(preferences)
             if not validation_result.is_valid:
@@ -1177,8 +1136,7 @@ class UserPreferencesManager:
             return False
     
     async def create_default_preferences(self, user_id: int) -> UserPreferences:
-        """Create default preferences for a new user"""
-        try:
+        """Create default preferences for a new user"""        try:
             preferences = UserPreferences(
                 user_id=user_id,
                 collaboration_preferences=CollaborationPreferences(**self.default_preferences["collaboration_preferences"]),
@@ -1210,8 +1168,7 @@ class UserPreferencesManager:
         user_id: int,
         category: PreferenceCategory
     ) -> Optional[Dict[str, Any]]:
-        """Get specific preference category"""
-        try:
+        """Get specific preference category"""        try:
             preferences = await self.get_user_preferences(user_id)
             if not preferences:
                 return None
@@ -1242,8 +1199,7 @@ class UserPreferencesManager:
         category: PreferenceCategory,
         category_data: Dict[str, Any]
     ) -> bool:
-        """Update specific preference category"""
-        try:
+        """Update specific preference category"""        try:
             preferences = await self.get_user_preferences(user_id)
             if not preferences:
                 return False
@@ -1278,8 +1234,7 @@ class UserPreferencesManager:
             return False
     
     async def get_matching_filters(self, user_id: int) -> Dict[str, Any]:
-        """Get filters for matching based on user preferences"""
-        try:
+        """Get filters for matching based on user preferences"""        try:
             preferences = await self.get_user_preferences(user_id)
             if not preferences:
                 return {}
@@ -1309,8 +1264,7 @@ class UserPreferencesManager:
             return {}
     
     async def get_compatibility_weights(self, user_id: int) -> Dict[str, float]:
-        """Get compatibility scoring weights based on user preferences"""
-        try:
+        """Get compatibility scoring weights based on user preferences"""        try:
             preferences = await self.get_user_preferences(user_id)
             if not preferences:
                 return self._get_default_weights()
@@ -1338,8 +1292,7 @@ class UserPreferencesManager:
             return self._get_default_weights()
     
     async def analyze_preference_trends(self, user_id: int) -> Dict[str, Any]:
-        """Analyze user preference trends and changes over time"""
-        try:
+        """Analyze user preference trends and changes over time"""        try:
             # Get historical preference data
             historical_data = await self._get_historical_preferences(user_id)
             
@@ -1361,8 +1314,7 @@ class UserPreferencesManager:
             return {"error": str(e)}
     
     async def suggest_preference_adjustments(self, user_id: int) -> List[Dict[str, Any]]:
-        """Suggest preference adjustments based on matching success and market trends"""
-        try:
+        """Suggest preference adjustments based on matching success and market trends"""        try:
             preferences = await self.get_user_preferences(user_id)
             if not preferences:
                 return []
@@ -1409,13 +1361,11 @@ class UserPreferencesManager:
     # Helper methods
     
     async def _fetch_preferences_from_db(self, user_id: int) -> Optional[Dict[str, Any]]:
-        """Fetch preferences from database"""
-        # Implementation would query the database
+        """Fetch preferences from database"""        # Implementation would query the database
         return None
     
     async def _store_preferences_in_db(self, user_id: int, preferences: UserPreferences) -> bool:
-        """Store preferences in database"""
-        try:
+        """Store preferences in database"""        try:
             # Implementation would store in database
             # This would involve serializing the preferences and storing in JSON format
             return True
@@ -1424,22 +1374,18 @@ class UserPreferencesManager:
             return False
     
     def _parse_preferences_data(self, data: Dict[str, Any]) -> UserPreferences:
-        """Parse preferences data from database format"""
-        # Implementation would parse database format to UserPreferences object
+        """Parse preferences data from database format"""        # Implementation would parse database format to UserPreferences object
         return None
     
     def _serialize_preferences(self, preferences: UserPreferences) -> str:
-        """Serialize preferences for storage"""
-        return json.dumps(asdict(preferences), default=str, ensure_ascii=False)
+        """Serialize preferences for storage"""        return json.dumps(asdict(preferences), default=str, ensure_ascii=False)
     
     def _deserialize_preferences(self, data: str) -> UserPreferences:
-        """Deserialize preferences from storage"""
-        # Implementation would deserialize JSON to UserPreferences object
+        """Deserialize preferences from storage"""        # Implementation would deserialize JSON to UserPreferences object
         return None
     
     def _validate_preferences(self, preferences: UserPreferences) -> Any:
-        """Validate preferences data"""
-        # Implementation would validate all preference fields
+        """Validate preferences data"""        # Implementation would validate all preference fields
         class ValidationResult:
             is_valid = True
             errors = []
@@ -1447,17 +1393,14 @@ class UserPreferencesManager:
         return ValidationResult()
     
     def _merge_preferences(self, existing: UserPreferences, updates: UserPreferences) -> UserPreferences:
-        """Merge updated preferences with existing ones"""
-        # Implementation would merge preferences intelligently
+        """Merge updated preferences with existing ones"""        # Implementation would merge preferences intelligently
         return updates
     
     def _generate_version_string(self) -> str:
-        """Generate version string for preferences"""
-        return f"1.0.{int(datetime.utcnow().timestamp())}"
+        """Generate version string for preferences"""        return f"1.0.{int(datetime.utcnow().timestamp())}"
     
     def _get_default_weights(self) -> Dict[str, float]:
-        """Get default compatibility weights"""
-        return {
+        """Get default compatibility weights"""        return {
             'content_similarity': 0.25,
             'audience_compatibility': 0.20,
             'quality_alignment': 0.15,
@@ -1469,36 +1412,28 @@ class UserPreferencesManager:
         }
     
     async def _get_historical_preferences(self, user_id: int) -> List[Dict[str, Any]]:
-        """Get historical preference data"""
-        # Implementation would query historical data
+        """Get historical preference data"""        # Implementation would query historical data
         return []
     
     def _calculate_preference_stability(self, historical_data: List[Dict[str, Any]]) -> float:
-        """Calculate how stable user preferences are over time"""
-        return 0.75  # Placeholder
+        """Calculate how stable user preferences are over time"""        return 0.75  # Placeholder
     
     def _identify_evolving_interests(self, historical_data: List[Dict[str, Any]]) -> List[str]:
-        """Identify evolving user interests"""
-        return []  # Placeholder
+        """Identify evolving user interests"""        return []  # Placeholder
     
     def _analyze_collaboration_patterns(self, historical_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze collaboration pattern changes"""
-        return {}  # Placeholder
+        """Analyze collaboration pattern changes"""        return {}  # Placeholder
     
     def _analyze_quality_evolution(self, historical_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze quality standard evolution"""
-        return {}  # Placeholder
+        """Analyze quality standard evolution"""        return {}  # Placeholder
     
     def _analyze_platform_trends(self, historical_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze platform preference trends"""
-        return {}  # Placeholder
+        """Analyze platform preference trends"""        return {}  # Placeholder
     
     async def _analyze_matching_performance(self, user_id: int) -> Dict[str, float]:
-        """Analyze user's matching performance"""
-        # Implementation would analyze matching success rates
+        """Analyze user's matching performance"""        # Implementation would analyze matching success rates
         return {}
     
     async def _get_market_trends(self) -> Dict[str, Any]:
-        """Get current market trends"""
-        # Implementation would analyze market data
+        """Get current market trends"""        # Implementation would analyze market data
         return {}

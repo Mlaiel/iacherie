@@ -1,5 +1,4 @@
-"""
-Enterprise Database Management CLI
+"""Enterprise Database Management CLI
 Command-line interface for database operations and management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -28,9 +27,7 @@ concept ou idée sans autorisation écrite explicite de Fahed Mlaiel
 sera poursuivie selon la loi allemande et internationale.
 
 Contact autorisé: mlaiel@live.de
-"""
-
-import click
+"""import click
 import json
 import sys
 import time
@@ -56,8 +53,7 @@ logger = get_logger(__name__)
 @click.option('--config', '-c', help='Configuration file path')
 @click.pass_context
 def database(ctx, verbose: bool, config: Optional[str]):
-    """Enterprise Database Management CLI for IA Influencer Agent"""
-    ctx.ensure_object(dict)
+    """Enterprise Database Management CLI for IA Influencer Agent"""    ctx.ensure_object(dict)
     ctx.obj['verbose'] = verbose
     ctx.obj['config'] = config
     
@@ -68,8 +64,7 @@ def database(ctx, verbose: bool, config: Optional[str]):
 
 @database.group()
 def migrate():
-    """Database migration management"""
-    pass
+    """Database migration management"""    pass
 
 
 @migrate.command()
@@ -77,8 +72,7 @@ def migrate():
 @click.option('--dry-run', is_flag=True, help='Show what would be executed without running')
 @click.pass_context
 def up(ctx, target: Optional[str], dry_run: bool):
-    """Run pending database migrations"""
-    try:
+    """Run pending database migrations"""    try:
         click.echo("🔄 Running database migrations...")
         
         migration_runner = get_migration_runner()
@@ -114,8 +108,7 @@ def up(ctx, target: Optional[str], dry_run: bool):
 @click.option('--force', is_flag=True, help='Force rollback even if risky')
 @click.pass_context
 def down(ctx, target_version: str, force: bool):
-    """Rollback database migrations to target version"""
-    try:
+    """Rollback database migrations to target version"""    try:
         if not force:
             click.confirm(
                 f"⚠️  Are you sure you want to rollback to version {target_version}?",
@@ -141,8 +134,7 @@ def down(ctx, target_version: str, force: bool):
 @migrate.command()
 @click.pass_context
 def status(ctx):
-    """Show migration status"""
-    try:
+    """Show migration status"""    try:
         migration_runner = get_migration_runner()
         status = migration_runner.get_migration_status()
         
@@ -183,8 +175,7 @@ def status(ctx):
 @click.option('--data-migration', is_flag=True, help='Mark as data migration')
 @click.pass_context
 def create(ctx, name: str, description: Optional[str], data_migration: bool):
-    """Create new migration file"""
-    try:
+    """Create new migration file"""    try:
         click.echo(f"📝 Creating migration: {name}")
         
         migration_runner = get_migration_runner()
@@ -204,8 +195,7 @@ def create(ctx, name: str, description: Optional[str], data_migration: bool):
 @migrate.command()
 @click.pass_context
 def validate(ctx):
-    """Validate all migrations"""
-    try:
+    """Validate all migrations"""    try:
         click.echo("🔍 Validating migrations...")
         
         migration_runner = get_migration_runner()
@@ -231,8 +221,7 @@ def validate(ctx):
 
 @database.group()
 def backup():
-    """Database backup management"""
-    pass
+    """Database backup management"""    pass
 
 
 @backup.command()
@@ -241,8 +230,7 @@ def backup():
 @click.option('--database', '-d', help='Database name (default: configured database)')
 @click.pass_context
 def create(ctx, compress: bool, upload: bool, database: Optional[str]):
-    """Create database backup"""
-    try:
+    """Create database backup"""    try:
         click.echo("💾 Creating database backup...")
         
         backup_manager = get_backup_manager()
@@ -276,8 +264,7 @@ def create(ctx, compress: bool, upload: bool, database: Optional[str]):
 @click.option('--limit', '-l', type=int, default=10, help='Limit number of results')
 @click.pass_context
 def list(ctx, backup_type: Optional[str], limit: int):
-    """List available backups"""
-    try:
+    """List available backups"""    try:
         backup_manager = get_backup_manager()
         
         filter_type = None
@@ -322,8 +309,7 @@ def list(ctx, backup_type: Optional[str], limit: int):
 @click.option('--force', is_flag=True, help='Force restore without confirmation')
 @click.pass_context
 def restore(ctx, backup_id: str, target_database: Optional[str], force: bool):
-    """Restore database from backup"""
-    try:
+    """Restore database from backup"""    try:
         if not force:
             click.confirm(
                 f"⚠️  Are you sure you want to restore backup {backup_id}?",
@@ -354,8 +340,7 @@ def restore(ctx, backup_id: str, target_database: Optional[str], force: bool):
 @click.option('--dry-run', is_flag=True, help='Show what would be cleaned without doing it')
 @click.pass_context
 def cleanup(ctx, retention_days: int, dry_run: bool):
-    """Clean up old backups"""
-    try:
+    """Clean up old backups"""    try:
         if dry_run:
             click.echo(f"🔍 Checking for backups older than {retention_days} days...")
             # This would require implementing a dry-run mode in BackupManager
@@ -376,15 +361,13 @@ def cleanup(ctx, retention_days: int, dry_run: bool):
 
 @database.group()
 def replication():
-    """Database replication management"""
-    pass
+    """Database replication management"""    pass
 
 
 @replication.command()
 @click.pass_context
 def status(ctx):
-    """Show replication status"""
-    try:
+    """Show replication status"""    try:
         replication_manager = get_replication_manager()
         status = replication_manager.get_replication_status()
         
@@ -425,8 +408,7 @@ def status(ctx):
 @replication.command()
 @click.pass_context
 def monitor(ctx):
-    """Start replication monitoring"""
-    try:
+    """Start replication monitoring"""    try:
         click.echo("🔍 Starting replication monitoring...")
         
         replication_manager = get_replication_manager()
@@ -450,15 +432,13 @@ def monitor(ctx):
 
 @database.group()
 def performance():
-    """Database performance monitoring"""
-    pass
+    """Database performance monitoring"""    pass
 
 
 @performance.command()
 @click.pass_context
 def monitor(ctx):
-    """Start performance monitoring"""
-    try:
+    """Start performance monitoring"""    try:
         click.echo("📊 Starting performance monitoring...")
         
         monitor = get_performance_monitor()
@@ -512,8 +492,7 @@ def monitor(ctx):
 @performance.command()
 @click.pass_context
 def summary(ctx):
-    """Show performance summary"""
-    try:
+    """Show performance summary"""    try:
         monitor = get_performance_monitor()
         summary = monitor.get_performance_summary()
         
@@ -559,8 +538,7 @@ def summary(ctx):
 @click.option('--output', '-o', type=click.Path(), help='Output file path')
 @click.pass_context
 def report(ctx, hours: int, output: Optional[str]):
-    """Generate performance report"""
-    try:
+    """Generate performance report"""    try:
         click.echo(f"📊 Generating {hours}-hour performance report...")
         
         monitor = get_performance_monitor()
@@ -580,15 +558,13 @@ def report(ctx, hours: int, output: Optional[str]):
 
 @database.group()
 def pool():
-    """Connection pool management"""
-    pass
+    """Connection pool management"""    pass
 
 
 @pool.command()
 @click.pass_context
 def status(ctx):
-    """Show connection pool status"""
-    try:
+    """Show connection pool status"""    try:
         pool_manager = get_pool_manager()
         status = pool_manager.get_pool_status()
         
@@ -630,8 +606,7 @@ def status(ctx):
 @database.command()
 @click.pass_context
 def health(ctx):
-    """Check database health"""
-    try:
+    """Check database health"""    try:
         click.echo("🔍 Checking database health...")
         
         db_manager = get_postgresql_manager()
@@ -663,8 +638,7 @@ def health(ctx):
 @database.command()
 @click.pass_context
 def info(ctx):
-    """Show database information"""
-    try:
+    """Show database information"""    try:
         click.echo("ℹ️  Database Information")
         click.echo("-" * 40)
         
@@ -689,8 +663,7 @@ def info(ctx):
 @click.argument('table_name')
 @click.pass_context
 def optimize(ctx, table_name: str):
-    """Optimize table performance"""
-    try:
+    """Optimize table performance"""    try:
         click.echo(f"⚡ Optimizing table: {table_name}")
         
         db_manager = get_postgresql_manager()
@@ -711,8 +684,7 @@ def optimize(ctx, table_name: str):
 @click.argument('table_name')
 @click.pass_context
 def stats(ctx, table_name: str):
-    """Show table statistics"""
-    try:
+    """Show table statistics"""    try:
         click.echo(f"📊 Table Statistics: {table_name}")
         click.echo("-" * 40)
         
@@ -774,21 +746,18 @@ logger = get_logger(__name__)
 
 @click.group()
 def database():
-    """Database deployment and management commands"""
-    pass
+    """Database deployment and management commands"""    pass
 
 
 @database.group()
 def migrate():
-    """Database migration commands"""
-    pass
+    """Database migration commands"""    pass
 
 
 @migrate.command()
 @click.option('--target', help='Target migration version')
 def up(target: Optional[str]):
-    """Run pending migrations"""
-    try:
+    """Run pending migrations"""    try:
         migration_runner = get_migration_runner()
         success = migration_runner.migrate_up(target)
         
@@ -804,8 +773,7 @@ def up(target: Optional[str]):
 @migrate.command()
 @click.argument('target_version')
 def down(target_version: str):
-    """Rollback migrations to target version"""
-    try:
+    """Rollback migrations to target version"""    try:
         migration_runner = get_migration_runner()
         success = migration_runner.migrate_down(target_version)
         
@@ -820,8 +788,7 @@ def down(target_version: str):
 
 @migrate.command()
 def status():
-    """Show migration status"""
-    try:
+    """Show migration status"""    try:
         migration_runner = get_migration_runner()
         status = migration_runner.get_migration_status()
         
@@ -844,8 +811,7 @@ def status():
 @click.argument('name')
 @click.option('--description', help='Migration description')
 def create(name: str, description: Optional[str]):
-    """Create new migration file"""
-    try:
+    """Create new migration file"""    try:
         migration_runner = get_migration_runner()
         filepath = migration_runner.create_migration(name, description or "")
         
@@ -857,8 +823,7 @@ def create(name: str, description: Optional[str]):
 
 @migrate.command()
 def validate():
-    """Validate migration files"""
-    try:
+    """Validate migration files"""    try:
         migration_runner = get_migration_runner()
         errors = migration_runner.validate_migrations()
         
@@ -881,8 +846,7 @@ def validate():
 
 @database.group()
 def backup():
-    """Database backup commands"""
-    pass
+    """Database backup commands"""    pass
 
 
 @backup.command()
@@ -890,8 +854,7 @@ def backup():
 @click.option('--compress/--no-compress', default=True, help='Compress backup')
 @click.option('--upload/--no-upload', default=True, help='Upload to cloud')
 def create(database: Optional[str], compress: bool, upload: bool):
-    """Create full database backup"""
-    try:
+    """Create full database backup"""    try:
         backup_manager = get_backup_manager()
         metadata = backup_manager.create_full_backup(
             database_name=database,
@@ -913,8 +876,7 @@ def create(database: Optional[str], compress: bool, upload: bool):
 
 @backup.command()
 def list():
-    """List available backups"""
-    try:
+    """List available backups"""    try:
         backup_manager = get_backup_manager()
         backups = backup_manager.list_backups(limit=20)
         
@@ -941,8 +903,7 @@ def list():
 @click.argument('backup_id')
 @click.option('--target-database', help='Target database name')
 def restore(backup_id: str, target_database: Optional[str]):
-    """Restore database from backup"""
-    try:
+    """Restore database from backup"""    try:
         backup_manager = get_backup_manager()
         success = backup_manager.restore_backup(backup_id, target_database)
         
@@ -958,8 +919,7 @@ def restore(backup_id: str, target_database: Optional[str]):
 @backup.command()
 @click.option('--retention-days', default=30, help='Retention period in days')
 def cleanup(retention_days: int):
-    """Clean up old backup files"""
-    try:
+    """Clean up old backup files"""    try:
         backup_manager = get_backup_manager()
         cleaned_count = backup_manager.cleanup_old_backups(retention_days)
         
@@ -971,8 +931,7 @@ def cleanup(retention_days: int):
 
 @backup.command()
 def stats():
-    """Show backup statistics"""
-    try:
+    """Show backup statistics"""    try:
         backup_manager = get_backup_manager()
         stats = backup_manager.get_backup_statistics()
         
@@ -997,14 +956,12 @@ def stats():
 
 @database.group()
 def replication():
-    """Database replication commands"""
-    pass
+    """Database replication commands"""    pass
 
 
 @replication.command()
 def status():
-    """Show replication status"""
-    try:
+    """Show replication status"""    try:
         replication_manager = get_replication_manager()
         status = replication_manager.get_replication_status()
         
@@ -1031,8 +988,7 @@ def status():
 @click.argument('slot_name')
 @click.option('--type', 'slot_type', default='physical', help='Slot type (physical/logical)')
 def create_slot(slot_name: str, slot_type: str):
-    """Create replication slot"""
-    try:
+    """Create replication slot"""    try:
         replication_manager = get_replication_manager()
         success = replication_manager.create_replication_slot(slot_name, slot_type)
         
@@ -1048,8 +1004,7 @@ def create_slot(slot_name: str, slot_type: str):
 @replication.command()
 @click.argument('slot_name')
 def drop_slot(slot_name: str):
-    """Drop replication slot"""
-    try:
+    """Drop replication slot"""    try:
         replication_manager = get_replication_manager()
         success = replication_manager.drop_replication_slot(slot_name)
         
@@ -1064,8 +1019,7 @@ def drop_slot(slot_name: str):
 
 @database.command()
 def health():
-    """Check database health"""
-    try:
+    """Check database health"""    try:
         db_manager = get_postgresql_manager()
         health_status = db_manager.health_check()
         
@@ -1082,8 +1036,7 @@ def health():
 
 @database.command()
 def info():
-    """Show database information"""
-    try:
+    """Show database information"""    try:
         db_manager = get_postgresql_manager()
         info = db_manager.get_database_info()
         
@@ -1101,8 +1054,7 @@ def info():
 @database.command()
 @click.argument('table_name')
 def optimize(table_name: str):
-    """Optimize table performance"""
-    try:
+    """Optimize table performance"""    try:
         db_manager = get_postgresql_manager()
         success = db_manager.optimize_table(table_name)
         

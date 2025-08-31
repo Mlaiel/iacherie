@@ -1,5 +1,4 @@
-"""
-Resource Manager Engine - IA-Influencer-Agent
+"""Resource Manager Engine - IA-Influencer-Agent
 ================================================================================
 Module: backend/crawlers/workers/resource_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,9 +15,7 @@ Contact: mlaiel@live.de
 LOGIQUE MÉTIER:
 Resource monitoring → ML prediction → Dynamic allocation → 
 Cost optimization → Performance tuning → Capacity planning → Auto-scaling
-"""
-
-from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, NamedTuple
+"""from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, NamedTuple
 import logging
 import asyncio
 import psutil
@@ -49,8 +46,7 @@ settings = get_settings()
 
 
 class ResourceType(Enum):
-    """Types of resources managed"""
-    CPU = "cpu"
+    """Types of resources managed"""    CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
     NETWORK = "network"
@@ -60,8 +56,7 @@ class ResourceType(Enum):
 
 
 class AllocationStrategy(Enum):
-    """Resource allocation strategies"""
-    STATIC = "static"
+    """Resource allocation strategies"""    STATIC = "static"
     DYNAMIC = "dynamic"
     PREDICTIVE = "predictive"
     COST_OPTIMIZED = "cost_optimized"
@@ -70,8 +65,7 @@ class AllocationStrategy(Enum):
 
 
 class ResourceStatus(Enum):
-    """Resource availability status"""
-    AVAILABLE = "available"
+    """Resource availability status"""    AVAILABLE = "available"
     ALLOCATED = "allocated"
     OVERALLOCATED = "overallocated"
     EXHAUSTED = "exhausted"
@@ -81,8 +75,7 @@ class ResourceStatus(Enum):
 
 @dataclass
 class ResourceLimit:
-    """Resource limit configuration"""
-    resource_type: ResourceType
+    """Resource limit configuration"""    resource_type: ResourceType
     min_value: float
     max_value: float
     current_value: float
@@ -95,8 +88,7 @@ class ResourceLimit:
 
 @dataclass
 class ResourceUsage:
-    """Current resource usage metrics"""
-    resource_type: ResourceType
+    """Current resource usage metrics"""    resource_type: ResourceType
     current_usage: float
     peak_usage: float
     average_usage: float
@@ -108,8 +100,7 @@ class ResourceUsage:
 
 @dataclass
 class ResourceAllocation:
-    """Resource allocation record"""
-    allocation_id: str
+    """Resource allocation record"""    allocation_id: str
     worker_id: str
     resource_type: ResourceType
     allocated_amount: float
@@ -120,8 +111,7 @@ class ResourceAllocation:
 
 @dataclass
 class ResourcePrediction:
-    """ML-based resource prediction"""
-    resource_type: ResourceType
+    """ML-based resource prediction"""    resource_type: ResourceType
     prediction_horizon: timedelta
     predicted_usage: float
     confidence_level: float
@@ -130,8 +120,7 @@ class ResourcePrediction:
 
 
 class ResourceManager:
-    """
-    Intelligent resource manager for worker system
+    """    Intelligent resource manager for worker system
     
     Features:
     - ML-based resource prediction
@@ -140,9 +129,7 @@ class ResourceManager:
     - Performance monitoring
     - Auto-scaling integration
     - Multi-tenant resource isolation
-    """
-
-    def __init__(self, allocation_strategy: AllocationStrategy = AllocationStrategy.BALANCED):
+    """    def __init__(self, allocation_strategy: AllocationStrategy = AllocationStrategy.BALANCED):
         self.allocation_strategy = allocation_strategy
         self.resource_limits: Dict[ResourceType, ResourceLimit] = {}
         self.current_allocations: Dict[str, ResourceAllocation] = {}
@@ -185,8 +172,7 @@ class ResourceManager:
                 self.k8s_client = None
 
     async def start(self) -> bool:
-        """Start resource manager"""
-        try:
+        """Start resource manager"""        try:
             logger.info("🚀 Starting resource manager")
             
             # Initialize resource limits
@@ -208,8 +194,7 @@ class ResourceManager:
             return False
 
     async def stop(self) -> None:
-        """Stop resource manager"""
-        try:
+        """Stop resource manager"""        try:
             logger.info("🛑 Stopping resource manager")
             
             self.is_running = False
@@ -237,8 +222,7 @@ class ResourceManager:
 
     async def allocate_resources(self, worker_id: str, required_resources: Dict[ResourceType, float],
                                priority: int = 1, timeout: int = 300) -> Dict[ResourceType, ResourceAllocation]:
-        """Allocate resources to a worker"""
-        try:
+        """Allocate resources to a worker"""        try:
             allocations = {}
             
             # Check resource availability
@@ -274,8 +258,7 @@ class ResourceManager:
             raise
 
     async def deallocate_resources(self, allocation_id: str) -> bool:
-        """Deallocate resources"""
-        try:
+        """Deallocate resources"""        try:
             allocation = self.current_allocations.get(allocation_id)
             if not allocation:
                 logger.warning(f"⚠️ Allocation not found: {allocation_id}")
@@ -295,8 +278,7 @@ class ResourceManager:
             return False
 
     async def get_resource_status(self) -> Dict[str, Any]:
-        """Get comprehensive resource status"""
-        try:
+        """Get comprehensive resource status"""        try:
             # Update current resource usage
             await self._update_resource_usage()
             
@@ -338,8 +320,7 @@ class ResourceManager:
             return {"error": str(e)}
 
     async def optimize_allocation(self, target_metric: str = "cost") -> Dict[str, Any]:
-        """Optimize resource allocation based on target metric"""
-        try:
+        """Optimize resource allocation based on target metric"""        try:
             logger.info(f"🔄 Optimizing resource allocation for: {target_metric}")
             
             # Analyze current allocations
@@ -368,8 +349,7 @@ class ResourceManager:
             return {"error": str(e)}
 
     async def predict_resource_needs(self, horizon_hours: int = 24) -> Dict[ResourceType, ResourcePrediction]:
-        """Predict future resource needs using ML"""
-        try:
+        """Predict future resource needs using ML"""        try:
             predictions = {}
             
             for resource_type in ResourceType:
@@ -398,8 +378,7 @@ class ResourceManager:
 
     async def handle_resource_alert(self, resource_type: ResourceType, 
                                   alert_type: str, current_value: float) -> bool:
-        """Handle resource alert and take corrective action"""
-        try:
+        """Handle resource alert and take corrective action"""        try:
             logger.warning(f"⚠️ Resource alert: {resource_type.value} - {alert_type} - {current_value}")
             
             if alert_type == "high_usage":
@@ -419,8 +398,7 @@ class ResourceManager:
             return False
 
     async def _initialize_resource_limits(self) -> None:
-        """Initialize resource limits based on system capabilities"""
-        try:
+        """Initialize resource limits based on system capabilities"""        try:
             # Get system information
             cpu_count = psutil.cpu_count()
             memory_info = psutil.virtual_memory()
@@ -479,8 +457,7 @@ class ResourceManager:
             raise
 
     async def _start_monitoring(self) -> None:
-        """Start resource monitoring"""
-        try:
+        """Start resource monitoring"""        try:
             # Initial resource usage update
             await self._update_resource_usage()
             
@@ -491,8 +468,7 @@ class ResourceManager:
             raise
 
     async def _start_background_tasks(self) -> None:
-        """Start background resource management tasks"""
-        try:
+        """Start background resource management tasks"""        try:
             # Resource monitor
             monitor_task = asyncio.create_task(self._resource_monitor())
             self.background_tasks.add(monitor_task)
@@ -516,8 +492,7 @@ class ResourceManager:
             raise
 
     async def _check_resource_availability(self, required_resources: Dict[ResourceType, float]) -> Dict[ResourceType, bool]:
-        """Check if required resources are available"""
-        try:
+        """Check if required resources are available"""        try:
             availability = {}
             
             for resource_type, amount in required_resources.items():
@@ -544,8 +519,7 @@ class ResourceManager:
 
     async def _allocate_single_resource(self, worker_id: str, resource_type: ResourceType, 
                                       amount: float, priority: int) -> ResourceAllocation:
-        """Allocate a single resource"""
-        try:
+        """Allocate a single resource"""        try:
             allocation_id = f"{worker_id}_{resource_type.value}_{int(time.time())}"
             
             allocation = ResourceAllocation(
@@ -574,8 +548,7 @@ class ResourceManager:
             raise
 
     async def _free_single_resource(self, allocation: ResourceAllocation) -> None:
-        """Free a single resource allocation"""
-        try:
+        """Free a single resource allocation"""        try:
             # Update resource limits
             limit = self.resource_limits[allocation.resource_type]
             limit.current_value -= allocation.allocated_amount
@@ -588,8 +561,7 @@ class ResourceManager:
             raise
 
     async def _apply_system_allocation(self, allocation: ResourceAllocation) -> None:
-        """Apply allocation at system level (Docker, Kubernetes, etc.)"""
-        try:
+        """Apply allocation at system level (Docker, Kubernetes, etc.)"""        try:
             if allocation.resource_type == ResourceType.CPU:
                 await self._apply_cpu_allocation(allocation)
             elif allocation.resource_type == ResourceType.MEMORY:
@@ -600,8 +572,7 @@ class ResourceManager:
             logger.error(f"❌ Failed to apply system allocation: {e}")
 
     async def _apply_system_deallocation(self, allocation: ResourceAllocation) -> None:
-        """Apply deallocation at system level"""
-        try:
+        """Apply deallocation at system level"""        try:
             if allocation.resource_type == ResourceType.CPU:
                 await self._apply_cpu_deallocation(allocation)
             elif allocation.resource_type == ResourceType.MEMORY:
@@ -612,8 +583,7 @@ class ResourceManager:
             logger.error(f"❌ Failed to apply system deallocation: {e}")
 
     async def _apply_cpu_allocation(self, allocation: ResourceAllocation) -> None:
-        """Apply CPU allocation using cgroups or container limits"""
-        try:
+        """Apply CPU allocation using cgroups or container limits"""        try:
             # Docker container CPU limit
             if self.docker_client:
                 # Implementation for Docker CPU limits
@@ -638,8 +608,7 @@ class ResourceManager:
             logger.error(f"❌ Failed to apply CPU allocation: {e}")
 
     async def _apply_memory_allocation(self, allocation: ResourceAllocation) -> None:
-        """Apply memory allocation using cgroups or container limits"""
-        try:
+        """Apply memory allocation using cgroups or container limits"""        try:
             # Docker container memory limit
             if self.docker_client:
                 # Implementation for Docker memory limits
@@ -660,8 +629,7 @@ class ResourceManager:
             logger.error(f"❌ Failed to apply memory allocation: {e}")
 
     async def _apply_cpu_deallocation(self, allocation: ResourceAllocation) -> None:
-        """Remove CPU allocation constraints"""
-        try:
+        """Remove CPU allocation constraints"""        try:
             worker_pid = self._get_worker_pid(allocation.worker_id)
             if worker_pid:
                 process = psutil.Process(worker_pid)
@@ -672,8 +640,7 @@ class ResourceManager:
             logger.error(f"❌ Failed to apply CPU deallocation: {e}")
 
     async def _apply_memory_deallocation(self, allocation: ResourceAllocation) -> None:
-        """Remove memory allocation constraints"""
-        try:
+        """Remove memory allocation constraints"""        try:
             # Remove memory constraints
             # Implementation depends on the system
             pass
@@ -682,8 +649,7 @@ class ResourceManager:
             logger.error(f"❌ Failed to apply memory deallocation: {e}")
 
     def _get_worker_pid(self, worker_id: str) -> Optional[int]:
-        """Get process ID for a worker"""
-        try:
+        """Get process ID for a worker"""        try:
             # This would need to be implemented based on how workers are tracked
             # For now, return None
             return None
@@ -693,8 +659,7 @@ class ResourceManager:
             return None
 
     async def _update_resource_usage(self) -> None:
-        """Update current resource usage metrics"""
-        try:
+        """Update current resource usage metrics"""        try:
             current_time = datetime.utcnow()
             
             # CPU usage
@@ -753,8 +718,7 @@ class ResourceManager:
             logger.error(f"❌ Failed to update resource usage: {e}")
 
     async def _get_system_resource_info(self) -> Dict[str, Any]:
-        """Get comprehensive system resource information"""
-        try:
+        """Get comprehensive system resource information"""        try:
             # Basic system info
             cpu_count = psutil.cpu_count()
             cpu_usage = psutil.cpu_percent(interval=1)
@@ -793,8 +757,7 @@ class ResourceManager:
             return {}
 
     async def _calculate_resource_utilization(self) -> Dict[str, float]:
-        """Calculate resource utilization percentages"""
-        try:
+        """Calculate resource utilization percentages"""        try:
             utilization = {}
             
             for resource_type, limit in self.resource_limits.items():
@@ -810,8 +773,7 @@ class ResourceManager:
             return {}
 
     async def _get_resource_predictions(self) -> Dict[str, Any]:
-        """Get current resource predictions"""
-        try:
+        """Get current resource predictions"""        try:
             predictions_dict = {}
             
             for resource_type, prediction in self.predictions.items():
@@ -830,8 +792,7 @@ class ResourceManager:
             return {}
 
     def _get_allocations_summary(self) -> Dict[str, Any]:
-        """Get summary of current allocations"""
-        try:
+        """Get summary of current allocations"""        try:
             summary = {
                 "total_allocations": len(self.current_allocations),
                 "by_resource_type": defaultdict(int),
@@ -851,8 +812,7 @@ class ResourceManager:
             return {}
 
     async def _resource_monitor(self) -> None:
-        """Background resource monitoring task"""
-        while not self.shutdown_event.is_set():
+        """Background resource monitoring task"""        while not self.shutdown_event.is_set():
             try:
                 await self._update_resource_usage()
                 await asyncio.sleep(30)  # Update every 30 seconds
@@ -862,8 +822,7 @@ class ResourceManager:
                 await asyncio.sleep(60)
 
     async def _resource_predictor_task(self) -> None:
-        """Background resource prediction task"""
-        while not self.shutdown_event.is_set():
+        """Background resource prediction task"""        while not self.shutdown_event.is_set():
             try:
                 await self.predict_resource_needs(horizon_hours=24)
                 await asyncio.sleep(3600)  # Update every hour
@@ -873,8 +832,7 @@ class ResourceManager:
                 await asyncio.sleep(1800)
 
     async def _resource_optimizer_task(self) -> None:
-        """Background resource optimization task"""
-        while not self.shutdown_event.is_set():
+        """Background resource optimization task"""        while not self.shutdown_event.is_set():
             try:
                 await self.optimize_allocation(target_metric="balanced")
                 await asyncio.sleep(1800)  # Optimize every 30 minutes
@@ -884,8 +842,7 @@ class ResourceManager:
                 await asyncio.sleep(3600)
 
     async def _resource_cleanup_task(self) -> None:
-        """Background resource cleanup task"""
-        while not self.shutdown_event.is_set():
+        """Background resource cleanup task"""        while not self.shutdown_event.is_set():
             try:
                 await self._cleanup_expired_allocations()
                 await self._cleanup_old_usage_data()
@@ -896,8 +853,7 @@ class ResourceManager:
                 await asyncio.sleep(600)
 
     async def _cleanup_expired_allocations(self) -> None:
-        """Clean up expired resource allocations"""
-        try:
+        """Clean up expired resource allocations"""        try:
             current_time = datetime.utcnow()
             expired_allocations = []
             
@@ -913,8 +869,7 @@ class ResourceManager:
             logger.error(f"❌ Failed to cleanup expired allocations: {e}")
 
     async def _cleanup_old_usage_data(self) -> None:
-        """Clean up old usage data to prevent memory growth"""
-        try:
+        """Clean up old usage data to prevent memory growth"""        try:
             cutoff_time = datetime.utcnow() - timedelta(hours=24)
             
             for resource_type in self.usage_history:
@@ -927,8 +882,7 @@ class ResourceManager:
             logger.error(f"❌ Failed to cleanup old usage data: {e}")
 
     async def _handle_resource_shortage(self, required_resources: Dict[ResourceType, float], priority: int) -> None:
-        """Handle resource shortage by freeing or scaling resources"""
-        try:
+        """Handle resource shortage by freeing or scaling resources"""        try:
             logger.warning(f"⚠️ Handling resource shortage for priority {priority}")
             
             # Try to free up resources from lower priority allocations
@@ -943,8 +897,7 @@ class ResourceManager:
 
     async def _free_lower_priority_resources(self, required_resources: Dict[ResourceType, float], 
                                            min_priority: int) -> bool:
-        """Free resources from lower priority allocations"""
-        try:
+        """Free resources from lower priority allocations"""        try:
             freed_any = False
             
             for resource_type, required_amount in required_resources.items():
@@ -976,8 +929,7 @@ class ResourceManager:
             return False
 
     async def _scale_up_resources(self, required_resources: Dict[ResourceType, float]) -> None:
-        """Scale up resources if possible"""
-        try:
+        """Scale up resources if possible"""        try:
             # Implementation would depend on the infrastructure
             # For example, scaling Kubernetes pods, adding Docker containers, etc.
             logger.info(f"📈 Attempting to scale up resources: {list(required_resources.keys())}")
@@ -988,8 +940,7 @@ class ResourceManager:
             logger.error(f"❌ Failed to scale up resources: {e}")
 
     async def _analyze_current_allocations(self) -> Dict[str, Any]:
-        """Analyze current resource allocations for optimization"""
-        try:
+        """Analyze current resource allocations for optimization"""        try:
             # Placeholder for allocation analysis
             return {
                 "total_allocations": len(self.current_allocations),
@@ -1004,8 +955,7 @@ class ResourceManager:
 
     async def _generate_optimization_recommendations(self, analysis: Dict[str, Any], 
                                                    target_metric: str) -> List[Dict[str, Any]]:
-        """Generate optimization recommendations"""
-        try:
+        """Generate optimization recommendations"""        try:
             # Placeholder for optimization recommendations
             return []
             
@@ -1014,8 +964,7 @@ class ResourceManager:
             return []
 
     async def _apply_optimizations(self, recommendations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Apply safe optimization recommendations"""
-        try:
+        """Apply safe optimization recommendations"""        try:
             applied = []
             
             for recommendation in recommendations:
@@ -1031,8 +980,7 @@ class ResourceManager:
             return []
 
     def _calculate_estimated_savings(self, applied_optimizations: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Calculate estimated savings from optimizations"""
-        try:
+        """Calculate estimated savings from optimizations"""        try:
             return {
                 "cost_savings_percent": 0.0,
                 "performance_improvement_percent": 0.0,
@@ -1044,8 +992,7 @@ class ResourceManager:
             return {}
 
     async def _handle_high_usage_alert(self, resource_type: ResourceType, current_value: float) -> bool:
-        """Handle high resource usage alert"""
-        try:
+        """Handle high resource usage alert"""        try:
             # Scale up if possible
             await self._scale_up_resources({resource_type: current_value * 0.2})
             return True
@@ -1055,8 +1002,7 @@ class ResourceManager:
             return False
 
     async def _handle_low_availability_alert(self, resource_type: ResourceType, current_value: float) -> bool:
-        """Handle low resource availability alert"""
-        try:
+        """Handle low resource availability alert"""        try:
             # Free up resources from low priority tasks
             await self._free_lower_priority_resources({resource_type: current_value}, priority=1)
             return True
@@ -1066,8 +1012,7 @@ class ResourceManager:
             return False
 
     async def _handle_allocation_failure_alert(self, resource_type: ResourceType, current_value: float) -> bool:
-        """Handle allocation failure alert"""
-        try:
+        """Handle allocation failure alert"""        try:
             # Try emergency resource freeing
             await self._emergency_resource_cleanup(resource_type)
             return True
@@ -1077,8 +1022,7 @@ class ResourceManager:
             return False
 
     async def _handle_prediction_threshold_alert(self, resource_type: ResourceType, current_value: float) -> bool:
-        """Handle prediction threshold alert"""
-        try:
+        """Handle prediction threshold alert"""        try:
             # Proactively scale based on prediction
             await self._proactive_scaling(resource_type, current_value)
             return True
@@ -1088,8 +1032,7 @@ class ResourceManager:
             return False
 
     async def _emergency_resource_cleanup(self, resource_type: ResourceType) -> None:
-        """Emergency resource cleanup"""
-        try:
+        """Emergency resource cleanup"""        try:
             # Force garbage collection
             gc.collect()
             
@@ -1102,8 +1045,7 @@ class ResourceManager:
             logger.error(f"❌ Failed emergency resource cleanup: {e}")
 
     async def _proactive_scaling(self, resource_type: ResourceType, predicted_value: float) -> None:
-        """Proactive scaling based on predictions"""
-        try:
+        """Proactive scaling based on predictions"""        try:
             # Scale up before hitting limits
             scale_amount = predicted_value * 0.1  # Scale by 10% of predicted need
             await self._scale_up_resources({resource_type: scale_amount})
@@ -1119,8 +1061,7 @@ _resource_manager_instance: Optional[ResourceManager] = None
 
 
 def get_resource_manager(allocation_strategy: AllocationStrategy = AllocationStrategy.BALANCED) -> ResourceManager:
-    """Get or create resource manager singleton"""
-    global _resource_manager_instance
+    """Get or create resource manager singleton"""    global _resource_manager_instance
     
     if _resource_manager_instance is None:
         _resource_manager_instance = ResourceManager(allocation_strategy)
@@ -1129,8 +1070,7 @@ def get_resource_manager(allocation_strategy: AllocationStrategy = AllocationStr
 
 
 async def initialize_resource_manager(allocation_strategy: AllocationStrategy = AllocationStrategy.BALANCED) -> bool:
-    """Initialize global resource manager"""
-    try:
+    """Initialize global resource manager"""    try:
         manager = get_resource_manager(allocation_strategy)
         return await manager.start()
         
@@ -1140,8 +1080,7 @@ async def initialize_resource_manager(allocation_strategy: AllocationStrategy = 
 
 
 async def shutdown_resource_manager() -> None:
-    """Shutdown global resource manager"""
-    global _resource_manager_instance
+    """Shutdown global resource manager"""    global _resource_manager_instance
     
     if _resource_manager_instance:
         await _resource_manager_instance.stop()

@@ -1,5 +1,4 @@
-"""
-Metrics Collector for IA Influencer Agent Platform
+"""Metrics Collector for IA Influencer Agent Platform
 ==================================================
 
 Industrial-grade metrics collection system with Prometheus integration
@@ -7,9 +6,7 @@ for comprehensive system and application monitoring.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-import time
+"""import time
 import psutil
 import asyncio
 import threading
@@ -27,8 +24,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MetricPoint:
-    """Individual metric data point"""
-    name: str
+    """Individual metric data point"""    name: str
     value: float
     timestamp: datetime
     labels: Dict[str, str] = field(default_factory=dict)
@@ -37,18 +33,15 @@ class MetricPoint:
 
 @dataclass
 class MetricThreshold:
-    """Metric threshold configuration"""
-    warning: float
+    """Metric threshold configuration"""    warning: float
     critical: float
     comparison: str = "greater_than"  # greater_than, less_than, equals
 
 
 class MetricsCollector:
-    """
-    Advanced metrics collection system with multi-source aggregation
+    """    Advanced metrics collection system with multi-source aggregation
     and real-time processing capabilities.
-    """
-    
+    """    
     def __init__(
         self,
         redis_client: Optional[redis.Redis] = None,
@@ -97,8 +90,7 @@ class MetricsCollector:
         self._buffer_lock = threading.Lock()
         
     def start_collection(self, prometheus_port: int = 8000):
-        """Start metrics collection with Prometheus server"""
-        if self._collecting:
+        """Start metrics collection with Prometheus server"""        if self._collecting:
             logger.warning("Metrics collection already running")
             return
             
@@ -118,15 +110,13 @@ class MetricsCollector:
         logger.info("Metrics collection started")
         
     def stop_collection(self):
-        """Stop metrics collection"""
-        self._collecting = False
+        """Stop metrics collection"""        self._collecting = False
         if self._collection_thread:
             self._collection_thread.join(timeout=5)
         logger.info("Metrics collection stopped")
         
     def _collection_loop(self):
-        """Main collection loop"""
-        while self._collecting:
+        """Main collection loop"""        while self._collecting:
             try:
                 self._collect_system_metrics()
                 self._collect_application_metrics()
@@ -141,8 +131,7 @@ class MetricsCollector:
                 time.sleep(5)  # Backoff on error
                 
     def _collect_system_metrics(self):
-        """Collect system-level metrics"""
-        try:
+        """Collect system-level metrics"""        try:
             # CPU usage
             cpu_percent = psutil.cpu_percent(interval=1)
             self.system_metrics['cpu_usage'].set(cpu_percent)
@@ -183,8 +172,7 @@ class MetricsCollector:
             logger.error(f"Error collecting system metrics: {e}")
             
     def _collect_application_metrics(self):
-        """Collect application-level metrics"""
-        try:
+        """Collect application-level metrics"""        try:
             # Redis metrics
             if self.redis_client:
                 info = self.redis_client.info()
@@ -212,13 +200,11 @@ class MetricsCollector:
             logger.error(f"Error collecting application metrics: {e}")
             
     def _collect_business_metrics(self):
-        """Collect business-specific metrics"""
-        try:
+        """Collect business-specific metrics"""        try:
             if self.db_engine:
                 with self.db_engine.connect() as conn:
                     # Fingerprint operations count
-                    result = conn.execute(text("""
-                        SELECT content_type, COUNT(*) 
+                    result = conn.execute(text("""                        SELECT content_type, COUNT(*) 
                         FROM content_fingerprints 
                         WHERE created_at > NOW() - INTERVAL '1 hour'
                         GROUP BY content_type
@@ -229,8 +215,7 @@ class MetricsCollector:
                         self._add_metric("business.fingerprints.hourly", count, {"content_type": content_type})
                         
                     # Protection alerts count
-                    result = conn.execute(text("""
-                        SELECT platform, status, COUNT(*) 
+                    result = conn.execute(text("""                        SELECT platform, status, COUNT(*) 
                         FROM protection_alerts 
                         WHERE created_at > NOW() - INTERVAL '1 hour'
                         GROUP BY platform, status
@@ -241,8 +226,7 @@ class MetricsCollector:
                         self._add_metric("business.alerts.hourly", count, {"platform": platform, "status": status})
                         
                     # Revenue tracking
-                    result = conn.execute(text("""
-                        SELECT platform, currency, SUM(revenue_amount) 
+                    result = conn.execute(text("""                        SELECT platform, currency, SUM(revenue_amount) 
                         FROM revenue_tracking 
                         WHERE created_at > NOW() - INTERVAL '1 day'
                         GROUP BY platform, currency
@@ -256,8 +240,7 @@ class MetricsCollector:
             logger.error(f"Error collecting business metrics: {e}")
             
     def _run_custom_collectors(self):
-        """Run custom metric collectors"""
-        for name, collector in self._custom_collectors.items():
+        """Run custom metric collectors"""        for name, collector in self._custom_collectors.items():
             try:
                 metrics = collector()
                 if isinstance(metrics, list):
@@ -270,8 +253,7 @@ class MetricsCollector:
                 logger.error(f"Error in custom collector '{name}': {e}")
                 
     def _add_metric(self, name: str, value: float, labels: Dict[str, str] = None):
-        """Add a metric to the buffer"""
-        metric_point = MetricPoint(
+        """Add a metric to the buffer"""        metric_point = MetricPoint(
             name=name,
             value=value,
             timestamp=datetime.utcnow(),
@@ -280,8 +262,7 @@ class MetricsCollector:
         self._add_metric_point(metric_point)
         
     def _add_metric_point(self, metric: MetricPoint):
-        """Add a metric point to the buffer"""
-        with self._buffer_lock:
+        """Add a metric point to the buffer"""        with self._buffer_lock:
             self._metrics_buffer.append(metric)
             
             # Prevent buffer overflow
@@ -289,8 +270,7 @@ class MetricsCollector:
                 self._metrics_buffer = self._metrics_buffer[-5000:]
                 
     def _process_metrics_buffer(self):
-        """Process metrics buffer"""
-        if not self._metrics_buffer:
+        """Process metrics buffer"""        if not self._metrics_buffer:
             return
             
         with self._buffer_lock:
@@ -327,24 +307,20 @@ class MetricsCollector:
                 logger.error(f"Error storing metrics to Redis: {e}")
                 
     def register_custom_collector(self, name: str, collector: Callable) -> None:
-        """Register a custom metrics collector"""
-        self._custom_collectors[name] = collector
+        """Register a custom metrics collector"""        self._custom_collectors[name] = collector
         logger.info(f"Registered custom collector: {name}")
         
     def unregister_custom_collector(self, name: str) -> None:
-        """Unregister a custom metrics collector"""
-        if name in self._custom_collectors:
+        """Unregister a custom metrics collector"""        if name in self._custom_collectors:
             del self._custom_collectors[name]
             logger.info(f"Unregistered custom collector: {name}")
             
     def set_threshold(self, metric_name: str, threshold: MetricThreshold) -> None:
-        """Set threshold for a metric"""
-        self._thresholds[metric_name] = threshold
+        """Set threshold for a metric"""        self._thresholds[metric_name] = threshold
         logger.info(f"Set threshold for metric: {metric_name}")
         
     def get_current_metrics(self) -> Dict[str, Any]:
-        """Get current metric values"""
-        if not self.redis_client:
+        """Get current metric values"""        if not self.redis_client:
             return {}
             
         try:
@@ -370,8 +346,7 @@ class MetricsCollector:
         start_time: Optional[datetime] = None,
         end_time: Optional[datetime] = None
     ) -> List[Dict[str, Any]]:
-        """Get metric history from time series"""
-        if not self.redis_client:
+        """Get metric history from time series"""        if not self.redis_client:
             return []
             
         try:
@@ -395,8 +370,7 @@ class MetricsCollector:
             return []
             
     def check_thresholds(self) -> List[Dict[str, Any]]:
-        """Check metric thresholds and return violations"""
-        violations = []
+        """Check metric thresholds and return violations"""        violations = []
         current_metrics = self.get_current_metrics()
         
         for metric_name, threshold in self._thresholds.items():
@@ -427,8 +401,7 @@ class MetricsCollector:
         return violations
         
     async def export_metrics(self, format_type: str = "prometheus") -> str:
-        """Export metrics in specified format"""
-        if format_type == "prometheus":
+        """Export metrics in specified format"""        if format_type == "prometheus":
             # Prometheus format handled by prometheus_client
             return "Prometheus metrics available at /metrics endpoint"
         elif format_type == "json":
@@ -438,8 +411,7 @@ class MetricsCollector:
             raise ValueError(f"Unsupported export format: {format_type}")
             
     def get_summary_stats(self) -> Dict[str, Any]:
-        """Get summary statistics of metrics collection"""
-        try:
+        """Get summary statistics of metrics collection"""        try:
             current_metrics = self.get_current_metrics()
             violations = self.check_thresholds()
             

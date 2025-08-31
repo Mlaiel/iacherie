@@ -1,5 +1,4 @@
-"""
-IA-Influencer Agent - DeFi Integration System
+"""IA-Influencer Agent - DeFi Integration System
 
 Enterprise DeFi (Decentralized Finance) integration platform providing:
 - Yield farming and liquidity mining optimization
@@ -16,9 +15,7 @@ Copyright: 2025 - All Rights Reserved
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
-"""
-
-import asyncio
+"""import asyncio
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -43,8 +40,7 @@ from .blockchain_agent import BlockchainNetwork, CurrencyType
 
 
 class DeFiProtocol(Enum):
-    """Supported DeFi protocols."""
-    UNISWAP_V3 = "uniswap_v3"
+    """Supported DeFi protocols."""    UNISWAP_V3 = "uniswap_v3"
     SUSHISWAP = "sushiswap"
     PANCAKESWAP = "pancakeswap"
     AAVE = "aave"
@@ -57,8 +53,7 @@ class DeFiProtocol(Enum):
 
 
 class StrategyType(Enum):
-    """DeFi investment strategies."""
-    YIELD_FARMING = "yield_farming"
+    """DeFi investment strategies."""    YIELD_FARMING = "yield_farming"
     LIQUIDITY_MINING = "liquidity_mining"
     LENDING = "lending"
     STAKING = "staking"
@@ -68,8 +63,7 @@ class StrategyType(Enum):
 
 
 class RiskLevel(Enum):
-    """Risk levels for DeFi strategies."""
-    CONSERVATIVE = "conservative"
+    """Risk levels for DeFi strategies."""    CONSERVATIVE = "conservative"
     MODERATE = "moderate"
     AGGRESSIVE = "aggressive"
     HIGH_RISK = "high_risk"
@@ -77,8 +71,7 @@ class RiskLevel(Enum):
 
 @dataclass
 class DeFiPool:
-    """DeFi liquidity pool information."""
-    id: str
+    """DeFi liquidity pool information."""    id: str
     protocol: DeFiProtocol
     network: BlockchainNetwork
     token_a: str
@@ -95,8 +88,7 @@ class DeFiPool:
 
 @dataclass
 class YieldPosition:
-    """Active yield farming position."""
-    id: str
+    """Active yield farming position."""    id: str
     user_address: str
     protocol: DeFiProtocol
     pool_id: str
@@ -115,8 +107,7 @@ class YieldPosition:
 
 @dataclass
 class LendingPosition:
-    """Active lending position."""
-    id: str
+    """Active lending position."""    id: str
     user_address: str
     protocol: DeFiProtocol
     asset: str
@@ -131,8 +122,7 @@ class LendingPosition:
 
 @dataclass
 class DeFiStrategy:
-    """Automated DeFi investment strategy."""
-    id: str
+    """Automated DeFi investment strategy."""    id: str
     name: str
     strategy_type: StrategyType
     risk_level: RiskLevel
@@ -147,8 +137,7 @@ class DeFiStrategy:
 
 
 class DeFiIntegration:
-    """
-    Advanced DeFi Integration and Strategy Management System.
+    """    Advanced DeFi Integration and Strategy Management System.
     
     Provides comprehensive DeFi services:
     - Automated yield farming optimization
@@ -157,11 +146,9 @@ class DeFiIntegration:
     - Risk management and portfolio rebalancing
     - Cross-chain DeFi strategy execution
     - Real-time performance monitoring
-    """
-    
+    """    
     def __init__(self, blockchain_agent, config: Optional[Dict] = None):
-        """Initialize the DeFi Integration system."""
-        self.blockchain_agent = blockchain_agent
+        """Initialize the DeFi Integration system."""        self.blockchain_agent = blockchain_agent
         self.config = config or {}
         
         # Logging setup
@@ -232,8 +219,7 @@ class DeFiIntegration:
         self.logger.info("DeFi Integration system initialized")
     
     def _initialize_protocols(self):
-        """Initialize connections to DeFi protocols."""
-        # Load popular DeFi pools
+        """Initialize connections to DeFi protocols."""        # Load popular DeFi pools
         self._load_popular_pools()
         
         # Initialize default strategies
@@ -242,8 +228,7 @@ class DeFiIntegration:
         self.logger.info(f"Initialized {len(self.pools)} DeFi pools and {len(self.strategies)} strategies")
     
     def _load_popular_pools(self):
-        """Load popular DeFi pools with current data."""
-        popular_pools = [
+        """Load popular DeFi pools with current data."""        popular_pools = [
             {
                 'protocol': DeFiProtocol.UNISWAP_V3,
                 'network': BlockchainNetwork.ETHEREUM,
@@ -294,8 +279,7 @@ class DeFiIntegration:
             self.pools[pool_id] = pool
     
     def _create_default_strategies(self):
-        """Create default DeFi investment strategies."""
-        strategies = [
+        """Create default DeFi investment strategies."""        strategies = [
             {
                 'name': 'Conservative Stablecoin Farming',
                 'strategy_type': StrategyType.YIELD_FARMING,
@@ -347,8 +331,7 @@ class DeFiIntegration:
         risk_level: RiskLevel = RiskLevel.MODERATE,
         min_apy: Decimal = Decimal('5.0')
     ) -> List[Dict[str, Any]]:
-        """
-        Find optimal yield farming opportunities based on criteria.
+        """        Find optimal yield farming opportunities based on criteria.
         
         Args:
             amount: Investment amount
@@ -358,8 +341,7 @@ class DeFiIntegration:
             
         Returns:
             List of optimal yield opportunities
-        """
-        try:
+        """        try:
             risk_params = self.risk_parameters[risk_level]
             opportunities = []
             
@@ -419,8 +401,7 @@ class DeFiIntegration:
         amount_b: Decimal,
         slippage_tolerance: Decimal = Decimal('1.0')
     ) -> str:
-        """
-        Execute yield farming position in a liquidity pool.
+        """        Execute yield farming position in a liquidity pool.
         
         Args:
             user_address: User's wallet address
@@ -431,8 +412,7 @@ class DeFiIntegration:
             
         Returns:
             str: Position ID
-        """
-        try:
+        """        try:
             if pool_id not in self.pools:
                 raise ValueError(f"Pool not found: {pool_id}")
             
@@ -495,8 +475,7 @@ class DeFiIntegration:
         protocol: DeFiProtocol = DeFiProtocol.AAVE,
         network: BlockchainNetwork = BlockchainNetwork.POLYGON
     ) -> str:
-        """
-        Execute lending strategy on DeFi protocol.
+        """        Execute lending strategy on DeFi protocol.
         
         Args:
             user_address: User's wallet address
@@ -507,8 +486,7 @@ class DeFiIntegration:
             
         Returns:
             str: Lending position ID
-        """
-        try:
+        """        try:
             position_id = str(uuid.uuid4())
             
             # Get current lending rate
@@ -557,8 +535,7 @@ class DeFiIntegration:
         investment_amount: Decimal,
         auto_compound: bool = True
     ) -> str:
-        """
-        Execute automated DeFi investment strategy.
+        """        Execute automated DeFi investment strategy.
         
         Args:
             user_address: User's wallet address
@@ -568,8 +545,7 @@ class DeFiIntegration:
             
         Returns:
             str: Strategy execution ID
-        """
-        try:
+        """        try:
             if strategy_id not in self.strategies:
                 raise ValueError(f"Strategy not found: {strategy_id}")
             
@@ -633,8 +609,7 @@ class DeFiIntegration:
         target_allocation: Dict[str, Decimal],
         rebalance_threshold: Decimal = Decimal('5.0')
     ) -> Dict[str, Any]:
-        """
-        Rebalance DeFi portfolio to target allocation.
+        """        Rebalance DeFi portfolio to target allocation.
         
         Args:
             user_address: User's wallet address
@@ -643,8 +618,7 @@ class DeFiIntegration:
             
         Returns:
             Dict containing rebalance results
-        """
-        try:
+        """        try:
             # Get current portfolio composition
             current_portfolio = await self._get_user_portfolio(user_address)
             
@@ -699,8 +673,7 @@ class DeFiIntegration:
             raise
     
     async def _monitor_yield_position(self, position_id: str):
-        """Monitor yield farming position performance."""
-        try:
+        """Monitor yield farming position performance."""        try:
             if position_id not in self.yield_positions:
                 return
             
@@ -721,8 +694,7 @@ class DeFiIntegration:
             self.logger.error(f"Yield position monitoring failed: {str(e)}")
     
     async def _monitor_lending_position(self, position_id: str):
-        """Monitor lending position and accrue interest."""
-        try:
+        """Monitor lending position and accrue interest."""        try:
             if position_id not in self.lending_positions:
                 return
             
@@ -742,8 +714,7 @@ class DeFiIntegration:
             self.logger.error(f"Lending position monitoring failed: {str(e)}")
     
     async def _get_token_price(self, token: str, network: BlockchainNetwork) -> Decimal:
-        """Get current token price in USD."""
-        # Mock price data - in real implementation would use price oracles
+        """Get current token price in USD."""        # Mock price data - in real implementation would use price oracles
         mock_prices = {
             'ETH': Decimal('2500.00'),
             'USDC': Decimal('1.00'),
@@ -756,8 +727,7 @@ class DeFiIntegration:
         return mock_prices.get(token, Decimal('1.00'))
     
     async def _get_lending_rate(self, asset: str, protocol: DeFiProtocol, network: BlockchainNetwork) -> Decimal:
-        """Get current lending rate for asset on protocol."""
-        # Mock lending rates - in real implementation would query protocol
+        """Get current lending rate for asset on protocol."""        # Mock lending rates - in real implementation would query protocol
         base_rates = {
             'USDC': Decimal('4.5'),
             'DAI': Decimal('3.8'),
@@ -775,16 +745,14 @@ class DeFiIntegration:
         price_a: Decimal,
         price_b: Decimal
     ) -> Decimal:
-        """Calculate LP tokens received for liquidity provision."""
-        # Simplified LP token calculation
+        """Calculate LP tokens received for liquidity provision."""        # Simplified LP token calculation
         total_value_usd = amount_a * price_a + amount_b * price_b
         
         # Assume 1 LP token per $1 of liquidity (simplified)
         return total_value_usd
     
     async def _estimate_defi_gas_cost(self, protocol: DeFiProtocol, network: BlockchainNetwork) -> Decimal:
-        """Estimate gas costs for DeFi operations."""
-        gas_estimates = {
+        """Estimate gas costs for DeFi operations."""        gas_estimates = {
             (DeFiProtocol.UNISWAP_V3, BlockchainNetwork.ETHEREUM): Decimal('150'),
             (DeFiProtocol.UNISWAP_V3, BlockchainNetwork.POLYGON): Decimal('5'),
             (DeFiProtocol.AAVE, BlockchainNetwork.ETHEREUM): Decimal('200'),
@@ -794,8 +762,7 @@ class DeFiIntegration:
         return gas_estimates.get((protocol, network), Decimal('50'))
     
     async def get_defi_analytics(self) -> Dict[str, Any]:
-        """Get comprehensive DeFi analytics."""
-        total_pools = len(self.pools)
+        """Get comprehensive DeFi analytics."""        total_pools = len(self.pools)
         total_positions = len(self.yield_positions) + len(self.lending_positions)
         
         # Calculate total TVL

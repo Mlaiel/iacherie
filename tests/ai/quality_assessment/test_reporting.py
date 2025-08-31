@@ -1,28 +1,22 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
-"""
-
-import sys
+"""import sys
 import os
 from pathlib import Path
 
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Tests de reporting pour le système d'évaluation de qualité IA.
+"""Tests de reporting pour le système d'évaluation de qualité IA.
 Module de test complet pour la validation du système de reporting professionnel.
 
 Créé par : Fahed Mlaiel (mlaiel@live.de)
 Développement de Systèmes IA Professionnels
-"""
-
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -113,17 +107,14 @@ except ImportError:
 
 
 class TestReportGenerator:
-    """Tests complets pour le générateur de rapports principal."""
-    
+    """Tests complets pour le générateur de rapports principal."""    
     @pytest.fixture
     def report_generator(self):
-        """Fixture pour le générateur de rapports."""
-        return ReportGenerator()
+        """Fixture pour le générateur de rapports."""        return ReportGenerator()
     
     @pytest.fixture
     def comprehensive_report_config(self):
-        """Configuration complète de rapport pour les tests."""
-        return {
+        """Configuration complète de rapport pour les tests."""        return {
             'report_id': 'comprehensive_analysis_2025_08_03',
             'report_type': 'comprehensive_analysis',
             'time_period': {
@@ -204,8 +195,7 @@ class TestReportGenerator:
     
     @pytest.mark.asyncio
     async def test_comprehensive_report_generation(self, report_generator, comprehensive_report_config):
-        """Test de génération de rapport complet."""
-        result = await report_generator.generate_report(comprehensive_report_config)
+        """Test de génération de rapport complet."""        result = await report_generator.generate_report(comprehensive_report_config)
         
         # Vérification de la structure de résultat
         assert isinstance(result, dict)
@@ -228,8 +218,7 @@ class TestReportGenerator:
     
     @pytest.mark.asyncio
     async def test_report_with_real_data_simulation(self, report_generator):
-        """Test de génération de rapport avec simulation de données réelles."""
-        # Simulation de données réelles d'analyse
+        """Test de génération de rapport avec simulation de données réelles."""        # Simulation de données réelles d'analyse
         real_data_config = {
             'report_id': 'real_data_simulation_report',
             'report_type': 'performance_analysis',
@@ -300,8 +289,7 @@ class TestReportGenerator:
     
     @pytest.mark.asyncio
     async def test_report_generation_performance(self, report_generator):
-        """Test de performance de génération de rapport."""
-        import time
+        """Test de performance de génération de rapport."""        import time
         
         performance_config = {
             'report_id': 'performance_test_report',
@@ -337,16 +325,13 @@ class TestReportGenerator:
 
 
 class TestAnalyticsReporter:
-    """Tests pour le reporter d'analytics."""
-    
+    """Tests pour le reporter d'analytics."""    
     @pytest.fixture
     def analytics_reporter(self):
-        """Fixture pour le reporter d'analytics."""
-        return AnalyticsReporter()
+        """Fixture pour le reporter d'analytics."""        return AnalyticsReporter()
     
     def test_content_analytics_report(self, analytics_reporter):
-        """Test de rapport d'analytics de contenu."""
-        analytics_data = {
+        """Test de rapport d'analytics de contenu."""        analytics_data = {
             'content_performance': {
                 'total_content_analyzed': 2150,
                 'content_types': {
@@ -431,8 +416,7 @@ class TestAnalyticsReporter:
             assert len(analytics_data['content_performance']['content_types']) == 3
     
     def test_user_behavior_analytics(self, analytics_reporter):
-        """Test d'analytics de comportement utilisateur."""
-        user_behavior_data = {
+        """Test d'analytics de comportement utilisateur."""        user_behavior_data = {
             'audience_demographics': {
                 'age_distribution': {
                     '18-24': 28.5,
@@ -509,16 +493,13 @@ class TestAnalyticsReporter:
 
 
 class TestPerformanceReporter:
-    """Tests pour le reporter de performance."""
-    
+    """Tests pour le reporter de performance."""    
     @pytest.fixture
     def performance_reporter(self):
-        """Fixture pour le reporter de performance."""
-        return PerformanceReporter()
+        """Fixture pour le reporter de performance."""        return PerformanceReporter()
     
     def test_system_performance_report(self, performance_reporter):
-        """Test de rapport de performance système."""
-        performance_data = {
+        """Test de rapport de performance système."""        performance_data = {
             'system_metrics': {
                 'processing_performance': {
                     'image_analysis': {
@@ -609,8 +590,7 @@ class TestPerformanceReporter:
             assert metrics['error_rate'] < 1.0  # Faible taux d'erreur
     
     def test_scalability_analysis_report(self, performance_reporter):
-        """Test de rapport d'analyse de scalabilité."""
-        scalability_data = {
+        """Test de rapport d'analyse de scalabilité."""        scalability_data = {
             'load_testing_results': {
                 'concurrent_users': [10, 25, 50, 100, 200, 500],
                 'response_times': [450, 520, 680, 950, 1450, 2800],  # ms
@@ -667,16 +647,13 @@ class TestPerformanceReporter:
 
 
 class TestBusinessReporter:
-    """Tests pour le reporter business."""
-    
+    """Tests pour le reporter business."""    
     @pytest.fixture
     def business_reporter(self):
-        """Fixture pour le reporter business."""
-        return BusinessReporter()
+        """Fixture pour le reporter business."""        return BusinessReporter()
     
     def test_roi_analysis_report(self, business_reporter):
-        """Test de rapport d'analyse ROI."""
-        roi_data = {
+        """Test de rapport d'analyse ROI."""        roi_data = {
             'financial_metrics': {
                 'revenue_generated': {
                     'direct_sales': 125000,      # €
@@ -761,8 +738,7 @@ class TestBusinessReporter:
             assert abs(calculated_roi - expected_roi) < 5.0  # Marge d'erreur acceptable
     
     def test_market_analysis_report(self, business_reporter):
-        """Test de rapport d'analyse de marché."""
-        market_data = {
+        """Test de rapport d'analyse de marché."""        market_data = {
             'market_position': {
                 'market_share': 8.5,           # %
                 'competitive_ranking': 3,       # position
@@ -824,16 +800,13 @@ class TestBusinessReporter:
 
 
 class TestReportExporter:
-    """Tests pour l'exporteur de rapports."""
-    
+    """Tests pour l'exporteur de rapports."""    
     @pytest.fixture
     def report_exporter(self):
-        """Fixture pour l'exporteur de rapports."""
-        return ReportExporter()
+        """Fixture pour l'exporteur de rapports."""        return ReportExporter()
     
     def test_pdf_export(self, report_exporter):
-        """Test d'export PDF."""
-        report_data = {
+        """Test d'export PDF."""        report_data = {
             'title': 'Rapport d\'Analyse de Qualité IA',
             'subtitle': 'Période: Juillet - Août 2025',
             'sections': [
@@ -876,8 +849,7 @@ class TestReportExporter:
             assert len(report_data['sections']) > 0
     
     def test_excel_export(self, report_exporter):
-        """Test d'export Excel."""
-        excel_data = {
+        """Test d'export Excel."""        excel_data = {
             'workbook_name': 'Rapport_Analytics_IA_Influencer',
             'worksheets': [
                 {
@@ -932,8 +904,7 @@ class TestReportExporter:
                 assert 'data' in worksheet
     
     def test_json_export(self, report_exporter):
-        """Test d'export JSON."""
-        json_data = {
+        """Test d'export JSON."""        json_data = {
             'report_metadata': {
                 'id': 'json_export_test',
                 'generated_at': datetime.now().isoformat(),
@@ -993,13 +964,11 @@ class TestReportExporter:
 
 
 class TestReportIntegration:
-    """Tests d'intégration pour le système de reporting complet."""
-    
+    """Tests d'intégration pour le système de reporting complet."""    
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_end_to_end_reporting_workflow(self):
-        """Test du workflow de reporting de bout en bout."""
-        # Configuration complète de workflow
+        """Test du workflow de reporting de bout en bout."""        # Configuration complète de workflow
         workflow_config = {
             'workflow_id': 'e2e_reporting_test',
             'steps': [
@@ -1067,8 +1036,7 @@ class TestReportIntegration:
     
     @pytest.mark.performance
     def test_reporting_system_performance(self):
-        """Test de performance du système de reporting."""
-        import time
+        """Test de performance du système de reporting."""        import time
         
         # Test de performance avec multiple rapports
         report_configs = []
@@ -1109,8 +1077,7 @@ class TestReportIntegration:
             assert result['status'] == 'generated'
     
     def test_report_quality_validation(self):
-        """Test de validation de qualité des rapports."""
-        # Critères de qualité pour un rapport
+        """Test de validation de qualité des rapports."""        # Critères de qualité pour un rapport
         quality_criteria = {
             'completeness': {
                 'required_sections': ['summary', 'analysis', 'recommendations'],

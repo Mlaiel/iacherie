@@ -1,5 +1,4 @@
-"""
-AI Recommendation Core - Main Recommendation Engine
+"""AI Recommendation Core - Main Recommendation Engine
 ==================================================
 
 Core recommendation engine and configuration for the Ainflue AI platform.
@@ -7,9 +6,7 @@ Provides the main recommendation system with configuration management.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-
-from typing import Any, Dict, List, Optional, Union
+"""from typing import Any, Dict, List, Optional, Union
 from dataclasses import dataclass, field
 from enum import Enum
 import asyncio
@@ -26,8 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 class RecommendationMode(Enum):
-    """Recommendation generation modes."""
-    FAST = "fast"
+    """Recommendation generation modes."""    FAST = "fast"
     BALANCED = "balanced" 
     COMPREHENSIVE = "comprehensive"
     CUSTOM = "custom"
@@ -35,8 +31,7 @@ class RecommendationMode(Enum):
 
 @dataclass
 class RecommendationConfig:
-    """Configuration for the recommendation engine."""
-    
+    """Configuration for the recommendation engine."""    
     # Performance settings
     mode: RecommendationMode = RecommendationMode.BALANCED
     max_recommendations: int = 50
@@ -70,8 +65,7 @@ class RecommendationConfig:
     enable_ab_testing: bool = False
     
     def validate(self) -> bool:
-        """Validate configuration settings."""
-        if not 0.0 <= self.min_confidence_threshold <= 1.0:
+        """Validate configuration settings."""        if not 0.0 <= self.min_confidence_threshold <= 1.0:
             raise ValidationError("Confidence threshold must be between 0.0 and 1.0")
         
         if self.max_recommendations <= 0:
@@ -85,8 +79,7 @@ class RecommendationConfig:
 
 @dataclass
 class RecommendationRequest:
-    """Request for recommendations."""
-    user_id: str
+    """Request for recommendations."""    user_id: str
     request_type: str = "content"
     parameters: Dict[str, Any] = field(default_factory=dict)
     limit: int = 10
@@ -102,8 +95,7 @@ class RecommendationRequest:
 
 @dataclass
 class RecommendationResponse:
-    """Response containing recommendations."""
-    request_id: str
+    """Response containing recommendations."""    request_id: str
     recommendations: List[Dict[str, Any]] = field(default_factory=list)
     metadata: Dict[str, Any] = field(default_factory=dict)
     confidence_scores: List[float] = field(default_factory=list)
@@ -111,26 +103,21 @@ class RecommendationResponse:
     total_candidates: int = 0
     
     def get_top_recommendations(self, n: int) -> List[Dict[str, Any]]:
-        """Get top N recommendations."""
-        return self.recommendations[:n]
+        """Get top N recommendations."""        return self.recommendations[:n]
 
 
 class RecommendationEngine:
-    """
-    Main recommendation engine for the Ainflue AI platform.
+    """    Main recommendation engine for the Ainflue AI platform.
     
     Provides comprehensive content, creator, and collaboration recommendations
     using multiple algorithms and personalization strategies.
-    """
-    
+    """    
     def __init__(self, config: Optional[RecommendationConfig] = None):
-        """
-        Initialize the recommendation engine.
+        """        Initialize the recommendation engine.
         
         Args:
             config: Optional configuration object
-        """
-        self.config = config or RecommendationConfig()
+        """        self.config = config or RecommendationConfig()
         self.config.validate()
         
         self.is_initialized = False
@@ -146,13 +133,11 @@ class RecommendationEngine:
         logger.info(f"RecommendationEngine initialized with mode: {self.config.mode}")
     
     async def initialize(self) -> bool:
-        """
-        Initialize the recommendation engine.
+        """        Initialize the recommendation engine.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             logger.info("Initializing Recommendation Engine...")
             
             # Initialize models based on configuration
@@ -175,8 +160,7 @@ class RecommendationEngine:
             raise ModelInitializationError(f"Engine initialization failed: {e}")
     
     async def _initialize_models(self) -> None:
-        """Initialize recommendation models."""
-        # In a real implementation, this would load actual ML models
+        """Initialize recommendation models."""        # In a real implementation, this would load actual ML models
         self.models = {
             'collaborative_filtering': MockModel('collaborative_filtering'),
             'content_based': MockModel('content_based'),
@@ -189,8 +173,7 @@ class RecommendationEngine:
             logger.debug(f"Initialized model: {model_name}")
     
     async def _initialize_cache(self) -> None:
-        """Initialize caching system."""
-        # Simple in-memory cache for now
+        """Initialize caching system."""        # Simple in-memory cache for now
         self.cache = {
             'recommendations': {},
             'user_profiles': {},
@@ -199,8 +182,7 @@ class RecommendationEngine:
         logger.debug("Cache initialized")
     
     async def _initialize_analytics(self) -> None:
-        """Initialize analytics system."""
-        # Reset analytics
+        """Initialize analytics system."""        # Reset analytics
         self.analytics = {
             'total_requests': 0,
             'successful_requests': 0,
@@ -215,16 +197,14 @@ class RecommendationEngine:
         self,
         request: RecommendationRequest
     ) -> RecommendationResponse:
-        """
-        Get content recommendations for a user.
+        """        Get content recommendations for a user.
         
         Args:
             request: Recommendation request
             
         Returns:
             RecommendationResponse: Recommendations and metadata
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             await self.initialize()
         
         start_time = datetime.now()
@@ -267,8 +247,7 @@ class RecommendationEngine:
         self,
         request: RecommendationRequest
     ) -> List[Dict[str, Any]]:
-        """Generate content recommendations using configured algorithms."""
-        
+        """Generate content recommendations using configured algorithms."""        
         recommendations = []
         
         # Collaborative filtering recommendations
@@ -297,8 +276,7 @@ class RecommendationEngine:
         self,
         request: RecommendationRequest
     ) -> List[Dict[str, Any]]:
-        """Get collaborative filtering recommendations."""
-        # Mock implementation
+        """Get collaborative filtering recommendations."""        # Mock implementation
         return [
             {
                 'id': f'collab_{i}',
@@ -315,8 +293,7 @@ class RecommendationEngine:
         self,
         request: RecommendationRequest
     ) -> List[Dict[str, Any]]:
-        """Get content-based recommendations."""
-        # Mock implementation
+        """Get content-based recommendations."""        # Mock implementation
         return [
             {
                 'id': f'content_{i}',
@@ -333,8 +310,7 @@ class RecommendationEngine:
         self,
         request: RecommendationRequest
     ) -> List[Dict[str, Any]]:
-        """Get hybrid recommendations."""
-        # Mock implementation
+        """Get hybrid recommendations."""        # Mock implementation
         return [
             {
                 'id': f'hybrid_{i}',
@@ -352,8 +328,7 @@ class RecommendationEngine:
         recommendations: List[Dict[str, Any]],
         request: RecommendationRequest
     ) -> List[Dict[str, Any]]:
-        """Filter and rank recommendations based on request and config."""
-        
+        """Filter and rank recommendations based on request and config."""        
         # Filter by confidence threshold
         filtered = [
             rec for rec in recommendations
@@ -379,8 +354,7 @@ class RecommendationEngine:
         response: Optional[RecommendationResponse],
         success: bool
     ) -> None:
-        """Update analytics metrics."""
-        self.analytics['total_requests'] += 1
+        """Update analytics metrics."""        self.analytics['total_requests'] += 1
         
         if success:
             self.analytics['successful_requests'] += 1
@@ -400,14 +374,12 @@ class RecommendationEngine:
                 )
     
     def get_analytics(self) -> Dict[str, Any]:
-        """Get analytics data."""
-        analytics = self.analytics.copy()
+        """Get analytics data."""        analytics = self.analytics.copy()
         analytics['unique_users'] = len(analytics['unique_users'])
         return analytics
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on the recommendation engine."""
-        health_status = {
+        """Perform health check on the recommendation engine."""        health_status = {
             'status': 'healthy',
             'initialized': self.is_initialized,
             'models_loaded': len(self.models),
@@ -426,22 +398,19 @@ class RecommendationEngine:
 
 
 class MockModel:
-    """Mock model for testing purposes."""
-    
+    """Mock model for testing purposes."""    
     def __init__(self, name: str):
         self.name = name
         self.is_initialized = False
     
     async def initialize(self) -> bool:
-        """Initialize the mock model."""
-        # Simulate initialization time
+        """Initialize the mock model."""        # Simulate initialization time
         await asyncio.sleep(0.01)
         self.is_initialized = True
         return True
     
     async def health_check(self) -> bool:
-        """Check model health."""
-        return self.is_initialized
+        """Check model health."""        return self.is_initialized
 
 
 # Export main classes

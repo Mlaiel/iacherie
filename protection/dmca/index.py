@@ -1,5 +1,4 @@
-"""
-🎯 DMCA Module Main Index
+"""🎯 DMCA Module Main Index
 ========================
 
 Main entry point for the DMCA automation module.
@@ -31,9 +30,7 @@ Project Team Specialties:
 - Audio Processing Engineer: Digital signal processing
 - Database Administrator: High-performance data systems
 - Microservices Architect: Distributed systems design
-"""
-
-# Core module imports
+"""# Core module imports
 from . import (
     DMCAStatus, DMCAPriority, NotificationType, ContentType,
     PlatformType, EvidenceType, LegalJurisdiction,
@@ -102,13 +99,11 @@ logger = logging.getLogger(__name__)
 
 
 class DMCAFactory:
-    """Factory class for creating DMCA system components"""
-    
+    """Factory class for creating DMCA system components"""    
     @staticmethod
     def create_full_system(db_session: Session, 
                           config: Optional[Dict[str, Any]] = None) -> DMCAOrchestrationEngine:
-        """
-        Create a complete DMCA automation system
+        """        Create a complete DMCA automation system
         
         Args:
             db_session: Database session
@@ -116,8 +111,7 @@ class DMCAFactory:
             
         Returns:
             DMCAOrchestrationEngine: Fully configured DMCA system
-        """
-        logger.info("Creating complete DMCA automation system")
+        """        logger.info("Creating complete DMCA automation system")
         
         # Create orchestration engine with all components
         orchestration_engine = DMCAOrchestrationEngine(db_session, config)
@@ -127,34 +121,28 @@ class DMCAFactory:
     
     @staticmethod
     def create_validator() -> DMCAAutomatedValidator:
-        """Create standalone DMCA validator"""
-        return DMCAAutomatedValidator()
+        """Create standalone DMCA validator"""        return DMCAAutomatedValidator()
     
     @staticmethod
     def create_template_engine() -> ProfessionalTemplateEngine:
-        """Create standalone template engine"""
-        return ProfessionalTemplateEngine()
+        """Create standalone template engine"""        return ProfessionalTemplateEngine()
     
     @staticmethod
     def create_platform_manager() -> PlatformIntegrationManager:
-        """Create standalone platform integration manager"""
-        return PlatformIntegrationManager()
+        """Create standalone platform integration manager"""        return PlatformIntegrationManager()
     
     @staticmethod
     def create_response_tracker(db_session: Session) -> ResponseIntelligenceEngine:
-        """Create standalone response tracking engine"""
-        return ResponseIntelligenceEngine(db_session)
+        """Create standalone response tracking engine"""        return ResponseIntelligenceEngine(db_session)
     
     @staticmethod
     def create_collaboration_engine(db_session: Session, 
                                   user_id: int) -> DMCACollaborationEngine:
-        """Create standalone collaboration engine"""
-        return DMCACollaborationEngine(db_session, user_id)
+        """Create standalone collaboration engine"""        return DMCACollaborationEngine(db_session, user_id)
 
 
 def get_system_info() -> Dict[str, Any]:
-    """Get DMCA system information and capabilities"""
-    return {
+    """Get DMCA system information and capabilities"""    return {
         "system_name": "Enterprise DMCA Automation Module",
         "version": "2.0.0",
         "author": "Fahed Mlaiel (mlaiel@live.de)",
